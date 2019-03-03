@@ -16,13 +16,13 @@ package com.liferay.layout.admin.web.internal.portlet.action;
 
 import com.liferay.layout.admin.constants.LayoutAdminPortletKeys;
 import com.liferay.layout.admin.web.internal.handler.LayoutExceptionRequestHandler;
-import com.liferay.layout.constants.LayoutConstants;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.LayoutTypePortlet;
 import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
@@ -124,7 +124,7 @@ public class AddSimpleLayoutMVCActionCommand
 			String redirectURL = getRedirectURL(
 				actionRequest, actionResponse, layout);
 
-			if (Objects.equals(type, LayoutConstants.LAYOUT_TYPE_CONTENT)) {
+			if (Objects.equals(type, LayoutConstants.TYPE_CONTENT)) {
 				redirectURL = getContentRedirectURL(themeDisplay, layout);
 			}
 

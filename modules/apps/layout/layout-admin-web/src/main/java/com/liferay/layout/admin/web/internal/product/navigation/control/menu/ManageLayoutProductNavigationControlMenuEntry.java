@@ -15,13 +15,13 @@
 package com.liferay.layout.admin.web.internal.product.navigation.control.menu;
 
 import com.liferay.layout.admin.constants.LayoutAdminPortletKeys;
-import com.liferay.layout.constants.LayoutConstants;
 import com.liferay.layout.content.page.editor.constants.ContentPageEditorWebKeys;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Html;
 import com.liferay.portal.kernel.util.Portal;
@@ -90,7 +90,7 @@ public class ManageLayoutProductNavigationControlMenuEntry
 		Layout layout = themeDisplay.getLayout();
 
 		if (StringUtil.equals(
-				layout.getType(), LayoutConstants.LAYOUT_TYPE_ASSET_DISPLAY)) {
+				layout.getType(), LayoutConstants.TYPE_ASSET_DISPLAY)) {
 
 			return false;
 		}

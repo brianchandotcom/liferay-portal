@@ -22,7 +22,7 @@ long classPK = layout.getPlid();
 
 AssetEntry assetEntry = (AssetEntry)request.getAttribute(WebKeys.LAYOUT_ASSET_ENTRY);
 
-if ((assetEntry != null) && Objects.equals(layout.getType(), LayoutConstants.LAYOUT_TYPE_ASSET_DISPLAY)) {
+if ((assetEntry != null) && Objects.equals(layout.getType(), LayoutConstants.TYPE_ASSET_DISPLAY)) {
 	className = assetEntry.getClassName();
 	classPK = assetEntry.getClassPK();
 }

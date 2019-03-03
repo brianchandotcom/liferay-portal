@@ -17,7 +17,6 @@ package com.liferay.layout.content.page.editor.web.internal.listener;
 import com.liferay.exportimport.kernel.lar.ExportImportThreadLocal;
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.service.FragmentEntryLinkLocalService;
-import com.liferay.layout.constants.LayoutConstants;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
@@ -31,6 +30,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.BaseModelListener;
 import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.ModelListener;
 import com.liferay.portal.kernel.model.PortletPreferences;
 import com.liferay.portal.kernel.search.Indexer;
@@ -260,9 +260,7 @@ public class LayoutModelListener extends BaseModelListener<Layout> {
 	}
 
 	private boolean _isContentLayout(Layout layout) {
-		if (Objects.equals(
-				layout.getType(), LayoutConstants.LAYOUT_TYPE_CONTENT)) {
-
+		if (Objects.equals(layout.getType(), LayoutConstants.TYPE_CONTENT)) {
 			return true;
 		}
 

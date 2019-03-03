@@ -46,4 +46,6 @@ dependencies {
 	compileOnly project(":core:petra:petra-lang")
 	compileOnly project(":core:petra:petra-string")
 	compileOnly project(":core:registry-api")
+
+	jsCompile project(":apps:asset:asset-taglib")
 }

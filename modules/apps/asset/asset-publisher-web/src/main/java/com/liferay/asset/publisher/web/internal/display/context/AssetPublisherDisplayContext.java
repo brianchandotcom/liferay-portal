@@ -461,12 +461,28 @@ public class AssetPublisherDisplayContext {
 				_portletPreferences, _request, "queryName" + queryLogicIndex,
 				"assetTags");
 
+
 			if (Objects.equals(queryName, "assetTags")) {
 				queryValues = ParamUtil.getString(
 					_request, "queryTagNames" + queryLogicIndex, queryValues);
 
 				queryValues = _assetPublisherWebUtil.filterAssetTagNames(
 					_themeDisplay.getScopeGroupId(), queryValues);
+
+				String[] tagNames = StringUtil.split(queryValues, ",");
+
+				List<Map<String, String>> selectedItems = new ArrayList<>();
+
+				ruleJSONObject.put("selectedItems", selectedItems);
+
+				for (String tagName : tagNames) {
+					Map<String, String> item = new HashMap<>();
+
+					selectedItems.add(item);
+
+					item.put("label", tagName);
+					item.put("value", tagName);
+				}
 			}
 			else {
 				queryValues = ParamUtil.getString(

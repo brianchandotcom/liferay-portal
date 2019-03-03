@@ -9,7 +9,16 @@
 	{@param id: string}
 	{@param? namespace: string}
 	{@param pathThemeImages: string}
-	{@param rules: list<[type: string, queryAndOperator: bool, queryContains: bool]>}
+	{@param rules: list<[
+		type: string,
+		queryAndOperator: bool,
+		queryContains: bool,
+		queryValues: string,
+		selectedItems: list<[
+			label: string,
+			value: string
+		]>
+	]>}
 	{@param tagSelectorURL: string}
 	{@param vocabularyIds: string}
 
@@ -78,7 +87,16 @@
 	{@param index: int}
 	{@param? namespace: string}
 	{@param pathThemeImages: string}
-	{@param rule: [type: string, queryAndOperator: bool, queryContains: bool]}
+	{@param rule: [
+		type: string,
+		queryAndOperator: bool,
+		queryContains: bool,
+		queryValues: string,
+		selectedItems: list<[
+			label: string,
+			value: string
+		]>
+	]}
 	{@param tagSelectorURL: string}
 	{@param vocabularyIds: string}
 
@@ -121,13 +139,15 @@
 						{param vocabularyIds: $vocabularyIds /}
 					{/call}
 				{else}
-					{call com.liferay.asset.publisher.web.TagSelector.render}
+					{call com.liferay.asset.taglib.AssetTagsSelector.render}
 						{param eventName: $namespace + 'selectTag' /}
-						{param groupIds: $groupIds /}
-						{param index: $index /}
-						{param namespace: $namespace /}
-						{param tagSelectorURL: $tagSelectorURL /}
-						{param rule: $rule /}
+						{param groupIds: [] /}
+						{param id: $namespace + 'assetTagsSelector' + $index /}
+						{param inputName: $namespace + 'queryTagNames' + $index /}
+						{param spritemap: $pathThemeImages + '/lexicon/icons.svg' /}
+						{param portletURL: $tagSelectorURL /}
+						{param selectedItems: $rule.selectedItems ?: [] /}
+						{param tagNames: $rule.queryValues ?: '' /}
 					{/call}
 				{/if}
 

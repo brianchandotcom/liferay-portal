@@ -20,7 +20,7 @@
 </tr>
 <tr>
 	<td>ASSET_TITLE_HEADER</td>
-	<td>//h4[contains(@class,'asset-title')]</td>
+	<td>//div[@class='h2']/span[2]</td>
 	<td></td>
 </tr>
 <tr>

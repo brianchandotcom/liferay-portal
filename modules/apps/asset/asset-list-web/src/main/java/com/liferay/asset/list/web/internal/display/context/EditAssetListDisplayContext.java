@@ -164,20 +164,21 @@ public class EditAssetListDisplayContext {
 				queryValues = _filterAssetTagNames(
 					_themeDisplay.getScopeGroupId(), queryValues);
 
-				String[] tagNames = StringUtil.split(queryValues, ",");
-
 				List<Map<String, String>> selectedItems = new ArrayList<>();
 
-				ruleJSONObject.put("selectedItems", selectedItems);
+				String[] tagNames = StringUtil.split(
+					queryValues, StringPool.COMMA);
 
 				for (String tagName : tagNames) {
 					Map<String, String> item = new HashMap<>();
 
-					selectedItems.add(item);
-
 					item.put("label", tagName);
 					item.put("value", tagName);
+
+					selectedItems.add(item);
 				}
+
+				ruleJSONObject.put("selectedItems", selectedItems);
 			}
 			else {
 				queryValues = ParamUtil.getString(

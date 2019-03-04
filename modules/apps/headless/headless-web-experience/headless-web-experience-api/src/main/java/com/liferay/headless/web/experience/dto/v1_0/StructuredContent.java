@@ -86,6 +86,10 @@ public class StructuredContent {
 		return description;
 	}
 
+	public Boolean getHasComments() {
+		return hasComments;
+	}
+
 	public Long getId() {
 		return id;
 	}
@@ -303,6 +307,22 @@ public class StructuredContent {
 		}
 	}
 
+	public void setHasComments(Boolean hasComments) {
+		this.hasComments = hasComments;
+	}
+
+	@JsonIgnore
+	public void setHasComments(
+		UnsafeSupplier<Boolean, Exception> hasCommentsUnsafeSupplier) {
+
+		try {
+			hasComments = hasCommentsUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
 	public void setId(Long id) {
 		this.id = id;
 	}
@@ -401,7 +421,7 @@ public class StructuredContent {
 	}
 
 	public String toString() {
-		StringBundler sb = new StringBundler(81);
+		StringBundler sb = new StringBundler(84);
 
 		sb.append("{");
 
@@ -479,6 +499,11 @@ public class StructuredContent {
 		sb.append("\"");
 		sb.append(description);
 		sb.append("\"");
+		sb.append(", ");
+
+		sb.append("\"hasComments\": ");
+
+		sb.append(hasComments);
 		sb.append(", ");
 
 		sb.append("\"id\": ");
@@ -572,6 +597,10 @@ public class StructuredContent {
 	@GraphQLField
 	@JsonProperty
 	protected String description;
+
+	@GraphQLField
+	@JsonProperty
+	protected Boolean hasComments;
 
 	@GraphQLField
 	@JsonProperty

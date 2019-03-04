@@ -173,6 +173,11 @@ public abstract class BaseStructuredContentResourceImpl
 				structuredContent.getDescription());
 		}
 
+		if (Validator.isNotNull(structuredContent.getHasComments())) {
+			existingStructuredContent.setHasComments(
+				structuredContent.getHasComments());
+		}
+
 		if (Validator.isNotNull(structuredContent.getKeywords())) {
 			existingStructuredContent.setKeywords(
 				structuredContent.getKeywords());

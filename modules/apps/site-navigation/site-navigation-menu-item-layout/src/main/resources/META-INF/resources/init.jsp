@@ -39,7 +39,9 @@ page import="com.liferay.portal.kernel.util.GetterUtil" %><%@
 page import="com.liferay.portal.kernel.util.HtmlUtil" %><%@
 page import="com.liferay.portal.kernel.util.ParamUtil" %><%@
 page import="com.liferay.portal.kernel.util.WebKeys" %><%@
+page import="com.liferay.site.navigation.constants.SiteNavigationWebKeys" %><%@
 page import="com.liferay.site.navigation.menu.item.layout.internal.constants.SiteNavigationMenuItemTypeLayoutWebKeys" %><%@
+page import="com.liferay.site.navigation.menu.item.util.SiteNavigationMenuItemUtil" %><%@
 page import="com.liferay.site.navigation.model.SiteNavigationMenuItem" %>
 
 <%@ page import="java.util.ArrayList" %><%@

@@ -206,6 +206,14 @@ function _handleNativeEditorKey(event) {
 	}
 }
 
+export {
+	destroy,
+	getActiveEditableElement,
+	getFloatingToolbarPanels,
+	init,
+	render
+};
+
 export default {
 	destroy,
 	getActiveEditableElement,

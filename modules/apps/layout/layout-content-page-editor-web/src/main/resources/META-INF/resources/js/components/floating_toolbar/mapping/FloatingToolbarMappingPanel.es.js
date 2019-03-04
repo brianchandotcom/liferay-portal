@@ -2,6 +2,7 @@ import Component from 'metal-component';
 import Soy, {Config} from 'metal-soy';
 
 import './FloatingToolbarMappingPanelDelegateTemplate.soy';
+import getConnectedComponent from '../../../store/ConnectedComponent.es';
 import templates from './FloatingToolbarMappingPanel.soy';
 
 /**
@@ -38,7 +39,12 @@ FloatingToolbarMappingPanel.STATE = {
 		.required()
 };
 
-Soy.register(FloatingToolbarMappingPanel, templates);
+const ConnectedFloatingToolbarMappingPanel = getConnectedComponent(
+	FloatingToolbarMappingPanel,
+	['selectedMappingTypes']
+);
 
-export {FloatingToolbarMappingPanel};
-export default FloatingToolbarMappingPanel;
+Soy.register(ConnectedFloatingToolbarMappingPanel, templates);
+
+export {ConnectedFloatingToolbarMappingPanel, FloatingToolbarMappingPanel};
+export default ConnectedFloatingToolbarMappingPanel;

@@ -129,6 +129,11 @@ definition {
 			nodePort = "8080"
 		);
 
+		Clustering.viewTextNotPresentOnSpecificNode(
+			exceptionText = "Unable to deserialize object",
+			nodePort = "9080"
+		);
+
 		Clustering.runGroovyScript(
 			nodePort = "9080",
 			scriptFile = "groovy-script-portal-cache-get.groovy"

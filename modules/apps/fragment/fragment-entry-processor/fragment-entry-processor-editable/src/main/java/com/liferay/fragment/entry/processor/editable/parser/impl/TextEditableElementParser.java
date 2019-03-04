@@ -75,7 +75,7 @@ public class TextEditableElementParser implements EditableElementParser {
 
 		element.addClass("text-" + textAlignment);
 		element.addClass("text-palette-" + textColor);
-		element.addClass("text-" + textStyle);
+		element.addClass(textStyle);
 
 		element.html(bodyElement.html());
 	}

@@ -19,7 +19,7 @@ definition {
 
 		selenium.waitForVisible("${locator1}");
 
-		selenium.waitForText("${locator1}", "${value1}");
+		selenium.waitForTextCaseInsensitive("${locator1}", "${value1}");
 
 		selenium.waitForVisible("${locator2}");
 
@@ -49,7 +49,7 @@ definition {
 
 		selenium.mouseOver("${locator1}");
 
-		selenium.waitForPartialText("${locator1}", "${value1}");
+		selenium.waitForPartialTextCaseInsensitive("${locator1}", "${value1}");
 
 		selenium.waitForVisible("${locator2}");
 

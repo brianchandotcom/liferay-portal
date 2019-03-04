@@ -7,9 +7,9 @@ definition {
 
 		selenium.waitForVisible();
 
-		selenium.waitForPartialText();
+		selenium.waitForPartialTextCaseInsensitive();
 
-		selenium.assertPartialText();
+		selenium.assertPartialTextCaseInsensitive();
 
 		selenium.assertJavaScriptErrors();
 

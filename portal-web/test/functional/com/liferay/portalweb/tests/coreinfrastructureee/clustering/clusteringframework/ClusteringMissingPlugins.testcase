@@ -26,6 +26,7 @@ definition {
 		}
 	}
 
+	@ignore = "true"
 	@priority = "3"
 	test CacheBootstrapLoader {
 		property custom.properties = "ehcache.bootstrap.cache.loader.enabled=true${line.separator}ehcache.bootstrap.cache.loader.properties.test.cache=bootstrapAsynchronously=false";

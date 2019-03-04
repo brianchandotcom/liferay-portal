@@ -107,6 +107,13 @@ public class LayoutPageTemplateEntryServiceUtil {
 	}
 
 	public static com.liferay.layout.page.template.model.LayoutPageTemplateEntry
+			fetchLayoutPageTemplateEntry(long groupId, String name)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().fetchLayoutPageTemplateEntry(groupId, name);
+	}
+
+	public static com.liferay.layout.page.template.model.LayoutPageTemplateEntry
 		fetchLayoutPageTemplateEntryByUuidAndGroupId(
 			String uuid, long groupId) {
 

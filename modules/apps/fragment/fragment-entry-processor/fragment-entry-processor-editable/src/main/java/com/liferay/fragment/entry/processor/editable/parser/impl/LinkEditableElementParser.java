@@ -18,10 +18,12 @@ import com.liferay.fragment.entry.processor.editable.EditableFragmentEntryProces
 import com.liferay.fragment.entry.processor.editable.parser.EditableElementParser;
 import com.liferay.fragment.entry.processor.editable.parser.util.EditableElementParserUtil;
 import com.liferay.fragment.exception.FragmentEntryContentException;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.util.List;
 import java.util.ResourceBundle;
@@ -38,6 +40,34 @@ import org.osgi.service.component.annotations.Component;
 	service = EditableElementParser.class
 )
 public class LinkEditableElementParser implements EditableElementParser {
+
+	@Override
+	public JSONObject getAttributes(Element element) {
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
+
+		List<Element> elements = element.getElementsByTag("a");
+
+		Element replaceableElement = elements.get(0);
+
+		String cssClass = replaceableElement.attr("class");
+
+		if (Validator.isNotNull(cssClass)) {
+			if (cssClass.contains("btn btn-primary")) {
+				jsonObject.put("buttonType", "primary");
+			}
+			else if (cssClass.contains("btn btn-secondary")) {
+				jsonObject.put("buttonType", "secondary");
+			}
+		}
+
+		String href = replaceableElement.attr("href");
+
+		if (Validator.isNotNull(href)) {
+			jsonObject.put("href", href);
+		}
+
+		return jsonObject;
+	}
 
 	@Override
 	public String getFieldTemplate() {

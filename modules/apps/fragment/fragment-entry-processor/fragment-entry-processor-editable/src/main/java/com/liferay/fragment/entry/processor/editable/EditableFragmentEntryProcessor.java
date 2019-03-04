@@ -131,6 +131,9 @@ public class EditableFragmentEntryProcessor implements FragmentEntryProcessor {
 			defaultValueJSONObject.put(
 				"defaultValue", editableElementParser.getValue(element));
 
+			defaultValueJSONObject.put(
+				"config", editableElementParser.getAttributes(element));
+
 			defaultEditableValuesJSONObject.put(
 				element.attr("id"), defaultValueJSONObject);
 		}

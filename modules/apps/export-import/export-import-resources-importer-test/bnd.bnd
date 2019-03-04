@@ -5,4 +5,3 @@ Import-Package:\
 	!com.liferay.shrinkwrap.osgi.api,\
 	\
 	*
--includeresource: test-classes/integration

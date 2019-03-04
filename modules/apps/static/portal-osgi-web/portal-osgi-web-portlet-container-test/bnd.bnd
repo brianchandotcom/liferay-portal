@@ -6,4 +6,3 @@ Require-Capability:\
 		filter:="(&(osgi.extender=jsp.taglib)(uri=http://liferay.com/tld/ddm))",\
 	osgi.extender;\
 		filter:="(&(osgi.extender=jsp.taglib)(uri=http://liferay.com/tld/portlet))"
--includeresource: test-classes/integration

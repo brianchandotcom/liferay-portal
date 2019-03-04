@@ -1,4 +1,3 @@
 Bundle-Name: Liferay Asset Tag Stats Test
 Bundle-SymbolicName: com.liferay.asset.tag.stats.test
 Bundle-Version: 1.0.0
--includeresource: test-classes/integration

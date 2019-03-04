@@ -25,7 +25,9 @@ import java.util.Optional;
 /**
  * @author Rodrigo Paulino
  * @author André de Oliveira
+ * @deprecated As of Mueller (7.2.x), with no direct replacement
  */
+@Deprecated
 @ProviderType
 public interface SearchResponse {
 

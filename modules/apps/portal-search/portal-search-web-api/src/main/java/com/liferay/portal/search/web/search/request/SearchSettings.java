@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.search.Query;
 import com.liferay.portal.kernel.search.QueryConfig;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.facet.Facet;
+import com.liferay.portal.search.searcher.SearchRequestBuilder;
 
 import java.util.Optional;
 
@@ -47,6 +48,8 @@ public interface SearchSettings {
 	public QueryConfig getQueryConfig();
 
 	public SearchContext getSearchContext();
+
+	public SearchRequestBuilder getSearchRequestBuilder();
 
 	public void setKeywords(String keywords);
 

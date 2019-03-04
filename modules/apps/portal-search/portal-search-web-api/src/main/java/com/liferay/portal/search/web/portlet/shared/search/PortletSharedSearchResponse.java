@@ -16,9 +16,13 @@ package com.liferay.portal.search.web.portlet.shared.search;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.portal.kernel.search.Document;
+import com.liferay.portal.kernel.search.facet.Facet;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.search.web.search.request.SearchResponse;
+import com.liferay.portal.search.searcher.SearchResponse;
+import com.liferay.portal.search.web.search.request.SearchSettings;
 
+import java.util.List;
 import java.util.Optional;
 
 import javax.portlet.PortletPreferences;
@@ -28,7 +32,23 @@ import javax.portlet.RenderRequest;
  * @author André de Oliveira
  */
 @ProviderType
-public interface PortletSharedSearchResponse extends SearchResponse {
+public interface PortletSharedSearchResponse {
+
+	public List<Document> getDocuments();
+
+	public Facet getFacet(String name);
+
+	/**
+	 * @deprecated As of Judson (7.1.x)
+	 */
+	@Deprecated
+	public String[] getHighlights();
+
+	public Optional<String> getKeywordsOptional();
+
+	public int getPaginationDelta();
+
+	public int getPaginationStart();
 
 	public Optional<String> getParameter(
 		String name, RenderRequest renderRequest);
@@ -39,6 +59,39 @@ public interface PortletSharedSearchResponse extends SearchResponse {
 	public Optional<PortletPreferences> getPortletPreferences(
 		RenderRequest renderRequest);
 
+	/**
+	 * @deprecated As of Judson (7.1.x), replaced by {@link #getSearchResponse()}
+	 *             and
+	 *             {@link SearchResponse#getRequestString()}
+	 *
+	 * @review
+	 */
+	@Deprecated
+	public String getQueryString();
+
+	public List<String> getRelatedQueriesSuggestions();
+
+	/**
+	 * @return the search response as processed by the Liferay Search Framework
+	 *
+	 * @review
+	 */
+	public SearchResponse getSearchResponse();
+
+	public SearchSettings getSearchSettings();
+
+	public Optional<String> getSpellCheckSuggestionOptional();
+
 	public ThemeDisplay getThemeDisplay(RenderRequest renderRequest);
+
+	/**
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #getSearchResponse()}
+	 *             and
+	 *             {@link SearchResponse#getTotalHits()}
+	 *
+	 * @review
+	 */
+	@Deprecated
+	public int getTotalHits();
 
 }

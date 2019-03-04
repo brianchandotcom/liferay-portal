@@ -181,7 +181,7 @@ paths:
       parameters:
         - in: query
           name: param
-          required: true
+          required: false
           schema:
             format: int64
             type: integer

@@ -99,7 +99,8 @@ class FragmentEditableField extends Component {
 		const content = Soy.toIncDom(
 			processor.render(
 				this.content,
-				value
+				value,
+				this.editableValues
 			)
 		);
 

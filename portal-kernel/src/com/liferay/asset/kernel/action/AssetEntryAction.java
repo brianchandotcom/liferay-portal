@@ -36,6 +36,8 @@ public interface AssetEntryAction<T> {
 			HttpServletRequest request, AssetRenderer<T> assetRenderer)
 		throws PortalException;
 
+	public String getIcon();
+
 	public String getMessage(Locale locale);
 
 	public boolean hasPermission(

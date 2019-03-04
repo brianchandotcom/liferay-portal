@@ -461,7 +461,6 @@ public class AssetPublisherDisplayContext {
 				_portletPreferences, _request, "queryName" + queryLogicIndex,
 				"assetTags");
 
-
 			if (Objects.equals(queryName, "assetTags")) {
 				queryValues = ParamUtil.getString(
 					_request, "queryTagNames" + queryLogicIndex, queryValues);

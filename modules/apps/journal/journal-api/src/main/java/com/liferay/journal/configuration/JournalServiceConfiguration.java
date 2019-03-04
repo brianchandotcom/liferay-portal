@@ -119,7 +119,7 @@ public interface JournalServiceConfiguration {
 	public boolean publishToLiveByDefaultEnabled();
 
 	@Meta.AD(
-		deflt = "true", description = "publish-version-history-by-default",
+		deflt = "true", description = "version-history-by-default-enabled-help",
 		name = "version-history-by-default-enabled", required = false
 	)
 	public boolean versionHistoryByDefaultEnabled();

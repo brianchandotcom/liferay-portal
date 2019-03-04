@@ -1,4 +1,45 @@
 /**
+ * FloatingToolbar panels
+ */
+export const FLOATING_TOOLBAR_PANELS = {
+	backgroundColor: {
+		icon: 'color-picker',
+		panelId: 'background_color',
+		title: Liferay.Language.get('background-color')
+	},
+
+	backgroundImage: {
+		icon: 'picture',
+		panelId: 'background_image',
+		title: Liferay.Language.get('background-image')
+	},
+
+	edit: {
+		icon: 'pencil',
+		panelId: 'edit',
+		title: Liferay.Language.get('edit')
+	},
+
+	map: {
+		icon: 'bolt',
+		panelId: 'map',
+		title: Liferay.Language.get('map')
+	},
+
+	spacing: {
+		icon: 'table',
+		panelId: 'spacing',
+		title: Liferay.Language.get('spacing')
+	},
+
+	textProperties: {
+		icon: 'format',
+		panelId: 'text_properties',
+		title: Liferay.Language.get('text-properties')
+	}
+};
+
+/**
  * Available element config keys
  */
 export const ITEM_CONFIG_KEYS = {

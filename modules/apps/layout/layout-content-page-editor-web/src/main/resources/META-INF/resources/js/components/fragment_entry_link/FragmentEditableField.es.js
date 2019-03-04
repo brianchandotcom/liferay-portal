@@ -6,7 +6,7 @@ import '../floating_toolbar/text_properties/FloatingToolbarTextPropertiesPanel.e
 import './FragmentEditableFieldTooltip.es';
 
 import {CLEAR_ACTIVE_ITEM, OPEN_MAPPING_FIELDS_DIALOG, UPDATE_ACTIVE_ITEM, UPDATE_EDITABLE_VALUE, UPDATE_HOVERED_ITEM, UPDATE_LAST_SAVE_DATE, UPDATE_SAVING_CHANGES_STATUS, UPDATE_TRANSLATION_STATUS} from '../../actions/actions.es';
-import {FRAGMENTS_EDITOR_ITEM_TYPES} from '../../utils/constants';
+import {FLOATING_TOOLBAR_PANELS, FRAGMENTS_EDITOR_ITEM_TYPES} from '../../utils/constants';
 import {getConnectedComponent} from '../../store/ConnectedComponent.es';
 import {setIn, shouldClearFocus} from '../../utils/FragmentsEditorUpdateUtils.es';
 import {shouldUpdateOnChangeProperties, shouldUpdatePureComponent} from '../../utils/FragmentsEditorComponentUtils.es';
@@ -14,54 +14,7 @@ import FloatingToolbar from '../floating_toolbar/FloatingToolbar.es';
 import FragmentProcessors from '../fragment_processors/FragmentProcessors.es';
 import templates from './FragmentEditableField.soy';
 
-/**
- * Default key used for translated values when there is no languageId
- * @review
- * @type {!string}
- */
 const DEFAULT_LANGUAGE_ID_KEY = 'defaultValue';
-
-const FLOATING_TOOLBAR_EDIT_PANEL_ID = 'edit';
-
-const FLOATING_TOOLBAR_MAP_PANEL_ID = 'map';
-
-const FLOATING_TOOLBAR_TEXT_PROPERTIES_PANEL_ID = 'text_properties';
-
-/**
- * List of available panels
- * @review
- * @type {object[]}
- */
-const FLOATING_TOOLBAR_PANELS = [
-	{
-		icon: 'pencil',
-		panelId: FLOATING_TOOLBAR_EDIT_PANEL_ID,
-		title: Liferay.Language.get('edit')
-	},
-	{
-		icon: 'bolt',
-		panelId: FLOATING_TOOLBAR_MAP_PANEL_ID,
-		title: Liferay.Language.get('map')
-	}
-];
-
-/**
- * List of available panels after mapping
- * @review
- * @type {object[]}
- */
-const FLOATING_TOOLBAR_PANELS_MAPPED = [
-	{
-		icon: 'format',
-		panelId: FLOATING_TOOLBAR_TEXT_PROPERTIES_PANEL_ID,
-		title: Liferay.Language.get('text-properties')
-	},
-	{
-		icon: 'bolt',
-		panelId: FLOATING_TOOLBAR_MAP_PANEL_ID,
-		title: Liferay.Language.get('map')
-	}
-];
 
 /**
  * Delay to save changes of an editable field
@@ -74,29 +27,6 @@ const SAVE_CHANGES_DELAY = 1500;
  * FragmentEditableField
  */
 class FragmentEditableField extends Component {
-
-	/**
-	 * Gets a translated image content of a given HTML replacing
-	 * the url inside the HTML content with the translated one
-	 * @param {string} content Original HTML content
-	 * @param {string} translatedValue Translated image URL
-	 * @private
-	 * @return {string} Translated HTML
-	 * @review
-	 */
-	static _getImageContent(content, translatedValue) {
-		const wrapper = document.createElement('div');
-
-		wrapper.innerHTML = content;
-
-		const image = wrapper.querySelector('img');
-
-		if (image) {
-			image.src = translatedValue;
-		}
-
-		return wrapper.innerHTML;
-	}
 
 	/**
 	 * @inheritDoc
@@ -149,10 +79,13 @@ class FragmentEditableField extends Component {
 			this.editableValues.defaultValue :
 			(translatedValue || this.editableValues.defaultValue);
 
+		const processor = FragmentProcessors[this.type] || FragmentProcessors.fallback;
+
 		const content = Soy.toIncDom(
-			this.type === 'image' ?
-				FragmentEditableField._getImageContent(this.content, value) :
+			processor.render(
+				this.content,
 				value
+			)
 		);
 
 		let nextState = state;
@@ -203,6 +136,8 @@ class FragmentEditableField extends Component {
 	 * @review
 	 */
 	_createFloatingToolbar() {
+		const processor = FragmentProcessors[this.type] || FragmentProcessors.fallback;
+
 		const config = {
 			anchorElement: this.element,
 			classes: this.editableValues.mappedField ?
@@ -216,9 +151,7 @@ class FragmentEditableField extends Component {
 				fragmentEntryLinkId: this.fragmentEntryLinkId
 			},
 			itemId: this.editableId,
-			panels: (this.editableValues.mappedField && !this.type === 'image') ?
-				FLOATING_TOOLBAR_PANELS_MAPPED :
-				FLOATING_TOOLBAR_PANELS,
+			panels: processor.getFloatingToolbarPanels(this.editableValues),
 			portalElement: document.body,
 			store: this.store
 		};
@@ -393,11 +326,11 @@ class FragmentEditableField extends Component {
 	_handleFloatingToolbarPanelSelected(event, data) {
 		const {panelId} = data;
 
-		if (panelId === FLOATING_TOOLBAR_EDIT_PANEL_ID) {
+		if (panelId === FLOATING_TOOLBAR_PANELS.edit.panelId) {
 			event.preventDefault();
 			this._enableEditor();
 		}
-		else if (panelId === FLOATING_TOOLBAR_MAP_PANEL_ID) {
+		else if (panelId === FLOATING_TOOLBAR_PANELS.map.panelId) {
 			event.preventDefault();
 			this.store
 				.dispatchAction(

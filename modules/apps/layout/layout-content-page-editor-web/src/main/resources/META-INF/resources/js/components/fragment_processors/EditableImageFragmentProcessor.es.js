@@ -1,3 +1,4 @@
+import {FLOATING_TOOLBAR_PANELS} from '../../utils/constants';
 import {openImageSelector} from '../../utils/FragmentsEditorDialogUtils';
 
 /**
@@ -30,6 +31,17 @@ function _handleImageEditorChange(
  * @review
  */
 function destroy() {
+}
+
+/**
+ * @param {object} editableValues
+ * @return {object[]} Floating toolbar panels
+ */
+function getFloatingToolbarPanels(editableValues) {
+	return [
+		FLOATING_TOOLBAR_PANELS.edit,
+		FLOATING_TOOLBAR_PANELS.map
+	];
 }
 
 /**
@@ -68,9 +80,28 @@ function init(
 	);
 }
 
-export {destroy, init};
+/**
+ * @param {string} content editableField's original HTML
+ * @param {string} value Translated/segmented value
+ * @return {string} Transformed content
+ */
+function render(content, value) {
+	const wrapper = document.createElement('div');
+
+	wrapper.innerHTML = content;
+
+	const image = wrapper.querySelector('img');
+
+	if (image) {
+		image.src = value;
+	}
+
+	return wrapper.innerHTML;
+}
 
 export default {
 	destroy,
-	init
+	getFloatingToolbarPanels,
+	init,
+	render
 };

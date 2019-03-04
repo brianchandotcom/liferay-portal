@@ -7,7 +7,7 @@ import '../floating_toolbar/background_image/FloatingToolbarBackgroundImagePanel
 import '../floating_toolbar/spacing/FloatingToolbarSpacingPanel.es';
 import './FragmentEntryLink.es';
 import {CLEAR_ACTIVE_ITEM, MOVE_SECTION, REMOVE_SECTION, UPDATE_ACTIVE_ITEM, UPDATE_HOVERED_ITEM} from '../../actions/actions.es';
-import {FRAGMENTS_EDITOR_ITEM_TYPES} from '../../utils/constants';
+import {FLOATING_TOOLBAR_PANELS, FRAGMENTS_EDITOR_ITEM_TYPES} from '../../utils/constants';
 import {getItemMoveDirection, getSectionIndex, getTargetBorder} from '../../utils/FragmentsEditorGetUtils.es';
 import {moveItem, removeItem, shouldClearFocus} from '../../utils/FragmentsEditorUpdateUtils.es';
 import {shouldUpdatePureComponent} from '../../utils/FragmentsEditorComponentUtils.es';
@@ -20,22 +20,10 @@ import templates from './FragmentEntryLinkListSection.soy';
  * @review
  * @type {object[]}
  */
-const FLOATING_TOOLBAR_PANELS = [
-	{
-		icon: 'color-picker',
-		panelId: 'background_color',
-		title: Liferay.Language.get('background-color')
-	},
-	{
-		icon: 'picture',
-		panelId: 'background_image',
-		title: Liferay.Language.get('background-image')
-	},
-	{
-		icon: 'table',
-		panelId: 'spacing',
-		title: Liferay.Language.get('spacing')
-	}
+const SECTION_FLOATING_TOOLBAR_PANELS = [
+	FLOATING_TOOLBAR_PANELS.backgroundColor,
+	FLOATING_TOOLBAR_PANELS.backgroundImage,
+	FLOATING_TOOLBAR_PANELS.spacing
 ];
 
 /**
@@ -86,7 +74,7 @@ class FragmentEntryLinkListSection extends Component {
 			anchorElement: this.element,
 			item: this.row,
 			itemId: this.rowId,
-			panels: FLOATING_TOOLBAR_PANELS,
+			panels: SECTION_FLOATING_TOOLBAR_PANELS,
 			portalElement: document.body,
 			store: this.store
 		};

@@ -4,12 +4,16 @@ import EditableTextFragmentProcessor from './EditableTextFragmentProcessor.es';
 const FragmentProcessors = {
 	fallback: {
 		destroy: EditableTextFragmentProcessor.destroy,
-		init: EditableTextFragmentProcessor.init
+		getFloatingToolbarPanels: EditableTextFragmentProcessor.getFloatingToolbarPanels,
+		init: EditableTextFragmentProcessor.init,
+		render: EditableTextFragmentProcessor.render
 	},
 
 	image: {
 		destroy: EditableImageFragmentProcessor.destroy,
-		init: EditableImageFragmentProcessor.init
+		getFloatingToolbarPanels: EditableImageFragmentProcessor.getFloatingToolbarPanels,
+		init: EditableImageFragmentProcessor.init,
+		render: EditableImageFragmentProcessor.render
 	}
 };
 

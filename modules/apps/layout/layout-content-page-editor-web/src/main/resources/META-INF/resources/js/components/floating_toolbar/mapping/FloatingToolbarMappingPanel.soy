@@ -53,6 +53,27 @@
 {/template}
 
 /**
+ * Select option
+ */
+{template .selectOption}
+	{@param optionId: string}
+	{@param optionLabel: string}
+	{@param? selectedId: string}
+
+	{let $optionAttributes kind="attributes"}
+		value="{$optionId}"
+
+		{if $optionId == $selectedId}
+			selected
+		{/if}
+	{/let}
+
+	<option {$optionAttributes}>
+		{$optionLabel}
+	</option>
+{/template}
+
+/**
  * Source select
  */
 {template .sourceSelect}

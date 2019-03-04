@@ -38,10 +38,6 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement(name = "Comment")
 public class Comment {
 
-	public Comment[] getComments() {
-		return comments;
-	}
-
 	public Creator getCreator() {
 		return creator;
 	}
@@ -64,22 +60,6 @@ public class Comment {
 
 	public String getText() {
 		return text;
-	}
-
-	public void setComments(Comment[] comments) {
-		this.comments = comments;
-	}
-
-	@JsonIgnore
-	public void setComments(
-		UnsafeSupplier<Comment[], Exception> commentsUnsafeSupplier) {
-
-		try {
-			comments = commentsUnsafeSupplier.get();
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
 	}
 
 	public void setCreator(Creator creator) {
@@ -175,16 +155,9 @@ public class Comment {
 	}
 
 	public String toString() {
-		StringBundler sb = new StringBundler(30);
+		StringBundler sb = new StringBundler(25);
 
 		sb.append("{");
-
-		sb.append("\"comments\": ");
-
-		sb.append("\"");
-		sb.append(comments);
-		sb.append("\"");
-		sb.append(", ");
 
 		sb.append("\"creator\": ");
 
@@ -225,10 +198,6 @@ public class Comment {
 
 		return sb.toString();
 	}
-
-	@GraphQLField
-	@JsonProperty
-	protected Comment[] comments;
 
 	@GraphQLField
 	@JsonProperty

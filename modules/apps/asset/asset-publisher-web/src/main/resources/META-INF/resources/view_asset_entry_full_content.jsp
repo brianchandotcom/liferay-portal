@@ -214,8 +214,6 @@ String title = assetRenderer.getTitle(locale);
 		/>
 	</c:if>
 
-	<div class="separator"><!-- --></div>
-
 	<%
 	PortletURL viewFullContentURL = renderResponse.createRenderURL();
 
@@ -233,162 +231,173 @@ String title = assetRenderer.getTitle(locale);
 
 		viewFullContentURL.setParameter("urlTitle", assetRenderer.getUrlTitle());
 	}
+
+	boolean showContextLink = assetPublisherDisplayContext.isShowContextLink(assetRenderer.getGroupId(), assetRendererFactory.getPortletId()) && !print && assetEntry.isVisible();
+	boolean showConversions = assetPublisherDisplayContext.isEnableConversions() && assetRenderer.isConvertible() && !print;
+	boolean showLocalization = (assetPublisherDisplayContext.isShowAvailableLocales() && assetRenderer.isLocalizable() && !print);
+	boolean showRatings = assetPublisherDisplayContext.isEnableRatings() && assetRenderer.isRatable();
 	%>
 
-	<div class="asset-details autofit-row autofit-row-center">
-		<c:if test="<%= assetPublisherDisplayContext.isShowContextLink(assetRenderer.getGroupId(), assetRendererFactory.getPortletId()) && !print && assetEntry.isVisible() %>">
-			<div class="asset-more autofit-col mr-3">
-				<a href="<%= assetRenderer.getURLViewInContext(liferayPortletRequest, liferayPortletResponse, HttpUtil.setParameter(viewFullContentURL.toString(), "redirect", currentURL)) %>"><liferay-ui:message key="<%= assetRenderer.getViewInContextMessage() %>" /> &raquo;</a>
-			</div>
-		</c:if>
+	<c:if test="<%= showContextLink || showRatings || assetPublisherDisplayContext.isEnableFlags() || assetPublisherDisplayContext.isEnablePrint() || showLocalization || showConversions %>">
+		<div class="separator"><!-- --></div>
 
-		<c:if test="<%= assetPublisherDisplayContext.isEnableRatings() && assetRenderer.isRatable() %>">
-			<div class="asset-ratings autofit-col mr-3">
-				<liferay-ui:ratings
-					className="<%= assetEntry.getClassName() %>"
-					classPK="<%= assetEntry.getClassPK() %>"
-				/>
-			</div>
-		</c:if>
+		<div class="asset-details autofit-row autofit-row-center">
+			<c:if test="<%= showContextLink %>">
+				<div class="asset-more autofit-col mr-3">
+					<a href="<%= assetRenderer.getURLViewInContext(liferayPortletRequest, liferayPortletResponse, HttpUtil.setParameter(viewFullContentURL.toString(), "redirect", currentURL)) %>"><liferay-ui:message key="<%= assetRenderer.getViewInContextMessage() %>" /> &raquo;</a>
+				</div>
+			</c:if>
 
-		<c:if test="<%= assetPublisherDisplayContext.isEnableFlags() %>">
-
-			<%
-			TrashHandler trashHandler = TrashHandlerRegistryUtil.getTrashHandler(assetRenderer.getClassName());
-
-			boolean inTrash = trashHandler.isInTrash(assetEntry.getClassPK());
-			%>
-
-			<div class="asset-flag autofit-col mr-3">
-				<liferay-flags:flags
-					className="<%= assetEntry.getClassName() %>"
-					classPK="<%= assetEntry.getClassPK() %>"
-					contentTitle="<%= title %>"
-					enabled="<%= !inTrash %>"
-					label="<%= false %>"
-					message='<%= inTrash ? "flags-are-disabled-because-this-entry-is-in-the-recycle-bin" : null %>'
-					reportedUserId="<%= assetRenderer.getUserId() %>"
-				/>
-			</div>
-		</c:if>
-
-		<c:if test="<%= assetPublisherDisplayContext.isEnablePrint() %>">
-			<div class="autofit-col component-subtitle mr-3 print-action">
-
-				<%
-				PortletURL printAssetURL = renderResponse.createRenderURL();
-
-				printAssetURL.setParameter("mvcPath", "/view_content.jsp");
-				printAssetURL.setParameter("assetEntryId", String.valueOf(assetEntry.getEntryId()));
-				printAssetURL.setParameter("viewMode", Constants.PRINT);
-				printAssetURL.setParameter("type", assetRendererFactory.getType());
-				printAssetURL.setParameter("languageId", LanguageUtil.getLanguageId(request));
-
-				String urlTitle = assetRenderer.getUrlTitle(locale);
-
-				if (Validator.isNotNull(urlTitle)) {
-					if (assetRenderer.getGroupId() != scopeGroupId) {
-						printAssetURL.setParameter("groupId", String.valueOf(assetRenderer.getGroupId()));
-					}
-
-					printAssetURL.setParameter("urlTitle", urlTitle);
-				}
-
-				printAssetURL.setWindowState(LiferayWindowState.POP_UP);
-				%>
-
-				<c:choose>
-					<c:when test="<%= print %>">
-						<liferay-ui:icon
-							icon="print"
-							markupView="lexicon"
-							message='<%= LanguageUtil.format(request, "print-x-x", new Object[] {"hide-accessible", HtmlUtil.escape(title)}, false) %>'
-							url="javascript:print();"
-						/>
-
-						<aui:script>
-							print();
-						</aui:script>
-					</c:when>
-					<c:otherwise>
-
-						<%
-						String id = assetEntry.getEntryId() + StringUtil.randomId();
-						%>
-
-						<liferay-ui:icon
-							icon="print"
-							markupView="lexicon"
-							message='<%= LanguageUtil.format(request, "print-x-x", new Object[] {"hide-accessible", HtmlUtil.escape(title)}, false) %>'
-							url='<%= "javascript:" + renderResponse.getNamespace() + "printPage_" + id + "();" %>'
-						/>
-
-						<aui:script>
-							function <portlet:namespace />printPage_<%= id %>() {
-								window.open('<%= printAssetURL %>', '', 'directories=0,height=480,left=80,location=1,menubar=1,resizable=1,scrollbars=yes,status=0,toolbar=0,top=180,width=640');
-							}
-						</aui:script>
-					</c:otherwise>
-				</c:choose>
-			</div>
-		</c:if>
-
-		<c:if test="<%= assetPublisherDisplayContext.isShowAvailableLocales() && assetRenderer.isLocalizable() && !print %>">
-
-			<%
-			String[] availableLanguageIds = assetRenderer.getAvailableLanguageIds();
-			%>
-
-			<c:if test="<%= availableLanguageIds.length > 1 %>">
-				<div class="autofit-col locale-actions mr-3">
-					<liferay-ui:language
-						formAction="<%= currentURL %>"
-						languageId="<%= LanguageUtil.getLanguageId(request) %>"
-						languageIds="<%= availableLanguageIds %>"
+			<c:if test="<%= showRatings %>">
+				<div class="asset-ratings autofit-col mr-3">
+					<liferay-ui:ratings
+						className="<%= assetEntry.getClassName() %>"
+						classPK="<%= assetEntry.getClassPK() %>"
 					/>
 				</div>
 			</c:if>
-		</c:if>
 
-		<c:if test="<%= assetPublisherDisplayContext.isEnableConversions() && assetRenderer.isConvertible() && !print %>">
+			<c:if test="<%= assetPublisherDisplayContext.isEnableFlags() %>">
 
-			<%
-			PortletURL exportAssetURL = assetRenderer.getURLExport(liferayPortletRequest, liferayPortletResponse);
+				<%
+				TrashHandler trashHandler = TrashHandlerRegistryUtil.getTrashHandler(assetRenderer.getClassName());
 
-			exportAssetURL.setParameter("plid", String.valueOf(themeDisplay.getPlid()));
-			exportAssetURL.setParameter("portletResource", portletDisplay.getId());
-			exportAssetURL.setWindowState(LiferayWindowState.EXCLUSIVE);
+				boolean inTrash = trashHandler.isInTrash(assetEntry.getClassPK());
+				%>
 
-			for (String extension : assetPublisherDisplayContext.getExtensions(assetRenderer)) {
-				Map<String, Object> data = new HashMap<>();
-
-				exportAssetURL.setParameter("targetExtension", extension);
-
-				data.put("resource-href", exportAssetURL.toString());
-			%>
-
-				<div class="autofit-col component-subtitle export-action mr-3">
-					<aui:a data="<%= data %>" href="<%= exportAssetURL.toString() %>" label='<%= LanguageUtil.format(request, "x-convert-x-to-x", new Object[] {"hide-accessible", title, StringUtil.toUpperCase(HtmlUtil.escape(extension))}, false) %>' />
+				<div class="asset-flag autofit-col mr-3">
+					<liferay-flags:flags
+						className="<%= assetEntry.getClassName() %>"
+						classPK="<%= assetEntry.getClassPK() %>"
+						contentTitle="<%= title %>"
+						enabled="<%= !inTrash %>"
+						label="<%= false %>"
+						message='<%= inTrash ? "flags-are-disabled-because-this-entry-is-in-the-recycle-bin" : null %>'
+						reportedUserId="<%= assetRenderer.getUserId() %>"
+					/>
 				</div>
+			</c:if>
 
-			<%
-			}
-			%>
+			<c:if test="<%= assetPublisherDisplayContext.isEnablePrint() %>">
+				<div class="autofit-col component-subtitle mr-3 print-action">
 
-		</c:if>
-	</div>
+					<%
+					PortletURL printAssetURL = renderResponse.createRenderURL();
 
-	<div class="separator"><!-- --></div>
+					printAssetURL.setParameter("mvcPath", "/view_content.jsp");
+					printAssetURL.setParameter("assetEntryId", String.valueOf(assetEntry.getEntryId()));
+					printAssetURL.setParameter("viewMode", Constants.PRINT);
+					printAssetURL.setParameter("type", assetRendererFactory.getType());
+					printAssetURL.setParameter("languageId", LanguageUtil.getLanguageId(request));
 
-	<liferay-social-bookmarks:bookmarks
-		className="<%= assetEntry.getClassName() %>"
-		classPK="<%= assetEntry.getClassPK() %>"
-		displayStyle="<%= assetPublisherDisplayContext.getSocialBookmarksDisplayStyle() %>"
-		target="_blank"
-		title="<%= title %>"
-		types="<%= assetPublisherDisplayContext.getSocialBookmarksTypes() %>"
-		urlImpl="<%= viewFullContentURL %>"
-	/>
+					String urlTitle = assetRenderer.getUrlTitle(locale);
+
+					if (Validator.isNotNull(urlTitle)) {
+						if (assetRenderer.getGroupId() != scopeGroupId) {
+							printAssetURL.setParameter("groupId", String.valueOf(assetRenderer.getGroupId()));
+						}
+
+						printAssetURL.setParameter("urlTitle", urlTitle);
+					}
+
+					printAssetURL.setWindowState(LiferayWindowState.POP_UP);
+					%>
+
+					<c:choose>
+						<c:when test="<%= print %>">
+							<liferay-ui:icon
+								icon="print"
+								markupView="lexicon"
+								message='<%= LanguageUtil.format(request, "print-x-x", new Object[] {"hide-accessible", HtmlUtil.escape(title)}, false) %>'
+								url="javascript:print();"
+							/>
+
+							<aui:script>
+								print();
+							</aui:script>
+						</c:when>
+						<c:otherwise>
+
+							<%
+							String id = assetEntry.getEntryId() + StringUtil.randomId();
+							%>
+
+							<liferay-ui:icon
+								icon="print"
+								markupView="lexicon"
+								message='<%= LanguageUtil.format(request, "print-x-x", new Object[] {"hide-accessible", HtmlUtil.escape(title)}, false) %>'
+								url='<%= "javascript:" + renderResponse.getNamespace() + "printPage_" + id + "();" %>'
+							/>
+
+							<aui:script>
+								function <portlet:namespace />printPage_<%= id %>() {
+									window.open('<%= printAssetURL %>', '', 'directories=0,height=480,left=80,location=1,menubar=1,resizable=1,scrollbars=yes,status=0,toolbar=0,top=180,width=640');
+								}
+							</aui:script>
+						</c:otherwise>
+					</c:choose>
+				</div>
+			</c:if>
+
+			<c:if test="<%= showLocalization %>">
+
+				<%
+				String[] availableLanguageIds = assetRenderer.getAvailableLanguageIds();
+				%>
+
+				<c:if test="<%= availableLanguageIds.length > 1 %>">
+					<div class="autofit-col locale-actions mr-3">
+						<liferay-ui:language
+							formAction="<%= currentURL %>"
+							languageId="<%= LanguageUtil.getLanguageId(request) %>"
+							languageIds="<%= availableLanguageIds %>"
+						/>
+					</div>
+				</c:if>
+			</c:if>
+
+			<c:if test="<%= showConversions %>">
+
+				<%
+				PortletURL exportAssetURL = assetRenderer.getURLExport(liferayPortletRequest, liferayPortletResponse);
+
+				exportAssetURL.setParameter("plid", String.valueOf(themeDisplay.getPlid()));
+				exportAssetURL.setParameter("portletResource", portletDisplay.getId());
+				exportAssetURL.setWindowState(LiferayWindowState.EXCLUSIVE);
+
+				for (String extension : assetPublisherDisplayContext.getExtensions(assetRenderer)) {
+					Map<String, Object> data = new HashMap<>();
+
+					exportAssetURL.setParameter("targetExtension", extension);
+
+					data.put("resource-href", exportAssetURL.toString());
+				%>
+
+					<div class="autofit-col component-subtitle export-action mr-3">
+						<aui:a data="<%= data %>" href="<%= exportAssetURL.toString() %>" label='<%= LanguageUtil.format(request, "x-convert-x-to-x", new Object[] {"hide-accessible", title, StringUtil.toUpperCase(HtmlUtil.escape(extension))}, false) %>' />
+					</div>
+
+				<%
+				}
+				%>
+
+			</c:if>
+		</div>
+	</c:if>
+
+	<c:if test="<%= Validator.isNotNull(assetPublisherDisplayContext.getSocialBookmarksTypes()) %>">
+		<div class="separator"><!-- --></div>
+
+		<liferay-social-bookmarks:bookmarks
+			className="<%= assetEntry.getClassName() %>"
+			classPK="<%= assetEntry.getClassPK() %>"
+			displayStyle="<%= assetPublisherDisplayContext.getSocialBookmarksDisplayStyle() %>"
+			target="_blank"
+			title="<%= title %>"
+			types="<%= assetPublisherDisplayContext.getSocialBookmarksTypes() %>"
+			urlImpl="<%= viewFullContentURL %>"
+		/>
+	</c:if>
 
 	<c:if test="<%= assetPublisherDisplayContext.isEnableComments() && assetRenderer.isCommentable() %>">
 		<div class="col-md-12">

@@ -41,6 +41,15 @@ public class SegmentsExperienceLocalServiceUtil {
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.segments.service.impl.SegmentsExperienceLocalServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
 	public static com.liferay.segments.model.SegmentsExperience
+			addDefaultSegmentsExperience(
+				long groupId, long classNameId, long classPK)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().addDefaultSegmentsExperience(
+			groupId, classNameId, classPK);
+	}
+
+	public static com.liferay.segments.model.SegmentsExperience
 			addSegmentsExperience(
 				long segmentsEntryId, long classNameId, long classPK,
 				java.util.Map<java.util.Locale, String> nameMap, int priority,

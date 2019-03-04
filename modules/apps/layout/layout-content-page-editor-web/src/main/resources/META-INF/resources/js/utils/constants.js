@@ -97,6 +97,47 @@ export const EDITABLE_FIELD_CONFIG_KEYS = {
 };
 
 /**
+ * Available values for buttonType config key
+ */
+export const BUTTON_TYPES = [
+	{
+		buttonTypeId: '',
+		label: '-'
+	},
+	{
+		buttonTypeId: 'primary',
+		label: Liferay.Language.get('primary')
+	},
+	{
+		buttonTypeId: 'secondary',
+		label: Liferay.Language.get('secondary')
+	}
+];
+
+/**
+ * Available attributes for target config key
+ */
+export const TARGET_TYPES = [
+	{
+		label: Liferay.Language.get('blank'),
+		targetTypeId: '_blank'
+	},
+	{
+		label: Liferay.Language.get('parent'),
+		targetTypeId: '_parent'
+
+	},
+	{
+		label: Liferay.Language.get('self'),
+		targetTypeId: '_self'
+	},
+	{
+		label: Liferay.Language.get('top'),
+		targetTypeId: '_top'
+	}
+];
+
+/**
  * Available values for textStyle config key
  */
 export const TEXT_STYLES = [

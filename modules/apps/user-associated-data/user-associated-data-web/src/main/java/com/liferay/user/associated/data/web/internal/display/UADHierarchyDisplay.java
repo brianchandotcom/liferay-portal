@@ -122,9 +122,10 @@ public class UADHierarchyDisplay {
 		Object object = uadDisplay.get(primaryKey);
 
 		Class<?> parentContainerClass = uadDisplay.getParentContainerClass();
-		long parentContainerId = (long)uadDisplay.getParentContainerId(object);
+		String parentContainerId = String.valueOf(
+			uadDisplay.getParentContainerId(object));
 
-		while (parentContainerId > 0) {
+		while (!parentContainerId.equals("0")) {
 			PortletURL portletURL = PortletURLUtil.clone(
 				baseURL, renderResponse);
 
@@ -139,17 +140,16 @@ public class UADHierarchyDisplay {
 
 			portletURL.setParameter(
 				"parentContainerClass", parentContainerClass.getName());
-			portletURL.setParameter(
-				"parentContainerId", String.valueOf(parentContainerId));
+			portletURL.setParameter("parentContainerId", parentContainerId);
 
 			parentBreadcrumbs.add(
 				new KeyValuePair(parentContainerName, portletURL.toString()));
 
 			parentContainerClass =
 				parentContainerUADDisplay.getParentContainerClass();
-			parentContainerId =
-				(long)parentContainerUADDisplay.getParentContainerId(
-					parentContainerUADDisplay.get(parentContainerId));
+			parentContainerId = String.valueOf(
+				parentContainerUADDisplay.getParentContainerId(
+					parentContainerUADDisplay.get(parentContainerId)));
 		}
 
 		Collections.reverse(parentBreadcrumbs);

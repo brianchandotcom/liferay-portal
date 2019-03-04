@@ -44,7 +44,7 @@
 	String anonymizeSingleMessage = "are-you-sure-you-want-to-anonymize-this-entity";
 
 	if (!uadEntity.isUserOwned()) {
-		anonymizeSingleMessage = "you-are-anonymizing-all-inner-items-of-the-current-user";
+		anonymizeSingleMessage = "only-items-belonging-to-the-user-will-be-anoymized";
 	}
 	%>
 
@@ -62,7 +62,7 @@
 	String deleteSingleMessage = "are-you-sure-you-want-to-delete-this-entity";
 
 	if (!uadEntity.isUserOwned()) {
-		deleteSingleMessage = "you-are-deleting-all-inner-items-of-the-current-user";
+		deleteSingleMessage = "only-items-belonging-to-the-user-will-be-deleted";
 	}
 	%>
 

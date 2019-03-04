@@ -126,7 +126,7 @@ if (uadHierarchyDisplay != null) {
 									cssClass="disabled"
 									icon="user"
 									markupView="lexicon"
-									message="this-item-contains-entities-belonging-to-the-user-but-does-not-itself-belong-to-the-user"
+									message="this-parent-item-does-not-belong-to-the-user-but-contains-children-items-belonging-to-the-user"
 									toolTip="<%= true %>"
 								/>
 							</c:if>
@@ -152,38 +152,27 @@ if (uadHierarchyDisplay != null) {
 </aui:form>
 
 <aui:script>
-
-	<%
-	String anonymizeMultipleMessage = "are-you-sure-you-want-to-anonymize-the-selected-items";
-
-	if (viewUADEntitiesDisplay.isHierarchy()) {
-		anonymizeMultipleMessage = "you-are-anonymizing-all-selected-items-of-the-current-user";
-	}
-	%>
-
 	function <portlet:namespace/>doAnonymizeMultiple() {
 		<portlet:namespace />doMultiple(
 			'<portlet:actionURL name="/anonymize_uad_entities" />',
-			'<liferay-ui:message key="<%= anonymizeMultipleMessage %>" />'
+			'<liferay-ui:message key="are-you-sure-you-want-to-anonymize-the-selected-items" />',
+			'<liferay-ui:message key="only-items-belonging-to-the-user-will-be-anoymized" />'
 		);
 	}
-
-	<%
-	String deleteMultipleMessage = "are-you-sure-you-want-to-delete-the-selected-items";
-
-	if (viewUADEntitiesDisplay.isHierarchy()) {
-		deleteMultipleMessage = "you-are-deleting-all-selected-items-of-the-current-user";
-	}
-	%>
 
 	function <portlet:namespace/>doDeleteMultiple() {
 		<portlet:namespace />doMultiple(
 			'<portlet:actionURL name="/delete_uad_entities" />',
-			'<liferay-ui:message key="<%= deleteMultipleMessage %>" />'
+			'<liferay-ui:message key="are-you-sure-you-want-to-delete-the-selected-items" />',
+			'<liferay-ui:message key="only-items-belonging-to-the-user-will-be-deleted" />'
 		);
 	}
 
-	function <portlet:namespace/>doMultiple(actionURL, message) {
+	function <portlet:namespace/>doMultiple(actionURL, message, hierarchyMessage) {
+		var userOwnedPrimaryKeys = '<%= viewUADEntitiesDisplay.getUserOwnedEntityPKsString() %>';
+
+		var userOwnedPrimaryKeyArray = userOwnedPrimaryKeys.split(',');
+
 		var form = document.getElementById('<portlet:namespace />viewUADEntitiesFm');
 
 		if (form) {
@@ -196,10 +185,20 @@ if (uadHierarchyDisplay != null) {
 				var <%= primaryKeysVar %> = form.querySelector('#<portlet:namespace />primaryKeys__<%= typeClass.getSimpleName() %>');
 
 				if (<%= primaryKeysVar %>) {
+					var primaryKeys = Liferay.Util.listCheckedExcept(form, '<portlet:namespace />allRowIds', '<portlet:namespace />rowIds<%= typeClass.getSimpleName() %>');
+
 					<%= primaryKeysVar %>.setAttribute(
 						'value',
-						Liferay.Util.listCheckedExcept(form, '<portlet:namespace />allRowIds', '<portlet:namespace />rowIds<%= typeClass.getSimpleName() %>')
+						primaryKeys
 					);
+
+					var primaryKeyArray = primaryKeys.split(',');
+
+					for (var i = 0; i < primaryKeyArray.length; i++) {
+						if ((primaryKeyArray[i] != '') && !userOwnedPrimaryKeyArray.includes(primaryKeyArray[i])) {
+							message = hierarchyMessage;
+						}
+					}
 				}
 
 			<%

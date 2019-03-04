@@ -14,10 +14,11 @@
 
 package com.liferay.user.associated.data.web.internal.display;
 
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.search.ResultRowSplitter;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -37,7 +38,7 @@ public class ViewUADEntitiesDisplay {
 		return _searchContainer;
 	}
 
-	public List<Class<?>> getTypeClasses() {
+	public Class<?>[] getTypeClasses() {
 		return _typeClasses;
 	}
 
@@ -47,6 +48,26 @@ public class ViewUADEntitiesDisplay {
 
 	public String getUadRegistryKey() {
 		return _uadRegistryKey;
+	}
+
+	public String getUserOwnedEntityPKsString() {
+		if (_searchContainer == null) {
+			return StringPool.BLANK;
+		}
+
+		List<String> userOwnedPKs = new ArrayList<>();
+
+		List<UADEntity> entities = _searchContainer.getResults();
+
+		for (UADEntity entity : entities) {
+			if (entity.isUserOwned()) {
+				userOwnedPKs.add(String.valueOf(entity.getPrimaryKey()));
+			}
+		}
+
+		return String.join(
+			StringPool.COMMA,
+			userOwnedPKs.toArray(new String[userOwnedPKs.size()]));
 	}
 
 	public boolean isHierarchy() {
@@ -70,7 +91,7 @@ public class ViewUADEntitiesDisplay {
 	}
 
 	public void setTypeClasses(Class<?>[] typeClasses) {
-		_typeClasses = Arrays.asList(typeClasses);
+		_typeClasses = typeClasses;
 	}
 
 	public void setTypeName(String typeName) {
@@ -85,7 +106,7 @@ public class ViewUADEntitiesDisplay {
 	private boolean _hierarchy;
 	private ResultRowSplitter _resultRowSplitter;
 	private SearchContainer<UADEntity> _searchContainer;
-	private List<Class<?>> _typeClasses;
+	private Class<?>[] _typeClasses;
 	private String _typeName;
 	private String _uadRegistryKey = "";
 

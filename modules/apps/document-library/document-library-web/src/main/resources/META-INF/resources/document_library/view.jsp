@@ -287,7 +287,7 @@ String navigation = ParamUtil.getString(request, "navigation");
 			Liferay.on('changeScope', changeScopeHandles);
 		</aui:script>
 
-		<aui:script require="document-library-web@4.0.0/document_library/categorization/EditCategories.es as EditCategories,document-library-web@4.0.0/document_library/categorization/EditTags.es as EditTags">
+		<aui:script require='<%= npmResolvedPackageName + "/document_library/categorization/EditCategories.es as EditCategories," + npmResolvedPackageName + "/document_library/categorization/EditTags.es as EditTags" %>'>
 			var namespace = '<portlet:namespace />';
 
 			var classNameId = '<%= ClassNameLocalServiceUtil.getClassNameId(DLFileEntryConstants.getClassName()) %>';

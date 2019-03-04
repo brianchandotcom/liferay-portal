@@ -575,9 +575,7 @@ definition {
 				key_assetTitle = "Webcontent Title"
 			);
 
-			AssetPublisherPortlet.clickViewInContext(
-				assetTitle = "Webcontent Title"
-			);
+			Click(locator1 = "AP#ASSET_ABSTRACT_TITLE", key_assetTitle = "Webcontent Title");
 		}
 
 		task ("Assert the Asset Publisher widget brings the user to view the web content article through the display page") {
@@ -777,9 +775,7 @@ definition {
 				key_assetTitle = "Webcontent Title"
 			);
 
-			AssetPublisherPortlet.clickViewInContext(
-				assetTitle = "Webcontent Title"
-			);
+			Click(locator1 = "AP#ASSET_ABSTRACT_TITLE", key_assetTitle = "Webcontent Title");
 		}
 
 		task ("Assert a default generic template instead of the default display page is used to display the web content article") {

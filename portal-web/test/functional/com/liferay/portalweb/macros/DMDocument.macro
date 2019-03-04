@@ -1371,9 +1371,7 @@ definition {
 	macro viewDMMarketingBannerPG {
 		var key_assetTitle = "${assetTitle}";
 
-		AssetPublisherPortlet.clickShowFullContent(
-			assetTitle = "${assetTitle}"
-		);
+		AssertClick(locator1 = "AP#ASSET_ABSTRACT_TITLE", value1 = "${assetTitle}");
 
 		DMNavigator.gotoDocumentDetails();
 

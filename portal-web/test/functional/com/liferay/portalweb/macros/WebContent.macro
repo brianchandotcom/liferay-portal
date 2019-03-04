@@ -1796,9 +1796,7 @@ definition {
 			);
 		}
 
-		AssetPublisherPortlet.clickShowFullContent(
-			assetTitle = "${webContentTitle}"
-		);
+		AssertClick(locator1 = "AP#ASSET_ABSTRACT_TITLE", value1 = "${webContentTitle}");
 
 		AssertVisible(locator1 = "Icon#SHARE");
 

@@ -533,9 +533,7 @@ definition {
 		var key_assetTitle = "${bookmarkName}";
 		var key_bookmarkName = "${bookmarkName}";
 
-		AssetPublisherPortlet.clickShowFullContent(
-			assetTitle = "${bookmarkName}"
-		);
+		AssertClick(locator1 = "AP#ASSET_ABSTRACT_TITLE", value1 = "${bookmarkName}");
 
 		AssertTextEquals(
 			locator1 = "APAsset#ASSET_TITLE_HEADER",

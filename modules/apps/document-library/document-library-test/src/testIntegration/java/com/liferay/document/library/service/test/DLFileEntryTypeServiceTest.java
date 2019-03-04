@@ -236,7 +236,7 @@ public class DLFileEntryTypeServiceTest {
 			ContentTypes.TEXT_PLAIN, name, "", "", bytes,
 			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 
-		assertFileEntryType(fileEntry, _dlFileEntryType2);
+		assertFileEntryType(fileEntry, _dlFileEntryType1);
 
 		// Configure subfolder
 

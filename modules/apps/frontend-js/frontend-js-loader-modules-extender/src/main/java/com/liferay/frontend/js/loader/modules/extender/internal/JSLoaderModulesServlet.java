@@ -14,8 +14,8 @@
 
 package com.liferay.frontend.js.loader.modules.extender.internal;
 
-import com.liferay.frontend.js.loader.modules.extender.internal.config.generator.JSConfigGeneratorModulesTracker;
 import com.liferay.frontend.js.loader.modules.extender.internal.config.generator.JSConfigGeneratorPackage;
+import com.liferay.frontend.js.loader.modules.extender.internal.config.generator.JSConfigGeneratorPackagesTracker;
 import com.liferay.frontend.js.loader.modules.extender.npm.JSModule;
 import com.liferay.frontend.js.loader.modules.extender.npm.JSModuleAlias;
 import com.liferay.frontend.js.loader.modules.extender.npm.JSPackage;
@@ -94,10 +94,10 @@ public class JSLoaderModulesServlet extends HttpServlet {
 		_componentContext = componentContext;
 	}
 
-	protected JSConfigGeneratorModulesTracker
-		getJSConfigGeneratorModulesTracker() {
+	protected JSConfigGeneratorPackagesTracker
+		getJSConfigGeneratorPackagesTracker() {
 
-		return _jsConfigGeneratorModulesTracker;
+		return _jsConfigGeneratorPackagesTracker;
 	}
 
 	@Override
@@ -141,9 +141,9 @@ public class JSLoaderModulesServlet extends HttpServlet {
 
 	@Reference(unbind = "-")
 	protected void setJSConfigGeneratorModulesTracker(
-		JSConfigGeneratorModulesTracker jsConfigGeneratorModulesTracker) {
+		JSConfigGeneratorPackagesTracker jsConfigGeneratorPackagesTracker) {
 
-		_jsConfigGeneratorModulesTracker = jsConfigGeneratorModulesTracker;
+		_jsConfigGeneratorPackagesTracker = jsConfigGeneratorPackagesTracker;
 	}
 
 	@Reference(unbind = "-")
@@ -168,7 +168,7 @@ public class JSLoaderModulesServlet extends HttpServlet {
 		Set<String> processedNames = new HashSet<>();
 
 		for (JSConfigGeneratorPackage jsConfigGeneratorPackage :
-				_jsConfigGeneratorModulesTracker.
+				_jsConfigGeneratorPackagesTracker.
 					getJSConfigGeneratorPackages()) {
 
 			if (processedNames.contains(jsConfigGeneratorPackage.getName())) {
@@ -265,7 +265,7 @@ public class JSLoaderModulesServlet extends HttpServlet {
 		delimiter = "";
 
 		for (JSConfigGeneratorPackage jsConfigGeneratorPackage :
-				_jsConfigGeneratorModulesTracker.
+				_jsConfigGeneratorPackagesTracker.
 					getJSConfigGeneratorPackages()) {
 
 			String unversionedConfiguration =
@@ -407,7 +407,7 @@ public class JSLoaderModulesServlet extends HttpServlet {
 		Set<String> processedNames = new HashSet<>();
 
 		for (JSConfigGeneratorPackage jsConfigGeneratorPackage :
-				_jsConfigGeneratorModulesTracker.
+				_jsConfigGeneratorPackagesTracker.
 					getJSConfigGeneratorPackages()) {
 
 			printWriter.write(delimiter);
@@ -468,7 +468,7 @@ public class JSLoaderModulesServlet extends HttpServlet {
 	private ComponentContext _componentContext;
 	private final Map<String, String> _dependencyAliases = new HashMap<>();
 	private volatile Details _details;
-	private JSConfigGeneratorModulesTracker _jsConfigGeneratorModulesTracker;
+	private JSConfigGeneratorPackagesTracker _jsConfigGeneratorPackagesTracker;
 	private Logger _logger;
 
 	@Reference

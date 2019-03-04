@@ -18,7 +18,7 @@ import aQute.bnd.osgi.Constants;
 
 import aQute.lib.converter.Converter;
 
-import com.liferay.frontend.js.loader.modules.extender.internal.config.generator.JSConfigGeneratorModulesTracker;
+import com.liferay.frontend.js.loader.modules.extender.internal.config.generator.JSConfigGeneratorPackagesTracker;
 import com.liferay.frontend.js.loader.modules.extender.internal.npm.NPMRegistryImpl;
 import com.liferay.frontend.js.loader.modules.extender.npm.NPMRegistry;
 import com.liferay.petra.string.StringPool;
@@ -115,21 +115,21 @@ public class JSLoaderModulesServletTest extends PowerMockito {
 				Collections.<String, Object>singletonMap(
 					"applyVersioning", Boolean.TRUE));
 
-		JSConfigGeneratorModulesTracker jsLoaderModulesTracker =
-			jsLoaderModulesServlet.getJSConfigGeneratorModulesTracker();
+		JSConfigGeneratorPackagesTracker jsConfigGeneratorPackagesTracker =
+			jsLoaderModulesServlet.getJSConfigGeneratorPackagesTracker();
 
 		ServiceReference<ServletContext> serviceReference =
 			buildServiceReference(
 				"test", new Version("1.0.0"), true, 0,
 				getResource("dependencies/config1.js"));
 
-		jsLoaderModulesTracker.addingService(serviceReference);
+		jsConfigGeneratorPackagesTracker.addingService(serviceReference);
 
 		serviceReference = buildServiceReference(
 			"foo", new Version("13.2.23"), true, 0,
 			getResource("dependencies/config2.js"));
 
-		jsLoaderModulesTracker.addingService(serviceReference);
+		jsConfigGeneratorPackagesTracker.addingService(serviceReference);
 
 		MockHttpServletRequest mockHttpServletRequest =
 			new MockHttpServletRequest();
@@ -171,21 +171,21 @@ public class JSLoaderModulesServletTest extends PowerMockito {
 				Collections.<String, Object>singletonMap(
 					"applyVersioning", Boolean.TRUE));
 
-		JSConfigGeneratorModulesTracker jsLoaderModulesTracker =
-			jsLoaderModulesServlet.getJSConfigGeneratorModulesTracker();
+		JSConfigGeneratorPackagesTracker jsConfigGeneratorPackagesTracker =
+			jsLoaderModulesServlet.getJSConfigGeneratorPackagesTracker();
 
 		ServiceReference<ServletContext> serviceReference =
 			buildServiceReference(
 				"test", new Version("1.0.0"), true, 0,
 				getResource("dependencies/config1.js"));
 
-		jsLoaderModulesTracker.addingService(serviceReference);
+		jsConfigGeneratorPackagesTracker.addingService(serviceReference);
 
 		serviceReference = buildServiceReference(
 			"test", new Version("1.2.0"), true, 0,
 			getResource("dependencies/config1.js"));
 
-		jsLoaderModulesTracker.addingService(serviceReference);
+		jsConfigGeneratorPackagesTracker.addingService(serviceReference);
 
 		MockHttpServletRequest mockHttpServletRequest =
 			new MockHttpServletRequest();
@@ -225,15 +225,15 @@ public class JSLoaderModulesServletTest extends PowerMockito {
 				Collections.<String, Object>singletonMap(
 					"applyVersioning", Boolean.TRUE));
 
-		JSConfigGeneratorModulesTracker jsLoaderModulesTracker =
-			jsLoaderModulesServlet.getJSConfigGeneratorModulesTracker();
+		JSConfigGeneratorPackagesTracker jsConfigGeneratorPackagesTracker =
+			jsLoaderModulesServlet.getJSConfigGeneratorPackagesTracker();
 
 		ServiceReference<ServletContext> serviceReference =
 			buildServiceReference(
 				"test", new Version("1.0.0"), true, 0,
 				getResource("dependencies/config1.js"));
 
-		jsLoaderModulesTracker.addingService(serviceReference);
+		jsConfigGeneratorPackagesTracker.addingService(serviceReference);
 
 		MockHttpServletRequest mockHttpServletRequest =
 			new MockHttpServletRequest();
@@ -266,15 +266,15 @@ public class JSLoaderModulesServletTest extends PowerMockito {
 		JSLoaderModulesServlet jsLoaderModulesServlet =
 			buildJSLoaderModulesServlet();
 
-		JSConfigGeneratorModulesTracker jsLoaderModulesTracker =
-			jsLoaderModulesServlet.getJSConfigGeneratorModulesTracker();
+		JSConfigGeneratorPackagesTracker jsConfigGeneratorPackagesTracker =
+			jsLoaderModulesServlet.getJSConfigGeneratorPackagesTracker();
 
 		ServiceReference<ServletContext> serviceReference =
 			buildServiceReference(
 				"test", new Version("1.0.0"), true, 0,
 				getResource("dependencies/empty.js"));
 
-		jsLoaderModulesTracker.addingService(serviceReference);
+		jsConfigGeneratorPackagesTracker.addingService(serviceReference);
 	}
 
 	@Test
@@ -284,16 +284,16 @@ public class JSLoaderModulesServletTest extends PowerMockito {
 				Collections.<String, Object>singletonMap(
 					"applyVersioning", Boolean.TRUE));
 
-		JSConfigGeneratorModulesTracker jsLoaderModulesTracker =
-			jsLoaderModulesServlet.getJSConfigGeneratorModulesTracker();
+		JSConfigGeneratorPackagesTracker jsConfigGeneratorPackagesTracker =
+			jsLoaderModulesServlet.getJSConfigGeneratorPackagesTracker();
 
 		ServiceReference<ServletContext> serviceReference =
 			buildServiceReference(
 				"test", new Version("1.0.0"), true, 0,
 				getResource("dependencies/config1.js"));
 
-		jsLoaderModulesTracker.addingService(serviceReference);
-		jsLoaderModulesTracker.addingService(serviceReference);
+		jsConfigGeneratorPackagesTracker.addingService(serviceReference);
+		jsConfigGeneratorPackagesTracker.addingService(serviceReference);
 
 		MockHttpServletRequest mockHttpServletRequest =
 			new MockHttpServletRequest();
@@ -329,21 +329,21 @@ public class JSLoaderModulesServletTest extends PowerMockito {
 		JSLoaderModulesServlet jsLoaderModulesServlet =
 			buildJSLoaderModulesServlet();
 
-		JSConfigGeneratorModulesTracker jsLoaderModulesTracker =
-			new JSConfigGeneratorModulesTracker();
+		JSConfigGeneratorPackagesTracker jsConfigGeneratorPackagesTracker =
+			new JSConfigGeneratorPackagesTracker();
 
-		jsLoaderModulesTracker.setDetails(
+		jsConfigGeneratorPackagesTracker.setDetails(
 			Converter.cnv(Details.class, new HashMap<>()));
 
 		jsLoaderModulesServlet.setJSConfigGeneratorModulesTracker(
-			jsLoaderModulesTracker);
+			jsConfigGeneratorPackagesTracker);
 
 		ServiceReference<ServletContext> serviceReference =
 			buildServiceReference(
 				"test", new Version("1.0.0"), true, 0,
 				getResource("dependencies/malformed.js"));
 
-		jsLoaderModulesTracker.addingService(serviceReference);
+		jsConfigGeneratorPackagesTracker.addingService(serviceReference);
 	}
 
 	@Test
@@ -353,8 +353,8 @@ public class JSLoaderModulesServletTest extends PowerMockito {
 				Collections.<String, Object>singletonMap(
 					"apply-versioning", Boolean.FALSE));
 
-		JSConfigGeneratorModulesTracker jsLoaderModulesTracker =
-			jsLoaderModulesServlet.getJSConfigGeneratorModulesTracker();
+		JSConfigGeneratorPackagesTracker jsConfigGeneratorPackagesTracker =
+			jsLoaderModulesServlet.getJSConfigGeneratorPackagesTracker();
 
 		ServiceReference<ServletContext> serviceReference =
 			buildServiceReference(
@@ -362,9 +362,9 @@ public class JSLoaderModulesServletTest extends PowerMockito {
 				getResource("dependencies/config1.js"));
 
 		jsLoaderModulesServlet.setJSConfigGeneratorModulesTracker(
-			jsLoaderModulesTracker);
+			jsConfigGeneratorPackagesTracker);
 
-		jsLoaderModulesTracker.addingService(serviceReference);
+		jsConfigGeneratorPackagesTracker.addingService(serviceReference);
 
 		MockHttpServletRequest mockHttpServletRequest =
 			new MockHttpServletRequest();
@@ -459,14 +459,14 @@ public class JSLoaderModulesServletTest extends PowerMockito {
 		jsLoaderModulesServlet.setDetails(
 			Converter.cnv(Details.class, properties));
 
-		JSConfigGeneratorModulesTracker jsLoaderModulesTracker =
-			new JSConfigGeneratorModulesTracker();
+		JSConfigGeneratorPackagesTracker jsConfigGeneratorPackagesTracker =
+			new JSConfigGeneratorPackagesTracker();
 
-		jsLoaderModulesTracker.setDetails(
+		jsConfigGeneratorPackagesTracker.setDetails(
 			Converter.cnv(Details.class, properties));
 
 		jsLoaderModulesServlet.setJSConfigGeneratorModulesTracker(
-			jsLoaderModulesTracker);
+			jsConfigGeneratorPackagesTracker);
 
 		NPMRegistry npmRegistry = new NPMRegistryImpl();
 

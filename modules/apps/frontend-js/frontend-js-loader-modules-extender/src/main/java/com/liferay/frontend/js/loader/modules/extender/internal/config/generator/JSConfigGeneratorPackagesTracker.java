@@ -42,9 +42,9 @@ import org.osgi.util.tracker.ServiceTrackerCustomizer;
  */
 @Component(
 	configurationPid = "com.liferay.frontend.js.loader.modules.extender.internal.Details",
-	immediate = true, service = JSConfigGeneratorModulesTracker.class
+	immediate = true, service = JSConfigGeneratorPackagesTracker.class
 )
-public class JSConfigGeneratorModulesTracker
+public class JSConfigGeneratorPackagesTracker
 	implements ServiceTrackerCustomizer
 		<ServletContext, ServiceReference<ServletContext>> {
 

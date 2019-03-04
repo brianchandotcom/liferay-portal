@@ -14,7 +14,7 @@
 
 package com.liferay.frontend.js.loader.modules.extender.internal;
 
-import com.liferay.frontend.js.loader.modules.extender.internal.config.generator.JSConfigGeneratorModulesTracker;
+import com.liferay.frontend.js.loader.modules.extender.internal.config.generator.JSConfigGeneratorPackagesTracker;
 import com.liferay.portal.kernel.servlet.PortalWebResourceConstants;
 import com.liferay.portal.kernel.servlet.PortalWebResources;
 import com.liferay.portal.servlet.delegate.ServletContextDelegate;
@@ -57,7 +57,7 @@ public class JSLoaderModulesPortalWebResources {
 	}
 
 	@Reference
-	private JSConfigGeneratorModulesTracker _jsConfigGeneratorModulesTracker;
+	private JSConfigGeneratorPackagesTracker _jsConfigGeneratorPackagesTracker;
 
 	@Reference
 	private JSLoaderModulesServlet _jsLoaderModulesServlet;
@@ -73,7 +73,7 @@ public class JSLoaderModulesPortalWebResources {
 
 		@Override
 		public long getLastModified() {
-			return _jsConfigGeneratorModulesTracker.getLastModified();
+			return _jsConfigGeneratorPackagesTracker.getLastModified();
 		}
 
 		@Override

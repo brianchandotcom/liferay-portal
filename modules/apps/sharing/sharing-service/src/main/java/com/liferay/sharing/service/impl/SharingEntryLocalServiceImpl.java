@@ -162,7 +162,7 @@ public class SharingEntryLocalServiceImpl
 		).reduce(
 			(bitwiseValue1, bitwiseValue2) -> bitwiseValue1 | bitwiseValue2
 		).ifPresent(
-			actionIds -> sharingEntry.setActionIds(actionIds)
+			sharingEntry::setActionIds
 		);
 
 		SharingEntry newSharingEntry = sharingEntryPersistence.update(
@@ -669,7 +669,7 @@ public class SharingEntryLocalServiceImpl
 		).reduce(
 			(bitwiseValue1, bitwiseValue2) -> bitwiseValue1 | bitwiseValue2
 		).ifPresent(
-			actionIds -> sharingEntry.setActionIds(actionIds)
+			sharingEntry::setActionIds
 		);
 
 		return sharingEntryPersistence.update(sharingEntry);

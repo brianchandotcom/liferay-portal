@@ -42,14 +42,12 @@ public class SharingEntryInterpreterProviderImpl
 		SharingEntry sharingEntry) {
 
 		SharingEntryInterpreter sharingEntryInterpreter =
-			(SharingEntryInterpreter)_serviceTrackerMap.getService(
-				sharingEntry.getClassNameId());
+			_serviceTrackerMap.getService(sharingEntry.getClassNameId());
 
 		if ((sharingEntryInterpreter == null) &&
 			_isAssetObject(sharingEntry.getClassNameId())) {
 
-			return (SharingEntryInterpreter)
-				_assetRendererSharingEntryInterpreter;
+			return _assetRendererSharingEntryInterpreter;
 		}
 
 		return sharingEntryInterpreter;
@@ -57,15 +55,13 @@ public class SharingEntryInterpreterProviderImpl
 
 	@Activate
 	protected void activate(BundleContext bundleContext) {
-		_serviceTrackerMap =
-			(ServiceTrackerMap<Long, SharingEntryInterpreter>)
-				(ServiceTrackerMap)ServiceTrackerMapFactory.openSingleValueMap(
-					bundleContext, SharingEntryInterpreter.class,
-					"(model.class.name=*)",
-					(serviceReference, emitter) -> emitter.emit(
-						_classNameLocalService.getClassNameId(
-							(String)serviceReference.getProperty(
-								"model.class.name"))));
+		_serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
+			bundleContext, SharingEntryInterpreter.class,
+			"(model.class.name=*)",
+			(serviceReference, emitter) -> emitter.emit(
+				_classNameLocalService.getClassNameId(
+					(String)serviceReference.getProperty(
+						"model.class.name"))));
 	}
 
 	@Deactivate

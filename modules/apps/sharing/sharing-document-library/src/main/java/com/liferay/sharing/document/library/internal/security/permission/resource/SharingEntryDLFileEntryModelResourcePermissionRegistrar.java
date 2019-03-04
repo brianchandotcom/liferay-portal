@@ -64,11 +64,9 @@ public class SharingEntryDLFileEntryModelResourcePermissionRegistrar {
 				DLFileEntry.class, DLFileEntry::getFileEntryId,
 				_dlFileEntryLocalService::getDLFileEntry,
 				_portletResourcePermission,
-				(modelResourcePermission, consumer) -> {
-					consumer.accept(
-						new SharingDLFileEntryModelPermissionLogic(
-							_dlFileEntryModelResourcePermission));
-				}),
+				(modelResourcePermission, consumer) -> consumer.accept(
+					new SharingDLFileEntryModelPermissionLogic(
+						_dlFileEntryModelResourcePermission))),
 			properties);
 	}
 

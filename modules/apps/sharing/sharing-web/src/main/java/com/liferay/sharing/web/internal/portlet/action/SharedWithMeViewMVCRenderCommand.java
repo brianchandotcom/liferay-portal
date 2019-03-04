@@ -170,7 +170,7 @@ public class SharedWithMeViewMVCRenderCommand implements MVCRenderCommand {
 	}
 
 	@Activate
-	protected void activate(final BundleContext bundleContext) {
+	protected void activate(BundleContext bundleContext) {
 		_serviceTrackerList = ServiceTrackerListFactory.open(
 			bundleContext, SharedWithMeFilterItem.class,
 			Collections.reverseOrder(

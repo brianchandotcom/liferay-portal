@@ -125,7 +125,7 @@ public class DefaultAssetPublisherCustomizer
 
 	@Override
 	public boolean isShowEnableRelatedAssets(HttpServletRequest request) {
-		return true;
+		return false;
 	}
 
 	@Override

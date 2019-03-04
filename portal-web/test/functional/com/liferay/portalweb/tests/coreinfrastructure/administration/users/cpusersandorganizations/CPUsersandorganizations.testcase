@@ -29,7 +29,7 @@ definition {
 
 	@priority = "5"
 	test AddMember {
-		property portal.acceptance = "true";
+		property portal.acceptance = "quarantine";
 		property testray.component.names = "Training";
 
 		ProductMenu.gotoPortlet(
@@ -354,7 +354,7 @@ definition {
 
 	@priority = "5"
 	test AddOrganizationTeam {
-		property portal.acceptance = "true";
+		property portal.acceptance = "quarantine";
 		property test.name.skip.portal.instance = "CPUsersandorganizations#AddOrganizationTeam";
 		property testray.component.names = "Training";
 
@@ -442,7 +442,7 @@ definition {
 
 	@priority = "5"
 	test AddSuborganization {
-		property portal.acceptance = "true";
+		property portal.acceptance = "quarantine";
 		property testray.component.names = "Training";
 
 		ProductMenu.gotoPortlet(
@@ -1119,7 +1119,7 @@ definition {
 
 	@priority = "5"
 	test DeleteOrganization {
-		property portal.acceptance = "true";
+		property portal.acceptance = "quarantine";
 
 		ProductMenu.gotoPortlet(
 			category = "Users",
@@ -1251,7 +1251,7 @@ definition {
 
 	@priority = "5"
 	test EditOrganizationSite {
-		property portal.acceptance = "true";
+		property portal.acceptance = "quarantine";
 		property testray.component.names = "Training";
 
 		ProductMenu.gotoPortlet(

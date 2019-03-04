@@ -145,18 +145,6 @@ public class EditDiscussionStrutsAction implements StrutsAction {
 		_commentManager.deleteComment(commentId);
 	}
 
-	@Reference(unbind = "-")
-	protected void setAssetEntryLocalService(
-		AssetEntryLocalService assetEntryLocalService) {
-
-		_assetEntryLocalService = assetEntryLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setUserLocalService(UserLocalService userLocalService) {
-		_userLocalService = userLocalService;
-	}
-
 	protected void subscribeToComments(
 			HttpServletRequest request, boolean subscribe)
 		throws Exception {
@@ -307,6 +295,7 @@ public class EditDiscussionStrutsAction implements StrutsAction {
 		return discussionPermission;
 	}
 
+	@Reference
 	private AssetEntryLocalService _assetEntryLocalService;
 
 	@Reference
@@ -315,6 +304,7 @@ public class EditDiscussionStrutsAction implements StrutsAction {
 	@Reference
 	private Portal _portal;
 
+	@Reference
 	private UserLocalService _userLocalService;
 
 }

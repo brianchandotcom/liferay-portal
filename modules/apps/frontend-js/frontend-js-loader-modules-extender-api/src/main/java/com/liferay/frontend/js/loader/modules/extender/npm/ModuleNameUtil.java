@@ -19,8 +19,10 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.FileUtil;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -85,6 +87,47 @@ import java.util.Set;
  * @author Iván Zaera
  */
 public class ModuleNameUtil {
+
+	/**
+	 * Resolve dependency path based on current module's path.
+	 * @param moduleName the module's name
+	 * @param dependency the dependency's name
+	 * @return the full path of the dependency if it is local, the given dependency otherwise
+	 * @review
+	 */
+	public static String getDependencyPath(
+		String moduleName, String dependency) {
+
+		if (!isLocalModuleName(dependency)) {
+			return dependency;
+		}
+
+		List<String> moduleDirNameParts = _getDirNameParts(moduleName);
+
+		List<String> dependencyDirNameParts = _getDirNameParts(dependency);
+
+		for (String dependencyDirNamePart : dependencyDirNameParts) {
+			if (dependencyDirNamePart.equals(StringPool.PERIOD)) {
+				continue;
+			}
+
+			if (dependencyDirNamePart.equals(StringPool.DOUBLE_PERIOD)) {
+				if (moduleDirNameParts.isEmpty()) {
+					throw new IllegalArgumentException(
+						"Invalid dependency " + dependency);
+				}
+
+				moduleDirNameParts.remove(moduleDirNameParts.size() - 1);
+			}
+			else {
+				moduleDirNameParts.add(dependencyDirNamePart);
+			}
+		}
+
+		moduleDirNameParts.add(_getFileName(dependency));
+
+		return String.join(StringPool.SLASH, moduleDirNameParts);
+	}
 
 	/**
 	 * Returns the module ID with the NPM package and module name.
@@ -216,6 +259,21 @@ public class ModuleNameUtil {
 		}
 
 		return FileUtil.stripExtension(fileName);
+	}
+
+	private static List<String> _getDirNameParts(String modulePath) {
+		List<String> modulePathParts = new ArrayList<>(
+			Arrays.asList(modulePath.split(StringPool.SLASH)));
+
+		modulePathParts.remove(modulePathParts.size() - 1);
+
+		return modulePathParts;
+	}
+
+	private static String _getFileName(String dependency) {
+		int pos = dependency.lastIndexOf(StringPool.SLASH);
+
+		return dependency.substring(pos + 1);
 	}
 
 	private static final Set<String> _reservedModuleNames = new HashSet<>(

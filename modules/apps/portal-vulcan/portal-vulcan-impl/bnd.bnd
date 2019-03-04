@@ -3,6 +3,12 @@ Bundle-SymbolicName: com.liferay.portal.vulcan.impl
 Bundle-Version: 1.0.0
 Import-Package:\
 	!com.google.errorprone.annotations.*,\
+	!com.google.gson.*,\
+	\
+	!com.sun.jdi.*,\
+	!com.sun.tools.*,\
+	\
+	!org.checkerframework.checker.nullness.qual.*,\
 	\
 	graphql.annotations.annotationTypes;version="5.4",\
 	\

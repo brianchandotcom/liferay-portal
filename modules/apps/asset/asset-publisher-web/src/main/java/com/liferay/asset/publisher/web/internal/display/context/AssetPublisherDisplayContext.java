@@ -987,8 +987,8 @@ public class AssetPublisherDisplayContext {
 
 	public String getSocialBookmarksTypes() {
 		if (_socialBookmarksTypes == null) {
-			_socialBookmarksTypes = _portletPreferences.getValue(
-				"socialBookmarksTypes", null);
+			_socialBookmarksTypes = GetterUtil.getString(
+				_portletPreferences.getValue("socialBookmarksTypes", null));
 		}
 
 		return _socialBookmarksTypes;

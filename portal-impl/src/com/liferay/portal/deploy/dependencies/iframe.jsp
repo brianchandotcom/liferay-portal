@@ -46,7 +46,7 @@ portletURL.setParameter("appURL", StringPool.BLANK);
 %>
 
 <div id="<portlet:namespace />iframeDiv">
-	<iframe frameborder="0" height="<%= defaultHeight %>" id="<portlet:namespace />iframe" src="<%= appURL %>" width="100%"></iframe>
+	<iframe frameborder="0" height="<%= defaultHeight %>" id="<portlet:namespace />iframe" src="<%= HtmlUtil.escapeAttribute(appURL) %>" width="100%"></iframe>
 </div>
 
 <div id="<portlet:namespace />bookmarkDiv">

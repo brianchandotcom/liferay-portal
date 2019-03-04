@@ -22,19 +22,19 @@ import templates from './FragmentEntryLinkListSection.soy';
  */
 const FLOATING_TOOLBAR_PANELS = [
 	{
-		icon: 'format',
+		icon: 'color-picker',
 		panelId: 'background_color',
 		title: Liferay.Language.get('background-color')
-	},
-	{
-		icon: 'table',
-		panelId: 'spacing',
-		title: Liferay.Language.get('spacing')
 	},
 	{
 		icon: 'picture',
 		panelId: 'background_image',
 		title: Liferay.Language.get('background-image')
+	},
+	{
+		icon: 'table',
+		panelId: 'spacing',
+		title: Liferay.Language.get('spacing')
 	}
 ];
 

@@ -52,7 +52,7 @@ const FLOATING_TOOLBAR_PANELS = [
  */
 const FLOATING_TOOLBAR_PANELS_MAPPED = [
 	{
-		icon: 'pencil',
+		icon: 'format',
 		panelId: FLOATING_TOOLBAR_TEXT_PROPERTIES_PANEL_ID,
 		title: Liferay.Language.get('text-properties')
 	},

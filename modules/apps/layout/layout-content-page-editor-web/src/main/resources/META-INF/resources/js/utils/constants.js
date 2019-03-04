@@ -61,19 +61,15 @@ export const EDITABLE_FIELD_CONFIG_KEYS = {
 export const TEXT_STYLES = [
 	{
 		label: Liferay.Language.get('regular'),
-		textStyleId: 'regular'
+		textStyleId: ''
 	},
 	{
 		label: Liferay.Language.get('small'),
 		textStyleId: 'small'
 	},
 	{
-		label: Liferay.Language.get('medium'),
-		textStyleId: 'medium'
-	},
-	{
-		label: Liferay.Language.get('large'),
-		textStyleId: 'large'
+		label: Liferay.Language.get('Large'),
+		textStyleId: 'lead'
 	}
 ];
 

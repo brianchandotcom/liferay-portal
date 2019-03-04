@@ -158,10 +158,10 @@ public class KeyStoreCredentialResolver
 			SamlProviderConfiguration samlProviderConfiguration =
 				_samlProviderConfigurationHelper.getSamlProviderConfiguration();
 
-			UsageType usageType = UsageType.UNSPECIFIED;
-
 			UsageCriterion usageCriterion = criteriaSet.get(
 				UsageCriterion.class);
+
+			UsageType usageType = UsageType.UNSPECIFIED;
 
 			if (usageCriterion != null) {
 				usageType = usageCriterion.getUsage();

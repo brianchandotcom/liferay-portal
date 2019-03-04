@@ -68,7 +68,9 @@ String helpMessage2 = "<em>" + LanguageUtil.format(request, "content-with-tag-x"
 
 		<aui:input label="comment-ratings" name="preferences--enableCommentRatings--" type="checkbox" value="<%= assetPublisherDisplayContext.isEnableCommentRatings() %>" />
 
-		<aui:input label="view-count-increment" name="preferences--enableViewCountIncrement--" type="checkbox" value="<%= assetPublisherDisplayContext.isEnableViewCountIncrement() %>" />
+		<c:if test="<%= PropsValues.ASSET_ENTRY_BUFFERED_INCREMENT_ENABLED %>">
+			<aui:input label="view-count-increment" name="preferences--enableViewCountIncrement--" type="checkbox" value="<%= assetPublisherDisplayContext.isEnableViewCountIncrement() %>" />
+		</c:if>
 
 		<c:if test="<%= assetPublisherDisplayContext.isSelectionStyleManual() %>">
 			<aui:input helpMessage="enable-tag-based-navigation-help" label="tag-based-navigation" name="preferences--enableTagBasedNavigation--" type="checkbox" value="<%= assetPublisherDisplayContext.isEnableTagBasedNavigation() %>" />

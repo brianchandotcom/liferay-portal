@@ -15,7 +15,9 @@
 package com.liferay.headless.document.library.internal.dto.v1_0.util;
 
 import com.liferay.headless.document.library.dto.v1_0.Comment;
+import com.liferay.portal.kernel.comment.CommentManager;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 /**
  * @author Javier Gamarra
@@ -23,7 +25,8 @@ import com.liferay.portal.kernel.util.Portal;
 public class CommentUtil {
 
 	public static Comment toComment(
-			com.liferay.portal.kernel.comment.Comment comment, Portal portal)
+			com.liferay.portal.kernel.comment.Comment comment,
+			CommentManager commentManager, Portal portal)
 		throws Exception {
 
 		if (comment == null) {
@@ -37,6 +40,20 @@ public class CommentUtil {
 				dateModified = comment.getModifiedDate();
 				id = comment.getCommentId();
 				text = comment.getBody();
+
+				setHasComments(
+					() -> {
+						int childCommentsCount =
+							commentManager.getChildCommentsCount(
+								comment.getCommentId(),
+								WorkflowConstants.STATUS_APPROVED);
+
+						if (childCommentsCount > 0) {
+							return true;
+						}
+
+						return false;
+					});
 			}
 		};
 	}

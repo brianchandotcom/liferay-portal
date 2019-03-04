@@ -108,7 +108,7 @@ public class CommentResourceImpl
 
 		_checkViewPermission(comment);
 
-		return CommentUtil.toComment(comment, _portal);
+		return CommentUtil.toComment(comment, _commentManager, _portal);
 	}
 
 	@Override
@@ -180,7 +180,8 @@ public class CommentResourceImpl
 				_createServiceContextFunction());
 
 			return CommentUtil.toComment(
-				_commentManager.fetchComment(commentId), _portal);
+				_commentManager.fetchComment(commentId), _commentManager,
+				_portal);
 		}
 		catch (MessageSubjectException mse) {
 			throw new ClientErrorException("Comment text is null", 422, mse);
@@ -239,7 +240,7 @@ public class CommentResourceImpl
 			document -> CommentUtil.toComment(
 				_commentManager.fetchComment(
 					GetterUtil.getLong(document.get(Field.ENTRY_CLASS_PK))),
-				_portal),
+				_commentManager, _portal),
 			sorts);
 	}
 
@@ -270,7 +271,8 @@ public class CommentResourceImpl
 			long commentId = addCommentUnsafeSupplier.get();
 
 			return CommentUtil.toComment(
-				_commentManager.fetchComment(commentId), _portal);
+				_commentManager.fetchComment(commentId), _commentManager,
+				_portal);
 		}
 		catch (DiscussionMaxCommentsException dmce) {
 			throw new ClientErrorException(

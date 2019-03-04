@@ -37,9 +37,9 @@ const reducers = [
 	updateActiveItemReducer,
 	updateDropTargetReducer,
 	updateEditableValueReducer,
+	updateFragmentEntryLinkConfigReducer,
 	updateHoveredItemReducer,
-	updateSectionConfigReducer,
-	updateFragmentEntryLinkConfigReducer
+	updateSectionConfigReducer
 ];
 
 export {reducers};

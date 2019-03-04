@@ -127,6 +127,9 @@ public class SampleSQLBuilderTest {
 		properties.put("sample.sql.max.asset.vocabulary.count", "1");
 		properties.put("sample.sql.max.blogs.entry.comment.count", "1");
 		properties.put("sample.sql.max.blogs.entry.count", "1");
+		properties.put("sample.sql.max.commerce.product.count", "1");
+		properties.put("sample.sql.max.commerce.product.definition.count", "1");
+		properties.put("sample.sql.max.commerce.product.instance.count", "1");
 		properties.put("sample.sql.max.ddl.custom.field.count", "1");
 		properties.put("sample.sql.max.ddl.record.count", "1");
 		properties.put("sample.sql.max.ddl.record.set.count", "1");
@@ -150,8 +153,8 @@ public class SampleSQLBuilderTest {
 		properties.put("sample.sql.optimize.buffer.size", "8192");
 		properties.put(
 			"sample.sql.output.csv.file.names",
-			"assetPublisher,blog,company,documentLibrary,dynamicDataList," +
-				"layout,mbCategory,mbThread,repository,wiki");
+			"assetPublisher,blog,company,cpfriendlyurlentry,documentLibrary," +
+				"dynamicDataList,layout,mbCategory,mbThread,repository,wiki");
 		properties.put("sample.sql.output.dir", outputDir);
 		properties.put("sample.sql.output.merge", "true");
 		properties.put(

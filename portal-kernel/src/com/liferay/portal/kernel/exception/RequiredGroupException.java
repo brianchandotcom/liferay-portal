@@ -20,32 +20,6 @@ package com.liferay.portal.kernel.exception;
  */
 public class RequiredGroupException extends PortalException {
 
-	/**
-	 * @deprecated As of Wilberforce (7.0.x)
-	 */
-	@Deprecated
-	public static final int CURRENT_GROUP = 3;
-
-	/**
-	 * @deprecated As of Wilberforce (7.0.x)
-	 */
-	@Deprecated
-	public static final int PARENT_GROUP = 2;
-
-	/**
-	 * @deprecated As of Wilberforce (7.0.x)
-	 */
-	@Deprecated
-	public static final int SYSTEM_GROUP = 1;
-
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), replaced by the inner classes
-	 */
-	@Deprecated
-	public int getType() {
-		return _type;
-	}
-
 	public static class MustNotDeleteCurrentGroup
 		extends RequiredGroupException {
 
@@ -54,8 +28,7 @@ public class RequiredGroupException extends PortalException {
 				String.format(
 					"Site %s cannot be deleted because it is currently being " +
 						"accessed",
-					groupId),
-				CURRENT_GROUP);
+					groupId));
 
 			this.groupId = groupId;
 		}
@@ -71,8 +44,7 @@ public class RequiredGroupException extends PortalException {
 			super(
 				String.format(
 					"Site %s cannot be deleted because it has child sites",
-					groupId),
-				PARENT_GROUP);
+					groupId));
 
 			this.groupId = groupId;
 		}
@@ -89,8 +61,7 @@ public class RequiredGroupException extends PortalException {
 				String.format(
 					"Site %s cannot be deleted because it is a system " +
 						"required site",
-					groupId),
-				SYSTEM_GROUP);
+					groupId));
 
 			this.groupId = groupId;
 		}
@@ -99,12 +70,8 @@ public class RequiredGroupException extends PortalException {
 
 	}
 
-	private RequiredGroupException(String message, int type) {
+	private RequiredGroupException(String message) {
 		super(message);
-
-		_type = type;
 	}
-
-	private final int _type;
 
 }

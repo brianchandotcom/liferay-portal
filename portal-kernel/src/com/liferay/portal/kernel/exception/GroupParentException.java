@@ -20,84 +20,12 @@ package com.liferay.portal.kernel.exception;
  */
 public class GroupParentException extends PortalException {
 
-	/**
-	 * @deprecated As of Wilberforce (7.0.x)
-	 */
-	@Deprecated
-	public static final int CHILD_DESCENDANT = 3;
-
-	/**
-	 * @deprecated As of Wilberforce (7.0.x)
-	 */
-	@Deprecated
-	public static final int SELF_DESCENDANT = 1;
-
-	/**
-	 * @deprecated As of Wilberforce (7.0.x)
-	 */
-	@Deprecated
-	public static final int STAGING_DESCENDANT = 2;
-
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), replaced by the inner classes
-	 */
-	@Deprecated
-	public GroupParentException() {
-		_type = 0;
-	}
-
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), replaced by the inner classes
-	 */
-	@Deprecated
-	public GroupParentException(int type) {
-		_type = type;
-	}
-
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), replaced by the inner classes
-	 */
-	@Deprecated
-	public GroupParentException(String msg) {
-		super(msg);
-
-		_type = 0;
-	}
-
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), replaced by the inner classes
-	 */
-	@Deprecated
-	public GroupParentException(String msg, Throwable cause) {
-		super(msg, cause);
-
-		_type = 0;
-	}
-
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), replaced by the inner classes
-	 */
-	@Deprecated
-	public GroupParentException(Throwable cause) {
-		super(cause);
-
-		_type = 0;
-	}
-
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), replaced by the inner classes
-	 */
-	@Deprecated
-	public int getType() {
-		return _type;
-	}
-
 	public static class MustNotBeOwnParent extends GroupParentException {
 
 		public MustNotBeOwnParent(long groupId) {
 			super(
-				String.format("Site %s cannot be its own parent site", groupId),
-				SELF_DESCENDANT);
+				String.format(
+					"Site %s cannot be its own parent site", groupId));
 
 			this.groupId = groupId;
 		}
@@ -112,8 +40,7 @@ public class GroupParentException extends PortalException {
 			super(
 				String.format(
 					"Site %s cannot have a child site %s as its parent site",
-					groupId, parentGroupId),
-				CHILD_DESCENDANT);
+					groupId, parentGroupId));
 
 			this.groupId = groupId;
 			this.parentGroupId = parentGroupId;
@@ -130,8 +57,7 @@ public class GroupParentException extends PortalException {
 			super(
 				String.format(
 					"Site %s cannot have a staging site %s as its parent site",
-					groupId, parentGroupId),
-				STAGING_DESCENDANT);
+					groupId, parentGroupId));
 
 			this.groupId = groupId;
 			this.parentGroupId = parentGroupId;
@@ -142,12 +68,8 @@ public class GroupParentException extends PortalException {
 
 	}
 
-	private GroupParentException(String message, int type) {
+	private GroupParentException(String message) {
 		super(message);
-
-		_type = type;
 	}
-
-	private final int _type;
 
 }

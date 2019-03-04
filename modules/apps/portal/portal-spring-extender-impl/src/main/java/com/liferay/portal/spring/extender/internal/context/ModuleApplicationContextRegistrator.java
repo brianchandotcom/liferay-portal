@@ -55,23 +55,20 @@ public class ModuleApplicationContextRegistrator {
 	}
 
 	protected void start() throws Exception {
+		BundleWiring extendeeBundleWiring = _extendeeBundle.adapt(
+			BundleWiring.class);
+
+		ClassLoader extendeeClassLoader = extendeeBundleWiring.getClassLoader();
+
+		BundleWiring extenderBundleWiring = _extenderBundle.adapt(
+			BundleWiring.class);
+
+		ClassLoader extenderClassLoader = extenderBundleWiring.getClassLoader();
+
+		ClassLoader classLoader = AggregateClassLoader.getAggregateClassLoader(
+			extendeeClassLoader, extenderClassLoader);
+
 		try {
-			BundleWiring extendeeBundleWiring = _extendeeBundle.adapt(
-				BundleWiring.class);
-
-			ClassLoader extendeeClassLoader =
-				extendeeBundleWiring.getClassLoader();
-
-			BundleWiring extenderBundleWiring = _extenderBundle.adapt(
-				BundleWiring.class);
-
-			ClassLoader extenderClassLoader =
-				extenderBundleWiring.getClassLoader();
-
-			ClassLoader classLoader =
-				AggregateClassLoader.getAggregateClassLoader(
-					extendeeClassLoader, extenderClassLoader);
-
 			Dictionary<String, String> headers = _extendeeBundle.getHeaders(
 				StringPool.BLANK);
 
@@ -118,16 +115,18 @@ public class ModuleApplicationContextRegistrator {
 			throw new Exception(
 				"Unable to start " + _extendeeBundle.getSymbolicName(), e);
 		}
+		finally {
+			CachedIntrospectionResults.clearClassLoader(classLoader);
+
+			CachedIntrospectionResults.clearClassLoader(extendeeClassLoader);
+
+			CachedIntrospectionResults.clearClassLoader(extenderClassLoader);
+
+			Introspector.flushCaches();
+		}
 	}
 
-	protected void stop() throws Exception {
-		BundleWiring bundleWiring = _extendeeBundle.adapt(BundleWiring.class);
-
-		CachedIntrospectionResults.clearClassLoader(
-			bundleWiring.getClassLoader());
-
-		Introspector.flushCaches();
-
+	protected void stop() {
 		ApplicationContextServicePublisherUtil.unregisterContext(
 			_serviceRegistrations);
 

@@ -24,7 +24,6 @@ import com.liferay.portal.kernel.search.QueryConfig;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchContextFactory;
 import com.liferay.portal.kernel.search.facet.Facet;
-import com.liferay.portal.kernel.search.facet.faceted.searcher.FacetedSearcherManager;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Html;
@@ -33,7 +32,10 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.search.constants.SearchContextAttributes;
-import com.liferay.portal.search.legacy.searcher.SearchResponseBuilderFactory;
+import com.liferay.portal.search.legacy.searcher.SearchRequestBuilderFactory;
+import com.liferay.portal.search.searcher.SearchRequestBuilder;
+import com.liferay.portal.search.searcher.SearchResponse;
+import com.liferay.portal.search.searcher.Searcher;
 import com.liferay.portal.search.summary.SummaryBuilderFactory;
 import com.liferay.portal.search.web.constants.SearchPortletParameterNames;
 import com.liferay.portal.search.web.facet.SearchFacet;
@@ -51,6 +53,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.function.Function;
 import java.util.stream.Stream;
 
 import javax.portlet.PortletException;
@@ -67,12 +70,11 @@ public class SearchDisplayContext {
 
 	public SearchDisplayContext(
 			RenderRequest renderRequest, PortletPreferences portletPreferences,
-			Portal portal, Html html, Language language,
-			FacetedSearcherManager facetedSearcherManager,
+			Portal portal, Html html, Language language, Searcher searcher,
 			IndexSearchPropsValues indexSearchPropsValues,
 			PortletURLFactory portletURLFactory,
 			SummaryBuilderFactory summaryBuilderFactory,
-			SearchResponseBuilderFactory searchResponseBuilderFactory,
+			SearchRequestBuilderFactory searchRequestBuilderFactory,
 			SearchFacetTracker searchFacetTracker)
 		throws PortletException {
 
@@ -142,17 +144,20 @@ public class SearchDisplayContext {
 
 		SearchRequestImpl searchRequestImpl = new SearchRequestImpl(
 			() -> searchContext, searchContainerOptions -> searchContainer,
-			searchResponseBuilderFactory, facetedSearcherManager);
+			searcher, searchRequestBuilderFactory);
 
 		searchRequestImpl.addSearchSettingsContributor(
 			this::contributeSearchSettings);
 
 		SearchResponseImpl searchResponseImpl = searchRequestImpl.search();
 
-		_hits = searchResponseImpl.getHits();
-		_queryString = searchResponseImpl.getQueryString();
-		_searchContainer = searchResponseImpl.getSearchContainer();
-		_searchContext = searchResponseImpl.getSearchContext();
+		SearchResponse searchResponse = searchResponseImpl.getSearchResponse();
+
+		_hits = searchResponse.withHitsGet(Function.identity());
+		_queryString = searchResponse.getRequestString();
+
+		_searchContainer = searchContainer;
+		_searchContext = searchContext;
 	}
 
 	public int getCollatedSpellCheckResultDisplayThreshold() {
@@ -494,7 +499,9 @@ public class SearchDisplayContext {
 		return _searchResultPreferences.isViewInContext();
 	}
 
-	protected void addEnabledSearchFacets(SearchSettings searchSettings) {
+	protected void addEnabledSearchFacets(
+		SearchRequestBuilder searchRequestBuilder) {
+
 		ThemeDisplay themeDisplay = _themeDisplaySupplier.getThemeDisplay();
 
 		long companyId = themeDisplay.getCompanyId();
@@ -504,11 +511,14 @@ public class SearchDisplayContext {
 		Stream<SearchFacet> searchFacetsStream = searchFacets.stream();
 
 		Stream<Optional<Facet>> facetOptionalsStream = searchFacetsStream.map(
-			searchFacet -> createFacet(
-				searchFacet, companyId, searchSettings.getSearchContext()));
+			searchFacet -> searchRequestBuilder.withSearchContextGet(
+				searchContext -> createFacet(
+					searchFacet, companyId, searchContext)));
 
-		facetOptionalsStream.forEach(
-			facetOptional -> facetOptional.ifPresent(searchSettings::addFacet));
+		searchRequestBuilder.withFacetContext(
+			facetContext -> facetOptionalsStream.forEach(
+				facetOptional -> facetOptional.ifPresent(
+					facetContext::addFacet)));
 	}
 
 	protected void contributeSearchSettings(SearchSettings searchSettings) {
@@ -528,7 +538,7 @@ public class SearchDisplayContext {
 			getQuerySuggestionsDisplayThreshold());
 		queryConfig.setQuerySuggestionsMax(getQuerySuggestionsMax());
 
-		addEnabledSearchFacets(searchSettings);
+		addEnabledSearchFacets(searchSettings.getSearchRequestBuilder());
 
 		filterByThisSite(searchSettings);
 	}

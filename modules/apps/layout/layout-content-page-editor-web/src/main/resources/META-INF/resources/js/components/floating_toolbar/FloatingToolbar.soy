@@ -13,13 +13,14 @@
 	]>}
 	{@param? _handlePanelButtonClick: any}
 	{@param? _handleFloatingToolbarFocusOut: any}
+	{@param? classes: string}
 	{@param? fixSelectedPanel: bool}
 	{@param? selectedPanelId: string}
 	{@param? spritemap: string}
 	{@param? store: ?}
 
 	<div
-		class="fragments-editor__floating-toolbar"
+		class="fragments-editor__floating-toolbar {$classes ?: ''}"
 		data-onfocusout="{$_handleFloatingToolbarFocusOut}"
 		tabindex="-1"
 	>

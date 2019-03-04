@@ -205,6 +205,7 @@ class FragmentEditableField extends Component {
 	_createFloatingToolbar() {
 		const config = {
 			anchorElement: this.element,
+			classes: this.editableValues.mappedField ? 'fragments-editor__floating-toolbar--mapped-field' : '',
 			events: {
 				panelSelected: this._handleFloatingToolbarPanelSelected
 			},

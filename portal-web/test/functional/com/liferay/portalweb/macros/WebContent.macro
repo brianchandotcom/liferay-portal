@@ -1659,7 +1659,7 @@ definition {
 			key_assetTitle = "${webContentTitle}"
 		);
 
-		AssertTextEquals.assertPartialText(
+		AssertTextEquals(
 			locator1 = "APAsset#ASSET_TITLE_HEADER",
 			value1 = "${webContentTitle}"
 		);
@@ -1802,7 +1802,7 @@ definition {
 
 		AssertVisible(locator1 = "Icon#SHARE");
 
-		AssertTextEquals.assertPartialText(
+		AssertTextEquals(
 			locator1 = "APAsset#ASSET_TITLE_HEADER",
 			value1 = "${webContentTitle}"
 		);

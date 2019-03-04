@@ -85,7 +85,7 @@ assetEntry = assetPublisherDisplayContext.incrementViewCounter(assetEntry);
 		</c:if>
 	</div>
 
-	<c:if test='<%= ArrayUtil.contains(assetPublisherDisplayContext.getMetadataFields(), "author") %>'>
+	<c:if test="<%= assetPublisherDisplayContext.isShowAuthor() %>">
 
 		<%
 		User assetRendererUser = UserLocalServiceUtil.getUser(assetRenderer.getUserId());
@@ -109,28 +109,28 @@ assetEntry = assetPublisherDisplayContext.incrementViewCounter(assetEntry);
 						<%
 						StringBundler sb = new StringBundler(13);
 
-						if (ArrayUtil.contains(assetPublisherDisplayContext.getMetadataFields(), "create-date") && (assetEntry.getCreateDate() != null)) {
+						if (assetPublisherDisplayContext.isShowCreateDate() && (assetEntry.getCreateDate() != null)) {
 							sb.append(LanguageUtil.get(request, "created"));
 							sb.append(StringPool.SPACE);
 							sb.append(dateFormatDate.format(assetEntry.getCreateDate()));
 							sb.append(" - ");
 						}
 
-						if (ArrayUtil.contains(assetPublisherDisplayContext.getMetadataFields(), "publish-date") && (assetEntry.getPublishDate() != null)) {
+						if (assetPublisherDisplayContext.isShowPublishDate() && (assetEntry.getPublishDate() != null)) {
 							sb.append(LanguageUtil.get(request, "published"));
 							sb.append(StringPool.SPACE);
 							sb.append(dateFormatDate.format(assetEntry.getPublishDate()));
 							sb.append(" - ");
 						}
 
-						if (ArrayUtil.contains(assetPublisherDisplayContext.getMetadataFields(), "expiration-date") && (assetEntry.getExpirationDate() != null)) {
+						if (assetPublisherDisplayContext.isShowExpirationDate() && (assetEntry.getExpirationDate() != null)) {
 							sb.append(LanguageUtil.get(request, "expired"));
 							sb.append(StringPool.SPACE);
 							sb.append(dateFormatDate.format(assetEntry.getExpirationDate()));
 							sb.append(" - ");
 						}
 
-						if (ArrayUtil.contains(assetPublisherDisplayContext.getMetadataFields(), "modified-date") && (assetEntry.getModifiedDate() != null)) {
+						if (assetPublisherDisplayContext.isShowModifiedDate() && (assetEntry.getModifiedDate() != null)) {
 							Date modifiedDate = assetEntry.getModifiedDate();
 
 							String modifiedDateDescription = LanguageUtil.getTimeDescription(request, System.currentTimeMillis() - modifiedDate.getTime(), true);
@@ -146,7 +146,7 @@ assetEntry = assetPublisherDisplayContext.incrementViewCounter(assetEntry);
 							<span class="date-info"><%= sb.toString() %></span>
 						</div>
 
-						<c:if test='<%= ArrayUtil.contains(assetPublisherDisplayContext.getMetadataFields(), "view-count") %>'>
+						<c:if test="<%= assetPublisherDisplayContext.isShowViewCount() %>">
 							<div class="asset-view-count-info text-secondary">
 								<span class="view-count-info"><%= assetEntry.getViewCount() %> <liferay-ui:message key='<%= (assetEntry.getViewCount() == 1) ? "view" : "views" %>' /></span>
 							</div>
@@ -166,7 +166,7 @@ assetEntry = assetPublisherDisplayContext.incrementViewCounter(assetEntry);
 		/>
 	</div>
 
-	<c:if test='<%= ArrayUtil.contains(assetPublisherDisplayContext.getMetadataFields(), "categories") %>'>
+	<c:if test="<%= assetPublisherDisplayContext.isShowCategories() %>">
 		<div class="asset-categories mb-3">
 			<liferay-asset:asset-categories-summary
 				className="<%= assetEntry.getClassName() %>"
@@ -177,7 +177,7 @@ assetEntry = assetPublisherDisplayContext.incrementViewCounter(assetEntry);
 		</div>
 	</c:if>
 
-	<c:if test='<%= ArrayUtil.contains(assetPublisherDisplayContext.getMetadataFields(), "tags") %>'>
+	<c:if test="<%= assetPublisherDisplayContext.isShowTags() %>">
 		<div class="asset-tags mb-3">
 			<liferay-asset:asset-tags-summary
 				className="<%= assetEntry.getClassName() %>"
@@ -187,7 +187,7 @@ assetEntry = assetPublisherDisplayContext.incrementViewCounter(assetEntry);
 		</div>
 	</c:if>
 
-	<c:if test='<%= ArrayUtil.contains(assetPublisherDisplayContext.getMetadataFields(), "priority") %>'>
+	<c:if test="<%= assetPublisherDisplayContext.isShowPriority() %>">
 		<div class="asset-priority mb-3 text-secondary">
 			<liferay-ui:message key="priority" />: <%= assetEntry.getPriority() %>
 		</div>

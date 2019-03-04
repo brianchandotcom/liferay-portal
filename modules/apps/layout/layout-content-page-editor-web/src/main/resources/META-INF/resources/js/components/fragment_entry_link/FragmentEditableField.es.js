@@ -23,9 +23,9 @@ const DEFAULT_LANGUAGE_ID_KEY = 'defaultValue';
 
 const FLOATING_TOOLBAR_EDIT_PANEL_ID = 'edit';
 
-const FLOATING_TOOLBAR_TEXT_PROPERTIES_PANEL_ID = 'text_properties';
-
 const FLOATING_TOOLBAR_MAP_PANEL_ID = 'map';
+
+const FLOATING_TOOLBAR_TEXT_PROPERTIES_PANEL_ID = 'text_properties';
 
 /**
  * List of available panels
@@ -213,7 +213,7 @@ class FragmentEditableField extends Component {
 				fragmentEntryLinkId: this.fragmentEntryLinkId
 			},
 			itemId: this.editableId,
-			panels: this.editableValues.mappedField === '' ? FLOATING_TOOLBAR_PANELS : FLOATING_TOOLBAR_PANELS_MAPPED,
+			panels: this.editableValues.mappedField ? FLOATING_TOOLBAR_PANELS_MAPPED : FLOATING_TOOLBAR_PANELS,
 			portalElement: document.body,
 			store: this.store
 		};

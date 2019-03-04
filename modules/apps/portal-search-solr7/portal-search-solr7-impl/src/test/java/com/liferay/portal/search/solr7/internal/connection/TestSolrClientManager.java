@@ -44,8 +44,14 @@ public class TestSolrClientManager extends SolrClientManager {
 			httpClientFactory,
 			Collections.singletonMap(
 				"type", (Object)solrConfiguration.authenticationMode()));
+
+		ReplicatedSolrClientFactory replicatedSolrClientFactory =
+			new ReplicatedSolrClientFactory();
+
+		replicatedSolrClientFactory.activate(configurationProperties);
+
 		setSolrClientFactory(
-			new ReplicatedSolrClientFactory(),
+			replicatedSolrClientFactory,
 			Collections.singletonMap(
 				"type", (Object)solrConfiguration.clientType()));
 

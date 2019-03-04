@@ -148,12 +148,9 @@ public class AssetDisplayPageFriendlyURLResolver
 				assetEntry.getGroupId(), assetEntry.getClassNameId(),
 				assetEntry.getClassPK());
 
-		if (assetDisplayPageEntry == null) {
-			return null;
-		}
-
-		if (assetDisplayPageEntry.getType() !=
-				AssetDisplayPageConstants.TYPE_DEFAULT) {
+		if ((assetDisplayPageEntry != null) &&
+			(assetDisplayPageEntry.getType() !=
+				AssetDisplayPageConstants.TYPE_DEFAULT)) {
 
 			return _layoutLocalService.fetchLayout(
 				assetDisplayPageEntry.getPlid());

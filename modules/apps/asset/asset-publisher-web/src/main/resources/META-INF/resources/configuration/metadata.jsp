@@ -26,23 +26,19 @@ List leftList = new ArrayList();
 
 String[] metadataFields = assetPublisherDisplayContext.getMetadataFields();
 
-for (int i = 0; i < metadataFields.length; i++) {
-	String folderColumn = metadataFields[i];
-
-	leftList.add(new KeyValuePair(folderColumn, LanguageUtil.get(request, folderColumn)));
+for (String metadataField : metadataFields) {
+	leftList.add(new KeyValuePair(metadataField, LanguageUtil.get(request, metadataField)));
 }
 
 // Right list
 
 List rightList = new ArrayList();
 
-Arrays.sort(metadataFields);
+String[] allMetadataFields = {"author", "categories", "create-date", "expiration-date", "modified-date", "priority", "publish-date", "tags", "view-count"};
 
-String[] allMetadataFields = {"create-date", "modified-date", "publish-date", "expiration-date", "priority", "author", "view-count", "categories", "tags"};
-
-for (String folderColumn : allMetadataFields) {
-	if (Arrays.binarySearch(metadataFields, folderColumn) < 0) {
-		rightList.add(new KeyValuePair(folderColumn, LanguageUtil.get(request, folderColumn)));
+for (String metadataField : allMetadataFields) {
+	if (Arrays.binarySearch(metadataFields, metadataField) < 0) {
+		rightList.add(new KeyValuePair(metadataField, LanguageUtil.get(request, metadataField)));
 	}
 }
 

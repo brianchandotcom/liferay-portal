@@ -57,17 +57,14 @@ public class BlogsEntryAssetDisplayContributor
 			new AssetDisplayField(
 				"content", LanguageUtil.get(resourceBundle, "content"),
 				"text"));
-
 		fields.add(
 			new AssetDisplayField(
 				"coverImage", LanguageUtil.get(resourceBundle, "cover-image"),
 				"image"));
-
 		fields.add(
 			new AssetDisplayField(
 				"subtitle", LanguageUtil.get(resourceBundle, "subtitle"),
 				"text"));
-
 		fields.add(
 			new AssetDisplayField(
 				"title", LanguageUtil.get(resourceBundle, "title"), "text"));

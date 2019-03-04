@@ -60,12 +60,12 @@ export const EDITABLE_FIELD_CONFIG_KEYS = {
  */
 export const TEXT_STYLES = [
 	{
-		label: Liferay.Language.get('small'),
-		textStyleId: 'small'
-	},
-	{
 		label: Liferay.Language.get('regular'),
 		textStyleId: 'regular'
+	},
+	{
+		label: Liferay.Language.get('small'),
+		textStyleId: 'small'
 	},
 	{
 		label: Liferay.Language.get('medium'),
@@ -82,16 +82,16 @@ export const TEXT_STYLES = [
  */
 export const TEXT_ALIGNMENT_OPTIONS = [
 	{
+		label: Liferay.Language.get('left'),
+		textAlignmentId: 'left'
+	},
+	{
 		label: Liferay.Language.get('center'),
 		textAlignmentId: 'center'
 	},
 	{
 		label: Liferay.Language.get('justify'),
 		textAlignmentId: 'justify'
-	},
-	{
-		label: Liferay.Language.get('left'),
-		textAlignmentId: 'left'
 	},
 	{
 		label: Liferay.Language.get('right'),

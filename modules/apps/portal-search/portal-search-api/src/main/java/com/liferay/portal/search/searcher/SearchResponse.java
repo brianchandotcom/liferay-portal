@@ -16,12 +16,17 @@ package com.liferay.portal.search.searcher;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.portal.kernel.search.Hits;
+import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.search.aggregation.AggregationResult;
 import com.liferay.portal.search.document.Document;
 import com.liferay.portal.search.hits.SearchHits;
 import com.liferay.portal.search.stats.StatsResponse;
 
+import java.util.List;
 import java.util.Map;
+import java.util.function.Consumer;
+import java.util.function.Function;
 import java.util.stream.Stream;
 
 /**
@@ -38,7 +43,11 @@ public interface SearchResponse {
 
 	public Map<String, AggregationResult> getAggregationResultsMap();
 
+	public List<com.liferay.portal.kernel.search.Document> getDocuments71();
+
 	public Stream<Document> getDocumentsStream();
+
+	public SearchRequest getRequest();
 
 	/**
 	 * Returns the request string submitted to the search engine.
@@ -71,5 +80,22 @@ public interface SearchResponse {
 	 * @review
 	 */
 	public Map<String, StatsResponse> getStatsResponseMap();
+
+	public int getTotalHits();
+
+	public void withFacetContext(Consumer<FacetContext> facetContextConsumer);
+
+	public <T> T withFacetContextGet(
+		Function<FacetContext, T> facetContextFunction);
+
+	public void withHits(Consumer<Hits> hitsConsumer);
+
+	public <T> T withHitsGet(Function<Hits, T> hitsFunction);
+
+	public void withSearchContext(
+		Consumer<SearchContext> searchContextConsumer);
+
+	public <T> T withSearchContextGet(
+		Function<SearchContext, T> searchContextFunction);
 
 }

@@ -16,6 +16,7 @@ package com.liferay.portal.search.searcher;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.search.aggregation.AggregationResult;
 import com.liferay.portal.search.hits.SearchHits;
 import com.liferay.portal.search.stats.StatsResponse;
@@ -47,6 +48,10 @@ public interface SearchResponseBuilder {
 	 * @review
 	 */
 	public SearchResponse build();
+
+	public SearchResponseBuilder hits(Hits hits);
+
+	public SearchResponseBuilder request(SearchRequest searchRequest);
 
 	/**
 	 * Sets the request string submitted to the search engine.

@@ -37,6 +37,10 @@ public interface SearchRequest {
 
 	public Map<String, Aggregation> getAggregationsMap();
 
+	public List<String> getEntryClassNames();
+
+	public List<Class<?>> getModelIndexerClasses();
+
 	public Map<String, PipelineAggregation> getPipelineAggregationsMap();
 
 	public Query getQuery();

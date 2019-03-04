@@ -68,12 +68,12 @@ public class SegmentsExperienceLocalServiceTest {
 	}
 
 	@Test
-	public void testAddDefaultExperience() throws PortalException {
+	public void testAddDefaultSegmentsExperience() throws PortalException {
 		long classNameId = _classNameLocalService.getClassNameId(
 			Layout.class.getName());
 
 		SegmentsExperience segmentsExperience =
-			_segmentsExperienceLocalService.addDefaultExperience(
+			_segmentsExperienceLocalService.addDefaultSegmentsExperience(
 				_group.getGroupId(), classNameId, RandomTestUtil.randomLong());
 
 		Map<Locale, String> nameMap = ResourceBundleUtil.getLocalizationMap(

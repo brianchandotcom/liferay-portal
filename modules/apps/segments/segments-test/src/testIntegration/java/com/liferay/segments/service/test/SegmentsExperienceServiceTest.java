@@ -184,7 +184,7 @@ public class SegmentsExperienceServiceTest {
 				_group, _companyAdminUser.getUserId());
 
 		SegmentsExperience segmentsExperience =
-			_segmentsExperienceLocalService.addDefaultExperience(
+			_segmentsExperienceLocalService.addDefaultSegmentsExperience(
 				_group.getGroupId(), _classNameId, _classPK);
 
 		_addSegmentsExperience(serviceContext);

@@ -205,7 +205,9 @@ class FragmentEditableField extends Component {
 	_createFloatingToolbar() {
 		const config = {
 			anchorElement: this.element,
-			classes: this.editableValues.mappedField ? 'fragments-editor__floating-toolbar--mapped-field' : '',
+			classes: this.editableValues.mappedField ?
+				'fragments-editor__floating-toolbar--mapped-field' :
+				'',
 			events: {
 				panelSelected: this._handleFloatingToolbarPanelSelected
 			},
@@ -214,7 +216,9 @@ class FragmentEditableField extends Component {
 				fragmentEntryLinkId: this.fragmentEntryLinkId
 			},
 			itemId: this.editableId,
-			panels: this.editableValues.mappedField ? FLOATING_TOOLBAR_PANELS_MAPPED : FLOATING_TOOLBAR_PANELS,
+			panels: (this.editableValues.mappedField && !this.type === 'image') ?
+				FLOATING_TOOLBAR_PANELS_MAPPED :
+				FLOATING_TOOLBAR_PANELS,
 			portalElement: document.body,
 			store: this.store
 		};

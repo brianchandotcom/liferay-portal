@@ -700,7 +700,8 @@ public class Table {
 		if (value instanceof BigDecimal) {
 			return (BigDecimal)value;
 		}
-		else if (value instanceof String) {
+
+		if (value instanceof String) {
 			String valueString = (String)value;
 
 			if (Validator.isNull(valueString)) {

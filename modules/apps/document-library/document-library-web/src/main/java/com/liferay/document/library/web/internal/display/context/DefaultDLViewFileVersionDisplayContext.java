@@ -401,6 +401,7 @@ public class DefaultDLViewFileVersionDisplayContext
 		}
 		catch (Exception e) {
 			if (e instanceof DLFileEntryPreviewGenerationException ||
+				e instanceof DLFileEntryPreviewNotAvailableException ||
 				e instanceof DLPreviewGenerationInProcessException ||
 				e instanceof DLPreviewSizeException) {
 

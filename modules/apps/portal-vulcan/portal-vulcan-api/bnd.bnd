@@ -3,6 +3,7 @@ Bundle-SymbolicName: com.liferay.portal.vulcan.api
 Bundle-Version: 1.0.0
 Export-Package:\
 	com.liferay.portal.vulcan.accept.language,\
+	com.liferay.portal.vulcan.fields,\
 	com.liferay.portal.vulcan.graphql.servlet,\
 	com.liferay.portal.vulcan.multipart,\
 	com.liferay.portal.vulcan.pagination,\

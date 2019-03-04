@@ -19,7 +19,6 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import com.liferay.headless.web.experience.dto.v1_0.Options;
 import com.liferay.headless.web.experience.dto.v1_0.StructuredContent;
 import com.liferay.headless.web.experience.resource.v1_0.StructuredContentResource;
 import com.liferay.petra.string.StringBundler;
@@ -37,7 +36,6 @@ import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
 
@@ -91,7 +89,8 @@ public abstract class BaseStructuredContentResourceTestCase {
 
 	@Before
 	public void setUp() throws Exception {
-		testGroup = GroupTestUtil.addGroup();
+		testGroup1 = GroupTestUtil.addGroup();
+		testGroup2 = GroupTestUtil.addGroup();
 
 		_resourceURL = new URL(
 			"http://localhost:8080/o/headless-web-experience/v1.0");
@@ -99,7 +98,8 @@ public abstract class BaseStructuredContentResourceTestCase {
 
 	@After
 	public void tearDown() throws Exception {
-		GroupTestUtil.deleteGroup(testGroup);
+		GroupTestUtil.deleteGroup(testGroup1);
+		GroupTestUtil.deleteGroup(testGroup2);
 	}
 
 	@Test
@@ -117,19 +117,32 @@ public abstract class BaseStructuredContentResourceTestCase {
 
 	@Test
 	public void testGetContentSpaceStructuredContentsPage() throws Exception {
-		Long contentSpaceId =
-			testGetContentSpaceStructuredContentsPage_getContentSpaceId();
+		Long contentSpaceId1 =
+			testGetContentSpaceStructuredContentsPage_getContentSpaceId1();
+
+		Long contentSpaceId2 =
+			testGetContentSpaceStructuredContentsPage_getContentSpaceId2();
 
 		StructuredContent structuredContent1 =
 			testGetContentSpaceStructuredContentsPage_addStructuredContent(
-				contentSpaceId, randomStructuredContent());
+				contentSpaceId1, randomStructuredContent());
 		StructuredContent structuredContent2 =
 			testGetContentSpaceStructuredContentsPage_addStructuredContent(
-				contentSpaceId, randomStructuredContent());
+				contentSpaceId1, randomStructuredContent());
+
+		StructuredContent randomStructuredContent3 = randomStructuredContent();
+
+		randomStructuredContent3.setContentStructureId(
+			testGetContentStructureStructuredContentsPage_getContentStructureId2()
+		);
+
+		StructuredContent structuredContent3 =
+			testGetContentSpaceStructuredContentsPage_addStructuredContent(
+				contentSpaceId2, randomStructuredContent3);
 
 		Page<StructuredContent> page =
 			invokeGetContentSpaceStructuredContentsPage(
-				contentSpaceId, (String)null, Pagination.of(2, 1),
+				contentSpaceId1, (String)null, Pagination.of(2, 1),
 				(String)null);
 
 		Assert.assertEquals(2, page.getTotalCount());
@@ -152,7 +165,7 @@ public abstract class BaseStructuredContentResourceTestCase {
 		}
 
 		Long contentSpaceId =
-			testGetContentSpaceStructuredContentsPage_getContentSpaceId();
+			testGetContentSpaceStructuredContentsPage_getContentSpaceId1();
 
 		StructuredContent structuredContent1 = randomStructuredContent();
 		StructuredContent structuredContent2 = randomStructuredContent();
@@ -198,7 +211,7 @@ public abstract class BaseStructuredContentResourceTestCase {
 		}
 
 		Long contentSpaceId =
-			testGetContentSpaceStructuredContentsPage_getContentSpaceId();
+			testGetContentSpaceStructuredContentsPage_getContentSpaceId1();
 
 		StructuredContent structuredContent1 =
 			testGetContentSpaceStructuredContentsPage_addStructuredContent(
@@ -225,7 +238,7 @@ public abstract class BaseStructuredContentResourceTestCase {
 		throws Exception {
 
 		Long contentSpaceId =
-			testGetContentSpaceStructuredContentsPage_getContentSpaceId();
+			testGetContentSpaceStructuredContentsPage_getContentSpaceId1();
 
 		StructuredContent structuredContent1 =
 			testGetContentSpaceStructuredContentsPage_addStructuredContent(
@@ -284,7 +297,7 @@ public abstract class BaseStructuredContentResourceTestCase {
 		}
 
 		Long contentSpaceId =
-			testGetContentSpaceStructuredContentsPage_getContentSpaceId();
+			testGetContentSpaceStructuredContentsPage_getContentSpaceId1();
 
 		StructuredContent structuredContent1 = randomStructuredContent();
 		StructuredContent structuredContent2 = randomStructuredContent();
@@ -338,7 +351,7 @@ public abstract class BaseStructuredContentResourceTestCase {
 		}
 
 		Long contentSpaceId =
-			testGetContentSpaceStructuredContentsPage_getContentSpaceId();
+			testGetContentSpaceStructuredContentsPage_getContentSpaceId1();
 
 		StructuredContent structuredContent1 = randomStructuredContent();
 		StructuredContent structuredContent2 = randomStructuredContent();
@@ -383,7 +396,7 @@ public abstract class BaseStructuredContentResourceTestCase {
 		throws Exception {
 
 		Long contentStructureId =
-			testGetContentStructureStructuredContentsPage_getContentStructureId();
+			testGetContentStructureStructuredContentsPage_getContentStructureId1();
 
 		StructuredContent structuredContent1 =
 			testGetContentStructureStructuredContentsPage_addStructuredContent(
@@ -417,7 +430,7 @@ public abstract class BaseStructuredContentResourceTestCase {
 		}
 
 		Long contentStructureId =
-			testGetContentStructureStructuredContentsPage_getContentStructureId();
+			testGetContentStructureStructuredContentsPage_getContentStructureId1();
 
 		StructuredContent structuredContent1 = randomStructuredContent();
 		StructuredContent structuredContent2 = randomStructuredContent();
@@ -463,7 +476,7 @@ public abstract class BaseStructuredContentResourceTestCase {
 		}
 
 		Long contentStructureId =
-			testGetContentStructureStructuredContentsPage_getContentStructureId();
+			testGetContentStructureStructuredContentsPage_getContentStructureId1();
 
 		StructuredContent structuredContent1 =
 			testGetContentStructureStructuredContentsPage_addStructuredContent(
@@ -490,7 +503,7 @@ public abstract class BaseStructuredContentResourceTestCase {
 		throws Exception {
 
 		Long contentStructureId =
-			testGetContentStructureStructuredContentsPage_getContentStructureId();
+			testGetContentStructureStructuredContentsPage_getContentStructureId1();
 
 		StructuredContent structuredContent1 =
 			testGetContentStructureStructuredContentsPage_addStructuredContent(
@@ -549,7 +562,7 @@ public abstract class BaseStructuredContentResourceTestCase {
 		}
 
 		Long contentStructureId =
-			testGetContentStructureStructuredContentsPage_getContentStructureId();
+			testGetContentStructureStructuredContentsPage_getContentStructureId1();
 
 		StructuredContent structuredContent1 = randomStructuredContent();
 		StructuredContent structuredContent2 = randomStructuredContent();
@@ -603,7 +616,7 @@ public abstract class BaseStructuredContentResourceTestCase {
 		}
 
 		Long contentStructureId =
-			testGetContentStructureStructuredContentsPage_getContentStructureId();
+			testGetContentStructureStructuredContentsPage_getContentStructureId1();
 
 		StructuredContent structuredContent1 = randomStructuredContent();
 		StructuredContent structuredContent2 = randomStructuredContent();
@@ -1256,10 +1269,16 @@ public abstract class BaseStructuredContentResourceTestCase {
 			"This method needs to be implemented");
 	}
 
-	protected Long testGetContentSpaceStructuredContentsPage_getContentSpaceId()
+	protected Long testGetContentSpaceStructuredContentsPage_getContentSpaceId1()
 		throws Exception {
 
-		return testGroup.getGroupId();
+		return testGroup1.getGroupId();
+	}
+
+	protected Long testGetContentSpaceStructuredContentsPage_getContentSpaceId2()
+		throws Exception {
+
+		return testGroup2.getGroupId();
 	}
 
 	protected StructuredContent
@@ -1272,7 +1291,15 @@ public abstract class BaseStructuredContentResourceTestCase {
 	}
 
 	protected Long
-			testGetContentStructureStructuredContentsPage_getContentStructureId()
+		testGetContentStructureStructuredContentsPage_getContentStructureId1()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected Long
+		testGetContentStructureStructuredContentsPage_getContentStructureId2()
 		throws Exception {
 
 		throw new UnsupportedOperationException(
@@ -1302,7 +1329,8 @@ public abstract class BaseStructuredContentResourceTestCase {
 			"This method needs to be implemented");
 	}
 
-	protected Group testGroup;
+	protected Group testGroup1;
+	protected Group testGroup2;
 
 	protected static class Page<T> {
 

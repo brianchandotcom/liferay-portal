@@ -64,18 +64,34 @@ public class StructuredContentResourceTest
 
 		_ddmFormDeserializerTracker = registry.getService(_serviceReference);
 
-		DDMStructureTestHelper ddmStructureTestHelper =
+		DDMStructureTestHelper ddmStructureTestHelper1 =
 			new DDMStructureTestHelper(
-				PortalUtil.getClassNameId(JournalArticle.class), testGroup);
+				PortalUtil.getClassNameId(JournalArticle.class), testGroup1);
 
-		_ddmStructure = ddmStructureTestHelper.addStructure(
+		DDMStructureTestHelper ddmStructureTestHelper2 =
+			new DDMStructureTestHelper(
+				PortalUtil.getClassNameId(JournalArticle.class), testGroup2);
+
+		_ddmStructure1 = ddmStructureTestHelper1.addStructure(
+			PortalUtil.getClassNameId(JournalArticle.class),
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+			_deserialize(_read("test-structured-content-structure.json")),
+			StorageType.JSON.getValue(), DDMStructureConstants.TYPE_DEFAULT);
+
+		_ddmStructure2 = ddmStructureTestHelper2.addStructure(
 			PortalUtil.getClassNameId(JournalArticle.class),
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 			_deserialize(_read("test-structured-content-structure.json")),
 			StorageType.JSON.getValue(), DDMStructureConstants.TYPE_DEFAULT);
 
 		DDMTemplateTestUtil.addTemplate(
-			testGroup.getGroupId(), _ddmStructure.getStructureId(),
+			testGroup1.getGroupId(), _ddmStructure1.getStructureId(),
+			PortalUtil.getClassNameId(JournalArticle.class),
+			TemplateConstants.LANG_TYPE_VM,
+			_read("test-structured-content-template.xsl"), LocaleUtil.US);
+
+		DDMTemplateTestUtil.addTemplate(
+			testGroup2.getGroupId(), _ddmStructure2.getStructureId(),
 			PortalUtil.getClassNameId(JournalArticle.class),
 			TemplateConstants.LANG_TYPE_VM,
 			_read("test-structured-content-template.xsl"), LocaleUtil.US);
@@ -97,7 +113,7 @@ public class StructuredContentResourceTest
 		boolean valid = false;
 
 		if (Objects.equals(
-				structuredContent.getContentSpace(), testGroup.getGroupId()) &&
+				structuredContent.getContentSpace(), testGroup1.getGroupId()) &&
 			(structuredContent.getDateCreated() != null) &&
 			(structuredContent.getDateModified() != null) &&
 			(structuredContent.getId() != null)) {
@@ -135,8 +151,8 @@ public class StructuredContentResourceTest
 	protected StructuredContent randomStructuredContent() {
 		return new StructuredContent() {
 			{
-				contentSpace = testGroup.getGroupId();
-				contentStructureId = _ddmStructure.getStructureId();
+				contentSpace = testGroup1.getGroupId();
+				contentStructureId = _ddmStructure1.getStructureId();
 				datePublished = RandomTestUtil.nextDate();
 				description = RandomTestUtil.randomString();
 				lastReviewed = RandomTestUtil.nextDate();
@@ -151,7 +167,7 @@ public class StructuredContentResourceTest
 		throws Exception {
 
 		return invokePostContentSpaceStructuredContent(
-			testGroup.getGroupId(), randomStructuredContent());
+			testGroup1.getGroupId(), randomStructuredContent());
 	}
 
 	@Override
@@ -171,15 +187,23 @@ public class StructuredContentResourceTest
 		throws Exception {
 
 		return invokePostContentSpaceStructuredContent(
-			testGroup.getGroupId(), structuredContent);
+			testGroup1.getGroupId(), structuredContent);
 	}
 
 	@Override
 	protected Long
-			testGetContentStructureStructuredContentsPage_getContentStructureId()
+			testGetContentStructureStructuredContentsPage_getContentStructureId1()
 		throws Exception {
 
-		return _ddmStructure.getStructureId();
+		return _ddmStructure1.getStructureId();
+	}
+
+	@Override
+	protected Long
+			testGetContentStructureStructuredContentsPage_getContentStructureId2()
+		throws Exception {
+
+		return _ddmStructure2.getStructureId();
 	}
 
 	@Override
@@ -187,7 +211,7 @@ public class StructuredContentResourceTest
 		throws Exception {
 
 		return invokePostContentSpaceStructuredContent(
-			testGroup.getGroupId(), randomStructuredContent());
+			testGroup1.getGroupId(), randomStructuredContent());
 	}
 
 	@Override
@@ -197,7 +221,7 @@ public class StructuredContentResourceTest
 		throws Exception {
 
 		return invokePostContentSpaceStructuredContent(
-			testGroup.getGroupId(), structuredContent);
+			testGroup1.getGroupId(), structuredContent);
 	}
 
 	@Override
@@ -205,7 +229,7 @@ public class StructuredContentResourceTest
 		throws Exception {
 
 		return invokePostContentSpaceStructuredContent(
-			testGroup.getGroupId(), randomStructuredContent());
+			testGroup1.getGroupId(), randomStructuredContent());
 	}
 
 	private DDMForm _deserialize(String content) {
@@ -232,7 +256,8 @@ public class StructuredContentResourceTest
 	}
 
 	private DDMFormDeserializerTracker _ddmFormDeserializerTracker;
-	private DDMStructure _ddmStructure;
+	private DDMStructure _ddmStructure1;
+	private DDMStructure _ddmStructure2;
 	private ServiceReference<DDMFormDeserializerTracker> _serviceReference;
 
 }

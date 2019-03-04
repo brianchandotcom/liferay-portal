@@ -484,7 +484,7 @@ definition {
 	macro publishViaSAP {
 		Blogs.clickEllipsisItemCP(
 			entryTitle = "${entryTitle}",
-			item = "Publish To Live"
+			item = "Publish to Live"
 		);
 
 		AssertConfirm(value1 = "${confirmMessage}");

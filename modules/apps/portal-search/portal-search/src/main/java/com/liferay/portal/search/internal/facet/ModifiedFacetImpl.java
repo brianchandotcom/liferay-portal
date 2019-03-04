@@ -60,7 +60,12 @@ public class ModifiedFacetImpl extends RangeFacet implements Facet {
 
 	@Override
 	public void select(String... selections) {
-		_selections = selections;
+		if (selections != null) {
+			_selections = selections;
+		}
+		else {
+			_selections = new String[0];
+		}
 	}
 
 	@Override

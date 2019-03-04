@@ -129,15 +129,15 @@ public class JSConfigGeneratorPackagesTracker
 		_lastModified = System.currentTimeMillis();
 	}
 
+	public void setDetails(Details details) {
+		_details = details;
+	}
+
 	@Deactivate
 	protected void deactivate() {
 		_serviceTracker.close();
 
 		_serviceTracker = null;
-	}
-
-	protected void setDetails(Details details) {
-		_details = details;
 	}
 
 	private volatile Details _details;

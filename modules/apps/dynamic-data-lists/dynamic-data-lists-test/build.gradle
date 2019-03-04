@@ -1,10 +1,4 @@
-copyLibs {
-	enabled = true
-}
-
 dependencies {
-	compileOnly group: "org.apache.poi", name: "poi", version: "3.15"
-
 	testCompile group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
 	testCompile project(":apps:dynamic-data-lists:dynamic-data-lists-api")
 	testCompile project(":apps:dynamic-data-lists:dynamic-data-lists-service")
@@ -14,6 +8,7 @@ dependencies {
 	testCompile project(":core:petra:petra-lang")
 
 	testIntegrationCompile group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"
+	testIntegrationCompile group: "org.apache.poi", name: "poi", version: "3.15"
 	testIntegrationCompile project(":apps:dynamic-data-mapping:dynamic-data-mapping-test-util")
 	testIntegrationCompile project(":apps:export-import:export-import-test-util")
 	testIntegrationCompile project(":apps:portal:portal-upgrade-api")

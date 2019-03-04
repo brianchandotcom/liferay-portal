@@ -1,12 +1,7 @@
-copyLibs {
-	enabled = true
-}
-
 dependencies {
-	compileOnly group: "com.liferay.portal", name: "com.liferay.util.java", version: "default"
-
 	testIntegrationCompile group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"
 	testIntegrationCompile group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
+	testIntegrationCompile group: "com.liferay.portal", name: "com.liferay.util.java", version: "default"
 	testIntegrationCompile project(":apps:site:site-api")
 	testIntegrationCompile project(":apps:trash:trash-test-util")
 	testIntegrationCompile project(":core:petra:petra-string")

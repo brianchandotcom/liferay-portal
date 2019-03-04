@@ -31,6 +31,7 @@ import com.liferay.portal.kernel.util.Html;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.search.searcher.SearchResponse;
 import com.liferay.portal.search.summary.Summary;
 import com.liferay.portal.search.summary.SummaryBuilder;
 import com.liferay.portal.search.summary.SummaryBuilderFactory;
@@ -287,6 +288,12 @@ public class SearchResultsPortletTest {
 		);
 
 		Mockito.doReturn(
+			_searchResponse
+		).when(
+			_portletSharedSearchResponse
+		).getSearchResponse();
+
+		Mockito.doReturn(
 			_searchSettings
 		).when(
 			_portletSharedSearchResponse
@@ -363,6 +370,9 @@ public class SearchResultsPortletTest {
 
 	@Mock
 	private SearchContext _searchContext;
+
+	@Mock
+	private SearchResponse _searchResponse;
 
 	private SearchResultsPortlet _searchResultsPortlet;
 

@@ -92,17 +92,6 @@ public interface JournalWebConfiguration {
 	public int maxAddMenuItems();
 
 	@Meta.AD(
-		deflt = "true", name = "publish-to-live-by-default", required = false
-	)
-	public boolean publishToLiveByDefault();
-
-	@Meta.AD(
-		deflt = "true", name = "publish-version-history-by-default",
-		required = false
-	)
-	public boolean publishVersionHistoryByDefault();
-
-	@Meta.AD(
 		deflt = "false", name = "show-ancestor-scopes-by-default",
 		required = false
 	)

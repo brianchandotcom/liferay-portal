@@ -41,7 +41,7 @@ if (uadHierarchyDisplay != null) {
 	<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
 	<aui:input name="p_u_i_d" type="hidden" value="<%= String.valueOf(selectedUser.getUserId()) %>" />
 	<aui:input name="applicationKey" type="hidden" value="<%= viewUADEntitiesDisplay.getApplicationKey() %>" />
-	<aui:input name="uadRegistryKey" type="hidden" value="<%= viewUADEntitiesDisplay.getUadRegistryKey() %>" />
+	<aui:input name="uadRegistryKey" type="hidden" value="<%= viewUADEntitiesDisplay.getUADRegistryKey() %>" />
 
 	<%
 	for (Class<?> typeClass : viewUADEntitiesDisplay.getTypeClasses()) {
@@ -156,7 +156,7 @@ if (uadHierarchyDisplay != null) {
 		<portlet:namespace />doMultiple(
 			'<portlet:actionURL name="/anonymize_uad_entities" />',
 			'<liferay-ui:message key="are-you-sure-you-want-to-anonymize-the-selected-items" />',
-			'<liferay-ui:message key="only-items-belonging-to-the-user-will-be-anoymized" />'
+			'<liferay-ui:message key="only-items-belonging-to-the-user-will-be-anonymized" />'
 		);
 	}
 

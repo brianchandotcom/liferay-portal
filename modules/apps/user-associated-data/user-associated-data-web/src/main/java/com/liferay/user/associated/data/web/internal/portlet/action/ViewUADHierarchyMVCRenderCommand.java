@@ -97,7 +97,7 @@ public class ViewUADHierarchyMVCRenderCommand implements MVCRenderCommand {
 
 			uadInfoPanelDisplay.setHierarchyView(true);
 			uadInfoPanelDisplay.setTopLevelView(false);
-			uadInfoPanelDisplay.setUadDisplay(uadDisplay);
+			uadInfoPanelDisplay.setUADDisplay(uadDisplay);
 
 			Class<?> typeClass = uadDisplay.getTypeClass();
 

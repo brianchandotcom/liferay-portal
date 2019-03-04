@@ -44,7 +44,7 @@
 	String anonymizeSingleMessage = "are-you-sure-you-want-to-anonymize-this-entity";
 
 	if (!uadEntity.isUserOwned()) {
-		anonymizeSingleMessage = "only-items-belonging-to-the-user-will-be-anoymized";
+		anonymizeSingleMessage = "only-items-belonging-to-the-user-will-be-anonymized";
 	}
 	%>
 

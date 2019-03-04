@@ -89,11 +89,11 @@ public class InfoPanelMVCResourceCommand extends BaseMVCResourceCommand {
 
 			if (!uadEntities.isEmpty()) {
 				uadInfoPanelDisplay.addUADEntities(uadEntities);
-				uadInfoPanelDisplay.setUadDisplay(uadDisplay);
+				uadInfoPanelDisplay.setUADDisplay(uadDisplay);
 			}
 		}
 
-		if (uadInfoPanelDisplay.getUadEntitiesCount() != 1) {
+		if (uadInfoPanelDisplay.getUADEntitiesCount() != 1) {
 			String uadRegistryKey = ParamUtil.getString(
 				resourceRequest, "uadRegistryKey");
 
@@ -122,7 +122,7 @@ public class InfoPanelMVCResourceCommand extends BaseMVCResourceCommand {
 				}
 			}
 
-			uadInfoPanelDisplay.setUadDisplay(
+			uadInfoPanelDisplay.setUADDisplay(
 				_uadRegistry.getUADDisplay(uadRegistryKey));
 		}
 

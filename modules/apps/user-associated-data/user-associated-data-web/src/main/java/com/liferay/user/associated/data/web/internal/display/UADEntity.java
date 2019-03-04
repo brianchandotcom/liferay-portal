@@ -53,7 +53,7 @@ public class UADEntity<T> {
 	}
 
 	public Object getColumnEntry(String key) {
-		for (KeyValuePair columnEntry : getColumnEntries()) {
+		for (KeyValuePair columnEntry : _columnEntries) {
 			if (key.equals(columnEntry.getKey())) {
 				return columnEntry.getValue();
 			}

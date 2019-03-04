@@ -21,13 +21,10 @@ import com.liferay.user.associated.data.display.UADDisplay;
 import com.liferay.user.associated.data.web.internal.display.UADEntity;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 /**
  * @author Pei-Jung Lan
@@ -39,21 +36,6 @@ public class UADHierarchyResultRowSplitter implements ResultRowSplitter {
 
 		_locale = locale;
 		_uadDisplays = uadDisplays;
-	}
-
-	public UADHierarchyResultRowSplitter(
-		Locale locale, UADDisplay<?>[] containerUADDisplays,
-		UADDisplay<?>[] noncontainerUADDisplays) {
-
-		List<UADDisplay> uadDisplayList = Stream.concat(
-			Arrays.stream(containerUADDisplays),
-			Arrays.stream(noncontainerUADDisplays)
-		).collect(
-			Collectors.toList()
-		);
-
-		_locale = locale;
-		_uadDisplays = (UADDisplay<?>[])uadDisplayList.toArray();
 	}
 
 	@Override

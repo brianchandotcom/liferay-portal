@@ -86,34 +86,39 @@ public class DeleteUADEntitiesMVCActionCommand extends BaseUADMVCActionCommand {
 			if (uadHierarchyDisplay.isUserOwned(entity, selectedUserId)) {
 				entityUADAnonymizer.delete(entity);
 			}
+			else {
+				Map<Class<?>, List<Serializable>> containerItemPKsMap =
+					uadHierarchyDisplay.getContainerItemPKsMap(
+						entityUADDisplay.getTypeClass(),
+						uadHierarchyDisplay.getPrimaryKey(entity),
+						selectedUserId);
 
-			Map<Class<?>, List<Serializable>> containerItemPKsMap =
-				uadHierarchyDisplay.getContainerItemPKsMap(
-					entityUADDisplay.getTypeClass(),
-					uadHierarchyDisplay.getPrimaryKey(entity), selectedUserId);
+				for (Map.Entry<Class<?>, List<Serializable>> entry :
+						containerItemPKsMap.entrySet()) {
 
-			for (Map.Entry<Class<?>, List<Serializable>> entry :
-					containerItemPKsMap.entrySet()) {
+					Class<?> containerItemClass = entry.getKey();
 
-				Class<?> containerItemClass = entry.getKey();
+					UADAnonymizer containerItemUADAnonymizer =
+						uadRegistry.getUADAnonymizer(
+							containerItemClass.getName());
+					UADDisplay containerItemUADDisplay =
+						uadRegistry.getUADDisplay(containerItemClass.getName());
 
-				UADAnonymizer containerItemUADAnonymizer =
-					uadRegistry.getUADAnonymizer(containerItemClass.getName());
-				UADDisplay containerItemUADDisplay = uadRegistry.getUADDisplay(
-					containerItemClass.getName());
+					doMultipleAction(
+						entry.getValue(),
+						containerItemPK -> {
+							try {
+								Object containerItem =
+									containerItemUADDisplay.get(
+										containerItemPK);
 
-				doMultipleAction(
-					entry.getValue(),
-					containerItemPK -> {
-						try {
-							Object containerItem = containerItemUADDisplay.get(
-								containerItemPK);
-
-							containerItemUADAnonymizer.delete(containerItem);
-						}
-						catch (NoSuchModelException nsme) {
-						}
-					});
+								containerItemUADAnonymizer.delete(
+									containerItem);
+							}
+							catch (NoSuchModelException nsme) {
+							}
+						});
+				}
 			}
 		}
 		else {

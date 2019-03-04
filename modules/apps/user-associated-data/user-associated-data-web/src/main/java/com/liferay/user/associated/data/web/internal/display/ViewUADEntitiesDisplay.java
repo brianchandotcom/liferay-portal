@@ -46,7 +46,7 @@ public class ViewUADEntitiesDisplay {
 		return _typeName;
 	}
 
-	public String getUadRegistryKey() {
+	public String getUADRegistryKey() {
 		return _uadRegistryKey;
 	}
 
@@ -98,7 +98,7 @@ public class ViewUADEntitiesDisplay {
 		_typeName = typeName;
 	}
 
-	public void setUadRegistryKey(String uadRegistryKey) {
+	public void setUADRegistryKey(String uadRegistryKey) {
 		_uadRegistryKey = uadRegistryKey;
 	}
 

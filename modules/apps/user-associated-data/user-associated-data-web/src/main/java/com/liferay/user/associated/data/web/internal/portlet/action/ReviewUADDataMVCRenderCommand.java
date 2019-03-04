@@ -87,12 +87,12 @@ public class ReviewUADDataMVCRenderCommand implements MVCRenderCommand {
 				uadApplicationSummaryDisplays.get(0);
 
 			for (UADApplicationSummaryDisplay
-					currentUadApplicationSummaryDisplay :
+					currentUADApplicationSummaryDisplay :
 						uadApplicationSummaryDisplays) {
 
-				if (currentUadApplicationSummaryDisplay.getCount() > 0) {
+				if (currentUADApplicationSummaryDisplay.getCount() > 0) {
 					uadApplicationSummaryDisplay =
-						currentUadApplicationSummaryDisplay;
+						currentUADApplicationSummaryDisplay;
 
 					break;
 				}
@@ -126,7 +126,7 @@ public class ReviewUADDataMVCRenderCommand implements MVCRenderCommand {
 				UADDisplay<?>[] uadDisplays =
 					uadHierarchyDisplay.getUADDisplays();
 
-				uadInfoPanelDisplay.setUadDisplay(uadDisplays[0]);
+				uadInfoPanelDisplay.setUADDisplay(uadDisplays[0]);
 
 				uadInfoPanelDisplay.setHierarchyView(true);
 
@@ -160,7 +160,7 @@ public class ReviewUADDataMVCRenderCommand implements MVCRenderCommand {
 				UADDisplay uadDisplay = _uadRegistry.getUADDisplay(
 					uadRegistryKey);
 
-				uadInfoPanelDisplay.setUadDisplay(uadDisplay);
+				uadInfoPanelDisplay.setUADDisplay(uadDisplay);
 
 				viewUADEntitiesDisplay.setSearchContainer(
 					_uadReviewDataHelper.getSearchContainer(
@@ -172,7 +172,7 @@ public class ReviewUADDataMVCRenderCommand implements MVCRenderCommand {
 				viewUADEntitiesDisplay.setTypeClasses(
 					new Class<?>[] {uadDisplay.getTypeClass()});
 
-				viewUADEntitiesDisplay.setUadRegistryKey(uadRegistryKey);
+				viewUADEntitiesDisplay.setUADRegistryKey(uadRegistryKey);
 			}
 
 			renderRequest.setAttribute(

@@ -44,7 +44,6 @@ import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
 
@@ -178,20 +177,6 @@ public class UADReviewDataHelper {
 		return searchContainer;
 	}
 
-	public String[] getUADRegistryKeys(PortletRequest portletRequest) {
-		List<String> uadRegistryKeys = new ArrayList<>();
-
-		Map<String, String[]> parameterMap = portletRequest.getParameterMap();
-
-		for (String key : parameterMap.keySet()) {
-			if (key.startsWith("uadRegistryKey__")) {
-				uadRegistryKeys.add(portletRequest.getParameter(key));
-			}
-		}
-
-		return uadRegistryKeys.toArray(new String[uadRegistryKeys.size()]);
-	}
-
 	private SearchContainer<UADEntity> _constructSearchContainer(
 		RenderRequest renderRequest, PortletURL currentURL,
 		String defaultOrderByCol, String[] sortingFieldNames) {
@@ -298,28 +283,28 @@ public class UADReviewDataHelper {
 	private Comparator<UADEntity> _getComparator(
 		String orderByColumn, String orderByType) {
 
-		Comparator<UADEntity> comparator = Comparator.comparingLong(
+		Comparator<UADEntity> comparator = Comparator.comparing(
 			uadEntity -> {
 				Object entry = uadEntity.getColumnEntry(orderByColumn);
 
-				try {
-					return Long.valueOf((String)entry);
+				if (entry == null) {
+					return "";
 				}
-				catch (NumberFormatException nfe) {
-					return 0L;
-				}
+
+				return (String)entry;
 			});
 
-		if (!orderByColumn.equals("count")) {
-			comparator = Comparator.comparing(
+		if (orderByColumn.equals("count")) {
+			comparator = Comparator.comparingLong(
 				uadEntity -> {
 					Object entry = uadEntity.getColumnEntry(orderByColumn);
 
-					if (entry == null) {
-						return "";
+					try {
+						return Long.valueOf((String)entry);
 					}
-
-					return (String)entry;
+					catch (NumberFormatException nfe) {
+						return 0L;
+					}
 				});
 		}
 

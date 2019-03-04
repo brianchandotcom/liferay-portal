@@ -54,7 +54,7 @@ public class UADInfoPanelDisplay {
 		}
 		else {
 			return LanguageUtil.format(
-				locale, "x-items-are-selected", getUadEntitiesCount());
+				locale, "x-items-are-selected", getUADEntitiesCount());
 		}
 	}
 
@@ -85,20 +85,12 @@ public class UADInfoPanelDisplay {
 		}
 	}
 
-	public UADDisplay getUadDisplay() {
+	public UADDisplay getUADDisplay() {
 		return _uadDisplay;
 	}
 
-	public int getUadEntitiesCount() {
+	public int getUADEntitiesCount() {
 		return _uadEntities.size();
-	}
-
-	public boolean isHierarchyView() {
-		return _hierarchyView;
-	}
-
-	public boolean isTopLevelView() {
-		return _topLevelView;
 	}
 
 	public void setHierarchyView(boolean hierarchyView) {
@@ -109,7 +101,7 @@ public class UADInfoPanelDisplay {
 		_topLevelView = topLevelView;
 	}
 
-	public void setUadDisplay(UADDisplay uadDisplay) {
+	public void setUADDisplay(UADDisplay uadDisplay) {
 		_uadDisplay = uadDisplay;
 	}
 

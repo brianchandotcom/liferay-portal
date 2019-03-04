@@ -19,8 +19,6 @@ package com.liferay.user.associated.data.web.internal.constants;
  */
 public class UADWebKeys {
 
-	public static final String ACTIONS = "ACTIONS";
-
 	public static final String APPLICATION_UAD_DISPLAYS =
 		"APPLICATION_UAD_DISPLAYS";
 
@@ -39,9 +37,6 @@ public class UADWebKeys {
 
 	public static final String UAD_INFO_PANEL_DISPLAY =
 		"UAD_INFO_PANEL_DISPLAY";
-
-	public static final String VIEW_UAD_APPLICATIONS_SUMMARY_DISPLAY =
-		"VIEW_UAD_APPLICATIONS_SUMMARY_DISPLAY";
 
 	public static final String VIEW_UAD_ENTITIES_DISPLAY =
 		"VIEW_UAD_ENTITIES_DISPLAY";

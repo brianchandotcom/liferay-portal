@@ -47,19 +47,29 @@ import org.osgi.service.component.annotations.Reference;
  */
 public abstract class BaseUADMVCActionCommand extends BaseMVCActionCommand {
 
+	protected void doMultipleAction(
+			List<Serializable> primaryKeys,
+			UnsafeConsumer<Serializable, Exception> unsafeConsumer)
+		throws Exception {
+
+		for (Serializable primaryKey : primaryKeys) {
+			unsafeConsumer.accept(primaryKey);
+		}
+	}
+
 	protected void doNonreviewableRedirect(
-		ActionRequest actionRequest, ActionResponse actionResponse)
-	throws Exception {
+			ActionRequest actionRequest, ActionResponse actionResponse)
+		throws Exception {
 
 		String mvcRenderCommandName = null;
 
 		long selectedUserId = getSelectedUserId(actionRequest);
 
 		if (uadApplicationSummaryHelper.getTotalNonreviewableUADEntitiesCount(
-			selectedUserId) == 0) {
+				selectedUserId) == 0) {
 
 			if (uadApplicationSummaryHelper.getTotalReviewableUADEntitiesCount(
-				selectedUserId) == 0) {
+					selectedUserId) == 0) {
 
 				mvcRenderCommandName = "/completed_data_erasure";
 			}
@@ -86,19 +96,19 @@ public abstract class BaseUADMVCActionCommand extends BaseMVCActionCommand {
 	}
 
 	protected void doReviewableRedirect(
-		ActionRequest actionRequest, ActionResponse actionResponse)
-	throws Exception {
+			ActionRequest actionRequest, ActionResponse actionResponse)
+		throws Exception {
 
 		String mvcRenderCommandName = null;
 
 		long selectedUserId = getSelectedUserId(actionRequest);
 
 		if (uadApplicationSummaryHelper.getTotalReviewableUADEntitiesCount(
-			selectedUserId) == 0) {
+				selectedUserId) == 0) {
 
 			if (uadApplicationSummaryHelper.
-				getTotalNonreviewableUADEntitiesCount(selectedUserId) ==
-				0) {
+					getTotalNonreviewableUADEntitiesCount(selectedUserId) ==
+						0) {
 
 				mvcRenderCommandName = "/completed_data_erasure";
 			}
@@ -122,16 +132,6 @@ public abstract class BaseUADMVCActionCommand extends BaseMVCActionCommand {
 
 		sendRedirect(
 			actionRequest, actionResponse, liferayPortletURL.toString());
-	}
-
-	protected void doMultipleAction(
-			List<Serializable> primaryKeys,
-			UnsafeConsumer<Serializable, Exception> unsafeConsumer)
-		throws Exception {
-
-		for (Serializable primaryKey : primaryKeys) {
-			unsafeConsumer.accept(primaryKey);
-		}
 	}
 
 	protected List<String> getEntityTypes(ActionRequest actionRequest) {
@@ -188,16 +188,6 @@ public abstract class BaseUADMVCActionCommand extends BaseMVCActionCommand {
 
 		return uadRegistry.getUADDisplay(
 			getUADRegistryKey(actionRequest, entityType));
-	}
-
-	protected List<UADDisplay> getUADDisplays(ActionRequest actionRequest) {
-		List<UADDisplay> uadDisplays = new ArrayList<>();
-
-		for (String entityType : getEntityTypes(actionRequest)) {
-			uadDisplays.add(getUADDisplay(actionRequest, entityType));
-		}
-
-		return uadDisplays;
 	}
 
 	protected String getUADRegistryKey(

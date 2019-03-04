@@ -60,7 +60,6 @@ public class ViewUADEntitiesManagementToolbarDisplayContext
 			{
 				add(
 					dropdownItem -> {
-						dropdownItem.putData("action", "anonymize");
 						dropdownItem.setHref(
 							StringBundler.concat(
 								"javascript:", getNamespace(),
@@ -71,7 +70,6 @@ public class ViewUADEntitiesManagementToolbarDisplayContext
 
 				add(
 					dropdownItem -> {
-						dropdownItem.putData("action", "delete");
 						dropdownItem.setHref(
 							StringBundler.concat(
 								"javascript:", getNamespace(),

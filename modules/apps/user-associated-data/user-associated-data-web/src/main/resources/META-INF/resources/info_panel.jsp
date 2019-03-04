@@ -22,7 +22,7 @@ UADInfoPanelDisplay uadInfoPanelDisplay = (UADInfoPanelDisplay)request.getAttrib
 
 <div class="sidebar sidebar-light">
 	<c:choose>
-		<c:when test="<%= uadInfoPanelDisplay.getUadEntitiesCount() == 0 %>">
+		<c:when test="<%= uadInfoPanelDisplay.getUADEntitiesCount() == 0 %>">
 			<div class="sidebar-header">
 				<c:if test="<%= uadInfoPanelDisplay.getTitle(locale) != null %>">
 					<h3 class="sidebar-title"><%= uadInfoPanelDisplay.getTitle(locale) %></h3>
@@ -31,10 +31,10 @@ UADInfoPanelDisplay uadInfoPanelDisplay = (UADInfoPanelDisplay)request.getAttrib
 				<h5 class="sidebar-subtitle"><%= uadInfoPanelDisplay.getSubtitle(locale) %></h5>
 			</div>
 		</c:when>
-		<c:when test="<%= uadInfoPanelDisplay.getUadEntitiesCount() == 1 %>">
+		<c:when test="<%= uadInfoPanelDisplay.getUADEntitiesCount() == 1 %>">
 
 			<%
-			UADDisplay uadDisplay = uadInfoPanelDisplay.getUadDisplay();
+			UADDisplay uadDisplay = uadInfoPanelDisplay.getUADDisplay();
 			UADEntity uadEntity = uadInfoPanelDisplay.getFirstUADEntity();
 
 			Serializable primaryKey = uadEntity.getPrimaryKey();
@@ -80,7 +80,7 @@ UADInfoPanelDisplay uadInfoPanelDisplay = (UADInfoPanelDisplay)request.getAttrib
 				</dl>
 			</div>
 		</c:when>
-		<c:when test="<%= uadInfoPanelDisplay.getUadEntitiesCount() > 1 %>">
+		<c:when test="<%= uadInfoPanelDisplay.getUADEntitiesCount() > 1 %>">
 			<div class="sidebar-header">
 				<c:if test="<%= uadInfoPanelDisplay.getTitle(locale) != null %>">
 					<h3 class="sidebar-title"><%= uadInfoPanelDisplay.getTitle(locale) %></h3>

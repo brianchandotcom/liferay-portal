@@ -45,6 +45,7 @@ import com.liferay.portal.vulcan.resource.EntityModelResource;
 import com.liferay.portal.vulcan.util.ContentLanguageUtil;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 import com.liferay.portal.vulcan.util.SearchUtil;
+import com.liferay.portal.vulcan.util.ServiceContextUtil;
 
 import java.util.AbstractMap;
 import java.util.Collections;
@@ -160,7 +161,9 @@ public class CategoryResourceImpl
 				Collections.singletonMap(
 					contextAcceptLanguage.getPreferredLocale(),
 					category.getDescription()),
-				assetCategory.getVocabularyId(), null, new ServiceContext()));
+				assetCategory.getVocabularyId(), null,
+				ServiceContextUtil.createServiceContext(
+					assetCategory.getGroupId(), category.getViewableBy())));
 	}
 
 	@Override
@@ -179,7 +182,9 @@ public class CategoryResourceImpl
 				Collections.singletonMap(
 					contextAcceptLanguage.getPreferredLocale(),
 					category.getDescription()),
-				vocabularyId, null, new ServiceContext()));
+				vocabularyId, null,
+				ServiceContextUtil.createServiceContext(
+					assetVocabulary.getGroupId(), category.getViewableBy())));
 	}
 
 	@Override

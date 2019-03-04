@@ -36,6 +36,7 @@ import com.liferay.portal.vulcan.multipart.MultipartBody;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.util.SearchUtil;
+import com.liferay.portal.vulcan.util.ServiceContextUtil;
 
 import java.util.Optional;
 
@@ -168,13 +169,9 @@ public class BlogPostingImageResourceImpl
 				binaryFile.getFileName()
 			),
 			null, null, binaryFile.getInputStream(), binaryFile.getSize(),
-			new ServiceContext() {
-				{
-					setAddGroupPermissions(true);
-					setAddGuestPermissions(true);
-					setScopeGroupId(contentSpaceId);
-				}
-			});
+			ServiceContextUtil.createServiceContext(
+				new String[0], new Long[0], contentSpaceId,
+				blogPostingImage.getViewableBy()));
 
 		return _toBlogPostingImage(fileEntry);
 	}

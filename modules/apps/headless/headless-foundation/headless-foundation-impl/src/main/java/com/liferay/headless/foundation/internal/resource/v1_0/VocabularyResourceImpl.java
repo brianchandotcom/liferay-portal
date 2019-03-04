@@ -36,6 +36,7 @@ import com.liferay.portal.vulcan.resource.EntityModelResource;
 import com.liferay.portal.vulcan.util.ContentLanguageUtil;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 import com.liferay.portal.vulcan.util.SearchUtil;
+import com.liferay.portal.vulcan.util.ServiceContextUtil;
 
 import java.util.AbstractMap;
 import java.util.Collections;
@@ -122,7 +123,9 @@ public class VocabularyResourceImpl
 				Collections.singletonMap(
 					contextAcceptLanguage.getPreferredLocale(),
 					vocabulary.getDescription()),
-				null, new ServiceContext()));
+				null,
+				ServiceContextUtil.createServiceContext(
+					contentSpaceId, vocabulary.getViewableBy())));
 	}
 
 	@Override

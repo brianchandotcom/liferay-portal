@@ -21,6 +21,7 @@ import com.liferay.headless.document.library.resource.v1_0.FolderResource;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
+import com.liferay.portal.vulcan.util.ServiceContextUtil;
 
 import java.util.Optional;
 
@@ -119,7 +120,9 @@ public class FolderResourceImpl extends BaseFolderResourceImpl {
 		return _toFolder(
 			_dlAppService.addFolder(
 				documentsRepositoryId, parentFolderId, folder.getName(),
-				folder.getDescription(), new ServiceContext()));
+				folder.getDescription(),
+				ServiceContextUtil.createServiceContext(
+					documentsRepositoryId, folder.getViewableBy())));
 	}
 
 	private Page<Folder> _getFolderPage(

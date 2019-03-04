@@ -47,7 +47,6 @@ import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.BooleanFilter;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.search.filter.TermFilter;
-import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -61,6 +60,7 @@ import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
 import com.liferay.portal.vulcan.util.SearchUtil;
+import com.liferay.portal.vulcan.util.ServiceContextUtil;
 import com.liferay.ratings.kernel.service.RatingsStatsLocalService;
 
 import java.util.Optional;
@@ -173,6 +173,20 @@ public class DocumentResourceImpl
 				DLFileEntry.class.getName(), documentId)
 		);
 
+		Long[] categoryIds = optional.map(
+			Document::getCategoryIds
+		).orElseGet(
+			() -> ArrayUtil.toArray(
+				_assetCategoryLocalService.getCategoryIds(
+					DLFileEntry.class.getName(), documentId))
+		);
+
+		String viewableBy = optional.map(
+			Document::getViewableBy
+		).orElse(
+			null
+		);
+
 		FileEntry fileEntry = _dlAppService.updateFileEntry(
 			documentId, binaryFile.getFileName(), binaryFile.getContentType(),
 			optional.map(
@@ -187,15 +201,9 @@ public class DocumentResourceImpl
 			),
 			null, DLVersionNumberIncrease.AUTOMATIC,
 			binaryFile.getInputStream(), binaryFile.getSize(),
-			_createServiceContext(
-				optional.map(
-					Document::getCategoryIds
-				).orElseGet(
-					() -> ArrayUtil.toArray(
-						_assetCategoryLocalService.getCategoryIds(
-							DLFileEntry.class.getName(), documentId))
-				),
-				existingFileEntry.getGroupId(), keywords));
+			ServiceContextUtil.createServiceContext(
+				keywords, categoryIds, existingFileEntry.getGroupId(),
+				viewableBy));
 
 		return _toDocument(
 			fileEntry, fileEntry.getFileVersion(),
@@ -240,9 +248,9 @@ public class DocumentResourceImpl
 			),
 			document.getDescription(), null, DLVersionNumberIncrease.AUTOMATIC,
 			binaryFile.getInputStream(), binaryFile.getSize(),
-			_createServiceContext(
-				document.getCategoryIds(), existingFileEntry.getGroupId(),
-				document.getKeywords()));
+			ServiceContextUtil.createServiceContext(
+				document.getKeywords(), document.getCategoryIds(),
+				existingFileEntry.getGroupId(), document.getViewableBy()));
 
 		return _toDocument(
 			fileEntry, fileEntry.getFileVersion(),
@@ -268,33 +276,13 @@ public class DocumentResourceImpl
 			),
 			document.getDescription(), null, binaryFile.getInputStream(),
 			binaryFile.getSize(),
-			_createServiceContext(
-				document.getCategoryIds(), groupId, document.getKeywords()));
+			ServiceContextUtil.createServiceContext(
+				document.getKeywords(), document.getCategoryIds(), groupId,
+				document.getViewableBy()));
 
 		return _toDocument(
 			fileEntry, fileEntry.getFileVersion(),
 			_userService.getUserById(fileEntry.getUserId()));
-	}
-
-	private ServiceContext _createServiceContext(
-		Long[] categoryIds, long groupId, String[] keywords) {
-
-		return new ServiceContext() {
-			{
-				setAddGroupPermissions(true);
-				setAddGuestPermissions(true);
-
-				if (ArrayUtil.isNotEmpty(categoryIds)) {
-					setAssetCategoryIds(ArrayUtil.toArray(categoryIds));
-				}
-
-				if (ArrayUtil.isNotEmpty(keywords)) {
-					setAssetTagNames(keywords);
-				}
-
-				setScopeGroupId(groupId);
-			}
-		};
 	}
 
 	private AdaptedImages[] _getAdaptiveMedias(FileEntry fileEntry)

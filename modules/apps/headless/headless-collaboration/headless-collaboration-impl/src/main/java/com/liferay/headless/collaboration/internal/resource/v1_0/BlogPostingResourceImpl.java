@@ -35,10 +35,8 @@ import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
-import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.servlet.taglib.ui.ImageSelector;
-import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -49,6 +47,7 @@ import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
 import com.liferay.portal.vulcan.util.SearchUtil;
+import com.liferay.portal.vulcan.util.ServiceContextUtil;
 import com.liferay.ratings.kernel.service.RatingsStatsLocalService;
 
 import java.time.LocalDateTime;
@@ -121,8 +120,6 @@ public class BlogPostingResourceImpl
 			Long contentSpaceId, BlogPosting blogPosting)
 		throws Exception {
 
-		blogPosting.setContentSpace(contentSpaceId);
-
 		LocalDateTime localDateTime = toLocalDateTime(
 			blogPosting.getDatePublished());
 
@@ -135,7 +132,9 @@ public class BlogPostingResourceImpl
 				localDateTime.getHour(), localDateTime.getMinute(), true, true,
 				new String[0], blogPosting.getCaption(),
 				_getImageSelector(blogPosting), null,
-				_createServiceContext(blogPosting)));
+				ServiceContextUtil.createServiceContext(
+					blogPosting.getKeywords(), blogPosting.getCategoryIds(),
+					contentSpaceId, blogPosting.getViewableBy())));
 	}
 
 	@Override
@@ -156,7 +155,10 @@ public class BlogPostingResourceImpl
 				localDateTime.getHour(), localDateTime.getMinute(), true, true,
 				new String[0], blogPosting.getCaption(),
 				_getImageSelector(blogPosting), null,
-				_createServiceContext(blogPosting)));
+				ServiceContextUtil.createServiceContext(
+					blogPosting.getKeywords(), blogPosting.getCategoryIds(),
+					blogPosting.getContentSpace(),
+					blogPosting.getViewableBy())));
 	}
 
 	@Override
@@ -166,32 +168,6 @@ public class BlogPostingResourceImpl
 		blogPosting.setDateModified((Date)null);
 		blogPosting.setEncodingFormat((String)null);
 		blogPosting.setHasComments((Boolean)null);
-	}
-
-	private ServiceContext _createServiceContext(BlogPosting blogPosting) {
-		return new ServiceContext() {
-			{
-				setAddGroupPermissions(true);
-				setAddGuestPermissions(true);
-
-				Long[] categoryIds = blogPosting.getCategoryIds();
-
-				if (categoryIds == null) {
-					setAssetCategoryIds(null);
-				}
-				else {
-					setAssetCategoryIds(ArrayUtil.toArray(categoryIds));
-				}
-
-				setAssetTagNames(blogPosting.getKeywords());
-
-				Long contentSpaceId = blogPosting.getContentSpace();
-
-				if (contentSpaceId != null) {
-					setScopeGroupId(contentSpaceId);
-				}
-			}
-		};
 	}
 
 	private Image _getImage(BlogsEntry blogsEntry) throws Exception {

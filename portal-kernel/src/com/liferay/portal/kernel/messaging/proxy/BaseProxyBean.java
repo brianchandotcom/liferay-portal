@@ -17,8 +17,6 @@ package com.liferay.portal.kernel.messaging.proxy;
 import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.messaging.MessageBus;
 import com.liferay.portal.kernel.messaging.MessageBusUtil;
-import com.liferay.portal.kernel.messaging.sender.SingleDestinationMessageSender;
-import com.liferay.portal.kernel.messaging.sender.SingleDestinationSynchronousMessageSender;
 import com.liferay.portal.kernel.messaging.sender.SynchronousMessageSender;
 import com.liferay.portal.kernel.util.ServiceProxyFactory;
 
@@ -30,39 +28,12 @@ import com.liferay.portal.kernel.util.ServiceProxyFactory;
  */
 public abstract class BaseProxyBean {
 
-	/**
-	 * @deprecated As of Judson (7.1.x), with no direct link
-	 */
-	@Deprecated
-	public void afterPropertiesSet() {
-	}
-
 	public void send(ProxyRequest proxyRequest) {
 		_messageBus.sendMessage(_destinationName, buildMessage(proxyRequest));
 	}
 
 	public void setDestinationName(String destinationName) {
 		_destinationName = destinationName;
-	}
-
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
-	 *             #setDestinationName)
-	 */
-	@Deprecated
-	public void setSingleDestinationMessageSender(
-		SingleDestinationMessageSender singleDestinationMessageSender) {
-	}
-
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
-	 *             #setSynchronousMessageSenderMode} and {@link
-	 *             #setSynchronousDestinationName}
-	 */
-	@Deprecated
-	public void setSingleDestinationSynchronousMessageSender(
-		SingleDestinationSynchronousMessageSender
-			singleDestinationSynchronousMessageSender) {
 	}
 
 	public void setSynchronousDestinationName(

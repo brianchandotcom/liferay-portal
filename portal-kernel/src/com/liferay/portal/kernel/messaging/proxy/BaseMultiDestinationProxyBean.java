@@ -15,7 +15,6 @@
 package com.liferay.portal.kernel.messaging.proxy;
 
 import com.liferay.portal.kernel.messaging.Message;
-import com.liferay.portal.kernel.messaging.MessageBus;
 import com.liferay.portal.kernel.messaging.MessageBusUtil;
 import com.liferay.portal.kernel.messaging.sender.SynchronousMessageSender;
 import com.liferay.portal.kernel.util.ServiceProxyFactory;
@@ -34,24 +33,6 @@ public abstract class BaseMultiDestinationProxyBean {
 	public void send(ProxyRequest proxyRequest) {
 		MessageBusUtil.sendMessage(
 			getDestinationName(proxyRequest), buildMessage(proxyRequest));
-	}
-
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
-	 *             MessageBusUtil#getMessageBus)
-	 */
-	@Deprecated
-	public void setMessageBus(MessageBus messageBus) {
-	}
-
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
-	 *             #setSynchronousMessageSenderMode(
-	 *             SynchronousMessageSender.Mode)}
-	 */
-	@Deprecated
-	public void setSynchronousMessageSender(
-		SynchronousMessageSender synchronousMessageSender) {
 	}
 
 	public void setSynchronousMessageSenderMode(

@@ -247,19 +247,6 @@ public abstract class BaseMessagingConfigurator
 		_messageListeners.putAll(messageListeners);
 	}
 
-	/**
-	 * @param      replacementDestinations
-	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
-	 *             #setDestinations(List)}
-	 */
-	@Deprecated
-	@Override
-	public void setReplacementDestinations(
-		List<Destination> replacementDestinations) {
-
-		_destinations.addAll(replacementDestinations);
-	}
-
 	protected abstract ClassLoader getOperatingClassloader();
 
 	protected void initialize() {

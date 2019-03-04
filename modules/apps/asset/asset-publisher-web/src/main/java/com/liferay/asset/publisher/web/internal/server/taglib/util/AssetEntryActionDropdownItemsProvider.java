@@ -69,6 +69,7 @@ public class AssetEntryActionDropdownItemsProvider {
 					add(
 						SafeConsumer.ignore(
 							dropdownItem -> {
+								dropdownItem.setIcon("pencil");
 								dropdownItem.putData(
 									"destroyOnHide", Boolean.TRUE.toString());
 
@@ -115,6 +116,8 @@ public class AssetEntryActionDropdownItemsProvider {
 						add(
 							SafeConsumer.ignore(
 								dropdownItem -> {
+									dropdownItem.setIcon(
+										assetEntryAction.getIcon());
 									dropdownItem.setHref(
 										assetEntryAction.getDialogURL(
 											_request, _assetRenderer));

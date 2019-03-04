@@ -127,7 +127,7 @@ AUI.add(
 						buffer.push(xmlAction.open, XMLUtil.create('name', item));
 
 						if (description) {
-							buffer.push(XMLUtil.create('description', description[index]));
+							buffer.push(XMLUtil.create('description', cdata(description[index])));
 						}
 
 						if (script) {
@@ -300,7 +300,7 @@ AUI.add(
 						buffer.push(xmlNotification.open, XMLUtil.create('name', item));
 
 						if (description) {
-							buffer.push(XMLUtil.create('description', description[index]));
+							buffer.push(XMLUtil.create('description', cdata(description[index])));
 						}
 
 						if (template) {

@@ -74,6 +74,10 @@ public class Vocabulary {
 		return name;
 	}
 
+	public String getViewableBy() {
+		return viewableBy;
+	}
+
 	public void setAvailableLanguages(String[] availableLanguages) {
 		this.availableLanguages = availableLanguages;
 	}
@@ -214,8 +218,24 @@ public class Vocabulary {
 		}
 	}
 
+	public void setViewableBy(String viewableBy) {
+		this.viewableBy = viewableBy;
+	}
+
+	@JsonIgnore
+	public void setViewableBy(
+		UnsafeSupplier<String, Exception> viewableByUnsafeSupplier) {
+
+		try {
+			viewableBy = viewableByUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
 	public String toString() {
-		StringBundler sb = new StringBundler(38);
+		StringBundler sb = new StringBundler(43);
 
 		sb.append("{");
 
@@ -272,6 +292,13 @@ public class Vocabulary {
 		sb.append("\"");
 		sb.append(name);
 		sb.append("\"");
+		sb.append(", ");
+
+		sb.append("\"viewableBy\": ");
+
+		sb.append("\"");
+		sb.append(viewableBy);
+		sb.append("\"");
 
 		sb.append("}");
 
@@ -313,5 +340,9 @@ public class Vocabulary {
 	@GraphQLField
 	@JsonProperty
 	protected String name;
+
+	@GraphQLField
+	@JsonProperty
+	protected String viewableBy;
 
 }

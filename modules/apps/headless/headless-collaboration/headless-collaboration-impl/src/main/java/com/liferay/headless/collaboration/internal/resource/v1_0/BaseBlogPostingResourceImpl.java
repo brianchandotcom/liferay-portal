@@ -169,6 +169,10 @@ public abstract class BaseBlogPostingResourceImpl
 			existingBlogPosting.setKeywords(blogPosting.getKeywords());
 		}
 
+		if (Validator.isNotNull(blogPosting.getViewableBy())) {
+			existingBlogPosting.setViewableBy(blogPosting.getViewableBy());
+		}
+
 		return putBlogPosting(blogPostingId, existingBlogPosting);
 	}
 

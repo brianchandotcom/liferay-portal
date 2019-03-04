@@ -187,6 +187,11 @@ public abstract class BaseStructuredContentResourceImpl
 			existingStructuredContent.setTitle(structuredContent.getTitle());
 		}
 
+		if (Validator.isNotNull(structuredContent.getViewableBy())) {
+			existingStructuredContent.setViewableBy(
+				structuredContent.getViewableBy());
+		}
+
 		return putStructuredContent(
 			structuredContentId, existingStructuredContent);
 	}

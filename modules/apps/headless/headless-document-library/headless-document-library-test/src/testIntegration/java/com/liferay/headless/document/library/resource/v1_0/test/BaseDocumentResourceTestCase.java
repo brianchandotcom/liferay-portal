@@ -798,6 +798,14 @@ public abstract class BaseDocumentResourceTestCase {
 			return sb.toString();
 		}
 
+		if (entityFieldName.equals("viewableBy")) {
+			sb.append("'");
+			sb.append(String.valueOf(document.getViewableBy()));
+			sb.append("'");
+
+			return sb.toString();
+		}
+
 		throw new IllegalArgumentException(
 			"Invalid entity field " + entityFieldName);
 	}
@@ -1056,6 +1064,7 @@ public abstract class BaseDocumentResourceTestCase {
 				folderId = RandomTestUtil.randomLong();
 				id = RandomTestUtil.randomLong();
 				title = RandomTestUtil.randomString();
+				viewableBy = RandomTestUtil.randomString();
 			}
 		};
 	}

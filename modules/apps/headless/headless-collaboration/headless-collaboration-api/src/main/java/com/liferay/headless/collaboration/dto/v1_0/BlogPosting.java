@@ -118,6 +118,10 @@ public class BlogPosting {
 		return keywords;
 	}
 
+	public String getViewableBy() {
+		return viewableBy;
+	}
+
 	public void setAggregateRating(AggregateRating aggregateRating) {
 		this.aggregateRating = aggregateRating;
 	}
@@ -435,8 +439,24 @@ public class BlogPosting {
 		}
 	}
 
+	public void setViewableBy(String viewableBy) {
+		this.viewableBy = viewableBy;
+	}
+
+	@JsonIgnore
+	public void setViewableBy(
+		UnsafeSupplier<String, Exception> viewableByUnsafeSupplier) {
+
+		try {
+			viewableBy = viewableByUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
 	public String toString() {
-		StringBundler sb = new StringBundler(87);
+		StringBundler sb = new StringBundler(92);
 
 		sb.append("{");
 
@@ -564,6 +584,13 @@ public class BlogPosting {
 		sb.append("\"");
 		sb.append(keywords);
 		sb.append("\"");
+		sb.append(", ");
+
+		sb.append("\"viewableBy\": ");
+
+		sb.append("\"");
+		sb.append(viewableBy);
+		sb.append("\"");
 
 		sb.append("}");
 
@@ -649,5 +676,9 @@ public class BlogPosting {
 	@GraphQLField
 	@JsonProperty
 	protected String[] keywords;
+
+	@GraphQLField
+	@JsonProperty
+	protected String viewableBy;
 
 }

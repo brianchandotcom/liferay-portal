@@ -439,6 +439,14 @@ public abstract class BaseFolderResourceTestCase {
 			return sb.toString();
 		}
 
+		if (entityFieldName.equals("viewableBy")) {
+			sb.append("'");
+			sb.append(String.valueOf(folder.getViewableBy()));
+			sb.append("'");
+
+			return sb.toString();
+		}
+
 		throw new IllegalArgumentException(
 			"Invalid entity field " + entityFieldName);
 	}
@@ -715,6 +723,7 @@ public abstract class BaseFolderResourceTestCase {
 				hasFolders = RandomTestUtil.randomBoolean();
 				id = RandomTestUtil.randomLong();
 				name = RandomTestUtil.randomString();
+				viewableBy = RandomTestUtil.randomString();
 			}
 		};
 	}

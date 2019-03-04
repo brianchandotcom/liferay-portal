@@ -82,6 +82,10 @@ public class Category {
 		return parentVocabularyId;
 	}
 
+	public String getViewableBy() {
+		return viewableBy;
+	}
+
 	public void setAvailableLanguages(String[] availableLanguages) {
 		this.availableLanguages = availableLanguages;
 	}
@@ -256,8 +260,24 @@ public class Category {
 		}
 	}
 
+	public void setViewableBy(String viewableBy) {
+		this.viewableBy = viewableBy;
+	}
+
+	@JsonIgnore
+	public void setViewableBy(
+		UnsafeSupplier<String, Exception> viewableByUnsafeSupplier) {
+
+		try {
+			viewableBy = viewableByUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
 	public String toString() {
-		StringBundler sb = new StringBundler(44);
+		StringBundler sb = new StringBundler(49);
 
 		sb.append("{");
 
@@ -324,6 +344,13 @@ public class Category {
 		sb.append("\"parentVocabularyId\": ");
 
 		sb.append(parentVocabularyId);
+		sb.append(", ");
+
+		sb.append("\"viewableBy\": ");
+
+		sb.append("\"");
+		sb.append(viewableBy);
+		sb.append("\"");
 
 		sb.append("}");
 
@@ -373,5 +400,9 @@ public class Category {
 	@GraphQLField
 	@JsonProperty
 	protected Long parentVocabularyId;
+
+	@GraphQLField
+	@JsonProperty
+	protected String viewableBy;
 
 }

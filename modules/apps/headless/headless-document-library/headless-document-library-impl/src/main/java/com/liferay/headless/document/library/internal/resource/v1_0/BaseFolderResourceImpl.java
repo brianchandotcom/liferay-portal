@@ -138,6 +138,10 @@ public abstract class BaseFolderResourceImpl implements FolderResource {
 			existingFolder.setName(folder.getName());
 		}
 
+		if (Validator.isNotNull(folder.getViewableBy())) {
+			existingFolder.setViewableBy(folder.getViewableBy());
+		}
+
 		return putFolder(folderId, existingFolder);
 	}
 

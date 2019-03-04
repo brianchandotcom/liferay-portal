@@ -787,6 +787,14 @@ public abstract class BaseCategoryResourceTestCase {
 				"Invalid entity field " + entityFieldName);
 		}
 
+		if (entityFieldName.equals("viewableBy")) {
+			sb.append("'");
+			sb.append(String.valueOf(category.getViewableBy()));
+			sb.append("'");
+
+			return sb.toString();
+		}
+
 		throw new IllegalArgumentException(
 			"Invalid entity field " + entityFieldName);
 	}
@@ -1039,6 +1047,7 @@ public abstract class BaseCategoryResourceTestCase {
 				id = RandomTestUtil.randomLong();
 				name = RandomTestUtil.randomString();
 				parentVocabularyId = RandomTestUtil.randomLong();
+				viewableBy = RandomTestUtil.randomString();
 			}
 		};
 	}

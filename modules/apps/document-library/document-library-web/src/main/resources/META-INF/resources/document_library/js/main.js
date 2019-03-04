@@ -251,10 +251,7 @@ AUI.add(
 						if (editCategoriesComponent) {
 							var bulkSelection = instance._searchContainer.select && instance._searchContainer.select.get('bulkSelection');
 
-							editCategoriesComponent.fileEntries = instance._selectedFileEntries;
-							editCategoriesComponent.selectAll = bulkSelection;
-							editCategoriesComponent.folderId = instance.getFolderId();
-							editCategoriesComponent.open();
+							editCategoriesComponent.open(instance._selectedFileEntries, bulkSelection, instance.getFolderId());
 						}
 					},
 
@@ -266,10 +263,7 @@ AUI.add(
 						if (editTagsComponent) {
 							var bulkSelection = instance._searchContainer.select && instance._searchContainer.select.get('bulkSelection');
 
-							editTagsComponent.fileEntries = instance._selectedFileEntries;
-							editTagsComponent.selectAll = bulkSelection;
-							editTagsComponent.folderId = instance.getFolderId();
-							editTagsComponent.open();
+							editTagsComponent.open(instance._selectedFileEntries, bulkSelection, instance.getFolderId());
 						}
 					},
 

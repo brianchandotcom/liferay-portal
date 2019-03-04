@@ -39,8 +39,12 @@ class EditTags extends Component {
 	 * Open the modal and get the
 	 * commont tags.
 	 */
-	open() {
+	open(fileEntries, selectAll, folderId) {
+		this.fileEntries = fileEntries;
+		this.selectAll = selectAll;
+		this.folderId = folderId;
 		this.showModal = true;
+
 		this._getCommonTags();
 	}
 

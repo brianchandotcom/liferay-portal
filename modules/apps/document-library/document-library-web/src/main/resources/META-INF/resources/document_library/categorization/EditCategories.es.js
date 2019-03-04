@@ -40,8 +40,12 @@ class EditCategories extends Component {
 	 * Open the modal and get the
 	 * commont categories.
 	 */
-	open() {
+	open(fileEntries, selectAll, folderId) {
+		this.fileEntries = fileEntries;
+		this.selectAll = selectAll;
+		this.folderId = folderId;
 		this.showModal = true;
+
 		this._getCommonCategories();
 	}
 

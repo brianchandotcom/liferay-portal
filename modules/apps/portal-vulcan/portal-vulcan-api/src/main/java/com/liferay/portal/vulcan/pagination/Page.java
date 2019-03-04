@@ -14,6 +14,7 @@
 
 package com.liferay.portal.vulcan.pagination;
 
+import com.fasterxml.jackson.annotation.JsonFilter;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlElementWrapper;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
@@ -28,6 +29,7 @@ import java.util.Collection;
  * @author Brian Wing Shun Chan
  */
 @JacksonXmlRootElement(localName = "page")
+@JsonFilter("VulcanFilter")
 public class Page<T> {
 
 	public static <T> Page<T> of(Collection<T> items) {

@@ -15,10 +15,6 @@ components:
         Comment:
             description: https://www.schema.org/Comment
             properties:
-                comments:
-                    items:
-                        $ref: "#/components/schemas/Comment"
-                    type: array
                 creator:
                     $ref: "#/components/schemas/Creator"
                 dateCreated:

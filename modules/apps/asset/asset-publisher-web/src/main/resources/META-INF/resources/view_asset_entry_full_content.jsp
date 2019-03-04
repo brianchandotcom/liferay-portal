@@ -76,11 +76,15 @@ assetEntry = assetPublisherDisplayContext.incrementViewCounter(assetEntry);
 				fullContentRedirect = redirect;
 			}
 
-			request.setAttribute("view.jsp-fullContentRedirect", fullContentRedirect);
+			AssetEntryActionDropdownItemsProvider assetEntryActionDropdownItemsProvider = new AssetEntryActionDropdownItemsProvider(assetRenderer, assetPublisherDisplayContext.getAssetEntryActions(assetEntry.getClassName()), fullContentRedirect, liferayPortletRequest, liferayPortletResponse);
 			%>
 
 			<div class="autofit-col autofit-col-end inline-item-after">
-				<liferay-util:include page="/asset_actions.jsp" servletContext="<%= application %>" />
+				<clay:dropdown-actions
+					defaultEventHandler="<%= com.liferay.asset.publisher.web.internal.constants.AssetPublisherWebKeys.ASSET_ENTRY_DROPDOWN_DEFAULT_EVENT_HANDLER %>"
+					dropdownItems="<%= assetEntryActionDropdownItemsProvider.getActionDropdownItems() %>"
+					elementClasses="visible-interaction"
+				/>
 			</div>
 		</c:if>
 	</div>

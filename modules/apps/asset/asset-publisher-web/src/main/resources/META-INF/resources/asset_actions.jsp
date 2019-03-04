@@ -27,30 +27,32 @@ List<DropdownItem> dropdownItems = assetEntryActionDropdownItemsProvider.getActi
 %>
 
 <c:if test="<%= ListUtil.isNotEmpty(dropdownItems) %>">
-	<liferay-ui:icon-menu
-		cssClass="visible-interaction"
-		direction="left-side"
-		icon="<%= StringPool.BLANK %>"
-		markupView="lexicon"
-		message="<%= StringPool.BLANK %>"
-		showWhenSingleIcon="<%= true %>"
-	>
+	<div class="pull-right">
+		<liferay-ui:icon-menu
+			cssClass="visible-interaction"
+			direction="left-side"
+			icon="<%= StringPool.BLANK %>"
+			markupView="lexicon"
+			message="<%= StringPool.BLANK %>"
+			showWhenSingleIcon="<%= true %>"
+		>
 
-		<%
-		for (DropdownItem dropdownItem : dropdownItems) {
-		%>
+			<%
+			for (DropdownItem dropdownItem : dropdownItems) {
+			%>
 
-			<liferay-ui:icon
-				data='<%= (HashMap)dropdownItem.get("data") %>'
-				message='<%= String.valueOf(dropdownItem.get("label")) %>'
-				method="get"
-				url='<%= String.valueOf(dropdownItem.get("href")) %>'
-				useDialog="<%= true %>"
-			/>
+				<liferay-ui:icon
+					data='<%= (HashMap)dropdownItem.get("data") %>'
+					message='<%= String.valueOf(dropdownItem.get("label")) %>'
+					method="get"
+					url='<%= String.valueOf(dropdownItem.get("href")) %>'
+					useDialog="<%= true %>"
+				/>
 
-		<%
-		}
-		%>
+			<%
+			}
+			%>
 
-	</liferay-ui:icon-menu>
+		</liferay-ui:icon-menu>
+	</div>
 </c:if>

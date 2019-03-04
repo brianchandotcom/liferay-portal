@@ -44,9 +44,6 @@ for (AssetEntry assetEntry : assetEntryResult.getAssetEntries()) {
 	}
 
 	String viewURL = assetPublisherHelper.getAssetViewURL(liferayPortletRequest, liferayPortletResponse, assetRenderer, assetEntry, assetPublisherDisplayContext.isAssetLinkBehaviorViewInPortlet());
-
-	request.setAttribute("view.jsp-assetEntry", assetEntry);
-	request.setAttribute("view.jsp-assetRenderer", assetRenderer);
 %>
 
 	<div class="asset-abstract">
@@ -59,8 +56,16 @@ for (AssetEntry assetEntry : assetEntryResult.getAssetEntries()) {
 				</h4>
 			</div>
 
+			<%
+			AssetEntryActionDropdownItemsProvider assetEntryActionDropdownItemsProvider = new AssetEntryActionDropdownItemsProvider(assetRenderer, assetPublisherDisplayContext.getAssetEntryActions(assetEntry.getClassName()), StringPool.BLANK, liferayPortletRequest, liferayPortletResponse);
+			%>
+
 			<div class="autofit-col autofit-col-end inline-item-after">
-				<liferay-util:include page="/asset_actions.jsp" servletContext="<%= application %>" />
+				<clay:dropdown-actions
+					defaultEventHandler="<%= com.liferay.asset.publisher.web.internal.constants.AssetPublisherWebKeys.ASSET_ENTRY_DROPDOWN_DEFAULT_EVENT_HANDLER %>"
+					dropdownItems="<%= assetEntryActionDropdownItemsProvider.getActionDropdownItems() %>"
+					elementClasses="visible-interaction"
+				/>
 			</div>
 		</div>
 
@@ -361,6 +366,11 @@ for (AssetEntry assetEntry : assetEntryResult.getAssetEntries()) {
 <%
 }
 %>
+
+<liferay-frontend:component
+	componentId="<%= com.liferay.asset.publisher.web.internal.constants.AssetPublisherWebKeys.ASSET_ENTRY_DROPDOWN_DEFAULT_EVENT_HANDLER %>"
+	module="js/AssetPublisherDropdownDefaultEventHandler.es"
+/>
 
 <%!
 private static Log _log = LogFactoryUtil.getLog("com_liferay_asset_publisher_web.view_asset_entry_abstract_jsp");

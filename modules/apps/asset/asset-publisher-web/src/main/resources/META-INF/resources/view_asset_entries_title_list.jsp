@@ -49,9 +49,6 @@ AssetEntryResult assetEntryResult = (AssetEntryResult)request.getAttribute("view
 		if ((assetRenderer == null) || !assetRenderer.isDisplayable()) {
 			continue;
 		}
-
-		request.setAttribute("view.jsp-assetEntry", assetEntry);
-		request.setAttribute("view.jsp-assetRenderer", assetRenderer);
 	%>
 
 		<li class="list-group-item list-group-item-flex">
@@ -113,8 +110,16 @@ AssetEntryResult assetEntryResult = (AssetEntryResult)request.getAttribute("view
 				</c:if>
 			</div>
 
+			<%
+			AssetEntryActionDropdownItemsProvider assetEntryActionDropdownItemsProvider = new AssetEntryActionDropdownItemsProvider(assetRenderer, assetPublisherDisplayContext.getAssetEntryActions(assetEntry.getClassName()), StringPool.BLANK, liferayPortletRequest, liferayPortletResponse);
+			%>
+
 			<div class="autofit-col">
-				<liferay-util:include page="/asset_actions.jsp" servletContext="<%= application %>" />
+				<clay:dropdown-actions
+					defaultEventHandler="<%= com.liferay.asset.publisher.web.internal.constants.AssetPublisherWebKeys.ASSET_ENTRY_DROPDOWN_DEFAULT_EVENT_HANDLER %>"
+					dropdownItems="<%= assetEntryActionDropdownItemsProvider.getActionDropdownItems() %>"
+					elementClasses="visible-interaction"
+				/>
 			</div>
 		</li>
 
@@ -123,6 +128,11 @@ AssetEntryResult assetEntryResult = (AssetEntryResult)request.getAttribute("view
 	%>
 
 </ul>
+
+<liferay-frontend:component
+	componentId="<%= com.liferay.asset.publisher.web.internal.constants.AssetPublisherWebKeys.ASSET_ENTRY_DROPDOWN_DEFAULT_EVENT_HANDLER %>"
+	module="js/AssetPublisherDropdownDefaultEventHandler.es"
+/>
 
 <%!
 private static Log _log = LogFactoryUtil.getLog("com_liferay_asset_publisher_web.view_asset_entry_title_list_jsp");

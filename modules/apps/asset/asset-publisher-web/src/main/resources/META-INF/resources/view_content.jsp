@@ -66,6 +66,11 @@ if ((assetEntry.isVisible() && !assetPublisherDisplayContext.isEnablePermissions
 
 	<liferay-util:include page="/view_asset_entry_full_content.jsp" servletContext="<%= application %>" />
 
+	<liferay-frontend:component
+		componentId="<%= com.liferay.asset.publisher.web.internal.constants.AssetPublisherWebKeys.ASSET_ENTRY_DROPDOWN_DEFAULT_EVENT_HANDLER %>"
+		module="js/AssetPublisherDropdownDefaultEventHandler.es"
+	/>
+
 <%
 	String summary = StringUtil.shorten(assetRenderer.getSummary(liferayPortletRequest, liferayPortletResponse), assetPublisherDisplayContext.getAbstractLength());
 

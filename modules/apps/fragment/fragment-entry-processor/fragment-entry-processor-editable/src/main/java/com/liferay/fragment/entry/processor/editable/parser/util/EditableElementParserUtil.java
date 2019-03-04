@@ -26,6 +26,21 @@ import org.jsoup.nodes.Element;
  */
 public class EditableElementParserUtil {
 
+	public static void addAttribute(
+		Element element, JSONObject configJSONObject, String attribute,
+		String property) {
+
+		if (configJSONObject == null) {
+			return;
+		}
+
+		String value = configJSONObject.getString(property);
+
+		if (Validator.isNotNull(value)) {
+			element.attr(attribute, value);
+		}
+	}
+
 	public static void addClass(
 		Element element, JSONObject configJSONObject, String prefix,
 		String property) {

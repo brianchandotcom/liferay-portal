@@ -47,11 +47,10 @@ header {
 			position: relative;
 		}
 
-		.sticker {
-			bottom: auto;
-			left: -1rem;
-			right: auto;
-			top: -1rem;
+		.panel-notifications-count {
+			left: -0.5rem;
+			position: absolute;
+			top: -0.8rem;
 		}
 	}
 

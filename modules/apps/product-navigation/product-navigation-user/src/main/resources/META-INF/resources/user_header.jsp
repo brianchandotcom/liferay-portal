@@ -49,7 +49,9 @@ ProductMenuDisplayContext productMenuDisplayContext = new ProductMenuDisplayCont
 	</span>
 
 	<c:if test="<%= notificationsCount > 0 %>">
-		<span class="panel-notifications-count sticker sticker-right sticker-rounded sticker-sm sticker-warning"><%= notificationsCount %></span>
+		<span class="badge badge-danger panel-notifications-count sticker-right">
+			<span class="badge-item badge-item-expand"><%= notificationsCount %></span>
+		</span>
 	</c:if>
 
 	<aui:icon cssClass="collapse-icon-closed" image="angle-right" markupView="lexicon" />

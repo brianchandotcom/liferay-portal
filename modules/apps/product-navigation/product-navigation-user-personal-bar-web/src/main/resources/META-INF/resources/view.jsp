@@ -45,7 +45,9 @@
 				%>
 
 				<aui:a href="<%= (notificationsURL != null) ? notificationsURL.toString() : null %>">
-					<span class="panel-notifications-count sticker sticker-right sticker-rounded sticker-sm sticker-warning"><%= notificationsCount %></span>
+					<span class="badge badge-danger panel-notifications-count">
+						<span class="badge-item badge-item-expand"><%= notificationsCount %></span>
+					</span>
 				</aui:a>
 			</c:if>
 		</span>

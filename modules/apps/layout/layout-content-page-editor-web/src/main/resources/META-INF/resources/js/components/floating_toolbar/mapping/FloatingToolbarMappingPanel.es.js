@@ -3,12 +3,62 @@ import Soy, {Config} from 'metal-soy';
 
 import './FloatingToolbarMappingPanelDelegateTemplate.soy';
 import getConnectedComponent from '../../../store/ConnectedComponent.es';
+import {setIn} from '../../../utils/FragmentsEditorUpdateUtils.es';
 import templates from './FloatingToolbarMappingPanel.soy';
+
+const MAPPING_SOURCE_SPECIFIC_CONTENT_KEY = 'specific_content';
+
+const MAPPING_SOURCE_SUBTYPE_KEY = 'subtype';
 
 /**
  * FloatingToolbarMappingPanel
  */
-class FloatingToolbarMappingPanel extends Component {}
+class FloatingToolbarMappingPanel extends Component {
+
+	/**
+	 * Get mapping sources
+	 * @param {!string} subtypeLabel
+	 * @private
+	 * @static
+	 * @review
+	 */
+	static _getMappingSources(subtypeLabel) {
+		return [
+			{
+				id: MAPPING_SOURCE_SUBTYPE_KEY,
+				label: Liferay.Util.sub(
+					Liferay.Language.get('x-default'),
+					subtypeLabel
+				)
+			},
+			{
+				id: MAPPING_SOURCE_SPECIFIC_CONTENT_KEY,
+				label: Liferay.Language.get('specific-content')
+			}
+		];
+	}
+
+	/**
+	 * @inheritdoc
+	 * @param {object} state
+	 * @return {object}
+	 * @review
+	 */
+	prepareStateForRender(state) {
+		let nextState = state;
+
+		if (this.selectedMappingTypes.subtype) {
+			nextState = setIn(
+				nextState,
+				['_mappingSources'],
+				FloatingToolbarMappingPanel._getMappingSources(
+					this.selectedMappingTypes.subtype.label
+				)
+			);
+		}
+
+		return nextState;
+	}
 
 /**
  * State definition.

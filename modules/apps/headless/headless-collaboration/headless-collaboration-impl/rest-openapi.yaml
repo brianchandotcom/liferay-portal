@@ -87,6 +87,13 @@ components:
                     items:
                         type: string
                     type: array
+                viewableBy:
+                    type: string
+                    enum:
+                        - anyone
+                        - members
+                        - owner
+                    writeOnly: true
             type: object
         BlogPostingImage:
             description: https://www.schema.org/BlogPostingImage
@@ -104,6 +111,13 @@ components:
                     type: number
                 title:
                     type: string
+                viewableBy:
+                    type: string
+                    enum:
+                        - anyone
+                        - members
+                        - owner
+                    writeOnly: true
             type: object
         Comment:
             description: https://www.schema.org/Comment

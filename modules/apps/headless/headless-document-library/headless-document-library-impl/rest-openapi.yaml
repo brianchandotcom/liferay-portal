@@ -126,6 +126,13 @@ components:
                     type: number
                 title:
                     type: string
+                viewableBy:
+                    type: string
+                    enum:
+                        - anyone
+                        - members
+                        - owner
+                    writeOnly: true
             type: object
         Folder:
             description: https://www.schema.org/Folder
@@ -150,6 +157,13 @@ components:
                     type: integer
                 name:
                     type: string
+                viewableBy:
+                    type: string
+                    enum:
+                        - anyone
+                        - members
+                        - owner
+                    writeOnly: true
             type: object
 info:
     description: ""

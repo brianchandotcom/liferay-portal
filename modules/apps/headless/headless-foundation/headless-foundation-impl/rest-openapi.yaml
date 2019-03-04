@@ -47,6 +47,13 @@ components:
                     format: int64
                     type: integer
                     writeOnly: true
+                viewableBy:
+                    type: string
+                    enum:
+                        - anyone
+                        - members
+                        - owner
+                    writeOnly: true
             type: object
         Creator:
             description: https://www.schema.org/Creator
@@ -471,6 +478,13 @@ components:
                     type: integer
                 name:
                     type: string
+                viewableBy:
+                    type: string
+                    enum:
+                        - anyone
+                        - members
+                        - owner
+                    writeOnly: true
             type: object
         WebUrl:
             description: https://www.schema.org/WebUrl

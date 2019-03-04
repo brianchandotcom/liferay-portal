@@ -691,8 +691,6 @@ definition {
 		property portal.acceptance = "true";
 		property testray.component.names = "Training";
 
-		User.firstLoginPG();
-
 		LAR.exportSiteCP();
 
 		var key_larFileName = "${larFileName}";

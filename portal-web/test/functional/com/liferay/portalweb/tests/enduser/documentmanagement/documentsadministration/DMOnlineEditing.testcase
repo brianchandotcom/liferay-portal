@@ -114,7 +114,7 @@ definition {
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
-		GoogleDoc.gotoEdit(dmDocumentTitle = "Untitled", dmGoogleApp = "Google Doc");
+		GoogleDoc.gotoEdit(dmDocumentTitle = "Untitled", dmGoogleApp = "Google Docs");
 
 		GoogleDoc.editTitleInGoogleDoc(
 			dmDocumentTitle = "This title should not be saved"
@@ -167,7 +167,7 @@ definition {
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
-		GoogleDoc.gotoEdit(dmDocumentTitle = "Untitled", dmGoogleApp = "Google Sheet");
+		GoogleDoc.gotoEdit(dmDocumentTitle = "Untitled", dmGoogleApp = "Google Sheets");
 
 		GoogleDoc.editTitleInGoogleDoc(
 			dmDocumentTitle = "This title should not be saved"
@@ -220,7 +220,7 @@ definition {
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
-		GoogleDoc.gotoEdit(dmDocumentTitle = "Untitled", dmGoogleApp = "Google Slide");
+		GoogleDoc.gotoEdit(dmDocumentTitle = "Untitled", dmGoogleApp = "Google Slides");
 
 		GoogleDoc.editTitleInGoogleDoc(
 			dmDocumentTitle = "This title should not be saved"
@@ -253,7 +253,7 @@ definition {
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
-		GoogleDoc.gotoEdit(dmDocumentTitle = "Untitled", dmGoogleApp = "Google Doc");
+		GoogleDoc.gotoEdit(dmDocumentTitle = "Untitled", dmGoogleApp = "Google Docs");
 
 		GoogleDoc.editTitleInGoogleDoc(dmDocumentTitle = "Edited Google Document");
 
@@ -282,7 +282,7 @@ definition {
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
-		GoogleDoc.gotoEdit(dmDocumentTitle = "Untitled", dmGoogleApp = "Google Doc");
+		GoogleDoc.gotoEdit(dmDocumentTitle = "Untitled", dmGoogleApp = "Google Docs");
 
 		var dmDocumentTitle = '''Special Characters Title 12345`~!@#$%^&*(){}[],.<>/?|''';
 
@@ -315,7 +315,7 @@ definition {
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
-		GoogleDoc.gotoEdit(dmDocumentTitle = "Untitled", dmGoogleApp = "Google Sheet");
+		GoogleDoc.gotoEdit(dmDocumentTitle = "Untitled", dmGoogleApp = "Google Sheets");
 
 		GoogleDoc.editTitleInGoogleDoc(dmDocumentTitle = "Edited Google Sheet");
 
@@ -346,7 +346,7 @@ definition {
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
-		GoogleDoc.gotoEdit(dmDocumentTitle = "Untitled", dmGoogleApp = "Google Slide");
+		GoogleDoc.gotoEdit(dmDocumentTitle = "Untitled", dmGoogleApp = "Google Slides");
 
 		GoogleDoc.editTitleInGoogleDoc(dmDocumentTitle = "Edited Google Slide");
 

@@ -15,6 +15,7 @@
 package com.liferay.headless.foundation.internal.resource.v1_0;
 
 import com.liferay.headless.foundation.dto.v1_0.Segment;
+import com.liferay.headless.foundation.internal.mapper.HeaderContextMapper;
 import com.liferay.headless.foundation.resource.v1_0.SegmentResource;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.UserService;
@@ -26,6 +27,10 @@ import com.liferay.segments.service.SegmentsEntryService;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.ws.rs.core.Context;
+import javax.ws.rs.core.HttpHeaders;
+import javax.ws.rs.core.MultivaluedMap;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -46,8 +51,12 @@ public class SegmentResourceImpl extends BaseSegmentResourceImpl {
 
 		User user = _userService.getUserById(userId);
 
+		MultivaluedMap<String, String> requestHeaders =
+			_httpHeaders.getRequestHeaders();
+
 		long[] segmentsEntryIds = _segmentsEntryProvider.getSegmentsEntryIds(
-			user.getModelClassName(), user.getPrimaryKey());
+			user.getModelClassName(), user.getPrimaryKey(),
+			_headerContextMapper.create(requestHeaders));
 
 		List<SegmentsEntry> segmentsEntries = new ArrayList<>(
 			segmentsEntryIds.length);
@@ -78,6 +87,12 @@ public class SegmentResourceImpl extends BaseSegmentResourceImpl {
 			}
 		};
 	}
+
+	@Reference
+	private HeaderContextMapper _headerContextMapper;
+
+	@Context
+	private HttpHeaders _httpHeaders;
 
 	@Reference
 	private SegmentsEntryProvider _segmentsEntryProvider;

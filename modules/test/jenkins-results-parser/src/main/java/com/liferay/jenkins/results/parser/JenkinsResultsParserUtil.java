@@ -2164,8 +2164,8 @@ public class JenkinsResultsParserUtil {
 									sslContext.getSocketFactory());
 							}
 						}
-						catch (KeyManagementException |
-							   NoSuchAlgorithmException e) {
+						catch (KeyManagementException | NoSuchAlgorithmException
+									e) {
 
 							throw new RuntimeException(
 								"Unable to set SSL context to TLS v1.2", e);

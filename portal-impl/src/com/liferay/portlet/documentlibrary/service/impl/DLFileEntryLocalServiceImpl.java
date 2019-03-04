@@ -1479,8 +1479,8 @@ public class DLFileEntryLocalServiceImpl
 
 				return uniqueTitle;
 			}
-			catch (DuplicateFileEntryException |
-				   DuplicateFolderNameException e) {
+			catch (DuplicateFileEntryException | DuplicateFolderNameException
+						e) {
 
 				if (_log.isDebugEnabled()) {
 					_log.debug(e, e);

@@ -108,8 +108,8 @@ public class DESaveDataRecordCollectionDataFetcher
 				languageId, "the-user-must-have-data-permission",
 				getActionMessage(languageId, mhp.getActionId()));
 		}
-		catch (DEDataRecordCollectionException.
-					NoSuchDataRecordCollection nsdrc) {
+		catch (DEDataRecordCollectionException.NoSuchDataRecordCollection
+					nsdrc) {
 
 			errorMessage = getMessage(
 				languageId, "no-data-record-collection-exists-with-id-x",

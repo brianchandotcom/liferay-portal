@@ -93,8 +93,8 @@ public class EditEntryMVCActionCommand extends BaseMVCActionCommand {
 		}
 		catch (EntryContentException | EntryDisplayDateException |
 			   EntryExpirationDateException | EntryTitleException |
-			   EntryURLException | NoSuchEntryException |
-			   PrincipalException e) {
+			   EntryURLException | NoSuchEntryException | PrincipalException
+				   e) {
 
 			SessionErrors.add(actionRequest, e.getClass());
 		}

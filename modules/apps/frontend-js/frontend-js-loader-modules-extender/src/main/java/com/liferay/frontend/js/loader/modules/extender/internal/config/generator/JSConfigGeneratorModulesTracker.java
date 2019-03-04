@@ -42,9 +42,9 @@ import org.osgi.util.tracker.ServiceTrackerCustomizer;
  */
 @Component(
 	configurationPid = "com.liferay.frontend.js.loader.modules.extender.internal.Details",
-	immediate = true, service = JSLoaderModulesTracker.class
+	immediate = true, service = JSConfigGeneratorModulesTracker.class
 )
-public class JSLoaderModulesTracker
+public class JSConfigGeneratorModulesTracker
 	implements ServiceTrackerCustomizer
 		<ServletContext, ServiceReference<ServletContext>> {
 
@@ -60,7 +60,7 @@ public class JSLoaderModulesTracker
 
 		setDetails(Converter.cnv(Details.class, properties));
 
-		_jsLoaderModules.clear();
+		_jsConfigGeneratorModules.clear();
 
 		_serviceTracker = ServiceTrackerFactory.open(
 			componentContext.getBundleContext(),
@@ -84,19 +84,21 @@ public class JSLoaderModulesTracker
 			return serviceReference;
 		}
 
-		JSLoaderModule jsLoaderModule = new JSLoaderModule(
-			_details.applyVersioning(), serviceReference.getBundle(),
-			contextPath);
+		JSConfigGeneratorModule jsConfigGeneratorModule =
+			new JSConfigGeneratorModule(
+				_details.applyVersioning(), serviceReference.getBundle(),
+				contextPath);
 
-		_jsLoaderModules.put(serviceReference, jsLoaderModule);
+		_jsConfigGeneratorModules.put(
+			serviceReference, jsConfigGeneratorModule);
 
 		_lastModified = System.currentTimeMillis();
 
 		return serviceReference;
 	}
 
-	public Collection<JSLoaderModule> getJSLoaderModules() {
-		return _jsLoaderModules.values();
+	public Collection<JSConfigGeneratorModule> getJSConfigGeneratorModules() {
+		return _jsConfigGeneratorModules.values();
 	}
 
 	public long getLastModified() {
@@ -122,9 +124,13 @@ public class JSLoaderModulesTracker
 		ServiceReference<ServletContext> serviceReference,
 		ServiceReference<ServletContext> trackedServiceReference) {
 
-		_jsLoaderModules.remove(serviceReference);
+		_jsConfigGeneratorModules.remove(serviceReference);
 
 		_lastModified = System.currentTimeMillis();
+	}
+
+	protected void setDetails(Details details) {
+		_details = details;
 	}
 
 	@Deactivate
@@ -134,13 +140,9 @@ public class JSLoaderModulesTracker
 		_serviceTracker = null;
 	}
 
-	protected void setDetails(Details details) {
-		_details = details;
-	}
-
 	private volatile Details _details;
-	private final Map<ServiceReference<ServletContext>, JSLoaderModule>
-		_jsLoaderModules = new ConcurrentSkipListMap<>();
+	private final Map<ServiceReference<ServletContext>, JSConfigGeneratorModule>
+		_jsConfigGeneratorModules = new ConcurrentSkipListMap<>();
 	private volatile long _lastModified = System.currentTimeMillis();
 	private ServiceTracker<ServletContext, ServiceReference<ServletContext>>
 		_serviceTracker;

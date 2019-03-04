@@ -49,9 +49,9 @@ import org.osgi.framework.wiring.BundleWiring;
 /**
  * @author Carlos Sierra Andrés
  */
-public class JSLoaderModule {
+public class JSConfigGeneratorModule {
 
-	public JSLoaderModule(
+	public JSConfigGeneratorModule(
 		boolean applyVersioning, Bundle bundle, String contextPath) {
 
 		_applyVersioning = applyVersioning;
@@ -317,7 +317,8 @@ public class JSLoaderModule {
 		return text.matches(pattern);
 	}
 
-	private static final Log _log = LogFactoryUtil.getLog(JSLoaderModule.class);
+	private static final Log _log = LogFactoryUtil.getLog(
+		JSConfigGeneratorModule.class);
 
 	private final boolean _applyVersioning;
 	private final Bundle _bundle;

@@ -14,8 +14,8 @@
 
 package com.liferay.frontend.js.loader.modules.extender.internal;
 
-import com.liferay.frontend.js.loader.modules.extender.internal.config.generator.JSLoaderModule;
-import com.liferay.frontend.js.loader.modules.extender.internal.config.generator.JSLoaderModulesTracker;
+import com.liferay.frontend.js.loader.modules.extender.internal.config.generator.JSConfigGeneratorModule;
+import com.liferay.frontend.js.loader.modules.extender.internal.config.generator.JSConfigGeneratorModulesTracker;
 import com.liferay.frontend.js.loader.modules.extender.npm.JSModule;
 import com.liferay.frontend.js.loader.modules.extender.npm.JSModuleAlias;
 import com.liferay.frontend.js.loader.modules.extender.npm.JSPackage;
@@ -94,8 +94,10 @@ public class JSLoaderModulesServlet extends HttpServlet {
 		_componentContext = componentContext;
 	}
 
-	protected JSLoaderModulesTracker getJSLoaderModulesTracker() {
-		return _jsLoaderModulesTracker;
+	protected JSConfigGeneratorModulesTracker
+		getJSConfigGeneratorModulesTracker() {
+
+		return _jsConfigGeneratorModulesTracker;
 	}
 
 	@Override
@@ -138,10 +140,10 @@ public class JSLoaderModulesServlet extends HttpServlet {
 	}
 
 	@Reference(unbind = "-")
-	protected void setJSLoaderModulesTracker(
-		JSLoaderModulesTracker jsLoaderModulesTracker) {
+	protected void setJSConfigGeneratorModulesTracker(
+		JSConfigGeneratorModulesTracker jsConfigGeneratorModulesTracker) {
 
-		_jsLoaderModulesTracker = jsLoaderModulesTracker;
+		_jsConfigGeneratorModulesTracker = jsConfigGeneratorModulesTracker;
 	}
 
 	@Reference(unbind = "-")
@@ -165,28 +167,29 @@ public class JSLoaderModulesServlet extends HttpServlet {
 		String delimiter = "";
 		Set<String> processedNames = new HashSet<>();
 
-		for (JSLoaderModule jsLoaderModule :
-				_jsLoaderModulesTracker.getJSLoaderModules()) {
+		for (JSConfigGeneratorModule jsConfigGeneratorModule :
+				_jsConfigGeneratorModulesTracker.
+					getJSConfigGeneratorModules()) {
 
-			if (processedNames.contains(jsLoaderModule.getName())) {
+			if (processedNames.contains(jsConfigGeneratorModule.getName())) {
 				continue;
 			}
 
-			processedNames.add(jsLoaderModule.getName());
+			processedNames.add(jsConfigGeneratorModule.getName());
 
 			printWriter.write(delimiter);
 			printWriter.write("\"");
-			printWriter.write(jsLoaderModule.getName());
+			printWriter.write(jsConfigGeneratorModule.getName());
 			printWriter.write("\": \"");
-			printWriter.write(jsLoaderModule.getName());
+			printWriter.write(jsConfigGeneratorModule.getName());
 			printWriter.write("@");
-			printWriter.write(jsLoaderModule.getVersion());
+			printWriter.write(jsConfigGeneratorModule.getVersion());
 			printWriter.write("\"");
 
 			delimiter = ",\n";
 
 			String unversionedMapsConfiguration =
-				jsLoaderModule.getUnversionedMapsConfiguration();
+				jsConfigGeneratorModule.getUnversionedMapsConfiguration();
 
 			if (!unversionedMapsConfiguration.equals("")) {
 				printWriter.write(delimiter);
@@ -261,18 +264,19 @@ public class JSLoaderModulesServlet extends HttpServlet {
 
 		delimiter = "";
 
-		for (JSLoaderModule jsLoaderModule :
-				_jsLoaderModulesTracker.getJSLoaderModules()) {
+		for (JSConfigGeneratorModule jsConfigGeneratorModule :
+				_jsConfigGeneratorModulesTracker.
+					getJSConfigGeneratorModules()) {
 
 			String unversionedConfiguration =
-				jsLoaderModule.getUnversionedConfiguration();
+				jsConfigGeneratorModule.getUnversionedConfiguration();
 
 			if (unversionedConfiguration.length() == 0) {
 				continue;
 			}
 
-			if (!processedNames.contains(jsLoaderModule.getName())) {
-				processedNames.add(jsLoaderModule.getName());
+			if (!processedNames.contains(jsConfigGeneratorModule.getName())) {
+				processedNames.add(jsConfigGeneratorModule.getName());
 
 				printWriter.write(delimiter);
 				printWriter.write(unversionedConfiguration);
@@ -281,7 +285,7 @@ public class JSLoaderModulesServlet extends HttpServlet {
 			}
 
 			String versionedConfiguration =
-				jsLoaderModule.getVersionedConfiguration();
+				jsConfigGeneratorModule.getVersionedConfiguration();
 
 			if (versionedConfiguration.length() > 0) {
 				printWriter.write(delimiter);
@@ -402,28 +406,29 @@ public class JSLoaderModulesServlet extends HttpServlet {
 		String delimiter = "";
 		Set<String> processedNames = new HashSet<>();
 
-		for (JSLoaderModule jsLoaderModule :
-				_jsLoaderModulesTracker.getJSLoaderModules()) {
+		for (JSConfigGeneratorModule jsConfigGeneratorModule :
+				_jsConfigGeneratorModulesTracker.
+					getJSConfigGeneratorModules()) {
 
 			printWriter.write(delimiter);
 			printWriter.write("\"");
-			printWriter.write(jsLoaderModule.getName());
+			printWriter.write(jsConfigGeneratorModule.getName());
 			printWriter.write("@");
-			printWriter.write(jsLoaderModule.getVersion());
+			printWriter.write(jsConfigGeneratorModule.getVersion());
 			printWriter.write("\": \"");
 			printWriter.write(_portal.getPathProxy());
-			printWriter.write(jsLoaderModule.getContextPath());
+			printWriter.write(jsConfigGeneratorModule.getContextPath());
 			printWriter.write("\"");
 
-			if (!processedNames.contains(jsLoaderModule.getName())) {
-				processedNames.add(jsLoaderModule.getName());
+			if (!processedNames.contains(jsConfigGeneratorModule.getName())) {
+				processedNames.add(jsConfigGeneratorModule.getName());
 
 				printWriter.println(",");
 				printWriter.write("\"");
-				printWriter.write(jsLoaderModule.getName());
+				printWriter.write(jsConfigGeneratorModule.getName());
 				printWriter.write("\": \"");
 				printWriter.write(_portal.getPathProxy());
-				printWriter.write(jsLoaderModule.getContextPath());
+				printWriter.write(jsConfigGeneratorModule.getContextPath());
 				printWriter.write("\"");
 			}
 
@@ -463,7 +468,7 @@ public class JSLoaderModulesServlet extends HttpServlet {
 	private ComponentContext _componentContext;
 	private final Map<String, String> _dependencyAliases = new HashMap<>();
 	private volatile Details _details;
-	private JSLoaderModulesTracker _jsLoaderModulesTracker;
+	private JSConfigGeneratorModulesTracker _jsConfigGeneratorModulesTracker;
 	private Logger _logger;
 
 	@Reference

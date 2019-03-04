@@ -128,11 +128,11 @@ public class ManageCollaboratorsMVCActionCommand extends BaseMVCActionCommand {
 	private Map<Long, Collection<SharingEntryAction>> _getSharingEntryActions(
 		ActionRequest actionRequest) {
 
-		Map<Long, Collection<SharingEntryAction>> sharingEntryActions =
-			new HashMap<>();
-
 		String[] sharingEntryIdActionIdPairs = ParamUtil.getParameterValues(
 			actionRequest, "sharingEntryIdActionIdPairs", new String[0], false);
+
+		Map<Long, Collection<SharingEntryAction>> sharingEntryActions =
+			new HashMap<>(sharingEntryIdActionIdPairs.length);
 
 		for (String sharingEntryIdActionIdPair : sharingEntryIdActionIdPairs) {
 			String[] parts = StringUtil.split(sharingEntryIdActionIdPair);
@@ -155,12 +155,13 @@ public class ManageCollaboratorsMVCActionCommand extends BaseMVCActionCommand {
 	private Map<Long, Date> _getSharingEntryExpirationDates(
 		ActionRequest actionRequest, ResourceBundle resourceBundle) {
 
-		Map<Long, Date> expirationDates = new HashMap<>();
-
 		String[] sharingEntryIdExpirationDatePairs =
 			ParamUtil.getParameterValues(
 				actionRequest, "sharingEntryIdExpirationDatePairs",
 				new String[0], false);
+
+		Map<Long, Date> expirationDates = new HashMap<>(
+			sharingEntryIdExpirationDatePairs.length);
 
 		for (String sharingEntryIdExpirationDatePair :
 				sharingEntryIdExpirationDatePairs) {
@@ -182,7 +183,8 @@ public class ManageCollaboratorsMVCActionCommand extends BaseMVCActionCommand {
 		long[] deleteSharingEntryIds = ParamUtil.getLongValues(
 			actionRequest, "deleteSharingEntryIds");
 
-		Set<Long> sharingEntryIdsToDelete = new HashSet<>();
+		Set<Long> sharingEntryIdsToDelete = new HashSet<>(
+			deleteSharingEntryIds.length);
 
 		for (Long sharingEntryId : deleteSharingEntryIds) {
 			sharingEntryIdsToDelete.add(sharingEntryId);

@@ -52,7 +52,6 @@ rightList = ListUtil.sort(rightList, new KeyValuePairComparator(false, true));
 <liferay-ui:input-move-boxes
 	leftBoxName="currentMetadataFields"
 	leftList="<%= leftList %>"
-	leftReorder="<%= Boolean.TRUE.toString() %>"
 	leftTitle="current"
 	rightBoxName="availableMetadataFields"
 	rightList="<%= rightList %>"

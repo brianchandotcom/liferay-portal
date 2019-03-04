@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.fragment.web.internal.portlet.util;
+package com.liferay.fragment.internal.importer;
 
 import com.liferay.fragment.constants.FragmentEntryTypeConstants;
 import com.liferay.fragment.constants.FragmentExportImportConstants;

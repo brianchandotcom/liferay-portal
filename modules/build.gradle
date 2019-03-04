@@ -140,6 +140,19 @@ gradle.beforeProject {
 			}
 		}
 
+		afterEvaluate {
+			deployDependencies {
+				project.configurations.compileOnly
+				.getAllDependencies()
+				.withType(ProjectDependency)
+				.findAll { it.name.contains("demo-data-creator") }
+				.each {
+					dependsOn "${it.dependencyProject.path}:deploy"
+					dependsOn "${it.dependencyProject.path.replace('-api', '-impl')}:deploy"
+				}
+			}
+		}
+
 		if (project.path.startsWith(":sdk:project-templates:project-templates-")) {
 			task generateSampleProject(type:JavaExec)
 

@@ -305,37 +305,11 @@ AUI.add(
 					_openModalTags: function() {
 						var instance = this;
 
-						var editTagsComponent = instance._editTagsComponent;
-						var form = instance.get('form').node;
-						var namespace = instance.NS;
+						var editTagsComponent = Liferay.component(instance.NS + 'EditTagsComponent');
 
-						var bulkSelection = instance._searchContainer.select && instance._searchContainer.select.get('bulkSelection');
+						if (editTagsComponent) {
+							var bulkSelection = instance._searchContainer.select && instance._searchContainer.select.get('bulkSelection');
 
-						if (!editTagsComponent) {
-							var pathModule = instance.get('pathModule');
-							var urlTags = pathModule + '/bulk/asset/tags/' + instance._config.scopeGroupId + '/' + instance.get('classNameId') + '/common';
-							var urlUpdateTags = pathModule + '/bulk/asset/tags/' + instance.get('classNameId');
-
-							Liferay.Loader.require(
-								instance.get('npmResolvedPackageName') + '/document_library/categorization/EditTags.es',
-								function(EditTags) {
-									instance._editTagsComponent = new EditTags.default(
-										{
-											fileEntries: instance._selectedFileEntries,
-											folderId: instance.getFolderId(),
-											portletNamespace: namespace,
-											repositoryId: parseFloat(form.get(namespace + 'repositoryId').val()),
-											selectAll: bulkSelection,
-											spritemap: themeDisplay.getPathThemeImages() + '/lexicon/icons.svg',
-											urlTags: urlTags,
-											urlUpdateTags: urlUpdateTags
-										},
-										'#' + instance.NS + 'documentLibraryModal'
-									);
-								}
-							);
-						}
-						else {
 							editTagsComponent.fileEntries = instance._selectedFileEntries;
 							editTagsComponent.selectAll = bulkSelection;
 							editTagsComponent.folderId = instance.getFolderId();

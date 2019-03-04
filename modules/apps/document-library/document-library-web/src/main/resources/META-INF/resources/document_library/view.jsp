@@ -302,7 +302,7 @@ String navigation = ParamUtil.getString(request, "navigation");
 			var urlUpdateTags = pathModule + '/bulk/asset/tags/' + classNameId;
 
 			Liferay.component(
-				'<portlet:namespace />EditTagsComponent',
+				namespace + 'EditTagsComponent',
 				new EditTags.default(
 					{
 						folderId: '<%= folderId %>',

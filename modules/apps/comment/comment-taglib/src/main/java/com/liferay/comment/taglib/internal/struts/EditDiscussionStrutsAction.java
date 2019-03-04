@@ -162,17 +162,18 @@ public class EditDiscussionStrutsAction implements StrutsAction {
 			className, classPK);
 
 		discussionPermission.checkSubscribePermission(
-			assetEntry.getCompanyId(), assetEntry.getGroupId(), className,
-			classPK);
+			assetEntry.getCompanyId(), assetEntry.getGroupId(),
+			assetEntry.getClassName(), assetEntry.getClassPK());
 
 		if (subscribe) {
 			_commentManager.subscribeDiscussion(
-				themeDisplay.getUserId(), assetEntry.getGroupId(), className,
-				classPK);
+				themeDisplay.getUserId(), assetEntry.getGroupId(),
+				assetEntry.getClassName(), assetEntry.getClassPK());
 		}
 		else {
 			_commentManager.unsubscribeDiscussion(
-				themeDisplay.getUserId(), className, classPK);
+				themeDisplay.getUserId(), assetEntry.getClassName(),
+				assetEntry.getClassPK());
 		}
 	}
 

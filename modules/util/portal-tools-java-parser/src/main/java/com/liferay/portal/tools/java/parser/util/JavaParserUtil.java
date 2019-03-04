@@ -496,10 +496,13 @@ public class JavaParserUtil {
 		}
 	}
 
-	private static JavaType _parseGenericBoundJavaType(DetailAST detailAST) {
+	private static JavaType _parseGenericBoundJavaType(
+		DetailAST detailAST, int arrayDimension) {
+
 		FullIdent fullIdent = FullIdent.createFullIdent(detailAST);
 
-		JavaType genericBoundJavaType = new JavaType(fullIdent.getText(), 0);
+		JavaType genericBoundJavaType = new JavaType(
+			fullIdent.getText(), arrayDimension);
 
 		DetailAST typeArgumentsDetailAST = null;
 
@@ -522,11 +525,45 @@ public class JavaParserUtil {
 	}
 
 	private static List<JavaType> _parseGenericBoundJavaTypes(
-		DetailAST detailAST) {
+		DetailAST detailAST, int genericBoundType) {
+
+		List<DetailAST> typeGenericBoundsDetailASTList =
+			DetailASTUtil.getAllChildTokens(detailAST, true, genericBoundType);
+
+		int arrayDimension = 0;
+		DetailAST typeGenericBoundsDetailAST = null;
+
+		outerLoop:
+		for (DetailAST curTypeGenericBoundsDetailAST :
+				typeGenericBoundsDetailASTList) {
+
+			DetailAST parentDetailAST =
+				curTypeGenericBoundsDetailAST.getParent();
+
+			while (true) {
+				if (parentDetailAST.equals(detailAST)) {
+					typeGenericBoundsDetailAST = curTypeGenericBoundsDetailAST;
+
+					break outerLoop;
+				}
+
+				if (parentDetailAST.getType() != TokenTypes.ARRAY_DECLARATOR) {
+					continue outerLoop;
+				}
+
+				arrayDimension++;
+
+				parentDetailAST = parentDetailAST.getParent();
+			}
+		}
+
+		if (typeGenericBoundsDetailAST == null) {
+			return null;
+		}
 
 		List<JavaType> genericBoundJavaTypes = new ArrayList<>();
 
-		DetailAST childDetailAST = detailAST.getFirstChild();
+		DetailAST childDetailAST = typeGenericBoundsDetailAST.getFirstChild();
 
 		while (true) {
 			if (childDetailAST == null) {
@@ -537,7 +574,7 @@ public class JavaParserUtil {
 				(childDetailAST.getType() != TokenTypes.TYPE_EXTENSION_AND)) {
 
 				genericBoundJavaTypes.add(
-					_parseGenericBoundJavaType(childDetailAST));
+					_parseGenericBoundJavaType(childDetailAST, arrayDimension));
 			}
 
 			childDetailAST = childDetailAST.getNextSibling();
@@ -1679,21 +1716,12 @@ public class JavaParserUtil {
 				typeInfoDetailAST.findFirstToken(TokenTypes.TYPE_ARGUMENTS),
 				TokenTypes.TYPE_ARGUMENT));
 
-		DetailAST typeLowerBoundsDetailAST = typeInfoDetailAST.findFirstToken(
-			TokenTypes.TYPE_LOWER_BOUNDS);
-
-		if (typeLowerBoundsDetailAST != null) {
-			javaType.setLowerBoundJavaTypes(
-				_parseGenericBoundJavaTypes(typeLowerBoundsDetailAST));
-		}
-
-		DetailAST typeUpperBoundsDetailAST = typeInfoDetailAST.findFirstToken(
-			TokenTypes.TYPE_UPPER_BOUNDS);
-
-		if (typeUpperBoundsDetailAST != null) {
-			javaType.setUpperBoundJavaTypes(
-				_parseGenericBoundJavaTypes(typeUpperBoundsDetailAST));
-		}
+		javaType.setLowerBoundJavaTypes(
+			_parseGenericBoundJavaTypes(
+				typeInfoDetailAST, TokenTypes.TYPE_LOWER_BOUNDS));
+		javaType.setUpperBoundJavaTypes(
+			_parseGenericBoundJavaTypes(
+				typeInfoDetailAST, TokenTypes.TYPE_UPPER_BOUNDS));
 
 		return javaType;
 	}

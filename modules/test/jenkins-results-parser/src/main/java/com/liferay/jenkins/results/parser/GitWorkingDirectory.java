@@ -1061,11 +1061,14 @@ public class GitWorkingDirectory {
 		List<LocalGitBranch> localGitBranches = new ArrayList<>(
 			localGitBranchNames.size());
 
+		Map<String, String> localGitBranchesShaMap =
+			getLocalGitBranchesShaMap();
+
 		for (String localGitBranchName : localGitBranchNames) {
 			localGitBranches.add(
 				GitBranchFactory.newLocalGitBranch(
 					localGitRepository, localGitBranchName,
-					getLocalGitBranchSHA(localGitBranchName)));
+					localGitBranchesShaMap.get(localGitBranchName)));
 		}
 
 		return localGitBranches;
@@ -1801,6 +1804,41 @@ public class GitWorkingDirectory {
 
 		return GitUtil.executeBashCommands(
 			maxRetries, retryDelay, timeout, _workingDirectory, commands);
+	}
+
+	protected Map<String, String> getLocalGitBranchesShaMap() {
+		File workingDirectory = getWorkingDirectory();
+
+		String command = JenkinsResultsParserUtil.combine(
+			"git ls-remote -h ", workingDirectory.getAbsolutePath());
+
+		GitUtil.ExecutionResult executionResult = executeBashCommands(
+			GitUtil.MAX_RETRIES, GitUtil.RETRY_DELAY, 1000 * 60 * 10, command);
+
+		if (executionResult.getExitValue() != 0) {
+			throw new RuntimeException(
+				JenkinsResultsParserUtil.combine(
+					"Unable to get local Git branch SHAs\n",
+					executionResult.getStandardError()));
+		}
+
+		String input = executionResult.getStandardOut();
+
+		String[] inputLines = input.split("\n");
+
+		Map<String, String> localGitBranchesShaMap = new HashMap<>(
+			inputLines.length);
+
+		for (String line : inputLines) {
+			Matcher matcher = GitRemote.gitLsRemotePattern.matcher(line);
+
+			if (matcher.find()) {
+				localGitBranchesShaMap.put(
+					matcher.group("name"), matcher.group("sha"));
+			}
+		}
+
+		return localGitBranchesShaMap;
 	}
 
 	protected List<String> getLocalGitBranchNames() {

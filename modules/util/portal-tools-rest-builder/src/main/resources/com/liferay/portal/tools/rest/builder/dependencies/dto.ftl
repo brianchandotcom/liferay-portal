@@ -76,12 +76,29 @@ public class ${schemaName} {
 
 			sb.append("\"${javaMethodParameter.parameterName}\": ");
 
-			<#if javaMethodParameter.parameterType?ends_with("Date") || javaMethodParameter.parameterType?ends_with("String") || javaMethodParameter.parameterType?starts_with("[")>
-				sb.append("\"");
-				sb.append(${javaMethodParameter.parameterName});
-				sb.append("\"");
+			<#if javaMethodParameter.parameterType?starts_with("[")>
+				sb.append("[");
+				for (int i=0; i<${javaMethodParameter.parameterName}.length; i++){
+				<#if javaMethodParameter.parameterType?ends_with("Date;") || javaMethodParameter.parameterType?ends_with("String;")>
+					sb.append("\"");
+					sb.append(${javaMethodParameter.parameterName}[i]);
+					sb.append("\"");
+				<#else>
+					sb.append(${javaMethodParameter.parameterName}[i]);
+				</#if>
+					if(i < (keywords.length -1)) {
+						sb.append(",");
+					}
+				}
+				sb.append("]");
 			<#else>
-				sb.append(${javaMethodParameter.parameterName});
+				<#if javaMethodParameter.parameterType?ends_with("Date") || javaMethodParameter.parameterType?ends_with("String")>
+					sb.append("\"");
+					sb.append(${javaMethodParameter.parameterName});
+					sb.append("\"");
+				<#else>
+					sb.append(${javaMethodParameter.parameterName});
+				</#if>
 			</#if>
 		</#list>
 

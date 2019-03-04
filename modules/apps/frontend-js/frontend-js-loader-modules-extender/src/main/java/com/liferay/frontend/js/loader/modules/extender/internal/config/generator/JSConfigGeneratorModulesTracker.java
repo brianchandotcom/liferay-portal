@@ -60,7 +60,7 @@ public class JSConfigGeneratorModulesTracker
 
 		setDetails(Converter.cnv(Details.class, properties));
 
-		_jsConfigGeneratorModules.clear();
+		_jsConfigGeneratorPackages.clear();
 
 		_serviceTracker = ServiceTrackerFactory.open(
 			componentContext.getBundleContext(),
@@ -84,21 +84,21 @@ public class JSConfigGeneratorModulesTracker
 			return serviceReference;
 		}
 
-		JSConfigGeneratorModule jsConfigGeneratorModule =
-			new JSConfigGeneratorModule(
+		JSConfigGeneratorPackage jsConfigGeneratorPackage =
+			new JSConfigGeneratorPackage(
 				_details.applyVersioning(), serviceReference.getBundle(),
 				contextPath);
 
-		_jsConfigGeneratorModules.put(
-			serviceReference, jsConfigGeneratorModule);
+		_jsConfigGeneratorPackages.put(
+			serviceReference, jsConfigGeneratorPackage);
 
 		_lastModified = System.currentTimeMillis();
 
 		return serviceReference;
 	}
 
-	public Collection<JSConfigGeneratorModule> getJSConfigGeneratorModules() {
-		return _jsConfigGeneratorModules.values();
+	public Collection<JSConfigGeneratorPackage> getJSConfigGeneratorPackages() {
+		return _jsConfigGeneratorPackages.values();
 	}
 
 	public long getLastModified() {
@@ -124,13 +124,9 @@ public class JSConfigGeneratorModulesTracker
 		ServiceReference<ServletContext> serviceReference,
 		ServiceReference<ServletContext> trackedServiceReference) {
 
-		_jsConfigGeneratorModules.remove(serviceReference);
+		_jsConfigGeneratorPackages.remove(serviceReference);
 
 		_lastModified = System.currentTimeMillis();
-	}
-
-	protected void setDetails(Details details) {
-		_details = details;
 	}
 
 	@Deactivate
@@ -140,9 +136,14 @@ public class JSConfigGeneratorModulesTracker
 		_serviceTracker = null;
 	}
 
+	protected void setDetails(Details details) {
+		_details = details;
+	}
+
 	private volatile Details _details;
-	private final Map<ServiceReference<ServletContext>, JSConfigGeneratorModule>
-		_jsConfigGeneratorModules = new ConcurrentSkipListMap<>();
+	private final Map
+		<ServiceReference<ServletContext>, JSConfigGeneratorPackage>
+			_jsConfigGeneratorPackages = new ConcurrentSkipListMap<>();
 	private volatile long _lastModified = System.currentTimeMillis();
 	private ServiceTracker<ServletContext, ServiceReference<ServletContext>>
 		_serviceTracker;

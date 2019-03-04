@@ -49,9 +49,9 @@ import org.osgi.framework.wiring.BundleWiring;
 /**
  * @author Carlos Sierra Andrés
  */
-public class JSConfigGeneratorModule {
+public class JSConfigGeneratorPackage {
 
-	public JSConfigGeneratorModule(
+	public JSConfigGeneratorPackage(
 		boolean applyVersioning, Bundle bundle, String contextPath) {
 
 		_applyVersioning = applyVersioning;
@@ -318,7 +318,7 @@ public class JSConfigGeneratorModule {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		JSConfigGeneratorModule.class);
+		JSConfigGeneratorPackage.class);
 
 	private final boolean _applyVersioning;
 	private final Bundle _bundle;

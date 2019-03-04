@@ -14,8 +14,8 @@
 
 package com.liferay.frontend.js.loader.modules.extender.internal;
 
-import com.liferay.frontend.js.loader.modules.extender.internal.config.generator.JSConfigGeneratorModule;
 import com.liferay.frontend.js.loader.modules.extender.internal.config.generator.JSConfigGeneratorModulesTracker;
+import com.liferay.frontend.js.loader.modules.extender.internal.config.generator.JSConfigGeneratorPackage;
 import com.liferay.frontend.js.loader.modules.extender.npm.JSModule;
 import com.liferay.frontend.js.loader.modules.extender.npm.JSModuleAlias;
 import com.liferay.frontend.js.loader.modules.extender.npm.JSPackage;
@@ -167,29 +167,29 @@ public class JSLoaderModulesServlet extends HttpServlet {
 		String delimiter = "";
 		Set<String> processedNames = new HashSet<>();
 
-		for (JSConfigGeneratorModule jsConfigGeneratorModule :
+		for (JSConfigGeneratorPackage jsConfigGeneratorPackage :
 				_jsConfigGeneratorModulesTracker.
-					getJSConfigGeneratorModules()) {
+					getJSConfigGeneratorPackages()) {
 
-			if (processedNames.contains(jsConfigGeneratorModule.getName())) {
+			if (processedNames.contains(jsConfigGeneratorPackage.getName())) {
 				continue;
 			}
 
-			processedNames.add(jsConfigGeneratorModule.getName());
+			processedNames.add(jsConfigGeneratorPackage.getName());
 
 			printWriter.write(delimiter);
 			printWriter.write("\"");
-			printWriter.write(jsConfigGeneratorModule.getName());
+			printWriter.write(jsConfigGeneratorPackage.getName());
 			printWriter.write("\": \"");
-			printWriter.write(jsConfigGeneratorModule.getName());
+			printWriter.write(jsConfigGeneratorPackage.getName());
 			printWriter.write("@");
-			printWriter.write(jsConfigGeneratorModule.getVersion());
+			printWriter.write(jsConfigGeneratorPackage.getVersion());
 			printWriter.write("\"");
 
 			delimiter = ",\n";
 
 			String unversionedMapsConfiguration =
-				jsConfigGeneratorModule.getUnversionedMapsConfiguration();
+				jsConfigGeneratorPackage.getUnversionedMapsConfiguration();
 
 			if (!unversionedMapsConfiguration.equals("")) {
 				printWriter.write(delimiter);
@@ -264,19 +264,19 @@ public class JSLoaderModulesServlet extends HttpServlet {
 
 		delimiter = "";
 
-		for (JSConfigGeneratorModule jsConfigGeneratorModule :
+		for (JSConfigGeneratorPackage jsConfigGeneratorPackage :
 				_jsConfigGeneratorModulesTracker.
-					getJSConfigGeneratorModules()) {
+					getJSConfigGeneratorPackages()) {
 
 			String unversionedConfiguration =
-				jsConfigGeneratorModule.getUnversionedConfiguration();
+				jsConfigGeneratorPackage.getUnversionedConfiguration();
 
 			if (unversionedConfiguration.length() == 0) {
 				continue;
 			}
 
-			if (!processedNames.contains(jsConfigGeneratorModule.getName())) {
-				processedNames.add(jsConfigGeneratorModule.getName());
+			if (!processedNames.contains(jsConfigGeneratorPackage.getName())) {
+				processedNames.add(jsConfigGeneratorPackage.getName());
 
 				printWriter.write(delimiter);
 				printWriter.write(unversionedConfiguration);
@@ -285,7 +285,7 @@ public class JSLoaderModulesServlet extends HttpServlet {
 			}
 
 			String versionedConfiguration =
-				jsConfigGeneratorModule.getVersionedConfiguration();
+				jsConfigGeneratorPackage.getVersionedConfiguration();
 
 			if (versionedConfiguration.length() > 0) {
 				printWriter.write(delimiter);
@@ -406,29 +406,29 @@ public class JSLoaderModulesServlet extends HttpServlet {
 		String delimiter = "";
 		Set<String> processedNames = new HashSet<>();
 
-		for (JSConfigGeneratorModule jsConfigGeneratorModule :
+		for (JSConfigGeneratorPackage jsConfigGeneratorPackage :
 				_jsConfigGeneratorModulesTracker.
-					getJSConfigGeneratorModules()) {
+					getJSConfigGeneratorPackages()) {
 
 			printWriter.write(delimiter);
 			printWriter.write("\"");
-			printWriter.write(jsConfigGeneratorModule.getName());
+			printWriter.write(jsConfigGeneratorPackage.getName());
 			printWriter.write("@");
-			printWriter.write(jsConfigGeneratorModule.getVersion());
+			printWriter.write(jsConfigGeneratorPackage.getVersion());
 			printWriter.write("\": \"");
 			printWriter.write(_portal.getPathProxy());
-			printWriter.write(jsConfigGeneratorModule.getContextPath());
+			printWriter.write(jsConfigGeneratorPackage.getContextPath());
 			printWriter.write("\"");
 
-			if (!processedNames.contains(jsConfigGeneratorModule.getName())) {
-				processedNames.add(jsConfigGeneratorModule.getName());
+			if (!processedNames.contains(jsConfigGeneratorPackage.getName())) {
+				processedNames.add(jsConfigGeneratorPackage.getName());
 
 				printWriter.println(",");
 				printWriter.write("\"");
-				printWriter.write(jsConfigGeneratorModule.getName());
+				printWriter.write(jsConfigGeneratorPackage.getName());
 				printWriter.write("\": \"");
 				printWriter.write(_portal.getPathProxy());
-				printWriter.write(jsConfigGeneratorModule.getContextPath());
+				printWriter.write(jsConfigGeneratorPackage.getContextPath());
 				printWriter.write("\"");
 			}
 

@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutRevision;
 import com.liferay.portal.kernel.model.LayoutType;
+import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.service.LayoutLocalService;
@@ -42,6 +43,7 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.webserver.WebServerServletTokenUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.xml.Element;
+import com.liferay.site.navigation.constants.SiteNavigationWebKeys;
 import com.liferay.site.navigation.menu.item.layout.constants.SiteNavigationMenuItemTypeConstants;
 import com.liferay.site.navigation.menu.item.layout.internal.constants.SiteNavigationMenuItemTypeLayoutWebKeys;
 import com.liferay.site.navigation.model.SiteNavigationMenuItem;
@@ -186,21 +188,26 @@ public class LayoutSiteNavigationMenuItemType
 	public String getTitle(
 		SiteNavigationMenuItem siteNavigationMenuItem, Locale locale) {
 
-		String label = getName(siteNavigationMenuItem.getTypeSettings());
+		UnicodeProperties typeSettingsProperties = new UnicodeProperties();
 
-		if (Validator.isNotNull(label) &&
-			!_isUseLayoutName(siteNavigationMenuItem)) {
+		typeSettingsProperties.fastLoad(
+			siteNavigationMenuItem.getTypeSettings());
 
-			return label;
-		}
+		String defaultLanguageId = typeSettingsProperties.getProperty(
+			Field.DEFAULT_LANGUAGE_ID,
+			LocaleUtil.toLanguageId(LocaleUtil.getMostRelevantLocale()));
+
+		String defaultTitle = typeSettingsProperties.getProperty(
+			"name_" + defaultLanguageId);
 
 		Layout layout = _fetchLayout(siteNavigationMenuItem);
 
 		if (layout != null) {
-			return layout.getName(locale);
+			defaultTitle = layout.getName(locale);
 		}
 
-		return getLabel(locale);
+		return typeSettingsProperties.getProperty(
+			"name_" + LocaleUtil.toLanguageId(locale), defaultTitle);
 	}
 
 	@Override
@@ -392,8 +399,8 @@ public class LayoutSiteNavigationMenuItemType
 			WebKeys.TITLE,
 			getTitle(siteNavigationMenuItem, themeDisplay.getLocale()));
 		request.setAttribute(
-			SiteNavigationMenuItemTypeLayoutWebKeys.USE_LAYOUT_NAME,
-			_isUseLayoutName(siteNavigationMenuItem));
+			SiteNavigationWebKeys.SITE_NAVIGATION_MENU_ITEM,
+			siteNavigationMenuItem);
 
 		_jspRenderer.renderJSP(
 			_servletContext, request, response, "/edit_layout.jsp");
@@ -429,19 +436,6 @@ public class LayoutSiteNavigationMenuItemType
 
 		return _layoutLocalService.getLayoutByUuidAndGroupId(
 			layoutUuid, siteNavigationMenuItem.getGroupId(), privateLayout);
-	}
-
-	private boolean _isUseLayoutName(
-		SiteNavigationMenuItem siteNavigationMenuItem) {
-
-		UnicodeProperties typeSettingsProperties = new UnicodeProperties();
-
-		typeSettingsProperties.fastLoad(
-			siteNavigationMenuItem.getTypeSettings());
-
-		return GetterUtil.getBoolean(
-			typeSettingsProperties.get("useLayoutName"),
-			Validator.isNull(typeSettingsProperties.get("name")));
 	}
 
 	@Reference

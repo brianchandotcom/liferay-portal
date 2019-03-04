@@ -13,10 +13,6 @@
 			/>
 			<fileset
 				dir="${sdk.dir}/dist"
-				includes="com.liferay.commerce.*.jar"
-			/>
-			<fileset
-				dir="${sdk.dir}/dist"
 				includes="com.liferay.dynamic.data.*.jar"
 			/>
 			<fileset

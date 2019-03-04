@@ -4,9 +4,16 @@
  * FloatingToolbarMappingPanel
  */
 {template .render}
+	{@param? _handleSourceOptionChange: any}
+	{@param? _mappingSources: ?}
+	{@param? _selectedSourceId: string}
+
 	<div class="floating-toolbar-mapping-panel">
 		<div class="form-group">
 			{call .sourceSelect}
+				{param handleSourceOptionChange: $_handleSourceOptionChange /}
+				{param mappingSources: $_mappingSources /}
+				{param selectedSourceId: $_selectedSourceId /}
 			{/call}
 		</div>
 
@@ -77,13 +84,26 @@
  * Source select
  */
 {template .sourceSelect}
+	{@param? handleSourceOptionChange: any}
+	{@param? mappingSources: ?}
+	{@param? selectedSourceId: string}
+
 	<label for="floatingToolbarMappingPanelSourceSelect">
 		{msg desc=""}source{/msg}
 	</label>
 
 	<select
 		class="form-control form-control-sm"
+		data-onchange="{$handleSourceOptionChange}"
 		id="floatingToolbarMappingPanelSourceSelect"
 	>
+		{foreach $source in $mappingSources}
+			{call .selectOption}
+				{param optionId: $source.id /}
+				{param optionLabel: $source.label /}
+				{param key: $source.id /}
+				{param selectedId: $selectedSourceId /}
+			{/call}
+		{/foreach}
 	</select>
 {/template}

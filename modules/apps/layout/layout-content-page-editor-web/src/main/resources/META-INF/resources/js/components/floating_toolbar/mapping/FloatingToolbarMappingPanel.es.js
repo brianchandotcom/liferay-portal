@@ -60,6 +60,17 @@ class FloatingToolbarMappingPanel extends Component {
 		return nextState;
 	}
 
+	/**
+	 * Handle source option change
+	 * @param {Event} event
+	 * @private
+	 * @review
+	 */
+	_handleSourceOptionChange(event) {
+		this._selectedSourceId = event.delegateTarget.value;
+	}
+}
+
 /**
  * State definition.
  * @review
@@ -86,7 +97,17 @@ FloatingToolbarMappingPanel.STATE = {
 	 */
 	itemId: Config
 		.string()
-		.required()
+		.required(),
+
+	/**
+	 * @default undefined
+	 * @memberof FloatingToolbarMappingPanel
+	 * @review
+	 * @type {!string}
+	 */
+	_selectedSourceId: Config
+		.oneOf([MAPPING_SOURCE_SPECIFIC_CONTENT_KEY, MAPPING_SOURCE_SUBTYPE_KEY])
+		.value(MAPPING_SOURCE_SUBTYPE_KEY)
 };
 
 const ConnectedFloatingToolbarMappingPanel = getConnectedComponent(

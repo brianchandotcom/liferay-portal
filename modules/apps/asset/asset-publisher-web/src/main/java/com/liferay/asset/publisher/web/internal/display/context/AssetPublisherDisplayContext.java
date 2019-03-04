@@ -75,7 +75,6 @@ import com.liferay.portal.kernel.util.StringComparator;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portal.util.PropsValues;
 import com.liferay.rss.util.RSSUtil;
 
 import java.io.Serializable;
@@ -1208,8 +1207,7 @@ public class AssetPublisherDisplayContext {
 		}
 
 		_enableViewCountIncrement = GetterUtil.getBoolean(
-			_portletPreferences.getValue("enableViewCountIncrement", null),
-			PropsValues.ASSET_ENTRY_BUFFERED_INCREMENT_ENABLED);
+			_portletPreferences.getValue("enableViewCountIncrement", null));
 
 		return _enableViewCountIncrement;
 	}

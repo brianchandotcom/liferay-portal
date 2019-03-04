@@ -59,6 +59,7 @@ import com.liferay.journal.util.JournalContent;
 import com.liferay.journal.util.JournalConverter;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.events.EventsProcessorUtil;
+import com.liferay.portal.kernel.comment.CommentManager;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -415,6 +416,18 @@ public class StructuredContentResourceImpl
 			sorts);
 	}
 
+	private boolean _hasComments(JournalArticle journalArticle) {
+		int count = _commentManager.getCommentsCount(
+			JournalArticle.class.getName(),
+			journalArticle.getResourcePrimKey());
+
+		if (count > 0) {
+			return true;
+		}
+
+		return false;
+	}
+
 	private ContentField _toContentField(
 			DDMStructure ddmStructure, Fields fields, String fieldName)
 		throws Exception {
@@ -649,6 +662,7 @@ public class StructuredContentResourceImpl
 				datePublished = journalArticle.getDisplayDate();
 				description = journalArticle.getDescription(
 					contextAcceptLanguage.getPreferredLocale());
+				hasComments = _hasComments(journalArticle);
 				id = journalArticle.getResourcePrimKey();
 				keywords = ListUtil.toArray(
 					_assetTagLocalService.getTags(
@@ -802,6 +816,9 @@ public class StructuredContentResourceImpl
 
 	@Reference
 	private AssetTagLocalService _assetTagLocalService;
+
+	@Reference
+	private CommentManager _commentManager;
 
 	@Context
 	private HttpServletRequest _contextHttpServletRequest;

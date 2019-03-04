@@ -22,29 +22,6 @@ import com.liferay.portal.kernel.model.Company;
  */
 public class SendPasswordException extends PortalException {
 
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), replaced by the inner classes
-	 */
-	@Deprecated
-	public SendPasswordException() {
-	}
-
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), replaced by the inner classes
-	 */
-	@Deprecated
-	public SendPasswordException(String msg, Throwable cause) {
-		super(msg, cause);
-	}
-
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), replaced by the inner classes
-	 */
-	@Deprecated
-	public SendPasswordException(Throwable cause) {
-		super(cause);
-	}
-
 	public static class MustBeEnabled extends SendPasswordException {
 
 		public MustBeEnabled(Company company) {

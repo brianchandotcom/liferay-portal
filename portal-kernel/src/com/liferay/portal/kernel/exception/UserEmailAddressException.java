@@ -29,31 +29,8 @@ public class UserEmailAddressException extends PortalException {
 	 * @deprecated As of Wilberforce (7.0.x), replaced by the inner classes
 	 */
 	@Deprecated
-	public UserEmailAddressException() {
-	}
-
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), replaced by the inner classes
-	 */
-	@Deprecated
 	public UserEmailAddressException(String msg) {
 		super(msg);
-	}
-
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), replaced by the inner classes
-	 */
-	@Deprecated
-	public UserEmailAddressException(String msg, Throwable cause) {
-		super(msg, cause);
-	}
-
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), replaced by the inner classes
-	 */
-	@Deprecated
-	public UserEmailAddressException(Throwable cause) {
-		super(cause);
 	}
 
 	public static class MustBeEqual extends UserEmailAddressException {

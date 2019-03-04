@@ -99,9 +99,7 @@ public class TypeFacetPortletPreferencesImpl
 	public String[] getCurrentAssetTypesArray(long companyId) {
 		Optional<String[]> assetTypesOptional = getAssetTypesArray();
 
-		String[] allAssetTypes = getAllAssetTypes(companyId);
-
-		return assetTypesOptional.orElse(allAssetTypes);
+		return assetTypesOptional.orElseGet(() -> getAllAssetTypes(companyId));
 	}
 
 	@Override

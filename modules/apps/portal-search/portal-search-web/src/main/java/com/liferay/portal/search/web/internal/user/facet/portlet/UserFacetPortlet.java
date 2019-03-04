@@ -14,12 +14,10 @@
 
 package com.liferay.portal.search.web.internal.user.facet.portlet;
 
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.search.facet.Facet;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portal.search.facet.user.UserFacetFactory;
 import com.liferay.portal.search.web.internal.facet.display.builder.UserSearchFacetDisplayBuilder;
 import com.liferay.portal.search.web.internal.facet.display.context.UserSearchFacetDisplayContext;
 import com.liferay.portal.search.web.internal.user.facet.constants.UserFacetPortletKeys;
@@ -132,15 +130,7 @@ public class UserFacetPortlet extends MVCPortlet {
 	}
 
 	protected String getAggregationName(RenderRequest renderRequest) {
-		String portletId = portal.getPortletId(renderRequest);
-
-		return getFieldName() + StringPool.PERIOD + portletId;
-	}
-
-	protected String getFieldName() {
-		Facet facet = userFacetFactory.newInstance(null);
-
-		return facet.getFieldName();
+		return portal.getPortletId(renderRequest);
 	}
 
 	protected Optional<List<String>> getParameterValuesOptional(
@@ -160,8 +150,5 @@ public class UserFacetPortlet extends MVCPortlet {
 
 	@Reference
 	protected PortletSharedSearchRequest portletSharedSearchRequest;
-
-	@Reference
-	protected UserFacetFactory userFacetFactory;
 
 }

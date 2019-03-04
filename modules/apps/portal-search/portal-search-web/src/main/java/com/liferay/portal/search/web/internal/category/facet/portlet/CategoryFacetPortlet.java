@@ -15,13 +15,11 @@
 package com.liferay.portal.search.web.internal.category.facet.portlet;
 
 import com.liferay.asset.kernel.service.AssetCategoryLocalService;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.search.facet.Facet;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portal.search.facet.category.CategoryFacetFactory;
 import com.liferay.portal.search.web.internal.category.facet.builder.AssetCategoriesFacetConfiguration;
 import com.liferay.portal.search.web.internal.category.facet.builder.AssetCategoriesFacetConfigurationImpl;
 import com.liferay.portal.search.web.internal.category.facet.constants.CategoryFacetPortletKeys;
@@ -153,22 +151,11 @@ public class CategoryFacetPortlet extends MVCPortlet {
 	}
 
 	protected String getAggregationName(RenderRequest renderRequest) {
-		String portletId = portal.getPortletId(renderRequest);
-
-		return getFieldName() + StringPool.PERIOD + portletId;
-	}
-
-	protected String getFieldName() {
-		Facet facet = categoryFacetFactory.newInstance(null);
-
-		return facet.getFieldName();
+		return portal.getPortletId(renderRequest);
 	}
 
 	@Reference
 	protected AssetCategoryLocalService assetCategoryLocalService;
-
-	@Reference
-	protected CategoryFacetFactory categoryFacetFactory;
 
 	@Reference
 	protected Portal portal;

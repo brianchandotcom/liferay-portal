@@ -14,15 +14,12 @@
 
 package com.liferay.portal.search.web.internal.type.facet.portlet.shared.search;
 
-import com.liferay.portal.kernel.search.SearchContext;
-import com.liferay.portal.kernel.search.facet.Facet;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.search.facet.type.AssetEntriesFacetFactory;
+import com.liferay.portal.search.facet.type.TypeFacetSearchContributor;
+import com.liferay.portal.search.searcher.SearchRequestBuilder;
 import com.liferay.portal.search.web.internal.type.facet.constants.TypeFacetPortletKeys;
-import com.liferay.portal.search.web.internal.type.facet.portlet.AssetEntriesFacetBuilder;
 import com.liferay.portal.search.web.internal.type.facet.portlet.TypeFacetPortletPreferences;
 import com.liferay.portal.search.web.internal.type.facet.portlet.TypeFacetPortletPreferencesImpl;
-import com.liferay.portal.search.web.internal.util.SearchOptionalUtil;
 import com.liferay.portal.search.web.portlet.shared.search.PortletSharedSearchContributor;
 import com.liferay.portal.search.web.portlet.shared.search.PortletSharedSearchSettings;
 
@@ -46,54 +43,31 @@ public class TypeFacetPortletSharedSearchContributor
 
 		TypeFacetPortletPreferences typeFacetPortletPreferences =
 			new TypeFacetPortletPreferencesImpl(
-				portletSharedSearchSettings.getPortletPreferences());
+				portletSharedSearchSettings.getPortletPreferencesOptional());
 
-		Facet facet = buildFacet(
-			typeFacetPortletPreferences, portletSharedSearchSettings);
+		SearchRequestBuilder searchRequestBuilder =
+			portletSharedSearchSettings.getSearchRequestBuilder();
 
-		portletSharedSearchSettings.addFacet(facet);
+		typeFacetSearchContributor.contribute(
+			searchRequestBuilder,
+			siteFacetBuilder -> siteFacetBuilder.aggregationName(
+				portletSharedSearchSettings.getPortletId()
+			).frequencyThreshold(
+				typeFacetPortletPreferences.getFrequencyThreshold()
+			).selectedEntryClassNames(
+				portletSharedSearchSettings.getParameterValues(
+					typeFacetPortletPreferences.getParameterName())
+			));
 
 		ThemeDisplay themeDisplay =
 			portletSharedSearchSettings.getThemeDisplay();
 
-		SearchContext searchContext =
-			portletSharedSearchSettings.getSearchContext();
-
-		searchContext.setEntryClassNames(
-			getAssetTypesClassNames(typeFacetPortletPreferences, themeDisplay));
-	}
-
-	protected Facet buildFacet(
-		TypeFacetPortletPreferences typeFacetPortletPreferences,
-		PortletSharedSearchSettings portletSharedSearchSettings) {
-
-		AssetEntriesFacetBuilder assetEntriesFacetBuilder =
-			new AssetEntriesFacetBuilder(assetEntriesFacetFactory);
-
-		assetEntriesFacetBuilder.setFrequencyThreshold(
-			typeFacetPortletPreferences.getFrequencyThreshold());
-		assetEntriesFacetBuilder.setPortletId(
-			portletSharedSearchSettings.getPortletId());
-		assetEntriesFacetBuilder.setSearchContext(
-			portletSharedSearchSettings.getSearchContext());
-
-		SearchOptionalUtil.copy(
-			() -> portletSharedSearchSettings.getParameterValues(
-				typeFacetPortletPreferences.getParameterName()),
-			assetEntriesFacetBuilder::setSelectedEntryClassNames);
-
-		return assetEntriesFacetBuilder.build();
-	}
-
-	protected String[] getAssetTypesClassNames(
-		TypeFacetPortletPreferences typeFacetPortletPreferences,
-		ThemeDisplay themeDisplay) {
-
-		return typeFacetPortletPreferences.getCurrentAssetTypesArray(
-			themeDisplay.getCompanyId());
+		searchRequestBuilder.entryClassNames(
+			typeFacetPortletPreferences.getCurrentAssetTypesArray(
+				themeDisplay.getCompanyId()));
 	}
 
 	@Reference
-	protected AssetEntriesFacetFactory assetEntriesFacetFactory;
+	protected TypeFacetSearchContributor typeFacetSearchContributor;
 
 }

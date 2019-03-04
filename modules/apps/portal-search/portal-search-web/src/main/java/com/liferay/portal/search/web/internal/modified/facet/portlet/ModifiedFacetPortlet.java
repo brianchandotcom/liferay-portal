@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.search.facet.modified.ModifiedFacetFactory;
+import com.liferay.portal.search.searcher.SearchResponse;
 import com.liferay.portal.search.web.internal.display.context.PortletRequestThemeDisplaySupplier;
 import com.liferay.portal.search.web.internal.display.context.ThemeDisplaySupplier;
 import com.liferay.portal.search.web.internal.modified.facet.constants.ModifiedFacetPortletKeys;
@@ -140,8 +141,10 @@ public class ModifiedFacetPortlet extends MVCPortlet {
 				parameterName + "To", renderRequest),
 			modifiedFacetDisplayBuilder::setToParameterValue);
 
-		modifiedFacetDisplayBuilder.setTotalHits(
-			portletSharedSearchResponse.getTotalHits());
+		SearchResponse searchResponse =
+			portletSharedSearchResponse.getSearchResponse();
+
+		modifiedFacetDisplayBuilder.setTotalHits(searchResponse.getTotalHits());
 
 		return modifiedFacetDisplayBuilder.build();
 	}

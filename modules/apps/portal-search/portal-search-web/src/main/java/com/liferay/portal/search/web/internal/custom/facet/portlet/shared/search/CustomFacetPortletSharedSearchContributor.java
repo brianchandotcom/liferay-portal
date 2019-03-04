@@ -14,10 +14,7 @@
 
 package com.liferay.portal.search.web.internal.custom.facet.portlet.shared.search;
 
-import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.search.facet.Facet;
-import com.liferay.portal.search.facet.custom.CustomFacetFactory;
-import com.liferay.portal.search.web.internal.custom.facet.builder.CustomFacetBuilder;
+import com.liferay.portal.search.facet.custom.CustomFacetSearchContributor;
 import com.liferay.portal.search.web.internal.custom.facet.constants.CustomFacetPortletKeys;
 import com.liferay.portal.search.web.internal.custom.facet.portlet.CustomFacetPortletPreferences;
 import com.liferay.portal.search.web.internal.custom.facet.portlet.CustomFacetPortletPreferencesImpl;
@@ -25,8 +22,6 @@ import com.liferay.portal.search.web.portlet.shared.search.PortletSharedSearchCo
 import com.liferay.portal.search.web.portlet.shared.search.PortletSharedSearchSettings;
 
 import java.util.Optional;
-import java.util.function.Consumer;
-import java.util.function.Supplier;
 import java.util.stream.Stream;
 
 import org.osgi.service.component.annotations.Component;
@@ -49,57 +44,22 @@ public class CustomFacetPortletSharedSearchContributor
 
 		CustomFacetPortletPreferences customFacetPortletPreferences =
 			new CustomFacetPortletPreferencesImpl(
-				portletSharedSearchSettings.getPortletPreferences());
+				portletSharedSearchSettings.getPortletPreferencesOptional());
 
 		Optional<String> fieldToAggregateOptional =
 			customFacetPortletPreferences.getAggregationFieldOptional();
 
 		fieldToAggregateOptional.ifPresent(
-			fieldToAggregate -> {
-				Facet facet = buildFacet(
-					fieldToAggregate, customFacetPortletPreferences,
-					portletSharedSearchSettings);
-
-				portletSharedSearchSettings.addFacet(facet);
-			});
-	}
-
-	protected Facet buildFacet(
-		String fieldToAggregate,
-		CustomFacetPortletPreferences customFacetPortletPreferences,
-		PortletSharedSearchSettings portletSharedSearchSettings) {
-
-		CustomFacetBuilder customFacetBuilder = new CustomFacetBuilder(
-			customFacetFactory);
-
-		customFacetBuilder.setAggregationName(
-			getAggregationName(
-				customFacetPortletPreferences,
-				portletSharedSearchSettings.getPortletId()));
-		customFacetBuilder.setFieldToAggregate(fieldToAggregate);
-		customFacetBuilder.setSearchContext(
-			portletSharedSearchSettings.getSearchContext());
-
-		copy(
-			() -> portletSharedSearchSettings.getParameterValues(
-				getParameterName(customFacetPortletPreferences)),
-			customFacetBuilder::setSelectedValues);
-
-		return customFacetBuilder.build();
-	}
-
-	protected <T> void copy(Supplier<Optional<T>> from, Consumer<T> to) {
-		Optional<T> optional = from.get();
-
-		optional.ifPresent(to);
-	}
-
-	protected String getAggregationName(
-		CustomFacetPortletPreferences customFacetPortletPreferences,
-		String portletId) {
-
-		return customFacetPortletPreferences.getAggregationFieldString() +
-			StringPool.PERIOD + portletId;
+			fieldToAggregate -> customFacetSearchContributor.contribute(
+				portletSharedSearchSettings.getSearchRequestBuilder(),
+				customFacetBuilder -> customFacetBuilder.aggregationName(
+					portletSharedSearchSettings.getPortletId()
+				).fieldToAggregate(
+					fieldToAggregate
+				).selectedValues(
+					portletSharedSearchSettings.getParameterValues(
+						getParameterName(customFacetPortletPreferences))
+				)));
 	}
 
 	protected String getParameterName(
@@ -118,6 +78,6 @@ public class CustomFacetPortletSharedSearchContributor
 	}
 
 	@Reference
-	protected CustomFacetFactory customFacetFactory;
+	protected CustomFacetSearchContributor customFacetSearchContributor;
 
 }

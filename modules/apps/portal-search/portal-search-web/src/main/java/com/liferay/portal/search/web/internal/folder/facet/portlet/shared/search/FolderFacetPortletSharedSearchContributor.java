@@ -14,20 +14,17 @@
 
 package com.liferay.portal.search.web.internal.folder.facet.portlet.shared.search;
 
-import com.liferay.portal.kernel.search.facet.Facet;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
-import com.liferay.portal.search.facet.folder.FolderFacetFactory;
+import com.liferay.portal.search.facet.folder.FolderFacetSearchContributor;
 import com.liferay.portal.search.web.internal.folder.facet.constants.FolderFacetPortletKeys;
-import com.liferay.portal.search.web.internal.folder.facet.portlet.FolderFacetBuilder;
 import com.liferay.portal.search.web.internal.folder.facet.portlet.FolderFacetPortletPreferences;
 import com.liferay.portal.search.web.internal.folder.facet.portlet.FolderFacetPortletPreferencesImpl;
-import com.liferay.portal.search.web.internal.util.SearchOptionalUtil;
 import com.liferay.portal.search.web.portlet.shared.search.PortletSharedSearchContributor;
 import com.liferay.portal.search.web.portlet.shared.search.PortletSharedSearchSettings;
 
 import java.util.Arrays;
-import java.util.Optional;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -49,46 +46,33 @@ public class FolderFacetPortletSharedSearchContributor
 
 		FolderFacetPortletPreferences folderFacetPortletPreferences =
 			new FolderFacetPortletPreferencesImpl(
-				portletSharedSearchSettings.getPortletPreferences());
+				portletSharedSearchSettings.getPortletPreferencesOptional());
 
-		Facet facet = buildFacet(
-			folderFacetPortletPreferences, portletSharedSearchSettings);
-
-		portletSharedSearchSettings.addFacet(facet);
+		folderFacetSearchContributor.contribute(
+			portletSharedSearchSettings.getSearchRequestBuilder(),
+			siteFacetBuilder -> siteFacetBuilder.aggregationName(
+				portletSharedSearchSettings.getPortletId()
+			).frequencyThreshold(
+				folderFacetPortletPreferences.getFrequencyThreshold()
+			).maxTerms(
+				folderFacetPortletPreferences.getMaxTerms()
+			).selectedFolderIds(
+				toLongArray(
+					portletSharedSearchSettings.getParameterValues(
+						folderFacetPortletPreferences.getParameterName()))
+			));
 	}
 
-	protected Facet buildFacet(
-		FolderFacetPortletPreferences folderFacetPortletPreferences,
-		PortletSharedSearchSettings portletSharedSearchSettings) {
+	protected static long[] toLongArray(String[] parameterValues) {
+		if (!ArrayUtil.isEmpty(parameterValues)) {
+			return ListUtil.toLongArray(
+				Arrays.asList(parameterValues), GetterUtil::getLong);
+		}
 
-		FolderFacetBuilder folderFacetBuilder = new FolderFacetBuilder(
-			folderFacetFactory);
-
-		folderFacetBuilder.setFrequencyThreshold(
-			folderFacetPortletPreferences.getFrequencyThreshold());
-		folderFacetBuilder.setMaxTerms(
-			folderFacetPortletPreferences.getMaxTerms());
-		folderFacetBuilder.setPortletId(
-			portletSharedSearchSettings.getPortletId());
-		folderFacetBuilder.setSearchContext(
-			portletSharedSearchSettings.getSearchContext());
-
-		SearchOptionalUtil.copy(
-			() -> {
-				Optional<String[]> optional =
-					portletSharedSearchSettings.getParameterValues(
-						folderFacetPortletPreferences.getParameterName());
-
-				return optional.map(
-					parameterValues -> ListUtil.toLongArray(
-						Arrays.asList(parameterValues), GetterUtil::getLong));
-			},
-			folderFacetBuilder::setSelectedFolderIds);
-
-		return folderFacetBuilder.build();
+		return new long[0];
 	}
 
 	@Reference
-	protected FolderFacetFactory folderFacetFactory;
+	protected FolderFacetSearchContributor folderFacetSearchContributor;
 
 }

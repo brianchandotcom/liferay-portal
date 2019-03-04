@@ -14,13 +14,10 @@
 
 package com.liferay.portal.search.web.internal.site.facet.portlet.shared.search;
 
-import com.liferay.portal.kernel.search.facet.Facet;
-import com.liferay.portal.search.facet.site.SiteFacetFactory;
+import com.liferay.portal.search.facet.site.SiteFacetSearchContributor;
 import com.liferay.portal.search.web.internal.site.facet.constants.SiteFacetPortletKeys;
-import com.liferay.portal.search.web.internal.site.facet.portlet.ScopeFacetBuilder;
 import com.liferay.portal.search.web.internal.site.facet.portlet.SiteFacetPortletPreferences;
 import com.liferay.portal.search.web.internal.site.facet.portlet.SiteFacetPortletPreferencesImpl;
-import com.liferay.portal.search.web.internal.util.SearchOptionalUtil;
 import com.liferay.portal.search.web.portlet.shared.search.PortletSharedSearchContributor;
 import com.liferay.portal.search.web.portlet.shared.search.PortletSharedSearchSettings;
 
@@ -44,39 +41,23 @@ public class SiteFacetPortletSharedSearchContributor
 
 		SiteFacetPortletPreferences siteFacetPortletPreferences =
 			new SiteFacetPortletPreferencesImpl(
-				portletSharedSearchSettings.getPortletPreferences());
+				portletSharedSearchSettings.getPortletPreferencesOptional());
 
-		Facet facet = buildFacet(
-			siteFacetPortletPreferences, portletSharedSearchSettings);
-
-		portletSharedSearchSettings.addFacet(facet);
-	}
-
-	protected Facet buildFacet(
-		SiteFacetPortletPreferences siteFacetPortletPreferences,
-		PortletSharedSearchSettings portletSharedSearchSettings) {
-
-		ScopeFacetBuilder scopeFacetBuilder = new ScopeFacetBuilder(
-			siteFacetFactory);
-
-		scopeFacetBuilder.setFrequencyThreshold(
-			siteFacetPortletPreferences.getFrequencyThreshold());
-		scopeFacetBuilder.setMaxTerms(
-			siteFacetPortletPreferences.getMaxTerms());
-		scopeFacetBuilder.setPortletId(
-			portletSharedSearchSettings.getPortletId());
-		scopeFacetBuilder.setSearchContext(
-			portletSharedSearchSettings.getSearchContext());
-
-		SearchOptionalUtil.copy(
-			() -> portletSharedSearchSettings.getParameterValues(
-				siteFacetPortletPreferences.getParameterName()),
-			scopeFacetBuilder::setSelectedGroupIds);
-
-		return scopeFacetBuilder.build();
+		siteFacetSearchContributor.contribute(
+			portletSharedSearchSettings.getSearchRequestBuilder(),
+			siteFacetBuilder -> siteFacetBuilder.aggregationName(
+				portletSharedSearchSettings.getPortletId()
+			).frequencyThreshold(
+				siteFacetPortletPreferences.getFrequencyThreshold()
+			).maxTerms(
+				siteFacetPortletPreferences.getMaxTerms()
+			).selectedGroupIds(
+				portletSharedSearchSettings.getParameterValues(
+					siteFacetPortletPreferences.getParameterName())
+			));
 	}
 
 	@Reference
-	protected SiteFacetFactory siteFacetFactory;
+	protected SiteFacetSearchContributor siteFacetSearchContributor;
 
 }

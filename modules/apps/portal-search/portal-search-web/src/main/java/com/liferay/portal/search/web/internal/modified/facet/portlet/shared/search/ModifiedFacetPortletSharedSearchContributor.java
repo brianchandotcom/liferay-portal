@@ -54,7 +54,7 @@ public class ModifiedFacetPortletSharedSearchContributor
 
 		ModifiedFacetPortletPreferences modifiedFacetPortletPreferences =
 			new ModifiedFacetPortletPreferencesImpl(
-				portletSharedSearchSettings.getPortletPreferences());
+				portletSharedSearchSettings.getPortletPreferencesOptional());
 
 		portletSharedSearchSettings.addFacet(
 			buildFacet(
@@ -79,17 +79,16 @@ public class ModifiedFacetPortletSharedSearchContributor
 		String parameterName =
 			modifiedFacetPortletPreferences.getParameterName();
 
-		SearchOptionalUtil.copy(
-			() -> portletSharedSearchSettings.getParameterValues(parameterName),
-			modifiedFacetBuilder::setSelectedRanges);
+		modifiedFacetBuilder.setSelectedRanges(
+			portletSharedSearchSettings.getParameterValues(parameterName));
 
 		SearchOptionalUtil.copy(
-			() -> portletSharedSearchSettings.getParameter(
+			() -> portletSharedSearchSettings.getParameterOptional(
 				parameterName + "From"),
 			modifiedFacetBuilder::setCustomRangeFrom);
 
 		SearchOptionalUtil.copy(
-			() -> portletSharedSearchSettings.getParameter(
+			() -> portletSharedSearchSettings.getParameterOptional(
 				parameterName + "To"),
 			modifiedFacetBuilder::setCustomRangeTo);
 

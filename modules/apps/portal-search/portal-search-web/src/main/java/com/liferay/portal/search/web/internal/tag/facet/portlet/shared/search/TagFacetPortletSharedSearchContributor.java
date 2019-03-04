@@ -14,13 +14,10 @@
 
 package com.liferay.portal.search.web.internal.tag.facet.portlet.shared.search;
 
-import com.liferay.portal.kernel.search.facet.Facet;
-import com.liferay.portal.search.facet.tag.AssetTagNamesFacetFactory;
-import com.liferay.portal.search.web.internal.tag.facet.builder.AssetTagsFacetBuilder;
+import com.liferay.portal.search.facet.tag.TagFacetSearchContributor;
 import com.liferay.portal.search.web.internal.tag.facet.constants.TagFacetPortletKeys;
 import com.liferay.portal.search.web.internal.tag.facet.portlet.TagFacetPortletPreferences;
 import com.liferay.portal.search.web.internal.tag.facet.portlet.TagFacetPortletPreferencesImpl;
-import com.liferay.portal.search.web.internal.util.SearchOptionalUtil;
 import com.liferay.portal.search.web.portlet.shared.search.PortletSharedSearchContributor;
 import com.liferay.portal.search.web.portlet.shared.search.PortletSharedSearchSettings;
 
@@ -44,39 +41,23 @@ public class TagFacetPortletSharedSearchContributor
 
 		TagFacetPortletPreferences tagFacetPortletPreferences =
 			new TagFacetPortletPreferencesImpl(
-				portletSharedSearchSettings.getPortletPreferences());
+				portletSharedSearchSettings.getPortletPreferencesOptional());
 
-		Facet facet = buildFacet(
-			tagFacetPortletPreferences, portletSharedSearchSettings);
-
-		portletSharedSearchSettings.addFacet(facet);
-	}
-
-	protected Facet buildFacet(
-		TagFacetPortletPreferences tagFacetPortletPreferences,
-		PortletSharedSearchSettings portletSharedSearchSettings) {
-
-		AssetTagsFacetBuilder assetTagsFacetBuilder = new AssetTagsFacetBuilder(
-			assetTagNamesFacetFactory);
-
-		assetTagsFacetBuilder.setFrequencyThreshold(
-			tagFacetPortletPreferences.getFrequencyThreshold());
-		assetTagsFacetBuilder.setMaxTerms(
-			tagFacetPortletPreferences.getMaxTerms());
-		assetTagsFacetBuilder.setPortletId(
-			portletSharedSearchSettings.getPortletId());
-		assetTagsFacetBuilder.setSearchContext(
-			portletSharedSearchSettings.getSearchContext());
-
-		SearchOptionalUtil.copy(
-			() -> portletSharedSearchSettings.getParameterValues(
-				tagFacetPortletPreferences.getParameterName()),
-			assetTagsFacetBuilder::setSelectedTagNames);
-
-		return assetTagsFacetBuilder.build();
+		tagFacetSearchContributor.contribute(
+			portletSharedSearchSettings.getSearchRequestBuilder(),
+			siteFacetBuilder -> siteFacetBuilder.aggregationName(
+				portletSharedSearchSettings.getPortletId()
+			).frequencyThreshold(
+				tagFacetPortletPreferences.getFrequencyThreshold()
+			).maxTerms(
+				tagFacetPortletPreferences.getMaxTerms()
+			).selectedTagNames(
+				portletSharedSearchSettings.getParameterValues(
+					tagFacetPortletPreferences.getParameterName())
+			));
 	}
 
 	@Reference
-	protected AssetTagNamesFacetFactory assetTagNamesFacetFactory;
+	protected TagFacetSearchContributor tagFacetSearchContributor;
 
 }

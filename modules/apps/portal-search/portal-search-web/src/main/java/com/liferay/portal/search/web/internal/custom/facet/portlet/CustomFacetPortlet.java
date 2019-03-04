@@ -14,7 +14,6 @@
 
 package com.liferay.portal.search.web.internal.custom.facet.portlet;
 
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -109,10 +108,7 @@ public class CustomFacetPortlet extends MVCPortlet {
 			customFacetDisplayBuilder::setCustomDisplayCaption);
 
 		customFacetDisplayBuilder.setFacet(
-			portletSharedSearchResponse.getFacet(
-				getAggregationName(
-					customFacetPortletPreferences,
-					getPortletId(renderRequest))));
+			portletSharedSearchResponse.getFacet(getPortletId(renderRequest)));
 		customFacetDisplayBuilder.setFieldToAggregate(
 			customFacetPortletPreferences.getAggregationFieldString());
 		customFacetDisplayBuilder.setFrequenciesVisible(
@@ -132,14 +128,6 @@ public class CustomFacetPortlet extends MVCPortlet {
 			customFacetDisplayBuilder::setParameterValues);
 
 		return customFacetDisplayBuilder.build();
-	}
-
-	protected String getAggregationName(
-		CustomFacetPortletPreferences customFacetPortletPreferences,
-		String portletId) {
-
-		return customFacetPortletPreferences.getAggregationFieldString() +
-			StringPool.PERIOD + portletId;
 	}
 
 	protected String getParameterName(

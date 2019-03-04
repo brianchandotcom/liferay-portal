@@ -14,13 +14,10 @@
 
 package com.liferay.portal.search.web.internal.user.facet.portlet.shared.search;
 
-import com.liferay.portal.kernel.search.facet.Facet;
-import com.liferay.portal.search.facet.user.UserFacetFactory;
+import com.liferay.portal.search.facet.user.UserFacetSearchContributor;
 import com.liferay.portal.search.web.internal.user.facet.constants.UserFacetPortletKeys;
-import com.liferay.portal.search.web.internal.user.facet.portlet.UserFacetBuilder;
 import com.liferay.portal.search.web.internal.user.facet.portlet.UserFacetPortletPreferences;
 import com.liferay.portal.search.web.internal.user.facet.portlet.UserFacetPortletPreferencesImpl;
-import com.liferay.portal.search.web.internal.util.SearchOptionalUtil;
 import com.liferay.portal.search.web.portlet.shared.search.PortletSharedSearchContributor;
 import com.liferay.portal.search.web.portlet.shared.search.PortletSharedSearchSettings;
 
@@ -44,38 +41,23 @@ public class UserFacetPortletSharedSearchContributor
 
 		UserFacetPortletPreferences userFacetPortletPreferences =
 			new UserFacetPortletPreferencesImpl(
-				portletSharedSearchSettings.getPortletPreferences());
+				portletSharedSearchSettings.getPortletPreferencesOptional());
 
-		Facet facet = buildFacet(
-			userFacetPortletPreferences, portletSharedSearchSettings);
-
-		portletSharedSearchSettings.addFacet(facet);
-	}
-
-	protected Facet buildFacet(
-		UserFacetPortletPreferences userFacetPortletPreferences,
-		PortletSharedSearchSettings portletSharedSearchSettings) {
-
-		UserFacetBuilder userFacetBuilder = new UserFacetBuilder(
-			userFacetFactory);
-
-		userFacetBuilder.setFrequencyThreshold(
-			userFacetPortletPreferences.getFrequencyThreshold());
-		userFacetBuilder.setMaxTerms(userFacetPortletPreferences.getMaxTerms());
-		userFacetBuilder.setPortletId(
-			portletSharedSearchSettings.getPortletId());
-		userFacetBuilder.setSearchContext(
-			portletSharedSearchSettings.getSearchContext());
-
-		SearchOptionalUtil.copy(
-			() -> portletSharedSearchSettings.getParameterValues(
-				userFacetPortletPreferences.getParameterName()),
-			userFacetBuilder::setSelectedUserNames);
-
-		return userFacetBuilder.build();
+		userFacetSearchContributor.contribute(
+			portletSharedSearchSettings.getSearchRequestBuilder(),
+			userFacetBuilder -> userFacetBuilder.aggregationName(
+				portletSharedSearchSettings.getPortletId()
+			).frequencyThreshold(
+				userFacetPortletPreferences.getFrequencyThreshold()
+			).maxTerms(
+				userFacetPortletPreferences.getMaxTerms()
+			).selectedUserNames(
+				portletSharedSearchSettings.getParameterValues(
+					userFacetPortletPreferences.getParameterName())
+			));
 	}
 
 	@Reference
-	protected UserFacetFactory userFacetFactory;
+	protected UserFacetSearchContributor userFacetSearchContributor;
 
 }

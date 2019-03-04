@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.search.aggregation.Aggregation;
 import com.liferay.portal.search.aggregation.pipeline.PipelineAggregation;
 import com.liferay.portal.search.query.Query;
+import com.liferay.portal.search.searcher.FacetContext;
 import com.liferay.portal.search.searcher.SearchRequest;
 import com.liferay.portal.search.searcher.SearchRequestBuilder;
 import com.liferay.portal.search.sort.Sort;
@@ -33,6 +34,8 @@ import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Consumer;
+import java.util.function.Function;
 
 /**
  * @author André de Oliveira
@@ -40,6 +43,7 @@ import java.util.Map;
 public class SearchRequestBuilderImpl implements SearchRequestBuilder {
 
 	public SearchRequestBuilderImpl(SearchContext searchContext) {
+		_facetContext = new FacetContextImpl(searchContext);
 		_searchContext = searchContext;
 	}
 
@@ -77,6 +81,13 @@ public class SearchRequestBuilderImpl implements SearchRequestBuilder {
 	}
 
 	@Override
+	public SearchRequestBuilder entryClassNames(String... entryClassNames) {
+		_searchContext.setEntryClassNames(entryClassNames);
+
+		return this;
+	}
+
+	@Override
 	public SearchRequestBuilder explain(boolean explain) {
 		_searchContext.setAttribute(
 			_SEARCH_CONTEXT_KEY_EXPLAIN, Boolean.valueOf(explain));
@@ -91,6 +102,18 @@ public class SearchRequestBuilderImpl implements SearchRequestBuilder {
 		_searchContext.setAttribute(
 			_SEARCH_CONTEXT_KEY_INCLUDE_RESPONSE_STRING,
 			Boolean.valueOf(includeResponseString));
+
+		return this;
+	}
+
+	@Override
+	public SearchRequestBuilder modelIndexerClasses(Class<?>... classes) {
+		if (classes != null) {
+			_modelIndexerClasses = Arrays.asList(classes);
+		}
+		else {
+			_modelIndexerClasses = Collections.emptyList();
+		}
 
 		return this;
 	}
@@ -127,6 +150,38 @@ public class SearchRequestBuilderImpl implements SearchRequestBuilder {
 		return this;
 	}
 
+	@Override
+	public SearchRequestBuilder withFacetContext(
+		Consumer<FacetContext> facetContextConsumer) {
+
+		facetContextConsumer.accept(_facetContext);
+
+		return this;
+	}
+
+	@Override
+	public <T> T withFacetContextGet(
+		Function<FacetContext, T> facetContextFunction) {
+
+		return facetContextFunction.apply(_facetContext);
+	}
+
+	@Override
+	public SearchRequestBuilder withSearchContext(
+		Consumer<SearchContext> consumer) {
+
+		consumer.accept(_searchContext);
+
+		return this;
+	}
+
+	@Override
+	public <T> T withSearchContextGet(
+		Function<SearchContext, T> searchContextFunction) {
+
+		return searchContextFunction.apply(_searchContext);
+	}
+
 	public class SearchRequestImpl implements SearchRequest {
 
 		@Override
@@ -140,6 +195,16 @@ public class SearchRequestBuilderImpl implements SearchRequestBuilder {
 			}
 
 			return map;
+		}
+
+		@Override
+		public List<String> getEntryClassNames() {
+			return Arrays.asList(_searchContext.getEntryClassNames());
+		}
+
+		@Override
+		public List<Class<?>> getModelIndexerClasses() {
+			return Collections.unmodifiableList(_modelIndexerClasses);
 		}
 
 		@Override
@@ -275,6 +340,8 @@ public class SearchRequestBuilderImpl implements SearchRequestBuilder {
 	private static final String _SEARCH_CONTEXT_KEY_STATS_REQUESTS =
 		"search.request.stats.requests";
 
+	private final FacetContext _facetContext;
+	private List<Class<?>> _modelIndexerClasses = Collections.emptyList();
 	private final SearchContext _searchContext;
 
 }

@@ -14,23 +14,29 @@
 
 package com.liferay.portal.search.internal.legacy.searcher;
 
+import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.search.aggregation.AggregationResult;
 import com.liferay.portal.search.document.Document;
 import com.liferay.portal.search.hits.SearchHit;
 import com.liferay.portal.search.hits.SearchHits;
+import com.liferay.portal.search.searcher.FacetContext;
+import com.liferay.portal.search.searcher.SearchRequest;
 import com.liferay.portal.search.searcher.SearchResponse;
 import com.liferay.portal.search.searcher.SearchResponseBuilder;
 import com.liferay.portal.search.stats.StatsResponse;
 
 import java.io.Serializable;
 
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Consumer;
+import java.util.function.Function;
 import java.util.stream.Stream;
 
 /**
@@ -39,6 +45,7 @@ import java.util.stream.Stream;
 public class SearchResponseBuilderImpl implements SearchResponseBuilder {
 
 	public SearchResponseBuilderImpl(SearchContext searchContext) {
+		_facetContext = new FacetContextImpl(searchContext);
 		_searchContext = searchContext;
 	}
 
@@ -56,6 +63,20 @@ public class SearchResponseBuilderImpl implements SearchResponseBuilder {
 	@Override
 	public SearchResponse build() {
 		return new SearchResponseImpl();
+	}
+
+	@Override
+	public SearchResponseBuilder hits(Hits hits) {
+		_hits = hits;
+
+		return this;
+	}
+
+	@Override
+	public SearchResponseBuilder request(SearchRequest searchRequest) {
+		_searchRequest = searchRequest;
+
+		return this;
 	}
 
 	@Override
@@ -122,6 +143,13 @@ public class SearchResponseBuilderImpl implements SearchResponseBuilder {
 		}
 
 		@Override
+		public List<com.liferay.portal.kernel.search.Document>
+			getDocuments71() {
+
+			return Arrays.asList(_hits.getDocs());
+		}
+
+		@Override
 		public Stream<Document> getDocumentsStream() {
 			SearchHits searchHits = getSearchHits();
 
@@ -130,6 +158,11 @@ public class SearchResponseBuilderImpl implements SearchResponseBuilder {
 			Stream<SearchHit> stream = list.stream();
 
 			return stream.map(SearchHit::getDocument);
+		}
+
+		@Override
+		public SearchRequest getRequest() {
+			return _searchRequest;
 		}
 
 		@Override
@@ -164,6 +197,47 @@ public class SearchResponseBuilderImpl implements SearchResponseBuilder {
 			return Collections.emptyMap();
 		}
 
+		@Override
+		public int getTotalHits() {
+			return _hits.getLength();
+		}
+
+		@Override
+		public void withFacetContext(
+			Consumer<FacetContext> facetContextConsumer) {
+
+			facetContextConsumer.accept(_facetContext);
+		}
+
+		@Override
+		public <T> T withFacetContextGet(
+			Function<FacetContext, T> facetContextFunction) {
+
+			return facetContextFunction.apply(_facetContext);
+		}
+
+		@Override
+		public void withHits(Consumer<Hits> hitsConsumer) {
+			hitsConsumer.accept(_hits);
+		}
+
+		@Override
+		public <T> T withHitsGet(Function<Hits, T> hitsFunction) {
+			return hitsFunction.apply(_hits);
+		}
+
+		@Override
+		public void withSearchContext(
+			Consumer<SearchContext> searchContextConsumer) {
+
+			searchContextConsumer.accept(_searchContext);
+		}
+
+		@Override
+		public <T> T withSearchContextGet(Function<SearchContext, T> function) {
+			return function.apply(_searchContext);
+		}
+
 	}
 
 	private static final String _QUERY_STRING = "queryString";
@@ -183,6 +257,9 @@ public class SearchResponseBuilderImpl implements SearchResponseBuilder {
 	private static final String _SEARCH_CONTEXT_KEY_STATS_RESPONSE_MAP =
 		"search.response.stats.response.map";
 
+	private final FacetContextImpl _facetContext;
+	private Hits _hits;
 	private final SearchContext _searchContext;
+	private SearchRequest _searchRequest;
 
 }

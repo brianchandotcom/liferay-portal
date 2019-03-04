@@ -14,17 +14,16 @@
 
 package com.liferay.portal.search.internal.searcher;
 
-import com.liferay.portal.kernel.search.Hits;
+import com.liferay.portal.kernel.search.IndexerRegistry;
 import com.liferay.portal.kernel.search.SearchContext;
-import com.liferay.portal.kernel.search.SearchException;
-import com.liferay.portal.kernel.search.facet.faceted.searcher.FacetedSearcher;
 import com.liferay.portal.kernel.search.facet.faceted.searcher.FacetedSearcherManager;
 import com.liferay.portal.search.internal.legacy.searcher.SearchRequestBuilderImpl.SearchRequestImpl;
 import com.liferay.portal.search.legacy.searcher.SearchResponseBuilderFactory;
 import com.liferay.portal.search.searcher.SearchRequest;
 import com.liferay.portal.search.searcher.SearchResponse;
-import com.liferay.portal.search.searcher.SearchResponseBuilder;
 import com.liferay.portal.search.searcher.Searcher;
+
+import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -37,40 +36,58 @@ public class SearcherImpl implements Searcher {
 
 	@Override
 	public SearchResponse search(SearchRequest searchRequest) {
-		FacetedSearcher facetedSearcher =
-			facetedSearcherManager.createFacetedSearcher();
+		if (searchRequest instanceof SearchRequestImpl) {
+			SearchRequestImpl searchRequestImpl =
+				(SearchRequestImpl)searchRequest;
 
-		SearchContext searchContext =
-			((SearchRequestImpl)searchRequest).getSearchContext();
+			SearchContext searchContext = searchRequestImpl.getSearchContext();
 
-		search(facetedSearcher, searchContext);
+			return doLegacySearch(searchContext, searchRequest);
+		}
 
-		SearchResponseBuilder searchResponseBuilder =
-			searchResponseBuilderFactory.getSearchResponseBuilder(
-				searchContext);
-
-		return searchResponseBuilder.build();
+		throw new UnsupportedOperationException();
 	}
 
-	protected Hits search(
-		FacetedSearcher facetedSearcher, SearchContext searchContext) {
+	protected SearchResponse doLegacySearch(
+		SearchContext searchContext, SearchRequest searchRequest) {
 
-		try {
-			return facetedSearcher.search(searchContext);
+		List<Class<?>> modelIndexerClasses =
+			searchRequest.getModelIndexerClasses();
+
+		if (modelIndexerClasses.size() == 1) {
+			return doSingleIndexerSearch(
+				modelIndexerClasses.get(0), searchContext, searchRequest);
 		}
-		catch (SearchException se) {
-			Throwable t = se.getCause();
 
-			if (t instanceof RuntimeException) {
-				throw (RuntimeException)t;
-			}
+		return doMultiIndexerSearch(searchContext, searchRequest);
+	}
 
-			throw new RuntimeException(t);
-		}
+	protected SearchResponse doMultiIndexerSearch(
+		SearchContext searchContext, SearchRequest searchRequest) {
+
+		FacetedSearcherSearch facetedSearcherSearch = new FacetedSearcherSearch(
+			searchContext, searchRequest, facetedSearcherManager,
+			searchResponseBuilderFactory);
+
+		return facetedSearcherSearch.search();
+	}
+
+	protected SearchResponse doSingleIndexerSearch(
+		Class<?> clazz, SearchContext searchContext,
+		SearchRequest searchRequest) {
+
+		IndexerSearch indexerSearch = new IndexerSearch(
+			clazz, searchContext, searchRequest, indexerRegistry,
+			searchResponseBuilderFactory);
+
+		return indexerSearch.search();
 	}
 
 	@Reference
 	protected FacetedSearcherManager facetedSearcherManager;
+
+	@Reference
+	protected IndexerRegistry indexerRegistry;
 
 	@Reference
 	protected SearchResponseBuilderFactory searchResponseBuilderFactory;

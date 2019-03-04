@@ -777,8 +777,15 @@ public class AssetPublisherDisplayContext {
 			return _metadataFields;
 		}
 
-		_metadataFields = StringUtil.split(
-			_portletPreferences.getValue("metadataFields", StringPool.BLANK));
+		String metadataFields = _portletPreferences.getValue(
+			"metadataFields", null);
+
+		if (metadataFields == null) {
+			_metadataFields = new String[] {"modified-date"};
+		}
+		else {
+			_metadataFields = StringUtil.split(metadataFields);
+		}
 
 		return _metadataFields;
 	}

@@ -47,6 +47,8 @@ for (AssetEntry assetEntry : assetEntryResult.getAssetEntries()) {
 
 	request.setAttribute("view.jsp-assetEntry", assetEntry);
 	request.setAttribute("view.jsp-assetRenderer", assetRenderer);
+
+	String title = assetRenderer.getTitle(locale);
 %>
 
 	<div class="asset-abstract">
@@ -55,7 +57,7 @@ for (AssetEntry assetEntry : assetEntryResult.getAssetEntries()) {
 		<div class="autofit-row autofit-row-center mb-3">
 			<div class="autofit-col">
 				<h4 class="asset-title component-title">
-					<%= HtmlUtil.escape(assetRenderer.getTitle(locale)) %>
+					<%= HtmlUtil.escape(title) %>
 				</h4>
 			</div>
 
@@ -219,7 +221,7 @@ for (AssetEntry assetEntry : assetEntryResult.getAssetEntries()) {
 					<liferay-flags:flags
 						className="<%= assetEntry.getClassName() %>"
 						classPK="<%= assetEntry.getClassPK() %>"
-						contentTitle="<%= assetRenderer.getTitle(locale) %>"
+						contentTitle="<%= title %>"
 						enabled="<%= !inTrash %>"
 						label="<%= false %>"
 						message='<%= inTrash ? "flags-are-disabled-because-this-entry-is-in-the-recycle-bin" : null %>'
@@ -258,7 +260,7 @@ for (AssetEntry assetEntry : assetEntryResult.getAssetEntries()) {
 					<liferay-ui:icon
 						icon="print"
 						markupView="lexicon"
-						message='<%= LanguageUtil.format(request, "print-x-x", new Object[] {"hide-accessible", HtmlUtil.escape(assetRenderer.getTitle(locale))}, false) %>'
+						message='<%= LanguageUtil.format(request, "print-x-x", new Object[] {"hide-accessible", HtmlUtil.escape(title)}, false) %>'
 						url='<%= "javascript:" + renderResponse.getNamespace() + "printPage_" + id + "();" %>'
 					/>
 
@@ -305,7 +307,7 @@ for (AssetEntry assetEntry : assetEntryResult.getAssetEntries()) {
 				%>
 
 					<div class="autofit-col component-subtitle export-action mr-3">
-						<aui:a data="<%= data %>" href="<%= exportAssetURL.toString() %>" label='<%= LanguageUtil.format(request, "x-convert-x-to-x", new Object[] {"hide-accessible", assetRenderer.getTitle(locale), StringUtil.toUpperCase(HtmlUtil.escape(extension))}, false) %>' />
+						<aui:a data="<%= data %>" href="<%= exportAssetURL.toString() %>" label='<%= LanguageUtil.format(request, "x-convert-x-to-x", new Object[] {"hide-accessible", title, StringUtil.toUpperCase(HtmlUtil.escape(extension))}, false) %>' />
 					</div>
 
 				<%
@@ -337,7 +339,7 @@ for (AssetEntry assetEntry : assetEntryResult.getAssetEntries()) {
 			classPK="<%= assetEntry.getClassPK() %>"
 			displayStyle="<%= assetPublisherDisplayContext.getSocialBookmarksDisplayStyle() %>"
 			target="_blank"
-			title="<%= assetRenderer.getTitle(locale) %>"
+			title="<%= title %>"
 			types="<%= assetPublisherDisplayContext.getSocialBookmarksTypes() %>"
 			urlImpl="<%= viewFullContentURL %>"
 		/>

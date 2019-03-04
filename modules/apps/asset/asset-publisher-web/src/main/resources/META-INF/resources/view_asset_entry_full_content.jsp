@@ -44,6 +44,8 @@ boolean print = GetterUtil.getBoolean(request.getAttribute("view.jsp-print"));
 assetPublisherDisplayContext.setLayoutAssetEntry(assetEntry);
 
 assetEntry = assetPublisherDisplayContext.incrementViewCounter(assetEntry);
+
+String title = assetRenderer.getTitle(locale);
 %>
 
 <div class="asset-full-content clearfix <%= assetPublisherDisplayContext.isDefaultAssetPublisher() ? "default-asset-publisher" : StringPool.BLANK %> <%= assetPublisherDisplayContext.isShowAssetTitle() ? "show-asset-title" : "no-title" %>">
@@ -62,7 +64,7 @@ assetEntry = assetPublisherDisplayContext.incrementViewCounter(assetEntry);
 						/>
 					</c:if>
 
-					<%= HtmlUtil.escape(assetRenderer.getTitle(locale)) %>
+					<%= HtmlUtil.escape(title) %>
 				</h4>
 			</div>
 		</c:if>
@@ -261,7 +263,7 @@ assetEntry = assetPublisherDisplayContext.incrementViewCounter(assetEntry);
 				<liferay-flags:flags
 					className="<%= assetEntry.getClassName() %>"
 					classPK="<%= assetEntry.getClassPK() %>"
-					contentTitle="<%= assetRenderer.getTitle(locale) %>"
+					contentTitle="<%= title %>"
 					enabled="<%= !inTrash %>"
 					label="<%= false %>"
 					message='<%= inTrash ? "flags-are-disabled-because-this-entry-is-in-the-recycle-bin" : null %>'
@@ -300,7 +302,7 @@ assetEntry = assetPublisherDisplayContext.incrementViewCounter(assetEntry);
 						<liferay-ui:icon
 							icon="print"
 							markupView="lexicon"
-							message='<%= LanguageUtil.format(request, "print-x-x", new Object[] {"hide-accessible", HtmlUtil.escape(assetRenderer.getTitle(locale))}, false) %>'
+							message='<%= LanguageUtil.format(request, "print-x-x", new Object[] {"hide-accessible", HtmlUtil.escape(title)}, false) %>'
 							url="javascript:print();"
 						/>
 
@@ -317,7 +319,7 @@ assetEntry = assetPublisherDisplayContext.incrementViewCounter(assetEntry);
 						<liferay-ui:icon
 							icon="print"
 							markupView="lexicon"
-							message='<%= LanguageUtil.format(request, "print-x-x", new Object[] {"hide-accessible", HtmlUtil.escape(assetRenderer.getTitle(locale))}, false) %>'
+							message='<%= LanguageUtil.format(request, "print-x-x", new Object[] {"hide-accessible", HtmlUtil.escape(title)}, false) %>'
 							url='<%= "javascript:" + renderResponse.getNamespace() + "printPage_" + id + "();" %>'
 						/>
 
@@ -366,7 +368,7 @@ assetEntry = assetPublisherDisplayContext.incrementViewCounter(assetEntry);
 			%>
 
 				<div class="autofit-col component-subtitle export-action mr-3">
-					<aui:a data="<%= data %>" href="<%= exportAssetURL.toString() %>" label='<%= LanguageUtil.format(request, "x-convert-x-to-x", new Object[] {"hide-accessible", assetRenderer.getTitle(locale), StringUtil.toUpperCase(HtmlUtil.escape(extension))}, false) %>' />
+					<aui:a data="<%= data %>" href="<%= exportAssetURL.toString() %>" label='<%= LanguageUtil.format(request, "x-convert-x-to-x", new Object[] {"hide-accessible", title, StringUtil.toUpperCase(HtmlUtil.escape(extension))}, false) %>' />
 				</div>
 
 			<%
@@ -383,7 +385,7 @@ assetEntry = assetPublisherDisplayContext.incrementViewCounter(assetEntry);
 		classPK="<%= assetEntry.getClassPK() %>"
 		displayStyle="<%= assetPublisherDisplayContext.getSocialBookmarksDisplayStyle() %>"
 		target="_blank"
-		title="<%= assetRenderer.getTitle(locale) %>"
+		title="<%= title %>"
 		types="<%= assetPublisherDisplayContext.getSocialBookmarksTypes() %>"
 		urlImpl="<%= viewFullContentURL %>"
 	/>

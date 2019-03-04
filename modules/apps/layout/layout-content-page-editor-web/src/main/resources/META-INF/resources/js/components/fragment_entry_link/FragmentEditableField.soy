@@ -46,7 +46,7 @@
 			{sp}fragments-editor__editable--mapped
 		{/if}
 
-		{if $editableValues.config}
+		{if $editableValues.config and $editableValues.mappedField}
 			{if $type == 'html' or $type == 'rich-text' or $type == 'text'}
 				{if $editableValues.config.textAlignment}
 					{sp}text-{$editableValues.config.textAlignment}

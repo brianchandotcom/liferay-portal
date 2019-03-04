@@ -447,19 +447,40 @@ function updateEditableValueReducer(state, actionType, payload) {
 				const keysTreeArray = editableValueSegmentId ? [
 					EDITABLE_FRAGMENT_ENTRY_PROCESSOR,
 					editableId,
-					editableValueSegmentId,
-					editableValueId
+					editableValueSegmentId
 				] : [
 					EDITABLE_FRAGMENT_ENTRY_PROCESSOR,
-					editableId,
-					editableValueId
+					editableId
 				];
 
-				const nextEditableValues = setIn(
+				let nextEditableValues = setIn(
 					editableValues,
-					keysTreeArray,
+					[...keysTreeArray, editableValueId],
 					editableValue
 				);
+
+				if (editableValueId === 'mappedField') {
+					nextEditableValues = updateIn(
+						nextEditableValues,
+						keysTreeArray,
+						editableValue => {
+							const nextEditableValue = Object.assign({}, editableValue);
+
+							[
+								'config',
+								state.defaultSegmentId,
+								...Object.keys(state.availableLanguages),
+								...Object.keys(state.availableSegments)
+							].forEach(
+								key => {
+									delete nextEditableValue[key];
+								}
+							);
+
+							return nextEditableValue;
+						}
+					);
+				}
 
 				const formData = new FormData();
 

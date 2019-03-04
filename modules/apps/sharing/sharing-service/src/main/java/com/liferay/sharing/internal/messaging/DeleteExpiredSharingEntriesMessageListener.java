@@ -48,8 +48,9 @@ public class DeleteExpiredSharingEntriesMessageListener
 	@Activate
 	@Modified
 	protected void activate(Map<String, Object> properties) {
-		_sharingSystemConfiguration = ConfigurableUtil.createConfigurable(
-			SharingSystemConfiguration.class, properties);
+		SharingSystemConfiguration sharingSystemConfiguration =
+			ConfigurableUtil.createConfigurable(
+				SharingSystemConfiguration.class, properties);
 
 		Class<?> clazz = getClass();
 
@@ -57,7 +58,7 @@ public class DeleteExpiredSharingEntriesMessageListener
 
 		Trigger trigger = _triggerFactory.createTrigger(
 			className, className, null, null,
-			_sharingSystemConfiguration.expiredSharingEntriesCheckInterval(),
+			sharingSystemConfiguration.expiredSharingEntriesCheckInterval(),
 			TimeUnit.MINUTE);
 
 		SchedulerEntry schedulerEntry = new SchedulerEntryImpl(
@@ -82,8 +83,6 @@ public class DeleteExpiredSharingEntriesMessageListener
 
 	@Reference
 	private SharingEntryLocalService _sharingEntryLocalService;
-
-	private volatile SharingSystemConfiguration _sharingSystemConfiguration;
 
 	@Reference
 	private TriggerFactory _triggerFactory;

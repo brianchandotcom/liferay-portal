@@ -1,7 +1,3 @@
-copyLibs {
-	enabled = true
-}
-
 dependencies {
 	compileOnly project(":apps:upload:upload-api")
 	compileOnly project(":core:petra:petra-function")

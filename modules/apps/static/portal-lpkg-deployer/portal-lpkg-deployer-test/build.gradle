@@ -1,7 +1,3 @@
-copyLibs {
-	enabled = true
-}
-
 dependencies {
 	compileOnly project(":apps:static:portal-lpkg-deployer:portal-lpkg-deployer-api")
 

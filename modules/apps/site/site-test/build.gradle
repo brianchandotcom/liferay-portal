@@ -1,7 +1,3 @@
-copyLibs {
-	enabled = true
-}
-
 dependencies {
 	compileOnly group: "com.liferay.portal", name: "com.liferay.util.java", version: "default"
 

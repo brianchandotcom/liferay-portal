@@ -37,7 +37,6 @@ import com.liferay.sharing.display.context.util.SharingToolbarItemFactory;
 import com.liferay.sharing.document.library.internal.security.permission.SharingPermissionHelper;
 
 import java.util.List;
-import java.util.ResourceBundle;
 import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
@@ -53,7 +52,6 @@ public class SharingDLViewFileVersionDisplayContext
 		DLViewFileVersionDisplayContext parentDLDisplayContext,
 		HttpServletRequest request, HttpServletResponse response,
 		FileEntry fileEntry, FileVersion fileVersion,
-		ResourceBundle resourceBundle,
 		SharingMenuItemFactory sharingMenuItemFactory,
 		SharingToolbarItemFactory sharingToolbarItemFactory,
 		SharingPermissionHelper sharingPermissionHelper,

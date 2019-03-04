@@ -94,9 +94,6 @@ public class SharingUtil {
 	private static final Log _log = LogFactoryUtil.getLog(SharingUtil.class);
 
 	@Reference
-	private SharingEntryLocalService _sharingEntryLocalService;
-
-	@Reference
 	private SharingPermission _sharingPermission;
 
 }

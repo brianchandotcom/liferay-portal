@@ -97,12 +97,9 @@ public class SharingDLDisplayContextFactory implements DLDisplayContextFactory {
 
 			return new SharingDLViewFileVersionDisplayContext(
 				parentDLViewFileVersionDisplayContext, request, response,
-				fileEntry, fileVersion,
-				ResourceBundleUtil.getBundle(
-					themeDisplay.getLocale(),
-					SharingDLDisplayContextFactory.class),
-				_sharingMenuItemFactory, _sharingToolbarItemFactory,
-				_sharingPermissionHelper, sharingConfiguration);
+				fileEntry, fileVersion, _sharingMenuItemFactory,
+				_sharingToolbarItemFactory, _sharingPermissionHelper,
+				sharingConfiguration);
 		}
 		catch (PortalException pe) {
 			throw new SystemException(

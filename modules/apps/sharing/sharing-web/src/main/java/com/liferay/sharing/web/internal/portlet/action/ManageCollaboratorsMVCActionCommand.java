@@ -262,7 +262,4 @@ public class ManageCollaboratorsMVCActionCommand extends BaseMVCActionCommand {
 	@Reference
 	private SharingEntryService _sharingEntryService;
 
-	@Reference
-	private UserLocalService _userLocalService;
-
 }

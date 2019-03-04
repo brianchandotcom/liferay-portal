@@ -2,6 +2,7 @@ import Component from 'metal-component';
 import Soy, {Config} from 'metal-soy';
 
 import './FloatingToolbarMappingPanelDelegateTemplate.soy';
+import {encodeAssetId} from '../../../utils/FragmentsEditorIdUtils.es';
 import getConnectedComponent from '../../../store/ConnectedComponent.es';
 import {setIn} from '../../../utils/FragmentsEditorUpdateUtils.es';
 import templates from './FloatingToolbarMappingPanel.soy';
@@ -45,7 +46,21 @@ class FloatingToolbarMappingPanel extends Component {
 	 * @review
 	 */
 	prepareStateForRender(state) {
-		let nextState = state;
+		const encodedMappedAssetEntries = this._mappedAssetEntries.map(
+			encodeAssetId
+		);
+
+		let nextState = setIn(
+			state,
+			['_encodedMappedAssetEntries'],
+			encodedMappedAssetEntries
+		);
+
+		nextState = setIn(
+			nextState,
+			['_specificContentKey'],
+			MAPPING_SOURCE_SPECIFIC_CONTENT_KEY
+		);
 
 		if (this.selectedMappingTypes.subtype) {
 			nextState = setIn(
@@ -58,6 +73,16 @@ class FloatingToolbarMappingPanel extends Component {
 		}
 
 		return nextState;
+	}
+
+	/**
+	 * Handle source option change
+	 * @param {Event} event
+	 * @private
+	 * @review
+	 */
+	_handleAssetOptionChange(event) {
+		this._mappedAssetEntryEncodedId = event.delegateTarget.value;
 	}
 
 	/**
@@ -98,6 +123,27 @@ FloatingToolbarMappingPanel.STATE = {
 	itemId: Config
 		.string()
 		.required(),
+
+	/**
+	 * @default undefined
+	 * @memberof FloatingToolbarMappingPanel
+	 * @review
+	 * @type {!string}
+	 */
+	_mappedAssetEntryEncodedId: Config
+		.string(),
+
+	/**
+	 * @default undefined
+	 * @memberOf FloatingToolbarMappingPanel
+	 * @private
+	 * @review
+	 * @type {object[]}
+	 */
+	_mappedAssetEntries: Config
+		.array()
+		.internal()
+		.value(),
 
 	/**
 	 * @default undefined

@@ -4,9 +4,13 @@
  * FloatingToolbarMappingPanel
  */
 {template .render}
+	{@param? _encodedMappedAssetEntries: ?}
+	{@param? _handleAssetOptionChange: any}
 	{@param? _handleSourceOptionChange: any}
+	{@param? _mappedAssetEntryEncodedId: ?}
 	{@param? _mappingSources: ?}
 	{@param? _selectedSourceId: string}
+	{@param? _specificContentKey: string}
 
 	<div class="floating-toolbar-mapping-panel">
 		<div class="form-group">
@@ -17,11 +21,16 @@
 			{/call}
 		</div>
 
-		<div class="form-group">
-			{call .assetSelect}
-			{/call}
-		</div>
-
+		{if $_selectedSourceId == $_specificContentKey}
+			<div class="form-group">
+				{call .assetSelect}
+					{param handleAssetOptionChange: $_handleAssetOptionChange /}
+					{param mappedAssetEntryEncodedId: $_mappedAssetEntryEncodedId /}
+					{param encodedMappedAssetEntries: $_encodedMappedAssetEntries /}
+				{/call}
+			</div>
+		{/if}
+		
 		<div class="form-group">
 			{call .fieldSelect}
 			{/call}
@@ -33,14 +42,29 @@
  * Asset select
  */
 {template .assetSelect}
+	{@param? handleAssetOptionChange: any}
+	{@param? mappedAssetEntryEncodedId: ?}
+	{@param? encodedMappedAssetEntries: ?}
+
 	<label for="floatingToolbarMappingPanelAssetSelect">
 		{msg desc=""}content{/msg}
 	</label>
 
 	<select
 		class="form-control form-control-sm"
+		data-onchange="{$handleAssetOptionChange}"
 		id="floatingToolbarMappingPanelAssetSelect"
 	>
+		<option disabled value="-">-</option>
+
+		{foreach $assetEntry in $encodedMappedAssetEntries}
+			{call .selectOption}
+				{param optionId: $assetEntry.encodedId /}
+				{param optionLabel: $assetEntry.assetEntryTitle /}
+				{param key: $assetEntry.encodedId /}
+				{param selectedId: $mappedAssetEntryEncodedId /}
+			{/call}
+		{/foreach}
 	</select>
 {/template}
 

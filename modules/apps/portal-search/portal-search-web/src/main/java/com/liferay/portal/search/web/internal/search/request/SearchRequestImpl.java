@@ -16,15 +16,11 @@ package com.liferay.portal.search.web.internal.search.request;
 
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.search.Document;
-import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.search.SearchContext;
-import com.liferay.portal.kernel.search.SearchException;
-import com.liferay.portal.kernel.search.facet.faceted.searcher.FacetedSearcher;
-import com.liferay.portal.kernel.search.facet.faceted.searcher.FacetedSearcherManager;
-import com.liferay.portal.search.legacy.searcher.SearchResponseBuilderFactory;
-import com.liferay.portal.search.searcher.SearchResponseBuilder;
-import com.liferay.portal.search.web.search.request.SearchRequest;
-import com.liferay.portal.search.web.search.request.SearchSettings;
+import com.liferay.portal.search.legacy.searcher.SearchRequestBuilderFactory;
+import com.liferay.portal.search.searcher.SearchRequestBuilder;
+import com.liferay.portal.search.searcher.SearchResponse;
+import com.liferay.portal.search.searcher.Searcher;
 import com.liferay.portal.search.web.search.request.SearchSettingsContributor;
 
 import java.util.HashSet;
@@ -33,39 +29,39 @@ import java.util.Set;
 /**
  * @author André de Oliveira
  */
-public class SearchRequestImpl implements SearchRequest {
+public class SearchRequestImpl {
 
 	public SearchRequestImpl(
 		SearchContextBuilder searchContextBuilder,
-		SearchContainerBuilder searchContainerBuilder,
-		SearchResponseBuilderFactory searchResponseBuilderFactory,
-		FacetedSearcherManager facetedSearcherManager) {
+		SearchContainerBuilder searchContainerBuilder, Searcher searcher,
+		SearchRequestBuilderFactory searchRequestBuilderFactory) {
 
 		_searchContextBuilder = searchContextBuilder;
 		_searchContainerBuilder = searchContainerBuilder;
-		_searchResponseBuilderFactory = searchResponseBuilderFactory;
-		_facetedSearcherManager = facetedSearcherManager;
+		_searcher = searcher;
+		_searchRequestBuilderFactory = searchRequestBuilderFactory;
 	}
 
-	@Override
 	public void addSearchSettingsContributor(
 		SearchSettingsContributor searchSettingsContributor) {
 
 		_searchSettingsContributors.add(searchSettingsContributor);
 	}
 
-	@Override
 	public void removeSearchSettingsContributor(
 		SearchSettingsContributor searchSettingsContributor) {
 
 		_searchSettingsContributors.remove(searchSettingsContributor);
 	}
 
-	@Override
 	public SearchResponseImpl search() {
 		SearchContext searchContext = buildSearchContext();
 
-		SearchSettingsImpl searchSettingsImpl = buildSettings(searchContext);
+		SearchRequestBuilder searchRequestBuilder =
+			_searchRequestBuilderFactory.getSearchRequestBuilder(searchContext);
+
+		SearchSettingsImpl searchSettingsImpl = buildSettings(
+			searchRequestBuilder, searchContext);
 
 		SearchContainer<Document> searchContainer = buildSearchContainer(
 			searchSettingsImpl);
@@ -73,18 +69,41 @@ public class SearchRequestImpl implements SearchRequest {
 		searchContext.setEnd(searchContainer.getEnd());
 		searchContext.setStart(searchContainer.getStart());
 
-		Hits hits = search(searchContext);
+		SearchResponse searchResponse = _searcher.search(
+			searchRequestBuilder.build());
 
-		searchContainer.setResults(hits.toList());
+		populateSearchContainer(searchContainer, searchResponse);
+
+		SearchResponseImpl searchResponseImpl = new SearchResponseImpl();
+
+		searchResponse.withHits(
+			hits -> {
+				searchResponseImpl.setDocuments(hits.toList());
+				searchResponseImpl.setHits(hits);
+				searchResponseImpl.setTotalHits(hits.getLength());
+			});
+
+		searchResponseImpl.setKeywords(searchContext.getKeywords());
+		searchResponseImpl.setPaginationDelta(searchContainer.getDelta());
+		searchResponseImpl.setPaginationStart(searchContainer.getCur());
+		searchResponseImpl.setSearchContainer(searchContainer);
+		searchResponseImpl.setSearchResponse(searchResponse);
+		searchResponseImpl.setSearchSettings(searchSettingsImpl);
+
+		return searchResponseImpl;
+	}
+
+	protected static void populateSearchContainer(
+		SearchContainer<Document> searchContainer,
+		SearchResponse searchResponse) {
 
 		searchContainer.setSearch(true);
 
-		searchContainer.setTotal(hits.getLength());
-
-		SearchResponseImpl searchResponseImpl = buildSearchResponse(
-			hits, searchContext, searchContainer, searchSettingsImpl);
-
-		return searchResponseImpl;
+		searchResponse.withHits(
+			hits -> {
+				searchContainer.setResults(hits.toList());
+				searchContainer.setTotal(hits.getLength());
+			});
 	}
 
 	protected SearchContainer<Document> buildSearchContainer(
@@ -102,65 +121,24 @@ public class SearchRequestImpl implements SearchRequest {
 		return searchContext;
 	}
 
-	protected SearchResponseImpl buildSearchResponse(
-		Hits hits, SearchContext searchContext,
-		SearchContainer<Document> searchContainer,
-		SearchSettings searchSettings) {
+	protected SearchSettingsImpl buildSettings(
+		SearchRequestBuilder searchRequestBuilder,
+		SearchContext searchContext) {
 
-		SearchResponseImpl searchResponseImpl = new SearchResponseImpl();
-
-		searchResponseImpl.setDocuments(hits.toList());
-		searchResponseImpl.setHits(hits);
-		searchResponseImpl.setKeywords(searchContext.getKeywords());
-		searchResponseImpl.setPaginationDelta(searchContainer.getDelta());
-		searchResponseImpl.setPaginationStart(searchContainer.getCur());
-		searchResponseImpl.setSearchContainer(searchContainer);
-		searchResponseImpl.setSearchContext(searchContext);
-		searchResponseImpl.setSearchSettings(searchSettings);
-		searchResponseImpl.setTotalHits(hits.getLength());
-
-		SearchResponseBuilder searchResponseBuilder =
-			_searchResponseBuilderFactory.getSearchResponseBuilder(
-				searchContext);
-
-		searchResponseImpl.setSearchResponse(searchResponseBuilder.build());
-
-		return searchResponseImpl;
-	}
-
-	protected SearchSettingsImpl buildSettings(SearchContext searchContext) {
 		SearchSettingsImpl searchSettingsImpl = new SearchSettingsImpl(
-			searchContext);
+			searchRequestBuilder, searchContext);
 
 		_searchSettingsContributors.forEach(
-			searchContributor -> searchContributor.contribute(
+			searchSettingsContributor -> searchSettingsContributor.contribute(
 				searchSettingsImpl));
 
 		return searchSettingsImpl;
 	}
 
-	protected Hits search(
-		FacetedSearcher facetedSearcher, SearchContext searchContext) {
-
-		try {
-			return facetedSearcher.search(searchContext);
-		}
-		catch (SearchException se) {
-			throw new RuntimeException(se);
-		}
-	}
-
-	protected Hits search(SearchContext searchContext) {
-		FacetedSearcher facetedSearcher =
-			_facetedSearcherManager.createFacetedSearcher();
-
-		return search(facetedSearcher, searchContext);
-	}
-
-	private final FacetedSearcherManager _facetedSearcherManager;
 	private final SearchContainerBuilder _searchContainerBuilder;
 	private final SearchContextBuilder _searchContextBuilder;
-	private final SearchResponseBuilderFactory _searchResponseBuilderFactory;
+	private final Searcher _searcher;
+	private final SearchRequestBuilderFactory _searchRequestBuilderFactory;
 	private final Set<SearchSettingsContributor> _searchSettingsContributors =
 		new HashSet<>();
 

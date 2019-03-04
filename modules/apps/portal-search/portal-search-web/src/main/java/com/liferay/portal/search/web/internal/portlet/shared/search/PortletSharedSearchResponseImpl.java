@@ -17,14 +17,16 @@ package com.liferay.portal.search.web.internal.portlet.shared.search;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.facet.Facet;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.search.searcher.SearchResponse;
 import com.liferay.portal.search.web.internal.display.context.PortletRequestThemeDisplaySupplier;
 import com.liferay.portal.search.web.internal.display.context.ThemeDisplaySupplier;
 import com.liferay.portal.search.web.internal.portlet.shared.task.PortletSharedRequestHelper;
+import com.liferay.portal.search.web.internal.search.request.SearchResponseImpl;
 import com.liferay.portal.search.web.portlet.shared.search.PortletSharedSearchResponse;
-import com.liferay.portal.search.web.search.request.SearchResponse;
 import com.liferay.portal.search.web.search.request.SearchSettings;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import javax.portlet.PortletPreferences;
@@ -37,45 +39,48 @@ public class PortletSharedSearchResponseImpl
 	implements PortletSharedSearchResponse {
 
 	public PortletSharedSearchResponseImpl(
-		SearchResponse searchResponse,
+		SearchResponseImpl searchResponseImpl,
 		PortletSharedRequestHelper portletSharedRequestHelper) {
 
-		_searchResponse = searchResponse;
+		_searchResponseImpl = searchResponseImpl;
 		_portletSharedRequestHelper = portletSharedRequestHelper;
 	}
 
 	@Override
 	public List<Document> getDocuments() {
-		return _searchResponse.getDocuments();
+		return _searchResponseImpl.getDocuments();
 	}
 
 	@Override
-	public Facet getFacet(String fieldName) {
-		return _searchResponse.getFacet(fieldName);
+	public Facet getFacet(String name) {
+		SearchResponse searchResponse = getSearchResponse();
+
+		return searchResponse.withSearchContextGet(
+			searchContext -> {
+				Map<String, Facet> facets = searchContext.getFacets();
+
+				return facets.get(name);
+			});
 	}
 
-	/**
-	 * @deprecated As of Judson (7.1.x)
-	 */
-	@Deprecated
 	@Override
 	public String[] getHighlights() {
-		return _searchResponse.getHighlights();
+		return null;
 	}
 
 	@Override
 	public Optional<String> getKeywordsOptional() {
-		return _searchResponse.getKeywordsOptional();
+		return _searchResponseImpl.getKeywordsOptional();
 	}
 
 	@Override
 	public int getPaginationDelta() {
-		return _searchResponse.getPaginationDelta();
+		return _searchResponseImpl.getPaginationDelta();
 	}
 
 	@Override
 	public int getPaginationStart() {
-		return _searchResponse.getPaginationStart();
+		return _searchResponseImpl.getPaginationStart();
 	}
 
 	@Override
@@ -102,29 +107,27 @@ public class PortletSharedSearchResponseImpl
 
 	@Override
 	public String getQueryString() {
-		return _searchResponse.getQueryString();
+		return _searchResponseImpl.getQueryString();
 	}
 
 	@Override
 	public List<String> getRelatedQueriesSuggestions() {
-		return _searchResponse.getRelatedQueriesSuggestions();
+		return _searchResponseImpl.getRelatedQueriesSuggestions();
 	}
 
 	@Override
-	public com.liferay.portal.search.searcher.SearchResponse
-		getSearchResponse() {
-
-		return _searchResponse.getSearchResponse();
+	public SearchResponse getSearchResponse() {
+		return _searchResponseImpl.getSearchResponse();
 	}
 
 	@Override
 	public SearchSettings getSearchSettings() {
-		return _searchResponse.getSearchSettings();
+		return _searchResponseImpl.getSearchSettings();
 	}
 
 	@Override
 	public Optional<String> getSpellCheckSuggestionOptional() {
-		return _searchResponse.getSpellCheckSuggestionOptional();
+		return _searchResponseImpl.getSpellCheckSuggestionOptional();
 	}
 
 	@Override
@@ -137,10 +140,10 @@ public class PortletSharedSearchResponseImpl
 
 	@Override
 	public int getTotalHits() {
-		return _searchResponse.getTotalHits();
+		return _searchResponseImpl.getTotalHits();
 	}
 
 	private final PortletSharedRequestHelper _portletSharedRequestHelper;
-	private final SearchResponse _searchResponse;
+	private final SearchResponseImpl _searchResponseImpl;
 
 }

@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.search.QueryConfig;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.facet.Facet;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.search.searcher.SearchRequestBuilder;
 import com.liferay.portal.search.web.search.request.SearchSettings;
 
 import java.util.Map;
@@ -30,7 +31,11 @@ import java.util.Optional;
  */
 public class SearchSettingsImpl implements SearchSettings {
 
-	public SearchSettingsImpl(SearchContext searchContext) {
+	public SearchSettingsImpl(
+		SearchRequestBuilder searchRequestBuilder,
+		SearchContext searchContext) {
+
+		_searchRequestBuilder = searchRequestBuilder;
 		_searchContext = searchContext;
 	}
 
@@ -92,6 +97,11 @@ public class SearchSettingsImpl implements SearchSettings {
 	}
 
 	@Override
+	public SearchRequestBuilder getSearchRequestBuilder() {
+		return _searchRequestBuilder;
+	}
+
+	@Override
 	public void setKeywords(String keywords) {
 		_searchContext.setKeywords(keywords);
 	}
@@ -142,5 +152,6 @@ public class SearchSettingsImpl implements SearchSettings {
 	private Integer _paginationStart;
 	private String _paginationStartParameterName;
 	private final SearchContext _searchContext;
+	private final SearchRequestBuilder _searchRequestBuilder;
 
 }

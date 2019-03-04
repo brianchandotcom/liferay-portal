@@ -38,27 +38,31 @@
 		}
 		%>
 
-		<aui:field-wrapper label="default-value">
-			<liferay-ui:input-date
-				dayParam="defaultValueDay"
-				dayValue="<%= defaultValueDate.get(Calendar.DATE) %>"
-				disabled="<%= false %>"
-				firstDayOfWeek="<%= defaultValueDate.getFirstDayOfWeek() - 1 %>"
-				monthParam="defaultValueMonth"
-				monthValue="<%= defaultValueDate.get(Calendar.MONTH) %>"
-				yearParam="defaultValueYear"
-				yearValue="<%= defaultValueDate.get(Calendar.YEAR) %>"
-			/>
+		<aui:field-wrapper cssClass="date-input-wrapper" label="default-value">
+			<div class="form-group-autofit">
+				<liferay-ui:input-date
+					cssClass="form-group-item"
+					dayParam="defaultValueDay"
+					dayValue="<%= defaultValueDate.get(Calendar.DATE) %>"
+					disabled="<%= false %>"
+					firstDayOfWeek="<%= defaultValueDate.getFirstDayOfWeek() - 1 %>"
+					monthParam="defaultValueMonth"
+					monthValue="<%= defaultValueDate.get(Calendar.MONTH) %>"
+					yearParam="defaultValueYear"
+					yearValue="<%= defaultValueDate.get(Calendar.YEAR) %>"
+				/>
 
-			<liferay-ui:input-time
-				amPmParam="defaultValueAmPm"
-				amPmValue="<%= defaultValueDate.get(Calendar.AM_PM) %>"
-				disabled="<%= false %>"
-				hourParam="defaultValueHour"
-				hourValue="<%= defaultValueDate.get(Calendar.HOUR) %>"
-				minuteParam="defaultValueMinute"
-				minuteValue="<%= defaultValueDate.get(Calendar.MINUTE) %>"
-			/>
+				<liferay-ui:input-time
+					amPmParam="defaultValueAmPm"
+					amPmValue="<%= defaultValueDate.get(Calendar.AM_PM) %>"
+					cssClass="form-group-item"
+					disabled="<%= false %>"
+					hourParam="defaultValueHour"
+					hourValue="<%= defaultValueDate.get(Calendar.HOUR) %>"
+					minuteParam="defaultValueMinute"
+					minuteValue="<%= defaultValueDate.get(Calendar.MINUTE) %>"
+				/>
+			</div>
 		</aui:field-wrapper>
 	</c:when>
 	<c:when test="<%= type == ExpandoColumnConstants.DATE_ARRAY %>">

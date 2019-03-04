@@ -190,7 +190,9 @@ public class JournalArticleAssetRenderer
 			return "/trash/" + template + ".jsp";
 		}
 
-		if (template.equals(TEMPLATE_FULL_CONTENT)) {
+		if (template.equals(TEMPLATE_ABSTRACT) ||
+			template.equals(TEMPLATE_FULL_CONTENT)) {
+
 			return "/asset/" + template + ".jsp";
 		}
 

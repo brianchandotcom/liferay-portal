@@ -43,23 +43,21 @@ import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.BaseModelPermissionCheckerUtil;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.SetUtil;
 
 import java.io.Serializable;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 import java.util.function.Function;
 import java.util.stream.Collectors;
-import java.util.stream.LongStream;
 import java.util.stream.Stream;
 
 import javax.ws.rs.core.Context;
@@ -72,7 +70,7 @@ import org.osgi.service.component.annotations.ServiceScope;
  * @author Javier Gamarra
  */
 @Component(
-	properties = "OSGI-INF/liferay/rest/v1_0/Bulk-action-response-model.properties",
+	properties = "OSGI-INF/liferay/rest/v1_0/bulk-action-response-model.properties",
 	scope = ServiceScope.PROTOTYPE,
 	service = BulkActionResponseModelResource.class
 )
@@ -117,22 +115,10 @@ public class BulkActionResponseModelResourceImpl
 				_user, assetEntryBulkSelection,
 				_editCategoriesBulkSelectionAction, inputMap);
 
-			BulkActionResponseModel bulkActionResponseModel =
-				new BulkActionResponseModel();
-
-			bulkActionResponseModel.setDescription(StringPool.BLANK);
-			bulkActionResponseModel.setStatus("success");
-
-			return bulkActionResponseModel;
+			return _toBulkActionResponseModel(null);
 		}
 		catch (Exception e) {
-			BulkActionResponseModel bulkActionResponseModel =
-				new BulkActionResponseModel();
-
-			bulkActionResponseModel.setDescription(e.getMessage());
-			bulkActionResponseModel.setStatus("error");
-
-			return bulkActionResponseModel;
+			return _toBulkActionResponseModel(e);
 		}
 	}
 
@@ -165,14 +151,6 @@ public class BulkActionResponseModelResourceImpl
 				Collections.emptySet()
 			);
 
-			BulkAssetEntryCommonCategoriesModel
-				bulkAssetEntryCommonCategoriesModel =
-					new BulkAssetEntryCommonCategoriesModel();
-
-			bulkAssetEntryCommonCategoriesModel.setDescription(
-				bulkSelection.describe(
-					contextAcceptLanguage.getPreferredLocale()));
-
 			Map<AssetVocabulary, List<AssetCategory>> assetVocabularyListMap =
 				_groupByAssetVocabulary(
 					categoryGroupId, categoryClassNameId, commonCategories);
@@ -183,27 +161,22 @@ public class BulkActionResponseModelResourceImpl
 			Stream<Map.Entry<AssetVocabulary, List<AssetCategory>>>
 				assetCategoriesStream = entries.stream();
 
-			bulkAssetEntryCommonCategoriesModel.setVocabularies(
-				assetCategoriesStream.map(
-					entry -> _toAssetVocabularyModel(
-						entry.getKey(), entry.getValue())
-				).toArray(
-					AssetVocabularyModel[]::new
-				));
-
-			bulkAssetEntryCommonCategoriesModel.setStatus("success");
-
-			return bulkAssetEntryCommonCategoriesModel;
+			return new BulkAssetEntryCommonCategoriesModel() {
+				{
+					description = bulkSelection.describe(
+						contextAcceptLanguage.getPreferredLocale());
+					status = "success";
+					vocabularies = assetCategoriesStream.map(
+						entry -> _toAssetVocabularyModel(
+							entry.getKey(), entry.getValue())
+					).toArray(
+						AssetVocabularyModel[]::new
+					);
+				}
+			};
 		}
 		catch (Exception e) {
-			BulkAssetEntryCommonCategoriesModel
-				bulkAssetEntryCommonCategoriesModel =
-					new BulkAssetEntryCommonCategoriesModel();
-
-			bulkAssetEntryCommonCategoriesModel.setStatus("error");
-			bulkAssetEntryCommonCategoriesModel.setDescription(e.getMessage());
-
-			return bulkAssetEntryCommonCategoriesModel;
+			return _toBulkAssetEntryCommonCategoriesModel(e);
 		}
 	}
 
@@ -242,22 +215,10 @@ public class BulkActionResponseModelResourceImpl
 				_user, assetEntryBulkSelection, _editTagsBulkSelectionAction,
 				inputMap);
 
-			BulkActionResponseModel bulkActionResponseModel =
-				new BulkActionResponseModel();
-
-			bulkActionResponseModel.setDescription(StringPool.BLANK);
-			bulkActionResponseModel.setStatus("success");
-
-			return bulkActionResponseModel;
+			return _toBulkActionResponseModel(null);
 		}
 		catch (Exception e) {
-			BulkActionResponseModel bulkActionResponseModel =
-				new BulkActionResponseModel();
-
-			bulkActionResponseModel.setDescription(e.getMessage());
-			bulkActionResponseModel.setStatus("error");
-
-			return bulkActionResponseModel;
+			return _toBulkActionResponseModel(e);
 		}
 	}
 
@@ -280,47 +241,35 @@ public class BulkActionResponseModelResourceImpl
 
 			Stream<AssetEntry> stream = assetEntryBulkSelection.stream();
 
-			Set<String> strings = stream.map(
-				_getAssetEntryTagsFunction(
-					PermissionCheckerFactoryUtil.create(_user))
-			).reduce(
-				SetUtil::intersect
-			).orElse(
-				new HashSet<>()
-			);
+			return new BulkAssetEntryCommonTagsModel() {
+				{
+					description = assetEntryBulkSelection.describe(
+						contextAcceptLanguage.getPreferredLocale());
+					groupIds = ArrayUtil.toLongArray(
+						_portal.getCurrentAndAncestorSiteGroupIds(tagGroupId));
 
-			String[] commonTags = strings.toArray(new String[0]);
+					tagNames = stream.map(
+						_getAssetEntryTagsFunction(
+							PermissionCheckerFactoryUtil.create(_user))
+					).reduce(
+						SetUtil::intersect
+					).orElse(
+						new HashSet<>()
+					).toArray(
+						new String[0]
+					);
 
-			long[] groupIds = _portal.getCurrentAndAncestorSiteGroupIds(
-				tagGroupId);
-
-			Locale preferredLocale = contextAcceptLanguage.getPreferredLocale();
-			BulkAssetEntryCommonTagsModel bulkAssetEntryCommonTagsModel =
-				new BulkAssetEntryCommonTagsModel();
-
-			bulkAssetEntryCommonTagsModel.setStatus("success");
-			bulkAssetEntryCommonTagsModel.setDescription(
-				assetEntryBulkSelection.describe(preferredLocale));
-
-			LongStream groupStream = Arrays.stream(groupIds);
-
-			Stream<Long> longStream = groupStream.boxed();
-
-			bulkAssetEntryCommonTagsModel.setGroupIds(
-				longStream.toArray(Long[]::new));
-
-			bulkAssetEntryCommonTagsModel.setTagNames(commonTags);
-
-			return bulkAssetEntryCommonTagsModel;
+					status = "success";
+				}
+			};
 		}
 		catch (Exception e) {
-			BulkAssetEntryCommonTagsModel bulkAssetEntryCommonTagsModel =
-				new BulkAssetEntryCommonTagsModel();
-
-			bulkAssetEntryCommonTagsModel.setStatus("error");
-			bulkAssetEntryCommonTagsModel.setDescription(e.getMessage());
-
-			return bulkAssetEntryCommonTagsModel;
+			return new BulkAssetEntryCommonTagsModel() {
+				{
+					description = e.getMessage();
+					status = "error";
+				}
+			};
 		}
 	}
 
@@ -461,31 +410,49 @@ public class BulkActionResponseModelResourceImpl
 	private AssetVocabularyModel _toAssetVocabularyModel(
 		AssetVocabulary assetVocabulary, List<AssetCategory> assetCategories) {
 
-		Stream<AssetCategory> stream = assetCategories.stream();
+		return new AssetVocabularyModel() {
+			{
+				categories = transformToArray(
+					assetCategories,
+					assetCategory -> new AssetCategoryModel() {
+						{
+							categoryId = assetCategory.getCategoryId();
+							name = assetCategory.getName();
+						}
+					},
+					AssetCategoryModel.class);
 
-		AssetVocabularyModel assetVocabularyModel = new AssetVocabularyModel();
-
-		AssetCategoryModel[] collect = stream.map(
-			assetCategory -> {
-				AssetCategoryModel assetCategoryModel =
-					new AssetCategoryModel();
-
-				assetCategoryModel.setName(assetCategory.getName());
-				assetCategoryModel.setCategoryId(assetCategory.getCategoryId());
-
-				return assetCategoryModel;
+				multiValued = assetVocabulary.isMultiValued();
+				name = assetVocabulary.getName();
+				vocabularyId = assetVocabulary.getVocabularyId();
 			}
-		).toArray(
-			AssetCategoryModel[]::new
-		);
+		};
+	}
 
-		assetVocabularyModel.setCategories(collect);
+	private BulkActionResponseModel _toBulkActionResponseModel(Exception e) {
+		return new BulkActionResponseModel() {
+			{
+				if (e == null) {
+					description = StringPool.BLANK;
+					status = "success";
+				}
+				else {
+					description = e.getMessage();
+					status = "error";
+				}
+			}
+		};
+	}
 
-		assetVocabularyModel.setMultiValued(assetVocabulary.isMultiValued());
-		assetVocabularyModel.setName(assetVocabulary.getName());
-		assetVocabularyModel.setVocabularyId(assetVocabulary.getVocabularyId());
+	private BulkAssetEntryCommonCategoriesModel
+		_toBulkAssetEntryCommonCategoriesModel(Exception e) {
 
-		return assetVocabularyModel;
+		return new BulkAssetEntryCommonCategoriesModel() {
+			{
+				description = e.getMessage();
+				status = "error";
+			}
+		};
 	}
 
 	@Reference

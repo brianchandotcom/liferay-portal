@@ -29,7 +29,7 @@ import org.osgi.service.component.annotations.ServiceScope;
  * @author Javier Gamarra
  */
 @Component(
-	properties = "OSGI-INF/liferay/rest/v1_0/Bulk-status-model.properties",
+	properties = "OSGI-INF/liferay/rest/v1_0/bulk-status-model.properties",
 	scope = ServiceScope.PROTOTYPE, service = BulkStatusModelResource.class
 )
 public class BulkStatusModelResourceImpl
@@ -37,11 +37,11 @@ public class BulkStatusModelResourceImpl
 
 	@Override
 	public BulkStatusModel getStatus(Long param) throws Exception {
-		BulkStatusModel bulkStatusModel = new BulkStatusModel();
-
-		bulkStatusModel.setStatus(_bulkSelectionRunner.isBusy(_user));
-
-		return bulkStatusModel;
+		return new BulkStatusModel() {
+			{
+				status = _bulkSelectionRunner.isBusy(_user);
+			}
+		};
 	}
 
 	@Reference

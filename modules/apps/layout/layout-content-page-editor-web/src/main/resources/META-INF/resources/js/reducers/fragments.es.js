@@ -288,9 +288,9 @@ function updateFragmentEntryLinkConfigReducer(state, actionType, payload) {
 		resolve => {
 			if (actionType === UPDATE_CONFIG_ATTRIBUTES) {
 				const {
-					fragmentEntryLinkId,
+					config,
 					editableId,
-					config
+					fragmentEntryLinkId
 				} = payload;
 
 				let {editableValues} = nextState.fragmentEntryLinks[fragmentEntryLinkId];

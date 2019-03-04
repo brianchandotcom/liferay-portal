@@ -3,7 +3,7 @@ import Soy, {Config} from 'metal-soy';
 
 import '../common/FloatingToolbarColorPicker.es';
 import './FloatingToolbarTextPropertiesPanelDelegateTemplate.soy';
-import {TEXT_ALIGNMENT_OPTIONS, TEXT_STYLES, EDITABLE_FIELD_CONFIG_KEYS} from '../../../utils/constants';
+import {EDITABLE_FIELD_CONFIG_KEYS, TEXT_ALIGNMENT_OPTIONS, TEXT_STYLES} from '../../../utils/constants';
 import getConnectedComponent from '../../../store/ConnectedComponent.es';
 import templates from './FloatingToolbarTextPropertiesPanel.soy';
 import {UPDATE_CONFIG_ATTRIBUTES, UPDATE_LAST_SAVE_DATE, UPDATE_SAVING_CHANGES_STATUS, UPDATE_TRANSLATION_STATUS} from '../../../actions/actions.es';

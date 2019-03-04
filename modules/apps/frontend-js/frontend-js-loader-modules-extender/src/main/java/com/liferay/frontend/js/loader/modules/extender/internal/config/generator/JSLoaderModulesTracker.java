@@ -12,10 +12,11 @@
  * details.
  */
 
-package com.liferay.frontend.js.loader.modules.extender.internal;
+package com.liferay.frontend.js.loader.modules.extender.internal.config.generator;
 
 import aQute.lib.converter.Converter;
 
+import com.liferay.frontend.js.loader.modules.extender.internal.Details;
 import com.liferay.osgi.util.ServiceTrackerFactory;
 
 import java.net.URL;

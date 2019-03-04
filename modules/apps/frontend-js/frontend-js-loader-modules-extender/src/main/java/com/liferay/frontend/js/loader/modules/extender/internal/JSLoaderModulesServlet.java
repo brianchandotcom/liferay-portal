@@ -14,6 +14,8 @@
 
 package com.liferay.frontend.js.loader.modules.extender.internal;
 
+import com.liferay.frontend.js.loader.modules.extender.internal.config.generator.JSLoaderModule;
+import com.liferay.frontend.js.loader.modules.extender.internal.config.generator.JSLoaderModulesTracker;
 import com.liferay.frontend.js.loader.modules.extender.npm.JSModule;
 import com.liferay.frontend.js.loader.modules.extender.npm.JSModuleAlias;
 import com.liferay.frontend.js.loader.modules.extender.npm.JSPackage;

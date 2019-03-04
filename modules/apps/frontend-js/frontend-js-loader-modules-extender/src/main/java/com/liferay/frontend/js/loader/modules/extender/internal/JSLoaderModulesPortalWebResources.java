@@ -14,6 +14,7 @@
 
 package com.liferay.frontend.js.loader.modules.extender.internal;
 
+import com.liferay.frontend.js.loader.modules.extender.internal.config.generator.JSLoaderModulesTracker;
 import com.liferay.portal.kernel.servlet.PortalWebResourceConstants;
 import com.liferay.portal.kernel.servlet.PortalWebResources;
 import com.liferay.portal.servlet.delegate.ServletContextDelegate;

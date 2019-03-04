@@ -15,9 +15,10 @@ function getFloatingToolbarPanels(editableValues) {
 /**
  * @param {string} content editableField's original HTML
  * @param {string} value Translated/segmented value
+ * @param {object} editable values of the element
  * @return {string} Transformed content
  */
-function render(content, value) {
+function render(content, value, editableValues) {
 	const wrapper = document.createElement('div');
 
 	wrapper.innerHTML = content;
@@ -26,6 +27,22 @@ function render(content, value) {
 
 	if (link) {
 		link.innerHTML = value;
+
+		if (editableValues && editableValues.config) {
+			if (editableValues.config.href) {
+				link.setAttribute('href', editableValues.config.href);
+			}
+
+			if (editableValues.config.target) {
+				link.setAttribute('target', editableValues.config.target);
+			}
+
+			if (editableValues.config.buttonType) {
+				let cssClass = link.getAttribute('class') || '';
+
+				link.setAttribute('class', cssClass + ' btn btn-' + editableValues.config.buttonType);
+			}
+		}
 	}
 
 	return wrapper.innerHTML;

@@ -262,43 +262,15 @@ AUI.add(
 					_openModalCategories: function() {
 						var instance = this;
 
-						var editCategories = instance._editCategories;
-						var form = instance.get('form').node;
-						var namespace = instance.NS;
+						var editCategoriesComponent = Liferay.component(instance.NS + 'EditCategoriesComponent');
 
-						var bulkSelection = instance._searchContainer.select && instance._searchContainer.select.get('bulkSelection');
+						if (editCategoriesComponent) {
+							var bulkSelection = instance._searchContainer.select && instance._searchContainer.select.get('bulkSelection');
 
-						if (!editCategories) {
-							var pathModule = instance.get('pathModule');
-
-							var urlCategories = pathModule + '/bulk/asset/categories/' + instance._config.scopeGroupId + '/' + instance.get('classNameId') + '/common';
-							var urlUpdateCategories = pathModule + '/bulk/asset/categories/' + instance.get('classNameId');
-
-							Liferay.Loader.require(
-								instance.get('npmResolvedPackageName') + '/document_library/categorization/EditCategories.es',
-								function(EditCategories) {
-									instance._editCategories = new EditCategories.default(
-										{
-											fileEntries: instance._selectedFileEntries,
-											folderId: instance.getFolderId(),
-											portletNamespace: namespace,
-											repositoryId: parseFloat(form.get(namespace + 'repositoryId').val()),
-											selectAll: bulkSelection,
-											selectCategoriesUrl: instance.get('selectCategoriesURL'),
-											spritemap: themeDisplay.getPathThemeImages() + '/lexicon/icons.svg',
-											urlCategories: urlCategories,
-											urlUpdateCategories: urlUpdateCategories
-										},
-										'#' + instance.NS + 'documentLibraryModal'
-									);
-								}
-							);
-						}
-						else {
-							editCategories.fileEntries = instance._selectedFileEntries;
-							editCategories.selectAll = bulkSelection;
-							editCategories.folderId = instance.getFolderId();
-							editCategories.open();
+							editCategoriesComponent.fileEntries = instance._selectedFileEntries;
+							editCategoriesComponent.selectAll = bulkSelection;
+							editCategoriesComponent.folderId = instance.getFolderId();
+							editCategoriesComponent.open();
 						}
 					},
 

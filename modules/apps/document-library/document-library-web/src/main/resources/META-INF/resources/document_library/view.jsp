@@ -291,12 +291,13 @@ String navigation = ParamUtil.getString(request, "navigation");
 			Liferay.on('changeScope', changeScopeHandles);
 		</aui:script>
 
-		<aui:script require="document-library-web@4.0.0/document_library/categorization/EditTags.es as EditTags">
+		<aui:script require="document-library-web@4.0.0/document_library/categorization/EditCategories.es as EditCategories,document-library-web@4.0.0/document_library/categorization/EditTags.es as EditTags">
 			var namespace = '<portlet:namespace />';
 
 			var classNameId = '<%= ClassNameLocalServiceUtil.getClassNameId(DLFileEntryConstants.getClassName()) %>';
 			var pathModule = '<%= PortalUtil.getPathModule() %>';
 			var scopeGroupId = '<%= scopeGroupId %>';
+			var spritemap = '<%= themeDisplay.getPathThemeImages() %>/lexicon/icons.svg';
 
 			var urlTags = pathModule + '/bulk/asset/tags/' + scopeGroupId + '/' + classNameId + '/common';
 			var urlUpdateTags = pathModule + '/bulk/asset/tags/' + classNameId;
@@ -308,9 +309,28 @@ String navigation = ParamUtil.getString(request, "navigation");
 						folderId: '<%= folderId %>',
 						portletNamespace: namespace,
 						repositoryId: <%= repositoryId %>,
-						spritemap: '<%= themeDisplay.getPathThemeImages() %>/lexicon/icons.svg',
+						spritemap: spritemap,
 						urlTags: urlTags,
 						urlUpdateTags: urlUpdateTags
+					},
+					'#' + namespace + 'documentLibraryModal'
+				)
+			);
+
+			var urlCategories = pathModule + '/bulk/asset/categories/' + scopeGroupId + '/' + classNameId + '/common';
+			var urlUpdateCategories = pathModule + '/bulk/asset/categories/' + classNameId;
+
+			Liferay.component(
+				namespace + 'EditCategoriesComponent',
+				new EditCategories.default(
+					{
+						folderId: '<%= folderId %>',
+						portletNamespace: namespace,
+						repositoryId: <%= repositoryId %>,
+						selectCategoriesUrl: '<%= selectCategoriesURL.toString() %>',
+						spritemap: spritemap,
+						urlCategories: urlCategories,
+						urlUpdateCategories: urlUpdateCategories
 					},
 					'#' + namespace + 'documentLibraryModal'
 				)

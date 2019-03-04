@@ -30,15 +30,14 @@ public class ObjectMapperContextResolver
 	implements ContextResolver<ObjectMapper> {
 
 	public ObjectMapper getContext(Class<?> clazz) {
-		return _objectMapper;
-	}
+		ObjectMapper objectMapper = new ObjectMapper();
 
-	private static final ObjectMapper _objectMapper = new ObjectMapper() {
-		{
-			configure(MapperFeature.SORT_PROPERTIES_ALPHABETICALLY, true);
-			enable(SerializationFeature.INDENT_OUTPUT);
-			setDateFormat(new ISO8601DateFormat());
-		}
-	};
+		objectMapper.configure(
+			MapperFeature.SORT_PROPERTIES_ALPHABETICALLY, true);
+		objectMapper.enable(SerializationFeature.INDENT_OUTPUT);
+		objectMapper.setDateFormat(new ISO8601DateFormat());
+
+		return objectMapper;
+	}
 
 }

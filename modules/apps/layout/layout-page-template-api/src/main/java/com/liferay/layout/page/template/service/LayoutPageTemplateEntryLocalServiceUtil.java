@@ -317,6 +317,12 @@ public class LayoutPageTemplateEntryLocalServiceUtil {
 	}
 
 	public static com.liferay.layout.page.template.model.LayoutPageTemplateEntry
+		fetchLayoutPageTemplateEntry(long groupId, String name) {
+
+		return getService().fetchLayoutPageTemplateEntry(groupId, name);
+	}
+
+	public static com.liferay.layout.page.template.model.LayoutPageTemplateEntry
 		fetchLayoutPageTemplateEntryByPlid(long plid) {
 
 		return getService().fetchLayoutPageTemplateEntryByPlid(plid);

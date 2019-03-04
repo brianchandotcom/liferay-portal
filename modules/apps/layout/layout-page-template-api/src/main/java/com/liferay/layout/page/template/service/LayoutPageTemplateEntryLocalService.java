@@ -240,6 +240,10 @@ public interface LayoutPageTemplateEntryLocalService
 		long layoutPageTemplateEntryId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public LayoutPageTemplateEntry fetchLayoutPageTemplateEntry(
+		long groupId, String name);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public LayoutPageTemplateEntry fetchLayoutPageTemplateEntryByPlid(
 		long plid);
 

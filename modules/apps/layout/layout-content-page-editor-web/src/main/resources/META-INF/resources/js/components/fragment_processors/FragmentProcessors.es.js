@@ -1,4 +1,5 @@
 import EditableImageFragmentProcessor from './EditableImageFragmentProcessor.es';
+import EditableLinkFragmentProcessor from './EditableLinkFragmentProcessor.es';
 import EditableTextFragmentProcessor from './EditableTextFragmentProcessor.es';
 
 const FragmentProcessors = {
@@ -14,6 +15,13 @@ const FragmentProcessors = {
 		getFloatingToolbarPanels: EditableImageFragmentProcessor.getFloatingToolbarPanels,
 		init: EditableImageFragmentProcessor.init,
 		render: EditableImageFragmentProcessor.render
+	},
+
+	link: {
+		destroy: EditableLinkFragmentProcessor.destroy,
+		getFloatingToolbarPanels: EditableLinkFragmentProcessor.getFloatingToolbarPanels,
+		init: EditableLinkFragmentProcessor.init,
+		render: EditableLinkFragmentProcessor.render
 	}
 };
 

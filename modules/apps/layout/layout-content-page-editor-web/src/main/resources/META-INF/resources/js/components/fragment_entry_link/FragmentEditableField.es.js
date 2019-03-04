@@ -2,6 +2,7 @@ import Component from 'metal-component';
 import {Config} from 'metal-state';
 import Soy from 'metal-soy';
 
+import '../floating_toolbar/link/FloatingToolbarLinkPanel.es';
 import '../floating_toolbar/mapping/FloatingToolbarMappingPanel.es';
 import '../floating_toolbar/text_properties/FloatingToolbarTextPropertiesPanel.es';
 import './FragmentEditableFieldTooltip.es';
@@ -341,10 +342,12 @@ class FragmentEditableField extends Component {
 
 		if (panelId === FLOATING_TOOLBAR_PANELS.edit.panelId) {
 			event.preventDefault();
+
 			this._enableEditor();
 		}
 		else if (panelId === FLOATING_TOOLBAR_PANELS.map.panelId) {
 			event.preventDefault();
+
 			this.store
 				.dispatchAction(
 					OPEN_MAPPING_FIELDS_DIALOG,
@@ -481,7 +484,7 @@ FragmentEditableField.STATE = {
 	 * @review
 	 * @type {!string}
 	 */
-	type: Config.oneOf(['html', 'image', 'rich-text', 'text']).required(),
+	type: Config.oneOf(['html', 'image', 'link', 'rich-text', 'text']).required(),
 
 	/**
 	 * Internal FloatingToolbar instance.

@@ -20,6 +20,12 @@ export const FLOATING_TOOLBAR_PANELS = {
 		title: Liferay.Language.get('edit')
 	},
 
+	link: {
+		icon: 'link',
+		panelId: 'link',
+		title: Liferay.Language.get('link')
+	},
+
 	map: {
 		icon: 'bolt',
 		panelId: 'mapping',

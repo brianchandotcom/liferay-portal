@@ -169,18 +169,20 @@ public abstract class BaseIndexingTestCase {
 		);
 	}
 
-	protected void assertSearch(Consumer<IndexingTestHelper> consumer) {
+	protected void assertSearch(
+		Consumer<IndexingTestHelper> indexingTestHelperConsumer) {
+
 		try {
 			IdempotentRetryAssert.retryAssert(
 				10, TimeUnit.SECONDS,
 				() -> {
-					consumer.accept(new IndexingTestHelper());
+					indexingTestHelperConsumer.accept(new IndexingTestHelper());
 
 					return null;
 				});
 		}
 		catch (RuntimeException re) {
-			throw (RuntimeException)re;
+			throw re;
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
@@ -294,12 +296,14 @@ public abstract class BaseIndexingTestCase {
 				_hits.getDocs(), fieldName, expectedValues);
 		}
 
-		public void define(Consumer<SearchContext> consumer) {
-			consumer.accept(_searchContext);
+		public void define(Consumer<SearchContext> searchContextConsumer) {
+			searchContextConsumer.accept(_searchContext);
 		}
 
-		public void defineRequest(Consumer<SearchRequestBuilder> consumer) {
-			consumer.accept(_searchRequestBuilder);
+		public void defineRequest(
+			Consumer<SearchRequestBuilder> searchRequestBuilderConsumer) {
+
+			searchRequestBuilderConsumer.accept(_searchRequestBuilder);
 		}
 
 		public <AR extends AggregationResult> AR getAggregationResult(
@@ -378,16 +382,20 @@ public abstract class BaseIndexingTestCase {
 			_searchContext.setAttribute(name, value);
 		}
 
-		public void verify(Consumer<Hits> consumer) {
-			consumer.accept(_hits);
+		public void verify(Consumer<Hits> hitsConsumer) {
+			hitsConsumer.accept(_hits);
 		}
 
-		public void verifyContext(Consumer<SearchContext> consumer) {
-			consumer.accept(_searchContext);
+		public void verifyContext(
+			Consumer<SearchContext> searchContextConsumer) {
+
+			searchContextConsumer.accept(_searchContext);
 		}
 
-		public void verifyResponse(Consumer<SearchResponse> consumer) {
-			consumer.accept(_searchResponse);
+		public void verifyResponse(
+			Consumer<SearchResponse> searchResponseConsumer) {
+
+			searchResponseConsumer.accept(_searchResponse);
 		}
 
 		protected <AR extends AggregationResult> AR getAggregationResult(

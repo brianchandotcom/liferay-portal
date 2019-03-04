@@ -20,7 +20,6 @@ import com.liferay.portal.kernel.search.facet.collector.FacetCollector;
 import com.liferay.portal.kernel.search.facet.collector.TermCollector;
 
 import java.util.List;
-import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -32,9 +31,7 @@ import org.junit.Assert;
 public class FacetsAssert {
 
 	public static void assertFrequencies(
-		String facetName, SearchContext searchContext, List<String> expected) {
-
-		Facet facet = searchContext.getFacet(facetName);
+		String message, Facet facet, String expected) {
 
 		FacetCollector facetCollector = facet.getFacetCollector();
 
@@ -42,26 +39,29 @@ public class FacetsAssert {
 
 		Assert.assertNotNull(termCollectors);
 
+		Stream<TermCollector> stream = termCollectors.stream();
+
 		Assert.assertEquals(
-			(String)searchContext.getAttribute("queryString"),
-			expected.toString(),
-			_toString(
-				termCollectors,
-				termCollector ->
-					termCollector.getTerm() + "=" +
-						termCollector.getFrequency()));
+			message, expected,
+			stream.map(
+				FacetsAssert::toString
+			).collect(
+				Collectors.toList()
+			).toString());
 	}
 
-	private static <T> String _toString(
-		List<? extends T> list, Function<? super T, String> function) {
+	public static void assertFrequencies(
+		String facetName, SearchContext searchContext, List<String> expected) {
 
-		Stream<? extends T> stream = list.stream();
+		String message = (String)searchContext.getAttribute("queryString");
 
-		return stream.map(
-			function
-		).collect(
-			Collectors.toList()
-		).toString();
+		Facet facet = searchContext.getFacet(facetName);
+
+		assertFrequencies(message, facet, expected.toString());
+	}
+
+	protected static String toString(TermCollector termCollector) {
+		return termCollector.getTerm() + "=" + termCollector.getFrequency();
 	}
 
 }

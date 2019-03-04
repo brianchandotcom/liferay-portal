@@ -147,16 +147,6 @@ public class DefaultActionableDynamicQuery implements ActionableDynamicQuery {
 		}
 	}
 
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
-	 *             #setModelClass(Class)}
-	 */
-	@Deprecated
-	@Override
-	public void setClass(Class<?> modelClass) {
-		_modelClass = modelClass;
-	}
-
 	@Override
 	public void setClassLoader(ClassLoader classLoader) {
 		_classLoader = classLoader;

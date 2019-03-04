@@ -44,13 +44,6 @@ public interface ActionableDynamicQuery {
 
 	public void setBaseLocalService(BaseLocalService baseLocalService);
 
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
-	 *             #setModelClass(Class)}
-	 */
-	@Deprecated
-	public void setClass(Class<?> clazz);
-
 	public void setClassLoader(ClassLoader classLoader);
 
 	public void setCompanyId(long companyId);

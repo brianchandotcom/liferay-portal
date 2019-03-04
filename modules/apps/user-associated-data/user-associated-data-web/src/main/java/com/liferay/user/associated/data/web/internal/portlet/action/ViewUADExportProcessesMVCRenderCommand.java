@@ -18,7 +18,6 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.user.associated.data.constants.UserAssociatedDataPortletKeys;
 
-import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
@@ -41,8 +40,7 @@ public class ViewUADExportProcessesMVCRenderCommand
 
 	@Override
 	public String render(
-			RenderRequest renderRequest, RenderResponse renderResponse)
-		throws PortletException {
+		RenderRequest renderRequest, RenderResponse renderResponse) {
 
 		return "/view_uad_export_processes.jsp";
 	}

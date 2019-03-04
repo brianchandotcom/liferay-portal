@@ -107,7 +107,7 @@ public class UADHierarchyDisplay {
 
 		String className = ParamUtil.getString(request, "parentContainerClass");
 
-		UADDisplay uadDisplay = _getUADDisplayByClassName(className);
+		UADDisplay uadDisplay = _getUADDisplayByTypeClassName(className);
 
 		String applicationName = UADLanguageUtil.getApplicationName(
 			uadDisplay, locale);
@@ -131,8 +131,8 @@ public class UADHierarchyDisplay {
 			portletURL.setParameter(
 				"mvcRenderCommandName", "/view_uad_hierarchy");
 
-			UADDisplay parentContainerUADDisplay = _getUADDisplayByClassName(
-				parentContainerClass.getName());
+			UADDisplay parentContainerUADDisplay = _getUADDisplayByTypeClass(
+				parentContainerClass);
 
 			String parentContainerName = parentContainerUADDisplay.getName(
 				parentContainerUADDisplay.get(parentContainerId), locale);
@@ -180,55 +180,33 @@ public class UADHierarchyDisplay {
 			_uadHierarchyDeclaration.getExtraColumnNames());
 	}
 
-	public <T> List<Object> getContainerItems(
+	public Map<Class<?>, List<Serializable>> getContainerItemPKsMap(
 		Class<?> parentContainerClass, Serializable parentContainerId,
-		String typeClassName, long userId) {
+		long userId) {
 
-		List<Object> containerItems = new ArrayList<>();
+		Map<Class<?>, List<Serializable>> containerItemPKsMap =
+			new LinkedHashMap<>();
 
-		UADDisplay uadDisplay = _getUADDisplayByClassName(typeClassName);
+		if (ArrayUtil.contains(_containerTypeClasses, parentContainerClass)) {
+			for (UADDisplay containerItemUADDisplay : _uadDisplays) {
+				Class<?> containerItemTypeClass =
+					containerItemUADDisplay.getTypeClass();
 
-		List<Object> searchItems = uadDisplay.search(
-			userId, null, null, null, null, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS);
+				List<Serializable> containerItemPKs = _getContainerItemPKs(
+					parentContainerClass, parentContainerId,
+					containerItemTypeClass, userId);
 
-		for (Object searchItem : searchItems) {
-			if (parentContainerId.equals(
-					uadDisplay.getParentContainerId(searchItem))) {
-
-				containerItems.add(searchItem);
-			}
-			else {
-				boolean containerItem = false;
-
-				for (UADDisplay containerUADDisplay :
-						getContainerUADDisplays()) {
-
-					Object topLevelContainer =
-						containerUADDisplay.getTopLevelContainer(
-							parentContainerClass, parentContainerId,
-							searchItem);
-
-					if (topLevelContainer != null) {
-						containerItem = true;
-					}
-				}
-
-				if (containerItem) {
-					containerItems.add(searchItem);
-				}
+				_addEntities(
+					containerItemPKsMap, containerItemPKs,
+					containerItemTypeClass);
 			}
 		}
 
-		return containerItems;
+		return containerItemPKsMap;
 	}
 
 	public Class<?>[] getContainerTypeClasses() {
 		return _containerTypeClasses;
-	}
-
-	public UADDisplay<?>[] getContainerUADDisplays() {
-		return _containerUADDisplays;
 	}
 
 	public <T> String getEditURL(
@@ -313,10 +291,9 @@ public class UADHierarchyDisplay {
 	}
 
 	public <T> String getViewURL(
-			LiferayPortletRequest liferayPortletRequest,
-			LiferayPortletResponse liferayPortletResponse,
-			String applicationKey, T object, long selectedUserId)
-		throws Exception {
+		LiferayPortletRequest liferayPortletRequest,
+		LiferayPortletResponse liferayPortletResponse, String applicationKey,
+		T object, long selectedUserId) {
 
 		T unwrappedObject = unwrap(object);
 
@@ -346,7 +323,7 @@ public class UADHierarchyDisplay {
 	}
 
 	public boolean isContainer(Class<?> typeClass) {
-		for (UADDisplay uadDisplay : getContainerUADDisplays()) {
+		for (UADDisplay uadDisplay : _containerUADDisplays) {
 			if (uadDisplay.getTypeClass() == typeClass) {
 				return true;
 			}
@@ -364,10 +341,9 @@ public class UADHierarchyDisplay {
 	}
 
 	public List<Object> search(
-			Class<?> parentContainerClass, Serializable parentContainerId,
-			long userId, long[] groupIds, String keywords, String orderByField,
-			String orderByType, int start, int end)
-		throws Exception {
+		Class<?> parentContainerClass, Serializable parentContainerId,
+		long userId, long[] groupIds, String keywords, String orderByField,
+		String orderByType, int start, int end) {
 
 		Objects.requireNonNull(parentContainerClass);
 		Objects.requireNonNull(parentContainerId);
@@ -472,9 +448,68 @@ public class UADHierarchyDisplay {
 		return topLevelCategories.values();
 	}
 
-	private <T> UADDisplay<?> _getUADDisplayByClassName(String className) {
+	private void _addEntities(
+		Map<Class<?>, List<Serializable>> entitiesMap,
+		List<Serializable> entities, Class<?> typeClass) {
+
+		if (entitiesMap.containsKey(typeClass)) {
+			List<Serializable> entitiesList = entitiesMap.get(typeClass);
+
+			entitiesList.addAll(entities);
+		}
+		else {
+			List<Serializable> entitiesList = new ArrayList<>();
+
+			entitiesList.addAll(entities);
+
+			entitiesMap.put(typeClass, entitiesList);
+		}
+	}
+
+	private <T> List<Serializable> _getContainerItemPKs(
+		Class<?> parentContainerClass, Serializable parentContainerId,
+		Class<?> typeClass, long userId) {
+
+		List<Serializable> containerItemPKs = new ArrayList<>();
+
+		UADDisplay uadDisplay = _getUADDisplayByTypeClass(typeClass);
+
+		List<Object> searchItems = uadDisplay.search(
+			userId, null, null, null, null, QueryUtil.ALL_POS,
+			QueryUtil.ALL_POS);
+
+		for (Object searchItem : searchItems) {
+			if (parentContainerId.equals(
+					uadDisplay.getParentContainerId(searchItem))) {
+
+				containerItemPKs.add(uadDisplay.getPrimaryKey(searchItem));
+			}
+			else {
+				boolean containerItem = false;
+
+				for (UADDisplay containerUADDisplay : _containerUADDisplays) {
+					Object topLevelContainer =
+						containerUADDisplay.getTopLevelContainer(
+							parentContainerClass, parentContainerId,
+							searchItem);
+
+					if (topLevelContainer != null) {
+						containerItem = true;
+					}
+				}
+
+				if (containerItem) {
+					containerItemPKs.add(uadDisplay.getPrimaryKey(searchItem));
+				}
+			}
+		}
+
+		return containerItemPKs;
+	}
+
+	private <T> UADDisplay<?> _getUADDisplayByObject(T object) {
 		for (Class<?> typeClass : _uadDisplayMap.keySet()) {
-			if (className.equals(typeClass.getName())) {
+			if (typeClass.isInstance(object)) {
 				return _uadDisplayMap.get(typeClass);
 			}
 		}
@@ -482,9 +517,19 @@ public class UADHierarchyDisplay {
 		return null;
 	}
 
-	private <T> UADDisplay<?> _getUADDisplayByObject(T object) {
+	private <T> UADDisplay<?> _getUADDisplayByTypeClass(Class<?> typeClass) {
+		if (!_uadDisplayMap.containsKey(typeClass)) {
+			return null;
+		}
+
+		return _uadDisplayMap.get(typeClass);
+	}
+
+	private <T> UADDisplay<?> _getUADDisplayByTypeClassName(
+		String typeClassName) {
+
 		for (Class<?> typeClass : _uadDisplayMap.keySet()) {
-			if (typeClass.isInstance(object)) {
+			if (typeClassName.equals(typeClass.getName())) {
 				return _uadDisplayMap.get(typeClass);
 			}
 		}

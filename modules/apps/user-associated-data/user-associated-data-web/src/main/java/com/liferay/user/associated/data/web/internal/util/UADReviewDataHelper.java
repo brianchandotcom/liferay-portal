@@ -58,11 +58,9 @@ import org.osgi.service.component.annotations.Reference;
 public class UADReviewDataHelper {
 
 	public SearchContainer<UADEntity> getSearchContainer(
-			RenderRequest renderRequest,
-			LiferayPortletResponse liferayPortletResponse,
-			PortletURL currentURL, long[] groupIds, User selectedUser,
-			UADDisplay uadDisplay)
-		throws Exception {
+		RenderRequest renderRequest,
+		LiferayPortletResponse liferayPortletResponse, PortletURL currentURL,
+		long[] groupIds, User selectedUser, UADDisplay uadDisplay) {
 
 		SearchContainer<UADEntity> searchContainer = _constructSearchContainer(
 			renderRequest, currentURL, "modifiedDate",
@@ -114,12 +112,11 @@ public class UADReviewDataHelper {
 	}
 
 	public SearchContainer<UADEntity> getSearchContainer(
-			RenderRequest renderRequest,
-			LiferayPortletResponse liferayPortletResponse,
-			String applicationKey, PortletURL currentURL, long[] groupIds,
-			Class<?> parentContainerClass, Serializable parentContainerId,
-			User selectedUser, UADHierarchyDisplay uadHierarchyDisplay)
-		throws Exception {
+		RenderRequest renderRequest,
+		LiferayPortletResponse liferayPortletResponse, String applicationKey,
+		PortletURL currentURL, long[] groupIds, Class<?> parentContainerClass,
+		Serializable parentContainerId, User selectedUser,
+		UADHierarchyDisplay uadHierarchyDisplay) {
 
 		SearchContainer<UADEntity> searchContainer = _constructSearchContainer(
 			renderRequest, currentURL, "name",

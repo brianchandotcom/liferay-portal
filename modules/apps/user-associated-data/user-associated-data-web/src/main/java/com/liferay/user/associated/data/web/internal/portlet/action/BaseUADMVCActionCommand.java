@@ -14,6 +14,7 @@
 
 package com.liferay.user.associated.data.web.internal.portlet.action;
 
+import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.LiferayPortletURL;
@@ -24,16 +25,14 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.user.associated.data.anonymizer.UADAnonymizer;
 import com.liferay.user.associated.data.constants.UserAssociatedDataPortletKeys;
 import com.liferay.user.associated.data.display.UADDisplay;
-import com.liferay.user.associated.data.web.internal.display.UADHierarchyDisplay;
 import com.liferay.user.associated.data.web.internal.registry.UADRegistry;
 import com.liferay.user.associated.data.web.internal.util.SelectedUserHelper;
 import com.liferay.user.associated.data.web.internal.util.UADApplicationSummaryHelper;
 import com.liferay.user.associated.data.web.internal.util.UADReviewDataHelper;
 
+import java.io.Serializable;
+
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -47,42 +46,6 @@ import org.osgi.service.component.annotations.Reference;
  * @author Drew Brokke
  */
 public abstract class BaseUADMVCActionCommand extends BaseMVCActionCommand {
-
-	protected void addEntities(
-		Map<String, List<Object>> entitiesMap, List<Object> entities,
-		String entityType) {
-
-		if (entitiesMap.containsKey(entityType)) {
-			List<Object> entitiesList = entitiesMap.get(entityType);
-
-			entitiesList.addAll(entities);
-		}
-		else {
-			List<Object> entitiesList = new ArrayList<>();
-
-			entitiesList.addAll(entities);
-
-			entitiesMap.put(entityType, entitiesList);
-		}
-	}
-
-	protected void addEntity(
-		Map<String, List<Object>> entitiesMap, Object entity,
-		String entityType) {
-
-		if (entitiesMap.containsKey(entityType)) {
-			List<Object> entitiesList = entitiesMap.get(entityType);
-
-			entitiesList.add(entity);
-		}
-		else {
-			List<Object> entitiesList = new ArrayList<>();
-
-			entitiesList.add(entity);
-
-			entitiesMap.put(entityType, entitiesList);
-		}
-	}
 
 	protected void doNonreviewableRedirect(
 		ActionRequest actionRequest, ActionResponse actionResponse)
@@ -161,63 +124,14 @@ public abstract class BaseUADMVCActionCommand extends BaseMVCActionCommand {
 			actionRequest, actionResponse, liferayPortletURL.toString());
 	}
 
-	protected Map<String, List<Object>> getEntitiesMap(
-			ActionRequest actionRequest)
+	protected void doMultipleAction(
+			List<Serializable> primaryKeys,
+			UnsafeConsumer<Serializable, Exception> unsafeConsumer)
 		throws Exception {
 
-		String applicationKey = ParamUtil.getString(
-			actionRequest, "applicationKey");
-
-		Map<String, List<Object>> entitiesMap = new LinkedHashMap<>();
-
-		UADHierarchyDisplay uadHierarchyDisplay =
-			uadRegistry.getUADHierarchyDisplay(applicationKey);
-
-		long selectedUserId = getSelectedUserId(actionRequest);
-
-		List<String> entityTypes = getEntityTypes(actionRequest);
-
-		for (String entityType : entityTypes) {
-			String uadRegistryKey = getUADRegistryKey(
-				actionRequest, entityType);
-
-			UADDisplay uadDisplay = uadRegistry.getUADDisplay(uadRegistryKey);
-
-			String[] primaryKeys = getPrimaryKeys(actionRequest, entityType);
-
-			for (String primaryKey : primaryKeys) {
-				Object entity = uadDisplay.get(primaryKey);
-
-				if (uadHierarchyDisplay != null) {
-					if (uadHierarchyDisplay.isContainer(
-							uadDisplay.getTypeClass())) {
-
-						for (String containerItemType : entityTypes) {
-							List<Object> containerItems =
-								uadHierarchyDisplay.getContainerItems(
-									uadDisplay.getTypeClass(),
-									uadDisplay.getPrimaryKey(entity),
-									getUADRegistryKey(
-										actionRequest, containerItemType),
-									selectedUserId);
-
-							addEntities(
-								entitiesMap, containerItems, containerItemType);
-						}
-					}
-
-					if (uadDisplay.isUserOwned(entity, selectedUserId)) {
-						addEntity(entitiesMap, entity, entityType);
-					}
-				}
-				else {
-					addEntity(
-						entitiesMap, uadDisplay.get(primaryKey), entityType);
-				}
-			}
+		for (Serializable primaryKey : primaryKeys) {
+			unsafeConsumer.accept(primaryKey);
 		}
-
-		return entitiesMap;
 	}
 
 	protected List<String> getEntityTypes(ActionRequest actionRequest) {

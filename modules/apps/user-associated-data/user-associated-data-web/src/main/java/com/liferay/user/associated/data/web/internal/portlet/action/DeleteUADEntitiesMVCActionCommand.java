@@ -14,9 +14,15 @@
 
 package com.liferay.user.associated.data.web.internal.portlet.action;
 
+import com.liferay.portal.kernel.exception.NoSuchModelException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
+import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.user.associated.data.anonymizer.UADAnonymizer;
 import com.liferay.user.associated.data.constants.UserAssociatedDataPortletKeys;
+import com.liferay.user.associated.data.display.UADDisplay;
+import com.liferay.user.associated.data.web.internal.display.UADHierarchyDisplay;
+
+import java.io.Serializable;
 
 import java.util.List;
 import java.util.Map;
@@ -44,19 +50,75 @@ public class DeleteUADEntitiesMVCActionCommand extends BaseUADMVCActionCommand {
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
-		Map<String, List<Object>> entitiesMap = getEntitiesMap(actionRequest);
+		String applicationKey = ParamUtil.getString(
+			actionRequest, "applicationKey");
 
-		for (Map.Entry<String, List<Object>> entry : entitiesMap.entrySet()) {
-			List<Object> entities = entry.getValue();
-			UADAnonymizer uadAnonymizer = getUADAnonymizer(
-				actionRequest, entry.getKey());
+		UADHierarchyDisplay uadHierarchyDisplay =
+			uadRegistry.getUADHierarchyDisplay(applicationKey);
 
-			for (Object entity : entities) {
-				uadAnonymizer.delete(entity);
+		for (String entityType : getEntityTypes(actionRequest)) {
+			String[] primaryKeys = getPrimaryKeys(actionRequest, entityType);
+
+			UADAnonymizer entityUADAnonymizer = getUADAnonymizer(
+				actionRequest, entityType);
+			UADDisplay<?> entityUADDisplay = getUADDisplay(
+				actionRequest, entityType);
+
+			for (String primaryKey : primaryKeys) {
+				_delete(
+					entityUADAnonymizer, entityUADDisplay, primaryKey,
+					getSelectedUserId(actionRequest), uadHierarchyDisplay);
 			}
 		}
 
 		doReviewableRedirect(actionRequest, actionResponse);
+	}
+
+	private void _delete(
+			UADAnonymizer entityUADAnonymizer, UADDisplay<?> entityUADDisplay,
+			String primaryKey, long selectedUserId,
+			UADHierarchyDisplay uadHierarchyDisplay)
+		throws Exception {
+
+		Object entity = entityUADDisplay.get(primaryKey);
+
+		if (uadHierarchyDisplay != null) {
+			if (uadHierarchyDisplay.isUserOwned(entity, selectedUserId)) {
+				entityUADAnonymizer.delete(entity);
+			}
+
+			Map<Class<?>, List<Serializable>> containerItemPKsMap =
+				uadHierarchyDisplay.getContainerItemPKsMap(
+					entityUADDisplay.getTypeClass(),
+					uadHierarchyDisplay.getPrimaryKey(entity), selectedUserId);
+
+			for (Map.Entry<Class<?>, List<Serializable>> entry :
+					containerItemPKsMap.entrySet()) {
+
+				Class<?> containerItemClass = entry.getKey();
+
+				UADAnonymizer containerItemUADAnonymizer =
+					uadRegistry.getUADAnonymizer(containerItemClass.getName());
+				UADDisplay containerItemUADDisplay = uadRegistry.getUADDisplay(
+					containerItemClass.getName());
+
+				doMultipleAction(
+					entry.getValue(),
+					containerItemPK -> {
+						try {
+							Object containerItem = containerItemUADDisplay.get(
+								containerItemPK);
+
+							containerItemUADAnonymizer.delete(containerItem);
+						}
+						catch (NoSuchModelException nsme) {
+						}
+					});
+			}
+		}
+		else {
+			entityUADAnonymizer.delete(entity);
+		}
 	}
 
 }

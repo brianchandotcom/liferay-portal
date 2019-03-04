@@ -61,7 +61,7 @@ public class UADHierarchyResultRowSplitter implements ResultRowSplitter {
 		List<ResultRowSplitterEntry> resultRowSplitterEntries =
 			new ArrayList<>();
 
-		Map<Class, List<ResultRow>> classResultRowsMap = new HashMap<>();
+		Map<Class<?>, List<ResultRow>> classResultRowsMap = new HashMap<>();
 
 		for (UADDisplay uadDisplay : _uadDisplays) {
 			classResultRowsMap.put(

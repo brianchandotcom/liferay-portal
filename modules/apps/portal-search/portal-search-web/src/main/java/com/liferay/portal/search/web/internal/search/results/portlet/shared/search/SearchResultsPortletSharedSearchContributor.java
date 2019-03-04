@@ -43,7 +43,7 @@ public class SearchResultsPortletSharedSearchContributor
 
 		SearchResultsPortletPreferences searchResultsPortletPreferences =
 			new SearchResultsPortletPreferencesImpl(
-				portletSharedSearchSettings.getPortletPreferences());
+				portletSharedSearchSettings.getPortletPreferencesOptional());
 
 		paginate(searchResultsPortletPreferences, portletSharedSearchSettings);
 
@@ -73,7 +73,7 @@ public class SearchResultsPortletSharedSearchContributor
 			paginationStartParameterName);
 
 		Optional<String> paginationStartParameterValueOptional =
-			portletSharedSearchSettings.getParameter(
+			portletSharedSearchSettings.getParameterOptional(
 				paginationStartParameterName);
 
 		SearchOptionalUtil.copy(
@@ -84,7 +84,7 @@ public class SearchResultsPortletSharedSearchContributor
 			searchResultsPortletPreferences.getPaginationDeltaParameterName();
 
 		Optional<String> paginationDeltaParameterValueOptional =
-			portletSharedSearchSettings.getParameter(
+			portletSharedSearchSettings.getParameterOptional(
 				paginationDeltaParameterName);
 
 		Optional<Integer> paginationDeltaOptional =

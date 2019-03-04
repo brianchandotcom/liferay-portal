@@ -57,7 +57,7 @@ public class SearchBarPortletSharedSearchContributor
 
 		SearchBarPortletPreferences searchBarPortletPreferences =
 			new SearchBarPortletPreferencesImpl(
-				portletSharedSearchSettings.getPortletPreferences());
+				portletSharedSearchSettings.getPortletPreferencesOptional());
 
 		if (!shouldContributeToCurrentPageSearch(
 				searchBarPortletPreferences, portletSharedSearchSettings)) {
@@ -149,8 +149,9 @@ public class SearchBarPortletSharedSearchContributor
 			return searchScopePreference.getSearchScope();
 		}
 
-		Optional<String> optional = portletSharedSearchSettings.getParameter(
-			searchBarPortletPreferences.getScopeParameterName());
+		Optional<String> optional =
+			portletSharedSearchSettings.getParameterOptional(
+				searchBarPortletPreferences.getScopeParameterName());
 
 		return optional.map(
 			SearchScope::getSearchScope
@@ -240,7 +241,8 @@ public class SearchBarPortletSharedSearchContributor
 		portletSharedSearchSettings.setKeywordsParameterName(parameterName);
 
 		SearchOptionalUtil.copy(
-			() -> portletSharedSearchSettings.getParameter(parameterName),
+			() -> portletSharedSearchSettings.getParameterOptional(
+				parameterName),
 			value -> {
 				Keywords keywords = new Keywords(value);
 

@@ -41,7 +41,7 @@ public class SearchOptionsPortletSharedSearchContributor
 
 		SearchOptionsPortletPreferences searchOptionsPortletPreferences =
 			new SearchOptionsPortletPreferencesImpl(
-				portletSharedSearchSettings.getPortletPreferences());
+				portletSharedSearchSettings.getPortletPreferencesOptional());
 
 		enableBasicFacetSelection(
 			searchOptionsPortletPreferences, portletSharedSearchSettings);

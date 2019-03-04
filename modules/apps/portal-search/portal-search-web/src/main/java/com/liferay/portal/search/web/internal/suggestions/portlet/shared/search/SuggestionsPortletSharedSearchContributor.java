@@ -40,7 +40,7 @@ public class SuggestionsPortletSharedSearchContributor
 
 		SuggestionsPortletPreferences suggestionsPortletPreferences =
 			new SuggestionsPortletPreferencesImpl(
-				portletSharedSearchSettings.getPortletPreferences());
+				portletSharedSearchSettings.getPortletPreferencesOptional());
 
 		setUpQueryIndexing(
 			suggestionsPortletPreferences, portletSharedSearchSettings);

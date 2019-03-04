@@ -14,7 +14,6 @@
 
 package com.liferay.portal.search.web.internal.search.insights.portlet.shared.search;
 
-import com.liferay.portal.search.legacy.searcher.SearchRequestBuilderFactory;
 import com.liferay.portal.search.searcher.SearchRequestBuilder;
 import com.liferay.portal.search.web.internal.search.insights.constants.SearchInsightsPortletKeys;
 import com.liferay.portal.search.web.internal.search.insights.portlet.SearchInsightsPortletPreferences;
@@ -23,7 +22,6 @@ import com.liferay.portal.search.web.portlet.shared.search.PortletSharedSearchCo
 import com.liferay.portal.search.web.portlet.shared.search.PortletSharedSearchSettings;
 
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Wade Cao
@@ -41,12 +39,11 @@ public class SearchInsightsPortletSharedSearchContributor
 		PortletSharedSearchSettings portletSharedSearchSettings) {
 
 		SearchRequestBuilder searchRequestBuilder =
-			searchRequestBuilderFactory.getSearchRequestBuilder(
-				portletSharedSearchSettings.getSearchContext());
+			portletSharedSearchSettings.getSearchRequestBuilder();
 
 		SearchInsightsPortletPreferences searchInsightsPortletPreferences =
 			new SearchInsightsPortletPreferencesImpl(
-				portletSharedSearchSettings.getPortletPreferences());
+				portletSharedSearchSettings.getPortletPreferencesOptional());
 
 		searchRequestBuilder.explain(
 			searchInsightsPortletPreferences.isExplain()
@@ -54,8 +51,5 @@ public class SearchInsightsPortletSharedSearchContributor
 			true
 		);
 	}
-
-	@Reference
-	protected SearchRequestBuilderFactory searchRequestBuilderFactory;
 
 }

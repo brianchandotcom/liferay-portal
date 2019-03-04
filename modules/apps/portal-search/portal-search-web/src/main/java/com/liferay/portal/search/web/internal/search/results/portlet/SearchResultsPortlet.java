@@ -32,6 +32,7 @@ import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.search.constants.SearchContextAttributes;
+import com.liferay.portal.search.searcher.SearchResponse;
 import com.liferay.portal.search.summary.SummaryBuilderFactory;
 import com.liferay.portal.search.web.internal.display.context.PortletURLFactory;
 import com.liferay.portal.search.web.internal.display.context.PortletURLFactoryImpl;
@@ -161,9 +162,12 @@ public class SearchResultsPortlet extends MVCPortlet {
 				portletSharedSearchResponse.getPortletPreferences(
 					renderRequest));
 
+		SearchResponse searchResponse =
+			portletSharedSearchResponse.getSearchResponse();
+
 		searchResultsPortletDisplayContext.setSearchContainer(
 			buildSearchContainer(
-				documents, portletSharedSearchResponse.getTotalHits(),
+				documents, searchResponse.getTotalHits(),
 				portletSharedSearchResponse.getPaginationStart(),
 				searchResultsPortletPreferences.
 					getPaginationStartParameterName(),
@@ -176,7 +180,7 @@ public class SearchResultsPortlet extends MVCPortlet {
 			searchResultsSummariesHolder);
 
 		searchResultsPortletDisplayContext.setTotalHits(
-			portletSharedSearchResponse.getTotalHits());
+			searchResponse.getTotalHits());
 
 		return searchResultsPortletDisplayContext;
 	}

@@ -69,7 +69,7 @@
 				</aui:script>
 			</c:when>
 			<c:otherwise>
-				<aui:input label="searchable-as-keyword" name="Property--index-type--" type="toggle-switch" value="<%= propertyIndexType %>" />
+				<aui:input checked="<%= (column != null) ? (propertyIndexType == ExpandoColumnConstants.INDEX_TYPE_KEYWORD) : true %>" label="searchable-as-keyword" name="Property--index-type--" type="toggle-switch" value="<%= propertyIndexType %>" />
 
 				<div class="form-text">
 					<liferay-ui:message key="custom-field-index-type-help" />

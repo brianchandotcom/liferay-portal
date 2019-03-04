@@ -79,6 +79,11 @@ public class JournalPermissionAssetEntryAction implements AssetEntryAction {
 	}
 
 	@Override
+	public String getIcon() {
+		return "cog";
+	}
+
+	@Override
 	public String getMessage(Locale locale) {
 		return LanguageUtil.get(locale, "permissions");
 	}

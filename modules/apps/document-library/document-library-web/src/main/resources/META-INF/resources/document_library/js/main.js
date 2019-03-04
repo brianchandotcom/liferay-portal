@@ -10,10 +10,6 @@ AUI.add(
 		var DocumentLibrary = A.Component.create(
 			{
 				ATTRS: {
-					classNameId: {
-						validator: Lang.isString
-					},
-
 					downloadEntryUrl: {
 						validator: Lang.isString
 					},
@@ -30,19 +26,7 @@ AUI.add(
 						validator: Lang.isString
 					},
 
-					npmResolvedPackageName: {
-						validator: Lang.isString
-					},
-
-					pathModule: {
-						validator: Lang.isString
-					},
-
 					searchContainerId: {
-						validator: Lang.isString
-					},
-
-					selectCategoriesURL: {
 						validator: Lang.isString
 					},
 

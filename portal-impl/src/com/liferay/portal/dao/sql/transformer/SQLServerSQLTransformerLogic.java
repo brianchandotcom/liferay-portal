@@ -31,7 +31,8 @@ public class SQLServerSQLTransformerLogic extends BaseSQLTransformerLogic {
 		Function[] functions = {
 			getBitwiseCheckFunction(), getBooleanFunction(),
 			getCastClobTextFunction(), getCastLongFunction(),
-			getCastTextFunction(), getConcatFunction(), getInstrFunction(),
+			getCastTextFunction(), getConcatFunction(),
+			getDropTableIfExistsTextFunction(), getInstrFunction(),
 			getIntegerDivisionFunction(), getLengthFunction(), getModFunction(),
 			getNullDateFunction(), getSubstrFunction()
 		};
@@ -46,6 +47,14 @@ public class SQLServerSQLTransformerLogic extends BaseSQLTransformerLogic {
 	@Override
 	protected String replaceCastText(Matcher matcher) {
 		return matcher.replaceAll("CAST($1 AS NVARCHAR(MAX))");
+	}
+
+	@Override
+	protected String replaceDropTableIfExistsText(Matcher matcher) {
+		String dropTableIfExists =
+			"IF OBJECT_ID('$1', 'U') IS NOT NULL DROP TABLE $1";
+
+		return matcher.replaceAll(dropTableIfExists);
 	}
 
 }

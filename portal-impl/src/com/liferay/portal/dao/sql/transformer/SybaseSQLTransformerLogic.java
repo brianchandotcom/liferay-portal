@@ -33,7 +33,8 @@ public class SybaseSQLTransformerLogic extends BaseSQLTransformerLogic {
 		Function[] functions = {
 			getBitwiseCheckFunction(), getBooleanFunction(),
 			getCastClobTextFunction(), getCastLongFunction(),
-			getCastTextFunction(), getConcatFunction(), getInstrFunction(),
+			getCastTextFunction(), getConcatFunction(),
+			getDropTableIfExistsTextFunction(), getInstrFunction(),
 			getIntegerDivisionFunction(), getLengthFunction(), getModFunction(),
 			getNullDateFunction(), getSubstrFunction(), _getCrossJoinFunction(),
 			_getReplaceFunction()

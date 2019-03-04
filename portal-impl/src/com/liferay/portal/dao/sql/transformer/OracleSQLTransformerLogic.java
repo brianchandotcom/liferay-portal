@@ -18,6 +18,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.internal.dao.sql.transformer.SQLFunctionTransformer;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 
 import java.util.function.Function;
@@ -34,8 +35,9 @@ public class OracleSQLTransformerLogic extends BaseSQLTransformerLogic {
 		Function[] functions = {
 			getBooleanFunction(), getCastClobTextFunction(),
 			getCastLongFunction(), getCastTextFunction(), getConcatFunction(),
-			getIntegerDivisionFunction(), getNullDateFunction(),
-			_getEscapeFunction(), _getNotEqualsBlankStringFunction()
+			getDropTableIfExistsTextFunction(), getIntegerDivisionFunction(),
+			getNullDateFunction(), _getEscapeFunction(),
+			_getNotEqualsBlankStringFunction()
 		};
 
 		if (!db.isSupportsStringCaseSensitiveQuery()) {
@@ -62,6 +64,24 @@ public class OracleSQLTransformerLogic extends BaseSQLTransformerLogic {
 	@Override
 	protected String replaceCastText(Matcher matcher) {
 		return matcher.replaceAll("CAST($1 AS VARCHAR(4000))");
+	}
+
+	protected String replaceDropTableIfExistsText(Matcher matcher) {
+		StringBundler sb = new StringBundler(9);
+
+		sb.append("BEGIN\n");
+		sb.append("EXECUTE IMMEDIATE 'DROP TABLE $1';\n");
+		sb.append("EXCEPTION\n");
+		sb.append("WHEN OTHERS THEN\n");
+		sb.append("IF SQLCODE != -942 THEN\n");
+		sb.append("RAISE;\n");
+		sb.append("END IF;\n");
+		sb.append("END;\n");
+		sb.append("/");
+
+		String dropTableIfExists = sb.toString();
+
+		return matcher.replaceAll(dropTableIfExists);
 	}
 
 	@Override

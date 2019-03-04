@@ -95,6 +95,18 @@ public abstract class BaseSQLTransformerLogic implements SQLTransformerLogic {
 		return sqlFunctionTransformer::transform;
 	}
 
+	protected Function<String, String> getDropTableIfExistsTextFunction() {
+		Pattern pattern = getDropTableIfExistsTextPattern();
+
+		return (String sql) -> replaceDropTableIfExistsText(
+			pattern.matcher(sql));
+	}
+
+	protected Pattern getDropTableIfExistsTextPattern() {
+		return Pattern.compile(
+			"DROP_TABLE_IF_EXISTS\\((.+?)\\)", Pattern.CASE_INSENSITIVE);
+	}
+
 	protected Function<String, String> getInstrFunction() {
 		Pattern pattern = getInstrPattern();
 
@@ -205,6 +217,10 @@ public abstract class BaseSQLTransformerLogic implements SQLTransformerLogic {
 
 	protected String replaceCastText(Matcher matcher) {
 		return matcher.replaceAll("$1");
+	}
+
+	protected String replaceDropTableIfExistsText(Matcher matcher) {
+		return matcher.replaceAll("DROP TABLE IF EXISTS $1");
 	}
 
 	protected String replaceInstr(Matcher matcher) {

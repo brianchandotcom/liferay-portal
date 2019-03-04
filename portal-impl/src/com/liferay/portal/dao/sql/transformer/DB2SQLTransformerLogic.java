@@ -34,8 +34,9 @@ public class DB2SQLTransformerLogic extends BaseSQLTransformerLogic {
 		Function[] functions = {
 			getBooleanFunction(), getCastClobTextFunction(),
 			getCastLongFunction(), getCastTextFunction(), getConcatFunction(),
-			getIntegerDivisionFunction(), getNullDateFunction(),
-			_getAlterColumnTypeFunction(), _getLikeFunction()
+			getDropTableIfExistsTextFunction(), getIntegerDivisionFunction(),
+			getNullDateFunction(), _getAlterColumnTypeFunction(),
+			_getLikeFunction()
 		};
 
 		if (!db.isSupportsStringCaseSensitiveQuery()) {

@@ -33,9 +33,9 @@ public class PostgreSQLTransformerLogic extends BaseSQLTransformerLogic {
 		Function[] functions = {
 			getBitwiseCheckFunction(), getBooleanFunction(),
 			getCastClobTextFunction(), getCastLongFunction(),
-			getCastTextFunction(), getInstrFunction(),
-			getIntegerDivisionFunction(), _getNegativeComparisonFunction(),
-			_getNullDateFunction()
+			getCastTextFunction(), getDropTableIfExistsTextFunction(),
+			getInstrFunction(), getIntegerDivisionFunction(),
+			_getNegativeComparisonFunction(), _getNullDateFunction()
 		};
 
 		if (!db.isSupportsStringCaseSensitiveQuery()) {

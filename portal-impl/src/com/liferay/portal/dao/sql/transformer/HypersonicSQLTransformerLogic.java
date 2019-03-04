@@ -32,7 +32,8 @@ public class HypersonicSQLTransformerLogic extends BaseSQLTransformerLogic {
 		Function[] functions = {
 			getBooleanFunction(), getCastClobTextFunction(),
 			getCastLongFunction(), getCastTextFunction(),
-			getIntegerDivisionFunction(), getNullDateFunction()
+			getDropTableIfExistsTextFunction(), getIntegerDivisionFunction(),
+			getNullDateFunction()
 		};
 
 		if (!db.isSupportsStringCaseSensitiveQuery()) {
@@ -50,6 +51,10 @@ public class HypersonicSQLTransformerLogic extends BaseSQLTransformerLogic {
 	@Override
 	protected String replaceCastText(Matcher matcher) {
 		return matcher.replaceAll("CONVERT($1, SQL_VARCHAR)");
+	}
+
+	protected String replaceDropTableIfExistsText(Matcher matcher) {
+		return matcher.replaceAll("DROP TABLE $1 IF EXISTS");
 	}
 
 }

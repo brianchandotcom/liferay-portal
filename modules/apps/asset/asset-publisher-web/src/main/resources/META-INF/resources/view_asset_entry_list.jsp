@@ -30,14 +30,6 @@ for (AssetEntryResult assetEntryResult : assetPublisherDisplayContext.getAssetEn
 
 			<liferay-util:include page="/view_asset_entries_abstract.jsp" servletContext="<%= application %>" />
 		</c:when>
-		<c:when test='<%= Objects.equals(assetPublisherDisplayContext.getDisplayStyle(), "full-content") %>'>
-
-			<%
-			request.setAttribute("view.jsp-assetEntryResult", assetEntryResult);
-			%>
-
-			<liferay-util:include page="/view_asset_entries_full_content.jsp" servletContext="<%= application %>" />
-		</c:when>
 		<c:when test='<%= Objects.equals(assetPublisherDisplayContext.getDisplayStyle(), "table") %>'>
 
 			<%

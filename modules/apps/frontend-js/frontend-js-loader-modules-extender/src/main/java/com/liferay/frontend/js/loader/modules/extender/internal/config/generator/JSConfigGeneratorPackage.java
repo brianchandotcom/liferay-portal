@@ -114,7 +114,7 @@ public class JSConfigGeneratorPackage {
 
 		if (!_applyVersioning) {
 			if (versionedModuleName) {
-				return "";
+				return StringPool.BLANK;
 			}
 
 			return jsonObject.toString();
@@ -132,22 +132,22 @@ public class JSConfigGeneratorPackage {
 		for (int i = 0; i < namesJSONArray.length(); i++) {
 			String name = (String)namesJSONArray.get(i);
 
-			int x = name.indexOf('/');
+			int index = name.indexOf(StringPool.SLASH);
 
-			if (x == -1) {
+			if (index == -1) {
 				continue;
 			}
 
-			String moduleName = name.substring(0, x);
+			String moduleName = name.substring(0, index);
 
 			if (!moduleName.equals(getName())) {
 				continue;
 			}
 
-			String modulePath = name.substring(x);
+			String modulePath = name.substring(index);
 
 			moduleName = StringBundler.concat(
-				getName(), "@", getVersion(), modulePath);
+				getName(), StringPool.AT, getVersion(), modulePath);
 
 			JSONObject nameJSONObject = jsonObject.getJSONObject(name);
 
@@ -157,18 +157,18 @@ public class JSConfigGeneratorPackage {
 			for (int j = 0; j < dependenciesJSONArray.length(); j++) {
 				String dependency = dependenciesJSONArray.getString(j);
 
-				int y = dependency.indexOf('/');
+				index = dependency.indexOf('/');
 
-				if (y == -1) {
+				if (index == -1) {
 					continue;
 				}
 
-				String dependencyName = dependency.substring(0, y);
-				String dependencyPath = dependency.substring(y);
+				String dependencyName = dependency.substring(0, index);
+				String dependencyPath = dependency.substring(index);
 
 				if (dependencyName.equals(getName())) {
 					dependencyName = StringBundler.concat(
-						getName(), "@", getVersion(), dependencyPath);
+						getName(), StringPool.AT, getVersion(), dependencyPath);
 
 					dependenciesJSONArray.put(j, dependencyName);
 				}
@@ -201,26 +201,27 @@ public class JSConfigGeneratorPackage {
 		JSONObject mapsConfigurationJSONObject = new JSONObject();
 
 		JSONObject configurationJSONObject = new JSONObject(
-			"{" + configuration + "}");
+			StringPool.OPEN_CURLY_BRACE + configuration +
+				StringPool.CLOSE_CURLY_BRACE);
 
 		JSONArray namesJSONArray = configurationJSONObject.names();
 
 		for (int i = 0; i < namesJSONArray.length(); i++) {
 			String name = (String)namesJSONArray.get(i);
 
-			int x = name.indexOf('/');
+			int x = name.indexOf(StringPool.SLASH);
 
 			String moduleRootPath = name.substring(0, x + 1);
 
 			String submodulePath = name.substring(x + 1);
 
-			int y = submodulePath.indexOf('/');
+			int index = submodulePath.indexOf(StringPool.SLASH);
 
-			if (y == -1) {
+			if (index == -1) {
 				continue;
 			}
 
-			String submoduleName = submodulePath.substring(0, y);
+			String submoduleName = submodulePath.substring(0, index);
 
 			if (exportAll ||
 				ArrayUtil.exists(
@@ -236,7 +237,9 @@ public class JSConfigGeneratorPackage {
 	}
 
 	protected String normalize(String jsonString) {
-		if (jsonString.startsWith("{") && jsonString.endsWith("}")) {
+		if (jsonString.startsWith(StringPool.OPEN_CURLY_BRACE) &&
+			jsonString.endsWith(StringPool.CLOSE_CURLY_BRACE)) {
+
 			jsonString = jsonString.substring(1, jsonString.length() - 1);
 		}
 
@@ -263,7 +266,8 @@ public class JSConfigGeneratorPackage {
 				Constants.VERSION_ATTRIBUTE);
 
 			dependencyName = StringBundler.concat(
-				dependencyName, "@", version.toString(), dependencyPath);
+				dependencyName, StringPool.AT, version.toString(),
+				dependencyPath);
 
 			jsonArray.put(index, dependencyName);
 
@@ -312,7 +316,8 @@ public class JSConfigGeneratorPackage {
 
 	private boolean _matchesWildcard(String text, String pattern) {
 		pattern = StringUtil.replace(
-			pattern, new String[] {"?", "*"}, new String[] {".?", ".*"});
+			pattern, new String[] {StringPool.QUESTION, StringPool.STAR},
+			new String[] {".?", ".*"});
 
 		return text.matches(pattern);
 	}

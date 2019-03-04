@@ -14,6 +14,7 @@
 
 package com.liferay.headless.workflow.dto.v1_0;
 
+import com.fasterxml.jackson.annotation.JsonFilter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -33,6 +34,7 @@ import javax.xml.bind.annotation.XmlRootElement;
  */
 @Generated("")
 @GraphQLName("ObjectReviewed")
+@JsonFilter("VulcanFilter")
 @XmlRootElement(name = "ObjectReviewed")
 public class ObjectReviewed {
 

@@ -8,7 +8,7 @@
 	{@param? vocabularies: list<?>}
 	{@param? description: string}
 	{@param? multiple: bool}
-	{@param? portletNamespace: string}
+	{@param? namespace: string}
 	{@param? selectCategoriesUrl: string}
 	{@param? _handleRadioChange: any}
 	{@param? _handleSaveBtnClick: any}
@@ -23,7 +23,7 @@
 						{param description: $description /}
 						{param dataSource: $dataSource /}
 						{param multiple: $multiple /}
-						{param portletNamespace: $portletNamespace /}
+						{param namespace: $namespace /}
 						{param selectCategoriesUrl: $selectCategoriesUrl /}
 						{param spritemap: $spritemap /}
 						{param vocabularies: $vocabularies /}
@@ -61,7 +61,7 @@
 {template .categories}
 	{@param dataSource: string|[]|list<?>}
 	{@param? vocabularies: list<?>}
-	{@param? portletNamespace: string}
+	{@param? namespace: string}
 	{@param? selectCategoriesUrl: string}
 	{@param spritemap: string}
 	{@param? description: string}
@@ -107,7 +107,7 @@
 				{param multiValued: $vocabulary.multiValued /}
 				{param categories: $vocabulary.categories /}
 				{param dataSource: $dataSource /}
-				{param portletNamespace: $portletNamespace /}
+				{param namespace: $namespace /}
 				{param selectCategoriesUrl: $selectCategoriesUrl /}
 				{param spritemap: $spritemap /}
 			{/call}
@@ -122,14 +122,14 @@
 	{@param spritemap: string}
 	{@param vocabularyId: number}
 	{@param vocabularyName: string}
-	{@param? portletNamespace: string}
+	{@param? namespace: string}
 	{@param? selectCategoriesUrl: string}
 
 	{call InputCategoriesSelector.render}
 		{param categories: $categories /}
 		{param dataSource: $dataSource /}
 		{param dialogClasses: 'modal-dialog-sm' /}
-		{param eventName: $portletNamespace + 'selectCategories' /}
+		{param eventName: $namespace + 'selectCategories' /}
 		{param multiValued: $multiValued /}
 		{param selectCategoriesUrl: $selectCategoriesUrl /}
 		{param spritemap: $spritemap /}

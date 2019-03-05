@@ -251,7 +251,7 @@ EditTags.STATE = {
 	 * @review
 	 * @type {String}
 	 */
-	folderId: Config.string().required(),
+	folderId: Config.string(),
 
 	/**
 	 * [groupIds description]
@@ -289,7 +289,7 @@ EditTags.STATE = {
 	 * @review
 	 * @type {string}
 	 */
-	portletNamespace: Config.string().required(),
+	namespace: Config.string().required(),
 
 	/**
 	 * RepositoryId

@@ -298,10 +298,7 @@ String navigation = ParamUtil.getString(request, "navigation");
 
 		Map<String, Object> tagsContext = new HashMap<>();
 
-		tagsContext.put("folderId", String.valueOf(folderId));
-		tagsContext.put("portletNamespace", liferayPortletResponse.getNamespace());
 		tagsContext.put("repositoryId", String.valueOf(repositoryId));
-		tagsContext.put("portalElement", "#" + liferayPortletResponse.getNamespace() + "documentLibraryModal");
 		tagsContext.put("urlTags", urlTags);
 		tagsContext.put("urlUpdateTags", urlUpdateTags);
 
@@ -310,8 +307,6 @@ String navigation = ParamUtil.getString(request, "navigation");
 
 		Map<String, Object> categoriesContext = new HashMap<>();
 
-		categoriesContext.put("folderId", String.valueOf(folderId));
-		categoriesContext.put("portletNamespace", liferayPortletResponse.getNamespace());
 		categoriesContext.put("repositoryId", String.valueOf(repositoryId));
 		categoriesContext.put("selectCategoriesUrl", selectCategoriesURL.toString());
 		categoriesContext.put("urlCategories", urlCategories);

@@ -286,7 +286,7 @@ EditCategories.STATE = {
 	 * @review
 	 * @type {String}
 	 */
-	folderId: Config.string().required(),
+	folderId: Config.string(),
 
 	/**
 	 * Original categoryIds
@@ -325,7 +325,7 @@ EditCategories.STATE = {
 	 * @review
 	 * @type {string}
 	 */
-	portletNamespace: Config.string().required(),
+	namespace: Config.string().required(),
 
 	/**
 	 * RepositoryId

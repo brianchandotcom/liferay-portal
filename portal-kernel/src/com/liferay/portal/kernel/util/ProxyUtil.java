@@ -20,6 +20,8 @@ import com.liferay.petra.lang.HashUtil;
 import com.liferay.petra.memory.FinalizeManager;
 import com.liferay.petra.reflect.ReflectionUtil;
 
+import java.lang.ref.Reference;
+import java.lang.ref.WeakReference;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
@@ -101,20 +103,7 @@ public class ProxyUtil {
 			}
 		}
 
-		if (!_constructors.containsKey(clazz)) {
-			Constructor<?> constructor = null;
-
-			try {
-				constructor = clazz.getConstructor(_ARGUMENTS_CLASS);
-
-				constructor.setAccessible(true);
-			}
-			catch (Exception e) {
-				throw new InternalError(e.toString());
-			}
-
-			_constructors.putIfAbsent(clazz, constructor);
-		}
+		_constructorReferences.putIfAbsent(clazz, new ConstructorReference());
 
 		return clazz;
 	}
@@ -124,22 +113,19 @@ public class ProxyUtil {
 			throw new NullPointerException();
 		}
 
-		return _constructors.containsKey(clazz);
+		return _constructorReferences.containsKey(clazz);
 	}
 
 	public static Object newProxyInstance(
 		ClassLoader classLoader, Class<?>[] interfaces,
 		InvocationHandler invocationHandler) {
 
-		Constructor<?> constructor = _constructors.get(
-			getProxyClass(classLoader, interfaces));
+		Class<?> proxyClass = getProxyClass(classLoader, interfaces);
 
-		try {
-			return constructor.newInstance(new Object[] {invocationHandler});
-		}
-		catch (Exception e) {
-			throw new InternalError(e.toString());
-		}
+		ConstructorReference constructorHolder = _constructorReferences.get(
+			proxyClass);
+
+		return constructorHolder.newInstance(proxyClass, invocationHandler);
 	}
 
 	private static final Class<?>[] _ARGUMENTS_CLASS = {
@@ -150,10 +136,8 @@ public class ProxyUtil {
 		<ClassLoader, ConcurrentMap<LookupKey, Class<?>>> _classReferences =
 			new ConcurrentReferenceKeyHashMap<>(
 				FinalizeManager.WEAK_REFERENCE_FACTORY);
-	private static final ConcurrentMap<Class<?>, Constructor<?>> _constructors =
-		new ConcurrentReferenceKeyHashMap<>(
-			new ConcurrentReferenceValueHashMap<>(
-				FinalizeManager.WEAK_REFERENCE_FACTORY),
+	private static final ConcurrentMap<Class<?>, ConstructorReference>
+		_constructorReferences = new ConcurrentReferenceKeyHashMap<>(
 			FinalizeManager.WEAK_REFERENCE_FACTORY);
 	private static final Field _invocationHandlerField;
 
@@ -165,6 +149,38 @@ public class ProxyUtil {
 		catch (Exception e) {
 			throw new ExceptionInInitializerError(e);
 		}
+	}
+
+	private static class ConstructorReference {
+
+		public Object newInstance(
+			Class<?> proxyClass, InvocationHandler invocationHandler) {
+
+			Constructor<?> constructor = null;
+
+			Reference<Constructor<?>> reference = _reference;
+
+			try {
+				if ((reference == null) ||
+					((constructor = reference.get()) == null)) {
+
+					constructor = proxyClass.getConstructor(_ARGUMENTS_CLASS);
+
+					constructor.setAccessible(true);
+
+					_reference = new WeakReference<>(constructor);
+				}
+
+				return constructor.newInstance(
+					new Object[] {invocationHandler});
+			}
+			catch (ReflectiveOperationException roe) {
+				throw new InternalError(roe);
+			}
+		}
+
+		private volatile Reference<Constructor<?>> _reference;
+
 	}
 
 	private static class LookupKey {

@@ -74,14 +74,14 @@ public class InitBundleTask extends JavaExec {
 
 	@Input
 	@Optional
-	public int getStripComponents() {
-		return GradleUtil.toInteger(_stripComponents);
+	public FileCollection getProvidedModules() {
+		return _providedModules;
 	}
 
 	@Input
 	@Optional
-	public FileCollection getProvidedModules() {
-		return _providedModules;
+	public int getStripComponents() {
+		return GradleUtil.toInteger(_stripComponents);
 	}
 
 	public void setConfigEnvironment(Object configEnvironment) {
@@ -156,8 +156,8 @@ public class InitBundleTask extends JavaExec {
 		BundleSupportConstants.DEFAULT_ENVIRONMENT;
 	private Object _configsDir;
 	private Object _file;
-	private FileCollection _providedModules;
 	private Object _homeDir;
+	private FileCollection _providedModules;
 	private Object _stripComponents =
 		BundleSupportConstants.DEFAULT_STRIP_COMPONENTS;
 

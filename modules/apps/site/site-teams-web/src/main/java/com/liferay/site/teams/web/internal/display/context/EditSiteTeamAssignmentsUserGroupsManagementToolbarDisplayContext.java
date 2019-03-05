@@ -130,8 +130,7 @@ public class EditSiteTeamAssignmentsUserGroupsManagementToolbarDisplayContext
 
 	@Override
 	public String getDefaultEventHandler() {
-		return
-			"editTeamAssignmentsUserGroupsManagementToolbarDefaultEventHandler";
+		return "editTeamAssignmentsUserGroupsManagementToolbarDefaultEventHandler";
 	}
 
 	@Override

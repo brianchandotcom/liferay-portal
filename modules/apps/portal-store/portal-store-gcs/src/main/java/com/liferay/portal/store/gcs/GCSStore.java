@@ -207,9 +207,8 @@ public class GCSStore extends BaseStore {
 
 		Bucket bucket = _getBucket();
 
-		Iterable<Blob> blobs;
-
-		String path;
+		Iterable<Blob> blobs = null;
+		String path = null;
 
 		if ((dirName == null) || dirName.isEmpty() ||
 			dirName.equals(StringPool.FORWARD_SLASH)) {
@@ -522,7 +521,7 @@ public class GCSStore extends BaseStore {
 	}
 
 	private boolean _deleteBlob(Blob blob) {
-		boolean deleted;
+		boolean deleted = false;
 
 		Stopwatch stopwatch = null;
 		String blobName = null;
@@ -574,7 +573,7 @@ public class GCSStore extends BaseStore {
 		long companyId, long repositoryId, String fileName,
 		String versionLabel) {
 
-		String filePath;
+		String filePath = null;
 
 		if ((versionLabel == null) || versionLabel.isEmpty()) {
 			filePath = _getHeadVersionLabel(companyId, repositoryId, fileName);
@@ -853,7 +852,7 @@ public class GCSStore extends BaseStore {
 		throws IOException, PortalException {
 
 		byte[] buffer = new byte[_WRITE_BUFFER_SIZE];
-		int limit;
+		int limit = -1;
 
 		Stopwatch outputWatch = null;
 		Stopwatch overallClock = null;

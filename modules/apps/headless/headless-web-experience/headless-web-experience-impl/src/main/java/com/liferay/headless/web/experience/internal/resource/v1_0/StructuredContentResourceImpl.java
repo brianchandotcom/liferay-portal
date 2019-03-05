@@ -811,6 +811,30 @@ public class StructuredContentResourceImpl
 		};
 	}
 
+	private <T> ContentField[] _transformToArrayFlattening(
+		List<T> list,
+		UnsafeFunction<T, ContentField[], Exception> unsafeFunction) {
+
+		Stream<T> stream = list.stream();
+
+		return stream.map(
+			t -> {
+				try {
+					return unsafeFunction.apply(t);
+				}
+				catch (Exception e) {
+					throw new RuntimeException(e);
+				}
+			}
+		).filter(
+			Objects::nonNull
+		).flatMap(
+			Stream::of
+		).toArray(
+			ContentField[]::new
+		);
+	}
+
 	@Reference
 	private AssetCategoryLocalService _assetCategoryLocalService;
 

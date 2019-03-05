@@ -2465,7 +2465,12 @@ public class DEDataRecordCollectionServiceTest {
 		deDataDefinitionRule.setRuleType(
 			DEDataDefinitionRuleConstants.VALIDATION_RULE_TYPE);
 
-		deDataDefinitionRule.getDEDataDefinitionFieldNames().add("email");
+		List<String> fieldNames =
+			deDataDefinitionRule.getDEDataDefinitionFieldNames();
+
+		fieldNames.add("email");
+
+		deDataDefinitionRule.setDEDataDefinitionFieldNames(fieldNames);
 
 		DEDataDefinition deDataDefinition =
 			DEDataEngineTestUtil.insertDEDataDefinitionWithRuleFunction(
@@ -2514,7 +2519,12 @@ public class DEDataRecordCollectionServiceTest {
 		deDataDefinitionRule.setRuleType(
 			DEDataDefinitionRuleConstants.VALIDATION_RULE_TYPE);
 
-		deDataDefinitionRule.getDEDataDefinitionFieldNames().add("email");
+		List<String> fieldNames =
+			deDataDefinitionRule.getDEDataDefinitionFieldNames();
+
+		fieldNames.add("email");
+
+		deDataDefinitionRule.setDEDataDefinitionFieldNames(fieldNames);
 
 		DEDataDefinition deDataDefinition =
 			DEDataEngineTestUtil.insertDEDataDefinitionWithRuleFunction(

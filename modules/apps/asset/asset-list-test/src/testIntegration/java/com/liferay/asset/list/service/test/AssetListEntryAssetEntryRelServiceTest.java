@@ -252,16 +252,17 @@ public class AssetListEntryAssetEntryRelServiceTest {
 					assetListEntry.getAssetListEntryId(), QueryUtil.ALL_POS,
 					QueryUtil.ALL_POS);
 
-		Assert.assertEquals(
-			assetListEntryRelList.get(
-				0
-			).getAssetEntryId(),
-			assetEntry1.getEntryId());
+		AssetListEntryAssetEntryRel assetListEntryAssetEntryRel =
+			assetListEntryRelList.get(0);
 
 		Assert.assertEquals(
-			assetListEntryRelList.get(
-				1
-			).getAssetEntryId(),
+			assetListEntryAssetEntryRel.getAssetEntryId(),
+			assetEntry1.getEntryId());
+
+		assetListEntryAssetEntryRel = assetListEntryRelList.get(1);
+
+		Assert.assertEquals(
+			assetListEntryAssetEntryRel.getAssetEntryId(),
 			assetEntry2.getEntryId());
 	}
 

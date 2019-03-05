@@ -134,7 +134,11 @@ public class BookmarksFolderServiceTest {
 			folder.getFolderId(), true, serviceContext);
 
 		long companyId = entry.getCompanyId();
-		long groupId = entry.getFolder().getGroupId();
+
+		BookmarksFolder entryFolder = entry.getFolder();
+
+		long groupId = entryFolder.getGroupId();
+
 		long folderId = entry.getFolderId();
 
 		String keywords = "test";

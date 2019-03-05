@@ -166,13 +166,15 @@ public class DLDirectoryNameAndFileNameTest {
 
 			Assert.assertEquals(
 				name.replace(blacklistChar, StringPool.UNDERLINE),
-				DLValidatorUtil.fixName(sb.toString()));
+				DLValidatorUtil.fixName(name));
 
 			sb.append(".txt");
 
+			name = sb.toString();
+
 			Assert.assertEquals(
-				sb.toString().replace(blacklistChar, StringPool.UNDERLINE),
-				DLValidatorUtil.fixName(sb.toString()));
+				name.replace(blacklistChar, StringPool.UNDERLINE),
+				DLValidatorUtil.fixName(name));
 		}
 	}
 

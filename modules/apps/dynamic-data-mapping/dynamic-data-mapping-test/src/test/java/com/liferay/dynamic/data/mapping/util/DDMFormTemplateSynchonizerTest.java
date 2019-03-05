@@ -41,6 +41,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
 import java.util.ResourceBundle;
 
 import org.junit.Assert;
@@ -511,7 +512,8 @@ public class DDMFormTemplateSynchonizerTest extends BaseDDMTestCase {
 
 			ddmTemplate.setScript(script);
 
-			if (ddmTemplate.getMode().equals(
+			if (Objects.equals(
+					ddmTemplate.getMode(),
 					DDMTemplateConstants.TEMPLATE_MODE_CREATE)) {
 
 				_createDDMTemplate = ddmTemplate;

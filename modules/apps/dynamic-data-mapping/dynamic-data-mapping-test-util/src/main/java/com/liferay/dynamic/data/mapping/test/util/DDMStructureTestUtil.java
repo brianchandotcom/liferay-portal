@@ -378,9 +378,13 @@ public class DDMStructureTestUtil {
 		Element parentElement = element.getParent();
 
 		while (true) {
-			if ((parentElement == null) ||
-				parentElement.getName().equals("root")) {
+			if (parentElement == null) {
+				break;
+			}
 
+			String parentName = parentElement.getName();
+
+			if (parentName.equals("root")) {
 				break;
 			}
 

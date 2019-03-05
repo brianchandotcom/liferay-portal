@@ -48,6 +48,7 @@ import com.liferay.subscription.model.Subscription;
 import com.liferay.subscription.service.SubscriptionLocalServiceUtil;
 
 import java.util.List;
+import java.util.Objects;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -195,7 +196,8 @@ public class BookmarksFolderLocalServiceTest {
 				TestPropsValues.getUserId(), BookmarksFolder.class.getName());
 
 		for (Subscription subscription : subscriptions) {
-			if (subscription.getClassName().equals(
+			if (Objects.equals(
+					subscription.getClassName(),
 					BookmarksFolder.class.getName()) &&
 				(subscription.getClassPK() == expectedSubscriptionClassPK)) {
 
@@ -234,7 +236,8 @@ public class BookmarksFolderLocalServiceTest {
 		for (Subscription subscription : subscriptions) {
 			Assert.assertFalse(
 				"Subscription exists",
-				subscription.getClassName().equals(
+				Objects.equals(
+					subscription.getClassName(),
 					BookmarksFolder.class.getName()) &&
 				(subscription.getClassPK() == expectedSubscriptionClassPK));
 		}

@@ -569,7 +569,7 @@ public class CTEngineManagerImpl implements CTEngineManager {
 		List<BaseModel> versionEntities =
 			versionEntitiesFromResourceEntityFunction.apply(resourceEntity);
 
-		for (BaseModel versionEntityModel : versionEntities) {
+		for (BaseModel versionEntity : versionEntities) {
 			Function<BaseModel, Serializable>
 				versionEntityIdFromVersionEntityFunction =
 					ctConfiguration.
@@ -577,7 +577,7 @@ public class CTEngineManagerImpl implements CTEngineManager {
 
 			Serializable versionEntityId =
 				versionEntityIdFromVersionEntityFunction.apply(
-					versionEntityModel);
+					versionEntity);
 
 			try {
 				_ctEntryLocalService.addCTEntry(

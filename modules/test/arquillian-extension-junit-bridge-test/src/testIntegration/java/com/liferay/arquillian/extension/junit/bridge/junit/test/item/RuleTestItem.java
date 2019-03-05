@@ -67,7 +67,28 @@ public class RuleTestItem {
 	}
 
 	@Rule
-	public final TestRule testRule = new TestRule() {
+	public final TestRule testRule1 = new TestRule() {
+
+		@Override
+		public Statement apply(Statement statement, Description description) {
+			return new Statement() {
+
+				@Override
+				public void evaluate() throws Throwable {
+					_testItemHelper.write("beforeTestRule");
+
+					statement.evaluate();
+
+					_testItemHelper.write("afterTestRule");
+				}
+
+			};
+		}
+
+	};
+
+	@Rule
+	public final TestRule testRule2 = new TestRule() {
 
 		@Override
 		public Statement apply(Statement statement, Description description) {
@@ -88,8 +109,9 @@ public class RuleTestItem {
 	};
 
 	private static final String[] _LINES = {
-		"beforeTestRule", "setUp", "test1", "tearDown", "afterTestRule",
-		"beforeTestRule", "setUp", "test2", "tearDown", "afterTestRule"
+		"beforeTestRule", "beforeTestRule", "setUp", "test1", "tearDown",
+		"afterTestRule", "afterTestRule", "beforeTestRule", "beforeTestRule",
+		"setUp", "test2", "tearDown", "afterTestRule", "afterTestRule"
 	};
 
 	private static final TestItemHelper _testItemHelper = new TestItemHelper(

@@ -699,11 +699,16 @@ public class StructuredContentResourceImpl
 		DDMFormField ddmFormField = ddmStructure.getDDMFormField(
 			ddmField.getName());
 
+		String value = String.valueOf(
+			ddmField.getValue(
+				locale, _ddmFieldsCounter.get(ddmField.getName())));
+
+		_ddmFieldsCounter.incrementKey(ddmField.getName());
+
 		if (Objects.equals(
 				DDMFormFieldType.DOCUMENT_LIBRARY, ddmFormField.getType())) {
 
-			JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
-				String.valueOf(ddmField.getValue(locale)));
+			JSONObject jsonObject = JSONFactoryUtil.createJSONObject(value);
 
 			long classPK = jsonObject.getLong("classPK");
 
@@ -740,10 +745,7 @@ public class StructuredContentResourceImpl
 		if (Objects.equals(
 				DDMFormFieldType.GEOLOCATION, ddmFormField.getType())) {
 
-			DDMForm ddmForm = ddmFormField.getDDMForm();
-
-			JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
-				String.valueOf(ddmField.getValue(ddmForm.getDefaultLocale())));
+			JSONObject jsonObject = JSONFactoryUtil.createJSONObject(value);
 
 			return new Value() {
 				{
@@ -760,8 +762,7 @@ public class StructuredContentResourceImpl
 		if (Objects.equals(
 				DDMFormFieldType.JOURNAL_ARTICLE, ddmFormField.getType())) {
 
-			JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
-				String.valueOf(ddmField.getValue(locale)));
+			JSONObject jsonObject = JSONFactoryUtil.createJSONObject(value);
 
 			long classPK = jsonObject.getLong("classPK");
 
@@ -782,8 +783,7 @@ public class StructuredContentResourceImpl
 		if (Objects.equals(
 				DDMFormFieldType.LINK_TO_PAGE, ddmFormField.getType())) {
 
-			JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
-				String.valueOf(ddmField.getValue(locale)));
+			JSONObject jsonObject = JSONFactoryUtil.createJSONObject(value);
 
 			long layoutId = jsonObject.getLong("layoutId");
 
@@ -806,7 +806,7 @@ public class StructuredContentResourceImpl
 
 		return new Value() {
 			{
-				data = String.valueOf(ddmField.getValue(locale));
+				data = value;
 			}
 		};
 	}
@@ -852,6 +852,8 @@ public class StructuredContentResourceImpl
 
 	@Reference
 	private DDM _ddm;
+
+	private final DDMFieldsCounter _ddmFieldsCounter = new DDMFieldsCounter();
 
 	@Reference
 	private DDMFormValuesSerializerTracker _ddmFormValuesSerializerTracker;

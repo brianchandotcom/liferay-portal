@@ -217,20 +217,25 @@ public class DLAppHelperLocalServiceImpl
 			return;
 		}
 
+		_deleteFileEntry(fileEntry.getFileEntryId());
+	}
+
+	private void _deleteFileEntry(long fileEntryId) throws PortalException {
+
 		// File shortcuts
 
 		dlFileShortcutLocalService.deleteFileShortcuts(
-			fileEntry.getFileEntryId());
+			fileEntryId);
 
 		// Asset
 
 		assetEntryLocalService.deleteEntry(
-			DLFileEntryConstants.getClassName(), fileEntry.getFileEntryId());
+			DLFileEntryConstants.getClassName(), fileEntryId);
 
 		// Ratings
 
 		ratingsStatsLocalService.deleteStats(
-			DLFileEntryConstants.getClassName(), fileEntry.getFileEntryId());
+			DLFileEntryConstants.getClassName(), fileEntryId);
 	}
 
 	@Override
@@ -259,7 +264,7 @@ public class DLAppHelperLocalServiceImpl
 
 		actionableDynamicQuery.setPerformActionMethod(
 			(DLFileEntry dlFileEntry) ->
-				deleteFileEntry(new LiferayFileEntry(dlFileEntry)));
+				_deleteFileEntry(dlFileEntry.getFileEntryId()));
 	}
 
 	@Override

@@ -12,6 +12,8 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
+import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
 
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -777,9 +779,22 @@ public abstract class Base${schemaName}ResourceTestCase {
 	private final static ObjectMapper _inputObjectMapper = new ObjectMapper() {
 		{
 			setSerializationInclusion(JsonInclude.Include.NON_NULL);
+			setFilterProvider(new SimpleFilterProvider() {
+				{
+					addFilter("Liferay.Vulcan", SimpleBeanPropertyFilter.serializeAll());
+				}
+			});
 		}
 	};
-	private final static ObjectMapper _outputObjectMapper = new ObjectMapper();
+	private final static ObjectMapper _outputObjectMapper = new ObjectMapper() {
+		{
+			setFilterProvider(new SimpleFilterProvider() {
+				{
+					addFilter("Liferay.Vulcan", SimpleBeanPropertyFilter.serializeAll());
+				}
+			});
+		}
+	};
 
 	@Inject
 	private ${schemaName}Resource _${schemaVarName}Resource;

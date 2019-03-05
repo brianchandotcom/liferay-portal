@@ -133,7 +133,6 @@
 		<check name="JavaBooleanStatementCheck" />
 		<check name="JavaBooleanUsageCheck" />
 		<check name="JavaCollatorUtilCheck" />
-		<check name="JavaCombineLinesCheck" />
 		<check name="JavaComponentAnnotationsCheck">
 			<property name="checkConfigurationPolicyAttribute" value="false" />
 			<property name="checkMismatchedServiceAttribute" value="false" />

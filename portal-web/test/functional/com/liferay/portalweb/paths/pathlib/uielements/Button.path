@@ -509,6 +509,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SELECT_ALL</td>
+	<td>//button[contains(.,'Select All')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SELECT_CATEGORIES</td>
 	<td>//button[contains(.,'Select Categories')] | //button[@title='Select Categories']</td>
 	<td></td>

@@ -205,9 +205,6 @@ public class GCSStore extends BaseStore {
 	public String[] getFileNames(
 		long companyId, long repositoryId, String dirName) {
 
-		Bucket bucket = _getBucket();
-
-		Iterable<Blob> blobs = null;
 		String path = null;
 
 		if ((dirName == null) || dirName.isEmpty() ||
@@ -229,6 +226,8 @@ public class GCSStore extends BaseStore {
 			stopwatch = Stopwatch.createStarted();
 		}
 
+		Bucket bucket = _getBucket();
+
 		Page<Blob> blobPage = bucket.list(prefixOption);
 
 		if (_log.isTraceEnabled()) {
@@ -241,7 +240,7 @@ public class GCSStore extends BaseStore {
 					"Listing ", path, " took ", elapsed, " milliseconds"));
 		}
 
-		blobs = blobPage.iterateAll();
+		Iterable<Blob> blobs = blobPage.iterateAll();
 
 		Stream<Blob> blobStream = StreamSupport.stream(
 			blobs.spliterator(), false);

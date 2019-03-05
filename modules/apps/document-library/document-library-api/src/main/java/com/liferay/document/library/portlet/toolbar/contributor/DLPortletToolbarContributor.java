@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.servlet.taglib.ui.MenuItem;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 
+import java.util.Collections;
 import java.util.List;
 
 import javax.portlet.PortletRequest;
@@ -28,16 +29,37 @@ import javax.portlet.PortletRequest;
  */
 public interface DLPortletToolbarContributor extends PortletToolbarContributor {
 
-	public List<MenuItem> getPortletTitleAddDocumentMenuItems(
+	/**
+	 * @deprecated As of Mueller (7.2.x), with no direct replacement
+	 */
+	@Deprecated
+	public default List<MenuItem> getPortletTitleAddDocumentMenuItems(
 		Folder folder, ThemeDisplay themeDisplay,
-		PortletRequest portletRequest);
+		PortletRequest portletRequest) {
 
-	public MenuItem getPortletTitleAddFolderMenuItem(
-		ThemeDisplay themeDisplay, PortletRequest portletRequest,
-		Folder folder);
+		return Collections.emptyList();
+	}
 
-	public MenuItem getPortletTitleAddMultipleDocumentsMenuItem(
+	/**
+	 * @deprecated As of Mueller (7.2.x), with no direct replacement
+	 */
+	@Deprecated
+	public default MenuItem getPortletTitleAddFolderMenuItem(
 		ThemeDisplay themeDisplay, PortletRequest portletRequest,
-		Folder folder);
+		Folder folder) {
+
+		return null;
+	}
+
+	/**
+	 * @deprecated As of Mueller (7.2.x), with no direct replacement
+	 */
+	@Deprecated
+	public default MenuItem getPortletTitleAddMultipleDocumentsMenuItem(
+		ThemeDisplay themeDisplay, PortletRequest portletRequest,
+		Folder folder) {
+
+		return null;
+	}
 
 }

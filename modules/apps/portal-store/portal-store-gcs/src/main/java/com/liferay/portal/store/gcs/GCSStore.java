@@ -99,8 +99,7 @@ public class GCSStore extends BaseStore {
 			String fileKey = _keyTransformer.getFileKey(
 				companyId, repositoryId, fileName);
 
-			_log.debug(
-				"Creating file with default version for: " + fileKey);
+			_log.debug("Creating file with default version for: " + fileKey);
 		}
 
 		addFileWithVersion(
@@ -865,6 +864,7 @@ public class GCSStore extends BaseStore {
 
 			overallClock = Stopwatch.createStarted();
 		}
+
 		while ((limit = inputStream.read(buffer)) >= 0) {
 			try {
 				if (_log.isTraceEnabled()) {

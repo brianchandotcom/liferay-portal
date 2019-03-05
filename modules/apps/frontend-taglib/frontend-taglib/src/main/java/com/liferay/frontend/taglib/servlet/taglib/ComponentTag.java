@@ -69,6 +69,10 @@ public class ComponentTag extends ParamAndPropertyAncestorTagImpl {
 		return _componentId;
 	}
 
+	public String getContainerId() {
+		return _containerId;
+	}
+
 	public String getModule() {
 		String namespace = StringPool.BLANK;
 
@@ -93,6 +97,10 @@ public class ComponentTag extends ParamAndPropertyAncestorTagImpl {
 		_componentId = componentId;
 	}
 
+	public void setContainerId(String containerId) {
+		_containerId = containerId;
+	}
+
 	public void setContext(Map<String, Object> context) {
 		_context = context;
 	}
@@ -111,6 +119,7 @@ public class ComponentTag extends ParamAndPropertyAncestorTagImpl {
 	protected void cleanUp() {
 		if (!ServerDetector.isResin()) {
 			_componentId = null;
+			_containerId = null;
 			_context = null;
 			_module = null;
 		}
@@ -168,7 +177,7 @@ public class ComponentTag extends ParamAndPropertyAncestorTagImpl {
 	}
 
 	private void _renderJavaScript() throws IOException {
-		StringBundler sb = new StringBundler(9);
+		StringBundler sb = new StringBundler(12);
 
 		sb.append("Liferay.component('");
 		sb.append(getComponentId());
@@ -200,6 +209,14 @@ public class ComponentTag extends ParamAndPropertyAncestorTagImpl {
 			themeDisplay.getPathThemeImages() + "/lexicon/icons.svg");
 
 		sb.append(_jsonSerializer.serializeDeep(context));
+
+		String containerId = getContainerId();
+
+		if (Validator.isNotNull(containerId)) {
+			sb.append(",'");
+			sb.append(containerId);
+			sb.append("'");
+		}
 
 		sb.append("), { portletId: '");
 		sb.append(portletDisplay.getId());
@@ -238,6 +255,7 @@ public class ComponentTag extends ParamAndPropertyAncestorTagImpl {
 	};
 
 	private String _componentId;
+	private String _containerId;
 	private Map<String, Object> _context;
 	private final JSONSerializer _jsonSerializer =
 		JSONFactoryUtil.createJSONSerializer();

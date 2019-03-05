@@ -773,6 +773,36 @@ definition {
 		DMDocument.viewSearchResultsCP(dmDocumentTitle = "DM Document Title");
 	}
 
+	@description = "This test makes sure that all files are deleted when user selects all"
+	@priority = "4"
+	test SelectAllAndDelete {
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			panel = "Site Administration",
+			portlet = "Documents and Media"
+		);
+
+		DMDocument.addMultipleCP(
+			dmDocumentFileList = "Document_1.doc,Document_2.jpg,Document_3.xls,Document_4.txt,Document_1.txt,Document_2.xls,Document_3.jpg,Document_4.jpg,Document_1.xls,Document_2.doc"
+		);
+
+		Pagination.changePagination(itemsPerPage = "5");
+
+		Pagination.viewResults(results = "Showing 1 to 5 of 10 entries.");
+
+		PortletEntry.selectAll();
+
+		AssertClick(locator1 = "Button#SELECT_ALL", value1 = "Select All");
+
+		Click(locator1 = "Icon#DELETE");
+
+		Alert.viewSuccessMessage();
+
+		DMDocument.viewDefaultCP();
+	}
+
 	@priority = "5"
 	test ViewImageEditorControls {
 		property portal.acceptance = "true";

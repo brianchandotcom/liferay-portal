@@ -17,6 +17,7 @@ package com.liferay.frontend.js.loader.modules.extender.internal.config.generato
 import aQute.bnd.osgi.Constants;
 
 import com.liferay.frontend.js.loader.modules.extender.internal.Details;
+import com.liferay.frontend.js.loader.modules.extender.npm.ModuleNameUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
@@ -32,6 +33,7 @@ import java.io.Reader;
 
 import java.net.URL;
 
+import java.util.ArrayList;
 import java.util.Dictionary;
 import java.util.List;
 import java.util.Map;
@@ -88,6 +90,10 @@ public class JSConfigGeneratorPackage {
 		return _contextPath;
 	}
 
+	public List<JSConfigGeneratorModule> getJSConfigGeneratorModules() {
+		return _jsConfigGeneratorModules;
+	}
+
 	public String getName() {
 		return _name;
 	}
@@ -108,22 +114,22 @@ public class JSConfigGeneratorPackage {
 		return _versionedConfiguration;
 	}
 
-	protected String generateConfiguration(
+	protected JSONObject generateConfigurationJSONObject(
 		JSONObject jsonObject, BundleWiring bundleWiring,
 		boolean versionedModuleName) {
 
 		if (!_applyVersioning) {
 			if (versionedModuleName) {
-				return StringPool.BLANK;
+				return new JSONObject();
 			}
 
-			return jsonObject.toString();
+			return jsonObject;
 		}
 
 		JSONArray namesJSONArray = jsonObject.names();
 
 		if (namesJSONArray == null) {
-			return jsonObject.toString();
+			return jsonObject;
 		}
 
 		List<BundleWire> bundleWires = bundleWiring.getRequiredWires(
@@ -189,10 +195,10 @@ public class JSConfigGeneratorPackage {
 			}
 		}
 
-		return jsonObject.toString();
+		return jsonObject;
 	}
 
-	protected String generateMapsConfiguration(
+	protected JSONObject generateMapsConfigurationJSONObject(
 		String configuration, String[] jsSubmodulesExport) {
 
 		boolean exportAll = ArrayUtil.contains(
@@ -233,17 +239,7 @@ public class JSConfigGeneratorPackage {
 			}
 		}
 
-		return mapsConfigurationJSONObject.toString();
-	}
-
-	protected String normalize(String jsonString) {
-		if (jsonString.startsWith(StringPool.OPEN_CURLY_BRACE) &&
-			jsonString.endsWith(StringPool.CLOSE_CURLY_BRACE)) {
-
-			jsonString = jsonString.substring(1, jsonString.length() - 1);
-		}
-
-		return jsonString;
+		return mapsConfigurationJSONObject;
 	}
 
 	protected void normalizeDependencies(
@@ -275,6 +271,14 @@ public class JSConfigGeneratorPackage {
 		}
 	}
 
+	protected String removeEnclosingCurlyBraces(JSONObject jsonObject) {
+		String json = jsonObject.toString();
+
+		json = json.substring(1, json.length() - 1);
+
+		return json;
+	}
+
 	protected void urlToConfiguration(URL url, BundleWiring bundleWiring) {
 		if (url == null) {
 			return;
@@ -285,10 +289,16 @@ public class JSConfigGeneratorPackage {
 
 			JSONObject jsonObject = new JSONObject(jsonTokener);
 
-			_unversionedConfiguration = normalize(
-				generateConfiguration(jsonObject, bundleWiring, false));
-			_versionedConfiguration = normalize(
-				generateConfiguration(jsonObject, bundleWiring, true));
+			JSONObject unversionedConfigurationJSONObject =
+				generateConfigurationJSONObject(
+					jsonObject, bundleWiring, false);
+
+			_unversionedConfiguration = removeEnclosingCurlyBraces(
+				unversionedConfigurationJSONObject);
+
+			_versionedConfiguration = removeEnclosingCurlyBraces(
+				generateConfigurationJSONObject(
+					jsonObject, bundleWiring, true));
 
 			Dictionary<String, String> headers = _bundle.getHeaders(
 				StringPool.BLANK);
@@ -297,8 +307,8 @@ public class JSConfigGeneratorPackage {
 				headers.get("Liferay-JS-Submodules-Export"));
 
 			if (Validator.isNotNull(jsSubmodulesExport)) {
-				_unversionedMapsConfiguration = normalize(
-					generateMapsConfiguration(
+				_unversionedMapsConfiguration = removeEnclosingCurlyBraces(
+					generateMapsConfigurationJSONObject(
 						_unversionedConfiguration,
 						StringUtil.split(jsSubmodulesExport)));
 
@@ -308,6 +318,9 @@ public class JSConfigGeneratorPackage {
 							"replaced with Liferay-JS-Submodules-Bridge");
 				}
 			}
+
+			_populateJSConfigGeneratorModules(
+				unversionedConfigurationJSONObject);
 		}
 		catch (IOException ioe) {
 			throw new RuntimeException(ioe);
@@ -322,12 +335,39 @@ public class JSConfigGeneratorPackage {
 		return text.matches(pattern);
 	}
 
+	private void _populateJSConfigGeneratorModules(
+		JSONObject unversionedConfigurationJSONObject) {
+
+		for (Object key : unversionedConfigurationJSONObject.keySet()) {
+			String name = (String)key;
+
+			List<String> dependencies = new ArrayList<>();
+
+			JSONObject moduleJSONObject =
+				unversionedConfigurationJSONObject.getJSONObject(name);
+
+			JSONArray dependenciesJSONArray = moduleJSONObject.getJSONArray(
+				"dependencies");
+
+			for (int i = 0; i < dependenciesJSONArray.length(); i++) {
+				dependencies.add((String)dependenciesJSONArray.get(i));
+			}
+
+			_jsConfigGeneratorModules.add(
+				new JSConfigGeneratorModule(
+					this, ModuleNameUtil.getPackagePath(name), dependencies,
+					_contextPath));
+		}
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		JSConfigGeneratorPackage.class);
 
 	private final boolean _applyVersioning;
 	private final Bundle _bundle;
 	private final String _contextPath;
+	private List<JSConfigGeneratorModule> _jsConfigGeneratorModules =
+		new ArrayList<>();
 	private final String _name;
 	private String _unversionedConfiguration = "";
 	private String _unversionedMapsConfiguration = "";

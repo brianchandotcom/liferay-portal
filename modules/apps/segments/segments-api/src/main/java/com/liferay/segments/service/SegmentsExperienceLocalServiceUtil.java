@@ -228,16 +228,6 @@ public class SegmentsExperienceLocalServiceUtil {
 	}
 
 	public static com.liferay.segments.model.SegmentsExperience
-			fetchDefaultSegmentsExperience(
-				long groupId, long classNameId, long classPK,
-				boolean addDefaultExperience)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return getService().fetchDefaultSegmentsExperience(
-			groupId, classNameId, classPK, addDefaultExperience);
-	}
-
-	public static com.liferay.segments.model.SegmentsExperience
 		fetchSegmentsExperience(long segmentsExperienceId) {
 
 		return getService().fetchSegmentsExperience(segmentsExperienceId);
@@ -247,6 +237,16 @@ public class SegmentsExperienceLocalServiceUtil {
 		getActionableDynamicQuery() {
 
 		return getService().getActionableDynamicQuery();
+	}
+
+	public static com.liferay.segments.model.SegmentsExperience
+			getDefaultSegmentsExperience(
+				long groupId, long classNameId, long classPK,
+				boolean addDefaultExperience)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().getDefaultSegmentsExperience(
+			groupId, classNameId, classPK, addDefaultExperience);
 	}
 
 	public static

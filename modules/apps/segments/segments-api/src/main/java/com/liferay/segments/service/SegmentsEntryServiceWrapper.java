@@ -70,6 +70,15 @@ public class SegmentsEntryServiceWrapper
 	@Override
 	public java.util.List<com.liferay.segments.model.SegmentsEntry>
 		getSegmentsEntries(
+			long groupId, boolean includeAncestorSegmentsEntries) {
+
+		return _segmentsEntryService.getSegmentsEntries(
+			groupId, includeAncestorSegmentsEntries);
+	}
+
+	@Override
+	public java.util.List<com.liferay.segments.model.SegmentsEntry>
+		getSegmentsEntries(
 			long groupId, boolean includeAncestorSegmentsEntries, int start,
 			int end,
 			com.liferay.portal.kernel.util.OrderByComparator

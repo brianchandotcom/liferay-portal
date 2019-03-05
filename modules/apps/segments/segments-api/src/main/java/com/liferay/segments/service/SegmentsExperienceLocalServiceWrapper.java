@@ -243,17 +243,6 @@ public class SegmentsExperienceLocalServiceWrapper
 
 	@Override
 	public com.liferay.segments.model.SegmentsExperience
-			fetchDefaultSegmentsExperience(
-				long groupId, long classNameId, long classPK,
-				boolean addDefaultExperience)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return _segmentsExperienceLocalService.fetchDefaultSegmentsExperience(
-			groupId, classNameId, classPK, addDefaultExperience);
-	}
-
-	@Override
-	public com.liferay.segments.model.SegmentsExperience
 		fetchSegmentsExperience(long segmentsExperienceId) {
 
 		return _segmentsExperienceLocalService.fetchSegmentsExperience(
@@ -265,6 +254,17 @@ public class SegmentsExperienceLocalServiceWrapper
 		getActionableDynamicQuery() {
 
 		return _segmentsExperienceLocalService.getActionableDynamicQuery();
+	}
+
+	@Override
+	public com.liferay.segments.model.SegmentsExperience
+			getDefaultSegmentsExperience(
+				long groupId, long classNameId, long classPK,
+				boolean addDefaultExperience)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _segmentsExperienceLocalService.getDefaultSegmentsExperience(
+			groupId, classNameId, classPK, addDefaultExperience);
 	}
 
 	@Override

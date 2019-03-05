@@ -135,6 +135,27 @@ public class SegmentsExperienceServiceSoap {
 
 	public static com.liferay.segments.model.SegmentsExperienceSoap[]
 			getSegmentsExperiences(
+				long groupId, long classNameId, long classPK, boolean active)
+		throws RemoteException {
+
+		try {
+			java.util.List<com.liferay.segments.model.SegmentsExperience>
+				returnValue =
+					SegmentsExperienceServiceUtil.getSegmentsExperiences(
+						groupId, classNameId, classPK, active);
+
+			return com.liferay.segments.model.SegmentsExperienceSoap.
+				toSoapModels(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.segments.model.SegmentsExperienceSoap[]
+			getSegmentsExperiences(
 				long groupId, long classNameId, long classPK, boolean active,
 				int start, int end,
 				com.liferay.portal.kernel.util.OrderByComparator

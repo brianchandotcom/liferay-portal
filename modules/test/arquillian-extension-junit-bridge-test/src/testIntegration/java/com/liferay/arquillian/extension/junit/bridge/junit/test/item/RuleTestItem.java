@@ -18,6 +18,7 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 
 import java.io.IOException;
 
+import java.util.Arrays;
 import java.util.List;
 
 import org.junit.After;
@@ -37,13 +38,7 @@ import org.junit.runners.model.Statement;
 public class RuleTestItem {
 
 	public static void assertAndTearDown() throws IOException {
-		List<String> lines = _testItemHelper.read();
-
-		Assert.assertEquals(lines.toString(), _LINES.length, lines.size());
-
-		for (int i = 0; i < _LINES.length; i++) {
-			Assert.assertEquals(lines.toString(), _LINES[i], lines.get(i));
-		}
+		Assert.assertEquals(_lines, _testItemHelper.read());
 	}
 
 	@Before
@@ -108,12 +103,10 @@ public class RuleTestItem {
 
 	};
 
-	private static final String[] _LINES = {
+	private static final List<String> _lines = Arrays.asList(
 		"beforeTestRule", "beforeTestRule", "setUp", "test1", "tearDown",
 		"afterTestRule", "afterTestRule", "beforeTestRule", "beforeTestRule",
-		"setUp", "test2", "tearDown", "afterTestRule", "afterTestRule"
-	};
-
+		"setUp", "test2", "tearDown", "afterTestRule", "afterTestRule");
 	private static final TestItemHelper _testItemHelper = new TestItemHelper(
 		RuleTestItem.class);
 

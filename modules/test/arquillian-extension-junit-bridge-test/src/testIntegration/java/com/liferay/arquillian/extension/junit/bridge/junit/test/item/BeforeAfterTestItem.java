@@ -18,6 +18,7 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 
 import java.io.IOException;
 
+import java.util.Arrays;
 import java.util.List;
 
 import org.junit.After;
@@ -33,13 +34,7 @@ import org.junit.runner.RunWith;
 public class BeforeAfterTestItem extends BaseBeforeAfterTestItem {
 
 	public static void assertAndTearDown() throws IOException {
-		List<String> lines = testItemHelper.read();
-
-		Assert.assertEquals(lines.toString(), _LINES.length, lines.size());
-
-		for (int i = 0; i < _LINES.length; i++) {
-			Assert.assertEquals(lines.toString(), _LINES[i], lines.get(i));
-		}
+		Assert.assertEquals(_lines, testItemHelper.read());
 	}
 
 	@Before
@@ -82,11 +77,10 @@ public class BeforeAfterTestItem extends BaseBeforeAfterTestItem {
 		testItemHelper.write("test2");
 	}
 
-	private static final String[] _LINES = {
+	private static final List<String> _lines = Arrays.asList(
 		"setUpBase", "setUpOverriddenChild", "setUp2", "setUp1", "test1",
 		"tearDown1", "tearDown2", "tearDownOverriddenChild", "tearDownBase",
 		"setUpBase", "setUpOverriddenChild", "setUp2", "setUp1", "test2",
-		"tearDown1", "tearDown2", "tearDownOverriddenChild", "tearDownBase"
-	};
+		"tearDown1", "tearDown2", "tearDownOverriddenChild", "tearDownBase");
 
 }

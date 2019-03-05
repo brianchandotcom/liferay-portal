@@ -301,28 +301,8 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 			File file, String fileName, String absolutePath, String content)
 		throws Exception {
 
-		return format(file, fileName, absolutePath, content, content);
-	}
-
-	protected File format(
-			File file, String fileName, String absolutePath, String content,
-			String originalContent)
-		throws Exception {
-
 		Set<String> modifiedContents = new HashSet<>();
-
 		Set<String> modifiedMessages = new TreeSet<>();
-
-		if ((this instanceof JavaSourceProcessor) &&
-			!content.equals(originalContent)) {
-
-			modifiedMessages.add(file.toString() + " (JavaParser)");
-
-			if (_sourceFormatterArgs.isShowDebugInformation()) {
-				DebugUtil.printContentModifications(
-					"JavaParser", fileName, originalContent, content);
-			}
-		}
 
 		String newContent = format(
 			file, fileName, absolutePath, content, content,
@@ -330,7 +310,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 			0);
 
 		return processFormattedFile(
-			file, fileName, originalContent, newContent, modifiedMessages);
+			file, fileName, content, newContent, modifiedMessages);
 	}
 
 	protected String format(
@@ -344,11 +324,13 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 
 		_checkUTF8(file, fileName);
 
+		String newContent = parse(file, fileName, content, modifiedMessages);
+
 		SourceChecksResult sourceChecksResult = _processSourceChecks(
-			file, fileName, absolutePath, content, sourceChecks,
+			file, fileName, absolutePath, newContent, sourceChecks,
 			modifiedMessages);
 
-		String newContent = sourceChecksResult.getContent();
+		newContent = sourceChecksResult.getContent();
 
 		if ((newContent == null) || content.equals(newContent)) {
 			return newContent;
@@ -463,6 +445,14 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		}
 
 		return false;
+	}
+
+	protected String parse(
+			File file, String fileName, String content,
+			Set<String> modifiedMessages)
+		throws Exception {
+
+		return content;
 	}
 
 	protected void postFormat() throws Exception {

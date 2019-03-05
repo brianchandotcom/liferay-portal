@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.tools.java.parser.JavaParser;
 import com.liferay.source.formatter.checkstyle.util.CheckstyleLogger;
 import com.liferay.source.formatter.checkstyle.util.CheckstyleUtil;
+import com.liferay.source.formatter.util.DebugUtil;
 import com.liferay.source.formatter.util.SourceFormatterUtil;
 
 import com.puppycrawl.tools.checkstyle.api.CheckstyleException;
@@ -69,23 +70,38 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 			File file, String fileName, String absolutePath, String content)
 		throws Exception {
 
-		if (_javaParserEnabled) {
-			SourceFormatterArgs sourceFormatterArgs = getSourceFormatterArgs();
-
-			file = format(
-				file, fileName, absolutePath,
-				JavaParser.parse(
-					file, content, sourceFormatterArgs.getMaxLineLength(),
-					false),
-				content);
-		}
-		else {
-			file = super.format(file, fileName, absolutePath, content);
-		}
+		file = super.format(file, fileName, absolutePath, content);
 
 		_processCheckstyle(file);
 
 		return file;
+	}
+
+	@Override
+	protected String parse(
+			File file, String fileName, String content,
+			Set<String> modifiedMessages)
+		throws Exception {
+
+		if (!_javaParserEnabled) {
+			return content;
+		}
+
+		SourceFormatterArgs sourceFormatterArgs = getSourceFormatterArgs();
+
+		String newContent = JavaParser.parse(
+			file, content, sourceFormatterArgs.getMaxLineLength(), false);
+
+		if (!content.equals(newContent)) {
+			modifiedMessages.add(file.toString() + " (JavaParser)");
+
+			if (sourceFormatterArgs.isShowDebugInformation()) {
+				DebugUtil.printContentModifications(
+					"JavaParser", fileName, content, newContent);
+			}
+		}
+
+		return newContent;
 	}
 
 	@Override

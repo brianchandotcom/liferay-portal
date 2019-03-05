@@ -617,6 +617,63 @@ definition {
 		);
 	}
 
+	@description = "This test share an asset to a user and disable the sharing option. This test asserts that a collaborator without sharing permissions will not be able to share this asset."
+	@priority = "5"
+	test ShareWithNoSharingPermissions {
+		JSONUser.addUser(
+			userEmailAddress = "userea@liferay.com",
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userScreenName = "usersn"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations"
+		);
+
+		User.editPasswordCP(
+			userEmailAddress = "userea@liferay.com",
+			userScreenName = "usersn"
+		);
+
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		DMDocumentSharing.addDocumentWithOnlyOwnerPermissions(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentFile = "Document_1.doc",
+			dmDocumentTitle = "DM Document Title"
+		);
+
+		DMNavigator.gotoShare(dmDocumentTitle = "DM Document Title");
+
+		DMDocument.sharePG(
+			userEmailAddress = "userea@liferay.com",
+			userName = "userfn userln"
+		);
+
+		User.logoutPG();
+
+		User.loginUserPG(password = "test", userEmailAddress = "userea@liferay.com");
+
+		ProductMenu.gotoPortlet(
+			category = "My Account",
+			panel = "User",
+			portlet = "Shared With Me"
+		);
+
+		var key_dmDocumentTitle = "DM Document Title";
+
+		AssertElementNotPresent(locator1 = "DocumentsAndMediaShare#SHARED_WITH_ME_DOCUMENT_OPTIONS");
+
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		Click(locator1 = "DocumentsAndMedia#DESCRIPTIVE_LIST_DOCUMENT_VERTICAL_ELLIPSIS");
+
+		MenuItem.viewNotPresent(menuItem = "Share");
+	}
+
 	@description = "This test makes sure only owners see the Collaborators List. Collaborators will only see the owner of the document. This usecase also tests that a user can successfully remove collaborators through Manage Collaborators and asserts that empty message displays when all collaborators are removed."
 	@priority = "5"
 	test ViewAndRemoveCollaborators {

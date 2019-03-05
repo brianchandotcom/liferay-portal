@@ -41,6 +41,7 @@ import javax.portlet.EventResponse;
 import javax.portlet.HeaderPortlet;
 import javax.portlet.HeaderRequest;
 import javax.portlet.HeaderResponse;
+import javax.portlet.MimeResponse;
 import javax.portlet.Portlet;
 import javax.portlet.PortletConfig;
 import javax.portlet.PortletContext;
@@ -170,22 +171,9 @@ public class BeanPortletInvokerPortlet
 				beanMethod.invoke(args);
 			}
 		}
-		else if (methodType == MethodType.HEADER) {
-			PortletRequest portletRequest = (PortletRequest)args[0];
+		else if ((methodType == MethodType.HEADER) ||
+				 (methodType == MethodType.RENDER)) {
 
-			PortletMode portletMode = portletRequest.getPortletMode();
-
-			PortletMode beanMethodPortletMode = beanMethod.getPortletMode();
-
-			if ((beanMethodPortletMode == null) ||
-				portletMode.equals(beanMethodPortletMode)) {
-
-				beanMethod.invoke(args);
-
-				include = methodType.getInclude(method);
-			}
-		}
-		else if (methodType == MethodType.RENDER) {
 			PortletRequest portletRequest = (PortletRequest)args[0];
 
 			PortletMode portletMode = portletRequest.getPortletMode();
@@ -199,9 +187,9 @@ public class BeanPortletInvokerPortlet
 					String markup = (String)beanMethod.invoke();
 
 					if (markup != null) {
-						RenderResponse renderResponse = (RenderResponse)args[1];
+						MimeResponse mimeResponse = (MimeResponse)args[1];
 
-						PrintWriter writer = renderResponse.getWriter();
+						PrintWriter writer = mimeResponse.getWriter();
 
 						writer.write(markup);
 					}

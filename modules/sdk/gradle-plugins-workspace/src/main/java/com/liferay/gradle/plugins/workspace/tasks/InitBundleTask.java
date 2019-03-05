@@ -125,8 +125,6 @@ public class InitBundleTask extends JavaExec {
 
 		FileCollection providedModules = getProvidedModules();
 
-		System.out.println(providedModules.getAsPath());
-
 		args.add("--provided-modules");
 		args.add(providedModules.getAsPath());
 

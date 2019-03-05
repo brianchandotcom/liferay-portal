@@ -360,7 +360,11 @@ public class ResourceOpenAPIParser {
 
 		methodNameSegments.add(httpMethod);
 
-		List<Parameter> parameters = operation.getParameters();
+		List<Parameter> parameters = Collections.emptyList();
+
+		if (operation.getParameters() != null) {
+			parameters = operation.getParameters();
+		}
 
 		Stream<Parameter> stream = parameters.stream();
 

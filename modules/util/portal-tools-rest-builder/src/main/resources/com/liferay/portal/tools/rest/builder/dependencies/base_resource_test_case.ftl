@@ -95,7 +95,6 @@ public abstract class Base${schemaName}ResourceTestCase {
 	<#list freeMarkerTool.getResourceJavaMethodSignatures(configYAML, openAPIYAML, schemaName) as javaMethodSignature>
 		<#assign
 			arguments = freeMarkerTool.getResourceArguments(javaMethodSignature.javaMethodParameters)
-			firstJavaMethodParameter = javaMethodSignature.javaMethodParameters[0]
 			parameters = freeMarkerTool.getResourceParameters(javaMethodSignature.javaMethodParameters, javaMethodSignature.operation, false)
 		/>
 
@@ -113,6 +112,8 @@ public abstract class Base${schemaName}ResourceTestCase {
 				throw new UnsupportedOperationException("This method needs to be implemented");
 			}
 		<#elseif freeMarkerTool.hasHTTPMethod(javaMethodSignature, "get") && javaMethodSignature.returnType?contains("Page<")>
+			<#assign firstJavaMethodParameter = javaMethodSignature.javaMethodParameters[0] />
+
 			<#if stringUtil.equals(firstJavaMethodParameter.parameterName, "filter") || stringUtil.equals(firstJavaMethodParameter.parameterName, "pagination") || stringUtil.equals(firstJavaMethodParameter.parameterName, "sorts")>
 				@Test
 				public void test${javaMethodSignature.methodName?cap_first}() throws Exception {
@@ -492,19 +493,23 @@ public abstract class Base${schemaName}ResourceTestCase {
 				options.setDelete(true);
 			</#if>
 
-			String location = _resourceURL + _toPath("${javaMethodSignature.path}", ${firstJavaMethodParameter.parameterName});
+			<#if (javaMethodSignature.javaMethodParameters?size > 0)>
+				String location = _resourceURL + _toPath("${javaMethodSignature.path}", ${javaMethodSignature.javaMethodParameters[0].parameterName});
 
-			<#if parameters?contains("Filter filter")>
-				location = HttpUtil.addParameter(location, "filter", filterString);
-			</#if>
+				<#if parameters?contains("Filter filter")>
+					location = HttpUtil.addParameter(location, "filter", filterString);
+				</#if>
 
-			<#if parameters?contains("Pagination pagination")>
-				location = HttpUtil.addParameter(location, "page", pagination.getPageNumber());
-				location = HttpUtil.addParameter(location, "pageSize", pagination.getItemsPerPage());
-			</#if>
+				<#if parameters?contains("Pagination pagination")>
+					location = HttpUtil.addParameter(location, "page", pagination.getPageNumber());
+					location = HttpUtil.addParameter(location, "pageSize", pagination.getItemsPerPage());
+				</#if>
 
-			<#if parameters?contains("Sort[] sorts")>
-				location = HttpUtil.addParameter(location, "sort", sortString);
+				<#if parameters?contains("Sort[] sorts")>
+					location = HttpUtil.addParameter(location, "sort", sortString);
+				</#if>
+			<#else>
+				String location = _resourceURL + "${javaMethodSignature.path}";
 			</#if>
 
 			options.setLocation(location);
@@ -537,19 +542,23 @@ public abstract class Base${schemaName}ResourceTestCase {
 				options.setDelete(true);
 			</#if>
 
-			String location = _resourceURL + _toPath("${javaMethodSignature.path}", ${firstJavaMethodParameter.parameterName});
+			<#if (javaMethodSignature.javaMethodParameters?size > 0)>
+				String location = _resourceURL + _toPath("${javaMethodSignature.path}", ${javaMethodSignature.javaMethodParameters[0].parameterName});
 
-			<#if parameters?contains("Filter filter")>
-				location = HttpUtil.addParameter(location, "filter", filterString);
-			</#if>
+				<#if parameters?contains("Filter filter")>
+					location = HttpUtil.addParameter(location, "filter", filterString);
+				</#if>
 
-			<#if parameters?contains("Pagination pagination")>
-				location = HttpUtil.addParameter(location, "page", pagination.getPageNumber());
-				location = HttpUtil.addParameter(location, "pageSize", pagination.getItemsPerPage());
-			</#if>
+				<#if parameters?contains("Pagination pagination")>
+					location = HttpUtil.addParameter(location, "page", pagination.getPageNumber());
+					location = HttpUtil.addParameter(location, "pageSize", pagination.getItemsPerPage());
+				</#if>
 
-			<#if parameters?contains("Sort[] sorts")>
-				location = HttpUtil.addParameter(location, "sort", sortString);
+				<#if parameters?contains("Sort[] sorts")>
+					location = HttpUtil.addParameter(location, "sort", sortString);
+				</#if>
+			<#else>
+				String location = _resourceURL + "${javaMethodSignature.path}";
 			</#if>
 
 			options.setLocation(location);

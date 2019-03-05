@@ -60,10 +60,6 @@ public class InitBundleTask extends JavaExec {
 		return GradleUtil.toFile(getProject(), _configsDir);
 	}
 
-	public File getDestinationDir() {
-		return GradleUtil.toFile(getProject(), _homeDir);
-	}
-
 	@InputFile
 	public File getFile() {
 		return GradleUtil.toFile(getProject(), _file);

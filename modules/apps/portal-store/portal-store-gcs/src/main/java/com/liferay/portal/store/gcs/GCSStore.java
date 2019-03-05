@@ -669,10 +669,10 @@ public class GCSStore extends BaseStore {
 					_gcsStoreConfiguration.authFileLocation());
 		}
 
-		File credentialFiles = new File(
+		File credentialFile = new File(
 			_gcsStoreConfiguration.authFileLocation());
 
-		return new FileInputStream(credentialFiles);
+		return new FileInputStream(credentialFile);
 	}
 
 	private String _getHeadVersionLabel(

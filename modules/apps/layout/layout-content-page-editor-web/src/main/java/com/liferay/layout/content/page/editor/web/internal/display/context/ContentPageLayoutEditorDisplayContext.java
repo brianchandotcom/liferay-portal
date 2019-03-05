@@ -14,14 +14,13 @@
 
 package com.liferay.layout.content.page.editor.web.internal.display.context;
 
-import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.template.soy.util.SoyContext;
 import com.liferay.portal.template.soy.util.SoyContextFactoryUtil;
 import com.liferay.segments.model.SegmentsEntry;
 import com.liferay.segments.model.SegmentsExperience;
 import com.liferay.segments.service.SegmentsEntryServiceUtil;
-import com.liferay.segments.service.SegmentsExperienceLocalServiceUtil;
+import com.liferay.segments.service.SegmentsExperienceServiceUtil;
 
 import java.util.List;
 
@@ -116,9 +115,8 @@ public class ContentPageLayoutEditorDisplayContext
 			SoyContextFactoryUtil.createSoyContext();
 
 		List<SegmentsExperience> segmentsExperiences =
-			SegmentsExperienceLocalServiceUtil.getSegmentsExperiences(
-				getGroupId(), classNameId, classPK, true, QueryUtil.ALL_POS,
-				QueryUtil.ALL_POS, null);
+			SegmentsExperienceServiceUtil.getSegmentsExperiences(
+				getGroupId(), classNameId, classPK, true);
 
 		for (SegmentsExperience segmentsExperience : segmentsExperiences) {
 			SoyContext experienceSoyContext =

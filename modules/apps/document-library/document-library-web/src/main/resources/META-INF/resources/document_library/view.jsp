@@ -279,8 +279,8 @@ String navigation = ParamUtil.getString(request, "navigation");
 		String classNameId = String.valueOf(ClassNameLocalServiceUtil.getClassNameId(DLFileEntryConstants.getClassName()));
 		String pathModule = PortalUtil.getPathModule();
 
-		String urlTags = pathModule + "/bulk/v1.0/asset/tags/" + scopeGroupId + "/" + classNameId + "/common";
-		String urlUpdateTags = pathModule + "/bulk/v1.0/asset/tags/" + classNameId;
+		String urlTags = pathModule + "/bulk/v1.0/tags/" + scopeGroupId + "/" + classNameId + "/common";
+		String urlUpdateTags = pathModule + "/bulk/v1.0/tags/" + classNameId;
 
 		Map<String, Object> tagsContext = new HashMap<>();
 
@@ -288,8 +288,8 @@ String navigation = ParamUtil.getString(request, "navigation");
 		tagsContext.put("urlTags", urlTags);
 		tagsContext.put("urlUpdateTags", urlUpdateTags);
 
-		String urlCategories = pathModule + "/bulk/v1.0/asset/categories/" + scopeGroupId + "/" + classNameId + "/common";
-		String urlUpdateCategories = pathModule + "/bulk/v1.0/asset/categories/" + classNameId;
+		String urlCategories = pathModule + "/bulk/v1.0/categories/" + scopeGroupId + "/" + classNameId + "/common";
+		String urlUpdateCategories = pathModule + "/bulk/v1.0/categories/" + classNameId;
 
 		Map<String, Object> categoriesContext = new HashMap<>();
 

@@ -259,6 +259,21 @@ public class AssetPublisherDisplayContext {
 		else if (isSelectionStyleAssetList() && (assetListEntry != null)) {
 			return assetListEntry.getAssetEntries();
 		}
+		else if (isSelectionStyleAssetListProvider()) {
+			String assetListProviderClassName = GetterUtil.getString(
+				_portletPreferences.getValue(
+					"assetListProviderClassName", null));
+
+			if (Validator.isNotNull(assetListProviderClassName)) {
+				AssetListProvider assetListProvider =
+					_assetListProviderTracker.getAssetListProvider(
+						assetListProviderClassName);
+
+				if (assetListProvider != null) {
+					return assetListProvider.getAssetEntries(_portletRequest);
+				}
+			}
+		}
 
 		return Collections.emptyList();
 	}

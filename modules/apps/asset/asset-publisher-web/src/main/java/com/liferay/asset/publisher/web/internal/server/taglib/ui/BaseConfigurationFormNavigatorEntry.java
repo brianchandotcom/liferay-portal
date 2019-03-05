@@ -82,4 +82,12 @@ public abstract class BaseConfigurationFormNavigatorEntry
 		return false;
 	}
 
+	protected boolean isManualSelection() {
+		if (Objects.equals(getSelectionStyle(), "manual")) {
+			return true;
+		}
+
+		return false;
+	}
+
 }

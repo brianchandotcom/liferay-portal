@@ -51,11 +51,11 @@ public class ScopeFormNavigatorEntry
 
 	@Override
 	public boolean isVisible(User user, Object object) {
-		if (isAssetListSelection()) {
+		if (!isManualSelection() && !isDynamicAssetSelection()) {
 			return false;
 		}
 
-		if (!isDynamicAssetSelection()) {
+		if (isManualSelection()) {
 			return true;
 		}
 

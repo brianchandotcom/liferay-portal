@@ -15,15 +15,13 @@
 package com.liferay.document.library.web.internal.portlet.toolbar.contributor;
 
 import com.liferay.document.library.constants.DLPortletKeys;
-import com.liferay.document.library.portlet.toolbar.contributor.DLPortletToolbarContributor;
 import com.liferay.document.library.web.internal.portlet.toolbar.contributor.helper.DLPortletToolbarContributorHelper;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.document.library.web.internal.portlet.toolbar.contributor.helper.MenuItemProvider;
 import com.liferay.portal.kernel.portlet.toolbar.contributor.BasePortletToolbarContributor;
 import com.liferay.portal.kernel.portlet.toolbar.contributor.PortletToolbarContributor;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.servlet.taglib.ui.MenuItem;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.ArrayList;
@@ -49,61 +47,6 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class IGPortletToolbarContributor extends BasePortletToolbarContributor {
 
-	protected void addPortletTitleAddFileEntryMenuItem(
-		List<MenuItem> menuItems, Folder folder, ThemeDisplay themeDisplay,
-		PortletRequest portletRequest) {
-
-		DLPortletToolbarContributor dlPortletToolbarContributor =
-			_dlPortletToolbarContributorRegistry.
-				getDLPortletToolbarContributor();
-
-		List<MenuItem> portletTitleAddDocumentMenuItems =
-			dlPortletToolbarContributor.getPortletTitleAddDocumentMenuItems(
-				folder, themeDisplay, portletRequest);
-
-		menuItems.addAll(portletTitleAddDocumentMenuItems);
-	}
-
-	protected void addPortletTitleAddFolderMenuItem(
-		List<MenuItem> menuItems, Folder folder, ThemeDisplay themeDisplay,
-		PortletRequest portletRequest) {
-
-		DLPortletToolbarContributor dlPortletToolbarContributor =
-			_dlPortletToolbarContributorRegistry.
-				getDLPortletToolbarContributor();
-
-		MenuItem portletTitleAddFolderMenuItem =
-			dlPortletToolbarContributor.getPortletTitleAddFolderMenuItem(
-				themeDisplay, portletRequest, folder);
-
-		if (portletTitleAddFolderMenuItem != null) {
-			menuItems.add(portletTitleAddFolderMenuItem);
-		}
-	}
-
-	protected void addPortletTitleAddMulpleFileEntriesMenuItem(
-		List<MenuItem> menuItems, Folder folder, ThemeDisplay themeDisplay,
-		PortletRequest portletRequest) {
-
-		DLPortletToolbarContributor dlPortletToolbarContributor =
-			_dlPortletToolbarContributorRegistry.
-				getDLPortletToolbarContributor();
-
-		MenuItem portletTitleAddMultipleDocumentsMenuItem =
-			dlPortletToolbarContributor.
-				getPortletTitleAddMultipleDocumentsMenuItem(
-					themeDisplay, portletRequest, folder);
-
-		if (portletTitleAddMultipleDocumentsMenuItem != null) {
-			portletTitleAddMultipleDocumentsMenuItem.setLabel(
-				LanguageUtil.get(
-					_portal.getHttpServletRequest(portletRequest),
-					"multiple-media"));
-
-			menuItems.add(portletTitleAddMultipleDocumentsMenuItem);
-		}
-	}
-
 	@Override
 	protected List<MenuItem> getPortletTitleMenuItems(
 		PortletRequest portletRequest, PortletResponse portletResponse) {
@@ -111,32 +54,43 @@ public class IGPortletToolbarContributor extends BasePortletToolbarContributor {
 		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		List<MenuItem> menuItems = new ArrayList<>();
-
 		Folder folder = _dlPortletToolbarContributorHelper.getFolder(
 			themeDisplay, portletRequest);
 
-		addPortletTitleAddFolderMenuItem(
-			menuItems, folder, themeDisplay, portletRequest);
+		List<MenuItem> menuItems = new ArrayList<>();
 
-		addPortletTitleAddFileEntryMenuItem(
-			menuItems, folder, themeDisplay, portletRequest);
+		menuItems.add(
+			_menuItemProvider.getAddBasicDocumentMenuItem(
+				folder, themeDisplay, portletRequest));
 
-		addPortletTitleAddMulpleFileEntriesMenuItem(
-			menuItems, folder, themeDisplay, portletRequest);
+		_add(
+			menuItems,
+			_menuItemProvider.getAddFolderMenuItem(
+				themeDisplay, portletRequest, folder));
+
+		_add(
+			menuItems,
+			_menuItemProvider.getAddMultipleFilesMenuItem(
+				themeDisplay, portletRequest, folder));
+
+		_add(
+			menuItems,
+			_menuItemProvider.getAddShortcutMenuItem(
+				folder, themeDisplay, portletRequest));
 
 		return menuItems;
+	}
+
+	private void _add(List<MenuItem> menuItems, MenuItem menuItem) {
+		if (menuItem != null) {
+			menuItems.add(menuItem);
+		}
 	}
 
 	@Reference
 	private DLPortletToolbarContributorHelper
 		_dlPortletToolbarContributorHelper;
 
-	@Reference
-	private DLPortletToolbarContributorRegistry
-		_dlPortletToolbarContributorRegistry;
-
-	@Reference
-	private Portal _portal;
+	private final MenuItemProvider _menuItemProvider = new MenuItemProvider();
 
 }

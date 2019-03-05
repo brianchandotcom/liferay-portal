@@ -88,6 +88,12 @@ public class DTOOpenAPIParser {
 		Map<String, String> javaDataTypeMap, Schema propertySchema,
 		String propertySchemaName) {
 
+		List<String> enumValues = propertySchema.getEnumValues();
+
+		if ((enumValues != null) && !enumValues.isEmpty()) {
+			return StringUtil.upperCaseFirstLetter(propertySchemaName);
+		}
+
 		Items items = propertySchema.getItems();
 		String type = propertySchema.getType();
 

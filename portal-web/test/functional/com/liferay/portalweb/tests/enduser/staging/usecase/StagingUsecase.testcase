@@ -463,7 +463,7 @@ definition {
 		);
 
 		ProductMenu.gotoPortlet(
-			category = "Sites",
+			category = "Content &amp; Data",
 			panel = "Site Administration",
 			portlet = "Web Content"
 		);

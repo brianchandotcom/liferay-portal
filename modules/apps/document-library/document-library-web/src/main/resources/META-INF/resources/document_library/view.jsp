@@ -288,12 +288,10 @@ String navigation = ParamUtil.getString(request, "navigation");
 		</aui:script>
 
 		<%
-		String classNameId = String.valueOf(ClassNameLocalServiceUtil.getClassNameId(
-			DLFileEntryConstants.getClassName()));
+		String classNameId = String.valueOf(ClassNameLocalServiceUtil.getClassNameId(DLFileEntryConstants.getClassName()));
 		String pathModule = PortalUtil.getPathModule();
-		String spritemap = themeDisplay.getPathThemeImages() + "/lexicon/icons.svg";
 
-		String urlTags =  pathModule + "/bulk/asset/tags/" + scopeGroupId + "/" + classNameId + "/common";
+		String urlTags = pathModule + "/bulk/asset/tags/" + scopeGroupId + "/" + classNameId + "/common";
 		String urlUpdateTags = pathModule + "/bulk/asset/tags/" + classNameId;
 
 		Map<String, Object> tagsContext = new HashMap<>();
@@ -315,14 +313,14 @@ String navigation = ParamUtil.getString(request, "navigation");
 
 		<liferay-frontend:component
 			componentId='<%= liferayPortletResponse.getNamespace() + "EditTagsComponent" %>'
-			containerId='<%= "#" + liferayPortletResponse.getNamespace()  + "documentLibraryModal" %>'
+			containerId='<%= "#" + liferayPortletResponse.getNamespace() + "documentLibraryModal" %>'
 			context="<%= tagsContext %>"
 			module="document_library/categorization/EditTags.es"
 		/>
 
 		<liferay-frontend:component
 			componentId='<%= liferayPortletResponse.getNamespace() + "EditCategoriesComponent" %>'
-			containerId='<%= "#" + liferayPortletResponse.getNamespace()  + "documentLibraryModal" %>'
+			containerId='<%= "#" + liferayPortletResponse.getNamespace() + "documentLibraryModal" %>'
 			context="<%= categoriesContext %>"
 			module="document_library/categorization/EditCategories.es"
 		/>

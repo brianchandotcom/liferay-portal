@@ -1,11 +1,10 @@
 import 'clay-multi-select';
-import ClayButton from 'clay-button';
-import ClayRadio from 'clay-radio';
+import 'clay-radio';
 import Component from 'metal-component';
 import {Config} from 'metal-state';
 import Soy from 'metal-soy';
 import 'frontend-js-web/liferay/compat/modal/Modal.es';
-import InputCategoriesSelector from './InputCategoriesSelector.es';
+import './InputCategoriesSelector.es';
 import templates from './EditCategories.soy';
 
 /**

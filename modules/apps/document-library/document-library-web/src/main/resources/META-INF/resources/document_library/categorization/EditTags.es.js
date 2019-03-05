@@ -1,6 +1,5 @@
 import 'clay-multi-select';
-import ClayButton from 'clay-button';
-import ClayRadio from 'clay-radio';
+import 'clay-radio';
 import Component from 'metal-component';
 import {Config} from 'metal-state';
 import Soy from 'metal-soy';

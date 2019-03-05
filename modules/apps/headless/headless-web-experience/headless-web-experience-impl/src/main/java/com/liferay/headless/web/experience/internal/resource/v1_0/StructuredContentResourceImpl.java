@@ -39,6 +39,7 @@ import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.dynamic.data.mapping.storage.Fields;
 import com.liferay.dynamic.data.mapping.util.DDM;
+import com.liferay.dynamic.data.mapping.util.DDMFieldsCounter;
 import com.liferay.headless.common.spi.service.context.ServiceContextUtil;
 import com.liferay.headless.web.experience.dto.v1_0.Categories;
 import com.liferay.headless.web.experience.dto.v1_0.ContentDocument;
@@ -58,6 +59,7 @@ import com.liferay.journal.model.JournalArticleDisplay;
 import com.liferay.journal.service.JournalArticleService;
 import com.liferay.journal.util.JournalContent;
 import com.liferay.journal.util.JournalConverter;
+import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.events.EventsProcessorUtil;
 import com.liferay.portal.kernel.comment.CommentManager;
@@ -83,6 +85,7 @@ import com.liferay.portal.kernel.util.LocaleThreadLocal;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.odata.entity.EntityField;
@@ -99,6 +102,7 @@ import com.liferay.ratings.kernel.service.RatingsStatsLocalService;
 import java.time.LocalDateTime;
 
 import java.util.AbstractMap;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
@@ -106,6 +110,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
+import java.util.stream.Stream;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -378,6 +383,38 @@ public class StructuredContentResourceImpl
 		return ddmTemplate.getTemplateKey();
 	}
 
+	private List<String> _getFieldDisplayValue(Fields fields) {
+		com.liferay.dynamic.data.mapping.storage.Field field = fields.get(
+			DDM.FIELDS_DISPLAY_NAME);
+
+		String fieldDisplayValue = (String)field.getValue();
+
+		return transformToList(
+			StringUtil.split(fieldDisplayValue),
+			value -> StringUtil.extractFirst(value, DDM.INSTANCE_SEPARATOR));
+	}
+
+	private List<List<String>> _getFieldsDisplaySubstrings(
+		String fieldName, List<String> fieldDisplayNames) {
+
+		List<List<String>> substrings = new ArrayList<>();
+
+		int offset = 0;
+
+		for (int i = 1; i < fieldDisplayNames.size(); i++) {
+			if (fieldName.equals(fieldDisplayNames.get(i))) {
+				substrings.add(fieldDisplayNames.subList(offset, i));
+
+				offset = i;
+			}
+		}
+
+		substrings.add(
+			fieldDisplayNames.subList(offset, fieldDisplayNames.size()));
+
+		return substrings;
+	}
+
 	private Page<StructuredContent> _getStructuredContentsPage(
 			Long contentSpaceId, Long contentStructureId, Filter filter,
 			Pagination pagination, Sort[] sorts)
@@ -429,7 +466,31 @@ public class StructuredContentResourceImpl
 	}
 
 	private ContentField _toContentField(
-			DDMStructure ddmStructure, Fields fields, String fieldName)
+			com.liferay.dynamic.data.mapping.storage.Field ddmField,
+			DDMFormField ddmFormField, DDMStructure ddmStructure,
+			List<String> fieldDisplayValues, Fields fields)
+		throws Exception {
+
+		return new ContentField() {
+			{
+				dataType = ContentStructureUtil.toDataType(ddmFormField);
+				inputControl = ContentStructureUtil.toInputControl(
+					ddmFormField);
+				name = ddmField.getName();
+				nestedFields = _transformToArrayFlattening(
+					ddmFormField.getNestedDDMFormFields(),
+					ddmFormField -> _toContentFields(
+						ddmStructure, fields, ddmFormField.getName(),
+						fieldDisplayValues));
+				value = _toValue(
+					ddmField, contextAcceptLanguage.getPreferredLocale());
+			}
+		};
+	}
+
+	private ContentField[] _toContentFields(
+			DDMStructure ddmStructure, Fields fields, String fieldName,
+			List<String> fieldDisplayValues)
 		throws Exception {
 
 		com.liferay.dynamic.data.mapping.storage.Field ddmField = fields.get(
@@ -441,20 +502,19 @@ public class StructuredContentResourceImpl
 
 		DDMFormField ddmFormField = ddmStructure.getDDMFormField(fieldName);
 
-		return new ContentField() {
-			{
-				dataType = ContentStructureUtil.toDataType(ddmFormField);
-				inputControl = ContentStructureUtil.toInputControl(
-					ddmFormField);
-				name = ddmField.getName();
-				nestedFields = transformToArray(
-					ddmFormField.getNestedDDMFormFields(),
-					ddmFormField -> _toContentField(
-						ddmStructure, fields, ddmFormField.getName()),
-					ContentField.class);
-				value = _toValue(
-					ddmField, contextAcceptLanguage.getPreferredLocale());
+		if (ddmFormField.isRepeatable()) {
+			if (fieldDisplayValues.isEmpty()) {
+				fieldDisplayValues = _getFieldDisplayValue(fields);
 			}
+
+			return _toRepeatableContentField(
+				ddmStructure, ddmFormField, fields, fieldDisplayValues);
+		}
+
+		return new ContentField[] {
+			_toContentField(
+				ddmField, ddmFormField, ddmStructure, fieldDisplayValues,
+				fields)
 		};
 	}
 
@@ -466,11 +526,10 @@ public class StructuredContentResourceImpl
 		Fields ddmFields = _journalConverter.getDDMFields(
 			ddmStructure, journalArticle.getContent());
 
-		return transformToArray(
+		return _transformToArrayFlattening(
 			ddmStructure.getRootFieldNames(),
-			rootFieldName -> _toContentField(
-				ddmStructure, ddmFields, rootFieldName),
-			ContentField.class);
+			fieldName -> _toContentFields(
+				ddmStructure, ddmFields, fieldName, Collections.emptyList()));
 	}
 
 	private Fields _toDDMFields(
@@ -609,6 +668,30 @@ public class StructuredContentResourceImpl
 		}
 
 		return new UnlocalizedValue(value.getData());
+	}
+
+	private ContentField[] _toRepeatableContentField(
+			DDMStructure ddmStructure, DDMFormField ddmFormField, Fields fields,
+			List<String> fieldDisplayValues)
+		throws Exception {
+
+		List<List<String>> fieldsDisplaySubstrings =
+			_getFieldsDisplaySubstrings(
+				ddmFormField.getName(), fieldDisplayValues);
+
+		com.liferay.dynamic.data.mapping.storage.Field ddmField = fields.get(
+			ddmFormField.getName());
+
+		List<ContentField> contentFields = new ArrayList<>();
+
+		for (List<String> substring : fieldsDisplaySubstrings) {
+			contentFields.add(
+				_toContentField(
+					ddmField, ddmFormField, ddmStructure,
+					substring.subList(1, substring.size()), fields));
+		}
+
+		return contentFields.toArray(new ContentField[0]);
 	}
 
 	private String _toString(DDMFormValues ddmFormValues) {

@@ -1085,17 +1085,13 @@ public class RootProjectConfigurator implements Plugin<Project> {
 	}
 
 	private File _getDownloadFile(Download download) {
-		File dir = download.getDest();
-
 		URL url = (URL)download.getSrc();
 
 		String fileName = url.toString();
 
-		fileName = fileName.substring(fileName.lastIndexOf('/') + 1);
-
-		File file = new File(dir, fileName);
-
-		return file;
+		return new File(
+			download.getDest(),
+			fileName.substring(fileName.lastIndexOf('/') + 1));
 	}
 
 	private List<?> _getSrcList(Download download) {

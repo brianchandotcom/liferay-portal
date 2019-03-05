@@ -81,7 +81,7 @@ public abstract class BaseBulkStatusModelResourceTestCase {
 	public void setUp() throws Exception {
 		testGroup = GroupTestUtil.addGroup();
 
-		_resourceURL = new URL("http://localhost:8080/o/bulk-rest/v1.0");
+		_resourceURL = new URL("http://localhost:8080/o/bulk/v1.0");
 	}
 
 	@After
@@ -94,7 +94,8 @@ public abstract class BaseBulkStatusModelResourceTestCase {
 		BulkStatusModel postBulkStatusModel =
 			testGetStatus_addBulkStatusModel();
 
-		BulkStatusModel getBulkStatusModel = invokeGetStatus(null);
+		BulkStatusModel getBulkStatusModel = invokeGetStatus(
+			postBulkStatusModel.getId());
 
 		assertEquals(postBulkStatusModel, getBulkStatusModel);
 		assertValid(getBulkStatusModel);

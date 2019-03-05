@@ -95,7 +95,8 @@ public class DDMFormDeepCopyTest extends BaseDDMTestCase {
 		List<DDMFormField> nestedDDMFormFields =
 			copyNestedDDMFormField.getNestedDDMFormFields();
 
-		Assert.assertEquals(1, nestedDDMFormFields.size());
+		Assert.assertEquals(
+			nestedDDMFormFields.toString(), 1, nestedDDMFormFields.size());
 
 		copyNestedDDMFormField = nestedDDMFormFields.get(0);
 

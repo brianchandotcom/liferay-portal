@@ -95,7 +95,8 @@ public class DDMFormContextToDDMFormValuesTest extends PowerMockito {
 
 		Set<Locale> availableLocales = ddmFormValues.getAvailableLocales();
 
-		Assert.assertEquals(1, availableLocales.size());
+		Assert.assertEquals(
+			availableLocales.toString(), 1, availableLocales.size());
 		Assert.assertTrue(availableLocales.contains(LocaleUtil.BRAZIL));
 	}
 

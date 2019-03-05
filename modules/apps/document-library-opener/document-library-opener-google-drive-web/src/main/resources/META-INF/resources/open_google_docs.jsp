@@ -35,36 +35,42 @@ String googleDocsRedirect = ParamUtil.getString(request, "googleDocsRedirect");
 	</head>
 
 	<body>
-		<portlet:actionURL name="/document_library/edit_in_google_docs" var="actionURL">
-			<portlet:param name="fileEntryId" value="<%= String.valueOf(dlOpenerGoogleDriveFileReference.getFileEntryId()) %>" />
-			<portlet:param name="redirect" value="<%= googleDocsRedirect %>" />
-		</portlet:actionURL>
-
-		<form action="<%= actionURL %>" method="post">
 		<div class="autofit-padded autofit-row autofit-row-center google-docs-toolbar">
 			<div class="autofit-col autofit-col-expand">
 				<div class="autofit-section">
+					<portlet:actionURL name="/document_library/edit_in_google_docs" var="checkInURL">
+						<portlet:param name="<%= Constants.CMD %>" value="<%= DLOpenerGoogleDriveWebConstants.GOOGLE_DRIVE_CHECKIN %>" />
+						<portlet:param name="redirect" value="<%= googleDocsRedirect %>" />
+						<portlet:param name="fileEntryId" value="<%= String.valueOf(dlOpenerGoogleDriveFileReference.getFileEntryId()) %>" />
+					</portlet:actionURL>
+
+					<form action="<%= checkInURL %>" method="post">
 					<clay:button
 						icon="angle-left"
 						id="closeAndCheckinBtn"
 						label='<%= LanguageUtil.format(resourceBundle, "save-and-return-to-x", themeDisplay.getSiteGroupName()) %>'
-						name="<%= renderResponse.getNamespace() + Constants.CMD %>"
 						size="sm"
 						type="submit"
-						value="<%= DLOpenerGoogleDriveWebConstants.GOOGLE_DRIVE_CHECKIN %>"
 					/>
+					</form>
 				</div>
 			</div>
 
 			<div class="autofit-col">
+				<portlet:actionURL name="/document_library/edit_in_google_docs" var="cancelCheckoutURL">
+					<portlet:param name="<%= Constants.CMD %>" value="<%= DLOpenerGoogleDriveWebConstants.GOOGLE_DRIVE_CANCEL_CHECKOUT %>" />
+					<portlet:param name="redirect" value="<%= googleDocsRedirect %>" />
+					<portlet:param name="fileEntryId" value="<%= String.valueOf(dlOpenerGoogleDriveFileReference.getFileEntryId()) %>" />
+				</portlet:actionURL>
+
+				<form action="<%= cancelCheckoutURL %>" method="post">
 				<clay:button
 					id="discardChangesBtn"
 					label='<%= LanguageUtil.get(resourceBundle, "discard-changes") %>'
-					name="<%= renderResponse.getNamespace() + Constants.CMD %>"
 					size="sm"
 					type="submit"
-					value="<%= DLOpenerGoogleDriveWebConstants.GOOGLE_DRIVE_CANCEL_CHECKOUT %>"
 				/>
+				</form>
 			</div>
 		</div>
 

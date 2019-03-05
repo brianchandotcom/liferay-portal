@@ -497,14 +497,14 @@ public class GCSStore extends BaseStore {
 
 		RetrySettings.Builder builder = RetrySettings.newBuilder();
 
-		builder.setMaxAttempts(maxAttempts);
 		builder.setInitialRetryDelay(Duration.ofMillis(initialRetryDelay));
-		builder.setMaxRetryDelay(Duration.ofMillis(maxRetryDelay));
-		builder.setRetryDelayMultiplier(retryDelayMultiplier);
 		builder.setInitialRpcTimeout(Duration.ofMillis(initRpcTimout));
-		builder.setMaxRpcTimeout(Duration.ofMillis(maxRpcTimeout));
-		builder.setRpcTimeoutMultiplier(rpcTimeoutMultiplier);
 		builder.setJittered(jittered);
+		builder.setMaxAttempts(maxAttempts);
+		builder.setMaxRetryDelay(Duration.ofMillis(maxRetryDelay));
+		builder.setMaxRpcTimeout(Duration.ofMillis(maxRpcTimeout));
+		builder.setRetryDelayMultiplier(retryDelayMultiplier);
+		builder.setRpcTimeoutMultiplier(rpcTimeoutMultiplier);
 
 		return builder.build();
 	}

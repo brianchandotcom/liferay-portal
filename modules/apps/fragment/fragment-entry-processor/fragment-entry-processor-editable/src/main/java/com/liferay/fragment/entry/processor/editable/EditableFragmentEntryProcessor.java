@@ -523,7 +523,7 @@ public class EditableFragmentEntryProcessor implements FragmentEntryProcessor {
 			throw new FragmentEntryContentException(
 				LanguageUtil.get(
 					resourceBundle,
-					"you-must-define-an-unique-id-for-each-editable-element"));
+					"you-must-define-a-unique-id-for-each-editable-element"));
 		}
 	}
 

@@ -18,7 +18,6 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.segments.constants.SegmentsPortletKeys;
-import com.liferay.segments.service.SegmentsEntryService;
 import com.liferay.segments.web.internal.constants.SegmentsWebKeys;
 import com.liferay.segments.web.internal.display.context.SelectUsersDisplayContext;
 
@@ -55,7 +54,7 @@ public class SelectUsersMVCRenderCommand implements MVCRenderCommand {
 		SelectUsersDisplayContext selectUsersDisplayContext =
 			new SelectUsersDisplayContext(
 				httpServletRequest, renderRequest, renderResponse,
-				_segmentsEntryService, _userLocalService);
+				_userLocalService);
 
 		renderRequest.setAttribute(
 			SegmentsWebKeys.SELECT_USERS_DISPLAY_CONTEXT,
@@ -66,9 +65,6 @@ public class SelectUsersMVCRenderCommand implements MVCRenderCommand {
 
 	@Reference
 	private Portal _portal;
-
-	@Reference
-	private SegmentsEntryService _segmentsEntryService;
 
 	@Reference
 	private UserLocalService _userLocalService;

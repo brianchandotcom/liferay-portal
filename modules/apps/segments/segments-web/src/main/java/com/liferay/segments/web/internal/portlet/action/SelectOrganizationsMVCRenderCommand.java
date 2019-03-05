@@ -18,7 +18,6 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.service.OrganizationLocalService;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.segments.constants.SegmentsPortletKeys;
-import com.liferay.segments.service.SegmentsEntryService;
 import com.liferay.segments.web.internal.constants.SegmentsWebKeys;
 import com.liferay.segments.web.internal.display.context.SelectOrganizationsDisplayContext;
 
@@ -55,7 +54,7 @@ public class SelectOrganizationsMVCRenderCommand implements MVCRenderCommand {
 		SelectOrganizationsDisplayContext selectOrganizationsDisplayContext =
 			new SelectOrganizationsDisplayContext(
 				httpServletRequest, renderRequest, renderResponse,
-				_organizationLocalService, _segmentsEntryService);
+				_organizationLocalService);
 
 		renderRequest.setAttribute(
 			SegmentsWebKeys.SELECT_ORGANIZATIONS_DISPLAY_CONTEXT,
@@ -69,8 +68,5 @@ public class SelectOrganizationsMVCRenderCommand implements MVCRenderCommand {
 
 	@Reference
 	private Portal _portal;
-
-	@Reference
-	private SegmentsEntryService _segmentsEntryService;
 
 }

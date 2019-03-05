@@ -33,8 +33,6 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portlet.usersadmin.search.OrganizationSearch;
 import com.liferay.portlet.usersadmin.search.OrganizationSearchTerms;
-import com.liferay.segments.model.SegmentsEntry;
-import com.liferay.segments.service.SegmentsEntryService;
 
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -55,14 +53,12 @@ public class SelectOrganizationsDisplayContext {
 	public SelectOrganizationsDisplayContext(
 		HttpServletRequest request, RenderRequest renderRequest,
 		RenderResponse renderResponse,
-		OrganizationLocalService organizationLocalService,
-		SegmentsEntryService segmentsEntryService) {
+		OrganizationLocalService organizationLocalService) {
 
 		_request = request;
 		_renderRequest = renderRequest;
 		_renderResponse = renderResponse;
 		_organizationLocalService = organizationLocalService;
-		_segmentsEntryService = segmentsEntryService;
 	}
 
 	public String getClearResultsURL() {
@@ -216,8 +212,6 @@ public class SelectOrganizationsDisplayContext {
 		PortletURL portletURL = _renderResponse.createRenderURL();
 
 		portletURL.setParameter("mvcRenderCommandName", "selectOrganizations");
-		portletURL.setParameter(
-			"segmentsEntryId", String.valueOf(getSegmentsEntryId()));
 		portletURL.setParameter("groupId", String.valueOf(getGroupId()));
 		portletURL.setParameter("eventName", getEventName());
 
@@ -252,31 +246,6 @@ public class SelectOrganizationsDisplayContext {
 		PortletURL searchActionURL = getPortletURL();
 
 		return searchActionURL.toString();
-	}
-
-	public SegmentsEntry getSegmentsEntry() throws PortalException {
-		if (_segmentsEntry != null) {
-			return _segmentsEntry;
-		}
-
-		long segmentsEntryId = getSegmentsEntryId();
-
-		if (segmentsEntryId > 0) {
-			_segmentsEntry = _segmentsEntryService.getSegmentsEntry(
-				segmentsEntryId);
-		}
-
-		return _segmentsEntry;
-	}
-
-	public long getSegmentsEntryId() {
-		if (_segmentsEntryId != null) {
-			return _segmentsEntryId;
-		}
-
-		_segmentsEntryId = ParamUtil.getLong(_request, "segmentsEntryId");
-
-		return _segmentsEntryId;
 	}
 
 	public String getSortingURL() {
@@ -382,8 +351,5 @@ public class SelectOrganizationsDisplayContext {
 	private final RenderRequest _renderRequest;
 	private final RenderResponse _renderResponse;
 	private final HttpServletRequest _request;
-	private SegmentsEntry _segmentsEntry;
-	private Long _segmentsEntryId;
-	private final SegmentsEntryService _segmentsEntryService;
 
 }

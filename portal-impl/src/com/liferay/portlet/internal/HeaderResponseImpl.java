@@ -329,7 +329,7 @@ public class HeaderResponseImpl
 
 				if (xml.charAt(openingEnd - 1) == CharPool.FORWARD_SLASH) {
 					sb.append(xml.substring(sbIndex, fromIndex - 2));
-					sb.append(CharPool.GREATER_THAN);
+					sb.append(StringPool.GREATER_THAN);
 				}
 				else {
 					sb.append(xml.substring(sbIndex, fromIndex));

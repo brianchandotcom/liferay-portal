@@ -157,6 +157,10 @@ public class IconTag extends IncludeTag {
 		_linkCssClass = linkCssClass;
 	}
 
+	/**
+	 * @deprecated As of Judson (7.1.x), with no direct replacement
+	 */
+	@Deprecated
 	public void setLinkTitle(String linkTitle) {
 		_linkTitle = linkTitle;
 	}

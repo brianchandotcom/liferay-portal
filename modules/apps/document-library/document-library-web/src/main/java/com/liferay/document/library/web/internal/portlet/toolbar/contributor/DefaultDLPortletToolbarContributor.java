@@ -25,7 +25,6 @@ import com.liferay.portal.kernel.portlet.toolbar.contributor.BasePortletToolbarC
 import com.liferay.portal.kernel.portlet.toolbar.contributor.PortletToolbarContributor;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.servlet.taglib.ui.MenuItem;
-import com.liferay.portal.kernel.servlet.taglib.ui.URLMenuItem;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.WebKeys;
 
@@ -62,49 +61,6 @@ public class DefaultDLPortletToolbarContributor
 	extends BasePortletToolbarContributor
 	implements DLPortletToolbarContributor {
 
-	@Override
-	public List<MenuItem> getPortletTitleAddDocumentMenuItems(
-		Folder folder, ThemeDisplay themeDisplay,
-		PortletRequest portletRequest) {
-
-		return _menuItemProvider.getAddDocumentTypesMenuItems(
-			folder, themeDisplay, portletRequest);
-	}
-
-	@Override
-	public MenuItem getPortletTitleAddFolderMenuItem(
-		ThemeDisplay themeDisplay, PortletRequest portletRequest,
-		Folder folder) {
-
-		return _menuItemProvider.getAddFolderMenuItem(
-			themeDisplay, portletRequest, folder);
-	}
-
-	@Override
-	public MenuItem getPortletTitleAddMultipleDocumentsMenuItem(
-		ThemeDisplay themeDisplay, PortletRequest portletRequest,
-		Folder folder) {
-
-		return _menuItemProvider.getAddMultipleFilesMenuItem(
-			themeDisplay, portletRequest, folder);
-	}
-
-	public URLMenuItem getPortletTitleAddRepositoryMenuItem(
-		Folder folder, ThemeDisplay themeDisplay,
-		PortletRequest portletRequest) {
-
-		return _menuItemProvider.getAddRepositoryMenuItem(
-			folder, themeDisplay, portletRequest);
-	}
-
-	public URLMenuItem getPortletTitleAddShortcutMenuItem(
-		Folder folder, ThemeDisplay themeDisplay,
-		PortletRequest portletRequest) {
-
-		return _menuItemProvider.getAddShortcutMenuItem(
-			folder, themeDisplay, portletRequest);
-	}
-
 	@Activate
 	protected void activate(BundleContext bundleContext) {
 		_dlPortletToolbarContributorContexts = ServiceTrackerListFactory.open(
@@ -134,22 +90,22 @@ public class DefaultDLPortletToolbarContributor
 
 		_add(
 			menuItems,
-			getPortletTitleAddFolderMenuItem(
+			_menuItemProvider.getAddFolderMenuItem(
 				themeDisplay, portletRequest, folder));
 
 		_add(
 			menuItems,
-			getPortletTitleAddMultipleDocumentsMenuItem(
+			_menuItemProvider.getAddMultipleFilesMenuItem(
 				themeDisplay, portletRequest, folder));
 
 		_add(
 			menuItems,
-			getPortletTitleAddRepositoryMenuItem(
+			_menuItemProvider.getAddRepositoryMenuItem(
 				folder, themeDisplay, portletRequest));
 
 		_add(
 			menuItems,
-			getPortletTitleAddShortcutMenuItem(
+			_menuItemProvider.getAddShortcutMenuItem(
 				folder, themeDisplay, portletRequest));
 
 		MenuItem lastStaticMenuItem = menuItems.get(menuItems.size() - 1);
@@ -164,7 +120,7 @@ public class DefaultDLPortletToolbarContributor
 		}
 
 		menuItems.addAll(
-			getPortletTitleAddDocumentMenuItems(
+			_menuItemProvider.getAddDocumentTypesMenuItems(
 				folder, themeDisplay, portletRequest));
 
 		if (lastStaticMenuItem != menuItems.get(menuItems.size() - 1)) {

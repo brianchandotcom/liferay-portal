@@ -17,10 +17,7 @@ package com.liferay.document.library.web.internal.portlet.toolbar.contributor;
 import com.liferay.document.library.portlet.toolbar.contributor.DLPortletToolbarContributor;
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerList;
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerListFactory;
-import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.servlet.taglib.ui.Menu;
-import com.liferay.portal.kernel.servlet.taglib.ui.MenuItem;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -65,64 +62,6 @@ public class DLPortletToolbarContributorRegistry {
 
 	private class AggregateDLPortletToolbarContributor
 		implements DLPortletToolbarContributor {
-
-		@Override
-		public List<MenuItem> getPortletTitleAddDocumentMenuItems(
-			Folder folder, ThemeDisplay themeDisplay,
-			PortletRequest portletRequest) {
-
-			List<MenuItem> menus = new ArrayList<>();
-
-			_serviceTrackerList.forEach(
-				dlPortletToolbarContributor -> menus.addAll(
-					dlPortletToolbarContributor.
-						getPortletTitleAddDocumentMenuItems(
-							folder, themeDisplay, portletRequest)));
-
-			return menus;
-		}
-
-		@Override
-		public MenuItem getPortletTitleAddFolderMenuItem(
-			ThemeDisplay themeDisplay, PortletRequest portletRequest,
-			Folder folder) {
-
-			for (DLPortletToolbarContributor dlPortletToolbarContributor :
-					_serviceTrackerList) {
-
-				MenuItem menuItem =
-					dlPortletToolbarContributor.
-						getPortletTitleAddFolderMenuItem(
-							themeDisplay, portletRequest, folder);
-
-				if (menuItem != null) {
-					return menuItem;
-				}
-			}
-
-			return null;
-		}
-
-		@Override
-		public MenuItem getPortletTitleAddMultipleDocumentsMenuItem(
-			ThemeDisplay themeDisplay, PortletRequest portletRequest,
-			Folder folder) {
-
-			for (DLPortletToolbarContributor dlPortletToolbarContributor :
-					_serviceTrackerList) {
-
-				MenuItem menuItem =
-					dlPortletToolbarContributor.
-						getPortletTitleAddMultipleDocumentsMenuItem(
-							themeDisplay, portletRequest, folder);
-
-				if (menuItem != null) {
-					return menuItem;
-				}
-			}
-
-			return null;
-		}
 
 		@Override
 		public List<Menu> getPortletTitleMenus(

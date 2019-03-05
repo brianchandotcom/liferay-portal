@@ -28,16 +28,22 @@ import com.liferay.portal.kernel.search.BaseModelSearchResult;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.SortFactoryUtil;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.segments.constants.SegmentsActionKeys;
 import com.liferay.segments.model.SegmentsEntry;
 import com.liferay.segments.service.SegmentsEntryService;
+import com.liferay.segments.web.internal.security.permission.resource.SegmentsEntryPermission;
+import com.liferay.segments.web.internal.security.permission.resource.SegmentsResourcePermission;
 import com.liferay.segments.web.internal.util.comparator.SegmentsEntryModifiedDateComparator;
 import com.liferay.segments.web.internal.util.comparator.SegmentsEntryNameComparator;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -81,6 +87,24 @@ public class SegmentsDisplayContext {
 						}));
 			}
 		};
+	}
+
+	public List<String> getAvailableActionDropdownItems(
+			SegmentsEntry segmentsEntry)
+		throws PortalException {
+
+		List<String> availableActionDropdownItems = new ArrayList<>();
+
+		PermissionChecker permissionChecker =
+			_themeDisplay.getPermissionChecker();
+
+		if (SegmentsEntryPermission.contains(
+				permissionChecker, segmentsEntry, ActionKeys.DELETE)) {
+
+			availableActionDropdownItems.add("deleteSegmentsEntries");
+		}
+
+		return availableActionDropdownItems;
 	}
 
 	public String getClearResultsURL() {
@@ -230,6 +254,18 @@ public class SegmentsDisplayContext {
 		}
 
 		return true;
+	}
+
+	public Boolean isShowCreationMenu() {
+		if (SegmentsResourcePermission.contains(
+				_themeDisplay.getPermissionChecker(),
+				_themeDisplay.getScopeGroupId(),
+				SegmentsActionKeys.MANAGE_SEGMENTS_ENTRIES)) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 	private List<DropdownItem> _getFilterNavigationDropdownItems() {

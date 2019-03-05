@@ -32,6 +32,7 @@ SegmentsDisplayContext segmentsDisplayContext = (SegmentsDisplayContext)request.
 	searchContainerId="segmentsEntries"
 	searchFormName="searchFm"
 	selectable="<%= true %>"
+	showCreationMenu="<%= segmentsDisplayContext.isShowCreationMenu() %>"
 	sortingOrder="<%= segmentsDisplayContext.getOrderByType() %>"
 	sortingURL="<%= segmentsDisplayContext.getSortingURL() %>"
 />
@@ -52,6 +53,15 @@ SegmentsDisplayContext segmentsDisplayContext = (SegmentsDisplayContext)request.
 			keyProperty="segmentsEntryId"
 			modelVar="segmentsEntry"
 		>
+
+			<%
+			Map<String, Object> rowData = new HashMap<>();
+
+			rowData.put("actions", segmentsDisplayContext.getAvailableActionDropdownItems(segmentsEntry));
+
+			row.setData(rowData);
+			%>
+
 			<portlet:renderURL var="rowURL">
 				<portlet:param name="mvcRenderCommandName" value="editSegmentsEntry" />
 				<portlet:param name="redirect" value="<%= currentURL %>" />

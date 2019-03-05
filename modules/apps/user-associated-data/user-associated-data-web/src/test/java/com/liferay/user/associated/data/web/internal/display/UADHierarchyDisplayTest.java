@@ -15,6 +15,7 @@
 package com.liferay.user.associated.data.web.internal.display;
 
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.user.associated.data.display.UADHierarchyDeclaration;
 
@@ -109,13 +110,12 @@ public class UADHierarchyDisplayTest {
 	public void testFieldValueCount() throws Exception {
 		List items = _uadHierarchyDisplay.search(
 			DummyContainer.class, DummyService.DEFAULT_CONTAINER_ID, _USER_ID,
-			null, "", "createDate", "asc", QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS);
+			null, "", null, null, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 
 		for (Object item : items) {
 			Map<String, Object> fieldValues =
 				_uadHierarchyDisplay.getFieldValues(
-					item, new String[] {"count"});
+					item, LocaleUtil.getDefault());
 
 			String uuid = (String)fieldValues.get("uuid");
 

@@ -51,7 +51,9 @@ public abstract class DummyUADDisplay<T extends UserAssociatedEntity>
 	}
 
 	@Override
-	public Map<String, Object> getFieldValues(T t, String[] fieldNames) {
+	public Map<String, Object> getFieldValues(
+		T t, String[] fieldNames, Locale locale) {
+
 		Map<String, Object> fieldValues = new HashMap<>();
 
 		List<String> fieldNamesList = ListUtil.toList(fieldNames);
@@ -61,6 +63,11 @@ public abstract class DummyUADDisplay<T extends UserAssociatedEntity>
 		}
 
 		return fieldValues;
+	}
+
+	@Override
+	public String getName(T t, Locale locale) {
+		return t.getName();
 	}
 
 	@Override

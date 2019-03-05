@@ -17,6 +17,7 @@ package com.liferay.fragment.entry.processor.editable.parser.impl;
 import com.liferay.fragment.entry.processor.editable.EditableFragmentEntryProcessor;
 import com.liferay.fragment.entry.processor.editable.parser.EditableElementParser;
 import com.liferay.fragment.entry.processor.editable.parser.util.EditableElementParserUtil;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.util.StringUtil;
 
@@ -64,6 +65,8 @@ public class TextEditableElementParser implements EditableElementParser {
 			element, configJSONObject, "text-", "textAlignment");
 		EditableElementParserUtil.addClass(
 			element, configJSONObject, "text-palette-", "textColor");
+		EditableElementParserUtil.addClass(
+			element, configJSONObject, StringPool.BLANK, "textStyle");
 
 		element.html(bodyElement.html());
 	}

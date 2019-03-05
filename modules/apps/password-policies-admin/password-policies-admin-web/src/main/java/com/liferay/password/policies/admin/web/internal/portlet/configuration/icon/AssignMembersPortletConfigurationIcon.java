@@ -81,6 +81,10 @@ public class AssignMembersPortletConfigurationIcon
 
 	@Override
 	public boolean isShow(PortletRequest portletRequest) {
+		if (_getPasswordPolicyId(portletRequest) == 0) {
+			return false;
+		}
+
 		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 

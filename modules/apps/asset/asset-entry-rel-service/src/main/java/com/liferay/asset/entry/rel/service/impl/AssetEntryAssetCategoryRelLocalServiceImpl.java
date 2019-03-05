@@ -73,7 +73,7 @@ public class AssetEntryAssetCategoryRelLocalServiceImpl
 				assetEntryAssetCategoryRel);
 		}
 
-		_reindex(assetEntryLocalService.fetchEntry(assetEntryId));
+		_reindex(assetEntryId);
 	}
 
 	@Override
@@ -89,9 +89,7 @@ public class AssetEntryAssetCategoryRelLocalServiceImpl
 				assetEntryAssetCategoryRelPersistence.remove(
 					assetEntryAssetCategoryRel);
 
-				_reindex(
-					assetEntryLocalService.fetchEntry(
-						assetEntryAssetCategoryRel.getAssetEntryId()));
+				_reindex(assetEntryAssetCategoryRel.getAssetEntryId());
 			});
 
 		assetEntryAssetCategoryRelPersistence.removeByAssetCategoryId(
@@ -105,7 +103,7 @@ public class AssetEntryAssetCategoryRelLocalServiceImpl
 		assetEntryAssetCategoryRelPersistence.removeByAssetEntryId(
 			assetEntryId);
 
-		_reindex(assetEntryLocalService.fetchEntry(assetEntryId));
+		_reindex(assetEntryId);
 	}
 
 	@Override
@@ -138,7 +136,13 @@ public class AssetEntryAssetCategoryRelLocalServiceImpl
 			assetEntryId);
 	}
 
-	private void _reindex(AssetEntry assetEntry) {
+	private void _reindex(long assetEntryId) {
+		if (assetEntryId <= 0) {
+			return;
+		}
+
+		AssetEntry assetEntry = assetEntryLocalService.fetchEntry(assetEntryId);
+
 		if (assetEntry == null) {
 			return;
 		}

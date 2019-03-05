@@ -6,6 +6,7 @@
 {template .render}
 	{@param? _encodedMappedAssetEntries: ?}
 	{@param? _handleAssetOptionChange: any}
+	{@param? _handleBrowseAllAssetsButtonClick: any}
 	{@param? _handleSourceOptionChange: any}
 	{@param? _mappedAssetEntryEncodedId: ?}
 	{@param? _mappingSources: ?}
@@ -22,13 +23,17 @@
 		</div>
 
 		{if $_selectedSourceId == $_specificContentKey}
-			<div class="form-group">
+			<div class="form-group floating-toolbar-mapping-panel__asset-select">
 				{call .assetSelect}
 					{param handleAssetOptionChange: $_handleAssetOptionChange /}
 					{param mappedAssetEntryEncodedId: $_mappedAssetEntryEncodedId /}
 					{param encodedMappedAssetEntries: $_encodedMappedAssetEntries /}
 				{/call}
 			</div>
+
+			{call .browseAllAssetsButton}
+				{param handleBrowseAllAssetsButtonClick: $_handleBrowseAllAssetsButtonClick /}
+			{/call}
 		{/if}
 		
 		<div class="form-group">
@@ -66,6 +71,20 @@
 			{/call}
 		{/foreach}
 	</select>
+{/template}
+
+/**
+ * Browse all assets button
+ */
+{template .browseAllAssetsButton}
+	{@param? handleBrowseAllAssetsButtonClick: any}
+
+	<button
+		class="btn btn-unstyled btn-link link-secondary"
+		data-onclick="{$handleBrowseAllAssetsButtonClick}"
+	>
+		{msg desc=""}browse-all{/msg}
+	</button>
 {/template}
 
 /**

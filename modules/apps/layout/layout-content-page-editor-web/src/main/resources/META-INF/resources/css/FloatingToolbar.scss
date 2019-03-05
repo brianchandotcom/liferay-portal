@@ -31,12 +31,16 @@
 		min-width: $floatingToolbarPanelMinWidth;
 		padding: $fragmentsEditorSpacing * 2;
 
-		.form-group, .form-group-autofit {
+		.btn, .form-group, .form-group-autofit {
 			margin-bottom: $fragmentsEditorSpacing * 2;
 
 			&:last-child {
 				margin: 0;
 			}
+		}
+
+		.floating-toolbar-mapping-panel__asset-select {
+			margin-bottom: $fragmentsEditorSpacing;
 		}
 
 		.palette-container {

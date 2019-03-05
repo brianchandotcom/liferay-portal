@@ -86,6 +86,14 @@ class FloatingToolbarMappingPanel extends Component {
 	}
 
 	/**
+	 * Handle browse all button click
+	 * @param {Event} event
+	 * @private
+	 * @review
+	 */
+	_handleBrowseAllAssetsButtonClick(event) {}
+
+	/**
 	 * Handle source option change
 	 * @param {Event} event
 	 * @private

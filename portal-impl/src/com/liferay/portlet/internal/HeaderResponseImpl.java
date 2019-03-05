@@ -327,7 +327,13 @@ public class HeaderResponseImpl
 					sb = new StringBundler();
 				}
 
-				sb.append(xml.substring(sbIndex, fromIndex));
+				if (xml.charAt(openingEnd - 1) == CharPool.FORWARD_SLASH) {
+					sb.append(xml.substring(sbIndex, fromIndex - 2));
+					sb.append(CharPool.GREATER_THAN);
+				}
+				else {
+					sb.append(xml.substring(sbIndex, fromIndex));
+				}
 
 				sbIndex = fromIndex;
 

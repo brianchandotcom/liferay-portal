@@ -70,7 +70,6 @@ String message = (String)request.getAttribute("liferay-ui:icon:message");
 boolean label = GetterUtil.getBoolean((String)request.getAttribute("liferay-ui:icon:label"));
 String lang = GetterUtil.getString((String)request.getAttribute("liferay-ui:icon:lang"));
 String linkCssClass = GetterUtil.getString((String)request.getAttribute("liferay-ui:icon:linkCssClass"));
-String linkTitle = (String)request.getAttribute("liferay-ui:icon:linkTitle");
 boolean localizeMessage = GetterUtil.getBoolean((String)request.getAttribute("liferay-ui:icon:localizeMessage"));
 String onClick = GetterUtil.getString((String)request.getAttribute("liferay-ui:icon:onClick"));
 String src = (String)request.getAttribute("liferay-ui:icon:src");

@@ -102,6 +102,14 @@ class FloatingToolbarMappingPanel extends Component {
 	_handleSourceOptionChange(event) {
 		this._selectedSourceId = event.delegateTarget.value;
 	}
+
+	/**
+	 * Handle unmap button click
+	 * @param {Event} event
+	 * @private
+	 * @review
+	 */
+	_handleUnmapButtonClick(event) {}
 }
 
 /**

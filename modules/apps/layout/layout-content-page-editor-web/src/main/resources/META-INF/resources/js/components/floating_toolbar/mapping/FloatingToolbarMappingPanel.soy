@@ -8,6 +8,7 @@
 	{@param? _handleAssetOptionChange: any}
 	{@param? _handleBrowseAllAssetsButtonClick: any}
 	{@param? _handleSourceOptionChange: any}
+	{@param? _handleUnmapButtonClick: any}
 	{@param? _mappedAssetEntryEncodedId: ?}
 	{@param? _mappingSources: ?}
 	{@param? _selectedSourceId: string}
@@ -40,6 +41,10 @@
 			{call .fieldSelect}
 			{/call}
 		</div>
+
+		{call .unmapButton}
+			{param handleUnmapButtonClick: $_handleUnmapButtonClick /}
+		{/call}
 	</div>
 {/template}
 
@@ -149,4 +154,18 @@
 			{/call}
 		{/foreach}
 	</select>
+{/template}
+
+/**
+ * Unmap button
+ */
+{template .unmapButton}
+	{@param? handleUnmapButtonClick: any}
+
+	<button
+		class="btn btn-secondary"
+		data-onclick="{$handleUnmapButtonClick}"
+	>
+		{msg desc=""}unmap{/msg}
+	</button>
 {/template}

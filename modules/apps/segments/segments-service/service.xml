@@ -157,7 +157,7 @@
 			<finder-column name="classNameId" />
 			<finder-column name="classPK" />
 		</finder>
-		<finder name="G_S_C_C" return-type="SegmentsExperience" unique="true">
+		<finder name="G_S_C_C" return-type="Collection">
 			<finder-column name="groupId" />
 			<finder-column name="segmentsEntryId" />
 			<finder-column name="classNameId" />
@@ -182,6 +182,7 @@
 		<reference entity="Group" package-path="com.liferay.portal" />
 	</entity>
 	<exceptions>
+		<exception>DefaultSegmentsExperience</exception>
 		<exception>SegmentsEntryCriteria</exception>
 		<exception>SegmentsEntryKey</exception>
 		<exception>SegmentsExperienceSegmentsEntry</exception>

@@ -158,7 +158,7 @@ BulkStatus.STATE = {
 	 * @memberof BulkStatus
 	 * @type {String}
 	 */
-	bulkStatusUrl: Config.string().value('/o/bulk/status'),
+	bulkStatusUrl: Config.string().value('/o/bulk/v1.0/status'),
 
 	/**
 	 * The interval (in milliseconds) on how often

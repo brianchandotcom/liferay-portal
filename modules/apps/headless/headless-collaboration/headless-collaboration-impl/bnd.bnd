@@ -1,3 +1,7 @@
 Bundle-Name: Liferay Headless Collaboration Implementation
 Bundle-SymbolicName: com.liferay.headless.collaboration.impl
 Bundle-Version: 1.0.0
+DynamicImport-Package: com.liferay.oauth2.provider.scope
+Import-Package:\
+	!com.liferay.oauth2.provider.scope,\
+	*

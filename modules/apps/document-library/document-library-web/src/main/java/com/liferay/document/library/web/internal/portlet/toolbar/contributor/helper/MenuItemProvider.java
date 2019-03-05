@@ -48,6 +48,33 @@ import javax.portlet.PortletURL;
  */
 public class MenuItemProvider {
 
+	public List<MenuItem> getAddDocumentTypesMenuItems(
+		Folder folder, ThemeDisplay themeDisplay,
+		PortletRequest portletRequest) {
+
+		long folderId = _getFolderId(folder);
+
+		if (!_hasPermission(
+				themeDisplay.getPermissionChecker(),
+				themeDisplay.getScopeGroupId(), folderId,
+				ActionKeys.ADD_DOCUMENT)) {
+
+			return Collections.emptyList();
+		}
+
+		List<MenuItem> menuItems = new ArrayList<>();
+
+		long repositoryId = _getRepositoryId(folder, themeDisplay);
+
+		if (themeDisplay.getScopeGroupId() == repositoryId) {
+			menuItems.addAll(
+				_getPortletTitleAddDocumentTypeMenuItems(
+					folder, themeDisplay, portletRequest));
+		}
+
+		return menuItems;
+	}
+
 	public MenuItem getAddFileMenuItem(
 		Folder folder, ThemeDisplay themeDisplay,
 		PortletRequest portletRequest) {
@@ -80,33 +107,6 @@ public class MenuItemProvider {
 		urlMenuItem.setURL(portletURL.toString());
 
 		return urlMenuItem;
-	}
-
-	public List<MenuItem> getAddDocumentTypesMenuItems(
-		Folder folder, ThemeDisplay themeDisplay,
-		PortletRequest portletRequest) {
-
-		long folderId = _getFolderId(folder);
-
-		if (!_hasPermission(
-				themeDisplay.getPermissionChecker(),
-				themeDisplay.getScopeGroupId(), folderId,
-				ActionKeys.ADD_DOCUMENT)) {
-
-			return Collections.emptyList();
-		}
-
-		List<MenuItem> menuItems = new ArrayList<>();
-
-		long repositoryId = _getRepositoryId(folder, themeDisplay);
-
-		if (themeDisplay.getScopeGroupId() == repositoryId) {
-			menuItems.addAll(
-				_getPortletTitleAddDocumentTypeMenuItems(
-					folder, themeDisplay, portletRequest));
-		}
-
-		return menuItems;
 	}
 
 	public MenuItem getAddFolderMenuItem(

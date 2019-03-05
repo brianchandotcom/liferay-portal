@@ -6,8 +6,4 @@
 		<suppress checks="MethodNamingCheck" files="modules/test/maven-executor/src/main/java/com/liferay/maven/executor/MavenExecutor\.java" />
 		<suppress checks="StaticVariableNameCheck" files="modules/test/jenkins-results-parser/src/main/java/com/liferay/jenkins/results/parser/LoadBalancerUtil\.java" />
 	</checkstyle>
-	<source-check>
-		<suppress checks="JavaCombineLinesCheck" files="modules/test/jenkins-results-parser/src/main/java/com/liferay/jenkins/results/parser/AutoCloseUtil.java" />
-		<suppress checks="JavaCombineLinesCheck" files="modules/test/jenkins-results-parser/src/main/java/com/liferay/jenkins/results/parser/FilePropagator.java" />
-	</source-check>
 </suppressions>

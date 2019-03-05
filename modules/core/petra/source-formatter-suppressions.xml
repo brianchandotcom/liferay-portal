@@ -22,7 +22,6 @@
 	</checkstyle>
 	<source-check>
 		<suppress checks="JavaAnnotationDefaultAttributeCheck" files="modules/core/petra/petra-reflect/src/test/java/com/liferay/petra/reflect/AnnotationLocatorTest\.java" />
-		<suppress checks="JavaCombineLinesCheck" files="modules/core/petra/petra-process/src/test/java/com/liferay/petra/process/ProcessUtilTest\.java" />
 		<suppress checks="JavaDeserializationSecurityCheck" files="modules/core/petra/petra-io/src/main/java/com/liferay/petra/io/AnnotatedObjectInputStream\.java" />
 		<suppress checks="JavaDeserializationSecurityCheck" files="modules/core/petra/petra-io/src/main/java/com/liferay/petra/io/ClassLoaderObjectInputStream\.java" />
 		<suppress checks="JavaDeserializationSecurityCheck" files="modules/core/petra/petra-io/src/main/java/com/liferay/petra/io/ProtectedObjectInputStream\.java" />

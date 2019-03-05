@@ -4,7 +4,4 @@
 	<checkstyle>
 		<suppress checks="IndentationCheck" files="modules/apps/portal-settings/portal-settings-authentication-ldap-web/src/main/java/com/liferay/portal/settings/authentication/ldap/web/internal/portlet/action/PortalSettingsLDAPFormMVCActionCommand\.java" />
 	</checkstyle>
-	<source-check>
-		<suppress checks="JavaCombineLinesCheck" files="modules/apps/portal-settings/portal-settings-authentication-ldap-web/src/main/java/com/liferay/portal/settings/authentication/ldap/web/internal/portlet/action/PortalSettingsLDAPFormMVCActionCommand\.java" />
-	</source-check>
 </suppressions>

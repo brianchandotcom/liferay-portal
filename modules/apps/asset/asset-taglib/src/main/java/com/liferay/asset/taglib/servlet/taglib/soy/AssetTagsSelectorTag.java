@@ -81,6 +81,7 @@ public class AssetTagsSelectorTag extends ComponentRendererTag {
 			}
 
 			putValue("selectedItems", selectedItems);
+			putValue("showSelectButton", false);
 
 			putValue(
 				"spritemap",

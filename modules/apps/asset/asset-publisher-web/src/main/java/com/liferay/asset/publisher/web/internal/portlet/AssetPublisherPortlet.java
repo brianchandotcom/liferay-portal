@@ -15,6 +15,7 @@
 package com.liferay.asset.publisher.web.internal.portlet;
 
 import com.liferay.asset.constants.AssetWebKeys;
+import com.liferay.asset.list.provider.AssetListProviderTracker;
 import com.liferay.asset.publisher.constants.AssetPublisherPortletKeys;
 import com.liferay.asset.publisher.constants.AssetPublisherWebKeys;
 import com.liferay.asset.publisher.util.AssetPublisherHelper;
@@ -239,7 +240,7 @@ public class AssetPublisherPortlet extends MVCPortlet {
 					assetEntryActionRegistry, assetHelper,
 					assetPublisherCustomizer, assetPublisherHelper,
 					assetPublisherWebConfiguration, assetPublisherWebUtil,
-					resourceRequest, resourceResponse,
+					assetListProviderTracker, resourceRequest, resourceResponse,
 					resourceRequest.getPreferences());
 
 			resourceRequest.setAttribute(
@@ -338,7 +339,7 @@ public class AssetPublisherPortlet extends MVCPortlet {
 					assetEntryActionRegistry, assetHelper,
 					assetPublisherCustomizer, assetPublisherHelper,
 					assetPublisherWebConfiguration, assetPublisherWebUtil,
-					renderRequest, renderResponse,
+					assetListProviderTracker, renderRequest, renderResponse,
 					renderRequest.getPreferences());
 
 			renderRequest.setAttribute(
@@ -391,6 +392,9 @@ public class AssetPublisherPortlet extends MVCPortlet {
 
 	@Reference
 	protected AssetHelper assetHelper;
+
+	@Reference
+	protected AssetListProviderTracker assetListProviderTracker;
 
 	@Reference
 	protected AssetPublisherCustomizerRegistry assetPublisherCustomizerRegistry;

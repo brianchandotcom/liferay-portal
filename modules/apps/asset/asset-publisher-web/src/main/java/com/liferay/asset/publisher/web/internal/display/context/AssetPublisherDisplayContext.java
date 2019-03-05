@@ -32,6 +32,8 @@ import com.liferay.asset.kernel.service.AssetVocabularyServiceUtil;
 import com.liferay.asset.kernel.service.persistence.AssetEntryQuery;
 import com.liferay.asset.list.constants.AssetListEntryTypeConstants;
 import com.liferay.asset.list.model.AssetListEntry;
+import com.liferay.asset.list.provider.AssetListProvider;
+import com.liferay.asset.list.provider.AssetListProviderTracker;
 import com.liferay.asset.list.service.AssetListEntryServiceUtil;
 import com.liferay.asset.publisher.constants.AssetPublisherPortletKeys;
 import com.liferay.asset.publisher.util.AssetEntryResult;
@@ -120,6 +122,7 @@ public class AssetPublisherDisplayContext {
 			AssetPublisherHelper assetPublisherHelper,
 			AssetPublisherWebConfiguration assetPublisherWebConfiguration,
 			AssetPublisherWebUtil assetPublisherWebUtil,
+			AssetListProviderTracker assetListProviderTracker,
 			PortletRequest portletRequest, PortletResponse portletResponse,
 			PortletPreferences portletPreferences)
 		throws ConfigurationException {
@@ -130,6 +133,7 @@ public class AssetPublisherDisplayContext {
 		_assetPublisherHelper = assetPublisherHelper;
 		_assetPublisherWebConfiguration = assetPublisherWebConfiguration;
 		_assetPublisherWebUtil = assetPublisherWebUtil;
+		_assetListProviderTracker = assetListProviderTracker;
 		_portletRequest = portletRequest;
 		_portletResponse = portletResponse;
 		_portletPreferences = portletPreferences;
@@ -348,6 +352,10 @@ public class AssetPublisherDisplayContext {
 			_portletPreferences.getValue("assetLinkBehavior", "viewInPortlet"));
 
 		return _assetLinkBehavior;
+	}
+
+	public List<AssetListProvider> getAssetListProviders() {
+		return _assetListProviderTracker.getAssetListProviders();
 	}
 
 	public String getAssetListSelectorURL() throws Exception {
@@ -1785,6 +1793,7 @@ public class AssetPublisherDisplayContext {
 	private final AssetHelper _assetHelper;
 	private String _assetLinkBehavior;
 	private AssetListEntry _assetListEntry;
+	private final AssetListProviderTracker _assetListProviderTracker;
 	private final AssetPublisherCustomizer _assetPublisherCustomizer;
 	private final AssetPublisherHelper _assetPublisherHelper;
 	private final AssetPublisherPortletInstanceConfiguration

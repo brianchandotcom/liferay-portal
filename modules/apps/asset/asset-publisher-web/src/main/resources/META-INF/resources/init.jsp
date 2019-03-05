@@ -45,6 +45,7 @@ page import="com.liferay.asset.kernel.model.ClassTypeField" %><%@
 page import="com.liferay.asset.kernel.model.ClassTypeReader" %><%@
 page import="com.liferay.asset.kernel.service.AssetVocabularyLocalServiceUtil" %><%@
 page import="com.liferay.asset.list.model.AssetListEntry" %><%@
+page import="com.liferay.asset.list.provider.AssetListProvider" %><%@
 page import="com.liferay.asset.publisher.constants.AssetPublisherConstants" %><%@
 page import="com.liferay.asset.publisher.constants.AssetPublisherPortletKeys" %><%@
 page import="com.liferay.asset.publisher.constants.AssetPublisherWebKeys" %><%@

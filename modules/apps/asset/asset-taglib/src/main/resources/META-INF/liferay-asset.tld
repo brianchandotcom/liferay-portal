@@ -465,6 +465,13 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<description>Whether to show the select button. The default value is <![CDATA[<code>false</code>]]>.</description>
+			<name>showSelectButton</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>boolean</type>
+		</attribute>
+		<attribute>
 			<description>The currently selected tags.</description>
 			<name>tagNames</name>
 			<required>false</required>

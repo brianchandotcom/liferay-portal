@@ -81,7 +81,8 @@ public class AssetTagsSelectorTag extends ComponentRendererTag {
 			}
 
 			putValue("selectedItems", selectedItems);
-			putValue("showSelectButton", false);
+
+			putValue("showSelectButton", _showSelectButton);
 
 			putValue(
 				"spritemap",
@@ -145,6 +146,10 @@ public class AssetTagsSelectorTag extends ComponentRendererTag {
 		putValue("removeCallback", _getNamespace() + removeCallback);
 	}
 
+	public void setShowSelectButton(boolean showSelectButton) {
+		_showSelectButton = showSelectButton;
+	}
+
 	public void setTagNames(String tagNames) {
 		_tagNames = tagNames;
 	}
@@ -161,6 +166,7 @@ public class AssetTagsSelectorTag extends ComponentRendererTag {
 			_id = null;
 			_ignoreRequestValue = false;
 			_namespace = null;
+			_showSelectButton = false;
 			_tagNames = null;
 		}
 	}
@@ -296,6 +302,7 @@ public class AssetTagsSelectorTag extends ComponentRendererTag {
 	private String _id;
 	private boolean _ignoreRequestValue;
 	private String _namespace;
+	private Boolean _showSelectButton;
 	private String _tagNames;
 
 }

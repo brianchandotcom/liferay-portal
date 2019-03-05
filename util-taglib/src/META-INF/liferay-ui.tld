@@ -1102,6 +1102,12 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<description>Text for <![CDATA[<code>title</code>]]> links in order to provide a link purpose.</description>
+			<name>linkTitle</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
 			<description>Whether to translate the icon's <![CDATA[<code>message</code>]]> into the user's language.</description>
 			<name>localizeMessage</name>
 			<required>false</required>

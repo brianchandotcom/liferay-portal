@@ -24,6 +24,11 @@ boolean urlIsNotNull = Validator.isNotNull(url);
 	<c:when test="<%= (iconListIconCount != null) && ((iconListSingleIcon == null) || iconListShowWhenSingleIcon) %>">
 		<li class="<%= cssClass %>" role="presentation">
 			<c:choose>
+				<c:when test="<%= urlIsNotNull && Validator.isNotNull(linkTitle) %>">
+					<aui:a ariaRole="menuitem" cssClass='<%= linkCssClass + " taglib-icon" %>' data="<%= data %>" href="<%= url %>" id="<%= id %>" lang="<%= lang %>" onClick="<%= onClick %>" target="<%= target %>" title="<%= linkTitle %>">
+						<%= linkContent %>
+					</aui:a>
+				</c:when>
 				<c:when test="<%= urlIsNotNull %>">
 					<aui:a ariaRole="menuitem" cssClass="<%= linkCssClass %>" data="<%= data %>" href="<%= url %>" id="<%= id %>" lang="<%= lang %>" onClick="<%= onClick %>" target="<%= target %>">
 						<%@ include file="/html/taglib/ui/icon/link_content.jspf" %>
@@ -38,6 +43,11 @@ boolean urlIsNotNull = Validator.isNotNull(url);
 	<c:when test="<%= (iconMenuIconCount != null) && ((iconMenuSingleIcon == null) || iconMenuShowWhenSingleIcon) %>">
 		<li class="<%= cssClass %>" role="presentation">
 			<c:choose>
+				<c:when test="<%= urlIsNotNull && Validator.isNotNull(linkTitle) %>">
+					<aui:a ariaRole="menuitem" cssClass='<%= linkCssClass + " taglib-icon" %>' data="<%= data %>" href="<%= url %>" id="<%= id %>" lang="<%= lang %>" onClick="<%= onClick %>" target="<%= target %>" title="<%= linkTitle %>">
+						<%= linkContent %>
+					</aui:a>
+				</c:when>
 				<c:when test="<%= urlIsNotNull %>">
 					<aui:a ariaRole="menuitem" cssClass="<%= linkCssClass %>" data="<%= data %>" href="<%= url %>" id="<%= id %>" lang="<%= lang %>" onClick="<%= onClick %>" target="<%= target %>">
 						<%@ include file="/html/taglib/ui/icon/link_content.jspf" %>
@@ -59,6 +69,11 @@ boolean urlIsNotNull = Validator.isNotNull(url);
 			</c:if>
 		>
 			<c:choose>
+				<c:when test="<%= urlIsNotNull && Validator.isNotNull(linkTitle) %>">
+					<aui:a ariaRole="<%= ariaRole %>" cssClass='<%= linkCssClass + " taglib-icon" %>' data="<%= data %>" href="<%= url %>" id="<%= id %>" lang="<%= lang %>" onClick="<%= onClick %>" target="<%= target %>" title="<%= linkTitle %>">
+						<%= linkContent %>
+					</aui:a>
+				</c:when>
 				<c:when test="<%= urlIsNotNull %>">
 					<aui:a ariaRole="<%= ariaRole %>" cssClass="<%= linkCssClass %>" data="<%= data %>" href="<%= url %>" id="<%= id %>" lang="<%= lang %>" onClick="<%= onClick %>" target="<%= target %>">
 						<%@ include file="/html/taglib/ui/icon/link_content.jspf" %>

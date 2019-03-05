@@ -1,10 +1,12 @@
 package ${configYAML.apiPackagePath}.dto.${escapedVersion};
 
+import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonFilter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import com.fasterxml.jackson.annotation.JsonValue;
 
 import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.petra.string.StringBundler;
@@ -16,6 +18,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 
 import java.util.Date;
 import java.util.Map;
+import java.util.Objects;
 
 import javax.annotation.Generated;
 
@@ -158,5 +161,47 @@ public class ${schemaName} <#if freeMarkerTool.getDTOParentClassName(openAPIYAML
 
 		return sb.toString();
 	}
+
+	<#if schema.propertySchemas??>
+		<#list schema.propertySchemas?keys as propertySchemaName>
+			<#assign propertySchema = schema.propertySchemas[propertySchemaName] />
+
+			<#if propertySchema.enumValues?? && (propertySchema.enumValues?size > 0)>
+				public static enum ${propertySchemaName?cap_first} {
+
+					<#list propertySchema.enumValues as enumValue>
+						${freeMarkerTool.getEnumFieldName(enumValue)}("${enumValue}")
+
+						<#if enumValue_has_next>
+							,
+						</#if>
+					</#list>;
+
+					@JsonCreator
+					public static ${propertySchemaName?cap_first} create(String value) {
+						for (${propertySchemaName?cap_first} ${propertySchemaName} : values()) {
+							if (Objects.equals(${propertySchemaName}.getValue(), value)) {
+								return ${propertySchemaName};
+							}
+						}
+
+						return null;
+					}
+
+					@JsonValue
+					public String getValue() {
+						return _value;
+					}
+
+					private ${propertySchemaName?cap_first}(String value) {
+						_value = value;
+					}
+
+					private final String _value;
+
+				}
+			</#if>
+		</#list>
+	</#if>
 
 }

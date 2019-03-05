@@ -94,7 +94,7 @@ public class ${schemaName} {
 							sb.append(${javaMethodParameter.parameterName}[i]);
 						</#if>
 
-						if ((i + 1) > ${javaMethodParameter.parameterName}.length) {
+						if ((i + 1) < ${javaMethodParameter.parameterName}.length) {
 							sb.append(",");
 						}
 					}

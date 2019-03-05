@@ -1,4 +1,4 @@
-drop table if exists KaleoTaskForm;
+DROP_TABLE_IF_EXISTS(KaleoTaskForm);
 
 create table KaleoTaskForm (
 	mvccVersion LONG default 0 not null,
@@ -24,7 +24,7 @@ create table KaleoTaskForm (
 	priority INTEGER
 );
 
-drop table if exists KaleoTaskFormInstance;
+DROP_TABLE_IF_EXISTS(KaleoTaskFormInstance);
 
 create table KaleoTaskFormInstance (
 	mvccVersion LONG default 0 not null,
@@ -47,7 +47,7 @@ create table KaleoTaskFormInstance (
 	metadata STRING null
 );
 
-drop table if exists KaleoDefinitionVersion;
+DROP_TABLE_IF_EXISTS(KaleoDefinitionVersion);
 
 create table KaleoDefinitionVersion (
 	mvccVersion LONG default 0 not null,

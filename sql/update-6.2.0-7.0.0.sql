@@ -10,9 +10,9 @@ alter table Contact_ drop column msnSn;
 alter table Contact_ drop column mySpaceSn;
 alter table Contact_ drop column ymSn;
 
-drop table CyrusUser;
+DROP_TABLE_IF_EXISTS(CyrusUser);
 
-drop table CyrusVirtual;
+DROP_TABLE_IF_EXISTS(CyrusVirtual);
 
 drop index IX_C803899D on DDMStructureLink;
 

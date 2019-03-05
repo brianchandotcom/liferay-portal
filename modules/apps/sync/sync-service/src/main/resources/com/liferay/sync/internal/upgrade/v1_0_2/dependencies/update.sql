@@ -1,4 +1,4 @@
-drop table SyncDLFileVersionDiff;
+DROP_TABLE_IF_EXISTS(SyncDLFileVersionDiff);
 
 create table SyncDLFileVersionDiff (
 	syncDLFileVersionDiffId LONG not null primary key,
@@ -13,7 +13,7 @@ create table SyncDLFileVersionDiff (
 create index IX_A9B43C55 on SyncDLFileVersionDiff (expirationDate);
 create unique index IX_AC4C7667 on SyncDLFileVersionDiff (fileEntryId, sourceFileVersionId, targetFileVersionId);
 
-drop table SyncDLObject;
+DROP_TABLE_IF_EXISTS(SyncDLObject);
 
 create table SyncDLObject (
 	syncDLObjectId LONG not null primary key,
@@ -55,7 +55,7 @@ create unique index IX_E3F57BD6 on SyncDLObject (type_[$COLUMN_LENGTH:75$], type
 create index IX_28CD54BB on SyncDLObject (type_[$COLUMN_LENGTH:75$], version[$COLUMN_LENGTH:75$]);
 create index IX_1CCA3B5 on SyncDLObject (version[$COLUMN_LENGTH:75$], type_[$COLUMN_LENGTH:75$]);
 
-drop table SyncDevice;
+DROP_TABLE_IF_EXISTS(SyncDevice);
 
 create table SyncDevice (
 	uuid_ VARCHAR(75) null,

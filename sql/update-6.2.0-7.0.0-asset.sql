@@ -6,4 +6,4 @@ COMMIT_TRANSACTION;
 
 update AssetEntry set listable = TRUE;
 
-drop table AssetTagProperty;
+DROP_TABLE_IF_EXISTS(AssetTagProperty);

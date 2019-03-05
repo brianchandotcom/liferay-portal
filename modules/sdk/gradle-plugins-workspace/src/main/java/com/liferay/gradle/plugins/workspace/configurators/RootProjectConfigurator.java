@@ -197,7 +197,7 @@ public class RootProjectConfigurator implements Plugin<Project> {
 
 		_addTaskInitBundle(
 			project, downloadBundleTask, workspaceExtension,
-			providedModulesConfiguration, bundleSupportConfiguration);
+			bundleSupportConfiguration, providedModulesConfiguration);
 
 		Dockerfile dockerfile = _addTaskCreateDockerfile(
 			project, workspaceExtension);
@@ -763,24 +763,14 @@ public class RootProjectConfigurator implements Plugin<Project> {
 	private InitBundleTask _addTaskInitBundle(
 		Project project, Download downloadBundleTask,
 		final WorkspaceExtension workspaceExtension,
-		Configuration configurationOsgiModules,
-		Configuration configurationBundleSupport) {
+		Configuration configurationBundleSupport,
+		Configuration configurationOsgiModules) {
 
 		InitBundleTask initBundleTask = GradleUtil.addTask(
 			project, INIT_BUNDLE_TASK_NAME, InitBundleTask.class);
 
 		initBundleTask.dependsOn(downloadBundleTask);
 
-		initBundleTask.setConfigsDir(
-			new Callable<File>() {
-
-				@Override
-				public File call() throws Exception {
-					return workspaceExtension.getConfigsDir();
-				}
-
-			});
-		initBundleTask.setDescription("Downloads and unzips the bundle.");
 		initBundleTask.setClasspath(configurationBundleSupport);
 		initBundleTask.setConfigEnvironment(
 			new Callable<String>() {
@@ -791,6 +781,16 @@ public class RootProjectConfigurator implements Plugin<Project> {
 				}
 
 			});
+		initBundleTask.setConfigsDir(
+			new Callable<File>() {
+
+				@Override
+				public File call() throws Exception {
+					return workspaceExtension.getConfigsDir();
+				}
+
+			});
+		initBundleTask.setDescription("Downloads and unzips the bundle.");
 		initBundleTask.setFile(
 			new Callable<File>() {
 

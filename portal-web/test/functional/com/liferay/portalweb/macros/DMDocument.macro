@@ -151,6 +151,46 @@ definition {
 		MenuItem.click(menuItem = "${dmGoogleApp}");
 	}
 
+	macro addMultipleCP {
+		DMNavigator.gotoAddDocumentType(dmDocumentTypeName = "Multiple Files Upload");
+
+		if (isSet(dmDocumentFileList)) {
+			for (var dmDocumentFile : list "${dmDocumentFileList}") {
+				var key_dmDocumentFile = "${dmDocumentFile}";
+
+				AssertClick(locator1 = "Button#SELECT_FILES", value1 = "Select Files");
+
+				if ("${uploadTempFile}" == "true") {
+					SikuliUploadTempFile(
+						locator1 = "OS#FILE_DIALOG_BOX_FILE_NAME_FIELD_PNG",
+						value1 = "${dmDocumentFile}"
+					);
+				}
+				else {
+					SikuliUploadCommonFile(
+						locator1 = "OS#FILE_DIALOG_BOX_FILE_NAME_FIELD_PNG",
+						value1 = "${dmDocumentFile}"
+					);
+				}
+
+				AssertChecked(locator1 = "DynamicUploader#SELECT_ALL_CHECKBOX");
+
+				AssertElementPresent(
+					locator1 = "DynamicUploader#ALL_FILES_READY_TO_BE_SAVED_DOCUMENT_TITLE",
+					key_documentName = "${dmDocumentFile}"
+				);
+			}
+		}
+
+		if (isSet(viewableBy)) {
+			Select(locator1 = "Select#PERMISSIONS", value1 = "${viewableBy}");
+		}
+
+		AssertClick(locator1 = "Button#PUBLISH", value1 = "Publish");
+
+		AssertElementPresent(locator1 = "Message#SUCCESS");
+	}
+
 	macro addMultiplePG {
 		Portlet.clickPortletPlusIconPG(portletName = "Documents and Media");
 

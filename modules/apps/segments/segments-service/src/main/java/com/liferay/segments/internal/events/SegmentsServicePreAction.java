@@ -125,7 +125,7 @@ public class SegmentsServicePreAction extends Action {
 
 		if (segmentsExperienceIds == null) {
 			SegmentsExperience segmentsExperience =
-				_segmentsExperienceLocalService.fetchDefaultSegmentsExperience(
+				_segmentsExperienceLocalService.getDefaultSegmentsExperience(
 					layout.getGroupId(), classNameId, layout.getPrimaryKey(),
 					true);
 

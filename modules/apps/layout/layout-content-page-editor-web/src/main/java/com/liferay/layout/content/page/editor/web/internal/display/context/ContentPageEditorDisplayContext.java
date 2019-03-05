@@ -363,9 +363,8 @@ public class ContentPageEditorDisplayContext {
 
 		try {
 			SegmentsExperience segmentsExperience =
-				SegmentsExperienceLocalServiceUtil.
-					fetchDefaultSegmentsExperience(
-						getGroupId(), classNameId, classPK, true);
+				SegmentsExperienceLocalServiceUtil.getDefaultSegmentsExperience(
+					getGroupId(), classNameId, classPK, true);
 
 			_defaultExperienceId = String.valueOf(
 				segmentsExperience.getSegmentsExperienceId());

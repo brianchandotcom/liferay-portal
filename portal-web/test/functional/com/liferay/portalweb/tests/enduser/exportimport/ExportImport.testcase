@@ -93,13 +93,7 @@ definition {
 
 		Pause(locator1 = "3000");
 
-		var valueName = selenium.getAttribute("//ul/li/div/h5//a@href");
-
-		echo("value name ${valueName}");
-
-		var larFileName = RegexUtil.replace("${valueName}", "http://localhost:8080/documents/portlet_file_entry/[0-9]*/([a-zA-z0-9_.-]*)[(0-9KB)]*", "1");
-
-		echo("lar file name ${larFileName}");
+		var larFileName = LAR.getLarFileName();
 
 		LAR.downloadLar();
 
@@ -606,13 +600,7 @@ definition {
 
 		LAR.exportSuccess();
 
-		var valueName = selenium.getAttribute("//ul/li/div/h5//a@href");
-
-		echo("value name ${valueName}");
-
-		var larFileName = RegexUtil.replace("${valueName}", "http://localhost:8080/documents/portlet_file_entry/[0-9]*/([a-zA-z0-9_.-]*)[(0-9KB)]*", "1");
-
-		echo("lar file name ${larFileName}");
+		var larFileName = LAR.getLarFileName();
 
 		LAR.downloadLar();
 
@@ -665,13 +653,7 @@ definition {
 			value1 = "Successful"
 		);
 
-		var valueName = selenium.getAttribute("//ul/li/div/h5//a@href");
-
-		echo("value name ${valueName}");
-
-		var larFileName = RegexUtil.replace("${valueName}", "http://localhost:8080/documents/portlet_file_entry/[0-9]*/([a-zA-z0-9_.-]*)[(0-9KB)]*", "1");
-
-		echo("lar file name ${larFileName}");
+		var larFileName = LAR.getLarFileName();
 
 		LAR.downloadLar();
 
@@ -708,13 +690,7 @@ definition {
 			value1 = "Successful"
 		);
 
-		var valueName = selenium.getAttribute("//ul/li/div/h5//a@href");
-
-		echo("value name ${valueName}");
-
-		var larFileName = RegexUtil.replace("${valueName}", "http://localhost:8080/documents/portlet_file_entry/[0-9]*/([a-zA-z0-9_.-]*)[(0-9KB)]*", "1");
-
-		echo("lar file name ${larFileName}");
+		var larFileName = LAR.getLarFileName();
 
 		LAR.downloadLar();
 
@@ -760,13 +736,7 @@ definition {
 			value1 = "Successful"
 		);
 
-		var valueName = selenium.getAttribute("//ul/li/div/h5//a@href");
-
-		echo("value name ${valueName}");
-
-		var larFileName = RegexUtil.replace("${valueName}", "http://localhost:8080/documents/portlet_file_entry/[0-9]*/([a-zA-z0-9_.-]*)[(0-9KB)]*", "1");
-
-		echo("lar file name ${larFileName}");
+		var larFileName = LAR.getLarFileName();
 
 		LAR.downloadLar();
 
@@ -856,13 +826,7 @@ definition {
 
 		LAR.exportSuccess();
 
-		var valueName = selenium.getAttribute("//ul/li/div/h5//a@href");
-
-		echo("value name ${valueName}");
-
-		var larFileName = RegexUtil.replace("${valueName}", "http://localhost:8080/documents/portlet_file_entry/[0-9]*/([a-zA-z0-9_.-]*)[(0-9KB)]*", "1");
-
-		echo("lar file name ${larFileName}");
+		var larFileName = LAR.getLarFileName();
 
 		LAR.downloadLar();
 
@@ -1058,13 +1022,7 @@ definition {
 			exportTemplateName = "Export Template Name"
 		);
 
-		var valueName = selenium.getAttribute("//ul/li/div/h5//a@href");
-
-		echo("value name ${valueName}");
-
-		var larFileName = RegexUtil.replace("${valueName}", "http://localhost:8080/documents/portlet_file_entry/[0-9]*/([a-zA-z0-9_.-]*)[(0-9KB)]*", "1");
-
-		echo("lar file name ${larFileName}");
+		var larFileName = LAR.getLarFileName();
 
 		LAR.downloadLar();
 

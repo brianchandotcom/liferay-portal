@@ -527,6 +527,20 @@ definition {
 		MenuItem.click(menuItem = "Completed");
 	}
 
+	macro getLarFileName {
+		var valueName = selenium.getAttribute("//ul/li/div/h5//a@href");
+
+		echo("value name ${valueName}");
+
+		var portalURL = PropsUtil.get("portal.url");
+
+		var larFileName = RegexUtil.replace("${valueName}", "${portalURL}/documents/portlet_file_entry/[0-9]*/([a-zA-z0-9_.-]*)[(0-9KB)]*", "1");
+
+		echo("lar file name ${larFileName}");
+
+		return "${larFileName}";
+	}
+
 	macro gotoExport {
 		LAR._gotoExportSite(siteScopeName = "${siteScopeName}");
 	}

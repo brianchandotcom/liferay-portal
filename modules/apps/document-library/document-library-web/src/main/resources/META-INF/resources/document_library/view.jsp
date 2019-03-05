@@ -287,51 +287,50 @@ String navigation = ParamUtil.getString(request, "navigation");
 			Liferay.on('changeScope', changeScopeHandles);
 		</aui:script>
 
-		<aui:script require='<%= npmResolvedPackageName + "/document_library/categorization/EditCategories.es as EditCategories," + npmResolvedPackageName + "/document_library/categorization/EditTags.es as EditTags" %>'>
-			var namespace = '<portlet:namespace />';
+		<%
+		String classNameId = String.valueOf(ClassNameLocalServiceUtil.getClassNameId(
+			DLFileEntryConstants.getClassName()));
+		String pathModule = PortalUtil.getPathModule();
+		String spritemap = themeDisplay.getPathThemeImages() + "/lexicon/icons.svg";
 
-			var classNameId = '<%= ClassNameLocalServiceUtil.getClassNameId(DLFileEntryConstants.getClassName()) %>';
-			var pathModule = '<%= PortalUtil.getPathModule() %>';
-			var scopeGroupId = '<%= scopeGroupId %>';
-			var spritemap = '<%= themeDisplay.getPathThemeImages() %>/lexicon/icons.svg';
+		String urlTags =  pathModule + "/bulk/asset/tags/" + scopeGroupId + "/" + classNameId + "/common";
+		String urlUpdateTags = pathModule + "/bulk/asset/tags/" + classNameId;
 
-			var urlTags = pathModule + '/bulk/asset/tags/' + scopeGroupId + '/' + classNameId + '/common';
-			var urlUpdateTags = pathModule + '/bulk/asset/tags/' + classNameId;
+		Map<String, Object> tagsContext = new HashMap<>();
 
-			Liferay.component(
-				namespace + 'EditTagsComponent',
-				new EditTags.default(
-					{
-						folderId: '<%= folderId %>',
-						portletNamespace: namespace,
-						repositoryId: <%= repositoryId %>,
-						spritemap: spritemap,
-						urlTags: urlTags,
-						urlUpdateTags: urlUpdateTags
-					},
-					'#' + namespace + 'documentLibraryModal'
-				)
-			);
+		tagsContext.put("folderId", String.valueOf(folderId));
+		tagsContext.put("portletNamespace", liferayPortletResponse.getNamespace());
+		tagsContext.put("repositoryId", String.valueOf(repositoryId));
+		tagsContext.put("portalElement", "#" + liferayPortletResponse.getNamespace() + "documentLibraryModal");
+		tagsContext.put("urlTags", urlTags);
+		tagsContext.put("urlUpdateTags", urlUpdateTags);
 
-			var urlCategories = pathModule + '/bulk/asset/categories/' + scopeGroupId + '/' + classNameId + '/common';
-			var urlUpdateCategories = pathModule + '/bulk/asset/categories/' + classNameId;
+		String urlCategories = pathModule + "/bulk/asset/categories/" + scopeGroupId + "/" + classNameId + "/common";
+		String urlUpdateCategories = pathModule + "/bulk/asset/categories/" + classNameId;
 
-			Liferay.component(
-				namespace + 'EditCategoriesComponent',
-				new EditCategories.default(
-					{
-						folderId: '<%= folderId %>',
-						portletNamespace: namespace,
-						repositoryId: <%= repositoryId %>,
-						selectCategoriesUrl: '<%= selectCategoriesURL.toString() %>',
-						spritemap: spritemap,
-						urlCategories: urlCategories,
-						urlUpdateCategories: urlUpdateCategories
-					},
-					'#' + namespace + 'documentLibraryModal'
-				)
-			);
-		</aui:script>
+		Map<String, Object> categoriesContext = new HashMap<>();
+
+		categoriesContext.put("folderId", String.valueOf(folderId));
+		categoriesContext.put("portletNamespace", liferayPortletResponse.getNamespace());
+		categoriesContext.put("repositoryId", String.valueOf(repositoryId));
+		categoriesContext.put("selectCategoriesUrl", selectCategoriesURL.toString());
+		categoriesContext.put("urlCategories", urlCategories);
+		categoriesContext.put("urlUpdateCategories", urlUpdateCategories);
+		%>
+
+		<liferay-frontend:component
+			componentId='<%= liferayPortletResponse.getNamespace() + "EditTagsComponent" %>'
+			containerId='<%= "#" + liferayPortletResponse.getNamespace()  + "documentLibraryModal" %>'
+			context="<%= tagsContext %>"
+			module="document_library/categorization/EditTags.es"
+		/>
+
+		<liferay-frontend:component
+			componentId='<%= liferayPortletResponse.getNamespace() + "EditCategoriesComponent" %>'
+			containerId='<%= "#" + liferayPortletResponse.getNamespace()  + "documentLibraryModal" %>'
+			context="<%= categoriesContext %>"
+			module="document_library/categorization/EditCategories.es"
+		/>
 
 		<liferay-util:dynamic-include key="com.liferay.document.library.web#/document_library/view.jsp#post" />
 	</c:otherwise>

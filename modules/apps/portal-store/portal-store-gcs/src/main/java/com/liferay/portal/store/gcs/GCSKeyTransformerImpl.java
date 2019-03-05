@@ -87,17 +87,12 @@ public class GCSKeyTransformerImpl implements GCSKeyTransformer {
 				0, normalizedFileName.length() - 1);
 		}
 
-		normalizedFileName = _obfuscate(normalizedFileName);
+		HashFunction hashFunction = Hashing.sha1();
 
-		return StringPool.SLASH + normalizedFileName;
-	}
+		HashCode hashCode = hashFunction.hashString(
+			fileName, StandardCharsets.UTF_8);
 
-	private String _obfuscate(String fileName) {
-		HashFunction sha1 = Hashing.sha1();
-
-		HashCode hashCode = sha1.hashString(fileName, StandardCharsets.UTF_8);
-
-		return hashCode.toString();
+		return StringPool.SLASH + hashCode.toString();
 	}
 
 }

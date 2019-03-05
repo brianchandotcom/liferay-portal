@@ -1,7 +1,7 @@
 apiDir: "../bulk-rest-api/src/main/java"
 apiPackagePath: "com.liferay.bulk.rest"
 application:
-    baseURI: "/bulk-rest"
+    baseURI: "/bulk"
     className: "BulkRestApplication"
     name: "Liferay.BulkRest"
 author: "Javier Gamarra"

@@ -18,56 +18,33 @@ import aQute.bnd.annotation.ProviderType;
 
 /**
  * @author Michael C. Han
+ * @author Wade Cao
+ * @author André de Oliveira
  */
 @ProviderType
-public class FieldValueFactorScoreFunction extends ScoreFunction {
-
-	public FieldValueFactorScoreFunction(String field) {
-		_field = field;
-	}
+public interface FieldValueFactorScoreFunction extends ScoreFunction {
 
 	@Override
-	public <T> T accept(ScoreFunctionTranslator<T> scoreFunctionTranslator) {
-		return scoreFunctionTranslator.translate(this);
-	}
+	public <T> T accept(ScoreFunctionTranslator<T> scoreFunctionTranslator);
 
-	public Float getFactor() {
-		return _factor;
-	}
+	public Float getFactor();
 
-	public String getField() {
-		return _field;
-	}
+	public String getField();
 
-	public Double getMissing() {
-		return _missing;
-	}
+	public Double getMissing();
 
-	public Modifier getModifier() {
-		return _modifier;
-	}
+	public Modifier getModifier();
 
-	public void setFactor(Float factor) {
-		_factor = factor;
-	}
+	public void setFactor(Float factor);
 
-	public void setMissing(Double missing) {
-		_missing = missing;
-	}
+	public void setMissing(Double missing);
 
-	public void setModifier(Modifier modifier) {
-		_modifier = modifier;
-	}
+	public void setModifier(Modifier modifier);
 
 	public enum Modifier {
 
 		LN, LN1P, LN2P, LOG, LOG1P, LOG2P, NONE, RECIPROCAL, SQRT, SQUARE
 
 	}
-
-	private Float _factor;
-	private final String _field;
-	private Double _missing;
-	private Modifier _modifier;
 
 }

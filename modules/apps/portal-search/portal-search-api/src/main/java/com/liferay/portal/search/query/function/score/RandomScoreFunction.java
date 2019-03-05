@@ -18,32 +18,21 @@ import aQute.bnd.annotation.ProviderType;
 
 /**
  * @author Michael C. Han
+ * @author Wade Cao
+ * @author André de Oliveira
  */
 @ProviderType
-public class RandomScoreFunction extends ScoreFunction {
+public interface RandomScoreFunction extends ScoreFunction {
 
 	@Override
-	public <T> T accept(ScoreFunctionTranslator<T> scoreFunctionTranslator) {
-		return scoreFunctionTranslator.translate(this);
-	}
+	public <T> T accept(ScoreFunctionTranslator<T> scoreFunctionTranslator);
 
-	public String getField() {
-		return _field;
-	}
+	public String getField();
 
-	public Integer getSeed() {
-		return _seed;
-	}
+	public Integer getSeed();
 
-	public void setField(String field) {
-		_field = field;
-	}
+	public void setField(String field);
 
-	public void setSeed(Integer seed) {
-		_seed = seed;
-	}
-
-	private String _field;
-	private Integer _seed;
+	public void setSeed(Integer seed);
 
 }

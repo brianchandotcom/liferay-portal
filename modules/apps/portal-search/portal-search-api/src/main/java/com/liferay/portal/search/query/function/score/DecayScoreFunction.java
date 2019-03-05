@@ -20,60 +20,24 @@ import com.liferay.portal.search.query.MultiValueMode;
 
 /**
  * @author Michael C. Han
+ * @author Wade Cao
+ * @author André de Oliveira
  */
 @ProviderType
-public abstract class DecayScoreFunction extends ScoreFunction {
+public interface DecayScoreFunction extends ScoreFunction {
 
-	public DecayScoreFunction(
-		String field, Object origin, Object scale, Object offset) {
+	public Double getDecay();
 
-		this(field, origin, scale, offset, null);
-	}
+	public String getField();
 
-	public DecayScoreFunction(
-		String field, Object origin, Object scale, Object offset,
-		Double decay) {
+	public MultiValueMode getMultiValueMode();
 
-		_field = field;
-		_origin = origin;
-		_scale = scale;
-		_offset = offset;
-		_decay = decay;
-	}
+	public Object getOffset();
 
-	public Double getDecay() {
-		return _decay;
-	}
+	public Object getOrigin();
 
-	public String getField() {
-		return _field;
-	}
+	public Object getScale();
 
-	public MultiValueMode getMultiValueMode() {
-		return _multiValueMode;
-	}
-
-	public Object getOffset() {
-		return _offset;
-	}
-
-	public Object getOrigin() {
-		return _origin;
-	}
-
-	public Object getScale() {
-		return _scale;
-	}
-
-	public void setMultiValueMode(MultiValueMode multiValueMode) {
-		_multiValueMode = multiValueMode;
-	}
-
-	private Double _decay;
-	private final String _field;
-	private MultiValueMode _multiValueMode;
-	private Object _offset;
-	private Object _origin;
-	private Object _scale;
+	public void setMultiValueMode(MultiValueMode multiValueMode);
 
 }

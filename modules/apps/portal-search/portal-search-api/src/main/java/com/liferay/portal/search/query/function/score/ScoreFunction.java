@@ -18,21 +18,16 @@ import aQute.bnd.annotation.ProviderType;
 
 /**
  * @author Michael C. Han
+ * @author Wade Cao
+ * @author André de Oliveira
  */
 @ProviderType
-public abstract class ScoreFunction {
+public interface ScoreFunction {
 
-	public abstract <T> T accept(
-		ScoreFunctionTranslator<T> scoreFunctionTranslator);
+	public <T> T accept(ScoreFunctionTranslator<T> scoreFunctionTranslator);
 
-	public Float getWeight() {
-		return _weight;
-	}
+	public Float getWeight();
 
-	public void setWeight(Float weight) {
-		_weight = weight;
-	}
-
-	private Float _weight;
+	public void setWeight(Float weight);
 
 }

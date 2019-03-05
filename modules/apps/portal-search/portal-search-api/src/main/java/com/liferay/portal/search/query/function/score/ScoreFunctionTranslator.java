@@ -28,7 +28,7 @@ public interface ScoreFunctionTranslator<T> {
 	public T translate(
 		FieldValueFactorScoreFunction fieldValueFactorScoreFunction);
 
-	public T translate(GuassianDecayScoreFunction guassianDecayScoreFunction);
+	public T translate(GaussianDecayScoreFunction gaussianDecayScoreFunction);
 
 	public T translate(LinearDecayScoreFunction linearDecayScoreFunction);
 

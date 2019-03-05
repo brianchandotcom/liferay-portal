@@ -47,7 +47,7 @@ public class SegmentsExperienceLocalServiceImpl
 			long groupId, long classNameId, long classPK)
 		throws PortalException {
 
-		return segmentsExperienceLocalService.fetchDefaultSegmentsExperience(
+		return segmentsExperienceLocalService.getDefaultSegmentsExperience(
 			groupId, classNameId, classPK, true);
 	}
 
@@ -155,7 +155,15 @@ public class SegmentsExperienceLocalServiceImpl
 	}
 
 	@Override
-	public SegmentsExperience fetchDefaultSegmentsExperience(
+	public SegmentsExperience fetchSegmentsExperience(
+		long segmentsExperienceId) {
+
+		return segmentsExperiencePersistence.fetchByPrimaryKey(
+			segmentsExperienceId);
+	}
+
+	@Override
+	public SegmentsExperience getDefaultSegmentsExperience(
 			long groupId, long classNameId, long classPK,
 			boolean addDefaultExperience)
 		throws PortalException {
@@ -177,14 +185,6 @@ public class SegmentsExperienceLocalServiceImpl
 
 		return _addDefaultSegmentsExperience(
 			groupId, segmentsEntry.getSegmentsEntryId(), classNameId, classPK);
-	}
-
-	@Override
-	public SegmentsExperience fetchSegmentsExperience(
-		long segmentsExperienceId) {
-
-		return segmentsExperiencePersistence.fetchByPrimaryKey(
-			segmentsExperienceId);
 	}
 
 	@Override

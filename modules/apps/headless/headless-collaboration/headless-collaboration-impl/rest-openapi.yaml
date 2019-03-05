@@ -88,10 +88,7 @@ components:
                         type: string
                     type: array
                 viewableBy:
-                    enum:
-                        - anyone
-                          - members
-                            - owner
+                    enum: [Anyone, Members, Owner]
                     type: string
                     writeOnly: true
             type: object
@@ -112,10 +109,7 @@ components:
                 title:
                     type: string
                 viewableBy:
-                    enum:
-                        - anyone
-                          - members
-                            - owner
+                    enum: [Anyone, Members, Owner]
                     type: string
                     writeOnly: true
             type: object

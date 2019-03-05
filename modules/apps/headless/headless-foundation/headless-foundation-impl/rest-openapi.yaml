@@ -59,10 +59,7 @@ components:
                     type: integer
                     writeOnly: true
                 viewableBy:
-                    enum:
-                        - anyone
-                          - members
-                            - owner
+                    enum: [Anyone, Members, Owner]
                     type: string
                     writeOnly: true
             required:
@@ -440,10 +437,7 @@ components:
                 name:
                     type: string
                 viewableBy:
-                    enum:
-                        - anyone
-                          - members
-                            - owner
+                    enum: [Anyone, Members, Owner]
                     type: string
                     writeOnly: true
             type: object

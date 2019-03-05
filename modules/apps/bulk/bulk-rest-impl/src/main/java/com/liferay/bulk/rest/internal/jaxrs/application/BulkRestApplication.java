@@ -27,7 +27,7 @@ import org.osgi.service.component.annotations.Component;
 @Component(
 	property = {
 		"oauth2.scope.checker.type=configuration",
-		"osgi.jaxrs.application.base=/bulk-rest",
+		"osgi.jaxrs.application.base=/bulk",
 		"osgi.jaxrs.extension.select=(osgi.jaxrs.name=Liferay.Vulcan)",
 		"osgi.jaxrs.name=Liferay.BulkRest"
 	},

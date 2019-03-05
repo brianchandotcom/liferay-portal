@@ -252,6 +252,7 @@ class ContributorBuilder extends React.Component {
 
 													<input
 														id={criteria.conjunctionInputId}
+														name={criteria.conjunctionInputId}
 														readOnly
 														type="hidden"
 														value={criteria.conjunctionId}

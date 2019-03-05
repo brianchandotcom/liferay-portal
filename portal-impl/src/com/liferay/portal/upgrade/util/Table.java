@@ -439,8 +439,10 @@ public class Table {
 				value = rs.getBigDecimal(name);
 			}
 			catch (SQLException sqle) {
-				value = _getBigDecimal(rs.getString(name));
+				value = rs.getString(name);
 			}
+
+			value = GetterUtil.get(value, BigDecimal.ZERO);
 		}
 		else if (t == Types.DOUBLE) {
 			value = GetterUtil.getDouble(rs.getDouble(name));
@@ -588,7 +590,8 @@ public class Table {
 			ps.setString(paramIndex, value);
 		}
 		else if (t == Types.DECIMAL) {
-			ps.setBigDecimal(paramIndex, _getBigDecimal(value));
+			ps.setBigDecimal(
+				paramIndex, (BigDecimal)GetterUtil.get(value, BigDecimal.ZERO));
 		}
 		else if (t == Types.DOUBLE) {
 			ps.setDouble(paramIndex, GetterUtil.getDouble(value));
@@ -693,19 +696,6 @@ public class Table {
 		}
 		finally {
 			DataAccess.cleanUp(con, ps);
-		}
-	}
-
-	private BigDecimal _getBigDecimal(String value) {
-		if (Validator.isNull(value)) {
-			return BigDecimal.ZERO;
-		}
-
-		try {
-			return new BigDecimal(value.trim());
-		}
-		catch (NumberFormatException nfe) {
-			return BigDecimal.ZERO;
 		}
 	}
 

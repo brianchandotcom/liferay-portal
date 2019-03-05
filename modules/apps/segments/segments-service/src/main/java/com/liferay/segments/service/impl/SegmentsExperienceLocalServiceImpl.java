@@ -25,7 +25,9 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ResourceBundleLoader;
 import com.liferay.portal.kernel.util.ResourceBundleLoaderUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.segments.constants.SegmentsConstants;
+import com.liferay.segments.exception.DefaultSegmentsExperienceException;
 import com.liferay.segments.exception.SegmentsExperienceSegmentsEntryException;
 import com.liferay.segments.model.SegmentsEntry;
 import com.liferay.segments.model.SegmentsExperience;
@@ -35,6 +37,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * @author David Arques
@@ -63,6 +66,8 @@ public class SegmentsExperienceLocalServiceImpl
 		User user = userLocalService.getUser(serviceContext.getUserId());
 
 		long groupId = serviceContext.getScopeGroupId();
+
+		_validate(groupId, segmentsEntryId, classNameId, classPK);
 
 		long segmentsExperienceId = counterLocalService.increment();
 
@@ -163,9 +168,9 @@ public class SegmentsExperienceLocalServiceImpl
 		SegmentsEntry segmentsEntry = _getDefaultSegmentsEntry(groupId);
 
 		SegmentsExperience segmentsExperience =
-			segmentsExperiencePersistence.fetchByG_S_C_C(
+			segmentsExperiencePersistence.fetchByG_S_C_C_First(
 				groupId, segmentsEntry.getSegmentsEntryId(), classNameId,
-				classPK);
+				classPK, null);
 
 		if (segmentsExperience != null) {
 			return segmentsExperience;
@@ -330,7 +335,7 @@ public class SegmentsExperienceLocalServiceImpl
 
 		if (segmentsEntry == null) {
 			throw new SegmentsExperienceSegmentsEntryException(
-				"Unable to find default segment");
+				"Unable to get default segments entry");
 		}
 
 		return segmentsEntry;
@@ -340,6 +345,38 @@ public class SegmentsExperienceLocalServiceImpl
 		return ResourceBundleLoaderUtil.
 			getResourceBundleLoaderByBundleSymbolicName(
 				"com.liferay.segments.lang");
+	}
+
+	private boolean _isDefaultSegmentsEntry(long groupId, long segmentsEntryId)
+		throws PortalException {
+
+		SegmentsEntry segmentsEntry = _getDefaultSegmentsEntry(groupId);
+
+		return Objects.equals(
+			segmentsEntry.getSegmentsEntryId(), segmentsEntryId);
+	}
+
+	private void _validate(
+			long groupId, long segmentsEntryId, long classNameId, long classPK)
+		throws PortalException {
+
+		if (!_isDefaultSegmentsEntry(groupId, segmentsEntryId)) {
+			return;
+		}
+
+		SegmentsExperience segmentsExperience = fetchDefaultSegmentsExperience(
+			groupId, classNameId, classPK, false);
+
+		if (segmentsExperience == null) {
+			return;
+		}
+
+		throw new DefaultSegmentsExperienceException(
+			StringBundler.concat(
+				"A default segments experience for the group ",
+				String.valueOf(groupId), ", classNameId ",
+				String.valueOf(classNameId), " and classPK ",
+				String.valueOf(classPK), " already exists"));
 	}
 
 }

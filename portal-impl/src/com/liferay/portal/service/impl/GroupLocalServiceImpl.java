@@ -5025,29 +5025,6 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 			}
 		}
 
-		String screenName = friendlyURL.substring(1);
-
-		User user = userPersistence.fetchByC_SN(companyId, screenName);
-
-		if (user != null) {
-			long userClassNameId = classNameLocalService.getClassNameId(
-				User.class);
-
-			if ((classNameId == userClassNameId) &&
-				(classPK == user.getUserId())) {
-			}
-			else {
-				GroupFriendlyURLException gfurle =
-					new GroupFriendlyURLException(
-						GroupFriendlyURLException.DUPLICATE);
-
-				gfurle.setDuplicateClassPK(user.getUserId());
-				gfurle.setDuplicateClassName(User.class.getName());
-
-				throw gfurle;
-			}
-		}
-
 		if (StringUtil.count(friendlyURL, CharPool.SLASH) > 1) {
 			throw new GroupFriendlyURLException(
 				GroupFriendlyURLException.TOO_DEEP);

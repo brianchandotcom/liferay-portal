@@ -100,7 +100,7 @@ public class GCSStore extends BaseStore {
 				companyId, repositoryId, fileName);
 
 			_log.debug(
-				"Creating file with default version for for: " + fileKey);
+				"Creating file with default version for: " + fileKey);
 		}
 
 		addFileWithVersion(

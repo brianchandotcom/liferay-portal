@@ -1,5 +1,3 @@
-task deployConfigs(type: Copy)
-
 dependencies {
 	compileOnly group: "com.fasterxml.jackson.core", name: "jackson-annotations", version: "2.9.8"
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"
@@ -20,17 +18,4 @@ dependencies {
 	compileOnly project(":apps:portal-vulcan:portal-vulcan-api")
 	compileOnly project(":core:petra:petra-function")
 	compileOnly project(":core:petra:petra-string")
-}
-
-deploy {
-	finalizedBy deployConfigs
-}
-
-deployConfigs {
-	ext {
-		autoClean = false
-	}
-
-	from "configs"
-	into new File(liferay.liferayHome, "osgi/configs")
 }

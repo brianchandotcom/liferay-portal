@@ -4,8 +4,6 @@ import aQute.bnd.osgi.Resource
 
 import java.util.jar.Manifest
 
-task deployConfigs(type: Copy)
-
 dependencies {
 	compileInclude group: "com.fasterxml.jackson.dataformat", name: "jackson-dataformat-xml", version: "2.9.8"
 	compileInclude group: "com.fasterxml.jackson.dataformat", name: "jackson-dataformat-yaml", version: "2.9.8"
@@ -46,19 +44,6 @@ dependencies {
 	compileOnly project(":apps:static:osgi:osgi-util")
 	compileOnly project(":core:osgi-service-tracker-collections")
 	compileOnly project(":core:petra:petra-string")
-}
-
-deploy {
-	finalizedBy deployConfigs
-}
-
-deployConfigs {
-	ext {
-		autoClean = false
-	}
-
-	from "configs"
-	into new File(liferay.liferayHome, "osgi/configs")
 }
 
 jar {

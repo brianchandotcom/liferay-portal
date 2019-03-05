@@ -17,6 +17,8 @@ package com.liferay.headless.form.resource.v1_0.test;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
+import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
 
 import com.liferay.headless.form.dto.v1_0.FormDocument;
 import com.liferay.headless.form.dto.v1_0.Options;
@@ -445,9 +447,28 @@ public abstract class BaseFormDocumentResourceTestCase {
 	private static final ObjectMapper _inputObjectMapper = new ObjectMapper() {
 		{
 			setSerializationInclusion(JsonInclude.Include.NON_NULL);
+			setFilterProvider(
+				new SimpleFilterProvider() {
+					{
+						addFilter(
+							"Liferay.Vulcan",
+							SimpleBeanPropertyFilter.serializeAll());
+					}
+				});
 		}
 	};
-	private static final ObjectMapper _outputObjectMapper = new ObjectMapper();
+	private static final ObjectMapper _outputObjectMapper = new ObjectMapper() {
+		{
+			setFilterProvider(
+				new SimpleFilterProvider() {
+					{
+						addFilter(
+							"Liferay.Vulcan",
+							SimpleBeanPropertyFilter.serializeAll());
+					}
+				});
+		}
+	};
 
 	@Inject
 	private FormDocumentResource _formDocumentResource;

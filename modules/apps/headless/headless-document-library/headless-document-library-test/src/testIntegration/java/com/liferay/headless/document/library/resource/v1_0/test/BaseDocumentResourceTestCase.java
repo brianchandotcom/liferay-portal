@@ -18,6 +18,8 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
+import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
 
 import com.liferay.headless.document.library.dto.v1_0.Document;
 import com.liferay.headless.document.library.resource.v1_0.DocumentResource;
@@ -1266,9 +1268,28 @@ public abstract class BaseDocumentResourceTestCase {
 	private static final ObjectMapper _inputObjectMapper = new ObjectMapper() {
 		{
 			setSerializationInclusion(JsonInclude.Include.NON_NULL);
+			setFilterProvider(
+				new SimpleFilterProvider() {
+					{
+						addFilter(
+							"Liferay.Vulcan",
+							SimpleBeanPropertyFilter.serializeAll());
+					}
+				});
 		}
 	};
-	private static final ObjectMapper _outputObjectMapper = new ObjectMapper();
+	private static final ObjectMapper _outputObjectMapper = new ObjectMapper() {
+		{
+			setFilterProvider(
+				new SimpleFilterProvider() {
+					{
+						addFilter(
+							"Liferay.Vulcan",
+							SimpleBeanPropertyFilter.serializeAll());
+					}
+				});
+		}
+	};
 
 	@Inject
 	private DocumentResource _documentResource;

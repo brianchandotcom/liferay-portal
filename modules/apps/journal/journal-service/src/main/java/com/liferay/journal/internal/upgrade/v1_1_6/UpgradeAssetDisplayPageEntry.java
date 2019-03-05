@@ -54,7 +54,7 @@ public class UpgradeAssetDisplayPageEntry extends UpgradeProcess {
 	}
 
 	protected void updateAssetDisplayPageEntry() throws Exception {
-		StringBuilder sb = new StringBuilder(8);
+		StringBuilder sb = new StringBuilder(9);
 
 		sb.append("select groupId, userId, resourcePrimKey from ");
 		sb.append("JournalArticle where JournalArticle.layoutUuid is not null");
@@ -63,7 +63,8 @@ public class UpgradeAssetDisplayPageEntry extends UpgradeProcess {
 		sb.append("AssetDisplayPageEntry.groupId = JournalArticle.groupId ");
 		sb.append("and AssetDisplayPageEntry.classNameId = ? and ");
 		sb.append("AssetDisplayPageEntry.classPK = ");
-		sb.append("JournalArticle.resourcePrimKey )");
+		sb.append("JournalArticle.resourcePrimKey ) ");
+		sb.append("group by groupId, userId, resourcePrimKey");
 
 		long journalArticleClassNameId = PortalUtil.getClassNameId(
 			JournalArticle.class);

@@ -17,6 +17,7 @@ package com.liferay.document.library.web.internal.display.context;
 import com.liferay.document.library.display.context.DLEditFileEntryDisplayContext;
 import com.liferay.document.library.display.context.DLFilePicker;
 import com.liferay.document.library.kernel.model.DLFileEntryType;
+import com.liferay.document.library.kernel.model.DLFileEntryTypeConstants;
 import com.liferay.document.library.kernel.util.DLUtil;
 import com.liferay.document.library.kernel.util.DLValidator;
 import com.liferay.document.library.web.internal.display.context.logic.FileEntryDisplayContextHelper;
@@ -274,17 +275,19 @@ public class DefaultDLEditFileEntryDisplayContext
 
 	private boolean _hasFolderWorkflowDefinitionLink() {
 		try {
-			if (_dlFileEntryType == null) {
-				return false;
-			}
-
 			long folderId = BeanParamUtil.getLong(
 				_fileEntry, _dlRequestHelper.getRequest(), "folderId");
 
+			long fileEntryTypeId =
+				DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_BASIC_DOCUMENT;
+
+			if (_dlFileEntryType != null) {
+				fileEntryTypeId = _dlFileEntryType.getFileEntryTypeId();
+			}
+
 			return DLUtil.hasWorkflowDefinitionLink(
 				_dlRequestHelper.getCompanyId(),
-				_dlRequestHelper.getScopeGroupId(), folderId,
-				_dlFileEntryType.getFileEntryTypeId());
+				_dlRequestHelper.getScopeGroupId(), folderId, fileEntryTypeId);
 		}
 		catch (Exception e) {
 			throw new SystemException(

@@ -20,6 +20,7 @@ import com.liferay.exportimport.kernel.lar.ExportImportHelperUtil;
 import com.liferay.exportimport.kernel.model.ExportImportConfiguration;
 import com.liferay.exportimport.kernel.service.ExportImportConfigurationLocalServiceUtil;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -47,13 +48,14 @@ public class ExportImportFixture {
 		long[] layoutIds = ExportImportHelperUtil.getAllLayoutIds(
 			_group.getGroupId(), false);
 
+		User user = TestPropsValues.getUser();
+
 		Map<String, Serializable> settingsMap =
 			ExportImportConfigurationSettingsMapFactoryUtil.
 				buildImportLayoutSettingsMap(
 					TestPropsValues.getUserId(), _group.getGroupId(), false,
-					layoutIds, new HashMap<>(),
-					TestPropsValues.getUser().getLocale(),
-					TestPropsValues.getUser().getTimeZone());
+					layoutIds, new HashMap<>(), user.getLocale(),
+					user.getTimeZone());
 
 		ExportImportConfiguration exportImportConfiguration =
 			ExportImportConfigurationLocalServiceUtil.

@@ -112,9 +112,11 @@ public class ExportedMissingReferenceBackwardCompatbilityExportImportTest
 
 			StackTraceElement[] stackTrace = cause.getStackTrace();
 
-			if (stackTrace[0].getClassName().equals(
+			if (Objects.equals(
+					stackTrace[0].getClassName(),
 					StagedModelDataHandlerUtil.class.getName()) &&
-				stackTrace[0].getMethodName().equals(
+				Objects.equals(
+					stackTrace[0].getMethodName(),
 					"doImportReferenceStagedModel")) {
 
 				throw pde;

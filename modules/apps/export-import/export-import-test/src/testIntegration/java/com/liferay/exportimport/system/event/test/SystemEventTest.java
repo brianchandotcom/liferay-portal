@@ -251,12 +251,12 @@ public class SystemEventTest {
 			JournalArticleLocalServiceUtil.getArticlesCount(
 				_liveGroup.getGroupId()));
 
+		JournalArticle firstJournalArticle = articles.get(0);
+
 		systemEvent = SystemEventLocalServiceUtil.fetchSystemEvent(
 			_liveGroup.getGroupId(),
 			ClassNameLocalServiceUtil.getClassNameId(JournalArticle.class),
-			articles.get(
-				0
-			).getResourcePrimKey(),
+			firstJournalArticle.getResourcePrimKey(),
 			SystemEventConstants.TYPE_DELETE);
 
 		Assert.assertNull(systemEvent);

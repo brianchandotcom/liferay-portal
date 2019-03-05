@@ -122,6 +122,7 @@ public class InitBundleTask extends JavaExec {
 
 		args.add("--environment");
 		args.add(getConfigEnvironment());
+
 		args.add("--liferay");
 		args.add(FileUtil.getAbsolutePath(getHomeDir()));
 

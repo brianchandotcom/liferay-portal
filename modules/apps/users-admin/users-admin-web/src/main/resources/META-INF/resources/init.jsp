@@ -35,6 +35,7 @@ taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 page import="com.liferay.announcements.kernel.model.AnnouncementsDelivery" %><%@
 page import="com.liferay.announcements.kernel.model.AnnouncementsEntryConstants" %><%@
 page import="com.liferay.announcements.kernel.service.AnnouncementsDeliveryLocalServiceUtil" %><%@
+page import="com.liferay.expando.kernel.model.ExpandoColumn" %><%@
 page import="com.liferay.petra.string.CharPool" %><%@
 page import="com.liferay.petra.string.StringBundler" %><%@
 page import="com.liferay.petra.string.StringPool" %><%@

@@ -46,10 +46,6 @@ User selUser = (User)request.getAttribute(UsersAdminWebKeys.SELECTED_USER);
 	</div>
 </div>
 
-<c:if test="<%= CustomFieldsUtil.hasVisibleCustomFields(company.getCompanyId(), User.class) %>">
-	<div class="sheet-section">
-		<h4 class="sheet-tertiary-title"><liferay-ui:message key="custom-fields" /></h4>
-
-		<liferay-util:include page="/user/custom_fields.jsp" servletContext="<%= application %>" />
-	</div>
-</c:if>
+<div class="sheet-section">
+	<liferay-util:include page="/user/custom_fields.jsp" servletContext="<%= application %>" />
+</div>

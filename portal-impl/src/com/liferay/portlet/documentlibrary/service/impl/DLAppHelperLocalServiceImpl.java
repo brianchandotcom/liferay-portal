@@ -249,17 +249,17 @@ public class DLAppHelperLocalServiceImpl
 	public void deleteRepositoryFileEntries(long repositoryId)
 		throws PortalException {
 
-		LocalRepository localRepository =
-			RepositoryProviderUtil.getLocalRepository(repositoryId);
+		ActionableDynamicQuery actionableDynamicQuery =
+			dlFileEntryLocalService.getActionableDynamicQuery();
 
-		List<FileEntry> fileEntries = localRepository.getRepositoryFileEntries(
-			UserConstants.USER_ID_DEFAULT,
-			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS, null);
+		actionableDynamicQuery.setAddCriteriaMethod(
+			dynamicQuery ->
+				dynamicQuery.add(
+					RestrictionsFactoryUtil.eq("repositoryId", repositoryId)));
 
-		for (FileEntry fileEntry : fileEntries) {
-			deleteFileEntry(fileEntry);
-		}
+		actionableDynamicQuery.setPerformActionMethod(
+			(DLFileEntry dlFileEntry) ->
+				deleteFileEntry(new LiferayFileEntry(dlFileEntry)));
 	}
 
 	@Override

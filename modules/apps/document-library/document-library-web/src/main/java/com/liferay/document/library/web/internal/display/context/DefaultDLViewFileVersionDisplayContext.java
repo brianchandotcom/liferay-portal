@@ -276,12 +276,16 @@ public class DefaultDLViewFileVersionDisplayContext
 			HttpServletRequest request, HttpServletResponse response)
 		throws IOException, ServletException {
 
+		Optional<DLPreviewRenderer> dlPreviewRendererOptional =
+			Optional.empty();
+
 		if (_dlPreviewRendererProvider != null) {
-			_renderPreview(
-				request, response,
+			dlPreviewRendererOptional =
 				_dlPreviewRendererProvider.
-					getThumbnailDLPreviewRendererOptional(_fileVersion));
+					getThumbnailDLPreviewRendererOptional(_fileVersion);
 		}
+
+		_renderPreview(request, response, dlPreviewRendererOptional);
 	}
 
 	@Override
@@ -289,12 +293,16 @@ public class DefaultDLViewFileVersionDisplayContext
 			HttpServletRequest request, HttpServletResponse response)
 		throws IOException, ServletException {
 
+		Optional<DLPreviewRenderer> dlPreviewRendererOptional =
+			Optional.empty();
+
 		if (_dlPreviewRendererProvider != null) {
-			_renderPreview(
-				request, response,
+			dlPreviewRendererOptional =
 				_dlPreviewRendererProvider.getPreviewDLPreviewRendererOptional(
-					_fileVersion));
+					_fileVersion);
 		}
+
+		_renderPreview(request, response, dlPreviewRendererOptional);
 	}
 
 	private DefaultDLViewFileVersionDisplayContext(

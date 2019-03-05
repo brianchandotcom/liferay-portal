@@ -332,6 +332,10 @@ public abstract class BaseDB implements DB {
 					sql = sql.substring(0, sql.length() - 3);
 				}
 
+				if (sql.endsWith("\n/")) {
+					sql = sql.substring(0, sql.length() - 2);
+				}
+
 				if (_log.isDebugEnabled()) {
 					_log.debug(sql);
 				}

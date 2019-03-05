@@ -303,7 +303,7 @@ components:
                     type: string
             type: object
         Segment:
-            description: "https://schema.org/Audience"
+            description: https://schema.org/Audience
             properties:
                 active:
                     type: boolean
@@ -321,6 +321,17 @@ components:
                 name:
                     type: string
                 source:
+                    type: string
+            type: object
+        SegmentUser:
+            description: https://www.schema.org/UserAccount
+            properties:
+                email:
+                    type: string
+                id:
+                    format: int64
+                    type: integer
+                name:
                     type: string
             type: object
         UserAccount:
@@ -1105,6 +1116,33 @@ paths:
                                 $ref: "#/components/schemas/Role"
                     description: ""
             tags: ["Role"]
+    "/segments/{segment-id}/user-accounts":
+        get:
+            parameters:
+                - in: query
+                  name: page
+                  schema:
+                      type: integer
+                - in: query
+                  name: pageSize
+                  schema:
+                      type: integer
+                - in: path
+                  name: segment-id
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/SegmentUser"
+                                type: array
+                    description: ""
+            tags: ["SegmentUser"]
     "/user-accounts":
         get:
             parameters:

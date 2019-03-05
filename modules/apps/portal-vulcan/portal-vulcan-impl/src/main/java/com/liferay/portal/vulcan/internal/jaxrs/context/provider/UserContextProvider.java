@@ -17,14 +17,13 @@ package com.liferay.portal.vulcan.internal.jaxrs.context.provider;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.util.Portal;
-import org.apache.cxf.jaxrs.ext.ContextProvider;
-import org.apache.cxf.message.Message;
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-import org.osgi.service.component.annotations.ServiceScope;
 
 import javax.servlet.http.HttpServletRequest;
+
 import javax.ws.rs.ext.Provider;
+
+import org.apache.cxf.jaxrs.ext.ContextProvider;
+import org.apache.cxf.message.Message;
 
 /**
  * @author Adolfo Pérez
@@ -48,6 +47,6 @@ public class UserContextProvider implements ContextProvider<User> {
 		}
 	}
 
-	private Portal _portal;
+	private final Portal _portal;
 
 }

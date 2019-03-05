@@ -111,67 +111,6 @@ public class DefaultDLPortletToolbarContributor
 			bundleContext, DLPortletToolbarContributorContext.class);
 	}
 
-	protected void addPortletTitleAddDocumentMenuItems(
-		List<MenuItem> menuItems, Folder folder, ThemeDisplay themeDisplay,
-		PortletRequest portletRequest) {
-
-		menuItems.addAll(
-			getPortletTitleAddDocumentMenuItems(
-				folder, themeDisplay, portletRequest));
-	}
-
-	protected void addPortletTitleAddFolderMenuItem(
-		List<MenuItem> menuItems, Folder folder, ThemeDisplay themeDisplay,
-		PortletRequest portletRequest) {
-
-		MenuItem portletTitleAddFolderMenuItem =
-			getPortletTitleAddFolderMenuItem(
-				themeDisplay, portletRequest, folder);
-
-		if (portletTitleAddFolderMenuItem != null) {
-			menuItems.add(portletTitleAddFolderMenuItem);
-		}
-	}
-
-	protected void addPortletTitleAddMultipleDocumentsMenuItem(
-		List<MenuItem> menuItems, Folder folder, ThemeDisplay themeDisplay,
-		PortletRequest portletRequest) {
-
-		MenuItem portletTitleAddMultipleDocumentsMenuItem =
-			getPortletTitleAddMultipleDocumentsMenuItem(
-				themeDisplay, portletRequest, folder);
-
-		if (portletTitleAddMultipleDocumentsMenuItem != null) {
-			menuItems.add(portletTitleAddMultipleDocumentsMenuItem);
-		}
-	}
-
-	protected void addPortletTitleAddRepositoryMenuItem(
-		List<MenuItem> menuItems, Folder folder, ThemeDisplay themeDisplay,
-		PortletRequest portletRequest) {
-
-		URLMenuItem portletTitleAddRepositoryMenuItem =
-			getPortletTitleAddRepositoryMenuItem(
-				folder, themeDisplay, portletRequest);
-
-		if (portletTitleAddRepositoryMenuItem != null) {
-			menuItems.add(portletTitleAddRepositoryMenuItem);
-		}
-	}
-
-	protected void addPortletTitleAddShortcutMenuItem(
-		List<MenuItem> menuItems, Folder folder, ThemeDisplay themeDisplay,
-		PortletRequest portletRequest) {
-
-		URLMenuItem portletTitleAddShortcutMenuItem =
-			getPortletTitleAddShortcutMenuItem(
-				folder, themeDisplay, portletRequest);
-
-		if (portletTitleAddShortcutMenuItem != null) {
-			menuItems.add(portletTitleAddShortcutMenuItem);
-		}
-	}
-
 	@Deactivate
 	protected void deactivate() {
 		_dlPortletToolbarContributorContexts.close();
@@ -193,17 +132,25 @@ public class DefaultDLPortletToolbarContributor
 			_menuItemProvider.getAddBasicDocumentMenuItem(
 				folder, themeDisplay, portletRequest));
 
-		addPortletTitleAddFolderMenuItem(
-			menuItems, folder, themeDisplay, portletRequest);
+		_add(
+			menuItems,
+			getPortletTitleAddFolderMenuItem(
+				themeDisplay, portletRequest, folder));
 
-		addPortletTitleAddMultipleDocumentsMenuItem(
-			menuItems, folder, themeDisplay, portletRequest);
+		_add(
+			menuItems,
+			getPortletTitleAddMultipleDocumentsMenuItem(
+				themeDisplay, portletRequest, folder));
 
-		addPortletTitleAddRepositoryMenuItem(
-			menuItems, folder, themeDisplay, portletRequest);
+		_add(
+			menuItems,
+			getPortletTitleAddRepositoryMenuItem(
+				folder, themeDisplay, portletRequest));
 
-		addPortletTitleAddShortcutMenuItem(
-			menuItems, folder, themeDisplay, portletRequest);
+		_add(
+			menuItems,
+			getPortletTitleAddShortcutMenuItem(
+				folder, themeDisplay, portletRequest));
 
 		MenuItem lastStaticMenuItem = menuItems.get(menuItems.size() - 1);
 
@@ -216,14 +163,21 @@ public class DefaultDLPortletToolbarContributor
 				portletResponse);
 		}
 
-		addPortletTitleAddDocumentMenuItems(
-			menuItems, folder, themeDisplay, portletRequest);
+		menuItems.addAll(
+			getPortletTitleAddDocumentMenuItems(
+				folder, themeDisplay, portletRequest));
 
 		if (lastStaticMenuItem != menuItems.get(menuItems.size() - 1)) {
 			lastStaticMenuItem.setSeparator(true);
 		}
 
 		return menuItems;
+	}
+
+	private void _add(List<MenuItem> menuItems, MenuItem menuItem) {
+		if (menuItem != null) {
+			menuItems.add(menuItem);
+		}
 	}
 
 	private ServiceTrackerList

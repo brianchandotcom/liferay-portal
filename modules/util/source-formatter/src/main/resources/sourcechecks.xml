@@ -171,7 +171,6 @@
 		<check name="JavaJSPDynamicIncludeCheck">
 			<property name="enabled" value="false" />
 		</check>
-		<check name="JavaLineBreakCheck" />
 		<check name="JavaLocalSensitiveComparisonCheck" />
 		<check name="JavaLongLinesCheck" />
 		<check name="JavaMetaAnnotationsCheck" />

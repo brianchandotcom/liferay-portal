@@ -3,6 +3,8 @@ package ${configYAML.apiPackagePath}.dto.${escapedVersion};
 import com.fasterxml.jackson.annotation.JsonFilter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonSubTypes;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
 
 import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.petra.string.StringBundler;
@@ -20,11 +22,24 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @author ${configYAML.author}
  * @generated
  */
+<#if schema.oneOfSchemas?has_content>
+	@JsonTypeInfo(use = JsonTypeInfo.Id.NAME,
+	include = JsonTypeInfo.As.PROPERTY,
+	property = "type")
+	@JsonSubTypes({
+	<#list schema.oneOfSchemas as oneOfSchema>
+
+		<#assign property = oneOfSchema.propertySchemas?keys[0] />
+
+		@JsonSubTypes.Type(value=${property?cap_first}.class, name = "${property}")<#if oneOfSchema_has_next>,</#if>
+	</#list>
+	})
+</#if>
 @Generated("")
 @GraphQLName("${schemaName}")
 //@JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "${schemaName}")
-public class ${schemaName} {
+public class ${schemaName} <#if freeMarkerTool.getParentClass(openAPIYAML, schemaName)??>extends ${freeMarkerTool.getParentClass(openAPIYAML, schemaName)} </#if>{
 
 	<#list freeMarkerTool.getDTOJavaMethodParameters(configYAML, openAPIYAML, schema) as javaMethodParameter>
 		<#assign javaDataType = javaMethodParameter.parameterType />

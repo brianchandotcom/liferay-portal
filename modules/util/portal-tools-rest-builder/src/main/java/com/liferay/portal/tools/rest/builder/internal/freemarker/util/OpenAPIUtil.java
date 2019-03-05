@@ -30,6 +30,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Queue;
+import java.util.Set;
 import java.util.TreeMap;
 import java.util.function.Predicate;
 import java.util.regex.Matcher;
@@ -93,6 +94,20 @@ public class OpenAPIUtil {
 
 				allSchemas.put(schemaName, schema);
 
+				List<Schema> oneOfSchemas = schema.getOneOfSchemas();
+
+				if (oneOfSchemas != null) {
+					for (Schema oneOfSchema : oneOfSchemas) {
+						String propertyName = StringUtil.upperCaseFirstLetter(
+							_getFirstProperty(
+								oneOfSchema.getPropertySchemas()));
+
+						allSchemas.put(propertyName, oneOfSchema);
+
+						queue.add(oneOfSchema.getPropertySchemas());
+					}
+				}
+
 				queue.add(propertySchemas);
 			}
 		}
@@ -106,6 +121,12 @@ public class OpenAPIUtil {
 
 		return GraphQLOpenAPIParser.getJavaMethodSignatures(
 			configYAML, openAPIYAML, predicate);
+	}
+
+	private static String _getFirstProperty(Map<String, Schema> oneOfSchema) {
+		Set<String> keys = oneOfSchema.keySet();
+
+		return keys.toArray(new String[0])[0];
 	}
 
 	private static final Pattern _leadingUnderscorePattern = Pattern.compile(

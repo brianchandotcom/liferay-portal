@@ -325,6 +325,10 @@ public class MenuItemProvider {
 	private List<DLFileEntryType> _getFileEntryTypes(
 		long groupId, Folder folder) {
 
+		if ((folder != null) && !folder.isSupportsMetadata()) {
+			return Collections.emptyList();
+		}
+
 		long folderId = _getFolderId(folder);
 
 		boolean inherited = true;
@@ -340,35 +344,28 @@ public class MenuItemProvider {
 			}
 		}
 
-		List<DLFileEntryType> fileEntryTypes = Collections.emptyList();
-
-		if ((folder == null) || folder.isSupportsMetadata()) {
-			try {
-				fileEntryTypes =
-					DLFileEntryTypeServiceUtil.getFolderFileEntryTypes(
-						PortalUtil.getCurrentAndAncestorSiteGroupIds(groupId),
-						folderId, inherited);
-			}
-			catch (PortalException pe) {
-				_log.error(
-					StringBundler.concat(
-						"Unable to get file entry types for group ", groupId,
-						" and folder ", folderId),
-					pe);
-			}
+		try {
+			return DLFileEntryTypeServiceUtil.getFolderFileEntryTypes(
+				PortalUtil.getCurrentAndAncestorSiteGroupIds(groupId), folderId,
+				inherited);
 		}
+		catch (PortalException pe) {
+			_log.error(
+				StringBundler.concat(
+					"Unable to get file entry types for group ", groupId,
+					" and folder ", folderId),
+				pe);
 
-		return fileEntryTypes;
+			return Collections.emptyList();
+		}
 	}
 
 	private long _getFolderId(Folder folder) {
-		long folderId = DLFolderConstants.DEFAULT_PARENT_FOLDER_ID;
-
-		if (folder != null) {
-			folderId = folder.getFolderId();
+		if (folder == null) {
+			return DLFolderConstants.DEFAULT_PARENT_FOLDER_ID;
 		}
 
-		return folderId;
+		return folder.getFolderId();
 	}
 
 	private List<MenuItem> _getPortletTitleAddDocumentTypeMenuItems(
@@ -404,13 +401,11 @@ public class MenuItemProvider {
 	}
 
 	private long _getRepositoryId(Folder folder, ThemeDisplay themeDisplay) {
-		long repositoryId = themeDisplay.getScopeGroupId();
-
-		if (folder != null) {
-			repositoryId = folder.getRepositoryId();
+		if (folder == null) {
+			return themeDisplay.getScopeGroupId();
 		}
 
-		return repositoryId;
+		return folder.getRepositoryId();
 	}
 
 	private boolean _hasPermission(

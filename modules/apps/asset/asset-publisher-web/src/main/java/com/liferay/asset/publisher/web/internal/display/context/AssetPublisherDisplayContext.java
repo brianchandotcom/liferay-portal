@@ -1263,9 +1263,19 @@ public class AssetPublisherDisplayContext {
 	}
 
 	public boolean isSelectionStyleAssetList() {
-		String selectionStyle = getSelectionStyle();
+		if (Objects.equals(getSelectionStyle(), "asset-list")) {
+			return true;
+		}
 
-		return selectionStyle.equals("asset-list");
+		return false;
+	}
+
+	public boolean isSelectionStyleAssetListProvider() {
+		if (Objects.equals(getSelectionStyle(), "asset-list-provider")) {
+			return true;
+		}
+
+		return false;
 	}
 
 	public boolean isSelectionStyleDynamic() throws PortalException {
@@ -1278,9 +1288,11 @@ public class AssetPublisherDisplayContext {
 			return true;
 		}
 
-		String selectionStyle = getSelectionStyle();
+		if (Objects.equals(getSelectionStyle(), "dynamic")) {
+			return true;
+		}
 
-		return selectionStyle.equals("dynamic");
+		return false;
 	}
 
 	public boolean isSelectionStyleManual() throws PortalException {
@@ -1293,9 +1305,11 @@ public class AssetPublisherDisplayContext {
 			return true;
 		}
 
-		String selectionStyle = getSelectionStyle();
+		if (Objects.equals(getSelectionStyle(), "manual")) {
+			return true;
+		}
 
-		return selectionStyle.equals("manual");
+		return false;
 	}
 
 	public boolean isShowAddContentButton() {

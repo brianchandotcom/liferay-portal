@@ -148,6 +148,26 @@ public class ModuleNameUtil {
 	}
 
 	/**
+	 * Returns the module resolved ID with the NPM package and module name.
+	 *
+	 * @param  jsPackage the NPM package
+	 * @param  moduleName the module's name
+	 * @return the module ID
+	 * @review
+	 */
+	public static String getModuleResolvedId(
+		JSPackage jsPackage, String moduleName) {
+
+		StringBundler sb = new StringBundler(3);
+
+		sb.append(jsPackage.getResolvedId());
+		sb.append(StringPool.SLASH);
+		sb.append(moduleName);
+
+		return sb.toString();
+	}
+
+	/**
 	 * Returns the package name portion of a full module name.
 	 *
 	 * <p>

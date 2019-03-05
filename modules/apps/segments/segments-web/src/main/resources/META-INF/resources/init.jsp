@@ -47,6 +47,7 @@ page import="com.liferay.segments.web.internal.display.context.EditSegmentsEntry
 page import="com.liferay.segments.web.internal.display.context.PreviewSegmentsEntryUsersDisplayContext" %><%@
 page import="com.liferay.segments.web.internal.display.context.SegmentsDisplayContext" %><%@
 page import="com.liferay.segments.web.internal.display.context.SelectOrganizationsDisplayContext" %><%@
+page import="com.liferay.segments.web.internal.display.context.SelectSegmentsEntryDisplayContext" %><%@
 page import="com.liferay.segments.web.internal.display.context.SelectUsersDisplayContext" %>
 
 <%@ page import="java.util.HashMap" %><%@

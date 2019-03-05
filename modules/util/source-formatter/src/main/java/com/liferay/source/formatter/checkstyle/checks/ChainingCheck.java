@@ -437,7 +437,7 @@ public class ChainingCheck extends BaseCheck {
 			}
 
 			for (String allowedClassName : _allowedClassNames) {
-				if (classOrVariableName.matches(allowedClassName)) {
+				if (classOrVariableName.matches("(?i)" + allowedClassName)) {
 					return true;
 				}
 			}

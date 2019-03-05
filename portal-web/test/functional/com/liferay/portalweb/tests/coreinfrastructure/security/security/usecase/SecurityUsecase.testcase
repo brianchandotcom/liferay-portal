@@ -23,7 +23,7 @@ definition {
 		}
 	}
 
-	@description = "This is a use case for LPS-69372."
+	@description = "This is a use case for LPS-83566."
 	@priority = "5"
 	test EscapeUrlRedirectWithGroovyScript {
 		property test.name.skip.portal.instance = "SecurityUsecase#EscapeUrlRedirectWithGroovyScript";

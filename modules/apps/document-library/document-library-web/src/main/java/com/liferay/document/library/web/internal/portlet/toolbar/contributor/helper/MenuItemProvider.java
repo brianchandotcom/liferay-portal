@@ -74,7 +74,7 @@ public class MenuItemProvider {
 			"redirect", PortalUtil.getCurrentURL(portletRequest));
 		portletURL.setParameter(
 			"repositoryId",
-			String.valueOf(_getRepositoryId(themeDisplay, folder)));
+			String.valueOf(_getRepositoryId(folder, themeDisplay)));
 		portletURL.setParameter("folderId", String.valueOf(folderId));
 
 		urlMenuItem.setURL(portletURL.toString());
@@ -98,7 +98,7 @@ public class MenuItemProvider {
 
 		List<MenuItem> menuItems = new ArrayList<>();
 
-		long repositoryId = _getRepositoryId(themeDisplay, folder);
+		long repositoryId = _getRepositoryId(folder, themeDisplay);
 
 		if (themeDisplay.getScopeGroupId() == repositoryId) {
 			menuItems.addAll(
@@ -110,8 +110,8 @@ public class MenuItemProvider {
 	}
 
 	public MenuItem getAddFolderMenuItem(
-		ThemeDisplay themeDisplay, PortletRequest portletRequest,
-		Folder folder) {
+		Folder folder, ThemeDisplay themeDisplay,
+		PortletRequest portletRequest) {
 
 		long folderId = _getFolderId(folder);
 
@@ -142,7 +142,7 @@ public class MenuItemProvider {
 			"redirect", PortalUtil.getCurrentURL(portletRequest));
 		portletURL.setParameter(
 			"repositoryId",
-			String.valueOf(_getRepositoryId(themeDisplay, folder)));
+			String.valueOf(_getRepositoryId(folder, themeDisplay)));
 		portletURL.setParameter("parentFolderId", String.valueOf(folderId));
 		portletURL.setParameter("ignoreRootFolder", Boolean.TRUE.toString());
 
@@ -152,8 +152,8 @@ public class MenuItemProvider {
 	}
 
 	public MenuItem getAddMultipleFilesMenuItem(
-		ThemeDisplay themeDisplay, PortletRequest portletRequest,
-		Folder folder) {
+		Folder folder, ThemeDisplay themeDisplay,
+		PortletRequest portletRequest) {
 
 		if ((folder != null) && !folder.isSupportsMultipleUpload()) {
 			return null;
@@ -189,7 +189,7 @@ public class MenuItemProvider {
 			"redirect", PortalUtil.getCurrentURL(portletRequest));
 		portletURL.setParameter(
 			"repositoryId",
-			String.valueOf(_getRepositoryId(themeDisplay, folder)));
+			String.valueOf(_getRepositoryId(folder, themeDisplay)));
 		portletURL.setParameter("folderId", String.valueOf(folderId));
 
 		urlMenuItem.setURL(portletURL.toString());
@@ -273,7 +273,7 @@ public class MenuItemProvider {
 			"redirect", PortalUtil.getCurrentURL(portletRequest));
 		portletURL.setParameter(
 			"repositoryId",
-			String.valueOf(_getRepositoryId(themeDisplay, folder)));
+			String.valueOf(_getRepositoryId(folder, themeDisplay)));
 		portletURL.setParameter("folderId", String.valueOf(folderId));
 
 		urlMenuItem.setURL(portletURL.toString());
@@ -282,9 +282,9 @@ public class MenuItemProvider {
 	}
 
 	private MenuItem _getFileEntryTypeMenuItem(
-			PortletRequest portletRequest, Folder folder,
-			List<DLFileEntryType> fileEntryTypes, DLFileEntryType fileEntryType,
-			ThemeDisplay themeDisplay)
+			Folder folder, List<DLFileEntryType> fileEntryTypes,
+			DLFileEntryType fileEntryType, ThemeDisplay themeDisplay,
+			PortletRequest portletRequest)
 		throws PortalException {
 
 		URLMenuItem urlMenuItem = new URLMenuItem();
@@ -310,7 +310,7 @@ public class MenuItemProvider {
 			"redirect", PortalUtil.getCurrentURL(portletRequest));
 		portletURL.setParameter(
 			"repositoryId",
-			String.valueOf(_getRepositoryId(themeDisplay, folder)));
+			String.valueOf(_getRepositoryId(folder, themeDisplay)));
 		portletURL.setParameter(
 			"folderId", String.valueOf(_getFolderId(folder)));
 		portletURL.setParameter(
@@ -386,8 +386,8 @@ public class MenuItemProvider {
 						DLFileEntryTypeConstants.COMPANY_ID_BASIC_DOCUMENT) {
 
 					MenuItem urlMenuItem = _getFileEntryTypeMenuItem(
-						portletRequest, folder, fileEntryTypes, fileEntryType,
-						themeDisplay);
+						folder, fileEntryTypes, fileEntryType, themeDisplay,
+						portletRequest);
 
 					menuItems.add(urlMenuItem);
 				}
@@ -403,7 +403,7 @@ public class MenuItemProvider {
 		return menuItems;
 	}
 
-	private long _getRepositoryId(ThemeDisplay themeDisplay, Folder folder) {
+	private long _getRepositoryId(Folder folder, ThemeDisplay themeDisplay) {
 		long repositoryId = themeDisplay.getScopeGroupId();
 
 		if (folder != null) {

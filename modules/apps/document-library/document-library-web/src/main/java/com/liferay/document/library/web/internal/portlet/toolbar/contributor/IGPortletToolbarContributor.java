@@ -66,12 +66,12 @@ public class IGPortletToolbarContributor extends BasePortletToolbarContributor {
 		_add(
 			menuItems,
 			_menuItemProvider.getAddFolderMenuItem(
-				themeDisplay, portletRequest, folder));
+				folder, themeDisplay, portletRequest));
 
 		_add(
 			menuItems,
 			_menuItemProvider.getAddMultipleFilesMenuItem(
-				themeDisplay, portletRequest, folder));
+				folder, themeDisplay, portletRequest));
 
 		_add(
 			menuItems,

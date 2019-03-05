@@ -85,7 +85,7 @@ public class DefaultDLPortletToolbarContributor
 		List<MenuItem> menuItems = new ArrayList<>();
 
 		menuItems.add(
-			_menuItemProvider.getAddBasicDocumentMenuItem(
+			_menuItemProvider.getAddFileMenuItem(
 				folder, themeDisplay, portletRequest));
 
 		_add(

@@ -48,7 +48,7 @@ import javax.portlet.PortletURL;
  */
 public class MenuItemProvider {
 
-	public MenuItem getAddBasicDocumentMenuItem(
+	public MenuItem getAddFileMenuItem(
 		Folder folder, ThemeDisplay themeDisplay,
 		PortletRequest portletRequest) {
 

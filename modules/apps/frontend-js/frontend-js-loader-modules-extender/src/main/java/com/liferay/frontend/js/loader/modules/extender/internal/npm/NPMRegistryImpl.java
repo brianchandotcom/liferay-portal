@@ -73,6 +73,25 @@ import org.osgi.util.tracker.BundleTrackerCustomizer;
 public class NPMRegistryImpl implements NPMRegistry {
 
 	@Override
+	@Reference(
+		cardinality = ReferenceCardinality.MULTIPLE,
+		policy = ReferencePolicy.DYNAMIC
+	)
+	public void addJSBundleTracker(JSBundleTracker jsBundleTracker) {
+		_jsBundleTrackers.add(jsBundleTracker);
+
+		for (Map.Entry<JSBundle, Bundle> entry : _jsBundles.entrySet()) {
+			try {
+				jsBundleTracker.addedJSBundle(
+					entry.getKey(), entry.getValue(), this);
+			}
+			catch (Exception e) {
+				_log.error("Unable to add JS bundle", e);
+			}
+		}
+	}
+
+	@Override
 	public Map<String, String> getGlobalAliases() {
 		return _globalAliases;
 	}
@@ -152,6 +171,11 @@ public class NPMRegistryImpl implements NPMRegistry {
 	}
 
 	@Override
+	public void removeJSBundleTracker(JSBundleTracker jsBundleTracker) {
+		_jsBundleTrackers.remove(jsBundleTracker);
+	}
+
+	@Override
 	public JSPackage resolveJSPackageDependency(
 		JSPackageDependency jsPackageDependency) {
 
@@ -226,24 +250,6 @@ public class NPMRegistryImpl implements NPMRegistry {
 		_reopenBundleTracker();
 	}
 
-	@Reference(
-		cardinality = ReferenceCardinality.MULTIPLE,
-		policy = ReferencePolicy.DYNAMIC
-	)
-	protected void bindJSBundleTracker(JSBundleTracker jsBundleTracker) {
-		_jsBundleTrackers.add(jsBundleTracker);
-
-		for (Map.Entry<JSBundle, Bundle> entry : _jsBundles.entrySet()) {
-			try {
-				jsBundleTracker.addedJSBundle(
-					entry.getKey(), entry.getValue(), this);
-			}
-			catch (Exception e) {
-				_log.error("Unable to add JS bundle", e);
-			}
-		}
-	}
-
 	@Deactivate
 	protected synchronized void deactivate() {
 		_bundleTracker.close();
@@ -257,10 +263,6 @@ public class NPMRegistryImpl implements NPMRegistry {
 		_jsBundleProcessors.remove(jsBundleProcessor);
 
 		_reopenBundleTracker();
-	}
-
-	protected void unbindJSBundleTracker(JSBundleTracker jsBundleTracker) {
-		_jsBundleTrackers.remove(jsBundleTracker);
 	}
 
 	private JSONObject _getPackageJSONObject(Bundle bundle) {

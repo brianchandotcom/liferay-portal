@@ -20,6 +20,18 @@ import org.osgi.framework.Bundle;
  * This is an interface for registering OSGi services that get notified whenever
  * the {@link NPMRegistry} is updated.
  *
+ * {@link JSBundleTracker} objects can be registered with the
+ * {@link NPMRegistry} calling
+ * {@link NPMRegistry#addJSBundleTracker(JSBundleTracker)} or declaring them as
+ * OSGi services (in that case the {@link NPMRegistry} will find and attach
+ * them).
+ *
+ * The reason for {@link NPMRegistry#addJSBundleTracker(JSBundleTracker)} to
+ * exist is that sometimes you need to implement a {@link JSBundleTracker} in a
+ * service which depends on {@link NPMRegistry} and thus, you cannot declare it
+ * as a {@link JSBundleTracker} because OSGi will complain about a soft circular
+ * dependency.
+ *
  * @author Iván Zaera
  * @review
  */

@@ -12,5 +12,3 @@ Import-Package:\
 	!org.joda.convert,\
 	\
 	*
-Liferay-Releng-Module-Group-Description:
-Liferay-Releng-Module-Group-Title: Data Stores

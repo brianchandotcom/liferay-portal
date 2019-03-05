@@ -193,9 +193,7 @@ public class GCSStore extends BaseStore {
 			_log.trace("Got Blob: " + blob);
 		}
 
-		ReadChannel reader = _getReader(blob);
-
-		return Channels.newInputStream(reader);
+		return Channels.newInputStream(_getReader(blob));
 	}
 
 	@Override
@@ -258,9 +256,7 @@ public class GCSStore extends BaseStore {
 		if (_log.isTraceEnabled()) {
 			_log.trace("Listing content with prefix: " + path);
 
-			String fnames = String.join("\n   ", fileNames);
-
-			_log.trace("   " + fnames);
+			_log.trace("    " + String.join("\n   ", fileNames));
 		}
 
 		return fileNames;
@@ -593,9 +589,8 @@ public class GCSStore extends BaseStore {
 
 	private Blob _getBlob(BlobId blobId) {
 		Stopwatch stopwatch = null;
-		boolean traceEnabled = _log.isTraceEnabled();
 
-		if (traceEnabled) {
+		if (_log.isTraceEnabled()) {
 			_log.trace("Fetching " + blobId);
 
 			stopwatch = Stopwatch.createStarted();
@@ -603,17 +598,14 @@ public class GCSStore extends BaseStore {
 
 		Blob blob = _gcsStore.get(blobId);
 
-		if (traceEnabled) {
+		if (_log.isTraceEnabled()) {
 			stopwatch.stop();
 
 			long elapsed = stopwatch.elapsed(TimeUnit.MILLISECONDS);
 
-			if (_log.isTraceEnabled()) {
-				_log.trace(
-					StringBundler.concat(
-						"Spent ", elapsed, " milliseconds retrieving ",
-						blobId));
-			}
+			_log.trace(
+				StringBundler.concat(
+					"Spent ", elapsed, " milliseconds retrieving ", blobId));
 		}
 
 		return blob;

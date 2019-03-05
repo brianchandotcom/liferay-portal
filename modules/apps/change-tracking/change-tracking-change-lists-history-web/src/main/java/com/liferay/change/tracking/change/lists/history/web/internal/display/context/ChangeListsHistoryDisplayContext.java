@@ -53,6 +53,10 @@ public class ChangeListsHistoryDisplayContext {
 	public SoyContext getChangeListsHistoryContext() {
 		SoyContext soyContext = SoyContextFactoryUtil.createSoyContext();
 
+		soyContext.put("filterStatus", _getFilterByStatus());
+		soyContext.put("filterUser", _getFilterByUser());
+		soyContext.put("orderByCol", _getOrderByCol());
+		soyContext.put("orderByType", getOrderByType());
 		soyContext.put(
 			"spritemap",
 			_themeDisplay.getPathThemeImages() + "/lexicon/icons.svg");
@@ -61,12 +65,6 @@ public class ChangeListsHistoryDisplayContext {
 			_themeDisplay.getPortalURL() +
 				"/o/change-tracking/processes?companyId=" +
 					_themeDisplay.getCompanyId());
-
-		soyContext.put("filterStatus", _getFilterByStatus());
-		soyContext.put("filterUser", _getFilterByUser());
-
-		soyContext.put("orderByCol", _getOrderByCol());
-		soyContext.put("orderByType", getOrderByType());
 
 		return soyContext;
 	}

@@ -32,7 +32,6 @@ class ChangeListsHistory extends PortletBase {
 		fetch(urlProcesses, init)
 			.then(r => r.json())
 			.then(response => this._populateProcessEntries(response))
-			.then(() => this.loaded = true)
 			.catch(
 				error => {
 					const message = typeof error === 'string' ?
@@ -51,11 +50,13 @@ class ChangeListsHistory extends PortletBase {
 	}
 
 	static _getState(processEntryStatus) {
+		let statusText = processEntryStatus;
+
 		if (processEntryStatus === 'successful') {
-			return 'published';
+			statusText = 'published';
 		}
 
-		return processEntryStatus;
+		return statusText;
 	}
 
 	_populateProcessEntries(processEntries) {
@@ -84,6 +85,8 @@ class ChangeListsHistory extends PortletBase {
 				);
 			}
 		);
+
+		this.loaded = true;
 	}
 
 }

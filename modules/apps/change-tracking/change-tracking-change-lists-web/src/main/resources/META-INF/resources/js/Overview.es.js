@@ -32,9 +32,11 @@ class Overview extends PortletBase {
 
 		fetch(url, init)
 			.then(r => r.json())
-			.then(response => {
-				this.productionCTCollectionId = response[0].ctCollectionId;
-			});
+			.then(
+				response => {
+					this.productionCTCollectionId = response[0].ctCollectionId;
+				}
+			);
 	}
 
 	_fetchAll(urls, init) {

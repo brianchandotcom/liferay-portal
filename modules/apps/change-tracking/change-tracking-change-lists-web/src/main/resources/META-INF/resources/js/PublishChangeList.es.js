@@ -1,4 +1,5 @@
-import ClayCheckbox from 'clay-checkbox';
+import 'clay-checkbox';
+
 import Component from 'metal-component';
 import {Config} from 'metal-state';
 import Soy from 'metal-soy';

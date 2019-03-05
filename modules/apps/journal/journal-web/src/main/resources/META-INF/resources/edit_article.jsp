@@ -33,7 +33,7 @@ JournalEditArticleDisplayContext journalEditArticleDisplayContext = new JournalE
 	<portlet:param name="mvcPath" value="/edit_article.jsp" />
 </portlet:renderURL>
 
-<aui:form action="<%= editArticleActionURL %>" enctype="multipart/form-data" method="post" name="fm1" onSubmit="event.preventDefault();">
+<aui:form action="<%= editArticleActionURL %>" cssClass="edit-article-form" enctype="multipart/form-data" method="post" name="fm1" onSubmit="event.preventDefault();">
 	<aui:input name="<%= ActionRequest.ACTION_NAME %>" type="hidden" />
 	<aui:input name="hideDefaultSuccessMessage" type="hidden" value="<%= journalEditArticleDisplayContext.isHideDefaultSuccessMessage() || (journalEditArticleDisplayContext.getClassNameId() == PortalUtil.getClassNameId(DDMStructure.class)) %>" />
 	<aui:input name="redirect" type="hidden" value="<%= journalEditArticleDisplayContext.getRedirect() %>" />
@@ -68,6 +68,7 @@ JournalEditArticleDisplayContext journalEditArticleDisplayContext = new JournalE
 						</div>
 					</li>
 				</c:if>
+
 				<li class="tbar-item tbar-item-expand">
 					<div class="journal-article-button-row tbar-section text-right">
 						<aui:button cssClass="btn-sm" href="<%= journalEditArticleDisplayContext.getRedirect() %>" type="cancel" />

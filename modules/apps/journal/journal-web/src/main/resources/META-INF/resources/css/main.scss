@@ -1,5 +1,13 @@
 @import "mixins";
 
+$toolbarZIndex: 971;
+
+$controlMenuDesktopHeight: 56px;
+$controlMenuHeight: 49px;
+
+$productMenuTransitionDuration: 0.5s;
+$productMenuWidth: 320px;
+
 .portlet-journal {
 	.article-content-content {
 		img, .cke_widget_image {
@@ -94,10 +102,49 @@
 		}
 	}
 
-	.edit-article-sidebar {
-		height: calc(100vh - 112px) !important;
-		overflow-y: scroll;
-		top: 112px !important;
+	.edit-article-form {
+		.component-tbar {
+			height: $controlMenuHeight;
+			left: 0;
+			position: fixed;
+			top: $controlMenuHeight;
+			transition: left ease $productMenuTransitionDuration, width ease $productMenuTransitionDuration;
+			width: 100%;
+			z-index: $toolbarZIndex;
+
+			body.open & {
+				left: $productMenuWidth;
+				width: calc(100% - #{$productMenuWidth});
+			}
+
+			@media (min-width: 768px) {
+				height: $controlMenuDesktopHeight;
+				top: $controlMenuDesktopHeight;
+			}
+		}
+
+		.container.container-view.contextual-sidebar-content {
+			margin-top: $controlMenuHeight;
+
+			@media (min-width: 768px) {
+				margin-top: $controlMenuDesktopHeight;
+			}
+		}
+
+		.edit-article-sidebar {
+			height: calc(100vh - #{$controlMenuHeight * 2}) !important;
+			overflow-y: scroll;
+			top: $controlMenuHeight * 2 !important;
+
+			@media (min-width: 768px) {
+				height: calc(100vh - #{$controlMenuDesktopHeight * 2}) !important;
+				top: $controlMenuDesktopHeight * 2 !important;
+			}
+		}
+
+		.sidebar-body .panel-body {
+			padding: 0;
+		}
 	}
 
 	.form-builder {
@@ -112,12 +159,6 @@
 
 	.journal-article-preview {
 		padding: 0 20px;
-	}
-
-	.metadata .lfr-ddm-field-group {
-		margin-bottom: 20px;
-		margin-top: 0;
-		padding: 0;
 	}
 
 	.structure-restrictions .lfr-workflow-column .form-group {

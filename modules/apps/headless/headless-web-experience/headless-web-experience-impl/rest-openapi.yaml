@@ -266,10 +266,7 @@ components:
                 title:
                     type: string
                 viewableBy:
-                    enum:
-                        - anyone
-                          - members
-                            - owner
+                    enum: [Anyone, Members, Owner]
                     type: string
                     writeOnly: true
         StructuredContentImage:

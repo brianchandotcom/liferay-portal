@@ -121,6 +121,11 @@ public class YAMLUtil {
 		schemaTypeDescription.addPropertyParameters("anyOf", Schema.class);
 
 		schemaTypeDescription.substituteProperty(
+			"enum", List.class, "getEnumValues", "setEnumValues");
+
+		schemaTypeDescription.addPropertyParameters("enum", String.class);
+
+		schemaTypeDescription.substituteProperty(
 			"oneOf", List.class, "getOneOfSchemas", "setOneOfSchemas");
 
 		schemaTypeDescription.addPropertyParameters("oneOf", Schema.class);

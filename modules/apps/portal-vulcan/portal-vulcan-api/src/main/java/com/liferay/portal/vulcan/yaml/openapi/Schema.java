@@ -38,6 +38,10 @@ public class Schema {
 		return _description;
 	}
 
+	public List<String> getEnumValues() {
+		return _enumValues;
+	}
+
 	public String getFormat() {
 		return _format;
 	}
@@ -90,6 +94,10 @@ public class Schema {
 		_description = description;
 	}
 
+	public void setEnumValues(List<String> enumValues) {
+		_enumValues = enumValues;
+	}
+
 	public void setFormat(String format) {
 		_format = format;
 	}
@@ -132,6 +140,7 @@ public class Schema {
 	private List<Schema> _allOfSchemas;
 	private List<Schema> _anyOfSchemas;
 	private String _description;
+	private List<String> _enumValues;
 	private String _format;
 	private Items _items;
 	private List<Schema> _oneOfSchemas;

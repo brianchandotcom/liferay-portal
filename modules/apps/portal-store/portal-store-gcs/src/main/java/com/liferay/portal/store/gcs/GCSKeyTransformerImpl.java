@@ -43,9 +43,7 @@ public class GCSKeyTransformerImpl implements GCSKeyTransformer {
 	public String getFileKey(
 		long companyId, long repositoryId, String fileName) {
 
-		int initialCapacity = 4;
-
-		StringBundler sb = new StringBundler(initialCapacity);
+		StringBundler sb = new StringBundler(4);
 
 		sb.append(companyId);
 		sb.append(StringPool.SLASH);
@@ -60,9 +58,7 @@ public class GCSKeyTransformerImpl implements GCSKeyTransformer {
 		long companyId, long repositoryId, String fileName,
 		String versionLabel) {
 
-		int initialCapacity = 6;
-
-		StringBundler sb = new StringBundler(initialCapacity);
+		StringBundler sb = new StringBundler(6);
 
 		sb.append(companyId);
 		sb.append(StringPool.SLASH);

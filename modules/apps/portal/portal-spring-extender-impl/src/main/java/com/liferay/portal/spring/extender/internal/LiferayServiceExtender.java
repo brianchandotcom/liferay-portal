@@ -113,6 +113,8 @@ public class LiferayServiceExtender extends AbstractExtender {
 
 				serviceRegistration.unregister();
 			}
+
+			_sessionFactoryImplementor.close();
 		}
 
 		@Override
@@ -151,7 +153,7 @@ public class LiferayServiceExtender extends AbstractExtender {
 			PortletHibernateConfiguration portletHibernateConfiguration =
 				new PortletHibernateConfiguration(classLoader, dataSource);
 
-			SessionFactoryImplementor sessionFactoryImplementor =
+			_sessionFactoryImplementor =
 				(SessionFactoryImplementor)
 					portletHibernateConfiguration.buildSessionFactory();
 
@@ -159,7 +161,7 @@ public class LiferayServiceExtender extends AbstractExtender {
 
 			sessionFactoryImpl.setSessionFactoryClassLoader(classLoader);
 			sessionFactoryImpl.setSessionFactoryImplementor(
-				sessionFactoryImplementor);
+				_sessionFactoryImplementor);
 
 			SessionFactory sessionFactory =
 				VerifySessionFactoryWrapper.createVerifySessionFactoryWrapper(
@@ -173,7 +175,7 @@ public class LiferayServiceExtender extends AbstractExtender {
 						_extendeeBundle.getSymbolicName())));
 
 			TransactionExecutor transactionExecutor = _getTransactionExecutor(
-				dataSource, sessionFactoryImplementor);
+				dataSource, _sessionFactoryImplementor);
 
 			_serviceRegistrations.add(
 				extendeeBundleContext.registerService(
@@ -212,6 +214,7 @@ public class LiferayServiceExtender extends AbstractExtender {
 		private final Bundle _extendeeBundle;
 		private final List<ServiceRegistration<?>> _serviceRegistrations =
 			new ArrayList<>();
+		private SessionFactoryImplementor _sessionFactoryImplementor;
 
 	}
 

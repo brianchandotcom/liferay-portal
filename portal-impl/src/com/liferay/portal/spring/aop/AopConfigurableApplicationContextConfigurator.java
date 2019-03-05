@@ -229,6 +229,14 @@ public class AopConfigurableApplicationContextConfigurator
 				catch (Exception e) {
 					return ReflectionUtil.throwException(e);
 				}
+
+				DefaultSingletonBeanRegistry defaultSingletonBeanRegistry =
+					(DefaultSingletonBeanRegistry)
+						configurableListableBeanFactory;
+
+				defaultSingletonBeanRegistry.registerDisposableBean(
+					"liferayHibernateSessionFactoryDestroyer",
+					liferayHibernateSessionFactory::close);
 			}
 
 			SessionFactoryImpl sessionFactoryImpl = new SessionFactoryImpl();

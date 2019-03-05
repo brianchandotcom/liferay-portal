@@ -255,6 +255,8 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 	public static final String DEPLOY_APP_SERVER_LIB_TASK_NAME =
 		"deployAppServerLib";
 
+	public static final String DEPLOY_CONFIGS_TASK_NAME = "deployConfigs";
+
 	public static final String DEPLOY_DEPENDENCIES_TASK_NAME =
 		"deployDependencies";
 
@@ -408,6 +410,8 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 
 		_addTaskCopyLibs(project);
 
+		Copy deployConfigsTask = _addTaskDeployConfigs(
+			project, liferayExtension);
 		Copy deployDependenciesTask = _addTaskDeployDependencies(
 			project, liferayExtension);
 
@@ -450,7 +454,8 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 		_configureProject(project);
 		GradlePluginsDefaultsUtil.configureRepositories(project, portalRootDir);
 		_configureSourceSetMain(project);
-		_configureTaskDeploy(project, deployDependenciesTask);
+		_configureTaskDeploy(
+			project, deployConfigsTask, deployDependenciesTask);
 		_configureTaskJar(jar, testProject);
 		_configureTaskJavadoc(project, portalRootDir);
 		_configureTaskTest(project);
@@ -832,6 +837,44 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 			project, JavaPlugin.CLASSES_TASK_NAME);
 
 		classesTask.dependsOn(copy);
+
+		return copy;
+	}
+
+	private Copy _addTaskDeployConfigs(
+		Project project, final LiferayExtension liferayExtension) {
+
+		final Copy copy = GradleUtil.addTask(
+			project, DEPLOY_CONFIGS_TASK_NAME, Copy.class);
+
+		GradleUtil.setProperty(
+			copy, LiferayOSGiPlugin.AUTO_CLEAN_PROPERTY_NAME, false);
+
+		copy.from("configs");
+		copy.into(
+			new Callable<File>() {
+
+				@Override
+				public File call() throws Exception {
+					return new File(
+						liferayExtension.getLiferayHome(), "osgi/configs");
+				}
+
+			});
+
+		copy.setDescription("Deploys additional configuration files.");
+
+		TaskOutputs taskOutputs = copy.getOutputs();
+
+		taskOutputs.upToDateWhen(
+			new Spec<Task>() {
+
+				@Override
+				public boolean isSatisfiedBy(Task task) {
+					return false;
+				}
+
+			});
 
 		return copy;
 	}
@@ -3078,11 +3121,12 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 	}
 
 	private void _configureTaskDeploy(
-		Project project, Copy deployDepenciesTask) {
+		Project project, Copy deployConfigsTask, Copy deployDepenciesTask) {
 
 		final Task deployTask = GradleUtil.getTask(
 			project, LiferayBasePlugin.DEPLOY_TASK_NAME);
 
+		deployTask.finalizedBy(deployConfigsTask);
 		deployTask.finalizedBy(deployDepenciesTask);
 
 		GradleUtil.withPlugin(

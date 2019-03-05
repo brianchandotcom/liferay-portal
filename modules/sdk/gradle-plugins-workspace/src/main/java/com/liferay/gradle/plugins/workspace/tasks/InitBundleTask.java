@@ -20,6 +20,7 @@ import com.liferay.portal.tools.bundle.support.constants.BundleSupportConstants;
 
 import java.io.File;
 
+import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URL;
 
@@ -28,6 +29,7 @@ import java.util.List;
 
 import org.gradle.api.Project;
 import org.gradle.api.file.FileCollection;
+import org.gradle.api.logging.Logger;
 import org.gradle.api.tasks.Input;
 import org.gradle.api.tasks.InputFile;
 import org.gradle.api.tasks.JavaExec;
@@ -141,7 +143,10 @@ public class InitBundleTask extends JavaExec {
 			args.add("--url");
 			args.add(url.toString());
 		}
-		catch (Exception e) {
+		catch (MalformedURLException murle) {
+			Logger logger = getLogger();
+
+			logger.error("Unable to construct URL for {}", getFile());
 		}
 
 		return args;

@@ -31,6 +31,7 @@ page import="com.liferay.portal.kernel.dao.search.ResultRow" %><%@
 page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
 page import="com.liferay.portal.kernel.language.UnicodeLanguageUtil" %><%@
 page import="com.liferay.portal.kernel.portlet.LiferayWindowState" %><%@
+page import="com.liferay.portal.kernel.security.permission.ActionKeys" %><%@
 page import="com.liferay.portal.kernel.util.Constants" %><%@
 page import="com.liferay.portal.kernel.util.HtmlUtil" %><%@
 page import="com.liferay.portal.kernel.util.ParamUtil" %><%@
@@ -47,7 +48,8 @@ page import="com.liferay.segments.web.internal.display.context.EditSegmentsEntry
 page import="com.liferay.segments.web.internal.display.context.PreviewSegmentsEntryUsersDisplayContext" %><%@
 page import="com.liferay.segments.web.internal.display.context.SegmentsDisplayContext" %><%@
 page import="com.liferay.segments.web.internal.display.context.SelectOrganizationsDisplayContext" %><%@
-page import="com.liferay.segments.web.internal.display.context.SelectUsersDisplayContext" %>
+page import="com.liferay.segments.web.internal.display.context.SelectUsersDisplayContext" %><%@
+page import="com.liferay.segments.web.internal.security.permission.resource.SegmentsEntryPermission" %>
 
 <%@ page import="java.util.HashMap" %><%@
 page import="java.util.Map" %><%@

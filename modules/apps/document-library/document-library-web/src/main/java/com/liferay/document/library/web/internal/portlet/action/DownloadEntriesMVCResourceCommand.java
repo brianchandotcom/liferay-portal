@@ -101,8 +101,6 @@ public class DownloadEntriesMVCResourceCommand implements MVCResourceCommand {
 
 		long folderId = ParamUtil.getLong(resourceRequest, "folderId");
 
-		_checkFolder(folderId);
-
 		File file = null;
 
 		try {

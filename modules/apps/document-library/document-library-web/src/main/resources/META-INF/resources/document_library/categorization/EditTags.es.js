@@ -297,9 +297,9 @@ EditTags.STATE = {
 	 * @instance
 	 * @memberof EditTags
 	 * @review
-	 * @type {Number}
+	 * @type {String}
 	 */
-	repositoryId: Config.number().required(),
+	repositoryId: Config.string().required(),
 
 	/**
 	 * Flag that indicate if "select all" checkbox

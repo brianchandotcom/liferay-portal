@@ -42,6 +42,23 @@ SegmentsEntry segmentsEntry = (SegmentsEntry)row.getObject();
 		/>
 	</c:if>
 
+	<c:if test="<%= SegmentsEntryPermission.contains(permissionChecker, segmentsEntry, ActionKeys.PERMISSIONS) %>">
+		<liferay-security:permissionsURL
+			modelResource="<%= SegmentsEntry.class.getName() %>"
+			modelResourceDescription="<%= segmentsEntry.getName(locale) %>"
+			resourcePrimKey="<%= String.valueOf(segmentsEntry.getSegmentsEntryId()) %>"
+			var="permissionsURL"
+			windowState="<%= LiferayWindowState.POP_UP.toString() %>"
+		/>
+
+		<liferay-ui:icon
+			message="permissions"
+			method="get"
+			url="<%= permissionsURL %>"
+			useDialog="<%= true %>"
+		/>
+	</c:if>
+
 	<c:if test="<%= SegmentsEntryPermission.contains(permissionChecker, segmentsEntry, ActionKeys.DELETE) %>">
 		<portlet:actionURL name="deleteSegmentsEntry" var="deleteURL">
 			<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.DELETE %>" />

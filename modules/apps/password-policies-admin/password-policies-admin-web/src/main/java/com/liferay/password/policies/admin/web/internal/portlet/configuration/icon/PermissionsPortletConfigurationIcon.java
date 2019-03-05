@@ -92,6 +92,10 @@ public class PermissionsPortletConfigurationIcon
 		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
+		if (_getPasswordPolicyId(portletRequest) == 0) {
+			return false;
+		}
+
 		if (PasswordPolicyPermissionUtil.contains(
 				themeDisplay.getPermissionChecker(),
 				_getPasswordPolicyId(portletRequest), ActionKeys.PERMISSIONS)) {

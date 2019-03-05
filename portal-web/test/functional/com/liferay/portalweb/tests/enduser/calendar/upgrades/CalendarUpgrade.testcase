@@ -23,6 +23,18 @@ definition {
 		);
 	}
 
+	@description = "This is a use case for LPS-43215."
+	@priority = "5"
+	test UpgradeCalendarWithLongCharactersFrom6130 {
+		property data.archive.type = "data-archive-calendar-long-character-event";
+		property database.types = "oracle";
+		property portal.version = "6.1.30";
+
+		AssertConsoleTextNotPresent(value1 = "SQLException");
+		AssertConsoleTextNotPresent(value1 = "ORA-22835");
+		AssertConsoleTextNotPresent(value1 = "Buffer too small for CLOB to CHAR or BLOB to RAW conversion");
+	}
+
 	@priority = "5"
 	test ViewCalendarArchive621015 {
 		property data.archive.type = "data-archive-calendar";

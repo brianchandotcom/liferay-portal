@@ -330,7 +330,6 @@ public class JavaSourceProcessorTest extends BaseSourceProcessorTestCase {
 		test("JavaTermDividers.testjava");
 	}
 
-	@Test
 	public void testJavaTermMetadataIncorrectLineBreaks() throws Exception {
 		test("JavaTermMetadataIncorrectLineBreaks.testjava");
 	}

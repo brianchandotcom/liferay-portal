@@ -39,59 +39,65 @@
 		var iframe = document.getElementById('<portlet:namespace />iframe');
 
 		if (iframe != null) {
-			var displayContextHeight = <%= youTubeDisplayContext.getHeight() %>;
 			var displayContextWidth = <%= youTubeDisplayContext.getWidth() %>;
 
-			var parent = iframe.parentElement;
-			var parentWidth = parent.offsetWidth;
+			var parentWidth = iframe.parentElement.offsetWidth;
 
 			if (displayContextWidth > parentWidth) {
 				displayContextWidth = parentWidth;
 			}
 
-			iframe.setAttribute('height', displayContextHeight);
+			iframe.setAttribute('height', <%= youTubeDisplayContext.getHeight() %>);
 			iframe.setAttribute('width', displayContextWidth);
 		}
 	};
 
-	function <portlet:namespace />addDragAndDropListener() {
-		if (!Liferay.Layout) {
-			setTimeout(
-				function() {
-					<portlet:namespace />addDragAndDropListener();
-				},
-				10
-			);
-		}
-		else {
-			Liferay.Layout.on(
-				[ 'drag:end', 'drag:start' ],
-				function(event) {
-					setTimeout(
-						function() {
-							<portlet:namespace />resizeIFrame();
-						},
-						10
-					);
-				}
-			);
-		}
-	}
+	Liferay.provide(
+		window,
+		'<portlet:namespace />addDragAndDropListener',
+		function() {
+			if (!Liferay.Layout) {
+				setTimeout(
+					function() {
+						<portlet:namespace />addDragAndDropListener();
+					},
+					5000
+				);
+			}
+			else {
+				Liferay.Layout.on(
+					['drag:end', 'drag:start'],
+					function() {
+						AUI().debounce(
+							<portlet:namespace />resizeIFrame(),
+							500
+						)
+					}
+				);
+			}
+		},
+		['aui-debounce']
+	);
 
 	Liferay.on(
-		'allPortletsReady', function(event) {
+		'allPortletsReady',
+		function() {
 			<portlet:namespace />addDragAndDropListener();
 		}
 	);
 
 	Liferay.on(
-		'portletReady', function(event) {
+		'portletReady',
+		function() {
 			<portlet:namespace />resizeIFrame();
 		}
 	);
+</aui:script>
 
-	$(window).on(
-		'resize', function() {
+<aui:script use="event">
+	A.on(
+		'windowresize',
+		function() {
 			<portlet:namespace />resizeIFrame();
 		}
 	);

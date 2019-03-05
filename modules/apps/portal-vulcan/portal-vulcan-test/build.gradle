@@ -1,4 +1,5 @@
 dependencies {
+	testIntegrationCompile group: "com.fasterxml.jackson.core", name: "jackson-annotations", version: "2.9.8"
 	testIntegrationCompile group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
 	testIntegrationCompile group: "javax.ws.rs", name: "javax.ws.rs-api", version: "2.1"
 	testIntegrationCompile group: "org.apache.cxf", name: "cxf-core", version: "3.2.5"
@@ -6,5 +7,6 @@ dependencies {
 	testIntegrationCompile group: "org.springframework", name: "spring-test", version: "4.1.9.RELEASE"
 	testIntegrationCompile project(":apps:portal-odata:portal-odata-api")
 	testIntegrationCompile project(":apps:portal-vulcan:portal-vulcan-api")
+	testIntegrationCompile project(":core:registry-api")
 	testIntegrationCompile project(":test:arquillian-extension-junit-bridge")
 }

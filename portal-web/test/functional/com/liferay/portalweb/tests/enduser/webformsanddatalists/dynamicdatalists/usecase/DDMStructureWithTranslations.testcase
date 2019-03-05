@@ -84,6 +84,8 @@ definition {
 	@description = "This is a use case for LPS-69325."
 	@priority = "4"
 	test ViewFieldInputWhenSwitchingTranslations {
+		property test.name.skip.portal.instance = "DDMStructureWithTranslations#ViewFieldInputWhenSwitchingTranslations";
+
 		DDLRecord.addCP();
 
 		DDLRecord.populateFieldText(

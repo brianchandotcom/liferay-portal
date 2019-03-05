@@ -128,10 +128,6 @@ public class ChainingCheck extends BaseCheck {
 			if (_isAllowedChainingMethodCall(
 					detailAST, methodCallDetailAST, chain)) {
 
-				if (chainSize > 1) {
-					_checkStyling(detailAST, methodCallDetailAST);
-				}
-
 				continue;
 			}
 
@@ -239,31 +235,6 @@ public class ChainingCheck extends BaseCheck {
 
 			log(methodCallDetailAST, _MSG_AVOID_CHAINING, methodName);
 		}
-	}
-
-	private void _checkStyling(
-		DetailAST detailAST, DetailAST methodCallDetailAST) {
-
-		if (_isInsideConstructorThisCall(methodCallDetailAST, detailAST) ||
-			DetailASTUtil.hasParentWithTokenType(
-				methodCallDetailAST, TokenTypes.SUPER_CTOR_CALL)) {
-
-			return;
-		}
-
-		for (int i = DetailASTUtil.getStartLineNumber(methodCallDetailAST) + 1;
-			 i <= DetailASTUtil.getEndLineNumber(methodCallDetailAST); i++) {
-
-			String line = StringUtil.trim(getLine(i - 1));
-
-			if (line.startsWith(").")) {
-				return;
-			}
-		}
-
-		log(
-			methodCallDetailAST, _MSG_INCORRECT_STYLING,
-			DetailASTUtil.getMethodName(methodCallDetailAST));
 	}
 
 	private DetailAST _findFirstParent(DetailAST detailAST, int... types) {
@@ -582,8 +553,6 @@ public class ChainingCheck extends BaseCheck {
 
 	private static final String _MSG_AVOID_TOO_MANY_CONCAT =
 		"concat.avoid.too.many";
-
-	private static final String _MSG_INCORRECT_STYLING = "styling.incorrect";
 
 	private String[] _allowedClassNames = new String[0];
 	private String[] _allowedMethodNames = new String[0];

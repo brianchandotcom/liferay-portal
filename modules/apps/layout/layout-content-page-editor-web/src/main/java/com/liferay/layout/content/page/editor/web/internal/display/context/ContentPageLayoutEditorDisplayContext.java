@@ -88,8 +88,7 @@ public class ContentPageLayoutEditorDisplayContext
 			SoyContextFactoryUtil.createSoyContext();
 
 		List<SegmentsEntry> segmentsEntries =
-			SegmentsEntryServiceUtil.getSegmentsEntries(
-				getGroupId(), true, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+			SegmentsEntryServiceUtil.getSegmentsEntries(getGroupId(), true);
 
 		for (SegmentsEntry segmentsEntry : segmentsEntries) {
 			SoyContext segmentsSoyContext =

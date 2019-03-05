@@ -174,7 +174,10 @@ FloatingToolbarMappingPanel.STATE = {
 
 const ConnectedFloatingToolbarMappingPanel = getConnectedComponent(
 	FloatingToolbarMappingPanel,
-	['selectedMappingTypes']
+	[
+		'mappingFieldsURL',
+		'selectedMappingTypes'
+	]
 );
 
 Soy.register(ConnectedFloatingToolbarMappingPanel, templates);

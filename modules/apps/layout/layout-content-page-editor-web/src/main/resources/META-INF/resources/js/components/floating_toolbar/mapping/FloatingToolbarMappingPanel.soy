@@ -13,17 +13,20 @@
 	{@param? _mappingSources: ?}
 	{@param? _selectedSourceId: string}
 	{@param? _specificContentKey: string}
+	{@param? mappingFieldsURL: string}
 
 	<div class="floating-toolbar-mapping-panel">
-		<div class="form-group">
-			{call .sourceSelect}
-				{param handleSourceOptionChange: $_handleSourceOptionChange /}
-				{param mappingSources: $_mappingSources /}
-				{param selectedSourceId: $_selectedSourceId /}
-			{/call}
-		</div>
+		{if $mappingFieldsURL}
+			<div class="form-group">
+				{call .sourceSelect}
+					{param handleSourceOptionChange: $_handleSourceOptionChange /}
+					{param mappingSources: $_mappingSources /}
+					{param selectedSourceId: $_selectedSourceId /}
+				{/call}
+			</div>
+		{/if}
 
-		{if $_selectedSourceId == $_specificContentKey}
+		{if not $_selectedSourceId or $_selectedSourceId == $_specificContentKey}
 			<div class="form-group floating-toolbar-mapping-panel__asset-select">
 				{call .assetSelect}
 					{param handleAssetOptionChange: $_handleAssetOptionChange /}

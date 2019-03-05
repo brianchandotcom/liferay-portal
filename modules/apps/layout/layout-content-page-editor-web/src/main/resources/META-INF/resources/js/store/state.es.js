@@ -377,6 +377,16 @@ const INITIAL_STATE = {
 		),
 
 	/**
+	 * URL for getting the list of mapping fields
+	 * @default ''
+	 * @review
+	 * @type {string}
+	 */
+	mappingFieldsURL: Config
+		.string()
+		.value(''),
+
+	/**
 	 * Portlet namespace needed for prefixing form inputs
 	 * @default ''
 	 * @review

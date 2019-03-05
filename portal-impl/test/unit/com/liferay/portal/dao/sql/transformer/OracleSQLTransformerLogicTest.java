@@ -16,6 +16,7 @@ package com.liferay.portal.dao.sql.transformer;
 
 import com.liferay.portal.dao.db.TestDB;
 import com.liferay.portal.kernel.dao.db.DBType;
+import com.liferay.portal.kernel.util.StringBundler;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -28,6 +29,23 @@ public class OracleSQLTransformerLogicTest
 
 	public OracleSQLTransformerLogicTest() {
 		super(new TestDB(DBType.ORACLE, 1, 0));
+	}
+
+	@Override
+	public String getDropTableIfExistsTextTransformedSQL() {
+		StringBundler sb = new StringBundler(9);
+
+		sb.append("BEGIN\n");
+		sb.append("EXECUTE IMMEDIATE 'DROP TABLE Foo';\n");
+		sb.append("EXCEPTION\n");
+		sb.append("WHEN OTHERS THEN\n");
+		sb.append("IF SQLCODE != -942 THEN\n");
+		sb.append("RAISE;\n");
+		sb.append("END IF;\n");
+		sb.append("END;\n");
+		sb.append("/");
+
+		return sb.toString();
 	}
 
 	@Override

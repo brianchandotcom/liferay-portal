@@ -30,6 +30,11 @@ public class SybaseSQLTransformerLogicTest
 		super(new TestSybaseDB(1, 0));
 	}
 
+	@Override
+	public String getDropTableIfExistsTextTransformedSQL() {
+		return "DROP TABLE IF EXISTS Foo";
+	}
+
 	@Test
 	public void testReplaceCastText() {
 		Assert.assertEquals(

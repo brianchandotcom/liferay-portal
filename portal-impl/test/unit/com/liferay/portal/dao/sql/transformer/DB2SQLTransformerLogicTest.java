@@ -30,6 +30,11 @@ public class DB2SQLTransformerLogicTest
 		super(new TestDB(DBType.DB2, 1, 0));
 	}
 
+	@Override
+	public String getDropTableIfExistsTextTransformedSQL() {
+		return "DROP TABLE IF EXISTS Foo";
+	}
+
 	@Test
 	public void testReplaceAlterColumnType() {
 		Assert.assertEquals(

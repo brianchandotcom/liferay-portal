@@ -78,6 +78,13 @@ public abstract class BaseSQLTransformerLogicTestCase {
 	}
 
 	@Test
+	public void testReplaceDropTableIfExistsText() {
+		Assert.assertEquals(
+			getDropTableIfExistsTextTransformedSQL(),
+			sqlTransformer.transform(getDropTableIfExistsTextOriginalSQL()));
+	}
+
+	@Test
 	public void testReplaceInstr() {
 		Assert.assertEquals(
 			getInstrTransformedSQL(),
@@ -201,6 +208,14 @@ public abstract class BaseSQLTransformerLogicTestCase {
 
 	protected String getCrossJoinTransformedSQL() {
 		return getCrossJoinOriginalSQL();
+	}
+
+	protected String getDropTableIfExistsTextOriginalSQL() {
+		return "DROP_TABLE_IF_EXISTS(Foo)";
+	}
+
+	protected String getDropTableIfExistsTextTransformedSQL() {
+		return getDropTableIfExistsTextOriginalSQL();
 	}
 
 	protected String getInstrOriginalSQL() {

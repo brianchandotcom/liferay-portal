@@ -30,6 +30,11 @@ public class PostgreSQLTransformerLogicTest
 	}
 
 	@Override
+	public String getDropTableIfExistsTextTransformedSQL() {
+		return "DROP TABLE IF EXISTS Foo";
+	}
+
+	@Override
 	@Test
 	public void testReplaceModWithExtraWhitespace() {
 		Assert.assertEquals(

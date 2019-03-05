@@ -30,6 +30,11 @@ public class SQLServerSQLTransformerLogicTest
 		super(new TestSQLServerDB(1, 0));
 	}
 
+	@Override
+	public String getDropTableIfExistsTextTransformedSQL() {
+		return "IF OBJECT_ID('Foo', 'U') IS NOT NULL DROP TABLE Foo";
+	}
+
 	@Test
 	public void testReplaceCastText() {
 		Assert.assertEquals(

@@ -37,6 +37,11 @@ public class MySQLSQLTransformerLogicTest
 			});
 	}
 
+	@Override
+	public String getDropTableIfExistsTextTransformedSQL() {
+		return "DROP TABLE IF EXISTS Foo";
+	}
+
 	@Test
 	public void testReplaceLower() {
 		Assert.assertEquals(

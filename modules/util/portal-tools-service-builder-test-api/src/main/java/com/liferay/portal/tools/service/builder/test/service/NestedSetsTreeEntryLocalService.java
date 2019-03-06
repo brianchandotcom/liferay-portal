@@ -60,6 +60,7 @@ public interface NestedSetsTreeEntryLocalService
 	 *
 	 * Never modify or reference this interface directly. Always use {@link NestedSetsTreeEntryLocalServiceUtil} to access the nested sets tree entry local service. Add custom service methods to <code>com.liferay.portal.tools.service.builder.test.service.impl.NestedSetsTreeEntryLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public NestedSetsTreeEntry addNestedSetsTreeEntry(long groupId);
 
 	/**
 	 * Adds the nested sets tree entry to the database. Also notifies the appropriate model listeners.

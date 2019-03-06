@@ -36,6 +36,14 @@ public class NestedSetsTreeEntryLocalServiceWrapper
 		_nestedSetsTreeEntryLocalService = nestedSetsTreeEntryLocalService;
 	}
 
+	@Override
+	public
+		com.liferay.portal.tools.service.builder.test.model.NestedSetsTreeEntry
+			addNestedSetsTreeEntry(long groupId) {
+
+		return _nestedSetsTreeEntryLocalService.addNestedSetsTreeEntry(groupId);
+	}
+
 	/**
 	 * Adds the nested sets tree entry to the database. Also notifies the appropriate model listeners.
 	 *

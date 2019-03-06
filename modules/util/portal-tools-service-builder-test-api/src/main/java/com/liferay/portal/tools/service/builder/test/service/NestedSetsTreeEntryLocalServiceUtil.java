@@ -40,6 +40,12 @@ public class NestedSetsTreeEntryLocalServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.portal.tools.service.builder.test.service.impl.NestedSetsTreeEntryLocalServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
+	public static
+		com.liferay.portal.tools.service.builder.test.model.NestedSetsTreeEntry
+			addNestedSetsTreeEntry(long groupId) {
+
+		return getService().addNestedSetsTreeEntry(groupId);
+	}
 
 	/**
 	 * Adds the nested sets tree entry to the database. Also notifies the appropriate model listeners.

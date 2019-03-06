@@ -132,15 +132,23 @@
 	</liferay-frontend:edit-form-footer>
 </liferay-frontend:edit-form>
 
-<aui:script>
+<script>
 	function <portlet:namespace />saveConfiguration() {
-		var Util = Liferay.Util;
+		var form = document.<portlet:namespace />fm;
 
-		var form = AUI.$(document.<portlet:namespace />fm);
+		var availableVisibleNodes = Liferay.Util.getFormElement(form, 'availableVisibleNodes');
+		var currentVisibleNodes = Liferay.Util.getFormElement(form, 'currentVisibleNodes');
 
-		form.fm('visibleNodes').val(Util.listSelect(form.fm('currentVisibleNodes')));
-		form.fm('hiddenNodes').val(Util.listSelect(form.fm('availableVisibleNodes')));
-
-		submitForm(form);
+		if (availableVisibleNodes && currentVisibleNodes) {
+			Liferay.Util.postForm(
+				form,
+				{
+					data: {
+						hiddenNodes: Liferay.Util.listSelect(availableVisibleNodes),
+						visibleNodes: Liferay.Util.listSelect(currentVisibleNodes)
+					}
+				}
+			);
+		}
 	}
-</aui:script>
+</script>

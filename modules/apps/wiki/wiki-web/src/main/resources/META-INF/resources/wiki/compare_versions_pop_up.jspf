@@ -14,12 +14,13 @@
  */
 --%>
 
-<aui:script sandbox="<%= true %>">
-	$('body').on(
+<aui:script require="metal-dom/src/dom as dom">
+	dom.delegate(
+		document.body,
 		'click',
-		'.compare-to-link a',
+		'.compare-to-link > a',
 		function(event) {
-			var currentTarget = $(event.currentTarget);
+			var currentTarget = event.delegateTarget;
 
 			Liferay.Util.selectEntity(
 				{
@@ -29,9 +30,9 @@
 						modal: true
 					},
 					eventName: '<portlet:namespace />selectVersionFm',
-					id: '<portlet:namespace />compareVersions' + currentTarget.attr('id'),
+					id: '<portlet:namespace />compareVersions' + currentTarget.id,
 					title: '<liferay-ui:message key="compare-versions" />',
-					uri: currentTarget.data('uri')
+					uri: currentTarget.dataset.uri
 				},
 				function(event) {
 					<portlet:renderURL var="compareVersionURL">

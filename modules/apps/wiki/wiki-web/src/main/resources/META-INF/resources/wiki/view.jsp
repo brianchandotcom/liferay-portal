@@ -402,17 +402,23 @@ if (portletTitleBasedNavigation) {
 					</div>
 				</liferay-ddm:template-renderer>
 
-				<aui:script sandbox="<%= true %>">
-					var toc = $('#p_p_id<portlet:namespace /> .toc');
+				<aui:script require="metal-dom/src/dom as dom">
+					var toc = document.querySelector('#p_p_id<portlet:namespace /> .toc');
 
-					var index = toc.find('.toc-index');
+					if (toc) {
+						var index = toc.querySelector('.toc-index');
 
-					toc.find('a.toc-trigger').on(
-						'click',
-						function(event) {
-							index.toggleClass('hide');
+						if (index) {
+							dom.delegate(
+								toc,
+								'click',
+								'a.toc-trigger',
+								function(event) {
+									dom.toggleClasses(index, 'hide');
+								}
+							);
 						}
-					);
+					}
 				</aui:script>
 
 				<%

@@ -93,19 +93,26 @@ boolean nodeInGroup = false;
 							</aui:select>
 						</div>
 
-						<aui:script sandbox="<%= true %>">
-							var nodeIdSelect = $('#<portlet:namespace />nodeId');
-							var pageSelectorContainer = $('#<portlet:namespace />pageSelectorContainer');
+						<script>
+							var nodeIdSelect = document.getElementById('<portlet:namespace />nodeId');
+							var pageSelectorContainer = document.getElementById('<portlet:namespace />pageSelectorContainer');
 
-							var nodeIdValue = nodeIdSelect.val();
+							if (nodeIdSelect && pageSelectorContainer) {
+								var nodeId = nodeIdSelect.value;
 
-							nodeIdSelect.on(
-								'change',
-								function() {
-									pageSelectorContainer.toggleClass('hide', nodeIdSelect.val() !== nodeIdValue);
-								}
-							);
-						</aui:script>
+								nodeIdSelect.addEventListener(
+									'change',
+									function() {
+										if (nodeIdSelect.value === nodeId) {
+											pageSelectorContainer.classList.remove('hide');
+										}
+										else {
+											pageSelectorContainer.classList.add('hide');
+										}
+									}
+								);
+							}
+						</script>
 					</c:when>
 					<c:otherwise>
 						<aui:input name="preferences--title--" type="hidden" value="<%= wikiGroupServiceConfiguration.frontPageName() %>" />

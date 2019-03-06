@@ -205,5 +205,5 @@ if (stageableGroup.isLayout()) {
 </div>
 
 <%!
-private static Log _log = LogFactoryUtil.getLog("com_liferay_asset_publisher_web.view_asset_entry_table_jsp");
+private static Log _log = LogFactoryUtil.getLog("com_liferay_asset_publisher_web.view_asset_entries_table_jsp");
 %>

@@ -21,6 +21,7 @@ import com.liferay.portal.search.aggregation.AggregationResultTranslator;
 import com.liferay.portal.search.aggregation.AggregationResults;
 import com.liferay.portal.search.aggregation.pipeline.PipelineAggregation;
 import com.liferay.portal.search.aggregation.pipeline.PipelineAggregationResultTranslator;
+import com.liferay.portal.search.document.DocumentBuilderFactory;
 import com.liferay.portal.search.elasticsearch6.internal.aggregation.AggregationResultTranslatorFactory;
 import com.liferay.portal.search.elasticsearch6.internal.aggregation.ElasticsearchAggregationResultTranslator;
 import com.liferay.portal.search.elasticsearch6.internal.aggregation.ElasticsearchAggregationResultsTranslator;
@@ -82,7 +83,8 @@ public class SearchSearchResponseAssemblerImpl
 		return new ElasticsearchAggregationResultTranslator(
 			elasticsearchAggregation, _aggregationResults,
 			new SearchHitsTranslator(
-				_searchHitBuilderFactory, _searchHitsBuilderFactory));
+				_searchHitBuilderFactory, _searchHitsBuilderFactory,
+				_documentBuilderFactory));
 	}
 
 	@Override
@@ -150,6 +152,13 @@ public class SearchSearchResponseAssemblerImpl
 		searchSearchResponse.setCount(searchHits.totalHits);
 	}
 
+	@Reference(unbind = "-")
+	protected void setDocumentBuilderFactory(
+		DocumentBuilderFactory documentBuilderFactory) {
+
+		_documentBuilderFactory = documentBuilderFactory;
+	}
+
 	protected void setScrollId(
 		SearchResponse searchResponse,
 		SearchSearchResponse searchSearchResponse) {
@@ -172,7 +181,8 @@ public class SearchSearchResponseAssemblerImpl
 		SearchSearchRequest searchSearchRequest) {
 
 		SearchHitsTranslator searchHitsTranslator = new SearchHitsTranslator(
-			_searchHitBuilderFactory, _searchHitsBuilderFactory);
+			_searchHitBuilderFactory, _searchHitsBuilderFactory,
+			_documentBuilderFactory);
 
 		org.elasticsearch.search.SearchHits elasticsearchSearchHits =
 			searchResponse.getHits();
@@ -200,6 +210,7 @@ public class SearchSearchResponseAssemblerImpl
 
 	private AggregationResults _aggregationResults;
 	private CommonSearchResponseAssembler _commonSearchResponseAssembler;
+	private DocumentBuilderFactory _documentBuilderFactory;
 	private SearchHitBuilderFactory _searchHitBuilderFactory;
 	private SearchHitsBuilderFactory _searchHitsBuilderFactory;
 	private SearchResponseTranslator _searchResponseTranslator;

@@ -791,6 +791,15 @@ public class RootProjectConfigurator implements Plugin<Project> {
 
 			});
 		initBundleTask.setDescription("Downloads and unzips the bundle.");
+		initBundleTask.setDestinationDir(
+			new Callable<File>() {
+
+				@Override
+				public File call() throws Exception {
+					return workspaceExtension.getHomeDir();
+				}
+
+			});
 		initBundleTask.setFile(
 			new Callable<File>() {
 
@@ -801,15 +810,6 @@ public class RootProjectConfigurator implements Plugin<Project> {
 
 			});
 		initBundleTask.setGroup(BUNDLE_GROUP);
-		initBundleTask.setHomeDir(
-			new Callable<File>() {
-
-				@Override
-				public File call() throws Exception {
-					return workspaceExtension.getHomeDir();
-				}
-
-			});
 		initBundleTask.setProvidedModules(configurationOsgiModules);
 
 		return initBundleTask;

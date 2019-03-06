@@ -67,8 +67,8 @@ public class InitBundleTask extends JavaExec {
 	}
 
 	@OutputDirectory
-	public File getHomeDir() {
-		return GradleUtil.toFile(getProject(), _homeDir);
+	public File getDestinationDir() {
+		return GradleUtil.toFile(getProject(), _destinationDir);
 	}
 
 	@Input
@@ -95,8 +95,8 @@ public class InitBundleTask extends JavaExec {
 		_file = file;
 	}
 
-	public void setHomeDir(Object homeDir) {
-		_homeDir = homeDir;
+	public void setDestinationDir(Object destinationDir) {
+		_destinationDir = destinationDir;
 	}
 
 	public void setProvidedModules(FileCollection providedModules) {
@@ -123,7 +123,7 @@ public class InitBundleTask extends JavaExec {
 		args.add(getConfigEnvironment());
 
 		args.add("--liferay");
-		args.add(FileUtil.getAbsolutePath(getHomeDir()));
+		args.add(FileUtil.getAbsolutePath(getDestinationDir()));
 
 		FileCollection providedModules = getProvidedModules();
 
@@ -157,8 +157,8 @@ public class InitBundleTask extends JavaExec {
 	private Object _configEnvironment =
 		BundleSupportConstants.DEFAULT_ENVIRONMENT;
 	private Object _configsDir;
+	private Object _destinationDir;
 	private Object _file;
-	private Object _homeDir;
 	private FileCollection _providedModules;
 	private Object _stripComponents =
 		BundleSupportConstants.DEFAULT_STRIP_COMPONENTS;

@@ -187,24 +187,6 @@ public class ResourceOpenAPIParser {
 		return sb.toString();
 	}
 
-	private static String _formatSingular(String name) {
-		if (Validator.isNull(name)) {
-			return name;
-		}
-
-		if (name.endsWith("ses")) {
-			name = name.substring(0, name.length() - 3) + "s";
-		}
-		else if (name.endsWith("ies")) {
-			name = name.substring(0, name.length() - 3) + "y";
-		}
-		else if (name.endsWith("s")) {
-			name = name.substring(0, name.length() - 1);
-		}
-
-		return name;
-	}
-
 	private static List<JavaMethodParameter> _getJavaMethodParameters(
 		Map<String, String> javaDataTypeMap, Operation operation) {
 
@@ -424,7 +406,7 @@ public class ResourceOpenAPIParser {
 				CamelCaseUtil.toCamelCase(
 					pathSegment.replaceAll("\\{|-id|}", "")));
 
-			if (_isPathParameter(pathSegment)) {
+			if (pathSegment.contains("{")) {
 				String previousPath = methodNameSegments.get(
 					methodNameSegments.size() - 1);
 
@@ -440,7 +422,19 @@ public class ResourceOpenAPIParser {
 				methodNameSegments.add(pathName + "Page");
 			}
 			else {
-				methodNameSegments.add(_formatSingular(pathName));
+				String name = pathName;
+
+				if (name.endsWith("ses")) {
+					name = name.substring(0, name.length() - 3) + "s";
+				}
+				else if (name.endsWith("ies")) {
+					name = name.substring(0, name.length() - 3) + "y";
+				}
+				else if (name.endsWith("s")) {
+					name = name.substring(0, name.length() - 1);
+				}
+
+				methodNameSegments.add(name);
 			}
 		}
 
@@ -563,10 +557,6 @@ public class ResourceOpenAPIParser {
 		}
 
 		return boolean.class.getName();
-	}
-
-	private static boolean _isPathParameter(String pathSegment) {
-		return pathSegment.contains("{");
 	}
 
 	private static boolean _isSchemaMethod(

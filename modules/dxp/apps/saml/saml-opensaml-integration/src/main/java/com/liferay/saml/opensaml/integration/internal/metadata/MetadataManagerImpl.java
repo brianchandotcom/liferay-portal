@@ -555,36 +555,6 @@ public class MetadataManagerImpl
 			return false;
 		}
 
-		for (SamlSpIdpConnection samlSpIdpConnection : samlSpIdpConnections) {
-			try {
-				RoleDescriptor roleDescriptor =
-					_predicateRoleDescriptorResolver.resolveSingle(
-						new CriteriaSet(
-							new EntityIdCriterion(
-								samlSpIdpConnection.getSamlIdpEntityId()),
-							new EntityRoleCriterion(
-								IDPSSODescriptor.DEFAULT_ELEMENT_NAME),
-							new ProtocolCriterion(SAMLConstants.SAML20P_NS)));
-
-				if (roleDescriptor == null) {
-					return false;
-				}
-			}
-			catch (ResolverException re) {
-				String message =
-					"Unable to get metadata information: " + re.getMessage();
-
-				if (_log.isDebugEnabled()) {
-					_log.debug(message, re);
-				}
-				else if (_log.isWarnEnabled()) {
-					_log.warn(message);
-				}
-
-				return false;
-			}
-		}
-
 		return true;
 	}
 

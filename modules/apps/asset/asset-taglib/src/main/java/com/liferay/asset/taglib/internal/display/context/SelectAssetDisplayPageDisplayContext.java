@@ -208,6 +208,30 @@ public class SelectAssetDisplayPageDisplayContext {
 		return StringPool.BLANK;
 	}
 
+	public int getAssetDisplayPageType() {
+		if (_displayPageType != null) {
+			return _displayPageType;
+		}
+
+		if (_classPK == 0) {
+			_displayPageType = AssetDisplayPageConstants.TYPE_DEFAULT;
+
+			return _displayPageType;
+		}
+
+		AssetDisplayPageEntry assetDisplayPageEntry =
+			_getAssetDisplayPageEntry();
+
+		if (assetDisplayPageEntry == null) {
+			_displayPageType = AssetDisplayPageConstants.TYPE_NONE;
+		}
+		else {
+			_displayPageType = assetDisplayPageEntry.getType();
+		}
+
+		return _displayPageType;
+	}
+
 	public String getAssetTypeName() throws PortalException {
 		if (Validator.isNotNull(_assetTypeName)) {
 			return _assetTypeName;
@@ -291,7 +315,7 @@ public class SelectAssetDisplayPageDisplayContext {
 	}
 
 	public boolean isAssetDisplayPageTypeDefault() {
-		if (_getAssetDisplayPageType() ==
+		if (getAssetDisplayPageType() ==
 				AssetDisplayPageConstants.TYPE_DEFAULT) {
 
 			return true;
@@ -301,7 +325,7 @@ public class SelectAssetDisplayPageDisplayContext {
 	}
 
 	public boolean isAssetDisplayPageTypeNone() {
-		if (_getAssetDisplayPageType() == AssetDisplayPageConstants.TYPE_NONE) {
+		if (getAssetDisplayPageType() == AssetDisplayPageConstants.TYPE_NONE) {
 			return true;
 		}
 
@@ -309,7 +333,7 @@ public class SelectAssetDisplayPageDisplayContext {
 	}
 
 	public boolean isAssetDisplayPageTypeSpecific() {
-		if (_getAssetDisplayPageType() ==
+		if (getAssetDisplayPageType() ==
 				AssetDisplayPageConstants.TYPE_SPECIFIC) {
 
 			return true;
@@ -370,30 +394,6 @@ public class SelectAssetDisplayPageDisplayContext {
 		}
 
 		return layoutPageTemplateEntry.getName();
-	}
-
-	private int _getAssetDisplayPageType() {
-		if (_displayPageType != null) {
-			return _displayPageType;
-		}
-
-		if (_classPK == 0) {
-			_displayPageType = AssetDisplayPageConstants.TYPE_DEFAULT;
-
-			return _displayPageType;
-		}
-
-		AssetDisplayPageEntry assetDisplayPageEntry =
-			_getAssetDisplayPageEntry();
-
-		if (assetDisplayPageEntry == null) {
-			_displayPageType = AssetDisplayPageConstants.TYPE_NONE;
-		}
-		else {
-			_displayPageType = assetDisplayPageEntry.getType();
-		}
-
-		return _displayPageType;
 	}
 
 	private String _getLayoutBreadcrumb(Layout layout) throws Exception {

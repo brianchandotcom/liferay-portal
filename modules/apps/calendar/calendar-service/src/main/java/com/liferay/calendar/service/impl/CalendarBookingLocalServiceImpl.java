@@ -275,6 +275,11 @@ public class CalendarBookingLocalServiceImpl
 				serviceContext);
 		}
 
+		calendarBooking.setCreateDate(serviceContext.getCreateDate(now));
+		calendarBooking.setModifiedDate(serviceContext.getModifiedDate(now));
+
+		calendarBookingPersistence.update(calendarBooking);
+
 		return calendarBooking;
 	}
 

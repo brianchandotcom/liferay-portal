@@ -26,10 +26,6 @@ import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.util.TransformUtil;
 
-import io.swagger.v3.oas.annotations.Parameter;
-import io.swagger.v3.oas.annotations.Parameters;
-import io.swagger.v3.oas.annotations.enums.ParameterIn;
-
 import java.net.URI;
 
 import java.util.Collections;
@@ -57,16 +53,18 @@ import javax.ws.rs.core.UriInfo;
 @Path("/v1.0")
 public abstract class BaseCommentResourceImpl implements CommentResource {
 
+	@DELETE
 	@Override
+	@Path("/comments/{comment-id}")
+	@Produces("application/json")
+	public boolean deleteComment(@PathParam("comment-id") Long commentId)
+		throws Exception {
+
+		return false;
+	}
+
 	@GET
-	@Parameters(
-		value = {
-			@Parameter(in = ParameterIn.QUERY, name = "filter"),
-			@Parameter(in = ParameterIn.QUERY, name = "page"),
-			@Parameter(in = ParameterIn.QUERY, name = "pageSize"),
-			@Parameter(in = ParameterIn.QUERY, name = "sorts")
-		}
-	)
+	@Override
 	@Path("/blog-postings/{blog-posting-id}/comments")
 	@Produces("application/json")
 	public Page<Comment> getBlogPostingCommentsPage(
@@ -78,30 +76,8 @@ public abstract class BaseCommentResourceImpl implements CommentResource {
 		return Page.of(Collections.emptyList());
 	}
 
-	@Override
-	@Consumes("application/json")
-	@POST
-	@Path("/blog-postings/{blog-posting-id}/comments")
-	@Produces("application/json")
-	public Comment postBlogPostingComment(
-			@PathParam("blog-posting-id") Long blogPostingId, Comment comment)
-		throws Exception {
-
-		return new Comment();
-	}
-
-	@Override
-	@DELETE
-	@Path("/comments/{comment-id}")
-	@Produces("application/json")
-	public boolean deleteComment(@PathParam("comment-id") Long commentId)
-		throws Exception {
-
-		return false;
-	}
-
-	@Override
 	@GET
+	@Override
 	@Path("/comments/{comment-id}")
 	@Produces("application/json")
 	public Comment getComment(@PathParam("comment-id") Long commentId)
@@ -110,28 +86,8 @@ public abstract class BaseCommentResourceImpl implements CommentResource {
 		return new Comment();
 	}
 
-	@Override
-	@Consumes("application/json")
-	@PUT
-	@Path("/comments/{comment-id}")
-	@Produces("application/json")
-	public Comment putComment(
-			@PathParam("comment-id") Long commentId, Comment comment)
-		throws Exception {
-
-		return new Comment();
-	}
-
-	@Override
 	@GET
-	@Parameters(
-		value = {
-			@Parameter(in = ParameterIn.QUERY, name = "filter"),
-			@Parameter(in = ParameterIn.QUERY, name = "page"),
-			@Parameter(in = ParameterIn.QUERY, name = "pageSize"),
-			@Parameter(in = ParameterIn.QUERY, name = "sorts")
-		}
-	)
+	@Override
 	@Path("/comments/{comment-id}/comments")
 	@Produces("application/json")
 	public Page<Comment> getCommentCommentsPage(
@@ -142,12 +98,36 @@ public abstract class BaseCommentResourceImpl implements CommentResource {
 		return Page.of(Collections.emptyList());
 	}
 
-	@Override
 	@Consumes("application/json")
+	@Override
+	@Path("/blog-postings/{blog-posting-id}/comments")
 	@POST
+	@Produces("application/json")
+	public Comment postBlogPostingComment(
+			@PathParam("blog-posting-id") Long blogPostingId, Comment comment)
+		throws Exception {
+
+		return new Comment();
+	}
+
+	@Consumes("application/json")
+	@Override
 	@Path("/comments/{comment-id}/comments")
+	@POST
 	@Produces("application/json")
 	public Comment postCommentComment(
+			@PathParam("comment-id") Long commentId, Comment comment)
+		throws Exception {
+
+		return new Comment();
+	}
+
+	@Consumes("application/json")
+	@Override
+	@Path("/comments/{comment-id}")
+	@Produces("application/json")
+	@PUT
+	public Comment putComment(
 			@PathParam("comment-id") Long commentId, Comment comment)
 		throws Exception {
 

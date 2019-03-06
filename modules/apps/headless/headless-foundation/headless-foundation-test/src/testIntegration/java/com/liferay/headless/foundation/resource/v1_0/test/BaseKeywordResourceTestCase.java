@@ -31,6 +31,7 @@ import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.HttpUtil;
+import com.liferay.portal.kernel.util.URLCodec;
 import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.test.rule.Inject;
@@ -98,6 +99,15 @@ public abstract class BaseKeywordResourceTestCase {
 	@After
 	public void tearDown() throws Exception {
 		GroupTestUtil.deleteGroup(testGroup);
+	}
+
+	@Test
+	public void testDeleteKeyword() throws Exception {
+		Keyword keyword = testDeleteKeyword_addKeyword();
+
+		assertResponseCode(200, invokeDeleteKeywordResponse(keyword.getId()));
+
+		assertResponseCode(404, invokeGetKeywordResponse(keyword.getId()));
 	}
 
 	@Test
@@ -178,8 +188,6 @@ public abstract class BaseKeywordResourceTestCase {
 
 		Keyword keyword1 = testGetContentSpaceKeywordsPage_addKeyword(
 			contentSpaceId, randomKeyword());
-
-		@SuppressWarnings("PMD.UnusedLocalVariable")
 		Keyword keyword2 = testGetContentSpaceKeywordsPage_addKeyword(
 			contentSpaceId, randomKeyword());
 
@@ -330,77 +338,14 @@ public abstract class BaseKeywordResourceTestCase {
 		}
 	}
 
-	protected Keyword testGetContentSpaceKeywordsPage_addKeyword(
-			Long contentSpaceId, Keyword keyword)
-		throws Exception {
+	@Test
+	public void testGetKeyword() throws Exception {
+		Keyword postKeyword = testGetKeyword_addKeyword();
 
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
+		Keyword getKeyword = invokeGetKeyword(postKeyword.getId());
 
-	protected Long testGetContentSpaceKeywordsPage_getContentSpaceId()
-		throws Exception {
-
-		return testGroup.getGroupId();
-	}
-
-	protected Page<Keyword> invokeGetContentSpaceKeywordsPage(
-			Long contentSpaceId, String filterString, Pagination pagination,
-			String sortString)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		String location =
-			_resourceURL +
-				_toPath(
-					"/content-spaces/{content-space-id}/keywords",
-					contentSpaceId);
-
-		location = HttpUtil.addParameter(location, "filter", filterString);
-
-		location = HttpUtil.addParameter(
-			location, "page", pagination.getPage());
-		location = HttpUtil.addParameter(
-			location, "pageSize", pagination.getPageSize());
-
-		location = HttpUtil.addParameter(location, "sort", sortString);
-
-		options.setLocation(location);
-
-		return _outputObjectMapper.readValue(
-			HttpUtil.URLtoString(options),
-			new TypeReference<Page<Keyword>>() {
-			});
-	}
-
-	protected Http.Response invokeGetContentSpaceKeywordsPageResponse(
-			Long contentSpaceId, String filterString, Pagination pagination,
-			String sortString)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		String location =
-			_resourceURL +
-				_toPath(
-					"/content-spaces/{content-space-id}/keywords",
-					contentSpaceId);
-
-		location = HttpUtil.addParameter(location, "filter", filterString);
-
-		location = HttpUtil.addParameter(
-			location, "page", pagination.getPage());
-		location = HttpUtil.addParameter(
-			location, "pageSize", pagination.getPageSize());
-
-		location = HttpUtil.addParameter(location, "sort", sortString);
-
-		options.setLocation(location);
-
-		HttpUtil.URLtoString(options);
-
-		return options.getResponse();
+		assertEquals(postKeyword, getKeyword);
+		assertValid(getKeyword);
 	}
 
 	@Test
@@ -412,149 +357,6 @@ public abstract class BaseKeywordResourceTestCase {
 
 		assertEquals(randomKeyword, postKeyword);
 		assertValid(postKeyword);
-	}
-
-	protected Keyword testPostContentSpaceKeyword_addKeyword(Keyword keyword)
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	protected Keyword invokePostContentSpaceKeyword(
-			Long contentSpaceId, Keyword keyword)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		options.setBody(
-			_inputObjectMapper.writeValueAsString(keyword),
-			ContentTypes.APPLICATION_JSON, StringPool.UTF8);
-
-		String location =
-			_resourceURL +
-				_toPath(
-					"/content-spaces/{content-space-id}/keywords",
-					contentSpaceId);
-
-		options.setLocation(location);
-
-		options.setPost(true);
-
-		return _outputObjectMapper.readValue(
-			HttpUtil.URLtoString(options), Keyword.class);
-	}
-
-	protected Http.Response invokePostContentSpaceKeywordResponse(
-			Long contentSpaceId, Keyword keyword)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		options.setBody(
-			_inputObjectMapper.writeValueAsString(keyword),
-			ContentTypes.APPLICATION_JSON, StringPool.UTF8);
-
-		String location =
-			_resourceURL +
-				_toPath(
-					"/content-spaces/{content-space-id}/keywords",
-					contentSpaceId);
-
-		options.setLocation(location);
-
-		options.setPost(true);
-
-		HttpUtil.URLtoString(options);
-
-		return options.getResponse();
-	}
-
-	@Test
-	public void testDeleteKeyword() throws Exception {
-		Keyword keyword = testDeleteKeyword_addKeyword();
-
-		assertResponseCode(200, invokeDeleteKeywordResponse(keyword.getId()));
-
-		assertResponseCode(404, invokeGetKeywordResponse(keyword.getId()));
-	}
-
-	protected Keyword testDeleteKeyword_addKeyword() throws Exception {
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	protected boolean invokeDeleteKeyword(Long keywordId) throws Exception {
-		Http.Options options = _createHttpOptions();
-
-		options.setDelete(true);
-
-		String location =
-			_resourceURL + _toPath("/keywords/{keyword-id}", keywordId);
-
-		options.setLocation(location);
-
-		return _outputObjectMapper.readValue(
-			HttpUtil.URLtoString(options), Boolean.class);
-	}
-
-	protected Http.Response invokeDeleteKeywordResponse(Long keywordId)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		options.setDelete(true);
-
-		String location =
-			_resourceURL + _toPath("/keywords/{keyword-id}", keywordId);
-
-		options.setLocation(location);
-
-		HttpUtil.URLtoString(options);
-
-		return options.getResponse();
-	}
-
-	@Test
-	public void testGetKeyword() throws Exception {
-		Keyword postKeyword = testGetKeyword_addKeyword();
-
-		Keyword getKeyword = invokeGetKeyword(postKeyword.getId());
-
-		assertEquals(postKeyword, getKeyword);
-		assertValid(getKeyword);
-	}
-
-	protected Keyword testGetKeyword_addKeyword() throws Exception {
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	protected Keyword invokeGetKeyword(Long keywordId) throws Exception {
-		Http.Options options = _createHttpOptions();
-
-		String location =
-			_resourceURL + _toPath("/keywords/{keyword-id}", keywordId);
-
-		options.setLocation(location);
-
-		return _outputObjectMapper.readValue(
-			HttpUtil.URLtoString(options), Keyword.class);
-	}
-
-	protected Http.Response invokeGetKeywordResponse(Long keywordId)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		String location =
-			_resourceURL + _toPath("/keywords/{keyword-id}", keywordId);
-
-		options.setLocation(location);
-
-		HttpUtil.URLtoString(options);
-
-		return options.getResponse();
 	}
 
 	@Test
@@ -573,60 +375,6 @@ public abstract class BaseKeywordResourceTestCase {
 
 		assertEquals(randomKeyword, getKeyword);
 		assertValid(getKeyword);
-	}
-
-	protected Keyword testPutKeyword_addKeyword() throws Exception {
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	protected Keyword invokePutKeyword(Long keywordId, Keyword keyword)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		options.setBody(
-			_inputObjectMapper.writeValueAsString(keyword),
-			ContentTypes.APPLICATION_JSON, StringPool.UTF8);
-
-		String location =
-			_resourceURL + _toPath("/keywords/{keyword-id}", keywordId);
-
-		options.setLocation(location);
-
-		options.setPut(true);
-
-		return _outputObjectMapper.readValue(
-			HttpUtil.URLtoString(options), Keyword.class);
-	}
-
-	protected Http.Response invokePutKeywordResponse(
-			Long keywordId, Keyword keyword)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		options.setBody(
-			_inputObjectMapper.writeValueAsString(keyword),
-			ContentTypes.APPLICATION_JSON, StringPool.UTF8);
-
-		String location =
-			_resourceURL + _toPath("/keywords/{keyword-id}", keywordId);
-
-		options.setLocation(location);
-
-		options.setPut(true);
-
-		HttpUtil.URLtoString(options);
-
-		return options.getResponse();
-	}
-
-	protected void assertResponseCode(
-		int expectedResponseCode, Http.Response actualResponse) {
-
-		Assert.assertEquals(
-			expectedResponseCode, actualResponse.getResponseCode());
 	}
 
 	protected void assertEquals(Keyword keyword1, Keyword keyword2) {
@@ -669,6 +417,13 @@ public abstract class BaseKeywordResourceTestCase {
 		}
 	}
 
+	protected void assertResponseCode(
+		int expectedResponseCode, Http.Response actualResponse) {
+
+		Assert.assertEquals(
+			expectedResponseCode, actualResponse.getResponseCode());
+	}
+
 	protected void assertValid(Keyword keyword) {
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
@@ -681,8 +436,8 @@ public abstract class BaseKeywordResourceTestCase {
 
 		int size = keywords.size();
 
-		if ((page.getLastPage() > 0) && (page.getPage() > 0) &&
-			(page.getPageSize() > 0) && (page.getTotalCount() > 0) &&
+		if ((page.getItemsPerPage() > 0) && (page.getLastPageNumber() > 0) &&
+			(page.getPageNumber() > 0) && (page.getTotalCount() > 0) &&
 			(size > 0)) {
 
 			valid = true;
@@ -788,6 +543,172 @@ public abstract class BaseKeywordResourceTestCase {
 			"Invalid entity field " + entityFieldName);
 	}
 
+	protected boolean invokeDeleteKeyword(Long keywordId) throws Exception {
+		Http.Options options = _createHttpOptions();
+
+		options.setDelete(true);
+
+		options.setLocation(
+			_resourceURL + _toPath("/keywords/{keyword-id}", keywordId));
+
+		return _outputObjectMapper.readValue(
+			HttpUtil.URLtoString(options), Boolean.class);
+	}
+
+	protected Http.Response invokeDeleteKeywordResponse(Long keywordId)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		options.setDelete(true);
+
+		options.setLocation(
+			_resourceURL + _toPath("/keywords/{keyword-id}", keywordId));
+
+		HttpUtil.URLtoString(options);
+
+		return options.getResponse();
+	}
+
+	protected Page<Keyword> invokeGetContentSpaceKeywordsPage(
+			Long contentSpaceId, String filterString, Pagination pagination,
+			String sortString)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		options.setLocation(
+			_getContentSpaceKeywordsLocation(
+				contentSpaceId, filterString, pagination, sortString));
+
+		return _outputObjectMapper.readValue(
+			HttpUtil.URLtoString(options),
+			new TypeReference<Page<Keyword>>() {
+			});
+	}
+
+	protected Http.Response invokeGetContentSpaceKeywordsPageResponse(
+			Long contentSpaceId, String filterString, Pagination pagination,
+			String sortString)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		options.setLocation(
+			_getContentSpaceKeywordsLocation(
+				contentSpaceId, filterString, pagination, sortString));
+
+		HttpUtil.URLtoString(options);
+
+		return options.getResponse();
+	}
+
+	protected Keyword invokeGetKeyword(Long keywordId) throws Exception {
+		Http.Options options = _createHttpOptions();
+
+		options.setLocation(
+			_resourceURL + _toPath("/keywords/{keyword-id}", keywordId));
+
+		return _outputObjectMapper.readValue(
+			HttpUtil.URLtoString(options), Keyword.class);
+	}
+
+	protected Http.Response invokeGetKeywordResponse(Long keywordId)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		options.setLocation(
+			_resourceURL + _toPath("/keywords/{keyword-id}", keywordId));
+
+		HttpUtil.URLtoString(options);
+
+		return options.getResponse();
+	}
+
+	protected Keyword invokePostContentSpaceKeyword(
+			Long contentSpaceId, Keyword keyword)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		options.setBody(
+			_inputObjectMapper.writeValueAsString(keyword),
+			ContentTypes.APPLICATION_JSON, StringPool.UTF8);
+
+		options.setLocation(
+			_resourceURL +
+				_toPath(
+					"/content-spaces/{content-space-id}/keywords",
+					contentSpaceId));
+
+		options.setPost(true);
+
+		return _outputObjectMapper.readValue(
+			HttpUtil.URLtoString(options), Keyword.class);
+	}
+
+	protected Http.Response invokePostContentSpaceKeywordResponse(
+			Long contentSpaceId, Keyword keyword)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		options.setBody(
+			_inputObjectMapper.writeValueAsString(keyword),
+			ContentTypes.APPLICATION_JSON, StringPool.UTF8);
+
+		options.setLocation(
+			_resourceURL +
+				_toPath(
+					"/content-spaces/{content-space-id}/keywords",
+					contentSpaceId));
+
+		options.setPost(true);
+
+		HttpUtil.URLtoString(options);
+
+		return options.getResponse();
+	}
+
+	protected Keyword invokePutKeyword(Long keywordId, Keyword keyword)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		options.setBody(
+			_inputObjectMapper.writeValueAsString(keyword),
+			ContentTypes.APPLICATION_JSON, StringPool.UTF8);
+
+		options.setLocation(
+			_resourceURL + _toPath("/keywords/{keyword-id}", keywordId));
+
+		options.setPut(true);
+
+		return _outputObjectMapper.readValue(
+			HttpUtil.URLtoString(options), Keyword.class);
+	}
+
+	protected Http.Response invokePutKeywordResponse(
+			Long keywordId, Keyword keyword)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		options.setBody(
+			_inputObjectMapper.writeValueAsString(keyword),
+			ContentTypes.APPLICATION_JSON, StringPool.UTF8);
+
+		options.setLocation(
+			_resourceURL + _toPath("/keywords/{keyword-id}", keywordId));
+
+		options.setPut(true);
+
+		HttpUtil.URLtoString(options);
+
+		return options.getResponse();
+	}
+
 	protected Keyword randomKeyword() {
 		return new Keyword() {
 			{
@@ -800,6 +721,42 @@ public abstract class BaseKeywordResourceTestCase {
 		};
 	}
 
+	protected Keyword testDeleteKeyword_addKeyword() throws Exception {
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected Keyword testGetContentSpaceKeywordsPage_addKeyword(
+			Long contentSpaceId, Keyword keyword)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected Long testGetContentSpaceKeywordsPage_getContentSpaceId()
+		throws Exception {
+
+		return testGroup.getGroupId();
+	}
+
+	protected Keyword testGetKeyword_addKeyword() throws Exception {
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected Keyword testPostContentSpaceKeyword_addKeyword(Keyword keyword)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected Keyword testPutKeyword_addKeyword() throws Exception {
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
 	protected Group testGroup;
 
 	protected static class Page<T> {
@@ -808,16 +765,16 @@ public abstract class BaseKeywordResourceTestCase {
 			return new ArrayList<>(items);
 		}
 
-		public long getLastPage() {
-			return lastPage;
+		public long getItemsPerPage() {
+			return itemsPerPage;
 		}
 
-		public long getPage() {
-			return page;
+		public long getLastPageNumber() {
+			return lastPageNumber;
 		}
 
-		public long getPageSize() {
-			return pageSize;
+		public long getPageNumber() {
+			return pageNumber;
 		}
 
 		public long getTotalCount() {
@@ -827,14 +784,14 @@ public abstract class BaseKeywordResourceTestCase {
 		@JsonProperty
 		protected Collection<T> items;
 
-		@JsonProperty
-		protected long lastPage;
+		@JsonProperty("pageSize")
+		protected long itemsPerPage;
 
 		@JsonProperty
-		protected long page;
+		protected long lastPageNumber;
 
-		@JsonProperty
-		protected long pageSize;
+		@JsonProperty("page")
+		protected long pageNumber;
 
 		@JsonProperty
 		protected long totalCount;
@@ -859,17 +816,35 @@ public abstract class BaseKeywordResourceTestCase {
 		return options;
 	}
 
+	private String _getContentSpaceKeywordsLocation(
+		Long contentSpaceId, String filterString, Pagination pagination,
+		String sortString) {
+
+		String url =
+			_resourceURL +
+				_toPath(
+					"/content-spaces/{content-space-id}/keywords",
+					contentSpaceId);
+
+		url += "?filter=" + URLCodec.encodeURL(filterString);
+		url += "&page=" + pagination.getPageNumber();
+		url += "&pageSize=" + pagination.getItemsPerPage();
+		url += "&sort=" + URLCodec.encodeURL(sortString);
+
+		return url;
+	}
+
 	private String _toPath(String template, Object value) {
 		return template.replaceFirst("\\{.*\\}", String.valueOf(value));
 	}
 
 	private static DateFormat _dateFormat;
-	private final static ObjectMapper _inputObjectMapper = new ObjectMapper() {
+	private static final ObjectMapper _inputObjectMapper = new ObjectMapper() {
 		{
 			setSerializationInclusion(JsonInclude.Include.NON_NULL);
 		}
 	};
-	private final static ObjectMapper _outputObjectMapper = new ObjectMapper();
+	private static final ObjectMapper _outputObjectMapper = new ObjectMapper();
 
 	@Inject
 	private KeywordResource _keywordResource;

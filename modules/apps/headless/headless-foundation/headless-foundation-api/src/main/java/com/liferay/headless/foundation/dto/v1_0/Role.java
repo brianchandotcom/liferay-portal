@@ -35,12 +35,39 @@ import javax.xml.bind.annotation.XmlRootElement;
  */
 @Generated("")
 @GraphQLName("Role")
-//@JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "Role")
-public class Role  {
+public class Role {
 
 	public String[] getAvailableLanguages() {
 		return availableLanguages;
+	}
+
+	public Creator getCreator() {
+		return creator;
+	}
+
+	public Date getDateCreated() {
+		return dateCreated;
+	}
+
+	public Date getDateModified() {
+		return dateModified;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public String getRoleType() {
+		return roleType;
 	}
 
 	public void setAvailableLanguages(String[] availableLanguages) {
@@ -59,14 +86,6 @@ public class Role  {
 		}
 	}
 
-	@GraphQLField
-	@JsonProperty
-	protected String[] availableLanguages;
-
-	public Creator getCreator() {
-		return creator;
-	}
-
 	public void setCreator(Creator creator) {
 		this.creator = creator;
 	}
@@ -81,14 +100,6 @@ public class Role  {
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
-	}
-
-	@GraphQLField
-	@JsonProperty
-	protected Creator creator;
-
-	public Date getDateCreated() {
-		return dateCreated;
 	}
 
 	public void setDateCreated(Date dateCreated) {
@@ -107,14 +118,6 @@ public class Role  {
 		}
 	}
 
-	@GraphQLField
-	@JsonProperty
-	protected Date dateCreated;
-
-	public Date getDateModified() {
-		return dateModified;
-	}
-
 	public void setDateModified(Date dateModified) {
 		this.dateModified = dateModified;
 	}
@@ -129,14 +132,6 @@ public class Role  {
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
-	}
-
-	@GraphQLField
-	@JsonProperty
-	protected Date dateModified;
-
-	public String getDescription() {
-		return description;
 	}
 
 	public void setDescription(String description) {
@@ -155,14 +150,6 @@ public class Role  {
 		}
 	}
 
-	@GraphQLField
-	@JsonProperty
-	protected String description;
-
-	public Long getId() {
-		return id;
-	}
-
 	public void setId(Long id) {
 		this.id = id;
 	}
@@ -177,14 +164,6 @@ public class Role  {
 		}
 	}
 
-	@GraphQLField
-	@JsonProperty
-	protected Long id;
-
-	public String getName() {
-		return name;
-	}
-
 	public void setName(String name) {
 		this.name = name;
 	}
@@ -197,14 +176,6 @@ public class Role  {
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
-	}
-
-	@GraphQLField
-	@JsonProperty
-	protected String name;
-
-	public String getRoleType() {
-		return roleType;
 	}
 
 	public void setRoleType(String roleType) {
@@ -223,36 +194,16 @@ public class Role  {
 		}
 	}
 
-	@GraphQLField
-	@JsonProperty
-	protected String roleType;
-
 	public String toString() {
-		StringBundler sb = new StringBundler();
+		StringBundler sb = new StringBundler(37);
 
 		sb.append("{");
 
 		sb.append("\"availableLanguages\": ");
 
-		if (availableLanguages == null) {
-			sb.append("null");
-		}
-		else {
-			sb.append("[");
-
-			for (int i = 0; i < availableLanguages.length; i++) {
-				sb.append("\"");
-				sb.append(availableLanguages[i]);
-				sb.append("\"");
-
-				if ((i + 1) < availableLanguages.length) {
-					sb.append(", ");
-				}
-			}
-
-			sb.append("]");
-		}
-
+		sb.append("\"");
+		sb.append(availableLanguages);
+		sb.append("\"");
 		sb.append(", ");
 
 		sb.append("\"creator\": ");
@@ -303,5 +254,37 @@ public class Role  {
 
 		return sb.toString();
 	}
+
+	@GraphQLField
+	@JsonProperty
+	protected String[] availableLanguages;
+
+	@GraphQLField
+	@JsonProperty
+	protected Creator creator;
+
+	@GraphQLField
+	@JsonProperty
+	protected Date dateCreated;
+
+	@GraphQLField
+	@JsonProperty
+	protected Date dateModified;
+
+	@GraphQLField
+	@JsonProperty
+	protected String description;
+
+	@GraphQLField
+	@JsonProperty
+	protected Long id;
+
+	@GraphQLField
+	@JsonProperty
+	protected String name;
+
+	@GraphQLField
+	@JsonProperty
+	protected String roleType;
 
 }

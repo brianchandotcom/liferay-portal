@@ -153,62 +153,6 @@ public abstract class BasePhoneResourceTestCase {
 			});
 	}
 
-	protected Phone testGetGenericParentPhonesPage_addPhone(
-			Object genericParentId, Phone phone)
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	protected Object testGetGenericParentPhonesPage_getGenericParentId()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	protected Page<Phone> invokeGetGenericParentPhonesPage(
-			Object genericParentId, Pagination pagination)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		String location = _resourceURL + _toPath("/phones", genericParentId);
-
-		location = HttpUtil.addParameter(
-			location, "page", pagination.getPage());
-		location = HttpUtil.addParameter(
-			location, "pageSize", pagination.getPageSize());
-
-		options.setLocation(location);
-
-		return _outputObjectMapper.readValue(
-			HttpUtil.URLtoString(options),
-			new TypeReference<Page<Phone>>() {
-			});
-	}
-
-	protected Http.Response invokeGetGenericParentPhonesPageResponse(
-			Object genericParentId, Pagination pagination)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		String location = _resourceURL + _toPath("/phones", genericParentId);
-
-		location = HttpUtil.addParameter(
-			location, "page", pagination.getPage());
-		location = HttpUtil.addParameter(
-			location, "pageSize", pagination.getPageSize());
-
-		options.setLocation(location);
-
-		HttpUtil.URLtoString(options);
-
-		return options.getResponse();
-	}
-
 	@Test
 	public void testGetPhone() throws Exception {
 		Phone postPhone = testGetPhone_addPhone();
@@ -217,48 +161,6 @@ public abstract class BasePhoneResourceTestCase {
 
 		assertEquals(postPhone, getPhone);
 		assertValid(getPhone);
-	}
-
-	protected Phone testGetPhone_addPhone() throws Exception {
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	protected Phone invokeGetPhone(Long phoneId) throws Exception {
-		Http.Options options = _createHttpOptions();
-
-		String location = _resourceURL + _toPath("/phones/{phone-id}", phoneId);
-
-		options.setLocation(location);
-
-		return _outputObjectMapper.readValue(
-			HttpUtil.URLtoString(options), Phone.class);
-	}
-
-	protected Http.Response invokeGetPhoneResponse(Long phoneId)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		String location = _resourceURL + _toPath("/phones/{phone-id}", phoneId);
-
-		options.setLocation(location);
-
-		HttpUtil.URLtoString(options);
-
-		return options.getResponse();
-	}
-
-	protected void assertResponseCode(
-		int expectedResponseCode, Http.Response actualResponse) {
-
-		Assert.assertEquals(
-			expectedResponseCode, actualResponse.getResponseCode());
-	}
-
-	protected void assertEquals(Phone phone1, Phone phone2) {
-		Assert.assertTrue(
-			phone1 + " does not equal " + phone2, equals(phone1, phone2));
 	}
 
 	protected void assertEquals(List<Phone> phones1, List<Phone> phones2) {
@@ -270,6 +172,11 @@ public abstract class BasePhoneResourceTestCase {
 
 			assertEquals(phone1, phone2);
 		}
+	}
+
+	protected void assertEquals(Phone phone1, Phone phone2) {
+		Assert.assertTrue(
+			phone1 + " does not equal " + phone2, equals(phone1, phone2));
 	}
 
 	protected void assertEqualsIgnoringOrder(
@@ -293,9 +200,11 @@ public abstract class BasePhoneResourceTestCase {
 		}
 	}
 
-	protected void assertValid(Phone phone) {
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+	protected void assertResponseCode(
+		int expectedResponseCode, Http.Response actualResponse) {
+
+		Assert.assertEquals(
+			expectedResponseCode, actualResponse.getResponseCode());
 	}
 
 	protected void assertValid(Page<Phone> page) {
@@ -305,14 +214,19 @@ public abstract class BasePhoneResourceTestCase {
 
 		int size = phones.size();
 
-		if ((page.getLastPage() > 0) && (page.getPage() > 0) &&
-			(page.getPageSize() > 0) && (page.getTotalCount() > 0) &&
+		if ((page.getItemsPerPage() > 0) && (page.getLastPageNumber() > 0) &&
+			(page.getPageNumber() > 0) && (page.getTotalCount() > 0) &&
 			(size > 0)) {
 
 			valid = true;
 		}
 
 		Assert.assertTrue(valid);
+	}
+
+	protected void assertValid(Phone phone) {
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	protected boolean equals(Phone phone1, Phone phone2) {
@@ -401,6 +315,56 @@ public abstract class BasePhoneResourceTestCase {
 			"Invalid entity field " + entityFieldName);
 	}
 
+	protected Page<Phone> invokeGetGenericParentPhonesPage(
+			Object genericParentId, Pagination pagination)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		options.setLocation(_resourceURL + _toPath("/phones", genericParentId));
+
+		return _outputObjectMapper.readValue(
+			HttpUtil.URLtoString(options),
+			new TypeReference<Page<Phone>>() {
+			});
+	}
+
+	protected Http.Response invokeGetGenericParentPhonesPageResponse(
+			Object genericParentId, Pagination pagination)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		options.setLocation(_resourceURL + _toPath("/phones", genericParentId));
+
+		HttpUtil.URLtoString(options);
+
+		return options.getResponse();
+	}
+
+	protected Phone invokeGetPhone(Long phoneId) throws Exception {
+		Http.Options options = _createHttpOptions();
+
+		options.setLocation(
+			_resourceURL + _toPath("/phones/{phone-id}", phoneId));
+
+		return _outputObjectMapper.readValue(
+			HttpUtil.URLtoString(options), Phone.class);
+	}
+
+	protected Http.Response invokeGetPhoneResponse(Long phoneId)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		options.setLocation(
+			_resourceURL + _toPath("/phones/{phone-id}", phoneId));
+
+		HttpUtil.URLtoString(options);
+
+		return options.getResponse();
+	}
+
 	protected Phone randomPhone() {
 		return new Phone() {
 			{
@@ -412,6 +376,26 @@ public abstract class BasePhoneResourceTestCase {
 		};
 	}
 
+	protected Phone testGetGenericParentPhonesPage_addPhone(
+			Object genericParentId, Phone phone)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected Object testGetGenericParentPhonesPage_getGenericParentId()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected Phone testGetPhone_addPhone() throws Exception {
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
 	protected Group testGroup;
 
 	protected static class Page<T> {
@@ -420,16 +404,16 @@ public abstract class BasePhoneResourceTestCase {
 			return new ArrayList<>(items);
 		}
 
-		public long getLastPage() {
-			return lastPage;
+		public long getItemsPerPage() {
+			return itemsPerPage;
 		}
 
-		public long getPage() {
-			return page;
+		public long getLastPageNumber() {
+			return lastPageNumber;
 		}
 
-		public long getPageSize() {
-			return pageSize;
+		public long getPageNumber() {
+			return pageNumber;
 		}
 
 		public long getTotalCount() {
@@ -439,14 +423,14 @@ public abstract class BasePhoneResourceTestCase {
 		@JsonProperty
 		protected Collection<T> items;
 
-		@JsonProperty
-		protected long lastPage;
+		@JsonProperty("pageSize")
+		protected long itemsPerPage;
 
 		@JsonProperty
-		protected long page;
+		protected long lastPageNumber;
 
-		@JsonProperty
-		protected long pageSize;
+		@JsonProperty("page")
+		protected long pageNumber;
 
 		@JsonProperty
 		protected long totalCount;
@@ -476,12 +460,12 @@ public abstract class BasePhoneResourceTestCase {
 	}
 
 	private static DateFormat _dateFormat;
-	private final static ObjectMapper _inputObjectMapper = new ObjectMapper() {
+	private static final ObjectMapper _inputObjectMapper = new ObjectMapper() {
 		{
 			setSerializationInclusion(JsonInclude.Include.NON_NULL);
 		}
 	};
-	private final static ObjectMapper _outputObjectMapper = new ObjectMapper();
+	private static final ObjectMapper _outputObjectMapper = new ObjectMapper();
 
 	@Inject
 	private PhoneResource _phoneResource;

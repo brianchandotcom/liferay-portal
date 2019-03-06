@@ -48,14 +48,43 @@ public class Mutation {
 	}
 
 	@GraphQLInvokeDetached
-	public Comment putComment(
-			@GraphQLName("comment-id") Long commentId,
-			@GraphQLName("Comment") Comment comment)
+	public boolean deleteDocument(@GraphQLName("document-id") Long documentId)
 		throws Exception {
 
-		CommentResource commentResource = _createCommentResource();
+		DocumentResource documentResource = _createDocumentResource();
 
-		return commentResource.putComment(commentId, comment);
+		return documentResource.deleteDocument(documentId);
+	}
+
+	@GraphQLInvokeDetached
+	public boolean deleteFolder(@GraphQLName("folder-id") Long folderId)
+		throws Exception {
+
+		FolderResource folderResource = _createFolderResource();
+
+		return folderResource.deleteFolder(folderId);
+	}
+
+	@GraphQLInvokeDetached
+	public Document patchDocument(
+			@GraphQLName("document-id") Long documentId,
+			@GraphQLName("MultipartBody") MultipartBody multipartBody)
+		throws Exception {
+
+		DocumentResource documentResource = _createDocumentResource();
+
+		return documentResource.patchDocument(documentId, multipartBody);
+	}
+
+	@GraphQLInvokeDetached
+	public Folder patchFolder(
+			@GraphQLName("folder-id") Long folderId,
+			@GraphQLName("Folder") Folder folder)
+		throws Exception {
+
+		FolderResource folderResource = _createFolderResource();
+
+		return folderResource.patchFolder(folderId, folder);
 	}
 
 	@GraphQLField
@@ -72,18 +101,6 @@ public class Mutation {
 
 	@GraphQLField
 	@GraphQLInvokeDetached
-	public Comment postDocumentComment(
-			@GraphQLName("document-id") Long documentId,
-			@GraphQLName("Comment") Comment comment)
-		throws Exception {
-
-		CommentResource commentResource = _createCommentResource();
-
-		return commentResource.postDocumentComment(documentId, comment);
-	}
-
-	@GraphQLField
-	@GraphQLInvokeDetached
 	public Document postContentSpaceDocument(
 			@GraphQLName("content-space-id") Long contentSpaceId,
 			@GraphQLName("MultipartBody") MultipartBody multipartBody)
@@ -95,35 +112,28 @@ public class Mutation {
 			contentSpaceId, multipartBody);
 	}
 
+	@GraphQLField
 	@GraphQLInvokeDetached
-	public boolean deleteDocument(@GraphQLName("document-id") Long documentId)
+	public Folder postContentSpaceFolder(
+			@GraphQLName("content-space-id") Long contentSpaceId,
+			@GraphQLName("Folder") Folder folder)
 		throws Exception {
 
-		DocumentResource documentResource = _createDocumentResource();
+		FolderResource folderResource = _createFolderResource();
 
-		return documentResource.deleteDocument(documentId);
+		return folderResource.postContentSpaceFolder(contentSpaceId, folder);
 	}
 
+	@GraphQLField
 	@GraphQLInvokeDetached
-	public Document patchDocument(
+	public Comment postDocumentComment(
 			@GraphQLName("document-id") Long documentId,
-			@GraphQLName("MultipartBody") MultipartBody multipartBody)
+			@GraphQLName("Comment") Comment comment)
 		throws Exception {
 
-		DocumentResource documentResource = _createDocumentResource();
+		CommentResource commentResource = _createCommentResource();
 
-		return documentResource.patchDocument(documentId, multipartBody);
-	}
-
-	@GraphQLInvokeDetached
-	public Document putDocument(
-			@GraphQLName("document-id") Long documentId,
-			@GraphQLName("MultipartBody") MultipartBody multipartBody)
-		throws Exception {
-
-		DocumentResource documentResource = _createDocumentResource();
-
-		return documentResource.putDocument(documentId, multipartBody);
+		return commentResource.postDocumentComment(documentId, comment);
 	}
 
 	@GraphQLField
@@ -140,34 +150,36 @@ public class Mutation {
 
 	@GraphQLField
 	@GraphQLInvokeDetached
-	public Folder postContentSpaceFolder(
-			@GraphQLName("content-space-id") Long contentSpaceId,
-			@GraphQLName("Folder") Folder folder)
-		throws Exception {
-
-		FolderResource folderResource = _createFolderResource();
-
-		return folderResource.postContentSpaceFolder(contentSpaceId, folder);
-	}
-
-	@GraphQLInvokeDetached
-	public boolean deleteFolder(@GraphQLName("folder-id") Long folderId)
-		throws Exception {
-
-		FolderResource folderResource = _createFolderResource();
-
-		return folderResource.deleteFolder(folderId);
-	}
-
-	@GraphQLInvokeDetached
-	public Folder patchFolder(
+	public Folder postFolderFolder(
 			@GraphQLName("folder-id") Long folderId,
 			@GraphQLName("Folder") Folder folder)
 		throws Exception {
 
 		FolderResource folderResource = _createFolderResource();
 
-		return folderResource.patchFolder(folderId, folder);
+		return folderResource.postFolderFolder(folderId, folder);
+	}
+
+	@GraphQLInvokeDetached
+	public Comment putComment(
+			@GraphQLName("comment-id") Long commentId,
+			@GraphQLName("Comment") Comment comment)
+		throws Exception {
+
+		CommentResource commentResource = _createCommentResource();
+
+		return commentResource.putComment(commentId, comment);
+	}
+
+	@GraphQLInvokeDetached
+	public Document putDocument(
+			@GraphQLName("document-id") Long documentId,
+			@GraphQLName("MultipartBody") MultipartBody multipartBody)
+		throws Exception {
+
+		DocumentResource documentResource = _createDocumentResource();
+
+		return documentResource.putDocument(documentId, multipartBody);
 	}
 
 	@GraphQLInvokeDetached
@@ -179,18 +191,6 @@ public class Mutation {
 		FolderResource folderResource = _createFolderResource();
 
 		return folderResource.putFolder(folderId, folder);
-	}
-
-	@GraphQLField
-	@GraphQLInvokeDetached
-	public Folder postFolderFolder(
-			@GraphQLName("folder-id") Long folderId,
-			@GraphQLName("Folder") Folder folder)
-		throws Exception {
-
-		FolderResource folderResource = _createFolderResource();
-
-		return folderResource.postFolderFolder(folderId, folder);
 	}
 
 	private static CommentResource _createCommentResource() {

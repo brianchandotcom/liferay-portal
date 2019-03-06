@@ -161,108 +161,6 @@ public abstract class BaseWorkflowTaskResourceTestCase {
 			});
 	}
 
-	protected WorkflowTask testGetRoleWorkflowTasksPage_addWorkflowTask(
-			Long roleId, WorkflowTask workflowTask)
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	protected Long testGetRoleWorkflowTasksPage_getRoleId() throws Exception {
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	protected Page<WorkflowTask> invokeGetRoleWorkflowTasksPage(
-			Long roleId, Pagination pagination)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		String location =
-			_resourceURL + _toPath("/roles/{role-id}/workflow-tasks", roleId);
-
-		location = HttpUtil.addParameter(
-			location, "page", pagination.getPage());
-		location = HttpUtil.addParameter(
-			location, "pageSize", pagination.getPageSize());
-
-		options.setLocation(location);
-
-		return _outputObjectMapper.readValue(
-			HttpUtil.URLtoString(options),
-			new TypeReference<Page<WorkflowTask>>() {
-			});
-	}
-
-	protected Http.Response invokeGetRoleWorkflowTasksPageResponse(
-			Long roleId, Pagination pagination)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		String location =
-			_resourceURL + _toPath("/roles/{role-id}/workflow-tasks", roleId);
-
-		location = HttpUtil.addParameter(
-			location, "page", pagination.getPage());
-		location = HttpUtil.addParameter(
-			location, "pageSize", pagination.getPageSize());
-
-		options.setLocation(location);
-
-		HttpUtil.URLtoString(options);
-
-		return options.getResponse();
-	}
-
-	@Test
-	public void testGetWorkflowTasksPage() throws Exception {
-		Assert.assertTrue(true);
-	}
-
-	protected Page<WorkflowTask> invokeGetWorkflowTasksPage(
-			Pagination pagination)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		String location = _resourceURL + _toPath("/workflow-tasks", pagination);
-
-		location = HttpUtil.addParameter(
-			location, "page", pagination.getPage());
-		location = HttpUtil.addParameter(
-			location, "pageSize", pagination.getPageSize());
-
-		options.setLocation(location);
-
-		return _outputObjectMapper.readValue(
-			HttpUtil.URLtoString(options),
-			new TypeReference<Page<WorkflowTask>>() {
-			});
-	}
-
-	protected Http.Response invokeGetWorkflowTasksPageResponse(
-			Pagination pagination)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		String location = _resourceURL + _toPath("/workflow-tasks", pagination);
-
-		location = HttpUtil.addParameter(
-			location, "page", pagination.getPage());
-		location = HttpUtil.addParameter(
-			location, "pageSize", pagination.getPageSize());
-
-		options.setLocation(location);
-
-		HttpUtil.URLtoString(options);
-
-		return options.getResponse();
-	}
-
 	@Test
 	public void testGetWorkflowTask() throws Exception {
 		WorkflowTask postWorkflowTask = testGetWorkflowTask_addWorkflowTask();
@@ -274,42 +172,9 @@ public abstract class BaseWorkflowTaskResourceTestCase {
 		assertValid(getWorkflowTask);
 	}
 
-	protected WorkflowTask testGetWorkflowTask_addWorkflowTask()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	protected WorkflowTask invokeGetWorkflowTask(Long workflowTaskId)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		String location =
-			_resourceURL +
-				_toPath("/workflow-tasks/{workflow-task-id}", workflowTaskId);
-
-		options.setLocation(location);
-
-		return _outputObjectMapper.readValue(
-			HttpUtil.URLtoString(options), WorkflowTask.class);
-	}
-
-	protected Http.Response invokeGetWorkflowTaskResponse(Long workflowTaskId)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		String location =
-			_resourceURL +
-				_toPath("/workflow-tasks/{workflow-task-id}", workflowTaskId);
-
-		options.setLocation(location);
-
-		HttpUtil.URLtoString(options);
-
-		return options.getResponse();
+	@Test
+	public void testGetWorkflowTasksPage() throws Exception {
+		Assert.assertTrue(true);
 	}
 
 	@Test
@@ -321,63 +186,6 @@ public abstract class BaseWorkflowTaskResourceTestCase {
 
 		assertEquals(randomWorkflowTask, postWorkflowTask);
 		assertValid(postWorkflowTask);
-	}
-
-	protected WorkflowTask testPostWorkflowTaskAssignToMe_addWorkflowTask(
-			WorkflowTask workflowTask)
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	protected WorkflowTask invokePostWorkflowTaskAssignToMe(
-			Long workflowTaskId, WorkflowTask workflowTask)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		options.setBody(
-			_inputObjectMapper.writeValueAsString(workflowTask),
-			ContentTypes.APPLICATION_JSON, StringPool.UTF8);
-
-		String location =
-			_resourceURL +
-				_toPath(
-					"/workflow-tasks/{workflow-task-id}/assign-to-me",
-					workflowTaskId);
-
-		options.setLocation(location);
-
-		options.setPost(true);
-
-		return _outputObjectMapper.readValue(
-			HttpUtil.URLtoString(options), WorkflowTask.class);
-	}
-
-	protected Http.Response invokePostWorkflowTaskAssignToMeResponse(
-			Long workflowTaskId, WorkflowTask workflowTask)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		options.setBody(
-			_inputObjectMapper.writeValueAsString(workflowTask),
-			ContentTypes.APPLICATION_JSON, StringPool.UTF8);
-
-		String location =
-			_resourceURL +
-				_toPath(
-					"/workflow-tasks/{workflow-task-id}/assign-to-me",
-					workflowTaskId);
-
-		options.setLocation(location);
-
-		options.setPost(true);
-
-		HttpUtil.URLtoString(options);
-
-		return options.getResponse();
 	}
 
 	@Test
@@ -392,63 +200,6 @@ public abstract class BaseWorkflowTaskResourceTestCase {
 		assertValid(postWorkflowTask);
 	}
 
-	protected WorkflowTask testPostWorkflowTaskAssignToUser_addWorkflowTask(
-			WorkflowTask workflowTask)
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	protected WorkflowTask invokePostWorkflowTaskAssignToUser(
-			Long workflowTaskId, WorkflowTask workflowTask)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		options.setBody(
-			_inputObjectMapper.writeValueAsString(workflowTask),
-			ContentTypes.APPLICATION_JSON, StringPool.UTF8);
-
-		String location =
-			_resourceURL +
-				_toPath(
-					"/workflow-tasks/{workflow-task-id}/assign-to-user",
-					workflowTaskId);
-
-		options.setLocation(location);
-
-		options.setPost(true);
-
-		return _outputObjectMapper.readValue(
-			HttpUtil.URLtoString(options), WorkflowTask.class);
-	}
-
-	protected Http.Response invokePostWorkflowTaskAssignToUserResponse(
-			Long workflowTaskId, WorkflowTask workflowTask)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		options.setBody(
-			_inputObjectMapper.writeValueAsString(workflowTask),
-			ContentTypes.APPLICATION_JSON, StringPool.UTF8);
-
-		String location =
-			_resourceURL +
-				_toPath(
-					"/workflow-tasks/{workflow-task-id}/assign-to-user",
-					workflowTaskId);
-
-		options.setLocation(location);
-
-		options.setPost(true);
-
-		HttpUtil.URLtoString(options);
-
-		return options.getResponse();
-	}
-
 	@Test
 	public void testPostWorkflowTaskChangeTransition() throws Exception {
 		WorkflowTask randomWorkflowTask = randomWorkflowTask();
@@ -459,63 +210,6 @@ public abstract class BaseWorkflowTaskResourceTestCase {
 
 		assertEquals(randomWorkflowTask, postWorkflowTask);
 		assertValid(postWorkflowTask);
-	}
-
-	protected WorkflowTask testPostWorkflowTaskChangeTransition_addWorkflowTask(
-			WorkflowTask workflowTask)
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	protected WorkflowTask invokePostWorkflowTaskChangeTransition(
-			Long workflowTaskId, WorkflowTask workflowTask)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		options.setBody(
-			_inputObjectMapper.writeValueAsString(workflowTask),
-			ContentTypes.APPLICATION_JSON, StringPool.UTF8);
-
-		String location =
-			_resourceURL +
-				_toPath(
-					"/workflow-tasks/{workflow-task-id}/change-transition",
-					workflowTaskId);
-
-		options.setLocation(location);
-
-		options.setPost(true);
-
-		return _outputObjectMapper.readValue(
-			HttpUtil.URLtoString(options), WorkflowTask.class);
-	}
-
-	protected Http.Response invokePostWorkflowTaskChangeTransitionResponse(
-			Long workflowTaskId, WorkflowTask workflowTask)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		options.setBody(
-			_inputObjectMapper.writeValueAsString(workflowTask),
-			ContentTypes.APPLICATION_JSON, StringPool.UTF8);
-
-		String location =
-			_resourceURL +
-				_toPath(
-					"/workflow-tasks/{workflow-task-id}/change-transition",
-					workflowTaskId);
-
-		options.setLocation(location);
-
-		options.setPost(true);
-
-		HttpUtil.URLtoString(options);
-
-		return options.getResponse();
 	}
 
 	@Test
@@ -530,78 +224,6 @@ public abstract class BaseWorkflowTaskResourceTestCase {
 		assertValid(postWorkflowTask);
 	}
 
-	protected WorkflowTask testPostWorkflowTaskUpdateDueDate_addWorkflowTask(
-			WorkflowTask workflowTask)
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	protected WorkflowTask invokePostWorkflowTaskUpdateDueDate(
-			Long workflowTaskId, WorkflowTask workflowTask)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		options.setBody(
-			_inputObjectMapper.writeValueAsString(workflowTask),
-			ContentTypes.APPLICATION_JSON, StringPool.UTF8);
-
-		String location =
-			_resourceURL +
-				_toPath(
-					"/workflow-tasks/{workflow-task-id}/update-due-date",
-					workflowTaskId);
-
-		options.setLocation(location);
-
-		options.setPost(true);
-
-		return _outputObjectMapper.readValue(
-			HttpUtil.URLtoString(options), WorkflowTask.class);
-	}
-
-	protected Http.Response invokePostWorkflowTaskUpdateDueDateResponse(
-			Long workflowTaskId, WorkflowTask workflowTask)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		options.setBody(
-			_inputObjectMapper.writeValueAsString(workflowTask),
-			ContentTypes.APPLICATION_JSON, StringPool.UTF8);
-
-		String location =
-			_resourceURL +
-				_toPath(
-					"/workflow-tasks/{workflow-task-id}/update-due-date",
-					workflowTaskId);
-
-		options.setLocation(location);
-
-		options.setPost(true);
-
-		HttpUtil.URLtoString(options);
-
-		return options.getResponse();
-	}
-
-	protected void assertResponseCode(
-		int expectedResponseCode, Http.Response actualResponse) {
-
-		Assert.assertEquals(
-			expectedResponseCode, actualResponse.getResponseCode());
-	}
-
-	protected void assertEquals(
-		WorkflowTask workflowTask1, WorkflowTask workflowTask2) {
-
-		Assert.assertTrue(
-			workflowTask1 + " does not equal " + workflowTask2,
-			equals(workflowTask1, workflowTask2));
-	}
-
 	protected void assertEquals(
 		List<WorkflowTask> workflowTasks1, List<WorkflowTask> workflowTasks2) {
 
@@ -613,6 +235,14 @@ public abstract class BaseWorkflowTaskResourceTestCase {
 
 			assertEquals(workflowTask1, workflowTask2);
 		}
+	}
+
+	protected void assertEquals(
+		WorkflowTask workflowTask1, WorkflowTask workflowTask2) {
+
+		Assert.assertTrue(
+			workflowTask1 + " does not equal " + workflowTask2,
+			equals(workflowTask1, workflowTask2));
 	}
 
 	protected void assertEqualsIgnoringOrder(
@@ -637,9 +267,11 @@ public abstract class BaseWorkflowTaskResourceTestCase {
 		}
 	}
 
-	protected void assertValid(WorkflowTask workflowTask) {
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+	protected void assertResponseCode(
+		int expectedResponseCode, Http.Response actualResponse) {
+
+		Assert.assertEquals(
+			expectedResponseCode, actualResponse.getResponseCode());
 	}
 
 	protected void assertValid(Page<WorkflowTask> page) {
@@ -649,14 +281,19 @@ public abstract class BaseWorkflowTaskResourceTestCase {
 
 		int size = workflowTasks.size();
 
-		if ((page.getLastPage() > 0) && (page.getPage() > 0) &&
-			(page.getPageSize() > 0) && (page.getTotalCount() > 0) &&
+		if ((page.getItemsPerPage() > 0) && (page.getLastPageNumber() > 0) &&
+			(page.getPageNumber() > 0) && (page.getTotalCount() > 0) &&
 			(size > 0)) {
 
 			valid = true;
 		}
 
 		Assert.assertTrue(valid);
+	}
+
+	protected void assertValid(WorkflowTask workflowTask) {
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	protected boolean equals(
@@ -790,6 +427,271 @@ public abstract class BaseWorkflowTaskResourceTestCase {
 			"Invalid entity field " + entityFieldName);
 	}
 
+	protected Page<WorkflowTask> invokeGetRoleWorkflowTasksPage(
+			Long roleId, Pagination pagination)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		options.setLocation(
+			_resourceURL + _toPath("/roles/{role-id}/workflow-tasks", roleId));
+
+		return _outputObjectMapper.readValue(
+			HttpUtil.URLtoString(options),
+			new TypeReference<Page<WorkflowTask>>() {
+			});
+	}
+
+	protected Http.Response invokeGetRoleWorkflowTasksPageResponse(
+			Long roleId, Pagination pagination)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		options.setLocation(
+			_resourceURL + _toPath("/roles/{role-id}/workflow-tasks", roleId));
+
+		HttpUtil.URLtoString(options);
+
+		return options.getResponse();
+	}
+
+	protected WorkflowTask invokeGetWorkflowTask(Long workflowTaskId)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		options.setLocation(
+			_resourceURL +
+				_toPath("/workflow-tasks/{workflow-task-id}", workflowTaskId));
+
+		return _outputObjectMapper.readValue(
+			HttpUtil.URLtoString(options), WorkflowTask.class);
+	}
+
+	protected Http.Response invokeGetWorkflowTaskResponse(Long workflowTaskId)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		options.setLocation(
+			_resourceURL +
+				_toPath("/workflow-tasks/{workflow-task-id}", workflowTaskId));
+
+		HttpUtil.URLtoString(options);
+
+		return options.getResponse();
+	}
+
+	protected Page<WorkflowTask> invokeGetWorkflowTasksPage(
+			Pagination pagination)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		options.setLocation(
+			_resourceURL + _toPath("/workflow-tasks", pagination));
+
+		return _outputObjectMapper.readValue(
+			HttpUtil.URLtoString(options),
+			new TypeReference<Page<WorkflowTask>>() {
+			});
+	}
+
+	protected Http.Response invokeGetWorkflowTasksPageResponse(
+			Pagination pagination)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		options.setLocation(
+			_resourceURL + _toPath("/workflow-tasks", pagination));
+
+		HttpUtil.URLtoString(options);
+
+		return options.getResponse();
+	}
+
+	protected WorkflowTask invokePostWorkflowTaskAssignToMe(
+			Long workflowTaskId, WorkflowTask workflowTask)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		options.setBody(
+			_inputObjectMapper.writeValueAsString(workflowTask),
+			ContentTypes.APPLICATION_JSON, StringPool.UTF8);
+
+		options.setLocation(
+			_resourceURL +
+				_toPath(
+					"/workflow-tasks/{workflow-task-id}/assign-to-me",
+					workflowTaskId));
+
+		options.setPost(true);
+
+		return _outputObjectMapper.readValue(
+			HttpUtil.URLtoString(options), WorkflowTask.class);
+	}
+
+	protected Http.Response invokePostWorkflowTaskAssignToMeResponse(
+			Long workflowTaskId, WorkflowTask workflowTask)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		options.setBody(
+			_inputObjectMapper.writeValueAsString(workflowTask),
+			ContentTypes.APPLICATION_JSON, StringPool.UTF8);
+
+		options.setLocation(
+			_resourceURL +
+				_toPath(
+					"/workflow-tasks/{workflow-task-id}/assign-to-me",
+					workflowTaskId));
+
+		options.setPost(true);
+
+		HttpUtil.URLtoString(options);
+
+		return options.getResponse();
+	}
+
+	protected WorkflowTask invokePostWorkflowTaskAssignToUser(
+			Long workflowTaskId, WorkflowTask workflowTask)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		options.setBody(
+			_inputObjectMapper.writeValueAsString(workflowTask),
+			ContentTypes.APPLICATION_JSON, StringPool.UTF8);
+
+		options.setLocation(
+			_resourceURL +
+				_toPath(
+					"/workflow-tasks/{workflow-task-id}/assign-to-user",
+					workflowTaskId));
+
+		options.setPost(true);
+
+		return _outputObjectMapper.readValue(
+			HttpUtil.URLtoString(options), WorkflowTask.class);
+	}
+
+	protected Http.Response invokePostWorkflowTaskAssignToUserResponse(
+			Long workflowTaskId, WorkflowTask workflowTask)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		options.setBody(
+			_inputObjectMapper.writeValueAsString(workflowTask),
+			ContentTypes.APPLICATION_JSON, StringPool.UTF8);
+
+		options.setLocation(
+			_resourceURL +
+				_toPath(
+					"/workflow-tasks/{workflow-task-id}/assign-to-user",
+					workflowTaskId));
+
+		options.setPost(true);
+
+		HttpUtil.URLtoString(options);
+
+		return options.getResponse();
+	}
+
+	protected WorkflowTask invokePostWorkflowTaskChangeTransition(
+			Long workflowTaskId, WorkflowTask workflowTask)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		options.setBody(
+			_inputObjectMapper.writeValueAsString(workflowTask),
+			ContentTypes.APPLICATION_JSON, StringPool.UTF8);
+
+		options.setLocation(
+			_resourceURL +
+				_toPath(
+					"/workflow-tasks/{workflow-task-id}/change-transition",
+					workflowTaskId));
+
+		options.setPost(true);
+
+		return _outputObjectMapper.readValue(
+			HttpUtil.URLtoString(options), WorkflowTask.class);
+	}
+
+	protected Http.Response invokePostWorkflowTaskChangeTransitionResponse(
+			Long workflowTaskId, WorkflowTask workflowTask)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		options.setBody(
+			_inputObjectMapper.writeValueAsString(workflowTask),
+			ContentTypes.APPLICATION_JSON, StringPool.UTF8);
+
+		options.setLocation(
+			_resourceURL +
+				_toPath(
+					"/workflow-tasks/{workflow-task-id}/change-transition",
+					workflowTaskId));
+
+		options.setPost(true);
+
+		HttpUtil.URLtoString(options);
+
+		return options.getResponse();
+	}
+
+	protected WorkflowTask invokePostWorkflowTaskUpdateDueDate(
+			Long workflowTaskId, WorkflowTask workflowTask)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		options.setBody(
+			_inputObjectMapper.writeValueAsString(workflowTask),
+			ContentTypes.APPLICATION_JSON, StringPool.UTF8);
+
+		options.setLocation(
+			_resourceURL +
+				_toPath(
+					"/workflow-tasks/{workflow-task-id}/update-due-date",
+					workflowTaskId));
+
+		options.setPost(true);
+
+		return _outputObjectMapper.readValue(
+			HttpUtil.URLtoString(options), WorkflowTask.class);
+	}
+
+	protected Http.Response invokePostWorkflowTaskUpdateDueDateResponse(
+			Long workflowTaskId, WorkflowTask workflowTask)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		options.setBody(
+			_inputObjectMapper.writeValueAsString(workflowTask),
+			ContentTypes.APPLICATION_JSON, StringPool.UTF8);
+
+		options.setLocation(
+			_resourceURL +
+				_toPath(
+					"/workflow-tasks/{workflow-task-id}/update-due-date",
+					workflowTaskId));
+
+		options.setPost(true);
+
+		HttpUtil.URLtoString(options);
+
+		return options.getResponse();
+	}
+
 	protected WorkflowTask randomWorkflowTask() {
 		return new WorkflowTask() {
 			{
@@ -805,6 +707,58 @@ public abstract class BaseWorkflowTaskResourceTestCase {
 		};
 	}
 
+	protected WorkflowTask testGetRoleWorkflowTasksPage_addWorkflowTask(
+			Long roleId, WorkflowTask workflowTask)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected Long testGetRoleWorkflowTasksPage_getRoleId() throws Exception {
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected WorkflowTask testGetWorkflowTask_addWorkflowTask()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected WorkflowTask testPostWorkflowTaskAssignToMe_addWorkflowTask(
+			WorkflowTask workflowTask)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected WorkflowTask testPostWorkflowTaskAssignToUser_addWorkflowTask(
+			WorkflowTask workflowTask)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected WorkflowTask testPostWorkflowTaskChangeTransition_addWorkflowTask(
+			WorkflowTask workflowTask)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected WorkflowTask testPostWorkflowTaskUpdateDueDate_addWorkflowTask(
+			WorkflowTask workflowTask)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
 	protected Group testGroup;
 
 	protected static class Page<T> {
@@ -813,16 +767,16 @@ public abstract class BaseWorkflowTaskResourceTestCase {
 			return new ArrayList<>(items);
 		}
 
-		public long getLastPage() {
-			return lastPage;
+		public long getItemsPerPage() {
+			return itemsPerPage;
 		}
 
-		public long getPage() {
-			return page;
+		public long getLastPageNumber() {
+			return lastPageNumber;
 		}
 
-		public long getPageSize() {
-			return pageSize;
+		public long getPageNumber() {
+			return pageNumber;
 		}
 
 		public long getTotalCount() {
@@ -832,14 +786,14 @@ public abstract class BaseWorkflowTaskResourceTestCase {
 		@JsonProperty
 		protected Collection<T> items;
 
-		@JsonProperty
-		protected long lastPage;
+		@JsonProperty("pageSize")
+		protected long itemsPerPage;
 
 		@JsonProperty
-		protected long page;
+		protected long lastPageNumber;
 
-		@JsonProperty
-		protected long pageSize;
+		@JsonProperty("page")
+		protected long pageNumber;
 
 		@JsonProperty
 		protected long totalCount;
@@ -869,16 +823,16 @@ public abstract class BaseWorkflowTaskResourceTestCase {
 	}
 
 	private static DateFormat _dateFormat;
-	private final static ObjectMapper _inputObjectMapper = new ObjectMapper() {
+	private static final ObjectMapper _inputObjectMapper = new ObjectMapper() {
 		{
 			setSerializationInclusion(JsonInclude.Include.NON_NULL);
 		}
 	};
-	private final static ObjectMapper _outputObjectMapper = new ObjectMapper();
+	private static final ObjectMapper _outputObjectMapper = new ObjectMapper();
+
+	private URL _resourceURL;
 
 	@Inject
 	private WorkflowTaskResource _workflowTaskResource;
-
-	private URL _resourceURL;
 
 }

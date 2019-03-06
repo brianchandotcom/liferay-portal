@@ -27,10 +27,6 @@ import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.util.TransformUtil;
 
-import io.swagger.v3.oas.annotations.Parameter;
-import io.swagger.v3.oas.annotations.Parameters;
-import io.swagger.v3.oas.annotations.enums.ParameterIn;
-
 import java.net.URI;
 
 import java.util.Collections;
@@ -59,16 +55,18 @@ import javax.ws.rs.core.UriInfo;
 @Path("/v1.0")
 public abstract class BaseDocumentResourceImpl implements DocumentResource {
 
+	@DELETE
 	@Override
+	@Path("/documents/{document-id}")
+	@Produces("application/json")
+	public boolean deleteDocument(@PathParam("document-id") Long documentId)
+		throws Exception {
+
+		return false;
+	}
+
 	@GET
-	@Parameters(
-		value = {
-			@Parameter(in = ParameterIn.QUERY, name = "filter"),
-			@Parameter(in = ParameterIn.QUERY, name = "page"),
-			@Parameter(in = ParameterIn.QUERY, name = "pageSize"),
-			@Parameter(in = ParameterIn.QUERY, name = "sorts")
-		}
-	)
+	@Override
 	@Path("/content-spaces/{content-space-id}/documents")
 	@Produces("application/json")
 	public Page<Document> getContentSpaceDocumentsPage(
@@ -80,31 +78,8 @@ public abstract class BaseDocumentResourceImpl implements DocumentResource {
 		return Page.of(Collections.emptyList());
 	}
 
-	@Override
-	@Consumes("multipart/form-data")
-	@POST
-	@Path("/content-spaces/{content-space-id}/documents")
-	@Produces("application/json")
-	public Document postContentSpaceDocument(
-			@PathParam("content-space-id") Long contentSpaceId,
-			MultipartBody multipartBody)
-		throws Exception {
-
-		return new Document();
-	}
-
-	@Override
-	@DELETE
-	@Path("/documents/{document-id}")
-	@Produces("application/json")
-	public boolean deleteDocument(@PathParam("document-id") Long documentId)
-		throws Exception {
-
-		return false;
-	}
-
-	@Override
 	@GET
+	@Override
 	@Path("/documents/{document-id}")
 	@Produces("application/json")
 	public Document getDocument(@PathParam("document-id") Long documentId)
@@ -113,8 +88,20 @@ public abstract class BaseDocumentResourceImpl implements DocumentResource {
 		return new Document();
 	}
 
+	@GET
 	@Override
+	@Path("/folders/{folder-id}/documents")
+	@Produces("application/json")
+	public Page<Document> getFolderDocumentsPage(
+			@PathParam("folder-id") Long folderId, @Context Filter filter,
+			@Context Pagination pagination, @Context Sort[] sorts)
+		throws Exception {
+
+		return Page.of(Collections.emptyList());
+	}
+
 	@Consumes("multipart/form-data")
+	@Override
 	@PATCH
 	@Path("/documents/{document-id}")
 	@Produces("application/json")
@@ -126,46 +113,39 @@ public abstract class BaseDocumentResourceImpl implements DocumentResource {
 		return new Document();
 	}
 
-	@Override
 	@Consumes("multipart/form-data")
-	@PUT
-	@Path("/documents/{document-id}")
+	@Override
+	@Path("/content-spaces/{content-space-id}/documents")
+	@POST
 	@Produces("application/json")
-	public Document putDocument(
-			@PathParam("document-id") Long documentId,
+	public Document postContentSpaceDocument(
+			@PathParam("content-space-id") Long contentSpaceId,
 			MultipartBody multipartBody)
 		throws Exception {
 
 		return new Document();
 	}
 
-	@Override
-	@GET
-	@Parameters(
-		value = {
-			@Parameter(in = ParameterIn.QUERY, name = "filter"),
-			@Parameter(in = ParameterIn.QUERY, name = "page"),
-			@Parameter(in = ParameterIn.QUERY, name = "pageSize"),
-			@Parameter(in = ParameterIn.QUERY, name = "sorts")
-		}
-	)
-	@Path("/folders/{folder-id}/documents")
-	@Produces("application/json")
-	public Page<Document> getFolderDocumentsPage(
-			@PathParam("folder-id") Long folderId, @Context Filter filter,
-			@Context Pagination pagination, @Context Sort[] sorts)
-		throws Exception {
-
-		return Page.of(Collections.emptyList());
-	}
-
-	@Override
 	@Consumes("multipart/form-data")
-	@POST
+	@Override
 	@Path("/folders/{folder-id}/documents")
+	@POST
 	@Produces("application/json")
 	public Document postFolderDocument(
 			@PathParam("folder-id") Long folderId, MultipartBody multipartBody)
+		throws Exception {
+
+		return new Document();
+	}
+
+	@Consumes("multipart/form-data")
+	@Override
+	@Path("/documents/{document-id}")
+	@Produces("application/json")
+	@PUT
+	public Document putDocument(
+			@PathParam("document-id") Long documentId,
+			MultipartBody multipartBody)
 		throws Exception {
 
 		return new Document();

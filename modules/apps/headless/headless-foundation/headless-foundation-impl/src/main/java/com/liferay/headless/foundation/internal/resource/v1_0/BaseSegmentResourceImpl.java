@@ -24,10 +24,6 @@ import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.util.TransformUtil;
 
-import io.swagger.v3.oas.annotations.Parameter;
-import io.swagger.v3.oas.annotations.Parameters;
-import io.swagger.v3.oas.annotations.enums.ParameterIn;
-
 import java.net.URI;
 
 import java.util.Collections;
@@ -51,14 +47,8 @@ import javax.ws.rs.core.UriInfo;
 @Path("/v1.0")
 public abstract class BaseSegmentResourceImpl implements SegmentResource {
 
-	@Override
 	@GET
-	@Parameters(
-		value = {
-			@Parameter(in = ParameterIn.QUERY, name = "page"),
-			@Parameter(in = ParameterIn.QUERY, name = "pageSize")
-		}
-	)
+	@Override
 	@Path("/user-accounts/{user-id}/segments")
 	@Produces("application/json")
 	public Page<Segment> getUserSegmentsPage(

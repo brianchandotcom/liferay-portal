@@ -85,27 +85,6 @@ public class Query {
 
 	@GraphQLField
 	@GraphQLInvokeDetached
-	public Collection<Comment> getStructuredContentCommentsPage(
-			@GraphQLName("structured-content-id") Long structuredContentId,
-			@GraphQLName("filter") Filter filter,
-			@GraphQLName("pageSize") int pageSize,
-			@GraphQLName("page") int page, @GraphQLName("Sort[]") Sort[] sorts)
-		throws Exception {
-
-		CommentResource commentResource = _createCommentResource();
-
-		commentResource.setContextCompany(
-			CompanyLocalServiceUtil.getCompany(
-				CompanyThreadLocal.getCompanyId()));
-
-		Page paginationPage = commentResource.getStructuredContentCommentsPage(
-			structuredContentId, filter, Pagination.of(pageSize, page), sorts);
-
-		return paginationPage.getItems();
-	}
-
-	@GraphQLField
-	@GraphQLInvokeDetached
 	public Collection<ContentStructure> getContentSpaceContentStructuresPage(
 			@GraphQLName("content-space-id") Long contentSpaceId,
 			@GraphQLName("filter") Filter filter,
@@ -129,22 +108,6 @@ public class Query {
 
 	@GraphQLField
 	@GraphQLInvokeDetached
-	public ContentStructure getContentStructure(
-			@GraphQLName("content-structure-id") Long contentStructureId)
-		throws Exception {
-
-		ContentStructureResource contentStructureResource =
-			_createContentStructureResource();
-
-		contentStructureResource.setContextCompany(
-			CompanyLocalServiceUtil.getCompany(
-				CompanyThreadLocal.getCompanyId()));
-
-		return contentStructureResource.getContentStructure(contentStructureId);
-	}
-
-	@GraphQLField
-	@GraphQLInvokeDetached
 	public Collection<StructuredContent> getContentSpaceStructuredContentsPage(
 			@GraphQLName("content-space-id") Long contentSpaceId,
 			@GraphQLName("filter") Filter filter,
@@ -164,6 +127,22 @@ public class Query {
 				contentSpaceId, filter, Pagination.of(pageSize, page), sorts);
 
 		return paginationPage.getItems();
+	}
+
+	@GraphQLField
+	@GraphQLInvokeDetached
+	public ContentStructure getContentStructure(
+			@GraphQLName("content-structure-id") Long contentStructureId)
+		throws Exception {
+
+		ContentStructureResource contentStructureResource =
+			_createContentStructureResource();
+
+		contentStructureResource.setContextCompany(
+			CompanyLocalServiceUtil.getCompany(
+				CompanyThreadLocal.getCompanyId()));
+
+		return contentStructureResource.getContentStructure(contentStructureId);
 	}
 
 	@GraphQLField
@@ -211,20 +190,23 @@ public class Query {
 
 	@GraphQLField
 	@GraphQLInvokeDetached
-	public String getStructuredContentTemplate(
+	public Collection<Comment> getStructuredContentCommentsPage(
 			@GraphQLName("structured-content-id") Long structuredContentId,
-			@GraphQLName("template-id") Long templateId)
+			@GraphQLName("filter") Filter filter,
+			@GraphQLName("pageSize") int pageSize,
+			@GraphQLName("page") int page, @GraphQLName("Sort[]") Sort[] sorts)
 		throws Exception {
 
-		StructuredContentResource structuredContentResource =
-			_createStructuredContentResource();
+		CommentResource commentResource = _createCommentResource();
 
-		structuredContentResource.setContextCompany(
+		commentResource.setContextCompany(
 			CompanyLocalServiceUtil.getCompany(
 				CompanyThreadLocal.getCompanyId()));
 
-		return structuredContentResource.getStructuredContentTemplate(
-			structuredContentId, templateId);
+		Page paginationPage = commentResource.getStructuredContentCommentsPage(
+			structuredContentId, filter, Pagination.of(pageSize, page), sorts);
+
+		return paginationPage.getItems();
 	}
 
 	@GraphQLField
@@ -267,6 +249,24 @@ public class Query {
 		return paginationPage.getItems();
 	}
 
+	@GraphQLField
+	@GraphQLInvokeDetached
+	public String getStructuredContentTemplate(
+			@GraphQLName("structured-content-id") Long structuredContentId,
+			@GraphQLName("template-id") Long templateId)
+		throws Exception {
+
+		StructuredContentResource structuredContentResource =
+			_createStructuredContentResource();
+
+		structuredContentResource.setContextCompany(
+			CompanyLocalServiceUtil.getCompany(
+				CompanyThreadLocal.getCompanyId()));
+
+		return structuredContentResource.getStructuredContentTemplate(
+			structuredContentId, templateId);
+	}
+
 	private static CommentResource _createCommentResource() {
 		return new CommentResourceImpl();
 	}
@@ -275,16 +275,16 @@ public class Query {
 		return new ContentStructureResourceImpl();
 	}
 
-	private static StructuredContentResource
-		_createStructuredContentResource() {
-
-		return new StructuredContentResourceImpl();
-	}
-
 	private static StructuredContentImageResource
 		_createStructuredContentImageResource() {
 
 		return new StructuredContentImageResourceImpl();
+	}
+
+	private static StructuredContentResource
+		_createStructuredContentResource() {
+
+		return new StructuredContentResourceImpl();
 	}
 
 }

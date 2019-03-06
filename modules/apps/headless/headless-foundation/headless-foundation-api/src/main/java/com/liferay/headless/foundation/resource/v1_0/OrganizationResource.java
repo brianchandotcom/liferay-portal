@@ -36,13 +36,13 @@ public interface OrganizationResource {
 			Long myUserAccountId, Pagination pagination)
 		throws Exception;
 
-	public Page<Organization> getOrganizationsPage(Pagination pagination)
-		throws Exception;
-
 	public Organization getOrganization(Long organizationId) throws Exception;
 
 	public Page<Organization> getOrganizationOrganizationsPage(
 			Long organizationId, Pagination pagination)
+		throws Exception;
+
+	public Page<Organization> getOrganizationsPage(Pagination pagination)
 		throws Exception;
 
 	public Page<Organization> getUserAccountOrganizationsPage(

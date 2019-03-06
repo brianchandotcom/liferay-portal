@@ -48,8 +48,8 @@ import javax.ws.rs.core.UriInfo;
 public abstract class BaseStructuredContentImageResourceImpl
 	implements StructuredContentImageResource {
 
-	@Override
 	@DELETE
+	@Override
 	@Path("/structured-content-images/{structured-content-image-id}")
 	@Produces("application/json")
 	public boolean deleteStructuredContentImage(
@@ -60,8 +60,8 @@ public abstract class BaseStructuredContentImageResourceImpl
 		return false;
 	}
 
-	@Override
 	@GET
+	@Override
 	@Path("/structured-content-images/{structured-content-image-id}")
 	@Produces("application/json")
 	public StructuredContentImage getStructuredContentImage(
@@ -72,8 +72,8 @@ public abstract class BaseStructuredContentImageResourceImpl
 		return new StructuredContentImage();
 	}
 
-	@Override
 	@GET
+	@Override
 	@Path(
 		"/structured-contents/{structured-content-id}/structured-content-images"
 	)

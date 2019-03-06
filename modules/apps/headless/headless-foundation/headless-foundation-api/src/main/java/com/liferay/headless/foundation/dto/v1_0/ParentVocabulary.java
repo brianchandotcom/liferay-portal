@@ -33,12 +33,15 @@ import javax.xml.bind.annotation.XmlRootElement;
  */
 @Generated("")
 @GraphQLName("ParentVocabulary")
-//@JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "ParentVocabulary")
-public class ParentVocabulary  {
+public class ParentVocabulary {
 
 	public Long getId() {
 		return id;
+	}
+
+	public String getName() {
+		return name;
 	}
 
 	public void setId(Long id) {
@@ -55,14 +58,6 @@ public class ParentVocabulary  {
 		}
 	}
 
-	@GraphQLField
-	@JsonProperty
-	protected Long id;
-
-	public String getName() {
-		return name;
-	}
-
 	public void setName(String name) {
 		this.name = name;
 	}
@@ -77,12 +72,8 @@ public class ParentVocabulary  {
 		}
 	}
 
-	@GraphQLField
-	@JsonProperty
-	protected String name;
-
 	public String toString() {
-		StringBundler sb = new StringBundler();
+		StringBundler sb = new StringBundler(9);
 
 		sb.append("{");
 
@@ -101,5 +92,13 @@ public class ParentVocabulary  {
 
 		return sb.toString();
 	}
+
+	@GraphQLField
+	@JsonProperty
+	protected Long id;
+
+	@GraphQLField
+	@JsonProperty
+	protected String name;
 
 }

@@ -36,28 +36,6 @@ import javax.annotation.Generated;
 @Generated("")
 public class Mutation {
 
-	@GraphQLField
-	@GraphQLInvokeDetached
-	public Form postFormEvaluateContext(
-			@GraphQLName("form-id") Long formId, @GraphQLName("Form") Form form)
-		throws Exception {
-
-		FormResource formResource = _createFormResource();
-
-		return formResource.postFormEvaluateContext(formId, form);
-	}
-
-	@GraphQLField
-	@GraphQLInvokeDetached
-	public Form postFormUploadFile(
-			@GraphQLName("form-id") Long formId, @GraphQLName("Form") Form form)
-		throws Exception {
-
-		FormResource formResource = _createFormResource();
-
-		return formResource.postFormUploadFile(formId, form);
-	}
-
 	@GraphQLInvokeDetached
 	public boolean deleteFormDocument(
 			@GraphQLName("form-document-id") Long formDocumentId)
@@ -69,15 +47,15 @@ public class Mutation {
 		return formDocumentResource.deleteFormDocument(formDocumentId);
 	}
 
+	@GraphQLField
 	@GraphQLInvokeDetached
-	public FormRecord putFormRecord(
-			@GraphQLName("form-record-id") Long formRecordId,
-			@GraphQLName("FormRecord") FormRecord formRecord)
+	public Form postFormEvaluateContext(
+			@GraphQLName("form-id") Long formId, @GraphQLName("Form") Form form)
 		throws Exception {
 
-		FormRecordResource formRecordResource = _createFormRecordResource();
+		FormResource formResource = _createFormResource();
 
-		return formRecordResource.putFormRecord(formRecordId, formRecord);
+		return formResource.postFormEvaluateContext(formId, form);
 	}
 
 	@GraphQLField
@@ -92,8 +70,26 @@ public class Mutation {
 		return formRecordResource.postFormFormRecord(formId, formRecord);
 	}
 
-	private static FormResource _createFormResource() {
-		return new FormResourceImpl();
+	@GraphQLField
+	@GraphQLInvokeDetached
+	public Form postFormUploadFile(
+			@GraphQLName("form-id") Long formId, @GraphQLName("Form") Form form)
+		throws Exception {
+
+		FormResource formResource = _createFormResource();
+
+		return formResource.postFormUploadFile(formId, form);
+	}
+
+	@GraphQLInvokeDetached
+	public FormRecord putFormRecord(
+			@GraphQLName("form-record-id") Long formRecordId,
+			@GraphQLName("FormRecord") FormRecord formRecord)
+		throws Exception {
+
+		FormRecordResource formRecordResource = _createFormRecordResource();
+
+		return formRecordResource.putFormRecord(formRecordId, formRecord);
 	}
 
 	private static FormDocumentResource _createFormDocumentResource() {
@@ -102,6 +98,10 @@ public class Mutation {
 
 	private static FormRecordResource _createFormRecordResource() {
 		return new FormRecordResourceImpl();
+	}
+
+	private static FormResource _createFormResource() {
+		return new FormResourceImpl();
 	}
 
 }

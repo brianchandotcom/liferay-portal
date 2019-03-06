@@ -36,10 +36,10 @@ public interface WorkflowTaskResource {
 			Long roleId, Pagination pagination)
 		throws Exception;
 
+	public WorkflowTask getWorkflowTask(Long workflowTaskId) throws Exception;
+
 	public Page<WorkflowTask> getWorkflowTasksPage(Pagination pagination)
 		throws Exception;
-
-	public WorkflowTask getWorkflowTask(Long workflowTaskId) throws Exception;
 
 	public WorkflowTask postWorkflowTaskAssignToMe(
 			Long workflowTaskId, WorkflowTask workflowTask)

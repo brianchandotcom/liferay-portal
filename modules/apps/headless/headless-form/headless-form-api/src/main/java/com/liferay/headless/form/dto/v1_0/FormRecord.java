@@ -23,8 +23,6 @@ import com.liferay.petra.string.StringBundler;
 import graphql.annotations.annotationTypes.GraphQLField;
 import graphql.annotations.annotationTypes.GraphQLName;
 
-import io.swagger.v3.oas.annotations.media.Schema;
-
 import java.util.Date;
 
 import javax.annotation.Generated;
@@ -37,12 +35,43 @@ import javax.xml.bind.annotation.XmlRootElement;
  */
 @Generated("")
 @GraphQLName("FormRecord")
-//@JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "FormRecord")
-public class FormRecord  {
+public class FormRecord {
 
 	public Creator getCreator() {
 		return creator;
+	}
+
+	public Date getDateCreated() {
+		return dateCreated;
+	}
+
+	public Date getDateModified() {
+		return dateModified;
+	}
+
+	public Date getDatePublished() {
+		return datePublished;
+	}
+
+	public Boolean getDraft() {
+		return draft;
+	}
+
+	public FieldValues[] getFieldValues() {
+		return fieldValues;
+	}
+
+	public Form getForm() {
+		return form;
+	}
+
+	public Long getFormId() {
+		return formId;
+	}
+
+	public Long getId() {
+		return id;
 	}
 
 	public void setCreator(Creator creator) {
@@ -61,14 +90,6 @@ public class FormRecord  {
 		}
 	}
 
-	@GraphQLField
-	@JsonProperty
-	protected Creator creator;
-
-	public Date getDateCreated() {
-		return dateCreated;
-	}
-
 	public void setDateCreated(Date dateCreated) {
 		this.dateCreated = dateCreated;
 	}
@@ -83,14 +104,6 @@ public class FormRecord  {
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
-	}
-
-	@GraphQLField
-	@JsonProperty
-	protected Date dateCreated;
-
-	public Date getDateModified() {
-		return dateModified;
 	}
 
 	public void setDateModified(Date dateModified) {
@@ -109,14 +122,6 @@ public class FormRecord  {
 		}
 	}
 
-	@GraphQLField
-	@JsonProperty
-	protected Date dateModified;
-
-	public Date getDatePublished() {
-		return datePublished;
-	}
-
 	public void setDatePublished(Date datePublished) {
 		this.datePublished = datePublished;
 	}
@@ -131,14 +136,6 @@ public class FormRecord  {
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
-	}
-
-	@GraphQLField
-	@JsonProperty
-	protected Date datePublished;
-
-	public Boolean getDraft() {
-		return draft;
 	}
 
 	public void setDraft(Boolean draft) {
@@ -157,15 +154,6 @@ public class FormRecord  {
 		}
 	}
 
-	@GraphQLField
-	@JsonProperty
-	protected Boolean draft;
-
-	@Schema(description = "https://www.schema.org/FormFieldValue")
-	public FieldValues[] getFieldValues() {
-		return fieldValues;
-	}
-
 	public void setFieldValues(FieldValues[] fieldValues) {
 		this.fieldValues = fieldValues;
 	}
@@ -182,14 +170,6 @@ public class FormRecord  {
 		}
 	}
 
-	@GraphQLField
-	@JsonProperty
-	protected FieldValues[] fieldValues;
-
-	public Form getForm() {
-		return form;
-	}
-
 	public void setForm(Form form) {
 		this.form = form;
 	}
@@ -202,14 +182,6 @@ public class FormRecord  {
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
-	}
-
-	@GraphQLField
-	@JsonProperty
-	protected Form form;
-
-	public Long getFormId() {
-		return formId;
 	}
 
 	public void setFormId(Long formId) {
@@ -228,14 +200,6 @@ public class FormRecord  {
 		}
 	}
 
-	@GraphQLField
-	@JsonProperty
-	protected Long formId;
-
-	public Long getId() {
-		return id;
-	}
-
 	public void setId(Long id) {
 		this.id = id;
 	}
@@ -250,12 +214,8 @@ public class FormRecord  {
 		}
 	}
 
-	@GraphQLField
-	@JsonProperty
-	protected Long id;
-
 	public String toString() {
-		StringBundler sb = new StringBundler();
+		StringBundler sb = new StringBundler(36);
 
 		sb.append("{");
 
@@ -292,23 +252,9 @@ public class FormRecord  {
 
 		sb.append("\"fieldValues\": ");
 
-		if (fieldValues == null) {
-			sb.append("null");
-		}
-		else {
-			sb.append("[");
-
-			for (int i = 0; i < fieldValues.length; i++) {
-				sb.append(fieldValues[i]);
-
-				if ((i + 1) < fieldValues.length) {
-					sb.append(", ");
-				}
-			}
-
-			sb.append("]");
-		}
-
+		sb.append("\"");
+		sb.append(fieldValues);
+		sb.append("\"");
 		sb.append(", ");
 
 		sb.append("\"form\": ");
@@ -329,5 +275,41 @@ public class FormRecord  {
 
 		return sb.toString();
 	}
+
+	@GraphQLField
+	@JsonProperty
+	protected Creator creator;
+
+	@GraphQLField
+	@JsonProperty
+	protected Date dateCreated;
+
+	@GraphQLField
+	@JsonProperty
+	protected Date dateModified;
+
+	@GraphQLField
+	@JsonProperty
+	protected Date datePublished;
+
+	@GraphQLField
+	@JsonProperty
+	protected Boolean draft;
+
+	@GraphQLField
+	@JsonProperty
+	protected FieldValues[] fieldValues;
+
+	@GraphQLField
+	@JsonProperty
+	protected Form form;
+
+	@GraphQLField
+	@JsonProperty
+	protected Long formId;
+
+	@GraphQLField
+	@JsonProperty
+	protected Long id;
 
 }

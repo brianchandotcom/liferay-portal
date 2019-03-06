@@ -24,10 +24,6 @@ import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.util.TransformUtil;
 
-import io.swagger.v3.oas.annotations.Parameter;
-import io.swagger.v3.oas.annotations.Parameters;
-import io.swagger.v3.oas.annotations.enums.ParameterIn;
-
 import java.net.URI;
 
 import java.util.Collections;
@@ -52,14 +48,8 @@ import javax.ws.rs.core.UriInfo;
 public abstract class BaseOrganizationResourceImpl
 	implements OrganizationResource {
 
-	@Override
 	@GET
-	@Parameters(
-		value = {
-			@Parameter(in = ParameterIn.QUERY, name = "page"),
-			@Parameter(in = ParameterIn.QUERY, name = "pageSize")
-		}
-	)
+	@Override
 	@Path("/my-user-accounts/{my-user-account-id}/organizations")
 	@Produces("application/json")
 	public Page<Organization> getMyUserAccountOrganizationsPage(
@@ -70,25 +60,8 @@ public abstract class BaseOrganizationResourceImpl
 		return Page.of(Collections.emptyList());
 	}
 
-	@Override
 	@GET
-	@Parameters(
-		value = {
-			@Parameter(in = ParameterIn.QUERY, name = "page"),
-			@Parameter(in = ParameterIn.QUERY, name = "pageSize")
-		}
-	)
-	@Path("/organizations")
-	@Produces("application/json")
-	public Page<Organization> getOrganizationsPage(
-			@Context Pagination pagination)
-		throws Exception {
-
-		return Page.of(Collections.emptyList());
-	}
-
 	@Override
-	@GET
 	@Path("/organizations/{organization-id}")
 	@Produces("application/json")
 	public Organization getOrganization(
@@ -98,14 +71,8 @@ public abstract class BaseOrganizationResourceImpl
 		return new Organization();
 	}
 
-	@Override
 	@GET
-	@Parameters(
-		value = {
-			@Parameter(in = ParameterIn.QUERY, name = "page"),
-			@Parameter(in = ParameterIn.QUERY, name = "pageSize")
-		}
-	)
+	@Override
 	@Path("/organizations/{organization-id}/organizations")
 	@Produces("application/json")
 	public Page<Organization> getOrganizationOrganizationsPage(
@@ -116,14 +83,19 @@ public abstract class BaseOrganizationResourceImpl
 		return Page.of(Collections.emptyList());
 	}
 
-	@Override
 	@GET
-	@Parameters(
-		value = {
-			@Parameter(in = ParameterIn.QUERY, name = "page"),
-			@Parameter(in = ParameterIn.QUERY, name = "pageSize")
-		}
-	)
+	@Override
+	@Path("/organizations")
+	@Produces("application/json")
+	public Page<Organization> getOrganizationsPage(
+			@Context Pagination pagination)
+		throws Exception {
+
+		return Page.of(Collections.emptyList());
+	}
+
+	@GET
+	@Override
 	@Path("/user-accounts/{user-account-id}/organizations")
 	@Produces("application/json")
 	public Page<Organization> getUserAccountOrganizationsPage(

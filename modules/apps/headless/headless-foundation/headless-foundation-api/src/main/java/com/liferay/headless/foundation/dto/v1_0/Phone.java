@@ -33,12 +33,23 @@ import javax.xml.bind.annotation.XmlRootElement;
  */
 @Generated("")
 @GraphQLName("Phone")
-//@JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "Phone")
-public class Phone  {
+public class Phone {
 
 	public String getExtension() {
 		return extension;
+	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public String getPhoneNumber() {
+		return phoneNumber;
+	}
+
+	public String getPhoneType() {
+		return phoneType;
 	}
 
 	public void setExtension(String extension) {
@@ -57,14 +68,6 @@ public class Phone  {
 		}
 	}
 
-	@GraphQLField
-	@JsonProperty
-	protected String extension;
-
-	public Long getId() {
-		return id;
-	}
-
 	public void setId(Long id) {
 		this.id = id;
 	}
@@ -77,14 +80,6 @@ public class Phone  {
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
-	}
-
-	@GraphQLField
-	@JsonProperty
-	protected Long id;
-
-	public String getPhoneNumber() {
-		return phoneNumber;
 	}
 
 	public void setPhoneNumber(String phoneNumber) {
@@ -103,14 +98,6 @@ public class Phone  {
 		}
 	}
 
-	@GraphQLField
-	@JsonProperty
-	protected String phoneNumber;
-
-	public String getPhoneType() {
-		return phoneType;
-	}
-
 	public void setPhoneType(String phoneType) {
 		this.phoneType = phoneType;
 	}
@@ -127,12 +114,8 @@ public class Phone  {
 		}
 	}
 
-	@GraphQLField
-	@JsonProperty
-	protected String phoneType;
-
 	public String toString() {
-		StringBundler sb = new StringBundler();
+		StringBundler sb = new StringBundler(19);
 
 		sb.append("{");
 
@@ -165,5 +148,21 @@ public class Phone  {
 
 		return sb.toString();
 	}
+
+	@GraphQLField
+	@JsonProperty
+	protected String extension;
+
+	@GraphQLField
+	@JsonProperty
+	protected Long id;
+
+	@GraphQLField
+	@JsonProperty
+	protected String phoneNumber;
+
+	@GraphQLField
+	@JsonProperty
+	protected String phoneType;
 
 }

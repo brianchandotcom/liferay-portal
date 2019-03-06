@@ -26,10 +26,6 @@ import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.util.TransformUtil;
 
-import io.swagger.v3.oas.annotations.Parameter;
-import io.swagger.v3.oas.annotations.Parameters;
-import io.swagger.v3.oas.annotations.enums.ParameterIn;
-
 import java.net.URI;
 
 import java.util.Collections;
@@ -57,8 +53,8 @@ import javax.ws.rs.core.UriInfo;
 @Path("/v1.0")
 public abstract class BaseCategoryResourceImpl implements CategoryResource {
 
-	@Override
 	@DELETE
+	@Override
 	@Path("/categories/{category-id}")
 	@Produces("application/json")
 	public boolean deleteCategory(@PathParam("category-id") Long categoryId)
@@ -67,8 +63,8 @@ public abstract class BaseCategoryResourceImpl implements CategoryResource {
 		return false;
 	}
 
-	@Override
 	@GET
+	@Override
 	@Path("/categories/{category-id}")
 	@Produces("application/json")
 	public Category getCategory(@PathParam("category-id") Long categoryId)
@@ -77,28 +73,8 @@ public abstract class BaseCategoryResourceImpl implements CategoryResource {
 		return new Category();
 	}
 
-	@Override
-	@Consumes("application/json")
-	@PUT
-	@Path("/categories/{category-id}")
-	@Produces("application/json")
-	public Category putCategory(
-			@PathParam("category-id") Long categoryId, Category category)
-		throws Exception {
-
-		return new Category();
-	}
-
-	@Override
 	@GET
-	@Parameters(
-		value = {
-			@Parameter(in = ParameterIn.QUERY, name = "filter"),
-			@Parameter(in = ParameterIn.QUERY, name = "page"),
-			@Parameter(in = ParameterIn.QUERY, name = "pageSize"),
-			@Parameter(in = ParameterIn.QUERY, name = "sorts")
-		}
-	)
+	@Override
 	@Path("/categories/{category-id}/categories")
 	@Produces("application/json")
 	public Page<Category> getCategoryCategoriesPage(
@@ -109,28 +85,8 @@ public abstract class BaseCategoryResourceImpl implements CategoryResource {
 		return Page.of(Collections.emptyList());
 	}
 
-	@Override
-	@Consumes("application/json")
-	@POST
-	@Path("/categories/{category-id}/categories")
-	@Produces("application/json")
-	public Category postCategoryCategory(
-			@PathParam("category-id") Long categoryId, Category category)
-		throws Exception {
-
-		return new Category();
-	}
-
-	@Override
 	@GET
-	@Parameters(
-		value = {
-			@Parameter(in = ParameterIn.QUERY, name = "filter"),
-			@Parameter(in = ParameterIn.QUERY, name = "page"),
-			@Parameter(in = ParameterIn.QUERY, name = "pageSize"),
-			@Parameter(in = ParameterIn.QUERY, name = "sorts")
-		}
-	)
+	@Override
 	@Path("/vocabularies/{vocabulary-id}/categories")
 	@Produces("application/json")
 	public Page<Category> getVocabularyCategoriesPage(
@@ -142,13 +98,37 @@ public abstract class BaseCategoryResourceImpl implements CategoryResource {
 		return Page.of(Collections.emptyList());
 	}
 
-	@Override
 	@Consumes("application/json")
+	@Override
+	@Path("/categories/{category-id}/categories")
 	@POST
+	@Produces("application/json")
+	public Category postCategoryCategory(
+			@PathParam("category-id") Long categoryId, Category category)
+		throws Exception {
+
+		return new Category();
+	}
+
+	@Consumes("application/json")
+	@Override
 	@Path("/vocabularies/{vocabulary-id}/categories")
+	@POST
 	@Produces("application/json")
 	public Category postVocabularyCategory(
 			@PathParam("vocabulary-id") Long vocabularyId, Category category)
+		throws Exception {
+
+		return new Category();
+	}
+
+	@Consumes("application/json")
+	@Override
+	@Path("/categories/{category-id}")
+	@Produces("application/json")
+	@PUT
+	public Category putCategory(
+			@PathParam("category-id") Long categoryId, Category category)
 		throws Exception {
 
 		return new Category();

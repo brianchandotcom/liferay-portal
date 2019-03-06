@@ -33,12 +33,19 @@ import javax.xml.bind.annotation.XmlRootElement;
  */
 @Generated("")
 @GraphQLName("Geo")
-//@JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "Geo")
-public class Geo  {
+public class Geo {
 
 	public Long getId() {
 		return id;
+	}
+
+	public Number getLatitude() {
+		return latitude;
+	}
+
+	public Number getLongitude() {
+		return longitude;
 	}
 
 	public void setId(Long id) {
@@ -53,14 +60,6 @@ public class Geo  {
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
-	}
-
-	@GraphQLField
-	@JsonProperty
-	protected Long id;
-
-	public Number getLatitude() {
-		return latitude;
 	}
 
 	public void setLatitude(Number latitude) {
@@ -79,14 +78,6 @@ public class Geo  {
 		}
 	}
 
-	@GraphQLField
-	@JsonProperty
-	protected Number latitude;
-
-	public Number getLongitude() {
-		return longitude;
-	}
-
 	public void setLongitude(Number longitude) {
 		this.longitude = longitude;
 	}
@@ -103,12 +94,8 @@ public class Geo  {
 		}
 	}
 
-	@GraphQLField
-	@JsonProperty
-	protected Number longitude;
-
 	public String toString() {
-		StringBundler sb = new StringBundler();
+		StringBundler sb = new StringBundler(10);
 
 		sb.append("{");
 
@@ -130,5 +117,17 @@ public class Geo  {
 
 		return sb.toString();
 	}
+
+	@GraphQLField
+	@JsonProperty
+	protected Long id;
+
+	@GraphQLField
+	@JsonProperty
+	protected Number latitude;
+
+	@GraphQLField
+	@JsonProperty
+	protected Number longitude;
 
 }

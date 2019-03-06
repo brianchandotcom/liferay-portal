@@ -149,75 +149,6 @@ public abstract class BaseSegmentResourceTestCase {
 			});
 	}
 
-	protected Segment testGetUserSegmentsPage_addSegment(
-			Long userId, Segment segment)
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	protected Long testGetUserSegmentsPage_getUserId() throws Exception {
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	protected Page<Segment> invokeGetUserSegmentsPage(
-			Long userId, Pagination pagination)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		String location =
-			_resourceURL + _toPath("/user-accounts/{user-id}/segments", userId);
-
-		location = HttpUtil.addParameter(
-			location, "page", pagination.getPage());
-		location = HttpUtil.addParameter(
-			location, "pageSize", pagination.getPageSize());
-
-		options.setLocation(location);
-
-		return _outputObjectMapper.readValue(
-			HttpUtil.URLtoString(options),
-			new TypeReference<Page<Segment>>() {
-			});
-	}
-
-	protected Http.Response invokeGetUserSegmentsPageResponse(
-			Long userId, Pagination pagination)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		String location =
-			_resourceURL + _toPath("/user-accounts/{user-id}/segments", userId);
-
-		location = HttpUtil.addParameter(
-			location, "page", pagination.getPage());
-		location = HttpUtil.addParameter(
-			location, "pageSize", pagination.getPageSize());
-
-		options.setLocation(location);
-
-		HttpUtil.URLtoString(options);
-
-		return options.getResponse();
-	}
-
-	protected void assertResponseCode(
-		int expectedResponseCode, Http.Response actualResponse) {
-
-		Assert.assertEquals(
-			expectedResponseCode, actualResponse.getResponseCode());
-	}
-
-	protected void assertEquals(Segment segment1, Segment segment2) {
-		Assert.assertTrue(
-			segment1 + " does not equal " + segment2,
-			equals(segment1, segment2));
-	}
-
 	protected void assertEquals(
 		List<Segment> segments1, List<Segment> segments2) {
 
@@ -229,6 +160,12 @@ public abstract class BaseSegmentResourceTestCase {
 
 			assertEquals(segment1, segment2);
 		}
+	}
+
+	protected void assertEquals(Segment segment1, Segment segment2) {
+		Assert.assertTrue(
+			segment1 + " does not equal " + segment2,
+			equals(segment1, segment2));
 	}
 
 	protected void assertEqualsIgnoringOrder(
@@ -252,9 +189,11 @@ public abstract class BaseSegmentResourceTestCase {
 		}
 	}
 
-	protected void assertValid(Segment segment) {
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+	protected void assertResponseCode(
+		int expectedResponseCode, Http.Response actualResponse) {
+
+		Assert.assertEquals(
+			expectedResponseCode, actualResponse.getResponseCode());
 	}
 
 	protected void assertValid(Page<Segment> page) {
@@ -264,14 +203,19 @@ public abstract class BaseSegmentResourceTestCase {
 
 		int size = segments.size();
 
-		if ((page.getLastPage() > 0) && (page.getPage() > 0) &&
-			(page.getPageSize() > 0) && (page.getTotalCount() > 0) &&
+		if ((page.getItemsPerPage() > 0) && (page.getLastPageNumber() > 0) &&
+			(page.getPageNumber() > 0) && (page.getTotalCount() > 0) &&
 			(size > 0)) {
 
 			valid = true;
 		}
 
 		Assert.assertTrue(valid);
+	}
+
+	protected void assertValid(Segment segment) {
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	protected boolean equals(Segment segment1, Segment segment2) {
@@ -377,6 +321,37 @@ public abstract class BaseSegmentResourceTestCase {
 			"Invalid entity field " + entityFieldName);
 	}
 
+	protected Page<Segment> invokeGetUserSegmentsPage(
+			Long userId, Pagination pagination)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		options.setLocation(
+			_resourceURL +
+				_toPath("/user-accounts/{user-id}/segments", userId));
+
+		return _outputObjectMapper.readValue(
+			HttpUtil.URLtoString(options),
+			new TypeReference<Page<Segment>>() {
+			});
+	}
+
+	protected Http.Response invokeGetUserSegmentsPageResponse(
+			Long userId, Pagination pagination)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		options.setLocation(
+			_resourceURL +
+				_toPath("/user-accounts/{user-id}/segments", userId));
+
+		HttpUtil.URLtoString(options);
+
+		return options.getResponse();
+	}
+
 	protected Segment randomSegment() {
 		return new Segment() {
 			{
@@ -391,6 +366,19 @@ public abstract class BaseSegmentResourceTestCase {
 		};
 	}
 
+	protected Segment testGetUserSegmentsPage_addSegment(
+			Long userId, Segment segment)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected Long testGetUserSegmentsPage_getUserId() throws Exception {
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
 	protected Group testGroup;
 
 	protected static class Page<T> {
@@ -399,16 +387,16 @@ public abstract class BaseSegmentResourceTestCase {
 			return new ArrayList<>(items);
 		}
 
-		public long getLastPage() {
-			return lastPage;
+		public long getItemsPerPage() {
+			return itemsPerPage;
 		}
 
-		public long getPage() {
-			return page;
+		public long getLastPageNumber() {
+			return lastPageNumber;
 		}
 
-		public long getPageSize() {
-			return pageSize;
+		public long getPageNumber() {
+			return pageNumber;
 		}
 
 		public long getTotalCount() {
@@ -418,14 +406,14 @@ public abstract class BaseSegmentResourceTestCase {
 		@JsonProperty
 		protected Collection<T> items;
 
-		@JsonProperty
-		protected long lastPage;
+		@JsonProperty("pageSize")
+		protected long itemsPerPage;
 
 		@JsonProperty
-		protected long page;
+		protected long lastPageNumber;
 
-		@JsonProperty
-		protected long pageSize;
+		@JsonProperty("page")
+		protected long pageNumber;
 
 		@JsonProperty
 		protected long totalCount;
@@ -455,16 +443,16 @@ public abstract class BaseSegmentResourceTestCase {
 	}
 
 	private static DateFormat _dateFormat;
-	private final static ObjectMapper _inputObjectMapper = new ObjectMapper() {
+	private static final ObjectMapper _inputObjectMapper = new ObjectMapper() {
 		{
 			setSerializationInclusion(JsonInclude.Include.NON_NULL);
 		}
 	};
-	private final static ObjectMapper _outputObjectMapper = new ObjectMapper();
+	private static final ObjectMapper _outputObjectMapper = new ObjectMapper();
+
+	private URL _resourceURL;
 
 	@Inject
 	private SegmentResource _segmentResource;
-
-	private URL _resourceURL;
 
 }

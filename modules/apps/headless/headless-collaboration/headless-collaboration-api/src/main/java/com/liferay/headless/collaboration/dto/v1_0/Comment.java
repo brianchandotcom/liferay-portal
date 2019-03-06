@@ -35,12 +35,31 @@ import javax.xml.bind.annotation.XmlRootElement;
  */
 @Generated("")
 @GraphQLName("Comment")
-//@JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "Comment")
-public class Comment  {
+public class Comment {
 
 	public Creator getCreator() {
 		return creator;
+	}
+
+	public Date getDateCreated() {
+		return dateCreated;
+	}
+
+	public Date getDateModified() {
+		return dateModified;
+	}
+
+	public Boolean getHasComments() {
+		return hasComments;
+	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public String getText() {
+		return text;
 	}
 
 	public void setCreator(Creator creator) {
@@ -59,14 +78,6 @@ public class Comment  {
 		}
 	}
 
-	@GraphQLField
-	@JsonProperty
-	protected Creator creator;
-
-	public Date getDateCreated() {
-		return dateCreated;
-	}
-
 	public void setDateCreated(Date dateCreated) {
 		this.dateCreated = dateCreated;
 	}
@@ -81,14 +92,6 @@ public class Comment  {
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
-	}
-
-	@GraphQLField
-	@JsonProperty
-	protected Date dateCreated;
-
-	public Date getDateModified() {
-		return dateModified;
 	}
 
 	public void setDateModified(Date dateModified) {
@@ -107,14 +110,6 @@ public class Comment  {
 		}
 	}
 
-	@GraphQLField
-	@JsonProperty
-	protected Date dateModified;
-
-	public Boolean getHasComments() {
-		return hasComments;
-	}
-
 	public void setHasComments(Boolean hasComments) {
 		this.hasComments = hasComments;
 	}
@@ -131,14 +126,6 @@ public class Comment  {
 		}
 	}
 
-	@GraphQLField
-	@JsonProperty
-	protected Boolean hasComments;
-
-	public Long getId() {
-		return id;
-	}
-
 	public void setId(Long id) {
 		this.id = id;
 	}
@@ -151,14 +138,6 @@ public class Comment  {
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
-	}
-
-	@GraphQLField
-	@JsonProperty
-	protected Long id;
-
-	public String getText() {
-		return text;
 	}
 
 	public void setText(String text) {
@@ -175,12 +154,8 @@ public class Comment  {
 		}
 	}
 
-	@GraphQLField
-	@JsonProperty
-	protected String text;
-
 	public String toString() {
-		StringBundler sb = new StringBundler();
+		StringBundler sb = new StringBundler(25);
 
 		sb.append("{");
 
@@ -223,5 +198,29 @@ public class Comment  {
 
 		return sb.toString();
 	}
+
+	@GraphQLField
+	@JsonProperty
+	protected Creator creator;
+
+	@GraphQLField
+	@JsonProperty
+	protected Date dateCreated;
+
+	@GraphQLField
+	@JsonProperty
+	protected Date dateModified;
+
+	@GraphQLField
+	@JsonProperty
+	protected Boolean hasComments;
+
+	@GraphQLField
+	@JsonProperty
+	protected Long id;
+
+	@GraphQLField
+	@JsonProperty
+	protected String text;
 
 }

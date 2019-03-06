@@ -33,12 +33,27 @@ import javax.xml.bind.annotation.XmlRootElement;
  */
 @Generated("")
 @GraphQLName("FieldValues")
-//@JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "FieldValues")
-public class FieldValues  {
+public class FieldValues {
 
 	public FormDocument getDocument() {
 		return document;
+	}
+
+	public Long getDocumentId() {
+		return documentId;
+	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public String getValue() {
+		return value;
 	}
 
 	public void setDocument(FormDocument document) {
@@ -57,14 +72,6 @@ public class FieldValues  {
 		}
 	}
 
-	@GraphQLField
-	@JsonProperty
-	protected FormDocument document;
-
-	public Long getDocumentId() {
-		return documentId;
-	}
-
 	public void setDocumentId(Long documentId) {
 		this.documentId = documentId;
 	}
@@ -81,14 +88,6 @@ public class FieldValues  {
 		}
 	}
 
-	@GraphQLField
-	@JsonProperty
-	protected Long documentId;
-
-	public Long getId() {
-		return id;
-	}
-
 	public void setId(Long id) {
 		this.id = id;
 	}
@@ -103,14 +102,6 @@ public class FieldValues  {
 		}
 	}
 
-	@GraphQLField
-	@JsonProperty
-	protected Long id;
-
-	public String getName() {
-		return name;
-	}
-
 	public void setName(String name) {
 		this.name = name;
 	}
@@ -123,14 +114,6 @@ public class FieldValues  {
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
-	}
-
-	@GraphQLField
-	@JsonProperty
-	protected String name;
-
-	public String getValue() {
-		return value;
 	}
 
 	public void setValue(String value) {
@@ -149,12 +132,8 @@ public class FieldValues  {
 		}
 	}
 
-	@GraphQLField
-	@JsonProperty
-	protected String value;
-
 	public String toString() {
-		StringBundler sb = new StringBundler();
+		StringBundler sb = new StringBundler(20);
 
 		sb.append("{");
 
@@ -190,5 +169,25 @@ public class FieldValues  {
 
 		return sb.toString();
 	}
+
+	@GraphQLField
+	@JsonProperty
+	protected FormDocument document;
+
+	@GraphQLField
+	@JsonProperty
+	protected Long documentId;
+
+	@GraphQLField
+	@JsonProperty
+	protected Long id;
+
+	@GraphQLField
+	@JsonProperty
+	protected String name;
+
+	@GraphQLField
+	@JsonProperty
+	protected String value;
 
 }

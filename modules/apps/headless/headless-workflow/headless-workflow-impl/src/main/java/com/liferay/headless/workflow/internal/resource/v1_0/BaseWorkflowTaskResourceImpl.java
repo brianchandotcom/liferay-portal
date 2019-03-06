@@ -24,10 +24,6 @@ import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.util.TransformUtil;
 
-import io.swagger.v3.oas.annotations.Parameter;
-import io.swagger.v3.oas.annotations.Parameters;
-import io.swagger.v3.oas.annotations.enums.ParameterIn;
-
 import java.net.URI;
 
 import java.util.Collections;
@@ -54,14 +50,8 @@ import javax.ws.rs.core.UriInfo;
 public abstract class BaseWorkflowTaskResourceImpl
 	implements WorkflowTaskResource {
 
-	@Override
 	@GET
-	@Parameters(
-		value = {
-			@Parameter(in = ParameterIn.QUERY, name = "page"),
-			@Parameter(in = ParameterIn.QUERY, name = "pageSize")
-		}
-	)
+	@Override
 	@Path("/roles/{role-id}/workflow-tasks")
 	@Produces("application/json")
 	public Page<WorkflowTask> getRoleWorkflowTasksPage(
@@ -71,25 +61,8 @@ public abstract class BaseWorkflowTaskResourceImpl
 		return Page.of(Collections.emptyList());
 	}
 
-	@Override
 	@GET
-	@Parameters(
-		value = {
-			@Parameter(in = ParameterIn.QUERY, name = "page"),
-			@Parameter(in = ParameterIn.QUERY, name = "pageSize")
-		}
-	)
-	@Path("/workflow-tasks")
-	@Produces("application/json")
-	public Page<WorkflowTask> getWorkflowTasksPage(
-			@Context Pagination pagination)
-		throws Exception {
-
-		return Page.of(Collections.emptyList());
-	}
-
 	@Override
-	@GET
 	@Path("/workflow-tasks/{workflow-task-id}")
 	@Produces("application/json")
 	public WorkflowTask getWorkflowTask(
@@ -99,10 +72,21 @@ public abstract class BaseWorkflowTaskResourceImpl
 		return new WorkflowTask();
 	}
 
+	@GET
 	@Override
+	@Path("/workflow-tasks")
+	@Produces("application/json")
+	public Page<WorkflowTask> getWorkflowTasksPage(
+			@Context Pagination pagination)
+		throws Exception {
+
+		return Page.of(Collections.emptyList());
+	}
+
 	@Consumes("application/json")
-	@POST
+	@Override
 	@Path("/workflow-tasks/{workflow-task-id}/assign-to-me")
+	@POST
 	@Produces("application/json")
 	public WorkflowTask postWorkflowTaskAssignToMe(
 			@PathParam("workflow-task-id") Long workflowTaskId,
@@ -112,10 +96,10 @@ public abstract class BaseWorkflowTaskResourceImpl
 		return new WorkflowTask();
 	}
 
-	@Override
 	@Consumes("application/json")
-	@POST
+	@Override
 	@Path("/workflow-tasks/{workflow-task-id}/assign-to-user")
+	@POST
 	@Produces("application/json")
 	public WorkflowTask postWorkflowTaskAssignToUser(
 			@PathParam("workflow-task-id") Long workflowTaskId,
@@ -125,10 +109,10 @@ public abstract class BaseWorkflowTaskResourceImpl
 		return new WorkflowTask();
 	}
 
-	@Override
 	@Consumes("application/json")
-	@POST
+	@Override
 	@Path("/workflow-tasks/{workflow-task-id}/change-transition")
+	@POST
 	@Produces("application/json")
 	public WorkflowTask postWorkflowTaskChangeTransition(
 			@PathParam("workflow-task-id") Long workflowTaskId,
@@ -138,10 +122,10 @@ public abstract class BaseWorkflowTaskResourceImpl
 		return new WorkflowTask();
 	}
 
-	@Override
 	@Consumes("application/json")
-	@POST
+	@Override
 	@Path("/workflow-tasks/{workflow-task-id}/update-due-date")
+	@POST
 	@Produces("application/json")
 	public WorkflowTask postWorkflowTaskUpdateDueDate(
 			@PathParam("workflow-task-id") Long workflowTaskId,

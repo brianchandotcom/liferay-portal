@@ -38,14 +38,8 @@ public interface CategoryResource {
 
 	public Category getCategory(Long categoryId) throws Exception;
 
-	public Category putCategory(Long categoryId, Category category)
-		throws Exception;
-
 	public Page<Category> getCategoryCategoriesPage(
 			Long categoryId, Filter filter, Pagination pagination, Sort[] sorts)
-		throws Exception;
-
-	public Category postCategoryCategory(Long categoryId, Category category)
 		throws Exception;
 
 	public Page<Category> getVocabularyCategoriesPage(
@@ -53,7 +47,13 @@ public interface CategoryResource {
 			Sort[] sorts)
 		throws Exception;
 
+	public Category postCategoryCategory(Long categoryId, Category category)
+		throws Exception;
+
 	public Category postVocabularyCategory(Long vocabularyId, Category category)
+		throws Exception;
+
+	public Category putCategory(Long categoryId, Category category)
 		throws Exception;
 
 	public void setContextCompany(Company contextCompany);

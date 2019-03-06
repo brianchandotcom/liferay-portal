@@ -38,10 +38,10 @@ public interface FormResource {
 
 	public Form getForm(Long formId) throws Exception;
 
+	public Form getFormFetchLatestDraft(Long formId) throws Exception;
+
 	public Form postFormEvaluateContext(Long formId, Form form)
 		throws Exception;
-
-	public Form getFormFetchLatestDraft(Long formId) throws Exception;
 
 	public Form postFormUploadFile(Long formId, Form form) throws Exception;
 

@@ -24,10 +24,6 @@ import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.util.TransformUtil;
 
-import io.swagger.v3.oas.annotations.Parameter;
-import io.swagger.v3.oas.annotations.Parameters;
-import io.swagger.v3.oas.annotations.enums.ParameterIn;
-
 import java.net.URI;
 
 import java.util.Collections;
@@ -51,14 +47,8 @@ import javax.ws.rs.core.UriInfo;
 @Path("/v1.0")
 public abstract class BaseRoleResourceImpl implements RoleResource {
 
-	@Override
 	@GET
-	@Parameters(
-		value = {
-			@Parameter(in = ParameterIn.QUERY, name = "page"),
-			@Parameter(in = ParameterIn.QUERY, name = "pageSize")
-		}
-	)
+	@Override
 	@Path("/my-user-accounts/{my-user-account-id}/roles")
 	@Produces("application/json")
 	public Page<Role> getMyUserAccountRolesPage(
@@ -69,14 +59,16 @@ public abstract class BaseRoleResourceImpl implements RoleResource {
 		return Page.of(Collections.emptyList());
 	}
 
-	@Override
 	@GET
-	@Parameters(
-		value = {
-			@Parameter(in = ParameterIn.QUERY, name = "page"),
-			@Parameter(in = ParameterIn.QUERY, name = "pageSize")
-		}
-	)
+	@Override
+	@Path("/roles/{role-id}")
+	@Produces("application/json")
+	public Role getRole(@PathParam("role-id") Long roleId) throws Exception {
+		return new Role();
+	}
+
+	@GET
+	@Override
 	@Path("/roles")
 	@Produces("application/json")
 	public Page<Role> getRolesPage(@Context Pagination pagination)
@@ -85,22 +77,8 @@ public abstract class BaseRoleResourceImpl implements RoleResource {
 		return Page.of(Collections.emptyList());
 	}
 
-	@Override
 	@GET
-	@Path("/roles/{role-id}")
-	@Produces("application/json")
-	public Role getRole(@PathParam("role-id") Long roleId) throws Exception {
-		return new Role();
-	}
-
 	@Override
-	@GET
-	@Parameters(
-		value = {
-			@Parameter(in = ParameterIn.QUERY, name = "page"),
-			@Parameter(in = ParameterIn.QUERY, name = "pageSize")
-		}
-	)
 	@Path("/user-accounts/{user-account-id}/roles")
 	@Produces("application/json")
 	public Page<Role> getUserAccountRolesPage(

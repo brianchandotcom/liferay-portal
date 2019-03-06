@@ -35,12 +35,35 @@ import javax.xml.bind.annotation.XmlRootElement;
  */
 @Generated("")
 @GraphQLName("Segment")
-//@JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "Segment")
-public class Segment  {
+public class Segment {
 
 	public Boolean getActive() {
 		return active;
+	}
+
+	public String getCriteria() {
+		return criteria;
+	}
+
+	public Date getDateCreated() {
+		return dateCreated;
+	}
+
+	public Date getDateModified() {
+		return dateModified;
+	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public String getSource() {
+		return source;
 	}
 
 	public void setActive(Boolean active) {
@@ -59,14 +82,6 @@ public class Segment  {
 		}
 	}
 
-	@GraphQLField
-	@JsonProperty
-	protected Boolean active;
-
-	public String getCriteria() {
-		return criteria;
-	}
-
 	public void setCriteria(String criteria) {
 		this.criteria = criteria;
 	}
@@ -81,14 +96,6 @@ public class Segment  {
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
-	}
-
-	@GraphQLField
-	@JsonProperty
-	protected String criteria;
-
-	public Date getDateCreated() {
-		return dateCreated;
 	}
 
 	public void setDateCreated(Date dateCreated) {
@@ -107,14 +114,6 @@ public class Segment  {
 		}
 	}
 
-	@GraphQLField
-	@JsonProperty
-	protected Date dateCreated;
-
-	public Date getDateModified() {
-		return dateModified;
-	}
-
 	public void setDateModified(Date dateModified) {
 		this.dateModified = dateModified;
 	}
@@ -131,14 +130,6 @@ public class Segment  {
 		}
 	}
 
-	@GraphQLField
-	@JsonProperty
-	protected Date dateModified;
-
-	public Long getId() {
-		return id;
-	}
-
 	public void setId(Long id) {
 		this.id = id;
 	}
@@ -153,14 +144,6 @@ public class Segment  {
 		}
 	}
 
-	@GraphQLField
-	@JsonProperty
-	protected Long id;
-
-	public String getName() {
-		return name;
-	}
-
 	public void setName(String name) {
 		this.name = name;
 	}
@@ -173,14 +156,6 @@ public class Segment  {
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
-	}
-
-	@GraphQLField
-	@JsonProperty
-	protected String name;
-
-	public String getSource() {
-		return source;
 	}
 
 	public void setSource(String source) {
@@ -199,12 +174,8 @@ public class Segment  {
 		}
 	}
 
-	@GraphQLField
-	@JsonProperty
-	protected String source;
-
 	public String toString() {
-		StringBundler sb = new StringBundler();
+		StringBundler sb = new StringBundler(32);
 
 		sb.append("{");
 
@@ -256,5 +227,33 @@ public class Segment  {
 
 		return sb.toString();
 	}
+
+	@GraphQLField
+	@JsonProperty
+	protected Boolean active;
+
+	@GraphQLField
+	@JsonProperty
+	protected String criteria;
+
+	@GraphQLField
+	@JsonProperty
+	protected Date dateCreated;
+
+	@GraphQLField
+	@JsonProperty
+	protected Date dateModified;
+
+	@GraphQLField
+	@JsonProperty
+	protected Long id;
+
+	@GraphQLField
+	@JsonProperty
+	protected String name;
+
+	@GraphQLField
+	@JsonProperty
+	protected String source;
 
 }

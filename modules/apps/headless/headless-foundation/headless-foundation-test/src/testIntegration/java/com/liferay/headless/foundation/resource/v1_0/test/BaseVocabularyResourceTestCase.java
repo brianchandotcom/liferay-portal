@@ -31,6 +31,7 @@ import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.HttpUtil;
+import com.liferay.portal.kernel.util.URLCodec;
 import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.test.rule.Inject;
@@ -98,6 +99,17 @@ public abstract class BaseVocabularyResourceTestCase {
 	@After
 	public void tearDown() throws Exception {
 		GroupTestUtil.deleteGroup(testGroup);
+	}
+
+	@Test
+	public void testDeleteVocabulary() throws Exception {
+		Vocabulary vocabulary = testDeleteVocabulary_addVocabulary();
+
+		assertResponseCode(
+			200, invokeDeleteVocabularyResponse(vocabulary.getId()));
+
+		assertResponseCode(
+			404, invokeGetVocabularyResponse(vocabulary.getId()));
 	}
 
 	@Test
@@ -182,8 +194,6 @@ public abstract class BaseVocabularyResourceTestCase {
 		Vocabulary vocabulary1 =
 			testGetContentSpaceVocabulariesPage_addVocabulary(
 				contentSpaceId, randomVocabulary());
-
-		@SuppressWarnings("PMD.UnusedLocalVariable")
 		Vocabulary vocabulary2 =
 			testGetContentSpaceVocabulariesPage_addVocabulary(
 				contentSpaceId, randomVocabulary());
@@ -338,77 +348,14 @@ public abstract class BaseVocabularyResourceTestCase {
 		}
 	}
 
-	protected Vocabulary testGetContentSpaceVocabulariesPage_addVocabulary(
-			Long contentSpaceId, Vocabulary vocabulary)
-		throws Exception {
+	@Test
+	public void testGetVocabulary() throws Exception {
+		Vocabulary postVocabulary = testGetVocabulary_addVocabulary();
 
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
+		Vocabulary getVocabulary = invokeGetVocabulary(postVocabulary.getId());
 
-	protected Long testGetContentSpaceVocabulariesPage_getContentSpaceId()
-		throws Exception {
-
-		return testGroup.getGroupId();
-	}
-
-	protected Page<Vocabulary> invokeGetContentSpaceVocabulariesPage(
-			Long contentSpaceId, String filterString, Pagination pagination,
-			String sortString)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		String location =
-			_resourceURL +
-				_toPath(
-					"/content-spaces/{content-space-id}/vocabularies",
-					contentSpaceId);
-
-		location = HttpUtil.addParameter(location, "filter", filterString);
-
-		location = HttpUtil.addParameter(
-			location, "page", pagination.getPage());
-		location = HttpUtil.addParameter(
-			location, "pageSize", pagination.getPageSize());
-
-		location = HttpUtil.addParameter(location, "sort", sortString);
-
-		options.setLocation(location);
-
-		return _outputObjectMapper.readValue(
-			HttpUtil.URLtoString(options),
-			new TypeReference<Page<Vocabulary>>() {
-			});
-	}
-
-	protected Http.Response invokeGetContentSpaceVocabulariesPageResponse(
-			Long contentSpaceId, String filterString, Pagination pagination,
-			String sortString)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		String location =
-			_resourceURL +
-				_toPath(
-					"/content-spaces/{content-space-id}/vocabularies",
-					contentSpaceId);
-
-		location = HttpUtil.addParameter(location, "filter", filterString);
-
-		location = HttpUtil.addParameter(
-			location, "page", pagination.getPage());
-		location = HttpUtil.addParameter(
-			location, "pageSize", pagination.getPageSize());
-
-		location = HttpUtil.addParameter(location, "sort", sortString);
-
-		options.setLocation(location);
-
-		HttpUtil.URLtoString(options);
-
-		return options.getResponse();
+		assertEquals(postVocabulary, getVocabulary);
+		assertValid(getVocabulary);
 	}
 
 	@Test
@@ -420,160 +367,6 @@ public abstract class BaseVocabularyResourceTestCase {
 
 		assertEquals(randomVocabulary, postVocabulary);
 		assertValid(postVocabulary);
-	}
-
-	protected Vocabulary testPostContentSpaceVocabulary_addVocabulary(
-			Vocabulary vocabulary)
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	protected Vocabulary invokePostContentSpaceVocabulary(
-			Long contentSpaceId, Vocabulary vocabulary)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		options.setBody(
-			_inputObjectMapper.writeValueAsString(vocabulary),
-			ContentTypes.APPLICATION_JSON, StringPool.UTF8);
-
-		String location =
-			_resourceURL +
-				_toPath(
-					"/content-spaces/{content-space-id}/vocabularies",
-					contentSpaceId);
-
-		options.setLocation(location);
-
-		options.setPost(true);
-
-		return _outputObjectMapper.readValue(
-			HttpUtil.URLtoString(options), Vocabulary.class);
-	}
-
-	protected Http.Response invokePostContentSpaceVocabularyResponse(
-			Long contentSpaceId, Vocabulary vocabulary)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		options.setBody(
-			_inputObjectMapper.writeValueAsString(vocabulary),
-			ContentTypes.APPLICATION_JSON, StringPool.UTF8);
-
-		String location =
-			_resourceURL +
-				_toPath(
-					"/content-spaces/{content-space-id}/vocabularies",
-					contentSpaceId);
-
-		options.setLocation(location);
-
-		options.setPost(true);
-
-		HttpUtil.URLtoString(options);
-
-		return options.getResponse();
-	}
-
-	@Test
-	public void testDeleteVocabulary() throws Exception {
-		Vocabulary vocabulary = testDeleteVocabulary_addVocabulary();
-
-		assertResponseCode(
-			200, invokeDeleteVocabularyResponse(vocabulary.getId()));
-
-		assertResponseCode(
-			404, invokeGetVocabularyResponse(vocabulary.getId()));
-	}
-
-	protected Vocabulary testDeleteVocabulary_addVocabulary() throws Exception {
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	protected boolean invokeDeleteVocabulary(Long vocabularyId)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		options.setDelete(true);
-
-		String location =
-			_resourceURL +
-				_toPath("/vocabularies/{vocabulary-id}", vocabularyId);
-
-		options.setLocation(location);
-
-		return _outputObjectMapper.readValue(
-			HttpUtil.URLtoString(options), Boolean.class);
-	}
-
-	protected Http.Response invokeDeleteVocabularyResponse(Long vocabularyId)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		options.setDelete(true);
-
-		String location =
-			_resourceURL +
-				_toPath("/vocabularies/{vocabulary-id}", vocabularyId);
-
-		options.setLocation(location);
-
-		HttpUtil.URLtoString(options);
-
-		return options.getResponse();
-	}
-
-	@Test
-	public void testGetVocabulary() throws Exception {
-		Vocabulary postVocabulary = testGetVocabulary_addVocabulary();
-
-		Vocabulary getVocabulary = invokeGetVocabulary(postVocabulary.getId());
-
-		assertEquals(postVocabulary, getVocabulary);
-		assertValid(getVocabulary);
-	}
-
-	protected Vocabulary testGetVocabulary_addVocabulary() throws Exception {
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	protected Vocabulary invokeGetVocabulary(Long vocabularyId)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		String location =
-			_resourceURL +
-				_toPath("/vocabularies/{vocabulary-id}", vocabularyId);
-
-		options.setLocation(location);
-
-		return _outputObjectMapper.readValue(
-			HttpUtil.URLtoString(options), Vocabulary.class);
-	}
-
-	protected Http.Response invokeGetVocabularyResponse(Long vocabularyId)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		String location =
-			_resourceURL +
-				_toPath("/vocabularies/{vocabulary-id}", vocabularyId);
-
-		options.setLocation(location);
-
-		HttpUtil.URLtoString(options);
-
-		return options.getResponse();
 	}
 
 	@Test
@@ -594,71 +387,6 @@ public abstract class BaseVocabularyResourceTestCase {
 		assertValid(getVocabulary);
 	}
 
-	protected Vocabulary testPutVocabulary_addVocabulary() throws Exception {
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	protected Vocabulary invokePutVocabulary(
-			Long vocabularyId, Vocabulary vocabulary)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		options.setBody(
-			_inputObjectMapper.writeValueAsString(vocabulary),
-			ContentTypes.APPLICATION_JSON, StringPool.UTF8);
-
-		String location =
-			_resourceURL +
-				_toPath("/vocabularies/{vocabulary-id}", vocabularyId);
-
-		options.setLocation(location);
-
-		options.setPut(true);
-
-		return _outputObjectMapper.readValue(
-			HttpUtil.URLtoString(options), Vocabulary.class);
-	}
-
-	protected Http.Response invokePutVocabularyResponse(
-			Long vocabularyId, Vocabulary vocabulary)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		options.setBody(
-			_inputObjectMapper.writeValueAsString(vocabulary),
-			ContentTypes.APPLICATION_JSON, StringPool.UTF8);
-
-		String location =
-			_resourceURL +
-				_toPath("/vocabularies/{vocabulary-id}", vocabularyId);
-
-		options.setLocation(location);
-
-		options.setPut(true);
-
-		HttpUtil.URLtoString(options);
-
-		return options.getResponse();
-	}
-
-	protected void assertResponseCode(
-		int expectedResponseCode, Http.Response actualResponse) {
-
-		Assert.assertEquals(
-			expectedResponseCode, actualResponse.getResponseCode());
-	}
-
-	protected void assertEquals(
-		Vocabulary vocabulary1, Vocabulary vocabulary2) {
-
-		Assert.assertTrue(
-			vocabulary1 + " does not equal " + vocabulary2,
-			equals(vocabulary1, vocabulary2));
-	}
-
 	protected void assertEquals(
 		List<Vocabulary> vocabularies1, List<Vocabulary> vocabularies2) {
 
@@ -670,6 +398,14 @@ public abstract class BaseVocabularyResourceTestCase {
 
 			assertEquals(vocabulary1, vocabulary2);
 		}
+	}
+
+	protected void assertEquals(
+		Vocabulary vocabulary1, Vocabulary vocabulary2) {
+
+		Assert.assertTrue(
+			vocabulary1 + " does not equal " + vocabulary2,
+			equals(vocabulary1, vocabulary2));
 	}
 
 	protected void assertEqualsIgnoringOrder(
@@ -693,9 +429,11 @@ public abstract class BaseVocabularyResourceTestCase {
 		}
 	}
 
-	protected void assertValid(Vocabulary vocabulary) {
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+	protected void assertResponseCode(
+		int expectedResponseCode, Http.Response actualResponse) {
+
+		Assert.assertEquals(
+			expectedResponseCode, actualResponse.getResponseCode());
 	}
 
 	protected void assertValid(Page<Vocabulary> page) {
@@ -705,14 +443,19 @@ public abstract class BaseVocabularyResourceTestCase {
 
 		int size = vocabularies.size();
 
-		if ((page.getLastPage() > 0) && (page.getPage() > 0) &&
-			(page.getPageSize() > 0) && (page.getTotalCount() > 0) &&
+		if ((page.getItemsPerPage() > 0) && (page.getLastPageNumber() > 0) &&
+			(page.getPageNumber() > 0) && (page.getTotalCount() > 0) &&
 			(size > 0)) {
 
 			valid = true;
 		}
 
 		Assert.assertTrue(valid);
+	}
+
+	protected void assertValid(Vocabulary vocabulary) {
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	protected boolean equals(Vocabulary vocabulary1, Vocabulary vocabulary2) {
@@ -833,6 +576,183 @@ public abstract class BaseVocabularyResourceTestCase {
 			"Invalid entity field " + entityFieldName);
 	}
 
+	protected boolean invokeDeleteVocabulary(Long vocabularyId)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		options.setDelete(true);
+
+		options.setLocation(
+			_resourceURL +
+				_toPath("/vocabularies/{vocabulary-id}", vocabularyId));
+
+		return _outputObjectMapper.readValue(
+			HttpUtil.URLtoString(options), Boolean.class);
+	}
+
+	protected Http.Response invokeDeleteVocabularyResponse(Long vocabularyId)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		options.setDelete(true);
+
+		options.setLocation(
+			_resourceURL +
+				_toPath("/vocabularies/{vocabulary-id}", vocabularyId));
+
+		HttpUtil.URLtoString(options);
+
+		return options.getResponse();
+	}
+
+	protected Page<Vocabulary> invokeGetContentSpaceVocabulariesPage(
+			Long contentSpaceId, String filterString, Pagination pagination,
+			String sortString)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		options.setLocation(
+			_getContentSpaceVocabulariesLocation(
+				contentSpaceId, filterString, pagination, sortString));
+
+		return _outputObjectMapper.readValue(
+			HttpUtil.URLtoString(options),
+			new TypeReference<Page<Vocabulary>>() {
+			});
+	}
+
+	protected Http.Response invokeGetContentSpaceVocabulariesPageResponse(
+			Long contentSpaceId, String filterString, Pagination pagination,
+			String sortString)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		options.setLocation(
+			_getContentSpaceVocabulariesLocation(
+				contentSpaceId, filterString, pagination, sortString));
+
+		HttpUtil.URLtoString(options);
+
+		return options.getResponse();
+	}
+
+	protected Vocabulary invokeGetVocabulary(Long vocabularyId)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		options.setLocation(
+			_resourceURL +
+				_toPath("/vocabularies/{vocabulary-id}", vocabularyId));
+
+		return _outputObjectMapper.readValue(
+			HttpUtil.URLtoString(options), Vocabulary.class);
+	}
+
+	protected Http.Response invokeGetVocabularyResponse(Long vocabularyId)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		options.setLocation(
+			_resourceURL +
+				_toPath("/vocabularies/{vocabulary-id}", vocabularyId));
+
+		HttpUtil.URLtoString(options);
+
+		return options.getResponse();
+	}
+
+	protected Vocabulary invokePostContentSpaceVocabulary(
+			Long contentSpaceId, Vocabulary vocabulary)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		options.setBody(
+			_inputObjectMapper.writeValueAsString(vocabulary),
+			ContentTypes.APPLICATION_JSON, StringPool.UTF8);
+
+		options.setLocation(
+			_resourceURL +
+				_toPath(
+					"/content-spaces/{content-space-id}/vocabularies",
+					contentSpaceId));
+
+		options.setPost(true);
+
+		return _outputObjectMapper.readValue(
+			HttpUtil.URLtoString(options), Vocabulary.class);
+	}
+
+	protected Http.Response invokePostContentSpaceVocabularyResponse(
+			Long contentSpaceId, Vocabulary vocabulary)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		options.setBody(
+			_inputObjectMapper.writeValueAsString(vocabulary),
+			ContentTypes.APPLICATION_JSON, StringPool.UTF8);
+
+		options.setLocation(
+			_resourceURL +
+				_toPath(
+					"/content-spaces/{content-space-id}/vocabularies",
+					contentSpaceId));
+
+		options.setPost(true);
+
+		HttpUtil.URLtoString(options);
+
+		return options.getResponse();
+	}
+
+	protected Vocabulary invokePutVocabulary(
+			Long vocabularyId, Vocabulary vocabulary)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		options.setBody(
+			_inputObjectMapper.writeValueAsString(vocabulary),
+			ContentTypes.APPLICATION_JSON, StringPool.UTF8);
+
+		options.setLocation(
+			_resourceURL +
+				_toPath("/vocabularies/{vocabulary-id}", vocabularyId));
+
+		options.setPut(true);
+
+		return _outputObjectMapper.readValue(
+			HttpUtil.URLtoString(options), Vocabulary.class);
+	}
+
+	protected Http.Response invokePutVocabularyResponse(
+			Long vocabularyId, Vocabulary vocabulary)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		options.setBody(
+			_inputObjectMapper.writeValueAsString(vocabulary),
+			ContentTypes.APPLICATION_JSON, StringPool.UTF8);
+
+		options.setLocation(
+			_resourceURL +
+				_toPath("/vocabularies/{vocabulary-id}", vocabularyId));
+
+		options.setPut(true);
+
+		HttpUtil.URLtoString(options);
+
+		return options.getResponse();
+	}
+
 	protected Vocabulary randomVocabulary() {
 		return new Vocabulary() {
 			{
@@ -848,6 +768,43 @@ public abstract class BaseVocabularyResourceTestCase {
 		};
 	}
 
+	protected Vocabulary testDeleteVocabulary_addVocabulary() throws Exception {
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected Vocabulary testGetContentSpaceVocabulariesPage_addVocabulary(
+			Long contentSpaceId, Vocabulary vocabulary)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected Long testGetContentSpaceVocabulariesPage_getContentSpaceId()
+		throws Exception {
+
+		return testGroup.getGroupId();
+	}
+
+	protected Vocabulary testGetVocabulary_addVocabulary() throws Exception {
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected Vocabulary testPostContentSpaceVocabulary_addVocabulary(
+			Vocabulary vocabulary)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected Vocabulary testPutVocabulary_addVocabulary() throws Exception {
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
 	protected Group testGroup;
 
 	protected static class Page<T> {
@@ -856,16 +813,16 @@ public abstract class BaseVocabularyResourceTestCase {
 			return new ArrayList<>(items);
 		}
 
-		public long getLastPage() {
-			return lastPage;
+		public long getItemsPerPage() {
+			return itemsPerPage;
 		}
 
-		public long getPage() {
-			return page;
+		public long getLastPageNumber() {
+			return lastPageNumber;
 		}
 
-		public long getPageSize() {
-			return pageSize;
+		public long getPageNumber() {
+			return pageNumber;
 		}
 
 		public long getTotalCount() {
@@ -875,14 +832,14 @@ public abstract class BaseVocabularyResourceTestCase {
 		@JsonProperty
 		protected Collection<T> items;
 
-		@JsonProperty
-		protected long lastPage;
+		@JsonProperty("pageSize")
+		protected long itemsPerPage;
 
 		@JsonProperty
-		protected long page;
+		protected long lastPageNumber;
 
-		@JsonProperty
-		protected long pageSize;
+		@JsonProperty("page")
+		protected long pageNumber;
 
 		@JsonProperty
 		protected long totalCount;
@@ -907,21 +864,39 @@ public abstract class BaseVocabularyResourceTestCase {
 		return options;
 	}
 
+	private String _getContentSpaceVocabulariesLocation(
+		Long contentSpaceId, String filterString, Pagination pagination,
+		String sortString) {
+
+		String url =
+			_resourceURL +
+				_toPath(
+					"/content-spaces/{content-space-id}/vocabularies",
+					contentSpaceId);
+
+		url += "?filter=" + URLCodec.encodeURL(filterString);
+		url += "&page=" + pagination.getPageNumber();
+		url += "&pageSize=" + pagination.getItemsPerPage();
+		url += "&sort=" + URLCodec.encodeURL(sortString);
+
+		return url;
+	}
+
 	private String _toPath(String template, Object value) {
 		return template.replaceFirst("\\{.*\\}", String.valueOf(value));
 	}
 
 	private static DateFormat _dateFormat;
-	private final static ObjectMapper _inputObjectMapper = new ObjectMapper() {
+	private static final ObjectMapper _inputObjectMapper = new ObjectMapper() {
 		{
 			setSerializationInclusion(JsonInclude.Include.NON_NULL);
 		}
 	};
-	private final static ObjectMapper _outputObjectMapper = new ObjectMapper();
+	private static final ObjectMapper _outputObjectMapper = new ObjectMapper();
+
+	private URL _resourceURL;
 
 	@Inject
 	private VocabularyResource _vocabularyResource;
-
-	private URL _resourceURL;
 
 }

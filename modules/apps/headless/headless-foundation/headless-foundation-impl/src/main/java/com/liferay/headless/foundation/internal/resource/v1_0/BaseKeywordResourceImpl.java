@@ -26,10 +26,6 @@ import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.util.TransformUtil;
 
-import io.swagger.v3.oas.annotations.Parameter;
-import io.swagger.v3.oas.annotations.Parameters;
-import io.swagger.v3.oas.annotations.enums.ParameterIn;
-
 import java.net.URI;
 
 import java.util.Collections;
@@ -57,16 +53,18 @@ import javax.ws.rs.core.UriInfo;
 @Path("/v1.0")
 public abstract class BaseKeywordResourceImpl implements KeywordResource {
 
+	@DELETE
 	@Override
+	@Path("/keywords/{keyword-id}")
+	@Produces("application/json")
+	public boolean deleteKeyword(@PathParam("keyword-id") Long keywordId)
+		throws Exception {
+
+		return false;
+	}
+
 	@GET
-	@Parameters(
-		value = {
-			@Parameter(in = ParameterIn.QUERY, name = "filter"),
-			@Parameter(in = ParameterIn.QUERY, name = "page"),
-			@Parameter(in = ParameterIn.QUERY, name = "pageSize"),
-			@Parameter(in = ParameterIn.QUERY, name = "sorts")
-		}
-	)
+	@Override
 	@Path("/content-spaces/{content-space-id}/keywords")
 	@Produces("application/json")
 	public Page<Keyword> getContentSpaceKeywordsPage(
@@ -78,30 +76,8 @@ public abstract class BaseKeywordResourceImpl implements KeywordResource {
 		return Page.of(Collections.emptyList());
 	}
 
-	@Override
-	@Consumes("application/json")
-	@POST
-	@Path("/content-spaces/{content-space-id}/keywords")
-	@Produces("application/json")
-	public Keyword postContentSpaceKeyword(
-			@PathParam("content-space-id") Long contentSpaceId, Keyword keyword)
-		throws Exception {
-
-		return new Keyword();
-	}
-
-	@Override
-	@DELETE
-	@Path("/keywords/{keyword-id}")
-	@Produces("application/json")
-	public boolean deleteKeyword(@PathParam("keyword-id") Long keywordId)
-		throws Exception {
-
-		return false;
-	}
-
-	@Override
 	@GET
+	@Override
 	@Path("/keywords/{keyword-id}")
 	@Produces("application/json")
 	public Keyword getKeyword(@PathParam("keyword-id") Long keywordId)
@@ -110,11 +86,23 @@ public abstract class BaseKeywordResourceImpl implements KeywordResource {
 		return new Keyword();
 	}
 
-	@Override
 	@Consumes("application/json")
-	@PUT
+	@Override
+	@Path("/content-spaces/{content-space-id}/keywords")
+	@POST
+	@Produces("application/json")
+	public Keyword postContentSpaceKeyword(
+			@PathParam("content-space-id") Long contentSpaceId, Keyword keyword)
+		throws Exception {
+
+		return new Keyword();
+	}
+
+	@Consumes("application/json")
+	@Override
 	@Path("/keywords/{keyword-id}")
 	@Produces("application/json")
+	@PUT
 	public Keyword putKeyword(
 			@PathParam("keyword-id") Long keywordId, Keyword keyword)
 		throws Exception {

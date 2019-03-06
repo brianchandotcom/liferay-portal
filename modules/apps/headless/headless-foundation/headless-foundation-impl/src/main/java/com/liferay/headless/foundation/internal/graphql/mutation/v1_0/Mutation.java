@@ -50,14 +50,32 @@ public class Mutation {
 	}
 
 	@GraphQLInvokeDetached
-	public Category putCategory(
-			@GraphQLName("category-id") Long categoryId,
-			@GraphQLName("Category") Category category)
+	public boolean deleteKeyword(@GraphQLName("keyword-id") Long keywordId)
 		throws Exception {
 
-		CategoryResource categoryResource = _createCategoryResource();
+		KeywordResource keywordResource = _createKeywordResource();
 
-		return categoryResource.putCategory(categoryId, category);
+		return keywordResource.deleteKeyword(keywordId);
+	}
+
+	@GraphQLInvokeDetached
+	public boolean deleteUserAccount(
+			@GraphQLName("user-account-id") Long userAccountId)
+		throws Exception {
+
+		UserAccountResource userAccountResource = _createUserAccountResource();
+
+		return userAccountResource.deleteUserAccount(userAccountId);
+	}
+
+	@GraphQLInvokeDetached
+	public boolean deleteVocabulary(
+			@GraphQLName("vocabulary-id") Long vocabularyId)
+		throws Exception {
+
+		VocabularyResource vocabularyResource = _createVocabularyResource();
+
+		return vocabularyResource.deleteVocabulary(vocabularyId);
 	}
 
 	@GraphQLField
@@ -74,18 +92,6 @@ public class Mutation {
 
 	@GraphQLField
 	@GraphQLInvokeDetached
-	public Category postVocabularyCategory(
-			@GraphQLName("vocabulary-id") Long vocabularyId,
-			@GraphQLName("Category") Category category)
-		throws Exception {
-
-		CategoryResource categoryResource = _createCategoryResource();
-
-		return categoryResource.postVocabularyCategory(vocabularyId, category);
-	}
-
-	@GraphQLField
-	@GraphQLInvokeDetached
 	public Keyword postContentSpaceKeyword(
 			@GraphQLName("content-space-id") Long contentSpaceId,
 			@GraphQLName("Keyword") Keyword keyword)
@@ -94,58 +100,6 @@ public class Mutation {
 		KeywordResource keywordResource = _createKeywordResource();
 
 		return keywordResource.postContentSpaceKeyword(contentSpaceId, keyword);
-	}
-
-	@GraphQLInvokeDetached
-	public boolean deleteKeyword(@GraphQLName("keyword-id") Long keywordId)
-		throws Exception {
-
-		KeywordResource keywordResource = _createKeywordResource();
-
-		return keywordResource.deleteKeyword(keywordId);
-	}
-
-	@GraphQLInvokeDetached
-	public Keyword putKeyword(
-			@GraphQLName("keyword-id") Long keywordId,
-			@GraphQLName("Keyword") Keyword keyword)
-		throws Exception {
-
-		KeywordResource keywordResource = _createKeywordResource();
-
-		return keywordResource.putKeyword(keywordId, keyword);
-	}
-
-	@GraphQLField
-	@GraphQLInvokeDetached
-	public UserAccount postUserAccount(
-			@GraphQLName("UserAccount") UserAccount userAccount)
-		throws Exception {
-
-		UserAccountResource userAccountResource = _createUserAccountResource();
-
-		return userAccountResource.postUserAccount(userAccount);
-	}
-
-	@GraphQLInvokeDetached
-	public boolean deleteUserAccount(
-			@GraphQLName("user-account-id") Long userAccountId)
-		throws Exception {
-
-		UserAccountResource userAccountResource = _createUserAccountResource();
-
-		return userAccountResource.deleteUserAccount(userAccountId);
-	}
-
-	@GraphQLInvokeDetached
-	public UserAccount putUserAccount(
-			@GraphQLName("user-account-id") Long userAccountId,
-			@GraphQLName("UserAccount") UserAccount userAccount)
-		throws Exception {
-
-		UserAccountResource userAccountResource = _createUserAccountResource();
-
-		return userAccountResource.putUserAccount(userAccountId, userAccount);
 	}
 
 	@GraphQLField
@@ -161,14 +115,60 @@ public class Mutation {
 			contentSpaceId, vocabulary);
 	}
 
+	@GraphQLField
 	@GraphQLInvokeDetached
-	public boolean deleteVocabulary(
-			@GraphQLName("vocabulary-id") Long vocabularyId)
+	public UserAccount postUserAccount(
+			@GraphQLName("UserAccount") UserAccount userAccount)
 		throws Exception {
 
-		VocabularyResource vocabularyResource = _createVocabularyResource();
+		UserAccountResource userAccountResource = _createUserAccountResource();
 
-		return vocabularyResource.deleteVocabulary(vocabularyId);
+		return userAccountResource.postUserAccount(userAccount);
+	}
+
+	@GraphQLField
+	@GraphQLInvokeDetached
+	public Category postVocabularyCategory(
+			@GraphQLName("vocabulary-id") Long vocabularyId,
+			@GraphQLName("Category") Category category)
+		throws Exception {
+
+		CategoryResource categoryResource = _createCategoryResource();
+
+		return categoryResource.postVocabularyCategory(vocabularyId, category);
+	}
+
+	@GraphQLInvokeDetached
+	public Category putCategory(
+			@GraphQLName("category-id") Long categoryId,
+			@GraphQLName("Category") Category category)
+		throws Exception {
+
+		CategoryResource categoryResource = _createCategoryResource();
+
+		return categoryResource.putCategory(categoryId, category);
+	}
+
+	@GraphQLInvokeDetached
+	public Keyword putKeyword(
+			@GraphQLName("keyword-id") Long keywordId,
+			@GraphQLName("Keyword") Keyword keyword)
+		throws Exception {
+
+		KeywordResource keywordResource = _createKeywordResource();
+
+		return keywordResource.putKeyword(keywordId, keyword);
+	}
+
+	@GraphQLInvokeDetached
+	public UserAccount putUserAccount(
+			@GraphQLName("user-account-id") Long userAccountId,
+			@GraphQLName("UserAccount") UserAccount userAccount)
+		throws Exception {
+
+		UserAccountResource userAccountResource = _createUserAccountResource();
+
+		return userAccountResource.putUserAccount(userAccountId, userAccount);
 	}
 
 	@GraphQLInvokeDetached

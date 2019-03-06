@@ -24,10 +24,6 @@ import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.util.TransformUtil;
 
-import io.swagger.v3.oas.annotations.Parameter;
-import io.swagger.v3.oas.annotations.Parameters;
-import io.swagger.v3.oas.annotations.enums.ParameterIn;
-
 import java.net.URI;
 
 import java.util.Collections;
@@ -52,8 +48,8 @@ import javax.ws.rs.core.UriInfo;
 public abstract class BaseWorkflowLogResourceImpl
 	implements WorkflowLogResource {
 
-	@Override
 	@GET
+	@Override
 	@Path("/workflow-logs/{workflow-log-id}")
 	@Produces("application/json")
 	public WorkflowLog getWorkflowLog(
@@ -63,14 +59,8 @@ public abstract class BaseWorkflowLogResourceImpl
 		return new WorkflowLog();
 	}
 
-	@Override
 	@GET
-	@Parameters(
-		value = {
-			@Parameter(in = ParameterIn.QUERY, name = "page"),
-			@Parameter(in = ParameterIn.QUERY, name = "pageSize")
-		}
-	)
+	@Override
 	@Path("/workflow-tasks/{workflow-task-id}/workflow-logs")
 	@Produces("application/json")
 	public Page<WorkflowLog> getWorkflowTaskWorkflowLogsPage(

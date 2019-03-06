@@ -151,67 +151,6 @@ public abstract class BaseFormResourceTestCase {
 			});
 	}
 
-	protected Form testGetContentSpaceFormsPage_addForm(
-			Long contentSpaceId, Form form)
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	protected Long testGetContentSpaceFormsPage_getContentSpaceId()
-		throws Exception {
-
-		return testGroup.getGroupId();
-	}
-
-	protected Page<Form> invokeGetContentSpaceFormsPage(
-			Long contentSpaceId, Pagination pagination)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		String location =
-			_resourceURL +
-				_toPath(
-					"/content-spaces/{content-space-id}/forms", contentSpaceId);
-
-		location = HttpUtil.addParameter(
-			location, "page", pagination.getPage());
-		location = HttpUtil.addParameter(
-			location, "pageSize", pagination.getPageSize());
-
-		options.setLocation(location);
-
-		return _outputObjectMapper.readValue(
-			HttpUtil.URLtoString(options),
-			new TypeReference<Page<Form>>() {
-			});
-	}
-
-	protected Http.Response invokeGetContentSpaceFormsPageResponse(
-			Long contentSpaceId, Pagination pagination)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		String location =
-			_resourceURL +
-				_toPath(
-					"/content-spaces/{content-space-id}/forms", contentSpaceId);
-
-		location = HttpUtil.addParameter(
-			location, "page", pagination.getPage());
-		location = HttpUtil.addParameter(
-			location, "pageSize", pagination.getPageSize());
-
-		options.setLocation(location);
-
-		HttpUtil.URLtoString(options);
-
-		return options.getResponse();
-	}
-
 	@Test
 	public void testGetForm() throws Exception {
 		Form postForm = testGetForm_addForm();
@@ -220,95 +159,6 @@ public abstract class BaseFormResourceTestCase {
 
 		assertEquals(postForm, getForm);
 		assertValid(getForm);
-	}
-
-	protected Form testGetForm_addForm() throws Exception {
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	protected Form invokeGetForm(Long formId) throws Exception {
-		Http.Options options = _createHttpOptions();
-
-		String location = _resourceURL + _toPath("/forms/{form-id}", formId);
-
-		options.setLocation(location);
-
-		return _outputObjectMapper.readValue(
-			HttpUtil.URLtoString(options), Form.class);
-	}
-
-	protected Http.Response invokeGetFormResponse(Long formId)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		String location = _resourceURL + _toPath("/forms/{form-id}", formId);
-
-		options.setLocation(location);
-
-		HttpUtil.URLtoString(options);
-
-		return options.getResponse();
-	}
-
-	@Test
-	public void testPostFormEvaluateContext() throws Exception {
-		Form randomForm = randomForm();
-
-		Form postForm = testPostFormEvaluateContext_addForm(randomForm);
-
-		assertEquals(randomForm, postForm);
-		assertValid(postForm);
-	}
-
-	protected Form testPostFormEvaluateContext_addForm(Form form)
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	protected Form invokePostFormEvaluateContext(Long formId, Form form)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		options.setBody(
-			_inputObjectMapper.writeValueAsString(form),
-			ContentTypes.APPLICATION_JSON, StringPool.UTF8);
-
-		String location =
-			_resourceURL + _toPath("/forms/{form-id}/evaluate-context", formId);
-
-		options.setLocation(location);
-
-		options.setPost(true);
-
-		return _outputObjectMapper.readValue(
-			HttpUtil.URLtoString(options), Form.class);
-	}
-
-	protected Http.Response invokePostFormEvaluateContextResponse(
-			Long formId, Form form)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		options.setBody(
-			_inputObjectMapper.writeValueAsString(form),
-			ContentTypes.APPLICATION_JSON, StringPool.UTF8);
-
-		String location =
-			_resourceURL + _toPath("/forms/{form-id}/evaluate-context", formId);
-
-		options.setLocation(location);
-
-		options.setPost(true);
-
-		HttpUtil.URLtoString(options);
-
-		return options.getResponse();
 	}
 
 	@Test
@@ -321,38 +171,14 @@ public abstract class BaseFormResourceTestCase {
 		assertValid(getForm);
 	}
 
-	protected Form testGetFormFetchLatestDraft_addForm() throws Exception {
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
+	@Test
+	public void testPostFormEvaluateContext() throws Exception {
+		Form randomForm = randomForm();
 
-	protected Form invokeGetFormFetchLatestDraft(Long formId) throws Exception {
-		Http.Options options = _createHttpOptions();
+		Form postForm = testPostFormEvaluateContext_addForm(randomForm);
 
-		String location =
-			_resourceURL +
-				_toPath("/forms/{form-id}/fetch-latest-draft", formId);
-
-		options.setLocation(location);
-
-		return _outputObjectMapper.readValue(
-			HttpUtil.URLtoString(options), Form.class);
-	}
-
-	protected Http.Response invokeGetFormFetchLatestDraftResponse(Long formId)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		String location =
-			_resourceURL +
-				_toPath("/forms/{form-id}/fetch-latest-draft", formId);
-
-		options.setLocation(location);
-
-		HttpUtil.URLtoString(options);
-
-		return options.getResponse();
+		assertEquals(randomForm, postForm);
+		assertValid(postForm);
 	}
 
 	@Test
@@ -363,60 +189,6 @@ public abstract class BaseFormResourceTestCase {
 
 		assertEquals(randomForm, postForm);
 		assertValid(postForm);
-	}
-
-	protected Form testPostFormUploadFile_addForm(Form form) throws Exception {
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	protected Form invokePostFormUploadFile(Long formId, Form form)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		options.setBody(
-			_inputObjectMapper.writeValueAsString(form),
-			ContentTypes.APPLICATION_JSON, StringPool.UTF8);
-
-		String location =
-			_resourceURL + _toPath("/forms/{form-id}/upload-file", formId);
-
-		options.setLocation(location);
-
-		options.setPost(true);
-
-		return _outputObjectMapper.readValue(
-			HttpUtil.URLtoString(options), Form.class);
-	}
-
-	protected Http.Response invokePostFormUploadFileResponse(
-			Long formId, Form form)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		options.setBody(
-			_inputObjectMapper.writeValueAsString(form),
-			ContentTypes.APPLICATION_JSON, StringPool.UTF8);
-
-		String location =
-			_resourceURL + _toPath("/forms/{form-id}/upload-file", formId);
-
-		options.setLocation(location);
-
-		options.setPost(true);
-
-		HttpUtil.URLtoString(options);
-
-		return options.getResponse();
-	}
-
-	protected void assertResponseCode(
-		int expectedResponseCode, Http.Response actualResponse) {
-
-		Assert.assertEquals(
-			expectedResponseCode, actualResponse.getResponseCode());
 	}
 
 	protected void assertEquals(Form form1, Form form2) {
@@ -455,6 +227,13 @@ public abstract class BaseFormResourceTestCase {
 		}
 	}
 
+	protected void assertResponseCode(
+		int expectedResponseCode, Http.Response actualResponse) {
+
+		Assert.assertEquals(
+			expectedResponseCode, actualResponse.getResponseCode());
+	}
+
 	protected void assertValid(Form form) {
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
@@ -467,8 +246,8 @@ public abstract class BaseFormResourceTestCase {
 
 		int size = forms.size();
 
-		if ((page.getLastPage() > 0) && (page.getPage() > 0) &&
-			(page.getPageSize() > 0) && (page.getTotalCount() > 0) &&
+		if ((page.getItemsPerPage() > 0) && (page.getLastPageNumber() > 0) &&
+			(page.getPageNumber() > 0) && (page.getTotalCount() > 0) &&
 			(size > 0)) {
 
 			valid = true;
@@ -616,6 +395,165 @@ public abstract class BaseFormResourceTestCase {
 			"Invalid entity field " + entityFieldName);
 	}
 
+	protected Page<Form> invokeGetContentSpaceFormsPage(
+			Long contentSpaceId, Pagination pagination)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		options.setLocation(
+			_resourceURL +
+				_toPath(
+					"/content-spaces/{content-space-id}/forms",
+					contentSpaceId));
+
+		return _outputObjectMapper.readValue(
+			HttpUtil.URLtoString(options),
+			new TypeReference<Page<Form>>() {
+			});
+	}
+
+	protected Http.Response invokeGetContentSpaceFormsPageResponse(
+			Long contentSpaceId, Pagination pagination)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		options.setLocation(
+			_resourceURL +
+				_toPath(
+					"/content-spaces/{content-space-id}/forms",
+					contentSpaceId));
+
+		HttpUtil.URLtoString(options);
+
+		return options.getResponse();
+	}
+
+	protected Form invokeGetForm(Long formId) throws Exception {
+		Http.Options options = _createHttpOptions();
+
+		options.setLocation(_resourceURL + _toPath("/forms/{form-id}", formId));
+
+		return _outputObjectMapper.readValue(
+			HttpUtil.URLtoString(options), Form.class);
+	}
+
+	protected Form invokeGetFormFetchLatestDraft(Long formId) throws Exception {
+		Http.Options options = _createHttpOptions();
+
+		options.setLocation(
+			_resourceURL +
+				_toPath("/forms/{form-id}/fetch-latest-draft", formId));
+
+		return _outputObjectMapper.readValue(
+			HttpUtil.URLtoString(options), Form.class);
+	}
+
+	protected Http.Response invokeGetFormFetchLatestDraftResponse(Long formId)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		options.setLocation(
+			_resourceURL +
+				_toPath("/forms/{form-id}/fetch-latest-draft", formId));
+
+		HttpUtil.URLtoString(options);
+
+		return options.getResponse();
+	}
+
+	protected Http.Response invokeGetFormResponse(Long formId)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		options.setLocation(_resourceURL + _toPath("/forms/{form-id}", formId));
+
+		HttpUtil.URLtoString(options);
+
+		return options.getResponse();
+	}
+
+	protected Form invokePostFormEvaluateContext(Long formId, Form form)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		options.setBody(
+			_inputObjectMapper.writeValueAsString(form),
+			ContentTypes.APPLICATION_JSON, StringPool.UTF8);
+
+		options.setLocation(
+			_resourceURL +
+				_toPath("/forms/{form-id}/evaluate-context", formId));
+
+		options.setPost(true);
+
+		return _outputObjectMapper.readValue(
+			HttpUtil.URLtoString(options), Form.class);
+	}
+
+	protected Http.Response invokePostFormEvaluateContextResponse(
+			Long formId, Form form)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		options.setBody(
+			_inputObjectMapper.writeValueAsString(form),
+			ContentTypes.APPLICATION_JSON, StringPool.UTF8);
+
+		options.setLocation(
+			_resourceURL +
+				_toPath("/forms/{form-id}/evaluate-context", formId));
+
+		options.setPost(true);
+
+		HttpUtil.URLtoString(options);
+
+		return options.getResponse();
+	}
+
+	protected Form invokePostFormUploadFile(Long formId, Form form)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		options.setBody(
+			_inputObjectMapper.writeValueAsString(form),
+			ContentTypes.APPLICATION_JSON, StringPool.UTF8);
+
+		options.setLocation(
+			_resourceURL + _toPath("/forms/{form-id}/upload-file", formId));
+
+		options.setPost(true);
+
+		return _outputObjectMapper.readValue(
+			HttpUtil.URLtoString(options), Form.class);
+	}
+
+	protected Http.Response invokePostFormUploadFileResponse(
+			Long formId, Form form)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		options.setBody(
+			_inputObjectMapper.writeValueAsString(form),
+			ContentTypes.APPLICATION_JSON, StringPool.UTF8);
+
+		options.setLocation(
+			_resourceURL + _toPath("/forms/{form-id}/upload-file", formId));
+
+		options.setPost(true);
+
+		HttpUtil.URLtoString(options);
+
+		return options.getResponse();
+	}
+
 	protected Form randomForm() {
 		return new Form() {
 			{
@@ -632,6 +570,42 @@ public abstract class BaseFormResourceTestCase {
 		};
 	}
 
+	protected Form testGetContentSpaceFormsPage_addForm(
+			Long contentSpaceId, Form form)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected Long testGetContentSpaceFormsPage_getContentSpaceId()
+		throws Exception {
+
+		return testGroup.getGroupId();
+	}
+
+	protected Form testGetForm_addForm() throws Exception {
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected Form testGetFormFetchLatestDraft_addForm() throws Exception {
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected Form testPostFormEvaluateContext_addForm(Form form)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected Form testPostFormUploadFile_addForm(Form form) throws Exception {
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
 	protected Group testGroup;
 
 	protected static class Page<T> {
@@ -640,16 +614,16 @@ public abstract class BaseFormResourceTestCase {
 			return new ArrayList<>(items);
 		}
 
-		public long getLastPage() {
-			return lastPage;
+		public long getItemsPerPage() {
+			return itemsPerPage;
 		}
 
-		public long getPage() {
-			return page;
+		public long getLastPageNumber() {
+			return lastPageNumber;
 		}
 
-		public long getPageSize() {
-			return pageSize;
+		public long getPageNumber() {
+			return pageNumber;
 		}
 
 		public long getTotalCount() {
@@ -659,14 +633,14 @@ public abstract class BaseFormResourceTestCase {
 		@JsonProperty
 		protected Collection<T> items;
 
-		@JsonProperty
-		protected long lastPage;
+		@JsonProperty("pageSize")
+		protected long itemsPerPage;
 
 		@JsonProperty
-		protected long page;
+		protected long lastPageNumber;
 
-		@JsonProperty
-		protected long pageSize;
+		@JsonProperty("page")
+		protected long pageNumber;
 
 		@JsonProperty
 		protected long totalCount;
@@ -696,12 +670,12 @@ public abstract class BaseFormResourceTestCase {
 	}
 
 	private static DateFormat _dateFormat;
-	private final static ObjectMapper _inputObjectMapper = new ObjectMapper() {
+	private static final ObjectMapper _inputObjectMapper = new ObjectMapper() {
 		{
 			setSerializationInclusion(JsonInclude.Include.NON_NULL);
 		}
 	};
-	private final static ObjectMapper _outputObjectMapper = new ObjectMapper();
+	private static final ObjectMapper _outputObjectMapper = new ObjectMapper();
 
 	@Inject
 	private FormResource _formResource;

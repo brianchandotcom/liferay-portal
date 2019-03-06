@@ -153,62 +153,6 @@ public abstract class BaseWebUrlResourceTestCase {
 			});
 	}
 
-	protected WebUrl testGetGenericParentWebUrlsPage_addWebUrl(
-			Object genericParentId, WebUrl webUrl)
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	protected Object testGetGenericParentWebUrlsPage_getGenericParentId()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	protected Page<WebUrl> invokeGetGenericParentWebUrlsPage(
-			Object genericParentId, Pagination pagination)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		String location = _resourceURL + _toPath("/web-urls", genericParentId);
-
-		location = HttpUtil.addParameter(
-			location, "page", pagination.getPage());
-		location = HttpUtil.addParameter(
-			location, "pageSize", pagination.getPageSize());
-
-		options.setLocation(location);
-
-		return _outputObjectMapper.readValue(
-			HttpUtil.URLtoString(options),
-			new TypeReference<Page<WebUrl>>() {
-			});
-	}
-
-	protected Http.Response invokeGetGenericParentWebUrlsPageResponse(
-			Object genericParentId, Pagination pagination)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		String location = _resourceURL + _toPath("/web-urls", genericParentId);
-
-		location = HttpUtil.addParameter(
-			location, "page", pagination.getPage());
-		location = HttpUtil.addParameter(
-			location, "pageSize", pagination.getPageSize());
-
-		options.setLocation(location);
-
-		HttpUtil.URLtoString(options);
-
-		return options.getResponse();
-	}
-
 	@Test
 	public void testGetWebUrl() throws Exception {
 		WebUrl postWebUrl = testGetWebUrl_addWebUrl();
@@ -217,50 +161,6 @@ public abstract class BaseWebUrlResourceTestCase {
 
 		assertEquals(postWebUrl, getWebUrl);
 		assertValid(getWebUrl);
-	}
-
-	protected WebUrl testGetWebUrl_addWebUrl() throws Exception {
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	protected WebUrl invokeGetWebUrl(Long webUrlId) throws Exception {
-		Http.Options options = _createHttpOptions();
-
-		String location =
-			_resourceURL + _toPath("/web-urls/{web-url-id}", webUrlId);
-
-		options.setLocation(location);
-
-		return _outputObjectMapper.readValue(
-			HttpUtil.URLtoString(options), WebUrl.class);
-	}
-
-	protected Http.Response invokeGetWebUrlResponse(Long webUrlId)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		String location =
-			_resourceURL + _toPath("/web-urls/{web-url-id}", webUrlId);
-
-		options.setLocation(location);
-
-		HttpUtil.URLtoString(options);
-
-		return options.getResponse();
-	}
-
-	protected void assertResponseCode(
-		int expectedResponseCode, Http.Response actualResponse) {
-
-		Assert.assertEquals(
-			expectedResponseCode, actualResponse.getResponseCode());
-	}
-
-	protected void assertEquals(WebUrl webUrl1, WebUrl webUrl2) {
-		Assert.assertTrue(
-			webUrl1 + " does not equal " + webUrl2, equals(webUrl1, webUrl2));
 	}
 
 	protected void assertEquals(List<WebUrl> webUrls1, List<WebUrl> webUrls2) {
@@ -272,6 +172,11 @@ public abstract class BaseWebUrlResourceTestCase {
 
 			assertEquals(webUrl1, webUrl2);
 		}
+	}
+
+	protected void assertEquals(WebUrl webUrl1, WebUrl webUrl2) {
+		Assert.assertTrue(
+			webUrl1 + " does not equal " + webUrl2, equals(webUrl1, webUrl2));
 	}
 
 	protected void assertEqualsIgnoringOrder(
@@ -295,9 +200,11 @@ public abstract class BaseWebUrlResourceTestCase {
 		}
 	}
 
-	protected void assertValid(WebUrl webUrl) {
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+	protected void assertResponseCode(
+		int expectedResponseCode, Http.Response actualResponse) {
+
+		Assert.assertEquals(
+			expectedResponseCode, actualResponse.getResponseCode());
 	}
 
 	protected void assertValid(Page<WebUrl> page) {
@@ -307,14 +214,19 @@ public abstract class BaseWebUrlResourceTestCase {
 
 		int size = webUrls.size();
 
-		if ((page.getLastPage() > 0) && (page.getPage() > 0) &&
-			(page.getPageSize() > 0) && (page.getTotalCount() > 0) &&
+		if ((page.getItemsPerPage() > 0) && (page.getLastPageNumber() > 0) &&
+			(page.getPageNumber() > 0) && (page.getTotalCount() > 0) &&
 			(size > 0)) {
 
 			valid = true;
 		}
 
 		Assert.assertTrue(valid);
+	}
+
+	protected void assertValid(WebUrl webUrl) {
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	protected boolean equals(WebUrl webUrl1, WebUrl webUrl2) {
@@ -395,6 +307,58 @@ public abstract class BaseWebUrlResourceTestCase {
 			"Invalid entity field " + entityFieldName);
 	}
 
+	protected Page<WebUrl> invokeGetGenericParentWebUrlsPage(
+			Object genericParentId, Pagination pagination)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		options.setLocation(
+			_resourceURL + _toPath("/web-urls", genericParentId));
+
+		return _outputObjectMapper.readValue(
+			HttpUtil.URLtoString(options),
+			new TypeReference<Page<WebUrl>>() {
+			});
+	}
+
+	protected Http.Response invokeGetGenericParentWebUrlsPageResponse(
+			Object genericParentId, Pagination pagination)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		options.setLocation(
+			_resourceURL + _toPath("/web-urls", genericParentId));
+
+		HttpUtil.URLtoString(options);
+
+		return options.getResponse();
+	}
+
+	protected WebUrl invokeGetWebUrl(Long webUrlId) throws Exception {
+		Http.Options options = _createHttpOptions();
+
+		options.setLocation(
+			_resourceURL + _toPath("/web-urls/{web-url-id}", webUrlId));
+
+		return _outputObjectMapper.readValue(
+			HttpUtil.URLtoString(options), WebUrl.class);
+	}
+
+	protected Http.Response invokeGetWebUrlResponse(Long webUrlId)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		options.setLocation(
+			_resourceURL + _toPath("/web-urls/{web-url-id}", webUrlId));
+
+		HttpUtil.URLtoString(options);
+
+		return options.getResponse();
+	}
+
 	protected WebUrl randomWebUrl() {
 		return new WebUrl() {
 			{
@@ -405,6 +369,26 @@ public abstract class BaseWebUrlResourceTestCase {
 		};
 	}
 
+	protected WebUrl testGetGenericParentWebUrlsPage_addWebUrl(
+			Object genericParentId, WebUrl webUrl)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected Object testGetGenericParentWebUrlsPage_getGenericParentId()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected WebUrl testGetWebUrl_addWebUrl() throws Exception {
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
 	protected Group testGroup;
 
 	protected static class Page<T> {
@@ -413,16 +397,16 @@ public abstract class BaseWebUrlResourceTestCase {
 			return new ArrayList<>(items);
 		}
 
-		public long getLastPage() {
-			return lastPage;
+		public long getItemsPerPage() {
+			return itemsPerPage;
 		}
 
-		public long getPage() {
-			return page;
+		public long getLastPageNumber() {
+			return lastPageNumber;
 		}
 
-		public long getPageSize() {
-			return pageSize;
+		public long getPageNumber() {
+			return pageNumber;
 		}
 
 		public long getTotalCount() {
@@ -432,14 +416,14 @@ public abstract class BaseWebUrlResourceTestCase {
 		@JsonProperty
 		protected Collection<T> items;
 
-		@JsonProperty
-		protected long lastPage;
+		@JsonProperty("pageSize")
+		protected long itemsPerPage;
 
 		@JsonProperty
-		protected long page;
+		protected long lastPageNumber;
 
-		@JsonProperty
-		protected long pageSize;
+		@JsonProperty("page")
+		protected long pageNumber;
 
 		@JsonProperty
 		protected long totalCount;
@@ -469,16 +453,16 @@ public abstract class BaseWebUrlResourceTestCase {
 	}
 
 	private static DateFormat _dateFormat;
-	private final static ObjectMapper _inputObjectMapper = new ObjectMapper() {
+	private static final ObjectMapper _inputObjectMapper = new ObjectMapper() {
 		{
 			setSerializationInclusion(JsonInclude.Include.NON_NULL);
 		}
 	};
-	private final static ObjectMapper _outputObjectMapper = new ObjectMapper();
+	private static final ObjectMapper _outputObjectMapper = new ObjectMapper();
+
+	private URL _resourceURL;
 
 	@Inject
 	private WebUrlResource _webUrlResource;
-
-	private URL _resourceURL;
 
 }

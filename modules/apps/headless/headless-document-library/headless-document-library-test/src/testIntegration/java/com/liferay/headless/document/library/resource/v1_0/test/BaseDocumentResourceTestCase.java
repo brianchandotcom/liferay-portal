@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.util.Base64;
 import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.HttpUtil;
+import com.liferay.portal.kernel.util.URLCodec;
 import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.test.rule.Inject;
@@ -97,6 +98,15 @@ public abstract class BaseDocumentResourceTestCase {
 	@After
 	public void tearDown() throws Exception {
 		GroupTestUtil.deleteGroup(testGroup);
+	}
+
+	@Test
+	public void testDeleteDocument() throws Exception {
+		Document document = testDeleteDocument_addDocument();
+
+		assertResponseCode(200, invokeDeleteDocumentResponse(document.getId()));
+
+		assertResponseCode(404, invokeGetDocumentResponse(document.getId()));
 	}
 
 	@Test
@@ -178,8 +188,6 @@ public abstract class BaseDocumentResourceTestCase {
 
 		Document document1 = testGetContentSpaceDocumentsPage_addDocument(
 			contentSpaceId, randomDocument());
-
-		@SuppressWarnings("PMD.UnusedLocalVariable")
 		Document document2 = testGetContentSpaceDocumentsPage_addDocument(
 			contentSpaceId, randomDocument());
 
@@ -330,178 +338,6 @@ public abstract class BaseDocumentResourceTestCase {
 		}
 	}
 
-	protected Document testGetContentSpaceDocumentsPage_addDocument(
-			Long contentSpaceId, Document document)
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	protected Long testGetContentSpaceDocumentsPage_getContentSpaceId()
-		throws Exception {
-
-		return testGroup.getGroupId();
-	}
-
-	protected Page<Document> invokeGetContentSpaceDocumentsPage(
-			Long contentSpaceId, String filterString, Pagination pagination,
-			String sortString)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		String location =
-			_resourceURL +
-				_toPath(
-					"/content-spaces/{content-space-id}/documents",
-					contentSpaceId);
-
-		location = HttpUtil.addParameter(location, "filter", filterString);
-
-		location = HttpUtil.addParameter(
-			location, "page", pagination.getPage());
-		location = HttpUtil.addParameter(
-			location, "pageSize", pagination.getPageSize());
-
-		location = HttpUtil.addParameter(location, "sort", sortString);
-
-		options.setLocation(location);
-
-		return _outputObjectMapper.readValue(
-			HttpUtil.URLtoString(options),
-			new TypeReference<Page<Document>>() {
-			});
-	}
-
-	protected Http.Response invokeGetContentSpaceDocumentsPageResponse(
-			Long contentSpaceId, String filterString, Pagination pagination,
-			String sortString)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		String location =
-			_resourceURL +
-				_toPath(
-					"/content-spaces/{content-space-id}/documents",
-					contentSpaceId);
-
-		location = HttpUtil.addParameter(location, "filter", filterString);
-
-		location = HttpUtil.addParameter(
-			location, "page", pagination.getPage());
-		location = HttpUtil.addParameter(
-			location, "pageSize", pagination.getPageSize());
-
-		location = HttpUtil.addParameter(location, "sort", sortString);
-
-		options.setLocation(location);
-
-		HttpUtil.URLtoString(options);
-
-		return options.getResponse();
-	}
-
-	@Test
-	public void testPostContentSpaceDocument() throws Exception {
-		Assert.assertTrue(true);
-	}
-
-	protected Document testPostContentSpaceDocument_addDocument(
-			Document document)
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	protected Document invokePostContentSpaceDocument(
-			Long contentSpaceId, MultipartBody multipartBody)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		String location =
-			_resourceURL +
-				_toPath(
-					"/content-spaces/{content-space-id}/documents",
-					contentSpaceId);
-
-		options.setLocation(location);
-
-		options.setPost(true);
-
-		return _outputObjectMapper.readValue(
-			HttpUtil.URLtoString(options), Document.class);
-	}
-
-	protected Http.Response invokePostContentSpaceDocumentResponse(
-			Long contentSpaceId, MultipartBody multipartBody)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		String location =
-			_resourceURL +
-				_toPath(
-					"/content-spaces/{content-space-id}/documents",
-					contentSpaceId);
-
-		options.setLocation(location);
-
-		options.setPost(true);
-
-		HttpUtil.URLtoString(options);
-
-		return options.getResponse();
-	}
-
-	@Test
-	public void testDeleteDocument() throws Exception {
-		Document document = testDeleteDocument_addDocument();
-
-		assertResponseCode(200, invokeDeleteDocumentResponse(document.getId()));
-
-		assertResponseCode(404, invokeGetDocumentResponse(document.getId()));
-	}
-
-	protected Document testDeleteDocument_addDocument() throws Exception {
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	protected boolean invokeDeleteDocument(Long documentId) throws Exception {
-		Http.Options options = _createHttpOptions();
-
-		options.setDelete(true);
-
-		String location =
-			_resourceURL + _toPath("/documents/{document-id}", documentId);
-
-		options.setLocation(location);
-
-		return _outputObjectMapper.readValue(
-			HttpUtil.URLtoString(options), Boolean.class);
-	}
-
-	protected Http.Response invokeDeleteDocumentResponse(Long documentId)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		options.setDelete(true);
-
-		String location =
-			_resourceURL + _toPath("/documents/{document-id}", documentId);
-
-		options.setLocation(location);
-
-		HttpUtil.URLtoString(options);
-
-		return options.getResponse();
-	}
-
 	@Test
 	public void testGetDocument() throws Exception {
 		Document postDocument = testGetDocument_addDocument();
@@ -510,119 +346,6 @@ public abstract class BaseDocumentResourceTestCase {
 
 		assertEquals(postDocument, getDocument);
 		assertValid(getDocument);
-	}
-
-	protected Document testGetDocument_addDocument() throws Exception {
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	protected Document invokeGetDocument(Long documentId) throws Exception {
-		Http.Options options = _createHttpOptions();
-
-		String location =
-			_resourceURL + _toPath("/documents/{document-id}", documentId);
-
-		options.setLocation(location);
-
-		return _outputObjectMapper.readValue(
-			HttpUtil.URLtoString(options), Document.class);
-	}
-
-	protected Http.Response invokeGetDocumentResponse(Long documentId)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		String location =
-			_resourceURL + _toPath("/documents/{document-id}", documentId);
-
-		options.setLocation(location);
-
-		HttpUtil.URLtoString(options);
-
-		return options.getResponse();
-	}
-
-	@Test
-	public void testPatchDocument() throws Exception {
-		Assert.assertTrue(true);
-	}
-
-	protected Document invokePatchDocument(
-			Long documentId, MultipartBody multipartBody)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		String location =
-			_resourceURL + _toPath("/documents/{document-id}", documentId);
-
-		options.setLocation(location);
-
-		return _outputObjectMapper.readValue(
-			HttpUtil.URLtoString(options), Document.class);
-	}
-
-	protected Http.Response invokePatchDocumentResponse(
-			Long documentId, MultipartBody multipartBody)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		String location =
-			_resourceURL + _toPath("/documents/{document-id}", documentId);
-
-		options.setLocation(location);
-
-		HttpUtil.URLtoString(options);
-
-		return options.getResponse();
-	}
-
-	@Test
-	public void testPutDocument() throws Exception {
-		Assert.assertTrue(true);
-	}
-
-	protected Document testPutDocument_addDocument() throws Exception {
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	protected Document invokePutDocument(
-			Long documentId, MultipartBody multipartBody)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		String location =
-			_resourceURL + _toPath("/documents/{document-id}", documentId);
-
-		options.setLocation(location);
-
-		options.setPut(true);
-
-		return _outputObjectMapper.readValue(
-			HttpUtil.URLtoString(options), Document.class);
-	}
-
-	protected Http.Response invokePutDocumentResponse(
-			Long documentId, MultipartBody multipartBody)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		String location =
-			_resourceURL + _toPath("/documents/{document-id}", documentId);
-
-		options.setLocation(location);
-
-		options.setPut(true);
-
-		HttpUtil.URLtoString(options);
-
-		return options.getResponse();
 	}
 
 	@Test
@@ -699,8 +422,6 @@ public abstract class BaseDocumentResourceTestCase {
 
 		Document document1 = testGetFolderDocumentsPage_addDocument(
 			folderId, randomDocument());
-
-		@SuppressWarnings("PMD.UnusedLocalVariable")
 		Document document2 = testGetFolderDocumentsPage_addDocument(
 			folderId, randomDocument());
 
@@ -838,70 +559,14 @@ public abstract class BaseDocumentResourceTestCase {
 		}
 	}
 
-	protected Document testGetFolderDocumentsPage_addDocument(
-			Long folderId, Document document)
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+	@Test
+	public void testPatchDocument() throws Exception {
+		Assert.assertTrue(true);
 	}
 
-	protected Long testGetFolderDocumentsPage_getFolderId() throws Exception {
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	protected Page<Document> invokeGetFolderDocumentsPage(
-			Long folderId, String filterString, Pagination pagination,
-			String sortString)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		String location =
-			_resourceURL + _toPath("/folders/{folder-id}/documents", folderId);
-
-		location = HttpUtil.addParameter(location, "filter", filterString);
-
-		location = HttpUtil.addParameter(
-			location, "page", pagination.getPage());
-		location = HttpUtil.addParameter(
-			location, "pageSize", pagination.getPageSize());
-
-		location = HttpUtil.addParameter(location, "sort", sortString);
-
-		options.setLocation(location);
-
-		return _outputObjectMapper.readValue(
-			HttpUtil.URLtoString(options),
-			new TypeReference<Page<Document>>() {
-			});
-	}
-
-	protected Http.Response invokeGetFolderDocumentsPageResponse(
-			Long folderId, String filterString, Pagination pagination,
-			String sortString)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		String location =
-			_resourceURL + _toPath("/folders/{folder-id}/documents", folderId);
-
-		location = HttpUtil.addParameter(location, "filter", filterString);
-
-		location = HttpUtil.addParameter(
-			location, "page", pagination.getPage());
-		location = HttpUtil.addParameter(
-			location, "pageSize", pagination.getPageSize());
-
-		location = HttpUtil.addParameter(location, "sort", sortString);
-
-		options.setLocation(location);
-
-		HttpUtil.URLtoString(options);
-
-		return options.getResponse();
+	@Test
+	public void testPostContentSpaceDocument() throws Exception {
+		Assert.assertTrue(true);
 	}
 
 	@Test
@@ -909,53 +574,9 @@ public abstract class BaseDocumentResourceTestCase {
 		Assert.assertTrue(true);
 	}
 
-	protected Document testPostFolderDocument_addDocument(Document document)
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	protected Document invokePostFolderDocument(
-			Long folderId, MultipartBody multipartBody)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		String location =
-			_resourceURL + _toPath("/folders/{folder-id}/documents", folderId);
-
-		options.setLocation(location);
-
-		options.setPost(true);
-
-		return _outputObjectMapper.readValue(
-			HttpUtil.URLtoString(options), Document.class);
-	}
-
-	protected Http.Response invokePostFolderDocumentResponse(
-			Long folderId, MultipartBody multipartBody)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		String location =
-			_resourceURL + _toPath("/folders/{folder-id}/documents", folderId);
-
-		options.setLocation(location);
-
-		options.setPost(true);
-
-		HttpUtil.URLtoString(options);
-
-		return options.getResponse();
-	}
-
-	protected void assertResponseCode(
-		int expectedResponseCode, Http.Response actualResponse) {
-
-		Assert.assertEquals(
-			expectedResponseCode, actualResponse.getResponseCode());
+	@Test
+	public void testPutDocument() throws Exception {
+		Assert.assertTrue(true);
 	}
 
 	protected void assertEquals(Document document1, Document document2) {
@@ -998,6 +619,13 @@ public abstract class BaseDocumentResourceTestCase {
 		}
 	}
 
+	protected void assertResponseCode(
+		int expectedResponseCode, Http.Response actualResponse) {
+
+		Assert.assertEquals(
+			expectedResponseCode, actualResponse.getResponseCode());
+	}
+
 	protected void assertValid(Document document) {
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
@@ -1010,8 +638,8 @@ public abstract class BaseDocumentResourceTestCase {
 
 		int size = documents.size();
 
-		if ((page.getLastPage() > 0) && (page.getPage() > 0) &&
-			(page.getPageSize() > 0) && (page.getTotalCount() > 0) &&
+		if ((page.getItemsPerPage() > 0) && (page.getLastPageNumber() > 0) &&
+			(page.getPageNumber() > 0) && (page.getTotalCount() > 0) &&
 			(size > 0)) {
 
 			valid = true;
@@ -1182,6 +810,248 @@ public abstract class BaseDocumentResourceTestCase {
 			"Invalid entity field " + entityFieldName);
 	}
 
+	protected boolean invokeDeleteDocument(Long documentId) throws Exception {
+		Http.Options options = _createHttpOptions();
+
+		options.setDelete(true);
+
+		options.setLocation(
+			_resourceURL + _toPath("/documents/{document-id}", documentId));
+
+		return _outputObjectMapper.readValue(
+			HttpUtil.URLtoString(options), Boolean.class);
+	}
+
+	protected Http.Response invokeDeleteDocumentResponse(Long documentId)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		options.setDelete(true);
+
+		options.setLocation(
+			_resourceURL + _toPath("/documents/{document-id}", documentId));
+
+		HttpUtil.URLtoString(options);
+
+		return options.getResponse();
+	}
+
+	protected Page<Document> invokeGetContentSpaceDocumentsPage(
+			Long contentSpaceId, String filterString, Pagination pagination,
+			String sortString)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		options.setLocation(
+			_getContentSpaceDocumentsLocation(
+				contentSpaceId, filterString, pagination, sortString));
+
+		return _outputObjectMapper.readValue(
+			HttpUtil.URLtoString(options),
+			new TypeReference<Page<Document>>() {
+			});
+	}
+
+	protected Http.Response invokeGetContentSpaceDocumentsPageResponse(
+			Long contentSpaceId, String filterString, Pagination pagination,
+			String sortString)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		options.setLocation(
+			_getContentSpaceDocumentsLocation(
+				contentSpaceId, filterString, pagination, sortString));
+
+		HttpUtil.URLtoString(options);
+
+		return options.getResponse();
+	}
+
+	protected Document invokeGetDocument(Long documentId) throws Exception {
+		Http.Options options = _createHttpOptions();
+
+		options.setLocation(
+			_resourceURL + _toPath("/documents/{document-id}", documentId));
+
+		return _outputObjectMapper.readValue(
+			HttpUtil.URLtoString(options), Document.class);
+	}
+
+	protected Http.Response invokeGetDocumentResponse(Long documentId)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		options.setLocation(
+			_resourceURL + _toPath("/documents/{document-id}", documentId));
+
+		HttpUtil.URLtoString(options);
+
+		return options.getResponse();
+	}
+
+	protected Page<Document> invokeGetFolderDocumentsPage(
+			Long folderId, String filterString, Pagination pagination,
+			String sortString)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		options.setLocation(
+			_getFolderDocumentsLocation(
+				folderId, filterString, pagination, sortString));
+
+		return _outputObjectMapper.readValue(
+			HttpUtil.URLtoString(options),
+			new TypeReference<Page<Document>>() {
+			});
+	}
+
+	protected Http.Response invokeGetFolderDocumentsPageResponse(
+			Long folderId, String filterString, Pagination pagination,
+			String sortString)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		options.setLocation(
+			_getFolderDocumentsLocation(
+				folderId, filterString, pagination, sortString));
+
+		HttpUtil.URLtoString(options);
+
+		return options.getResponse();
+	}
+
+	protected Document invokePatchDocument(
+			Long documentId, MultipartBody multipartBody)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		options.setLocation(
+			_resourceURL + _toPath("/documents/{document-id}", documentId));
+
+		return _outputObjectMapper.readValue(
+			HttpUtil.URLtoString(options), Document.class);
+	}
+
+	protected Http.Response invokePatchDocumentResponse(
+			Long documentId, MultipartBody multipartBody)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		options.setLocation(
+			_resourceURL + _toPath("/documents/{document-id}", documentId));
+
+		HttpUtil.URLtoString(options);
+
+		return options.getResponse();
+	}
+
+	protected Document invokePostContentSpaceDocument(
+			Long contentSpaceId, MultipartBody multipartBody)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		options.setLocation(
+			_resourceURL +
+				_toPath(
+					"/content-spaces/{content-space-id}/documents",
+					contentSpaceId));
+
+		options.setPost(true);
+
+		return _outputObjectMapper.readValue(
+			HttpUtil.URLtoString(options), Document.class);
+	}
+
+	protected Http.Response invokePostContentSpaceDocumentResponse(
+			Long contentSpaceId, MultipartBody multipartBody)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		options.setLocation(
+			_resourceURL +
+				_toPath(
+					"/content-spaces/{content-space-id}/documents",
+					contentSpaceId));
+
+		options.setPost(true);
+
+		HttpUtil.URLtoString(options);
+
+		return options.getResponse();
+	}
+
+	protected Document invokePostFolderDocument(
+			Long folderId, MultipartBody multipartBody)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		options.setLocation(
+			_resourceURL + _toPath("/folders/{folder-id}/documents", folderId));
+
+		options.setPost(true);
+
+		return _outputObjectMapper.readValue(
+			HttpUtil.URLtoString(options), Document.class);
+	}
+
+	protected Http.Response invokePostFolderDocumentResponse(
+			Long folderId, MultipartBody multipartBody)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		options.setLocation(
+			_resourceURL + _toPath("/folders/{folder-id}/documents", folderId));
+
+		options.setPost(true);
+
+		HttpUtil.URLtoString(options);
+
+		return options.getResponse();
+	}
+
+	protected Document invokePutDocument(
+			Long documentId, MultipartBody multipartBody)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		options.setLocation(
+			_resourceURL + _toPath("/documents/{document-id}", documentId));
+
+		options.setPut(true);
+
+		return _outputObjectMapper.readValue(
+			HttpUtil.URLtoString(options), Document.class);
+	}
+
+	protected Http.Response invokePutDocumentResponse(
+			Long documentId, MultipartBody multipartBody)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		options.setLocation(
+			_resourceURL + _toPath("/documents/{document-id}", documentId));
+
+		options.setPut(true);
+
+		HttpUtil.URLtoString(options);
+
+		return options.getResponse();
+	}
+
 	protected Document randomDocument() {
 		return new Document() {
 			{
@@ -1199,6 +1069,63 @@ public abstract class BaseDocumentResourceTestCase {
 		};
 	}
 
+	protected Document testDeleteDocument_addDocument() throws Exception {
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected Document testGetContentSpaceDocumentsPage_addDocument(
+			Long contentSpaceId, Document document)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected Long testGetContentSpaceDocumentsPage_getContentSpaceId()
+		throws Exception {
+
+		return testGroup.getGroupId();
+	}
+
+	protected Document testGetDocument_addDocument() throws Exception {
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected Document testGetFolderDocumentsPage_addDocument(
+			Long folderId, Document document)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected Long testGetFolderDocumentsPage_getFolderId() throws Exception {
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected Document testPostContentSpaceDocument_addDocument(
+			Document document)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected Document testPostFolderDocument_addDocument(Document document)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected Document testPutDocument_addDocument() throws Exception {
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
 	protected Group testGroup;
 
 	protected static class Page<T> {
@@ -1207,16 +1134,16 @@ public abstract class BaseDocumentResourceTestCase {
 			return new ArrayList<>(items);
 		}
 
-		public long getLastPage() {
-			return lastPage;
+		public long getItemsPerPage() {
+			return itemsPerPage;
 		}
 
-		public long getPage() {
-			return page;
+		public long getLastPageNumber() {
+			return lastPageNumber;
 		}
 
-		public long getPageSize() {
-			return pageSize;
+		public long getPageNumber() {
+			return pageNumber;
 		}
 
 		public long getTotalCount() {
@@ -1226,14 +1153,14 @@ public abstract class BaseDocumentResourceTestCase {
 		@JsonProperty
 		protected Collection<T> items;
 
-		@JsonProperty
-		protected long lastPage;
+		@JsonProperty("pageSize")
+		protected long itemsPerPage;
 
 		@JsonProperty
-		protected long page;
+		protected long lastPageNumber;
 
-		@JsonProperty
-		protected long pageSize;
+		@JsonProperty("page")
+		protected long pageNumber;
 
 		@JsonProperty
 		protected long totalCount;
@@ -1258,17 +1185,50 @@ public abstract class BaseDocumentResourceTestCase {
 		return options;
 	}
 
+	private String _getContentSpaceDocumentsLocation(
+		Long contentSpaceId, String filterString, Pagination pagination,
+		String sortString) {
+
+		String url =
+			_resourceURL +
+				_toPath(
+					"/content-spaces/{content-space-id}/documents",
+					contentSpaceId);
+
+		url += "?filter=" + URLCodec.encodeURL(filterString);
+		url += "&page=" + pagination.getPageNumber();
+		url += "&pageSize=" + pagination.getItemsPerPage();
+		url += "&sort=" + URLCodec.encodeURL(sortString);
+
+		return url;
+	}
+
+	private String _getFolderDocumentsLocation(
+		Long folderId, String filterString, Pagination pagination,
+		String sortString) {
+
+		String url =
+			_resourceURL + _toPath("/folders/{folder-id}/documents", folderId);
+
+		url += "?filter=" + URLCodec.encodeURL(filterString);
+		url += "&page=" + pagination.getPageNumber();
+		url += "&pageSize=" + pagination.getItemsPerPage();
+		url += "&sort=" + URLCodec.encodeURL(sortString);
+
+		return url;
+	}
+
 	private String _toPath(String template, Object value) {
 		return template.replaceFirst("\\{.*\\}", String.valueOf(value));
 	}
 
 	private static DateFormat _dateFormat;
-	private final static ObjectMapper _inputObjectMapper = new ObjectMapper() {
+	private static final ObjectMapper _inputObjectMapper = new ObjectMapper() {
 		{
 			setSerializationInclusion(JsonInclude.Include.NON_NULL);
 		}
 	};
-	private final static ObjectMapper _outputObjectMapper = new ObjectMapper();
+	private static final ObjectMapper _outputObjectMapper = new ObjectMapper();
 
 	@Inject
 	private DocumentResource _documentResource;

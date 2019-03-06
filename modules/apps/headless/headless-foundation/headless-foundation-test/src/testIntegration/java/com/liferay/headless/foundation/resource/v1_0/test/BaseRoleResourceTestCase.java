@@ -151,114 +151,6 @@ public abstract class BaseRoleResourceTestCase {
 			});
 	}
 
-	protected Role testGetMyUserAccountRolesPage_addRole(
-			Long myUserAccountId, Role role)
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	protected Long testGetMyUserAccountRolesPage_getMyUserAccountId()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	protected Page<Role> invokeGetMyUserAccountRolesPage(
-			Long myUserAccountId, Pagination pagination)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		String location =
-			_resourceURL +
-				_toPath(
-					"/my-user-accounts/{my-user-account-id}/roles",
-					myUserAccountId);
-
-		location = HttpUtil.addParameter(
-			location, "page", pagination.getPage());
-		location = HttpUtil.addParameter(
-			location, "pageSize", pagination.getPageSize());
-
-		options.setLocation(location);
-
-		return _outputObjectMapper.readValue(
-			HttpUtil.URLtoString(options),
-			new TypeReference<Page<Role>>() {
-			});
-	}
-
-	protected Http.Response invokeGetMyUserAccountRolesPageResponse(
-			Long myUserAccountId, Pagination pagination)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		String location =
-			_resourceURL +
-				_toPath(
-					"/my-user-accounts/{my-user-account-id}/roles",
-					myUserAccountId);
-
-		location = HttpUtil.addParameter(
-			location, "page", pagination.getPage());
-		location = HttpUtil.addParameter(
-			location, "pageSize", pagination.getPageSize());
-
-		options.setLocation(location);
-
-		HttpUtil.URLtoString(options);
-
-		return options.getResponse();
-	}
-
-	@Test
-	public void testGetRolesPage() throws Exception {
-		Assert.assertTrue(true);
-	}
-
-	protected Page<Role> invokeGetRolesPage(Pagination pagination)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		String location = _resourceURL + _toPath("/roles", pagination);
-
-		location = HttpUtil.addParameter(
-			location, "page", pagination.getPage());
-		location = HttpUtil.addParameter(
-			location, "pageSize", pagination.getPageSize());
-
-		options.setLocation(location);
-
-		return _outputObjectMapper.readValue(
-			HttpUtil.URLtoString(options),
-			new TypeReference<Page<Role>>() {
-			});
-	}
-
-	protected Http.Response invokeGetRolesPageResponse(Pagination pagination)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		String location = _resourceURL + _toPath("/roles", pagination);
-
-		location = HttpUtil.addParameter(
-			location, "page", pagination.getPage());
-		location = HttpUtil.addParameter(
-			location, "pageSize", pagination.getPageSize());
-
-		options.setLocation(location);
-
-		HttpUtil.URLtoString(options);
-
-		return options.getResponse();
-	}
-
 	@Test
 	public void testGetRole() throws Exception {
 		Role postRole = testGetRole_addRole();
@@ -269,34 +161,9 @@ public abstract class BaseRoleResourceTestCase {
 		assertValid(getRole);
 	}
 
-	protected Role testGetRole_addRole() throws Exception {
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	protected Role invokeGetRole(Long roleId) throws Exception {
-		Http.Options options = _createHttpOptions();
-
-		String location = _resourceURL + _toPath("/roles/{role-id}", roleId);
-
-		options.setLocation(location);
-
-		return _outputObjectMapper.readValue(
-			HttpUtil.URLtoString(options), Role.class);
-	}
-
-	protected Http.Response invokeGetRoleResponse(Long roleId)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		String location = _resourceURL + _toPath("/roles/{role-id}", roleId);
-
-		options.setLocation(location);
-
-		HttpUtil.URLtoString(options);
-
-		return options.getResponse();
+	@Test
+	public void testGetRolesPage() throws Exception {
+		Assert.assertTrue(true);
 	}
 
 	@Test
@@ -355,80 +222,6 @@ public abstract class BaseRoleResourceTestCase {
 			});
 	}
 
-	protected Role testGetUserAccountRolesPage_addRole(
-			Long userAccountId, Role role)
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	protected Long testGetUserAccountRolesPage_getUserAccountId()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	protected Page<Role> invokeGetUserAccountRolesPage(
-			Long userAccountId, Pagination pagination)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		String location =
-			_resourceURL +
-				_toPath(
-					"/user-accounts/{user-account-id}/roles", userAccountId);
-
-		location = HttpUtil.addParameter(
-			location, "page", pagination.getPage());
-		location = HttpUtil.addParameter(
-			location, "pageSize", pagination.getPageSize());
-
-		options.setLocation(location);
-
-		return _outputObjectMapper.readValue(
-			HttpUtil.URLtoString(options),
-			new TypeReference<Page<Role>>() {
-			});
-	}
-
-	protected Http.Response invokeGetUserAccountRolesPageResponse(
-			Long userAccountId, Pagination pagination)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		String location =
-			_resourceURL +
-				_toPath(
-					"/user-accounts/{user-account-id}/roles", userAccountId);
-
-		location = HttpUtil.addParameter(
-			location, "page", pagination.getPage());
-		location = HttpUtil.addParameter(
-			location, "pageSize", pagination.getPageSize());
-
-		options.setLocation(location);
-
-		HttpUtil.URLtoString(options);
-
-		return options.getResponse();
-	}
-
-	protected void assertResponseCode(
-		int expectedResponseCode, Http.Response actualResponse) {
-
-		Assert.assertEquals(
-			expectedResponseCode, actualResponse.getResponseCode());
-	}
-
-	protected void assertEquals(Role role1, Role role2) {
-		Assert.assertTrue(
-			role1 + " does not equal " + role2, equals(role1, role2));
-	}
-
 	protected void assertEquals(List<Role> roles1, List<Role> roles2) {
 		Assert.assertEquals(roles1.size(), roles2.size());
 
@@ -438,6 +231,11 @@ public abstract class BaseRoleResourceTestCase {
 
 			assertEquals(role1, role2);
 		}
+	}
+
+	protected void assertEquals(Role role1, Role role2) {
+		Assert.assertTrue(
+			role1 + " does not equal " + role2, equals(role1, role2));
 	}
 
 	protected void assertEqualsIgnoringOrder(
@@ -460,9 +258,11 @@ public abstract class BaseRoleResourceTestCase {
 		}
 	}
 
-	protected void assertValid(Role role) {
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+	protected void assertResponseCode(
+		int expectedResponseCode, Http.Response actualResponse) {
+
+		Assert.assertEquals(
+			expectedResponseCode, actualResponse.getResponseCode());
 	}
 
 	protected void assertValid(Page<Role> page) {
@@ -472,14 +272,19 @@ public abstract class BaseRoleResourceTestCase {
 
 		int size = roles.size();
 
-		if ((page.getLastPage() > 0) && (page.getPage() > 0) &&
-			(page.getPageSize() > 0) && (page.getTotalCount() > 0) &&
+		if ((page.getItemsPerPage() > 0) && (page.getLastPageNumber() > 0) &&
+			(page.getPageNumber() > 0) && (page.getTotalCount() > 0) &&
 			(size > 0)) {
 
 			valid = true;
 		}
 
 		Assert.assertTrue(valid);
+	}
+
+	protected void assertValid(Role role) {
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	protected boolean equals(Role role1, Role role2) {
@@ -590,6 +395,120 @@ public abstract class BaseRoleResourceTestCase {
 			"Invalid entity field " + entityFieldName);
 	}
 
+	protected Page<Role> invokeGetMyUserAccountRolesPage(
+			Long myUserAccountId, Pagination pagination)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		options.setLocation(
+			_resourceURL +
+				_toPath(
+					"/my-user-accounts/{my-user-account-id}/roles",
+					myUserAccountId));
+
+		return _outputObjectMapper.readValue(
+			HttpUtil.URLtoString(options),
+			new TypeReference<Page<Role>>() {
+			});
+	}
+
+	protected Http.Response invokeGetMyUserAccountRolesPageResponse(
+			Long myUserAccountId, Pagination pagination)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		options.setLocation(
+			_resourceURL +
+				_toPath(
+					"/my-user-accounts/{my-user-account-id}/roles",
+					myUserAccountId));
+
+		HttpUtil.URLtoString(options);
+
+		return options.getResponse();
+	}
+
+	protected Role invokeGetRole(Long roleId) throws Exception {
+		Http.Options options = _createHttpOptions();
+
+		options.setLocation(_resourceURL + _toPath("/roles/{role-id}", roleId));
+
+		return _outputObjectMapper.readValue(
+			HttpUtil.URLtoString(options), Role.class);
+	}
+
+	protected Http.Response invokeGetRoleResponse(Long roleId)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		options.setLocation(_resourceURL + _toPath("/roles/{role-id}", roleId));
+
+		HttpUtil.URLtoString(options);
+
+		return options.getResponse();
+	}
+
+	protected Page<Role> invokeGetRolesPage(Pagination pagination)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		options.setLocation(_resourceURL + _toPath("/roles", pagination));
+
+		return _outputObjectMapper.readValue(
+			HttpUtil.URLtoString(options),
+			new TypeReference<Page<Role>>() {
+			});
+	}
+
+	protected Http.Response invokeGetRolesPageResponse(Pagination pagination)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		options.setLocation(_resourceURL + _toPath("/roles", pagination));
+
+		HttpUtil.URLtoString(options);
+
+		return options.getResponse();
+	}
+
+	protected Page<Role> invokeGetUserAccountRolesPage(
+			Long userAccountId, Pagination pagination)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		options.setLocation(
+			_resourceURL +
+				_toPath(
+					"/user-accounts/{user-account-id}/roles", userAccountId));
+
+		return _outputObjectMapper.readValue(
+			HttpUtil.URLtoString(options),
+			new TypeReference<Page<Role>>() {
+			});
+	}
+
+	protected Http.Response invokeGetUserAccountRolesPageResponse(
+			Long userAccountId, Pagination pagination)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		options.setLocation(
+			_resourceURL +
+				_toPath(
+					"/user-accounts/{user-account-id}/roles", userAccountId));
+
+		HttpUtil.URLtoString(options);
+
+		return options.getResponse();
+	}
+
 	protected Role randomRole() {
 		return new Role() {
 			{
@@ -603,6 +522,41 @@ public abstract class BaseRoleResourceTestCase {
 		};
 	}
 
+	protected Role testGetMyUserAccountRolesPage_addRole(
+			Long myUserAccountId, Role role)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected Long testGetMyUserAccountRolesPage_getMyUserAccountId()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected Role testGetRole_addRole() throws Exception {
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected Role testGetUserAccountRolesPage_addRole(
+			Long userAccountId, Role role)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected Long testGetUserAccountRolesPage_getUserAccountId()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
 	protected Group testGroup;
 
 	protected static class Page<T> {
@@ -611,16 +565,16 @@ public abstract class BaseRoleResourceTestCase {
 			return new ArrayList<>(items);
 		}
 
-		public long getLastPage() {
-			return lastPage;
+		public long getItemsPerPage() {
+			return itemsPerPage;
 		}
 
-		public long getPage() {
-			return page;
+		public long getLastPageNumber() {
+			return lastPageNumber;
 		}
 
-		public long getPageSize() {
-			return pageSize;
+		public long getPageNumber() {
+			return pageNumber;
 		}
 
 		public long getTotalCount() {
@@ -630,14 +584,14 @@ public abstract class BaseRoleResourceTestCase {
 		@JsonProperty
 		protected Collection<T> items;
 
-		@JsonProperty
-		protected long lastPage;
+		@JsonProperty("pageSize")
+		protected long itemsPerPage;
 
 		@JsonProperty
-		protected long page;
+		protected long lastPageNumber;
 
-		@JsonProperty
-		protected long pageSize;
+		@JsonProperty("page")
+		protected long pageNumber;
 
 		@JsonProperty
 		protected long totalCount;
@@ -667,16 +621,16 @@ public abstract class BaseRoleResourceTestCase {
 	}
 
 	private static DateFormat _dateFormat;
-	private final static ObjectMapper _inputObjectMapper = new ObjectMapper() {
+	private static final ObjectMapper _inputObjectMapper = new ObjectMapper() {
 		{
 			setSerializationInclusion(JsonInclude.Include.NON_NULL);
 		}
 	};
-	private final static ObjectMapper _outputObjectMapper = new ObjectMapper();
+	private static final ObjectMapper _outputObjectMapper = new ObjectMapper();
+
+	private URL _resourceURL;
 
 	@Inject
 	private RoleResource _roleResource;
-
-	private URL _resourceURL;
 
 }

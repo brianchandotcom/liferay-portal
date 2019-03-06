@@ -46,14 +46,42 @@ public class Mutation {
 	}
 
 	@GraphQLInvokeDetached
-	public Comment putComment(
-			@GraphQLName("comment-id") Long commentId,
-			@GraphQLName("Comment") Comment comment)
+	public boolean deleteStructuredContent(
+			@GraphQLName("structured-content-id") Long structuredContentId)
 		throws Exception {
 
-		CommentResource commentResource = _createCommentResource();
+		StructuredContentResource structuredContentResource =
+			_createStructuredContentResource();
 
-		return commentResource.putComment(commentId, comment);
+		return structuredContentResource.deleteStructuredContent(
+			structuredContentId);
+	}
+
+	@GraphQLInvokeDetached
+	public boolean deleteStructuredContentImage(
+			@GraphQLName("structured-content-image-id") Long
+				structuredContentImageId)
+		throws Exception {
+
+		StructuredContentImageResource structuredContentImageResource =
+			_createStructuredContentImageResource();
+
+		return structuredContentImageResource.deleteStructuredContentImage(
+			structuredContentImageId);
+	}
+
+	@GraphQLInvokeDetached
+	public StructuredContent patchStructuredContent(
+			@GraphQLName("structured-content-id") Long structuredContentId,
+			@GraphQLName("StructuredContent") StructuredContent
+				structuredContent)
+		throws Exception {
+
+		StructuredContentResource structuredContentResource =
+			_createStructuredContentResource();
+
+		return structuredContentResource.patchStructuredContent(
+			structuredContentId, structuredContent);
 	}
 
 	@GraphQLField
@@ -66,19 +94,6 @@ public class Mutation {
 		CommentResource commentResource = _createCommentResource();
 
 		return commentResource.postCommentComment(commentId, comment);
-	}
-
-	@GraphQLField
-	@GraphQLInvokeDetached
-	public Comment postStructuredContentComment(
-			@GraphQLName("structured-content-id") Long structuredContentId,
-			@GraphQLName("Comment") Comment comment)
-		throws Exception {
-
-		CommentResource commentResource = _createCommentResource();
-
-		return commentResource.postStructuredContentComment(
-			structuredContentId, comment);
 	}
 
 	@GraphQLField
@@ -96,30 +111,28 @@ public class Mutation {
 			contentSpaceId, structuredContent);
 	}
 
+	@GraphQLField
 	@GraphQLInvokeDetached
-	public boolean deleteStructuredContent(
-			@GraphQLName("structured-content-id") Long structuredContentId)
+	public Comment postStructuredContentComment(
+			@GraphQLName("structured-content-id") Long structuredContentId,
+			@GraphQLName("Comment") Comment comment)
 		throws Exception {
 
-		StructuredContentResource structuredContentResource =
-			_createStructuredContentResource();
+		CommentResource commentResource = _createCommentResource();
 
-		return structuredContentResource.deleteStructuredContent(
-			structuredContentId);
+		return commentResource.postStructuredContentComment(
+			structuredContentId, comment);
 	}
 
 	@GraphQLInvokeDetached
-	public StructuredContent patchStructuredContent(
-			@GraphQLName("structured-content-id") Long structuredContentId,
-			@GraphQLName("StructuredContent") StructuredContent
-				structuredContent)
+	public Comment putComment(
+			@GraphQLName("comment-id") Long commentId,
+			@GraphQLName("Comment") Comment comment)
 		throws Exception {
 
-		StructuredContentResource structuredContentResource =
-			_createStructuredContentResource();
+		CommentResource commentResource = _createCommentResource();
 
-		return structuredContentResource.patchStructuredContent(
-			structuredContentId, structuredContent);
+		return commentResource.putComment(commentId, comment);
 	}
 
 	@GraphQLInvokeDetached
@@ -136,33 +149,20 @@ public class Mutation {
 			structuredContentId, structuredContent);
 	}
 
-	@GraphQLInvokeDetached
-	public boolean deleteStructuredContentImage(
-			@GraphQLName("structured-content-image-id") Long
-				structuredContentImageId)
-		throws Exception {
-
-		StructuredContentImageResource structuredContentImageResource =
-			_createStructuredContentImageResource();
-
-		return structuredContentImageResource.deleteStructuredContentImage(
-			structuredContentImageId);
-	}
-
 	private static CommentResource _createCommentResource() {
 		return new CommentResourceImpl();
-	}
-
-	private static StructuredContentResource
-		_createStructuredContentResource() {
-
-		return new StructuredContentResourceImpl();
 	}
 
 	private static StructuredContentImageResource
 		_createStructuredContentImageResource() {
 
 		return new StructuredContentImageResourceImpl();
+	}
+
+	private static StructuredContentResource
+		_createStructuredContentResource() {
+
+		return new StructuredContentResourceImpl();
 	}
 
 }

@@ -33,12 +33,19 @@ import javax.xml.bind.annotation.XmlRootElement;
  */
 @Generated("")
 @GraphQLName("Columns")
-//@JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "Columns")
-public class Columns  {
+public class Columns {
 
 	public Long getId() {
 		return id;
+	}
+
+	public String getLabel() {
+		return label;
+	}
+
+	public String getValue() {
+		return value;
 	}
 
 	public void setId(Long id) {
@@ -53,14 +60,6 @@ public class Columns  {
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
-	}
-
-	@GraphQLField
-	@JsonProperty
-	protected Long id;
-
-	public String getLabel() {
-		return label;
 	}
 
 	public void setLabel(String label) {
@@ -79,14 +78,6 @@ public class Columns  {
 		}
 	}
 
-	@GraphQLField
-	@JsonProperty
-	protected String label;
-
-	public String getValue() {
-		return value;
-	}
-
 	public void setValue(String value) {
 		this.value = value;
 	}
@@ -103,12 +94,8 @@ public class Columns  {
 		}
 	}
 
-	@GraphQLField
-	@JsonProperty
-	protected String value;
-
 	public String toString() {
-		StringBundler sb = new StringBundler();
+		StringBundler sb = new StringBundler(14);
 
 		sb.append("{");
 
@@ -134,5 +121,17 @@ public class Columns  {
 
 		return sb.toString();
 	}
+
+	@GraphQLField
+	@JsonProperty
+	protected Long id;
+
+	@GraphQLField
+	@JsonProperty
+	protected String label;
+
+	@GraphQLField
+	@JsonProperty
+	protected String value;
 
 }

@@ -23,8 +23,6 @@ import com.liferay.petra.string.StringBundler;
 import graphql.annotations.annotationTypes.GraphQLField;
 import graphql.annotations.annotationTypes.GraphQLName;
 
-import io.swagger.v3.oas.annotations.media.Schema;
-
 import java.util.Date;
 
 import javax.annotation.Generated;
@@ -37,13 +35,75 @@ import javax.xml.bind.annotation.XmlRootElement;
  */
 @Generated("")
 @GraphQLName("Document")
-//@JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "Document")
-public class Document  {
+public class Document {
 
-	@Schema(description = "https://www.schema.org/ImageObject")
 	public AdaptedImages[] getAdaptedImages() {
 		return adaptedImages;
+	}
+
+	public AggregateRating getAggregateRating() {
+		return aggregateRating;
+	}
+
+	public Categories[] getCategories() {
+		return categories;
+	}
+
+	public Long[] getCategoryIds() {
+		return categoryIds;
+	}
+
+	public String getContentUrl() {
+		return contentUrl;
+	}
+
+	public Creator getCreator() {
+		return creator;
+	}
+
+	public Date getDateCreated() {
+		return dateCreated;
+	}
+
+	public Date getDateModified() {
+		return dateModified;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public String getEncodingFormat() {
+		return encodingFormat;
+	}
+
+	public String getFileExtension() {
+		return fileExtension;
+	}
+
+	public Long getFolderId() {
+		return folderId;
+	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public String[] getKeywords() {
+		return keywords;
+	}
+
+	public Number getSizeInBytes() {
+		return sizeInBytes;
+	}
+
+	public String getTitle() {
+		return title;
+	}
+
+	public String getViewableBy() {
+		return viewableBy;
 	}
 
 	public void setAdaptedImages(AdaptedImages[] adaptedImages) {
@@ -63,14 +123,6 @@ public class Document  {
 		}
 	}
 
-	@GraphQLField
-	@JsonProperty
-	protected AdaptedImages[] adaptedImages;
-
-	public AggregateRating getAggregateRating() {
-		return aggregateRating;
-	}
-
 	public void setAggregateRating(AggregateRating aggregateRating) {
 		this.aggregateRating = aggregateRating;
 	}
@@ -86,14 +138,6 @@ public class Document  {
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
-	}
-
-	@GraphQLField
-	@JsonProperty
-	protected AggregateRating aggregateRating;
-
-	public Categories[] getCategories() {
-		return categories;
 	}
 
 	public void setCategories(Categories[] categories) {
@@ -112,14 +156,6 @@ public class Document  {
 		}
 	}
 
-	@GraphQLField
-	@JsonProperty
-	protected Categories[] categories;
-
-	public Long[] getCategoryIds() {
-		return categoryIds;
-	}
-
 	public void setCategoryIds(Long[] categoryIds) {
 		this.categoryIds = categoryIds;
 	}
@@ -134,14 +170,6 @@ public class Document  {
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
-	}
-
-	@GraphQLField
-	@JsonProperty
-	protected Long[] categoryIds;
-
-	public String getContentUrl() {
-		return contentUrl;
 	}
 
 	public void setContentUrl(String contentUrl) {
@@ -160,14 +188,6 @@ public class Document  {
 		}
 	}
 
-	@GraphQLField
-	@JsonProperty
-	protected String contentUrl;
-
-	public Creator getCreator() {
-		return creator;
-	}
-
 	public void setCreator(Creator creator) {
 		this.creator = creator;
 	}
@@ -182,14 +202,6 @@ public class Document  {
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
-	}
-
-	@GraphQLField
-	@JsonProperty
-	protected Creator creator;
-
-	public Date getDateCreated() {
-		return dateCreated;
 	}
 
 	public void setDateCreated(Date dateCreated) {
@@ -208,14 +220,6 @@ public class Document  {
 		}
 	}
 
-	@GraphQLField
-	@JsonProperty
-	protected Date dateCreated;
-
-	public Date getDateModified() {
-		return dateModified;
-	}
-
 	public void setDateModified(Date dateModified) {
 		this.dateModified = dateModified;
 	}
@@ -230,14 +234,6 @@ public class Document  {
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
-	}
-
-	@GraphQLField
-	@JsonProperty
-	protected Date dateModified;
-
-	public String getDescription() {
-		return description;
 	}
 
 	public void setDescription(String description) {
@@ -256,14 +252,6 @@ public class Document  {
 		}
 	}
 
-	@GraphQLField
-	@JsonProperty
-	protected String description;
-
-	public String getEncodingFormat() {
-		return encodingFormat;
-	}
-
 	public void setEncodingFormat(String encodingFormat) {
 		this.encodingFormat = encodingFormat;
 	}
@@ -278,14 +266,6 @@ public class Document  {
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
-	}
-
-	@GraphQLField
-	@JsonProperty
-	protected String encodingFormat;
-
-	public String getFileExtension() {
-		return fileExtension;
 	}
 
 	public void setFileExtension(String fileExtension) {
@@ -304,14 +284,6 @@ public class Document  {
 		}
 	}
 
-	@GraphQLField
-	@JsonProperty
-	protected String fileExtension;
-
-	public Long getFolderId() {
-		return folderId;
-	}
-
 	public void setFolderId(Long folderId) {
 		this.folderId = folderId;
 	}
@@ -328,14 +300,6 @@ public class Document  {
 		}
 	}
 
-	@GraphQLField
-	@JsonProperty
-	protected Long folderId;
-
-	public Long getId() {
-		return id;
-	}
-
 	public void setId(Long id) {
 		this.id = id;
 	}
@@ -348,14 +312,6 @@ public class Document  {
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
-	}
-
-	@GraphQLField
-	@JsonProperty
-	protected Long id;
-
-	public String[] getKeywords() {
-		return keywords;
 	}
 
 	public void setKeywords(String[] keywords) {
@@ -374,14 +330,6 @@ public class Document  {
 		}
 	}
 
-	@GraphQLField
-	@JsonProperty
-	protected String[] keywords;
-
-	public Number getSizeInBytes() {
-		return sizeInBytes;
-	}
-
 	public void setSizeInBytes(Number sizeInBytes) {
 		this.sizeInBytes = sizeInBytes;
 	}
@@ -396,14 +344,6 @@ public class Document  {
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
-	}
-
-	@GraphQLField
-	@JsonProperty
-	protected Number sizeInBytes;
-
-	public String getTitle() {
-		return title;
 	}
 
 	public void setTitle(String title) {
@@ -422,14 +362,6 @@ public class Document  {
 		}
 	}
 
-	@GraphQLField
-	@JsonProperty
-	protected String title;
-
-	public String getViewableBy() {
-		return viewableBy;
-	}
-
 	public void setViewableBy(String viewableBy) {
 		this.viewableBy = viewableBy;
 	}
@@ -446,34 +378,16 @@ public class Document  {
 		}
 	}
 
-	@GraphQLField
-	@JsonProperty
-	protected String viewableBy;
-
 	public String toString() {
-		StringBundler sb = new StringBundler();
+		StringBundler sb = new StringBundler(76);
 
 		sb.append("{");
 
 		sb.append("\"adaptedImages\": ");
 
-		if (adaptedImages == null) {
-			sb.append("null");
-		}
-		else {
-			sb.append("[");
-
-			for (int i = 0; i < adaptedImages.length; i++) {
-				sb.append(adaptedImages[i]);
-
-				if ((i + 1) < adaptedImages.length) {
-					sb.append(", ");
-				}
-			}
-
-			sb.append("]");
-		}
-
+		sb.append("\"");
+		sb.append(adaptedImages);
+		sb.append("\"");
 		sb.append(", ");
 
 		sb.append("\"aggregateRating\": ");
@@ -483,44 +397,16 @@ public class Document  {
 
 		sb.append("\"categories\": ");
 
-		if (categories == null) {
-			sb.append("null");
-		}
-		else {
-			sb.append("[");
-
-			for (int i = 0; i < categories.length; i++) {
-				sb.append(categories[i]);
-
-				if ((i + 1) < categories.length) {
-					sb.append(", ");
-				}
-			}
-
-			sb.append("]");
-		}
-
+		sb.append("\"");
+		sb.append(categories);
+		sb.append("\"");
 		sb.append(", ");
 
 		sb.append("\"categoryIds\": ");
 
-		if (categoryIds == null) {
-			sb.append("null");
-		}
-		else {
-			sb.append("[");
-
-			for (int i = 0; i < categoryIds.length; i++) {
-				sb.append(categoryIds[i]);
-
-				if ((i + 1) < categoryIds.length) {
-					sb.append(", ");
-				}
-			}
-
-			sb.append("]");
-		}
-
+		sb.append("\"");
+		sb.append(categoryIds);
+		sb.append("\"");
 		sb.append(", ");
 
 		sb.append("\"contentUrl\": ");
@@ -582,25 +468,9 @@ public class Document  {
 
 		sb.append("\"keywords\": ");
 
-		if (keywords == null) {
-			sb.append("null");
-		}
-		else {
-			sb.append("[");
-
-			for (int i = 0; i < keywords.length; i++) {
-				sb.append("\"");
-				sb.append(keywords[i]);
-				sb.append("\"");
-
-				if ((i + 1) < keywords.length) {
-					sb.append(", ");
-				}
-			}
-
-			sb.append("]");
-		}
-
+		sb.append("\"");
+		sb.append(keywords);
+		sb.append("\"");
 		sb.append(", ");
 
 		sb.append("\"sizeInBytes\": ");
@@ -625,5 +495,73 @@ public class Document  {
 
 		return sb.toString();
 	}
+
+	@GraphQLField
+	@JsonProperty
+	protected AdaptedImages[] adaptedImages;
+
+	@GraphQLField
+	@JsonProperty
+	protected AggregateRating aggregateRating;
+
+	@GraphQLField
+	@JsonProperty
+	protected Categories[] categories;
+
+	@GraphQLField
+	@JsonProperty
+	protected Long[] categoryIds;
+
+	@GraphQLField
+	@JsonProperty
+	protected String contentUrl;
+
+	@GraphQLField
+	@JsonProperty
+	protected Creator creator;
+
+	@GraphQLField
+	@JsonProperty
+	protected Date dateCreated;
+
+	@GraphQLField
+	@JsonProperty
+	protected Date dateModified;
+
+	@GraphQLField
+	@JsonProperty
+	protected String description;
+
+	@GraphQLField
+	@JsonProperty
+	protected String encodingFormat;
+
+	@GraphQLField
+	@JsonProperty
+	protected String fileExtension;
+
+	@GraphQLField
+	@JsonProperty
+	protected Long folderId;
+
+	@GraphQLField
+	@JsonProperty
+	protected Long id;
+
+	@GraphQLField
+	@JsonProperty
+	protected String[] keywords;
+
+	@GraphQLField
+	@JsonProperty
+	protected Number sizeInBytes;
+
+	@GraphQLField
+	@JsonProperty
+	protected String title;
+
+	@GraphQLField
+	@JsonProperty
+	protected String viewableBy;
 
 }

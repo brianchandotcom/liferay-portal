@@ -96,6 +96,17 @@ public abstract class BaseUserAccountResourceTestCase {
 	}
 
 	@Test
+	public void testDeleteUserAccount() throws Exception {
+		UserAccount userAccount = testDeleteUserAccount_addUserAccount();
+
+		assertResponseCode(
+			200, invokeDeleteUserAccountResponse(userAccount.getId()));
+
+		assertResponseCode(
+			404, invokeGetUserAccountResponse(userAccount.getId()));
+	}
+
+	@Test
 	public void testGetMyUserAccount() throws Exception {
 		UserAccount postUserAccount = testGetMyUserAccount_addUserAccount();
 
@@ -104,46 +115,6 @@ public abstract class BaseUserAccountResourceTestCase {
 
 		assertEquals(postUserAccount, getUserAccount);
 		assertValid(getUserAccount);
-	}
-
-	protected UserAccount testGetMyUserAccount_addUserAccount()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	protected UserAccount invokeGetMyUserAccount(Long myUserAccountId)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		String location =
-			_resourceURL +
-				_toPath(
-					"/my-user-accounts/{my-user-account-id}", myUserAccountId);
-
-		options.setLocation(location);
-
-		return _outputObjectMapper.readValue(
-			HttpUtil.URLtoString(options), UserAccount.class);
-	}
-
-	protected Http.Response invokeGetMyUserAccountResponse(Long myUserAccountId)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		String location =
-			_resourceURL +
-				_toPath(
-					"/my-user-accounts/{my-user-account-id}", myUserAccountId);
-
-		options.setLocation(location);
-
-		HttpUtil.URLtoString(options);
-
-		return options.getResponse();
 	}
 
 	@Test
@@ -212,68 +183,15 @@ public abstract class BaseUserAccountResourceTestCase {
 			});
 	}
 
-	protected UserAccount testGetOrganizationUserAccountsPage_addUserAccount(
-			Long organizationId, UserAccount userAccount)
-		throws Exception {
+	@Test
+	public void testGetUserAccount() throws Exception {
+		UserAccount postUserAccount = testGetUserAccount_addUserAccount();
 
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
+		UserAccount getUserAccount = invokeGetUserAccount(
+			postUserAccount.getId());
 
-	protected Long testGetOrganizationUserAccountsPage_getOrganizationId()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	protected Page<UserAccount> invokeGetOrganizationUserAccountsPage(
-			Long organizationId, Pagination pagination)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		String location =
-			_resourceURL +
-				_toPath(
-					"/organizations/{organization-id}/user-accounts",
-					organizationId);
-
-		location = HttpUtil.addParameter(
-			location, "page", pagination.getPage());
-		location = HttpUtil.addParameter(
-			location, "pageSize", pagination.getPageSize());
-
-		options.setLocation(location);
-
-		return _outputObjectMapper.readValue(
-			HttpUtil.URLtoString(options),
-			new TypeReference<Page<UserAccount>>() {
-			});
-	}
-
-	protected Http.Response invokeGetOrganizationUserAccountsPageResponse(
-			Long organizationId, Pagination pagination)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		String location =
-			_resourceURL +
-				_toPath(
-					"/organizations/{organization-id}/user-accounts",
-					organizationId);
-
-		location = HttpUtil.addParameter(
-			location, "page", pagination.getPage());
-		location = HttpUtil.addParameter(
-			location, "pageSize", pagination.getPageSize());
-
-		options.setLocation(location);
-
-		HttpUtil.URLtoString(options);
-
-		return options.getResponse();
+		assertEquals(postUserAccount, getUserAccount);
+		assertValid(getUserAccount);
 	}
 
 	@Test
@@ -331,284 +249,6 @@ public abstract class BaseUserAccountResourceTestCase {
 					addAll(userAccounts2);
 				}
 			});
-	}
-
-	protected UserAccount testGetUserAccountsPage_addUserAccount(
-			String fullnamequery, UserAccount userAccount)
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	protected String testGetUserAccountsPage_getFullnamequery()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	protected Page<UserAccount> invokeGetUserAccountsPage(
-			String fullnamequery, Pagination pagination)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		String location =
-			_resourceURL + _toPath("/user-accounts", fullnamequery);
-
-		location = HttpUtil.addParameter(
-			location, "page", pagination.getPage());
-		location = HttpUtil.addParameter(
-			location, "pageSize", pagination.getPageSize());
-
-		options.setLocation(location);
-
-		return _outputObjectMapper.readValue(
-			HttpUtil.URLtoString(options),
-			new TypeReference<Page<UserAccount>>() {
-			});
-	}
-
-	protected Http.Response invokeGetUserAccountsPageResponse(
-			String fullnamequery, Pagination pagination)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		String location =
-			_resourceURL + _toPath("/user-accounts", fullnamequery);
-
-		location = HttpUtil.addParameter(
-			location, "page", pagination.getPage());
-		location = HttpUtil.addParameter(
-			location, "pageSize", pagination.getPageSize());
-
-		options.setLocation(location);
-
-		HttpUtil.URLtoString(options);
-
-		return options.getResponse();
-	}
-
-	@Test
-	public void testPostUserAccount() throws Exception {
-		UserAccount randomUserAccount = randomUserAccount();
-
-		UserAccount postUserAccount = testPostUserAccount_addUserAccount(
-			randomUserAccount);
-
-		assertEquals(randomUserAccount, postUserAccount);
-		assertValid(postUserAccount);
-	}
-
-	protected UserAccount testPostUserAccount_addUserAccount(
-			UserAccount userAccount)
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	protected UserAccount invokePostUserAccount(UserAccount userAccount)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		String location = _resourceURL + _toPath("/user-accounts", userAccount);
-
-		options.setLocation(location);
-
-		options.setPost(true);
-
-		return _outputObjectMapper.readValue(
-			HttpUtil.URLtoString(options), UserAccount.class);
-	}
-
-	protected Http.Response invokePostUserAccountResponse(
-			UserAccount userAccount)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		String location = _resourceURL + _toPath("/user-accounts", userAccount);
-
-		options.setLocation(location);
-
-		options.setPost(true);
-
-		HttpUtil.URLtoString(options);
-
-		return options.getResponse();
-	}
-
-	@Test
-	public void testDeleteUserAccount() throws Exception {
-		UserAccount userAccount = testDeleteUserAccount_addUserAccount();
-
-		assertResponseCode(
-			200, invokeDeleteUserAccountResponse(userAccount.getId()));
-
-		assertResponseCode(
-			404, invokeGetUserAccountResponse(userAccount.getId()));
-	}
-
-	protected UserAccount testDeleteUserAccount_addUserAccount()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	protected boolean invokeDeleteUserAccount(Long userAccountId)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		options.setDelete(true);
-
-		String location =
-			_resourceURL +
-				_toPath("/user-accounts/{user-account-id}", userAccountId);
-
-		options.setLocation(location);
-
-		return _outputObjectMapper.readValue(
-			HttpUtil.URLtoString(options), Boolean.class);
-	}
-
-	protected Http.Response invokeDeleteUserAccountResponse(Long userAccountId)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		options.setDelete(true);
-
-		String location =
-			_resourceURL +
-				_toPath("/user-accounts/{user-account-id}", userAccountId);
-
-		options.setLocation(location);
-
-		HttpUtil.URLtoString(options);
-
-		return options.getResponse();
-	}
-
-	@Test
-	public void testGetUserAccount() throws Exception {
-		UserAccount postUserAccount = testGetUserAccount_addUserAccount();
-
-		UserAccount getUserAccount = invokeGetUserAccount(
-			postUserAccount.getId());
-
-		assertEquals(postUserAccount, getUserAccount);
-		assertValid(getUserAccount);
-	}
-
-	protected UserAccount testGetUserAccount_addUserAccount() throws Exception {
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	protected UserAccount invokeGetUserAccount(Long userAccountId)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		String location =
-			_resourceURL +
-				_toPath("/user-accounts/{user-account-id}", userAccountId);
-
-		options.setLocation(location);
-
-		return _outputObjectMapper.readValue(
-			HttpUtil.URLtoString(options), UserAccount.class);
-	}
-
-	protected Http.Response invokeGetUserAccountResponse(Long userAccountId)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		String location =
-			_resourceURL +
-				_toPath("/user-accounts/{user-account-id}", userAccountId);
-
-		options.setLocation(location);
-
-		HttpUtil.URLtoString(options);
-
-		return options.getResponse();
-	}
-
-	@Test
-	public void testPutUserAccount() throws Exception {
-		UserAccount postUserAccount = testPutUserAccount_addUserAccount();
-
-		UserAccount randomUserAccount = randomUserAccount();
-
-		UserAccount putUserAccount = invokePutUserAccount(
-			postUserAccount.getId(), randomUserAccount);
-
-		assertEquals(randomUserAccount, putUserAccount);
-		assertValid(putUserAccount);
-
-		UserAccount getUserAccount = invokeGetUserAccount(
-			putUserAccount.getId());
-
-		assertEquals(randomUserAccount, getUserAccount);
-		assertValid(getUserAccount);
-	}
-
-	protected UserAccount testPutUserAccount_addUserAccount() throws Exception {
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	protected UserAccount invokePutUserAccount(
-			Long userAccountId, UserAccount userAccount)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		options.setBody(
-			_inputObjectMapper.writeValueAsString(userAccount),
-			ContentTypes.APPLICATION_JSON, StringPool.UTF8);
-
-		String location =
-			_resourceURL +
-				_toPath("/user-accounts/{user-account-id}", userAccountId);
-
-		options.setLocation(location);
-
-		options.setPut(true);
-
-		return _outputObjectMapper.readValue(
-			HttpUtil.URLtoString(options), UserAccount.class);
-	}
-
-	protected Http.Response invokePutUserAccountResponse(
-			Long userAccountId, UserAccount userAccount)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		options.setBody(
-			_inputObjectMapper.writeValueAsString(userAccount),
-			ContentTypes.APPLICATION_JSON, StringPool.UTF8);
-
-		String location =
-			_resourceURL +
-				_toPath("/user-accounts/{user-account-id}", userAccountId);
-
-		options.setLocation(location);
-
-		options.setPut(true);
-
-		HttpUtil.URLtoString(options);
-
-		return options.getResponse();
 	}
 
 	@Test
@@ -675,79 +315,34 @@ public abstract class BaseUserAccountResourceTestCase {
 			});
 	}
 
-	protected UserAccount testGetWebSiteUserAccountsPage_addUserAccount(
-			Long webSiteId, UserAccount userAccount)
-		throws Exception {
+	@Test
+	public void testPostUserAccount() throws Exception {
+		UserAccount randomUserAccount = randomUserAccount();
 
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		UserAccount postUserAccount = testPostUserAccount_addUserAccount(
+			randomUserAccount);
+
+		assertEquals(randomUserAccount, postUserAccount);
+		assertValid(postUserAccount);
 	}
 
-	protected Long testGetWebSiteUserAccountsPage_getWebSiteId()
-		throws Exception {
+	@Test
+	public void testPutUserAccount() throws Exception {
+		UserAccount postUserAccount = testPutUserAccount_addUserAccount();
 
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
+		UserAccount randomUserAccount = randomUserAccount();
 
-	protected Page<UserAccount> invokeGetWebSiteUserAccountsPage(
-			Long webSiteId, Pagination pagination)
-		throws Exception {
+		UserAccount putUserAccount = invokePutUserAccount(
+			postUserAccount.getId(), randomUserAccount);
 
-		Http.Options options = _createHttpOptions();
+		assertEquals(randomUserAccount, putUserAccount);
+		assertValid(putUserAccount);
 
-		String location =
-			_resourceURL +
-				_toPath("/web-sites/{web-site-id}/user-accounts", webSiteId);
+		UserAccount getUserAccount = invokeGetUserAccount(
+			putUserAccount.getId());
 
-		location = HttpUtil.addParameter(
-			location, "page", pagination.getPage());
-		location = HttpUtil.addParameter(
-			location, "pageSize", pagination.getPageSize());
-
-		options.setLocation(location);
-
-		return _outputObjectMapper.readValue(
-			HttpUtil.URLtoString(options),
-			new TypeReference<Page<UserAccount>>() {
-			});
-	}
-
-	protected Http.Response invokeGetWebSiteUserAccountsPageResponse(
-			Long webSiteId, Pagination pagination)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		String location =
-			_resourceURL +
-				_toPath("/web-sites/{web-site-id}/user-accounts", webSiteId);
-
-		location = HttpUtil.addParameter(
-			location, "page", pagination.getPage());
-		location = HttpUtil.addParameter(
-			location, "pageSize", pagination.getPageSize());
-
-		options.setLocation(location);
-
-		HttpUtil.URLtoString(options);
-
-		return options.getResponse();
-	}
-
-	protected void assertResponseCode(
-		int expectedResponseCode, Http.Response actualResponse) {
-
-		Assert.assertEquals(
-			expectedResponseCode, actualResponse.getResponseCode());
-	}
-
-	protected void assertEquals(
-		UserAccount userAccount1, UserAccount userAccount2) {
-
-		Assert.assertTrue(
-			userAccount1 + " does not equal " + userAccount2,
-			equals(userAccount1, userAccount2));
+		assertEquals(randomUserAccount, getUserAccount);
+		assertValid(getUserAccount);
 	}
 
 	protected void assertEquals(
@@ -761,6 +356,14 @@ public abstract class BaseUserAccountResourceTestCase {
 
 			assertEquals(userAccount1, userAccount2);
 		}
+	}
+
+	protected void assertEquals(
+		UserAccount userAccount1, UserAccount userAccount2) {
+
+		Assert.assertTrue(
+			userAccount1 + " does not equal " + userAccount2,
+			equals(userAccount1, userAccount2));
 	}
 
 	protected void assertEqualsIgnoringOrder(
@@ -784,9 +387,11 @@ public abstract class BaseUserAccountResourceTestCase {
 		}
 	}
 
-	protected void assertValid(UserAccount userAccount) {
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+	protected void assertResponseCode(
+		int expectedResponseCode, Http.Response actualResponse) {
+
+		Assert.assertEquals(
+			expectedResponseCode, actualResponse.getResponseCode());
 	}
 
 	protected void assertValid(Page<UserAccount> page) {
@@ -796,14 +401,19 @@ public abstract class BaseUserAccountResourceTestCase {
 
 		int size = userAccounts.size();
 
-		if ((page.getLastPage() > 0) && (page.getPage() > 0) &&
-			(page.getPageSize() > 0) && (page.getTotalCount() > 0) &&
+		if ((page.getItemsPerPage() > 0) && (page.getLastPageNumber() > 0) &&
+			(page.getPageNumber() > 0) && (page.getTotalCount() > 0) &&
 			(size > 0)) {
 
 			valid = true;
 		}
 
 		Assert.assertTrue(valid);
+	}
+
+	protected void assertValid(UserAccount userAccount) {
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	protected boolean equals(
@@ -1007,6 +617,259 @@ public abstract class BaseUserAccountResourceTestCase {
 			"Invalid entity field " + entityFieldName);
 	}
 
+	protected boolean invokeDeleteUserAccount(Long userAccountId)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		options.setDelete(true);
+
+		options.setLocation(
+			_resourceURL +
+				_toPath("/user-accounts/{user-account-id}", userAccountId));
+
+		return _outputObjectMapper.readValue(
+			HttpUtil.URLtoString(options), Boolean.class);
+	}
+
+	protected Http.Response invokeDeleteUserAccountResponse(Long userAccountId)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		options.setDelete(true);
+
+		options.setLocation(
+			_resourceURL +
+				_toPath("/user-accounts/{user-account-id}", userAccountId));
+
+		HttpUtil.URLtoString(options);
+
+		return options.getResponse();
+	}
+
+	protected UserAccount invokeGetMyUserAccount(Long myUserAccountId)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		options.setLocation(
+			_resourceURL +
+				_toPath(
+					"/my-user-accounts/{my-user-account-id}", myUserAccountId));
+
+		return _outputObjectMapper.readValue(
+			HttpUtil.URLtoString(options), UserAccount.class);
+	}
+
+	protected Http.Response invokeGetMyUserAccountResponse(Long myUserAccountId)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		options.setLocation(
+			_resourceURL +
+				_toPath(
+					"/my-user-accounts/{my-user-account-id}", myUserAccountId));
+
+		HttpUtil.URLtoString(options);
+
+		return options.getResponse();
+	}
+
+	protected Page<UserAccount> invokeGetOrganizationUserAccountsPage(
+			Long organizationId, Pagination pagination)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		options.setLocation(
+			_resourceURL +
+				_toPath(
+					"/organizations/{organization-id}/user-accounts",
+					organizationId));
+
+		return _outputObjectMapper.readValue(
+			HttpUtil.URLtoString(options),
+			new TypeReference<Page<UserAccount>>() {
+			});
+	}
+
+	protected Http.Response invokeGetOrganizationUserAccountsPageResponse(
+			Long organizationId, Pagination pagination)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		options.setLocation(
+			_resourceURL +
+				_toPath(
+					"/organizations/{organization-id}/user-accounts",
+					organizationId));
+
+		HttpUtil.URLtoString(options);
+
+		return options.getResponse();
+	}
+
+	protected UserAccount invokeGetUserAccount(Long userAccountId)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		options.setLocation(
+			_resourceURL +
+				_toPath("/user-accounts/{user-account-id}", userAccountId));
+
+		return _outputObjectMapper.readValue(
+			HttpUtil.URLtoString(options), UserAccount.class);
+	}
+
+	protected Http.Response invokeGetUserAccountResponse(Long userAccountId)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		options.setLocation(
+			_resourceURL +
+				_toPath("/user-accounts/{user-account-id}", userAccountId));
+
+		HttpUtil.URLtoString(options);
+
+		return options.getResponse();
+	}
+
+	protected Page<UserAccount> invokeGetUserAccountsPage(
+			String fullnamequery, Pagination pagination)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		options.setLocation(
+			_resourceURL + _toPath("/user-accounts", fullnamequery));
+
+		return _outputObjectMapper.readValue(
+			HttpUtil.URLtoString(options),
+			new TypeReference<Page<UserAccount>>() {
+			});
+	}
+
+	protected Http.Response invokeGetUserAccountsPageResponse(
+			String fullnamequery, Pagination pagination)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		options.setLocation(
+			_resourceURL + _toPath("/user-accounts", fullnamequery));
+
+		HttpUtil.URLtoString(options);
+
+		return options.getResponse();
+	}
+
+	protected Page<UserAccount> invokeGetWebSiteUserAccountsPage(
+			Long webSiteId, Pagination pagination)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		options.setLocation(
+			_resourceURL +
+				_toPath("/web-sites/{web-site-id}/user-accounts", webSiteId));
+
+		return _outputObjectMapper.readValue(
+			HttpUtil.URLtoString(options),
+			new TypeReference<Page<UserAccount>>() {
+			});
+	}
+
+	protected Http.Response invokeGetWebSiteUserAccountsPageResponse(
+			Long webSiteId, Pagination pagination)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		options.setLocation(
+			_resourceURL +
+				_toPath("/web-sites/{web-site-id}/user-accounts", webSiteId));
+
+		HttpUtil.URLtoString(options);
+
+		return options.getResponse();
+	}
+
+	protected UserAccount invokePostUserAccount(UserAccount userAccount)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		options.setLocation(
+			_resourceURL + _toPath("/user-accounts", userAccount));
+
+		options.setPost(true);
+
+		return _outputObjectMapper.readValue(
+			HttpUtil.URLtoString(options), UserAccount.class);
+	}
+
+	protected Http.Response invokePostUserAccountResponse(
+			UserAccount userAccount)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		options.setLocation(
+			_resourceURL + _toPath("/user-accounts", userAccount));
+
+		options.setPost(true);
+
+		HttpUtil.URLtoString(options);
+
+		return options.getResponse();
+	}
+
+	protected UserAccount invokePutUserAccount(
+			Long userAccountId, UserAccount userAccount)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		options.setBody(
+			_inputObjectMapper.writeValueAsString(userAccount),
+			ContentTypes.APPLICATION_JSON, StringPool.UTF8);
+
+		options.setLocation(
+			_resourceURL +
+				_toPath("/user-accounts/{user-account-id}", userAccountId));
+
+		options.setPut(true);
+
+		return _outputObjectMapper.readValue(
+			HttpUtil.URLtoString(options), UserAccount.class);
+	}
+
+	protected Http.Response invokePutUserAccountResponse(
+			Long userAccountId, UserAccount userAccount)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		options.setBody(
+			_inputObjectMapper.writeValueAsString(userAccount),
+			ContentTypes.APPLICATION_JSON, StringPool.UTF8);
+
+		options.setLocation(
+			_resourceURL +
+				_toPath("/user-accounts/{user-account-id}", userAccountId));
+
+		options.setPut(true);
+
+		HttpUtil.URLtoString(options);
+
+		return options.getResponse();
+	}
+
 	protected UserAccount randomUserAccount() {
 		return new UserAccount() {
 			{
@@ -1028,6 +891,83 @@ public abstract class BaseUserAccountResourceTestCase {
 		};
 	}
 
+	protected UserAccount testDeleteUserAccount_addUserAccount()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected UserAccount testGetMyUserAccount_addUserAccount()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected UserAccount testGetOrganizationUserAccountsPage_addUserAccount(
+			Long organizationId, UserAccount userAccount)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected Long testGetOrganizationUserAccountsPage_getOrganizationId()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected UserAccount testGetUserAccount_addUserAccount() throws Exception {
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected UserAccount testGetUserAccountsPage_addUserAccount(
+			String fullnamequery, UserAccount userAccount)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected String testGetUserAccountsPage_getFullnamequery()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected UserAccount testGetWebSiteUserAccountsPage_addUserAccount(
+			Long webSiteId, UserAccount userAccount)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected Long testGetWebSiteUserAccountsPage_getWebSiteId()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected UserAccount testPostUserAccount_addUserAccount(
+			UserAccount userAccount)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected UserAccount testPutUserAccount_addUserAccount() throws Exception {
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
 	protected Group testGroup;
 
 	protected static class Page<T> {
@@ -1036,16 +976,16 @@ public abstract class BaseUserAccountResourceTestCase {
 			return new ArrayList<>(items);
 		}
 
-		public long getLastPage() {
-			return lastPage;
+		public long getItemsPerPage() {
+			return itemsPerPage;
 		}
 
-		public long getPage() {
-			return page;
+		public long getLastPageNumber() {
+			return lastPageNumber;
 		}
 
-		public long getPageSize() {
-			return pageSize;
+		public long getPageNumber() {
+			return pageNumber;
 		}
 
 		public long getTotalCount() {
@@ -1055,14 +995,14 @@ public abstract class BaseUserAccountResourceTestCase {
 		@JsonProperty
 		protected Collection<T> items;
 
-		@JsonProperty
-		protected long lastPage;
+		@JsonProperty("pageSize")
+		protected long itemsPerPage;
 
 		@JsonProperty
-		protected long page;
+		protected long lastPageNumber;
 
-		@JsonProperty
-		protected long pageSize;
+		@JsonProperty("page")
+		protected long pageNumber;
 
 		@JsonProperty
 		protected long totalCount;
@@ -1092,16 +1032,16 @@ public abstract class BaseUserAccountResourceTestCase {
 	}
 
 	private static DateFormat _dateFormat;
-	private final static ObjectMapper _inputObjectMapper = new ObjectMapper() {
+	private static final ObjectMapper _inputObjectMapper = new ObjectMapper() {
 		{
 			setSerializationInclusion(JsonInclude.Include.NON_NULL);
 		}
 	};
-	private final static ObjectMapper _outputObjectMapper = new ObjectMapper();
+	private static final ObjectMapper _outputObjectMapper = new ObjectMapper();
+
+	private URL _resourceURL;
 
 	@Inject
 	private UserAccountResource _userAccountResource;
-
-	private URL _resourceURL;
 
 }

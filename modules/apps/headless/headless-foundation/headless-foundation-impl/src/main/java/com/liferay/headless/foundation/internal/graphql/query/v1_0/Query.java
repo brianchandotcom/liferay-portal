@@ -106,23 +106,59 @@ public class Query {
 
 	@GraphQLField
 	@GraphQLInvokeDetached
-	public Collection<Category> getVocabularyCategoriesPage(
-			@GraphQLName("vocabulary-id") Long vocabularyId,
+	public Collection<Keyword> getContentSpaceKeywordsPage(
+			@GraphQLName("content-space-id") Long contentSpaceId,
 			@GraphQLName("filter") Filter filter,
 			@GraphQLName("pageSize") int pageSize,
 			@GraphQLName("page") int page, @GraphQLName("Sort[]") Sort[] sorts)
 		throws Exception {
 
-		CategoryResource categoryResource = _createCategoryResource();
+		KeywordResource keywordResource = _createKeywordResource();
 
-		categoryResource.setContextCompany(
+		keywordResource.setContextCompany(
 			CompanyLocalServiceUtil.getCompany(
 				CompanyThreadLocal.getCompanyId()));
 
-		Page paginationPage = categoryResource.getVocabularyCategoriesPage(
-			vocabularyId, filter, Pagination.of(pageSize, page), sorts);
+		Page paginationPage = keywordResource.getContentSpaceKeywordsPage(
+			contentSpaceId, filter, Pagination.of(pageSize, page), sorts);
 
 		return paginationPage.getItems();
+	}
+
+	@GraphQLField
+	@GraphQLInvokeDetached
+	public Collection<Vocabulary> getContentSpaceVocabulariesPage(
+			@GraphQLName("content-space-id") Long contentSpaceId,
+			@GraphQLName("filter") Filter filter,
+			@GraphQLName("pageSize") int pageSize,
+			@GraphQLName("page") int page, @GraphQLName("Sort[]") Sort[] sorts)
+		throws Exception {
+
+		VocabularyResource vocabularyResource = _createVocabularyResource();
+
+		vocabularyResource.setContextCompany(
+			CompanyLocalServiceUtil.getCompany(
+				CompanyThreadLocal.getCompanyId()));
+
+		Page paginationPage =
+			vocabularyResource.getContentSpaceVocabulariesPage(
+				contentSpaceId, filter, Pagination.of(pageSize, page), sorts);
+
+		return paginationPage.getItems();
+	}
+
+	@GraphQLField
+	@GraphQLInvokeDetached
+	public Email getEmail(@GraphQLName("email-id") Long emailId)
+		throws Exception {
+
+		EmailResource emailResource = _createEmailResource();
+
+		emailResource.setContextCompany(
+			CompanyLocalServiceUtil.getCompany(
+				CompanyThreadLocal.getCompanyId()));
+
+		return emailResource.getEmail(emailId);
 	}
 
 	@GraphQLField
@@ -147,35 +183,62 @@ public class Query {
 
 	@GraphQLField
 	@GraphQLInvokeDetached
-	public Email getEmail(@GraphQLName("email-id") Long emailId)
+	public Collection<Phone> getGenericParentPhonesPage(
+			@GraphQLName("generic-parent-id") Object genericParentId,
+			@GraphQLName("pageSize") int pageSize,
+			@GraphQLName("page") int page)
 		throws Exception {
 
-		EmailResource emailResource = _createEmailResource();
+		PhoneResource phoneResource = _createPhoneResource();
 
-		emailResource.setContextCompany(
+		phoneResource.setContextCompany(
 			CompanyLocalServiceUtil.getCompany(
 				CompanyThreadLocal.getCompanyId()));
 
-		return emailResource.getEmail(emailId);
+		Page paginationPage = phoneResource.getGenericParentPhonesPage(
+			genericParentId, Pagination.of(pageSize, page));
+
+		return paginationPage.getItems();
 	}
 
 	@GraphQLField
 	@GraphQLInvokeDetached
-	public Collection<Keyword> getContentSpaceKeywordsPage(
-			@GraphQLName("content-space-id") Long contentSpaceId,
-			@GraphQLName("filter") Filter filter,
+	public Collection<PostalAddress> getGenericParentPostalAddressesPage(
+			@GraphQLName("generic-parent-id") Object genericParentId,
 			@GraphQLName("pageSize") int pageSize,
-			@GraphQLName("page") int page, @GraphQLName("Sort[]") Sort[] sorts)
+			@GraphQLName("page") int page)
 		throws Exception {
 
-		KeywordResource keywordResource = _createKeywordResource();
+		PostalAddressResource postalAddressResource =
+			_createPostalAddressResource();
 
-		keywordResource.setContextCompany(
+		postalAddressResource.setContextCompany(
 			CompanyLocalServiceUtil.getCompany(
 				CompanyThreadLocal.getCompanyId()));
 
-		Page paginationPage = keywordResource.getContentSpaceKeywordsPage(
-			contentSpaceId, filter, Pagination.of(pageSize, page), sorts);
+		Page paginationPage =
+			postalAddressResource.getGenericParentPostalAddressesPage(
+				genericParentId, Pagination.of(pageSize, page));
+
+		return paginationPage.getItems();
+	}
+
+	@GraphQLField
+	@GraphQLInvokeDetached
+	public Collection<WebUrl> getGenericParentWebUrlsPage(
+			@GraphQLName("generic-parent-id") Object genericParentId,
+			@GraphQLName("pageSize") int pageSize,
+			@GraphQLName("page") int page)
+		throws Exception {
+
+		WebUrlResource webUrlResource = _createWebUrlResource();
+
+		webUrlResource.setContextCompany(
+			CompanyLocalServiceUtil.getCompany(
+				CompanyThreadLocal.getCompanyId()));
+
+		Page paginationPage = webUrlResource.getGenericParentWebUrlsPage(
+			genericParentId, Pagination.of(pageSize, page));
 
 		return paginationPage.getItems();
 	}
@@ -192,6 +255,21 @@ public class Query {
 				CompanyThreadLocal.getCompanyId()));
 
 		return keywordResource.getKeyword(keywordId);
+	}
+
+	@GraphQLField
+	@GraphQLInvokeDetached
+	public UserAccount getMyUserAccount(
+			@GraphQLName("my-user-account-id") Long myUserAccountId)
+		throws Exception {
+
+		UserAccountResource userAccountResource = _createUserAccountResource();
+
+		userAccountResource.setContextCompany(
+			CompanyLocalServiceUtil.getCompany(
+				CompanyThreadLocal.getCompanyId()));
+
+		return userAccountResource.getMyUserAccount(myUserAccountId);
 	}
 
 	@GraphQLField
@@ -218,20 +296,20 @@ public class Query {
 
 	@GraphQLField
 	@GraphQLInvokeDetached
-	public Collection<Organization> getOrganizationsPage(
+	public Collection<Role> getMyUserAccountRolesPage(
+			@GraphQLName("my-user-account-id") Long myUserAccountId,
 			@GraphQLName("pageSize") int pageSize,
 			@GraphQLName("page") int page)
 		throws Exception {
 
-		OrganizationResource organizationResource =
-			_createOrganizationResource();
+		RoleResource roleResource = _createRoleResource();
 
-		organizationResource.setContextCompany(
+		roleResource.setContextCompany(
 			CompanyLocalServiceUtil.getCompany(
 				CompanyThreadLocal.getCompanyId()));
 
-		Page paginationPage = organizationResource.getOrganizationsPage(
-			Pagination.of(pageSize, page));
+		Page paginationPage = roleResource.getMyUserAccountRolesPage(
+			myUserAccountId, Pagination.of(pageSize, page));
 
 		return paginationPage.getItems();
 	}
@@ -276,8 +354,7 @@ public class Query {
 
 	@GraphQLField
 	@GraphQLInvokeDetached
-	public Collection<Organization> getUserAccountOrganizationsPage(
-			@GraphQLName("user-account-id") Long userAccountId,
+	public Collection<Organization> getOrganizationsPage(
 			@GraphQLName("pageSize") int pageSize,
 			@GraphQLName("page") int page)
 		throws Exception {
@@ -289,29 +366,29 @@ public class Query {
 			CompanyLocalServiceUtil.getCompany(
 				CompanyThreadLocal.getCompanyId()));
 
-		Page paginationPage =
-			organizationResource.getUserAccountOrganizationsPage(
-				userAccountId, Pagination.of(pageSize, page));
+		Page paginationPage = organizationResource.getOrganizationsPage(
+			Pagination.of(pageSize, page));
 
 		return paginationPage.getItems();
 	}
 
 	@GraphQLField
 	@GraphQLInvokeDetached
-	public Collection<Phone> getGenericParentPhonesPage(
-			@GraphQLName("generic-parent-id") Object genericParentId,
+	public Collection<UserAccount> getOrganizationUserAccountsPage(
+			@GraphQLName("organization-id") Long organizationId,
 			@GraphQLName("pageSize") int pageSize,
 			@GraphQLName("page") int page)
 		throws Exception {
 
-		PhoneResource phoneResource = _createPhoneResource();
+		UserAccountResource userAccountResource = _createUserAccountResource();
 
-		phoneResource.setContextCompany(
+		userAccountResource.setContextCompany(
 			CompanyLocalServiceUtil.getCompany(
 				CompanyThreadLocal.getCompanyId()));
 
-		Page paginationPage = phoneResource.getGenericParentPhonesPage(
-			genericParentId, Pagination.of(pageSize, page));
+		Page paginationPage =
+			userAccountResource.getOrganizationUserAccountsPage(
+				organizationId, Pagination.of(pageSize, page));
 
 		return paginationPage.getItems();
 	}
@@ -332,28 +409,6 @@ public class Query {
 
 	@GraphQLField
 	@GraphQLInvokeDetached
-	public Collection<PostalAddress> getGenericParentPostalAddressesPage(
-			@GraphQLName("generic-parent-id") Object genericParentId,
-			@GraphQLName("pageSize") int pageSize,
-			@GraphQLName("page") int page)
-		throws Exception {
-
-		PostalAddressResource postalAddressResource =
-			_createPostalAddressResource();
-
-		postalAddressResource.setContextCompany(
-			CompanyLocalServiceUtil.getCompany(
-				CompanyThreadLocal.getCompanyId()));
-
-		Page paginationPage =
-			postalAddressResource.getGenericParentPostalAddressesPage(
-				genericParentId, Pagination.of(pageSize, page));
-
-		return paginationPage.getItems();
-	}
-
-	@GraphQLField
-	@GraphQLInvokeDetached
 	public PostalAddress getPostalAddress(
 			@GraphQLName("postal-address-id") Long postalAddressId)
 		throws Exception {
@@ -370,22 +425,14 @@ public class Query {
 
 	@GraphQLField
 	@GraphQLInvokeDetached
-	public Collection<Role> getMyUserAccountRolesPage(
-			@GraphQLName("my-user-account-id") Long myUserAccountId,
-			@GraphQLName("pageSize") int pageSize,
-			@GraphQLName("page") int page)
-		throws Exception {
-
+	public Role getRole(@GraphQLName("role-id") Long roleId) throws Exception {
 		RoleResource roleResource = _createRoleResource();
 
 		roleResource.setContextCompany(
 			CompanyLocalServiceUtil.getCompany(
 				CompanyThreadLocal.getCompanyId()));
 
-		Page paginationPage = roleResource.getMyUserAccountRolesPage(
-			myUserAccountId, Pagination.of(pageSize, page));
-
-		return paginationPage.getItems();
+		return roleResource.getRole(roleId);
 	}
 
 	@GraphQLField
@@ -409,14 +456,39 @@ public class Query {
 
 	@GraphQLField
 	@GraphQLInvokeDetached
-	public Role getRole(@GraphQLName("role-id") Long roleId) throws Exception {
-		RoleResource roleResource = _createRoleResource();
+	public UserAccount getUserAccount(
+			@GraphQLName("user-account-id") Long userAccountId)
+		throws Exception {
 
-		roleResource.setContextCompany(
+		UserAccountResource userAccountResource = _createUserAccountResource();
+
+		userAccountResource.setContextCompany(
 			CompanyLocalServiceUtil.getCompany(
 				CompanyThreadLocal.getCompanyId()));
 
-		return roleResource.getRole(roleId);
+		return userAccountResource.getUserAccount(userAccountId);
+	}
+
+	@GraphQLField
+	@GraphQLInvokeDetached
+	public Collection<Organization> getUserAccountOrganizationsPage(
+			@GraphQLName("user-account-id") Long userAccountId,
+			@GraphQLName("pageSize") int pageSize,
+			@GraphQLName("page") int page)
+		throws Exception {
+
+		OrganizationResource organizationResource =
+			_createOrganizationResource();
+
+		organizationResource.setContextCompany(
+			CompanyLocalServiceUtil.getCompany(
+				CompanyThreadLocal.getCompanyId()));
+
+		Page paginationPage =
+			organizationResource.getUserAccountOrganizationsPage(
+				userAccountId, Pagination.of(pageSize, page));
+
+		return paginationPage.getItems();
 	}
 
 	@GraphQLField
@@ -435,62 +507,6 @@ public class Query {
 
 		Page paginationPage = roleResource.getUserAccountRolesPage(
 			userAccountId, Pagination.of(pageSize, page));
-
-		return paginationPage.getItems();
-	}
-
-	@GraphQLField
-	@GraphQLInvokeDetached
-	public Collection<Segment> getUserSegmentsPage(
-			@GraphQLName("user-id") Long userId,
-			@GraphQLName("pageSize") int pageSize,
-			@GraphQLName("page") int page)
-		throws Exception {
-
-		SegmentResource segmentResource = _createSegmentResource();
-
-		segmentResource.setContextCompany(
-			CompanyLocalServiceUtil.getCompany(
-				CompanyThreadLocal.getCompanyId()));
-
-		Page paginationPage = segmentResource.getUserSegmentsPage(
-			userId, Pagination.of(pageSize, page));
-
-		return paginationPage.getItems();
-	}
-
-	@GraphQLField
-	@GraphQLInvokeDetached
-	public UserAccount getMyUserAccount(
-			@GraphQLName("my-user-account-id") Long myUserAccountId)
-		throws Exception {
-
-		UserAccountResource userAccountResource = _createUserAccountResource();
-
-		userAccountResource.setContextCompany(
-			CompanyLocalServiceUtil.getCompany(
-				CompanyThreadLocal.getCompanyId()));
-
-		return userAccountResource.getMyUserAccount(myUserAccountId);
-	}
-
-	@GraphQLField
-	@GraphQLInvokeDetached
-	public Collection<UserAccount> getOrganizationUserAccountsPage(
-			@GraphQLName("organization-id") Long organizationId,
-			@GraphQLName("pageSize") int pageSize,
-			@GraphQLName("page") int page)
-		throws Exception {
-
-		UserAccountResource userAccountResource = _createUserAccountResource();
-
-		userAccountResource.setContextCompany(
-			CompanyLocalServiceUtil.getCompany(
-				CompanyThreadLocal.getCompanyId()));
-
-		Page paginationPage =
-			userAccountResource.getOrganizationUserAccountsPage(
-				organizationId, Pagination.of(pageSize, page));
 
 		return paginationPage.getItems();
 	}
@@ -517,57 +533,20 @@ public class Query {
 
 	@GraphQLField
 	@GraphQLInvokeDetached
-	public UserAccount getUserAccount(
-			@GraphQLName("user-account-id") Long userAccountId)
-		throws Exception {
-
-		UserAccountResource userAccountResource = _createUserAccountResource();
-
-		userAccountResource.setContextCompany(
-			CompanyLocalServiceUtil.getCompany(
-				CompanyThreadLocal.getCompanyId()));
-
-		return userAccountResource.getUserAccount(userAccountId);
-	}
-
-	@GraphQLField
-	@GraphQLInvokeDetached
-	public Collection<UserAccount> getWebSiteUserAccountsPage(
-			@GraphQLName("web-site-id") Long webSiteId,
+	public Collection<Segment> getUserSegmentsPage(
+			@GraphQLName("user-id") Long userId,
 			@GraphQLName("pageSize") int pageSize,
 			@GraphQLName("page") int page)
 		throws Exception {
 
-		UserAccountResource userAccountResource = _createUserAccountResource();
+		SegmentResource segmentResource = _createSegmentResource();
 
-		userAccountResource.setContextCompany(
+		segmentResource.setContextCompany(
 			CompanyLocalServiceUtil.getCompany(
 				CompanyThreadLocal.getCompanyId()));
 
-		Page paginationPage = userAccountResource.getWebSiteUserAccountsPage(
-			webSiteId, Pagination.of(pageSize, page));
-
-		return paginationPage.getItems();
-	}
-
-	@GraphQLField
-	@GraphQLInvokeDetached
-	public Collection<Vocabulary> getContentSpaceVocabulariesPage(
-			@GraphQLName("content-space-id") Long contentSpaceId,
-			@GraphQLName("filter") Filter filter,
-			@GraphQLName("pageSize") int pageSize,
-			@GraphQLName("page") int page, @GraphQLName("Sort[]") Sort[] sorts)
-		throws Exception {
-
-		VocabularyResource vocabularyResource = _createVocabularyResource();
-
-		vocabularyResource.setContextCompany(
-			CompanyLocalServiceUtil.getCompany(
-				CompanyThreadLocal.getCompanyId()));
-
-		Page paginationPage =
-			vocabularyResource.getContentSpaceVocabulariesPage(
-				contentSpaceId, filter, Pagination.of(pageSize, page), sorts);
+		Page paginationPage = segmentResource.getUserSegmentsPage(
+			userId, Pagination.of(pageSize, page));
 
 		return paginationPage.getItems();
 	}
@@ -589,20 +568,41 @@ public class Query {
 
 	@GraphQLField
 	@GraphQLInvokeDetached
-	public Collection<WebUrl> getGenericParentWebUrlsPage(
-			@GraphQLName("generic-parent-id") Object genericParentId,
+	public Collection<Category> getVocabularyCategoriesPage(
+			@GraphQLName("vocabulary-id") Long vocabularyId,
+			@GraphQLName("filter") Filter filter,
+			@GraphQLName("pageSize") int pageSize,
+			@GraphQLName("page") int page, @GraphQLName("Sort[]") Sort[] sorts)
+		throws Exception {
+
+		CategoryResource categoryResource = _createCategoryResource();
+
+		categoryResource.setContextCompany(
+			CompanyLocalServiceUtil.getCompany(
+				CompanyThreadLocal.getCompanyId()));
+
+		Page paginationPage = categoryResource.getVocabularyCategoriesPage(
+			vocabularyId, filter, Pagination.of(pageSize, page), sorts);
+
+		return paginationPage.getItems();
+	}
+
+	@GraphQLField
+	@GraphQLInvokeDetached
+	public Collection<UserAccount> getWebSiteUserAccountsPage(
+			@GraphQLName("web-site-id") Long webSiteId,
 			@GraphQLName("pageSize") int pageSize,
 			@GraphQLName("page") int page)
 		throws Exception {
 
-		WebUrlResource webUrlResource = _createWebUrlResource();
+		UserAccountResource userAccountResource = _createUserAccountResource();
 
-		webUrlResource.setContextCompany(
+		userAccountResource.setContextCompany(
 			CompanyLocalServiceUtil.getCompany(
 				CompanyThreadLocal.getCompanyId()));
 
-		Page paginationPage = webUrlResource.getGenericParentWebUrlsPage(
-			genericParentId, Pagination.of(pageSize, page));
+		Page paginationPage = userAccountResource.getWebSiteUserAccountsPage(
+			webSiteId, Pagination.of(pageSize, page));
 
 		return paginationPage.getItems();
 	}

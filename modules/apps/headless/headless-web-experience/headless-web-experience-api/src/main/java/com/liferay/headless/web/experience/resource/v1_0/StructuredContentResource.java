@@ -34,13 +34,12 @@ import javax.annotation.Generated;
 @Generated("")
 public interface StructuredContentResource {
 
+	public boolean deleteStructuredContent(Long structuredContentId)
+		throws Exception;
+
 	public Page<StructuredContent> getContentSpaceStructuredContentsPage(
 			Long contentSpaceId, Filter filter, Pagination pagination,
 			Sort[] sorts)
-		throws Exception;
-
-	public StructuredContent postContentSpaceStructuredContent(
-			Long contentSpaceId, StructuredContent structuredContent)
 		throws Exception;
 
 	public Page<StructuredContent> getContentStructureStructuredContentsPage(
@@ -48,22 +47,23 @@ public interface StructuredContentResource {
 			Sort[] sorts)
 		throws Exception;
 
-	public boolean deleteStructuredContent(Long structuredContentId)
+	public StructuredContent getStructuredContent(Long structuredContentId)
 		throws Exception;
 
-	public StructuredContent getStructuredContent(Long structuredContentId)
+	public String getStructuredContentTemplate(
+			Long structuredContentId, Long templateId)
 		throws Exception;
 
 	public StructuredContent patchStructuredContent(
 			Long structuredContentId, StructuredContent structuredContent)
 		throws Exception;
 
-	public StructuredContent putStructuredContent(
-			Long structuredContentId, StructuredContent structuredContent)
+	public StructuredContent postContentSpaceStructuredContent(
+			Long contentSpaceId, StructuredContent structuredContent)
 		throws Exception;
 
-	public String getStructuredContentTemplate(
-			Long structuredContentId, Long templateId)
+	public StructuredContent putStructuredContent(
+			Long structuredContentId, StructuredContent structuredContent)
 		throws Exception;
 
 	public void setContextCompany(Company contextCompany);

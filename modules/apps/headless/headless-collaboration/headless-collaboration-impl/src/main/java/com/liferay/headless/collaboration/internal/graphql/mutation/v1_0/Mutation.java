@@ -49,41 +49,6 @@ public class Mutation {
 	}
 
 	@GraphQLInvokeDetached
-	public BlogPosting patchBlogPosting(
-			@GraphQLName("blog-posting-id") Long blogPostingId,
-			@GraphQLName("BlogPosting") BlogPosting blogPosting)
-		throws Exception {
-
-		BlogPostingResource blogPostingResource = _createBlogPostingResource();
-
-		return blogPostingResource.patchBlogPosting(blogPostingId, blogPosting);
-	}
-
-	@GraphQLInvokeDetached
-	public BlogPosting putBlogPosting(
-			@GraphQLName("blog-posting-id") Long blogPostingId,
-			@GraphQLName("BlogPosting") BlogPosting blogPosting)
-		throws Exception {
-
-		BlogPostingResource blogPostingResource = _createBlogPostingResource();
-
-		return blogPostingResource.putBlogPosting(blogPostingId, blogPosting);
-	}
-
-	@GraphQLField
-	@GraphQLInvokeDetached
-	public BlogPosting postContentSpaceBlogPosting(
-			@GraphQLName("content-space-id") Long contentSpaceId,
-			@GraphQLName("BlogPosting") BlogPosting blogPosting)
-		throws Exception {
-
-		BlogPostingResource blogPostingResource = _createBlogPostingResource();
-
-		return blogPostingResource.postContentSpaceBlogPosting(
-			contentSpaceId, blogPosting);
-	}
-
-	@GraphQLInvokeDetached
 	public boolean deleteBlogPostingImage(
 			@GraphQLName("blog-posting-image-id") Long blogPostingImageId)
 		throws Exception {
@@ -93,6 +58,26 @@ public class Mutation {
 
 		return blogPostingImageResource.deleteBlogPostingImage(
 			blogPostingImageId);
+	}
+
+	@GraphQLInvokeDetached
+	public boolean deleteComment(@GraphQLName("comment-id") Long commentId)
+		throws Exception {
+
+		CommentResource commentResource = _createCommentResource();
+
+		return commentResource.deleteComment(commentId);
+	}
+
+	@GraphQLInvokeDetached
+	public BlogPosting patchBlogPosting(
+			@GraphQLName("blog-posting-id") Long blogPostingId,
+			@GraphQLName("BlogPosting") BlogPosting blogPosting)
+		throws Exception {
+
+		BlogPostingResource blogPostingResource = _createBlogPostingResource();
+
+		return blogPostingResource.patchBlogPosting(blogPostingId, blogPosting);
 	}
 
 	@GraphQLInvokeDetached
@@ -108,17 +93,41 @@ public class Mutation {
 			blogPostingImageId, multipartBody);
 	}
 
+	@GraphQLField
 	@GraphQLInvokeDetached
-	public BlogPostingImage putBlogPostingImage(
-			@GraphQLName("blog-posting-image-id") Long blogPostingImageId,
-			@GraphQLName("MultipartBody") MultipartBody multipartBody)
+	public Comment postBlogPostingComment(
+			@GraphQLName("blog-posting-id") Long blogPostingId,
+			@GraphQLName("Comment") Comment comment)
 		throws Exception {
 
-		BlogPostingImageResource blogPostingImageResource =
-			_createBlogPostingImageResource();
+		CommentResource commentResource = _createCommentResource();
 
-		return blogPostingImageResource.putBlogPostingImage(
-			blogPostingImageId, multipartBody);
+		return commentResource.postBlogPostingComment(blogPostingId, comment);
+	}
+
+	@GraphQLField
+	@GraphQLInvokeDetached
+	public Comment postCommentComment(
+			@GraphQLName("comment-id") Long commentId,
+			@GraphQLName("Comment") Comment comment)
+		throws Exception {
+
+		CommentResource commentResource = _createCommentResource();
+
+		return commentResource.postCommentComment(commentId, comment);
+	}
+
+	@GraphQLField
+	@GraphQLInvokeDetached
+	public BlogPosting postContentSpaceBlogPosting(
+			@GraphQLName("content-space-id") Long contentSpaceId,
+			@GraphQLName("BlogPosting") BlogPosting blogPosting)
+		throws Exception {
+
+		BlogPostingResource blogPostingResource = _createBlogPostingResource();
+
+		return blogPostingResource.postContentSpaceBlogPosting(
+			contentSpaceId, blogPosting);
 	}
 
 	@GraphQLField
@@ -135,25 +144,28 @@ public class Mutation {
 			contentSpaceId, multipartBody);
 	}
 
-	@GraphQLField
 	@GraphQLInvokeDetached
-	public Comment postBlogPostingComment(
+	public BlogPosting putBlogPosting(
 			@GraphQLName("blog-posting-id") Long blogPostingId,
-			@GraphQLName("Comment") Comment comment)
+			@GraphQLName("BlogPosting") BlogPosting blogPosting)
 		throws Exception {
 
-		CommentResource commentResource = _createCommentResource();
+		BlogPostingResource blogPostingResource = _createBlogPostingResource();
 
-		return commentResource.postBlogPostingComment(blogPostingId, comment);
+		return blogPostingResource.putBlogPosting(blogPostingId, blogPosting);
 	}
 
 	@GraphQLInvokeDetached
-	public boolean deleteComment(@GraphQLName("comment-id") Long commentId)
+	public BlogPostingImage putBlogPostingImage(
+			@GraphQLName("blog-posting-image-id") Long blogPostingImageId,
+			@GraphQLName("MultipartBody") MultipartBody multipartBody)
 		throws Exception {
 
-		CommentResource commentResource = _createCommentResource();
+		BlogPostingImageResource blogPostingImageResource =
+			_createBlogPostingImageResource();
 
-		return commentResource.deleteComment(commentId);
+		return blogPostingImageResource.putBlogPostingImage(
+			blogPostingImageId, multipartBody);
 	}
 
 	@GraphQLInvokeDetached
@@ -167,24 +179,12 @@ public class Mutation {
 		return commentResource.putComment(commentId, comment);
 	}
 
-	@GraphQLField
-	@GraphQLInvokeDetached
-	public Comment postCommentComment(
-			@GraphQLName("comment-id") Long commentId,
-			@GraphQLName("Comment") Comment comment)
-		throws Exception {
-
-		CommentResource commentResource = _createCommentResource();
-
-		return commentResource.postCommentComment(commentId, comment);
+	private static BlogPostingImageResource _createBlogPostingImageResource() {
+		return new BlogPostingImageResourceImpl();
 	}
 
 	private static BlogPostingResource _createBlogPostingResource() {
 		return new BlogPostingResourceImpl();
-	}
-
-	private static BlogPostingImageResource _createBlogPostingImageResource() {
-		return new BlogPostingImageResourceImpl();
 	}
 
 	private static CommentResource _createCommentResource() {

@@ -24,10 +24,6 @@ import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.util.TransformUtil;
 
-import io.swagger.v3.oas.annotations.Parameter;
-import io.swagger.v3.oas.annotations.Parameters;
-import io.swagger.v3.oas.annotations.enums.ParameterIn;
-
 import java.net.URI;
 
 import java.util.Collections;
@@ -57,8 +53,19 @@ import javax.ws.rs.core.UriInfo;
 public abstract class BaseUserAccountResourceImpl
 	implements UserAccountResource {
 
+	@DELETE
 	@Override
+	@Path("/user-accounts/{user-account-id}")
+	@Produces("application/json")
+	public boolean deleteUserAccount(
+			@PathParam("user-account-id") Long userAccountId)
+		throws Exception {
+
+		return false;
+	}
+
 	@GET
+	@Override
 	@Path("/my-user-accounts/{my-user-account-id}")
 	@Produces("application/json")
 	public UserAccount getMyUserAccount(
@@ -68,14 +75,8 @@ public abstract class BaseUserAccountResourceImpl
 		return new UserAccount();
 	}
 
-	@Override
 	@GET
-	@Parameters(
-		value = {
-			@Parameter(in = ParameterIn.QUERY, name = "page"),
-			@Parameter(in = ParameterIn.QUERY, name = "pageSize")
-		}
-	)
+	@Override
 	@Path("/organizations/{organization-id}/user-accounts")
 	@Produces("application/json")
 	public Page<UserAccount> getOrganizationUserAccountsPage(
@@ -86,14 +87,19 @@ public abstract class BaseUserAccountResourceImpl
 		return Page.of(Collections.emptyList());
 	}
 
-	@Override
 	@GET
-	@Parameters(
-		value = {
-			@Parameter(in = ParameterIn.QUERY, name = "page"),
-			@Parameter(in = ParameterIn.QUERY, name = "pageSize")
-		}
-	)
+	@Override
+	@Path("/user-accounts/{user-account-id}")
+	@Produces("application/json")
+	public UserAccount getUserAccount(
+			@PathParam("user-account-id") Long userAccountId)
+		throws Exception {
+
+		return new UserAccount();
+	}
+
+	@GET
+	@Override
 	@Path("/user-accounts")
 	@Produces("application/json")
 	public Page<UserAccount> getUserAccountsPage(
@@ -104,60 +110,8 @@ public abstract class BaseUserAccountResourceImpl
 		return Page.of(Collections.emptyList());
 	}
 
-	@Override
-	@Consumes("application/json")
-	@POST
-	@Path("/user-accounts")
-	@Produces("application/json")
-	public UserAccount postUserAccount(UserAccount userAccount)
-		throws Exception {
-
-		return new UserAccount();
-	}
-
-	@Override
-	@DELETE
-	@Path("/user-accounts/{user-account-id}")
-	@Produces("application/json")
-	public boolean deleteUserAccount(
-			@PathParam("user-account-id") Long userAccountId)
-		throws Exception {
-
-		return false;
-	}
-
-	@Override
 	@GET
-	@Path("/user-accounts/{user-account-id}")
-	@Produces("application/json")
-	public UserAccount getUserAccount(
-			@PathParam("user-account-id") Long userAccountId)
-		throws Exception {
-
-		return new UserAccount();
-	}
-
 	@Override
-	@Consumes("application/json")
-	@PUT
-	@Path("/user-accounts/{user-account-id}")
-	@Produces("application/json")
-	public UserAccount putUserAccount(
-			@PathParam("user-account-id") Long userAccountId,
-			UserAccount userAccount)
-		throws Exception {
-
-		return new UserAccount();
-	}
-
-	@Override
-	@GET
-	@Parameters(
-		value = {
-			@Parameter(in = ParameterIn.QUERY, name = "page"),
-			@Parameter(in = ParameterIn.QUERY, name = "pageSize")
-		}
-	)
 	@Path("/web-sites/{web-site-id}/user-accounts")
 	@Produces("application/json")
 	public Page<UserAccount> getWebSiteUserAccountsPage(
@@ -166,6 +120,30 @@ public abstract class BaseUserAccountResourceImpl
 		throws Exception {
 
 		return Page.of(Collections.emptyList());
+	}
+
+	@Consumes("application/json")
+	@Override
+	@Path("/user-accounts")
+	@POST
+	@Produces("application/json")
+	public UserAccount postUserAccount(UserAccount userAccount)
+		throws Exception {
+
+		return new UserAccount();
+	}
+
+	@Consumes("application/json")
+	@Override
+	@Path("/user-accounts/{user-account-id}")
+	@Produces("application/json")
+	@PUT
+	public UserAccount putUserAccount(
+			@PathParam("user-account-id") Long userAccountId,
+			UserAccount userAccount)
+		throws Exception {
+
+		return new UserAccount();
 	}
 
 	public void setContextCompany(Company contextCompany) {

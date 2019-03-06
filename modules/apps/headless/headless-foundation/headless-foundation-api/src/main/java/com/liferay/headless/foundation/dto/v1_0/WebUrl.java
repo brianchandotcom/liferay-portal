@@ -33,12 +33,19 @@ import javax.xml.bind.annotation.XmlRootElement;
  */
 @Generated("")
 @GraphQLName("WebUrl")
-//@JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "WebUrl")
-public class WebUrl  {
+public class WebUrl {
 
 	public Long getId() {
 		return id;
+	}
+
+	public String getUrl() {
+		return url;
+	}
+
+	public String getUrlType() {
+		return urlType;
 	}
 
 	public void setId(Long id) {
@@ -55,14 +62,6 @@ public class WebUrl  {
 		}
 	}
 
-	@GraphQLField
-	@JsonProperty
-	protected Long id;
-
-	public String getUrl() {
-		return url;
-	}
-
 	public void setUrl(String url) {
 		this.url = url;
 	}
@@ -75,14 +74,6 @@ public class WebUrl  {
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
-	}
-
-	@GraphQLField
-	@JsonProperty
-	protected String url;
-
-	public String getUrlType() {
-		return urlType;
 	}
 
 	public void setUrlType(String urlType) {
@@ -101,12 +92,8 @@ public class WebUrl  {
 		}
 	}
 
-	@GraphQLField
-	@JsonProperty
-	protected String urlType;
-
 	public String toString() {
-		StringBundler sb = new StringBundler();
+		StringBundler sb = new StringBundler(14);
 
 		sb.append("{");
 
@@ -132,5 +119,17 @@ public class WebUrl  {
 
 		return sb.toString();
 	}
+
+	@GraphQLField
+	@JsonProperty
+	protected Long id;
+
+	@GraphQLField
+	@JsonProperty
+	protected String url;
+
+	@GraphQLField
+	@JsonProperty
+	protected String urlType;
 
 }

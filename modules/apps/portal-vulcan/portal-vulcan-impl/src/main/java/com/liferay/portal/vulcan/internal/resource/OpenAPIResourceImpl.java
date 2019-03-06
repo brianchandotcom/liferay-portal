@@ -17,7 +17,6 @@ package com.liferay.portal.vulcan.internal.resource;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.vulcan.resource.OpenAPIResource;
 
-import io.swagger.v3.core.util.Json;
 import io.swagger.v3.core.util.Yaml;
 import io.swagger.v3.jaxrs2.integration.JaxrsOpenApiContextBuilder;
 import io.swagger.v3.jaxrs2.integration.ServletConfigContextUtils;
@@ -111,7 +110,7 @@ public class OpenAPIResourceImpl implements OpenAPIResource {
 		return Response.status(
 			Response.Status.OK
 		).entity(
-			Json.pretty(openAPI)
+			openAPI
 		).type(
 			MediaType.APPLICATION_JSON_TYPE
 		).build();

@@ -40,5 +40,5 @@
 </liferay-frontend:vertical-card-header>
 
 <liferay-frontend:vertical-card-footer>
-	<aui:workflow-status markupView="lexicon" showIcon="<%= false %>" showLabel="<%= false %>" status="<%= latestFileVersion.getStatus() %>" />
+	<aui:workflow-status showIcon="<%= false %>" showLabel="<%= false %>" status="<%= latestFileVersion.getStatus() %>" />
 </liferay-frontend:vertical-card-footer>

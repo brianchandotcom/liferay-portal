@@ -39,7 +39,7 @@ public class BulkStatusModelResourceImpl
 	public BulkStatusModel getStatus(Long param) throws Exception {
 		return new BulkStatusModel() {
 			{
-				status = _bulkSelectionRunner.isBusy(_user);
+				busy = _bulkSelectionRunner.isBusy(_user);
 			}
 		};
 	}

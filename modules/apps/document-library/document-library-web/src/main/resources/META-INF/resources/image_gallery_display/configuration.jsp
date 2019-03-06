@@ -98,48 +98,57 @@ DLPortletInstanceSettingsHelper dlPortletInstanceSettingsHelper = new DLPortletI
 	</liferay-frontend:edit-form-footer>
 </liferay-frontend:edit-form>
 
-<aui:script>
-	AUI.$('#<portlet:namespace />openFolderSelectorButton').on(
-		'click',
-		function(event) {
-			Liferay.Util.selectEntity(
-				{
-					dialog: {
-						constrain: true,
-						destroyOnHide: true,
-						modal: true,
-						width: 680
+<script>
+	var openFolderSelectorButton = document.getElementById('<portlet:namespace />openFolderSelectorButton');
+
+	if (openFolderSelectorButton) {
+		openFolderSelectorButton.addEventListener(
+			'click',
+			function(event) {
+				Liferay.Util.selectEntity(
+					{
+						dialog: {
+							constrain: true,
+							destroyOnHide: true,
+							modal: true,
+							width: 680
+						},
+						id: '_<%= HtmlUtil.escapeJS(portletResource) %>_selectFolder',
+						title: '<liferay-ui:message arguments="folder" key="select-x" />',
+
+						<liferay-portlet:renderURL portletName="<%= portletResource %>" var="selectFolderURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
+							<portlet:param name="mvcRenderCommandName" value='<%= "/document_library/select_folder" %>' />
+							<portlet:param name="folderId" value="<%= String.valueOf(rootFolderId) %>" />
+							<portlet:param name="ignoreRootFolder" value="<%= Boolean.TRUE.toString() %>" />
+						</liferay-portlet:renderURL>
+
+						uri: '<%= HtmlUtil.escapeJS(selectFolderURL.toString()) %>'
 					},
-					id: '_<%= HtmlUtil.escapeJS(portletResource) %>_selectFolder',
-					title: '<liferay-ui:message arguments="folder" key="select-x" />',
+					function(event) {
+						var folderData = {
+							idString: 'rootFolderId',
+							idValue: event.folderid,
+							nameString: 'rootFolderName',
+							nameValue: event.foldername
+						};
 
-					<liferay-portlet:renderURL portletName="<%= portletResource %>" var="selectFolderURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
-						<portlet:param name="mvcRenderCommandName" value='<%= "/document_library/select_folder" %>' />
-						<portlet:param name="folderId" value="<%= String.valueOf(rootFolderId) %>" />
-						<portlet:param name="ignoreRootFolder" value="<%= Boolean.TRUE.toString() %>" />
-					</liferay-portlet:renderURL>
-
-					uri: '<%= HtmlUtil.escapeJS(selectFolderURL.toString()) %>'
-				},
-				function(event) {
-					var folderData = {
-						idString: 'rootFolderId',
-						idValue: event.folderid,
-						nameString: 'rootFolderName',
-						nameValue: event.foldername
-					};
-
-					Liferay.Util.selectFolder(folderData, '<portlet:namespace />');
-				}
-			);
-		}
-	);
+						Liferay.Util.selectFolder(folderData, '<portlet:namespace />');
+					}
+				);
+			}
+		);
+	}
 
 	function <portlet:namespace />saveConfiguration() {
-		var form = AUI.$(document.<portlet:namespace />fm);
+		var form = document.<portlet:namespace />fm;
 
-		form.fm('mimeTypes').val(Liferay.Util.listSelect(form.fm('currentMimeTypes')));
-
-		submitForm(form);
+		Liferay.Util.postForm(
+			form,
+			{
+				data: {
+					mimeTypes: Liferay.Util.listSelect(Liferay.Util.getFormElement(form, 'currentMimeTypes'))
+				}
+			}
+		);
 	}
-</aui:script>
+</script>

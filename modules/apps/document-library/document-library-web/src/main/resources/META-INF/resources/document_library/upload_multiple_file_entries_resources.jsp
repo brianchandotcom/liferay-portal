@@ -204,38 +204,74 @@ else {
 					}
 					%>
 
-					<aui:script sandbox="<%= true %>">
-						$('#<portlet:namespace/>documentTypeSelector .lfr-menu-list').on(
-							'click',
-							'li a',
-							function(event) {
-								event.preventDefault();
+					<aui:script require="metal-dom/src/all/dom as dom">
+						var documentTypeMenuList = document.querySelector('#<portlet:namespace/>documentTypeSelector .lfr-menu-list');
 
-								$('#<portlet:namespace />commonFileMetadataContainer').load(
-									$(event.currentTarget).attr('href'),
-									function() {
-										var totalFiles = $('input[name=<portlet:namespace />selectUploadedFile]');
+						if (documentTypeMenuList) {
+							dom.delegate(
+								documentTypeMenuList,
+								'click',
+								'li a',
+								function(event) {
+									event.preventDefault();
 
-										var selectedFiles = totalFiles.filter(':checked');
+									fetch(
+										event.delegateTarget.getAttribute('href'),
+										{
+											credentials: 'include'
+										}
+									).then(
+										function(response) {
+											return response.text();
+										}
+									).then(
+										function(response) {
+											var commonFileMetadataContainer = document.getElementById('<portlet:namespace />commonFileMetadataContainer');
 
-										var selectedFilesCount = selectedFiles.length;
+											if (commonFileMetadataContainer) {
+												commonFileMetadataContainer.innerHTML = response;
 
-										var selectedFilesText = selectedFiles.eq(0).data('title');
-
-										if (selectedFilesCount > 1) {
-											if (selectedFilesCount == totalFiles.length) {
-												selectedFilesText = '<%= UnicodeLanguageUtil.get(request, "all-files-selected") %>';
+												dom.globalEval.runScriptsInElement(commonFileMetadataContainer);
 											}
-											else {
-												selectedFilesText = Liferay.Util.sub('<%= UnicodeLanguageUtil.get(request, "x-files-selected") %>', selectedFilesCount);
+
+											var fileNodes = document.querySelectorAll('input[name=<portlet:namespace />selectUploadedFile]');
+
+											var selectedFileNodes = Array.prototype.filter.call(
+												fileNodes,
+												function(fileNode) {
+													return fileNode.checked;
+												}
+											);
+
+											var selectedFilesCount = selectedFileNodes.length;
+
+											var selectedFilesText = '';
+
+											if (selectedFilesCount > 0) {
+												selectedFilesText = selectedFileNodes[0].dataset.title;
+											}
+
+											if (selectedFilesCount > 1) {
+												if (selectedFilesCount === fileNodes.length) {
+													selectedFilesText = '<%= UnicodeLanguageUtil.get(request, "all-files-selected") %>';
+												}
+												else {
+													selectedFilesText = Liferay.Util.sub('<%= UnicodeLanguageUtil.get(request, "x-files-selected") %>', selectedFilesCount);
+												}
+											}
+
+											var selectedFilesCountElement = document.querySelector('.selected-files-count');
+
+											if (selectedFilesCountElement) {
+												selectedFilesCountElement.innerHTML = selectedFilesText;
+
+												selectedFilesCountElement.setAttribute('title', selectedFilesText);
 											}
 										}
-
-										$('.selected-files-count').html(selectedFilesText).attr('title', selectedFilesText);
-									}
-								);
-							}
-						);
+									);
+								}
+							);
+						}
 					</aui:script>
 				</liferay-ui:panel>
 			</c:if>

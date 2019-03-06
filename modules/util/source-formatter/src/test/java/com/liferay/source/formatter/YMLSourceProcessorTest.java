@@ -21,7 +21,6 @@ import org.junit.Test;
  */
 public class YMLSourceProcessorTest extends BaseSourceProcessorTestCase {
 
-	@Test
 	public void testSortDefinitionsAndWhitespaceCheck() throws Exception {
 		test("SortDefinitionsAndWhitespace.testyaml");
 	}

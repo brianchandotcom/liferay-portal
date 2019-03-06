@@ -59,7 +59,8 @@ public class IGPortletToolbarContributor extends BasePortletToolbarContributor {
 
 		List<MenuItem> menuItems = new ArrayList<>();
 
-		menuItems.add(
+		_add(
+			menuItems,
 			_menuItemProvider.getAddFileMenuItem(
 				folder, themeDisplay, portletRequest));
 

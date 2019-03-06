@@ -446,27 +446,26 @@ public class DefaultPortalToLDAPConverter implements PortalToLDAPConverter {
 				sb.append(
 					_passwordEncryptor.encrypt(algorithm, password, null));
 
-				String passwordKey = userMappings.getProperty(
-					UserConverterKeys.PASSWORD);
-
-				if (passwordKey.equals("unicodePwd")) {
-					String quotedPassword = StringPool.QUOTE.concat(
-						sb.toString()
-					).concat(
-						StringPool.QUOTE
-					);
-
-					byte[] unicodePassword = quotedPassword.getBytes(
-						"UTF-16LE");
-
-					return new String(unicodePassword);
-				}
-
-				return sb.toString();
+				password = sb.toString();
 			}
 			catch (Exception e) {
 				throw new SystemException(e);
 			}
+		}
+
+		String passwordKey = userMappings.getProperty(
+			UserConverterKeys.PASSWORD);
+
+		if (passwordKey.equals("unicodePwd")) {
+			String quotedPassword = StringPool.QUOTE.concat(
+				password
+			).concat(
+				StringPool.QUOTE
+			);
+
+			byte[] unicodePassword = quotedPassword.getBytes("UTF-16LE");
+
+			return new String(unicodePassword);
 		}
 
 		return password;

@@ -174,11 +174,13 @@ public class UpgradeContentImages extends UpgradeProcess {
 				fileEntryId);
 		}
 		catch (PortalException pe) {
+			String message = "Unable to get file entry " + fileEntryId;
+
 			if (_log.isDebugEnabled()) {
-				_log.debug("Unable to get file entry " + fileEntryId, pe);
+				_log.debug(message, pe);
 			}
 			else if (_log.isWarnEnabled()) {
-				_log.warn("Unable to get file entry " + fileEntryId);
+				_log.warn(message);
 			}
 		}
 
@@ -202,25 +204,17 @@ public class UpgradeContentImages extends UpgradeProcess {
 				groupId, folderId, id);
 		}
 		catch (PortalException pe) {
+			String message = StringBundler.concat(
+				"Unable to get file entry with group ID ",
+				String.valueOf(groupId), ", folder ID ",
+				String.valueOf(folderId), ", and file name ", id,
+				" for resourcePrimKey ", String.valueOf(resourcePrimKey));
+
 			if (_log.isDebugEnabled()) {
-				_log.debug(
-					StringBundler.concat(
-						"Unable to get file entry with group ID ",
-						String.valueOf(groupId), ", folder ID ",
-						String.valueOf(folderId), ", and file name ", id,
-						" for resourcePrimKey ",
-						String.valueOf(resourcePrimKey)),
-					pe);
+				_log.debug(message, pe);
 			}
 			else if (_log.isWarnEnabled()) {
-				_log.warn(
-					StringBundler.concat(
-						"Unable to get file entry with group ID ",
-						String.valueOf(groupId), ", folder ID ",
-						String.valueOf(folderId), ", and file name ", id,
-						" for resourcePrimKey ",
-						String.valueOf(resourcePrimKey))
-				);
+				_log.warn(message);
 			}
 		}
 

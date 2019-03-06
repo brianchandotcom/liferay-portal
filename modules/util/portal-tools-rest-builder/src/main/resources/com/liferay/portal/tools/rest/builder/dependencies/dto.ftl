@@ -23,23 +23,26 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 <#if schema.oneOfSchemas?has_content>
-	@JsonTypeInfo(use = JsonTypeInfo.Id.NAME,
-	include = JsonTypeInfo.As.PROPERTY,
-	property = "type")
-	@JsonSubTypes({
-	<#list schema.oneOfSchemas as oneOfSchema>
+	@JsonSubTypes(
+		{
+			<#list schema.oneOfSchemas as oneOfSchema>
+				<#assign property = oneOfSchema.propertySchemas?keys[0] />
 
-		<#assign property = oneOfSchema.propertySchemas?keys[0] />
+				@JsonSubTypes.Type(name = "${property}", value=${property?cap_first}.class)
 
-		@JsonSubTypes.Type(value=${property?cap_first}.class, name = "${property}")<#if oneOfSchema_has_next>,</#if>
-	</#list>
-	})
+				<#if oneOfSchema_has_next>
+					,
+				</#if>
+			</#list>
+		}
+	)
+	@JsonTypeInfo(include = JsonTypeInfo.As.PROPERTY, property = "type", use = JsonTypeInfo.Id.NAME)
 </#if>
 @Generated("")
 @GraphQLName("${schemaName}")
 //@JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "${schemaName}")
-public class ${schemaName} <#if freeMarkerTool.getParentClass(openAPIYAML, schemaName)??>extends ${freeMarkerTool.getParentClass(openAPIYAML, schemaName)} </#if>{
+public class ${schemaName} <#if freeMarkerTool.getParentClass(openAPIYAML, schemaName)??>extends ${freeMarkerTool.getParentClass(openAPIYAML, schemaName)}</#if> {
 
 	<#list freeMarkerTool.getDTOJavaMethodParameters(configYAML, openAPIYAML, schema) as javaMethodParameter>
 		<#assign javaDataType = javaMethodParameter.parameterType />

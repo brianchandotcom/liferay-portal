@@ -14,6 +14,7 @@
 
 package com.liferay.segments.service.impl;
 
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.ResourceConstants;
@@ -25,7 +26,6 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ResourceBundleLoader;
 import com.liferay.portal.kernel.util.ResourceBundleLoaderUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.segments.constants.SegmentsConstants;
 import com.liferay.segments.exception.DefaultSegmentsExperienceException;
 import com.liferay.segments.exception.SegmentsExperienceSegmentsEntryException;
@@ -37,7 +37,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-import java.util.Objects;
 
 /**
  * @author David Arques
@@ -347,20 +346,13 @@ public class SegmentsExperienceLocalServiceImpl
 				"com.liferay.segments.lang");
 	}
 
-	private boolean _isDefaultSegmentsEntry(long groupId, long segmentsEntryId)
-		throws PortalException {
-
-		SegmentsEntry segmentsEntry = _getDefaultSegmentsEntry(groupId);
-
-		return Objects.equals(
-			segmentsEntry.getSegmentsEntryId(), segmentsEntryId);
-	}
-
 	private void _validate(
 			long groupId, long segmentsEntryId, long classNameId, long classPK)
 		throws PortalException {
 
-		if (!_isDefaultSegmentsEntry(groupId, segmentsEntryId)) {
+		SegmentsEntry defaultSegmentsEntry = _getDefaultSegmentsEntry(groupId);
+
+		if (defaultSegmentsEntry.getSegmentsEntryId() != segmentsEntryId) {
 			return;
 		}
 
@@ -373,10 +365,9 @@ public class SegmentsExperienceLocalServiceImpl
 
 		throw new DefaultSegmentsExperienceException(
 			StringBundler.concat(
-				"A default segments experience for the group ",
-				String.valueOf(groupId), ", classNameId ",
-				String.valueOf(classNameId), " and classPK ",
-				String.valueOf(classPK), " already exists"));
+				"A default segments experience for the group ", groupId,
+				", classNameId ", classNameId, " and classPK ", classPK,
+				" already exists"));
 	}
 
 }

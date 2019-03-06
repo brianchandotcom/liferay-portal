@@ -39,7 +39,6 @@ import com.liferay.segments.constants.SegmentsConstants;
 import com.liferay.segments.exception.DefaultSegmentsExperienceException;
 import com.liferay.segments.exception.SegmentsExperienceSegmentsEntryException;
 import com.liferay.segments.model.SegmentsEntry;
-import com.liferay.segments.model.SegmentsEntryModel;
 import com.liferay.segments.model.SegmentsExperience;
 import com.liferay.segments.service.SegmentsEntryLocalService;
 import com.liferay.segments.service.SegmentsExperienceLocalService;
@@ -214,7 +213,7 @@ public class SegmentsExperienceLocalServiceTest {
 	}
 
 	private SegmentsExperience _addSegmentsExperience(
-			SegmentsEntryModel segmentsEntry)
+			SegmentsEntry segmentsEntry)
 		throws Exception {
 
 		ServiceContext serviceContext =

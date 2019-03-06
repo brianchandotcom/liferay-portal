@@ -304,33 +304,6 @@ info:
     version: v1.0
 openapi: 3.0.1
 paths:
-    "/content-spaces/{content-space-id}/form":
-        get:
-            parameters:
-                - in: query
-                  name: page
-                  schema:
-                      type: integer
-                - in: query
-                  name: pageSize
-                  schema:
-                      type: integer
-                - in: path
-                  name: content-space-id
-                  required: true
-                  schema:
-                      format: int64
-                      type: integer
-            responses:
-                200:
-                    content:
-                        application/json:
-                            schema:
-                                items:
-                                    $ref: "#/components/schemas/Form"
-                                type: array
-                    description: ""
-            tags: ["Form"]
     "/content-spaces/{content-space-id}/form-structures":
         get:
             parameters:
@@ -358,6 +331,33 @@ paths:
                                 type: array
                     description: ""
             tags: ["FormStructure"]
+    "/content-spaces/{content-space-id}/forms":
+        get:
+            parameters:
+                - in: query
+                  name: page
+                  schema:
+                      type: integer
+                - in: query
+                  name: pageSize
+                  schema:
+                      type: integer
+                - in: path
+                  name: content-space-id
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/Form"
+                                type: array
+                    description: ""
+            tags: ["Form"]
     "/form-documents/{form-document-id}":
         delete:
             parameters:

@@ -129,7 +129,7 @@ public class YMLDefinitionOrderCheck extends BaseFileCheck {
 	}
 
 	private static final Pattern _incorrectIndentationPattern = Pattern.compile(
-		"^( *)[^ ].+(\n\\1- .+(\n\\1 .+)*)+", Pattern.MULTILINE);
+		"^( *)[^ -].+(\n\\1- .+(\n\\1 .+)*)+", Pattern.MULTILINE);
 
 	private static class DefinitionComparator
 		implements Comparator<String>, Serializable {

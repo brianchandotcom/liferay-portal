@@ -39,36 +39,39 @@ header {
 	}
 
 	.user-avatar-link {
+		display: block;
 		position: relative;
+
+		.text-default {
+			align-items: center;
+			display: flex;
+
+			.user-full-name {
+				margin-left: 0.5rem;
+
+				@include media-query(null, $screen-xs-max) {
+					display: none;
+				}
+			}
+		}
+
+		.panel-notifications-count {
+			margin: 0;
+			position: absolute;
+			right: calc(100% - 0.7rem);
+			top: -0.4rem;
+		}
 	}
 
 	.user-personal-bar {
 		.fieldset {
 			position: relative;
 		}
-
-		.panel-notifications-count {
-			left: -0.5rem;
-			position: absolute;
-			top: -0.8rem;
-		}
 	}
 
 	.search-input {
 		font-size: 0.88rem;
 		padding: 0.28rem 2rem 0.28rem 1rem;
-	}
-
-	.user-avatar-image {
-		display: inline-flex;
-		margin-right: 0.5rem;
-		vertical-align: middle;
-	}
-
-	.user-full-name {
-		@include media-query(null, $screen-xs-max) {
-			display: none;
-		}
 	}
 }
 

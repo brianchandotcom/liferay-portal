@@ -127,24 +127,26 @@ public class AssetBrowserDisplayContext {
 			sort = new Sort(sortFieldName, Sort.STRING_TYPE, orderByAsc);
 		}
 
-		String className = StringPool.BLANK;
+		long classNameId = 0;
 
 		if (assetRendererFactory != null) {
-			assetRendererFactory.getClassName();
+			classNameId = assetRendererFactory.getClassNameId();
 		}
 
 		int total = (int)AssetEntryLocalServiceUtil.searchCount(
 			themeDisplay.getCompanyId(), _getFilterGroupIds(),
-			themeDisplay.getUserId(), className, getSubtypeSelectionId(),
-			_getKeywords(), _isShowNonindexable(), _getStatuses());
+			themeDisplay.getUserId(), new long[] {classNameId},
+			getSubtypeSelectionId(), _getKeywords(), _isShowNonindexable(),
+			_getStatuses());
 
 		assetBrowserSearch.setTotal(total);
 
 		Hits hits = AssetEntryLocalServiceUtil.search(
 			themeDisplay.getCompanyId(), _getFilterGroupIds(),
-			themeDisplay.getUserId(), className, getSubtypeSelectionId(),
-			_getKeywords(), _isShowNonindexable(), _getStatuses(),
-			assetBrowserSearch.getStart(), assetBrowserSearch.getEnd(), sort);
+			themeDisplay.getUserId(), new long[] {classNameId},
+			getSubtypeSelectionId(), _getKeywords(), _isShowNonindexable(),
+			_getStatuses(), assetBrowserSearch.getStart(),
+			assetBrowserSearch.getEnd(), sort);
 
 		List<AssetEntry> assetEntries = _assetHelper.getAssetEntries(hits);
 

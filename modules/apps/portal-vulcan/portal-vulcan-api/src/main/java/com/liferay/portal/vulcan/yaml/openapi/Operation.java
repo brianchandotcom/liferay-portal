@@ -23,6 +23,10 @@ import java.util.Map;
  */
 public class Operation {
 
+	public String getDescription() {
+		return _description;
+	}
+
 	public String getOperationId() {
 		return _operationId;
 	}
@@ -41,6 +45,10 @@ public class Operation {
 
 	public List<String> getTags() {
 		return _tags;
+	}
+
+	public void setDescription(String description) {
+		_description = description;
 	}
 
 	public void setOperationId(String operationId) {
@@ -63,6 +71,7 @@ public class Operation {
 		_tags = tags;
 	}
 
+	private String _description;
 	private String _operationId;
 	private List<Parameter> _parameters;
 	private RequestBody _requestBody;

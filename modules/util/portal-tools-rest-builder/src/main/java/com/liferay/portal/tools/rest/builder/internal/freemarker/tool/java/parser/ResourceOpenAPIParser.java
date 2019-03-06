@@ -107,6 +107,11 @@ public class ResourceOpenAPIParser {
 
 		Set<String> methodAnnotations = new TreeSet<>();
 
+		if (operation.getDescription() != null) {
+			methodAnnotations.add(
+				"@Operation(description=\"" + operation.getDescription() +
+					"\")");
+		}
 		methodAnnotations.add("@Path(\"" + path + "\")");
 
 		String httpMethod = OpenAPIParserUtil.getHTTPMethod(operation);

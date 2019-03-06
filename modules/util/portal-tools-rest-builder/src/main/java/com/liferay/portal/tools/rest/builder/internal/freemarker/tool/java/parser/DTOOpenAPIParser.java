@@ -67,7 +67,9 @@ public class DTOOpenAPIParser {
 				javaDataTypeMap, propertySchema, propertySchemaName);
 
 			javaMethodParameters.add(
-				new JavaMethodParameter(parameterName, parameterType));
+				new JavaMethodParameter(
+					parameterName, parameterType,
+					propertySchema.getDescription()));
 		}
 
 		return javaMethodParameters;

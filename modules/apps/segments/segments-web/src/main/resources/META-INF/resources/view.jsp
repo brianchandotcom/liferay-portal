@@ -57,7 +57,7 @@ SegmentsDisplayContext segmentsDisplayContext = (SegmentsDisplayContext)request.
 			<%
 			Map<String, Object> rowData = new HashMap<>();
 
-			rowData.put("actions", segmentsDisplayContext.getAvailableActionDropdownItems(segmentsEntry));
+			rowData.put("actions", segmentsDisplayContext.getAvailableActions(segmentsEntry));
 
 			row.setData(rowData);
 			%>

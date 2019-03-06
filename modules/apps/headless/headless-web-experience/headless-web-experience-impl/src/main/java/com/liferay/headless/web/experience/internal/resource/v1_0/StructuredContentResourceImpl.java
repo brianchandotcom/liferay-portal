@@ -44,8 +44,9 @@ import com.liferay.headless.web.experience.dto.v1_0.Categories;
 import com.liferay.headless.web.experience.dto.v1_0.ContentDocument;
 import com.liferay.headless.web.experience.dto.v1_0.ContentField;
 import com.liferay.headless.web.experience.dto.v1_0.Geo;
-import com.liferay.headless.web.experience.dto.v1_0.RenderedContentsURL;
+import com.liferay.headless.web.experience.dto.v1_0.RenderedContents;
 import com.liferay.headless.web.experience.dto.v1_0.StructuredContent;
+import com.liferay.headless.web.experience.dto.v1_0.StructuredContentLink;
 import com.liferay.headless.web.experience.dto.v1_0.Value;
 import com.liferay.headless.web.experience.internal.dto.v1_0.util.AggregateRatingUtil;
 import com.liferay.headless.web.experience.internal.dto.v1_0.util.ContentStructureUtil;
@@ -670,9 +671,9 @@ public class StructuredContentResourceImpl
 						journalArticle.getResourcePrimKey()),
 					AssetTag.NAME_ACCESSOR);
 				lastReviewed = journalArticle.getReviewDate();
-				renderedContentsURL = transformToArray(
+				renderedContents = transformToArray(
 					ddmStructure.getTemplates(),
-					ddmTemplate -> new RenderedContentsURL() {
+					ddmTemplate -> new RenderedContents() {
 						{
 							renderedContentURL = getJAXRSLink(
 								"getStructuredContentTemplate",
@@ -682,7 +683,7 @@ public class StructuredContentResourceImpl
 								contextAcceptLanguage.getPreferredLocale());
 						}
 					},
-					RenderedContentsURL.class);
+					RenderedContents.class);
 				title = journalArticle.getTitle(
 					contextAcceptLanguage.getPreferredLocale());
 			}
@@ -717,15 +718,9 @@ public class StructuredContentResourceImpl
 				{
 					document = new ContentDocument() {
 						{
-							creator = CreatorUtil.toCreator(
-								_portal,
-								_userLocalService.getUser(
-									fileEntry.getUserId()));
 							contentUrl = _dlurlHelper.getPreviewURL(
 								fileEntry, fileEntry.getFileVersion(), null, "",
 								false, false);
-							dateCreated = fileEntry.getCreateDate();
-							dateModified = fileEntry.getModifiedDate();
 							encodingFormat = fileEntry.getMimeType();
 							fileExtension = fileEntry.getExtension();
 							id = fileEntry.getFileEntryId();
@@ -774,7 +769,12 @@ public class StructuredContentResourceImpl
 
 			return new Value() {
 				{
-					structuredContent = _toStructuredContent(journalArticle);
+					structuredContentLink = new StructuredContentLink() {
+						{
+							id = journalArticle.getId();
+							title = journalArticle.getTitle();
+						}
+					};
 				}
 			};
 		}

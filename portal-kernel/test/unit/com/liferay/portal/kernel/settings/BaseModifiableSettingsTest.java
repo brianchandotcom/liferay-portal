@@ -29,13 +29,16 @@ public class BaseModifiableSettingsTest {
 		_baseModifiableSettings.setValue("key1", "value2");
 		_baseModifiableSettings.setValue("key2", "value2");
 
-		Assert.assertEquals(
-			2, _baseModifiableSettings.getModifiedKeys().size());
+		Collection<String> modifiedKeys =
+			_baseModifiableSettings.getModifiedKeys();
+
+		Assert.assertEquals(2, modifiedKeys.size());
 
 		_baseModifiableSettings.reset();
 
-		Assert.assertEquals(
-			0, _baseModifiableSettings.getModifiedKeys().size());
+		modifiedKeys = _baseModifiableSettings.getModifiedKeys();
+
+		Assert.assertEquals(0, modifiedKeys.size());
 	}
 
 	@Test

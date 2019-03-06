@@ -17,8 +17,10 @@ package com.liferay.portal.kernel.concurrent;
 import com.liferay.portal.kernel.concurrent.test.MarkerBlockingJob;
 import com.liferay.portal.kernel.concurrent.test.TestUtil;
 
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 import java.util.Queue;
 import java.util.Set;
 import java.util.concurrent.CountDownLatch;
@@ -797,8 +799,10 @@ public class ThreadPoolExecutorTest {
 
 			threadPoolExecutor.execute(markerBlockingJob);
 
-			Assert.assertTrue(
-				recordRejectedExecutionHandler.getRejectedList().isEmpty());
+			List<Runnable> rejectedList =
+				recordRejectedExecutionHandler.getRejectedList();
+
+			Assert.assertTrue(rejectedList.isEmpty());
 		}
 		finally {
 			TestUtil.closePool(threadPoolExecutor);
@@ -1123,8 +1127,11 @@ public class ThreadPoolExecutorTest {
 		}
 
 		Assert.assertEquals(1, threadPoolExecutor.getLargestPoolSize());
-		Assert.assertEquals(
-			10, recordUncaughtExceptionHandler.getUncaughtMap().size());
+
+		Map<Thread, Throwable> uncaughtMap =
+			recordUncaughtExceptionHandler.getUncaughtMap();
+
+		Assert.assertEquals(10, uncaughtMap.size());
 
 		for (MarkerBlockingJob markerBlockingJob : markerBlockingJobQueue) {
 			Assert.assertTrue(markerBlockingJob.isStarted());
@@ -1180,7 +1187,10 @@ public class ThreadPoolExecutorTest {
 
 			Assert.assertEquals(workerTasks.toString(), 1, workerTasks.size());
 
-			headWorkerTask = workerTasks.iterator().next();
+			Iterator<? extends AbstractQueuedSynchronizer> iterator =
+				workerTasks.iterator();
+
+			headWorkerTask = iterator.next();
 
 			headWorkerTask.acquire(1);
 		}

@@ -1509,8 +1509,9 @@ public class BaseIntrabandTest {
 			Assert.assertEquals("Result waiting timeout", te.getMessage());
 		}
 
-		Assert.assertEquals(
-			_DEFAULT_TIMEOUT, _mockIntraband.getDatagram().timeout);
+		Datagram datagram = _mockIntraband.getDatagram();
+
+		Assert.assertEquals(_DEFAULT_TIMEOUT, datagram.timeout);
 
 		// Covert timeout
 

@@ -33,6 +33,7 @@ import com.liferay.portal.kernel.util.SetUtil;
 
 import java.io.Serializable;
 
+import java.util.Arrays;
 import java.util.Map;
 import java.util.Set;
 import java.util.stream.Stream;
@@ -58,13 +59,12 @@ public class EditCategoriesBulkSelectionActionImpl
 			Map<String, Serializable> inputMap)
 		throws Exception {
 
-		long[] toAddCategoryIds = (long[])inputMap.getOrDefault(
-			"toAddCategoryIds", new long[0]);
+		long[] toAddCategoryIds = _getLongArray(inputMap, "toAddCategoryIds");
 
 		Set<Long> toAddCategoryIdsSet = SetUtil.fromArray(toAddCategoryIds);
 
 		Set<Long> toRemoveCategoryIdsSet = SetUtil.fromArray(
-			(long[])inputMap.getOrDefault("toRemoveCategoryIds", new long[0]));
+			_getLongArray(inputMap, "toRemoveCategoryIds"));
 
 		PermissionChecker permissionChecker =
 			PermissionCheckerFactoryUtil.create(user);
@@ -108,6 +108,11 @@ public class EditCategoriesBulkSelectionActionImpl
 					}
 				}
 			});
+	}
+
+	private long[] _getLongArray(Map<String, Serializable> map, String key) {
+		return ArrayUtil.toLongArray(
+			Arrays.asList((Long[])map.getOrDefault(key, new Long[0])));
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

@@ -20,7 +20,7 @@ import com.liferay.portal.kernel.dao.orm.SessionFactory;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.service.persistence.impl.NestedSetsTreeManager;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
@@ -101,7 +101,7 @@ public class PersistenceNestedSetsTreeManagerTest {
 			_nestedSetsTreeEntryPersistence, "_sessionFactory",
 			_sessionFactoryInvocationHandler.getTarget());
 
-		GroupLocalServiceUtil.deleteGroup(_group);
+		_groupLocalService.deleteGroup(_group);
 
 		_nestedSetsTreeEntryPersistence.setRebuildTreeEnabled(true);
 	}
@@ -692,6 +692,10 @@ public class PersistenceNestedSetsTreeManagerTest {
 	}
 
 	private Group _group;
+
+	@Inject
+	private static GroupLocalService _groupLocalService;
+
 	private NestedSetsTreeEntry[] _nestedSetsTreeEntries;
 
 	@Inject

@@ -187,14 +187,23 @@ public class ProxyUtil {
 
 		@Override
 		public boolean equals(Object obj) {
+			if (obj == this) {
+				return true;
+			}
+
 			LookupKey lookupKey = (LookupKey)obj;
 
-			if (_interfaces.length != lookupKey._interfaces.length) {
+			Reference<?>[] references = lookupKey._references;
+
+			if (_references.length != references.length) {
 				return false;
 			}
 
-			for (int i = 0; i < _interfaces.length; i++) {
-				if (_interfaces[i] != lookupKey._interfaces[i]) {
+			for (int i = 0; i < _references.length; i++) {
+				Reference<?> reference = _references[i];
+				Reference<?> otherReference = references[i];
+
+				if (reference.get() != otherReference.get()) {
 					return false;
 				}
 			}
@@ -208,19 +217,23 @@ public class ProxyUtil {
 		}
 
 		private LookupKey(Class<?>[] interfaces) {
-			_interfaces = interfaces;
-
 			int hashCode = 0;
 
-			for (Class<?> clazz : interfaces) {
+			_references = new Reference<?>[interfaces.length];
+
+			for (int i = 0; i < interfaces.length; i++) {
+				Class<?> clazz = interfaces[i];
+
 				hashCode = HashUtil.hash(hashCode, clazz.getName());
+
+				_references[i] = new WeakReference<>(clazz);
 			}
 
 			_hashCode = hashCode;
 		}
 
 		private final int _hashCode;
-		private final Class<?>[] _interfaces;
+		private final Reference<?>[] _references;
 
 	}
 

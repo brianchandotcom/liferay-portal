@@ -19,6 +19,7 @@ import com.liferay.expando.kernel.util.ExpandoConverterUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.bean.BeanPropertiesUtil;
+import com.liferay.portal.kernel.exception.PwdEncryptorException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -46,6 +47,7 @@ import com.liferay.portal.security.ldap.exportimport.Modifications;
 import com.liferay.portal.security.ldap.exportimport.PortalToLDAPConverter;
 
 import java.io.Serializable;
+import java.io.UnsupportedEncodingException;
 
 import java.util.HashMap;
 import java.util.List;
@@ -448,8 +450,8 @@ public class DefaultPortalToLDAPConverter implements PortalToLDAPConverter {
 
 				password = sb.toString();
 			}
-			catch (Exception e) {
-				throw new SystemException(e);
+			catch (PwdEncryptorException pee) {
+				throw new SystemException(pee);
 			}
 		}
 
@@ -463,9 +465,14 @@ public class DefaultPortalToLDAPConverter implements PortalToLDAPConverter {
 				StringPool.QUOTE
 			);
 
-			byte[] unicodePassword = quotedPassword.getBytes("UTF-16LE");
+			try {
+				byte[] unicodePassword = quotedPassword.getBytes("UTF-16LE");
 
-			return new String(unicodePassword);
+				return new String(unicodePassword);
+			}
+			catch (UnsupportedEncodingException uee) {
+				throw new SystemException(uee);
+			}
 		}
 
 		return password;

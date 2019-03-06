@@ -63,9 +63,11 @@ public class IndicesExistsIndexRequestExecutorTest {
 		IndicesExistsRequest indicesExistsRequest =
 			indicesExistsRequestBuilder.request();
 
-		Assert.assertEquals(2, indicesExistsRequest.indices().length);
-		Assert.assertEquals(_INDEX_NAME_1, indicesExistsRequest.indices()[0]);
-		Assert.assertEquals(_INDEX_NAME_2, indicesExistsRequest.indices()[1]);
+		String[] indices = indicesExistsRequest.indices();
+
+		Assert.assertEquals(2, indices.length);
+		Assert.assertEquals(_INDEX_NAME_1, indices[0]);
+		Assert.assertEquals(_INDEX_NAME_2, indices[1]);
 	}
 
 	private static final String _INDEX_NAME_1 = "test_request_index1";

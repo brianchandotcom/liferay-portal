@@ -242,9 +242,10 @@ public class ElasticsearchSearchEngineAdapterIndexRequestTest {
 		GetIndexIndexResponse getIndexIndexResponse =
 			_searchEngineAdapter.execute(getIndexIndexRequest);
 
-		Assert.assertEquals(1, getIndexIndexResponse.getIndexNames().length);
-		Assert.assertEquals(
-			_INDEX_NAME, getIndexIndexResponse.getIndexNames()[0]);
+		String[] indexNames = getIndexIndexResponse.getIndexNames();
+
+		Assert.assertEquals(1, indexNames.length);
+		Assert.assertEquals(_INDEX_NAME, indexNames[0]);
 	}
 
 	@Test

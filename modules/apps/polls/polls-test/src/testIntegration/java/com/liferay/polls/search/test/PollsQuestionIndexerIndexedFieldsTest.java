@@ -36,6 +36,7 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerTestRule;
 import com.liferay.users.admin.test.util.search.UserSearchFixture;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
@@ -172,7 +173,9 @@ public class PollsQuestionIndexerIndexedFieldsTest {
 			sb.append(StringPool.SPACE);
 		}
 
-		return sb.toString().trim();
+		String s = sb.toString();
+
+		return s.trim();
 	}
 
 	private String _getTitleField(PollsQuestion pollsQuestion) {
@@ -185,20 +188,23 @@ public class PollsQuestionIndexerIndexedFieldsTest {
 			sb.append(StringPool.SPACE);
 		}
 
-		return sb.toString().trim();
+		String s = sb.toString();
+
+		return s.trim();
 	}
 
 	private void _populateDates(
 		PollsQuestion pollsQuestion, Map<String, String> map) {
 
-		indexedFieldsFixture.populateDate(
-			Field.CREATE_DATE, pollsQuestion.getCreateDate(), map);
+		Date createDate = pollsQuestion.getCreateDate();
+
+		indexedFieldsFixture.populateDate(Field.CREATE_DATE, createDate, map);
+
 		indexedFieldsFixture.populateDate(
 			Field.MODIFIED_DATE, pollsQuestion.getModifiedDate(), map);
 
 		map.put(
-			"createDate_Number_sortable",
-			String.valueOf(pollsQuestion.getCreateDate().getTime()));
+			"createDate_Number_sortable", String.valueOf(createDate.getTime()));
 	}
 
 	private void _populateRoles(

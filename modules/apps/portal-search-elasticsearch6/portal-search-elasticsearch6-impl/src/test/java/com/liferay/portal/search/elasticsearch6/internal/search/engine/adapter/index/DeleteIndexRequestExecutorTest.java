@@ -75,12 +75,11 @@ public class DeleteIndexRequestExecutorTest {
 			elasticsearchDeleteIndexRequest =
 				deleteIndexRequestBuilder.request();
 
-		Assert.assertEquals(
-			2, elasticsearchDeleteIndexRequest.indices().length);
-		Assert.assertEquals(
-			_INDEX_NAME_1, elasticsearchDeleteIndexRequest.indices()[0]);
-		Assert.assertEquals(
-			_INDEX_NAME_2, elasticsearchDeleteIndexRequest.indices()[1]);
+		String[] indices = elasticsearchDeleteIndexRequest.indices();
+
+		Assert.assertEquals(2, indices.length);
+		Assert.assertEquals(_INDEX_NAME_1, indices[0]);
+		Assert.assertEquals(_INDEX_NAME_2, indices[1]);
 
 		org.elasticsearch.action.support.IndicesOptions
 			elasticsearchIndicesOptions =

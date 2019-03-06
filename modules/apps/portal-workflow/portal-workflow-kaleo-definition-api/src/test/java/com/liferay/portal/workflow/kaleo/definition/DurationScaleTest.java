@@ -46,7 +46,9 @@ public class DurationScaleTest {
 
 	@Test
 	public void testScaleNum() throws Exception {
-		Assert.assertEquals(8, DurationScale.values().length);
+		DurationScale[] values = DurationScale.values();
+
+		Assert.assertEquals(8, values.length);
 	}
 
 }

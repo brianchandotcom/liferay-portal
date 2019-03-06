@@ -34,6 +34,7 @@ import javax.ws.rs.ClientErrorException;
 import javax.ws.rs.client.Invocation;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.Application;
+import javax.ws.rs.core.Response;
 
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.container.test.api.RunAsClient;
@@ -100,7 +101,9 @@ public class TOCTOUTest extends BaseClientTestCase {
 					"end-user TOCTOU protection");
 		}
 		catch (ClientErrorException cee) {
-			Assert.assertEquals(403, cee.getResponse().getStatus());
+			Response response = cee.getResponse();
+
+			Assert.assertEquals(403, response.getStatus());
 		}
 
 		// Try again with a fresh narrowed down token for "everything.read".
@@ -121,7 +124,9 @@ public class TOCTOUTest extends BaseClientTestCase {
 					"TOCTOU protection");
 		}
 		catch (ClientErrorException cee) {
-			Assert.assertEquals(403, cee.getResponse().getStatus());
+			Response response = cee.getResponse();
+
+			Assert.assertEquals(403, response.getStatus());
 		}
 
 		// Resave the OAuth2 app scope assignment
@@ -138,7 +143,9 @@ public class TOCTOUTest extends BaseClientTestCase {
 					"TOCTOU protection");
 		}
 		catch (ClientErrorException cee) {
-			Assert.assertEquals(403, cee.getResponse().getStatus());
+			Response response = cee.getResponse();
+
+			Assert.assertEquals(403, response.getStatus());
 		}
 
 		// Try again with a fresh token (implicitly for "everything.read"). It

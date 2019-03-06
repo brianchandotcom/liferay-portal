@@ -83,8 +83,10 @@ public class UpdateIndexSettingsIndexRequestExecutorTest {
 		UpdateSettingsRequest updateSettingsRequest =
 			updateSettingsRequestBuilder.request();
 
-		Assert.assertEquals(1, updateSettingsRequest.indices().length);
-		Assert.assertEquals(_INDEX_NAME, updateSettingsRequest.indices()[0]);
+		String[] indices = updateSettingsRequest.indices();
+
+		Assert.assertEquals(1, indices.length);
+		Assert.assertEquals(_INDEX_NAME, indices[0]);
 	}
 
 	private static final String _INDEX_NAME = "test_request_index";

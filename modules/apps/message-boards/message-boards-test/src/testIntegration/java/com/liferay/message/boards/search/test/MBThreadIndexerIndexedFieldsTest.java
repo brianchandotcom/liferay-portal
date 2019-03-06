@@ -38,6 +38,7 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerTestRule;
 import com.liferay.users.admin.test.util.search.UserSearchFixture;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
@@ -154,9 +155,11 @@ public class MBThreadIndexerIndexedFieldsTest {
 		map.put(Field.USER_NAME, StringUtil.lowerCase(mbThread.getUserName()));
 
 		map.put("discussion", "false");
-		map.put(
-			"lastPostDate",
-			String.valueOf(mbThread.getLastPostDate().getTime()));
+
+		Date lastPostDate = mbThread.getLastPostDate();
+
+		map.put("lastPostDate", String.valueOf(lastPostDate.getTime()));
+
 		map.put(
 			"participantUserIds",
 			String.valueOf(_getValues(mbThread.getParticipantUserIds())));

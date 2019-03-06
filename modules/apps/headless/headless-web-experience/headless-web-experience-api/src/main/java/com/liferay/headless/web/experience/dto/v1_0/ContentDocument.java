@@ -23,8 +23,6 @@ import com.liferay.petra.string.StringBundler;
 import graphql.annotations.annotationTypes.GraphQLField;
 import graphql.annotations.annotationTypes.GraphQLName;
 
-import java.util.Date;
-
 import javax.annotation.Generated;
 
 import javax.xml.bind.annotation.XmlRootElement;
@@ -41,18 +39,6 @@ public class ContentDocument {
 
 	public String getContentUrl() {
 		return contentUrl;
-	}
-
-	public Creator getCreator() {
-		return creator;
-	}
-
-	public Date getDateCreated() {
-		return dateCreated;
-	}
-
-	public Date getDateModified() {
-		return dateModified;
 	}
 
 	public String getEncodingFormat() {
@@ -85,54 +71,6 @@ public class ContentDocument {
 
 		try {
 			contentUrl = contentUrlUnsafeSupplier.get();
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	public void setCreator(Creator creator) {
-		this.creator = creator;
-	}
-
-	@JsonIgnore
-	public void setCreator(
-		UnsafeSupplier<Creator, Exception> creatorUnsafeSupplier) {
-
-		try {
-			creator = creatorUnsafeSupplier.get();
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	public void setDateCreated(Date dateCreated) {
-		this.dateCreated = dateCreated;
-	}
-
-	@JsonIgnore
-	public void setDateCreated(
-		UnsafeSupplier<Date, Exception> dateCreatedUnsafeSupplier) {
-
-		try {
-			dateCreated = dateCreatedUnsafeSupplier.get();
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	public void setDateModified(Date dateModified) {
-		this.dateModified = dateModified;
-	}
-
-	@JsonIgnore
-	public void setDateModified(
-		UnsafeSupplier<Date, Exception> dateModifiedUnsafeSupplier) {
-
-		try {
-			dateModified = dateModifiedUnsafeSupplier.get();
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
@@ -218,7 +156,7 @@ public class ContentDocument {
 	}
 
 	public String toString() {
-		StringBundler sb = new StringBundler(40);
+		StringBundler sb = new StringBundler(27);
 
 		sb.append("{");
 
@@ -226,25 +164,6 @@ public class ContentDocument {
 
 		sb.append("\"");
 		sb.append(contentUrl);
-		sb.append("\"");
-		sb.append(", ");
-
-		sb.append("\"creator\": ");
-
-		sb.append(creator);
-		sb.append(", ");
-
-		sb.append("\"dateCreated\": ");
-
-		sb.append("\"");
-		sb.append(dateCreated);
-		sb.append("\"");
-		sb.append(", ");
-
-		sb.append("\"dateModified\": ");
-
-		sb.append("\"");
-		sb.append(dateModified);
 		sb.append("\"");
 		sb.append(", ");
 
@@ -286,18 +205,6 @@ public class ContentDocument {
 	@GraphQLField
 	@JsonProperty
 	protected String contentUrl;
-
-	@GraphQLField
-	@JsonProperty
-	protected Creator creator;
-
-	@GraphQLField
-	@JsonProperty
-	protected Date dateCreated;
-
-	@GraphQLField
-	@JsonProperty
-	protected Date dateModified;
 
 	@GraphQLField
 	@JsonProperty

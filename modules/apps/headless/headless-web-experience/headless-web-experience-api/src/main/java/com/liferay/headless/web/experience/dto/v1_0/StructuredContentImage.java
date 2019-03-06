@@ -55,6 +55,10 @@ public class StructuredContentImage {
 		return dateModified;
 	}
 
+	public String getDescription() {
+		return description;
+	}
+
 	public String getEncodingFormat() {
 		return encodingFormat;
 	}
@@ -137,6 +141,22 @@ public class StructuredContentImage {
 
 		try {
 			dateModified = dateModifiedUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	@JsonIgnore
+	public void setDescription(
+		UnsafeSupplier<String, Exception> descriptionUnsafeSupplier) {
+
+		try {
+			description = descriptionUnsafeSupplier.get();
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
@@ -238,7 +258,7 @@ public class StructuredContentImage {
 	}
 
 	public String toString() {
-		StringBundler sb = new StringBundler(43);
+		StringBundler sb = new StringBundler(48);
 
 		sb.append("{");
 
@@ -265,6 +285,13 @@ public class StructuredContentImage {
 
 		sb.append("\"");
 		sb.append(dateModified);
+		sb.append("\"");
+		sb.append(", ");
+
+		sb.append("\"description\": ");
+
+		sb.append("\"");
+		sb.append(description);
 		sb.append("\"");
 		sb.append(", ");
 
@@ -323,6 +350,10 @@ public class StructuredContentImage {
 	@GraphQLField
 	@JsonProperty
 	protected Date dateModified;
+
+	@GraphQLField
+	@JsonProperty
+	protected String description;
 
 	@GraphQLField
 	@JsonProperty

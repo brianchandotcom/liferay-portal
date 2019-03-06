@@ -921,7 +921,7 @@ public abstract class BaseStructuredContentResourceTestCase {
 			return sb.toString();
 		}
 
-		if (entityFieldName.equals("renderedContentsURL")) {
+		if (entityFieldName.equals("renderedContents")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
 		}

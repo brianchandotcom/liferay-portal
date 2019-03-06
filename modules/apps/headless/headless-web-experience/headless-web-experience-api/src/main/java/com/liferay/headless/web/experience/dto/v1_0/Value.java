@@ -53,16 +53,20 @@ public class Value {
 		return geo;
 	}
 
+	public StructuredContentImage getImage() {
+		return image;
+	}
+
 	public String getLink() {
 		return link;
 	}
 
-	public StructuredContent getStructuredContent() {
-		return structuredContent;
-	}
-
 	public Long getStructuredContentId() {
 		return structuredContentId;
+	}
+
+	public StructuredContentLink getStructuredContentLink() {
+		return structuredContentLink;
 	}
 
 	public void setData(String data) {
@@ -125,6 +129,22 @@ public class Value {
 		}
 	}
 
+	public void setImage(StructuredContentImage image) {
+		this.image = image;
+	}
+
+	@JsonIgnore
+	public void setImage(
+		UnsafeSupplier<StructuredContentImage, Exception> imageUnsafeSupplier) {
+
+		try {
+			image = imageUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
 	public void setLink(String link) {
 		this.link = link;
 	}
@@ -133,23 +153,6 @@ public class Value {
 	public void setLink(UnsafeSupplier<String, Exception> linkUnsafeSupplier) {
 		try {
 			link = linkUnsafeSupplier.get();
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	public void setStructuredContent(StructuredContent structuredContent) {
-		this.structuredContent = structuredContent;
-	}
-
-	@JsonIgnore
-	public void setStructuredContent(
-		UnsafeSupplier<StructuredContent, Exception>
-			structuredContentUnsafeSupplier) {
-
-		try {
-			structuredContent = structuredContentUnsafeSupplier.get();
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
@@ -172,8 +175,27 @@ public class Value {
 		}
 	}
 
+	public void setStructuredContentLink(
+		StructuredContentLink structuredContentLink) {
+
+		this.structuredContentLink = structuredContentLink;
+	}
+
+	@JsonIgnore
+	public void setStructuredContentLink(
+		UnsafeSupplier<StructuredContentLink, Exception>
+			structuredContentLinkUnsafeSupplier) {
+
+		try {
+			structuredContentLink = structuredContentLinkUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
 	public String toString() {
-		StringBundler sb = new StringBundler(26);
+		StringBundler sb = new StringBundler(29);
 
 		sb.append("{");
 
@@ -182,6 +204,11 @@ public class Value {
 		sb.append("\"");
 		sb.append(data);
 		sb.append("\"");
+		sb.append(", ");
+
+		sb.append("\"image\": ");
+
+		sb.append(image);
 		sb.append(", ");
 
 		sb.append("\"document\": ");
@@ -206,9 +233,9 @@ public class Value {
 		sb.append("\"");
 		sb.append(", ");
 
-		sb.append("\"structuredContent\": ");
+		sb.append("\"structuredContentLink\": ");
 
-		sb.append(structuredContent);
+		sb.append(structuredContentLink);
 		sb.append(", ");
 
 		sb.append("\"structuredContentId\": ");
@@ -238,14 +265,18 @@ public class Value {
 
 	@GraphQLField
 	@JsonProperty
+	protected StructuredContentImage image;
+
+	@GraphQLField
+	@JsonProperty
 	protected String link;
 
 	@GraphQLField
 	@JsonProperty
-	protected StructuredContent structuredContent;
+	protected Long structuredContentId;
 
 	@GraphQLField
 	@JsonProperty
-	protected Long structuredContentId;
+	protected StructuredContentLink structuredContentLink;
 
 }

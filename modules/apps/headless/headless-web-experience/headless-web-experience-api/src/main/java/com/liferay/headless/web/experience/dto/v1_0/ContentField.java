@@ -41,10 +41,6 @@ public class ContentField {
 		return dataType;
 	}
 
-	public Long getId() {
-		return id;
-	}
-
 	public String getInputControl() {
 		return inputControl;
 	}
@@ -61,6 +57,14 @@ public class ContentField {
 		return nestedFields;
 	}
 
+	public Boolean getRepeatable() {
+		return repeatable;
+	}
+
+	public String getRepeatableId() {
+		return repeatableId;
+	}
+
 	public Value getValue() {
 		return value;
 	}
@@ -75,20 +79,6 @@ public class ContentField {
 
 		try {
 			dataType = dataTypeUnsafeSupplier.get();
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
-
-	@JsonIgnore
-	public void setId(UnsafeSupplier<Long, Exception> idUnsafeSupplier) {
-		try {
-			id = idUnsafeSupplier.get();
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
@@ -157,6 +147,38 @@ public class ContentField {
 		}
 	}
 
+	public void setRepeatable(Boolean repeatable) {
+		this.repeatable = repeatable;
+	}
+
+	@JsonIgnore
+	public void setRepeatable(
+		UnsafeSupplier<Boolean, Exception> repeatableUnsafeSupplier) {
+
+		try {
+			repeatable = repeatableUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	public void setRepeatableId(String repeatableId) {
+		this.repeatableId = repeatableId;
+	}
+
+	@JsonIgnore
+	public void setRepeatableId(
+		UnsafeSupplier<String, Exception> repeatableIdUnsafeSupplier) {
+
+		try {
+			repeatableId = repeatableIdUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
 	@JsonIgnore
 	public void setValue(UnsafeSupplier<Value, Exception> valueUnsafeSupplier) {
 		try {
@@ -183,15 +205,22 @@ public class ContentField {
 		sb.append("\"");
 		sb.append(", ");
 
-		sb.append("\"id\": ");
-
-		sb.append(id);
-		sb.append(", ");
-
 		sb.append("\"inputControl\": ");
 
 		sb.append("\"");
 		sb.append(inputControl);
+		sb.append("\"");
+		sb.append(", ");
+
+		sb.append("\"repeatable\": ");
+
+		sb.append(repeatable);
+		sb.append(", ");
+
+		sb.append("\"repeatableId\": ");
+
+		sb.append("\"");
+		sb.append(repeatableId);
 		sb.append("\"");
 		sb.append(", ");
 
@@ -245,10 +274,6 @@ public class ContentField {
 
 	@GraphQLField
 	@JsonProperty
-	protected Long id;
-
-	@GraphQLField
-	@JsonProperty
 	protected String inputControl;
 
 	@GraphQLField
@@ -262,6 +287,14 @@ public class ContentField {
 	@GraphQLField
 	@JsonProperty
 	protected ContentField[] nestedFields;
+
+	@GraphQLField
+	@JsonProperty
+	protected Boolean repeatable;
+
+	@GraphQLField
+	@JsonProperty
+	protected String repeatableId;
 
 	@GraphQLField
 	@JsonProperty

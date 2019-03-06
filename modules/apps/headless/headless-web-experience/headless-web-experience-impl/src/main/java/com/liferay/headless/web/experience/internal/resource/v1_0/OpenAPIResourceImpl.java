@@ -75,8 +75,6 @@ public class OpenAPIResourceImpl {
 			add(ContentStructureResourceImpl.class);
 
 			add(StructuredContentResourceImpl.class);
-
-			add(StructuredContentImageResourceImpl.class);
 		}
 	};
 

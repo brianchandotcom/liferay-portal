@@ -28,6 +28,7 @@ import com.liferay.portal.vulcan.yaml.openapi.OpenAPIYAML;
 import com.liferay.portal.vulcan.yaml.openapi.Operation;
 import com.liferay.portal.vulcan.yaml.openapi.Schema;
 
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -126,9 +127,9 @@ public class FreeMarkerTool {
 
 				Set<String> keys = propertySchemas.keySet();
 
-				if (StringUtil.equalsIgnoreCase(
-						schemaName, keys.toArray(new String[0])[0])) {
+				Iterator<String> iterator = keys.iterator();
 
+				if (StringUtil.equalsIgnoreCase(schemaName, iterator.next())) {
 					return entry.getKey();
 				}
 			}

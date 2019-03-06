@@ -362,9 +362,11 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		SourceCheck sourceCheck =
 			sourceChecksResult.getMostRecentProcessedSourceCheck();
 
-		sourceChecks.remove(sourceCheck);
+		if (sourceCheck != null) {
+			sourceChecks.remove(sourceCheck);
 
-		sourceChecks.add(0, sourceCheck);
+			sourceChecks.add(0, sourceCheck);
+		}
 
 		return format(
 			file, fileName, absolutePath, newContent, originalContent,

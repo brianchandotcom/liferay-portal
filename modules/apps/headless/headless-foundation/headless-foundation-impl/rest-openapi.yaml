@@ -613,6 +613,33 @@ paths:
                                 $ref: "#/components/schemas/Keyword"
                     description: ""
             tags: ["Keyword"]
+    "/content-spaces/{content-space-id}/segments":
+        get:
+            parameters:
+                - in: path
+                  name: content-space-id
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+                - in: query
+                  name: page
+                  schema:
+                      type: integer
+                - in: query
+                  name: pageSize
+                  schema:
+                      type: integer
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/Segment"
+                                type: array
+                    description: ""
+            tags: ["Segment"]
     "/content-spaces/{content-space-id}/vocabularies":
         get:
             parameters:

@@ -20,10 +20,10 @@
 	<clay:link
 		buttonStyle="outline-secondary"
 		elementClasses="btn-sm"
-		href="https://github.com/liferay/generator-liferay-fragments"
+		href="https://github.com/liferay/generator-liferay-fragments#liferay-fragments-cli"
 		icon="download"
-		label='<%= LanguageUtil.get(resourceBundle, "fragments-generator") %>'
+		label='<%= LanguageUtil.get(resourceBundle, "fragments-cli") %>'
 		target="_blank"
-		title='<%= LanguageUtil.get(resourceBundle, "fragments-generator") %>'
+		title='<%= LanguageUtil.get(resourceBundle, "fragments-cli") %>'
 	/>
 </label>

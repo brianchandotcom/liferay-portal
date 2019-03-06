@@ -112,6 +112,34 @@ public class ResourceOpenAPIParser {
 				"@Operation(description=\"" + operation.getDescription() +
 					"\")");
 		}
+
+		List<JavaMethodParameter> javaMethodParameters =
+			javaMethodSignature.getJavaMethodParameters();
+
+		StringBuilder sb = new StringBuilder("");
+
+		for (JavaMethodParameter javaMethodParameter : javaMethodParameters) {
+			String parameterName = javaMethodParameter.getParameterName();
+
+			if (parameterName.equals("filter") ||
+				parameterName.equals("sorts")) {
+
+				sb.append(
+					"@Parameter(in = ParameterIn.QUERY, name = \"" +
+						parameterName + "\"),");
+			}
+			else if (parameterName.equals("pagination")) {
+				sb.append(
+					"@Parameter(in = ParameterIn.QUERY, name = \"page\"),");
+				sb.append(
+					"@Parameter(in = ParameterIn.QUERY, name = \"pageSize\"),");
+			}
+		}
+
+		if (sb.length() > 0) {
+			methodAnnotations.add("@Parameters(value={" + sb + "})");
+		}
+
 		methodAnnotations.add("@Path(\"" + path + "\")");
 
 		String httpMethod = OpenAPIParserUtil.getHTTPMethod(operation);

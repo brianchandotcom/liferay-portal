@@ -35,6 +35,6 @@ public class GoogleDocsConstants {
 
 	public static final String DL_FILE_ENTRY_TYPE_KEY = "GOOGLE_DOCS";
 
-	public static final String DL_FILE_ENTRY_TYPE_NAME = "Google Docs Shortcut";
+	public static final String DL_FILE_ENTRY_TYPE_NAME = "Google Drive Shortcut";
 
 }

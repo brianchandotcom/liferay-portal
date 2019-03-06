@@ -94,6 +94,16 @@ class FloatingToolbarMappingPanel extends Component {
 	_handleBrowseAllAssetsButtonClick(event) {}
 
 	/**
+	 * Handle field option change
+	 * @param {Event} event
+	 * @private
+	 * @review
+	 */
+	_handleFieldOptionChange(event) {
+		this._mappingField = event.delegateTarget.value;
+	}
+
+	/**
 	 * Handle source option change
 	 * @param {Event} event
 	 * @private
@@ -151,6 +161,18 @@ FloatingToolbarMappingPanel.STATE = {
 
 	/**
 	 * @default undefined
+	 * @memberOf FloatingToolbarMappingPanel
+	 * @private
+	 * @review
+	 * @type {object[]}
+	 */
+	_fields: Config
+		.array()
+		.internal()
+		.value([]),
+
+	/**
+	 * @default undefined
 	 * @memberof FloatingToolbarMappingPanel
 	 * @review
 	 * @type {!string}
@@ -168,7 +190,15 @@ FloatingToolbarMappingPanel.STATE = {
 	_mappedAssetEntries: Config
 		.array()
 		.internal()
-		.value(),
+
+	/**
+	 * @default undefined
+	 * @memberof FloatingToolbarMappingPanel
+	 * @review
+	 * @type {!string}
+	 */
+	_mappedFieldId: Config
+		.string(),
 
 	/**
 	 * @default undefined

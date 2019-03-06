@@ -5,11 +5,14 @@
  */
 {template .render}
 	{@param? _encodedMappedAssetEntries: ?}
+	{@param? _fields: ?}
 	{@param? _handleAssetOptionChange: any}
 	{@param? _handleBrowseAllAssetsButtonClick: any}
+	{@param? _handleFieldOptionChange: any}
 	{@param? _handleSourceOptionChange: any}
 	{@param? _handleUnmapButtonClick: any}
 	{@param? _mappedAssetEntryEncodedId: ?}
+	{@param? _mappedFieldId: ?}
 	{@param? _mappingSources: ?}
 	{@param? _selectedSourceId: string}
 	{@param? _specificContentKey: string}
@@ -42,6 +45,9 @@
 		
 		<div class="form-group">
 			{call .fieldSelect}
+				{param fields: $_fields /}
+				{param handleFieldOptionChange: $_handleFieldOptionChange /}
+				{param mappedFieldId: $_mappedFieldId /}
 			{/call}
 		</div>
 
@@ -99,14 +105,27 @@
  * Field select
  */
 {template .fieldSelect}
+	{@param? fields: ?}
+	{@param? handleFieldOptionChange: any}
+	{@param? mappedFieldId: ?}
+
 	<label for="floatingToolbarMappingPanelFieldSelect">
 		{msg desc=""}field{/msg}
 	</label>
 
 	<select
 		class="form-control form-control-sm"
+		data-onchange="{$handleFieldOptionChange}"
 		id="floatingToolbarMappingPanelFieldSelect"
 	>
+		{foreach $field in $fields}
+			{call .selectOption}
+				{param optionId: $field.key /}
+				{param optionLabel: $field.label /}
+				{param key: $field.key /}
+				{param selectedId: $mappedFieldId /}
+			{/call}
+		{/foreach}
 	</select>
 {/template}
 

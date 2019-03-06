@@ -24,24 +24,22 @@ function render(content, value, editableValues) {
 	wrapper.innerHTML = content;
 
 	const link = wrapper.querySelector('a');
+	const config = (editableValues && editableValues.config) || {};
 
 	if (link) {
 		link.innerHTML = value;
 
-		if (editableValues && editableValues.config) {
-			if (editableValues.config.href) {
-				link.setAttribute('href', editableValues.config.href);
-			}
+		if (config.href) {
+			link.href = config.href;
+		}
 
-			if (editableValues.config.target) {
-				link.setAttribute('target', editableValues.config.target);
-			}
+		if (config.target) {
+			link.target = config.target;
+		}
 
-			if (editableValues.config.buttonType) {
-				let cssClass = link.getAttribute('class') || '';
-
-				link.setAttribute('class', cssClass + ' btn btn-' + editableValues.config.buttonType);
-			}
+		if (config.buttonType) {
+			link.classList.add('btn');
+			link.classList.add(`btn-${config.buttonType}`);
 		}
 	}
 

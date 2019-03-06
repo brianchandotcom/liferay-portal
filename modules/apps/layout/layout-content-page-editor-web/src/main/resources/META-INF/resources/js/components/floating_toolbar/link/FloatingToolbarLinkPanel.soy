@@ -4,7 +4,15 @@
  * FloatingToolbarLinkPanel
  */
 {template .render}
-	{@param item: ?}
+	{@param item: [
+		editableValues: [
+			config: [
+				buttonType: string,
+				href: string,
+				target: string
+			]
+		]
+	]}
 	{@param? _buttonTypes: ?}
 	{@param? _handleButtonTypeOptionChange: any}
 	{@param? _handleInputHrefKeyUp: any}
@@ -63,8 +71,8 @@
 					>
 						{foreach $buttonType in $_buttonTypes}
 							{call .buttonTypeOption}
-								{param item: $item /}
 								{param buttonType: $buttonType /}
+								{param item: $item /}
 							{/call}
 						{/foreach}
 					</select>
@@ -78,13 +86,22 @@
  * Link button option
  */
 {template .buttonTypeOption}
-	{@param item: ?}
-	{@param buttonType: ?}
+	{@param item: [
+		editableValues: [
+			config: [
+				buttonType: string
+			]
+		]
+	]}
+	{@param buttonType: [
+		buttonTypeId: string,
+		label: string
+	]}
 
 	{let $optionAttributes kind="attributes"}
 		value="{$buttonType.buttonTypeId}"
 
-		{if $item.editableValues.config and $item.editableValues.config.btnType and $item.editableValues.config.buttonType == $buttonType.buttonTypeId}
+		{if $item.editableValues.config and $item.editableValues.config.buttonType and $item.editableValues.config.buttonType == $buttonType.buttonTypeId}
 			selected
 		{/if}
 	{/let}
@@ -98,7 +115,13 @@
  * Link target option
  */
 {template .targetTypeOption}
-	{@param item: ?}
+	{@param item: [
+		editableValues: [
+			config: [
+				target: string
+			]
+		]
+	]}
 	{@param targetType: [
 		targetTypeId: string,
 		label: string

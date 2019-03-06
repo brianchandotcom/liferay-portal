@@ -414,7 +414,7 @@ public class ResourceOpenAPIParser {
 					methodNameSegments.add(pathName);
 				}
 			}
-			else if ((i == pathSegments.length - 1) &&
+			else if ((i == (pathSegments.length - 1)) &&
 					 StringUtil.startsWith(
 						 returnType,
 						 "com.liferay.portal.vulcan.pagination.Page<")) {

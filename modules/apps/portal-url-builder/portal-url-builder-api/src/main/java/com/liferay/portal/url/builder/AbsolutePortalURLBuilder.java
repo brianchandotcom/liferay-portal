@@ -86,6 +86,18 @@ public interface AbsolutePortalURLBuilder {
 	public ResourceAbsolutePortalURLBuilder forResource(String relativeURL);
 
 	/**
+	 * Returns URLs for OSGi whiteboard servlet instances. The servlet class
+	 * must be annotated with the OSGi @Component annotation for this method to
+	 * work.
+	 *
+	 * @param servletPattern the value of the osgi.http.whiteboard.servlet.pattern property
+	 * @return a builder that returns servlet URLs
+	 * @review
+	 */
+	public WhiteboardServletAbsolutePortalURLBuilder forWhiteboardServlet(
+		String servletPattern);
+
+	/**
 	 * Returns absolute URLs without the CDN part.
 	 *
 	 * @return the same builder

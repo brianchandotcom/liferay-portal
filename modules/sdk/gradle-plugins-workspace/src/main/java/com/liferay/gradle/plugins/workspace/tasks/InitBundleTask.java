@@ -61,14 +61,14 @@ public class InitBundleTask extends JavaExec {
 		return GradleUtil.toFile(getProject(), _configsDir);
 	}
 
-	@InputFile
-	public File getFile() {
-		return GradleUtil.toFile(getProject(), _file);
-	}
-
 	@OutputDirectory
 	public File getDestinationDir() {
 		return GradleUtil.toFile(getProject(), _destinationDir);
+	}
+
+	@InputFile
+	public File getFile() {
+		return GradleUtil.toFile(getProject(), _file);
 	}
 
 	@Input
@@ -91,12 +91,12 @@ public class InitBundleTask extends JavaExec {
 		_configsDir = configsDir;
 	}
 
-	public void setFile(Object file) {
-		_file = file;
-	}
-
 	public void setDestinationDir(Object destinationDir) {
 		_destinationDir = destinationDir;
+	}
+
+	public void setFile(Object file) {
+		_file = file;
 	}
 
 	public void setProvidedModules(FileCollection providedModules) {

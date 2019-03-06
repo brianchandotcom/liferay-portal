@@ -56,6 +56,8 @@ public class AnonymizeUADEntitiesMVCActionCommand
 			actionRequest,
 			entity -> uadAnonymizer.autoAnonymize(
 				entity, selectedUser.getUserId(), anonymousUser));
+
+		doReviewableRedirect(actionRequest, actionResponse);
 	}
 
 	@Reference

@@ -60,6 +60,8 @@ public class AnonymizeNonreviewableUADDataMVCActionCommand
 			uadAnonymizer.autoAnonymizeAll(
 				selectedUser.getUserId(), anonymousUser);
 		}
+
+		doNonreviewableRedirect(actionRequest, actionResponse);
 	}
 
 	@Reference

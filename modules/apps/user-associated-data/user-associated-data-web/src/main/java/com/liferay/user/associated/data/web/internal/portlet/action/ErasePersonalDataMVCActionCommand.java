@@ -28,7 +28,6 @@ import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.user.associated.data.constants.UserAssociatedDataPortletKeys;
-import com.liferay.user.associated.data.web.internal.registry.UADRegistry;
 import com.liferay.user.associated.data.web.internal.util.SelectedUserHelper;
 import com.liferay.user.associated.data.web.internal.util.UADApplicationSummaryHelper;
 
@@ -120,9 +119,6 @@ public class ErasePersonalDataMVCActionCommand
 
 	@Reference
 	private UADApplicationSummaryHelper _uadApplicationSummaryHelper;
-
-	@Reference
-	private UADRegistry _uadRegistry;
 
 	@Reference
 	private UserGroupLocalService _userGroupLocalService;

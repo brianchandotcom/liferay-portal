@@ -44,6 +44,8 @@ public class DeleteUADEntitiesMVCActionCommand extends BaseUADMVCActionCommand {
 		UADAnonymizer uadAnonymizer = getUADAnonymizer(actionRequest);
 
 		doMultipleAction(actionRequest, uadAnonymizer::delete);
+
+		doReviewableRedirect(actionRequest, actionResponse);
 	}
 
 }

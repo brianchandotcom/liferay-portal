@@ -17,17 +17,24 @@ package com.liferay.user.associated.data.web.internal.portlet.action;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.portlet.LiferayPortletURL;
+import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.user.associated.data.anonymizer.UADAnonymizer;
+import com.liferay.user.associated.data.constants.UserAssociatedDataPortletKeys;
 import com.liferay.user.associated.data.display.UADDisplay;
 import com.liferay.user.associated.data.web.internal.registry.UADRegistry;
 import com.liferay.user.associated.data.web.internal.util.SelectedUserHelper;
+import com.liferay.user.associated.data.web.internal.util.UADApplicationSummaryHelper;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.portlet.ActionRequest;
+import javax.portlet.ActionResponse;
+import javax.portlet.PortletRequest;
 
 import org.osgi.service.component.annotations.Reference;
 
@@ -43,6 +50,75 @@ public abstract class BaseUADMVCActionCommand extends BaseMVCActionCommand {
 
 		for (Object entity : getEntities(actionRequest)) {
 			unsafeConsumer.accept(entity);
+		}
+	}
+
+	protected void doNonreviewableRedirect(
+			ActionRequest actionRequest, ActionResponse actionResponse)
+		throws Exception {
+
+		LiferayPortletURL redirect = PortletURLFactoryUtil.create(
+			actionRequest, UserAssociatedDataPortletKeys.USER_ASSOCIATED_DATA,
+			PortletRequest.RENDER_PHASE);
+
+		long selectedUserId = getSelectedUserId(actionRequest);
+
+		redirect.setParameter("p_u_i_d", String.valueOf(selectedUserId));
+
+		String mvcRenderCommandName = null;
+
+		if (uadApplicationSummaryHelper.getTotalNonreviewableUADEntitiesCount(
+				selectedUserId) == 0) {
+
+			if (uadApplicationSummaryHelper.getTotalReviewableUADEntitiesCount(
+					selectedUserId) == 0) {
+
+				mvcRenderCommandName = "/completed_data_erasure";
+			}
+			else {
+				mvcRenderCommandName = "/review_uad_data";
+			}
+		}
+
+		if (Validator.isNotNull(mvcRenderCommandName)) {
+			redirect.setParameter("mvcRenderCommandName", mvcRenderCommandName);
+
+			sendRedirect(actionRequest, actionResponse, redirect.toString());
+		}
+	}
+
+	protected void doReviewableRedirect(
+			ActionRequest actionRequest, ActionResponse actionResponse)
+		throws Exception {
+
+		LiferayPortletURL redirect = PortletURLFactoryUtil.create(
+			actionRequest, UserAssociatedDataPortletKeys.USER_ASSOCIATED_DATA,
+			PortletRequest.RENDER_PHASE);
+
+		long selectedUserId = getSelectedUserId(actionRequest);
+
+		redirect.setParameter("p_u_i_d", String.valueOf(selectedUserId));
+
+		String mvcRenderCommandName = null;
+
+		if (uadApplicationSummaryHelper.getTotalReviewableUADEntitiesCount(
+				selectedUserId) == 0) {
+
+			if (uadApplicationSummaryHelper.
+					getTotalNonreviewableUADEntitiesCount(selectedUserId) ==
+						0) {
+
+				mvcRenderCommandName = "/completed_data_erasure";
+			}
+			else {
+				mvcRenderCommandName = "/anonymize_nonreviewable_uad_data";
+			}
+		}
+
+		if (Validator.isNotNull(mvcRenderCommandName)) {
+			redirect.setParameter("mvcRenderCommandName", mvcRenderCommandName);
+
+			sendRedirect(actionRequest, actionResponse, redirect.toString());
 		}
 	}
 
@@ -97,6 +173,9 @@ public abstract class BaseUADMVCActionCommand extends BaseMVCActionCommand {
 
 	@Reference
 	protected SelectedUserHelper selectedUserHelper;
+
+	@Reference
+	protected UADApplicationSummaryHelper uadApplicationSummaryHelper;
 
 	@Reference
 	protected UADRegistry uadRegistry;

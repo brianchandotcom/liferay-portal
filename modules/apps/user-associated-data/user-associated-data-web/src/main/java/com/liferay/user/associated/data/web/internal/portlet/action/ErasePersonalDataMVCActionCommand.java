@@ -93,7 +93,15 @@ public class ErasePersonalDataMVCActionCommand
 		if (_uadApplicationSummaryHelper.getTotalReviewableUADEntitiesCount(
 				selectedUser.getUserId()) == 0) {
 
-			mvcRenderCommandName = "/anonymize_nonreviewable_uad_data";
+			if (_uadApplicationSummaryHelper.
+					getTotalNonreviewableUADEntitiesCount(
+						selectedUser.getUserId()) == 0) {
+
+				mvcRenderCommandName = "/completed_data_erasure";
+			}
+			else {
+				mvcRenderCommandName = "/anonymize_nonreviewable_uad_data";
+			}
 		}
 
 		redirect.setParameter("mvcRenderCommandName", mvcRenderCommandName);

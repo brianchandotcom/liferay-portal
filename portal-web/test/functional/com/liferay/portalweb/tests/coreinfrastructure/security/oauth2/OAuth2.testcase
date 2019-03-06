@@ -130,12 +130,6 @@ definition {
 			configurationScope = "System Scope"
 		);
 
-		SystemSettings.gotoConfigurationEntry(
-			configurationEntry = "Default"
-		);
-
-		SystemSettings.deleteConfiguration();
-
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",

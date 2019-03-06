@@ -8,7 +8,7 @@ runGradleTest {
 	dependsOn initBundle
 
 	doLast {
-		File expectedFile = new File(initBundle.destinationDir, "osgi/modules/guava-23.0.jar")
+		File expectedFile = new File(initBundle.homeDir, "osgi/modules/guava-23.0.jar")
 
 		assert expectedFile.exists()
 	}

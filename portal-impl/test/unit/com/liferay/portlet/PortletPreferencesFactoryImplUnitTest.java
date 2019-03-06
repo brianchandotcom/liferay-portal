@@ -260,7 +260,7 @@ public class PortletPreferencesFactoryImplUnitTest {
 
 		String[] values = preference.getValues();
 
-		Assert.assertEquals(0, values.length);
+		Assert.assertEquals(Arrays.toString(values), 0, values.length);
 
 		Assert.assertFalse(preference.isReadOnly());
 	}

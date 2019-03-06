@@ -93,19 +93,23 @@ public class OrganizationImplTest {
 	public void testGetDescendants() throws Exception {
 		List<Organization> organizations1 = _organization1.getDescendants();
 
-		Assert.assertEquals(3, organizations1.size());
+		Assert.assertEquals(
+			organizations1.toString(), 3, organizations1.size());
 
 		List<Organization> organizations2 = _organization2.getDescendants();
 
-		Assert.assertEquals(2, organizations2.size());
+		Assert.assertEquals(
+			organizations2.toString(), 2, organizations2.size());
 
 		List<Organization> organizations3 = _organization3.getDescendants();
 
-		Assert.assertEquals(1, organizations3.size());
+		Assert.assertEquals(
+			organizations3.toString(), 1, organizations3.size());
 
 		List<Organization> organizations4 = _organization4.getDescendants();
 
-		Assert.assertEquals(0, organizations4.size());
+		Assert.assertEquals(
+			organizations4.toString(), 0, organizations4.size());
 
 		Assert.assertTrue(
 			organizations1.toString(), organizations1.contains(_organization2));

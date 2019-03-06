@@ -2,10 +2,11 @@ import Component from 'metal-component';
 import Soy, {Config} from 'metal-soy';
 
 import './FloatingToolbarMappingPanelDelegateTemplate.soy';
-import {encodeAssetId} from '../../../utils/FragmentsEditorIdUtils.es';
+import {decodeId, encodeAssetId} from '../../../utils/FragmentsEditorIdUtils.es';
 import getConnectedComponent from '../../../store/ConnectedComponent.es';
 import {setIn} from '../../../utils/FragmentsEditorUpdateUtils.es';
 import templates from './FloatingToolbarMappingPanel.soy';
+import {UPDATE_EDITABLE_VALUE} from '../../../actions/actions.es';
 
 const MAPPING_SOURCE_SPECIFIC_CONTENT_KEY = 'specific_content';
 
@@ -83,6 +84,17 @@ class FloatingToolbarMappingPanel extends Component {
 	 */
 	_handleAssetOptionChange(event) {
 		this._mappedAssetEntryEncodedId = event.delegateTarget.value;
+		const asset = decodeId(this._mappedAssetEntryEncodedId);
+
+		this._updateEditableValues(
+			'assetEntryClassNameId',
+			asset.assetEntryClassNameId
+		);
+
+		this._updateEditableValues(
+			'assetEntryClassPK',
+			asset.assetEntryClassPK
+		);
 	}
 
 	/**
@@ -120,6 +132,24 @@ class FloatingToolbarMappingPanel extends Component {
 	 * @review
 	 */
 	_handleUnmapButtonClick(event) {}
+
+	/**
+	 * Dispatches action to update editable value
+	 * @param {!string} key
+	 * @param {!string} value
+	 */
+	_updateEditableValues(key, value) {
+		this.store
+			.dispatchAction(
+				UPDATE_EDITABLE_VALUE,
+				{
+					editableId: this.itemId,
+					editableValue: value,
+					editableValueId: key,
+					fragmentEntryLinkId: this.item.fragmentEntryLinkId
+				}
+			);
+	}
 }
 
 /**

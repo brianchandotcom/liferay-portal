@@ -26,32 +26,35 @@ User selUser = (User)request.getAttribute(UsersAdminWebKeys.SELECTED_USER);
 			<liferay-ui:message key="custom-fields" />
 		</h4>
 	</span>
-	<span class="autofit-col">
 
-		<%
-		boolean hasVisibleCustomFields = CustomFieldsUtil.hasVisibleCustomFields(company.getCompanyId(), User.class);
+	<c:if test="<%= PortletPermissionUtil.contains(permissionChecker, PortletKeys.EXPANDO, ActionKeys.ACCESS_IN_CONTROL_PANEL) %>">
+		<span class="autofit-col">
 
-		PortletProvider.Action action = PortletProvider.Action.EDIT;
+			<%
+			boolean hasVisibleCustomFields = CustomFieldsUtil.hasVisibleCustomFields(company.getCompanyId(), User.class);
 
-		if (hasVisibleCustomFields) {
-			action = PortletProvider.Action.MANAGE;
-		}
+			PortletProvider.Action action = PortletProvider.Action.EDIT;
 
-		PortletURL customFieldsURL = PortletProviderUtil.getPortletURL(request, ExpandoColumn.class.getName(), action);
+			if (hasVisibleCustomFields) {
+				action = PortletProvider.Action.MANAGE;
+			}
 
-		customFieldsURL.setParameter("modelResource", User.class.getName());
-		customFieldsURL.setParameter("redirect", currentURL);
-		%>
+			PortletURL customFieldsURL = PortletProviderUtil.getPortletURL(request, ExpandoColumn.class.getName(), action);
 
-		<liferay-ui:icon
-			cssClass="modify-link"
-			label="<%= true %>"
-			linkCssClass="btn btn-secondary btn-sm"
-			message='<%= hasVisibleCustomFields ? "manage" : "add" %>'
-			method="get"
-			url="<%= customFieldsURL.toString() %>"
-		/>
-	</span>
+			customFieldsURL.setParameter("modelResource", User.class.getName());
+			customFieldsURL.setParameter("redirect", currentURL);
+			%>
+
+			<liferay-ui:icon
+				cssClass="modify-link"
+				label="<%= true %>"
+				linkCssClass="btn btn-secondary btn-sm"
+				message='<%= hasVisibleCustomFields ? "manage" : "add" %>'
+				method="get"
+				url="<%= customFieldsURL.toString() %>"
+			/>
+		</span>
+	</c:if>
 </div>
 
 <liferay-expando:custom-attribute-list

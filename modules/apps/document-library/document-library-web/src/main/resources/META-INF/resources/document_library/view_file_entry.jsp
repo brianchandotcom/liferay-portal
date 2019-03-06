@@ -228,67 +228,9 @@ if (portletTitleBasedNavigation) {
 	<liferay-util:include page="/document_library/version_details.jsp" servletContext="<%= application %>" />
 </c:if>
 
-<aui:script>
-	function <portlet:namespace />compare() {
-		var rowIds = AUI.$('input[name=<portlet:namespace />rowIds]:checked');
-		var sourceFileVersionId = AUI.$('input[name="<portlet:namespace />sourceFileVersionId"]');
-		var targetFileVersionId = AUI.$('input[name="<portlet:namespace />targetFileVersionId"]');
-
-		var rowIdsSize = rowIds.length;
-
-		if (rowIdsSize == 1) {
-			sourceFileVersionId.val(rowIds.eq(0).val());
-		}
-		else if (rowIdsSize == 2) {
-			sourceFileVersionId.val(rowIds.eq(1).val());
-
-			targetFileVersionId.val(rowIds.eq(0).val());
-		}
-
-		submitForm(document.<portlet:namespace />fm1);
-	}
-
-	function <portlet:namespace />initRowsChecked() {
-		AUI.$('input[name=<portlet:namespace />rowIds]').each(
-			function(index, item) {
-				if (index >= 2) {
-					item = AUI.$(item);
-
-					item.prop('checked', false);
-				}
-			}
-		);
-	}
-
-	function <portlet:namespace />updateRowsChecked(element) {
-		var rowsChecked = AUI.$('input[name=<portlet:namespace />rowIds]:checked');
-
-		if (rowsChecked.length > 2) {
-			var index = 2;
-
-			if (rowsChecked.eq(2).is(element)) {
-				index = 1;
-			}
-
-			rowsChecked.eq(index).prop('checked', false);
-		}
-	}
-</aui:script>
-
 <c:if test="<%= DLFileEntryPermission.contains(permissionChecker, fileEntry, ActionKeys.VIEW) && DLUtil.isOfficeExtension(fileVersion.getExtension()) && portletDisplay.isWebDAVEnabled() && BrowserSnifferUtil.isIeOnWin32(request) %>">
 	<%@ include file="/document_library/action/open_document_js.jspf" %>
 </c:if>
-
-<aui:script sandbox="<%= true %>">
-	<portlet:namespace />initRowsChecked();
-
-	$('input[name=<portlet:namespace />rowIds]').on(
-		'click',
-		function(event) {
-			<portlet:namespace />updateRowsChecked($(event.currentTarget));
-		}
-	);
-</aui:script>
 
 <%
 boolean addPortletBreadcrumbEntries = ParamUtil.getBoolean(request, "addPortletBreadcrumbEntries", true);

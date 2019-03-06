@@ -1131,7 +1131,7 @@ public class ThreadPoolExecutorTest {
 		Map<Thread, Throwable> uncaughtMap =
 			recordUncaughtExceptionHandler.getUncaughtMap();
 
-		Assert.assertEquals(10, uncaughtMap.size());
+		Assert.assertEquals(uncaughtMap.toString(), 10, uncaughtMap.size());
 
 		for (MarkerBlockingJob markerBlockingJob : markerBlockingJobQueue) {
 			Assert.assertTrue(markerBlockingJob.isStarted());

@@ -231,7 +231,7 @@ public abstract class BaseBulkStatusModelResourceTestCase {
 		sb.append(operator);
 		sb.append(" ");
 
-		if (entityFieldName.equals("status")) {
+		if (entityFieldName.equals("busy")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
 		}
@@ -264,7 +264,7 @@ public abstract class BaseBulkStatusModelResourceTestCase {
 	protected BulkStatusModel randomBulkStatusModel() {
 		return new BulkStatusModel() {
 			{
-				status = RandomTestUtil.randomBoolean();
+				busy = RandomTestUtil.randomBoolean();
 			}
 		};
 	}

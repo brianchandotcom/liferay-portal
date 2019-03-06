@@ -907,6 +907,21 @@ public class PortalImpl implements Portal {
 
 				String[] values = actionRequest.getParameterValues(param);
 
+				if (values == null) {
+					values = new String[0];
+				}
+				else {
+					values = ArrayUtil.filter(
+						values,
+						s -> {
+							if (s == null) {
+								return false;
+							}
+
+							return true;
+						});
+				}
+
 				actionResponse.setRenderParameter(param, values);
 			}
 		}

@@ -794,7 +794,8 @@ definition {
 
 			AssertTextEquals.assertPartialText(
 				locator1 = "WCEditWebContent#WORKFLOW_STATUS",
-				value1 = "Draft"
+				value1 = "Draft",
+				key_status = "Draft"
 			);
 		}
 		else {

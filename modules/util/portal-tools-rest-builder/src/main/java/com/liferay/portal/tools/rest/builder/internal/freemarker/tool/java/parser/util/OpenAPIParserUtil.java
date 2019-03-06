@@ -25,6 +25,8 @@ import com.liferay.portal.vulcan.yaml.openapi.OpenAPIYAML;
 import com.liferay.portal.vulcan.yaml.openapi.Operation;
 import com.liferay.portal.vulcan.yaml.openapi.Schema;
 
+import java.math.BigDecimal;
+
 import java.util.AbstractMap;
 import java.util.Date;
 import java.util.HashMap;
@@ -358,6 +360,13 @@ public class OpenAPIParserUtil {
 				put(
 					new AbstractMap.SimpleImmutableEntry<>("number", null),
 					Number.class.getName());
+				put(
+					new AbstractMap.SimpleImmutableEntry<>(
+						"number", "bigdecimal"),
+					BigDecimal.class.getName());
+				put(
+					new AbstractMap.SimpleImmutableEntry<>("string", "email"),
+					String.class.getName());
 				put(
 					new AbstractMap.SimpleImmutableEntry<>("string", "uri"),
 					String.class.getName());

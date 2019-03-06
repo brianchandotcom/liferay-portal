@@ -172,6 +172,22 @@ String referringPortletResource = ParamUtil.getString(request, "referringPortlet
 							value="<%= StringUtil.shorten(HtmlUtil.stripHtml(curArticle.getDescription(locale)), 200) %>"
 						/>
 
+						<c:if test="<%= journalDisplayContext.isChangeListVisible() %>">
+
+							<%
+							boolean inChangeList = journalDisplayContext.isJournalArticleInChangeList(curArticle);
+							String icon =
+								"<svg class=\"lexicon-icon lexicon-icon-check-circle progress-group-feedback\">\n\t<use xlink:href=\"" +
+								themeDisplay.getPathThemeImages() + "/lexicon/icons.svg#check-circle\" />\n</svg>";
+							%>
+
+							<liferay-ui:search-container-column-text
+								cssClass="check-circle-center progress-success table-cell-expand table-cell-minw-50 table-column-text-center"
+								name="change-list"
+								value="<%= inChangeList ? icon : StringPool.BLANK %>"
+							/>
+						</c:if>
+
 						<c:if test="<%= journalDisplayContext.isSearch() %>">
 							<liferay-ui:search-container-column-text
 								cssClass="table-cell-expand-smallest table-cell-minw-200"

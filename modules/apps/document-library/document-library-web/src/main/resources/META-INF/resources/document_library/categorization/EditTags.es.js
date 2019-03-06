@@ -17,7 +17,7 @@ class EditTags extends Component {
 	 * @inheritDoc
 	 */
 	attached() {
-		this._bulkStatusComponent =	Liferay.component(this.portletNamespace + 'BulkStatus');
+		this._bulkStatusComponent =	Liferay.component(this.namespace + 'BulkStatus');
 	}
 
 	/**

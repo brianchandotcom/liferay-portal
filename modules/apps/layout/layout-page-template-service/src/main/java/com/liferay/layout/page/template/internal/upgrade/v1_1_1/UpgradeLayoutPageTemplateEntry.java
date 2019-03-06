@@ -67,6 +67,8 @@ public class UpgradeLayoutPageTemplateEntry extends UpgradeProcess {
 
 		Company company = _companyLocalService.getCompany(companyId);
 
+		String newName = name;
+
 		for (int i = 1;; i++) {
 			StringBundler sb = new StringBundler(6);
 
@@ -74,7 +76,7 @@ public class UpgradeLayoutPageTemplateEntry extends UpgradeProcess {
 			sb.append("groupId = ");
 			sb.append(company.getGroupId());
 			sb.append(" and name = '");
-			sb.append(name);
+			sb.append(newName);
 			sb.append("'");
 
 			try (PreparedStatement ps = connection.prepareStatement(
@@ -82,7 +84,7 @@ public class UpgradeLayoutPageTemplateEntry extends UpgradeProcess {
 				ResultSet rs = ps.executeQuery()) {
 
 				if (rs.next() && (rs.getInt(1) > 0)) {
-					name = name + i;
+					newName = name + i;
 				}
 				else {
 					break;
@@ -95,7 +97,7 @@ public class UpgradeLayoutPageTemplateEntry extends UpgradeProcess {
 		sb.append("update LayoutPageTemplateEntry set groupId = ");
 		sb.append(company.getGroupId());
 		sb.append(", layoutPageTemplateCollectionId = 0, name = '");
-		sb.append(name);
+		sb.append(newName);
 		sb.append("' where layoutPageTemplateEntryId = ");
 		sb.append(layoutPageTemplateEntryId);
 

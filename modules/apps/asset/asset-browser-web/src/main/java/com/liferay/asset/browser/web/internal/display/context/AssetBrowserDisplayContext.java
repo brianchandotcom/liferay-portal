@@ -79,7 +79,7 @@ public class AssetBrowserDisplayContext {
 		AssetRendererFactory assetRendererFactory = getAssetRendererFactory();
 
 		if (AssetBrowserWebConfigurationValues.SEARCH_WITH_DATABASE) {
-			long classNameId = 0L;
+			long classNameId = 0;
 
 			if (assetRendererFactory != null) {
 				classNameId = assetRendererFactory.getClassNameId();

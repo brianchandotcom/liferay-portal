@@ -68,10 +68,14 @@ public class UADHierarchyResultRowSplitter implements ResultRowSplitter {
 		}
 
 		for (UADDisplay uadDisplay : _uadDisplays) {
-			resultRowSplitterEntries.add(
-				new ResultRowSplitterEntry(
-					uadDisplay.getTypeName(_locale),
-					classResultRowsMap.get(uadDisplay.getTypeClass())));
+			List<ResultRow> classResultRows = classResultRowsMap.get(
+				uadDisplay.getTypeClass());
+
+			if (!classResultRows.isEmpty()) {
+				resultRowSplitterEntries.add(
+					new ResultRowSplitterEntry(
+						uadDisplay.getTypeName(_locale), classResultRows));
+			}
 		}
 
 		return resultRowSplitterEntries;

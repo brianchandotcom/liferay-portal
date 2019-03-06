@@ -444,18 +444,13 @@ public class UADHierarchyDisplay {
 		Map<Class<?>, List<Serializable>> entitiesMap,
 		List<Serializable> entities, Class<?> typeClass) {
 
-		if (entitiesMap.containsKey(typeClass)) {
-			List<Serializable> entitiesList = entitiesMap.get(typeClass);
-
-			entitiesList.addAll(entities);
+		if (!entitiesMap.containsKey(typeClass)) {
+			entitiesMap.put(typeClass, new ArrayList<>());
 		}
-		else {
-			List<Serializable> entitiesList = new ArrayList<>();
 
-			entitiesList.addAll(entities);
+		List<Serializable> entitiesList = entitiesMap.get(typeClass);
 
-			entitiesMap.put(typeClass, entitiesList);
-		}
+		entitiesList.addAll(entities);
 	}
 
 	private <T> List<Serializable> _getContainerItemPKs(

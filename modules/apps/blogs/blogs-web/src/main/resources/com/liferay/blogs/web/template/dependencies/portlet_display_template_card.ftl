@@ -140,10 +140,16 @@
 							</div>
 						</div>
 
-						<#if cardImage>
-							<p class="widget-resume">${stringUtil.shorten(htmlUtil.stripHtml(curBlogEntry.getContent()), 150)}</p>
+						<#if validator.isNotNull(curBlogEntry.getDescription())>
+							<#assign content = curBlogEntry.getDescription() />
 						<#else>
-							<p class="widget-resume">${stringUtil.shorten(htmlUtil.stripHtml(curBlogEntry.getContent()), 400)}</p>
+							<#assign content = curBlogEntry.getContent() />
+						</#if>
+
+						<#if cardImage>
+							<p class="widget-resume">${stringUtil.shorten(htmlUtil.stripHtml(content), 150)}</p>
+						<#else>
+							<p class="widget-resume">${stringUtil.shorten(htmlUtil.stripHtml(content), 400)}</p>
 						</#if>
 					</div>
 

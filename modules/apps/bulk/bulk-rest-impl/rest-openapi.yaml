@@ -117,7 +117,7 @@ components:
           type: array
     BulkStatusModel:
       properties:
-        status:
+        busy:
           type: boolean
       type: object
 info:

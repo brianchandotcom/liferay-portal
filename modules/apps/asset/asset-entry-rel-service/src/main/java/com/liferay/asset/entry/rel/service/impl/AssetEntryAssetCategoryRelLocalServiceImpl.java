@@ -157,6 +157,10 @@ public class AssetEntryAssetCategoryRelLocalServiceImpl
 
 			AssetRenderer assetRenderer = assetEntry.getAssetRenderer();
 
+			if (assetRenderer == null) {
+				return;
+			}
+
 			indexer.reindex(assetRenderer.getAssetObject());
 		}
 		catch (SearchException se) {

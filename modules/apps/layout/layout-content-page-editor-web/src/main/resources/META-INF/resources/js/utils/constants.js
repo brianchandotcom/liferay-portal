@@ -125,17 +125,16 @@ export const BUTTON_TYPES = [
  */
 export const TARGET_TYPES = [
 	{
+		label: Liferay.Language.get('self'),
+		targetTypeId: '_self'
+	},
+	{
 		label: Liferay.Language.get('blank'),
 		targetTypeId: '_blank'
 	},
 	{
 		label: Liferay.Language.get('parent'),
 		targetTypeId: '_parent'
-
-	},
-	{
-		label: Liferay.Language.get('self'),
-		targetTypeId: '_self'
 	},
 	{
 		label: Liferay.Language.get('top'),

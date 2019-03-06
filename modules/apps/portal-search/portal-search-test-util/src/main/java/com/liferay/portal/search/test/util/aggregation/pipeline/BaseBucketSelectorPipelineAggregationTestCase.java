@@ -57,7 +57,7 @@ public abstract class BaseBucketSelectorPipelineAggregationTestCase
 
 		histogramAggregation.addChildAggregation(sumAggregation);
 
-		Script script = new Script("painless", "params.sum > 40");
+		Script script = scripts.script("params.sum > 40");
 
 		BucketSelectorPipelineAggregation bucketSelectorPipelineAggregation =
 			new BucketSelectorPipelineAggregationImpl(

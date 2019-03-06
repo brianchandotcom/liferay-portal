@@ -60,7 +60,7 @@ public abstract class BaseBucketScriptPipelineAggregationTestCase
 
 		histogramAggregation.addChildAggregation(sumAggregation);
 
-		Script script = new Script("painless", "params.sum * 50");
+		Script script = scripts.script("params.sum * 50");
 
 		BucketScriptPipelineAggregation bucketScriptPipelineAggregation =
 			new BucketScriptPipelineAggregationImpl("bucket_script", script);

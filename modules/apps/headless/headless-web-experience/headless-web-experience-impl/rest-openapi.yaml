@@ -37,14 +37,6 @@ components:
                 contentUrl:
                     format: uri
                     type: string
-                creator:
-                    $ref: "#/components/schemas/Creator"
-                dateCreated:
-                    format: date-time
-                    type: string
-                dateModified:
-                    format: date-time
-                    type: string
                 encodingFormat:
                     type: string
                 fileExtension:
@@ -62,9 +54,6 @@ components:
             properties:
                 dataType:
                     type: string
-                id:
-                    format: int64
-                    type: integer
                 inputControl:
                     type: string
                 label:
@@ -75,6 +64,10 @@ components:
                     items:
                         $ref: "#/components/schemas/ContentField"
                     type: array
+                repeatable:
+                    type: boolean
+                repeatableId:
+                    type: string
                 value:
                     properties:
                         data:
@@ -98,17 +91,25 @@ components:
                                 longitude:
                                     type: number
                             type: object
+                        image:
+                            allOf:
+                                - $ref: "#/components/schemas/StructuredContentImage"
+                            readOnly: true
                         link:
                             format: uri
                             type: string
-                        structuredContent:
-                            allOf:
-                                - $ref: "#/components/schemas/StructuredContent"
-                            readOnly: true
                         structuredContentId:
                             format: int64
                             type: integer
                             writeOnly: true
+                        structuredContentLink:
+                            properties:
+                                id:
+                                    format: int64
+                                    type: integer
+                                title:
+                                    type: string
+                            type: object
                     type: object
         ContentStructure:
             description: https://www.schema.org/ContentStructure
@@ -251,7 +252,7 @@ components:
                 lastReviewed:
                     format: date-time
                     type: string
-                renderedContentsURL:
+                renderedContents:
                     description: https://www.schema.org/templates
                     items:
                         properties:
@@ -284,6 +285,8 @@ components:
                     type: string
                 dateModified:
                     format: date-time
+                    type: string
+                description:
                     type: string
                 encodingFormat:
                     type: string
@@ -569,37 +572,6 @@ paths:
                                 type: array
                     description: ""
             tags: ["StructuredContent"]
-    "/structured-content-images/{structured-content-image-id}":
-        delete:
-            parameters:
-                - in: path
-                  name: structured-content-image-id
-                  required: true
-                  schema:
-                      format: int64
-                      type: integer
-            responses:
-                204:
-                    content:
-                        application/json: {}
-                    description: ""
-            tags: ["StructuredContentImage"]
-        get:
-            parameters:
-                - in: path
-                  name: structured-content-image-id
-                  required: true
-                  schema:
-                      format: int64
-                      type: integer
-            responses:
-                200:
-                    content:
-                        application/json:
-                            schema:
-                                $ref: "#/components/schemas/StructuredContentImage"
-                    description: ""
-            tags: ["StructuredContentImage"]
     "/structured-contents/{structured-content-id}":
         delete:
             parameters:
@@ -764,22 +736,3 @@ paths:
                                 type: string
                     description: ""
             tags: ["StructuredContent"]
-    "/structured-contents/{structured-content-id}/structured-content-images":
-        get:
-            parameters:
-                - in: path
-                  name: structured-content-id
-                  required: true
-                  schema:
-                      format: int64
-                      type: integer
-            responses:
-                200:
-                    content:
-                        application/json:
-                            schema:
-                                items:
-                                    $ref: "#/components/schemas/StructuredContentImage"
-                                type: array
-                    description: ""
-            tags: ["StructuredContentImage"]

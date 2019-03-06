@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
-import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.transaction.Propagation;
@@ -517,38 +516,6 @@ public class SegmentsExperiencePersistenceTest {
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
 		Assert.assertEquals(0, result.size());
-	}
-
-	@Test
-	public void testResetOriginalValues() throws Exception {
-		SegmentsExperience newSegmentsExperience = addSegmentsExperience();
-
-		_persistence.clearCache();
-
-		SegmentsExperience existingSegmentsExperience =
-			_persistence.findByPrimaryKey(
-				newSegmentsExperience.getPrimaryKey());
-
-		Assert.assertEquals(
-			Long.valueOf(existingSegmentsExperience.getGroupId()),
-			ReflectionTestUtil.<Long>invoke(
-				existingSegmentsExperience, "getOriginalGroupId",
-				new Class<?>[0]));
-		Assert.assertEquals(
-			Long.valueOf(existingSegmentsExperience.getSegmentsEntryId()),
-			ReflectionTestUtil.<Long>invoke(
-				existingSegmentsExperience, "getOriginalSegmentsEntryId",
-				new Class<?>[0]));
-		Assert.assertEquals(
-			Long.valueOf(existingSegmentsExperience.getClassNameId()),
-			ReflectionTestUtil.<Long>invoke(
-				existingSegmentsExperience, "getOriginalClassNameId",
-				new Class<?>[0]));
-		Assert.assertEquals(
-			Long.valueOf(existingSegmentsExperience.getClassPK()),
-			ReflectionTestUtil.<Long>invoke(
-				existingSegmentsExperience, "getOriginalClassPK",
-				new Class<?>[0]));
 	}
 
 	protected SegmentsExperience addSegmentsExperience() throws Exception {

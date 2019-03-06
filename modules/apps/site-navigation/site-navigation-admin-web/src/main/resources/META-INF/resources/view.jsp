@@ -70,11 +70,11 @@ SiteNavigationAdminManagementToolbarDisplayContext siteNavigationAdminManagement
 						String createDateDescription = LanguageUtil.getTimeDescription(request, System.currentTimeMillis() - createDate.getTime(), true);
 						%>
 
-						<h6 class="text-default">
+						<span class="text-default">
 							<liferay-ui:message arguments="<%= new String[] {HtmlUtil.escape(siteNavigationMenu.getUserName()), createDateDescription} %>" key="x-created-x-ago" />
-						</h6>
+						</span>
 
-						<h5>
+						<h2 class="h5">
 							<c:choose>
 								<c:when test="<%= siteNavigationAdminDisplayContext.hasEditPermission() %>">
 									<aui:a href="<%= editSiteNavigationMenuURL %>">
@@ -85,11 +85,11 @@ SiteNavigationAdminManagementToolbarDisplayContext siteNavigationAdminManagement
 									<%= HtmlUtil.escape(siteNavigationMenu.getName()) %>
 								</c:otherwise>
 							</c:choose>
-						</h5>
+						</h2>
 
-						<h6 class="text-default">
+						<span class="text-default">
 							<liferay-ui:message key="<%= siteNavigationMenu.getTypeKey() %>" />
-						</h6>
+						</span>
 					</liferay-ui:search-container-column-text>
 
 					<liferay-ui:search-container-column-jsp

@@ -26,6 +26,7 @@ import com.liferay.portal.vulcan.yaml.openapi.OpenAPIYAML;
 import com.liferay.portal.vulcan.yaml.openapi.Operation;
 import com.liferay.portal.vulcan.yaml.openapi.Schema;
 
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -94,17 +95,20 @@ public class OpenAPIUtil {
 
 				allSchemas.put(schemaName, schema);
 
-				List<Schema> oneOfSchemas = schema.getOneOfSchemas();
+				if (schema.getOneOfSchemas() != null) {
+					for (Schema oneOfSchema : schema.getOneOfSchemas()) {
+						Map<String, Schema> schemas =
+							oneOfSchema.getPropertySchemas();
 
-				if (oneOfSchemas != null) {
-					for (Schema oneOfSchema : oneOfSchemas) {
-						String propertyName = StringUtil.upperCaseFirstLetter(
-							_getFirstProperty(
-								oneOfSchema.getPropertySchemas()));
+						Set<String> keys = schemas.keySet();
 
-						allSchemas.put(propertyName, oneOfSchema);
+						Iterator<String> iterator = keys.iterator();
 
-						queue.add(oneOfSchema.getPropertySchemas());
+						allSchemas.put(
+							StringUtil.upperCaseFirstLetter(iterator.next()),
+							oneOfSchema);
+
+						queue.add(schemas);
 					}
 				}
 
@@ -121,12 +125,6 @@ public class OpenAPIUtil {
 
 		return GraphQLOpenAPIParser.getJavaMethodSignatures(
 			configYAML, openAPIYAML, predicate);
-	}
-
-	private static String _getFirstProperty(Map<String, Schema> oneOfSchema) {
-		Set<String> keys = oneOfSchema.keySet();
-
-		return keys.toArray(new String[0])[0];
 	}
 
 	private static final Pattern _leadingUnderscorePattern = Pattern.compile(

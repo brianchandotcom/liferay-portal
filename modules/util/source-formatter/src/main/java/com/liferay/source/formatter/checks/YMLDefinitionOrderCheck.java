@@ -42,6 +42,24 @@ public class YMLDefinitionOrderCheck extends BaseFileCheck {
 		return _sortDefinitions(fileName, content, StringPool.BLANK);
 	}
 
+	private static String _getDefinitionKey(String definition) {
+		Matcher matcher = _definitionKeyPattern.matcher(definition);
+
+		if (matcher.find()) {
+			return StringUtil.trim(matcher.group(1));
+		}
+
+		return definition;
+	}
+
+	private static int _getTravisDefinitionKeyWeight(String definitionKey) {
+		if (_travisDefinitionKeyWeightMap.containsKey(definitionKey)) {
+			return _travisDefinitionKeyWeightMap.get(definitionKey);
+		}
+
+		return -1;
+	}
+
 	private String _fixIncorrectIndentation(String content) {
 		Matcher matcher = _incorrectIndentationPattern.matcher(content);
 
@@ -101,7 +119,11 @@ public class YMLDefinitionOrderCheck extends BaseFileCheck {
 			String nestedDefinitionIndent =
 				YMLSourceUtil.getNestedDefinitionIndent(definition);
 
-			if (!nestedDefinitionIndent.equals(StringPool.BLANK)) {
+			String definitionKey = _getDefinitionKey(definition);
+
+			if (!nestedDefinitionIndent.equals(StringPool.BLANK) &&
+				!_travisDefinitionKeyWeightMap.containsKey(definitionKey)) {
+
 				String newDefinition = _sortDefinitions(
 					fileName, definition, nestedDefinitionIndent);
 
@@ -114,7 +136,11 @@ public class YMLDefinitionOrderCheck extends BaseFileCheck {
 			nestedDefinitionIndent = YMLSourceUtil.getNestedDefinitionIndent(
 				previousDefinition);
 
-			if (!nestedDefinitionIndent.equals(StringPool.BLANK)) {
+			definitionKey = _getDefinitionKey(previousDefinition);
+
+			if (!nestedDefinitionIndent.equals(StringPool.BLANK) &&
+				!_travisDefinitionKeyWeightMap.containsKey(definitionKey)) {
+
 				String newDefinition = _sortDefinitions(
 					fileName, previousDefinition, nestedDefinitionIndent);
 
@@ -128,8 +154,27 @@ public class YMLDefinitionOrderCheck extends BaseFileCheck {
 		return content;
 	}
 
+	private static final Pattern _definitionKeyPattern = Pattern.compile(
+		"(.*?):");
 	private static final Pattern _incorrectIndentationPattern = Pattern.compile(
 		"^( *)[^ -].+(\n\\1- .+(\n\\1 .+)*)+", Pattern.MULTILINE);
+	private static final Map<String, Integer> _travisDefinitionKeyWeightMap =
+		new HashMap<String, Integer>() {
+			{
+				put("after_deploy", 11);
+				put("after_failure", 8);
+				put("after_script", 12);
+				put("after_success", 7);
+				put("before_cache", 5);
+				put("before_deploy", 9);
+				put("before_install", 1);
+				put("before_script", 3);
+				put("cache", 6);
+				put("deploy", 10);
+				put("install", 2);
+				put("script", 4);
+			}
+		};
 
 	private static class DefinitionComparator
 		implements Comparator<String>, Serializable {
@@ -155,43 +200,6 @@ public class YMLDefinitionOrderCheck extends BaseFileCheck {
 			return definitionKey1.compareTo(definitionKey2);
 		}
 
-		private String _getDefinitionKey(String definition) {
-			Matcher matcher = _definitionKeyPattern.matcher(definition);
-
-			if (matcher.find()) {
-				return StringUtil.trim(matcher.group(1));
-			}
-
-			return definition;
-		}
-
-		private int _getTravisDefinitionKeyWeight(String definitionKey) {
-			if (_travisDefinitionKeyWeightMap.containsKey(definitionKey)) {
-				return _travisDefinitionKeyWeightMap.get(definitionKey);
-			}
-
-			return -1;
-		}
-
-		private static final Map<String, Integer>
-			_travisDefinitionKeyWeightMap = new HashMap<String, Integer>() {
-				{
-					put("after_deploy", 11);
-					put("after_failure", 8);
-					put("after_script", 12);
-					put("after_success", 7);
-					put("before_cache", 5);
-					put("before_deploy", 9);
-					put("before_install", 1);
-					put("before_script", 3);
-					put("cache", 6);
-					put("deploy", 10);
-					put("install", 2);
-					put("script", 4);
-				}
-			};
-
-		private final Pattern _definitionKeyPattern = Pattern.compile("(.*?):");
 		private final String _fileName;
 
 	}

@@ -2,6 +2,9 @@ package ${configYAML.apiPackagePath}.internal.resource.${escapedVersion};
 
 import com.liferay.portal.vulcan.resource.OpenAPIResource;
 
+import io.swagger.v3.oas.annotations.OpenAPIDefinition;
+import io.swagger.v3.oas.annotations.info.Info;
+
 import java.util.HashSet;
 import java.util.Set;
 
@@ -33,6 +36,13 @@ import org.osgi.service.component.annotations.ServiceScope;
 	service = OpenAPIResourceImpl.class
 )
 @Generated("")
+@OpenAPIDefinition(
+	info = @Info(
+		title = "${openAPIYAML.info.title}",
+		version = "${openAPIYAML.info.version}",
+		description = "${openAPIYAML.info.description}"
+	)
+)
 @Path("/${openAPIYAML.info.version}")
 public class OpenAPIResourceImpl {
 
@@ -58,6 +68,8 @@ public class OpenAPIResourceImpl {
 					add(${schemaName}ResourceImpl.class);
 				</#if>
 			</#list>
+
+			add(OpenAPIResourceImpl.class);
 		}
 	};
 

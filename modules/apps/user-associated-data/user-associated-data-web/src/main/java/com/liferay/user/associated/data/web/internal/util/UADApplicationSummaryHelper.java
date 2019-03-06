@@ -14,6 +14,8 @@
 
 package com.liferay.user.associated.data.web.internal.util;
 
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -70,24 +72,13 @@ public class UADApplicationSummaryHelper {
 		return typeClass.getName();
 	}
 
-	public int getReviewableUADEntitiesCount(
-		Stream<UADDisplay> uadDisplayStream, long userId) {
-
-		return uadDisplayStream.mapToInt(
-			uadDisplay -> (int)uadDisplay.count(userId)
-		).sum();
-	}
-
-	public int getReviewableUADEntitiesCount(
-		Stream<UADDisplay> uadDisplayStream, long userId, long[] groupIds) {
-
-		return uadDisplayStream.mapToInt(
-			uadDisplay -> (int)uadDisplay.searchCount(userId, groupIds, null)
-		).sum();
+	public int getTotalNonreviewableUADEntitiesCount(long userId) {
+		return _getNonreviewableUADEntitiesCount(
+			_uadRegistry.getNonreviewableUADAnonymizerStream(), userId);
 	}
 
 	public int getTotalReviewableUADEntitiesCount(long userId) {
-		return getReviewableUADEntitiesCount(
+		return _getReviewableUADEntitiesCount(
 			_uadRegistry.getUADDisplayStream(), userId);
 	}
 
@@ -98,7 +89,7 @@ public class UADApplicationSummaryHelper {
 		UADApplicationSummaryDisplay uadApplicationSummaryDisplay =
 			new UADApplicationSummaryDisplay();
 
-		int count = getReviewableUADEntitiesCount(
+		int count = _getReviewableUADEntitiesCount(
 			uadDisplayStream.stream(), userId, groupIds);
 
 		uadApplicationSummaryDisplay.setCount(count);
@@ -150,6 +141,37 @@ public class UADApplicationSummaryHelper {
 			});
 
 		return uadApplicationSummaryDisplays;
+	}
+
+	private int _getNonreviewableUADEntitiesCount(
+		Stream<UADAnonymizer> uadAnonymizerStream, long userId) {
+
+		return uadAnonymizerStream.mapToInt(
+			uadAnonymizer -> {
+				try {
+					return (int)uadAnonymizer.count(userId);
+				}
+				catch (PortalException pe) {
+					throw new SystemException(pe);
+				}
+			}
+		).sum();
+	}
+
+	private int _getReviewableUADEntitiesCount(
+		Stream<UADDisplay> uadDisplayStream, long userId) {
+
+		return uadDisplayStream.mapToInt(
+			uadDisplay -> (int)uadDisplay.count(userId)
+		).sum();
+	}
+
+	private int _getReviewableUADEntitiesCount(
+		Stream<UADDisplay> uadDisplayStream, long userId, long[] groupIds) {
+
+		return uadDisplayStream.mapToInt(
+			uadDisplay -> (int)uadDisplay.searchCount(userId, groupIds, null)
+		).sum();
 	}
 
 	@Reference

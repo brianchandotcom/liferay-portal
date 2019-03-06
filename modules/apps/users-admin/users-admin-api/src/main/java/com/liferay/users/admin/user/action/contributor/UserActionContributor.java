@@ -33,6 +33,11 @@ public interface UserActionContributor {
 		PortletRequest portletRequest, PortletResponse portletResponse,
 		User user, User selUser);
 
+	public boolean isShowConfirmationMessage(User selUser);
+
+	public String getConfirmationMessage(
+		PortletRequest portletRequest);
+
 	public boolean isShow(
 		PortletRequest portletRequest, User user, User selUser);
 

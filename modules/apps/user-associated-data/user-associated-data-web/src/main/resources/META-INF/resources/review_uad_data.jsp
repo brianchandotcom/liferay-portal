@@ -27,12 +27,9 @@ String scope = ParamUtil.getString(request, "scope", UADConstants.SCOPE_PERSONAL
 
 portletDisplay.setShowBackIcon(true);
 
-PortletURL backURL = renderResponse.createRenderURL();
+LiferayPortletURL usersAdminURL = liferayPortletResponse.createLiferayPortletURL(UsersAdminPortletKeys.USERS_ADMIN, PortletRequest.RENDER_PHASE);
 
-backURL.setParameter("mvcRenderCommandName", "/view_uad_summary");
-backURL.setParameter("p_u_i_d", String.valueOf(selectedUser.getUserId()));
-
-portletDisplay.setURLBack(backURL.toString());
+portletDisplay.setURLBack(usersAdminURL.toString());
 
 renderResponse.setTitle(StringBundler.concat(selectedUser.getFullName(), " - ", LanguageUtil.get(request, "personal-data-erasure")));
 %>
@@ -180,9 +177,18 @@ renderResponse.setTitle(StringBundler.concat(selectedUser.getFullName(), " - ", 
 				</div>
 
 				<div class="sheet-section">
-					<h3 class="sheet-subtitle"><liferay-ui:message key="view-data" /></h3>
+					<c:choose>
+						<c:when test="<%= totalReviewableUADEntitiesCount == 0 %>">
+							<liferay-ui:empty-result-message
+								message="all-data-that-requires-review-has-been-anonymized"
+							/>
+						</c:when>
+						<c:otherwise>
+							<h3 class="sheet-subtitle"><liferay-ui:message key="view-data" /></h3>
 
-					<liferay-util:include page="/view_uad_entities.jsp" servletContext="<%= application %>" />
+							<liferay-util:include page="/view_uad_entities.jsp" servletContext="<%= application %>" />
+						</c:otherwise>
+					</c:choose>
 				</div>
 			</div>
 		</div>

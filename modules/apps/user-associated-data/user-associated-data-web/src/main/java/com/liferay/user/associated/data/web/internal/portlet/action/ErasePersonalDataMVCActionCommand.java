@@ -16,34 +16,41 @@ package com.liferay.user.associated.data.web.internal.portlet.action;
 
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.portlet.LiferayPortletURL;
+import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseTransactionalMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserGroupLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.servlet.SessionMessages;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.user.associated.data.constants.UserAssociatedDataPortletKeys;
+import com.liferay.user.associated.data.web.internal.registry.UADRegistry;
 import com.liferay.user.associated.data.web.internal.util.SelectedUserHelper;
+import com.liferay.user.associated.data.web.internal.util.UADApplicationSummaryHelper;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
+import javax.portlet.PortletRequest;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
- * @author William Newbury
+ * @author Samuel Trong Tran
  */
 @Component(
 	immediate = true,
 	property = {
 		"javax.portlet.name=" + UserAssociatedDataPortletKeys.USER_ASSOCIATED_DATA,
-		"mvc.command.name=/deactivate_user"
+		"mvc.command.name=/erase_personal_data"
 	},
 	service = MVCActionCommand.class
 )
-public class DeactivateUserMVCActionCommand
+public class ErasePersonalDataMVCActionCommand
 	extends BaseTransactionalMVCActionCommand {
 
 	@Override
@@ -53,24 +60,61 @@ public class DeactivateUserMVCActionCommand
 
 		User selectedUser = _selectedUserHelper.getSelectedUser(actionRequest);
 
-		_userGroupLocalService.clearUserUserGroups(selectedUser.getUserId());
+		if (selectedUser.isActive()) {
+			_userGroupLocalService.clearUserUserGroups(
+				selectedUser.getUserId());
 
-		_userLocalService.updateStatus(
-			selectedUser.getUserId(), WorkflowConstants.STATUS_INACTIVE,
-			new ServiceContext());
+			_userLocalService.updateStatus(
+				selectedUser.getUserId(), WorkflowConstants.STATUS_INACTIVE,
+				new ServiceContext());
 
-		Group group = selectedUser.getGroup();
+			Group group = selectedUser.getGroup();
 
-		group.setActive(true);
+			group.setActive(true);
 
-		_groupLocalService.updateGroup(group);
+			_groupLocalService.updateGroup(group);
+		}
+		else {
+			SessionMessages.add(
+				actionRequest,
+				_portal.getPortletId(actionRequest) +
+					SessionMessages.KEY_SUFFIX_HIDE_DEFAULT_SUCCESS_MESSAGE);
+		}
+
+		LiferayPortletURL redirect = PortletURLFactoryUtil.create(
+			actionRequest, UserAssociatedDataPortletKeys.USER_ASSOCIATED_DATA,
+			PortletRequest.RENDER_PHASE);
+
+		redirect.setParameter(
+			"p_u_i_d", String.valueOf(selectedUser.getUserId()));
+
+		String mvcRenderCommandName = "/review_uad_data";
+
+		if (_uadApplicationSummaryHelper.getTotalReviewableUADEntitiesCount(
+				selectedUser.getUserId()) == 0) {
+
+			mvcRenderCommandName = "/anonymize_nonreviewable_uad_data";
+		}
+
+		redirect.setParameter("mvcRenderCommandName", mvcRenderCommandName);
+
+		actionResponse.sendRedirect(redirect.toString());
 	}
 
 	@Reference
 	private GroupLocalService _groupLocalService;
 
 	@Reference
+	private Portal _portal;
+
+	@Reference
 	private SelectedUserHelper _selectedUserHelper;
+
+	@Reference
+	private UADApplicationSummaryHelper _uadApplicationSummaryHelper;
+
+	@Reference
+	private UADRegistry _uadRegistry;
 
 	@Reference
 	private UserGroupLocalService _userGroupLocalService;

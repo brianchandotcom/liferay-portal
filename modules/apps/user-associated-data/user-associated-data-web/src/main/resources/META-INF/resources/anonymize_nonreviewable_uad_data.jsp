@@ -22,12 +22,9 @@ SearchContainer<UADApplicationSummaryDisplay> uadApplicationSummarySearchContain
 
 portletDisplay.setShowBackIcon(true);
 
-PortletURL backURL = renderResponse.createRenderURL();
+LiferayPortletURL usersAdminURL = liferayPortletResponse.createLiferayPortletURL(UsersAdminPortletKeys.USERS_ADMIN, PortletRequest.RENDER_PHASE);
 
-backURL.setParameter("mvcRenderCommandName", "/view_uad_summary");
-backURL.setParameter("p_u_i_d", String.valueOf(selectedUser.getUserId()));
-
-portletDisplay.setURLBack(backURL.toString());
+portletDisplay.setURLBack(usersAdminURL.toString());
 
 renderResponse.setTitle(StringBundler.concat(selectedUser.getFullName(), " - ", LanguageUtil.get(request, "personal-data-erasure")));
 %>
@@ -69,46 +66,55 @@ renderResponse.setTitle(StringBundler.concat(selectedUser.getFullName(), " - ", 
 			</div>
 
 			<div class="sheet-section">
-				<h3 class="sheet-subtitle"><liferay-ui:message key="applications" /></h3>
-
-				<liferay-ui:search-container
-					compactEmptyResultsMessage="<%= true %>"
-					searchContainer="<%= uadApplicationSummarySearchContainer %>"
-				>
-					<liferay-ui:search-container-row
-						className="com.liferay.user.associated.data.web.internal.display.UADApplicationSummaryDisplay"
-						escapedModel="<%= true %>"
-						keyProperty="key"
-						modelVar="uadApplicationSummaryDisplay"
-					>
-						<liferay-ui:search-container-column-text
-							cssClass="table-cell-expand table-list-title"
-							name="name"
-							value="<%= UADLanguageUtil.getApplicationName(uadApplicationSummaryDisplay.getApplicationKey(), locale) %>"
+				<c:choose>
+					<c:when test="<%= totalReviewableUADEntitiesCount == 0 %>">
+						<liferay-ui:empty-result-message
+							message="all-data-that-does-not-require-review-has-been-anonymized"
 						/>
+					</c:when>
+					<c:otherwise>
+						<h3 class="sheet-subtitle"><liferay-ui:message key="applications" /></h3>
 
-						<liferay-ui:search-container-column-text
-							cssClass="table-cell-expand"
-							name="items"
-							property="count"
-						/>
-
-						<liferay-ui:search-container-column-text
-							cssClass="table-cell-expand"
-							name="status"
+						<liferay-ui:search-container
+							compactEmptyResultsMessage="<%= true %>"
+							searchContainer="<%= uadApplicationSummarySearchContainer %>"
 						>
-							<clay:label
-								label='<%= uadApplicationSummaryDisplay.hasItems() ? StringUtil.toUpperCase(LanguageUtil.get(request, "pending"), locale) : StringUtil.toUpperCase(LanguageUtil.get(request, "done"), locale) %>'
-								style='<%= uadApplicationSummaryDisplay.hasItems() ? "warning" : "success" %>'
-							/>
-						</liferay-ui:search-container-column-text>
-					</liferay-ui:search-container-row>
+							<liferay-ui:search-container-row
+								className="com.liferay.user.associated.data.web.internal.display.UADApplicationSummaryDisplay"
+								escapedModel="<%= true %>"
+								keyProperty="key"
+								modelVar="uadApplicationSummaryDisplay"
+							>
+								<liferay-ui:search-container-column-text
+									cssClass="table-cell-expand table-list-title"
+									name="name"
+									value="<%= UADLanguageUtil.getApplicationName(uadApplicationSummaryDisplay.getApplicationKey(), locale) %>"
+								/>
 
-					<liferay-ui:search-iterator
-						markupView="lexicon"
-						searchResultCssClass="show-quick-actions-on-hover table table-autofit"
-					/>
-				</liferay-ui:search-container>
+								<liferay-ui:search-container-column-text
+									cssClass="table-cell-expand"
+									name="items"
+									property="count"
+								/>
+
+								<liferay-ui:search-container-column-text
+									cssClass="table-cell-expand"
+									name="status"
+								>
+									<clay:label
+										label='<%= uadApplicationSummaryDisplay.hasItems() ? StringUtil.toUpperCase(LanguageUtil.get(request, "pending"), locale) : StringUtil.toUpperCase(LanguageUtil.get(request, "done"), locale) %>'
+										style='<%= uadApplicationSummaryDisplay.hasItems() ? "warning" : "success" %>'
+									/>
+								</liferay-ui:search-container-column-text>
+							</liferay-ui:search-container-row>
+
+							<liferay-ui:search-iterator
+								markupView="lexicon"
+								searchResultCssClass="show-quick-actions-on-hover table table-autofit"
+							/>
+						</liferay-ui:search-container>
+					</c:otherwise>
+				</c:choose>
 			</div>
 		</div>
 	</aui:form>

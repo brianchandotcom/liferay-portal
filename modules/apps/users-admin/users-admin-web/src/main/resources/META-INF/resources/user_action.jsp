@@ -159,10 +159,21 @@ long userId = user2.getUserId();
 		for (UserActionContributor userActionContributor : filteredUserActionContributors) {
 		%>
 
-			<liferay-ui:icon
-				message="<%= userActionContributor.getMessage(liferayPortletRequest) %>"
-				url="<%= userActionContributor.getURL(liferayPortletRequest, liferayPortletResponse, user, user2) %>"
-			/>
+			<c:choose>
+				<c:when test="<%= userActionContributor.isShowConfirmationMessage(user2) %>">
+					<liferay-ui:icon-delete
+						confirmation="<%= userActionContributor.getConfirmationMessage(liferayPortletRequest) %>"
+						message="<%= userActionContributor.getMessage(liferayPortletRequest) %>"
+						url="<%= userActionContributor.getURL(liferayPortletRequest, liferayPortletResponse, user, user2) %>"
+					/>
+				</c:when>
+				<c:otherwise>
+					<liferay-ui:icon
+						message="<%= userActionContributor.getMessage(liferayPortletRequest) %>"
+						url="<%= userActionContributor.getURL(liferayPortletRequest, liferayPortletResponse, user, user2) %>"
+					/>
+				</c:otherwise>
+			</c:choose>
 
 		<%
 		}

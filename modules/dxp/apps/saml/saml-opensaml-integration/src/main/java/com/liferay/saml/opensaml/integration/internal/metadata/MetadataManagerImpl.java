@@ -36,9 +36,6 @@ import com.liferay.saml.runtime.configuration.SamlProviderConfigurationHelper;
 import com.liferay.saml.runtime.metadata.LocalEntityManager;
 import com.liferay.saml.util.SamlHttpRequestUtil;
 
-import java.security.cert.CertificateEncodingException;
-import java.security.cert.X509Certificate;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -48,8 +45,6 @@ import net.shibboleth.utilities.java.support.component.ComponentInitializationEx
 import net.shibboleth.utilities.java.support.resolver.CriteriaSet;
 import net.shibboleth.utilities.java.support.resolver.ResolverException;
 import net.shibboleth.utilities.java.support.xml.ParserPool;
-
-import org.apache.xml.security.utils.Base64;
 
 import org.opensaml.core.config.ConfigurationService;
 import org.opensaml.core.criterion.EntityIdCriterion;
@@ -62,21 +57,16 @@ import org.opensaml.saml.common.binding.security.impl.SAMLProtocolMessageXMLSign
 import org.opensaml.saml.common.messaging.context.navigate.SAMLMessageContextAuthenticationFunction;
 import org.opensaml.saml.common.messaging.context.navigate.SAMLMessageContextIssuerFunction;
 import org.opensaml.saml.common.xml.SAMLConstants;
-import org.opensaml.saml.criterion.EntityRoleCriterion;
-import org.opensaml.saml.criterion.ProtocolCriterion;
 import org.opensaml.saml.metadata.resolver.MetadataResolver;
 import org.opensaml.saml.metadata.resolver.impl.PredicateRoleDescriptorResolver;
 import org.opensaml.saml.saml2.binding.security.impl.SAML2HTTPPostSimpleSignSecurityHandler;
 import org.opensaml.saml.saml2.binding.security.impl.SAML2HTTPRedirectDeflateSignatureSecurityHandler;
 import org.opensaml.saml.saml2.metadata.EntityDescriptor;
-import org.opensaml.saml.saml2.metadata.IDPSSODescriptor;
-import org.opensaml.saml.saml2.metadata.RoleDescriptor;
 import org.opensaml.saml.security.impl.MetadataCredentialResolver;
 import org.opensaml.security.credential.Credential;
 import org.opensaml.security.credential.CredentialResolver;
 import org.opensaml.security.credential.UsageType;
 import org.opensaml.security.criteria.UsageCriterion;
-import org.opensaml.security.x509.X509Credential;
 import org.opensaml.xmlsec.DecryptionConfiguration;
 import org.opensaml.xmlsec.SecurityConfigurationSupport;
 import org.opensaml.xmlsec.SignatureValidationConfiguration;
@@ -99,13 +89,10 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
  */
 @Component(
 	immediate = true,
-	service = {
-		LocalEntityManager.class, MetadataManager.class,
-		SamlHttpRequestUtil.class
-	}
+	service = {MetadataManager.class, SamlHttpRequestUtil.class}
 )
 public class MetadataManagerImpl
-	implements LocalEntityManager, MetadataManager, SamlHttpRequestUtil {
+	implements MetadataManager, SamlHttpRequestUtil {
 
 	@Activate
 	public void activate() throws ComponentInitializationException {
@@ -212,29 +199,9 @@ public class MetadataManagerImpl
 	}
 
 	@Override
-	public String getEncodedLocalEntityCertificate(
-			CertificateUsage certificateUsage)
-		throws SamlException {
-
-		try {
-			X509Certificate x509Certificate = getLocalEntityCertificate(
-				certificateUsage);
-
-			if (x509Certificate == null) {
-				return null;
-			}
-
-			return Base64.encode(x509Certificate.getEncoded(), 76);
-		}
-		catch (CertificateEncodingException cee) {
-			throw new SamlException(cee);
-		}
-	}
-
-	@Override
 	public Credential getEncryptionCredential() throws SamlException {
 		try {
-			String entityId = getLocalEntityId();
+			String entityId = _localEntityManager.getLocalEntityId();
 
 			if (Validator.isNull(entityId)) {
 				return null;
@@ -270,16 +237,17 @@ public class MetadataManagerImpl
 
 		try {
 			String portalURL = _portal.getPortalURL(request, isSSLRequired());
+			String localEntityId = _localEntityManager.getLocalEntityId();
 
 			if (_samlProviderConfigurationHelper.isRoleIdp()) {
 				return MetadataGeneratorUtil.buildIdpEntityDescriptor(
-					portalURL, getLocalEntityId(), isWantAuthnRequestSigned(),
+					portalURL, localEntityId, isWantAuthnRequestSigned(),
 					isSignMetadata(), getSigningCredential(),
 					encryptionCredential);
 			}
 			else if (_samlProviderConfigurationHelper.isRoleSp()) {
 				return MetadataGeneratorUtil.buildSpEntityDescriptor(
-					portalURL, getLocalEntityId(), isSignAuthnRequest(),
+					portalURL, localEntityId, isSignAuthnRequest(),
 					isSignMetadata(), isWantAssertionsSigned(),
 					getSigningCredential(), encryptionCredential);
 			}
@@ -303,37 +271,6 @@ public class MetadataManagerImpl
 		catch (Exception e) {
 			throw new SamlException(e);
 		}
-	}
-
-	@Override
-	public X509Certificate getLocalEntityCertificate(
-			CertificateUsage certificateUsage)
-		throws SamlException {
-
-		X509Credential x509Credential;
-
-		if (certificateUsage == CertificateUsage.ENCRYPTION) {
-			x509Credential = (X509Credential)getEncryptionCredential();
-		}
-		else if (certificateUsage == CertificateUsage.SIGNING) {
-			x509Credential = (X509Credential)getSigningCredential();
-		}
-		else {
-			x509Credential = null;
-		}
-
-		X509Certificate x509Certificate = null;
-
-		if (x509Credential != null) {
-			x509Certificate = x509Credential.getEntityCertificate();
-		}
-
-		return x509Certificate;
-	}
-
-	@Override
-	public String getLocalEntityId() {
-		return getSamlProviderConfiguration().entityId();
 	}
 
 	@Override
@@ -509,7 +446,7 @@ public class MetadataManagerImpl
 	@Override
 	public Credential getSigningCredential() throws SamlException {
 		try {
-			String entityId = getLocalEntityId();
+			String entityId = _localEntityManager.getLocalEntityId();
 
 			if (Validator.isNull(entityId)) {
 				return null;
@@ -543,19 +480,6 @@ public class MetadataManagerImpl
 		}
 
 		return null;
-	}
-
-	@Override
-	public boolean hasDefaultIdpRole() {
-		List<SamlSpIdpConnection> samlSpIdpConnections =
-			_samlSpIdpConnectionLocalService.getSamlSpIdpConnections(
-				CompanyThreadLocal.getCompanyId());
-
-		if (samlSpIdpConnections.isEmpty()) {
-			return false;
-		}
-
-		return true;
 	}
 
 	@Override
@@ -692,6 +616,10 @@ public class MetadataManagerImpl
 	private ChainingSignatureTrustEngine _chainingSignatureTrustEngine;
 	private CredentialResolver _credentialResolver;
 	private Http _http;
+
+	@Reference
+	private LocalEntityManager _localEntityManager;
+
 	private MetadataCredentialResolver _metadataCredentialResolver;
 	private ParserPool _parserPool;
 	private Portal _portal;

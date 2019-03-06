@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.model.LayoutTypePortlet;
 import com.liferay.portal.kernel.service.LayoutPrototypeLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.LocalizationUtil;
 
 import java.util.List;
 import java.util.Locale;
@@ -37,10 +38,15 @@ public class LayoutPrototypeHelperUtil {
 			List<LayoutPrototype> layoutPrototypes)
 		throws Exception {
 
-		String name = nameMap.get(LocaleUtil.getDefault());
-
 		for (LayoutPrototype layoutPrototype : layoutPrototypes) {
-			String curName = layoutPrototype.getName(LocaleUtil.getDefault());
+			String nameXML = layoutPrototype.getName();
+
+			Locale defaultLocale = LocaleUtil.fromLanguageId(
+				LocalizationUtil.getDefaultLanguageId(nameXML));
+
+			String name = nameMap.get(defaultLocale);
+
+			String curName = layoutPrototype.getName(defaultLocale);
 
 			if ((name == null) || name.equals(curName)) {
 				return null;

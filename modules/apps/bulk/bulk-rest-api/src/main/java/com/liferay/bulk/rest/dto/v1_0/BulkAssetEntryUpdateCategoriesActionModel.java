@@ -186,20 +186,6 @@ public class BulkAssetEntryUpdateCategoriesActionModel {
 		sb.append(append);
 		sb.append(", ");
 
-		sb.append("\"toAddCategoryIds\": ");
-
-		sb.append("\"");
-		sb.append(toAddCategoryIds);
-		sb.append("\"");
-		sb.append(", ");
-
-		sb.append("\"toRemoveCategoryIds\": ");
-
-		sb.append("\"");
-		sb.append(toRemoveCategoryIds);
-		sb.append("\"");
-		sb.append(", ");
-
 		sb.append("\"folderId\": ");
 
 		sb.append(folderId);
@@ -219,6 +205,20 @@ public class BulkAssetEntryUpdateCategoriesActionModel {
 
 		sb.append("\"");
 		sb.append(selection);
+		sb.append("\"");
+		sb.append(", ");
+
+		sb.append("\"toAddCategoryIds\": ");
+
+		sb.append("\"");
+		sb.append(toAddCategoryIds);
+		sb.append("\"");
+		sb.append(", ");
+
+		sb.append("\"toRemoveCategoryIds\": ");
+
+		sb.append("\"");
+		sb.append(toRemoveCategoryIds);
 		sb.append("\"");
 
 		sb.append("}");

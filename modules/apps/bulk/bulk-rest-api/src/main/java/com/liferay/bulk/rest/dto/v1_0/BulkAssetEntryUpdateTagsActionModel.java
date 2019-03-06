@@ -186,20 +186,6 @@ public class BulkAssetEntryUpdateTagsActionModel {
 		sb.append(append);
 		sb.append(", ");
 
-		sb.append("\"toAddTagNames\": ");
-
-		sb.append("\"");
-		sb.append(toAddTagNames);
-		sb.append("\"");
-		sb.append(", ");
-
-		sb.append("\"toRemoveTagNames\": ");
-
-		sb.append("\"");
-		sb.append(toRemoveTagNames);
-		sb.append("\"");
-		sb.append(", ");
-
 		sb.append("\"folderId\": ");
 
 		sb.append(folderId);
@@ -219,6 +205,20 @@ public class BulkAssetEntryUpdateTagsActionModel {
 
 		sb.append("\"");
 		sb.append(selection);
+		sb.append("\"");
+		sb.append(", ");
+
+		sb.append("\"toAddTagNames\": ");
+
+		sb.append("\"");
+		sb.append(toAddTagNames);
+		sb.append("\"");
+		sb.append(", ");
+
+		sb.append("\"toRemoveTagNames\": ");
+
+		sb.append("\"");
+		sb.append(toRemoveTagNames);
 		sb.append("\"");
 
 		sb.append("}");

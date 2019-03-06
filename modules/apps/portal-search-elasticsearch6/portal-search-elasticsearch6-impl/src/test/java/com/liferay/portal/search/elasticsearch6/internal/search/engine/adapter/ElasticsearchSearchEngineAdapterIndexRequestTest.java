@@ -47,6 +47,7 @@ import com.liferay.portal.search.engine.adapter.index.RefreshIndexResponse;
 import com.liferay.portal.search.engine.adapter.index.UpdateIndexSettingsIndexRequest;
 import com.liferay.portal.search.engine.adapter.index.UpdateIndexSettingsIndexResponse;
 
+import java.util.Arrays;
 import java.util.Map;
 
 import org.elasticsearch.action.admin.cluster.state.ClusterStateAction;
@@ -244,7 +245,7 @@ public class ElasticsearchSearchEngineAdapterIndexRequestTest {
 
 		String[] indexNames = getIndexIndexResponse.getIndexNames();
 
-		Assert.assertEquals(1, indexNames.length);
+		Assert.assertEquals(Arrays.toString(indexNames), 1, indexNames.length);
 		Assert.assertEquals(_INDEX_NAME, indexNames[0]);
 	}
 

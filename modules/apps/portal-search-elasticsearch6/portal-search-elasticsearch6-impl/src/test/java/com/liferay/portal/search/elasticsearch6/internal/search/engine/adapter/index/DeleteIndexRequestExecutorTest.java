@@ -18,6 +18,8 @@ import com.liferay.portal.search.elasticsearch6.internal.connection.Elasticsearc
 import com.liferay.portal.search.engine.adapter.index.DeleteIndexRequest;
 import com.liferay.portal.search.engine.adapter.index.IndicesOptions;
 
+import java.util.Arrays;
+
 import org.elasticsearch.action.admin.indices.delete.DeleteIndexRequestBuilder;
 
 import org.junit.After;
@@ -77,7 +79,7 @@ public class DeleteIndexRequestExecutorTest {
 
 		String[] indices = elasticsearchDeleteIndexRequest.indices();
 
-		Assert.assertEquals(2, indices.length);
+		Assert.assertEquals(Arrays.toString(indices), 2, indices.length);
 		Assert.assertEquals(_INDEX_NAME_1, indices[0]);
 		Assert.assertEquals(_INDEX_NAME_2, indices[1]);
 

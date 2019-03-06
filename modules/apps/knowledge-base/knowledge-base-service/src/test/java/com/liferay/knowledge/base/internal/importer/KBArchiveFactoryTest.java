@@ -166,7 +166,7 @@ public class KBArchiveFactoryTest {
 
 		Collection<File> files1 = folder1.getFiles();
 
-		Assert.assertEquals(1, files1.size());
+		Assert.assertEquals(files1.toString(), 1, files1.size());
 
 		KBArchive.Folder folder2 = folderIterator.next();
 
@@ -176,7 +176,7 @@ public class KBArchiveFactoryTest {
 
 		Collection<File> files2 = folder2.getFiles();
 
-		Assert.assertEquals(2, files2.size());
+		Assert.assertEquals(files2.toString(), 2, files2.size());
 	}
 
 	@Test(expected = KBArticleImportException.class)

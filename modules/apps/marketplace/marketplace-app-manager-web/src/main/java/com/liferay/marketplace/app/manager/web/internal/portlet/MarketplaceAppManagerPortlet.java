@@ -202,7 +202,7 @@ public class MarketplaceAppManagerPortlet extends MVCPortlet {
 			}
 		}
 		catch (MalformedURLException murle) {
-			SessionErrors.add(actionRequest, "invalidURL", murle);
+			SessionErrors.add(actionRequest, "invalidUrl", murle);
 		}
 	}
 

@@ -1,4 +1,48 @@
 /**
+ * List of editable types and their compatibilities
+ * with the corresponding mappeable types
+ * @review
+ * @see DDMStructureClassType.java for compatible types
+ * @type {!object}
+ */
+
+export const COMPATIBLE_TYPES = {
+	'html': [
+		'ddm-date',
+		'ddm-decimal',
+		'ddm-integer',
+		'ddm-number',
+		'ddm-text-html',
+		'text',
+		'textarea'
+	],
+
+	'image': [
+		'ddm-image',
+		'image'
+	],
+
+	'rich-text': [
+		'ddm-date',
+		'ddm-decimal',
+		'ddm-integer',
+		'ddm-number',
+		'ddm-text-html',
+		'text',
+		'textarea'
+	],
+
+	'text': [
+		'ddm-date',
+		'ddm-decimal',
+		'ddm-integer',
+		'ddm-number',
+		'text',
+		'textarea'
+	]
+};
+
+/**
  * FloatingToolbar panels
  */
 export const FLOATING_TOOLBAR_PANELS = {

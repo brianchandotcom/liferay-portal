@@ -2,54 +2,11 @@ import {Config} from 'metal-state';
 import PortletBase from 'frontend-js-web/liferay/PortletBase.es';
 import Soy from 'metal-soy';
 
+import {COMPATIBLE_TYPES} from '../../utils/constants';
 import {HIDE_MAPPING_DIALOG, UPDATE_EDITABLE_VALUE} from '../../actions/actions.es';
 import {Store} from '../../store/store.es';
 import templates from './SelectMappingDialog.soy';
 import {setIn} from '../../utils/FragmentsEditorUpdateUtils.es';
-
-/**
- * List of editable types and their compatibilities
- * with the corresponding mappeable types
- * @review
- * @see DDMStructureClassType.java for compatible types
- * @type {!object}
- */
-
-const COMPATIBLE_TYPES = {
-	'html': [
-		'ddm-date',
-		'ddm-decimal',
-		'ddm-integer',
-		'ddm-number',
-		'ddm-text-html',
-		'text',
-		'textarea'
-	],
-
-	'image': [
-		'ddm-image',
-		'image'
-	],
-
-	'rich-text': [
-		'ddm-date',
-		'ddm-decimal',
-		'ddm-integer',
-		'ddm-number',
-		'ddm-text-html',
-		'text',
-		'textarea'
-	],
-
-	'text': [
-		'ddm-date',
-		'ddm-decimal',
-		'ddm-integer',
-		'ddm-number',
-		'text',
-		'textarea'
-	]
-};
 
 /**
  * SelectMappingDialog

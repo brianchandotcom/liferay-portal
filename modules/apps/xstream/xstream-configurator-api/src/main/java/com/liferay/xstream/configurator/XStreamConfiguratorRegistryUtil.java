@@ -69,7 +69,7 @@ public class XStreamConfiguratorRegistryUtil {
 			classLoaders.toArray(new ClassLoader[classLoaders.size()]));
 	}
 
-	public static long getLastModifiedCount() {
+	public static long getModifiedCount() {
 		return _modifiedCount.get();
 	}
 

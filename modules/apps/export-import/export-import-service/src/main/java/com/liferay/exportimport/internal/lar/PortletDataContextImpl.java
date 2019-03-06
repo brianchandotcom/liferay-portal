@@ -2791,8 +2791,7 @@ public class PortletDataContextImpl implements PortletDataContext {
 			XStreamConfiguratorRegistryUtil.getConfiguratorsClassLoader(
 				XStream.class.getClassLoader());
 
-		long modifiedCount =
-			XStreamConfiguratorRegistryUtil.getLastModifiedCount();
+		long modifiedCount = XStreamConfiguratorRegistryUtil.getModifiedCount();
 
 		if ((_xStream != null) && (_modifiedCount == modifiedCount) &&
 			classLoader.equals(_classLoader)) {

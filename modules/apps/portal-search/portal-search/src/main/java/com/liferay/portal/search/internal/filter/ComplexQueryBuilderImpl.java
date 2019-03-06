@@ -23,7 +23,7 @@ import com.liferay.portal.search.query.Queries;
 import com.liferay.portal.search.query.Query;
 import com.liferay.portal.search.query.SimpleStringQuery;
 import com.liferay.portal.search.query.StringQuery;
-import com.liferay.portal.search.script.Script;
+import com.liferay.portal.search.script.Scripts;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -39,8 +39,9 @@ import java.util.stream.Collectors;
  */
 public class ComplexQueryBuilderImpl implements ComplexQueryBuilder {
 
-	public ComplexQueryBuilderImpl(Queries queries) {
+	public ComplexQueryBuilderImpl(Queries queries, Scripts scripts) {
 		_queries = queries;
+		_scripts = scripts;
 	}
 
 	@Override
@@ -78,6 +79,7 @@ public class ComplexQueryBuilderImpl implements ComplexQueryBuilder {
 	private BooleanQuery _booleanQuery;
 	private final List<ComplexQueryPart> _complexQueryParts = new ArrayList<>();
 	private final Queries _queries;
+	private final Scripts _scripts;
 
 	private class Build {
 
@@ -187,7 +189,7 @@ public class ComplexQueryBuilderImpl implements ComplexQueryBuilder {
 			}
 
 			if ("script".equals(type)) {
-				return _queries.script(new Script("painless", value));
+				return _queries.script(_scripts.script(value));
 			}
 
 			if ("simple_query_string".equals(type)) {

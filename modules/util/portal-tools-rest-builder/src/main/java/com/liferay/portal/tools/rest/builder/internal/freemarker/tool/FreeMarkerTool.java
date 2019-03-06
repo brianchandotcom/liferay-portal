@@ -106,7 +106,9 @@ public class FreeMarkerTool {
 		return OpenAPIParserUtil.getHTTPMethod(operation);
 	}
 
-	public String getParentClass(OpenAPIYAML openAPIYAML, String schemaName) {
+	public String getDTOParentClass(
+		OpenAPIYAML openAPIYAML, String schemaName) {
+
 		Components components = openAPIYAML.getComponents();
 
 		Map<String, Schema> schemas = components.getSchemas();

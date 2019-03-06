@@ -15,6 +15,8 @@
 package com.liferay.password.policies.admin.web.internal.portlet;
 
 import com.liferay.password.policies.admin.constants.PasswordPoliciesAdminPortletKeys;
+import com.liferay.password.policies.admin.web.internal.configuration.PasswordPoliciesConfiguration;
+import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.exception.DuplicatePasswordPolicyException;
 import com.liferay.portal.kernel.exception.NoSuchPasswordPolicyException;
 import com.liferay.portal.kernel.exception.PasswordPolicyNameException;
@@ -37,6 +39,8 @@ import com.liferay.portal.kernel.util.WebKeys;
 
 import java.io.IOException;
 
+import java.util.Map;
+
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.Portlet;
@@ -44,7 +48,9 @@ import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
 
 /**
@@ -53,6 +59,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Drew Brokke
  */
 @Component(
+	configurationPid = "com.liferay.password.policies.admin.web.internal.configuration.PasswordPoliciesConfiguration",
 	immediate = true,
 	property = {
 		"com.liferay.portlet.css-class-wrapper=portlet-users-admin",
@@ -222,10 +229,21 @@ public class PasswordPoliciesAdminPortlet extends MVCPortlet {
 		}
 	}
 
+	@Activate
+	@Modified
+	protected void activate(Map<String, Object> properties) {
+		_passwordPoliciesConfiguration = ConfigurableUtil.createConfigurable(
+			PasswordPoliciesConfiguration.class, properties);
+	}
+
 	@Override
 	protected void doDispatch(
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws IOException, PortletException {
+
+		renderRequest.setAttribute(
+			PasswordPoliciesConfiguration.class.getName(),
+			_passwordPoliciesConfiguration);
 
 		if (SessionErrors.contains(
 				renderRequest, NoSuchPasswordPolicyException.class.getName()) ||
@@ -285,6 +303,8 @@ public class PasswordPoliciesAdminPortlet extends MVCPortlet {
 	private Http _http;
 
 	private OrganizationService _organizationService;
+	private volatile PasswordPoliciesConfiguration
+		_passwordPoliciesConfiguration;
 	private PasswordPolicyService _passwordPolicyService;
 	private UserService _userService;
 

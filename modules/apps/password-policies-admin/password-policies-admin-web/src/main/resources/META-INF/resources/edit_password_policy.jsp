@@ -80,10 +80,10 @@ renderResponse.setTitle(passwordPolicy.isNew() ? LanguageUtil.get(request, "new-
 							<aui:option label="none" value="0" />
 
 							<%
-							for (int i = 0; i < 15; i++) {
+							for (long duration : passwordPoliciesConfiguration.minimumAgeDurations()) {
 							%>
 
-								<aui:option label="<%= LanguageUtil.getTimeDescription(request, _DURATIONS[i] * 1000) %>" value="<%= _DURATIONS[i] %>" />
+								<aui:option label="<%= LanguageUtil.getTimeDescription(request, duration * 1000) %>" value="<%= duration %>" />
 
 							<%
 							}
@@ -96,10 +96,10 @@ renderResponse.setTitle(passwordPolicy.isNew() ? LanguageUtil.get(request, "new-
 						<aui:option label="eternal" value="0" />
 
 						<%
-						for (int i = 0; i < 15; i++) {
+						for (long duration : passwordPoliciesConfiguration.resetTicketMaxAgeDurations()) {
 						%>
 
-							<aui:option label="<%= LanguageUtil.getTimeDescription(request, _DURATIONS[i] * 1000) %>" value="<%= _DURATIONS[i] %>" />
+							<aui:option label="<%= LanguageUtil.getTimeDescription(request, duration * 1000) %>" value="<%= duration %>" />
 
 						<%
 						}
@@ -188,10 +188,10 @@ renderResponse.setTitle(passwordPolicy.isNew() ? LanguageUtil.get(request, "new-
 						<aui:select helpMessage="maximum-age-help" label="maximum-age" name="maxAge">
 
 							<%
-							for (int i = 15; i < _DURATIONS.length; i++) {
+							for (long duration : passwordPoliciesConfiguration.maximumAgeDurations()) {
 							%>
 
-								<aui:option label="<%= LanguageUtil.getTimeDescription(request, _DURATIONS[i] * 1000) %>" value="<%= _DURATIONS[i] %>" />
+								<aui:option label="<%= LanguageUtil.getTimeDescription(request, duration * 1000) %>" value="<%= duration %>" />
 
 							<%
 							}
@@ -202,10 +202,10 @@ renderResponse.setTitle(passwordPolicy.isNew() ? LanguageUtil.get(request, "new-
 						<aui:select helpMessage="warning-time-help" name="warningTime">
 
 							<%
-							for (int i = 7; i < 16; i++) {
+							for (long duration : passwordPoliciesConfiguration.expirationWarningTimeDurations()) {
 							%>
 
-								<aui:option label="<%= LanguageUtil.getTimeDescription(request, _DURATIONS[i] * 1000) %>" value="<%= _DURATIONS[i] %>" />
+								<aui:option label="<%= LanguageUtil.getTimeDescription(request, duration * 1000) %>" value="<%= duration %>" />
 
 							<%
 							}
@@ -236,10 +236,10 @@ renderResponse.setTitle(passwordPolicy.isNew() ? LanguageUtil.get(request, "new-
 						<aui:select helpMessage="reset-failure-count-help" name="resetFailureCount">
 
 							<%
-							for (int i = 0; i < 15; i++) {
+							for (long duration : passwordPoliciesConfiguration.resetFailureDurations()) {
 							%>
 
-								<aui:option label="<%= LanguageUtil.getTimeDescription(request, _DURATIONS[i] * 1000) %>" value="<%= _DURATIONS[i] %>" />
+								<aui:option label="<%= LanguageUtil.getTimeDescription(request, duration * 1000) %>" value="<%= duration %>" />
 
 							<%
 							}
@@ -251,10 +251,10 @@ renderResponse.setTitle(passwordPolicy.isNew() ? LanguageUtil.get(request, "new-
 							<aui:option label="until-unlocked-by-an-administrator" value="0" />
 
 							<%
-							for (int i = 0; i < 15; i++) {
+							for (long duration : passwordPoliciesConfiguration.lockoutDurations()) {
 							%>
 
-								<aui:option label="<%= LanguageUtil.getTimeDescription(request, _DURATIONS[i] * 1000) %>" value="<%= _DURATIONS[i] %>" />
+								<aui:option label="<%= LanguageUtil.getTimeDescription(request, duration * 1000) %>" value="<%= duration %>" />
 
 							<%
 							}
@@ -290,10 +290,6 @@ if (passwordPolicy != null) {
 else {
 	PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "add-user"), currentURL);
 }
-%>
-
-<%!
-private static final long[] _DURATIONS = {300, 600, 1800, 3600, 7200, 10800, 21600, 43200, 86400, 172800, 259200, 345600, 432000, 518400, 604800, 1209600, 1814400, 2419200, 4838400, 7862400, 15724800, 31449600};
 %>
 
 <%@ include file="/action/delete_password_policy.jspf" %>

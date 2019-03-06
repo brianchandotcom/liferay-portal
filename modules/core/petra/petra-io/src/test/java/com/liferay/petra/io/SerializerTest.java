@@ -99,9 +99,9 @@ public class SerializerTest {
 			bufferOutputStream.write(b);
 		}
 
-		byte[] result = serializer.toByteBuffer().array();
+		ByteBuffer byteBuffer = serializer.toByteBuffer();
 
-		Assert.assertArrayEquals(data, result);
+		Assert.assertArrayEquals(data, byteBuffer.array());
 
 		serializer = new Serializer();
 
@@ -109,9 +109,9 @@ public class SerializerTest {
 
 		bufferOutputStream.write(data);
 
-		result = serializer.toByteBuffer().array();
+		byteBuffer = serializer.toByteBuffer();
 
-		Assert.assertArrayEquals(data, result);
+		Assert.assertArrayEquals(data, byteBuffer.array());
 	}
 
 	@Test
@@ -438,7 +438,9 @@ public class SerializerTest {
 			serializer.writeBoolean(booleans[i]);
 		}
 
-		byte[] bytes = serializer.toByteBuffer().array();
+		ByteBuffer byteBuffer = serializer.toByteBuffer();
+
+		byte[] bytes = byteBuffer.array();
 
 		Assert.assertNull(_bufferField.get(serializer));
 
@@ -464,7 +466,9 @@ public class SerializerTest {
 			serializer.writeByte(bytes[i]);
 		}
 
-		Assert.assertArrayEquals(bytes, serializer.toByteBuffer().array());
+		ByteBuffer byteBuffer = serializer.toByteBuffer();
+
+		Assert.assertArrayEquals(bytes, byteBuffer.array());
 	}
 
 	@Test
@@ -487,9 +491,10 @@ public class SerializerTest {
 			charBuffer.put(chars[i]);
 		}
 
-		byte[] bytes = serializer.toByteBuffer().array();
+		ByteBuffer serializerByteBuffer = serializer.toByteBuffer();
 
-		Assert.assertArrayEquals(byteBuffer.array(), bytes);
+		Assert.assertArrayEquals(
+			byteBuffer.array(), serializerByteBuffer.array());
 	}
 
 	@Test
@@ -512,9 +517,10 @@ public class SerializerTest {
 			doubleBuffer.put(doubles[i]);
 		}
 
-		byte[] bytes = serializer.toByteBuffer().array();
+		ByteBuffer serializerByteBuffer = serializer.toByteBuffer();
 
-		Assert.assertArrayEquals(byteBuffer.array(), bytes);
+		Assert.assertArrayEquals(
+			byteBuffer.array(), serializerByteBuffer.array());
 	}
 
 	@Test
@@ -537,9 +543,10 @@ public class SerializerTest {
 			floatBuffer.put(floats[i]);
 		}
 
-		byte[] bytes = serializer.toByteBuffer().array();
+		ByteBuffer serializerByteBuffer = serializer.toByteBuffer();
 
-		Assert.assertArrayEquals(byteBuffer.array(), bytes);
+		Assert.assertArrayEquals(
+			byteBuffer.array(), serializerByteBuffer.array());
 	}
 
 	@Test
@@ -562,9 +569,10 @@ public class SerializerTest {
 			intBuffer.put(ints[i]);
 		}
 
-		byte[] bytes = serializer.toByteBuffer().array();
+		ByteBuffer serializerByteBuffer = serializer.toByteBuffer();
 
-		Assert.assertArrayEquals(byteBuffer.array(), bytes);
+		Assert.assertArrayEquals(
+			byteBuffer.array(), serializerByteBuffer.array());
 	}
 
 	@Test
@@ -587,9 +595,10 @@ public class SerializerTest {
 			longBuffer.put(longs[i]);
 		}
 
-		byte[] bytes = serializer.toByteBuffer().array();
+		ByteBuffer serializerByteBuffer = serializer.toByteBuffer();
 
-		Assert.assertArrayEquals(byteBuffer.array(), bytes);
+		Assert.assertArrayEquals(
+			byteBuffer.array(), serializerByteBuffer.array());
 	}
 
 	@Test
@@ -904,9 +913,10 @@ public class SerializerTest {
 			shortBuffer.put(shorts[i]);
 		}
 
-		byte[] bytes = serializer.toByteBuffer().array();
+		ByteBuffer serializerByteBuffer = serializer.toByteBuffer();
 
-		Assert.assertArrayEquals(byteBuffer.array(), bytes);
+		Assert.assertArrayEquals(
+			byteBuffer.array(), serializerByteBuffer.array());
 	}
 
 	@Test

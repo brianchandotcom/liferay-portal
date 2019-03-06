@@ -170,6 +170,24 @@ public class ResourceOpenAPIParser {
 		return StringUtil.merge(methodAnnotations, "\n");
 	}
 
+	public static String getOAuth2ScopesParameters(
+		List<JavaMethodParameter> javaMethodParameters) {
+
+		StringBuilder sb = new StringBuilder();
+
+		for (JavaMethodParameter javaMethodParameter : javaMethodParameters) {
+			sb.append(javaMethodParameter.getParameterType());
+
+			sb.append(',');
+		}
+
+		if (sb.length() > 0) {
+			sb.setLength(sb.length() - 1);
+		}
+
+		return sb.toString();
+	}
+
 	public static String getParameters(
 		List<JavaMethodParameter> javaMethodParameters, Operation operation,
 		boolean annotation) {

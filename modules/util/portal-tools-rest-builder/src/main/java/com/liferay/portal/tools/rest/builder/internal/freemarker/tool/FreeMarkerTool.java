@@ -157,6 +157,13 @@ public class FreeMarkerTool {
 		return ResourceOpenAPIParser.getMethodAnnotations(javaMethodSignature);
 	}
 
+	public String getResourceOAuth2ScopesParameters(
+		List<JavaMethodParameter> javaMethodParameters) {
+
+		return ResourceOpenAPIParser.getOAuth2ScopesParameters(
+			javaMethodParameters);
+	}
+
 	public String getResourceParameters(
 		List<JavaMethodParameter> javaMethodParameters, Operation operation,
 		boolean annotation) {

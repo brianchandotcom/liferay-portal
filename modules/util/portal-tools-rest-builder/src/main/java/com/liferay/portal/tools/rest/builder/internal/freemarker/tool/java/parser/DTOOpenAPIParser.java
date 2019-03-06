@@ -94,12 +94,19 @@ public class DTOOpenAPIParser {
 		if (StringUtil.equals(type, "array") && (items != null) &&
 			StringUtil.equalsIgnoreCase(items.getType(), "object")) {
 
-			return OpenAPIParserUtil.getArrayClassName(
-				StringUtil.upperCaseFirstLetter(propertySchemaName));
+			String name = StringUtil.upperCaseFirstLetter(propertySchemaName);
+
+			if (javaDataTypeMap.containsKey(name)) {
+				return OpenAPIParserUtil.getArrayClassName(name);
+			}
 		}
 
 		if (StringUtil.equalsIgnoreCase(type, "object")) {
-			return StringUtil.upperCaseFirstLetter(propertySchemaName);
+			String name = StringUtil.upperCaseFirstLetter(propertySchemaName);
+
+			if (javaDataTypeMap.containsKey(name)) {
+				return name;
+			}
 		}
 
 		return OpenAPIParserUtil.getJavaDataType(

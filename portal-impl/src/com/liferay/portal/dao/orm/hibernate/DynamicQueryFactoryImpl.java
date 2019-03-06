@@ -14,17 +14,11 @@
 
 package com.liferay.portal.dao.orm.hibernate;
 
-import com.liferay.petra.concurrent.ConcurrentReferenceKeyHashMap;
-import com.liferay.petra.memory.FinalizeManager;
 import com.liferay.portal.kernel.annotation.ImplementationClassName;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQueryFactory;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-
-import java.util.HashMap;
-import java.util.Map;
-import java.util.concurrent.ConcurrentMap;
 
 import org.hibernate.criterion.DetachedCriteria;
 
@@ -125,31 +119,11 @@ public class DynamicQueryFactoryImpl implements DynamicQueryFactory {
 			String implClassName, ClassLoader classLoader)
 		throws ClassNotFoundException {
 
-		Map<String, Class<?>> classes = _classes.get(classLoader);
-
-		if (classes == null) {
-			classes = new HashMap<>();
-
-			_classes.put(classLoader, classes);
-		}
-
-		Class<?> clazz = classes.get(implClassName);
-
-		if (clazz == null) {
-			clazz = classLoader.loadClass(implClassName);
-
-			classes.put(implClassName, clazz);
-		}
-
-		return clazz;
+		return classLoader.loadClass(implClassName);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		DynamicQueryFactoryImpl.class);
-
-	private static final ConcurrentMap<ClassLoader, Map<String, Class<?>>>
-		_classes = new ConcurrentReferenceKeyHashMap<>(
-			FinalizeManager.WEAK_REFERENCE_FACTORY);
 
 	private final ClassLoader _portalClassLoader =
 		DynamicQueryFactoryImpl.class.getClassLoader();

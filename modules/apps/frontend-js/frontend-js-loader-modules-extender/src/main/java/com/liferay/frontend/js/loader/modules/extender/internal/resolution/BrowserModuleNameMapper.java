@@ -39,8 +39,8 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Rodolfo Roza Miranda
  */
-@Component(immediate = true, service = JSModuleNameMapper.class)
-public class JSModuleNameMapper {
+@Component(immediate = true, service = BrowserModuleNameMapper.class)
+public class BrowserModuleNameMapper {
 
 	public String mapModuleName(String moduleName) {
 		return mapModuleName(moduleName, null);
@@ -49,18 +49,18 @@ public class JSModuleNameMapper {
 	public String mapModuleName(
 		String moduleName, Map<String, String> dependenciesMap) {
 
-		JSModuleNameMapperCache jsModuleNameMapperCache =
-			_jsModuleNameMapperCache.get();
+		BrowserModuleNameMapperCache browserModuleNameMapperCache =
+			_browserModuleNameMapperCache.get();
 
-		if (jsModuleNameMapperCache.isOlderThan(
+		if (browserModuleNameMapperCache.isOlderThan(
 				_jsConfigGeneratorPackagesTracker.getLastModified())) {
 
 			_clearCache();
 
-			jsModuleNameMapperCache = _jsModuleNameMapperCache.get();
+			browserModuleNameMapperCache = _browserModuleNameMapperCache.get();
 		}
 
-		String mappedModuleName = jsModuleNameMapperCache.get(
+		String mappedModuleName = browserModuleNameMapperCache.get(
 			moduleName, dependenciesMap);
 
 		if (mappedModuleName != null) {
@@ -75,10 +75,10 @@ public class JSModuleNameMapper {
 		}
 
 		mappedModuleName = _map(
-			mappedModuleName, jsModuleNameMapperCache.getExactMatchMap(),
-			jsModuleNameMapperCache.getPartialMatchMap());
+			mappedModuleName, browserModuleNameMapperCache.getExactMatchMap(),
+			browserModuleNameMapperCache.getPartialMatchMap());
 
-		jsModuleNameMapperCache.put(
+		browserModuleNameMapperCache.put(
 			moduleName, dependenciesMap, mappedModuleName);
 
 		return mappedModuleName;
@@ -95,8 +95,8 @@ public class JSModuleNameMapper {
 	}
 
 	private void _clearCache() {
-		_jsModuleNameMapperCache.set(
-			new JSModuleNameMapperCache(
+		_browserModuleNameMapperCache.set(
+			new BrowserModuleNameMapperCache(
 				_getExactMatchMap(), _getPartialMatchMap()));
 	}
 
@@ -169,6 +169,9 @@ public class JSModuleNameMapper {
 		return moduleName;
 	}
 
+	private final AtomicReference<BrowserModuleNameMapperCache>
+		_browserModuleNameMapperCache = new AtomicReference<>();
+
 	private JSBundleTracker _jsBundleTracker = new JSBundleTracker() {
 
 		@Override
@@ -189,9 +192,6 @@ public class JSModuleNameMapper {
 
 	@Reference
 	private JSConfigGeneratorPackagesTracker _jsConfigGeneratorPackagesTracker;
-
-	private final AtomicReference<JSModuleNameMapperCache>
-		_jsModuleNameMapperCache = new AtomicReference<>();
 
 	@Reference
 	private NPMRegistry _npmRegistry;

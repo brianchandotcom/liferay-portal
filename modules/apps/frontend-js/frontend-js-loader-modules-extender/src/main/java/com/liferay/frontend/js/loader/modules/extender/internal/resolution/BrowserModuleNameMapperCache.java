@@ -23,9 +23,9 @@ import java.util.concurrent.ConcurrentHashMap;
 /**
  * @author Rodolfo Roza Miranda
  */
-public class JSModuleNameMapperCache {
+public class BrowserModuleNameMapperCache {
 
-	public JSModuleNameMapperCache(
+	public BrowserModuleNameMapperCache(
 		Map<String, String> exactMatchMap,
 		Map<String, String> partialMatchMap) {
 

@@ -29,9 +29,9 @@ import java.util.Set;
  * @author Rodolfo Roza Miranda
  * @review
  */
-public class JSModulesResolution {
+public class BrowserModulesResolution {
 
-	public JSModulesResolution(JSONFactory jsonFactory, boolean explain) {
+	public BrowserModulesResolution(JSONFactory jsonFactory, boolean explain) {
 		_jsonFactory = jsonFactory;
 
 		if (explain) {

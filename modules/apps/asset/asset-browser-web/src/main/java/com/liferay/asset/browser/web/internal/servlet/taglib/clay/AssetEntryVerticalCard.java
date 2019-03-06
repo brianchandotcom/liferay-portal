@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HtmlUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.HashMap;
@@ -122,6 +123,13 @@ public class AssetEntryVerticalCard implements VerticalCard {
 
 	@Override
 	public String getSubtitle() {
+		if (Validator.isNull(_assetBrowserDisplayContext.getTypeSelection())) {
+			return HtmlUtil.escape(
+				_assetRendererFactory.getTypeName(
+					_themeDisplay.getLocale(),
+					_assetBrowserDisplayContext.getSubtypeSelectionId()));
+		}
+
 		Group group = GroupLocalServiceUtil.fetchGroup(
 			_assetEntry.getGroupId());
 

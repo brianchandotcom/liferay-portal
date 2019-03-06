@@ -115,19 +115,9 @@
 					%>
 
 					<liferay-ui:search-container-column-text>
-						<c:choose>
-							<c:when test="<%= Validator.isNull(assetBrowserDisplayContext.getTypeSelection()) %>">
-								<clay:vertical-card
-									subtitle="<%= HtmlUtil.escape(assetRendererFactory.getTypeName(locale, assetBrowserDisplayContext.getSubtypeSelectionId())) %>"
-									verticalCard="<%= new AssetEntryVerticalCard(assetEntry, renderRequest, assetBrowserDisplayContext) %>"
-								/>
-							</c:when>
-							<c:otherwise>
-								<clay:vertical-card
-									verticalCard="<%= new AssetEntryVerticalCard(assetEntry, renderRequest, assetBrowserDisplayContext) %>"
-								/>
-							</c:otherwise>
-						</c:choose>
+						<clay:vertical-card
+							verticalCard="<%= new AssetEntryVerticalCard(assetEntry, renderRequest, assetBrowserDisplayContext) %>"
+						/>
 					</liferay-ui:search-container-column-text>
 				</c:when>
 				<c:when test='<%= Objects.equals(assetBrowserDisplayContext.getDisplayStyle(), "list") %>'>

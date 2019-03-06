@@ -159,7 +159,7 @@ public class YMLDefinitionOrderCheck extends BaseFileCheck {
 			Matcher matcher = _definitionKeyPattern.matcher(definition);
 
 			if (matcher.find()) {
-				return matcher.group(1);
+				return StringUtil.trim(matcher.group(1));
 			}
 
 			return definition;

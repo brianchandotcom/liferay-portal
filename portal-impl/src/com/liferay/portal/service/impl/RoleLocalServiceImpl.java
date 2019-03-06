@@ -17,6 +17,7 @@ package com.liferay.portal.service.impl;
 import com.liferay.admin.kernel.util.PortalMyAccountApplicationType;
 import com.liferay.exportimport.kernel.lar.ExportImportThreadLocal;
 import com.liferay.petra.string.CharPool;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.cache.thread.local.Lifecycle;
 import com.liferay.portal.kernel.cache.thread.local.ThreadLocalCachable;
 import com.liferay.portal.kernel.cache.thread.local.ThreadLocalCache;
@@ -65,6 +66,7 @@ import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.security.permission.PermissionCacheUtil;
 import com.liferay.portal.service.base.RoleLocalServiceBaseImpl;
@@ -449,6 +451,36 @@ public class RoleLocalServiceImpl extends RoleLocalServiceBaseImpl {
 
 			userGroupGroupRoleLocalService.deleteUserGroupGroupRolesByRoleId(
 				role.getRoleId());
+
+			List<Group> groupList = groupPersistence.findByC_S(
+				role.getCompanyId(), true);
+
+			for (Group group : groupList) {
+				UnicodeProperties groupTypeSettings =
+					group.getTypeSettingsProperties();
+
+				List<Role> defaultSiteRoles = new ArrayList();
+
+				long[] defaultSiteRoleIds = StringUtil.split(
+					groupTypeSettings.getProperty("defaultSiteRoleIds"), 0L);
+
+				for (long defaultSiteRoleId : defaultSiteRoleIds) {
+					Role oldRole = getRole(defaultSiteRoleId);
+
+					if (oldRole.getRoleId() != role.getRoleId()) {
+						defaultSiteRoles.add(oldRole);
+					}
+				}
+
+				groupTypeSettings.setProperty(
+					"defaultSiteRoleIds",
+					ListUtil.toString(
+						defaultSiteRoles, Role.ROLE_ID_ACCESSOR,
+						StringPool.COMMA));
+
+				groupLocalService.updateGroup(
+					group.getGroupId(), groupTypeSettings.toString());
+			}
 		}
 
 		// Role

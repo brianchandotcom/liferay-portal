@@ -35,6 +35,7 @@ import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.template.soy.util.SoyContext;
 import com.liferay.portal.template.soy.util.SoyContextFactoryUtil;
 
@@ -199,6 +200,9 @@ public class ChangeListsDisplayContext {
 
 		ctCollections = stream.filter(
 			ctCollection -> !ctCollection.isProduction()
+		).filter(
+			ctCollection ->
+				ctCollection.getStatus() != WorkflowConstants.STATUS_APPROVED
 		).collect(
 			Collectors.toList()
 		);

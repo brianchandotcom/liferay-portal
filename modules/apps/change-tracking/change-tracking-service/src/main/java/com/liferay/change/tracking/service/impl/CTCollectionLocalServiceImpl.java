@@ -67,7 +67,7 @@ public class CTCollectionLocalServiceImpl
 
 		ctCollection.setName(name);
 		ctCollection.setDescription(description);
-		ctCollection.setStatus(WorkflowConstants.STATUS_APPROVED);
+		ctCollection.setStatus(WorkflowConstants.STATUS_DRAFT);
 
 		return ctCollectionPersistence.update(ctCollection);
 	}

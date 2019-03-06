@@ -116,18 +116,20 @@ public class FreeMarkerTool {
 		for (Map.Entry<String, Schema> entry : schemas.entrySet()) {
 			Schema schema = entry.getValue();
 
-			if (schema.getOneOfSchemas() != null) {
-				for (Schema oneOfSchema : schema.getOneOfSchemas()) {
-					Map<String, Schema> propertySchemas =
-						oneOfSchema.getPropertySchemas();
+			if (schema.getOneOfSchemas() == null) {
+				continue;
+			}
 
-					Set<String> keys = propertySchemas.keySet();
+			for (Schema oneOfSchema : schema.getOneOfSchemas()) {
+				Map<String, Schema> propertySchemas =
+					oneOfSchema.getPropertySchemas();
 
-					if (StringUtil.equalsIgnoreCase(
-							schemaName, keys.toArray(new String[0])[0])) {
+				Set<String> keys = propertySchemas.keySet();
 
-						return entry.getKey();
-					}
+				if (StringUtil.equalsIgnoreCase(
+						schemaName, keys.toArray(new String[0])[0])) {
+
+					return entry.getKey();
 				}
 			}
 		}

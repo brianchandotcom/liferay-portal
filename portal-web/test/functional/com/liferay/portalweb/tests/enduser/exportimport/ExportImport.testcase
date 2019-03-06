@@ -151,7 +151,7 @@ definition {
 			larFileName = "Edited Export Template Name"
 		);
 
-		var larFile = RegexUtil.replace("Edited Export Template Name", "([a-zA-z0-9_.-]*)[(0-9KB)]*", "1");
+		var larFileName = LAR.getLarFileName();
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "SitePagesExport#CURRENT_AND_PREVIOUS_STATUS",
@@ -162,7 +162,7 @@ definition {
 
 		Pause(locator1 = "5000");
 
-		LAR.importSiteCP(larFileName = "${larFile}", siteName = "Site Name");
+		LAR.importSiteCP(larFileName = "${larFileName}", siteName = "Site Name");
 
 		ProductMenu.gotoSite(site = "Site Name");
 

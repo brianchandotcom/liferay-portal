@@ -86,6 +86,13 @@ public class JSConfigGeneratorPackage {
 		urlToConfiguration(url, bundleWiring);
 	}
 
+	/**
+	 * Returns the path to the web context containing the package (usually
+	 * something like '/o/web-context-name').
+	 *
+	 * @return
+	 * @review
+	 */
 	public String getContextPath() {
 		return _contextPath;
 	}
@@ -94,6 +101,14 @@ public class JSConfigGeneratorPackage {
 		return _jsConfigGeneratorModules;
 	}
 
+	/**
+	 * Returns the name of the package, which is defined by the
+	 * {@link Details#OSGI_WEBRESOURCE} property provided by the OSGi bundle and
+	 * usually looks like 'osgi-bundle-name'.
+	 *
+	 * @return
+	 * @review
+	 */
 	public String getName() {
 		return _name;
 	}

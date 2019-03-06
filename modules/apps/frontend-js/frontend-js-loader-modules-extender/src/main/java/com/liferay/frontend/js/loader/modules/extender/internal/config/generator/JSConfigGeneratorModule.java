@@ -25,15 +25,14 @@ import java.util.List;
 public class JSConfigGeneratorModule {
 
 	public JSConfigGeneratorModule(
-		JSConfigGeneratorPackage jsConfigGeneratorPackage, String packagePath,
+		JSConfigGeneratorPackage jsConfigGeneratorPackage, String name,
 		List<String> dependencies, String contextPath) {
 
 		_jsConfigGeneratorPackage = jsConfigGeneratorPackage;
-		_packagePath = packagePath;
+		_name = name;
 		_dependencies = dependencies;
 
-		_resolvedURL = StringBundler.concat(
-			contextPath, StringPool.SLASH, _packagePath);
+		_url = StringBundler.concat(contextPath, StringPool.SLASH, _name);
 	}
 
 	public List<String> getDependencies() {
@@ -44,17 +43,36 @@ public class JSConfigGeneratorModule {
 		return _jsConfigGeneratorPackage;
 	}
 
-	public String getPackagePath() {
-		return _packagePath;
+	/**
+	 * Returns the name of the module.
+	 *
+	 * This is the legacy equivalent of {@link JSModule#getName()} for new JS
+	 * modules.
+	 *
+	 * @return
+	 * @review
+	 */
+	public String getName() {
+		return _name;
 	}
 
-	public String getResolvedURL() {
-		return _resolvedURL;
+	/**
+	 * Returns the publicly accessible URL of the module.
+	 *
+	 * This is the legacy equivalent of {@link JSModule#getResolvedURL()} for
+	 * new JS modules, but in this case we don't use "resolved" prefix because
+	 * there's no notion of resolved URLs or IDs in legacy modules.
+	 *
+	 * @return
+	 * @review
+	 */
+	public String getURL() {
+		return _url;
 	}
 
 	private final List<String> _dependencies;
 	private final JSConfigGeneratorPackage _jsConfigGeneratorPackage;
-	private final String _packagePath;
-	private final String _resolvedURL;
+	private final String _name;
+	private final String _url;
 
 }

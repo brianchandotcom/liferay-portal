@@ -21,7 +21,7 @@ runGradleTest {
 		configFileNames.each {
 			String fileName, String config ->
 
-			File generatedFile = new File(initBundle.homeDir, fileName)
+			File generatedFile = new File(initBundle.destinationDir, fileName)
 
 			assert generatedFile.exists()
 
@@ -63,7 +63,7 @@ runGradleTest {
 				return
 			}
 
-			File generatedFile = new File(initBundle.homeDir, fileName)
+			File generatedFile = new File(initBundle.destinationDir, fileName)
 
 			assert generatedFile.exists()
 

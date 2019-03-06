@@ -302,7 +302,7 @@ components:
             type: object
 info:
     description: ""
-    title: ""
+    title: "Headless Web Experience"
     version: v1.0
 openapi: 3.0.1
 paths:
@@ -360,6 +360,7 @@ paths:
             tags: ["Comment"]
     "/comments/{comment-id}/comments":
         get:
+            description: retrieve the child comments of a comment thread
             parameters:
                 - in: query
                   name: filter

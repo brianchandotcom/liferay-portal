@@ -56,6 +56,37 @@ public class FreeMarkerTool {
 			configYAML, openAPIYAML, schemaName);
 	}
 
+	public String getDTOParentClass(
+		OpenAPIYAML openAPIYAML, String schemaName) {
+
+		Components components = openAPIYAML.getComponents();
+
+		Map<String, Schema> schemas = components.getSchemas();
+
+		for (Map.Entry<String, Schema> entry : schemas.entrySet()) {
+			Schema schema = entry.getValue();
+
+			if (schema.getOneOfSchemas() == null) {
+				continue;
+			}
+
+			for (Schema oneOfSchema : schema.getOneOfSchemas()) {
+				Map<String, Schema> propertySchemas =
+					oneOfSchema.getPropertySchemas();
+
+				Set<String> keys = propertySchemas.keySet();
+
+				Iterator<String> iterator = keys.iterator();
+
+				if (StringUtil.equalsIgnoreCase(schemaName, iterator.next())) {
+					return entry.getKey();
+				}
+			}
+		}
+
+		return null;
+	}
+
 	public String getGraphQLArguments(
 		List<JavaMethodParameter> javaMethodParameters) {
 
@@ -105,37 +136,6 @@ public class FreeMarkerTool {
 
 	public String getHTTPMethod(Operation operation) {
 		return OpenAPIParserUtil.getHTTPMethod(operation);
-	}
-
-	public String getDTOParentClass(
-		OpenAPIYAML openAPIYAML, String schemaName) {
-
-		Components components = openAPIYAML.getComponents();
-
-		Map<String, Schema> schemas = components.getSchemas();
-
-		for (Map.Entry<String, Schema> entry : schemas.entrySet()) {
-			Schema schema = entry.getValue();
-
-			if (schema.getOneOfSchemas() == null) {
-				continue;
-			}
-
-			for (Schema oneOfSchema : schema.getOneOfSchemas()) {
-				Map<String, Schema> propertySchemas =
-					oneOfSchema.getPropertySchemas();
-
-				Set<String> keys = propertySchemas.keySet();
-
-				Iterator<String> iterator = keys.iterator();
-
-				if (StringUtil.equalsIgnoreCase(schemaName, iterator.next())) {
-					return entry.getKey();
-				}
-			}
-		}
-
-		return null;
 	}
 
 	public String getResourceArguments(

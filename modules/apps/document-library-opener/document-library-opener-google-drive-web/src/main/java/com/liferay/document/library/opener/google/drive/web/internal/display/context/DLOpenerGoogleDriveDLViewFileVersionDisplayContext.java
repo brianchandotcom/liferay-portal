@@ -105,24 +105,26 @@ public class DLOpenerGoogleDriveDLViewFileVersionDisplayContext
 		Menu menu = super.getMenu();
 
 		if (_isCheckedOutInGoogleDrive()) {
-			Collection<MenuItem> menuItems = menu.getMenuItems();
+			FileEntry fileEntry = fileVersion.getFileEntry();
 
-			_updateCancelCheckoutAndCheckinMenuItems(menuItems);
+			if (fileEntry.hasLock()) {
+				Collection<MenuItem> menuItems = menu.getMenuItems();
 
-			menuItems.add(
-				_createEditInGoogleDocsMenuItem(
-					DLOpenerGoogleDriveWebConstants.GOOGLE_DRIVE_EDIT));
+				_updateCancelCheckoutAndCheckinMenuItems(menuItems);
+
+				menuItems.add(
+					_createEditInGoogleDocsMenuItem(
+						DLOpenerGoogleDriveWebConstants.GOOGLE_DRIVE_EDIT));
+			}
 
 			return menu;
 		}
 
-		if (!_isCheckedOut()) {
-			List<MenuItem> menuItems = menu.getMenuItems();
+		List<MenuItem> menuItems = menu.getMenuItems();
 
-			menuItems.add(
-				_createEditInGoogleDocsMenuItem(
-					DLOpenerGoogleDriveWebConstants.GOOGLE_DRIVE_CHECKOUT));
-		}
+		menuItems.add(
+			_createEditInGoogleDocsMenuItem(
+				DLOpenerGoogleDriveWebConstants.GOOGLE_DRIVE_CHECKOUT));
 
 		return menu;
 	}
@@ -189,20 +191,10 @@ public class DLOpenerGoogleDriveDLViewFileVersionDisplayContext
 		return liferayPortletResponse.getNamespace();
 	}
 
-	private boolean _isCheckedOut() throws PortalException {
-		FileEntry fileEntry = fileVersion.getFileEntry();
-
-		if (fileEntry.isCheckedOut() && !fileEntry.hasLock()) {
-			return true;
-		}
-
-		return false;
-	}
-
 	private boolean _isCheckedOutInGoogleDrive() throws PortalException {
 		FileEntry fileEntry = fileVersion.getFileEntry();
 
-		if (fileEntry.isCheckedOut() && fileEntry.hasLock() &&
+		if (fileEntry.isCheckedOut() &&
 			_dlOpenerGoogleDriveManager.isGoogleDriveFile(fileEntry)) {
 
 			return true;

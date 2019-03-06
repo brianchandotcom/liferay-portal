@@ -182,7 +182,17 @@ const INITIAL_STATE = {
 				{
 					config: Config.object().value({}),
 					content: Config.any().value(''),
-					editableValues: Config.object().value({}),
+					editableValues: Config.objectOf(
+						Config.shapeOf(
+							{
+								assetEntryClassNameId: Config.string().value(''),
+								assetEntryClassPK: Config.string().value(''),
+								assetEntryFieldId: Config.string().value(''),
+								defaultValue: Config.string().required(),
+								mappedField: Config.string().value('')
+							}
+						)
+					).value({}),
 					fragmentEntryKey: Config.string().required(),
 					fragmentEntryLinkId: Config.string().required(),
 					name: Config.string().required()

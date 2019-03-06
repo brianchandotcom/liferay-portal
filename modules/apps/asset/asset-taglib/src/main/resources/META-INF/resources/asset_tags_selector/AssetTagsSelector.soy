@@ -7,7 +7,6 @@
 	{@param id: string}
 	{@param inputName: string}
 	{@param spritemap: string}
-	{@param? label: string}
 	{@param? tagNames: string}
 	{@param? selectedItems: list<?>}
 	{@param? showSelectButton: bool}
@@ -29,7 +28,7 @@
 			] /}
 			{param helpText: '' /}
 			{param inputName: $inputName /}
-			{param label: $label /}
+			{param label kind="text"} {msg desc=""}tags{/msg} {/param}
 			{param labelLocator: 'name' /}
 			{param ref: 'multiSelect' /}
 			{param selectedItems: $selectedItems /}

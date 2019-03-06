@@ -20,7 +20,6 @@ import com.liferay.frontend.js.loader.modules.extender.npm.NPMResolverUtil;
 import com.liferay.frontend.taglib.soy.servlet.taglib.ComponentRendererTag;
 import com.liferay.petra.string.StringPool;
 import com.liferay.petra.string.StringUtil;
-import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
@@ -32,7 +31,6 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.ServerDetector;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -41,9 +39,7 @@ import com.liferay.taglib.aui.AUIUtil;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
-import java.util.ResourceBundle;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
@@ -64,7 +60,6 @@ public class AssetTagsSelectorTag extends ComponentRendererTag {
 			putValue("groupIds", _getGroupIds());
 			putValue("id", _getNamespace() + _getId() + "assetTagsSelector");
 			putValue("inputName", _getInputName());
-			putValue("label", _getLabel(themeDisplay.getLocale()));
 			putValue("portletURL", _getPortletURL());
 
 			List<Map<String, String>> selectedItems = new ArrayList<>();
@@ -218,13 +213,6 @@ public class AssetTagsSelectorTag extends ComponentRendererTag {
 
 	private String _getInputName() {
 		return _getNamespace() + _hiddenInput;
-	}
-
-	private String _getLabel(Locale locale) {
-		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
-			locale, getClass());
-
-		return LanguageUtil.get(resourceBundle, "tags");
 	}
 
 	private String _getNamespace() {

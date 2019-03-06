@@ -1191,11 +1191,14 @@ public class GroupServiceImpl extends GroupServiceBaseImpl {
 	protected List<Group> filterGroups(List<Group> groups)
 		throws PortalException {
 
+		PermissionChecker permissionChecker = getPermissionChecker();
+
 		List<Group> filteredGroups = new ArrayList<>();
 
 		for (Group group : groups) {
 			if (GroupPermissionUtil.contains(
-					getPermissionChecker(), group, ActionKeys.VIEW)) {
+					permissionChecker, group, ActionKeys.VIEW) ||
+				permissionChecker.isGroupMember(group.getGroupId())) {
 
 				filteredGroups.add(group);
 			}

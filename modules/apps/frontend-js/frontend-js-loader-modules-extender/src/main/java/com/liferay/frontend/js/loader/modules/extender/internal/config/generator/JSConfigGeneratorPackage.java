@@ -17,7 +17,6 @@ package com.liferay.frontend.js.loader.modules.extender.internal.config.generato
 import aQute.bnd.osgi.Constants;
 
 import com.liferay.frontend.js.loader.modules.extender.internal.Details;
-import com.liferay.frontend.js.loader.modules.extender.npm.ModuleNameUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
@@ -105,6 +104,15 @@ public class JSConfigGeneratorPackage {
 	 * Returns the name of the package, which is defined by the
 	 * {@link Details#OSGI_WEBRESOURCE} property provided by the OSGi bundle and
 	 * usually looks like 'osgi-bundle-name'.
+	 *
+	 * Note that the name of the package may be different from the one that its
+	 * modules use. For example, you may have a package named 'my-osgi-bundle'
+	 * that exports modules with id 'my-js-package@2.0.0/path/to/my-module' (it
+	 * all depends on what is in the MANIFEST.MF and config.json files).
+	 *
+	 * This is because even though the tools used to build legacy JARs had a
+	 * convention for names, it is not enforced by this code so, to be safe,
+	 * we interpret and use each attribute strictly.
 	 *
 	 * @return
 	 * @review
@@ -354,12 +362,12 @@ public class JSConfigGeneratorPackage {
 		JSONObject unversionedConfigurationJSONObject) {
 
 		for (Object key : unversionedConfigurationJSONObject.keySet()) {
-			String name = (String)key;
+			String moduleId = (String)key;
 
 			List<String> dependencies = new ArrayList<>();
 
 			JSONObject moduleJSONObject =
-				unversionedConfigurationJSONObject.getJSONObject(name);
+				unversionedConfigurationJSONObject.getJSONObject(moduleId);
 
 			JSONArray dependenciesJSONArray = moduleJSONObject.getJSONArray(
 				"dependencies");
@@ -370,8 +378,7 @@ public class JSConfigGeneratorPackage {
 
 			_jsConfigGeneratorModules.add(
 				new JSConfigGeneratorModule(
-					this, ModuleNameUtil.getPackagePath(name), dependencies,
-					_contextPath));
+					this, moduleId, dependencies, _contextPath));
 		}
 	}
 

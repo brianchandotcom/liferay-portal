@@ -25,12 +25,16 @@ import java.util.List;
 public class JSConfigGeneratorModule {
 
 	public JSConfigGeneratorModule(
-		JSConfigGeneratorPackage jsConfigGeneratorPackage, String name,
+		JSConfigGeneratorPackage jsConfigGeneratorPackage, String moduleId,
 		List<String> dependencies, String contextPath) {
 
 		_jsConfigGeneratorPackage = jsConfigGeneratorPackage;
-		_name = name;
+		_id = moduleId;
 		_dependencies = dependencies;
+
+		int index = moduleId.indexOf(StringPool.SLASH);
+
+		_name = moduleId.substring(index + 1);
 
 		_url = StringBundler.concat(contextPath, StringPool.SLASH, _name);
 	}
@@ -39,12 +43,29 @@ public class JSConfigGeneratorModule {
 		return _dependencies;
 	}
 
+	/**
+	 * Returns the id of the module.
+	 *
+	 * For example: 'my-package@1.0.0/path/to/module'
+	 *
+	 * This is the legacy equivalent of {@link JSModule#getResolvedId()} for new
+	 * JS modules, but in this case we don't use "resolved" prefix because
+	 * there's no notion of resolved URLs or IDs in legacy modules.
+	 *
+	 * @return
+	 */
+	public String getId() {
+		return _id;
+	}
+
 	public JSConfigGeneratorPackage getJSConfigGeneratorPackage() {
 		return _jsConfigGeneratorPackage;
 	}
 
 	/**
 	 * Returns the name of the module.
+	 *
+	 * For example: 'path/to/module'
 	 *
 	 * This is the legacy equivalent of {@link JSModule#getName()} for new JS
 	 * modules.
@@ -59,6 +80,8 @@ public class JSConfigGeneratorModule {
 	/**
 	 * Returns the publicly accessible URL of the module.
 	 *
+	 * For example: '/o/my-web-context/path/to/module'
+	 *
 	 * This is the legacy equivalent of {@link JSModule#getResolvedURL()} for
 	 * new JS modules, but in this case we don't use "resolved" prefix because
 	 * there's no notion of resolved URLs or IDs in legacy modules.
@@ -71,6 +94,7 @@ public class JSConfigGeneratorModule {
 	}
 
 	private final List<String> _dependencies;
+	private final String _id;
 	private final JSConfigGeneratorPackage _jsConfigGeneratorPackage;
 	private final String _name;
 	private final String _url;

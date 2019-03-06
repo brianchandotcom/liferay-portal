@@ -33,6 +33,7 @@ import com.liferay.portal.kernel.util.SetUtil;
 
 import java.io.Serializable;
 
+import java.util.Arrays;
 import java.util.Map;
 import java.util.Set;
 import java.util.stream.Stream;
@@ -58,8 +59,10 @@ public class EditCategoriesBulkSelectionActionImpl
 			Map<String, Serializable> inputMap)
 		throws Exception {
 
-		long[] toAddCategoryIds = (long[])inputMap.getOrDefault(
-			"toAddCategoryIds", new long[0]);
+		long[] toAddCategoryIds = ArrayUtil.toLongArray(
+			Arrays.asList(
+				(Long[])inputMap.getOrDefault(
+					"toAddCategoryIds", new Long[0])));
 
 		Set<Long> toAddCategoryIdsSet = SetUtil.fromArray(toAddCategoryIds);
 

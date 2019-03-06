@@ -18,16 +18,6 @@
 
 <%
 User selUser = (User)request.getAttribute(UsersAdminWebKeys.SELECTED_USER);
-
-PortletURL managePortletURL = PortletProviderUtil.getPortletURL(request, ExpandoColumn.class.getName(), PortletProvider.Action.MANAGE);
-
-managePortletURL.setParameter("modelResource", User.class.getName());
-managePortletURL.setParameter("redirect", currentURL);
-
-PortletURL editPortletURL = PortletProviderUtil.getPortletURL(request, ExpandoColumn.class.getName(), PortletProvider.Action.EDIT);
-
-editPortletURL.setParameter("modelResource", User.class.getName());
-editPortletURL.setParameter("redirect", currentURL);
 %>
 
 <div class="autofit-padded-no-gutters autofit-row">
@@ -37,28 +27,30 @@ editPortletURL.setParameter("redirect", currentURL);
 		</h4>
 	</span>
 	<span class="autofit-col">
-		<c:choose>
-			<c:when test="<%= CustomFieldsUtil.hasVisibleCustomFields(company.getCompanyId(), User.class) %>">
-				<liferay-ui:icon
-					cssClass="modify-link"
-					label="<%= true %>"
-					linkCssClass="btn btn-secondary btn-sm"
-					message="manage"
-					method="get"
-					url="<%= managePortletURL.toString() %>"
-				/>
-			</c:when>
-			<c:otherwise>
-				<liferay-ui:icon
-					cssClass="modify-link"
-					label="<%= true %>"
-					linkCssClass="btn btn-secondary btn-sm"
-					message="add"
-					method="get"
-					url="<%= editPortletURL.toString() %>"
-				/>
-			</c:otherwise>
-		</c:choose>
+
+		<%
+		boolean hasVisibleCustomFields = CustomFieldsUtil.hasVisibleCustomFields(company.getCompanyId(), User.class);
+
+		PortletProvider.Action action = PortletProvider.Action.EDIT;
+
+		if (hasVisibleCustomFields) {
+			action = PortletProvider.Action.MANAGE;
+		}
+
+		PortletURL customFieldsURL = PortletProviderUtil.getPortletURL(request, ExpandoColumn.class.getName(), action);
+
+		customFieldsURL.setParameter("modelResource", User.class.getName());
+		customFieldsURL.setParameter("redirect", currentURL);
+		%>
+
+		<liferay-ui:icon
+			cssClass="modify-link"
+			label="<%= true %>"
+			linkCssClass="btn btn-secondary btn-sm"
+			message='<%= hasVisibleCustomFields ? "manage" : "add" %>'
+			method="get"
+			url="<%= customFieldsURL.toString() %>"
+		/>
 	</span>
 </div>
 

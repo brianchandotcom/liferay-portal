@@ -431,11 +431,8 @@ public class DefaultPortalToLDAPConverter implements PortalToLDAPConverter {
 
 		String algorithm = ldapAuthConfiguration.passwordEncryptionAlgorithm();
 
-		if (Validator.isNull(algorithm) ||
-			algorithm.equals(PasswordEncryptorUtil.TYPE_NONE)) {
-
-			return password;
-		}
+		if (!Validator.isNull(algorithm) &&
+			!algorithm.equals(PasswordEncryptorUtil.TYPE_NONE)) {
 
 		try {
 			StringBundler sb = new StringBundler(4);
@@ -468,6 +465,9 @@ public class DefaultPortalToLDAPConverter implements PortalToLDAPConverter {
 		catch (Exception e) {
 			throw new SystemException(e);
 		}
+		}
+
+		return password;
 	}
 
 	protected Modifications getModifications(

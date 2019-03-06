@@ -15,10 +15,6 @@
 package com.liferay.portal.tools.service.builder.test.service.persistence.impl.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.asset.kernel.model.AssetCategory;
-import com.liferay.asset.kernel.model.AssetVocabulary;
-import com.liferay.asset.kernel.service.persistence.AssetCategoryPersistence;
-import com.liferay.asset.kernel.service.persistence.AssetCategoryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.SessionFactory;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -27,7 +23,6 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.service.persistence.impl.NestedSetsTreeManager;
-import com.liferay.portal.kernel.service.persistence.impl.PersistenceNestedSetsTreeManager;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.CodeCoverageAssertor;
@@ -35,10 +30,12 @@ import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.test.log.CaptureAppender;
 import com.liferay.portal.test.log.Log4JLoggerTestUtil;
+import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.TransactionalTestRule;
-import com.liferay.portlet.asset.model.impl.AssetCategoryImpl;
-import com.liferay.portlet.asset.util.test.AssetTestUtil;
+import com.liferay.portal.tools.service.builder.test.model.NestedSetsTreeEntry;
+import com.liferay.portal.tools.service.builder.test.service.NestedSetsTreeEntryLocalService;
+import com.liferay.portal.tools.service.builder.test.service.persistence.NestedSetsTreeEntryPersistence;
 
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
@@ -71,163 +68,158 @@ public class PersistenceNestedSetsTreeManagerTest {
 
 	@Before
 	public void setUp() throws Exception {
-		_assetCategoryPersistence = AssetCategoryUtil.getPersistence();
-
 		_sessionFactoryInvocationHandler = new SessionFactoryInvocationHandler(
 			ReflectionTestUtil.getFieldValue(
-				_assetCategoryPersistence, "_sessionFactory"));
+				_nestedSetsTreeEntryPersistence, "_sessionFactory"));
 
 		ReflectionTestUtil.setFieldValue(
-			_assetCategoryPersistence, "_sessionFactory",
+			_nestedSetsTreeEntryPersistence, "_sessionFactory",
 			ProxyUtil.newProxyInstance(
 				SessionFactory.class.getClassLoader(),
 				new Class<?>[] {SessionFactory.class},
 				_sessionFactoryInvocationHandler));
 
-		_assetCategoryPersistence.setRebuildTreeEnabled(false);
+		_nestedSetsTreeEntryPersistence.setRebuildTreeEnabled(false);
 
-		_nestedSetsTreeManager = new PersistenceNestedSetsTreeManager<>(
-			(BasePersistenceImpl<?>)_assetCategoryPersistence, "AssetCategory",
-			"AssetCategory", AssetCategoryImpl.class, "categoryId", "groupId",
-			"leftCategoryId", "rightCategoryId");
+		_nestedSetsTreeManager = ReflectionTestUtil.getFieldValue(
+			_nestedSetsTreeEntryPersistence, "nestedSetsTreeManager");
 
 		_group = GroupTestUtil.addGroup();
 
-		_assetVocabulary = AssetTestUtil.addVocabulary(_group.getGroupId());
-
-		_assetCategories = new AssetCategory[9];
+		_nestedSetsTreeEntries = new NestedSetsTreeEntry[9];
 
 		for (int i = 0; i < 9; i++) {
-			_assetCategories[i] = AssetTestUtil.addCategory(
-				_group.getGroupId(), _assetVocabulary.getVocabularyId());
+			_nestedSetsTreeEntries[i] =
+				_nestedSetsTreeEntryLocalService.addNestedSetsTreeEntry(
+					_group.getGroupId());
 		}
 	}
 
 	@After
 	public void tearDown() throws PortalException {
 		ReflectionTestUtil.setFieldValue(
-			_assetCategoryPersistence, "_sessionFactory",
+			_nestedSetsTreeEntryPersistence, "_sessionFactory",
 			_sessionFactoryInvocationHandler.getTarget());
 
 		GroupLocalServiceUtil.deleteGroup(_group);
 
-		_assetCategoryPersistence.setRebuildTreeEnabled(true);
+		_nestedSetsTreeEntryPersistence.setRebuildTreeEnabled(true);
 	}
 
 	@Test
 	public void testCountAncestors() {
 		testInsert();
 
-		assertCountAncestors(1, _assetCategories[0]);
-		assertCountAncestors(1, _assetCategories[1]);
-		assertCountAncestors(1, _assetCategories[2]);
-		assertCountAncestors(2, _assetCategories[3]);
-		assertCountAncestors(2, _assetCategories[4]);
-		assertCountAncestors(3, _assetCategories[5]);
-		assertCountAncestors(2, _assetCategories[6]);
-		assertCountAncestors(3, _assetCategories[7]);
-		assertCountAncestors(3, _assetCategories[8]);
+		assertCountAncestors(1, _nestedSetsTreeEntries[0]);
+		assertCountAncestors(1, _nestedSetsTreeEntries[1]);
+		assertCountAncestors(1, _nestedSetsTreeEntries[2]);
+		assertCountAncestors(2, _nestedSetsTreeEntries[3]);
+		assertCountAncestors(2, _nestedSetsTreeEntries[4]);
+		assertCountAncestors(3, _nestedSetsTreeEntries[5]);
+		assertCountAncestors(2, _nestedSetsTreeEntries[6]);
+		assertCountAncestors(3, _nestedSetsTreeEntries[7]);
+		assertCountAncestors(3, _nestedSetsTreeEntries[8]);
 	}
 
 	@Test
 	public void testCountChildren() {
 		testInsert();
 
-		assertCountChildren(5, _assetCategories[0]);
-		assertCountChildren(3, _assetCategories[1]);
-		assertCountChildren(1, _assetCategories[2]);
-		assertCountChildren(2, _assetCategories[3]);
-		assertCountChildren(2, _assetCategories[4]);
-		assertCountChildren(1, _assetCategories[5]);
-		assertCountChildren(2, _assetCategories[6]);
-		assertCountChildren(1, _assetCategories[7]);
-		assertCountChildren(1, _assetCategories[8]);
+		assertCountChildren(5, _nestedSetsTreeEntries[0]);
+		assertCountChildren(3, _nestedSetsTreeEntries[1]);
+		assertCountChildren(1, _nestedSetsTreeEntries[2]);
+		assertCountChildren(2, _nestedSetsTreeEntries[3]);
+		assertCountChildren(2, _nestedSetsTreeEntries[4]);
+		assertCountChildren(1, _nestedSetsTreeEntries[5]);
+		assertCountChildren(2, _nestedSetsTreeEntries[6]);
+		assertCountChildren(1, _nestedSetsTreeEntries[7]);
+		assertCountChildren(1, _nestedSetsTreeEntries[8]);
 	}
 
 	@Test
 	public void testDelete() {
 		testInsert();
 
-		_nestedSetsTreeManager.delete(_assetCategories[7]);
+		_nestedSetsTreeManager.delete(_nestedSetsTreeEntries[7]);
 
-		synchronizeAssetCategories(_assetCategories[7], true);
+		synchronizeAssetCategories(_nestedSetsTreeEntries[7], true);
 
-		assertLeftAndRight(_assetCategories[0], 1, 10);
-		assertLeftAndRight(_assetCategories[1], 11, 14);
-		assertLeftAndRight(_assetCategories[2], 15, 16);
-		assertLeftAndRight(_assetCategories[3], 2, 5);
-		assertLeftAndRight(_assetCategories[4], 6, 9);
-		assertLeftAndRight(_assetCategories[5], 3, 4);
-		assertLeftAndRight(_assetCategories[6], 12, 13);
-		assertLeftAndRight(_assetCategories[8], 7, 8);
+		assertLeftAndRight(_nestedSetsTreeEntries[0], 1, 10);
+		assertLeftAndRight(_nestedSetsTreeEntries[1], 11, 14);
+		assertLeftAndRight(_nestedSetsTreeEntries[2], 15, 16);
+		assertLeftAndRight(_nestedSetsTreeEntries[3], 2, 5);
+		assertLeftAndRight(_nestedSetsTreeEntries[4], 6, 9);
+		assertLeftAndRight(_nestedSetsTreeEntries[5], 3, 4);
+		assertLeftAndRight(_nestedSetsTreeEntries[6], 12, 13);
+		assertLeftAndRight(_nestedSetsTreeEntries[8], 7, 8);
 
-		_nestedSetsTreeManager.delete(_assetCategories[4]);
+		_nestedSetsTreeManager.delete(_nestedSetsTreeEntries[4]);
 
-		synchronizeAssetCategories(_assetCategories[4], true);
+		synchronizeAssetCategories(_nestedSetsTreeEntries[4], true);
 
-		assertLeftAndRight(_assetCategories[0], 1, 8);
-		assertLeftAndRight(_assetCategories[1], 9, 12);
-		assertLeftAndRight(_assetCategories[2], 13, 14);
-		assertLeftAndRight(_assetCategories[3], 2, 5);
-		assertLeftAndRight(_assetCategories[5], 3, 4);
-		assertLeftAndRight(_assetCategories[6], 10, 11);
-		assertLeftAndRight(_assetCategories[8], 6, 7);
+		assertLeftAndRight(_nestedSetsTreeEntries[0], 1, 8);
+		assertLeftAndRight(_nestedSetsTreeEntries[1], 9, 12);
+		assertLeftAndRight(_nestedSetsTreeEntries[2], 13, 14);
+		assertLeftAndRight(_nestedSetsTreeEntries[3], 2, 5);
+		assertLeftAndRight(_nestedSetsTreeEntries[5], 3, 4);
+		assertLeftAndRight(_nestedSetsTreeEntries[6], 10, 11);
+		assertLeftAndRight(_nestedSetsTreeEntries[8], 6, 7);
 
-		_nestedSetsTreeManager.delete(_assetCategories[0]);
+		_nestedSetsTreeManager.delete(_nestedSetsTreeEntries[0]);
 
-		synchronizeAssetCategories(_assetCategories[0], true);
+		synchronizeAssetCategories(_nestedSetsTreeEntries[0], true);
 
-		assertLeftAndRight(_assetCategories[1], 7, 10);
-		assertLeftAndRight(_assetCategories[2], 11, 12);
-		assertLeftAndRight(_assetCategories[3], 1, 4);
-		assertLeftAndRight(_assetCategories[5], 2, 3);
-		assertLeftAndRight(_assetCategories[6], 8, 9);
-		assertLeftAndRight(_assetCategories[8], 5, 6);
+		assertLeftAndRight(_nestedSetsTreeEntries[1], 7, 10);
+		assertLeftAndRight(_nestedSetsTreeEntries[2], 11, 12);
+		assertLeftAndRight(_nestedSetsTreeEntries[3], 1, 4);
+		assertLeftAndRight(_nestedSetsTreeEntries[5], 2, 3);
+		assertLeftAndRight(_nestedSetsTreeEntries[6], 8, 9);
+		assertLeftAndRight(_nestedSetsTreeEntries[8], 5, 6);
 
-		_nestedSetsTreeManager.delete(_assetCategories[8]);
+		_nestedSetsTreeManager.delete(_nestedSetsTreeEntries[8]);
 
-		synchronizeAssetCategories(_assetCategories[8], true);
+		synchronizeAssetCategories(_nestedSetsTreeEntries[8], true);
 
-		assertLeftAndRight(_assetCategories[1], 5, 8);
-		assertLeftAndRight(_assetCategories[2], 9, 10);
-		assertLeftAndRight(_assetCategories[3], 1, 4);
-		assertLeftAndRight(_assetCategories[5], 2, 3);
-		assertLeftAndRight(_assetCategories[6], 6, 7);
+		assertLeftAndRight(_nestedSetsTreeEntries[1], 5, 8);
+		assertLeftAndRight(_nestedSetsTreeEntries[2], 9, 10);
+		assertLeftAndRight(_nestedSetsTreeEntries[3], 1, 4);
+		assertLeftAndRight(_nestedSetsTreeEntries[5], 2, 3);
+		assertLeftAndRight(_nestedSetsTreeEntries[6], 6, 7);
 
-		_nestedSetsTreeManager.delete(_assetCategories[2]);
+		_nestedSetsTreeManager.delete(_nestedSetsTreeEntries[2]);
 
-		synchronizeAssetCategories(_assetCategories[2], true);
+		synchronizeAssetCategories(_nestedSetsTreeEntries[2], true);
 
-		assertLeftAndRight(_assetCategories[1], 5, 8);
-		assertLeftAndRight(_assetCategories[3], 1, 4);
-		assertLeftAndRight(_assetCategories[5], 2, 3);
-		assertLeftAndRight(_assetCategories[6], 6, 7);
+		assertLeftAndRight(_nestedSetsTreeEntries[1], 5, 8);
+		assertLeftAndRight(_nestedSetsTreeEntries[3], 1, 4);
+		assertLeftAndRight(_nestedSetsTreeEntries[5], 2, 3);
+		assertLeftAndRight(_nestedSetsTreeEntries[6], 6, 7);
 
-		_nestedSetsTreeManager.delete(_assetCategories[5]);
+		_nestedSetsTreeManager.delete(_nestedSetsTreeEntries[5]);
 
-		synchronizeAssetCategories(_assetCategories[5], true);
+		synchronizeAssetCategories(_nestedSetsTreeEntries[5], true);
 
-		assertLeftAndRight(_assetCategories[1], 3, 6);
-		assertLeftAndRight(_assetCategories[3], 1, 2);
-		assertLeftAndRight(_assetCategories[6], 4, 5);
+		assertLeftAndRight(_nestedSetsTreeEntries[1], 3, 6);
+		assertLeftAndRight(_nestedSetsTreeEntries[3], 1, 2);
+		assertLeftAndRight(_nestedSetsTreeEntries[6], 4, 5);
 
-		_nestedSetsTreeManager.delete(_assetCategories[1]);
+		_nestedSetsTreeManager.delete(_nestedSetsTreeEntries[1]);
 
-		synchronizeAssetCategories(_assetCategories[1], true);
+		synchronizeAssetCategories(_nestedSetsTreeEntries[1], true);
 
-		assertLeftAndRight(_assetCategories[3], 1, 2);
-		assertLeftAndRight(_assetCategories[6], 3, 4);
+		assertLeftAndRight(_nestedSetsTreeEntries[3], 1, 2);
+		assertLeftAndRight(_nestedSetsTreeEntries[6], 3, 4);
 
-		_nestedSetsTreeManager.delete(_assetCategories[6]);
+		_nestedSetsTreeManager.delete(_nestedSetsTreeEntries[6]);
 
-		synchronizeAssetCategories(_assetCategories[6], true);
+		synchronizeAssetCategories(_nestedSetsTreeEntries[6], true);
 
-		assertLeftAndRight(_assetCategories[3], 1, 2);
+		assertLeftAndRight(_nestedSetsTreeEntries[3], 1, 2);
 
-		synchronizeAssetCategories(_assetCategories[3], true);
+		synchronizeAssetCategories(_nestedSetsTreeEntries[3], true);
 
-		for (AssetCategory assetCategorie : _assetCategories) {
-			Assert.assertNull(assetCategorie);
+		for (NestedSetsTreeEntry nestedSetsTreeEntry : _nestedSetsTreeEntries) {
+			Assert.assertNull(nestedSetsTreeEntry);
 		}
 	}
 
@@ -339,18 +331,18 @@ public class PersistenceNestedSetsTreeManagerTest {
 	public void testGetAncestors() {
 		testInsert();
 
-		assertGetAncestors(_assetCategories[0]);
-		assertGetAncestors(_assetCategories[1]);
-		assertGetAncestors(_assetCategories[2]);
-		assertGetAncestors(_assetCategories[3], _assetCategories[0]);
-		assertGetAncestors(_assetCategories[4], _assetCategories[0]);
+		assertGetAncestors(_nestedSetsTreeEntries[0]);
+		assertGetAncestors(_nestedSetsTreeEntries[1]);
+		assertGetAncestors(_nestedSetsTreeEntries[2]);
+		assertGetAncestors(_nestedSetsTreeEntries[3], _nestedSetsTreeEntries[0]);
+		assertGetAncestors(_nestedSetsTreeEntries[4], _nestedSetsTreeEntries[0]);
 		assertGetAncestors(
-			_assetCategories[5], _assetCategories[3], _assetCategories[0]);
-		assertGetAncestors(_assetCategories[6], _assetCategories[1]);
+			_nestedSetsTreeEntries[5], _nestedSetsTreeEntries[3], _nestedSetsTreeEntries[0]);
+		assertGetAncestors(_nestedSetsTreeEntries[6], _nestedSetsTreeEntries[1]);
 		assertGetAncestors(
-			_assetCategories[7], _assetCategories[6], _assetCategories[1]);
+			_nestedSetsTreeEntries[7], _nestedSetsTreeEntries[6], _nestedSetsTreeEntries[1]);
 		assertGetAncestors(
-			_assetCategories[8], _assetCategories[4], _assetCategories[0]);
+			_nestedSetsTreeEntries[8], _nestedSetsTreeEntries[4], _nestedSetsTreeEntries[0]);
 	}
 
 	@Test
@@ -358,17 +350,17 @@ public class PersistenceNestedSetsTreeManagerTest {
 		testInsert();
 
 		assertGetDescendants(
-			_assetCategories[0], _assetCategories[3], _assetCategories[4],
-			_assetCategories[5], _assetCategories[8]);
+			_nestedSetsTreeEntries[0], _nestedSetsTreeEntries[3], _nestedSetsTreeEntries[4],
+			_nestedSetsTreeEntries[5], _nestedSetsTreeEntries[8]);
 		assertGetDescendants(
-			_assetCategories[1], _assetCategories[6], _assetCategories[7]);
-		assertGetDescendants(_assetCategories[2]);
-		assertGetDescendants(_assetCategories[3], _assetCategories[5]);
-		assertGetDescendants(_assetCategories[4], _assetCategories[8]);
-		assertGetDescendants(_assetCategories[5]);
-		assertGetDescendants(_assetCategories[6], _assetCategories[7]);
-		assertGetDescendants(_assetCategories[7]);
-		assertGetDescendants(_assetCategories[8]);
+			_nestedSetsTreeEntries[1], _nestedSetsTreeEntries[6], _nestedSetsTreeEntries[7]);
+		assertGetDescendants(_nestedSetsTreeEntries[2]);
+		assertGetDescendants(_nestedSetsTreeEntries[3], _nestedSetsTreeEntries[5]);
+		assertGetDescendants(_nestedSetsTreeEntries[4], _nestedSetsTreeEntries[8]);
+		assertGetDescendants(_nestedSetsTreeEntries[5]);
+		assertGetDescendants(_nestedSetsTreeEntries[6], _nestedSetsTreeEntries[7]);
+		assertGetDescendants(_nestedSetsTreeEntries[7]);
+		assertGetDescendants(_nestedSetsTreeEntries[8]);
 	}
 
 	@Test
@@ -376,265 +368,265 @@ public class PersistenceNestedSetsTreeManagerTest {
 
 		// (0)
 
-		_nestedSetsTreeManager.insert(_assetCategories[0], null);
+		_nestedSetsTreeManager.insert(_nestedSetsTreeEntries[0], null);
 
-		synchronizeAssetCategories(_assetCategories[0]);
+		synchronizeAssetCategories(_nestedSetsTreeEntries[0]);
 
-		assertLeftAndRight(_assetCategories[0], 1, 2);
+		assertLeftAndRight(_nestedSetsTreeEntries[0], 1, 2);
 
 		// (0, 1)
 
-		_nestedSetsTreeManager.insert(_assetCategories[1], null);
+		_nestedSetsTreeManager.insert(_nestedSetsTreeEntries[1], null);
 
-		synchronizeAssetCategories(_assetCategories[1]);
+		synchronizeAssetCategories(_nestedSetsTreeEntries[1]);
 
-		assertLeftAndRight(_assetCategories[0], 1, 2);
-		assertLeftAndRight(_assetCategories[1], 3, 4);
+		assertLeftAndRight(_nestedSetsTreeEntries[0], 1, 2);
+		assertLeftAndRight(_nestedSetsTreeEntries[1], 3, 4);
 
 		// (0, 1, 2)
 
-		_nestedSetsTreeManager.insert(_assetCategories[2], null);
+		_nestedSetsTreeManager.insert(_nestedSetsTreeEntries[2], null);
 
-		synchronizeAssetCategories(_assetCategories[2]);
+		synchronizeAssetCategories(_nestedSetsTreeEntries[2]);
 
-		assertLeftAndRight(_assetCategories[0], 1, 2);
-		assertLeftAndRight(_assetCategories[1], 3, 4);
-		assertLeftAndRight(_assetCategories[2], 5, 6);
+		assertLeftAndRight(_nestedSetsTreeEntries[0], 1, 2);
+		assertLeftAndRight(_nestedSetsTreeEntries[1], 3, 4);
+		assertLeftAndRight(_nestedSetsTreeEntries[2], 5, 6);
 
 		// (0(3), 1, 2)
 
-		_nestedSetsTreeManager.insert(_assetCategories[3], _assetCategories[0]);
+		_nestedSetsTreeManager.insert(_nestedSetsTreeEntries[3], _nestedSetsTreeEntries[0]);
 
-		synchronizeAssetCategories(_assetCategories[3]);
+		synchronizeAssetCategories(_nestedSetsTreeEntries[3]);
 
-		assertLeftAndRight(_assetCategories[0], 1, 4);
-		assertLeftAndRight(_assetCategories[1], 5, 6);
-		assertLeftAndRight(_assetCategories[2], 7, 8);
-		assertLeftAndRight(_assetCategories[3], 2, 3);
+		assertLeftAndRight(_nestedSetsTreeEntries[0], 1, 4);
+		assertLeftAndRight(_nestedSetsTreeEntries[1], 5, 6);
+		assertLeftAndRight(_nestedSetsTreeEntries[2], 7, 8);
+		assertLeftAndRight(_nestedSetsTreeEntries[3], 2, 3);
 
 		// (0(3, 4), 1, 2)
 
-		_nestedSetsTreeManager.insert(_assetCategories[4], _assetCategories[0]);
+		_nestedSetsTreeManager.insert(_nestedSetsTreeEntries[4], _nestedSetsTreeEntries[0]);
 
-		synchronizeAssetCategories(_assetCategories[4]);
+		synchronizeAssetCategories(_nestedSetsTreeEntries[4]);
 
-		assertLeftAndRight(_assetCategories[0], 1, 6);
-		assertLeftAndRight(_assetCategories[1], 7, 8);
-		assertLeftAndRight(_assetCategories[2], 9, 10);
-		assertLeftAndRight(_assetCategories[3], 2, 3);
-		assertLeftAndRight(_assetCategories[4], 4, 5);
+		assertLeftAndRight(_nestedSetsTreeEntries[0], 1, 6);
+		assertLeftAndRight(_nestedSetsTreeEntries[1], 7, 8);
+		assertLeftAndRight(_nestedSetsTreeEntries[2], 9, 10);
+		assertLeftAndRight(_nestedSetsTreeEntries[3], 2, 3);
+		assertLeftAndRight(_nestedSetsTreeEntries[4], 4, 5);
 
 		// (0(3(5), 4), 1, 2)
 
-		_nestedSetsTreeManager.insert(_assetCategories[5], _assetCategories[3]);
+		_nestedSetsTreeManager.insert(_nestedSetsTreeEntries[5], _nestedSetsTreeEntries[3]);
 
-		synchronizeAssetCategories(_assetCategories[5]);
+		synchronizeAssetCategories(_nestedSetsTreeEntries[5]);
 
-		assertLeftAndRight(_assetCategories[0], 1, 8);
-		assertLeftAndRight(_assetCategories[1], 9, 10);
-		assertLeftAndRight(_assetCategories[2], 11, 12);
-		assertLeftAndRight(_assetCategories[3], 2, 5);
-		assertLeftAndRight(_assetCategories[4], 6, 7);
-		assertLeftAndRight(_assetCategories[5], 3, 4);
+		assertLeftAndRight(_nestedSetsTreeEntries[0], 1, 8);
+		assertLeftAndRight(_nestedSetsTreeEntries[1], 9, 10);
+		assertLeftAndRight(_nestedSetsTreeEntries[2], 11, 12);
+		assertLeftAndRight(_nestedSetsTreeEntries[3], 2, 5);
+		assertLeftAndRight(_nestedSetsTreeEntries[4], 6, 7);
+		assertLeftAndRight(_nestedSetsTreeEntries[5], 3, 4);
 
 		// (0(3(5), 4), 1(6), 2)
 
-		_nestedSetsTreeManager.insert(_assetCategories[6], _assetCategories[1]);
+		_nestedSetsTreeManager.insert(_nestedSetsTreeEntries[6], _nestedSetsTreeEntries[1]);
 
-		synchronizeAssetCategories(_assetCategories[6]);
+		synchronizeAssetCategories(_nestedSetsTreeEntries[6]);
 
-		assertLeftAndRight(_assetCategories[0], 1, 8);
-		assertLeftAndRight(_assetCategories[1], 9, 12);
-		assertLeftAndRight(_assetCategories[2], 13, 14);
-		assertLeftAndRight(_assetCategories[3], 2, 5);
-		assertLeftAndRight(_assetCategories[4], 6, 7);
-		assertLeftAndRight(_assetCategories[5], 3, 4);
-		assertLeftAndRight(_assetCategories[6], 10, 11);
+		assertLeftAndRight(_nestedSetsTreeEntries[0], 1, 8);
+		assertLeftAndRight(_nestedSetsTreeEntries[1], 9, 12);
+		assertLeftAndRight(_nestedSetsTreeEntries[2], 13, 14);
+		assertLeftAndRight(_nestedSetsTreeEntries[3], 2, 5);
+		assertLeftAndRight(_nestedSetsTreeEntries[4], 6, 7);
+		assertLeftAndRight(_nestedSetsTreeEntries[5], 3, 4);
+		assertLeftAndRight(_nestedSetsTreeEntries[6], 10, 11);
 
 		// (0(3(5), 4), 1(6(7)), 2)
 
-		_nestedSetsTreeManager.insert(_assetCategories[7], _assetCategories[6]);
+		_nestedSetsTreeManager.insert(_nestedSetsTreeEntries[7], _nestedSetsTreeEntries[6]);
 
-		synchronizeAssetCategories(_assetCategories[7]);
+		synchronizeAssetCategories(_nestedSetsTreeEntries[7]);
 
-		assertLeftAndRight(_assetCategories[0], 1, 8);
-		assertLeftAndRight(_assetCategories[1], 9, 14);
-		assertLeftAndRight(_assetCategories[2], 15, 16);
-		assertLeftAndRight(_assetCategories[3], 2, 5);
-		assertLeftAndRight(_assetCategories[4], 6, 7);
-		assertLeftAndRight(_assetCategories[5], 3, 4);
-		assertLeftAndRight(_assetCategories[6], 10, 13);
-		assertLeftAndRight(_assetCategories[7], 11, 12);
+		assertLeftAndRight(_nestedSetsTreeEntries[0], 1, 8);
+		assertLeftAndRight(_nestedSetsTreeEntries[1], 9, 14);
+		assertLeftAndRight(_nestedSetsTreeEntries[2], 15, 16);
+		assertLeftAndRight(_nestedSetsTreeEntries[3], 2, 5);
+		assertLeftAndRight(_nestedSetsTreeEntries[4], 6, 7);
+		assertLeftAndRight(_nestedSetsTreeEntries[5], 3, 4);
+		assertLeftAndRight(_nestedSetsTreeEntries[6], 10, 13);
+		assertLeftAndRight(_nestedSetsTreeEntries[7], 11, 12);
 
 		// (0(3(5), 4(8)), 1(6(7)), 2)
 
-		_nestedSetsTreeManager.insert(_assetCategories[8], _assetCategories[4]);
+		_nestedSetsTreeManager.insert(_nestedSetsTreeEntries[8], _nestedSetsTreeEntries[4]);
 
-		synchronizeAssetCategories(_assetCategories[8]);
+		synchronizeAssetCategories(_nestedSetsTreeEntries[8]);
 
-		assertLeftAndRight(_assetCategories[0], 1, 10);
-		assertLeftAndRight(_assetCategories[1], 11, 16);
-		assertLeftAndRight(_assetCategories[2], 17, 18);
-		assertLeftAndRight(_assetCategories[3], 2, 5);
-		assertLeftAndRight(_assetCategories[4], 6, 9);
-		assertLeftAndRight(_assetCategories[5], 3, 4);
-		assertLeftAndRight(_assetCategories[6], 12, 15);
-		assertLeftAndRight(_assetCategories[7], 13, 14);
-		assertLeftAndRight(_assetCategories[8], 7, 8);
+		assertLeftAndRight(_nestedSetsTreeEntries[0], 1, 10);
+		assertLeftAndRight(_nestedSetsTreeEntries[1], 11, 16);
+		assertLeftAndRight(_nestedSetsTreeEntries[2], 17, 18);
+		assertLeftAndRight(_nestedSetsTreeEntries[3], 2, 5);
+		assertLeftAndRight(_nestedSetsTreeEntries[4], 6, 9);
+		assertLeftAndRight(_nestedSetsTreeEntries[5], 3, 4);
+		assertLeftAndRight(_nestedSetsTreeEntries[6], 12, 15);
+		assertLeftAndRight(_nestedSetsTreeEntries[7], 13, 14);
+		assertLeftAndRight(_nestedSetsTreeEntries[8], 7, 8);
 	}
 
 	@Test
 	public void testMove() {
 		testInsert();
 
-		_nestedSetsTreeManager.move(_assetCategories[4], null, null);
+		_nestedSetsTreeManager.move(_nestedSetsTreeEntries[4], null, null);
 
 		synchronizeAssetCategories(null);
 
-		assertLeftAndRight(_assetCategories[0], 1, 10);
-		assertLeftAndRight(_assetCategories[1], 11, 16);
-		assertLeftAndRight(_assetCategories[2], 17, 18);
-		assertLeftAndRight(_assetCategories[3], 2, 5);
-		assertLeftAndRight(_assetCategories[4], 6, 9);
-		assertLeftAndRight(_assetCategories[5], 3, 4);
-		assertLeftAndRight(_assetCategories[6], 12, 15);
-		assertLeftAndRight(_assetCategories[7], 13, 14);
-		assertLeftAndRight(_assetCategories[8], 7, 8);
+		assertLeftAndRight(_nestedSetsTreeEntries[0], 1, 10);
+		assertLeftAndRight(_nestedSetsTreeEntries[1], 11, 16);
+		assertLeftAndRight(_nestedSetsTreeEntries[2], 17, 18);
+		assertLeftAndRight(_nestedSetsTreeEntries[3], 2, 5);
+		assertLeftAndRight(_nestedSetsTreeEntries[4], 6, 9);
+		assertLeftAndRight(_nestedSetsTreeEntries[5], 3, 4);
+		assertLeftAndRight(_nestedSetsTreeEntries[6], 12, 15);
+		assertLeftAndRight(_nestedSetsTreeEntries[7], 13, 14);
+		assertLeftAndRight(_nestedSetsTreeEntries[8], 7, 8);
 
 		_nestedSetsTreeManager.move(
-			_assetCategories[4], _assetCategories[0], _assetCategories[0]);
+			_nestedSetsTreeEntries[4], _nestedSetsTreeEntries[0], _nestedSetsTreeEntries[0]);
 
 		synchronizeAssetCategories(null);
 
-		assertLeftAndRight(_assetCategories[0], 1, 10);
-		assertLeftAndRight(_assetCategories[1], 11, 16);
-		assertLeftAndRight(_assetCategories[2], 17, 18);
-		assertLeftAndRight(_assetCategories[3], 2, 5);
-		assertLeftAndRight(_assetCategories[4], 6, 9);
-		assertLeftAndRight(_assetCategories[5], 3, 4);
-		assertLeftAndRight(_assetCategories[6], 12, 15);
-		assertLeftAndRight(_assetCategories[7], 13, 14);
-		assertLeftAndRight(_assetCategories[8], 7, 8);
+		assertLeftAndRight(_nestedSetsTreeEntries[0], 1, 10);
+		assertLeftAndRight(_nestedSetsTreeEntries[1], 11, 16);
+		assertLeftAndRight(_nestedSetsTreeEntries[2], 17, 18);
+		assertLeftAndRight(_nestedSetsTreeEntries[3], 2, 5);
+		assertLeftAndRight(_nestedSetsTreeEntries[4], 6, 9);
+		assertLeftAndRight(_nestedSetsTreeEntries[5], 3, 4);
+		assertLeftAndRight(_nestedSetsTreeEntries[6], 12, 15);
+		assertLeftAndRight(_nestedSetsTreeEntries[7], 13, 14);
+		assertLeftAndRight(_nestedSetsTreeEntries[8], 7, 8);
 
 		_nestedSetsTreeManager.move(
-			_assetCategories[4], _assetCategories[0], _assetCategories[2]);
+			_nestedSetsTreeEntries[4], _nestedSetsTreeEntries[0], _nestedSetsTreeEntries[2]);
 
 		synchronizeAssetCategories(null);
 
-		assertLeftAndRight(_assetCategories[0], 1, 6);
-		assertLeftAndRight(_assetCategories[1], 7, 12);
-		assertLeftAndRight(_assetCategories[2], 13, 18);
-		assertLeftAndRight(_assetCategories[3], 2, 5);
-		assertLeftAndRight(_assetCategories[4], 14, 17);
-		assertLeftAndRight(_assetCategories[5], 3, 4);
-		assertLeftAndRight(_assetCategories[6], 8, 11);
-		assertLeftAndRight(_assetCategories[7], 9, 10);
-		assertLeftAndRight(_assetCategories[8], 15, 16);
+		assertLeftAndRight(_nestedSetsTreeEntries[0], 1, 6);
+		assertLeftAndRight(_nestedSetsTreeEntries[1], 7, 12);
+		assertLeftAndRight(_nestedSetsTreeEntries[2], 13, 18);
+		assertLeftAndRight(_nestedSetsTreeEntries[3], 2, 5);
+		assertLeftAndRight(_nestedSetsTreeEntries[4], 14, 17);
+		assertLeftAndRight(_nestedSetsTreeEntries[5], 3, 4);
+		assertLeftAndRight(_nestedSetsTreeEntries[6], 8, 11);
+		assertLeftAndRight(_nestedSetsTreeEntries[7], 9, 10);
+		assertLeftAndRight(_nestedSetsTreeEntries[8], 15, 16);
 
 		_nestedSetsTreeManager.move(
-			_assetCategories[2], null, _assetCategories[0]);
+			_nestedSetsTreeEntries[2], null, _nestedSetsTreeEntries[0]);
 
 		synchronizeAssetCategories(null);
 
-		assertLeftAndRight(_assetCategories[0], 1, 12);
-		assertLeftAndRight(_assetCategories[1], 13, 18);
-		assertLeftAndRight(_assetCategories[2], 6, 11);
-		assertLeftAndRight(_assetCategories[3], 2, 5);
-		assertLeftAndRight(_assetCategories[4], 7, 10);
-		assertLeftAndRight(_assetCategories[5], 3, 4);
-		assertLeftAndRight(_assetCategories[6], 14, 17);
-		assertLeftAndRight(_assetCategories[7], 15, 16);
-		assertLeftAndRight(_assetCategories[8], 8, 9);
+		assertLeftAndRight(_nestedSetsTreeEntries[0], 1, 12);
+		assertLeftAndRight(_nestedSetsTreeEntries[1], 13, 18);
+		assertLeftAndRight(_nestedSetsTreeEntries[2], 6, 11);
+		assertLeftAndRight(_nestedSetsTreeEntries[3], 2, 5);
+		assertLeftAndRight(_nestedSetsTreeEntries[4], 7, 10);
+		assertLeftAndRight(_nestedSetsTreeEntries[5], 3, 4);
+		assertLeftAndRight(_nestedSetsTreeEntries[6], 14, 17);
+		assertLeftAndRight(_nestedSetsTreeEntries[7], 15, 16);
+		assertLeftAndRight(_nestedSetsTreeEntries[8], 8, 9);
 
 		_nestedSetsTreeManager.move(
-			_assetCategories[3], _assetCategories[0], null);
+			_nestedSetsTreeEntries[3], _nestedSetsTreeEntries[0], null);
 
 		synchronizeAssetCategories(null);
 
-		assertLeftAndRight(_assetCategories[0], 1, 8);
-		assertLeftAndRight(_assetCategories[1], 9, 14);
-		assertLeftAndRight(_assetCategories[2], 2, 7);
-		assertLeftAndRight(_assetCategories[3], 15, 18);
-		assertLeftAndRight(_assetCategories[4], 3, 6);
-		assertLeftAndRight(_assetCategories[5], 16, 17);
-		assertLeftAndRight(_assetCategories[6], 10, 13);
-		assertLeftAndRight(_assetCategories[7], 11, 12);
-		assertLeftAndRight(_assetCategories[8], 4, 5);
+		assertLeftAndRight(_nestedSetsTreeEntries[0], 1, 8);
+		assertLeftAndRight(_nestedSetsTreeEntries[1], 9, 14);
+		assertLeftAndRight(_nestedSetsTreeEntries[2], 2, 7);
+		assertLeftAndRight(_nestedSetsTreeEntries[3], 15, 18);
+		assertLeftAndRight(_nestedSetsTreeEntries[4], 3, 6);
+		assertLeftAndRight(_nestedSetsTreeEntries[5], 16, 17);
+		assertLeftAndRight(_nestedSetsTreeEntries[6], 10, 13);
+		assertLeftAndRight(_nestedSetsTreeEntries[7], 11, 12);
+		assertLeftAndRight(_nestedSetsTreeEntries[8], 4, 5);
 
 		_nestedSetsTreeManager.move(
-			_assetCategories[1], null, _assetCategories[0]);
+			_nestedSetsTreeEntries[1], null, _nestedSetsTreeEntries[0]);
 
 		synchronizeAssetCategories(null);
 
-		assertLeftAndRight(_assetCategories[0], 1, 14);
-		assertLeftAndRight(_assetCategories[1], 8, 13);
-		assertLeftAndRight(_assetCategories[2], 2, 7);
-		assertLeftAndRight(_assetCategories[3], 15, 18);
-		assertLeftAndRight(_assetCategories[4], 3, 6);
-		assertLeftAndRight(_assetCategories[5], 16, 17);
-		assertLeftAndRight(_assetCategories[6], 9, 12);
-		assertLeftAndRight(_assetCategories[7], 10, 11);
-		assertLeftAndRight(_assetCategories[8], 4, 5);
+		assertLeftAndRight(_nestedSetsTreeEntries[0], 1, 14);
+		assertLeftAndRight(_nestedSetsTreeEntries[1], 8, 13);
+		assertLeftAndRight(_nestedSetsTreeEntries[2], 2, 7);
+		assertLeftAndRight(_nestedSetsTreeEntries[3], 15, 18);
+		assertLeftAndRight(_nestedSetsTreeEntries[4], 3, 6);
+		assertLeftAndRight(_nestedSetsTreeEntries[5], 16, 17);
+		assertLeftAndRight(_nestedSetsTreeEntries[6], 9, 12);
+		assertLeftAndRight(_nestedSetsTreeEntries[7], 10, 11);
+		assertLeftAndRight(_nestedSetsTreeEntries[8], 4, 5);
 
 		_nestedSetsTreeManager.move(
-			_assetCategories[3], null, _assetCategories[1]);
+			_nestedSetsTreeEntries[3], null, _nestedSetsTreeEntries[1]);
 
 		synchronizeAssetCategories(null);
 
-		assertLeftAndRight(_assetCategories[0], 1, 18);
-		assertLeftAndRight(_assetCategories[1], 8, 17);
-		assertLeftAndRight(_assetCategories[2], 2, 7);
-		assertLeftAndRight(_assetCategories[3], 13, 16);
-		assertLeftAndRight(_assetCategories[4], 3, 6);
-		assertLeftAndRight(_assetCategories[5], 14, 15);
-		assertLeftAndRight(_assetCategories[6], 9, 12);
-		assertLeftAndRight(_assetCategories[7], 10, 11);
-		assertLeftAndRight(_assetCategories[8], 4, 5);
+		assertLeftAndRight(_nestedSetsTreeEntries[0], 1, 18);
+		assertLeftAndRight(_nestedSetsTreeEntries[1], 8, 17);
+		assertLeftAndRight(_nestedSetsTreeEntries[2], 2, 7);
+		assertLeftAndRight(_nestedSetsTreeEntries[3], 13, 16);
+		assertLeftAndRight(_nestedSetsTreeEntries[4], 3, 6);
+		assertLeftAndRight(_nestedSetsTreeEntries[5], 14, 15);
+		assertLeftAndRight(_nestedSetsTreeEntries[6], 9, 12);
+		assertLeftAndRight(_nestedSetsTreeEntries[7], 10, 11);
+		assertLeftAndRight(_nestedSetsTreeEntries[8], 4, 5);
 
 		_nestedSetsTreeManager.move(
-			_assetCategories[2], _assetCategories[0], _assetCategories[3]);
+			_nestedSetsTreeEntries[2], _nestedSetsTreeEntries[0], _nestedSetsTreeEntries[3]);
 
 		synchronizeAssetCategories(null);
 
-		assertLeftAndRight(_assetCategories[0], 1, 18);
-		assertLeftAndRight(_assetCategories[1], 2, 17);
-		assertLeftAndRight(_assetCategories[2], 10, 15);
-		assertLeftAndRight(_assetCategories[3], 7, 16);
-		assertLeftAndRight(_assetCategories[4], 11, 14);
-		assertLeftAndRight(_assetCategories[5], 8, 9);
-		assertLeftAndRight(_assetCategories[6], 3, 6);
-		assertLeftAndRight(_assetCategories[7], 4, 5);
-		assertLeftAndRight(_assetCategories[8], 12, 13);
+		assertLeftAndRight(_nestedSetsTreeEntries[0], 1, 18);
+		assertLeftAndRight(_nestedSetsTreeEntries[1], 2, 17);
+		assertLeftAndRight(_nestedSetsTreeEntries[2], 10, 15);
+		assertLeftAndRight(_nestedSetsTreeEntries[3], 7, 16);
+		assertLeftAndRight(_nestedSetsTreeEntries[4], 11, 14);
+		assertLeftAndRight(_nestedSetsTreeEntries[5], 8, 9);
+		assertLeftAndRight(_nestedSetsTreeEntries[6], 3, 6);
+		assertLeftAndRight(_nestedSetsTreeEntries[7], 4, 5);
+		assertLeftAndRight(_nestedSetsTreeEntries[8], 12, 13);
 	}
 
 	protected void assertCountAncestors(
-		long ancestorsCount, AssetCategory assetCategory) {
+		long ancestorsCount, NestedSetsTreeEntry nestedSetsTreeEntry) {
 
 		Assert.assertEquals(
 			ancestorsCount,
-			_nestedSetsTreeManager.countAncestors(assetCategory));
+			_nestedSetsTreeManager.countAncestors(nestedSetsTreeEntry));
 	}
 
 	protected void assertCountChildren(
-		long childrenCount, AssetCategory assetCategory) {
+		long childrenCount, NestedSetsTreeEntry nestedSetsTreeEntry) {
 
 		Assert.assertEquals(
 			childrenCount,
-			_nestedSetsTreeManager.countDescendants(assetCategory));
+			_nestedSetsTreeManager.countDescendants(nestedSetsTreeEntry));
 	}
 
 	protected void assertGetAncestors(
-		AssetCategory assetCategory, AssetCategory... ancestorAssetCategories) {
+		NestedSetsTreeEntry nestedSetsTreeEntry, NestedSetsTreeEntry... ancestorNestedSetsTreeEntries) {
 
-		List<AssetCategory> expectedAssetCategories = new ArrayList<>(
-			Arrays.asList(ancestorAssetCategories));
+		List<NestedSetsTreeEntry> expectedAssetCategories = new ArrayList<>(
+			Arrays.asList(ancestorNestedSetsTreeEntries));
 
-		expectedAssetCategories.add(assetCategory);
+		expectedAssetCategories.add(nestedSetsTreeEntry);
 
 		Collections.sort(expectedAssetCategories);
 
-		List<AssetCategory> actualAssetCategories = new ArrayList<>(
-			_nestedSetsTreeManager.getAncestors(assetCategory));
+		List<NestedSetsTreeEntry> actualAssetCategories = new ArrayList<>(
+			_nestedSetsTreeManager.getAncestors(nestedSetsTreeEntry));
 
 		Collections.sort(actualAssetCategories);
 
@@ -642,17 +634,17 @@ public class PersistenceNestedSetsTreeManagerTest {
 	}
 
 	protected void assertGetDescendants(
-		AssetCategory assetCategory, AssetCategory... childAssetCategories) {
+		NestedSetsTreeEntry nestedSetsTreeEntry, NestedSetsTreeEntry... childNestedSetsTreeEntries) {
 
-		List<AssetCategory> expectedAssetCategories = new ArrayList<>(
-			Arrays.asList(childAssetCategories));
+		List<NestedSetsTreeEntry> expectedAssetCategories = new ArrayList<>(
+			Arrays.asList(childNestedSetsTreeEntries));
 
-		expectedAssetCategories.add(assetCategory);
+		expectedAssetCategories.add(nestedSetsTreeEntry);
 
 		Collections.sort(expectedAssetCategories);
 
-		List<AssetCategory> actualAssetCategories = new ArrayList<>(
-			_nestedSetsTreeManager.getDescendants(assetCategory));
+		List<NestedSetsTreeEntry> actualAssetCategories = new ArrayList<>(
+			_nestedSetsTreeManager.getDescendants(nestedSetsTreeEntry));
 
 		Collections.sort(actualAssetCategories);
 
@@ -660,50 +652,55 @@ public class PersistenceNestedSetsTreeManagerTest {
 	}
 
 	protected void assertLeftAndRight(
-		AssetCategory assetCategory, long leftCategoryId,
-		long rightCategoryId) {
+		NestedSetsTreeEntry nestedSetsTreeEntry, long leftNestedSetsTreeEntryId,
+		long rightNestedSetsTreeEntryId) {
 
-		Assert.assertEquals(leftCategoryId, assetCategory.getLeftCategoryId());
+		Assert.assertEquals(leftNestedSetsTreeEntryId, nestedSetsTreeEntry.getLeftNestedSetsTreeEntryId());
 		Assert.assertEquals(
-			rightCategoryId, assetCategory.getRightCategoryId());
+			rightNestedSetsTreeEntryId, nestedSetsTreeEntry.getRightNestedSetsTreeEntryId());
 
-		_assetCategoryPersistence.update(assetCategory);
+		_nestedSetsTreeEntryPersistence.update(nestedSetsTreeEntry);
 	}
 
-	protected void synchronizeAssetCategories(AssetCategory assetCategory) {
-		synchronizeAssetCategories(assetCategory, false);
+	protected void synchronizeAssetCategories(NestedSetsTreeEntry nestedSetsTreeEntry) {
+		synchronizeAssetCategories(nestedSetsTreeEntry, false);
 	}
 
 	protected void synchronizeAssetCategories(
-		AssetCategory assetCategory, boolean delete) {
+		NestedSetsTreeEntry nestedSetsTreeEntry, boolean delete) {
 
-		if (assetCategory != null) {
+		if (nestedSetsTreeEntry != null) {
 			if (delete) {
-				_assetCategoryPersistence.remove(assetCategory);
+				_nestedSetsTreeEntryPersistence.remove(nestedSetsTreeEntry);
 			}
 			else {
-				_assetCategoryPersistence.update(assetCategory);
+				_nestedSetsTreeEntryPersistence.update(nestedSetsTreeEntry);
 			}
 		}
 
-		_assetCategoryPersistence.clearCache();
+		_nestedSetsTreeEntryPersistence.clearCache();
 
-		for (int i = 0; i < _assetCategories.length; i++) {
-			assetCategory = _assetCategories[i];
+		for (int i = 0; i < _nestedSetsTreeEntries.length; i++) {
+			nestedSetsTreeEntry = _nestedSetsTreeEntries[i];
 
-			if (assetCategory != null) {
-				_assetCategories[i] =
-					_assetCategoryPersistence.fetchByPrimaryKey(
-						assetCategory.getCategoryId());
+			if (nestedSetsTreeEntry != null) {
+				_nestedSetsTreeEntries[i] =
+					_nestedSetsTreeEntryPersistence.fetchByPrimaryKey(
+						nestedSetsTreeEntry.getNestedSetsTreeEntryId());
 			}
 		}
 	}
 
-	private AssetCategory[] _assetCategories;
-	private AssetCategoryPersistence _assetCategoryPersistence;
-	private AssetVocabulary _assetVocabulary;
 	private Group _group;
-	private NestedSetsTreeManager<AssetCategory> _nestedSetsTreeManager;
+	private NestedSetsTreeEntry[] _nestedSetsTreeEntries;
+
+	@Inject
+	private static NestedSetsTreeEntryLocalService _nestedSetsTreeEntryLocalService;
+
+	@Inject
+	private static NestedSetsTreeEntryPersistence _nestedSetsTreeEntryPersistence;
+
+	private NestedSetsTreeManager<NestedSetsTreeEntry> _nestedSetsTreeManager;
 	private SessionFactoryInvocationHandler _sessionFactoryInvocationHandler;
 
 	private static class SessionFactoryInvocationHandler

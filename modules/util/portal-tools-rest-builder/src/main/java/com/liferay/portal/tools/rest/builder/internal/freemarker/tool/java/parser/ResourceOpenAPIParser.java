@@ -18,7 +18,6 @@ import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.util.CamelCaseUtil;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.TextFormatter;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.tools.rest.builder.internal.freemarker.tool.java.JavaMethodParameter;
 import com.liferay.portal.tools.rest.builder.internal.freemarker.tool.java.JavaMethodSignature;
@@ -46,8 +45,6 @@ import java.util.Objects;
 import java.util.Set;
 import java.util.TreeSet;
 import java.util.function.Consumer;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 /**
  * @author Peter Shin
@@ -87,7 +84,7 @@ public class ResourceOpenAPIParser {
 					List<JavaMethodParameter> javaMethodParameters =
 						_getJavaMethodParameters(javaDataTypeMap, operation);
 					String methodName = _getMethodName(
-						operation, path, returnType, schemaName);
+						operation, path, returnType);
 
 					javaMethodSignatures.add(
 						new JavaMethodSignature(
@@ -188,6 +185,24 @@ public class ResourceOpenAPIParser {
 		}
 
 		return sb.toString();
+	}
+
+	private static String _formatSingular(String name) {
+		if (Validator.isNull(name)) {
+			return name;
+		}
+
+		if (name.endsWith("ses")) {
+			name = name.substring(0, name.length() - 3) + "s";
+		}
+		else if (name.endsWith("ies")) {
+			name = name.substring(0, name.length() - 3) + "y";
+		}
+		else if (name.endsWith("s")) {
+			name = name.substring(0, name.length() - 1);
+		}
+
+		return name;
 	}
 
 	private static List<JavaMethodParameter> _getJavaMethodParameters(
@@ -384,8 +399,11 @@ public class ResourceOpenAPIParser {
 	}
 
 	private static String _getMethodName(
-		Operation operation, String path, String returnType,
-		String schemaName) {
+		Operation operation, String path, String returnType) {
+
+		if (operation.getOperationId() != null) {
+			return operation.getOperationId();
+		}
 
 		List<String> methodNameSegments = new ArrayList<>();
 
@@ -393,78 +411,37 @@ public class ResourceOpenAPIParser {
 
 		methodNameSegments.add(httpMethod);
 
-		List<Parameter> parameters = Collections.emptyList();
-
-		if (operation.getParameters() != null) {
-			parameters = operation.getParameters();
-		}
-
-		Stream<Parameter> stream = parameters.stream();
-
-		parameters = stream.filter(
-			parameter -> {
-				if (StringUtil.equals(parameter.getIn(), "path")) {
-					return true;
-				}
-
-				return false;
-			}
-		).collect(
-			Collectors.toList()
-		);
-
-		for (Parameter parameter : parameters) {
-			String text = parameter.getName();
-
-			text = CamelCaseUtil.toCamelCase(text.replace("-id", ""));
-
-			methodNameSegments.add(StringUtil.upperCaseFirstLetter(text));
-		}
-
-		if (httpMethod.equals("get") &&
-			returnType.startsWith(Page.class.getName() + "<")) {
-
-			String className = returnType.substring(5, returnType.length() - 1);
-
-			String simpleClassName = className.substring(
-				className.lastIndexOf(".") + 1);
-
-			if (Objects.equals(simpleClassName, schemaName)) {
-				methodNameSegments.add(TextFormatter.formatPlural(schemaName));
-			}
-		}
-
 		String[] pathSegments = path.split("/");
 
-		if (httpMethod.equals("post") &&
-			(pathSegments.length >
-				(methodNameSegments.size() + parameters.size()))) {
+		for (int i = 0; i < pathSegments.length; i++) {
+			String pathSegment = pathSegments[i];
 
-			String pathSegment =
-				pathSegments[methodNameSegments.size() + parameters.size()];
-
-			String text = CamelCaseUtil.toCamelCase(pathSegment);
-
-			text = StringUtil.upperCaseFirstLetter(text);
-
-			if (text.equals(TextFormatter.formatPlural(schemaName))) {
-				methodNameSegments.add(schemaName);
+			if (pathSegment.isEmpty()) {
+				continue;
 			}
-		}
 
-		if (pathSegments.length >
-				(methodNameSegments.size() + parameters.size())) {
+			String pathName = StringUtil.upperCaseFirstLetter(
+				CamelCaseUtil.toCamelCase(
+					pathSegment.replaceAll("\\{|-id|}", "")));
 
-			String pathSegment =
-				pathSegments[methodNameSegments.size() + parameters.size()];
+			if (_isPathParameter(pathSegment)) {
+				String previousPath = methodNameSegments.get(
+					methodNameSegments.size() - 1);
 
-			String text = CamelCaseUtil.toCamelCase(pathSegment);
+				if (!previousPath.equals(pathName)) {
+					methodNameSegments.add(pathName);
+				}
+			}
+			else if ((i == pathSegments.length - 1) &&
+					 StringUtil.startsWith(
+						 returnType,
+						 "com.liferay.portal.vulcan.pagination.Page<")) {
 
-			methodNameSegments.add(StringUtil.upperCaseFirstLetter(text));
-		}
-
-		if (StringUtil.startsWith(returnType, Page.class.getName() + "<")) {
-			methodNameSegments.add("Page");
+				methodNameSegments.add(pathName + "Page");
+			}
+			else {
+				methodNameSegments.add(_formatSingular(pathName));
+			}
 		}
 
 		return String.join("", methodNameSegments);
@@ -586,6 +563,10 @@ public class ResourceOpenAPIParser {
 		}
 
 		return boolean.class.getName();
+	}
+
+	private static boolean _isPathParameter(String pathSegment) {
+		return pathSegment.contains("{");
 	}
 
 	private static boolean _isSchemaMethod(

@@ -25,6 +25,7 @@ dependencies {
 	compileInclude group: "org.reflections", name: "reflections", version: "0.9.11"
 	compileInclude group: "org.yaml", name: "snakeyaml", version: "1.23"
 
+	compileOnly group: "com.fasterxml.jackson.core", name: "jackson-annotations", version: "2.9.8"
 	compileOnly group: "com.fasterxml.jackson.core", name: "jackson-core", version: "2.9.8"
 	compileOnly group: "com.fasterxml.jackson.core", name: "jackson-databind", version: "2.9.8"
 	compileOnly group: "com.fasterxml.jackson.jaxrs", name: "jackson-jaxrs-json-provider", version: "2.9.8"

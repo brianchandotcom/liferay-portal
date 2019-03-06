@@ -14,6 +14,7 @@
 
 package com.liferay.portal.vulcan.internal.jaxrs.context.resolver;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.MapperFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
@@ -36,6 +37,7 @@ public class ObjectMapperContextResolver
 			MapperFeature.SORT_PROPERTIES_ALPHABETICALLY, true);
 		objectMapper.enable(SerializationFeature.INDENT_OUTPUT);
 		objectMapper.setDateFormat(new ISO8601DateFormat());
+		objectMapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
 
 		return objectMapper;
 	}

@@ -164,7 +164,8 @@ class FragmentEditableField extends Component {
 			},
 			item: {
 				editableValues: this.editableValues,
-				fragmentEntryLinkId: this.fragmentEntryLinkId
+				fragmentEntryLinkId: this.fragmentEntryLinkId,
+				type: this.type
 			},
 			itemId: this.editableId,
 			panels: processor.getFloatingToolbarPanels(this.editableValues),

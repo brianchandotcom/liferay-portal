@@ -134,6 +134,15 @@ FloatingToolbarMappingPanel.STATE = {
 	 * @default undefined
 	 * @memberof FloatingToolbarMappingPanel
 	 * @review
+	 * @type {!object}
+	 */
+	item: Config
+		.required(),
+
+	/**
+	 * @default undefined
+	 * @memberof FloatingToolbarMappingPanel
+	 * @review
 	 * @type {!string}
 	 */
 	itemId: Config

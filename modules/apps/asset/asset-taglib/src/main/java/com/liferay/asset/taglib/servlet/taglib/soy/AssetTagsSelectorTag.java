@@ -302,7 +302,7 @@ public class AssetTagsSelectorTag extends ComponentRendererTag {
 	private String _id;
 	private boolean _ignoreRequestValue;
 	private String _namespace;
-	private Boolean _showSelectButton;
+	private Boolean _showSelectButton = false;
 	private String _tagNames;
 
 }

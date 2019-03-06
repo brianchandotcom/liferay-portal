@@ -147,8 +147,9 @@ public class InvokerFilterTest {
 
 			LogRecord logRecord = logRecords.get(0);
 
-			Assert.assertTrue(
-				logRecord.getMessage().startsWith("Rejected " + urlPrefix));
+			String message = logRecord.getMessage();
+
+			Assert.assertTrue(message.startsWith("Rejected " + urlPrefix));
 		}
 	}
 

@@ -2322,7 +2322,9 @@ public abstract class BaseBuild implements Build {
 				Object value = parameterJSONObject.opt("value");
 
 				if (value instanceof String) {
-					if (!value.toString().isEmpty()) {
+					String valueString = value.toString();
+
+					if (!valueString.isEmpty()) {
 						_parameters.put(
 							parameterJSONObject.getString("name"),
 							value.toString());

@@ -176,16 +176,14 @@ public class RebaseErrorTopLevelBuild extends TopLevelBuild {
 			System.out.println();
 			System.out.println("Test " + i);
 
+			String expectedCommentToken = expectedCommentTokens.get(i);
+
 			Pattern pattern = Pattern.compile(
-				expectedCommentTokens.get(
-					i
-				).replaceAll(
-					"\\s+", "\\\\s*"
-				));
+				expectedCommentToken.replaceAll("\\s+", "\\\\s*"));
 
 			Matcher matcher = pattern.matcher(actualCommentTokens.get(i));
 
-			System.out.println("'" + expectedCommentTokens.get(i) + "'");
+			System.out.println("'" + expectedCommentToken + "'");
 			System.out.println("pattern: " + pattern.pattern());
 			System.out.println("'" + actualCommentTokens.get(i) + "'");
 

@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.util.Calendar;
+import java.util.Locale;
 
 import org.junit.ClassRule;
 import org.junit.Rule;
@@ -71,7 +72,11 @@ public class UserServiceSoapTest {
 			"UserServiceSoapTest." + RandomTestUtil.nextLong() + "@liferay.com";
 		long facebookId = 0;
 		String openId = StringPool.BLANK;
-		String locale = LocaleUtil.getDefault().toString();
+
+		Locale defaultLocale = LocaleUtil.getDefault();
+
+		String locale = defaultLocale.toString();
+
 		String firstName = "UserServiceSoapTest";
 		String middleName = StringPool.BLANK;
 		String lastName = "UserServiceSoapTest";

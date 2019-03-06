@@ -793,7 +793,7 @@ definition {
 			PortletEntry.saveAsDraft();
 
 			AssertTextEquals.assertPartialText(
-				locator1 = "Message#WEB_CONTENT_STATUS",
+				locator1 = "WCEditWebContent#WORKFLOW_STATUS",
 				value1 = "Draft"
 			);
 		}

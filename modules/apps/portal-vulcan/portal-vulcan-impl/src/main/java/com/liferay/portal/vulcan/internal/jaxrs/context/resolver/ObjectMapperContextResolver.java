@@ -37,6 +37,7 @@ public class ObjectMapperContextResolver
 			MapperFeature.SORT_PROPERTIES_ALPHABETICALLY, true);
 		objectMapper.enable(SerializationFeature.INDENT_OUTPUT);
 		objectMapper.setDateFormat(new ISO8601DateFormat());
+		objectMapper.setSerializationInclusion(JsonInclude.Include.NON_EMPTY);
 		objectMapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
 
 		return objectMapper;

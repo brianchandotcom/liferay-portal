@@ -46,22 +46,22 @@ public class Page<T> {
 		return new ArrayList<>(_items);
 	}
 
-	@JsonProperty("pageSize")
-	public long getItemsPerPage() {
-		return _itemsPerPage;
-	}
-
-	public long getLastPageNumber() {
+	public long getLastPage() {
 		if (_totalCount == 0) {
 			return 1;
 		}
 
-		return -Math.floorDiv(-_totalCount, _itemsPerPage);
+		return -Math.floorDiv(-_totalCount, _pageSize);
 	}
 
 	@JsonProperty("page")
-	public long getPageNumber() {
-		return _pageNumber;
+	public long getPage() {
+		return _page;
+	}
+
+	@JsonProperty("pageSize")
+	public long getPageSize() {
+		return _pageSize;
 	}
 
 	public long getTotalCount() {
@@ -69,7 +69,7 @@ public class Page<T> {
 	}
 
 	public boolean hasNext() {
-		if (getLastPageNumber() > _pageNumber) {
+		if (getLastPage() > _page) {
 			return true;
 		}
 
@@ -77,7 +77,7 @@ public class Page<T> {
 	}
 
 	public boolean hasPrevious() {
-		if (_pageNumber > 1) {
+		if (_page > 1) {
 			return true;
 		}
 
@@ -86,22 +86,22 @@ public class Page<T> {
 
 	private Page(Collection<T> items) {
 		_items = items;
-		_itemsPerPage = items.size();
-		_pageNumber = 1;
+		_pageSize = items.size();
+		_page = 1;
 
-		_totalCount = _itemsPerPage;
+		_totalCount = _pageSize;
 	}
 
 	private Page(Collection<T> items, Pagination pagination, long totalCount) {
 		_items = items;
-		_itemsPerPage = pagination.getItemsPerPage();
-		_pageNumber = pagination.getPageNumber();
+		_pageSize = pagination.getPageSize();
+		_page = pagination.getPage();
 		_totalCount = totalCount;
 	}
 
 	private final Collection<T> _items;
-	private final long _itemsPerPage;
-	private final long _pageNumber;
+	private final long _page;
+	private final long _pageSize;
 	private final long _totalCount;
 
 }

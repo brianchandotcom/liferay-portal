@@ -29,8 +29,8 @@ public class PaginationTest {
 		Pagination pagination = Pagination.of(30, 3);
 
 		assertThat(pagination.getEndPosition(), is(90));
-		assertThat(pagination.getItemsPerPage(), is(30));
-		assertThat(pagination.getPageNumber(), is(3));
+		assertThat(pagination.getPageSize(), is(30));
+		assertThat(pagination.getPage(), is(3));
 		assertThat(pagination.getStartPosition(), is(60));
 	}
 

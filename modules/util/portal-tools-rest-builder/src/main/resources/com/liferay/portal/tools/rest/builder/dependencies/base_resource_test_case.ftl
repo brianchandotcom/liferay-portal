@@ -501,8 +501,8 @@ public abstract class Base${schemaName}ResourceTestCase {
 				</#if>
 
 				<#if parameters?contains("Pagination pagination")>
-					location = HttpUtil.addParameter(location, "page", pagination.getPageNumber());
-					location = HttpUtil.addParameter(location, "pageSize", pagination.getItemsPerPage());
+					location = HttpUtil.addParameter(location, "page", pagination.getPage());
+					location = HttpUtil.addParameter(location, "pageSize", pagination.getPageSize());
 				</#if>
 
 				<#if parameters?contains("Sort[] sorts")>
@@ -550,8 +550,8 @@ public abstract class Base${schemaName}ResourceTestCase {
 				</#if>
 
 				<#if parameters?contains("Pagination pagination")>
-					location = HttpUtil.addParameter(location, "page", pagination.getPageNumber());
-					location = HttpUtil.addParameter(location, "pageSize", pagination.getItemsPerPage());
+					location = HttpUtil.addParameter(location, "page", pagination.getPage());
+					location = HttpUtil.addParameter(location, "pageSize", pagination.getPageSize());
 				</#if>
 
 				<#if parameters?contains("Sort[] sorts")>
@@ -623,8 +623,8 @@ public abstract class Base${schemaName}ResourceTestCase {
 
 		int size = ${schemaVarNames}.size();
 
-		if ((page.getItemsPerPage() > 0) && (page.getLastPageNumber() > 0) &&
-			(page.getPageNumber() > 0) && (page.getTotalCount() > 0) &&
+		if ((page.getPageSize() > 0) && (page.getLastPage() > 0) &&
+			(page.getPage() > 0) && (page.getTotalCount() > 0) &&
 			(size > 0)) {
 
 			valid = true;
@@ -723,16 +723,16 @@ public abstract class Base${schemaName}ResourceTestCase {
 			return new ArrayList<>(items);
 		}
 
-		public long getItemsPerPage() {
-			return itemsPerPage;
+		public long getPageSize() {
+			return pageSize;
 		}
 
-		public long getLastPageNumber() {
-			return lastPageNumber;
+		public long getLastPage() {
+			return lastPage;
 		}
 
-		public long getPageNumber() {
-			return pageNumber;
+		public long getPage() {
+			return page;
 		}
 
 		public long getTotalCount() {
@@ -742,14 +742,14 @@ public abstract class Base${schemaName}ResourceTestCase {
 		@JsonProperty
 		protected Collection<T> items;
 
-		@JsonProperty("pageSize")
-		protected long itemsPerPage;
+		@JsonProperty
+		protected long pageSize;
 
 		@JsonProperty
-		protected long lastPageNumber;
+		protected long lastPage;
 
-		@JsonProperty("page")
-		protected long pageNumber;
+		@JsonProperty
+		protected long page;
 
 		@JsonProperty
 		protected long totalCount;

@@ -20,32 +20,32 @@ package com.liferay.portal.vulcan.pagination;
  */
 public class Pagination {
 
-	public static Pagination of(int itemsPerPage, int pageNumber) {
-		return new Pagination(itemsPerPage, pageNumber);
+	public static Pagination of(int pageSize, int page) {
+		return new Pagination(pageSize, page);
 	}
 
 	public int getEndPosition() {
-		return _pageNumber * _itemsPerPage;
+		return _page * _pageSize;
 	}
 
-	public int getItemsPerPage() {
-		return _itemsPerPage;
+	public int getPage() {
+		return _page;
 	}
 
-	public int getPageNumber() {
-		return _pageNumber;
+	public int getPageSize() {
+		return _pageSize;
 	}
 
 	public int getStartPosition() {
-		return (_pageNumber - 1) * _itemsPerPage;
+		return (_page - 1) * _pageSize;
 	}
 
-	private Pagination(int itemsPerPage, int pageNumber) {
-		_itemsPerPage = itemsPerPage;
-		_pageNumber = pageNumber;
+	private Pagination(int pageSize, int page) {
+		_pageSize = pageSize;
+		_page = page;
 	}
 
-	private final int _itemsPerPage;
-	private final int _pageNumber;
+	private final int _page;
+	private final int _pageSize;
 
 }

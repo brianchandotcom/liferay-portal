@@ -75,7 +75,16 @@ class FragmentEditableField extends Component {
 		const translatedValue = segmentedValue[this.languageId] ||
 			segmentedValue[this.defaultLanguageId];
 
-		const value = this.editableValues.mappedField ?
+		const mapped = Boolean(
+			this.editableValues.mappedField ||
+			(
+				this.editableValues.assetEntryClassNameId &&
+				this.editableValues.assetEntryClassPK &&
+				this.editableValues.assetEntryFieldId
+			)
+		);
+
+		const value = mapped ?
 			this.editableValues.defaultValue :
 			(translatedValue || this.editableValues.defaultValue);
 
@@ -91,7 +100,6 @@ class FragmentEditableField extends Component {
 		let nextState = state;
 
 		const fragmentEntryLinkEditableId = `${this.fragmentEntryLinkId}-${this.editableId}`;
-		const mapped = Boolean(this.editableValues.mappedField);
 		const translated = !mapped && Boolean(segmentedValue[this.languageId]);
 
 		nextState = setIn(nextState, ['_mapped'], mapped);

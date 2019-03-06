@@ -109,7 +109,11 @@ public class DefaultDLPortletToolbarContributor
 			_menuItemProvider.getAddShortcutMenuItem(
 				folder, themeDisplay, portletRequest));
 
-		MenuItem lastStaticMenuItem = menuItems.get(menuItems.size() - 1);
+		MenuItem lastStaticMenuItem = null;
+
+		if (!menuItems.isEmpty()) {
+			lastStaticMenuItem = menuItems.get(menuItems.size() - 1);
+		}
 
 		for (DLPortletToolbarContributorContext
 				dlPortletToolbarContributorContext :
@@ -124,7 +128,9 @@ public class DefaultDLPortletToolbarContributor
 			_menuItemProvider.getAddDocumentTypesMenuItems(
 				folder, themeDisplay, portletRequest));
 
-		if (lastStaticMenuItem != menuItems.get(menuItems.size() - 1)) {
+		if ((lastStaticMenuItem != null) &&
+			(lastStaticMenuItem != menuItems.get(menuItems.size() - 1))) {
+
 			lastStaticMenuItem.setSeparator(true);
 		}
 

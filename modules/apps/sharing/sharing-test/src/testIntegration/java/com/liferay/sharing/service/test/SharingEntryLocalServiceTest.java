@@ -890,12 +890,13 @@ public class SharingEntryLocalServiceTest {
 
 				users.add(fromUser);
 
+				Instant now = Instant.now();
+
 				_sharingEntryLocalService.addSharingEntry(
 					fromUser.getUserId(), _toUser.getUserId(), classNameId,
 					classPK, _group.getGroupId(), true,
 					Arrays.asList(SharingEntryAction.VIEW),
-					Date.from(Instant.now().plus(2, ChronoUnit.DAYS)),
-					serviceContext);
+					Date.from(now.plus(2, ChronoUnit.DAYS)), serviceContext);
 			}
 
 			List<SharingEntry> sharingEntries =
@@ -947,19 +948,21 @@ public class SharingEntryLocalServiceTest {
 
 				users.add(fromUser);
 
+				Instant now = Instant.now();
+
 				_sharingEntryLocalService.addSharingEntry(
 					fromUser.getUserId(), _toUser.getUserId(), classNameId1,
 					classPK1, _group.getGroupId(), true,
 					Arrays.asList(SharingEntryAction.VIEW),
-					Date.from(Instant.now().plus(2, ChronoUnit.DAYS)),
-					serviceContext);
+					Date.from(now.plus(2, ChronoUnit.DAYS)), serviceContext);
+
+				now = Instant.now();
 
 				_sharingEntryLocalService.addSharingEntry(
 					fromUser.getUserId(), _toUser.getUserId(), classNameId2,
 					classPK2, _group.getGroupId(), true,
 					Arrays.asList(SharingEntryAction.VIEW),
-					Date.from(Instant.now().plus(2, ChronoUnit.DAYS)),
-					serviceContext);
+					Date.from(now.plus(2, ChronoUnit.DAYS)), serviceContext);
 			}
 
 			List<SharingEntry> sharingEntriesForClassNameId =
@@ -1017,23 +1020,25 @@ public class SharingEntryLocalServiceTest {
 			ServiceContext serviceContext =
 				ServiceContextTestUtil.getServiceContext(_group.getGroupId());
 
+			Instant now = Instant.now();
+
 			SharingEntry sharingEntry1 =
 				_sharingEntryLocalService.addSharingEntry(
 					_fromUser.getUserId(), _toUser.getUserId(), classNameId,
 					classPK1, _group.getGroupId(), true,
 					Arrays.asList(SharingEntryAction.VIEW),
-					Date.from(Instant.now().plus(2, ChronoUnit.DAYS)),
-					serviceContext);
+					Date.from(now.plus(2, ChronoUnit.DAYS)), serviceContext);
 
 			long classPK2 = group.getGroupId();
+
+			now = Instant.now();
 
 			SharingEntry sharingEntry2 =
 				_sharingEntryLocalService.addSharingEntry(
 					_fromUser.getUserId(), _toUser.getUserId(), classNameId,
 					classPK2, _group.getGroupId(), true,
 					Arrays.asList(SharingEntryAction.VIEW),
-					Date.from(Instant.now().plus(2, ChronoUnit.DAYS)),
-					serviceContext);
+					Date.from(now.plus(2, ChronoUnit.DAYS)), serviceContext);
 
 			List<SharingEntry> ascendingSharingEntries =
 				_sharingEntryLocalService.getUniqueToUserSharingEntries(

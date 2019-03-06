@@ -117,11 +117,13 @@ public class WorkflowDefinitionManagerTest {
 
 		Assert.assertFalse(workflowDefinition.isActive());
 
+		String content = workflowDefinition.getContent();
+
 		WorkflowDefinition deployedWorkflowDefinition =
 			_workflowDefinitionManager.deployWorkflowDefinition(
 				TestPropsValues.getCompanyId(), workflowDefinition.getUserId(),
 				workflowDefinition.getTitle(), workflowDefinition.getName(),
-				workflowDefinition.getContent().getBytes());
+				content.getBytes());
 
 		Assert.assertEquals(
 			workflowDefinition.getName(), deployedWorkflowDefinition.getName());

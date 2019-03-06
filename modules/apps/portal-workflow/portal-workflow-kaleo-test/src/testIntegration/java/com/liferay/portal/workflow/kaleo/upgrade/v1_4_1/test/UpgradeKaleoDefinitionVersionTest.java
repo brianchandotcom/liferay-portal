@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Company;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
@@ -164,7 +165,11 @@ public class UpgradeKaleoDefinitionVersionTest {
 			ps.setLong(2, groupId);
 			ps.setLong(3, companyId);
 			ps.setLong(4, TestPropsValues.getUserId());
-			ps.setString(5, TestPropsValues.getUser().getFullName());
+
+			User user = TestPropsValues.getUser();
+
+			ps.setString(5, user.getFullName());
+
 			ps.setTimestamp(6, _timestamp);
 			ps.setTimestamp(7, _timestamp);
 			ps.setString(8, name);

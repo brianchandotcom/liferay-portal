@@ -597,7 +597,11 @@ public class UpgradeContentTargetingTest {
 			ps.setLong(2, _group.getGroupId());
 			ps.setLong(3, _group.getCompanyId());
 			ps.setLong(4, TestPropsValues.getUserId());
-			ps.setString(5, TestPropsValues.getUser().getFullName());
+
+			User user = TestPropsValues.getUser();
+
+			ps.setString(5, user.getFullName());
+
 			ps.setTimestamp(6, new Timestamp(System.currentTimeMillis()));
 			ps.setTimestamp(7, new Timestamp(System.currentTimeMillis()));
 			ps.setLong(8, contentTargetingUserSegmentId);
@@ -628,7 +632,11 @@ public class UpgradeContentTargetingTest {
 			ps.setLong(2, _group.getGroupId());
 			ps.setLong(3, _group.getCompanyId());
 			ps.setLong(4, TestPropsValues.getUserId());
-			ps.setString(5, TestPropsValues.getUser().getFullName());
+
+			User user = TestPropsValues.getUser();
+
+			ps.setString(5, user.getFullName());
+
 			ps.setTimestamp(6, new Timestamp(System.currentTimeMillis()));
 			ps.setTimestamp(7, new Timestamp(System.currentTimeMillis()));
 			ps.setString(

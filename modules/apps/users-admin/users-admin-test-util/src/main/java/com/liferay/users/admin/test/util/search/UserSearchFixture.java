@@ -18,6 +18,7 @@ import com.liferay.asset.kernel.model.AssetTag;
 import com.liferay.asset.kernel.service.AssetTagLocalServiceUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Address;
+import com.liferay.portal.kernel.model.Contact;
 import com.liferay.portal.kernel.model.Country;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.ListType;
@@ -71,7 +72,10 @@ public class UserSearchFixture {
 		long listTypeId = listType.getListTypeId();
 
 		long contactId = user.getContactId();
-		String modelClassName = user.getContact().getModelClassName();
+
+		Contact contact = user.getContact();
+
+		String modelClassName = contact.getModelClassName();
 
 		Country country = CountryServiceUtil.getCountryByName("united-states");
 

@@ -216,9 +216,11 @@ public class UserIndexerIndexedFieldsTest {
 		map.put("lastName", user.getLastName());
 		map.put(
 			"lastName_sortable", StringUtil.toLowerCase(user.getLastName()));
-		map.put(
-			"organizationCount",
-			String.valueOf(user.getOrganizationIds().length));
+
+		long[] organizationIds = user.getOrganizationIds();
+
+		map.put("organizationCount", String.valueOf(organizationIds.length));
+
 		map.put("roleIds", _getValues(user.getRoleIds()));
 		map.put("screenName", user.getScreenName());
 		map.put(

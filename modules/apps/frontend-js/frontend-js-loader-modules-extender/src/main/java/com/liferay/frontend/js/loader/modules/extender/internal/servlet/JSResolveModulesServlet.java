@@ -47,12 +47,14 @@ import org.osgi.service.component.annotations.Reference;
 	immediate = true,
 	property = {
 		"osgi.http.whiteboard.servlet.name=com.liferay.frontend.js.loader.modules.extender.internal.servlet.JSResolveModulesServlet",
-		"osgi.http.whiteboard.servlet.pattern=/js_resolve_modules",
+		"osgi.http.whiteboard.servlet.pattern=" + JSResolveModulesServlet.SERVLET_PATTERN,
 		"service.ranking:Integer=" + Details.MAX_VALUE_LESS_1K
 	},
 	service = {JSResolveModulesServlet.class, Servlet.class}
 )
 public class JSResolveModulesServlet extends HttpServlet {
+
+	public static final String SERVLET_PATTERN = "/js_resolve_modules";
 
 	@Override
 	protected void service(

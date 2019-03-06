@@ -163,6 +163,70 @@ public abstract class BaseFormStructureResourceTestCase {
 			});
 	}
 
+	protected FormStructure
+			testGetContentSpaceFormStructuresPage_addFormStructure(
+				Long contentSpaceId, FormStructure formStructure)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected Long testGetContentSpaceFormStructuresPage_getContentSpaceId()
+		throws Exception {
+
+		return testGroup.getGroupId();
+	}
+
+	protected Page<FormStructure> invokeGetContentSpaceFormStructuresPage(
+			Long contentSpaceId, Pagination pagination)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		String location =
+			_resourceURL +
+				_toPath(
+					"/content-spaces/{content-space-id}/form-structures",
+					contentSpaceId);
+
+		location = HttpUtil.addParameter(
+			location, "page", pagination.getPageNumber());
+		location = HttpUtil.addParameter(
+			location, "pageSize", pagination.getItemsPerPage());
+
+		options.setLocation(location);
+
+		return _outputObjectMapper.readValue(
+			HttpUtil.URLtoString(options),
+			new TypeReference<Page<FormStructure>>() {
+			});
+	}
+
+	protected Http.Response invokeGetContentSpaceFormStructuresPageResponse(
+			Long contentSpaceId, Pagination pagination)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		String location =
+			_resourceURL +
+				_toPath(
+					"/content-spaces/{content-space-id}/form-structures",
+					contentSpaceId);
+
+		location = HttpUtil.addParameter(
+			location, "page", pagination.getPageNumber());
+		location = HttpUtil.addParameter(
+			location, "pageSize", pagination.getItemsPerPage());
+
+		options.setLocation(location);
+
+		HttpUtil.URLtoString(options);
+
+		return options.getResponse();
+	}
+
 	@Test
 	public void testGetFormStructure() throws Exception {
 		FormStructure postFormStructure =
@@ -173,6 +237,53 @@ public abstract class BaseFormStructureResourceTestCase {
 
 		assertEquals(postFormStructure, getFormStructure);
 		assertValid(getFormStructure);
+	}
+
+	protected FormStructure testGetFormStructure_addFormStructure()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected FormStructure invokeGetFormStructure(Long formStructureId)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		String location =
+			_resourceURL +
+				_toPath(
+					"/form-structures/{form-structure-id}", formStructureId);
+
+		options.setLocation(location);
+
+		return _outputObjectMapper.readValue(
+			HttpUtil.URLtoString(options), FormStructure.class);
+	}
+
+	protected Http.Response invokeGetFormStructureResponse(Long formStructureId)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		String location =
+			_resourceURL +
+				_toPath(
+					"/form-structures/{form-structure-id}", formStructureId);
+
+		options.setLocation(location);
+
+		HttpUtil.URLtoString(options);
+
+		return options.getResponse();
+	}
+
+	protected void assertResponseCode(
+		int expectedResponseCode, Http.Response actualResponse) {
+
+		Assert.assertEquals(
+			expectedResponseCode, actualResponse.getResponseCode());
 	}
 
 	protected void assertEquals(
@@ -218,13 +329,6 @@ public abstract class BaseFormStructureResourceTestCase {
 				formStructures2 + " does not contain " + formStructure1,
 				contains);
 		}
-	}
-
-	protected void assertResponseCode(
-		int expectedResponseCode, Http.Response actualResponse) {
-
-		Assert.assertEquals(
-			expectedResponseCode, actualResponse.getResponseCode());
 	}
 
 	protected void assertValid(FormStructure formStructure) {
@@ -366,88 +470,6 @@ public abstract class BaseFormStructureResourceTestCase {
 			"Invalid entity field " + entityFieldName);
 	}
 
-	protected Page<FormStructure> invokeGetContentSpaceFormStructuresPage(
-			Long contentSpaceId, Pagination pagination)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		String location =
-			_resourceURL +
-				_toPath(
-					"/content-spaces/{content-space-id}/form-structures",
-					contentSpaceId);
-
-		location = HttpUtil.addParameter(
-			location, "page", pagination.getPageNumber());
-		location = HttpUtil.addParameter(
-			location, "pageSize", pagination.getItemsPerPage());
-
-		options.setLocation(location);
-
-		return _outputObjectMapper.readValue(
-			HttpUtil.URLtoString(options),
-			new TypeReference<Page<FormStructure>>() {
-			});
-	}
-
-	protected Http.Response invokeGetContentSpaceFormStructuresPageResponse(
-			Long contentSpaceId, Pagination pagination)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		String location =
-			_resourceURL +
-				_toPath(
-					"/content-spaces/{content-space-id}/form-structures",
-					contentSpaceId);
-
-		location = HttpUtil.addParameter(
-			location, "page", pagination.getPageNumber());
-		location = HttpUtil.addParameter(
-			location, "pageSize", pagination.getItemsPerPage());
-
-		options.setLocation(location);
-
-		HttpUtil.URLtoString(options);
-
-		return options.getResponse();
-	}
-
-	protected FormStructure invokeGetFormStructure(Long formStructureId)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		String location =
-			_resourceURL +
-				_toPath(
-					"/form-structures/{form-structure-id}", formStructureId);
-
-		options.setLocation(location);
-
-		return _outputObjectMapper.readValue(
-			HttpUtil.URLtoString(options), FormStructure.class);
-	}
-
-	protected Http.Response invokeGetFormStructureResponse(Long formStructureId)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		String location =
-			_resourceURL +
-				_toPath(
-					"/form-structures/{form-structure-id}", formStructureId);
-
-		options.setLocation(location);
-
-		HttpUtil.URLtoString(options);
-
-		return options.getResponse();
-	}
-
 	protected FormStructure randomFormStructure() {
 		return new FormStructure() {
 			{
@@ -459,28 +481,6 @@ public abstract class BaseFormStructureResourceTestCase {
 				name = RandomTestUtil.randomString();
 			}
 		};
-	}
-
-	protected FormStructure
-			testGetContentSpaceFormStructuresPage_addFormStructure(
-				Long contentSpaceId, FormStructure formStructure)
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	protected Long testGetContentSpaceFormStructuresPage_getContentSpaceId()
-		throws Exception {
-
-		return testGroup.getGroupId();
-	}
-
-	protected FormStructure testGetFormStructure_addFormStructure()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
 	}
 
 	protected Group testGroup;
@@ -547,12 +547,12 @@ public abstract class BaseFormStructureResourceTestCase {
 	}
 
 	private static DateFormat _dateFormat;
-	private static final ObjectMapper _inputObjectMapper = new ObjectMapper() {
+	private final static ObjectMapper _inputObjectMapper = new ObjectMapper() {
 		{
 			setSerializationInclusion(JsonInclude.Include.NON_NULL);
 		}
 	};
-	private static final ObjectMapper _outputObjectMapper = new ObjectMapper();
+	private final static ObjectMapper _outputObjectMapper = new ObjectMapper();
 
 	@Inject
 	private FormStructureResource _formStructureResource;

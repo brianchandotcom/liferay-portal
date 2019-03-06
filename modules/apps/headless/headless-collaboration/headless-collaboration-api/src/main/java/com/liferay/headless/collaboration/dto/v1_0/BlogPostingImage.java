@@ -41,30 +41,6 @@ public class BlogPostingImage {
 		return contentUrl;
 	}
 
-	public String getEncodingFormat() {
-		return encodingFormat;
-	}
-
-	public String getFileExtension() {
-		return fileExtension;
-	}
-
-	public Long getId() {
-		return id;
-	}
-
-	public Number getSizeInBytes() {
-		return sizeInBytes;
-	}
-
-	public String getTitle() {
-		return title;
-	}
-
-	public String getViewableBy() {
-		return viewableBy;
-	}
-
 	public void setContentUrl(String contentUrl) {
 		this.contentUrl = contentUrl;
 	}
@@ -79,6 +55,14 @@ public class BlogPostingImage {
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
+	}
+
+	@GraphQLField
+	@JsonProperty
+	protected String contentUrl;
+
+	public String getEncodingFormat() {
+		return encodingFormat;
 	}
 
 	public void setEncodingFormat(String encodingFormat) {
@@ -97,6 +81,14 @@ public class BlogPostingImage {
 		}
 	}
 
+	@GraphQLField
+	@JsonProperty
+	protected String encodingFormat;
+
+	public String getFileExtension() {
+		return fileExtension;
+	}
+
 	public void setFileExtension(String fileExtension) {
 		this.fileExtension = fileExtension;
 	}
@@ -113,6 +105,14 @@ public class BlogPostingImage {
 		}
 	}
 
+	@GraphQLField
+	@JsonProperty
+	protected String fileExtension;
+
+	public Long getId() {
+		return id;
+	}
+
 	public void setId(Long id) {
 		this.id = id;
 	}
@@ -125,6 +125,14 @@ public class BlogPostingImage {
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
+	}
+
+	@GraphQLField
+	@JsonProperty
+	protected Long id;
+
+	public Number getSizeInBytes() {
+		return sizeInBytes;
 	}
 
 	public void setSizeInBytes(Number sizeInBytes) {
@@ -143,6 +151,14 @@ public class BlogPostingImage {
 		}
 	}
 
+	@GraphQLField
+	@JsonProperty
+	protected Number sizeInBytes;
+
+	public String getTitle() {
+		return title;
+	}
+
 	public void setTitle(String title) {
 		this.title = title;
 	}
@@ -157,6 +173,14 @@ public class BlogPostingImage {
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
+	}
+
+	@GraphQLField
+	@JsonProperty
+	protected String title;
+
+	public String getViewableBy() {
+		return viewableBy;
 	}
 
 	public void setViewableBy(String viewableBy) {
@@ -175,8 +199,12 @@ public class BlogPostingImage {
 		}
 	}
 
+	@GraphQLField
+	@JsonProperty
+	protected String viewableBy;
+
 	public String toString() {
-		StringBundler sb = new StringBundler(32);
+		StringBundler sb = new StringBundler();
 
 		sb.append("{");
 
@@ -228,33 +256,5 @@ public class BlogPostingImage {
 
 		return sb.toString();
 	}
-
-	@GraphQLField
-	@JsonProperty
-	protected String contentUrl;
-
-	@GraphQLField
-	@JsonProperty
-	protected String encodingFormat;
-
-	@GraphQLField
-	@JsonProperty
-	protected String fileExtension;
-
-	@GraphQLField
-	@JsonProperty
-	protected Long id;
-
-	@GraphQLField
-	@JsonProperty
-	protected Number sizeInBytes;
-
-	@GraphQLField
-	@JsonProperty
-	protected String title;
-
-	@GraphQLField
-	@JsonProperty
-	protected String viewableBy;
 
 }

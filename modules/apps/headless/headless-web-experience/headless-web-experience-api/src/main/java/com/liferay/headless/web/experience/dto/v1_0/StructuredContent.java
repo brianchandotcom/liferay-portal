@@ -43,78 +43,6 @@ public class StructuredContent {
 		return aggregateRating;
 	}
 
-	public String[] getAvailableLanguages() {
-		return availableLanguages;
-	}
-
-	public Categories[] getCategories() {
-		return categories;
-	}
-
-	public Long[] getCategoryIds() {
-		return categoryIds;
-	}
-
-	public ContentField[] getContentFields() {
-		return contentFields;
-	}
-
-	public Long getContentSpace() {
-		return contentSpace;
-	}
-
-	public Long getContentStructureId() {
-		return contentStructureId;
-	}
-
-	public Creator getCreator() {
-		return creator;
-	}
-
-	public Date getDateCreated() {
-		return dateCreated;
-	}
-
-	public Date getDateModified() {
-		return dateModified;
-	}
-
-	public Date getDatePublished() {
-		return datePublished;
-	}
-
-	public String getDescription() {
-		return description;
-	}
-
-	public Boolean getHasComments() {
-		return hasComments;
-	}
-
-	public Long getId() {
-		return id;
-	}
-
-	public String[] getKeywords() {
-		return keywords;
-	}
-
-	public Date getLastReviewed() {
-		return lastReviewed;
-	}
-
-	public RenderedContentsURL[] getRenderedContentsURL() {
-		return renderedContentsURL;
-	}
-
-	public String getTitle() {
-		return title;
-	}
-
-	public String getViewableBy() {
-		return viewableBy;
-	}
-
 	public void setAggregateRating(AggregateRating aggregateRating) {
 		this.aggregateRating = aggregateRating;
 	}
@@ -130,6 +58,14 @@ public class StructuredContent {
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
+	}
+
+	@GraphQLField
+	@JsonProperty
+	protected AggregateRating aggregateRating;
+
+	public String[] getAvailableLanguages() {
+		return availableLanguages;
 	}
 
 	public void setAvailableLanguages(String[] availableLanguages) {
@@ -148,6 +84,14 @@ public class StructuredContent {
 		}
 	}
 
+	@GraphQLField
+	@JsonProperty
+	protected String[] availableLanguages;
+
+	public Categories[] getCategories() {
+		return categories;
+	}
+
 	public void setCategories(Categories[] categories) {
 		this.categories = categories;
 	}
@@ -162,6 +106,14 @@ public class StructuredContent {
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
+	}
+
+	@GraphQLField
+	@JsonProperty
+	protected Categories[] categories;
+
+	public Long[] getCategoryIds() {
+		return categoryIds;
 	}
 
 	public void setCategoryIds(Long[] categoryIds) {
@@ -180,6 +132,14 @@ public class StructuredContent {
 		}
 	}
 
+	@GraphQLField
+	@JsonProperty
+	protected Long[] categoryIds;
+
+	public ContentField[] getContentFields() {
+		return contentFields;
+	}
+
 	public void setContentFields(ContentField[] contentFields) {
 		this.contentFields = contentFields;
 	}
@@ -194,6 +154,14 @@ public class StructuredContent {
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
+	}
+
+	@GraphQLField
+	@JsonProperty
+	protected ContentField[] contentFields;
+
+	public Long getContentSpace() {
+		return contentSpace;
 	}
 
 	public void setContentSpace(Long contentSpace) {
@@ -212,6 +180,14 @@ public class StructuredContent {
 		}
 	}
 
+	@GraphQLField
+	@JsonProperty
+	protected Long contentSpace;
+
+	public Long getContentStructureId() {
+		return contentStructureId;
+	}
+
 	public void setContentStructureId(Long contentStructureId) {
 		this.contentStructureId = contentStructureId;
 	}
@@ -226,6 +202,14 @@ public class StructuredContent {
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
+	}
+
+	@GraphQLField
+	@JsonProperty
+	protected Long contentStructureId;
+
+	public Creator getCreator() {
+		return creator;
 	}
 
 	public void setCreator(Creator creator) {
@@ -244,6 +228,14 @@ public class StructuredContent {
 		}
 	}
 
+	@GraphQLField
+	@JsonProperty
+	protected Creator creator;
+
+	public Date getDateCreated() {
+		return dateCreated;
+	}
+
 	public void setDateCreated(Date dateCreated) {
 		this.dateCreated = dateCreated;
 	}
@@ -258,6 +250,14 @@ public class StructuredContent {
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
+	}
+
+	@GraphQLField
+	@JsonProperty
+	protected Date dateCreated;
+
+	public Date getDateModified() {
+		return dateModified;
 	}
 
 	public void setDateModified(Date dateModified) {
@@ -276,6 +276,14 @@ public class StructuredContent {
 		}
 	}
 
+	@GraphQLField
+	@JsonProperty
+	protected Date dateModified;
+
+	public Date getDatePublished() {
+		return datePublished;
+	}
+
 	public void setDatePublished(Date datePublished) {
 		this.datePublished = datePublished;
 	}
@@ -290,6 +298,14 @@ public class StructuredContent {
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
+	}
+
+	@GraphQLField
+	@JsonProperty
+	protected Date datePublished;
+
+	public String getDescription() {
+		return description;
 	}
 
 	public void setDescription(String description) {
@@ -308,6 +324,14 @@ public class StructuredContent {
 		}
 	}
 
+	@GraphQLField
+	@JsonProperty
+	protected String description;
+
+	public Boolean getHasComments() {
+		return hasComments;
+	}
+
 	public void setHasComments(Boolean hasComments) {
 		this.hasComments = hasComments;
 	}
@@ -324,6 +348,14 @@ public class StructuredContent {
 		}
 	}
 
+	@GraphQLField
+	@JsonProperty
+	protected Boolean hasComments;
+
+	public Long getId() {
+		return id;
+	}
+
 	public void setId(Long id) {
 		this.id = id;
 	}
@@ -336,6 +368,14 @@ public class StructuredContent {
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
+	}
+
+	@GraphQLField
+	@JsonProperty
+	protected Long id;
+
+	public String[] getKeywords() {
+		return keywords;
 	}
 
 	public void setKeywords(String[] keywords) {
@@ -354,6 +394,14 @@ public class StructuredContent {
 		}
 	}
 
+	@GraphQLField
+	@JsonProperty
+	protected String[] keywords;
+
+	public Date getLastReviewed() {
+		return lastReviewed;
+	}
+
 	public void setLastReviewed(Date lastReviewed) {
 		this.lastReviewed = lastReviewed;
 	}
@@ -368,6 +416,14 @@ public class StructuredContent {
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
+	}
+
+	@GraphQLField
+	@JsonProperty
+	protected Date lastReviewed;
+
+	public RenderedContentsURL[] getRenderedContentsURL() {
+		return renderedContentsURL;
 	}
 
 	public void setRenderedContentsURL(
@@ -389,6 +445,14 @@ public class StructuredContent {
 		}
 	}
 
+	@GraphQLField
+	@JsonProperty
+	protected RenderedContentsURL[] renderedContentsURL;
+
+	public String getTitle() {
+		return title;
+	}
+
 	public void setTitle(String title) {
 		this.title = title;
 	}
@@ -403,6 +467,14 @@ public class StructuredContent {
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
+	}
+
+	@GraphQLField
+	@JsonProperty
+	protected String title;
+
+	public String getViewableBy() {
+		return viewableBy;
 	}
 
 	public void setViewableBy(String viewableBy) {
@@ -420,6 +492,10 @@ public class StructuredContent {
 			throw new RuntimeException(e);
 		}
 	}
+
+	@GraphQLField
+	@JsonProperty
+	protected String viewableBy;
 
 	public String toString() {
 		StringBundler sb = new StringBundler();
@@ -638,81 +714,5 @@ public class StructuredContent {
 
 		return sb.toString();
 	}
-
-	@GraphQLField
-	@JsonProperty
-	protected AggregateRating aggregateRating;
-
-	@GraphQLField
-	@JsonProperty
-	protected String[] availableLanguages;
-
-	@GraphQLField
-	@JsonProperty
-	protected Categories[] categories;
-
-	@GraphQLField
-	@JsonProperty
-	protected Long[] categoryIds;
-
-	@GraphQLField
-	@JsonProperty
-	protected ContentField[] contentFields;
-
-	@GraphQLField
-	@JsonProperty
-	protected Long contentSpace;
-
-	@GraphQLField
-	@JsonProperty
-	protected Long contentStructureId;
-
-	@GraphQLField
-	@JsonProperty
-	protected Creator creator;
-
-	@GraphQLField
-	@JsonProperty
-	protected Date dateCreated;
-
-	@GraphQLField
-	@JsonProperty
-	protected Date dateModified;
-
-	@GraphQLField
-	@JsonProperty
-	protected Date datePublished;
-
-	@GraphQLField
-	@JsonProperty
-	protected String description;
-
-	@GraphQLField
-	@JsonProperty
-	protected Boolean hasComments;
-
-	@GraphQLField
-	@JsonProperty
-	protected Long id;
-
-	@GraphQLField
-	@JsonProperty
-	protected String[] keywords;
-
-	@GraphQLField
-	@JsonProperty
-	protected Date lastReviewed;
-
-	@GraphQLField
-	@JsonProperty
-	protected RenderedContentsURL[] renderedContentsURL;
-
-	@GraphQLField
-	@JsonProperty
-	protected String title;
-
-	@GraphQLField
-	@JsonProperty
-	protected String viewableBy;
 
 }

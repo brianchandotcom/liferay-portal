@@ -38,8 +38,13 @@ public interface CommentResource {
 
 	public Comment getComment(Long commentId) throws Exception;
 
+	public Comment putComment(Long commentId, Comment comment) throws Exception;
+
 	public Page<Comment> getCommentCommentsPage(
 			Long commentId, Filter filter, Pagination pagination, Sort[] sorts)
+		throws Exception;
+
+	public Comment postCommentComment(Long commentId, Comment comment)
 		throws Exception;
 
 	public Page<Comment> getStructuredContentCommentsPage(
@@ -47,14 +52,9 @@ public interface CommentResource {
 			Sort[] sorts)
 		throws Exception;
 
-	public Comment postCommentComment(Long commentId, Comment comment)
-		throws Exception;
-
 	public Comment postStructuredContentComment(
 			Long structuredContentId, Comment comment)
 		throws Exception;
-
-	public Comment putComment(Long commentId, Comment comment) throws Exception;
 
 	public void setContextCompany(Company contextCompany);
 

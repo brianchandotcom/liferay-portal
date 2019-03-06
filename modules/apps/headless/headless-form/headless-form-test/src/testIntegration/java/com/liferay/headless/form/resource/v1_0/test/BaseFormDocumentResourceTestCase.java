@@ -101,6 +101,49 @@ public abstract class BaseFormDocumentResourceTestCase {
 			404, invokeGetFormDocumentResponse(formDocument.getId()));
 	}
 
+	protected FormDocument testDeleteFormDocument_addFormDocument()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected boolean invokeDeleteFormDocument(Long formDocumentId)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		options.setDelete(true);
+
+		String location =
+			_resourceURL +
+				_toPath("/form-documents/{form-document-id}", formDocumentId);
+
+		options.setLocation(location);
+
+		return _outputObjectMapper.readValue(
+			HttpUtil.URLtoString(options), Boolean.class);
+	}
+
+	protected Http.Response invokeDeleteFormDocumentResponse(
+			Long formDocumentId)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		options.setDelete(true);
+
+		String location =
+			_resourceURL +
+				_toPath("/form-documents/{form-document-id}", formDocumentId);
+
+		options.setLocation(location);
+
+		HttpUtil.URLtoString(options);
+
+		return options.getResponse();
+	}
+
 	@Test
 	public void testGetFormDocument() throws Exception {
 		FormDocument postFormDocument = testGetFormDocument_addFormDocument();
@@ -110,6 +153,51 @@ public abstract class BaseFormDocumentResourceTestCase {
 
 		assertEquals(postFormDocument, getFormDocument);
 		assertValid(getFormDocument);
+	}
+
+	protected FormDocument testGetFormDocument_addFormDocument()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected FormDocument invokeGetFormDocument(Long formDocumentId)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		String location =
+			_resourceURL +
+				_toPath("/form-documents/{form-document-id}", formDocumentId);
+
+		options.setLocation(location);
+
+		return _outputObjectMapper.readValue(
+			HttpUtil.URLtoString(options), FormDocument.class);
+	}
+
+	protected Http.Response invokeGetFormDocumentResponse(Long formDocumentId)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		String location =
+			_resourceURL +
+				_toPath("/form-documents/{form-document-id}", formDocumentId);
+
+		options.setLocation(location);
+
+		HttpUtil.URLtoString(options);
+
+		return options.getResponse();
+	}
+
+	protected void assertResponseCode(
+		int expectedResponseCode, Http.Response actualResponse) {
+
+		Assert.assertEquals(
+			expectedResponseCode, actualResponse.getResponseCode());
 	}
 
 	protected void assertEquals(
@@ -153,13 +241,6 @@ public abstract class BaseFormDocumentResourceTestCase {
 				formDocuments2 + " does not contain " + formDocument1,
 				contains);
 		}
-	}
-
-	protected void assertResponseCode(
-		int expectedResponseCode, Http.Response actualResponse) {
-
-		Assert.assertEquals(
-			expectedResponseCode, actualResponse.getResponseCode());
 	}
 
 	protected void assertValid(FormDocument formDocument) {
@@ -285,73 +366,6 @@ public abstract class BaseFormDocumentResourceTestCase {
 			"Invalid entity field " + entityFieldName);
 	}
 
-	protected boolean invokeDeleteFormDocument(Long formDocumentId)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		options.setDelete(true);
-
-		String location =
-			_resourceURL +
-				_toPath("/form-documents/{form-document-id}", formDocumentId);
-
-		options.setLocation(location);
-
-		return _outputObjectMapper.readValue(
-			HttpUtil.URLtoString(options), Boolean.class);
-	}
-
-	protected Http.Response invokeDeleteFormDocumentResponse(
-			Long formDocumentId)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		options.setDelete(true);
-
-		String location =
-			_resourceURL +
-				_toPath("/form-documents/{form-document-id}", formDocumentId);
-
-		options.setLocation(location);
-
-		HttpUtil.URLtoString(options);
-
-		return options.getResponse();
-	}
-
-	protected FormDocument invokeGetFormDocument(Long formDocumentId)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		String location =
-			_resourceURL +
-				_toPath("/form-documents/{form-document-id}", formDocumentId);
-
-		options.setLocation(location);
-
-		return _outputObjectMapper.readValue(
-			HttpUtil.URLtoString(options), FormDocument.class);
-	}
-
-	protected Http.Response invokeGetFormDocumentResponse(Long formDocumentId)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		String location =
-			_resourceURL +
-				_toPath("/form-documents/{form-document-id}", formDocumentId);
-
-		options.setLocation(location);
-
-		HttpUtil.URLtoString(options);
-
-		return options.getResponse();
-	}
-
 	protected FormDocument randomFormDocument() {
 		return new FormDocument() {
 			{
@@ -362,20 +376,6 @@ public abstract class BaseFormDocumentResourceTestCase {
 				title = RandomTestUtil.randomString();
 			}
 		};
-	}
-
-	protected FormDocument testDeleteFormDocument_addFormDocument()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	protected FormDocument testGetFormDocument_addFormDocument()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
 	}
 
 	protected Group testGroup;
@@ -442,12 +442,12 @@ public abstract class BaseFormDocumentResourceTestCase {
 	}
 
 	private static DateFormat _dateFormat;
-	private static final ObjectMapper _inputObjectMapper = new ObjectMapper() {
+	private final static ObjectMapper _inputObjectMapper = new ObjectMapper() {
 		{
 			setSerializationInclusion(JsonInclude.Include.NON_NULL);
 		}
 	};
-	private static final ObjectMapper _outputObjectMapper = new ObjectMapper();
+	private final static ObjectMapper _outputObjectMapper = new ObjectMapper();
 
 	@Inject
 	private FormDocumentResource _formDocumentResource;

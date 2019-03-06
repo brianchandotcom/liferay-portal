@@ -41,10 +41,6 @@ public class RenderedContentsURL {
 		return renderedContentURL;
 	}
 
-	public String getTemplateName() {
-		return templateName;
-	}
-
 	public void setRenderedContentURL(String renderedContentURL) {
 		this.renderedContentURL = renderedContentURL;
 	}
@@ -59,6 +55,14 @@ public class RenderedContentsURL {
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
+	}
+
+	@GraphQLField
+	@JsonProperty
+	protected String renderedContentURL;
+
+	public String getTemplateName() {
+		return templateName;
 	}
 
 	public void setTemplateName(String templateName) {
@@ -77,8 +81,12 @@ public class RenderedContentsURL {
 		}
 	}
 
+	@GraphQLField
+	@JsonProperty
+	protected String templateName;
+
 	public String toString() {
-		StringBundler sb = new StringBundler(11);
+		StringBundler sb = new StringBundler();
 
 		sb.append("{");
 
@@ -99,13 +107,5 @@ public class RenderedContentsURL {
 
 		return sb.toString();
 	}
-
-	@GraphQLField
-	@JsonProperty
-	protected String renderedContentURL;
-
-	@GraphQLField
-	@JsonProperty
-	protected String templateName;
 
 }

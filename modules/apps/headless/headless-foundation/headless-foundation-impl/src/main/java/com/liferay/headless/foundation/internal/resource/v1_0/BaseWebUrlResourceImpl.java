@@ -47,8 +47,8 @@ import javax.ws.rs.core.UriInfo;
 @Path("/v1.0")
 public abstract class BaseWebUrlResourceImpl implements WebUrlResource {
 
-	@GET
 	@Override
+	@GET
 	@Path("/web-urls")
 	@Produces("application/json")
 	public Page<WebUrl> getGenericParentWebUrlsPage(
@@ -59,8 +59,8 @@ public abstract class BaseWebUrlResourceImpl implements WebUrlResource {
 		return Page.of(Collections.emptyList());
 	}
 
-	@GET
 	@Override
+	@GET
 	@Path("/web-urls/{web-url-id}")
 	@Produces("application/json")
 	public WebUrl getWebUrl(@PathParam("web-url-id") Long webUrlId)

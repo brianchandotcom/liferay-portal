@@ -149,6 +149,75 @@ public abstract class BaseSegmentResourceTestCase {
 			});
 	}
 
+	protected Segment testGetUserSegmentsPage_addSegment(
+			Long userId, Segment segment)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected Long testGetUserSegmentsPage_getUserId() throws Exception {
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected Page<Segment> invokeGetUserSegmentsPage(
+			Long userId, Pagination pagination)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		String location =
+			_resourceURL + _toPath("/user-accounts/{user-id}/segments", userId);
+
+		location = HttpUtil.addParameter(
+			location, "page", pagination.getPageNumber());
+		location = HttpUtil.addParameter(
+			location, "pageSize", pagination.getItemsPerPage());
+
+		options.setLocation(location);
+
+		return _outputObjectMapper.readValue(
+			HttpUtil.URLtoString(options),
+			new TypeReference<Page<Segment>>() {
+			});
+	}
+
+	protected Http.Response invokeGetUserSegmentsPageResponse(
+			Long userId, Pagination pagination)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		String location =
+			_resourceURL + _toPath("/user-accounts/{user-id}/segments", userId);
+
+		location = HttpUtil.addParameter(
+			location, "page", pagination.getPageNumber());
+		location = HttpUtil.addParameter(
+			location, "pageSize", pagination.getItemsPerPage());
+
+		options.setLocation(location);
+
+		HttpUtil.URLtoString(options);
+
+		return options.getResponse();
+	}
+
+	protected void assertResponseCode(
+		int expectedResponseCode, Http.Response actualResponse) {
+
+		Assert.assertEquals(
+			expectedResponseCode, actualResponse.getResponseCode());
+	}
+
+	protected void assertEquals(Segment segment1, Segment segment2) {
+		Assert.assertTrue(
+			segment1 + " does not equal " + segment2,
+			equals(segment1, segment2));
+	}
+
 	protected void assertEquals(
 		List<Segment> segments1, List<Segment> segments2) {
 
@@ -160,12 +229,6 @@ public abstract class BaseSegmentResourceTestCase {
 
 			assertEquals(segment1, segment2);
 		}
-	}
-
-	protected void assertEquals(Segment segment1, Segment segment2) {
-		Assert.assertTrue(
-			segment1 + " does not equal " + segment2,
-			equals(segment1, segment2));
 	}
 
 	protected void assertEqualsIgnoringOrder(
@@ -189,11 +252,9 @@ public abstract class BaseSegmentResourceTestCase {
 		}
 	}
 
-	protected void assertResponseCode(
-		int expectedResponseCode, Http.Response actualResponse) {
-
-		Assert.assertEquals(
-			expectedResponseCode, actualResponse.getResponseCode());
+	protected void assertValid(Segment segment) {
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	protected void assertValid(Page<Segment> page) {
@@ -211,11 +272,6 @@ public abstract class BaseSegmentResourceTestCase {
 		}
 
 		Assert.assertTrue(valid);
-	}
-
-	protected void assertValid(Segment segment) {
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
 	}
 
 	protected boolean equals(Segment segment1, Segment segment2) {
@@ -321,49 +377,6 @@ public abstract class BaseSegmentResourceTestCase {
 			"Invalid entity field " + entityFieldName);
 	}
 
-	protected Page<Segment> invokeGetUserSegmentsPage(
-			Long userId, Pagination pagination)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		String location =
-			_resourceURL + _toPath("/user-accounts/{user-id}/segments", userId);
-
-		location = HttpUtil.addParameter(
-			location, "page", pagination.getPageNumber());
-		location = HttpUtil.addParameter(
-			location, "pageSize", pagination.getItemsPerPage());
-
-		options.setLocation(location);
-
-		return _outputObjectMapper.readValue(
-			HttpUtil.URLtoString(options),
-			new TypeReference<Page<Segment>>() {
-			});
-	}
-
-	protected Http.Response invokeGetUserSegmentsPageResponse(
-			Long userId, Pagination pagination)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		String location =
-			_resourceURL + _toPath("/user-accounts/{user-id}/segments", userId);
-
-		location = HttpUtil.addParameter(
-			location, "page", pagination.getPageNumber());
-		location = HttpUtil.addParameter(
-			location, "pageSize", pagination.getItemsPerPage());
-
-		options.setLocation(location);
-
-		HttpUtil.URLtoString(options);
-
-		return options.getResponse();
-	}
-
 	protected Segment randomSegment() {
 		return new Segment() {
 			{
@@ -376,19 +389,6 @@ public abstract class BaseSegmentResourceTestCase {
 				source = RandomTestUtil.randomString();
 			}
 		};
-	}
-
-	protected Segment testGetUserSegmentsPage_addSegment(
-			Long userId, Segment segment)
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	protected Long testGetUserSegmentsPage_getUserId() throws Exception {
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
 	}
 
 	protected Group testGroup;
@@ -455,16 +455,16 @@ public abstract class BaseSegmentResourceTestCase {
 	}
 
 	private static DateFormat _dateFormat;
-	private static final ObjectMapper _inputObjectMapper = new ObjectMapper() {
+	private final static ObjectMapper _inputObjectMapper = new ObjectMapper() {
 		{
 			setSerializationInclusion(JsonInclude.Include.NON_NULL);
 		}
 	};
-	private static final ObjectMapper _outputObjectMapper = new ObjectMapper();
-
-	private URL _resourceURL;
+	private final static ObjectMapper _outputObjectMapper = new ObjectMapper();
 
 	@Inject
 	private SegmentResource _segmentResource;
+
+	private URL _resourceURL;
 
 }

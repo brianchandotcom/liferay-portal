@@ -96,15 +96,6 @@ public abstract class BaseFolderResourceTestCase {
 	}
 
 	@Test
-	public void testDeleteFolder() throws Exception {
-		Folder folder = testDeleteFolder_addFolder();
-
-		assertResponseCode(200, invokeDeleteFolderResponse(folder.getId()));
-
-		assertResponseCode(404, invokeGetFolderResponse(folder.getId()));
-	}
-
-	@Test
 	public void testGetContentSpaceFoldersPage() throws Exception {
 		Long contentSpaceId =
 			testGetContentSpaceFoldersPage_getContentSpaceId();
@@ -164,6 +155,180 @@ public abstract class BaseFolderResourceTestCase {
 			});
 	}
 
+	protected Folder testGetContentSpaceFoldersPage_addFolder(
+			Long contentSpaceId, Folder folder)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected Long testGetContentSpaceFoldersPage_getContentSpaceId()
+		throws Exception {
+
+		return testGroup.getGroupId();
+	}
+
+	protected Page<Folder> invokeGetContentSpaceFoldersPage(
+			Long contentSpaceId, Pagination pagination)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		String location =
+			_resourceURL +
+				_toPath(
+					"/content-spaces/{content-space-id}/folders",
+					contentSpaceId);
+
+		location = HttpUtil.addParameter(
+			location, "page", pagination.getPageNumber());
+		location = HttpUtil.addParameter(
+			location, "pageSize", pagination.getItemsPerPage());
+
+		options.setLocation(location);
+
+		return _outputObjectMapper.readValue(
+			HttpUtil.URLtoString(options),
+			new TypeReference<Page<Folder>>() {
+			});
+	}
+
+	protected Http.Response invokeGetContentSpaceFoldersPageResponse(
+			Long contentSpaceId, Pagination pagination)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		String location =
+			_resourceURL +
+				_toPath(
+					"/content-spaces/{content-space-id}/folders",
+					contentSpaceId);
+
+		location = HttpUtil.addParameter(
+			location, "page", pagination.getPageNumber());
+		location = HttpUtil.addParameter(
+			location, "pageSize", pagination.getItemsPerPage());
+
+		options.setLocation(location);
+
+		HttpUtil.URLtoString(options);
+
+		return options.getResponse();
+	}
+
+	@Test
+	public void testPostContentSpaceFolder() throws Exception {
+		Folder randomFolder = randomFolder();
+
+		Folder postFolder = testPostContentSpaceFolder_addFolder(randomFolder);
+
+		assertEquals(randomFolder, postFolder);
+		assertValid(postFolder);
+	}
+
+	protected Folder testPostContentSpaceFolder_addFolder(Folder folder)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected Folder invokePostContentSpaceFolder(
+			Long contentSpaceId, Folder folder)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		options.setBody(
+			_inputObjectMapper.writeValueAsString(folder),
+			ContentTypes.APPLICATION_JSON, StringPool.UTF8);
+
+		String location =
+			_resourceURL +
+				_toPath(
+					"/content-spaces/{content-space-id}/folders",
+					contentSpaceId);
+
+		options.setLocation(location);
+
+		options.setPost(true);
+
+		return _outputObjectMapper.readValue(
+			HttpUtil.URLtoString(options), Folder.class);
+	}
+
+	protected Http.Response invokePostContentSpaceFolderResponse(
+			Long contentSpaceId, Folder folder)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		options.setBody(
+			_inputObjectMapper.writeValueAsString(folder),
+			ContentTypes.APPLICATION_JSON, StringPool.UTF8);
+
+		String location =
+			_resourceURL +
+				_toPath(
+					"/content-spaces/{content-space-id}/folders",
+					contentSpaceId);
+
+		options.setLocation(location);
+
+		options.setPost(true);
+
+		HttpUtil.URLtoString(options);
+
+		return options.getResponse();
+	}
+
+	@Test
+	public void testDeleteFolder() throws Exception {
+		Folder folder = testDeleteFolder_addFolder();
+
+		assertResponseCode(200, invokeDeleteFolderResponse(folder.getId()));
+
+		assertResponseCode(404, invokeGetFolderResponse(folder.getId()));
+	}
+
+	protected Folder testDeleteFolder_addFolder() throws Exception {
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected boolean invokeDeleteFolder(Long folderId) throws Exception {
+		Http.Options options = _createHttpOptions();
+
+		options.setDelete(true);
+
+		String location =
+			_resourceURL + _toPath("/folders/{folder-id}", folderId);
+
+		options.setLocation(location);
+
+		return _outputObjectMapper.readValue(
+			HttpUtil.URLtoString(options), Boolean.class);
+	}
+
+	protected Http.Response invokeDeleteFolderResponse(Long folderId)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		options.setDelete(true);
+
+		String location =
+			_resourceURL + _toPath("/folders/{folder-id}", folderId);
+
+		options.setLocation(location);
+
+		HttpUtil.URLtoString(options);
+
+		return options.getResponse();
+	}
+
 	@Test
 	public void testGetFolder() throws Exception {
 		Folder postFolder = testGetFolder_addFolder();
@@ -172,6 +337,137 @@ public abstract class BaseFolderResourceTestCase {
 
 		assertEquals(postFolder, getFolder);
 		assertValid(getFolder);
+	}
+
+	protected Folder testGetFolder_addFolder() throws Exception {
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected Folder invokeGetFolder(Long folderId) throws Exception {
+		Http.Options options = _createHttpOptions();
+
+		String location =
+			_resourceURL + _toPath("/folders/{folder-id}", folderId);
+
+		options.setLocation(location);
+
+		return _outputObjectMapper.readValue(
+			HttpUtil.URLtoString(options), Folder.class);
+	}
+
+	protected Http.Response invokeGetFolderResponse(Long folderId)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		String location =
+			_resourceURL + _toPath("/folders/{folder-id}", folderId);
+
+		options.setLocation(location);
+
+		HttpUtil.URLtoString(options);
+
+		return options.getResponse();
+	}
+
+	@Test
+	public void testPatchFolder() throws Exception {
+		Assert.assertTrue(true);
+	}
+
+	protected Folder invokePatchFolder(Long folderId, Folder folder)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		String location =
+			_resourceURL + _toPath("/folders/{folder-id}", folderId);
+
+		options.setLocation(location);
+
+		return _outputObjectMapper.readValue(
+			HttpUtil.URLtoString(options), Folder.class);
+	}
+
+	protected Http.Response invokePatchFolderResponse(
+			Long folderId, Folder folder)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		String location =
+			_resourceURL + _toPath("/folders/{folder-id}", folderId);
+
+		options.setLocation(location);
+
+		HttpUtil.URLtoString(options);
+
+		return options.getResponse();
+	}
+
+	@Test
+	public void testPutFolder() throws Exception {
+		Folder postFolder = testPutFolder_addFolder();
+
+		Folder randomFolder = randomFolder();
+
+		Folder putFolder = invokePutFolder(postFolder.getId(), randomFolder);
+
+		assertEquals(randomFolder, putFolder);
+		assertValid(putFolder);
+
+		Folder getFolder = invokeGetFolder(putFolder.getId());
+
+		assertEquals(randomFolder, getFolder);
+		assertValid(getFolder);
+	}
+
+	protected Folder testPutFolder_addFolder() throws Exception {
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected Folder invokePutFolder(Long folderId, Folder folder)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		options.setBody(
+			_inputObjectMapper.writeValueAsString(folder),
+			ContentTypes.APPLICATION_JSON, StringPool.UTF8);
+
+		String location =
+			_resourceURL + _toPath("/folders/{folder-id}", folderId);
+
+		options.setLocation(location);
+
+		options.setPut(true);
+
+		return _outputObjectMapper.readValue(
+			HttpUtil.URLtoString(options), Folder.class);
+	}
+
+	protected Http.Response invokePutFolderResponse(
+			Long folderId, Folder folder)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		options.setBody(
+			_inputObjectMapper.writeValueAsString(folder),
+			ContentTypes.APPLICATION_JSON, StringPool.UTF8);
+
+		String location =
+			_resourceURL + _toPath("/folders/{folder-id}", folderId);
+
+		options.setLocation(location);
+
+		options.setPut(true);
+
+		HttpUtil.URLtoString(options);
+
+		return options.getResponse();
 	}
 
 	@Test
@@ -230,19 +526,60 @@ public abstract class BaseFolderResourceTestCase {
 			});
 	}
 
-	@Test
-	public void testPatchFolder() throws Exception {
-		Assert.assertTrue(true);
+	protected Folder testGetFolderFoldersPage_addFolder(
+			Long folderId, Folder folder)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
-	@Test
-	public void testPostContentSpaceFolder() throws Exception {
-		Folder randomFolder = randomFolder();
+	protected Long testGetFolderFoldersPage_getFolderId() throws Exception {
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
 
-		Folder postFolder = testPostContentSpaceFolder_addFolder(randomFolder);
+	protected Page<Folder> invokeGetFolderFoldersPage(
+			Long folderId, Pagination pagination)
+		throws Exception {
 
-		assertEquals(randomFolder, postFolder);
-		assertValid(postFolder);
+		Http.Options options = _createHttpOptions();
+
+		String location =
+			_resourceURL + _toPath("/folders/{folder-id}/folders", folderId);
+
+		location = HttpUtil.addParameter(
+			location, "page", pagination.getPageNumber());
+		location = HttpUtil.addParameter(
+			location, "pageSize", pagination.getItemsPerPage());
+
+		options.setLocation(location);
+
+		return _outputObjectMapper.readValue(
+			HttpUtil.URLtoString(options),
+			new TypeReference<Page<Folder>>() {
+			});
+	}
+
+	protected Http.Response invokeGetFolderFoldersPageResponse(
+			Long folderId, Pagination pagination)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		String location =
+			_resourceURL + _toPath("/folders/{folder-id}/folders", folderId);
+
+		location = HttpUtil.addParameter(
+			location, "page", pagination.getPageNumber());
+		location = HttpUtil.addParameter(
+			location, "pageSize", pagination.getItemsPerPage());
+
+		options.setLocation(location);
+
+		HttpUtil.URLtoString(options);
+
+		return options.getResponse();
 	}
 
 	@Test
@@ -255,21 +592,60 @@ public abstract class BaseFolderResourceTestCase {
 		assertValid(postFolder);
 	}
 
-	@Test
-	public void testPutFolder() throws Exception {
-		Folder postFolder = testPutFolder_addFolder();
+	protected Folder testPostFolderFolder_addFolder(Folder folder)
+		throws Exception {
 
-		Folder randomFolder = randomFolder();
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
 
-		Folder putFolder = invokePutFolder(postFolder.getId(), randomFolder);
+	protected Folder invokePostFolderFolder(Long folderId, Folder folder)
+		throws Exception {
 
-		assertEquals(randomFolder, putFolder);
-		assertValid(putFolder);
+		Http.Options options = _createHttpOptions();
 
-		Folder getFolder = invokeGetFolder(putFolder.getId());
+		options.setBody(
+			_inputObjectMapper.writeValueAsString(folder),
+			ContentTypes.APPLICATION_JSON, StringPool.UTF8);
 
-		assertEquals(randomFolder, getFolder);
-		assertValid(getFolder);
+		String location =
+			_resourceURL + _toPath("/folders/{folder-id}/folders", folderId);
+
+		options.setLocation(location);
+
+		options.setPost(true);
+
+		return _outputObjectMapper.readValue(
+			HttpUtil.URLtoString(options), Folder.class);
+	}
+
+	protected Http.Response invokePostFolderFolderResponse(
+			Long folderId, Folder folder)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		options.setBody(
+			_inputObjectMapper.writeValueAsString(folder),
+			ContentTypes.APPLICATION_JSON, StringPool.UTF8);
+
+		String location =
+			_resourceURL + _toPath("/folders/{folder-id}/folders", folderId);
+
+		options.setLocation(location);
+
+		options.setPost(true);
+
+		HttpUtil.URLtoString(options);
+
+		return options.getResponse();
+	}
+
+	protected void assertResponseCode(
+		int expectedResponseCode, Http.Response actualResponse) {
+
+		Assert.assertEquals(
+			expectedResponseCode, actualResponse.getResponseCode());
 	}
 
 	protected void assertEquals(Folder folder1, Folder folder2) {
@@ -307,13 +683,6 @@ public abstract class BaseFolderResourceTestCase {
 			Assert.assertTrue(
 				folders2 + " does not contain " + folder1, contains);
 		}
-	}
-
-	protected void assertResponseCode(
-		int expectedResponseCode, Http.Response actualResponse) {
-
-		Assert.assertEquals(
-			expectedResponseCode, actualResponse.getResponseCode());
 	}
 
 	protected void assertValid(Folder folder) {
@@ -451,319 +820,6 @@ public abstract class BaseFolderResourceTestCase {
 			"Invalid entity field " + entityFieldName);
 	}
 
-	protected boolean invokeDeleteFolder(Long folderId) throws Exception {
-		Http.Options options = _createHttpOptions();
-
-		options.setDelete(true);
-
-		String location =
-			_resourceURL + _toPath("/folders/{folder-id}", folderId);
-
-		options.setLocation(location);
-
-		return _outputObjectMapper.readValue(
-			HttpUtil.URLtoString(options), Boolean.class);
-	}
-
-	protected Http.Response invokeDeleteFolderResponse(Long folderId)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		options.setDelete(true);
-
-		String location =
-			_resourceURL + _toPath("/folders/{folder-id}", folderId);
-
-		options.setLocation(location);
-
-		HttpUtil.URLtoString(options);
-
-		return options.getResponse();
-	}
-
-	protected Page<Folder> invokeGetContentSpaceFoldersPage(
-			Long contentSpaceId, Pagination pagination)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		String location =
-			_resourceURL +
-				_toPath(
-					"/content-spaces/{content-space-id}/folders",
-					contentSpaceId);
-
-		location = HttpUtil.addParameter(
-			location, "page", pagination.getPageNumber());
-		location = HttpUtil.addParameter(
-			location, "pageSize", pagination.getItemsPerPage());
-
-		options.setLocation(location);
-
-		return _outputObjectMapper.readValue(
-			HttpUtil.URLtoString(options),
-			new TypeReference<Page<Folder>>() {
-			});
-	}
-
-	protected Http.Response invokeGetContentSpaceFoldersPageResponse(
-			Long contentSpaceId, Pagination pagination)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		String location =
-			_resourceURL +
-				_toPath(
-					"/content-spaces/{content-space-id}/folders",
-					contentSpaceId);
-
-		location = HttpUtil.addParameter(
-			location, "page", pagination.getPageNumber());
-		location = HttpUtil.addParameter(
-			location, "pageSize", pagination.getItemsPerPage());
-
-		options.setLocation(location);
-
-		HttpUtil.URLtoString(options);
-
-		return options.getResponse();
-	}
-
-	protected Folder invokeGetFolder(Long folderId) throws Exception {
-		Http.Options options = _createHttpOptions();
-
-		String location =
-			_resourceURL + _toPath("/folders/{folder-id}", folderId);
-
-		options.setLocation(location);
-
-		return _outputObjectMapper.readValue(
-			HttpUtil.URLtoString(options), Folder.class);
-	}
-
-	protected Page<Folder> invokeGetFolderFoldersPage(
-			Long folderId, Pagination pagination)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		String location =
-			_resourceURL + _toPath("/folders/{folder-id}/folders", folderId);
-
-		location = HttpUtil.addParameter(
-			location, "page", pagination.getPageNumber());
-		location = HttpUtil.addParameter(
-			location, "pageSize", pagination.getItemsPerPage());
-
-		options.setLocation(location);
-
-		return _outputObjectMapper.readValue(
-			HttpUtil.URLtoString(options),
-			new TypeReference<Page<Folder>>() {
-			});
-	}
-
-	protected Http.Response invokeGetFolderFoldersPageResponse(
-			Long folderId, Pagination pagination)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		String location =
-			_resourceURL + _toPath("/folders/{folder-id}/folders", folderId);
-
-		location = HttpUtil.addParameter(
-			location, "page", pagination.getPageNumber());
-		location = HttpUtil.addParameter(
-			location, "pageSize", pagination.getItemsPerPage());
-
-		options.setLocation(location);
-
-		HttpUtil.URLtoString(options);
-
-		return options.getResponse();
-	}
-
-	protected Http.Response invokeGetFolderResponse(Long folderId)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		String location =
-			_resourceURL + _toPath("/folders/{folder-id}", folderId);
-
-		options.setLocation(location);
-
-		HttpUtil.URLtoString(options);
-
-		return options.getResponse();
-	}
-
-	protected Folder invokePatchFolder(Long folderId, Folder folder)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		String location =
-			_resourceURL + _toPath("/folders/{folder-id}", folderId);
-
-		options.setLocation(location);
-
-		return _outputObjectMapper.readValue(
-			HttpUtil.URLtoString(options), Folder.class);
-	}
-
-	protected Http.Response invokePatchFolderResponse(
-			Long folderId, Folder folder)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		String location =
-			_resourceURL + _toPath("/folders/{folder-id}", folderId);
-
-		options.setLocation(location);
-
-		HttpUtil.URLtoString(options);
-
-		return options.getResponse();
-	}
-
-	protected Folder invokePostContentSpaceFolder(
-			Long contentSpaceId, Folder folder)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		options.setBody(
-			_inputObjectMapper.writeValueAsString(folder),
-			ContentTypes.APPLICATION_JSON, StringPool.UTF8);
-
-		String location =
-			_resourceURL +
-				_toPath(
-					"/content-spaces/{content-space-id}/folders",
-					contentSpaceId);
-
-		options.setLocation(location);
-
-		options.setPost(true);
-
-		return _outputObjectMapper.readValue(
-			HttpUtil.URLtoString(options), Folder.class);
-	}
-
-	protected Http.Response invokePostContentSpaceFolderResponse(
-			Long contentSpaceId, Folder folder)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		options.setBody(
-			_inputObjectMapper.writeValueAsString(folder),
-			ContentTypes.APPLICATION_JSON, StringPool.UTF8);
-
-		String location =
-			_resourceURL +
-				_toPath(
-					"/content-spaces/{content-space-id}/folders",
-					contentSpaceId);
-
-		options.setLocation(location);
-
-		options.setPost(true);
-
-		HttpUtil.URLtoString(options);
-
-		return options.getResponse();
-	}
-
-	protected Folder invokePostFolderFolder(Long folderId, Folder folder)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		options.setBody(
-			_inputObjectMapper.writeValueAsString(folder),
-			ContentTypes.APPLICATION_JSON, StringPool.UTF8);
-
-		String location =
-			_resourceURL + _toPath("/folders/{folder-id}/folders", folderId);
-
-		options.setLocation(location);
-
-		options.setPost(true);
-
-		return _outputObjectMapper.readValue(
-			HttpUtil.URLtoString(options), Folder.class);
-	}
-
-	protected Http.Response invokePostFolderFolderResponse(
-			Long folderId, Folder folder)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		options.setBody(
-			_inputObjectMapper.writeValueAsString(folder),
-			ContentTypes.APPLICATION_JSON, StringPool.UTF8);
-
-		String location =
-			_resourceURL + _toPath("/folders/{folder-id}/folders", folderId);
-
-		options.setLocation(location);
-
-		options.setPost(true);
-
-		HttpUtil.URLtoString(options);
-
-		return options.getResponse();
-	}
-
-	protected Folder invokePutFolder(Long folderId, Folder folder)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		options.setBody(
-			_inputObjectMapper.writeValueAsString(folder),
-			ContentTypes.APPLICATION_JSON, StringPool.UTF8);
-
-		String location =
-			_resourceURL + _toPath("/folders/{folder-id}", folderId);
-
-		options.setLocation(location);
-
-		options.setPut(true);
-
-		return _outputObjectMapper.readValue(
-			HttpUtil.URLtoString(options), Folder.class);
-	}
-
-	protected Http.Response invokePutFolderResponse(
-			Long folderId, Folder folder)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		options.setBody(
-			_inputObjectMapper.writeValueAsString(folder),
-			ContentTypes.APPLICATION_JSON, StringPool.UTF8);
-
-		String location =
-			_resourceURL + _toPath("/folders/{folder-id}", folderId);
-
-		options.setLocation(location);
-
-		options.setPut(true);
-
-		HttpUtil.URLtoString(options);
-
-		return options.getResponse();
-	}
-
 	protected Folder randomFolder() {
 		return new Folder() {
 			{
@@ -778,62 +834,6 @@ public abstract class BaseFolderResourceTestCase {
 				viewableBy = RandomTestUtil.randomString();
 			}
 		};
-	}
-
-	protected Folder testDeleteFolder_addFolder() throws Exception {
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	protected Folder testGetContentSpaceFoldersPage_addFolder(
-			Long contentSpaceId, Folder folder)
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	protected Long testGetContentSpaceFoldersPage_getContentSpaceId()
-		throws Exception {
-
-		return testGroup.getGroupId();
-	}
-
-	protected Folder testGetFolder_addFolder() throws Exception {
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	protected Folder testGetFolderFoldersPage_addFolder(
-			Long folderId, Folder folder)
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	protected Long testGetFolderFoldersPage_getFolderId() throws Exception {
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	protected Folder testPostContentSpaceFolder_addFolder(Folder folder)
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	protected Folder testPostFolderFolder_addFolder(Folder folder)
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	protected Folder testPutFolder_addFolder() throws Exception {
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
 	}
 
 	protected Group testGroup;
@@ -900,12 +900,12 @@ public abstract class BaseFolderResourceTestCase {
 	}
 
 	private static DateFormat _dateFormat;
-	private static final ObjectMapper _inputObjectMapper = new ObjectMapper() {
+	private final static ObjectMapper _inputObjectMapper = new ObjectMapper() {
 		{
 			setSerializationInclusion(JsonInclude.Include.NON_NULL);
 		}
 	};
-	private static final ObjectMapper _outputObjectMapper = new ObjectMapper();
+	private final static ObjectMapper _outputObjectMapper = new ObjectMapper();
 
 	@Inject
 	private FolderResource _folderResource;

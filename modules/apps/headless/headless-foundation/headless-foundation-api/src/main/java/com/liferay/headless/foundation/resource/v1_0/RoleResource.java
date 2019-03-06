@@ -36,9 +36,9 @@ public interface RoleResource {
 			Long myUserAccountId, Pagination pagination)
 		throws Exception;
 
-	public Role getRole(Long roleId) throws Exception;
-
 	public Page<Role> getRolesPage(Pagination pagination) throws Exception;
+
+	public Role getRole(Long roleId) throws Exception;
 
 	public Page<Role> getUserAccountRolesPage(
 			Long userAccountId, Pagination pagination)

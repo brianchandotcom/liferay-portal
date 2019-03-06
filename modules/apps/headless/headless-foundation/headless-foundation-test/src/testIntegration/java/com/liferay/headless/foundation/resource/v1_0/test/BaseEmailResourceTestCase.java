@@ -94,16 +94,6 @@ public abstract class BaseEmailResourceTestCase {
 	}
 
 	@Test
-	public void testGetEmail() throws Exception {
-		Email postEmail = testGetEmail_addEmail();
-
-		Email getEmail = invokeGetEmail(postEmail.getId());
-
-		assertEquals(postEmail, getEmail);
-		assertValid(getEmail);
-	}
-
-	@Test
 	public void testGetGenericParentEmailsPage() throws Exception {
 		Object genericParentId =
 			testGetGenericParentEmailsPage_getGenericParentId();
@@ -163,6 +153,109 @@ public abstract class BaseEmailResourceTestCase {
 			});
 	}
 
+	protected Email testGetGenericParentEmailsPage_addEmail(
+			Object genericParentId, Email email)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected Object testGetGenericParentEmailsPage_getGenericParentId()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected Page<Email> invokeGetGenericParentEmailsPage(
+			Object genericParentId, Pagination pagination)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		String location = _resourceURL + _toPath("/emails", genericParentId);
+
+		location = HttpUtil.addParameter(
+			location, "page", pagination.getPageNumber());
+		location = HttpUtil.addParameter(
+			location, "pageSize", pagination.getItemsPerPage());
+
+		options.setLocation(location);
+
+		return _outputObjectMapper.readValue(
+			HttpUtil.URLtoString(options),
+			new TypeReference<Page<Email>>() {
+			});
+	}
+
+	protected Http.Response invokeGetGenericParentEmailsPageResponse(
+			Object genericParentId, Pagination pagination)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		String location = _resourceURL + _toPath("/emails", genericParentId);
+
+		location = HttpUtil.addParameter(
+			location, "page", pagination.getPageNumber());
+		location = HttpUtil.addParameter(
+			location, "pageSize", pagination.getItemsPerPage());
+
+		options.setLocation(location);
+
+		HttpUtil.URLtoString(options);
+
+		return options.getResponse();
+	}
+
+	@Test
+	public void testGetEmail() throws Exception {
+		Email postEmail = testGetEmail_addEmail();
+
+		Email getEmail = invokeGetEmail(postEmail.getId());
+
+		assertEquals(postEmail, getEmail);
+		assertValid(getEmail);
+	}
+
+	protected Email testGetEmail_addEmail() throws Exception {
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected Email invokeGetEmail(Long emailId) throws Exception {
+		Http.Options options = _createHttpOptions();
+
+		String location = _resourceURL + _toPath("/emails/{email-id}", emailId);
+
+		options.setLocation(location);
+
+		return _outputObjectMapper.readValue(
+			HttpUtil.URLtoString(options), Email.class);
+	}
+
+	protected Http.Response invokeGetEmailResponse(Long emailId)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		String location = _resourceURL + _toPath("/emails/{email-id}", emailId);
+
+		options.setLocation(location);
+
+		HttpUtil.URLtoString(options);
+
+		return options.getResponse();
+	}
+
+	protected void assertResponseCode(
+		int expectedResponseCode, Http.Response actualResponse) {
+
+		Assert.assertEquals(
+			expectedResponseCode, actualResponse.getResponseCode());
+	}
+
 	protected void assertEquals(Email email1, Email email2) {
 		Assert.assertTrue(
 			email1 + " does not equal " + email2, equals(email1, email2));
@@ -198,13 +291,6 @@ public abstract class BaseEmailResourceTestCase {
 			Assert.assertTrue(
 				emails2 + " does not contain " + email1, contains);
 		}
-	}
-
-	protected void assertResponseCode(
-		int expectedResponseCode, Http.Response actualResponse) {
-
-		Assert.assertEquals(
-			expectedResponseCode, actualResponse.getResponseCode());
 	}
 
 	protected void assertValid(Email email) {
@@ -307,72 +393,6 @@ public abstract class BaseEmailResourceTestCase {
 			"Invalid entity field " + entityFieldName);
 	}
 
-	protected Email invokeGetEmail(Long emailId) throws Exception {
-		Http.Options options = _createHttpOptions();
-
-		String location = _resourceURL + _toPath("/emails/{email-id}", emailId);
-
-		options.setLocation(location);
-
-		return _outputObjectMapper.readValue(
-			HttpUtil.URLtoString(options), Email.class);
-	}
-
-	protected Http.Response invokeGetEmailResponse(Long emailId)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		String location = _resourceURL + _toPath("/emails/{email-id}", emailId);
-
-		options.setLocation(location);
-
-		HttpUtil.URLtoString(options);
-
-		return options.getResponse();
-	}
-
-	protected Page<Email> invokeGetGenericParentEmailsPage(
-			Object genericParentId, Pagination pagination)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		String location = _resourceURL + _toPath("/emails", genericParentId);
-
-		location = HttpUtil.addParameter(
-			location, "page", pagination.getPageNumber());
-		location = HttpUtil.addParameter(
-			location, "pageSize", pagination.getItemsPerPage());
-
-		options.setLocation(location);
-
-		return _outputObjectMapper.readValue(
-			HttpUtil.URLtoString(options),
-			new TypeReference<Page<Email>>() {
-			});
-	}
-
-	protected Http.Response invokeGetGenericParentEmailsPageResponse(
-			Object genericParentId, Pagination pagination)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		String location = _resourceURL + _toPath("/emails", genericParentId);
-
-		location = HttpUtil.addParameter(
-			location, "page", pagination.getPageNumber());
-		location = HttpUtil.addParameter(
-			location, "pageSize", pagination.getItemsPerPage());
-
-		options.setLocation(location);
-
-		HttpUtil.URLtoString(options);
-
-		return options.getResponse();
-	}
-
 	protected Email randomEmail() {
 		return new Email() {
 			{
@@ -381,26 +401,6 @@ public abstract class BaseEmailResourceTestCase {
 				type = RandomTestUtil.randomString();
 			}
 		};
-	}
-
-	protected Email testGetEmail_addEmail() throws Exception {
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	protected Email testGetGenericParentEmailsPage_addEmail(
-			Object genericParentId, Email email)
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	protected Object testGetGenericParentEmailsPage_getGenericParentId()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
 	}
 
 	protected Group testGroup;
@@ -467,12 +467,12 @@ public abstract class BaseEmailResourceTestCase {
 	}
 
 	private static DateFormat _dateFormat;
-	private static final ObjectMapper _inputObjectMapper = new ObjectMapper() {
+	private final static ObjectMapper _inputObjectMapper = new ObjectMapper() {
 		{
 			setSerializationInclusion(JsonInclude.Include.NON_NULL);
 		}
 	};
-	private static final ObjectMapper _outputObjectMapper = new ObjectMapper();
+	private final static ObjectMapper _outputObjectMapper = new ObjectMapper();
 
 	@Inject
 	private EmailResource _emailResource;

@@ -47,8 +47,8 @@ import javax.ws.rs.core.UriInfo;
 @Path("/v1.0")
 public abstract class BaseRoleResourceImpl implements RoleResource {
 
-	@GET
 	@Override
+	@GET
 	@Path("/my-user-accounts/{my-user-account-id}/roles")
 	@Produces("application/json")
 	public Page<Role> getMyUserAccountRolesPage(
@@ -59,16 +59,8 @@ public abstract class BaseRoleResourceImpl implements RoleResource {
 		return Page.of(Collections.emptyList());
 	}
 
-	@GET
 	@Override
-	@Path("/roles/{role-id}")
-	@Produces("application/json")
-	public Role getRole(@PathParam("role-id") Long roleId) throws Exception {
-		return new Role();
-	}
-
 	@GET
-	@Override
 	@Path("/roles")
 	@Produces("application/json")
 	public Page<Role> getRolesPage(@Context Pagination pagination)
@@ -77,8 +69,16 @@ public abstract class BaseRoleResourceImpl implements RoleResource {
 		return Page.of(Collections.emptyList());
 	}
 
-	@GET
 	@Override
+	@GET
+	@Path("/roles/{role-id}")
+	@Produces("application/json")
+	public Role getRole(@PathParam("role-id") Long roleId) throws Exception {
+		return new Role();
+	}
+
+	@Override
+	@GET
 	@Path("/user-accounts/{user-account-id}/roles")
 	@Produces("application/json")
 	public Page<Role> getUserAccountRolesPage(

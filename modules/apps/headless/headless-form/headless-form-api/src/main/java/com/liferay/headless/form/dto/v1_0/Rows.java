@@ -41,14 +41,6 @@ public class Rows {
 		return id;
 	}
 
-	public String getLabel() {
-		return label;
-	}
-
-	public String getValue() {
-		return value;
-	}
-
 	public void setId(Long id) {
 		this.id = id;
 	}
@@ -61,6 +53,14 @@ public class Rows {
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
+	}
+
+	@GraphQLField
+	@JsonProperty
+	protected Long id;
+
+	public String getLabel() {
+		return label;
 	}
 
 	public void setLabel(String label) {
@@ -79,6 +79,14 @@ public class Rows {
 		}
 	}
 
+	@GraphQLField
+	@JsonProperty
+	protected String label;
+
+	public String getValue() {
+		return value;
+	}
+
 	public void setValue(String value) {
 		this.value = value;
 	}
@@ -95,8 +103,12 @@ public class Rows {
 		}
 	}
 
+	@GraphQLField
+	@JsonProperty
+	protected String value;
+
 	public String toString() {
-		StringBundler sb = new StringBundler(14);
+		StringBundler sb = new StringBundler();
 
 		sb.append("{");
 
@@ -122,17 +134,5 @@ public class Rows {
 
 		return sb.toString();
 	}
-
-	@GraphQLField
-	@JsonProperty
-	protected Long id;
-
-	@GraphQLField
-	@JsonProperty
-	protected String label;
-
-	@GraphQLField
-	@JsonProperty
-	protected String value;
 
 }

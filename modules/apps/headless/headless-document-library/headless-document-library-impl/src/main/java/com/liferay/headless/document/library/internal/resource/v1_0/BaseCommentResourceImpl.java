@@ -53,8 +53,8 @@ import javax.ws.rs.core.UriInfo;
 @Path("/v1.0")
 public abstract class BaseCommentResourceImpl implements CommentResource {
 
-	@DELETE
 	@Override
+	@DELETE
 	@Path("/comments/{comment-id}")
 	@Produces("application/json")
 	public boolean deleteComment(@PathParam("comment-id") Long commentId)
@@ -63,8 +63,8 @@ public abstract class BaseCommentResourceImpl implements CommentResource {
 		return false;
 	}
 
-	@GET
 	@Override
+	@GET
 	@Path("/comments/{comment-id}")
 	@Produces("application/json")
 	public Comment getComment(@PathParam("comment-id") Long commentId)
@@ -73,8 +73,20 @@ public abstract class BaseCommentResourceImpl implements CommentResource {
 		return new Comment();
 	}
 
-	@GET
 	@Override
+	@Consumes("application/json")
+	@PUT
+	@Path("/comments/{comment-id}")
+	@Produces("application/json")
+	public Comment putComment(
+			@PathParam("comment-id") Long commentId, Comment comment)
+		throws Exception {
+
+		return new Comment();
+	}
+
+	@Override
+	@GET
 	@Path("/comments/{comment-id}/comments")
 	@Produces("application/json")
 	public Page<Comment> getCommentCommentsPage(
@@ -85,8 +97,20 @@ public abstract class BaseCommentResourceImpl implements CommentResource {
 		return Page.of(Collections.emptyList());
 	}
 
-	@GET
 	@Override
+	@Consumes("application/json")
+	@POST
+	@Path("/comments/{comment-id}/comments")
+	@Produces("application/json")
+	public Comment postCommentComment(
+			@PathParam("comment-id") Long commentId, Comment comment)
+		throws Exception {
+
+		return new Comment();
+	}
+
+	@Override
+	@GET
 	@Path("/documents/{document-id}/comments")
 	@Produces("application/json")
 	public Page<Comment> getDocumentCommentsPage(
@@ -97,37 +121,13 @@ public abstract class BaseCommentResourceImpl implements CommentResource {
 		return Page.of(Collections.emptyList());
 	}
 
-	@Consumes("application/json")
 	@Override
-	@Path("/comments/{comment-id}/comments")
+	@Consumes("application/json")
 	@POST
-	@Produces("application/json")
-	public Comment postCommentComment(
-			@PathParam("comment-id") Long commentId, Comment comment)
-		throws Exception {
-
-		return new Comment();
-	}
-
-	@Consumes("application/json")
-	@Override
 	@Path("/documents/{document-id}/comments")
-	@POST
 	@Produces("application/json")
 	public Comment postDocumentComment(
 			@PathParam("document-id") Long documentId, Comment comment)
-		throws Exception {
-
-		return new Comment();
-	}
-
-	@Consumes("application/json")
-	@Override
-	@Path("/comments/{comment-id}")
-	@Produces("application/json")
-	@PUT
-	public Comment putComment(
-			@PathParam("comment-id") Long commentId, Comment comment)
 		throws Exception {
 
 		return new Comment();

@@ -41,18 +41,6 @@ public class Phone {
 		return extension;
 	}
 
-	public Long getId() {
-		return id;
-	}
-
-	public String getPhoneNumber() {
-		return phoneNumber;
-	}
-
-	public String getPhoneType() {
-		return phoneType;
-	}
-
 	public void setExtension(String extension) {
 		this.extension = extension;
 	}
@@ -69,6 +57,14 @@ public class Phone {
 		}
 	}
 
+	@GraphQLField
+	@JsonProperty
+	protected String extension;
+
+	public Long getId() {
+		return id;
+	}
+
 	public void setId(Long id) {
 		this.id = id;
 	}
@@ -81,6 +77,14 @@ public class Phone {
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
+	}
+
+	@GraphQLField
+	@JsonProperty
+	protected Long id;
+
+	public String getPhoneNumber() {
+		return phoneNumber;
 	}
 
 	public void setPhoneNumber(String phoneNumber) {
@@ -99,6 +103,14 @@ public class Phone {
 		}
 	}
 
+	@GraphQLField
+	@JsonProperty
+	protected String phoneNumber;
+
+	public String getPhoneType() {
+		return phoneType;
+	}
+
 	public void setPhoneType(String phoneType) {
 		this.phoneType = phoneType;
 	}
@@ -115,8 +127,12 @@ public class Phone {
 		}
 	}
 
+	@GraphQLField
+	@JsonProperty
+	protected String phoneType;
+
 	public String toString() {
-		StringBundler sb = new StringBundler(19);
+		StringBundler sb = new StringBundler();
 
 		sb.append("{");
 
@@ -149,21 +165,5 @@ public class Phone {
 
 		return sb.toString();
 	}
-
-	@GraphQLField
-	@JsonProperty
-	protected String extension;
-
-	@GraphQLField
-	@JsonProperty
-	protected Long id;
-
-	@GraphQLField
-	@JsonProperty
-	protected String phoneNumber;
-
-	@GraphQLField
-	@JsonProperty
-	protected String phoneType;
 
 }

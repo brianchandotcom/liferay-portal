@@ -41,14 +41,6 @@ public class Location {
 		return addressCountry;
 	}
 
-	public String getAddressRegion() {
-		return addressRegion;
-	}
-
-	public Long getId() {
-		return id;
-	}
-
 	public void setAddressCountry(String addressCountry) {
 		this.addressCountry = addressCountry;
 	}
@@ -63,6 +55,14 @@ public class Location {
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
+	}
+
+	@GraphQLField
+	@JsonProperty
+	protected String addressCountry;
+
+	public String getAddressRegion() {
+		return addressRegion;
 	}
 
 	public void setAddressRegion(String addressRegion) {
@@ -81,6 +81,14 @@ public class Location {
 		}
 	}
 
+	@GraphQLField
+	@JsonProperty
+	protected String addressRegion;
+
+	public Long getId() {
+		return id;
+	}
+
 	public void setId(Long id) {
 		this.id = id;
 	}
@@ -95,8 +103,12 @@ public class Location {
 		}
 	}
 
+	@GraphQLField
+	@JsonProperty
+	protected Long id;
+
 	public String toString() {
-		StringBundler sb = new StringBundler(14);
+		StringBundler sb = new StringBundler();
 
 		sb.append("{");
 
@@ -122,17 +134,5 @@ public class Location {
 
 		return sb.toString();
 	}
-
-	@GraphQLField
-	@JsonProperty
-	protected String addressCountry;
-
-	@GraphQLField
-	@JsonProperty
-	protected String addressRegion;
-
-	@GraphQLField
-	@JsonProperty
-	protected Long id;
 
 }

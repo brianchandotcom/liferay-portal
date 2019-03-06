@@ -53,18 +53,8 @@ import javax.ws.rs.core.UriInfo;
 @Path("/v1.0")
 public abstract class BaseKeywordResourceImpl implements KeywordResource {
 
-	@DELETE
 	@Override
-	@Path("/keywords/{keyword-id}")
-	@Produces("application/json")
-	public boolean deleteKeyword(@PathParam("keyword-id") Long keywordId)
-		throws Exception {
-
-		return false;
-	}
-
 	@GET
-	@Override
 	@Path("/content-spaces/{content-space-id}/keywords")
 	@Produces("application/json")
 	public Page<Keyword> getContentSpaceKeywordsPage(
@@ -76,20 +66,10 @@ public abstract class BaseKeywordResourceImpl implements KeywordResource {
 		return Page.of(Collections.emptyList());
 	}
 
-	@GET
 	@Override
-	@Path("/keywords/{keyword-id}")
-	@Produces("application/json")
-	public Keyword getKeyword(@PathParam("keyword-id") Long keywordId)
-		throws Exception {
-
-		return new Keyword();
-	}
-
 	@Consumes("application/json")
-	@Override
-	@Path("/content-spaces/{content-space-id}/keywords")
 	@POST
+	@Path("/content-spaces/{content-space-id}/keywords")
 	@Produces("application/json")
 	public Keyword postContentSpaceKeyword(
 			@PathParam("content-space-id") Long contentSpaceId, Keyword keyword)
@@ -98,11 +78,31 @@ public abstract class BaseKeywordResourceImpl implements KeywordResource {
 		return new Keyword();
 	}
 
-	@Consumes("application/json")
 	@Override
+	@DELETE
 	@Path("/keywords/{keyword-id}")
 	@Produces("application/json")
+	public boolean deleteKeyword(@PathParam("keyword-id") Long keywordId)
+		throws Exception {
+
+		return false;
+	}
+
+	@Override
+	@GET
+	@Path("/keywords/{keyword-id}")
+	@Produces("application/json")
+	public Keyword getKeyword(@PathParam("keyword-id") Long keywordId)
+		throws Exception {
+
+		return new Keyword();
+	}
+
+	@Override
+	@Consumes("application/json")
 	@PUT
+	@Path("/keywords/{keyword-id}")
+	@Produces("application/json")
 	public Keyword putKeyword(
 			@PathParam("keyword-id") Long keywordId, Keyword keyword)
 		throws Exception {

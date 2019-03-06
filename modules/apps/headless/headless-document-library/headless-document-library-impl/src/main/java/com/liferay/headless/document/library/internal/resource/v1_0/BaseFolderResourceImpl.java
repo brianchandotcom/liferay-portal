@@ -53,18 +53,8 @@ import javax.ws.rs.core.UriInfo;
 @Path("/v1.0")
 public abstract class BaseFolderResourceImpl implements FolderResource {
 
-	@DELETE
 	@Override
-	@Path("/folders/{folder-id}")
-	@Produces("application/json")
-	public boolean deleteFolder(@PathParam("folder-id") Long folderId)
-		throws Exception {
-
-		return false;
-	}
-
 	@GET
-	@Override
 	@Path("/content-spaces/{content-space-id}/folders")
 	@Produces("application/json")
 	public Page<Folder> getContentSpaceFoldersPage(
@@ -75,8 +65,30 @@ public abstract class BaseFolderResourceImpl implements FolderResource {
 		return Page.of(Collections.emptyList());
 	}
 
-	@GET
 	@Override
+	@Consumes("application/json")
+	@POST
+	@Path("/content-spaces/{content-space-id}/folders")
+	@Produces("application/json")
+	public Folder postContentSpaceFolder(
+			@PathParam("content-space-id") Long contentSpaceId, Folder folder)
+		throws Exception {
+
+		return new Folder();
+	}
+
+	@Override
+	@DELETE
+	@Path("/folders/{folder-id}")
+	@Produces("application/json")
+	public boolean deleteFolder(@PathParam("folder-id") Long folderId)
+		throws Exception {
+
+		return false;
+	}
+
+	@Override
+	@GET
 	@Path("/folders/{folder-id}")
 	@Produces("application/json")
 	public Folder getFolder(@PathParam("folder-id") Long folderId)
@@ -85,20 +97,8 @@ public abstract class BaseFolderResourceImpl implements FolderResource {
 		return new Folder();
 	}
 
-	@GET
 	@Override
-	@Path("/folders/{folder-id}/folders")
-	@Produces("application/json")
-	public Page<Folder> getFolderFoldersPage(
-			@PathParam("folder-id") Long folderId,
-			@Context Pagination pagination)
-		throws Exception {
-
-		return Page.of(Collections.emptyList());
-	}
-
 	@Consumes("application/json")
-	@Override
 	@PATCH
 	@Path("/folders/{folder-id}")
 	@Produces("application/json")
@@ -145,36 +145,36 @@ public abstract class BaseFolderResourceImpl implements FolderResource {
 		return putFolder(folderId, existingFolder);
 	}
 
-	@Consumes("application/json")
 	@Override
-	@Path("/content-spaces/{content-space-id}/folders")
-	@POST
-	@Produces("application/json")
-	public Folder postContentSpaceFolder(
-			@PathParam("content-space-id") Long contentSpaceId, Folder folder)
-		throws Exception {
-
-		return new Folder();
-	}
-
 	@Consumes("application/json")
-	@Override
-	@Path("/folders/{folder-id}/folders")
-	@POST
+	@PUT
+	@Path("/folders/{folder-id}")
 	@Produces("application/json")
-	public Folder postFolderFolder(
+	public Folder putFolder(
 			@PathParam("folder-id") Long folderId, Folder folder)
 		throws Exception {
 
 		return new Folder();
 	}
 
-	@Consumes("application/json")
 	@Override
-	@Path("/folders/{folder-id}")
+	@GET
+	@Path("/folders/{folder-id}/folders")
 	@Produces("application/json")
-	@PUT
-	public Folder putFolder(
+	public Page<Folder> getFolderFoldersPage(
+			@PathParam("folder-id") Long folderId,
+			@Context Pagination pagination)
+		throws Exception {
+
+		return Page.of(Collections.emptyList());
+	}
+
+	@Override
+	@Consumes("application/json")
+	@POST
+	@Path("/folders/{folder-id}/folders")
+	@Produces("application/json")
+	public Folder postFolderFolder(
 			@PathParam("folder-id") Long folderId, Folder folder)
 		throws Exception {
 

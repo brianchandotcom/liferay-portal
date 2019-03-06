@@ -48,8 +48,8 @@ import javax.ws.rs.core.UriInfo;
 public abstract class BasePostalAddressResourceImpl
 	implements PostalAddressResource {
 
-	@GET
 	@Override
+	@GET
 	@Path("/postal-addresses")
 	@Produces("application/json")
 	public Page<PostalAddress> getGenericParentPostalAddressesPage(
@@ -60,8 +60,8 @@ public abstract class BasePostalAddressResourceImpl
 		return Page.of(Collections.emptyList());
 	}
 
-	@GET
 	@Override
+	@GET
 	@Path("/postal-addresses/{postal-address-id}")
 	@Produces("application/json")
 	public PostalAddress getPostalAddress(

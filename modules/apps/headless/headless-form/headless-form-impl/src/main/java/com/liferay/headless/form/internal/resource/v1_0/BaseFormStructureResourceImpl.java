@@ -48,8 +48,8 @@ import javax.ws.rs.core.UriInfo;
 public abstract class BaseFormStructureResourceImpl
 	implements FormStructureResource {
 
-	@GET
 	@Override
+	@GET
 	@Path("/content-spaces/{content-space-id}/form-structures")
 	@Produces("application/json")
 	public Page<FormStructure> getContentSpaceFormStructuresPage(
@@ -60,8 +60,8 @@ public abstract class BaseFormStructureResourceImpl
 		return Page.of(Collections.emptyList());
 	}
 
-	@GET
 	@Override
+	@GET
 	@Path("/form-structures/{form-structure-id}")
 	@Produces("application/json")
 	public FormStructure getFormStructure(

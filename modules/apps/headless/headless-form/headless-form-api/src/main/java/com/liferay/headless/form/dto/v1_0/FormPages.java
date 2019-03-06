@@ -41,18 +41,6 @@ public class FormPages {
 		return fields;
 	}
 
-	public String getHeadline() {
-		return headline;
-	}
-
-	public Long getId() {
-		return id;
-	}
-
-	public String getText() {
-		return text;
-	}
-
 	public void setFields(Fields[] fields) {
 		this.fields = fields;
 	}
@@ -67,6 +55,14 @@ public class FormPages {
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
+	}
+
+	@GraphQLField
+	@JsonProperty
+	protected Fields[] fields;
+
+	public String getHeadline() {
+		return headline;
 	}
 
 	public void setHeadline(String headline) {
@@ -85,6 +81,14 @@ public class FormPages {
 		}
 	}
 
+	@GraphQLField
+	@JsonProperty
+	protected String headline;
+
+	public Long getId() {
+		return id;
+	}
+
 	public void setId(Long id) {
 		this.id = id;
 	}
@@ -97,6 +101,14 @@ public class FormPages {
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
+	}
+
+	@GraphQLField
+	@JsonProperty
+	protected Long id;
+
+	public String getText() {
+		return text;
 	}
 
 	public void setText(String text) {
@@ -112,6 +124,10 @@ public class FormPages {
 			throw new RuntimeException(e);
 		}
 	}
+
+	@GraphQLField
+	@JsonProperty
+	protected String text;
 
 	public String toString() {
 		StringBundler sb = new StringBundler();
@@ -161,21 +177,5 @@ public class FormPages {
 
 		return sb.toString();
 	}
-
-	@GraphQLField
-	@JsonProperty
-	protected Fields[] fields;
-
-	@GraphQLField
-	@JsonProperty
-	protected String headline;
-
-	@GraphQLField
-	@JsonProperty
-	protected Long id;
-
-	@GraphQLField
-	@JsonProperty
-	protected String text;
 
 }

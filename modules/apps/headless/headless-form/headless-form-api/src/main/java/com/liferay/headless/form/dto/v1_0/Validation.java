@@ -41,14 +41,6 @@ public class Validation {
 		return errorMessage;
 	}
 
-	public String getExpression() {
-		return expression;
-	}
-
-	public Long getId() {
-		return id;
-	}
-
 	public void setErrorMessage(String errorMessage) {
 		this.errorMessage = errorMessage;
 	}
@@ -63,6 +55,14 @@ public class Validation {
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
+	}
+
+	@GraphQLField
+	@JsonProperty
+	protected String errorMessage;
+
+	public String getExpression() {
+		return expression;
 	}
 
 	public void setExpression(String expression) {
@@ -81,6 +81,14 @@ public class Validation {
 		}
 	}
 
+	@GraphQLField
+	@JsonProperty
+	protected String expression;
+
+	public Long getId() {
+		return id;
+	}
+
 	public void setId(Long id) {
 		this.id = id;
 	}
@@ -95,8 +103,12 @@ public class Validation {
 		}
 	}
 
+	@GraphQLField
+	@JsonProperty
+	protected Long id;
+
 	public String toString() {
-		StringBundler sb = new StringBundler(14);
+		StringBundler sb = new StringBundler();
 
 		sb.append("{");
 
@@ -122,17 +134,5 @@ public class Validation {
 
 		return sb.toString();
 	}
-
-	@GraphQLField
-	@JsonProperty
-	protected String errorMessage;
-
-	@GraphQLField
-	@JsonProperty
-	protected String expression;
-
-	@GraphQLField
-	@JsonProperty
-	protected Long id;
 
 }

@@ -43,38 +43,6 @@ public class FormRecord {
 		return creator;
 	}
 
-	public Date getDateCreated() {
-		return dateCreated;
-	}
-
-	public Date getDateModified() {
-		return dateModified;
-	}
-
-	public Date getDatePublished() {
-		return datePublished;
-	}
-
-	public Boolean getDraft() {
-		return draft;
-	}
-
-	public FieldValues[] getFieldValues() {
-		return fieldValues;
-	}
-
-	public Form getForm() {
-		return form;
-	}
-
-	public Long getFormId() {
-		return formId;
-	}
-
-	public Long getId() {
-		return id;
-	}
-
 	public void setCreator(Creator creator) {
 		this.creator = creator;
 	}
@@ -89,6 +57,14 @@ public class FormRecord {
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
+	}
+
+	@GraphQLField
+	@JsonProperty
+	protected Creator creator;
+
+	public Date getDateCreated() {
+		return dateCreated;
 	}
 
 	public void setDateCreated(Date dateCreated) {
@@ -107,6 +83,14 @@ public class FormRecord {
 		}
 	}
 
+	@GraphQLField
+	@JsonProperty
+	protected Date dateCreated;
+
+	public Date getDateModified() {
+		return dateModified;
+	}
+
 	public void setDateModified(Date dateModified) {
 		this.dateModified = dateModified;
 	}
@@ -121,6 +105,14 @@ public class FormRecord {
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
+	}
+
+	@GraphQLField
+	@JsonProperty
+	protected Date dateModified;
+
+	public Date getDatePublished() {
+		return datePublished;
 	}
 
 	public void setDatePublished(Date datePublished) {
@@ -139,6 +131,14 @@ public class FormRecord {
 		}
 	}
 
+	@GraphQLField
+	@JsonProperty
+	protected Date datePublished;
+
+	public Boolean getDraft() {
+		return draft;
+	}
+
 	public void setDraft(Boolean draft) {
 		this.draft = draft;
 	}
@@ -153,6 +153,14 @@ public class FormRecord {
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
+	}
+
+	@GraphQLField
+	@JsonProperty
+	protected Boolean draft;
+
+	public FieldValues[] getFieldValues() {
+		return fieldValues;
 	}
 
 	public void setFieldValues(FieldValues[] fieldValues) {
@@ -171,6 +179,14 @@ public class FormRecord {
 		}
 	}
 
+	@GraphQLField
+	@JsonProperty
+	protected FieldValues[] fieldValues;
+
+	public Form getForm() {
+		return form;
+	}
+
 	public void setForm(Form form) {
 		this.form = form;
 	}
@@ -183,6 +199,14 @@ public class FormRecord {
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
+	}
+
+	@GraphQLField
+	@JsonProperty
+	protected Form form;
+
+	public Long getFormId() {
+		return formId;
 	}
 
 	public void setFormId(Long formId) {
@@ -201,6 +225,14 @@ public class FormRecord {
 		}
 	}
 
+	@GraphQLField
+	@JsonProperty
+	protected Long formId;
+
+	public Long getId() {
+		return id;
+	}
+
 	public void setId(Long id) {
 		this.id = id;
 	}
@@ -214,6 +246,10 @@ public class FormRecord {
 			throw new RuntimeException(e);
 		}
 	}
+
+	@GraphQLField
+	@JsonProperty
+	protected Long id;
 
 	public String toString() {
 		StringBundler sb = new StringBundler();
@@ -290,41 +326,5 @@ public class FormRecord {
 
 		return sb.toString();
 	}
-
-	@GraphQLField
-	@JsonProperty
-	protected Creator creator;
-
-	@GraphQLField
-	@JsonProperty
-	protected Date dateCreated;
-
-	@GraphQLField
-	@JsonProperty
-	protected Date dateModified;
-
-	@GraphQLField
-	@JsonProperty
-	protected Date datePublished;
-
-	@GraphQLField
-	@JsonProperty
-	protected Boolean draft;
-
-	@GraphQLField
-	@JsonProperty
-	protected FieldValues[] fieldValues;
-
-	@GraphQLField
-	@JsonProperty
-	protected Form form;
-
-	@GraphQLField
-	@JsonProperty
-	protected Long formId;
-
-	@GraphQLField
-	@JsonProperty
-	protected Long id;
 
 }

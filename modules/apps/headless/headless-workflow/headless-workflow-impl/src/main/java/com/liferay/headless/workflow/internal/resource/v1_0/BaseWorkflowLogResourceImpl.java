@@ -48,8 +48,8 @@ import javax.ws.rs.core.UriInfo;
 public abstract class BaseWorkflowLogResourceImpl
 	implements WorkflowLogResource {
 
-	@GET
 	@Override
+	@GET
 	@Path("/workflow-logs/{workflow-log-id}")
 	@Produces("application/json")
 	public WorkflowLog getWorkflowLog(
@@ -59,8 +59,8 @@ public abstract class BaseWorkflowLogResourceImpl
 		return new WorkflowLog();
 	}
 
-	@GET
 	@Override
+	@GET
 	@Path("/workflow-tasks/{workflow-task-id}/workflow-logs")
 	@Produces("application/json")
 	public Page<WorkflowLog> getWorkflowTaskWorkflowLogsPage(

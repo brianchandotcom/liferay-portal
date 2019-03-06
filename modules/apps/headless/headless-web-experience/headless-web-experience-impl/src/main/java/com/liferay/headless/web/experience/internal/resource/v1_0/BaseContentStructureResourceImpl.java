@@ -50,8 +50,8 @@ import javax.ws.rs.core.UriInfo;
 public abstract class BaseContentStructureResourceImpl
 	implements ContentStructureResource {
 
-	@GET
 	@Override
+	@GET
 	@Path("/content-spaces/{content-space-id}/content-structures")
 	@Produces("application/json")
 	public Page<ContentStructure> getContentSpaceContentStructuresPage(
@@ -63,8 +63,8 @@ public abstract class BaseContentStructureResourceImpl
 		return Page.of(Collections.emptyList());
 	}
 
-	@GET
 	@Override
+	@GET
 	@Path("/content-structures/{content-structure-id}")
 	@Produces("application/json")
 	public ContentStructure getContentStructure(

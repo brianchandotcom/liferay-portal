@@ -41,10 +41,6 @@ public class Options {
 		return label;
 	}
 
-	public String getValue() {
-		return value;
-	}
-
 	public void setLabel(String label) {
 		this.label = label;
 	}
@@ -59,6 +55,14 @@ public class Options {
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
+	}
+
+	@GraphQLField
+	@JsonProperty
+	protected String label;
+
+	public String getValue() {
+		return value;
 	}
 
 	public void setValue(String value) {
@@ -77,8 +81,12 @@ public class Options {
 		}
 	}
 
+	@GraphQLField
+	@JsonProperty
+	protected String value;
+
 	public String toString() {
-		StringBundler sb = new StringBundler(11);
+		StringBundler sb = new StringBundler();
 
 		sb.append("{");
 
@@ -99,13 +107,5 @@ public class Options {
 
 		return sb.toString();
 	}
-
-	@GraphQLField
-	@JsonProperty
-	protected String label;
-
-	@GraphQLField
-	@JsonProperty
-	protected String value;
 
 }

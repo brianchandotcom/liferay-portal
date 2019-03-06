@@ -68,28 +68,6 @@ public class Query {
 
 	@GraphQLField
 	@GraphQLInvokeDetached
-	public Collection<FormStructure> getContentSpaceFormStructuresPage(
-			@GraphQLName("content-space-id") Long contentSpaceId,
-			@GraphQLName("pageSize") int pageSize,
-			@GraphQLName("page") int page)
-		throws Exception {
-
-		FormStructureResource formStructureResource =
-			_createFormStructureResource();
-
-		formStructureResource.setContextCompany(
-			CompanyLocalServiceUtil.getCompany(
-				CompanyThreadLocal.getCompanyId()));
-
-		Page paginationPage =
-			formStructureResource.getContentSpaceFormStructuresPage(
-				contentSpaceId, Pagination.of(pageSize, page));
-
-		return paginationPage.getItems();
-	}
-
-	@GraphQLField
-	@GraphQLInvokeDetached
 	public Form getForm(@GraphQLName("form-id") Long formId) throws Exception {
 		FormResource formResource = _createFormResource();
 
@@ -98,6 +76,20 @@ public class Query {
 				CompanyThreadLocal.getCompanyId()));
 
 		return formResource.getForm(formId);
+	}
+
+	@GraphQLField
+	@GraphQLInvokeDetached
+	public Form getFormFetchLatestDraft(@GraphQLName("form-id") Long formId)
+		throws Exception {
+
+		FormResource formResource = _createFormResource();
+
+		formResource.setContextCompany(
+			CompanyLocalServiceUtil.getCompany(
+				CompanyThreadLocal.getCompanyId()));
+
+		return formResource.getFormFetchLatestDraft(formId);
 	}
 
 	@GraphQLField
@@ -118,16 +110,17 @@ public class Query {
 
 	@GraphQLField
 	@GraphQLInvokeDetached
-	public Form getFormFetchLatestDraft(@GraphQLName("form-id") Long formId)
+	public FormRecord getFormRecord(
+			@GraphQLName("form-record-id") Long formRecordId)
 		throws Exception {
 
-		FormResource formResource = _createFormResource();
+		FormRecordResource formRecordResource = _createFormRecordResource();
 
-		formResource.setContextCompany(
+		formRecordResource.setContextCompany(
 			CompanyLocalServiceUtil.getCompany(
 				CompanyThreadLocal.getCompanyId()));
 
-		return formResource.getFormFetchLatestDraft(formId);
+		return formRecordResource.getFormRecord(formRecordId);
 	}
 
 	@GraphQLField
@@ -152,17 +145,24 @@ public class Query {
 
 	@GraphQLField
 	@GraphQLInvokeDetached
-	public FormRecord getFormRecord(
-			@GraphQLName("form-record-id") Long formRecordId)
+	public Collection<FormStructure> getContentSpaceFormStructuresPage(
+			@GraphQLName("content-space-id") Long contentSpaceId,
+			@GraphQLName("pageSize") int pageSize,
+			@GraphQLName("page") int page)
 		throws Exception {
 
-		FormRecordResource formRecordResource = _createFormRecordResource();
+		FormStructureResource formStructureResource =
+			_createFormStructureResource();
 
-		formRecordResource.setContextCompany(
+		formStructureResource.setContextCompany(
 			CompanyLocalServiceUtil.getCompany(
 				CompanyThreadLocal.getCompanyId()));
 
-		return formRecordResource.getFormRecord(formRecordId);
+		Page paginationPage =
+			formStructureResource.getContentSpaceFormStructuresPage(
+				contentSpaceId, Pagination.of(pageSize, page));
+
+		return paginationPage.getItems();
 	}
 
 	@GraphQLField
@@ -181,16 +181,16 @@ public class Query {
 		return formStructureResource.getFormStructure(formStructureId);
 	}
 
+	private static FormResource _createFormResource() {
+		return new FormResourceImpl();
+	}
+
 	private static FormDocumentResource _createFormDocumentResource() {
 		return new FormDocumentResourceImpl();
 	}
 
 	private static FormRecordResource _createFormRecordResource() {
 		return new FormRecordResourceImpl();
-	}
-
-	private static FormResource _createFormResource() {
-		return new FormResourceImpl();
 	}
 
 	private static FormStructureResource _createFormStructureResource() {

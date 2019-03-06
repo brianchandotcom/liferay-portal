@@ -41,18 +41,6 @@ public class AggregateRating {
 		return bestRating;
 	}
 
-	public Number getRatingCount() {
-		return ratingCount;
-	}
-
-	public Number getRatingValue() {
-		return ratingValue;
-	}
-
-	public Number getWorstRating() {
-		return worstRating;
-	}
-
 	public void setBestRating(Number bestRating) {
 		this.bestRating = bestRating;
 	}
@@ -67,6 +55,14 @@ public class AggregateRating {
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
+	}
+
+	@GraphQLField
+	@JsonProperty
+	protected Number bestRating;
+
+	public Number getRatingCount() {
+		return ratingCount;
 	}
 
 	public void setRatingCount(Number ratingCount) {
@@ -85,6 +81,14 @@ public class AggregateRating {
 		}
 	}
 
+	@GraphQLField
+	@JsonProperty
+	protected Number ratingCount;
+
+	public Number getRatingValue() {
+		return ratingValue;
+	}
+
 	public void setRatingValue(Number ratingValue) {
 		this.ratingValue = ratingValue;
 	}
@@ -99,6 +103,14 @@ public class AggregateRating {
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
+	}
+
+	@GraphQLField
+	@JsonProperty
+	protected Number ratingValue;
+
+	public Number getWorstRating() {
+		return worstRating;
 	}
 
 	public void setWorstRating(Number worstRating) {
@@ -117,8 +129,12 @@ public class AggregateRating {
 		}
 	}
 
+	@GraphQLField
+	@JsonProperty
+	protected Number worstRating;
+
 	public String toString() {
-		StringBundler sb = new StringBundler(13);
+		StringBundler sb = new StringBundler();
 
 		sb.append("{");
 
@@ -145,21 +161,5 @@ public class AggregateRating {
 
 		return sb.toString();
 	}
-
-	@GraphQLField
-	@JsonProperty
-	protected Number bestRating;
-
-	@GraphQLField
-	@JsonProperty
-	protected Number ratingCount;
-
-	@GraphQLField
-	@JsonProperty
-	protected Number ratingValue;
-
-	@GraphQLField
-	@JsonProperty
-	protected Number worstRating;
 
 }

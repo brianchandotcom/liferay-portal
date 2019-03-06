@@ -163,6 +163,66 @@ public abstract class BasePostalAddressResourceTestCase {
 			});
 	}
 
+	protected PostalAddress
+			testGetGenericParentPostalAddressesPage_addPostalAddress(
+				Object genericParentId, PostalAddress postalAddress)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected Object
+			testGetGenericParentPostalAddressesPage_getGenericParentId()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected Page<PostalAddress> invokeGetGenericParentPostalAddressesPage(
+			Object genericParentId, Pagination pagination)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		String location =
+			_resourceURL + _toPath("/postal-addresses", genericParentId);
+
+		location = HttpUtil.addParameter(
+			location, "page", pagination.getPageNumber());
+		location = HttpUtil.addParameter(
+			location, "pageSize", pagination.getItemsPerPage());
+
+		options.setLocation(location);
+
+		return _outputObjectMapper.readValue(
+			HttpUtil.URLtoString(options),
+			new TypeReference<Page<PostalAddress>>() {
+			});
+	}
+
+	protected Http.Response invokeGetGenericParentPostalAddressesPageResponse(
+			Object genericParentId, Pagination pagination)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		String location =
+			_resourceURL + _toPath("/postal-addresses", genericParentId);
+
+		location = HttpUtil.addParameter(
+			location, "page", pagination.getPageNumber());
+		location = HttpUtil.addParameter(
+			location, "pageSize", pagination.getItemsPerPage());
+
+		options.setLocation(location);
+
+		HttpUtil.URLtoString(options);
+
+		return options.getResponse();
+	}
+
 	@Test
 	public void testGetPostalAddress() throws Exception {
 		PostalAddress postPostalAddress =
@@ -173,6 +233,61 @@ public abstract class BasePostalAddressResourceTestCase {
 
 		assertEquals(postPostalAddress, getPostalAddress);
 		assertValid(getPostalAddress);
+	}
+
+	protected PostalAddress testGetPostalAddress_addPostalAddress()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected PostalAddress invokeGetPostalAddress(Long postalAddressId)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		String location =
+			_resourceURL +
+				_toPath(
+					"/postal-addresses/{postal-address-id}", postalAddressId);
+
+		options.setLocation(location);
+
+		return _outputObjectMapper.readValue(
+			HttpUtil.URLtoString(options), PostalAddress.class);
+	}
+
+	protected Http.Response invokeGetPostalAddressResponse(Long postalAddressId)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		String location =
+			_resourceURL +
+				_toPath(
+					"/postal-addresses/{postal-address-id}", postalAddressId);
+
+		options.setLocation(location);
+
+		HttpUtil.URLtoString(options);
+
+		return options.getResponse();
+	}
+
+	protected void assertResponseCode(
+		int expectedResponseCode, Http.Response actualResponse) {
+
+		Assert.assertEquals(
+			expectedResponseCode, actualResponse.getResponseCode());
+	}
+
+	protected void assertEquals(
+		PostalAddress postalAddress1, PostalAddress postalAddress2) {
+
+		Assert.assertTrue(
+			postalAddress1 + " does not equal " + postalAddress2,
+			equals(postalAddress1, postalAddress2));
 	}
 
 	protected void assertEquals(
@@ -187,14 +302,6 @@ public abstract class BasePostalAddressResourceTestCase {
 
 			assertEquals(postalAddress1, postalAddress2);
 		}
-	}
-
-	protected void assertEquals(
-		PostalAddress postalAddress1, PostalAddress postalAddress2) {
-
-		Assert.assertTrue(
-			postalAddress1 + " does not equal " + postalAddress2,
-			equals(postalAddress1, postalAddress2));
 	}
 
 	protected void assertEqualsIgnoringOrder(
@@ -220,11 +327,9 @@ public abstract class BasePostalAddressResourceTestCase {
 		}
 	}
 
-	protected void assertResponseCode(
-		int expectedResponseCode, Http.Response actualResponse) {
-
-		Assert.assertEquals(
-			expectedResponseCode, actualResponse.getResponseCode());
+	protected void assertValid(PostalAddress postalAddress) {
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	protected void assertValid(Page<PostalAddress> page) {
@@ -242,11 +347,6 @@ public abstract class BasePostalAddressResourceTestCase {
 		}
 
 		Assert.assertTrue(valid);
-	}
-
-	protected void assertValid(PostalAddress postalAddress) {
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
 	}
 
 	protected boolean equals(
@@ -377,82 +477,6 @@ public abstract class BasePostalAddressResourceTestCase {
 			"Invalid entity field " + entityFieldName);
 	}
 
-	protected Page<PostalAddress> invokeGetGenericParentPostalAddressesPage(
-			Object genericParentId, Pagination pagination)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		String location =
-			_resourceURL + _toPath("/postal-addresses", genericParentId);
-
-		location = HttpUtil.addParameter(
-			location, "page", pagination.getPageNumber());
-		location = HttpUtil.addParameter(
-			location, "pageSize", pagination.getItemsPerPage());
-
-		options.setLocation(location);
-
-		return _outputObjectMapper.readValue(
-			HttpUtil.URLtoString(options),
-			new TypeReference<Page<PostalAddress>>() {
-			});
-	}
-
-	protected Http.Response invokeGetGenericParentPostalAddressesPageResponse(
-			Object genericParentId, Pagination pagination)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		String location =
-			_resourceURL + _toPath("/postal-addresses", genericParentId);
-
-		location = HttpUtil.addParameter(
-			location, "page", pagination.getPageNumber());
-		location = HttpUtil.addParameter(
-			location, "pageSize", pagination.getItemsPerPage());
-
-		options.setLocation(location);
-
-		HttpUtil.URLtoString(options);
-
-		return options.getResponse();
-	}
-
-	protected PostalAddress invokeGetPostalAddress(Long postalAddressId)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		String location =
-			_resourceURL +
-				_toPath(
-					"/postal-addresses/{postal-address-id}", postalAddressId);
-
-		options.setLocation(location);
-
-		return _outputObjectMapper.readValue(
-			HttpUtil.URLtoString(options), PostalAddress.class);
-	}
-
-	protected Http.Response invokeGetPostalAddressResponse(Long postalAddressId)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		String location =
-			_resourceURL +
-				_toPath(
-					"/postal-addresses/{postal-address-id}", postalAddressId);
-
-		options.setLocation(location);
-
-		HttpUtil.URLtoString(options);
-
-		return options.getResponse();
-	}
-
 	protected PostalAddress randomPostalAddress() {
 		return new PostalAddress() {
 			{
@@ -467,30 +491,6 @@ public abstract class BasePostalAddressResourceTestCase {
 				streetAddressLine3 = RandomTestUtil.randomString();
 			}
 		};
-	}
-
-	protected PostalAddress
-			testGetGenericParentPostalAddressesPage_addPostalAddress(
-				Object genericParentId, PostalAddress postalAddress)
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	protected Object
-			testGetGenericParentPostalAddressesPage_getGenericParentId()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	protected PostalAddress testGetPostalAddress_addPostalAddress()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
 	}
 
 	protected Group testGroup;
@@ -557,12 +557,12 @@ public abstract class BasePostalAddressResourceTestCase {
 	}
 
 	private static DateFormat _dateFormat;
-	private static final ObjectMapper _inputObjectMapper = new ObjectMapper() {
+	private final static ObjectMapper _inputObjectMapper = new ObjectMapper() {
 		{
 			setSerializationInclusion(JsonInclude.Include.NON_NULL);
 		}
 	};
-	private static final ObjectMapper _outputObjectMapper = new ObjectMapper();
+	private final static ObjectMapper _outputObjectMapper = new ObjectMapper();
 
 	@Inject
 	private PostalAddressResource _postalAddressResource;

@@ -41,22 +41,6 @@ public class AdaptedImages {
 		return contentUrl;
 	}
 
-	public Number getHeight() {
-		return height;
-	}
-
-	public String getResolutionName() {
-		return resolutionName;
-	}
-
-	public Number getSizeInBytes() {
-		return sizeInBytes;
-	}
-
-	public Number getWidth() {
-		return width;
-	}
-
 	public void setContentUrl(String contentUrl) {
 		this.contentUrl = contentUrl;
 	}
@@ -71,6 +55,14 @@ public class AdaptedImages {
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
+	}
+
+	@GraphQLField
+	@JsonProperty
+	protected String contentUrl;
+
+	public Number getHeight() {
+		return height;
 	}
 
 	public void setHeight(Number height) {
@@ -89,6 +81,14 @@ public class AdaptedImages {
 		}
 	}
 
+	@GraphQLField
+	@JsonProperty
+	protected Number height;
+
+	public String getResolutionName() {
+		return resolutionName;
+	}
+
 	public void setResolutionName(String resolutionName) {
 		this.resolutionName = resolutionName;
 	}
@@ -103,6 +103,14 @@ public class AdaptedImages {
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
+	}
+
+	@GraphQLField
+	@JsonProperty
+	protected String resolutionName;
+
+	public Number getSizeInBytes() {
+		return sizeInBytes;
 	}
 
 	public void setSizeInBytes(Number sizeInBytes) {
@@ -121,6 +129,14 @@ public class AdaptedImages {
 		}
 	}
 
+	@GraphQLField
+	@JsonProperty
+	protected Number sizeInBytes;
+
+	public Number getWidth() {
+		return width;
+	}
+
 	public void setWidth(Number width) {
 		this.width = width;
 	}
@@ -137,8 +153,12 @@ public class AdaptedImages {
 		}
 	}
 
+	@GraphQLField
+	@JsonProperty
+	protected Number width;
+
 	public String toString() {
-		StringBundler sb = new StringBundler(20);
+		StringBundler sb = new StringBundler();
 
 		sb.append("{");
 
@@ -174,25 +194,5 @@ public class AdaptedImages {
 
 		return sb.toString();
 	}
-
-	@GraphQLField
-	@JsonProperty
-	protected String contentUrl;
-
-	@GraphQLField
-	@JsonProperty
-	protected Number height;
-
-	@GraphQLField
-	@JsonProperty
-	protected String resolutionName;
-
-	@GraphQLField
-	@JsonProperty
-	protected Number sizeInBytes;
-
-	@GraphQLField
-	@JsonProperty
-	protected Number width;
 
 }

@@ -41,10 +41,6 @@ public class ParentVocabulary {
 		return id;
 	}
 
-	public String getName() {
-		return name;
-	}
-
 	public void setId(Long id) {
 		this.id = id;
 	}
@@ -57,6 +53,14 @@ public class ParentVocabulary {
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
+	}
+
+	@GraphQLField
+	@JsonProperty
+	protected Long id;
+
+	public String getName() {
+		return name;
 	}
 
 	public void setName(String name) {
@@ -73,8 +77,12 @@ public class ParentVocabulary {
 		}
 	}
 
+	@GraphQLField
+	@JsonProperty
+	protected String name;
+
 	public String toString() {
-		StringBundler sb = new StringBundler(9);
+		StringBundler sb = new StringBundler();
 
 		sb.append("{");
 
@@ -93,13 +101,5 @@ public class ParentVocabulary {
 
 		return sb.toString();
 	}
-
-	@GraphQLField
-	@JsonProperty
-	protected Long id;
-
-	@GraphQLField
-	@JsonProperty
-	protected String name;
 
 }

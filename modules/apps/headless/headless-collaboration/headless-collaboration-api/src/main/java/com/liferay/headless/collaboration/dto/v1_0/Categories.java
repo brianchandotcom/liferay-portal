@@ -41,10 +41,6 @@ public class Categories {
 		return categoryId;
 	}
 
-	public String getCategoryName() {
-		return categoryName;
-	}
-
 	public void setCategoryId(Long categoryId) {
 		this.categoryId = categoryId;
 	}
@@ -59,6 +55,14 @@ public class Categories {
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
+	}
+
+	@GraphQLField
+	@JsonProperty
+	protected Long categoryId;
+
+	public String getCategoryName() {
+		return categoryName;
 	}
 
 	public void setCategoryName(String categoryName) {
@@ -77,8 +81,12 @@ public class Categories {
 		}
 	}
 
+	@GraphQLField
+	@JsonProperty
+	protected String categoryName;
+
 	public String toString() {
-		StringBundler sb = new StringBundler(9);
+		StringBundler sb = new StringBundler();
 
 		sb.append("{");
 
@@ -97,13 +105,5 @@ public class Categories {
 
 		return sb.toString();
 	}
-
-	@GraphQLField
-	@JsonProperty
-	protected Long categoryId;
-
-	@GraphQLField
-	@JsonProperty
-	protected String categoryName;
 
 }

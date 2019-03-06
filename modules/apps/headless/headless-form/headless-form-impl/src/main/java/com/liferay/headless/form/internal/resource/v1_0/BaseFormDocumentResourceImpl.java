@@ -46,8 +46,8 @@ import javax.ws.rs.core.UriInfo;
 public abstract class BaseFormDocumentResourceImpl
 	implements FormDocumentResource {
 
-	@DELETE
 	@Override
+	@DELETE
 	@Path("/form-documents/{form-document-id}")
 	@Produces("application/json")
 	public boolean deleteFormDocument(
@@ -57,8 +57,8 @@ public abstract class BaseFormDocumentResourceImpl
 		return false;
 	}
 
-	@GET
 	@Override
+	@GET
 	@Path("/form-documents/{form-document-id}")
 	@Produces("application/json")
 	public FormDocument getFormDocument(

@@ -43,42 +43,6 @@ public class StructuredContentImage {
 		return contentUrl;
 	}
 
-	public Creator getCreator() {
-		return creator;
-	}
-
-	public Date getDateCreated() {
-		return dateCreated;
-	}
-
-	public Date getDateModified() {
-		return dateModified;
-	}
-
-	public String getEncodingFormat() {
-		return encodingFormat;
-	}
-
-	public String getFileExtension() {
-		return fileExtension;
-	}
-
-	public Long getId() {
-		return id;
-	}
-
-	public Number getSizeInBytes() {
-		return sizeInBytes;
-	}
-
-	public Long getStructuredContentId() {
-		return structuredContentId;
-	}
-
-	public String getTitle() {
-		return title;
-	}
-
 	public void setContentUrl(String contentUrl) {
 		this.contentUrl = contentUrl;
 	}
@@ -93,6 +57,14 @@ public class StructuredContentImage {
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
+	}
+
+	@GraphQLField
+	@JsonProperty
+	protected String contentUrl;
+
+	public Creator getCreator() {
+		return creator;
 	}
 
 	public void setCreator(Creator creator) {
@@ -111,6 +83,14 @@ public class StructuredContentImage {
 		}
 	}
 
+	@GraphQLField
+	@JsonProperty
+	protected Creator creator;
+
+	public Date getDateCreated() {
+		return dateCreated;
+	}
+
 	public void setDateCreated(Date dateCreated) {
 		this.dateCreated = dateCreated;
 	}
@@ -125,6 +105,14 @@ public class StructuredContentImage {
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
+	}
+
+	@GraphQLField
+	@JsonProperty
+	protected Date dateCreated;
+
+	public Date getDateModified() {
+		return dateModified;
 	}
 
 	public void setDateModified(Date dateModified) {
@@ -143,6 +131,14 @@ public class StructuredContentImage {
 		}
 	}
 
+	@GraphQLField
+	@JsonProperty
+	protected Date dateModified;
+
+	public String getEncodingFormat() {
+		return encodingFormat;
+	}
+
 	public void setEncodingFormat(String encodingFormat) {
 		this.encodingFormat = encodingFormat;
 	}
@@ -157,6 +153,14 @@ public class StructuredContentImage {
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
+	}
+
+	@GraphQLField
+	@JsonProperty
+	protected String encodingFormat;
+
+	public String getFileExtension() {
+		return fileExtension;
 	}
 
 	public void setFileExtension(String fileExtension) {
@@ -175,6 +179,14 @@ public class StructuredContentImage {
 		}
 	}
 
+	@GraphQLField
+	@JsonProperty
+	protected String fileExtension;
+
+	public Long getId() {
+		return id;
+	}
+
 	public void setId(Long id) {
 		this.id = id;
 	}
@@ -187,6 +199,14 @@ public class StructuredContentImage {
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
+	}
+
+	@GraphQLField
+	@JsonProperty
+	protected Long id;
+
+	public Number getSizeInBytes() {
+		return sizeInBytes;
 	}
 
 	public void setSizeInBytes(Number sizeInBytes) {
@@ -205,6 +225,14 @@ public class StructuredContentImage {
 		}
 	}
 
+	@GraphQLField
+	@JsonProperty
+	protected Number sizeInBytes;
+
+	public Long getStructuredContentId() {
+		return structuredContentId;
+	}
+
 	public void setStructuredContentId(Long structuredContentId) {
 		this.structuredContentId = structuredContentId;
 	}
@@ -219,6 +247,14 @@ public class StructuredContentImage {
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
+	}
+
+	@GraphQLField
+	@JsonProperty
+	protected Long structuredContentId;
+
+	public String getTitle() {
+		return title;
 	}
 
 	public void setTitle(String title) {
@@ -237,8 +273,12 @@ public class StructuredContentImage {
 		}
 	}
 
+	@GraphQLField
+	@JsonProperty
+	protected String title;
+
 	public String toString() {
-		StringBundler sb = new StringBundler(43);
+		StringBundler sb = new StringBundler();
 
 		sb.append("{");
 
@@ -307,45 +347,5 @@ public class StructuredContentImage {
 
 		return sb.toString();
 	}
-
-	@GraphQLField
-	@JsonProperty
-	protected String contentUrl;
-
-	@GraphQLField
-	@JsonProperty
-	protected Creator creator;
-
-	@GraphQLField
-	@JsonProperty
-	protected Date dateCreated;
-
-	@GraphQLField
-	@JsonProperty
-	protected Date dateModified;
-
-	@GraphQLField
-	@JsonProperty
-	protected String encodingFormat;
-
-	@GraphQLField
-	@JsonProperty
-	protected String fileExtension;
-
-	@GraphQLField
-	@JsonProperty
-	protected Long id;
-
-	@GraphQLField
-	@JsonProperty
-	protected Number sizeInBytes;
-
-	@GraphQLField
-	@JsonProperty
-	protected Long structuredContentId;
-
-	@GraphQLField
-	@JsonProperty
-	protected String title;
 
 }

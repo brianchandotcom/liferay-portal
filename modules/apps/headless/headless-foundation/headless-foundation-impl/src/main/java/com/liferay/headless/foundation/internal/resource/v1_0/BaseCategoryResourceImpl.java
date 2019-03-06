@@ -53,8 +53,8 @@ import javax.ws.rs.core.UriInfo;
 @Path("/v1.0")
 public abstract class BaseCategoryResourceImpl implements CategoryResource {
 
-	@DELETE
 	@Override
+	@DELETE
 	@Path("/categories/{category-id}")
 	@Produces("application/json")
 	public boolean deleteCategory(@PathParam("category-id") Long categoryId)
@@ -63,8 +63,8 @@ public abstract class BaseCategoryResourceImpl implements CategoryResource {
 		return false;
 	}
 
-	@GET
 	@Override
+	@GET
 	@Path("/categories/{category-id}")
 	@Produces("application/json")
 	public Category getCategory(@PathParam("category-id") Long categoryId)
@@ -73,8 +73,20 @@ public abstract class BaseCategoryResourceImpl implements CategoryResource {
 		return new Category();
 	}
 
-	@GET
 	@Override
+	@Consumes("application/json")
+	@PUT
+	@Path("/categories/{category-id}")
+	@Produces("application/json")
+	public Category putCategory(
+			@PathParam("category-id") Long categoryId, Category category)
+		throws Exception {
+
+		return new Category();
+	}
+
+	@Override
+	@GET
 	@Path("/categories/{category-id}/categories")
 	@Produces("application/json")
 	public Page<Category> getCategoryCategoriesPage(
@@ -85,8 +97,20 @@ public abstract class BaseCategoryResourceImpl implements CategoryResource {
 		return Page.of(Collections.emptyList());
 	}
 
-	@GET
 	@Override
+	@Consumes("application/json")
+	@POST
+	@Path("/categories/{category-id}/categories")
+	@Produces("application/json")
+	public Category postCategoryCategory(
+			@PathParam("category-id") Long categoryId, Category category)
+		throws Exception {
+
+		return new Category();
+	}
+
+	@Override
+	@GET
 	@Path("/vocabularies/{vocabulary-id}/categories")
 	@Produces("application/json")
 	public Page<Category> getVocabularyCategoriesPage(
@@ -98,37 +122,13 @@ public abstract class BaseCategoryResourceImpl implements CategoryResource {
 		return Page.of(Collections.emptyList());
 	}
 
-	@Consumes("application/json")
 	@Override
-	@Path("/categories/{category-id}/categories")
+	@Consumes("application/json")
 	@POST
-	@Produces("application/json")
-	public Category postCategoryCategory(
-			@PathParam("category-id") Long categoryId, Category category)
-		throws Exception {
-
-		return new Category();
-	}
-
-	@Consumes("application/json")
-	@Override
 	@Path("/vocabularies/{vocabulary-id}/categories")
-	@POST
 	@Produces("application/json")
 	public Category postVocabularyCategory(
 			@PathParam("vocabulary-id") Long vocabularyId, Category category)
-		throws Exception {
-
-		return new Category();
-	}
-
-	@Consumes("application/json")
-	@Override
-	@Path("/categories/{category-id}")
-	@Produces("application/json")
-	@PUT
-	public Category putCategory(
-			@PathParam("category-id") Long categoryId, Category category)
 		throws Exception {
 
 		return new Category();

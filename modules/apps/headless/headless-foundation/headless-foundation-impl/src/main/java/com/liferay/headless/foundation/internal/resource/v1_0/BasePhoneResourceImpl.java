@@ -47,8 +47,8 @@ import javax.ws.rs.core.UriInfo;
 @Path("/v1.0")
 public abstract class BasePhoneResourceImpl implements PhoneResource {
 
-	@GET
 	@Override
+	@GET
 	@Path("/phones")
 	@Produces("application/json")
 	public Page<Phone> getGenericParentPhonesPage(
@@ -59,8 +59,8 @@ public abstract class BasePhoneResourceImpl implements PhoneResource {
 		return Page.of(Collections.emptyList());
 	}
 
-	@GET
 	@Override
+	@GET
 	@Path("/phones/{phone-id}")
 	@Produces("application/json")
 	public Phone getPhone(@PathParam("phone-id") Long phoneId)

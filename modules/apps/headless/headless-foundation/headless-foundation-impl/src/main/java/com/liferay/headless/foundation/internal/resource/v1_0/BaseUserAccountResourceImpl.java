@@ -53,19 +53,8 @@ import javax.ws.rs.core.UriInfo;
 public abstract class BaseUserAccountResourceImpl
 	implements UserAccountResource {
 
-	@DELETE
 	@Override
-	@Path("/user-accounts/{user-account-id}")
-	@Produces("application/json")
-	public boolean deleteUserAccount(
-			@PathParam("user-account-id") Long userAccountId)
-		throws Exception {
-
-		return false;
-	}
-
 	@GET
-	@Override
 	@Path("/my-user-accounts/{my-user-account-id}")
 	@Produces("application/json")
 	public UserAccount getMyUserAccount(
@@ -75,8 +64,8 @@ public abstract class BaseUserAccountResourceImpl
 		return new UserAccount();
 	}
 
-	@GET
 	@Override
+	@GET
 	@Path("/organizations/{organization-id}/user-accounts")
 	@Produces("application/json")
 	public Page<UserAccount> getOrganizationUserAccountsPage(
@@ -87,19 +76,8 @@ public abstract class BaseUserAccountResourceImpl
 		return Page.of(Collections.emptyList());
 	}
 
-	@GET
 	@Override
-	@Path("/user-accounts/{user-account-id}")
-	@Produces("application/json")
-	public UserAccount getUserAccount(
-			@PathParam("user-account-id") Long userAccountId)
-		throws Exception {
-
-		return new UserAccount();
-	}
-
 	@GET
-	@Override
 	@Path("/user-accounts")
 	@Produces("application/json")
 	public Page<UserAccount> getUserAccountsPage(
@@ -110,8 +88,54 @@ public abstract class BaseUserAccountResourceImpl
 		return Page.of(Collections.emptyList());
 	}
 
-	@GET
 	@Override
+	@Consumes("application/json")
+	@POST
+	@Path("/user-accounts")
+	@Produces("application/json")
+	public UserAccount postUserAccount(UserAccount userAccount)
+		throws Exception {
+
+		return new UserAccount();
+	}
+
+	@Override
+	@DELETE
+	@Path("/user-accounts/{user-account-id}")
+	@Produces("application/json")
+	public boolean deleteUserAccount(
+			@PathParam("user-account-id") Long userAccountId)
+		throws Exception {
+
+		return false;
+	}
+
+	@Override
+	@GET
+	@Path("/user-accounts/{user-account-id}")
+	@Produces("application/json")
+	public UserAccount getUserAccount(
+			@PathParam("user-account-id") Long userAccountId)
+		throws Exception {
+
+		return new UserAccount();
+	}
+
+	@Override
+	@Consumes("application/json")
+	@PUT
+	@Path("/user-accounts/{user-account-id}")
+	@Produces("application/json")
+	public UserAccount putUserAccount(
+			@PathParam("user-account-id") Long userAccountId,
+			UserAccount userAccount)
+		throws Exception {
+
+		return new UserAccount();
+	}
+
+	@Override
+	@GET
 	@Path("/web-sites/{web-site-id}/user-accounts")
 	@Produces("application/json")
 	public Page<UserAccount> getWebSiteUserAccountsPage(
@@ -120,30 +144,6 @@ public abstract class BaseUserAccountResourceImpl
 		throws Exception {
 
 		return Page.of(Collections.emptyList());
-	}
-
-	@Consumes("application/json")
-	@Override
-	@Path("/user-accounts")
-	@POST
-	@Produces("application/json")
-	public UserAccount postUserAccount(UserAccount userAccount)
-		throws Exception {
-
-		return new UserAccount();
-	}
-
-	@Consumes("application/json")
-	@Override
-	@Path("/user-accounts/{user-account-id}")
-	@Produces("application/json")
-	@PUT
-	public UserAccount putUserAccount(
-			@PathParam("user-account-id") Long userAccountId,
-			UserAccount userAccount)
-		throws Exception {
-
-		return new UserAccount();
 	}
 
 	public void setContextCompany(Company contextCompany) {

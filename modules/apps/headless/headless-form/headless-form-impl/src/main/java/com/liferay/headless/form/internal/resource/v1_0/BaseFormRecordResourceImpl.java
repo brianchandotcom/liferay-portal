@@ -50,19 +50,8 @@ import javax.ws.rs.core.UriInfo;
 @Path("/v1.0")
 public abstract class BaseFormRecordResourceImpl implements FormRecordResource {
 
-	@GET
 	@Override
-	@Path("/forms/{form-id}/form-records")
-	@Produces("application/json")
-	public Page<FormRecord> getFormFormRecordsPage(
-			@PathParam("form-id") Long formId, @Context Pagination pagination)
-		throws Exception {
-
-		return Page.of(Collections.emptyList());
-	}
-
 	@GET
-	@Override
 	@Path("/form-records/{form-record-id}")
 	@Produces("application/json")
 	public FormRecord getFormRecord(
@@ -72,26 +61,37 @@ public abstract class BaseFormRecordResourceImpl implements FormRecordResource {
 		return new FormRecord();
 	}
 
-	@Consumes("application/json")
 	@Override
-	@Path("/forms/{form-id}/form-records")
-	@POST
+	@Consumes("application/json")
+	@PUT
+	@Path("/form-records/{form-record-id}")
 	@Produces("application/json")
-	public FormRecord postFormFormRecord(
-			@PathParam("form-id") Long formId, FormRecord formRecord)
+	public FormRecord putFormRecord(
+			@PathParam("form-record-id") Long formRecordId,
+			FormRecord formRecord)
 		throws Exception {
 
 		return new FormRecord();
 	}
 
-	@Consumes("application/json")
 	@Override
-	@Path("/form-records/{form-record-id}")
+	@GET
+	@Path("/forms/{form-id}/form-records")
 	@Produces("application/json")
-	@PUT
-	public FormRecord putFormRecord(
-			@PathParam("form-record-id") Long formRecordId,
-			FormRecord formRecord)
+	public Page<FormRecord> getFormFormRecordsPage(
+			@PathParam("form-id") Long formId, @Context Pagination pagination)
+		throws Exception {
+
+		return Page.of(Collections.emptyList());
+	}
+
+	@Override
+	@Consumes("application/json")
+	@POST
+	@Path("/forms/{form-id}/form-records")
+	@Produces("application/json")
+	public FormRecord postFormFormRecord(
+			@PathParam("form-id") Long formId, FormRecord formRecord)
 		throws Exception {
 
 		return new FormRecord();

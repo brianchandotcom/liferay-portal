@@ -41,54 +41,6 @@ public class Organization {
 		return comment;
 	}
 
-	public ContactInformation getContactInformation() {
-		return contactInformation;
-	}
-
-	public Long getId() {
-		return id;
-	}
-
-	public Location getLocation() {
-		return location;
-	}
-
-	public String getLogo() {
-		return logo;
-	}
-
-	public UserAccount[] getMembers() {
-		return members;
-	}
-
-	public Long[] getMembersIds() {
-		return membersIds;
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public Organization getParentOrganization() {
-		return parentOrganization;
-	}
-
-	public Long getParentOrganizationId() {
-		return parentOrganizationId;
-	}
-
-	public Services[] getServices() {
-		return services;
-	}
-
-	public Organization[] getSubOrganization() {
-		return subOrganization;
-	}
-
-	public Long[] getSubOrganizationIds() {
-		return subOrganizationIds;
-	}
-
 	public void setComment(String comment) {
 		this.comment = comment;
 	}
@@ -103,6 +55,14 @@ public class Organization {
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
+	}
+
+	@GraphQLField
+	@JsonProperty
+	protected String comment;
+
+	public ContactInformation getContactInformation() {
+		return contactInformation;
 	}
 
 	public void setContactInformation(ContactInformation contactInformation) {
@@ -122,6 +82,14 @@ public class Organization {
 		}
 	}
 
+	@GraphQLField
+	@JsonProperty
+	protected ContactInformation contactInformation;
+
+	public Long getId() {
+		return id;
+	}
+
 	public void setId(Long id) {
 		this.id = id;
 	}
@@ -134,6 +102,14 @@ public class Organization {
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
+	}
+
+	@GraphQLField
+	@JsonProperty
+	protected Long id;
+
+	public Location getLocation() {
+		return location;
 	}
 
 	public void setLocation(Location location) {
@@ -152,6 +128,14 @@ public class Organization {
 		}
 	}
 
+	@GraphQLField
+	@JsonProperty
+	protected Location location;
+
+	public String getLogo() {
+		return logo;
+	}
+
 	public void setLogo(String logo) {
 		this.logo = logo;
 	}
@@ -166,6 +150,18 @@ public class Organization {
 		}
 	}
 
+	@GraphQLField
+	@JsonProperty
+	protected String logo;
+
+	public UserAccount[] getMembers() {
+		return members;
+	}
+
+	public void setMembers(UserAccount[] members) {
+		this.members = members;
+	}
+
 	@JsonIgnore
 	public void setMembers(
 		UnsafeSupplier<UserAccount[], Exception> membersUnsafeSupplier) {
@@ -178,8 +174,12 @@ public class Organization {
 		}
 	}
 
-	public void setMembers(UserAccount[] members) {
-		this.members = members;
+	@GraphQLField
+	@JsonProperty
+	protected UserAccount[] members;
+
+	public Long[] getMembersIds() {
+		return membersIds;
 	}
 
 	public void setMembersIds(Long[] membersIds) {
@@ -198,6 +198,14 @@ public class Organization {
 		}
 	}
 
+	@GraphQLField
+	@JsonProperty
+	protected Long[] membersIds;
+
+	public String getName() {
+		return name;
+	}
+
 	public void setName(String name) {
 		this.name = name;
 	}
@@ -210,6 +218,14 @@ public class Organization {
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
+	}
+
+	@GraphQLField
+	@JsonProperty
+	protected String name;
+
+	public Organization getParentOrganization() {
+		return parentOrganization;
 	}
 
 	public void setParentOrganization(Organization parentOrganization) {
@@ -229,6 +245,14 @@ public class Organization {
 		}
 	}
 
+	@GraphQLField
+	@JsonProperty
+	protected Organization parentOrganization;
+
+	public Long getParentOrganizationId() {
+		return parentOrganizationId;
+	}
+
 	public void setParentOrganizationId(Long parentOrganizationId) {
 		this.parentOrganizationId = parentOrganizationId;
 	}
@@ -245,6 +269,14 @@ public class Organization {
 		}
 	}
 
+	@GraphQLField
+	@JsonProperty
+	protected Long parentOrganizationId;
+
+	public Services[] getServices() {
+		return services;
+	}
+
 	public void setServices(Services[] services) {
 		this.services = services;
 	}
@@ -259,6 +291,14 @@ public class Organization {
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
+	}
+
+	@GraphQLField
+	@JsonProperty
+	protected Services[] services;
+
+	public Organization[] getSubOrganization() {
+		return subOrganization;
 	}
 
 	public void setSubOrganization(Organization[] subOrganization) {
@@ -278,6 +318,14 @@ public class Organization {
 		}
 	}
 
+	@GraphQLField
+	@JsonProperty
+	protected Organization[] subOrganization;
+
+	public Long[] getSubOrganizationIds() {
+		return subOrganizationIds;
+	}
+
 	public void setSubOrganizationIds(Long[] subOrganizationIds) {
 		this.subOrganizationIds = subOrganizationIds;
 	}
@@ -293,6 +341,10 @@ public class Organization {
 			throw new RuntimeException(e);
 		}
 	}
+
+	@GraphQLField
+	@JsonProperty
+	protected Long[] subOrganizationIds;
 
 	public String toString() {
 		StringBundler sb = new StringBundler();
@@ -452,57 +504,5 @@ public class Organization {
 
 		return sb.toString();
 	}
-
-	@GraphQLField
-	@JsonProperty
-	protected String comment;
-
-	@GraphQLField
-	@JsonProperty
-	protected ContactInformation contactInformation;
-
-	@GraphQLField
-	@JsonProperty
-	protected Long id;
-
-	@GraphQLField
-	@JsonProperty
-	protected Location location;
-
-	@GraphQLField
-	@JsonProperty
-	protected String logo;
-
-	@GraphQLField
-	@JsonProperty
-	protected UserAccount[] members;
-
-	@GraphQLField
-	@JsonProperty
-	protected Long[] membersIds;
-
-	@GraphQLField
-	@JsonProperty
-	protected String name;
-
-	@GraphQLField
-	@JsonProperty
-	protected Organization parentOrganization;
-
-	@GraphQLField
-	@JsonProperty
-	protected Long parentOrganizationId;
-
-	@GraphQLField
-	@JsonProperty
-	protected Services[] services;
-
-	@GraphQLField
-	@JsonProperty
-	protected Organization[] subOrganization;
-
-	@GraphQLField
-	@JsonProperty
-	protected Long[] subOrganizationIds;
 
 }

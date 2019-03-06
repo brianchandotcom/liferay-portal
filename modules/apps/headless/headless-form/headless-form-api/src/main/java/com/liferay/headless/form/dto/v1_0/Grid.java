@@ -41,14 +41,6 @@ public class Grid {
 		return columns;
 	}
 
-	public Long getId() {
-		return id;
-	}
-
-	public Rows[] getRows() {
-		return rows;
-	}
-
 	public void setColumns(Columns[] columns) {
 		this.columns = columns;
 	}
@@ -65,6 +57,14 @@ public class Grid {
 		}
 	}
 
+	@GraphQLField
+	@JsonProperty
+	protected Columns[] columns;
+
+	public Long getId() {
+		return id;
+	}
+
 	public void setId(Long id) {
 		this.id = id;
 	}
@@ -77,6 +77,14 @@ public class Grid {
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
+	}
+
+	@GraphQLField
+	@JsonProperty
+	protected Long id;
+
+	public Rows[] getRows() {
+		return rows;
 	}
 
 	public void setRows(Rows[] rows) {
@@ -92,6 +100,10 @@ public class Grid {
 			throw new RuntimeException(e);
 		}
 	}
+
+	@GraphQLField
+	@JsonProperty
+	protected Rows[] rows;
 
 	public String toString() {
 		StringBundler sb = new StringBundler();
@@ -147,17 +159,5 @@ public class Grid {
 
 		return sb.toString();
 	}
-
-	@GraphQLField
-	@JsonProperty
-	protected Columns[] columns;
-
-	@GraphQLField
-	@JsonProperty
-	protected Long id;
-
-	@GraphQLField
-	@JsonProperty
-	protected Rows[] rows;
 
 }

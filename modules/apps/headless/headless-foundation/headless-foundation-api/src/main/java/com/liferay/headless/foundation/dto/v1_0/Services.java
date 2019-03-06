@@ -41,14 +41,6 @@ public class Services {
 		return hoursAvailable;
 	}
 
-	public Long getId() {
-		return id;
-	}
-
-	public String getServiceType() {
-		return serviceType;
-	}
-
 	public void setHoursAvailable(HoursAvailable[] hoursAvailable) {
 		this.hoursAvailable = hoursAvailable;
 	}
@@ -66,6 +58,14 @@ public class Services {
 		}
 	}
 
+	@GraphQLField
+	@JsonProperty
+	protected HoursAvailable[] hoursAvailable;
+
+	public Long getId() {
+		return id;
+	}
+
 	public void setId(Long id) {
 		this.id = id;
 	}
@@ -78,6 +78,14 @@ public class Services {
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
+	}
+
+	@GraphQLField
+	@JsonProperty
+	protected Long id;
+
+	public String getServiceType() {
+		return serviceType;
 	}
 
 	public void setServiceType(String serviceType) {
@@ -95,6 +103,10 @@ public class Services {
 			throw new RuntimeException(e);
 		}
 	}
+
+	@GraphQLField
+	@JsonProperty
+	protected String serviceType;
 
 	public String toString() {
 		StringBundler sb = new StringBundler();
@@ -137,17 +149,5 @@ public class Services {
 
 		return sb.toString();
 	}
-
-	@GraphQLField
-	@JsonProperty
-	protected HoursAvailable[] hoursAvailable;
-
-	@GraphQLField
-	@JsonProperty
-	protected Long id;
-
-	@GraphQLField
-	@JsonProperty
-	protected String serviceType;
 
 }

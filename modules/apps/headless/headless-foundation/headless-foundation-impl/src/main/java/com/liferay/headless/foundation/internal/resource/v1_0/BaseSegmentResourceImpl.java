@@ -47,8 +47,8 @@ import javax.ws.rs.core.UriInfo;
 @Path("/v1.0")
 public abstract class BaseSegmentResourceImpl implements SegmentResource {
 
-	@GET
 	@Override
+	@GET
 	@Path("/user-accounts/{user-id}/segments")
 	@Produces("application/json")
 	public Page<Segment> getUserSegmentsPage(

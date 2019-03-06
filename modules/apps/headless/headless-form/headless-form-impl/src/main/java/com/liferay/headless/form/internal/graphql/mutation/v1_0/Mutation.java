@@ -36,17 +36,6 @@ import javax.annotation.Generated;
 @Generated("")
 public class Mutation {
 
-	@GraphQLInvokeDetached
-	public boolean deleteFormDocument(
-			@GraphQLName("form-document-id") Long formDocumentId)
-		throws Exception {
-
-		FormDocumentResource formDocumentResource =
-			_createFormDocumentResource();
-
-		return formDocumentResource.deleteFormDocument(formDocumentId);
-	}
-
 	@GraphQLField
 	@GraphQLInvokeDetached
 	public Form postFormEvaluateContext(
@@ -56,18 +45,6 @@ public class Mutation {
 		FormResource formResource = _createFormResource();
 
 		return formResource.postFormEvaluateContext(formId, form);
-	}
-
-	@GraphQLField
-	@GraphQLInvokeDetached
-	public FormRecord postFormFormRecord(
-			@GraphQLName("form-id") Long formId,
-			@GraphQLName("FormRecord") FormRecord formRecord)
-		throws Exception {
-
-		FormRecordResource formRecordResource = _createFormRecordResource();
-
-		return formRecordResource.postFormFormRecord(formId, formRecord);
 	}
 
 	@GraphQLField
@@ -82,6 +59,17 @@ public class Mutation {
 	}
 
 	@GraphQLInvokeDetached
+	public boolean deleteFormDocument(
+			@GraphQLName("form-document-id") Long formDocumentId)
+		throws Exception {
+
+		FormDocumentResource formDocumentResource =
+			_createFormDocumentResource();
+
+		return formDocumentResource.deleteFormDocument(formDocumentId);
+	}
+
+	@GraphQLInvokeDetached
 	public FormRecord putFormRecord(
 			@GraphQLName("form-record-id") Long formRecordId,
 			@GraphQLName("FormRecord") FormRecord formRecord)
@@ -92,16 +80,28 @@ public class Mutation {
 		return formRecordResource.putFormRecord(formRecordId, formRecord);
 	}
 
+	@GraphQLField
+	@GraphQLInvokeDetached
+	public FormRecord postFormFormRecord(
+			@GraphQLName("form-id") Long formId,
+			@GraphQLName("FormRecord") FormRecord formRecord)
+		throws Exception {
+
+		FormRecordResource formRecordResource = _createFormRecordResource();
+
+		return formRecordResource.postFormFormRecord(formId, formRecord);
+	}
+
+	private static FormResource _createFormResource() {
+		return new FormResourceImpl();
+	}
+
 	private static FormDocumentResource _createFormDocumentResource() {
 		return new FormDocumentResourceImpl();
 	}
 
 	private static FormRecordResource _createFormRecordResource() {
 		return new FormRecordResourceImpl();
-	}
-
-	private static FormResource _createFormResource() {
-		return new FormResourceImpl();
 	}
 
 }

@@ -96,6 +96,120 @@ public abstract class BaseFormRecordResourceTestCase {
 	}
 
 	@Test
+	public void testGetFormRecord() throws Exception {
+		FormRecord postFormRecord = testGetFormRecord_addFormRecord();
+
+		FormRecord getFormRecord = invokeGetFormRecord(postFormRecord.getId());
+
+		assertEquals(postFormRecord, getFormRecord);
+		assertValid(getFormRecord);
+	}
+
+	protected FormRecord testGetFormRecord_addFormRecord() throws Exception {
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected FormRecord invokeGetFormRecord(Long formRecordId)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		String location =
+			_resourceURL +
+				_toPath("/form-records/{form-record-id}", formRecordId);
+
+		options.setLocation(location);
+
+		return _outputObjectMapper.readValue(
+			HttpUtil.URLtoString(options), FormRecord.class);
+	}
+
+	protected Http.Response invokeGetFormRecordResponse(Long formRecordId)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		String location =
+			_resourceURL +
+				_toPath("/form-records/{form-record-id}", formRecordId);
+
+		options.setLocation(location);
+
+		HttpUtil.URLtoString(options);
+
+		return options.getResponse();
+	}
+
+	@Test
+	public void testPutFormRecord() throws Exception {
+		FormRecord postFormRecord = testPutFormRecord_addFormRecord();
+
+		FormRecord randomFormRecord = randomFormRecord();
+
+		FormRecord putFormRecord = invokePutFormRecord(
+			postFormRecord.getId(), randomFormRecord);
+
+		assertEquals(randomFormRecord, putFormRecord);
+		assertValid(putFormRecord);
+
+		FormRecord getFormRecord = invokeGetFormRecord(putFormRecord.getId());
+
+		assertEquals(randomFormRecord, getFormRecord);
+		assertValid(getFormRecord);
+	}
+
+	protected FormRecord testPutFormRecord_addFormRecord() throws Exception {
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected FormRecord invokePutFormRecord(
+			Long formRecordId, FormRecord formRecord)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		options.setBody(
+			_inputObjectMapper.writeValueAsString(formRecord),
+			ContentTypes.APPLICATION_JSON, StringPool.UTF8);
+
+		String location =
+			_resourceURL +
+				_toPath("/form-records/{form-record-id}", formRecordId);
+
+		options.setLocation(location);
+
+		options.setPut(true);
+
+		return _outputObjectMapper.readValue(
+			HttpUtil.URLtoString(options), FormRecord.class);
+	}
+
+	protected Http.Response invokePutFormRecordResponse(
+			Long formRecordId, FormRecord formRecord)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		options.setBody(
+			_inputObjectMapper.writeValueAsString(formRecord),
+			ContentTypes.APPLICATION_JSON, StringPool.UTF8);
+
+		String location =
+			_resourceURL +
+				_toPath("/form-records/{form-record-id}", formRecordId);
+
+		options.setLocation(location);
+
+		options.setPut(true);
+
+		HttpUtil.URLtoString(options);
+
+		return options.getResponse();
+	}
+
+	@Test
 	public void testGetFormFormRecordsPage() throws Exception {
 		Long formId = testGetFormFormRecordsPage_getFormId();
 
@@ -152,14 +266,60 @@ public abstract class BaseFormRecordResourceTestCase {
 			});
 	}
 
-	@Test
-	public void testGetFormRecord() throws Exception {
-		FormRecord postFormRecord = testGetFormRecord_addFormRecord();
+	protected FormRecord testGetFormFormRecordsPage_addFormRecord(
+			Long formId, FormRecord formRecord)
+		throws Exception {
 
-		FormRecord getFormRecord = invokeGetFormRecord(postFormRecord.getId());
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
 
-		assertEquals(postFormRecord, getFormRecord);
-		assertValid(getFormRecord);
+	protected Long testGetFormFormRecordsPage_getFormId() throws Exception {
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected Page<FormRecord> invokeGetFormFormRecordsPage(
+			Long formId, Pagination pagination)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		String location =
+			_resourceURL + _toPath("/forms/{form-id}/form-records", formId);
+
+		location = HttpUtil.addParameter(
+			location, "page", pagination.getPageNumber());
+		location = HttpUtil.addParameter(
+			location, "pageSize", pagination.getItemsPerPage());
+
+		options.setLocation(location);
+
+		return _outputObjectMapper.readValue(
+			HttpUtil.URLtoString(options),
+			new TypeReference<Page<FormRecord>>() {
+			});
+	}
+
+	protected Http.Response invokeGetFormFormRecordsPageResponse(
+			Long formId, Pagination pagination)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		String location =
+			_resourceURL + _toPath("/forms/{form-id}/form-records", formId);
+
+		location = HttpUtil.addParameter(
+			location, "page", pagination.getPageNumber());
+		location = HttpUtil.addParameter(
+			location, "pageSize", pagination.getItemsPerPage());
+
+		options.setLocation(location);
+
+		HttpUtil.URLtoString(options);
+
+		return options.getResponse();
 	}
 
 	@Test
@@ -173,22 +333,62 @@ public abstract class BaseFormRecordResourceTestCase {
 		assertValid(postFormRecord);
 	}
 
-	@Test
-	public void testPutFormRecord() throws Exception {
-		FormRecord postFormRecord = testPutFormRecord_addFormRecord();
+	protected FormRecord testPostFormFormRecord_addFormRecord(
+			FormRecord formRecord)
+		throws Exception {
 
-		FormRecord randomFormRecord = randomFormRecord();
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
 
-		FormRecord putFormRecord = invokePutFormRecord(
-			postFormRecord.getId(), randomFormRecord);
+	protected FormRecord invokePostFormFormRecord(
+			Long formId, FormRecord formRecord)
+		throws Exception {
 
-		assertEquals(randomFormRecord, putFormRecord);
-		assertValid(putFormRecord);
+		Http.Options options = _createHttpOptions();
 
-		FormRecord getFormRecord = invokeGetFormRecord(putFormRecord.getId());
+		options.setBody(
+			_inputObjectMapper.writeValueAsString(formRecord),
+			ContentTypes.APPLICATION_JSON, StringPool.UTF8);
 
-		assertEquals(randomFormRecord, getFormRecord);
-		assertValid(getFormRecord);
+		String location =
+			_resourceURL + _toPath("/forms/{form-id}/form-records", formId);
+
+		options.setLocation(location);
+
+		options.setPost(true);
+
+		return _outputObjectMapper.readValue(
+			HttpUtil.URLtoString(options), FormRecord.class);
+	}
+
+	protected Http.Response invokePostFormFormRecordResponse(
+			Long formId, FormRecord formRecord)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		options.setBody(
+			_inputObjectMapper.writeValueAsString(formRecord),
+			ContentTypes.APPLICATION_JSON, StringPool.UTF8);
+
+		String location =
+			_resourceURL + _toPath("/forms/{form-id}/form-records", formId);
+
+		options.setLocation(location);
+
+		options.setPost(true);
+
+		HttpUtil.URLtoString(options);
+
+		return options.getResponse();
+	}
+
+	protected void assertResponseCode(
+		int expectedResponseCode, Http.Response actualResponse) {
+
+		Assert.assertEquals(
+			expectedResponseCode, actualResponse.getResponseCode());
 	}
 
 	protected void assertEquals(
@@ -231,13 +431,6 @@ public abstract class BaseFormRecordResourceTestCase {
 			Assert.assertTrue(
 				formRecords2 + " does not contain " + formRecord1, contains);
 		}
-	}
-
-	protected void assertResponseCode(
-		int expectedResponseCode, Http.Response actualResponse) {
-
-		Assert.assertEquals(
-			expectedResponseCode, actualResponse.getResponseCode());
 	}
 
 	protected void assertValid(FormRecord formRecord) {
@@ -367,168 +560,6 @@ public abstract class BaseFormRecordResourceTestCase {
 			"Invalid entity field " + entityFieldName);
 	}
 
-	protected Page<FormRecord> invokeGetFormFormRecordsPage(
-			Long formId, Pagination pagination)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		String location =
-			_resourceURL + _toPath("/forms/{form-id}/form-records", formId);
-
-		location = HttpUtil.addParameter(
-			location, "page", pagination.getPageNumber());
-		location = HttpUtil.addParameter(
-			location, "pageSize", pagination.getItemsPerPage());
-
-		options.setLocation(location);
-
-		return _outputObjectMapper.readValue(
-			HttpUtil.URLtoString(options),
-			new TypeReference<Page<FormRecord>>() {
-			});
-	}
-
-	protected Http.Response invokeGetFormFormRecordsPageResponse(
-			Long formId, Pagination pagination)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		String location =
-			_resourceURL + _toPath("/forms/{form-id}/form-records", formId);
-
-		location = HttpUtil.addParameter(
-			location, "page", pagination.getPageNumber());
-		location = HttpUtil.addParameter(
-			location, "pageSize", pagination.getItemsPerPage());
-
-		options.setLocation(location);
-
-		HttpUtil.URLtoString(options);
-
-		return options.getResponse();
-	}
-
-	protected FormRecord invokeGetFormRecord(Long formRecordId)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		String location =
-			_resourceURL +
-				_toPath("/form-records/{form-record-id}", formRecordId);
-
-		options.setLocation(location);
-
-		return _outputObjectMapper.readValue(
-			HttpUtil.URLtoString(options), FormRecord.class);
-	}
-
-	protected Http.Response invokeGetFormRecordResponse(Long formRecordId)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		String location =
-			_resourceURL +
-				_toPath("/form-records/{form-record-id}", formRecordId);
-
-		options.setLocation(location);
-
-		HttpUtil.URLtoString(options);
-
-		return options.getResponse();
-	}
-
-	protected FormRecord invokePostFormFormRecord(
-			Long formId, FormRecord formRecord)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		options.setBody(
-			_inputObjectMapper.writeValueAsString(formRecord),
-			ContentTypes.APPLICATION_JSON, StringPool.UTF8);
-
-		String location =
-			_resourceURL + _toPath("/forms/{form-id}/form-records", formId);
-
-		options.setLocation(location);
-
-		options.setPost(true);
-
-		return _outputObjectMapper.readValue(
-			HttpUtil.URLtoString(options), FormRecord.class);
-	}
-
-	protected Http.Response invokePostFormFormRecordResponse(
-			Long formId, FormRecord formRecord)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		options.setBody(
-			_inputObjectMapper.writeValueAsString(formRecord),
-			ContentTypes.APPLICATION_JSON, StringPool.UTF8);
-
-		String location =
-			_resourceURL + _toPath("/forms/{form-id}/form-records", formId);
-
-		options.setLocation(location);
-
-		options.setPost(true);
-
-		HttpUtil.URLtoString(options);
-
-		return options.getResponse();
-	}
-
-	protected FormRecord invokePutFormRecord(
-			Long formRecordId, FormRecord formRecord)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		options.setBody(
-			_inputObjectMapper.writeValueAsString(formRecord),
-			ContentTypes.APPLICATION_JSON, StringPool.UTF8);
-
-		String location =
-			_resourceURL +
-				_toPath("/form-records/{form-record-id}", formRecordId);
-
-		options.setLocation(location);
-
-		options.setPut(true);
-
-		return _outputObjectMapper.readValue(
-			HttpUtil.URLtoString(options), FormRecord.class);
-	}
-
-	protected Http.Response invokePutFormRecordResponse(
-			Long formRecordId, FormRecord formRecord)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		options.setBody(
-			_inputObjectMapper.writeValueAsString(formRecord),
-			ContentTypes.APPLICATION_JSON, StringPool.UTF8);
-
-		String location =
-			_resourceURL +
-				_toPath("/form-records/{form-record-id}", formRecordId);
-
-		options.setLocation(location);
-
-		options.setPut(true);
-
-		HttpUtil.URLtoString(options);
-
-		return options.getResponse();
-	}
-
 	protected FormRecord randomFormRecord() {
 		return new FormRecord() {
 			{
@@ -540,37 +571,6 @@ public abstract class BaseFormRecordResourceTestCase {
 				id = RandomTestUtil.randomLong();
 			}
 		};
-	}
-
-	protected FormRecord testGetFormFormRecordsPage_addFormRecord(
-			Long formId, FormRecord formRecord)
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	protected Long testGetFormFormRecordsPage_getFormId() throws Exception {
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	protected FormRecord testGetFormRecord_addFormRecord() throws Exception {
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	protected FormRecord testPostFormFormRecord_addFormRecord(
-			FormRecord formRecord)
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	protected FormRecord testPutFormRecord_addFormRecord() throws Exception {
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
 	}
 
 	protected Group testGroup;
@@ -637,12 +637,12 @@ public abstract class BaseFormRecordResourceTestCase {
 	}
 
 	private static DateFormat _dateFormat;
-	private static final ObjectMapper _inputObjectMapper = new ObjectMapper() {
+	private final static ObjectMapper _inputObjectMapper = new ObjectMapper() {
 		{
 			setSerializationInclusion(JsonInclude.Include.NON_NULL);
 		}
 	};
-	private static final ObjectMapper _outputObjectMapper = new ObjectMapper();
+	private final static ObjectMapper _outputObjectMapper = new ObjectMapper();
 
 	@Inject
 	private FormRecordResource _formRecordResource;

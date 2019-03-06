@@ -53,19 +53,8 @@ import javax.ws.rs.core.UriInfo;
 @Path("/v1.0")
 public abstract class BaseVocabularyResourceImpl implements VocabularyResource {
 
-	@DELETE
 	@Override
-	@Path("/vocabularies/{vocabulary-id}")
-	@Produces("application/json")
-	public boolean deleteVocabulary(
-			@PathParam("vocabulary-id") Long vocabularyId)
-		throws Exception {
-
-		return false;
-	}
-
 	@GET
-	@Override
 	@Path("/content-spaces/{content-space-id}/vocabularies")
 	@Produces("application/json")
 	public Page<Vocabulary> getContentSpaceVocabulariesPage(
@@ -77,21 +66,10 @@ public abstract class BaseVocabularyResourceImpl implements VocabularyResource {
 		return Page.of(Collections.emptyList());
 	}
 
-	@GET
 	@Override
-	@Path("/vocabularies/{vocabulary-id}")
-	@Produces("application/json")
-	public Vocabulary getVocabulary(
-			@PathParam("vocabulary-id") Long vocabularyId)
-		throws Exception {
-
-		return new Vocabulary();
-	}
-
 	@Consumes("application/json")
-	@Override
-	@Path("/content-spaces/{content-space-id}/vocabularies")
 	@POST
+	@Path("/content-spaces/{content-space-id}/vocabularies")
 	@Produces("application/json")
 	public Vocabulary postContentSpaceVocabulary(
 			@PathParam("content-space-id") Long contentSpaceId,
@@ -101,11 +79,33 @@ public abstract class BaseVocabularyResourceImpl implements VocabularyResource {
 		return new Vocabulary();
 	}
 
-	@Consumes("application/json")
 	@Override
+	@DELETE
 	@Path("/vocabularies/{vocabulary-id}")
 	@Produces("application/json")
+	public boolean deleteVocabulary(
+			@PathParam("vocabulary-id") Long vocabularyId)
+		throws Exception {
+
+		return false;
+	}
+
+	@Override
+	@GET
+	@Path("/vocabularies/{vocabulary-id}")
+	@Produces("application/json")
+	public Vocabulary getVocabulary(
+			@PathParam("vocabulary-id") Long vocabularyId)
+		throws Exception {
+
+		return new Vocabulary();
+	}
+
+	@Override
+	@Consumes("application/json")
 	@PUT
+	@Path("/vocabularies/{vocabulary-id}")
+	@Produces("application/json")
 	public Vocabulary putVocabulary(
 			@PathParam("vocabulary-id") Long vocabularyId,
 			Vocabulary vocabulary)

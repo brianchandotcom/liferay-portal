@@ -2,5 +2,10 @@
 # This is a generated file.
 #
 
-public boolean com.liferay.headless.collaboration.internal.resource.v1_0.BlogPostingImageResourceImpl.deleteBlogPostingImage(java.lang.Long) throws java.lang.Exception:everything.write
-public com.liferay.headless.collaboration.dto.v1_0.BlogPostingImage com.liferay.headless.collaboration.internal.resource.v1_0.BlogPostingImageResourceImpl.getBlogPostingImage(java.lang.Long) throws java.lang.Exception:everything.read
+	public com.liferay.portal.vulcan.pagination.Page<com.liferay.headless.workflow.dto.v1_0.WorkflowTask> com.liferay.headless.workflow.internal.resource.v1_0.WorkflowTaskResourceImpl.getRoleWorkflowTasksPage(java.lang.Long,com.liferay.portal.vulcan.pagination.Pagination) throws java.lang.Exception:everything.read
+	public com.liferay.portal.vulcan.pagination.Page<com.liferay.headless.workflow.dto.v1_0.WorkflowTask> com.liferay.headless.workflow.internal.resource.v1_0.WorkflowTaskResourceImpl.getWorkflowTasksPage(com.liferay.portal.vulcan.pagination.Pagination) throws java.lang.Exception:everything.read
+	public com.liferay.headless.workflow.dto.v1_0.WorkflowTask com.liferay.headless.workflow.internal.resource.v1_0.WorkflowTaskResourceImpl.getWorkflowTask(java.lang.Long) throws java.lang.Exception:everything.read
+	public com.liferay.headless.workflow.dto.v1_0.WorkflowTask com.liferay.headless.workflow.internal.resource.v1_0.WorkflowTaskResourceImpl.postWorkflowTaskAssignToMe(java.lang.Long,com.liferay.headless.workflow.dto.v1_0.WorkflowTask) throws java.lang.Exception:everything.write
+	public com.liferay.headless.workflow.dto.v1_0.WorkflowTask com.liferay.headless.workflow.internal.resource.v1_0.WorkflowTaskResourceImpl.postWorkflowTaskAssignToUser(java.lang.Long,com.liferay.headless.workflow.dto.v1_0.WorkflowTask) throws java.lang.Exception:everything.write
+	public com.liferay.headless.workflow.dto.v1_0.WorkflowTask com.liferay.headless.workflow.internal.resource.v1_0.WorkflowTaskResourceImpl.postWorkflowTaskChangeTransition(java.lang.Long,com.liferay.headless.workflow.dto.v1_0.WorkflowTask) throws java.lang.Exception:everything.write
+	public com.liferay.headless.workflow.dto.v1_0.WorkflowTask com.liferay.headless.workflow.internal.resource.v1_0.WorkflowTaskResourceImpl.postWorkflowTaskUpdateDueDate(java.lang.Long,com.liferay.headless.workflow.dto.v1_0.WorkflowTask) throws java.lang.Exception:everything.write

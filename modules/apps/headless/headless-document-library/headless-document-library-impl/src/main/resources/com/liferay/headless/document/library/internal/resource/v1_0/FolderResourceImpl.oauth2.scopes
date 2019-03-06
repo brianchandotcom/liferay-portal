@@ -2,5 +2,11 @@
 # This is a generated file.
 #
 
-public boolean com.liferay.headless.collaboration.internal.resource.v1_0.BlogPostingImageResourceImpl.deleteBlogPostingImage(java.lang.Long) throws java.lang.Exception:everything.write
-public com.liferay.headless.collaboration.dto.v1_0.BlogPostingImage com.liferay.headless.collaboration.internal.resource.v1_0.BlogPostingImageResourceImpl.getBlogPostingImage(java.lang.Long) throws java.lang.Exception:everything.read
+	public com.liferay.portal.vulcan.pagination.Page<com.liferay.headless.document.library.dto.v1_0.Folder> com.liferay.headless.document.library.internal.resource.v1_0.FolderResourceImpl.getContentSpaceFoldersPage(java.lang.Long,com.liferay.portal.vulcan.pagination.Pagination) throws java.lang.Exception:everything.read
+	public com.liferay.headless.document.library.dto.v1_0.Folder com.liferay.headless.document.library.internal.resource.v1_0.FolderResourceImpl.postContentSpaceFolder(java.lang.Long,com.liferay.headless.document.library.dto.v1_0.Folder) throws java.lang.Exception:everything.write
+	public boolean com.liferay.headless.document.library.internal.resource.v1_0.FolderResourceImpl.deleteFolder(java.lang.Long) throws java.lang.Exception:everything.write
+	public com.liferay.headless.document.library.dto.v1_0.Folder com.liferay.headless.document.library.internal.resource.v1_0.FolderResourceImpl.getFolder(java.lang.Long) throws java.lang.Exception:everything.read
+	public com.liferay.headless.document.library.dto.v1_0.Folder com.liferay.headless.document.library.internal.resource.v1_0.FolderResourceImpl.patchFolder(java.lang.Long,com.liferay.headless.document.library.dto.v1_0.Folder) throws java.lang.Exception:everything.write
+	public com.liferay.headless.document.library.dto.v1_0.Folder com.liferay.headless.document.library.internal.resource.v1_0.FolderResourceImpl.putFolder(java.lang.Long,com.liferay.headless.document.library.dto.v1_0.Folder) throws java.lang.Exception:everything.write
+	public com.liferay.portal.vulcan.pagination.Page<com.liferay.headless.document.library.dto.v1_0.Folder> com.liferay.headless.document.library.internal.resource.v1_0.FolderResourceImpl.getFolderFoldersPage(java.lang.Long,com.liferay.portal.vulcan.pagination.Pagination) throws java.lang.Exception:everything.read
+	public com.liferay.headless.document.library.dto.v1_0.Folder com.liferay.headless.document.library.internal.resource.v1_0.FolderResourceImpl.postFolderFolder(java.lang.Long,com.liferay.headless.document.library.dto.v1_0.Folder) throws java.lang.Exception:everything.write

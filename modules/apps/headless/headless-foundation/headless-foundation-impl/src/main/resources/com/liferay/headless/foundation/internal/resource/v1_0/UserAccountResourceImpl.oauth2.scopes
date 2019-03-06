@@ -2,5 +2,11 @@
 # This is a generated file.
 #
 
-public boolean com.liferay.headless.collaboration.internal.resource.v1_0.BlogPostingImageResourceImpl.deleteBlogPostingImage(java.lang.Long) throws java.lang.Exception:everything.write
-public com.liferay.headless.collaboration.dto.v1_0.BlogPostingImage com.liferay.headless.collaboration.internal.resource.v1_0.BlogPostingImageResourceImpl.getBlogPostingImage(java.lang.Long) throws java.lang.Exception:everything.read
+	public com.liferay.headless.foundation.dto.v1_0.UserAccount com.liferay.headless.foundation.internal.resource.v1_0.UserAccountResourceImpl.getMyUserAccount(java.lang.Long) throws java.lang.Exception:everything.read
+	public com.liferay.portal.vulcan.pagination.Page<com.liferay.headless.foundation.dto.v1_0.UserAccount> com.liferay.headless.foundation.internal.resource.v1_0.UserAccountResourceImpl.getOrganizationUserAccountsPage(java.lang.Long,com.liferay.portal.vulcan.pagination.Pagination) throws java.lang.Exception:everything.read
+	public com.liferay.portal.vulcan.pagination.Page<com.liferay.headless.foundation.dto.v1_0.UserAccount> com.liferay.headless.foundation.internal.resource.v1_0.UserAccountResourceImpl.getUserAccountsPage(java.lang.String,com.liferay.portal.vulcan.pagination.Pagination) throws java.lang.Exception:everything.read
+	public com.liferay.headless.foundation.dto.v1_0.UserAccount com.liferay.headless.foundation.internal.resource.v1_0.UserAccountResourceImpl.postUserAccount(com.liferay.headless.foundation.dto.v1_0.UserAccount) throws java.lang.Exception:everything.write
+	public boolean com.liferay.headless.foundation.internal.resource.v1_0.UserAccountResourceImpl.deleteUserAccount(java.lang.Long) throws java.lang.Exception:everything.write
+	public com.liferay.headless.foundation.dto.v1_0.UserAccount com.liferay.headless.foundation.internal.resource.v1_0.UserAccountResourceImpl.getUserAccount(java.lang.Long) throws java.lang.Exception:everything.read
+	public com.liferay.headless.foundation.dto.v1_0.UserAccount com.liferay.headless.foundation.internal.resource.v1_0.UserAccountResourceImpl.putUserAccount(java.lang.Long,com.liferay.headless.foundation.dto.v1_0.UserAccount) throws java.lang.Exception:everything.write
+	public com.liferay.portal.vulcan.pagination.Page<com.liferay.headless.foundation.dto.v1_0.UserAccount> com.liferay.headless.foundation.internal.resource.v1_0.UserAccountResourceImpl.getWebSiteUserAccountsPage(java.lang.Long,com.liferay.portal.vulcan.pagination.Pagination) throws java.lang.Exception:everything.read

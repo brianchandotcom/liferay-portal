@@ -2,5 +2,5 @@
 # This is a generated file.
 #
 
-public boolean com.liferay.headless.collaboration.internal.resource.v1_0.BlogPostingImageResourceImpl.deleteBlogPostingImage(java.lang.Long) throws java.lang.Exception:everything.write
-public com.liferay.headless.collaboration.dto.v1_0.BlogPostingImage com.liferay.headless.collaboration.internal.resource.v1_0.BlogPostingImageResourceImpl.getBlogPostingImage(java.lang.Long) throws java.lang.Exception:everything.read
+	public com.liferay.headless.workflow.dto.v1_0.WorkflowLog com.liferay.headless.workflow.internal.resource.v1_0.WorkflowLogResourceImpl.getWorkflowLog(java.lang.Long) throws java.lang.Exception:everything.read
+	public com.liferay.portal.vulcan.pagination.Page<com.liferay.headless.workflow.dto.v1_0.WorkflowLog> com.liferay.headless.workflow.internal.resource.v1_0.WorkflowLogResourceImpl.getWorkflowTaskWorkflowLogsPage(java.lang.Long,com.liferay.portal.vulcan.pagination.Pagination) throws java.lang.Exception:everything.read

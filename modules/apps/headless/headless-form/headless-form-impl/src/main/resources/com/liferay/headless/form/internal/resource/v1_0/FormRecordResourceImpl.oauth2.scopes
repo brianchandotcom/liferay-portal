@@ -2,5 +2,7 @@
 # This is a generated file.
 #
 
-public boolean com.liferay.headless.collaboration.internal.resource.v1_0.BlogPostingImageResourceImpl.deleteBlogPostingImage(java.lang.Long) throws java.lang.Exception:everything.write
-public com.liferay.headless.collaboration.dto.v1_0.BlogPostingImage com.liferay.headless.collaboration.internal.resource.v1_0.BlogPostingImageResourceImpl.getBlogPostingImage(java.lang.Long) throws java.lang.Exception:everything.read
+	public com.liferay.headless.form.dto.v1_0.FormRecord com.liferay.headless.form.internal.resource.v1_0.FormRecordResourceImpl.getFormRecord(java.lang.Long) throws java.lang.Exception:everything.read
+	public com.liferay.headless.form.dto.v1_0.FormRecord com.liferay.headless.form.internal.resource.v1_0.FormRecordResourceImpl.putFormRecord(java.lang.Long,com.liferay.headless.form.dto.v1_0.FormRecord) throws java.lang.Exception:everything.write
+	public com.liferay.portal.vulcan.pagination.Page<com.liferay.headless.form.dto.v1_0.FormRecord> com.liferay.headless.form.internal.resource.v1_0.FormRecordResourceImpl.getFormFormRecordsPage(java.lang.Long,com.liferay.portal.vulcan.pagination.Pagination) throws java.lang.Exception:everything.read
+	public com.liferay.headless.form.dto.v1_0.FormRecord com.liferay.headless.form.internal.resource.v1_0.FormRecordResourceImpl.postFormFormRecord(java.lang.Long,com.liferay.headless.form.dto.v1_0.FormRecord) throws java.lang.Exception:everything.write

@@ -2,5 +2,11 @@
 # This is a generated file.
 #
 
-public boolean com.liferay.headless.collaboration.internal.resource.v1_0.BlogPostingImageResourceImpl.deleteBlogPostingImage(java.lang.Long) throws java.lang.Exception:everything.write
-public com.liferay.headless.collaboration.dto.v1_0.BlogPostingImage com.liferay.headless.collaboration.internal.resource.v1_0.BlogPostingImageResourceImpl.getBlogPostingImage(java.lang.Long) throws java.lang.Exception:everything.read
+	public com.liferay.portal.vulcan.pagination.Page<com.liferay.headless.document.library.dto.v1_0.Document> com.liferay.headless.document.library.internal.resource.v1_0.DocumentResourceImpl.getContentSpaceDocumentsPage(java.lang.Long,com.liferay.portal.kernel.search.filter.Filter,com.liferay.portal.vulcan.pagination.Pagination,[Lcom.liferay.portal.kernel.search.Sort;) throws java.lang.Exception:everything.read
+	public com.liferay.headless.document.library.dto.v1_0.Document com.liferay.headless.document.library.internal.resource.v1_0.DocumentResourceImpl.postContentSpaceDocument(java.lang.Long,com.liferay.portal.vulcan.multipart.MultipartBody) throws java.lang.Exception:everything.write
+	public boolean com.liferay.headless.document.library.internal.resource.v1_0.DocumentResourceImpl.deleteDocument(java.lang.Long) throws java.lang.Exception:everything.write
+	public com.liferay.headless.document.library.dto.v1_0.Document com.liferay.headless.document.library.internal.resource.v1_0.DocumentResourceImpl.getDocument(java.lang.Long) throws java.lang.Exception:everything.read
+	public com.liferay.headless.document.library.dto.v1_0.Document com.liferay.headless.document.library.internal.resource.v1_0.DocumentResourceImpl.patchDocument(java.lang.Long,com.liferay.portal.vulcan.multipart.MultipartBody) throws java.lang.Exception:everything.write
+	public com.liferay.headless.document.library.dto.v1_0.Document com.liferay.headless.document.library.internal.resource.v1_0.DocumentResourceImpl.putDocument(java.lang.Long,com.liferay.portal.vulcan.multipart.MultipartBody) throws java.lang.Exception:everything.write
+	public com.liferay.portal.vulcan.pagination.Page<com.liferay.headless.document.library.dto.v1_0.Document> com.liferay.headless.document.library.internal.resource.v1_0.DocumentResourceImpl.getFolderDocumentsPage(java.lang.Long,com.liferay.portal.kernel.search.filter.Filter,com.liferay.portal.vulcan.pagination.Pagination,[Lcom.liferay.portal.kernel.search.Sort;) throws java.lang.Exception:everything.read
+	public com.liferay.headless.document.library.dto.v1_0.Document com.liferay.headless.document.library.internal.resource.v1_0.DocumentResourceImpl.postFolderDocument(java.lang.Long,com.liferay.portal.vulcan.multipart.MultipartBody) throws java.lang.Exception:everything.write

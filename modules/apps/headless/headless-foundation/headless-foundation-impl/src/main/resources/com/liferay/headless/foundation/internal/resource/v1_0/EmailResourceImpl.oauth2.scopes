@@ -2,5 +2,5 @@
 # This is a generated file.
 #
 
-public boolean com.liferay.headless.collaboration.internal.resource.v1_0.BlogPostingImageResourceImpl.deleteBlogPostingImage(java.lang.Long) throws java.lang.Exception:everything.write
-public com.liferay.headless.collaboration.dto.v1_0.BlogPostingImage com.liferay.headless.collaboration.internal.resource.v1_0.BlogPostingImageResourceImpl.getBlogPostingImage(java.lang.Long) throws java.lang.Exception:everything.read
+	public com.liferay.portal.vulcan.pagination.Page<com.liferay.headless.foundation.dto.v1_0.Email> com.liferay.headless.foundation.internal.resource.v1_0.EmailResourceImpl.getGenericParentEmailsPage(java.lang.Object,com.liferay.portal.vulcan.pagination.Pagination) throws java.lang.Exception:everything.read
+	public com.liferay.headless.foundation.dto.v1_0.Email com.liferay.headless.foundation.internal.resource.v1_0.EmailResourceImpl.getEmail(java.lang.Long) throws java.lang.Exception:everything.read

@@ -2,5 +2,8 @@
 # This is a generated file.
 #
 
-public boolean com.liferay.headless.collaboration.internal.resource.v1_0.BlogPostingImageResourceImpl.deleteBlogPostingImage(java.lang.Long) throws java.lang.Exception:everything.write
-public com.liferay.headless.collaboration.dto.v1_0.BlogPostingImage com.liferay.headless.collaboration.internal.resource.v1_0.BlogPostingImageResourceImpl.getBlogPostingImage(java.lang.Long) throws java.lang.Exception:everything.read
+	public com.liferay.portal.vulcan.pagination.Page<com.liferay.headless.form.dto.v1_0.Form> com.liferay.headless.form.internal.resource.v1_0.FormResourceImpl.getContentSpaceFormsPage(java.lang.Long,com.liferay.portal.vulcan.pagination.Pagination) throws java.lang.Exception:everything.read
+	public com.liferay.headless.form.dto.v1_0.Form com.liferay.headless.form.internal.resource.v1_0.FormResourceImpl.getForm(java.lang.Long) throws java.lang.Exception:everything.read
+	public com.liferay.headless.form.dto.v1_0.Form com.liferay.headless.form.internal.resource.v1_0.FormResourceImpl.postFormEvaluateContext(java.lang.Long,com.liferay.headless.form.dto.v1_0.Form) throws java.lang.Exception:everything.write
+	public com.liferay.headless.form.dto.v1_0.Form com.liferay.headless.form.internal.resource.v1_0.FormResourceImpl.getFormFetchLatestDraft(java.lang.Long) throws java.lang.Exception:everything.read
+	public com.liferay.headless.form.dto.v1_0.Form com.liferay.headless.form.internal.resource.v1_0.FormResourceImpl.postFormUploadFile(java.lang.Long,com.liferay.headless.form.dto.v1_0.Form) throws java.lang.Exception:everything.write

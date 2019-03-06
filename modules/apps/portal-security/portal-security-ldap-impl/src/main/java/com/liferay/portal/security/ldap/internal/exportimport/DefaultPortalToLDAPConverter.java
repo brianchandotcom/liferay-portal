@@ -431,40 +431,42 @@ public class DefaultPortalToLDAPConverter implements PortalToLDAPConverter {
 
 		String algorithm = ldapAuthConfiguration.passwordEncryptionAlgorithm();
 
-		if (!Validator.isNull(algorithm) &&
+		if (Validator.isNotNull(algorithm) &&
 			!algorithm.equals(PasswordEncryptorUtil.TYPE_NONE)) {
 
-		try {
-			StringBundler sb = new StringBundler(4);
+			try {
+				StringBundler sb = new StringBundler(4);
 
-			if (!hasLegacyPasswordEncryptionAlgorithm()) {
-				sb.append(StringPool.OPEN_CURLY_BRACE);
-				sb.append(algorithm);
-				sb.append(StringPool.CLOSE_CURLY_BRACE);
+				if (!hasLegacyPasswordEncryptionAlgorithm()) {
+					sb.append(StringPool.OPEN_CURLY_BRACE);
+					sb.append(algorithm);
+					sb.append(StringPool.CLOSE_CURLY_BRACE);
+				}
+
+				sb.append(
+					_passwordEncryptor.encrypt(algorithm, password, null));
+
+				String passwordKey = userMappings.getProperty(
+					UserConverterKeys.PASSWORD);
+
+				if (passwordKey.equals("unicodePwd")) {
+					String quotedPassword = StringPool.QUOTE.concat(
+						sb.toString()
+					).concat(
+						StringPool.QUOTE
+					);
+
+					byte[] unicodePassword = quotedPassword.getBytes(
+						"UTF-16LE");
+
+					return new String(unicodePassword);
+				}
+
+				return sb.toString();
 			}
-
-			sb.append(_passwordEncryptor.encrypt(algorithm, password, null));
-
-			String passwordKey = userMappings.getProperty(
-				UserConverterKeys.PASSWORD);
-
-			if (passwordKey.equals("unicodePwd")) {
-				String quotedPassword = StringPool.QUOTE.concat(
-					sb.toString()
-				).concat(
-					StringPool.QUOTE
-				);
-
-				byte[] unicodePassword = quotedPassword.getBytes("UTF-16LE");
-
-				return new String(unicodePassword);
+			catch (Exception e) {
+				throw new SystemException(e);
 			}
-
-			return sb.toString();
-		}
-		catch (Exception e) {
-			throw new SystemException(e);
-		}
 		}
 
 		return password;

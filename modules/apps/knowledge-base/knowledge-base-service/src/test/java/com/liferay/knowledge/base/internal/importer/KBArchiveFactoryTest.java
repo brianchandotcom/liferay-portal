@@ -154,7 +154,7 @@ public class KBArchiveFactoryTest {
 
 		Assert.assertNull(folder0.getParentFolderIntroFile());
 
-		Collection<File> files0 = folder0.getFiles();
+		Collection<KBArchive.File> files0 = folder0.getFiles();
 
 		Assert.assertTrue(files0.isEmpty());
 
@@ -164,7 +164,7 @@ public class KBArchiveFactoryTest {
 		Assert.assertNull(folder1.getIntroFile());
 		Assert.assertNotNull(folder1.getParentFolderIntroFile());
 
-		Collection<File> files1 = folder1.getFiles();
+		Collection<KBArchive.File> files1 = folder1.getFiles();
 
 		Assert.assertEquals(files1.toString(), 1, files1.size());
 
@@ -174,7 +174,7 @@ public class KBArchiveFactoryTest {
 		Assert.assertNull(folder2.getIntroFile());
 		Assert.assertNull(folder2.getParentFolderIntroFile());
 
-		Collection<File> files2 = folder2.getFiles();
+		Collection<KBArchive.File> files2 = folder2.getFiles();
 
 		Assert.assertEquals(files2.toString(), 2, files2.size());
 	}

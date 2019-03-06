@@ -22,6 +22,7 @@ import com.liferay.headless.foundation.dto.v1_0.Phone;
 import com.liferay.headless.foundation.dto.v1_0.PostalAddress;
 import com.liferay.headless.foundation.dto.v1_0.Role;
 import com.liferay.headless.foundation.dto.v1_0.Segment;
+import com.liferay.headless.foundation.dto.v1_0.SegmentUser;
 import com.liferay.headless.foundation.dto.v1_0.UserAccount;
 import com.liferay.headless.foundation.dto.v1_0.Vocabulary;
 import com.liferay.headless.foundation.dto.v1_0.WebUrl;
@@ -33,6 +34,7 @@ import com.liferay.headless.foundation.internal.resource.v1_0.PhoneResourceImpl;
 import com.liferay.headless.foundation.internal.resource.v1_0.PostalAddressResourceImpl;
 import com.liferay.headless.foundation.internal.resource.v1_0.RoleResourceImpl;
 import com.liferay.headless.foundation.internal.resource.v1_0.SegmentResourceImpl;
+import com.liferay.headless.foundation.internal.resource.v1_0.SegmentUserResourceImpl;
 import com.liferay.headless.foundation.internal.resource.v1_0.UserAccountResourceImpl;
 import com.liferay.headless.foundation.internal.resource.v1_0.VocabularyResourceImpl;
 import com.liferay.headless.foundation.internal.resource.v1_0.WebUrlResourceImpl;
@@ -44,6 +46,7 @@ import com.liferay.headless.foundation.resource.v1_0.PhoneResource;
 import com.liferay.headless.foundation.resource.v1_0.PostalAddressResource;
 import com.liferay.headless.foundation.resource.v1_0.RoleResource;
 import com.liferay.headless.foundation.resource.v1_0.SegmentResource;
+import com.liferay.headless.foundation.resource.v1_0.SegmentUserResource;
 import com.liferay.headless.foundation.resource.v1_0.UserAccountResource;
 import com.liferay.headless.foundation.resource.v1_0.VocabularyResource;
 import com.liferay.headless.foundation.resource.v1_0.WebUrlResource;
@@ -460,6 +463,26 @@ public class Query {
 
 	@GraphQLField
 	@GraphQLInvokeDetached
+	public Collection<SegmentUser> getSegmentUserAccountsPage(
+			@GraphQLName("segment-id") Long segmentId,
+			@GraphQLName("pageSize") int pageSize,
+			@GraphQLName("page") int page)
+		throws Exception {
+
+		SegmentUserResource segmentUserResource = _createSegmentUserResource();
+
+		segmentUserResource.setContextCompany(
+			CompanyLocalServiceUtil.getCompany(
+				CompanyThreadLocal.getCompanyId()));
+
+		Page paginationPage = segmentUserResource.getSegmentUserAccountsPage(
+			segmentId, Pagination.of(pageSize, page));
+
+		return paginationPage.getItems();
+	}
+
+	@GraphQLField
+	@GraphQLInvokeDetached
 	public UserAccount getMyUserAccount(
 			@GraphQLName("my-user-account-id") Long myUserAccountId)
 		throws Exception {
@@ -650,6 +673,10 @@ public class Query {
 
 	private static SegmentResource _createSegmentResource() {
 		return new SegmentResourceImpl();
+	}
+
+	private static SegmentUserResource _createSegmentUserResource() {
+		return new SegmentUserResourceImpl();
 	}
 
 	private static UserAccountResource _createUserAccountResource() {

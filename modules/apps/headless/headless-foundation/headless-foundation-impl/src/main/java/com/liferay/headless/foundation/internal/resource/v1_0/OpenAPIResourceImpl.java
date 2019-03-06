@@ -92,6 +92,8 @@ public class OpenAPIResourceImpl {
 
 			add(SegmentResourceImpl.class);
 
+			add(SegmentUserResourceImpl.class);
+
 			add(UserAccountResourceImpl.class);
 
 			add(VocabularyResourceImpl.class);

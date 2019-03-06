@@ -23,6 +23,8 @@ import com.liferay.petra.string.StringBundler;
 import graphql.annotations.annotationTypes.GraphQLField;
 import graphql.annotations.annotationTypes.GraphQLName;
 
+import io.swagger.v3.oas.annotations.media.Schema;
+
 import java.util.Date;
 
 import javax.annotation.Generated;
@@ -39,6 +41,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement(name = "Document")
 public class Document {
 
+	@Schema(description = "https://www.schema.org/ImageObject")
 	public AdaptedImages[] getAdaptedImages() {
 		return adaptedImages;
 	}

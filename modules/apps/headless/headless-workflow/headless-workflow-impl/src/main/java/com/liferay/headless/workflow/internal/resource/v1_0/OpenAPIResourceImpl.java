@@ -16,6 +16,9 @@ package com.liferay.headless.workflow.internal.resource.v1_0;
 
 import com.liferay.portal.vulcan.resource.OpenAPIResource;
 
+import io.swagger.v3.oas.annotations.OpenAPIDefinition;
+import io.swagger.v3.oas.annotations.info.Info;
+
 import java.util.HashSet;
 import java.util.Set;
 
@@ -46,6 +49,9 @@ import org.osgi.service.component.annotations.Reference;
 	service = OpenAPIResourceImpl.class
 )
 @Generated("")
+@OpenAPIDefinition(
+	info = @Info(title = "Headless Workflow", version = "v1.0", description = "")
+)
 @Path("/v1.0")
 public class OpenAPIResourceImpl {
 
@@ -73,6 +79,8 @@ public class OpenAPIResourceImpl {
 			add(WorkflowLogResourceImpl.class);
 
 			add(WorkflowTaskResourceImpl.class);
+
+			add(OpenAPIResourceImpl.class);
 		}
 	};
 

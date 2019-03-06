@@ -24,6 +24,10 @@ import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.util.TransformUtil;
 
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.Parameters;
+import io.swagger.v3.oas.annotations.enums.ParameterIn;
+
 import java.net.URI;
 
 import java.util.Collections;
@@ -51,6 +55,12 @@ public abstract class BaseFormResourceImpl implements FormResource {
 
 	@GET
 	@Override
+	@Parameters(
+		{
+			@Parameter(in = ParameterIn.QUERY, name = "page"),
+			@Parameter(in = ParameterIn.QUERY, name = "pageSize")
+		}
+	)
 	@Path("/content-spaces/{content-space-id}/form")
 	@Produces("application/json")
 	public Page<Form> getContentSpaceFormsPage(

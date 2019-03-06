@@ -23,6 +23,8 @@ import com.liferay.petra.string.StringBundler;
 import graphql.annotations.annotationTypes.GraphQLField;
 import graphql.annotations.annotationTypes.GraphQLName;
 
+import io.swagger.v3.oas.annotations.media.Schema;
+
 import java.util.Date;
 
 import javax.annotation.Generated;
@@ -63,6 +65,7 @@ public class FormStructure {
 		return description;
 	}
 
+	@Schema(description = "https://www.schema.org/FormLayoutPage")
 	public FormPages[] getFormPages() {
 		return formPages;
 	}
@@ -75,6 +78,7 @@ public class FormStructure {
 		return name;
 	}
 
+	@Schema(description = "https://www.schema.org/FormSuccessPageSettings")
 	public SuccessPage getSuccessPage() {
 		return successPage;
 	}

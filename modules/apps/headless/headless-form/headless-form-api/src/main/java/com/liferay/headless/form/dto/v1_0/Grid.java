@@ -23,6 +23,8 @@ import com.liferay.petra.string.StringBundler;
 import graphql.annotations.annotationTypes.GraphQLField;
 import graphql.annotations.annotationTypes.GraphQLName;
 
+import io.swagger.v3.oas.annotations.media.Schema;
+
 import javax.annotation.Generated;
 
 import javax.xml.bind.annotation.XmlRootElement;
@@ -37,6 +39,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement(name = "Grid")
 public class Grid {
 
+	@Schema(description = "https://www.schema.org/FormFieldOptions")
 	public Columns[] getColumns() {
 		return columns;
 	}
@@ -45,6 +48,7 @@ public class Grid {
 		return id;
 	}
 
+	@Schema(description = "https://www.schema.org/FormFieldOptions")
 	public Rows[] getRows() {
 		return rows;
 	}

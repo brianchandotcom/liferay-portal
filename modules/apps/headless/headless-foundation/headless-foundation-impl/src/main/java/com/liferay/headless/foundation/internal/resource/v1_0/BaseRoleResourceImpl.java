@@ -24,6 +24,10 @@ import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.util.TransformUtil;
 
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.Parameters;
+import io.swagger.v3.oas.annotations.enums.ParameterIn;
+
 import java.net.URI;
 
 import java.util.Collections;
@@ -49,6 +53,12 @@ public abstract class BaseRoleResourceImpl implements RoleResource {
 
 	@GET
 	@Override
+	@Parameters(
+		{
+			@Parameter(in = ParameterIn.QUERY, name = "page"),
+			@Parameter(in = ParameterIn.QUERY, name = "pageSize")
+		}
+	)
 	@Path("/my-user-accounts/{my-user-account-id}/roles")
 	@Produces("application/json")
 	public Page<Role> getMyUserAccountRolesPage(
@@ -69,6 +79,12 @@ public abstract class BaseRoleResourceImpl implements RoleResource {
 
 	@GET
 	@Override
+	@Parameters(
+		{
+			@Parameter(in = ParameterIn.QUERY, name = "page"),
+			@Parameter(in = ParameterIn.QUERY, name = "pageSize")
+		}
+	)
 	@Path("/roles")
 	@Produces("application/json")
 	public Page<Role> getRolesPage(@Context Pagination pagination)
@@ -79,6 +95,12 @@ public abstract class BaseRoleResourceImpl implements RoleResource {
 
 	@GET
 	@Override
+	@Parameters(
+		{
+			@Parameter(in = ParameterIn.QUERY, name = "page"),
+			@Parameter(in = ParameterIn.QUERY, name = "pageSize")
+		}
+	)
 	@Path("/user-accounts/{user-account-id}/roles")
 	@Produces("application/json")
 	public Page<Role> getUserAccountRolesPage(

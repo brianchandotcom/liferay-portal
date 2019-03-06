@@ -23,6 +23,8 @@ import com.liferay.petra.string.StringBundler;
 import graphql.annotations.annotationTypes.GraphQLField;
 import graphql.annotations.annotationTypes.GraphQLName;
 
+import io.swagger.v3.oas.annotations.media.Schema;
+
 import javax.annotation.Generated;
 
 import javax.xml.bind.annotation.XmlRootElement;
@@ -37,6 +39,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement(name = "FormPages")
 public class FormPages {
 
+	@Schema(description = "https://www.schema.org/FormField")
 	public Fields[] getFields() {
 		return fields;
 	}

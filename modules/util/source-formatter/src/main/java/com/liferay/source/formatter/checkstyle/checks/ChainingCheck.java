@@ -26,6 +26,7 @@ import com.liferay.source.formatter.checkstyle.util.DetailASTUtil;
 import com.puppycrawl.tools.checkstyle.api.DetailAST;
 import com.puppycrawl.tools.checkstyle.api.FileContents;
 import com.puppycrawl.tools.checkstyle.api.FileText;
+import com.puppycrawl.tools.checkstyle.api.FullIdent;
 import com.puppycrawl.tools.checkstyle.api.TokenTypes;
 
 import java.util.ArrayList;
@@ -292,23 +293,27 @@ public class ChainingCheck extends BaseCheck {
 			return null;
 		}
 
-		DetailAST nameDetailAST = null;
-
 		DetailAST firstChildDetailAST = dotDetailAST.getFirstChild();
 
+		FullIdent fullIdent = null;
+
 		if (firstChildDetailAST.getType() == TokenTypes.LITERAL_NEW) {
-			nameDetailAST = firstChildDetailAST.findFirstToken(
-				TokenTypes.IDENT);
+			fullIdent = FullIdent.createFullIdent(
+				firstChildDetailAST.getFirstChild());
 		}
 		else {
-			nameDetailAST = dotDetailAST.findFirstToken(TokenTypes.IDENT);
+			fullIdent = FullIdent.createFullIdent(dotDetailAST);
 		}
 
-		if (nameDetailAST != null) {
-			return nameDetailAST.getText();
+		String s = fullIdent.getText();
+
+		int x = s.lastIndexOf(CharPool.PERIOD);
+
+		if (x == -1) {
+			return s;
 		}
 
-		return null;
+		return s.substring(0, x);
 	}
 
 	private List<DetailAST> _getIdentDetailASTList(
@@ -436,9 +441,13 @@ public class ChainingCheck extends BaseCheck {
 				return true;
 			}
 
-			for (String allowedClassName : _allowedClassNames) {
-				if (classOrVariableName.matches("(?i)" + allowedClassName)) {
-					return true;
+			for (String s :
+					StringUtil.split(classOrVariableName, CharPool.PERIOD)) {
+
+				for (String allowedClassName : _allowedClassNames) {
+					if (s.matches("(?i)" + allowedClassName)) {
+						return true;
+					}
 				}
 			}
 

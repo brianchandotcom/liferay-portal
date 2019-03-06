@@ -113,6 +113,19 @@ class FloatingToolbarMappingPanel extends Component {
 	 */
 	_handleFieldOptionChange(event) {
 		this._mappingField = event.delegateTarget.value;
+
+		if (this._selectedSourceId === MAPPING_SOURCE_SPECIFIC_CONTENT_KEY) {
+			this._updateEditableValues(
+				'assetEntryFieldId',
+				this._mappingField
+			);
+	}
+		else if (this._selectedSourceId === MAPPING_SOURCE_SUBTYPE_KEY) {
+			this._updateEditableValues(
+				'mappedField',
+				this._mappingField
+			);
+		}
 	}
 
 	/**

@@ -76,17 +76,9 @@ public class AssetBrowserDisplayContext {
 		assetBrowserSearch.setOrderByCol(_getOrderByCol());
 		assetBrowserSearch.setOrderByType(getOrderByType());
 
-		AssetRendererFactory assetRendererFactory = getAssetRendererFactory();
-
 		if (AssetBrowserWebConfigurationValues.SEARCH_WITH_DATABASE) {
-			long classNameId = 0;
-
-			if (assetRendererFactory != null) {
-				classNameId = assetRendererFactory.getClassNameId();
-			}
-
 			int total = AssetEntryLocalServiceUtil.getEntriesCount(
-				_getFilterGroupIds(), new long[] {classNameId}, _getKeywords(),
+				_getFilterGroupIds(), _getClassNameIds(), _getKeywords(),
 				_getKeywords(), _getKeywords(), _getKeywords(), _getListable(),
 				false, false);
 
@@ -94,7 +86,7 @@ public class AssetBrowserDisplayContext {
 
 			List<AssetEntry> assetEntries =
 				AssetEntryLocalServiceUtil.getEntries(
-					_getFilterGroupIds(), new long[] {classNameId},
+					_getFilterGroupIds(), _getClassNameIds(),
 					new long[] {getSubtypeSelectionId()}, _getKeywords(),
 					_getKeywords(), _getKeywords(), _getKeywords(),
 					_getListable(), false, false, assetBrowserSearch.getStart(),
@@ -127,15 +119,9 @@ public class AssetBrowserDisplayContext {
 			sort = new Sort(sortFieldName, Sort.STRING_TYPE, orderByAsc);
 		}
 
-		long classNameId = 0;
-
-		if (assetRendererFactory != null) {
-			classNameId = assetRendererFactory.getClassNameId();
-		}
-
 		int total = (int)AssetEntryLocalServiceUtil.searchCount(
 			themeDisplay.getCompanyId(), _getFilterGroupIds(),
-			themeDisplay.getUserId(), new long[] {classNameId},
+			themeDisplay.getUserId(), _getClassNameIds(),
 			getSubtypeSelectionId(), _getKeywords(), _isShowNonindexable(),
 			_getStatuses());
 
@@ -143,7 +129,7 @@ public class AssetBrowserDisplayContext {
 
 		Hits hits = AssetEntryLocalServiceUtil.search(
 			themeDisplay.getCompanyId(), _getFilterGroupIds(),
-			themeDisplay.getUserId(), new long[] {classNameId},
+			themeDisplay.getUserId(), _getClassNameIds(),
 			getSubtypeSelectionId(), _getKeywords(), _isShowNonindexable(),
 			_getStatuses(), assetBrowserSearch.getStart(),
 			assetBrowserSearch.getEnd(), sort);
@@ -321,6 +307,20 @@ public class AssetBrowserDisplayContext {
 		return _multipleSelection;
 	}
 
+	private long[] _getClassNameIds() {
+		if (_classNameIds != null) {
+			return _classNameIds;
+		}
+
+		AssetRendererFactory assetRendererFactory = getAssetRendererFactory();
+
+		if (assetRendererFactory != null) {
+			_classNameIds = new long[] {assetRendererFactory.getClassNameId()};
+		}
+
+		return _classNameIds;
+	}
+
 	private long[] _getFilterGroupIds() {
 		long[] filterGroupIds = getSelectedGroupIds();
 
@@ -402,6 +402,7 @@ public class AssetBrowserDisplayContext {
 
 	private final AssetHelper _assetHelper;
 	private AssetRendererFactory _assetRendererFactory;
+	private long[] _classNameIds;
 	private String _displayStyle;
 	private String _eventName;
 	private Long _groupId;

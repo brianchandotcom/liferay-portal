@@ -51,7 +51,7 @@ public abstract class BaseFormResourceImpl implements FormResource {
 
 	@GET
 	@Override
-	@Path("/content-spaces/{content-space-id}/form")
+	@Path("/content-spaces/{content-space-id}/forms")
 	@Produces("application/json")
 	public Page<Form> getContentSpaceFormsPage(
 			@PathParam("content-space-id") Long contentSpaceId,

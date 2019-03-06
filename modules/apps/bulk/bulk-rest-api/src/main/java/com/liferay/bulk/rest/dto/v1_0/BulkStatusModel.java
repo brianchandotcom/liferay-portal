@@ -36,20 +36,18 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement(name = "BulkStatusModel")
 public class BulkStatusModel {
 
-	public Boolean getStatus() {
-		return status;
+	public Boolean getBusy() {
+		return busy;
 	}
 
-	public void setStatus(Boolean status) {
-		this.status = status;
+	public void setBusy(Boolean busy) {
+		this.busy = busy;
 	}
 
 	@JsonIgnore
-	public void setStatus(
-		UnsafeSupplier<Boolean, Exception> statusUnsafeSupplier) {
-
+	public void setBusy(UnsafeSupplier<Boolean, Exception> busyUnsafeSupplier) {
 		try {
-			status = statusUnsafeSupplier.get();
+			busy = busyUnsafeSupplier.get();
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
@@ -61,9 +59,9 @@ public class BulkStatusModel {
 
 		sb.append("{");
 
-		sb.append("\"status\": ");
+		sb.append("\"busy\": ");
 
-		sb.append(status);
+		sb.append(busy);
 
 		sb.append("}");
 
@@ -72,6 +70,6 @@ public class BulkStatusModel {
 
 	@GraphQLField
 	@JsonProperty
-	protected Boolean status;
+	protected Boolean busy;
 
 }

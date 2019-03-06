@@ -713,6 +713,8 @@ public class StructuredContentResourceImpl
 
 		DDMStructure ddmStructure = journalArticle.getDDMStructure();
 
+		_ddmFieldsCounter = new DDMFieldsCounter();
+
 		return new StructuredContent() {
 			{
 				availableLanguages = LocaleUtil.toW3cLanguageIds(
@@ -934,7 +936,7 @@ public class StructuredContentResourceImpl
 	@Reference
 	private DDM _ddm;
 
-	private final DDMFieldsCounter _ddmFieldsCounter = new DDMFieldsCounter();
+	private DDMFieldsCounter _ddmFieldsCounter = new DDMFieldsCounter();
 
 	@Reference
 	private DDMFormValuesSerializerTracker _ddmFormValuesSerializerTracker;

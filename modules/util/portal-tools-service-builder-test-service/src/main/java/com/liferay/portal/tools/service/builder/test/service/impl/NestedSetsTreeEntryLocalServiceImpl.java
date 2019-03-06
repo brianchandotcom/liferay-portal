@@ -14,6 +14,7 @@
 
 package com.liferay.portal.tools.service.builder.test.service.impl;
 
+import com.liferay.portal.tools.service.builder.test.model.NestedSetsTreeEntry;
 import com.liferay.portal.tools.service.builder.test.service.base.NestedSetsTreeEntryLocalServiceBaseImpl;
 
 /**
@@ -32,9 +33,19 @@ import com.liferay.portal.tools.service.builder.test.service.base.NestedSetsTree
 public class NestedSetsTreeEntryLocalServiceImpl
 	extends NestedSetsTreeEntryLocalServiceBaseImpl {
 
-	/*
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never reference this class directly. Use <code>com.liferay.portal.tools.service.builder.test.service.NestedSetsTreeEntryLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.portal.tools.service.builder.test.service.NestedSetsTreeEntryLocalServiceUtil</code>.
-	 */
+	@Override
+	public NestedSetsTreeEntry addNestedSetsTreeEntry(long groupId) {
+		long nestedSetsTreeEntryId = counterLocalService.increment();
+
+		NestedSetsTreeEntry nestedSetsTreeEntry = createNestedSetsTreeEntry(
+			nestedSetsTreeEntryId);
+
+		nestedSetsTreeEntry.setGroupId(groupId);
+		nestedSetsTreeEntry.setParentNestedSetsTreeEntryId(0);
+
+		addNestedSetsTreeEntry(nestedSetsTreeEntry);
+
+		return nestedSetsTreeEntry;
+	}
+
 }

@@ -67,7 +67,7 @@ if ((assetEntry.isVisible() && !assetPublisherDisplayContext.isEnablePermissions
 	PortalUtil.addPortletBreadcrumbEntry(request, assetRenderer.getTitle(locale), currentURL);
 %>
 
-	<liferay-util:include page="/display/full_content.jsp" servletContext="<%= application %>" />
+	<liferay-util:include page="/view_asset_entry_full_content.jsp" servletContext="<%= application %>" />
 
 <%
 	String summary = StringUtil.shorten(assetRenderer.getSummary(liferayPortletRequest, liferayPortletResponse), assetPublisherDisplayContext.getAbstractLength());

@@ -272,9 +272,8 @@ public abstract class BaseRoleResourceTestCase {
 
 		int size = roles.size();
 
-		if ((page.getItemsPerPage() > 0) && (page.getLastPageNumber() > 0) &&
-			(page.getPageNumber() > 0) && (page.getTotalCount() > 0) &&
-			(size > 0)) {
+		if ((page.getPageSize() > 0) && (page.getLastPage() > 0) &&
+			(page.getPage() > 0) && (page.getTotalCount() > 0) && (size > 0)) {
 
 			valid = true;
 		}
@@ -408,9 +407,9 @@ public abstract class BaseRoleResourceTestCase {
 					myUserAccountId);
 
 		location = HttpUtil.addParameter(
-			location, "page", pagination.getPageNumber());
+			location, "page", pagination.getPage());
 		location = HttpUtil.addParameter(
-			location, "pageSize", pagination.getItemsPerPage());
+			location, "pageSize", pagination.getPageSize());
 
 		options.setLocation(location);
 
@@ -433,9 +432,9 @@ public abstract class BaseRoleResourceTestCase {
 					myUserAccountId);
 
 		location = HttpUtil.addParameter(
-			location, "page", pagination.getPageNumber());
+			location, "page", pagination.getPage());
 		location = HttpUtil.addParameter(
-			location, "pageSize", pagination.getItemsPerPage());
+			location, "pageSize", pagination.getPageSize());
 
 		options.setLocation(location);
 
@@ -477,9 +476,9 @@ public abstract class BaseRoleResourceTestCase {
 		String location = _resourceURL + _toPath("/roles", pagination);
 
 		location = HttpUtil.addParameter(
-			location, "page", pagination.getPageNumber());
+			location, "page", pagination.getPage());
 		location = HttpUtil.addParameter(
-			location, "pageSize", pagination.getItemsPerPage());
+			location, "pageSize", pagination.getPageSize());
 
 		options.setLocation(location);
 
@@ -497,9 +496,9 @@ public abstract class BaseRoleResourceTestCase {
 		String location = _resourceURL + _toPath("/roles", pagination);
 
 		location = HttpUtil.addParameter(
-			location, "page", pagination.getPageNumber());
+			location, "page", pagination.getPage());
 		location = HttpUtil.addParameter(
-			location, "pageSize", pagination.getItemsPerPage());
+			location, "pageSize", pagination.getPageSize());
 
 		options.setLocation(location);
 
@@ -520,9 +519,9 @@ public abstract class BaseRoleResourceTestCase {
 					"/user-accounts/{user-account-id}/roles", userAccountId);
 
 		location = HttpUtil.addParameter(
-			location, "page", pagination.getPageNumber());
+			location, "page", pagination.getPage());
 		location = HttpUtil.addParameter(
-			location, "pageSize", pagination.getItemsPerPage());
+			location, "pageSize", pagination.getPageSize());
 
 		options.setLocation(location);
 
@@ -544,9 +543,9 @@ public abstract class BaseRoleResourceTestCase {
 					"/user-accounts/{user-account-id}/roles", userAccountId);
 
 		location = HttpUtil.addParameter(
-			location, "page", pagination.getPageNumber());
+			location, "page", pagination.getPage());
 		location = HttpUtil.addParameter(
-			location, "pageSize", pagination.getItemsPerPage());
+			location, "pageSize", pagination.getPageSize());
 
 		options.setLocation(location);
 
@@ -611,16 +610,16 @@ public abstract class BaseRoleResourceTestCase {
 			return new ArrayList<>(items);
 		}
 
-		public long getItemsPerPage() {
-			return itemsPerPage;
+		public long getLastPage() {
+			return lastPage;
 		}
 
-		public long getLastPageNumber() {
-			return lastPageNumber;
+		public long getPage() {
+			return page;
 		}
 
-		public long getPageNumber() {
-			return pageNumber;
+		public long getPageSize() {
+			return pageSize;
 		}
 
 		public long getTotalCount() {
@@ -630,14 +629,14 @@ public abstract class BaseRoleResourceTestCase {
 		@JsonProperty
 		protected Collection<T> items;
 
-		@JsonProperty("pageSize")
-		protected long itemsPerPage;
+		@JsonProperty
+		protected long lastPage;
 
 		@JsonProperty
-		protected long lastPageNumber;
+		protected long page;
 
-		@JsonProperty("page")
-		protected long pageNumber;
+		@JsonProperty
+		protected long pageSize;
 
 		@JsonProperty
 		protected long totalCount;

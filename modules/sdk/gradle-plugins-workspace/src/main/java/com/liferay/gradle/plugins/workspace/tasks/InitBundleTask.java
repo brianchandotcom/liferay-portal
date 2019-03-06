@@ -127,8 +127,10 @@ public class InitBundleTask extends JavaExec {
 
 		FileCollection providedModules = getProvidedModules();
 
-		args.add("--provided-modules");
-		args.add(providedModules.getAsPath());
+		if (!providedModules.isEmpty()) {
+			args.add("--provided-modules");
+			args.add(providedModules.getAsPath());
+		}
 
 		args.add("--strip-components");
 		args.add(String.valueOf(getStripComponents()));

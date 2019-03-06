@@ -2787,19 +2787,20 @@ public class PortletDataContextImpl implements PortletDataContext {
 	}
 
 	protected void initXStream() {
-		Set<XStreamConfigurator> xStreamConfigurators =
-			XStreamConfiguratorRegistryUtil.getXStreamConfigurators();
-
 		ClassLoader classLoader =
 			XStreamConfiguratorRegistryUtil.getConfiguratorsClassLoader(
 				XStream.class.getClassLoader());
 
-		if ((_xStream != null) &&
-			xStreamConfigurators.equals(_xStreamConfigurators) &&
+		long modifiedCount =
+			XStreamConfiguratorRegistryUtil.getLastModifiedCount();
+
+		if ((_xStream != null) && (_modifiedCount == modifiedCount) &&
 			classLoader.equals(_classLoader)) {
 
 			return;
 		}
+
+		_modifiedCount = modifiedCount;
 
 		_classLoader = classLoader;
 
@@ -2808,7 +2809,8 @@ public class PortletDataContextImpl implements PortletDataContext {
 
 		_xStream.omitField(HashMap.class, "cache_bitmask");
 
-		_xStreamConfigurators = xStreamConfigurators;
+		_xStreamConfigurators =
+			XStreamConfiguratorRegistryUtil.getXStreamConfigurators();
 
 		try {
 			Class<?> timestampClass = classLoader.loadClass(
@@ -2828,13 +2830,13 @@ public class PortletDataContextImpl implements PortletDataContext {
 			new ConverterAdapter(new TimestampConverter()),
 			XStream.PRIORITY_VERY_HIGH);
 
-		if (xStreamConfigurators.isEmpty()) {
+		if (_xStreamConfigurators.isEmpty()) {
 			return;
 		}
 
 		List<String> allowedTypeNames = new ArrayList<>();
 
-		for (XStreamConfigurator xStreamConfigurator : xStreamConfigurators) {
+		for (XStreamConfigurator xStreamConfigurator : _xStreamConfigurators) {
 			List<XStreamAlias> xStreamAliases =
 				xStreamConfigurator.getXStreamAliases();
 
@@ -3127,6 +3129,7 @@ public class PortletDataContextImpl implements PortletDataContext {
 		PortletDataContextImpl.class);
 
 	private static ClassLoader _classLoader;
+	private static long _modifiedCount;
 	private static transient XStream _xStream;
 	private static Set<XStreamConfigurator> _xStreamConfigurators;
 

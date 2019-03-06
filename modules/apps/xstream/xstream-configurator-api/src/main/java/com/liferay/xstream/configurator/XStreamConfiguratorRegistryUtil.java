@@ -24,6 +24,7 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.atomic.AtomicLong;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceReference;
@@ -68,8 +69,12 @@ public class XStreamConfiguratorRegistryUtil {
 			classLoaders.toArray(new ClassLoader[classLoaders.size()]));
 	}
 
+	public static long getLastModifiedCount() {
+		return _modifiedCount.get();
+	}
+
 	public static Set<XStreamConfigurator> getXStreamConfigurators() {
-		return new HashSet<>(_xStreamConfigurators);
+		return _xStreamConfigurators;
 	}
 
 	@Activate
@@ -88,6 +93,7 @@ public class XStreamConfiguratorRegistryUtil {
 		_serviceTracker.close();
 	}
 
+	private static final AtomicLong _modifiedCount = new AtomicLong(0);
 	private static final Set<XStreamConfigurator> _xStreamConfigurators =
 		Collections.newSetFromMap(new ConcurrentHashMap<>());
 
@@ -107,6 +113,8 @@ public class XStreamConfiguratorRegistryUtil {
 				serviceReference);
 
 			_xStreamConfigurators.add(xStreamConfigurator);
+
+			_modifiedCount.getAndIncrement();
 
 			return xStreamConfigurator;
 		}
@@ -129,6 +137,8 @@ public class XStreamConfiguratorRegistryUtil {
 			_bundleContext.ungetService(serviceReference);
 
 			_xStreamConfigurators.remove(xStreamConfigurator);
+
+			_modifiedCount.getAndIncrement();
 		}
 
 	}

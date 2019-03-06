@@ -108,13 +108,15 @@ AUI.add(
 								cols.forEach(
 									function(col, indexCol) {
 										var colId = col.get('node').attr('id');
-										var fieldColumnEndId = fieldColumnEnd.attr('id');
+
 										var fieldColumnStartId = fieldColumnStart.attr('id');
 
 										if (fieldColumnStartId === colId) {
 											positions.positionRowStart = indexRow;
 											positions.positionColumnStart = indexCol;
 										}
+
+										var fieldColumnEndId = fieldColumnEnd.attr('id');
 
 										if (fieldColumnEndId === colId) {
 											positions.positionRowEnd = indexRow;

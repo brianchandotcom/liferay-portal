@@ -14,26 +14,22 @@
 
 package com.liferay.portal.search.script;
 
-import aQute.bnd.annotation.ProviderType;
-
-import java.util.Map;
-
 /**
- * @author Michael C. Han
  * @author Wade Cao
  * @author André de Oliveira
  */
-@ProviderType
-public interface Script {
+public interface Scripts {
 
-	public String getIdOrCode();
+	public ScriptBuilder builder();
 
-	public String getLanguage();
+	public ScriptFieldBuilder fieldBuilder();
 
-	public Map<String, String> getOptions();
+	public Script inline(String language, String code);
 
-	public Map<String, Object> getParameters();
+	public Script script(String idOrCode);
 
-	public ScriptType getScriptType();
+	public ScriptField scriptField(String field, Script script);
+
+	public Script stored(String scriptId);
 
 }

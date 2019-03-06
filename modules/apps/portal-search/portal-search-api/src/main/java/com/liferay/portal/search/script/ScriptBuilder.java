@@ -19,21 +19,27 @@ import aQute.bnd.annotation.ProviderType;
 import java.util.Map;
 
 /**
- * @author Michael C. Han
  * @author Wade Cao
  * @author André de Oliveira
  */
 @ProviderType
-public interface Script {
+public interface ScriptBuilder {
 
-	public String getIdOrCode();
+	public Script build();
 
-	public String getLanguage();
+	public ScriptBuilder idOrCode(String idOrCode);
 
-	public Map<String, String> getOptions();
+	public ScriptBuilder language(String language);
 
-	public Map<String, Object> getParameters();
+	public ScriptBuilder options(Map<String, String> optionsMap);
 
-	public ScriptType getScriptType();
+	public ScriptBuilder parameters(Map<String, Object> parametersMap);
+
+	public ScriptBuilder putOption(String optionName, String optionValue);
+
+	public ScriptBuilder putParameter(
+		String parameterName, Object parameterValue);
+
+	public ScriptBuilder scriptType(ScriptType scriptType);
 
 }

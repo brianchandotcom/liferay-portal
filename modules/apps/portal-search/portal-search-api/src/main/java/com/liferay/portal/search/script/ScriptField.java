@@ -18,33 +18,16 @@ import aQute.bnd.annotation.ProviderType;
 
 /**
  * @author Michael C. Han
+ * @author Wade Cao
+ * @author André de Oliveira
  */
 @ProviderType
-public class ScriptField {
+public interface ScriptField {
 
-	public ScriptField(String field, Script script) {
-		_field = field;
-		_script = script;
-	}
+	public String getField();
 
-	public String getField() {
-		return _field;
-	}
+	public Script getScript();
 
-	public Script getScript() {
-		return _script;
-	}
-
-	public boolean isIgnoreFailure() {
-		return _ignoreFailure;
-	}
-
-	public void setIgnoreFailure(boolean ignoreFailure) {
-		_ignoreFailure = ignoreFailure;
-	}
-
-	private final String _field;
-	private boolean _ignoreFailure = true;
-	private final Script _script;
+	public boolean isIgnoreFailure();
 
 }

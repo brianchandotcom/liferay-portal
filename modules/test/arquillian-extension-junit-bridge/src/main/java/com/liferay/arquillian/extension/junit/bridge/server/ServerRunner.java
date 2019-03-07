@@ -73,8 +73,20 @@ public class ServerRunner extends Runner {
 					new Failure(description, ave));
 			}
 			catch (MultipleFailureException mfe) {
+				Throwable throwable = null;
+
 				for (Throwable t : mfe.getFailures()) {
-					runNotifier.fireTestFailure(new Failure(description, t));
+					if (throwable == null) {
+						throwable = t;
+					}
+					else {
+						throwable.addSuppressed(t);
+					}
+				}
+
+				if (throwable != null) {
+					runNotifier.fireTestFailure(
+						new Failure(description, throwable));
 				}
 			}
 			catch (Throwable t) {

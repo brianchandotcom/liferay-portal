@@ -58,6 +58,14 @@ public class Schema {
 		return _type;
 	}
 
+	public boolean isReadOnly() {
+		return _readOnly;
+	}
+
+	public boolean isWriteOnly() {
+		return _writeOnly;
+	}
+
 	public void setAllOfSchemas(List<Schema> allOfSchemas) {
 		_allOfSchemas = allOfSchemas;
 	}
@@ -86,12 +94,20 @@ public class Schema {
 		_propertySchemas = propertySchemas;
 	}
 
+	public void setReadOnly(boolean readOnly) {
+		_readOnly = readOnly;
+	}
+
 	public void setReference(String reference) {
 		_reference = reference;
 	}
 
 	public void setType(String type) {
 		_type = type;
+	}
+
+	public void setWriteOnly(boolean writeOnly) {
+		_writeOnly = writeOnly;
 	}
 
 	private List<Schema> _allOfSchemas;
@@ -101,7 +117,9 @@ public class Schema {
 	private Items _items;
 	private List<Schema> _oneOfSchemas;
 	private Map<String, Schema> _propertySchemas;
+	private boolean _readOnly;
 	private String _reference;
 	private String _type;
+	private boolean _writeOnly;
 
 }

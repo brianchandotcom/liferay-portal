@@ -20,15 +20,23 @@ package com.liferay.portal.tools.rest.builder.internal.freemarker.tool.java;
 public class JavaMethodParameter {
 
 	public JavaMethodParameter(String parameterName, String parameterType) {
-		this(parameterName, parameterType, null);
+		this(
+			parameterName, parameterType, null,
+			"JsonProperty.Access.READ_WRITE");
 	}
 
 	public JavaMethodParameter(
-		String parameterName, String parameterType, String description) {
+		String parameterName, String parameterType, String description,
+		String accessType) {
 
 		_parameterName = parameterName;
 		_parameterType = parameterType;
 		_description = description;
+		_accessType = accessType;
+	}
+
+	public String getAccessType() {
+		return _accessType;
 	}
 
 	public String getDescription() {
@@ -43,6 +51,7 @@ public class JavaMethodParameter {
 		return _parameterType;
 	}
 
+	private final String _accessType;
 	private final String _description;
 	private final String _parameterName;
 	private final String _parameterType;

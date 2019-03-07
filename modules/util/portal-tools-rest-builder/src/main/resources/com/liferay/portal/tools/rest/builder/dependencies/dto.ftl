@@ -83,7 +83,7 @@ public class ${schemaName} <#if freeMarkerTool.getDTOParentClassName(openAPIYAML
 		}
 
 		@GraphQLField
-		@JsonProperty
+		@JsonProperty(access = ${javaMethodParameter.accessType})
 		protected ${javaDataType} ${javaMethodParameter.parameterName};
 	</#list>
 

@@ -111,7 +111,6 @@ public class BndBundleUtil {
 
 		Set<String> includeResources = new LinkedHashSet<>();
 
-		includeResources.add("arquillian.remote.marker;literal=''");
 		includeResources.add("test-classes/integration");
 
 		ProtectionDomain protectionDomain =

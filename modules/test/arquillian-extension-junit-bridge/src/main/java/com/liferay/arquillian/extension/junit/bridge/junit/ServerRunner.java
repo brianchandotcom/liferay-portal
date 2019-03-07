@@ -14,14 +14,9 @@
 
 package com.liferay.arquillian.extension.junit.bridge.junit;
 
-import com.liferay.arquillian.extension.junit.bridge.statement.ClientExecutorStatement;
-import com.liferay.arquillian.extension.junit.bridge.statement.DeploymentStatement;
 import com.liferay.arquillian.extension.junit.bridge.statement.ServerExecutorStatement;
 
 import java.lang.annotation.Annotation;
-import java.lang.reflect.Method;
-
-import java.net.URL;
 
 import java.util.Comparator;
 import java.util.List;
@@ -81,62 +76,16 @@ public class ServerRunner extends Runner implements Filterable {
 		Description description = getDescription();
 
 		try {
-			Statement statement = _createClassStatement(runNotifier);
-
-			statement.evaluate();
+			for (FrameworkMethod frameworkMethod : _getChildren()) {
+				_runMethod(frameworkMethod, runNotifier);
+			}
 		}
 		catch (AssumptionViolatedException ave) {
 			runNotifier.fireTestAssumptionFailed(new Failure(description, ave));
 		}
-		catch (MultipleFailureException mfe) {
-			for (Throwable t : mfe.getFailures()) {
-				runNotifier.fireTestFailure(new Failure(description, t));
-			}
-		}
 		catch (Throwable t) {
 			runNotifier.fireTestFailure(new Failure(description, t));
 		}
-	}
-
-	private Statement _createClassStatement(RunNotifier runNotifier) {
-		Statement statement = new Statement() {
-
-			@Override
-			public void evaluate() {
-				for (FrameworkMethod frameworkMethod : _getChildren()) {
-					_runMethod(frameworkMethod, runNotifier);
-				}
-			}
-
-		};
-
-		boolean hasTestMethod = false;
-
-		for (FrameworkMethod frameworkMethod : _getChildren()) {
-			if (!_isIgnored(frameworkMethod)) {
-				hasTestMethod = true;
-
-				break;
-			}
-		}
-
-		if (hasTestMethod && !_REMOTE) {
-			return new DeploymentStatement(statement);
-		}
-
-		return statement;
-	}
-
-	private Statement _createExecutorStatement(
-		FrameworkMethod frameworkMethod, Object target) {
-
-		Method method = frameworkMethod.getMethod();
-
-		if (_REMOTE) {
-			return new ServerExecutorStatement(target, method);
-		}
-
-		return new ClientExecutorStatement(target, method);
 	}
 
 	private Statement _createMethodStatement(FrameworkMethod frameworkMethod) {
@@ -149,9 +98,9 @@ public class ServerRunner extends Runner implements Filterable {
 			return new Fail(roe);
 		}
 
-		Statement statement = _createExecutorStatement(frameworkMethod, target);
-
-		return _withTimeout(frameworkMethod, statement);
+		return _withTimeout(
+			frameworkMethod,
+			new ServerExecutorStatement(target, frameworkMethod.getMethod()));
 	}
 
 	private Description _describeChild(FrameworkMethod frameworkMethod) {
@@ -234,19 +183,6 @@ public class ServerRunner extends Runner implements Filterable {
 		builder.withTimeout(test.timeout(), TimeUnit.MILLISECONDS);
 
 		return builder.build(statement);
-	}
-
-	private static final boolean _REMOTE;
-
-	static {
-		URL url = Arquillian.class.getResource("/arquillian.remote.marker");
-
-		if (url == null) {
-			_REMOTE = false;
-		}
-		else {
-			_REMOTE = true;
-		}
 	}
 
 	private final Class<?> _clazz;

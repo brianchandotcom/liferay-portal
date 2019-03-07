@@ -9,27 +9,33 @@
 	{@param? _handleAssetOptionChange: any}
 	{@param? _handleBrowseAllAssetsButtonClick: any}
 	{@param? _handleFieldOptionChange: any}
-	{@param? _handleSourceOptionChange: any}
+	{@param? _handleSourceTypeChange: any}
 	{@param? _handleUnmapButtonClick: any}
 	{@param? _mappedAssetEntryEncodedId: ?}
 	{@param? _mappedFieldId: ?}
-	{@param? _mappingSources: ?}
-	{@param? _selectedSourceId: string}
-	{@param? _specificContentKey: string}
+	{@param? _selectedSourceTypeId: string}
+	{@param? _sourceTypeIds: [
+		content: string,
+		structure: string
+	]}
+	{@param? _sourceTypes: list<[
+		id: string,
+		label: string
+	]>}
 	{@param? mappingFieldsURL: string}
 
 	<div class="floating-toolbar-mapping-panel">
 		{if $mappingFieldsURL}
 			<div class="form-group">
-				{call .sourceSelect}
-					{param handleSourceOptionChange: $_handleSourceOptionChange /}
-					{param mappingSources: $_mappingSources /}
-					{param selectedSourceId: $_selectedSourceId /}
+				{call .sourceTypeSelect}
+					{param handleSourceOptionChange: $_handleSourceTypeChange /}
+					{param sourceTypes: $_sourceTypes /}
+					{param selectedSourceTypeId: $_selectedSourceTypeId /}
 				{/call}
 			</div>
 		{/if}
 
-		{if not $mappingFieldsURL or $_selectedSourceId == $_specificContentKey}
+		{if not $mappingFieldsURL or $_selectedSourceTypeId == $_sourceTypeIds.content}
 			<div class="form-group floating-toolbar-mapping-panel__asset-select">
 				{call .assetSelect}
 					{param handleAssetOptionChange: $_handleAssetOptionChange /}
@@ -153,26 +159,26 @@
 /**
  * Source select
  */
-{template .sourceSelect}
+{template .sourceTypeSelect}
 	{@param? handleSourceOptionChange: any}
-	{@param? mappingSources: ?}
-	{@param? selectedSourceId: string}
+	{@param? sourceTypes: ?}
+	{@param? selectedSourceTypeId: string}
 
-	<label for="floatingToolbarMappingPanelSourceSelect">
+	<label for="floatingToolbarMappingPanelSourceTypeSelect">
 		{msg desc=""}source{/msg}
 	</label>
 
 	<select
 		class="form-control form-control-sm"
 		data-onchange="{$handleSourceOptionChange}"
-		id="floatingToolbarMappingPanelSourceSelect"
+		id="floatingToolbarMappingPanelSourceTypeSelect"
 	>
-		{foreach $source in $mappingSources}
+		{foreach $sourceType in $sourceTypes}
 			{call .selectOption}
-				{param optionId: $source.id /}
-				{param optionLabel: $source.label /}
-				{param key: $source.id /}
-				{param selectedId: $selectedSourceId /}
+				{param optionId: $sourceType.id /}
+				{param optionLabel: $sourceType.label /}
+				{param key: $sourceType.id /}
+				{param selectedId: $selectedSourceTypeId /}
 			{/call}
 		{/foreach}
 	</select>

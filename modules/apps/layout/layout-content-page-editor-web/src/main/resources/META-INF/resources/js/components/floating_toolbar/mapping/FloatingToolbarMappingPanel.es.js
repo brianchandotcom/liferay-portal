@@ -9,9 +9,10 @@ import {setIn} from '../../../utils/FragmentsEditorUpdateUtils.es';
 import templates from './FloatingToolbarMappingPanel.soy';
 import {UPDATE_EDITABLE_VALUE} from '../../../actions/actions.es';
 
-const MAPPING_SOURCE_SPECIFIC_CONTENT_KEY = 'specific_content';
-
-const MAPPING_SOURCE_SUBTYPE_KEY = 'subtype';
+const SOURCE_TYPE_IDS = {
+	content: 'specific_content',
+	structure: 'structure'
+};
 
 /**
  * FloatingToolbarMappingPanel
@@ -19,23 +20,23 @@ const MAPPING_SOURCE_SUBTYPE_KEY = 'subtype';
 class FloatingToolbarMappingPanel extends PortletBase {
 
 	/**
-	 * Get mapping sources
 	 * @param {!string} subtypeLabel
+	 * @return {{id: string, label: string}[]} Source types
 	 * @private
 	 * @static
 	 * @review
 	 */
-	static _getMappingSources(subtypeLabel) {
+	static _getSourceTypes(subtypeLabel) {
 		return [
 			{
-				id: MAPPING_SOURCE_SUBTYPE_KEY,
+				id: SOURCE_TYPE_IDS.structure,
 				label: Liferay.Util.sub(
 					Liferay.Language.get('x-default'),
 					subtypeLabel
 				)
 			},
 			{
-				id: MAPPING_SOURCE_SPECIFIC_CONTENT_KEY,
+				id: SOURCE_TYPE_IDS.content,
 				label: Liferay.Language.get('specific-content')
 			}
 		];
@@ -60,15 +61,15 @@ class FloatingToolbarMappingPanel extends PortletBase {
 
 		nextState = setIn(
 			nextState,
-			['_specificContentKey'],
-			MAPPING_SOURCE_SPECIFIC_CONTENT_KEY
+			['_sourceTypeIds'],
+			SOURCE_TYPE_IDS
 		);
 
-		if (this.selectedMappingTypes.subtype) {
+		if (this.mappingFieldsURL) {
 			nextState = setIn(
 				nextState,
-				['_mappingSources'],
-				FloatingToolbarMappingPanel._getMappingSources(
+				['_sourceTypes'],
+				FloatingToolbarMappingPanel._getSourceTypes(
 					this.selectedMappingTypes.subtype.label
 				)
 			);
@@ -124,13 +125,13 @@ class FloatingToolbarMappingPanel extends PortletBase {
 	_handleFieldOptionChange(event) {
 		this._mappingField = event.delegateTarget.value;
 
-		if (this._selectedSourceId === MAPPING_SOURCE_SPECIFIC_CONTENT_KEY) {
+		if (this._selectedSourceTypeId === SOURCE_TYPE_IDS.content) {
 			this._updateEditableValues(
 				'assetEntryFieldId',
 				this._mappingField
 			);
-	}
-		else if (this._selectedSourceId === MAPPING_SOURCE_SUBTYPE_KEY) {
+		}
+		else if (this._selectedSourceTypeId === SOURCE_TYPE_IDS.structure) {
 			this._updateEditableValues(
 				'mappedField',
 				this._mappingField
@@ -144,8 +145,8 @@ class FloatingToolbarMappingPanel extends PortletBase {
 	 * @private
 	 * @review
 	 */
-	_handleSourceOptionChange(event) {
-		this._selectedSourceId = event.delegateTarget.value;
+	_handleSourceTypeChange(event) {
+		this._selectedSourceTypeId = event.delegateTarget.value;
 
 		this._loadFields();
 	}
@@ -168,7 +169,7 @@ class FloatingToolbarMappingPanel extends PortletBase {
 
 		let promise;
 
-		if (this._selectedSourceId === MAPPING_SOURCE_SUBTYPE_KEY) {
+		if (this._selectedSourceTypeId === SOURCE_TYPE_IDS.structure) {
 			promise = this.fetch(
 				this.mappingFieldsURL,
 				{
@@ -178,7 +179,7 @@ class FloatingToolbarMappingPanel extends PortletBase {
 			);
 		}
 		else if (
-			this._selectedSourceId === MAPPING_SOURCE_SPECIFIC_CONTENT_KEY &&
+			this._selectedSourceTypeId === SOURCE_TYPE_IDS.content &&
 			this._mappedAssetEntryEncodedId
 		) {
 			const asset = decodeId(this._mappedAssetEntryEncodedId);
@@ -285,6 +286,7 @@ FloatingToolbarMappingPanel.STATE = {
 	_mappedAssetEntries: Config
 		.array()
 		.internal()
+		.value([]),
 
 	/**
 	 * @default undefined
@@ -301,9 +303,9 @@ FloatingToolbarMappingPanel.STATE = {
 	 * @review
 	 * @type {!string}
 	 */
-	_selectedSourceId: Config
-		.oneOf([MAPPING_SOURCE_SPECIFIC_CONTENT_KEY, MAPPING_SOURCE_SUBTYPE_KEY])
-		.value(MAPPING_SOURCE_SUBTYPE_KEY)
+	_selectedSourceTypeId: Config
+		.oneOf(Object.values(SOURCE_TYPE_IDS))
+		.value(SOURCE_TYPE_IDS.structure)
 };
 
 const ConnectedFloatingToolbarMappingPanel = getConnectedComponent(

@@ -48,14 +48,12 @@ public class Arquillian extends Runner implements Filterable {
 	public Arquillian(Class<?> clazz) {
 		_clazz = clazz;
 
-		_testClass = new FilteredSortedTestClass(_clazz);
+		_testClass = new FilteredSortedTestClass(_clazz, null);
 	}
 
 	@Override
 	public void filter(Filter filter) throws NoTestsRemainException {
-		_filter = filter;
-
-		_testClass = new FilteredSortedTestClass(_clazz);
+		_testClass = new FilteredSortedTestClass(_clazz, filter);
 
 		List<FrameworkMethod> frameworkMethods = _testClass.getAnnotatedMethods(
 			Test.class);
@@ -167,7 +165,6 @@ public class Arquillian extends Runner implements Filterable {
 	}
 
 	private final Class<?> _clazz;
-	private Filter _filter;
 	private final Map<FrameworkMethod, Description> _methodDescriptions =
 		new ConcurrentHashMap<>();
 	private TestClass _testClass;
@@ -183,22 +180,23 @@ public class Arquillian extends Runner implements Filterable {
 
 			super.scanAnnotatedMembers(frameworkMethodsMap, frameworkFieldsMap);
 
-			List<FrameworkMethod> frameworkMethods = frameworkMethodsMap.get(
-				Test.class);
+			_testFrameworkMethods = frameworkMethodsMap.get(Test.class);
 
-			if (_filter != null) {
-				frameworkMethods.removeIf(
-					frameworkMethod -> !_filter.shouldRun(
-						_describeChild(frameworkMethod)));
-			}
-
-			frameworkMethods.sort(
+			_testFrameworkMethods.sort(
 				Comparator.comparing(FrameworkMethod::getName));
 		}
 
-		private FilteredSortedTestClass(Class<?> clazz) {
+		private FilteredSortedTestClass(Class<?> clazz, Filter filter) {
 			super(clazz);
+
+			if (filter != null) {
+				_testFrameworkMethods.removeIf(
+					frameworkMethod -> !filter.shouldRun(
+						_describeChild(frameworkMethod)));
+			}
 		}
+
+		private List<FrameworkMethod> _testFrameworkMethods;
 
 	}
 

@@ -50,9 +50,7 @@ public class ServerRunner extends Runner implements Filterable {
 
 	@Override
 	public void filter(Filter filter) {
-		_filter = filter;
-
-		_testClass = new FilteredSortedTestClass(_clazz);
+		_testClass = new FilteredSortedTestClass(_clazz, filter);
 	}
 
 	@Override
@@ -66,12 +64,11 @@ public class ServerRunner extends Runner implements Filterable {
 		Description description = getDescription();
 
 		try {
-			for (FrameworkMethod frameworkMethod : _getChildren()) {
+			for (FrameworkMethod frameworkMethod :
+					_testClass.getAnnotatedMethods(Test.class)) {
+
 				_runMethod(frameworkMethod, runNotifier);
 			}
-		}
-		catch (AssumptionViolatedException ave) {
-			runNotifier.fireTestAssumptionFailed(new Failure(description, ave));
 		}
 		catch (Throwable t) {
 			runNotifier.fireTestFailure(new Failure(description, t));
@@ -86,20 +83,6 @@ public class ServerRunner extends Runner implements Filterable {
 					_clazz, keyFrameworkMethod.getName(),
 					keyFrameworkMethod.getAnnotations());
 			});
-	}
-
-	private List<FrameworkMethod> _getChildren() {
-		TestClass testClass = _getTestClass();
-
-		return testClass.getAnnotatedMethods(Test.class);
-	}
-
-	private TestClass _getTestClass() {
-		if (_testClass == null) {
-			_testClass = new FilteredSortedTestClass(_clazz);
-		}
-
-		return _testClass;
 	}
 
 	private void _runMethod(
@@ -149,7 +132,6 @@ public class ServerRunner extends Runner implements Filterable {
 	}
 
 	private final Class<?> _clazz;
-	private Filter _filter;
 	private final Map<FrameworkMethod, Description> _methodDescriptions =
 		new ConcurrentHashMap<>();
 	private TestClass _testClass;
@@ -165,22 +147,23 @@ public class ServerRunner extends Runner implements Filterable {
 
 			super.scanAnnotatedMembers(frameworkMethodsMap, frameworkFieldsMap);
 
-			List<FrameworkMethod> frameworkMethods = frameworkMethodsMap.get(
-				Test.class);
+			_testFrameworkMethods = frameworkMethodsMap.get(Test.class);
 
-			if (_filter != null) {
-				frameworkMethods.removeIf(
-					frameworkMethod -> !_filter.shouldRun(
-						_describeChild(frameworkMethod)));
-			}
-
-			frameworkMethods.sort(
+			_testFrameworkMethods.sort(
 				Comparator.comparing(FrameworkMethod::getName));
 		}
 
-		private FilteredSortedTestClass(Class<?> clazz) {
+		private FilteredSortedTestClass(Class<?> clazz, Filter filter) {
 			super(clazz);
+
+			if (filter != null) {
+				_testFrameworkMethods.removeIf(
+					frameworkMethod -> !filter.shouldRun(
+						_describeChild(frameworkMethod)));
+			}
 		}
+
+		private List<FrameworkMethod> _testFrameworkMethods;
 
 	}
 

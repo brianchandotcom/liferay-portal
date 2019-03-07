@@ -2,6 +2,7 @@ import Component from 'metal-component';
 import {Config} from 'metal-state';
 import Soy from 'metal-soy';
 
+import '../floating_toolbar/image_properties/FloatingToolbarImagePropertiesPanel.es';
 import '../floating_toolbar/link/FloatingToolbarLinkPanel.es';
 import '../floating_toolbar/mapping/FloatingToolbarMappingPanel.es';
 import '../floating_toolbar/text_properties/FloatingToolbarTextPropertiesPanel.es';

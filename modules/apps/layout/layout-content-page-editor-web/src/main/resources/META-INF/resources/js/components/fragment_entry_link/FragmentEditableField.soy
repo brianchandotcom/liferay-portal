@@ -75,6 +75,19 @@
 		tabindex="0"
 		type="{$type}"
 	>
-		{$content}
+		{if $type == 'image' and $editableValues.mappedField
+			and $editableValues.config and $editableValues.config.imageLink
+			and $editableValues.config.imageLink != ''}
+			{let $linkAttributes kind="attributes"}
+				href="{$editableValues.config.imageLink}"
+				target="{$editableValues.config.imageTarget}"
+			{/let}
+
+			<a {$linkAttributes}>
+				{$content}
+			</a>
+		{else}
+			{$content}
+		{/if}
 	</lfr-editable>
 {/template}

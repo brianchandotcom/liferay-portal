@@ -126,7 +126,7 @@ public class SelectAssetDisplayPageTag extends IncludeTag {
 			"liferay-asset:select-asset-display-page:showPortletLayouts",
 			String.valueOf(_showPortletLayouts));
 		request.setAttribute(
-			"liferay-asset:select-asset-display-page:showPortletLayouts",
+			"liferay-asset:select-asset-display-page:showViewInContextLink",
 			String.valueOf(_showViewInContextLink));
 	}
 

@@ -452,34 +452,31 @@ public class RoleLocalServiceImpl extends RoleLocalServiceBaseImpl {
 			userGroupGroupRoleLocalService.deleteUserGroupGroupRolesByRoleId(
 				role.getRoleId());
 
-			List<Group> groupList = groupPersistence.findByC_S(
+			List<Group> groups = groupPersistence.findByC_S(
 				role.getCompanyId(), true);
 
-			for (Group group : groupList) {
-				UnicodeProperties groupTypeSettings =
+			for (Group group : groups) {
+				UnicodeProperties typeSettingsProperties =
 					group.getTypeSettingsProperties();
 
-				List<Role> defaultSiteRoles = new ArrayList();
+				List<Long> roleIds = new ArrayList<>();
 
 				long[] defaultSiteRoleIds = StringUtil.split(
-					groupTypeSettings.getProperty("defaultSiteRoleIds"), 0L);
+					typeSettingsProperties.getProperty("defaultSiteRoleIds"),
+					0L);
 
 				for (long defaultSiteRoleId : defaultSiteRoleIds) {
-					Role oldRole = getRole(defaultSiteRoleId);
-
-					if (oldRole.getRoleId() != role.getRoleId()) {
-						defaultSiteRoles.add(oldRole);
+					if (defaultSiteRoleId != role.getRoleId()) {
+						roleIds.add(defaultSiteRoleId);
 					}
 				}
 
-				groupTypeSettings.setProperty(
+				typeSettingsProperties.setProperty(
 					"defaultSiteRoleIds",
-					ListUtil.toString(
-						defaultSiteRoles, Role.ROLE_ID_ACCESSOR,
-						StringPool.COMMA));
+					ListUtil.toString(roleIds, StringPool.BLANK));
 
 				groupLocalService.updateGroup(
-					group.getGroupId(), groupTypeSettings.toString());
+					group.getGroupId(), typeSettingsProperties.toString());
 			}
 		}
 

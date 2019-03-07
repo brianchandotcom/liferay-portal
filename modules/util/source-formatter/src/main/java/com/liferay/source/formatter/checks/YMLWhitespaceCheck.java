@@ -190,8 +190,6 @@ public class YMLWhitespaceCheck extends WhitespaceCheck {
 
 			StringBundler sb = new StringBundler();
 
-			sb.append(lines[0]);
-
 			for (int i = 1; i < lines.length; i++) {
 				sb.append(StringPool.NEW_LINE);
 				sb.append(lines[i].substring(2));
@@ -200,7 +198,8 @@ public class YMLWhitespaceCheck extends WhitespaceCheck {
 			sb.append(StringPool.NEW_LINE);
 
 			content = StringUtil.replaceFirst(
-				content, matcher.group(), sb.toString());
+				content, matcher.group(),
+				lines[0] + _formatMappingEntry(sb.toString()));
 		}
 
 		return content;
@@ -229,6 +228,6 @@ public class YMLWhitespaceCheck extends WhitespaceCheck {
 	}
 
 	private static final Pattern _mappingEntryPattern = Pattern.compile(
-		"^( +)- .+(\n|\\Z)((\\1 +.+)?(\n|\\Z))+", Pattern.MULTILINE);
+		"^( +)- .+(\n|\\Z)((\\1 +.+)(\n|\\Z))+", Pattern.MULTILINE);
 
 }

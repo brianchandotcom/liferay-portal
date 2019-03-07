@@ -15,7 +15,7 @@ function getFloatingToolbarPanels(editableValues) {
 /**
  * @param {string} content editableField's original HTML
  * @param {string} value Translated/segmented value
- * @param {object} editable values of the element
+ * @param {object} editableValues values of the element
  * @return {string} Transformed content
  */
 function render(content, value, editableValues) {
@@ -23,8 +23,8 @@ function render(content, value, editableValues) {
 
 	wrapper.innerHTML = content;
 
-	const link = wrapper.querySelector('a');
 	const config = (editableValues && editableValues.config) || {};
+	const link = wrapper.querySelector('a');
 
 	if (link) {
 		link.innerHTML = value;

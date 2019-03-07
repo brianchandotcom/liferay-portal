@@ -11,6 +11,11 @@ import debounce from 'metal-debounce';
  * FloatingToolbarLinkPanel
  */
 class FloatingToolbarLinkPanel extends Component {
+
+	/**
+	 * @inheritdoc
+	 * @review
+	 */
 	created() {
 		this._handleInputHrefKeyUp = debounce(
 			this._handleInputHrefKeyUp.bind(this),
@@ -18,6 +23,12 @@ class FloatingToolbarLinkPanel extends Component {
 		);
 	}
 
+	/**
+	 * Callback executed on href keyup
+	 * @param {object} event
+	 * @private
+	 * @review
+	 */
 	_handleInputHrefKeyUp(event) {
 		const hrefElement = event.target;
 
@@ -28,6 +39,11 @@ class FloatingToolbarLinkPanel extends Component {
 		this._updateSectionConfig(config);
 	}
 
+	/**
+	 * @param {object} event
+	 * @private
+	 * @review
+	 */
 	_handleSubmit(event) {
 		event.preventDefault();
 

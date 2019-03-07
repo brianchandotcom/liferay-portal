@@ -8,7 +8,7 @@ Import-Package:\
 	!com.sun.jdi.*,\
 	!com.sun.tools.*,\
 	\
-	!javax.validation.*,\
+	!javafx.*,\
 	\
 	!org.checkerframework.checker.nullness.qual.*,\
 	\

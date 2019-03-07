@@ -402,25 +402,6 @@ if (portletTitleBasedNavigation) {
 					</div>
 				</liferay-ddm:template-renderer>
 
-				<aui:script require="metal-dom/src/dom as dom">
-					var toc = document.querySelector('#p_p_id<portlet:namespace /> .toc');
-
-					if (toc) {
-						var index = toc.querySelector('.toc-index');
-
-						if (index) {
-							dom.delegate(
-								toc,
-								'click',
-								'a.toc-trigger',
-								function(event) {
-									dom.toggleClasses(index, 'hide');
-								}
-							);
-						}
-					}
-				</aui:script>
-
 				<%
 				if (!wikiPage.getTitle().equals(wikiGroupServiceConfiguration.frontPageName())) {
 					if (!portletName.equals(WikiPortletKeys.WIKI_DISPLAY)) {

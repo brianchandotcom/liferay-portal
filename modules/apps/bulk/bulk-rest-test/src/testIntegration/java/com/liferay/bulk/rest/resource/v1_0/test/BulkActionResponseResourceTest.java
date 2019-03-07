@@ -12,26 +12,18 @@
  * details.
  */
 
-package com.liferay.bulk.rest.resource.v1_0;
+package com.liferay.bulk.rest.resource.v1_0.test;
 
-import com.liferay.bulk.rest.dto.v1_0.BulkStatusModel;
-import com.liferay.portal.kernel.model.Company;
+import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 
-import javax.annotation.Generated;
+import org.junit.Ignore;
+import org.junit.runner.RunWith;
 
 /**
- * To access this resource, run:
- *
- *     curl -u your@email.com:yourpassword -D - http://localhost:8080/o/bulk/v1.0
- *
  * @author Javier Gamarra
- * @generated
  */
-@Generated("")
-public interface BulkStatusModelResource {
-
-	public BulkStatusModel getStatus(Long param) throws Exception;
-
-	public void setContextCompany(Company contextCompany);
-
+@Ignore
+@RunWith(Arquillian.class)
+public class BulkActionResponseResourceTest
+	extends BaseBulkActionResponseResourceTestCase {
 }

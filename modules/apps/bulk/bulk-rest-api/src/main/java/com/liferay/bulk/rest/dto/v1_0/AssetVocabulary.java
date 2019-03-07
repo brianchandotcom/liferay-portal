@@ -32,11 +32,11 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
-@GraphQLName("AssetVocabularyModel")
-@XmlRootElement(name = "AssetVocabularyModel")
-public class AssetVocabularyModel {
+@GraphQLName("AssetVocabulary")
+@XmlRootElement(name = "AssetVocabulary")
+public class AssetVocabulary {
 
-	public AssetCategoryModel[] getCategories() {
+	public AssetCategory[] getCategories() {
 		return categories;
 	}
 
@@ -52,14 +52,13 @@ public class AssetVocabularyModel {
 		return vocabularyId;
 	}
 
-	public void setCategories(AssetCategoryModel[] categories) {
+	public void setCategories(AssetCategory[] categories) {
 		this.categories = categories;
 	}
 
 	@JsonIgnore
 	public void setCategories(
-		UnsafeSupplier<AssetCategoryModel[], Exception>
-			categoriesUnsafeSupplier) {
+		UnsafeSupplier<AssetCategory[], Exception> categoriesUnsafeSupplier) {
 
 		try {
 			categories = categoriesUnsafeSupplier.get();
@@ -150,7 +149,7 @@ public class AssetVocabularyModel {
 
 	@GraphQLField
 	@JsonProperty
-	protected AssetCategoryModel[] categories;
+	protected AssetCategory[] categories;
 
 	@GraphQLField
 	@JsonProperty

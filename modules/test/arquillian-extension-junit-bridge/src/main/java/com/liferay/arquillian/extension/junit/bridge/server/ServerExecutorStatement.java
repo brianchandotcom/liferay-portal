@@ -46,17 +46,16 @@ import org.junit.runners.model.TestClass;
  */
 public class ServerExecutorStatement extends Statement {
 
-	public ServerExecutorStatement(
-		TestClass testClass, Class<?> clazz, Method method) {
-
+	public ServerExecutorStatement(TestClass testClass, Method method) {
 		_testClass = testClass;
-		_clazz = clazz;
 		_method = method;
 	}
 
 	@Override
 	public void evaluate() throws Throwable {
-		Object target = _clazz.newInstance();
+		Class<?> clazz = _testClass.getJavaClass();
+
+		Object target = clazz.newInstance();
 
 		Statement statement = new InvokeMethod(null, target) {
 
@@ -66,7 +65,7 @@ public class ServerExecutorStatement extends Statement {
 
 				ClassLoader classLoader = currentThread.getContextClassLoader();
 
-				currentThread.setContextClassLoader(_clazz.getClassLoader());
+				currentThread.setContextClassLoader(clazz.getClassLoader());
 
 				try {
 					_method.invoke(target);
@@ -96,7 +95,7 @@ public class ServerExecutorStatement extends Statement {
 		statement = withRules(
 			statement, _testClass, target,
 			Description.createTestDescription(
-				_clazz, _method.getName(), _method.getAnnotations()));
+				clazz, _method.getName(), _method.getAnnotations()));
 
 		List<FrameworkMethod> frameworkMethods = new ArrayList<>(
 			_testClass.getAnnotatedMethods(Test.class));
@@ -131,8 +130,7 @@ public class ServerExecutorStatement extends Statement {
 
 		evaluateWithClassRule(
 			statement, _testClass, target,
-			Description.createSuiteDescription(_clazz), firstMethod,
-			lastMethod);
+			Description.createSuiteDescription(clazz), firstMethod, lastMethod);
 	}
 
 	protected void evaluateWithClassRule(
@@ -276,7 +274,6 @@ public class ServerExecutorStatement extends Statement {
 		}
 	}
 
-	private final Class<?> _clazz;
 	private final Method _method;
 	private final TestClass _testClass;
 

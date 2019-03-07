@@ -18,12 +18,14 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
 
+import java.util.concurrent.TimeUnit;
+
 import org.junit.AssumptionViolatedException;
-import org.junit.runner.JUnitCore;
-import org.junit.runner.Request;
-import org.junit.runner.Runner;
-import org.junit.runner.notification.Failure;
-import org.junit.runner.notification.RunListener;
+import org.junit.Test;
+import org.junit.internal.runners.statements.FailOnTimeout;
+import org.junit.runners.model.FrameworkMethod;
+import org.junit.runners.model.Statement;
+import org.junit.runners.model.TestClass;
 
 /**
  * @author Matthew Tambara
@@ -36,37 +38,46 @@ public class JMXTestRunner implements JMXTestRunnerMBean {
 
 	@Override
 	public byte[] runTestMethod(String className, String methodName) {
-		Throwable throwable = null;
-
-		ExceptionRunListener exceptionRunListener = new ExceptionRunListener();
-
 		try {
-			JUnitCore jUnitCore = new JUnitCore();
+			TestClass testClass = new TestClass(
+				_classLoader.loadClass(className));
 
-			jUnitCore.addListener(exceptionRunListener);
+			for (FrameworkMethod frameworkMethod :
+					testClass.getAnnotatedMethods(Test.class)) {
 
-			Class<?> clazz = _classLoader.loadClass(className);
+				if (!methodName.equals(frameworkMethod.getName())) {
+					continue;
+				}
 
-			jUnitCore.run(
-				new Request() {
+				Statement statement = _withTimeout(
+					frameworkMethod,
+					new ServerExecutorStatement(
+						testClass, frameworkMethod.getMethod()));
 
-					@Override
-					public Runner getRunner() {
-						return new ServerRunner(clazz, methodName);
-					}
-
-				});
-
-			throwable = exceptionRunListener.getException();
+				statement.evaluate();
+			}
 		}
 		catch (Throwable t) {
-			throwable = t;
+			return _toByteArray(t);
 		}
 
-		return _toByteArray(throwable);
+		return _PASSED;
 	}
 
 	private static byte[] _toByteArray(Throwable throwable) {
+		if (throwable instanceof AssumptionViolatedException) {
+
+			// To neutralize the non-serializable Matcher field
+			// inside AssumptionViolatedException
+
+			AssumptionViolatedException ave = new AssumptionViolatedException(
+				throwable.getMessage());
+
+			ave.setStackTrace(throwable.getStackTrace());
+
+			throwable = ave;
+		}
+
 		try (ByteArrayOutputStream byteArrayOutputStream =
 				new ByteArrayOutputStream();
 			ObjectOutputStream objectOutputStream = new ObjectOutputStream(
@@ -84,31 +95,24 @@ public class JMXTestRunner implements JMXTestRunnerMBean {
 		}
 	}
 
-	private final ClassLoader _classLoader;
+	private Statement _withTimeout(
+		FrameworkMethod frameworkMethod, Statement statement) {
 
-	private class ExceptionRunListener extends RunListener {
+		Test test = frameworkMethod.getAnnotation(Test.class);
 
-		public Throwable getException() {
-			return _throwable;
+		if ((test == null) || (test.timeout() <= 0)) {
+			return statement;
 		}
 
-		@Override
-		public void testAssumptionFailure(Failure failure) {
-			Throwable throwable = failure.getException();
+		FailOnTimeout.Builder builder = FailOnTimeout.builder();
 
-			_throwable = new AssumptionViolatedException(
-				throwable.getMessage());
+		builder.withTimeout(test.timeout(), TimeUnit.MILLISECONDS);
 
-			_throwable.setStackTrace(throwable.getStackTrace());
-		}
-
-		@Override
-		public void testFailure(Failure failure) {
-			_throwable = failure.getException();
-		}
-
-		private Throwable _throwable;
-
+		return builder.build(statement);
 	}
+
+	private static final byte[] _PASSED = _toByteArray(null);
+
+	private final ClassLoader _classLoader;
 
 }

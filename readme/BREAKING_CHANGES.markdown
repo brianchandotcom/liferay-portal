@@ -329,31 +329,31 @@ the chance of package version lock down.
 
 ---------------------------------------
 
-### Drop support of ServiceLoaderCondition
+### Dropped Support of ServiceLoaderCondition
 - **Date:** 2019-Jan-08
 - **JIRA Ticket:** [LPS-88913](https://issues.liferay.com/browse/LPS-88913)
 
 #### What changed?
 
-Interface `ServiceLoaderCondition` and its implementation
+The interface `ServiceLoaderCondition` and its implementation
 `DefaultServiceLoaderCondition` in package `com.liferay.portal.kernel.util` were
 removed.
 
 #### Who is affected?
 
-This affects anyone used `ServiceLoaderCondition` and
+This affects anyone using `ServiceLoaderCondition` and
 `DefaultServiceLoaderCondition`.
 
 #### How should I update my code?
 
-Remove usages of `ServiceLoaderCondition`. Update usages of `load` methods in
-`com.liferay.portal.kernel.util.ServiceLoader` according to the updated method
-signatures.
+You should remove usages of `ServiceLoaderCondition`. Update usages of `load`
+methods in `com.liferay.portal.kernel.util.ServiceLoader` according to the
+updated method signatures.
 
 #### Why was this change made?
 
-It's one of several steps to clean up kernel provider interfaces to reduce the
-chance of package version lock down.
+This is one of several steps to clean up kernel provider interfaces to reduce
+the chance of package version lock down.
 
 ---------------------------------------
 

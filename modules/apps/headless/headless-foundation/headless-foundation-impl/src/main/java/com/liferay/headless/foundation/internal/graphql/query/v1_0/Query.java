@@ -22,6 +22,7 @@ import com.liferay.headless.foundation.dto.v1_0.Phone;
 import com.liferay.headless.foundation.dto.v1_0.PostalAddress;
 import com.liferay.headless.foundation.dto.v1_0.Role;
 import com.liferay.headless.foundation.dto.v1_0.Segment;
+import com.liferay.headless.foundation.dto.v1_0.SegmentUser;
 import com.liferay.headless.foundation.dto.v1_0.UserAccount;
 import com.liferay.headless.foundation.dto.v1_0.Vocabulary;
 import com.liferay.headless.foundation.dto.v1_0.WebUrl;
@@ -33,6 +34,7 @@ import com.liferay.headless.foundation.resource.v1_0.PhoneResource;
 import com.liferay.headless.foundation.resource.v1_0.PostalAddressResource;
 import com.liferay.headless.foundation.resource.v1_0.RoleResource;
 import com.liferay.headless.foundation.resource.v1_0.SegmentResource;
+import com.liferay.headless.foundation.resource.v1_0.SegmentUserResource;
 import com.liferay.headless.foundation.resource.v1_0.UserAccountResource;
 import com.liferay.headless.foundation.resource.v1_0.VocabularyResource;
 import com.liferay.headless.foundation.resource.v1_0.WebUrlResource;
@@ -369,6 +371,22 @@ public class Query {
 
 	@GraphQLField
 	@GraphQLInvokeDetached
+	public Collection<SegmentUser> getSegmentUserAccountsPage(
+			@GraphQLName("segment-id") Long segmentId,
+			@GraphQLName("pageSize") int pageSize,
+			@GraphQLName("page") int page)
+		throws Exception {
+
+		SegmentUserResource segmentUserResource = _createSegmentUserResource();
+
+		Page paginationPage = segmentUserResource.getSegmentUserAccountsPage(
+			segmentId, Pagination.of(pageSize, page));
+
+		return paginationPage.getItems();
+	}
+
+	@GraphQLField
+	@GraphQLInvokeDetached
 	public UserAccount getMyUserAccount(
 			@GraphQLName("my-user-account-id") Long myUserAccountId)
 		throws Exception {
@@ -608,6 +626,23 @@ public class Query {
 	private static final ServiceTracker<SegmentResource, SegmentResource>
 		_segmentResourceServiceTracker;
 
+	private static SegmentUserResource _createSegmentUserResource()
+		throws Exception {
+
+		SegmentUserResource segmentUserResource =
+			_segmentUserResourceServiceTracker.getService();
+
+		segmentUserResource.setContextCompany(
+			CompanyLocalServiceUtil.getCompany(
+				CompanyThreadLocal.getCompanyId()));
+
+		return segmentUserResource;
+	}
+
+	private static final ServiceTracker
+		<SegmentUserResource, SegmentUserResource>
+			_segmentUserResourceServiceTracker;
+
 	private static UserAccountResource _createUserAccountResource()
 		throws Exception {
 
@@ -716,6 +751,13 @@ public class Query {
 		segmentResourceServiceTracker.open();
 
 		_segmentResourceServiceTracker = segmentResourceServiceTracker;
+		ServiceTracker<SegmentUserResource, SegmentUserResource>
+			segmentUserResourceServiceTracker = new ServiceTracker<>(
+				bundle.getBundleContext(), SegmentUserResource.class, null);
+
+		segmentUserResourceServiceTracker.open();
+
+		_segmentUserResourceServiceTracker = segmentUserResourceServiceTracker;
 		ServiceTracker<UserAccountResource, UserAccountResource>
 			userAccountResourceServiceTracker = new ServiceTracker<>(
 				bundle.getBundleContext(), UserAccountResource.class, null);

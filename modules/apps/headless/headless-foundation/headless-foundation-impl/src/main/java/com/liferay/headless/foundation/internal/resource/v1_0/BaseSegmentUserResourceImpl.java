@@ -27,6 +27,8 @@ import com.liferay.portal.vulcan.util.TransformUtil;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.Parameters;
 import io.swagger.v3.oas.annotations.enums.ParameterIn;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import io.swagger.v3.oas.annotations.tags.Tags;
 
 import java.net.URI;
 
@@ -62,6 +64,7 @@ public abstract class BaseSegmentUserResourceImpl
 	)
 	@Path("/segments/{segment-id}/user-accounts")
 	@Produces("application/json")
+	@Tags(value = {@Tag(name = "SegmentUser")})
 	public Page<SegmentUser> getSegmentUserAccountsPage(
 			@PathParam("segment-id") Long segmentId,
 			@Context Pagination pagination)

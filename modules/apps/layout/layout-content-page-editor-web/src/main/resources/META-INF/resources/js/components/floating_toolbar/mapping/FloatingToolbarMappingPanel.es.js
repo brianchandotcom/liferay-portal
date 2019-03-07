@@ -313,6 +313,7 @@ FloatingToolbarMappingPanel.STATE = {
 	 */
 	_selectedSourceTypeId: Config
 		.oneOf(Object.values(SOURCE_TYPE_IDS))
+		.internal()
 		.value(SOURCE_TYPE_IDS.structure)
 };
 

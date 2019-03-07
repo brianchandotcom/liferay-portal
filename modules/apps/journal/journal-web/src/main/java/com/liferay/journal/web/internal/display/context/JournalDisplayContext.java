@@ -130,8 +130,6 @@ public class JournalDisplayContext {
 			_request);
 		_themeDisplay = (ThemeDisplay)_request.getAttribute(
 			WebKeys.THEME_DISPLAY);
-
-		_journalChangeTrackingHelper = _serviceTracker.getService();
 	}
 
 	public String[] getAddMenuFavItems() throws PortalException {
@@ -1082,7 +1080,7 @@ public class JournalDisplayContext {
 		return false;
 	}
 
-	public boolean isChangeListVisible() {
+	public boolean isChangeListColumnVisible() {
 		if (_journalChangeTrackingHelper == null) {
 			return false;
 		}
@@ -1263,9 +1261,7 @@ public class JournalDisplayContext {
 		return jsonArray;
 	}
 
-	private static ServiceTracker
-		<JournalChangeTrackingHelper, JournalChangeTrackingHelper>
-			_serviceTracker;
+	private static JournalChangeTrackingHelper _journalChangeTrackingHelper;
 
 	static {
 		Bundle bundle = FrameworkUtil.getBundle(
@@ -1278,7 +1274,7 @@ public class JournalDisplayContext {
 
 		serviceTracker.open();
 
-		_serviceTracker = serviceTracker;
+		_journalChangeTrackingHelper = serviceTracker.getService();
 	}
 
 	private String[] _addMenuFavItems;
@@ -1294,7 +1290,6 @@ public class JournalDisplayContext {
 	private String _displayStyle;
 	private JournalFolder _folder;
 	private Long _folderId;
-	private final JournalChangeTrackingHelper _journalChangeTrackingHelper;
 	private final JournalWebConfiguration _journalWebConfiguration;
 	private String _keywords;
 	private final LiferayPortletRequest _liferayPortletRequest;

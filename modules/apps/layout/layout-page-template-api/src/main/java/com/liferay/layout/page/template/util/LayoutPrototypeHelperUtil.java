@@ -39,16 +39,16 @@ public class LayoutPrototypeHelperUtil {
 		throws Exception {
 
 		for (LayoutPrototype layoutPrototype : layoutPrototypes) {
-			String nameXML = layoutPrototype.getName();
+			String defaultLanguageId = LocalizationUtil.getDefaultLanguageId(
+				layoutPrototype.getName());
 
-			Locale defaultLocale = LocaleUtil.fromLanguageId(
-				LocalizationUtil.getDefaultLanguageId(nameXML));
+			Locale defaultLocale = LocaleUtil.fromLanguageId(defaultLanguageId);
 
 			String name = nameMap.get(defaultLocale);
 
-			String curName = layoutPrototype.getName(defaultLocale);
+			if ((name == null) ||
+				name.equals(layoutPrototype.getName(defaultLocale))) {
 
-			if ((name == null) || name.equals(curName)) {
 				return null;
 			}
 		}

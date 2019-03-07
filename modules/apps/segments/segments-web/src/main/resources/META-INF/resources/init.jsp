@@ -41,6 +41,7 @@ page import="com.liferay.portal.kernel.util.Validator" %><%@
 page import="com.liferay.portal.kernel.util.WebKeys" %><%@
 page import="com.liferay.segments.constants.SegmentsConstants" %><%@
 page import="com.liferay.segments.exception.NoSuchEntryException" %><%@
+page import="com.liferay.segments.exception.RequiredSegmentsEntryException" %><%@
 page import="com.liferay.segments.exception.SegmentsEntryCriteriaException" %><%@
 page import="com.liferay.segments.exception.SegmentsEntryKeyException" %><%@
 page import="com.liferay.segments.model.SegmentsEntry" %><%@

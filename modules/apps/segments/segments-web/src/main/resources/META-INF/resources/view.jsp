@@ -44,6 +44,8 @@ SegmentsDisplayContext segmentsDisplayContext = (SegmentsDisplayContext)request.
 <aui:form action="<%= deleteSegmentsEntryURL %>" cssClass="container-fluid-1280" method="post" name="fmSegmentsEntries">
 	<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
 
+	<liferay-ui:error exception="<%= RequiredSegmentsEntryException.MustNotDeleteSegmentsEntryReferencedBySegmentsExperiences.class %>" message="the-segment-cannot-be-deleted-because-it-is-required-by-one-or-more-experiences" />
+
 	<liferay-ui:search-container
 		id="segmentsEntries"
 		searchContainer="<%= segmentsDisplayContext.getSearchContainer() %>"

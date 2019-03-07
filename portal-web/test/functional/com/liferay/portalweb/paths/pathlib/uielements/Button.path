@@ -195,7 +195,7 @@
 </tr>
 <tr>
 	<td>DELETE_ENTRY</td>
-	<td>xpath=(//li[contains(@class,'nav-item navbar-breakpoint')]/button[contains(@type,'button')])[1]</td>
+	<td>//li[contains(@class,'nav-item navbar-breakpoint')]//a/*[name()='svg'][contains(@class,'lexicon-icon')]</td>
 	<td></td>
 </tr>
 <tr>

@@ -76,10 +76,9 @@ public class BulkActionResponseResourceImpl
 
 	@Override
 	public BulkActionResponse postCategoryClassName(
-			Long categoryClassNameId,
-			BulkAssetEntryUpdateCategoriesAction
-				bulkAssetEntryUpdateCategoriesAction)
-		throws Exception {
+		Long categoryClassNameId,
+		BulkAssetEntryUpdateCategoriesAction
+			bulkAssetEntryUpdateCategoriesAction) {
 
 		try {
 			BulkSelectionFactory<?> bulkSelectionFactory =
@@ -118,9 +117,8 @@ public class BulkActionResponseResourceImpl
 
 	@Override
 	public BulkAssetEntryCommonCategories postCategoryGroupCategoryClassName(
-			Long categoryGroupId, Long categoryClassNameId,
-			BulkAssetEntryAction bulkAssetEntryAction)
-		throws Exception {
+		Long categoryGroupId, Long categoryClassNameId,
+		BulkAssetEntryAction bulkAssetEntryAction) {
 
 		try {
 			BulkSelectionFactory<?> bulkSelectionFactory =
@@ -175,9 +173,8 @@ public class BulkActionResponseResourceImpl
 
 	@Override
 	public BulkActionResponse postTagClassName(
-			Long tagClassNameId,
-			BulkAssetEntryUpdateTagsAction bulkAssetEntryUpdateTagsAction)
-		throws Exception {
+		Long tagClassNameId,
+		BulkAssetEntryUpdateTagsAction bulkAssetEntryUpdateTagsAction) {
 
 		try {
 			BulkSelectionFactory<?> bulkSelectionFactory =
@@ -215,9 +212,8 @@ public class BulkActionResponseResourceImpl
 
 	@Override
 	public BulkAssetEntryCommonTags postTagGroupTagClassName(
-			Long tagGroupId, Long tagClassNameId,
-			BulkAssetEntryAction bulkAssetEntryAction)
-		throws Exception {
+		Long tagGroupId, Long tagClassNameId,
+		BulkAssetEntryAction bulkAssetEntryAction) {
 
 		try {
 			BulkSelectionFactory<?> bulkSelectionFactory =

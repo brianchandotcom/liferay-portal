@@ -1484,6 +1484,37 @@ public class TopLevelBuild extends BaseBuild {
 				"\\s*\\[echo\\] (?<name>.*)\\.start\\.timestamp: ",
 				"(?<timestamp>.*)$"));
 
+	protected Map<String, StopwatchRecord> stopwatchRecordMap = new HashMap<>();
+
+	protected static class StopwatchRecord {
+
+		public StopwatchRecord(String name, long startTimestamp) {
+			_name = name;
+			_startTimestamp = startTimestamp;
+		}
+
+		public long getDuration() {
+			return _duration;
+		}
+
+		public String getName() {
+			return _name;
+		}
+
+		public long getStartTimestamp() {
+			return _startTimestamp;
+		}
+
+		public void setDuration(long duration) {
+			_duration = duration;
+		}
+
+		private long _duration;
+		private final String _name;
+		private final long _startTimestamp;
+
+	}
+
 	private Map<Map<String, String>, Integer> _getSlaveUsageByLabels() {
 		Map<Map<String, String>, Integer> slaveUsages = new HashMap<>();
 

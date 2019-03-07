@@ -1,17 +1,17 @@
 components:
     schemas:
-        AssetCategoryModel:
+        AssetCategory:
             properties:
                 categoryId:
                     format: int64
                     type: integer
                 name:
                     type: string
-        AssetVocabularyModel:
+        AssetVocabulary:
             properties:
                 categories:
                     items:
-                        $ref: "#/components/schemas/AssetCategoryModel"
+                        $ref: "#/components/schemas/AssetCategory"
                     type: array
                 multiValued:
                     type: boolean
@@ -20,13 +20,13 @@ components:
                 vocabularyId:
                     format: int64
                     type: integer
-        BulkActionResponseModel:
+        BulkActionResponse:
             properties:
                 description:
                     type: string
                 status:
                     type: string
-        BulkAssetEntryActionModel:
+        BulkAssetEntryAction:
             properties:
                 folderId:
                     format: int64
@@ -40,7 +40,7 @@ components:
                     items:
                         type: string
                     type: array
-        BulkAssetEntryCommonCategoriesModel:
+        BulkAssetEntryCommonCategories:
             properties:
                 description:
                     type: string
@@ -48,9 +48,9 @@ components:
                     type: string
                 vocabularies:
                     items:
-                        $ref: "#/components/schemas/AssetVocabularyModel"
+                        $ref: "#/components/schemas/AssetVocabulary"
                     type: array
-        BulkAssetEntryCommonTagsModel:
+        BulkAssetEntryCommonTags:
             properties:
                 description:
                     type: string
@@ -65,7 +65,7 @@ components:
                     items:
                         type: string
                     type: array
-        BulkAssetEntryUpdateCategoriesActionModel:
+        BulkAssetEntryUpdateCategoriesAction:
             properties:
                 append:
                     type: boolean
@@ -91,7 +91,7 @@ components:
                         format: int64
                         type: integer
                     type: array
-        BulkAssetEntryUpdateTagsActionModel:
+        BulkAssetEntryUpdateTagsAction:
             properties:
                 append:
                     type: boolean
@@ -115,7 +115,7 @@ components:
                     items:
                         type: string
                     type: array
-        BulkStatusModel:
+        BulkStatus:
             properties:
                 busy:
                     type: boolean
@@ -139,15 +139,15 @@ paths:
                 content:
                     application/json:
                         schema:
-                            $ref: "#/components/schemas/BulkAssetEntryUpdateCategoriesActionModel"
+                            $ref: "#/components/schemas/BulkAssetEntryUpdateCategoriesAction"
             responses:
                 200:
                     content:
                         application/json:
                             schema:
-                                $ref: "#/components/schemas/BulkActionResponseModel"
+                                $ref: "#/components/schemas/BulkActionResponse"
                     description: ""
-            tags: ["BulkActionResponseModel"]
+            tags: ["BulkActionResponse"]
     "/categories/{category-group-id}/{category-class-name-id}/common":
         post:
             parameters:
@@ -167,15 +167,15 @@ paths:
                 content:
                     application/json:
                         schema:
-                            $ref: "#/components/schemas/BulkAssetEntryActionModel"
+                            $ref: "#/components/schemas/BulkAssetEntryAction"
             responses:
                 200:
                     content:
                         application/json:
                             schema:
-                                $ref: "#/components/schemas/BulkAssetEntryCommonCategoriesModel"
+                                $ref: "#/components/schemas/BulkAssetEntryCommonCategories"
                     description: ""
-            tags: ["BulkActionResponseModel"]
+            tags: ["BulkActionResponse"]
     "/tags/{tag-class-name-id}":
         post:
             parameters:
@@ -189,15 +189,15 @@ paths:
                 content:
                     application/json:
                         schema:
-                            $ref: "#/components/schemas/BulkAssetEntryUpdateTagsActionModel"
+                            $ref: "#/components/schemas/BulkAssetEntryUpdateTagsAction"
             responses:
                 200:
                     content:
                         application/json:
                             schema:
-                                $ref: "#/components/schemas/BulkActionResponseModel"
+                                $ref: "#/components/schemas/BulkActionResponse"
                     description: ""
-            tags: ["BulkActionResponseModel"]
+            tags: ["BulkActionResponse"]
     "/tags/{tag-group-id}/{tag-class-name-id}/common":
         post:
             parameters:
@@ -217,15 +217,15 @@ paths:
                 content:
                     application/json:
                         schema:
-                            $ref: "#/components/schemas/BulkAssetEntryActionModel"
+                            $ref: "#/components/schemas/BulkAssetEntryAction"
             responses:
                 200:
                     content:
                         application/json:
                             schema:
-                                $ref: "#/components/schemas/BulkAssetEntryCommonTagsModel"
+                                $ref: "#/components/schemas/BulkAssetEntryCommonTags"
                     description: ""
-            tags: ["BulkActionResponseModel"]
+            tags: ["BulkActionResponse"]
     /status:
         get:
             parameters:
@@ -240,6 +240,6 @@ paths:
                     content:
                         application/json:
                             schema:
-                                $ref: "#/components/schemas/BulkStatusModel"
+                                $ref: "#/components/schemas/BulkStatus"
                     description: ""
-            tags: ["BulkStatusModel"]
+            tags: ["BulkStatus"]

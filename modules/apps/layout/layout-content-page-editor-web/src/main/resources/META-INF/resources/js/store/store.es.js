@@ -124,10 +124,32 @@ class Store extends State {
 
 						this.emit('change', this._state);
 
-						return this;
+						return new Promise(
+							resolve => {
+								requestAnimationFrame(
+									() => {
+										resolve(this);
+									}
+								);
+							}
+						);
 					}
 				)
 		);
+
+		return this;
+	}
+
+	done(callback) {
+		this._dispatchPromise = this._dispatchPromise
+			.then(() => callback(this));
+
+		return this;
+	}
+
+	failed(callback) {
+		this._dispatchPromise = this._dispatchPromise
+			.catch(() => callback(this));
 
 		return this;
 	}

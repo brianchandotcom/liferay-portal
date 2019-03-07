@@ -112,8 +112,50 @@ public class Arquillian extends Runner implements Filterable {
 
 			Class.forName(_clazz.getName(), true, _clazz.getClassLoader());
 
+			JMXTestRunnerMBean jmxTestRunnerMBean =
+				MBeans.getJmxTestRunnerMBean();
+
 			for (FrameworkMethod frameworkMethod : frameworkMethods) {
-				_runMethod(frameworkMethod, runNotifier);
+				Description description = Description.createTestDescription(
+					_clazz, frameworkMethod.getName(),
+					frameworkMethod.getAnnotations());
+
+				runNotifier.fireTestStarted(description);
+
+				byte[] data = jmxTestRunnerMBean.runTestMethod(
+					_clazz.getName(), frameworkMethod.getName());
+
+				try (InputStream inputStream = new UnsyncByteArrayInputStream(
+						data);
+					ObjectInputStream oos = new ObjectInputStream(
+						inputStream)) {
+
+					Throwable throwable = (Throwable)oos.readObject();
+
+					if (throwable != null) {
+						if (throwable instanceof AssumptionViolatedException) {
+							runNotifier.fireTestAssumptionFailed(
+								new Failure(description, throwable));
+						}
+						else if (throwable instanceof
+									MultipleFailureException) {
+
+							MultipleFailureException mfe =
+								(MultipleFailureException)throwable;
+
+							for (Throwable t : mfe.getFailures()) {
+								runNotifier.fireTestFailure(
+									new Failure(description, t));
+							}
+						}
+						else {
+							runNotifier.fireTestFailure(
+								new Failure(description, throwable));
+						}
+					}
+				}
+
+				runNotifier.fireTestFinished(description);
 			}
 		}
 		catch (Throwable t) {
@@ -143,50 +185,6 @@ public class Arquillian extends Runner implements Filterable {
 		frameworkMBean.startBundle(bundleId);
 
 		return () -> frameworkMBean.uninstallBundle(bundleId);
-	}
-
-	private void _runMethod(
-			FrameworkMethod frameworkMethod, RunNotifier runNotifier)
-		throws Exception {
-
-		Description description = Description.createTestDescription(
-			_clazz, frameworkMethod.getName(),
-			frameworkMethod.getAnnotations());
-
-		runNotifier.fireTestStarted(description);
-
-		JMXTestRunnerMBean jmxTestRunnerMBean = MBeans.getJmxTestRunnerMBean();
-
-		byte[] data = jmxTestRunnerMBean.runTestMethod(
-			_clazz.getName(), frameworkMethod.getName());
-
-		try (InputStream inputStream = new UnsyncByteArrayInputStream(data);
-			ObjectInputStream oos = new ObjectInputStream(inputStream)) {
-
-			Throwable throwable = (Throwable)oos.readObject();
-
-			if (throwable != null) {
-				if (throwable instanceof AssumptionViolatedException) {
-					runNotifier.fireTestAssumptionFailed(
-						new Failure(description, throwable));
-				}
-				else if (throwable instanceof MultipleFailureException) {
-					MultipleFailureException mfe =
-						(MultipleFailureException)throwable;
-
-					for (Throwable t : mfe.getFailures()) {
-						runNotifier.fireTestFailure(
-							new Failure(description, t));
-					}
-				}
-				else {
-					runNotifier.fireTestFailure(
-						new Failure(description, throwable));
-				}
-			}
-
-			runNotifier.fireTestFinished(description);
-		}
 	}
 
 	private final Class<?> _clazz;

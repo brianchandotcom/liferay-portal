@@ -127,12 +127,10 @@ SegmentsDisplayContext segmentsDisplayContext = (SegmentsDisplayContext)request.
 				value="<%= segmentsEntry.getModifiedDate() %>"
 			/>
 
-			<c:if test="<%= !segmentsEntry.isDefaultSegment() %>">
-				<liferay-ui:search-container-column-jsp
-					cssClass="entry-action-column"
-					path="/segments_entry_action.jsp"
-				/>
-			</c:if>
+			<liferay-ui:search-container-column-jsp
+				cssClass="entry-action-column"
+				path="/segments_entry_action.jsp"
+			/>
 		</liferay-ui:search-container-row>
 
 		<liferay-ui:search-iterator

@@ -24,9 +24,13 @@ import com.liferay.petra.string.StringBundler;
 import graphql.annotations.annotationTypes.GraphQLField;
 import graphql.annotations.annotationTypes.GraphQLName;
 
+import io.swagger.v3.oas.annotations.media.Schema;
+
 import java.util.Date;
 
 import javax.annotation.Generated;
+
+import javax.validation.constraints.NotNull;
 
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -40,6 +44,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement(name = "Segment")
 public class Segment {
 
+	@Schema(description = "Returns true if the segment is active")
 	public Boolean getActive() {
 		return active;
 	}
@@ -64,6 +69,7 @@ public class Segment {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean active;
 
+	@Schema(description = "Inclusion criteria of the segment")
 	public String getCriteria() {
 		return criteria;
 	}
@@ -86,8 +92,10 @@ public class Segment {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	@NotNull
 	protected String criteria;
 
+	@Schema(description = "The date the segment was created")
 	public Date getDateCreated() {
 		return dateCreated;
 	}
@@ -112,6 +120,7 @@ public class Segment {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Date dateCreated;
 
+	@Schema(description = "The date the segment was last modified")
 	public Date getDateModified() {
 		return dateModified;
 	}
@@ -136,6 +145,7 @@ public class Segment {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Date dateModified;
 
+	@Schema(description = "Internal ID of the segment")
 	public Long getId() {
 		return id;
 	}
@@ -158,6 +168,7 @@ public class Segment {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long id;
 
+	@Schema(description = "Segment's name")
 	public String getName() {
 		return name;
 	}
@@ -178,8 +189,12 @@ public class Segment {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	@NotNull
 	protected String name;
 
+	@Schema(
+		description = "The source of the segment. It can be from Analytics Cloud or from Liferay instance"
+	)
 	public String getSource() {
 		return source;
 	}

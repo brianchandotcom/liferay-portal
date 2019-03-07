@@ -183,6 +183,12 @@ definition {
 			searchPortletList = "Type Facet,Search Results,Search Bar"
 		);
 
+		// Workaround for LPS-91767
+
+		SearchPortlets.configureWidgetDestination(
+			destinationPage = "Search Page"
+		);
+
 		SearchPortlets.configureWidgetParameterNames(
 			keywordsParameterName = "keywordparameter",
 			scopeParameterName = "scopeparameter"
@@ -1532,6 +1538,12 @@ definition {
 
 		SearchPortlets.addWidgets(
 			searchPortletList = "Site Facet,Search Results,Search Bar"
+		);
+
+		// Workaround for LPS-91767
+
+		SearchPortlets.configureWidgetDestination(
+			destinationPage = "Search Page"
 		);
 
 		SearchPortlets.configureWidgetScope(searchScope = "Everything");

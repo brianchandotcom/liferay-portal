@@ -1172,13 +1172,7 @@ AUI.add(
 
 							var selectedFilesCount = selectedFiles.size();
 
-							var selectedFileName = STR_BLANK;
-
 							var hasSelectedFiles = selectedFilesCount > 0;
-
-							if (hasSelectedFiles) {
-								selectedFileName = selectedFiles.item(0).ancestor().attr('data-title');
-							}
 
 							if (metadataContainer) {
 								metadataContainer.toggle(hasSelectedFiles);
@@ -1186,10 +1180,14 @@ AUI.add(
 								var selectedFilesText = strings.noFilesSelectedText;
 
 								if (hasSelectedFiles) {
-									if (selectedFilesCount == 1) {
-										selectedFilesText = selectedFileName;
+									if (selectedFilesCount === 1) {
+										var titleNode = selectedFiles.item(0).ancestor('[data-title]');
+
+										if (titleNode) {
+											selectedFilesText = titleNode.attr('data-title');
+										}
 									}
-									else if (selectedFilesCount == totalFilesCount) {
+									else if (selectedFilesCount === totalFilesCount) {
 										selectedFilesText = strings.allFilesSelectedText;
 									}
 									else if (selectedFilesCount > 1) {

@@ -23,8 +23,6 @@ import com.liferay.portal.search.engine.adapter.search.SearchSearchResponse;
 import com.liferay.portal.search.hits.SearchHit;
 import com.liferay.portal.search.hits.SearchHits;
 import com.liferay.portal.search.query.DateRangeTermQuery;
-import com.liferay.portal.search.sort.FieldSort;
-import com.liferay.portal.search.sort.SortOrder;
 import com.liferay.portal.search.test.util.indexing.BaseIndexingTestCase;
 import com.liferay.portal.search.test.util.indexing.DocumentCreationHelpers;
 
@@ -71,11 +69,8 @@ public abstract class BaseDateRangeTermQueryTestCase
 				searchSearchRequest.setIndexNames("_all");
 				searchSearchRequest.setQuery(dateRangeTermQuery);
 
-				FieldSort fieldSort = new FieldSort(Field.EXPIRATION_DATE);
-
-				fieldSort.setSortOrder(SortOrder.ASC);
-
-				searchSearchRequest.addSorts(fieldSort);
+				searchSearchRequest.addSorts(
+					sorts.field(Field.EXPIRATION_DATE));
 
 				SearchEngineAdapter searchEngineAdapter =
 					getSearchEngineAdapter();

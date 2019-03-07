@@ -25,7 +25,6 @@ import com.liferay.portal.search.aggregation.pipeline.BucketSortPipelineAggregat
 import com.liferay.portal.search.internal.aggregation.bucket.HistogramAggregationImpl;
 import com.liferay.portal.search.internal.aggregation.metrics.SumAggregationImpl;
 import com.liferay.portal.search.internal.aggregation.pipeline.BucketSortPipelineAggregationImpl;
-import com.liferay.portal.search.sort.FieldSort;
 import com.liferay.portal.search.sort.SortOrder;
 import com.liferay.portal.search.test.util.aggregation.AggregationAssert;
 import com.liferay.portal.search.test.util.indexing.BaseIndexingTestCase;
@@ -62,11 +61,7 @@ public abstract class BaseBucketSortPipelineAggregationTestCase
 		BucketSortPipelineAggregation bucketSortPipelineAggregation =
 			new BucketSortPipelineAggregationImpl("bucket_sort");
 
-		FieldSort fieldSort = new FieldSort("sum");
-
-		fieldSort.setSortOrder(SortOrder.ASC);
-
-		bucketSortPipelineAggregation.addSortFields(fieldSort);
+		bucketSortPipelineAggregation.addSortFields(sorts.field("sum"));
 
 		histogramAggregation.addPipelineAggregation(
 			bucketSortPipelineAggregation);
@@ -114,11 +109,8 @@ public abstract class BaseBucketSortPipelineAggregationTestCase
 		BucketSortPipelineAggregation bucketSortPipelineAggregation =
 			new BucketSortPipelineAggregationImpl("bucket_sort");
 
-		FieldSort fieldSort = new FieldSort("sum");
-
-		fieldSort.setSortOrder(SortOrder.DESC);
-
-		bucketSortPipelineAggregation.addSortFields(fieldSort);
+		bucketSortPipelineAggregation.addSortFields(
+			sorts.field("sum", SortOrder.DESC));
 
 		bucketSortPipelineAggregation.setSize(3);
 

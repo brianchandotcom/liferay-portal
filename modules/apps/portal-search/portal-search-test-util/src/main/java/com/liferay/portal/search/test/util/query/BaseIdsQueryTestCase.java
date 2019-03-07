@@ -48,9 +48,7 @@ public abstract class BaseIdsQueryTestCase extends BaseIndexingTestCase {
 
 		idsQuery.addIds("1", "4");
 
-		FieldSort fieldSort = new FieldSort(Field.USER_NAME);
-
-		fieldSort.setSortOrder(SortOrder.DESC);
+		FieldSort fieldSort = sorts.field(Field.USER_NAME, SortOrder.DESC);
 
 		String expected = "[delta, alpha]";
 

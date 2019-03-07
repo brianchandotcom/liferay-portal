@@ -47,9 +47,7 @@ public abstract class BaseTermsQueryTestCase extends BaseIndexingTestCase {
 
 		termsQuery.addValues("bravo", "charlie");
 
-		FieldSort fieldSort = new FieldSort(Field.USER_NAME);
-
-		fieldSort.setSortOrder(SortOrder.DESC);
+		FieldSort fieldSort = sorts.field(Field.USER_NAME, SortOrder.DESC);
 
 		String expected = "[charlie, bravo]";
 

@@ -22,8 +22,6 @@ import com.liferay.portal.search.engine.adapter.search.SearchSearchResponse;
 import com.liferay.portal.search.hits.SearchHit;
 import com.liferay.portal.search.hits.SearchHits;
 import com.liferay.portal.search.query.RegexQuery;
-import com.liferay.portal.search.sort.FieldSort;
-import com.liferay.portal.search.sort.SortOrder;
 import com.liferay.portal.search.test.util.indexing.BaseIndexingTestCase;
 import com.liferay.portal.search.test.util.indexing.DocumentCreationHelpers;
 
@@ -77,11 +75,7 @@ public abstract class BaseRegexQueryTestCase extends BaseIndexingTestCase {
 				searchSearchRequest.setQuery(regexQuery);
 				searchSearchRequest.setSize(30);
 
-				FieldSort fieldSort = new FieldSort(Field.USER_NAME);
-
-				fieldSort.setSortOrder(SortOrder.ASC);
-
-				searchSearchRequest.addSorts(fieldSort);
+				searchSearchRequest.addSorts(sorts.field(Field.USER_NAME));
 
 				SearchEngineAdapter searchEngineAdapter =
 					getSearchEngineAdapter();

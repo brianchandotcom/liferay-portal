@@ -16,7 +16,7 @@ package com.liferay.arquillian.extension.junit.bridge.junit;
 
 import com.liferay.arquillian.extension.junit.bridge.client.BndBundleUtil;
 import com.liferay.arquillian.extension.junit.bridge.client.MBeans;
-import com.liferay.arquillian.extension.junit.bridge.jmx.JMXTestRunnerMBean;
+import com.liferay.arquillian.extension.junit.bridge.server.JMXTestRunnerMBean;
 import com.liferay.petra.io.unsync.UnsyncByteArrayInputStream;
 
 import java.io.Closeable;

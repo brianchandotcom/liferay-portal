@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.arquillian.extension.junit.bridge.jmx;
+package com.liferay.arquillian.extension.junit.bridge.server;
 
 /**
  * @author Matthew Tambara

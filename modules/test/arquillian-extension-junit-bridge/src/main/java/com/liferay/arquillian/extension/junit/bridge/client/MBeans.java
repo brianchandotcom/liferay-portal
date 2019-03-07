@@ -14,7 +14,7 @@
 
 package com.liferay.arquillian.extension.junit.bridge.client;
 
-import com.liferay.arquillian.extension.junit.bridge.jmx.JMXTestRunnerMBean;
+import com.liferay.arquillian.extension.junit.bridge.server.JMXTestRunnerMBean;
 
 import java.util.Collections;
 import java.util.Iterator;

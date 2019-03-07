@@ -12,10 +12,7 @@
  * details.
  */
 
-package com.liferay.arquillian.extension.junit.bridge.activator;
-
-import com.liferay.arquillian.extension.junit.bridge.jmx.JMXTestRunner;
-import com.liferay.arquillian.extension.junit.bridge.jmx.JMXTestRunnerMBean;
+package com.liferay.arquillian.extension.junit.bridge.server;
 
 import java.lang.management.ManagementFactory;
 

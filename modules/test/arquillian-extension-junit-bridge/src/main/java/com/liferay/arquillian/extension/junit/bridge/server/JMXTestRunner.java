@@ -12,9 +12,7 @@
  * details.
  */
 
-package com.liferay.arquillian.extension.junit.bridge.jmx;
-
-import com.liferay.arquillian.extension.junit.bridge.junit.ServerRunner;
+package com.liferay.arquillian.extension.junit.bridge.server;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;

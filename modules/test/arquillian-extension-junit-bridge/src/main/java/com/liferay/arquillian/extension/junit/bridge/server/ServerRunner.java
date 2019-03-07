@@ -12,9 +12,7 @@
  * details.
  */
 
-package com.liferay.arquillian.extension.junit.bridge.junit;
-
-import com.liferay.arquillian.extension.junit.bridge.statement.ServerExecutorStatement;
+package com.liferay.arquillian.extension.junit.bridge.server;
 
 import java.util.concurrent.TimeUnit;
 

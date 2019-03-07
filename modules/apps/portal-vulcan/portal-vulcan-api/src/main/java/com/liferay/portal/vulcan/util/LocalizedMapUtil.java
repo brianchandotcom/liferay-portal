@@ -41,7 +41,7 @@ public class LocalizedMapUtil {
 		}
 
 		if (mapEntry.getValue() == null) {
-			map.remove(mapEntry.getValue());
+			map.remove(mapEntry.getKey());
 
 			return map;
 		}

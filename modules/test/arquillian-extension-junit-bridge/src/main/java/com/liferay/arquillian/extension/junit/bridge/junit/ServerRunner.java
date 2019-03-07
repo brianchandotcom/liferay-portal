@@ -16,11 +16,6 @@ package com.liferay.arquillian.extension.junit.bridge.junit;
 
 import com.liferay.arquillian.extension.junit.bridge.statement.ServerExecutorStatement;
 
-import java.lang.annotation.Annotation;
-
-import java.util.Comparator;
-import java.util.List;
-import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 import org.junit.AssumptionViolatedException;
@@ -28,11 +23,8 @@ import org.junit.Test;
 import org.junit.internal.runners.statements.FailOnTimeout;
 import org.junit.runner.Description;
 import org.junit.runner.Runner;
-import org.junit.runner.manipulation.Filter;
-import org.junit.runner.manipulation.Filterable;
 import org.junit.runner.notification.Failure;
 import org.junit.runner.notification.RunNotifier;
-import org.junit.runners.model.FrameworkField;
 import org.junit.runners.model.FrameworkMethod;
 import org.junit.runners.model.MultipleFailureException;
 import org.junit.runners.model.Statement;
@@ -41,15 +33,11 @@ import org.junit.runners.model.TestClass;
 /**
  * @author Shuyang Zhou
  */
-public class ServerRunner extends Runner implements Filterable {
+public class ServerRunner extends Runner {
 
-	public ServerRunner(Class<?> clazz) {
+	public ServerRunner(Class<?> clazz, String methodName) {
 		_clazz = clazz;
-	}
-
-	@Override
-	public void filter(Filter filter) {
-		_testClass = new FilteredSortedTestClass(_clazz, filter);
+		_methodName = methodName;
 	}
 
 	@Override
@@ -60,12 +48,19 @@ public class ServerRunner extends Runner implements Filterable {
 
 	@Override
 	public void run(RunNotifier runNotifier) {
+		TestClass testClass = new TestClass(_clazz);
+
 		for (FrameworkMethod frameworkMethod :
-				_testClass.getAnnotatedMethods(Test.class)) {
+				testClass.getAnnotatedMethods(Test.class)) {
+
+			String methodName = frameworkMethod.getName();
+
+			if (!methodName.equals(_methodName)) {
+				continue;
+			}
 
 			Description description = Description.createTestDescription(
-				_clazz, frameworkMethod.getName(),
-				frameworkMethod.getAnnotations());
+				_clazz, methodName, frameworkMethod.getAnnotations());
 
 			runNotifier.fireTestStarted(description);
 
@@ -73,7 +68,7 @@ public class ServerRunner extends Runner implements Filterable {
 				Statement statement = _withTimeout(
 					frameworkMethod,
 					new ServerExecutorStatement(
-						_clazz, frameworkMethod.getMethod()));
+						testClass, _clazz, frameworkMethod.getMethod()));
 
 				statement.evaluate();
 			}
@@ -112,38 +107,6 @@ public class ServerRunner extends Runner implements Filterable {
 	}
 
 	private final Class<?> _clazz;
-	private TestClass _testClass;
-
-	private class FilteredSortedTestClass extends TestClass {
-
-		@Override
-		protected void scanAnnotatedMembers(
-			Map<Class<? extends Annotation>, List<FrameworkMethod>>
-				frameworkMethodsMap,
-			Map<Class<? extends Annotation>, List<FrameworkField>>
-				frameworkFieldsMap) {
-
-			super.scanAnnotatedMembers(frameworkMethodsMap, frameworkFieldsMap);
-
-			_testFrameworkMethods = frameworkMethodsMap.get(Test.class);
-
-			_testFrameworkMethods.sort(
-				Comparator.comparing(FrameworkMethod::getName));
-		}
-
-		private FilteredSortedTestClass(Class<?> clazz, Filter filter) {
-			super(clazz);
-
-			if (filter != null) {
-				_testFrameworkMethods.removeIf(
-					frameworkMethod -> !filter.shouldRun(
-						Description.createTestDescription(
-							_clazz, frameworkMethod.getName())));
-			}
-		}
-
-		private List<FrameworkMethod> _testFrameworkMethods;
-
-	}
+	private final String _methodName;
 
 }

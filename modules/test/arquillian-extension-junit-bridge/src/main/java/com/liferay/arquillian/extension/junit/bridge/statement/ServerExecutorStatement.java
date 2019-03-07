@@ -46,7 +46,10 @@ import org.junit.runners.model.TestClass;
  */
 public class ServerExecutorStatement extends Statement {
 
-	public ServerExecutorStatement(Class<?> clazz, Method method) {
+	public ServerExecutorStatement(
+		TestClass testClass, Class<?> clazz, Method method) {
+
+		_testClass = testClass;
 		_clazz = clazz;
 		_method = method;
 	}
@@ -86,21 +89,20 @@ public class ServerExecutorStatement extends Statement {
 
 		};
 
-		TestClass testClass = new TestClass(_clazz);
+		statement = withBefores(statement, Before.class, _testClass, target);
 
-		statement = withBefores(statement, Before.class, testClass, target);
-
-		statement = withAfters(statement, After.class, testClass, target);
+		statement = withAfters(statement, After.class, _testClass, target);
 
 		statement = withRules(
-			statement, testClass, target,
+			statement, _testClass, target,
 			Description.createTestDescription(
 				_clazz, _method.getName(), _method.getAnnotations()));
 
 		List<FrameworkMethod> frameworkMethods = new ArrayList<>(
-			testClass.getAnnotatedMethods(Test.class));
+			_testClass.getAnnotatedMethods(Test.class));
 
-		frameworkMethods.removeAll(testClass.getAnnotatedMethods(Ignore.class));
+		frameworkMethods.removeAll(
+			_testClass.getAnnotatedMethods(Ignore.class));
 
 		frameworkMethods.sort(Comparator.comparing(FrameworkMethod::getName));
 
@@ -112,7 +114,7 @@ public class ServerExecutorStatement extends Statement {
 			firstMethod = true;
 
 			statement = withBefores(
-				statement, BeforeClass.class, testClass, null);
+				statement, BeforeClass.class, _testClass, null);
 		}
 
 		FrameworkMethod lastFrameworkMethod = frameworkMethods.get(
@@ -124,11 +126,11 @@ public class ServerExecutorStatement extends Statement {
 			lastMethod = true;
 
 			statement = withAfters(
-				statement, AfterClass.class, testClass, null);
+				statement, AfterClass.class, _testClass, null);
 		}
 
 		evaluateWithClassRule(
-			statement, testClass, target,
+			statement, _testClass, target,
 			Description.createSuiteDescription(_clazz), firstMethod,
 			lastMethod);
 	}
@@ -276,5 +278,6 @@ public class ServerExecutorStatement extends Statement {
 
 	private final Class<?> _clazz;
 	private final Method _method;
+	private final TestClass _testClass;
 
 }

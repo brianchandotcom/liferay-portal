@@ -17,12 +17,18 @@ package com.liferay.headless.collaboration.internal.graphql.mutation.v1_0;
 import com.liferay.headless.collaboration.dto.v1_0.BlogPosting;
 import com.liferay.headless.collaboration.dto.v1_0.BlogPostingImage;
 import com.liferay.headless.collaboration.dto.v1_0.Comment;
+import com.liferay.headless.collaboration.dto.v1_0.Folder;
+import com.liferay.headless.collaboration.dto.v1_0.KnowledgeBaseArticle;
 import com.liferay.headless.collaboration.internal.resource.v1_0.BlogPostingImageResourceImpl;
 import com.liferay.headless.collaboration.internal.resource.v1_0.BlogPostingResourceImpl;
 import com.liferay.headless.collaboration.internal.resource.v1_0.CommentResourceImpl;
+import com.liferay.headless.collaboration.internal.resource.v1_0.FolderResourceImpl;
+import com.liferay.headless.collaboration.internal.resource.v1_0.KnowledgeBaseArticleResourceImpl;
 import com.liferay.headless.collaboration.resource.v1_0.BlogPostingImageResource;
 import com.liferay.headless.collaboration.resource.v1_0.BlogPostingResource;
 import com.liferay.headless.collaboration.resource.v1_0.CommentResource;
+import com.liferay.headless.collaboration.resource.v1_0.FolderResource;
+import com.liferay.headless.collaboration.resource.v1_0.KnowledgeBaseArticleResource;
 import com.liferay.portal.vulcan.multipart.MultipartBody;
 
 import graphql.annotations.annotationTypes.GraphQLField;
@@ -179,6 +185,132 @@ public class Mutation {
 		return commentResource.postCommentComment(commentId, comment);
 	}
 
+	@GraphQLField
+	@GraphQLInvokeDetached
+	public Folder postContentSpaceFolder(
+			@GraphQLName("content-space-id") Long contentSpaceId,
+			@GraphQLName("Folder") Folder folder)
+		throws Exception {
+
+		FolderResource folderResource = _createFolderResource();
+
+		return folderResource.postContentSpaceFolder(contentSpaceId, folder);
+	}
+
+	@GraphQLInvokeDetached
+	public boolean deleteFolder(@GraphQLName("folder-id") Long folderId)
+		throws Exception {
+
+		FolderResource folderResource = _createFolderResource();
+
+		return folderResource.deleteFolder(folderId);
+	}
+
+	@GraphQLInvokeDetached
+	public Folder patchFolder(
+			@GraphQLName("folder-id") Long folderId,
+			@GraphQLName("Folder") Folder folder)
+		throws Exception {
+
+		FolderResource folderResource = _createFolderResource();
+
+		return folderResource.patchFolder(folderId, folder);
+	}
+
+	@GraphQLInvokeDetached
+	public Folder putFolder(
+			@GraphQLName("folder-id") Long folderId,
+			@GraphQLName("Folder") Folder folder)
+		throws Exception {
+
+		FolderResource folderResource = _createFolderResource();
+
+		return folderResource.putFolder(folderId, folder);
+	}
+
+	@GraphQLField
+	@GraphQLInvokeDetached
+	public Folder postFolderFolder(
+			@GraphQLName("folder-id") Long folderId,
+			@GraphQLName("Folder") Folder folder)
+		throws Exception {
+
+		FolderResource folderResource = _createFolderResource();
+
+		return folderResource.postFolderFolder(folderId, folder);
+	}
+
+	@GraphQLField
+	@GraphQLInvokeDetached
+	public KnowledgeBaseArticle postContentSpaceKnowledgeBaseArticle(
+			@GraphQLName("content-space-id") Long contentSpaceId,
+			@GraphQLName("MultipartBody") MultipartBody multipartBody)
+		throws Exception {
+
+		KnowledgeBaseArticleResource knowledgeBaseArticleResource =
+			_createKnowledgeBaseArticleResource();
+
+		return knowledgeBaseArticleResource.
+			postContentSpaceKnowledgeBaseArticle(contentSpaceId, multipartBody);
+	}
+
+	@GraphQLField
+	@GraphQLInvokeDetached
+	public KnowledgeBaseArticle postFolderKnowledgeBaseArticle(
+			@GraphQLName("folder-id") Long folderId,
+			@GraphQLName("MultipartBody") MultipartBody multipartBody)
+		throws Exception {
+
+		KnowledgeBaseArticleResource knowledgeBaseArticleResource =
+			_createKnowledgeBaseArticleResource();
+
+		return knowledgeBaseArticleResource.postFolderKnowledgeBaseArticle(
+			folderId, multipartBody);
+	}
+
+	@GraphQLInvokeDetached
+	public boolean deleteKnowledgeBaseArticle(
+			@GraphQLName("knowledge-base-article-id") Long
+				knowledgeBaseArticleId)
+		throws Exception {
+
+		KnowledgeBaseArticleResource knowledgeBaseArticleResource =
+			_createKnowledgeBaseArticleResource();
+
+		return knowledgeBaseArticleResource.deleteKnowledgeBaseArticle(
+			knowledgeBaseArticleId);
+	}
+
+	@GraphQLInvokeDetached
+	public KnowledgeBaseArticle putKnowledgeBaseArticle(
+			@GraphQLName("knowledge-base-article-id") Long
+				knowledgeBaseArticleId,
+			@GraphQLName("MultipartBody") MultipartBody multipartBody)
+		throws Exception {
+
+		KnowledgeBaseArticleResource knowledgeBaseArticleResource =
+			_createKnowledgeBaseArticleResource();
+
+		return knowledgeBaseArticleResource.putKnowledgeBaseArticle(
+			knowledgeBaseArticleId, multipartBody);
+	}
+
+	@GraphQLField
+	@GraphQLInvokeDetached
+	public KnowledgeBaseArticle postKnowledgeBaseArticleKnowledgeBaseArticle(
+			@GraphQLName("knowledge-base-article-id") Long
+				knowledgeBaseArticleId,
+			@GraphQLName("MultipartBody") MultipartBody multipartBody)
+		throws Exception {
+
+		KnowledgeBaseArticleResource knowledgeBaseArticleResource =
+			_createKnowledgeBaseArticleResource();
+
+		return knowledgeBaseArticleResource.
+			postKnowledgeBaseArticleKnowledgeBaseArticle(
+				knowledgeBaseArticleId, multipartBody);
+	}
+
 	private static BlogPostingResource _createBlogPostingResource() {
 		return new BlogPostingResourceImpl();
 	}
@@ -189,6 +321,16 @@ public class Mutation {
 
 	private static CommentResource _createCommentResource() {
 		return new CommentResourceImpl();
+	}
+
+	private static FolderResource _createFolderResource() {
+		return new FolderResourceImpl();
+	}
+
+	private static KnowledgeBaseArticleResource
+		_createKnowledgeBaseArticleResource() {
+
+		return new KnowledgeBaseArticleResourceImpl();
 	}
 
 }

@@ -17,12 +17,18 @@ package com.liferay.headless.collaboration.internal.graphql.query.v1_0;
 import com.liferay.headless.collaboration.dto.v1_0.BlogPosting;
 import com.liferay.headless.collaboration.dto.v1_0.BlogPostingImage;
 import com.liferay.headless.collaboration.dto.v1_0.Comment;
+import com.liferay.headless.collaboration.dto.v1_0.Folder;
+import com.liferay.headless.collaboration.dto.v1_0.KnowledgeBaseArticle;
 import com.liferay.headless.collaboration.internal.resource.v1_0.BlogPostingImageResourceImpl;
 import com.liferay.headless.collaboration.internal.resource.v1_0.BlogPostingResourceImpl;
 import com.liferay.headless.collaboration.internal.resource.v1_0.CommentResourceImpl;
+import com.liferay.headless.collaboration.internal.resource.v1_0.FolderResourceImpl;
+import com.liferay.headless.collaboration.internal.resource.v1_0.KnowledgeBaseArticleResourceImpl;
 import com.liferay.headless.collaboration.resource.v1_0.BlogPostingImageResource;
 import com.liferay.headless.collaboration.resource.v1_0.BlogPostingResource;
 import com.liferay.headless.collaboration.resource.v1_0.CommentResource;
+import com.liferay.headless.collaboration.resource.v1_0.FolderResource;
+import com.liferay.headless.collaboration.resource.v1_0.KnowledgeBaseArticleResource;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
@@ -177,6 +183,149 @@ public class Query {
 		return paginationPage.getItems();
 	}
 
+	@GraphQLField
+	@GraphQLInvokeDetached
+	public Collection<Folder> getContentSpaceFoldersPage(
+			@GraphQLName("content-space-id") Long contentSpaceId,
+			@GraphQLName("pageSize") int pageSize,
+			@GraphQLName("page") int page)
+		throws Exception {
+
+		FolderResource folderResource = _createFolderResource();
+
+		folderResource.setContextCompany(
+			CompanyLocalServiceUtil.getCompany(
+				CompanyThreadLocal.getCompanyId()));
+
+		Page paginationPage = folderResource.getContentSpaceFoldersPage(
+			contentSpaceId, Pagination.of(pageSize, page));
+
+		return paginationPage.getItems();
+	}
+
+	@GraphQLField
+	@GraphQLInvokeDetached
+	public Folder getFolder(@GraphQLName("folder-id") Long folderId)
+		throws Exception {
+
+		FolderResource folderResource = _createFolderResource();
+
+		folderResource.setContextCompany(
+			CompanyLocalServiceUtil.getCompany(
+				CompanyThreadLocal.getCompanyId()));
+
+		return folderResource.getFolder(folderId);
+	}
+
+	@GraphQLField
+	@GraphQLInvokeDetached
+	public Collection<Folder> getFolderFoldersPage(
+			@GraphQLName("folder-id") Long folderId,
+			@GraphQLName("pageSize") int pageSize,
+			@GraphQLName("page") int page)
+		throws Exception {
+
+		FolderResource folderResource = _createFolderResource();
+
+		folderResource.setContextCompany(
+			CompanyLocalServiceUtil.getCompany(
+				CompanyThreadLocal.getCompanyId()));
+
+		Page paginationPage = folderResource.getFolderFoldersPage(
+			folderId, Pagination.of(pageSize, page));
+
+		return paginationPage.getItems();
+	}
+
+	@GraphQLField
+	@GraphQLInvokeDetached
+	public Collection<KnowledgeBaseArticle>
+			getContentSpaceKnowledgeBaseArticlesPage(
+				@GraphQLName("content-space-id") Long contentSpaceId,
+				@GraphQLName("pageSize") int pageSize,
+				@GraphQLName("page") int page)
+		throws Exception {
+
+		KnowledgeBaseArticleResource knowledgeBaseArticleResource =
+			_createKnowledgeBaseArticleResource();
+
+		knowledgeBaseArticleResource.setContextCompany(
+			CompanyLocalServiceUtil.getCompany(
+				CompanyThreadLocal.getCompanyId()));
+
+		Page paginationPage =
+			knowledgeBaseArticleResource.
+				getContentSpaceKnowledgeBaseArticlesPage(
+					contentSpaceId, Pagination.of(pageSize, page));
+
+		return paginationPage.getItems();
+	}
+
+	@GraphQLField
+	@GraphQLInvokeDetached
+	public Collection<KnowledgeBaseArticle> getFolderKnowledgeBaseArticlesPage(
+			@GraphQLName("folder-id") Long folderId,
+			@GraphQLName("pageSize") int pageSize,
+			@GraphQLName("page") int page)
+		throws Exception {
+
+		KnowledgeBaseArticleResource knowledgeBaseArticleResource =
+			_createKnowledgeBaseArticleResource();
+
+		knowledgeBaseArticleResource.setContextCompany(
+			CompanyLocalServiceUtil.getCompany(
+				CompanyThreadLocal.getCompanyId()));
+
+		Page paginationPage =
+			knowledgeBaseArticleResource.getFolderKnowledgeBaseArticlesPage(
+				folderId, Pagination.of(pageSize, page));
+
+		return paginationPage.getItems();
+	}
+
+	@GraphQLField
+	@GraphQLInvokeDetached
+	public KnowledgeBaseArticle getKnowledgeBaseArticle(
+			@GraphQLName("knowledge-base-article-id") Long
+				knowledgeBaseArticleId)
+		throws Exception {
+
+		KnowledgeBaseArticleResource knowledgeBaseArticleResource =
+			_createKnowledgeBaseArticleResource();
+
+		knowledgeBaseArticleResource.setContextCompany(
+			CompanyLocalServiceUtil.getCompany(
+				CompanyThreadLocal.getCompanyId()));
+
+		return knowledgeBaseArticleResource.getKnowledgeBaseArticle(
+			knowledgeBaseArticleId);
+	}
+
+	@GraphQLField
+	@GraphQLInvokeDetached
+	public Collection<KnowledgeBaseArticle>
+			getKnowledgeBaseArticleKnowledgeBaseArticlesPage(
+				@GraphQLName("knowledge-base-article-id") Long
+					knowledgeBaseArticleId,
+				@GraphQLName("pageSize") int pageSize,
+				@GraphQLName("page") int page)
+		throws Exception {
+
+		KnowledgeBaseArticleResource knowledgeBaseArticleResource =
+			_createKnowledgeBaseArticleResource();
+
+		knowledgeBaseArticleResource.setContextCompany(
+			CompanyLocalServiceUtil.getCompany(
+				CompanyThreadLocal.getCompanyId()));
+
+		Page paginationPage =
+			knowledgeBaseArticleResource.
+				getKnowledgeBaseArticleKnowledgeBaseArticlesPage(
+					knowledgeBaseArticleId, Pagination.of(pageSize, page));
+
+		return paginationPage.getItems();
+	}
+
 	private static BlogPostingResource _createBlogPostingResource() {
 		return new BlogPostingResourceImpl();
 	}
@@ -187,6 +336,16 @@ public class Query {
 
 	private static CommentResource _createCommentResource() {
 		return new CommentResourceImpl();
+	}
+
+	private static FolderResource _createFolderResource() {
+		return new FolderResourceImpl();
+	}
+
+	private static KnowledgeBaseArticleResource
+		_createKnowledgeBaseArticleResource() {
+
+		return new KnowledgeBaseArticleResourceImpl();
 	}
 
 }

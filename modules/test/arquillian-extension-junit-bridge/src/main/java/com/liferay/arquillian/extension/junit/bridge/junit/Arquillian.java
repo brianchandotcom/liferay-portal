@@ -15,10 +15,13 @@
 package com.liferay.arquillian.extension.junit.bridge.junit;
 
 import com.liferay.arquillian.extension.junit.bridge.client.BndBundleUtil;
-import com.liferay.arquillian.extension.junit.bridge.client.ClientExecutorStatement;
 import com.liferay.arquillian.extension.junit.bridge.client.MBeans;
+import com.liferay.arquillian.extension.junit.bridge.jmx.JMXTestRunnerMBean;
+import com.liferay.petra.io.unsync.UnsyncByteArrayInputStream;
 
 import java.io.Closeable;
+import java.io.InputStream;
+import java.io.ObjectInputStream;
 
 import java.lang.annotation.Annotation;
 
@@ -46,7 +49,6 @@ import org.junit.runner.notification.RunNotifier;
 import org.junit.runners.model.FrameworkField;
 import org.junit.runners.model.FrameworkMethod;
 import org.junit.runners.model.MultipleFailureException;
-import org.junit.runners.model.Statement;
 import org.junit.runners.model.TestClass;
 
 import org.osgi.jmx.framework.FrameworkMBean;
@@ -104,6 +106,12 @@ public class Arquillian extends Runner implements Filterable {
 		}
 
 		try (Closeable closeable = _installBundle()) {
+
+			// Enfore client side test class initialization, in case it has
+			// static blocks to do preparation setup before server tests start.
+
+			Class.forName(_clazz.getName(), true, _clazz.getClassLoader());
+
 			for (FrameworkMethod frameworkMethod : frameworkMethods) {
 				_runMethod(frameworkMethod, runNotifier);
 			}
@@ -138,7 +146,8 @@ public class Arquillian extends Runner implements Filterable {
 	}
 
 	private void _runMethod(
-		FrameworkMethod frameworkMethod, RunNotifier runNotifier) {
+			FrameworkMethod frameworkMethod, RunNotifier runNotifier)
+		throws Exception {
 
 		Description description = Description.createTestDescription(
 			_clazz, frameworkMethod.getName(),
@@ -146,24 +155,36 @@ public class Arquillian extends Runner implements Filterable {
 
 		runNotifier.fireTestStarted(description);
 
-		try {
-			Statement statement = new ClientExecutorStatement(
-				_clazz.newInstance(), frameworkMethod.getMethod());
+		JMXTestRunnerMBean jmxTestRunnerMBean = MBeans.getJmxTestRunnerMBean();
 
-			statement.evaluate();
-		}
-		catch (AssumptionViolatedException ave) {
-			runNotifier.fireTestAssumptionFailed(new Failure(description, ave));
-		}
-		catch (MultipleFailureException mfe) {
-			for (Throwable t : mfe.getFailures()) {
-				runNotifier.fireTestFailure(new Failure(description, t));
+		byte[] data = jmxTestRunnerMBean.runTestMethod(
+			_clazz.getName(), frameworkMethod.getName());
+
+		try (InputStream inputStream = new UnsyncByteArrayInputStream(data);
+			ObjectInputStream oos = new ObjectInputStream(inputStream)) {
+
+			Throwable throwable = (Throwable)oos.readObject();
+
+			if (throwable != null) {
+				if (throwable instanceof AssumptionViolatedException) {
+					runNotifier.fireTestAssumptionFailed(
+						new Failure(description, throwable));
+				}
+				else if (throwable instanceof MultipleFailureException) {
+					MultipleFailureException mfe =
+						(MultipleFailureException)throwable;
+
+					for (Throwable t : mfe.getFailures()) {
+						runNotifier.fireTestFailure(
+							new Failure(description, t));
+					}
+				}
+				else {
+					runNotifier.fireTestFailure(
+						new Failure(description, throwable));
+				}
 			}
-		}
-		catch (Throwable t) {
-			runNotifier.fireTestFailure(new Failure(description, t));
-		}
-		finally {
+
 			runNotifier.fireTestFinished(description);
 		}
 	}

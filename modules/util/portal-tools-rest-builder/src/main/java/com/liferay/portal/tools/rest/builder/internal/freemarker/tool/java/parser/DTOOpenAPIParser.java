@@ -37,25 +37,11 @@ public class DTOOpenAPIParser {
 	public static List<JavaMethodParameter> getJavaMethodParameters(
 		ConfigYAML configYAML, OpenAPIYAML openAPIYAML, Schema schema) {
 
-		Map<String, Schema> propertySchemas = null;
-
-		Items items = schema.getItems();
-
-		if (items != null) {
-			propertySchemas = items.getPropertySchemas();
-		}
-		else {
-			propertySchemas = schema.getPropertySchemas();
-		}
-
-		if (propertySchemas == null) {
-			return Collections.emptyList();
-		}
-
 		Map<String, String> javaDataTypeMap =
 			OpenAPIParserUtil.getJavaDataTypeMap(configYAML, openAPIYAML);
-		List<JavaMethodParameter> javaMethodParameters = new ArrayList<>(
-			propertySchemas.size());
+		List<JavaMethodParameter> javaMethodParameters = new ArrayList<>();
+
+		Map<String, Schema> propertySchemas = _getPropertySchemas(schema);
 
 		for (Map.Entry<String, Schema> entry : propertySchemas.entrySet()) {
 			String propertySchemaName = entry.getKey();
@@ -123,6 +109,25 @@ public class DTOOpenAPIParser {
 
 		return OpenAPIParserUtil.getJavaDataType(
 			javaDataTypeMap, propertySchema);
+	}
+
+	private static Map<String, Schema> _getPropertySchemas(Schema schema) {
+		Map<String, Schema> propertySchemas = null;
+
+		Items items = schema.getItems();
+
+		if (items != null) {
+			propertySchemas = items.getPropertySchemas();
+		}
+		else {
+			propertySchemas = schema.getPropertySchemas();
+		}
+
+		if (propertySchemas == null) {
+			return Collections.emptyMap();
+		}
+
+		return propertySchemas;
 	}
 
 }

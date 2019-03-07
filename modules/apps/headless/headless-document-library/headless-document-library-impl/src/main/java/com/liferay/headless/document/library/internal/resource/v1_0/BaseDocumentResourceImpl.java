@@ -30,6 +30,8 @@ import com.liferay.portal.vulcan.util.TransformUtil;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.Parameters;
 import io.swagger.v3.oas.annotations.enums.ParameterIn;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import io.swagger.v3.oas.annotations.tags.Tags;
 
 import java.net.URI;
 
@@ -71,6 +73,7 @@ public abstract class BaseDocumentResourceImpl implements DocumentResource {
 	)
 	@Path("/content-spaces/{content-space-id}/documents")
 	@Produces("application/json")
+	@Tags(value = {@Tag(name = "Document")})
 	public Page<Document> getContentSpaceDocumentsPage(
 			@PathParam("content-space-id") Long contentSpaceId,
 			@Context Filter filter, @Context Pagination pagination,
@@ -85,6 +88,7 @@ public abstract class BaseDocumentResourceImpl implements DocumentResource {
 	@POST
 	@Path("/content-spaces/{content-space-id}/documents")
 	@Produces("application/json")
+	@Tags(value = {@Tag(name = "Document")})
 	public Document postContentSpaceDocument(
 			@PathParam("content-space-id") Long contentSpaceId,
 			MultipartBody multipartBody)
@@ -97,6 +101,7 @@ public abstract class BaseDocumentResourceImpl implements DocumentResource {
 	@DELETE
 	@Path("/documents/{document-id}")
 	@Produces("application/json")
+	@Tags(value = {@Tag(name = "Document")})
 	public boolean deleteDocument(@PathParam("document-id") Long documentId)
 		throws Exception {
 
@@ -107,6 +112,7 @@ public abstract class BaseDocumentResourceImpl implements DocumentResource {
 	@GET
 	@Path("/documents/{document-id}")
 	@Produces("application/json")
+	@Tags(value = {@Tag(name = "Document")})
 	public Document getDocument(@PathParam("document-id") Long documentId)
 		throws Exception {
 
@@ -118,6 +124,7 @@ public abstract class BaseDocumentResourceImpl implements DocumentResource {
 	@PATCH
 	@Path("/documents/{document-id}")
 	@Produces("application/json")
+	@Tags(value = {@Tag(name = "Document")})
 	public Document patchDocument(
 			@PathParam("document-id") Long documentId,
 			MultipartBody multipartBody)
@@ -131,6 +138,7 @@ public abstract class BaseDocumentResourceImpl implements DocumentResource {
 	@PUT
 	@Path("/documents/{document-id}")
 	@Produces("application/json")
+	@Tags(value = {@Tag(name = "Document")})
 	public Document putDocument(
 			@PathParam("document-id") Long documentId,
 			MultipartBody multipartBody)
@@ -151,6 +159,7 @@ public abstract class BaseDocumentResourceImpl implements DocumentResource {
 	)
 	@Path("/folders/{folder-id}/documents")
 	@Produces("application/json")
+	@Tags(value = {@Tag(name = "Document")})
 	public Page<Document> getFolderDocumentsPage(
 			@PathParam("folder-id") Long folderId, @Context Filter filter,
 			@Context Pagination pagination, @Context Sort[] sorts)
@@ -164,6 +173,7 @@ public abstract class BaseDocumentResourceImpl implements DocumentResource {
 	@POST
 	@Path("/folders/{folder-id}/documents")
 	@Produces("application/json")
+	@Tags(value = {@Tag(name = "Document")})
 	public Document postFolderDocument(
 			@PathParam("folder-id") Long folderId, MultipartBody multipartBody)
 		throws Exception {

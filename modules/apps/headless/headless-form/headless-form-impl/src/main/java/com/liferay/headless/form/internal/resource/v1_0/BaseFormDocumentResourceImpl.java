@@ -22,6 +22,9 @@ import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.portal.vulcan.util.TransformUtil;
 
+import io.swagger.v3.oas.annotations.tags.Tag;
+import io.swagger.v3.oas.annotations.tags.Tags;
+
 import java.net.URI;
 
 import java.util.List;
@@ -50,6 +53,7 @@ public abstract class BaseFormDocumentResourceImpl
 	@DELETE
 	@Path("/form-documents/{form-document-id}")
 	@Produces("application/json")
+	@Tags(value = {@Tag(name = "FormDocument")})
 	public boolean deleteFormDocument(
 			@PathParam("form-document-id") Long formDocumentId)
 		throws Exception {
@@ -61,6 +65,7 @@ public abstract class BaseFormDocumentResourceImpl
 	@GET
 	@Path("/form-documents/{form-document-id}")
 	@Produces("application/json")
+	@Tags(value = {@Tag(name = "FormDocument")})
 	public FormDocument getFormDocument(
 			@PathParam("form-document-id") Long formDocumentId)
 		throws Exception {

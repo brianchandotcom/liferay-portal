@@ -27,6 +27,8 @@ import com.liferay.portal.vulcan.util.TransformUtil;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.Parameters;
 import io.swagger.v3.oas.annotations.enums.ParameterIn;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import io.swagger.v3.oas.annotations.tags.Tags;
 
 import java.net.URI;
 
@@ -61,6 +63,7 @@ public abstract class BasePhoneResourceImpl implements PhoneResource {
 	)
 	@Path("/phones")
 	@Produces("application/json")
+	@Tags(value = {@Tag(name = "Phone")})
 	public Page<Phone> getPhonesPage(
 			@PathParam("generic-parent-id") Object genericParentId,
 			@Context Pagination pagination)
@@ -73,6 +76,7 @@ public abstract class BasePhoneResourceImpl implements PhoneResource {
 	@GET
 	@Path("/phones/{phone-id}")
 	@Produces("application/json")
+	@Tags(value = {@Tag(name = "Phone")})
 	public Phone getPhone(@PathParam("phone-id") Long phoneId)
 		throws Exception {
 

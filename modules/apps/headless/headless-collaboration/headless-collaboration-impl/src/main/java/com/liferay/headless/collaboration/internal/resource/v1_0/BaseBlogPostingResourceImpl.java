@@ -30,6 +30,8 @@ import com.liferay.portal.vulcan.util.TransformUtil;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.Parameters;
 import io.swagger.v3.oas.annotations.enums.ParameterIn;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import io.swagger.v3.oas.annotations.tags.Tags;
 
 import java.net.URI;
 
@@ -64,6 +66,7 @@ public abstract class BaseBlogPostingResourceImpl
 	@DELETE
 	@Path("/blog-postings/{blog-posting-id}")
 	@Produces("application/json")
+	@Tags(value = {@Tag(name = "BlogPosting")})
 	public boolean deleteBlogPosting(
 			@PathParam("blog-posting-id") Long blogPostingId)
 		throws Exception {
@@ -75,6 +78,7 @@ public abstract class BaseBlogPostingResourceImpl
 	@GET
 	@Path("/blog-postings/{blog-posting-id}")
 	@Produces("application/json")
+	@Tags(value = {@Tag(name = "BlogPosting")})
 	public BlogPosting getBlogPosting(
 			@PathParam("blog-posting-id") Long blogPostingId)
 		throws Exception {
@@ -87,6 +91,7 @@ public abstract class BaseBlogPostingResourceImpl
 	@PATCH
 	@Path("/blog-postings/{blog-posting-id}")
 	@Produces("application/json")
+	@Tags(value = {@Tag(name = "BlogPosting")})
 	public BlogPosting patchBlogPosting(
 			@PathParam("blog-posting-id") Long blogPostingId,
 			BlogPosting blogPosting)
@@ -172,6 +177,7 @@ public abstract class BaseBlogPostingResourceImpl
 	@PUT
 	@Path("/blog-postings/{blog-posting-id}")
 	@Produces("application/json")
+	@Tags(value = {@Tag(name = "BlogPosting")})
 	public BlogPosting putBlogPosting(
 			@PathParam("blog-posting-id") Long blogPostingId,
 			BlogPosting blogPosting)
@@ -192,6 +198,7 @@ public abstract class BaseBlogPostingResourceImpl
 	)
 	@Path("/content-spaces/{content-space-id}/blog-postings")
 	@Produces("application/json")
+	@Tags(value = {@Tag(name = "BlogPosting")})
 	public Page<BlogPosting> getContentSpaceBlogPostingsPage(
 			@PathParam("content-space-id") Long contentSpaceId,
 			@Context Filter filter, @Context Pagination pagination,
@@ -206,6 +213,7 @@ public abstract class BaseBlogPostingResourceImpl
 	@POST
 	@Path("/content-spaces/{content-space-id}/blog-postings")
 	@Produces("application/json")
+	@Tags(value = {@Tag(name = "BlogPosting")})
 	public BlogPosting postContentSpaceBlogPosting(
 			@PathParam("content-space-id") Long contentSpaceId,
 			BlogPosting blogPosting)

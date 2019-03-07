@@ -27,6 +27,8 @@ import com.liferay.portal.vulcan.util.TransformUtil;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.Parameters;
 import io.swagger.v3.oas.annotations.enums.ParameterIn;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import io.swagger.v3.oas.annotations.tags.Tags;
 
 import java.net.URI;
 
@@ -56,6 +58,7 @@ public abstract class BaseWorkflowLogResourceImpl
 	@GET
 	@Path("/workflow-logs/{workflow-log-id}")
 	@Produces("application/json")
+	@Tags(value = {@Tag(name = "WorkflowLog")})
 	public WorkflowLog getWorkflowLog(
 			@PathParam("workflow-log-id") Long workflowLogId)
 		throws Exception {
@@ -73,6 +76,7 @@ public abstract class BaseWorkflowLogResourceImpl
 	)
 	@Path("/workflow-tasks/{workflow-task-id}/workflow-logs")
 	@Produces("application/json")
+	@Tags(value = {@Tag(name = "WorkflowLog")})
 	public Page<WorkflowLog> getWorkflowTaskWorkflowLogsPage(
 			@PathParam("workflow-task-id") Long workflowTaskId,
 			@Context Pagination pagination)

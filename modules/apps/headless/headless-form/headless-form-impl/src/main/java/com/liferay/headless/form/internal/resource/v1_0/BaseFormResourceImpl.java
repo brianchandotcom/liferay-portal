@@ -27,6 +27,8 @@ import com.liferay.portal.vulcan.util.TransformUtil;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.Parameters;
 import io.swagger.v3.oas.annotations.enums.ParameterIn;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import io.swagger.v3.oas.annotations.tags.Tags;
 
 import java.net.URI;
 
@@ -63,6 +65,7 @@ public abstract class BaseFormResourceImpl implements FormResource {
 	)
 	@Path("/content-spaces/{content-space-id}/forms")
 	@Produces("application/json")
+	@Tags(value = {@Tag(name = "Form")})
 	public Page<Form> getContentSpaceFormsPage(
 			@PathParam("content-space-id") Long contentSpaceId,
 			@Context Pagination pagination)
@@ -75,6 +78,7 @@ public abstract class BaseFormResourceImpl implements FormResource {
 	@GET
 	@Path("/forms/{form-id}")
 	@Produces("application/json")
+	@Tags(value = {@Tag(name = "Form")})
 	public Form getForm(@PathParam("form-id") Long formId) throws Exception {
 		return new Form();
 	}
@@ -84,6 +88,7 @@ public abstract class BaseFormResourceImpl implements FormResource {
 	@POST
 	@Path("/forms/{form-id}/evaluate-context")
 	@Produces("application/json")
+	@Tags(value = {@Tag(name = "Form")})
 	public Form postFormEvaluateContext(
 			@PathParam("form-id") Long formId, Form form)
 		throws Exception {
@@ -95,6 +100,7 @@ public abstract class BaseFormResourceImpl implements FormResource {
 	@GET
 	@Path("/forms/{form-id}/fetch-latest-draft")
 	@Produces("application/json")
+	@Tags(value = {@Tag(name = "Form")})
 	public Form getFormFetchLatestDraft(@PathParam("form-id") Long formId)
 		throws Exception {
 
@@ -106,6 +112,7 @@ public abstract class BaseFormResourceImpl implements FormResource {
 	@POST
 	@Path("/forms/{form-id}/upload-file")
 	@Produces("application/json")
+	@Tags(value = {@Tag(name = "Form")})
 	public Form postFormUploadFile(@PathParam("form-id") Long formId, Form form)
 		throws Exception {
 

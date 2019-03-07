@@ -27,6 +27,8 @@ import com.liferay.portal.vulcan.util.TransformUtil;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.Parameters;
 import io.swagger.v3.oas.annotations.enums.ParameterIn;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import io.swagger.v3.oas.annotations.tags.Tags;
 
 import java.net.URI;
 
@@ -61,6 +63,7 @@ public abstract class BaseWebUrlResourceImpl implements WebUrlResource {
 	)
 	@Path("/web-urls")
 	@Produces("application/json")
+	@Tags(value = {@Tag(name = "WebUrl")})
 	public Page<WebUrl> getWebUrlsPage(
 			@PathParam("generic-parent-id") Object genericParentId,
 			@Context Pagination pagination)
@@ -73,6 +76,7 @@ public abstract class BaseWebUrlResourceImpl implements WebUrlResource {
 	@GET
 	@Path("/web-urls/{web-url-id}")
 	@Produces("application/json")
+	@Tags(value = {@Tag(name = "WebUrl")})
 	public WebUrl getWebUrl(@PathParam("web-url-id") Long webUrlId)
 		throws Exception {
 

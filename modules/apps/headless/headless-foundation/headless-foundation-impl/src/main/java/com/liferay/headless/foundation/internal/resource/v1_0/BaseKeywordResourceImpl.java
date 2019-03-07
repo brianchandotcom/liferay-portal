@@ -29,6 +29,8 @@ import com.liferay.portal.vulcan.util.TransformUtil;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.Parameters;
 import io.swagger.v3.oas.annotations.enums.ParameterIn;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import io.swagger.v3.oas.annotations.tags.Tags;
 
 import java.net.URI;
 
@@ -69,6 +71,7 @@ public abstract class BaseKeywordResourceImpl implements KeywordResource {
 	)
 	@Path("/content-spaces/{content-space-id}/keywords")
 	@Produces("application/json")
+	@Tags(value = {@Tag(name = "Keyword")})
 	public Page<Keyword> getContentSpaceKeywordsPage(
 			@PathParam("content-space-id") Long contentSpaceId,
 			@Context Filter filter, @Context Pagination pagination,
@@ -83,6 +86,7 @@ public abstract class BaseKeywordResourceImpl implements KeywordResource {
 	@POST
 	@Path("/content-spaces/{content-space-id}/keywords")
 	@Produces("application/json")
+	@Tags(value = {@Tag(name = "Keyword")})
 	public Keyword postContentSpaceKeyword(
 			@PathParam("content-space-id") Long contentSpaceId, Keyword keyword)
 		throws Exception {
@@ -94,6 +98,7 @@ public abstract class BaseKeywordResourceImpl implements KeywordResource {
 	@DELETE
 	@Path("/keywords/{keyword-id}")
 	@Produces("application/json")
+	@Tags(value = {@Tag(name = "Keyword")})
 	public boolean deleteKeyword(@PathParam("keyword-id") Long keywordId)
 		throws Exception {
 
@@ -104,6 +109,7 @@ public abstract class BaseKeywordResourceImpl implements KeywordResource {
 	@GET
 	@Path("/keywords/{keyword-id}")
 	@Produces("application/json")
+	@Tags(value = {@Tag(name = "Keyword")})
 	public Keyword getKeyword(@PathParam("keyword-id") Long keywordId)
 		throws Exception {
 
@@ -115,6 +121,7 @@ public abstract class BaseKeywordResourceImpl implements KeywordResource {
 	@PUT
 	@Path("/keywords/{keyword-id}")
 	@Produces("application/json")
+	@Tags(value = {@Tag(name = "Keyword")})
 	public Keyword putKeyword(
 			@PathParam("keyword-id") Long keywordId, Keyword keyword)
 		throws Exception {

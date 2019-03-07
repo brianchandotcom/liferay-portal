@@ -29,6 +29,8 @@ import com.liferay.portal.vulcan.util.TransformUtil;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.Parameters;
 import io.swagger.v3.oas.annotations.enums.ParameterIn;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import io.swagger.v3.oas.annotations.tags.Tags;
 
 import java.net.URI;
 
@@ -61,6 +63,7 @@ public abstract class BaseCommentResourceImpl implements CommentResource {
 	@DELETE
 	@Path("/comments/{comment-id}")
 	@Produces("application/json")
+	@Tags(value = {@Tag(name = "Comment")})
 	public boolean deleteComment(@PathParam("comment-id") Long commentId)
 		throws Exception {
 
@@ -71,6 +74,7 @@ public abstract class BaseCommentResourceImpl implements CommentResource {
 	@GET
 	@Path("/comments/{comment-id}")
 	@Produces("application/json")
+	@Tags(value = {@Tag(name = "Comment")})
 	public Comment getComment(@PathParam("comment-id") Long commentId)
 		throws Exception {
 
@@ -82,6 +86,7 @@ public abstract class BaseCommentResourceImpl implements CommentResource {
 	@PUT
 	@Path("/comments/{comment-id}")
 	@Produces("application/json")
+	@Tags(value = {@Tag(name = "Comment")})
 	public Comment putComment(
 			@PathParam("comment-id") Long commentId, Comment comment)
 		throws Exception {
@@ -101,6 +106,7 @@ public abstract class BaseCommentResourceImpl implements CommentResource {
 	)
 	@Path("/comments/{comment-id}/comments")
 	@Produces("application/json")
+	@Tags(value = {@Tag(name = "Comment")})
 	public Page<Comment> getCommentCommentsPage(
 			@PathParam("comment-id") Long commentId, @Context Filter filter,
 			@Context Pagination pagination, @Context Sort[] sorts)
@@ -114,6 +120,7 @@ public abstract class BaseCommentResourceImpl implements CommentResource {
 	@POST
 	@Path("/comments/{comment-id}/comments")
 	@Produces("application/json")
+	@Tags(value = {@Tag(name = "Comment")})
 	public Comment postCommentComment(
 			@PathParam("comment-id") Long commentId, Comment comment)
 		throws Exception {
@@ -133,6 +140,7 @@ public abstract class BaseCommentResourceImpl implements CommentResource {
 	)
 	@Path("/documents/{document-id}/comments")
 	@Produces("application/json")
+	@Tags(value = {@Tag(name = "Comment")})
 	public Page<Comment> getDocumentCommentsPage(
 			@PathParam("document-id") Long documentId, @Context Filter filter,
 			@Context Pagination pagination, @Context Sort[] sorts)
@@ -146,6 +154,7 @@ public abstract class BaseCommentResourceImpl implements CommentResource {
 	@POST
 	@Path("/documents/{document-id}/comments")
 	@Produces("application/json")
+	@Tags(value = {@Tag(name = "Comment")})
 	public Comment postDocumentComment(
 			@PathParam("document-id") Long documentId, Comment comment)
 		throws Exception {

@@ -30,6 +30,8 @@ import com.liferay.portal.vulcan.util.TransformUtil;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.Parameters;
 import io.swagger.v3.oas.annotations.enums.ParameterIn;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import io.swagger.v3.oas.annotations.tags.Tags;
 
 import java.net.URI;
 
@@ -72,6 +74,7 @@ public abstract class BaseStructuredContentResourceImpl
 	)
 	@Path("/content-spaces/{content-space-id}/structured-contents")
 	@Produces("application/json")
+	@Tags(value = {@Tag(name = "StructuredContent")})
 	public Page<StructuredContent> getContentSpaceStructuredContentsPage(
 			@PathParam("content-space-id") Long contentSpaceId,
 			@Context Filter filter, @Context Pagination pagination,
@@ -86,6 +89,7 @@ public abstract class BaseStructuredContentResourceImpl
 	@POST
 	@Path("/content-spaces/{content-space-id}/structured-contents")
 	@Produces("application/json")
+	@Tags(value = {@Tag(name = "StructuredContent")})
 	public StructuredContent postContentSpaceStructuredContent(
 			@PathParam("content-space-id") Long contentSpaceId,
 			StructuredContent structuredContent)
@@ -106,6 +110,7 @@ public abstract class BaseStructuredContentResourceImpl
 	)
 	@Path("/content-structures/{content-structure-id}/structured-contents")
 	@Produces("application/json")
+	@Tags(value = {@Tag(name = "StructuredContent")})
 	public Page<StructuredContent> getContentStructureStructuredContentsPage(
 			@PathParam("content-structure-id") Long contentStructureId,
 			@Context Filter filter, @Context Pagination pagination,
@@ -119,6 +124,7 @@ public abstract class BaseStructuredContentResourceImpl
 	@DELETE
 	@Path("/structured-contents/{structured-content-id}")
 	@Produces("application/json")
+	@Tags(value = {@Tag(name = "StructuredContent")})
 	public boolean deleteStructuredContent(
 			@PathParam("structured-content-id") Long structuredContentId)
 		throws Exception {
@@ -130,6 +136,7 @@ public abstract class BaseStructuredContentResourceImpl
 	@GET
 	@Path("/structured-contents/{structured-content-id}")
 	@Produces("application/json")
+	@Tags(value = {@Tag(name = "StructuredContent")})
 	public StructuredContent getStructuredContent(
 			@PathParam("structured-content-id") Long structuredContentId)
 		throws Exception {
@@ -142,6 +149,7 @@ public abstract class BaseStructuredContentResourceImpl
 	@PATCH
 	@Path("/structured-contents/{structured-content-id}")
 	@Produces("application/json")
+	@Tags(value = {@Tag(name = "StructuredContent")})
 	public StructuredContent patchStructuredContent(
 			@PathParam("structured-content-id") Long structuredContentId,
 			StructuredContent structuredContent)
@@ -225,6 +233,7 @@ public abstract class BaseStructuredContentResourceImpl
 	@PUT
 	@Path("/structured-contents/{structured-content-id}")
 	@Produces("application/json")
+	@Tags(value = {@Tag(name = "StructuredContent")})
 	public StructuredContent putStructuredContent(
 			@PathParam("structured-content-id") Long structuredContentId,
 			StructuredContent structuredContent)
@@ -239,6 +248,7 @@ public abstract class BaseStructuredContentResourceImpl
 		"/structured-contents/{structured-content-id}/rendered-content/{template-id}"
 	)
 	@Produces("text/html")
+	@Tags(value = {@Tag(name = "StructuredContent")})
 	public String getStructuredContentRenderedContentTemplate(
 			@PathParam("structured-content-id") Long structuredContentId,
 			@PathParam("template-id") Long templateId)

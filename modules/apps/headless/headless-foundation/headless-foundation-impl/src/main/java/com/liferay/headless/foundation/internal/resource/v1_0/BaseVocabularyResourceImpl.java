@@ -29,6 +29,8 @@ import com.liferay.portal.vulcan.util.TransformUtil;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.Parameters;
 import io.swagger.v3.oas.annotations.enums.ParameterIn;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import io.swagger.v3.oas.annotations.tags.Tags;
 
 import java.net.URI;
 
@@ -69,6 +71,7 @@ public abstract class BaseVocabularyResourceImpl implements VocabularyResource {
 	)
 	@Path("/content-spaces/{content-space-id}/vocabularies")
 	@Produces("application/json")
+	@Tags(value = {@Tag(name = "Vocabulary")})
 	public Page<Vocabulary> getContentSpaceVocabulariesPage(
 			@PathParam("content-space-id") Long contentSpaceId,
 			@Context Filter filter, @Context Pagination pagination,
@@ -83,6 +86,7 @@ public abstract class BaseVocabularyResourceImpl implements VocabularyResource {
 	@POST
 	@Path("/content-spaces/{content-space-id}/vocabularies")
 	@Produces("application/json")
+	@Tags(value = {@Tag(name = "Vocabulary")})
 	public Vocabulary postContentSpaceVocabulary(
 			@PathParam("content-space-id") Long contentSpaceId,
 			Vocabulary vocabulary)
@@ -95,6 +99,7 @@ public abstract class BaseVocabularyResourceImpl implements VocabularyResource {
 	@DELETE
 	@Path("/vocabularies/{vocabulary-id}")
 	@Produces("application/json")
+	@Tags(value = {@Tag(name = "Vocabulary")})
 	public boolean deleteVocabulary(
 			@PathParam("vocabulary-id") Long vocabularyId)
 		throws Exception {
@@ -106,6 +111,7 @@ public abstract class BaseVocabularyResourceImpl implements VocabularyResource {
 	@GET
 	@Path("/vocabularies/{vocabulary-id}")
 	@Produces("application/json")
+	@Tags(value = {@Tag(name = "Vocabulary")})
 	public Vocabulary getVocabulary(
 			@PathParam("vocabulary-id") Long vocabularyId)
 		throws Exception {
@@ -118,6 +124,7 @@ public abstract class BaseVocabularyResourceImpl implements VocabularyResource {
 	@PUT
 	@Path("/vocabularies/{vocabulary-id}")
 	@Produces("application/json")
+	@Tags(value = {@Tag(name = "Vocabulary")})
 	public Vocabulary putVocabulary(
 			@PathParam("vocabulary-id") Long vocabularyId,
 			Vocabulary vocabulary)

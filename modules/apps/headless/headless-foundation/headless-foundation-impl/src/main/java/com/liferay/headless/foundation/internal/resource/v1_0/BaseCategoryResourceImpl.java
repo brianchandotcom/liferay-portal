@@ -29,6 +29,8 @@ import com.liferay.portal.vulcan.util.TransformUtil;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.Parameters;
 import io.swagger.v3.oas.annotations.enums.ParameterIn;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import io.swagger.v3.oas.annotations.tags.Tags;
 
 import java.net.URI;
 
@@ -61,6 +63,7 @@ public abstract class BaseCategoryResourceImpl implements CategoryResource {
 	@DELETE
 	@Path("/categories/{category-id}")
 	@Produces("application/json")
+	@Tags(value = {@Tag(name = "Category")})
 	public boolean deleteCategory(@PathParam("category-id") Long categoryId)
 		throws Exception {
 
@@ -71,6 +74,7 @@ public abstract class BaseCategoryResourceImpl implements CategoryResource {
 	@GET
 	@Path("/categories/{category-id}")
 	@Produces("application/json")
+	@Tags(value = {@Tag(name = "Category")})
 	public Category getCategory(@PathParam("category-id") Long categoryId)
 		throws Exception {
 
@@ -82,6 +86,7 @@ public abstract class BaseCategoryResourceImpl implements CategoryResource {
 	@PUT
 	@Path("/categories/{category-id}")
 	@Produces("application/json")
+	@Tags(value = {@Tag(name = "Category")})
 	public Category putCategory(
 			@PathParam("category-id") Long categoryId, Category category)
 		throws Exception {
@@ -101,6 +106,7 @@ public abstract class BaseCategoryResourceImpl implements CategoryResource {
 	)
 	@Path("/categories/{category-id}/categories")
 	@Produces("application/json")
+	@Tags(value = {@Tag(name = "Category")})
 	public Page<Category> getCategoryCategoriesPage(
 			@PathParam("category-id") Long categoryId, @Context Filter filter,
 			@Context Pagination pagination, @Context Sort[] sorts)
@@ -114,6 +120,7 @@ public abstract class BaseCategoryResourceImpl implements CategoryResource {
 	@POST
 	@Path("/categories/{category-id}/categories")
 	@Produces("application/json")
+	@Tags(value = {@Tag(name = "Category")})
 	public Category postCategoryCategory(
 			@PathParam("category-id") Long categoryId, Category category)
 		throws Exception {
@@ -133,6 +140,7 @@ public abstract class BaseCategoryResourceImpl implements CategoryResource {
 	)
 	@Path("/vocabularies/{vocabulary-id}/categories")
 	@Produces("application/json")
+	@Tags(value = {@Tag(name = "Category")})
 	public Page<Category> getVocabularyCategoriesPage(
 			@PathParam("vocabulary-id") Long vocabularyId,
 			@Context Filter filter, @Context Pagination pagination,
@@ -147,6 +155,7 @@ public abstract class BaseCategoryResourceImpl implements CategoryResource {
 	@POST
 	@Path("/vocabularies/{vocabulary-id}/categories")
 	@Produces("application/json")
+	@Tags(value = {@Tag(name = "Category")})
 	public Category postVocabularyCategory(
 			@PathParam("vocabulary-id") Long vocabularyId, Category category)
 		throws Exception {

@@ -27,6 +27,8 @@ import com.liferay.portal.vulcan.util.TransformUtil;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.Parameters;
 import io.swagger.v3.oas.annotations.enums.ParameterIn;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import io.swagger.v3.oas.annotations.tags.Tags;
 
 import java.net.URI;
 
@@ -64,6 +66,7 @@ public abstract class BaseWorkflowTaskResourceImpl
 	)
 	@Path("/roles/{role-id}/workflow-tasks")
 	@Produces("application/json")
+	@Tags(value = {@Tag(name = "WorkflowTask")})
 	public Page<WorkflowTask> getRoleWorkflowTasksPage(
 			@PathParam("role-id") Long roleId, @Context Pagination pagination)
 		throws Exception {
@@ -81,6 +84,7 @@ public abstract class BaseWorkflowTaskResourceImpl
 	)
 	@Path("/workflow-tasks")
 	@Produces("application/json")
+	@Tags(value = {@Tag(name = "WorkflowTask")})
 	public Page<WorkflowTask> getWorkflowTasksPage(
 			@Context Pagination pagination)
 		throws Exception {
@@ -92,6 +96,7 @@ public abstract class BaseWorkflowTaskResourceImpl
 	@GET
 	@Path("/workflow-tasks/{workflow-task-id}")
 	@Produces("application/json")
+	@Tags(value = {@Tag(name = "WorkflowTask")})
 	public WorkflowTask getWorkflowTask(
 			@PathParam("workflow-task-id") Long workflowTaskId)
 		throws Exception {
@@ -104,6 +109,7 @@ public abstract class BaseWorkflowTaskResourceImpl
 	@POST
 	@Path("/workflow-tasks/{workflow-task-id}/assign-to-me")
 	@Produces("application/json")
+	@Tags(value = {@Tag(name = "WorkflowTask")})
 	public WorkflowTask postWorkflowTaskAssignToMe(
 			@PathParam("workflow-task-id") Long workflowTaskId,
 			WorkflowTask workflowTask)
@@ -117,6 +123,7 @@ public abstract class BaseWorkflowTaskResourceImpl
 	@POST
 	@Path("/workflow-tasks/{workflow-task-id}/assign-to-user")
 	@Produces("application/json")
+	@Tags(value = {@Tag(name = "WorkflowTask")})
 	public WorkflowTask postWorkflowTaskAssignToUser(
 			@PathParam("workflow-task-id") Long workflowTaskId,
 			WorkflowTask workflowTask)
@@ -130,6 +137,7 @@ public abstract class BaseWorkflowTaskResourceImpl
 	@POST
 	@Path("/workflow-tasks/{workflow-task-id}/change-transition")
 	@Produces("application/json")
+	@Tags(value = {@Tag(name = "WorkflowTask")})
 	public WorkflowTask postWorkflowTaskChangeTransition(
 			@PathParam("workflow-task-id") Long workflowTaskId,
 			WorkflowTask workflowTask)
@@ -143,6 +151,7 @@ public abstract class BaseWorkflowTaskResourceImpl
 	@POST
 	@Path("/workflow-tasks/{workflow-task-id}/update-due-date")
 	@Produces("application/json")
+	@Tags(value = {@Tag(name = "WorkflowTask")})
 	public WorkflowTask postWorkflowTaskUpdateDueDate(
 			@PathParam("workflow-task-id") Long workflowTaskId,
 			WorkflowTask workflowTask)

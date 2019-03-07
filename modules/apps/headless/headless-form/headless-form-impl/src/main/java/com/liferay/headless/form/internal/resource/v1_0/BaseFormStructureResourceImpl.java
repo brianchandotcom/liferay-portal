@@ -27,6 +27,8 @@ import com.liferay.portal.vulcan.util.TransformUtil;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.Parameters;
 import io.swagger.v3.oas.annotations.enums.ParameterIn;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import io.swagger.v3.oas.annotations.tags.Tags;
 
 import java.net.URI;
 
@@ -62,6 +64,7 @@ public abstract class BaseFormStructureResourceImpl
 	)
 	@Path("/content-spaces/{content-space-id}/form-structures")
 	@Produces("application/json")
+	@Tags(value = {@Tag(name = "FormStructure")})
 	public Page<FormStructure> getContentSpaceFormStructuresPage(
 			@PathParam("content-space-id") Long contentSpaceId,
 			@Context Pagination pagination)
@@ -74,6 +77,7 @@ public abstract class BaseFormStructureResourceImpl
 	@GET
 	@Path("/form-structures/{form-structure-id}")
 	@Produces("application/json")
+	@Tags(value = {@Tag(name = "FormStructure")})
 	public FormStructure getFormStructure(
 			@PathParam("form-structure-id") Long formStructureId)
 		throws Exception {

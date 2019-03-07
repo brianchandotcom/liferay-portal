@@ -27,6 +27,8 @@ import com.liferay.portal.vulcan.util.TransformUtil;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.Parameters;
 import io.swagger.v3.oas.annotations.enums.ParameterIn;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import io.swagger.v3.oas.annotations.tags.Tags;
 
 import java.net.URI;
 
@@ -61,6 +63,7 @@ public abstract class BaseRoleResourceImpl implements RoleResource {
 	)
 	@Path("/my-user-accounts/{my-user-account-id}/roles")
 	@Produces("application/json")
+	@Tags(value = {@Tag(name = "Role")})
 	public Page<Role> getMyUserAccountRolesPage(
 			@PathParam("my-user-account-id") Long myUserAccountId,
 			@Context Pagination pagination)
@@ -79,6 +82,7 @@ public abstract class BaseRoleResourceImpl implements RoleResource {
 	)
 	@Path("/roles")
 	@Produces("application/json")
+	@Tags(value = {@Tag(name = "Role")})
 	public Page<Role> getRolesPage(@Context Pagination pagination)
 		throws Exception {
 
@@ -89,6 +93,7 @@ public abstract class BaseRoleResourceImpl implements RoleResource {
 	@GET
 	@Path("/roles/{role-id}")
 	@Produces("application/json")
+	@Tags(value = {@Tag(name = "Role")})
 	public Role getRole(@PathParam("role-id") Long roleId) throws Exception {
 		return new Role();
 	}
@@ -103,6 +108,7 @@ public abstract class BaseRoleResourceImpl implements RoleResource {
 	)
 	@Path("/user-accounts/{user-account-id}/roles")
 	@Produces("application/json")
+	@Tags(value = {@Tag(name = "Role")})
 	public Page<Role> getUserAccountRolesPage(
 			@PathParam("user-account-id") Long userAccountId,
 			@Context Pagination pagination)

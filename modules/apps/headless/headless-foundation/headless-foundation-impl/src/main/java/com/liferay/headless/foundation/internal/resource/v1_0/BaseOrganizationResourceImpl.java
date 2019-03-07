@@ -27,6 +27,8 @@ import com.liferay.portal.vulcan.util.TransformUtil;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.Parameters;
 import io.swagger.v3.oas.annotations.enums.ParameterIn;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import io.swagger.v3.oas.annotations.tags.Tags;
 
 import java.net.URI;
 
@@ -62,6 +64,7 @@ public abstract class BaseOrganizationResourceImpl
 	)
 	@Path("/my-user-accounts/{my-user-account-id}/organizations")
 	@Produces("application/json")
+	@Tags(value = {@Tag(name = "Organization")})
 	public Page<Organization> getMyUserAccountOrganizationsPage(
 			@PathParam("my-user-account-id") Long myUserAccountId,
 			@Context Pagination pagination)
@@ -80,6 +83,7 @@ public abstract class BaseOrganizationResourceImpl
 	)
 	@Path("/organizations")
 	@Produces("application/json")
+	@Tags(value = {@Tag(name = "Organization")})
 	public Page<Organization> getOrganizationsPage(
 			@Context Pagination pagination)
 		throws Exception {
@@ -91,6 +95,7 @@ public abstract class BaseOrganizationResourceImpl
 	@GET
 	@Path("/organizations/{organization-id}")
 	@Produces("application/json")
+	@Tags(value = {@Tag(name = "Organization")})
 	public Organization getOrganization(
 			@PathParam("organization-id") Long organizationId)
 		throws Exception {
@@ -108,6 +113,7 @@ public abstract class BaseOrganizationResourceImpl
 	)
 	@Path("/organizations/{organization-id}/organizations")
 	@Produces("application/json")
+	@Tags(value = {@Tag(name = "Organization")})
 	public Page<Organization> getOrganizationOrganizationsPage(
 			@PathParam("organization-id") Long organizationId,
 			@Context Pagination pagination)
@@ -126,6 +132,7 @@ public abstract class BaseOrganizationResourceImpl
 	)
 	@Path("/user-accounts/{user-account-id}/organizations")
 	@Produces("application/json")
+	@Tags(value = {@Tag(name = "Organization")})
 	public Page<Organization> getUserAccountOrganizationsPage(
 			@PathParam("user-account-id") Long userAccountId,
 			@Context Pagination pagination)

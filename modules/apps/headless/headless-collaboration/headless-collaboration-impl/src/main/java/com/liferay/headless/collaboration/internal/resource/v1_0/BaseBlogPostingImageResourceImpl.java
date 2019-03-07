@@ -30,6 +30,8 @@ import com.liferay.portal.vulcan.util.TransformUtil;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.Parameters;
 import io.swagger.v3.oas.annotations.enums.ParameterIn;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import io.swagger.v3.oas.annotations.tags.Tags;
 
 import java.net.URI;
 
@@ -64,6 +66,7 @@ public abstract class BaseBlogPostingImageResourceImpl
 	@DELETE
 	@Path("/blog-posting-images/{blog-posting-image-id}")
 	@Produces("application/json")
+	@Tags(value = {@Tag(name = "BlogPostingImage")})
 	public boolean deleteBlogPostingImage(
 			@PathParam("blog-posting-image-id") Long blogPostingImageId)
 		throws Exception {
@@ -75,6 +78,7 @@ public abstract class BaseBlogPostingImageResourceImpl
 	@GET
 	@Path("/blog-posting-images/{blog-posting-image-id}")
 	@Produces("application/json")
+	@Tags(value = {@Tag(name = "BlogPostingImage")})
 	public BlogPostingImage getBlogPostingImage(
 			@PathParam("blog-posting-image-id") Long blogPostingImageId)
 		throws Exception {
@@ -87,6 +91,7 @@ public abstract class BaseBlogPostingImageResourceImpl
 	@PATCH
 	@Path("/blog-posting-images/{blog-posting-image-id}")
 	@Produces("application/json")
+	@Tags(value = {@Tag(name = "BlogPostingImage")})
 	public BlogPostingImage patchBlogPostingImage(
 			@PathParam("blog-posting-image-id") Long blogPostingImageId,
 			MultipartBody multipartBody)
@@ -100,6 +105,7 @@ public abstract class BaseBlogPostingImageResourceImpl
 	@PUT
 	@Path("/blog-posting-images/{blog-posting-image-id}")
 	@Produces("application/json")
+	@Tags(value = {@Tag(name = "BlogPostingImage")})
 	public BlogPostingImage putBlogPostingImage(
 			@PathParam("blog-posting-image-id") Long blogPostingImageId,
 			MultipartBody multipartBody)
@@ -120,6 +126,7 @@ public abstract class BaseBlogPostingImageResourceImpl
 	)
 	@Path("/content-spaces/{content-space-id}/blog-posting-images")
 	@Produces("application/json")
+	@Tags(value = {@Tag(name = "BlogPostingImage")})
 	public Page<BlogPostingImage> getContentSpaceBlogPostingImagesPage(
 			@PathParam("content-space-id") Long contentSpaceId,
 			@Context Filter filter, @Context Pagination pagination,
@@ -134,6 +141,7 @@ public abstract class BaseBlogPostingImageResourceImpl
 	@POST
 	@Path("/content-spaces/{content-space-id}/blog-posting-images")
 	@Produces("application/json")
+	@Tags(value = {@Tag(name = "BlogPostingImage")})
 	public BlogPostingImage postContentSpaceBlogPostingImage(
 			@PathParam("content-space-id") Long contentSpaceId,
 			MultipartBody multipartBody)

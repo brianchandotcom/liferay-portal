@@ -28,6 +28,8 @@ import com.liferay.portal.vulcan.util.TransformUtil;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.Parameters;
 import io.swagger.v3.oas.annotations.enums.ParameterIn;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import io.swagger.v3.oas.annotations.tags.Tags;
 
 import java.net.URI;
 
@@ -67,6 +69,7 @@ public abstract class BaseFolderResourceImpl implements FolderResource {
 	)
 	@Path("/content-spaces/{content-space-id}/folders")
 	@Produces("application/json")
+	@Tags(value = {@Tag(name = "Folder")})
 	public Page<Folder> getContentSpaceFoldersPage(
 			@PathParam("content-space-id") Long contentSpaceId,
 			@Context Pagination pagination)
@@ -80,6 +83,7 @@ public abstract class BaseFolderResourceImpl implements FolderResource {
 	@POST
 	@Path("/content-spaces/{content-space-id}/folders")
 	@Produces("application/json")
+	@Tags(value = {@Tag(name = "Folder")})
 	public Folder postContentSpaceFolder(
 			@PathParam("content-space-id") Long contentSpaceId, Folder folder)
 		throws Exception {
@@ -91,6 +95,7 @@ public abstract class BaseFolderResourceImpl implements FolderResource {
 	@DELETE
 	@Path("/folders/{folder-id}")
 	@Produces("application/json")
+	@Tags(value = {@Tag(name = "Folder")})
 	public boolean deleteFolder(@PathParam("folder-id") Long folderId)
 		throws Exception {
 
@@ -101,6 +106,7 @@ public abstract class BaseFolderResourceImpl implements FolderResource {
 	@GET
 	@Path("/folders/{folder-id}")
 	@Produces("application/json")
+	@Tags(value = {@Tag(name = "Folder")})
 	public Folder getFolder(@PathParam("folder-id") Long folderId)
 		throws Exception {
 
@@ -112,6 +118,7 @@ public abstract class BaseFolderResourceImpl implements FolderResource {
 	@PATCH
 	@Path("/folders/{folder-id}")
 	@Produces("application/json")
+	@Tags(value = {@Tag(name = "Folder")})
 	public Folder patchFolder(
 			@PathParam("folder-id") Long folderId, Folder folder)
 		throws Exception {
@@ -160,6 +167,7 @@ public abstract class BaseFolderResourceImpl implements FolderResource {
 	@PUT
 	@Path("/folders/{folder-id}")
 	@Produces("application/json")
+	@Tags(value = {@Tag(name = "Folder")})
 	public Folder putFolder(
 			@PathParam("folder-id") Long folderId, Folder folder)
 		throws Exception {
@@ -177,6 +185,7 @@ public abstract class BaseFolderResourceImpl implements FolderResource {
 	)
 	@Path("/folders/{folder-id}/folders")
 	@Produces("application/json")
+	@Tags(value = {@Tag(name = "Folder")})
 	public Page<Folder> getFolderFoldersPage(
 			@PathParam("folder-id") Long folderId,
 			@Context Pagination pagination)
@@ -190,6 +199,7 @@ public abstract class BaseFolderResourceImpl implements FolderResource {
 	@POST
 	@Path("/folders/{folder-id}/folders")
 	@Produces("application/json")
+	@Tags(value = {@Tag(name = "Folder")})
 	public Folder postFolderFolder(
 			@PathParam("folder-id") Long folderId, Folder folder)
 		throws Exception {

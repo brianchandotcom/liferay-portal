@@ -17,14 +17,16 @@
 <%@ include file="/init.jsp" %>
 
 <%
-EditArticleDisplayPageDisplayContext editArticleDisplayPageDisplayContext = new EditArticleDisplayPageDisplayContext(request);
+JournalArticle article = journalDisplayContext.getArticle();
+
+JournalEditArticleDisplayContext journalEditArticleDisplayContext = new JournalEditArticleDisplayContext(request, liferayPortletResponse, article);
 %>
 
 <liferay-asset:select-asset-display-page
-	classNameId="<%= editArticleDisplayPageDisplayContext.getClassNameId() %>"
-	classPK="<%= editArticleDisplayPageDisplayContext.getClassPK() %>"
-	classTypeId="<%= editArticleDisplayPageDisplayContext.getDDMStructureId() %>"
-	groupId="<%= editArticleDisplayPageDisplayContext.getGroupId() %>"
+	classNameId="<%= PortalUtil.getClassNameId(JournalArticle.class) %>"
+	classPK="<%= (article != null) ? article.getResourcePrimKey() : 0 %>"
+	classTypeId="<%= journalEditArticleDisplayContext.getDDMStructureId() %>"
+	groupId="<%= journalEditArticleDisplayContext.getGroupId() %>"
 	showPortletLayouts="<%= true %>"
-	showViewInContextLink="<%= editArticleDisplayPageDisplayContext.getClassNameId() > JournalArticleConstants.CLASSNAME_ID_DEFAULT %>"
+	showViewInContextLink="<%= journalEditArticleDisplayContext.getClassNameId() == JournalArticleConstants.CLASSNAME_ID_DEFAULT %>"
 />

@@ -209,12 +209,12 @@ components:
                                 type: string
                         type: object
                     type: array
-                    categoryIds:
-                        items:
-                            format: int64
-                            type: integer
-                        type: array
-                        writeOnly: true
+                categoryIds:
+                    items:
+                        format: int64
+                        type: integer
+                    type: array
+                    writeOnly: true
                 contentSpace:
                     format: int64
                     type: integer
@@ -230,6 +230,8 @@ components:
                     type: string
                 title:
                     type: string
+                hasAttachments:
+                    type: boolean
                 id:
                     format: int64
                     type: integer
@@ -249,6 +251,30 @@ components:
                     format: int64
                     type: integer
                     writeOnly: true
+                viewableBy:
+                    enum:
+                        - anyone
+                        - members
+                        - owner
+                    type: string
+                    writeOnly: true
+            type: object
+        KnowledgeBaseAttachment:
+            description: https://www.schema.org/KnowledgeBaseAttachment
+            properties:
+                contentUrl:
+                    type: string
+                encodingFormat:
+                    type: string
+                fileExtension:
+                    type: string
+                id:
+                    format: int64
+                    type: integer
+                sizeInBytes:
+                    type: number
+                title:
+                    type: string
             type: object
 info:
     description: ""
@@ -781,15 +807,6 @@ paths:
                         type: integer
             requestBody:
                 content:
-                    multipart/form-data:
-                        schema:
-                            type: object
-                            properties:
-                                document:
-                                    $ref: "#/components/schemas/KnowledgeBaseArticle"
-                                file:
-                                    type: string
-                                    format: binary
                     application/json:
                         schema:
                             $ref: "#/components/schemas/KnowledgeBaseArticle"
@@ -911,15 +928,6 @@ paths:
                         type: integer
             requestBody:
                 content:
-                    multipart/form-data:
-                        schema:
-                            type: object
-                            properties:
-                                document:
-                                    $ref: "#/components/schemas/KnowledgeBaseArticle"
-                                file:
-                                    type: string
-                                    format: binary
                     application/json:
                         schema:
                             $ref: "#/components/schemas/KnowledgeBaseArticle"
@@ -1010,7 +1018,66 @@ paths:
                                 $ref: "#/components/schemas/KnowledgeBaseArticle"
                     description: ""
             tags: ["KnowledgeBaseArticle"]
+        patch:
+            parameters:
+                -   in: path
+                    name: knowledge-base-article-id
+                    required: true
+                    schema:
+                        format: int64
+                        type: integer
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/KnowledgeBaseArticle"
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/KnowledgeBaseArticle"
+                    description: ""
+            tags: ["KnowledgeBaseArticle"]
         put:
+            parameters:
+                -   in: path
+                    name: knowledge-base-article-id
+                    required: true
+                    schema:
+                        format: int64
+                        type: integer
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/KnowledgeBaseArticle"
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/KnowledgeBaseArticle"
+                    description: ""
+            tags: ["KnowledgeBaseArticle"]
+    "/knowledge-base-articles/{knowledge-base-article-id}/attachments":
+        get:
+            parameters:
+                -   in: path
+                    name: knowledge-base-article-id
+                    required: true
+                    schema:
+                        format: int64
+                        type: integer
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/KnowledgeBaseAttachment"
+                    description: ""
+            tags: ["KnowledgeBaseArticle"]
+        post:
             parameters:
                 -   in: path
                     name: knowledge-base-article-id
@@ -1022,22 +1089,62 @@ paths:
                 content:
                     multipart/form-data:
                         schema:
-                            type: object
                             properties:
-                                document:
-                                    $ref: "#/components/schemas/KnowledgeBaseArticle"
+                                knowledgeBaseAttachment:
+                                    $ref: "#/components/schemas/KnowledgeBaseAttachment"
                                 file:
-                                    type: string
                                     format: binary
-                    application/json:
-                        schema:
-                            $ref: "#/components/schemas/KnowledgeBaseArticle"
+                                    type: string
+                            type: object
             responses:
                 200:
                     content:
                         application/json:
                             schema:
-                                $ref: "#/components/schemas/KnowledgeBaseArticle"
+                                $ref: "#/components/schemas/KnowledgeBaseAttachment"
+                    description: ""
+            tags: ["KnowledgeBaseArticle"]
+    "/knowledge-base-articles/{knowledge-base-article-id}/attachments/{attachment-id}":
+        delete:
+            parameters:
+                -   in: path
+                    name: knowledge-base-article-id
+                    required: true
+                    schema:
+                        format: int64
+                        type: integer
+                -   in: path
+                    name: attachment-id
+                    required: true
+                    schema:
+                        format: int64
+                        type: integer
+            responses:
+                204:
+                    content:
+                        application/json: {}
+                    description: ""
+            tags: ["KnowledgeBaseArticle"]
+        get:
+            parameters:
+                -   in: path
+                    name: knowledge-base-article-id
+                    required: true
+                    schema:
+                        format: int64
+                        type: integer
+                -   in: path
+                    name: attachment-id
+                    required: true
+                    schema:
+                        format: int64
+                        type: integer
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/KnowledgeBaseAttachment"
                     description: ""
             tags: ["KnowledgeBaseArticle"]
     "/knowledge-base-articles/{knowledge-base-article-id}/knowledge-base-articles":
@@ -1077,15 +1184,6 @@ paths:
                         type: integer
             requestBody:
                 content:
-                    multipart/form-data:
-                        schema:
-                            type: object
-                            properties:
-                                document:
-                                    $ref: "#/components/schemas/KnowledgeBaseArticle"
-                                file:
-                                    type: string
-                                    format: binary
                     application/json:
                         schema:
                             $ref: "#/components/schemas/KnowledgeBaseArticle"

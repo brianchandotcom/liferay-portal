@@ -21,7 +21,10 @@ import com.fasterxml.jackson.databind.ser.PropertyFilter;
 import com.fasterxml.jackson.databind.ser.PropertyWriter;
 import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 /**
@@ -55,8 +58,48 @@ public class VulcanPropertyFilter
 		_fieldNames = fieldNames;
 	}
 
-	private String _createPath(String name, JsonGenerator jsonGenerator) {
-		StringBuilder stringBuilder = new StringBuilder(name);
+	private boolean _isFiltered(String path) {
+		return _fieldNames.contains(path);
+	}
+
+	private boolean _isFilteredWithoutNested(String path) {
+		if (_isFiltered(path)) {
+			Stream<String> stream = _fieldNames.stream();
+
+			return stream.noneMatch(field -> field.startsWith(path + "."));
+		}
+
+		return false;
+	}
+
+	private boolean _shouldWrite(
+		JsonGenerator jsonGenerator, PropertyWriter propertyWriter) {
+
+		List<String> paths = _toPaths(propertyWriter.getName(), jsonGenerator);
+
+		String firstPath = paths.get(0);
+
+		if (_isFiltered(firstPath)) {
+			return true;
+		}
+
+		if (paths.size() == 1) {
+			return false;
+		}
+
+		for (int i = 1; i < paths.size(); i++) {
+			if (_isFilteredWithoutNested(paths.get(i))) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+	private List<String> _toPaths(String name, JsonGenerator jsonGenerator) {
+		List<String> paths = new ArrayList<>();
+
+		paths.add(name);
 
 		JsonStreamContext jsonStreamContext = jsonGenerator.getOutputContext();
 
@@ -68,36 +111,21 @@ public class VulcanPropertyFilter
 			String currentName = jsonStreamContext.getCurrentName();
 
 			if (currentName != null) {
-				stringBuilder.insert(0, currentName + ".");
+				Stream<String> stream = paths.stream();
+
+				paths = stream.map(
+					(currentName + ".")::concat
+				).collect(
+					Collectors.toList()
+				);
+
+				paths.add(currentName);
 			}
 
 			jsonStreamContext = jsonStreamContext.getParent();
 		}
 
-		return stringBuilder.toString();
-	}
-
-	private boolean _shouldWrite(
-		JsonGenerator jsonGenerator, PropertyWriter propertyWriter) {
-
-		String path = _createPath(propertyWriter.getName(), jsonGenerator);
-
-		if (_fieldNames.contains(path)) {
-			return true;
-		}
-
-		if (path.contains(".")) {
-			String parent = path.substring(0, path.lastIndexOf('.'));
-
-			if (_fieldNames.contains(parent)) {
-				Stream<String> stream = _fieldNames.stream();
-
-				return stream.noneMatch(
-					field -> field.startsWith(parent + "."));
-			}
-		}
-
-		return false;
+		return paths;
 	}
 
 	private final Set<String> _fieldNames;

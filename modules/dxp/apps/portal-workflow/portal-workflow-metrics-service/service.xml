@@ -90,4 +90,9 @@
 			<finder-column name="processId" />
 		</finder>
 	</entity>
+	<exceptions>
+		<exception>WorkflowMetricsSLADefinitionDuplicateName</exception>
+		<exception>WorkflowMetricsSLADefinitionInvalidDuration</exception>
+		<exception>WorkflowMetricsSLADefinitionName</exception>
+	</exceptions>
 </service-builder>

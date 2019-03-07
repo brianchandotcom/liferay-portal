@@ -77,26 +77,12 @@ public class VulcanPropertyFilter
 		return stringBuilder.toString();
 	}
 
-	private boolean _isDescendentPresent(String path) {
-		Stream<String> stream = _fieldNames.stream();
-
-		if (stream.anyMatch(field -> field.startsWith(path + "."))) {
-			return true;
-		}
-
-		return false;
-	}
-
 	private boolean _shouldWrite(
 		JsonGenerator jsonGenerator, PropertyWriter propertyWriter) {
 
 		String path = _createPath(propertyWriter.getName(), jsonGenerator);
 
 		if (_fieldNames.contains(path)) {
-			return true;
-		}
-
-		if (_isDescendentPresent(path)) {
 			return true;
 		}
 

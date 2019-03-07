@@ -16,8 +16,13 @@ package com.liferay.portal.vulcan.internal.jaxrs.context.provider;
 
 import com.liferay.portal.vulcan.fields.FieldsQueryParam;
 
+import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashSet;
+import java.util.Collections;
+import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -49,7 +54,40 @@ public class FieldsQueryParamContextProvider
 			return () -> null;
 		}
 
-		return () -> new HashSet<>(Arrays.asList(fieldNames.split(",")));
+		Stream<String> stream = Arrays.stream(fieldNames.split(","));
+
+		Set<String> fields = stream.map(
+			this::_toPaths
+		).flatMap(
+			List::stream
+		).collect(
+			Collectors.toSet()
+		);
+
+		return () -> fields;
+	}
+
+	private List<String> _toPaths(String string) {
+		if (!string.contains(".")) {
+			return Collections.singletonList(string);
+		}
+
+		List<String> list = new ArrayList<>();
+
+		String pending = string;
+
+		while (!pending.equals("")) {
+			list.add(pending);
+
+			if (pending.contains(".")) {
+				pending = pending.substring(0, pending.lastIndexOf("."));
+			}
+			else {
+				pending = "";
+			}
+		}
+
+		return list;
 	}
 
 }

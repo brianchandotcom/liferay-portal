@@ -18,6 +18,8 @@ import java.util.Date;
 
 import javax.annotation.Generated;
 
+import javax.validation.constraints.NotNull;
+
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -97,6 +99,9 @@ public class ${schemaName} <#if freeMarkerTool.getDTOParentClassName(openAPIYAML
 				access = JsonProperty.Access.READ_WRITE
 			</#if>
 		)
+		<#if schema.required?contains(javaMethodParameter.parameterName)>
+		@NotNull
+		</#if>
 		protected ${javaDataType} ${javaMethodParameter.parameterName};
 	</#list>
 

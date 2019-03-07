@@ -14,6 +14,7 @@
 
 package com.liferay.portal.vulcan.yaml.openapi;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -52,6 +53,10 @@ public class Schema {
 
 	public String getReference() {
 		return _reference;
+	}
+
+	public List<String> getRequired() {
+		return _required;
 	}
 
 	public String getType() {
@@ -102,6 +107,10 @@ public class Schema {
 		_reference = reference;
 	}
 
+	public void setRequired(List<String> required) {
+		_required = required;
+	}
+
 	public void setType(String type) {
 		_type = type;
 	}
@@ -119,6 +128,7 @@ public class Schema {
 	private Map<String, Schema> _propertySchemas;
 	private boolean _readOnly;
 	private String _reference;
+	private List<String> _required = new ArrayList<>();
 	private String _type;
 	private boolean _writeOnly;
 

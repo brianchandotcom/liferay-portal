@@ -66,15 +66,15 @@ public class SAPEntryScopeDescriptorFinderRegistrator {
 		try {
 			List<SAPEntryScope> sapEntryScopes = loadSAPEntryScopes(companyId);
 
+			SAPEntryScopeDescriptorFinder sapEntryScopeDescriptorFinder =
+				new SAPEntryScopeDescriptorFinder(sapEntryScopes);
+
 			Dictionary<String, Object> properties = new HashMapDictionary<>();
 
 			properties.put("companyId", String.valueOf(companyId));
 			properties.put(
 				"osgi.jaxrs.name", OAuth2JSONWSConstants.APPLICATION_NAME);
 			properties.put("sap.scope.finder", Boolean.TRUE);
-
-			SAPEntryScopeDescriptorFinder sapEntryScopeDescriptorFinder =
-				new SAPEntryScopeDescriptorFinder(sapEntryScopes);
 
 			_scopeFinderRegistrations.compute(
 				companyId,

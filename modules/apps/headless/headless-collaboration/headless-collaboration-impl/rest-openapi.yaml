@@ -226,6 +226,8 @@ components:
                 dateModified:
                     format: date-time
                     type: string
+                description:
+                    type: string
                 friendlyUrlPath:
                     type: string
                 title:
@@ -1074,9 +1076,11 @@ paths:
                     content:
                         application/json:
                             schema:
-                                $ref: "#/components/schemas/KnowledgeBaseAttachment"
+                                items:
+                                    $ref: "#/components/schemas/KnowledgeBaseAttachment"
+                                type: array
                     description: ""
-            tags: ["KnowledgeBaseArticle"]
+            tags: ["KnowledgeBaseAttachment"]
         post:
             parameters:
                 -   in: path
@@ -1103,16 +1107,10 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/KnowledgeBaseAttachment"
                     description: ""
-            tags: ["KnowledgeBaseArticle"]
-    "/knowledge-base-articles/{knowledge-base-article-id}/attachments/{attachment-id}":
+            tags: ["KnowledgeBaseAttachment"]
+    "/attachments/{attachment-id}":
         delete:
             parameters:
-                -   in: path
-                    name: knowledge-base-article-id
-                    required: true
-                    schema:
-                        format: int64
-                        type: integer
                 -   in: path
                     name: attachment-id
                     required: true
@@ -1124,15 +1122,9 @@ paths:
                     content:
                         application/json: {}
                     description: ""
-            tags: ["KnowledgeBaseArticle"]
+            tags: ["KnowledgeBaseAttachment"]
         get:
             parameters:
-                -   in: path
-                    name: knowledge-base-article-id
-                    required: true
-                    schema:
-                        format: int64
-                        type: integer
                 -   in: path
                     name: attachment-id
                     required: true
@@ -1146,7 +1138,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/KnowledgeBaseAttachment"
                     description: ""
-            tags: ["KnowledgeBaseArticle"]
+            tags: ["KnowledgeBaseAttachment"]
     "/knowledge-base-articles/{knowledge-base-article-id}/knowledge-base-articles":
         get:
             parameters:

@@ -1146,27 +1146,6 @@ public class TopLevelBuild extends BaseBuild {
 			throw new RuntimeException("Unable to get build properties", ioe);
 		}
 
-		Map<String, StopwatchRecord> stopwatchRecordMap =
-			getStopwatchRecordMap();
-
-		List<StopwatchRecord> stopwatchRecords = new ArrayList<>(
-			stopwatchRecordMap.size());
-
-		stopwatchRecords.addAll(stopwatchRecordMap.values());
-
-		Collections.sort(stopwatchRecords);
-
-		Element stopwatchRecordsElement = Dom4JUtil.getNewElement(
-			"p", summaryElement, "Stopwatch Records");
-
-		Element stopwatchRecordsListElement = Dom4JUtil.getNewElement(
-			"ul", stopwatchRecordsElement);
-
-		for (StopwatchRecord stopwatchRecord : stopwatchRecords) {
-			Dom4JUtil.getNewElement(
-				"li", stopwatchRecordsListElement, stopwatchRecord.toString());
-		}
-
 		return summaryElement;
 	}
 

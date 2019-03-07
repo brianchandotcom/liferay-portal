@@ -15,20 +15,26 @@
 package com.liferay.portal.service.impl;
 
 import com.liferay.petra.string.CharPool;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.DuplicateTeamException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.TeamNameException;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.RoleConstants;
 import com.liferay.portal.kernel.model.Team;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.service.base.TeamLocalServiceBaseImpl;
 
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 
@@ -105,6 +111,31 @@ public class TeamLocalServiceImpl extends TeamLocalServiceBaseImpl {
 		// Team
 
 		teamPersistence.remove(team);
+
+		List<Group> groups = groupPersistence.findByC_S(
+			team.getCompanyId(), true);
+
+		for (Group group : groups) {
+			UnicodeProperties typeSettingsProperties =
+				group.getTypeSettingsProperties();
+
+			List<Long> teamIds = new ArrayList<>();
+
+			long[] defaultTeamIds = StringUtil.split(
+				typeSettingsProperties.getProperty("defaultTeamIds"), 0L);
+
+			for (long defaultTeamId : defaultTeamIds) {
+				if (defaultTeamId != team.getTeamId()) {
+					teamIds.add(defaultTeamId);
+				}
+			}
+
+			typeSettingsProperties.setProperty(
+				"defaultTeamIds", ListUtil.toString(teamIds, StringPool.BLANK));
+
+			groupLocalService.updateGroup(
+				group.getGroupId(), typeSettingsProperties.toString());
+		}
 
 		// Resources
 

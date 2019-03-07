@@ -14,7 +14,7 @@
 
 package com.liferay.arquillian.extension.junit.bridge.jmx;
 
-import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.arquillian.extension.junit.bridge.junit.ServerRunner;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -54,7 +54,7 @@ public class JMXTestRunner implements JMXTestRunnerMBean {
 
 				@Override
 				public Runner getRunner() {
-					return new Arquillian(clazz);
+					return new ServerRunner(clazz);
 				}
 
 			};

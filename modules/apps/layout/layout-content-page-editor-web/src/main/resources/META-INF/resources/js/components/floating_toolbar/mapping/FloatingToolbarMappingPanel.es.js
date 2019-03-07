@@ -2,6 +2,7 @@ import PortletBase from 'frontend-js-web/liferay/PortletBase.es';
 import Soy, {Config} from 'metal-soy';
 
 import './FloatingToolbarMappingPanelDelegateTemplate.soy';
+import {COMPATIBLE_TYPES} from '../../../utils/constants';
 import {decodeId, encodeAssetId} from '../../../utils/FragmentsEditorIdUtils.es';
 import getConnectedComponent from '../../../store/ConnectedComponent.es';
 import {setIn} from '../../../utils/FragmentsEditorUpdateUtils.es';
@@ -76,6 +77,12 @@ class FloatingToolbarMappingPanel extends PortletBase {
 		return nextState;
 	}
 
+	rendered(firstRender) {
+		if (firstRender) {
+			this._loadFields();
+		}
+	}
+
 	/**
 	 * Handle source option change
 	 * @param {Event} event
@@ -84,6 +91,9 @@ class FloatingToolbarMappingPanel extends PortletBase {
 	 */
 	_handleAssetOptionChange(event) {
 		this._mappedAssetEntryEncodedId = event.delegateTarget.value;
+
+		this._loadFields();
+
 		const asset = decodeId(this._mappedAssetEntryEncodedId);
 
 		this._updateEditableValues(
@@ -136,6 +146,8 @@ class FloatingToolbarMappingPanel extends PortletBase {
 	 */
 	_handleSourceOptionChange(event) {
 		this._selectedSourceId = event.delegateTarget.value;
+
+		this._loadFields();
 	}
 
 	/**
@@ -145,6 +157,56 @@ class FloatingToolbarMappingPanel extends PortletBase {
 	 * @review
 	 */
 	_handleUnmapButtonClick(event) {}
+
+	/**
+	 * Load the list of fields
+	 * @private
+	 * @review
+	 */
+	_loadFields() {
+		this._fields = [];
+
+		let promise;
+
+		if (this._selectedSourceId === MAPPING_SOURCE_SUBTYPE_KEY) {
+			promise = this.fetch(
+				this.mappingFieldsURL,
+				{
+					classNameId: this.selectedMappingTypes.type.id,
+					classTypeId: this.selectedMappingTypes.subtype.id
+				}
+			);
+		}
+		else if (
+			this._selectedSourceId === MAPPING_SOURCE_SPECIFIC_CONTENT_KEY &&
+			this._mappedAssetEntryEncodedId
+		) {
+			const asset = decodeId(this._mappedAssetEntryEncodedId);
+
+			promise = this.fetch(
+				this.getAssetMappingFieldsURL,
+				{
+					classNameId: asset.assetEntryClassNameId,
+					classPK: asset.assetEntryClassPK
+				}
+			);
+		}
+
+		if (promise) {
+			promise
+				.then(
+					response => response.json()
+				)
+				.then(
+					response => {
+						this._fields = response.filter(
+							field => COMPATIBLE_TYPES[this.item.type]
+								.indexOf(field.type) !== -1
+						);
+					}
+				);
+		}
+	}
 
 	/**
 	 * Dispatches action to update editable value
@@ -247,7 +309,9 @@ FloatingToolbarMappingPanel.STATE = {
 const ConnectedFloatingToolbarMappingPanel = getConnectedComponent(
 	FloatingToolbarMappingPanel,
 	[
+		'getAssetMappingFieldsURL',
 		'mappingFieldsURL',
+		'portletNamespace',
 		'selectedMappingTypes'
 	]
 );

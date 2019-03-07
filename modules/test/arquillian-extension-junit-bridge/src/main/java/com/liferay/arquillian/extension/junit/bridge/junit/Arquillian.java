@@ -47,6 +47,8 @@ public class Arquillian extends Runner implements Filterable {
 
 	public Arquillian(Class<?> clazz) {
 		_clazz = clazz;
+
+		_testClass = new FilteredSortedTestClass(_clazz);
 	}
 
 	@Override
@@ -109,10 +111,6 @@ public class Arquillian extends Runner implements Filterable {
 	}
 
 	private List<FrameworkMethod> _getTestFrameworkMethods() {
-		if (_testClass == null) {
-			_testClass = new FilteredSortedTestClass(_clazz);
-		}
-
 		List<FrameworkMethod> frameworkMethods = _testClass.getAnnotatedMethods(
 			Test.class);
 

@@ -262,7 +262,7 @@ public class CTDDMStructureLocalServiceWrapper
 
 		Optional<DDMStructureVersion> ddmStructureVersionOptional =
 			ctEntryOptional.map(
-				CTEntry::getClassPK
+				CTEntry::getModelClassPK
 			).map(
 				_ddmStructureVersionLocalService::fetchDDMStructureVersion
 			);

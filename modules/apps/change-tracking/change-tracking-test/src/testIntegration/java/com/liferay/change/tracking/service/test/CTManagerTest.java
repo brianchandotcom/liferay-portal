@@ -541,11 +541,11 @@ public class CTManagerTest {
 
 		Assert.assertEquals(
 			_testVersionClassClassName.getClassNameId(),
-			ctEntry.getClassNameId());
+			ctEntry.getModelClassNameId());
 		Assert.assertEquals(
-			_TEST_VERSION_CLASS_ENTITY_ID, ctEntry.getClassPK());
+			_TEST_VERSION_CLASS_ENTITY_ID, ctEntry.getModelClassPK());
 		Assert.assertEquals(
-			_TEST_RESOURCE_CLASS_ENTITY_ID, ctEntry.getResourcePrimKey());
+			_TEST_RESOURCE_CLASS_ENTITY_ID, ctEntry.getModelResourcePrimKey());
 	}
 
 	@Test

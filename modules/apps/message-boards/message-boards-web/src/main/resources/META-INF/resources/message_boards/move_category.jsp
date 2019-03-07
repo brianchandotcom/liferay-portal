@@ -97,12 +97,6 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "move"),
 %>
 
 <script>
-	<portlet:renderURL var="selectCategoryURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
-		<portlet:param name="mvcRenderCommandName" value="/message_boards/select_category" />
-		<portlet:param name="mbCategoryId" value="<%= String.valueOf((category == null) ? MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID : category.getParentCategoryId()) %>" />
-		<portlet:param name="excludedMBCategoryId" value="<%= String.valueOf(categoryId) %>" />
-	</portlet:renderURL>
-
 	var selectCategoryButton = document.getElementById('<portlet:namespace />selectCategoryButton');
 
 	if (selectCategoryButton) {
@@ -118,7 +112,14 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "move"),
 						},
 						id: '<portlet:namespace />selectCategory',
 						title: '<liferay-ui:message arguments="category" key="select-x" />',
-						uri: '<%= selectCategoryURL.toString() %>'
+
+						<portlet:renderURL var="selectCategoryURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
+							<portlet:param name="mvcRenderCommandName" value="/message_boards/select_category" />
+							<portlet:param name="mbCategoryId" value="<%= String.valueOf((category == null) ? MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID : category.getParentCategoryId()) %>" />
+							<portlet:param name="excludedMBCategoryId" value="<%= String.valueOf(categoryId) %>" />
+						</portlet:renderURL>
+
+						uri: '<%= selectCategoryURL %>'
 					},
 					function(event) {
 						var form = document.<portlet:namespace />fm;

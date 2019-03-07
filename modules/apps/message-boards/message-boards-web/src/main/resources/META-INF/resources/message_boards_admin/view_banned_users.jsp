@@ -138,8 +138,6 @@ PortalUtil.setPageSubtitle(LanguageUtil.get(request, "banned-users"), request);
 %>
 
 <aui:script>
-	<portlet:actionURL name="/message_boards/ban_user" var="banUserURL" />
-
 	var unbanUser = function() {
 		Liferay.Util.postForm(
 			document.<portlet:namespace />fm,
@@ -147,7 +145,7 @@ PortalUtil.setPageSubtitle(LanguageUtil.get(request, "banned-users"), request);
 				data: {
 					'<%= Constants.CMD %>': 'unban'
 				},
-				url: '<%= banUserURL %>'
+				url: '<portlet:actionURL name="/message_boards/ban_user" var="banUserURL" />'
 			}
 		);
 	};

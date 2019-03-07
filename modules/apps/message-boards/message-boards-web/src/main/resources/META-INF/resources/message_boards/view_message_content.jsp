@@ -323,9 +323,11 @@ if (portletTitleBasedNavigation) {
 			'click',
 			function(event) {
 				var form = document.<portlet:namespace />fm;
-				var formData = new FormData();
+
 				var index = Liferay.Util.getFormElement(form, 'index');
 				var rootIndexPage = Liferay.Util.getFormElement(form, 'rootIndexPage');
+
+				var formData = new FormData();
 
 				if (index && rootIndexPage) {
 					formData.append('<portlet:namespace />index', index.value);

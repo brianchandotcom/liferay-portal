@@ -74,7 +74,7 @@ if (portletTitleBasedNavigation) {
 
 				<aui:input disabled="<%= thread.isLocked() %>" helpMessage='<%= thread.isLocked() ? LanguageUtil.get(request, "unlock-thread-to-add-an-explanation-post") : StringPool.BLANK %>' label="add-explanation-post" name="addExplanationPost" onClick='<%= renderResponse.getNamespace() + "toggleExplanationPost();" %>' type="checkbox" />
 
-				<div id="<portlet:namespace />explanationPost" style="display: none;">
+				<div class="hide" id="<portlet:namespace />explanationPost">
 					<aui:input maxlength="<%= ModelHintsConstants.TEXT_MAX_LENGTH %>" name="subject" style="width: 350px;" value="">
 						<aui:validator name="required">
 							function() {
@@ -135,11 +135,6 @@ if (portletTitleBasedNavigation) {
 	var selectCategoryButton = document.getElementById('<portlet:namespace />selectCategoryButton');
 
 	if (selectCategoryButton) {
-		<portlet:renderURL var="selectCategoryURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
-			<portlet:param name="mvcRenderCommandName" value="/message_boards/select_category" />
-			<portlet:param name="mbCategoryId" value="<%= String.valueOf(category.getParentCategoryId()) %>" />
-		</portlet:renderURL>
-
 		selectCategoryButton.addEventListener(
 			'click',
 			function(event) {
@@ -152,7 +147,13 @@ if (portletTitleBasedNavigation) {
 						},
 						id: '<portlet:namespace />selectCategory',
 						title: '<liferay-ui:message arguments="category" key="select-x" />',
-						uri: '<%= selectCategoryURL.toString() %>'
+
+						<portlet:renderURL var="selectCategoryURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
+							<portlet:param name="mvcRenderCommandName" value="/message_boards/select_category" />
+							<portlet:param name="mbCategoryId" value="<%= String.valueOf(category.getParentCategoryId()) %>" />
+						</portlet:renderURL>
+
+						uri: '<%= selectCategoryURL %>'
 					},
 					function(event) {
 						Liferay.Util.setFormValues(

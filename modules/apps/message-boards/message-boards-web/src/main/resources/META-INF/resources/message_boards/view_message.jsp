@@ -80,10 +80,8 @@ MBBreadcrumbUtil.addPortletBreadcrumbEntries(message, request, renderResponse);
 		window[editorName].setHTML(quote);
 		window[editorName].focus();
 
-		if (AUI().UA.mobile) {
-			if (addQuickReplyContainer) {
-				addQuickReplyContainer.scrollIntoView(true);
-			}
+		if (addQuickReplyContainer && AUI().UA.mobile) {
+			addQuickReplyContainer.scrollIntoView(true);
 		}
 
 		Liferay.Util.toggleDisabled('#<portlet:namespace />replyMessageButton' + messageId, true);

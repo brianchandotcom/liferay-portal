@@ -21,6 +21,7 @@ import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import org.junit.After;
 import org.junit.AfterClass;
@@ -31,6 +32,7 @@ import org.junit.ClassRule;
 import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
+import org.junit.internal.runners.statements.FailOnTimeout;
 import org.junit.internal.runners.statements.InvokeMethod;
 import org.junit.internal.runners.statements.RunAfters;
 import org.junit.internal.runners.statements.RunBefores;
@@ -44,16 +46,12 @@ import org.junit.runners.model.TestClass;
 /**
  * @author Shuyang Zhou
  */
-public class ServerExecutorStatement extends Statement {
+public class TestExecutorUtil {
 
-	public ServerExecutorStatement(TestClass testClass, Method method) {
-		_testClass = testClass;
-		_method = method;
-	}
+	public static void execute(TestClass testClass, Method method)
+		throws Throwable {
 
-	@Override
-	public void evaluate() throws Throwable {
-		Class<?> clazz = _testClass.getJavaClass();
+		Class<?> clazz = testClass.getJavaClass();
 
 		Object target = clazz.newInstance();
 
@@ -68,7 +66,7 @@ public class ServerExecutorStatement extends Statement {
 				currentThread.setContextClassLoader(clazz.getClassLoader());
 
 				try {
-					_method.invoke(target);
+					method.invoke(target);
 				}
 				catch (Throwable t) {
 					if (t instanceof InvocationTargetException) {
@@ -79,7 +77,7 @@ public class ServerExecutorStatement extends Statement {
 						throw t;
 					}
 
-					_processThrowable(t, _method);
+					_processThrowable(t, method);
 				}
 				finally {
 					currentThread.setContextClassLoader(classLoader);
@@ -88,20 +86,19 @@ public class ServerExecutorStatement extends Statement {
 
 		};
 
-		statement = withBefores(statement, Before.class, _testClass, target);
+		statement = _withBefores(statement, Before.class, testClass, target);
 
-		statement = withAfters(statement, After.class, _testClass, target);
+		statement = _withAfters(statement, After.class, testClass, target);
 
-		statement = withRules(
-			statement, _testClass, target,
+		statement = _withRules(
+			statement, testClass, target,
 			Description.createTestDescription(
-				clazz, _method.getName(), _method.getAnnotations()));
+				clazz, method.getName(), method.getAnnotations()));
 
 		List<FrameworkMethod> frameworkMethods = new ArrayList<>(
-			_testClass.getAnnotatedMethods(Test.class));
+			testClass.getAnnotatedMethods(Test.class));
 
-		frameworkMethods.removeAll(
-			_testClass.getAnnotatedMethods(Ignore.class));
+		frameworkMethods.removeAll(testClass.getAnnotatedMethods(Ignore.class));
 
 		frameworkMethods.sort(Comparator.comparing(FrameworkMethod::getName));
 
@@ -109,11 +106,11 @@ public class ServerExecutorStatement extends Statement {
 
 		boolean firstMethod = false;
 
-		if (_method.equals(firstFrameworkMethod.getMethod())) {
+		if (method.equals(firstFrameworkMethod.getMethod())) {
 			firstMethod = true;
 
-			statement = withBefores(
-				statement, BeforeClass.class, _testClass, null);
+			statement = _withBefores(
+				statement, BeforeClass.class, testClass, null);
 		}
 
 		FrameworkMethod lastFrameworkMethod = frameworkMethods.get(
@@ -121,55 +118,23 @@ public class ServerExecutorStatement extends Statement {
 
 		boolean lastMethod = false;
 
-		if (_method.equals(lastFrameworkMethod.getMethod())) {
+		if (method.equals(lastFrameworkMethod.getMethod())) {
 			lastMethod = true;
 
-			statement = withAfters(
-				statement, AfterClass.class, _testClass, null);
+			statement = _withAfters(
+				statement, AfterClass.class, testClass, null);
 		}
 
-		evaluateWithClassRule(
-			statement, _testClass, target,
+		statement = _withClassRule(
+			statement, testClass, target,
 			Description.createSuiteDescription(clazz), firstMethod, lastMethod);
+
+		statement = _withTimeout(method, statement);
+
+		statement.evaluate();
 	}
 
-	protected void evaluateWithClassRule(
-			Statement statement, TestClass junitTestClass, Object target,
-			Description description, boolean firstMethod, boolean lastMethod)
-		throws Throwable {
-
-		if (!firstMethod && !lastMethod) {
-			statement.evaluate();
-
-			return;
-		}
-
-		List<TestRule> testRules = junitTestClass.getAnnotatedMethodValues(
-			target, ClassRule.class, TestRule.class);
-
-		testRules.addAll(
-			junitTestClass.getAnnotatedFieldValues(
-				target, ClassRule.class, TestRule.class));
-
-		if (testRules.isEmpty()) {
-			statement.evaluate();
-
-			return;
-		}
-
-		handleClassRules(testRules, firstMethod, lastMethod, true);
-
-		statement = new RunRules(statement, testRules, description);
-
-		try {
-			statement.evaluate();
-		}
-		finally {
-			handleClassRules(testRules, firstMethod, lastMethod, false);
-		}
-	}
-
-	protected void handleClassRules(
+	private static void _handleClassRules(
 		List<TestRule> testRules, boolean firstMethod, boolean lastMethod,
 		boolean enable) {
 
@@ -202,53 +167,7 @@ public class ServerExecutorStatement extends Statement {
 		}
 	}
 
-	protected Statement withAfters(
-		Statement statement, Class<? extends Annotation> afterClass,
-		TestClass junitTestClass, Object target) {
-
-		List<FrameworkMethod> frameworkMethods =
-			junitTestClass.getAnnotatedMethods(afterClass);
-
-		if (!frameworkMethods.isEmpty()) {
-			statement = new RunAfters(statement, frameworkMethods, target);
-		}
-
-		return statement;
-	}
-
-	protected Statement withBefores(
-		Statement statement, Class<? extends Annotation> beforeClass,
-		TestClass junitTestClass, Object target) {
-
-		List<FrameworkMethod> frameworkMethods =
-			junitTestClass.getAnnotatedMethods(beforeClass);
-
-		if (!frameworkMethods.isEmpty()) {
-			statement = new RunBefores(statement, frameworkMethods, target);
-		}
-
-		return statement;
-	}
-
-	protected Statement withRules(
-		Statement statement, TestClass junitTestClass, Object target,
-		Description description) {
-
-		List<TestRule> testRules = junitTestClass.getAnnotatedMethodValues(
-			target, Rule.class, TestRule.class);
-
-		testRules.addAll(
-			junitTestClass.getAnnotatedFieldValues(
-				target, Rule.class, TestRule.class));
-
-		if (!testRules.isEmpty()) {
-			statement = new RunRules(statement, testRules, description);
-		}
-
-		return statement;
-	}
-
-	private void _processThrowable(Throwable throwable, Method method)
+	private static void _processThrowable(Throwable throwable, Method method)
 		throws Throwable {
 
 		Test test = method.getAnnotation(Test.class);
@@ -274,7 +193,105 @@ public class ServerExecutorStatement extends Statement {
 		}
 	}
 
-	private final Method _method;
-	private final TestClass _testClass;
+	private static Statement _withAfters(
+		Statement statement, Class<? extends Annotation> afterClass,
+		TestClass junitTestClass, Object target) {
+
+		List<FrameworkMethod> frameworkMethods =
+			junitTestClass.getAnnotatedMethods(afterClass);
+
+		if (!frameworkMethods.isEmpty()) {
+			statement = new RunAfters(statement, frameworkMethods, target);
+		}
+
+		return statement;
+	}
+
+	private static Statement _withBefores(
+		Statement statement, Class<? extends Annotation> beforeClass,
+		TestClass junitTestClass, Object target) {
+
+		List<FrameworkMethod> frameworkMethods =
+			junitTestClass.getAnnotatedMethods(beforeClass);
+
+		if (!frameworkMethods.isEmpty()) {
+			statement = new RunBefores(statement, frameworkMethods, target);
+		}
+
+		return statement;
+	}
+
+	private static Statement _withClassRule(
+			Statement statement, TestClass junitTestClass, Object target,
+			Description description, boolean firstMethod, boolean lastMethod)
+		throws Throwable {
+
+		if (!firstMethod && !lastMethod) {
+			return statement;
+		}
+
+		List<TestRule> testRules = junitTestClass.getAnnotatedMethodValues(
+			target, ClassRule.class, TestRule.class);
+
+		testRules.addAll(
+			junitTestClass.getAnnotatedFieldValues(
+				target, ClassRule.class, TestRule.class));
+
+		if (testRules.isEmpty()) {
+			return statement;
+		}
+
+		return new InvokeMethod(null, target) {
+
+			@Override
+			public void evaluate() throws Throwable {
+				_handleClassRules(testRules, firstMethod, lastMethod, true);
+
+				Statement ruleStatement = new RunRules(
+					statement, testRules, description);
+
+				try {
+					ruleStatement.evaluate();
+				}
+				finally {
+					_handleClassRules(
+						testRules, firstMethod, lastMethod, false);
+				}
+			}
+
+		};
+	}
+
+	private static Statement _withRules(
+		Statement statement, TestClass junitTestClass, Object target,
+		Description description) {
+
+		List<TestRule> testRules = junitTestClass.getAnnotatedMethodValues(
+			target, Rule.class, TestRule.class);
+
+		testRules.addAll(
+			junitTestClass.getAnnotatedFieldValues(
+				target, Rule.class, TestRule.class));
+
+		if (!testRules.isEmpty()) {
+			statement = new RunRules(statement, testRules, description);
+		}
+
+		return statement;
+	}
+
+	private static Statement _withTimeout(Method method, Statement statement) {
+		Test test = method.getAnnotation(Test.class);
+
+		if ((test == null) || (test.timeout() <= 0)) {
+			return statement;
+		}
+
+		FailOnTimeout.Builder builder = FailOnTimeout.builder();
+
+		builder.withTimeout(test.timeout(), TimeUnit.MILLISECONDS);
+
+		return builder.build(statement);
+	}
 
 }

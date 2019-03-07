@@ -18,13 +18,9 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
 
-import java.util.concurrent.TimeUnit;
-
 import org.junit.AssumptionViolatedException;
 import org.junit.Test;
-import org.junit.internal.runners.statements.FailOnTimeout;
 import org.junit.runners.model.FrameworkMethod;
-import org.junit.runners.model.Statement;
 import org.junit.runners.model.TestClass;
 
 /**
@@ -49,12 +45,8 @@ public class JMXTestRunner implements JMXTestRunnerMBean {
 					continue;
 				}
 
-				Statement statement = _withTimeout(
-					frameworkMethod,
-					new ServerExecutorStatement(
-						testClass, frameworkMethod.getMethod()));
-
-				statement.evaluate();
+				TestExecutorUtil.execute(
+					testClass, frameworkMethod.getMethod());
 			}
 		}
 		catch (Throwable t) {
@@ -93,22 +85,6 @@ public class JMXTestRunner implements JMXTestRunnerMBean {
 			throw new RuntimeException(
 				"Unable to serialize object: " + throwable, ioe);
 		}
-	}
-
-	private Statement _withTimeout(
-		FrameworkMethod frameworkMethod, Statement statement) {
-
-		Test test = frameworkMethod.getAnnotation(Test.class);
-
-		if ((test == null) || (test.timeout() <= 0)) {
-			return statement;
-		}
-
-		FailOnTimeout.Builder builder = FailOnTimeout.builder();
-
-		builder.withTimeout(test.timeout(), TimeUnit.MILLISECONDS);
-
-		return builder.build(statement);
 	}
 
 	private static final byte[] _PASSED = _toByteArray(null);

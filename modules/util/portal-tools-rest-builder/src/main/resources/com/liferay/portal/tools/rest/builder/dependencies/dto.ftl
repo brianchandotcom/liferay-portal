@@ -47,7 +47,10 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class ${schemaName} <#if freeMarkerTool.getDTOParentClassName(openAPIYAML, schemaName)??>extends ${freeMarkerTool.getParentClass(openAPIYAML, schemaName)}</#if> {
 
 	<#list freeMarkerTool.getDTOJavaMethodParameters(configYAML, openAPIYAML, schema) as javaMethodParameter>
-		<#assign javaDataType = javaMethodParameter.parameterType />
+		<#assign
+			javaDataType = javaMethodParameter.parameterType
+			propertySchema = freeMarkerTool.getDTOPropertySchema(javaMethodParameter, schema)
+		/>
 
 		<#if stringUtil.equals(javaDataType, "[Z")>
 			<#assign javaDataType = "boolean[]" />
@@ -63,7 +66,9 @@ public class ${schemaName} <#if freeMarkerTool.getDTOParentClassName(openAPIYAML
 			<#assign javaDataType = javaDataType[2..(javaDataType?length - 2)] + "[]" />
 		</#if>
 
-		<#if javaMethodParameter.description??>@Schema(description = "${javaMethodParameter.description}")</#if>
+		<#if propertySchema.description??>
+			@Schema(description = "${propertySchema.description}")
+		</#if>
 		public ${javaDataType} get${javaMethodParameter.parameterName?cap_first}() {
 			return ${javaMethodParameter.parameterName};
 		}
@@ -84,8 +89,6 @@ public class ${schemaName} <#if freeMarkerTool.getDTOParentClassName(openAPIYAML
 
 		@GraphQLField
 		@JsonProperty(
-			<#assign propertySchema = freeMarkerTool.getDTOPropertySchema(javaMethodParameter, schema) />
-
 			<#if propertySchema.readOnly>
 				access = JsonProperty.Access.READ_ONLY
 			<#elseif propertySchema.writeOnly>

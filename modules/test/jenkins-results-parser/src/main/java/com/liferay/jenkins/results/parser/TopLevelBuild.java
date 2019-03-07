@@ -374,7 +374,9 @@ public class TopLevelBuild extends BaseBuild {
 				StopwatchRecord stopwatchRecord = stopwatchRecordMap.get(
 					stopwatchName);
 
-				stopwatchRecord.setDuration(duration);
+				if (stopwatchRecord != null) {
+					stopwatchRecord.setDuration(duration);
+				}
 			}
 		}
 

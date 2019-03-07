@@ -94,7 +94,7 @@ public interface AbsolutePortalURLBuilder {
 	 * @return a builder that returns servlet URLs
 	 * @review
 	 */
-	public WhiteboardServletAbsolutePortalURLBuilder forWhiteboardServlet(
+	public WhiteboardAbsolutePortalURLBuilder forWhiteboard(
 		String servletPattern);
 
 	/**

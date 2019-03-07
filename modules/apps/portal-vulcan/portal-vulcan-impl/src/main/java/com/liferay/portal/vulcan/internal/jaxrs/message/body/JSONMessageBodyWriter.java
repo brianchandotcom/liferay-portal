@@ -33,6 +33,7 @@ import java.lang.reflect.Type;
 
 import java.util.Optional;
 import java.util.Set;
+import java.util.stream.Stream;
 
 import javax.ws.rs.InternalServerErrorException;
 import javax.ws.rs.Produces;
@@ -136,9 +137,7 @@ public class JSONMessageBodyWriter implements MessageBodyWriter<Object> {
 				return;
 			}
 
-			String path = _createPath(propertyWriter.getName(), jsonGenerator);
-
-			if (_fieldNames.contains(path)) {
+			if (_shouldWrite(jsonGenerator, propertyWriter)) {
 				propertyWriter.serializeAsField(
 					object, jsonGenerator, serializerProvider);
 			}
@@ -169,6 +168,29 @@ public class JSONMessageBodyWriter implements MessageBodyWriter<Object> {
 			}
 
 			return stringBuilder.toString();
+		}
+
+		private boolean _shouldWrite(
+			JsonGenerator jsonGenerator, PropertyWriter propertyWriter) {
+
+			String path = _createPath(propertyWriter.getName(), jsonGenerator);
+
+			if (_fieldNames.contains(path)) {
+				return true;
+			}
+
+			if (path.contains(".")) {
+				String parent = path.substring(0, path.lastIndexOf('.'));
+
+				if (_fieldNames.contains(parent)) {
+					Stream<String> stream = _fieldNames.stream();
+
+					return stream.noneMatch(
+						field -> field.startsWith(parent + "."));
+				}
+			}
+
+			return false;
 		}
 
 		private final Set<String> _fieldNames;

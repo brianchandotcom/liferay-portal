@@ -791,8 +791,6 @@ definition {
 
 		Click(locator1 = "AP#ASSET_ABSTRACT_EDIT");
 
-		Click(locator1 = "Icon#BODY_VERTICAL_ELLIPSIS");
-
 		Click(locator1 = "AP#ASSET_EDIT");
 
 		SelectFrame(locator1 = "IFrame#DIALOG");

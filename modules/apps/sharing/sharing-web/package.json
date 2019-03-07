@@ -1,11 +1,7 @@
 {
 	"dependencies": {
 		"clay-alert": "^2.8.3",
-		"clay-autocomplete": "^2.8.3",
 		"clay-button": "^2.8.3",
-		"clay-data-provider": "^2.8.3",
-		"clay-label": "^2.8.3",
-		"clay-link": "^2.8.3",
 		"clay-multi-select": "^2.8.3",
 		"clay-select": "^2.8.3",
 		"clay-sticker": "^2.8.3",
@@ -13,7 +9,7 @@
 		"metal-soy": "^2.16.7"
 	},
 	"devDependencies": {
-		"liferay-npm-scripts": "1.2.0"
+		"liferay-npm-scripts": "1.4.2"
 	},
 	"name": "sharing-web",
 	"scripts": {

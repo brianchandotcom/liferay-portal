@@ -267,15 +267,16 @@ for (int i = 0; i < pages.size(); i++) {
 <c:if test='<%= navigation.equals("history") %>'>
 	<aui:script require="metal-dom/src/dom as dom">
 		function <portlet:namespace />initRowsChecked() {
-			var rowIds = document.querySelectorAll('input[name=<portlet:namespace />rowIds]');
+			var rowIdsNodes = document.querySelectorAll('input[name=<portlet:namespace />rowIds]');
 
-			if (rowIds.length !== 0) {
-				var rowIdsArray = Array.prototype.slice.call(rowIds);
-
-				var rowId = rowIdsArray.slice(2);
-
-				rowId[0].checked = false;
-			}
+			Array.prototype.forEach.call(
+				rowIdsNodes,
+				function(rowIdsNode, index) {
+					if (index > 1) {
+						rowIdsNode.checked = false;
+					}
+				}
+			);
 		}
 
 		function <portlet:namespace />updateRowsChecked(element) {

@@ -114,6 +114,10 @@ public class GitRepositoryFactory {
 			return new JenkinsWorkspaceGitRepository(jsonObject);
 		}
 
+		if (jsonObjectType.equals(LegacyWorkspaceGitRepository.TYPE)) {
+			return new LegacyWorkspaceGitRepository(jsonObject);
+		}
+
 		if (jsonObjectType.equals(OtherPortalWorkspaceGitRepository.TYPE)) {
 			return new OtherPortalWorkspaceGitRepository(jsonObject);
 		}
@@ -147,6 +151,11 @@ public class GitRepositoryFactory {
 				pullRequest, upstreamBranchName);
 		}
 
+		if (gitHubURL.contains("/liferay-qa-portal-legacy-ee")) {
+			return new LegacyWorkspaceGitRepository(
+				pullRequest, upstreamBranchName);
+		}
+
 		throw new RuntimeException("Unsupported workspace Git repository");
 	}
 
@@ -166,6 +175,11 @@ public class GitRepositoryFactory {
 
 		if (gitHubURL.contains("/liferay-portal")) {
 			return new PrimaryPortalWorkspaceGitRepository(
+				remoteGitRef, upstreamBranchName);
+		}
+
+		if (gitHubURL.contains("/liferay-qa-portal-legacy-ee")) {
+			return new LegacyWorkspaceGitRepository(
 				remoteGitRef, upstreamBranchName);
 		}
 

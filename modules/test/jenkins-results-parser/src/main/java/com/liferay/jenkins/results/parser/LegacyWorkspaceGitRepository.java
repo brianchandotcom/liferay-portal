@@ -14,20 +14,34 @@
 
 package com.liferay.jenkins.results.parser;
 
+import org.json.JSONObject;
+
 /**
  * @author Michael Hashimoto
  */
-public interface PortalWorkspace extends Workspace {
+public class LegacyWorkspaceGitRepository extends BaseWorkspaceGitRepository {
 
-	public WorkspaceGitRepository getCompanionPortalWorkspaceGitRepository();
+	public static final String TYPE = "legacy";
 
-	public LegacyWorkspaceGitRepository getLegacyWorkspaceGitRepository();
+	@Override
+	public String getType() {
+		return TYPE;
+	}
 
-	public WorkspaceGitRepository getOtherPortalWorkspaceGitRepository();
+	protected LegacyWorkspaceGitRepository(JSONObject jsonObject) {
+		super(jsonObject);
+	}
 
-	public WorkspaceGitRepository getPluginsWorkspaceGitRepository();
+	protected LegacyWorkspaceGitRepository(
+		PullRequest pullRequest, String upstreamBranchName) {
 
-	public PortalWorkspaceGitRepository
-		getPrimaryPortalWorkspaceGitRepository();
+		super(pullRequest, upstreamBranchName);
+	}
+
+	protected LegacyWorkspaceGitRepository(
+		RemoteGitRef remoteGitRef, String upstreamBranchName) {
+
+		super(remoteGitRef, upstreamBranchName);
+	}
 
 }

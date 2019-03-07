@@ -31,6 +31,24 @@ public class FunctionalBatchPortalWorkspace extends BatchPortalWorkspace {
 		_setPortalReleaseProperties();
 	}
 
+	@Override
+	protected void setUpWorkspaceGitRepositories() {
+		super.setUpWorkspaceGitRepositories();
+
+		if (legacyWorkspaceGitRepository != null) {
+			legacyWorkspaceGitRepository.setUp();
+		}
+	}
+
+	@Override
+	protected void tearDownWorkspaceGitRepositories() {
+		super.tearDownWorkspaceGitRepositories();
+
+		if (legacyWorkspaceGitRepository != null) {
+			legacyWorkspaceGitRepository.tearDown();
+		}
+	}
+
 	private void _setPortalBuildProperties() {
 		Properties properties = new Properties();
 

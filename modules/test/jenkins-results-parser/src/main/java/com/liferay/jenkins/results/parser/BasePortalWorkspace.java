@@ -41,6 +41,11 @@ public abstract class BasePortalWorkspace
 	}
 
 	@Override
+	public LegacyWorkspaceGitRepository getLegacyWorkspaceGitRepository() {
+		return legacyWorkspaceGitRepository;
+	}
+
+	@Override
 	public WorkspaceGitRepository getOtherPortalWorkspaceGitRepository() {
 		return _otherPortalWorkspaceGitRepository;
 	}
@@ -92,6 +97,16 @@ public abstract class BasePortalWorkspace
 		if (_companionPortalWorkspaceGitRepository != null) {
 			_companionPortalWorkspaceGitRepository.setUp();
 		}
+
+		workspaceGitRepository = WorkspaceUtil.getWorkspaceGitRepository(
+			LegacyWorkspaceGitRepository.TYPE, _LEGACY_GITHUB_URL, "master");
+
+		if (!(workspaceGitRepository instanceof LegacyWorkspaceGitRepository)) {
+			throw new RuntimeException("Invalid workspace Git repository");
+		}
+
+		legacyWorkspaceGitRepository =
+			(LegacyWorkspaceGitRepository)workspaceGitRepository;
 
 		_otherPortalWorkspaceGitRepository =
 			WorkspaceUtil.getDependencyWorkspaceGitRepository(
@@ -231,6 +246,11 @@ public abstract class BasePortalWorkspace
 
 		_pluginsWorkspaceGitRepository.writePropertiesFiles();
 	}
+
+	protected final LegacyWorkspaceGitRepository legacyWorkspaceGitRepository;
+
+	private static final String _LEGACY_GITHUB_URL =
+		"https://github.com/liferay/liferay-qa-portal-legacy-ee/tree/master";
 
 	private static final Pattern _portalGitHubURLPattern = Pattern.compile(
 		"https://github.com/[^/]+/(?<gitRepositoryName>" +

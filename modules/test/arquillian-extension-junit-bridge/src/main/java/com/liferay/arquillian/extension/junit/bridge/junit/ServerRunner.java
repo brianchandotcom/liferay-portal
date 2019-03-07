@@ -33,7 +33,6 @@ import org.junit.runner.Description;
 import org.junit.runner.Runner;
 import org.junit.runner.manipulation.Filter;
 import org.junit.runner.manipulation.Filterable;
-import org.junit.runner.manipulation.NoTestsRemainException;
 import org.junit.runner.notification.Failure;
 import org.junit.runner.notification.RunNotifier;
 import org.junit.runners.model.FrameworkField;
@@ -52,17 +51,10 @@ public class ServerRunner extends Runner implements Filterable {
 	}
 
 	@Override
-	public void filter(Filter filter) throws NoTestsRemainException {
+	public void filter(Filter filter) {
 		_filter = filter;
 
 		_testClass = new FilteredSortedTestClass(_clazz);
-
-		List<FrameworkMethod> frameworkMethods = _testClass.getAnnotatedMethods(
-			Test.class);
-
-		if (frameworkMethods.isEmpty()) {
-			throw new NoTestsRemainException();
-		}
 	}
 
 	@Override

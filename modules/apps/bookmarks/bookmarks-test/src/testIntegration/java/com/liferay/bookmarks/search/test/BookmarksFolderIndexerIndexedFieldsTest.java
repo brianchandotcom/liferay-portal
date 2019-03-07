@@ -173,6 +173,8 @@ public class BookmarksFolderIndexerIndexedFieldsTest {
 		indexedFieldsFixture.populateUID(
 			BookmarksFolder.class.getName(), bookmarksFolder.getFolderId(),
 			map);
+		indexedFieldsFixture.populateViewCount(
+			BookmarksFolder.class, bookmarksFolder.getFolderId(), map);
 
 		_populateDates(bookmarksFolder, map);
 		_populateRoles(bookmarksFolder, map);

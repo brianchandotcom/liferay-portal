@@ -170,6 +170,8 @@ public class BookmarksEntryIndexerIndexedFieldsTest {
 		indexedFieldsFixture.populatePriority("0.0", map);
 		indexedFieldsFixture.populateUID(
 			BookmarksEntry.class.getName(), bookmarksEntry.getEntryId(), map);
+		indexedFieldsFixture.populateViewCount(
+			BookmarksEntry.class, bookmarksEntry.getEntryId(), map);
 
 		_populateDates(bookmarksEntry, map);
 		_populateRoles(bookmarksEntry, map);

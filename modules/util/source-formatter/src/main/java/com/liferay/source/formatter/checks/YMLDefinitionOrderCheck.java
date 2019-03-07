@@ -42,24 +42,6 @@ public class YMLDefinitionOrderCheck extends BaseFileCheck {
 		return _sortDefinitions(fileName, content, StringPool.BLANK);
 	}
 
-	private static String _getDefinitionKey(String definition) {
-		Matcher matcher = _definitionKeyPattern.matcher(definition);
-
-		if (matcher.find()) {
-			return StringUtil.trim(matcher.group(1));
-		}
-
-		return definition;
-	}
-
-	private static int _getTravisDefinitionKeyWeight(String definitionKey) {
-		if (_travisDefinitionKeyWeightMap.containsKey(definitionKey)) {
-			return _travisDefinitionKeyWeightMap.get(definitionKey);
-		}
-
-		return -1;
-	}
-
 	private String _fixIncorrectIndentation(String content) {
 		Matcher matcher = _incorrectIndentationPattern.matcher(content);
 
@@ -119,7 +101,8 @@ public class YMLDefinitionOrderCheck extends BaseFileCheck {
 			String nestedDefinitionIndent =
 				YMLSourceUtil.getNestedDefinitionIndent(definition);
 
-			String definitionKey = _getDefinitionKey(definition);
+			String definitionKey = definitionComparator._getDefinitionKey(
+				definition);
 
 			if (!nestedDefinitionIndent.equals(StringPool.BLANK) &&
 				!_travisDefinitionKeyWeightMap.containsKey(definitionKey)) {
@@ -136,7 +119,8 @@ public class YMLDefinitionOrderCheck extends BaseFileCheck {
 			nestedDefinitionIndent = YMLSourceUtil.getNestedDefinitionIndent(
 				previousDefinition);
 
-			definitionKey = _getDefinitionKey(previousDefinition);
+			definitionKey = definitionComparator._getDefinitionKey(
+				previousDefinition);
 
 			if (!nestedDefinitionIndent.equals(StringPool.BLANK) &&
 				!_travisDefinitionKeyWeightMap.containsKey(definitionKey)) {
@@ -154,8 +138,6 @@ public class YMLDefinitionOrderCheck extends BaseFileCheck {
 		return content;
 	}
 
-	private static final Pattern _definitionKeyPattern = Pattern.compile(
-		"(.*?):");
 	private static final Pattern _incorrectIndentationPattern = Pattern.compile(
 		"^( *)[^ -].+(\n\\1- .+(\n\\1 .+)*)+", Pattern.MULTILINE);
 	private static final Map<String, Integer> _travisDefinitionKeyWeightMap =
@@ -200,6 +182,25 @@ public class YMLDefinitionOrderCheck extends BaseFileCheck {
 			return definitionKey1.compareTo(definitionKey2);
 		}
 
+		private String _getDefinitionKey(String definition) {
+			Matcher matcher = _definitionKeyPattern.matcher(definition);
+
+			if (matcher.find()) {
+				return StringUtil.trim(matcher.group(1));
+			}
+
+			return definition;
+		}
+
+		private int _getTravisDefinitionKeyWeight(String definitionKey) {
+			if (_travisDefinitionKeyWeightMap.containsKey(definitionKey)) {
+				return _travisDefinitionKeyWeightMap.get(definitionKey);
+			}
+
+			return -1;
+		}
+
+		private final Pattern _definitionKeyPattern = Pattern.compile("(.*?):");
 		private final String _fileName;
 
 	}

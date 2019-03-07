@@ -15,7 +15,7 @@
 package com.liferay.headless.collaboration.internal.resource.v1_0;
 
 import com.liferay.headless.collaboration.dto.v1_0.Folder;
-import com.liferay.headless.collaboration.dto.v1_0.ParentFolder;
+import com.liferay.headless.collaboration.internal.dto.v1_0.util.ParentFolderUtil;
 import com.liferay.headless.collaboration.resource.v1_0.FolderResource;
 import com.liferay.knowledge.base.model.KBFolder;
 import com.liferay.knowledge.base.service.KBArticleService;
@@ -140,7 +140,8 @@ public class FolderResourceImpl extends BaseFolderResourceImpl {
 				description = kbFolder.getDescription();
 				id = kbFolder.getKbFolderId();
 				name = kbFolder.getName();
-				parentFolder = _toParentFolder(kbFolder.getParentKBFolder());
+				parentFolder = ParentFolderUtil.toParentFolder(
+					kbFolder.getParentKBFolder());
 
 				setHasFolders(
 					() -> {
@@ -156,19 +157,6 @@ public class FolderResourceImpl extends BaseFolderResourceImpl {
 
 						return count > 0;
 					});
-			}
-		};
-	}
-
-	private ParentFolder _toParentFolder(KBFolder kbFolder) {
-		if (kbFolder == null) {
-			return null;
-		}
-
-		return new ParentFolder() {
-			{
-				folderId = kbFolder.getKbFolderId();
-				folderName = kbFolder.getName();
 			}
 		};
 	}

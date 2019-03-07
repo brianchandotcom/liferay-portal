@@ -14,13 +14,28 @@
 
 package com.liferay.headless.collaboration.internal.resource.v1_0;
 
+import com.liferay.asset.kernel.model.AssetTag;
+import com.liferay.asset.kernel.service.AssetCategoryLocalService;
+import com.liferay.asset.kernel.service.AssetTagLocalService;
+import com.liferay.headless.collaboration.dto.v1_0.Categories;
 import com.liferay.headless.collaboration.dto.v1_0.KnowledgeBaseArticle;
+import com.liferay.headless.collaboration.internal.dto.v1_0.util.AggregateRatingUtil;
+import com.liferay.headless.collaboration.internal.dto.v1_0.util.CreatorUtil;
+import com.liferay.headless.collaboration.internal.dto.v1_0.util.ParentFolderUtil;
 import com.liferay.headless.collaboration.resource.v1_0.KnowledgeBaseArticleResource;
 import com.liferay.knowledge.base.model.KBArticle;
+import com.liferay.knowledge.base.model.KBFolder;
 import com.liferay.knowledge.base.service.KBArticleService;
+import com.liferay.knowledge.base.service.KBFolderService;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.vulcan.multipart.MultipartBody;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
+import com.liferay.ratings.kernel.service.RatingsStatsLocalService;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -46,17 +61,41 @@ public class KnowledgeBaseArticleResourceImpl
 	}
 
 	@Override
-	public Page<KnowledgeBaseArticle> getFolderKnowledgeBaseArticlesPage(
-			Long folderId, Pagination pagination)
+	public Page<KnowledgeBaseArticle> getContentSpaceKnowledgeBaseArticlesPage(
+			Long contentSpaceId, Pagination pagination)
 		throws Exception {
 
 		return Page.of(
 			transform(
-				_kbArticleService.getGroupKBArticles(
-					folderId, 0, pagination.getStartPosition(),
-					pagination.getEndPosition(), null),
+				_kbArticleService.getKBArticles(
+					contentSpaceId, 0, WorkflowConstants.STATUS_APPROVED,
+					pagination.getStartPosition(), pagination.getEndPosition(),
+					null),
 				this::_toKBArticle),
-			pagination, _kbArticleService.getGroupKBArticlesCount(folderId, 0));
+			pagination,
+			_kbArticleService.getKBArticlesCount(
+				contentSpaceId, 0, WorkflowConstants.STATUS_APPROVED));
+	}
+
+	@Override
+	public Page<KnowledgeBaseArticle> getFolderKnowledgeBaseArticlesPage(
+			Long folderId, Pagination pagination)
+		throws Exception {
+
+		KBFolder kbFolder = _kbFolderService.getKBFolder(folderId);
+
+		return Page.of(
+			transform(
+				_kbArticleService.getKBArticles(
+					kbFolder.getGroupId(), folderId,
+					WorkflowConstants.STATUS_APPROVED,
+					pagination.getStartPosition(), pagination.getEndPosition(),
+					null),
+				this::_toKBArticle),
+			pagination,
+			_kbArticleService.getKBArticlesCount(
+				kbFolder.getGroupId(), folderId,
+				WorkflowConstants.STATUS_APPROVED));
 	}
 
 	@Override
@@ -65,7 +104,8 @@ public class KnowledgeBaseArticleResourceImpl
 		throws Exception {
 
 		return _toKBArticle(
-			_kbArticleService.fetchLatestKBArticle(knowledgeBaseArticleId, 0));
+			_kbArticleService.fetchLatestKBArticle(
+				knowledgeBaseArticleId, WorkflowConstants.STATUS_APPROVED));
 	}
 
 	@Override
@@ -74,15 +114,30 @@ public class KnowledgeBaseArticleResourceImpl
 				Long knowledgeBaseArticleId, Pagination pagination)
 		throws Exception {
 
+		KBArticle kbArticle = _kbArticleService.fetchLatestKBArticle(
+			knowledgeBaseArticleId, WorkflowConstants.STATUS_APPROVED);
+
 		return Page.of(
 			transform(
-				_kbArticleService.getGroupKBArticles(
-					knowledgeBaseArticleId, 0, pagination.getStartPosition(),
-					pagination.getEndPosition(), null),
+				_kbArticleService.getKBArticles(
+					kbArticle.getGroupId(), kbArticle.getResourcePrimKey(),
+					WorkflowConstants.STATUS_APPROVED,
+					pagination.getStartPosition(), pagination.getEndPosition(),
+					null),
 				this::_toKBArticle),
 			pagination,
-			_kbArticleService.getGroupKBArticlesCount(
-				knowledgeBaseArticleId, 0));
+			_kbArticleService.getKBArticlesCount(
+				kbArticle.getGroupId(), kbArticle.getResourcePrimKey(),
+				WorkflowConstants.STATUS_APPROVED));
+	}
+
+	@Override
+	public KnowledgeBaseArticle postContentSpaceKnowledgeBaseArticle(
+			Long contentSpaceId, MultipartBody multipartBody)
+		throws Exception {
+
+		return super.postContentSpaceKnowledgeBaseArticle(
+			contentSpaceId, multipartBody);
 	}
 
 	@Override
@@ -111,25 +166,72 @@ public class KnowledgeBaseArticleResourceImpl
 			knowledgeBaseArticleId, multipartBody);
 	}
 
-	private KnowledgeBaseArticle _toKBArticle(KBArticle kbArticle) {
+	private KnowledgeBaseArticle _toKBArticle(KBArticle kbArticle)
+		throws PortalException {
+
+		if (kbArticle == null) {
+			return null;
+		}
+
 		return new KnowledgeBaseArticle() {
 			{
-				//				aggregateRating =
+				aggregateRating = AggregateRatingUtil.toAggregateRating(
+					_ratingsStatsLocalService.fetchStats(
+						KBArticle.class.getName(),
+						kbArticle.getResourcePrimKey()));
 				articleBody = kbArticle.getContent();
-				//				category = kbArticle.get
-				//				creator = kbArticle.getCr
+				categories = transformToArray(
+					_assetCategoryLocalService.getCategories(
+						KBArticle.class.getName(), kbArticle.getClassPK()),
+					assetCategory -> new Categories() {
+						{
+							categoryId = assetCategory.getCategoryId();
+							categoryName = assetCategory.getName();
+						}
+					},
+					Categories.class);
+				creator = CreatorUtil.toCreator(
+					_portal, _userLocalService.getUser(kbArticle.getUserId()));
 				dateCreated = kbArticle.getCreateDate();
 				dateModified = kbArticle.getModifiedDate();
-				datePublished = kbArticle.getLastPublishDate();
-				//				friendlyUrlPath = kbArticle.getUr
+				friendlyUrlPath = kbArticle.getUrlTitle();
+				id = kbArticle.getKbArticleId();
+				keywords = ListUtil.toArray(
+					_assetTagLocalService.getTags(
+						KBArticle.class.getName(), kbArticle.getClassPK()),
+					AssetTag.NAME_ACCESSOR);
+
+				if (kbArticle.getKbFolderId() != 0) {
+					parentFolder = ParentFolderUtil.toParentFolder(
+						_kbFolderService.getKBFolder(
+							kbArticle.getKbFolderId()));
+				}
+
+				parentFolderId = kbArticle.getKbFolderId();
 				title = kbArticle.getTitle();
-				//				keywords = kbArticle.
-				//				folder = kbArticle.getKbFolderId();
 			}
 		};
 	}
 
 	@Reference
+	private AssetCategoryLocalService _assetCategoryLocalService;
+
+	@Reference
+	private AssetTagLocalService _assetTagLocalService;
+
+	@Reference
 	private KBArticleService _kbArticleService;
+
+	@Reference
+	private KBFolderService _kbFolderService;
+
+	@Reference
+	private Portal _portal;
+
+	@Reference
+	private RatingsStatsLocalService _ratingsStatsLocalService;
+
+	@Reference
+	private UserLocalService _userLocalService;
 
 }

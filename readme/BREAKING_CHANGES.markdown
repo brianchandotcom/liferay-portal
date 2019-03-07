@@ -20,7 +20,7 @@ Here are some of the types of changes documented in this file:
   replaces an old API, in spite of the old API being kept in Liferay Portal for
   backwards compatibility.
 
-*This document has been reviewed through commit `c3b54108fcd4`.*
+*This document has been reviewed through commit `85a738099b8f`.*
 
 ## Breaking Changes Contribution Guidelines
 
@@ -495,10 +495,12 @@ since it runs on top of OAuth.
 
 #### What changed?
 
-Three Google SSO modules have been moved from the `portal-security-sso` project to a
-new project named `portal-security-sso-google`. Same applies to the settings module,
-now named `portal-settings-authentication-google`.
-Those new projects are deprecated and available to download from Liferay Marketplace.
+Three Google SSO modules have been moved from the `portal-security-sso` project
+to a new project named `portal-security-sso-google`. Similarly, the settings
+module (`portal-settings-authentication-google-web`) was moved from the
+`portal-settings` project to a new project named
+`portal-settings-authentication-google`. These new projects are deprecated and
+available to download from Liferay Marketplace.
 
 #### Who is affected?
 
@@ -507,13 +509,13 @@ This affects anyone using Google SSO as an authentication system.
 #### How should I update my code?
 
 If you want to continue using Google SSO as an authentication system, you must
-download the corresponding modules from Liferay Marketplace. Alternatively, you can use
-OpenID Connect.
+download the corresponding modules from Liferay Marketplace. Alternatively, you
+can use OpenID Connect.
 
 #### Why was this change made?
 
-This change was made to avoid using an old solution for authentication (Google SSO).
-OpenID Connect is the recommended specification to use Google implementation for
-authentication.
+This change was made to avoid using an old solution for authentication (Google
+SSO). OpenID Connect is the recommended specification to use Google
+implementation for authentication.
 
 ---------------------------------------

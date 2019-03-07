@@ -14,10 +14,12 @@
 
 package com.liferay.document.library.kernel.util;
 
+import com.liferay.asset.kernel.model.AssetRenderer;
 import com.liferay.document.library.kernel.model.DLFileEntryType;
 import com.liferay.document.library.kernel.model.DLFileShortcut;
 import com.liferay.document.library.kernel.model.DLFileVersion;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.repository.model.Folder;
@@ -339,6 +341,15 @@ public class DLUtil {
 		long groupId, long folderId, String fileName) {
 
 		return getDL().getUniqueFileName(groupId, folderId, fileName);
+	}
+
+	public static String getURLViewInContext(
+		AssetRenderer assetRenderer,
+		LiferayPortletRequest liferayPortletRequest,
+		String noSuchEntryRedirect) {
+
+		return getDL().getURLViewInContext(
+			assetRenderer, liferayPortletRequest, noSuchEntryRedirect);
 	}
 
 	/**

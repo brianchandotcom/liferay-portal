@@ -14,6 +14,7 @@
 
 package com.liferay.portlet.documentlibrary.util;
 
+import com.liferay.asset.kernel.model.AssetRenderer;
 import com.liferay.document.library.kernel.model.DLFileEntryConstants;
 import com.liferay.document.library.kernel.model.DLFileEntryType;
 import com.liferay.document.library.kernel.model.DLFileEntryTypeConstants;
@@ -35,6 +36,7 @@ import com.liferay.document.library.kernel.util.comparator.RepositoryModelTitleC
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.configuration.Filter;
+import com.liferay.portal.kernel.exception.NoSuchLayoutException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -43,6 +45,7 @@ import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.Subscription;
+import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.PortletLayoutFinder;
 import com.liferay.portal.kernel.portlet.PortletProvider;
 import com.liferay.portal.kernel.portlet.PortletProviderUtil;
@@ -912,6 +915,41 @@ public class DLImpl implements DL {
 		return uniqueFileName;
 	}
 
+	public String getURLViewInContext(
+		AssetRenderer assetRenderer,
+		LiferayPortletRequest liferayPortletRequest,
+		String noSuchEntryRedirect) {
+
+		if (_serviceTrackerList.size() <= 0) {
+			return null;
+		}
+
+		try {
+			PortletLayoutFinder portletLayoutFinder = _serviceTrackerList.get(
+				0);
+
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)liferayPortletRequest.getAttribute(
+					WebKeys.THEME_DISPLAY);
+
+			PortletLayoutFinder.Result result = portletLayoutFinder.find(
+				themeDisplay, assetRenderer.getGroupId());
+
+			if (result != null) {
+				return _doGetURLViewInContext(
+					assetRenderer, noSuchEntryRedirect, themeDisplay);
+			}
+		}
+		catch (NoSuchLayoutException nsle) {
+			return null;
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+		}
+
+		return null;
+	}
+
 	/**
 	 * @deprecated As of Mueller (7.2.x), replaced by {@link com.liferay.document.library.util.DLURLHelper#FileEntryURLHelper#getWebDavURL(ThemeDisplay, Folder, FileEntry)}
 	 */
@@ -1283,6 +1321,29 @@ public class DLImpl implements DL {
 		for (String extension : extensions) {
 			_genericNames.put(extension, genericName);
 		}
+	}
+
+	private String _doGetURLViewInContext(
+		AssetRenderer assetRenderer, String noSuchEntryRedirect,
+		ThemeDisplay themeDisplay) {
+
+		FileEntry fileEntry = (FileEntry)assetRenderer.getAssetObject();
+
+		StringBundler sb = new StringBundler(11);
+
+		sb.append(themeDisplay.getPortalURL());
+		sb.append(themeDisplay.getPathMain());
+		sb.append("/document_library/find_file_entry");
+		sb.append("?p_l_id=");
+		sb.append(themeDisplay.getPlid());
+		sb.append("&noSuchEntryRedirect=");
+		sb.append(URLCodec.encodeURL(noSuchEntryRedirect));
+		sb.append(StringPool.AMPERSAND);
+		sb.append("fileEntryId");
+		sb.append(StringPool.EQUAL);
+		sb.append(fileEntry.getFileEntryId());
+
+		return PortalUtil.addPreservedParameters(themeDisplay, sb.toString());
 	}
 
 	private static final String _DEFAULT_FILE_ICON = "page";

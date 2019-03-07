@@ -16,11 +16,13 @@ package com.liferay.document.library.kernel.util;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.asset.kernel.model.AssetRenderer;
 import com.liferay.document.library.kernel.model.DLFileEntryType;
 import com.liferay.document.library.kernel.model.DLFileShortcut;
 import com.liferay.document.library.kernel.model.DLFileVersion;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.repository.model.Folder;
@@ -233,6 +235,11 @@ public interface DL {
 
 	public String getUniqueFileName(
 		long groupId, long folderId, String fileName);
+
+	public String getURLViewInContext(
+		AssetRenderer assetRenderer,
+		LiferayPortletRequest liferayPortletRequest,
+		String noSuchEntryRedirect);
 
 	/**
 	 * @deprecated As of Mueller (7.2.x), replaced by {@link com.liferay.document.library.util.DLURLHelper#FileEntryURLHelper#getWebDavURL(ThemeDisplay, Folder, FileEntry)}

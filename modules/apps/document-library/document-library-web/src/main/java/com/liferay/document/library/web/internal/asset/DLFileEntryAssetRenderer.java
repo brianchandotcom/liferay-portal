@@ -23,6 +23,7 @@ import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFileEntryConstants;
 import com.liferay.document.library.kernel.service.DLFileEntryLocalService;
 import com.liferay.document.library.kernel.service.DLFileEntryLocalServiceUtil;
+import com.liferay.document.library.kernel.util.DLUtil;
 import com.liferay.document.library.util.DLURLHelper;
 import com.liferay.document.library.web.internal.security.permission.resource.DLFileEntryPermission;
 import com.liferay.petra.string.CharPool;
@@ -101,6 +102,17 @@ public class DLFileEntryAssetRenderer
 		_dlFileEntryLocalService = dlFileEntryLocalService;
 		_trashHelper = trashHelper;
 		_dlurlHelper = dlurlHelper;
+	}
+
+	public String doGetURLViewInContext(
+		LiferayPortletRequest liferayPortletRequest,
+		LiferayPortletResponse liferayPortletResponse,
+		String noSuchEntryRedirect) {
+
+		return getURLViewInContext(
+			liferayPortletRequest, noSuchEntryRedirect,
+			"/document_library/find_file_entry", "fileEntryId",
+			_fileEntry.getFileEntryId());
 	}
 
 	@Override
@@ -351,10 +363,10 @@ public class DLFileEntryAssetRenderer
 		LiferayPortletResponse liferayPortletResponse,
 		String noSuchEntryRedirect) {
 
-		return getURLViewInContext(
-			liferayPortletRequest, noSuchEntryRedirect,
-			"/document_library/find_file_entry", "fileEntryId",
-			_fileEntry.getFileEntryId());
+		String urlViewInContext = DLUtil.getURLViewInContext(
+			this, liferayPortletRequest, noSuchEntryRedirect);
+
+		return urlViewInContext;
 	}
 
 	@Override

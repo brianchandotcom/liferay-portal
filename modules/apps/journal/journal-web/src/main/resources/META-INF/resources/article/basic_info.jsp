@@ -27,30 +27,34 @@ DDMStructure ddmStructure = journalEditArticleDisplayContext.getDDMStructure();
 <aui:input name="groupId" type="hidden" value="<%= journalEditArticleDisplayContext.getGroupId() %>" />
 <aui:input name="ddmStructureKey" type="hidden" value="<%= ddmStructure.getStructureKey() %>" />
 
-<div class="article-structure">
+<p class="article-structure small">
 	<b><liferay-ui:message key="structure" /></b>: <%= HtmlUtil.escape(ddmStructure.getName(locale)) %>
-</div>
+</p>
 
 <c:if test="<%= article != null %>">
-	<div class="article-version-status mt-4">
+	<p class="article-version-status small">
 		<b><liferay-ui:message key="version" />: <%= article.getVersion() %></b>
+
+		&nbsp;
 
 		<span class="label label-<%= LabelItem.getStyleFromWorkflowStatus(article.getStatus()) %> text-uppercase">
 			<liferay-ui:message key="<%= WorkflowConstants.getStatusLabel(article.getStatus()) %>" />
 		</span>
-	</div>
+	</p>
 </c:if>
 
 <c:choose>
 	<c:when test="<%= !journalWebConfiguration.journalArticleForceAutogenerateId() %>">
-		<div class="article-id mt-4">
-			<aui:input disabled="<%= true %>" name="newArticleId" type="text" value="<%= (article != null) ? article.getArticleId() : StringPool.BLANK %>" />
+		<div class="article-id">
+			<label for="<portlet:namespace />newArticleId"><liferay-ui:message key="id" /></label>
+
+			<aui:input cssClass="form-control-sm" disabled="<%= true %>" label="" name="newArticleId" type="text" value="<%= (article != null) ? article.getArticleId() : StringPool.BLANK %>" wrapperCssClass="mb-1" />
 
 			<%
 			String taglibOnChange = "Liferay.Util.toggleDisabled('#" + renderResponse.getNamespace() + "newArticleId', event.target.checked);";
 			%>
 
-			<aui:input checked="<%= true %>" label="autogenerate-id" name="autoArticleId" onChange="<%= taglibOnChange %>" type="checkbox" value="<%= true %>" />
+			<aui:input checked="<%= true %>" label="autogenerate-id" name="autoArticleId" onChange="<%= taglibOnChange %>" type="checkbox" value="<%= true %>" wrapperCssClass="mb-3" />
 		</div>
 	</c:when>
 	<c:otherwise>
@@ -59,7 +63,7 @@ DDMStructure ddmStructure = journalEditArticleDisplayContext.getDDMStructure();
 	</c:otherwise>
 </c:choose>
 
-<div class="article-content-description mt-4">
+<div class="article-content-description">
 	<label for="<portlet:namespace />descriptionMapAsXML"><liferay-ui:message key="summary" /></label>
 
 	<liferay-ui:input-localized

@@ -8,6 +8,7 @@
 	{@param? availableSegmentsEntries: ?}
 	{@param? _handleToggleContextualSidebarButtonClick: any}
 	{@param? classPK: ?}
+	{@param? draft: bool}
 	{@param? fragmentsEditorSidebarVisible: bool}
 	{@param? lastSaveDate: string}
 	{@param? portletNamespace: string}
@@ -49,8 +50,10 @@
 					<span class="navbar-text">
 						{if $savingChanges}
 							{msg desc=""}saving-changes{/msg}
-						{elseif $lastSaveDate}
+						{elseif $lastSaveDate and not $draft}
 							{msg desc=""}changes-saved-at-{$lastSaveDate}{/msg}
+						{elseif $lastSaveDate and $draft}
+							{msg desc=""}draft-saved-at-{$lastSaveDate}{/msg}
 						{/if}
 					</span>
 				</li>
@@ -79,7 +82,12 @@
 							/>
 
 							<button class="btn btn-primary nav-btn" type="submit">
-								{msg desc=""}publish{/msg}
+								{if $draft}
+									{msg desc=""}publish-page{/msg}
+								{else}
+									{msg desc=""}publish{/msg}
+
+								{/if}
 							</button>
 						</form>
 					</li>

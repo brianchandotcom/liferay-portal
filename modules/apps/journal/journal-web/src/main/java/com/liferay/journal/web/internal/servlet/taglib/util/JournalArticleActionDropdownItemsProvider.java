@@ -52,6 +52,7 @@ import com.liferay.portal.kernel.service.permission.GroupPermissionUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
+import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -503,7 +504,7 @@ public class JournalArticleActionDropdownItemsProvider {
 		if (AssetDisplayPageHelper.hasAssetDisplayPage(
 				_themeDisplay.getScopeGroupId(), assetEntry)) {
 
-			StringBundler sb = new StringBundler(6);
+			StringBundler sb = new StringBundler(5);
 
 			sb.append(
 				PortalUtil.getGroupFriendlyURL(
@@ -512,9 +513,10 @@ public class JournalArticleActionDropdownItemsProvider {
 			sb.append(assetEntry.getEntryId());
 			sb.append(StringPool.SLASH);
 			sb.append(_article.getId());
-			sb.append("?p_p_state=pop_up");
 
-			return sb.toString();
+			return HttpUtil.addParameter(
+				sb.toString(), "p_p_state",
+				LiferayWindowState.POP_UP.toString());
 		}
 
 		if (Validator.isNull(_article.getDDMTemplateKey())) {

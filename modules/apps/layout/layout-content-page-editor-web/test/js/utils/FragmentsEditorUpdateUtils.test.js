@@ -1,7 +1,7 @@
 import {decodeId, encodeAssetId} from "../../../src/main/resources/META-INF/resources/js/utils/FragmentsEditorIdUtils.es";
 
 describe(
-	'FragmentsEditorIdUtils', 
+	'FragmentsEditorIdUtils',
 	() => {
 		describe(
 			'#decodeId',

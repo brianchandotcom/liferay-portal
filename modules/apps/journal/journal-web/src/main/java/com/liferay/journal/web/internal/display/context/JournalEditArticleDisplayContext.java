@@ -234,6 +234,12 @@ public class JournalEditArticleDisplayContext {
 		return _ddmStructure;
 	}
 
+	public long getDDMStructureId() {
+		DDMStructure ddmStructure = getDDMStructure();
+
+		return ddmStructure.getStructureId();
+	}
+
 	public String getDDMStructureKey() {
 		if (_ddmStructureKey != null) {
 			return _ddmStructureKey;

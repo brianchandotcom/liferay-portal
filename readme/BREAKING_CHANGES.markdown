@@ -445,3 +445,33 @@ is now recommended, which is a standard protocol and a more secure method of
 authentication compared to NTLM.
 
 ---------------------------------------
+
+### Deprecated OpenID in Portal Distribution
+- **Date:** 2019-Jan-21
+- **JIRA Ticket:** [LPS-88906](https://issues.liferay.com/browse/LPS-88906)
+
+#### What changed?
+
+Three OpenID modules have been moved from the `portal-security-sso` project to a
+new project named `portal-security-sso-openid`. Same applies to the settings module,
+now named `portal-settings-authentication-openid` and login module, now named 
+`login-authentication-openid`.
+Those new projects are deprecated and available to download from Liferay Marketplace.
+
+#### Who is affected?
+
+This affects anyone using OpenID as an authentication system.
+
+#### How should I update my code?
+
+If you want to continue using OpenID as an authentication system, you must
+download the corresponding modules from Liferay Marketplace. Alternatively, you
+should migrate to OpenID Connect, available on Liferay Portal Distribution.
+
+#### Why was this change made?
+
+This change was made to avoid using a deprecated solution (OpenID). OpenID
+Connect is now recommended, which is a more secure method of
+authentication since it runs on top of OAuth.
+
+---------------------------------------

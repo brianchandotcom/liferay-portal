@@ -29,7 +29,7 @@
 			</div>
 		{/if}
 
-		{if not $_selectedSourceId or $_selectedSourceId == $_specificContentKey}
+		{if not $mappingFieldsURL or $_selectedSourceId == $_specificContentKey}
 			<div class="form-group floating-toolbar-mapping-panel__asset-select">
 				{call .assetSelect}
 					{param handleAssetOptionChange: $_handleAssetOptionChange /}
@@ -42,7 +42,7 @@
 				{param handleBrowseAllAssetsButtonClick: $_handleBrowseAllAssetsButtonClick /}
 			{/call}
 		{/if}
-		
+
 		<div class="form-group">
 			{call .fieldSelect}
 				{param fields: $_fields /}

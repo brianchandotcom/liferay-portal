@@ -275,9 +275,6 @@ public class OAuth2ProviderShortcutPortalInstanceLifecycleListener
 		}
 	};
 
-	private static final PrefixHandler _prefixHandler =
-		input -> "liferay-json-web-services-analytics." + input;
-
 	@Reference(
 		target = "(indexer.class.name=com.liferay.document.library.kernel.model.DLFileEntry)"
 	)

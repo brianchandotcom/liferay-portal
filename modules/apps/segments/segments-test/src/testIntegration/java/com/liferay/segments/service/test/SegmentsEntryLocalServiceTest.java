@@ -30,11 +30,13 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.service.test.ServiceTestUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+import com.liferay.segments.exception.RequiredSegmentsEntryException;
 import com.liferay.segments.exception.SegmentsEntryKeyException;
 import com.liferay.segments.model.SegmentsEntry;
 import com.liferay.segments.model.SegmentsEntryRel;
 import com.liferay.segments.service.SegmentsEntryLocalService;
 import com.liferay.segments.service.SegmentsEntryRelLocalService;
+import com.liferay.segments.service.SegmentsExperienceLocalService;
 import com.liferay.segments.test.util.SegmentsTestUtil;
 
 import java.util.ArrayList;
@@ -153,6 +155,25 @@ public class SegmentsEntryLocalServiceTest {
 			0,
 			_segmentsEntryLocalService.getSegmentsEntriesCount(
 				_group.getGroupId(), false));
+	}
+
+	@Test(
+		expected = RequiredSegmentsEntryException.MustNotDeleteSegmentsEntryReferencedBySegmentsExperiences.class
+	)
+	public void testDeleteSegmentsEntryReferencedBySegmentsExperiences()
+		throws PortalException {
+
+		SegmentsEntry segmentsEntry = SegmentsTestUtil.addSegmentsEntry(
+			_group.getGroupId());
+
+		_segmentsExperienceLocalService.addSegmentsExperience(
+			segmentsEntry.getSegmentsEntryId(), 0, 0,
+			RandomTestUtil.randomLocaleStringMap(), RandomTestUtil.randomInt(),
+			false,
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
+
+		_segmentsEntryLocalService.deleteSegmentsEntry(
+			segmentsEntry.getSegmentsEntryId());
 	}
 
 	@Test
@@ -305,5 +326,8 @@ public class SegmentsEntryLocalServiceTest {
 
 	@Inject
 	private SegmentsEntryRelLocalService _segmentsEntryRelLocalService;
+
+	@Inject
+	private SegmentsExperienceLocalService _segmentsExperienceLocalService;
 
 }

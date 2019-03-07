@@ -269,7 +269,7 @@ components:
                     enum:
                         - anyone
                           - members
-                              - owner
+                            - owner
                     type: string
                     writeOnly: true
         StructuredContentImage:

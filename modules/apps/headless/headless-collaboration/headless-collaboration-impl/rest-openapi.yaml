@@ -91,7 +91,7 @@ components:
                     enum:
                         - anyone
                           - members
-                              - owner
+                            - owner
                     type: string
                     writeOnly: true
             type: object
@@ -115,7 +115,7 @@ components:
                     enum:
                         - anyone
                           - members
-                              - owner
+                            - owner
                     type: string
                     writeOnly: true
             type: object

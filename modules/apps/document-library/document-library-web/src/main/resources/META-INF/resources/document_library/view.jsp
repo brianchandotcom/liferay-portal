@@ -180,6 +180,16 @@ String navigation = ParamUtil.getString(request, "navigation");
 		selectCategoriesURL.setWindowState(LiferayWindowState.POP_UP);
 		%>
 
+		<aui:script>
+			function <portlet:namespace />move(itemsSelected, parameterName, parameterValue) {
+				var dlComponent = Liferay.component('<portlet:namespace />DocumentLibrary');
+
+				if (dlComponent) {
+					dlComponent.showFolderDialog(itemsSelected, parameterName, parameterValue);
+				}
+			}
+		</aui:script>
+
 		<aui:script use="liferay-document-library">
 
 			<%

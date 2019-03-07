@@ -19,6 +19,7 @@ import com.liferay.headless.collaboration.dto.v1_0.BlogPostingImage;
 import com.liferay.headless.collaboration.dto.v1_0.Comment;
 import com.liferay.headless.collaboration.dto.v1_0.Folder;
 import com.liferay.headless.collaboration.dto.v1_0.KnowledgeBaseArticle;
+import com.liferay.headless.collaboration.dto.v1_0.KnowledgeBaseAttachment;
 import com.liferay.headless.collaboration.internal.resource.v1_0.BlogPostingImageResourceImpl;
 import com.liferay.headless.collaboration.internal.resource.v1_0.BlogPostingResourceImpl;
 import com.liferay.headless.collaboration.internal.resource.v1_0.CommentResourceImpl;
@@ -244,28 +245,31 @@ public class Mutation {
 	@GraphQLInvokeDetached
 	public KnowledgeBaseArticle postContentSpaceKnowledgeBaseArticle(
 			@GraphQLName("content-space-id") Long contentSpaceId,
-			@GraphQLName("MultipartBody") MultipartBody multipartBody)
+			@GraphQLName("KnowledgeBaseArticle") KnowledgeBaseArticle
+				knowledgeBaseArticle)
 		throws Exception {
 
 		KnowledgeBaseArticleResource knowledgeBaseArticleResource =
 			_createKnowledgeBaseArticleResource();
 
 		return knowledgeBaseArticleResource.
-			postContentSpaceKnowledgeBaseArticle(contentSpaceId, multipartBody);
+			postContentSpaceKnowledgeBaseArticle(
+				contentSpaceId, knowledgeBaseArticle);
 	}
 
 	@GraphQLField
 	@GraphQLInvokeDetached
 	public KnowledgeBaseArticle postFolderKnowledgeBaseArticle(
 			@GraphQLName("folder-id") Long folderId,
-			@GraphQLName("MultipartBody") MultipartBody multipartBody)
+			@GraphQLName("KnowledgeBaseArticle") KnowledgeBaseArticle
+				knowledgeBaseArticle)
 		throws Exception {
 
 		KnowledgeBaseArticleResource knowledgeBaseArticleResource =
 			_createKnowledgeBaseArticleResource();
 
 		return knowledgeBaseArticleResource.postFolderKnowledgeBaseArticle(
-			folderId, multipartBody);
+			folderId, knowledgeBaseArticle);
 	}
 
 	@GraphQLInvokeDetached
@@ -282,7 +286,38 @@ public class Mutation {
 	}
 
 	@GraphQLInvokeDetached
+	public KnowledgeBaseArticle patchKnowledgeBaseArticle(
+			@GraphQLName("knowledge-base-article-id") Long
+				knowledgeBaseArticleId,
+			@GraphQLName("KnowledgeBaseArticle") KnowledgeBaseArticle
+				knowledgeBaseArticle)
+		throws Exception {
+
+		KnowledgeBaseArticleResource knowledgeBaseArticleResource =
+			_createKnowledgeBaseArticleResource();
+
+		return knowledgeBaseArticleResource.patchKnowledgeBaseArticle(
+			knowledgeBaseArticleId, knowledgeBaseArticle);
+	}
+
+	@GraphQLInvokeDetached
 	public KnowledgeBaseArticle putKnowledgeBaseArticle(
+			@GraphQLName("knowledge-base-article-id") Long
+				knowledgeBaseArticleId,
+			@GraphQLName("KnowledgeBaseArticle") KnowledgeBaseArticle
+				knowledgeBaseArticle)
+		throws Exception {
+
+		KnowledgeBaseArticleResource knowledgeBaseArticleResource =
+			_createKnowledgeBaseArticleResource();
+
+		return knowledgeBaseArticleResource.putKnowledgeBaseArticle(
+			knowledgeBaseArticleId, knowledgeBaseArticle);
+	}
+
+	@GraphQLField
+	@GraphQLInvokeDetached
+	public KnowledgeBaseAttachment postKnowledgeBaseArticleAttachment(
 			@GraphQLName("knowledge-base-article-id") Long
 				knowledgeBaseArticleId,
 			@GraphQLName("MultipartBody") MultipartBody multipartBody)
@@ -291,8 +326,23 @@ public class Mutation {
 		KnowledgeBaseArticleResource knowledgeBaseArticleResource =
 			_createKnowledgeBaseArticleResource();
 
-		return knowledgeBaseArticleResource.putKnowledgeBaseArticle(
+		return knowledgeBaseArticleResource.postKnowledgeBaseArticleAttachment(
 			knowledgeBaseArticleId, multipartBody);
+	}
+
+	@GraphQLInvokeDetached
+	public boolean deleteKnowledgeBaseArticleAttachment(
+			@GraphQLName("knowledge-base-article-id") Long
+				knowledgeBaseArticleId,
+			@GraphQLName("attachment-id") Long attachmentId)
+		throws Exception {
+
+		KnowledgeBaseArticleResource knowledgeBaseArticleResource =
+			_createKnowledgeBaseArticleResource();
+
+		return knowledgeBaseArticleResource.
+			deleteKnowledgeBaseArticleAttachment(
+				knowledgeBaseArticleId, attachmentId);
 	}
 
 	@GraphQLField
@@ -300,7 +350,8 @@ public class Mutation {
 	public KnowledgeBaseArticle postKnowledgeBaseArticleKnowledgeBaseArticle(
 			@GraphQLName("knowledge-base-article-id") Long
 				knowledgeBaseArticleId,
-			@GraphQLName("MultipartBody") MultipartBody multipartBody)
+			@GraphQLName("KnowledgeBaseArticle") KnowledgeBaseArticle
+				knowledgeBaseArticle)
 		throws Exception {
 
 		KnowledgeBaseArticleResource knowledgeBaseArticleResource =
@@ -308,7 +359,7 @@ public class Mutation {
 
 		return knowledgeBaseArticleResource.
 			postKnowledgeBaseArticleKnowledgeBaseArticle(
-				knowledgeBaseArticleId, multipartBody);
+				knowledgeBaseArticleId, knowledgeBaseArticle);
 	}
 
 	private static BlogPostingResource _createBlogPostingResource() {

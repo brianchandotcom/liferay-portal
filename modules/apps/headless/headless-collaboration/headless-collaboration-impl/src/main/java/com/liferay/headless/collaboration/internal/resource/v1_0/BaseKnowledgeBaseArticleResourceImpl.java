@@ -15,10 +15,12 @@
 package com.liferay.headless.collaboration.internal.resource.v1_0;
 
 import com.liferay.headless.collaboration.dto.v1_0.KnowledgeBaseArticle;
+import com.liferay.headless.collaboration.dto.v1_0.KnowledgeBaseAttachment;
 import com.liferay.headless.collaboration.resource.v1_0.KnowledgeBaseArticleResource;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Company;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.portal.vulcan.multipart.MultipartBody;
 import com.liferay.portal.vulcan.pagination.Page;
@@ -39,6 +41,7 @@ import javax.annotation.Generated;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
+import javax.ws.rs.PATCH;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
@@ -76,13 +79,13 @@ public abstract class BaseKnowledgeBaseArticleResourceImpl
 	}
 
 	@Override
-	@Consumes({"application/json", "multipart/form-data"})
+	@Consumes("application/json")
 	@POST
 	@Path("/content-space/{content-space-id}/knowledge-base-articles")
 	@Produces("application/json")
 	public KnowledgeBaseArticle postContentSpaceKnowledgeBaseArticle(
 			@PathParam("content-space-id") Long contentSpaceId,
-			MultipartBody multipartBody)
+			KnowledgeBaseArticle knowledgeBaseArticle)
 		throws Exception {
 
 		return new KnowledgeBaseArticle();
@@ -107,12 +110,13 @@ public abstract class BaseKnowledgeBaseArticleResourceImpl
 	}
 
 	@Override
-	@Consumes({"application/json", "multipart/form-data"})
+	@Consumes("application/json")
 	@POST
 	@Path("/folders/{folder-id}/knowledge-base-articles")
 	@Produces("application/json")
 	public KnowledgeBaseArticle postFolderKnowledgeBaseArticle(
-			@PathParam("folder-id") Long folderId, MultipartBody multipartBody)
+			@PathParam("folder-id") Long folderId,
+			KnowledgeBaseArticle knowledgeBaseArticle)
 		throws Exception {
 
 		return new KnowledgeBaseArticle();
@@ -141,16 +145,142 @@ public abstract class BaseKnowledgeBaseArticleResourceImpl
 	}
 
 	@Override
-	@Consumes({"application/json", "multipart/form-data"})
+	@Consumes("application/json")
+	@PATCH
+	@Path("/knowledge-base-articles/{knowledge-base-article-id}")
+	@Produces("application/json")
+	public KnowledgeBaseArticle patchKnowledgeBaseArticle(
+			@PathParam("knowledge-base-article-id") Long knowledgeBaseArticleId,
+			KnowledgeBaseArticle knowledgeBaseArticle)
+		throws Exception {
+
+		preparePatch(knowledgeBaseArticle);
+
+		KnowledgeBaseArticle existingKnowledgeBaseArticle =
+			getKnowledgeBaseArticle(knowledgeBaseArticleId);
+
+		if (Validator.isNotNull(knowledgeBaseArticle.getArticleBody())) {
+			existingKnowledgeBaseArticle.setArticleBody(
+				knowledgeBaseArticle.getArticleBody());
+		}
+
+		if (Validator.isNotNull(knowledgeBaseArticle.getCategoryIds())) {
+			existingKnowledgeBaseArticle.setCategoryIds(
+				knowledgeBaseArticle.getCategoryIds());
+		}
+
+		if (Validator.isNotNull(knowledgeBaseArticle.getContentSpace())) {
+			existingKnowledgeBaseArticle.setContentSpace(
+				knowledgeBaseArticle.getContentSpace());
+		}
+
+		if (Validator.isNotNull(knowledgeBaseArticle.getDateCreated())) {
+			existingKnowledgeBaseArticle.setDateCreated(
+				knowledgeBaseArticle.getDateCreated());
+		}
+
+		if (Validator.isNotNull(knowledgeBaseArticle.getDateModified())) {
+			existingKnowledgeBaseArticle.setDateModified(
+				knowledgeBaseArticle.getDateModified());
+		}
+
+		if (Validator.isNotNull(knowledgeBaseArticle.getFriendlyUrlPath())) {
+			existingKnowledgeBaseArticle.setFriendlyUrlPath(
+				knowledgeBaseArticle.getFriendlyUrlPath());
+		}
+
+		if (Validator.isNotNull(knowledgeBaseArticle.getTitle())) {
+			existingKnowledgeBaseArticle.setTitle(
+				knowledgeBaseArticle.getTitle());
+		}
+
+		if (Validator.isNotNull(knowledgeBaseArticle.getHasAttachments())) {
+			existingKnowledgeBaseArticle.setHasAttachments(
+				knowledgeBaseArticle.getHasAttachments());
+		}
+
+		if (Validator.isNotNull(knowledgeBaseArticle.getKeywords())) {
+			existingKnowledgeBaseArticle.setKeywords(
+				knowledgeBaseArticle.getKeywords());
+		}
+
+		if (Validator.isNotNull(knowledgeBaseArticle.getParentFolderId())) {
+			existingKnowledgeBaseArticle.setParentFolderId(
+				knowledgeBaseArticle.getParentFolderId());
+		}
+
+		if (Validator.isNotNull(knowledgeBaseArticle.getViewableBy())) {
+			existingKnowledgeBaseArticle.setViewableBy(
+				knowledgeBaseArticle.getViewableBy());
+		}
+
+		return putKnowledgeBaseArticle(
+			knowledgeBaseArticleId, existingKnowledgeBaseArticle);
+	}
+
+	@Override
+	@Consumes("application/json")
 	@PUT
 	@Path("/knowledge-base-articles/{knowledge-base-article-id}")
 	@Produces("application/json")
 	public KnowledgeBaseArticle putKnowledgeBaseArticle(
 			@PathParam("knowledge-base-article-id") Long knowledgeBaseArticleId,
-			MultipartBody multipartBody)
+			KnowledgeBaseArticle knowledgeBaseArticle)
 		throws Exception {
 
 		return new KnowledgeBaseArticle();
+	}
+
+	@Override
+	@GET
+	@Path("/knowledge-base-articles/{knowledge-base-article-id}/attachments")
+	@Produces("application/json")
+	public KnowledgeBaseAttachment getKnowledgeBaseArticleAttachment(
+			@PathParam("knowledge-base-article-id") Long knowledgeBaseArticleId)
+		throws Exception {
+
+		return new KnowledgeBaseAttachment();
+	}
+
+	@Override
+	@Consumes("multipart/form-data")
+	@POST
+	@Path("/knowledge-base-articles/{knowledge-base-article-id}/attachments")
+	@Produces("application/json")
+	public KnowledgeBaseAttachment postKnowledgeBaseArticleAttachment(
+			@PathParam("knowledge-base-article-id") Long knowledgeBaseArticleId,
+			MultipartBody multipartBody)
+		throws Exception {
+
+		return new KnowledgeBaseAttachment();
+	}
+
+	@Override
+	@DELETE
+	@Path(
+		"/knowledge-base-articles/{knowledge-base-article-id}/attachments/{attachment-id}"
+	)
+	@Produces("application/json")
+	public boolean deleteKnowledgeBaseArticleAttachment(
+			@PathParam("knowledge-base-article-id") Long knowledgeBaseArticleId,
+			@PathParam("attachment-id") Long attachmentId)
+		throws Exception {
+
+		return false;
+	}
+
+	@Override
+	@GET
+	@Path(
+		"/knowledge-base-articles/{knowledge-base-article-id}/attachments/{attachment-id}"
+	)
+	@Produces("application/json")
+	public KnowledgeBaseAttachment getKnowledgeBaseArticleAttachment(
+			@PathParam("knowledge-base-article-id") Long knowledgeBaseArticleId,
+			@PathParam("attachment-id") Long attachmentId)
+		throws Exception {
+
+		return new KnowledgeBaseAttachment();
 	}
 
 	@Override
@@ -176,7 +306,7 @@ public abstract class BaseKnowledgeBaseArticleResourceImpl
 	}
 
 	@Override
-	@Consumes({"application/json", "multipart/form-data"})
+	@Consumes("application/json")
 	@POST
 	@Path(
 		"/knowledge-base-articles/{knowledge-base-article-id}/knowledge-base-articles"
@@ -184,7 +314,7 @@ public abstract class BaseKnowledgeBaseArticleResourceImpl
 	@Produces("application/json")
 	public KnowledgeBaseArticle postKnowledgeBaseArticleKnowledgeBaseArticle(
 			@PathParam("knowledge-base-article-id") Long knowledgeBaseArticleId,
-			MultipartBody multipartBody)
+			KnowledgeBaseArticle knowledgeBaseArticle)
 		throws Exception {
 
 		return new KnowledgeBaseArticle();

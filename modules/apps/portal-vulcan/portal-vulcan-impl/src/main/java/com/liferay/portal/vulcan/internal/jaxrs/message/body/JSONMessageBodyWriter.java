@@ -14,16 +14,13 @@
 
 package com.liferay.portal.vulcan.internal.jaxrs.message.body;
 
-import com.fasterxml.jackson.core.JsonGenerator;
-import com.fasterxml.jackson.core.JsonStreamContext;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.SerializerProvider;
 import com.fasterxml.jackson.databind.ser.PropertyFilter;
-import com.fasterxml.jackson.databind.ser.PropertyWriter;
 import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
 import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
 
 import com.liferay.portal.vulcan.fields.FieldsQueryParam;
+import com.liferay.portal.vulcan.internal.jackson.property.filter.VulcanPropertyFilter;
 
 import java.io.IOException;
 import java.io.OutputStream;
@@ -33,7 +30,6 @@ import java.lang.reflect.Type;
 
 import java.util.Optional;
 import java.util.Set;
-import java.util.stream.Stream;
 
 import javax.ws.rs.InternalServerErrorException;
 import javax.ws.rs.Produces;
@@ -90,8 +86,7 @@ public class JSONMessageBodyWriter implements MessageBodyWriter<Object> {
 							SimpleBeanPropertyFilter.serializeAll();
 					}
 					else {
-						propertyFilter = new VulcanSimpleBeanPropertyFilter(
-							fieldNames);
+						propertyFilter = VulcanPropertyFilter.of(fieldNames);
 					}
 
 					addFilter("Liferay.Vulcan", propertyFilter);
@@ -122,79 +117,5 @@ public class JSONMessageBodyWriter implements MessageBodyWriter<Object> {
 
 	@Context
 	private Providers _providers;
-
-	private static class VulcanSimpleBeanPropertyFilter
-		extends SimpleBeanPropertyFilter {
-
-		@Override
-		public void serializeAsField(
-				Object object, JsonGenerator jsonGenerator,
-				SerializerProvider serializerProvider,
-				PropertyWriter propertyWriter)
-			throws Exception {
-
-			if (!include(propertyWriter)) {
-				return;
-			}
-
-			if (_shouldWrite(jsonGenerator, propertyWriter)) {
-				propertyWriter.serializeAsField(
-					object, jsonGenerator, serializerProvider);
-			}
-		}
-
-		private VulcanSimpleBeanPropertyFilter(Set<String> fieldNames) {
-			_fieldNames = fieldNames;
-		}
-
-		private String _createPath(String name, JsonGenerator jsonGenerator) {
-			StringBuilder stringBuilder = new StringBuilder(name);
-
-			JsonStreamContext jsonStreamContext =
-				jsonGenerator.getOutputContext();
-
-			if (jsonStreamContext != null) {
-				jsonStreamContext = jsonStreamContext.getParent();
-			}
-
-			while (jsonStreamContext != null) {
-				String currentName = jsonStreamContext.getCurrentName();
-
-				if (currentName != null) {
-					stringBuilder.insert(0, currentName + ".");
-				}
-
-				jsonStreamContext = jsonStreamContext.getParent();
-			}
-
-			return stringBuilder.toString();
-		}
-
-		private boolean _shouldWrite(
-			JsonGenerator jsonGenerator, PropertyWriter propertyWriter) {
-
-			String path = _createPath(propertyWriter.getName(), jsonGenerator);
-
-			if (_fieldNames.contains(path)) {
-				return true;
-			}
-
-			if (path.contains(".")) {
-				String parent = path.substring(0, path.lastIndexOf('.'));
-
-				if (_fieldNames.contains(parent)) {
-					Stream<String> stream = _fieldNames.stream();
-
-					return stream.noneMatch(
-						field -> field.startsWith(parent + "."));
-				}
-			}
-
-			return false;
-		}
-
-		private final Set<String> _fieldNames;
-
-	}
 
 }

@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.LiferayPortletURL;
 import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.user.associated.data.constants.UserAssociatedDataPortletKeys;
-import com.liferay.user.associated.data.web.internal.util.UADApplicationSummaryHelper;
 import com.liferay.users.admin.user.action.contributor.UserActionContributor;
 
 import javax.portlet.ActionRequest;
@@ -27,7 +26,6 @@ import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
 
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Drew Brokke
@@ -79,8 +77,5 @@ public class ErasePersonalDataUserActionContributor
 	protected String getMVCRenderCommandName() {
 		return null;
 	}
-
-	@Reference
-	private UADApplicationSummaryHelper _uadApplicationSummaryHelper;
 
 }

@@ -1,6 +1,8 @@
 components:
     schemas:
         Category:
+            required:
+                - name
             description: https://www.schema.org/Category
             properties:
                 availableLanguages:

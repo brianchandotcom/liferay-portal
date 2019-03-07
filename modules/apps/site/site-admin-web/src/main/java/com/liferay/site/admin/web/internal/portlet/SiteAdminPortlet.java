@@ -378,10 +378,14 @@ public class SiteAdminPortlet extends MVCPortlet {
 
 		long groupId = ParamUtil.getLong(renderRequest, "groupId");
 
-		if (groupId > 0) {
-			ThemeDisplay themeDisplay =
-				(ThemeDisplay)renderRequest.getAttribute(WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
 
+		if (groupId == 0) {
+			groupId = themeDisplay.getScopeGroupId();
+		}
+
+		if (groupId > 0) {
 			try {
 				GroupPermissionUtil.check(
 					themeDisplay.getPermissionChecker(), groupId,

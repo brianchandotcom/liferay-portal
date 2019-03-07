@@ -48,17 +48,16 @@ public class SegmentUserResourceImpl extends BaseSegmentUserResourceImpl {
 				segmentId, pagination.getStartPosition(),
 				pagination.getEndPosition());
 
-		List<User> userEntries = new ArrayList<>(segmentsEntryClassPKs.length);
+		List<User> users = new ArrayList<>(segmentsEntryClassPKs.length);
 
-		for (long segmentEntryClassPK : segmentsEntryClassPKs) {
-			User user = _userService.getUserById(segmentEntryClassPK);
+		for (long segmentsEntryClassPK : segmentsEntryClassPKs) {
+			User user = _userService.getUserById(segmentsEntryClassPK);
 
-			userEntries.add(user);
+			users.add(user);
 		}
 
 		return Page.of(
-			transform(userEntries, this::_toSegmentUser), pagination,
-			userEntries.size());
+			transform(users, this::_toSegmentUser), pagination, users.size());
 	}
 
 	private SegmentUser _toSegmentUser(User user) {

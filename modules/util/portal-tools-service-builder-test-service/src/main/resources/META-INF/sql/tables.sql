@@ -59,6 +59,14 @@ create table LocalizedEntryLocalization (
 	content VARCHAR(75) null
 );
 
+create table NestedSetsTreeEntry (
+	nestedSetsTreeEntryId LONG not null primary key,
+	groupId LONG,
+	parentNestedSetsTreeEntryId LONG,
+	leftNestedSetsTreeEntryId LONG,
+	rightNestedSetsTreeEntryId LONG
+);
+
 create table UADPartialEntry (
 	uadPartialEntryId LONG not null primary key,
 	userId LONG,

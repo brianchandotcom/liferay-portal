@@ -53,6 +53,13 @@
 		<field name="groupId" type="long" />
 		<field name="uniqueGroupKey" type="String" />
 	</model>
+	<model name="com.liferay.portal.tools.service.builder.test.model.NestedSetsTreeEntry">
+		<field name="nestedSetsTreeEntryId" type="long" />
+		<field name="groupId" type="long" />
+		<field name="parentNestedSetsTreeEntryId" type="long" />
+		<field name="leftNestedSetsTreeEntryId" type="long" />
+		<field name="rightNestedSetsTreeEntryId" type="long" />
+	</model>
 	<model name="com.liferay.portal.tools.service.builder.test.model.UADPartialEntry">
 		<field name="uadPartialEntryId" type="long" />
 		<field name="userId" type="long" />

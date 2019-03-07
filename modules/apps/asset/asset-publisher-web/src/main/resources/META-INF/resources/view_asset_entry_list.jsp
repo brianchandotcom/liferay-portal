@@ -22,13 +22,29 @@ for (AssetEntryResult assetEntryResult : assetPublisherDisplayContext.getAssetEn
 %>
 
 	<c:choose>
+		<c:when test='<%= Objects.equals(assetPublisherDisplayContext.getDisplayStyle(), "abstracts") %>'>
+
+			<%
+			request.setAttribute("view.jsp-assetEntryResult", assetEntryResult);
+			%>
+
+			<liferay-util:include page="/view_asset_entries_abstract.jsp" servletContext="<%= application %>" />
+		</c:when>
+		<c:when test='<%= Objects.equals(assetPublisherDisplayContext.getDisplayStyle(), "full-content") %>'>
+
+			<%
+			request.setAttribute("view.jsp-assetEntryResult", assetEntryResult);
+			%>
+
+			<liferay-util:include page="/view_asset_entries_full_content.jsp" servletContext="<%= application %>" />
+		</c:when>
 		<c:when test='<%= Objects.equals(assetPublisherDisplayContext.getDisplayStyle(), "table") %>'>
 
 			<%
 			request.setAttribute("view.jsp-assetEntryResult", assetEntryResult);
 			%>
 
-			<liferay-util:include page="/view_asset_entry_table.jsp" servletContext="<%= application %>" />
+			<liferay-util:include page="/view_asset_entries_table.jsp" servletContext="<%= application %>" />
 		</c:when>
 		<c:when test='<%= Objects.equals(assetPublisherDisplayContext.getDisplayStyle(), "title-list") %>'>
 
@@ -36,7 +52,7 @@ for (AssetEntryResult assetEntryResult : assetPublisherDisplayContext.getAssetEn
 			request.setAttribute("view.jsp-assetEntryResult", assetEntryResult);
 			%>
 
-			<liferay-util:include page="/view_asset_entry_title_list.jsp" servletContext="<%= application %>" />
+			<liferay-util:include page="/view_asset_entries_title_list.jsp" servletContext="<%= application %>" />
 		</c:when>
 		<c:when test="<%= StringUtil.startsWith(assetPublisherDisplayContext.getDisplayStyle(), PortletDisplayTemplateManager.DISPLAY_STYLE_PREFIX) %>">
 			<c:if test="<%= Validator.isNotNull(assetEntryResult.getTitle()) %>">

@@ -70,11 +70,9 @@ public class JSLoaderConfigServlet extends HttpServlet {
 			response.getOutputStream(), true);
 
 		printWriter.println("(function() {");
-
 		printWriter.println(
 			"Liferay.EXPLAIN_RESOLUTIONS = " + _details.explainResolutions() +
 				";\n");
-
 		printWriter.println(
 			"Liferay.EXPOSE_GLOBAL = " + _details.exposeGlobal() + ";\n");
 
@@ -82,11 +80,11 @@ public class JSLoaderConfigServlet extends HttpServlet {
 			_absolutePortalURLBuilderFactory.getAbsolutePortalURLBuilder(
 				request);
 
-		String servletUrl = absolutePortalURLBuilder.forWhiteboardServlet(
+		String url = absolutePortalURLBuilder.forWhiteboardServlet(
 			JSResolveModulesServlet.SERVLET_PATTERN
 		).build();
 
-		printWriter.println("Liferay.RESOLVE_PATH = \"" + servletUrl + "\";\n");
+		printWriter.println("Liferay.RESOLVE_PATH = \"" + url + "\";\n");
 
 		printWriter.println(
 			"Liferay.WAIT_TIMEOUT = " + (_details.waitTimeout() * 1000) +

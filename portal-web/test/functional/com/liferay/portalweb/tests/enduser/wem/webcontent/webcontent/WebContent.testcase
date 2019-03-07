@@ -757,20 +757,12 @@ definition {
 		}
 
 		task ("Assert the user is taken to the Web Content Display Page and the draft version of the Web Content article displays in the Web Content Display widget") {
-			SelectWindow(
-				locator1 = "Web Content Display Page - Test Site Name - Liferay"
+			SelectWindow.selectPopUp(
+				locator1 = "null"
 			);
 
 			WebContent.viewPGViaWCD(
 				webContentContent = "WC WebContent Content Edit"
-			);
-
-			Close.closeWindow(
-				locator1 = "Web Content Display Page - Test Site Name - Liferay"
-			);
-
-			SelectWindow(
-				locator1 = "null"
 			);
 		}
 	}
@@ -852,20 +844,12 @@ definition {
 		}
 
 		task ("Assert the user is taken to the Web Content Display Page and the pending version of the Web Content article displays in the Web Content Display widget") {
-			SelectWindow(
-				locator1 = "Web Content Display Page - Test Site Name - Liferay"
+			SelectWindow.selectPopUp(
+				locator1 = "null"
 			);
 
 			WebContent.viewPGViaWCD(
 				webContentContent = "WC WebContent Content Edit"
-			);
-
-			Close.closeWindow(
-				locator1 = "Web Content Display Page - Test Site Name - Liferay"
-			);
-
-			SelectWindow(
-				locator1 = "null"
 			);
 		}
 	}

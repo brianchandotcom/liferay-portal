@@ -21,7 +21,6 @@ import java.lang.annotation.Annotation;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.TimeUnit;
 
 import org.junit.AssumptionViolatedException;
@@ -64,7 +63,9 @@ public class ServerRunner extends Runner implements Filterable {
 		for (FrameworkMethod frameworkMethod :
 				_testClass.getAnnotatedMethods(Test.class)) {
 
-			Description description = _describeChild(frameworkMethod);
+			Description description = Description.createTestDescription(
+				_clazz, frameworkMethod.getName(),
+				frameworkMethod.getAnnotations());
 
 			runNotifier.fireTestStarted(description);
 
@@ -94,16 +95,6 @@ public class ServerRunner extends Runner implements Filterable {
 		}
 	}
 
-	private Description _describeChild(FrameworkMethod frameworkMethod) {
-		return _methodDescriptions.computeIfAbsent(
-			frameworkMethod,
-			keyFrameworkMethod -> {
-				return Description.createTestDescription(
-					_clazz, keyFrameworkMethod.getName(),
-					keyFrameworkMethod.getAnnotations());
-			});
-	}
-
 	private Statement _withTimeout(
 		FrameworkMethod frameworkMethod, Statement statement) {
 
@@ -121,8 +112,6 @@ public class ServerRunner extends Runner implements Filterable {
 	}
 
 	private final Class<?> _clazz;
-	private final Map<FrameworkMethod, Description> _methodDescriptions =
-		new ConcurrentHashMap<>();
 	private TestClass _testClass;
 
 	private class FilteredSortedTestClass extends TestClass {
@@ -148,7 +137,8 @@ public class ServerRunner extends Runner implements Filterable {
 			if (filter != null) {
 				_testFrameworkMethods.removeIf(
 					frameworkMethod -> !filter.shouldRun(
-						_describeChild(frameworkMethod)));
+						Description.createTestDescription(
+							_clazz, frameworkMethod.getName())));
 			}
 		}
 

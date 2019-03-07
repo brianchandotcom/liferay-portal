@@ -22,7 +22,6 @@ import java.lang.annotation.Annotation;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
 
 import org.junit.AssumptionViolatedException;
 import org.junit.Ignore;
@@ -98,16 +97,6 @@ public class Arquillian extends Runner implements Filterable {
 		}
 	}
 
-	private Description _describeChild(FrameworkMethod frameworkMethod) {
-		return _methodDescriptions.computeIfAbsent(
-			frameworkMethod,
-			keyFrameworkMethod -> {
-				return Description.createTestDescription(
-					_clazz, keyFrameworkMethod.getName(),
-					keyFrameworkMethod.getAnnotations());
-			});
-	}
-
 	private List<FrameworkMethod> _getTestFrameworkMethods() {
 		List<FrameworkMethod> frameworkMethods = _testClass.getAnnotatedMethods(
 			Test.class);
@@ -132,7 +121,9 @@ public class Arquillian extends Runner implements Filterable {
 	private void _runMethod(
 		FrameworkMethod frameworkMethod, RunNotifier runNotifier) {
 
-		Description description = _describeChild(frameworkMethod);
+		Description description = Description.createTestDescription(
+			_clazz, frameworkMethod.getName(),
+			frameworkMethod.getAnnotations());
 
 		if (_isIgnored(frameworkMethod)) {
 			runNotifier.fireTestIgnored(description);
@@ -165,8 +156,6 @@ public class Arquillian extends Runner implements Filterable {
 	}
 
 	private final Class<?> _clazz;
-	private final Map<FrameworkMethod, Description> _methodDescriptions =
-		new ConcurrentHashMap<>();
 	private TestClass _testClass;
 
 	private class FilteredSortedTestClass extends TestClass {
@@ -192,7 +181,8 @@ public class Arquillian extends Runner implements Filterable {
 			if (filter != null) {
 				_testFrameworkMethods.removeIf(
 					frameworkMethod -> !filter.shouldRun(
-						_describeChild(frameworkMethod)));
+						Description.createTestDescription(
+							_clazz, frameworkMethod.getName())));
 			}
 		}
 

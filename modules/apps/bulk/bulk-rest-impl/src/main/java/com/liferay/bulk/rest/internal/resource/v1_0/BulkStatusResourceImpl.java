@@ -14,9 +14,15 @@
 
 package com.liferay.bulk.rest.internal.resource.v1_0;
 
+import com.liferay.bulk.rest.dto.v1_0.BulkStatus;
 import com.liferay.bulk.rest.resource.v1_0.BulkStatusResource;
+import com.liferay.bulk.selection.BulkSelectionRunner;
+import com.liferay.portal.kernel.model.User;
+
+import javax.ws.rs.core.Context;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ServiceScope;
 
 /**
@@ -27,4 +33,20 @@ import org.osgi.service.component.annotations.ServiceScope;
 	scope = ServiceScope.PROTOTYPE, service = BulkStatusResource.class
 )
 public class BulkStatusResourceImpl extends BaseBulkStatusResourceImpl {
+
+	@Override
+	public BulkStatus getStatus(Long param) throws Exception {
+		return new BulkStatus() {
+			{
+				busy = _bulkSelectionRunner.isBusy(_user);
+			}
+		};
+	}
+
+	@Reference
+	private BulkSelectionRunner _bulkSelectionRunner;
+
+	@Context
+	private User _user;
+
 }

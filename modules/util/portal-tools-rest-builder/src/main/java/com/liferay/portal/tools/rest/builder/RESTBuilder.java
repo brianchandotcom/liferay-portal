@@ -145,7 +145,6 @@ public class RESTBuilder {
 
 				_createBaseResourceImplFile(
 					context, escapedVersion, schemaName);
-				_createOAuth2ScopesFile(context, escapedVersion, schemaName);
 				_createPropertiesFile(context, escapedVersion, schemaName);
 				_createResourceFile(context, escapedVersion, schemaName);
 				_createResourceImplFile(context, escapedVersion, schemaName);
@@ -445,35 +444,6 @@ public class RESTBuilder {
 			file,
 			FreeMarkerUtil.processTemplate(
 				_copyrightFileName, "graphql_servlet_data", context));
-	}
-
-	private void _createOAuth2ScopesFile(
-			Map<String, Object> context, String escapedVersion,
-			String schemaName)
-		throws Exception {
-
-		StringBuilder sb = new StringBuilder();
-
-		sb.append(_configYAML.getImplDir());
-		sb.append("/../resources/");
-
-		String apiPackagePath = _configYAML.getApiPackagePath();
-
-		sb.append(apiPackagePath.replace('.', '/'));
-
-		sb.append("/internal/resource/");
-		sb.append(escapedVersion);
-		sb.append("/");
-		sb.append(schemaName);
-		sb.append("ResourceImpl.oauth2.scopes");
-
-		File file = new File(sb.toString());
-
-		_files.add(file);
-
-		FileUtil.write(
-			file,
-			FreeMarkerUtil.processTemplate(null, "oauth2_scopes", context));
 	}
 
 	private void _createOpenAPIResourceFile(

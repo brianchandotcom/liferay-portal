@@ -26,7 +26,6 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(
 	property = {
-		"oauth2.scope.checker.type=resource.config",
 		"osgi.jaxrs.application.base=/headless-form",
 		"osgi.jaxrs.extension.select=(osgi.jaxrs.name=Liferay.Vulcan)",
 		"osgi.jaxrs.name=Liferay.Headless.Form"

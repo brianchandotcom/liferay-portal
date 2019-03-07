@@ -113,7 +113,7 @@ public class BndBundleUtil {
 		includeResources.add("test-classes/integration");
 
 		ProtectionDomain protectionDomain =
-			DeploymentStatement.class.getProtectionDomain();
+			BndBundleUtil.class.getProtectionDomain();
 
 		CodeSource codeSource = protectionDomain.getCodeSource();
 

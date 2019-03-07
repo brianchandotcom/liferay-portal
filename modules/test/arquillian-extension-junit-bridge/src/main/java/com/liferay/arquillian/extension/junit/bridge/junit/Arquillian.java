@@ -14,10 +14,17 @@
 
 package com.liferay.arquillian.extension.junit.bridge.junit;
 
+import com.liferay.arquillian.extension.junit.bridge.client.BndBundleUtil;
 import com.liferay.arquillian.extension.junit.bridge.client.ClientExecutorStatement;
-import com.liferay.arquillian.extension.junit.bridge.client.DeploymentStatement;
+import com.liferay.arquillian.extension.junit.bridge.client.MBeans;
 
 import java.lang.annotation.Annotation;
+
+import java.net.URI;
+import java.net.URL;
+
+import java.nio.file.Files;
+import java.nio.file.Path;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -39,6 +46,8 @@ import org.junit.runners.model.FrameworkMethod;
 import org.junit.runners.model.MultipleFailureException;
 import org.junit.runners.model.Statement;
 import org.junit.runners.model.TestClass;
+
+import org.osgi.jmx.framework.FrameworkMBean;
 
 /**
  * @author Shuyang Zhou
@@ -71,45 +80,63 @@ public class Arquillian extends Runner implements Filterable {
 
 	@Override
 	public void run(RunNotifier runNotifier) {
-		try {
-			List<FrameworkMethod> frameworkMethods = new ArrayList<>(
-				_testClass.getAnnotatedMethods(Test.class));
+		List<FrameworkMethod> frameworkMethods = new ArrayList<>(
+			_testClass.getAnnotatedMethods(Test.class));
 
-			frameworkMethods.removeIf(
-				frameworkMethod -> {
-					if (frameworkMethod.getAnnotation(Ignore.class) != null) {
-						runNotifier.fireTestIgnored(
-							Description.createTestDescription(
-								_clazz, frameworkMethod.getName(),
-								frameworkMethod.getAnnotations()));
+		frameworkMethods.removeIf(
+			frameworkMethod -> {
+				if (frameworkMethod.getAnnotation(Ignore.class) != null) {
+					runNotifier.fireTestIgnored(
+						Description.createTestDescription(
+							_clazz, frameworkMethod.getName(),
+							frameworkMethod.getAnnotations()));
 
-						return true;
-					}
-
-					return false;
-				});
-
-			if (frameworkMethods.isEmpty()) {
-				return;
-			}
-
-			Statement statement = new Statement() {
-
-				@Override
-				public void evaluate() {
-					for (FrameworkMethod frameworkMethod : frameworkMethods) {
-						_runMethod(frameworkMethod, runNotifier);
-					}
+					return true;
 				}
 
-			};
+				return false;
+			});
 
-			statement = new DeploymentStatement(statement);
+		if (frameworkMethods.isEmpty()) {
+			return;
+		}
 
-			statement.evaluate();
+		try {
+			FrameworkMBean frameworkMBean = MBeans.getFrameworkMBean();
+
+			long bundleId = _installBundle(frameworkMBean);
+
+			frameworkMBean.startBundle(bundleId);
+
+			try {
+				for (FrameworkMethod frameworkMethod : frameworkMethods) {
+					_runMethod(frameworkMethod, runNotifier);
+				}
+			}
+			finally {
+				frameworkMBean.uninstallBundle(bundleId);
+			}
 		}
 		catch (Throwable t) {
 			runNotifier.fireTestFailure(new Failure(getDescription(), t));
+		}
+	}
+
+	private long _installBundle(FrameworkMBean frameworkMBean)
+		throws Exception {
+
+		Path path = BndBundleUtil.createBundle();
+
+		URI uri = path.toUri();
+
+		URL url = uri.toURL();
+
+		try {
+			return frameworkMBean.installBundleFromURL(
+				url.getPath(), url.toExternalForm());
+		}
+		finally {
+			Files.delete(path);
 		}
 	}
 

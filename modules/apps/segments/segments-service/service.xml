@@ -182,6 +182,7 @@
 		<reference entity="Group" package-path="com.liferay.portal" />
 	</entity>
 	<exceptions>
+		<exception>DefaultSegmentsEntry</exception>
 		<exception>DefaultSegmentsExperience</exception>
 		<exception>RequiredSegmentsEntry</exception>
 		<exception>SegmentsEntryCriteria</exception>

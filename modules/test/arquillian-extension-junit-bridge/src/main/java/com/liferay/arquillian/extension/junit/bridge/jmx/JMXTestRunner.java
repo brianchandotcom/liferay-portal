@@ -14,13 +14,17 @@
 
 package com.liferay.arquillian.extension.junit.bridge.jmx;
 
+import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
 
 import org.junit.AssumptionViolatedException;
+import org.junit.runner.Description;
 import org.junit.runner.JUnitCore;
 import org.junit.runner.Request;
+import org.junit.runner.Runner;
 import org.junit.runner.notification.Failure;
 import org.junit.runner.notification.RunListener;
 
@@ -44,8 +48,20 @@ public class JMXTestRunner implements JMXTestRunnerMBean {
 
 			jUnitCore.addListener(exceptionRunListener);
 
+			Class<?> clazz = _classLoader.loadClass(className);
+
+			Request request = new Request() {
+
+				@Override
+				public Runner getRunner() {
+					return new Arquillian(clazz);
+				}
+
+			};
+
 			jUnitCore.run(
-				Request.method(_classLoader.loadClass(className), methodName));
+				request.filterWith(
+					Description.createTestDescription(clazz, methodName)));
 
 			throwable = exceptionRunListener.getException();
 		}

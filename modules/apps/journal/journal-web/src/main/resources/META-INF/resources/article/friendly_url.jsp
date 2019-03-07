@@ -22,11 +22,11 @@ JournalArticle article = journalDisplayContext.getArticle();
 JournalEditArticleDisplayContext journalEditArticleDisplayContext = new JournalEditArticleDisplayContext(request, liferayPortletResponse, article);
 %>
 
-<div class="form-group">
-	<div class="mb-2 text-secondary">
-		<%= journalEditArticleDisplayContext.getFriendlyURLBase() %>
-	</div>
+<p class="mb-2 small text-secondary">
+	<%= journalEditArticleDisplayContext.getFriendlyURLBase() %>
+</p>
 
+<div class="input-group-sm">
 	<liferay-ui:input-localized
 		defaultLanguageId="<%= journalEditArticleDisplayContext.getDefaultLanguageId() %>"
 		maxLength='<%= String.valueOf(ModelHintsUtil.getMaxLength(JournalArticle.class.getName(), "urlTitle")) %>'

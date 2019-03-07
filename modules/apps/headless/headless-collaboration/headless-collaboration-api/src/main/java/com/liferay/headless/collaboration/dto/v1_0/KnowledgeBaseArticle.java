@@ -113,6 +113,30 @@ public class KnowledgeBaseArticle {
 	@JsonProperty
 	protected Categories[] categories;
 
+	public Long[] getCategoryIds() {
+		return categoryIds;
+	}
+
+	public void setCategoryIds(Long[] categoryIds) {
+		this.categoryIds = categoryIds;
+	}
+
+	@JsonIgnore
+	public void setCategoryIds(
+		UnsafeSupplier<Long[], Exception> categoryIdsUnsafeSupplier) {
+
+		try {
+			categoryIds = categoryIdsUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty
+	protected Long[] categoryIds;
+
 	public Long getContentSpace() {
 		return contentSpace;
 	}
@@ -257,6 +281,30 @@ public class KnowledgeBaseArticle {
 	@JsonProperty
 	protected String title;
 
+	public Boolean getHasAttachments() {
+		return hasAttachments;
+	}
+
+	public void setHasAttachments(Boolean hasAttachments) {
+		this.hasAttachments = hasAttachments;
+	}
+
+	@JsonIgnore
+	public void setHasAttachments(
+		UnsafeSupplier<Boolean, Exception> hasAttachmentsUnsafeSupplier) {
+
+		try {
+			hasAttachments = hasAttachmentsUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty
+	protected Boolean hasAttachments;
+
 	public Long getId() {
 		return id;
 	}
@@ -351,6 +399,30 @@ public class KnowledgeBaseArticle {
 	@JsonProperty
 	protected Long parentFolderId;
 
+	public String getViewableBy() {
+		return viewableBy;
+	}
+
+	public void setViewableBy(String viewableBy) {
+		this.viewableBy = viewableBy;
+	}
+
+	@JsonIgnore
+	public void setViewableBy(
+		UnsafeSupplier<String, Exception> viewableByUnsafeSupplier) {
+
+		try {
+			viewableBy = viewableByUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty
+	protected String viewableBy;
+
 	public String toString() {
 		StringBundler sb = new StringBundler();
 
@@ -380,6 +452,27 @@ public class KnowledgeBaseArticle {
 				sb.append(categories[i]);
 
 				if ((i + 1) < categories.length) {
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
+		}
+
+		sb.append(", ");
+
+		sb.append("\"categoryIds\": ");
+
+		if (categoryIds == null) {
+			sb.append("null");
+		}
+		else {
+			sb.append("[");
+
+			for (int i = 0; i < categoryIds.length; i++) {
+				sb.append(categoryIds[i]);
+
+				if ((i + 1) < categoryIds.length) {
 					sb.append(", ");
 				}
 			}
@@ -427,6 +520,11 @@ public class KnowledgeBaseArticle {
 		sb.append("\"");
 		sb.append(", ");
 
+		sb.append("\"hasAttachments\": ");
+
+		sb.append(hasAttachments);
+		sb.append(", ");
+
 		sb.append("\"id\": ");
 
 		sb.append(id);
@@ -463,6 +561,13 @@ public class KnowledgeBaseArticle {
 		sb.append("\"parentFolderId\": ");
 
 		sb.append(parentFolderId);
+		sb.append(", ");
+
+		sb.append("\"viewableBy\": ");
+
+		sb.append("\"");
+		sb.append(viewableBy);
+		sb.append("\"");
 
 		sb.append("}");
 

@@ -19,6 +19,7 @@ import com.liferay.headless.collaboration.dto.v1_0.BlogPostingImage;
 import com.liferay.headless.collaboration.dto.v1_0.Comment;
 import com.liferay.headless.collaboration.dto.v1_0.Folder;
 import com.liferay.headless.collaboration.dto.v1_0.KnowledgeBaseArticle;
+import com.liferay.headless.collaboration.dto.v1_0.KnowledgeBaseAttachment;
 import com.liferay.headless.collaboration.internal.resource.v1_0.BlogPostingImageResourceImpl;
 import com.liferay.headless.collaboration.internal.resource.v1_0.BlogPostingResourceImpl;
 import com.liferay.headless.collaboration.internal.resource.v1_0.CommentResourceImpl;
@@ -299,6 +300,43 @@ public class Query {
 
 		return knowledgeBaseArticleResource.getKnowledgeBaseArticle(
 			knowledgeBaseArticleId);
+	}
+
+	@GraphQLField
+	@GraphQLInvokeDetached
+	public KnowledgeBaseAttachment getKnowledgeBaseArticleAttachment(
+			@GraphQLName("knowledge-base-article-id") Long
+				knowledgeBaseArticleId)
+		throws Exception {
+
+		KnowledgeBaseArticleResource knowledgeBaseArticleResource =
+			_createKnowledgeBaseArticleResource();
+
+		knowledgeBaseArticleResource.setContextCompany(
+			CompanyLocalServiceUtil.getCompany(
+				CompanyThreadLocal.getCompanyId()));
+
+		return knowledgeBaseArticleResource.getKnowledgeBaseArticleAttachment(
+			knowledgeBaseArticleId);
+	}
+
+	@GraphQLField
+	@GraphQLInvokeDetached
+	public KnowledgeBaseAttachment getKnowledgeBaseArticleAttachment(
+			@GraphQLName("knowledge-base-article-id") Long
+				knowledgeBaseArticleId,
+			@GraphQLName("attachment-id") Long attachmentId)
+		throws Exception {
+
+		KnowledgeBaseArticleResource knowledgeBaseArticleResource =
+			_createKnowledgeBaseArticleResource();
+
+		knowledgeBaseArticleResource.setContextCompany(
+			CompanyLocalServiceUtil.getCompany(
+				CompanyThreadLocal.getCompanyId()));
+
+		return knowledgeBaseArticleResource.getKnowledgeBaseArticleAttachment(
+			knowledgeBaseArticleId, attachmentId);
 	}
 
 	@GraphQLField

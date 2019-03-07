@@ -22,12 +22,15 @@ import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
 import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
 
 import com.liferay.headless.collaboration.dto.v1_0.KnowledgeBaseArticle;
+import com.liferay.headless.collaboration.dto.v1_0.KnowledgeBaseAttachment;
 import com.liferay.headless.collaboration.resource.v1_0.KnowledgeBaseArticleResource;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.Base64;
+import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.HttpUtil;
@@ -244,7 +247,15 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 
 	@Test
 	public void testPostContentSpaceKnowledgeBaseArticle() throws Exception {
-		Assert.assertTrue(true);
+		KnowledgeBaseArticle randomKnowledgeBaseArticle =
+			randomKnowledgeBaseArticle();
+
+		KnowledgeBaseArticle postKnowledgeBaseArticle =
+			testPostContentSpaceKnowledgeBaseArticle_addKnowledgeBaseArticle(
+				randomKnowledgeBaseArticle);
+
+		assertEquals(randomKnowledgeBaseArticle, postKnowledgeBaseArticle);
+		assertValid(postKnowledgeBaseArticle);
 	}
 
 	protected KnowledgeBaseArticle
@@ -257,10 +268,14 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 	}
 
 	protected KnowledgeBaseArticle invokePostContentSpaceKnowledgeBaseArticle(
-			Long contentSpaceId, MultipartBody multipartBody)
+			Long contentSpaceId, KnowledgeBaseArticle knowledgeBaseArticle)
 		throws Exception {
 
 		Http.Options options = _createHttpOptions();
+
+		options.setBody(
+			_inputObjectMapper.writeValueAsString(knowledgeBaseArticle),
+			ContentTypes.APPLICATION_JSON, StringPool.UTF8);
 
 		String location =
 			_resourceURL +
@@ -277,10 +292,14 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 	}
 
 	protected Http.Response invokePostContentSpaceKnowledgeBaseArticleResponse(
-			Long contentSpaceId, MultipartBody multipartBody)
+			Long contentSpaceId, KnowledgeBaseArticle knowledgeBaseArticle)
 		throws Exception {
 
 		Http.Options options = _createHttpOptions();
+
+		options.setBody(
+			_inputObjectMapper.writeValueAsString(knowledgeBaseArticle),
+			ContentTypes.APPLICATION_JSON, StringPool.UTF8);
 
 		String location =
 			_resourceURL +
@@ -438,7 +457,15 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 
 	@Test
 	public void testPostFolderKnowledgeBaseArticle() throws Exception {
-		Assert.assertTrue(true);
+		KnowledgeBaseArticle randomKnowledgeBaseArticle =
+			randomKnowledgeBaseArticle();
+
+		KnowledgeBaseArticle postKnowledgeBaseArticle =
+			testPostFolderKnowledgeBaseArticle_addKnowledgeBaseArticle(
+				randomKnowledgeBaseArticle);
+
+		assertEquals(randomKnowledgeBaseArticle, postKnowledgeBaseArticle);
+		assertValid(postKnowledgeBaseArticle);
 	}
 
 	protected KnowledgeBaseArticle
@@ -451,10 +478,14 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 	}
 
 	protected KnowledgeBaseArticle invokePostFolderKnowledgeBaseArticle(
-			Long folderId, MultipartBody multipartBody)
+			Long folderId, KnowledgeBaseArticle knowledgeBaseArticle)
 		throws Exception {
 
 		Http.Options options = _createHttpOptions();
+
+		options.setBody(
+			_inputObjectMapper.writeValueAsString(knowledgeBaseArticle),
+			ContentTypes.APPLICATION_JSON, StringPool.UTF8);
 
 		String location =
 			_resourceURL +
@@ -470,10 +501,14 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 	}
 
 	protected Http.Response invokePostFolderKnowledgeBaseArticleResponse(
-			Long folderId, MultipartBody multipartBody)
+			Long folderId, KnowledgeBaseArticle knowledgeBaseArticle)
 		throws Exception {
 
 		Http.Options options = _createHttpOptions();
+
+		options.setBody(
+			_inputObjectMapper.writeValueAsString(knowledgeBaseArticle),
+			ContentTypes.APPLICATION_JSON, StringPool.UTF8);
 
 		String location =
 			_resourceURL +
@@ -612,8 +647,69 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 	}
 
 	@Test
-	public void testPutKnowledgeBaseArticle() throws Exception {
+	public void testPatchKnowledgeBaseArticle() throws Exception {
 		Assert.assertTrue(true);
+	}
+
+	protected KnowledgeBaseArticle invokePatchKnowledgeBaseArticle(
+			Long knowledgeBaseArticleId,
+			KnowledgeBaseArticle knowledgeBaseArticle)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		String location =
+			_resourceURL +
+				_toPath(
+					"/knowledge-base-articles/{knowledge-base-article-id}",
+					knowledgeBaseArticleId);
+
+		options.setLocation(location);
+
+		return _outputObjectMapper.readValue(
+			HttpUtil.URLtoString(options), KnowledgeBaseArticle.class);
+	}
+
+	protected Http.Response invokePatchKnowledgeBaseArticleResponse(
+			Long knowledgeBaseArticleId,
+			KnowledgeBaseArticle knowledgeBaseArticle)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		String location =
+			_resourceURL +
+				_toPath(
+					"/knowledge-base-articles/{knowledge-base-article-id}",
+					knowledgeBaseArticleId);
+
+		options.setLocation(location);
+
+		HttpUtil.URLtoString(options);
+
+		return options.getResponse();
+	}
+
+	@Test
+	public void testPutKnowledgeBaseArticle() throws Exception {
+		KnowledgeBaseArticle postKnowledgeBaseArticle =
+			testPutKnowledgeBaseArticle_addKnowledgeBaseArticle();
+
+		KnowledgeBaseArticle randomKnowledgeBaseArticle =
+			randomKnowledgeBaseArticle();
+
+		KnowledgeBaseArticle putKnowledgeBaseArticle =
+			invokePutKnowledgeBaseArticle(
+				postKnowledgeBaseArticle.getId(), randomKnowledgeBaseArticle);
+
+		assertEquals(randomKnowledgeBaseArticle, putKnowledgeBaseArticle);
+		assertValid(putKnowledgeBaseArticle);
+
+		KnowledgeBaseArticle getKnowledgeBaseArticle =
+			invokeGetKnowledgeBaseArticle(putKnowledgeBaseArticle.getId());
+
+		assertEquals(randomKnowledgeBaseArticle, getKnowledgeBaseArticle);
+		assertValid(getKnowledgeBaseArticle);
 	}
 
 	protected KnowledgeBaseArticle
@@ -625,10 +721,15 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 	}
 
 	protected KnowledgeBaseArticle invokePutKnowledgeBaseArticle(
-			Long knowledgeBaseArticleId, MultipartBody multipartBody)
+			Long knowledgeBaseArticleId,
+			KnowledgeBaseArticle knowledgeBaseArticle)
 		throws Exception {
 
 		Http.Options options = _createHttpOptions();
+
+		options.setBody(
+			_inputObjectMapper.writeValueAsString(knowledgeBaseArticle),
+			ContentTypes.APPLICATION_JSON, StringPool.UTF8);
 
 		String location =
 			_resourceURL +
@@ -645,10 +746,15 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 	}
 
 	protected Http.Response invokePutKnowledgeBaseArticleResponse(
-			Long knowledgeBaseArticleId, MultipartBody multipartBody)
+			Long knowledgeBaseArticleId,
+			KnowledgeBaseArticle knowledgeBaseArticle)
 		throws Exception {
 
 		Http.Options options = _createHttpOptions();
+
+		options.setBody(
+			_inputObjectMapper.writeValueAsString(knowledgeBaseArticle),
+			ContentTypes.APPLICATION_JSON, StringPool.UTF8);
 
 		String location =
 			_resourceURL +
@@ -659,6 +765,210 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 		options.setLocation(location);
 
 		options.setPut(true);
+
+		HttpUtil.URLtoString(options);
+
+		return options.getResponse();
+	}
+
+	@Test
+	public void testGetKnowledgeBaseArticleAttachment() throws Exception {
+		Assert.assertTrue(true);
+	}
+
+	protected KnowledgeBaseAttachment invokeGetKnowledgeBaseArticleAttachment(
+			Long knowledgeBaseArticleId)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		String location =
+			_resourceURL +
+				_toPath(
+					"/knowledge-base-articles/{knowledge-base-article-id}/attachments",
+					knowledgeBaseArticleId);
+
+		options.setLocation(location);
+
+		return _outputObjectMapper.readValue(
+			HttpUtil.URLtoString(options), KnowledgeBaseAttachment.class);
+	}
+
+	protected Http.Response invokeGetKnowledgeBaseArticleAttachmentResponse(
+			Long knowledgeBaseArticleId)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		String location =
+			_resourceURL +
+				_toPath(
+					"/knowledge-base-articles/{knowledge-base-article-id}/attachments",
+					knowledgeBaseArticleId);
+
+		options.setLocation(location);
+
+		HttpUtil.URLtoString(options);
+
+		return options.getResponse();
+	}
+
+	@Test
+	public void testPostKnowledgeBaseArticleAttachment() throws Exception {
+		Assert.assertTrue(true);
+	}
+
+	protected KnowledgeBaseArticle
+			testPostKnowledgeBaseArticleAttachment_addKnowledgeBaseArticle(
+				KnowledgeBaseArticle knowledgeBaseArticle)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected KnowledgeBaseAttachment invokePostKnowledgeBaseArticleAttachment(
+			Long knowledgeBaseArticleId, MultipartBody multipartBody)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		String location =
+			_resourceURL +
+				_toPath(
+					"/knowledge-base-articles/{knowledge-base-article-id}/attachments",
+					knowledgeBaseArticleId);
+
+		options.setLocation(location);
+
+		options.setPost(true);
+
+		return _outputObjectMapper.readValue(
+			HttpUtil.URLtoString(options), KnowledgeBaseAttachment.class);
+	}
+
+	protected Http.Response invokePostKnowledgeBaseArticleAttachmentResponse(
+			Long knowledgeBaseArticleId, MultipartBody multipartBody)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		String location =
+			_resourceURL +
+				_toPath(
+					"/knowledge-base-articles/{knowledge-base-article-id}/attachments",
+					knowledgeBaseArticleId);
+
+		options.setLocation(location);
+
+		options.setPost(true);
+
+		HttpUtil.URLtoString(options);
+
+		return options.getResponse();
+	}
+
+	@Test
+	public void testDeleteKnowledgeBaseArticleAttachment() throws Exception {
+		KnowledgeBaseArticle knowledgeBaseArticle =
+			testDeleteKnowledgeBaseArticleAttachment_addKnowledgeBaseArticle();
+
+		assertResponseCode(
+			200,
+			invokeDeleteKnowledgeBaseArticleAttachmentResponse(
+				knowledgeBaseArticle.getId()));
+
+		assertResponseCode(
+			404,
+			invokeGetKnowledgeBaseArticleAttachmentResponse(
+				knowledgeBaseArticle.getId()));
+	}
+
+	protected KnowledgeBaseArticle
+			testDeleteKnowledgeBaseArticleAttachment_addKnowledgeBaseArticle()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected boolean invokeDeleteKnowledgeBaseArticleAttachment(
+			Long knowledgeBaseArticleId, Long attachmentId)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		options.setDelete(true);
+
+		String location =
+			_resourceURL +
+				_toPath(
+					"/knowledge-base-articles/{knowledge-base-article-id}/attachments/{attachment-id}",
+					knowledgeBaseArticleId);
+
+		options.setLocation(location);
+
+		return _outputObjectMapper.readValue(
+			HttpUtil.URLtoString(options), Boolean.class);
+	}
+
+	protected Http.Response invokeDeleteKnowledgeBaseArticleAttachmentResponse(
+			Long knowledgeBaseArticleId, Long attachmentId)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		options.setDelete(true);
+
+		String location =
+			_resourceURL +
+				_toPath(
+					"/knowledge-base-articles/{knowledge-base-article-id}/attachments/{attachment-id}",
+					knowledgeBaseArticleId);
+
+		options.setLocation(location);
+
+		HttpUtil.URLtoString(options);
+
+		return options.getResponse();
+	}
+
+	@Test
+	public void testGetKnowledgeBaseArticleAttachment() throws Exception {
+		Assert.assertTrue(true);
+	}
+
+	protected KnowledgeBaseAttachment invokeGetKnowledgeBaseArticleAttachment(
+			Long knowledgeBaseArticleId, Long attachmentId)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		String location =
+			_resourceURL +
+				_toPath(
+					"/knowledge-base-articles/{knowledge-base-article-id}/attachments/{attachment-id}",
+					knowledgeBaseArticleId);
+
+		options.setLocation(location);
+
+		return _outputObjectMapper.readValue(
+			HttpUtil.URLtoString(options), KnowledgeBaseAttachment.class);
+	}
+
+	protected Http.Response invokeGetKnowledgeBaseArticleAttachmentResponse(
+			Long knowledgeBaseArticleId, Long attachmentId)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		String location =
+			_resourceURL +
+				_toPath(
+					"/knowledge-base-articles/{knowledge-base-article-id}/attachments/{attachment-id}",
+					knowledgeBaseArticleId);
+
+		options.setLocation(location);
 
 		HttpUtil.URLtoString(options);
 
@@ -817,7 +1127,15 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 	public void testPostKnowledgeBaseArticleKnowledgeBaseArticle()
 		throws Exception {
 
-		Assert.assertTrue(true);
+		KnowledgeBaseArticle randomKnowledgeBaseArticle =
+			randomKnowledgeBaseArticle();
+
+		KnowledgeBaseArticle postKnowledgeBaseArticle =
+			testPostKnowledgeBaseArticleKnowledgeBaseArticle_addKnowledgeBaseArticle(
+				randomKnowledgeBaseArticle);
+
+		assertEquals(randomKnowledgeBaseArticle, postKnowledgeBaseArticle);
+		assertValid(postKnowledgeBaseArticle);
 	}
 
 	protected KnowledgeBaseArticle
@@ -831,10 +1149,15 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 
 	protected KnowledgeBaseArticle
 			invokePostKnowledgeBaseArticleKnowledgeBaseArticle(
-				Long knowledgeBaseArticleId, MultipartBody multipartBody)
+				Long knowledgeBaseArticleId,
+				KnowledgeBaseArticle knowledgeBaseArticle)
 		throws Exception {
 
 		Http.Options options = _createHttpOptions();
+
+		options.setBody(
+			_inputObjectMapper.writeValueAsString(knowledgeBaseArticle),
+			ContentTypes.APPLICATION_JSON, StringPool.UTF8);
 
 		String location =
 			_resourceURL +
@@ -852,10 +1175,15 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 
 	protected Http.Response
 			invokePostKnowledgeBaseArticleKnowledgeBaseArticleResponse(
-				Long knowledgeBaseArticleId, MultipartBody multipartBody)
+				Long knowledgeBaseArticleId,
+				KnowledgeBaseArticle knowledgeBaseArticle)
 		throws Exception {
 
 		Http.Options options = _createHttpOptions();
+
+		options.setBody(
+			_inputObjectMapper.writeValueAsString(knowledgeBaseArticle),
+			ContentTypes.APPLICATION_JSON, StringPool.UTF8);
 
 		String location =
 			_resourceURL +
@@ -1032,6 +1360,11 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 				"Invalid entity field " + entityFieldName);
 		}
 
+		if (entityFieldName.equals("categoryIds")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
 		if (entityFieldName.equals("contentSpace")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
@@ -1073,6 +1406,11 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 			return sb.toString();
 		}
 
+		if (entityFieldName.equals("hasAttachments")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
 		if (entityFieldName.equals("id")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
@@ -1093,6 +1431,14 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 				"Invalid entity field " + entityFieldName);
 		}
 
+		if (entityFieldName.equals("viewableBy")) {
+			sb.append("'");
+			sb.append(String.valueOf(knowledgeBaseArticle.getViewableBy()));
+			sb.append("'");
+
+			return sb.toString();
+		}
+
 		throw new IllegalArgumentException(
 			"Invalid entity field " + entityFieldName);
 	}
@@ -1106,8 +1452,10 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 				dateModified = RandomTestUtil.nextDate();
 				friendlyUrlPath = RandomTestUtil.randomString();
 				title = RandomTestUtil.randomString();
+				hasAttachments = RandomTestUtil.randomBoolean();
 				id = RandomTestUtil.randomLong();
 				parentFolderId = RandomTestUtil.randomLong();
+				viewableBy = RandomTestUtil.randomString();
 			}
 		};
 	}

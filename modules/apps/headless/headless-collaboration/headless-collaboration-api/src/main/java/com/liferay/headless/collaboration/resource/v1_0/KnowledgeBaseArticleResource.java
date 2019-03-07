@@ -15,6 +15,7 @@
 package com.liferay.headless.collaboration.resource.v1_0;
 
 import com.liferay.headless.collaboration.dto.v1_0.KnowledgeBaseArticle;
+import com.liferay.headless.collaboration.dto.v1_0.KnowledgeBaseAttachment;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.vulcan.multipart.MultipartBody;
 import com.liferay.portal.vulcan.pagination.Page;
@@ -38,7 +39,7 @@ public interface KnowledgeBaseArticleResource {
 		throws Exception;
 
 	public KnowledgeBaseArticle postContentSpaceKnowledgeBaseArticle(
-			Long contentSpaceId, MultipartBody multipartBody)
+			Long contentSpaceId, KnowledgeBaseArticle knowledgeBaseArticle)
 		throws Exception;
 
 	public Page<KnowledgeBaseArticle> getFolderKnowledgeBaseArticlesPage(
@@ -46,7 +47,7 @@ public interface KnowledgeBaseArticleResource {
 		throws Exception;
 
 	public KnowledgeBaseArticle postFolderKnowledgeBaseArticle(
-			Long folderId, MultipartBody multipartBody)
+			Long folderId, KnowledgeBaseArticle knowledgeBaseArticle)
 		throws Exception;
 
 	public boolean deleteKnowledgeBaseArticle(Long knowledgeBaseArticleId)
@@ -56,8 +57,30 @@ public interface KnowledgeBaseArticleResource {
 			Long knowledgeBaseArticleId)
 		throws Exception;
 
+	public KnowledgeBaseArticle patchKnowledgeBaseArticle(
+			Long knowledgeBaseArticleId,
+			KnowledgeBaseArticle knowledgeBaseArticle)
+		throws Exception;
+
 	public KnowledgeBaseArticle putKnowledgeBaseArticle(
+			Long knowledgeBaseArticleId,
+			KnowledgeBaseArticle knowledgeBaseArticle)
+		throws Exception;
+
+	public KnowledgeBaseAttachment getKnowledgeBaseArticleAttachment(
+			Long knowledgeBaseArticleId)
+		throws Exception;
+
+	public KnowledgeBaseAttachment postKnowledgeBaseArticleAttachment(
 			Long knowledgeBaseArticleId, MultipartBody multipartBody)
+		throws Exception;
+
+	public boolean deleteKnowledgeBaseArticleAttachment(
+			Long knowledgeBaseArticleId, Long attachmentId)
+		throws Exception;
+
+	public KnowledgeBaseAttachment getKnowledgeBaseArticleAttachment(
+			Long knowledgeBaseArticleId, Long attachmentId)
 		throws Exception;
 
 	public Page<KnowledgeBaseArticle>
@@ -66,7 +89,8 @@ public interface KnowledgeBaseArticleResource {
 		throws Exception;
 
 	public KnowledgeBaseArticle postKnowledgeBaseArticleKnowledgeBaseArticle(
-			Long knowledgeBaseArticleId, MultipartBody multipartBody)
+			Long knowledgeBaseArticleId,
+			KnowledgeBaseArticle knowledgeBaseArticle)
 		throws Exception;
 
 	public void setContextCompany(Company contextCompany);

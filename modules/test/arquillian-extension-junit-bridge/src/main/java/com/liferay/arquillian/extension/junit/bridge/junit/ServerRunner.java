@@ -64,7 +64,33 @@ public class ServerRunner extends Runner implements Filterable {
 		for (FrameworkMethod frameworkMethod :
 				_testClass.getAnnotatedMethods(Test.class)) {
 
-			_runMethod(frameworkMethod, runNotifier);
+			Description description = _describeChild(frameworkMethod);
+
+			runNotifier.fireTestStarted(description);
+
+			try {
+				Statement statement = _withTimeout(
+					frameworkMethod,
+					new ServerExecutorStatement(
+						_clazz, frameworkMethod.getMethod()));
+
+				statement.evaluate();
+			}
+			catch (AssumptionViolatedException ave) {
+				runNotifier.fireTestAssumptionFailed(
+					new Failure(description, ave));
+			}
+			catch (MultipleFailureException mfe) {
+				for (Throwable t : mfe.getFailures()) {
+					runNotifier.fireTestFailure(new Failure(description, t));
+				}
+			}
+			catch (Throwable t) {
+				runNotifier.fireTestFailure(new Failure(description, t));
+			}
+			finally {
+				runNotifier.fireTestFinished(description);
+			}
 		}
 	}
 
@@ -76,37 +102,6 @@ public class ServerRunner extends Runner implements Filterable {
 					_clazz, keyFrameworkMethod.getName(),
 					keyFrameworkMethod.getAnnotations());
 			});
-	}
-
-	private void _runMethod(
-		FrameworkMethod frameworkMethod, RunNotifier runNotifier) {
-
-		Description description = _describeChild(frameworkMethod);
-
-		runNotifier.fireTestStarted(description);
-
-		try {
-			Statement statement = _withTimeout(
-				frameworkMethod,
-				new ServerExecutorStatement(
-					_clazz, frameworkMethod.getMethod()));
-
-			statement.evaluate();
-		}
-		catch (AssumptionViolatedException ave) {
-			runNotifier.fireTestAssumptionFailed(new Failure(description, ave));
-		}
-		catch (MultipleFailureException mfe) {
-			for (Throwable t : mfe.getFailures()) {
-				runNotifier.fireTestFailure(new Failure(description, t));
-			}
-		}
-		catch (Throwable t) {
-			runNotifier.fireTestFailure(new Failure(description, t));
-		}
-		finally {
-			runNotifier.fireTestFinished(description);
-		}
 	}
 
 	private Statement _withTimeout(

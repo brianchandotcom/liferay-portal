@@ -395,34 +395,37 @@ the chance of package version lock down.
 
 ---------------------------------------
 
-### Remove unsafe functional interfaces in package com.liferay.portal.kernel.util
+### Removed Unsafe Functional Interfaces in Package com.liferay.portal.kernel.util
 - **Date:** 2019-Jan-15
 - **JIRA Ticket:** [LPS-89223](https://issues.liferay.com/browse/LPS-89223)
 
 #### What changed?
 
-`com.liferay.portal.osgi.util.test.OSGiServiceUtil` was removed.
-`UnsafeConsumer`, `UnsafeFunction` and `UnsafeRunnable` in package
-`com.liferay.portal.kernel.util` were removed.
+The `com.liferay.portal.osgi.util.test.OSGiServiceUtil` class was removed. Also,
+the following interfaces were removed from the `com.liferay.portal.kernel.util`
+package:
+
+- `UnsafeConsumer`
+- `UnsafeFunction`
+- `UnsafeRunnable`
 
 #### Who is affected?
 
-This affects anyone used `com.liferay.portal.osgi.util.test.OSGiServiceUtil` and
-`UnsafeConsumer`, `UnsafeFunction`, `UnsafeRunnable` in package
-`com.liferay.portal.kernel.util`
+This affects anyone using the class/interfaces mentioned above.
 
 #### How should I update my code?
 
-`com.liferay.portal.osgi.util.test.OSGiServiceUtil` has been deprecated since
-7.1. If there is still any usage of the class, replace it with its direct
-replacement `com.liferay.osgi.util.service.OSGiServiceUtil`. Replace usages of
-`UnsafeConsumer`, `UnsafeFunction` and `UnsafeRunnable` with corresponding interface
-in package `com.liferay.petra.function`.
+The `com.liferay.portal.osgi.util.test.OSGiServiceUtil` class has been
+deprecated since Liferay Portal 7.1. If usages for this class still exist,
+replace it with its direct replacement:
+`com.liferay.osgi.util.service.OSGiServiceUtil`. Replace usages of
+`UnsafeConsumer`, `UnsafeFunction` and `UnsafeRunnable` with their corresponding
+interfaces in package `com.liferay.petra.function`.
 
 #### Why was this change made?
 
-It's one of several steps to clean up kernel provider interfaces to reduce the
-chance of package version lock down.
+This is one of several steps to clean up kernel provider interfaces to reduce
+the chance of package version lock down.
 
 ---------------------------------------
 

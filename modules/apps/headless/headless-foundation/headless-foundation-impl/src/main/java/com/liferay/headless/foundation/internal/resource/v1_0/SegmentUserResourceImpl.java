@@ -14,9 +14,19 @@
 
 package com.liferay.headless.foundation.internal.resource.v1_0;
 
+import com.liferay.headless.foundation.dto.v1_0.SegmentUser;
 import com.liferay.headless.foundation.resource.v1_0.SegmentUserResource;
+import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.service.UserService;
+import com.liferay.portal.vulcan.pagination.Page;
+import com.liferay.portal.vulcan.pagination.Pagination;
+import com.liferay.segments.provider.SegmentsEntryProvider;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ServiceScope;
 
 /**
@@ -27,4 +37,44 @@ import org.osgi.service.component.annotations.ServiceScope;
 	scope = ServiceScope.PROTOTYPE, service = SegmentUserResource.class
 )
 public class SegmentUserResourceImpl extends BaseSegmentUserResourceImpl {
+
+	@Override
+	public Page<SegmentUser> getSegmentUserAccountsPage(
+			Long segmentId, Pagination pagination)
+		throws Exception {
+
+		long[] segmentsEntryClassPKs =
+			_segmentsEntryProvider.getSegmentsEntryClassPKs(
+				segmentId, pagination.getStartPosition(),
+				pagination.getEndPosition());
+
+		List<User> userEntries = new ArrayList<>(segmentsEntryClassPKs.length);
+
+		for (long segmentEntryClassPK : segmentsEntryClassPKs) {
+			User user = _userService.getUserById(segmentEntryClassPK);
+
+			userEntries.add(user);
+		}
+
+		return Page.of(
+			transform(userEntries, this::_toSegmentUser), pagination,
+			userEntries.size());
+	}
+
+	private SegmentUser _toSegmentUser(User user) {
+		return new SegmentUser() {
+			{
+				email = user.getEmailAddress();
+				id = user.getUserId();
+				name = user.getFullName();
+			}
+		};
+	}
+
+	@Reference
+	private SegmentsEntryProvider _segmentsEntryProvider;
+
+	@Reference
+	private UserService _userService;
+
 }

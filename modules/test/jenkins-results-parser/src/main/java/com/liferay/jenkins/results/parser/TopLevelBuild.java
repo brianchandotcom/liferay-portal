@@ -1554,14 +1554,33 @@ public class TopLevelBuild extends BaseBuild {
 	protected int stopwatchRecordConsoleReadCursor;
 	protected Map<String, StopwatchRecord> stopwatchRecordMap = new HashMap<>();
 
-	protected static class StopwatchRecord {
+	protected static class StopwatchRecord
+		implements Comparable<StopwatchRecord> {
 
 		public StopwatchRecord(String name, long startTimestamp) {
 			_name = name;
 			_startTimestamp = startTimestamp;
 		}
 
-		public long getDuration() {
+		@Override
+		public int compareTo(StopwatchRecord stopwatchRecord) {
+			int compareToValue = _startTimestamp.compareTo(
+				stopwatchRecord.getStartTimestamp());
+
+			if (compareToValue != 0) {
+				return compareToValue;
+			}
+
+			compareToValue = _duration.compareTo(stopwatchRecord.getDuration());
+
+			if (compareToValue != 0) {
+				return compareToValue;
+			}
+
+			return _name.compareTo(stopwatchRecord.getName());
+		}
+
+		public Long getDuration() {
 			return _duration;
 		}
 
@@ -1569,7 +1588,7 @@ public class TopLevelBuild extends BaseBuild {
 			return _name;
 		}
 
-		public long getStartTimestamp() {
+		public Long getStartTimestamp() {
 			return _startTimestamp;
 		}
 
@@ -1577,9 +1596,19 @@ public class TopLevelBuild extends BaseBuild {
 			_duration = duration;
 		}
 
-		private long _duration;
+		@Override
+		public String toString() {
+			return JenkinsResultsParserUtil.combine(
+				"Stopwatch record ", getName(), " started at ",
+				JenkinsResultsParserUtil.toDateString(
+					new Date(getStartTimestamp()), "America,Los_Angeles"),
+				" duration ",
+				JenkinsResultsParserUtil.toDurationString(getDuration()));
+		}
+
+		private Long _duration;
 		private final String _name;
-		private final long _startTimestamp;
+		private final Long _startTimestamp;
 
 	}
 

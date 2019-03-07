@@ -15,7 +15,6 @@
 package com.liferay.user.associated.data.web.internal.portlet.action;
 
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
-import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.user.associated.data.anonymizer.UADAnonymizer;
 import com.liferay.user.associated.data.constants.UserAssociatedDataPortletKeys;
 
@@ -46,9 +45,7 @@ public class DeleteUADEntityMVCActionCommand extends BaseUADMVCActionCommand {
 
 		uadAnonymizer.delete(getEntity(actionRequest));
 
-		String redirect = ParamUtil.getString(actionRequest, "redirect");
-
-		sendRedirect(actionRequest, actionResponse, redirect);
+		doReviewableRedirect(actionRequest, actionResponse);
 	}
 
 }

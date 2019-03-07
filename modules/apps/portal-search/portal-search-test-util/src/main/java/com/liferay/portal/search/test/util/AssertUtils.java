@@ -29,8 +29,10 @@ public class AssertUtils {
 	public static void assertEquals(
 		String message, Map<?, ?> expectedMap, Map<?, ?> actualMap) {
 
+		String actual = _toString(actualMap);
+
 		Assert.assertEquals(
-			message, _toString(expectedMap), _toString(actualMap));
+			message + "->" + actual, _toString(expectedMap), actual);
 	}
 
 	private static String _toString(Map<?, ?> map) {

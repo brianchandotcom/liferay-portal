@@ -141,6 +141,12 @@
 		data-onchange="{$handleFieldOptionChange}"
 		id="floatingToolbarMappingPanelFieldSelect"
 	>
+		{call .selectOption}
+			{param optionId: '' /}
+			{param optionLabel: '-' /}
+			{param selectedId: $mappedFieldId or '-' /}
+		{/call}
+
 		{foreach $field in $fields}
 			{call .selectOption}
 				{param optionId: $field.key /}

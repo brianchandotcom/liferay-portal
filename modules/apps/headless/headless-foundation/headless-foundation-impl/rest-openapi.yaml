@@ -242,25 +242,35 @@ components:
                     type: string
             type: object
         Segment:
-            description: https://schema.org/Audience
+            description: This model allows you to divide your audience into user segments and then target specific content to different user segments
             properties:
                 active:
+                    description: Returns true if the segment is active
                     type: boolean
                 criteria:
+                    description: Inclusion criteria of the segment
                     type: string
                 dateCreated:
+                    description: The date the segment was created
                     format: date-time
                     type: string
                 dateModified:
+                    description: The date the segment was last modified
                     format: date-time
                     type: string
                 id:
+                    description: Internal ID of the segment
                     format: int64
                     type: integer
                 name:
+                    description: Segment's name
                     type: string
                 source:
+                    description: The source of the segment. It can be from Analytics Cloud or from Liferay instance
                     type: string
+            required:
+                - criteria
+                - name
             type: object
         SegmentUser:
             description: https://www.schema.org/UserAccount

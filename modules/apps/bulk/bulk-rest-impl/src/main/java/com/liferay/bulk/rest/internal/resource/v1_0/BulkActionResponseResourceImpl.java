@@ -91,16 +91,16 @@ public class BulkActionResponseResourceImpl
 			BulkSelection<AssetEntry> assetEntryBulkSelection =
 				bulkSelection.toAssetEntryBulkSelection();
 
-			Map<String, Serializable> inputMap = new HashMap<>(4);
+			Map<String, Serializable> inputMap = new HashMap<>();
 
-			inputMap.put(
+			put(
 				BulkSelectionInputParameters.ASSET_ENTRY_BULK_SELECTION, true);
-			inputMap.put(
+			put(
 				"append", bulkAssetEntryUpdateCategoriesAction.getAppend());
-			inputMap.put(
+			put(
 				"toAddCategoryIds",
 				bulkAssetEntryUpdateCategoriesAction.getToAddCategoryIds());
-			inputMap.put(
+			put(
 				"toRemoveCategoryIds",
 				bulkAssetEntryUpdateCategoriesAction.getToRemoveCategoryIds());
 
@@ -187,7 +187,7 @@ public class BulkActionResponseResourceImpl
 			BulkSelection<AssetEntry> assetEntryBulkSelection =
 				bulkSelection.toAssetEntryBulkSelection();
 
-			Map<String, Serializable> inputMap = new HashMap<>(4);
+			Map<String, Serializable> inputMap = new HashMap<>();
 
 			inputMap.put(
 				BulkSelectionInputParameters.ASSET_ENTRY_BULK_SELECTION, true);
@@ -355,7 +355,7 @@ public class BulkActionResponseResourceImpl
 			return Collections.singletonMap("rowIdsFileEntry", values);
 		}
 
-		Map<String, String[]> parameterMap = new HashMap<>(2);
+		Map<String, String[]> parameterMap = new HashMap<>();
 
 		parameterMap.put("folderId", new String[] {String.valueOf(folderId)});
 		parameterMap.put(

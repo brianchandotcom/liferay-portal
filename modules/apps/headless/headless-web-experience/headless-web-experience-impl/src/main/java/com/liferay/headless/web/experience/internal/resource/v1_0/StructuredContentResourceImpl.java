@@ -116,6 +116,7 @@ import java.util.stream.Stream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import javax.ws.rs.BadRequestException;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MultivaluedMap;
 
@@ -250,6 +251,17 @@ public class StructuredContentResourceImpl
 			structuredContent.getContentStructureId());
 		LocalDateTime localDateTime = toLocalDateTime(
 			structuredContent.getDatePublished());
+
+		if (!LocaleUtil.equals(
+				LocaleUtil.fromLanguageId(ddmStructure.getDefaultLanguageId()),
+				contextAcceptLanguage.getPreferredLocale())) {
+
+			throw new BadRequestException(
+				"You have to use the default language of the structure to " +
+					"create. The default language is " +
+						LocaleUtil.toW3cLanguageId(
+							ddmStructure.getDefaultLanguageId()));
+		}
 
 		return _toStructuredContent(
 			_journalArticleService.addArticle(

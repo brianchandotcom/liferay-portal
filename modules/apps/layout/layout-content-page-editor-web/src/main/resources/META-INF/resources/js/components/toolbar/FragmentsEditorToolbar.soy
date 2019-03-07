@@ -11,7 +11,7 @@
 	{@param? fragmentsEditorSidebarVisible: bool}
 	{@param? lastSaveDate: string}
 	{@param? portletNamespace: string}
-	{@param? publishLayoutPageTemplateEntryURL: string}
+	{@param? publishURL: string}
 	{@param? redirectURL: string}
 	{@param? savingChanges: bool}
 	{@param? spritemap: string}
@@ -63,9 +63,9 @@
 					</li>
 				{/if}
 
-				{if $publishLayoutPageTemplateEntryURL}
+				{if $publishURL}
 					<li class="nav-item">
-						<form action="{$publishLayoutPageTemplateEntryURL}" method="POST">
+						<form action="{$publishURL}" method="POST">
 							<input
 								name="{$portletNamespace ?: ''}classPK"
 								type="hidden"
@@ -78,7 +78,7 @@
 								value="{$redirectURL}"
 							/>
 
-							<button class="btn btn-outline-light nav-btn" type="submit">
+                            <button class="btn btn-outline-light nav-btn" type="submit">
 								{msg desc=""}publish{/msg}
 							</button>
 						</form>

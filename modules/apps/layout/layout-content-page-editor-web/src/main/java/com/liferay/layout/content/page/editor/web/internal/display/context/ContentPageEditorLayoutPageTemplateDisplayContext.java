@@ -82,7 +82,7 @@ public class ContentPageEditorLayoutPageTemplateDisplayContext
 				LayoutPageTemplateEntry.class)) {
 
 			soyContext.put(
-				"publishLayoutPageTemplateEntryURL",
+				"publishURL",
 				getFragmentEntryActionURL(
 					"/content_layout/publish_layout_page_template_entry"));
 		}

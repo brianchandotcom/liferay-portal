@@ -1473,6 +1473,16 @@ public class TopLevelBuild extends BaseBuild {
 
 	protected static final Pattern gitRepositoryTempMapNamePattern =
 		Pattern.compile("git\\.(?<gitRepositoryType>.*)\\.properties");
+	protected static final Pattern stopwatchPattern = Pattern.compile(
+		JenkinsResultsParserUtil.combine(
+			"\\s*\\[stopwatch\\]\\s*\\[(?<name>[^:]+): ",
+			"((?<minutes>\\d+):)?((?<seconds>\\d+))?\\.",
+			"(?<milliseconds>\\d+) sec\\]"));
+	protected static final Pattern stopwatchStartTimestampPattern =
+		Pattern.compile(
+			JenkinsResultsParserUtil.combine(
+				"\\s*\\[echo\\] (?<name>.*)\\.start\\.timestamp: ",
+				"(?<timestamp>.*)$"));
 
 	private Map<Map<String, String>, Integer> _getSlaveUsageByLabels() {
 		Map<Map<String, String>, Integer> slaveUsages = new HashMap<>();

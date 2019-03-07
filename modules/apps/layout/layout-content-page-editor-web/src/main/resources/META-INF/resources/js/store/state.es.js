@@ -288,6 +288,16 @@ const INITIAL_STATE = {
 		.value(''),
 
 	/**
+	 * Get asset mapping fields url
+	 * @default undefined
+	 * @review
+	 * @type {string}
+	 */
+	getAssetMappingFieldsURL: Config
+		.string()
+		.value(''),
+
+	/**
 	 * Id of the last element that was hovered
 	 * @default ''
 	 * @review

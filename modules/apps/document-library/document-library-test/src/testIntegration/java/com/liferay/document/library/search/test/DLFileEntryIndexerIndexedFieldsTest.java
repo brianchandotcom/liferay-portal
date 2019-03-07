@@ -218,6 +218,7 @@ public class DLFileEntryIndexerIndexedFieldsTest extends BaseDLIndexerTestCase {
 		populateDates(fileEntry, map);
 		populateHttpHeaders(fileEntry, map);
 		populateLocalizedTitles(fileEntry, map);
+		populateViewCount(fileEntry, map);
 
 		indexedFieldsFixture.populatePriority("0.0", map);
 		indexedFieldsFixture.populateRoleIdFields(
@@ -271,6 +272,13 @@ public class DLFileEntryIndexerIndexedFieldsTest extends BaseDLIndexerTestCase {
 			map.put(key, title);
 			map.put(key.concat("_sortable"), title);
 		}
+	}
+
+	protected void populateViewCount(
+		FileEntry fileEntry, Map<String, String> map) {
+
+		map.put("viewCount", String.valueOf(fileEntry.getReadCount()));
+		map.put("viewCount_sortable", String.valueOf(fileEntry.getReadCount()));
 	}
 
 	protected FileEntrySearchFixture fileEntrySearchFixture;

@@ -167,6 +167,8 @@ public class DLFolderIndexerIndexedFieldsTest extends BaseDLIndexerTestCase {
 			dlFolder.getPrimaryKey(), dlFolder.getGroupId(), null, map);
 		indexedFieldsFixture.populateUID(
 			dlFolder.getModelClassName(), dlFolder.getFolderId(), map);
+		indexedFieldsFixture.populateViewCount(
+			DLFolder.class, dlFolder.getFolderId(), map);
 
 		return map;
 	}

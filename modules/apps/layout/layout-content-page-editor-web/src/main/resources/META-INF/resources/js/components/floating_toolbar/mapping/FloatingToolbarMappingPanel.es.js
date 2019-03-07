@@ -128,13 +128,19 @@ class FloatingToolbarMappingPanel extends PortletBase {
 	 * @review
 	 */
 	_handleAssetOptionChange(event) {
-		const {
-			assetEntryClassNameId,
-			assetEntryClassPK
-		} = decodeId(event.delegateTarget.value);
+		if (event.delegateTarget.value) {
+			const {
+				assetEntryClassNameId,
+				assetEntryClassPK
+			} = decodeId(event.delegateTarget.value);
 
-		this._updateEditableValues('assetEntryClassNameId', assetEntryClassNameId);
-		this._updateEditableValues('assetEntryClassPK', assetEntryClassPK);
+			this._updateEditableValues('assetEntryClassNameId', assetEntryClassNameId);
+			this._updateEditableValues('assetEntryClassPK', assetEntryClassPK);
+		}
+		else {
+			this._updateEditableValues('assetEntryClassNameId', '');
+			this._updateEditableValues('assetEntryClassPK', '');
+		}
 
 		this.store.done(
 			() => {
@@ -314,8 +320,7 @@ FloatingToolbarMappingPanel.STATE = {
 	 */
 	_assetEntries: Config
 		.array()
-		.internal()
-		.value([]),
+		.internal(),
 
 	/**
 	 * @default undefined

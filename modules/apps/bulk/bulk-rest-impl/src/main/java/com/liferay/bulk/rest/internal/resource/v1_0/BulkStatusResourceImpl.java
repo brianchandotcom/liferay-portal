@@ -29,7 +29,7 @@ import org.osgi.service.component.annotations.ServiceScope;
  * @author Javier Gamarra
  */
 @Component(
-	properties = "OSGI-INF/liferay/rest/v1_0/Bulk-status.properties",
+	properties = "OSGI-INF/liferay/rest/v1_0/bulk-status.properties",
 	scope = ServiceScope.PROTOTYPE, service = BulkStatusResource.class
 )
 public class BulkStatusResourceImpl extends BaseBulkStatusResourceImpl {

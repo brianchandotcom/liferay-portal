@@ -22,51 +22,24 @@ import com.liferay.portal.search.script.Script;
  * @author Michael C. Han
  */
 @ProviderType
-public class ScriptSort extends Sort {
+public interface ScriptSort extends Sort {
 
-	public ScriptSort(Script script, ScriptSortType scriptSortType) {
-		_script = script;
-		_scriptSortType = scriptSortType;
-	}
+	public NestedSort getNestedSort();
 
-	@Override
-	public <T> T accept(SortVisitor<T> sortVisitor) {
-		return sortVisitor.visit(this);
-	}
+	public Script getScript();
 
-	public NestedSort getNestedSort() {
-		return _nestedSort;
-	}
+	public ScriptSortType getScriptSortType();
 
-	public Script getScript() {
-		return _script;
-	}
+	public SortMode getSortMode();
 
-	public ScriptSortType getScriptSortType() {
-		return _scriptSortType;
-	}
+	public void setNestedSort(NestedSort nestedSort);
 
-	public SortMode getSortMode() {
-		return _sortMode;
-	}
-
-	public void setNestedSort(NestedSort nestedSort) {
-		_nestedSort = nestedSort;
-	}
-
-	public void setSortMode(SortMode sortMode) {
-		_sortMode = sortMode;
-	}
+	public void setSortMode(SortMode sortMode);
 
 	public enum ScriptSortType {
 
 		NUMBER, STRING
 
 	}
-
-	private NestedSort _nestedSort;
-	private final Script _script;
-	private final ScriptSortType _scriptSortType;
-	private SortMode _sortMode;
 
 }

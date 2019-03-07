@@ -22,43 +22,20 @@ import com.liferay.portal.search.query.Query;
  * @author Michael C. Han
  */
 @ProviderType
-public class NestedSort {
+public interface NestedSort {
 
-	public NestedSort(String path) {
-		_path = path;
-	}
+	public Query getFilterQuery();
 
-	public Query getFilterQuery() {
-		return _filterQuery;
-	}
+	public int getMaxChildren();
 
-	public int getMaxChildren() {
-		return _maxChildren;
-	}
+	public NestedSort getNestedSort();
 
-	public NestedSort getNestedSort() {
-		return _nestedSort;
-	}
+	public String getPath();
 
-	public String getPath() {
-		return _path;
-	}
+	public void setFilterQuery(Query filterQuery);
 
-	public void setFilterQuery(Query filterQuery) {
-		_filterQuery = filterQuery;
-	}
+	public void setMaxChildren(int maxChildren);
 
-	public void setMaxChildren(int maxChildren) {
-		_maxChildren = maxChildren;
-	}
-
-	public void setNestedSort(NestedSort nestedSort) {
-		_nestedSort = nestedSort;
-	}
-
-	private Query _filterQuery;
-	private int _maxChildren = Integer.MAX_VALUE;
-	private NestedSort _nestedSort;
-	private final String _path;
+	public void setNestedSort(NestedSort nestedSort);
 
 }

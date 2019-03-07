@@ -18,6 +18,10 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.workflow.metrics.exception.WorkflowMetricsSLADefinitionDuplicateNameException;
+import com.liferay.portal.workflow.metrics.exception.WorkflowMetricsSLADefinitionInvalidDurationException;
+import com.liferay.portal.workflow.metrics.exception.WorkflowMetricsSLADefinitionNameException;
 import com.liferay.portal.workflow.metrics.model.WorkflowMetricsSLADefinition;
 import com.liferay.portal.workflow.metrics.service.base.WorkflowMetricsSLADefinitionLocalServiceBaseImpl;
 
@@ -39,13 +43,18 @@ public class WorkflowMetricsSLADefinitionLocalServiceImpl
 		User user = userLocalService.getUser(serviceContext.getGuestOrUserId());
 		Date now = new Date();
 
+		validate(
+			0, serviceContext.getCompanyId(), processId, name, duration,
+			pauseNodeNames, startNodeNames, stopNodeNames);
+
 		WorkflowMetricsSLADefinition workflowMetricsSLADefinition =
 			workflowMetricsSLADefinitionPersistence.create(
 				counterLocalService.increment());
 
 		workflowMetricsSLADefinition.setGroupId(
 			serviceContext.getScopeGroupId());
-		workflowMetricsSLADefinition.setCompanyId(user.getCompanyId());
+		workflowMetricsSLADefinition.setCompanyId(
+			serviceContext.getCompanyId());
 		workflowMetricsSLADefinition.setUserId(user.getUserId());
 		workflowMetricsSLADefinition.setUserName(user.getFullName());
 		workflowMetricsSLADefinition.setCreateDate(now);
@@ -63,9 +72,6 @@ public class WorkflowMetricsSLADefinitionLocalServiceImpl
 
 		workflowMetricsSLADefinitionPersistence.update(
 			workflowMetricsSLADefinition);
-
-		resourceLocalService.addModelResources(
-			workflowMetricsSLADefinition, serviceContext);
 
 		return workflowMetricsSLADefinition;
 	}
@@ -96,6 +102,12 @@ public class WorkflowMetricsSLADefinitionLocalServiceImpl
 			workflowMetricsSLADefinitionPersistence.findByPrimaryKey(
 				workflowMetricsSLADefinitiontId);
 
+		validate(
+			workflowMetricsSLADefinition.getWorkflowMetricsSLADefinitionId(),
+			workflowMetricsSLADefinition.getCompanyId(),
+			workflowMetricsSLADefinition.getProcessId(), name, duration,
+			pauseNodeNames, startNodeNames, stopNodeNames);
+
 		workflowMetricsSLADefinition.setModifiedDate(new Date());
 		workflowMetricsSLADefinition.setName(name);
 		workflowMetricsSLADefinition.setDescription(description);
@@ -109,6 +121,33 @@ public class WorkflowMetricsSLADefinitionLocalServiceImpl
 
 		return workflowMetricsSLADefinitionPersistence.update(
 			workflowMetricsSLADefinition);
+	}
+
+	protected void validate(
+			long workflowMetricsSLADefinitionId, long companyId, long processId,
+			String name, long duration, String[] pauseNodeNames,
+			String[] startNodeNames, String[] stopNodeNames)
+		throws PortalException {
+
+		if (Validator.isNull(name)) {
+			throw new WorkflowMetricsSLADefinitionNameException();
+		}
+
+		if (duration <= 0) {
+			throw new WorkflowMetricsSLADefinitionInvalidDurationException();
+		}
+
+		WorkflowMetricsSLADefinition workflowMetricsSLADefinition =
+			workflowMetricsSLADefinitionPersistence.fetchByC_N_P(
+				companyId, name, processId);
+
+		if ((workflowMetricsSLADefinition != null) &&
+			(workflowMetricsSLADefinitionId !=
+				workflowMetricsSLADefinition.
+					getWorkflowMetricsSLADefinitionId())) {
+
+			throw new WorkflowMetricsSLADefinitionDuplicateNameException();
+		}
 	}
 
 }

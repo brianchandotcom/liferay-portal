@@ -226,9 +226,6 @@ components:
                 dateModified:
                     format: date-time
                     type: string
-                datePublished:
-                    format: date-time
-                    type: string
                 friendlyUrlPath:
                     type: string
                 title:
@@ -241,9 +238,13 @@ components:
                         type: string
                     type: array
                 parentFolder:
-                    allOf:
-                        -   $ref: "#/components/schemas/Folder"
-                    readOnly: true
+                    properties:
+                        folderId:
+                            format: int64
+                            type: integer
+                        folderName:
+                            type: string
+                    type: object
                 parentFolderId:
                     format: int64
                     type: integer
@@ -743,6 +744,63 @@ paths:
                                 $ref: "#/components/schemas/Folder"
                     description: ""
             tags: ["Folder"]
+    "/content-space/{content-space-id}/knowledge-base-articles":
+        get:
+            parameters:
+                -   in: query
+                    name: page
+                    schema:
+                        type: integer
+                -   in: query
+                    name: pageSize
+                    schema:
+                        type: integer
+                -   in: path
+                    name: content-space-id
+                    required: true
+                    schema:
+                        format: int64
+                        type: integer
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/KnowledgeBaseArticle"
+                                type: array
+                    description: ""
+            tags: ["KnowledgeBaseArticle"]
+        post:
+            parameters:
+                -   in: path
+                    name: content-space-id
+                    required: true
+                    schema:
+                        format: int64
+                        type: integer
+            requestBody:
+                content:
+                    multipart/form-data:
+                        schema:
+                            type: object
+                            properties:
+                                document:
+                                    $ref: "#/components/schemas/KnowledgeBaseArticle"
+                                file:
+                                    type: string
+                                    format: binary
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/KnowledgeBaseArticle"
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/KnowledgeBaseArticle"
+                    description: ""
+            tags: ["KnowledgeBaseArticle"]
     "/folders/{folder-id}":
         delete:
             parameters:

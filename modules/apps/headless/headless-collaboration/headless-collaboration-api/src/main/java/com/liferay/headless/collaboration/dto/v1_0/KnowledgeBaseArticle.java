@@ -209,30 +209,6 @@ public class KnowledgeBaseArticle {
 	@JsonProperty
 	protected Date dateModified;
 
-	public Date getDatePublished() {
-		return datePublished;
-	}
-
-	public void setDatePublished(Date datePublished) {
-		this.datePublished = datePublished;
-	}
-
-	@JsonIgnore
-	public void setDatePublished(
-		UnsafeSupplier<Date, Exception> datePublishedUnsafeSupplier) {
-
-		try {
-			datePublished = datePublishedUnsafeSupplier.get();
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	@GraphQLField
-	@JsonProperty
-	protected Date datePublished;
-
 	public String getFriendlyUrlPath() {
 		return friendlyUrlPath;
 	}
@@ -327,17 +303,17 @@ public class KnowledgeBaseArticle {
 	@JsonProperty
 	protected String[] keywords;
 
-	public Folder getParentFolder() {
+	public ParentFolder getParentFolder() {
 		return parentFolder;
 	}
 
-	public void setParentFolder(Folder parentFolder) {
+	public void setParentFolder(ParentFolder parentFolder) {
 		this.parentFolder = parentFolder;
 	}
 
 	@JsonIgnore
 	public void setParentFolder(
-		UnsafeSupplier<Folder, Exception> parentFolderUnsafeSupplier) {
+		UnsafeSupplier<ParentFolder, Exception> parentFolderUnsafeSupplier) {
 
 		try {
 			parentFolder = parentFolderUnsafeSupplier.get();
@@ -349,7 +325,7 @@ public class KnowledgeBaseArticle {
 
 	@GraphQLField
 	@JsonProperty
-	protected Folder parentFolder;
+	protected ParentFolder parentFolder;
 
 	public Long getParentFolderId() {
 		return parentFolderId;
@@ -434,13 +410,6 @@ public class KnowledgeBaseArticle {
 
 		sb.append("\"");
 		sb.append(dateModified);
-		sb.append("\"");
-		sb.append(", ");
-
-		sb.append("\"datePublished\": ");
-
-		sb.append("\"");
-		sb.append(datePublished);
 		sb.append("\"");
 		sb.append(", ");
 

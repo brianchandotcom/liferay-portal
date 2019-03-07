@@ -65,6 +65,37 @@ public abstract class BaseKnowledgeBaseArticleResourceImpl
 			@Parameter(in = ParameterIn.QUERY, name = "pageSize")
 		}
 	)
+	@Path("/content-space/{content-space-id}/knowledge-base-articles")
+	@Produces("application/json")
+	public Page<KnowledgeBaseArticle> getContentSpaceKnowledgeBaseArticlesPage(
+			@PathParam("content-space-id") Long contentSpaceId,
+			@Context Pagination pagination)
+		throws Exception {
+
+		return Page.of(Collections.emptyList());
+	}
+
+	@Override
+	@Consumes({"application/json", "multipart/form-data"})
+	@POST
+	@Path("/content-space/{content-space-id}/knowledge-base-articles")
+	@Produces("application/json")
+	public KnowledgeBaseArticle postContentSpaceKnowledgeBaseArticle(
+			@PathParam("content-space-id") Long contentSpaceId,
+			MultipartBody multipartBody)
+		throws Exception {
+
+		return new KnowledgeBaseArticle();
+	}
+
+	@Override
+	@GET
+	@Parameters(
+		value = {
+			@Parameter(in = ParameterIn.QUERY, name = "page"),
+			@Parameter(in = ParameterIn.QUERY, name = "pageSize")
+		}
+	)
 	@Path("/folders/{folder-id}/knowledge-base-articles")
 	@Produces("application/json")
 	public Page<KnowledgeBaseArticle> getFolderKnowledgeBaseArticlesPage(

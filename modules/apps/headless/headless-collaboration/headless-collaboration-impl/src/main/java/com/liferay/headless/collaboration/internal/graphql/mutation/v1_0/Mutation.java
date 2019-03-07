@@ -242,6 +242,20 @@ public class Mutation {
 
 	@GraphQLField
 	@GraphQLInvokeDetached
+	public KnowledgeBaseArticle postContentSpaceKnowledgeBaseArticle(
+			@GraphQLName("content-space-id") Long contentSpaceId,
+			@GraphQLName("MultipartBody") MultipartBody multipartBody)
+		throws Exception {
+
+		KnowledgeBaseArticleResource knowledgeBaseArticleResource =
+			_createKnowledgeBaseArticleResource();
+
+		return knowledgeBaseArticleResource.
+			postContentSpaceKnowledgeBaseArticle(contentSpaceId, multipartBody);
+	}
+
+	@GraphQLField
+	@GraphQLInvokeDetached
 	public KnowledgeBaseArticle postFolderKnowledgeBaseArticle(
 			@GraphQLName("folder-id") Long folderId,
 			@GraphQLName("MultipartBody") MultipartBody multipartBody)

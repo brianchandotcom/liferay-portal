@@ -239,6 +239,30 @@ public class Query {
 
 	@GraphQLField
 	@GraphQLInvokeDetached
+	public Collection<KnowledgeBaseArticle>
+			getContentSpaceKnowledgeBaseArticlesPage(
+				@GraphQLName("content-space-id") Long contentSpaceId,
+				@GraphQLName("pageSize") int pageSize,
+				@GraphQLName("page") int page)
+		throws Exception {
+
+		KnowledgeBaseArticleResource knowledgeBaseArticleResource =
+			_createKnowledgeBaseArticleResource();
+
+		knowledgeBaseArticleResource.setContextCompany(
+			CompanyLocalServiceUtil.getCompany(
+				CompanyThreadLocal.getCompanyId()));
+
+		Page paginationPage =
+			knowledgeBaseArticleResource.
+				getContentSpaceKnowledgeBaseArticlesPage(
+					contentSpaceId, Pagination.of(pageSize, page));
+
+		return paginationPage.getItems();
+	}
+
+	@GraphQLField
+	@GraphQLInvokeDetached
 	public Collection<KnowledgeBaseArticle> getFolderKnowledgeBaseArticlesPage(
 			@GraphQLName("folder-id") Long folderId,
 			@GraphQLName("pageSize") int pageSize,

@@ -97,6 +97,207 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 	}
 
 	@Test
+	public void testGetContentSpaceKnowledgeBaseArticlesPage()
+		throws Exception {
+
+		Long contentSpaceId =
+			testGetContentSpaceKnowledgeBaseArticlesPage_getContentSpaceId();
+
+		KnowledgeBaseArticle knowledgeBaseArticle1 =
+			testGetContentSpaceKnowledgeBaseArticlesPage_addKnowledgeBaseArticle(
+				contentSpaceId, randomKnowledgeBaseArticle());
+		KnowledgeBaseArticle knowledgeBaseArticle2 =
+			testGetContentSpaceKnowledgeBaseArticlesPage_addKnowledgeBaseArticle(
+				contentSpaceId, randomKnowledgeBaseArticle());
+
+		Page<KnowledgeBaseArticle> page =
+			invokeGetContentSpaceKnowledgeBaseArticlesPage(
+				contentSpaceId, Pagination.of(1, 2));
+
+		Assert.assertEquals(2, page.getTotalCount());
+
+		assertEqualsIgnoringOrder(
+			Arrays.asList(knowledgeBaseArticle1, knowledgeBaseArticle2),
+			(List<KnowledgeBaseArticle>)page.getItems());
+		assertValid(page);
+	}
+
+	@Test
+	public void testGetContentSpaceKnowledgeBaseArticlesPageWithPagination()
+		throws Exception {
+
+		Long contentSpaceId =
+			testGetContentSpaceKnowledgeBaseArticlesPage_getContentSpaceId();
+
+		KnowledgeBaseArticle knowledgeBaseArticle1 =
+			testGetContentSpaceKnowledgeBaseArticlesPage_addKnowledgeBaseArticle(
+				contentSpaceId, randomKnowledgeBaseArticle());
+		KnowledgeBaseArticle knowledgeBaseArticle2 =
+			testGetContentSpaceKnowledgeBaseArticlesPage_addKnowledgeBaseArticle(
+				contentSpaceId, randomKnowledgeBaseArticle());
+		KnowledgeBaseArticle knowledgeBaseArticle3 =
+			testGetContentSpaceKnowledgeBaseArticlesPage_addKnowledgeBaseArticle(
+				contentSpaceId, randomKnowledgeBaseArticle());
+
+		Page<KnowledgeBaseArticle> page1 =
+			invokeGetContentSpaceKnowledgeBaseArticlesPage(
+				contentSpaceId, Pagination.of(1, 2));
+
+		List<KnowledgeBaseArticle> knowledgeBaseArticles1 =
+			(List<KnowledgeBaseArticle>)page1.getItems();
+
+		Assert.assertEquals(
+			knowledgeBaseArticles1.toString(), 2,
+			knowledgeBaseArticles1.size());
+
+		Page<KnowledgeBaseArticle> page2 =
+			invokeGetContentSpaceKnowledgeBaseArticlesPage(
+				contentSpaceId, Pagination.of(2, 2));
+
+		Assert.assertEquals(3, page2.getTotalCount());
+
+		List<KnowledgeBaseArticle> knowledgeBaseArticles2 =
+			(List<KnowledgeBaseArticle>)page2.getItems();
+
+		Assert.assertEquals(
+			knowledgeBaseArticles2.toString(), 1,
+			knowledgeBaseArticles2.size());
+
+		assertEqualsIgnoringOrder(
+			Arrays.asList(
+				knowledgeBaseArticle1, knowledgeBaseArticle2,
+				knowledgeBaseArticle3),
+			new ArrayList<KnowledgeBaseArticle>() {
+				{
+					addAll(knowledgeBaseArticles1);
+					addAll(knowledgeBaseArticles2);
+				}
+			});
+	}
+
+	protected KnowledgeBaseArticle
+			testGetContentSpaceKnowledgeBaseArticlesPage_addKnowledgeBaseArticle(
+				Long contentSpaceId, KnowledgeBaseArticle knowledgeBaseArticle)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected Long
+			testGetContentSpaceKnowledgeBaseArticlesPage_getContentSpaceId()
+		throws Exception {
+
+		return testGroup.getGroupId();
+	}
+
+	protected Page<KnowledgeBaseArticle>
+			invokeGetContentSpaceKnowledgeBaseArticlesPage(
+				Long contentSpaceId, Pagination pagination)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		String location =
+			_resourceURL +
+				_toPath(
+					"/content-space/{content-space-id}/knowledge-base-articles",
+					contentSpaceId);
+
+		location = HttpUtil.addParameter(
+			location, "page", pagination.getPage());
+		location = HttpUtil.addParameter(
+			location, "pageSize", pagination.getPageSize());
+
+		options.setLocation(location);
+
+		return _outputObjectMapper.readValue(
+			HttpUtil.URLtoString(options),
+			new TypeReference<Page<KnowledgeBaseArticle>>() {
+			});
+	}
+
+	protected Http.Response
+			invokeGetContentSpaceKnowledgeBaseArticlesPageResponse(
+				Long contentSpaceId, Pagination pagination)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		String location =
+			_resourceURL +
+				_toPath(
+					"/content-space/{content-space-id}/knowledge-base-articles",
+					contentSpaceId);
+
+		location = HttpUtil.addParameter(
+			location, "page", pagination.getPage());
+		location = HttpUtil.addParameter(
+			location, "pageSize", pagination.getPageSize());
+
+		options.setLocation(location);
+
+		HttpUtil.URLtoString(options);
+
+		return options.getResponse();
+	}
+
+	@Test
+	public void testPostContentSpaceKnowledgeBaseArticle() throws Exception {
+		Assert.assertTrue(true);
+	}
+
+	protected KnowledgeBaseArticle
+			testPostContentSpaceKnowledgeBaseArticle_addKnowledgeBaseArticle(
+				KnowledgeBaseArticle knowledgeBaseArticle)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected KnowledgeBaseArticle invokePostContentSpaceKnowledgeBaseArticle(
+			Long contentSpaceId, MultipartBody multipartBody)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		String location =
+			_resourceURL +
+				_toPath(
+					"/content-space/{content-space-id}/knowledge-base-articles",
+					contentSpaceId);
+
+		options.setLocation(location);
+
+		options.setPost(true);
+
+		return _outputObjectMapper.readValue(
+			HttpUtil.URLtoString(options), KnowledgeBaseArticle.class);
+	}
+
+	protected Http.Response invokePostContentSpaceKnowledgeBaseArticleResponse(
+			Long contentSpaceId, MultipartBody multipartBody)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		String location =
+			_resourceURL +
+				_toPath(
+					"/content-space/{content-space-id}/knowledge-base-articles",
+					contentSpaceId);
+
+		options.setLocation(location);
+
+		options.setPost(true);
+
+		HttpUtil.URLtoString(options);
+
+		return options.getResponse();
+	}
+
+	@Test
 	public void testGetFolderKnowledgeBaseArticlesPage() throws Exception {
 		Long folderId = testGetFolderKnowledgeBaseArticlesPage_getFolderId();
 
@@ -855,13 +1056,6 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 			return sb.toString();
 		}
 
-		if (entityFieldName.equals("datePublished")) {
-			sb.append(
-				_dateFormat.format(knowledgeBaseArticle.getDatePublished()));
-
-			return sb.toString();
-		}
-
 		if (entityFieldName.equals("friendlyUrlPath")) {
 			sb.append("'");
 			sb.append(
@@ -910,7 +1104,6 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 				contentSpace = RandomTestUtil.randomLong();
 				dateCreated = RandomTestUtil.nextDate();
 				dateModified = RandomTestUtil.nextDate();
-				datePublished = RandomTestUtil.nextDate();
 				friendlyUrlPath = RandomTestUtil.randomString();
 				title = RandomTestUtil.randomString();
 				id = RandomTestUtil.randomLong();

@@ -33,6 +33,14 @@ import javax.annotation.Generated;
 @Generated("")
 public interface KnowledgeBaseArticleResource {
 
+	public Page<KnowledgeBaseArticle> getContentSpaceKnowledgeBaseArticlesPage(
+			Long contentSpaceId, Pagination pagination)
+		throws Exception;
+
+	public KnowledgeBaseArticle postContentSpaceKnowledgeBaseArticle(
+			Long contentSpaceId, MultipartBody multipartBody)
+		throws Exception;
+
 	public Page<KnowledgeBaseArticle> getFolderKnowledgeBaseArticlesPage(
 			Long folderId, Pagination pagination)
 		throws Exception;

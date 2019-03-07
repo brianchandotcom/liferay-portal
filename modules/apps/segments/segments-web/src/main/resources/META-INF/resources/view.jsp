@@ -73,7 +73,7 @@ SegmentsDisplayContext segmentsDisplayContext = (SegmentsDisplayContext)request.
 
 			<liferay-ui:search-container-column-text
 				cssClass="table-cell-expand table-title"
-				href="<%= rowURL %>"
+				href="<%= segmentsEntry.isDefaultSegment() ? null : rowURL %>"
 				name="name"
 				value="<%= HtmlUtil.escape(segmentsEntry.getName(locale)) %>"
 			/>
@@ -127,10 +127,12 @@ SegmentsDisplayContext segmentsDisplayContext = (SegmentsDisplayContext)request.
 				value="<%= segmentsEntry.getModifiedDate() %>"
 			/>
 
-			<liferay-ui:search-container-column-jsp
-				cssClass="entry-action-column"
-				path="/segments_entry_action.jsp"
-			/>
+			<c:if test="<%= !segmentsEntry.isDefaultSegment() %>">
+				<liferay-ui:search-container-column-jsp
+					cssClass="entry-action-column"
+					path="/segments_entry_action.jsp"
+				/>
+			</c:if>
 		</liferay-ui:search-container-row>
 
 		<liferay-ui:search-iterator

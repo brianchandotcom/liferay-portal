@@ -90,7 +90,8 @@ public class SegmentsDisplayContext {
 	public String getAvailableActions(SegmentsEntry segmentsEntry)
 		throws PortalException {
 
-		if (SegmentsEntryPermission.contains(
+		if (!segmentsEntry.isDefaultSegment() &&
+			SegmentsEntryPermission.contains(
 				_themeDisplay.getPermissionChecker(), segmentsEntry,
 				ActionKeys.DELETE)) {
 

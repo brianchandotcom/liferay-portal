@@ -292,14 +292,6 @@ public abstract class CTEntryLocalServiceBaseImpl
 		return ctEntryPersistence.findByPrimaryKey(primaryKeyObj);
 	}
 
-	@Override
-	public List<? extends PersistedModel> getPersistedModel(
-			long resourcePrimKey)
-		throws PortalException {
-
-		return ctEntryPersistence.findByResourcePrimKey(resourcePrimKey);
-	}
-
 	/**
 	 * Returns a range of all the ct entries.
 	 *

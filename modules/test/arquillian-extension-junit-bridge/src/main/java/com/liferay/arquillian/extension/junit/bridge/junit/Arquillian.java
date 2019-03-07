@@ -74,9 +74,26 @@ public class Arquillian extends Runner implements Filterable {
 		Description description = getDescription();
 
 		try {
-			Statement statement = _createClassStatement(runNotifier);
+			List<FrameworkMethod> frameworkMethods = _getTestFrameworkMethods();
 
-			statement.evaluate();
+			if (frameworkMethods != null) {
+				Statement statement = new Statement() {
+
+					@Override
+					public void evaluate() {
+						for (FrameworkMethod frameworkMethod :
+								frameworkMethods) {
+
+							_runMethod(frameworkMethod, runNotifier);
+						}
+					}
+
+				};
+
+				statement = new DeploymentStatement(statement);
+
+				statement.evaluate();
+			}
 		}
 		catch (AssumptionViolatedException ave) {
 			runNotifier.fireTestAssumptionFailed(new Failure(description, ave));
@@ -91,35 +108,6 @@ public class Arquillian extends Runner implements Filterable {
 		}
 	}
 
-	private Statement _createClassStatement(RunNotifier runNotifier) {
-		Statement statement = new Statement() {
-
-			@Override
-			public void evaluate() {
-				for (FrameworkMethod frameworkMethod : _getChildren()) {
-					_runMethod(frameworkMethod, runNotifier);
-				}
-			}
-
-		};
-
-		boolean hasTestMethod = false;
-
-		for (FrameworkMethod frameworkMethod : _getChildren()) {
-			if (!_isIgnored(frameworkMethod)) {
-				hasTestMethod = true;
-
-				break;
-			}
-		}
-
-		if (hasTestMethod) {
-			return new DeploymentStatement(statement);
-		}
-
-		return statement;
-	}
-
 	private Description _describeChild(FrameworkMethod frameworkMethod) {
 		return _methodDescriptions.computeIfAbsent(
 			frameworkMethod,
@@ -130,18 +118,27 @@ public class Arquillian extends Runner implements Filterable {
 			});
 	}
 
-	private List<FrameworkMethod> _getChildren() {
-		TestClass testClass = _getTestClass();
-
-		return testClass.getAnnotatedMethods(Test.class);
-	}
-
 	private TestClass _getTestClass() {
 		if (_testClass == null) {
 			_testClass = new FilteredSortedTestClass(_clazz);
 		}
 
 		return _testClass;
+	}
+
+	private List<FrameworkMethod> _getTestFrameworkMethods() {
+		TestClass testClass = _getTestClass();
+
+		List<FrameworkMethod> frameworkMethods = testClass.getAnnotatedMethods(
+			Test.class);
+
+		for (FrameworkMethod frameworkMethod : frameworkMethods) {
+			if (!_isIgnored(frameworkMethod)) {
+				return frameworkMethods;
+			}
+		}
+
+		return null;
 	}
 
 	private boolean _isIgnored(FrameworkMethod frameworkMethod) {

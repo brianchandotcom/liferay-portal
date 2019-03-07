@@ -152,6 +152,27 @@ public class CTCollectionModelImpl
 				"value.object.finder.cache.enabled.CTCollections_CTEntries"),
 			true);
 
+	public static final String
+		MAPPING_TABLE_CTCOLLECTION_CTENTRYAGGREGATE_NAME =
+			"CTCollection_CTEntryAggregate";
+
+	public static final Object[][]
+		MAPPING_TABLE_CTCOLLECTION_CTENTRYAGGREGATE_COLUMNS = {
+			{"companyId", Types.BIGINT}, {"ctCollectionId", Types.BIGINT},
+			{"ctEntryAggregateId", Types.BIGINT}
+		};
+
+	public static final String
+		MAPPING_TABLE_CTCOLLECTION_CTENTRYAGGREGATE_SQL_CREATE =
+			"create table CTCollection_CTEntryAggregate (companyId LONG not null,ctCollectionId LONG not null,ctEntryAggregateId LONG not null,primary key (ctCollectionId, ctEntryAggregateId))";
+
+	public static final boolean
+		FINDER_CACHE_ENABLED_CTCOLLECTION_CTENTRYAGGREGATE =
+			GetterUtil.getBoolean(
+				com.liferay.change.tracking.service.util.ServiceProps.get(
+					"value.object.finder.cache.enabled.CTCollection_CTEntryAggregate"),
+				true);
+
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(
 		com.liferay.change.tracking.service.util.ServiceProps.get(
 			"lock.expiration.time.com.liferay.change.tracking.model.CTCollection"));

@@ -32,6 +32,7 @@ import com.liferay.journal.service.JournalArticleLocalServiceUtil;
 import com.liferay.journal.service.JournalArticleServiceUtil;
 import com.liferay.journal.service.JournalFolderLocalServiceUtil;
 import com.liferay.journal.service.JournalFolderServiceUtil;
+import com.liferay.journal.util.JournalChangeTrackingHelper;
 import com.liferay.journal.util.comparator.FolderArticleArticleIdComparator;
 import com.liferay.journal.util.comparator.FolderArticleDisplayDateComparator;
 import com.liferay.journal.util.comparator.FolderArticleModifiedDateComparator;
@@ -101,6 +102,10 @@ import javax.portlet.PortletPreferences;
 import javax.portlet.PortletURL;
 
 import javax.servlet.http.HttpServletRequest;
+
+import org.osgi.framework.Bundle;
+import org.osgi.framework.FrameworkUtil;
+import org.osgi.util.tracker.ServiceTracker;
 
 /**
  * @author Eudaldo Alonso
@@ -1082,6 +1087,24 @@ public class JournalDisplayContext {
 		return false;
 	}
 
+	public boolean isChangeListColumnVisible() {
+		if (_journalChangeTrackingHelper == null) {
+			return false;
+		}
+
+		return _journalChangeTrackingHelper.hasActiveCTCollection(
+			_themeDisplay.getCompanyId(), _themeDisplay.getUserId());
+	}
+
+	public boolean isJournalArticleInChangeList(JournalArticle journalArticle) {
+		if (_journalChangeTrackingHelper == null) {
+			return false;
+		}
+
+		return _journalChangeTrackingHelper.isJournalArticleInChangeList(
+			_themeDisplay.getUserId(), journalArticle.getId());
+	}
+
 	public boolean isNavigationHome() {
 		if (Objects.equals(getNavigation(), "all")) {
 			return true;
@@ -1243,6 +1266,22 @@ public class JournalDisplayContext {
 		}
 
 		return jsonArray;
+	}
+
+	private static JournalChangeTrackingHelper _journalChangeTrackingHelper;
+
+	static {
+		Bundle bundle = FrameworkUtil.getBundle(
+			JournalChangeTrackingHelper.class);
+
+		ServiceTracker<JournalChangeTrackingHelper, JournalChangeTrackingHelper>
+			serviceTracker = new ServiceTracker<>(
+				bundle.getBundleContext(), JournalChangeTrackingHelper.class,
+				null);
+
+		serviceTracker.open();
+
+		_journalChangeTrackingHelper = serviceTracker.getService();
 	}
 
 	private String[] _addMenuFavItems;

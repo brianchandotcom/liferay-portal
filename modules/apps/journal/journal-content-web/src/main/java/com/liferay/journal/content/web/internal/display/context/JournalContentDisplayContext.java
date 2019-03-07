@@ -20,6 +20,10 @@ import com.liferay.asset.kernel.model.AssetRenderer;
 import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.asset.kernel.service.AssetEntryLocalServiceUtil;
 import com.liferay.asset.kernel.service.AssetEntryServiceUtil;
+import com.liferay.change.tracking.CTEngineManager;
+import com.liferay.change.tracking.CTManager;
+import com.liferay.change.tracking.model.CTCollection;
+import com.liferay.change.tracking.model.CTCollectionModel;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.DDMTemplate;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalServiceUtil;
@@ -77,6 +81,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Stream;
 
 import javax.portlet.PortletMode;
@@ -88,6 +93,7 @@ import javax.portlet.PortletURL;
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.FrameworkUtil;
+import org.osgi.util.tracker.ServiceTracker;
 
 /**
  * @author Eudaldo Alonso
@@ -112,8 +118,8 @@ public class JournalContentDisplayContext {
 						JournalContentPortletInstanceConfiguration.class);
 
 			journalContentDisplayContext = new JournalContentDisplayContext(
-				portletRequest, portletResponse,
-				journalContentPortletInstanceConfiguration,
+				portletDisplay.getPortletSetup(), portletRequest,
+				portletResponse, journalContentPortletInstanceConfiguration,
 				ddmStructureClassNameId, ddmTemplateModelResourcePermission);
 
 			portletRequest.setAttribute(
@@ -263,9 +269,37 @@ public class JournalContentDisplayContext {
 			return _articleId;
 		}
 
-		_articleId = ParamUtil.getString(
-			_portletRequest, "articleId",
+		long companyId = GetterUtil.getLong(
+			_portletRequest.getAttribute(WebKeys.COMPANY_ID));
+
+		if (!_ctEngineManager.isChangeTrackingEnabled(companyId)) {
+			_articleId = ParamUtil.getString(
+				_portletRequest, "articleId",
+				_journalContentPortletInstanceConfiguration.articleId());
+
+			return _articleId;
+		}
+
+		long userId = GetterUtil.getLong(
+			_portletRequest.getAttribute(WebKeys.USER_ID));
+
+		Optional<CTCollection> activeCTCollectionOptional =
+			_ctManager.getActiveCTCollectionOptional(userId);
+
+		String ctCollectionArticleIdKey = activeCTCollectionOptional.map(
+			CTCollectionModel::getCtCollectionId
+		).map(
+			ctCollectionId -> "ctCollectionArticleId" + ctCollectionId
+		).orElse(
+			"articleId"
+		);
+
+		String preferencesArticleId = _portletPreferences.getValue(
+			ctCollectionArticleIdKey,
 			_journalContentPortletInstanceConfiguration.articleId());
+
+		_articleId = ParamUtil.getString(
+			_portletRequest, ctCollectionArticleIdKey, preferencesArticleId);
 
 		return _articleId;
 	}
@@ -940,6 +974,7 @@ public class JournalContentDisplayContext {
 	}
 
 	private JournalContentDisplayContext(
+			PortletPreferences portletPreferences,
 			PortletRequest portletRequest, PortletResponse portletResponse,
 			JournalContentPortletInstanceConfiguration
 				journalContentPortletInstanceConfiguration,
@@ -948,6 +983,7 @@ public class JournalContentDisplayContext {
 				ddmTemplateModelResourcePermission)
 		throws PortalException {
 
+		_portletPreferences = portletPreferences;
 		_portletRequest = portletRequest;
 		_portletResponse = portletResponse;
 		_journalContentPortletInstanceConfiguration =
@@ -1000,12 +1036,32 @@ public class JournalContentDisplayContext {
 	private static final ServiceTrackerMap
 		<String, ContentMetadataAssetAddonEntry>
 			_contentMetadataAssetAddonEntryMap;
+	private static CTEngineManager _ctEngineManager;
+	private static CTManager _ctManager;
 	private static final ServiceTrackerMap<String, UserToolAssetAddonEntry>
 		_userToolAssetAddonEntryMap;
 
 	static {
 		Bundle bundle = FrameworkUtil.getBundle(
 			JournalContentDisplayContext.class);
+
+		ServiceTracker<CTEngineManager, CTEngineManager>
+			ctEngineManagerServiceTracker =
+				new ServiceTracker<>(
+					bundle.getBundleContext(), CTEngineManager.class, null);
+
+		ctEngineManagerServiceTracker.open();
+
+		_ctEngineManager = ctEngineManagerServiceTracker.getService();
+
+		ServiceTracker<CTManager, CTManager>
+			ctManagerServiceTracker =
+				new ServiceTracker<>(
+					bundle.getBundleContext(), CTManager.class, null);
+
+		ctManagerServiceTracker.open();
+
+		_ctManager = ctManagerServiceTracker.getService();
 
 		BundleContext bundleContext = bundle.getBundleContext();
 
@@ -1050,6 +1106,7 @@ public class JournalContentDisplayContext {
 	private final JournalContentPortletInstanceConfiguration
 		_journalContentPortletInstanceConfiguration;
 	private JournalArticle _latestArticle;
+	private final PortletPreferences _portletPreferences;
 	private final PortletRequest _portletRequest;
 	private String _portletResource;
 	private final PortletResponse _portletResponse;

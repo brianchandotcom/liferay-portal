@@ -20,6 +20,7 @@ import com.liferay.change.tracking.exception.NoSuchEntryAggregateException;
 import com.liferay.change.tracking.model.CTEntryAggregate;
 import com.liferay.change.tracking.model.impl.CTEntryAggregateImpl;
 import com.liferay.change.tracking.model.impl.CTEntryAggregateModelImpl;
+import com.liferay.change.tracking.service.persistence.CTCollectionPersistence;
 import com.liferay.change.tracking.service.persistence.CTEntryAggregatePersistence;
 import com.liferay.change.tracking.service.persistence.CTEntryPersistence;
 import com.liferay.petra.string.StringBundler;
@@ -90,54 +91,48 @@ public class CTEntryAggregatePersistenceImpl
 	private FinderPath _finderPathWithPaginationFindAll;
 	private FinderPath _finderPathWithoutPaginationFindAll;
 	private FinderPath _finderPathCountAll;
-	private FinderPath _finderPathWithPaginationFindByC_O;
-	private FinderPath _finderPathWithoutPaginationFindByC_O;
-	private FinderPath _finderPathCountByC_O;
+	private FinderPath _finderPathWithPaginationFindByOwnerCTEntryID;
+	private FinderPath _finderPathWithoutPaginationFindByOwnerCTEntryID;
+	private FinderPath _finderPathCountByOwnerCTEntryID;
 
 	/**
-	 * Returns all the ct entry aggregates where ctCollectionId = &#63; and ownerCTEntryId = &#63;.
+	 * Returns all the ct entry aggregates where ownerCTEntryId = &#63;.
 	 *
-	 * @param ctCollectionId the ct collection ID
 	 * @param ownerCTEntryId the owner ct entry ID
 	 * @return the matching ct entry aggregates
 	 */
 	@Override
-	public List<CTEntryAggregate> findByC_O(
-		long ctCollectionId, long ownerCTEntryId) {
-
-		return findByC_O(
-			ctCollectionId, ownerCTEntryId, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS, null);
+	public List<CTEntryAggregate> findByOwnerCTEntryID(long ownerCTEntryId) {
+		return findByOwnerCTEntryID(
+			ownerCTEntryId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 	}
 
 	/**
-	 * Returns a range of all the ct entry aggregates where ctCollectionId = &#63; and ownerCTEntryId = &#63;.
+	 * Returns a range of all the ct entry aggregates where ownerCTEntryId = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>CTEntryAggregateModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @param ctCollectionId the ct collection ID
 	 * @param ownerCTEntryId the owner ct entry ID
 	 * @param start the lower bound of the range of ct entry aggregates
 	 * @param end the upper bound of the range of ct entry aggregates (not inclusive)
 	 * @return the range of matching ct entry aggregates
 	 */
 	@Override
-	public List<CTEntryAggregate> findByC_O(
-		long ctCollectionId, long ownerCTEntryId, int start, int end) {
+	public List<CTEntryAggregate> findByOwnerCTEntryID(
+		long ownerCTEntryId, int start, int end) {
 
-		return findByC_O(ctCollectionId, ownerCTEntryId, start, end, null);
+		return findByOwnerCTEntryID(ownerCTEntryId, start, end, null);
 	}
 
 	/**
-	 * Returns an ordered range of all the ct entry aggregates where ctCollectionId = &#63; and ownerCTEntryId = &#63;.
+	 * Returns an ordered range of all the ct entry aggregates where ownerCTEntryId = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>CTEntryAggregateModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @param ctCollectionId the ct collection ID
 	 * @param ownerCTEntryId the owner ct entry ID
 	 * @param start the lower bound of the range of ct entry aggregates
 	 * @param end the upper bound of the range of ct entry aggregates (not inclusive)
@@ -145,23 +140,21 @@ public class CTEntryAggregatePersistenceImpl
 	 * @return the ordered range of matching ct entry aggregates
 	 */
 	@Override
-	public List<CTEntryAggregate> findByC_O(
-		long ctCollectionId, long ownerCTEntryId, int start, int end,
+	public List<CTEntryAggregate> findByOwnerCTEntryID(
+		long ownerCTEntryId, int start, int end,
 		OrderByComparator<CTEntryAggregate> orderByComparator) {
 
-		return findByC_O(
-			ctCollectionId, ownerCTEntryId, start, end, orderByComparator,
-			true);
+		return findByOwnerCTEntryID(
+			ownerCTEntryId, start, end, orderByComparator, true);
 	}
 
 	/**
-	 * Returns an ordered range of all the ct entry aggregates where ctCollectionId = &#63; and ownerCTEntryId = &#63;.
+	 * Returns an ordered range of all the ct entry aggregates where ownerCTEntryId = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>CTEntryAggregateModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @param ctCollectionId the ct collection ID
 	 * @param ownerCTEntryId the owner ct entry ID
 	 * @param start the lower bound of the range of ct entry aggregates
 	 * @param end the upper bound of the range of ct entry aggregates (not inclusive)
@@ -170,8 +163,8 @@ public class CTEntryAggregatePersistenceImpl
 	 * @return the ordered range of matching ct entry aggregates
 	 */
 	@Override
-	public List<CTEntryAggregate> findByC_O(
-		long ctCollectionId, long ownerCTEntryId, int start, int end,
+	public List<CTEntryAggregate> findByOwnerCTEntryID(
+		long ownerCTEntryId, int start, int end,
 		OrderByComparator<CTEntryAggregate> orderByComparator,
 		boolean retrieveFromCache) {
 
@@ -183,13 +176,13 @@ public class CTEntryAggregatePersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindByC_O;
-			finderArgs = new Object[] {ctCollectionId, ownerCTEntryId};
+			finderPath = _finderPathWithoutPaginationFindByOwnerCTEntryID;
+			finderArgs = new Object[] {ownerCTEntryId};
 		}
 		else {
-			finderPath = _finderPathWithPaginationFindByC_O;
+			finderPath = _finderPathWithPaginationFindByOwnerCTEntryID;
 			finderArgs = new Object[] {
-				ctCollectionId, ownerCTEntryId, start, end, orderByComparator
+				ownerCTEntryId, start, end, orderByComparator
 			};
 		}
 
@@ -201,9 +194,7 @@ public class CTEntryAggregatePersistenceImpl
 
 			if ((list != null) && !list.isEmpty()) {
 				for (CTEntryAggregate ctEntryAggregate : list) {
-					if ((ctCollectionId !=
-							ctEntryAggregate.getCtCollectionId()) ||
-						(ownerCTEntryId !=
+					if ((ownerCTEntryId !=
 							ctEntryAggregate.getOwnerCTEntryId())) {
 
 						list = null;
@@ -219,17 +210,15 @@ public class CTEntryAggregatePersistenceImpl
 
 			if (orderByComparator != null) {
 				query = new StringBundler(
-					4 + (orderByComparator.getOrderByFields().length * 2));
+					3 + (orderByComparator.getOrderByFields().length * 2));
 			}
 			else {
-				query = new StringBundler(4);
+				query = new StringBundler(3);
 			}
 
 			query.append(_SQL_SELECT_CTENTRYAGGREGATE_WHERE);
 
-			query.append(_FINDER_COLUMN_C_O_CTCOLLECTIONID_2);
-
-			query.append(_FINDER_COLUMN_C_O_OWNERCTENTRYID_2);
+			query.append(_FINDER_COLUMN_OWNERCTENTRYID_OWNERCTENTRYID_2);
 
 			if (orderByComparator != null) {
 				appendOrderByComparator(
@@ -249,8 +238,6 @@ public class CTEntryAggregatePersistenceImpl
 				Query q = session.createQuery(sql);
 
 				QueryPos qPos = QueryPos.getInstance(q);
-
-				qPos.add(ctCollectionId);
 
 				qPos.add(ownerCTEntryId);
 
@@ -285,35 +272,31 @@ public class CTEntryAggregatePersistenceImpl
 	}
 
 	/**
-	 * Returns the first ct entry aggregate in the ordered set where ctCollectionId = &#63; and ownerCTEntryId = &#63;.
+	 * Returns the first ct entry aggregate in the ordered set where ownerCTEntryId = &#63;.
 	 *
-	 * @param ctCollectionId the ct collection ID
 	 * @param ownerCTEntryId the owner ct entry ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching ct entry aggregate
 	 * @throws NoSuchEntryAggregateException if a matching ct entry aggregate could not be found
 	 */
 	@Override
-	public CTEntryAggregate findByC_O_First(
-			long ctCollectionId, long ownerCTEntryId,
+	public CTEntryAggregate findByOwnerCTEntryID_First(
+			long ownerCTEntryId,
 			OrderByComparator<CTEntryAggregate> orderByComparator)
 		throws NoSuchEntryAggregateException {
 
-		CTEntryAggregate ctEntryAggregate = fetchByC_O_First(
-			ctCollectionId, ownerCTEntryId, orderByComparator);
+		CTEntryAggregate ctEntryAggregate = fetchByOwnerCTEntryID_First(
+			ownerCTEntryId, orderByComparator);
 
 		if (ctEntryAggregate != null) {
 			return ctEntryAggregate;
 		}
 
-		StringBundler msg = new StringBundler(6);
+		StringBundler msg = new StringBundler(4);
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("ctCollectionId=");
-		msg.append(ctCollectionId);
-
-		msg.append(", ownerCTEntryId=");
+		msg.append("ownerCTEntryId=");
 		msg.append(ownerCTEntryId);
 
 		msg.append("}");
@@ -322,20 +305,19 @@ public class CTEntryAggregatePersistenceImpl
 	}
 
 	/**
-	 * Returns the first ct entry aggregate in the ordered set where ctCollectionId = &#63; and ownerCTEntryId = &#63;.
+	 * Returns the first ct entry aggregate in the ordered set where ownerCTEntryId = &#63;.
 	 *
-	 * @param ctCollectionId the ct collection ID
 	 * @param ownerCTEntryId the owner ct entry ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching ct entry aggregate, or <code>null</code> if a matching ct entry aggregate could not be found
 	 */
 	@Override
-	public CTEntryAggregate fetchByC_O_First(
-		long ctCollectionId, long ownerCTEntryId,
+	public CTEntryAggregate fetchByOwnerCTEntryID_First(
+		long ownerCTEntryId,
 		OrderByComparator<CTEntryAggregate> orderByComparator) {
 
-		List<CTEntryAggregate> list = findByC_O(
-			ctCollectionId, ownerCTEntryId, 0, 1, orderByComparator);
+		List<CTEntryAggregate> list = findByOwnerCTEntryID(
+			ownerCTEntryId, 0, 1, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -345,35 +327,31 @@ public class CTEntryAggregatePersistenceImpl
 	}
 
 	/**
-	 * Returns the last ct entry aggregate in the ordered set where ctCollectionId = &#63; and ownerCTEntryId = &#63;.
+	 * Returns the last ct entry aggregate in the ordered set where ownerCTEntryId = &#63;.
 	 *
-	 * @param ctCollectionId the ct collection ID
 	 * @param ownerCTEntryId the owner ct entry ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching ct entry aggregate
 	 * @throws NoSuchEntryAggregateException if a matching ct entry aggregate could not be found
 	 */
 	@Override
-	public CTEntryAggregate findByC_O_Last(
-			long ctCollectionId, long ownerCTEntryId,
+	public CTEntryAggregate findByOwnerCTEntryID_Last(
+			long ownerCTEntryId,
 			OrderByComparator<CTEntryAggregate> orderByComparator)
 		throws NoSuchEntryAggregateException {
 
-		CTEntryAggregate ctEntryAggregate = fetchByC_O_Last(
-			ctCollectionId, ownerCTEntryId, orderByComparator);
+		CTEntryAggregate ctEntryAggregate = fetchByOwnerCTEntryID_Last(
+			ownerCTEntryId, orderByComparator);
 
 		if (ctEntryAggregate != null) {
 			return ctEntryAggregate;
 		}
 
-		StringBundler msg = new StringBundler(6);
+		StringBundler msg = new StringBundler(4);
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("ctCollectionId=");
-		msg.append(ctCollectionId);
-
-		msg.append(", ownerCTEntryId=");
+		msg.append("ownerCTEntryId=");
 		msg.append(ownerCTEntryId);
 
 		msg.append("}");
@@ -382,27 +360,25 @@ public class CTEntryAggregatePersistenceImpl
 	}
 
 	/**
-	 * Returns the last ct entry aggregate in the ordered set where ctCollectionId = &#63; and ownerCTEntryId = &#63;.
+	 * Returns the last ct entry aggregate in the ordered set where ownerCTEntryId = &#63;.
 	 *
-	 * @param ctCollectionId the ct collection ID
 	 * @param ownerCTEntryId the owner ct entry ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching ct entry aggregate, or <code>null</code> if a matching ct entry aggregate could not be found
 	 */
 	@Override
-	public CTEntryAggregate fetchByC_O_Last(
-		long ctCollectionId, long ownerCTEntryId,
+	public CTEntryAggregate fetchByOwnerCTEntryID_Last(
+		long ownerCTEntryId,
 		OrderByComparator<CTEntryAggregate> orderByComparator) {
 
-		int count = countByC_O(ctCollectionId, ownerCTEntryId);
+		int count = countByOwnerCTEntryID(ownerCTEntryId);
 
 		if (count == 0) {
 			return null;
 		}
 
-		List<CTEntryAggregate> list = findByC_O(
-			ctCollectionId, ownerCTEntryId, count - 1, count,
-			orderByComparator);
+		List<CTEntryAggregate> list = findByOwnerCTEntryID(
+			ownerCTEntryId, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -412,18 +388,17 @@ public class CTEntryAggregatePersistenceImpl
 	}
 
 	/**
-	 * Returns the ct entry aggregates before and after the current ct entry aggregate in the ordered set where ctCollectionId = &#63; and ownerCTEntryId = &#63;.
+	 * Returns the ct entry aggregates before and after the current ct entry aggregate in the ordered set where ownerCTEntryId = &#63;.
 	 *
 	 * @param ctEntryAggregateId the primary key of the current ct entry aggregate
-	 * @param ctCollectionId the ct collection ID
 	 * @param ownerCTEntryId the owner ct entry ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next ct entry aggregate
 	 * @throws NoSuchEntryAggregateException if a ct entry aggregate with the primary key could not be found
 	 */
 	@Override
-	public CTEntryAggregate[] findByC_O_PrevAndNext(
-			long ctEntryAggregateId, long ctCollectionId, long ownerCTEntryId,
+	public CTEntryAggregate[] findByOwnerCTEntryID_PrevAndNext(
+			long ctEntryAggregateId, long ownerCTEntryId,
 			OrderByComparator<CTEntryAggregate> orderByComparator)
 		throws NoSuchEntryAggregateException {
 
@@ -437,15 +412,15 @@ public class CTEntryAggregatePersistenceImpl
 
 			CTEntryAggregate[] array = new CTEntryAggregateImpl[3];
 
-			array[0] = getByC_O_PrevAndNext(
-				session, ctEntryAggregate, ctCollectionId, ownerCTEntryId,
-				orderByComparator, true);
+			array[0] = getByOwnerCTEntryID_PrevAndNext(
+				session, ctEntryAggregate, ownerCTEntryId, orderByComparator,
+				true);
 
 			array[1] = ctEntryAggregate;
 
-			array[2] = getByC_O_PrevAndNext(
-				session, ctEntryAggregate, ctCollectionId, ownerCTEntryId,
-				orderByComparator, false);
+			array[2] = getByOwnerCTEntryID_PrevAndNext(
+				session, ctEntryAggregate, ownerCTEntryId, orderByComparator,
+				false);
 
 			return array;
 		}
@@ -457,9 +432,8 @@ public class CTEntryAggregatePersistenceImpl
 		}
 	}
 
-	protected CTEntryAggregate getByC_O_PrevAndNext(
-		Session session, CTEntryAggregate ctEntryAggregate, long ctCollectionId,
-		long ownerCTEntryId,
+	protected CTEntryAggregate getByOwnerCTEntryID_PrevAndNext(
+		Session session, CTEntryAggregate ctEntryAggregate, long ownerCTEntryId,
 		OrderByComparator<CTEntryAggregate> orderByComparator,
 		boolean previous) {
 
@@ -467,18 +441,16 @@ public class CTEntryAggregatePersistenceImpl
 
 		if (orderByComparator != null) {
 			query = new StringBundler(
-				5 + (orderByComparator.getOrderByConditionFields().length * 3) +
+				4 + (orderByComparator.getOrderByConditionFields().length * 3) +
 					(orderByComparator.getOrderByFields().length * 3));
 		}
 		else {
-			query = new StringBundler(4);
+			query = new StringBundler(3);
 		}
 
 		query.append(_SQL_SELECT_CTENTRYAGGREGATE_WHERE);
 
-		query.append(_FINDER_COLUMN_C_O_CTCOLLECTIONID_2);
-
-		query.append(_FINDER_COLUMN_C_O_OWNERCTENTRYID_2);
+		query.append(_FINDER_COLUMN_OWNERCTENTRYID_OWNERCTENTRYID_2);
 
 		if (orderByComparator != null) {
 			String[] orderByConditionFields =
@@ -549,8 +521,6 @@ public class CTEntryAggregatePersistenceImpl
 
 		QueryPos qPos = QueryPos.getInstance(q);
 
-		qPos.add(ctCollectionId);
-
 		qPos.add(ownerCTEntryId);
 
 		if (orderByComparator != null) {
@@ -573,45 +543,41 @@ public class CTEntryAggregatePersistenceImpl
 	}
 
 	/**
-	 * Removes all the ct entry aggregates where ctCollectionId = &#63; and ownerCTEntryId = &#63; from the database.
+	 * Removes all the ct entry aggregates where ownerCTEntryId = &#63; from the database.
 	 *
-	 * @param ctCollectionId the ct collection ID
 	 * @param ownerCTEntryId the owner ct entry ID
 	 */
 	@Override
-	public void removeByC_O(long ctCollectionId, long ownerCTEntryId) {
+	public void removeByOwnerCTEntryID(long ownerCTEntryId) {
 		for (CTEntryAggregate ctEntryAggregate :
-				findByC_O(
-					ctCollectionId, ownerCTEntryId, QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS, null)) {
+				findByOwnerCTEntryID(
+					ownerCTEntryId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+					null)) {
 
 			remove(ctEntryAggregate);
 		}
 	}
 
 	/**
-	 * Returns the number of ct entry aggregates where ctCollectionId = &#63; and ownerCTEntryId = &#63;.
+	 * Returns the number of ct entry aggregates where ownerCTEntryId = &#63;.
 	 *
-	 * @param ctCollectionId the ct collection ID
 	 * @param ownerCTEntryId the owner ct entry ID
 	 * @return the number of matching ct entry aggregates
 	 */
 	@Override
-	public int countByC_O(long ctCollectionId, long ownerCTEntryId) {
-		FinderPath finderPath = _finderPathCountByC_O;
+	public int countByOwnerCTEntryID(long ownerCTEntryId) {
+		FinderPath finderPath = _finderPathCountByOwnerCTEntryID;
 
-		Object[] finderArgs = new Object[] {ctCollectionId, ownerCTEntryId};
+		Object[] finderArgs = new Object[] {ownerCTEntryId};
 
 		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
-			StringBundler query = new StringBundler(3);
+			StringBundler query = new StringBundler(2);
 
 			query.append(_SQL_COUNT_CTENTRYAGGREGATE_WHERE);
 
-			query.append(_FINDER_COLUMN_C_O_CTCOLLECTIONID_2);
-
-			query.append(_FINDER_COLUMN_C_O_OWNERCTENTRYID_2);
+			query.append(_FINDER_COLUMN_OWNERCTENTRYID_OWNERCTENTRYID_2);
 
 			String sql = query.toString();
 
@@ -623,8 +589,6 @@ public class CTEntryAggregatePersistenceImpl
 				Query q = session.createQuery(sql);
 
 				QueryPos qPos = QueryPos.getInstance(q);
-
-				qPos.add(ctCollectionId);
 
 				qPos.add(ownerCTEntryId);
 
@@ -645,10 +609,7 @@ public class CTEntryAggregatePersistenceImpl
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_C_O_CTCOLLECTIONID_2 =
-		"ctEntryAggregate.ctCollectionId = ? AND ";
-
-	private static final String _FINDER_COLUMN_C_O_OWNERCTENTRYID_2 =
+	private static final String _FINDER_COLUMN_OWNERCTENTRYID_OWNERCTENTRYID_2 =
 		"ctEntryAggregate.ownerCTEntryId = ?";
 
 	public CTEntryAggregatePersistenceImpl() {
@@ -815,6 +776,9 @@ public class CTEntryAggregatePersistenceImpl
 
 	@Override
 	protected CTEntryAggregate removeImpl(CTEntryAggregate ctEntryAggregate) {
+		ctEntryAggregateToCTCollectionTableMapper.
+			deleteLeftPrimaryKeyTableMappings(ctEntryAggregate.getPrimaryKey());
+
 		ctEntryAggregateToCTEntryTableMapper.deleteLeftPrimaryKeyTableMappings(
 			ctEntryAggregate.getPrimaryKey());
 
@@ -925,13 +889,12 @@ public class CTEntryAggregatePersistenceImpl
 		}
 		else if (isNew) {
 			Object[] args = new Object[] {
-				ctEntryAggregateModelImpl.getCtCollectionId(),
 				ctEntryAggregateModelImpl.getOwnerCTEntryId()
 			};
 
-			finderCache.removeResult(_finderPathCountByC_O, args);
+			finderCache.removeResult(_finderPathCountByOwnerCTEntryID, args);
 			finderCache.removeResult(
-				_finderPathWithoutPaginationFindByC_O, args);
+				_finderPathWithoutPaginationFindByOwnerCTEntryID, args);
 
 			finderCache.removeResult(_finderPathCountAll, FINDER_ARGS_EMPTY);
 			finderCache.removeResult(
@@ -939,26 +902,26 @@ public class CTEntryAggregatePersistenceImpl
 		}
 		else {
 			if ((ctEntryAggregateModelImpl.getColumnBitmask() &
-				 _finderPathWithoutPaginationFindByC_O.getColumnBitmask()) !=
-					 0) {
+				 _finderPathWithoutPaginationFindByOwnerCTEntryID.
+					 getColumnBitmask()) != 0) {
 
 				Object[] args = new Object[] {
-					ctEntryAggregateModelImpl.getOriginalCtCollectionId(),
 					ctEntryAggregateModelImpl.getOriginalOwnerCTEntryId()
 				};
 
-				finderCache.removeResult(_finderPathCountByC_O, args);
 				finderCache.removeResult(
-					_finderPathWithoutPaginationFindByC_O, args);
+					_finderPathCountByOwnerCTEntryID, args);
+				finderCache.removeResult(
+					_finderPathWithoutPaginationFindByOwnerCTEntryID, args);
 
 				args = new Object[] {
-					ctEntryAggregateModelImpl.getCtCollectionId(),
 					ctEntryAggregateModelImpl.getOwnerCTEntryId()
 				};
 
-				finderCache.removeResult(_finderPathCountByC_O, args);
 				finderCache.removeResult(
-					_finderPathWithoutPaginationFindByC_O, args);
+					_finderPathCountByOwnerCTEntryID, args);
+				finderCache.removeResult(
+					_finderPathWithoutPaginationFindByOwnerCTEntryID, args);
 			}
 		}
 
@@ -1216,6 +1179,338 @@ public class CTEntryAggregatePersistenceImpl
 		}
 
 		return count.intValue();
+	}
+
+	/**
+	 * Returns the primaryKeys of ct collections associated with the ct entry aggregate.
+	 *
+	 * @param pk the primary key of the ct entry aggregate
+	 * @return long[] of the primaryKeys of ct collections associated with the ct entry aggregate
+	 */
+	@Override
+	public long[] getCTCollectionPrimaryKeys(long pk) {
+		long[] pks =
+			ctEntryAggregateToCTCollectionTableMapper.getRightPrimaryKeys(pk);
+
+		return pks.clone();
+	}
+
+	/**
+	 * Returns all the ct collections associated with the ct entry aggregate.
+	 *
+	 * @param pk the primary key of the ct entry aggregate
+	 * @return the ct collections associated with the ct entry aggregate
+	 */
+	@Override
+	public List<com.liferay.change.tracking.model.CTCollection>
+		getCTCollections(long pk) {
+
+		return getCTCollections(pk, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+	}
+
+	/**
+	 * Returns a range of all the ct collections associated with the ct entry aggregate.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>CTEntryAggregateModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param pk the primary key of the ct entry aggregate
+	 * @param start the lower bound of the range of ct entry aggregates
+	 * @param end the upper bound of the range of ct entry aggregates (not inclusive)
+	 * @return the range of ct collections associated with the ct entry aggregate
+	 */
+	@Override
+	public List<com.liferay.change.tracking.model.CTCollection>
+		getCTCollections(long pk, int start, int end) {
+
+		return getCTCollections(pk, start, end, null);
+	}
+
+	/**
+	 * Returns an ordered range of all the ct collections associated with the ct entry aggregate.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>CTEntryAggregateModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param pk the primary key of the ct entry aggregate
+	 * @param start the lower bound of the range of ct entry aggregates
+	 * @param end the upper bound of the range of ct entry aggregates (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of ct collections associated with the ct entry aggregate
+	 */
+	@Override
+	public List<com.liferay.change.tracking.model.CTCollection>
+		getCTCollections(
+			long pk, int start, int end,
+			OrderByComparator<com.liferay.change.tracking.model.CTCollection>
+				orderByComparator) {
+
+		return ctEntryAggregateToCTCollectionTableMapper.getRightBaseModels(
+			pk, start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns the number of ct collections associated with the ct entry aggregate.
+	 *
+	 * @param pk the primary key of the ct entry aggregate
+	 * @return the number of ct collections associated with the ct entry aggregate
+	 */
+	@Override
+	public int getCTCollectionsSize(long pk) {
+		long[] pks =
+			ctEntryAggregateToCTCollectionTableMapper.getRightPrimaryKeys(pk);
+
+		return pks.length;
+	}
+
+	/**
+	 * Returns <code>true</code> if the ct collection is associated with the ct entry aggregate.
+	 *
+	 * @param pk the primary key of the ct entry aggregate
+	 * @param ctCollectionPK the primary key of the ct collection
+	 * @return <code>true</code> if the ct collection is associated with the ct entry aggregate; <code>false</code> otherwise
+	 */
+	@Override
+	public boolean containsCTCollection(long pk, long ctCollectionPK) {
+		return ctEntryAggregateToCTCollectionTableMapper.containsTableMapping(
+			pk, ctCollectionPK);
+	}
+
+	/**
+	 * Returns <code>true</code> if the ct entry aggregate has any ct collections associated with it.
+	 *
+	 * @param pk the primary key of the ct entry aggregate to check for associations with ct collections
+	 * @return <code>true</code> if the ct entry aggregate has any ct collections associated with it; <code>false</code> otherwise
+	 */
+	@Override
+	public boolean containsCTCollections(long pk) {
+		if (getCTCollectionsSize(pk) > 0) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+
+	/**
+	 * Adds an association between the ct entry aggregate and the ct collection. Also notifies the appropriate model listeners and clears the mapping table finder cache.
+	 *
+	 * @param pk the primary key of the ct entry aggregate
+	 * @param ctCollectionPK the primary key of the ct collection
+	 */
+	@Override
+	public void addCTCollection(long pk, long ctCollectionPK) {
+		CTEntryAggregate ctEntryAggregate = fetchByPrimaryKey(pk);
+
+		if (ctEntryAggregate == null) {
+			ctEntryAggregateToCTCollectionTableMapper.addTableMapping(
+				companyProvider.getCompanyId(), pk, ctCollectionPK);
+		}
+		else {
+			ctEntryAggregateToCTCollectionTableMapper.addTableMapping(
+				ctEntryAggregate.getCompanyId(), pk, ctCollectionPK);
+		}
+	}
+
+	/**
+	 * Adds an association between the ct entry aggregate and the ct collection. Also notifies the appropriate model listeners and clears the mapping table finder cache.
+	 *
+	 * @param pk the primary key of the ct entry aggregate
+	 * @param ctCollection the ct collection
+	 */
+	@Override
+	public void addCTCollection(
+		long pk, com.liferay.change.tracking.model.CTCollection ctCollection) {
+
+		CTEntryAggregate ctEntryAggregate = fetchByPrimaryKey(pk);
+
+		if (ctEntryAggregate == null) {
+			ctEntryAggregateToCTCollectionTableMapper.addTableMapping(
+				companyProvider.getCompanyId(), pk,
+				ctCollection.getPrimaryKey());
+		}
+		else {
+			ctEntryAggregateToCTCollectionTableMapper.addTableMapping(
+				ctEntryAggregate.getCompanyId(), pk,
+				ctCollection.getPrimaryKey());
+		}
+	}
+
+	/**
+	 * Adds an association between the ct entry aggregate and the ct collections. Also notifies the appropriate model listeners and clears the mapping table finder cache.
+	 *
+	 * @param pk the primary key of the ct entry aggregate
+	 * @param ctCollectionPKs the primary keys of the ct collections
+	 */
+	@Override
+	public void addCTCollections(long pk, long[] ctCollectionPKs) {
+		long companyId = 0;
+
+		CTEntryAggregate ctEntryAggregate = fetchByPrimaryKey(pk);
+
+		if (ctEntryAggregate == null) {
+			companyId = companyProvider.getCompanyId();
+		}
+		else {
+			companyId = ctEntryAggregate.getCompanyId();
+		}
+
+		ctEntryAggregateToCTCollectionTableMapper.addTableMappings(
+			companyId, pk, ctCollectionPKs);
+	}
+
+	/**
+	 * Adds an association between the ct entry aggregate and the ct collections. Also notifies the appropriate model listeners and clears the mapping table finder cache.
+	 *
+	 * @param pk the primary key of the ct entry aggregate
+	 * @param ctCollections the ct collections
+	 */
+	@Override
+	public void addCTCollections(
+		long pk,
+		List<com.liferay.change.tracking.model.CTCollection> ctCollections) {
+
+		addCTCollections(
+			pk,
+			ListUtil.toLongArray(
+				ctCollections,
+				com.liferay.change.tracking.model.CTCollection.
+					CT_COLLECTION_ID_ACCESSOR));
+	}
+
+	/**
+	 * Clears all associations between the ct entry aggregate and its ct collections. Also notifies the appropriate model listeners and clears the mapping table finder cache.
+	 *
+	 * @param pk the primary key of the ct entry aggregate to clear the associated ct collections from
+	 */
+	@Override
+	public void clearCTCollections(long pk) {
+		ctEntryAggregateToCTCollectionTableMapper.
+			deleteLeftPrimaryKeyTableMappings(pk);
+	}
+
+	/**
+	 * Removes the association between the ct entry aggregate and the ct collection. Also notifies the appropriate model listeners and clears the mapping table finder cache.
+	 *
+	 * @param pk the primary key of the ct entry aggregate
+	 * @param ctCollectionPK the primary key of the ct collection
+	 */
+	@Override
+	public void removeCTCollection(long pk, long ctCollectionPK) {
+		ctEntryAggregateToCTCollectionTableMapper.deleteTableMapping(
+			pk, ctCollectionPK);
+	}
+
+	/**
+	 * Removes the association between the ct entry aggregate and the ct collection. Also notifies the appropriate model listeners and clears the mapping table finder cache.
+	 *
+	 * @param pk the primary key of the ct entry aggregate
+	 * @param ctCollection the ct collection
+	 */
+	@Override
+	public void removeCTCollection(
+		long pk, com.liferay.change.tracking.model.CTCollection ctCollection) {
+
+		ctEntryAggregateToCTCollectionTableMapper.deleteTableMapping(
+			pk, ctCollection.getPrimaryKey());
+	}
+
+	/**
+	 * Removes the association between the ct entry aggregate and the ct collections. Also notifies the appropriate model listeners and clears the mapping table finder cache.
+	 *
+	 * @param pk the primary key of the ct entry aggregate
+	 * @param ctCollectionPKs the primary keys of the ct collections
+	 */
+	@Override
+	public void removeCTCollections(long pk, long[] ctCollectionPKs) {
+		ctEntryAggregateToCTCollectionTableMapper.deleteTableMappings(
+			pk, ctCollectionPKs);
+	}
+
+	/**
+	 * Removes the association between the ct entry aggregate and the ct collections. Also notifies the appropriate model listeners and clears the mapping table finder cache.
+	 *
+	 * @param pk the primary key of the ct entry aggregate
+	 * @param ctCollections the ct collections
+	 */
+	@Override
+	public void removeCTCollections(
+		long pk,
+		List<com.liferay.change.tracking.model.CTCollection> ctCollections) {
+
+		removeCTCollections(
+			pk,
+			ListUtil.toLongArray(
+				ctCollections,
+				com.liferay.change.tracking.model.CTCollection.
+					CT_COLLECTION_ID_ACCESSOR));
+	}
+
+	/**
+	 * Sets the ct collections associated with the ct entry aggregate, removing and adding associations as necessary. Also notifies the appropriate model listeners and clears the mapping table finder cache.
+	 *
+	 * @param pk the primary key of the ct entry aggregate
+	 * @param ctCollectionPKs the primary keys of the ct collections to be associated with the ct entry aggregate
+	 */
+	@Override
+	public void setCTCollections(long pk, long[] ctCollectionPKs) {
+		Set<Long> newCTCollectionPKsSet = SetUtil.fromArray(ctCollectionPKs);
+		Set<Long> oldCTCollectionPKsSet = SetUtil.fromArray(
+			ctEntryAggregateToCTCollectionTableMapper.getRightPrimaryKeys(pk));
+
+		Set<Long> removeCTCollectionPKsSet = new HashSet<Long>(
+			oldCTCollectionPKsSet);
+
+		removeCTCollectionPKsSet.removeAll(newCTCollectionPKsSet);
+
+		ctEntryAggregateToCTCollectionTableMapper.deleteTableMappings(
+			pk, ArrayUtil.toLongArray(removeCTCollectionPKsSet));
+
+		newCTCollectionPKsSet.removeAll(oldCTCollectionPKsSet);
+
+		long companyId = 0;
+
+		CTEntryAggregate ctEntryAggregate = fetchByPrimaryKey(pk);
+
+		if (ctEntryAggregate == null) {
+			companyId = companyProvider.getCompanyId();
+		}
+		else {
+			companyId = ctEntryAggregate.getCompanyId();
+		}
+
+		ctEntryAggregateToCTCollectionTableMapper.addTableMappings(
+			companyId, pk, ArrayUtil.toLongArray(newCTCollectionPKsSet));
+	}
+
+	/**
+	 * Sets the ct collections associated with the ct entry aggregate, removing and adding associations as necessary. Also notifies the appropriate model listeners and clears the mapping table finder cache.
+	 *
+	 * @param pk the primary key of the ct entry aggregate
+	 * @param ctCollections the ct collections to be associated with the ct entry aggregate
+	 */
+	@Override
+	public void setCTCollections(
+		long pk,
+		List<com.liferay.change.tracking.model.CTCollection> ctCollections) {
+
+		try {
+			long[] ctCollectionPKs = new long[ctCollections.size()];
+
+			for (int i = 0; i < ctCollections.size(); i++) {
+				com.liferay.change.tracking.model.CTCollection ctCollection =
+					ctCollections.get(i);
+
+				ctCollectionPKs[i] = ctCollection.getPrimaryKey();
+			}
+
+			setCTCollections(pk, ctCollectionPKs);
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
 	}
 
 	/**
@@ -1566,6 +1861,12 @@ public class CTEntryAggregatePersistenceImpl
 	 * Initializes the ct entry aggregate persistence.
 	 */
 	public void afterPropertiesSet() {
+		ctEntryAggregateToCTCollectionTableMapper =
+			TableMapperFactory.getTableMapper(
+				"CTCollection_CTEntryAggregate", "companyId",
+				"ctEntryAggregateId", "ctCollectionId", this,
+				ctCollectionPersistence);
+
 		ctEntryAggregateToCTEntryTableMapper =
 			TableMapperFactory.getTableMapper(
 				"CTEntryAggregates_CTEntries", "companyId",
@@ -1590,31 +1891,29 @@ public class CTEntryAggregatePersistenceImpl
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
 			new String[0]);
 
-		_finderPathWithPaginationFindByC_O = new FinderPath(
+		_finderPathWithPaginationFindByOwnerCTEntryID = new FinderPath(
 			CTEntryAggregateModelImpl.ENTITY_CACHE_ENABLED,
 			CTEntryAggregateModelImpl.FINDER_CACHE_ENABLED,
 			CTEntryAggregateImpl.class, FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
-			"findByC_O",
+			"findByOwnerCTEntryID",
 			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
+				Long.class.getName(), Integer.class.getName(),
+				Integer.class.getName(), OrderByComparator.class.getName()
 			});
 
-		_finderPathWithoutPaginationFindByC_O = new FinderPath(
+		_finderPathWithoutPaginationFindByOwnerCTEntryID = new FinderPath(
 			CTEntryAggregateModelImpl.ENTITY_CACHE_ENABLED,
 			CTEntryAggregateModelImpl.FINDER_CACHE_ENABLED,
 			CTEntryAggregateImpl.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_O",
-			new String[] {Long.class.getName(), Long.class.getName()},
-			CTEntryAggregateModelImpl.CTCOLLECTIONID_COLUMN_BITMASK |
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByOwnerCTEntryID",
+			new String[] {Long.class.getName()},
 			CTEntryAggregateModelImpl.OWNERCTENTRYID_COLUMN_BITMASK);
 
-		_finderPathCountByC_O = new FinderPath(
+		_finderPathCountByOwnerCTEntryID = new FinderPath(
 			CTEntryAggregateModelImpl.ENTITY_CACHE_ENABLED,
 			CTEntryAggregateModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_O",
-			new String[] {Long.class.getName(), Long.class.getName()});
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByOwnerCTEntryID",
+			new String[] {Long.class.getName()});
 	}
 
 	public void destroy() {
@@ -1623,6 +1922,7 @@ public class CTEntryAggregatePersistenceImpl
 		finderCache.removeCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		finderCache.removeCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 
+		TableMapperFactory.removeTableMapper("CTCollection_CTEntryAggregate");
 		TableMapperFactory.removeTableMapper("CTEntryAggregates_CTEntries");
 	}
 
@@ -1634,6 +1934,13 @@ public class CTEntryAggregatePersistenceImpl
 
 	@ServiceReference(type = FinderCache.class)
 	protected FinderCache finderCache;
+
+	@BeanReference(type = CTCollectionPersistence.class)
+	protected CTCollectionPersistence ctCollectionPersistence;
+
+	protected TableMapper
+		<CTEntryAggregate, com.liferay.change.tracking.model.CTCollection>
+			ctEntryAggregateToCTCollectionTableMapper;
 
 	@BeanReference(type = CTEntryPersistence.class)
 	protected CTEntryPersistence ctEntryPersistence;

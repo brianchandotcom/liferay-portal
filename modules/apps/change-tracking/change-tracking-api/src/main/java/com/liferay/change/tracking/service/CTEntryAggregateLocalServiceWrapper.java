@@ -37,6 +37,41 @@ public class CTEntryAggregateLocalServiceWrapper
 	}
 
 	@Override
+	public void addCTCollectionCTEntryAggregate(
+		long ctCollectionId,
+		com.liferay.change.tracking.model.CTEntryAggregate ctEntryAggregate) {
+
+		_ctEntryAggregateLocalService.addCTCollectionCTEntryAggregate(
+			ctCollectionId, ctEntryAggregate);
+	}
+
+	@Override
+	public void addCTCollectionCTEntryAggregate(
+		long ctCollectionId, long ctEntryAggregateId) {
+
+		_ctEntryAggregateLocalService.addCTCollectionCTEntryAggregate(
+			ctCollectionId, ctEntryAggregateId);
+	}
+
+	@Override
+	public void addCTCollectionCTEntryAggregates(
+		long ctCollectionId,
+		java.util.List<com.liferay.change.tracking.model.CTEntryAggregate>
+			ctEntryAggregates) {
+
+		_ctEntryAggregateLocalService.addCTCollectionCTEntryAggregates(
+			ctCollectionId, ctEntryAggregates);
+	}
+
+	@Override
+	public void addCTCollectionCTEntryAggregates(
+		long ctCollectionId, long[] ctEntryAggregateIds) {
+
+		_ctEntryAggregateLocalService.addCTCollectionCTEntryAggregates(
+			ctCollectionId, ctEntryAggregateIds);
+	}
+
+	@Override
 	public void addCTEntry(
 		com.liferay.change.tracking.model.CTEntryAggregate ctEntryAggregate,
 		com.liferay.change.tracking.model.CTEntry ctEntry) {
@@ -107,6 +142,12 @@ public class CTEntryAggregateLocalServiceWrapper
 	}
 
 	@Override
+	public void clearCTCollectionCTEntryAggregates(long ctCollectionId) {
+		_ctEntryAggregateLocalService.clearCTCollectionCTEntryAggregates(
+			ctCollectionId);
+	}
+
+	@Override
 	public void clearCTEntryCTEntryAggregates(long ctEntryId) {
 		_ctEntryAggregateLocalService.clearCTEntryCTEntryAggregates(ctEntryId);
 	}
@@ -123,6 +164,41 @@ public class CTEntryAggregateLocalServiceWrapper
 
 		return _ctEntryAggregateLocalService.createCTEntryAggregate(
 			ctEntryAggregateId);
+	}
+
+	@Override
+	public void deleteCTCollectionCTEntryAggregate(
+		long ctCollectionId,
+		com.liferay.change.tracking.model.CTEntryAggregate ctEntryAggregate) {
+
+		_ctEntryAggregateLocalService.deleteCTCollectionCTEntryAggregate(
+			ctCollectionId, ctEntryAggregate);
+	}
+
+	@Override
+	public void deleteCTCollectionCTEntryAggregate(
+		long ctCollectionId, long ctEntryAggregateId) {
+
+		_ctEntryAggregateLocalService.deleteCTCollectionCTEntryAggregate(
+			ctCollectionId, ctEntryAggregateId);
+	}
+
+	@Override
+	public void deleteCTCollectionCTEntryAggregates(
+		long ctCollectionId,
+		java.util.List<com.liferay.change.tracking.model.CTEntryAggregate>
+			ctEntryAggregates) {
+
+		_ctEntryAggregateLocalService.deleteCTCollectionCTEntryAggregates(
+			ctCollectionId, ctEntryAggregates);
+	}
+
+	@Override
+	public void deleteCTCollectionCTEntryAggregates(
+		long ctCollectionId, long[] ctEntryAggregateIds) {
+
+		_ctEntryAggregateLocalService.deleteCTCollectionCTEntryAggregates(
+			ctCollectionId, ctEntryAggregateIds);
 	}
 
 	/**
@@ -326,6 +402,53 @@ public class CTEntryAggregateLocalServiceWrapper
 		return _ctEntryAggregateLocalService.getActionableDynamicQuery();
 	}
 
+	@Override
+	public java.util.List<com.liferay.change.tracking.model.CTEntryAggregate>
+		getCTCollectionCTEntryAggregates(long ctCollectionId) {
+
+		return _ctEntryAggregateLocalService.getCTCollectionCTEntryAggregates(
+			ctCollectionId);
+	}
+
+	@Override
+	public java.util.List<com.liferay.change.tracking.model.CTEntryAggregate>
+		getCTCollectionCTEntryAggregates(
+			long ctCollectionId, int start, int end) {
+
+		return _ctEntryAggregateLocalService.getCTCollectionCTEntryAggregates(
+			ctCollectionId, start, end);
+	}
+
+	@Override
+	public java.util.List<com.liferay.change.tracking.model.CTEntryAggregate>
+		getCTCollectionCTEntryAggregates(
+			long ctCollectionId, int start, int end,
+			com.liferay.portal.kernel.util.OrderByComparator
+				<com.liferay.change.tracking.model.CTEntryAggregate>
+					orderByComparator) {
+
+		return _ctEntryAggregateLocalService.getCTCollectionCTEntryAggregates(
+			ctCollectionId, start, end, orderByComparator);
+	}
+
+	@Override
+	public int getCTCollectionCTEntryAggregatesCount(long ctCollectionId) {
+		return _ctEntryAggregateLocalService.
+			getCTCollectionCTEntryAggregatesCount(ctCollectionId);
+	}
+
+	/**
+	 * Returns the ctCollectionIds of the ct collections associated with the ct entry aggregate.
+	 *
+	 * @param ctEntryAggregateId the ctEntryAggregateId of the ct entry aggregate
+	 * @return long[] the ctCollectionIds of ct collections associated with the ct entry aggregate
+	 */
+	@Override
+	public long[] getCTCollectionPrimaryKeys(long ctEntryAggregateId) {
+		return _ctEntryAggregateLocalService.getCTCollectionPrimaryKeys(
+			ctEntryAggregateId);
+	}
+
 	/**
 	 * Returns the ct entry aggregate with the primary key.
 	 *
@@ -443,6 +566,20 @@ public class CTEntryAggregateLocalServiceWrapper
 	}
 
 	@Override
+	public boolean hasCTCollectionCTEntryAggregate(
+		long ctCollectionId, long ctEntryAggregateId) {
+
+		return _ctEntryAggregateLocalService.hasCTCollectionCTEntryAggregate(
+			ctCollectionId, ctEntryAggregateId);
+	}
+
+	@Override
+	public boolean hasCTCollectionCTEntryAggregates(long ctCollectionId) {
+		return _ctEntryAggregateLocalService.hasCTCollectionCTEntryAggregates(
+			ctCollectionId);
+	}
+
+	@Override
 	public boolean hasCTEntry(
 		com.liferay.change.tracking.model.CTEntryAggregate ctEntryAggregate,
 		com.liferay.change.tracking.model.CTEntry ctEntry) {
@@ -471,6 +608,14 @@ public class CTEntryAggregateLocalServiceWrapper
 		com.liferay.change.tracking.model.CTEntry ctEntry) {
 
 		_ctEntryAggregateLocalService.removeCTEntry(ctEntryAggregate, ctEntry);
+	}
+
+	@Override
+	public void setCTCollectionCTEntryAggregates(
+		long ctCollectionId, long[] ctEntryAggregateIds) {
+
+		_ctEntryAggregateLocalService.setCTCollectionCTEntryAggregates(
+			ctCollectionId, ctEntryAggregateIds);
 	}
 
 	@Override

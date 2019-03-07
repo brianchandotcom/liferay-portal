@@ -17,6 +17,7 @@ package com.liferay.change.tracking.service.impl;
 import com.liferay.change.tracking.model.CTEntry;
 import com.liferay.change.tracking.model.CTEntryAggregate;
 import com.liferay.change.tracking.service.base.CTEntryAggregateLocalServiceBaseImpl;
+import com.liferay.portal.kernel.dao.orm.QueryDefinition;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -67,13 +68,15 @@ public class CTEntryAggregateLocalServiceImpl
 		ctEntryAggregate.setCreateDate(serviceContext.getCreateDate(now));
 		ctEntryAggregate.setModifiedDate(serviceContext.getModifiedDate(now));
 
-		ctEntryAggregate.setCtCollectionId(ctCollectionId);
 		ctEntryAggregate.setOwnerCTEntryId(ownerCTEntryId);
 
 		ctEntryAggregatePersistence.update(ctEntryAggregate);
 
 		ctEntryAggregatePersistence.addCTEntry(
 			ctEntryAggregate.getCtEntryAggregateId(), ownerCTEntryId);
+
+		ctCollectionLocalService.addCTEntryAggregateCTCollection(
+			ctEntryAggregate.getCtEntryAggregateId(), ctCollectionId);
 
 		return ctEntryAggregate;
 	}
@@ -82,18 +85,30 @@ public class CTEntryAggregateLocalServiceImpl
 	public List<CTEntryAggregate> fetchCTEntryAggregates(
 		long ctCollectionId, long ownerCTEntryId) {
 
-		return ctEntryAggregatePersistence.findByC_O(
-			ctCollectionId, ownerCTEntryId);
+		return ctEntryAggregateFinder.findByC_O(
+			ctCollectionId, ownerCTEntryId, new QueryDefinition<>());
 	}
 
 	@Override
 	public CTEntryAggregate fetchLatestCTEntryAggregate(
 		long ctCollectionId, long ownerCTEntryId) {
 
-		return ctEntryAggregatePersistence.fetchByC_O_Last(
-			ctCollectionId, ownerCTEntryId,
+		QueryDefinition<CTEntryAggregate> queryDefinition =
+			new QueryDefinition<>();
+
+		queryDefinition.setOrderByComparator(
 			OrderByComparatorFactoryUtil.create(
 				"CTEntryAggregate", "createDate", false));
+
+		List<CTEntryAggregate> ctEntryAggregates =
+			ctEntryAggregateFinder.findByC_O(
+				ctCollectionId, ownerCTEntryId, queryDefinition);
+
+		if (!ctEntryAggregates.isEmpty()) {
+			return ctEntryAggregates.get(0);
+		}
+
+		return null;
 	}
 
 	@Override

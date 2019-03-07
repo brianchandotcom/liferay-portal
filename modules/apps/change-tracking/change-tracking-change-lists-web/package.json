@@ -1,6 +1,7 @@
 {
 	"dependencies": {
 		"clay-checkbox": "^2.6.0",
+		"clay-icon": "^2.9.0",
 		"metal-component": "^2.16.3",
 		"metal-dom": "^2.6.4",
 		"metal-modal": "^2.0.1",

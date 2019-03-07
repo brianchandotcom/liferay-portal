@@ -4,3 +4,22 @@
 .custom-sheet {
 	margin-top: 1.5rem;
 }
+
+.change-lists-helper {
+	color: #272833;
+	font-size: 14px;
+	line-height: 25px;
+	text-align: right;
+}
+
+.change-lists-helper .lexicon-icon {
+	margin-right: 0.5rem;
+}
+
+.change-lists-helper:hover .tooltip {
+	opacity: 1;
+}
+
+.tooltip:hover .tooltip {
+	opacity: 1;
+}

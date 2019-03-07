@@ -172,6 +172,19 @@ String referringPortletResource = ParamUtil.getString(request, "referringPortlet
 							value="<%= StringUtil.shorten(HtmlUtil.stripHtml(curArticle.getDescription(locale)), 200) %>"
 						/>
 
+						<c:if test="<%= journalDisplayContext.isChangeListColumnVisible() %>">
+							<liferay-ui:search-container-column-text
+								cssClass="check-circle-center progress-success table-cell-expand table-cell-minw-50 table-column-text-center"
+								name="change-list"
+							>
+								<c:if test="<%= journalDisplayContext.isJournalArticleInChangeList(curArticle) %>">
+									<liferay-ui:icon
+										icon="check-circle"
+									/>
+								</c:if>
+							</liferay-ui:search-container-column-text>
+						</c:if>
+
 						<c:if test="<%= journalDisplayContext.isSearch() %>">
 							<liferay-ui:search-container-column-text
 								cssClass="table-cell-expand-smallest table-cell-minw-200"

@@ -132,8 +132,6 @@ public class CTEntryAggregatePersistenceTest {
 
 		newCTEntryAggregate.setModifiedDate(RandomTestUtil.nextDate());
 
-		newCTEntryAggregate.setCtCollectionId(RandomTestUtil.nextLong());
-
 		newCTEntryAggregate.setOwnerCTEntryId(RandomTestUtil.nextLong());
 
 		_ctEntryAggregates.add(_persistence.update(newCTEntryAggregate));
@@ -160,19 +158,15 @@ public class CTEntryAggregatePersistenceTest {
 			Time.getShortTimestamp(existingCTEntryAggregate.getModifiedDate()),
 			Time.getShortTimestamp(newCTEntryAggregate.getModifiedDate()));
 		Assert.assertEquals(
-			existingCTEntryAggregate.getCtCollectionId(),
-			newCTEntryAggregate.getCtCollectionId());
-		Assert.assertEquals(
 			existingCTEntryAggregate.getOwnerCTEntryId(),
 			newCTEntryAggregate.getOwnerCTEntryId());
 	}
 
 	@Test
-	public void testCountByC_O() throws Exception {
-		_persistence.countByC_O(
-			RandomTestUtil.nextLong(), RandomTestUtil.nextLong());
+	public void testCountByOwnerCTEntryID() throws Exception {
+		_persistence.countByOwnerCTEntryID(RandomTestUtil.nextLong());
 
-		_persistence.countByC_O(0L, 0L);
+		_persistence.countByOwnerCTEntryID(0L);
 	}
 
 	@Test
@@ -202,8 +196,7 @@ public class CTEntryAggregatePersistenceTest {
 		return OrderByComparatorFactoryUtil.create(
 			"CTEntryAggregate", "ctEntryAggregateId", true, "companyId", true,
 			"userId", true, "userName", true, "createDate", true,
-			"modifiedDate", true, "ctCollectionId", true, "ownerCTEntryId",
-			true);
+			"modifiedDate", true, "ownerCTEntryId", true);
 	}
 
 	@Test
@@ -437,8 +430,6 @@ public class CTEntryAggregatePersistenceTest {
 		ctEntryAggregate.setCreateDate(RandomTestUtil.nextDate());
 
 		ctEntryAggregate.setModifiedDate(RandomTestUtil.nextDate());
-
-		ctEntryAggregate.setCtCollectionId(RandomTestUtil.nextLong());
 
 		ctEntryAggregate.setOwnerCTEntryId(RandomTestUtil.nextLong());
 

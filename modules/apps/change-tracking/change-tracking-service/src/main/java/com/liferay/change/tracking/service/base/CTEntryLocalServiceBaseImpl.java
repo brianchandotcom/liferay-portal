@@ -19,6 +19,7 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.change.tracking.model.CTEntry;
 import com.liferay.change.tracking.service.CTEntryLocalService;
 import com.liferay.change.tracking.service.persistence.CTCollectionPersistence;
+import com.liferay.change.tracking.service.persistence.CTEntryAggregateFinder;
 import com.liferay.change.tracking.service.persistence.CTEntryAggregatePersistence;
 import com.liferay.change.tracking.service.persistence.CTEntryFinder;
 import com.liferay.change.tracking.service.persistence.CTEntryPersistence;
@@ -779,6 +780,26 @@ public abstract class CTEntryLocalServiceBaseImpl
 	}
 
 	/**
+	 * Returns the ct entry aggregate finder.
+	 *
+	 * @return the ct entry aggregate finder
+	 */
+	public CTEntryAggregateFinder getCTEntryAggregateFinder() {
+		return ctEntryAggregateFinder;
+	}
+
+	/**
+	 * Sets the ct entry aggregate finder.
+	 *
+	 * @param ctEntryAggregateFinder the ct entry aggregate finder
+	 */
+	public void setCTEntryAggregateFinder(
+		CTEntryAggregateFinder ctEntryAggregateFinder) {
+
+		this.ctEntryAggregateFinder = ctEntryAggregateFinder;
+	}
+
+	/**
 	 * Returns the ct process local service.
 	 *
 	 * @return the ct process local service
@@ -1046,6 +1067,9 @@ public abstract class CTEntryLocalServiceBaseImpl
 
 	@BeanReference(type = CTEntryAggregatePersistence.class)
 	protected CTEntryAggregatePersistence ctEntryAggregatePersistence;
+
+	@BeanReference(type = CTEntryAggregateFinder.class)
+	protected CTEntryAggregateFinder ctEntryAggregateFinder;
 
 	@BeanReference(
 		type = com.liferay.change.tracking.service.CTProcessLocalService.class

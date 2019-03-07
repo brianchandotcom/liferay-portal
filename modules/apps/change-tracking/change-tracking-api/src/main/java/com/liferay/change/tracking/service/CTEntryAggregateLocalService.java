@@ -62,6 +62,18 @@ public interface CTEntryAggregateLocalService
 	 *
 	 * Never modify or reference this interface directly. Always use {@link CTEntryAggregateLocalServiceUtil} to access the ct entry aggregate local service. Add custom service methods to <code>com.liferay.change.tracking.service.impl.CTEntryAggregateLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public void addCTCollectionCTEntryAggregate(
+		long ctCollectionId, CTEntryAggregate ctEntryAggregate);
+
+	public void addCTCollectionCTEntryAggregate(
+		long ctCollectionId, long ctEntryAggregateId);
+
+	public void addCTCollectionCTEntryAggregates(
+		long ctCollectionId, List<CTEntryAggregate> ctEntryAggregates);
+
+	public void addCTCollectionCTEntryAggregates(
+		long ctCollectionId, long[] ctEntryAggregateIds);
+
 	public void addCTEntry(CTEntryAggregate ctEntryAggregate, CTEntry ctEntry);
 
 	/**
@@ -91,6 +103,8 @@ public interface CTEntryAggregateLocalService
 	public void addCTEntryCTEntryAggregates(
 		long ctEntryId, long[] ctEntryAggregateIds);
 
+	public void clearCTCollectionCTEntryAggregates(long ctCollectionId);
+
 	public void clearCTEntryCTEntryAggregates(long ctEntryId);
 
 	/**
@@ -101,6 +115,18 @@ public interface CTEntryAggregateLocalService
 	 */
 	@Transactional(enabled = false)
 	public CTEntryAggregate createCTEntryAggregate(long ctEntryAggregateId);
+
+	public void deleteCTCollectionCTEntryAggregate(
+		long ctCollectionId, CTEntryAggregate ctEntryAggregate);
+
+	public void deleteCTCollectionCTEntryAggregate(
+		long ctCollectionId, long ctEntryAggregateId);
+
+	public void deleteCTCollectionCTEntryAggregates(
+		long ctCollectionId, List<CTEntryAggregate> ctEntryAggregates);
+
+	public void deleteCTCollectionCTEntryAggregates(
+		long ctCollectionId, long[] ctEntryAggregateIds);
 
 	/**
 	 * Deletes the ct entry aggregate from the database. Also notifies the appropriate model listeners.
@@ -222,6 +248,31 @@ public interface CTEntryAggregateLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CTEntryAggregate> getCTCollectionCTEntryAggregates(
+		long ctCollectionId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CTEntryAggregate> getCTCollectionCTEntryAggregates(
+		long ctCollectionId, int start, int end);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CTEntryAggregate> getCTCollectionCTEntryAggregates(
+		long ctCollectionId, int start, int end,
+		OrderByComparator<CTEntryAggregate> orderByComparator);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getCTCollectionCTEntryAggregatesCount(long ctCollectionId);
+
+	/**
+	 * Returns the ctCollectionIds of the ct collections associated with the ct entry aggregate.
+	 *
+	 * @param ctEntryAggregateId the ctEntryAggregateId of the ct entry aggregate
+	 * @return long[] the ctCollectionIds of ct collections associated with the ct entry aggregate
+	 */
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public long[] getCTCollectionPrimaryKeys(long ctEntryAggregateId);
+
 	/**
 	 * Returns the ct entry aggregate with the primary key.
 	 *
@@ -295,6 +346,13 @@ public interface CTEntryAggregateLocalService
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public boolean hasCTCollectionCTEntryAggregate(
+		long ctCollectionId, long ctEntryAggregateId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public boolean hasCTCollectionCTEntryAggregates(long ctCollectionId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public boolean hasCTEntry(
 		CTEntryAggregate ctEntryAggregate, CTEntry ctEntry);
 
@@ -307,6 +365,9 @@ public interface CTEntryAggregateLocalService
 
 	public void removeCTEntry(
 		CTEntryAggregate ctEntryAggregate, CTEntry ctEntry);
+
+	public void setCTCollectionCTEntryAggregates(
+		long ctCollectionId, long[] ctEntryAggregateIds);
 
 	public void setCTEntryCTEntryAggregates(
 		long ctEntryId, long[] ctEntryAggregateIds);

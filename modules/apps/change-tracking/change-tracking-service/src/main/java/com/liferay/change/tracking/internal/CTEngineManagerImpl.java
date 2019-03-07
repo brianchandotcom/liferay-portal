@@ -23,7 +23,9 @@ import com.liferay.change.tracking.exception.CTException;
 import com.liferay.change.tracking.internal.util.ChangeTrackingThreadLocal;
 import com.liferay.change.tracking.model.CTCollection;
 import com.liferay.change.tracking.model.CTEntry;
+import com.liferay.change.tracking.model.CTEntryAggregate;
 import com.liferay.change.tracking.service.CTCollectionLocalService;
+import com.liferay.change.tracking.service.CTEntryAggregateLocalService;
 import com.liferay.change.tracking.service.CTEntryLocalService;
 import com.liferay.change.tracking.service.CTProcessLocalService;
 import com.liferay.change.tracking.util.comparator.CTEntryCreateDateComparator;
@@ -56,7 +58,9 @@ import java.io.Serializable;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.function.Function;
 
@@ -81,10 +85,10 @@ public class CTEngineManagerImpl implements CTEngineManager {
 			return;
 		}
 
-		Optional<CTCollection> ctCollectionOptional = getCTCollectionOptional(
+		CTCollection ctCollection = _ctCollectionLocalService.fetchCTCollection(
 			ctCollectionId);
 
-		if (!ctCollectionOptional.isPresent()) {
+		if (ctCollection == null) {
 			_log.error(
 				"Unable to checkout change tracking collection " +
 					ctCollectionId);
@@ -128,18 +132,16 @@ public class CTEngineManagerImpl implements CTEngineManager {
 
 	@Override
 	public void deleteCTCollection(long ctCollectionId) {
-		Optional<CTCollection> ctCollectionOptional = getCTCollectionOptional(
+		CTCollection ctCollection = _ctCollectionLocalService.fetchCTCollection(
 			ctCollectionId);
 
-		if (!ctCollectionOptional.isPresent()) {
+		if (ctCollection == null) {
 			_log.error(
 				"Unable to delete change tracking collection " +
 					ctCollectionId);
 
 			return;
 		}
-
-		CTCollection ctCollection = ctCollectionOptional.get();
 
 		if (ctCollection.isProduction()) {
 			if (_log.isWarnEnabled()) {
@@ -152,8 +154,7 @@ public class CTEngineManagerImpl implements CTEngineManager {
 		}
 
 		try {
-			_ctCollectionLocalService.deleteCTCollection(
-				ctCollectionOptional.get());
+			_ctCollectionLocalService.deleteCTCollection(ctCollection);
 		}
 		catch (PortalException pe) {
 			_log.error(
@@ -175,7 +176,7 @@ public class CTEngineManagerImpl implements CTEngineManager {
 					_ctCollectionLocalService.deleteCompanyCTCollections(
 						companyId);
 
-					_productionCTCollection = null;
+					_productionCTCollections.remove(companyId);
 
 					return null;
 				});
@@ -313,6 +314,12 @@ public class CTEngineManagerImpl implements CTEngineManager {
 	}
 
 	@Override
+	public List<CTEntryAggregate> getCTEntryAggregates(long ctCollectionId) {
+		return _ctEntryAggregateLocalService.getCTCollectionCTEntryAggregates(
+			ctCollectionId);
+	}
+
+	@Override
 	public List<CTCollection> getNonproductionCTCollections(
 		long companyId, QueryDefinition<CTCollection> queryDefinition) {
 
@@ -324,18 +331,25 @@ public class CTEngineManagerImpl implements CTEngineManager {
 			companyId, queryDefinition, false);
 	}
 
+	@Override
 	public Optional<CTCollection> getProductionCTCollectionOptional(
 		long companyId) {
 
-		if (_productionCTCollection == null) {
-			_productionCTCollection =
+		CTCollection productionCTCollection = _productionCTCollections.get(
+			companyId);
+
+		if (productionCTCollection == null) {
+			productionCTCollection =
 				_ctCollectionLocalService.fetchCTCollection(
 					companyId, CTConstants.CT_COLLECTION_NAME_PRODUCTION);
+
+			_productionCTCollections.put(companyId, productionCTCollection);
 		}
 
-		return Optional.ofNullable(_productionCTCollection);
+		return Optional.ofNullable(productionCTCollection);
 	}
 
+	@Override
 	public long getRecentCTCollectionId(long userId) {
 		User user = _userLocalService.fetchUser(userId);
 
@@ -464,6 +478,20 @@ public class CTEngineManagerImpl implements CTEngineManager {
 			_ctCollectionLocalService.addCTEntryCTCollection(
 				ctEntry.getCtEntryId(), ctCollection);
 		}
+
+		List<CTEntryAggregate> productionCTEntryAggregates =
+			productionCTCollectionOptional.map(
+				CTCollection::getCtCollectionId
+			).map(
+				this::getCTEntryAggregates
+			).orElse(
+				Collections.emptyList()
+			);
+
+		for (CTEntryAggregate ctEntryAggregate : productionCTEntryAggregates) {
+			_ctCollectionLocalService.addCTEntryAggregateCTCollection(
+				ctEntryAggregate.getCtEntryAggregateId(), ctCollection);
+		}
 	}
 
 	private Optional<CTCollection> _createCTCollection(
@@ -498,19 +526,22 @@ public class CTEngineManagerImpl implements CTEngineManager {
 			userId, CTConstants.CT_COLLECTION_NAME_PRODUCTION,
 			StringPool.BLANK);
 
-		_productionCTCollection = ctCollectionOptional.orElseThrow(
+		long companyId = _getCompanyId(userId);
+
+		CTCollection productionCTCollection = ctCollectionOptional.orElseThrow(
 			() -> new CTException(
-				_getCompanyId(userId),
+				companyId,
 				"Unable to create production change tracking collection"));
 
+		_productionCTCollections.put(companyId, productionCTCollection);
+
 		_generateCTEntriesForAllCTConfigurations(
-			userId, _productionCTCollection);
+			userId, productionCTCollection);
 
 		checkoutCTCollection(
-			userId, _productionCTCollection.getCtCollectionId());
+			userId, productionCTCollection.getCtCollectionId());
 	}
 
-	@SuppressWarnings("unchecked")
 	private void _generateCTEntriesForAllCTConfigurations(
 		long userId, CTCollection ctCollection) {
 
@@ -672,6 +703,9 @@ public class CTEngineManagerImpl implements CTEngineManager {
 	private CTConfigurationRegistry _ctConfigurationRegistry;
 
 	@Reference
+	private CTEntryAggregateLocalService _ctEntryAggregateLocalService;
+
+	@Reference
 	private CTEntryLocalService _ctEntryLocalService;
 
 	@Reference
@@ -680,7 +714,8 @@ public class CTEngineManagerImpl implements CTEngineManager {
 	@Reference
 	private Portal _portal;
 
-	private CTCollection _productionCTCollection;
+	private final Map<Long, CTCollection> _productionCTCollections =
+		new HashMap<>();
 	private final TransactionConfig _transactionConfig =
 		TransactionConfig.Factory.create(
 			Propagation.REQUIRED, new Class<?>[] {Exception.class});

@@ -1,3 +1,5 @@
+import 'clay-icon';
+
 import Soy from 'metal-soy';
 import PortletBase from 'frontend-js-web/liferay/PortletBase.es';
 import {Config} from 'metal-state';
@@ -77,6 +79,38 @@ class Overview extends PortletBase {
 		fetch(url, init)
 			.then(r => r.json())
 			.then(response => this._populateChangeEntries(response))
+			.catch(
+				error => {
+					const message = typeof error === 'string' ?
+						error :
+						Liferay.Util.sub(Liferay.Language.get('an-error-occured-while-getting-data-from-x'), url);
+
+					openToast(
+						{
+							message,
+							title: Liferay.Language.get('error'),
+							type: 'danger'
+						}
+					);
+				}
+			);
+	}
+
+	_fetchCollisions(url, type) {
+		this.collisionsLoading = true;
+
+		let headers = new Headers();
+		headers.append('Content-Type', 'application/json');
+
+		let init = {
+			credentials: 'include',
+			headers,
+			method: type
+		};
+
+		fetch(url, init)
+			.then(r => r.json())
+			.then(response => this._populateCollidingChangeEntries(response))
 			.catch(
 				error => {
 					const message = typeof error === 'string' ?
@@ -247,6 +281,16 @@ class Overview extends PortletBase {
 		);
 	}
 
+	_populateCollidingChangeEntries(collisionsResult) {
+		if (collisionsResult.items) {
+			this.collisionsCount = collisionsResult.items.length;
+		}
+
+		this.collisionsTooltip = Liferay.Util.sub(Liferay.Language.get('collision-detected-for-x-change-lists'), this.collisionsCount);
+
+		this.collisionsLoading = false;
+	}
+
 	_populateFields(requestResult) {
 		let activeCollection = requestResult[0];
 		let productionInformation = requestResult[1];
@@ -258,6 +302,7 @@ class Overview extends PortletBase {
 		);
 
 		if (foundEntriesLink) {
+			this._fetchCollisions(foundEntriesLink.href + '?collision=true', foundEntriesLink.type);
 			this._fetchChangeEntries(foundEntriesLink.href, foundEntriesLink.type);
 		}
 
@@ -293,7 +338,7 @@ class Overview extends PortletBase {
 
 		this.initialFetch = true;
 
-		if ((productionInformation !== undefined) && (productionInformation.ctcollection !== undefined) && (productionInformation.ctcollection.name !== null)) {
+		if ((productionInformation !== undefined) && (productionInformation.ctcollection !== undefined) && (productionInformation.ctcollection.name !== undefined)) {
 
 			// Production Information Description
 
@@ -466,6 +511,28 @@ Overview.STATE = {
 			}
 		)
 	),
+
+	/**
+	 * Stores if fetching collission is in progress.
+	 * @default true
+	 * @instance
+	 * @memberOf Overview
+	 * @review
+	 * @type {boolean}
+	 */
+	collisionsLoading: Config.bool().value(true),
+
+	/**
+	 * Stores the number of collisions.
+	 * @default true
+	 * @instance
+	 * @memberOf Overview
+	 * @review
+	 * @type {boolean}
+	 */
+	collisionsCount: Config.number().value(0),
+
+	collisionsTooltip: Config.string(),
 
 	/**
 	 * Stores if the head button is disabled or not.

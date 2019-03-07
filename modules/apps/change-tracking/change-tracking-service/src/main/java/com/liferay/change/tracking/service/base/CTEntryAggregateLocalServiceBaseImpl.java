@@ -19,6 +19,7 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.change.tracking.model.CTEntryAggregate;
 import com.liferay.change.tracking.service.CTEntryAggregateLocalService;
 import com.liferay.change.tracking.service.persistence.CTCollectionPersistence;
+import com.liferay.change.tracking.service.persistence.CTEntryAggregateFinder;
 import com.liferay.change.tracking.service.persistence.CTEntryAggregatePersistence;
 import com.liferay.change.tracking.service.persistence.CTEntryFinder;
 import com.liferay.change.tracking.service.persistence.CTEntryPersistence;
@@ -347,6 +348,170 @@ public abstract class CTEntryAggregateLocalServiceBaseImpl
 	/**
 	 */
 	@Override
+	public void addCTCollectionCTEntryAggregate(
+		long ctCollectionId, long ctEntryAggregateId) {
+
+		ctCollectionPersistence.addCTEntryAggregate(
+			ctCollectionId, ctEntryAggregateId);
+	}
+
+	/**
+	 */
+	@Override
+	public void addCTCollectionCTEntryAggregate(
+		long ctCollectionId, CTEntryAggregate ctEntryAggregate) {
+
+		ctCollectionPersistence.addCTEntryAggregate(
+			ctCollectionId, ctEntryAggregate);
+	}
+
+	/**
+	 */
+	@Override
+	public void addCTCollectionCTEntryAggregates(
+		long ctCollectionId, long[] ctEntryAggregateIds) {
+
+		ctCollectionPersistence.addCTEntryAggregates(
+			ctCollectionId, ctEntryAggregateIds);
+	}
+
+	/**
+	 */
+	@Override
+	public void addCTCollectionCTEntryAggregates(
+		long ctCollectionId, List<CTEntryAggregate> ctEntryAggregates) {
+
+		ctCollectionPersistence.addCTEntryAggregates(
+			ctCollectionId, ctEntryAggregates);
+	}
+
+	/**
+	 */
+	@Override
+	public void clearCTCollectionCTEntryAggregates(long ctCollectionId) {
+		ctCollectionPersistence.clearCTEntryAggregates(ctCollectionId);
+	}
+
+	/**
+	 */
+	@Override
+	public void deleteCTCollectionCTEntryAggregate(
+		long ctCollectionId, long ctEntryAggregateId) {
+
+		ctCollectionPersistence.removeCTEntryAggregate(
+			ctCollectionId, ctEntryAggregateId);
+	}
+
+	/**
+	 */
+	@Override
+	public void deleteCTCollectionCTEntryAggregate(
+		long ctCollectionId, CTEntryAggregate ctEntryAggregate) {
+
+		ctCollectionPersistence.removeCTEntryAggregate(
+			ctCollectionId, ctEntryAggregate);
+	}
+
+	/**
+	 */
+	@Override
+	public void deleteCTCollectionCTEntryAggregates(
+		long ctCollectionId, long[] ctEntryAggregateIds) {
+
+		ctCollectionPersistence.removeCTEntryAggregates(
+			ctCollectionId, ctEntryAggregateIds);
+	}
+
+	/**
+	 */
+	@Override
+	public void deleteCTCollectionCTEntryAggregates(
+		long ctCollectionId, List<CTEntryAggregate> ctEntryAggregates) {
+
+		ctCollectionPersistence.removeCTEntryAggregates(
+			ctCollectionId, ctEntryAggregates);
+	}
+
+	/**
+	 * Returns the ctCollectionIds of the ct collections associated with the ct entry aggregate.
+	 *
+	 * @param ctEntryAggregateId the ctEntryAggregateId of the ct entry aggregate
+	 * @return long[] the ctCollectionIds of ct collections associated with the ct entry aggregate
+	 */
+	@Override
+	public long[] getCTCollectionPrimaryKeys(long ctEntryAggregateId) {
+		return ctEntryAggregatePersistence.getCTCollectionPrimaryKeys(
+			ctEntryAggregateId);
+	}
+
+	/**
+	 */
+	@Override
+	public List<CTEntryAggregate> getCTCollectionCTEntryAggregates(
+		long ctCollectionId) {
+
+		return ctCollectionPersistence.getCTEntryAggregates(ctCollectionId);
+	}
+
+	/**
+	 */
+	@Override
+	public List<CTEntryAggregate> getCTCollectionCTEntryAggregates(
+		long ctCollectionId, int start, int end) {
+
+		return ctCollectionPersistence.getCTEntryAggregates(
+			ctCollectionId, start, end);
+	}
+
+	/**
+	 */
+	@Override
+	public List<CTEntryAggregate> getCTCollectionCTEntryAggregates(
+		long ctCollectionId, int start, int end,
+		OrderByComparator<CTEntryAggregate> orderByComparator) {
+
+		return ctCollectionPersistence.getCTEntryAggregates(
+			ctCollectionId, start, end, orderByComparator);
+	}
+
+	/**
+	 */
+	@Override
+	public int getCTCollectionCTEntryAggregatesCount(long ctCollectionId) {
+		return ctCollectionPersistence.getCTEntryAggregatesSize(ctCollectionId);
+	}
+
+	/**
+	 */
+	@Override
+	public boolean hasCTCollectionCTEntryAggregate(
+		long ctCollectionId, long ctEntryAggregateId) {
+
+		return ctCollectionPersistence.containsCTEntryAggregate(
+			ctCollectionId, ctEntryAggregateId);
+	}
+
+	/**
+	 */
+	@Override
+	public boolean hasCTCollectionCTEntryAggregates(long ctCollectionId) {
+		return ctCollectionPersistence.containsCTEntryAggregates(
+			ctCollectionId);
+	}
+
+	/**
+	 */
+	@Override
+	public void setCTCollectionCTEntryAggregates(
+		long ctCollectionId, long[] ctEntryAggregateIds) {
+
+		ctCollectionPersistence.setCTEntryAggregates(
+			ctCollectionId, ctEntryAggregateIds);
+	}
+
+	/**
+	 */
+	@Override
 	public void addCTEntryCTEntryAggregate(
 		long ctEntryId, long ctEntryAggregateId) {
 
@@ -641,6 +806,26 @@ public abstract class CTEntryAggregateLocalServiceBaseImpl
 	}
 
 	/**
+	 * Returns the ct entry aggregate finder.
+	 *
+	 * @return the ct entry aggregate finder
+	 */
+	public CTEntryAggregateFinder getCTEntryAggregateFinder() {
+		return ctEntryAggregateFinder;
+	}
+
+	/**
+	 * Sets the ct entry aggregate finder.
+	 *
+	 * @param ctEntryAggregateFinder the ct entry aggregate finder
+	 */
+	public void setCTEntryAggregateFinder(
+		CTEntryAggregateFinder ctEntryAggregateFinder) {
+
+		this.ctEntryAggregateFinder = ctEntryAggregateFinder;
+	}
+
+	/**
 	 * Returns the ct process local service.
 	 *
 	 * @return the ct process local service
@@ -909,6 +1094,9 @@ public abstract class CTEntryAggregateLocalServiceBaseImpl
 
 	@BeanReference(type = CTEntryAggregatePersistence.class)
 	protected CTEntryAggregatePersistence ctEntryAggregatePersistence;
+
+	@BeanReference(type = CTEntryAggregateFinder.class)
+	protected CTEntryAggregateFinder ctEntryAggregateFinder;
 
 	@BeanReference(
 		type = com.liferay.change.tracking.service.CTProcessLocalService.class

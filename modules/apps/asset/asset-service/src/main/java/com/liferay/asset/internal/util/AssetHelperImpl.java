@@ -28,6 +28,9 @@ import com.liferay.asset.kernel.service.AssetTagLocalService;
 import com.liferay.asset.kernel.service.persistence.AssetEntryQuery;
 import com.liferay.asset.util.AssetHelper;
 import com.liferay.asset.util.AssetPublisherAddItemHolder;
+import com.liferay.change.tracking.CTEngineManager;
+import com.liferay.change.tracking.CTManager;
+import com.liferay.change.tracking.model.CTEntry;
 import com.liferay.dynamic.data.mapping.kernel.DDMStructureManager;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
@@ -54,6 +57,8 @@ import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchContextFactory;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.SortFactoryUtil;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.PortletLocalService;
 import com.liferay.portal.kernel.theme.PortletDisplay;
@@ -269,8 +274,29 @@ public class AssetHelperImpl implements AssetHelper {
 			AssetEntry assetEntry = _assetEntryLocalService.fetchEntry(
 				className, classPK);
 
-			if (assetEntry != null) {
-				assetEntries.add(assetEntry);
+			PermissionChecker permissionChecker =
+				PermissionThreadLocal.getPermissionChecker();
+
+			if (!_ctEngineManager.isChangeTrackingEnabled(
+					permissionChecker.getCompanyId())) {
+
+				if (assetEntry != null) {
+					assetEntries.add(assetEntry);
+				}
+			}
+			else if ((assetEntry != null) &&
+					 _ctEngineManager.isChangeTrackingSupported(
+						 permissionChecker.getCompanyId(),
+						 _portal.getClassNameId(className))) {
+
+				long userId = permissionChecker.getUserId();
+
+				List<CTEntry> ctEntries = _ctManager.getModelChangeCTEntries(
+					userId, classPK);
+
+				if (!ctEntries.isEmpty()) {
+					assetEntries.add(assetEntry);
+				}
 			}
 		}
 
@@ -669,6 +695,12 @@ public class AssetHelperImpl implements AssetHelper {
 
 	@Reference
 	private AssetTagLocalService _assetTagLocalService;
+
+	@Reference
+	private CTEngineManager _ctEngineManager;
+
+	@Reference
+	private CTManager _ctManager;
 
 	@Reference
 	private DDMStructureLocalService _ddmStructureLocalService;

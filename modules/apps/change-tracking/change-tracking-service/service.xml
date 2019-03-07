@@ -29,6 +29,7 @@
 		<!-- Relationships -->
 
 		<column entity="CTEntry" mapping-table="CTCollections_CTEntries" name="entries" type="Collection" />
+		<column entity="CTEntryAggregate" mapping-table="CTCollection_CTEntryAggregate" name="aggregates" type="Collection" />
 
 		<!-- Order -->
 
@@ -105,17 +106,16 @@
 
 		<!-- Other fields -->
 
-		<column name="ctCollectionId" type="long" />
 		<column name="ownerCTEntryId" type="long" />
 
 		<!-- Relationships -->
 
+		<column entity="CTCollection" mapping-table="CTCollection_CTEntryAggregate" name="collections" type="Collection" />
 		<column entity="CTEntry" mapping-table="CTEntryAggregates_CTEntries" name="entries" type="Collection" />
 
 		<!-- Finder methods -->
 
-		<finder name="C_O" return-type="Collection">
-			<finder-column name="ctCollectionId" />
+		<finder name="OwnerCTEntryID" return-type="Collection">
 			<finder-column name="ownerCTEntryId" />
 		</finder>
 

@@ -2,6 +2,7 @@
 	"build": {
 		"dependencies": [
 			"clay-checkbox",
+			"clay-icon",
 			"clay-portal",
 			"metal-modal",
 			"com.liferay.frontend.js.web",

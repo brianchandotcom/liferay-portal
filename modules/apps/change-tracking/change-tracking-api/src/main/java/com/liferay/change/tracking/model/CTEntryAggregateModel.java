@@ -170,20 +170,6 @@ public interface CTEntryAggregateModel
 	public void setModifiedDate(Date modifiedDate);
 
 	/**
-	 * Returns the ct collection ID of this ct entry aggregate.
-	 *
-	 * @return the ct collection ID of this ct entry aggregate
-	 */
-	public long getCtCollectionId();
-
-	/**
-	 * Sets the ct collection ID of this ct entry aggregate.
-	 *
-	 * @param ctCollectionId the ct collection ID of this ct entry aggregate
-	 */
-	public void setCtCollectionId(long ctCollectionId);
-
-	/**
 	 * Returns the owner ct entry ID of this ct entry aggregate.
 	 *
 	 * @return the owner ct entry ID of this ct entry aggregate

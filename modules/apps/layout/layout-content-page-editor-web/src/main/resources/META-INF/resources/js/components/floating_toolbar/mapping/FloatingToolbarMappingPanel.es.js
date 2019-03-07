@@ -1,4 +1,4 @@
-import Component from 'metal-component';
+import PortletBase from 'frontend-js-web/liferay/PortletBase.es';
 import Soy, {Config} from 'metal-soy';
 
 import './FloatingToolbarMappingPanelDelegateTemplate.soy';
@@ -15,7 +15,7 @@ const MAPPING_SOURCE_SUBTYPE_KEY = 'subtype';
 /**
  * FloatingToolbarMappingPanel
  */
-class FloatingToolbarMappingPanel extends Component {
+class FloatingToolbarMappingPanel extends PortletBase {
 
 	/**
 	 * Get mapping sources

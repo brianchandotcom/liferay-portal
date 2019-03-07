@@ -110,6 +110,18 @@ public class ResourceOpenAPIParser {
 					"\")");
 		}
 
+		if (operation.getTags() != null) {
+			StringBuilder sb = new StringBuilder("");
+
+			for (String tag : operation.getTags()) {
+				sb.append("@Tag(name=\"");
+				sb.append(tag);
+				sb.append("\"),");
+			}
+
+			methodAnnotations.add("@Tags(value={" + sb.toString() + "})");
+		}
+
 		List<JavaMethodParameter> javaMethodParameters =
 			javaMethodSignature.getJavaMethodParameters();
 

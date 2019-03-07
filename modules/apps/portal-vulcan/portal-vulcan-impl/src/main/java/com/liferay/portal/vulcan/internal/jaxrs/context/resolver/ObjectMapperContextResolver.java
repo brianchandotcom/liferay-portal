@@ -30,6 +30,7 @@ import javax.ws.rs.ext.Provider;
 public class ObjectMapperContextResolver
 	implements ContextResolver<ObjectMapper> {
 
+	@Override
 	public ObjectMapper getContext(Class<?> clazz) {
 		ObjectMapper objectMapper = new ObjectMapper();
 
@@ -38,7 +39,6 @@ public class ObjectMapperContextResolver
 		objectMapper.enable(SerializationFeature.INDENT_OUTPUT);
 		objectMapper.setDateFormat(new ISO8601DateFormat());
 		objectMapper.setSerializationInclusion(JsonInclude.Include.NON_EMPTY);
-		objectMapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
 
 		return objectMapper;
 	}

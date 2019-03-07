@@ -76,7 +76,8 @@ public class HttpMethodFeature implements Feature {
 			new CollectionScopeFinder(
 				Arrays.asList(
 					HttpMethod.DELETE, HttpMethod.GET, HttpMethod.HEAD,
-					HttpMethod.OPTIONS, HttpMethod.POST, HttpMethod.PUT)),
+					HttpMethod.OPTIONS, HttpMethod.PATCH, HttpMethod.POST,
+					HttpMethod.PUT)),
 			new Hashtable<>(
 				(Map<String, Object>)configuration.getProperty(
 					"osgi.jaxrs.application.serviceProperties")));

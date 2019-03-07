@@ -84,8 +84,8 @@ public class SAPEntryScopeDescriptorFinderRegistrator {
 					}
 
 					serviceRegistration = _bundleContext.registerService(
-						new String[] {ScopeFinder.class.getName()},
-						sapEntryScopeDescriptorFinder, properties);
+						ScopeFinder.class, sapEntryScopeDescriptorFinder,
+						properties);
 
 					_registeredSAPEntryScopes.put(companyId, sapEntryScopes);
 

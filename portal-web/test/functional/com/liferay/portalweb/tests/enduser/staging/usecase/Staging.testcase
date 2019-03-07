@@ -1221,6 +1221,18 @@ definition {
 
 		Navigator.gotoSitePage(pageName = "Staging Test Page", siteName = "Site Name");
 
+
+		Portlet.addPG(portletName = "Asset Publisher");
+
+		Navigator.gotoSitePage(pageName = "Staging Test Page", siteName = "Site Name");
+
+		AssetPublisherPortlet.configureAssetTypePG(
+			assetSubtype = "DM Document Type Name",
+			selectedAsset = "Document"
+		);
+
+		Navigator.gotoSitePage(pageName = "Staging Test Page", siteName = "Site Name");
+
 		Staging.gotoPublishToLive();
 
 		Staging.publishToLive();
@@ -1236,6 +1248,13 @@ definition {
 		DMNavigator.gotoDocumentCP(dmDocumentTitle = "DM Document Type Title");
 
 		DMDocument.viewCP(dmDocumentTitle = "DM Document Type Title");
+
+		Navigator.gotoSitePage(pageName = "Staging Test Page", siteName = "Site Name");
+
+		AssetPublisherPortlet.viewAssetPG(
+			assetContent = "DM Document Type Description",
+			assetTitle = "DM Document Type Title"
+		);
 	}
 
 	@description = "This is a use case for LPS-72478."

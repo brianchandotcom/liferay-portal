@@ -232,7 +232,10 @@ public class PersistenceNestedSetsTreeManagerTest {
 					BasePersistenceImpl.class.getName(), Level.OFF)) {
 
 			try {
-				_nestedSetsTreeManager.doCountAncestors(0, 0, 0);
+				ReflectionTestUtil.invoke(
+					_nestedSetsTreeManager, "doCountAncestors",
+					new Class[] {long.class, long.class, long.class},
+					new Object[] {0, 0, 0});
 
 				Assert.fail();
 			}
@@ -245,7 +248,10 @@ public class PersistenceNestedSetsTreeManagerTest {
 			}
 
 			try {
-				_nestedSetsTreeManager.doCountDescendants(0, 0, 0);
+				ReflectionTestUtil.invoke(
+					_nestedSetsTreeManager, "doCountDescendants",
+					new Class[] {long.class, long.class, long.class},
+					new Object[] {0, 0, 0});
 
 				Assert.fail();
 			}
@@ -258,7 +264,10 @@ public class PersistenceNestedSetsTreeManagerTest {
 			}
 
 			try {
-				_nestedSetsTreeManager.doGetAncestors(0, 0, 0);
+				ReflectionTestUtil.invoke(
+					_nestedSetsTreeManager, "doGetAncestors",
+					new Class[] {long.class, long.class, long.class},
+					new Object[] {0, 0, 0});
 
 				Assert.fail();
 			}
@@ -271,7 +280,10 @@ public class PersistenceNestedSetsTreeManagerTest {
 			}
 
 			try {
-				_nestedSetsTreeManager.doGetDescendants(0, 0, 0);
+				ReflectionTestUtil.invoke(
+					_nestedSetsTreeManager, "doGetDescendants",
+					new Class[] {long.class, long.class, long.class},
+					new Object[] {0, 0, 0});
 
 				Assert.fail();
 			}
@@ -284,7 +296,13 @@ public class PersistenceNestedSetsTreeManagerTest {
 			}
 
 			try {
-				_nestedSetsTreeManager.doUpdate(0, true, 0, 0, true);
+				ReflectionTestUtil.invoke(
+					_nestedSetsTreeManager, "doUpdate",
+					new Class[] {
+						long.class, boolean.class, long.class, long.class,
+						boolean.class
+					},
+					new Object[] {0, true, 0, 0, true});
 
 				Assert.fail();
 			}
@@ -297,7 +315,13 @@ public class PersistenceNestedSetsTreeManagerTest {
 			}
 
 			try {
-				_nestedSetsTreeManager.doUpdate(0, 0, 0, true, 0, true, null);
+				ReflectionTestUtil.invoke(
+					_nestedSetsTreeManager, "doUpdate",
+					new Class[] {
+						long.class, long.class, long.class, boolean.class,
+						long.class, boolean.class, List.class
+					},
+					new Object[] {0, 0, 0, true, 0, true, null});
 
 				Assert.fail();
 			}
@@ -310,7 +334,9 @@ public class PersistenceNestedSetsTreeManagerTest {
 			}
 
 			try {
-				_nestedSetsTreeManager.getMaxNestedSetsTreeNodeRight(0);
+				ReflectionTestUtil.invoke(
+					_nestedSetsTreeManager, "getMaxNestedSetsTreeNodeRight",
+					new Class[] {long.class}, new Object[] {0});
 
 				Assert.fail();
 			}

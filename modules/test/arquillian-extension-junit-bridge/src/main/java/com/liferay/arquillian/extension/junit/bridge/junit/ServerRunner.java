@@ -26,7 +26,6 @@ import java.util.concurrent.TimeUnit;
 
 import org.junit.AssumptionViolatedException;
 import org.junit.Test;
-import org.junit.internal.runners.statements.Fail;
 import org.junit.internal.runners.statements.FailOnTimeout;
 import org.junit.runner.Description;
 import org.junit.runner.Runner;
@@ -79,21 +78,6 @@ public class ServerRunner extends Runner implements Filterable {
 		}
 	}
 
-	private Statement _createMethodStatement(FrameworkMethod frameworkMethod) {
-		Object target = null;
-
-		try {
-			target = _clazz.newInstance();
-		}
-		catch (ReflectiveOperationException roe) {
-			return new Fail(roe);
-		}
-
-		return _withTimeout(
-			frameworkMethod,
-			new ServerExecutorStatement(target, frameworkMethod.getMethod()));
-	}
-
 	private Description _describeChild(FrameworkMethod frameworkMethod) {
 		return _methodDescriptions.computeIfAbsent(
 			frameworkMethod,
@@ -123,7 +107,9 @@ public class ServerRunner extends Runner implements Filterable {
 
 		Description description = _describeChild(frameworkMethod);
 
-		Statement statement = _createMethodStatement(frameworkMethod);
+		Statement statement = _withTimeout(
+			frameworkMethod,
+			new ServerExecutorStatement(_clazz, frameworkMethod.getMethod()));
 
 		runNotifier.fireTestStarted(description);
 

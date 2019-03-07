@@ -46,16 +46,16 @@ import org.junit.runners.model.TestClass;
  */
 public class ServerExecutorStatement extends Statement {
 
-	public ServerExecutorStatement(Object target, Method method) {
-		_target = target;
+	public ServerExecutorStatement(Class<?> clazz, Method method) {
+		_clazz = clazz;
 		_method = method;
 	}
 
 	@Override
 	public void evaluate() throws Throwable {
-		Class<?> clazz = _target.getClass();
+		Object target = _clazz.newInstance();
 
-		Statement statement = new InvokeMethod(null, _target) {
+		Statement statement = new InvokeMethod(null, target) {
 
 			@Override
 			public void evaluate() throws Throwable {
@@ -63,10 +63,10 @@ public class ServerExecutorStatement extends Statement {
 
 				ClassLoader classLoader = currentThread.getContextClassLoader();
 
-				currentThread.setContextClassLoader(clazz.getClassLoader());
+				currentThread.setContextClassLoader(_clazz.getClassLoader());
 
 				try {
-					_method.invoke(_target);
+					_method.invoke(target);
 				}
 				catch (Throwable t) {
 					if (t instanceof InvocationTargetException) {
@@ -86,16 +86,16 @@ public class ServerExecutorStatement extends Statement {
 
 		};
 
-		TestClass testClass = new TestClass(clazz);
+		TestClass testClass = new TestClass(_clazz);
 
-		statement = withBefores(statement, Before.class, testClass, _target);
+		statement = withBefores(statement, Before.class, testClass, target);
 
-		statement = withAfters(statement, After.class, testClass, _target);
+		statement = withAfters(statement, After.class, testClass, target);
 
 		statement = withRules(
-			statement, testClass, _target,
+			statement, testClass, target,
 			Description.createTestDescription(
-				clazz, _method.getName(), _method.getAnnotations()));
+				_clazz, _method.getName(), _method.getAnnotations()));
 
 		List<FrameworkMethod> frameworkMethods = new ArrayList<>(
 			testClass.getAnnotatedMethods(Test.class));
@@ -128,8 +128,9 @@ public class ServerExecutorStatement extends Statement {
 		}
 
 		evaluateWithClassRule(
-			statement, testClass, _target,
-			Description.createSuiteDescription(clazz), firstMethod, lastMethod);
+			statement, testClass, target,
+			Description.createSuiteDescription(_clazz), firstMethod,
+			lastMethod);
 	}
 
 	protected void evaluateWithClassRule(
@@ -273,7 +274,7 @@ public class ServerExecutorStatement extends Statement {
 		}
 	}
 
+	private final Class<?> _clazz;
 	private final Method _method;
-	private final Object _target;
 
 }

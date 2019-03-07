@@ -7,6 +7,7 @@
 	{@param item: [
 		editableValues: [
 			assetEntryEncodedId: string,
+			assetEntryFieldId: string,
 			mappedField: string
 		]
 	]}
@@ -60,7 +61,7 @@
 			{call .fieldSelect}
 				{param fields: $_fields /}
 				{param handleFieldOptionChange: $_handleFieldOptionChange /}
-				{param mappedFieldId: $item.editableValues.mappedField /}
+				{param mappedFieldId: $item.editableValues.mappedField or $item.editableValues.assetEntryFieldId /}
 			{/call}
 		</div>
 
@@ -90,7 +91,11 @@
 		data-onchange="{$handleAssetOptionChange}"
 		id="floatingToolbarMappingPanelAssetSelect"
 	>
-		<option disabled value="-">-</option>
+		{call .selectOption}
+			{param optionId: '' /}
+			{param optionLabel: '-' /}
+			{param selectedId: $selectedAssetEntryEncodedId or '-' /}
+		{/call}
 
 		{if $assetEntries}
 			{foreach $assetEntry in $assetEntries}

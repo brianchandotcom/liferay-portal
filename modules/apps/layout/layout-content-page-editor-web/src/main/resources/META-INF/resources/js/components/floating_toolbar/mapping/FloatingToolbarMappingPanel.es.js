@@ -87,8 +87,24 @@ class FloatingToolbarMappingPanel extends PortletBase {
 		return nextState;
 	}
 
+	/**
+	 * @inheritdoc
+	 * @param {boolean} firstRender
+	 * @review
+	 */
 	rendered(firstRender) {
 		if (firstRender) {
+			if (
+				this.item &&
+				this.item.editableValues.assetEntryClassNameId &&
+				this.item.editableValues.assetEntryClassPK
+			) {
+				this._selectedSourceTypeId = SOURCE_TYPE_IDS.content;
+			}
+			else {
+				this._selectedSourceTypeId = SOURCE_TYPE_IDS.structure;
+			}
+
 			this._loadFields();
 		}
 	}
@@ -112,20 +128,18 @@ class FloatingToolbarMappingPanel extends PortletBase {
 	 * @review
 	 */
 	_handleAssetOptionChange(event) {
-		this._mappedAssetEntryEncodedId = event.delegateTarget.value;
+		const {
+			assetEntryClassNameId,
+			assetEntryClassPK
+		} = decodeId(event.delegateTarget.value);
 
-		this._loadFields();
+		this._updateEditableValues('assetEntryClassNameId', assetEntryClassNameId);
+		this._updateEditableValues('assetEntryClassPK', assetEntryClassPK);
 
-		const asset = decodeId(this._mappedAssetEntryEncodedId);
-
-		this._updateEditableValues(
-			'assetEntryClassNameId',
-			asset.assetEntryClassNameId
-		);
-
-		this._updateEditableValues(
-			'assetEntryClassPK',
-			asset.assetEntryClassPK
+		this.store.done(
+			() => {
+				this._loadFields();
+			}
 		);
 	}
 
@@ -135,7 +149,9 @@ class FloatingToolbarMappingPanel extends PortletBase {
 	 * @private
 	 * @review
 	 */
-	_handleBrowseAllAssetsButtonClick(event) {}
+	_handleBrowseAllAssetsButtonClick(event) {
+		this._loadFields();
+	}
 
 	/**
 	 * Handle field option change
@@ -144,19 +160,13 @@ class FloatingToolbarMappingPanel extends PortletBase {
 	 * @review
 	 */
 	_handleFieldOptionChange(event) {
-		this._mappingField = event.delegateTarget.value;
+		const fieldId = event.delegateTarget.value;
 
 		if (this._selectedSourceTypeId === SOURCE_TYPE_IDS.content) {
-			this._updateEditableValues(
-				'assetEntryFieldId',
-				this._mappingField
-			);
+			this._updateEditableValues('assetEntryFieldId', fieldId);
 		}
 		else if (this._selectedSourceTypeId === SOURCE_TYPE_IDS.structure) {
-			this._updateEditableValues(
-				'mappedField',
-				this._mappingField
-			);
+			this._updateEditableValues('mappedField', fieldId);
 		}
 	}
 
@@ -169,7 +179,9 @@ class FloatingToolbarMappingPanel extends PortletBase {
 	_handleSourceTypeChange(event) {
 		this._selectedSourceTypeId = event.delegateTarget.value;
 
-		this._loadFields();
+		if (this._selectedSourceTypeId === SOURCE_TYPE_IDS.structure) {
+			this._loadFields();
+		}
 	}
 
 	/**
@@ -191,8 +203,6 @@ class FloatingToolbarMappingPanel extends PortletBase {
 	 * @review
 	 */
 	_loadFields() {
-		this._fields = [];
-
 		let promise;
 
 		if (this._selectedSourceTypeId === SOURCE_TYPE_IDS.structure) {
@@ -206,15 +216,14 @@ class FloatingToolbarMappingPanel extends PortletBase {
 		}
 		else if (
 			this._selectedSourceTypeId === SOURCE_TYPE_IDS.content &&
-			this._mappedAssetEntryEncodedId
+			this.item.editableValues.assetEntryClassNameId &&
+			this.item.editableValues.assetEntryClassPK
 		) {
-			const asset = decodeId(this._mappedAssetEntryEncodedId);
-
 			promise = this.fetch(
 				this.getAssetMappingFieldsURL,
 				{
-					classNameId: asset.assetEntryClassNameId,
-					classPK: asset.assetEntryClassPK
+					classNameId: this.item.editableValues.assetEntryClassNameId,
+					classPK: this.item.editableValues.assetEntryClassPK
 				}
 			);
 		}
@@ -232,6 +241,9 @@ class FloatingToolbarMappingPanel extends PortletBase {
 						);
 					}
 				);
+		}
+		else if (this._fields.length) {
+			this._fields = [];
 		}
 	}
 

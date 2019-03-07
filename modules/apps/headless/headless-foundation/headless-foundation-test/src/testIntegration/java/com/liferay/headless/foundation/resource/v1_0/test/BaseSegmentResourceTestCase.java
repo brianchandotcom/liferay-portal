@@ -96,6 +96,129 @@ public abstract class BaseSegmentResourceTestCase {
 	}
 
 	@Test
+	public void testGetContentSpaceSegmentsPage() throws Exception {
+		Long contentSpaceId =
+			testGetContentSpaceSegmentsPage_getContentSpaceId();
+
+		Segment segment1 = testGetContentSpaceSegmentsPage_addSegment(
+			contentSpaceId, randomSegment());
+		Segment segment2 = testGetContentSpaceSegmentsPage_addSegment(
+			contentSpaceId, randomSegment());
+
+		Page<Segment> page = invokeGetContentSpaceSegmentsPage(
+			contentSpaceId, Pagination.of(1, 2));
+
+		Assert.assertEquals(2, page.getTotalCount());
+
+		assertEqualsIgnoringOrder(
+			Arrays.asList(segment1, segment2), (List<Segment>)page.getItems());
+		assertValid(page);
+	}
+
+	@Test
+	public void testGetContentSpaceSegmentsPageWithPagination()
+		throws Exception {
+
+		Long contentSpaceId =
+			testGetContentSpaceSegmentsPage_getContentSpaceId();
+
+		Segment segment1 = testGetContentSpaceSegmentsPage_addSegment(
+			contentSpaceId, randomSegment());
+		Segment segment2 = testGetContentSpaceSegmentsPage_addSegment(
+			contentSpaceId, randomSegment());
+		Segment segment3 = testGetContentSpaceSegmentsPage_addSegment(
+			contentSpaceId, randomSegment());
+
+		Page<Segment> page1 = invokeGetContentSpaceSegmentsPage(
+			contentSpaceId, Pagination.of(1, 2));
+
+		List<Segment> segments1 = (List<Segment>)page1.getItems();
+
+		Assert.assertEquals(segments1.toString(), 2, segments1.size());
+
+		Page<Segment> page2 = invokeGetContentSpaceSegmentsPage(
+			contentSpaceId, Pagination.of(2, 2));
+
+		Assert.assertEquals(3, page2.getTotalCount());
+
+		List<Segment> segments2 = (List<Segment>)page2.getItems();
+
+		Assert.assertEquals(segments2.toString(), 1, segments2.size());
+
+		assertEqualsIgnoringOrder(
+			Arrays.asList(segment1, segment2, segment3),
+			new ArrayList<Segment>() {
+				{
+					addAll(segments1);
+					addAll(segments2);
+				}
+			});
+	}
+
+	protected Segment testGetContentSpaceSegmentsPage_addSegment(
+			Long contentSpaceId, Segment segment)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected Long testGetContentSpaceSegmentsPage_getContentSpaceId()
+		throws Exception {
+
+		return testGroup.getGroupId();
+	}
+
+	protected Page<Segment> invokeGetContentSpaceSegmentsPage(
+			Long contentSpaceId, Pagination pagination)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		String location =
+			_resourceURL +
+				_toPath(
+					"/content-spaces/{content-space-id}/segments",
+					contentSpaceId);
+
+		location = HttpUtil.addParameter(
+			location, "page", pagination.getPage());
+		location = HttpUtil.addParameter(
+			location, "pageSize", pagination.getPageSize());
+
+		options.setLocation(location);
+
+		return _outputObjectMapper.readValue(
+			HttpUtil.URLtoString(options),
+			new TypeReference<Page<Segment>>() {
+			});
+	}
+
+	protected Http.Response invokeGetContentSpaceSegmentsPageResponse(
+			Long contentSpaceId, Pagination pagination)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		String location =
+			_resourceURL +
+				_toPath(
+					"/content-spaces/{content-space-id}/segments",
+					contentSpaceId);
+
+		location = HttpUtil.addParameter(
+			location, "page", pagination.getPage());
+		location = HttpUtil.addParameter(
+			location, "pageSize", pagination.getPageSize());
+
+		options.setLocation(location);
+
+		HttpUtil.URLtoString(options);
+
+		return options.getResponse();
+	}
+
+	@Test
 	public void testGetUserAccountUserSegmentsPage() throws Exception {
 		Long userId = testGetUserAccountUserSegmentsPage_getUserId();
 

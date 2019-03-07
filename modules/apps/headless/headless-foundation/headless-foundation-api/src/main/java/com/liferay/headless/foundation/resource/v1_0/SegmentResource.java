@@ -32,6 +32,10 @@ import javax.annotation.Generated;
 @Generated("")
 public interface SegmentResource {
 
+	public Page<Segment> getContentSpaceSegmentsPage(
+			Long contentSpaceId, Pagination pagination)
+		throws Exception;
+
 	public Page<Segment> getUserAccountUserSegmentsPage(
 			Long userId, Pagination pagination)
 		throws Exception;

@@ -32,16 +32,24 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
-@GraphQLName("BulkActionResponseModel")
-@XmlRootElement(name = "BulkActionResponseModel")
-public class BulkActionResponseModel {
+@GraphQLName("BulkAssetEntryCommonTags")
+@XmlRootElement(name = "BulkAssetEntryCommonTags")
+public class BulkAssetEntryCommonTags {
 
 	public String getDescription() {
 		return description;
 	}
 
+	public Long[] getGroupIds() {
+		return groupIds;
+	}
+
 	public String getStatus() {
 		return status;
+	}
+
+	public String[] getTagNames() {
+		return tagNames;
 	}
 
 	public void setDescription(String description) {
@@ -54,6 +62,22 @@ public class BulkActionResponseModel {
 
 		try {
 			description = descriptionUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	public void setGroupIds(Long[] groupIds) {
+		this.groupIds = groupIds;
+	}
+
+	@JsonIgnore
+	public void setGroupIds(
+		UnsafeSupplier<Long[], Exception> groupIdsUnsafeSupplier) {
+
+		try {
+			groupIds = groupIdsUnsafeSupplier.get();
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
@@ -76,8 +100,24 @@ public class BulkActionResponseModel {
 		}
 	}
 
+	public void setTagNames(String[] tagNames) {
+		this.tagNames = tagNames;
+	}
+
+	@JsonIgnore
+	public void setTagNames(
+		UnsafeSupplier<String[], Exception> tagNamesUnsafeSupplier) {
+
+		try {
+			tagNames = tagNamesUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
 	public String toString() {
-		StringBundler sb = new StringBundler(11);
+		StringBundler sb = new StringBundler(21);
 
 		sb.append("{");
 
@@ -88,10 +128,24 @@ public class BulkActionResponseModel {
 		sb.append("\"");
 		sb.append(", ");
 
+		sb.append("\"groupIds\": ");
+
+		sb.append("\"");
+		sb.append(groupIds);
+		sb.append("\"");
+		sb.append(", ");
+
 		sb.append("\"status\": ");
 
 		sb.append("\"");
 		sb.append(status);
+		sb.append("\"");
+		sb.append(", ");
+
+		sb.append("\"tagNames\": ");
+
+		sb.append("\"");
+		sb.append(tagNames);
 		sb.append("\"");
 
 		sb.append("}");
@@ -105,6 +159,14 @@ public class BulkActionResponseModel {
 
 	@GraphQLField
 	@JsonProperty
+	protected Long[] groupIds;
+
+	@GraphQLField
+	@JsonProperty
 	protected String status;
+
+	@GraphQLField
+	@JsonProperty
+	protected String[] tagNames;
 
 }

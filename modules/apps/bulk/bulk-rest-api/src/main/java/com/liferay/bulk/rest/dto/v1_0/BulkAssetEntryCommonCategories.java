@@ -32,9 +32,9 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
-@GraphQLName("BulkAssetEntryCommonCategoriesModel")
-@XmlRootElement(name = "BulkAssetEntryCommonCategoriesModel")
-public class BulkAssetEntryCommonCategoriesModel {
+@GraphQLName("BulkAssetEntryCommonCategories")
+@XmlRootElement(name = "BulkAssetEntryCommonCategories")
+public class BulkAssetEntryCommonCategories {
 
 	public String getDescription() {
 		return description;
@@ -44,7 +44,7 @@ public class BulkAssetEntryCommonCategoriesModel {
 		return status;
 	}
 
-	public AssetVocabularyModel[] getVocabularies() {
+	public AssetVocabulary[] getVocabularies() {
 		return vocabularies;
 	}
 
@@ -80,13 +80,13 @@ public class BulkAssetEntryCommonCategoriesModel {
 		}
 	}
 
-	public void setVocabularies(AssetVocabularyModel[] vocabularies) {
+	public void setVocabularies(AssetVocabulary[] vocabularies) {
 		this.vocabularies = vocabularies;
 	}
 
 	@JsonIgnore
 	public void setVocabularies(
-		UnsafeSupplier<AssetVocabularyModel[], Exception>
+		UnsafeSupplier<AssetVocabulary[], Exception>
 			vocabulariesUnsafeSupplier) {
 
 		try {
@@ -137,6 +137,6 @@ public class BulkAssetEntryCommonCategoriesModel {
 
 	@GraphQLField
 	@JsonProperty
-	protected AssetVocabularyModel[] vocabularies;
+	protected AssetVocabulary[] vocabularies;
 
 }

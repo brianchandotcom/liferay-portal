@@ -14,8 +14,13 @@
 
 package com.liferay.bulk.rest.internal.resource.v1_0;
 
-import com.liferay.bulk.rest.dto.v1_0.BulkStatusModel;
-import com.liferay.bulk.rest.resource.v1_0.BulkStatusModelResource;
+import com.liferay.bulk.rest.dto.v1_0.BulkActionResponse;
+import com.liferay.bulk.rest.dto.v1_0.BulkAssetEntryAction;
+import com.liferay.bulk.rest.dto.v1_0.BulkAssetEntryCommonCategories;
+import com.liferay.bulk.rest.dto.v1_0.BulkAssetEntryCommonTags;
+import com.liferay.bulk.rest.dto.v1_0.BulkAssetEntryUpdateCategoriesAction;
+import com.liferay.bulk.rest.dto.v1_0.BulkAssetEntryUpdateTagsAction;
+import com.liferay.bulk.rest.resource.v1_0.BulkActionResponseResource;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Company;
@@ -28,10 +33,11 @@ import java.util.List;
 
 import javax.annotation.Generated;
 
-import javax.ws.rs.GET;
+import javax.ws.rs.Consumes;
+import javax.ws.rs.POST;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
-import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.UriBuilder;
 import javax.ws.rs.core.UriInfo;
@@ -42,17 +48,62 @@ import javax.ws.rs.core.UriInfo;
  */
 @Generated("")
 @Path("/v1.0")
-public abstract class BaseBulkStatusModelResourceImpl
-	implements BulkStatusModelResource {
+public abstract class BaseBulkActionResponseResourceImpl
+	implements BulkActionResponseResource {
 
-	@GET
+	@Consumes("application/json")
 	@Override
-	@Path("/status")
+	@Path("/categories/{category-class-name-id}")
+	@POST
 	@Produces("application/json")
-	public BulkStatusModel getStatus(@QueryParam("param") Long param)
+	public BulkActionResponse postCategoryClassName(
+			@PathParam("category-class-name-id") Long categoryClassNameId,
+			BulkAssetEntryUpdateCategoriesAction
+				bulkAssetEntryUpdateCategoriesAction)
 		throws Exception {
 
-		return new BulkStatusModel();
+		return new BulkActionResponse();
+	}
+
+	@Consumes("application/json")
+	@Override
+	@Path("/categories/{category-group-id}/{category-class-name-id}/common")
+	@POST
+	@Produces("application/json")
+	public BulkAssetEntryCommonCategories postCategoryGroupCategoryClassName(
+			@PathParam("category-group-id") Long categoryGroupId,
+			@PathParam("category-class-name-id") Long categoryClassNameId,
+			BulkAssetEntryAction bulkAssetEntryAction)
+		throws Exception {
+
+		return new BulkAssetEntryCommonCategories();
+	}
+
+	@Consumes("application/json")
+	@Override
+	@Path("/tags/{tag-class-name-id}")
+	@POST
+	@Produces("application/json")
+	public BulkActionResponse postTagClassName(
+			@PathParam("tag-class-name-id") Long tagClassNameId,
+			BulkAssetEntryUpdateTagsAction bulkAssetEntryUpdateTagsAction)
+		throws Exception {
+
+		return new BulkActionResponse();
+	}
+
+	@Consumes("application/json")
+	@Override
+	@Path("/tags/{tag-group-id}/{tag-class-name-id}/common")
+	@POST
+	@Produces("application/json")
+	public BulkAssetEntryCommonTags postTagGroupTagClassName(
+			@PathParam("tag-group-id") Long tagGroupId,
+			@PathParam("tag-class-name-id") Long tagClassNameId,
+			BulkAssetEntryAction bulkAssetEntryAction)
+		throws Exception {
+
+		return new BulkAssetEntryCommonTags();
 	}
 
 	public void setContextCompany(Company contextCompany) {
@@ -68,11 +119,11 @@ public abstract class BaseBulkStatusModelResourceImpl
 		}
 
 		URI resourceURI = UriBuilder.fromResource(
-			BaseBulkStatusModelResourceImpl.class
+			BaseBulkActionResponseResourceImpl.class
 		).build();
 
 		URI methodURI = UriBuilder.fromMethod(
-			BaseBulkStatusModelResourceImpl.class, methodName
+			BaseBulkActionResponseResourceImpl.class, methodName
 		).build(
 			values
 		);
@@ -80,7 +131,7 @@ public abstract class BaseBulkStatusModelResourceImpl
 		return baseURIString + resourceURI.toString() + methodURI.toString();
 	}
 
-	protected void preparePatch(BulkStatusModel bulkStatusModel) {
+	protected void preparePatch(BulkActionResponse bulkActionResponse) {
 	}
 
 	protected <T, R> List<R> transform(

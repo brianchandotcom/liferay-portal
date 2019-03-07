@@ -18,6 +18,8 @@ import com.liferay.arquillian.extension.junit.bridge.client.BndBundleUtil;
 import com.liferay.arquillian.extension.junit.bridge.client.ClientExecutorStatement;
 import com.liferay.arquillian.extension.junit.bridge.client.MBeans;
 
+import java.io.Closeable;
+
 import java.lang.annotation.Annotation;
 
 import java.net.URI;
@@ -101,20 +103,9 @@ public class Arquillian extends Runner implements Filterable {
 			return;
 		}
 
-		try {
-			FrameworkMBean frameworkMBean = MBeans.getFrameworkMBean();
-
-			long bundleId = _installBundle(frameworkMBean);
-
-			frameworkMBean.startBundle(bundleId);
-
-			try {
-				for (FrameworkMethod frameworkMethod : frameworkMethods) {
-					_runMethod(frameworkMethod, runNotifier);
-				}
-			}
-			finally {
-				frameworkMBean.uninstallBundle(bundleId);
+		try (Closeable closeable = _installBundle()) {
+			for (FrameworkMethod frameworkMethod : frameworkMethods) {
+				_runMethod(frameworkMethod, runNotifier);
 			}
 		}
 		catch (Throwable t) {
@@ -122,22 +113,28 @@ public class Arquillian extends Runner implements Filterable {
 		}
 	}
 
-	private long _installBundle(FrameworkMBean frameworkMBean)
-		throws Exception {
-
+	private Closeable _installBundle() throws Exception {
 		Path path = BndBundleUtil.createBundle();
 
 		URI uri = path.toUri();
 
 		URL url = uri.toURL();
 
+		FrameworkMBean frameworkMBean = MBeans.getFrameworkMBean();
+
+		long bundleId;
+
 		try {
-			return frameworkMBean.installBundleFromURL(
+			bundleId = frameworkMBean.installBundleFromURL(
 				url.getPath(), url.toExternalForm());
 		}
 		finally {
 			Files.delete(path);
 		}
+
+		frameworkMBean.startBundle(bundleId);
+
+		return () -> frameworkMBean.uninstallBundle(bundleId);
 	}
 
 	private void _runMethod(

@@ -25,7 +25,6 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.TimeUnit;
 
 import org.junit.AssumptionViolatedException;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.internal.runners.statements.Fail;
 import org.junit.internal.runners.statements.FailOnTimeout;
@@ -119,45 +118,31 @@ public class ServerRunner extends Runner implements Filterable {
 		return _testClass;
 	}
 
-	private boolean _isIgnored(FrameworkMethod frameworkMethod) {
-		if (frameworkMethod.getAnnotation(Ignore.class) != null) {
-			return true;
-		}
-
-		return false;
-	}
-
 	private void _runMethod(
 		FrameworkMethod frameworkMethod, RunNotifier runNotifier) {
 
 		Description description = _describeChild(frameworkMethod);
 
-		if (_isIgnored(frameworkMethod)) {
-			runNotifier.fireTestIgnored(description);
+		Statement statement = _createMethodStatement(frameworkMethod);
+
+		runNotifier.fireTestStarted(description);
+
+		try {
+			statement.evaluate();
 		}
-		else {
-			Statement statement = _createMethodStatement(frameworkMethod);
-
-			runNotifier.fireTestStarted(description);
-
-			try {
-				statement.evaluate();
-			}
-			catch (AssumptionViolatedException ave) {
-				runNotifier.fireTestAssumptionFailed(
-					new Failure(description, ave));
-			}
-			catch (MultipleFailureException mfe) {
-				for (Throwable t : mfe.getFailures()) {
-					runNotifier.fireTestFailure(new Failure(description, t));
-				}
-			}
-			catch (Throwable t) {
+		catch (AssumptionViolatedException ave) {
+			runNotifier.fireTestAssumptionFailed(new Failure(description, ave));
+		}
+		catch (MultipleFailureException mfe) {
+			for (Throwable t : mfe.getFailures()) {
 				runNotifier.fireTestFailure(new Failure(description, t));
 			}
-			finally {
-				runNotifier.fireTestFinished(description);
-			}
+		}
+		catch (Throwable t) {
+			runNotifier.fireTestFailure(new Failure(description, t));
+		}
+		finally {
+			runNotifier.fireTestFinished(description);
 		}
 	}
 

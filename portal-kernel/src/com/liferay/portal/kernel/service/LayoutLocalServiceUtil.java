@@ -927,6 +927,12 @@ public class LayoutLocalServiceUtil {
 	}
 
 	public static com.liferay.portal.kernel.model.Layout fetchLayout(
+		long classNameId, long classPK) {
+
+		return getService().fetchLayout(classNameId, classPK);
+	}
+
+	public static com.liferay.portal.kernel.model.Layout fetchLayout(
 		String uuid, long groupId, boolean privateLayout) {
 
 		return getService().fetchLayout(uuid, groupId, privateLayout);

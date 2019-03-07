@@ -133,25 +133,8 @@ public class Arquillian extends Runner implements Filterable {
 					Throwable throwable = (Throwable)oos.readObject();
 
 					if (throwable != null) {
-						if (throwable instanceof AssumptionViolatedException) {
-							runNotifier.fireTestAssumptionFailed(
-								new Failure(description, throwable));
-						}
-						else if (throwable instanceof
-									MultipleFailureException) {
-
-							MultipleFailureException mfe =
-								(MultipleFailureException)throwable;
-
-							for (Throwable t : mfe.getFailures()) {
-								runNotifier.fireTestFailure(
-									new Failure(description, t));
-							}
-						}
-						else {
-							runNotifier.fireTestFailure(
-								new Failure(description, throwable));
-						}
+						_processTestException(
+							runNotifier, description, throwable);
 					}
 				}
 
@@ -185,6 +168,25 @@ public class Arquillian extends Runner implements Filterable {
 		frameworkMBean.startBundle(bundleId);
 
 		return () -> frameworkMBean.uninstallBundle(bundleId);
+	}
+
+	private void _processTestException(
+		RunNotifier runNotifier, Description description, Throwable throwable) {
+
+		if (throwable instanceof AssumptionViolatedException) {
+			runNotifier.fireTestAssumptionFailed(
+				new Failure(description, throwable));
+		}
+		else if (throwable instanceof MultipleFailureException) {
+			MultipleFailureException mfe = (MultipleFailureException)throwable;
+
+			for (Throwable t : mfe.getFailures()) {
+				runNotifier.fireTestFailure(new Failure(description, t));
+			}
+		}
+		else {
+			runNotifier.fireTestFailure(new Failure(description, throwable));
+		}
 	}
 
 	private final Class<?> _clazz;

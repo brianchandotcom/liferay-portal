@@ -175,6 +175,8 @@ public class MBMessageIndexerIndexedFieldsTest {
 		indexedFieldsFixture.populatePriority("0.0", map);
 		indexedFieldsFixture.populateUID(
 			MBMessage.class.getName(), mbMessage.getMessageId(), map);
+		indexedFieldsFixture.populateViewCount(
+			MBMessage.class, mbMessage.getMessageId(), map);
 
 		_populateDates(mbMessage, map);
 		_populateRoles(mbMessage, map);

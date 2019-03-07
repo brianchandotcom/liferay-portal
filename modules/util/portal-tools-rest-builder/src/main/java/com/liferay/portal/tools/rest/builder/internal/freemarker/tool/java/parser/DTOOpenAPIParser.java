@@ -51,12 +51,11 @@ public class DTOOpenAPIParser {
 				propertySchemaName);
 			String parameterType = _getParameterType(
 				javaDataTypeMap, propertySchema, propertySchemaName);
-			String accessType = _getAccessType(propertySchema);
 
 			javaMethodParameters.add(
 				new JavaMethodParameter(
 					parameterName, parameterType,
-					propertySchema.getDescription(), accessType));
+					propertySchema.getDescription()));
 		}
 
 		return javaMethodParameters;
@@ -71,15 +70,20 @@ public class DTOOpenAPIParser {
 			configYAML, openAPIYAML, schemas.get(schemaName));
 	}
 
-	private static String _getAccessType(Schema propertySchema) {
-		if (propertySchema.isReadOnly()) {
-			return "JsonProperty.Access.READ_ONLY";
-		}
-		else if (propertySchema.isWriteOnly()) {
-			return "JsonProperty.Access.WRITE_ONLY";
+	public static Schema getPropertySchema(
+		JavaMethodParameter javaMethodParameter, Schema schema) {
+
+		String parameterName = javaMethodParameter.getParameterName();
+
+		Map<String, Schema> propertySchemas = _getPropertySchemas(schema);
+
+		for (Map.Entry<String, Schema> entry : propertySchemas.entrySet()) {
+			if (StringUtil.equalsIgnoreCase(entry.getKey(), parameterName)) {
+				return entry.getValue();
+			}
 		}
 
-		return "JsonProperty.Access.READ_WRITE";
+		return null;
 	}
 
 	private static String _getParameterType(

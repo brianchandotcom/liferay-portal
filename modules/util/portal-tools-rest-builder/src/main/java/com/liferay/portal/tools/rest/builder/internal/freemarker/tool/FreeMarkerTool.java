@@ -87,6 +87,12 @@ public class FreeMarkerTool {
 		return null;
 	}
 
+	public Schema getDTOPropertySchema(
+		JavaMethodParameter javaMethodParameter, Schema schema) {
+
+		return DTOOpenAPIParser.getPropertySchema(javaMethodParameter, schema);
+	}
+
 	public String getGraphQLArguments(
 		List<JavaMethodParameter> javaMethodParameters) {
 

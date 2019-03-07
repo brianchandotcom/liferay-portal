@@ -958,6 +958,13 @@ public class LayoutLocalServiceWrapper
 
 	@Override
 	public com.liferay.portal.kernel.model.Layout fetchLayout(
+		long classNameId, long classPK) {
+
+		return _layoutLocalService.fetchLayout(classNameId, classPK);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.model.Layout fetchLayout(
 		String uuid, long groupId, boolean privateLayout) {
 
 		return _layoutLocalService.fetchLayout(uuid, groupId, privateLayout);

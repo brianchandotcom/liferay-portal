@@ -180,7 +180,7 @@ FragmentsEditor.STATE = Object.assign(
 		 * @type {!string}
 		 */
 
-		publishLayoutPageTemplateEntryURL: Config.string(),
+		publishURL: Config.string(),
 
 		/**
 		 * URL for redirect.

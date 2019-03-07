@@ -68,7 +68,7 @@ import org.osgi.service.component.annotations.ServiceScope;
  * @author Javier Gamarra
  */
 @Component(
-	properties = "OSGI-INF/liferay/rest/v1_0/Bulk-action-response.properties",
+	properties = "OSGI-INF/liferay/rest/v1_0/bulk-action-response.properties",
 	scope = ServiceScope.PROTOTYPE, service = BulkActionResponseResource.class
 )
 public class BulkActionResponseResourceImpl

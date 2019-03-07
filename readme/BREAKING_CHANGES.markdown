@@ -274,31 +274,31 @@ the chance of package version lock down.
 
 ---------------------------------------
 
-### Switch to use JDK Function and Supplier
+### Switched to use JDK Function and Supplier
 - **Date:** 2019-Jan-08
 - **JIRA Ticket:** [LPS-88911](https://issues.liferay.com/browse/LPS-88911)
 
 #### What changed?
 
-`Function` and `Supplier` in package `com.liferay.portal.kernel.util` were
-removed. Their usages were replaced with `java.util.function.Function` and
-`java.util.function.Supplier`.
+The `Function` and `Supplier` interfaces in package
+`com.liferay.portal.kernel.util` were removed. Their usages were replaced with
+`java.util.function.Function` and `java.util.function.Supplier`.
 
 #### Who is affected?
 
-This affects anyone who used `Function` and `Supplier` in package
-`com.liferay.portal.kernel.util`.
+This affects anyone who implemented the `Function` and `Supplier` interfaces in
+package `com.liferay.portal.kernel.util`.
 
 #### How should I update my code?
 
-Replace usages of `com.liferay.portal.kernel.util.Function` with
-`java.util.function.Function`. Replace usages of
-`com.liferay.portal.kernel.util.Supplier` with `java.util.function.Supplier`.
+You should replace usages of `com.liferay.portal.kernel.util.Function` and
+`com.liferay.portal.kernel.util.Supplier` with `java.util.function.Function` and
+`java.util.function.Supplier`, respectively.
 
 #### Why was this change made?
 
-It's one of several steps to clean up kernel provider interfaces to reduce the
-chance of package version lock down.
+This is one of several steps to clean up kernel provider interfaces to reduce
+the chance of package version lock down.
 
 ---------------------------------------
 

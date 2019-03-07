@@ -61,17 +61,10 @@ public class ServerRunner extends Runner implements Filterable {
 
 	@Override
 	public void run(RunNotifier runNotifier) {
-		Description description = getDescription();
+		for (FrameworkMethod frameworkMethod :
+				_testClass.getAnnotatedMethods(Test.class)) {
 
-		try {
-			for (FrameworkMethod frameworkMethod :
-					_testClass.getAnnotatedMethods(Test.class)) {
-
-				_runMethod(frameworkMethod, runNotifier);
-			}
-		}
-		catch (Throwable t) {
-			runNotifier.fireTestFailure(new Failure(description, t));
+			_runMethod(frameworkMethod, runNotifier);
 		}
 	}
 
@@ -90,13 +83,14 @@ public class ServerRunner extends Runner implements Filterable {
 
 		Description description = _describeChild(frameworkMethod);
 
-		Statement statement = _withTimeout(
-			frameworkMethod,
-			new ServerExecutorStatement(_clazz, frameworkMethod.getMethod()));
-
 		runNotifier.fireTestStarted(description);
 
 		try {
+			Statement statement = _withTimeout(
+				frameworkMethod,
+				new ServerExecutorStatement(
+					_clazz, frameworkMethod.getMethod()));
+
 			statement.evaluate();
 		}
 		catch (AssumptionViolatedException ave) {

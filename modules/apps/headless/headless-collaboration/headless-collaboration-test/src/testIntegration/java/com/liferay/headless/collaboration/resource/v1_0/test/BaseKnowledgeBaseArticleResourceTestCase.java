@@ -22,7 +22,6 @@ import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
 import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
 
 import com.liferay.headless.collaboration.dto.v1_0.KnowledgeBaseArticle;
-import com.liferay.headless.collaboration.dto.v1_0.KnowledgeBaseAttachment;
 import com.liferay.headless.collaboration.resource.v1_0.KnowledgeBaseArticleResource;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -38,7 +37,6 @@ import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-import com.liferay.portal.vulcan.multipart.MultipartBody;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
@@ -772,210 +770,6 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 	}
 
 	@Test
-	public void testGetKnowledgeBaseArticleAttachment() throws Exception {
-		Assert.assertTrue(true);
-	}
-
-	protected KnowledgeBaseAttachment invokeGetKnowledgeBaseArticleAttachment(
-			Long knowledgeBaseArticleId)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		String location =
-			_resourceURL +
-				_toPath(
-					"/knowledge-base-articles/{knowledge-base-article-id}/attachments",
-					knowledgeBaseArticleId);
-
-		options.setLocation(location);
-
-		return _outputObjectMapper.readValue(
-			HttpUtil.URLtoString(options), KnowledgeBaseAttachment.class);
-	}
-
-	protected Http.Response invokeGetKnowledgeBaseArticleAttachmentResponse(
-			Long knowledgeBaseArticleId)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		String location =
-			_resourceURL +
-				_toPath(
-					"/knowledge-base-articles/{knowledge-base-article-id}/attachments",
-					knowledgeBaseArticleId);
-
-		options.setLocation(location);
-
-		HttpUtil.URLtoString(options);
-
-		return options.getResponse();
-	}
-
-	@Test
-	public void testPostKnowledgeBaseArticleAttachment() throws Exception {
-		Assert.assertTrue(true);
-	}
-
-	protected KnowledgeBaseArticle
-			testPostKnowledgeBaseArticleAttachment_addKnowledgeBaseArticle(
-				KnowledgeBaseArticle knowledgeBaseArticle)
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	protected KnowledgeBaseAttachment invokePostKnowledgeBaseArticleAttachment(
-			Long knowledgeBaseArticleId, MultipartBody multipartBody)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		String location =
-			_resourceURL +
-				_toPath(
-					"/knowledge-base-articles/{knowledge-base-article-id}/attachments",
-					knowledgeBaseArticleId);
-
-		options.setLocation(location);
-
-		options.setPost(true);
-
-		return _outputObjectMapper.readValue(
-			HttpUtil.URLtoString(options), KnowledgeBaseAttachment.class);
-	}
-
-	protected Http.Response invokePostKnowledgeBaseArticleAttachmentResponse(
-			Long knowledgeBaseArticleId, MultipartBody multipartBody)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		String location =
-			_resourceURL +
-				_toPath(
-					"/knowledge-base-articles/{knowledge-base-article-id}/attachments",
-					knowledgeBaseArticleId);
-
-		options.setLocation(location);
-
-		options.setPost(true);
-
-		HttpUtil.URLtoString(options);
-
-		return options.getResponse();
-	}
-
-	@Test
-	public void testDeleteKnowledgeBaseArticleAttachment() throws Exception {
-		KnowledgeBaseArticle knowledgeBaseArticle =
-			testDeleteKnowledgeBaseArticleAttachment_addKnowledgeBaseArticle();
-
-		assertResponseCode(
-			200,
-			invokeDeleteKnowledgeBaseArticleAttachmentResponse(
-				knowledgeBaseArticle.getId()));
-
-		assertResponseCode(
-			404,
-			invokeGetKnowledgeBaseArticleAttachmentResponse(
-				knowledgeBaseArticle.getId()));
-	}
-
-	protected KnowledgeBaseArticle
-			testDeleteKnowledgeBaseArticleAttachment_addKnowledgeBaseArticle()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	protected boolean invokeDeleteKnowledgeBaseArticleAttachment(
-			Long knowledgeBaseArticleId, Long attachmentId)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		options.setDelete(true);
-
-		String location =
-			_resourceURL +
-				_toPath(
-					"/knowledge-base-articles/{knowledge-base-article-id}/attachments/{attachment-id}",
-					knowledgeBaseArticleId);
-
-		options.setLocation(location);
-
-		return _outputObjectMapper.readValue(
-			HttpUtil.URLtoString(options), Boolean.class);
-	}
-
-	protected Http.Response invokeDeleteKnowledgeBaseArticleAttachmentResponse(
-			Long knowledgeBaseArticleId, Long attachmentId)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		options.setDelete(true);
-
-		String location =
-			_resourceURL +
-				_toPath(
-					"/knowledge-base-articles/{knowledge-base-article-id}/attachments/{attachment-id}",
-					knowledgeBaseArticleId);
-
-		options.setLocation(location);
-
-		HttpUtil.URLtoString(options);
-
-		return options.getResponse();
-	}
-
-	@Test
-	public void testGetKnowledgeBaseArticleAttachment() throws Exception {
-		Assert.assertTrue(true);
-	}
-
-	protected KnowledgeBaseAttachment invokeGetKnowledgeBaseArticleAttachment(
-			Long knowledgeBaseArticleId, Long attachmentId)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		String location =
-			_resourceURL +
-				_toPath(
-					"/knowledge-base-articles/{knowledge-base-article-id}/attachments/{attachment-id}",
-					knowledgeBaseArticleId);
-
-		options.setLocation(location);
-
-		return _outputObjectMapper.readValue(
-			HttpUtil.URLtoString(options), KnowledgeBaseAttachment.class);
-	}
-
-	protected Http.Response invokeGetKnowledgeBaseArticleAttachmentResponse(
-			Long knowledgeBaseArticleId, Long attachmentId)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		String location =
-			_resourceURL +
-				_toPath(
-					"/knowledge-base-articles/{knowledge-base-article-id}/attachments/{attachment-id}",
-					knowledgeBaseArticleId);
-
-		options.setLocation(location);
-
-		HttpUtil.URLtoString(options);
-
-		return options.getResponse();
-	}
-
-	@Test
 	public void testGetKnowledgeBaseArticleKnowledgeBaseArticlesPage()
 		throws Exception {
 
@@ -1389,6 +1183,14 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 			return sb.toString();
 		}
 
+		if (entityFieldName.equals("description")) {
+			sb.append("'");
+			sb.append(String.valueOf(knowledgeBaseArticle.getDescription()));
+			sb.append("'");
+
+			return sb.toString();
+		}
+
 		if (entityFieldName.equals("friendlyUrlPath")) {
 			sb.append("'");
 			sb.append(
@@ -1450,6 +1252,7 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 				contentSpace = RandomTestUtil.randomLong();
 				dateCreated = RandomTestUtil.nextDate();
 				dateModified = RandomTestUtil.nextDate();
+				description = RandomTestUtil.randomString();
 				friendlyUrlPath = RandomTestUtil.randomString();
 				title = RandomTestUtil.randomString();
 				hasAttachments = RandomTestUtil.randomBoolean();

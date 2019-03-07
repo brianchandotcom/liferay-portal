@@ -86,6 +86,8 @@ public class OpenAPIResourceImpl {
 
 			add(KnowledgeBaseArticleResourceImpl.class);
 
+			add(KnowledgeBaseAttachmentResourceImpl.class);
+
 			add(OpenAPIResourceImpl.class);
 		}
 	};

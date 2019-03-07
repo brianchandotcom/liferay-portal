@@ -23,19 +23,25 @@ import com.liferay.headless.collaboration.internal.dto.v1_0.util.AggregateRating
 import com.liferay.headless.collaboration.internal.dto.v1_0.util.CreatorUtil;
 import com.liferay.headless.collaboration.internal.dto.v1_0.util.ParentFolderUtil;
 import com.liferay.headless.collaboration.resource.v1_0.KnowledgeBaseArticleResource;
+import com.liferay.headless.common.spi.service.context.ServiceContextUtil;
+import com.liferay.knowledge.base.constants.KBPortletKeys;
 import com.liferay.knowledge.base.model.KBArticle;
 import com.liferay.knowledge.base.model.KBFolder;
 import com.liferay.knowledge.base.service.KBArticleService;
 import com.liferay.knowledge.base.service.KBFolderService;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.ClassName;
+import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.service.ClassNameService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
-import com.liferay.portal.vulcan.multipart.MultipartBody;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.ratings.kernel.service.RatingsStatsLocalService;
+
+import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -133,37 +139,83 @@ public class KnowledgeBaseArticleResourceImpl
 
 	@Override
 	public KnowledgeBaseArticle postContentSpaceKnowledgeBaseArticle(
-			Long contentSpaceId, MultipartBody multipartBody)
+			Long contentSpaceId, KnowledgeBaseArticle knowledgeBaseArticle)
 		throws Exception {
 
-		return super.postContentSpaceKnowledgeBaseArticle(
-			contentSpaceId, multipartBody);
+		ClassName className = _classNameService.fetchClassName(
+			KBFolder.class.getName());
+
+		return _getKnowledgeBaseArticle(
+			contentSpaceId, 0L, className, knowledgeBaseArticle);
 	}
 
 	@Override
 	public KnowledgeBaseArticle postFolderKnowledgeBaseArticle(
-			Long folderId, MultipartBody multipartBody)
+			Long folderId, KnowledgeBaseArticle knowledgeBaseArticle)
 		throws Exception {
 
-		return super.postFolderKnowledgeBaseArticle(folderId, multipartBody);
+		KBFolder kbFolder = _kbFolderService.getKBFolder(folderId);
+
+		ClassName className = _classNameService.fetchClassName(
+			KBFolder.class.getName());
+
+		return _getKnowledgeBaseArticle(
+			kbFolder.getGroupId(), folderId, className, knowledgeBaseArticle);
 	}
 
 	@Override
 	public KnowledgeBaseArticle postKnowledgeBaseArticleKnowledgeBaseArticle(
-			Long knowledgeBaseArticleId, MultipartBody multipartBody)
+			Long knowledgeBaseArticleId,
+			KnowledgeBaseArticle knowledgeBaseArticle)
 		throws Exception {
 
-		return super.postKnowledgeBaseArticleKnowledgeBaseArticle(
-			knowledgeBaseArticleId, multipartBody);
+		KBArticle kbArticle = _kbArticleService.fetchLatestKBArticle(
+			knowledgeBaseArticleId, WorkflowConstants.STATUS_APPROVED);
+
+		ClassName className = _classNameService.fetchClassName(
+			KBArticle.class.getName());
+
+		return _getKnowledgeBaseArticle(
+			kbArticle.getGroupId(), knowledgeBaseArticleId, className,
+			knowledgeBaseArticle);
 	}
 
 	@Override
 	public KnowledgeBaseArticle putKnowledgeBaseArticle(
-			Long knowledgeBaseArticleId, MultipartBody multipartBody)
+			Long knowledgeBaseArticleId,
+			KnowledgeBaseArticle knowledgeBaseArticle)
 		throws Exception {
 
-		return super.putKnowledgeBaseArticle(
-			knowledgeBaseArticleId, multipartBody);
+		return _toKBArticle(
+			_kbArticleService.updateKBArticle(
+				knowledgeBaseArticleId, knowledgeBaseArticle.getTitle(),
+				knowledgeBaseArticle.getArticleBody(),
+				knowledgeBaseArticle.getDescription(), null, null, null, null,
+				ServiceContextUtil.createServiceContext(
+					knowledgeBaseArticle.getKeywords(),
+					knowledgeBaseArticle.getCategoryIds(),
+					knowledgeBaseArticle.getContentSpace(),
+					knowledgeBaseArticle.getViewableBy())));
+	}
+
+	private KnowledgeBaseArticle _getKnowledgeBaseArticle(
+			Long contentSpaceId, Long resourcePrimaryKey,
+			ClassName resourceClassName,
+			KnowledgeBaseArticle knowledgeBaseArticle)
+		throws PortalException {
+
+		return _toKBArticle(
+			_kbArticleService.addKBArticle(
+				KBPortletKeys.KNOWLEDGE_BASE_DISPLAY,
+				resourceClassName.getClassNameId(), resourcePrimaryKey,
+				knowledgeBaseArticle.getTitle(),
+				knowledgeBaseArticle.getFriendlyUrlPath(),
+				knowledgeBaseArticle.getArticleBody(),
+				knowledgeBaseArticle.getDescription(), null, null, null,
+				ServiceContextUtil.createServiceContext(
+					knowledgeBaseArticle.getKeywords(),
+					knowledgeBaseArticle.getCategoryIds(), contentSpaceId,
+					knowledgeBaseArticle.getViewableBy())));
 	}
 
 	private KnowledgeBaseArticle _toKBArticle(KBArticle kbArticle)
@@ -172,6 +224,9 @@ public class KnowledgeBaseArticleResourceImpl
 		if (kbArticle == null) {
 			return null;
 		}
+
+		List<FileEntry> attachmentsFileEntries =
+			kbArticle.getAttachmentsFileEntries();
 
 		return new KnowledgeBaseArticle() {
 			{
@@ -194,7 +249,9 @@ public class KnowledgeBaseArticleResourceImpl
 					_portal, _userLocalService.getUser(kbArticle.getUserId()));
 				dateCreated = kbArticle.getCreateDate();
 				dateModified = kbArticle.getModifiedDate();
+				description = kbArticle.getDescription();
 				friendlyUrlPath = kbArticle.getUrlTitle();
+				hasAttachments = !attachmentsFileEntries.isEmpty();
 				id = kbArticle.getKbArticleId();
 				keywords = ListUtil.toArray(
 					_assetTagLocalService.getTags(
@@ -218,6 +275,9 @@ public class KnowledgeBaseArticleResourceImpl
 
 	@Reference
 	private AssetTagLocalService _assetTagLocalService;
+
+	@Reference
+	private ClassNameService _classNameService;
 
 	@Reference
 	private KBArticleService _kbArticleService;

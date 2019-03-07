@@ -25,11 +25,13 @@ import com.liferay.headless.collaboration.internal.resource.v1_0.BlogPostingReso
 import com.liferay.headless.collaboration.internal.resource.v1_0.CommentResourceImpl;
 import com.liferay.headless.collaboration.internal.resource.v1_0.FolderResourceImpl;
 import com.liferay.headless.collaboration.internal.resource.v1_0.KnowledgeBaseArticleResourceImpl;
+import com.liferay.headless.collaboration.internal.resource.v1_0.KnowledgeBaseAttachmentResourceImpl;
 import com.liferay.headless.collaboration.resource.v1_0.BlogPostingImageResource;
 import com.liferay.headless.collaboration.resource.v1_0.BlogPostingResource;
 import com.liferay.headless.collaboration.resource.v1_0.CommentResource;
 import com.liferay.headless.collaboration.resource.v1_0.FolderResource;
 import com.liferay.headless.collaboration.resource.v1_0.KnowledgeBaseArticleResource;
+import com.liferay.headless.collaboration.resource.v1_0.KnowledgeBaseAttachmentResource;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
@@ -304,43 +306,6 @@ public class Query {
 
 	@GraphQLField
 	@GraphQLInvokeDetached
-	public KnowledgeBaseAttachment getKnowledgeBaseArticleAttachment(
-			@GraphQLName("knowledge-base-article-id") Long
-				knowledgeBaseArticleId)
-		throws Exception {
-
-		KnowledgeBaseArticleResource knowledgeBaseArticleResource =
-			_createKnowledgeBaseArticleResource();
-
-		knowledgeBaseArticleResource.setContextCompany(
-			CompanyLocalServiceUtil.getCompany(
-				CompanyThreadLocal.getCompanyId()));
-
-		return knowledgeBaseArticleResource.getKnowledgeBaseArticleAttachment(
-			knowledgeBaseArticleId);
-	}
-
-	@GraphQLField
-	@GraphQLInvokeDetached
-	public KnowledgeBaseAttachment getKnowledgeBaseArticleAttachment(
-			@GraphQLName("knowledge-base-article-id") Long
-				knowledgeBaseArticleId,
-			@GraphQLName("attachment-id") Long attachmentId)
-		throws Exception {
-
-		KnowledgeBaseArticleResource knowledgeBaseArticleResource =
-			_createKnowledgeBaseArticleResource();
-
-		knowledgeBaseArticleResource.setContextCompany(
-			CompanyLocalServiceUtil.getCompany(
-				CompanyThreadLocal.getCompanyId()));
-
-		return knowledgeBaseArticleResource.getKnowledgeBaseArticleAttachment(
-			knowledgeBaseArticleId, attachmentId);
-	}
-
-	@GraphQLField
-	@GraphQLInvokeDetached
 	public Collection<KnowledgeBaseArticle>
 			getKnowledgeBaseArticleKnowledgeBaseArticlesPage(
 				@GraphQLName("knowledge-base-article-id") Long
@@ -364,6 +329,44 @@ public class Query {
 		return paginationPage.getItems();
 	}
 
+	@GraphQLField
+	@GraphQLInvokeDetached
+	public Collection<KnowledgeBaseAttachment>
+			getKnowledgeBaseArticleAttachmentsPage(
+				@GraphQLName("knowledge-base-article-id") Long
+					knowledgeBaseArticleId)
+		throws Exception {
+
+		KnowledgeBaseAttachmentResource knowledgeBaseAttachmentResource =
+			_createKnowledgeBaseAttachmentResource();
+
+		knowledgeBaseAttachmentResource.setContextCompany(
+			CompanyLocalServiceUtil.getCompany(
+				CompanyThreadLocal.getCompanyId()));
+
+		Page paginationPage =
+			knowledgeBaseAttachmentResource.
+				getKnowledgeBaseArticleAttachmentsPage(knowledgeBaseArticleId);
+
+		return paginationPage.getItems();
+	}
+
+	@GraphQLField
+	@GraphQLInvokeDetached
+	public KnowledgeBaseAttachment getAttachment(
+			@GraphQLName("attachment-id") Long attachmentId)
+		throws Exception {
+
+		KnowledgeBaseAttachmentResource knowledgeBaseAttachmentResource =
+			_createKnowledgeBaseAttachmentResource();
+
+		knowledgeBaseAttachmentResource.setContextCompany(
+			CompanyLocalServiceUtil.getCompany(
+				CompanyThreadLocal.getCompanyId()));
+
+		return knowledgeBaseAttachmentResource.getAttachment(attachmentId);
+	}
+
 	private static BlogPostingResource _createBlogPostingResource() {
 		return new BlogPostingResourceImpl();
 	}
@@ -384,6 +387,12 @@ public class Query {
 		_createKnowledgeBaseArticleResource() {
 
 		return new KnowledgeBaseArticleResourceImpl();
+	}
+
+	private static KnowledgeBaseAttachmentResource
+		_createKnowledgeBaseAttachmentResource() {
+
+		return new KnowledgeBaseAttachmentResourceImpl();
 	}
 
 }

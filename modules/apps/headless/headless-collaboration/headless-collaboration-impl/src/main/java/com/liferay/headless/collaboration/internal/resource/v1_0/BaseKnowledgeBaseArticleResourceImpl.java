@@ -15,14 +15,12 @@
 package com.liferay.headless.collaboration.internal.resource.v1_0;
 
 import com.liferay.headless.collaboration.dto.v1_0.KnowledgeBaseArticle;
-import com.liferay.headless.collaboration.dto.v1_0.KnowledgeBaseAttachment;
 import com.liferay.headless.collaboration.resource.v1_0.KnowledgeBaseArticleResource;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
-import com.liferay.portal.vulcan.multipart.MultipartBody;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.util.TransformUtil;
@@ -184,6 +182,11 @@ public abstract class BaseKnowledgeBaseArticleResourceImpl
 				knowledgeBaseArticle.getDateModified());
 		}
 
+		if (Validator.isNotNull(knowledgeBaseArticle.getDescription())) {
+			existingKnowledgeBaseArticle.setDescription(
+				knowledgeBaseArticle.getDescription());
+		}
+
 		if (Validator.isNotNull(knowledgeBaseArticle.getFriendlyUrlPath())) {
 			existingKnowledgeBaseArticle.setFriendlyUrlPath(
 				knowledgeBaseArticle.getFriendlyUrlPath());
@@ -229,58 +232,6 @@ public abstract class BaseKnowledgeBaseArticleResourceImpl
 		throws Exception {
 
 		return new KnowledgeBaseArticle();
-	}
-
-	@Override
-	@GET
-	@Path("/knowledge-base-articles/{knowledge-base-article-id}/attachments")
-	@Produces("application/json")
-	public KnowledgeBaseAttachment getKnowledgeBaseArticleAttachment(
-			@PathParam("knowledge-base-article-id") Long knowledgeBaseArticleId)
-		throws Exception {
-
-		return new KnowledgeBaseAttachment();
-	}
-
-	@Override
-	@Consumes("multipart/form-data")
-	@POST
-	@Path("/knowledge-base-articles/{knowledge-base-article-id}/attachments")
-	@Produces("application/json")
-	public KnowledgeBaseAttachment postKnowledgeBaseArticleAttachment(
-			@PathParam("knowledge-base-article-id") Long knowledgeBaseArticleId,
-			MultipartBody multipartBody)
-		throws Exception {
-
-		return new KnowledgeBaseAttachment();
-	}
-
-	@Override
-	@DELETE
-	@Path(
-		"/knowledge-base-articles/{knowledge-base-article-id}/attachments/{attachment-id}"
-	)
-	@Produces("application/json")
-	public boolean deleteKnowledgeBaseArticleAttachment(
-			@PathParam("knowledge-base-article-id") Long knowledgeBaseArticleId,
-			@PathParam("attachment-id") Long attachmentId)
-		throws Exception {
-
-		return false;
-	}
-
-	@Override
-	@GET
-	@Path(
-		"/knowledge-base-articles/{knowledge-base-article-id}/attachments/{attachment-id}"
-	)
-	@Produces("application/json")
-	public KnowledgeBaseAttachment getKnowledgeBaseArticleAttachment(
-			@PathParam("knowledge-base-article-id") Long knowledgeBaseArticleId,
-			@PathParam("attachment-id") Long attachmentId)
-		throws Exception {
-
-		return new KnowledgeBaseAttachment();
 	}
 
 	@Override

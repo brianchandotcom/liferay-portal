@@ -15,9 +15,7 @@
 package com.liferay.headless.collaboration.resource.v1_0;
 
 import com.liferay.headless.collaboration.dto.v1_0.KnowledgeBaseArticle;
-import com.liferay.headless.collaboration.dto.v1_0.KnowledgeBaseAttachment;
 import com.liferay.portal.kernel.model.Company;
-import com.liferay.portal.vulcan.multipart.MultipartBody;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 
@@ -65,22 +63,6 @@ public interface KnowledgeBaseArticleResource {
 	public KnowledgeBaseArticle putKnowledgeBaseArticle(
 			Long knowledgeBaseArticleId,
 			KnowledgeBaseArticle knowledgeBaseArticle)
-		throws Exception;
-
-	public KnowledgeBaseAttachment getKnowledgeBaseArticleAttachment(
-			Long knowledgeBaseArticleId)
-		throws Exception;
-
-	public KnowledgeBaseAttachment postKnowledgeBaseArticleAttachment(
-			Long knowledgeBaseArticleId, MultipartBody multipartBody)
-		throws Exception;
-
-	public boolean deleteKnowledgeBaseArticleAttachment(
-			Long knowledgeBaseArticleId, Long attachmentId)
-		throws Exception;
-
-	public KnowledgeBaseAttachment getKnowledgeBaseArticleAttachment(
-			Long knowledgeBaseArticleId, Long attachmentId)
 		throws Exception;
 
 	public Page<KnowledgeBaseArticle>

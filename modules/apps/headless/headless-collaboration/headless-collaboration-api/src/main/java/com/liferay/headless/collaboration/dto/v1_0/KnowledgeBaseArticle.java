@@ -233,6 +233,30 @@ public class KnowledgeBaseArticle {
 	@JsonProperty
 	protected Date dateModified;
 
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	@JsonIgnore
+	public void setDescription(
+		UnsafeSupplier<String, Exception> descriptionUnsafeSupplier) {
+
+		try {
+			description = descriptionUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty
+	protected String description;
+
 	public String getFriendlyUrlPath() {
 		return friendlyUrlPath;
 	}
@@ -503,6 +527,13 @@ public class KnowledgeBaseArticle {
 
 		sb.append("\"");
 		sb.append(dateModified);
+		sb.append("\"");
+		sb.append(", ");
+
+		sb.append("\"description\": ");
+
+		sb.append("\"");
+		sb.append(description);
 		sb.append("\"");
 		sb.append(", ");
 

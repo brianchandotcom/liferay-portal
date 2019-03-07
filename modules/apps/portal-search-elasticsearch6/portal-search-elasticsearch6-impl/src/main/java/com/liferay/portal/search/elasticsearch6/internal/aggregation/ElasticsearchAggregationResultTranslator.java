@@ -136,10 +136,12 @@ public class ElasticsearchAggregationResultTranslator
 	public ElasticsearchAggregationResultTranslator(
 		org.elasticsearch.search.aggregations.Aggregation
 			elasticsearchAggregation,
-		AggregationResults aggregationResults) {
+		AggregationResults aggregationResults,
+		SearchHitsTranslator searchHitsTranslator) {
 
 		_elasticsearchAggregation = elasticsearchAggregation;
 		_aggregationResults = aggregationResults;
+		_searchHitsTranslator = searchHitsTranslator;
 	}
 
 	@Override
@@ -148,7 +150,8 @@ public class ElasticsearchAggregationResultTranslator
 			elasticsearchAggregation) {
 
 		return new ElasticsearchAggregationResultTranslator(
-			elasticsearchAggregation, _aggregationResults);
+			elasticsearchAggregation, _aggregationResults,
+			_searchHitsTranslator);
 	}
 
 	@Override
@@ -628,7 +631,6 @@ public class ElasticsearchAggregationResultTranslator
 	private final AggregationResults _aggregationResults;
 	private final org.elasticsearch.search.aggregations.Aggregation
 		_elasticsearchAggregation;
-	private final SearchHitsTranslator _searchHitsTranslator =
-		new SearchHitsTranslator();
+	private final SearchHitsTranslator _searchHitsTranslator;
 
 }

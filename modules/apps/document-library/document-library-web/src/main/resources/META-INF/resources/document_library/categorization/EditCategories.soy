@@ -1,7 +1,6 @@
 {namespace EditCategories}
 
 {template .render}
-	{@param dataSource: string|[]|list<?>}
 	{@param loading: bool}
 	{@param showModal: bool}
 	{@param spritemap: string}
@@ -9,7 +8,7 @@
 	{@param? description: string}
 	{@param? multiple: bool}
 	{@param? namespace: string}
-	{@param? selectCategoriesUrl: string}
+	{@param selectCategoriesUrl: string}
 	{@param? _handleRadioChange: any}
 	{@param? _handleSaveBtnClick: any}
 
@@ -21,7 +20,6 @@
 				{else}
 					{call .categories}
 						{param description: $description /}
-						{param dataSource: $dataSource /}
 						{param multiple: $multiple /}
 						{param namespace: $namespace /}
 						{param selectCategoriesUrl: $selectCategoriesUrl /}
@@ -59,10 +57,9 @@
 {/template}
 
 {template .categories}
-	{@param dataSource: string|[]|list<?>}
 	{@param? vocabularies: list<?>}
 	{@param? namespace: string}
-	{@param? selectCategoriesUrl: string}
+	{@param selectCategoriesUrl: string}
 	{@param spritemap: string}
 	{@param? description: string}
 	{@param? multiple: bool}
@@ -100,18 +97,15 @@
 	{/if}
 
 	{if $vocabularies and length($vocabularies) > 0}
-		{foreach $vocabulary in $vocabularies}
-			{call .categorySelector}
-				{param vocabularyId: $vocabulary.id /}
-				{param vocabularyName: $vocabulary.name /}
-				{param multiValued: $vocabulary.multiValued /}
-				{param categories: $vocabulary.categories /}
-				{param dataSource: $dataSource /}
-				{param namespace: $namespace /}
-				{param selectCategoriesUrl: $selectCategoriesUrl /}
-				{param spritemap: $spritemap /}
-			{/call}
-		{/foreach}
+		{call com.liferay.asset.taglib.AssetCategoriesSelector.render}
+			{param elementClasses: 'clay-multi-select' /}
+			{param eventName: $namespace + 'selectCategories' /}
+			{param id: $namespace + 'assetTagsSelector' /}
+			{param inputName: $namespace + '_hiddenInput_' /}
+			{param portletURL: $selectCategoriesUrl /}
+			{param spritemap: $spritemap /}
+			{param vocabularies: $vocabularies /}
+		{/call}
 	{/if}
 {/template}
 

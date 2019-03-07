@@ -5,6 +5,7 @@ import {Config} from 'metal-state';
 import Soy from 'metal-soy';
 import 'frontend-js-web/liferay/compat/modal/Modal.es';
 import './InputCategoriesSelector.es';
+import 'asset-taglib/asset_categories_selector/AssetCategoriesSelector.es';
 import templates from './EditCategories.soy';
 
 /**
@@ -126,7 +127,7 @@ class EditCategories extends Component {
 
 		this.vocabularies.forEach(
 			vocabulary => {
-				let categoryIds = vocabulary.categories.map(item => item.value);
+				let categoryIds = vocabulary.selectedItems.map(item => item.value);
 				finalCategories = finalCategories.concat(categoryIds);
 			}
 		);
@@ -202,16 +203,17 @@ class EditCategories extends Component {
 			vocabulary => {
 				let categories = this._parseCategories(vocabulary.categories);
 
+				let categoryIds = categories.map(item => item.value);
+
 				let obj = {
-					categories: categories,
-					id: vocabulary.vocabularyId,
-					multiValued: vocabulary.multiValued,
-					name: vocabulary.name
+					id: vocabulary.vocabularyId + '', //TODO
+					selectedCategoryIds: categoryIds.join(','),
+					selectedItems: categories,
+					singleSelect: !vocabulary.multiValued,
+					title: vocabulary.name
 				};
 
 				vocabulariesList.push(obj);
-
-				let categoryIds = categories.map(item => item.value);
 
 				initialCategories = initialCategories.concat(categoryIds);
 			}

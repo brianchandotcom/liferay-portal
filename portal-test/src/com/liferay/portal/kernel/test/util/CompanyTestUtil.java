@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.util.TimeZoneUtil;
 
 import java.util.Collection;
 import java.util.Locale;
+import java.util.TimeZone;
 
 import javax.portlet.PortletPreferences;
 
@@ -69,7 +70,10 @@ public class CompanyTestUtil {
 		User user = UserLocalServiceUtil.loadGetDefaultUser(companyId);
 
 		user.setLanguageId(defaultLanguageId);
-		user.setTimeZoneId(TimeZoneUtil.getDefault().getID());
+
+		TimeZone timeZone = TimeZoneUtil.getDefault();
+
+		user.setTimeZoneId(timeZone.getID());
 
 		UserLocalServiceUtil.updateUser(user);
 

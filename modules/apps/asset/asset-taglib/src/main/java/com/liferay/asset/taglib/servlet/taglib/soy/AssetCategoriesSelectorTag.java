@@ -33,16 +33,20 @@ import com.liferay.portal.kernel.portlet.PortletProviderUtil;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.taglib.aui.AUIUtil;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.portlet.PortletRequest;
+import javax.portlet.PortletResponse;
 import javax.portlet.PortletURL;
 
 /**
@@ -57,8 +61,8 @@ public class AssetCategoriesSelectorTag extends ComponentRendererTag {
 
 		try {
 			putValue("eventName", getEventName());
-			putValue("id", "assetCategoriesSelector");
-			putValue("inputName", _hiddenInput + StringPool.UNDERLINE);
+			putValue("id", _getNamespace() + "assetCategoriesSelector");
+			putValue("inputName", _getInputName());
 			putValue("portletURL", getPortletURL().toString());
 			putValue(
 				"spritemap",
@@ -354,6 +358,31 @@ public class AssetCategoriesSelectorTag extends ComponentRendererTag {
 		return vocabularies;
 	}
 
+	private String _getInputName() {
+		return _getNamespace() + _hiddenInput + StringPool.UNDERLINE;
+	}
+
+	private String _getNamespace() {
+		if (_namespace != null) {
+			return _namespace;
+		}
+
+		PortletRequest portletRequest = (PortletRequest)request.getAttribute(
+			JavaConstants.JAVAX_PORTLET_REQUEST);
+		PortletResponse portletResponse = (PortletResponse)request.getAttribute(
+			JavaConstants.JAVAX_PORTLET_RESPONSE);
+
+		if ((portletRequest == null) || (portletResponse == null)) {
+			_namespace = AUIUtil.getNamespace(request);
+
+			return _namespace;
+		}
+
+		_namespace = AUIUtil.getNamespace(portletRequest, portletResponse);
+
+		return _namespace;
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		AssetCategoriesSelectorTag.class);
 
@@ -364,6 +393,7 @@ public class AssetCategoriesSelectorTag extends ComponentRendererTag {
 	private long[] _groupIds;
 	private String _hiddenInput = "assetCategoryIds";
 	private boolean _ignoreRequestValue;
+	private String _namespace;
 	private boolean _showRequiredLabel = true;
 	private boolean _singleSelect;
 

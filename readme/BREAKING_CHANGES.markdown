@@ -357,38 +357,41 @@ the chance of package version lock down.
 
 ---------------------------------------
 
-### Switch to use JDK Predicate
+### Switched to use JDK Predicate
 - **Date:** 2019-Jan-14
 - **JIRA Ticket:** [LPS-89139](https://issues.liferay.com/browse/LPS-89139)
 
 #### What changed?
 
-Interface `com.liferay.portal.kernel.util.PredicateFilter` was removed and
-replaced with `java.util.function.Predicate`. As a result of that, all
-implementations of the interface: `AggregatePredicateFilter`,
-`PrefixPredicateFilter` in package `com.liferay.portal.kernel.util`,
-`JavaScriptPortletResourcePredicateFilter` in package
-`com.liferay.portal.kernel.portlet` and `DDMFormFieldValuePredicateFilter`
-in package `com.liferay.dynamic.data.mapping.form.values.query.internal.model`
-were removed. `com.liferay.portal.kernel.util.ArrayUtil_IW` was regenerated.
+The interface `com.liferay.portal.kernel.util.PredicateFilter` was removed and
+replaced with `java.util.function.Predicate`. As a result, the following
+implementations were removed:
+
+- `com.liferay.portal.kernel.util.AggregatePredicateFilter`
+- `com.liferay.portal.kernel.util.PrefixPredicateFilter`
+- `com.liferay.portal.kernel.portlet.JavaScriptPortletResourcePredicateFilter`
+- `com.liferay.dynamic.data.mapping.form.values.query.internal.model.DDMFormFieldValuePredicateFilter`
+
+The `com.liferay.portal.kernel.util.ArrayUtil_IW` class was regenerated.
 
 #### Who is affected?
 
 This affects anyone who used `PredicateFilter`, `AggregatePredicateFilter`,
-`PrefixPredicateFilter`, `JavaScriptPortletResourcePredicateFilter` and
+`PrefixPredicateFilter`, `JavaScriptPortletResourcePredicateFilter`, and
 `DDMFormFieldValuePredicateFilter`.
 
 #### How should I update my code?
 
-Replace usages of `com.liferay.portal.kernel.util.PredicateFilter` with
-`java.util.function.Predicate`. Remove usages of `AggregatePredicateFilter`,
-`PrefixPredicateFilter`, `JavaScriptPortletResourcePredicateFilter` and
+You should replace usages of `com.liferay.portal.kernel.util.PredicateFilter`
+with `java.util.function.Predicate`. Additionally, remove usages of
+`AggregatePredicateFilter`, `PrefixPredicateFilter`,
+`JavaScriptPortletResourcePredicateFilter`, and
 `DDMFormFieldValuePredicateFilter`.
 
 #### Why was this change made?
 
-It's one of several steps to clean up kernel provider interfaces to reduce the
-chance of package version lock down.
+This is one of several steps to clean up kernel provider interfaces to reduce
+the chance of package version lock down.
 
 ---------------------------------------
 

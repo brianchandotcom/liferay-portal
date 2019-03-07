@@ -1,0 +1,141 @@
+{namespace com.liferay.layout.content.page.editor.web.FloatingToolbarImagePropertiesPanel}
+
+/**
+ * FloatingToolbarTextPropertiesPanel
+ */
+{template .render}
+	{@param item: ?}
+	{@param? _imageTargetOptions: list<[
+		imageTargetId: string,
+		label: string
+	]>}
+	{@param? _handleImageLinkInputChange: any}
+	{@param? _handleImageTargetOptionChange: any}
+
+	<div class="floating-toolbar-spacing-panel">
+		{call .imageLink}
+			{param _handleImageLinkInputChange: $_handleImageLinkInputChange /}
+			{param item: $item /}
+		{/call}
+
+		{call .imageTargetOptions}
+			{param _handleImageTargetOptionChange: $_handleImageTargetOptionChange /}
+			{param imageTargetOptions: $_imageTargetOptions /}
+			{param item: $item /}
+		{/call}
+	</div>
+{/template}
+
+/**
+ * Image Link Input
+ */
+{template .imageLink}
+	{@param item: ?}
+	{@param? _handleImageLinkInputChange: any}
+
+	<div class="form-group">
+		<label for="floatingToolbarImagePropertiesPanelImageLink">
+			{msg desc=""}link{/msg}
+		</label>
+
+		{let $inputPlaceholder kind="text"}
+			{msg desc=""}url{/msg}
+		{/let}
+
+		{let $inputValue kind="text"}
+			{if $item.editableValues.config and $item.editableValues.config.imagePosition}
+				{$item.editableValues.config.imageLink}
+			{/if}
+		{/let}
+
+		<input
+			class="form-control form-control-sm"
+			data-onchange="{$_handleImageLinkInputChange}"
+			id="floatingToolbarImagePropertiesPanelImageLink"
+			placeholder="{$inputPlaceholder}"
+			title="{$inputValue}"
+			type="text"
+			value="{$inputValue}"
+		/>
+	</div>
+{/template}
+
+/**
+ * Image Position option
+ */
+{template .imagePositionOption}
+	{@param imagePosition: [
+		imagePositionId: string,
+		label: string
+	]}
+	{@param item: ?}
+
+	{let $optionAttributes kind="attributes"}
+		value="{$imagePosition.imagePositionId}"
+
+		{if $item.editableValues.config and $item.editableValues.config.imagePosition == $imagePosition.imagePositionId}
+			selected
+		{/if}
+	{/let}
+
+	<option {$optionAttributes}>
+		{$imagePosition.label}
+	</option>
+{/template}
+
+/**
+ * Image target options
+ */
+{template .imageTargetOptions}
+	{@param item: ?}
+	{@param? _handleImageTargetOptionChange: any}
+	{@param? imageTargetOptions: list<[
+		imageTargetId: string,
+		label: string
+	]>}
+
+	{if $imageTargetOptions}
+		<div class="form-group">
+			<label for="floatingToolbarImagePropertiesPanelImageTarget">
+				{msg desc=""}target{/msg}
+			</label>
+
+			<select
+				class="form-control form-control-sm"
+				data-onchange="{$_handleImageTargetOptionChange}"
+				id="floatingToolbarImagePropertiesPanelImageTarget"
+			>
+				{foreach $imageTarget in $imageTargetOptions}
+					{call .imageTargetOption}
+						{param imageTarget: $imageTarget /}
+						{param item: $item /}
+						{param key: $imageTarget.imageTargetId /}
+					{/call}
+				{/foreach}
+			</select>
+		</div>
+	{/if}
+{/template}
+
+/**
+ * Image Target option
+ */
+{template .imageTargetOption}
+	{@param imageTarget: [
+		imageTargetId: string,
+		label: string
+	]}
+	{@param item: ?}
+
+	{let $optionAttributes kind="attributes"}
+		value="{$imageTarget.imageTargetId}"
+
+		{if $item.editableValues.config and $item.editableValues.config.imageTarget == $imageTarget.imageTargetId}
+			selected
+		{/if}
+	{/let}
+
+	<option {$optionAttributes}>
+		{$imageTarget.label}
+	</option>
+{/template}

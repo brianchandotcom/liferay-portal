@@ -20,6 +20,12 @@ export const FLOATING_TOOLBAR_PANELS = {
 		title: Liferay.Language.get('edit')
 	},
 
+	imageProperties: {
+		icon: 'format',
+		panelId: 'image_properties',
+		title: Liferay.Language.get('image-properties')
+	},
+
 	link: {
 		icon: 'link',
 		panelId: 'link',
@@ -97,6 +103,8 @@ export const FRAGMENTS_EDITOR_ITEM_TYPES = {
  * Available editable field config keys
  */
 export const EDITABLE_FIELD_CONFIG_KEYS = {
+	imageLink: 'imageLink',
+	imageTarget: 'imageTarget',
 	textAlignment: 'textAlignment',
 	textColor: 'textColor',
 	textStyle: 'textStyle'

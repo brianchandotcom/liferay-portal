@@ -14,12 +14,12 @@ import {UPDATE_CONFIG_ATTRIBUTES, UPDATE_LAST_SAVE_DATE, UPDATE_SAVING_CHANGES_S
 class FloatingToolbarTextPropertiesPanel extends Component {
 
 	/**
-	 * Updates section configuration
+	 * Updates fragment configuration
 	 * @param {object} config Section configuration
 	 * @private
 	 * @review
 	 */
-	_updateSectionConfig(config) {
+	_updateFragmentConfig(config) {
 		this.store
 			.dispatchAction(
 				UPDATE_SAVING_CHANGES_STATUS,
@@ -59,7 +59,7 @@ class FloatingToolbarTextPropertiesPanel extends Component {
 	 * @review
 	 */
 	_handleTextAlignmentOptionChange(event) {
-		this._updateSectionConfig(
+		this._updateFragmentConfig(
 			{
 				[EDITABLE_FIELD_CONFIG_KEYS.textAlignment]: event.delegateTarget.value
 			}
@@ -73,7 +73,7 @@ class FloatingToolbarTextPropertiesPanel extends Component {
 	 * @review
 	 */
 	_handleTextColorButtonClick(event) {
-		this._updateSectionConfig(
+		this._updateFragmentConfig(
 			{
 				[EDITABLE_FIELD_CONFIG_KEYS.textColor]: event.color
 			}
@@ -87,7 +87,7 @@ class FloatingToolbarTextPropertiesPanel extends Component {
 	 * @review
 	 */
 	_handleTextStyleOptionChange(event) {
-		this._updateSectionConfig(
+		this._updateFragmentConfig(
 			{
 				[EDITABLE_FIELD_CONFIG_KEYS.textStyle]: event.delegateTarget.value
 			}
@@ -128,6 +128,12 @@ FloatingToolbarTextPropertiesPanel.STATE = {
 		.internal()
 		.value(TEXT_STYLES),
 
+	/**
+	 * @default undefined
+	 * @memberOf FloatingToolbarTextPropertiesPanel
+	 * @review
+	 * @type {object}
+	 */
 	item: Config.object(),
 
 	/**

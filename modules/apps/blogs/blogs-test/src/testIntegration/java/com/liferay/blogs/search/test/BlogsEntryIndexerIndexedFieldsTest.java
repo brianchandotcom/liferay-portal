@@ -158,6 +158,8 @@ public class BlogsEntryIndexerIndexedFieldsTest {
 		indexedFieldsFixture.populateUID(
 			BlogsEntry.class.getName(), blogsEntry.getEntryId(), map);
 		indexedFieldsFixture.populatePriority("0.0", map);
+		indexedFieldsFixture.populateViewCount(
+			BlogsEntry.class, blogsEntry.getEntryId(), map);
 
 		_populateDates(blogsEntry, map);
 		_populateRoles(blogsEntry, map);

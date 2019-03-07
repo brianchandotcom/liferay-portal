@@ -61,6 +61,24 @@ public abstract class BaseSegmentResourceImpl implements SegmentResource {
 			@Parameter(in = ParameterIn.QUERY, name = "pageSize")
 		}
 	)
+	@Path("/content-spaces/{content-space-id}/segments")
+	@Produces("application/json")
+	public Page<Segment> getContentSpaceSegmentsPage(
+			@PathParam("content-space-id") Long contentSpaceId,
+			@Context Pagination pagination)
+		throws Exception {
+
+		return Page.of(Collections.emptyList());
+	}
+
+	@Override
+	@GET
+	@Parameters(
+		value = {
+			@Parameter(in = ParameterIn.QUERY, name = "page"),
+			@Parameter(in = ParameterIn.QUERY, name = "pageSize")
+		}
+	)
 	@Path("/user-accounts/{user-id}/segments")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "Segment")})

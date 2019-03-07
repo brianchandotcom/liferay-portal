@@ -362,6 +362,26 @@ public class Query {
 
 	@GraphQLField
 	@GraphQLInvokeDetached
+	public Collection<Segment> getContentSpaceSegmentsPage(
+			@GraphQLName("content-space-id") Long contentSpaceId,
+			@GraphQLName("pageSize") int pageSize,
+			@GraphQLName("page") int page)
+		throws Exception {
+
+		SegmentResource segmentResource = _createSegmentResource();
+
+		segmentResource.setContextCompany(
+			CompanyLocalServiceUtil.getCompany(
+				CompanyThreadLocal.getCompanyId()));
+
+		Page paginationPage = segmentResource.getContentSpaceSegmentsPage(
+			contentSpaceId, Pagination.of(pageSize, page));
+
+		return paginationPage.getItems();
+	}
+
+	@GraphQLField
+	@GraphQLInvokeDetached
 	public Collection<Segment> getUserAccountUserSegmentsPage(
 			@GraphQLName("user-id") Long userId,
 			@GraphQLName("pageSize") int pageSize,

@@ -675,6 +675,10 @@
 			<finder-column name="privateLayout" />
 			<finder-column name="iconImageId" />
 		</finder>
+		<finder name="C_C" return-type="Layout">
+			<finder-column name="classNameId" />
+			<finder-column name="classPK" />
+		</finder>
 		<finder name="G_P_L" return-type="Layout" unique="true">
 			<finder-column name="groupId" />
 			<finder-column name="privateLayout" />

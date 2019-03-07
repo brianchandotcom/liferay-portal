@@ -100,6 +100,8 @@ import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 import com.liferay.portal.vulcan.util.SearchUtil;
 import com.liferay.ratings.kernel.service.RatingsStatsLocalService;
 
+import java.io.Serializable;
+
 import java.time.LocalDateTime;
 
 import java.util.AbstractMap;
@@ -348,6 +350,33 @@ public class StructuredContentResourceImpl
 					structuredContent.getViewableBy())));
 	}
 
+	private void _createFieldsDisplayValue(
+		ContentField contentField, List<String> fieldsDisplayValue) {
+
+		String repeatableId = contentField.getRepeatableId();
+
+		if (repeatableId == null) {
+			repeatableId = StringUtil.randomId();
+		}
+
+		fieldsDisplayValue.add(
+			contentField.getName() + DDM.INSTANCE_SEPARATOR + repeatableId);
+
+		for (ContentField nestedField : contentField.getNestedFields()) {
+			_createFieldsDisplayValue(nestedField, fieldsDisplayValue);
+		}
+	}
+
+	private String _createFieldsDisplayValue(ContentField[] contentFields) {
+		List<String> fieldsDisplayValues = new ArrayList<>();
+
+		for (ContentField contentField : contentFields) {
+			_createFieldsDisplayValue(contentField, fieldsDisplayValues);
+		}
+
+		return String.join(",", fieldsDisplayValues);
+	}
+
 	private String _createJournalArticleContent(
 			List<DDMFormFieldValue> ddmFormFieldValues,
 			DDMStructure ddmStructure)
@@ -427,6 +456,23 @@ public class StructuredContentResourceImpl
 		return substrings;
 	}
 
+	private String _getRepeatableId(
+		DDMFieldsCounter ddmFieldsCounter, Fields fields, String fieldName) {
+
+		Field field = fields.get(DDM.FIELDS_DISPLAY_NAME);
+
+		String fieldDisplayValue = (String)field.getValue();
+
+		int offset = ddmFieldsCounter.get(fieldName);
+
+		String[] fieldsDisplayValues = StringUtil.split(fieldDisplayValue);
+
+		String fieldsDisplayValue = fieldsDisplayValues[offset];
+
+		return StringUtil.extractLast(
+			fieldsDisplayValue, DDM.INSTANCE_SEPARATOR);
+	}
+
 	private Page<StructuredContent> _getStructuredContentsPage(
 			Long contentSpaceId, Long contentStructureId, Filter filter,
 			Pagination pagination, Sort[] sorts)
@@ -502,6 +548,8 @@ public class StructuredContentResourceImpl
 					ddmFormField -> _toContentFields(
 						ddmFieldsCounter, ddmStructure, fields,
 						ddmFormField.getName(), fieldDisplayValues));
+				repeatableId = _getRepeatableId(
+					ddmFieldsCounter, fields, field.getName());
 				value = _toValue(
 					ddmFieldsCounter, field,
 					contextAcceptLanguage.getPreferredLocale());
@@ -593,6 +641,7 @@ public class StructuredContentResourceImpl
 			Arrays.asList(contentFields),
 			contentFieldValue -> new DDMFormFieldValue() {
 				{
+					setInstanceId(contentFieldValue.getRepeatableId());
 					setName(contentFieldValue.getName());
 					setNestedDDMFormFields(
 						_toDDMFormFieldValues(
@@ -691,28 +740,54 @@ public class StructuredContentResourceImpl
 			ContentField[] contentFields, JournalArticle journalArticle)
 		throws Exception {
 
-		Fields fields = _journalConverter.getDDMFields(
-			journalArticle.getDDMStructure(), journalArticle.getContent());
-
 		List<DDMFormFieldValue> ddmFormFieldValues = _toDDMFormFieldValues(
 			contentFields, journalArticle.getDDMStructure(),
 			contextAcceptLanguage.getPreferredLocale());
+
+		DDMStructure ddmStructure = journalArticle.getDDMStructure();
+
+		DDMForm ddmForm = ddmStructure.getDDMForm();
+
+		ServiceContext serviceContext = new ServiceContext();
+
+		serviceContext.setAttribute(
+			"ddmFormValues",
+			_toString(
+				new DDMFormValues(ddmForm) {
+					{
+						setAvailableLocales(ddmForm.getAvailableLocales());
+						setDDMFormFieldValues(ddmFormFieldValues);
+						setDefaultLocale(ddmForm.getDefaultLocale());
+					}
+				}));
+
+		Fields newFields = _ddm.getFields(
+			ddmStructure.getStructureId(), serviceContext);
+
+		Fields fields = _journalConverter.getDDMFields(
+			journalArticle.getDDMStructure(), journalArticle.getContent());
 
 		Iterator<Field> iterator = fields.iterator();
 
 		while (iterator.hasNext()) {
 			Field field = iterator.next();
 
-			for (DDMFormFieldValue ddmFormFieldValue : ddmFormFieldValues) {
-				if (Objects.equals(
-						ddmFormFieldValue.getName(), field.getName())) {
+			Field newField = newFields.get(field.getName());
 
-					field.addValue(
-						contextAcceptLanguage.getPreferredLocale(),
-						ddmFormFieldValue.getValue());
-				}
+			if (newField != null) {
+				List<Serializable> values = newField.getValues(
+					contextAcceptLanguage.getPreferredLocale());
+
+				field.setValues(
+					contextAcceptLanguage.getPreferredLocale(), values);
 			}
 		}
+
+		Field field = fields.get(DDM.FIELDS_DISPLAY_NAME);
+
+		field.setValue(
+			contextAcceptLanguage.getPreferredLocale(),
+			_createFieldsDisplayValue(contentFields));
 
 		return fields;
 	}

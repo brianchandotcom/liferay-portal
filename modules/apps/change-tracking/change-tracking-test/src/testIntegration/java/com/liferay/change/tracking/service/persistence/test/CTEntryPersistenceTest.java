@@ -133,11 +133,11 @@ public class CTEntryPersistenceTest {
 
 		newCTEntry.setModifiedDate(RandomTestUtil.nextDate());
 
-		newCTEntry.setClassNameId(RandomTestUtil.nextLong());
+		newCTEntry.setModelClassNameId(RandomTestUtil.nextLong());
 
-		newCTEntry.setClassPK(RandomTestUtil.nextLong());
+		newCTEntry.setModelClassPK(RandomTestUtil.nextLong());
 
-		newCTEntry.setResourcePrimKey(RandomTestUtil.nextLong());
+		newCTEntry.setModelResourcePrimKey(RandomTestUtil.nextLong());
 
 		newCTEntry.setChangeType(RandomTestUtil.nextInt());
 
@@ -163,23 +163,17 @@ public class CTEntryPersistenceTest {
 			Time.getShortTimestamp(existingCTEntry.getModifiedDate()),
 			Time.getShortTimestamp(newCTEntry.getModifiedDate()));
 		Assert.assertEquals(
-			existingCTEntry.getClassNameId(), newCTEntry.getClassNameId());
+			existingCTEntry.getModelClassNameId(),
+			newCTEntry.getModelClassNameId());
 		Assert.assertEquals(
-			existingCTEntry.getClassPK(), newCTEntry.getClassPK());
+			existingCTEntry.getModelClassPK(), newCTEntry.getModelClassPK());
 		Assert.assertEquals(
-			existingCTEntry.getResourcePrimKey(),
-			newCTEntry.getResourcePrimKey());
+			existingCTEntry.getModelResourcePrimKey(),
+			newCTEntry.getModelResourcePrimKey());
 		Assert.assertEquals(
 			existingCTEntry.getChangeType(), newCTEntry.getChangeType());
 		Assert.assertEquals(
 			existingCTEntry.getStatus(), newCTEntry.getStatus());
-	}
-
-	@Test
-	public void testCountByResourcePrimKey() throws Exception {
-		_persistence.countByResourcePrimKey(RandomTestUtil.nextLong());
-
-		_persistence.countByResourcePrimKey(0L);
 	}
 
 	@Test
@@ -217,8 +211,8 @@ public class CTEntryPersistenceTest {
 		return OrderByComparatorFactoryUtil.create(
 			"CTEntry", "ctEntryId", true, "companyId", true, "userId", true,
 			"userName", true, "createDate", true, "modifiedDate", true,
-			"classNameId", true, "classPK", true, "resourcePrimKey", true,
-			"changeType", true, "status", true);
+			"modelClassNameId", true, "modelClassPK", true,
+			"modelResourcePrimKey", true, "changeType", true, "status", true);
 	}
 
 	@Test
@@ -434,13 +428,14 @@ public class CTEntryPersistenceTest {
 			newCTEntry.getPrimaryKey());
 
 		Assert.assertEquals(
-			Long.valueOf(existingCTEntry.getClassNameId()),
+			Long.valueOf(existingCTEntry.getModelClassNameId()),
 			ReflectionTestUtil.<Long>invoke(
-				existingCTEntry, "getOriginalClassNameId", new Class<?>[0]));
+				existingCTEntry, "getOriginalModelClassNameId",
+				new Class<?>[0]));
 		Assert.assertEquals(
-			Long.valueOf(existingCTEntry.getClassPK()),
+			Long.valueOf(existingCTEntry.getModelClassPK()),
 			ReflectionTestUtil.<Long>invoke(
-				existingCTEntry, "getOriginalClassPK", new Class<?>[0]));
+				existingCTEntry, "getOriginalModelClassPK", new Class<?>[0]));
 	}
 
 	protected CTEntry addCTEntry() throws Exception {
@@ -458,11 +453,11 @@ public class CTEntryPersistenceTest {
 
 		ctEntry.setModifiedDate(RandomTestUtil.nextDate());
 
-		ctEntry.setClassNameId(RandomTestUtil.nextLong());
+		ctEntry.setModelClassNameId(RandomTestUtil.nextLong());
 
-		ctEntry.setClassPK(RandomTestUtil.nextLong());
+		ctEntry.setModelClassPK(RandomTestUtil.nextLong());
 
-		ctEntry.setResourcePrimKey(RandomTestUtil.nextLong());
+		ctEntry.setModelResourcePrimKey(RandomTestUtil.nextLong());
 
 		ctEntry.setChangeType(RandomTestUtil.nextInt());
 

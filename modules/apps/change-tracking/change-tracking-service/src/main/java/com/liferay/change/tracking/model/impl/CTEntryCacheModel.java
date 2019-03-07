@@ -77,12 +77,12 @@ public class CTEntryCacheModel implements CacheModel<CTEntry>, Externalizable {
 		sb.append(createDate);
 		sb.append(", modifiedDate=");
 		sb.append(modifiedDate);
-		sb.append(", classNameId=");
-		sb.append(classNameId);
-		sb.append(", classPK=");
-		sb.append(classPK);
-		sb.append(", resourcePrimKey=");
-		sb.append(resourcePrimKey);
+		sb.append(", modelClassNameId=");
+		sb.append(modelClassNameId);
+		sb.append(", modelClassPK=");
+		sb.append(modelClassPK);
+		sb.append(", modelResourcePrimKey=");
+		sb.append(modelResourcePrimKey);
 		sb.append(", changeType=");
 		sb.append(changeType);
 		sb.append(", status=");
@@ -121,9 +121,9 @@ public class CTEntryCacheModel implements CacheModel<CTEntry>, Externalizable {
 			ctEntryImpl.setModifiedDate(new Date(modifiedDate));
 		}
 
-		ctEntryImpl.setClassNameId(classNameId);
-		ctEntryImpl.setClassPK(classPK);
-		ctEntryImpl.setResourcePrimKey(resourcePrimKey);
+		ctEntryImpl.setModelClassNameId(modelClassNameId);
+		ctEntryImpl.setModelClassPK(modelClassPK);
+		ctEntryImpl.setModelResourcePrimKey(modelResourcePrimKey);
 		ctEntryImpl.setChangeType(changeType);
 		ctEntryImpl.setStatus(status);
 
@@ -143,11 +143,11 @@ public class CTEntryCacheModel implements CacheModel<CTEntry>, Externalizable {
 		createDate = objectInput.readLong();
 		modifiedDate = objectInput.readLong();
 
-		classNameId = objectInput.readLong();
+		modelClassNameId = objectInput.readLong();
 
-		classPK = objectInput.readLong();
+		modelClassPK = objectInput.readLong();
 
-		resourcePrimKey = objectInput.readLong();
+		modelResourcePrimKey = objectInput.readLong();
 
 		changeType = objectInput.readInt();
 
@@ -172,11 +172,11 @@ public class CTEntryCacheModel implements CacheModel<CTEntry>, Externalizable {
 		objectOutput.writeLong(createDate);
 		objectOutput.writeLong(modifiedDate);
 
-		objectOutput.writeLong(classNameId);
+		objectOutput.writeLong(modelClassNameId);
 
-		objectOutput.writeLong(classPK);
+		objectOutput.writeLong(modelClassPK);
 
-		objectOutput.writeLong(resourcePrimKey);
+		objectOutput.writeLong(modelResourcePrimKey);
 
 		objectOutput.writeInt(changeType);
 
@@ -189,9 +189,9 @@ public class CTEntryCacheModel implements CacheModel<CTEntry>, Externalizable {
 	public String userName;
 	public long createDate;
 	public long modifiedDate;
-	public long classNameId;
-	public long classPK;
-	public long resourcePrimKey;
+	public long modelClassNameId;
+	public long modelClassPK;
+	public long modelResourcePrimKey;
 	public int changeType;
 	public int status;
 

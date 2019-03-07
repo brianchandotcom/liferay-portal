@@ -17,10 +17,8 @@ package com.liferay.change.tracking.model;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.bean.AutoEscape;
-import com.liferay.portal.kernel.model.AttachedModel;
 import com.liferay.portal.kernel.model.AuditedModel;
 import com.liferay.portal.kernel.model.BaseModel;
-import com.liferay.portal.kernel.model.ResourcedModel;
 import com.liferay.portal.kernel.model.ShardedModel;
 
 import java.util.Date;
@@ -38,8 +36,7 @@ import java.util.Date;
  */
 @ProviderType
 public interface CTEntryModel
-	extends AttachedModel, AuditedModel, BaseModel<CTEntry>, ResourcedModel,
-			ShardedModel {
+	extends AuditedModel, BaseModel<CTEntry>, ShardedModel {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -173,65 +170,46 @@ public interface CTEntryModel
 	public void setModifiedDate(Date modifiedDate);
 
 	/**
-	 * Returns the fully qualified class name of this ct entry.
+	 * Returns the model class name ID of this ct entry.
 	 *
-	 * @return the fully qualified class name of this ct entry
+	 * @return the model class name ID of this ct entry
 	 */
-	@Override
-	public String getClassName();
-
-	public void setClassName(String className);
+	public long getModelClassNameId();
 
 	/**
-	 * Returns the class name ID of this ct entry.
+	 * Sets the model class name ID of this ct entry.
 	 *
-	 * @return the class name ID of this ct entry
+	 * @param modelClassNameId the model class name ID of this ct entry
 	 */
-	@Override
-	public long getClassNameId();
+	public void setModelClassNameId(long modelClassNameId);
 
 	/**
-	 * Sets the class name ID of this ct entry.
+	 * Returns the model class pk of this ct entry.
 	 *
-	 * @param classNameId the class name ID of this ct entry
+	 * @return the model class pk of this ct entry
 	 */
-	@Override
-	public void setClassNameId(long classNameId);
+	public long getModelClassPK();
 
 	/**
-	 * Returns the class pk of this ct entry.
+	 * Sets the model class pk of this ct entry.
 	 *
-	 * @return the class pk of this ct entry
+	 * @param modelClassPK the model class pk of this ct entry
 	 */
-	@Override
-	public long getClassPK();
+	public void setModelClassPK(long modelClassPK);
 
 	/**
-	 * Sets the class pk of this ct entry.
+	 * Returns the model resource prim key of this ct entry.
 	 *
-	 * @param classPK the class pk of this ct entry
+	 * @return the model resource prim key of this ct entry
 	 */
-	@Override
-	public void setClassPK(long classPK);
+	public long getModelResourcePrimKey();
 
 	/**
-	 * Returns the resource prim key of this ct entry.
+	 * Sets the model resource prim key of this ct entry.
 	 *
-	 * @return the resource prim key of this ct entry
+	 * @param modelResourcePrimKey the model resource prim key of this ct entry
 	 */
-	@Override
-	public long getResourcePrimKey();
-
-	/**
-	 * Sets the resource prim key of this ct entry.
-	 *
-	 * @param resourcePrimKey the resource prim key of this ct entry
-	 */
-	@Override
-	public void setResourcePrimKey(long resourcePrimKey);
-
-	@Override
-	public boolean isResourceMain();
+	public void setModelResourcePrimKey(long modelResourcePrimKey);
 
 	/**
 	 * Returns the change type of this ct entry.

@@ -29,7 +29,6 @@ import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.BaseLocalService;
 import com.liferay.portal.kernel.service.PersistedModelLocalService;
-import com.liferay.portal.kernel.service.PersistedResourcedModelLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
@@ -56,8 +55,7 @@ import java.util.List;
 	rollbackFor = {PortalException.class, SystemException.class}
 )
 public interface CTEntryLocalService
-	extends BaseLocalService, PersistedModelLocalService,
-			PersistedResourcedModelLocalService {
+	extends BaseLocalService, PersistedModelLocalService {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -84,8 +82,9 @@ public interface CTEntryLocalService
 	public CTEntry addCTEntry(CTEntry ctEntry);
 
 	public CTEntry addCTEntry(
-			long userId, long classNameId, long classPK, long resourcePrimKey,
-			int changeType, long ctCollectionId, ServiceContext serviceContext)
+			long userId, long modelClassNameId, long modelClassPK,
+			long resourcePrimKey, int changeType, long ctCollectionId,
+			ServiceContext serviceContext)
 		throws PortalException;
 
 	public void addCTEntryAggregateCTEntries(
@@ -240,11 +239,11 @@ public interface CTEntryLocalService
 	public CTEntry fetchCTEntry(long ctEntryId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public CTEntry fetchCTEntry(long classNameId, long classPK);
+	public CTEntry fetchCTEntry(long modelClassNameId, long modelClassPK);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public CTEntry fetchCTEntry(
-		long ctCollectionId, long classNameId, long classPK);
+		long ctCollectionId, long modelClassNameId, long modelClassPK);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
@@ -341,12 +340,6 @@ public interface CTEntryLocalService
 	 * @return the OSGi service identifier
 	 */
 	public String getOSGiServiceIdentifier();
-
-	@Override
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<? extends PersistedModel> getPersistedModel(
-			long resourcePrimKey)
-		throws PortalException;
 
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)

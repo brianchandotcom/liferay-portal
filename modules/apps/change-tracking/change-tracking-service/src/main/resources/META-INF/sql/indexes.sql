@@ -8,8 +8,7 @@ create index IX_AFC3725E on CTCollections_CTEntries (companyId);
 create index IX_D9FBD9E8 on CTCollections_CTEntries (ctCollectionId);
 create index IX_6EA8BE62 on CTCollections_CTEntries (ctEntryId);
 
-create unique index IX_776391C on CTEntry (classNameId, classPK);
-create index IX_C57DDD34 on CTEntry (resourcePrimKey);
+create unique index IX_88A1512E on CTEntry (modelClassNameId, modelClassPK);
 
 create index IX_49B471E1 on CTEntryAggregate (ownerCTEntryId);
 

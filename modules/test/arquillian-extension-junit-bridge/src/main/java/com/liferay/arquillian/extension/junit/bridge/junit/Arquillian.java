@@ -71,43 +71,39 @@ public class Arquillian extends Runner implements Filterable {
 	@Override
 	public void run(RunNotifier runNotifier) {
 		try {
-			List<FrameworkMethod> frameworkMethods = _getTestFrameworkMethods();
+			List<FrameworkMethod> frameworkMethods =
+				_testClass.getAnnotatedMethods(Test.class);
 
-			if (frameworkMethods != null) {
-				Statement statement = new Statement() {
+			boolean hasTestMethod = false;
 
-					@Override
-					public void evaluate() {
-						for (FrameworkMethod frameworkMethod :
-								frameworkMethods) {
+			for (FrameworkMethod frameworkMethod : frameworkMethods) {
+				if (!_isIgnored(frameworkMethod)) {
+					hasTestMethod = true;
 
-							_runMethod(frameworkMethod, runNotifier);
-						}
-					}
-
-				};
-
-				statement = new DeploymentStatement(statement);
-
-				statement.evaluate();
+					break;
+				}
 			}
+
+			Statement statement = new Statement() {
+
+				@Override
+				public void evaluate() {
+					for (FrameworkMethod frameworkMethod : frameworkMethods) {
+						_runMethod(frameworkMethod, runNotifier);
+					}
+				}
+
+			};
+
+			if (hasTestMethod) {
+				statement = new DeploymentStatement(statement);
+			}
+
+			statement.evaluate();
 		}
 		catch (Throwable t) {
 			runNotifier.fireTestFailure(new Failure(getDescription(), t));
 		}
-	}
-
-	private List<FrameworkMethod> _getTestFrameworkMethods() {
-		List<FrameworkMethod> frameworkMethods = _testClass.getAnnotatedMethods(
-			Test.class);
-
-		for (FrameworkMethod frameworkMethod : frameworkMethods) {
-			if (!_isIgnored(frameworkMethod)) {
-				return frameworkMethods;
-			}
-		}
-
-		return null;
 	}
 
 	private boolean _isIgnored(FrameworkMethod frameworkMethod) {

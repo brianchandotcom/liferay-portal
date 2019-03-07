@@ -4,15 +4,22 @@
  * FloatingToolbarMappingPanel
  */
 {template .render}
-	{@param? _encodedMappedAssetEntries: ?}
+	{@param item: [
+		editableValues: [
+			assetEntryEncodedId: string,
+			mappedField: string
+		]
+	]}
+	{@param? _assetEntries: list<[
+		assetEntryTitle: string,
+		encodedId: string
+	]>}
 	{@param? _fields: ?}
 	{@param? _handleAssetOptionChange: any}
 	{@param? _handleBrowseAllAssetsButtonClick: any}
 	{@param? _handleFieldOptionChange: any}
 	{@param? _handleSourceTypeChange: any}
 	{@param? _handleUnmapButtonClick: any}
-	{@param? _mappedAssetEntryEncodedId: ?}
-	{@param? _mappedFieldId: ?}
 	{@param? _selectedSourceTypeId: string}
 	{@param? _sourceTypeIds: [
 		content: string,
@@ -39,8 +46,8 @@
 			<div class="form-group floating-toolbar-mapping-panel__asset-select">
 				{call .assetSelect}
 					{param handleAssetOptionChange: $_handleAssetOptionChange /}
-					{param mappedAssetEntryEncodedId: $_mappedAssetEntryEncodedId /}
-					{param encodedMappedAssetEntries: $_encodedMappedAssetEntries /}
+					{param selectedAssetEntryEncodedId: $item.editableValues.assetEntryEncodedId /}
+					{param assetEntries: $_assetEntries /}
 				{/call}
 			</div>
 
@@ -53,7 +60,7 @@
 			{call .fieldSelect}
 				{param fields: $_fields /}
 				{param handleFieldOptionChange: $_handleFieldOptionChange /}
-				{param mappedFieldId: $_mappedFieldId /}
+				{param mappedFieldId: $item.editableValues.mappedField /}
 			{/call}
 		</div>
 
@@ -67,9 +74,12 @@
  * Asset select
  */
 {template .assetSelect}
+	{@param? assetEntries: list<[
+		assetEntryTitle: string,
+		encodedId: string
+	]>}
 	{@param? handleAssetOptionChange: any}
-	{@param? mappedAssetEntryEncodedId: ?}
-	{@param? encodedMappedAssetEntries: ?}
+	{@param? selectedAssetEntryEncodedId: string}
 
 	<label for="floatingToolbarMappingPanelAssetSelect">
 		{msg desc=""}content{/msg}
@@ -82,14 +92,16 @@
 	>
 		<option disabled value="-">-</option>
 
-		{foreach $assetEntry in $encodedMappedAssetEntries}
-			{call .selectOption}
-				{param optionId: $assetEntry.encodedId /}
-				{param optionLabel: $assetEntry.assetEntryTitle /}
-				{param key: $assetEntry.encodedId /}
-				{param selectedId: $mappedAssetEntryEncodedId /}
-			{/call}
-		{/foreach}
+		{if $assetEntries}
+			{foreach $assetEntry in $assetEntries}
+				{call .selectOption}
+					{param optionId: $assetEntry.encodedId /}
+					{param optionLabel: $assetEntry.assetEntryTitle /}
+					{param key: $assetEntry.encodedId /}
+					{param selectedId: $selectedAssetEntryEncodedId /}
+				{/call}
+			{/foreach}
+		{/if}
 	</select>
 {/template}
 

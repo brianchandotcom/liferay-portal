@@ -49,14 +49,12 @@ class FloatingToolbarMappingPanel extends PortletBase {
 	 * @review
 	 */
 	prepareStateForRender(state) {
-		const encodedMappedAssetEntries = this._mappedAssetEntries.map(
-			encodeAssetId
-		);
+		let nextState = state;
 
-		let nextState = setIn(
-			state,
-			['_encodedMappedAssetEntries'],
-			encodedMappedAssetEntries
+		nextState = setIn(
+			nextState,
+			['_assetEntries'],
+			nextState._assetEntries.map(encodeAssetId)
 		);
 
 		nextState = setIn(
@@ -65,13 +63,24 @@ class FloatingToolbarMappingPanel extends PortletBase {
 			SOURCE_TYPE_IDS
 		);
 
-		if (this.mappingFieldsURL) {
+		if (nextState.mappingFieldsURL) {
 			nextState = setIn(
 				nextState,
 				['_sourceTypes'],
 				FloatingToolbarMappingPanel._getSourceTypes(
-					this.selectedMappingTypes.subtype.label
+					nextState.selectedMappingTypes.subtype.label
 				)
+			);
+		}
+
+		if (
+			nextState.item.editableValues.assetEntryClassNameId &&
+			nextState.item.editableValues.assetEntryClassPK
+		) {
+			nextState = setIn(
+				nextState,
+				['item', 'editableValues', 'assetEntryEncodedId'],
+				encodeAssetId(nextState.item.editableValues).encodedId
 			);
 		}
 
@@ -268,34 +277,16 @@ FloatingToolbarMappingPanel.STATE = {
 		.value([]),
 
 	/**
-	 * @default undefined
-	 * @memberof FloatingToolbarMappingPanel
-	 * @review
-	 * @type {!string}
-	 */
-	_mappedAssetEntryEncodedId: Config
-		.string(),
-
-	/**
-	 * @default undefined
+	 * @default []
 	 * @memberOf FloatingToolbarMappingPanel
 	 * @private
 	 * @review
 	 * @type {object[]}
 	 */
-	_mappedAssetEntries: Config
+	_assetEntries: Config
 		.array()
 		.internal()
 		.value([]),
-
-	/**
-	 * @default undefined
-	 * @memberof FloatingToolbarMappingPanel
-	 * @review
-	 * @type {!string}
-	 */
-	_mappedFieldId: Config
-		.string(),
 
 	/**
 	 * @default undefined

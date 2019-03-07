@@ -18,13 +18,13 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import com.liferay.bulk.rest.dto.v1_0.BulkActionResponseModel;
-import com.liferay.bulk.rest.dto.v1_0.BulkAssetEntryActionModel;
-import com.liferay.bulk.rest.dto.v1_0.BulkAssetEntryCommonCategoriesModel;
-import com.liferay.bulk.rest.dto.v1_0.BulkAssetEntryCommonTagsModel;
-import com.liferay.bulk.rest.dto.v1_0.BulkAssetEntryUpdateCategoriesActionModel;
-import com.liferay.bulk.rest.dto.v1_0.BulkAssetEntryUpdateTagsActionModel;
-import com.liferay.bulk.rest.resource.v1_0.BulkActionResponseModelResource;
+import com.liferay.bulk.rest.dto.v1_0.BulkActionResponse;
+import com.liferay.bulk.rest.dto.v1_0.BulkAssetEntryAction;
+import com.liferay.bulk.rest.dto.v1_0.BulkAssetEntryCommonCategories;
+import com.liferay.bulk.rest.dto.v1_0.BulkAssetEntryCommonTags;
+import com.liferay.bulk.rest.dto.v1_0.BulkAssetEntryUpdateCategoriesAction;
+import com.liferay.bulk.rest.dto.v1_0.BulkAssetEntryUpdateTagsAction;
+import com.liferay.bulk.rest.resource.v1_0.BulkActionResponseResource;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
@@ -69,7 +69,7 @@ import org.junit.Test;
  * @generated
  */
 @Generated("")
-public abstract class BaseBulkActionResponseModelResourceTestCase {
+public abstract class BaseBulkActionResponseResourceTestCase {
 
 	@ClassRule
 	@Rule
@@ -96,105 +96,96 @@ public abstract class BaseBulkActionResponseModelResourceTestCase {
 
 	@Test
 	public void testPostCategoryClassName() throws Exception {
-		BulkActionResponseModel randomBulkActionResponseModel =
-			randomBulkActionResponseModel();
+		BulkActionResponse randomBulkActionResponse =
+			randomBulkActionResponse();
 
-		BulkActionResponseModel postBulkActionResponseModel =
-			testPostCategoryClassName_addBulkActionResponseModel(
-				randomBulkActionResponseModel);
+		BulkActionResponse postBulkActionResponse =
+			testPostCategoryClassName_addBulkActionResponse(
+				randomBulkActionResponse);
 
-		assertEquals(
-			randomBulkActionResponseModel, postBulkActionResponseModel);
-		assertValid(postBulkActionResponseModel);
+		assertEquals(randomBulkActionResponse, postBulkActionResponse);
+		assertValid(postBulkActionResponse);
 	}
 
 	@Test
 	public void testPostCategoryGroupCategoryClassName() throws Exception {
-		BulkActionResponseModel randomBulkActionResponseModel =
-			randomBulkActionResponseModel();
+		BulkActionResponse randomBulkActionResponse =
+			randomBulkActionResponse();
 
-		BulkActionResponseModel postBulkActionResponseModel =
-			testPostCategoryGroupCategoryClassName_addBulkActionResponseModel(
-				randomBulkActionResponseModel);
+		BulkActionResponse postBulkActionResponse =
+			testPostCategoryGroupCategoryClassName_addBulkActionResponse(
+				randomBulkActionResponse);
 
-		assertEquals(
-			randomBulkActionResponseModel, postBulkActionResponseModel);
-		assertValid(postBulkActionResponseModel);
+		assertEquals(randomBulkActionResponse, postBulkActionResponse);
+		assertValid(postBulkActionResponse);
 	}
 
 	@Test
 	public void testPostTagClassName() throws Exception {
-		BulkActionResponseModel randomBulkActionResponseModel =
-			randomBulkActionResponseModel();
+		BulkActionResponse randomBulkActionResponse =
+			randomBulkActionResponse();
 
-		BulkActionResponseModel postBulkActionResponseModel =
-			testPostTagClassName_addBulkActionResponseModel(
-				randomBulkActionResponseModel);
+		BulkActionResponse postBulkActionResponse =
+			testPostTagClassName_addBulkActionResponse(
+				randomBulkActionResponse);
 
-		assertEquals(
-			randomBulkActionResponseModel, postBulkActionResponseModel);
-		assertValid(postBulkActionResponseModel);
+		assertEquals(randomBulkActionResponse, postBulkActionResponse);
+		assertValid(postBulkActionResponse);
 	}
 
 	@Test
 	public void testPostTagGroupTagClassName() throws Exception {
-		BulkActionResponseModel randomBulkActionResponseModel =
-			randomBulkActionResponseModel();
+		BulkActionResponse randomBulkActionResponse =
+			randomBulkActionResponse();
 
-		BulkActionResponseModel postBulkActionResponseModel =
-			testPostTagGroupTagClassName_addBulkActionResponseModel(
-				randomBulkActionResponseModel);
+		BulkActionResponse postBulkActionResponse =
+			testPostTagGroupTagClassName_addBulkActionResponse(
+				randomBulkActionResponse);
 
-		assertEquals(
-			randomBulkActionResponseModel, postBulkActionResponseModel);
-		assertValid(postBulkActionResponseModel);
+		assertEquals(randomBulkActionResponse, postBulkActionResponse);
+		assertValid(postBulkActionResponse);
 	}
 
 	protected void assertEquals(
-		BulkActionResponseModel bulkActionResponseModel1,
-		BulkActionResponseModel bulkActionResponseModel2) {
+		BulkActionResponse bulkActionResponse1,
+		BulkActionResponse bulkActionResponse2) {
 
 		Assert.assertTrue(
-			bulkActionResponseModel1 + " does not equal " +
-				bulkActionResponseModel2,
-			equals(bulkActionResponseModel1, bulkActionResponseModel2));
+			bulkActionResponse1 + " does not equal " + bulkActionResponse2,
+			equals(bulkActionResponse1, bulkActionResponse2));
 	}
 
 	protected void assertEquals(
-		List<BulkActionResponseModel> bulkActionResponseModels1,
-		List<BulkActionResponseModel> bulkActionResponseModels2) {
+		List<BulkActionResponse> bulkActionResponses1,
+		List<BulkActionResponse> bulkActionResponses2) {
 
 		Assert.assertEquals(
-			bulkActionResponseModels1.size(), bulkActionResponseModels2.size());
+			bulkActionResponses1.size(), bulkActionResponses2.size());
 
-		for (int i = 0; i < bulkActionResponseModels1.size(); i++) {
-			BulkActionResponseModel bulkActionResponseModel1 =
-				bulkActionResponseModels1.get(i);
-			BulkActionResponseModel bulkActionResponseModel2 =
-				bulkActionResponseModels2.get(i);
+		for (int i = 0; i < bulkActionResponses1.size(); i++) {
+			BulkActionResponse bulkActionResponse1 = bulkActionResponses1.get(
+				i);
+			BulkActionResponse bulkActionResponse2 = bulkActionResponses2.get(
+				i);
 
-			assertEquals(bulkActionResponseModel1, bulkActionResponseModel2);
+			assertEquals(bulkActionResponse1, bulkActionResponse2);
 		}
 	}
 
 	protected void assertEqualsIgnoringOrder(
-		List<BulkActionResponseModel> bulkActionResponseModels1,
-		List<BulkActionResponseModel> bulkActionResponseModels2) {
+		List<BulkActionResponse> bulkActionResponses1,
+		List<BulkActionResponse> bulkActionResponses2) {
 
 		Assert.assertEquals(
-			bulkActionResponseModels1.size(), bulkActionResponseModels2.size());
+			bulkActionResponses1.size(), bulkActionResponses2.size());
 
-		for (BulkActionResponseModel bulkActionResponseModel1 :
-				bulkActionResponseModels1) {
-
+		for (BulkActionResponse bulkActionResponse1 : bulkActionResponses1) {
 			boolean contains = false;
 
-			for (BulkActionResponseModel bulkActionResponseModel2 :
-					bulkActionResponseModels2) {
+			for (BulkActionResponse bulkActionResponse2 :
+					bulkActionResponses2) {
 
-				if (equals(
-						bulkActionResponseModel1, bulkActionResponseModel2)) {
-
+				if (equals(bulkActionResponse1, bulkActionResponse2)) {
 					contains = true;
 
 					break;
@@ -202,8 +193,8 @@ public abstract class BaseBulkActionResponseModelResourceTestCase {
 			}
 
 			Assert.assertTrue(
-				bulkActionResponseModels2 + " does not contain " +
-					bulkActionResponseModel1,
+				bulkActionResponses2 + " does not contain " +
+					bulkActionResponse1,
 				contains);
 		}
 	}
@@ -215,20 +206,17 @@ public abstract class BaseBulkActionResponseModelResourceTestCase {
 			expectedResponseCode, actualResponse.getResponseCode());
 	}
 
-	protected void assertValid(
-		BulkActionResponseModel bulkActionResponseModel) {
-
+	protected void assertValid(BulkActionResponse bulkActionResponse) {
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
 	}
 
-	protected void assertValid(Page<BulkActionResponseModel> page) {
+	protected void assertValid(Page<BulkActionResponse> page) {
 		boolean valid = false;
 
-		Collection<BulkActionResponseModel> bulkActionResponseModels =
-			page.getItems();
+		Collection<BulkActionResponse> bulkActionResponses = page.getItems();
 
-		int size = bulkActionResponseModels.size();
+		int size = bulkActionResponses.size();
 
 		if ((page.getItemsPerPage() > 0) && (page.getLastPageNumber() > 0) &&
 			(page.getPageNumber() > 0) && (page.getTotalCount() > 0) &&
@@ -241,10 +229,10 @@ public abstract class BaseBulkActionResponseModelResourceTestCase {
 	}
 
 	protected boolean equals(
-		BulkActionResponseModel bulkActionResponseModel1,
-		BulkActionResponseModel bulkActionResponseModel2) {
+		BulkActionResponse bulkActionResponse1,
+		BulkActionResponse bulkActionResponse2) {
 
-		if (bulkActionResponseModel1 == bulkActionResponseModel2) {
+		if (bulkActionResponse1 == bulkActionResponse2) {
 			return true;
 		}
 
@@ -252,15 +240,13 @@ public abstract class BaseBulkActionResponseModelResourceTestCase {
 	}
 
 	protected Collection<EntityField> getEntityFields() throws Exception {
-		if (!(_bulkActionResponseModelResource instanceof
-				EntityModelResource)) {
-
+		if (!(_bulkActionResponseResource instanceof EntityModelResource)) {
 			throw new UnsupportedOperationException(
 				"Resource is not an instance of EntityModelResource");
 		}
 
 		EntityModelResource entityModelResource =
-			(EntityModelResource)_bulkActionResponseModelResource;
+			(EntityModelResource)_bulkActionResponseResource;
 
 		EntityModel entityModel = entityModelResource.getEntityModel(
 			new MultivaluedHashMap());
@@ -287,7 +273,7 @@ public abstract class BaseBulkActionResponseModelResourceTestCase {
 
 	protected String getFilterString(
 		EntityField entityField, String operator,
-		BulkActionResponseModel bulkActionResponseModel) {
+		BulkActionResponse bulkActionResponse) {
 
 		StringBundler sb = new StringBundler();
 
@@ -301,7 +287,7 @@ public abstract class BaseBulkActionResponseModelResourceTestCase {
 
 		if (entityFieldName.equals("description")) {
 			sb.append("'");
-			sb.append(String.valueOf(bulkActionResponseModel.getDescription()));
+			sb.append(String.valueOf(bulkActionResponse.getDescription()));
 			sb.append("'");
 
 			return sb.toString();
@@ -309,7 +295,7 @@ public abstract class BaseBulkActionResponseModelResourceTestCase {
 
 		if (entityFieldName.equals("status")) {
 			sb.append("'");
-			sb.append(String.valueOf(bulkActionResponseModel.getStatus()));
+			sb.append(String.valueOf(bulkActionResponse.getStatus()));
 			sb.append("'");
 
 			return sb.toString();
@@ -319,10 +305,10 @@ public abstract class BaseBulkActionResponseModelResourceTestCase {
 			"Invalid entity field " + entityFieldName);
 	}
 
-	protected BulkActionResponseModel invokePostCategoryClassName(
+	protected BulkActionResponse invokePostCategoryClassName(
 			Long categoryClassNameId,
-			BulkAssetEntryUpdateCategoriesActionModel
-				bulkAssetEntryUpdateCategoriesActionModel)
+			BulkAssetEntryUpdateCategoriesAction
+				bulkAssetEntryUpdateCategoriesAction)
 		throws Exception {
 
 		Http.Options options = _createHttpOptions();
@@ -336,13 +322,13 @@ public abstract class BaseBulkActionResponseModelResourceTestCase {
 		options.setPost(true);
 
 		return _outputObjectMapper.readValue(
-			HttpUtil.URLtoString(options), BulkActionResponseModel.class);
+			HttpUtil.URLtoString(options), BulkActionResponse.class);
 	}
 
 	protected Http.Response invokePostCategoryClassNameResponse(
 			Long categoryClassNameId,
-			BulkAssetEntryUpdateCategoriesActionModel
-				bulkAssetEntryUpdateCategoriesActionModel)
+			BulkAssetEntryUpdateCategoriesAction
+				bulkAssetEntryUpdateCategoriesAction)
 		throws Exception {
 
 		Http.Options options = _createHttpOptions();
@@ -360,10 +346,10 @@ public abstract class BaseBulkActionResponseModelResourceTestCase {
 		return options.getResponse();
 	}
 
-	protected BulkAssetEntryCommonCategoriesModel
+	protected BulkAssetEntryCommonCategories
 			invokePostCategoryGroupCategoryClassName(
 				Long categoryGroupId, Long categoryClassNameId,
-				BulkAssetEntryActionModel bulkAssetEntryActionModel)
+				BulkAssetEntryAction bulkAssetEntryAction)
 		throws Exception {
 
 		Http.Options options = _createHttpOptions();
@@ -378,12 +364,12 @@ public abstract class BaseBulkActionResponseModelResourceTestCase {
 
 		return _outputObjectMapper.readValue(
 			HttpUtil.URLtoString(options),
-			BulkAssetEntryCommonCategoriesModel.class);
+			BulkAssetEntryCommonCategories.class);
 	}
 
 	protected Http.Response invokePostCategoryGroupCategoryClassNameResponse(
 			Long categoryGroupId, Long categoryClassNameId,
-			BulkAssetEntryActionModel bulkAssetEntryActionModel)
+			BulkAssetEntryAction bulkAssetEntryAction)
 		throws Exception {
 
 		Http.Options options = _createHttpOptions();
@@ -401,10 +387,9 @@ public abstract class BaseBulkActionResponseModelResourceTestCase {
 		return options.getResponse();
 	}
 
-	protected BulkActionResponseModel invokePostTagClassName(
+	protected BulkActionResponse invokePostTagClassName(
 			Long tagClassNameId,
-			BulkAssetEntryUpdateTagsActionModel
-				bulkAssetEntryUpdateTagsActionModel)
+			BulkAssetEntryUpdateTagsAction bulkAssetEntryUpdateTagsAction)
 		throws Exception {
 
 		Http.Options options = _createHttpOptions();
@@ -416,13 +401,12 @@ public abstract class BaseBulkActionResponseModelResourceTestCase {
 		options.setPost(true);
 
 		return _outputObjectMapper.readValue(
-			HttpUtil.URLtoString(options), BulkActionResponseModel.class);
+			HttpUtil.URLtoString(options), BulkActionResponse.class);
 	}
 
 	protected Http.Response invokePostTagClassNameResponse(
 			Long tagClassNameId,
-			BulkAssetEntryUpdateTagsActionModel
-				bulkAssetEntryUpdateTagsActionModel)
+			BulkAssetEntryUpdateTagsAction bulkAssetEntryUpdateTagsAction)
 		throws Exception {
 
 		Http.Options options = _createHttpOptions();
@@ -438,9 +422,9 @@ public abstract class BaseBulkActionResponseModelResourceTestCase {
 		return options.getResponse();
 	}
 
-	protected BulkAssetEntryCommonTagsModel invokePostTagGroupTagClassName(
+	protected BulkAssetEntryCommonTags invokePostTagGroupTagClassName(
 			Long tagGroupId, Long tagClassNameId,
-			BulkAssetEntryActionModel bulkAssetEntryActionModel)
+			BulkAssetEntryAction bulkAssetEntryAction)
 		throws Exception {
 
 		Http.Options options = _createHttpOptions();
@@ -454,12 +438,12 @@ public abstract class BaseBulkActionResponseModelResourceTestCase {
 		options.setPost(true);
 
 		return _outputObjectMapper.readValue(
-			HttpUtil.URLtoString(options), BulkAssetEntryCommonTagsModel.class);
+			HttpUtil.URLtoString(options), BulkAssetEntryCommonTags.class);
 	}
 
 	protected Http.Response invokePostTagGroupTagClassNameResponse(
 			Long tagGroupId, Long tagClassNameId,
-			BulkAssetEntryActionModel bulkAssetEntryActionModel)
+			BulkAssetEntryAction bulkAssetEntryAction)
 		throws Exception {
 
 		Http.Options options = _createHttpOptions();
@@ -477,8 +461,8 @@ public abstract class BaseBulkActionResponseModelResourceTestCase {
 		return options.getResponse();
 	}
 
-	protected BulkActionResponseModel randomBulkActionResponseModel() {
-		return new BulkActionResponseModel() {
+	protected BulkActionResponse randomBulkActionResponse() {
+		return new BulkActionResponse() {
 			{
 				description = RandomTestUtil.randomString();
 				status = RandomTestUtil.randomString();
@@ -486,36 +470,35 @@ public abstract class BaseBulkActionResponseModelResourceTestCase {
 		};
 	}
 
-	protected BulkActionResponseModel
-			testPostCategoryClassName_addBulkActionResponseModel(
-				BulkActionResponseModel bulkActionResponseModel)
+	protected BulkActionResponse
+			testPostCategoryClassName_addBulkActionResponse(
+				BulkActionResponse bulkActionResponse)
 		throws Exception {
 
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
 	}
 
-	protected BulkActionResponseModel
-			testPostCategoryGroupCategoryClassName_addBulkActionResponseModel(
-				BulkActionResponseModel bulkActionResponseModel)
+	protected BulkActionResponse
+			testPostCategoryGroupCategoryClassName_addBulkActionResponse(
+				BulkActionResponse bulkActionResponse)
 		throws Exception {
 
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
 	}
 
-	protected BulkActionResponseModel
-			testPostTagClassName_addBulkActionResponseModel(
-				BulkActionResponseModel bulkActionResponseModel)
+	protected BulkActionResponse testPostTagClassName_addBulkActionResponse(
+			BulkActionResponse bulkActionResponse)
 		throws Exception {
 
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
 	}
 
-	protected BulkActionResponseModel
-			testPostTagGroupTagClassName_addBulkActionResponseModel(
-				BulkActionResponseModel bulkActionResponseModel)
+	protected BulkActionResponse
+			testPostTagGroupTagClassName_addBulkActionResponse(
+				BulkActionResponse bulkActionResponse)
 		throws Exception {
 
 		throw new UnsupportedOperationException(
@@ -594,7 +577,7 @@ public abstract class BaseBulkActionResponseModelResourceTestCase {
 	private static final ObjectMapper _outputObjectMapper = new ObjectMapper();
 
 	@Inject
-	private BulkActionResponseModelResource _bulkActionResponseModelResource;
+	private BulkActionResponseResource _bulkActionResponseResource;
 
 	private URL _resourceURL;
 

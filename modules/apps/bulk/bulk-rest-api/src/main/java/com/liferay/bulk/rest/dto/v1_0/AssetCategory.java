@@ -32,22 +32,42 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
-@GraphQLName("BulkStatusModel")
-@XmlRootElement(name = "BulkStatusModel")
-public class BulkStatusModel {
+@GraphQLName("AssetCategory")
+@XmlRootElement(name = "AssetCategory")
+public class AssetCategory {
 
-	public Boolean getBusy() {
-		return busy;
+	public Long getCategoryId() {
+		return categoryId;
 	}
 
-	public void setBusy(Boolean busy) {
-		this.busy = busy;
+	public String getName() {
+		return name;
+	}
+
+	public void setCategoryId(Long categoryId) {
+		this.categoryId = categoryId;
 	}
 
 	@JsonIgnore
-	public void setBusy(UnsafeSupplier<Boolean, Exception> busyUnsafeSupplier) {
+	public void setCategoryId(
+		UnsafeSupplier<Long, Exception> categoryIdUnsafeSupplier) {
+
 		try {
-			busy = busyUnsafeSupplier.get();
+			categoryId = categoryIdUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	@JsonIgnore
+	public void setName(UnsafeSupplier<String, Exception> nameUnsafeSupplier) {
+		try {
+			name = nameUnsafeSupplier.get();
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
@@ -55,13 +75,20 @@ public class BulkStatusModel {
 	}
 
 	public String toString() {
-		StringBundler sb = new StringBundler(4);
+		StringBundler sb = new StringBundler(9);
 
 		sb.append("{");
 
-		sb.append("\"busy\": ");
+		sb.append("\"categoryId\": ");
 
-		sb.append(busy);
+		sb.append(categoryId);
+		sb.append(", ");
+
+		sb.append("\"name\": ");
+
+		sb.append("\"");
+		sb.append(name);
+		sb.append("\"");
 
 		sb.append("}");
 
@@ -70,6 +97,10 @@ public class BulkStatusModel {
 
 	@GraphQLField
 	@JsonProperty
-	protected Boolean busy;
+	protected Long categoryId;
+
+	@GraphQLField
+	@JsonProperty
+	protected String name;
 
 }

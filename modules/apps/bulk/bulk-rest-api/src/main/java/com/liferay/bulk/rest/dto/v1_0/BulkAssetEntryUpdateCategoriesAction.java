@@ -32,9 +32,9 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
-@GraphQLName("BulkAssetEntryUpdateCategoriesActionModel")
-@XmlRootElement(name = "BulkAssetEntryUpdateCategoriesActionModel")
-public class BulkAssetEntryUpdateCategoriesActionModel {
+@GraphQLName("BulkAssetEntryUpdateCategoriesAction")
+@XmlRootElement(name = "BulkAssetEntryUpdateCategoriesAction")
+public class BulkAssetEntryUpdateCategoriesAction {
 
 	public Boolean getAppend() {
 		return append;

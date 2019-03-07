@@ -641,7 +641,11 @@ definition {
 		if ("${saveAsDraft}" == "true") {
 			PortletEntry.saveAsDraft();
 
-			AssertTextEquals(locator1 = "AssetWorkflow#WORKFLOW_STATUS", value1 = "Draft");
+			AssertTextEquals(
+				locator1 = "WCEditWebContent#WORKFLOW_STATUS",
+				value1 = "Draft",
+				key_status = "Draft"
+			);
 		}
 	}
 
@@ -1879,8 +1883,9 @@ definition {
 
 	macro viewStatus {
 		AssertTextEquals(
-			locator1 = "AssetWorkflow#WORKFLOW_STATUS",
-			value1 = "${webContentStatus}"
+			locator1 = "WCEditWebContent#WORKFLOW_STATUS",
+			value1 = "${webContentStatus}",
+			key_status = "${webContentStatus}"
 		);
 
 		AssertTextEquals(locator1 = "TextInput#TITLE", value1 = "${webContentTitle}");
@@ -2094,7 +2099,8 @@ definition {
 
 		AssertTextEquals(
 			locator1 = "AssetWorkflow#WORKFLOW_STATUS",
-			value1 = "Pending (${workflowTask})"
+			value1 = "Pending (${workflowTask})",
+			key_status = "Pending"
 		);
 
 		AssertTextEquals(locator1 = "TextInput#TITLE", value1 = "${webContentTitle}");
@@ -2124,8 +2130,9 @@ definition {
 		);
 
 		AssertTextEquals(
-			locator1 = "AssetWorkflow#WORKFLOW_STATUS",
-			value1 = "Pending (${workflowTask})"
+			locator1 = "WCEditWebContent#WORKFLOW_STATUS",
+			value1 = "Pending (${workflowTask})",
+			key_status = "Pending"
 		);
 
 		AssertTextEquals(locator1 = "TextInput#TITLE", value1 = "${webContentTitle}");

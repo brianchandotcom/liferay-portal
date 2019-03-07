@@ -59,7 +59,7 @@ public class PostalAddress {
 	}
 
 	@GraphQLField
-	@JsonProperty
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String addressCountry;
 
 	public String getAddressLocality() {
@@ -83,7 +83,7 @@ public class PostalAddress {
 	}
 
 	@GraphQLField
-	@JsonProperty
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String addressLocality;
 
 	public String getAddressRegion() {
@@ -107,7 +107,7 @@ public class PostalAddress {
 	}
 
 	@GraphQLField
-	@JsonProperty
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String addressRegion;
 
 	public String getAddressType() {
@@ -131,7 +131,7 @@ public class PostalAddress {
 	}
 
 	@GraphQLField
-	@JsonProperty
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String addressType;
 
 	public Long getId() {
@@ -153,7 +153,7 @@ public class PostalAddress {
 	}
 
 	@GraphQLField
-	@JsonProperty
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long id;
 
 	public String getPostalCode() {
@@ -177,7 +177,7 @@ public class PostalAddress {
 	}
 
 	@GraphQLField
-	@JsonProperty
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String postalCode;
 
 	public String getStreetAddressLine1() {
@@ -201,7 +201,7 @@ public class PostalAddress {
 	}
 
 	@GraphQLField
-	@JsonProperty
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String streetAddressLine1;
 
 	public String getStreetAddressLine2() {
@@ -225,7 +225,7 @@ public class PostalAddress {
 	}
 
 	@GraphQLField
-	@JsonProperty
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String streetAddressLine2;
 
 	public String getStreetAddressLine3() {
@@ -249,7 +249,7 @@ public class PostalAddress {
 	}
 
 	@GraphQLField
-	@JsonProperty
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String streetAddressLine3;
 
 	public String toString() {

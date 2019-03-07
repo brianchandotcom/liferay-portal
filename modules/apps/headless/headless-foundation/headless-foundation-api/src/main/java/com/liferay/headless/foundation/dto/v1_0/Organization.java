@@ -61,7 +61,7 @@ public class Organization {
 	}
 
 	@GraphQLField
-	@JsonProperty
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String comment;
 
 	@Schema(description = "https://www.schema.org/ContactInformation")
@@ -87,7 +87,7 @@ public class Organization {
 	}
 
 	@GraphQLField
-	@JsonProperty
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected ContactInformation contactInformation;
 
 	public Long getId() {
@@ -109,7 +109,7 @@ public class Organization {
 	}
 
 	@GraphQLField
-	@JsonProperty
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long id;
 
 	@Schema(description = "https://www.schema.org/PostalAddress")
@@ -134,7 +134,7 @@ public class Organization {
 	}
 
 	@GraphQLField
-	@JsonProperty
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Location location;
 
 	public String getLogo() {
@@ -156,7 +156,7 @@ public class Organization {
 	}
 
 	@GraphQLField
-	@JsonProperty
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String logo;
 
 	public UserAccount[] getMembers() {
@@ -180,7 +180,7 @@ public class Organization {
 	}
 
 	@GraphQLField
-	@JsonProperty
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected UserAccount[] members;
 
 	public Long[] getMembersIds() {
@@ -204,7 +204,7 @@ public class Organization {
 	}
 
 	@GraphQLField
-	@JsonProperty
+	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
 	protected Long[] membersIds;
 
 	public String getName() {
@@ -226,7 +226,7 @@ public class Organization {
 	}
 
 	@GraphQLField
-	@JsonProperty
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String name;
 
 	public Organization getParentOrganization() {
@@ -251,7 +251,7 @@ public class Organization {
 	}
 
 	@GraphQLField
-	@JsonProperty
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Organization parentOrganization;
 
 	public Long getParentOrganizationId() {
@@ -275,7 +275,7 @@ public class Organization {
 	}
 
 	@GraphQLField
-	@JsonProperty
+	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
 	protected Long parentOrganizationId;
 
 	@Schema(description = "https://www.schema.org/Service")
@@ -300,7 +300,7 @@ public class Organization {
 	}
 
 	@GraphQLField
-	@JsonProperty
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Services[] services;
 
 	public Organization[] getSubOrganization() {
@@ -325,7 +325,7 @@ public class Organization {
 	}
 
 	@GraphQLField
-	@JsonProperty
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Organization[] subOrganization;
 
 	public Long[] getSubOrganizationIds() {
@@ -349,7 +349,7 @@ public class Organization {
 	}
 
 	@GraphQLField
-	@JsonProperty
+	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
 	protected Long[] subOrganizationIds;
 
 	public String toString() {

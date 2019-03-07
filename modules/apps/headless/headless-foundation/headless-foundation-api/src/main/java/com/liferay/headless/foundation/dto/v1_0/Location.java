@@ -59,7 +59,7 @@ public class Location {
 	}
 
 	@GraphQLField
-	@JsonProperty
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String addressCountry;
 
 	public String getAddressRegion() {
@@ -83,7 +83,7 @@ public class Location {
 	}
 
 	@GraphQLField
-	@JsonProperty
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String addressRegion;
 
 	public Long getId() {
@@ -105,7 +105,7 @@ public class Location {
 	}
 
 	@GraphQLField
-	@JsonProperty
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long id;
 
 	public String toString() {

@@ -61,7 +61,7 @@ public class ContentStructure {
 	}
 
 	@GraphQLField
-	@JsonProperty
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String[] availableLanguages;
 
 	public Long getContentSpace() {
@@ -85,7 +85,7 @@ public class ContentStructure {
 	}
 
 	@GraphQLField
-	@JsonProperty
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long contentSpace;
 
 	public Creator getCreator() {
@@ -109,7 +109,7 @@ public class ContentStructure {
 	}
 
 	@GraphQLField
-	@JsonProperty
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Creator creator;
 
 	public Date getDateCreated() {
@@ -133,7 +133,7 @@ public class ContentStructure {
 	}
 
 	@GraphQLField
-	@JsonProperty
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Date dateCreated;
 
 	public Date getDateModified() {
@@ -157,7 +157,7 @@ public class ContentStructure {
 	}
 
 	@GraphQLField
-	@JsonProperty
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Date dateModified;
 
 	public String getDescription() {
@@ -181,7 +181,7 @@ public class ContentStructure {
 	}
 
 	@GraphQLField
-	@JsonProperty
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String description;
 
 	public Fields[] getFields() {
@@ -205,7 +205,7 @@ public class ContentStructure {
 	}
 
 	@GraphQLField
-	@JsonProperty
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Fields[] fields;
 
 	public Long getId() {
@@ -227,7 +227,7 @@ public class ContentStructure {
 	}
 
 	@GraphQLField
-	@JsonProperty
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long id;
 
 	public String getName() {
@@ -249,7 +249,7 @@ public class ContentStructure {
 	}
 
 	@GraphQLField
-	@JsonProperty
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String name;
 
 	public String toString() {

@@ -64,7 +64,7 @@ public class StructuredContent {
 	}
 
 	@GraphQLField
-	@JsonProperty
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected AggregateRating aggregateRating;
 
 	public String[] getAvailableLanguages() {
@@ -88,7 +88,7 @@ public class StructuredContent {
 	}
 
 	@GraphQLField
-	@JsonProperty
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String[] availableLanguages;
 
 	public Categories[] getCategories() {
@@ -112,7 +112,7 @@ public class StructuredContent {
 	}
 
 	@GraphQLField
-	@JsonProperty
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Categories[] categories;
 
 	public Long[] getCategoryIds() {
@@ -136,7 +136,7 @@ public class StructuredContent {
 	}
 
 	@GraphQLField
-	@JsonProperty
+	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
 	protected Long[] categoryIds;
 
 	public ContentField[] getContentFields() {
@@ -160,7 +160,7 @@ public class StructuredContent {
 	}
 
 	@GraphQLField
-	@JsonProperty
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected ContentField[] contentFields;
 
 	public Long getContentSpace() {
@@ -184,7 +184,7 @@ public class StructuredContent {
 	}
 
 	@GraphQLField
-	@JsonProperty
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long contentSpace;
 
 	public Long getContentStructureId() {
@@ -208,7 +208,7 @@ public class StructuredContent {
 	}
 
 	@GraphQLField
-	@JsonProperty
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long contentStructureId;
 
 	public Creator getCreator() {
@@ -232,7 +232,7 @@ public class StructuredContent {
 	}
 
 	@GraphQLField
-	@JsonProperty
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Creator creator;
 
 	public Date getDateCreated() {
@@ -256,7 +256,7 @@ public class StructuredContent {
 	}
 
 	@GraphQLField
-	@JsonProperty
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Date dateCreated;
 
 	public Date getDateModified() {
@@ -280,7 +280,7 @@ public class StructuredContent {
 	}
 
 	@GraphQLField
-	@JsonProperty
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Date dateModified;
 
 	public Date getDatePublished() {
@@ -304,7 +304,7 @@ public class StructuredContent {
 	}
 
 	@GraphQLField
-	@JsonProperty
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Date datePublished;
 
 	public String getDescription() {
@@ -328,7 +328,7 @@ public class StructuredContent {
 	}
 
 	@GraphQLField
-	@JsonProperty
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String description;
 
 	public Boolean getHasComments() {
@@ -352,7 +352,7 @@ public class StructuredContent {
 	}
 
 	@GraphQLField
-	@JsonProperty
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean hasComments;
 
 	public Long getId() {
@@ -374,7 +374,7 @@ public class StructuredContent {
 	}
 
 	@GraphQLField
-	@JsonProperty
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long id;
 
 	public String[] getKeywords() {
@@ -398,7 +398,7 @@ public class StructuredContent {
 	}
 
 	@GraphQLField
-	@JsonProperty
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String[] keywords;
 
 	public Date getLastReviewed() {
@@ -422,7 +422,7 @@ public class StructuredContent {
 	}
 
 	@GraphQLField
-	@JsonProperty
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Date lastReviewed;
 
 	@Schema(description = "https://www.schema.org/templates")
@@ -448,7 +448,7 @@ public class StructuredContent {
 	}
 
 	@GraphQLField
-	@JsonProperty
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected RenderedContents[] renderedContents;
 
 	public String getTitle() {
@@ -472,7 +472,7 @@ public class StructuredContent {
 	}
 
 	@GraphQLField
-	@JsonProperty
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String title;
 
 	public String getViewableBy() {
@@ -496,7 +496,7 @@ public class StructuredContent {
 	}
 
 	@GraphQLField
-	@JsonProperty
+	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
 	protected String viewableBy;
 
 	public String toString() {

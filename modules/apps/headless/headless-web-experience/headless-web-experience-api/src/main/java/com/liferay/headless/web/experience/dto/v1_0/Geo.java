@@ -57,7 +57,7 @@ public class Geo {
 	}
 
 	@GraphQLField
-	@JsonProperty
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long id;
 
 	public Number getLatitude() {
@@ -81,7 +81,7 @@ public class Geo {
 	}
 
 	@GraphQLField
-	@JsonProperty
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Number latitude;
 
 	public Number getLongitude() {
@@ -105,7 +105,7 @@ public class Geo {
 	}
 
 	@GraphQLField
-	@JsonProperty
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Number longitude;
 
 	public String toString() {

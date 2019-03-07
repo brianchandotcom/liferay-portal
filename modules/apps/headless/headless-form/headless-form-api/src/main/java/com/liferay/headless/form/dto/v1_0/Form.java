@@ -61,7 +61,7 @@ public class Form {
 	}
 
 	@GraphQLField
-	@JsonProperty
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String[] availableLanguages;
 
 	public Long getContentSpace() {
@@ -85,7 +85,7 @@ public class Form {
 	}
 
 	@GraphQLField
-	@JsonProperty
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long contentSpace;
 
 	public Creator getCreator() {
@@ -109,7 +109,7 @@ public class Form {
 	}
 
 	@GraphQLField
-	@JsonProperty
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Creator creator;
 
 	public Date getDateCreated() {
@@ -133,7 +133,7 @@ public class Form {
 	}
 
 	@GraphQLField
-	@JsonProperty
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Date dateCreated;
 
 	public Date getDateModified() {
@@ -157,7 +157,7 @@ public class Form {
 	}
 
 	@GraphQLField
-	@JsonProperty
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Date dateModified;
 
 	public Date getDatePublished() {
@@ -181,7 +181,7 @@ public class Form {
 	}
 
 	@GraphQLField
-	@JsonProperty
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Date datePublished;
 
 	public String getDefaultLanguage() {
@@ -205,7 +205,7 @@ public class Form {
 	}
 
 	@GraphQLField
-	@JsonProperty
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String defaultLanguage;
 
 	public String getDescription() {
@@ -229,7 +229,7 @@ public class Form {
 	}
 
 	@GraphQLField
-	@JsonProperty
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String description;
 
 	public FormRecord[] getFormRecords() {
@@ -253,7 +253,7 @@ public class Form {
 	}
 
 	@GraphQLField
-	@JsonProperty
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected FormRecord[] formRecords;
 
 	public Long[] getFormRecordsIds() {
@@ -277,7 +277,7 @@ public class Form {
 	}
 
 	@GraphQLField
-	@JsonProperty
+	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
 	protected Long[] formRecordsIds;
 
 	public Long getId() {
@@ -299,7 +299,7 @@ public class Form {
 	}
 
 	@GraphQLField
-	@JsonProperty
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long id;
 
 	public String getName() {
@@ -321,7 +321,7 @@ public class Form {
 	}
 
 	@GraphQLField
-	@JsonProperty
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String name;
 
 	public FormStructure getStructure() {
@@ -345,7 +345,7 @@ public class Form {
 	}
 
 	@GraphQLField
-	@JsonProperty
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected FormStructure structure;
 
 	public Long getStructureId() {
@@ -369,7 +369,7 @@ public class Form {
 	}
 
 	@GraphQLField
-	@JsonProperty
+	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
 	protected Long structureId;
 
 	public String toString() {

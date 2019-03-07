@@ -59,7 +59,7 @@ public class SuccessPage {
 	}
 
 	@GraphQLField
-	@JsonProperty
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String description;
 
 	public String getHeadline() {
@@ -83,7 +83,7 @@ public class SuccessPage {
 	}
 
 	@GraphQLField
-	@JsonProperty
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String headline;
 
 	public Long getId() {
@@ -105,7 +105,7 @@ public class SuccessPage {
 	}
 
 	@GraphQLField
-	@JsonProperty
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long id;
 
 	public String toString() {

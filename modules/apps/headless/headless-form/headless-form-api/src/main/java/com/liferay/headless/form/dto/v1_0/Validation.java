@@ -59,7 +59,7 @@ public class Validation {
 	}
 
 	@GraphQLField
-	@JsonProperty
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String errorMessage;
 
 	public String getExpression() {
@@ -83,7 +83,7 @@ public class Validation {
 	}
 
 	@GraphQLField
-	@JsonProperty
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String expression;
 
 	public Long getId() {
@@ -105,7 +105,7 @@ public class Validation {
 	}
 
 	@GraphQLField
-	@JsonProperty
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long id;
 
 	public String toString() {

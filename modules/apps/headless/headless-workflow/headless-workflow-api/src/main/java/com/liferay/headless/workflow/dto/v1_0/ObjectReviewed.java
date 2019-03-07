@@ -57,7 +57,7 @@ public class ObjectReviewed {
 	}
 
 	@GraphQLField
-	@JsonProperty
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long id;
 
 	public String getIdentifier() {
@@ -81,7 +81,7 @@ public class ObjectReviewed {
 	}
 
 	@GraphQLField
-	@JsonProperty
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String identifier;
 
 	public String getResourceType() {
@@ -105,7 +105,7 @@ public class ObjectReviewed {
 	}
 
 	@GraphQLField
-	@JsonProperty
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String resourceType;
 
 	public String toString() {

@@ -59,7 +59,7 @@ public class AdaptedImages {
 	}
 
 	@GraphQLField
-	@JsonProperty
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String contentUrl;
 
 	public Number getHeight() {
@@ -83,7 +83,7 @@ public class AdaptedImages {
 	}
 
 	@GraphQLField
-	@JsonProperty
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Number height;
 
 	public String getResolutionName() {
@@ -107,7 +107,7 @@ public class AdaptedImages {
 	}
 
 	@GraphQLField
-	@JsonProperty
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String resolutionName;
 
 	public Number getSizeInBytes() {
@@ -131,7 +131,7 @@ public class AdaptedImages {
 	}
 
 	@GraphQLField
-	@JsonProperty
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Number sizeInBytes;
 
 	public Number getWidth() {
@@ -155,7 +155,7 @@ public class AdaptedImages {
 	}
 
 	@GraphQLField
-	@JsonProperty
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Number width;
 
 	public String toString() {

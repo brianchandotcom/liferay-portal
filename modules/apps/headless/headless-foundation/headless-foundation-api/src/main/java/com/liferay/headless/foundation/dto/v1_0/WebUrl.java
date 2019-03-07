@@ -57,7 +57,7 @@ public class WebUrl {
 	}
 
 	@GraphQLField
-	@JsonProperty
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long id;
 
 	public String getUrl() {
@@ -79,7 +79,7 @@ public class WebUrl {
 	}
 
 	@GraphQLField
-	@JsonProperty
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String url;
 
 	public String getUrlType() {
@@ -103,7 +103,7 @@ public class WebUrl {
 	}
 
 	@GraphQLField
-	@JsonProperty
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String urlType;
 
 	public String toString() {

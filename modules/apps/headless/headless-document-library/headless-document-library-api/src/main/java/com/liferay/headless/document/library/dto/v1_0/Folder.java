@@ -61,7 +61,7 @@ public class Folder {
 	}
 
 	@GraphQLField
-	@JsonProperty
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long contentSpaceId;
 
 	public Date getDateCreated() {
@@ -85,7 +85,7 @@ public class Folder {
 	}
 
 	@GraphQLField
-	@JsonProperty
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Date dateCreated;
 
 	public Date getDateModified() {
@@ -109,7 +109,7 @@ public class Folder {
 	}
 
 	@GraphQLField
-	@JsonProperty
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Date dateModified;
 
 	public String getDescription() {
@@ -133,7 +133,7 @@ public class Folder {
 	}
 
 	@GraphQLField
-	@JsonProperty
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String description;
 
 	public Boolean getHasDocuments() {
@@ -157,7 +157,7 @@ public class Folder {
 	}
 
 	@GraphQLField
-	@JsonProperty
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean hasDocuments;
 
 	public Boolean getHasFolders() {
@@ -181,7 +181,7 @@ public class Folder {
 	}
 
 	@GraphQLField
-	@JsonProperty
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean hasFolders;
 
 	public Long getId() {
@@ -203,7 +203,7 @@ public class Folder {
 	}
 
 	@GraphQLField
-	@JsonProperty
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long id;
 
 	public String getName() {
@@ -225,7 +225,7 @@ public class Folder {
 	}
 
 	@GraphQLField
-	@JsonProperty
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String name;
 
 	public String getViewableBy() {
@@ -249,7 +249,7 @@ public class Folder {
 	}
 
 	@GraphQLField
-	@JsonProperty
+	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
 	protected String viewableBy;
 
 	public String toString() {

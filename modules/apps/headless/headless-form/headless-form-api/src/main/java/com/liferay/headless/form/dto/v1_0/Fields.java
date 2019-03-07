@@ -61,7 +61,7 @@ public class Fields {
 	}
 
 	@GraphQLField
-	@JsonProperty
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean autocomplete;
 
 	public String getDataSourceType() {
@@ -85,7 +85,7 @@ public class Fields {
 	}
 
 	@GraphQLField
-	@JsonProperty
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String dataSourceType;
 
 	public String getDataType() {
@@ -109,7 +109,7 @@ public class Fields {
 	}
 
 	@GraphQLField
-	@JsonProperty
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String dataType;
 
 	public String getDisplayStyle() {
@@ -133,7 +133,7 @@ public class Fields {
 	}
 
 	@GraphQLField
-	@JsonProperty
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String displayStyle;
 
 	@Schema(description = "https://www.schema.org/FormFieldProperties")
@@ -156,7 +156,7 @@ public class Fields {
 	}
 
 	@GraphQLField
-	@JsonProperty
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Grid grid;
 
 	public Boolean getHasFormRules() {
@@ -180,7 +180,7 @@ public class Fields {
 	}
 
 	@GraphQLField
-	@JsonProperty
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean hasFormRules;
 
 	public Long getId() {
@@ -202,7 +202,7 @@ public class Fields {
 	}
 
 	@GraphQLField
-	@JsonProperty
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long id;
 
 	public Boolean getImmutable() {
@@ -226,7 +226,7 @@ public class Fields {
 	}
 
 	@GraphQLField
-	@JsonProperty
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean immutable;
 
 	public Boolean getInline() {
@@ -250,7 +250,7 @@ public class Fields {
 	}
 
 	@GraphQLField
-	@JsonProperty
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean inline;
 
 	public String getInputControl() {
@@ -274,7 +274,7 @@ public class Fields {
 	}
 
 	@GraphQLField
-	@JsonProperty
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String inputControl;
 
 	public String getLabel() {
@@ -298,7 +298,7 @@ public class Fields {
 	}
 
 	@GraphQLField
-	@JsonProperty
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String label;
 
 	public Boolean getLocalizable() {
@@ -322,7 +322,7 @@ public class Fields {
 	}
 
 	@GraphQLField
-	@JsonProperty
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean localizable;
 
 	public Boolean getMultiple() {
@@ -346,7 +346,7 @@ public class Fields {
 	}
 
 	@GraphQLField
-	@JsonProperty
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean multiple;
 
 	public String getName() {
@@ -368,7 +368,7 @@ public class Fields {
 	}
 
 	@GraphQLField
-	@JsonProperty
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String name;
 
 	@Schema(description = "https://www.schema.org/FormFieldOptions")
@@ -393,7 +393,7 @@ public class Fields {
 	}
 
 	@GraphQLField
-	@JsonProperty
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Options options;
 
 	public String getPlaceholder() {
@@ -417,7 +417,7 @@ public class Fields {
 	}
 
 	@GraphQLField
-	@JsonProperty
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String placeholder;
 
 	public String getPredefinedValue() {
@@ -441,7 +441,7 @@ public class Fields {
 	}
 
 	@GraphQLField
-	@JsonProperty
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String predefinedValue;
 
 	public Boolean getReadOnly() {
@@ -465,7 +465,7 @@ public class Fields {
 	}
 
 	@GraphQLField
-	@JsonProperty
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean readOnly;
 
 	public Boolean getRepeatable() {
@@ -489,7 +489,7 @@ public class Fields {
 	}
 
 	@GraphQLField
-	@JsonProperty
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean repeatable;
 
 	public Boolean getRequired() {
@@ -513,7 +513,7 @@ public class Fields {
 	}
 
 	@GraphQLField
-	@JsonProperty
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean required;
 
 	public Boolean getShowAsSwitcher() {
@@ -537,7 +537,7 @@ public class Fields {
 	}
 
 	@GraphQLField
-	@JsonProperty
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean showAsSwitcher;
 
 	public Boolean getShowLabel() {
@@ -561,7 +561,7 @@ public class Fields {
 	}
 
 	@GraphQLField
-	@JsonProperty
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean showLabel;
 
 	public String getStyle() {
@@ -585,7 +585,7 @@ public class Fields {
 	}
 
 	@GraphQLField
-	@JsonProperty
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String style;
 
 	public String getText() {
@@ -607,7 +607,7 @@ public class Fields {
 	}
 
 	@GraphQLField
-	@JsonProperty
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String text;
 
 	public String getTooltip() {
@@ -631,7 +631,7 @@ public class Fields {
 	}
 
 	@GraphQLField
-	@JsonProperty
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String tooltip;
 
 	@Schema(description = "https://www.schema.org/FormFieldProperties")
@@ -656,7 +656,7 @@ public class Fields {
 	}
 
 	@GraphQLField
-	@JsonProperty
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Validation validation;
 
 	public String toString() {

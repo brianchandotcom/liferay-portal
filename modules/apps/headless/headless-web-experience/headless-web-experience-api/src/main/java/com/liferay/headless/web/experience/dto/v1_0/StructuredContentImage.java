@@ -61,7 +61,7 @@ public class StructuredContentImage {
 	}
 
 	@GraphQLField
-	@JsonProperty
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String contentUrl;
 
 	public Creator getCreator() {
@@ -85,7 +85,7 @@ public class StructuredContentImage {
 	}
 
 	@GraphQLField
-	@JsonProperty
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Creator creator;
 
 	public Date getDateCreated() {
@@ -109,7 +109,7 @@ public class StructuredContentImage {
 	}
 
 	@GraphQLField
-	@JsonProperty
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Date dateCreated;
 
 	public Date getDateModified() {
@@ -133,7 +133,7 @@ public class StructuredContentImage {
 	}
 
 	@GraphQLField
-	@JsonProperty
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Date dateModified;
 
 	public String getDescription() {
@@ -157,7 +157,7 @@ public class StructuredContentImage {
 	}
 
 	@GraphQLField
-	@JsonProperty
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String description;
 
 	public String getEncodingFormat() {
@@ -181,7 +181,7 @@ public class StructuredContentImage {
 	}
 
 	@GraphQLField
-	@JsonProperty
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String encodingFormat;
 
 	public String getFileExtension() {
@@ -205,7 +205,7 @@ public class StructuredContentImage {
 	}
 
 	@GraphQLField
-	@JsonProperty
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String fileExtension;
 
 	public Long getId() {
@@ -227,7 +227,7 @@ public class StructuredContentImage {
 	}
 
 	@GraphQLField
-	@JsonProperty
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long id;
 
 	public Number getSizeInBytes() {
@@ -251,7 +251,7 @@ public class StructuredContentImage {
 	}
 
 	@GraphQLField
-	@JsonProperty
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Number sizeInBytes;
 
 	public Long getStructuredContentId() {
@@ -275,7 +275,7 @@ public class StructuredContentImage {
 	}
 
 	@GraphQLField
-	@JsonProperty
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long structuredContentId;
 
 	public String getTitle() {
@@ -299,7 +299,7 @@ public class StructuredContentImage {
 	}
 
 	@GraphQLField
-	@JsonProperty
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String title;
 
 	public String toString() {

@@ -62,7 +62,7 @@ public class Grid {
 	}
 
 	@GraphQLField
-	@JsonProperty
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Columns[] columns;
 
 	public Long getId() {
@@ -84,7 +84,7 @@ public class Grid {
 	}
 
 	@GraphQLField
-	@JsonProperty
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long id;
 
 	@Schema(description = "https://www.schema.org/FormFieldOptions")
@@ -107,7 +107,7 @@ public class Grid {
 	}
 
 	@GraphQLField
-	@JsonProperty
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Rows[] rows;
 
 	public String toString() {

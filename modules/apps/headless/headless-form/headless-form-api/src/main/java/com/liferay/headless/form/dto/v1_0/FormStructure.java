@@ -63,7 +63,7 @@ public class FormStructure {
 	}
 
 	@GraphQLField
-	@JsonProperty
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String[] availableLanguages;
 
 	public Long getContentSpace() {
@@ -87,7 +87,7 @@ public class FormStructure {
 	}
 
 	@GraphQLField
-	@JsonProperty
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long contentSpace;
 
 	public Creator getCreator() {
@@ -111,7 +111,7 @@ public class FormStructure {
 	}
 
 	@GraphQLField
-	@JsonProperty
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Creator creator;
 
 	public Date getDateCreated() {
@@ -135,7 +135,7 @@ public class FormStructure {
 	}
 
 	@GraphQLField
-	@JsonProperty
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Date dateCreated;
 
 	public Date getDateModified() {
@@ -159,7 +159,7 @@ public class FormStructure {
 	}
 
 	@GraphQLField
-	@JsonProperty
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Date dateModified;
 
 	public String getDescription() {
@@ -183,7 +183,7 @@ public class FormStructure {
 	}
 
 	@GraphQLField
-	@JsonProperty
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String description;
 
 	@Schema(description = "https://www.schema.org/FormLayoutPage")
@@ -208,7 +208,7 @@ public class FormStructure {
 	}
 
 	@GraphQLField
-	@JsonProperty
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected FormPages[] formPages;
 
 	public Long getId() {
@@ -230,7 +230,7 @@ public class FormStructure {
 	}
 
 	@GraphQLField
-	@JsonProperty
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long id;
 
 	public String getName() {
@@ -252,7 +252,7 @@ public class FormStructure {
 	}
 
 	@GraphQLField
-	@JsonProperty
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String name;
 
 	@Schema(description = "https://www.schema.org/FormSuccessPageSettings")
@@ -277,7 +277,7 @@ public class FormStructure {
 	}
 
 	@GraphQLField
-	@JsonProperty
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected SuccessPage successPage;
 
 	public String toString() {

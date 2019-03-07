@@ -59,7 +59,7 @@ public class ContentField {
 	}
 
 	@GraphQLField
-	@JsonProperty
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String dataType;
 
 	public String getInputControl() {
@@ -83,7 +83,7 @@ public class ContentField {
 	}
 
 	@GraphQLField
-	@JsonProperty
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String inputControl;
 
 	public String getLabel() {
@@ -107,7 +107,7 @@ public class ContentField {
 	}
 
 	@GraphQLField
-	@JsonProperty
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String label;
 
 	public String getName() {
@@ -129,7 +129,7 @@ public class ContentField {
 	}
 
 	@GraphQLField
-	@JsonProperty
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String name;
 
 	public ContentField[] getNestedFields() {
@@ -153,7 +153,7 @@ public class ContentField {
 	}
 
 	@GraphQLField
-	@JsonProperty
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected ContentField[] nestedFields;
 
 	public Boolean getRepeatable() {
@@ -177,7 +177,7 @@ public class ContentField {
 	}
 
 	@GraphQLField
-	@JsonProperty
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean repeatable;
 
 	public String getRepeatableId() {
@@ -201,7 +201,7 @@ public class ContentField {
 	}
 
 	@GraphQLField
-	@JsonProperty
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String repeatableId;
 
 	public Value getValue() {
@@ -223,7 +223,7 @@ public class ContentField {
 	}
 
 	@GraphQLField
-	@JsonProperty
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Value value;
 
 	public String toString() {

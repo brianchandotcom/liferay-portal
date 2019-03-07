@@ -59,7 +59,7 @@ public class BlogPostingImage {
 	}
 
 	@GraphQLField
-	@JsonProperty
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String contentUrl;
 
 	public String getEncodingFormat() {
@@ -83,7 +83,7 @@ public class BlogPostingImage {
 	}
 
 	@GraphQLField
-	@JsonProperty
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String encodingFormat;
 
 	public String getFileExtension() {
@@ -107,7 +107,7 @@ public class BlogPostingImage {
 	}
 
 	@GraphQLField
-	@JsonProperty
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String fileExtension;
 
 	public Long getId() {
@@ -129,7 +129,7 @@ public class BlogPostingImage {
 	}
 
 	@GraphQLField
-	@JsonProperty
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long id;
 
 	public Number getSizeInBytes() {
@@ -153,7 +153,7 @@ public class BlogPostingImage {
 	}
 
 	@GraphQLField
-	@JsonProperty
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Number sizeInBytes;
 
 	public String getTitle() {
@@ -177,7 +177,7 @@ public class BlogPostingImage {
 	}
 
 	@GraphQLField
-	@JsonProperty
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String title;
 
 	public String getViewableBy() {
@@ -201,7 +201,7 @@ public class BlogPostingImage {
 	}
 
 	@GraphQLField
-	@JsonProperty
+	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
 	protected String viewableBy;
 
 	public String toString() {

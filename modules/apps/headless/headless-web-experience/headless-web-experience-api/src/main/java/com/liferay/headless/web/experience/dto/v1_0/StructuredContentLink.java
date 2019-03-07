@@ -57,7 +57,7 @@ public class StructuredContentLink {
 	}
 
 	@GraphQLField
-	@JsonProperty
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long id;
 
 	public String getTitle() {
@@ -81,7 +81,7 @@ public class StructuredContentLink {
 	}
 
 	@GraphQLField
-	@JsonProperty
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String title;
 
 	public String toString() {

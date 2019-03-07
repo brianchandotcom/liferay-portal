@@ -63,7 +63,7 @@ public class UserAccount {
 	}
 
 	@GraphQLField
-	@JsonProperty
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String additionalName;
 
 	public String getAlternateName() {
@@ -87,7 +87,7 @@ public class UserAccount {
 	}
 
 	@GraphQLField
-	@JsonProperty
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String alternateName;
 
 	public Date getBirthDate() {
@@ -111,7 +111,7 @@ public class UserAccount {
 	}
 
 	@GraphQLField
-	@JsonProperty
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Date birthDate;
 
 	@Schema(description = "https://www.schema.org/ContactInformation")
@@ -137,7 +137,7 @@ public class UserAccount {
 	}
 
 	@GraphQLField
-	@JsonProperty
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected ContactInformation contactInformation;
 
 	public String getDashboardURL() {
@@ -161,7 +161,7 @@ public class UserAccount {
 	}
 
 	@GraphQLField
-	@JsonProperty
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String dashboardURL;
 
 	public String getEmail() {
@@ -185,7 +185,7 @@ public class UserAccount {
 	}
 
 	@GraphQLField
-	@JsonProperty
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String email;
 
 	public String getFamilyName() {
@@ -209,7 +209,7 @@ public class UserAccount {
 	}
 
 	@GraphQLField
-	@JsonProperty
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String familyName;
 
 	public String getGivenName() {
@@ -233,7 +233,7 @@ public class UserAccount {
 	}
 
 	@GraphQLField
-	@JsonProperty
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String givenName;
 
 	public String getHonorificPrefix() {
@@ -257,7 +257,7 @@ public class UserAccount {
 	}
 
 	@GraphQLField
-	@JsonProperty
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String honorificPrefix;
 
 	public String getHonorificSuffix() {
@@ -281,7 +281,7 @@ public class UserAccount {
 	}
 
 	@GraphQLField
-	@JsonProperty
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String honorificSuffix;
 
 	public Long getId() {
@@ -303,7 +303,7 @@ public class UserAccount {
 	}
 
 	@GraphQLField
-	@JsonProperty
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long id;
 
 	public String getImage() {
@@ -327,7 +327,7 @@ public class UserAccount {
 	}
 
 	@GraphQLField
-	@JsonProperty
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String image;
 
 	public String getJobTitle() {
@@ -351,7 +351,7 @@ public class UserAccount {
 	}
 
 	@GraphQLField
-	@JsonProperty
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String jobTitle;
 
 	public Organization[] getMyOrganizations() {
@@ -376,7 +376,7 @@ public class UserAccount {
 	}
 
 	@GraphQLField
-	@JsonProperty
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Organization[] myOrganizations;
 
 	public Long[] getMyOrganizationsIds() {
@@ -400,7 +400,7 @@ public class UserAccount {
 	}
 
 	@GraphQLField
-	@JsonProperty
+	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
 	protected Long[] myOrganizationsIds;
 
 	public String getName() {
@@ -422,7 +422,7 @@ public class UserAccount {
 	}
 
 	@GraphQLField
-	@JsonProperty
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String name;
 
 	public String getProfileURL() {
@@ -446,7 +446,7 @@ public class UserAccount {
 	}
 
 	@GraphQLField
-	@JsonProperty
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String profileURL;
 
 	public Role[] getRoles() {
@@ -470,7 +470,7 @@ public class UserAccount {
 	}
 
 	@GraphQLField
-	@JsonProperty
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Role[] roles;
 
 	public Long[] getRolesIds() {
@@ -494,7 +494,7 @@ public class UserAccount {
 	}
 
 	@GraphQLField
-	@JsonProperty
+	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
 	protected Long[] rolesIds;
 
 	public String[] getTasksAssignedToMe() {
@@ -518,7 +518,7 @@ public class UserAccount {
 	}
 
 	@GraphQLField
-	@JsonProperty
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String[] tasksAssignedToMe;
 
 	public String[] getTasksAssignedToMyRoles() {
@@ -543,7 +543,7 @@ public class UserAccount {
 	}
 
 	@GraphQLField
-	@JsonProperty
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String[] tasksAssignedToMyRoles;
 
 	public String toString() {

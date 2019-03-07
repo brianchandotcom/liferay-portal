@@ -57,7 +57,7 @@ public class Options {
 	}
 
 	@GraphQLField
-	@JsonProperty
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long id;
 
 	public String getLabel() {
@@ -81,7 +81,7 @@ public class Options {
 	}
 
 	@GraphQLField
-	@JsonProperty
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String label;
 
 	public String getValue() {
@@ -105,7 +105,7 @@ public class Options {
 	}
 
 	@GraphQLField
-	@JsonProperty
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String value;
 
 	public String toString() {

@@ -59,7 +59,7 @@ public class Categories {
 	}
 
 	@GraphQLField
-	@JsonProperty
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long categoryId;
 
 	public String getCategoryName() {
@@ -83,7 +83,7 @@ public class Categories {
 	}
 
 	@GraphQLField
-	@JsonProperty
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String categoryName;
 
 	public String toString() {

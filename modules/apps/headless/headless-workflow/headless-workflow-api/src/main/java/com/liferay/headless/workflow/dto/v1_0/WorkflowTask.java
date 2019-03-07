@@ -61,7 +61,7 @@ public class WorkflowTask {
 	}
 
 	@GraphQLField
-	@JsonProperty
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean completed;
 
 	public Date getDateCompleted() {
@@ -85,7 +85,7 @@ public class WorkflowTask {
 	}
 
 	@GraphQLField
-	@JsonProperty
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Date dateCompleted;
 
 	public Date getDateCreated() {
@@ -109,7 +109,7 @@ public class WorkflowTask {
 	}
 
 	@GraphQLField
-	@JsonProperty
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Date dateCreated;
 
 	public String getDefinitionName() {
@@ -133,7 +133,7 @@ public class WorkflowTask {
 	}
 
 	@GraphQLField
-	@JsonProperty
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String definitionName;
 
 	public String getDescription() {
@@ -157,7 +157,7 @@ public class WorkflowTask {
 	}
 
 	@GraphQLField
-	@JsonProperty
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String description;
 
 	public Date getDueDate() {
@@ -181,7 +181,7 @@ public class WorkflowTask {
 	}
 
 	@GraphQLField
-	@JsonProperty
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Date dueDate;
 
 	public Long getId() {
@@ -203,7 +203,7 @@ public class WorkflowTask {
 	}
 
 	@GraphQLField
-	@JsonProperty
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long id;
 
 	public WorkflowLog[] getLogs() {
@@ -227,7 +227,7 @@ public class WorkflowTask {
 	}
 
 	@GraphQLField
-	@JsonProperty
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected WorkflowLog[] logs;
 
 	public Long[] getLogsIds() {
@@ -251,7 +251,7 @@ public class WorkflowTask {
 	}
 
 	@GraphQLField
-	@JsonProperty
+	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
 	protected Long[] logsIds;
 
 	public String getName() {
@@ -273,7 +273,7 @@ public class WorkflowTask {
 	}
 
 	@GraphQLField
-	@JsonProperty
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String name;
 
 	public ObjectReviewed getObjectReviewed() {
@@ -298,7 +298,7 @@ public class WorkflowTask {
 	}
 
 	@GraphQLField
-	@JsonProperty
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected ObjectReviewed objectReviewed;
 
 	public String[] getTransitions() {
@@ -322,7 +322,7 @@ public class WorkflowTask {
 	}
 
 	@GraphQLField
-	@JsonProperty
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String[] transitions;
 
 	public String toString() {

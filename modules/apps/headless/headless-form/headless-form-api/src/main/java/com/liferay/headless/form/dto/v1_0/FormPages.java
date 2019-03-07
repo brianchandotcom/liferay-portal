@@ -62,7 +62,7 @@ public class FormPages {
 	}
 
 	@GraphQLField
-	@JsonProperty
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Fields[] fields;
 
 	public String getHeadline() {
@@ -86,7 +86,7 @@ public class FormPages {
 	}
 
 	@GraphQLField
-	@JsonProperty
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String headline;
 
 	public Long getId() {
@@ -108,7 +108,7 @@ public class FormPages {
 	}
 
 	@GraphQLField
-	@JsonProperty
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long id;
 
 	public String getText() {
@@ -130,7 +130,7 @@ public class FormPages {
 	}
 
 	@GraphQLField
-	@JsonProperty
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String text;
 
 	public String toString() {

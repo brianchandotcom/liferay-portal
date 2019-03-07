@@ -61,7 +61,7 @@ public class Category {
 	}
 
 	@GraphQLField
-	@JsonProperty
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String[] availableLanguages;
 
 	public Creator getCreator() {
@@ -85,7 +85,7 @@ public class Category {
 	}
 
 	@GraphQLField
-	@JsonProperty
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Creator creator;
 
 	public Date getDateCreated() {
@@ -109,7 +109,7 @@ public class Category {
 	}
 
 	@GraphQLField
-	@JsonProperty
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Date dateCreated;
 
 	public Date getDateModified() {
@@ -133,7 +133,7 @@ public class Category {
 	}
 
 	@GraphQLField
-	@JsonProperty
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Date dateModified;
 
 	public String getDescription() {
@@ -157,7 +157,7 @@ public class Category {
 	}
 
 	@GraphQLField
-	@JsonProperty
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String description;
 
 	public Boolean getHasCategories() {
@@ -181,7 +181,7 @@ public class Category {
 	}
 
 	@GraphQLField
-	@JsonProperty
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean hasCategories;
 
 	public Long getId() {
@@ -203,7 +203,7 @@ public class Category {
 	}
 
 	@GraphQLField
-	@JsonProperty
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long id;
 
 	public String getName() {
@@ -225,7 +225,7 @@ public class Category {
 	}
 
 	@GraphQLField
-	@JsonProperty
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String name;
 
 	public ParentCategory getParentCategory() {
@@ -250,7 +250,7 @@ public class Category {
 	}
 
 	@GraphQLField
-	@JsonProperty
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected ParentCategory parentCategory;
 
 	public ParentVocabulary getParentVocabulary() {
@@ -275,7 +275,7 @@ public class Category {
 	}
 
 	@GraphQLField
-	@JsonProperty
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected ParentVocabulary parentVocabulary;
 
 	public Long getParentVocabularyId() {
@@ -299,7 +299,7 @@ public class Category {
 	}
 
 	@GraphQLField
-	@JsonProperty
+	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
 	protected Long parentVocabularyId;
 
 	public String getViewableBy() {
@@ -323,7 +323,7 @@ public class Category {
 	}
 
 	@GraphQLField
-	@JsonProperty
+	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
 	protected String viewableBy;
 
 	public String toString() {

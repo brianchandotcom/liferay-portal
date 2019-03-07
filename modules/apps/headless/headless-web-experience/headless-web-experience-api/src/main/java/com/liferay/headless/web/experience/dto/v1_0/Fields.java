@@ -59,7 +59,7 @@ public class Fields {
 	}
 
 	@GraphQLField
-	@JsonProperty
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String dataType;
 
 	public String getInputControl() {
@@ -83,7 +83,7 @@ public class Fields {
 	}
 
 	@GraphQLField
-	@JsonProperty
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String inputControl;
 
 	public String getLabel() {
@@ -107,7 +107,7 @@ public class Fields {
 	}
 
 	@GraphQLField
-	@JsonProperty
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String label;
 
 	public Boolean getLocalizable() {
@@ -131,7 +131,7 @@ public class Fields {
 	}
 
 	@GraphQLField
-	@JsonProperty
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean localizable;
 
 	public Boolean getMultiple() {
@@ -155,7 +155,7 @@ public class Fields {
 	}
 
 	@GraphQLField
-	@JsonProperty
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean multiple;
 
 	public String getName() {
@@ -177,7 +177,7 @@ public class Fields {
 	}
 
 	@GraphQLField
-	@JsonProperty
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String name;
 
 	public Options[] getOptions() {
@@ -201,7 +201,7 @@ public class Fields {
 	}
 
 	@GraphQLField
-	@JsonProperty
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Options[] options;
 
 	public String getPredefinedValue() {
@@ -225,7 +225,7 @@ public class Fields {
 	}
 
 	@GraphQLField
-	@JsonProperty
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String predefinedValue;
 
 	public Boolean getRepeatable() {
@@ -249,7 +249,7 @@ public class Fields {
 	}
 
 	@GraphQLField
-	@JsonProperty
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean repeatable;
 
 	public Boolean getRequired() {
@@ -273,7 +273,7 @@ public class Fields {
 	}
 
 	@GraphQLField
-	@JsonProperty
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean required;
 
 	public Boolean getShowLabel() {
@@ -297,7 +297,7 @@ public class Fields {
 	}
 
 	@GraphQLField
-	@JsonProperty
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean showLabel;
 
 	public String toString() {

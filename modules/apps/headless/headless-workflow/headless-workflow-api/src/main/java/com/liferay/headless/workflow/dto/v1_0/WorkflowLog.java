@@ -61,7 +61,7 @@ public class WorkflowLog {
 	}
 
 	@GraphQLField
-	@JsonProperty
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String auditPerson;
 
 	public String getCommentLog() {
@@ -85,7 +85,7 @@ public class WorkflowLog {
 	}
 
 	@GraphQLField
-	@JsonProperty
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String commentLog;
 
 	public Date getDateCreated() {
@@ -109,7 +109,7 @@ public class WorkflowLog {
 	}
 
 	@GraphQLField
-	@JsonProperty
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Date dateCreated;
 
 	public Long getId() {
@@ -131,7 +131,7 @@ public class WorkflowLog {
 	}
 
 	@GraphQLField
-	@JsonProperty
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long id;
 
 	public String getPerson() {
@@ -155,7 +155,7 @@ public class WorkflowLog {
 	}
 
 	@GraphQLField
-	@JsonProperty
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String person;
 
 	public String getPreviousPerson() {
@@ -179,7 +179,7 @@ public class WorkflowLog {
 	}
 
 	@GraphQLField
-	@JsonProperty
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String previousPerson;
 
 	public String getPreviousState() {
@@ -203,7 +203,7 @@ public class WorkflowLog {
 	}
 
 	@GraphQLField
-	@JsonProperty
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String previousState;
 
 	public String getState() {
@@ -227,7 +227,7 @@ public class WorkflowLog {
 	}
 
 	@GraphQLField
-	@JsonProperty
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String state;
 
 	public WorkflowTask getTask() {
@@ -251,7 +251,7 @@ public class WorkflowLog {
 	}
 
 	@GraphQLField
-	@JsonProperty
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected WorkflowTask task;
 
 	public Long getTaskId() {
@@ -275,7 +275,7 @@ public class WorkflowLog {
 	}
 
 	@GraphQLField
-	@JsonProperty
+	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
 	protected Long taskId;
 
 	public String getType() {
@@ -297,7 +297,7 @@ public class WorkflowLog {
 	}
 
 	@GraphQLField
-	@JsonProperty
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String type;
 
 	public String toString() {

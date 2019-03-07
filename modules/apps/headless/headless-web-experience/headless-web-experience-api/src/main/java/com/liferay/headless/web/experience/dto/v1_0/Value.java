@@ -59,7 +59,7 @@ public class Value {
 	}
 
 	@GraphQLField
-	@JsonProperty
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String data;
 
 	public ContentDocument getDocument() {
@@ -83,7 +83,7 @@ public class Value {
 	}
 
 	@GraphQLField
-	@JsonProperty
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected ContentDocument document;
 
 	public Long getDocumentId() {
@@ -107,7 +107,7 @@ public class Value {
 	}
 
 	@GraphQLField
-	@JsonProperty
+	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
 	protected Long documentId;
 
 	@Schema(description = "https://www.schema.org/GeoCoordinates")
@@ -130,7 +130,7 @@ public class Value {
 	}
 
 	@GraphQLField
-	@JsonProperty
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Geo geo;
 
 	public StructuredContentImage getImage() {
@@ -154,7 +154,7 @@ public class Value {
 	}
 
 	@GraphQLField
-	@JsonProperty
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected StructuredContentImage image;
 
 	public String getLink() {
@@ -176,7 +176,7 @@ public class Value {
 	}
 
 	@GraphQLField
-	@JsonProperty
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String link;
 
 	public Long getStructuredContentId() {
@@ -200,7 +200,7 @@ public class Value {
 	}
 
 	@GraphQLField
-	@JsonProperty
+	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
 	protected Long structuredContentId;
 
 	public StructuredContentLink getStructuredContentLink() {
@@ -227,7 +227,7 @@ public class Value {
 	}
 
 	@GraphQLField
-	@JsonProperty
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected StructuredContentLink structuredContentLink;
 
 	public String toString() {

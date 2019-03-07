@@ -59,7 +59,7 @@ public class FieldValues {
 	}
 
 	@GraphQLField
-	@JsonProperty
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected FormDocument document;
 
 	public Long getDocumentId() {
@@ -83,7 +83,7 @@ public class FieldValues {
 	}
 
 	@GraphQLField
-	@JsonProperty
+	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
 	protected Long documentId;
 
 	public Long getId() {
@@ -105,7 +105,7 @@ public class FieldValues {
 	}
 
 	@GraphQLField
-	@JsonProperty
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long id;
 
 	public String getName() {
@@ -127,7 +127,7 @@ public class FieldValues {
 	}
 
 	@GraphQLField
-	@JsonProperty
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String name;
 
 	public String getValue() {
@@ -151,7 +151,7 @@ public class FieldValues {
 	}
 
 	@GraphQLField
-	@JsonProperty
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String value;
 
 	public String toString() {

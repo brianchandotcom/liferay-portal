@@ -59,7 +59,7 @@ public class Image {
 	}
 
 	@GraphQLField
-	@JsonProperty
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String contentUrl;
 
 	public Long getImageId() {
@@ -83,7 +83,7 @@ public class Image {
 	}
 
 	@GraphQLField
-	@JsonProperty
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long imageId;
 
 	public String getName() {
@@ -105,7 +105,7 @@ public class Image {
 	}
 
 	@GraphQLField
-	@JsonProperty
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String name;
 
 	public String toString() {

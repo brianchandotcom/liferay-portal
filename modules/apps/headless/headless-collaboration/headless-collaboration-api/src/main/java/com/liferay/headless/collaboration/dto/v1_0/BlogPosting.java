@@ -62,7 +62,7 @@ public class BlogPosting {
 	}
 
 	@GraphQLField
-	@JsonProperty
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected AggregateRating aggregateRating;
 
 	public String getAlternativeHeadline() {
@@ -86,7 +86,7 @@ public class BlogPosting {
 	}
 
 	@GraphQLField
-	@JsonProperty
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String alternativeHeadline;
 
 	public String getArticleBody() {
@@ -110,7 +110,7 @@ public class BlogPosting {
 	}
 
 	@GraphQLField
-	@JsonProperty
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String articleBody;
 
 	public String getCaption() {
@@ -134,7 +134,7 @@ public class BlogPosting {
 	}
 
 	@GraphQLField
-	@JsonProperty
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String caption;
 
 	public Categories[] getCategories() {
@@ -158,7 +158,7 @@ public class BlogPosting {
 	}
 
 	@GraphQLField
-	@JsonProperty
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Categories[] categories;
 
 	public Long[] getCategoryIds() {
@@ -182,7 +182,7 @@ public class BlogPosting {
 	}
 
 	@GraphQLField
-	@JsonProperty
+	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
 	protected Long[] categoryIds;
 
 	public Long getContentSpace() {
@@ -206,7 +206,7 @@ public class BlogPosting {
 	}
 
 	@GraphQLField
-	@JsonProperty
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long contentSpace;
 
 	public Creator getCreator() {
@@ -230,7 +230,7 @@ public class BlogPosting {
 	}
 
 	@GraphQLField
-	@JsonProperty
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Creator creator;
 
 	public Date getDateCreated() {
@@ -254,7 +254,7 @@ public class BlogPosting {
 	}
 
 	@GraphQLField
-	@JsonProperty
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Date dateCreated;
 
 	public Date getDateModified() {
@@ -278,7 +278,7 @@ public class BlogPosting {
 	}
 
 	@GraphQLField
-	@JsonProperty
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Date dateModified;
 
 	public Date getDatePublished() {
@@ -302,7 +302,7 @@ public class BlogPosting {
 	}
 
 	@GraphQLField
-	@JsonProperty
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Date datePublished;
 
 	public String getDescription() {
@@ -326,7 +326,7 @@ public class BlogPosting {
 	}
 
 	@GraphQLField
-	@JsonProperty
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String description;
 
 	public String getEncodingFormat() {
@@ -350,7 +350,7 @@ public class BlogPosting {
 	}
 
 	@GraphQLField
-	@JsonProperty
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String encodingFormat;
 
 	public String getFriendlyUrlPath() {
@@ -374,7 +374,7 @@ public class BlogPosting {
 	}
 
 	@GraphQLField
-	@JsonProperty
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String friendlyUrlPath;
 
 	public Boolean getHasComments() {
@@ -398,7 +398,7 @@ public class BlogPosting {
 	}
 
 	@GraphQLField
-	@JsonProperty
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean hasComments;
 
 	public String getHeadline() {
@@ -422,7 +422,7 @@ public class BlogPosting {
 	}
 
 	@GraphQLField
-	@JsonProperty
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String headline;
 
 	public Long getId() {
@@ -444,7 +444,7 @@ public class BlogPosting {
 	}
 
 	@GraphQLField
-	@JsonProperty
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long id;
 
 	public Image getImage() {
@@ -466,7 +466,7 @@ public class BlogPosting {
 	}
 
 	@GraphQLField
-	@JsonProperty
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Image image;
 
 	public Long getImageId() {
@@ -490,7 +490,7 @@ public class BlogPosting {
 	}
 
 	@GraphQLField
-	@JsonProperty
+	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
 	protected Long imageId;
 
 	public String[] getKeywords() {
@@ -514,7 +514,7 @@ public class BlogPosting {
 	}
 
 	@GraphQLField
-	@JsonProperty
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String[] keywords;
 
 	public String getViewableBy() {
@@ -538,7 +538,7 @@ public class BlogPosting {
 	}
 
 	@GraphQLField
-	@JsonProperty
+	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
 	protected String viewableBy;
 
 	public String toString() {

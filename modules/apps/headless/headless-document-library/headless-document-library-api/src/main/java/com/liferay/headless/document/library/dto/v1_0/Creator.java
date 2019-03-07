@@ -59,7 +59,7 @@ public class Creator {
 	}
 
 	@GraphQLField
-	@JsonProperty
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String additionalName;
 
 	public String getFamilyName() {
@@ -83,7 +83,7 @@ public class Creator {
 	}
 
 	@GraphQLField
-	@JsonProperty
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String familyName;
 
 	public String getGivenName() {
@@ -107,7 +107,7 @@ public class Creator {
 	}
 
 	@GraphQLField
-	@JsonProperty
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String givenName;
 
 	public Long getId() {
@@ -129,7 +129,7 @@ public class Creator {
 	}
 
 	@GraphQLField
-	@JsonProperty
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long id;
 
 	public String getImage() {
@@ -153,7 +153,7 @@ public class Creator {
 	}
 
 	@GraphQLField
-	@JsonProperty
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String image;
 
 	public String getName() {
@@ -175,7 +175,7 @@ public class Creator {
 	}
 
 	@GraphQLField
-	@JsonProperty
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String name;
 
 	public String getProfileURL() {
@@ -199,7 +199,7 @@ public class Creator {
 	}
 
 	@GraphQLField
-	@JsonProperty
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String profileURL;
 
 	public String toString() {

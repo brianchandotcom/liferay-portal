@@ -59,7 +59,7 @@ public class Email {
 	}
 
 	@GraphQLField
-	@JsonProperty
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String email;
 
 	public Long getId() {
@@ -81,7 +81,7 @@ public class Email {
 	}
 
 	@GraphQLField
-	@JsonProperty
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long id;
 
 	public String getType() {
@@ -103,7 +103,7 @@ public class Email {
 	}
 
 	@GraphQLField
-	@JsonProperty
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String type;
 
 	public String toString() {

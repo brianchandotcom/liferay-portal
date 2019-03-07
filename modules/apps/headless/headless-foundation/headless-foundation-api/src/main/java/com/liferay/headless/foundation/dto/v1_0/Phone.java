@@ -59,7 +59,7 @@ public class Phone {
 	}
 
 	@GraphQLField
-	@JsonProperty
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String extension;
 
 	public Long getId() {
@@ -81,7 +81,7 @@ public class Phone {
 	}
 
 	@GraphQLField
-	@JsonProperty
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long id;
 
 	public String getPhoneNumber() {
@@ -105,7 +105,7 @@ public class Phone {
 	}
 
 	@GraphQLField
-	@JsonProperty
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String phoneNumber;
 
 	public String getPhoneType() {
@@ -129,7 +129,7 @@ public class Phone {
 	}
 
 	@GraphQLField
-	@JsonProperty
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String phoneType;
 
 	public String toString() {

@@ -63,7 +63,7 @@ public class FormRecord {
 	}
 
 	@GraphQLField
-	@JsonProperty
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Creator creator;
 
 	public Date getDateCreated() {
@@ -87,7 +87,7 @@ public class FormRecord {
 	}
 
 	@GraphQLField
-	@JsonProperty
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Date dateCreated;
 
 	public Date getDateModified() {
@@ -111,7 +111,7 @@ public class FormRecord {
 	}
 
 	@GraphQLField
-	@JsonProperty
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Date dateModified;
 
 	public Date getDatePublished() {
@@ -135,7 +135,7 @@ public class FormRecord {
 	}
 
 	@GraphQLField
-	@JsonProperty
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Date datePublished;
 
 	public Boolean getDraft() {
@@ -159,7 +159,7 @@ public class FormRecord {
 	}
 
 	@GraphQLField
-	@JsonProperty
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean draft;
 
 	@Schema(description = "https://www.schema.org/FormFieldValue")
@@ -184,7 +184,7 @@ public class FormRecord {
 	}
 
 	@GraphQLField
-	@JsonProperty
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected FieldValues[] fieldValues;
 
 	public Form getForm() {
@@ -206,7 +206,7 @@ public class FormRecord {
 	}
 
 	@GraphQLField
-	@JsonProperty
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Form form;
 
 	public Long getFormId() {
@@ -230,7 +230,7 @@ public class FormRecord {
 	}
 
 	@GraphQLField
-	@JsonProperty
+	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
 	protected Long formId;
 
 	public Long getId() {
@@ -252,7 +252,7 @@ public class FormRecord {
 	}
 
 	@GraphQLField
-	@JsonProperty
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long id;
 
 	public String toString() {

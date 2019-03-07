@@ -65,7 +65,7 @@ public class Document {
 	}
 
 	@GraphQLField
-	@JsonProperty
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected AdaptedImages[] adaptedImages;
 
 	public AggregateRating getAggregateRating() {
@@ -90,7 +90,7 @@ public class Document {
 	}
 
 	@GraphQLField
-	@JsonProperty
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected AggregateRating aggregateRating;
 
 	public Categories[] getCategories() {
@@ -114,7 +114,7 @@ public class Document {
 	}
 
 	@GraphQLField
-	@JsonProperty
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Categories[] categories;
 
 	public Long[] getCategoryIds() {
@@ -138,7 +138,7 @@ public class Document {
 	}
 
 	@GraphQLField
-	@JsonProperty
+	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
 	protected Long[] categoryIds;
 
 	public String getContentUrl() {
@@ -162,7 +162,7 @@ public class Document {
 	}
 
 	@GraphQLField
-	@JsonProperty
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String contentUrl;
 
 	public Creator getCreator() {
@@ -186,7 +186,7 @@ public class Document {
 	}
 
 	@GraphQLField
-	@JsonProperty
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Creator creator;
 
 	public Date getDateCreated() {
@@ -210,7 +210,7 @@ public class Document {
 	}
 
 	@GraphQLField
-	@JsonProperty
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Date dateCreated;
 
 	public Date getDateModified() {
@@ -234,7 +234,7 @@ public class Document {
 	}
 
 	@GraphQLField
-	@JsonProperty
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Date dateModified;
 
 	public String getDescription() {
@@ -258,7 +258,7 @@ public class Document {
 	}
 
 	@GraphQLField
-	@JsonProperty
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String description;
 
 	public String getEncodingFormat() {
@@ -282,7 +282,7 @@ public class Document {
 	}
 
 	@GraphQLField
-	@JsonProperty
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String encodingFormat;
 
 	public String getFileExtension() {
@@ -306,7 +306,7 @@ public class Document {
 	}
 
 	@GraphQLField
-	@JsonProperty
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String fileExtension;
 
 	public Long getFolderId() {
@@ -330,7 +330,7 @@ public class Document {
 	}
 
 	@GraphQLField
-	@JsonProperty
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long folderId;
 
 	public Long getId() {
@@ -352,7 +352,7 @@ public class Document {
 	}
 
 	@GraphQLField
-	@JsonProperty
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long id;
 
 	public String[] getKeywords() {
@@ -376,7 +376,7 @@ public class Document {
 	}
 
 	@GraphQLField
-	@JsonProperty
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String[] keywords;
 
 	public Number getSizeInBytes() {
@@ -400,7 +400,7 @@ public class Document {
 	}
 
 	@GraphQLField
-	@JsonProperty
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Number sizeInBytes;
 
 	public String getTitle() {
@@ -424,7 +424,7 @@ public class Document {
 	}
 
 	@GraphQLField
-	@JsonProperty
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String title;
 
 	public String getViewableBy() {
@@ -448,7 +448,7 @@ public class Document {
 	}
 
 	@GraphQLField
-	@JsonProperty
+	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
 	protected String viewableBy;
 
 	public String toString() {

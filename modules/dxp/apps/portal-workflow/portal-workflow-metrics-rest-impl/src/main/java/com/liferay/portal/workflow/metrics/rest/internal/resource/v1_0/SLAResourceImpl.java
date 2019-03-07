@@ -117,6 +117,7 @@ public class SLAResourceImpl extends BaseSLAResourceImpl {
 			{
 				setDescription(workflowMetricsSLADefinition.getDescription());
 				setDuration(workflowMetricsSLADefinition.getDuration());
+				setId(workflowMetricsSLADefinition.getPrimaryKey());
 				setName(workflowMetricsSLADefinition.getName());
 				setPauseNodeNames(
 					StringUtil.split(

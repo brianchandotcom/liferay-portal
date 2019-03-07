@@ -43,14 +43,12 @@ import org.osgi.service.component.annotations.Reference;
 	immediate = true,
 	property = {
 		"osgi.http.whiteboard.servlet.name=com.liferay.frontend.js.loader.modules.extender.internal.servlet.JSLoaderConfigServlet",
-		"osgi.http.whiteboard.servlet.pattern=" + JSLoaderConfigServlet.SERVLET_PATTERN,
+		"osgi.http.whiteboard.servlet.pattern=/js_loader_config",
 		"service.ranking:Integer=" + Details.MAX_VALUE_LESS_1K
 	},
 	service = {JSLoaderConfigServlet.class, Servlet.class}
 )
 public class JSLoaderConfigServlet extends HttpServlet {
-
-	public static final String SERVLET_PATTERN = "/js_loader_config";
 
 	@Activate
 	@Modified
@@ -81,7 +79,7 @@ public class JSLoaderConfigServlet extends HttpServlet {
 				request);
 
 		String url = absolutePortalURLBuilder.forWhiteboard(
-			JSResolveModulesServlet.SERVLET_PATTERN
+			"/js_loader_config"
 		).build();
 
 		printWriter.println("Liferay.RESOLVE_PATH = \"" + url + "\";\n");

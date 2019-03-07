@@ -35,10 +35,12 @@ import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.GroupThreadLocal;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.segments.constants.SegmentsConstants;
+import com.liferay.segments.exception.RequiredSegmentsEntryException;
 import com.liferay.segments.exception.SegmentsEntryKeyException;
 import com.liferay.segments.model.SegmentsEntry;
 import com.liferay.segments.service.base.SegmentsEntryLocalServiceBaseImpl;
@@ -148,6 +150,16 @@ public class SegmentsEntryLocalServiceImpl
 	@SystemEvent(type = SystemEventConstants.TYPE_DELETE)
 	public SegmentsEntry deleteSegmentsEntry(SegmentsEntry segmentsEntry)
 		throws PortalException {
+
+		if (!GroupThreadLocal.isDeleteInProcess()) {
+			if (segmentsExperiencePersistence.countBySegmentsEntryId(
+					segmentsEntry.getSegmentsEntryId()) > 0) {
+
+				throw new RequiredSegmentsEntryException.
+					MustNotDeleteSegmentsEntryReferencedBySegmentsExperiences(
+						segmentsEntry.getSegmentsEntryId());
+			}
+		}
 
 		// Segments entry
 

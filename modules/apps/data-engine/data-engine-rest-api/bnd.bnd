@@ -1,0 +1,6 @@
+Bundle-Name: Liferay Data Engine Rest API
+Bundle-SymbolicName: com.liferay.data.engine.rest.api
+Bundle-Version: 1.0.0
+Export-Package:\
+	com.liferay.data.engine.rest.dto.v1_0,\
+	com.liferay.data.engine.rest.resource.v1_0

@@ -1,0 +1,7 @@
+apiDir: "../data-engine-rest-api/src/main/java"
+apiPackagePath: "com.liferay.data.engine.rest"
+application:
+  baseURI: "/data-engine-rest"
+  className: "DataEngineRestApplication"
+  name: "data-engine-rest-application"
+author: "Jeyvison Nascimento"

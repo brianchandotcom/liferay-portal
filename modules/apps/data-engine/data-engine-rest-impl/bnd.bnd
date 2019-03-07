@@ -1,0 +1,3 @@
+Bundle-Name: Liferay Data Engine Rest Implementation
+Bundle-SymbolicName: com.liferay.data.engine.rest.impl
+Bundle-Version: 1.0.0

@@ -75,6 +75,22 @@
 			<finder-column name="uniqueGroupKey" />
 		</finder>
 	</entity>
+	<entity local-service="true" name="NestedSetsTreeEntry" remote-service="false">
+
+		<!-- PK fields -->
+
+		<column name="nestedSetsTreeEntryId" primary="true" type="long" />
+
+		<!-- Group instance -->
+
+		<column name="groupId" type="long" />
+
+		<!-- Other fields -->
+
+		<column name="parentNestedSetsTreeEntryId" type="long" />
+		<column name="leftNestedSetsTreeEntryId" type="long" />
+		<column name="rightNestedSetsTreeEntryId" type="long" />
+	</entity>
 	<entity local-service="true" name="UADPartialEntry">
 
 		<!-- PK fields -->

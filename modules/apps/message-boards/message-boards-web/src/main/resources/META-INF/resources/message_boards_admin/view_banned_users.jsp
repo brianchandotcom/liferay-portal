@@ -137,14 +137,19 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, TextForm
 PortalUtil.setPageSubtitle(LanguageUtil.get(request, "banned-users"), request);
 %>
 
-<aui:script sandbox="<%= true %>">
+<aui:script>
+	<portlet:actionURL name="/message_boards/ban_user" var="banUserURL" />
+
 	var unbanUser = function() {
-		var form = AUI.$(document.<portlet:namespace />fm);
-
-		form.attr('method', 'post');
-		form.fm('<%= Constants.CMD %>').val('unban');
-
-		submitForm(form, '<portlet:actionURL name="/message_boards/ban_user" />');
+		Liferay.Util.postForm(
+			document.<portlet:namespace />fm,
+			{
+				data: {
+					'<%= Constants.CMD %>': 'unban'
+				},
+				url: '<%= banUserURL %>'
+			}
+		);
 	};
 
 	var ACTIONS = {

@@ -62,16 +62,24 @@ if (mbMessageIterator != null) {
 }
 %>
 
-<aui:script sandbox="<%= true %>">
-	var rootIndexPage = $('#<portlet:namespace />rootIndexPage');
-	var index = $('#<portlet:namespace />index');
+<script>
+	var index = document.getElementById('<portlet:namespace />index');
 
-	rootIndexPage.val('<%= String.valueOf(rootIndexPage) %>');
-	index.val('<%= String.valueOf(index) %>');
+	if (index) {
+		index.value = '<%= String.valueOf(index) %>';
+	}
+
+	var rootIndexPage = document.getElementById('<portlet:namespace />rootIndexPage');
+
+	if (rootIndexPage) {
+		rootIndexPage.value = '<%= String.valueOf(rootIndexPage) %>';
+	}
 
 	<c:if test="<%= treeWalker.getMessages().size() <= (index + 1) %>">
-		var moreMessagesLink = $('#<portlet:namespace />moreMessages');
+		var moreMessagesLink = document.getElementById('<portlet:namespace />moreMessages');
 
-		moreMessagesLink.hide();
+		if (moreMessagesLink) {
+			moreMessagesLink.classList.add('hide');
+		}
 	</c:if>
-</aui:script>
+</script>

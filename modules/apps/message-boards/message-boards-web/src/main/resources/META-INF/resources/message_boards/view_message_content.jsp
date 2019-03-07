@@ -315,37 +315,58 @@ if (portletTitleBasedNavigation) {
 	</c:if>
 </div>
 
-<aui:script sandbox="<%= true %>">
-	$('#<portlet:namespace />moreMessages').on(
-		'click',
-		function(event) {
-			var form = $('#<portlet:namespace />fm');
+<aui:script require="metal-dom/src/all/dom as dom">
+	var moreMessagesButton = document.getElementById('<portlet:namespace />moreMessages');
 
-			var data = Liferay.Util.ns(
-				'<portlet:namespace />',
-				{
-					index: form.fm('index').val(),
-					rootIndexPage: form.fm('rootIndexPage').val()
+	if (moreMessagesButton) {
+		moreMessagesButton.addEventListener(
+			'click',
+			function(event) {
+				var form = document.<portlet:namespace />fm;
+				var formData = new FormData();
+				var index = Liferay.Util.getFormElement(form, 'index');
+				var rootIndexPage = Liferay.Util.getFormElement(form, 'rootIndexPage');
+
+				if (index && rootIndexPage) {
+					formData.append('<portlet:namespace />index', index.value);
+					formData.append('<portlet:namespace />rootIndexPage', rootIndexPage.value);
 				}
-			);
 
-			<portlet:resourceURL id="/message_boards/get_messages" var="getMessagesURL">
-				<portlet:param name="messageId" value="<%= String.valueOf(message.getMessageId()) %>" />
-			</portlet:resourceURL>
+				<portlet:resourceURL id="/message_boards/get_messages" var="getMessagesURL">
+					<portlet:param name="messageId" value="<%= String.valueOf(message.getMessageId()) %>" />
+				</portlet:resourceURL>
 
-			$.ajax(
-				'<%= getMessagesURL.toString() %>',
-				{
-					data: data,
-					success: function(data) {
-						var messageContainer = $('#<portlet:namespace />messageContainer');
-
-						messageContainer.append(data);
-
-						messageContainer.append($('#<portlet:namespace />messageContainer > .reply-container'));
+				fetch(
+					'<%= getMessagesURL.toString() %>',
+					{
+						body: formData,
+						credentials: 'include',
+						method: 'POST'
 					}
-				}
-			);
-		}
-	);
+				)
+				.then(
+					function(response) {
+						return response.text();
+					}
+				)
+				.then(
+					function(response) {
+						var messageContainer = document.getElementById('<portlet:namespace />messageContainer');
+
+						if (messageContainer) {
+							dom.append(messageContainer, response);
+
+							dom.globalEval.runScriptsInElement(messageContainer.parentElement);
+
+							var replyContainer = document.querySelector('#<portlet:namespace />messageContainer > .reply-container');
+
+							if (replyContainer) {
+								dom.append(messageContainer, replyContainer);
+							}
+						}
+					}
+				);
+			}
+		);
+	}
 </aui:script>

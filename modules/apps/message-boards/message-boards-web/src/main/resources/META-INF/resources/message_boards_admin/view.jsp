@@ -105,33 +105,46 @@ if (category != null) {
 %>
 
 <aui:script>
+	var form = document.<portlet:namespace />fm;
+
+	<portlet:actionURL name="/message_boards/edit_entry" var="editEntryURL" />
+
 	var deleteEntries = function() {
 		if (<%= trashHelper.isTrashEnabled(scopeGroupId) %> || confirm('<%= UnicodeLanguageUtil.get(request, trashHelper.isTrashEnabled(scopeGroupId) ? "are-you-sure-you-want-to-move-the-selected-entries-to-the-recycle-bin" : "are-you-sure-you-want-to-delete-the-selected-entries") %>')) {
-			var form = AUI.$(document.<portlet:namespace />fm);
-
-			form.attr('method', 'post');
-			form.fm('<%= Constants.CMD %>').val('<%= trashHelper.isTrashEnabled(scopeGroupId) ? Constants.MOVE_TO_TRASH : Constants.DELETE %>');
-
-			submitForm(form, '<portlet:actionURL name="/message_boards/edit_entry" />');
+			Liferay.Util.postForm(
+				form,
+				{
+					data: {
+						'<%= Constants.CMD %>': '<%= trashHelper.isTrashEnabled(scopeGroupId) ? Constants.MOVE_TO_TRASH : Constants.DELETE %>'
+					},
+					url: '<%= editEntryURL %>'
+				}
+			);
 		}
 	};
 
 	var lockEntries = function() {
-		var form = AUI.$(document.<portlet:namespace />fm);
-
-		form.attr('method', 'post');
-		form.fm('<%= Constants.CMD %>').val('<%= Constants.LOCK %>');
-
-		submitForm(form, '<portlet:actionURL name="/message_boards/edit_entry" />');
+		Liferay.Util.postForm(
+			form,
+			{
+				data: {
+					'<%= Constants.CMD %>': '<%= Constants.LOCK %>'
+				},
+				url: '<%= editEntryURL %>'
+			}
+		);
 	};
 
 	var unlockEntries = function() {
-		var form = AUI.$(document.<portlet:namespace />fm);
-
-		form.attr('method', 'post');
-		form.fm('<%= Constants.CMD %>').val('<%= Constants.UNLOCK %>');
-
-		submitForm(form, '<portlet:actionURL name="/message_boards/edit_entry" />');
+		Liferay.Util.postForm(
+			form,
+			{
+				data: {
+					'<%= Constants.CMD %>': '<%= Constants.UNLOCK %>'
+				},
+				url: '<%= editEntryURL %>'
+			}
+		);
 	};
 
 	var ACTIONS = {

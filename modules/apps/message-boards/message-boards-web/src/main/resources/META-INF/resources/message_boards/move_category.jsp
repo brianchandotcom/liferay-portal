@@ -96,31 +96,49 @@ MBBreadcrumbUtil.addPortletBreadcrumbEntries(category, request, renderResponse);
 PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "move"), currentURL);
 %>
 
-<aui:script sandbox="<%= true %>">
-	$('#<portlet:namespace />selectCategoryButton').on(
-		'click',
-		function(event) {
-			Liferay.Util.selectEntity(
-				{
-					dialog: {
-						constrain: true,
-						modal: true,
-						width: 680
+<script>
+	<portlet:renderURL var="selectCategoryURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
+		<portlet:param name="mvcRenderCommandName" value="/message_boards/select_category" />
+		<portlet:param name="mbCategoryId" value="<%= String.valueOf((category == null) ? MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID : category.getParentCategoryId()) %>" />
+		<portlet:param name="excludedMBCategoryId" value="<%= String.valueOf(categoryId) %>" />
+	</portlet:renderURL>
+
+	var selectCategoryButton = document.getElementById('<portlet:namespace />selectCategoryButton');
+
+	if (selectCategoryButton) {
+		selectCategoryButton.addEventListener(
+			'click',
+			function(event) {
+				Liferay.Util.selectEntity(
+					{
+						dialog: {
+							constrain: true,
+							modal: true,
+							width: 680
+						},
+						id: '<portlet:namespace />selectCategory',
+						title: '<liferay-ui:message arguments="category" key="select-x" />',
+						uri: '<%= selectCategoryURL.toString() %>'
 					},
-					id: '<portlet:namespace />selectCategory',
-					title: '<liferay-ui:message arguments="category" key="select-x" />',
-					uri: '<portlet:renderURL windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="mvcRenderCommandName" value="/message_boards/select_category" /><portlet:param name="mbCategoryId" value="<%= String.valueOf((category == null) ? MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID : category.getParentCategoryId()) %>" /><portlet:param name="excludedMBCategoryId" value="<%= String.valueOf(categoryId) %>" /></portlet:renderURL>'
-				},
-				function(event) {
-					var form = $(document.<portlet:namespace />fm);
+					function(event) {
+						var form = document.<portlet:namespace />fm;
 
-					form.fm('parentCategoryId').val(event.categoryid);
+						Liferay.Util.setFormValues(
+							form,
+							{
+								parentCategoryId: event.categoryid,
+								parentCategoryName: Liferay.Util.unescape(event.name)
+							}
+						);
 
-					form.fm('parentCategoryName').val(Liferay.Util.unescape(event.name));
+						var removeCategoryButton = document.getElementById('<portlet:namespace />removeCategoryButton');
 
-					Liferay.Util.toggleDisabled('#<portlet:namespace />removeCategoryButton', false);
-				}
-			);
-		}
-	);
-</aui:script>
+						if (removeCategoryButton) {
+							Liferay.Util.toggleDisabled(removeCategoryButton, false);
+						}
+					}
+				);
+			}
+		);
+	}
+</script>

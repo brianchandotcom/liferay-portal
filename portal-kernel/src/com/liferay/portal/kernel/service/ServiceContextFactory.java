@@ -293,8 +293,8 @@ public class ServiceContextFactory {
 			if (name.startsWith("assetCategoryIds")) {
 				updateAssetCategoryIds = true;
 
-				long[] assetVocabularyAssetCategoryIds = StringUtil.split(
-					ParamUtil.getString(request, name), 0L);
+				long[] assetVocabularyAssetCategoryIds =
+					ParamUtil.getLongValues(request, name);
 
 				for (long assetCategoryId : assetVocabularyAssetCategoryIds) {
 					assetCategoryIdsList.add(assetCategoryId);
@@ -453,8 +453,8 @@ public class ServiceContextFactory {
 			if (name.startsWith("assetCategoryIds")) {
 				updateAssetCategoryIds = true;
 
-				long[] assetVocabularyAssetCategoryIds = StringUtil.split(
-					ParamUtil.getString(portletRequest, name), 0L);
+				long[] assetVocabularyAssetCategoryIds =
+					ParamUtil.getLongValues(portletRequest, name);
 
 				for (long assetCategoryId : assetVocabularyAssetCategoryIds) {
 					assetCategoryIdsList.add(assetCategoryId);

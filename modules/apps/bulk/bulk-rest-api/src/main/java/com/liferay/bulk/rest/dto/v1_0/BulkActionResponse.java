@@ -32,24 +32,16 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
-@GraphQLName("BulkAssetEntryCommonTagsModel")
-@XmlRootElement(name = "BulkAssetEntryCommonTagsModel")
-public class BulkAssetEntryCommonTagsModel {
+@GraphQLName("BulkActionResponse")
+@XmlRootElement(name = "BulkActionResponse")
+public class BulkActionResponse {
 
 	public String getDescription() {
 		return description;
 	}
 
-	public Long[] getGroupIds() {
-		return groupIds;
-	}
-
 	public String getStatus() {
 		return status;
-	}
-
-	public String[] getTagNames() {
-		return tagNames;
 	}
 
 	public void setDescription(String description) {
@@ -62,22 +54,6 @@ public class BulkAssetEntryCommonTagsModel {
 
 		try {
 			description = descriptionUnsafeSupplier.get();
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	public void setGroupIds(Long[] groupIds) {
-		this.groupIds = groupIds;
-	}
-
-	@JsonIgnore
-	public void setGroupIds(
-		UnsafeSupplier<Long[], Exception> groupIdsUnsafeSupplier) {
-
-		try {
-			groupIds = groupIdsUnsafeSupplier.get();
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
@@ -100,24 +76,8 @@ public class BulkAssetEntryCommonTagsModel {
 		}
 	}
 
-	public void setTagNames(String[] tagNames) {
-		this.tagNames = tagNames;
-	}
-
-	@JsonIgnore
-	public void setTagNames(
-		UnsafeSupplier<String[], Exception> tagNamesUnsafeSupplier) {
-
-		try {
-			tagNames = tagNamesUnsafeSupplier.get();
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
 	public String toString() {
-		StringBundler sb = new StringBundler(21);
+		StringBundler sb = new StringBundler(11);
 
 		sb.append("{");
 
@@ -128,24 +88,10 @@ public class BulkAssetEntryCommonTagsModel {
 		sb.append("\"");
 		sb.append(", ");
 
-		sb.append("\"groupIds\": ");
-
-		sb.append("\"");
-		sb.append(groupIds);
-		sb.append("\"");
-		sb.append(", ");
-
 		sb.append("\"status\": ");
 
 		sb.append("\"");
 		sb.append(status);
-		sb.append("\"");
-		sb.append(", ");
-
-		sb.append("\"tagNames\": ");
-
-		sb.append("\"");
-		sb.append(tagNames);
 		sb.append("\"");
 
 		sb.append("}");
@@ -159,14 +105,6 @@ public class BulkAssetEntryCommonTagsModel {
 
 	@GraphQLField
 	@JsonProperty
-	protected Long[] groupIds;
-
-	@GraphQLField
-	@JsonProperty
 	protected String status;
-
-	@GraphQLField
-	@JsonProperty
-	protected String[] tagNames;
 
 }

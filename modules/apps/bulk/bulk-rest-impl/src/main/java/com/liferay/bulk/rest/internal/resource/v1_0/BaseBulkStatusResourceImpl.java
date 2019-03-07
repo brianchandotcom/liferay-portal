@@ -14,13 +14,8 @@
 
 package com.liferay.bulk.rest.internal.resource.v1_0;
 
-import com.liferay.bulk.rest.dto.v1_0.BulkActionResponseModel;
-import com.liferay.bulk.rest.dto.v1_0.BulkAssetEntryActionModel;
-import com.liferay.bulk.rest.dto.v1_0.BulkAssetEntryCommonCategoriesModel;
-import com.liferay.bulk.rest.dto.v1_0.BulkAssetEntryCommonTagsModel;
-import com.liferay.bulk.rest.dto.v1_0.BulkAssetEntryUpdateCategoriesActionModel;
-import com.liferay.bulk.rest.dto.v1_0.BulkAssetEntryUpdateTagsActionModel;
-import com.liferay.bulk.rest.resource.v1_0.BulkActionResponseModelResource;
+import com.liferay.bulk.rest.dto.v1_0.BulkStatus;
+import com.liferay.bulk.rest.resource.v1_0.BulkStatusResource;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Company;
@@ -33,11 +28,10 @@ import java.util.List;
 
 import javax.annotation.Generated;
 
-import javax.ws.rs.Consumes;
-import javax.ws.rs.POST;
+import javax.ws.rs.GET;
 import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.UriBuilder;
 import javax.ws.rs.core.UriInfo;
@@ -48,64 +42,16 @@ import javax.ws.rs.core.UriInfo;
  */
 @Generated("")
 @Path("/v1.0")
-public abstract class BaseBulkActionResponseModelResourceImpl
-	implements BulkActionResponseModelResource {
+public abstract class BaseBulkStatusResourceImpl implements BulkStatusResource {
 
-	@Consumes("application/json")
+	@GET
 	@Override
-	@Path("/categories/{category-class-name-id}")
-	@POST
+	@Path("/status")
 	@Produces("application/json")
-	public BulkActionResponseModel postCategoryClassName(
-			@PathParam("category-class-name-id") Long categoryClassNameId,
-			BulkAssetEntryUpdateCategoriesActionModel
-				bulkAssetEntryUpdateCategoriesActionModel)
+	public BulkStatus getStatus(@QueryParam("param") Long param)
 		throws Exception {
 
-		return new BulkActionResponseModel();
-	}
-
-	@Consumes("application/json")
-	@Override
-	@Path("/categories/{category-group-id}/{category-class-name-id}/common")
-	@POST
-	@Produces("application/json")
-	public BulkAssetEntryCommonCategoriesModel
-			postCategoryGroupCategoryClassName(
-				@PathParam("category-group-id") Long categoryGroupId,
-				@PathParam("category-class-name-id") Long categoryClassNameId,
-				BulkAssetEntryActionModel bulkAssetEntryActionModel)
-		throws Exception {
-
-		return new BulkAssetEntryCommonCategoriesModel();
-	}
-
-	@Consumes("application/json")
-	@Override
-	@Path("/tags/{tag-class-name-id}")
-	@POST
-	@Produces("application/json")
-	public BulkActionResponseModel postTagClassName(
-			@PathParam("tag-class-name-id") Long tagClassNameId,
-			BulkAssetEntryUpdateTagsActionModel
-				bulkAssetEntryUpdateTagsActionModel)
-		throws Exception {
-
-		return new BulkActionResponseModel();
-	}
-
-	@Consumes("application/json")
-	@Override
-	@Path("/tags/{tag-group-id}/{tag-class-name-id}/common")
-	@POST
-	@Produces("application/json")
-	public BulkAssetEntryCommonTagsModel postTagGroupTagClassName(
-			@PathParam("tag-group-id") Long tagGroupId,
-			@PathParam("tag-class-name-id") Long tagClassNameId,
-			BulkAssetEntryActionModel bulkAssetEntryActionModel)
-		throws Exception {
-
-		return new BulkAssetEntryCommonTagsModel();
+		return new BulkStatus();
 	}
 
 	public void setContextCompany(Company contextCompany) {
@@ -121,11 +67,11 @@ public abstract class BaseBulkActionResponseModelResourceImpl
 		}
 
 		URI resourceURI = UriBuilder.fromResource(
-			BaseBulkActionResponseModelResourceImpl.class
+			BaseBulkStatusResourceImpl.class
 		).build();
 
 		URI methodURI = UriBuilder.fromMethod(
-			BaseBulkActionResponseModelResourceImpl.class, methodName
+			BaseBulkStatusResourceImpl.class, methodName
 		).build(
 			values
 		);
@@ -133,8 +79,7 @@ public abstract class BaseBulkActionResponseModelResourceImpl
 		return baseURIString + resourceURI.toString() + methodURI.toString();
 	}
 
-	protected void preparePatch(
-		BulkActionResponseModel bulkActionResponseModel) {
+	protected void preparePatch(BulkStatus bulkStatus) {
 	}
 
 	protected <T, R> List<R> transform(

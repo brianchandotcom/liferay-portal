@@ -14,12 +14,12 @@
 
 package com.liferay.bulk.rest.resource.v1_0;
 
-import com.liferay.bulk.rest.dto.v1_0.BulkActionResponseModel;
-import com.liferay.bulk.rest.dto.v1_0.BulkAssetEntryActionModel;
-import com.liferay.bulk.rest.dto.v1_0.BulkAssetEntryCommonCategoriesModel;
-import com.liferay.bulk.rest.dto.v1_0.BulkAssetEntryCommonTagsModel;
-import com.liferay.bulk.rest.dto.v1_0.BulkAssetEntryUpdateCategoriesActionModel;
-import com.liferay.bulk.rest.dto.v1_0.BulkAssetEntryUpdateTagsActionModel;
+import com.liferay.bulk.rest.dto.v1_0.BulkActionResponse;
+import com.liferay.bulk.rest.dto.v1_0.BulkAssetEntryAction;
+import com.liferay.bulk.rest.dto.v1_0.BulkAssetEntryCommonCategories;
+import com.liferay.bulk.rest.dto.v1_0.BulkAssetEntryCommonTags;
+import com.liferay.bulk.rest.dto.v1_0.BulkAssetEntryUpdateCategoriesAction;
+import com.liferay.bulk.rest.dto.v1_0.BulkAssetEntryUpdateTagsAction;
 import com.liferay.portal.kernel.model.Company;
 
 import javax.annotation.Generated;
@@ -33,29 +33,27 @@ import javax.annotation.Generated;
  * @generated
  */
 @Generated("")
-public interface BulkActionResponseModelResource {
+public interface BulkActionResponseResource {
 
-	public BulkActionResponseModel postCategoryClassName(
+	public BulkActionResponse postCategoryClassName(
 			Long categoryClassNameId,
-			BulkAssetEntryUpdateCategoriesActionModel
-				bulkAssetEntryUpdateCategoriesActionModel)
+			BulkAssetEntryUpdateCategoriesAction
+				bulkAssetEntryUpdateCategoriesAction)
 		throws Exception;
 
-	public BulkAssetEntryCommonCategoriesModel
-			postCategoryGroupCategoryClassName(
-				Long categoryGroupId, Long categoryClassNameId,
-				BulkAssetEntryActionModel bulkAssetEntryActionModel)
+	public BulkAssetEntryCommonCategories postCategoryGroupCategoryClassName(
+			Long categoryGroupId, Long categoryClassNameId,
+			BulkAssetEntryAction bulkAssetEntryAction)
 		throws Exception;
 
-	public BulkActionResponseModel postTagClassName(
+	public BulkActionResponse postTagClassName(
 			Long tagClassNameId,
-			BulkAssetEntryUpdateTagsActionModel
-				bulkAssetEntryUpdateTagsActionModel)
+			BulkAssetEntryUpdateTagsAction bulkAssetEntryUpdateTagsAction)
 		throws Exception;
 
-	public BulkAssetEntryCommonTagsModel postTagGroupTagClassName(
+	public BulkAssetEntryCommonTags postTagGroupTagClassName(
 			Long tagGroupId, Long tagClassNameId,
-			BulkAssetEntryActionModel bulkAssetEntryActionModel)
+			BulkAssetEntryAction bulkAssetEntryAction)
 		throws Exception;
 
 	public void setContextCompany(Company contextCompany);

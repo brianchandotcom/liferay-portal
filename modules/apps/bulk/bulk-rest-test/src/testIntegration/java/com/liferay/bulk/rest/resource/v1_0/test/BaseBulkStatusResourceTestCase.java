@@ -18,8 +18,8 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import com.liferay.bulk.rest.dto.v1_0.BulkStatusModel;
-import com.liferay.bulk.rest.resource.v1_0.BulkStatusModelResource;
+import com.liferay.bulk.rest.dto.v1_0.BulkStatus;
+import com.liferay.bulk.rest.resource.v1_0.BulkStatusResource;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
@@ -64,7 +64,7 @@ import org.junit.Test;
  * @generated
  */
 @Generated("")
-public abstract class BaseBulkStatusModelResourceTestCase {
+public abstract class BaseBulkStatusResourceTestCase {
 
 	@ClassRule
 	@Rule
@@ -91,49 +91,45 @@ public abstract class BaseBulkStatusModelResourceTestCase {
 
 	@Test
 	public void testGetStatus() throws Exception {
-		BulkStatusModel postBulkStatusModel =
-			testGetStatus_addBulkStatusModel();
+		BulkStatus postBulkStatus = testGetStatus_addBulkStatus();
 
-		BulkStatusModel getBulkStatusModel = invokeGetStatus(
-			postBulkStatusModel.getId());
+		BulkStatus getBulkStatus = invokeGetStatus(postBulkStatus.getId());
 
-		assertEquals(postBulkStatusModel, getBulkStatusModel);
-		assertValid(getBulkStatusModel);
+		assertEquals(postBulkStatus, getBulkStatus);
+		assertValid(getBulkStatus);
 	}
 
 	protected void assertEquals(
-		BulkStatusModel bulkStatusModel1, BulkStatusModel bulkStatusModel2) {
+		BulkStatus bulkStatus1, BulkStatus bulkStatus2) {
 
 		Assert.assertTrue(
-			bulkStatusModel1 + " does not equal " + bulkStatusModel2,
-			equals(bulkStatusModel1, bulkStatusModel2));
+			bulkStatus1 + " does not equal " + bulkStatus2,
+			equals(bulkStatus1, bulkStatus2));
 	}
 
 	protected void assertEquals(
-		List<BulkStatusModel> bulkStatusModels1,
-		List<BulkStatusModel> bulkStatusModels2) {
+		List<BulkStatus> bulkStatuses1, List<BulkStatus> bulkStatuses2) {
 
-		Assert.assertEquals(bulkStatusModels1.size(), bulkStatusModels2.size());
+		Assert.assertEquals(bulkStatuses1.size(), bulkStatuses2.size());
 
-		for (int i = 0; i < bulkStatusModels1.size(); i++) {
-			BulkStatusModel bulkStatusModel1 = bulkStatusModels1.get(i);
-			BulkStatusModel bulkStatusModel2 = bulkStatusModels2.get(i);
+		for (int i = 0; i < bulkStatuses1.size(); i++) {
+			BulkStatus bulkStatus1 = bulkStatuses1.get(i);
+			BulkStatus bulkStatus2 = bulkStatuses2.get(i);
 
-			assertEquals(bulkStatusModel1, bulkStatusModel2);
+			assertEquals(bulkStatus1, bulkStatus2);
 		}
 	}
 
 	protected void assertEqualsIgnoringOrder(
-		List<BulkStatusModel> bulkStatusModels1,
-		List<BulkStatusModel> bulkStatusModels2) {
+		List<BulkStatus> bulkStatuses1, List<BulkStatus> bulkStatuses2) {
 
-		Assert.assertEquals(bulkStatusModels1.size(), bulkStatusModels2.size());
+		Assert.assertEquals(bulkStatuses1.size(), bulkStatuses2.size());
 
-		for (BulkStatusModel bulkStatusModel1 : bulkStatusModels1) {
+		for (BulkStatus bulkStatus1 : bulkStatuses1) {
 			boolean contains = false;
 
-			for (BulkStatusModel bulkStatusModel2 : bulkStatusModels2) {
-				if (equals(bulkStatusModel1, bulkStatusModel2)) {
+			for (BulkStatus bulkStatus2 : bulkStatuses2) {
+				if (equals(bulkStatus1, bulkStatus2)) {
 					contains = true;
 
 					break;
@@ -141,8 +137,7 @@ public abstract class BaseBulkStatusModelResourceTestCase {
 			}
 
 			Assert.assertTrue(
-				bulkStatusModels2 + " does not contain " + bulkStatusModel1,
-				contains);
+				bulkStatuses2 + " does not contain " + bulkStatus1, contains);
 		}
 	}
 
@@ -153,17 +148,17 @@ public abstract class BaseBulkStatusModelResourceTestCase {
 			expectedResponseCode, actualResponse.getResponseCode());
 	}
 
-	protected void assertValid(BulkStatusModel bulkStatusModel) {
+	protected void assertValid(BulkStatus bulkStatus) {
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
 	}
 
-	protected void assertValid(Page<BulkStatusModel> page) {
+	protected void assertValid(Page<BulkStatus> page) {
 		boolean valid = false;
 
-		Collection<BulkStatusModel> bulkStatusModels = page.getItems();
+		Collection<BulkStatus> bulkStatuses = page.getItems();
 
-		int size = bulkStatusModels.size();
+		int size = bulkStatuses.size();
 
 		if ((page.getItemsPerPage() > 0) && (page.getLastPageNumber() > 0) &&
 			(page.getPageNumber() > 0) && (page.getTotalCount() > 0) &&
@@ -175,10 +170,8 @@ public abstract class BaseBulkStatusModelResourceTestCase {
 		Assert.assertTrue(valid);
 	}
 
-	protected boolean equals(
-		BulkStatusModel bulkStatusModel1, BulkStatusModel bulkStatusModel2) {
-
-		if (bulkStatusModel1 == bulkStatusModel2) {
+	protected boolean equals(BulkStatus bulkStatus1, BulkStatus bulkStatus2) {
+		if (bulkStatus1 == bulkStatus2) {
 			return true;
 		}
 
@@ -186,13 +179,13 @@ public abstract class BaseBulkStatusModelResourceTestCase {
 	}
 
 	protected Collection<EntityField> getEntityFields() throws Exception {
-		if (!(_bulkStatusModelResource instanceof EntityModelResource)) {
+		if (!(_bulkStatusResource instanceof EntityModelResource)) {
 			throw new UnsupportedOperationException(
 				"Resource is not an instance of EntityModelResource");
 		}
 
 		EntityModelResource entityModelResource =
-			(EntityModelResource)_bulkStatusModelResource;
+			(EntityModelResource)_bulkStatusResource;
 
 		EntityModel entityModel = entityModelResource.getEntityModel(
 			new MultivaluedHashMap());
@@ -218,8 +211,7 @@ public abstract class BaseBulkStatusModelResourceTestCase {
 	}
 
 	protected String getFilterString(
-		EntityField entityField, String operator,
-		BulkStatusModel bulkStatusModel) {
+		EntityField entityField, String operator, BulkStatus bulkStatus) {
 
 		StringBundler sb = new StringBundler(4);
 
@@ -240,13 +232,13 @@ public abstract class BaseBulkStatusModelResourceTestCase {
 			"Invalid entity field " + entityFieldName);
 	}
 
-	protected BulkStatusModel invokeGetStatus(Long param) throws Exception {
+	protected BulkStatus invokeGetStatus(Long param) throws Exception {
 		Http.Options options = _createHttpOptions();
 
 		options.setLocation(_resourceURL + _toPath("/status", param));
 
 		return _outputObjectMapper.readValue(
-			HttpUtil.URLtoString(options), BulkStatusModel.class);
+			HttpUtil.URLtoString(options), BulkStatus.class);
 	}
 
 	protected Http.Response invokeGetStatusResponse(Long param)
@@ -261,17 +253,15 @@ public abstract class BaseBulkStatusModelResourceTestCase {
 		return options.getResponse();
 	}
 
-	protected BulkStatusModel randomBulkStatusModel() {
-		return new BulkStatusModel() {
+	protected BulkStatus randomBulkStatus() {
+		return new BulkStatus() {
 			{
 				busy = RandomTestUtil.randomBoolean();
 			}
 		};
 	}
 
-	protected BulkStatusModel testGetStatus_addBulkStatusModel()
-		throws Exception {
-
+	protected BulkStatus testGetStatus_addBulkStatus() throws Exception {
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
 	}
@@ -348,7 +338,7 @@ public abstract class BaseBulkStatusModelResourceTestCase {
 	private static final ObjectMapper _outputObjectMapper = new ObjectMapper();
 
 	@Inject
-	private BulkStatusModelResource _bulkStatusModelResource;
+	private BulkStatusResource _bulkStatusResource;
 
 	private URL _resourceURL;
 

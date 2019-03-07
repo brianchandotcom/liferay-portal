@@ -32,42 +32,22 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
-@GraphQLName("AssetCategoryModel")
-@XmlRootElement(name = "AssetCategoryModel")
-public class AssetCategoryModel {
+@GraphQLName("BulkStatus")
+@XmlRootElement(name = "BulkStatus")
+public class BulkStatus {
 
-	public Long getCategoryId() {
-		return categoryId;
+	public Boolean getBusy() {
+		return busy;
 	}
 
-	public String getName() {
-		return name;
-	}
-
-	public void setCategoryId(Long categoryId) {
-		this.categoryId = categoryId;
+	public void setBusy(Boolean busy) {
+		this.busy = busy;
 	}
 
 	@JsonIgnore
-	public void setCategoryId(
-		UnsafeSupplier<Long, Exception> categoryIdUnsafeSupplier) {
-
+	public void setBusy(UnsafeSupplier<Boolean, Exception> busyUnsafeSupplier) {
 		try {
-			categoryId = categoryIdUnsafeSupplier.get();
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	@JsonIgnore
-	public void setName(UnsafeSupplier<String, Exception> nameUnsafeSupplier) {
-		try {
-			name = nameUnsafeSupplier.get();
+			busy = busyUnsafeSupplier.get();
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
@@ -75,20 +55,13 @@ public class AssetCategoryModel {
 	}
 
 	public String toString() {
-		StringBundler sb = new StringBundler(9);
+		StringBundler sb = new StringBundler(4);
 
 		sb.append("{");
 
-		sb.append("\"categoryId\": ");
+		sb.append("\"busy\": ");
 
-		sb.append(categoryId);
-		sb.append(", ");
-
-		sb.append("\"name\": ");
-
-		sb.append("\"");
-		sb.append(name);
-		sb.append("\"");
+		sb.append(busy);
 
 		sb.append("}");
 
@@ -97,10 +70,6 @@ public class AssetCategoryModel {
 
 	@GraphQLField
 	@JsonProperty
-	protected Long categoryId;
-
-	@GraphQLField
-	@JsonProperty
-	protected String name;
+	protected Boolean busy;
 
 }

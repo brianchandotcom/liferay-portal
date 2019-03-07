@@ -163,7 +163,7 @@ if (parentResourcePrimKey != KBFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
 							<liferay-ui:search-container-column-text
 								colspan="<%= 2 %>"
 							>
-								<h5 class="text-default">
+								<span class="text-default">
 
 									<%
 									Date modifiedDate = kbFolder.getModifiedDate();
@@ -172,7 +172,7 @@ if (parentResourcePrimKey != KBFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
 									%>
 
 									<liferay-ui:message arguments="<%= new String[] {HtmlUtil.escape(kbFolder.getUserName()), modifiedDateDescription} %>" key="x-modified-x-ago" />
-								</h5>
+								</span>
 
 								<liferay-portlet:renderURL varImpl="rowURL">
 									<portlet:param name="mvcPath" value="/admin/view_folders.jsp" />
@@ -181,13 +181,13 @@ if (parentResourcePrimKey != KBFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
 									<portlet:param name="redirect" value="<%= currentURL %>" />
 								</liferay-portlet:renderURL>
 
-								<h4>
+								<h2 class="h5">
 									<aui:a href="<%= rowURL.toString() %>">
 										<%= HtmlUtil.escape(kbFolder.getName()) %>
 									</aui:a>
-								</h4>
+								</h2>
 
-								<h5 class="text-default">
+								<span class="text-default">
 									<span>
 
 										<%
@@ -218,7 +218,7 @@ if (parentResourcePrimKey != KBFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
 											</c:otherwise>
 										</c:choose>
 									</span>
-								</h5>
+								</span>
 							</liferay-ui:search-container-column-text>
 
 							<liferay-ui:search-container-column-jsp
@@ -247,7 +247,7 @@ if (parentResourcePrimKey != KBFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
 							<liferay-ui:search-container-column-text
 								colspan="<%= 2 %>"
 							>
-								<h5 class="text-default">
+								<span class="text-default">
 
 									<%
 									Date modifiedDate = kbArticle.getModifiedDate();
@@ -256,9 +256,9 @@ if (parentResourcePrimKey != KBFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
 									%>
 
 									<liferay-ui:message arguments="<%= new String[] {HtmlUtil.escape(kbArticle.getUserName()), modifiedDateDescription} %>" key="x-modified-x-ago" />
-								</h5>
+								</span>
 
-								<h4>
+								<h2 class="h5">
 
 									<%
 									PortletURL viewURL = kbArticleURLHelper.createViewWithRedirectURL(kbArticle, currentURL);
@@ -267,9 +267,9 @@ if (parentResourcePrimKey != KBFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
 									<aui:a href="<%= viewURL.toString() %>">
 										<%= HtmlUtil.escape(kbArticle.getTitle()) %>
 									</aui:a>
-								</h4>
+								</h2>
 
-								<h5 class="text-default">
+								<span class="text-default">
 									<aui:workflow-status markupView="lexicon" showIcon="<%= false %>" showLabel="<%= false %>" status="<%= kbArticle.getStatus() %>" />
 
 									<%
@@ -297,7 +297,7 @@ if (parentResourcePrimKey != KBFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
 									<span class="kb-descriptive-details">
 										<liferay-ui:message arguments="<%= kbArticle.getViewCount() %>" key="x-views" />
 									</span>
-								</h5>
+								</span>
 							</liferay-ui:search-container-column-text>
 
 							<liferay-ui:search-container-column-jsp

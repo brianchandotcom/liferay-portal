@@ -290,15 +290,17 @@ public class ServiceContextFactory {
 		for (Map.Entry<String, String[]> entry : parameterMap.entrySet()) {
 			String name = entry.getKey();
 
-			if (name.startsWith("assetCategoryIds")) {
-				updateAssetCategoryIds = true;
+			if (!name.startsWith("assetCategoryIds")) {
+				continue;
+			}
 
-				long[] assetVocabularyAssetCategoryIds =
-					ParamUtil.getLongValues(request, name);
+			updateAssetCategoryIds = true;
 
-				for (long assetCategoryId : assetVocabularyAssetCategoryIds) {
-					assetCategoryIdsList.add(assetCategoryId);
-				}
+			long[] assetVocabularyAssetCategoryIds = ParamUtil.getLongValues(
+				request, name);
+
+			for (long assetCategoryId : assetVocabularyAssetCategoryIds) {
+				assetCategoryIdsList.add(assetCategoryId);
 			}
 		}
 
@@ -450,15 +452,17 @@ public class ServiceContextFactory {
 		for (Map.Entry<String, String[]> entry : parameterMap.entrySet()) {
 			String name = entry.getKey();
 
-			if (name.startsWith("assetCategoryIds")) {
-				updateAssetCategoryIds = true;
+			if (!name.startsWith("assetCategoryIds")) {
+				continue;
+			}
 
-				long[] assetVocabularyAssetCategoryIds =
-					ParamUtil.getLongValues(portletRequest, name);
+			updateAssetCategoryIds = true;
 
-				for (long assetCategoryId : assetVocabularyAssetCategoryIds) {
-					assetCategoryIdsList.add(assetCategoryId);
-				}
+			long[] assetVocabularyAssetCategoryIds = ParamUtil.getLongValues(
+				portletRequest, name);
+
+			for (long assetCategoryId : assetVocabularyAssetCategoryIds) {
+				assetCategoryIdsList.add(assetCategoryId);
 			}
 		}
 

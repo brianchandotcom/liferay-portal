@@ -183,6 +183,7 @@ create index IX_3B69160F on Groups_UserGroups (userGroupId);
 
 create index IX_6A925A4D on Image (size_);
 
+create index IX_B8E1E6E5 on Layout (classNameId, classPK);
 create index IX_881EABCB on Layout (companyId, layoutPrototypeUuid[$COLUMN_LENGTH:75$]);
 create index IX_D4B8A526 on Layout (groupId, leftPlid, rightPlid, privateLayout);
 create unique index IX_BC2C4231 on Layout (groupId, privateLayout, friendlyURL[$COLUMN_LENGTH:255$]);

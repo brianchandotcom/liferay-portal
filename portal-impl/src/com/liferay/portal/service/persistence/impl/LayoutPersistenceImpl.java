@@ -6716,6 +6716,235 @@ public class LayoutPersistenceImpl
 	private static final String _FINDER_COLUMN_G_T_TYPE_3_SQL =
 		"(layout.type_ IS NULL OR layout.type_ = '') AND layout.system_ = [$FALSE$]";
 
+	private FinderPath _finderPathFetchByC_C;
+	private FinderPath _finderPathCountByC_C;
+
+	/**
+	 * Returns the layout where classNameId = &#63; and classPK = &#63; or throws a <code>NoSuchLayoutException</code> if it could not be found.
+	 *
+	 * @param classNameId the class name ID
+	 * @param classPK the class pk
+	 * @return the matching layout
+	 * @throws NoSuchLayoutException if a matching layout could not be found
+	 */
+	@Override
+	public Layout findByC_C(long classNameId, long classPK)
+		throws NoSuchLayoutException {
+
+		Layout layout = fetchByC_C(classNameId, classPK);
+
+		if (layout == null) {
+			StringBundler msg = new StringBundler(6);
+
+			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+			msg.append("classNameId=");
+			msg.append(classNameId);
+
+			msg.append(", classPK=");
+			msg.append(classPK);
+
+			msg.append("}");
+
+			if (_log.isDebugEnabled()) {
+				_log.debug(msg.toString());
+			}
+
+			throw new NoSuchLayoutException(msg.toString());
+		}
+
+		return layout;
+	}
+
+	/**
+	 * Returns the layout where classNameId = &#63; and classPK = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param classNameId the class name ID
+	 * @param classPK the class pk
+	 * @return the matching layout, or <code>null</code> if a matching layout could not be found
+	 */
+	@Override
+	public Layout fetchByC_C(long classNameId, long classPK) {
+		return fetchByC_C(classNameId, classPK, true);
+	}
+
+	/**
+	 * Returns the layout where classNameId = &#63; and classPK = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 *
+	 * @param classNameId the class name ID
+	 * @param classPK the class pk
+	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @return the matching layout, or <code>null</code> if a matching layout could not be found
+	 */
+	@Override
+	public Layout fetchByC_C(
+		long classNameId, long classPK, boolean retrieveFromCache) {
+
+		Object[] finderArgs = new Object[] {classNameId, classPK};
+
+		Object result = null;
+
+		if (retrieveFromCache) {
+			result = FinderCacheUtil.getResult(
+				_finderPathFetchByC_C, finderArgs, this);
+		}
+
+		if (result instanceof Layout) {
+			Layout layout = (Layout)result;
+
+			if ((classNameId != layout.getClassNameId()) ||
+				(classPK != layout.getClassPK())) {
+
+				result = null;
+			}
+		}
+
+		if (result == null) {
+			StringBundler query = new StringBundler(4);
+
+			query.append(_SQL_SELECT_LAYOUT_WHERE);
+
+			query.append(_FINDER_COLUMN_C_C_CLASSNAMEID_2);
+
+			query.append(_FINDER_COLUMN_C_C_CLASSPK_2);
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(classNameId);
+
+				qPos.add(classPK);
+
+				List<Layout> list = q.list();
+
+				if (list.isEmpty()) {
+					FinderCacheUtil.putResult(
+						_finderPathFetchByC_C, finderArgs, list);
+				}
+				else {
+					if (list.size() > 1) {
+						Collections.sort(list, Collections.reverseOrder());
+
+						if (_log.isWarnEnabled()) {
+							_log.warn(
+								"LayoutPersistenceImpl.fetchByC_C(long, long, boolean) with parameters (" +
+									StringUtil.merge(finderArgs) +
+										") yields a result set with more than 1 result. This violates the logical unique restriction. There is no order guarantee on which result is returned by this finder.");
+						}
+					}
+
+					Layout layout = list.get(0);
+
+					result = layout;
+
+					cacheResult(layout);
+				}
+			}
+			catch (Exception e) {
+				FinderCacheUtil.removeResult(_finderPathFetchByC_C, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		if (result instanceof List<?>) {
+			return null;
+		}
+		else {
+			return (Layout)result;
+		}
+	}
+
+	/**
+	 * Removes the layout where classNameId = &#63; and classPK = &#63; from the database.
+	 *
+	 * @param classNameId the class name ID
+	 * @param classPK the class pk
+	 * @return the layout that was removed
+	 */
+	@Override
+	public Layout removeByC_C(long classNameId, long classPK)
+		throws NoSuchLayoutException {
+
+		Layout layout = findByC_C(classNameId, classPK);
+
+		return remove(layout);
+	}
+
+	/**
+	 * Returns the number of layouts where classNameId = &#63; and classPK = &#63;.
+	 *
+	 * @param classNameId the class name ID
+	 * @param classPK the class pk
+	 * @return the number of matching layouts
+	 */
+	@Override
+	public int countByC_C(long classNameId, long classPK) {
+		FinderPath finderPath = _finderPathCountByC_C;
+
+		Object[] finderArgs = new Object[] {classNameId, classPK};
+
+		Long count = (Long)FinderCacheUtil.getResult(
+			finderPath, finderArgs, this);
+
+		if (count == null) {
+			StringBundler query = new StringBundler(3);
+
+			query.append(_SQL_COUNT_LAYOUT_WHERE);
+
+			query.append(_FINDER_COLUMN_C_C_CLASSNAMEID_2);
+
+			query.append(_FINDER_COLUMN_C_C_CLASSPK_2);
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(classNameId);
+
+				qPos.add(classPK);
+
+				count = (Long)q.uniqueResult();
+
+				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception e) {
+				FinderCacheUtil.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	private static final String _FINDER_COLUMN_C_C_CLASSNAMEID_2 =
+		"layout.classNameId = ? AND ";
+
+	private static final String _FINDER_COLUMN_C_C_CLASSPK_2 =
+		"layout.classPK = ?";
+
 	private FinderPath _finderPathWithPaginationFindByC_L;
 	private FinderPath _finderPathWithoutPaginationFindByC_L;
 	private FinderPath _finderPathCountByC_L;
@@ -13323,6 +13552,11 @@ public class LayoutPersistenceImpl
 			new Object[] {layout.getIconImageId()}, layout);
 
 		FinderCacheUtil.putResult(
+			_finderPathFetchByC_C,
+			new Object[] {layout.getClassNameId(), layout.getClassPK()},
+			layout);
+
+		FinderCacheUtil.putResult(
 			_finderPathFetchByP_I,
 			new Object[] {layout.isPrivateLayout(), layout.getIconImageId()},
 			layout);
@@ -13442,6 +13676,15 @@ public class LayoutPersistenceImpl
 			_finderPathFetchByIconImageId, args, layoutModelImpl, false);
 
 		args = new Object[] {
+			layoutModelImpl.getClassNameId(), layoutModelImpl.getClassPK()
+		};
+
+		FinderCacheUtil.putResult(
+			_finderPathCountByC_C, args, Long.valueOf(1), false);
+		FinderCacheUtil.putResult(
+			_finderPathFetchByC_C, args, layoutModelImpl, false);
+
+		args = new Object[] {
 			layoutModelImpl.isPrivateLayout(), layoutModelImpl.getIconImageId()
 		};
 
@@ -13523,6 +13766,27 @@ public class LayoutPersistenceImpl
 
 			FinderCacheUtil.removeResult(_finderPathCountByIconImageId, args);
 			FinderCacheUtil.removeResult(_finderPathFetchByIconImageId, args);
+		}
+
+		if (clearCurrent) {
+			Object[] args = new Object[] {
+				layoutModelImpl.getClassNameId(), layoutModelImpl.getClassPK()
+			};
+
+			FinderCacheUtil.removeResult(_finderPathCountByC_C, args);
+			FinderCacheUtil.removeResult(_finderPathFetchByC_C, args);
+		}
+
+		if ((layoutModelImpl.getColumnBitmask() &
+			 _finderPathFetchByC_C.getColumnBitmask()) != 0) {
+
+			Object[] args = new Object[] {
+				layoutModelImpl.getOriginalClassNameId(),
+				layoutModelImpl.getOriginalClassPK()
+			};
+
+			FinderCacheUtil.removeResult(_finderPathCountByC_C, args);
+			FinderCacheUtil.removeResult(_finderPathFetchByC_C, args);
 		}
 
 		if (clearCurrent) {
@@ -15038,6 +15302,20 @@ public class LayoutPersistenceImpl
 			LayoutModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_T",
 			new String[] {Long.class.getName(), String.class.getName()});
+
+		_finderPathFetchByC_C = new FinderPath(
+			LayoutModelImpl.ENTITY_CACHE_ENABLED,
+			LayoutModelImpl.FINDER_CACHE_ENABLED, LayoutImpl.class,
+			FINDER_CLASS_NAME_ENTITY, "fetchByC_C",
+			new String[] {Long.class.getName(), Long.class.getName()},
+			LayoutModelImpl.CLASSNAMEID_COLUMN_BITMASK |
+			LayoutModelImpl.CLASSPK_COLUMN_BITMASK);
+
+		_finderPathCountByC_C = new FinderPath(
+			LayoutModelImpl.ENTITY_CACHE_ENABLED,
+			LayoutModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_C",
+			new String[] {Long.class.getName(), Long.class.getName()});
 
 		_finderPathWithPaginationFindByC_L = new FinderPath(
 			LayoutModelImpl.ENTITY_CACHE_ENABLED,

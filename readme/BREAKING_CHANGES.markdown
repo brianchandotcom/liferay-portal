@@ -274,7 +274,7 @@ the chance of package version lock down.
 
 ---------------------------------------
 
-### Switched to use JDK Function and Supplier
+### Switched to Use JDK Function and Supplier
 - **Date:** 2019-Jan-08
 - **JIRA Ticket:** [LPS-88911](https://issues.liferay.com/browse/LPS-88911)
 
@@ -357,7 +357,7 @@ the chance of package version lock down.
 
 ---------------------------------------
 
-### Switched to use JDK Predicate
+### Switched to Use JDK Predicate
 - **Date:** 2019-Jan-14
 - **JIRA Ticket:** [LPS-89139](https://issues.liferay.com/browse/LPS-89139)
 

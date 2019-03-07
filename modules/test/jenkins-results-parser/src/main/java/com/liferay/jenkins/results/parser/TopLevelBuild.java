@@ -1157,7 +1157,7 @@ public class TopLevelBuild extends BaseBuild {
 		Collections.sort(stopwatchRecords);
 
 		Element stopwatchRecordsElement = Dom4JUtil.getNewElement(
-			"p", summaryElement, "Stopwatches");
+			"p", summaryElement, "Stopwatch Records");
 
 		Element stopwatchRecordsListElement = Dom4JUtil.getNewElement(
 			"ul", stopwatchRecordsElement);
@@ -1240,6 +1240,22 @@ public class TopLevelBuild extends BaseBuild {
 		Dom4JUtil.addToElement(
 			topLevelTableElement, getJenkinsReportTableColumnHeadersElement(),
 			getJenkinsReportTableRowElement());
+
+		Map<String, StopwatchRecord> stopwatchRecordMap =
+			getStopwatchRecordMap();
+
+		List<StopwatchRecord> stopwatchRecords = new ArrayList<>(
+			stopwatchRecordMap.size());
+
+		stopwatchRecords.addAll(stopwatchRecordMap.values());
+
+		Collections.sort(stopwatchRecords);
+
+		for (StopwatchRecord stopwatchRecord : stopwatchRecords) {
+			Dom4JUtil.addToElement(
+				topLevelTableElement,
+				stopwatchRecord.getJenkinsReportTableRowElement());
+		}
 
 		return topLevelTableElement;
 	}
@@ -1577,8 +1593,7 @@ public class TopLevelBuild extends BaseBuild {
 	protected int stopwatchRecordConsoleReadCursor;
 	protected Map<String, StopwatchRecord> stopwatchRecordMap = new HashMap<>();
 
-	protected static class StopwatchRecord
-		implements Comparable<StopwatchRecord> {
+	protected class StopwatchRecord implements Comparable<StopwatchRecord> {
 
 		public StopwatchRecord(String name, long startTimestamp) {
 			_name = name;
@@ -1622,11 +1637,30 @@ public class TopLevelBuild extends BaseBuild {
 		@Override
 		public String toString() {
 			return JenkinsResultsParserUtil.combine(
-				"Stopwatch record ", getName(), " started at ",
+				getName(), " started at ",
 				JenkinsResultsParserUtil.toDateString(
-					new Date(getStartTimestamp()), "America,Los_Angeles"),
-				" duration ",
-				JenkinsResultsParserUtil.toDurationString(getDuration()));
+					new Date(getStartTimestamp()), "America/Los_Angeles"),
+				" and ran for ",
+				JenkinsResultsParserUtil.toDurationString(getDuration()), ".");
+		}
+
+		protected Element getJenkinsReportTableRowElement() {
+			Element buildInfoElement = Dom4JUtil.getNewElement(
+				"tr", null, Dom4JUtil.getNewElement("td", null, getName()),
+				Dom4JUtil.getNewElement("td", null, "&nbsp;"),
+				Dom4JUtil.getNewElement("td", null, "&nbsp;"),
+				Dom4JUtil.getNewElement(
+					"td", null,
+					toJenkinsReportDateString(
+						new Date(getStartTimestamp()),
+						getJenkinsReportTimeZoneName())),
+				Dom4JUtil.getNewElement(
+					"td", null,
+					JenkinsResultsParserUtil.toDurationString(getDuration())),
+				Dom4JUtil.getNewElement("td", null, "&nbsp;"),
+				Dom4JUtil.getNewElement("td", null, "&nbsp;"));
+
+			return buildInfoElement;
 		}
 
 		private Long _duration;

@@ -181,7 +181,7 @@ public class CTDDMTemplateLocalServiceWrapper
 
 		Optional<DDMTemplateVersion> ddmTemplateVersionOptional =
 			ctEntryOptional.map(
-				CTEntry::getClassPK
+				CTEntry::getModelClassPK
 			).map(
 				_ddmTemplateVersionLocalService::fetchDDMTemplateVersion
 			);

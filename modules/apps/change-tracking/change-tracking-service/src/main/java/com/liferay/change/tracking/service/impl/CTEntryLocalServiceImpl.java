@@ -39,14 +39,16 @@ public class CTEntryLocalServiceImpl extends CTEntryLocalServiceBaseImpl {
 
 	@Override
 	public CTEntry addCTEntry(
-			long userId, long classNameId, long classPK, long resourcePrimKey,
-			int changeType, long ctCollectionId, ServiceContext serviceContext)
+			long userId, long modelClassNameId, long modelClassPK,
+			long resourcePrimKey, int changeType, long ctCollectionId,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		boolean force = GetterUtil.getBoolean(
 			serviceContext.getAttribute("force"));
 
-		CTEntry ctEntry = ctEntryPersistence.fetchByC_C(classNameId, classPK);
+		CTEntry ctEntry = ctEntryPersistence.fetchByC_C(
+			modelClassNameId, modelClassPK);
 
 		_validate(ctEntry, changeType, ctCollectionId, force);
 
@@ -57,7 +59,7 @@ public class CTEntryLocalServiceImpl extends CTEntryLocalServiceBaseImpl {
 		}
 
 		return _addCTEntry(
-			user, classNameId, classPK, resourcePrimKey, changeType,
+			user, modelClassNameId, modelClassPK, resourcePrimKey, changeType,
 			ctCollectionId, serviceContext);
 	}
 
@@ -78,15 +80,16 @@ public class CTEntryLocalServiceImpl extends CTEntryLocalServiceBaseImpl {
 	}
 
 	@Override
-	public CTEntry fetchCTEntry(long classNameId, long classPK) {
-		return ctEntryPersistence.fetchByC_C(classNameId, classPK);
+	public CTEntry fetchCTEntry(long modelClassNameId, long modelClassPK) {
+		return ctEntryPersistence.fetchByC_C(modelClassNameId, modelClassPK);
 	}
 
 	@Override
 	public CTEntry fetchCTEntry(
-		long ctCollectionId, long classNameId, long classPK) {
+		long ctCollectionId, long modelClassNameId, long modelClassPK) {
 
-		return ctEntryFinder.findByC_C_C(ctCollectionId, classNameId, classPK);
+		return ctEntryFinder.findByC_C_C(
+			ctCollectionId, modelClassNameId, modelClassPK);
 	}
 
 	@Override
@@ -169,8 +172,9 @@ public class CTEntryLocalServiceImpl extends CTEntryLocalServiceBaseImpl {
 	}
 
 	private CTEntry _addCTEntry(
-		User user, long classNameId, long classPK, long resourcePrimKey,
-		int changeType, long ctCollectionId, ServiceContext serviceContext) {
+		User user, long modelClassNameId, long modelClassPK,
+		long resourcePrimKey, int changeType, long ctCollectionId,
+		ServiceContext serviceContext) {
 
 		long ctEntryId = counterLocalService.increment();
 
@@ -185,9 +189,9 @@ public class CTEntryLocalServiceImpl extends CTEntryLocalServiceBaseImpl {
 		ctEntry.setCreateDate(serviceContext.getCreateDate(now));
 		ctEntry.setModifiedDate(serviceContext.getModifiedDate(now));
 
-		ctEntry.setClassNameId(classNameId);
-		ctEntry.setClassPK(classPK);
-		ctEntry.setResourcePrimKey(resourcePrimKey);
+		ctEntry.setModelClassNameId(modelClassNameId);
+		ctEntry.setModelClassPK(modelClassPK);
+		ctEntry.setModelResourcePrimKey(resourcePrimKey);
 		ctEntry.setChangeType(changeType);
 
 		int status = WorkflowConstants.STATUS_DRAFT;

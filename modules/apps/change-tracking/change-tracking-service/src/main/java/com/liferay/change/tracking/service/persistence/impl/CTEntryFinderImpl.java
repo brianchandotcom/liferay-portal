@@ -202,7 +202,7 @@ public class CTEntryFinderImpl
 	@Override
 	@SuppressWarnings("unchecked")
 	public List<CTEntry> findByC_R(
-		long ctCollectionId, long resourcePrimKey,
+		long ctCollectionId, long modelResourcePrimKey,
 		QueryDefinition<CTEntry> queryDefinition) {
 
 		Session session = null;
@@ -212,9 +212,9 @@ public class CTEntryFinderImpl
 
 			String sql = _customSQL.get(getClass(), FIND_BY_CT_COLLECTION_ID);
 
-			if (resourcePrimKey > 0) {
+			if (modelResourcePrimKey > 0) {
 				sql = _customSQL.appendCriteria(
-					sql, "AND (CTEntry.resourcePrimKey = ?)");
+					sql, "AND (CTEntry.modelResourcePrimKey = ?)");
 			}
 
 			sql = _customSQL.replaceOrderBy(
@@ -228,8 +228,8 @@ public class CTEntryFinderImpl
 
 			qPos.add(ctCollectionId);
 
-			if (resourcePrimKey > 0) {
-				qPos.add(resourcePrimKey);
+			if (modelResourcePrimKey > 0) {
+				qPos.add(modelResourcePrimKey);
 			}
 
 			return (List<CTEntry>)QueryUtil.list(
@@ -247,7 +247,7 @@ public class CTEntryFinderImpl
 	@Override
 	@SuppressWarnings("unchecked")
 	public CTEntry findByC_C_C(
-		long ctCollectionId, long classNameId, long classPK) {
+		long ctCollectionId, long modelClassNameId, long modelClassPK) {
 
 		Session session = null;
 
@@ -257,9 +257,10 @@ public class CTEntryFinderImpl
 			String sql = _customSQL.get(getClass(), FIND_BY_CT_COLLECTION_ID);
 
 			sql = _customSQL.appendCriteria(
-				sql, "AND (CTEntry.classNameId = ?)");
+				sql, "AND (CTEntry.modelClassNameId = ?)");
 
-			sql = _customSQL.appendCriteria(sql, "AND (CTEntry.classPK = ?)");
+			sql = _customSQL.appendCriteria(
+				sql, "AND (CTEntry.modelClassPK = ?)");
 
 			SQLQuery q = session.createSynchronizedSQLQuery(sql);
 
@@ -269,9 +270,9 @@ public class CTEntryFinderImpl
 
 			qPos.add(ctCollectionId);
 
-			qPos.add(classNameId);
+			qPos.add(modelClassNameId);
 
-			qPos.add(classPK);
+			qPos.add(modelClassPK);
 
 			List<CTEntry> ctEntries = q.list();
 

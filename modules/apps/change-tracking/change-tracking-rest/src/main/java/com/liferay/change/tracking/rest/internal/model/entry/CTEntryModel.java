@@ -36,26 +36,26 @@ public class CTEntryModel {
 		return builder.setChangeType(
 			ctEntry.getChangeType()
 		).setClassNameId(
-			ctEntry.getClassNameId()
+			ctEntry.getModelClassNameId()
 		).setClassPK(
-			ctEntry.getClassPK()
+			ctEntry.getModelClassPK()
 		).setCTEntryId(
 			ctEntry.getCtEntryId()
 		).setModifiedDate(
 			ctEntry.getModifiedDate()
 		).setResourcePrimKey(
-			ctEntry.getResourcePrimKey()
+			ctEntry.getModelResourcePrimKey()
 		).setSiteName(
 			CTConfigurationRegistryUtil.getVersionEntitySiteName(
-				ctEntry.getClassNameId(), ctEntry.getClassPK())
+				ctEntry.getModelClassNameId(), ctEntry.getModelClassPK())
 		).setTitle(
 			CTConfigurationRegistryUtil.getVersionEntityTitle(
-				ctEntry.getClassNameId(), ctEntry.getClassPK())
+				ctEntry.getModelClassNameId(), ctEntry.getModelClassPK())
 		).setUserName(
 			ctEntry.getUserName()
 		).setVersion(
 			CTConfigurationRegistryUtil.getVersionEntityVersion(
-				ctEntry.getClassNameId(), ctEntry.getClassPK())
+				ctEntry.getModelClassNameId(), ctEntry.getModelClassPK())
 		).build();
 	}
 

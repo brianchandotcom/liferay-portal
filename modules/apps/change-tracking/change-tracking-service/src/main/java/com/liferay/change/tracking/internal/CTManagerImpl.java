@@ -522,7 +522,8 @@ public class CTManagerImpl implements CTManager {
 				ctEntryAggregate, relatedCTEntry);
 		}
 		else if (!_containsResource(
-					ctEntryAggregate, relatedCTEntry.getResourcePrimKey())) {
+					ctEntryAggregate,
+					relatedCTEntry.getModelResourcePrimKey())) {
 
 			_ctEntryAggregateLocalService.addCTEntry(
 				ctEntryAggregate, relatedCTEntry);
@@ -544,7 +545,8 @@ public class CTManagerImpl implements CTManager {
 			relatedCTEntries.parallelStream();
 
 		if (relatedCTEntriesStream.anyMatch(
-				ctEntry -> ctEntry.getResourcePrimKey() == resourcePrimKey)) {
+				ctEntry ->
+					ctEntry.getModelResourcePrimKey() == resourcePrimKey)) {
 
 			return true;
 		}
@@ -625,8 +627,8 @@ public class CTManagerImpl implements CTManager {
 		Optional<CTEntry> previousCTEntryOptional =
 			relatedCTEntriesStream.filter(
 				relatedCTEntry ->
-					relatedCTEntry.getResourcePrimKey() ==
-						ctEntry.getResourcePrimKey()
+					relatedCTEntry.getModelResourcePrimKey() ==
+						ctEntry.getModelResourcePrimKey()
 			).findFirst();
 
 		previousCTEntryOptional.ifPresent(

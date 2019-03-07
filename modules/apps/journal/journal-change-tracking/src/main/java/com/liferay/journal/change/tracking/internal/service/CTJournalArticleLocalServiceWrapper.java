@@ -1824,10 +1824,10 @@ public class CTJournalArticleLocalServiceWrapper
 
 		List<Long> classPKs = ctEntryStream.filter(
 			ctEntry ->
-				ctEntry.getClassNameId() == _portal.getClassNameId(
+				ctEntry.getModelClassNameId() == _portal.getClassNameId(
 					JournalArticle.class.getName())
 		).map(
-			CTEntry::getClassPK
+			CTEntry::getModelClassPK
 		).collect(
 			Collectors.toList()
 		);

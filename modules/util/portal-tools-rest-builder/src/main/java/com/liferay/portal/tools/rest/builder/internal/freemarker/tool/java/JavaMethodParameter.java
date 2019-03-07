@@ -20,19 +20,8 @@ package com.liferay.portal.tools.rest.builder.internal.freemarker.tool.java;
 public class JavaMethodParameter {
 
 	public JavaMethodParameter(String parameterName, String parameterType) {
-		this(parameterName, parameterType, null);
-	}
-
-	public JavaMethodParameter(
-		String parameterName, String parameterType, String description) {
-
 		_parameterName = parameterName;
 		_parameterType = parameterType;
-		_description = description;
-	}
-
-	public String getDescription() {
-		return _description;
 	}
 
 	public String getParameterName() {
@@ -43,7 +32,6 @@ public class JavaMethodParameter {
 		return _parameterType;
 	}
 
-	private final String _description;
 	private final String _parameterName;
 	private final String _parameterType;
 

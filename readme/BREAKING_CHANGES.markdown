@@ -454,7 +454,7 @@ authentication compared to NTLM.
 
 Three OpenID modules have been moved from the `portal-security-sso` project to a
 new project named `portal-security-sso-openid`. Same applies to the settings module,
-now named `portal-settings-authentication-openid` and login module, now named 
+now named `portal-settings-authentication-openid` and login module, now named
 `login-authentication-openid`.
 Those new projects are deprecated and available to download from Liferay Marketplace.
 
@@ -471,7 +471,7 @@ should migrate to OpenID Connect, available on Liferay Portal Distribution.
 #### Why was this change made?
 
 This change was made to avoid using a deprecated solution (OpenID). OpenID
-Connect is now recommended, which is a more secure method of
-authentication since it runs on top of OAuth.
+Connect is now recommended, which is a more secure method of authentication
+since it runs on top of OAuth.
 
 ---------------------------------------

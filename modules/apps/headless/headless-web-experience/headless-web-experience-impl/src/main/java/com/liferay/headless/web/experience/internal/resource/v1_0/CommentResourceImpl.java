@@ -50,7 +50,8 @@ public class CommentResourceImpl
 	@Activate
 	public void afterPropertiesSet() {
 		_spiCommentResource = new SPICommentResource<>(
-			JournalArticle.class.getName(), _commentManager, contextCompany,
+			JournalArticle.class.getName(), _commentManager,
+			() -> contextCompany,
 			comment -> CommentUtil.toComment(
 				comment, _commentManager, _portal));
 	}

@@ -46,6 +46,7 @@ import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.util.SearchUtil;
 
 import java.util.function.Function;
+import java.util.function.Supplier;
 
 import javax.ws.rs.ClientErrorException;
 import javax.ws.rs.NotFoundException;
@@ -57,12 +58,13 @@ import javax.ws.rs.core.MultivaluedMap;
 public class SPICommentResource<T> {
 
 	public SPICommentResource(
-		String className, CommentManager commentManager, Company company,
+		String className, CommentManager commentManager,
+		Supplier<Company> companySupplier,
 		UnsafeFunction<Comment, T, Exception> transformUnsafeFunction) {
 
 		_className = className;
 		_commentManager = commentManager;
-		_company = company;
+		_companySupplier = companySupplier;
 		_transformUnsafeFunction = transformUnsafeFunction;
 	}
 
@@ -169,8 +171,10 @@ public class SPICommentResource<T> {
 
 		DiscussionPermission discussionPermission = _getDiscussionPermission();
 
+		Company company = _companySupplier.get();
+
 		discussionPermission.checkViewPermission(
-			_company.getCompanyId(), comment.getGroupId(), _className,
+			company.getCompanyId(), comment.getGroupId(), _className,
 			comment.getClassPK());
 	}
 
@@ -189,6 +193,8 @@ public class SPICommentResource<T> {
 			Sort[] sorts)
 		throws Exception {
 
+		Company company = _companySupplier.get();
+
 		return SearchUtil.search(
 			booleanQuery -> {
 				BooleanFilter booleanFilter =
@@ -206,7 +212,7 @@ public class SPICommentResource<T> {
 				searchContext.setAttribute("discussion", Boolean.TRUE);
 				searchContext.setAttribute(
 					"searchPermissionContext", StringPool.BLANK);
-				searchContext.setCompanyId(_company.getCompanyId());
+				searchContext.setCompanyId(company.getCompanyId());
 			},
 			document -> _transformUnsafeFunction.apply(
 				_commentManager.fetchComment(
@@ -233,8 +239,10 @@ public class SPICommentResource<T> {
 
 		DiscussionPermission discussionPermission = _getDiscussionPermission();
 
+		Company company = _companySupplier.get();
+
 		discussionPermission.checkAddPermission(
-			_company.getCompanyId(), groupId, _className, classPK);
+			company.getCompanyId(), groupId, _className, classPK);
 
 		try {
 			long commentId = addCommentUnsafeSupplier.get();
@@ -259,7 +267,7 @@ public class SPICommentResource<T> {
 
 	private final String _className;
 	private final CommentManager _commentManager;
-	private final Company _company;
+	private final Supplier<Company> _companySupplier;
 	private final UnsafeFunction<Comment, T, Exception>
 		_transformUnsafeFunction;
 

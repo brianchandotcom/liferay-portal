@@ -23,13 +23,10 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.TimeUnit;
 
 import org.junit.AssumptionViolatedException;
 import org.junit.Ignore;
 import org.junit.Test;
-import org.junit.internal.runners.statements.Fail;
-import org.junit.internal.runners.statements.FailOnTimeout;
 import org.junit.runner.Description;
 import org.junit.runner.Runner;
 import org.junit.runner.manipulation.Filter;
@@ -123,21 +120,6 @@ public class Arquillian extends Runner implements Filterable {
 		return statement;
 	}
 
-	private Statement _createMethodStatement(FrameworkMethod frameworkMethod) {
-		Object target = null;
-
-		try {
-			target = _clazz.newInstance();
-		}
-		catch (ReflectiveOperationException roe) {
-			return new Fail(roe);
-		}
-
-		return _withTimeout(
-			frameworkMethod,
-			new ClientExecutorStatement(target, frameworkMethod.getMethod()));
-	}
-
 	private Description _describeChild(FrameworkMethod frameworkMethod) {
 		return _methodDescriptions.computeIfAbsent(
 			frameworkMethod,
@@ -179,11 +161,12 @@ public class Arquillian extends Runner implements Filterable {
 			runNotifier.fireTestIgnored(description);
 		}
 		else {
-			Statement statement = _createMethodStatement(frameworkMethod);
-
 			runNotifier.fireTestStarted(description);
 
 			try {
+				Statement statement = new ClientExecutorStatement(
+					_clazz.newInstance(), frameworkMethod.getMethod());
+
 				statement.evaluate();
 			}
 			catch (AssumptionViolatedException ave) {
@@ -202,22 +185,6 @@ public class Arquillian extends Runner implements Filterable {
 				runNotifier.fireTestFinished(description);
 			}
 		}
-	}
-
-	private Statement _withTimeout(
-		FrameworkMethod frameworkMethod, Statement statement) {
-
-		Test test = frameworkMethod.getAnnotation(Test.class);
-
-		if ((test == null) || (test.timeout() <= 0)) {
-			return statement;
-		}
-
-		FailOnTimeout.Builder builder = FailOnTimeout.builder();
-
-		builder.withTimeout(test.timeout(), TimeUnit.MILLISECONDS);
-
-		return builder.build(statement);
 	}
 
 	private final Class<?> _clazz;

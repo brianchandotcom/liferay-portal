@@ -19,6 +19,7 @@ import com.liferay.arquillian.extension.junit.bridge.statement.DeploymentStateme
 
 import java.lang.annotation.Annotation;
 
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
@@ -71,17 +72,25 @@ public class Arquillian extends Runner implements Filterable {
 	@Override
 	public void run(RunNotifier runNotifier) {
 		try {
-			List<FrameworkMethod> frameworkMethods =
-				_testClass.getAnnotatedMethods(Test.class);
+			List<FrameworkMethod> frameworkMethods = new ArrayList<>(
+				_testClass.getAnnotatedMethods(Test.class));
 
-			boolean hasTestMethod = false;
+			frameworkMethods.removeIf(
+				frameworkMethod -> {
+					if (frameworkMethod.getAnnotation(Ignore.class) != null) {
+						runNotifier.fireTestIgnored(
+							Description.createTestDescription(
+								_clazz, frameworkMethod.getName(),
+								frameworkMethod.getAnnotations()));
 
-			for (FrameworkMethod frameworkMethod : frameworkMethods) {
-				if (!_isIgnored(frameworkMethod)) {
-					hasTestMethod = true;
+						return true;
+					}
 
-					break;
-				}
+					return false;
+				});
+
+			if (frameworkMethods.isEmpty()) {
+				return;
 			}
 
 			Statement statement = new Statement() {
@@ -95,23 +104,13 @@ public class Arquillian extends Runner implements Filterable {
 
 			};
 
-			if (hasTestMethod) {
-				statement = new DeploymentStatement(statement);
-			}
+			statement = new DeploymentStatement(statement);
 
 			statement.evaluate();
 		}
 		catch (Throwable t) {
 			runNotifier.fireTestFailure(new Failure(getDescription(), t));
 		}
-	}
-
-	private boolean _isIgnored(FrameworkMethod frameworkMethod) {
-		if (frameworkMethod.getAnnotation(Ignore.class) != null) {
-			return true;
-		}
-
-		return false;
 	}
 
 	private void _runMethod(
@@ -121,33 +120,27 @@ public class Arquillian extends Runner implements Filterable {
 			_clazz, frameworkMethod.getName(),
 			frameworkMethod.getAnnotations());
 
-		if (_isIgnored(frameworkMethod)) {
-			runNotifier.fireTestIgnored(description);
+		runNotifier.fireTestStarted(description);
+
+		try {
+			Statement statement = new ClientExecutorStatement(
+				_clazz.newInstance(), frameworkMethod.getMethod());
+
+			statement.evaluate();
 		}
-		else {
-			runNotifier.fireTestStarted(description);
-
-			try {
-				Statement statement = new ClientExecutorStatement(
-					_clazz.newInstance(), frameworkMethod.getMethod());
-
-				statement.evaluate();
-			}
-			catch (AssumptionViolatedException ave) {
-				runNotifier.fireTestAssumptionFailed(
-					new Failure(description, ave));
-			}
-			catch (MultipleFailureException mfe) {
-				for (Throwable t : mfe.getFailures()) {
-					runNotifier.fireTestFailure(new Failure(description, t));
-				}
-			}
-			catch (Throwable t) {
+		catch (AssumptionViolatedException ave) {
+			runNotifier.fireTestAssumptionFailed(new Failure(description, ave));
+		}
+		catch (MultipleFailureException mfe) {
+			for (Throwable t : mfe.getFailures()) {
 				runNotifier.fireTestFailure(new Failure(description, t));
 			}
-			finally {
-				runNotifier.fireTestFinished(description);
-			}
+		}
+		catch (Throwable t) {
+			runNotifier.fireTestFailure(new Failure(description, t));
+		}
+		finally {
+			runNotifier.fireTestFinished(description);
 		}
 	}
 

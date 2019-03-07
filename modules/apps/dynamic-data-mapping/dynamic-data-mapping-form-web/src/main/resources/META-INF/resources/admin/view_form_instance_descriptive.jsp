@@ -29,19 +29,19 @@ String href = (String)request.getAttribute(WebKeys.SEARCH_ENTRY_HREF);
 %>
 
 <div class="clamp-container">
-	<h4 class="truncate-text">
+	<h2 class="h5 truncate-text">
 		<aui:a cssClass="form-instance-name" href="<%= href %>">
 			<%= HtmlUtil.escape(ddmFormInstance.getName(locale)) %>
 		</aui:a>
-	</h4>
+	</h2>
 
-	<h5 class="text-default">
+	<span class="text-default">
 		<div class="form-instance-description truncate-text">
 			<%= HtmlUtil.escape(ddmFormInstance.getDescription(locale)) %>
 		</div>
-	</h5>
+	</span>
 
-	<h5 class="text-default">
+	<span class="text-default">
 		<span class="form-instance-id">
 			<liferay-ui:message key="id" />: <%= ddmFormInstance.getFormInstanceId() %>
 		</span>

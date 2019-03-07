@@ -159,6 +159,92 @@ components:
                     format: uri
                     type: string
             type: object
+        Folder:
+            description: https://www.schema.org/Folder
+            properties:
+                dateCreated:
+                    format: date-time
+                    type: string
+                dateModified:
+                    format: date-time
+                    type: string
+                description:
+                    type: string
+                knowledgeBaseArticles:
+                    items:
+                        $ref: "#/components/schemas/KnowledgeBaseArticle"
+                    readOnly: true
+                    type: array
+                knowledgeBaseArticlesIds:
+                    items:
+                        format: int64
+                        type: integer
+                    type: array
+                    writeOnly: true
+                folder:
+                    allOf:
+                        -   $ref: "#/components/schemas/Folder"
+                    readOnly: true
+                folderId:
+                    format: int64
+                    type: integer
+                    writeOnly: true
+                id:
+                    format: int64
+                    type: integer
+                name:
+                    type: string
+                subFolders:
+                    items:
+                        $ref: "#/components/schemas/Folder"
+                    type: array
+            type: object
+        KnowledgeBaseArticle:
+            description: https://www.schema.org/KnowledgeBaseArticle
+            properties:
+                aggregateRating:
+                    $ref: "#/components/schemas/AggregateRating"
+                articleBody:
+                    type: string
+                category:
+                    items:
+                        format: int64
+                        type: integer
+                    type: array
+                contentSpace:
+                    format: int64
+                    type: integer
+                creator:
+                    $ref: "#/components/schemas/Creator"
+                dateCreated:
+                    format: date-time
+                    type: string
+                dateModified:
+                    format: date-time
+                    type: string
+                datePublished:
+                    format: date-time
+                    type: string
+                friendlyUrlPath:
+                    type: string
+                title:
+                    type: string
+                id:
+                    format: int64
+                    type: integer
+                keywords:
+                    items:
+                        type: string
+                    type: array
+                folder:
+                    allOf:
+                        -   $ref: "#/components/schemas/Folder"
+                    readOnly: true
+                folderId:
+                    format: int64
+                    type: integer
+                    writeOnly: true
+            type: object
 info:
     description: ""
     title: "Headless Collaboration"
@@ -605,3 +691,326 @@ paths:
                                 $ref: "#/components/schemas/BlogPosting"
                     description: ""
             tags: ["BlogPosting"]
+    "/content-space/{content-space-id}/folders":
+        get:
+            parameters:
+                -   in: query
+                    name: page
+                    schema:
+                        type: integer
+                -   in: query
+                    name: pageSize
+                    schema:
+                        type: integer
+                -   in: path
+                    name: content-space-id
+                    required: true
+                    schema:
+                        format: int64
+                        type: integer
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/Folder"
+                                type: array
+                    description: ""
+            tags: ["Folder"]
+        post:
+            parameters:
+                -   in: path
+                    name: content-space-id
+                    required: true
+                    schema:
+                        format: int64
+                        type: integer
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/Folder"
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Folder"
+                    description: ""
+            tags: ["Folder"]
+    "/folders/{folder-id}":
+        delete:
+            parameters:
+                -   in: path
+                    name: folder-id
+                    required: true
+                    schema:
+                        format: int64
+                        type: integer
+            responses:
+                204:
+                    content:
+                        application/json: {}
+                    description: ""
+            tags: ["Folder"]
+        get:
+            parameters:
+                -   in: path
+                    name: folder-id
+                    required: true
+                    schema:
+                        format: int64
+                        type: integer
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Folder"
+                    description: ""
+            tags: ["Folder"]
+        put:
+            parameters:
+                -   in: path
+                    name: folder-id
+                    required: true
+                    schema:
+                        format: int64
+                        type: integer
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/Folder"
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Folder"
+                    description: ""
+            tags: ["Folder"]
+    "/folders/{folder-id}/knowledge-base-articles":
+        get:
+            parameters:
+                -   in: query
+                    name: page
+                    schema:
+                        type: integer
+                -   in: query
+                    name: pageSize
+                    schema:
+                        type: integer
+                -   in: path
+                    name: folder-id
+                    required: true
+                    schema:
+                        format: int64
+                        type: integer
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/KnowledgeBaseArticle"
+                                type: array
+                    description: ""
+            tags: ["KnowledgeBaseArticle"]
+        post:
+            parameters:
+                -   in: path
+                    name: folder-id
+                    required: true
+                    schema:
+                        format: int64
+                        type: integer
+            requestBody:
+                content:
+                    multipart/form-data:
+                        schema:
+                            type: object
+                            properties:
+                                document:
+                                    $ref: "#/components/schemas/KnowledgeBaseArticle"
+                                file:
+                                    type: string
+                                    format: binary
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/KnowledgeBaseArticle"
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/KnowledgeBaseArticle"
+                    description: ""
+            tags: ["KnowledgeBaseArticle"]
+    "/folders/{folder-id}/folders":
+        get:
+            parameters:
+                -   in: query
+                    name: page
+                    schema:
+                        type: integer
+                -   in: query
+                    name: pageSize
+                    schema:
+                        type: integer
+                -   in: path
+                    name: folder-id
+                    required: true
+                    schema:
+                        format: int64
+                        type: integer
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/Folder"
+                                type: array
+                    description: ""
+            tags: ["Folder"]
+        post:
+            parameters:
+                -   in: path
+                    name: folder-id
+                    required: true
+                    schema:
+                        format: int64
+                        type: integer
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/Folder"
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Folder"
+                    description: ""
+            tags: ["Folder"]
+    "/knowledge-base-articles/{knowledge-base-article-id}":
+        delete:
+            parameters:
+                -   in: path
+                    name: knowledge-base-article-id
+                    required: true
+                    schema:
+                        format: int64
+                        type: integer
+            responses:
+                204:
+                    content:
+                        application/json: {}
+                    description: ""
+            tags: ["KnowledgeBaseArticle"]
+        get:
+            parameters:
+                -   in: path
+                    name: knowledge-base-article-id
+                    required: true
+                    schema:
+                        format: int64
+                        type: integer
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/KnowledgeBaseArticle"
+                    description: ""
+            tags: ["KnowledgeBaseArticle"]
+        put:
+            parameters:
+                -   in: path
+                    name: knowledge-base-article-id
+                    required: true
+                    schema:
+                        format: int64
+                        type: integer
+            requestBody:
+                content:
+                    multipart/form-data:
+                        schema:
+                            type: object
+                            properties:
+                                document:
+                                    $ref: "#/components/schemas/KnowledgeBaseArticle"
+                                file:
+                                    type: string
+                                    format: binary
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/KnowledgeBaseArticle"
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/KnowledgeBaseArticle"
+                    description: ""
+            tags: ["KnowledgeBaseArticle"]
+    "/knowledge-base-articles/{knowledge-base-article-id}/knowledge-base-articles":
+        get:
+            parameters:
+                -   in: query
+                    name: page
+                    schema:
+                        type: integer
+                -   in: query
+                    name: pageSize
+                    schema:
+                        type: integer
+                -   in: path
+                    name: knowledge-base-article-id
+                    required: true
+                    schema:
+                        format: int64
+                        type: integer
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/KnowledgeBaseArticle"
+                                type: array
+                    description: ""
+            tags: ["KnowledgeBaseArticle"]
+        post:
+            parameters:
+                -   in: path
+                    name: knowledge-base-article-id
+                    required: true
+                    schema:
+                        format: int64
+                        type: integer
+            requestBody:
+                content:
+                    multipart/form-data:
+                        schema:
+                            type: object
+                            properties:
+                                document:
+                                    $ref: "#/components/schemas/KnowledgeBaseArticle"
+                                file:
+                                    type: string
+                                    format: binary
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/KnowledgeBaseArticle"
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/KnowledgeBaseArticle"
+                    description: ""
+            tags: ["KnowledgeBaseArticle"]

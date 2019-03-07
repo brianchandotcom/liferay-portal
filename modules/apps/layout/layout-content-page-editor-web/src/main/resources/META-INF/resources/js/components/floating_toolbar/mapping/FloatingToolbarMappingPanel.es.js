@@ -94,6 +94,18 @@ class FloatingToolbarMappingPanel extends PortletBase {
 	}
 
 	/**
+	 * Clears editable values
+	 * @private
+	 * @review
+	 */
+	_clearEditableValues() {
+		this._updateEditableValues('assetEntryClassNameId', '');
+		this._updateEditableValues('assetEntryClassPK', '');
+		this._updateEditableValues('assetEntryFieldId', '');
+		this._updateEditableValues('mappedField', '');
+	}
+
+	/**
 	 * Handle source option change
 	 * @param {Event} event
 	 * @private
@@ -162,11 +174,16 @@ class FloatingToolbarMappingPanel extends PortletBase {
 
 	/**
 	 * Handle unmap button click
-	 * @param {Event} event
 	 * @private
 	 * @review
 	 */
-	_handleUnmapButtonClick(event) {}
+	_handleUnmapButtonClick() {
+		this._selectedSourceTypeId = this.mappingFieldsURL ?
+			SOURCE_TYPE_IDS.structure :
+			SOURCE_TYPE_IDS.content;
+
+		this._clearEditableValues();
+	}
 
 	/**
 	 * Load the list of fields

@@ -30,26 +30,14 @@ renderResponse.setTitle(StringBundler.concat(selectedUser.getFullName(), " - ", 
 	<liferay-ui:empty-result-message
 		message="you-have-successfully-anonymized-all-remaining-data"
 	/>
-
-	<portlet:actionURL name="/delete_user" var="deleteUserURL">
-		<portlet:param name="p_u_i_d" value="<%= String.valueOf(selectedUser.getUserId()) %>" />
-	</portlet:actionURL>
-
-	<liferay-ui:icon-delete
-		confirmation="all-personal-data-associated-to-this-users-applications-has-been-deleted-or-anonymized"
-		cssClass="hidden"
-		id="deleteUserIcon"
-		message=""
-		url="<%= deleteUserURL.toString() %>"
-	/>
 </div>
 
-<aui:script use="aui-base">
-	AUI().ready(
-		function() {
-			var deleteUserIcon = document.getElementById('<portlet:namespace/>deleteUserIcon');
+<portlet:actionURL name="/delete_user" var="deleteUserURL">
+	<portlet:param name="p_u_i_d" value="<%= String.valueOf(selectedUser.getUserId()) %>" />
+</portlet:actionURL>
 
-			deleteUserIcon.click();
-		}
-	);
+<aui:script>
+	if (confirm('<%= UnicodeLanguageUtil.get(request, "all-personal-data-associated-to-this-users-applications-has-been-deleted-or-anonymized") %>')) {
+		Liferay.Util.navigate('<%= deleteUserURL.toString() %>');
+	}
 </aui:script>

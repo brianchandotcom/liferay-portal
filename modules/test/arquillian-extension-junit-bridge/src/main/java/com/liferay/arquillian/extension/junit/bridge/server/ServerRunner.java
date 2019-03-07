@@ -60,8 +60,6 @@ public class ServerRunner extends Runner {
 			Description description = Description.createTestDescription(
 				_clazz, methodName, frameworkMethod.getAnnotations());
 
-			runNotifier.fireTestStarted(description);
-
 			try {
 				Statement statement = _withTimeout(
 					frameworkMethod,
@@ -81,9 +79,6 @@ public class ServerRunner extends Runner {
 			}
 			catch (Throwable t) {
 				runNotifier.fireTestFailure(new Failure(description, t));
-			}
-			finally {
-				runNotifier.fireTestFinished(description);
 			}
 		}
 	}

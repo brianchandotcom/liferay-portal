@@ -39,7 +39,7 @@ public class ErasePersonalDataUserActionContributor
 		return LanguageUtil.get(
 			getResourceBundle(getLocale(portletRequest)),
 			"the-user-must-be-deactivated-before-starting-the-data-erasure-" +
-				"process-are-you-sure-you-want-to-deactivate-the-user");
+				"process.-are-you-sure-you-want-to-deactivate-the-user");
 	}
 
 	@Override

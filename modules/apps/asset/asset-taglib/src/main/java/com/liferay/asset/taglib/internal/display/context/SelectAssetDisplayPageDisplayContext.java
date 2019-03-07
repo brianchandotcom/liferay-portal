@@ -22,8 +22,6 @@ import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.model.AssetRenderer;
 import com.liferay.asset.kernel.model.AssetRendererFactory;
-import com.liferay.asset.kernel.model.ClassType;
-import com.liferay.asset.kernel.model.ClassTypeReader;
 import com.liferay.asset.taglib.internal.item.selector.ItemSelectorUtil;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.item.selector.ItemSelectorCriterion;
@@ -101,27 +99,14 @@ public class SelectAssetDisplayPageDisplayContext {
 			return _assetDisplayPageId;
 		}
 
+		_assetDisplayPageId = 0L;
+
 		AssetDisplayPageEntry assetDisplayPageEntry =
 			_getAssetDisplayPageEntry();
 
 		if (assetDisplayPageEntry != null) {
 			_assetDisplayPageId =
 				assetDisplayPageEntry.getLayoutPageTemplateEntryId();
-
-			return _assetDisplayPageId;
-		}
-
-		LayoutPageTemplateEntry layoutPageTemplateEntry =
-			LayoutPageTemplateEntryServiceUtil.
-				fetchDefaultLayoutPageTemplateEntry(
-					_groupId, _classNameId, _classTypeId);
-
-		if (layoutPageTemplateEntry != null) {
-			_assetDisplayPageId =
-				layoutPageTemplateEntry.getLayoutPageTemplateEntryId();
-		}
-		else {
-			_assetDisplayPageId = 0L;
 		}
 
 		return _assetDisplayPageId;
@@ -177,37 +162,6 @@ public class SelectAssetDisplayPageDisplayContext {
 		return itemSelectorURL.toString();
 	}
 
-	public String getAssetDisplayPageName() throws Exception {
-		String assetDisplayPageName = _getAssetDisplayPageName();
-
-		if (Validator.isNotNull(assetDisplayPageName)) {
-			return assetDisplayPageName;
-		}
-
-		String layoutUuid = getLayoutUuid();
-
-		if (Validator.isNull(layoutUuid)) {
-			return StringPool.BLANK;
-		}
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		Layout selLayout = LayoutLocalServiceUtil.fetchLayoutByUuidAndGroupId(
-			layoutUuid, themeDisplay.getSiteGroupId(), false);
-
-		if (selLayout == null) {
-			selLayout = LayoutLocalServiceUtil.fetchLayoutByUuidAndGroupId(
-				layoutUuid, themeDisplay.getSiteGroupId(), true);
-		}
-
-		if (selLayout != null) {
-			return _getLayoutBreadcrumb(selLayout);
-		}
-
-		return StringPool.BLANK;
-	}
-
 	public int getAssetDisplayPageType() {
 		if (_displayPageType != null) {
 			return _displayPageType;
@@ -232,51 +186,17 @@ public class SelectAssetDisplayPageDisplayContext {
 		return _displayPageType;
 	}
 
-	public String getAssetTypeName() throws PortalException {
-		if (Validator.isNotNull(_assetTypeName)) {
-			return _assetTypeName;
-		}
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		AssetRendererFactory assetRendererFactory =
-			AssetRendererFactoryRegistryUtil.
-				getAssetRendererFactoryByClassNameId(_classNameId);
-
-		_assetTypeName = assetRendererFactory.getTypeName(
-			themeDisplay.getLocale());
-
-		if (_classTypeId > 0) {
-			ClassTypeReader classTypeReader =
-				assetRendererFactory.getClassTypeReader();
-
-			ClassType classType = classTypeReader.getClassType(
-				_classTypeId, themeDisplay.getLocale());
-
-			_assetTypeName = classType.getName();
-		}
-
-		return _assetTypeName;
-	}
-
 	public String getDefaultAssetDisplayPageName() {
-		if (_defaultAssetDisplayPageName != null) {
-			return _defaultAssetDisplayPageName;
-		}
-
-		LayoutPageTemplateEntry layoutPageTemplateEntry = null;
-
-		layoutPageTemplateEntry =
+		LayoutPageTemplateEntry defaultAssetDisplayPage =
 			LayoutPageTemplateEntryServiceUtil.
 				fetchDefaultLayoutPageTemplateEntry(
 					_groupId, _classNameId, _classTypeId);
 
-		if (layoutPageTemplateEntry != null) {
-			_defaultAssetDisplayPageName = layoutPageTemplateEntry.getName();
+		if (defaultAssetDisplayPage != null) {
+			return defaultAssetDisplayPage.getName();
 		}
 
-		return _defaultAssetDisplayPageName;
+		return null;
 	}
 
 	public String getEventName() {
@@ -296,6 +216,37 @@ public class SelectAssetDisplayPageDisplayContext {
 			PortalUtil.getClassName(_classNameId), _classPK);
 
 		return assetEntry.getLayoutUuid();
+	}
+
+	public String getSpecificAssetDisplayPageName() throws Exception {
+		String assetDisplayPageName = _getAssetDisplayPageName();
+
+		if (Validator.isNotNull(assetDisplayPageName)) {
+			return assetDisplayPageName;
+		}
+
+		String layoutUuid = getLayoutUuid();
+
+		if (Validator.isNull(layoutUuid)) {
+			return null;
+		}
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		Layout selLayout = LayoutLocalServiceUtil.fetchLayoutByUuidAndGroupId(
+			layoutUuid, themeDisplay.getSiteGroupId(), false);
+
+		if (selLayout == null) {
+			selLayout = LayoutLocalServiceUtil.fetchLayoutByUuidAndGroupId(
+				layoutUuid, themeDisplay.getSiteGroupId(), true);
+		}
+
+		if (selLayout != null) {
+			return _getLayoutBreadcrumb(selLayout);
+		}
+
+		return null;
 	}
 
 	public String getURLViewInContext() throws Exception {
@@ -324,14 +275,6 @@ public class SelectAssetDisplayPageDisplayContext {
 		return false;
 	}
 
-	public boolean isAssetDisplayPageTypeNone() {
-		if (getAssetDisplayPageType() == AssetDisplayPageConstants.TYPE_NONE) {
-			return true;
-		}
-
-		return false;
-	}
-
 	public boolean isAssetDisplayPageTypeSpecific() {
 		if (getAssetDisplayPageType() ==
 				AssetDisplayPageConstants.TYPE_SPECIFIC) {
@@ -351,11 +294,9 @@ public class SelectAssetDisplayPageDisplayContext {
 			return false;
 		}
 
-		if (Validator.isNull(getLayoutUuid())) {
-			return false;
-		}
+		if (Validator.isNull(getLayoutUuid()) &&
+			Validator.isNull(getURLViewInContext())) {
 
-		if (Validator.isNull(getURLViewInContext())) {
 			return false;
 		}
 
@@ -433,11 +374,9 @@ public class SelectAssetDisplayPageDisplayContext {
 
 	private AssetDisplayPageEntry _assetDisplayPageEntry;
 	private Long _assetDisplayPageId;
-	private String _assetTypeName;
 	private final Long _classNameId;
 	private Long _classPK;
 	private final Long _classTypeId;
-	private String _defaultAssetDisplayPageName;
 	private Integer _displayPageType;
 	private final String _eventName;
 	private final long _groupId;

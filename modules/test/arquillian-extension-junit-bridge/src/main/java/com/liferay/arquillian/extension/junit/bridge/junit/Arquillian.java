@@ -14,8 +14,8 @@
 
 package com.liferay.arquillian.extension.junit.bridge.junit;
 
-import com.liferay.arquillian.extension.junit.bridge.statement.ClientExecutorStatement;
-import com.liferay.arquillian.extension.junit.bridge.statement.DeploymentStatement;
+import com.liferay.arquillian.extension.junit.bridge.client.ClientExecutorStatement;
+import com.liferay.arquillian.extension.junit.bridge.client.DeploymentStatement;
 
 import java.lang.annotation.Annotation;
 

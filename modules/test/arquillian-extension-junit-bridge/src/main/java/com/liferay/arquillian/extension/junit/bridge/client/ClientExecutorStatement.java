@@ -12,9 +12,8 @@
  * details.
  */
 
-package com.liferay.arquillian.extension.junit.bridge.statement;
+package com.liferay.arquillian.extension.junit.bridge.client;
 
-import com.liferay.arquillian.extension.junit.bridge.jmx.JMXProxyUtil;
 import com.liferay.arquillian.extension.junit.bridge.jmx.JMXTestRunnerMBean;
 import com.liferay.petra.io.unsync.UnsyncByteArrayInputStream;
 

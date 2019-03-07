@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.arquillian.extension.junit.bridge.bnd;
+package com.liferay.arquillian.extension.junit.bridge.client;
 
 import aQute.bnd.build.Classpath;
 import aQute.bnd.build.Project;
@@ -22,7 +22,6 @@ import aQute.bnd.osgi.Analyzer;
 import aQute.bnd.osgi.Jar;
 
 import com.liferay.arquillian.extension.junit.bridge.activator.ArquillianBundleActivator;
-import com.liferay.arquillian.extension.junit.bridge.statement.DeploymentStatement;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
 import com.liferay.petra.string.StringUtil;

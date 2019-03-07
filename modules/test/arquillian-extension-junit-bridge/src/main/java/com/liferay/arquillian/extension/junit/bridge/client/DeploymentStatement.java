@@ -12,10 +12,7 @@
  * details.
  */
 
-package com.liferay.arquillian.extension.junit.bridge.statement;
-
-import com.liferay.arquillian.extension.junit.bridge.bnd.BndBundleUtil;
-import com.liferay.arquillian.extension.junit.bridge.jmx.JMXProxyUtil;
+package com.liferay.arquillian.extension.junit.bridge.client;
 
 import java.net.URI;
 import java.net.URL;

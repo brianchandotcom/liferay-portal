@@ -1255,6 +1255,11 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 	}
 
 	@Override
+	public Layout fetchLayout(long classNameId, long classPK) {
+		return layoutPersistence.fetchByC_C(classNameId, classPK);
+	}
+
+	@Override
 	public Layout fetchLayout(
 		String uuid, long groupId, boolean privateLayout) {
 

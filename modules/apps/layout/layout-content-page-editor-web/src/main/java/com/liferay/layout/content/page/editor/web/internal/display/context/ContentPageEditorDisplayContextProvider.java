@@ -19,7 +19,9 @@ import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeCon
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
 import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.Portal;
 
 import java.util.Objects;
 
@@ -48,6 +50,13 @@ public class ContentPageEditorDisplayContextProvider {
 			request.getAttribute(ContentPageEditorWebKeys.CLASS_PK));
 
 		if (Objects.equals(className, Layout.class.getName())) {
+			Layout draftLayout = _layoutLocalService.fetchLayout(
+				_portal.getClassNameId(Layout.class), classPK);
+
+			if (draftLayout != null) {
+				classPK = draftLayout.getPlid();
+			}
+
 			return new ContentPageLayoutEditorDisplayContext(
 				request, renderResponse, className, classPK);
 		}
@@ -70,7 +79,13 @@ public class ContentPageEditorDisplayContextProvider {
 	}
 
 	@Reference
+	private LayoutLocalService _layoutLocalService;
+
+	@Reference
 	private LayoutPageTemplateEntryLocalService
 		_layoutPageTemplateEntryLocalService;
+
+	@Reference
+	private Portal _portal;
 
 }

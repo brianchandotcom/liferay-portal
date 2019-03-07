@@ -706,11 +706,15 @@ public class ContentPageEditorDisplayContext {
 	}
 
 	private String _getRedirect() {
-		if (_redirect != null) {
+		if (Validator.isNotNull(_redirect)) {
 			return _redirect;
 		}
 
 		_redirect = ParamUtil.getString(request, "redirect");
+
+		if (Validator.isNull(_redirect)) {
+			_redirect = themeDisplay.getURLCurrent();
+		}
 
 		return _redirect;
 	}

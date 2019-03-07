@@ -14,9 +14,9 @@
 
 package com.liferay.bulk.rest.internal.graphql.query.v1_0;
 
-import com.liferay.bulk.rest.dto.v1_0.BulkStatusModel;
-import com.liferay.bulk.rest.internal.resource.v1_0.BulkStatusModelResourceImpl;
-import com.liferay.bulk.rest.resource.v1_0.BulkStatusModelResource;
+import com.liferay.bulk.rest.dto.v1_0.BulkStatus;
+import com.liferay.bulk.rest.internal.resource.v1_0.BulkStatusResourceImpl;
+import com.liferay.bulk.rest.resource.v1_0.BulkStatusResource;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
 
@@ -35,21 +35,20 @@ public class Query {
 
 	@GraphQLField
 	@GraphQLInvokeDetached
-	public BulkStatusModel getStatus(@GraphQLName("param") Long param)
+	public BulkStatus getStatus(@GraphQLName("param") Long param)
 		throws Exception {
 
-		BulkStatusModelResource bulkStatusModelResource =
-			_createBulkStatusModelResource();
+		BulkStatusResource bulkStatusResource = _createBulkStatusResource();
 
-		bulkStatusModelResource.setContextCompany(
+		bulkStatusResource.setContextCompany(
 			CompanyLocalServiceUtil.getCompany(
 				CompanyThreadLocal.getCompanyId()));
 
-		return bulkStatusModelResource.getStatus(param);
+		return bulkStatusResource.getStatus(param);
 	}
 
-	private static BulkStatusModelResource _createBulkStatusModelResource() {
-		return new BulkStatusModelResourceImpl();
+	private static BulkStatusResource _createBulkStatusResource() {
+		return new BulkStatusResourceImpl();
 	}
 
 }

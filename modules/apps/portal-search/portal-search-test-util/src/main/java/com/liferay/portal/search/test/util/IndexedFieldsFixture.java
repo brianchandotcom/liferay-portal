@@ -14,6 +14,9 @@
 
 package com.liferay.portal.search.test.util;
 
+import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
+import com.liferay.asset.kernel.model.AssetEntry;
+import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.Role;
@@ -108,6 +111,22 @@ public class IndexedFieldsFixture {
 		String modelClassName, long id, Map<String, String> map) {
 
 		map.put(Field.UID, modelClassName + "_PORTLET_" + id);
+	}
+
+	public void populateViewCount(
+			Class<?> clazz, long classPK, Map<String, String> map)
+		throws Exception {
+
+		AssetRendererFactory assetRendererFactory =
+			AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClass(
+				clazz);
+
+		AssetEntry assetEntry = assetRendererFactory.getAssetEntry(
+			clazz.getName(), classPK);
+
+		map.put("viewCount", String.valueOf(assetEntry.getViewCount()));
+		map.put(
+			"viewCount_sortable", String.valueOf(assetEntry.getViewCount()));
 	}
 
 	public void postProcessDocument(Document document) {

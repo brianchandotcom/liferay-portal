@@ -22,8 +22,6 @@ import com.liferay.portal.search.engine.adapter.search.SearchSearchResponse;
 import com.liferay.portal.search.hits.SearchHit;
 import com.liferay.portal.search.hits.SearchHits;
 import com.liferay.portal.search.query.RegexQuery;
-import com.liferay.portal.search.sort.FieldSort;
-import com.liferay.portal.search.sort.SortOrder;
 import com.liferay.portal.search.test.util.indexing.BaseIndexingTestCase;
 import com.liferay.portal.search.test.util.indexing.DocumentCreationHelpers;
 
@@ -63,31 +61,26 @@ public abstract class BaseRegexQueryTestCase extends BaseIndexingTestCase {
 					Field.USER_NAME, "Other" + i));
 		}
 
+		RegexQuery regexQuery = queries.regex(
+			Field.USER_NAME, "OtherUser<0-9>");
+
+		regexQuery.setRegexFlags(RegexQuery.RegexFlag.INTERVAL);
+
 		assertSearch(
 			indexingTestHelper -> {
-				RegexQuery regexQuery = queries.regex(
-					Field.USER_NAME, "OtherUser<0-9>");
-
-				regexQuery.setRegexFlags(RegexQuery.RegexFlag.INTERVAL);
-
-				SearchSearchRequest searchSearchRequest =
-					new SearchSearchRequest();
-
-				searchSearchRequest.setIndexNames("_all");
-				searchSearchRequest.setQuery(regexQuery);
-				searchSearchRequest.setSize(30);
-
-				FieldSort fieldSort = new FieldSort(Field.USER_NAME);
-
-				fieldSort.setSortOrder(SortOrder.ASC);
-
-				searchSearchRequest.addSorts(fieldSort);
-
 				SearchEngineAdapter searchEngineAdapter =
 					getSearchEngineAdapter();
 
 				SearchSearchResponse searchSearchResponse =
-					searchEngineAdapter.execute(searchSearchRequest);
+					searchEngineAdapter.execute(
+						new SearchSearchRequest() {
+							{
+								addSorts(sorts.field(Field.USER_NAME));
+								setIndexNames("_all");
+								setQuery(regexQuery);
+								setSize(30);
+							}
+						});
 
 				SearchHits searchHits = searchSearchResponse.getSearchHits();
 

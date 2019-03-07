@@ -22,8 +22,6 @@ import com.liferay.portal.search.engine.adapter.search.SearchSearchResponse;
 import com.liferay.portal.search.hits.SearchHit;
 import com.liferay.portal.search.hits.SearchHits;
 import com.liferay.portal.search.query.MatchAllQuery;
-import com.liferay.portal.search.sort.FieldSort;
-import com.liferay.portal.search.sort.SortOrder;
 import com.liferay.portal.search.test.util.indexing.BaseIndexingTestCase;
 import com.liferay.portal.search.test.util.indexing.DocumentCreationHelpers;
 
@@ -44,28 +42,23 @@ public abstract class BaseMatchAllQueryTestCase extends BaseIndexingTestCase {
 				DocumentCreationHelpers.singleNumber(Field.PRIORITY, i));
 		}
 
+		MatchAllQuery matchAllQuery = queries.matchAll();
+
 		assertSearch(
 			indexingTestHelper -> {
-				MatchAllQuery matchAllQuery = queries.matchAll();
-
-				SearchSearchRequest searchSearchRequest =
-					new SearchSearchRequest();
-
-				searchSearchRequest.setIndexNames("_all");
-				searchSearchRequest.setQuery(matchAllQuery);
-				searchSearchRequest.setSize(30);
-
-				FieldSort fieldSort = new FieldSort(Field.PRIORITY);
-
-				fieldSort.setSortOrder(SortOrder.ASC);
-
-				searchSearchRequest.addSorts(fieldSort);
-
 				SearchEngineAdapter searchEngineAdapter =
 					getSearchEngineAdapter();
 
 				SearchSearchResponse searchSearchResponse =
-					searchEngineAdapter.execute(searchSearchRequest);
+					searchEngineAdapter.execute(
+						new SearchSearchRequest() {
+							{
+								addSorts(sorts.field(Field.PRIORITY));
+								setIndexNames("_all");
+								setQuery(matchAllQuery);
+								setSize(30);
+							}
+						});
 
 				SearchHits searchHits = searchSearchResponse.getSearchHits();
 

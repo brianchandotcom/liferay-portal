@@ -22,7 +22,7 @@ import com.liferay.portal.search.engine.adapter.search.SearchSearchResponse;
 import com.liferay.portal.search.hits.SearchHit;
 import com.liferay.portal.search.hits.SearchHits;
 import com.liferay.portal.search.query.IdsQuery;
-import com.liferay.portal.search.sort.FieldSort;
+import com.liferay.portal.search.sort.Sort;
 import com.liferay.portal.search.sort.SortOrder;
 import com.liferay.portal.search.test.util.DocumentsAssert;
 import com.liferay.portal.search.test.util.indexing.BaseIndexingTestCase;
@@ -48,27 +48,24 @@ public abstract class BaseIdsQueryTestCase extends BaseIndexingTestCase {
 
 		idsQuery.addIds("1", "4");
 
-		FieldSort fieldSort = new FieldSort(Field.USER_NAME);
-
-		fieldSort.setSortOrder(SortOrder.DESC);
+		Sort sort = sorts.field(Field.USER_NAME, SortOrder.DESC);
 
 		String expected = "[delta, alpha]";
 
 		assertSearch(
 			indexingTestHelper -> {
-				SearchSearchRequest searchSearchRequest =
-					new SearchSearchRequest();
-
-				searchSearchRequest.setIndexNames("_all");
-				searchSearchRequest.setQuery(idsQuery);
-
-				searchSearchRequest.addSorts(fieldSort);
-
 				SearchEngineAdapter searchEngineAdapter =
 					getSearchEngineAdapter();
 
 				SearchSearchResponse searchSearchResponse =
-					searchEngineAdapter.execute(searchSearchRequest);
+					searchEngineAdapter.execute(
+						new SearchSearchRequest() {
+							{
+								addSorts(sort);
+								setIndexNames("_all");
+								setQuery(idsQuery);
+							}
+						});
 
 				SearchHits searchHits = searchSearchResponse.getSearchHits();
 

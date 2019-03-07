@@ -23,8 +23,6 @@ import com.liferay.portal.search.engine.adapter.search.SearchSearchResponse;
 import com.liferay.portal.search.hits.SearchHit;
 import com.liferay.portal.search.hits.SearchHits;
 import com.liferay.portal.search.query.DateRangeTermQuery;
-import com.liferay.portal.search.sort.FieldSort;
-import com.liferay.portal.search.sort.SortOrder;
 import com.liferay.portal.search.test.util.indexing.BaseIndexingTestCase;
 import com.liferay.portal.search.test.util.indexing.DocumentCreationHelpers;
 
@@ -58,30 +56,25 @@ public abstract class BaseDateRangeTermQueryTestCase
 		addDocument(getDate("2018-02-03T00:00:00"));
 		addDocument(getDate("2019-02-05T00:00:00"));
 
+		DateRangeTermQuery dateRangeTermQuery = queries.dateRangeTerm(
+			Field.EXPIRATION_DATE, true, true, "20170101", "20181231");
+
+		dateRangeTermQuery.setDateFormat("yyyyMMdd");
+
 		assertSearch(
 			indexingTestHelper -> {
-				DateRangeTermQuery dateRangeTermQuery = queries.dateRangeTerm(
-					Field.EXPIRATION_DATE, true, true, "20170101", "20181231");
-
-				dateRangeTermQuery.setDateFormat("yyyyMMdd");
-
-				SearchSearchRequest searchSearchRequest =
-					new SearchSearchRequest();
-
-				searchSearchRequest.setIndexNames("_all");
-				searchSearchRequest.setQuery(dateRangeTermQuery);
-
-				FieldSort fieldSort = new FieldSort(Field.EXPIRATION_DATE);
-
-				fieldSort.setSortOrder(SortOrder.ASC);
-
-				searchSearchRequest.addSorts(fieldSort);
-
 				SearchEngineAdapter searchEngineAdapter =
 					getSearchEngineAdapter();
 
 				SearchSearchResponse searchSearchResponse =
-					searchEngineAdapter.execute(searchSearchRequest);
+					searchEngineAdapter.execute(
+						new SearchSearchRequest() {
+							{
+								addSorts(sorts.field(Field.EXPIRATION_DATE));
+								setIndexNames("_all");
+								setQuery(dateRangeTermQuery);
+							}
+						});
 
 				SearchHits searchHits = searchSearchResponse.getSearchHits();
 

@@ -22,8 +22,6 @@ import com.liferay.portal.search.engine.adapter.search.SearchSearchResponse;
 import com.liferay.portal.search.hits.SearchHit;
 import com.liferay.portal.search.hits.SearchHits;
 import com.liferay.portal.search.query.RangeTermQuery;
-import com.liferay.portal.search.sort.FieldSort;
-import com.liferay.portal.search.sort.SortOrder;
 import com.liferay.portal.search.test.util.indexing.BaseIndexingTestCase;
 import com.liferay.portal.search.test.util.indexing.DocumentCreationHelpers;
 
@@ -49,32 +47,27 @@ public abstract class BaseRangeTermQueryTestCase extends BaseIndexingTestCase {
 				DocumentCreationHelpers.singleNumber(Field.PRIORITY, i));
 		}
 
+		RangeTermQuery rangeTermQuery = queries.rangeTerm(
+			Field.PRIORITY, true, false);
+
+		rangeTermQuery.setLowerBound(5);
+		rangeTermQuery.setUpperBound(15);
+
 		assertSearch(
 			indexingTestHelper -> {
-				RangeTermQuery rangeTermQuery = queries.rangeTerm(
-					Field.PRIORITY, true, false);
-
-				rangeTermQuery.setLowerBound(5);
-				rangeTermQuery.setUpperBound(15);
-
-				SearchSearchRequest searchSearchRequest =
-					new SearchSearchRequest();
-
-				searchSearchRequest.setIndexNames("_all");
-				searchSearchRequest.setQuery(rangeTermQuery);
-				searchSearchRequest.setSize(15);
-
-				FieldSort fieldSort = new FieldSort(Field.PRIORITY);
-
-				fieldSort.setSortOrder(SortOrder.ASC);
-
-				searchSearchRequest.addSorts(fieldSort);
-
 				SearchEngineAdapter searchEngineAdapter =
 					getSearchEngineAdapter();
 
 				SearchSearchResponse searchSearchResponse =
-					searchEngineAdapter.execute(searchSearchRequest);
+					searchEngineAdapter.execute(
+						new SearchSearchRequest() {
+							{
+								addSorts(sorts.field(Field.PRIORITY));
+								setIndexNames("_all");
+								setQuery(rangeTermQuery);
+								setSize(15);
+							}
+						});
 
 				SearchHits searchHits = searchSearchResponse.getSearchHits();
 

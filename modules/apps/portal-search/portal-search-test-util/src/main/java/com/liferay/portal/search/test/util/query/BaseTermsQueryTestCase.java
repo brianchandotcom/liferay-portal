@@ -17,7 +17,7 @@ package com.liferay.portal.search.test.util.query;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.search.hits.SearchHits;
 import com.liferay.portal.search.query.TermsQuery;
-import com.liferay.portal.search.sort.FieldSort;
+import com.liferay.portal.search.sort.Sort;
 import com.liferay.portal.search.sort.SortOrder;
 import com.liferay.portal.search.test.util.DocumentsAssert;
 import com.liferay.portal.search.test.util.indexing.BaseIndexingTestCase;
@@ -47,9 +47,7 @@ public abstract class BaseTermsQueryTestCase extends BaseIndexingTestCase {
 
 		termsQuery.addValues("bravo", "charlie");
 
-		FieldSort fieldSort = new FieldSort(Field.USER_NAME);
-
-		fieldSort.setSortOrder(SortOrder.DESC);
+		Sort sort = sorts.field(Field.USER_NAME, SortOrder.DESC);
 
 		String expected = "[charlie, bravo]";
 
@@ -60,7 +58,7 @@ public abstract class BaseTermsQueryTestCase extends BaseIndexingTestCase {
 						searchRequestBuilder.query(
 							termsQuery
 						).sorts(
-							fieldSort
+							sort
 						);
 					});
 

@@ -25,7 +25,6 @@ import com.liferay.portal.search.aggregation.metrics.TopHitsAggregationResult;
 import com.liferay.portal.search.document.Document;
 import com.liferay.portal.search.hits.SearchHit;
 import com.liferay.portal.search.hits.SearchHits;
-import com.liferay.portal.search.sort.FieldSort;
 import com.liferay.portal.search.sort.SortOrder;
 import com.liferay.portal.search.test.util.indexing.BaseIndexingTestCase;
 
@@ -79,12 +78,8 @@ public abstract class BaseTopHitsAggregationTestCase
 
 		TopHitsAggregation topHitsAggregation = aggregations.topHits("topHits");
 
-		FieldSort fieldSort = new FieldSort(Field.PRIORITY);
-
-		fieldSort.setSortOrder(SortOrder.DESC);
-
-		topHitsAggregation.addSortFields(fieldSort);
-
+		topHitsAggregation.addSortFields(
+			sorts.field(Field.PRIORITY, SortOrder.DESC));
 		topHitsAggregation.setSize(1);
 
 		termsAggregation.addChildAggregation(topHitsAggregation);

@@ -22,9 +22,6 @@ import com.liferay.portal.search.aggregation.bucket.HistogramAggregationResult;
 import com.liferay.portal.search.aggregation.metrics.SumAggregation;
 import com.liferay.portal.search.aggregation.metrics.SumAggregationResult;
 import com.liferay.portal.search.aggregation.pipeline.BucketSortPipelineAggregation;
-import com.liferay.portal.search.internal.aggregation.bucket.HistogramAggregationImpl;
-import com.liferay.portal.search.internal.aggregation.metrics.SumAggregationImpl;
-import com.liferay.portal.search.internal.aggregation.pipeline.BucketSortPipelineAggregationImpl;
 import com.liferay.portal.search.sort.FieldSort;
 import com.liferay.portal.search.sort.SortOrder;
 import com.liferay.portal.search.test.util.aggregation.AggregationAssert;
@@ -48,28 +45,26 @@ public abstract class BaseBucketSortPipelineAggregationTestCase
 				DocumentCreationHelpers.singleNumber(Field.PRIORITY, i));
 		}
 
-		HistogramAggregation histogramAggregation =
-			new HistogramAggregationImpl("histogram", Field.PRIORITY);
+		FieldSort fieldSort = sorts.field("sum");
 
-		histogramAggregation.setInterval(5.0);
-		histogramAggregation.setMinDocCount(1L);
+		String expectedBuckets = "[0.0=4, 20.0=1, 5.0=5, 10.0=5, 15.0=5]";
+		String expectedBucketValues = "10.0, 20.0, 35.0, 60.0, 85.0";
 
-		SumAggregation sumAggregation = new SumAggregationImpl(
-			"sum", Field.PRIORITY);
+		HistogramAggregation histogramAggregation = aggregations.histogram(
+			"histogram", Field.PRIORITY);
 
-		histogramAggregation.addChildAggregation(sumAggregation);
+		SumAggregation sumAggregation = aggregations.sum("sum", Field.PRIORITY);
 
 		BucketSortPipelineAggregation bucketSortPipelineAggregation =
-			new BucketSortPipelineAggregationImpl("bucket_sort");
-
-		FieldSort fieldSort = new FieldSort("sum");
-
-		fieldSort.setSortOrder(SortOrder.ASC);
+			aggregations.bucketSort("bucket_sort");
 
 		bucketSortPipelineAggregation.addSortFields(fieldSort);
 
+		histogramAggregation.addChildAggregation(sumAggregation);
 		histogramAggregation.addPipelineAggregation(
 			bucketSortPipelineAggregation);
+		histogramAggregation.setInterval(5.0);
+		histogramAggregation.setMinDocCount(1L);
 
 		assertSearch(
 			indexingTestHelper -> {
@@ -84,11 +79,10 @@ public abstract class BaseBucketSortPipelineAggregationTestCase
 						histogramAggregation);
 
 				AggregationAssert.assertBuckets(
-					"[0.0=4, 20.0=1, 5.0=5, 10.0=5, 15.0=5]",
-					histogramAggregationResult);
+					expectedBuckets, histogramAggregationResult);
 
 				AggregationAssert.assertBucketValues(
-					"10.0, 20.0, 35.0, 60.0, 85.0", this::getSumValue,
+					expectedBucketValues, this::getSumValue,
 					histogramAggregationResult);
 			});
 	}
@@ -100,30 +94,27 @@ public abstract class BaseBucketSortPipelineAggregationTestCase
 				DocumentCreationHelpers.singleNumber(Field.PRIORITY, i));
 		}
 
-		HistogramAggregation histogramAggregation =
-			new HistogramAggregationImpl("histogram", Field.PRIORITY);
+		FieldSort fieldSort = sorts.field("sum", SortOrder.DESC);
 
-		histogramAggregation.setInterval(5.0);
-		histogramAggregation.setMinDocCount(1L);
+		String expectedBuckets = "[15.0=5, 10.0=5, 5.0=5]";
+		String expectedBucketValues = "85.0, 60.0, 35.0";
 
-		SumAggregation sumAggregation = new SumAggregationImpl(
-			"sum", Field.PRIORITY);
+		HistogramAggregation histogramAggregation = aggregations.histogram(
+			"histogram", Field.PRIORITY);
 
-		histogramAggregation.addChildAggregation(sumAggregation);
+		SumAggregation sumAggregation = aggregations.sum("sum", Field.PRIORITY);
 
 		BucketSortPipelineAggregation bucketSortPipelineAggregation =
-			new BucketSortPipelineAggregationImpl("bucket_sort");
-
-		FieldSort fieldSort = new FieldSort("sum");
-
-		fieldSort.setSortOrder(SortOrder.DESC);
+			aggregations.bucketSort("bucket_sort");
 
 		bucketSortPipelineAggregation.addSortFields(fieldSort);
-
 		bucketSortPipelineAggregation.setSize(3);
 
+		histogramAggregation.addChildAggregation(sumAggregation);
 		histogramAggregation.addPipelineAggregation(
 			bucketSortPipelineAggregation);
+		histogramAggregation.setInterval(5.0);
+		histogramAggregation.setMinDocCount(1L);
 
 		assertSearch(
 			indexingTestHelper -> {
@@ -138,10 +129,10 @@ public abstract class BaseBucketSortPipelineAggregationTestCase
 						histogramAggregation);
 
 				AggregationAssert.assertBuckets(
-					"[15.0=5, 10.0=5, 5.0=5]", histogramAggregationResult);
+					expectedBuckets, histogramAggregationResult);
 
 				AggregationAssert.assertBucketValues(
-					"85.0, 60.0, 35.0", this::getSumValue,
+					expectedBucketValues, this::getSumValue,
 					histogramAggregationResult);
 			});
 	}

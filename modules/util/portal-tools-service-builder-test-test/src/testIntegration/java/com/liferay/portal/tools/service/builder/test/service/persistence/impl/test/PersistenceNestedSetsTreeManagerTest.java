@@ -234,7 +234,7 @@ public class PersistenceNestedSetsTreeManagerTest {
 			try {
 				ReflectionTestUtil.invoke(
 					_nestedSetsTreeManager, "doCountAncestors",
-					new Class[] {long.class, long.class, long.class},
+					new Class<?>[] {long.class, long.class, long.class},
 					new Object[] {0, 0, 0});
 
 				Assert.fail();
@@ -250,7 +250,7 @@ public class PersistenceNestedSetsTreeManagerTest {
 			try {
 				ReflectionTestUtil.invoke(
 					_nestedSetsTreeManager, "doCountDescendants",
-					new Class[] {long.class, long.class, long.class},
+					new Class<?>[] {long.class, long.class, long.class},
 					new Object[] {0, 0, 0});
 
 				Assert.fail();
@@ -266,7 +266,7 @@ public class PersistenceNestedSetsTreeManagerTest {
 			try {
 				ReflectionTestUtil.invoke(
 					_nestedSetsTreeManager, "doGetAncestors",
-					new Class[] {long.class, long.class, long.class},
+					new Class<?>[] {long.class, long.class, long.class},
 					new Object[] {0, 0, 0});
 
 				Assert.fail();
@@ -282,7 +282,7 @@ public class PersistenceNestedSetsTreeManagerTest {
 			try {
 				ReflectionTestUtil.invoke(
 					_nestedSetsTreeManager, "doGetDescendants",
-					new Class[] {long.class, long.class, long.class},
+					new Class<?>[] {long.class, long.class, long.class},
 					new Object[] {0, 0, 0});
 
 				Assert.fail();
@@ -298,7 +298,7 @@ public class PersistenceNestedSetsTreeManagerTest {
 			try {
 				ReflectionTestUtil.invoke(
 					_nestedSetsTreeManager, "doUpdate",
-					new Class[] {
+					new Class<?>[] {
 						long.class, boolean.class, long.class, long.class,
 						boolean.class
 					},
@@ -317,7 +317,7 @@ public class PersistenceNestedSetsTreeManagerTest {
 			try {
 				ReflectionTestUtil.invoke(
 					_nestedSetsTreeManager, "doUpdate",
-					new Class[] {
+					new Class<?>[] {
 						long.class, long.class, long.class, boolean.class,
 						long.class, boolean.class, List.class
 					},
@@ -336,7 +336,7 @@ public class PersistenceNestedSetsTreeManagerTest {
 			try {
 				ReflectionTestUtil.invoke(
 					_nestedSetsTreeManager, "getMaxNestedSetsTreeNodeRight",
-					new Class[] {long.class}, new Object[] {0});
+					new Class<?>[] {long.class}, new Object[] {0});
 
 				Assert.fail();
 			}
@@ -360,15 +360,21 @@ public class PersistenceNestedSetsTreeManagerTest {
 		assertGetAncestors(_nestedSetsTreeEntries[0]);
 		assertGetAncestors(_nestedSetsTreeEntries[1]);
 		assertGetAncestors(_nestedSetsTreeEntries[2]);
-		assertGetAncestors(_nestedSetsTreeEntries[3], _nestedSetsTreeEntries[0]);
-		assertGetAncestors(_nestedSetsTreeEntries[4], _nestedSetsTreeEntries[0]);
 		assertGetAncestors(
-			_nestedSetsTreeEntries[5], _nestedSetsTreeEntries[3], _nestedSetsTreeEntries[0]);
-		assertGetAncestors(_nestedSetsTreeEntries[6], _nestedSetsTreeEntries[1]);
+			_nestedSetsTreeEntries[3], _nestedSetsTreeEntries[0]);
 		assertGetAncestors(
-			_nestedSetsTreeEntries[7], _nestedSetsTreeEntries[6], _nestedSetsTreeEntries[1]);
+			_nestedSetsTreeEntries[4], _nestedSetsTreeEntries[0]);
 		assertGetAncestors(
-			_nestedSetsTreeEntries[8], _nestedSetsTreeEntries[4], _nestedSetsTreeEntries[0]);
+			_nestedSetsTreeEntries[5], _nestedSetsTreeEntries[3],
+			_nestedSetsTreeEntries[0]);
+		assertGetAncestors(
+			_nestedSetsTreeEntries[6], _nestedSetsTreeEntries[1]);
+		assertGetAncestors(
+			_nestedSetsTreeEntries[7], _nestedSetsTreeEntries[6],
+			_nestedSetsTreeEntries[1]);
+		assertGetAncestors(
+			_nestedSetsTreeEntries[8], _nestedSetsTreeEntries[4],
+			_nestedSetsTreeEntries[0]);
 	}
 
 	@Test
@@ -376,15 +382,20 @@ public class PersistenceNestedSetsTreeManagerTest {
 		testInsert();
 
 		assertGetDescendants(
-			_nestedSetsTreeEntries[0], _nestedSetsTreeEntries[3], _nestedSetsTreeEntries[4],
-			_nestedSetsTreeEntries[5], _nestedSetsTreeEntries[8]);
+			_nestedSetsTreeEntries[0], _nestedSetsTreeEntries[3],
+			_nestedSetsTreeEntries[4], _nestedSetsTreeEntries[5],
+			_nestedSetsTreeEntries[8]);
 		assertGetDescendants(
-			_nestedSetsTreeEntries[1], _nestedSetsTreeEntries[6], _nestedSetsTreeEntries[7]);
+			_nestedSetsTreeEntries[1], _nestedSetsTreeEntries[6],
+			_nestedSetsTreeEntries[7]);
 		assertGetDescendants(_nestedSetsTreeEntries[2]);
-		assertGetDescendants(_nestedSetsTreeEntries[3], _nestedSetsTreeEntries[5]);
-		assertGetDescendants(_nestedSetsTreeEntries[4], _nestedSetsTreeEntries[8]);
+		assertGetDescendants(
+			_nestedSetsTreeEntries[3], _nestedSetsTreeEntries[5]);
+		assertGetDescendants(
+			_nestedSetsTreeEntries[4], _nestedSetsTreeEntries[8]);
 		assertGetDescendants(_nestedSetsTreeEntries[5]);
-		assertGetDescendants(_nestedSetsTreeEntries[6], _nestedSetsTreeEntries[7]);
+		assertGetDescendants(
+			_nestedSetsTreeEntries[6], _nestedSetsTreeEntries[7]);
 		assertGetDescendants(_nestedSetsTreeEntries[7]);
 		assertGetDescendants(_nestedSetsTreeEntries[8]);
 	}
@@ -421,7 +432,8 @@ public class PersistenceNestedSetsTreeManagerTest {
 
 		// (0(3), 1, 2)
 
-		_nestedSetsTreeManager.insert(_nestedSetsTreeEntries[3], _nestedSetsTreeEntries[0]);
+		_nestedSetsTreeManager.insert(
+			_nestedSetsTreeEntries[3], _nestedSetsTreeEntries[0]);
 
 		synchronizeAssetCategories(_nestedSetsTreeEntries[3]);
 
@@ -432,7 +444,8 @@ public class PersistenceNestedSetsTreeManagerTest {
 
 		// (0(3, 4), 1, 2)
 
-		_nestedSetsTreeManager.insert(_nestedSetsTreeEntries[4], _nestedSetsTreeEntries[0]);
+		_nestedSetsTreeManager.insert(
+			_nestedSetsTreeEntries[4], _nestedSetsTreeEntries[0]);
 
 		synchronizeAssetCategories(_nestedSetsTreeEntries[4]);
 
@@ -444,7 +457,8 @@ public class PersistenceNestedSetsTreeManagerTest {
 
 		// (0(3(5), 4), 1, 2)
 
-		_nestedSetsTreeManager.insert(_nestedSetsTreeEntries[5], _nestedSetsTreeEntries[3]);
+		_nestedSetsTreeManager.insert(
+			_nestedSetsTreeEntries[5], _nestedSetsTreeEntries[3]);
 
 		synchronizeAssetCategories(_nestedSetsTreeEntries[5]);
 
@@ -457,7 +471,8 @@ public class PersistenceNestedSetsTreeManagerTest {
 
 		// (0(3(5), 4), 1(6), 2)
 
-		_nestedSetsTreeManager.insert(_nestedSetsTreeEntries[6], _nestedSetsTreeEntries[1]);
+		_nestedSetsTreeManager.insert(
+			_nestedSetsTreeEntries[6], _nestedSetsTreeEntries[1]);
 
 		synchronizeAssetCategories(_nestedSetsTreeEntries[6]);
 
@@ -471,7 +486,8 @@ public class PersistenceNestedSetsTreeManagerTest {
 
 		// (0(3(5), 4), 1(6(7)), 2)
 
-		_nestedSetsTreeManager.insert(_nestedSetsTreeEntries[7], _nestedSetsTreeEntries[6]);
+		_nestedSetsTreeManager.insert(
+			_nestedSetsTreeEntries[7], _nestedSetsTreeEntries[6]);
 
 		synchronizeAssetCategories(_nestedSetsTreeEntries[7]);
 
@@ -486,7 +502,8 @@ public class PersistenceNestedSetsTreeManagerTest {
 
 		// (0(3(5), 4(8)), 1(6(7)), 2)
 
-		_nestedSetsTreeManager.insert(_nestedSetsTreeEntries[8], _nestedSetsTreeEntries[4]);
+		_nestedSetsTreeManager.insert(
+			_nestedSetsTreeEntries[8], _nestedSetsTreeEntries[4]);
 
 		synchronizeAssetCategories(_nestedSetsTreeEntries[8]);
 
@@ -520,7 +537,8 @@ public class PersistenceNestedSetsTreeManagerTest {
 		assertLeftAndRight(_nestedSetsTreeEntries[8], 7, 8);
 
 		_nestedSetsTreeManager.move(
-			_nestedSetsTreeEntries[4], _nestedSetsTreeEntries[0], _nestedSetsTreeEntries[0]);
+			_nestedSetsTreeEntries[4], _nestedSetsTreeEntries[0],
+			_nestedSetsTreeEntries[0]);
 
 		synchronizeAssetCategories(null);
 
@@ -535,7 +553,8 @@ public class PersistenceNestedSetsTreeManagerTest {
 		assertLeftAndRight(_nestedSetsTreeEntries[8], 7, 8);
 
 		_nestedSetsTreeManager.move(
-			_nestedSetsTreeEntries[4], _nestedSetsTreeEntries[0], _nestedSetsTreeEntries[2]);
+			_nestedSetsTreeEntries[4], _nestedSetsTreeEntries[0],
+			_nestedSetsTreeEntries[2]);
 
 		synchronizeAssetCategories(null);
 
@@ -610,7 +629,8 @@ public class PersistenceNestedSetsTreeManagerTest {
 		assertLeftAndRight(_nestedSetsTreeEntries[8], 4, 5);
 
 		_nestedSetsTreeManager.move(
-			_nestedSetsTreeEntries[2], _nestedSetsTreeEntries[0], _nestedSetsTreeEntries[3]);
+			_nestedSetsTreeEntries[2], _nestedSetsTreeEntries[0],
+			_nestedSetsTreeEntries[3]);
 
 		synchronizeAssetCategories(null);
 
@@ -642,7 +662,8 @@ public class PersistenceNestedSetsTreeManagerTest {
 	}
 
 	protected void assertGetAncestors(
-		NestedSetsTreeEntry nestedSetsTreeEntry, NestedSetsTreeEntry... ancestorNestedSetsTreeEntries) {
+		NestedSetsTreeEntry nestedSetsTreeEntry,
+		NestedSetsTreeEntry... ancestorNestedSetsTreeEntries) {
 
 		List<NestedSetsTreeEntry> expectedAssetCategories = new ArrayList<>(
 			Arrays.asList(ancestorNestedSetsTreeEntries));
@@ -660,7 +681,8 @@ public class PersistenceNestedSetsTreeManagerTest {
 	}
 
 	protected void assertGetDescendants(
-		NestedSetsTreeEntry nestedSetsTreeEntry, NestedSetsTreeEntry... childNestedSetsTreeEntries) {
+		NestedSetsTreeEntry nestedSetsTreeEntry,
+		NestedSetsTreeEntry... childNestedSetsTreeEntries) {
 
 		List<NestedSetsTreeEntry> expectedAssetCategories = new ArrayList<>(
 			Arrays.asList(childNestedSetsTreeEntries));
@@ -681,14 +703,19 @@ public class PersistenceNestedSetsTreeManagerTest {
 		NestedSetsTreeEntry nestedSetsTreeEntry, long leftNestedSetsTreeEntryId,
 		long rightNestedSetsTreeEntryId) {
 
-		Assert.assertEquals(leftNestedSetsTreeEntryId, nestedSetsTreeEntry.getLeftNestedSetsTreeEntryId());
 		Assert.assertEquals(
-			rightNestedSetsTreeEntryId, nestedSetsTreeEntry.getRightNestedSetsTreeEntryId());
+			leftNestedSetsTreeEntryId,
+			nestedSetsTreeEntry.getLeftNestedSetsTreeEntryId());
+		Assert.assertEquals(
+			rightNestedSetsTreeEntryId,
+			nestedSetsTreeEntry.getRightNestedSetsTreeEntryId());
 
 		_nestedSetsTreeEntryPersistence.update(nestedSetsTreeEntry);
 	}
 
-	protected void synchronizeAssetCategories(NestedSetsTreeEntry nestedSetsTreeEntry) {
+	protected void synchronizeAssetCategories(
+		NestedSetsTreeEntry nestedSetsTreeEntry) {
+
 		synchronizeAssetCategories(nestedSetsTreeEntry, false);
 	}
 
@@ -717,19 +744,19 @@ public class PersistenceNestedSetsTreeManagerTest {
 		}
 	}
 
-	private Group _group;
-
 	@Inject
 	private static GroupLocalService _groupLocalService;
 
+	@Inject
+	private static NestedSetsTreeEntryLocalService
+		_nestedSetsTreeEntryLocalService;
+
+	@Inject
+	private static NestedSetsTreeEntryPersistence
+		_nestedSetsTreeEntryPersistence;
+
+	private Group _group;
 	private NestedSetsTreeEntry[] _nestedSetsTreeEntries;
-
-	@Inject
-	private static NestedSetsTreeEntryLocalService _nestedSetsTreeEntryLocalService;
-
-	@Inject
-	private static NestedSetsTreeEntryPersistence _nestedSetsTreeEntryPersistence;
-
 	private NestedSetsTreeManager<NestedSetsTreeEntry> _nestedSetsTreeManager;
 	private SessionFactoryInvocationHandler _sessionFactoryInvocationHandler;
 

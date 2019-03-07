@@ -48,6 +48,7 @@ import com.liferay.headless.web.experience.dto.v1_0.ContentField;
 import com.liferay.headless.web.experience.dto.v1_0.Geo;
 import com.liferay.headless.web.experience.dto.v1_0.RenderedContents;
 import com.liferay.headless.web.experience.dto.v1_0.StructuredContent;
+import com.liferay.headless.web.experience.dto.v1_0.StructuredContentImage;
 import com.liferay.headless.web.experience.dto.v1_0.StructuredContentLink;
 import com.liferay.headless.web.experience.dto.v1_0.Value;
 import com.liferay.headless.web.experience.internal.dto.v1_0.util.AggregateRatingUtil;
@@ -861,6 +862,36 @@ public class StructuredContentResourceImpl
 						{
 							latitude = jsonObject.getDouble("latitude");
 							longitude = jsonObject.getDouble("longitude");
+						}
+					};
+				}
+			};
+		}
+
+		if (Objects.equals(DDMFormFieldType.IMAGE, ddmFormField.getType())) {
+			JSONObject jsonObject = JSONFactoryUtil.createJSONObject(value);
+
+			long fileEntryId = jsonObject.getLong("fileEntryId");
+
+			if (fileEntryId == 0) {
+				return null;
+			}
+
+			FileEntry fileEntry = _dlAppService.getFileEntry(fileEntryId);
+
+			return new Value() {
+				{
+					image = new StructuredContentImage() {
+						{
+							contentUrl = _dlurlHelper.getPreviewURL(
+								fileEntry, fileEntry.getFileVersion(), null, "",
+								false, false);
+							description = jsonObject.getString("alt");
+							encodingFormat = fileEntry.getMimeType();
+							fileExtension = fileEntry.getExtension();
+							id = fileEntry.getFileEntryId();
+							sizeInBytes = fileEntry.getSize();
+							title = fileEntry.getTitle();
 						}
 					};
 				}

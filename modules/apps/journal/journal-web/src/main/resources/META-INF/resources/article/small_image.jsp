@@ -43,51 +43,21 @@ JournalFileUploadsConfiguration journalFileUploadsConfiguration = (JournalFileUp
 	<liferay-ui:message arguments="<%= TextFormatter.formatStorageSize(journalFileUploadsConfiguration.smallImageMaxSize(), locale) %>" key="please-enter-a-small-image-with-a-valid-file-size-no-larger-than-x" translateArguments="<%= false %>" />
 </liferay-ui:error>
 
-<div id="<portlet:namespace />smallImageContainer">
-	<aui:select cssClass="lfr-journal-small-image-header lfr-journal-small-image-type" ignoreRequestValue="<%= journalEditArticleDisplayContext.isChangeStructure() %>" label="" name="smallImageSource" value="<%= smallImageSource %>">
-		<aui:option label="no-image" value="none" />
-		<aui:option label="from-url" value="url" />
-		<aui:option label="from-your-computer" value="file" />
-	</aui:select>
+<aui:select ignoreRequestValue="<%= journalEditArticleDisplayContext.isChangeStructure() %>" label="" name="smallImageSource" value="<%= smallImageSource %>">
+	<aui:option label="no-image" value="none" />
+	<aui:option label="from-url" value="url" />
+	<aui:option label="from-your-computer" value="file" />
+</aui:select>
 
-	<div class="lfr-journal-small-image-content-url <%= Objects.equals(smallImageSource, "url") ? "" : "hide" %>">
-		<liferay-frontend:fieldset>
-			<aui:input cssClass="lfr-journal-small-image-value" ignoreRequestValue="<%= journalEditArticleDisplayContext.isChangeStructure() %>" label="" name="smallImageURL" title="small-image-url" />
-		</liferay-frontend:fieldset>
-	</div>
-
-	<div class="lfr-journal-small-image-content-file <%= Objects.equals(smallImageSource, "file") ? "" : "hide" %>">
-		<liferay-frontend:fieldset>
-			<aui:input cssClass="lfr-journal-small-image-value" ignoreRequestValue="<%= journalEditArticleDisplayContext.isChangeStructure() %>" label="" name="smallFile" type="file" />
-		</liferay-frontend:fieldset>
-	</div>
+<div class="<%= Objects.equals(smallImageSource, "url") ? "" : "hide" %>" id="<portlet:namespace/>smallImageURLContainer">
+	<aui:input ignoreRequestValue="<%= journalEditArticleDisplayContext.isChangeStructure() %>" label="" name="smallImageURL" title="small-image-url" />
 </div>
 
-<aui:script use="aui-base">
-	var container = A.one('#<portlet:namespace />smallImageContainer');
+<div class="<%= Objects.equals(smallImageSource, "file") ? "" : "hide" %>" id="<portlet:namespace/>smallFileContainer">
+	<aui:input ignoreRequestValue="<%= journalEditArticleDisplayContext.isChangeStructure() %>" label="" name="smallFile" type="file" />
+</div>
 
-	var selectSmallImageType = function(index) {
-		if (index === 1) {
-			A.one('.lfr-journal-small-image-content-url').show();
-			A.one('.lfr-journal-small-image-content-file').hide();
-		}
-		else if (index === 2) {
-			A.one('.lfr-journal-small-image-content-url').hide();
-			A.one('.lfr-journal-small-image-content-file').show();
-		}
-		else {
-			A.one('.lfr-journal-small-image-content-url').hide();
-			A.one('.lfr-journal-small-image-content-file').hide();
-		}
-	};
-
-	container.delegate(
-		'change',
-		function(event) {
-			var index = event.currentTarget.getDOMNode().selectedIndex;
-
-			selectSmallImageType(index);
-		},
-		'.lfr-journal-small-image-type'
-	);
+<aui:script>
+	Liferay.Util.toggleSelectBox('<portlet:namespace />smallImageSource', 'url', '<portlet:namespace />smallImageURLContainer');
+	Liferay.Util.toggleSelectBox('<portlet:namespace />smallImageSource', 'file', '<portlet:namespace />smallFileContainer');
 </aui:script>

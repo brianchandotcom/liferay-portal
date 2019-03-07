@@ -27,18 +27,17 @@ import javax.portlet.PortletResponse;
 @ProviderType
 public interface UserActionContributor {
 
+	public String getConfirmationMessage(PortletRequest portletRequest);
+
 	public String getMessage(PortletRequest portletRequest);
 
 	public String getURL(
 		PortletRequest portletRequest, PortletResponse portletResponse,
 		User user, User selUser);
 
-	public boolean isShowConfirmationMessage(User selUser);
-
-	public String getConfirmationMessage(
-		PortletRequest portletRequest);
-
 	public boolean isShow(
 		PortletRequest portletRequest, User user, User selUser);
+
+	public boolean isShowConfirmationMessage(User selUser);
 
 }

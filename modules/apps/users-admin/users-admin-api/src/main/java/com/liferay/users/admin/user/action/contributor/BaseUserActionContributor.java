@@ -32,6 +32,10 @@ import javax.portlet.PortletRequest;
 public abstract class BaseUserActionContributor
 	implements UserActionContributor {
 
+	public String getConfirmationMessage(PortletRequest portletRequest) {
+		return null;
+	}
+
 	public ResourceBundle getResourceBundle(Locale locale) {
 		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
 			"content.Language", locale, getClass());
@@ -40,19 +44,15 @@ public abstract class BaseUserActionContributor
 			resourceBundle, PortalUtil.getResourceBundle(locale));
 	}
 
+	public boolean isShowConfirmationMessage(User selUser) {
+		return false;
+	}
+
 	protected Locale getLocale(PortletRequest portletRequest) {
 		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
 		return themeDisplay.getLocale();
-	}
-
-	public boolean isShowConfirmationMessage(User selUser) {
-		return false;
-	}
-
-	public String getConfirmationMessage(PortletRequest portletRequest) {
-		return null;
 	}
 
 }

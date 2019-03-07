@@ -12,20 +12,14 @@
  * details.
  */
 
-package com.liferay.data.engine.web.constants;
+package com.liferay.data.engine.constants;
 
 /**
- * @author Jeyvison Nascimento
+ * @author Marcela Cunha
  */
-public class DEPortletKeys {
+public class DEDataLayoutConstants {
 
-	public static final String DATA_DEFINITION =
-		"com_liferay_data_engine_web_portlet_DEDataDefinitionPortlet";
-
-	public static final String DATA_LAYOUT =
-		"com_liferay_data_engine_web_portlet_DEDataLayout";
-
-	public static final String DATA_RECORD_COLLECTION =
-		"com_liferay_data_engine_web_portlet_DEDataRecordCollectionPortlet";
+	public static final String MODEL_RESOURCE_NAME =
+		"com.liferay.data.engine.model.DEDataLayout";
 
 }

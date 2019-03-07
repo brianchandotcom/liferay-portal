@@ -634,6 +634,7 @@ paths:
             tags: ["Keyword"]
     "/content-spaces/{content-space-id}/segments":
         get:
+            description: Get segments of a content space
             parameters:
                 - in: path
                   name: content-space-id
@@ -657,7 +658,7 @@ paths:
                                 items:
                                     $ref: "#/components/schemas/Segment"
                                 type: array
-                    description: ""
+                    description: "OK"
             tags: ["Segment"]
     "/content-spaces/{content-space-id}/vocabularies":
         get:
@@ -1129,6 +1130,7 @@ paths:
             tags: ["Role"]
     "/segments/{segment-id}/user-accounts":
         get:
+            description: Get users of a segment
             parameters:
                 - in: query
                   name: page
@@ -1152,7 +1154,7 @@ paths:
                                 items:
                                     $ref: "#/components/schemas/SegmentUser"
                                 type: array
-                    description: ""
+                    description: "OK"
             tags: ["SegmentUser"]
     "/user-accounts":
         get:
@@ -1388,6 +1390,7 @@ paths:
             tags: ["Role"]
     "/user-accounts/{user-account-id}/segments":
         get:
+            description: Get segments of a user
             parameters:
                 - in: query
                   name: page
@@ -1411,7 +1414,7 @@ paths:
                                 items:
                                     $ref: "#/components/schemas/Segment"
                                 type: array
-                    description: ""
+                    description: "OK"
             tags: ["Segment"]
     "/user-accounts/{user-account-id}/web-urls":
         get:

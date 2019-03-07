@@ -108,18 +108,12 @@ public class Arquillian extends Runner implements Filterable {
 			});
 	}
 
-	private TestClass _getTestClass() {
+	private List<FrameworkMethod> _getTestFrameworkMethods() {
 		if (_testClass == null) {
 			_testClass = new FilteredSortedTestClass(_clazz);
 		}
 
-		return _testClass;
-	}
-
-	private List<FrameworkMethod> _getTestFrameworkMethods() {
-		TestClass testClass = _getTestClass();
-
-		List<FrameworkMethod> frameworkMethods = testClass.getAnnotatedMethods(
+		List<FrameworkMethod> frameworkMethods = _testClass.getAnnotatedMethods(
 			Test.class);
 
 		for (FrameworkMethod frameworkMethod : frameworkMethods) {

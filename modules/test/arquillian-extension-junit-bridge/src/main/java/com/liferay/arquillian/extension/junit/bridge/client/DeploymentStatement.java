@@ -20,8 +20,6 @@ import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
-import javax.management.ObjectName;
-
 import org.junit.runners.model.Statement;
 
 import org.osgi.jmx.framework.FrameworkMBean;
@@ -37,8 +35,7 @@ public class DeploymentStatement extends Statement {
 
 	@Override
 	public void evaluate() throws Throwable {
-		FrameworkMBean frameworkMBean = JMXProxyUtil.newProxy(
-			_frameworkObjectName, FrameworkMBean.class);
+		FrameworkMBean frameworkMBean = MBeans.getFrameworkMBean();
 
 		long bundleId = _installBundle(frameworkMBean);
 
@@ -67,17 +64,6 @@ public class DeploymentStatement extends Statement {
 		}
 		finally {
 			Files.delete(path);
-		}
-	}
-
-	private static final ObjectName _frameworkObjectName;
-
-	static {
-		try {
-			_frameworkObjectName = new ObjectName("osgi.core:type=framework,*");
-		}
-		catch (Exception e) {
-			throw new ExceptionInInitializerError(e);
 		}
 	}
 

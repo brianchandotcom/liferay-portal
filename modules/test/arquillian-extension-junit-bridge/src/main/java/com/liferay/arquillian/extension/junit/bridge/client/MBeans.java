@@ -14,7 +14,7 @@
 
 package com.liferay.arquillian.extension.junit.bridge.client;
 
-import java.io.IOException;
+import com.liferay.arquillian.extension.junit.bridge.jmx.JMXTestRunnerMBean;
 
 import java.util.Collections;
 import java.util.Iterator;
@@ -27,28 +27,23 @@ import javax.management.remote.JMXConnector;
 import javax.management.remote.JMXConnectorFactory;
 import javax.management.remote.JMXServiceURL;
 
+import org.osgi.jmx.framework.FrameworkMBean;
+
 /**
  * @author Shuyang Zhou
  */
-public class JMXProxyUtil {
+public class MBeans {
 
-	public static <T> T newProxy(ObjectName objectName, Class<T> interfaceClass)
-		throws IOException {
-
-		if (objectName.isPattern()) {
-			Set<ObjectName> objectNames = _mBeanServerConnection.queryNames(
-				objectName, null);
-
-			Iterator<ObjectName> iterator = objectNames.iterator();
-
-			objectName = iterator.next();
-		}
-
-		return MBeanServerInvocationHandler.newProxyInstance(
-			_mBeanServerConnection, objectName, interfaceClass, false);
+	public static FrameworkMBean getFrameworkMBean() {
+		return _frameworkMBean;
 	}
 
-	private static final MBeanServerConnection _mBeanServerConnection;
+	public static JMXTestRunnerMBean getJmxTestRunnerMBean() {
+		return _jmxTestRunnerMBean;
+	}
+
+	private static final FrameworkMBean _frameworkMBean;
+	private static final JMXTestRunnerMBean _jmxTestRunnerMBean;
 
 	static {
 		try {
@@ -60,7 +55,27 @@ public class JMXProxyUtil {
 				Collections.singletonMap(
 					JMXConnector.CREDENTIALS, new String[] {"", ""}));
 
-			_mBeanServerConnection = jmxConnector.getMBeanServerConnection();
+			MBeanServerConnection mBeanServerConnection =
+				jmxConnector.getMBeanServerConnection();
+
+			Set<ObjectName> objectNames = mBeanServerConnection.queryNames(
+				new ObjectName("osgi.core:type=framework,*"), null);
+
+			Iterator<ObjectName> iterator = objectNames.iterator();
+
+			if (!iterator.hasNext()) {
+				throw new IllegalStateException(
+					"FrameworkMBean is unavailable");
+			}
+
+			_frameworkMBean = MBeanServerInvocationHandler.newProxyInstance(
+				mBeanServerConnection, iterator.next(), FrameworkMBean.class,
+				false);
+
+			_jmxTestRunnerMBean = MBeanServerInvocationHandler.newProxyInstance(
+				mBeanServerConnection,
+				new ObjectName(JMXTestRunnerMBean.OBJECT_NAME),
+				JMXTestRunnerMBean.class, false);
 		}
 		catch (Exception e) {
 			throw new ExceptionInInitializerError(e);

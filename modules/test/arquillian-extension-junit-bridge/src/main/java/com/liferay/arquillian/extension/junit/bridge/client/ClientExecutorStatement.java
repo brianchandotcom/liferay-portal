@@ -22,9 +22,6 @@ import java.io.ObjectInputStream;
 
 import java.lang.reflect.Method;
 
-import javax.management.MalformedObjectNameException;
-import javax.management.ObjectName;
-
 import org.junit.runners.model.Statement;
 
 /**
@@ -42,8 +39,7 @@ public class ClientExecutorStatement extends Statement {
 
 	@Override
 	public void evaluate() throws Throwable {
-		JMXTestRunnerMBean jmxTestRunnerMBean = JMXProxyUtil.newProxy(
-			_objectName, JMXTestRunnerMBean.class);
+		JMXTestRunnerMBean jmxTestRunnerMBean = MBeans.getJmxTestRunnerMBean();
 
 		byte[] data = jmxTestRunnerMBean.runTestMethod(_className, _methodName);
 
@@ -55,17 +51,6 @@ public class ClientExecutorStatement extends Statement {
 			if (throwable != null) {
 				throw throwable;
 			}
-		}
-	}
-
-	private static final ObjectName _objectName;
-
-	static {
-		try {
-			_objectName = new ObjectName(JMXTestRunnerMBean.OBJECT_NAME);
-		}
-		catch (MalformedObjectNameException mone) {
-			throw new ExceptionInInitializerError(mone);
 		}
 	}
 

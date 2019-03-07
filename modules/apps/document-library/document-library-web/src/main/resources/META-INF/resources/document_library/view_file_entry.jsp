@@ -104,6 +104,10 @@ if (portletTitleBasedNavigation) {
 		<aui:input name="<%= Constants.CMD %>" type="hidden" />
 		<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
 		<aui:input name="fileEntryId" type="hidden" value="<%= String.valueOf(fileEntry.getFileEntryId()) %>" />
+		<aui:input name="newFolderId" type="hidden" />
+		<aui:input name="rowIdsDLFileShortcut" type="hidden" />
+		<aui:input name="rowIdsFileEntry" type="hidden" />
+		<aui:input name="rowIdsFolder" type="hidden" />
 	</aui:form>
 
 	<c:if test="<%= !portletTitleBasedNavigation && showHeader && (folder != null) %>">
@@ -224,6 +228,47 @@ if (portletTitleBasedNavigation) {
 
 	<liferay-util:include page="/document_library/version_details.jsp" servletContext="<%= application %>" />
 </c:if>
+
+<portlet:renderURL var="selectFolderURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="mvcRenderCommandName" value="/document_library/select_folder" /><portlet:param name="folderId" value="<%= String.valueOf(folderId) %>" /></portlet:renderURL>
+
+<portlet:actionURL name="/document_library/edit_entry" var="editEntryURL" />
+
+<aui:script>
+	function <portlet:namespace />move(parameterName, parameterValue) {
+		var namespace = '<portlet:namespace />';
+
+		Liferay.Util.selectEntity(
+			{
+				dialog: {
+					constrain: true,
+					destroyOnHide: true,
+					modal: true,
+					width: 680
+				},
+				id: namespace + 'selectFolder',
+				title: '<liferay-ui:message arguments="<%= 1 %>" key="select-destination-folder-for-x-items" translateArguments="<%= false %>" />',
+				uri: '<%= selectFolderURL.toString() %>'
+			},
+			function(event) {
+				var form = document.getElementById(namespace + 'fm');
+
+				if (parameterName && parameterValue) {
+					form.elements[namespace + parameterName].value = parameterValue;
+				}
+
+				var actionUrl = '<%= editEntryURL.toString() %>';
+
+				form.setAttribute('action', actionUrl);
+				form.setAttribute('enctype', 'multipart/form-data');
+
+				form.elements[namespace + 'cmd'].value = 'move';
+				form.elements[namespace + 'newFolderId'].value = event.folderid;
+
+				submitForm(form, actionUrl, false);
+			}
+		);
+	}
+</aui:script>
 
 <%
 boolean addPortletBreadcrumbEntries = ParamUtil.getBoolean(request, "addPortletBreadcrumbEntries", true);

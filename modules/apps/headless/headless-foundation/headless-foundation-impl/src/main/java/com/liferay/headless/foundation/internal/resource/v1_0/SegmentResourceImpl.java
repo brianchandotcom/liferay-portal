@@ -51,6 +51,20 @@ import org.osgi.service.component.annotations.ServiceScope;
 public class SegmentResourceImpl extends BaseSegmentResourceImpl {
 
 	@Override
+	public Page<Segment> getContentSpaceSegmentsPage(
+		Long contentSpaceId, Pagination pagination) {
+
+		List<SegmentsEntry> segmentsEntries =
+			_segmentsEntryService.getSegmentsEntries(
+				contentSpaceId, true, pagination.getStartPosition(),
+				pagination.getEndPosition(), null);
+
+		return Page.of(
+			transform(segmentsEntries, this::_toSegment), pagination,
+			segmentsEntries.size());
+	}
+
+	@Override
 	public Page<Segment> getUserAccountUserSegmentsPage(
 			Long userId, Pagination pagination)
 		throws Exception {

@@ -71,8 +71,6 @@ public class Arquillian extends Runner implements Filterable {
 
 	@Override
 	public void run(RunNotifier runNotifier) {
-		Description description = getDescription();
-
 		try {
 			List<FrameworkMethod> frameworkMethods = _getTestFrameworkMethods();
 
@@ -95,16 +93,8 @@ public class Arquillian extends Runner implements Filterable {
 				statement.evaluate();
 			}
 		}
-		catch (AssumptionViolatedException ave) {
-			runNotifier.fireTestAssumptionFailed(new Failure(description, ave));
-		}
-		catch (MultipleFailureException mfe) {
-			for (Throwable t : mfe.getFailures()) {
-				runNotifier.fireTestFailure(new Failure(description, t));
-			}
-		}
 		catch (Throwable t) {
-			runNotifier.fireTestFailure(new Failure(description, t));
+			runNotifier.fireTestFailure(new Failure(getDescription(), t));
 		}
 	}
 

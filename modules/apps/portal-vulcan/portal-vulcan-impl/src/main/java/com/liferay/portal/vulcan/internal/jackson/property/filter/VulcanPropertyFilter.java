@@ -21,6 +21,8 @@ import com.fasterxml.jackson.databind.ser.PropertyFilter;
 import com.fasterxml.jackson.databind.ser.PropertyWriter;
 import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
 
+import com.liferay.portal.vulcan.pagination.Page;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -108,6 +110,12 @@ public class VulcanPropertyFilter
 		}
 
 		while (jsonStreamContext != null) {
+			Object currentValue = jsonStreamContext.getCurrentValue();
+
+			if (currentValue instanceof Page) {
+				break;
+			}
+
 			String currentName = jsonStreamContext.getCurrentName();
 
 			if (currentName != null) {

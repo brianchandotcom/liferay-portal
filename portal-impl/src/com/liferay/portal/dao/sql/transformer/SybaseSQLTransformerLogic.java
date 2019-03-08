@@ -16,9 +16,11 @@ package com.liferay.portal.dao.sql.transformer;
 
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.db.DB;
-import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.function.Function;
 import java.util.regex.Matcher;
 
@@ -30,18 +32,18 @@ public class SybaseSQLTransformerLogic extends BaseSQLTransformerLogic {
 	public SybaseSQLTransformerLogic(DB db) {
 		super(db);
 
-		Function[] functions = {
-			getBitwiseCheckFunction(), getBooleanFunction(),
-			getCastClobTextFunction(), getCastLongFunction(),
-			getCastTextFunction(), getConcatFunction(),
-			getDropTableIfExistsTextFunction(), getInstrFunction(),
-			getIntegerDivisionFunction(), getLengthFunction(), getModFunction(),
-			getNullDateFunction(), getSubstrFunction(), _getCrossJoinFunction(),
-			_getReplaceFunction()
-		};
+		List<Function<String, String>> functions = new ArrayList<>(
+			Arrays.asList(
+				getBitwiseCheckFunction(), getBooleanFunction(),
+				getCastClobTextFunction(), getCastLongFunction(),
+				getCastTextFunction(), getConcatFunction(),
+				getDropTableIfExistsTextFunction(), getInstrFunction(),
+				getIntegerDivisionFunction(), getLengthFunction(),
+				getModFunction(), getNullDateFunction(), getSubstrFunction(),
+				_getCrossJoinFunction(), _getReplaceFunction()));
 
 		if (!db.isSupportsStringCaseSensitiveQuery()) {
-			functions = ArrayUtil.append(functions, getLowerFunction());
+			functions.add(getLowerFunction());
 		}
 
 		setFunctions(functions);

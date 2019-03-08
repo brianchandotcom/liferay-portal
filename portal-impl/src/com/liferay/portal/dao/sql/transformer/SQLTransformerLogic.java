@@ -14,6 +14,7 @@
 
 package com.liferay.portal.dao.sql.transformer;
 
+import java.util.List;
 import java.util.function.Function;
 
 /**
@@ -22,6 +23,6 @@ import java.util.function.Function;
  */
 public interface SQLTransformerLogic {
 
-	public Function<String, String>[] getFunctions();
+	public List<Function<String, String>> getFunctions();
 
 }

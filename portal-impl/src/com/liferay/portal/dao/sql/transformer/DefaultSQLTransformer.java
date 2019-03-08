@@ -17,6 +17,7 @@ package com.liferay.portal.dao.sql.transformer;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 
+import java.util.List;
 import java.util.function.Function;
 
 /**
@@ -25,7 +26,7 @@ import java.util.function.Function;
  */
 public class DefaultSQLTransformer implements SQLTransformer {
 
-	public DefaultSQLTransformer(Function<String, String>[] functions) {
+	public DefaultSQLTransformer(List<Function<String, String>> functions) {
 		_functions = functions;
 	}
 
@@ -52,6 +53,6 @@ public class DefaultSQLTransformer implements SQLTransformer {
 	private static final Log _log = LogFactoryUtil.getLog(
 		DefaultSQLTransformer.class);
 
-	private final Function<String, String>[] _functions;
+	private final List<Function<String, String>> _functions;
 
 }

@@ -19,6 +19,7 @@ import com.liferay.portal.internal.dao.sql.transformer.SQLFunctionTransformer;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.util.StringUtil;
 
+import java.util.List;
 import java.util.function.Function;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -34,7 +35,7 @@ public abstract class BaseSQLTransformerLogic implements SQLTransformerLogic {
 	}
 
 	@Override
-	public Function<String, String>[] getFunctions() {
+	public List<Function<String, String>> getFunctions() {
 		return _functions;
 	}
 
@@ -238,7 +239,7 @@ public abstract class BaseSQLTransformerLogic implements SQLTransformerLogic {
 		return matcher.replaceAll("SUBSTRING($1, $2, $3)");
 	}
 
-	protected void setFunctions(Function... functions) {
+	protected void setFunctions(List<Function<String, String>> functions) {
 		_functions = functions;
 	}
 
@@ -247,6 +248,6 @@ public abstract class BaseSQLTransformerLogic implements SQLTransformerLogic {
 	private static final String _LOWER_OPEN = "lower(";
 
 	private final DB _db;
-	private Function[] _functions;
+	private List<Function<String, String>> _functions;
 
 }

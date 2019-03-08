@@ -15,8 +15,10 @@
 package com.liferay.portal.dao.sql.transformer;
 
 import com.liferay.portal.kernel.dao.db.DB;
-import com.liferay.portal.kernel.util.ArrayUtil;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.function.Function;
 import java.util.regex.Matcher;
 
@@ -29,15 +31,15 @@ public class HypersonicSQLTransformerLogic extends BaseSQLTransformerLogic {
 	public HypersonicSQLTransformerLogic(DB db) {
 		super(db);
 
-		Function[] functions = {
-			getBooleanFunction(), getCastClobTextFunction(),
-			getCastLongFunction(), getCastTextFunction(),
-			getDropTableIfExistsTextFunction(), getIntegerDivisionFunction(),
-			getNullDateFunction()
-		};
+		List<Function<String, String>> functions = new ArrayList<>(
+			Arrays.asList(
+				getBooleanFunction(), getCastClobTextFunction(),
+				getCastLongFunction(), getCastTextFunction(),
+				getDropTableIfExistsTextFunction(),
+				getIntegerDivisionFunction(), getNullDateFunction()));
 
 		if (!db.isSupportsStringCaseSensitiveQuery()) {
-			functions = ArrayUtil.append(functions, getLowerFunction());
+			functions.add(getLowerFunction());
 		}
 
 		setFunctions(functions);

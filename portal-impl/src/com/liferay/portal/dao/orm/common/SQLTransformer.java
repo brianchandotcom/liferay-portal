@@ -20,6 +20,8 @@ import com.liferay.portal.dao.sql.transformer.SQLTransformerFactory;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Function;
@@ -100,11 +102,10 @@ public class SQLTransformer {
 
 		newSQL = _sqlTransformer.transform(sql);
 
-		Function[] functions = {
+		List<Function<String, String>> functions = Arrays.asList(
 			HQLToJPQLTransformerLogic.getPositionalParameterFunction(),
 			HQLToJPQLTransformerLogic.getNotEqualsFunction(),
-			HQLToJPQLTransformerLogic.getCompositeIdMarkerFunction()
-		};
+			HQLToJPQLTransformerLogic.getCompositeIdMarkerFunction());
 
 		for (Function<String, String> function : functions) {
 			newSQL = function.apply(newSQL);

@@ -15,8 +15,10 @@
 package com.liferay.portal.dao.sql.transformer;
 
 import com.liferay.portal.kernel.dao.db.DB;
-import com.liferay.portal.kernel.util.ArrayUtil;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.function.Function;
 import java.util.regex.Matcher;
 
@@ -28,17 +30,17 @@ public class SQLServerSQLTransformerLogic extends BaseSQLTransformerLogic {
 	public SQLServerSQLTransformerLogic(DB db) {
 		super(db);
 
-		Function[] functions = {
-			getBitwiseCheckFunction(), getBooleanFunction(),
-			getCastClobTextFunction(), getCastLongFunction(),
-			getCastTextFunction(), getConcatFunction(),
-			getDropTableIfExistsTextFunction(), getInstrFunction(),
-			getIntegerDivisionFunction(), getLengthFunction(), getModFunction(),
-			getNullDateFunction(), getSubstrFunction()
-		};
+		List<Function<String, String>> functions = new ArrayList<>(
+			Arrays.asList(
+				getBitwiseCheckFunction(), getBooleanFunction(),
+				getCastClobTextFunction(), getCastLongFunction(),
+				getCastTextFunction(), getConcatFunction(),
+				getDropTableIfExistsTextFunction(), getInstrFunction(),
+				getIntegerDivisionFunction(), getLengthFunction(),
+				getModFunction(), getNullDateFunction(), getSubstrFunction()));
 
 		if (!db.isSupportsStringCaseSensitiveQuery()) {
-			functions = ArrayUtil.append(functions, getLowerFunction());
+			functions.add(getLowerFunction());
 		}
 
 		setFunctions(functions);

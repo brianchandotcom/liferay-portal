@@ -17,10 +17,12 @@ package com.liferay.portal.dao.sql.transformer;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.internal.dao.sql.transformer.SQLFunctionTransformer;
 import com.liferay.portal.kernel.dao.db.DB;
-import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.function.Function;
 import java.util.regex.Matcher;
 
@@ -32,16 +34,16 @@ public class OracleSQLTransformerLogic extends BaseSQLTransformerLogic {
 	public OracleSQLTransformerLogic(DB db) {
 		super(db);
 
-		Function[] functions = {
-			getBooleanFunction(), getCastClobTextFunction(),
-			getCastLongFunction(), getCastTextFunction(), getConcatFunction(),
-			getDropTableIfExistsTextFunction(), getIntegerDivisionFunction(),
-			getNullDateFunction(), _getEscapeFunction(),
-			_getNotEqualsBlankStringFunction()
-		};
+		List<Function<String, String>> functions = new ArrayList<>(
+			Arrays.asList(
+				getBooleanFunction(), getCastClobTextFunction(),
+				getCastLongFunction(), getCastTextFunction(),
+				getConcatFunction(), getDropTableIfExistsTextFunction(),
+				getIntegerDivisionFunction(), getNullDateFunction(),
+				_getEscapeFunction(), _getNotEqualsBlankStringFunction()));
 
 		if (!db.isSupportsStringCaseSensitiveQuery()) {
-			functions = ArrayUtil.append(functions, getLowerFunction());
+			functions.add(getLowerFunction());
 		}
 
 		setFunctions(functions);

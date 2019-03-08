@@ -15,9 +15,11 @@
 package com.liferay.portal.dao.sql.transformer;
 
 import com.liferay.portal.kernel.dao.db.DB;
-import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.function.Function;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -30,16 +32,16 @@ public class PostgreSQLTransformerLogic extends BaseSQLTransformerLogic {
 	public PostgreSQLTransformerLogic(DB db) {
 		super(db);
 
-		Function[] functions = {
-			getBitwiseCheckFunction(), getBooleanFunction(),
-			getCastClobTextFunction(), getCastLongFunction(),
-			getCastTextFunction(), getDropTableIfExistsTextFunction(),
-			getInstrFunction(), getIntegerDivisionFunction(),
-			_getNegativeComparisonFunction(), _getNullDateFunction()
-		};
+		List<Function<String, String>> functions = new ArrayList<>(
+			Arrays.asList(
+				getBitwiseCheckFunction(), getBooleanFunction(),
+				getCastClobTextFunction(), getCastLongFunction(),
+				getCastTextFunction(), getDropTableIfExistsTextFunction(),
+				getInstrFunction(), getIntegerDivisionFunction(),
+				_getNegativeComparisonFunction(), _getNullDateFunction()));
 
 		if (!db.isSupportsStringCaseSensitiveQuery()) {
-			functions = ArrayUtil.append(functions, getLowerFunction());
+			functions.add(getLowerFunction());
 		}
 
 		setFunctions(functions);

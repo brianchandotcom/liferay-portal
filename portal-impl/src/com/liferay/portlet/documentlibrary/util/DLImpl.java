@@ -36,7 +36,6 @@ import com.liferay.document.library.kernel.util.comparator.RepositoryModelTitleC
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.configuration.Filter;
-import com.liferay.portal.kernel.exception.NoSuchLayoutException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -704,31 +703,29 @@ public class DLImpl implements DL {
 		AssetRenderer assetRenderer,
 		LiferayPortletRequest liferayPortletRequest) {
 
-		if (_serviceTrackerList.size() <= 0) {
-			return null;
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)liferayPortletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		PortletLayoutFinder.Result result = null;
+
+		for (PortletLayoutFinder portletLayoutFinder : _serviceTrackerList) {
+			try {
+				result = portletLayoutFinder.find(
+					themeDisplay, assetRenderer.getGroupId());
+
+				if (result != null) {
+					break;
+				}
+			}
+			catch (PortalException pe) {
+				if (_log.isDebugEnabled()) {
+					_log.debug(pe, pe);
+				}
+			}
 		}
 
-		try {
-			PortletLayoutFinder portletLayoutFinder = _serviceTrackerList.get(
-				0);
-
-			ThemeDisplay themeDisplay =
-				(ThemeDisplay)liferayPortletRequest.getAttribute(
-					WebKeys.THEME_DISPLAY);
-
-			PortletLayoutFinder.Result result = portletLayoutFinder.find(
-				themeDisplay, assetRenderer.getGroupId());
-
-			return result;
-		}
-		catch (NoSuchLayoutException nsle) {
-			return null;
-		}
-		catch (Exception e) {
-			_log.error(e, e);
-		}
-
-		return null;
+		return result;
 	}
 
 	@Override

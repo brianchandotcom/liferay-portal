@@ -172,7 +172,7 @@ definition {
 			webContentTitle = "Web Content Title"
 		);
 
-		Alert.viewSuccessMessage();
+		PortletEntry.publish();
 
 		Navigator.gotoSitePage(pageName = "Site Page Name", siteName = "Test Site Name");
 

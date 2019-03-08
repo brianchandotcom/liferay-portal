@@ -861,8 +861,6 @@ definition {
 			locator1 = "WCEditWebContent#DISPLAY_PAGE_SPECIFIC_SELECTION",
 			value1 = "${pageName}"
 		);
-
-		Button.clickPublish();
 	}
 
 	macro editDisplayPagePGViaAP {

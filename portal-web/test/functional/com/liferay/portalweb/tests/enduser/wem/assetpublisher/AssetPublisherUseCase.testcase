@@ -2131,6 +2131,8 @@ definition {
 			pageType = "Public Pages"
 		);
 
+		PortletEntry.publish();
+
 		Navigator.gotoPage(pageName = "Asset Publisher Page");
 
 		WebContent.viewLinkedAssetPGViaAP(

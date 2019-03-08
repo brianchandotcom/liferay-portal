@@ -95,6 +95,8 @@ definition {
 				pageName = "Display Page Name",
 				pageType = "Display Pages"
 			);
+
+			PortletEntry.publish();
 		}
 
 		task ("Publish the site to live") {
@@ -154,6 +156,8 @@ definition {
 				pageName = "Display Page Name",
 				pageType = "Display Pages"
 			);
+
+			PortletEntry.publish();
 		}
 
 		task ("Assert the web content article displays using the display page in the staging site") {

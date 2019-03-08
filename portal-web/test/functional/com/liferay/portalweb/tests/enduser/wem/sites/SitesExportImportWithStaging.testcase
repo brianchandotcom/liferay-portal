@@ -175,6 +175,8 @@ definition {
 				pageName = "Display Page Name",
 				pageType = "Display Pages"
 			);
+
+			PortletEntry.publish();
 		}
 
 		task ("Publish the first site to live") {

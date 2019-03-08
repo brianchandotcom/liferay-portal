@@ -864,6 +864,8 @@ definition {
 			pageType = "Public Pages"
 		);
 
+		PortletEntry.publish();
+
 		Navigator.openStagingSiteURL(siteName = "Site Name");
 
 		Staging.gotoPublishToLive();

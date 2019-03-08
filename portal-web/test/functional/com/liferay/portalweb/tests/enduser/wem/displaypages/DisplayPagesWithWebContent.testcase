@@ -89,6 +89,8 @@ definition {
 				pageName = "Display Page Name",
 				pageType = "Display Pages"
 			);
+
+			PortletEntry.publish();
 		}
 
 		task ("View the web content through the display page") {
@@ -196,6 +198,8 @@ definition {
 				pageName = "Display Page Name",
 				pageType = "Display Pages"
 			);
+
+			PortletEntry.publish();
 		}
 
 		task ("View the web content through the display page") {
@@ -514,6 +518,8 @@ definition {
 				pageName = "Display Page Name",
 				pageType = "Display Pages"
 			);
+
+			PortletEntry.publish();
 		}
 
 		task ("View page source of the web content article's friendly URL page") {
@@ -548,6 +554,8 @@ definition {
 				pageName = "Display Page Name",
 				pageType = "Display Pages"
 			);
+
+			PortletEntry.publish();
 		}
 
 		task ("Add a widget page to the site") {
@@ -612,6 +620,8 @@ definition {
 				pageName = "Display Page Name",
 				pageType = "Display Pages"
 			);
+
+			PortletEntry.publish();
 		}
 
 		task ("Navigate to the web content article's friendly URL") {
@@ -691,6 +701,8 @@ definition {
 				pageName = "Non-Default Display Page",
 				pageType = "Display Pages"
 			);
+
+			PortletEntry.publish();
 		}
 
 		task ("Navigate to the web content article's friendly URL") {

@@ -427,6 +427,8 @@ definition {
 				pageName = "Display Page Name",
 				pageType = "Display Pages"
 			);
+
+			PortletEntry.publish();
 		}
 
 		task ("Assert the display page cannot be deleted") {

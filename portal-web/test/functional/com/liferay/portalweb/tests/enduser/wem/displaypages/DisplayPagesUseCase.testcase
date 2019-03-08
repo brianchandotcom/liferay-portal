@@ -110,6 +110,8 @@ definition {
 				pageName = "Display Page Name",
 				pageType = "Display Pages"
 			);
+
+			PortletEntry.publish();
 		}
 
 		task ("Assert the super admin's name and profile image appear in the display page") {
@@ -223,6 +225,8 @@ definition {
 				pageName = "Display Page Name",
 				pageType = "Display Pages"
 			);
+
+			PortletEntry.publish();
 		}
 
 		task ("Assert the super admin name and profile image appear in the display page") {
@@ -353,6 +357,8 @@ definition {
 				pageName = "Display Page Name",
 				pageType = "Display Pages"
 			);
+
+			PortletEntry.publish();
 		}
 
 		task ("Add a page to the site") {

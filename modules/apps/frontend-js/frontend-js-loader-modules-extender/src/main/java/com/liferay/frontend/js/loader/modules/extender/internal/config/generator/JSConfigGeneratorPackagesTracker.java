@@ -41,7 +41,7 @@ import org.osgi.util.tracker.ServiceTrackerCustomizer;
  * @author Carlos Sierra Andrés
  */
 @Component(
-	configurationPid = "com.liferay.frontend.js.loader.modules.extender.internal.configuration.Details",
+	configurationPid = "com.liferay.frontend.js.loader.modules.extender.internal.Details",
 	immediate = true, service = JSConfigGeneratorPackagesTracker.class
 )
 public class JSConfigGeneratorPackagesTracker

@@ -335,6 +335,39 @@ public class SharingEntryLocalServiceImpl
 	}
 
 	/**
+	 * Returns the resource's sharing entries. The class name ID and class
+	 * primary key identify the resource's type and instance, respectively.
+	 *
+	 * @param  classNameId the resource's class name ID
+	 * @param  classPK the class primary key of the resource
+	 * @param  start the range's lower bound
+	 * @param  end the range's upper bound (not inclusive)
+	 * @return the sharing entries
+	 * @review
+	 */
+	@Override
+	public List<SharingEntry> getSharingEntries(
+		long classNameId, long classPK, int start, int end) {
+
+		return sharingEntryPersistence.findByC_C(
+			classNameId, classPK, start, end);
+	}
+
+	/**
+	 * Returns the resource's sharing entries count. The class name ID and class
+	 * primary key identify the resource's type and instance, respectively.
+	 *
+	 * @param  classNameId the resource's class name ID
+	 * @param  classPK the class primary key of the resource
+	 * @return the sharing entries count
+	 * @review
+	 */
+	@Override
+	public int getSharingEntriesCount(long classNameId, long classPK) {
+		return sharingEntryPersistence.countByC_C(classNameId, classPK);
+	}
+
+	/**
 	 * Returns the sharing entry for the resource shared with the user. The
 	 * class name ID and class primary key identify the resource's type and
 	 * instance, respectively.

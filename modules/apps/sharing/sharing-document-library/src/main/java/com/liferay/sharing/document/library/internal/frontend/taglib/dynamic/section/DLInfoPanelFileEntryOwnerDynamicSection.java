@@ -77,26 +77,24 @@ public class DLInfoPanelFileEntryOwnerDynamicSection implements DynamicSection {
 		FileEntry fileEntry = (FileEntry)request.getAttribute(
 			"info_panel.jsp-fileEntry");
 
-		int countSharingEntryToUserIds =
-			_sharingEntryLocalService.getFromUserSharingEntriesCount(
-				themeDisplay.getUserId(), classNameId,
-				fileEntry.getFileEntryId());
+		int sharingEntriesCount =
+			_sharingEntryLocalService.getSharingEntriesCount(
+				classNameId, fileEntry.getFileEntryId());
 
-		if (countSharingEntryToUserIds == 0) {
+		if (sharingEntriesCount == 0) {
 			return sb;
 		}
 
 		request.setAttribute(
-			"info_panel_file_entry.jsp-countSharingEntryToUserIds",
-			countSharingEntryToUserIds);
+			"info_panel_file_entry.jsp-sharingEntriesCount",
+			sharingEntriesCount);
 
-		List<SharingEntry> fromUserSharingEntries =
-			_sharingEntryLocalService.getFromUserSharingEntries(
-				themeDisplay.getUserId(), classNameId,
-				fileEntry.getFileEntryId(), 0, 4);
+		List<SharingEntry> sharingEntries =
+			_sharingEntryLocalService.getSharingEntries(
+				classNameId, fileEntry.getFileEntryId(), 0, 4);
 
 		Stream<SharingEntry> fromUserSharingEntriesStream =
-			fromUserSharingEntries.stream();
+			sharingEntries.stream();
 
 		List<User> sharingEntryToUsers = fromUserSharingEntriesStream.map(
 			SharingEntryModel::getToUserId

@@ -93,10 +93,9 @@ public class DLInfoPanelFileEntryOwnerDynamicSection implements DynamicSection {
 			_sharingEntryLocalService.getSharingEntries(
 				classNameId, fileEntry.getFileEntryId(), 0, 4);
 
-		Stream<SharingEntry> fromUserSharingEntriesStream =
-			sharingEntries.stream();
+		Stream<SharingEntry> stream = sharingEntries.stream();
 
-		List<User> sharingEntryToUsers = fromUserSharingEntriesStream.map(
+		List<User> sharingEntryToUsers = stream.map(
 			SharingEntryModel::getToUserId
 		).map(
 			_userLocalService::fetchUserById
@@ -115,8 +114,6 @@ public class DLInfoPanelFileEntryOwnerDynamicSection implements DynamicSection {
 				"/META-INF/resources/dynamic_section" +
 					"/info_panel_file_entry.jsp");
 
-		String string = null;
-
 		try (ByteArrayOutputStream outputStream = new ByteArrayOutputStream()) {
 			HttpServletResponse httpServletResponse = new PipingServletResponse(
 				(HttpServletResponse)pageContext.getResponse(), outputStream);
@@ -124,13 +121,11 @@ public class DLInfoPanelFileEntryOwnerDynamicSection implements DynamicSection {
 			requestDispatcher.include(
 				pageContext.getRequest(), httpServletResponse);
 
-			string = new String(outputStream.toByteArray());
+			return new StringBundler(new String(outputStream.toByteArray()));
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
-
-		return new StringBundler(string);
 	}
 
 	@Reference

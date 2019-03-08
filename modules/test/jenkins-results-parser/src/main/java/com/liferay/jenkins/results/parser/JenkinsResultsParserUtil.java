@@ -750,6 +750,21 @@ public class JenkinsResultsParserUtil {
 		}
 	}
 
+	public static String getCanonicalPath(File file) {
+		try {
+			String canonicalPath = file.getCanonicalPath();
+
+			if (isWindows()) {
+				canonicalPath = canonicalPath.replaceAll("\\\\", "/");
+			}
+
+			return canonicalPath;
+		}
+		catch (IOException ioe) {
+			throw new RuntimeException(ioe);
+		}
+	}
+
 	public static List<File> getDirectoriesContainingFiles(
 		List<File> directories, List<File> files) {
 

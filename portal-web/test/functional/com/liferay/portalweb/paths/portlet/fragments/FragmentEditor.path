@@ -34,13 +34,13 @@
 	<td></td>
 </tr>
 <tr>
-	<td>LFR-EDITABLE</td>
-	<td>//lfr-editable[contains(@type,'${key_type}')]</td>
+	<td>PREVIEW_IFRAME</td>
+	<td>//iframe[@class='fragment-preview__content']</td>
 	<td></td>
 </tr>
 <tr>
-	<td>PREVIEW_IFRAME</td>
-	<td>//iframe[@class='fragment-preview__content']</td>
+	<td>FRAGMENTS_CLI_LINK</td>
+	<td>//a[@title='Fragments CLI']</td>
 	<td></td>
 </tr>
 </tbody>

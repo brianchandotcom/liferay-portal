@@ -205,4 +205,24 @@ definition {
 			SelectFrameTop();
 		}
 	}
+
+	@description = "This is a test for LPS-89251. When creating fragments there should be a visible reference to the Liferay Fragments CLI."
+	@priority = "4"
+	test ViewReferenceToFragmentsCLI {
+		task ("Click on the Fragments CLI link") {
+			Click(
+				locator1 = "FragmentEditor#FRAGMENTS_CLI_LINK"
+			);
+		}
+
+		task ("Assert user is taken to the the Liferay Fragments CLI documentation page") {
+			SelectWindow.selectPopUp(
+				locator1 = "null"
+			);
+
+			AssertLocation(
+				value1 = "https://github.com/liferay/generator-liferay-fragments#liferay-fragments-cli"
+			);
+		}
+	}
 }

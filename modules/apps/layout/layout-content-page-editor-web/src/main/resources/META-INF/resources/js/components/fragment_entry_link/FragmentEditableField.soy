@@ -75,9 +75,7 @@
 		tabindex="0"
 		type="{$type}"
 	>
-		{if $type == 'image' and $editableValues.mappedField
-			and $editableValues.config and $editableValues.config.imageLink
-			and $editableValues.config.imageLink != ''}
+		{if ($type == 'image') and $editableValues.mappedField and $editableValues.config and $editableValues.config.imageLink}
 			{let $linkAttributes kind="attributes"}
 				href="{$editableValues.config.imageLink}"
 				target="{$editableValues.config.imageTarget}"

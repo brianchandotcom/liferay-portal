@@ -35,6 +35,8 @@ portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(String.valueOf(renderResponse.createRenderURL()));
 
 renderResponse.setTitle(passwordPolicy.isNew() ? LanguageUtil.get(request, "new-password-policy") : passwordPolicy.getName());
+
+PasswordPoliciesConfiguration passwordPoliciesConfiguration = (PasswordPoliciesConfiguration)request.getAttribute(PasswordPoliciesConfiguration.class.getName());
 %>
 
 <liferay-util:include page="/edit_password_policy_tabs.jsp" servletContext="<%= application %>" />

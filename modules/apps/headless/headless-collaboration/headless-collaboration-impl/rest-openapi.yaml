@@ -159,39 +159,6 @@ components:
                     format: uri
                     type: string
             type: object
-        Folder:
-            description: https://www.schema.org/Folder
-            properties:
-                dateCreated:
-                    format: date-time
-                    type: string
-                dateModified:
-                    format: date-time
-                    type: string
-                description:
-                    type: string
-                parentFolder:
-                    properties:
-                        folderId:
-                            format: int64
-                            type: integer
-                        folderName:
-                            type: string
-                    type: object
-                parentFolderId:
-                    format: int64
-                    type: integer
-                    writeOnly: true
-                hasFolders:
-                    type: boolean
-                hasKnowledgeBaseArticles:
-                    type: boolean
-                id:
-                    format: int64
-                    type: integer
-                name:
-                    type: string
-            type: object
         KnowledgeBaseArticle:
             description: https://www.schema.org/KnowledgeBaseArticle
             properties:
@@ -276,6 +243,39 @@ components:
                 sizeInBytes:
                     type: number
                 title:
+                    type: string
+            type: object
+        KnowledgeBaseFolder:
+            description: https://www.schema.org/KnowledgeBaseFolder
+            properties:
+                dateCreated:
+                    format: date-time
+                    type: string
+                dateModified:
+                    format: date-time
+                    type: string
+                description:
+                    type: string
+                parentFolder:
+                    properties:
+                        folderId:
+                            format: int64
+                            type: integer
+                        folderName:
+                            type: string
+                    type: object
+                parentFolderId:
+                    format: int64
+                    type: integer
+                    writeOnly: true
+                hasFolders:
+                    type: boolean
+                hasKnowledgeBaseArticles:
+                    type: boolean
+                id:
+                    format: int64
+                    type: integer
+                name:
                     type: string
             type: object
 info:
@@ -724,7 +724,7 @@ paths:
                                 $ref: "#/components/schemas/BlogPosting"
                     description: ""
             tags: ["BlogPosting"]
-    "/content-space/{content-space-id}/folders":
+    "/content-space/{content-space-id}/knowledge-base-folders":
         get:
             parameters:
                 -   in: query
@@ -747,10 +747,10 @@ paths:
                         application/json:
                             schema:
                                 items:
-                                    $ref: "#/components/schemas/Folder"
+                                    $ref: "#/components/schemas/KnowledgeBaseFolder"
                                 type: array
                     description: ""
-            tags: ["Folder"]
+            tags: ["KnowledgeBaseFolder"]
         post:
             parameters:
                 -   in: path
@@ -763,15 +763,15 @@ paths:
                 content:
                     application/json:
                         schema:
-                            $ref: "#/components/schemas/Folder"
+                            $ref: "#/components/schemas/KnowledgeBaseFolder"
             responses:
                 200:
                     content:
                         application/json:
                             schema:
-                                $ref: "#/components/schemas/Folder"
+                                $ref: "#/components/schemas/KnowledgeBaseFolder"
                     description: ""
-            tags: ["Folder"]
+            tags: ["KnowledgeBaseFolder"]
     "/content-space/{content-space-id}/knowledge-base-articles":
         get:
             parameters:
@@ -820,175 +820,6 @@ paths:
                                 $ref: "#/components/schemas/KnowledgeBaseArticle"
                     description: ""
             tags: ["KnowledgeBaseArticle"]
-    "/folders/{folder-id}":
-        delete:
-            parameters:
-                -   in: path
-                    name: folder-id
-                    required: true
-                    schema:
-                        format: int64
-                        type: integer
-            responses:
-                204:
-                    content:
-                        application/json: {}
-                    description: ""
-            tags: ["Folder"]
-        get:
-            parameters:
-                -   in: path
-                    name: folder-id
-                    required: true
-                    schema:
-                        format: int64
-                        type: integer
-            responses:
-                200:
-                    content:
-                        application/json:
-                            schema:
-                                $ref: "#/components/schemas/Folder"
-                    description: ""
-            tags: ["Folder"]
-        patch:
-            parameters:
-                -   in: path
-                    name: folder-id
-                    required: true
-                    schema:
-                        format: int64
-                        type: integer
-            requestBody:
-                content:
-                    application/json:
-                        schema:
-                            $ref: "#/components/schemas/Folder"
-            responses:
-                200:
-                    content:
-                        application/json:
-                            schema:
-                                $ref: "#/components/schemas/Folder"
-                    description: ""
-            tags: ["Folder"]
-        put:
-            parameters:
-                -   in: path
-                    name: folder-id
-                    required: true
-                    schema:
-                        format: int64
-                        type: integer
-            requestBody:
-                content:
-                    application/json:
-                        schema:
-                            $ref: "#/components/schemas/Folder"
-            responses:
-                200:
-                    content:
-                        application/json:
-                            schema:
-                                $ref: "#/components/schemas/Folder"
-                    description: ""
-            tags: ["Folder"]
-    "/folders/{folder-id}/knowledge-base-articles":
-        get:
-            parameters:
-                -   in: query
-                    name: page
-                    schema:
-                        type: integer
-                -   in: query
-                    name: pageSize
-                    schema:
-                        type: integer
-                -   in: path
-                    name: folder-id
-                    required: true
-                    schema:
-                        format: int64
-                        type: integer
-            responses:
-                200:
-                    content:
-                        application/json:
-                            schema:
-                                items:
-                                    $ref: "#/components/schemas/KnowledgeBaseArticle"
-                                type: array
-                    description: ""
-            tags: ["KnowledgeBaseArticle"]
-        post:
-            parameters:
-                -   in: path
-                    name: folder-id
-                    required: true
-                    schema:
-                        format: int64
-                        type: integer
-            requestBody:
-                content:
-                    application/json:
-                        schema:
-                            $ref: "#/components/schemas/KnowledgeBaseArticle"
-            responses:
-                200:
-                    content:
-                        application/json:
-                            schema:
-                                $ref: "#/components/schemas/KnowledgeBaseArticle"
-                    description: ""
-            tags: ["KnowledgeBaseArticle"]
-    "/folders/{folder-id}/folders":
-        get:
-            parameters:
-                -   in: query
-                    name: page
-                    schema:
-                        type: integer
-                -   in: query
-                    name: pageSize
-                    schema:
-                        type: integer
-                -   in: path
-                    name: folder-id
-                    required: true
-                    schema:
-                        format: int64
-                        type: integer
-            responses:
-                200:
-                    content:
-                        application/json:
-                            schema:
-                                items:
-                                    $ref: "#/components/schemas/Folder"
-                                type: array
-                    description: ""
-            tags: ["Folder"]
-        post:
-            parameters:
-                -   in: path
-                    name: folder-id
-                    required: true
-                    schema:
-                        format: int64
-                        type: integer
-            requestBody:
-                content:
-                    application/json:
-                        schema:
-                            $ref: "#/components/schemas/Folder"
-            responses:
-                200:
-                    content:
-                        application/json:
-                            schema:
-                                $ref: "#/components/schemas/Folder"
-                    description: ""
-            tags: ["Folder"]
     "/knowledge-base-articles/{knowledge-base-article-id}":
         delete:
             parameters:
@@ -1062,83 +893,6 @@ paths:
                                 $ref: "#/components/schemas/KnowledgeBaseArticle"
                     description: ""
             tags: ["KnowledgeBaseArticle"]
-    "/knowledge-base-articles/{knowledge-base-article-id}/attachments":
-        get:
-            parameters:
-                -   in: path
-                    name: knowledge-base-article-id
-                    required: true
-                    schema:
-                        format: int64
-                        type: integer
-            responses:
-                200:
-                    content:
-                        application/json:
-                            schema:
-                                items:
-                                    $ref: "#/components/schemas/KnowledgeBaseAttachment"
-                                type: array
-                    description: ""
-            tags: ["KnowledgeBaseAttachment"]
-        post:
-            parameters:
-                -   in: path
-                    name: knowledge-base-article-id
-                    required: true
-                    schema:
-                        format: int64
-                        type: integer
-            requestBody:
-                content:
-                    multipart/form-data:
-                        schema:
-                            properties:
-                                knowledgeBaseAttachment:
-                                    $ref: "#/components/schemas/KnowledgeBaseAttachment"
-                                file:
-                                    format: binary
-                                    type: string
-                            type: object
-            responses:
-                200:
-                    content:
-                        application/json:
-                            schema:
-                                $ref: "#/components/schemas/KnowledgeBaseAttachment"
-                    description: ""
-            tags: ["KnowledgeBaseAttachment"]
-    "/attachments/{attachment-id}":
-        delete:
-            parameters:
-                -   in: path
-                    name: attachment-id
-                    required: true
-                    schema:
-                        format: int64
-                        type: integer
-            responses:
-                204:
-                    content:
-                        application/json: {}
-                    description: ""
-            tags: ["KnowledgeBaseAttachment"]
-        get:
-            parameters:
-                -   in: path
-                    name: attachment-id
-                    required: true
-                    schema:
-                        format: int64
-                        type: integer
-            responses:
-                200:
-                    content:
-                        application/json:
-                            schema:
-                                $ref: "#/components/schemas/KnowledgeBaseAttachment"
-                    description: ""
-            tags: ["KnowledgeBaseAttachment"]
     "/knowledge-base-articles/{knowledge-base-article-id}/knowledge-base-articles":
         get:
             parameters:
@@ -1187,3 +941,249 @@ paths:
                                 $ref: "#/components/schemas/KnowledgeBaseArticle"
                     description: ""
             tags: ["KnowledgeBaseArticle"]
+    "/knowledge-base-articles/{knowledge-base-article-id}/knowledge-base-attachments":
+        get:
+            parameters:
+                -   in: path
+                    name: knowledge-base-article-id
+                    required: true
+                    schema:
+                        format: int64
+                        type: integer
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/KnowledgeBaseAttachment"
+                                type: array
+                    description: ""
+            tags: ["KnowledgeBaseAttachment"]
+        post:
+            parameters:
+                -   in: path
+                    name: knowledge-base-article-id
+                    required: true
+                    schema:
+                        format: int64
+                        type: integer
+            requestBody:
+                content:
+                    multipart/form-data:
+                        schema:
+                            properties:
+                                knowledgeBaseAttachment:
+                                    $ref: "#/components/schemas/KnowledgeBaseAttachment"
+                                file:
+                                    format: binary
+                                    type: string
+                            type: object
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/KnowledgeBaseAttachment"
+                    description: ""
+            tags: ["KnowledgeBaseAttachment"]
+    "/knowledge-base-attachments/{knowledge-base-attachment-id}":
+        delete:
+            parameters:
+                -   in: path
+                    name: knowledge-base-attachment-id
+                    required: true
+                    schema:
+                        format: int64
+                        type: integer
+            responses:
+                204:
+                    content:
+                        application/json: {}
+                    description: ""
+            tags: ["KnowledgeBaseAttachment"]
+        get:
+            parameters:
+                -   in: path
+                    name: knowledge-base-attachment-id
+                    required: true
+                    schema:
+                        format: int64
+                        type: integer
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/KnowledgeBaseAttachment"
+                    description: ""
+            tags: ["KnowledgeBaseAttachment"]
+    "/knowledge-base-folders/{knowledge-base-folder-id}":
+        delete:
+            parameters:
+                -   in: path
+                    name: knowledge-base-folder-id
+                    required: true
+                    schema:
+                        format: int64
+                        type: integer
+            responses:
+                204:
+                    content:
+                        application/json: {}
+                    description: ""
+            tags: ["KnowledgeBaseFolder"]
+        get:
+            parameters:
+                -   in: path
+                    name: knowledge-base-folder-id
+                    required: true
+                    schema:
+                        format: int64
+                        type: integer
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/KnowledgeBaseFolder"
+                    description: ""
+            tags: ["KnowledgeBaseFolder"]
+        patch:
+            parameters:
+                -   in: path
+                    name: knowledge-base-folder-id
+                    required: true
+                    schema:
+                        format: int64
+                        type: integer
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/KnowledgeBaseFolder"
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/KnowledgeBaseFolder"
+                    description: ""
+            tags: ["KnowledgeBaseFolder"]
+        put:
+            parameters:
+                -   in: path
+                    name: knowledge-base-folder-id
+                    required: true
+                    schema:
+                        format: int64
+                        type: integer
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/KnowledgeBaseFolder"
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/KnowledgeBaseFolder"
+                    description: ""
+            tags: ["KnowledgeBaseFolder"]
+    "/knowledge-base-folders/{knowledge-base-folder-id}/knowledge-base-articles":
+        get:
+            parameters:
+                -   in: query
+                    name: page
+                    schema:
+                        type: integer
+                -   in: query
+                    name: pageSize
+                    schema:
+                        type: integer
+                -   in: path
+                    name: knowledge-base-folder-id
+                    required: true
+                    schema:
+                        format: int64
+                        type: integer
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/KnowledgeBaseArticle"
+                                type: array
+                    description: ""
+            tags: ["KnowledgeBaseArticle"]
+        post:
+            parameters:
+                -   in: path
+                    name: knowledge-base-folder-id
+                    required: true
+                    schema:
+                        format: int64
+                        type: integer
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/KnowledgeBaseArticle"
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/KnowledgeBaseArticle"
+                    description: ""
+            tags: ["KnowledgeBaseArticle"]
+    "/knowledge-base-folders/{knowledge-base-folder-id}/knowledge-base-folders":
+        get:
+            parameters:
+                -   in: query
+                    name: page
+                    schema:
+                        type: integer
+                -   in: query
+                    name: pageSize
+                    schema:
+                        type: integer
+                -   in: path
+                    name: knowledge-base-folder-id
+                    required: true
+                    schema:
+                        format: int64
+                        type: integer
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/KnowledgeBaseFolder"
+                                type: array
+                    description: ""
+            tags: ["KnowledgeBaseFolder"]
+        post:
+            parameters:
+                -   in: path
+                    name: knowledge-base-folder-id
+                    required: true
+                    schema:
+                        format: int64
+                        type: integer
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/KnowledgeBaseFolder"
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/KnowledgeBaseFolder"
+                    description: ""
+            tags: ["KnowledgeBaseFolder"]

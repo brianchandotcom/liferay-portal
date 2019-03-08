@@ -3,7 +3,7 @@ import Options from 'source/Options/Options.es';
 let component;
 const spritemap = 'icons.svg';
 
-const valueOptions = {
+const optionsValue = {
 	en_US: [
 		{
 			label: 'Option 1',
@@ -35,7 +35,7 @@ describe(
 				component = new Options(
 					{
 						spritemap,
-						value: valueOptions
+						value: optionsValue
 					}
 				);
 
@@ -49,7 +49,7 @@ describe(
 				component = new Options(
 					{
 						spritemap,
-						value: valueOptions
+						value: optionsValue
 					}
 				);
 
@@ -62,12 +62,51 @@ describe(
 		);
 
 		it(
+			'.normalizeValue() should not allow options with the same value',
+			() => {
+				component = new Options(
+					{
+						spritemap
+					}
+				);
+
+				const value = {
+					en_US: [
+						{
+							label: 'One',
+							value: 'One'
+						},
+						{
+							label: 'One',
+							value: 'One'
+						}
+					]
+				};
+
+				expect(component.normalizeValue(value, true)).toEqual(
+					{
+						en_US: [
+							{
+								label: 'One',
+								value: 'One'
+							},
+							{
+								label: 'One',
+								value: 'One1'
+							}
+						]
+					}
+				);
+			}
+		);
+
+		it(
 			'should allow the user to order the fieldName options by dragging and dropping the options',
 			() => {
 				component = new Options(
 					{
 						spritemap,
-						value: valueOptions
+						value: optionsValue
 					}
 				);
 

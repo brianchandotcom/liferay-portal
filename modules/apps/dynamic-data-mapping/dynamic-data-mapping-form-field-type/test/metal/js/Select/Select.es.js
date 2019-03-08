@@ -1,5 +1,4 @@
 import Select from 'source/Select/Select.es';
-import {dom as MetalTestUtil} from 'metal-dom';
 
 let component;
 const spritemap = 'icons.svg';
@@ -296,83 +295,12 @@ describe(
 							item: {
 								value: 'Liferay'
 							}
-						}
+						},
+						preventDefault: () => 0
 					}
 				);
 
 				expect(spy).toHaveBeenCalled();
-			}
-		);
-
-		it(
-			'should open dropdown when select is clicked',
-			() => {
-				component = new Select(
-					{
-						dataSourceType: 'manual',
-						options: [
-							{
-								checked: false,
-								disabled: false,
-								id: 'id',
-								inline: false,
-								label: 'label',
-								name: 'name',
-								showLabel: true,
-								value: 'item'
-							}
-						],
-						spritemap
-					}
-				);
-
-				MetalTestUtil.triggerEvent(
-					component.element.querySelector('.select-field-trigger'),
-					'click',
-					{}
-				);
-				expect(component.getState().open).toBe(true);
-			}
-		);
-
-		it(
-			'should propagate the field edit event',
-			() => {
-				component = new Select(
-					{
-						dataSourceType: 'manual',
-						options: [
-							{
-								checked: false,
-								disabled: false,
-								id: 'id',
-								inline: false,
-								label: 'label',
-								name: 'name',
-								showLabel: true,
-								value: 'item'
-							}
-						],
-						spritemap
-					}
-				);
-
-				const spy = jest.spyOn(component, 'emit');
-
-				jest.runAllTimers();
-
-				component._handleItemClicked(
-					{
-						data: {
-							item: {
-								value: 'Liferay'
-							}
-						}
-					}
-				);
-
-				expect(spy).toHaveBeenCalled();
-				expect(spy).toHaveBeenCalledWith('fieldEdited', expect.any(Object));
 			}
 		);
 

@@ -14,6 +14,7 @@ const EvaluatorComponent = WithEvaluator(
 );
 const fieldInstance = {
 	fieldName: 'Checkbox',
+	isDisposed: () => false,
 	value: false
 };
 

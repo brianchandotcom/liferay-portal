@@ -23,6 +23,10 @@ public interface AssetDisplayContributorTracker {
 
 	public AssetDisplayContributor getAssetDisplayContributor(String className);
 
+	public AssetDisplayContributor
+		getAssetDisplayContributorByFriendlyURLShortcut(
+			String friendlyURLShortcut);
+
 	public List<AssetDisplayContributor> getAssetDisplayContributors();
 
 }

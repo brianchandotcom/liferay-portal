@@ -82,7 +82,7 @@ class StateSyncronizer extends Component {
 
 		const visitor = new PagesVisitor(state.pages);
 
-		let pages = visitor.mapPages(
+		const pages = visitor.mapPages(
 			page => {
 				return {
 					...page,
@@ -106,7 +106,7 @@ class StateSyncronizer extends Component {
 									...field.settingsContext,
 									pages: this._filterEmptyOptions(field.settingsContext.pages)
 								}
-							}
+							};
 						}
 
 						return field;
@@ -132,7 +132,7 @@ class StateSyncronizer extends Component {
 					field = {
 						...field,
 						value: newValue
-					}
+					};
 				}
 
 				return field;

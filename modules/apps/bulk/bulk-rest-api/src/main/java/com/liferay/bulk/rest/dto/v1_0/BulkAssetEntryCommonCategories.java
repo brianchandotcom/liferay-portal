@@ -44,7 +44,7 @@ public class BulkAssetEntryCommonCategories {
 		return status;
 	}
 
-	public AssetVocabulary[] getVocabularies() {
+	public Vocabulary[] getVocabularies() {
 		return vocabularies;
 	}
 
@@ -80,14 +80,9 @@ public class BulkAssetEntryCommonCategories {
 		}
 	}
 
-	public void setVocabularies(AssetVocabulary[] vocabularies) {
-		this.vocabularies = vocabularies;
-	}
-
 	@JsonIgnore
 	public void setVocabularies(
-		UnsafeSupplier<AssetVocabulary[], Exception>
-			vocabulariesUnsafeSupplier) {
+		UnsafeSupplier<Vocabulary[], Exception> vocabulariesUnsafeSupplier) {
 
 		try {
 			vocabularies = vocabulariesUnsafeSupplier.get();
@@ -95,6 +90,10 @@ public class BulkAssetEntryCommonCategories {
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
+	}
+
+	public void setVocabularies(Vocabulary[] vocabularies) {
+		this.vocabularies = vocabularies;
 	}
 
 	public String toString() {
@@ -137,6 +136,6 @@ public class BulkAssetEntryCommonCategories {
 
 	@GraphQLField
 	@JsonProperty
-	protected AssetVocabulary[] vocabularies;
+	protected Vocabulary[] vocabularies;
 
 }

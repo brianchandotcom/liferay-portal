@@ -32,52 +32,28 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
-@GraphQLName("AssetVocabulary")
-@XmlRootElement(name = "AssetVocabulary")
-public class AssetVocabulary {
+@GraphQLName("Category")
+@XmlRootElement(name = "Category")
+public class Category {
 
-	public AssetCategory[] getCategories() {
-		return categories;
-	}
-
-	public Boolean getMultiValued() {
-		return multiValued;
+	public Long getCategoryId() {
+		return categoryId;
 	}
 
 	public String getName() {
 		return name;
 	}
 
-	public Long getVocabularyId() {
-		return vocabularyId;
-	}
-
-	public void setCategories(AssetCategory[] categories) {
-		this.categories = categories;
+	public void setCategoryId(Long categoryId) {
+		this.categoryId = categoryId;
 	}
 
 	@JsonIgnore
-	public void setCategories(
-		UnsafeSupplier<AssetCategory[], Exception> categoriesUnsafeSupplier) {
+	public void setCategoryId(
+		UnsafeSupplier<Long, Exception> categoryIdUnsafeSupplier) {
 
 		try {
-			categories = categoriesUnsafeSupplier.get();
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	public void setMultiValued(Boolean multiValued) {
-		this.multiValued = multiValued;
-	}
-
-	@JsonIgnore
-	public void setMultiValued(
-		UnsafeSupplier<Boolean, Exception> multiValuedUnsafeSupplier) {
-
-		try {
-			multiValued = multiValuedUnsafeSupplier.get();
+			categoryId = categoryIdUnsafeSupplier.get();
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
@@ -98,37 +74,14 @@ public class AssetVocabulary {
 		}
 	}
 
-	public void setVocabularyId(Long vocabularyId) {
-		this.vocabularyId = vocabularyId;
-	}
-
-	@JsonIgnore
-	public void setVocabularyId(
-		UnsafeSupplier<Long, Exception> vocabularyIdUnsafeSupplier) {
-
-		try {
-			vocabularyId = vocabularyIdUnsafeSupplier.get();
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
 	public String toString() {
-		StringBundler sb = new StringBundler(17);
+		StringBundler sb = new StringBundler(9);
 
 		sb.append("{");
 
-		sb.append("\"categories\": ");
+		sb.append("\"categoryId\": ");
 
-		sb.append("\"");
-		sb.append(categories);
-		sb.append("\"");
-		sb.append(", ");
-
-		sb.append("\"multiValued\": ");
-
-		sb.append(multiValued);
+		sb.append(categoryId);
 		sb.append(", ");
 
 		sb.append("\"name\": ");
@@ -136,11 +89,6 @@ public class AssetVocabulary {
 		sb.append("\"");
 		sb.append(name);
 		sb.append("\"");
-		sb.append(", ");
-
-		sb.append("\"vocabularyId\": ");
-
-		sb.append(vocabularyId);
 
 		sb.append("}");
 
@@ -149,18 +97,10 @@ public class AssetVocabulary {
 
 	@GraphQLField
 	@JsonProperty
-	protected AssetCategory[] categories;
-
-	@GraphQLField
-	@JsonProperty
-	protected Boolean multiValued;
+	protected Long categoryId;
 
 	@GraphQLField
 	@JsonProperty
 	protected String name;
-
-	@GraphQLField
-	@JsonProperty
-	protected Long vocabularyId;
 
 }

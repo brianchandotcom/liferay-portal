@@ -1231,6 +1231,10 @@ public class TopLevelBuild extends BaseBuild {
 		Collections.sort(stopwatchRecords);
 
 		for (StopwatchRecord stopwatchRecord : stopwatchRecords) {
+			if (stopwatchRecord.getDuration() == null) {
+				continue;
+			}
+
 			Dom4JUtil.addToElement(
 				topLevelTableElement,
 				stopwatchRecord.getJenkinsReportTableRowElement());
@@ -1624,20 +1628,32 @@ public class TopLevelBuild extends BaseBuild {
 		}
 
 		protected Element getJenkinsReportTableRowElement() {
-			Element buildInfoElement = Dom4JUtil.getNewElement(
-				"tr", null, Dom4JUtil.getNewElement("td", null, getName()),
-				Dom4JUtil.getNewElement("td", null, "&nbsp;"),
-				Dom4JUtil.getNewElement("td", null, "&nbsp;"),
+			Element buildInfoElement = Dom4JUtil.getNewElement("tr", null);
+
+			Dom4JUtil.getNewElement("td", buildInfoElement, getName());
+
+			Dom4JUtil.getNewElement("td", buildInfoElement, "&nbsp;");
+
+			Dom4JUtil.getNewElement("td", buildInfoElement, "&nbsp;");
+
+			Dom4JUtil.getNewElement(
+				"td", buildInfoElement,
+				toJenkinsReportDateString(
+					new Date(getStartTimestamp()),
+					getJenkinsReportTimeZoneName()));
+
+			if (getDuration() == null) {
+				Dom4JUtil.getNewElement("td", buildInfoElement, "&nbsp");
+			}
+			else {
 				Dom4JUtil.getNewElement(
-					"td", null,
-					toJenkinsReportDateString(
-						new Date(getStartTimestamp()),
-						getJenkinsReportTimeZoneName())),
-				Dom4JUtil.getNewElement(
-					"td", null,
-					JenkinsResultsParserUtil.toDurationString(getDuration())),
-				Dom4JUtil.getNewElement("td", null, "&nbsp;"),
-				Dom4JUtil.getNewElement("td", null, "&nbsp;"));
+					"td", buildInfoElement,
+					JenkinsResultsParserUtil.toDurationString(getDuration()));
+			}
+
+			Dom4JUtil.getNewElement("td", buildInfoElement, "&nbsp;");
+
+			Dom4JUtil.getNewElement("td", buildInfoElement, "&nbsp;");
 
 			return buildInfoElement;
 		}

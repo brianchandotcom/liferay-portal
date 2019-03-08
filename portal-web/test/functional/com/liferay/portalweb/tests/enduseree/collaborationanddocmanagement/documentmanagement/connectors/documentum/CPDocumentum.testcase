@@ -5,7 +5,7 @@ definition {
 	property dummy.socket.proxy.disabled = "true";
 	property osgi.app.includes = "documentum";
 	property portal.release = "false";
-	property portal.upstream = "true";
+	property portal.upstream = "false";
 	property test.run.environment = "EE";
 	property testray.main.component.name = "Documents Management";
 

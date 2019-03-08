@@ -1,9 +1,9 @@
 import '../FieldBase/FieldBase.es';
-import '../FieldBase/FieldBase.es';
 import '../Text/Text.es';
 import './SelectRegister.soy.js';
 import 'clay-dropdown';
 import 'clay-icon';
+import 'clay-label';
 import Component from 'metal-component';
 import dom from 'metal-dom';
 import Soy from 'metal-soy';
@@ -31,6 +31,15 @@ class Select extends Component {
 		 */
 
 		evaluable: Config.bool().value(false),
+
+		/**
+		 * @default undefined
+		 * @instance
+		 * @memberof Select
+		 * @type {?bool}
+		 */
+
+		expanded: Config.bool().internal().value(false),
 
 		/**
 		 * @default 'string'
@@ -129,10 +138,10 @@ class Select extends Component {
 		 * @default undefined
 		 * @instance
 		 * @memberof Select
-		 * @type {?bool}
+		 * @type {?(string|undefined)}
 		 */
 
-		open: Config.bool().value(false),
+		multiple: Config.bool(),
 
 		/**
 		 * @default Choose an Option
@@ -150,7 +159,7 @@ class Select extends Component {
 		 * @type {?string}
 		 */
 
-		predefinedValue: Config.oneOfType([Config.array(), Config.string()]),
+		predefinedValue: Config.oneOfType([Config.array(), Config.string()]).value([]),
 
 		/**
 		 * @default false
@@ -197,7 +206,8 @@ class Select extends Component {
 
 		strings: Config.object().value(
 			{
-				chooseAnOption: Liferay.Language.get('choose-an-option')
+				chooseAnOption: Liferay.Language.get('choose-an-option'),
+				chooseOptions: Liferay.Language.get('choose-options')
 			}
 		),
 
@@ -222,16 +232,6 @@ class Select extends Component {
 		visible: Config.bool().value(true)
 	};
 
-	willReceiveState({options}) {
-		if (options && options.newVal) {
-			this.setState(
-				{
-					options: options.newVal.filter(({label}) => label)
-				}
-			);
-		}
-	}
-
 	attached() {
 		this._eventHandler = new EventHandler();
 
@@ -254,115 +254,192 @@ class Select extends Component {
 
 	prepareStateForRender(state) {
 		const {predefinedValue, value} = state;
-		const {fixedOptions, options} = this;
+		const {fixedOptions, multiple, options} = this;
 		const predefinedValueArray = this._getArrayValue(predefinedValue);
-		const valueArray = this._getArrayValue(value);
+		let valueArray = this._getArrayValue(value);
 
-		const selectedValue = valueArray[0] || '';
+		valueArray = this._isEmptyArray(valueArray) ? predefinedValueArray : valueArray;
+
+		valueArray = valueArray.filter(
+			(value, index) => {
+				return (multiple ? true : index === 0);
+			}
+		);
 
 		const emptyOption = {
 			label: this.strings.chooseAnOption,
 			value: ''
 		};
 
-		const newOptions = [
-			emptyOption,
+		let newOptions = [
 			...options
 		].map(
-			option => this._markSelectedOption(option, selectedValue)
+			(option, index) => {
+				return {
+					...this._prepareOption(option, valueArray),
+					separator: (fixedOptions.length > 0) && (index === options.length - 1)
+				};
+			}
 		).concat(
-			fixedOptions.map(option => this._markSelectedOption(option, selectedValue))
+			fixedOptions.map(
+				option => this._prepareOption(option, valueArray)
+			)
+		).filter(
+			({value}) => value !== ''
 		);
 
-		if (newOptions.length > 2 && fixedOptions.length) {
-			newOptions[options.length].separator = true;
+		if (!multiple) {
+			newOptions = [emptyOption, ...newOptions];
 		}
 
 		return {
 			...state,
 			options: newOptions,
-			predefinedValue: predefinedValueArray[0] || '',
-			selectedLabel: this._getSelectedLabel(selectedValue),
-			value: selectedValue
+			value: valueArray
 		};
 	}
 
-	_markSelectedOption(option, value) {
+	syncMultiple(multiple) {
+		if (multiple === false) {
+			this.setState(
+				{
+					value: []
+				},
+				() => this.emit(
+					'fieldEdited',
+					{
+						fieldInstance: this,
+						value: []
+					}
+				)
+			);
+		}
+	}
+
+	_prepareOption(option, valueArray) {
+		const {multiple} = this;
+		const included = valueArray.includes(option.value);
+
 		return {
 			...option,
-			active: option.value === value,
-			type: 'item'
+			active: !multiple && included,
+			checked: multiple && included,
+			type: multiple ? 'checkbox' : 'item'
 		};
 	}
 
 	_getArrayValue(value) {
-		let newValue = value;
+		let newValue = value || '';
 
-		if (!Array.isArray(value)) {
-			newValue = [value];
+		if (!Array.isArray(newValue)) {
+			newValue = [newValue];
 		}
 
 		return newValue;
 	}
 
-	_getSelectedLabel(selectedValue) {
-		const {fixedOptions, options, placeholder, predefinedValue} = this;
-		let predefinedLabel;
-		let selectedLabel = placeholder;
-		let selectedOption = options.find(option => option.value === selectedValue);
-
-		if (!selectedOption) {
-			selectedOption = fixedOptions.find(option => option.value === selectedValue);
-		}
-
-		if (selectedOption) {
-			selectedLabel = selectedOption.label;
-		}
-		else if (predefinedValue && predefinedValue.length && predefinedValue[0]) {
-			predefinedLabel = options.find(option => option.value === predefinedValue[0]);
-		}
-
-		if (predefinedLabel) {
-			selectedLabel = predefinedLabel.label;
-		}
-
-		return selectedLabel;
-	}
-
 	_handleDocumentClicked({target}) {
-		if (!this.element.contains(target)) {
-			this.setState({open: false});
+		const {base} = this.refs;
+		const {dropdown} = base.refs;
+		const {menu} = dropdown.refs.portal.refs;
+		const {expanded} = this;
+
+		if (expanded && !this.element.contains(target) && !dropdown.element.contains(target) && !menu.contains(target)) {
+			this.setState({expanded: false});
 		}
 	}
 
-	_handleItemClicked(event) {
-		const value = [event.data.item.value];
+	_isEmptyArray(array) {
+		return array.some(value => value !== '') === false;
+	}
+
+	addValue(value) {
+		const currentValue = this._getArrayValue(this.value);
+		const newValue = [...currentValue];
+
+		if (value) {
+			newValue.push(value);
+		}
+
+		return newValue;
+	}
+
+	deleteValue(value) {
+		const currentValue = this._getArrayValue(this.value);
+
+		return currentValue.filter(v => v !== value);
+	}
+
+	setValue(value) {
+		const newValue = [];
+
+		if (value) {
+			newValue.push(value);
+		}
+
+		return newValue;
+	}
+
+	_handleItemClicked({data, preventDefault}) {
+		const {multiple} = this;
+		const currentValue = this._getArrayValue(this.value);
+		const itemValue = data.item.value;
+
+		let newValue;
+
+		if (multiple) {
+			if (currentValue.includes(itemValue)) {
+				newValue = this.deleteValue(itemValue);
+
+				if (document.activeElement) {
+					document.activeElement.blur();
+				}
+			}
+			else {
+				newValue = this.addValue(itemValue);
+			}
+		}
+		else {
+			newValue = this.setValue(itemValue);
+		}
+
+		preventDefault();
 
 		this.setState(
 			{
-				open: !this.open,
-				value
-			}
-		);
-
-		this.emit(
-			'fieldEdited',
-			{
-				fieldInstance: this,
-				originalEvent: event,
-				value
-			}
+				expanded: multiple,
+				value: newValue
+			},
+			() => this.emit(
+				'fieldEdited',
+				{
+					fieldInstance: this,
+					value: newValue
+				}
+			)
 		);
 	}
 
-	_handleClick() {
-		if (!this.readOnly) {
-			this.setState(
+	_handleLabelClosed({target, preventDefault, stopPropagation}) {
+		const {value} = target.data;
+
+		preventDefault();
+		stopPropagation();
+
+		const newValue = this.deleteValue(value);
+
+		this.setState(
+			{
+				value: newValue
+			},
+			() => this.emit(
+				'fieldEdited',
 				{
-					open: !this.open
+					fieldInstance: this,
+					value: newValue
 				}
-			);
-		}
+			)
+		);
 	}
 }
 

@@ -92,7 +92,7 @@
 						{if $displayValues}
 							{foreach $displayValue in $displayValues}
 								{foreach $option in $options}
-									{if $option.value == $displayValue}
+									{if $option.value == $displayValue and index($displayValue) == 0}
 										<div class="option-selected" title="{$option.label}">{$option.label}</div>
 									{/if}
 								{/foreach}
@@ -329,8 +329,14 @@
 		{let $selected kind="text"}
 			{if $value}
 				{foreach $currentValue in $value}
-					{if $currentValue == $option.value}
-						selected
+					{if $multiple}
+						{if $currentValue == $option.value}
+							selected
+						{/if}
+					{else}
+						{if $currentValue == $option.value and index($currentValue) == 0}
+							selected
+						{/if}
 					{/if}
 				{/foreach}
 			{/if}

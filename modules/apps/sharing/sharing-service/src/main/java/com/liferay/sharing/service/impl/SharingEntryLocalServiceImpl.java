@@ -396,17 +396,6 @@ public class SharingEntryLocalServiceImpl
 	}
 
 	/**
-	 * Returns the number of sharing entries for resources shared with the user.
-	 *
-	 * @param  toUserId the user's ID
-	 * @return the number of sharing entries
-	 */
-	@Override
-	public int getToUserSharingEntriesCount(long toUserId) {
-		return sharingEntryPersistence.countByToUserId(toUserId);
-	}
-
-	/**
 	 * Returns the ordered range of sharing entries for the type of resource
 	 * shared with the user. The class name ID identifies the resource type.
 	 *
@@ -428,6 +417,17 @@ public class SharingEntryLocalServiceImpl
 	}
 
 	/**
+	 * Returns the number of sharing entries for resources shared with the user.
+	 *
+	 * @param  toUserId the user's ID
+	 * @return the number of sharing entries
+	 */
+	@Override
+	public int getToUserSharingEntriesCount(long toUserId) {
+		return sharingEntryPersistence.countByToUserId(toUserId);
+	}
+
+	/**
 	 * Returns the number of sharing entries for the type of resource shared
 	 * with the user. The class name ID identifies the resource type.
 	 *
@@ -437,9 +437,7 @@ public class SharingEntryLocalServiceImpl
 	 * @review
 	 */
 	@Override
-	public int getToUserSharingEntriesCount(
-		long toUserId, long classNameId) {
-
+	public int getToUserSharingEntriesCount(long toUserId, long classNameId) {
 		return sharingEntryFinder.countByToUserId(toUserId, classNameId);
 	}
 

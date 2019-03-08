@@ -28,6 +28,7 @@ import com.liferay.friendly.url.model.FriendlyURLEntry;
 import com.liferay.friendly.url.service.FriendlyURLEntryLocalService;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryService;
+import com.liferay.layout.type.controller.asset.display.internal.constants.AssetDisplayPageFriendlyURLResolverConstants;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutFriendlyURLComposite;
@@ -106,7 +107,8 @@ public class AssetDisplayPageURLTitleFriendlyURLResolver
 
 	@Override
 	public String getURLSeparator() {
-		return "/_";
+		return AssetDisplayPageFriendlyURLResolverConstants.
+			ASSET_DISPLAY_PAGE_URL_TITLE_URL_SEPARATOR;
 	}
 
 	private AssetDisplayContributor _getAssetDisplayContributor(

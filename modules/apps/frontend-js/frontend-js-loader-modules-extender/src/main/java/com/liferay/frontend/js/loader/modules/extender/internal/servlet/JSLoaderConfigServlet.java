@@ -80,7 +80,7 @@ public class JSLoaderConfigServlet extends HttpServlet {
 			_absolutePortalURLBuilderFactory.getAbsolutePortalURLBuilder(
 				request);
 
-		String url = absolutePortalURLBuilder.forWhiteboard(
+		String url = absolutePortalURLBuilder.forWhiteboardServlet(
 			JSResolveModulesServlet.SERVLET_PATTERN
 		).build();
 

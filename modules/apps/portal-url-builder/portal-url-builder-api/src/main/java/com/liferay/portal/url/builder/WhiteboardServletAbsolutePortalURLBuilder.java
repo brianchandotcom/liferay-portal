@@ -20,6 +20,6 @@ package com.liferay.portal.url.builder;
  * @author Iván Zaera Avellón
  * @review
  */
-public interface WhiteboardAbsolutePortalURLBuilder
+public interface WhiteboardServletAbsolutePortalURLBuilder
 	extends BuildableAbsolutePortalURLBuilder {
 }

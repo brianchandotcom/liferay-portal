@@ -47,7 +47,7 @@ public class JSLoaderConfigTopHeadDynamicInclude extends BaseDynamicInclude {
 			_absolutePortalURLBuilderFactory.getAbsolutePortalURLBuilder(
 				request);
 
-		String url = absolutePortalURLBuilder.forWhiteboard(
+		String url = absolutePortalURLBuilder.forWhiteboardServlet(
 			JSLoaderConfigServlet.SERVLET_PATTERN
 		).build();
 

@@ -29,7 +29,7 @@ import com.liferay.portal.url.builder.MainAbsolutePortalURLBuilder;
 import com.liferay.portal.url.builder.ModuleAbsolutePortalURLBuilder;
 import com.liferay.portal.url.builder.PortletDependencyAbsolutePortalURLBuilder;
 import com.liferay.portal.url.builder.ResourceAbsolutePortalURLBuilder;
-import com.liferay.portal.url.builder.WhiteboardAbsolutePortalURLBuilder;
+import com.liferay.portal.url.builder.WhiteboardServletAbsolutePortalURLBuilder;
 
 import java.util.Dictionary;
 
@@ -176,10 +176,10 @@ public class AbsolutePortalURLBuilderImpl implements AbsolutePortalURLBuilder {
 	}
 
 	@Override
-	public WhiteboardAbsolutePortalURLBuilder forWhiteboard(
+	public WhiteboardServletAbsolutePortalURLBuilder forWhiteboardServlet(
 		String servletPattern) {
 
-		return new WhiteboardAbsolutePortalURLBuilder() {
+		return new WhiteboardServletAbsolutePortalURLBuilder() {
 
 			@Override
 			public String build() {

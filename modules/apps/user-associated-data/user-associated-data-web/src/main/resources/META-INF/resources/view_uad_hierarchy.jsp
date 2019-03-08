@@ -19,12 +19,9 @@
 <%
 portletDisplay.setShowBackIcon(true);
 
-PortletURL backURL = renderResponse.createRenderURL();
+LiferayPortletURL usersAdminURL = liferayPortletResponse.createLiferayPortletURL(UsersAdminPortletKeys.USERS_ADMIN, PortletRequest.RENDER_PHASE);
 
-backURL.setParameter("mvcRenderCommandName", "/view_uad_summary");
-backURL.setParameter("p_u_i_d", String.valueOf(selectedUser.getUserId()));
-
-portletDisplay.setURLBack(backURL.toString());
+portletDisplay.setURLBack(usersAdminURL.toString());
 
 renderResponse.setTitle(StringBundler.concat(selectedUser.getFullName(), " - ", LanguageUtil.get(request, "personal-data-erasure")));
 %>

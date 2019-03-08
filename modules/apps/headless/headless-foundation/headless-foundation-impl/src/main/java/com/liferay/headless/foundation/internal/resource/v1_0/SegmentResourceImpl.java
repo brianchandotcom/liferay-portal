@@ -92,6 +92,9 @@ public class SegmentResourceImpl extends BaseSegmentResourceImpl {
 			else if (key.equals("host")) {
 				context.put(Context.URL, value);
 			}
+			else if (key.equals("referer")) {
+				context.put(Context.REFERRER_URL, value);
+			}
 			else if (key.equals("user-agent")) {
 				context.put(Context.USER_AGENT, value);
 			}

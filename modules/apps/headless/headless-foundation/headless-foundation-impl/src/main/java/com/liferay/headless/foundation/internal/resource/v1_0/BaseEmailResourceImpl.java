@@ -61,12 +61,13 @@ public abstract class BaseEmailResourceImpl implements EmailResource {
 			@Parameter(in = ParameterIn.QUERY, name = "pageSize")
 		}
 	)
-	@Path("/emails")
+	@Path("/emails-by/{classNameClassPK}")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "Email")})
-	public Page<Email> getEmailsPage(
-			@PathParam("generic-parent-id") Object genericParentId,
-			@Context Pagination pagination)
+	public Page<Email> getEmailsByClassNameClassPK(
+			@Context Pagination pagination,
+			@Context com.liferay.portal.vulcan.provider.ClassNameClassPK
+				classNameClassPK)
 		throws Exception {
 
 		return Page.of(Collections.emptyList());

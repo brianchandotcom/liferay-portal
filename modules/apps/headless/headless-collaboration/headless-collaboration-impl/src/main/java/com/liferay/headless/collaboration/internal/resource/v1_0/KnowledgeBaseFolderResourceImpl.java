@@ -15,7 +15,7 @@
 package com.liferay.headless.collaboration.internal.resource.v1_0;
 
 import com.liferay.headless.collaboration.dto.v1_0.KnowledgeBaseFolder;
-import com.liferay.headless.collaboration.internal.dto.v1_0.util.ParentFolderUtil;
+import com.liferay.headless.collaboration.internal.dto.v1_0.util.ParentKnowledgeBaseFolderUtil;
 import com.liferay.headless.collaboration.resource.v1_0.KnowledgeBaseFolderResource;
 import com.liferay.knowledge.base.model.KBFolder;
 import com.liferay.knowledge.base.service.KBArticleService;
@@ -123,16 +123,17 @@ public class KnowledgeBaseFolderResourceImpl
 			Long knowledgeBaseFolderId, KnowledgeBaseFolder knowledgeBaseFolder)
 		throws Exception {
 
-		Long parentFolderId = knowledgeBaseFolder.getParentFolderId();
+		Long parentKnowledgeBaseFolderId =
+			knowledgeBaseFolder.getParentKnowledgeBaseFolderId();
 
-		if (parentFolderId == null) {
-			parentFolderId = 0L;
+		if (parentKnowledgeBaseFolderId == null) {
+			parentKnowledgeBaseFolderId = 0L;
 		}
 
 		return _toKnowledgeBaseFolder(
 			_kbFolderService.updateKBFolder(
-				_getClassNameId(), parentFolderId, knowledgeBaseFolderId,
-				knowledgeBaseFolder.getName(),
+				_getClassNameId(), parentKnowledgeBaseFolderId,
+				knowledgeBaseFolderId, knowledgeBaseFolder.getName(),
 				knowledgeBaseFolder.getDescription(), new ServiceContext()));
 	}
 
@@ -157,20 +158,21 @@ public class KnowledgeBaseFolderResourceImpl
 				description = kbFolder.getDescription();
 				id = kbFolder.getKbFolderId();
 				name = kbFolder.getName();
-				parentFolder = ParentFolderUtil.toParentFolder(
-					kbFolder.getParentKBFolder());
+				parentKnowledgeBaseFolder =
+					ParentKnowledgeBaseFolderUtil.toParentFolder(
+						kbFolder.getParentKBFolder());
 
-				setHasFolders(
-					() -> {
-						int count = _kbFolderService.getKBFoldersCount(
-							kbFolder.getGroupId(), kbFolder.getKbFolderId());
-
-						return count > 0;
-					});
 				setHasKnowledgeBaseArticles(
 					() -> {
 						int count = _kbArticleService.getKBArticlesCount(
 							kbFolder.getGroupId(), kbFolder.getKbFolderId(), 0);
+
+						return count > 0;
+					});
+				setHasKnowledgeBaseFolders(
+					() -> {
+						int count = _kbFolderService.getKBFoldersCount(
+							kbFolder.getGroupId(), kbFolder.getKbFolderId());
 
 						return count > 0;
 					});

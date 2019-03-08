@@ -21,7 +21,7 @@ import com.liferay.headless.collaboration.dto.v1_0.Categories;
 import com.liferay.headless.collaboration.dto.v1_0.KnowledgeBaseArticle;
 import com.liferay.headless.collaboration.internal.dto.v1_0.util.AggregateRatingUtil;
 import com.liferay.headless.collaboration.internal.dto.v1_0.util.CreatorUtil;
-import com.liferay.headless.collaboration.internal.dto.v1_0.util.ParentFolderUtil;
+import com.liferay.headless.collaboration.internal.dto.v1_0.util.ParentKnowledgeBaseFolderUtil;
 import com.liferay.headless.collaboration.resource.v1_0.KnowledgeBaseArticleResource;
 import com.liferay.headless.common.spi.service.context.ServiceContextUtil;
 import com.liferay.knowledge.base.constants.KBPortletKeys;
@@ -262,12 +262,13 @@ public class KnowledgeBaseArticleResourceImpl
 					AssetTag.NAME_ACCESSOR);
 
 				if (kbArticle.getKbFolderId() != 0) {
-					parentFolder = ParentFolderUtil.toParentFolder(
-						_kbFolderService.getKBFolder(
-							kbArticle.getKbFolderId()));
+					parentKnowledgeBaseFolder =
+						ParentKnowledgeBaseFolderUtil.toParentFolder(
+							_kbFolderService.getKBFolder(
+								kbArticle.getKbFolderId()));
 				}
 
-				parentFolderId = kbArticle.getKbFolderId();
+				parentKnowledgeBaseFolderId = kbArticle.getKbFolderId();
 				title = kbArticle.getTitle();
 			}
 		};

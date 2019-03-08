@@ -14,20 +14,20 @@
 
 package com.liferay.headless.collaboration.internal.dto.v1_0.util;
 
-import com.liferay.headless.collaboration.dto.v1_0.ParentFolder;
+import com.liferay.headless.collaboration.dto.v1_0.ParentKnowledgeBaseFolder;
 import com.liferay.knowledge.base.model.KBFolder;
 
 /**
  * @author Javier Gamarra
  */
-public class ParentFolderUtil {
+public class ParentKnowledgeBaseFolderUtil {
 
-	public static ParentFolder toParentFolder(KBFolder kbFolder) {
+	public static ParentKnowledgeBaseFolder toParentFolder(KBFolder kbFolder) {
 		if (kbFolder == null) {
 			return null;
 		}
 
-		return new ParentFolder() {
+		return new ParentKnowledgeBaseFolder() {
 			{
 				folderId = kbFolder.getKbFolderId();
 				folderName = kbFolder.getName();

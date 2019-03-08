@@ -61,7 +61,8 @@ public class SegmentResourceImpl extends BaseSegmentResourceImpl {
 
 		return Page.of(
 			transform(segmentsEntries, this::_toSegment), pagination,
-			segmentsEntries.size());
+			_segmentsEntryService.getSegmentsEntriesCount(
+				contentSpaceId, true));
 	}
 
 	@Override

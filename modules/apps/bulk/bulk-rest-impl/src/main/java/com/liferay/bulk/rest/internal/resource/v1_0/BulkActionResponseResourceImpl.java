@@ -26,6 +26,8 @@ import com.liferay.bulk.rest.dto.v1_0.BulkAssetEntryCommonCategories;
 import com.liferay.bulk.rest.dto.v1_0.BulkAssetEntryCommonTags;
 import com.liferay.bulk.rest.dto.v1_0.BulkAssetEntryUpdateCategoriesAction;
 import com.liferay.bulk.rest.dto.v1_0.BulkAssetEntryUpdateTagsAction;
+import com.liferay.bulk.rest.dto.v1_0.Category;
+import com.liferay.bulk.rest.dto.v1_0.Vocabulary;
 import com.liferay.bulk.rest.resource.v1_0.BulkActionResponseResource;
 import com.liferay.bulk.selection.BulkSelection;
 import com.liferay.bulk.selection.BulkSelectionFactory;
@@ -158,10 +160,9 @@ public class BulkActionResponseResourceImpl
 						contextAcceptLanguage.getPreferredLocale());
 					status = "success";
 					vocabularies = assetCategoriesStream.map(
-						entry -> _toAssetVocabulary(
-							entry.getKey(), entry.getValue())
+						entry -> _toVocabulary(entry.getKey(), entry.getValue())
 					).toArray(
-						com.liferay.bulk.rest.dto.v1_0.AssetVocabulary[]::new
+						Vocabulary[]::new
 					);
 				}
 			};
@@ -392,29 +393,6 @@ public class BulkActionResponseResourceImpl
 					key -> new ArrayList<>())));
 	}
 
-	private com.liferay.bulk.rest.dto.v1_0.AssetVocabulary _toAssetVocabulary(
-		AssetVocabulary assetVocabulary, List<AssetCategory> assetCategories) {
-
-		return new com.liferay.bulk.rest.dto.v1_0.AssetVocabulary() {
-			{
-				categories = transformToArray(
-					assetCategories,
-					assetCategory ->
-						new com.liferay.bulk.rest.dto.v1_0.AssetCategory() {
-							{
-								categoryId = assetCategory.getCategoryId();
-								name = assetCategory.getName();
-							}
-						},
-					com.liferay.bulk.rest.dto.v1_0.AssetCategory.class);
-
-				multiValued = assetVocabulary.isMultiValued();
-				name = assetVocabulary.getName();
-				vocabularyId = assetVocabulary.getVocabularyId();
-			}
-		};
-	}
-
 	private BulkActionResponse _toBulkActionResponse(Exception e) {
 		return new BulkActionResponse() {
 			{
@@ -437,6 +415,28 @@ public class BulkActionResponseResourceImpl
 			{
 				description = e.getMessage();
 				status = "error";
+			}
+		};
+	}
+
+	private Vocabulary _toVocabulary(
+		AssetVocabulary assetVocabulary, List<AssetCategory> assetCategories) {
+
+		return new Vocabulary() {
+			{
+				categories = transformToArray(
+					assetCategories,
+					assetCategory -> new Category() {
+						{
+							categoryId = assetCategory.getCategoryId();
+							name = assetCategory.getName();
+						}
+					},
+					Category.class);
+
+				multiValued = assetVocabulary.isMultiValued();
+				name = assetVocabulary.getName();
+				vocabularyId = assetVocabulary.getVocabularyId();
 			}
 		};
 	}

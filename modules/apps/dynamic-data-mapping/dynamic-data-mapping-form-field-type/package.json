@@ -45,6 +45,7 @@
 		"autobind-decorator": "^2.1.0",
 		"clay-button": "^2.9.0",
 		"clay-checkbox": "^2.9.0",
+		"clay-component": "^2.9.0",
 		"clay-dropdown": "^2.9.0",
 		"clay-icon": "^2.9.0",
 		"clay-label": "^2.9.0",
@@ -55,6 +56,8 @@
 		"metal-drag-drop": "^3.2.2",
 		"metal-position": "^2.1.2",
 		"metal-soy": "^2.16.0",
+		"metal-web-component": "^2.14.0",
+		"moment": "^2.22.2",
 		"text-mask-addons": "^3.7.1",
 		"vanilla-text-mask": "^5.0.1"
 	},
@@ -81,6 +84,7 @@
 		"rimraf": "^2.6.2"
 	},
 	"jest": {
+		"browser": true,
 		"automock": false,
 		"coverageDirectory": "build/coverage",
 		"coverageThreshold": {

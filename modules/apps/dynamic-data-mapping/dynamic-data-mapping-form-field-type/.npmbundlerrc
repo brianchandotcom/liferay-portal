@@ -7,6 +7,7 @@
 			"frontend-taglib-clay": {
 				"clay-button": "^2.9.0",
 				"clay-checkbox": "^2.9.0",
+				"clay-component": "^2.9.0",
 				"clay-dropdown": "^2.9.0",
 				"clay-icon": "^2.9.0",
 				"clay-label": "^2.9.0",

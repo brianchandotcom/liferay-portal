@@ -10,6 +10,7 @@ dependencies {
 	compileOnly project(":apps:application-list:application-list-api")
 	compileOnly project(":apps:asset:asset-api")
 	compileOnly project(":apps:asset:asset-display-api")
+	compileOnly project(":apps:asset:asset-display-page-api")
 	compileOnly project(":apps:asset:asset-taglib")
 	compileOnly project(":apps:blogs:blogs-api")
 	compileOnly project(":apps:blogs:blogs-item-selector-api")

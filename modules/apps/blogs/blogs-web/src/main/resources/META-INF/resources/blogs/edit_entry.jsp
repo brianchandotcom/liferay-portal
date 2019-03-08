@@ -374,6 +374,16 @@ if (portletTitleBasedNavigation) {
 					</c:if>
 				</aui:fieldset>
 
+				<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="display-page">
+					<liferay-asset:select-asset-display-page
+						classNameId="<%= PortalUtil.getClassNameId(BlogsEntry.class) %>"
+						classPK="<%= (entry != null) ? entry.getEntryId() : 0 %>"
+						groupId="<%= scopeGroupId %>"
+						showPortletLayouts="<%= true %>"
+						showViewInContextLink="<%= true %>"
+					/>
+				</aui:fieldset>
+
 				<liferay-expando:custom-attributes-available
 					className="<%= BlogsEntry.class.getName() %>"
 				>

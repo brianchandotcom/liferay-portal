@@ -733,8 +733,8 @@ definition {
 		}
 
 		if (isSet(entryExternalURL)) {
-			AssertClick.assertTextClickAtNoJavaScript(
-				locator1 = "BlogsEntry#CONTENT",
+			AssertClick(
+				locator1 = "BlogsEntry#CONTENT_LINK",
 				value1 = "${entryContent}"
 			);
 
@@ -768,7 +768,7 @@ definition {
 		BlogsNavigator.gotoEditCP(entryTitle = "${entryTitle}");
 
 		DoubleClick(
-			locator1 = "BlogsEntry#CONTENT_LINK",
+			locator1 = "BlogsEntry#CONTENT_LINK_IN_EDIT",
 			key_entryContent = "${entryContent}"
 		);
 

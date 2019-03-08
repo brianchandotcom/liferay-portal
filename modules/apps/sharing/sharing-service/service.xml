@@ -15,13 +15,13 @@
 
 		<!-- Audit fields -->
 
+		<column name="userId" type="long" />
 		<column name="companyId" type="long" />
 		<column name="createDate" type="Date" />
 		<column name="modifiedDate" type="Date" />
 
 		<!-- Other fields -->
 
-		<column name="fromUserId" type="long" />
 		<column name="toUserId" type="long" />
 		<column name="classNameId" type="long" />
 		<column name="classPK" type="long" />
@@ -33,9 +33,6 @@
 
 		<finder name="GroupId" return-type="Collection">
 			<finder-column name="groupId" />
-		</finder>
-		<finder name="FromUserId" return-type="Collection">
-			<finder-column name="fromUserId" />
 		</finder>
 		<finder name="ToUserId" return-type="Collection">
 			<finder-column name="toUserId" />
@@ -51,18 +48,7 @@
 			<finder-column name="classNameId" />
 			<finder-column name="classPK" />
 		</finder>
-		<finder name="FU_C_C" return-type="Collection">
-			<finder-column name="fromUserId" />
-			<finder-column name="classNameId" />
-			<finder-column name="classPK" />
-		</finder>
-		<finder name="TU_C_C" return-type="Collection">
-			<finder-column name="toUserId" />
-			<finder-column name="classNameId" />
-			<finder-column name="classPK" />
-		</finder>
-		<finder name="FU_TU_C_C" return-type="SharingEntry" unique="true">
-			<finder-column name="fromUserId" />
+		<finder name="TU_C_C" return-type="SharingEntry">
 			<finder-column name="toUserId" />
 			<finder-column name="classNameId" />
 			<finder-column name="classPK" />

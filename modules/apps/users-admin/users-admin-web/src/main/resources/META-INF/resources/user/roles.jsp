@@ -129,55 +129,59 @@ String organizationRoleSyncEntitiesEventName = liferayPortletResponse.getNamespa
 	</liferay-ui:search-container>
 
 	<c:if test="<%= !portletName.equals(myAccountPortletId) %>">
-		<aui:script>
-			AUI.$('#<portlet:namespace />selectRegularRoleLink').on(
-				'click',
-				function(event) {
-					var searchContainerName = '<portlet:namespace />rolesSearchContainer';
+		<aui:script sandbox="<%= true %>">
+			var selectRegularRoleLink = document.getElementById('<portlet:namespace />selectRegularRoleLink');
 
-					var searchContainer = Liferay.SearchContainer.get(searchContainerName);
+			if (selectRegularRoleLink) {
+				selectRegularRoleLink.addEventListener(
+					'click',
+					function(event) {
+						var searchContainerName = '<portlet:namespace />rolesSearchContainer';
 
-					var searchContainerData = searchContainer.getData();
+						var searchContainer = Liferay.SearchContainer.get(searchContainerName);
 
-					if (!searchContainerData.length) {
-						searchContainerData = [];
-					}
-					else {
-						searchContainerData = searchContainerData.split(',');
-					}
+						var searchContainerData = searchContainer.getData();
 
-					Liferay.Util.selectEntity(
-						{
-							dialog: {
-								constrain: true,
-								modal: true
-							},
-
-							<%
-							String regularRoleEventName = liferayPortletResponse.getNamespace() + "selectRegularRole";
-							%>
-
-							id: '<%= regularRoleEventName %>',
-							selectedData: searchContainerData,
-							title: '<liferay-ui:message arguments="regular-role" key="select-x" />',
-
-							<%
-							PortletURL selectRegularRoleURL = PortletProviderUtil.getPortletURL(request, Role.class.getName(), PortletProvider.Action.BROWSE);
-
-							selectRegularRoleURL.setParameter("p_u_i_d", (selUser == null) ? "0" : String.valueOf(selUser.getUserId()));
-							selectRegularRoleURL.setParameter("eventName", regularRoleEventName);
-							selectRegularRoleURL.setParameter("syncEntitiesEventName", regularRoleSyncEntitiesEventName);
-							selectRegularRoleURL.setWindowState(LiferayWindowState.POP_UP);
-							%>
-
-							uri: '<%= selectRegularRoleURL.toString() %>'
-						},
-						function(event) {
-							<portlet:namespace />selectRole(event.entityid, event.entityname, event.searchcontainername, event.groupdescriptivename, event.groupid, event.iconcssclass);
+						if (!searchContainerData.length) {
+							searchContainerData = [];
 						}
-					);
-				}
-			);
+						else {
+							searchContainerData = searchContainerData.split(',');
+						}
+
+						Liferay.Util.selectEntity(
+							{
+								dialog: {
+									constrain: true,
+									modal: true
+								},
+
+								<%
+								String regularRoleEventName = liferayPortletResponse.getNamespace() + "selectRegularRole";
+								%>
+
+								id: '<%= regularRoleEventName %>',
+								selectedData: searchContainerData,
+								title: '<liferay-ui:message arguments="regular-role" key="select-x" />',
+
+								<%
+								PortletURL selectRegularRoleURL = PortletProviderUtil.getPortletURL(request, Role.class.getName(), PortletProvider.Action.BROWSE);
+
+								selectRegularRoleURL.setParameter("p_u_i_d", (selUser == null) ? "0" : String.valueOf(selUser.getUserId()));
+								selectRegularRoleURL.setParameter("eventName", regularRoleEventName);
+								selectRegularRoleURL.setParameter("syncEntitiesEventName", regularRoleSyncEntitiesEventName);
+								selectRegularRoleURL.setWindowState(LiferayWindowState.POP_UP);
+								%>
+
+								uri: '<%= selectRegularRoleURL.toString() %>'
+							},
+							function(event) {
+								<portlet:namespace />selectRole(event.entityid, event.entityname, event.searchcontainername, event.groupdescriptivename, event.groupid, event.iconcssclass);
+							}
+						);
+					}
+				);
+			}
 		</aui:script>
 	</c:if>
 
@@ -386,45 +390,49 @@ String organizationRoleSyncEntitiesEventName = liferayPortletResponse.getNamespa
 	</c:if>
 
 	<c:if test="<%= !organizations.isEmpty() && !portletName.equals(myAccountPortletId) %>">
-		<aui:script>
-			AUI.$('#<portlet:namespace />selectOrganizationRoleLink').on(
-				'click',
-				function(event) {
-					Liferay.Util.selectEntity(
-						{
-							dialog: {
-								constrain: true,
-								modal: true
+		<aui:script sandbox="<%= true %>">
+			var selectOrganizationRoleLink = document.getElementById('<portlet:namespace />selectOrganizationRoleLink');
+
+			if (selectOrganizationRoleLink) {
+				selectOrganizationRoleLink.addEventListener(
+					'click',
+					function(event) {
+						Liferay.Util.selectEntity(
+							{
+								dialog: {
+									constrain: true,
+									modal: true
+								},
+
+								<%
+								String organizationRoleEventName = liferayPortletResponse.getNamespace() + "selectOrganizationRole";
+								%>
+
+								id: '<%= organizationRoleEventName %>',
+								selectedData: [],
+								title: '<liferay-ui:message arguments="organization-role" key="select-x" />',
+
+								<%
+								PortletURL selectOrganizationRoleURL = PortletProviderUtil.getPortletURL(request, Role.class.getName(), PortletProvider.Action.BROWSE);
+
+								selectOrganizationRoleURL.setParameter("p_u_i_d", (selUser == null) ? "0" : String.valueOf(selUser.getUserId()));
+								selectOrganizationRoleURL.setParameter("step", "1");
+								selectOrganizationRoleURL.setParameter("roleType", String.valueOf(RoleConstants.TYPE_ORGANIZATION));
+								selectOrganizationRoleURL.setParameter("organizationIds", StringUtil.merge(organizationIds));
+								selectOrganizationRoleURL.setParameter("eventName", organizationRoleEventName);
+								selectOrganizationRoleURL.setParameter("syncEntitiesEventName", organizationRoleSyncEntitiesEventName);
+								selectOrganizationRoleURL.setWindowState(LiferayWindowState.POP_UP);
+								%>
+
+								uri: '<%= selectOrganizationRoleURL.toString() %>'
 							},
-
-							<%
-							String organizationRoleEventName = liferayPortletResponse.getNamespace() + "selectOrganizationRole";
-							%>
-
-							id: '<%= organizationRoleEventName %>',
-							selectedData: [],
-							title: '<liferay-ui:message arguments="organization-role" key="select-x" />',
-
-							<%
-							PortletURL selectOrganizationRoleURL = PortletProviderUtil.getPortletURL(request, Role.class.getName(), PortletProvider.Action.BROWSE);
-
-							selectOrganizationRoleURL.setParameter("p_u_i_d", (selUser == null) ? "0" : String.valueOf(selUser.getUserId()));
-							selectOrganizationRoleURL.setParameter("step", "1");
-							selectOrganizationRoleURL.setParameter("roleType", String.valueOf(RoleConstants.TYPE_ORGANIZATION));
-							selectOrganizationRoleURL.setParameter("organizationIds", StringUtil.merge(organizationIds));
-							selectOrganizationRoleURL.setParameter("eventName", organizationRoleEventName);
-							selectOrganizationRoleURL.setParameter("syncEntitiesEventName", organizationRoleSyncEntitiesEventName);
-							selectOrganizationRoleURL.setWindowState(LiferayWindowState.POP_UP);
-							%>
-
-							uri: '<%= selectOrganizationRoleURL.toString() %>'
-						},
-						function(event) {
-							<portlet:namespace />selectRole(event.entityid, event.entityname, event.searchcontainername, event.groupdescriptivename, event.groupid, event.iconcssclass);
-						}
-					);
-				}
-			);
+							function(event) {
+								<portlet:namespace />selectRole(event.entityid, event.entityname, event.searchcontainername, event.groupdescriptivename, event.groupid, event.iconcssclass);
+							}
+						);
+					}
+				);
+			}
 		</aui:script>
 	</c:if>
 </div>

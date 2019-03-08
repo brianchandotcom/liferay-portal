@@ -114,17 +114,21 @@ else {
 		if (((cmd == '<%= Constants.DEACTIVATE %>') && confirm('<%= UnicodeLanguageUtil.get(request, "are-you-sure-you-want-to-deactivate-the-selected-users") %>')) || ((cmd == '<%= Constants.DELETE %>') && confirm('<%= UnicodeLanguageUtil.get(request, "are-you-sure-you-want-to-permanently-delete-the-selected-users") %>')) || (cmd == '<%= Constants.RESTORE %>')) {
 			var form = document.<portlet:namespace />fm;
 
-			Liferay.Util.postForm(
-				form,
-				{
-					data: {
-						'<%= Constants.CMD %>': cmd,
-						'redirect': Liferay.Util.getFormElement(form, 'usersRedirect').value,
-						'deleteUserIds': Liferay.Util.listCheckedExcept(form, '<portlet:namespace />allRowIds', '<portlet:namespace />rowIdsUser')
-					},
-					url: '<portlet:actionURL name="/users_admin/edit_user" />'
-				}
-			);
+			var usersRedirect = Liferay.Util.getFormElement(form, 'usersRedirect');
+
+			if (usersRedirect) {
+				Liferay.Util.postForm(
+					form,
+					{
+						data: {
+							'<%= Constants.CMD %>': cmd,
+							deleteUserIds: Liferay.Util.listCheckedExcept(form, '<portlet:namespace />allRowIds', '<portlet:namespace />rowIdsUser'),
+							redirect: usersRedirect.value
+						},
+						url: '<portlet:actionURL name="/users_admin/edit_user" />'
+					}
+				);
+			}
 		}
 	}
 
@@ -178,31 +182,54 @@ else {
 	}
 
 	function <portlet:namespace />doDeleteOrganizations(organizationIds, organizationsRedirect) {
-		var form = AUI.$(document.<portlet:namespace />fm);
-
-		form.attr('method', 'post');
-		form.fm('<%= Constants.CMD %>').val('<%= Constants.DELETE %>');
-		form.fm('deleteOrganizationIds').val(organizationIds);
+		var form = document.<portlet:namespace />fm;
 
 		if (organizationsRedirect) {
-			form.fm('redirect').val(organizationsRedirect);
+			Liferay.Util.setFormValues(
+				form,
+				{
+					redirect: organizationsRedirect
+				}
+			);
 		}
 
-		submitForm(form, '<portlet:actionURL name="/users_admin/edit_organization" />');
+		Liferay.Util.postForm(
+			form,
+			{
+				data: {
+					'<%= Constants.CMD %>': '<%= Constants.DELETE %>',
+					deleteOrganizationIds: organizationIds
+				},
+				url: '<portlet:actionURL name="/users_admin/edit_organization" />'
+			}
+		);
 	}
 
 	function <portlet:namespace />getUsersCount(className, ids, status, callback) {
-		AUI.$.ajax(
+		var formData = new FormData();
+
+		formData.append('className', className);
+		formData.append('ids', ids);
+		formData.append('status', status);
+
+		fetch(
 			'<liferay-portlet:resourceURL id="/users_admin/get_users_count" />',
 			{
-				data: {
-					className: className,
-					ids: ids,
-					status: status
-				},
-				success: callback
+				body: formData,
+				credentials: 'include',
+				method: 'POST'
 			}
-		);
+		)
+		.then(
+			function(response) {
+				return response.text();
+			}
+		)
+		.then(
+			function(response) {
+				callback(response);
+			}
+		)
 	}
 
 	function <portlet:namespace />search() {
@@ -243,8 +270,6 @@ else {
 		function(organizationId) {
 			var A = AUI();
 
-			var form = AUI.$(document.<portlet:namespace />fm);
-
 			<portlet:renderURL var="selectUsersURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
 				<portlet:param name="mvcPath" value="/select_organization_users.jsp" />
 			</portlet:renderURL>
@@ -272,7 +297,7 @@ else {
 
 								editAssignmentURL.setParameter('assignmentsRedirect', assignmentsRedirectURL.toString());
 
-								submitForm(form, editAssignmentURL.toString());
+								submitForm(document.<portlet:namespace />fm, editAssignmentURL.toString());
 							}
 						}
 					},

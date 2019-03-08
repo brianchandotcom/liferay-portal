@@ -143,23 +143,36 @@ if (organization != null) {
 
 <c:if test="<%= organization == null %>">
 	<aui:script sandbox="<%= true %>">
-		$('#<portlet:namespace />type').on(
-			'change',
-			function(event) {
+		var typeSelect = document.getElementById('<portlet:namespace />type');
 
-				<%
-				for (String curType : organizationsTypes) {
-				%>
+		if (typeSelect) {
+			typeSelect.addEventListener(
+				'change',
+				function(event) {
+					var countryDiv = document.getElementById('<portlet:namespace />countryDiv');
 
-					if ($(event.currentTarget).val() == '<%= curType %>') {
-						$('#<portlet:namespace />countryDiv').toggleClass('hide', !<%= OrganizationLocalServiceUtil.isCountryEnabled(curType) %>);
+					if (countryDiv) {
+
+						<%
+						for (String curType : organizationsTypes) {
+						%>
+
+							if (event.currentTarget.value === '<%= curType %>') {
+								if (!<%= OrganizationLocalServiceUtil.isCountryEnabled(curType) %>) {
+									countryDiv.classList.add('hide');
+								}
+								else {
+									countryDiv.classList.remove('hide');
+								}
+							}
+
+						<%
+						}
+						%>
+
 					}
-
-				<%
 				}
-				%>
-
-			}
-		);
+			);
+		}
 	</aui:script>
 </c:if>

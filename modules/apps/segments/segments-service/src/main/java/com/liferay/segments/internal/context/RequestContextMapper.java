@@ -98,6 +98,9 @@ public class RequestContextMapper {
 		}
 
 		context.put(Context.LOCAL_DATE, LocalDate.from(ZonedDateTime.now()));
+		context.put(
+			Context.REFERRER_URL,
+			GetterUtil.getString(request.getHeader(HttpHeaders.REFERER)));
 		context.put(Context.SIGNED_IN, themeDisplay.isSignedIn());
 		context.put(Context.URL, _portal.getCurrentCompleteURL(request));
 

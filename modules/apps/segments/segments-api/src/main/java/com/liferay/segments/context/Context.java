@@ -50,6 +50,8 @@ public class Context {
 
 	public static final String LOCAL_DATE = "localDate";
 
+	public static final String REFERRER_URL = "referrerUrl";
+
 	public static final String SIGNED_IN = "signedIn";
 
 	public static final String URL = "url";

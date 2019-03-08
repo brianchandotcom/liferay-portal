@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.PortletConstants;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
+import com.liferay.portal.kernel.settings.ModifiableSettings;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portlet.PortletPreferencesImpl;
 
@@ -64,6 +65,46 @@ public class TemplatePortletPreferences {
 				sb.setIndex(sb.index() - 3);
 
 				continue;
+			}
+
+			sb.append("</preference>");
+		}
+
+		sb.append("</portlet-preferences>");
+
+		return sb.toString();
+	}
+
+	public String getPreferences(ModifiableSettings settings) {
+		StringBundler sb = new StringBundler();
+
+		sb.append("<portlet-preferences>");
+
+		for (String key : settings.getModifiedKeys()) {
+			sb.append("<preference><name>");
+			sb.append(key);
+			sb.append("</name>");
+
+			Object valueObject = settings.getValue(key, null);
+
+			if (valueObject != null) {
+				if (valueObject instanceof String) {
+					sb.append("<value>");
+					sb.append(XMLUtil.toCompactSafe((String)valueObject));
+					sb.append("</value>");
+				}
+				else if (valueObject instanceof String[]) {
+					for (String value : (String[])valueObject) {
+						sb.append("<value>");
+						sb.append(XMLUtil.toCompactSafe(value));
+						sb.append("</value>");
+					}
+				}
+				else {
+					sb.setIndex(sb.index() - 3);
+
+					continue;
+				}
 			}
 
 			sb.append("</preference>");

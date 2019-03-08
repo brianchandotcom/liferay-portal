@@ -31,7 +31,6 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.ResourceBundleLoader;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.sharing.display.context.util.SharingMenuItemFactory;
-import com.liferay.sharing.exception.NoSuchEntryException;
 import com.liferay.sharing.filter.SharedWithMeFilterItem;
 import com.liferay.sharing.interpreter.SharingEntryInterpreter;
 import com.liferay.sharing.interpreter.SharingEntryInterpreterProvider;
@@ -187,26 +186,21 @@ public class SharedWithMeViewMVCRenderCommand implements MVCRenderCommand {
 			RenderRequest renderRequest, ThemeDisplay themeDisplay)
 		throws PortalException {
 
-		try {
-			long sharingEntryId = ParamUtil.getLong(
-				renderRequest, "sharingEntryId");
+		long sharingEntryId = ParamUtil.getLong(
+			renderRequest, "sharingEntryId");
 
-			return _sharingEntryLocalService.getSharingEntry(sharingEntryId);
-		}
-		catch (NoSuchEntryException nsee) {
-			long classNameId = ParamUtil.getLong(renderRequest, "classNameId");
-			long classPK = ParamUtil.getLong(renderRequest, "classPK");
+		SharingEntry sharingEntry = _sharingEntryLocalService.fetchSharingEntry(
+			sharingEntryId);
 
-			SharingEntry sharingEntry =
-				_sharingEntryLocalService.fetchSharingEntry(
-					themeDisplay.getUserId(), classNameId, classPK);
-
-			if (sharingEntry == null) {
-				throw nsee;
-			}
-
+		if (sharingEntry != null) {
 			return sharingEntry;
 		}
+
+		long classNameId = ParamUtil.getLong(renderRequest, "classNameId");
+		long classPK = ParamUtil.getLong(renderRequest, "classPK");
+
+		return _sharingEntryLocalService.getSharingEntry(
+			themeDisplay.getUserId(), classNameId, classPK);
 	}
 
 	@Reference

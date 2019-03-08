@@ -14,8 +14,6 @@
 
 package com.liferay.data.engine.service;
 
-import com.liferay.data.engine.model.DEDataLayout;
-
 /**
  * Response class used to retrieve a {@link DEDataLayout}
  * @author Marcelo Mello
@@ -74,8 +72,8 @@ public final class DEDataLayoutDeleteResponse {
 			_deDataLayoutDeleteResponse._deDataLayoutId = deDataLayoutId;
 		}
 
-		private final DEDataLayoutDeleteResponse
-			_deDataLayoutDeleteResponse = new DEDataLayoutDeleteResponse();
+		private final DEDataLayoutDeleteResponse _deDataLayoutDeleteResponse =
+			new DEDataLayoutDeleteResponse();
 
 	}
 

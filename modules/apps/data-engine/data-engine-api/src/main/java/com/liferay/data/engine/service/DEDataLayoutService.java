@@ -32,7 +32,7 @@ public interface DEDataLayoutService {
 	 * @review
 	 */
 	public DEDataLayoutDeleteResponse execute(
-		DEDataLayoutDeleteRequest deDataLayoutDeleteRequest)
+			DEDataLayoutDeleteRequest deDataLayoutDeleteRequest)
 		throws DEDataLayoutException;
 
 	/**

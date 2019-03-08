@@ -40,12 +40,12 @@ public class PasswordPoliciesConfigurationModelListener
 		throws ConfigurationModelListenerException {
 
 		try {
-			_validateDurations((Long[])properties.get("minimumAgeDurations"));
-			_validateDurations((Long[])properties.get("lockoutDurations"));
-			_validateDurations((Long[])properties.get("maximumAgeDurations"));
-			_validateDurations((Long[])properties.get("resetFailureDurations"));
 			_validateDurations(
 				(Long[])properties.get("expirationWarningTimeDurations"));
+			_validateDurations((Long[])properties.get("lockoutDurations"));
+			_validateDurations((Long[])properties.get("maximumAgeDurations"));
+			_validateDurations((Long[])properties.get("minimumAgeDurations"));
+			_validateDurations((Long[])properties.get("resetFailureDurations"));
 			_validateDurations(
 				(Long[])properties.get("resetTicketMaxAgeDurations"));
 		}

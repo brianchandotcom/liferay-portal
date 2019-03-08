@@ -93,14 +93,14 @@ public class BulkActionResponseResourceImpl
 
 			Map<String, Serializable> inputMap = new HashMap<>();
 
-			put(
+			inputMap.put(
 				BulkSelectionInputParameters.ASSET_ENTRY_BULK_SELECTION, true);
-			put(
+			inputMap.put(
 				"append", bulkAssetEntryUpdateCategoriesAction.getAppend());
-			put(
+			inputMap.put(
 				"toAddCategoryIds",
 				bulkAssetEntryUpdateCategoriesAction.getToAddCategoryIds());
-			put(
+			inputMap.put(
 				"toRemoveCategoryIds",
 				bulkAssetEntryUpdateCategoriesAction.getToRemoveCategoryIds());
 

@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBInspector;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
+import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.Group;
@@ -383,6 +384,53 @@ public class UpgradeContentTargetingTest {
 			Criteria.Conjunction.parse(criterion.getConjunction()));
 		Assert.assertEquals(
 			"contains(userAgent, 'iOS')", criterion.getFilterString());
+	}
+
+	@Test
+	public void testUpgradeContentTargetingUserSegmentsWithPreviousVisitedSiteRule()
+		throws Exception {
+
+		long contentTargetingUserSegmentId = -1L;
+
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
+
+		jsonObject.put("value", "liferay");
+
+		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
+
+		jsonArray.put(jsonObject);
+
+		insertContentTargetingRuleInstance(
+			contentTargetingUserSegmentId, "PreviousVisitedSiteRule",
+			jsonArray.toString());
+
+		insertContentTargetingUserSegment(
+			contentTargetingUserSegmentId,
+			RandomTestUtil.randomLocaleStringMap(),
+			RandomTestUtil.randomLocaleStringMap());
+
+		_upgradeContentTargeting.upgrade();
+
+		SegmentsEntry segmentsEntry =
+			_segmentsEntryLocalService.fetchSegmentsEntry(
+				_group.getGroupId(), "ct_" + contentTargetingUserSegmentId,
+				false);
+
+		Assert.assertNotNull(segmentsEntry);
+
+		Criteria criteriaObj = segmentsEntry.getCriteriaObj();
+
+		Assert.assertNotNull(criteriaObj);
+
+		Criteria.Criterion criterion = criteriaObj.getCriterion("context");
+
+		Assert.assertNotNull(criterion);
+
+		Assert.assertEquals(
+			Criteria.Conjunction.AND,
+			Criteria.Conjunction.parse(criterion.getConjunction()));
+		Assert.assertEquals(
+			"contains(referrerUrl, 'liferay')", criterion.getFilterString());
 	}
 
 	@Test

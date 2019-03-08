@@ -119,11 +119,13 @@ public class DDLRecordSetStagedModelRepository
 
 		for (DDLRecordSet recordSet : recordSets) {
 			DDMStructure ddmStructure =
-				_ddmStructureLocalService.getDDMStructure(
+				_ddmStructureLocalService.fetchDDMStructure(
 					recordSet.getDDMStructureId());
 
-			if (ddmStructure.getGroupId() == recordSet.getGroupId()) {
-				recordSetDDMStructureIds.add(recordSet.getDDMStructureId());
+			if (ddmStructure != null) {
+				if (ddmStructure.getGroupId() == recordSet.getGroupId()) {
+					recordSetDDMStructureIds.add(recordSet.getDDMStructureId());
+				}
 			}
 
 			_ddlRecordSetLocalService.deleteRecordSet(recordSet);

@@ -5,3 +5,14 @@
 @import "./form-pagination";
 @import "./share_url_popover";
 @import "./sidebar";
+
+.ddm-form-builder .ddm-select-option-label .label-item {
+	display: block;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
+.ddm-select-dropdown .dropdown-item:focus {
+	background-color: transparent;
+}

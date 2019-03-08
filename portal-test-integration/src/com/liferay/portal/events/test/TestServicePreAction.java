@@ -100,11 +100,12 @@ public class TestServicePreAction extends ServicePreAction {
 	public LayoutComposite getDefaultViewableLayoutComposite(
 			HttpServletRequest request, User user,
 			PermissionChecker permissionChecker, long doAsGroupId,
-			boolean signedIn)
+			boolean signedIn, boolean ignoreHiddenLayouts)
 		throws PortalException {
 
 		return super.getDefaultViewableLayoutComposite(
-			request, user, permissionChecker, doAsGroupId, signedIn);
+			request, user, permissionChecker, doAsGroupId, signedIn,
+			ignoreHiddenLayouts);
 	}
 
 	@Override

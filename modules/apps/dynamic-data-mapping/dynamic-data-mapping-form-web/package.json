@@ -130,7 +130,9 @@
 		},
 		"moduleNameMapper": {
 			"(.*)\\.soy$": "$1.soy.js",
-			"clay-(.*)$": "<rootDir>/node_modules/clay-$1"
+			"clay-(.*)$": "<rootDir>/node_modules/clay-$1",
+			"dynamic-data-mapping-form-builder/(.*)": "<rootDir>/../dynamic-data-mapping-form-builder/src/main/resources/META-INF/resources/$1",
+			"source/(.*)": "<rootDir>/src/main/resources/META-INF/resources/metal/js/$1.js"
 		},
 		"modulePathIgnorePatterns": [
 			"/classes/",
@@ -170,7 +172,7 @@
 		"start": "node watch.js",
 		"test:coverage:open": "opn build/coverage/lcov-report/index.html",
 		"test:snapshots": "npm run build-soy-tests && NODE_ENV=test jest --coverage -u && npm run clean",
-		"test_DISABLED": "npm run build-soy-tests && cross-env NODE_ENV=test jest --coverage && npm run clean"
+		"test": "npm run build-soy-tests && cross-env NODE_ENV=test jest --coverage && npm run clean"
 	},
 	"version": "2.0.0"
 }

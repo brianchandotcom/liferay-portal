@@ -251,7 +251,11 @@ public class SelectAssetDisplayPageDisplayContext {
 		return null;
 	}
 
-	public String getURLViewInContext() throws Exception {
+	public String getURLViewInContext() {
+		if (_classPK <= 0) {
+			return StringPool.BLANK;
+		}
+
 		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
@@ -259,16 +263,22 @@ public class SelectAssetDisplayPageDisplayContext {
 			AssetRendererFactoryRegistryUtil.
 				getAssetRendererFactoryByClassNameId(_classNameId);
 
-		AssetRenderer assetRenderer = assetRendererFactory.getAssetRenderer(
-			_classPK);
+		try {
+			AssetRenderer assetRenderer = assetRendererFactory.getAssetRenderer(
+				_classPK);
 
-		String viewInContextURL = assetRenderer.getURLViewInContext(
-			_liferayPortletRequest, _liferayPortletResponse,
-			themeDisplay.getURLCurrent());
+			String viewInContextURL = assetRenderer.getURLViewInContext(
+				_liferayPortletRequest, _liferayPortletResponse,
+				themeDisplay.getURLCurrent());
 
-		return HttpUtil.addParameter(
-			viewInContextURL, "p_p_state",
-			LiferayWindowState.POP_UP.toString());
+			return HttpUtil.addParameter(
+				viewInContextURL, "p_p_state",
+				LiferayWindowState.POP_UP.toString());
+		}
+		catch (Exception e) {
+		}
+
+		return StringPool.BLANK;
 	}
 
 	public boolean isAssetDisplayPageTypeDefault() {

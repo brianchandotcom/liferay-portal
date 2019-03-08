@@ -25,6 +25,7 @@ import com.liferay.portal.tools.rest.builder.internal.freemarker.tool.java.parse
 import com.liferay.portal.vulcan.multipart.MultipartBody;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
+import com.liferay.portal.vulcan.provider.ClassNameClassPK;
 import com.liferay.portal.vulcan.yaml.config.ConfigYAML;
 import com.liferay.portal.vulcan.yaml.openapi.Content;
 import com.liferay.portal.vulcan.yaml.openapi.Get;
@@ -220,6 +221,7 @@ public class ResourceOpenAPIParser {
 			String parameterName = parameter.getName();
 
 			if (StringUtil.equals(parameterName, "Accept-Language") ||
+				StringUtil.equals(parameterName, "classNameClassPK") ||
 				StringUtil.equals(parameterName, "filter") ||
 				StringUtil.equals(parameterName, "sort")) {
 
@@ -262,6 +264,13 @@ public class ResourceOpenAPIParser {
 		if (parameterNames.contains("sort")) {
 			JavaMethodParameter javaMethodParameter = new JavaMethodParameter(
 				"sorts", Sort[].class.getName());
+
+			javaMethodParameters.add(javaMethodParameter);
+		}
+
+		if (parameterNames.contains("classNameClassPK")) {
+			JavaMethodParameter javaMethodParameter = new JavaMethodParameter(
+				"classNameClassPK", ClassNameClassPK.class.getName());
 
 			javaMethodParameters.add(javaMethodParameter);
 		}
@@ -481,6 +490,12 @@ public class ResourceOpenAPIParser {
 
 		if (Objects.equals(parameterType, Sort[].class.getName()) &&
 			parameterNames.contains("sort")) {
+
+			return "@Context";
+		}
+
+		if (Objects.equals(parameterType, ClassNameClassPK.class.getName()) &&
+			parameterNames.contains("classNameClassPK")) {
 
 			return "@Context";
 		}

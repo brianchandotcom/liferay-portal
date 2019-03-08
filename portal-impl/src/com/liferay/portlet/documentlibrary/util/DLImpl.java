@@ -707,25 +707,8 @@ public class DLImpl implements DL {
 			(ThemeDisplay)liferayPortletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
-		PortletLayoutFinder.Result result = null;
-
-		for (PortletLayoutFinder portletLayoutFinder : _serviceTrackerList) {
-			try {
-				result = portletLayoutFinder.find(
-					themeDisplay, assetRenderer.getGroupId());
-
-				if (result != null) {
-					break;
-				}
-			}
-			catch (PortalException pe) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(pe, pe);
-				}
-			}
-		}
-
-		return result;
+		return _getPortletLayoutFinderResult(
+			themeDisplay, assetRenderer.getGroupId());
 	}
 
 	@Override
@@ -1245,24 +1228,12 @@ public class DLImpl implements DL {
 		String portletId = PortletProviderUtil.getPortletId(
 			FileEntry.class.getName(), PortletProvider.Action.VIEW);
 
-		for (PortletLayoutFinder portletLayoutFinder : _serviceTrackerList) {
-			try {
-				PortletLayoutFinder.Result result = portletLayoutFinder.find(
-					themeDisplay, themeDisplay.getSiteGroupId());
+		PortletLayoutFinder.Result result = _getPortletLayoutFinderResult(
+			themeDisplay, themeDisplay.getSiteGroupId());
 
-				portletId = result.getPortletId();
-				plid = result.getPlid();
-
-				break;
-			}
-			catch (PortalException pe) {
-
-				// LPS-52675
-
-				if (_log.isDebugEnabled()) {
-					_log.debug(pe, pe);
-				}
-			}
+		if (result != null) {
+			portletId = result.getPortletId();
+			plid = result.getPlid();
 		}
 
 		if ((plid == controlPanelPlid) ||
@@ -1314,6 +1285,29 @@ public class DLImpl implements DL {
 		for (String extension : extensions) {
 			_genericNames.put(extension, genericName);
 		}
+	}
+
+	private PortletLayoutFinder.Result _getPortletLayoutFinderResult(
+		ThemeDisplay themeDisplay, long groupId) {
+
+		PortletLayoutFinder.Result result = null;
+
+		for (PortletLayoutFinder portletLayoutFinder : _serviceTrackerList) {
+			try {
+				result = portletLayoutFinder.find(themeDisplay, groupId);
+
+				if (result != null) {
+					break;
+				}
+			}
+			catch (PortalException pe) {
+				if (_log.isDebugEnabled()) {
+					_log.debug(pe, pe);
+				}
+			}
+		}
+
+		return result;
 	}
 
 	private static final String _DEFAULT_FILE_ICON = "page";

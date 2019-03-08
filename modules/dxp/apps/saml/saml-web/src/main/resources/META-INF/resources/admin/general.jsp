@@ -21,10 +21,10 @@ UnicodeProperties properties = PropertiesParamUtil.getProperties(request, "setti
 
 String entityId = properties.getProperty(PortletPropsKeys.SAML_ENTITY_ID, (String)request.getAttribute(SamlWebKeys.SAML_ENTITY_ID));
 
-CertificateBindsDisplayContext.CertificateBind certificateBind = certificateBindsDisplayContext.getCertificateBind();
+GeneralTabDefaultViewDisplayContext.X509CertificateStatus certificateBind = certificateBindsDisplayContext.getX509CertificateStatus();
 
-boolean keystoreException = certificateBind.getStatus() == CertificateBindsDisplayContext.CertificateBind.Status.SAML_KEYSTORE_EXCEPTION;
-boolean keystoreIncorrectPassword = certificateBind.getStatus() == CertificateBindsDisplayContext.CertificateBind.Status.SAML_KEYSTORE_PASSWORD_INCORRECT;
+boolean keystoreException = certificateBind.getStatus() == GeneralTabDefaultViewDisplayContext.X509CertificateStatus.Status.SAML_KEYSTORE_EXCEPTION;
+boolean keystoreIncorrectPassword = certificateBind.getStatus() == GeneralTabDefaultViewDisplayContext.X509CertificateStatus.Status.SAML_KEYSTORE_PASSWORD_INCORRECT;
 String samlRole = properties.getProperty(PortletPropsKeys.SAML_ROLE, samlProviderConfiguration.role());
 %>
 

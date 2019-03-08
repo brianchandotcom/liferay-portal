@@ -29,7 +29,7 @@ import com.liferay.saml.runtime.certificate.CertificateTool;
 import com.liferay.saml.runtime.configuration.SamlProviderConfigurationHelper;
 import com.liferay.saml.runtime.metadata.LocalEntityManager;
 import com.liferay.saml.web.internal.constants.SamlAdminPortletKeys;
-import com.liferay.saml.web.internal.display.context.CertificateBindsDisplayContext;
+import com.liferay.saml.web.internal.display.context.GeneralTabDefaultViewDisplayContext;
 
 import java.util.List;
 
@@ -99,12 +99,13 @@ public class DefaultViewMVCRenderCommand implements MVCRenderCommand {
 			return;
 		}
 
-		CertificateBindsDisplayContext boundCertificatesDisplayContext =
-			new CertificateBindsDisplayContext(_localEntityManager);
+		GeneralTabDefaultViewDisplayContext
+			generalTabDefaultViewDisplayContext =
+				new GeneralTabDefaultViewDisplayContext(_localEntityManager);
 
 		renderRequest.setAttribute(
-			CertificateBindsDisplayContext.class.getName(),
-			boundCertificatesDisplayContext);
+			GeneralTabDefaultViewDisplayContext.class.getName(),
+			generalTabDefaultViewDisplayContext);
 
 		renderRequest.setAttribute(
 			SamlWebKeys.SAML_CERTIFICATE_TOOL, _certificateTool);

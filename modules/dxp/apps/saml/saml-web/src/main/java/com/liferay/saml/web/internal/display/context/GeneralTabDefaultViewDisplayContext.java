@@ -29,26 +29,26 @@ import java.util.Map;
 /**
  * @author Stian Sigvartsen
  */
-public class CertificateBindsDisplayContext {
+public class GeneralTabDefaultViewDisplayContext {
 
-	public CertificateBindsDisplayContext(
+	public GeneralTabDefaultViewDisplayContext(
 		LocalEntityManager localEntityManager) {
 
 		_localEntityManager = localEntityManager;
 	}
 
-	public CertificateBind getCertificateBind() {
-		return getCertificateBind(CertificateUsage.SIGNING);
+	public X509CertificateStatus getX509CertificateStatus() {
+		return getX509CertificateStatus(CertificateUsage.SIGNING);
 	}
 
-	public CertificateBind getCertificateBind(
+	public X509CertificateStatus getX509CertificateStatus(
 		CertificateUsage certificateUsage) {
 
-		CertificateBind certificateBind = _certificateBinds.get(
-			certificateUsage);
+		X509CertificateStatus x509CertificateStatus =
+			_x509CertificateStatuses.get(certificateUsage);
 
-		if (certificateBind != null) {
-			return certificateBind;
+		if (x509CertificateStatus != null) {
+			return x509CertificateStatus;
 		}
 
 		try {
@@ -56,17 +56,17 @@ public class CertificateBindsDisplayContext {
 				_localEntityManager.getLocalEntityCertificate(certificateUsage);
 
 			if (x509Certificate != null) {
-				certificateBind = new CertificateBind(
-					x509Certificate, CertificateBind.Status.BOUND);
+				x509CertificateStatus = new X509CertificateStatus(
+					x509Certificate, X509CertificateStatus.Status.BOUND);
 			}
 			else {
-				certificateBind = new CertificateBind(
-					null, CertificateBind.Status.UNBOUND);
+				x509CertificateStatus = new X509CertificateStatus(
+					null, X509CertificateStatus.Status.UNBOUND);
 			}
 		}
 		catch (Exception e) {
 			Throwable cause = _getCause(e, KeyStoreException.class);
-			CertificateBind.Status status;
+			X509CertificateStatus.Status status;
 
 			if (cause != null) {
 				Throwable unrecoverableKeyException;
@@ -83,7 +83,8 @@ public class CertificateBindsDisplayContext {
 					}
 
 					status =
-						CertificateBind.Status.SAML_KEYSTORE_PASSWORD_INCORRECT;
+						X509CertificateStatus.Status.
+							SAML_KEYSTORE_PASSWORD_INCORRECT;
 				}
 				else {
 					if (_log.isDebugEnabled()) {
@@ -93,7 +94,8 @@ public class CertificateBindsDisplayContext {
 							cause);
 					}
 
-					status = CertificateBind.Status.SAML_KEYSTORE_EXCEPTION;
+					status =
+						X509CertificateStatus.Status.SAML_KEYSTORE_EXCEPTION;
 				}
 			}
 			else {
@@ -108,7 +110,7 @@ public class CertificateBindsDisplayContext {
 					}
 
 					status =
-						CertificateBind.Status.
+						X509CertificateStatus.Status.
 							SAML_X509_CERTIFICATE_AUTH_NEEDED;
 				}
 				else {
@@ -123,21 +125,23 @@ public class CertificateBindsDisplayContext {
 						_log.warn(message);
 					}
 
-					status = CertificateBind.Status.UNKNOWN_EXCEPTION;
+					status = X509CertificateStatus.Status.UNKNOWN_EXCEPTION;
 				}
 			}
 
-			certificateBind = new CertificateBind(null, status);
+			x509CertificateStatus = new X509CertificateStatus(null, status);
 		}
 
-		_certificateBinds.put(certificateUsage, certificateBind);
+		_x509CertificateStatuses.put(certificateUsage, x509CertificateStatus);
 
-		return certificateBind;
+		return x509CertificateStatus;
 	}
 
-	public static class CertificateBind {
+	public static class X509CertificateStatus {
 
-		public CertificateBind(X509Certificate x509Certificate, Status status) {
+		public X509CertificateStatus(
+			X509Certificate x509Certificate, Status status) {
+
 			_x509Certificate = x509Certificate;
 			_status = status;
 		}
@@ -181,10 +185,10 @@ public class CertificateBindsDisplayContext {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		CertificateBindsDisplayContext.class);
+		GeneralTabDefaultViewDisplayContext.class);
 
-	private Map<CertificateUsage, CertificateBind> _certificateBinds =
-		new HashMap<>();
 	private final LocalEntityManager _localEntityManager;
+	private Map<CertificateUsage, X509CertificateStatus>
+		_x509CertificateStatuses = new HashMap<>();
 
 }

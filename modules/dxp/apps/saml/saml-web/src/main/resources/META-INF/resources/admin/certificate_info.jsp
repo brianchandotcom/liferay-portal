@@ -23,9 +23,9 @@ CertificateTool certificateTool = (CertificateTool)request.getAttribute(SamlWebK
 
 LocalEntityManager.CertificateUsage certificateUsage = LocalEntityManager.CertificateUsage.valueOf(ParamUtil.getString(request, "certificateUsage"));
 
-CertificateBindsDisplayContext.CertificateBind certificateBind = certificateBindsDisplayContext.getCertificateBind(certificateUsage);
+GeneralTabDefaultViewDisplayContext.X509CertificateStatus certificateBind = certificateBindsDisplayContext.getX509CertificateStatus(certificateUsage);
 X509Certificate x509Certificate = certificateBind.getX509Certificate();
-boolean certificateAuthNeeded = certificateBind.getStatus() == CertificateBindsDisplayContext.CertificateBind.Status.SAML_X509_CERTIFICATE_AUTH_NEEDED;
+boolean certificateAuthNeeded = certificateBind.getStatus() == GeneralTabDefaultViewDisplayContext.X509CertificateStatus.Status.SAML_X509_CERTIFICATE_AUTH_NEEDED;
 %>
 
 <liferay-util:buffer

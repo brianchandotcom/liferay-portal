@@ -14,6 +14,8 @@
 
 package com.liferay.jenkins.results.parser.test.clazz.group;
 
+import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
+
 import java.io.File;
 
 import java.util.List;
@@ -44,17 +46,18 @@ public interface TestClassGroup {
 			}
 
 			public String getRelativePath(File workingDirectory) {
-				String absolutePath = getAbsolutePath();
-				String workingDirectoryAbsolutePath =
-					workingDirectory.getAbsolutePath();
+				String canonicalPath =
+					JenkinsResultsParserUtil.getCanonicalPath(this);
+				String workingDirectoryCanonicalPath =
+					JenkinsResultsParserUtil.getCanonicalPath(workingDirectory);
 
-				if (!absolutePath.startsWith(workingDirectoryAbsolutePath)) {
+				if (!canonicalPath.startsWith(workingDirectoryCanonicalPath)) {
 					throw new IllegalArgumentException(
 						"Working directory does not contain this file");
 				}
 
-				return absolutePath.replaceAll(
-					workingDirectoryAbsolutePath, "");
+				return canonicalPath.replaceAll(
+					workingDirectoryCanonicalPath, "");
 			}
 
 		}

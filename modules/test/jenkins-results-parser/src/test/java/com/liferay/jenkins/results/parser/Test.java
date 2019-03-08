@@ -355,7 +355,8 @@ public class Test {
 		path = path.substring(x);
 
 		return urlString.replace(
-			"file:" + dependenciesDir.getAbsolutePath(),
+			"file:" +
+				JenkinsResultsParserUtil.getCanonicalPath(dependenciesDir),
 			"${dependencies.url}/" + path);
 	}
 

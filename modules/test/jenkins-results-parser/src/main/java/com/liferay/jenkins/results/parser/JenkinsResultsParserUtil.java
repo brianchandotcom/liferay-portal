@@ -115,7 +115,7 @@ public class JenkinsResultsParserUtil {
 			System.getProperty("java.io.tmpdir"), "jenkins-cached-files");
 
 		System.out.println(
-			"Clearing cache " + cacheDirectory.getAbsolutePath());
+			"Clearing cache " + getCanonicalPath(cacheDirectory));
 
 		if (!cacheDirectory.exists()) {
 			return;
@@ -918,7 +918,7 @@ public class JenkinsResultsParserUtil {
 		throws IOException {
 
 		final List<PathMatcher> pathMatchers = toPathMatchers(
-			rootDir.getAbsolutePath() + File.separator,
+			getCanonicalPath(rootDir) + File.separator,
 			resourceIncludesRelativeGlobs);
 
 		final List<URL> includedResourceURLs = new ArrayList<>();
@@ -1210,13 +1210,12 @@ public class JenkinsResultsParserUtil {
 
 	public static String getPathRelativeTo(File file, File relativeToFile) {
 		try {
-			String filePath = file.getCanonicalPath();
+			String filePath = getCanonicalPath(file);
 
-			return filePath.replace(
-				relativeToFile.getCanonicalPath() + "/", "");
+			return filePath.replace(getCanonicalPath(relativeToFile) + "/", "");
 		}
-		catch (IOException ioe) {
-			throw new RuntimeException("Unable to get relative path", ioe);
+		catch (RuntimeException re) {
+			throw new RuntimeException("Unable to get relative path", re);
 		}
 	}
 
@@ -1571,10 +1570,10 @@ public class JenkinsResultsParserUtil {
 				directory.getName() + " is not a directory");
 		}
 
-		String directoryAbsolutePath = directory.getAbsolutePath();
-		String fileAbsolutePath = file.getAbsolutePath();
+		String directoryCanonicalPath = getCanonicalPath(directory);
+		String fileCanonicalPath = getCanonicalPath(file);
 
-		if (fileAbsolutePath.startsWith(directoryAbsolutePath)) {
+		if (fileCanonicalPath.startsWith(directoryCanonicalPath)) {
 			return true;
 		}
 
@@ -1808,7 +1807,7 @@ public class JenkinsResultsParserUtil {
 			StringBuffer sb = new StringBuffer();
 
 			sb.append("cat ");
-			sb.append(file.getAbsolutePath());
+			sb.append(getCanonicalPath(file));
 			sb.append(" | mail -v -s ");
 			sb.append("\"");
 			sb.append(subject);

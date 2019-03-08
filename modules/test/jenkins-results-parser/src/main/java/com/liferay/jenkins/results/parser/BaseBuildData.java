@@ -282,12 +282,9 @@ public abstract class BaseBuildData implements BuildData {
 
 	@Override
 	public void setWorkspaceDir(File workspaceDir) {
-		try {
-			put("workspace_dir", workspaceDir.getCanonicalPath());
-		}
-		catch (IOException ioe) {
-			throw new RuntimeException(ioe);
-		}
+		put(
+			"workspace_dir",
+			JenkinsResultsParserUtil.getCanonicalPath(workspaceDir));
 	}
 
 	protected static boolean isValidJSONObject(

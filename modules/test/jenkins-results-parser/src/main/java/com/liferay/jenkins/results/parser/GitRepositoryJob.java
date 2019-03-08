@@ -50,7 +50,8 @@ public abstract class GitRepositoryJob extends BaseJob {
 		checkGitRepositoryDir();
 
 		gitWorkingDirectory = GitWorkingDirectoryFactory.newGitWorkingDirectory(
-			getBranchName(), gitRepositoryDir.getAbsolutePath());
+			getBranchName(),
+			JenkinsResultsParserUtil.getCanonicalPath(gitRepositoryDir));
 
 		return gitWorkingDirectory;
 	}

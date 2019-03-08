@@ -15,7 +15,6 @@
 package com.liferay.jenkins.results.parser;
 
 import java.io.File;
-import java.io.IOException;
 
 import java.util.Arrays;
 import java.util.List;
@@ -105,18 +104,13 @@ public abstract class BaseLocalGitRepository
 
 	@Override
 	public int hashCode() {
-		try {
-			File directory = getDirectory();
+		File directory = getDirectory();
 
-			String hash = JenkinsResultsParserUtil.combine(
-				directory.getCanonicalPath(), getName(),
-				getUpstreamBranchName());
+		String hash = JenkinsResultsParserUtil.combine(
+			JenkinsResultsParserUtil.getCanonicalPath(directory), getName(),
+			getUpstreamBranchName());
 
-			return hash.hashCode();
-		}
-		catch (IOException ioe) {
-			throw new RuntimeException(ioe);
-		}
+		return hash.hashCode();
 	}
 
 	protected BaseLocalGitRepository(JSONObject jsonObject) {
@@ -158,16 +152,18 @@ public abstract class BaseLocalGitRepository
 		}
 
 		try {
-			put("directory", directory.getCanonicalPath());
+			put(
+				"directory",
+				JenkinsResultsParserUtil.getCanonicalPath(directory));
 		}
-		catch (IOException ioe) {
+		catch (RuntimeException re) {
 			throw new RuntimeException(
 				JenkinsResultsParserUtil.combine(
 					"Unable to find Git repository directory.\n",
 					"Please set this location in repository.dir[", getName(),
 					"][", getUpstreamBranchName(),
 					"] in repository.properties."),
-				ioe);
+				re);
 		}
 	}
 

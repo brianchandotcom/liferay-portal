@@ -1810,7 +1810,8 @@ public class GitWorkingDirectory {
 		File workingDirectory = getWorkingDirectory();
 
 		String command = JenkinsResultsParserUtil.combine(
-			"git ls-remote -h ", workingDirectory.getAbsolutePath());
+			"git ls-remote -h ",
+			JenkinsResultsParserUtil.getCanonicalPath(workingDirectory));
 
 		GitUtil.ExecutionResult executionResult = executeBashCommands(
 			GitUtil.MAX_RETRIES, GitUtil.RETRY_DELAY, 1000 * 60 * 10, command);
@@ -2252,13 +2253,7 @@ public class GitWorkingDirectory {
 
 		if (file != null) {
 			sb.append(" ");
-
-			try {
-				sb.append(file.getCanonicalPath());
-			}
-			catch (IOException ioe) {
-				throw new RuntimeException(ioe);
-			}
+			sb.append(JenkinsResultsParserUtil.getCanonicalPath(file));
 		}
 
 		GitUtil.ExecutionResult result = executeBashCommands(

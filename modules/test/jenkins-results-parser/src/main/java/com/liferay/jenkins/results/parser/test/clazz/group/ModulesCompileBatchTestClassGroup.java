@@ -52,7 +52,9 @@ public class ModulesCompileBatchTestClassGroup
 			File moduleBaseDir, File modulesDir) {
 
 			return new ModulesCompileBatchTestClass(
-				new TestClassFile(moduleBaseDir.getAbsolutePath()), modulesDir);
+				new TestClassFile(
+					JenkinsResultsParserUtil.getCanonicalPath(moduleBaseDir)),
+				modulesDir);
 		}
 
 		protected ModulesCompileBatchTestClass(
@@ -180,7 +182,8 @@ public class ModulesCompileBatchTestClassGroup
 		for (File moduleDir : moduleDirsList) {
 			testClasses.add(
 				ModulesCompileBatchTestClass.getInstance(
-					new TestClass.TestClassFile(moduleDir.getAbsolutePath()),
+					new TestClass.TestClassFile(
+						JenkinsResultsParserUtil.getCanonicalPath(moduleDir)),
 					portalModulesBaseDir));
 		}
 	}

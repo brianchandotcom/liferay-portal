@@ -69,8 +69,9 @@ public class ServiceBuilderBatchTestClassGroup
 			List<File> modulesProjectDirs) {
 
 			return new ServiceBuilderBatchTestClass(
-				new TestClassFile(moduleBaseDir.getAbsolutePath()), modulesDir,
-				modulesProjectDirs);
+				new TestClassFile(
+					JenkinsResultsParserUtil.getCanonicalPath(moduleBaseDir)),
+				modulesDir, modulesProjectDirs);
 		}
 
 		protected ServiceBuilderBatchTestClass(

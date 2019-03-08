@@ -721,7 +721,10 @@ public class JUnitBatchTestClassGroup extends BatchTestClassGroup {
 
 		testClassNamesIncludesPathMatchers.addAll(
 			JenkinsResultsParserUtil.toPathMatchers(
-				_rootWorkingDirectory.getAbsolutePath() + File.separator,
+				JenkinsResultsParserUtil.combine(
+					JenkinsResultsParserUtil.getCanonicalPath(
+						_rootWorkingDirectory),
+					File.separator),
 				testClassNamesIncludesRelativeGlobs.toArray(
 					new String[testClassNamesIncludesRelativeGlobs.size()])));
 	}

@@ -35,7 +35,8 @@ public class GitWorkingDirectoryFactory {
 		}
 
 		try {
-			String gitRepositoryDirPath = gitRepositoryDir.getCanonicalPath();
+			String gitRepositoryDirPath =
+				JenkinsResultsParserUtil.getCanonicalPath(gitRepositoryDir);
 
 			String key = JenkinsResultsParserUtil.combine(
 				gitRepositoryDirPath, "-", upstreamBranchName);

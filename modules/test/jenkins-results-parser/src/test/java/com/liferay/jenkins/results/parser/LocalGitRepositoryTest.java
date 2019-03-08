@@ -33,7 +33,9 @@ public class LocalGitRepositoryTest extends GitRepositoryTest {
 		File directory = localGitRepository.getDirectory();
 
 		try {
-			if (!REPOSITORY_DIR.equals(directory.getCanonicalPath())) {
+			if (!REPOSITORY_DIR.equals(
+					JenkinsResultsParserUtil.getCanonicalPath(directory))) {
+
 				errorCollector.addError(
 					new Throwable(
 						"The repository directorydirectory should be " +

@@ -155,7 +155,8 @@ public class NPMTestBatchTestClassGroup extends BatchTestClassGroup {
 				moduleDir,
 				new NPMTestBatchTestClass(
 					batchName, gitWorkingDirectory,
-					new TestClassFile(moduleDir.getAbsolutePath())));
+					new TestClassFile(
+						JenkinsResultsParserUtil.getCanonicalPath(moduleDir))));
 
 			return _npmTestBatchTestClasses.get(moduleDir);
 		}
@@ -187,11 +188,13 @@ public class NPMTestBatchTestClassGroup extends BatchTestClassGroup {
 
 			File workingDirectory = _gitWorkingDirectory.getWorkingDirectory();
 
-			String workingDirectoryPath = workingDirectory.getAbsolutePath();
+			String workingDirectoryPath =
+				JenkinsResultsParserUtil.getCanonicalPath(workingDirectory);
 
 			for (File jsFile : jsFiles) {
 				try {
-					String jsFileRelativePath = jsFile.getAbsolutePath();
+					String jsFileRelativePath =
+						JenkinsResultsParserUtil.getCanonicalPath(jsFile);
 
 					jsFileRelativePath = jsFileRelativePath.replace(
 						workingDirectoryPath, "");
@@ -270,7 +273,8 @@ public class NPMTestBatchTestClassGroup extends BatchTestClassGroup {
 			NPMTestBatchTestClass npmTestBatchTestClass =
 				NPMTestBatchTestClass.getInstance(
 					batchName, portalGitWorkingDirectory,
-					new TestClass.TestClassFile(moduleDir.getAbsolutePath()));
+					new TestClass.TestClassFile(
+						JenkinsResultsParserUtil.getCanonicalPath(moduleDir)));
 
 			testClasses.add(npmTestBatchTestClass);
 

@@ -60,7 +60,7 @@ public class ModulesJUnitBatchTestClassGroup extends JUnitBatchTestClassGroup {
 
 		for (File releaseModuleAppDir : releaseModuleAppDirs) {
 			String releaseModuleAppAbsolutePath =
-				releaseModuleAppDir.getAbsolutePath();
+				JenkinsResultsParserUtil.getCanonicalPath(releaseModuleAppDir);
 
 			String appSourceRelativePath =
 				releaseModuleAppAbsolutePath.substring(
@@ -125,7 +125,7 @@ public class ModulesJUnitBatchTestClassGroup extends JUnitBatchTestClassGroup {
 
 		for (File modifiedModuleDir : modifiedModuleDirsList) {
 			String modifiedModuleAbsolutePath =
-				modifiedModuleDir.getAbsolutePath();
+				JenkinsResultsParserUtil.getCanonicalPath(modifiedModuleDir);
 
 			String modifiedModuleRelativePath =
 				modifiedModuleAbsolutePath.substring(

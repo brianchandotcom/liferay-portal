@@ -99,7 +99,8 @@ public class FunctionalBatchTestClassGroup extends BatchTestClassGroup {
 			portalGitWorkingDirectory.getModifiedDirsList(
 				false,
 				JenkinsResultsParserUtil.toPathMatchers(
-					null, modulesDir.getAbsolutePath()),
+					null,
+					JenkinsResultsParserUtil.getCanonicalPath(modulesDir)),
 				null));
 
 		modifiedDirsList.addAll(

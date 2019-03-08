@@ -379,12 +379,17 @@ public class MergeCentralGitSubrepositoryUtil {
 		File centralWorkingDirectory =
 			centralGitWorkingDirectory.getWorkingDirectory();
 
-		String ciMergeFilePath = gitrepoFile.getCanonicalPath();
+		String ciMergeFilePath = JenkinsResultsParserUtil.getCanonicalPath(
+			gitrepoFile);
 
 		ciMergeFilePath = ciMergeFilePath.replace(".gitrepo", "ci-merge");
 
 		return ciMergeFilePath.replace(
-			centralWorkingDirectory.getCanonicalPath() + File.separator, "");
+			JenkinsResultsParserUtil.combine(
+				JenkinsResultsParserUtil.getCanonicalPath(
+					centralWorkingDirectory),
+				File.separator),
+			"");
 	}
 
 	private static String _getMergeBranchName(

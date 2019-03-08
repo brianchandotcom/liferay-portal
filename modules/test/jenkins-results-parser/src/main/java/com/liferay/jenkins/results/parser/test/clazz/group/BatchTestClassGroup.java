@@ -254,7 +254,8 @@ public abstract class BatchTestClassGroup extends BaseTestClassGroup {
 		}
 
 		return JenkinsResultsParserUtil.toPathMatchers(
-			workingDirectory.getAbsolutePath() + File.separator,
+			JenkinsResultsParserUtil.getCanonicalPath(workingDirectory) +
+				File.separator,
 			JenkinsResultsParserUtil.getGlobsFromProperty(relativeGlobs));
 	}
 

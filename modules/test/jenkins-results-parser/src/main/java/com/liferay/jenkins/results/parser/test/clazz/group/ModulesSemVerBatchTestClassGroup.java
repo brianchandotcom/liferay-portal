@@ -53,8 +53,9 @@ public class ModulesSemVerBatchTestClassGroup
 			List<File> modulesProjectDirs) {
 
 			return new ModulesSemVerBatchTestClass(
-				new TestClassFile(moduleBaseDir.getAbsolutePath()), modulesDir,
-				modulesProjectDirs);
+				new TestClassFile(
+					JenkinsResultsParserUtil.getCanonicalPath(moduleBaseDir)),
+				modulesDir, modulesProjectDirs);
 		}
 
 		protected ModulesSemVerBatchTestClass(
@@ -167,7 +168,8 @@ public class ModulesSemVerBatchTestClassGroup
 				testClasses.add(
 					ModulesSemVerBatchTestClass.getInstance(
 						new TestClass.TestClassFile(
-							moduleDir.getAbsolutePath()),
+							JenkinsResultsParserUtil.getCanonicalPath(
+								moduleDir)),
 						portalModulesBaseDir, modulesProjectsDirs));
 			}
 		}

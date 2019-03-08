@@ -11,11 +11,10 @@ import {setIn} from '../../utils/FragmentsEditorUpdateUtils.es';
  * Tells if a priority an `obj2`
  * has higher, equal or lower priority
  * than `obj1`
- *
- * @review
  * @param {object} obj1
  * @param {object} obj2
  * @returns {1|0|-1}
+ * @review
  */
 function comparePriority(obj1, obj2) {
 	let result = 0;
@@ -34,11 +33,10 @@ function comparePriority(obj1, obj2) {
 /**
  * Searchs for a segment based on its Id
  * and returns its label
- *
- * @review
  * @param {Array} segments
  * @param {string} segmentsEntryId
  * @returns {string|undefined}
+ * @review
  */
 function findSegmentsEntryLabelById(segments, segmentsEntryId) {
 	const mostWantedSegment = segments.find(
@@ -56,7 +54,6 @@ class SegmentsExperienceSelector extends Component {
 	/**
 	 * Transforms `availableSegmentsEntries` and `availableSegmentsExperiences` objects into arrays
 	 * Adds `activeSegmentsExperienceLabel` to the component state
-	 *
 	 * @inheritDoc
 	 * @review
 	 */
@@ -106,18 +103,18 @@ class SegmentsExperienceSelector extends Component {
 	}
 
 	/**
+	 * @memberof SegmentsExperienceSelector
 	 * @private
 	 * @review
-	 * @memberof SegmentsExperienceSelector
 	 */
 	_closeDropdown() {
 		this.openDropdown = false;
 	}
 
 	/**
+	 * @memberof SegmentsExperienceSelector
 	 * @private
 	 * @review
-	 * @memberof SegmentsExperienceSelector
 	 */
 	_closeModal() {
 		this.store.dispatchAction(
@@ -147,7 +144,6 @@ class SegmentsExperienceSelector extends Component {
 
 	/**
 	 * Dispatches action to delete an experience
-	 *
 	 * @memberof SegmentsExperienceSelector
 	 * @param {!string} segmentsExperienceId
 	 * @private
@@ -231,10 +227,9 @@ class SegmentsExperienceSelector extends Component {
 	}
 
 	/**
-	 *
+	 * @memberof SegmentsExperienceSelector
 	 * @review
 	 * @param {Event} event
-	 * @memberof SegmentsExperienceSelector
 	 */
 	_handleFormSubmit(event) {
 		event.preventDefault();

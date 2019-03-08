@@ -89,8 +89,6 @@ function createSegmentsExperienceReducer(state, actionType, payload) {
 }
 
 /**
- *
- *
  * @export
  * @param {!object} state
  * @param {!string} actionType
@@ -184,8 +182,6 @@ function endCreateSegmentsExperience(state, actionType) {
 }
 
 /**
- *
- *
  * @export
  * @param {!object} state
  * @param {!string} actionType

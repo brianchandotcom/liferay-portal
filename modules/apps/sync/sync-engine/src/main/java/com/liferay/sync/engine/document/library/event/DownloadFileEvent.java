@@ -98,7 +98,7 @@ public class DownloadFileEvent extends BaseEvent {
 			sb.append("&targetVersionId=");
 			sb.append(getParameterValue("targetVersionId"));
 		}
-		else {
+		else if (!(boolean)getParameterValue("latestVersion")) {
 			sb.append("?version=");
 			sb.append(syncFile.getVersion());
 			sb.append("&versionId=");

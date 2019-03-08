@@ -224,6 +224,13 @@ public class FileEventUtil {
 	public static void downloadFile(
 		long syncAccountId, SyncFile syncFile, boolean batch, boolean lan) {
 
+		downloadFile(syncAccountId, syncFile, batch, lan, false);
+	}
+
+	public static void downloadFile(
+		long syncAccountId, SyncFile syncFile, boolean batch, boolean lan,
+		boolean latestVersion) {
+
 		if (isDownloadInProgress(syncFile)) {
 			return;
 		}
@@ -231,6 +238,7 @@ public class FileEventUtil {
 		Map<String, Object> parameters = new HashMap<>();
 
 		parameters.put("batch", batch);
+		parameters.put("latestVersion", latestVersion);
 		parameters.put("patch", false);
 		parameters.put("syncFile", syncFile);
 

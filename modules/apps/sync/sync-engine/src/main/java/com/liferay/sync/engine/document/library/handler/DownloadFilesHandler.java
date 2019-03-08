@@ -19,6 +19,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.liferay.sync.engine.document.library.event.Event;
 import com.liferay.sync.engine.document.library.util.FileEventUtil;
 import com.liferay.sync.engine.model.SyncFile;
+import com.liferay.sync.engine.service.SyncFileService;
 import com.liferay.sync.engine.session.Session;
 import com.liferay.sync.engine.session.SessionManager;
 import com.liferay.sync.engine.session.rate.limiter.RateLimitedInputStream;
@@ -175,6 +176,8 @@ public class DownloadFilesHandler extends BaseHandler {
 					handlers.remove(zipEntryName);
 
 					downloadFileHandler.removeEvent();
+
+					SyncFileService.update(syncFile);
 				}
 			}
 		}

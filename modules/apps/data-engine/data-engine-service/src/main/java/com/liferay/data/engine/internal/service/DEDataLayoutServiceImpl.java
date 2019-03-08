@@ -20,6 +20,8 @@ import com.liferay.data.engine.internal.executor.DEDataLayoutListRequestExecutor
 import com.liferay.data.engine.internal.executor.DEDataLayoutSaveRequestExecutor;
 import com.liferay.data.engine.internal.io.DEDataLayoutDeserializerTracker;
 import com.liferay.data.engine.internal.io.DEDataLayoutSerializerTracker;
+import com.liferay.data.engine.service.DEDataLayoutDeleteRequest;
+import com.liferay.data.engine.service.DEDataLayoutDeleteResponse;
 import com.liferay.data.engine.service.DEDataLayoutGetRequest;
 import com.liferay.data.engine.service.DEDataLayoutGetResponse;
 import com.liferay.data.engine.service.DEDataLayoutListRequest;
@@ -39,6 +41,17 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(immediate = true, service = DEDataLayoutService.class)
 public class DEDataLayoutServiceImpl implements DEDataLayoutService {
+
+	@Override
+	public DEDataLayoutDeleteResponse execute(
+			DEDataLayoutDeleteRequest deDataLayoutDeleteRequest)
+		throws DEDataLayoutException {
+
+		/**
+		 * TODO: Implement executor here
+		 */
+		return null;
+	}
 
 	@Override
 	public DEDataLayoutGetResponse execute(

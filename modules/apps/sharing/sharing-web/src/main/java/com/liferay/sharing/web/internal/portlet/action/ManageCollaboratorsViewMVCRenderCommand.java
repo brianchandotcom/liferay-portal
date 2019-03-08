@@ -25,7 +25,6 @@ import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.template.Template;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
-import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -39,7 +38,6 @@ import com.liferay.sharing.web.internal.util.SharingUtil;
 import java.text.DateFormat;
 import java.text.Format;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -97,9 +95,6 @@ public class ManageCollaboratorsViewMVCRenderCommand
 			long classNameId = ParamUtil.getLong(renderRequest, "classNameId");
 			long classPK = ParamUtil.getLong(renderRequest, "classPK");
 
-			ThemeDisplay themeDisplay =
-				(ThemeDisplay)renderRequest.getAttribute(WebKeys.THEME_DISPLAY);
-
 			int sharingEntriesCount =
 				_sharingEntryLocalService.getSharingEntriesCount(
 					classNameId, classPK);
@@ -108,31 +103,19 @@ public class ManageCollaboratorsViewMVCRenderCommand
 				return JSONFactoryUtil.createJSONArray();
 			}
 
-			List<SharingEntry> sharingEntries =
-				_sharingEntryLocalService.getSharingEntries(
-					classNameId, classPK);
-
-			List<ObjectValuePair<SharingEntry, User>> sharingEntryToUserOVPs =
-				new ArrayList<>();
-
-			for (SharingEntry sharingEntry : sharingEntries) {
-				User toUser = _userLocalService.fetchUser(
-					sharingEntry.getToUserId());
-
-				if (toUser != null) {
-					sharingEntryToUserOVPs.add(
-						new ObjectValuePair<>(sharingEntry, toUser));
-				}
-			}
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)renderRequest.getAttribute(WebKeys.THEME_DISPLAY);
 
 			JSONArray collaboratorsJSONArray =
 				JSONFactoryUtil.createJSONArray();
 
-			for (ObjectValuePair<SharingEntry, User> sharingEntryToUserOVP :
-					sharingEntryToUserOVPs) {
+			List<SharingEntry> sharingEntries =
+				_sharingEntryLocalService.getSharingEntries(
+					classNameId, classPK);
 
-				SharingEntry sharingEntry = sharingEntryToUserOVP.getKey();
-				User sharingEntryToUser = sharingEntryToUserOVP.getValue();
+			for (SharingEntry sharingEntry : sharingEntries) {
+				User sharingEntryToUser = _userLocalService.fetchUser(
+					sharingEntry.getToUserId());
 
 				JSONObject collaboratorJSONObject =
 					JSONFactoryUtil.createJSONObject();

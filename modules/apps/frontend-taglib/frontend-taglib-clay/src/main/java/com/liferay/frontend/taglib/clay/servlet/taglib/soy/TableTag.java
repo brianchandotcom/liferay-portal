@@ -14,10 +14,13 @@
 
 package com.liferay.frontend.taglib.clay.servlet.taglib.soy;
 
+import com.liferay.frontend.taglib.clay.internal.ClayTagDataSourceProvider;
+import com.liferay.frontend.taglib.clay.servlet.taglib.data.ClayTagDataSource;
 import com.liferay.frontend.taglib.clay.servlet.taglib.display.context.TableDisplayContext;
 import com.liferay.frontend.taglib.clay.servlet.taglib.display.context.table.Schema;
 import com.liferay.frontend.taglib.clay.servlet.taglib.display.context.table.Size;
 import com.liferay.frontend.taglib.clay.servlet.taglib.soy.base.BaseClayTag;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.util.Collection;
 import java.util.HashSet;
@@ -26,7 +29,7 @@ import java.util.Map;
 /**
  * @author Iván Zaera Avellón
  */
-public class TableTag extends BaseClayTag {
+public class TableTag<T> extends BaseClayTag {
 
 	@Override
 	public int doStartTag() {
@@ -34,11 +37,19 @@ public class TableTag extends BaseClayTag {
 		setHydrate(true);
 		setModuleBaseName("table");
 
+		int returnValue = super.doStartTag();
+
 		if (_tableDisplayContext != null) {
 			_populateContext(_tableDisplayContext);
 		}
 
-		return super.doStartTag();
+		ClayTagDataSource<T> clayTagDataSource = getClayTagDataSource();
+
+		if (clayTagDataSource != null) {
+			_populateContext(clayTagDataSource);
+		}
+
+		return returnValue;
 	}
 
 	public TableDisplayContext getDisplayContext() {
@@ -47,6 +58,10 @@ public class TableTag extends BaseClayTag {
 
 	public void setActionsMenuVariant(String actionsMenuVariant) {
 		putValue("actionsMenuVariant", actionsMenuVariant);
+	}
+
+	public void setDataSourceKey(String dataSourceKey) {
+		putValue("dataSourceKey", dataSourceKey);
 	}
 
 	public void setDisplayContext(TableDisplayContext tableDisplayContext) {
@@ -102,6 +117,27 @@ public class TableTag extends BaseClayTag {
 		super.cleanUp();
 
 		_tableDisplayContext = null;
+	}
+
+	protected ClayTagDataSource<T> getClayTagDataSource() {
+		Map<String, Object> context = getContext();
+
+		String dataSourceKey = (String)context.get("dataSourceKey");
+
+		if (Validator.isNull(dataSourceKey)) {
+			return null;
+		}
+
+		return (ClayTagDataSource<T>)
+			ClayTagDataSourceProvider.getClayTagDataSource(dataSourceKey);
+	}
+
+	private void _populateContext(ClayTagDataSource<T> clayTagDataSource) {
+		Map<String, Object> context = getContext();
+
+		if (context.get("items") == null) {
+			setItems(clayTagDataSource.getItems(request));
+		}
 	}
 
 	private void _populateContext(TableDisplayContext tableDisplayContext) {

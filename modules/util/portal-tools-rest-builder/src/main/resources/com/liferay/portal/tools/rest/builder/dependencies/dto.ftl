@@ -99,8 +99,8 @@ public class ${schemaName} <#if freeMarkerTool.getDTOParentClassName(openAPIYAML
 				access = JsonProperty.Access.READ_WRITE
 			</#if>
 		)
-		<#if schema.required?seq_contains(javaMethodParameter.parameterName)>
-		@NotNull
+		<#if schema.requiredPropertySchemaNames?? && schema.requiredPropertySchemaNames?seq_contains(javaMethodParameter.parameterName)>
+			@NotNull
 		</#if>
 		protected ${javaDataType} ${javaMethodParameter.parameterName};
 	</#list>

@@ -54,8 +54,8 @@ public class Schema {
 		return _reference;
 	}
 
-	public List<String> getRequired() {
-		return _required;
+	public List<String> getRequiredPropertySchemaNames() {
+		return _requiredPropertySchemaNames;
 	}
 
 	public String getType() {
@@ -106,8 +106,10 @@ public class Schema {
 		_reference = reference;
 	}
 
-	public void setRequired(List<String> required) {
-		_required = required;
+	public void setRequiredPropertySchemaNames(
+		List<String> requiredPropertySchemaNames) {
+
+		_requiredPropertySchemaNames = requiredPropertySchemaNames;
 	}
 
 	public void setType(String type) {
@@ -127,7 +129,7 @@ public class Schema {
 	private Map<String, Schema> _propertySchemas;
 	private boolean _readOnly;
 	private String _reference;
-	private List<String> _required;
+	private List<String> _requiredPropertySchemaNames;
 	private String _type;
 	private boolean _writeOnly;
 

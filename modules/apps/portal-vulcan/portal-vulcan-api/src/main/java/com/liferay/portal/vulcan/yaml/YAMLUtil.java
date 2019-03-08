@@ -132,6 +132,12 @@ public class YAMLUtil {
 		schemaTypeDescription.addPropertyParameters(
 			"properties", String.class, Schema.class);
 
+		schemaTypeDescription.substituteProperty(
+			"required", List.class, "getRequiredPropertySchemaNames",
+			"setRequiredPropertySchemaNames");
+
+		schemaTypeDescription.addPropertyParameters("required", String.class);
+
 		openAPIYAMLConstructor.addTypeDescription(schemaTypeDescription);
 
 		_YAML_OPEN_API = new Yaml(openAPIYAMLConstructor, representer);

@@ -223,8 +223,8 @@ public class DDLExporterTest {
 
 	@Test
 	public void testExportRecordsWithDistinctFields() throws Exception {
-		com.liferay.dynamic.data.mapping.kernel.DDMForm ddmForm =
-			DDMFormTestUtil.createDDMForm(_availableLocales, _defaultLocale);
+		DDMForm ddmForm = DDMFormTestUtil.createDDMForm(
+			_availableLocales, _defaultLocale);
 
 		ddmForm.addDDMFormField(
 			DDMFormTestUtil.createTextDDMFormField(

@@ -29,7 +29,7 @@ import org.osgi.service.component.annotations.Component;
 		"ddm.form.field.type.description=document-library-field-type-description",
 		"ddm.form.field.type.display.order:Integer=9",
 		"ddm.form.field.type.group=customized",
-		"ddm.form.field.type.icon=documents-and-media",
+		"ddm.form.field.type.icon=upload",
 		"ddm.form.field.type.js.class.name=Liferay.DDM.Field.DocumentLibrary",
 		"ddm.form.field.type.js.module=liferay-ddm-form-field-document-library",
 		"ddm.form.field.type.label=document-library-field-type-label",

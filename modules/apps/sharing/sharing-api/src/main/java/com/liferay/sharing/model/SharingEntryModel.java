@@ -105,6 +105,34 @@ public interface SharingEntryModel
 	public void setGroupId(long groupId);
 
 	/**
+	 * Returns the user ID of this sharing entry.
+	 *
+	 * @return the user ID of this sharing entry
+	 */
+	public long getUserId();
+
+	/**
+	 * Sets the user ID of this sharing entry.
+	 *
+	 * @param userId the user ID of this sharing entry
+	 */
+	public void setUserId(long userId);
+
+	/**
+	 * Returns the user uuid of this sharing entry.
+	 *
+	 * @return the user uuid of this sharing entry
+	 */
+	public String getUserUuid();
+
+	/**
+	 * Sets the user uuid of this sharing entry.
+	 *
+	 * @param userUuid the user uuid of this sharing entry
+	 */
+	public void setUserUuid(String userUuid);
+
+	/**
 	 * Returns the company ID of this sharing entry.
 	 *
 	 * @return the company ID of this sharing entry
@@ -151,34 +179,6 @@ public interface SharingEntryModel
 	 */
 	@Override
 	public void setModifiedDate(Date modifiedDate);
-
-	/**
-	 * Returns the from user ID of this sharing entry.
-	 *
-	 * @return the from user ID of this sharing entry
-	 */
-	public long getFromUserId();
-
-	/**
-	 * Sets the from user ID of this sharing entry.
-	 *
-	 * @param fromUserId the from user ID of this sharing entry
-	 */
-	public void setFromUserId(long fromUserId);
-
-	/**
-	 * Returns the from user uuid of this sharing entry.
-	 *
-	 * @return the from user uuid of this sharing entry
-	 */
-	public String getFromUserUuid();
-
-	/**
-	 * Sets the from user uuid of this sharing entry.
-	 *
-	 * @param fromUserUuid the from user uuid of this sharing entry
-	 */
-	public void setFromUserUuid(String fromUserUuid);
 
 	/**
 	 * Returns the to user ID of this sharing entry.

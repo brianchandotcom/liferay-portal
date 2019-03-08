@@ -73,14 +73,14 @@ public class SharingEntryCacheModel
 		sb.append(sharingEntryId);
 		sb.append(", groupId=");
 		sb.append(groupId);
+		sb.append(", userId=");
+		sb.append(userId);
 		sb.append(", companyId=");
 		sb.append(companyId);
 		sb.append(", createDate=");
 		sb.append(createDate);
 		sb.append(", modifiedDate=");
 		sb.append(modifiedDate);
-		sb.append(", fromUserId=");
-		sb.append(fromUserId);
 		sb.append(", toUserId=");
 		sb.append(toUserId);
 		sb.append(", classNameId=");
@@ -111,6 +111,7 @@ public class SharingEntryCacheModel
 
 		sharingEntryImpl.setSharingEntryId(sharingEntryId);
 		sharingEntryImpl.setGroupId(groupId);
+		sharingEntryImpl.setUserId(userId);
 		sharingEntryImpl.setCompanyId(companyId);
 
 		if (createDate == Long.MIN_VALUE) {
@@ -127,7 +128,6 @@ public class SharingEntryCacheModel
 			sharingEntryImpl.setModifiedDate(new Date(modifiedDate));
 		}
 
-		sharingEntryImpl.setFromUserId(fromUserId);
 		sharingEntryImpl.setToUserId(toUserId);
 		sharingEntryImpl.setClassNameId(classNameId);
 		sharingEntryImpl.setClassPK(classPK);
@@ -154,11 +154,11 @@ public class SharingEntryCacheModel
 
 		groupId = objectInput.readLong();
 
+		userId = objectInput.readLong();
+
 		companyId = objectInput.readLong();
 		createDate = objectInput.readLong();
 		modifiedDate = objectInput.readLong();
-
-		fromUserId = objectInput.readLong();
 
 		toUserId = objectInput.readLong();
 
@@ -185,11 +185,11 @@ public class SharingEntryCacheModel
 
 		objectOutput.writeLong(groupId);
 
+		objectOutput.writeLong(userId);
+
 		objectOutput.writeLong(companyId);
 		objectOutput.writeLong(createDate);
 		objectOutput.writeLong(modifiedDate);
-
-		objectOutput.writeLong(fromUserId);
 
 		objectOutput.writeLong(toUserId);
 
@@ -206,10 +206,10 @@ public class SharingEntryCacheModel
 	public String uuid;
 	public long sharingEntryId;
 	public long groupId;
+	public long userId;
 	public long companyId;
 	public long createDate;
 	public long modifiedDate;
-	public long fromUserId;
 	public long toUserId;
 	public long classNameId;
 	public long classPK;

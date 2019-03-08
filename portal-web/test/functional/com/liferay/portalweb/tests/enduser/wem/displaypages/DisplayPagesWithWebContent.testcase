@@ -452,7 +452,23 @@ definition {
 				webContentContent = "Webcontent Content",
 				webContentTitle = "Webcontent Title"
 			);
+		}
 
+		task ("Assert the display page is selected by default") {
+			Panel.expandPanel(panel = "Display Page");
+
+			AssertSelectedLabel(
+				locator1 = "WCEditWebContent#DISPLAY_PAGE_SELECT",
+				value1 = "Default Display Page"
+			);
+
+			AssertTextEquals(
+				locator1 = "WCEditWebContent#DISPLAY_PAGE_DEFAULT_SELECTION",
+				value1 = "Display Page Name"
+			);
+		}
+
+		task ("Publish the web content article") {
 			PortletEntry.publish();
 		}
 

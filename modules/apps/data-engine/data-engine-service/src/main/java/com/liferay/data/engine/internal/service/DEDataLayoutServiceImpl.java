@@ -15,6 +15,7 @@
 package com.liferay.data.engine.internal.service;
 
 import com.liferay.data.engine.exception.DEDataLayoutException;
+import com.liferay.data.engine.internal.executor.DEDataLayoutDeleteRequestExecutor;
 import com.liferay.data.engine.internal.executor.DEDataLayoutGetRequestExecutor;
 import com.liferay.data.engine.internal.executor.DEDataLayoutSaveRequestExecutor;
 import com.liferay.data.engine.internal.io.DEDataLayoutDeserializerTracker;
@@ -44,10 +45,11 @@ public class DEDataLayoutServiceImpl implements DEDataLayoutService {
 			DEDataLayoutDeleteRequest deDataLayoutDeleteRequest)
 		throws DEDataLayoutException {
 
-		/**
-		 * TODO: Implement executor here
-		 */
-		return null;
+		DEDataLayoutDeleteRequestExecutor deDataLayoutDeleteRequestExecutor =
+			getDEDataLayoutDeleteRequestExecutor();
+
+		return deDataLayoutDeleteRequestExecutor.execute(
+			deDataLayoutDeleteRequest);
 	}
 
 	@Override
@@ -70,6 +72,19 @@ public class DEDataLayoutServiceImpl implements DEDataLayoutService {
 			getDEDataLayoutSaveRequestExecutor();
 
 		return deDataLayoutSaveRequestExecutor.execute(deDataLayoutSaveRequest);
+	}
+
+	public DEDataLayoutDeleteRequestExecutor
+		getDEDataLayoutDeleteRequestExecutor() {
+
+		if (_deDataLayoutDeleteRequestExecutor == null) {
+			_deDataLayoutDeleteRequestExecutor =
+				new DEDataLayoutDeleteRequestExecutor(
+					_ddmStructureLayoutLocalService,
+					_ddmStructureVersionLocalService);
+		}
+
+		return _deDataLayoutDeleteRequestExecutor;
 	}
 
 	public DEDataLayoutGetRequestExecutor getDEDataLayoutGetRequestExecutor() {
@@ -110,6 +125,7 @@ public class DEDataLayoutServiceImpl implements DEDataLayoutService {
 	@Reference
 	private DEDataLayoutDeserializerTracker _deDataLayoutDeserializerTracker;
 
+	private DEDataLayoutDeleteRequestExecutor _deDataLayoutDeleteRequestExecutor;
 	private DEDataLayoutGetRequestExecutor _deDataLayoutGetRequestExecutor;
 	private DEDataLayoutSaveRequestExecutor _deDataLayoutSaveRequestExecutor;
 

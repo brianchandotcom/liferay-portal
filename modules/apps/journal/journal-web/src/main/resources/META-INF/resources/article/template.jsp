@@ -28,35 +28,40 @@ DDMTemplate ddmTemplate = journalEditArticleDisplayContext.getDDMTemplate();
 <aui:input name="groupId" type="hidden" value="<%= journalEditArticleDisplayContext.getGroupId() %>" />
 <aui:input name="ddmTemplateKey" type="hidden" value="<%= (ddmTemplate != null) ? ddmTemplate.getTemplateKey() : StringPool.BLANK %>" />
 
-<c:if test="<%= ListUtil.isNotEmpty(ddmStructure.getTemplates()) %>">
-	<p class="small text-secondary"><liferay-ui:message key="this-template-will-be-used-when-showing-the-content-within-a-widget" /></p>
+<c:choose>
+	<c:when test="<%= ListUtil.isNotEmpty(ddmStructure.getTemplates()) %>">
+		<p class="small text-secondary"><liferay-ui:message key="this-template-will-be-used-when-showing-the-content-within-a-widget" /></p>
 
-	<div class="input-group input-group-sm">
-		<aui:input disabled="<%= true %>" label="" name="ddmTemplateName" value='<%= (ddmTemplate != null) ? HtmlUtil.escape(ddmTemplate.getName(locale)) : LanguageUtil.get(request, "none") %>' wrapperCssClass="input-group-item mb-0" />
+		<div class="input-group input-group-sm">
+			<aui:input disabled="<%= true %>" label="" name="ddmTemplateName" value='<%= (ddmTemplate != null) ? HtmlUtil.escape(ddmTemplate.getName(locale)) : LanguageUtil.get(request, "none") %>' wrapperCssClass="input-group-item mb-0" />
 
-		<c:if test="<%= (ddmTemplate != null) && DDMTemplatePermission.contains(permissionChecker, ddmTemplate, ActionKeys.UPDATE) %>">
-			<clay:button
-				elementClasses="ml-1"
-				icon="pencil"
-				id='<%= liferayPortletResponse.getNamespace() + "editDDMTemplate" %>'
-				size="sm"
-				style="secondary"
-			/>
-		</c:if>
+			<c:if test="<%= (ddmTemplate != null) && DDMTemplatePermission.contains(permissionChecker, ddmTemplate, ActionKeys.UPDATE) %>">
+				<clay:button
+					elementClasses="ml-1"
+					icon="pencil"
+					id='<%= liferayPortletResponse.getNamespace() + "editDDMTemplate" %>'
+					size="sm"
+					style="secondary"
+				/>
+			</c:if>
 
-		<c:if test="<%= (article != null) && (ddmTemplate != null) %>">
-			<clay:button
-				elementClasses="ml-1"
-				icon="view"
-				id='<%= liferayPortletResponse.getNamespace() + "previewWithTemplate" %>'
-				size="sm"
-				style="secondary"
-			/>
-		</c:if>
-	</div>
+			<c:if test="<%= (article != null) && (ddmTemplate != null) %>">
+				<clay:button
+					elementClasses="ml-1"
+					icon="view"
+					id='<%= liferayPortletResponse.getNamespace() + "previewWithTemplate" %>'
+					size="sm"
+					style="secondary"
+				/>
+			</c:if>
+		</div>
 
-	<aui:button cssClass="btn-sm mt-3" id="selectDDMTemplate" value="select" />
-</c:if>
+		<aui:button cssClass="btn-sm mt-3" id="selectDDMTemplate" value="select" />
+	</c:when>
+	<c:otherwise>
+		<p class="small text-secondary"><liferay-ui:message key="there-are-no-templates" /></p>
+	</c:otherwise>
+</c:choose>
 
 <aui:script>
 	<c:if test="<%= (article != null) && (ddmTemplate != null) %>">

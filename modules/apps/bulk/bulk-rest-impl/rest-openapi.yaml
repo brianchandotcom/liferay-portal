@@ -1,25 +1,5 @@
 components:
     schemas:
-        Category:
-            properties:
-                categoryId:
-                    format: int64
-                    type: integer
-                name:
-                    type: string
-        Vocabulary:
-            properties:
-                categories:
-                    items:
-                        $ref: "#/components/schemas/Category"
-                    type: array
-                multiValued:
-                    type: boolean
-                name:
-                    type: string
-                vocabularyId:
-                    format: int64
-                    type: integer
         BulkActionResponse:
             properties:
                 description:
@@ -120,6 +100,26 @@ components:
                 busy:
                     type: boolean
             type: object
+        Category:
+            properties:
+                categoryId:
+                    format: int64
+                    type: integer
+                name:
+                    type: string
+        Vocabulary:
+            properties:
+                categories:
+                    items:
+                        $ref: "#/components/schemas/Category"
+                    type: array
+                multiValued:
+                    type: boolean
+                name:
+                    type: string
+                vocabularyId:
+                    format: int64
+                    type: integer
 info:
     description: ""
     title: ""

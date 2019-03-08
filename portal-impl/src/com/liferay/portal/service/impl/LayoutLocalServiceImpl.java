@@ -3082,14 +3082,17 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 			return null;
 		}
 
-		PortalUtil.updateImageId(layout, true, bytes, "iconImageId", 0, 0, 0);
+		Layout draftLayout = getDraft(layout);
 
-		return layoutLocalService.updateLayout(layout);
+		PortalUtil.updateImageId(
+			draftLayout, true, bytes, "iconImageId", 0, 0, 0);
+
+		return publishDraft(draftLayout);
 	}
 
 	@Override
-	public Layout updateLayout(Layout layout) {
-		return layoutLocalService.updateLayout(layout, false);
+	public Layout updateLayout(Layout layout) throws PortalException {
+		return publishDraft(getDraft(layout));
 	}
 
 	@Override
@@ -3097,13 +3100,11 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 		try {
 			layoutPersistence.setRebuildTreeEnabled(rebuildTree);
 
-			if (layout.isHead()) {
-				return layoutPersistence.update(layout);
-			}
+			Layout draftLayout = getDraft(layout);
 
-			updateDraft(layout);
+			layoutPersistence.update(draftLayout);
 
-			return publishDraft(layout);
+			return publishDraft(draftLayout);
 		}
 		catch (PortalException pe) {
 			throw new SystemException(pe);
@@ -3132,9 +3133,11 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 		Layout layout = layoutPersistence.findByG_P_L(
 			groupId, privateLayout, layoutId, true);
 
-		layout.setPublishDate(publishDate);
+		Layout draftLayout = getDraft(layout);
 
-		return layoutLocalService.updateLayout(layout);
+		draftLayout.setPublishDate(publishDate);
+
+		return publishDraft(draftLayout);
 	}
 
 	/**
@@ -3157,10 +3160,12 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 		Layout layout = layoutPersistence.findByG_P_L(
 			groupId, privateLayout, layoutId, true);
 
-		layout.setClassNameId(classNameId);
-		layout.setClassPK(classPK);
+		Layout draftLayout = getDraft(layout);
 
-		return layoutLocalService.updateLayout(layout);
+		draftLayout.setClassNameId(classNameId);
+		draftLayout.setClassPK(classPK);
+
+		return publishDraft(draftLayout);
 	}
 
 	/**
@@ -3237,9 +3242,7 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 		Layout layout = layoutPersistence.findByG_P_L(
 			groupId, privateLayout, layoutId, true);
 
-		LayoutVersion layoutVersion = fetchLatestVersion(layout);
-
-		Layout draftLayout = checkout(layout, layoutVersion.getVersion());
+		Layout draftLayout = getDraft(layout);
 
 		if (parentLayoutId != layout.getParentLayoutId()) {
 			draftLayout.setParentPlid(
@@ -3344,9 +3347,7 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 		Layout layout = layoutPersistence.findByG_P_L(
 			groupId, privateLayout, layoutId, true);
 
-		LayoutVersion layoutVersion = fetchLatestVersion(layout);
-
-		Layout draftLayout = checkout(layout, layoutVersion.getVersion());
+		Layout draftLayout = getDraft(layout);
 
 		validateTypeSettingsProperties(draftLayout, typeSettingsProperties);
 
@@ -3379,9 +3380,7 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 		Layout layout = layoutPersistence.findByG_P_L(
 			groupId, privateLayout, layoutId, true);
 
-		LayoutVersion layoutVersion = fetchLatestVersion(layout);
-
-		Layout draftLayout = checkout(layout, layoutVersion.getVersion());
+		Layout draftLayout = getDraft(layout);
 
 		draftLayout.setModifiedDate(now);
 
@@ -3410,9 +3409,7 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 
 		layoutLocalServiceHelper.validateName(name, languageId);
 
-		LayoutVersion layoutVersion = fetchLatestVersion(layout);
-
-		Layout draftLayout = checkout(layout, layoutVersion.getVersion());
+		Layout draftLayout = getDraft(layout);
 
 		draftLayout.setModifiedDate(now);
 		draftLayout.setName(name, LocaleUtil.fromLanguageId(languageId));
@@ -3511,9 +3508,7 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 		Layout layout = layoutPersistence.findByG_P_L(
 			groupId, privateLayout, layoutId, true);
 
-		LayoutVersion layoutVersion = fetchLatestVersion(layout);
-
-		Layout draftLayout = checkout(layout, layoutVersion.getVersion());
+		Layout draftLayout = getDraft(layout);
 
 		if (parentLayoutId != draftLayout.getParentLayoutId()) {
 			draftLayout.setParentPlid(
@@ -3555,9 +3550,7 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 			return layout;
 		}
 
-		LayoutVersion layoutVersion = fetchLatestVersion(layout);
-
-		Layout draftLayout = checkout(layout, layoutVersion.getVersion());
+		Layout draftLayout = getDraft(layout);
 
 		Date now = new Date();
 
@@ -3634,9 +3627,7 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 				layout.getParentLayoutId(),
 				layout.getSourcePrototypeLayoutUuid(), layout.getPriority());
 
-			LayoutVersion layoutVersion = fetchLatestVersion(layout);
-
-			Layout draftLayout = checkout(layout, layoutVersion.getVersion());
+			Layout draftLayout = getDraft(layout);
 
 			draftLayout.setPriority(nextPriority);
 
@@ -3671,9 +3662,7 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 			return layout;
 		}
 
-		LayoutVersion layoutVersion = fetchLatestVersion(layout);
-
-		Layout draftLayout = checkout(layout, layoutVersion.getVersion());
+		Layout draftLayout = getDraft(layout);
 
 		draftLayout.setModifiedDate(new Date());
 		draftLayout.setPriority(nextPriority);
@@ -3713,10 +3702,7 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 				continue;
 			}
 
-			LayoutVersion curLayoutVersion = fetchLatestVersion(curLayout);
-
-			Layout curDraftLayout = checkout(
-				curLayout, curLayoutVersion.getVersion());
+			Layout curDraftLayout = getDraft(curLayout);
 
 			curDraftLayout.setModifiedDate(layout.getModifiedDate());
 			curDraftLayout.setPriority(curNextPriority);

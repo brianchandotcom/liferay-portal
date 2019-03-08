@@ -8,17 +8,19 @@ Liferay.provide(
 			{
 				label: '${dialogSaveButtonLabel}',
 				callback: function(event) {
-					var $ = AUI.$;
-
 					var portletURL = saveURL;
 
-					var versionIncreaseNode = $("input:radio[name='${namespace}versionDetailsVersionIncrease']:checked");
+					var versionIncreaseElement = document.querySelector("input[name='${namespace}versionDetailsVersionIncrease']:checked");
 
-					portletURL += '&${namespace}versionIncrease=' + encodeURIComponent(versionIncreaseNode.val());
+					if (versionIncreaseElement) {
+						portletURL += '&${namespace}versionIncrease=' + encodeURIComponent(versionIncreaseElement.value);
+					}
 
-					var changeLogNode = $('#${namespace}versionDetailsChangeLog');
+					var changeLogElement = document.getElementById('${namespace}versionDetailsChangeLog');
 
-					portletURL += '&${namespace}changeLog=' + encodeURIComponent(changeLogNode.val());
+					if (changeLogElement) {
+						portletURL += '&${namespace}changeLog=' + encodeURIComponent(changeLogElement.value);
+					}
 
 					window.location.href = portletURL;
 				}

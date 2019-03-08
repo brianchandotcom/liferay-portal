@@ -180,18 +180,6 @@ String navigation = ParamUtil.getString(request, "navigation");
 		selectCategoriesURL.setWindowState(LiferayWindowState.POP_UP);
 		%>
 
-		<aui:script>
-			function <portlet:namespace />toggleActionsButton() {
-				var form = AUI.$(document.<portlet:namespace />fm2);
-
-				var hide = Liferay.Util.listCheckedExcept(form, '<portlet:namespace /><%= RowChecker.ALL_ROW_IDS %>').length == 0;
-
-				AUI.$('#<portlet:namespace />actionsButtonContainer').toggleClass('hide', hide);
-			}
-
-			<portlet:namespace />toggleActionsButton();
-		</aui:script>
-
 		<aui:script use="liferay-document-library">
 
 			<%

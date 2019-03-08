@@ -374,48 +374,50 @@ if (portletTitleBasedNavigation) {
 	</aui:form>
 </div>
 
-<aui:script>
-	AUI.$('#<portlet:namespace />selectFolderButton').on(
-		'click',
-		function(event) {
-			Liferay.Util.selectEntity(
-				{
-					dialog: {
-						constrain: true,
-						destroyOnHide: true,
-						modal: true,
-						width: 680
+<script>
+	var selectFolderButton = document.getElementById('<portlet:namespace />selectFolderButton');
+
+	if (selectFolderButton) {
+		selectFolderButton.addEventListener(
+			'click',
+			function(event) {
+				Liferay.Util.selectEntity(
+					{
+						dialog: {
+							constrain: true,
+							destroyOnHide: true,
+							modal: true,
+							width: 680
+						},
+						id: '<portlet:namespace />selectFolder',
+						title: '<liferay-ui:message arguments="folder" key="select-x" />',
+
+						<portlet:renderURL var="selectFolderURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
+							<portlet:param name="mvcRenderCommandName" value="/document_library/select_folder" />
+							<portlet:param name="folderId" value="<%= String.valueOf(newFolderId) %>" />
+						</portlet:renderURL>
+
+						uri: '<%= selectFolderURL.toString() %>'
 					},
-					id: '<portlet:namespace />selectFolder',
-					title: '<liferay-ui:message arguments="folder" key="select-x" />',
+					function(event) {
+						var folderData = {
+							idString: 'newFolderId',
+							idValue: event.folderid,
+							nameString: 'folderName',
+							nameValue: event.foldername
+						};
 
-					<portlet:renderURL var="selectFolderURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
-						<portlet:param name="mvcRenderCommandName" value="/document_library/select_folder" />
-						<portlet:param name="folderId" value="<%= String.valueOf(newFolderId) %>" />
-					</portlet:renderURL>
+						Liferay.Util.selectFolder(folderData, '<portlet:namespace />');
+					}
+				);
+			}
+		);
+	}
 
-					uri: '<%= selectFolderURL.toString() %>'
-				},
-				function(event) {
-					var folderData = {
-						idString: 'newFolderId',
-						idValue: event.folderid,
-						nameString: 'folderName',
-						nameValue: event.foldername
-					};
-
-					Liferay.Util.selectFolder(folderData, '<portlet:namespace />');
-				}
-			);
-		}
-	);
-</aui:script>
-
-<aui:script>
 	function <portlet:namespace />saveFileEntry() {
 		submitForm(document.<portlet:namespace />fm);
 	}
-</aui:script>
+</script>
 
 <%
 PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "move-files"), currentURL);

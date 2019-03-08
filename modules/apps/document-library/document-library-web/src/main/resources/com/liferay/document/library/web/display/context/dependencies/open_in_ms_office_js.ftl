@@ -5,11 +5,13 @@ function ${namespace}openDocument(webDavURL) {
 		function(exception) {
 			var errorMessage = Liferay.Util.sub('${errorMessage}', exception.message);
 
-			var openMSOfficeError = AUI.$('#${namespace}openMSOfficeError');
+			var openMSOfficeErrorElement = document.getElementById('${namespace}openMSOfficeError');
 
-			openMSOfficeError.html(errorMessage);
+			if (openMSOfficeErrorElement) {
+				openMSOfficeErrorElement.innerHTML = errorMessage;
 
-			openMSOfficeError.removeClass('hide');
+				openMSOfficeErrorElement.classList.remove('hide');
+			}
 		}
 	);
 }

@@ -232,15 +232,6 @@ else {
 		)
 	}
 
-	function <portlet:namespace />search() {
-		var form = AUI.$(document.<portlet:namespace />fm);
-
-		form.attr('method', 'post');
-		form.fm('<%= Constants.CMD %>').val('');
-
-		submitForm(form, '<%= portletURLString %>');
-	}
-
 	function <portlet:namespace />showUsers(status) {
 
 		<%

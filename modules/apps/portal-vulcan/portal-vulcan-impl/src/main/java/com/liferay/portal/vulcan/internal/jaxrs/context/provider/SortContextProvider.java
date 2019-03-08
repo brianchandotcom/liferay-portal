@@ -28,7 +28,6 @@ import com.liferay.portal.odata.sort.SortParser;
 import com.liferay.portal.odata.sort.SortParserProvider;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.portal.vulcan.internal.accept.language.AcceptLanguageImpl;
-import com.liferay.portal.vulcan.internal.resource.EntityModelResourceRegistry;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
 
 import java.util.List;
@@ -48,11 +47,9 @@ import org.apache.cxf.message.Message;
 public class SortContextProvider implements ContextProvider<Sort[]> {
 
 	public SortContextProvider(
-		EntityModelResourceRegistry entityModelResourceRegistry,
 		Language language, Portal portal,
 		SortParserProvider sortParserProvider) {
 
-		_entityModelResourceRegistry = entityModelResourceRegistry;
 		_language = language;
 		_portal = portal;
 		_sortParserProvider = sortParserProvider;
@@ -146,7 +143,6 @@ public class SortContextProvider implements ContextProvider<Sort[]> {
 	private static final Log _log = LogFactoryUtil.getLog(
 		SortContextProvider.class);
 
-	private final EntityModelResourceRegistry _entityModelResourceRegistry;
 	private final Language _language;
 	private final Portal _portal;
 	private final SortParserProvider _sortParserProvider;

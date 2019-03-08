@@ -14,8 +14,6 @@
 
 package com.liferay.portal.vulcan.internal.jaxrs.context.provider;
 
-import java.lang.reflect.Method;
-
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -55,10 +53,6 @@ public class ContextProviderUtil {
 		Class<?> matchedResourceClass = (Class<?>)matchedResources.get(0);
 
 		return resourceContext.getResource(matchedResourceClass);
-	}
-
-	public static Method getMethod(Message message) {
-		return (Method)message.get("org.apache.cxf.resource.method");
 	}
 
 	public static MultivaluedMap<String, String> getQueryParameters(

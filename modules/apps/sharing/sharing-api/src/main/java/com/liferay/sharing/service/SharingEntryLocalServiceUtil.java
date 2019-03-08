@@ -44,7 +44,7 @@ public class SharingEntryLocalServiceUtil {
 	/**
 	 * Adds a new sharing entry in the database or updates an existing one.
 	 *
-	 * @param fromUserId the ID of the user sharing the resource
+	 * @param userId the ID of the user sharing the resource
 	 * @param toUserId the ID of the user the resource is shared with
 	 * @param classNameId the resource's class name ID
 	 * @param classPK the class primary key of the resource
@@ -59,10 +59,11 @@ public class SharingEntryLocalServiceUtil {
 	 empty, don't contain {@code SharingEntryAction#VIEW}, or contain
 	 a {@code null} value), if the to/from user IDs are the same, or
 	 if the expiration date is a past value
+	 * @review
 	 */
 	public static com.liferay.sharing.model.SharingEntry
 			addOrUpdateSharingEntry(
-				long fromUserId, long toUserId, long classNameId, long classPK,
+				long userId, long toUserId, long classNameId, long classPK,
 				long groupId, boolean shareable,
 				java.util.Collection
 					<com.liferay.sharing.security.permission.SharingEntryAction>
@@ -72,14 +73,14 @@ public class SharingEntryLocalServiceUtil {
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return getService().addOrUpdateSharingEntry(
-			fromUserId, toUserId, classNameId, classPK, groupId, shareable,
+			userId, toUserId, classNameId, classPK, groupId, shareable,
 			sharingEntryActions, expirationDate, serviceContext);
 	}
 
 	/**
 	 * Adds a new sharing entry in the database.
 	 *
-	 * @param fromUserId the ID of the user sharing the resource
+	 * @param userId the ID of the user sharing the resource
 	 * @param toUserId the ID of the user the resource is shared with
 	 * @param classNameId the resource's class name ID
 	 * @param classPK the class primary key of the resource
@@ -95,9 +96,10 @@ public class SharingEntryLocalServiceUtil {
 	 don't contain {@code SharingEntryAction#VIEW}, or contain a
 	 {@code null} value), if the to/from user IDs are the same, or if
 	 the expiration date is a past value
+	 * @review
 	 */
 	public static com.liferay.sharing.model.SharingEntry addSharingEntry(
-			long fromUserId, long toUserId, long classNameId, long classPK,
+			long userId, long toUserId, long classNameId, long classPK,
 			long groupId, boolean shareable,
 			java.util.Collection
 				<com.liferay.sharing.security.permission.SharingEntryAction>
@@ -107,7 +109,7 @@ public class SharingEntryLocalServiceUtil {
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return getService().addSharingEntry(
-			fromUserId, toUserId, classNameId, classPK, groupId, shareable,
+			userId, toUserId, classNameId, classPK, groupId, shareable,
 			sharingEntryActions, expirationDate, serviceContext);
 	}
 
@@ -193,18 +195,16 @@ public class SharingEntryLocalServiceUtil {
 	 * and class primary key identify the resource's type and instance,
 	 * respectively.
 	 *
-	 * @param fromUserId the ID of the user sharing the resource
 	 * @param toUserId the ID of the user the resource is shared with
 	 * @param classNameId the resource's class name ID
 	 * @param classPK the class primary key of the resource
 	 * @return the deleted sharing entry
 	 */
 	public static com.liferay.sharing.model.SharingEntry deleteSharingEntry(
-			long fromUserId, long toUserId, long classNameId, long classPK)
+			long toUserId, long classNameId, long classPK)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
-		return getService().deleteSharingEntry(
-			fromUserId, toUserId, classNameId, classPK);
+		return getService().deleteSharingEntry(toUserId, classNameId, classPK);
 	}
 
 	/**
@@ -320,6 +320,23 @@ public class SharingEntryLocalServiceUtil {
 	}
 
 	/**
+	 * Returns the sharing entry for the resource shared with the user or null
+	 * if there's none. The class name ID and class primary key identify the
+	 * resource's type and instance, respectively.
+	 *
+	 * @param toUserId the user's ID
+	 * @param classNameId the resource's class name ID
+	 * @param classPK the class primary key of the resource
+	 * @return the sharing entry or null if none
+	 * @review
+	 */
+	public static com.liferay.sharing.model.SharingEntry fetchSharingEntry(
+		long toUserId, long classNameId, long classPK) {
+
+		return getService().fetchSharingEntry(toUserId, classNameId, classPK);
+	}
+
+	/**
 	 * Returns the sharing entry matching the UUID and group.
 	 *
 	 * @param uuid the sharing entry's UUID
@@ -347,84 +364,6 @@ public class SharingEntryLocalServiceUtil {
 	}
 
 	/**
-	 * Returns the list of sharing entries for resources shared by the user.
-	 *
-	 * @param fromUserId the user's ID
-	 * @return the list of sharing entries
-	 */
-	public static java.util.List<com.liferay.sharing.model.SharingEntry>
-		getFromUserSharingEntries(long fromUserId) {
-
-		return getService().getFromUserSharingEntries(fromUserId);
-	}
-
-	/**
-	 * Returns the list of sharing entries for the resource shared by the user.
-	 * The class name ID and class primary key identify the resource's type and
-	 * instance, respectively.
-	 *
-	 * @param fromUserId the user's ID
-	 * @param classNameId the resource's class name ID
-	 * @param classPK the primary key of the resource
-	 * @return the list of sharing entries
-	 */
-	public static java.util.List<com.liferay.sharing.model.SharingEntry>
-		getFromUserSharingEntries(
-			long fromUserId, long classNameId, long classPK) {
-
-		return getService().getFromUserSharingEntries(
-			fromUserId, classNameId, classPK);
-	}
-
-	/**
-	 * Returns the range of sharing entries for the resource shared by the user.
-	 * The class name ID and class primary key identify the resource's type and
-	 * instance, respectively.
-	 *
-	 * @param fromUserId the user's ID
-	 * @param classNameId the resource's class name ID
-	 * @param classPK the primary key of the resource
-	 * @param start the range's lower bound
-	 * @param end the range's upper bound (not inclusive)
-	 * @return the range of sharing entries
-	 */
-	public static java.util.List<com.liferay.sharing.model.SharingEntry>
-		getFromUserSharingEntries(
-			long fromUserId, long classNameId, long classPK, int start,
-			int end) {
-
-		return getService().getFromUserSharingEntries(
-			fromUserId, classNameId, classPK, start, end);
-	}
-
-	/**
-	 * Returns the number of sharing entries for resources shared by the user.
-	 *
-	 * @param fromUserId the user's ID
-	 * @return the number of sharing entries
-	 */
-	public static int getFromUserSharingEntriesCount(long fromUserId) {
-		return getService().getFromUserSharingEntriesCount(fromUserId);
-	}
-
-	/**
-	 * Returns the number of sharing entries for the resource shared by the
-	 * user. The class name ID and class primary key identify the resource's
-	 * type and instance, respectively.
-	 *
-	 * @param fromUserId the user's ID
-	 * @param classNameId the resource's class name ID
-	 * @param classPK the class primary key of the resource
-	 * @return the number of sharing entries
-	 */
-	public static int getFromUserSharingEntriesCount(
-		long fromUserId, long classNameId, long classPK) {
-
-		return getService().getFromUserSharingEntriesCount(
-			fromUserId, classNameId, classPK);
-	}
-
-	/**
 	 * Returns the the group's sharing entries.
 	 *
 	 * @param groupId the primary key of the group
@@ -434,6 +373,16 @@ public class SharingEntryLocalServiceUtil {
 		getGroupSharingEntries(long groupId) {
 
 		return getService().getGroupSharingEntries(groupId);
+	}
+
+	/**
+	 * Returns the the group's sharing entries count.
+	 *
+	 * @param groupId the primary key of the group
+	 * @return the sharing entries count
+	 */
+	public static int getGroupSharingEntriesCount(long groupId) {
+		return getService().getGroupSharingEntriesCount(groupId);
 	}
 
 	public static
@@ -491,19 +440,20 @@ public class SharingEntryLocalServiceUtil {
 	}
 
 	/**
-	 * Returns the sharing entries for the resource shared with the user. The
-	 * class name ID and class primary key identify the resource's type and
-	 * instance, respectively.
+	 * Returns the resource's sharing entries. The class name ID and class
+	 * primary key identify the resource's type and instance, respectively.
 	 *
-	 * @param toUserId the user's ID
 	 * @param classNameId the resource's class name ID
 	 * @param classPK the class primary key of the resource
+	 * @param start the range's lower bound
+	 * @param end the range's upper bound (not inclusive)
 	 * @return the sharing entries
+	 * @review
 	 */
 	public static java.util.List<com.liferay.sharing.model.SharingEntry>
-		getSharingEntries(long toUserId, long classNameId, long classPK) {
+		getSharingEntries(long classNameId, long classPK, int start, int end) {
 
-		return getService().getSharingEntries(toUserId, classNameId, classPK);
+		return getService().getSharingEntries(classNameId, classPK, start, end);
 	}
 
 	/**
@@ -550,6 +500,19 @@ public class SharingEntryLocalServiceUtil {
 	}
 
 	/**
+	 * Returns the resource's sharing entries count. The class name ID and class
+	 * primary key identify the resource's type and instance, respectively.
+	 *
+	 * @param classNameId the resource's class name ID
+	 * @param classPK the class primary key of the resource
+	 * @return the sharing entries count
+	 * @review
+	 */
+	public static int getSharingEntriesCount(long classNameId, long classPK) {
+		return getService().getSharingEntriesCount(classNameId, classPK);
+	}
+
+	/**
 	 * Returns the sharing entry with the primary key.
 	 *
 	 * @param sharingEntryId the primary key of the sharing entry
@@ -561,6 +524,24 @@ public class SharingEntryLocalServiceUtil {
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return getService().getSharingEntry(sharingEntryId);
+	}
+
+	/**
+	 * Returns the sharing entry for the resource shared with the user. The
+	 * class name ID and class primary key identify the resource's type and
+	 * instance, respectively.
+	 *
+	 * @param toUserId the user's ID
+	 * @param classNameId the resource's class name ID
+	 * @param classPK the class primary key of the resource
+	 * @return the sharing entry
+	 * @review
+	 */
+	public static com.liferay.sharing.model.SharingEntry getSharingEntry(
+			long toUserId, long classNameId, long classPK)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().getSharingEntry(toUserId, classNameId, classPK);
 	}
 
 	/**
@@ -576,24 +557,6 @@ public class SharingEntryLocalServiceUtil {
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return getService().getSharingEntryByUuidAndGroupId(uuid, groupId);
-	}
-
-	/**
-	 * Returns the sharing entries for the resource shared with the user. The
-	 * class name ID and class primary key identify the resource's type and
-	 * instance, respectively.
-	 *
-	 * @param toUserId the user's ID
-	 * @param classNameId the resource's class name ID
-	 * @param classPK the class primary key of the resource
-	 * @return the sharing entries
-	 */
-	public static java.util.List<com.liferay.sharing.model.SharingEntry>
-		getToUserClassPKSharingEntries(
-			long toUserId, long classNameId, long classPK) {
-
-		return getService().getToUserClassPKSharingEntries(
-			toUserId, classNameId, classPK);
 	}
 
 	/**
@@ -637,6 +600,28 @@ public class SharingEntryLocalServiceUtil {
 	}
 
 	/**
+	 * Returns the ordered range of sharing entries for the type of resource
+	 * shared with the user. The class name ID identifies the resource type.
+	 *
+	 * @param toUserId the user's ID
+	 * @param classNameId the class name ID of the resources
+	 * @param start the ordered range's lower bound
+	 * @param end the ordered range's upper bound (not inclusive)
+	 * @param orderByComparator the comparator that orders the sharing entries
+	 * @return the ordered range of sharing entries
+	 * @review
+	 */
+	public static java.util.List<com.liferay.sharing.model.SharingEntry>
+		getToUserSharingEntries(
+			long toUserId, long classNameId, int start, int end,
+			com.liferay.portal.kernel.util.OrderByComparator
+				<com.liferay.sharing.model.SharingEntry> orderByComparator) {
+
+		return getService().getToUserSharingEntries(
+			toUserId, classNameId, start, end, orderByComparator);
+	}
+
+	/**
 	 * Returns the number of sharing entries for resources shared with the user.
 	 *
 	 * @param toUserId the user's ID
@@ -647,43 +632,18 @@ public class SharingEntryLocalServiceUtil {
 	}
 
 	/**
-	 * Returns the ordered range of sharing entries for the type of resource
-	 * shared with the user. Because it's possible for several users to share
-	 * the same resource with the user, this method returns only one sharing
-	 * entry per resource. The class name ID identifies the resource type.
-	 *
-	 * @param toUserId the user's ID
-	 * @param classNameId the class name ID of the resources
-	 * @param start the ordered range's lower bound
-	 * @param end the ordered range's upper bound (not inclusive)
-	 * @param orderByComparator the comparator that orders the sharing entries
-	 * @return the ordered range of sharing entries
-	 */
-	public static java.util.List<com.liferay.sharing.model.SharingEntry>
-		getUniqueToUserSharingEntries(
-			long toUserId, long classNameId, int start, int end,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<com.liferay.sharing.model.SharingEntry> orderByComparator) {
-
-		return getService().getUniqueToUserSharingEntries(
-			toUserId, classNameId, start, end, orderByComparator);
-	}
-
-	/**
 	 * Returns the number of sharing entries for the type of resource shared
-	 * with the user. Because it's possible for several users to share the same
-	 * resource with the user, this method counts only one sharing entry per
-	 * resource. The class name ID identifies the resource type.
+	 * with the user. The class name ID identifies the resource type.
 	 *
 	 * @param toUserId the user's ID
 	 * @param classNameId the class name ID of the resources
 	 * @return the number of sharing entries
+	 * @review
 	 */
-	public static int getUniqueToUserSharingEntriesCount(
+	public static int getToUserSharingEntriesCount(
 		long toUserId, long classNameId) {
 
-		return getService().getUniqueToUserSharingEntriesCount(
-			toUserId, classNameId);
+		return getService().getToUserSharingEntriesCount(toUserId, classNameId);
 	}
 
 	/**

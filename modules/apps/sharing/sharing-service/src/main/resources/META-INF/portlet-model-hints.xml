@@ -5,10 +5,10 @@
 		<field name="uuid" type="String" />
 		<field name="sharingEntryId" type="long" />
 		<field name="groupId" type="long" />
+		<field name="userId" type="long" />
 		<field name="companyId" type="long" />
 		<field name="createDate" type="Date" />
 		<field name="modifiedDate" type="Date" />
-		<field name="fromUserId" type="long" />
 		<field name="toUserId" type="long" />
 		<field name="classNameId" type="long" />
 		<field name="classPK" type="long" />

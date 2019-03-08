@@ -37,10 +37,10 @@ public class SharingEntrySoap implements Serializable {
 		soapModel.setUuid(model.getUuid());
 		soapModel.setSharingEntryId(model.getSharingEntryId());
 		soapModel.setGroupId(model.getGroupId());
+		soapModel.setUserId(model.getUserId());
 		soapModel.setCompanyId(model.getCompanyId());
 		soapModel.setCreateDate(model.getCreateDate());
 		soapModel.setModifiedDate(model.getModifiedDate());
-		soapModel.setFromUserId(model.getFromUserId());
 		soapModel.setToUserId(model.getToUserId());
 		soapModel.setClassNameId(model.getClassNameId());
 		soapModel.setClassPK(model.getClassPK());
@@ -124,6 +124,14 @@ public class SharingEntrySoap implements Serializable {
 		_groupId = groupId;
 	}
 
+	public long getUserId() {
+		return _userId;
+	}
+
+	public void setUserId(long userId) {
+		_userId = userId;
+	}
+
 	public long getCompanyId() {
 		return _companyId;
 	}
@@ -146,14 +154,6 @@ public class SharingEntrySoap implements Serializable {
 
 	public void setModifiedDate(Date modifiedDate) {
 		_modifiedDate = modifiedDate;
-	}
-
-	public long getFromUserId() {
-		return _fromUserId;
-	}
-
-	public void setFromUserId(long fromUserId) {
-		_fromUserId = fromUserId;
 	}
 
 	public long getToUserId() {
@@ -211,10 +211,10 @@ public class SharingEntrySoap implements Serializable {
 	private String _uuid;
 	private long _sharingEntryId;
 	private long _groupId;
+	private long _userId;
 	private long _companyId;
 	private Date _createDate;
 	private Date _modifiedDate;
-	private long _fromUserId;
 	private long _toUserId;
 	private long _classNameId;
 	private long _classPK;

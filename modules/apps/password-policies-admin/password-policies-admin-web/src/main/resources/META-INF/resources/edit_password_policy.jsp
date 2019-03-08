@@ -82,7 +82,7 @@ PasswordPoliciesConfiguration passwordPoliciesConfiguration = (PasswordPoliciesC
 							<aui:option label="none" value="0" />
 
 							<%
-							for (long duration : passwordPoliciesConfiguration.minimumAgeDurations()) {
+							for (long duration : _getSortedArray(passwordPoliciesConfiguration.minimumAgeDurations())) {
 							%>
 
 								<aui:option label="<%= LanguageUtil.getTimeDescription(request, duration * 1000) %>" value="<%= duration %>" />
@@ -98,7 +98,7 @@ PasswordPoliciesConfiguration passwordPoliciesConfiguration = (PasswordPoliciesC
 						<aui:option label="eternal" value="0" />
 
 						<%
-						for (long duration : passwordPoliciesConfiguration.resetTicketMaxAgeDurations()) {
+						for (long duration : _getSortedArray(passwordPoliciesConfiguration.resetTicketMaxAgeDurations())) {
 						%>
 
 							<aui:option label="<%= LanguageUtil.getTimeDescription(request, duration * 1000) %>" value="<%= duration %>" />
@@ -190,7 +190,7 @@ PasswordPoliciesConfiguration passwordPoliciesConfiguration = (PasswordPoliciesC
 						<aui:select helpMessage="maximum-age-help" label="maximum-age" name="maxAge">
 
 							<%
-							for (long duration : passwordPoliciesConfiguration.maximumAgeDurations()) {
+							for (long duration : _getSortedArray(passwordPoliciesConfiguration.maximumAgeDurations())) {
 							%>
 
 								<aui:option label="<%= LanguageUtil.getTimeDescription(request, duration * 1000) %>" value="<%= duration %>" />
@@ -204,7 +204,7 @@ PasswordPoliciesConfiguration passwordPoliciesConfiguration = (PasswordPoliciesC
 						<aui:select helpMessage="warning-time-help" name="warningTime">
 
 							<%
-							for (long duration : passwordPoliciesConfiguration.expirationWarningTimeDurations()) {
+							for (long duration : _getSortedArray(passwordPoliciesConfiguration.expirationWarningTimeDurations())) {
 							%>
 
 								<aui:option label="<%= LanguageUtil.getTimeDescription(request, duration * 1000) %>" value="<%= duration %>" />
@@ -238,7 +238,7 @@ PasswordPoliciesConfiguration passwordPoliciesConfiguration = (PasswordPoliciesC
 						<aui:select helpMessage="reset-failure-count-help" name="resetFailureCount">
 
 							<%
-							for (long duration : passwordPoliciesConfiguration.resetFailureDurations()) {
+							for (long duration : _getSortedArray(passwordPoliciesConfiguration.resetFailureDurations())) {
 							%>
 
 								<aui:option label="<%= LanguageUtil.getTimeDescription(request, duration * 1000) %>" value="<%= duration %>" />
@@ -253,7 +253,7 @@ PasswordPoliciesConfiguration passwordPoliciesConfiguration = (PasswordPoliciesC
 							<aui:option label="until-unlocked-by-an-administrator" value="0" />
 
 							<%
-							for (long duration : passwordPoliciesConfiguration.lockoutDurations()) {
+							for (long duration : _getSortedArray(passwordPoliciesConfiguration.lockoutDurations())) {
 							%>
 
 								<aui:option label="<%= LanguageUtil.getTimeDescription(request, duration * 1000) %>" value="<%= duration %>" />
@@ -291,6 +291,14 @@ if (passwordPolicy != null) {
 }
 else {
 	PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "add-user"), currentURL);
+}
+%>
+
+<%!
+private static long[] _getSortedArray(long[] array) {
+	Arrays.sort(array);
+
+	return array;
 }
 %>
 

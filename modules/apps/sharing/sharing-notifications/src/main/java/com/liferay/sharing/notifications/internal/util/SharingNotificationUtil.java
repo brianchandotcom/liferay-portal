@@ -174,10 +174,9 @@ public class SharingNotificationUtil {
 	private String _getFromUserName(
 		SharingEntry sharingEntry, ResourceBundle resourceBundle) {
 
-		User fromUser = _userLocalService.fetchUser(
-			sharingEntry.getFromUserId());
+		User user = _userLocalService.fetchUser(sharingEntry.getUserId());
 
-		return _getUserName(fromUser, resourceBundle);
+		return _getUserName(user, resourceBundle);
 	}
 
 	private Locale _getLocale(User toUser) {

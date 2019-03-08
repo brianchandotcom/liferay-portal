@@ -358,6 +358,9 @@ public class OpenAPIParserUtil {
 				// Liferay
 
 				put(
+					new AbstractMap.SimpleImmutableEntry<>("integer", null),
+					Integer.class.getName());
+				put(
 					new AbstractMap.SimpleImmutableEntry<>("number", null),
 					Number.class.getName());
 				put(

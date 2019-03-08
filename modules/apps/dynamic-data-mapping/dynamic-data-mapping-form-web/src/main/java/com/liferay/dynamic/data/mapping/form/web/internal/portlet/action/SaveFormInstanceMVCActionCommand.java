@@ -91,6 +91,11 @@ public class SaveFormInstanceMVCActionCommand
 
 			SessionErrors.add(actionRequest, msvve.getClass(), msvve);
 		}
+		catch (DDMFormValidationException.MustSetValidFormRuleExpression
+					msvfre) {
+
+			SessionErrors.add(actionRequest, msvfre.getClass(), msvfre);
+		}
 	}
 
 	@Reference

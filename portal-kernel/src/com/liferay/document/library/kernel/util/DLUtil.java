@@ -20,6 +20,7 @@ import com.liferay.document.library.kernel.model.DLFileShortcut;
 import com.liferay.document.library.kernel.model.DLFileVersion;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
+import com.liferay.portal.kernel.portlet.PortletLayoutFinder;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.repository.model.Folder;
@@ -251,6 +252,14 @@ public class DLUtil {
 			orderByCol, orderByType, orderByModel);
 	}
 
+	public static PortletLayoutFinder.Result getResultURLViewInContext(
+		AssetRenderer assetRenderer,
+		LiferayPortletRequest liferayPortletRequest) {
+
+		return getDL().getResultURLViewInContext(
+			assetRenderer, liferayPortletRequest);
+	}
+
 	public static String getSanitizedFileName(String title, String extension) {
 		return getDL().getSanitizedFileName(title, extension);
 	}
@@ -341,15 +350,6 @@ public class DLUtil {
 		long groupId, long folderId, String fileName) {
 
 		return getDL().getUniqueFileName(groupId, folderId, fileName);
-	}
-
-	public static String getURLViewInContext(
-		AssetRenderer assetRenderer,
-		LiferayPortletRequest liferayPortletRequest,
-		String noSuchEntryRedirect) {
-
-		return getDL().getURLViewInContext(
-			assetRenderer, liferayPortletRequest, noSuchEntryRedirect);
 	}
 
 	/**

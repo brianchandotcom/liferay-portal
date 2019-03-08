@@ -700,6 +700,37 @@ public class DLImpl implements DL {
 		return orderByComparator;
 	}
 
+	public PortletLayoutFinder.Result getResultURLViewInContext(
+		AssetRenderer assetRenderer,
+		LiferayPortletRequest liferayPortletRequest) {
+
+		if (_serviceTrackerList.size() <= 0) {
+			return null;
+		}
+
+		try {
+			PortletLayoutFinder portletLayoutFinder = _serviceTrackerList.get(
+				0);
+
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)liferayPortletRequest.getAttribute(
+					WebKeys.THEME_DISPLAY);
+
+			PortletLayoutFinder.Result result = portletLayoutFinder.find(
+				themeDisplay, assetRenderer.getGroupId());
+
+			return result;
+		}
+		catch (NoSuchLayoutException nsle) {
+			return null;
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+		}
+
+		return null;
+	}
+
 	@Override
 	public String getSanitizedFileName(String title, String extension) {
 		String fileName = StringUtil.replace(
@@ -913,41 +944,6 @@ public class DLImpl implements DL {
 		}
 
 		return uniqueFileName;
-	}
-
-	public String getURLViewInContext(
-		AssetRenderer assetRenderer,
-		LiferayPortletRequest liferayPortletRequest,
-		String noSuchEntryRedirect) {
-
-		if (_serviceTrackerList.size() <= 0) {
-			return null;
-		}
-
-		try {
-			PortletLayoutFinder portletLayoutFinder = _serviceTrackerList.get(
-				0);
-
-			ThemeDisplay themeDisplay =
-				(ThemeDisplay)liferayPortletRequest.getAttribute(
-					WebKeys.THEME_DISPLAY);
-
-			PortletLayoutFinder.Result result = portletLayoutFinder.find(
-				themeDisplay, assetRenderer.getGroupId());
-
-			if (result != null) {
-				return _doGetURLViewInContext(
-					assetRenderer, noSuchEntryRedirect, themeDisplay);
-			}
-		}
-		catch (NoSuchLayoutException nsle) {
-			return null;
-		}
-		catch (Exception e) {
-			_log.error(e, e);
-		}
-
-		return null;
 	}
 
 	/**
@@ -1321,29 +1317,6 @@ public class DLImpl implements DL {
 		for (String extension : extensions) {
 			_genericNames.put(extension, genericName);
 		}
-	}
-
-	private String _doGetURLViewInContext(
-		AssetRenderer assetRenderer, String noSuchEntryRedirect,
-		ThemeDisplay themeDisplay) {
-
-		FileEntry fileEntry = (FileEntry)assetRenderer.getAssetObject();
-
-		StringBundler sb = new StringBundler(11);
-
-		sb.append(themeDisplay.getPortalURL());
-		sb.append(themeDisplay.getPathMain());
-		sb.append("/document_library/find_file_entry");
-		sb.append("?p_l_id=");
-		sb.append(themeDisplay.getPlid());
-		sb.append("&noSuchEntryRedirect=");
-		sb.append(URLCodec.encodeURL(noSuchEntryRedirect));
-		sb.append(StringPool.AMPERSAND);
-		sb.append("fileEntryId");
-		sb.append(StringPool.EQUAL);
-		sb.append(fileEntry.getFileEntryId());
-
-		return PortalUtil.addPreservedParameters(themeDisplay, sb.toString());
 	}
 
 	private static final String _DEFAULT_FILE_ICON = "page";

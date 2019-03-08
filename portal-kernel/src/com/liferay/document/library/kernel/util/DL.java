@@ -23,6 +23,7 @@ import com.liferay.document.library.kernel.model.DLFileVersion;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
+import com.liferay.portal.kernel.portlet.PortletLayoutFinder;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.repository.model.Folder;
@@ -179,6 +180,10 @@ public interface DL {
 	public <T> OrderByComparator<T> getRepositoryModelOrderByComparator(
 		String orderByCol, String orderByType, boolean orderByModel);
 
+	public PortletLayoutFinder.Result getResultURLViewInContext(
+		AssetRenderer assetRenderer,
+		LiferayPortletRequest liferayPortletRequest);
+
 	public String getSanitizedFileName(String title, String extension);
 
 	public String getTempFileId(long id, String version);
@@ -235,11 +240,6 @@ public interface DL {
 
 	public String getUniqueFileName(
 		long groupId, long folderId, String fileName);
-
-	public String getURLViewInContext(
-		AssetRenderer assetRenderer,
-		LiferayPortletRequest liferayPortletRequest,
-		String noSuchEntryRedirect);
 
 	/**
 	 * @deprecated As of Mueller (7.2.x), replaced by {@link com.liferay.document.library.util.DLURLHelper#FileEntryURLHelper#getWebDavURL(ThemeDisplay, Folder, FileEntry)}

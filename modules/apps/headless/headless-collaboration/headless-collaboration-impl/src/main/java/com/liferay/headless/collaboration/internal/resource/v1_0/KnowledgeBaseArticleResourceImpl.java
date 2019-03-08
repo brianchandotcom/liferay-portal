@@ -84,27 +84,6 @@ public class KnowledgeBaseArticleResourceImpl
 	}
 
 	@Override
-	public Page<KnowledgeBaseArticle> getFolderKnowledgeBaseArticlesPage(
-			Long folderId, Pagination pagination)
-		throws Exception {
-
-		KBFolder kbFolder = _kbFolderService.getKBFolder(folderId);
-
-		return Page.of(
-			transform(
-				_kbArticleService.getKBArticles(
-					kbFolder.getGroupId(), folderId,
-					WorkflowConstants.STATUS_APPROVED,
-					pagination.getStartPosition(), pagination.getEndPosition(),
-					null),
-				this::_toKBArticle),
-			pagination,
-			_kbArticleService.getKBArticlesCount(
-				kbFolder.getGroupId(), folderId,
-				WorkflowConstants.STATUS_APPROVED));
-	}
-
-	@Override
 	public KnowledgeBaseArticle getKnowledgeBaseArticle(
 			Long knowledgeBaseArticleId)
 		throws Exception {
@@ -138,6 +117,28 @@ public class KnowledgeBaseArticleResourceImpl
 	}
 
 	@Override
+	public Page<KnowledgeBaseArticle>
+			getKnowledgeBaseFolderKnowledgeBaseArticlesPage(
+				Long knowledgeBaseFolderId, Pagination pagination)
+		throws Exception {
+
+		KBFolder kbFolder = _kbFolderService.getKBFolder(knowledgeBaseFolderId);
+
+		return Page.of(
+			transform(
+				_kbArticleService.getKBArticles(
+					kbFolder.getGroupId(), knowledgeBaseFolderId,
+					WorkflowConstants.STATUS_APPROVED,
+					pagination.getStartPosition(), pagination.getEndPosition(),
+					null),
+				this::_toKBArticle),
+			pagination,
+			_kbArticleService.getKBArticlesCount(
+				kbFolder.getGroupId(), knowledgeBaseFolderId,
+				WorkflowConstants.STATUS_APPROVED));
+	}
+
+	@Override
 	public KnowledgeBaseArticle postContentSpaceKnowledgeBaseArticle(
 			Long contentSpaceId, KnowledgeBaseArticle knowledgeBaseArticle)
 		throws Exception {
@@ -147,20 +148,6 @@ public class KnowledgeBaseArticleResourceImpl
 
 		return _getKnowledgeBaseArticle(
 			contentSpaceId, 0L, className, knowledgeBaseArticle);
-	}
-
-	@Override
-	public KnowledgeBaseArticle postFolderKnowledgeBaseArticle(
-			Long folderId, KnowledgeBaseArticle knowledgeBaseArticle)
-		throws Exception {
-
-		KBFolder kbFolder = _kbFolderService.getKBFolder(folderId);
-
-		ClassName className = _classNameService.fetchClassName(
-			KBFolder.class.getName());
-
-		return _getKnowledgeBaseArticle(
-			kbFolder.getGroupId(), folderId, className, knowledgeBaseArticle);
 	}
 
 	@Override
@@ -177,6 +164,22 @@ public class KnowledgeBaseArticleResourceImpl
 
 		return _getKnowledgeBaseArticle(
 			kbArticle.getGroupId(), knowledgeBaseArticleId, className,
+			knowledgeBaseArticle);
+	}
+
+	@Override
+	public KnowledgeBaseArticle postKnowledgeBaseFolderKnowledgeBaseArticle(
+			Long knowledgeBaseFolderId,
+			KnowledgeBaseArticle knowledgeBaseArticle)
+		throws Exception {
+
+		KBFolder kbFolder = _kbFolderService.getKBFolder(knowledgeBaseFolderId);
+
+		ClassName className = _classNameService.fetchClassName(
+			KBFolder.class.getName());
+
+		return _getKnowledgeBaseArticle(
+			kbFolder.getGroupId(), knowledgeBaseFolderId, className,
 			knowledgeBaseArticle);
 	}
 

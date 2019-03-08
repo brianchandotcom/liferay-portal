@@ -14,9 +14,9 @@
 
 package com.liferay.headless.collaboration.internal.resource.v1_0;
 
-import com.liferay.headless.collaboration.dto.v1_0.Folder;
+import com.liferay.headless.collaboration.dto.v1_0.KnowledgeBaseFolder;
 import com.liferay.headless.collaboration.internal.dto.v1_0.util.ParentFolderUtil;
-import com.liferay.headless.collaboration.resource.v1_0.FolderResource;
+import com.liferay.headless.collaboration.resource.v1_0.KnowledgeBaseFolderResource;
 import com.liferay.knowledge.base.model.KBFolder;
 import com.liferay.knowledge.base.service.KBArticleService;
 import com.liferay.knowledge.base.service.KBFolderService;
@@ -35,20 +35,23 @@ import org.osgi.service.component.annotations.ServiceScope;
  * @author Javier Gamarra
  */
 @Component(
-	properties = "OSGI-INF/liferay/rest/v1_0/folder.properties",
-	scope = ServiceScope.PROTOTYPE, service = FolderResource.class
+	properties = "OSGI-INF/liferay/rest/v1_0/knowledge-base-folder.properties",
+	scope = ServiceScope.PROTOTYPE, service = KnowledgeBaseFolderResource.class
 )
-public class FolderResourceImpl extends BaseFolderResourceImpl {
+public class KnowledgeBaseFolderResourceImpl
+	extends BaseKnowledgeBaseFolderResourceImpl {
 
 	@Override
-	public boolean deleteFolder(Long folderId) throws Exception {
-		_kbFolderService.deleteKBFolder(folderId);
+	public boolean deleteKnowledgeBaseFolder(Long knowledgeBaseFolderId)
+		throws Exception {
+
+		_kbFolderService.deleteKBFolder(knowledgeBaseFolderId);
 
 		return true;
 	}
 
 	@Override
-	public Page<Folder> getContentSpaceFoldersPage(
+	public Page<KnowledgeBaseFolder> getContentSpaceKnowledgeBaseFoldersPage(
 			Long contentSpaceId, Pagination pagination)
 		throws Exception {
 
@@ -57,68 +60,80 @@ public class FolderResourceImpl extends BaseFolderResourceImpl {
 				_kbFolderService.getKBFolders(
 					contentSpaceId, 0, pagination.getStartPosition(),
 					pagination.getEndPosition()),
-				this::_toFolder),
+				this::_toKnowledgeBaseFolder),
 			pagination, _kbFolderService.getKBFoldersCount(contentSpaceId, 0));
 	}
 
 	@Override
-	public Folder getFolder(Long folderId) throws Exception {
-		return _toFolder(_kbFolderService.getKBFolder(folderId));
+	public KnowledgeBaseFolder getKnowledgeBaseFolder(
+			Long knowledgeBaseFolderId)
+		throws Exception {
+
+		return _toKnowledgeBaseFolder(
+			_kbFolderService.getKBFolder(knowledgeBaseFolderId));
 	}
 
 	@Override
-	public Page<Folder> getFolderFoldersPage(
-			Long folderId, Pagination pagination)
+	public Page<KnowledgeBaseFolder>
+			getKnowledgeBaseFolderKnowledgeBaseFoldersPage(
+				Long knowledgeBaseFolderId, Pagination pagination)
 		throws Exception {
 
-		KBFolder kbFolder = _kbFolderService.getKBFolder(folderId);
+		KBFolder kbFolder = _kbFolderService.getKBFolder(knowledgeBaseFolderId);
 
 		return Page.of(
 			transform(
 				_kbFolderService.getKBFolders(
-					kbFolder.getGroupId(), folderId,
+					kbFolder.getGroupId(), knowledgeBaseFolderId,
 					pagination.getStartPosition(), pagination.getEndPosition()),
-				this::_toFolder),
+				this::_toKnowledgeBaseFolder),
 			pagination,
 			_kbFolderService.getKBFoldersCount(
-				kbFolder.getGroupId(), folderId));
+				kbFolder.getGroupId(), knowledgeBaseFolderId));
 	}
 
 	@Override
-	public Folder postContentSpaceFolder(Long contentSpaceId, Folder folder)
+	public KnowledgeBaseFolder postContentSpaceKnowledgeBaseFolder(
+			Long contentSpaceId, KnowledgeBaseFolder knowledgeBaseFolder)
 		throws Exception {
 
-		return _toFolder(
+		return _toKnowledgeBaseFolder(
 			_kbFolderService.addKBFolder(
-				contentSpaceId, _getClassNameId(), 0, folder.getName(),
-				folder.getDescription(), new ServiceContext()));
+				contentSpaceId, _getClassNameId(), 0,
+				knowledgeBaseFolder.getName(),
+				knowledgeBaseFolder.getDescription(), new ServiceContext()));
 	}
 
 	@Override
-	public Folder postFolderFolder(Long folderId, Folder folder)
+	public KnowledgeBaseFolder postKnowledgeBaseFolderKnowledgeBaseFolder(
+			Long knowledgeBaseFolderId, KnowledgeBaseFolder knowledgeBaseFolder)
 		throws Exception {
 
-		KBFolder kbFolder = _kbFolderService.getKBFolder(folderId);
+		KBFolder kbFolder = _kbFolderService.getKBFolder(knowledgeBaseFolderId);
 
-		return _toFolder(
+		return _toKnowledgeBaseFolder(
 			_kbFolderService.addKBFolder(
-				kbFolder.getGroupId(), _getClassNameId(), folderId,
-				folder.getName(), folder.getDescription(),
-				new ServiceContext()));
+				kbFolder.getGroupId(), _getClassNameId(), knowledgeBaseFolderId,
+				knowledgeBaseFolder.getName(),
+				knowledgeBaseFolder.getDescription(), new ServiceContext()));
 	}
 
 	@Override
-	public Folder putFolder(Long folderId, Folder folder) throws Exception {
-		Long parentFolderId = folder.getParentFolderId();
+	public KnowledgeBaseFolder putKnowledgeBaseFolder(
+			Long knowledgeBaseFolderId, KnowledgeBaseFolder knowledgeBaseFolder)
+		throws Exception {
+
+		Long parentFolderId = knowledgeBaseFolder.getParentFolderId();
 
 		if (parentFolderId == null) {
 			parentFolderId = 0L;
 		}
 
-		return _toFolder(
+		return _toKnowledgeBaseFolder(
 			_kbFolderService.updateKBFolder(
-				_getClassNameId(), parentFolderId, folderId, folder.getName(),
-				folder.getDescription(), new ServiceContext()));
+				_getClassNameId(), parentFolderId, knowledgeBaseFolderId,
+				knowledgeBaseFolder.getName(),
+				knowledgeBaseFolder.getDescription(), new ServiceContext()));
 	}
 
 	private long _getClassNameId() {
@@ -128,12 +143,14 @@ public class FolderResourceImpl extends BaseFolderResourceImpl {
 		return className.getClassNameId();
 	}
 
-	private Folder _toFolder(KBFolder kbFolder) throws PortalException {
+	private KnowledgeBaseFolder _toKnowledgeBaseFolder(KBFolder kbFolder)
+		throws PortalException {
+
 		if (kbFolder == null) {
 			return null;
 		}
 
-		return new Folder() {
+		return new KnowledgeBaseFolder() {
 			{
 				dateCreated = kbFolder.getCreateDate();
 				dateModified = kbFolder.getModifiedDate();

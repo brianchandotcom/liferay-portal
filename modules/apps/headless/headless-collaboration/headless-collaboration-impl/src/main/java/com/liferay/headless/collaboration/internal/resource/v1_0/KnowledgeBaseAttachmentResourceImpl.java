@@ -47,23 +47,19 @@ public class KnowledgeBaseAttachmentResourceImpl
 	extends BaseKnowledgeBaseAttachmentResourceImpl {
 
 	@Override
-	public boolean deleteAttachment(Long attachmentId) throws Exception {
-		_portletFileRepository.deletePortletFileEntry(attachmentId);
+	public boolean deleteKnowledgeBaseAttachment(Long knowledgeBaseAttachmentId)
+		throws Exception {
+
+		_portletFileRepository.deletePortletFileEntry(
+			knowledgeBaseAttachmentId);
 
 		return true;
 	}
 
 	@Override
-	public KnowledgeBaseAttachment getAttachment(Long attachmentId)
-		throws Exception {
-
-		return _toKnowledgeBaseAttachment(
-			_portletFileRepository.getPortletFileEntry(attachmentId));
-	}
-
-	@Override
-	public Page<KnowledgeBaseAttachment> getKnowledgeBaseArticleAttachmentsPage(
-			Long knowledgeBaseArticleId)
+	public Page<KnowledgeBaseAttachment>
+			getKnowledgeBaseArticleKnowledgeBaseAttachmentsPage(
+				Long knowledgeBaseArticleId)
 		throws Exception {
 
 		KBArticle kbArticle = _kbArticleService.fetchLatestKBArticle(
@@ -76,8 +72,19 @@ public class KnowledgeBaseAttachmentResourceImpl
 	}
 
 	@Override
-	public KnowledgeBaseAttachment postKnowledgeBaseArticleAttachment(
-			Long knowledgeBaseArticleId, MultipartBody multipartBody)
+	public KnowledgeBaseAttachment getKnowledgeBaseAttachment(
+			Long knowledgeBaseAttachmentId)
+		throws Exception {
+
+		return _toKnowledgeBaseAttachment(
+			_portletFileRepository.getPortletFileEntry(
+				knowledgeBaseAttachmentId));
+	}
+
+	@Override
+	public KnowledgeBaseAttachment
+			postKnowledgeBaseArticleKnowledgeBaseAttachment(
+				Long knowledgeBaseArticleId, MultipartBody multipartBody)
 		throws Exception {
 
 		KBArticle kbArticle = _kbArticleService.fetchLatestKBArticle(

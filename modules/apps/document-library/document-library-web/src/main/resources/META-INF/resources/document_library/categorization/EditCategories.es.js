@@ -238,7 +238,7 @@ class EditCategories extends Component {
 	_parseCategories(categories) {
 		let categoriesObjList = [];
 
-		if (categories.length > 0) {
+		if (categories && categories.length > 0) {
 			categories.forEach(
 				item => {
 					let itemObj = {

@@ -44,6 +44,9 @@ import com.liferay.portal.kernel.test.util.RoleTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserGroupTestUtil;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
+import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.comparator.RoleRoleIdComparator;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.util.test.LayoutTestUtil;
@@ -82,6 +85,32 @@ public class RoleLocalServiceTest {
 		RoleTestUtil.addRole(
 			RoleConstants.PLACEHOLDER_DEFAULT_GROUP_ROLE,
 			RoleConstants.TYPE_REGULAR);
+	}
+
+	@Test
+	public void testDeleteRole() throws Exception {
+		_group = GroupTestUtil.addGroup();
+		_role = RoleTestUtil.addRole(RoleConstants.TYPE_SITE);
+
+		UnicodeProperties typeSettingsProperties =
+			_group.getTypeSettingsProperties();
+
+		typeSettingsProperties.setProperty(
+			"defaultSiteRoleIds", String.valueOf(_role.getRoleId()));
+
+		GroupLocalServiceUtil.updateGroup(_group);
+
+		RoleLocalServiceUtil.deleteRole(_role);
+
+		_group = GroupLocalServiceUtil.getGroup(_group.getGroupId());
+
+		typeSettingsProperties = _group.getTypeSettingsProperties();
+
+		List<Long> defaultSiteRoleIds = ListUtil.toList(
+			StringUtil.split(
+				typeSettingsProperties.getProperty("defaultSiteRoleIds"), 0L));
+
+		Assert.assertFalse(defaultSiteRoleIds.contains(_role.getRoleId()));
 	}
 
 	@Test

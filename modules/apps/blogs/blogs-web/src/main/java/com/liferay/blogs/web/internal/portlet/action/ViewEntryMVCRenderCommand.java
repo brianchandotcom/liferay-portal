@@ -14,6 +14,7 @@
 
 package com.liferay.blogs.web.internal.portlet.action;
 
+import com.liferay.asset.display.page.portlet.AssetDisplayPageFriendlyURLProvider;
 import com.liferay.blogs.constants.BlogsPortletKeys;
 import com.liferay.blogs.exception.NoSuchEntryException;
 import com.liferay.blogs.model.BlogsEntry;
@@ -23,6 +24,7 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderConstants;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.servlet.SessionErrors;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
@@ -72,6 +74,23 @@ public class ViewEntryMVCRenderCommand implements MVCRenderCommand {
 				renderRequest, "redirectToLastFriendlyURL", true);
 
 			BlogsEntry entry = ActionUtil.getEntry(renderRequest);
+
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)renderRequest.getAttribute(WebKeys.THEME_DISPLAY);
+
+			String assetDisplayPageFriendlyURL =
+				_assetDisplayPageFriendlyURLProvider.getFriendlyURL(
+					BlogsEntry.class.getName(), entry.getEntryId(),
+					themeDisplay);
+
+			if (assetDisplayPageFriendlyURL != null) {
+				HttpServletResponse response = _portal.getHttpServletResponse(
+					renderResponse);
+
+				response.sendRedirect(assetDisplayPageFriendlyURL);
+
+				return MVCRenderConstants.MVC_PATH_VALUE_SKIP_DISPATCH;
+			}
 
 			FriendlyURLEntry mainFriendlyURLEntry =
 				_friendlyURLEntryLocalService.getMainFriendlyURLEntry(
@@ -135,6 +154,10 @@ public class ViewEntryMVCRenderCommand implements MVCRenderCommand {
 
 		_friendlyURLEntryLocalService = friendlyURLEntryLocalService;
 	}
+
+	@Reference
+	private AssetDisplayPageFriendlyURLProvider
+		_assetDisplayPageFriendlyURLProvider;
 
 	private FriendlyURLEntryLocalService _friendlyURLEntryLocalService;
 

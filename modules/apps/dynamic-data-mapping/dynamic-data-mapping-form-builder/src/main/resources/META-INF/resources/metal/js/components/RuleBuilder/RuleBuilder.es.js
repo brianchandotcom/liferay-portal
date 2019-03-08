@@ -425,8 +425,7 @@ class RuleBuilder extends Component {
 			functionsMetadata,
 			functionsURL,
 			pages,
-			spritemap,
-			visible
+			spritemap
 		} = this.props;
 
 		const {
@@ -439,7 +438,7 @@ class RuleBuilder extends Component {
 
 		return (
 			<div class="container">
-				{visible && mode === 'create' && (
+				{mode === 'create' && (
 					<RuleEditor
 						actions={[]}
 						conditions={[]}
@@ -461,7 +460,7 @@ class RuleBuilder extends Component {
 						spritemap={spritemap}
 					/>
 				)}
-				{visible && mode === 'edit' && (
+				{mode === 'edit' && (
 					<RuleEditor
 						dataProvider={dataProvider}
 						dataProviderInstanceParameterSettingsURL={dataProviderInstanceParameterSettingsURL}
@@ -481,7 +480,7 @@ class RuleBuilder extends Component {
 						spritemap={spritemap}
 					/>
 				)}
-				{visible && mode === 'view' && (
+				{mode === 'view' && (
 					<RuleList
 						dataProvider={dataProvider}
 						events={{

@@ -114,14 +114,14 @@ public abstract class Base${schemaName}ResourceTestCase {
 				throw new UnsupportedOperationException("This method needs to be implemented");
 			}
 		<#elseif freeMarkerTool.hasHTTPMethod(javaMethodSignature, "get") && javaMethodSignature.returnType?contains("Page<")>
-			<#assign firstJavaMethodParameter = javaMethodSignature.javaMethodParameters[0] />
-
-			<#if stringUtil.equals(firstJavaMethodParameter.parameterName, "filter") || stringUtil.equals(firstJavaMethodParameter.parameterName, "pagination") || stringUtil.equals(firstJavaMethodParameter.parameterName, "sorts")>
+			<#if (javaMethodSignature.javaMethodParameters?size == 0) || stringUtil.equals(javaMethodSignature.javaMethodParameters[0].parameterName, "filter") || stringUtil.equals(javaMethodSignature.javaMethodParameters[0].parameterName, "pagination") || stringUtil.equals(javaMethodSignature.javaMethodParameters[0].parameterName, "sorts")>
 				@Test
 				public void test${javaMethodSignature.methodName?cap_first}() throws Exception {
 					Assert.assertTrue(true);
 				}
 			<#else>
+				<#assign firstJavaMethodParameter = javaMethodSignature.javaMethodParameters[0] />
+
 				@Test
 				public void test${javaMethodSignature.methodName?cap_first}() throws Exception {
 					${firstJavaMethodParameter.parameterType} ${firstJavaMethodParameter.parameterName} = test${javaMethodSignature.methodName?cap_first}_get${firstJavaMethodParameter.parameterName?cap_first}();

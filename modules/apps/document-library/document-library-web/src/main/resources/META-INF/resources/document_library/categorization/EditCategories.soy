@@ -108,26 +108,3 @@
 		{/call}
 	{/if}
 {/template}
-
-{template .categorySelector}
-	{@param categories: list<?>}
-	{@param dataSource: string|[]|list<?>}
-	{@param multiValued: bool}
-	{@param spritemap: string}
-	{@param vocabularyId: number}
-	{@param vocabularyName: string}
-	{@param? namespace: string}
-	{@param? selectCategoriesUrl: string}
-
-	{call InputCategoriesSelector.render}
-		{param categories: $categories /}
-		{param dataSource: $dataSource /}
-		{param dialogClasses: 'modal-dialog-sm' /}
-		{param eventName: $namespace + 'selectCategories' /}
-		{param multiValued: $multiValued /}
-		{param selectCategoriesUrl: $selectCategoriesUrl /}
-		{param spritemap: $spritemap /}
-		{param vocabularyId: $vocabularyId /}
-		{param vocabularyName: $vocabularyName /}
-	{/call}
-{/template}

@@ -4,7 +4,6 @@ import Component from 'metal-component';
 import {Config} from 'metal-state';
 import Soy from 'metal-soy';
 import 'frontend-js-web/liferay/compat/modal/Modal.es';
-import './InputCategoriesSelector.es';
 import 'asset-taglib/asset_categories_selector/AssetCategoriesSelector.es';
 import templates from './EditCategories.soy';
 

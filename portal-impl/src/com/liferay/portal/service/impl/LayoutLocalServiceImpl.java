@@ -777,6 +777,16 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 			layout.getCompanyId(), Layout.class.getName(),
 			ResourceConstants.SCOPE_INDIVIDUAL, layout.getPlid());
 
+		// Draft layout
+
+		Layout draftLayout = fetchLayout(
+			classNameLocalService.getClassNameId(Layout.class),
+			layout.getPlid());
+
+		if (draftLayout != null) {
+			layoutLocalService.deleteLayout(draftLayout);
+		}
+
 		// Layout
 
 		layout = layoutPersistence.remove(layout);

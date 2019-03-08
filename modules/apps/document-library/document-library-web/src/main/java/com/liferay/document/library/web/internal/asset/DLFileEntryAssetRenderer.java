@@ -105,17 +105,6 @@ public class DLFileEntryAssetRenderer
 		_dlurlHelper = dlurlHelper;
 	}
 
-	public String doGetURLViewInContext(
-		LiferayPortletRequest liferayPortletRequest,
-		LiferayPortletResponse liferayPortletResponse,
-		String noSuchEntryRedirect) {
-
-		return getURLViewInContext(
-			liferayPortletRequest, noSuchEntryRedirect,
-			"/document_library/find_file_entry", "fileEntryId",
-			_fileEntry.getFileEntryId());
-	}
-
 	@Override
 	public FileEntry getAssetObject() {
 		return _fileEntry;

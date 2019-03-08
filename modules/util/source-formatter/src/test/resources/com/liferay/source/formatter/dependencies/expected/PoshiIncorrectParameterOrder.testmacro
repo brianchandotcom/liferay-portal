@@ -1,0 +1,44 @@
+definition {
+	test AddBlogsEntries {
+
+		echo("This is a message.");
+
+		SignIn.signIn();
+
+		FormFields.editText(
+			a = "eteteee",
+			c = "54545445",
+			d = "353535");
+
+		FormFields.editName(
+			A = "etet);eee",
+			C = "54545445",
+			D = "353535");
+
+		deee.oneParameter(DDDD = "353535");
+
+		User_a.editDetailsViaMyAccount_a(
+			userFirstNameEdit = ''''alert(0)'"alert(0)"><img src=x onerror=alert(0)><script>alert(0)</script>''',
+			userLastNameEdit = '''<script>document.write("XSS"); window.stop();</script>''',
+			userMiddleNameEdit = '''<script>document.write("XSS"); window.stop();</script>''');
+
+		User.multiParametersOneLine(
+			password = "test",
+			userEmailAddress = "userea@liferay.com");
+
+		ProductMenu.gotoControlPanelUsers(portlet = "Users and Organizations");
+
+		Click(locator1 = "ItemSelector#SELECT_FILE_IMAGE_PREVIEW");
+
+		MultiParametersOneLine(
+			locator1 = "ItemSelector#ADD_BUTTON",
+			value1 = "Add");
+
+		User.addCP(
+			userEmailAddress = "${userEmailAddress}",
+			userFirstName = "${userFirstName}",
+			userLastName = "${userLastName}",
+			userScreenName = "${userScreenName}");
+
+	}
+}

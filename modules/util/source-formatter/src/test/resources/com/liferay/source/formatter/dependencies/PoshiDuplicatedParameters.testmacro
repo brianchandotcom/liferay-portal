@@ -1,0 +1,12 @@
+definition {
+	test AddBlogsEntries {
+
+		User.addCP(
+			userEmailAddress = "${userEmailAddress}",
+			userFirstName = "${userFirstName}",
+			userLastName = "${userLastName}",
+			userScreenName = "${userScreenName}",
+			userScreenName = "");
+
+	}
+}

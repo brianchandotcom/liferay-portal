@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.saml.runtime.metadata.LocalEntityManager;
+import com.liferay.saml.runtime.metadata.LocalEntityManager.CertificateUsage;
 import com.liferay.saml.web.internal.constants.SamlAdminPortletKeys;
 
 import javax.portlet.ResourceRequest;
@@ -50,9 +51,8 @@ public class DownloadCertificateMVCResourceCommand
 			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
 		throws Exception {
 
-		LocalEntityManager.CertificateUsage certificateUsage =
-			LocalEntityManager.CertificateUsage.valueOf(
-				ParamUtil.getString(resourceRequest, "certificateUsage"));
+		CertificateUsage certificateUsage = CertificateUsage.valueOf(
+			ParamUtil.getString(resourceRequest, "certificateUsage"));
 
 		String encodedCertificate =
 			_localEntityManager.getEncodedLocalEntityCertificate(

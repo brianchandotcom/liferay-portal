@@ -8,7 +8,7 @@ import '../floating_toolbar/mapping/FloatingToolbarMappingPanel.es';
 import '../floating_toolbar/text_properties/FloatingToolbarTextPropertiesPanel.es';
 import './FragmentEditableFieldTooltip.es';
 
-import {CLEAR_ACTIVE_ITEM, OPEN_ASSET_TYPE_DIALOG, UPDATE_ACTIVE_ITEM, UPDATE_EDITABLE_VALUE, UPDATE_HOVERED_ITEM, UPDATE_LAST_SAVE_DATE, UPDATE_SAVING_CHANGES_STATUS, UPDATE_TRANSLATION_STATUS} from '../../actions/actions.es';
+import {CLEAR_ACTIVE_ITEM, OPEN_MAPPING_FIELDS_DIALOG, UPDATE_ACTIVE_ITEM, UPDATE_EDITABLE_VALUE, UPDATE_HOVERED_ITEM, UPDATE_LAST_SAVE_DATE, UPDATE_SAVING_CHANGES_STATUS, UPDATE_TRANSLATION_STATUS} from '../../actions/actions.es';
 import {FLOATING_TOOLBAR_PANELS, FRAGMENTS_EDITOR_ITEM_TYPES} from '../../utils/constants';
 import {prefixSegmentsExperienceId} from '../../utils/prefixSegmentsExperienceId.es';
 import {getConnectedComponent} from '../../store/ConnectedComponent.es';
@@ -348,13 +348,18 @@ class FragmentEditableField extends Component {
 
 			this._enableEditor();
 		}
-		else if (
-			panelId === FLOATING_TOOLBAR_PANELS.map.panelId &&
-			this.mappingFieldsURL &&
-			!this.selectedMappingTypes.subtype
-		) {
+		else if (panelId === FLOATING_TOOLBAR_PANELS.map.panelId) {
 			event.preventDefault();
-			this.store.dispatchAction(OPEN_ASSET_TYPE_DIALOG);
+			this.store
+				.dispatchAction(
+					OPEN_MAPPING_FIELDS_DIALOG,
+					{
+						editableId: this.editableId,
+						editableType: this.type,
+						fragmentEntryLinkId: this.fragmentEntryLinkId,
+						mappedFieldId: this.editableValues.mappedField || ''
+					}
+				);
 		}
 	}
 

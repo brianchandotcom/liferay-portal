@@ -72,13 +72,18 @@ export const normalizeSettingsContextPages = (pages, namespace, fieldType, gener
  * Converts the settings Form of a field into an object of field properties.
  */
 
-export const getFieldPropertiesFromSettingsContext = settingsContext => {
+export const getFieldPropertiesFromSettingsContext = (locale, settingsContext) => {
 	const properties = {};
 	const visitor = new PagesVisitor(settingsContext.pages);
 
 	visitor.mapFields(
-		({fieldName, value}) => {
-			properties[fieldName] = value;
+		({fieldName, type, value}) => {
+			if (type === 'options') {
+				properties[fieldName] = value[locale];
+			}
+			else {
+				properties[fieldName] = value;
+			}
 		}
 	);
 

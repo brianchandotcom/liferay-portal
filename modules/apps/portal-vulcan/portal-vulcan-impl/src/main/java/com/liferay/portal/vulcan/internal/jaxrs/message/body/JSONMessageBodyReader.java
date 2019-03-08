@@ -49,17 +49,16 @@ public class JSONMessageBodyReader implements MessageBodyReader {
 
 	@Override
 	public boolean isReadable(
-		Class type, Type genericType, Annotation[] annotations,
-		MediaType mediaType) {
+		Class clazz, Type type, Annotation[] annotations, MediaType mediaType) {
 
 		return true;
 	}
 
 	@Override
 	public Object readFrom(
-			Class clazz, Type genericType, Annotation[] annotations,
-			MediaType mediaType, MultivaluedMap httpHeaders,
-			InputStream entityStream)
+			Class clazz, Type type, Annotation[] annotations,
+			MediaType mediaType, MultivaluedMap multivaluedMap,
+			InputStream inputStream)
 		throws IOException, WebApplicationException {
 
 		ObjectReader objectMapper = _getObjectMapper(
@@ -68,7 +67,7 @@ public class JSONMessageBodyReader implements MessageBodyReader {
 			clazz
 		);
 
-		Object value = objectMapper.readValue(entityStream);
+		Object value = objectMapper.readValue(inputStream);
 
 		_validateValue(value);
 
@@ -96,18 +95,18 @@ public class JSONMessageBodyReader implements MessageBodyReader {
 		Set<ConstraintViolation<Object>> constraintViolations =
 			validator.validate(value);
 
-		StringBuilder stringBuilder = new StringBuilder("");
+		StringBuilder sb = new StringBuilder("");
 
 		for (ConstraintViolation<Object> constraintViolation :
 				constraintViolations) {
 
-			stringBuilder.append(constraintViolation.getPropertyPath());
-			stringBuilder.append(" ");
-			stringBuilder.append(constraintViolation.getMessage());
+			sb.append(constraintViolation.getPropertyPath());
+			sb.append(" ");
+			sb.append(constraintViolation.getMessage());
 		}
 
-		if (stringBuilder.length() > 0) {
-			throw new ValidationException(stringBuilder.toString());
+		if (sb.length() > 0) {
+			throw new ValidationException(sb.toString());
 		}
 	}
 

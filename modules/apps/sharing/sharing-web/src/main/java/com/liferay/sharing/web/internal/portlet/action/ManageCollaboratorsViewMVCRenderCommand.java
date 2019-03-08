@@ -100,23 +100,22 @@ public class ManageCollaboratorsViewMVCRenderCommand
 			ThemeDisplay themeDisplay =
 				(ThemeDisplay)renderRequest.getAttribute(WebKeys.THEME_DISPLAY);
 
-			int countSharingEntryToUserIds =
-				_sharingEntryLocalService.getFromUserSharingEntriesCount(
-					themeDisplay.getUserId(), classNameId, classPK);
+			int sharingEntriesCount =
+				_sharingEntryLocalService.getSharingEntriesCount(
+					classNameId, classPK);
 
-			if (countSharingEntryToUserIds == 0) {
+			if (sharingEntriesCount == 0) {
 				return JSONFactoryUtil.createJSONArray();
 			}
 
-			List<SharingEntry> fromUserSharingEntries =
-				_sharingEntryLocalService.getFromUserSharingEntries(
-					themeDisplay.getUserId(), classNameId, classPK, 0,
-					countSharingEntryToUserIds);
+			List<SharingEntry> sharingEntries =
+				_sharingEntryLocalService.getSharingEntries(
+					classNameId, classPK);
 
 			List<ObjectValuePair<SharingEntry, User>> sharingEntryToUserOVPs =
 				new ArrayList<>();
 
-			for (SharingEntry sharingEntry : fromUserSharingEntries) {
+			for (SharingEntry sharingEntry : sharingEntries) {
 				User toUser = _userLocalService.fetchUser(
 					sharingEntry.getToUserId());
 

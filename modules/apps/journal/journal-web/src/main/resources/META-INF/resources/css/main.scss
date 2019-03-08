@@ -64,12 +64,6 @@ $productMenuWidth: 320px;
 	}
 
 	@include media-query($screen-md-min, null) {
-		.contextual-sidebar-content {
-			.sheet {
-				margin-right: 320px;
-			}
-		}
-
 		.contextual-sidebar.closed {
 			visibility: visible;
 			width: 320px;

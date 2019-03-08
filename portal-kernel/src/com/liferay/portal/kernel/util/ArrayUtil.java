@@ -24,7 +24,6 @@ import java.lang.reflect.Array;
 import java.text.DateFormat;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.Comparator;
 import java.util.Date;
@@ -1020,6 +1019,7 @@ public class ArrayUtil {
 		return toArray(filteredList.toArray(new Short[filteredList.size()]));
 	}
 
+	@SuppressWarnings("unchecked")
 	public static <T> T[] filter(T[] array, Predicate<T> filterPredicate) {
 		if (isEmpty(array)) {
 			return array;
@@ -1033,10 +1033,11 @@ public class ArrayUtil {
 			}
 		}
 
-		Object[] filteredArray = filteredList.toArray();
+		Class<?> arrayClass = array.getClass();
 
-		return (T[])Arrays.copyOf(
-			filteredArray, filteredArray.length, array.getClass());
+		return filteredList.toArray(
+			(T[])Array.newInstance(
+				arrayClass.getComponentType(), filteredList.size()));
 	}
 
 	public static int getLength(Object[] array) {

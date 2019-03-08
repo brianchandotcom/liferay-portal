@@ -56,6 +56,11 @@ public class JournalArticleAssetDisplayContributor
 	}
 
 	@Override
+	public String getFriendlyURLShortcut() {
+		return "article";
+	}
+
+	@Override
 	protected Map<String, Object> getClassTypeValues(
 		JournalArticle article, Locale locale) {
 

@@ -37,6 +37,11 @@ public class BlogsEntryAssetDisplayContributor
 	}
 
 	@Override
+	public String getFriendlyURLShortcut() {
+		return "blogs";
+	}
+
+	@Override
 	protected Map<String, Object> getClassTypeValues(
 		BlogsEntry blogsEntry, Locale locale) {
 

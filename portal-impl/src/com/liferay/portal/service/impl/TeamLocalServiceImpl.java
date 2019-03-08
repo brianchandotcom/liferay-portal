@@ -34,7 +34,6 @@ import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.service.base.TeamLocalServiceBaseImpl;
 
-import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 
@@ -119,22 +118,20 @@ public class TeamLocalServiceImpl extends TeamLocalServiceBaseImpl {
 			UnicodeProperties typeSettingsProperties =
 				group.getTypeSettingsProperties();
 
-			List<Long> teamIds = new ArrayList<>();
+			List<Long> defaultTeamIds = ListUtil.toList(
+				StringUtil.split(
+					typeSettingsProperties.getProperty("defaultTeamIds"), 0L));
 
-			long[] defaultTeamIds = StringUtil.split(
-				typeSettingsProperties.getProperty("defaultTeamIds"), 0L);
+			if (defaultTeamIds.contains(team.getTeamId())) {
+				defaultTeamIds.remove(team.getTeamId());
 
-			for (long defaultTeamId : defaultTeamIds) {
-				if (defaultTeamId != team.getTeamId()) {
-					teamIds.add(defaultTeamId);
-				}
+				typeSettingsProperties.setProperty(
+					"defaultTeamIds",
+					ListUtil.toString(defaultTeamIds, StringPool.BLANK));
+
+				groupLocalService.updateGroup(
+					group.getGroupId(), typeSettingsProperties.toString());
 			}
-
-			typeSettingsProperties.setProperty(
-				"defaultTeamIds", ListUtil.toString(teamIds, StringPool.BLANK));
-
-			groupLocalService.updateGroup(
-				group.getGroupId(), typeSettingsProperties.toString());
 		}
 
 		// Resources

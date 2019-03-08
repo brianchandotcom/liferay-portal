@@ -179,20 +179,24 @@ class Sidebar extends Component {
 	}
 
 	changeFieldType(type) {
-		const {fieldTypes, focusedField, namespace} = this.props;
+		const {editingLanguageId, fieldTypes, focusedField, namespace} = this.props;
 		const newFieldType = fieldTypes.find(({name}) => name === type);
 		const newSettingsContext = {
 			...newFieldType.settingsContext,
 			pages: normalizeSettingsContextPages(newFieldType.settingsContext.pages, namespace, newFieldType, focusedField.fieldName)
 		};
-		const settingsContext = this._mergeFieldTypeSettings(focusedField.settingsContext, newSettingsContext);
+		let {settingsContext} = focusedField;
+
+		if (type !== focusedField.type) {
+			settingsContext = this._mergeFieldTypeSettings(settingsContext, newSettingsContext);
+		}
 
 		this.emit(
 			'focusedFieldUpdated',
 			{
 				...focusedField,
 				...newFieldType,
-				...getFieldPropertiesFromSettingsContext(settingsContext),
+				...getFieldPropertiesFromSettingsContext(editingLanguageId, settingsContext),
 				settingsContext,
 				type: newFieldType.name
 			}
@@ -616,16 +620,26 @@ class Sidebar extends Component {
 		const newVisitor = new PagesVisitor(newSettingsContext.pages);
 		const oldVisitor = new PagesVisitor(oldSettingsContext.pages);
 
-		const excludedFields = ['type', 'validation'];
+		const excludedFields = [
+			'indexType',
+			'type',
+			'validation'
+		];
 
-		const getByFieldNameAndType = (fieldName, type) => {
+		const getPreviousField = ({fieldName, type, value}) => {
 			let field;
 
-			oldVisitor.mapFields(
+			oldVisitor.findField(
 				oldField => {
-					if (excludedFields.indexOf(fieldName) === -1 && oldField.fieldName === fieldName && oldField.type === type) {
+					if (
+						excludedFields.indexOf(fieldName) === -1 &&
+						oldField.fieldName === fieldName &&
+						oldField.type === type
+					) {
 						field = oldField;
 					}
+
+					return field;
 				}
 			);
 
@@ -636,13 +650,24 @@ class Sidebar extends Component {
 			...newSettingsContext,
 			pages: newVisitor.mapFields(
 				newField => {
-					const mergedField = getByFieldNameAndType(newField.fieldName, newField.type);
+					const previousField = getPreviousField(newField);
 
-					if (mergedField) {
-						newField = {
-							...mergedField,
-							visible: newField.visible
-						};
+					if (previousField) {
+						if (newField.fieldName === 'repeatable') {
+							newField.value = previousField.value;
+						}
+						else {
+							newField = {
+								...newField,
+								...previousField,
+								visible: newField.visible
+							};
+
+							if (newField.fieldName === 'predefinedValue') {
+								delete newField.multiple;
+								delete newField.value;
+							}
+						}
 					}
 
 					return newField;

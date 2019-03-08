@@ -58,15 +58,13 @@ public class DefaultSQLTransformerTest {
 	@Test
 	public void testTransformWithOneFunction() {
 		SQLTransformer sqlTransformer = new DefaultSQLTransformer(
-			new Function[] {_dummyFunction});
+			new Function[] {Function.identity()});
 
 		Assert.assertNull(sqlTransformer.transform(null));
 	}
 
-	private final Function<String, String> _dummyFunction = (String sql) -> sql;
 	private final Function<String, String> _toUpperCaseFunction =
-		(String sql) -> StringUtil.toUpperCase(sql);
-	private final Function<String, String> _trimFunction =
-		(String sql) -> sql.trim();
+		sql -> StringUtil.toUpperCase(sql);
+	private final Function<String, String> _trimFunction = sql -> sql.trim();
 
 }

@@ -269,6 +269,6 @@ public abstract class BaseSQLTransformerLogicTestCase {
 	protected SQLTransformer sqlTransformer;
 
 	private final Function<String, String> _addExtraWhitespaceFunction =
-		(String sql) -> StringUtil.replace(sql, CharPool.COMMA, "   ,   ");
+		sql -> StringUtil.replace(sql, CharPool.COMMA, "   ,   ");
 
 }

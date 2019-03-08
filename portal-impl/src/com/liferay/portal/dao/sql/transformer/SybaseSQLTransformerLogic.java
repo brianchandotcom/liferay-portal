@@ -58,12 +58,11 @@ public class SybaseSQLTransformerLogic extends BaseSQLTransformerLogic {
 	}
 
 	private Function<String, String> _getCrossJoinFunction() {
-		return (String sql) -> StringUtil.replace(
-			sql, "CROSS JOIN", StringPool.COMMA);
+		return sql -> StringUtil.replace(sql, "CROSS JOIN", StringPool.COMMA);
 	}
 
 	private Function<String, String> _getReplaceFunction() {
-		return (String sql) -> sql.replaceAll("(?i)replace\\(", "str_replace(");
+		return sql -> sql.replaceAll("(?i)replace\\(", "str_replace(");
 	}
 
 }

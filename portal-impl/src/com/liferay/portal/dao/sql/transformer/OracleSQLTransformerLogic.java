@@ -90,13 +90,11 @@ public class OracleSQLTransformerLogic extends BaseSQLTransformerLogic {
 	}
 
 	private Function<String, String> _getEscapeFunction() {
-		return (String sql) -> StringUtil.replace(
-			sql, "LIKE ?", "LIKE ? ESCAPE '\\'");
+		return sql -> StringUtil.replace(sql, "LIKE ?", "LIKE ? ESCAPE '\\'");
 	}
 
 	private Function<String, String> _getNotEqualsBlankStringFunction() {
-		return (String sql) -> StringUtil.replace(
-			sql, " != ''", " IS NOT NULL");
+		return sql -> StringUtil.replace(sql, " != ''", " IS NOT NULL");
 	}
 
 }

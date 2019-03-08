@@ -61,7 +61,7 @@ public class PostgreSQLTransformerLogic extends BaseSQLTransformerLogic {
 	}
 
 	private Function<String, String> _getNegativeComparisonFunction() {
-		return (String sql) -> {
+		return sql -> {
 			Matcher matcher = _negativeComparisonPattern.matcher(sql);
 
 			return matcher.replaceAll("$1 ($2)");
@@ -69,7 +69,7 @@ public class PostgreSQLTransformerLogic extends BaseSQLTransformerLogic {
 	}
 
 	private Function<String, String> _getNullDateFunction() {
-		return (String sql) -> StringUtil.replace(
+		return sql -> StringUtil.replace(
 			sql, "[$NULL_DATE$]", "CAST(NULL AS TIMESTAMP)");
 	}
 

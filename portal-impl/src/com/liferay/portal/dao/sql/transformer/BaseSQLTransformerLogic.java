@@ -41,7 +41,7 @@ public abstract class BaseSQLTransformerLogic implements SQLTransformerLogic {
 	protected Function<String, String> getBitwiseCheckFunction() {
 		Pattern pattern = getBitwiseCheckPattern();
 
-		return (String sql) -> replaceBitwiseCheck(pattern.matcher(sql));
+		return sql -> replaceBitwiseCheck(pattern.matcher(sql));
 	}
 
 	protected Pattern getBitwiseCheckPattern() {
@@ -49,7 +49,7 @@ public abstract class BaseSQLTransformerLogic implements SQLTransformerLogic {
 	}
 
 	protected Function<String, String> getBooleanFunction() {
-		return (String sql) -> StringUtil.replace(
+		return sql -> StringUtil.replace(
 			sql, new String[] {"[$FALSE$]", "[$TRUE$]"},
 			new String[] {_db.getTemplateFalse(), _db.getTemplateTrue()});
 	}
@@ -57,7 +57,7 @@ public abstract class BaseSQLTransformerLogic implements SQLTransformerLogic {
 	protected Function<String, String> getCastClobTextFunction() {
 		Pattern pattern = getCastClobTextPattern();
 
-		return (String sql) -> replaceCastClobText(pattern.matcher(sql));
+		return sql -> replaceCastClobText(pattern.matcher(sql));
 	}
 
 	protected Pattern getCastClobTextPattern() {
@@ -68,7 +68,7 @@ public abstract class BaseSQLTransformerLogic implements SQLTransformerLogic {
 	protected Function<String, String> getCastLongFunction() {
 		Pattern pattern = getCastLongPattern();
 
-		return (String sql) -> replaceCastLong(pattern.matcher(sql));
+		return sql -> replaceCastLong(pattern.matcher(sql));
 	}
 
 	protected Pattern getCastLongPattern() {
@@ -79,7 +79,7 @@ public abstract class BaseSQLTransformerLogic implements SQLTransformerLogic {
 	protected Function<String, String> getCastTextFunction() {
 		Pattern pattern = getCastTextPattern();
 
-		return (String sql) -> replaceCastText(pattern.matcher(sql));
+		return sql -> replaceCastText(pattern.matcher(sql));
 	}
 
 	protected Pattern getCastTextPattern() {
@@ -98,8 +98,7 @@ public abstract class BaseSQLTransformerLogic implements SQLTransformerLogic {
 	protected Function<String, String> getDropTableIfExistsTextFunction() {
 		Pattern pattern = getDropTableIfExistsTextPattern();
 
-		return (String sql) -> replaceDropTableIfExistsText(
-			pattern.matcher(sql));
+		return sql -> replaceDropTableIfExistsText(pattern.matcher(sql));
 	}
 
 	protected Pattern getDropTableIfExistsTextPattern() {
@@ -110,7 +109,7 @@ public abstract class BaseSQLTransformerLogic implements SQLTransformerLogic {
 	protected Function<String, String> getInstrFunction() {
 		Pattern pattern = getInstrPattern();
 
-		return (String sql) -> replaceInstr(pattern.matcher(sql));
+		return sql -> replaceInstr(pattern.matcher(sql));
 	}
 
 	protected Pattern getInstrPattern() {
@@ -121,7 +120,7 @@ public abstract class BaseSQLTransformerLogic implements SQLTransformerLogic {
 	protected Function<String, String> getIntegerDivisionFunction() {
 		Pattern pattern = getIntegerDivisionPattern();
 
-		return (String sql) -> replaceIntegerDivision(pattern.matcher(sql));
+		return sql -> replaceIntegerDivision(pattern.matcher(sql));
 	}
 
 	protected Pattern getIntegerDivisionPattern() {
@@ -131,11 +130,11 @@ public abstract class BaseSQLTransformerLogic implements SQLTransformerLogic {
 	}
 
 	protected Function<String, String> getLengthFunction() {
-		return (String sql) -> StringUtil.replace(sql, "LENGTH(", "LEN(");
+		return sql -> StringUtil.replace(sql, "LENGTH(", "LEN(");
 	}
 
 	protected Function<String, String> getLowerFunction() {
-		return (String sql) -> {
+		return sql -> {
 			int x = sql.indexOf(_LOWER_OPEN);
 
 			if (x == -1) {
@@ -179,7 +178,7 @@ public abstract class BaseSQLTransformerLogic implements SQLTransformerLogic {
 	protected Function<String, String> getModFunction() {
 		Pattern pattern = getModPattern();
 
-		return (String sql) -> replaceMod(pattern.matcher(sql));
+		return sql -> replaceMod(pattern.matcher(sql));
 	}
 
 	protected Pattern getModPattern() {
@@ -188,13 +187,13 @@ public abstract class BaseSQLTransformerLogic implements SQLTransformerLogic {
 	}
 
 	protected Function<String, String> getNullDateFunction() {
-		return (String sql) -> StringUtil.replace(sql, "[$NULL_DATE$]", "NULL");
+		return sql -> StringUtil.replace(sql, "[$NULL_DATE$]", "NULL");
 	}
 
 	protected Function<String, String> getSubstrFunction() {
 		Pattern pattern = getSubstrPattern();
 
-		return (String sql) -> replaceSubstr(pattern.matcher(sql));
+		return sql -> replaceSubstr(pattern.matcher(sql));
 	}
 
 	protected Pattern getSubstrPattern() {

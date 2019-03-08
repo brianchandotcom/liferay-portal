@@ -24,7 +24,7 @@ import java.util.regex.Pattern;
 public class JPQLToHQLTransformerLogic {
 
 	public static final Function<String, String> getCountFunction() {
-		return (String sql) -> {
+		return sql -> {
 			Matcher matcher = _jpqlCountPattern.matcher(sql);
 
 			if (matcher.find()) {

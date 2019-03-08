@@ -61,7 +61,7 @@ public class DB2SQLTransformerLogic extends BaseSQLTransformerLogic {
 	}
 
 	private Function<String, String> _getAlterColumnTypeFunction() {
-		return (String sql) -> {
+		return sql -> {
 			Matcher matcher = _alterColumnTypePattern.matcher(sql);
 
 			return matcher.replaceAll(
@@ -70,7 +70,7 @@ public class DB2SQLTransformerLogic extends BaseSQLTransformerLogic {
 	}
 
 	private Function<String, String> _getLikeFunction() {
-		return (String sql) -> {
+		return sql -> {
 			Matcher matcher = _likePattern.matcher(sql);
 
 			return matcher.replaceAll(

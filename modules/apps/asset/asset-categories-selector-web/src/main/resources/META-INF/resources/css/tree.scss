@@ -1,47 +1,59 @@
-$background-color-default: #FFF;
-$background-color-selected: #F0F5FF;
-$border-color-selected: #65B6F0;
-$border-color: #DEE2E6;
-$color-default: #6B6C7E;
-$color-disabled: #A7A9BC;
-$color-selected: #272833;
 $navigation-color: #869CAD;
 $spacer: 1rem;
 
 .select-category-filter {
-	background: $background-color-default;
-	border-bottom: 1px solid $border-color;
+	background: #FFF;
+	border-bottom: 1px solid #DEE2E6;
 	margin-bottom: $spacer * 1.5;
 	padding: $spacer * 0.75;
 }
 
 .category-tree {
 	.card {
-		color: $color-default;
+		border: 1px solid #E7E7ED;
+		box-shadow: none;
+		color: #6B6C7E;
 		margin-bottom: 0;
-
-		&:focus {
-			box-shadow: inset 0 0 0 2px $border-color-selected;
-			outline: none;
-		}
 
 		&:hover {
 			background-color: #F7F8F9;
+			border-color: #CDCED9;
+			color: #272833;
+		}
+
+		&:focus {
+			box-shadow: 0 0 0 2px white, 0 0 0 4px #80AFFF;
+			color: #272833;
 		}
 	}
 
 	.card-row-padded {
-		padding: $spacer * 0.25;
+		padding: 8px 12px;
 	}
 
 	.selected .card {
-		background-color: $background-color-selected;
-		color: $color-selected;
+		background-color: #80ACFF;
+		border-color: #80ACFF;
+		color: #272833;
 	}
 
-	.disabled .card {
-		cursor: not-allowed;
-		opacity: 0.4;
+	.disabled {
+		.card, .card:hover, .card:focus {
+			background-color: #E7E7ED;
+			border: 1px solid #E7E7ED;
+			box-shadow: none;
+			color: #272833;
+			cursor: not-allowed;
+			outline: none;
+		}
+	}
+
+	.treeview {
+		margin-left: -15px;
+
+		@media (min-width: 768px) {
+			margin-left: -54px;
+		}
 	}
 
 	.treeview-node {
@@ -51,25 +63,38 @@ $spacer: 1rem;
 
 	.treeview-node-main {
 		float: none;
-		margin-bottom: $spacer;
-		padding-left: $spacer;
+		margin-bottom: 15px;
+		padding-left: 15px;
 		position: relative;
 
 		&:not(.disabled) {
 			cursor: pointer;
+		}
+
+		@media (min-width: 768px) {
+			margin-bottom: 24px;
+			padding-left: 24px;
 		}
 	}
 
 	.treeview-nodes {
 		border-left: 2px solid $navigation-color;
 		list-style: none;
-		margin-left: $spacer;
+		margin-left: 15px;
 		padding-left: 0;
 
 		.treeview-nodes {
 			border-left-style: dashed;
 			border-left-width: 1px;
 		}
+
+		@media (min-width: 768px) {
+			margin-left: 54px;
+		}
+	}
+
+	.treeview-node-name {
+		margin-left: 2px;
 	}
 
 	.treeview-node-toggler {

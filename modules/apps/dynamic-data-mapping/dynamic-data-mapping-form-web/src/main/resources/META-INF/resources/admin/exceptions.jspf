@@ -56,6 +56,8 @@
 	<liferay-ui:message arguments="<%= HtmlUtil.escape(msvcffn.getFieldName()) %>" key="invalid-characters-were-defined-for-field-name-x" translateArguments="<%= false %>" />
 </liferay-ui:error>
 
+<liferay-ui:error exception="<%= DDMFormValidationException.MustSetValidFormRuleExpression.class %>" message="there-are-invalid-rule-expressions" />
+
 <liferay-ui:error exception="<%= DDMFormValidationException.MustSetValidValidationExpression.class %>">
 
 	<%

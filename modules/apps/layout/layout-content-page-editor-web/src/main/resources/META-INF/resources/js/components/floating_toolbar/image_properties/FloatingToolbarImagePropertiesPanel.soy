@@ -6,7 +6,7 @@
 {template .render}
 	{@param item: ?}
 	{@param? _imageTargetOptions: list<[
-		imageTargetId: string,
+		targetTypeId: string,
 		label: string
 	]>}
 	{@param? _handleImageLinkInputChange: any}
@@ -90,7 +90,7 @@
 	{@param item: ?}
 	{@param? _handleImageTargetOptionChange: any}
 	{@param? imageTargetOptions: list<[
-		imageTargetId: string,
+		targetTypeId: string,
 		label: string
 	]>}
 
@@ -109,7 +109,7 @@
 					{call .imageTargetOption}
 						{param imageTarget: $imageTarget /}
 						{param item: $item /}
-						{param key: $imageTarget.imageTargetId /}
+						{param key: $imageTarget.targetTypeId /}
 					{/call}
 				{/foreach}
 			</select>
@@ -122,15 +122,15 @@
  */
 {template .imageTargetOption}
 	{@param imageTarget: [
-		imageTargetId: string,
+		targetTypeId: string,
 		label: string
 	]}
 	{@param item: ?}
 
 	{let $optionAttributes kind="attributes"}
-		value="{$imageTarget.imageTargetId}"
+		value="{$imageTarget.targetTypeId}"
 
-		{if $item.editableValues.config and $item.editableValues.config.imageTarget == $imageTarget.imageTargetId}
+		{if $item.editableValues.config and $item.editableValues.config.imageTarget == $imageTarget.targetTypeId}
 			selected
 		{/if}
 	{/let}

@@ -87,11 +87,6 @@ String newArticleId = ParamUtil.getString(request, "newArticleId");
 <liferay-ui:error exception="<%= StorageFieldRequiredException.class %>" message="please-fill-out-all-required-fields" />
 
 <liferay-frontend:fieldset>
-	<aui:input autoFocus="<%= true %>" label="title" localized="<%= true %>" name="titleMapAsXML" type="text" wrapperCssClass="article-content-title">
-		<c:if test="<%= classNameId == JournalArticleConstants.CLASSNAME_ID_DEFAULT %>">
-			<aui:validator name="required" />
-		</c:if>
-	</aui:input>
 
 	<%
 	JournalItemSelectorHelper journalItemSelectorHelper = new JournalItemSelectorHelper(article, journalDisplayContext.getFolder(), renderRequest, renderResponse);

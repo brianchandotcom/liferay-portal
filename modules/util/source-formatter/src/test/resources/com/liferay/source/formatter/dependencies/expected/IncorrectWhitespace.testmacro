@@ -10,13 +10,11 @@ definition {
 			ProductMenu.gotoPortlet(
 				category = "Content",
 				panel = "Site Administration",
-				portlet = "Blogs"
-			);
+				portlet = "Blogs");
 
 			Blogs.addEntry(
 				entryContent = "Blogs Entry1 Content",
-				entryTitle = "Blogs Entry1 Title"
-			);
+				entryTitle = "Blogs Entry1 Title");
 		}
 
 		task ("You can call 'Blogs Entry2 Title()	; ' with content 'Blogs Entry2 Content() ; and you will find something'") {
@@ -26,8 +24,13 @@ definition {
 
 			Blogs.correctLine(
 				entryContent = "Blogs Entry2 Content",
-				entryTitle = "Blogs Entry2 Title"
-			);
+				entryTitle = "Blogs Entry2 Title");
 		}
+
+		var maliciousURL1 = '''
+				${portalURL}/group/guest/home?p_p_id=82&p_p_lifecycle=1&p_p_state=normal&p_p_mode=view&p_p_col_id=column-1&p_p_col_pos=1&p_p_col_count=2&_82_struts_action=%2Flanguage%2Fview&languageId=&lt;/script&gt;&lt;script&gt;alert(document.domain)&lt;/script>
+			''';
+
+		Site.editGoogleAnalyticsIDCP(googleAnalyticsID = '''']);alert(/googleAnalyticsId/);//''');
 	}
 }

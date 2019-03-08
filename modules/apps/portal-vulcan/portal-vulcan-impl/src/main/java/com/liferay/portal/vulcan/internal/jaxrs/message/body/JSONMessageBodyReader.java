@@ -96,23 +96,9 @@ public class JSONMessageBodyReader implements MessageBodyReader {
 		);
 	}
 
-	private ValidatorFactory _getValidatorFactory() {
-		if (_validatorFactory == null) {
-			synchronized (JSONMessageBodyReader.class) {
-				ProviderSpecificBootstrap providerSpecificBootstrap =
-					Validation.byProvider(ApacheValidationProvider.class);
-
-				Configuration configure = providerSpecificBootstrap.configure();
-
-				_validatorFactory = configure.buildValidatorFactory();
-			}
-		}
-
-		return _validatorFactory;
-	}
-
 	private void _validate(Object value) {
-		ValidatorFactory validatorFactory = _getValidatorFactory();
+		ValidatorFactory validatorFactory =
+			ValidatorFactoryHolder._validatorFactory;
 
 		Validator validator = validatorFactory.getValidator();
 
@@ -136,9 +122,22 @@ public class JSONMessageBodyReader implements MessageBodyReader {
 		throw new ValidationException(sb.toString());
 	}
 
-	private static ValidatorFactory _validatorFactory;
-
 	@Context
 	private Providers _providers;
+
+	private static class ValidatorFactoryHolder {
+
+		private static final ValidatorFactory _validatorFactory;
+
+		static {
+			ProviderSpecificBootstrap providerSpecificBootstrap =
+				Validation.byProvider(ApacheValidationProvider.class);
+
+			Configuration configure = providerSpecificBootstrap.configure();
+
+			_validatorFactory = configure.buildValidatorFactory();
+		}
+
+	}
 
 }

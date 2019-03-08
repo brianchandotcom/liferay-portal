@@ -1,5 +1,4 @@
 import PublishButton from 'source/components/PublishButton/PublishButton.es';
-import * as util from 'dynamic-data-mapping-form-builder/metal/js/util/fetch.es';
 
 const formInstanceId = '12345';
 const namespace = 'portlet_namespace';
@@ -19,8 +18,11 @@ const props = {
 		)
 	),
 	spritemap,
+	submitForm: () => false,
 	url
 };
+
+const mockEvent = {preventDefault: () => false};
 
 describe(
 	'PublishButton',
@@ -69,32 +71,19 @@ describe(
 			'publish()',
 			() => {
 				it(
-					'should call fetch with published=true',
+					'should call submitForm()',
 					() => {
-						component = new PublishButton(props);
+						const submitForm = jest.fn();
 
-						const fetchSpy = jest.spyOn(util, 'makeFetch');
-
-						fetchSpy.mockImplementation(
-							() => Promise.resolve(
-								{
-									modifiedDate: 'December'
-								}
-							)
+						component = new PublishButton(
+							{
+								...props,
+								submitForm
+							}
 						);
 
-						return component.publish().then(
-							() => expect(fetchSpy).toHaveBeenCalledWith(
-								{
-									body: util.convertToSearchParams(
-										{
-											[`${namespace}formInstanceId`]: formInstanceId,
-											[`${namespace}published`]: true
-										}
-									),
-									url
-								}
-							)
+						return component.publish(mockEvent).then(
+							() => expect(submitForm).toHaveBeenCalled()
 						);
 					}
 				);
@@ -105,32 +94,19 @@ describe(
 			'unpublish()',
 			() => {
 				it(
-					'should call fetch with published=false',
+					'should call submitForm()',
 					() => {
-						component = new PublishButton(props);
+						const submitForm = jest.fn();
 
-						const fetchSpy = jest.spyOn(util, 'makeFetch');
-
-						fetchSpy.mockImplementation(
-							() => Promise.resolve(
-								{
-									modifiedDate: 'December'
-								}
-							)
+						component = new PublishButton(
+							{
+								...props,
+								submitForm
+							}
 						);
 
-						return component.unpublish().then(
-							() => expect(fetchSpy).toHaveBeenCalledWith(
-								{
-									body: util.convertToSearchParams(
-										{
-											[`${namespace}formInstanceId`]: formInstanceId,
-											[`${namespace}published`]: true
-										}
-									),
-									url
-								}
-							)
+						return component.publish(mockEvent).then(
+							() => expect(submitForm).toHaveBeenCalled()
 						);
 					}
 				);
@@ -154,7 +130,7 @@ describe(
 
 						publishSpy.mockImplementation(() => Promise.resolve());
 
-						return component.toggle().then(() => expect(publishSpy).toHaveBeenCalled());
+						return component.toggle(mockEvent).then(() => expect(publishSpy).toHaveBeenCalled());
 					}
 				);
 
@@ -172,7 +148,7 @@ describe(
 
 						unpublishSpy.mockImplementation(() => Promise.resolve());
 
-						return component.toggle().then(() => expect(unpublishSpy).toHaveBeenCalled());
+						return component.toggle(mockEvent).then(() => expect(unpublishSpy).toHaveBeenCalled());
 					}
 				);
 

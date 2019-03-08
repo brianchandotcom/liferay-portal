@@ -76,9 +76,13 @@ class PublishButton extends Component {
 
 		event.preventDefault();
 
-		document.querySelector(`#${namespace}editForm`).setAttribute('action', url);
+		const form = document.querySelector(`#${namespace}editForm`);
 
-		submitForm();
+		if (form) {
+			form.setAttribute('action', url);
+		}
+
+		return Promise.resolve(submitForm());
 	}
 
 	_showPublishAlert(publishURL) {

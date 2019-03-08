@@ -32,7 +32,6 @@ import javax.validation.Validator;
 
 import javax.ws.rs.InternalServerErrorException;
 import javax.ws.rs.Produces;
-import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.MultivaluedMap;
@@ -59,7 +58,7 @@ public class JSONMessageBodyReader implements MessageBodyReader {
 			Class clazz, Type type, Annotation[] annotations,
 			MediaType mediaType, MultivaluedMap multivaluedMap,
 			InputStream inputStream)
-		throws IOException, WebApplicationException {
+		throws IOException {
 
 		ObjectReader objectMapper = _getObjectMapper(
 			clazz

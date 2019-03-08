@@ -57,6 +57,12 @@ $productMenuWidth: 320px;
 		}
 	}
 
+	.article-content-title {
+		.form-validator-stack {
+			display: none;
+		}
+	}
+
 	@include media-query(null, $screen-sm-max) {
 		.edit-article-sidebar {
 			top: 49px !important;

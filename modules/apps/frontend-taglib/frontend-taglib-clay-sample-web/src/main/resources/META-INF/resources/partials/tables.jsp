@@ -24,8 +24,9 @@
 	displayContext="<%= tablesDisplayContext %>"
 />
 
-<h3>TABLE USING CONTRIBUTOR</h3>
+<h3>TABLE USING CONTRIBUTOR + DATA SOURCE</h3>
 
 <clay:table
 	contributorKey="SampleTable"
+	dataSourceKey="SampleTable"
 />

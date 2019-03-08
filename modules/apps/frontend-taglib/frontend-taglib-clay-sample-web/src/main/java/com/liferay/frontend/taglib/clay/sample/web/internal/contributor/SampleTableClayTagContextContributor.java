@@ -18,9 +18,6 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.contributor.ClayTagContex
 import com.liferay.frontend.taglib.clay.servlet.taglib.display.context.table.Field;
 import com.liferay.frontend.taglib.clay.servlet.taglib.display.context.table.Schema;
 
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.HashMap;
 import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
@@ -41,32 +38,12 @@ public class SampleTableClayTagContextContributor
 
 	@Override
 	public void populate(Map<String, Object> context) {
-		context.put("items", _getItems());
-
 		Schema schema = _getSchema();
 
 		context.put("schema", schema.toMap());
 
 		context.put("selectable", true);
 		context.put("tableClasses", "sample-table");
-	}
-
-	private Map<String, Object> _getItem(
-		String name, int calories, int portion) {
-
-		Map<String, Object> item = new HashMap<>();
-
-		item.put("calories", calories);
-		item.put("name", name);
-		item.put("portion", portion);
-
-		return item;
-	}
-
-	private Collection<?> _getItems() {
-		return Arrays.asList(
-			_getItem("Blueberry", 57, 100), _getItem("Strawberry", 33, 100),
-			_getItem("Raspberry", 53, 100));
 	}
 
 	private Schema _getSchema() {

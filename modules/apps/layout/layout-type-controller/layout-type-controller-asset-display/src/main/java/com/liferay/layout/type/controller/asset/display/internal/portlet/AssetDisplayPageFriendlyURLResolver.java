@@ -15,31 +15,13 @@
 package com.liferay.layout.type.controller.asset.display.internal.portlet;
 
 import com.liferay.asset.display.contributor.AssetDisplayContributor;
-import com.liferay.asset.display.contributor.AssetDisplayContributorTracker;
-import com.liferay.asset.display.contributor.constants.AssetDisplayWebKeys;
-import com.liferay.asset.display.page.constants.AssetDisplayPageConstants;
-import com.liferay.asset.display.page.model.AssetDisplayPageEntry;
-import com.liferay.asset.display.page.service.AssetDisplayPageEntryLocalService;
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.service.AssetEntryService;
-import com.liferay.asset.util.AssetHelper;
-import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
-import com.liferay.layout.page.template.service.LayoutPageTemplateEntryService;
 import com.liferay.layout.type.controller.asset.display.internal.constants.AssetDisplayPageFriendlyURLResolverConstants;
 import com.liferay.petra.string.CharPool;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.model.Layout;
-import com.liferay.portal.kernel.model.LayoutFriendlyURLComposite;
 import com.liferay.portal.kernel.portlet.FriendlyURLResolver;
-import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.WebKeys;
-
-import java.util.Locale;
-import java.util.Map;
-
-import javax.servlet.http.HttpServletRequest;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -49,72 +31,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = FriendlyURLResolver.class)
 public class AssetDisplayPageFriendlyURLResolver
-	implements FriendlyURLResolver {
-
-	@Override
-	public String getActualURL(
-			long companyId, long groupId, boolean privateLayout,
-			String mainPath, String friendlyURL, Map<String, String[]> params,
-			Map<String, Object> requestContext)
-		throws PortalException {
-
-		long versionClassPK = 0L;
-
-		String urlSeparator = getURLSeparator();
-
-		String path = friendlyURL.substring(urlSeparator.length());
-
-		if (path.indexOf(CharPool.SLASH) != -1) {
-			versionClassPK = GetterUtil.getLong(
-				path.substring(path.indexOf(CharPool.SLASH) + 1));
-		}
-
-		AssetEntry assetEntry = _getAssetEntry(friendlyURL);
-
-		AssetDisplayContributor assetDisplayContributor =
-			_assetDisplayContributorTracker.getAssetDisplayContributor(
-				assetEntry.getClassName());
-
-		if (assetDisplayContributor == null) {
-			throw new PortalException();
-		}
-
-		HttpServletRequest request = (HttpServletRequest)requestContext.get(
-			"request");
-
-		request.setAttribute(
-			AssetDisplayWebKeys.ASSET_DISPLAY_CONTRIBUTOR,
-			assetDisplayContributor);
-		request.setAttribute(WebKeys.LAYOUT_ASSET_ENTRY, assetEntry);
-		request.setAttribute(
-			AssetDisplayWebKeys.VERSION_CLASS_PK, versionClassPK);
-
-		Locale locale = _portal.getLocale(request);
-
-		_portal.setPageTitle(assetEntry.getTitle(locale), request);
-		_portal.setPageDescription(assetEntry.getDescription(locale), request);
-
-		_portal.setPageKeywords(
-			_assetHelper.getAssetKeywords(
-				assetEntry.getClassName(), assetEntry.getClassPK()),
-			request);
-
-		Layout layout = _getAssetEntryLayout(assetEntry);
-
-		return _portal.getLayoutActualURL(layout, mainPath);
-	}
-
-	@Override
-	public LayoutFriendlyURLComposite getLayoutFriendlyURLComposite(
-			long companyId, long groupId, boolean privateLayout,
-			String friendlyURL, Map<String, String[]> params,
-			Map<String, Object> requestContext)
-		throws PortalException {
-
-		Layout layout = _getAssetEntryLayout(_getAssetEntry(friendlyURL));
-
-		return new LayoutFriendlyURLComposite(layout, friendlyURL);
-	}
+	extends BaseAssetDisplayPageFriendlyURLResolver {
 
 	@Override
 	public String getURLSeparator() {
@@ -122,7 +39,28 @@ public class AssetDisplayPageFriendlyURLResolver
 			ASSET_DISPLAY_PAGE_URL_SEPARATOR;
 	}
 
-	private AssetEntry _getAssetEntry(String friendlyURL)
+	@Override
+	protected AssetDisplayContributor getAssetDisplayContributor(
+			long groupId, String friendlyURL)
+		throws PortalException {
+
+		AssetEntry assetEntry = getAssetEntry(groupId, friendlyURL);
+
+		AssetDisplayContributor assetDisplayContributor =
+			assetDisplayContributorTracker.getAssetDisplayContributor(
+				assetEntry.getClassName());
+
+		if (assetDisplayContributor == null) {
+			throw new PortalException(
+				"Display page not available for className" +
+					assetEntry.getClassName());
+		}
+
+		return assetDisplayContributor;
+	}
+
+	@Override
+	protected AssetEntry getAssetEntry(long groupId, String friendlyURL)
 		throws PortalException {
 
 		long assetEntryId = 0;
@@ -142,55 +80,23 @@ public class AssetDisplayPageFriendlyURLResolver
 		return _assetEntryService.getEntry(assetEntryId);
 	}
 
-	private Layout _getAssetEntryLayout(AssetEntry assetEntry)
-		throws PortalException {
+	@Override
+	protected long getVersionClassPK(String friendlyURL) {
+		long versionClassPK = 0L;
 
-		AssetDisplayPageEntry assetDisplayPageEntry =
-			_assetDisplayPageEntryLocalService.fetchAssetDisplayPageEntry(
-				assetEntry.getGroupId(), assetEntry.getClassNameId(),
-				assetEntry.getClassPK());
+		String urlSeparator = getURLSeparator();
 
-		if ((assetDisplayPageEntry != null) &&
-			(assetDisplayPageEntry.getType() !=
-				AssetDisplayPageConstants.TYPE_DEFAULT)) {
+		String path = friendlyURL.substring(urlSeparator.length());
 
-			return _layoutLocalService.fetchLayout(
-				assetDisplayPageEntry.getPlid());
+		if (path.indexOf(CharPool.SLASH) != -1) {
+			versionClassPK = GetterUtil.getLong(
+				path.substring(path.indexOf(CharPool.SLASH) + 1));
 		}
 
-		LayoutPageTemplateEntry layoutPageTemplateEntry =
-			_layoutPageTemplateEntryService.fetchDefaultLayoutPageTemplateEntry(
-				assetEntry.getGroupId(), assetEntry.getClassNameId(),
-				assetEntry.getClassTypeId());
-
-		if (layoutPageTemplateEntry != null) {
-			return _layoutLocalService.fetchLayout(
-				layoutPageTemplateEntry.getPlid());
-		}
-
-		return null;
+		return versionClassPK;
 	}
 
 	@Reference
-	private AssetDisplayContributorTracker _assetDisplayContributorTracker;
-
-	@Reference
-	private AssetDisplayPageEntryLocalService
-		_assetDisplayPageEntryLocalService;
-
-	@Reference
 	private AssetEntryService _assetEntryService;
-
-	@Reference
-	private AssetHelper _assetHelper;
-
-	@Reference
-	private LayoutLocalService _layoutLocalService;
-
-	@Reference
-	private LayoutPageTemplateEntryService _layoutPageTemplateEntryService;
-
-	@Reference
-	private Portal _portal;
 
 }

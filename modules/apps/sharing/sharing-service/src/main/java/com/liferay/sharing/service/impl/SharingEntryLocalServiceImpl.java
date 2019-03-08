@@ -309,6 +309,25 @@ public class SharingEntryLocalServiceImpl
 	}
 
 	/**
+	 * Returns the sharing entry for the resource shared with the user or null
+	 * if there's none. The class name ID and class primary key identify the
+	 * resource's type and instance, respectively.
+	 *
+	 * @param  toUserId the user's ID
+	 * @param  classNameId the resource's class name ID
+	 * @param  classPK the class primary key of the resource
+	 * @return the sharing entry or null if none
+	 * @review
+	 */
+	@Override
+	public SharingEntry fetchSharingEntry(
+		long toUserId, long classNameId, long classPK) {
+
+		return sharingEntryPersistence.fetchByTU_C_C(
+			toUserId, classNameId, classPK);
+	}
+
+	/**
 	 * Returns the the group's sharing entries.
 	 *
 	 * @param  groupId the primary key of the group

@@ -197,15 +197,15 @@ public class SharedWithMeViewMVCRenderCommand implements MVCRenderCommand {
 			long classNameId = ParamUtil.getLong(renderRequest, "classNameId");
 			long classPK = ParamUtil.getLong(renderRequest, "classPK");
 
-			List<SharingEntry> sharingEntries =
-				_sharingEntryLocalService.getSharingEntries(
+			SharingEntry sharingEntry =
+				_sharingEntryLocalService.fetchSharingEntry(
 					themeDisplay.getUserId(), classNameId, classPK);
 
-			if (sharingEntries.isEmpty()) {
+			if (sharingEntry == null) {
 				throw nsee;
 			}
 
-			return sharingEntries.get(0);
+			return sharingEntry;
 		}
 	}
 

@@ -17,17 +17,24 @@ package com.liferay.arquillian.extension.junit.bridge.junit;
 import com.liferay.arquillian.extension.junit.bridge.client.BndBundleUtil;
 import com.liferay.arquillian.extension.junit.bridge.client.MBeans;
 import com.liferay.arquillian.extension.junit.bridge.server.JMXTestRunnerMBean;
-import com.liferay.petra.io.unsync.UnsyncByteArrayInputStream;
+import com.liferay.petra.io.unsync.UnsyncBufferedInputStream;
 
 import java.io.Closeable;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.ObjectInputStream;
 
 import java.lang.annotation.Annotation;
+import java.lang.reflect.Method;
 
+import java.net.InetAddress;
+import java.net.InetSocketAddress;
+import java.net.ServerSocket;
+import java.net.Socket;
 import java.net.URI;
 import java.net.URL;
 
+import java.nio.channels.ServerSocketChannel;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
@@ -36,7 +43,6 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 
-import org.junit.AssumptionViolatedException;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.Description;
@@ -48,7 +54,6 @@ import org.junit.runner.notification.Failure;
 import org.junit.runner.notification.RunNotifier;
 import org.junit.runners.model.FrameworkField;
 import org.junit.runners.model.FrameworkMethod;
-import org.junit.runners.model.MultipleFailureException;
 import org.junit.runners.model.TestClass;
 
 import org.osgi.jmx.framework.FrameworkMBean;
@@ -115,34 +120,36 @@ public class Arquillian extends Runner implements Filterable {
 				MBeans.getJmxTestRunnerMBean();
 
 			for (FrameworkMethod frameworkMethod : frameworkMethods) {
-				Description description = Description.createTestDescription(
-					_clazz, frameworkMethod.getName(),
-					frameworkMethod.getAnnotations());
+				Thread thread = _startServerThread(runNotifier);
 
-				runNotifier.fireTestStarted(description);
-
-				byte[] data = jmxTestRunnerMBean.runTestMethod(
+				jmxTestRunnerMBean.runTestMethod(
 					_clazz.getName(), frameworkMethod.getName(),
-					_filteredSortedTestClass._filteredMethodNames);
+					_filteredSortedTestClass._filteredMethodNames, _inetAddress,
+					_port);
 
-				try (InputStream inputStream = new UnsyncByteArrayInputStream(
-						data);
-					ObjectInputStream oos = new ObjectInputStream(
-						inputStream)) {
-
-					Throwable throwable = (Throwable)oos.readObject();
-
-					if (throwable != null) {
-						_processTestException(
-							runNotifier, description, throwable);
-					}
-				}
-
-				runNotifier.fireTestFinished(description);
+				thread.join();
 			}
 		}
 		catch (Throwable t) {
 			runNotifier.fireTestFailure(new Failure(getDescription(), t));
+		}
+	}
+
+	private ServerSocket _getServerSocket() {
+		while (true) {
+			try {
+				ServerSocketChannel serverSocketChannel =
+					ServerSocketChannel.open();
+
+				ServerSocket serverSocket = serverSocketChannel.socket();
+
+				serverSocket.bind(new InetSocketAddress(_inetAddress, _port));
+
+				return serverSocket;
+			}
+			catch (IOException ioe) {
+				_port++;
+			}
 		}
 	}
 
@@ -170,22 +177,27 @@ public class Arquillian extends Runner implements Filterable {
 		return () -> frameworkMBean.uninstallBundle(bundleId);
 	}
 
-	private void _processTestException(
-		RunNotifier runNotifier, Description description, Throwable throwable) {
+	private Thread _startServerThread(RunNotifier runNotifier) {
+		Thread thread = new Thread(
+			new ServerRunnable(runNotifier, _getServerSocket()),
+			_clazz.getName() + "-Test-Thread");
 
-		if (throwable instanceof AssumptionViolatedException) {
-			runNotifier.fireTestAssumptionFailed(
-				new Failure(description, throwable));
-		}
-		else if (throwable instanceof MultipleFailureException) {
-			MultipleFailureException mfe = (MultipleFailureException)throwable;
+		thread.setDaemon(true);
 
-			for (Throwable t : mfe.getFailures()) {
-				runNotifier.fireTestFailure(new Failure(description, t));
-			}
+		thread.start();
+
+		return thread;
+	}
+
+	private static final InetAddress _inetAddress;
+	private static int _port = 12343;
+
+	static {
+		try {
+			_inetAddress = InetAddress.getByName("localhost");
 		}
-		else {
-			runNotifier.fireTestFailure(new Failure(description, throwable));
+		catch (Exception e) {
+			throw new ExceptionInInitializerError(e);
 		}
 	}
 
@@ -233,6 +245,51 @@ public class Arquillian extends Runner implements Filterable {
 
 		private final List<String> _filteredMethodNames = new ArrayList<>();
 		private List<FrameworkMethod> _testFrameworkMethods;
+
+	}
+
+	private class ServerRunnable implements Runnable {
+
+		public ServerRunnable(
+			RunNotifier runNotifier, ServerSocket serverSocket) {
+
+			_runNotifier = runNotifier;
+			_serverSocket = serverSocket;
+		}
+
+		@Override
+		public void run() {
+			Class<?> clazz = _runNotifier.getClass();
+
+			while (true) {
+				try (Socket socket = _serverSocket.accept();
+					InputStream inputStream = socket.getInputStream();
+					ObjectInputStream objectInputStream = new ObjectInputStream(
+						new UnsyncBufferedInputStream(inputStream))) {
+
+					String methodName = objectInputStream.readUTF();
+
+					Object object = objectInputStream.readObject();
+
+					Method method = clazz.getMethod(
+						methodName, object.getClass());
+
+					method.invoke(_runNotifier, object);
+
+					if (methodName.equals("fireTestFinished")) {
+						_serverSocket.close();
+
+						break;
+					}
+				}
+				catch (Exception e) {
+					throw new RuntimeException(e);
+				}
+			}
+		}
+
+		private final RunNotifier _runNotifier;
+		private final ServerSocket _serverSocket;
 
 	}
 

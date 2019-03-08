@@ -14,6 +14,8 @@
 
 package com.liferay.arquillian.extension.junit.bridge.server;
 
+import java.net.InetAddress;
+
 import java.util.List;
 
 /**
@@ -24,7 +26,8 @@ public interface JMXTestRunnerMBean {
 	public static final String OBJECT_NAME =
 		"com.liferay:service=jmx-test-runner";
 
-	public byte[] runTestMethod(
-		String className, String methodName, List<String> filteredMethodNames);
+	public void runTestMethod(
+		String className, String methodName, List<String> filteredMethodNames,
+		InetAddress inetAddress, int port);
 
 }

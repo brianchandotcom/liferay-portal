@@ -14,11 +14,15 @@
 
 package com.liferay.arquillian.extension.junit.bridge.server;
 
-import java.io.ByteArrayOutputStream;
+import com.liferay.petra.io.unsync.UnsyncBufferedOutputStream;
+
 import java.io.IOException;
 import java.io.ObjectOutputStream;
 
 import java.lang.annotation.Annotation;
+
+import java.net.InetAddress;
+import java.net.Socket;
 
 import java.util.Comparator;
 import java.util.List;
@@ -27,8 +31,11 @@ import java.util.Map;
 import org.junit.AssumptionViolatedException;
 import org.junit.Ignore;
 import org.junit.Test;
+import org.junit.runner.Description;
+import org.junit.runner.notification.Failure;
 import org.junit.runners.model.FrameworkField;
 import org.junit.runners.model.FrameworkMethod;
+import org.junit.runners.model.MultipleFailureException;
 import org.junit.runners.model.TestClass;
 
 /**
@@ -41,8 +48,16 @@ public class JMXTestRunner implements JMXTestRunnerMBean {
 	}
 
 	@Override
-	public byte[] runTestMethod(
-		String className, String methodName, List<String> filterMethodNames) {
+	public void runTestMethod(
+		String className, String methodName, List<String> filterMethodNames,
+		InetAddress inetAddress, int port) {
+
+		ClientBridge clientBridge = new ClientBridge(inetAddress, port);
+
+		Description description = Description.createTestDescription(
+			className, methodName);
+
+		clientBridge.bridge("fireTestStarted", description);
 
 		try {
 			TestClass testClass = new TestClass(
@@ -90,13 +105,17 @@ public class JMXTestRunner implements JMXTestRunnerMBean {
 			}
 		}
 		catch (Throwable t) {
-			return _toByteArray(t);
+			_processThrowable(t, clientBridge, description);
 		}
-
-		return _PASSED;
+		finally {
+			clientBridge.bridge("fireTestFinished", description);
+		}
 	}
 
-	private static byte[] _toByteArray(Throwable throwable) {
+	private void _processThrowable(
+		Throwable throwable, ClientBridge clientBridge,
+		Description description) {
+
 		if (throwable instanceof AssumptionViolatedException) {
 
 			// To neutralize the nonserializable Matcher field inside
@@ -107,28 +126,48 @@ public class JMXTestRunner implements JMXTestRunnerMBean {
 
 			ave.setStackTrace(throwable.getStackTrace());
 
-			throwable = ave;
+			clientBridge.bridge(
+				"fireTestAssumptionFailed", new Failure(description, ave));
 		}
+		else if (throwable instanceof MultipleFailureException) {
+			MultipleFailureException mfe = (MultipleFailureException)throwable;
 
-		try (ByteArrayOutputStream byteArrayOutputStream =
-				new ByteArrayOutputStream();
-			ObjectOutputStream objectOutputStream = new ObjectOutputStream(
-				byteArrayOutputStream)) {
-
-			objectOutputStream.writeObject(throwable);
-
-			objectOutputStream.flush();
-
-			return byteArrayOutputStream.toByteArray();
+			for (Throwable t : mfe.getFailures()) {
+				clientBridge.bridge(
+					"fireTestFailure", new Failure(description, t));
+			}
 		}
-		catch (IOException ioe) {
-			throw new RuntimeException(
-				"Unable to serialize object: " + throwable, ioe);
+		else {
+			clientBridge.bridge(
+				"fireTestFailure", new Failure(description, throwable));
 		}
 	}
 
-	private static final byte[] _PASSED = _toByteArray(null);
-
 	private final ClassLoader _classLoader;
+
+	private class ClientBridge {
+
+		public ClientBridge(InetAddress inetAddress, int port) {
+			_inetAddress = inetAddress;
+			_port = port;
+		}
+
+		public void bridge(String methodName, Object object) {
+			try (Socket socket = new Socket(_inetAddress, _port);
+				ObjectOutputStream objectOutputStream = new ObjectOutputStream(
+					new UnsyncBufferedOutputStream(socket.getOutputStream()))) {
+
+				objectOutputStream.writeUTF(methodName);
+				objectOutputStream.writeObject(object);
+			}
+			catch (IOException ioe) {
+				throw new RuntimeException(ioe);
+			}
+		}
+
+		private final InetAddress _inetAddress;
+		private final int _port;
+
+	}
 
 }

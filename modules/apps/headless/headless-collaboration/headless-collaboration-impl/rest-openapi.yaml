@@ -197,8 +197,6 @@ components:
                     type: string
                 friendlyUrlPath:
                     type: string
-                title:
-                    type: string
                 hasAttachments:
                     type: boolean
                 id:
@@ -208,7 +206,7 @@ components:
                     items:
                         type: string
                     type: array
-                parentFolder:
+                parentKnowledgeBaseFolder:
                     properties:
                         folderId:
                             format: int64
@@ -216,10 +214,12 @@ components:
                         folderName:
                             type: string
                     type: object
-                parentFolderId:
+                parentKnowledgeBaseFolderId:
                     format: int64
                     type: integer
                     writeOnly: true
+                title:
+                    type: string
                 viewableBy:
                     enum:
                         - anyone
@@ -256,7 +256,16 @@ components:
                     type: string
                 description:
                     type: string
-                parentFolder:
+                hasKnowledgeBaseArticles:
+                    type: boolean
+                hasKnowledgeBaseFolders:
+                    type: boolean
+                id:
+                    format: int64
+                    type: integer
+                name:
+                    type: string
+                parentKnowledgeBaseFolder:
                     properties:
                         folderId:
                             format: int64
@@ -264,19 +273,10 @@ components:
                         folderName:
                             type: string
                     type: object
-                parentFolderId:
+                parentKnowledgeBaseFolderId:
                     format: int64
                     type: integer
                     writeOnly: true
-                hasFolders:
-                    type: boolean
-                hasKnowledgeBaseArticles:
-                    type: boolean
-                id:
-                    format: int64
-                    type: integer
-                name:
-                    type: string
             type: object
 info:
     description: ""
@@ -606,6 +606,102 @@ paths:
                                 $ref: "#/components/schemas/Comment"
                     description: ""
             tags: ["Comment"]
+    "/content-space/{content-space-id}/knowledge-base-articles":
+        get:
+            parameters:
+                -   in: query
+                  name: page
+                  schema:
+                      type: integer
+                -   in: query
+                  name: pageSize
+                  schema:
+                      type: integer
+                -   in: path
+                  name: content-space-id
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/KnowledgeBaseArticle"
+                                type: array
+                    description: ""
+            tags: ["KnowledgeBaseArticle"]
+        post:
+            parameters:
+                -   in: path
+                  name: content-space-id
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/KnowledgeBaseArticle"
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/KnowledgeBaseArticle"
+                    description: ""
+            tags: ["KnowledgeBaseArticle"]
+    "/content-space/{content-space-id}/knowledge-base-folders":
+        get:
+            parameters:
+                -   in: query
+                  name: page
+                  schema:
+                      type: integer
+                -   in: query
+                  name: pageSize
+                  schema:
+                      type: integer
+                -   in: path
+                  name: content-space-id
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/KnowledgeBaseFolder"
+                                type: array
+                    description: ""
+            tags: ["KnowledgeBaseFolder"]
+        post:
+            parameters:
+                -   in: path
+                  name: content-space-id
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/KnowledgeBaseFolder"
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/KnowledgeBaseFolder"
+                    description: ""
+            tags: ["KnowledgeBaseFolder"]
     "/content-spaces/{content-space-id}/blog-posting-images":
         get:
             parameters:
@@ -724,111 +820,15 @@ paths:
                                 $ref: "#/components/schemas/BlogPosting"
                     description: ""
             tags: ["BlogPosting"]
-    "/content-space/{content-space-id}/knowledge-base-folders":
-        get:
-            parameters:
-                -   in: query
-                    name: page
-                    schema:
-                        type: integer
-                -   in: query
-                    name: pageSize
-                    schema:
-                        type: integer
-                -   in: path
-                    name: content-space-id
-                    required: true
-                    schema:
-                        format: int64
-                        type: integer
-            responses:
-                200:
-                    content:
-                        application/json:
-                            schema:
-                                items:
-                                    $ref: "#/components/schemas/KnowledgeBaseFolder"
-                                type: array
-                    description: ""
-            tags: ["KnowledgeBaseFolder"]
-        post:
-            parameters:
-                -   in: path
-                    name: content-space-id
-                    required: true
-                    schema:
-                        format: int64
-                        type: integer
-            requestBody:
-                content:
-                    application/json:
-                        schema:
-                            $ref: "#/components/schemas/KnowledgeBaseFolder"
-            responses:
-                200:
-                    content:
-                        application/json:
-                            schema:
-                                $ref: "#/components/schemas/KnowledgeBaseFolder"
-                    description: ""
-            tags: ["KnowledgeBaseFolder"]
-    "/content-space/{content-space-id}/knowledge-base-articles":
-        get:
-            parameters:
-                -   in: query
-                    name: page
-                    schema:
-                        type: integer
-                -   in: query
-                    name: pageSize
-                    schema:
-                        type: integer
-                -   in: path
-                    name: content-space-id
-                    required: true
-                    schema:
-                        format: int64
-                        type: integer
-            responses:
-                200:
-                    content:
-                        application/json:
-                            schema:
-                                items:
-                                    $ref: "#/components/schemas/KnowledgeBaseArticle"
-                                type: array
-                    description: ""
-            tags: ["KnowledgeBaseArticle"]
-        post:
-            parameters:
-                -   in: path
-                    name: content-space-id
-                    required: true
-                    schema:
-                        format: int64
-                        type: integer
-            requestBody:
-                content:
-                    application/json:
-                        schema:
-                            $ref: "#/components/schemas/KnowledgeBaseArticle"
-            responses:
-                200:
-                    content:
-                        application/json:
-                            schema:
-                                $ref: "#/components/schemas/KnowledgeBaseArticle"
-                    description: ""
-            tags: ["KnowledgeBaseArticle"]
     "/knowledge-base-articles/{knowledge-base-article-id}":
         delete:
             parameters:
                 -   in: path
-                    name: knowledge-base-article-id
-                    required: true
-                    schema:
-                        format: int64
-                        type: integer
+                  name: knowledge-base-article-id
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
             responses:
                 204:
                     content:
@@ -838,11 +838,11 @@ paths:
         get:
             parameters:
                 -   in: path
-                    name: knowledge-base-article-id
-                    required: true
-                    schema:
-                        format: int64
-                        type: integer
+                  name: knowledge-base-article-id
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
             responses:
                 200:
                     content:
@@ -854,11 +854,11 @@ paths:
         patch:
             parameters:
                 -   in: path
-                    name: knowledge-base-article-id
-                    required: true
-                    schema:
-                        format: int64
-                        type: integer
+                  name: knowledge-base-article-id
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
             requestBody:
                 content:
                     application/json:
@@ -875,11 +875,11 @@ paths:
         put:
             parameters:
                 -   in: path
-                    name: knowledge-base-article-id
-                    required: true
-                    schema:
-                        format: int64
-                        type: integer
+                  name: knowledge-base-article-id
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
             requestBody:
                 content:
                     application/json:
@@ -897,19 +897,19 @@ paths:
         get:
             parameters:
                 -   in: query
-                    name: page
-                    schema:
-                        type: integer
+                  name: page
+                  schema:
+                      type: integer
                 -   in: query
-                    name: pageSize
-                    schema:
-                        type: integer
+                  name: pageSize
+                  schema:
+                      type: integer
                 -   in: path
-                    name: knowledge-base-article-id
-                    required: true
-                    schema:
-                        format: int64
-                        type: integer
+                  name: knowledge-base-article-id
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
             responses:
                 200:
                     content:
@@ -923,11 +923,11 @@ paths:
         post:
             parameters:
                 -   in: path
-                    name: knowledge-base-article-id
-                    required: true
-                    schema:
-                        format: int64
-                        type: integer
+                  name: knowledge-base-article-id
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
             requestBody:
                 content:
                     application/json:
@@ -945,11 +945,11 @@ paths:
         get:
             parameters:
                 -   in: path
-                    name: knowledge-base-article-id
-                    required: true
-                    schema:
-                        format: int64
-                        type: integer
+                  name: knowledge-base-article-id
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
             responses:
                 200:
                     content:
@@ -963,21 +963,21 @@ paths:
         post:
             parameters:
                 -   in: path
-                    name: knowledge-base-article-id
-                    required: true
-                    schema:
-                        format: int64
-                        type: integer
+                  name: knowledge-base-article-id
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
             requestBody:
                 content:
                     multipart/form-data:
                         schema:
                             properties:
-                                knowledgeBaseAttachment:
-                                    $ref: "#/components/schemas/KnowledgeBaseAttachment"
                                 file:
                                     format: binary
                                     type: string
+                                knowledgeBaseAttachment:
+                                    $ref: "#/components/schemas/KnowledgeBaseAttachment"
                             type: object
             responses:
                 200:
@@ -991,11 +991,11 @@ paths:
         delete:
             parameters:
                 -   in: path
-                    name: knowledge-base-attachment-id
-                    required: true
-                    schema:
-                        format: int64
-                        type: integer
+                  name: knowledge-base-attachment-id
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
             responses:
                 204:
                     content:
@@ -1005,11 +1005,11 @@ paths:
         get:
             parameters:
                 -   in: path
-                    name: knowledge-base-attachment-id
-                    required: true
-                    schema:
-                        format: int64
-                        type: integer
+                  name: knowledge-base-attachment-id
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
             responses:
                 200:
                     content:
@@ -1022,11 +1022,11 @@ paths:
         delete:
             parameters:
                 -   in: path
-                    name: knowledge-base-folder-id
-                    required: true
-                    schema:
-                        format: int64
-                        type: integer
+                  name: knowledge-base-folder-id
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
             responses:
                 204:
                     content:
@@ -1036,11 +1036,11 @@ paths:
         get:
             parameters:
                 -   in: path
-                    name: knowledge-base-folder-id
-                    required: true
-                    schema:
-                        format: int64
-                        type: integer
+                  name: knowledge-base-folder-id
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
             responses:
                 200:
                     content:
@@ -1052,11 +1052,11 @@ paths:
         patch:
             parameters:
                 -   in: path
-                    name: knowledge-base-folder-id
-                    required: true
-                    schema:
-                        format: int64
-                        type: integer
+                  name: knowledge-base-folder-id
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
             requestBody:
                 content:
                     application/json:
@@ -1073,11 +1073,11 @@ paths:
         put:
             parameters:
                 -   in: path
-                    name: knowledge-base-folder-id
-                    required: true
-                    schema:
-                        format: int64
-                        type: integer
+                  name: knowledge-base-folder-id
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
             requestBody:
                 content:
                     application/json:
@@ -1095,19 +1095,19 @@ paths:
         get:
             parameters:
                 -   in: query
-                    name: page
-                    schema:
-                        type: integer
+                  name: page
+                  schema:
+                      type: integer
                 -   in: query
-                    name: pageSize
-                    schema:
-                        type: integer
+                  name: pageSize
+                  schema:
+                      type: integer
                 -   in: path
-                    name: knowledge-base-folder-id
-                    required: true
-                    schema:
-                        format: int64
-                        type: integer
+                  name: knowledge-base-folder-id
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
             responses:
                 200:
                     content:
@@ -1121,11 +1121,11 @@ paths:
         post:
             parameters:
                 -   in: path
-                    name: knowledge-base-folder-id
-                    required: true
-                    schema:
-                        format: int64
-                        type: integer
+                  name: knowledge-base-folder-id
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
             requestBody:
                 content:
                     application/json:
@@ -1143,19 +1143,19 @@ paths:
         get:
             parameters:
                 -   in: query
-                    name: page
-                    schema:
-                        type: integer
+                  name: page
+                  schema:
+                      type: integer
                 -   in: query
-                    name: pageSize
-                    schema:
-                        type: integer
+                  name: pageSize
+                  schema:
+                      type: integer
                 -   in: path
-                    name: knowledge-base-folder-id
-                    required: true
-                    schema:
-                        format: int64
-                        type: integer
+                  name: knowledge-base-folder-id
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
             responses:
                 200:
                     content:
@@ -1169,11 +1169,11 @@ paths:
         post:
             parameters:
                 -   in: path
-                    name: knowledge-base-folder-id
-                    required: true
-                    schema:
-                        format: int64
-                        type: integer
+                  name: knowledge-base-folder-id
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
             requestBody:
                 content:
                     application/json:

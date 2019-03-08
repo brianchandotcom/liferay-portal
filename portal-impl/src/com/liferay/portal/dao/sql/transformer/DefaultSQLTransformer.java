@@ -16,6 +16,7 @@ package com.liferay.portal.dao.sql.transformer;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.util.List;
 import java.util.function.Function;
@@ -27,12 +28,16 @@ import java.util.function.Function;
 public class DefaultSQLTransformer implements SQLTransformer {
 
 	public DefaultSQLTransformer(List<Function<String, String>> functions) {
+		if (functions == null) {
+			throw new NullPointerException("functions is null");
+		}
+
 		_functions = functions;
 	}
 
 	@Override
 	public String transform(String sql) {
-		if ((_functions == null) || (sql == null)) {
+		if (Validator.isBlank(sql)) {
 			return sql;
 		}
 

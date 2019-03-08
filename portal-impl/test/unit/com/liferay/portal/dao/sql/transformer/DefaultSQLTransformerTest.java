@@ -50,11 +50,13 @@ public class DefaultSQLTransformerTest {
 
 	@Test
 	public void testTransformWithNullFunction() {
-		String sql = "select * from Foo";
+		try {
+			new DefaultSQLTransformer(null);
 
-		SQLTransformer sqlTransformer = new DefaultSQLTransformer(null);
-
-		Assert.assertEquals(sql, sqlTransformer.transform(sql));
+			Assert.fail();
+		}
+		catch (NullPointerException npe) {
+		}
 	}
 
 	@Test

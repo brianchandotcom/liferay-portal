@@ -36,7 +36,7 @@
 <!--EMAIL-->
 <tr>
 	<td>EMAIL_VIEW_DOCUMENT_BUTTON</td>
-	<td>//tr/td/a[contains(.,'View Document')]</td>
+	<td>//div/a[contains(.,'View Document')]</td>
 	<td></td>
 </tr>
 <tr>

@@ -3130,7 +3130,7 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 		throws PortalException {
 
 		Layout layout = layoutPersistence.findByG_P_L(
-			groupId, privateLayout, layoutId);
+			groupId, privateLayout, layoutId, true);
 
 		layout.setPublishDate(publishDate);
 
@@ -3155,7 +3155,7 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 		throws PortalException {
 
 		Layout layout = layoutPersistence.findByG_P_L(
-			groupId, privateLayout, layoutId);
+			groupId, privateLayout, layoutId, true);
 
 		layout.setClassNameId(classNameId);
 		layout.setClassPK(classPK);

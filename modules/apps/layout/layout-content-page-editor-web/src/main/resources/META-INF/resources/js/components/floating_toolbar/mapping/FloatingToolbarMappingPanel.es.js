@@ -94,14 +94,13 @@ class FloatingToolbarMappingPanel extends PortletBase {
 	 */
 	rendered(firstRender) {
 		if (firstRender) {
+			this._selectedSourceTypeId = SOURCE_TYPE_IDS.content;
+
 			if (
 				this.item &&
-				this.item.editableValues.assetEntryClassNameId &&
-				this.item.editableValues.assetEntryClassPK
+				this.mappingFieldsURL &&
+				!this.item.editableValues.assetEntryClassNameId
 			) {
-				this._selectedSourceTypeId = SOURCE_TYPE_IDS.content;
-			}
-			else {
 				this._selectedSourceTypeId = SOURCE_TYPE_IDS.structure;
 			}
 
@@ -330,7 +329,6 @@ FloatingToolbarMappingPanel.STATE = {
 	_selectedSourceTypeId: Config
 		.oneOf(Object.values(SOURCE_TYPE_IDS))
 		.internal()
-		.value(SOURCE_TYPE_IDS.structure)
 };
 
 const ConnectedFloatingToolbarMappingPanel = getConnectedComponent(

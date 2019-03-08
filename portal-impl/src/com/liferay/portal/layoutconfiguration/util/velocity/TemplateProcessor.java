@@ -39,8 +39,10 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.layoutconfiguration.util.PortletRenderer;
+import com.liferay.portal.template.TemplatePortletPreferences;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
@@ -212,11 +214,31 @@ public class TemplateProcessor implements ColumnProcessor {
 			if (!layoutTypePortlet.hasPortletId(portletId, true) &&
 				!layout.isPortletEmbedded(portletId, layout.getGroupId())) {
 
+				Settings currentSettings = SettingsFactoryUtil.getSettings(
+					new PortletInstanceSettingsLocator(layout, portletId));
+
+				ModifiableSettings currentModifiableSettings =
+					currentSettings.getModifiableSettings();
+
+				Collection<String> currentModifiableSettingsKeys =
+					currentModifiableSettings.getModifiedKeys();
+
+				String portletPreferences = portlet.getDefaultPreferences();
+
+				if (!currentModifiableSettingsKeys.isEmpty()) {
+					TemplatePortletPreferences templatePortletPreferences =
+						new TemplatePortletPreferences();
+
+					portletPreferences =
+						templatePortletPreferences.getPreferences(
+							currentModifiableSettings);
+				}
+
 				PortletPreferencesFactoryUtil.getLayoutPortletSetup(
 					layout.getCompanyId(), layout.getGroupId(),
 					PortletKeys.PREFS_OWNER_TYPE_LAYOUT,
 					PortletKeys.PREFS_PLID_SHARED, portletId,
-					portlet.getDefaultPreferences());
+					portletPreferences);
 			}
 		}
 

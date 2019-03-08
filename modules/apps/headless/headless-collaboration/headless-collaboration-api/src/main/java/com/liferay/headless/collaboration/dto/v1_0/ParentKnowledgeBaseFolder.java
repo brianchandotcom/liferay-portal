@@ -33,10 +33,10 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
-@GraphQLName("ParentFolder")
+@GraphQLName("ParentKnowledgeBaseFolder")
 @JsonFilter("Liferay.Vulcan")
-@XmlRootElement(name = "ParentFolder")
-public class ParentFolder {
+@XmlRootElement(name = "ParentKnowledgeBaseFolder")
+public class ParentKnowledgeBaseFolder {
 
 	public Long getFolderId() {
 		return folderId;

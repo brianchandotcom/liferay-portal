@@ -1240,12 +1240,12 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 				"Invalid entity field " + entityFieldName);
 		}
 
-		if (entityFieldName.equals("parentFolder")) {
+		if (entityFieldName.equals("parentKnowledgeBaseFolder")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
 		}
 
-		if (entityFieldName.equals("parentFolderId")) {
+		if (entityFieldName.equals("parentKnowledgeBaseFolderId")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
 		}
@@ -1274,7 +1274,7 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 				title = RandomTestUtil.randomString();
 				hasAttachments = RandomTestUtil.randomBoolean();
 				id = RandomTestUtil.randomLong();
-				parentFolderId = RandomTestUtil.randomLong();
+				parentKnowledgeBaseFolderId = RandomTestUtil.randomLong();
 				viewableBy = RandomTestUtil.randomString();
 			}
 		};

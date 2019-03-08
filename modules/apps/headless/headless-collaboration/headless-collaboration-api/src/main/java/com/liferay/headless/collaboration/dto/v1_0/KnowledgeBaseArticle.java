@@ -375,20 +375,24 @@ public class KnowledgeBaseArticle {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String[] keywords;
 
-	public ParentFolder getParentFolder() {
-		return parentFolder;
+	public ParentKnowledgeBaseFolder getParentKnowledgeBaseFolder() {
+		return parentKnowledgeBaseFolder;
 	}
 
-	public void setParentFolder(ParentFolder parentFolder) {
-		this.parentFolder = parentFolder;
+	public void setParentKnowledgeBaseFolder(
+		ParentKnowledgeBaseFolder parentKnowledgeBaseFolder) {
+
+		this.parentKnowledgeBaseFolder = parentKnowledgeBaseFolder;
 	}
 
 	@JsonIgnore
-	public void setParentFolder(
-		UnsafeSupplier<ParentFolder, Exception> parentFolderUnsafeSupplier) {
+	public void setParentKnowledgeBaseFolder(
+		UnsafeSupplier<ParentKnowledgeBaseFolder, Exception>
+			parentKnowledgeBaseFolderUnsafeSupplier) {
 
 		try {
-			parentFolder = parentFolderUnsafeSupplier.get();
+			parentKnowledgeBaseFolder =
+				parentKnowledgeBaseFolderUnsafeSupplier.get();
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
@@ -397,22 +401,26 @@ public class KnowledgeBaseArticle {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected ParentFolder parentFolder;
+	protected ParentKnowledgeBaseFolder parentKnowledgeBaseFolder;
 
-	public Long getParentFolderId() {
-		return parentFolderId;
+	public Long getParentKnowledgeBaseFolderId() {
+		return parentKnowledgeBaseFolderId;
 	}
 
-	public void setParentFolderId(Long parentFolderId) {
-		this.parentFolderId = parentFolderId;
+	public void setParentKnowledgeBaseFolderId(
+		Long parentKnowledgeBaseFolderId) {
+
+		this.parentKnowledgeBaseFolderId = parentKnowledgeBaseFolderId;
 	}
 
 	@JsonIgnore
-	public void setParentFolderId(
-		UnsafeSupplier<Long, Exception> parentFolderIdUnsafeSupplier) {
+	public void setParentKnowledgeBaseFolderId(
+		UnsafeSupplier<Long, Exception>
+			parentKnowledgeBaseFolderIdUnsafeSupplier) {
 
 		try {
-			parentFolderId = parentFolderIdUnsafeSupplier.get();
+			parentKnowledgeBaseFolderId =
+				parentKnowledgeBaseFolderIdUnsafeSupplier.get();
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
@@ -421,7 +429,7 @@ public class KnowledgeBaseArticle {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-	protected Long parentFolderId;
+	protected Long parentKnowledgeBaseFolderId;
 
 	public String getViewableBy() {
 		return viewableBy;
@@ -584,14 +592,14 @@ public class KnowledgeBaseArticle {
 
 		sb.append(", ");
 
-		sb.append("\"parentFolder\": ");
+		sb.append("\"parentKnowledgeBaseFolder\": ");
 
-		sb.append(parentFolder);
+		sb.append(parentKnowledgeBaseFolder);
 		sb.append(", ");
 
-		sb.append("\"parentFolderId\": ");
+		sb.append("\"parentKnowledgeBaseFolderId\": ");
 
-		sb.append(parentFolderId);
+		sb.append(parentKnowledgeBaseFolderId);
 		sb.append(", ");
 
 		sb.append("\"viewableBy\": ");

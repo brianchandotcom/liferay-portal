@@ -183,9 +183,11 @@ public abstract class BaseKnowledgeBaseArticleResourceImpl
 				knowledgeBaseArticle.getKeywords());
 		}
 
-		if (Validator.isNotNull(knowledgeBaseArticle.getParentFolderId())) {
-			existingKnowledgeBaseArticle.setParentFolderId(
-				knowledgeBaseArticle.getParentFolderId());
+		if (Validator.isNotNull(
+				knowledgeBaseArticle.getParentKnowledgeBaseFolderId())) {
+
+			existingKnowledgeBaseArticle.setParentKnowledgeBaseFolderId(
+				knowledgeBaseArticle.getParentKnowledgeBaseFolderId());
 		}
 
 		if (Validator.isNotNull(knowledgeBaseArticle.getViewableBy())) {

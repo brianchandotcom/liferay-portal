@@ -148,14 +148,11 @@ public abstract class BaseKnowledgeBaseFolderResourceImpl
 				knowledgeBaseFolder.getDescription());
 		}
 
-		if (Validator.isNotNull(knowledgeBaseFolder.getParentFolderId())) {
-			existingKnowledgeBaseFolder.setParentFolderId(
-				knowledgeBaseFolder.getParentFolderId());
-		}
+		if (Validator.isNotNull(
+				knowledgeBaseFolder.getParentKnowledgeBaseFolderId())) {
 
-		if (Validator.isNotNull(knowledgeBaseFolder.getHasFolders())) {
-			existingKnowledgeBaseFolder.setHasFolders(
-				knowledgeBaseFolder.getHasFolders());
+			existingKnowledgeBaseFolder.setParentKnowledgeBaseFolderId(
+				knowledgeBaseFolder.getParentKnowledgeBaseFolderId());
 		}
 
 		if (Validator.isNotNull(
@@ -163,6 +160,13 @@ public abstract class BaseKnowledgeBaseFolderResourceImpl
 
 			existingKnowledgeBaseFolder.setHasKnowledgeBaseArticles(
 				knowledgeBaseFolder.getHasKnowledgeBaseArticles());
+		}
+
+		if (Validator.isNotNull(
+				knowledgeBaseFolder.getHasKnowledgeBaseFolders())) {
+
+			existingKnowledgeBaseFolder.setHasKnowledgeBaseFolders(
+				knowledgeBaseFolder.getHasKnowledgeBaseFolders());
 		}
 
 		if (Validator.isNotNull(knowledgeBaseFolder.getName())) {

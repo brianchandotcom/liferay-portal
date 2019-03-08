@@ -112,20 +112,24 @@ public class KnowledgeBaseFolder {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String description;
 
-	public ParentFolder getParentFolder() {
-		return parentFolder;
+	public ParentKnowledgeBaseFolder getParentKnowledgeBaseFolder() {
+		return parentKnowledgeBaseFolder;
 	}
 
-	public void setParentFolder(ParentFolder parentFolder) {
-		this.parentFolder = parentFolder;
+	public void setParentKnowledgeBaseFolder(
+		ParentKnowledgeBaseFolder parentKnowledgeBaseFolder) {
+
+		this.parentKnowledgeBaseFolder = parentKnowledgeBaseFolder;
 	}
 
 	@JsonIgnore
-	public void setParentFolder(
-		UnsafeSupplier<ParentFolder, Exception> parentFolderUnsafeSupplier) {
+	public void setParentKnowledgeBaseFolder(
+		UnsafeSupplier<ParentKnowledgeBaseFolder, Exception>
+			parentKnowledgeBaseFolderUnsafeSupplier) {
 
 		try {
-			parentFolder = parentFolderUnsafeSupplier.get();
+			parentKnowledgeBaseFolder =
+				parentKnowledgeBaseFolderUnsafeSupplier.get();
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
@@ -134,22 +138,26 @@ public class KnowledgeBaseFolder {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected ParentFolder parentFolder;
+	protected ParentKnowledgeBaseFolder parentKnowledgeBaseFolder;
 
-	public Long getParentFolderId() {
-		return parentFolderId;
+	public Long getParentKnowledgeBaseFolderId() {
+		return parentKnowledgeBaseFolderId;
 	}
 
-	public void setParentFolderId(Long parentFolderId) {
-		this.parentFolderId = parentFolderId;
+	public void setParentKnowledgeBaseFolderId(
+		Long parentKnowledgeBaseFolderId) {
+
+		this.parentKnowledgeBaseFolderId = parentKnowledgeBaseFolderId;
 	}
 
 	@JsonIgnore
-	public void setParentFolderId(
-		UnsafeSupplier<Long, Exception> parentFolderIdUnsafeSupplier) {
+	public void setParentKnowledgeBaseFolderId(
+		UnsafeSupplier<Long, Exception>
+			parentKnowledgeBaseFolderIdUnsafeSupplier) {
 
 		try {
-			parentFolderId = parentFolderIdUnsafeSupplier.get();
+			parentKnowledgeBaseFolderId =
+				parentKnowledgeBaseFolderIdUnsafeSupplier.get();
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
@@ -158,31 +166,7 @@ public class KnowledgeBaseFolder {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-	protected Long parentFolderId;
-
-	public Boolean getHasFolders() {
-		return hasFolders;
-	}
-
-	public void setHasFolders(Boolean hasFolders) {
-		this.hasFolders = hasFolders;
-	}
-
-	@JsonIgnore
-	public void setHasFolders(
-		UnsafeSupplier<Boolean, Exception> hasFoldersUnsafeSupplier) {
-
-		try {
-			hasFolders = hasFoldersUnsafeSupplier.get();
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Boolean hasFolders;
+	protected Long parentKnowledgeBaseFolderId;
 
 	public Boolean getHasKnowledgeBaseArticles() {
 		return hasKnowledgeBaseArticles;
@@ -209,6 +193,32 @@ public class KnowledgeBaseFolder {
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean hasKnowledgeBaseArticles;
+
+	public Boolean getHasKnowledgeBaseFolders() {
+		return hasKnowledgeBaseFolders;
+	}
+
+	public void setHasKnowledgeBaseFolders(Boolean hasKnowledgeBaseFolders) {
+		this.hasKnowledgeBaseFolders = hasKnowledgeBaseFolders;
+	}
+
+	@JsonIgnore
+	public void setHasKnowledgeBaseFolders(
+		UnsafeSupplier<Boolean, Exception>
+			hasKnowledgeBaseFoldersUnsafeSupplier) {
+
+		try {
+			hasKnowledgeBaseFolders =
+				hasKnowledgeBaseFoldersUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Boolean hasKnowledgeBaseFolders;
 
 	public Long getId() {
 		return id;
@@ -280,24 +290,24 @@ public class KnowledgeBaseFolder {
 		sb.append("\"");
 		sb.append(", ");
 
-		sb.append("\"parentFolder\": ");
+		sb.append("\"parentKnowledgeBaseFolder\": ");
 
-		sb.append(parentFolder);
+		sb.append(parentKnowledgeBaseFolder);
 		sb.append(", ");
 
-		sb.append("\"parentFolderId\": ");
+		sb.append("\"parentKnowledgeBaseFolderId\": ");
 
-		sb.append(parentFolderId);
-		sb.append(", ");
-
-		sb.append("\"hasFolders\": ");
-
-		sb.append(hasFolders);
+		sb.append(parentKnowledgeBaseFolderId);
 		sb.append(", ");
 
 		sb.append("\"hasKnowledgeBaseArticles\": ");
 
 		sb.append(hasKnowledgeBaseArticles);
+		sb.append(", ");
+
+		sb.append("\"hasKnowledgeBaseFolders\": ");
+
+		sb.append(hasKnowledgeBaseFolders);
 		sb.append(", ");
 
 		sb.append("\"id\": ");

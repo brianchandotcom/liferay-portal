@@ -33,6 +33,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
+import com.liferay.portal.kernel.portlet.PortletLayoutFinder;
 import com.liferay.portal.kernel.repository.capabilities.CommentCapability;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
@@ -363,10 +364,17 @@ public class DLFileEntryAssetRenderer
 		LiferayPortletResponse liferayPortletResponse,
 		String noSuchEntryRedirect) {
 
-		String urlViewInContext = DLUtil.getURLViewInContext(
-			this, liferayPortletRequest, noSuchEntryRedirect);
+		PortletLayoutFinder.Result result = DLUtil.getResultURLViewInContext(
+			this, liferayPortletRequest);
 
-		return urlViewInContext;
+		if (result == null) {
+			return null;
+		}
+
+		return getURLViewInContext(
+			liferayPortletRequest, noSuchEntryRedirect,
+			"/document_library/find_file_entry", "fileEntryId",
+			_fileEntry.getFileEntryId());
 	}
 
 	@Override

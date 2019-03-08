@@ -25,6 +25,7 @@ import com.liferay.asset.kernel.service.AssetEntryService;
 import com.liferay.asset.util.AssetHelper;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryService;
+import com.liferay.layout.type.controller.asset.display.internal.constants.AssetDisplayPageFriendlyURLResolverConstants;
 import com.liferay.petra.string.CharPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Layout;
@@ -117,7 +118,8 @@ public class AssetDisplayPageFriendlyURLResolver
 
 	@Override
 	public String getURLSeparator() {
-		return "/a/";
+		return AssetDisplayPageFriendlyURLResolverConstants.
+			ASSET_DISPLAY_PAGE_URL_SEPARATOR;
 	}
 
 	private AssetEntry _getAssetEntry(String friendlyURL)

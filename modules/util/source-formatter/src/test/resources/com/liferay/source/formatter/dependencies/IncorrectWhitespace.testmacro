@@ -33,5 +33,13 @@ definition {
 				entryTitle = "Blogs Entry2 Title"
 			);
 		}
+
+		var maliciousURL1 = '''
+				${portalURL}/group/guest/home?p_p_id=82&p_p_lifecycle=1&p_p_state=normal&p_p_mode=view&p_p_col_id=column-1&p_p_col_pos=1&p_p_col_count=2&_82_struts_action=%2Flanguage%2Fview&languageId=&lt;/script&gt;&lt;script&gt;alert(document.domain)&lt;/script>
+			''';
+
+		Site.editGoogleAnalyticsIDCP(
+			googleAnalyticsID = '''']);alert(/googleAnalyticsId/);//'''
+		);
 	}
 }

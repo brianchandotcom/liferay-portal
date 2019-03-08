@@ -11,14 +11,12 @@ definition {
 			ProductMenu.correctLine(
 				category = "Content",
 				panel = "Site Administration",
-				portlet = "Blogs"
-			);
+				portlet = "Blogs");
 		}
 
 		property testray.component.names = "Blogs";		property testray.main.component.name = "Blogs";		property testray.main.component.name = "Blogs";
-			Navigator.openURL();ProductMenu.gotoPortlet(
-				portlet = "Blogs"
-			);
-		}
+		Navigator.openURL();ProductMenu.gotoPortlet(
+			portlet = "Blogs"
+		);
 	}
 }

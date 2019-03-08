@@ -29,9 +29,10 @@ import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
 
+import javax.ws.rs.container.ResourceContext;
+import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MultivaluedMap;
 
-import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ServiceScope;
@@ -47,22 +48,14 @@ import org.osgi.service.component.annotations.ServiceScope;
 public class CommentResourceImpl
 	extends BaseCommentResourceImpl implements EntityModelResource {
 
-	@Activate
-	public void afterPropertiesSet() {
-		_spiCommentResource = new SPICommentResource<>(
-			JournalArticle.class.getName(), _commentManager, contextCompany,
-			comment -> CommentUtil.toComment(
-				comment, _commentManager, _portal));
-	}
-
 	@Override
 	public boolean deleteComment(Long commentId) throws Exception {
-		return _spiCommentResource.deleteComment(commentId);
+		return _getSPICommentResource().deleteComment(commentId);
 	}
 
 	@Override
 	public Comment getComment(Long commentId) throws Exception {
-		return _spiCommentResource.getComment(commentId);
+		return _getSPICommentResource().getComment(commentId);
 	}
 
 	@Override
@@ -70,13 +63,13 @@ public class CommentResourceImpl
 			Long commentId, Filter filter, Pagination pagination, Sort[] sorts)
 		throws Exception {
 
-		return _spiCommentResource.getCommentCommentsPage(
+		return _getSPICommentResource().getCommentCommentsPage(
 			commentId, filter, pagination, sorts);
 	}
 
 	@Override
 	public EntityModel getEntityModel(MultivaluedMap multivaluedMap) {
-		return _spiCommentResource.getEntityModel(multivaluedMap);
+		return _getSPICommentResource().getEntityModel(multivaluedMap);
 	}
 
 	@Override
@@ -88,7 +81,7 @@ public class CommentResourceImpl
 		JournalArticle journalArticle = _journalArticleService.getLatestArticle(
 			structuredContentId);
 
-		return _spiCommentResource.getEntityCommentsPage(
+		return _getSPICommentResource().getEntityCommentsPage(
 			journalArticle.getGroupId(), structuredContentId, filter,
 			pagination, sorts);
 	}
@@ -97,7 +90,7 @@ public class CommentResourceImpl
 	public Comment postCommentComment(Long parentCommentId, Comment comment)
 		throws Exception {
 
-		return _spiCommentResource.postCommentComment(
+		return _getSPICommentResource().postCommentComment(
 			parentCommentId, comment.getText());
 	}
 
@@ -109,7 +102,7 @@ public class CommentResourceImpl
 		JournalArticle journalArticle = _journalArticleService.getLatestArticle(
 			structuredContentId);
 
-		return _spiCommentResource.postEntityComment(
+		return _getSPICommentResource().postEntityComment(
 			journalArticle.getGroupId(), structuredContentId,
 			comment.getText());
 	}
@@ -118,7 +111,18 @@ public class CommentResourceImpl
 	public Comment putComment(Long commentId, Comment comment)
 		throws Exception {
 
-		return _spiCommentResource.putComment(commentId, comment.getText());
+		return _getSPICommentResource().putComment(
+			commentId, comment.getText());
+	}
+
+	@Context
+	protected ResourceContext resourceContext;
+
+	private SPICommentResource<Comment> _getSPICommentResource() {
+		return new SPICommentResource<>(
+			JournalArticle.class.getName(), _commentManager, contextCompany,
+			comment -> CommentUtil.toComment(
+				comment, _commentManager, _portal));
 	}
 
 	@Reference
@@ -129,7 +133,5 @@ public class CommentResourceImpl
 
 	@Reference
 	private Portal _portal;
-
-	private SPICommentResource<Comment> _spiCommentResource;
 
 }

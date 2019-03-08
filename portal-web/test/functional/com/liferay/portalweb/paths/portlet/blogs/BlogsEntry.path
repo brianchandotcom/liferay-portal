@@ -89,7 +89,7 @@
 	<td></td>
 </tr>
 <tr>
-	<td>CONTENT_LINK</td>
+	<td>CONTENT_LINK_IN_EDIT</td>
 	<td>//div[contains(@id,'contentEditor')]//a[contains(.,'${key_entryContent}')]</td>
 	<td></td>
 </tr>

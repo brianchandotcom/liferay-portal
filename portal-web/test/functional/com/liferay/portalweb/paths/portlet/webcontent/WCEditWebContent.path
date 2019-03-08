@@ -116,8 +116,28 @@
 </tr>
 <!--DISPLAY_PAGE-->
 <tr>
-	<td>DISPLAY_PAGE_SELECTION</td>
-	<td>//span[contains(@id,'displayPageNameInput')]</td>
+	<td>DISPLAY_PAGE_SELECT</td>
+	<td>//select[contains(@id,'displayPageType')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DISPLAY_PAGE_DEFAULT_SELECTION</td>
+	<td>//input[contains(@id,'defaultDisplayPageNameInput')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DISPLAY_PAGE_SPECIFIC_SELECTION</td>
+	<td>//input[contains(@id,'specificDisplayPageNameInput')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DISPLAY_PAGE_CHOOSE_BUTTON</td>
+	<td>//button[contains(@id,'chooseSpecificDisplayPage')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DISPLAY_PAGE_SELECT_PAGE_IFRAME</td>
+	<td>//iframe[contains(@id,'selectDisplayPage')]</td>
 	<td></td>
 </tr>
 </tbody>

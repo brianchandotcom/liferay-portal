@@ -735,7 +735,10 @@ definition {
 
 			Panel.expandPanel(panel = "Display Page");
 
-			Click(locator1 = "WCSelectDisplayPage#NONE");
+			Select(
+				locator1 = "WCEditWebContent#DISPLAY_PAGE_SELECT",
+				value1 = "No Display Page"
+			);
 
 			PortletEntry.publish();
 		}

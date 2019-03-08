@@ -821,15 +821,20 @@ definition {
 	macro editDisplayPage {
 		Panel.expandPanel(panel = "Display Page");
 
-		Click(locator1 = "WCSelectDisplayPage#USE_SPECIFIC_DISPLAY_PAGE");
+		Select(
+			locator1 = "WCEditWebContent#DISPLAY_PAGE_SELECT",
+			value1 = "Specific Display Page"
+		);
 
-		AssertClick(locator1 = "Button#CHOOSE", value1 = "Choose");
+		Click(
+			locator1 = "WCEditWebContent#DISPLAY_PAGE_CHOOSE_BUTTON"
+		);
 
 		Pause(locator1 = "5000");
 
 		SelectFrameTop();
 
-		SelectFrame(locator1 = "WCSelectDisplayPage#DISPLAY_PAGE_CONFIGURATION_IFRAME");
+		SelectFrame(locator1 = "WCEditWebContent#DISPLAY_PAGE_SELECT_PAGE_IFRAME");
 
 		if ("${pageType}" == "Public Pages") {
 			Navigator.gotoNavItem(navItem = "Public Pages");
@@ -852,8 +857,8 @@ definition {
 
 		SelectFrame(value1 = "relative=top");
 
-		AssertTextEquals.assertPartialText(
-			locator1 = "WCEditWebContent#DISPLAY_PAGE_SELECTION",
+		AssertTextEquals(
+			locator1 = "WCEditWebContent#DISPLAY_PAGE_SPECIFIC_SELECTION",
 			value1 = "${pageName}"
 		);
 

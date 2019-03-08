@@ -17,9 +17,11 @@ package com.liferay.fragment.entry.processor.editable.parser.impl;
 import com.liferay.fragment.entry.processor.editable.EditableFragmentEntryProcessor;
 import com.liferay.fragment.entry.processor.editable.parser.EditableElementParser;
 import com.liferay.fragment.exception.FragmentEntryContentException;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.util.List;
 import java.util.ResourceBundle;
@@ -53,11 +55,38 @@ public class ImageEditableElementParser implements EditableElementParser {
 
 	@Override
 	public void replace(Element element, String value) {
+		replace(element, value, null);
+	}
+
+	@Override
+	public void replace(
+		Element element, String value, JSONObject configJSONObject) {
+
 		List<Element> elements = element.getElementsByTag("img");
 
 		Element replaceableElement = elements.get(0);
 
 		replaceableElement.attr("src", value);
+
+		if (configJSONObject == null) {
+			return;
+		}
+
+		String imageLink = configJSONObject.getString("imageLink");
+		String imageTarget = configJSONObject.getString("imageTarget");
+
+		if (Validator.isNull(imageLink) || Validator.isNull(imageTarget)) {
+			return;
+		}
+
+		Element link = new Element("a");
+
+		link.attr("href", imageLink);
+		link.attr("target", imageTarget);
+
+		link.html(element.html());
+
+		element.html(link.outerHtml());
 	}
 
 	@Override

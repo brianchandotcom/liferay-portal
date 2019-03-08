@@ -433,7 +433,7 @@ class RuleList extends Component {
 				label = this._getOptionLabel(operands[0].value, operand.value);
 			}
 			else {
-				label = this._getFieldLabel(operand.value);
+				label = operand.value;
 			}
 		}
 		else {

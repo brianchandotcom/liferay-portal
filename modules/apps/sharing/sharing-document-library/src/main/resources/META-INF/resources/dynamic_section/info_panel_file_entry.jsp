@@ -65,13 +65,13 @@ JSONArray collaboratorsJSONArray = JSONFactoryUtil.createJSONArray();
 			<%
 			}
 
-			int countSharingEntryToUserIds = GetterUtil.getInteger(request.getAttribute("info_panel_file_entry.jsp-countSharingEntryToUserIds"));
+			int sharingEntriesCount = GetterUtil.getInteger(request.getAttribute("info_panel_file_entry.jsp-sharingEntriesCount"));
 			%>
 
-			<c:if test="<%= countSharingEntryToUserIds > 4 %>">
+			<c:if test="<%= sharingEntriesCount > 4 %>">
 
 				<%
-				int moreCollaboratorsCount = countSharingEntryToUserIds - 4;
+				int moreCollaboratorsCount = sharingEntriesCount - 4;
 				%>
 
 				<div class="lfr-portal-tooltip rounded-circle sticker sticker-lg sticker-secondary" data-title="<%= LanguageUtil.format(resourceBundle, (moreCollaboratorsCount == 1) ? "x-more-collaborator" : "x-more-collaborators", moreCollaboratorsCount) %>">

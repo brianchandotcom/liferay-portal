@@ -520,11 +520,11 @@ paths:
         delete:
             parameters:
                 - in: path
-                  name: category-id
-                  required: true
-                  schema:
-                      format: int64
-                      type: integer
+                name: category-id
+                required: true
+                schema:
+                    format: int64
+                    type: integer
             responses:
                 204:
                     content:
@@ -534,11 +534,11 @@ paths:
         get:
             parameters:
                 - in: path
-                  name: category-id
-                  required: true
-                  schema:
-                      format: int64
-                      type: integer
+                name: category-id
+                required: true
+                schema:
+                    format: int64
+                    type: integer
             responses:
                 200:
                     content:
@@ -550,11 +550,11 @@ paths:
         put:
             parameters:
                 - in: path
-                  name: category-id
-                  required: true
-                  schema:
-                      format: int64
-                      type: integer
+                name: category-id
+                required: true
+                schema:
+                    format: int64
+                    type: integer
             requestBody:
                 content:
                     application/json:
@@ -572,27 +572,27 @@ paths:
         get:
             parameters:
                 - in: path
-                  name: category-id
-                  required: true
-                  schema:
-                      format: int64
-                      type: integer
+                name: category-id
+                required: true
+                schema:
+                    format: int64
+                    type: integer
                 - in: query
-                  name: filter
-                  schema:
-                      type: string
+                name: filter
+                schema:
+                    type: string
                 - in: query
-                  name: page
-                  schema:
-                      type: integer
+                name: page
+                schema:
+                    type: integer
                 - in: query
-                  name: pageSize
-                  schema:
-                      type: integer
+                name: pageSize
+                schema:
+                    type: integer
                 - in: query
-                  name: sort
-                  schema:
-                      type: string
+                name: sort
+                schema:
+                    type: string
             responses:
                 200:
                     content:
@@ -606,11 +606,11 @@ paths:
         post:
             parameters:
                 - in: path
-                  name: category-id
-                  required: true
-                  schema:
-                      format: int64
-                      type: integer
+                name: category-id
+                required: true
+                schema:
+                    format: int64
+                    type: integer
             requestBody:
                 content:
                     application/json:
@@ -628,27 +628,27 @@ paths:
         get:
             parameters:
                 - in: query
-                  name: page
-                  schema:
-                      type: integer
+                name: page
+                schema:
+                    type: integer
                 - in: query
-                  name: pageSize
-                  schema:
-                      type: integer
+                name: pageSize
+                schema:
+                    type: integer
                 - in: query
-                  name: filter
-                  schema:
-                      type: string
+                name: filter
+                schema:
+                    type: string
                 - in: query
-                  name: sort
-                  schema:
-                      type: string
+                name: sort
+                schema:
+                    type: string
                 - in: path
-                  name: content-space-id
-                  required: true
-                  schema:
-                      format: int64
-                      type: integer
+                name: content-space-id
+                required: true
+                schema:
+                    format: int64
+                    type: integer
             responses:
                 200:
                     content:
@@ -662,11 +662,11 @@ paths:
         post:
             parameters:
                 - in: path
-                  name: content-space-id
-                  required: true
-                  schema:
-                      format: int64
-                      type: integer
+                name: content-space-id
+                required: true
+                schema:
+                    format: int64
+                    type: integer
             requestBody:
                 content:
                     application/json:
@@ -684,27 +684,27 @@ paths:
         get:
             parameters:
                 - in: path
-                  name: content-space-id
-                  required: true
-                  schema:
-                      format: int64
-                      type: integer
+                name: content-space-id
+                required: true
+                schema:
+                    format: int64
+                    type: integer
                 - in: query
-                  name: page
-                  schema:
-                      type: integer
+                name: page
+                schema:
+                    type: integer
                 - in: query
-                  name: pageSize
-                  schema:
-                      type: integer
+                name: pageSize
+                schema:
+                    type: integer
                 - in: query
-                  name: filter
-                  schema:
-                      type: string
+                name: filter
+                schema:
+                    type: string
                 - in: query
-                  name: sort
-                  schema:
-                      type: string
+                name: sort
+                schema:
+                    type: string
             responses:
                 200:
                     content:
@@ -718,11 +718,11 @@ paths:
         post:
             parameters:
                 - in: path
-                  name: content-space-id
-                  required: true
-                  schema:
-                      format: int64
-                      type: integer
+                name: content-space-id
+                required: true
+                schema:
+                    format: int64
+                    type: integer
             requestBody:
                 content:
                     application/json:
@@ -736,22 +736,23 @@ paths:
                                 $ref: "#/components/schemas/Vocabulary"
                     description: ""
             tags: ["Vocabulary"]
-    "/emails":
+    "/emails-by/{classNameClassPK}":
         get:
             parameters:
-                - in: query
-                  name: page
-                  schema:
-                      type: integer
-                - in: query
-                  name: pageSize
-                  schema:
-                      type: integer
                 - in: path
-                  name: generic-parent-id
-                  required: true
-                  schema:
-                      type: object
+                name: classNameClassPK
+                required: true
+                schema:
+                    type: string
+                - in: query
+                name: page
+                schema:
+                    type: integer
+                - in: query
+                name: pageSize
+                schema:
+                    type: integer
+
             responses:
                 200:
                     content:
@@ -766,11 +767,11 @@ paths:
         get:
             parameters:
                 - in: path
-                  name: email-id
-                  required: true
-                  schema:
-                      format: int64
-                      type: integer
+                name: email-id
+                required: true
+                schema:
+                    format: int64
+                    type: integer
             responses:
                 200:
                     content:
@@ -783,11 +784,11 @@ paths:
         delete:
             parameters:
                 - in: path
-                  name: keyword-id
-                  required: true
-                  schema:
-                      format: int64
-                      type: integer
+                name: keyword-id
+                required: true
+                schema:
+                    format: int64
+                    type: integer
             responses:
                 204:
                     content:
@@ -797,11 +798,11 @@ paths:
         get:
             parameters:
                 - in: path
-                  name: keyword-id
-                  required: true
-                  schema:
-                      format: int64
-                      type: integer
+                name: keyword-id
+                required: true
+                schema:
+                    format: int64
+                    type: integer
             responses:
                 200:
                     content:
@@ -813,11 +814,11 @@ paths:
         put:
             parameters:
                 - in: path
-                  name: keyword-id
-                  required: true
-                  schema:
-                      format: int64
-                      type: integer
+                name: keyword-id
+                required: true
+                schema:
+                    format: int64
+                    type: integer
             requestBody:
                 content:
                     application/json:
@@ -835,11 +836,11 @@ paths:
         get:
             parameters:
                 - in: path
-                  name: my-user-account-id
-                  required: true
-                  schema:
-                      format: int64
-                      type: integer
+                name: my-user-account-id
+                required: true
+                schema:
+                    format: int64
+                    type: integer
             responses:
                 200:
                     content:
@@ -852,19 +853,19 @@ paths:
         get:
             parameters:
                 - in: query
-                  name: page
-                  schema:
-                      type: integer
+                name: page
+                schema:
+                    type: integer
                 - in: query
-                  name: pageSize
-                  schema:
-                      type: integer
+                name: pageSize
+                schema:
+                    type: integer
                 - in: path
-                  name: my-user-account-id
-                  required: true
-                  schema:
-                      format: int64
-                      type: integer
+                name: my-user-account-id
+                required: true
+                schema:
+                    format: int64
+                    type: integer
             responses:
                 200:
                     content:
@@ -879,19 +880,19 @@ paths:
         get:
             parameters:
                 - in: query
-                  name: page
-                  schema:
-                      type: integer
+                name: page
+                schema:
+                    type: integer
                 - in: query
-                  name: pageSize
-                  schema:
-                      type: integer
+                name: pageSize
+                schema:
+                    type: integer
                 - in: path
-                  name: my-user-account-id
-                  required: true
-                  schema:
-                      format: int64
-                      type: integer
+                name: my-user-account-id
+                required: true
+                schema:
+                    format: int64
+                    type: integer
             responses:
                 200:
                     content:
@@ -906,13 +907,13 @@ paths:
         get:
             parameters:
                 - in: query
-                  name: page
-                  schema:
-                      type: integer
+                name: page
+                schema:
+                    type: integer
                 - in: query
-                  name: pageSize
-                  schema:
-                      type: integer
+                name: pageSize
+                schema:
+                    type: integer
             responses:
                 200:
                     content:
@@ -927,11 +928,11 @@ paths:
         get:
             parameters:
                 - in: path
-                  name: organization-id
-                  required: true
-                  schema:
-                      format: int64
-                      type: integer
+                name: organization-id
+                required: true
+                schema:
+                    format: int64
+                    type: integer
             responses:
                 200:
                     content:
@@ -944,19 +945,19 @@ paths:
         get:
             parameters:
                 - in: query
-                  name: page
-                  schema:
-                      type: integer
+                name: page
+                schema:
+                    type: integer
                 - in: query
-                  name: pageSize
-                  schema:
-                      type: integer
+                name: pageSize
+                schema:
+                    type: integer
                 - in: path
-                  name: organization-id
-                  required: true
-                  schema:
-                      format: int64
-                      type: integer
+                name: organization-id
+                required: true
+                schema:
+                    format: int64
+                    type: integer
             responses:
                 200:
                     content:
@@ -971,19 +972,19 @@ paths:
         get:
             parameters:
                 - in: query
-                  name: page
-                  schema:
-                      type: integer
+                name: page
+                schema:
+                    type: integer
                 - in: query
-                  name: pageSize
-                  schema:
-                      type: integer
+                name: pageSize
+                schema:
+                    type: integer
                 - in: path
-                  name: organization-id
-                  required: true
-                  schema:
-                      format: int64
-                      type: integer
+                name: organization-id
+                required: true
+                schema:
+                    format: int64
+                    type: integer
             responses:
                 200:
                     content:
@@ -998,18 +999,18 @@ paths:
         get:
             parameters:
                 - in: query
-                  name: page
-                  schema:
-                      type: integer
+                name: page
+                schema:
+                    type: integer
                 - in: query
-                  name: pageSize
-                  schema:
-                      type: integer
+                name: pageSize
+                schema:
+                    type: integer
                 - in: path
-                  name: generic-parent-id
-                  required: true
-                  schema:
-                      type: object
+                name: generic-parent-id
+                required: true
+                schema:
+                    type: object
             responses:
                 200:
                     content:
@@ -1024,11 +1025,11 @@ paths:
         get:
             parameters:
                 - in: path
-                  name: phone-id
-                  required: true
-                  schema:
-                      format: int64
-                      type: integer
+                name: phone-id
+                required: true
+                schema:
+                    format: int64
+                    type: integer
             responses:
                 200:
                     content:
@@ -1041,18 +1042,18 @@ paths:
         get:
             parameters:
                 - in: query
-                  name: page
-                  schema:
-                      type: integer
+                name: page
+                schema:
+                    type: integer
                 - in: query
-                  name: pageSize
-                  schema:
-                      type: integer
+                name: pageSize
+                schema:
+                    type: integer
                 - in: path
-                  name: generic-parent-id
-                  required: true
-                  schema:
-                      type: object
+                name: generic-parent-id
+                required: true
+                schema:
+                    type: object
             responses:
                 200:
                     content:
@@ -1067,11 +1068,11 @@ paths:
         get:
             parameters:
                 - in: path
-                  name: postal-address-id
-                  required: true
-                  schema:
-                      format: int64
-                      type: integer
+                name: postal-address-id
+                required: true
+                schema:
+                    format: int64
+                    type: integer
             responses:
                 200:
                     content:
@@ -1084,13 +1085,13 @@ paths:
         get:
             parameters:
                 - in: query
-                  name: page
-                  schema:
-                      type: integer
+                name: page
+                schema:
+                    type: integer
                 - in: query
-                  name: pageSize
-                  schema:
-                      type: integer
+                name: pageSize
+                schema:
+                    type: integer
             responses:
                 200:
                     content:
@@ -1105,11 +1106,11 @@ paths:
         get:
             parameters:
                 - in: path
-                  name: role-id
-                  required: true
-                  schema:
-                      format: int64
-                      type: integer
+                name: role-id
+                required: true
+                schema:
+                    format: int64
+                    type: integer
             responses:
                 200:
                     content:
@@ -1122,19 +1123,19 @@ paths:
         get:
             parameters:
                 - in: query
-                  name: page
-                  schema:
-                      type: integer
+                name: page
+                schema:
+                    type: integer
                 - in: query
-                  name: pageSize
-                  schema:
-                      type: integer
+                name: pageSize
+                schema:
+                    type: integer
                 - in: path
-                  name: segment-id
-                  required: true
-                  schema:
-                      format: int64
-                      type: integer
+                name: segment-id
+                required: true
+                schema:
+                    format: int64
+                    type: integer
             responses:
                 200:
                     content:
@@ -1149,17 +1150,17 @@ paths:
         get:
             parameters:
                 - in: query
-                  name: page
-                  schema:
-                      type: integer
+                name: page
+                schema:
+                    type: integer
                 - in: query
-                  name: pageSize
-                  schema:
-                      type: integer
+                name: pageSize
+                schema:
+                    type: integer
                 - in: query
-                  name: fullnamequery
-                  schema:
-                      type: string
+                name: fullnamequery
+                schema:
+                    type: string
             responses:
                 200:
                     content:
@@ -1189,11 +1190,11 @@ paths:
         delete:
             parameters:
                 - in: path
-                  name: user-account-id
-                  required: true
-                  schema:
-                      format: int64
-                      type: integer
+                name: user-account-id
+                required: true
+                schema:
+                    format: int64
+                    type: integer
             responses:
                 204:
                     content:
@@ -1203,11 +1204,11 @@ paths:
         get:
             parameters:
                 - in: path
-                  name: user-account-id
-                  required: true
-                  schema:
-                      format: int64
-                      type: integer
+                name: user-account-id
+                required: true
+                schema:
+                    format: int64
+                    type: integer
             responses:
                 200:
                     content:
@@ -1219,11 +1220,11 @@ paths:
         put:
             parameters:
                 - in: path
-                  name: user-account-id
-                  required: true
-                  schema:
-                      format: int64
-                      type: integer
+                name: user-account-id
+                required: true
+                schema:
+                    format: int64
+                    type: integer
             requestBody:
                 content:
                     application/json:
@@ -1241,19 +1242,19 @@ paths:
         get:
             parameters:
                 - in: query
-                  name: page
-                  schema:
-                      type: integer
+                name: page
+                schema:
+                    type: integer
                 - in: query
-                  name: pageSize
-                  schema:
-                      type: integer
+                name: pageSize
+                schema:
+                    type: integer
                 - in: path
-                  name: user-account-id
-                  required: true
-                  schema:
-                      format: int64
-                      type: integer
+                name: user-account-id
+                required: true
+                schema:
+                    format: int64
+                    type: integer
             responses:
                 200:
                     content:
@@ -1268,19 +1269,19 @@ paths:
         get:
             parameters:
                 - in: query
-                  name: page
-                  schema:
-                      type: integer
+                name: page
+                schema:
+                    type: integer
                 - in: query
-                  name: pageSize
-                  schema:
-                      type: integer
+                name: pageSize
+                schema:
+                    type: integer
                 - in: path
-                  name: user-account-id
-                  required: true
-                  schema:
-                      format: int64
-                      type: integer
+                name: user-account-id
+                required: true
+                schema:
+                    format: int64
+                    type: integer
             responses:
                 200:
                     content:
@@ -1295,19 +1296,19 @@ paths:
         get:
             parameters:
                 - in: query
-                  name: page
-                  schema:
-                      type: integer
+                name: page
+                schema:
+                    type: integer
                 - in: query
-                  name: pageSize
-                  schema:
-                      type: integer
+                name: pageSize
+                schema:
+                    type: integer
                 - in: path
-                  name: user-id
-                  required: true
-                  schema:
-                      format: int64
-                      type: integer
+                name: user-id
+                required: true
+                schema:
+                    format: int64
+                    type: integer
             responses:
                 200:
                     content:
@@ -1322,11 +1323,11 @@ paths:
         delete:
             parameters:
                 - in: path
-                  name: vocabulary-id
-                  required: true
-                  schema:
-                      format: int64
-                      type: integer
+                name: vocabulary-id
+                required: true
+                schema:
+                    format: int64
+                    type: integer
             responses:
                 204:
                     content:
@@ -1336,11 +1337,11 @@ paths:
         get:
             parameters:
                 - in: path
-                  name: vocabulary-id
-                  required: true
-                  schema:
-                      format: int64
-                      type: integer
+                name: vocabulary-id
+                required: true
+                schema:
+                    format: int64
+                    type: integer
             responses:
                 200:
                     content:
@@ -1352,11 +1353,11 @@ paths:
         put:
             parameters:
                 - in: path
-                  name: vocabulary-id
-                  required: true
-                  schema:
-                      format: int64
-                      type: integer
+                name: vocabulary-id
+                required: true
+                schema:
+                    format: int64
+                    type: integer
             requestBody:
                 content:
                     application/json:
@@ -1374,27 +1375,27 @@ paths:
         get:
             parameters:
                 - in: query
-                  name: filter
-                  schema:
-                      type: string
+                name: filter
+                schema:
+                    type: string
                 - in: query
-                  name: page
-                  schema:
-                      type: integer
+                name: page
+                schema:
+                    type: integer
                 - in: query
-                  name: pageSize
-                  schema:
-                      type: integer
+                name: pageSize
+                schema:
+                    type: integer
                 - in: query
-                  name: sort
-                  schema:
-                      type: string
+                name: sort
+                schema:
+                    type: string
                 - in: path
-                  name: vocabulary-id
-                  required: true
-                  schema:
-                      format: int64
-                      type: integer
+                name: vocabulary-id
+                required: true
+                schema:
+                    format: int64
+                    type: integer
             responses:
                 200:
                     content:
@@ -1408,11 +1409,11 @@ paths:
         post:
             parameters:
                 - in: path
-                  name: vocabulary-id
-                  required: true
-                  schema:
-                      format: int64
-                      type: integer
+                name: vocabulary-id
+                required: true
+                schema:
+                    format: int64
+                    type: integer
             requestBody:
                 content:
                     application/json:
@@ -1430,19 +1431,19 @@ paths:
         get:
             parameters:
                 - in: query
-                  name: page
-                  schema:
-                      type: integer
+                name: page
+                schema:
+                    type: integer
                 - in: query
-                  name: pageSize
-                  schema:
-                      type: integer
+                name: pageSize
+                schema:
+                    type: integer
                 - in: path
-                  name: web-site-id
-                  required: true
-                  schema:
-                      format: int64
-                      type: integer
+                name: web-site-id
+                required: true
+                schema:
+                    format: int64
+                    type: integer
             responses:
                 200:
                     content:
@@ -1457,18 +1458,18 @@ paths:
         get:
             parameters:
                 - in: query
-                  name: page
-                  schema:
-                      type: integer
+                name: page
+                schema:
+                    type: integer
                 - in: query
-                  name: pageSize
-                  schema:
-                      type: integer
+                name: pageSize
+                schema:
+                    type: integer
                 - in: path
-                  name: generic-parent-id
-                  required: true
-                  schema:
-                      type: object
+                name: generic-parent-id
+                required: true
+                schema:
+                    type: object
             responses:
                 200:
                     content:
@@ -1483,11 +1484,11 @@ paths:
         get:
             parameters:
                 - in: path
-                  name: web-url-id
-                  required: true
-                  schema:
-                      format: int64
-                      type: integer
+                name: web-url-id
+                required: true
+                schema:
+                    format: int64
+                    type: integer
             responses:
                 200:
                     content:

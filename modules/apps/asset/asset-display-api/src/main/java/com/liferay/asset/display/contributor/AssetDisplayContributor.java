@@ -113,6 +113,8 @@ public interface AssetDisplayContributor {
 			PortalUtil.getCurrentAndAncestorSiteGroupIds(groupId), locale);
 	}
 
+	public String getFriendlyURLShortcut();
+
 	public String getLabel(Locale locale);
 
 }

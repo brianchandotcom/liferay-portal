@@ -191,14 +191,13 @@ public class SharedWithMeViewDisplayContext {
 	}
 
 	public boolean hasEditPermission(long classNameId, long classPK) {
-		List<SharingEntry> toUserSharingEntries =
-			_sharingEntryLocalService.getToUserClassPKSharingEntries(
-				_themeDisplay.getUserId(), classNameId, classPK);
+		SharingEntry sharingEntry = _sharingEntryLocalService.fetchSharingEntry(
+			_themeDisplay.getUserId(), classNameId, classPK);
 
-		for (SharingEntry sharingEntry : toUserSharingEntries) {
-			if (sharingEntry.hasSharingPermission(SharingEntryAction.UPDATE)) {
-				return true;
-			}
+		if ((sharingEntry != null) &&
+			sharingEntry.hasSharingPermission(SharingEntryAction.UPDATE)) {
+
+			return true;
 		}
 
 		return false;
@@ -213,14 +212,13 @@ public class SharedWithMeViewDisplayContext {
 			classNameId = ClassNameLocalServiceUtil.getClassNameId(className);
 		}
 
-		int total =
-			_sharingEntryLocalService.getUniqueToUserSharingEntriesCount(
-				_themeDisplay.getUserId(), classNameId);
+		int total = _sharingEntryLocalService.getToUserSharingEntriesCount(
+			_themeDisplay.getUserId(), classNameId);
 
 		searchContainer.setTotal(total);
 
 		List<SharingEntry> sharingEntries =
-			_sharingEntryLocalService.getUniqueToUserSharingEntries(
+			_sharingEntryLocalService.getToUserSharingEntries(
 				_themeDisplay.getUserId(), classNameId,
 				searchContainer.getStart(), searchContainer.getEnd(),
 				new SharingEntryModifiedDateComparator(

@@ -16,8 +16,18 @@ package com.liferay.portal.vulcan.internal.jaxrs.context.provider;
 
 import java.lang.reflect.Method;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 
+import javax.ws.rs.container.ResourceContext;
+import javax.ws.rs.core.MultivaluedMap;
+import javax.ws.rs.core.UriInfo;
+
+import org.apache.cxf.jaxrs.impl.ResourceContextImpl;
+import org.apache.cxf.jaxrs.impl.UriInfoImpl;
+import org.apache.cxf.jaxrs.model.OperationResourceInfo;
+import org.apache.cxf.message.Exchange;
 import org.apache.cxf.message.Message;
 
 /**
@@ -32,8 +42,31 @@ public class ContextProviderUtil {
 			"HTTP.REQUEST");
 	}
 
+	public static Object getMatchedResource(Message message) {
+		Exchange exchange = message.getExchange();
+
+		ResourceContext resourceContext = new ResourceContextImpl(
+			message, exchange.get(OperationResourceInfo.class));
+
+		UriInfo uriInfo = new UriInfoImpl(message);
+
+		List<Object> matchedResources = uriInfo.getMatchedResources();
+
+		Class<?> matchedResourceClass = (Class<?>)matchedResources.get(0);
+
+		return resourceContext.getResource(matchedResourceClass);
+	}
+
 	public static Method getMethod(Message message) {
 		return (Method)message.get("org.apache.cxf.resource.method");
+	}
+
+	public static MultivaluedMap<String, String> getQueryParameters(
+		Message message) {
+
+		UriInfoImpl uriInfo = new UriInfoImpl(message);
+
+		return uriInfo.getQueryParameters();
 	}
 
 }

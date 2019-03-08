@@ -169,7 +169,7 @@ public class SamlLoginAction extends BaseSamlStrutsAction {
 	@Reference
 	private SamlSpIdpConnectionLocalService _samlSpIdpConnectionLocalService;
 
-	@Reference (
+	@Reference(
 		cardinality = ReferenceCardinality.OPTIONAL,
 		policyOption = ReferencePolicyOption.GREEDY
 	)

@@ -401,29 +401,38 @@ public class ServicePreAction extends Action {
 			redirectToDefaultLayout = Boolean.FALSE;
 		}
 
+		Group group = null;
+
+		boolean stagingGroup = false;
+		boolean viewableGroup = false;
+		boolean loginRequest = isLoginRequest(request);
+
 		if (layout != null) {
-			Group group = layout.getGroup();
+			group = layout.getGroup();
+			stagingGroup = group.isStagingGroup();
 
 			if (!signedIn && PropsValues.AUTH_FORWARD_BY_REDIRECT) {
 				request.setAttribute(WebKeys.REQUESTED_LAYOUT, layout);
 			}
 
-			boolean viewableGroup = hasAccessPermission(
+			viewableGroup = hasAccessPermission(
 				permissionChecker, layout, doAsGroupId, true);
-			boolean viewableStaging =
-				!group.isControlPanel() &&
+
+			boolean viewableStaging = false;
+
+			if (!group.isControlPanel() &&
 				GroupPermissionUtil.contains(
-					permissionChecker, group, ActionKeys.VIEW_STAGING);
-			boolean loginRequest = isLoginRequest(request);
+					permissionChecker, group, ActionKeys.VIEW_STAGING)) {
+
+				viewableStaging = true;
+			}
 
 			if (viewableStaging) {
 				layouts = LayoutLocalServiceUtil.getLayouts(
 					layout.getGroupId(), layout.isPrivateLayout(),
 					LayoutConstants.DEFAULT_PARENT_LAYOUT_ID);
 			}
-			else if ((!viewableGroup || !viewableSourceGroup) &&
-					 group.isStagingGroup()) {
-
+			else if ((!viewableGroup || !viewableSourceGroup) && stagingGroup) {
 				layout = null;
 			}
 			else if (!loginRequest &&
@@ -476,8 +485,17 @@ public class ServicePreAction extends Action {
 		LayoutComposite viewableLayoutComposite = null;
 
 		if (layout == null) {
+			boolean ignoreHiddenLayouts = false;
+
+			if (((!viewableGroup || !viewableSourceGroup) && stagingGroup) ||
+				(loginRequest && !viewableGroup)) {
+
+				ignoreHiddenLayouts = true;
+			}
+
 			viewableLayoutComposite = getDefaultViewableLayoutComposite(
-				request, user, permissionChecker, doAsGroupId, signedIn);
+				request, user, permissionChecker, doAsGroupId, signedIn,
+				ignoreHiddenLayouts);
 
 			request.setAttribute(WebKeys.LAYOUT_DEFAULT, Boolean.TRUE);
 		}
@@ -491,10 +509,10 @@ public class ServicePreAction extends Action {
 		layout = viewableLayoutComposite.getLayout();
 		layouts = viewableLayoutComposite.getLayouts();
 
-		Group group = null;
-
 		if (layout != null) {
-			group = layout.getGroup();
+			if (group == null) {
+				group = layout.getGroup();
+			}
 
 			if (!group.isControlPanel()) {
 				rememberVisitedGroupIds(request, group.getGroupId());
@@ -1413,7 +1431,7 @@ public class ServicePreAction extends Action {
 	protected LayoutComposite getDefaultViewableLayoutComposite(
 			HttpServletRequest request, User user,
 			PermissionChecker permissionChecker, long doAsGroupId,
-			boolean signedIn)
+			boolean signedIn, boolean ignoreHiddenLayouts)
 		throws PortalException {
 
 		LayoutComposite defaultLayoutComposite =
@@ -1421,7 +1439,7 @@ public class ServicePreAction extends Action {
 
 		defaultLayoutComposite = getViewableLayoutComposite(
 			request, user, permissionChecker, defaultLayoutComposite,
-			doAsGroupId);
+			doAsGroupId, ignoreHiddenLayouts);
 
 		if (ListUtil.isNotEmpty(defaultLayoutComposite.getLayouts())) {
 			return defaultLayoutComposite;
@@ -1438,7 +1456,7 @@ public class ServicePreAction extends Action {
 
 			defaultLayoutComposite = getViewableLayoutComposite(
 				request, user, permissionChecker, defaultLayoutComposite,
-				doAsGroupId);
+				doAsGroupId, ignoreHiddenLayouts);
 
 			if (ListUtil.isNotEmpty(defaultLayoutComposite.getLayouts())) {
 				return defaultLayoutComposite;
@@ -1449,7 +1467,7 @@ public class ServicePreAction extends Action {
 
 		return getViewableLayoutComposite(
 			request, user, permissionChecker, defaultLayoutComposite,
-			doAsGroupId);
+			doAsGroupId, ignoreHiddenLayouts);
 	}
 
 	protected LayoutComposite getDefaultVirtualHostLayoutComposite(
@@ -1600,10 +1618,29 @@ public class ServicePreAction extends Action {
 		return new LayoutComposite(layout, layouts);
 	}
 
+	/**
+	 * @deprecated As of Judson (7.1.x), replaced by {@link
+	 *             #getViewableLayoutComposite(
+	 *                 HttpServletRequest,User,PermissionChecker,Layout,List,
+	 *                 long,boolean)}
+	 */
+	@Deprecated
 	protected LayoutComposite getViewableLayoutComposite(
 			HttpServletRequest request, User user,
 			PermissionChecker permissionChecker,
 			LayoutComposite defaultLayoutComposite, long doAsGroupId)
+		throws PortalException {
+
+		return getViewableLayoutComposite(
+			request, user, permissionChecker, defaultLayoutComposite,
+			doAsGroupId, true);
+	}
+
+	protected LayoutComposite getViewableLayoutComposite(
+			HttpServletRequest request, User user,
+			PermissionChecker permissionChecker,
+			LayoutComposite defaultLayoutComposite, long doAsGroupId,
+			boolean ignoreHiddenLayouts)
 		throws PortalException {
 
 		Layout layout = defaultLayoutComposite.getLayout();
@@ -1611,7 +1648,7 @@ public class ServicePreAction extends Action {
 
 		return getViewableLayoutComposite(
 			request, user, permissionChecker, layout, layouts, doAsGroupId,
-			true);
+			ignoreHiddenLayouts);
 	}
 
 	protected boolean hasAccessPermission(

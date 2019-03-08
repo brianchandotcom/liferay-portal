@@ -19,7 +19,6 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -29,7 +28,6 @@ import org.junit.AssumptionViolatedException;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.ClassRule;
-import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.internal.runners.statements.FailOnTimeout;
@@ -97,10 +95,6 @@ public class TestExecutorUtil {
 
 		List<FrameworkMethod> frameworkMethods = new ArrayList<>(
 			testClass.getAnnotatedMethods(Test.class));
-
-		frameworkMethods.removeAll(testClass.getAnnotatedMethods(Ignore.class));
-
-		frameworkMethods.sort(Comparator.comparing(FrameworkMethod::getName));
 
 		FrameworkMethod firstFrameworkMethod = frameworkMethods.get(0);
 

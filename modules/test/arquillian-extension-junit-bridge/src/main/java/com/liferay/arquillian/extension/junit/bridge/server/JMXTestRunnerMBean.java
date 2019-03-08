@@ -14,6 +14,8 @@
 
 package com.liferay.arquillian.extension.junit.bridge.server;
 
+import java.util.List;
+
 /**
  * @author Matthew Tambara
  */
@@ -22,6 +24,7 @@ public interface JMXTestRunnerMBean {
 	public static final String OBJECT_NAME =
 		"com.liferay:service=jmx-test-runner";
 
-	public byte[] runTestMethod(String className, String methodName);
+	public byte[] runTestMethod(
+		String className, String methodName, List<String> filteredMethodNames);
 
 }

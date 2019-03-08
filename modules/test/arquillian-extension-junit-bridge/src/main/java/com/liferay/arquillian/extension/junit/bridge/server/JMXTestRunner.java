@@ -18,8 +18,16 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
 
+import java.lang.annotation.Annotation;
+
+import java.util.Comparator;
+import java.util.List;
+import java.util.Map;
+
 import org.junit.AssumptionViolatedException;
+import org.junit.Ignore;
 import org.junit.Test;
+import org.junit.runners.model.FrameworkField;
 import org.junit.runners.model.FrameworkMethod;
 import org.junit.runners.model.TestClass;
 
@@ -33,10 +41,42 @@ public class JMXTestRunner implements JMXTestRunnerMBean {
 	}
 
 	@Override
-	public byte[] runTestMethod(String className, String methodName) {
+	public byte[] runTestMethod(
+		String className, String methodName, List<String> filterMethodNames) {
+
 		try {
 			TestClass testClass = new TestClass(
-				_classLoader.loadClass(className));
+				_classLoader.loadClass(className)) {
+
+				@Override
+				protected void scanAnnotatedMembers(
+					Map<Class<? extends Annotation>, List<FrameworkMethod>>
+						frameworkMethodsMap,
+					Map<Class<? extends Annotation>, List<FrameworkField>>
+						frameworkFieldsMap) {
+
+					super.scanAnnotatedMembers(
+						frameworkMethodsMap, frameworkFieldsMap);
+
+					List<FrameworkMethod> testFrameworkMethods =
+						frameworkMethodsMap.get(Test.class);
+
+					List<FrameworkMethod> ignoreFrameworkMethods =
+						frameworkMethodsMap.get(Ignore.class);
+
+					if (ignoreFrameworkMethods != null) {
+						testFrameworkMethods.removeAll(ignoreFrameworkMethods);
+					}
+
+					testFrameworkMethods.removeIf(
+						frameworkMethod -> filterMethodNames.contains(
+							frameworkMethod.getName()));
+
+					testFrameworkMethods.sort(
+						Comparator.comparing(FrameworkMethod::getName));
+				}
+
+			};
 
 			for (FrameworkMethod frameworkMethod :
 					testClass.getAnnotatedMethods(Test.class)) {

@@ -1,17 +1,17 @@
 components:
     schemas:
-        AssetCategory:
+        Category:
             properties:
                 categoryId:
                     format: int64
                     type: integer
                 name:
                     type: string
-        AssetVocabulary:
+        Vocabulary:
             properties:
                 categories:
                     items:
-                        $ref: "#/components/schemas/AssetCategory"
+                        $ref: "#/components/schemas/Category"
                     type: array
                 multiValued:
                     type: boolean
@@ -48,7 +48,7 @@ components:
                     type: string
                 vocabularies:
                     items:
-                        $ref: "#/components/schemas/AssetVocabulary"
+                        $ref: "#/components/schemas/Vocabulary"
                     type: array
         BulkAssetEntryCommonTags:
             properties:

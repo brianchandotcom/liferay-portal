@@ -126,7 +126,8 @@ class EditCategories extends Component {
 
 		this.vocabularies.forEach(
 			vocabulary => {
-				let categoryIds = vocabulary.categories.map(item => item.value);
+				const categories = vocabulary.categories || [];
+				let categoryIds = categories.map(item => item.value);
 				finalCategories = finalCategories.concat(categoryIds);
 			}
 		);
@@ -232,7 +233,7 @@ class EditCategories extends Component {
 	_parseCategories(categories) {
 		let categoriesObjList = [];
 
-		if (categories.length > 0) {
+		if (categories && categories.length > 0) {
 			categories.forEach(
 				item => {
 					let itemObj = {

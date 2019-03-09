@@ -35,7 +35,7 @@ public class MySQLSQLTransformerLogic extends BaseSQLTransformerLogic {
 				this::replaceBitwiseCheck, this::replaceBoolean,
 				this::replaceCastClobText, this::replaceCastLong,
 				this::replaceCastText, this::replaceDropTableIfExistsText,
-				this::replaceIntegerDivision, this::replaceNullDate));
+				this::_replaceIntegerDivision, this::replaceNullDate));
 
 		if (!db.isSupportsStringCaseSensitiveQuery()) {
 			functions.add(this::replaceLower);
@@ -44,8 +44,9 @@ public class MySQLSQLTransformerLogic extends BaseSQLTransformerLogic {
 		setFunctions(functions);
 	}
 
-	@Override
-	protected String replaceIntegerDivision(Matcher matcher) {
+	private String _replaceIntegerDivision(String sql) {
+		Matcher matcher = integerDivisionPattern.matcher(sql);
+
 		return matcher.replaceAll("$1 DIV $2");
 	}
 

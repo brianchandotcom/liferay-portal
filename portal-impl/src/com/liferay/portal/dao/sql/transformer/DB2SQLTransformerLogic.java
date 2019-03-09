@@ -35,9 +35,9 @@ public class DB2SQLTransformerLogic extends BaseSQLTransformerLogic {
 
 		List<Function<String, String>> functions = new ArrayList<>(
 			Arrays.asList(
-				this::replaceBoolean, this::replaceCastClobText,
-				this::replaceCastLong, this::replaceCastText,
-				this::replaceConcat, this::replaceDropTableIfExistsText,
+				this::replaceBoolean, this::_replaceCastClobText,
+				this::replaceCastLong, this::_replaceCastText,
+				this::_replaceConcat, this::replaceDropTableIfExistsText,
 				this::replaceIntegerDivision, this::replaceNullDate,
 				this::_replaceAlterColumnType, this::_replaceLike));
 
@@ -48,25 +48,31 @@ public class DB2SQLTransformerLogic extends BaseSQLTransformerLogic {
 		setFunctions(functions);
 	}
 
-	@Override
-	protected String replaceCastText(Matcher matcher) {
-		return matcher.replaceAll("CAST($1 AS VARCHAR(254))");
-	}
-
-	@Override
-	protected String replaceConcat(String sql) {
-		SQLFunctionTransformer sqlFunctionTransformer =
-			new SQLFunctionTransformer(
-				"CONCAT(", StringPool.BLANK, " CONCAT ", StringPool.BLANK);
-
-		return sqlFunctionTransformer.transform(sql);
-	}
-
 	private String _replaceAlterColumnType(String sql) {
 		Matcher matcher = _alterColumnTypePattern.matcher(sql);
 
 		return matcher.replaceAll(
 			"ALTER TABLE $1 ALTER COLUMN $2 SET DATA TYPE $3");
+	}
+
+	private String _replaceCastClobText(String sql) {
+		Matcher matcher = castClobTestPattern.matcher(sql);
+
+		return matcher.replaceAll("CAST($1 AS VARCHAR(254))");
+	}
+
+	private String _replaceCastText(String sql) {
+		Matcher matcher = castTextPattern.matcher(sql);
+
+		return matcher.replaceAll("CAST($1 AS VARCHAR(254))");
+	}
+
+	private String _replaceConcat(String sql) {
+		SQLFunctionTransformer sqlFunctionTransformer =
+			new SQLFunctionTransformer(
+				"CONCAT(", StringPool.BLANK, " CONCAT ", StringPool.BLANK);
+
+		return sqlFunctionTransformer.transform(sql);
 	}
 
 	private String _replaceLike(String sql) {

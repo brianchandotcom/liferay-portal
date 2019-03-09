@@ -33,9 +33,9 @@ public class HypersonicSQLTransformerLogic extends BaseSQLTransformerLogic {
 
 		List<Function<String, String>> functions = new ArrayList<>(
 			Arrays.asList(
-				this::replaceBoolean, this::replaceCastClobText,
-				this::replaceCastLong, this::replaceCastText,
-				this::replaceDropTableIfExistsText,
+				this::replaceBoolean, this::_replaceCastClobText,
+				this::_replaceCastLong, this::_replaceCastText,
+				this::_replaceDropTableIfExistsText,
 				this::replaceIntegerDivision, this::replaceNullDate));
 
 		if (!db.isSupportsStringCaseSensitiveQuery()) {
@@ -45,17 +45,27 @@ public class HypersonicSQLTransformerLogic extends BaseSQLTransformerLogic {
 		setFunctions(functions);
 	}
 
-	@Override
-	protected String replaceCastLong(Matcher matcher) {
-		return matcher.replaceAll("CONVERT($1, SQL_BIGINT)");
-	}
+	private String _replaceCastClobText(String sql) {
+		Matcher matcher = castClobTestPattern.matcher(sql);
 
-	@Override
-	protected String replaceCastText(Matcher matcher) {
 		return matcher.replaceAll("CONVERT($1, SQL_VARCHAR)");
 	}
 
-	protected String replaceDropTableIfExistsText(Matcher matcher) {
+	private String _replaceCastLong(String sql) {
+		Matcher matcher = castLongPattern.matcher(sql);
+
+		return matcher.replaceAll("CONVERT($1, SQL_BIGINT)");
+	}
+
+	private String _replaceCastText(String sql) {
+		Matcher matcher = castTextPattern.matcher(sql);
+
+		return matcher.replaceAll("CONVERT($1, SQL_VARCHAR)");
+	}
+
+	private String _replaceDropTableIfExistsText(String sql) {
+		Matcher matcher = dropTableIfExistsTextPattern.matcher(sql);
+
 		return matcher.replaceAll("DROP TABLE $1 IF EXISTS");
 	}
 

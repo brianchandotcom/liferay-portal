@@ -35,8 +35,8 @@ public class SybaseSQLTransformerLogic extends BaseSQLTransformerLogic {
 		List<Function<String, String>> functions = new ArrayList<>(
 			Arrays.asList(
 				this::replaceBitwiseCheck, this::replaceBoolean,
-				this::replaceCastClobText, this::replaceCastLong,
-				this::replaceCastText, this::replaceConcat,
+				this::_replaceCastClobText, this::_replaceCastLong,
+				this::_replaceCastText, this::replaceConcat,
 				this::replaceDropTableIfExistsText, this::replaceInstr,
 				this::replaceIntegerDivision, this::replaceLength,
 				this::replaceMod, this::replaceNullDate, this::replaceSubstr,
@@ -49,13 +49,21 @@ public class SybaseSQLTransformerLogic extends BaseSQLTransformerLogic {
 		setFunctions(functions);
 	}
 
-	@Override
-	protected String replaceCastLong(Matcher matcher) {
+	private String _replaceCastClobText(String sql) {
+		Matcher matcher = castClobTestPattern.matcher(sql);
+
+		return matcher.replaceAll("CAST($1 AS NVARCHAR(5461))");
+	}
+
+	private String _replaceCastLong(String sql) {
+		Matcher matcher = castLongPattern.matcher(sql);
+
 		return matcher.replaceAll("CONVERT(BIGINT, $1)");
 	}
 
-	@Override
-	protected String replaceCastText(Matcher matcher) {
+	private String _replaceCastText(String sql) {
+		Matcher matcher = castTextPattern.matcher(sql);
+
 		return matcher.replaceAll("CAST($1 AS NVARCHAR(5461))");
 	}
 

@@ -33,9 +33,9 @@ public class SQLServerSQLTransformerLogic extends BaseSQLTransformerLogic {
 		List<Function<String, String>> functions = new ArrayList<>(
 			Arrays.asList(
 				this::replaceBitwiseCheck, this::replaceBoolean,
-				this::replaceCastClobText, this::replaceCastLong,
-				this::replaceCastText, this::replaceConcat,
-				this::replaceDropTableIfExistsText, this::replaceInstr,
+				this::_replaceCastClobText, this::replaceCastLong,
+				this::_replaceCastText, this::replaceConcat,
+				this::_replaceDropTableIfExistsText, this::replaceInstr,
 				this::replaceIntegerDivision, this::replaceLength,
 				this::replaceMod, this::replaceNullDate, this::replaceSubstr));
 
@@ -46,13 +46,21 @@ public class SQLServerSQLTransformerLogic extends BaseSQLTransformerLogic {
 		setFunctions(functions);
 	}
 
-	@Override
-	protected String replaceCastText(Matcher matcher) {
+	private String _replaceCastClobText(String sql) {
+		Matcher matcher = castClobTestPattern.matcher(sql);
+
 		return matcher.replaceAll("CAST($1 AS NVARCHAR(MAX))");
 	}
 
-	@Override
-	protected String replaceDropTableIfExistsText(Matcher matcher) {
+	private String _replaceCastText(String sql) {
+		Matcher matcher = castTextPattern.matcher(sql);
+
+		return matcher.replaceAll("CAST($1 AS NVARCHAR(MAX))");
+	}
+
+	private String _replaceDropTableIfExistsText(String sql) {
+		Matcher matcher = dropTableIfExistsTextPattern.matcher(sql);
+
 		String dropTableIfExists =
 			"IF OBJECT_ID('$1', 'U') IS NOT NULL DROP TABLE $1";
 

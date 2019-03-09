@@ -36,10 +36,10 @@ public class OracleSQLTransformerLogic extends BaseSQLTransformerLogic {
 
 		List<Function<String, String>> functions = new ArrayList<>(
 			Arrays.asList(
-				this::replaceBoolean, this::replaceCastClobText,
-				this::replaceCastLong, this::replaceCastText,
-				this::replaceConcat, this::replaceDropTableIfExistsText,
-				this::replaceIntegerDivision, this::replaceNullDate,
+				this::replaceBoolean, this::_replaceCastClobText,
+				this::replaceCastLong, this::_replaceCastText,
+				this::_replaceConcat, this::_replaceDropTableIfExistsText,
+				this::_replaceIntegerDivision, this::replaceNullDate,
 				this::_replaceEscape, this::_replaceNotEqualsBlankString));
 
 		if (!db.isSupportsStringCaseSensitiveQuery()) {
@@ -49,18 +49,19 @@ public class OracleSQLTransformerLogic extends BaseSQLTransformerLogic {
 		setFunctions(functions);
 	}
 
-	@Override
-	protected String replaceCastClobText(Matcher matcher) {
+	private String _replaceCastClobText(String sql) {
+		Matcher matcher = castClobTestPattern.matcher(sql);
+
 		return matcher.replaceAll("DBMS_LOB.SUBSTR($1, 4000, 1)");
 	}
 
-	@Override
-	protected String replaceCastText(Matcher matcher) {
+	private String _replaceCastText(String sql) {
+		Matcher matcher = castTextPattern.matcher(sql);
+
 		return matcher.replaceAll("CAST($1 AS VARCHAR(4000))");
 	}
 
-	@Override
-	protected String replaceConcat(String sql) {
+	private String _replaceConcat(String sql) {
 		SQLFunctionTransformer sqlFunctionTransformer =
 			new SQLFunctionTransformer(
 				"CONCAT(", StringPool.BLANK, " || ", StringPool.BLANK);
@@ -68,7 +69,9 @@ public class OracleSQLTransformerLogic extends BaseSQLTransformerLogic {
 		return sqlFunctionTransformer.transform(sql);
 	}
 
-	protected String replaceDropTableIfExistsText(Matcher matcher) {
+	private String _replaceDropTableIfExistsText(String sql) {
+		Matcher matcher = dropTableIfExistsTextPattern.matcher(sql);
+
 		StringBundler sb = new StringBundler(9);
 
 		sb.append("BEGIN\n");
@@ -86,13 +89,14 @@ public class OracleSQLTransformerLogic extends BaseSQLTransformerLogic {
 		return matcher.replaceAll(dropTableIfExists);
 	}
 
-	@Override
-	protected String replaceIntegerDivision(Matcher matcher) {
-		return matcher.replaceAll("TRUNC($1 / $2)");
-	}
-
 	private String _replaceEscape(String sql) {
 		return StringUtil.replace(sql, "LIKE ?", "LIKE ? ESCAPE '\\'");
+	}
+
+	private String _replaceIntegerDivision(String sql) {
+		Matcher matcher = integerDivisionPattern.matcher(sql);
+
+		return matcher.replaceAll("TRUNC($1 / $2)");
 	}
 
 	private String _replaceNotEqualsBlankString(String sql) {

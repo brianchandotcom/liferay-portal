@@ -1,4 +1,14 @@
 .portlet-expando {
+	.card-body {
+		.custom-aspect-ratio-geolocation {
+			padding-bottom: 35%;
+		}
+
+		.custom-checkbox, .custom-radio {
+			margin-bottom: 0 !important;
+		}
+	}
+
 	.custom-attribute-icon {
 		float: left;
 		margin-right: 5px;

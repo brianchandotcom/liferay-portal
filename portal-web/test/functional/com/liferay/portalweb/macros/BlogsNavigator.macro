@@ -107,9 +107,8 @@ definition {
 			);
 		}
 
-		AssertClick(
-			locator1 = "Blogs#DESCRIPTIVE_VIEW_ENTRY_TITLE",
-			value1 = "${entryTitle}"
+		LexiconList.clickListEntryTitle(
+			listEntry = "${entryTitle}"
 		);
 	}
 

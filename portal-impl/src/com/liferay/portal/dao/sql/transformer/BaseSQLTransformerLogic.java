@@ -16,7 +16,6 @@ package com.liferay.portal.dao.sql.transformer;
 
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.internal.dao.sql.transformer.SQLFunctionTransformer;
-import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.util.StringUtil;
 
 import java.util.List;
@@ -30,10 +29,6 @@ import java.util.regex.Pattern;
  */
 public abstract class BaseSQLTransformerLogic implements SQLTransformerLogic {
 
-	public BaseSQLTransformerLogic(DB db) {
-		_db = db;
-	}
-
 	@Override
 	public List<Function<String, String>> getFunctions() {
 		return _functions;
@@ -45,10 +40,12 @@ public abstract class BaseSQLTransformerLogic implements SQLTransformerLogic {
 		return matcher.replaceAll("($1 & $2)");
 	}
 
-	protected String replaceBoolean(String sql) {
+	protected String replaceBoolean(
+		String sql, String templateFalse, String templateTrue) {
+
 		return StringUtil.replace(
 			sql, new String[] {"[$FALSE$]", "[$TRUE$]"},
-			new String[] {_db.getTemplateFalse(), _db.getTemplateTrue()});
+			new String[] {templateFalse, templateTrue});
 	}
 
 	protected String replaceCastClobText(String sql) {
@@ -185,7 +182,6 @@ public abstract class BaseSQLTransformerLogic implements SQLTransformerLogic {
 
 	private static final String _LOWER_OPEN = "lower(";
 
-	private final DB _db;
 	private List<Function<String, String>> _functions;
 
 }

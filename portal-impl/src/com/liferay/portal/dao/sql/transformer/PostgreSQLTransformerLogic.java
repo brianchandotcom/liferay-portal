@@ -30,11 +30,11 @@ import java.util.regex.Pattern;
 public class PostgreSQLTransformerLogic extends BaseSQLTransformerLogic {
 
 	public PostgreSQLTransformerLogic(DB db) {
-		super(db);
-
 		List<Function<String, String>> functions = new ArrayList<>(
 			Arrays.asList(
-				this::replaceBitwiseCheck, this::replaceBoolean,
+				this::replaceBitwiseCheck,
+				sql -> replaceBoolean(
+					sql, db.getTemplateFalse(), db.getTemplateTrue()),
 				this::_replaceCastClobText, this::_replaceCastLong,
 				this::_replaceCastText, this::replaceDropTableIfExistsText,
 				this::_replaceInstr, this::replaceIntegerDivision,

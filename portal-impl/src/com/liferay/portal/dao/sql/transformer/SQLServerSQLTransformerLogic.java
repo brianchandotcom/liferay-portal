@@ -28,11 +28,11 @@ import java.util.regex.Matcher;
 public class SQLServerSQLTransformerLogic extends BaseSQLTransformerLogic {
 
 	public SQLServerSQLTransformerLogic(DB db) {
-		super(db);
-
 		List<Function<String, String>> functions = new ArrayList<>(
 			Arrays.asList(
-				this::replaceBitwiseCheck, this::replaceBoolean,
+				this::replaceBitwiseCheck,
+				sql -> replaceBoolean(
+					sql, db.getTemplateFalse(), db.getTemplateTrue()),
 				this::_replaceCastClobText, this::replaceCastLong,
 				this::_replaceCastText, this::replaceConcat,
 				this::_replaceDropTableIfExistsText, this::replaceInstr,

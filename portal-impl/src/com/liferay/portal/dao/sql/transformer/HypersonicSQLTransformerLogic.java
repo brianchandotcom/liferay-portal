@@ -29,13 +29,12 @@ import java.util.regex.Matcher;
 public class HypersonicSQLTransformerLogic extends BaseSQLTransformerLogic {
 
 	public HypersonicSQLTransformerLogic(DB db) {
-		super(db);
-
 		List<Function<String, String>> functions = new ArrayList<>(
 			Arrays.asList(
-				this::replaceBoolean, this::_replaceCastClobText,
-				this::_replaceCastLong, this::_replaceCastText,
-				this::_replaceDropTableIfExistsText,
+				sql -> replaceBoolean(
+					sql, db.getTemplateFalse(), db.getTemplateTrue()),
+				this::_replaceCastClobText, this::_replaceCastLong,
+				this::_replaceCastText, this::_replaceDropTableIfExistsText,
 				this::replaceIntegerDivision, this::replaceNullDate));
 
 		if (!db.isSupportsStringCaseSensitiveQuery()) {

@@ -31,13 +31,13 @@ import java.util.regex.Pattern;
 public class DB2SQLTransformerLogic extends BaseSQLTransformerLogic {
 
 	public DB2SQLTransformerLogic(DB db) {
-		super(db);
-
 		List<Function<String, String>> functions = new ArrayList<>(
 			Arrays.asList(
-				this::replaceBoolean, this::_replaceCastClobText,
-				this::replaceCastLong, this::_replaceCastText,
-				this::_replaceConcat, this::replaceDropTableIfExistsText,
+				sql -> replaceBoolean(
+					sql, db.getTemplateFalse(), db.getTemplateTrue()),
+				this::_replaceCastClobText, this::replaceCastLong,
+				this::_replaceCastText, this::_replaceConcat,
+				this::replaceDropTableIfExistsText,
 				this::replaceIntegerDivision, this::replaceNullDate,
 				this::_replaceAlterColumnType, this::_replaceLike));
 

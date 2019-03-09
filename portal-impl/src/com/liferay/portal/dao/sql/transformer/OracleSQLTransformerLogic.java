@@ -32,13 +32,13 @@ import java.util.regex.Matcher;
 public class OracleSQLTransformerLogic extends BaseSQLTransformerLogic {
 
 	public OracleSQLTransformerLogic(DB db) {
-		super(db);
-
 		List<Function<String, String>> functions = new ArrayList<>(
 			Arrays.asList(
-				this::replaceBoolean, this::_replaceCastClobText,
-				this::replaceCastLong, this::_replaceCastText,
-				this::_replaceConcat, this::_replaceDropTableIfExistsText,
+				sql -> replaceBoolean(
+					sql, db.getTemplateFalse(), db.getTemplateTrue()),
+				this::_replaceCastClobText, this::replaceCastLong,
+				this::_replaceCastText, this::_replaceConcat,
+				this::_replaceDropTableIfExistsText,
 				this::_replaceIntegerDivision, this::replaceNullDate,
 				this::_replaceEscape, this::_replaceNotEqualsBlankString));
 

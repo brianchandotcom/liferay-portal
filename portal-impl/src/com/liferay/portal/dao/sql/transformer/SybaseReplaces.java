@@ -25,52 +25,48 @@ import java.util.function.Function;
 import java.util.regex.Matcher;
 
 /**
- * @author Manuel de la Peña
+ * @author Shuyang Zhou
  */
-public class SybaseSQLTransformerLogic {
+public class SybaseReplaces {
 
-	public static List<Function<String, String>> getFunctions(DB db) {
+	public static List<Function<String, String>> getReplaces(DB db) {
 		List<Function<String, String>> functions = new ArrayList<>(
 			Arrays.asList(
-				BaseSQLTransformerLogic::replaceBitwiseCheck,
-				sql -> BaseSQLTransformerLogic.replaceBoolean(
+				CommonReplaces::replaceBitwiseCheck,
+				sql -> CommonReplaces.replaceBoolean(
 					sql, db.getTemplateFalse(), db.getTemplateTrue()),
-				SybaseSQLTransformerLogic::_replaceCastClobText,
-				SybaseSQLTransformerLogic::_replaceCastLong,
-				SybaseSQLTransformerLogic::_replaceCastText,
-				BaseSQLTransformerLogic::replaceConcat,
-				BaseSQLTransformerLogic::replaceDropTableIfExistsText,
-				BaseSQLTransformerLogic::replaceInstr,
-				BaseSQLTransformerLogic::replaceIntegerDivision,
-				BaseSQLTransformerLogic::replaceLength,
-				BaseSQLTransformerLogic::replaceMod,
-				BaseSQLTransformerLogic::replaceNullDate,
-				BaseSQLTransformerLogic::replaceSubstr,
-				SybaseSQLTransformerLogic::_replaceCrossJoin,
-				SybaseSQLTransformerLogic::_replaceReplace));
+				SybaseReplaces::_replaceCastClobText,
+				SybaseReplaces::_replaceCastLong,
+				SybaseReplaces::_replaceCastText, CommonReplaces::replaceConcat,
+				CommonReplaces::replaceDropTableIfExistsText,
+				CommonReplaces::replaceInstr,
+				CommonReplaces::replaceIntegerDivision,
+				CommonReplaces::replaceLength, CommonReplaces::replaceMod,
+				CommonReplaces::replaceNullDate, CommonReplaces::replaceSubstr,
+				SybaseReplaces::_replaceCrossJoin,
+				SybaseReplaces::_replaceReplace));
 
 		if (!db.isSupportsStringCaseSensitiveQuery()) {
-			functions.add(BaseSQLTransformerLogic::replaceLower);
+			functions.add(CommonReplaces::replaceLower);
 		}
 
 		return functions;
 	}
 
 	private static String _replaceCastClobText(String sql) {
-		Matcher matcher = BaseSQLTransformerLogic.castClobTestPattern.matcher(
-			sql);
+		Matcher matcher = CommonReplaces.castClobTestPattern.matcher(sql);
 
 		return matcher.replaceAll("CAST($1 AS NVARCHAR(5461))");
 	}
 
 	private static String _replaceCastLong(String sql) {
-		Matcher matcher = BaseSQLTransformerLogic.castLongPattern.matcher(sql);
+		Matcher matcher = CommonReplaces.castLongPattern.matcher(sql);
 
 		return matcher.replaceAll("CONVERT(BIGINT, $1)");
 	}
 
 	private static String _replaceCastText(String sql) {
-		Matcher matcher = BaseSQLTransformerLogic.castTextPattern.matcher(sql);
+		Matcher matcher = CommonReplaces.castTextPattern.matcher(sql);
 
 		return matcher.replaceAll("CAST($1 AS NVARCHAR(5461))");
 	}

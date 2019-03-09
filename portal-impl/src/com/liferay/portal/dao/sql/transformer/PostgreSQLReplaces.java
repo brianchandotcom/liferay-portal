@@ -25,53 +25,52 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * @author Manuel de la Peña
+ * @author Shuyang Zhou
  */
-public class PostgreSQLTransformerLogic {
+public class PostgreSQLReplaces {
 
-	public static List<Function<String, String>> getFunctions(DB db) {
+	public static List<Function<String, String>> getReplaces(DB db) {
 		List<Function<String, String>> functions = new ArrayList<>(
 			Arrays.asList(
-				BaseSQLTransformerLogic::replaceBitwiseCheck,
-				sql -> BaseSQLTransformerLogic.replaceBoolean(
+				CommonReplaces::replaceBitwiseCheck,
+				sql -> CommonReplaces.replaceBoolean(
 					sql, db.getTemplateFalse(), db.getTemplateTrue()),
-				PostgreSQLTransformerLogic::_replaceCastClobText,
-				PostgreSQLTransformerLogic::_replaceCastLong,
-				PostgreSQLTransformerLogic::_replaceCastText,
-				BaseSQLTransformerLogic::replaceDropTableIfExistsText,
-				PostgreSQLTransformerLogic::_replaceInstr,
-				BaseSQLTransformerLogic::replaceIntegerDivision,
-				PostgreSQLTransformerLogic::_replaceNegativeComparison,
-				PostgreSQLTransformerLogic::_replaceNullDate));
+				PostgreSQLReplaces::_replaceCastClobText,
+				PostgreSQLReplaces::_replaceCastLong,
+				PostgreSQLReplaces::_replaceCastText,
+				CommonReplaces::replaceDropTableIfExistsText,
+				PostgreSQLReplaces::_replaceInstr,
+				CommonReplaces::replaceIntegerDivision,
+				PostgreSQLReplaces::_replaceNegativeComparison,
+				PostgreSQLReplaces::_replaceNullDate));
 
 		if (!db.isSupportsStringCaseSensitiveQuery()) {
-			functions.add(BaseSQLTransformerLogic::replaceLower);
+			functions.add(CommonReplaces::replaceLower);
 		}
 
 		return functions;
 	}
 
 	private static String _replaceCastClobText(String sql) {
-		Matcher matcher = BaseSQLTransformerLogic.castClobTestPattern.matcher(
-			sql);
+		Matcher matcher = CommonReplaces.castClobTestPattern.matcher(sql);
 
 		return matcher.replaceAll("CAST($1 AS TEXT)");
 	}
 
 	private static String _replaceCastLong(String sql) {
-		Matcher matcher = BaseSQLTransformerLogic.castLongPattern.matcher(sql);
+		Matcher matcher = CommonReplaces.castLongPattern.matcher(sql);
 
 		return matcher.replaceAll("CAST($1 AS INTEGER)");
 	}
 
 	private static String _replaceCastText(String sql) {
-		Matcher matcher = BaseSQLTransformerLogic.castTextPattern.matcher(sql);
+		Matcher matcher = CommonReplaces.castTextPattern.matcher(sql);
 
 		return matcher.replaceAll("CAST($1 AS TEXT)");
 	}
 
 	private static String _replaceInstr(String sql) {
-		Matcher matcher = BaseSQLTransformerLogic.instrPattern.matcher(sql);
+		Matcher matcher = CommonReplaces.instrPattern.matcher(sql);
 
 		return matcher.replaceAll("POSITION($2 in $1)");
 	}

@@ -26,27 +26,26 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * @author Manuel de la Peña
+ * @author Shuyang Zhou
  */
-public class DB2SQLTransformerLogic {
+public class DB2Replaces {
 
-	public static List<Function<String, String>> getFunctions(DB db) {
+	public static List<Function<String, String>> getReplaces(DB db) {
 		List<Function<String, String>> functions = new ArrayList<>(
 			Arrays.asList(
-				sql -> BaseSQLTransformerLogic.replaceBoolean(
+				sql -> CommonReplaces.replaceBoolean(
 					sql, db.getTemplateFalse(), db.getTemplateTrue()),
-				DB2SQLTransformerLogic::_replaceCastClobText,
-				BaseSQLTransformerLogic::replaceCastLong,
-				DB2SQLTransformerLogic::_replaceCastText,
-				DB2SQLTransformerLogic::_replaceConcat,
-				BaseSQLTransformerLogic::replaceDropTableIfExistsText,
-				BaseSQLTransformerLogic::replaceIntegerDivision,
-				BaseSQLTransformerLogic::replaceNullDate,
-				DB2SQLTransformerLogic::_replaceAlterColumnType,
-				DB2SQLTransformerLogic::_replaceLike));
+				DB2Replaces::_replaceCastClobText,
+				CommonReplaces::replaceCastLong, DB2Replaces::_replaceCastText,
+				DB2Replaces::_replaceConcat,
+				CommonReplaces::replaceDropTableIfExistsText,
+				CommonReplaces::replaceIntegerDivision,
+				CommonReplaces::replaceNullDate,
+				DB2Replaces::_replaceAlterColumnType,
+				DB2Replaces::_replaceLike));
 
 		if (!db.isSupportsStringCaseSensitiveQuery()) {
-			functions.add(BaseSQLTransformerLogic::replaceLower);
+			functions.add(CommonReplaces::replaceLower);
 		}
 
 		return functions;
@@ -60,14 +59,13 @@ public class DB2SQLTransformerLogic {
 	}
 
 	private static String _replaceCastClobText(String sql) {
-		Matcher matcher = BaseSQLTransformerLogic.castClobTestPattern.matcher(
-			sql);
+		Matcher matcher = CommonReplaces.castClobTestPattern.matcher(sql);
 
 		return matcher.replaceAll("CAST($1 AS VARCHAR(254))");
 	}
 
 	private static String _replaceCastText(String sql) {
-		Matcher matcher = BaseSQLTransformerLogic.castTextPattern.matcher(sql);
+		Matcher matcher = CommonReplaces.castTextPattern.matcher(sql);
 
 		return matcher.replaceAll("CAST($1 AS VARCHAR(254))");
 	}

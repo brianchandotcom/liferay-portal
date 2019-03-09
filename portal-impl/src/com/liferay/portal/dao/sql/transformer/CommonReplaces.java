@@ -22,10 +22,9 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * @author Manuel de la Peña
- * @author Brian Wing Shun Chan
+ * @author Shuyang Zhou
  */
-public abstract class BaseSQLTransformerLogic {
+public class CommonReplaces {
 
 	protected static String replaceBitwiseCheck(String sql) {
 		Matcher matcher = bitwiseCheckPattern.matcher(sql);

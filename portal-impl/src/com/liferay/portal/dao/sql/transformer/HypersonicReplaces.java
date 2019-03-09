@@ -23,52 +23,50 @@ import java.util.function.Function;
 import java.util.regex.Matcher;
 
 /**
- * @author Manuel de la Peña
- * @author Brian Wing Shun Chan
+ * @author Shuyang Zhou
  */
-public class HypersonicSQLTransformerLogic {
+public class HypersonicReplaces {
 
-	public static List<Function<String, String>> getFunctions(DB db) {
+	public static List<Function<String, String>> getReplaces(DB db) {
 		List<Function<String, String>> functions = new ArrayList<>(
 			Arrays.asList(
-				sql -> BaseSQLTransformerLogic.replaceBoolean(
+				sql -> CommonReplaces.replaceBoolean(
 					sql, db.getTemplateFalse(), db.getTemplateTrue()),
-				HypersonicSQLTransformerLogic::_replaceCastClobText,
-				HypersonicSQLTransformerLogic::_replaceCastLong,
-				HypersonicSQLTransformerLogic::_replaceCastText,
-				HypersonicSQLTransformerLogic::_replaceDropTableIfExistsText,
-				BaseSQLTransformerLogic::replaceIntegerDivision,
-				BaseSQLTransformerLogic::replaceNullDate));
+				HypersonicReplaces::_replaceCastClobText,
+				HypersonicReplaces::_replaceCastLong,
+				HypersonicReplaces::_replaceCastText,
+				HypersonicReplaces::_replaceDropTableIfExistsText,
+				CommonReplaces::replaceIntegerDivision,
+				CommonReplaces::replaceNullDate));
 
 		if (!db.isSupportsStringCaseSensitiveQuery()) {
-			functions.add(BaseSQLTransformerLogic::replaceLower);
+			functions.add(CommonReplaces::replaceLower);
 		}
 
 		return functions;
 	}
 
 	private static String _replaceCastClobText(String sql) {
-		Matcher matcher = BaseSQLTransformerLogic.castClobTestPattern.matcher(
-			sql);
+		Matcher matcher = CommonReplaces.castClobTestPattern.matcher(sql);
 
 		return matcher.replaceAll("CONVERT($1, SQL_VARCHAR)");
 	}
 
 	private static String _replaceCastLong(String sql) {
-		Matcher matcher = BaseSQLTransformerLogic.castLongPattern.matcher(sql);
+		Matcher matcher = CommonReplaces.castLongPattern.matcher(sql);
 
 		return matcher.replaceAll("CONVERT($1, SQL_BIGINT)");
 	}
 
 	private static String _replaceCastText(String sql) {
-		Matcher matcher = BaseSQLTransformerLogic.castTextPattern.matcher(sql);
+		Matcher matcher = CommonReplaces.castTextPattern.matcher(sql);
 
 		return matcher.replaceAll("CONVERT($1, SQL_VARCHAR)");
 	}
 
 	private static String _replaceDropTableIfExistsText(String sql) {
-		Matcher matcher =
-			BaseSQLTransformerLogic.dropTableIfExistsTextPattern.matcher(sql);
+		Matcher matcher = CommonReplaces.dropTableIfExistsTextPattern.matcher(
+			sql);
 
 		return matcher.replaceAll("DROP TABLE $1 IF EXISTS");
 	}

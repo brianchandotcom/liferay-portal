@@ -23,51 +23,49 @@ import java.util.function.Function;
 import java.util.regex.Matcher;
 
 /**
- * @author Manuel de la Peña
+ * @author Shuyang Zhou
  */
-public class SQLServerSQLTransformerLogic {
+public class SQLServerReplaces {
 
-	public static List<Function<String, String>> getFunctions(DB db) {
+	public static List<Function<String, String>> getReplaces(DB db) {
 		List<Function<String, String>> functions = new ArrayList<>(
 			Arrays.asList(
-				BaseSQLTransformerLogic::replaceBitwiseCheck,
-				sql -> BaseSQLTransformerLogic.replaceBoolean(
+				CommonReplaces::replaceBitwiseCheck,
+				sql -> CommonReplaces.replaceBoolean(
 					sql, db.getTemplateFalse(), db.getTemplateTrue()),
-				SQLServerSQLTransformerLogic::_replaceCastClobText,
-				BaseSQLTransformerLogic::replaceCastLong,
-				SQLServerSQLTransformerLogic::_replaceCastText,
-				BaseSQLTransformerLogic::replaceConcat,
-				SQLServerSQLTransformerLogic::_replaceDropTableIfExistsText,
-				BaseSQLTransformerLogic::replaceInstr,
-				BaseSQLTransformerLogic::replaceIntegerDivision,
-				BaseSQLTransformerLogic::replaceLength,
-				BaseSQLTransformerLogic::replaceMod,
-				BaseSQLTransformerLogic::replaceNullDate,
-				BaseSQLTransformerLogic::replaceSubstr));
+				SQLServerReplaces::_replaceCastClobText,
+				CommonReplaces::replaceCastLong,
+				SQLServerReplaces::_replaceCastText,
+				CommonReplaces::replaceConcat,
+				SQLServerReplaces::_replaceDropTableIfExistsText,
+				CommonReplaces::replaceInstr,
+				CommonReplaces::replaceIntegerDivision,
+				CommonReplaces::replaceLength, CommonReplaces::replaceMod,
+				CommonReplaces::replaceNullDate,
+				CommonReplaces::replaceSubstr));
 
 		if (!db.isSupportsStringCaseSensitiveQuery()) {
-			functions.add(BaseSQLTransformerLogic::replaceLower);
+			functions.add(CommonReplaces::replaceLower);
 		}
 
 		return functions;
 	}
 
 	private static String _replaceCastClobText(String sql) {
-		Matcher matcher = BaseSQLTransformerLogic.castClobTestPattern.matcher(
-			sql);
+		Matcher matcher = CommonReplaces.castClobTestPattern.matcher(sql);
 
 		return matcher.replaceAll("CAST($1 AS NVARCHAR(MAX))");
 	}
 
 	private static String _replaceCastText(String sql) {
-		Matcher matcher = BaseSQLTransformerLogic.castTextPattern.matcher(sql);
+		Matcher matcher = CommonReplaces.castTextPattern.matcher(sql);
 
 		return matcher.replaceAll("CAST($1 AS NVARCHAR(MAX))");
 	}
 
 	private static String _replaceDropTableIfExistsText(String sql) {
-		Matcher matcher =
-			BaseSQLTransformerLogic.dropTableIfExistsTextPattern.matcher(sql);
+		Matcher matcher = CommonReplaces.dropTableIfExistsTextPattern.matcher(
+			sql);
 
 		String dropTableIfExists =
 			"IF OBJECT_ID('$1', 'U') IS NOT NULL DROP TABLE $1";

@@ -23,33 +23,32 @@ import java.util.function.Function;
 import java.util.regex.Matcher;
 
 /**
- * @author Manuel de la Peña
+ * @author Shuyang Zhou
  */
-public class MySQLSQLTransformerLogic {
+public class MySQLReplaces {
 
-	public static List<Function<String, String>> getFunctions(DB db) {
+	public static List<Function<String, String>> getReplaces(DB db) {
 		List<Function<String, String>> functions = new ArrayList<>(
 			Arrays.asList(
-				BaseSQLTransformerLogic::replaceBitwiseCheck,
-				sql -> BaseSQLTransformerLogic.replaceBoolean(
+				CommonReplaces::replaceBitwiseCheck,
+				sql -> CommonReplaces.replaceBoolean(
 					sql, db.getTemplateFalse(), db.getTemplateTrue()),
-				BaseSQLTransformerLogic::replaceCastClobText,
-				BaseSQLTransformerLogic::replaceCastLong,
-				BaseSQLTransformerLogic::replaceCastText,
-				BaseSQLTransformerLogic::replaceDropTableIfExistsText,
-				MySQLSQLTransformerLogic::_replaceIntegerDivision,
-				BaseSQLTransformerLogic::replaceNullDate));
+				CommonReplaces::replaceCastClobText,
+				CommonReplaces::replaceCastLong,
+				CommonReplaces::replaceCastText,
+				CommonReplaces::replaceDropTableIfExistsText,
+				MySQLReplaces::_replaceIntegerDivision,
+				CommonReplaces::replaceNullDate));
 
 		if (!db.isSupportsStringCaseSensitiveQuery()) {
-			functions.add(BaseSQLTransformerLogic::replaceLower);
+			functions.add(CommonReplaces::replaceLower);
 		}
 
 		return functions;
 	}
 
 	private static String _replaceIntegerDivision(String sql) {
-		Matcher matcher =
-			BaseSQLTransformerLogic.integerDivisionPattern.matcher(sql);
+		Matcher matcher = CommonReplaces.integerDivisionPattern.matcher(sql);
 
 		return matcher.replaceAll("$1 DIV $2");
 	}

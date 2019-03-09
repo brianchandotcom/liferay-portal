@@ -32,25 +32,25 @@ public class SQLTransformerFactory {
 		List<Function<String, String>> functions = null;
 
 		if (dbType == DBType.DB2) {
-			functions = DB2SQLTransformerLogic.getFunctions(db);
+			functions = DB2Replaces.getReplaces(db);
 		}
 		else if (dbType == DBType.HYPERSONIC) {
-			functions = HypersonicSQLTransformerLogic.getFunctions(db);
+			functions = HypersonicReplaces.getReplaces(db);
 		}
 		else if ((dbType == DBType.MARIADB) || (dbType == DBType.MYSQL)) {
-			functions = MySQLSQLTransformerLogic.getFunctions(db);
+			functions = MySQLReplaces.getReplaces(db);
 		}
 		else if (dbType == DBType.ORACLE) {
-			functions = OracleSQLTransformerLogic.getFunctions(db);
+			functions = OracleReplaces.getReplaces(db);
 		}
 		else if (dbType == DBType.POSTGRESQL) {
-			functions = PostgreSQLTransformerLogic.getFunctions(db);
+			functions = PostgreSQLReplaces.getReplaces(db);
 		}
 		else if (dbType == DBType.SQLSERVER) {
-			functions = SQLServerSQLTransformerLogic.getFunctions(db);
+			functions = SQLServerReplaces.getReplaces(db);
 		}
 		else if (dbType == DBType.SYBASE) {
-			functions = SybaseSQLTransformerLogic.getFunctions(db);
+			functions = SybaseReplaces.getReplaces(db);
 		}
 		else {
 			return sql -> sql;

@@ -116,57 +116,8 @@ components:
             properties:
                 comment:
                     type: string
-                contactInformation:
-                    description: https://www.schema.org/ContactInformation
-                    properties:
-                        email:
-                            items:
-                                $ref: "#/components/schemas/Email"
-                            readOnly: true
-                            type: array
-                        emailIds:
-                            items:
-                                format: int64
-                                type: integer
-                            type: array
-                            writeOnly: true
-                        id:
-                            format: int64
-                            type: integer
-                        postalAddress:
-                            items:
-                                $ref: "#/components/schemas/PostalAddress"
-                            readOnly: true
-                            type: array
-                        postalAddressIds:
-                            items:
-                                format: int64
-                                type: integer
-                            type: array
-                            writeOnly: true
-                        telephone:
-                            items:
-                                $ref: "#/components/schemas/Phone"
-                            readOnly: true
-                            type: array
-                        telephoneIds:
-                            items:
-                                format: int64
-                                type: integer
-                            type: array
-                            writeOnly: true
-                        webUrl:
-                            items:
-                                $ref: "#/components/schemas/WebUrl"
-                            readOnly: true
-                            type: array
-                        webUrlIds:
-                            items:
-                                format: int64
-                                type: integer
-                            type: array
-                            writeOnly: true
-                    type: object
+                hasOrganizations:
+                    type: boolean
                 id:
                     format: int64
                     type: integer
@@ -184,17 +135,6 @@ components:
                 logo:
                     format: uri
                     type: string
-                members:
-                    items:
-                        $ref: "#/components/schemas/UserAccount"
-                    readOnly: true
-                    type: array
-                membersIds:
-                    items:
-                        format: int64
-                        type: integer
-                    type: array
-                    writeOnly: true
                 name:
                     type: string
                 parentOrganization:
@@ -231,17 +171,6 @@ components:
                                 type: string
                         type: object
                     type: array
-                subOrganization:
-                    items:
-                        $ref: "#/components/schemas/Organization"
-                    readOnly: true
-                    type: array
-                subOrganizationIds:
-                    items:
-                        format: int64
-                        type: integer
-                    type: array
-                    writeOnly: true
             type: object
         Phone:
             description: https://www.schema.org/Phone

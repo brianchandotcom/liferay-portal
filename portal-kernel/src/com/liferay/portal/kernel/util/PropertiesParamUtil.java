@@ -458,6 +458,19 @@ public class PropertiesParamUtil {
 
 				String[] values = portletRequest.getParameterValues(param);
 
+				// Portlets that opt-in to Portlet 3.0 functionality might have
+				// null values in the array. Make the array compatible with the
+				// call to StringUtil.merge(String[]) below by replacing each
+				// null value with the empty string.
+
+				if (values != null) {
+					for (int i = 0; i < values.length; i++) {
+						if (values[i] == null) {
+							values[i] = "";
+						}
+					}
+				}
+
 				String value = StringUtil.merge(values);
 
 				properties.setProperty(key, value);

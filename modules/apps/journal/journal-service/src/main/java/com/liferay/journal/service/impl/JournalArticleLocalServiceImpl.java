@@ -29,9 +29,11 @@ import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.model.DDMStorageLink;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
+import com.liferay.dynamic.data.mapping.model.DDMStructureLink;
 import com.liferay.dynamic.data.mapping.model.DDMTemplate;
 import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 import com.liferay.dynamic.data.mapping.service.DDMStorageLinkLocalService;
+import com.liferay.dynamic.data.mapping.service.DDMStructureLinkLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMTemplateLinkLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMTemplateLocalService;
@@ -1196,6 +1198,10 @@ public class JournalArticleLocalServiceImpl
 				DDMStructure.class)) {
 
 			ddmStorageLinkLocalService.deleteClassStorageLink(article.getId());
+
+			ddmStructureLinkLocalService.deleteStructureLinks(
+				classNameLocalService.getClassNameId(JournalArticle.class),
+				article.getId());
 
 			ddmTemplateLinkLocalService.deleteTemplateLink(
 				classNameLocalService.getClassNameId(JournalArticle.class),
@@ -8495,6 +8501,10 @@ public class JournalArticleLocalServiceImpl
 				ddmStructure.getClassNameId(), id,
 				ddmStructure.getStructureId(), new ServiceContext());
 
+			ddmStructureLinkLocalService.addStructureLink(
+				classNameLocalService.getClassNameId(JournalArticle.class), id,
+				ddmStructure.getStructureId());
+
 			if (ddmTemplate != null) {
 				ddmTemplateLinkLocalService.addTemplateLink(
 					classNameLocalService.getClassNameId(JournalArticle.class),
@@ -8508,6 +8518,16 @@ public class JournalArticleLocalServiceImpl
 			ddmStorageLink.setStructureId(ddmStructure.getStructureId());
 
 			ddmStorageLinkLocalService.updateDDMStorageLink(ddmStorageLink);
+
+			DDMStructureLink ddmStructureLink =
+				ddmStructureLinkLocalService.getUniqueStructureLink(
+					classNameLocalService.getClassNameId(JournalArticle.class),
+					id);
+
+			ddmStorageLink.setStructureId(ddmStructure.getStructureId());
+
+			ddmStructureLinkLocalService.updateDDMStructureLink(
+				ddmStructureLink);
 
 			if (ddmTemplate != null) {
 				ddmTemplateLinkLocalService.updateTemplateLink(
@@ -8751,6 +8771,9 @@ public class JournalArticleLocalServiceImpl
 
 	@ServiceReference(type = DDMStorageLinkLocalService.class)
 	protected DDMStorageLinkLocalService ddmStorageLinkLocalService;
+
+	@ServiceReference(type = DDMStructureLinkLocalService.class)
+	protected DDMStructureLinkLocalService ddmStructureLinkLocalService;
 
 	@ServiceReference(type = DDMStructureLocalService.class)
 	protected DDMStructureLocalService ddmStructureLocalService;

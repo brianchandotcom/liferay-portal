@@ -15,11 +15,9 @@
 package com.liferay.portal.dao.sql.transformer;
 
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.util.StringUtil;
 
-import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.function.Function;
 import java.util.regex.Matcher;
@@ -29,28 +27,18 @@ import java.util.regex.Matcher;
  */
 public class SybaseReplaces {
 
-	public static List<Function<String, String>> getReplaces(DB db) {
-		List<Function<String, String>> functions = new ArrayList<>(
-			Arrays.asList(
-				CommonReplaces::replaceBitwiseCheck,
-				sql -> CommonReplaces.replaceBoolean(
-					sql, db.getTemplateFalse(), db.getTemplateTrue()),
-				SybaseReplaces::_replaceCastClobText,
-				SybaseReplaces::_replaceCastLong,
-				SybaseReplaces::_replaceCastText, CommonReplaces::replaceConcat,
-				CommonReplaces::replaceDropTableIfExistsText,
-				CommonReplaces::replaceInstr,
-				CommonReplaces::replaceIntegerDivision,
-				CommonReplaces::replaceLength, CommonReplaces::replaceMod,
-				CommonReplaces::replaceNullDate, CommonReplaces::replaceSubstr,
-				SybaseReplaces::_replaceCrossJoin,
-				SybaseReplaces::_replaceReplace));
-
-		if (!db.isSupportsStringCaseSensitiveQuery()) {
-			functions.add(CommonReplaces::replaceLower);
-		}
-
-		return functions;
+	public static void addReplaces(List<Function<String, String>> functions) {
+		Collections.addAll(
+			functions, CommonReplaces::replaceBitwiseCheck,
+			SybaseReplaces::_replaceCastClobText,
+			SybaseReplaces::_replaceCastLong, SybaseReplaces::_replaceCastText,
+			CommonReplaces::replaceConcat,
+			CommonReplaces::replaceDropTableIfExistsText,
+			CommonReplaces::replaceInstr,
+			CommonReplaces::replaceIntegerDivision,
+			CommonReplaces::replaceLength, CommonReplaces::replaceMod,
+			CommonReplaces::replaceNullDate, CommonReplaces::replaceSubstr,
+			SybaseReplaces::_replaceCrossJoin, SybaseReplaces::_replaceReplace);
 	}
 
 	private static String _replaceCastClobText(String sql) {

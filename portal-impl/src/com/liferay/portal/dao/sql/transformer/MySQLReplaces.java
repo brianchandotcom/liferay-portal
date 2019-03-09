@@ -14,10 +14,7 @@
 
 package com.liferay.portal.dao.sql.transformer;
 
-import com.liferay.portal.kernel.dao.db.DB;
-
-import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.function.Function;
 import java.util.regex.Matcher;
@@ -27,24 +24,14 @@ import java.util.regex.Matcher;
  */
 public class MySQLReplaces {
 
-	public static List<Function<String, String>> getReplaces(DB db) {
-		List<Function<String, String>> functions = new ArrayList<>(
-			Arrays.asList(
-				CommonReplaces::replaceBitwiseCheck,
-				sql -> CommonReplaces.replaceBoolean(
-					sql, db.getTemplateFalse(), db.getTemplateTrue()),
-				CommonReplaces::replaceCastClobText,
-				CommonReplaces::replaceCastLong,
-				CommonReplaces::replaceCastText,
-				CommonReplaces::replaceDropTableIfExistsText,
-				MySQLReplaces::_replaceIntegerDivision,
-				CommonReplaces::replaceNullDate));
-
-		if (!db.isSupportsStringCaseSensitiveQuery()) {
-			functions.add(CommonReplaces::replaceLower);
-		}
-
-		return functions;
+	public static void addReplaces(List<Function<String, String>> functions) {
+		Collections.addAll(
+			functions, CommonReplaces::replaceBitwiseCheck,
+			CommonReplaces::replaceCastClobText,
+			CommonReplaces::replaceCastLong, CommonReplaces::replaceCastText,
+			CommonReplaces::replaceDropTableIfExistsText,
+			MySQLReplaces::_replaceIntegerDivision,
+			CommonReplaces::replaceNullDate);
 	}
 
 	private static String _replaceIntegerDivision(String sql) {

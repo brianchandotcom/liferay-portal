@@ -17,6 +17,7 @@ package com.liferay.portal.dao.sql.transformer;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBType;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Function;
 
@@ -29,28 +30,36 @@ public class SQLTransformerFactory {
 	public static SQLTransformer getSQLTransformer(DB db) {
 		DBType dbType = db.getDBType();
 
-		List<Function<String, String>> functions = null;
+		List<Function<String, String>> functions = new ArrayList<>();
+
+		functions.add(
+			sql -> CommonReplaces.replaceBoolean(
+				sql, db.getTemplateFalse(), db.getTemplateTrue()));
+
+		if (!db.isSupportsStringCaseSensitiveQuery()) {
+			functions.add(CommonReplaces::replaceLower);
+		}
 
 		if (dbType == DBType.DB2) {
-			functions = DB2Replaces.getReplaces(db);
+			DB2Replaces.addReplaces(functions);
 		}
 		else if (dbType == DBType.HYPERSONIC) {
-			functions = HypersonicReplaces.getReplaces(db);
+			HypersonicReplaces.addReplaces(functions);
 		}
 		else if ((dbType == DBType.MARIADB) || (dbType == DBType.MYSQL)) {
-			functions = MySQLReplaces.getReplaces(db);
+			MySQLReplaces.addReplaces(functions);
 		}
 		else if (dbType == DBType.ORACLE) {
-			functions = OracleReplaces.getReplaces(db);
+			OracleReplaces.addReplaces(functions);
 		}
 		else if (dbType == DBType.POSTGRESQL) {
-			functions = PostgreSQLReplaces.getReplaces(db);
+			PostgreSQLReplaces.addReplaces(functions);
 		}
 		else if (dbType == DBType.SQLSERVER) {
-			functions = SQLServerReplaces.getReplaces(db);
+			SQLServerReplaces.addReplaces(functions);
 		}
 		else if (dbType == DBType.SYBASE) {
-			functions = SybaseReplaces.getReplaces(db);
+			SybaseReplaces.addReplaces(functions);
 		}
 		else {
 			return sql -> sql;

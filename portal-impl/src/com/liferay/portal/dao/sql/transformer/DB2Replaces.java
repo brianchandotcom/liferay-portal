@@ -16,10 +16,8 @@ package com.liferay.portal.dao.sql.transformer;
 
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.internal.dao.sql.transformer.SQLFunctionTransformer;
-import com.liferay.portal.kernel.dao.db.DB;
 
-import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.function.Function;
 import java.util.regex.Matcher;
@@ -30,25 +28,15 @@ import java.util.regex.Pattern;
  */
 public class DB2Replaces {
 
-	public static List<Function<String, String>> getReplaces(DB db) {
-		List<Function<String, String>> functions = new ArrayList<>(
-			Arrays.asList(
-				sql -> CommonReplaces.replaceBoolean(
-					sql, db.getTemplateFalse(), db.getTemplateTrue()),
-				DB2Replaces::_replaceCastClobText,
-				CommonReplaces::replaceCastLong, DB2Replaces::_replaceCastText,
-				DB2Replaces::_replaceConcat,
-				CommonReplaces::replaceDropTableIfExistsText,
-				CommonReplaces::replaceIntegerDivision,
-				CommonReplaces::replaceNullDate,
-				DB2Replaces::_replaceAlterColumnType,
-				DB2Replaces::_replaceLike));
-
-		if (!db.isSupportsStringCaseSensitiveQuery()) {
-			functions.add(CommonReplaces::replaceLower);
-		}
-
-		return functions;
+	public static void addReplaces(List<Function<String, String>> functions) {
+		Collections.addAll(
+			functions, DB2Replaces::_replaceCastClobText,
+			CommonReplaces::replaceCastLong, DB2Replaces::_replaceCastText,
+			DB2Replaces::_replaceConcat,
+			CommonReplaces::replaceDropTableIfExistsText,
+			CommonReplaces::replaceIntegerDivision,
+			CommonReplaces::replaceNullDate,
+			DB2Replaces::_replaceAlterColumnType, DB2Replaces::_replaceLike);
 	}
 
 	private static String _replaceAlterColumnType(String sql) {

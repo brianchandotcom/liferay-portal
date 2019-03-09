@@ -14,10 +14,7 @@
 
 package com.liferay.portal.dao.sql.transformer;
 
-import com.liferay.portal.kernel.dao.db.DB;
-
-import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.function.Function;
 import java.util.regex.Matcher;
@@ -27,23 +24,14 @@ import java.util.regex.Matcher;
  */
 public class HypersonicReplaces {
 
-	public static List<Function<String, String>> getReplaces(DB db) {
-		List<Function<String, String>> functions = new ArrayList<>(
-			Arrays.asList(
-				sql -> CommonReplaces.replaceBoolean(
-					sql, db.getTemplateFalse(), db.getTemplateTrue()),
-				HypersonicReplaces::_replaceCastClobText,
-				HypersonicReplaces::_replaceCastLong,
-				HypersonicReplaces::_replaceCastText,
-				HypersonicReplaces::_replaceDropTableIfExistsText,
-				CommonReplaces::replaceIntegerDivision,
-				CommonReplaces::replaceNullDate));
-
-		if (!db.isSupportsStringCaseSensitiveQuery()) {
-			functions.add(CommonReplaces::replaceLower);
-		}
-
-		return functions;
+	public static void addReplaces(List<Function<String, String>> functions) {
+		Collections.addAll(
+			functions, HypersonicReplaces::_replaceCastClobText,
+			HypersonicReplaces::_replaceCastLong,
+			HypersonicReplaces::_replaceCastText,
+			HypersonicReplaces::_replaceDropTableIfExistsText,
+			CommonReplaces::replaceIntegerDivision,
+			CommonReplaces::replaceNullDate);
 	}
 
 	private static String _replaceCastClobText(String sql) {

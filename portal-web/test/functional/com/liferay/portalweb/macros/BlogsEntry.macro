@@ -578,7 +578,7 @@ definition {
 			value1 = "No entries were found."
 		);
 
-		AssertElementNotPresent(locator1 = "Blogs#DESCRIPTIVE_VIEW_ENTRY_TITLE");
+		Blogs.viewEntryNotPresent(entryTitle = "${entryTitle}");
 	}
 
 	macro selectFormattingStyle {

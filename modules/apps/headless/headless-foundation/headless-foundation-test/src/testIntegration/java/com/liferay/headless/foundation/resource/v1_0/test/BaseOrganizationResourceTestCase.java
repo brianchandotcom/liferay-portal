@@ -728,7 +728,7 @@ public abstract class BaseOrganizationResourceTestCase {
 			return sb.toString();
 		}
 
-		if (entityFieldName.equals("contactInformation")) {
+		if (entityFieldName.equals("hasOrganizations")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
 		}
@@ -749,16 +749,6 @@ public abstract class BaseOrganizationResourceTestCase {
 			sb.append("'");
 
 			return sb.toString();
-		}
-
-		if (entityFieldName.equals("members")) {
-			throw new IllegalArgumentException(
-				"Invalid entity field " + entityFieldName);
-		}
-
-		if (entityFieldName.equals("membersIds")) {
-			throw new IllegalArgumentException(
-				"Invalid entity field " + entityFieldName);
 		}
 
 		if (entityFieldName.equals("name")) {
@@ -784,16 +774,6 @@ public abstract class BaseOrganizationResourceTestCase {
 				"Invalid entity field " + entityFieldName);
 		}
 
-		if (entityFieldName.equals("subOrganization")) {
-			throw new IllegalArgumentException(
-				"Invalid entity field " + entityFieldName);
-		}
-
-		if (entityFieldName.equals("subOrganizationIds")) {
-			throw new IllegalArgumentException(
-				"Invalid entity field " + entityFieldName);
-		}
-
 		throw new IllegalArgumentException(
 			"Invalid entity field " + entityFieldName);
 	}
@@ -802,6 +782,7 @@ public abstract class BaseOrganizationResourceTestCase {
 		return new Organization() {
 			{
 				comment = RandomTestUtil.randomString();
+				hasOrganizations = RandomTestUtil.randomBoolean();
 				id = RandomTestUtil.randomLong();
 				logo = RandomTestUtil.randomString();
 				name = RandomTestUtil.randomString();

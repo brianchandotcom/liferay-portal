@@ -64,22 +64,20 @@ public class Organization {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String comment;
 
-	@Schema(description = "https://www.schema.org/ContactInformation")
-	public ContactInformation getContactInformation() {
-		return contactInformation;
+	public Boolean getHasOrganizations() {
+		return hasOrganizations;
 	}
 
-	public void setContactInformation(ContactInformation contactInformation) {
-		this.contactInformation = contactInformation;
+	public void setHasOrganizations(Boolean hasOrganizations) {
+		this.hasOrganizations = hasOrganizations;
 	}
 
 	@JsonIgnore
-	public void setContactInformation(
-		UnsafeSupplier<ContactInformation, Exception>
-			contactInformationUnsafeSupplier) {
+	public void setHasOrganizations(
+		UnsafeSupplier<Boolean, Exception> hasOrganizationsUnsafeSupplier) {
 
 		try {
-			contactInformation = contactInformationUnsafeSupplier.get();
+			hasOrganizations = hasOrganizationsUnsafeSupplier.get();
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
@@ -88,7 +86,7 @@ public class Organization {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected ContactInformation contactInformation;
+	protected Boolean hasOrganizations;
 
 	public Long getId() {
 		return id;
@@ -158,54 +156,6 @@ public class Organization {
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String logo;
-
-	public UserAccount[] getMembers() {
-		return members;
-	}
-
-	public void setMembers(UserAccount[] members) {
-		this.members = members;
-	}
-
-	@JsonIgnore
-	public void setMembers(
-		UnsafeSupplier<UserAccount[], Exception> membersUnsafeSupplier) {
-
-		try {
-			members = membersUnsafeSupplier.get();
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
-	protected UserAccount[] members;
-
-	public Long[] getMembersIds() {
-		return membersIds;
-	}
-
-	public void setMembersIds(Long[] membersIds) {
-		this.membersIds = membersIds;
-	}
-
-	@JsonIgnore
-	public void setMembersIds(
-		UnsafeSupplier<Long[], Exception> membersIdsUnsafeSupplier) {
-
-		try {
-			membersIds = membersIdsUnsafeSupplier.get();
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-	protected Long[] membersIds;
 
 	public String getName() {
 		return name;
@@ -303,55 +253,6 @@ public class Organization {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Services[] services;
 
-	public Organization[] getSubOrganization() {
-		return subOrganization;
-	}
-
-	public void setSubOrganization(Organization[] subOrganization) {
-		this.subOrganization = subOrganization;
-	}
-
-	@JsonIgnore
-	public void setSubOrganization(
-		UnsafeSupplier<Organization[], Exception>
-			subOrganizationUnsafeSupplier) {
-
-		try {
-			subOrganization = subOrganizationUnsafeSupplier.get();
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
-	protected Organization[] subOrganization;
-
-	public Long[] getSubOrganizationIds() {
-		return subOrganizationIds;
-	}
-
-	public void setSubOrganizationIds(Long[] subOrganizationIds) {
-		this.subOrganizationIds = subOrganizationIds;
-	}
-
-	@JsonIgnore
-	public void setSubOrganizationIds(
-		UnsafeSupplier<Long[], Exception> subOrganizationIdsUnsafeSupplier) {
-
-		try {
-			subOrganizationIds = subOrganizationIdsUnsafeSupplier.get();
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-	protected Long[] subOrganizationIds;
-
 	public String toString() {
 		StringBundler sb = new StringBundler();
 
@@ -364,9 +265,9 @@ public class Organization {
 		sb.append("\"");
 		sb.append(", ");
 
-		sb.append("\"contactInformation\": ");
+		sb.append("\"hasOrganizations\": ");
 
-		sb.append(contactInformation);
+		sb.append(hasOrganizations);
 		sb.append(", ");
 
 		sb.append("\"id\": ");
@@ -384,48 +285,6 @@ public class Organization {
 		sb.append("\"");
 		sb.append(logo);
 		sb.append("\"");
-		sb.append(", ");
-
-		sb.append("\"members\": ");
-
-		if (members == null) {
-			sb.append("null");
-		}
-		else {
-			sb.append("[");
-
-			for (int i = 0; i < members.length; i++) {
-				sb.append(members[i]);
-
-				if ((i + 1) < members.length) {
-					sb.append(", ");
-				}
-			}
-
-			sb.append("]");
-		}
-
-		sb.append(", ");
-
-		sb.append("\"membersIds\": ");
-
-		if (membersIds == null) {
-			sb.append("null");
-		}
-		else {
-			sb.append("[");
-
-			for (int i = 0; i < membersIds.length; i++) {
-				sb.append(membersIds[i]);
-
-				if ((i + 1) < membersIds.length) {
-					sb.append(", ");
-				}
-			}
-
-			sb.append("]");
-		}
-
 		sb.append(", ");
 
 		sb.append("\"name\": ");
@@ -457,48 +316,6 @@ public class Organization {
 				sb.append(services[i]);
 
 				if ((i + 1) < services.length) {
-					sb.append(", ");
-				}
-			}
-
-			sb.append("]");
-		}
-
-		sb.append(", ");
-
-		sb.append("\"subOrganization\": ");
-
-		if (subOrganization == null) {
-			sb.append("null");
-		}
-		else {
-			sb.append("[");
-
-			for (int i = 0; i < subOrganization.length; i++) {
-				sb.append(subOrganization[i]);
-
-				if ((i + 1) < subOrganization.length) {
-					sb.append(", ");
-				}
-			}
-
-			sb.append("]");
-		}
-
-		sb.append(", ");
-
-		sb.append("\"subOrganizationIds\": ");
-
-		if (subOrganizationIds == null) {
-			sb.append("null");
-		}
-		else {
-			sb.append("[");
-
-			for (int i = 0; i < subOrganizationIds.length; i++) {
-				sb.append(subOrganizationIds[i]);
-
-				if ((i + 1) < subOrganizationIds.length) {
 					sb.append(", ");
 				}
 			}

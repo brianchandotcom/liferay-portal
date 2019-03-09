@@ -818,6 +818,15 @@ definition {
 		}
 	}
 
+	macro editDisplayDate {
+		Panel.expandPanel(panel = "Schedule");
+
+		Type.clickAtType(
+			locator1 = "TextInput#DISPLAY_DATE",
+			value1 = "${displayDate}"
+		);
+	}
+
 	macro editDisplayPage {
 		Panel.expandPanel(panel = "Display Page");
 

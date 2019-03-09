@@ -854,6 +854,74 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-90066. A user can preview a scheduled Web Content article through the 'View Usages' screen."
+	@priority = "5"
+	test PreviewScheduledWebContentInWCD {
+		task ("Add a web content article with a future display date") {
+			WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
+
+			WebContentNavigator.gotoAddCP();
+
+			WebContent.addCP(
+				webContentContent = "WC WebContent Content",
+				webContentTitle = "WC WebContent Title"
+			);
+
+			WebContent.editDisplayDate(
+				displayDate = "01/01/2100"
+			);
+
+			PortletEntry.publish();
+		}
+
+		task ("Add a page with a Web Content Display widget and display the Web Content article in the Web Content Display widget") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Web Content Display Page"
+			);
+
+			Navigator.gotoSitePage(
+				pageName = "Web Content Display Page",
+				siteName = "Test Site Name"
+			);
+
+			Portlet.addPG(
+				portletName = "Web Content Display"
+			);
+
+			WebContentDisplayPortlet.selectWebContent(
+				webContentTitle = "WC WebContent Title"
+			);
+		}
+
+		task ("View the usages of the Web Content article") {
+			WebContent.openWebContentAdmin(
+				siteURLKey = "test-site-name"
+			);
+
+			WebContentNavigator.gotoEntryMenuItem(
+				entry = "WC WebContent Title",
+				menuItem = "View Usages"
+			);
+		}
+
+		task ("Preview the scheduled article within the context of the Web Content Display widget") {
+			WebContentViewUsages.previewScheduledInPage(
+				page = "Web Content Display Page"
+			);
+		}
+
+		task ("Assert the user is taken to the Web Content Display Page and the scheduled Web Content article displays in the Web Content Display widget") {
+			SelectWindow.selectPopUp(
+				locator1 = "null"
+			);
+
+			WebContent.viewPGViaWCD(
+				webContentContent = "WC WebContent Content"
+			);
+		}
+	}
+
 	@priority = "4"
 	test PublishDraftWebContent {
 		property testray.component.names = "Web Content Administration";

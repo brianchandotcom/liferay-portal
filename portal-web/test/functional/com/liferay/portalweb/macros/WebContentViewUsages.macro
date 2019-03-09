@@ -20,6 +20,13 @@ definition {
 		);
 	}
 
+	macro previewScheduledInPage {
+		WebContentViewUsages.clickEllipsisItem(
+			item = "Preview Scheduled in Page",
+			page = "${page}"
+		);
+	}
+
 	macro viewInPage {
 		WebContentViewUsages.clickEllipsisItem(
 			item = "View in Page",

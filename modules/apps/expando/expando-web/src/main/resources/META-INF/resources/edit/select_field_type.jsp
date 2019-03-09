@@ -19,10 +19,21 @@
 <%
 String redirect = ParamUtil.getString(request, "redirect");
 
-String modelResource = ParamUtil.getString(request, "modelResource");
-
 portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(redirect);
+
+String modelResource = ParamUtil.getString(request, "modelResource");
+String modelResourceName = ResourceActionsUtil.getModelResource(request, modelResource);
+
+long columnId = ParamUtil.getLong(request, "columnId");
+
+ExpandoColumn column = null;
+
+if (columnId > 0) {
+	column = ExpandoColumnServiceUtil.fetchExpandoColumn(columnId);
+}
+
+renderResponse.setTitle(modelResourceName + ": " + ((column == null) ? LanguageUtil.get(request, "new-custom-field") : column.getName()));
 %>
 
 <liferay-frontend:edit-form>

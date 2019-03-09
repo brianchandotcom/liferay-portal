@@ -23,6 +23,16 @@ String modelResource = ParamUtil.getString(request, "modelResource");
 String modelResourceName = ResourceActionsUtil.getModelResource(request, modelResource);
 String displayStyle = ParamUtil.getString(request, "displayStyle", "list");
 
+long columnId = ParamUtil.getLong(request, "columnId");
+
+ExpandoColumn column = null;
+
+if (columnId > 0) {
+	column = ExpandoColumnServiceUtil.fetchExpandoColumn(columnId);
+}
+
+renderResponse.setTitle(modelResourceName + ": " + ((column == null) ? LanguageUtil.get(request, "new-custom-field") : column.getName()));
+
 PortletURL portletURL = renderResponse.createRenderURL();
 
 portletURL.setParameter("mvcPath", "/view_attributes.jsp");
@@ -31,8 +41,6 @@ portletURL.setParameter("modelResource", modelResource);
 
 portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(redirect);
-
-renderResponse.setTitle(modelResourceName);
 
 ExpandoBridge expandoBridge = ExpandoBridgeFactoryUtil.getExpandoBridge(company.getCompanyId(), modelResource);
 

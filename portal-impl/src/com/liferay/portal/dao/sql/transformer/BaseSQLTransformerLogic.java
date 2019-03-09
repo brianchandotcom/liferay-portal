@@ -39,12 +39,10 @@ public abstract class BaseSQLTransformerLogic implements SQLTransformerLogic {
 		return _functions;
 	}
 
-	protected String replaceBitwiseCheck(Matcher matcher) {
-		return matcher.replaceAll("($1 & $2)");
-	}
-
 	protected String replaceBitwiseCheck(String sql) {
-		return replaceBitwiseCheck(bitwiseCheckPattern.matcher(sql));
+		Matcher matcher = bitwiseCheckPattern.matcher(sql);
+
+		return matcher.replaceAll("($1 & $2)");
 	}
 
 	protected String replaceBoolean(String sql) {
@@ -53,28 +51,22 @@ public abstract class BaseSQLTransformerLogic implements SQLTransformerLogic {
 			new String[] {_db.getTemplateFalse(), _db.getTemplateTrue()});
 	}
 
-	protected String replaceCastClobText(Matcher matcher) {
-		return replaceCastText(matcher);
-	}
-
 	protected String replaceCastClobText(String sql) {
-		return replaceCastClobText(castClobTestPattern.matcher(sql));
-	}
+		Matcher matcher = castClobTestPattern.matcher(sql);
 
-	protected String replaceCastLong(Matcher matcher) {
 		return matcher.replaceAll("$1");
 	}
 
 	protected String replaceCastLong(String sql) {
-		return replaceCastLong(castLongPattern.matcher(sql));
-	}
+		Matcher matcher = castLongPattern.matcher(sql);
 
-	protected String replaceCastText(Matcher matcher) {
 		return matcher.replaceAll("$1");
 	}
 
 	protected String replaceCastText(String sql) {
-		return replaceCastText(castTextPattern.matcher(sql));
+		Matcher matcher = castTextPattern.matcher(sql);
+
+		return matcher.replaceAll("$1");
 	}
 
 	protected String replaceConcat(String sql) {
@@ -85,29 +77,22 @@ public abstract class BaseSQLTransformerLogic implements SQLTransformerLogic {
 		return sqlFunctionTransformer.transform(sql);
 	}
 
-	protected String replaceDropTableIfExistsText(Matcher matcher) {
+	protected String replaceDropTableIfExistsText(String sql) {
+		Matcher matcher = dropTableIfExistsTextPattern.matcher(sql);
+
 		return matcher.replaceAll("DROP TABLE IF EXISTS $1");
 	}
 
-	protected String replaceDropTableIfExistsText(String sql) {
-		return replaceDropTableIfExistsText(
-			dropTableIfExistsTextPattern.matcher(sql));
-	}
+	protected String replaceInstr(String sql) {
+		Matcher matcher = instrPattern.matcher(sql);
 
-	protected String replaceInstr(Matcher matcher) {
 		return matcher.replaceAll("CHARINDEX($2, $1)");
 	}
 
-	protected String replaceInstr(String sql) {
-		return replaceInstr(instrPattern.matcher(sql));
-	}
-
-	protected String replaceIntegerDivision(Matcher matcher) {
-		return matcher.replaceAll("$1 / $2");
-	}
-
 	protected String replaceIntegerDivision(String sql) {
-		return replaceIntegerDivision(integerDivisionPattern.matcher(sql));
+		Matcher matcher = integerDivisionPattern.matcher(sql);
+
+		return matcher.replaceAll("$1 / $2");
 	}
 
 	protected String replaceLength(String sql) {
@@ -154,24 +139,20 @@ public abstract class BaseSQLTransformerLogic implements SQLTransformerLogic {
 		return sql;
 	}
 
-	protected String replaceMod(Matcher matcher) {
-		return matcher.replaceAll("$1 % $2");
-	}
-
 	protected String replaceMod(String sql) {
-		return replaceMod(modPattern.matcher(sql));
+		Matcher matcher = modPattern.matcher(sql);
+
+		return matcher.replaceAll("$1 % $2");
 	}
 
 	protected String replaceNullDate(String sql) {
 		return StringUtil.replace(sql, "[$NULL_DATE$]", "NULL");
 	}
 
-	protected String replaceSubstr(Matcher matcher) {
-		return matcher.replaceAll("SUBSTRING($1, $2, $3)");
-	}
-
 	protected String replaceSubstr(String sql) {
-		return replaceSubstr(substrPattern.matcher(sql));
+		Matcher matcher = substrPattern.matcher(sql);
+
+		return matcher.replaceAll("SUBSTRING($1, $2, $3)");
 	}
 
 	protected void setFunctions(List<Function<String, String>> functions) {

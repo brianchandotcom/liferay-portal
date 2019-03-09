@@ -403,10 +403,7 @@ definition {
 	macro compareVersionsCP {
 		var key_wikiPageTitle = "${wikiPageTitle}";
 
-		AssertClick(
-			locator1 = "Wiki#DESCRIPTIVE_VIEW_ENTRY_TITLE",
-			value1 = "${wikiPageTitle}"
-		);
+		WikiNavigator.gotoCP(wikiPageTitle = "${wikiPageTitle}");
 
 		Click(locator1 = "Icon#INFO");
 

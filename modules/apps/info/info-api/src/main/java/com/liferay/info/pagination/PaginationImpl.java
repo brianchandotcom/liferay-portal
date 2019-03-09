@@ -12,33 +12,34 @@
  * details.
  */
 
-package com.liferay.info.provider;
-
-import aQute.bnd.annotation.ConsumerType;
-
-import com.liferay.info.pagination.Pagination;
-import com.liferay.portal.kernel.search.Sort;
-
-import java.util.List;
-import java.util.Locale;
+package com.liferay.info.pagination;
 
 /**
  * @author Jorge Ferrer
  */
-@ConsumerType
-public interface InfoListProvider<T> {
+public class PaginationImpl implements Pagination {
 
-	public List<T> getInfoList(InfoListProviderContext context);
-
-	public List<T> getInfoList(
-		InfoListProviderContext context, Pagination pagination, Sort sort);
-
-	public int getInfoListCount(InfoListProviderContext context);
-
-	public String getLabel(Locale locale);
-
-	public default boolean isAvailable(InfoListProviderContext context) {
-		return true;
+	public PaginationImpl(int start, int end) {
+		_start = start;
+		_end = end;
 	}
+
+	@Override
+	public int getEnd() {
+		return _end;
+	}
+
+	@Override
+	public int getItemsPerPage() {
+		return _end - _start;
+	}
+
+	@Override
+	public int getStart() {
+		return _start;
+	}
+
+	private final int _end;
+	private final int _start;
 
 }

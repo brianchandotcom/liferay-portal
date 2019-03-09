@@ -25,13 +25,13 @@ import java.util.regex.Matcher;
 /**
  * @author Manuel de la Peña
  */
-public class SQLServerSQLTransformerLogic extends BaseSQLTransformerLogic {
+public class SQLServerSQLTransformerLogic {
 
-	public SQLServerSQLTransformerLogic(DB db) {
+	public static List<Function<String, String>> getFunctions(DB db) {
 		List<Function<String, String>> functions = new ArrayList<>(
 			Arrays.asList(
 				BaseSQLTransformerLogic::replaceBitwiseCheck,
-				sql -> replaceBoolean(
+				sql -> BaseSQLTransformerLogic.replaceBoolean(
 					sql, db.getTemplateFalse(), db.getTemplateTrue()),
 				SQLServerSQLTransformerLogic::_replaceCastClobText,
 				BaseSQLTransformerLogic::replaceCastLong,
@@ -49,23 +49,25 @@ public class SQLServerSQLTransformerLogic extends BaseSQLTransformerLogic {
 			functions.add(BaseSQLTransformerLogic::replaceLower);
 		}
 
-		setFunctions(functions);
+		return functions;
 	}
 
 	private static String _replaceCastClobText(String sql) {
-		Matcher matcher = castClobTestPattern.matcher(sql);
+		Matcher matcher = BaseSQLTransformerLogic.castClobTestPattern.matcher(
+			sql);
 
 		return matcher.replaceAll("CAST($1 AS NVARCHAR(MAX))");
 	}
 
 	private static String _replaceCastText(String sql) {
-		Matcher matcher = castTextPattern.matcher(sql);
+		Matcher matcher = BaseSQLTransformerLogic.castTextPattern.matcher(sql);
 
 		return matcher.replaceAll("CAST($1 AS NVARCHAR(MAX))");
 	}
 
 	private static String _replaceDropTableIfExistsText(String sql) {
-		Matcher matcher = dropTableIfExistsTextPattern.matcher(sql);
+		Matcher matcher =
+			BaseSQLTransformerLogic.dropTableIfExistsTextPattern.matcher(sql);
 
 		String dropTableIfExists =
 			"IF OBJECT_ID('$1', 'U') IS NOT NULL DROP TABLE $1";

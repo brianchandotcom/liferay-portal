@@ -17,6 +17,9 @@ package com.liferay.portal.dao.sql.transformer;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBType;
 
+import java.util.List;
+import java.util.function.Function;
+
 /**
  * @author Manuel de la Peña
  * @author Brian Wing Shun Chan
@@ -26,34 +29,34 @@ public class SQLTransformerFactory {
 	public static SQLTransformer getSQLTransformer(DB db) {
 		DBType dbType = db.getDBType();
 
-		SQLTransformerLogic sqlTransformerLogic = null;
+		List<Function<String, String>> functions = null;
 
 		if (dbType == DBType.DB2) {
-			sqlTransformerLogic = new DB2SQLTransformerLogic(db);
+			functions = DB2SQLTransformerLogic.getFunctions(db);
 		}
 		else if (dbType == DBType.HYPERSONIC) {
-			sqlTransformerLogic = new HypersonicSQLTransformerLogic(db);
+			functions = HypersonicSQLTransformerLogic.getFunctions(db);
 		}
 		else if ((dbType == DBType.MARIADB) || (dbType == DBType.MYSQL)) {
-			sqlTransformerLogic = new MySQLSQLTransformerLogic(db);
+			functions = MySQLSQLTransformerLogic.getFunctions(db);
 		}
 		else if (dbType == DBType.ORACLE) {
-			sqlTransformerLogic = new OracleSQLTransformerLogic(db);
+			functions = OracleSQLTransformerLogic.getFunctions(db);
 		}
 		else if (dbType == DBType.POSTGRESQL) {
-			sqlTransformerLogic = new PostgreSQLTransformerLogic(db);
+			functions = PostgreSQLTransformerLogic.getFunctions(db);
 		}
 		else if (dbType == DBType.SQLSERVER) {
-			sqlTransformerLogic = new SQLServerSQLTransformerLogic(db);
+			functions = SQLServerSQLTransformerLogic.getFunctions(db);
 		}
 		else if (dbType == DBType.SYBASE) {
-			sqlTransformerLogic = new SybaseSQLTransformerLogic(db);
+			functions = SybaseSQLTransformerLogic.getFunctions(db);
 		}
 		else {
 			return sql -> sql;
 		}
 
-		return new DefaultSQLTransformer(sqlTransformerLogic.getFunctions());
+		return new DefaultSQLTransformer(functions);
 	}
 
 }

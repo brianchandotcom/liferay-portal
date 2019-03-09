@@ -25,13 +25,13 @@ import java.util.regex.Matcher;
 /**
  * @author Manuel de la Peña
  */
-public class MySQLSQLTransformerLogic extends BaseSQLTransformerLogic {
+public class MySQLSQLTransformerLogic {
 
-	public MySQLSQLTransformerLogic(DB db) {
+	public static List<Function<String, String>> getFunctions(DB db) {
 		List<Function<String, String>> functions = new ArrayList<>(
 			Arrays.asList(
 				BaseSQLTransformerLogic::replaceBitwiseCheck,
-				sql -> replaceBoolean(
+				sql -> BaseSQLTransformerLogic.replaceBoolean(
 					sql, db.getTemplateFalse(), db.getTemplateTrue()),
 				BaseSQLTransformerLogic::replaceCastClobText,
 				BaseSQLTransformerLogic::replaceCastLong,
@@ -44,11 +44,12 @@ public class MySQLSQLTransformerLogic extends BaseSQLTransformerLogic {
 			functions.add(BaseSQLTransformerLogic::replaceLower);
 		}
 
-		setFunctions(functions);
+		return functions;
 	}
 
 	private static String _replaceIntegerDivision(String sql) {
-		Matcher matcher = integerDivisionPattern.matcher(sql);
+		Matcher matcher =
+			BaseSQLTransformerLogic.integerDivisionPattern.matcher(sql);
 
 		return matcher.replaceAll("$1 DIV $2");
 	}

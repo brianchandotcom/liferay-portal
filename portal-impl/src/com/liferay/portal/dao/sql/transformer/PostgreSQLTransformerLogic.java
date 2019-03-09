@@ -27,13 +27,13 @@ import java.util.regex.Pattern;
 /**
  * @author Manuel de la Peña
  */
-public class PostgreSQLTransformerLogic extends BaseSQLTransformerLogic {
+public class PostgreSQLTransformerLogic {
 
-	public PostgreSQLTransformerLogic(DB db) {
+	public static List<Function<String, String>> getFunctions(DB db) {
 		List<Function<String, String>> functions = new ArrayList<>(
 			Arrays.asList(
 				BaseSQLTransformerLogic::replaceBitwiseCheck,
-				sql -> replaceBoolean(
+				sql -> BaseSQLTransformerLogic.replaceBoolean(
 					sql, db.getTemplateFalse(), db.getTemplateTrue()),
 				PostgreSQLTransformerLogic::_replaceCastClobText,
 				PostgreSQLTransformerLogic::_replaceCastLong,
@@ -48,29 +48,30 @@ public class PostgreSQLTransformerLogic extends BaseSQLTransformerLogic {
 			functions.add(BaseSQLTransformerLogic::replaceLower);
 		}
 
-		setFunctions(functions);
+		return functions;
 	}
 
 	private static String _replaceCastClobText(String sql) {
-		Matcher matcher = castClobTestPattern.matcher(sql);
+		Matcher matcher = BaseSQLTransformerLogic.castClobTestPattern.matcher(
+			sql);
 
 		return matcher.replaceAll("CAST($1 AS TEXT)");
 	}
 
 	private static String _replaceCastLong(String sql) {
-		Matcher matcher = castLongPattern.matcher(sql);
+		Matcher matcher = BaseSQLTransformerLogic.castLongPattern.matcher(sql);
 
 		return matcher.replaceAll("CAST($1 AS INTEGER)");
 	}
 
 	private static String _replaceCastText(String sql) {
-		Matcher matcher = castTextPattern.matcher(sql);
+		Matcher matcher = BaseSQLTransformerLogic.castTextPattern.matcher(sql);
 
 		return matcher.replaceAll("CAST($1 AS TEXT)");
 	}
 
 	private static String _replaceInstr(String sql) {
-		Matcher matcher = instrPattern.matcher(sql);
+		Matcher matcher = BaseSQLTransformerLogic.instrPattern.matcher(sql);
 
 		return matcher.replaceAll("POSITION($2 in $1)");
 	}

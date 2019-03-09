@@ -26,12 +26,12 @@ import java.util.regex.Matcher;
  * @author Manuel de la Peña
  * @author Brian Wing Shun Chan
  */
-public class HypersonicSQLTransformerLogic extends BaseSQLTransformerLogic {
+public class HypersonicSQLTransformerLogic {
 
-	public HypersonicSQLTransformerLogic(DB db) {
+	public static List<Function<String, String>> getFunctions(DB db) {
 		List<Function<String, String>> functions = new ArrayList<>(
 			Arrays.asList(
-				sql -> replaceBoolean(
+				sql -> BaseSQLTransformerLogic.replaceBoolean(
 					sql, db.getTemplateFalse(), db.getTemplateTrue()),
 				HypersonicSQLTransformerLogic::_replaceCastClobText,
 				HypersonicSQLTransformerLogic::_replaceCastLong,
@@ -44,29 +44,31 @@ public class HypersonicSQLTransformerLogic extends BaseSQLTransformerLogic {
 			functions.add(BaseSQLTransformerLogic::replaceLower);
 		}
 
-		setFunctions(functions);
+		return functions;
 	}
 
 	private static String _replaceCastClobText(String sql) {
-		Matcher matcher = castClobTestPattern.matcher(sql);
+		Matcher matcher = BaseSQLTransformerLogic.castClobTestPattern.matcher(
+			sql);
 
 		return matcher.replaceAll("CONVERT($1, SQL_VARCHAR)");
 	}
 
 	private static String _replaceCastLong(String sql) {
-		Matcher matcher = castLongPattern.matcher(sql);
+		Matcher matcher = BaseSQLTransformerLogic.castLongPattern.matcher(sql);
 
 		return matcher.replaceAll("CONVERT($1, SQL_BIGINT)");
 	}
 
 	private static String _replaceCastText(String sql) {
-		Matcher matcher = castTextPattern.matcher(sql);
+		Matcher matcher = BaseSQLTransformerLogic.castTextPattern.matcher(sql);
 
 		return matcher.replaceAll("CONVERT($1, SQL_VARCHAR)");
 	}
 
 	private static String _replaceDropTableIfExistsText(String sql) {
-		Matcher matcher = dropTableIfExistsTextPattern.matcher(sql);
+		Matcher matcher =
+			BaseSQLTransformerLogic.dropTableIfExistsTextPattern.matcher(sql);
 
 		return matcher.replaceAll("DROP TABLE $1 IF EXISTS");
 	}

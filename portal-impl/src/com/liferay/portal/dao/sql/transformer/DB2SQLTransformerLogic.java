@@ -28,12 +28,12 @@ import java.util.regex.Pattern;
 /**
  * @author Manuel de la Peña
  */
-public class DB2SQLTransformerLogic extends BaseSQLTransformerLogic {
+public class DB2SQLTransformerLogic {
 
-	public DB2SQLTransformerLogic(DB db) {
+	public static List<Function<String, String>> getFunctions(DB db) {
 		List<Function<String, String>> functions = new ArrayList<>(
 			Arrays.asList(
-				sql -> replaceBoolean(
+				sql -> BaseSQLTransformerLogic.replaceBoolean(
 					sql, db.getTemplateFalse(), db.getTemplateTrue()),
 				DB2SQLTransformerLogic::_replaceCastClobText,
 				BaseSQLTransformerLogic::replaceCastLong,
@@ -49,7 +49,7 @@ public class DB2SQLTransformerLogic extends BaseSQLTransformerLogic {
 			functions.add(BaseSQLTransformerLogic::replaceLower);
 		}
 
-		setFunctions(functions);
+		return functions;
 	}
 
 	private static String _replaceAlterColumnType(String sql) {
@@ -60,13 +60,14 @@ public class DB2SQLTransformerLogic extends BaseSQLTransformerLogic {
 	}
 
 	private static String _replaceCastClobText(String sql) {
-		Matcher matcher = castClobTestPattern.matcher(sql);
+		Matcher matcher = BaseSQLTransformerLogic.castClobTestPattern.matcher(
+			sql);
 
 		return matcher.replaceAll("CAST($1 AS VARCHAR(254))");
 	}
 
 	private static String _replaceCastText(String sql) {
-		Matcher matcher = castTextPattern.matcher(sql);
+		Matcher matcher = BaseSQLTransformerLogic.castTextPattern.matcher(sql);
 
 		return matcher.replaceAll("CAST($1 AS VARCHAR(254))");
 	}

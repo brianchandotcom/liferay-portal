@@ -27,13 +27,13 @@ import java.util.regex.Matcher;
 /**
  * @author Manuel de la Peña
  */
-public class SybaseSQLTransformerLogic extends BaseSQLTransformerLogic {
+public class SybaseSQLTransformerLogic {
 
-	public SybaseSQLTransformerLogic(DB db) {
+	public static List<Function<String, String>> getFunctions(DB db) {
 		List<Function<String, String>> functions = new ArrayList<>(
 			Arrays.asList(
 				BaseSQLTransformerLogic::replaceBitwiseCheck,
-				sql -> replaceBoolean(
+				sql -> BaseSQLTransformerLogic.replaceBoolean(
 					sql, db.getTemplateFalse(), db.getTemplateTrue()),
 				SybaseSQLTransformerLogic::_replaceCastClobText,
 				SybaseSQLTransformerLogic::_replaceCastLong,
@@ -53,23 +53,24 @@ public class SybaseSQLTransformerLogic extends BaseSQLTransformerLogic {
 			functions.add(BaseSQLTransformerLogic::replaceLower);
 		}
 
-		setFunctions(functions);
+		return functions;
 	}
 
 	private static String _replaceCastClobText(String sql) {
-		Matcher matcher = castClobTestPattern.matcher(sql);
+		Matcher matcher = BaseSQLTransformerLogic.castClobTestPattern.matcher(
+			sql);
 
 		return matcher.replaceAll("CAST($1 AS NVARCHAR(5461))");
 	}
 
 	private static String _replaceCastLong(String sql) {
-		Matcher matcher = castLongPattern.matcher(sql);
+		Matcher matcher = BaseSQLTransformerLogic.castLongPattern.matcher(sql);
 
 		return matcher.replaceAll("CONVERT(BIGINT, $1)");
 	}
 
 	private static String _replaceCastText(String sql) {
-		Matcher matcher = castTextPattern.matcher(sql);
+		Matcher matcher = BaseSQLTransformerLogic.castTextPattern.matcher(sql);
 
 		return matcher.replaceAll("CAST($1 AS NVARCHAR(5461))");
 	}

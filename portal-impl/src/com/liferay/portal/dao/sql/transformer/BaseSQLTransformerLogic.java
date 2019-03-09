@@ -18,8 +18,6 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.internal.dao.sql.transformer.SQLFunctionTransformer;
 import com.liferay.portal.kernel.util.StringUtil;
 
-import java.util.List;
-import java.util.function.Function;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -27,12 +25,7 @@ import java.util.regex.Pattern;
  * @author Manuel de la Peña
  * @author Brian Wing Shun Chan
  */
-public abstract class BaseSQLTransformerLogic implements SQLTransformerLogic {
-
-	@Override
-	public List<Function<String, String>> getFunctions() {
-		return _functions;
-	}
+public abstract class BaseSQLTransformerLogic {
 
 	protected static String replaceBitwiseCheck(String sql) {
 		Matcher matcher = bitwiseCheckPattern.matcher(sql);
@@ -152,10 +145,6 @@ public abstract class BaseSQLTransformerLogic implements SQLTransformerLogic {
 		return matcher.replaceAll("SUBSTRING($1, $2, $3)");
 	}
 
-	protected void setFunctions(List<Function<String, String>> functions) {
-		_functions = functions;
-	}
-
 	protected static final Pattern bitwiseCheckPattern = Pattern.compile(
 		"BITAND\\(\\s*(.+?)\\s*,\\s*(.+?)\\s*\\)");
 	protected static final Pattern castClobTestPattern = Pattern.compile(
@@ -181,7 +170,5 @@ public abstract class BaseSQLTransformerLogic implements SQLTransformerLogic {
 	private static final String _LOWER_CLOSE = StringPool.CLOSE_PARENTHESIS;
 
 	private static final String _LOWER_OPEN = "lower(";
-
-	private List<Function<String, String>> _functions;
 
 }

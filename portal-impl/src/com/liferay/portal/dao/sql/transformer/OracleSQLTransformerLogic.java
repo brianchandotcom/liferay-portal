@@ -29,12 +29,12 @@ import java.util.regex.Matcher;
 /**
  * @author Manuel de la Peña
  */
-public class OracleSQLTransformerLogic extends BaseSQLTransformerLogic {
+public class OracleSQLTransformerLogic {
 
-	public OracleSQLTransformerLogic(DB db) {
+	public static List<Function<String, String>> getFunctions(DB db) {
 		List<Function<String, String>> functions = new ArrayList<>(
 			Arrays.asList(
-				sql -> replaceBoolean(
+				sql -> BaseSQLTransformerLogic.replaceBoolean(
 					sql, db.getTemplateFalse(), db.getTemplateTrue()),
 				OracleSQLTransformerLogic::_replaceCastClobText,
 				BaseSQLTransformerLogic::replaceCastLong,
@@ -50,17 +50,18 @@ public class OracleSQLTransformerLogic extends BaseSQLTransformerLogic {
 			functions.add(BaseSQLTransformerLogic::replaceLower);
 		}
 
-		setFunctions(functions);
+		return functions;
 	}
 
 	private static String _replaceCastClobText(String sql) {
-		Matcher matcher = castClobTestPattern.matcher(sql);
+		Matcher matcher = BaseSQLTransformerLogic.castClobTestPattern.matcher(
+			sql);
 
 		return matcher.replaceAll("DBMS_LOB.SUBSTR($1, 4000, 1)");
 	}
 
 	private static String _replaceCastText(String sql) {
-		Matcher matcher = castTextPattern.matcher(sql);
+		Matcher matcher = BaseSQLTransformerLogic.castTextPattern.matcher(sql);
 
 		return matcher.replaceAll("CAST($1 AS VARCHAR(4000))");
 	}
@@ -74,7 +75,8 @@ public class OracleSQLTransformerLogic extends BaseSQLTransformerLogic {
 	}
 
 	private static String _replaceDropTableIfExistsText(String sql) {
-		Matcher matcher = dropTableIfExistsTextPattern.matcher(sql);
+		Matcher matcher =
+			BaseSQLTransformerLogic.dropTableIfExistsTextPattern.matcher(sql);
 
 		StringBundler sb = new StringBundler(9);
 
@@ -98,7 +100,8 @@ public class OracleSQLTransformerLogic extends BaseSQLTransformerLogic {
 	}
 
 	private static String _replaceIntegerDivision(String sql) {
-		Matcher matcher = integerDivisionPattern.matcher(sql);
+		Matcher matcher =
+			BaseSQLTransformerLogic.integerDivisionPattern.matcher(sql);
 
 		return matcher.replaceAll("TRUNC($1 / $2)");
 	}

@@ -61,11 +61,12 @@ public abstract class BaseWebUrlResourceImpl implements WebUrlResource {
 			@Parameter(in = ParameterIn.QUERY, name = "pageSize")
 		}
 	)
-	@Path("/web-urls")
+	@Path("/web-urls-by/{classNameClassPK}")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "WebUrl")})
-	public Page<WebUrl> getWebUrlsPage(
-			@PathParam("generic-parent-id") Object genericParentId,
+	public Page<WebUrl> getWebUrlsByClassNameClassPK(
+			@Context com.liferay.portal.vulcan.identifier.ClassNameClassPK
+				classNameClassPK,
 			@Context Pagination pagination)
 		throws Exception {
 

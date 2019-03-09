@@ -247,16 +247,18 @@ public class Query {
 
 	@GraphQLField
 	@GraphQLInvokeDetached
-	public Collection<Phone> getPhonesPage(
-			@GraphQLName("generic-parent-id") Object genericParentId,
+	public Collection<Phone> getPhonesByClassNameClassPK(
+			@GraphQLName("classNameClassPK")
+				com.liferay.portal.vulcan.identifier.ClassNameClassPK
+					classNameClassPK,
 			@GraphQLName("pageSize") int pageSize,
 			@GraphQLName("page") int page)
 		throws Exception {
 
 		PhoneResource phoneResource = _createPhoneResource();
 
-		Page paginationPage = phoneResource.getPhonesPage(
-			genericParentId, Pagination.of(pageSize, page));
+		Page paginationPage = phoneResource.getPhonesByClassNameClassPK(
+			classNameClassPK, Pagination.of(pageSize, page));
 
 		return paginationPage.getItems();
 	}
@@ -273,8 +275,10 @@ public class Query {
 
 	@GraphQLField
 	@GraphQLInvokeDetached
-	public Collection<PostalAddress> getPostalAddressesPage(
-			@GraphQLName("generic-parent-id") Object genericParentId,
+	public Collection<PostalAddress> getPostalAddressesByClassNameClassPK(
+			@GraphQLName("classNameClassPK")
+				com.liferay.portal.vulcan.identifier.ClassNameClassPK
+					classNameClassPK,
 			@GraphQLName("pageSize") int pageSize,
 			@GraphQLName("page") int page)
 		throws Exception {
@@ -282,8 +286,9 @@ public class Query {
 		PostalAddressResource postalAddressResource =
 			_createPostalAddressResource();
 
-		Page paginationPage = postalAddressResource.getPostalAddressesPage(
-			genericParentId, Pagination.of(pageSize, page));
+		Page paginationPage =
+			postalAddressResource.getPostalAddressesByClassNameClassPK(
+				classNameClassPK, Pagination.of(pageSize, page));
 
 		return paginationPage.getItems();
 	}
@@ -489,16 +494,18 @@ public class Query {
 
 	@GraphQLField
 	@GraphQLInvokeDetached
-	public Collection<WebUrl> getWebUrlsPage(
-			@GraphQLName("generic-parent-id") Object genericParentId,
+	public Collection<WebUrl> getWebUrlsByClassNameClassPK(
+			@GraphQLName("classNameClassPK")
+				com.liferay.portal.vulcan.identifier.ClassNameClassPK
+					classNameClassPK,
 			@GraphQLName("pageSize") int pageSize,
 			@GraphQLName("page") int page)
 		throws Exception {
 
 		WebUrlResource webUrlResource = _createWebUrlResource();
 
-		Page paginationPage = webUrlResource.getWebUrlsPage(
-			genericParentId, Pagination.of(pageSize, page));
+		Page paginationPage = webUrlResource.getWebUrlsByClassNameClassPK(
+			classNameClassPK, Pagination.of(pageSize, page));
 
 		return paginationPage.getItems();
 	}

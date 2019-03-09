@@ -96,16 +96,17 @@ public abstract class BasePhoneResourceTestCase {
 	}
 
 	@Test
-	public void testGetPhonesPage() throws Exception {
-		Object genericParentId = testGetPhonesPage_getGenericParentId();
+	public void testGetPhonesByClassNameClassPK() throws Exception {
+		com.liferay.portal.vulcan.identifier.ClassNameClassPK classNameClassPK =
+			testGetPhonesByClassNameClassPK_getClassNameClassPK();
 
-		Phone phone1 = testGetPhonesPage_addPhone(
-			genericParentId, randomPhone());
-		Phone phone2 = testGetPhonesPage_addPhone(
-			genericParentId, randomPhone());
+		Phone phone1 = testGetPhonesByClassNameClassPK_addPhone(
+			classNameClassPK, randomPhone());
+		Phone phone2 = testGetPhonesByClassNameClassPK_addPhone(
+			classNameClassPK, randomPhone());
 
-		Page<Phone> page = invokeGetPhonesPage(
-			genericParentId, Pagination.of(1, 2));
+		Page<Phone> page = invokeGetPhonesByClassNameClassPK(
+			classNameClassPK, Pagination.of(1, 2));
 
 		Assert.assertEquals(2, page.getTotalCount());
 
@@ -115,25 +116,28 @@ public abstract class BasePhoneResourceTestCase {
 	}
 
 	@Test
-	public void testGetPhonesPageWithPagination() throws Exception {
-		Object genericParentId = testGetPhonesPage_getGenericParentId();
+	public void testGetPhonesByClassNameClassPKWithPagination()
+		throws Exception {
 
-		Phone phone1 = testGetPhonesPage_addPhone(
-			genericParentId, randomPhone());
-		Phone phone2 = testGetPhonesPage_addPhone(
-			genericParentId, randomPhone());
-		Phone phone3 = testGetPhonesPage_addPhone(
-			genericParentId, randomPhone());
+		com.liferay.portal.vulcan.identifier.ClassNameClassPK classNameClassPK =
+			testGetPhonesByClassNameClassPK_getClassNameClassPK();
 
-		Page<Phone> page1 = invokeGetPhonesPage(
-			genericParentId, Pagination.of(1, 2));
+		Phone phone1 = testGetPhonesByClassNameClassPK_addPhone(
+			classNameClassPK, randomPhone());
+		Phone phone2 = testGetPhonesByClassNameClassPK_addPhone(
+			classNameClassPK, randomPhone());
+		Phone phone3 = testGetPhonesByClassNameClassPK_addPhone(
+			classNameClassPK, randomPhone());
+
+		Page<Phone> page1 = invokeGetPhonesByClassNameClassPK(
+			classNameClassPK, Pagination.of(1, 2));
 
 		List<Phone> phones1 = (List<Phone>)page1.getItems();
 
 		Assert.assertEquals(phones1.toString(), 2, phones1.size());
 
-		Page<Phone> page2 = invokeGetPhonesPage(
-			genericParentId, Pagination.of(2, 2));
+		Page<Phone> page2 = invokeGetPhonesByClassNameClassPK(
+			classNameClassPK, Pagination.of(2, 2));
 
 		Assert.assertEquals(3, page2.getTotalCount());
 
@@ -151,26 +155,35 @@ public abstract class BasePhoneResourceTestCase {
 			});
 	}
 
-	protected Phone testGetPhonesPage_addPhone(
-			Object genericParentId, Phone phone)
+	protected Phone testGetPhonesByClassNameClassPK_addPhone(
+			com.liferay.portal.vulcan.identifier.ClassNameClassPK
+				classNameClassPK,
+			Phone phone)
 		throws Exception {
 
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
 	}
 
-	protected Object testGetPhonesPage_getGenericParentId() throws Exception {
+	protected com.liferay.portal.vulcan.identifier.ClassNameClassPK
+			testGetPhonesByClassNameClassPK_getClassNameClassPK()
+		throws Exception {
+
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
 	}
 
-	protected Page<Phone> invokeGetPhonesPage(
-			Object genericParentId, Pagination pagination)
+	protected Page<Phone> invokeGetPhonesByClassNameClassPK(
+			com.liferay.portal.vulcan.identifier.ClassNameClassPK
+				classNameClassPK,
+			Pagination pagination)
 		throws Exception {
 
 		Http.Options options = _createHttpOptions();
 
-		String location = _resourceURL + _toPath("/phones", genericParentId);
+		String location =
+			_resourceURL +
+				_toPath("/phones-by/{classNameClassPK}", classNameClassPK);
 
 		location = HttpUtil.addParameter(
 			location, "page", pagination.getPage());
@@ -185,13 +198,17 @@ public abstract class BasePhoneResourceTestCase {
 			});
 	}
 
-	protected Http.Response invokeGetPhonesPageResponse(
-			Object genericParentId, Pagination pagination)
+	protected Http.Response invokeGetPhonesByClassNameClassPKResponse(
+			com.liferay.portal.vulcan.identifier.ClassNameClassPK
+				classNameClassPK,
+			Pagination pagination)
 		throws Exception {
 
 		Http.Options options = _createHttpOptions();
 
-		String location = _resourceURL + _toPath("/phones", genericParentId);
+		String location =
+			_resourceURL +
+				_toPath("/phones-by/{classNameClassPK}", classNameClassPK);
 
 		location = HttpUtil.addParameter(
 			location, "page", pagination.getPage());

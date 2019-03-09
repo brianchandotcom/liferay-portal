@@ -61,11 +61,12 @@ public abstract class BasePhoneResourceImpl implements PhoneResource {
 			@Parameter(in = ParameterIn.QUERY, name = "pageSize")
 		}
 	)
-	@Path("/phones")
+	@Path("/phones-by/{classNameClassPK}")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "Phone")})
-	public Page<Phone> getPhonesPage(
-			@PathParam("generic-parent-id") Object genericParentId,
+	public Page<Phone> getPhonesByClassNameClassPK(
+			@Context com.liferay.portal.vulcan.identifier.ClassNameClassPK
+				classNameClassPK,
 			@Context Pagination pagination)
 		throws Exception {
 

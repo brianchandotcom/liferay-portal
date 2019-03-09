@@ -32,8 +32,10 @@ import javax.annotation.Generated;
 @Generated("")
 public interface PhoneResource {
 
-	public Page<Phone> getPhonesPage(
-			Object genericParentId, Pagination pagination)
+	public Page<Phone> getPhonesByClassNameClassPK(
+			com.liferay.portal.vulcan.identifier.ClassNameClassPK
+				classNameClassPK,
+			Pagination pagination)
 		throws Exception;
 
 	public Phone getPhone(Long phoneId) throws Exception;

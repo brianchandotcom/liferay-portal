@@ -96,16 +96,17 @@ public abstract class BaseWebUrlResourceTestCase {
 	}
 
 	@Test
-	public void testGetWebUrlsPage() throws Exception {
-		Object genericParentId = testGetWebUrlsPage_getGenericParentId();
+	public void testGetWebUrlsByClassNameClassPK() throws Exception {
+		com.liferay.portal.vulcan.identifier.ClassNameClassPK classNameClassPK =
+			testGetWebUrlsByClassNameClassPK_getClassNameClassPK();
 
-		WebUrl webUrl1 = testGetWebUrlsPage_addWebUrl(
-			genericParentId, randomWebUrl());
-		WebUrl webUrl2 = testGetWebUrlsPage_addWebUrl(
-			genericParentId, randomWebUrl());
+		WebUrl webUrl1 = testGetWebUrlsByClassNameClassPK_addWebUrl(
+			classNameClassPK, randomWebUrl());
+		WebUrl webUrl2 = testGetWebUrlsByClassNameClassPK_addWebUrl(
+			classNameClassPK, randomWebUrl());
 
-		Page<WebUrl> page = invokeGetWebUrlsPage(
-			genericParentId, Pagination.of(1, 2));
+		Page<WebUrl> page = invokeGetWebUrlsByClassNameClassPK(
+			classNameClassPK, Pagination.of(1, 2));
 
 		Assert.assertEquals(2, page.getTotalCount());
 
@@ -115,25 +116,28 @@ public abstract class BaseWebUrlResourceTestCase {
 	}
 
 	@Test
-	public void testGetWebUrlsPageWithPagination() throws Exception {
-		Object genericParentId = testGetWebUrlsPage_getGenericParentId();
+	public void testGetWebUrlsByClassNameClassPKWithPagination()
+		throws Exception {
 
-		WebUrl webUrl1 = testGetWebUrlsPage_addWebUrl(
-			genericParentId, randomWebUrl());
-		WebUrl webUrl2 = testGetWebUrlsPage_addWebUrl(
-			genericParentId, randomWebUrl());
-		WebUrl webUrl3 = testGetWebUrlsPage_addWebUrl(
-			genericParentId, randomWebUrl());
+		com.liferay.portal.vulcan.identifier.ClassNameClassPK classNameClassPK =
+			testGetWebUrlsByClassNameClassPK_getClassNameClassPK();
 
-		Page<WebUrl> page1 = invokeGetWebUrlsPage(
-			genericParentId, Pagination.of(1, 2));
+		WebUrl webUrl1 = testGetWebUrlsByClassNameClassPK_addWebUrl(
+			classNameClassPK, randomWebUrl());
+		WebUrl webUrl2 = testGetWebUrlsByClassNameClassPK_addWebUrl(
+			classNameClassPK, randomWebUrl());
+		WebUrl webUrl3 = testGetWebUrlsByClassNameClassPK_addWebUrl(
+			classNameClassPK, randomWebUrl());
+
+		Page<WebUrl> page1 = invokeGetWebUrlsByClassNameClassPK(
+			classNameClassPK, Pagination.of(1, 2));
 
 		List<WebUrl> webUrls1 = (List<WebUrl>)page1.getItems();
 
 		Assert.assertEquals(webUrls1.toString(), 2, webUrls1.size());
 
-		Page<WebUrl> page2 = invokeGetWebUrlsPage(
-			genericParentId, Pagination.of(2, 2));
+		Page<WebUrl> page2 = invokeGetWebUrlsByClassNameClassPK(
+			classNameClassPK, Pagination.of(2, 2));
 
 		Assert.assertEquals(3, page2.getTotalCount());
 
@@ -151,26 +155,35 @@ public abstract class BaseWebUrlResourceTestCase {
 			});
 	}
 
-	protected WebUrl testGetWebUrlsPage_addWebUrl(
-			Object genericParentId, WebUrl webUrl)
+	protected WebUrl testGetWebUrlsByClassNameClassPK_addWebUrl(
+			com.liferay.portal.vulcan.identifier.ClassNameClassPK
+				classNameClassPK,
+			WebUrl webUrl)
 		throws Exception {
 
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
 	}
 
-	protected Object testGetWebUrlsPage_getGenericParentId() throws Exception {
+	protected com.liferay.portal.vulcan.identifier.ClassNameClassPK
+			testGetWebUrlsByClassNameClassPK_getClassNameClassPK()
+		throws Exception {
+
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
 	}
 
-	protected Page<WebUrl> invokeGetWebUrlsPage(
-			Object genericParentId, Pagination pagination)
+	protected Page<WebUrl> invokeGetWebUrlsByClassNameClassPK(
+			com.liferay.portal.vulcan.identifier.ClassNameClassPK
+				classNameClassPK,
+			Pagination pagination)
 		throws Exception {
 
 		Http.Options options = _createHttpOptions();
 
-		String location = _resourceURL + _toPath("/web-urls", genericParentId);
+		String location =
+			_resourceURL +
+				_toPath("/web-urls-by/{classNameClassPK}", classNameClassPK);
 
 		location = HttpUtil.addParameter(
 			location, "page", pagination.getPage());
@@ -185,13 +198,17 @@ public abstract class BaseWebUrlResourceTestCase {
 			});
 	}
 
-	protected Http.Response invokeGetWebUrlsPageResponse(
-			Object genericParentId, Pagination pagination)
+	protected Http.Response invokeGetWebUrlsByClassNameClassPKResponse(
+			com.liferay.portal.vulcan.identifier.ClassNameClassPK
+				classNameClassPK,
+			Pagination pagination)
 		throws Exception {
 
 		Http.Options options = _createHttpOptions();
 
-		String location = _resourceURL + _toPath("/web-urls", genericParentId);
+		String location =
+			_resourceURL +
+				_toPath("/web-urls-by/{classNameClassPK}", classNameClassPK);
 
 		location = HttpUtil.addParameter(
 			location, "page", pagination.getPage());

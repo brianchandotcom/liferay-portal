@@ -62,11 +62,12 @@ public abstract class BasePostalAddressResourceImpl
 			@Parameter(in = ParameterIn.QUERY, name = "pageSize")
 		}
 	)
-	@Path("/postal-addresses")
+	@Path("/postal-addresses-by/{classNameClassPK}")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "PostalAddress")})
-	public Page<PostalAddress> getPostalAddressesPage(
-			@PathParam("generic-parent-id") Object genericParentId,
+	public Page<PostalAddress> getPostalAddressesByClassNameClassPK(
+			@Context com.liferay.portal.vulcan.identifier.ClassNameClassPK
+				classNameClassPK,
 			@Context Pagination pagination)
 		throws Exception {
 

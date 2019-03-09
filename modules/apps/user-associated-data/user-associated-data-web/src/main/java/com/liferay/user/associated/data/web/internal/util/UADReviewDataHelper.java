@@ -124,11 +124,24 @@ public class UADReviewDataHelper {
 		try {
 			DisplayTerms displayTerms = searchContainer.getDisplayTerms();
 
-			List entities = uadHierarchyDisplay.search(
-				parentContainerClass, parentContainerId,
-				selectedUser.getUserId(), groupIds, displayTerms.getKeywords(),
-				null, null, searchContainer.getStart(),
-				searchContainer.getEnd());
+			List<Object> entities = new ArrayList<>();
+
+			entities.addAll(
+				uadHierarchyDisplay.search(
+					parentContainerClass, parentContainerId,
+					selectedUser.getUserId(), groupIds,
+					displayTerms.getKeywords(), null, null,
+					searchContainer.getStart(), searchContainer.getEnd()));
+
+			String parentContainerIdString = String.valueOf(parentContainerId);
+
+			if (parentContainerIdString.equals("0")) {
+				entities.addAll(
+					uadHierarchyDisplay.search(
+						parentContainerClass, -1L, selectedUser.getUserId(),
+						groupIds, displayTerms.getKeywords(), null, null,
+						searchContainer.getStart(), searchContainer.getEnd()));
+			}
 
 			LiferayPortletRequest liferayPortletRequest =
 				_portal.getLiferayPortletRequest(renderRequest);

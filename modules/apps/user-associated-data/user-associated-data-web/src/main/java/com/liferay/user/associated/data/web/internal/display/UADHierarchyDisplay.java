@@ -129,7 +129,9 @@ public class UADHierarchyDisplay {
 		String parentContainerId = String.valueOf(
 			uadDisplay.getParentContainerId(container));
 
-		while (!parentContainerId.equals("0")) {
+		while (!parentContainerId.equals("0") &&
+			   !parentContainerId.equals("-1")) {
+
 			PortletURL portletURL = PortletURLUtil.clone(
 				baseURL, renderResponse);
 

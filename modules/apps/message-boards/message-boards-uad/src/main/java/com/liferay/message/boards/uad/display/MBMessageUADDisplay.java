@@ -14,6 +14,7 @@
 
 package com.liferay.message.boards.uad.display;
 
+import com.liferay.message.boards.constants.MBCategoryConstants;
 import com.liferay.message.boards.constants.MBPortletKeys;
 import com.liferay.message.boards.model.MBMessage;
 import com.liferay.message.boards.model.MBThread;
@@ -61,6 +62,12 @@ public class MBMessageUADDisplay extends BaseMBMessageUADDisplay {
 			MBMessage mbMessage, LiferayPortletRequest liferayPortletRequest,
 			LiferayPortletResponse liferayPortletResponse)
 		throws Exception {
+
+		if (mbMessage.getCategoryId() ==
+				MBCategoryConstants.DISCUSSION_CATEGORY_ID) {
+
+			return null;
+		}
 
 		PortletURL portletURL = liferayPortletResponse.createLiferayPortletURL(
 			portal.getControlPanelPlid(liferayPortletRequest),

@@ -34,14 +34,14 @@ public class PostgreSQLTransformerLogic extends BaseSQLTransformerLogic {
 
 		List<Function<String, String>> functions = new ArrayList<>(
 			Arrays.asList(
-				getBitwiseCheckFunction(), getBooleanFunction(),
-				getCastClobTextFunction(), getCastLongFunction(),
-				getCastTextFunction(), getDropTableIfExistsTextFunction(),
-				getInstrFunction(), getIntegerDivisionFunction(),
-				_getNegativeComparisonFunction(), _getNullDateFunction()));
+				this::replaceBitwiseCheck, this::replaceBoolean,
+				this::replaceCastClobText, this::replaceCastLong,
+				this::replaceCastText, this::replaceDropTableIfExistsText,
+				this::replaceInstr, this::replaceIntegerDivision,
+				this::_replaceNegativeComparison, this::replaceNullDate));
 
 		if (!db.isSupportsStringCaseSensitiveQuery()) {
-			functions.add(getLowerFunction());
+			functions.add(this::replaceLower);
 		}
 
 		setFunctions(functions);
@@ -62,17 +62,16 @@ public class PostgreSQLTransformerLogic extends BaseSQLTransformerLogic {
 		return matcher.replaceAll("POSITION($2 in $1)");
 	}
 
-	private Function<String, String> _getNegativeComparisonFunction() {
-		return sql -> {
-			Matcher matcher = _negativeComparisonPattern.matcher(sql);
-
-			return matcher.replaceAll("$1 ($2)");
-		};
+	@Override
+	protected String replaceNullDate(String sql) {
+		return StringUtil.replace(
+			sql, "[$NULL_DATE$]", "CAST(NULL AS TIMESTAMP)");
 	}
 
-	private Function<String, String> _getNullDateFunction() {
-		return sql -> StringUtil.replace(
-			sql, "[$NULL_DATE$]", "CAST(NULL AS TIMESTAMP)");
+	private String _replaceNegativeComparison(String sql) {
+		Matcher matcher = _negativeComparisonPattern.matcher(sql);
+
+		return matcher.replaceAll("$1 ($2)");
 	}
 
 	private static final Pattern _negativeComparisonPattern = Pattern.compile(

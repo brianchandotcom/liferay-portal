@@ -33,13 +33,13 @@ public class HypersonicSQLTransformerLogic extends BaseSQLTransformerLogic {
 
 		List<Function<String, String>> functions = new ArrayList<>(
 			Arrays.asList(
-				getBooleanFunction(), getCastClobTextFunction(),
-				getCastLongFunction(), getCastTextFunction(),
-				getDropTableIfExistsTextFunction(),
-				getIntegerDivisionFunction(), getNullDateFunction()));
+				this::replaceBoolean, this::replaceCastClobText,
+				this::replaceCastLong, this::replaceCastText,
+				this::replaceDropTableIfExistsText,
+				this::replaceIntegerDivision, this::replaceNullDate));
 
 		if (!db.isSupportsStringCaseSensitiveQuery()) {
-			functions.add(getLowerFunction());
+			functions.add(this::replaceLower);
 		}
 
 		setFunctions(functions);

@@ -34,16 +34,16 @@ public class SybaseSQLTransformerLogic extends BaseSQLTransformerLogic {
 
 		List<Function<String, String>> functions = new ArrayList<>(
 			Arrays.asList(
-				getBitwiseCheckFunction(), getBooleanFunction(),
-				getCastClobTextFunction(), getCastLongFunction(),
-				getCastTextFunction(), getConcatFunction(),
-				getDropTableIfExistsTextFunction(), getInstrFunction(),
-				getIntegerDivisionFunction(), getLengthFunction(),
-				getModFunction(), getNullDateFunction(), getSubstrFunction(),
-				_getCrossJoinFunction(), _getReplaceFunction()));
+				this::replaceBitwiseCheck, this::replaceBoolean,
+				this::replaceCastClobText, this::replaceCastLong,
+				this::replaceCastText, this::replaceConcat,
+				this::replaceDropTableIfExistsText, this::replaceInstr,
+				this::replaceIntegerDivision, this::replaceLength,
+				this::replaceMod, this::replaceNullDate, this::replaceSubstr,
+				this::_replaceCrossJoin, this::_replaceReplace));
 
 		if (!db.isSupportsStringCaseSensitiveQuery()) {
-			functions.add(getLowerFunction());
+			functions.add(this::replaceLower);
 		}
 
 		setFunctions(functions);
@@ -59,12 +59,12 @@ public class SybaseSQLTransformerLogic extends BaseSQLTransformerLogic {
 		return matcher.replaceAll("CAST($1 AS NVARCHAR(5461))");
 	}
 
-	private Function<String, String> _getCrossJoinFunction() {
-		return sql -> StringUtil.replace(sql, "CROSS JOIN", StringPool.COMMA);
+	private String _replaceCrossJoin(String sql) {
+		return StringUtil.replace(sql, "CROSS JOIN", StringPool.COMMA);
 	}
 
-	private Function<String, String> _getReplaceFunction() {
-		return sql -> sql.replaceAll("(?i)replace\\(", "str_replace(");
+	private String _replaceReplace(String sql) {
+		return sql.replaceAll("(?i)replace\\(", "str_replace(");
 	}
 
 }

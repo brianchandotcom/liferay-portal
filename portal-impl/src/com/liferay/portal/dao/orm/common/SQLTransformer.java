@@ -103,9 +103,9 @@ public class SQLTransformer {
 		newSQL = _sqlTransformer.transform(sql);
 
 		List<Function<String, String>> functions = Arrays.asList(
-			HQLToJPQLTransformerLogic.getPositionalParameterFunction(),
-			HQLToJPQLTransformerLogic.getNotEqualsFunction(),
-			HQLToJPQLTransformerLogic.getCompositeIdMarkerFunction());
+			HQLToJPQLTransformerLogic::replacePositionalParameter,
+			HQLToJPQLTransformerLogic::replaceNotEquals,
+			HQLToJPQLTransformerLogic::replaceCompositeIdMarker);
 
 		for (Function<String, String> function : functions) {
 			newSQL = function.apply(newSQL);
@@ -125,10 +125,7 @@ public class SQLTransformer {
 
 		newSQL = _sqlTransformer.transform(sql);
 
-		Function<String, String> countFunction =
-			JPQLToHQLTransformerLogic.getCountFunction();
-
-		newSQL = countFunction.apply(newSQL);
+		newSQL = JPQLToHQLTransformerLogic.replaceCount(newSQL);
 
 		_transformedSqls.put(sql, newSQL);
 

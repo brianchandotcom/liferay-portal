@@ -19,49 +19,42 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 
-import java.util.function.Function;
-
 /**
  * @author Manuel de la Peña
  */
 public class HQLToJPQLTransformerLogic {
 
-	public static final Function<String, String>
-		getCompositeIdMarkerFunction() {
-
-		return sql -> StringUtil.replace(
+	public static final String replaceCompositeIdMarker(String sql) {
+		return StringUtil.replace(
 			sql, _HQL_COMPOSITE_ID_MARKER, _JPQL_DOT_SEPARTOR);
 	}
 
-	public static final Function<String, String> getNotEqualsFunction() {
-		return sql -> StringUtil.replace(
-			sql, _HQL_NOT_EQUALS, _JPQL_NOT_EQUALS);
+	public static final String replaceNotEquals(String sql) {
+		return StringUtil.replace(sql, _HQL_NOT_EQUALS, _JPQL_NOT_EQUALS);
 	}
 
-	public static Function<String, String> getPositionalParameterFunction() {
-		return sql -> {
-			if (sql.indexOf(CharPool.QUESTION) == -1) {
-				return sql;
-			}
+	public static String replacePositionalParameter(String sql) {
+		if (sql.indexOf(CharPool.QUESTION) == -1) {
+			return sql;
+		}
 
-			StringBundler sb = new StringBundler();
+		StringBundler sb = new StringBundler();
 
-			int i = 1;
-			int from = 0;
-			int to = 0;
+		int i = 1;
+		int from = 0;
+		int to = 0;
 
-			while ((to = sql.indexOf(CharPool.QUESTION, from)) != -1) {
-				sb.append(sql.substring(from, to));
-				sb.append(StringPool.QUESTION);
-				sb.append(i++);
+		while ((to = sql.indexOf(CharPool.QUESTION, from)) != -1) {
+			sb.append(sql.substring(from, to));
+			sb.append(StringPool.QUESTION);
+			sb.append(i++);
 
-				from = to + 1;
-			}
+			from = to + 1;
+		}
 
-			sb.append(sql.substring(from));
+		sb.append(sql.substring(from));
 
-			return sb.toString();
-		};
+		return sb.toString();
 	}
 
 	private static final String _HQL_COMPOSITE_ID_MARKER = "\\.id\\.";

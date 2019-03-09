@@ -32,13 +32,13 @@ public class MySQLSQLTransformerLogic extends BaseSQLTransformerLogic {
 
 		List<Function<String, String>> functions = new ArrayList<>(
 			Arrays.asList(
-				getBitwiseCheckFunction(), getBooleanFunction(),
-				getCastClobTextFunction(), getCastLongFunction(),
-				getCastTextFunction(), getDropTableIfExistsTextFunction(),
-				getIntegerDivisionFunction(), getNullDateFunction()));
+				this::replaceBitwiseCheck, this::replaceBoolean,
+				this::replaceCastClobText, this::replaceCastLong,
+				this::replaceCastText, this::replaceDropTableIfExistsText,
+				this::replaceIntegerDivision, this::replaceNullDate));
 
 		if (!db.isSupportsStringCaseSensitiveQuery()) {
-			functions.add(getLowerFunction());
+			functions.add(this::replaceLower);
 		}
 
 		setFunctions(functions);

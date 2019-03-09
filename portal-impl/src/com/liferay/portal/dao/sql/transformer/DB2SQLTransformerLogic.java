@@ -35,26 +35,17 @@ public class DB2SQLTransformerLogic extends BaseSQLTransformerLogic {
 
 		List<Function<String, String>> functions = new ArrayList<>(
 			Arrays.asList(
-				getBooleanFunction(), getCastClobTextFunction(),
-				getCastLongFunction(), getCastTextFunction(),
-				getConcatFunction(), getDropTableIfExistsTextFunction(),
-				getIntegerDivisionFunction(), getNullDateFunction(),
-				_getAlterColumnTypeFunction(), _getLikeFunction()));
+				this::replaceBoolean, this::replaceCastClobText,
+				this::replaceCastLong, this::replaceCastText,
+				this::replaceConcat, this::replaceDropTableIfExistsText,
+				this::replaceIntegerDivision, this::replaceNullDate,
+				this::_replaceAlterColumnType, this::_replaceLike));
 
 		if (!db.isSupportsStringCaseSensitiveQuery()) {
-			functions.add(getLowerFunction());
+			functions.add(this::replaceLower);
 		}
 
 		setFunctions(functions);
-	}
-
-	@Override
-	protected Function<String, String> getConcatFunction() {
-		SQLFunctionTransformer sqlFunctionTransformer =
-			new SQLFunctionTransformer(
-				"CONCAT(", StringPool.BLANK, " CONCAT ", StringPool.BLANK);
-
-		return sqlFunctionTransformer::transform;
 	}
 
 	@Override
@@ -62,22 +53,27 @@ public class DB2SQLTransformerLogic extends BaseSQLTransformerLogic {
 		return matcher.replaceAll("CAST($1 AS VARCHAR(254))");
 	}
 
-	private Function<String, String> _getAlterColumnTypeFunction() {
-		return sql -> {
-			Matcher matcher = _alterColumnTypePattern.matcher(sql);
+	@Override
+	protected String replaceConcat(String sql) {
+		SQLFunctionTransformer sqlFunctionTransformer =
+			new SQLFunctionTransformer(
+				"CONCAT(", StringPool.BLANK, " CONCAT ", StringPool.BLANK);
 
-			return matcher.replaceAll(
-				"ALTER TABLE $1 ALTER COLUMN $2 SET DATA TYPE $3");
-		};
+		return sqlFunctionTransformer.transform(sql);
 	}
 
-	private Function<String, String> _getLikeFunction() {
-		return sql -> {
-			Matcher matcher = _likePattern.matcher(sql);
+	private String _replaceAlterColumnType(String sql) {
+		Matcher matcher = _alterColumnTypePattern.matcher(sql);
 
-			return matcher.replaceAll(
-				"LIKE COALESCE(CAST(? AS VARCHAR(32672)),'')");
-		};
+		return matcher.replaceAll(
+			"ALTER TABLE $1 ALTER COLUMN $2 SET DATA TYPE $3");
+	}
+
+	private String _replaceLike(String sql) {
+		Matcher matcher = _likePattern.matcher(sql);
+
+		return matcher.replaceAll(
+			"LIKE COALESCE(CAST(? AS VARCHAR(32672)),'')");
 	}
 
 	private static final Pattern _alterColumnTypePattern = Pattern.compile(

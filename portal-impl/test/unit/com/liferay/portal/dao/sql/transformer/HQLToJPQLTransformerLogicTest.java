@@ -14,8 +14,6 @@
 
 package com.liferay.portal.dao.sql.transformer;
 
-import java.util.function.Function;
-
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -26,22 +24,18 @@ public class HQLToJPQLTransformerLogicTest {
 
 	@Test
 	public void testReplaceCompositeId() {
-		Function<String, String> function =
-			HQLToJPQLTransformerLogic.getCompositeIdMarkerFunction();
-
 		Assert.assertEquals(
 			"select * from Foo where foo.a = 1",
-			function.apply("select * from Foo where foo\\.id\\.a = 1"));
+			HQLToJPQLTransformerLogic.replaceCompositeIdMarker(
+				"select * from Foo where foo\\.id\\.a = 1"));
 	}
 
 	@Test
 	public void testReplaceNotEquals() {
-		Function<String, String> function =
-			HQLToJPQLTransformerLogic.getNotEqualsFunction();
-
 		Assert.assertEquals(
 			"select * from Foo where foo <> 1",
-			function.apply("select * from Foo where foo != 1"));
+			HQLToJPQLTransformerLogic.replaceNotEquals(
+				"select * from Foo where foo != 1"));
 	}
 
 	@Test
@@ -57,33 +51,26 @@ public class HQLToJPQLTransformerLogicTest {
 			transformedSQL += positionalParameter + i;
 		}
 
-		Function<String, String> positionalParameterFunction =
-			HQLToJPQLTransformerLogic.getPositionalParameterFunction();
-
 		Assert.assertEquals(
-			transformedSQL, positionalParameterFunction.apply(originalSQL));
+			transformedSQL,
+			HQLToJPQLTransformerLogic.replacePositionalParameter(originalSQL));
 	}
 
 	@Test
 	public void testTransformWithNoQuestions() {
 		String sql = "select * from Foo";
 
-		Function<String, String> positionalParameterFunction =
-			HQLToJPQLTransformerLogic.getPositionalParameterFunction();
-
-		Assert.assertEquals(sql, positionalParameterFunction.apply(sql));
+		Assert.assertEquals(
+			sql, HQLToJPQLTransformerLogic.replacePositionalParameter(sql));
 	}
 
 	@Test
 	public void testTransformWithOneQuestion() {
-		Function<String, String> positionalParameterFunction =
-			HQLToJPQLTransformerLogic.getPositionalParameterFunction();
-
 		String sql = "select * from Foo where foo = ?";
 
 		Assert.assertEquals(
 			"select * from Foo where foo = ?1",
-			positionalParameterFunction.apply(sql));
+			HQLToJPQLTransformerLogic.replacePositionalParameter(sql));
 	}
 
 }

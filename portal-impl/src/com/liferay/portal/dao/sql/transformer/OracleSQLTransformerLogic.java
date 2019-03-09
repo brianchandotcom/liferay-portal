@@ -36,26 +36,17 @@ public class OracleSQLTransformerLogic extends BaseSQLTransformerLogic {
 
 		List<Function<String, String>> functions = new ArrayList<>(
 			Arrays.asList(
-				getBooleanFunction(), getCastClobTextFunction(),
-				getCastLongFunction(), getCastTextFunction(),
-				getConcatFunction(), getDropTableIfExistsTextFunction(),
-				getIntegerDivisionFunction(), getNullDateFunction(),
-				_getEscapeFunction(), _getNotEqualsBlankStringFunction()));
+				this::replaceBoolean, this::replaceCastClobText,
+				this::replaceCastLong, this::replaceCastText,
+				this::replaceConcat, this::replaceDropTableIfExistsText,
+				this::replaceIntegerDivision, this::replaceNullDate,
+				this::_replaceEscape, this::_replaceNotEqualsBlankString));
 
 		if (!db.isSupportsStringCaseSensitiveQuery()) {
-			functions.add(getLowerFunction());
+			functions.add(this::replaceLower);
 		}
 
 		setFunctions(functions);
-	}
-
-	@Override
-	protected Function<String, String> getConcatFunction() {
-		SQLFunctionTransformer sqlFunctionTransformer =
-			new SQLFunctionTransformer(
-				"CONCAT(", StringPool.BLANK, " || ", StringPool.BLANK);
-
-		return sqlFunctionTransformer::transform;
 	}
 
 	@Override
@@ -66,6 +57,15 @@ public class OracleSQLTransformerLogic extends BaseSQLTransformerLogic {
 	@Override
 	protected String replaceCastText(Matcher matcher) {
 		return matcher.replaceAll("CAST($1 AS VARCHAR(4000))");
+	}
+
+	@Override
+	protected String replaceConcat(String sql) {
+		SQLFunctionTransformer sqlFunctionTransformer =
+			new SQLFunctionTransformer(
+				"CONCAT(", StringPool.BLANK, " || ", StringPool.BLANK);
+
+		return sqlFunctionTransformer.transform(sql);
 	}
 
 	protected String replaceDropTableIfExistsText(Matcher matcher) {
@@ -91,12 +91,12 @@ public class OracleSQLTransformerLogic extends BaseSQLTransformerLogic {
 		return matcher.replaceAll("TRUNC($1 / $2)");
 	}
 
-	private Function<String, String> _getEscapeFunction() {
-		return sql -> StringUtil.replace(sql, "LIKE ?", "LIKE ? ESCAPE '\\'");
+	private String _replaceEscape(String sql) {
+		return StringUtil.replace(sql, "LIKE ?", "LIKE ? ESCAPE '\\'");
 	}
 
-	private Function<String, String> _getNotEqualsBlankStringFunction() {
-		return sql -> StringUtil.replace(sql, " != ''", " IS NOT NULL");
+	private String _replaceNotEqualsBlankString(String sql) {
+		return StringUtil.replace(sql, " != ''", " IS NOT NULL");
 	}
 
 }

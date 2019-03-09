@@ -39,142 +39,139 @@ public abstract class BaseSQLTransformerLogic implements SQLTransformerLogic {
 		return _functions;
 	}
 
-	protected Function<String, String> getBitwiseCheckFunction() {
-		return sql -> replaceBitwiseCheck(_bitwiseCheckPattern.matcher(sql));
-	}
-
-	protected Function<String, String> getBooleanFunction() {
-		return sql -> StringUtil.replace(
-			sql, new String[] {"[$FALSE$]", "[$TRUE$]"},
-			new String[] {_db.getTemplateFalse(), _db.getTemplateTrue()});
-	}
-
-	protected Function<String, String> getCastClobTextFunction() {
-		return sql -> replaceCastClobText(_castClobTestPattern.matcher(sql));
-	}
-
-	protected Function<String, String> getCastLongFunction() {
-		return sql -> replaceCastLong(_castLongPattern.matcher(sql));
-	}
-
-	protected Function<String, String> getCastTextFunction() {
-		return sql -> replaceCastText(_castTextPattern.matcher(sql));
-	}
-
-	protected Function<String, String> getConcatFunction() {
-		SQLFunctionTransformer sqlFunctionTransformer =
-			new SQLFunctionTransformer(
-				"CONCAT(", StringPool.BLANK, " + ", StringPool.BLANK);
-
-		return sqlFunctionTransformer::transform;
-	}
-
-	protected Function<String, String> getDropTableIfExistsTextFunction() {
-		return sql -> replaceDropTableIfExistsText(
-			_dropTableIfExistsTextPattern.matcher(sql));
-	}
-
-	protected Function<String, String> getInstrFunction() {
-		return sql -> replaceInstr(_instrPattern.matcher(sql));
-	}
-
-	protected Function<String, String> getIntegerDivisionFunction() {
-		return sql -> replaceIntegerDivision(
-			_integerDivisionPattern.matcher(sql));
-	}
-
-	protected Function<String, String> getLengthFunction() {
-		return sql -> StringUtil.replace(sql, "LENGTH(", "LEN(");
-	}
-
-	protected Function<String, String> getLowerFunction() {
-		return sql -> {
-			int x = sql.indexOf(_LOWER_OPEN);
-
-			if (x == -1) {
-				return sql;
-			}
-
-			StringBuilder sb = new StringBuilder(sql.length());
-
-			int y = 0;
-
-			while (true) {
-				sb.append(sql.substring(y, x));
-
-				y = sql.indexOf(_LOWER_CLOSE, x);
-
-				if (y == -1) {
-					sb.append(sql.substring(x));
-
-					break;
-				}
-
-				sb.append(sql.substring(x + _LOWER_OPEN.length(), y));
-
-				y++;
-
-				x = sql.indexOf(_LOWER_OPEN, y);
-
-				if (x == -1) {
-					sb.append(sql.substring(y));
-
-					break;
-				}
-			}
-
-			sql = sb.toString();
-
-			return sql;
-		};
-	}
-
-	protected Function<String, String> getModFunction() {
-		return sql -> replaceMod(_modPattern.matcher(sql));
-	}
-
-	protected Function<String, String> getNullDateFunction() {
-		return sql -> StringUtil.replace(sql, "[$NULL_DATE$]", "NULL");
-	}
-
-	protected Function<String, String> getSubstrFunction() {
-		return sql -> replaceSubstr(_substrPattern.matcher(sql));
-	}
-
 	protected String replaceBitwiseCheck(Matcher matcher) {
 		return matcher.replaceAll("($1 & $2)");
+	}
+
+	protected String replaceBitwiseCheck(String sql) {
+		return replaceBitwiseCheck(_bitwiseCheckPattern.matcher(sql));
+	}
+
+	protected String replaceBoolean(String sql) {
+		return StringUtil.replace(
+			sql, new String[] {"[$FALSE$]", "[$TRUE$]"},
+			new String[] {_db.getTemplateFalse(), _db.getTemplateTrue()});
 	}
 
 	protected String replaceCastClobText(Matcher matcher) {
 		return replaceCastText(matcher);
 	}
 
+	protected String replaceCastClobText(String sql) {
+		return replaceCastClobText(_castClobTestPattern.matcher(sql));
+	}
+
 	protected String replaceCastLong(Matcher matcher) {
 		return matcher.replaceAll("$1");
+	}
+
+	protected String replaceCastLong(String sql) {
+		return replaceCastLong(_castLongPattern.matcher(sql));
 	}
 
 	protected String replaceCastText(Matcher matcher) {
 		return matcher.replaceAll("$1");
 	}
 
+	protected String replaceCastText(String sql) {
+		return replaceCastText(_castTextPattern.matcher(sql));
+	}
+
+	protected String replaceConcat(String sql) {
+		SQLFunctionTransformer sqlFunctionTransformer =
+			new SQLFunctionTransformer(
+				"CONCAT(", StringPool.BLANK, " + ", StringPool.BLANK);
+
+		return sqlFunctionTransformer.transform(sql);
+	}
+
 	protected String replaceDropTableIfExistsText(Matcher matcher) {
 		return matcher.replaceAll("DROP TABLE IF EXISTS $1");
+	}
+
+	protected String replaceDropTableIfExistsText(String sql) {
+		return replaceDropTableIfExistsText(
+			_dropTableIfExistsTextPattern.matcher(sql));
 	}
 
 	protected String replaceInstr(Matcher matcher) {
 		return matcher.replaceAll("CHARINDEX($2, $1)");
 	}
 
+	protected String replaceInstr(String sql) {
+		return replaceInstr(_instrPattern.matcher(sql));
+	}
+
 	protected String replaceIntegerDivision(Matcher matcher) {
 		return matcher.replaceAll("$1 / $2");
+	}
+
+	protected String replaceIntegerDivision(String sql) {
+		return replaceIntegerDivision(_integerDivisionPattern.matcher(sql));
+	}
+
+	protected String replaceLength(String sql) {
+		return StringUtil.replace(sql, "LENGTH(", "LEN(");
+	}
+
+	protected String replaceLower(String sql) {
+		int x = sql.indexOf(_LOWER_OPEN);
+
+		if (x == -1) {
+			return sql;
+		}
+
+		StringBuilder sb = new StringBuilder(sql.length());
+
+		int y = 0;
+
+		while (true) {
+			sb.append(sql.substring(y, x));
+
+			y = sql.indexOf(_LOWER_CLOSE, x);
+
+			if (y == -1) {
+				sb.append(sql.substring(x));
+
+				break;
+			}
+
+			sb.append(sql.substring(x + _LOWER_OPEN.length(), y));
+
+			y++;
+
+			x = sql.indexOf(_LOWER_OPEN, y);
+
+			if (x == -1) {
+				sb.append(sql.substring(y));
+
+				break;
+			}
+		}
+
+		sql = sb.toString();
+
+		return sql;
 	}
 
 	protected String replaceMod(Matcher matcher) {
 		return matcher.replaceAll("$1 % $2");
 	}
 
+	protected String replaceMod(String sql) {
+		return replaceMod(_modPattern.matcher(sql));
+	}
+
+	protected String replaceNullDate(String sql) {
+		return StringUtil.replace(sql, "[$NULL_DATE$]", "NULL");
+	}
+
 	protected String replaceSubstr(Matcher matcher) {
 		return matcher.replaceAll("SUBSTRING($1, $2, $3)");
+	}
+
+	protected String replaceSubstr(String sql) {
+		return replaceSubstr(_substrPattern.matcher(sql));
 	}
 
 	protected void setFunctions(List<Function<String, String>> functions) {

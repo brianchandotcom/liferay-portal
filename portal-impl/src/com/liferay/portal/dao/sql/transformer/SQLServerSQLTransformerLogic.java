@@ -32,15 +32,15 @@ public class SQLServerSQLTransformerLogic extends BaseSQLTransformerLogic {
 
 		List<Function<String, String>> functions = new ArrayList<>(
 			Arrays.asList(
-				getBitwiseCheckFunction(), getBooleanFunction(),
-				getCastClobTextFunction(), getCastLongFunction(),
-				getCastTextFunction(), getConcatFunction(),
-				getDropTableIfExistsTextFunction(), getInstrFunction(),
-				getIntegerDivisionFunction(), getLengthFunction(),
-				getModFunction(), getNullDateFunction(), getSubstrFunction()));
+				this::replaceBitwiseCheck, this::replaceBoolean,
+				this::replaceCastClobText, this::replaceCastLong,
+				this::replaceCastText, this::replaceConcat,
+				this::replaceDropTableIfExistsText, this::replaceInstr,
+				this::replaceIntegerDivision, this::replaceLength,
+				this::replaceMod, this::replaceNullDate, this::replaceSubstr));
 
 		if (!db.isSupportsStringCaseSensitiveQuery()) {
-			functions.add(getLowerFunction());
+			functions.add(this::replaceLower);
 		}
 
 		setFunctions(functions);

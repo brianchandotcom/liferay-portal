@@ -369,10 +369,7 @@ definition {
 	macro moveToRecycleBinCP {
 		var key_entryTitle = "${entryTitle}";
 
-		AssertTextEquals(
-			locator1 = "Blogs#DESCRIPTIVE_VIEW_ENTRY_TITLE",
-			value1 = "${entryTitle}"
-		);
+		Blogs.viewEntryTitle(entryTitle = "${entryTitle}");
 
 		Click(
 			locator1 = "LexiconList#LIST_ENTRY_ELLIPSIS",
@@ -387,10 +384,7 @@ definition {
 	macro moveToRecycleBinDraftCP {
 		var key_entryTitle = "${entryTitle}";
 
-		AssertTextEquals(
-			locator1 = "Blogs#DESCRIPTIVE_VIEW_ENTRY_TITLE",
-			value1 = "${entryTitle}"
-		);
+		Blogs.viewEntryTitle(entryTitle = "${entryTitle}");
 
 		AssertTextEquals(
 			locator1 = "Blogs#DESCRIPTIVE_VIEW_ENTRY_STATUS",
@@ -570,10 +564,7 @@ definition {
 
 		Search.searchCP(searchTerm = "${entrySearchTerm}");
 
-		AssertTextEquals(
-			locator1 = "Blogs#DESCRIPTIVE_VIEW_ENTRY_TITLE",
-			value1 = "${entryTitle}"
-		);
+		Blogs.viewEntryTitle(entryTitle = "${entryTitle}");
 	}
 
 	macro searchNoCP {

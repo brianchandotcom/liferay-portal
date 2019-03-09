@@ -862,10 +862,7 @@ definition {
 
 		var key_entryTitle = "Blogs Entry Title";
 
-		AssertTextEquals(
-			locator1 = "Blogs#DESCRIPTIVE_VIEW_ENTRY_TITLE",
-			value1 = "Blogs Entry Title"
-		);
+		Blogs.viewEntryTitle(entryTitle = "Blogs Entry Title");
 
 		AssertTextEquals(
 			locator1 = "Blogs#DESCRIPTIVE_VIEW_ENTRY_STATUS",

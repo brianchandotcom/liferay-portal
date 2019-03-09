@@ -350,10 +350,7 @@ definition {
 
 		var key_entryTitle = "${entryTitle}";
 
-		AssertTextEquals(
-			locator1 = "Blogs#DESCRIPTIVE_VIEW_ENTRY_TITLE",
-			value1 = "${entryTitle}"
-		);
+		Blogs.viewEntryTitle(entryTitle = "${entryTitle}");
 
 		Click(
 			locator1 = "LexiconList#LIST_ENTRY_ELLIPSIS",

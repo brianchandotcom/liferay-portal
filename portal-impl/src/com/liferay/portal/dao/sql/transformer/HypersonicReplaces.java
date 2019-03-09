@@ -26,12 +26,12 @@ public class HypersonicReplaces {
 
 	public static void addReplaces(List<Function<String, String>> functions) {
 		Collections.addAll(
-			functions, HypersonicReplaces::_replaceCastClobText,
+			functions, CommonReplaces::replaceIntegerDivision,
+			CommonReplaces::replaceNullDate,
+			HypersonicReplaces::_replaceCastClobText,
 			HypersonicReplaces::_replaceCastLong,
 			HypersonicReplaces::_replaceCastText,
-			HypersonicReplaces::_replaceDropTableIfExistsText,
-			CommonReplaces::replaceIntegerDivision,
-			CommonReplaces::replaceNullDate);
+			HypersonicReplaces::_replaceDropTableIfExistsText);
 	}
 
 	private static String _replaceCastClobText(String sql) {

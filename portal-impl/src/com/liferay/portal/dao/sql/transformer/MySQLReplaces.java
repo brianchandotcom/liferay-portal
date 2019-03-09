@@ -30,8 +30,8 @@ public class MySQLReplaces {
 			CommonReplaces::replaceCastClobText,
 			CommonReplaces::replaceCastLong, CommonReplaces::replaceCastText,
 			CommonReplaces::replaceDropTableIfExistsText,
-			MySQLReplaces::_replaceIntegerDivision,
-			CommonReplaces::replaceNullDate);
+			CommonReplaces::replaceNullDate,
+			MySQLReplaces::_replaceIntegerDivision);
 	}
 
 	private static String _replaceIntegerDivision(String sql) {

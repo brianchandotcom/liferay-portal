@@ -30,12 +30,12 @@ public class PostgreSQLReplaces {
 	public static void addReplaces(List<Function<String, String>> functions) {
 		Collections.addAll(
 			functions, CommonReplaces::replaceBitwiseCheck,
+			CommonReplaces::replaceDropTableIfExistsText,
+			CommonReplaces::replaceIntegerDivision,
 			PostgreSQLReplaces::_replaceCastClobText,
 			PostgreSQLReplaces::_replaceCastLong,
 			PostgreSQLReplaces::_replaceCastText,
-			CommonReplaces::replaceDropTableIfExistsText,
 			PostgreSQLReplaces::_replaceInstr,
-			CommonReplaces::replaceIntegerDivision,
 			PostgreSQLReplaces::_replaceNegativeComparison,
 			PostgreSQLReplaces::_replaceNullDate);
 	}

@@ -31,12 +31,13 @@ public class OracleReplaces {
 
 	public static void addReplaces(List<Function<String, String>> functions) {
 		Collections.addAll(
-			functions, OracleReplaces::_replaceCastClobText,
-			CommonReplaces::replaceCastLong, OracleReplaces::_replaceCastText,
-			OracleReplaces::_replaceConcat,
+			functions, CommonReplaces::replaceCastLong,
+			CommonReplaces::replaceNullDate,
+			OracleReplaces::_replaceCastClobText,
+			OracleReplaces::_replaceCastText, OracleReplaces::_replaceConcat,
 			OracleReplaces::_replaceDropTableIfExistsText,
 			OracleReplaces::_replaceIntegerDivision,
-			CommonReplaces::replaceNullDate, OracleReplaces::_replaceEscape,
+			OracleReplaces::_replaceEscape,
 			OracleReplaces::_replaceNotEqualsBlankString);
 	}
 

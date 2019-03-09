@@ -30,12 +30,11 @@ public class DB2Replaces {
 
 	public static void addReplaces(List<Function<String, String>> functions) {
 		Collections.addAll(
-			functions, DB2Replaces::_replaceCastClobText,
-			CommonReplaces::replaceCastLong, DB2Replaces::_replaceCastText,
-			DB2Replaces::_replaceConcat,
+			functions, CommonReplaces::replaceCastLong,
 			CommonReplaces::replaceDropTableIfExistsText,
 			CommonReplaces::replaceIntegerDivision,
-			CommonReplaces::replaceNullDate,
+			CommonReplaces::replaceNullDate, DB2Replaces::_replaceCastClobText,
+			DB2Replaces::_replaceCastText, DB2Replaces::_replaceConcat,
 			DB2Replaces::_replaceAlterColumnType, DB2Replaces::_replaceLike);
 	}
 

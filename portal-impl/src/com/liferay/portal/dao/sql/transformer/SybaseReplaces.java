@@ -30,14 +30,14 @@ public class SybaseReplaces {
 	public static void addReplaces(List<Function<String, String>> functions) {
 		Collections.addAll(
 			functions, CommonReplaces::replaceBitwiseCheck,
-			SybaseReplaces::_replaceCastClobText,
-			SybaseReplaces::_replaceCastLong, SybaseReplaces::_replaceCastText,
 			CommonReplaces::replaceConcat,
 			CommonReplaces::replaceDropTableIfExistsText,
 			CommonReplaces::replaceInstr,
 			CommonReplaces::replaceIntegerDivision,
 			CommonReplaces::replaceLength, CommonReplaces::replaceMod,
 			CommonReplaces::replaceNullDate, CommonReplaces::replaceSubstr,
+			SybaseReplaces::_replaceCastClobText,
+			SybaseReplaces::_replaceCastLong, SybaseReplaces::_replaceCastText,
 			SybaseReplaces::_replaceCrossJoin, SybaseReplaces::_replaceReplace);
 	}
 

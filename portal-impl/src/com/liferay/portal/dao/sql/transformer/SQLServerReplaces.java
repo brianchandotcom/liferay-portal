@@ -27,14 +27,14 @@ public class SQLServerReplaces {
 	public static void addReplaces(List<Function<String, String>> functions) {
 		Collections.addAll(
 			functions, CommonReplaces::replaceBitwiseCheck,
-			SQLServerReplaces::_replaceCastClobText,
-			CommonReplaces::replaceCastLong,
-			SQLServerReplaces::_replaceCastText, CommonReplaces::replaceConcat,
-			SQLServerReplaces::_replaceDropTableIfExistsText,
+			CommonReplaces::replaceCastLong, CommonReplaces::replaceConcat,
 			CommonReplaces::replaceInstr,
 			CommonReplaces::replaceIntegerDivision,
 			CommonReplaces::replaceLength, CommonReplaces::replaceMod,
-			CommonReplaces::replaceNullDate, CommonReplaces::replaceSubstr);
+			CommonReplaces::replaceNullDate, CommonReplaces::replaceSubstr,
+			SQLServerReplaces::_replaceCastClobText,
+			SQLServerReplaces::_replaceCastText,
+			SQLServerReplaces::_replaceDropTableIfExistsText);
 	}
 
 	private static String _replaceCastClobText(String sql) {

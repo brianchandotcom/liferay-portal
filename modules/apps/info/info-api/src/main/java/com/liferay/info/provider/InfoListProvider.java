@@ -19,6 +19,9 @@ import aQute.bnd.annotation.ConsumerType;
 import com.liferay.info.pagination.Pagination;
 import com.liferay.portal.kernel.search.Sort;
 
+import java.lang.reflect.ParameterizedType;
+import java.lang.reflect.Type;
+
 import java.util.List;
 import java.util.Locale;
 
@@ -34,6 +37,28 @@ public interface InfoListProvider<T> {
 		InfoListProviderContext context, Pagination pagination, Sort sort);
 
 	public int getInfoListCount(InfoListProviderContext context);
+
+	public default Class getItemClass() {
+		Class<?> infoListProviderClass = getClass();
+
+		Type[] genericInterfaceTypess =
+			infoListProviderClass.getGenericInterfaces();
+
+		for (Type genericInterfaceType : genericInterfaceTypess) {
+			ParameterizedType parameterizedType =
+				(ParameterizedType)genericInterfaceType;
+
+			Class<?> clazz = (Class)parameterizedType.getRawType();
+
+			if (!clazz.equals(InfoListProvider.class)) {
+				continue;
+			}
+
+			return (Class<?>)parameterizedType.getActualTypeArguments()[0];
+		}
+
+		return Object.class;
+	}
 
 	public String getLabel(Locale locale);
 

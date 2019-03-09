@@ -32,52 +32,56 @@ public class PostgreSQLTransformerLogic extends BaseSQLTransformerLogic {
 	public PostgreSQLTransformerLogic(DB db) {
 		List<Function<String, String>> functions = new ArrayList<>(
 			Arrays.asList(
-				this::replaceBitwiseCheck,
+				BaseSQLTransformerLogic::replaceBitwiseCheck,
 				sql -> replaceBoolean(
 					sql, db.getTemplateFalse(), db.getTemplateTrue()),
-				this::_replaceCastClobText, this::_replaceCastLong,
-				this::_replaceCastText, this::replaceDropTableIfExistsText,
-				this::_replaceInstr, this::replaceIntegerDivision,
-				this::_replaceNegativeComparison, this::_replaceNullDate));
+				PostgreSQLTransformerLogic::_replaceCastClobText,
+				PostgreSQLTransformerLogic::_replaceCastLong,
+				PostgreSQLTransformerLogic::_replaceCastText,
+				BaseSQLTransformerLogic::replaceDropTableIfExistsText,
+				PostgreSQLTransformerLogic::_replaceInstr,
+				BaseSQLTransformerLogic::replaceIntegerDivision,
+				PostgreSQLTransformerLogic::_replaceNegativeComparison,
+				PostgreSQLTransformerLogic::_replaceNullDate));
 
 		if (!db.isSupportsStringCaseSensitiveQuery()) {
-			functions.add(this::replaceLower);
+			functions.add(BaseSQLTransformerLogic::replaceLower);
 		}
 
 		setFunctions(functions);
 	}
 
-	private String _replaceCastClobText(String sql) {
+	private static String _replaceCastClobText(String sql) {
 		Matcher matcher = castClobTestPattern.matcher(sql);
 
 		return matcher.replaceAll("CAST($1 AS TEXT)");
 	}
 
-	private String _replaceCastLong(String sql) {
+	private static String _replaceCastLong(String sql) {
 		Matcher matcher = castLongPattern.matcher(sql);
 
 		return matcher.replaceAll("CAST($1 AS INTEGER)");
 	}
 
-	private String _replaceCastText(String sql) {
+	private static String _replaceCastText(String sql) {
 		Matcher matcher = castTextPattern.matcher(sql);
 
 		return matcher.replaceAll("CAST($1 AS TEXT)");
 	}
 
-	private String _replaceInstr(String sql) {
+	private static String _replaceInstr(String sql) {
 		Matcher matcher = instrPattern.matcher(sql);
 
 		return matcher.replaceAll("POSITION($2 in $1)");
 	}
 
-	private String _replaceNegativeComparison(String sql) {
+	private static String _replaceNegativeComparison(String sql) {
 		Matcher matcher = _negativeComparisonPattern.matcher(sql);
 
 		return matcher.replaceAll("$1 ($2)");
 	}
 
-	private String _replaceNullDate(String sql) {
+	private static String _replaceNullDate(String sql) {
 		return StringUtil.replace(
 			sql, "[$NULL_DATE$]", "CAST(NULL AS TIMESTAMP)");
 	}

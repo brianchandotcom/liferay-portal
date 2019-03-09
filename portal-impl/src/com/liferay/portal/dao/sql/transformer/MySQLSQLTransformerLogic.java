@@ -30,21 +30,24 @@ public class MySQLSQLTransformerLogic extends BaseSQLTransformerLogic {
 	public MySQLSQLTransformerLogic(DB db) {
 		List<Function<String, String>> functions = new ArrayList<>(
 			Arrays.asList(
-				this::replaceBitwiseCheck,
+				BaseSQLTransformerLogic::replaceBitwiseCheck,
 				sql -> replaceBoolean(
 					sql, db.getTemplateFalse(), db.getTemplateTrue()),
-				this::replaceCastClobText, this::replaceCastLong,
-				this::replaceCastText, this::replaceDropTableIfExistsText,
-				this::_replaceIntegerDivision, this::replaceNullDate));
+				BaseSQLTransformerLogic::replaceCastClobText,
+				BaseSQLTransformerLogic::replaceCastLong,
+				BaseSQLTransformerLogic::replaceCastText,
+				BaseSQLTransformerLogic::replaceDropTableIfExistsText,
+				MySQLSQLTransformerLogic::_replaceIntegerDivision,
+				BaseSQLTransformerLogic::replaceNullDate));
 
 		if (!db.isSupportsStringCaseSensitiveQuery()) {
-			functions.add(this::replaceLower);
+			functions.add(BaseSQLTransformerLogic::replaceLower);
 		}
 
 		setFunctions(functions);
 	}
 
-	private String _replaceIntegerDivision(String sql) {
+	private static String _replaceIntegerDivision(String sql) {
 		Matcher matcher = integerDivisionPattern.matcher(sql);
 
 		return matcher.replaceAll("$1 DIV $2");

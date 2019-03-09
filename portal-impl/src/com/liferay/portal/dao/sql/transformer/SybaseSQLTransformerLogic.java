@@ -32,46 +32,53 @@ public class SybaseSQLTransformerLogic extends BaseSQLTransformerLogic {
 	public SybaseSQLTransformerLogic(DB db) {
 		List<Function<String, String>> functions = new ArrayList<>(
 			Arrays.asList(
-				this::replaceBitwiseCheck,
+				BaseSQLTransformerLogic::replaceBitwiseCheck,
 				sql -> replaceBoolean(
 					sql, db.getTemplateFalse(), db.getTemplateTrue()),
-				this::_replaceCastClobText, this::_replaceCastLong,
-				this::_replaceCastText, this::replaceConcat,
-				this::replaceDropTableIfExistsText, this::replaceInstr,
-				this::replaceIntegerDivision, this::replaceLength,
-				this::replaceMod, this::replaceNullDate, this::replaceSubstr,
-				this::_replaceCrossJoin, this::_replaceReplace));
+				SybaseSQLTransformerLogic::_replaceCastClobText,
+				SybaseSQLTransformerLogic::_replaceCastLong,
+				SybaseSQLTransformerLogic::_replaceCastText,
+				BaseSQLTransformerLogic::replaceConcat,
+				BaseSQLTransformerLogic::replaceDropTableIfExistsText,
+				BaseSQLTransformerLogic::replaceInstr,
+				BaseSQLTransformerLogic::replaceIntegerDivision,
+				BaseSQLTransformerLogic::replaceLength,
+				BaseSQLTransformerLogic::replaceMod,
+				BaseSQLTransformerLogic::replaceNullDate,
+				BaseSQLTransformerLogic::replaceSubstr,
+				SybaseSQLTransformerLogic::_replaceCrossJoin,
+				SybaseSQLTransformerLogic::_replaceReplace));
 
 		if (!db.isSupportsStringCaseSensitiveQuery()) {
-			functions.add(this::replaceLower);
+			functions.add(BaseSQLTransformerLogic::replaceLower);
 		}
 
 		setFunctions(functions);
 	}
 
-	private String _replaceCastClobText(String sql) {
+	private static String _replaceCastClobText(String sql) {
 		Matcher matcher = castClobTestPattern.matcher(sql);
 
 		return matcher.replaceAll("CAST($1 AS NVARCHAR(5461))");
 	}
 
-	private String _replaceCastLong(String sql) {
+	private static String _replaceCastLong(String sql) {
 		Matcher matcher = castLongPattern.matcher(sql);
 
 		return matcher.replaceAll("CONVERT(BIGINT, $1)");
 	}
 
-	private String _replaceCastText(String sql) {
+	private static String _replaceCastText(String sql) {
 		Matcher matcher = castTextPattern.matcher(sql);
 
 		return matcher.replaceAll("CAST($1 AS NVARCHAR(5461))");
 	}
 
-	private String _replaceCrossJoin(String sql) {
+	private static String _replaceCrossJoin(String sql) {
 		return StringUtil.replace(sql, "CROSS JOIN", StringPool.COMMA);
 	}
 
-	private String _replaceReplace(String sql) {
+	private static String _replaceReplace(String sql) {
 		return sql.replaceAll("(?i)replace\\(", "str_replace(");
 	}
 

@@ -30,35 +30,41 @@ public class SQLServerSQLTransformerLogic extends BaseSQLTransformerLogic {
 	public SQLServerSQLTransformerLogic(DB db) {
 		List<Function<String, String>> functions = new ArrayList<>(
 			Arrays.asList(
-				this::replaceBitwiseCheck,
+				BaseSQLTransformerLogic::replaceBitwiseCheck,
 				sql -> replaceBoolean(
 					sql, db.getTemplateFalse(), db.getTemplateTrue()),
-				this::_replaceCastClobText, this::replaceCastLong,
-				this::_replaceCastText, this::replaceConcat,
-				this::_replaceDropTableIfExistsText, this::replaceInstr,
-				this::replaceIntegerDivision, this::replaceLength,
-				this::replaceMod, this::replaceNullDate, this::replaceSubstr));
+				SQLServerSQLTransformerLogic::_replaceCastClobText,
+				BaseSQLTransformerLogic::replaceCastLong,
+				SQLServerSQLTransformerLogic::_replaceCastText,
+				BaseSQLTransformerLogic::replaceConcat,
+				SQLServerSQLTransformerLogic::_replaceDropTableIfExistsText,
+				BaseSQLTransformerLogic::replaceInstr,
+				BaseSQLTransformerLogic::replaceIntegerDivision,
+				BaseSQLTransformerLogic::replaceLength,
+				BaseSQLTransformerLogic::replaceMod,
+				BaseSQLTransformerLogic::replaceNullDate,
+				BaseSQLTransformerLogic::replaceSubstr));
 
 		if (!db.isSupportsStringCaseSensitiveQuery()) {
-			functions.add(this::replaceLower);
+			functions.add(BaseSQLTransformerLogic::replaceLower);
 		}
 
 		setFunctions(functions);
 	}
 
-	private String _replaceCastClobText(String sql) {
+	private static String _replaceCastClobText(String sql) {
 		Matcher matcher = castClobTestPattern.matcher(sql);
 
 		return matcher.replaceAll("CAST($1 AS NVARCHAR(MAX))");
 	}
 
-	private String _replaceCastText(String sql) {
+	private static String _replaceCastText(String sql) {
 		Matcher matcher = castTextPattern.matcher(sql);
 
 		return matcher.replaceAll("CAST($1 AS NVARCHAR(MAX))");
 	}
 
-	private String _replaceDropTableIfExistsText(String sql) {
+	private static String _replaceDropTableIfExistsText(String sql) {
 		Matcher matcher = dropTableIfExistsTextPattern.matcher(sql);
 
 		String dropTableIfExists =

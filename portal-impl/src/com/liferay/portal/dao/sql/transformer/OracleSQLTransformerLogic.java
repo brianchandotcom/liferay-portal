@@ -36,32 +36,36 @@ public class OracleSQLTransformerLogic extends BaseSQLTransformerLogic {
 			Arrays.asList(
 				sql -> replaceBoolean(
 					sql, db.getTemplateFalse(), db.getTemplateTrue()),
-				this::_replaceCastClobText, this::replaceCastLong,
-				this::_replaceCastText, this::_replaceConcat,
-				this::_replaceDropTableIfExistsText,
-				this::_replaceIntegerDivision, this::replaceNullDate,
-				this::_replaceEscape, this::_replaceNotEqualsBlankString));
+				OracleSQLTransformerLogic::_replaceCastClobText,
+				BaseSQLTransformerLogic::replaceCastLong,
+				OracleSQLTransformerLogic::_replaceCastText,
+				OracleSQLTransformerLogic::_replaceConcat,
+				OracleSQLTransformerLogic::_replaceDropTableIfExistsText,
+				OracleSQLTransformerLogic::_replaceIntegerDivision,
+				BaseSQLTransformerLogic::replaceNullDate,
+				OracleSQLTransformerLogic::_replaceEscape,
+				OracleSQLTransformerLogic::_replaceNotEqualsBlankString));
 
 		if (!db.isSupportsStringCaseSensitiveQuery()) {
-			functions.add(this::replaceLower);
+			functions.add(BaseSQLTransformerLogic::replaceLower);
 		}
 
 		setFunctions(functions);
 	}
 
-	private String _replaceCastClobText(String sql) {
+	private static String _replaceCastClobText(String sql) {
 		Matcher matcher = castClobTestPattern.matcher(sql);
 
 		return matcher.replaceAll("DBMS_LOB.SUBSTR($1, 4000, 1)");
 	}
 
-	private String _replaceCastText(String sql) {
+	private static String _replaceCastText(String sql) {
 		Matcher matcher = castTextPattern.matcher(sql);
 
 		return matcher.replaceAll("CAST($1 AS VARCHAR(4000))");
 	}
 
-	private String _replaceConcat(String sql) {
+	private static String _replaceConcat(String sql) {
 		SQLFunctionTransformer sqlFunctionTransformer =
 			new SQLFunctionTransformer(
 				"CONCAT(", StringPool.BLANK, " || ", StringPool.BLANK);
@@ -69,7 +73,7 @@ public class OracleSQLTransformerLogic extends BaseSQLTransformerLogic {
 		return sqlFunctionTransformer.transform(sql);
 	}
 
-	private String _replaceDropTableIfExistsText(String sql) {
+	private static String _replaceDropTableIfExistsText(String sql) {
 		Matcher matcher = dropTableIfExistsTextPattern.matcher(sql);
 
 		StringBundler sb = new StringBundler(9);
@@ -89,17 +93,17 @@ public class OracleSQLTransformerLogic extends BaseSQLTransformerLogic {
 		return matcher.replaceAll(dropTableIfExists);
 	}
 
-	private String _replaceEscape(String sql) {
+	private static String _replaceEscape(String sql) {
 		return StringUtil.replace(sql, "LIKE ?", "LIKE ? ESCAPE '\\'");
 	}
 
-	private String _replaceIntegerDivision(String sql) {
+	private static String _replaceIntegerDivision(String sql) {
 		Matcher matcher = integerDivisionPattern.matcher(sql);
 
 		return matcher.replaceAll("TRUNC($1 / $2)");
 	}
 
-	private String _replaceNotEqualsBlankString(String sql) {
+	private static String _replaceNotEqualsBlankString(String sql) {
 		return StringUtil.replace(sql, " != ''", " IS NOT NULL");
 	}
 

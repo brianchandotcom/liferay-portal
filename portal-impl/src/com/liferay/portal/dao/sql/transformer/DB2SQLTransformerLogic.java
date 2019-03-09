@@ -35,39 +35,43 @@ public class DB2SQLTransformerLogic extends BaseSQLTransformerLogic {
 			Arrays.asList(
 				sql -> replaceBoolean(
 					sql, db.getTemplateFalse(), db.getTemplateTrue()),
-				this::_replaceCastClobText, this::replaceCastLong,
-				this::_replaceCastText, this::_replaceConcat,
-				this::replaceDropTableIfExistsText,
-				this::replaceIntegerDivision, this::replaceNullDate,
-				this::_replaceAlterColumnType, this::_replaceLike));
+				DB2SQLTransformerLogic::_replaceCastClobText,
+				BaseSQLTransformerLogic::replaceCastLong,
+				DB2SQLTransformerLogic::_replaceCastText,
+				DB2SQLTransformerLogic::_replaceConcat,
+				BaseSQLTransformerLogic::replaceDropTableIfExistsText,
+				BaseSQLTransformerLogic::replaceIntegerDivision,
+				BaseSQLTransformerLogic::replaceNullDate,
+				DB2SQLTransformerLogic::_replaceAlterColumnType,
+				DB2SQLTransformerLogic::_replaceLike));
 
 		if (!db.isSupportsStringCaseSensitiveQuery()) {
-			functions.add(this::replaceLower);
+			functions.add(BaseSQLTransformerLogic::replaceLower);
 		}
 
 		setFunctions(functions);
 	}
 
-	private String _replaceAlterColumnType(String sql) {
+	private static String _replaceAlterColumnType(String sql) {
 		Matcher matcher = _alterColumnTypePattern.matcher(sql);
 
 		return matcher.replaceAll(
 			"ALTER TABLE $1 ALTER COLUMN $2 SET DATA TYPE $3");
 	}
 
-	private String _replaceCastClobText(String sql) {
+	private static String _replaceCastClobText(String sql) {
 		Matcher matcher = castClobTestPattern.matcher(sql);
 
 		return matcher.replaceAll("CAST($1 AS VARCHAR(254))");
 	}
 
-	private String _replaceCastText(String sql) {
+	private static String _replaceCastText(String sql) {
 		Matcher matcher = castTextPattern.matcher(sql);
 
 		return matcher.replaceAll("CAST($1 AS VARCHAR(254))");
 	}
 
-	private String _replaceConcat(String sql) {
+	private static String _replaceConcat(String sql) {
 		SQLFunctionTransformer sqlFunctionTransformer =
 			new SQLFunctionTransformer(
 				"CONCAT(", StringPool.BLANK, " CONCAT ", StringPool.BLANK);
@@ -75,7 +79,7 @@ public class DB2SQLTransformerLogic extends BaseSQLTransformerLogic {
 		return sqlFunctionTransformer.transform(sql);
 	}
 
-	private String _replaceLike(String sql) {
+	private static String _replaceLike(String sql) {
 		Matcher matcher = _likePattern.matcher(sql);
 
 		return matcher.replaceAll(

@@ -102,7 +102,7 @@ public abstract class BaseHighlighterTestCase extends BaseIndexingTestCase {
 				searchHitList.forEach(
 					searchHit -> {
 						Map<String, HighlightField> highlightFields =
-							searchHit.getHighlightFields();
+							searchHit.getHighlightFieldsMap();
 
 						HighlightField highlightField = highlightFields.get(
 							fieldName);

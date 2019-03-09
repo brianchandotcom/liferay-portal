@@ -134,7 +134,7 @@ public abstract class BaseTopHitsAggregationTestCase
 			Assert.assertEquals(priority, document.getField(Field.PRIORITY));
 		}
 		else {
-			Map<String, Object> sourceMap = searchHit.getSourceMap();
+			Map<String, Object> sourceMap = searchHit.getSourcesMap();
 
 			Assert.assertEquals(priority, sourceMap.get(Field.PRIORITY));
 		}

@@ -54,7 +54,7 @@ definition {
 
 		WikiNavigator.gotoNode(wikiNodeName = "Main");
 
-		WikiNavigator.gotoFrontPageCP();
+		WikiNavigator.gotoCP(wikiPageTitle = "FrontPage");
 
 		WikiPage.viewFrontPageCP(
 			portletName = "Wiki",
@@ -501,7 +501,7 @@ definition {
 
 		WikiNavigator.gotoNode(wikiNodeName = "Main");
 
-		WikiNavigator.gotoFrontPageCP();
+		WikiNavigator.gotoCP(wikiPageTitle = "FrontPage");
 
 		WikiPage.viewFrontPageDefaultCP(
 			wikiFrontPageContent = "Wiki FrontPage Content",

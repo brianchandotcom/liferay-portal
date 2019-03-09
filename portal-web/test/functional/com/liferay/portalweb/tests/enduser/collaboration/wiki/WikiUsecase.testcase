@@ -235,7 +235,7 @@ definition {
 
 		WikiNavigator.gotoNode(wikiNodeName = "Main");
 
-		WikiNavigator.gotoFrontPageCP();
+		WikiNavigator.gotoCP(wikiPageTitle = "FrontPage");
 
 		WikiPage.viewFrontPageDefaultCP(wikiPageTitle = "FrontPage");
 	}
@@ -277,19 +277,9 @@ definition {
 
 		Refresh();
 
-		LexiconEntry.changeDisplayStyle(displayStyle = "list");
+		WikiNavigator.gotoNode(wikiNodeName = "Organic Research Projects");
 
-		AssertClick(
-			locator1 = "Wiki#DESCRIPTIVE_VIEW_ENTRY_TITLE",
-			value1 = "Organic Research Projects",
-			key_wikiPageTitle = "Organic Research Projects"
-		);
-
-		AssertClick(
-			locator1 = "Wiki#DESCRIPTIVE_VIEW_ENTRY_TITLE",
-			value1 = "FrontPage",
-			key_wikiPageTitle = "FrontPage"
-		);
+		WikiNavigator.gotoCP(wikiPageTitle = "FrontPage");
 
 		AssertClick(locator1 = "WikiEntry#BODY_LINK", value1 = "Sweet Potatoes");
 
@@ -439,7 +429,7 @@ definition {
 
 		WikiNavigator.gotoNode(wikiNodeName = "Main");
 
-		WikiNavigator.gotoFrontPageCP();
+		WikiNavigator.gotoCP(wikiPageTitle = "FrontPage");
 
 		WikiPage.viewFrontPageCP(
 			wikiFrontPageContent = "Wiki FrontPage Content",

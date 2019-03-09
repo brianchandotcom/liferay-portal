@@ -110,19 +110,6 @@ definition {
 		);
 	}
 
-	macro gotoFrontPageCP {
-		LexiconEntry.changeDisplayStyle(displayStyle = "list");
-
-		var key_wikiPageTitle = "FrontPage";
-
-		AssertClick(
-			locator1 = "Wiki#DESCRIPTIVE_VIEW_ENTRY_TITLE",
-			value1 = "FrontPage"
-		);
-
-		AssertVisible(locator1 = "Portlet#HEADER", value1 = "FrontPage");
-	}
-
 	macro gotoFrontPagePG {
 		AssertClick(locator1 = "WikiTable#NAVIGATION_FRONTPAGE", value1 = "FrontPage");
 	}

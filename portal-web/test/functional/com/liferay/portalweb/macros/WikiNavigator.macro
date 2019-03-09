@@ -59,11 +59,8 @@ definition {
 			MenuItem.click(menuItem = "All Pages");
 		}
 
-		var key_wikiPageTitle = "${wikiPageTitle}";
-
-		AssertClick(
-			locator1 = "Wiki#DESCRIPTIVE_VIEW_ENTRY_TITLE",
-			value1 = "${wikiPageTitle}"
+		LexiconList.clickListEntryTitle(
+			listEntry = "${wikiPageTitle}"
 		);
 
 		AssertElementNotPresent(locator1 = "Button#PLUS");

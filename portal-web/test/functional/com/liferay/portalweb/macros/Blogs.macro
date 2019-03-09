@@ -575,6 +575,13 @@ definition {
 		);
 	}
 
+	macro viewEntryTitle
+	 {
+		LexiconList.viewListEntryTitle(
+			listEntry = "${entryTitle}"
+		);
+	}
+
 	macro viewNoEntryCP {
 		AssertTextEquals(
 			locator1 = "Message#EMPTY_INFO",

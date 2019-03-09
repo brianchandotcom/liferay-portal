@@ -14,25 +14,27 @@
 
 package com.liferay.info.provider;
 
-import aQute.bnd.annotation.ConsumerType;
+import aQute.bnd.annotation.ProviderType;
 
-import java.util.List;
-import java.util.Locale;
+import com.liferay.asset.kernel.model.AssetEntry;
+import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.model.User;
+
+import java.util.Optional;
 
 /**
  * @author Jorge Ferrer
  */
-@ConsumerType
-public interface InfoListProvider<T> {
+@ProviderType
+public interface InfoListProviderContext {
 
-	public List<T> getInfoList(InfoListProviderContext context);
+	public Optional<AssetEntry> getAssetEntryOptional();
 
-	public int getInfoListCount(InfoListProviderContext context);
+	public Optional<Layout> getLayout();
 
-	public String getLabel(Locale locale);
+	public Group getScopeGroup();
 
-	public default boolean isAvailable(InfoListProviderContext context) {
-		return true;
-	}
+	public User getUser();
 
 }

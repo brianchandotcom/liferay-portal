@@ -32,7 +32,7 @@
 	String defaultAssetDisplayPageName = selectAssetDisplayPageDisplayContext.getDefaultAssetDisplayPageName();
 	%>
 
-	<aui:input disabled="<%= true %>" label="" name="defaultDisplayPageNameInput" value='<%= Validator.isNotNull(defaultAssetDisplayPageName) ? defaultAssetDisplayPageName : LanguageUtil.get(resourceBundle, "no-default-display-page") %>' wrapperCssClass="input-group-item mb-0" />
+	<aui:input disabled="<%= true %>" label="" name="defaultDisplayPageNameInput" title="default-display-page" value='<%= Validator.isNotNull(defaultAssetDisplayPageName) ? defaultAssetDisplayPageName : LanguageUtil.get(resourceBundle, "no-default-display-page") %>' wrapperCssClass="input-group-item mb-0" />
 
 	<c:if test="<%= selectAssetDisplayPageDisplayContext.isAssetDisplayPageTypeDefault() && selectAssetDisplayPageDisplayContext.isShowViewInContextLink() && selectAssetDisplayPageDisplayContext.isURLViewInContext() %>">
 		<clay:button
@@ -52,7 +52,7 @@
 		String specificAssetDisplayPageName = selectAssetDisplayPageDisplayContext.getSpecificAssetDisplayPageName();
 		%>
 
-		<aui:input disabled="<%= true %>" label="" name="specificDisplayPageNameInput" value='<%= Validator.isNotNull(specificAssetDisplayPageName) ? specificAssetDisplayPageName : LanguageUtil.get(resourceBundle, "no-display-page-selected") %>' wrapperCssClass="input-group-item mb-0" />
+		<aui:input disabled="<%= true %>" label="" name="specificDisplayPageNameInput" title="specific-display-page" value='<%= Validator.isNotNull(specificAssetDisplayPageName) ? specificAssetDisplayPageName : LanguageUtil.get(resourceBundle, "no-display-page-selected") %>' wrapperCssClass="input-group-item mb-0" />
 
 		<c:if test="<%= selectAssetDisplayPageDisplayContext.isAssetDisplayPageTypeSpecific() && selectAssetDisplayPageDisplayContext.isShowViewInContextLink() && selectAssetDisplayPageDisplayContext.isURLViewInContext() %>">
 			<clay:button

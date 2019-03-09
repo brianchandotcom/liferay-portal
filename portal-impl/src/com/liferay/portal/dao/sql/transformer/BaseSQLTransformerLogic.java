@@ -44,7 +44,7 @@ public abstract class BaseSQLTransformerLogic implements SQLTransformerLogic {
 	}
 
 	protected String replaceBitwiseCheck(String sql) {
-		return replaceBitwiseCheck(_bitwiseCheckPattern.matcher(sql));
+		return replaceBitwiseCheck(bitwiseCheckPattern.matcher(sql));
 	}
 
 	protected String replaceBoolean(String sql) {
@@ -58,7 +58,7 @@ public abstract class BaseSQLTransformerLogic implements SQLTransformerLogic {
 	}
 
 	protected String replaceCastClobText(String sql) {
-		return replaceCastClobText(_castClobTestPattern.matcher(sql));
+		return replaceCastClobText(castClobTestPattern.matcher(sql));
 	}
 
 	protected String replaceCastLong(Matcher matcher) {
@@ -66,7 +66,7 @@ public abstract class BaseSQLTransformerLogic implements SQLTransformerLogic {
 	}
 
 	protected String replaceCastLong(String sql) {
-		return replaceCastLong(_castLongPattern.matcher(sql));
+		return replaceCastLong(castLongPattern.matcher(sql));
 	}
 
 	protected String replaceCastText(Matcher matcher) {
@@ -74,7 +74,7 @@ public abstract class BaseSQLTransformerLogic implements SQLTransformerLogic {
 	}
 
 	protected String replaceCastText(String sql) {
-		return replaceCastText(_castTextPattern.matcher(sql));
+		return replaceCastText(castTextPattern.matcher(sql));
 	}
 
 	protected String replaceConcat(String sql) {
@@ -91,7 +91,7 @@ public abstract class BaseSQLTransformerLogic implements SQLTransformerLogic {
 
 	protected String replaceDropTableIfExistsText(String sql) {
 		return replaceDropTableIfExistsText(
-			_dropTableIfExistsTextPattern.matcher(sql));
+			dropTableIfExistsTextPattern.matcher(sql));
 	}
 
 	protected String replaceInstr(Matcher matcher) {
@@ -99,7 +99,7 @@ public abstract class BaseSQLTransformerLogic implements SQLTransformerLogic {
 	}
 
 	protected String replaceInstr(String sql) {
-		return replaceInstr(_instrPattern.matcher(sql));
+		return replaceInstr(instrPattern.matcher(sql));
 	}
 
 	protected String replaceIntegerDivision(Matcher matcher) {
@@ -107,7 +107,7 @@ public abstract class BaseSQLTransformerLogic implements SQLTransformerLogic {
 	}
 
 	protected String replaceIntegerDivision(String sql) {
-		return replaceIntegerDivision(_integerDivisionPattern.matcher(sql));
+		return replaceIntegerDivision(integerDivisionPattern.matcher(sql));
 	}
 
 	protected String replaceLength(String sql) {
@@ -159,7 +159,7 @@ public abstract class BaseSQLTransformerLogic implements SQLTransformerLogic {
 	}
 
 	protected String replaceMod(String sql) {
-		return replaceMod(_modPattern.matcher(sql));
+		return replaceMod(modPattern.matcher(sql));
 	}
 
 	protected String replaceNullDate(String sql) {
@@ -171,38 +171,38 @@ public abstract class BaseSQLTransformerLogic implements SQLTransformerLogic {
 	}
 
 	protected String replaceSubstr(String sql) {
-		return replaceSubstr(_substrPattern.matcher(sql));
+		return replaceSubstr(substrPattern.matcher(sql));
 	}
 
 	protected void setFunctions(List<Function<String, String>> functions) {
 		_functions = functions;
 	}
 
+	protected static final Pattern bitwiseCheckPattern = Pattern.compile(
+		"BITAND\\(\\s*(.+?)\\s*,\\s*(.+?)\\s*\\)");
+	protected static final Pattern castClobTestPattern = Pattern.compile(
+		"CAST_CLOB_TEXT\\((.+?)\\)", Pattern.CASE_INSENSITIVE);
+	protected static final Pattern castLongPattern = Pattern.compile(
+		"CAST_LONG\\((.+?)\\)", Pattern.CASE_INSENSITIVE);
+	protected static final Pattern castTextPattern = Pattern.compile(
+		"CAST_TEXT\\((.+?)\\)", Pattern.CASE_INSENSITIVE);
+	protected static final Pattern dropTableIfExistsTextPattern =
+		Pattern.compile(
+			"DROP_TABLE_IF_EXISTS\\((.+?)\\)", Pattern.CASE_INSENSITIVE);
+	protected static final Pattern instrPattern = Pattern.compile(
+		"INSTR\\(\\s*(.+?)\\s*,\\s*(.+?)\\s*\\)", Pattern.CASE_INSENSITIVE);
+	protected static final Pattern integerDivisionPattern = Pattern.compile(
+		"INTEGER_DIV\\(\\s*(.+?)\\s*,\\s*(.+?)\\s*\\)",
+		Pattern.CASE_INSENSITIVE);
+	protected static final Pattern modPattern = Pattern.compile(
+		"MOD\\(\\s*(.+?)\\s*,\\s*(.+?)\\s*\\)", Pattern.CASE_INSENSITIVE);
+	protected static final Pattern substrPattern = Pattern.compile(
+		"SUBSTR\\(\\s*(.+?)\\s*,\\s*(.+?)\\s*,\\s*(.+?)\\s*\\)",
+		Pattern.CASE_INSENSITIVE);
+
 	private static final String _LOWER_CLOSE = StringPool.CLOSE_PARENTHESIS;
 
 	private static final String _LOWER_OPEN = "lower(";
-
-	private static final Pattern _bitwiseCheckPattern = Pattern.compile(
-		"BITAND\\(\\s*(.+?)\\s*,\\s*(.+?)\\s*\\)");
-	private static final Pattern _castClobTestPattern = Pattern.compile(
-		"CAST_CLOB_TEXT\\((.+?)\\)", Pattern.CASE_INSENSITIVE);
-	private static final Pattern _castLongPattern = Pattern.compile(
-		"CAST_LONG\\((.+?)\\)", Pattern.CASE_INSENSITIVE);
-	private static final Pattern _castTextPattern = Pattern.compile(
-		"CAST_TEXT\\((.+?)\\)", Pattern.CASE_INSENSITIVE);
-	private static final Pattern _dropTableIfExistsTextPattern =
-		Pattern.compile(
-			"DROP_TABLE_IF_EXISTS\\((.+?)\\)", Pattern.CASE_INSENSITIVE);
-	private static final Pattern _instrPattern = Pattern.compile(
-		"INSTR\\(\\s*(.+?)\\s*,\\s*(.+?)\\s*\\)", Pattern.CASE_INSENSITIVE);
-	private static final Pattern _integerDivisionPattern = Pattern.compile(
-		"INTEGER_DIV\\(\\s*(.+?)\\s*,\\s*(.+?)\\s*\\)",
-		Pattern.CASE_INSENSITIVE);
-	private static final Pattern _modPattern = Pattern.compile(
-		"MOD\\(\\s*(.+?)\\s*,\\s*(.+?)\\s*\\)", Pattern.CASE_INSENSITIVE);
-	private static final Pattern _substrPattern = Pattern.compile(
-		"SUBSTR\\(\\s*(.+?)\\s*,\\s*(.+?)\\s*,\\s*(.+?)\\s*\\)",
-		Pattern.CASE_INSENSITIVE);
 
 	private final DB _db;
 	private List<Function<String, String>> _functions;

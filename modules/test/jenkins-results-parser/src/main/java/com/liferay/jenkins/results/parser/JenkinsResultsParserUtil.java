@@ -68,6 +68,7 @@ import java.util.Map;
 import java.util.Properties;
 import java.util.Random;
 import java.util.Set;
+import java.util.Stack;
 import java.util.TimeZone;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ThreadPoolExecutor;
@@ -752,13 +753,51 @@ public class JenkinsResultsParserUtil {
 
 	public static String getCanonicalPath(File file) {
 		try {
-			String canonicalPath = file.getCanonicalPath();
+			File canonicalFile = new File(file.getCanonicalPath());
 
-			if (isWindows()) {
-				canonicalPath = canonicalPath.replaceAll("\\\\", "/");
+			Stack<String> stack = new Stack<>();
+
+			if (canonicalFile.isDirectory()) {
+				stack.push(canonicalFile.getName());
 			}
 
-			return canonicalPath;
+			File parent = canonicalFile.getParentFile();
+
+			while (parent != null) {
+				stack.push(parent.getName());
+
+				parent = parent.getParentFile();
+			}
+
+			StringBuilder sb = new StringBuilder();
+
+			stack.pop();
+
+			if (isWindows()) {
+				String canonicalPath = canonicalFile.getCanonicalPath();
+
+				sb.append(canonicalPath.substring(0, 2));
+			}
+
+			if (stack.size() <= 1) {
+				sb.append("/");
+
+				return sb.toString();
+			}
+
+			while (stack.size() > 0) {
+				String dirPath = stack.pop();
+
+				sb.append("/");
+				sb.append(dirPath);
+			}
+
+			if (!canonicalFile.isDirectory()) {
+				sb.append("/");
+				sb.append(canonicalFile.getName());
+			}
+
+			return sb.toString();
 		}
 		catch (IOException ioe) {
 			throw new RuntimeException(ioe);

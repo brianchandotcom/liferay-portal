@@ -994,7 +994,7 @@ paths:
                                 type: array
                     description: ""
             tags: ["UserAccount"]
-    "/phones":
+    "/phones-by/{classNameClassPK}":
         get:
             parameters:
                 - in: query
@@ -1006,10 +1006,10 @@ paths:
                   schema:
                       type: integer
                 - in: path
-                  name: generic-parent-id
+                  name: classNameClassPK
                   required: true
                   schema:
-                      type: object
+                      type: string
             responses:
                 200:
                     content:
@@ -1037,7 +1037,7 @@ paths:
                                 $ref: "#/components/schemas/Phone"
                     description: ""
             tags: ["Phone"]
-    "/postal-addresses":
+    "/postal-addresses-by/{classNameClassPK}":
         get:
             parameters:
                 - in: query
@@ -1049,10 +1049,10 @@ paths:
                   schema:
                       type: integer
                 - in: path
-                  name: generic-parent-id
+                  name: classNameClassPK
                   required: true
                   schema:
-                      type: object
+                      type: string
             responses:
                 200:
                     content:
@@ -1453,7 +1453,7 @@ paths:
                                 type: array
                     description: ""
             tags: ["UserAccount"]
-    "/web-urls":
+    "/web-urls-by/{classNameClassPK}":
         get:
             parameters:
                 - in: query
@@ -1465,10 +1465,10 @@ paths:
                   schema:
                       type: integer
                 - in: path
-                  name: generic-parent-id
+                  name: classNameClassPK
                   required: true
                   schema:
-                      type: object
+                      type: string
             responses:
                 200:
                     content:

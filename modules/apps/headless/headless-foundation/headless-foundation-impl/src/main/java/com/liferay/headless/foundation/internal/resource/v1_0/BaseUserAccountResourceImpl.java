@@ -108,7 +108,7 @@ public abstract class BaseUserAccountResourceImpl
 	}
 
 	@Override
-	@Consumes({"application/json", "multipart/form-data"})
+	@Consumes("multipart/form-data")
 	@POST
 	@Path("/user-accounts")
 	@Produces("application/json")

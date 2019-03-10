@@ -30,6 +30,8 @@ import java.util.Date;
 
 import javax.annotation.Generated;
 
+import javax.validation.constraints.NotNull;
+
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -186,6 +188,7 @@ public class UserAccount {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	@NotNull
 	protected String email;
 
 	public String getFamilyName() {
@@ -210,6 +213,7 @@ public class UserAccount {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	@NotNull
 	protected String familyName;
 
 	public String getGivenName() {
@@ -234,6 +238,7 @@ public class UserAccount {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	@NotNull
 	protected String givenName;
 
 	public String getHonorificPrefix() {

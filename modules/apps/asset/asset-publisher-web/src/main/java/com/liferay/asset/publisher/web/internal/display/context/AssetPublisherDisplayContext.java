@@ -373,20 +373,7 @@ public class AssetPublisherDisplayContext {
 	}
 
 	public List<InfoListProvider> getAssetInfoListProviders() {
-		List<InfoListProvider> infoListProviders =
-			_infoListProviderTracker.getInfoListProviders();
-
-		List<InfoListProvider> assetInfoListProviders = new ArrayList();
-
-		for (InfoListProvider infoListProvider : infoListProviders) {
-			Class<?> itemClass = infoListProvider.getItemClass();
-
-			if (itemClass.equals(AssetEntry.class)) {
-				assetInfoListProviders.add(infoListProvider);
-			}
-		}
-
-		return assetInfoListProviders;
+		return _infoListProviderTracker.getInfoListProviders(AssetEntry.class);
 	}
 
 	public String getAssetLinkBehavior() {

@@ -39,7 +39,7 @@ import javax.ws.rs.core.UriBuilder;
 import javax.ws.rs.core.UriInfo;
 
 /**
- * @author Javier Gamarra
+ * @author Alejandro Tard�n
  * @generated
  */
 @Generated("")

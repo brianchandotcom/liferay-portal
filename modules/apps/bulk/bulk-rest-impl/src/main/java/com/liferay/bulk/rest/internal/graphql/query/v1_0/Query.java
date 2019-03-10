@@ -29,7 +29,7 @@ import org.osgi.framework.FrameworkUtil;
 import org.osgi.util.tracker.ServiceTracker;
 
 /**
- * @author Javier Gamarra
+ * @author Alejandro Tard�n
  * @generated
  */
 @Generated("")

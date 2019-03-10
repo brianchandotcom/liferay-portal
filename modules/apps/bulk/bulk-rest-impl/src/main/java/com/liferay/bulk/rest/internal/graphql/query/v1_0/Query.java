@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
 
 import graphql.annotations.annotationTypes.GraphQLField;
 import graphql.annotations.annotationTypes.GraphQLInvokeDetached;
-import graphql.annotations.annotationTypes.GraphQLName;
 
 import javax.annotation.Generated;
 
@@ -38,12 +37,10 @@ public class Query {
 
 	@GraphQLField
 	@GraphQLInvokeDetached
-	public BulkStatus getStatu(@GraphQLName("param") Long param)
-		throws Exception {
-
+	public BulkStatus getStatu() throws Exception {
 		BulkStatusResource bulkStatusResource = _createBulkStatusResource();
 
-		return bulkStatusResource.getStatu(param);
+		return bulkStatusResource.getStatu();
 	}
 
 	private static BulkStatusResource _createBulkStatusResource()

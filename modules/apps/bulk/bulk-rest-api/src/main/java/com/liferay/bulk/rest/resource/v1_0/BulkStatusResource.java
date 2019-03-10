@@ -30,7 +30,7 @@ import javax.annotation.Generated;
 @Generated("")
 public interface BulkStatusResource {
 
-	public BulkStatus getStatu(Long param) throws Exception;
+	public BulkStatus getStatu() throws Exception;
 
 	public void setContextCompany(Company contextCompany);
 

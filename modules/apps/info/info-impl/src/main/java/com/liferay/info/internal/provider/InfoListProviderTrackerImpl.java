@@ -19,6 +19,7 @@ import com.liferay.info.provider.InfoListProviderTracker;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -48,6 +49,18 @@ public class InfoListProviderTrackerImpl implements InfoListProviderTracker {
 		return new ArrayList(_infoListProviders.values());
 	}
 
+	@Override
+	public List<InfoListProvider> getInfoListProviders(Class itemClass) {
+		List<InfoListProvider> infoListProviders =
+			_infoListProvidersByItemClass.get(itemClass);
+
+		if (infoListProviders != null) {
+			return new ArrayList(infoListProviders);
+		}
+
+		return Collections.emptyList();
+	}
+
 	@Reference(
 		cardinality = ReferenceCardinality.MULTIPLE,
 		policy = ReferencePolicy.DYNAMIC
@@ -56,6 +69,20 @@ public class InfoListProviderTrackerImpl implements InfoListProviderTracker {
 		Class<?> clazz = infoListProvider.getClass();
 
 		_infoListProviders.put(clazz.getName(), infoListProvider);
+
+		Class<?> itemClass = infoListProvider.getItemClass();
+
+		List<InfoListProvider> infoListProvidersByItemClass =
+			_infoListProvidersByItemClass.get(itemClass);
+
+		if (infoListProvidersByItemClass == null) {
+			infoListProvidersByItemClass = new ArrayList();
+
+			_infoListProvidersByItemClass.put(
+				itemClass, infoListProvidersByItemClass);
+		}
+
+		infoListProvidersByItemClass.add(infoListProvider);
 	}
 
 	protected void unsetInfoListProvider(InfoListProvider infoListProvider) {
@@ -66,5 +93,7 @@ public class InfoListProviderTrackerImpl implements InfoListProviderTracker {
 
 	private final Map<String, InfoListProvider> _infoListProviders =
 		new ConcurrentHashMap<>();
+	private final Map<Class, List<InfoListProvider>>
+		_infoListProvidersByItemClass = new ConcurrentHashMap<>();
 
 }

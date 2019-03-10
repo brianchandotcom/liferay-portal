@@ -77,7 +77,7 @@ public class BulkActionResponseResourceImpl
 	extends BaseBulkActionResponseResourceImpl {
 
 	@Override
-	public BulkActionResponse postCategoryClassName(
+	public BulkActionResponse postCategoryCategoryClassName(
 		Long categoryClassNameId,
 		BulkAssetEntryUpdateCategoriesAction
 			bulkAssetEntryUpdateCategoriesAction) {
@@ -118,7 +118,7 @@ public class BulkActionResponseResourceImpl
 	}
 
 	@Override
-	public BulkAssetEntryCommonCategories postCategoryGroupCategoryClassName(
+	public BulkAssetEntryCommonCategories postCategoryCategoryGroupCategoryClassNameCommon(
 		Long categoryGroupId, Long categoryClassNameId,
 		BulkAssetEntryAction bulkAssetEntryAction) {
 
@@ -173,7 +173,7 @@ public class BulkActionResponseResourceImpl
 	}
 
 	@Override
-	public BulkActionResponse postTagClassName(
+	public BulkActionResponse postTagTagClassName(
 		Long tagClassNameId,
 		BulkAssetEntryUpdateTagsAction bulkAssetEntryUpdateTagsAction) {
 
@@ -212,7 +212,7 @@ public class BulkActionResponseResourceImpl
 	}
 
 	@Override
-	public BulkAssetEntryCommonTags postTagGroupTagClassName(
+	public BulkAssetEntryCommonTags postTagTagGroupTagClassNameCommon(
 		Long tagGroupId, Long tagClassNameId,
 		BulkAssetEntryAction bulkAssetEntryAction) {
 

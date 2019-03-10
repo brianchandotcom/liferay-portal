@@ -640,7 +640,7 @@ definition {
 		WebContentNavigator.gotoEditCP(webContentTitle = "WebContent Title");
 
 
-		WebContent.addSmallImageViaURL(imageSourceURL = '''<img src="http://url.to.file.which/not.exist" onerror=alert(123);>''');
+		WebContent.addFeaturedImageFromURL(imageSourceURL = '''<img src="http://url.to.file.which/not.exist" onerror=alert(123);>''');
 
 		PortletEntry.publish();
 

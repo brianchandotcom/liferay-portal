@@ -23,7 +23,7 @@ import javax.annotation.Generated;
 import org.osgi.service.component.annotations.Component;
 
 /**
- * @author Javier Gamarra
+ * @author Alejandro Tard�n
  * @generated
  */
 @Component(immediate = true, service = ServletData.class)

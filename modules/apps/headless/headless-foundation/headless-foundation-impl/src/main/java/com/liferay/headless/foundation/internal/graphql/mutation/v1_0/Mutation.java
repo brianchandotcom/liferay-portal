@@ -24,6 +24,7 @@ import com.liferay.headless.foundation.resource.v1_0.UserAccountResource;
 import com.liferay.headless.foundation.resource.v1_0.VocabularyResource;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
+import com.liferay.portal.vulcan.multipart.MultipartBody;
 
 import graphql.annotations.annotationTypes.GraphQLField;
 import graphql.annotations.annotationTypes.GraphQLInvokeDetached;
@@ -121,12 +122,12 @@ public class Mutation {
 	@GraphQLField
 	@GraphQLInvokeDetached
 	public UserAccount postUserAccount(
-			@GraphQLName("UserAccount") UserAccount userAccount)
+			@GraphQLName("MultipartBody") MultipartBody multipartBody)
 		throws Exception {
 
 		UserAccountResource userAccountResource = _createUserAccountResource();
 
-		return userAccountResource.postUserAccount(userAccount);
+		return userAccountResource.postUserAccount(multipartBody);
 	}
 
 	@GraphQLInvokeDetached

@@ -20,6 +20,7 @@ import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
+import com.liferay.portal.vulcan.multipart.MultipartBody;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.util.TransformUtil;
@@ -45,7 +46,6 @@ import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
-import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.UriBuilder;
 import javax.ws.rs.core.UriInfo;
@@ -101,21 +101,19 @@ public abstract class BaseUserAccountResourceImpl
 	@Path("/user-accounts")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "UserAccount")})
-	public Page<UserAccount> getUserAccountsPage(
-			@QueryParam("fullnamequery") String fullnamequery,
-			@Context Pagination pagination)
+	public Page<UserAccount> getUserAccountsPage(@Context Pagination pagination)
 		throws Exception {
 
 		return Page.of(Collections.emptyList());
 	}
 
 	@Override
-	@Consumes("application/json")
+	@Consumes({"application/json", "multipart/form-data"})
 	@POST
 	@Path("/user-accounts")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "UserAccount")})
-	public UserAccount postUserAccount(UserAccount userAccount)
+	public UserAccount postUserAccount(MultipartBody multipartBody)
 		throws Exception {
 
 		return new UserAccount();

@@ -418,7 +418,6 @@ public class Query {
 	@GraphQLField
 	@GraphQLInvokeDetached
 	public Collection<UserAccount> getUserAccountsPage(
-			@GraphQLName("fullnamequery") String fullnamequery,
 			@GraphQLName("pageSize") int pageSize,
 			@GraphQLName("page") int page)
 		throws Exception {
@@ -426,7 +425,7 @@ public class Query {
 		UserAccountResource userAccountResource = _createUserAccountResource();
 
 		Page paginationPage = userAccountResource.getUserAccountsPage(
-			fullnamequery, Pagination.of(pageSize, page));
+			Pagination.of(pageSize, page));
 
 		return paginationPage.getItems();
 	}

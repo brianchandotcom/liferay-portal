@@ -106,10 +106,10 @@ public abstract class BaseBulkStatusResourceTestCase {
 			"This method needs to be implemented");
 	}
 
-	protected BulkStatus invokeGetStatu(Long param) throws Exception {
+	protected BulkStatus invokeGetStatu() throws Exception {
 		Http.Options options = _createHttpOptions();
 
-		String location = _resourceURL + _toPath("/status", param);
+		String location = _resourceURL + "/status";
 
 		options.setLocation(location);
 
@@ -117,12 +117,10 @@ public abstract class BaseBulkStatusResourceTestCase {
 			HttpUtil.URLtoString(options), BulkStatus.class);
 	}
 
-	protected Http.Response invokeGetStatuResponse(Long param)
-		throws Exception {
-
+	protected Http.Response invokeGetStatuResponse() throws Exception {
 		Http.Options options = _createHttpOptions();
 
-		String location = _resourceURL + _toPath("/status", param);
+		String location = _resourceURL + "/status";
 
 		options.setLocation(location);
 

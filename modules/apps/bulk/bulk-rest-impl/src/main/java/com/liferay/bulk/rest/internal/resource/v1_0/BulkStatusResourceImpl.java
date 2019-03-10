@@ -35,7 +35,7 @@ import org.osgi.service.component.annotations.ServiceScope;
 public class BulkStatusResourceImpl extends BaseBulkStatusResourceImpl {
 
 	@Override
-	public BulkStatus getStatus(Long param) {
+	public BulkStatus getStatu(Long param) {
 		return new BulkStatus() {
 			{
 				busy = _bulkSelectionRunner.isBusy(_user);

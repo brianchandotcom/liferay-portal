@@ -34,7 +34,6 @@ import javax.annotation.Generated;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
-import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.UriBuilder;
 import javax.ws.rs.core.UriInfo;
@@ -52,9 +51,7 @@ public abstract class BaseBulkStatusResourceImpl implements BulkStatusResource {
 	@Path("/status")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "BulkStatus")})
-	public BulkStatus getStatu(@QueryParam("param") Long param)
-		throws Exception {
-
+	public BulkStatus getStatu() throws Exception {
 		return new BulkStatus();
 	}
 

@@ -14,6 +14,7 @@
 
 package com.liferay.bulk.rest.dto.v1_0;
 
+import com.fasterxml.jackson.annotation.JsonFilter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -33,19 +34,12 @@ import javax.xml.bind.annotation.XmlRootElement;
  */
 @Generated("")
 @GraphQLName("BulkAssetEntryCommonCategories")
+@JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "BulkAssetEntryCommonCategories")
 public class BulkAssetEntryCommonCategories {
 
 	public String getDescription() {
 		return description;
-	}
-
-	public String getStatus() {
-		return status;
-	}
-
-	public Vocabulary[] getVocabularies() {
-		return vocabularies;
 	}
 
 	public void setDescription(String description) {
@@ -64,6 +58,14 @@ public class BulkAssetEntryCommonCategories {
 		}
 	}
 
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected String description;
+
+	public String getStatus() {
+		return status;
+	}
+
 	public void setStatus(String status) {
 		this.status = status;
 	}
@@ -80,6 +82,18 @@ public class BulkAssetEntryCommonCategories {
 		}
 	}
 
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected String status;
+
+	public Vocabulary[] getVocabularies() {
+		return vocabularies;
+	}
+
+	public void setVocabularies(Vocabulary[] vocabularies) {
+		this.vocabularies = vocabularies;
+	}
+
 	@JsonIgnore
 	public void setVocabularies(
 		UnsafeSupplier<Vocabulary[], Exception> vocabulariesUnsafeSupplier) {
@@ -92,12 +106,12 @@ public class BulkAssetEntryCommonCategories {
 		}
 	}
 
-	public void setVocabularies(Vocabulary[] vocabularies) {
-		this.vocabularies = vocabularies;
-	}
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Vocabulary[] vocabularies;
 
 	public String toString() {
-		StringBundler sb = new StringBundler(16);
+		StringBundler sb = new StringBundler();
 
 		sb.append("{");
 
@@ -117,25 +131,26 @@ public class BulkAssetEntryCommonCategories {
 
 		sb.append("\"vocabularies\": ");
 
-		sb.append("\"");
-		sb.append(vocabularies);
-		sb.append("\"");
+		if (vocabularies == null) {
+			sb.append("null");
+		}
+		else {
+			sb.append("[");
+
+			for (int i = 0; i < vocabularies.length; i++) {
+				sb.append(vocabularies[i]);
+
+				if ((i + 1) < vocabularies.length) {
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
+		}
 
 		sb.append("}");
 
 		return sb.toString();
 	}
-
-	@GraphQLField
-	@JsonProperty
-	protected String description;
-
-	@GraphQLField
-	@JsonProperty
-	protected String status;
-
-	@GraphQLField
-	@JsonProperty
-	protected Vocabulary[] vocabularies;
 
 }

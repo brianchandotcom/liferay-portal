@@ -14,6 +14,7 @@
 
 package com.liferay.bulk.rest.dto.v1_0;
 
+import com.fasterxml.jackson.annotation.JsonFilter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -33,35 +34,12 @@ import javax.xml.bind.annotation.XmlRootElement;
  */
 @Generated("")
 @GraphQLName("BulkAssetEntryUpdateTagsAction")
+@JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "BulkAssetEntryUpdateTagsAction")
 public class BulkAssetEntryUpdateTagsAction {
 
 	public Boolean getAppend() {
 		return append;
-	}
-
-	public Long getFolderId() {
-		return folderId;
-	}
-
-	public Long getRepositoryId() {
-		return repositoryId;
-	}
-
-	public Boolean getSelectAll() {
-		return selectAll;
-	}
-
-	public String[] getSelection() {
-		return selection;
-	}
-
-	public String[] getToAddTagNames() {
-		return toAddTagNames;
-	}
-
-	public String[] getToRemoveTagNames() {
-		return toRemoveTagNames;
 	}
 
 	public void setAppend(Boolean append) {
@@ -80,6 +58,14 @@ public class BulkAssetEntryUpdateTagsAction {
 		}
 	}
 
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Boolean append;
+
+	public Long getFolderId() {
+		return folderId;
+	}
+
 	public void setFolderId(Long folderId) {
 		this.folderId = folderId;
 	}
@@ -94,6 +80,14 @@ public class BulkAssetEntryUpdateTagsAction {
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Long folderId;
+
+	public Long getRepositoryId() {
+		return repositoryId;
 	}
 
 	public void setRepositoryId(Long repositoryId) {
@@ -112,6 +106,14 @@ public class BulkAssetEntryUpdateTagsAction {
 		}
 	}
 
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Long repositoryId;
+
+	public Boolean getSelectAll() {
+		return selectAll;
+	}
+
 	public void setSelectAll(Boolean selectAll) {
 		this.selectAll = selectAll;
 	}
@@ -126,6 +128,14 @@ public class BulkAssetEntryUpdateTagsAction {
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Boolean selectAll;
+
+	public String[] getSelection() {
+		return selection;
 	}
 
 	public void setSelection(String[] selection) {
@@ -144,6 +154,14 @@ public class BulkAssetEntryUpdateTagsAction {
 		}
 	}
 
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected String[] selection;
+
+	public String[] getToAddTagNames() {
+		return toAddTagNames;
+	}
+
 	public void setToAddTagNames(String[] toAddTagNames) {
 		this.toAddTagNames = toAddTagNames;
 	}
@@ -158,6 +176,14 @@ public class BulkAssetEntryUpdateTagsAction {
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected String[] toAddTagNames;
+
+	public String[] getToRemoveTagNames() {
+		return toRemoveTagNames;
 	}
 
 	public void setToRemoveTagNames(String[] toRemoveTagNames) {
@@ -176,8 +202,12 @@ public class BulkAssetEntryUpdateTagsAction {
 		}
 	}
 
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected String[] toRemoveTagNames;
+
 	public String toString() {
-		StringBundler sb = new StringBundler(28);
+		StringBundler sb = new StringBundler();
 
 		sb.append("{");
 
@@ -203,55 +233,74 @@ public class BulkAssetEntryUpdateTagsAction {
 
 		sb.append("\"selection\": ");
 
-		sb.append("\"");
-		sb.append(selection);
-		sb.append("\"");
+		if (selection == null) {
+			sb.append("null");
+		}
+		else {
+			sb.append("[");
+
+			for (int i = 0; i < selection.length; i++) {
+				sb.append("\"");
+				sb.append(selection[i]);
+				sb.append("\"");
+
+				if ((i + 1) < selection.length) {
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
+		}
+
 		sb.append(", ");
 
 		sb.append("\"toAddTagNames\": ");
 
-		sb.append("\"");
-		sb.append(toAddTagNames);
-		sb.append("\"");
+		if (toAddTagNames == null) {
+			sb.append("null");
+		}
+		else {
+			sb.append("[");
+
+			for (int i = 0; i < toAddTagNames.length; i++) {
+				sb.append("\"");
+				sb.append(toAddTagNames[i]);
+				sb.append("\"");
+
+				if ((i + 1) < toAddTagNames.length) {
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
+		}
+
 		sb.append(", ");
 
 		sb.append("\"toRemoveTagNames\": ");
 
-		sb.append("\"");
-		sb.append(toRemoveTagNames);
-		sb.append("\"");
+		if (toRemoveTagNames == null) {
+			sb.append("null");
+		}
+		else {
+			sb.append("[");
+
+			for (int i = 0; i < toRemoveTagNames.length; i++) {
+				sb.append("\"");
+				sb.append(toRemoveTagNames[i]);
+				sb.append("\"");
+
+				if ((i + 1) < toRemoveTagNames.length) {
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
+		}
 
 		sb.append("}");
 
 		return sb.toString();
 	}
-
-	@GraphQLField
-	@JsonProperty
-	protected Boolean append;
-
-	@GraphQLField
-	@JsonProperty
-	protected Long folderId;
-
-	@GraphQLField
-	@JsonProperty
-	protected Long repositoryId;
-
-	@GraphQLField
-	@JsonProperty
-	protected Boolean selectAll;
-
-	@GraphQLField
-	@JsonProperty
-	protected String[] selection;
-
-	@GraphQLField
-	@JsonProperty
-	protected String[] toAddTagNames;
-
-	@GraphQLField
-	@JsonProperty
-	protected String[] toRemoveTagNames;
 
 }

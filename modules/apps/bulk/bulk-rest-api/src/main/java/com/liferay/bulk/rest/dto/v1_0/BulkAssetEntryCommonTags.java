@@ -14,6 +14,7 @@
 
 package com.liferay.bulk.rest.dto.v1_0;
 
+import com.fasterxml.jackson.annotation.JsonFilter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -33,23 +34,12 @@ import javax.xml.bind.annotation.XmlRootElement;
  */
 @Generated("")
 @GraphQLName("BulkAssetEntryCommonTags")
+@JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "BulkAssetEntryCommonTags")
 public class BulkAssetEntryCommonTags {
 
 	public String getDescription() {
 		return description;
-	}
-
-	public Long[] getGroupIds() {
-		return groupIds;
-	}
-
-	public String getStatus() {
-		return status;
-	}
-
-	public String[] getTagNames() {
-		return tagNames;
 	}
 
 	public void setDescription(String description) {
@@ -68,6 +58,14 @@ public class BulkAssetEntryCommonTags {
 		}
 	}
 
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected String description;
+
+	public Long[] getGroupIds() {
+		return groupIds;
+	}
+
 	public void setGroupIds(Long[] groupIds) {
 		this.groupIds = groupIds;
 	}
@@ -82,6 +80,14 @@ public class BulkAssetEntryCommonTags {
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Long[] groupIds;
+
+	public String getStatus() {
+		return status;
 	}
 
 	public void setStatus(String status) {
@@ -100,6 +106,14 @@ public class BulkAssetEntryCommonTags {
 		}
 	}
 
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected String status;
+
+	public String[] getTagNames() {
+		return tagNames;
+	}
+
 	public void setTagNames(String[] tagNames) {
 		this.tagNames = tagNames;
 	}
@@ -116,8 +130,12 @@ public class BulkAssetEntryCommonTags {
 		}
 	}
 
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected String[] tagNames;
+
 	public String toString() {
-		StringBundler sb = new StringBundler(21);
+		StringBundler sb = new StringBundler();
 
 		sb.append("{");
 
@@ -130,9 +148,23 @@ public class BulkAssetEntryCommonTags {
 
 		sb.append("\"groupIds\": ");
 
-		sb.append("\"");
-		sb.append(groupIds);
-		sb.append("\"");
+		if (groupIds == null) {
+			sb.append("null");
+		}
+		else {
+			sb.append("[");
+
+			for (int i = 0; i < groupIds.length; i++) {
+				sb.append(groupIds[i]);
+
+				if ((i + 1) < groupIds.length) {
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
+		}
+
 		sb.append(", ");
 
 		sb.append("\"status\": ");
@@ -144,29 +176,28 @@ public class BulkAssetEntryCommonTags {
 
 		sb.append("\"tagNames\": ");
 
-		sb.append("\"");
-		sb.append(tagNames);
-		sb.append("\"");
+		if (tagNames == null) {
+			sb.append("null");
+		}
+		else {
+			sb.append("[");
+
+			for (int i = 0; i < tagNames.length; i++) {
+				sb.append("\"");
+				sb.append(tagNames[i]);
+				sb.append("\"");
+
+				if ((i + 1) < tagNames.length) {
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
+		}
 
 		sb.append("}");
 
 		return sb.toString();
 	}
-
-	@GraphQLField
-	@JsonProperty
-	protected String description;
-
-	@GraphQLField
-	@JsonProperty
-	protected Long[] groupIds;
-
-	@GraphQLField
-	@JsonProperty
-	protected String status;
-
-	@GraphQLField
-	@JsonProperty
-	protected String[] tagNames;
 
 }

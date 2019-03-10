@@ -67,7 +67,7 @@ import org.junit.Rule;
 import org.junit.Test;
 
 /**
- * @author Javier Gamarra
+ * @author Alejandro Tard�n
  * @generated
  */
 @Generated("")

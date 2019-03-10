@@ -21,17 +21,17 @@ import javax.ws.rs.core.Application;
 import org.osgi.service.component.annotations.Component;
 
 /**
- * @author Javier Gamarra
+ * @author Alejandro Tard�n
  * @generated
  */
 @Component(
 	property = {
 		"osgi.jaxrs.application.base=/bulk",
 		"osgi.jaxrs.extension.select=(osgi.jaxrs.name=Liferay.Vulcan)",
-		"osgi.jaxrs.name=Liferay.BulkRest"
+		"osgi.jaxrs.name=Liferay.Bulk.REST"
 	},
 	service = Application.class
 )
 @Generated("")
-public class BulkRestApplication extends Application {
+public class BulkRESTApplication extends Application {
 }

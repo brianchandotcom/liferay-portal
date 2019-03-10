@@ -14,13 +14,23 @@
 	<td></td>
 </tr>
 <tr>
-	<td>WEB_CONTENT_ID</td>
-	<td>//input[contains(@id,'JournalPortlet_newArticleId')]</td>
+	<td>AUDIO_BUTTON</td>
+	<td>//a[contains(@title,'Audio')]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>VERSION</td>
-	<td>//div[contains(@class,'article-version')]/b</td>
+	<td>EDIT_TEMPLATE</td>
+	<td>//a[contains(@id,'editDDMTemplate')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SELECT_STRUCTURE</td>
+	<td>//button[contains(.,'Select')]/span</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SELECT_TEMPLATE</td>
+	<td>//button[contains(@id,'selectDDMTemplate')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -34,28 +44,8 @@
 	<td></td>
 </tr>
 <tr>
-	<td>SELECT_STRUCTURE</td>
-	<td>//button[contains(.,'Select')]/span</td>
-	<td></td>
-</tr>
-<tr>
 	<td>SELECTED_TEMPLATE</td>
 	<td>//span[contains(@id,'templateNameLabel')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>EDIT_TEMPLATE</td>
-	<td>//a[contains(@id,'editDDMTemplate')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>SELECT_TEMPLATE</td>
-	<td>//button[contains(@id,'selectDDMTemplate')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>USE_SMALL_IMAGE_CHECKBOX</td>
-	<td>//input[@type='checkbox' and contains(@id,'useSmallImage')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -69,18 +59,28 @@
 	<td></td>
 </tr>
 <tr>
+	<td>USE_SMALL_IMAGE_CHECKBOX</td>
+	<td>//input[@type='checkbox' and contains(@id,'useSmallImage')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>USER_SEGMENT_DETAIL_TITLE</td>
 	<td>//label[contains(.,'${key_userSegmentDetailTitle}')]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>AUDIO_BUTTON</td>
-	<td>//a[contains(@title,'Audio')]</td>
+	<td>VERSION</td>
+	<td>//div[contains(@class,'article-version')]/b</td>
 	<td></td>
 </tr>
 <tr>
 	<td>VIDEO_BUTTON</td>
 	<td>//a[@title='Video']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>WEB_CONTENT_ID</td>
+	<td>//input[contains(@id,'JournalPortlet_newArticleId')]</td>
 	<td></td>
 </tr>
 <tr>

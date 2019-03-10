@@ -17,6 +17,8 @@ package com.liferay.bulk.rest.resource.v1_0.test;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
+import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
 
 import com.liferay.bulk.rest.dto.v1_0.BulkActionResponse;
 import com.liferay.bulk.rest.dto.v1_0.BulkAssetEntryAction;
@@ -95,55 +97,270 @@ public abstract class BaseBulkActionResponseResourceTestCase {
 	}
 
 	@Test
-	public void testPostCategoryClassName() throws Exception {
+	public void testPostCategoryCategoryClassName() throws Exception {
 		BulkActionResponse randomBulkActionResponse =
 			randomBulkActionResponse();
 
 		BulkActionResponse postBulkActionResponse =
-			testPostCategoryClassName_addBulkActionResponse(
+			testPostCategoryCategoryClassName_addBulkActionResponse(
 				randomBulkActionResponse);
 
 		assertEquals(randomBulkActionResponse, postBulkActionResponse);
 		assertValid(postBulkActionResponse);
 	}
 
+	protected BulkActionResponse
+			testPostCategoryCategoryClassName_addBulkActionResponse(
+				BulkActionResponse bulkActionResponse)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected BulkActionResponse invokePostCategoryCategoryClassName(
+			Long categoryClassNameId,
+			BulkAssetEntryUpdateCategoriesAction
+				bulkAssetEntryUpdateCategoriesAction)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		String location =
+			_resourceURL +
+				_toPath(
+					"/categories/{category-class-name-id}",
+					categoryClassNameId);
+
+		options.setLocation(location);
+
+		options.setPost(true);
+
+		return _outputObjectMapper.readValue(
+			HttpUtil.URLtoString(options), BulkActionResponse.class);
+	}
+
+	protected Http.Response invokePostCategoryCategoryClassNameResponse(
+			Long categoryClassNameId,
+			BulkAssetEntryUpdateCategoriesAction
+				bulkAssetEntryUpdateCategoriesAction)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		String location =
+			_resourceURL +
+				_toPath(
+					"/categories/{category-class-name-id}",
+					categoryClassNameId);
+
+		options.setLocation(location);
+
+		options.setPost(true);
+
+		HttpUtil.URLtoString(options);
+
+		return options.getResponse();
+	}
+
 	@Test
-	public void testPostCategoryGroupCategoryClassName() throws Exception {
+	public void testPostCategoryCategoryGroupCategoryClassNameCommon()
+		throws Exception {
+
 		BulkActionResponse randomBulkActionResponse =
 			randomBulkActionResponse();
 
 		BulkActionResponse postBulkActionResponse =
-			testPostCategoryGroupCategoryClassName_addBulkActionResponse(
+			testPostCategoryCategoryGroupCategoryClassNameCommon_addBulkActionResponse(
 				randomBulkActionResponse);
 
 		assertEquals(randomBulkActionResponse, postBulkActionResponse);
 		assertValid(postBulkActionResponse);
 	}
 
+	protected BulkActionResponse
+			testPostCategoryCategoryGroupCategoryClassNameCommon_addBulkActionResponse(
+				BulkActionResponse bulkActionResponse)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected BulkAssetEntryCommonCategories
+			invokePostCategoryCategoryGroupCategoryClassNameCommon(
+				Long categoryGroupId, Long categoryClassNameId,
+				BulkAssetEntryAction bulkAssetEntryAction)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		String location =
+			_resourceURL +
+				_toPath(
+					"/categories/{category-group-id}/{category-class-name-id}/common",
+					categoryGroupId);
+
+		options.setLocation(location);
+
+		options.setPost(true);
+
+		return _outputObjectMapper.readValue(
+			HttpUtil.URLtoString(options),
+			BulkAssetEntryCommonCategories.class);
+	}
+
+	protected Http.Response
+			invokePostCategoryCategoryGroupCategoryClassNameCommonResponse(
+				Long categoryGroupId, Long categoryClassNameId,
+				BulkAssetEntryAction bulkAssetEntryAction)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		String location =
+			_resourceURL +
+				_toPath(
+					"/categories/{category-group-id}/{category-class-name-id}/common",
+					categoryGroupId);
+
+		options.setLocation(location);
+
+		options.setPost(true);
+
+		HttpUtil.URLtoString(options);
+
+		return options.getResponse();
+	}
+
 	@Test
-	public void testPostTagClassName() throws Exception {
+	public void testPostTagTagClassName() throws Exception {
 		BulkActionResponse randomBulkActionResponse =
 			randomBulkActionResponse();
 
 		BulkActionResponse postBulkActionResponse =
-			testPostTagClassName_addBulkActionResponse(
+			testPostTagTagClassName_addBulkActionResponse(
 				randomBulkActionResponse);
 
 		assertEquals(randomBulkActionResponse, postBulkActionResponse);
 		assertValid(postBulkActionResponse);
 	}
 
+	protected BulkActionResponse testPostTagTagClassName_addBulkActionResponse(
+			BulkActionResponse bulkActionResponse)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected BulkActionResponse invokePostTagTagClassName(
+			Long tagClassNameId,
+			BulkAssetEntryUpdateTagsAction bulkAssetEntryUpdateTagsAction)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		String location =
+			_resourceURL + _toPath("/tags/{tag-class-name-id}", tagClassNameId);
+
+		options.setLocation(location);
+
+		options.setPost(true);
+
+		return _outputObjectMapper.readValue(
+			HttpUtil.URLtoString(options), BulkActionResponse.class);
+	}
+
+	protected Http.Response invokePostTagTagClassNameResponse(
+			Long tagClassNameId,
+			BulkAssetEntryUpdateTagsAction bulkAssetEntryUpdateTagsAction)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		String location =
+			_resourceURL + _toPath("/tags/{tag-class-name-id}", tagClassNameId);
+
+		options.setLocation(location);
+
+		options.setPost(true);
+
+		HttpUtil.URLtoString(options);
+
+		return options.getResponse();
+	}
+
 	@Test
-	public void testPostTagGroupTagClassName() throws Exception {
+	public void testPostTagTagGroupTagClassNameCommon() throws Exception {
 		BulkActionResponse randomBulkActionResponse =
 			randomBulkActionResponse();
 
 		BulkActionResponse postBulkActionResponse =
-			testPostTagGroupTagClassName_addBulkActionResponse(
+			testPostTagTagGroupTagClassNameCommon_addBulkActionResponse(
 				randomBulkActionResponse);
 
 		assertEquals(randomBulkActionResponse, postBulkActionResponse);
 		assertValid(postBulkActionResponse);
+	}
+
+	protected BulkActionResponse
+			testPostTagTagGroupTagClassNameCommon_addBulkActionResponse(
+				BulkActionResponse bulkActionResponse)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected BulkAssetEntryCommonTags invokePostTagTagGroupTagClassNameCommon(
+			Long tagGroupId, Long tagClassNameId,
+			BulkAssetEntryAction bulkAssetEntryAction)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		String location =
+			_resourceURL +
+				_toPath(
+					"/tags/{tag-group-id}/{tag-class-name-id}/common",
+					tagGroupId);
+
+		options.setLocation(location);
+
+		options.setPost(true);
+
+		return _outputObjectMapper.readValue(
+			HttpUtil.URLtoString(options), BulkAssetEntryCommonTags.class);
+	}
+
+	protected Http.Response invokePostTagTagGroupTagClassNameCommonResponse(
+			Long tagGroupId, Long tagClassNameId,
+			BulkAssetEntryAction bulkAssetEntryAction)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		String location =
+			_resourceURL +
+				_toPath(
+					"/tags/{tag-group-id}/{tag-class-name-id}/common",
+					tagGroupId);
+
+		options.setLocation(location);
+
+		options.setPost(true);
+
+		HttpUtil.URLtoString(options);
+
+		return options.getResponse();
+	}
+
+	protected void assertResponseCode(
+		int expectedResponseCode, Http.Response actualResponse) {
+
+		Assert.assertEquals(
+			expectedResponseCode, actualResponse.getResponseCode());
 	}
 
 	protected void assertEquals(
@@ -199,13 +416,6 @@ public abstract class BaseBulkActionResponseResourceTestCase {
 		}
 	}
 
-	protected void assertResponseCode(
-		int expectedResponseCode, Http.Response actualResponse) {
-
-		Assert.assertEquals(
-			expectedResponseCode, actualResponse.getResponseCode());
-	}
-
 	protected void assertValid(BulkActionResponse bulkActionResponse) {
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
@@ -218,8 +428,8 @@ public abstract class BaseBulkActionResponseResourceTestCase {
 
 		int size = bulkActionResponses.size();
 
-		if ((page.getItemsPerPage() > 0) && (page.getLastPageNumber() > 0) &&
-			(page.getPageNumber() > 0) && (page.getTotalCount() > 0) &&
+		if ((page.getLastPage() > 0) && (page.getPage() > 0) &&
+			(page.getPageSize() > 0) && (page.getTotalCount() > 0) &&
 			(size > 0)) {
 
 			valid = true;
@@ -305,162 +515,6 @@ public abstract class BaseBulkActionResponseResourceTestCase {
 			"Invalid entity field " + entityFieldName);
 	}
 
-	protected BulkActionResponse invokePostCategoryClassName(
-			Long categoryClassNameId,
-			BulkAssetEntryUpdateCategoriesAction
-				bulkAssetEntryUpdateCategoriesAction)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		options.setLocation(
-			_resourceURL +
-				_toPath(
-					"/categories/{category-class-name-id}",
-					categoryClassNameId));
-
-		options.setPost(true);
-
-		return _outputObjectMapper.readValue(
-			HttpUtil.URLtoString(options), BulkActionResponse.class);
-	}
-
-	protected Http.Response invokePostCategoryClassNameResponse(
-			Long categoryClassNameId,
-			BulkAssetEntryUpdateCategoriesAction
-				bulkAssetEntryUpdateCategoriesAction)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		options.setLocation(
-			_resourceURL +
-				_toPath(
-					"/categories/{category-class-name-id}",
-					categoryClassNameId));
-
-		options.setPost(true);
-
-		HttpUtil.URLtoString(options);
-
-		return options.getResponse();
-	}
-
-	protected BulkAssetEntryCommonCategories
-			invokePostCategoryGroupCategoryClassName(
-				Long categoryGroupId, Long categoryClassNameId,
-				BulkAssetEntryAction bulkAssetEntryAction)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		options.setLocation(
-			_resourceURL +
-				_toPath(
-					"/categories/{category-group-id}/{category-class-name-id}/common",
-					categoryGroupId));
-
-		options.setPost(true);
-
-		return _outputObjectMapper.readValue(
-			HttpUtil.URLtoString(options),
-			BulkAssetEntryCommonCategories.class);
-	}
-
-	protected Http.Response invokePostCategoryGroupCategoryClassNameResponse(
-			Long categoryGroupId, Long categoryClassNameId,
-			BulkAssetEntryAction bulkAssetEntryAction)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		options.setLocation(
-			_resourceURL +
-				_toPath(
-					"/categories/{category-group-id}/{category-class-name-id}/common",
-					categoryGroupId));
-
-		options.setPost(true);
-
-		HttpUtil.URLtoString(options);
-
-		return options.getResponse();
-	}
-
-	protected BulkActionResponse invokePostTagClassName(
-			Long tagClassNameId,
-			BulkAssetEntryUpdateTagsAction bulkAssetEntryUpdateTagsAction)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		options.setLocation(
-			_resourceURL +
-				_toPath("/tags/{tag-class-name-id}", tagClassNameId));
-
-		options.setPost(true);
-
-		return _outputObjectMapper.readValue(
-			HttpUtil.URLtoString(options), BulkActionResponse.class);
-	}
-
-	protected Http.Response invokePostTagClassNameResponse(
-			Long tagClassNameId,
-			BulkAssetEntryUpdateTagsAction bulkAssetEntryUpdateTagsAction)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		options.setLocation(
-			_resourceURL +
-				_toPath("/tags/{tag-class-name-id}", tagClassNameId));
-
-		options.setPost(true);
-
-		HttpUtil.URLtoString(options);
-
-		return options.getResponse();
-	}
-
-	protected BulkAssetEntryCommonTags invokePostTagGroupTagClassName(
-			Long tagGroupId, Long tagClassNameId,
-			BulkAssetEntryAction bulkAssetEntryAction)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		options.setLocation(
-			_resourceURL +
-				_toPath(
-					"/tags/{tag-group-id}/{tag-class-name-id}/common",
-					tagGroupId));
-
-		options.setPost(true);
-
-		return _outputObjectMapper.readValue(
-			HttpUtil.URLtoString(options), BulkAssetEntryCommonTags.class);
-	}
-
-	protected Http.Response invokePostTagGroupTagClassNameResponse(
-			Long tagGroupId, Long tagClassNameId,
-			BulkAssetEntryAction bulkAssetEntryAction)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		options.setLocation(
-			_resourceURL +
-				_toPath(
-					"/tags/{tag-group-id}/{tag-class-name-id}/common",
-					tagGroupId));
-
-		options.setPost(true);
-
-		HttpUtil.URLtoString(options);
-
-		return options.getResponse();
-	}
-
 	protected BulkActionResponse randomBulkActionResponse() {
 		return new BulkActionResponse() {
 			{
@@ -468,41 +522,6 @@ public abstract class BaseBulkActionResponseResourceTestCase {
 				status = RandomTestUtil.randomString();
 			}
 		};
-	}
-
-	protected BulkActionResponse
-			testPostCategoryClassName_addBulkActionResponse(
-				BulkActionResponse bulkActionResponse)
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	protected BulkActionResponse
-			testPostCategoryGroupCategoryClassName_addBulkActionResponse(
-				BulkActionResponse bulkActionResponse)
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	protected BulkActionResponse testPostTagClassName_addBulkActionResponse(
-			BulkActionResponse bulkActionResponse)
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	protected BulkActionResponse
-			testPostTagGroupTagClassName_addBulkActionResponse(
-				BulkActionResponse bulkActionResponse)
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
 	}
 
 	protected Group testGroup;
@@ -513,16 +532,16 @@ public abstract class BaseBulkActionResponseResourceTestCase {
 			return new ArrayList<>(items);
 		}
 
-		public long getItemsPerPage() {
-			return itemsPerPage;
+		public long getLastPage() {
+			return lastPage;
 		}
 
-		public long getLastPageNumber() {
-			return lastPageNumber;
+		public long getPage() {
+			return page;
 		}
 
-		public long getPageNumber() {
-			return pageNumber;
+		public long getPageSize() {
+			return pageSize;
 		}
 
 		public long getTotalCount() {
@@ -532,14 +551,14 @@ public abstract class BaseBulkActionResponseResourceTestCase {
 		@JsonProperty
 		protected Collection<T> items;
 
-		@JsonProperty("pageSize")
-		protected long itemsPerPage;
+		@JsonProperty
+		protected long lastPage;
 
 		@JsonProperty
-		protected long lastPageNumber;
+		protected long page;
 
-		@JsonProperty("page")
-		protected long pageNumber;
+		@JsonProperty
+		protected long pageSize;
 
 		@JsonProperty
 		protected long totalCount;
@@ -569,12 +588,31 @@ public abstract class BaseBulkActionResponseResourceTestCase {
 	}
 
 	private static DateFormat _dateFormat;
-	private static final ObjectMapper _inputObjectMapper = new ObjectMapper() {
+	private final static ObjectMapper _inputObjectMapper = new ObjectMapper() {
 		{
+			setFilterProvider(
+				new SimpleFilterProvider() {
+					{
+						addFilter(
+							"Liferay.Vulcan",
+							SimpleBeanPropertyFilter.serializeAll());
+					}
+				});
 			setSerializationInclusion(JsonInclude.Include.NON_NULL);
 		}
 	};
-	private static final ObjectMapper _outputObjectMapper = new ObjectMapper();
+	private final static ObjectMapper _outputObjectMapper = new ObjectMapper() {
+		{
+			setFilterProvider(
+				new SimpleFilterProvider() {
+					{
+						addFilter(
+							"Liferay.Vulcan",
+							SimpleBeanPropertyFilter.serializeAll());
+					}
+				});
+		}
+	};
 
 	@Inject
 	private BulkActionResponseResource _bulkActionResponseResource;

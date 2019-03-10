@@ -15,7 +15,6 @@
 package com.liferay.bulk.rest.internal.graphql.query.v1_0;
 
 import com.liferay.bulk.rest.dto.v1_0.BulkStatus;
-import com.liferay.bulk.rest.internal.resource.v1_0.BulkStatusResourceImpl;
 import com.liferay.bulk.rest.resource.v1_0.BulkStatusResource;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
@@ -26,6 +25,10 @@ import graphql.annotations.annotationTypes.GraphQLName;
 
 import javax.annotation.Generated;
 
+import org.osgi.framework.Bundle;
+import org.osgi.framework.FrameworkUtil;
+import org.osgi.util.tracker.ServiceTracker;
+
 /**
  * @author Javier Gamarra
  * @generated
@@ -35,20 +38,40 @@ public class Query {
 
 	@GraphQLField
 	@GraphQLInvokeDetached
-	public BulkStatus getStatus(@GraphQLName("param") Long param)
+	public BulkStatus getStatu(@GraphQLName("param") Long param)
 		throws Exception {
 
 		BulkStatusResource bulkStatusResource = _createBulkStatusResource();
+
+		return bulkStatusResource.getStatu(param);
+	}
+
+	private static BulkStatusResource _createBulkStatusResource()
+		throws Exception {
+
+		BulkStatusResource bulkStatusResource =
+			_bulkStatusResourceServiceTracker.getService();
 
 		bulkStatusResource.setContextCompany(
 			CompanyLocalServiceUtil.getCompany(
 				CompanyThreadLocal.getCompanyId()));
 
-		return bulkStatusResource.getStatus(param);
+		return bulkStatusResource;
 	}
 
-	private static BulkStatusResource _createBulkStatusResource() {
-		return new BulkStatusResourceImpl();
+	private static final ServiceTracker<BulkStatusResource, BulkStatusResource>
+		_bulkStatusResourceServiceTracker;
+
+	static {
+		Bundle bundle = FrameworkUtil.getBundle(Query.class);
+
+		ServiceTracker<BulkStatusResource, BulkStatusResource>
+			bulkStatusResourceServiceTracker = new ServiceTracker<>(
+				bundle.getBundleContext(), BulkStatusResource.class, null);
+
+		bulkStatusResourceServiceTracker.open();
+
+		_bulkStatusResourceServiceTracker = bulkStatusResourceServiceTracker;
 	}
 
 }

@@ -27,6 +27,9 @@ import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.portal.vulcan.util.TransformUtil;
 
+import io.swagger.v3.oas.annotations.tags.Tag;
+import io.swagger.v3.oas.annotations.tags.Tags;
+
 import java.net.URI;
 
 import java.util.List;
@@ -51,12 +54,13 @@ import javax.ws.rs.core.UriInfo;
 public abstract class BaseBulkActionResponseResourceImpl
 	implements BulkActionResponseResource {
 
-	@Consumes("application/json")
 	@Override
-	@Path("/categories/{category-class-name-id}")
+	@Consumes("application/json")
 	@POST
+	@Path("/categories/{category-class-name-id}")
 	@Produces("application/json")
-	public BulkActionResponse postCategoryClassName(
+	@Tags(value = {@Tag(name = "BulkActionResponse")})
+	public BulkActionResponse postCategoryCategoryClassName(
 			@PathParam("category-class-name-id") Long categoryClassNameId,
 			BulkAssetEntryUpdateCategoriesAction
 				bulkAssetEntryUpdateCategoriesAction)
@@ -65,26 +69,29 @@ public abstract class BaseBulkActionResponseResourceImpl
 		return new BulkActionResponse();
 	}
 
-	@Consumes("application/json")
 	@Override
-	@Path("/categories/{category-group-id}/{category-class-name-id}/common")
+	@Consumes("application/json")
 	@POST
+	@Path("/categories/{category-group-id}/{category-class-name-id}/common")
 	@Produces("application/json")
-	public BulkAssetEntryCommonCategories postCategoryGroupCategoryClassName(
-			@PathParam("category-group-id") Long categoryGroupId,
-			@PathParam("category-class-name-id") Long categoryClassNameId,
-			BulkAssetEntryAction bulkAssetEntryAction)
+	@Tags(value = {@Tag(name = "BulkActionResponse")})
+	public BulkAssetEntryCommonCategories
+			postCategoryCategoryGroupCategoryClassNameCommon(
+				@PathParam("category-group-id") Long categoryGroupId,
+				@PathParam("category-class-name-id") Long categoryClassNameId,
+				BulkAssetEntryAction bulkAssetEntryAction)
 		throws Exception {
 
 		return new BulkAssetEntryCommonCategories();
 	}
 
-	@Consumes("application/json")
 	@Override
-	@Path("/tags/{tag-class-name-id}")
+	@Consumes("application/json")
 	@POST
+	@Path("/tags/{tag-class-name-id}")
 	@Produces("application/json")
-	public BulkActionResponse postTagClassName(
+	@Tags(value = {@Tag(name = "BulkActionResponse")})
+	public BulkActionResponse postTagTagClassName(
 			@PathParam("tag-class-name-id") Long tagClassNameId,
 			BulkAssetEntryUpdateTagsAction bulkAssetEntryUpdateTagsAction)
 		throws Exception {
@@ -92,12 +99,13 @@ public abstract class BaseBulkActionResponseResourceImpl
 		return new BulkActionResponse();
 	}
 
-	@Consumes("application/json")
 	@Override
-	@Path("/tags/{tag-group-id}/{tag-class-name-id}/common")
+	@Consumes("application/json")
 	@POST
+	@Path("/tags/{tag-group-id}/{tag-class-name-id}/common")
 	@Produces("application/json")
-	public BulkAssetEntryCommonTags postTagGroupTagClassName(
+	@Tags(value = {@Tag(name = "BulkActionResponse")})
+	public BulkAssetEntryCommonTags postTagTagGroupTagClassNameCommon(
 			@PathParam("tag-group-id") Long tagGroupId,
 			@PathParam("tag-class-name-id") Long tagClassNameId,
 			BulkAssetEntryAction bulkAssetEntryAction)

@@ -14,6 +14,7 @@
 
 package com.liferay.bulk.rest.dto.v1_0;
 
+import com.fasterxml.jackson.annotation.JsonFilter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -33,23 +34,12 @@ import javax.xml.bind.annotation.XmlRootElement;
  */
 @Generated("")
 @GraphQLName("BulkAssetEntryAction")
+@JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "BulkAssetEntryAction")
 public class BulkAssetEntryAction {
 
 	public Long getFolderId() {
 		return folderId;
-	}
-
-	public Long getRepositoryId() {
-		return repositoryId;
-	}
-
-	public Boolean getSelectAll() {
-		return selectAll;
-	}
-
-	public String[] getSelection() {
-		return selection;
 	}
 
 	public void setFolderId(Long folderId) {
@@ -68,6 +58,14 @@ public class BulkAssetEntryAction {
 		}
 	}
 
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Long folderId;
+
+	public Long getRepositoryId() {
+		return repositoryId;
+	}
+
 	public void setRepositoryId(Long repositoryId) {
 		this.repositoryId = repositoryId;
 	}
@@ -82,6 +80,14 @@ public class BulkAssetEntryAction {
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Long repositoryId;
+
+	public Boolean getSelectAll() {
+		return selectAll;
 	}
 
 	public void setSelectAll(Boolean selectAll) {
@@ -100,6 +106,14 @@ public class BulkAssetEntryAction {
 		}
 	}
 
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Boolean selectAll;
+
+	public String[] getSelection() {
+		return selection;
+	}
+
 	public void setSelection(String[] selection) {
 		this.selection = selection;
 	}
@@ -116,8 +130,12 @@ public class BulkAssetEntryAction {
 		}
 	}
 
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected String[] selection;
+
 	public String toString() {
-		StringBundler sb = new StringBundler(15);
+		StringBundler sb = new StringBundler();
 
 		sb.append("{");
 
@@ -138,29 +156,28 @@ public class BulkAssetEntryAction {
 
 		sb.append("\"selection\": ");
 
-		sb.append("\"");
-		sb.append(selection);
-		sb.append("\"");
+		if (selection == null) {
+			sb.append("null");
+		}
+		else {
+			sb.append("[");
+
+			for (int i = 0; i < selection.length; i++) {
+				sb.append("\"");
+				sb.append(selection[i]);
+				sb.append("\"");
+
+				if ((i + 1) < selection.length) {
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
+		}
 
 		sb.append("}");
 
 		return sb.toString();
 	}
-
-	@GraphQLField
-	@JsonProperty
-	protected Long folderId;
-
-	@GraphQLField
-	@JsonProperty
-	protected Long repositoryId;
-
-	@GraphQLField
-	@JsonProperty
-	protected Boolean selectAll;
-
-	@GraphQLField
-	@JsonProperty
-	protected String[] selection;
 
 }

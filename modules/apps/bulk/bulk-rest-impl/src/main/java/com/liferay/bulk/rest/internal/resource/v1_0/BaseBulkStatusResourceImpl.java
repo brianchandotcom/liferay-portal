@@ -22,6 +22,9 @@ import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.portal.vulcan.util.TransformUtil;
 
+import io.swagger.v3.oas.annotations.tags.Tag;
+import io.swagger.v3.oas.annotations.tags.Tags;
+
 import java.net.URI;
 
 import java.util.List;
@@ -44,11 +47,12 @@ import javax.ws.rs.core.UriInfo;
 @Path("/v1.0")
 public abstract class BaseBulkStatusResourceImpl implements BulkStatusResource {
 
-	@GET
 	@Override
+	@GET
 	@Path("/status")
 	@Produces("application/json")
-	public BulkStatus getStatus(@QueryParam("param") Long param)
+	@Tags(value = {@Tag(name = "BulkStatus")})
+	public BulkStatus getStatu(@QueryParam("param") Long param)
 		throws Exception {
 
 		return new BulkStatus();

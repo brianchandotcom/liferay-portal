@@ -228,13 +228,6 @@ paths:
             tags: ["BulkActionResponse"]
     /status:
         get:
-            parameters:
-                - in: query
-                  name: param
-                  required: false
-                  schema:
-                      format: int64
-                      type: integer
             responses:
                 200:
                     content:

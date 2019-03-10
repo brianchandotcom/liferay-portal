@@ -14,7 +14,10 @@
 
 package com.liferay.headless.workflow.internal.resource.v1_0;
 
+import com.liferay.headless.workflow.dto.v1_0.ChangeDescription;
 import com.liferay.headless.workflow.dto.v1_0.WorkflowTask;
+import com.liferay.headless.workflow.dto.v1_0.WorkflowTaskAssignToMe;
+import com.liferay.headless.workflow.dto.v1_0.WorkflowTaskAssignToUser;
 import com.liferay.headless.workflow.resource.v1_0.WorkflowTaskResource;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.petra.string.StringPool;
@@ -82,10 +85,11 @@ public abstract class BaseWorkflowTaskResourceImpl
 			@Parameter(in = ParameterIn.QUERY, name = "pageSize")
 		}
 	)
-	@Path("/workflow-tasks")
+	@Path("/workflow-tasks-by/{workflow-task-id}")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "WorkflowTask")})
-	public Page<WorkflowTask> getWorkflowTasksPage(
+	public Page<WorkflowTask> getWorkflowTasksByWorkflowTask(
+			@PathParam("workflow-task-id") String workflowTaskId,
 			@Context Pagination pagination)
 		throws Exception {
 
@@ -112,7 +116,7 @@ public abstract class BaseWorkflowTaskResourceImpl
 	@Tags(value = {@Tag(name = "WorkflowTask")})
 	public WorkflowTask postWorkflowTaskAssignToMe(
 			@PathParam("workflow-task-id") Long workflowTaskId,
-			WorkflowTask workflowTask)
+			WorkflowTaskAssignToMe workflowTaskAssignToMe)
 		throws Exception {
 
 		return new WorkflowTask();
@@ -126,7 +130,7 @@ public abstract class BaseWorkflowTaskResourceImpl
 	@Tags(value = {@Tag(name = "WorkflowTask")})
 	public WorkflowTask postWorkflowTaskAssignToUser(
 			@PathParam("workflow-task-id") Long workflowTaskId,
-			WorkflowTask workflowTask)
+			WorkflowTaskAssignToUser workflowTaskAssignToUser)
 		throws Exception {
 
 		return new WorkflowTask();
@@ -140,7 +144,7 @@ public abstract class BaseWorkflowTaskResourceImpl
 	@Tags(value = {@Tag(name = "WorkflowTask")})
 	public WorkflowTask postWorkflowTaskChangeTransition(
 			@PathParam("workflow-task-id") Long workflowTaskId,
-			WorkflowTask workflowTask)
+			ChangeDescription changeDescription)
 		throws Exception {
 
 		return new WorkflowTask();
@@ -154,7 +158,7 @@ public abstract class BaseWorkflowTaskResourceImpl
 	@Tags(value = {@Tag(name = "WorkflowTask")})
 	public WorkflowTask postWorkflowTaskUpdateDueDate(
 			@PathParam("workflow-task-id") Long workflowTaskId,
-			WorkflowTask workflowTask)
+			WorkflowTaskAssignToMe workflowTaskAssignToMe)
 		throws Exception {
 
 		return new WorkflowTask();

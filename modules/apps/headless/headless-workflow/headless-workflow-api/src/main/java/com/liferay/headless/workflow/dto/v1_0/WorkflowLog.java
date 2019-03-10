@@ -40,17 +40,17 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement(name = "WorkflowLog")
 public class WorkflowLog {
 
-	public String getAuditPerson() {
+	public Creator getAuditPerson() {
 		return auditPerson;
 	}
 
-	public void setAuditPerson(String auditPerson) {
+	public void setAuditPerson(Creator auditPerson) {
 		this.auditPerson = auditPerson;
 	}
 
 	@JsonIgnore
 	public void setAuditPerson(
-		UnsafeSupplier<String, Exception> auditPersonUnsafeSupplier) {
+		UnsafeSupplier<Creator, Exception> auditPersonUnsafeSupplier) {
 
 		try {
 			auditPerson = auditPersonUnsafeSupplier.get();
@@ -62,7 +62,7 @@ public class WorkflowLog {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected String auditPerson;
+	protected Creator auditPerson;
 
 	public String getCommentLog() {
 		return commentLog;
@@ -134,17 +134,17 @@ public class WorkflowLog {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long id;
 
-	public String getPerson() {
+	public Creator getPerson() {
 		return person;
 	}
 
-	public void setPerson(String person) {
+	public void setPerson(Creator person) {
 		this.person = person;
 	}
 
 	@JsonIgnore
 	public void setPerson(
-		UnsafeSupplier<String, Exception> personUnsafeSupplier) {
+		UnsafeSupplier<Creator, Exception> personUnsafeSupplier) {
 
 		try {
 			person = personUnsafeSupplier.get();
@@ -156,19 +156,19 @@ public class WorkflowLog {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected String person;
+	protected Creator person;
 
-	public String getPreviousPerson() {
+	public Creator getPreviousPerson() {
 		return previousPerson;
 	}
 
-	public void setPreviousPerson(String previousPerson) {
+	public void setPreviousPerson(Creator previousPerson) {
 		this.previousPerson = previousPerson;
 	}
 
 	@JsonIgnore
 	public void setPreviousPerson(
-		UnsafeSupplier<String, Exception> previousPersonUnsafeSupplier) {
+		UnsafeSupplier<Creator, Exception> previousPersonUnsafeSupplier) {
 
 		try {
 			previousPerson = previousPersonUnsafeSupplier.get();
@@ -180,7 +180,7 @@ public class WorkflowLog {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected String previousPerson;
+	protected Creator previousPerson;
 
 	public String getPreviousState() {
 		return previousState;
@@ -307,9 +307,7 @@ public class WorkflowLog {
 
 		sb.append("\"auditPerson\": ");
 
-		sb.append("\"");
 		sb.append(auditPerson);
-		sb.append("\"");
 		sb.append(", ");
 
 		sb.append("\"commentLog\": ");
@@ -333,16 +331,12 @@ public class WorkflowLog {
 
 		sb.append("\"person\": ");
 
-		sb.append("\"");
 		sb.append(person);
-		sb.append("\"");
 		sb.append(", ");
 
 		sb.append("\"previousPerson\": ");
 
-		sb.append("\"");
 		sb.append(previousPerson);
-		sb.append("\"");
 		sb.append(", ");
 
 		sb.append("\"previousState\": ");

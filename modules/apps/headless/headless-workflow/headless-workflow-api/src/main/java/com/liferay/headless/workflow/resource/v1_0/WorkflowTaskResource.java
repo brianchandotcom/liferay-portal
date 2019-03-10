@@ -14,7 +14,10 @@
 
 package com.liferay.headless.workflow.resource.v1_0;
 
+import com.liferay.headless.workflow.dto.v1_0.ChangeDescription;
 import com.liferay.headless.workflow.dto.v1_0.WorkflowTask;
+import com.liferay.headless.workflow.dto.v1_0.WorkflowTaskAssignToMe;
+import com.liferay.headless.workflow.dto.v1_0.WorkflowTaskAssignToUser;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
@@ -36,25 +39,27 @@ public interface WorkflowTaskResource {
 			Long roleId, Pagination pagination)
 		throws Exception;
 
-	public Page<WorkflowTask> getWorkflowTasksPage(Pagination pagination)
+	public Page<WorkflowTask> getWorkflowTasksByWorkflowTask(
+			String workflowTaskId, Pagination pagination)
 		throws Exception;
 
 	public WorkflowTask getWorkflowTask(Long workflowTaskId) throws Exception;
 
 	public WorkflowTask postWorkflowTaskAssignToMe(
-			Long workflowTaskId, WorkflowTask workflowTask)
+			Long workflowTaskId, WorkflowTaskAssignToMe workflowTaskAssignToMe)
 		throws Exception;
 
 	public WorkflowTask postWorkflowTaskAssignToUser(
-			Long workflowTaskId, WorkflowTask workflowTask)
+			Long workflowTaskId,
+			WorkflowTaskAssignToUser workflowTaskAssignToUser)
 		throws Exception;
 
 	public WorkflowTask postWorkflowTaskChangeTransition(
-			Long workflowTaskId, WorkflowTask workflowTask)
+			Long workflowTaskId, ChangeDescription changeDescription)
 		throws Exception;
 
 	public WorkflowTask postWorkflowTaskUpdateDueDate(
-			Long workflowTaskId, WorkflowTask workflowTask)
+			Long workflowTaskId, WorkflowTaskAssignToMe workflowTaskAssignToMe)
 		throws Exception;
 
 	public void setContextCompany(Company contextCompany);

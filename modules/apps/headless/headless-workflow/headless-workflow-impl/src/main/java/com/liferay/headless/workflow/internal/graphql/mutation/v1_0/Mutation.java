@@ -14,7 +14,10 @@
 
 package com.liferay.headless.workflow.internal.graphql.mutation.v1_0;
 
+import com.liferay.headless.workflow.dto.v1_0.ChangeDescription;
 import com.liferay.headless.workflow.dto.v1_0.WorkflowTask;
+import com.liferay.headless.workflow.dto.v1_0.WorkflowTaskAssignToMe;
+import com.liferay.headless.workflow.dto.v1_0.WorkflowTaskAssignToUser;
 import com.liferay.headless.workflow.resource.v1_0.WorkflowTaskResource;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
@@ -40,56 +43,60 @@ public class Mutation {
 	@GraphQLInvokeDetached
 	public WorkflowTask postWorkflowTaskAssignToMe(
 			@GraphQLName("workflow-task-id") Long workflowTaskId,
-			@GraphQLName("WorkflowTask") WorkflowTask workflowTask)
+			@GraphQLName("WorkflowTaskAssignToMe") WorkflowTaskAssignToMe
+				workflowTaskAssignToMe)
 		throws Exception {
 
 		WorkflowTaskResource workflowTaskResource =
 			_createWorkflowTaskResource();
 
 		return workflowTaskResource.postWorkflowTaskAssignToMe(
-			workflowTaskId, workflowTask);
+			workflowTaskId, workflowTaskAssignToMe);
 	}
 
 	@GraphQLField
 	@GraphQLInvokeDetached
 	public WorkflowTask postWorkflowTaskAssignToUser(
 			@GraphQLName("workflow-task-id") Long workflowTaskId,
-			@GraphQLName("WorkflowTask") WorkflowTask workflowTask)
+			@GraphQLName("WorkflowTaskAssignToUser") WorkflowTaskAssignToUser
+				workflowTaskAssignToUser)
 		throws Exception {
 
 		WorkflowTaskResource workflowTaskResource =
 			_createWorkflowTaskResource();
 
 		return workflowTaskResource.postWorkflowTaskAssignToUser(
-			workflowTaskId, workflowTask);
+			workflowTaskId, workflowTaskAssignToUser);
 	}
 
 	@GraphQLField
 	@GraphQLInvokeDetached
 	public WorkflowTask postWorkflowTaskChangeTransition(
 			@GraphQLName("workflow-task-id") Long workflowTaskId,
-			@GraphQLName("WorkflowTask") WorkflowTask workflowTask)
+			@GraphQLName("ChangeDescription") ChangeDescription
+				changeDescription)
 		throws Exception {
 
 		WorkflowTaskResource workflowTaskResource =
 			_createWorkflowTaskResource();
 
 		return workflowTaskResource.postWorkflowTaskChangeTransition(
-			workflowTaskId, workflowTask);
+			workflowTaskId, changeDescription);
 	}
 
 	@GraphQLField
 	@GraphQLInvokeDetached
 	public WorkflowTask postWorkflowTaskUpdateDueDate(
 			@GraphQLName("workflow-task-id") Long workflowTaskId,
-			@GraphQLName("WorkflowTask") WorkflowTask workflowTask)
+			@GraphQLName("WorkflowTaskAssignToMe") WorkflowTaskAssignToMe
+				workflowTaskAssignToMe)
 		throws Exception {
 
 		WorkflowTaskResource workflowTaskResource =
 			_createWorkflowTaskResource();
 
 		return workflowTaskResource.postWorkflowTaskUpdateDueDate(
-			workflowTaskId, workflowTask);
+			workflowTaskId, workflowTaskAssignToMe);
 	}
 
 	private static WorkflowTaskResource _createWorkflowTaskResource()

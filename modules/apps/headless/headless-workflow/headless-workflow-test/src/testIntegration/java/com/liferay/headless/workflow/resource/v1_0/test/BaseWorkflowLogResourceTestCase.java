@@ -403,11 +403,8 @@ public abstract class BaseWorkflowLogResourceTestCase {
 		sb.append(" ");
 
 		if (entityFieldName.equals("auditPerson")) {
-			sb.append("'");
-			sb.append(String.valueOf(workflowLog.getAuditPerson()));
-			sb.append("'");
-
-			return sb.toString();
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
 		}
 
 		if (entityFieldName.equals("commentLog")) {
@@ -430,19 +427,13 @@ public abstract class BaseWorkflowLogResourceTestCase {
 		}
 
 		if (entityFieldName.equals("person")) {
-			sb.append("'");
-			sb.append(String.valueOf(workflowLog.getPerson()));
-			sb.append("'");
-
-			return sb.toString();
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
 		}
 
 		if (entityFieldName.equals("previousPerson")) {
-			sb.append("'");
-			sb.append(String.valueOf(workflowLog.getPreviousPerson()));
-			sb.append("'");
-
-			return sb.toString();
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
 		}
 
 		if (entityFieldName.equals("previousState")) {
@@ -486,12 +477,9 @@ public abstract class BaseWorkflowLogResourceTestCase {
 	protected WorkflowLog randomWorkflowLog() {
 		return new WorkflowLog() {
 			{
-				auditPerson = RandomTestUtil.randomString();
 				commentLog = RandomTestUtil.randomString();
 				dateCreated = RandomTestUtil.nextDate();
 				id = RandomTestUtil.randomLong();
-				person = RandomTestUtil.randomString();
-				previousPerson = RandomTestUtil.randomString();
 				previousState = RandomTestUtil.randomString();
 				state = RandomTestUtil.randomString();
 				taskId = RandomTestUtil.randomLong();

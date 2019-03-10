@@ -14,6 +14,7 @@
 
 package com.liferay.bulk.rest.dto.v1_0;
 
+import com.fasterxml.jackson.annotation.JsonFilter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -33,15 +34,12 @@ import javax.xml.bind.annotation.XmlRootElement;
  */
 @Generated("")
 @GraphQLName("Category")
+@JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "Category")
 public class Category {
 
 	public Long getCategoryId() {
 		return categoryId;
-	}
-
-	public String getName() {
-		return name;
 	}
 
 	public void setCategoryId(Long categoryId) {
@@ -60,6 +58,14 @@ public class Category {
 		}
 	}
 
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Long categoryId;
+
+	public String getName() {
+		return name;
+	}
+
 	public void setName(String name) {
 		this.name = name;
 	}
@@ -74,8 +80,12 @@ public class Category {
 		}
 	}
 
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected String name;
+
 	public String toString() {
-		StringBundler sb = new StringBundler(9);
+		StringBundler sb = new StringBundler();
 
 		sb.append("{");
 
@@ -94,13 +104,5 @@ public class Category {
 
 		return sb.toString();
 	}
-
-	@GraphQLField
-	@JsonProperty
-	protected Long categoryId;
-
-	@GraphQLField
-	@JsonProperty
-	protected String name;
 
 }

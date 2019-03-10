@@ -19,7 +19,6 @@ import com.liferay.asset.kernel.exception.AssetTagException;
 import com.liferay.asset.kernel.exception.DuplicateQueryRuleException;
 import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.asset.kernel.service.AssetTagLocalService;
-import com.liferay.asset.list.provider.AssetListProviderTracker;
 import com.liferay.asset.publisher.constants.AssetPublisherPortletKeys;
 import com.liferay.asset.publisher.constants.AssetPublisherWebKeys;
 import com.liferay.asset.publisher.util.AssetPublisherHelper;
@@ -35,6 +34,7 @@ import com.liferay.asset.service.AssetEntryUsageLocalService;
 import com.liferay.asset.util.AssetHelper;
 import com.liferay.exportimport.kernel.staging.LayoutStagingUtil;
 import com.liferay.exportimport.kernel.staging.Staging;
+import com.liferay.info.provider.InfoListProviderTracker;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
@@ -142,7 +142,7 @@ public class AssetPublisherConfigurationAction
 
 		AssetPublisherDisplayContext assetPublisherDisplayContext =
 			new AssetPublisherDisplayContext(
-				assetEntryActionRegistry, assetHelper, assetListProviderTracker,
+				assetEntryActionRegistry, assetHelper, infoListProviderTracker,
 				assetPublisherCustomizer, assetPublisherHelper,
 				assetPublisherWebConfiguration, assetPublisherWebUtil,
 				renderRequest, renderResponse, renderRequest.getPreferences());
@@ -836,9 +836,6 @@ public class AssetPublisherConfigurationAction
 	protected AssetHelper assetHelper;
 
 	@Reference
-	protected AssetListProviderTracker assetListProviderTracker;
-
-	@Reference
 	protected AssetPublisherCustomizerRegistry assetPublisherCustomizerRegistry;
 
 	@Reference
@@ -854,6 +851,9 @@ public class AssetPublisherConfigurationAction
 
 	@Reference
 	protected GroupLocalService groupLocalService;
+
+	@Reference
+	protected InfoListProviderTracker infoListProviderTracker;
 
 	@Reference
 	protected ItemSelector itemSelector;

@@ -1156,10 +1156,6 @@ paths:
                   name: pageSize
                   schema:
                       type: integer
-                - in: query
-                  name: fullnamequery
-                  schema:
-                      type: string
             responses:
                 200:
                     content:
@@ -1177,6 +1173,15 @@ paths:
                     application/json:
                         schema:
                             $ref: "#/components/schemas/UserAccount"
+                    multipart/form-data:
+                        schema:
+                            properties:
+                                file:
+                                    format: binary
+                                    type: string
+                                userAccount:
+                                    $ref: "#/components/schemas/UserAccount"
+                            type: object
             responses:
                 200:
                     content:

@@ -463,6 +463,10 @@ components:
                         format: uri
                         type: string
                     type: array
+            required:
+                - email
+                - familyName
+                - givenName
             type: object
         Vocabulary:
             description: https://www.schema.org/Vocabulary
@@ -1170,9 +1174,6 @@ paths:
             parameters: []
             requestBody:
                 content:
-                    application/json:
-                        schema:
-                            $ref: "#/components/schemas/UserAccount"
                     multipart/form-data:
                         schema:
                             properties:

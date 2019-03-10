@@ -14,6 +14,7 @@
 
 package com.liferay.bulk.rest.dto.v1_0;
 
+import com.fasterxml.jackson.annotation.JsonFilter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -33,23 +34,12 @@ import javax.xml.bind.annotation.XmlRootElement;
  */
 @Generated("")
 @GraphQLName("Vocabulary")
+@JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "Vocabulary")
 public class Vocabulary {
 
 	public Category[] getCategories() {
 		return categories;
-	}
-
-	public Boolean getMultiValued() {
-		return multiValued;
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public Long getVocabularyId() {
-		return vocabularyId;
 	}
 
 	public void setCategories(Category[] categories) {
@@ -68,6 +58,14 @@ public class Vocabulary {
 		}
 	}
 
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Category[] categories;
+
+	public Boolean getMultiValued() {
+		return multiValued;
+	}
+
 	public void setMultiValued(Boolean multiValued) {
 		this.multiValued = multiValued;
 	}
@@ -84,6 +82,14 @@ public class Vocabulary {
 		}
 	}
 
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Boolean multiValued;
+
+	public String getName() {
+		return name;
+	}
+
 	public void setName(String name) {
 		this.name = name;
 	}
@@ -96,6 +102,14 @@ public class Vocabulary {
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected String name;
+
+	public Long getVocabularyId() {
+		return vocabularyId;
 	}
 
 	public void setVocabularyId(Long vocabularyId) {
@@ -114,16 +128,34 @@ public class Vocabulary {
 		}
 	}
 
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Long vocabularyId;
+
 	public String toString() {
-		StringBundler sb = new StringBundler(17);
+		StringBundler sb = new StringBundler();
 
 		sb.append("{");
 
 		sb.append("\"categories\": ");
 
-		sb.append("\"");
-		sb.append(categories);
-		sb.append("\"");
+		if (categories == null) {
+			sb.append("null");
+		}
+		else {
+			sb.append("[");
+
+			for (int i = 0; i < categories.length; i++) {
+				sb.append(categories[i]);
+
+				if ((i + 1) < categories.length) {
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
+		}
+
 		sb.append(", ");
 
 		sb.append("\"multiValued\": ");
@@ -146,21 +178,5 @@ public class Vocabulary {
 
 		return sb.toString();
 	}
-
-	@GraphQLField
-	@JsonProperty
-	protected Category[] categories;
-
-	@GraphQLField
-	@JsonProperty
-	protected Boolean multiValued;
-
-	@GraphQLField
-	@JsonProperty
-	protected String name;
-
-	@GraphQLField
-	@JsonProperty
-	protected Long vocabularyId;
 
 }

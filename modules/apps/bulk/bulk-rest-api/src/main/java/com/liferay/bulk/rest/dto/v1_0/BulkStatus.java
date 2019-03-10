@@ -14,6 +14,7 @@
 
 package com.liferay.bulk.rest.dto.v1_0;
 
+import com.fasterxml.jackson.annotation.JsonFilter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -33,6 +34,7 @@ import javax.xml.bind.annotation.XmlRootElement;
  */
 @Generated("")
 @GraphQLName("BulkStatus")
+@JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "BulkStatus")
 public class BulkStatus {
 
@@ -54,8 +56,12 @@ public class BulkStatus {
 		}
 	}
 
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Boolean busy;
+
 	public String toString() {
-		StringBundler sb = new StringBundler(4);
+		StringBundler sb = new StringBundler();
 
 		sb.append("{");
 
@@ -67,9 +73,5 @@ public class BulkStatus {
 
 		return sb.toString();
 	}
-
-	@GraphQLField
-	@JsonProperty
-	protected Boolean busy;
 
 }

@@ -17,6 +17,8 @@ package com.liferay.bulk.rest.resource.v1_0.test;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
+import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
 
 import com.liferay.bulk.rest.dto.v1_0.BulkStatus;
 import com.liferay.bulk.rest.resource.v1_0.BulkStatusResource;
@@ -90,13 +92,50 @@ public abstract class BaseBulkStatusResourceTestCase {
 	}
 
 	@Test
-	public void testGetStatus() throws Exception {
-		BulkStatus postBulkStatus = testGetStatus_addBulkStatus();
+	public void testGetStatu() throws Exception {
+		BulkStatus postBulkStatus = testGetStatu_addBulkStatus();
 
-		BulkStatus getBulkStatus = invokeGetStatus(postBulkStatus.getId());
+		BulkStatus getBulkStatus = invokeGetStatu(postBulkStatus.getId());
 
 		assertEquals(postBulkStatus, getBulkStatus);
 		assertValid(getBulkStatus);
+	}
+
+	protected BulkStatus testGetStatu_addBulkStatus() throws Exception {
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected BulkStatus invokeGetStatu(Long param) throws Exception {
+		Http.Options options = _createHttpOptions();
+
+		String location = _resourceURL + _toPath("/status", param);
+
+		options.setLocation(location);
+
+		return _outputObjectMapper.readValue(
+			HttpUtil.URLtoString(options), BulkStatus.class);
+	}
+
+	protected Http.Response invokeGetStatuResponse(Long param)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		String location = _resourceURL + _toPath("/status", param);
+
+		options.setLocation(location);
+
+		HttpUtil.URLtoString(options);
+
+		return options.getResponse();
+	}
+
+	protected void assertResponseCode(
+		int expectedResponseCode, Http.Response actualResponse) {
+
+		Assert.assertEquals(
+			expectedResponseCode, actualResponse.getResponseCode());
 	}
 
 	protected void assertEquals(
@@ -141,13 +180,6 @@ public abstract class BaseBulkStatusResourceTestCase {
 		}
 	}
 
-	protected void assertResponseCode(
-		int expectedResponseCode, Http.Response actualResponse) {
-
-		Assert.assertEquals(
-			expectedResponseCode, actualResponse.getResponseCode());
-	}
-
 	protected void assertValid(BulkStatus bulkStatus) {
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
@@ -160,8 +192,8 @@ public abstract class BaseBulkStatusResourceTestCase {
 
 		int size = bulkStatuses.size();
 
-		if ((page.getItemsPerPage() > 0) && (page.getLastPageNumber() > 0) &&
-			(page.getPageNumber() > 0) && (page.getTotalCount() > 0) &&
+		if ((page.getLastPage() > 0) && (page.getPage() > 0) &&
+			(page.getPageSize() > 0) && (page.getTotalCount() > 0) &&
 			(size > 0)) {
 
 			valid = true;
@@ -213,7 +245,7 @@ public abstract class BaseBulkStatusResourceTestCase {
 	protected String getFilterString(
 		EntityField entityField, String operator, BulkStatus bulkStatus) {
 
-		StringBundler sb = new StringBundler(4);
+		StringBundler sb = new StringBundler();
 
 		String entityFieldName = entityField.getName();
 
@@ -232,38 +264,12 @@ public abstract class BaseBulkStatusResourceTestCase {
 			"Invalid entity field " + entityFieldName);
 	}
 
-	protected BulkStatus invokeGetStatus(Long param) throws Exception {
-		Http.Options options = _createHttpOptions();
-
-		options.setLocation(_resourceURL + _toPath("/status", param));
-
-		return _outputObjectMapper.readValue(
-			HttpUtil.URLtoString(options), BulkStatus.class);
-	}
-
-	protected Http.Response invokeGetStatusResponse(Long param)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		options.setLocation(_resourceURL + _toPath("/status", param));
-
-		HttpUtil.URLtoString(options);
-
-		return options.getResponse();
-	}
-
 	protected BulkStatus randomBulkStatus() {
 		return new BulkStatus() {
 			{
 				busy = RandomTestUtil.randomBoolean();
 			}
 		};
-	}
-
-	protected BulkStatus testGetStatus_addBulkStatus() throws Exception {
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
 	}
 
 	protected Group testGroup;
@@ -274,16 +280,16 @@ public abstract class BaseBulkStatusResourceTestCase {
 			return new ArrayList<>(items);
 		}
 
-		public long getItemsPerPage() {
-			return itemsPerPage;
+		public long getLastPage() {
+			return lastPage;
 		}
 
-		public long getLastPageNumber() {
-			return lastPageNumber;
+		public long getPage() {
+			return page;
 		}
 
-		public long getPageNumber() {
-			return pageNumber;
+		public long getPageSize() {
+			return pageSize;
 		}
 
 		public long getTotalCount() {
@@ -293,14 +299,14 @@ public abstract class BaseBulkStatusResourceTestCase {
 		@JsonProperty
 		protected Collection<T> items;
 
-		@JsonProperty("pageSize")
-		protected long itemsPerPage;
+		@JsonProperty
+		protected long lastPage;
 
 		@JsonProperty
-		protected long lastPageNumber;
+		protected long page;
 
-		@JsonProperty("page")
-		protected long pageNumber;
+		@JsonProperty
+		protected long pageSize;
 
 		@JsonProperty
 		protected long totalCount;
@@ -330,12 +336,31 @@ public abstract class BaseBulkStatusResourceTestCase {
 	}
 
 	private static DateFormat _dateFormat;
-	private static final ObjectMapper _inputObjectMapper = new ObjectMapper() {
+	private final static ObjectMapper _inputObjectMapper = new ObjectMapper() {
 		{
+			setFilterProvider(
+				new SimpleFilterProvider() {
+					{
+						addFilter(
+							"Liferay.Vulcan",
+							SimpleBeanPropertyFilter.serializeAll());
+					}
+				});
 			setSerializationInclusion(JsonInclude.Include.NON_NULL);
 		}
 	};
-	private static final ObjectMapper _outputObjectMapper = new ObjectMapper();
+	private final static ObjectMapper _outputObjectMapper = new ObjectMapper() {
+		{
+			setFilterProvider(
+				new SimpleFilterProvider() {
+					{
+						addFilter(
+							"Liferay.Vulcan",
+							SimpleBeanPropertyFilter.serializeAll());
+					}
+				});
+		}
+	};
 
 	@Inject
 	private BulkStatusResource _bulkStatusResource;

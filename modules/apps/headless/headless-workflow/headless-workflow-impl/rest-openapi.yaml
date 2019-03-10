@@ -1,5 +1,32 @@
 components:
     schemas:
+        ChangeDescription:
+            description: https://www.schema.org/ChangeDescription
+            properties:
+                transition:
+                    type: string
+            type: object
+        Creator:
+            description: https://www.schema.org/Creator
+            properties:
+                additionalName:
+                    type: string
+                familyName:
+                    type: string
+                givenName:
+                    type: string
+                id:
+                    format: int64
+                    type: integer
+                image:
+                    format: uri
+                    type: string
+                name:
+                    type: string
+                profileURL:
+                    format: uri
+                    type: string
+            type: object
         ObjectReviewed:
             description: https://www.schema.org/ObjectReviewed
             properties:
@@ -16,8 +43,7 @@ components:
             description: https://www.schema.org/WorkflowLog
             properties:
                 auditPerson:
-                    format: uri
-                    type: string
+                    $ref: "#/components/schemas/Creator"
                 commentLog:
                     type: string
                 dateCreated:
@@ -27,23 +53,16 @@ components:
                     format: int64
                     type: integer
                 person:
-                    format: uri
-                    type: string
+                    $ref: "#/components/schemas/Creator"
                 previousPerson:
-                    format: uri
-                    type: string
+                    $ref: "#/components/schemas/Creator"
                 previousState:
                     type: string
                 state:
                     type: string
-                task:
-                    allOf:
-                        - $ref: "#/components/schemas/WorkflowTask"
-                    readOnly: true
                 taskId:
                     format: int64
                     type: integer
-                    writeOnly: true
                 type:
                     type: string
             type: object
@@ -87,6 +106,27 @@ components:
                     items:
                         type: string
                     type: array
+            type: object
+        WorkflowTaskAssignToMe:
+            description: https://www.schema.org/WorkflowTaskAssignToMe
+            properties:
+                comment:
+                    type: string
+                dueDate:
+                    format: date-time
+                    type: string
+            type: object
+        WorkflowTaskAssignToUser:
+            description: https://www.schema.org/WorkflowTaskAssignToUser
+            properties:
+                assignee:
+                    format: int64
+                    type: integer
+                comment:
+                    type: string
+                dueDate:
+                    format: date-time
+                    type: string
             type: object
 info:
     description: ""
@@ -138,9 +178,14 @@ paths:
                                 $ref: "#/components/schemas/WorkflowLog"
                     description: ""
             tags: ["WorkflowLog"]
-    "/workflow-tasks":
+    "/workflow-tasks-by/{workflow-task-id}":
         get:
             parameters:
+                - in: path
+                  name: workflow-task-id
+                  required: true
+                  schema:
+                      type: string
                 - in: query
                   name: page
                   schema:
@@ -189,7 +234,7 @@ paths:
                 content:
                     application/json:
                         schema:
-                            $ref: "#/components/schemas/WorkflowTask"
+                            $ref: "#/components/schemas/WorkflowTaskAssignToMe"
             responses:
                 200:
                     content:
@@ -211,7 +256,7 @@ paths:
                 content:
                     application/json:
                         schema:
-                            $ref: "#/components/schemas/WorkflowTask"
+                            $ref: "#/components/schemas/WorkflowTaskAssignToUser"
             responses:
                 200:
                     content:
@@ -233,7 +278,7 @@ paths:
                 content:
                     application/json:
                         schema:
-                            $ref: "#/components/schemas/WorkflowTask"
+                            $ref: "#/components/schemas/ChangeDescription"
             responses:
                 200:
                     content:
@@ -255,7 +300,7 @@ paths:
                 content:
                     application/json:
                         schema:
-                            $ref: "#/components/schemas/WorkflowTask"
+                            $ref: "#/components/schemas/WorkflowTaskAssignToMe"
             responses:
                 200:
                     content:

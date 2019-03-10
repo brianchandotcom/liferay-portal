@@ -17,20 +17,21 @@
 <%@ include file="/init.jsp" %>
 
 <%
-List<AssetListProvider> assetListProviders = assetPublisherDisplayContext.getAssetListProviders();
+List<InfoListProvider> infoListProviders = assetPublisherDisplayContext.getAssetInfoListProviders();
+String curInfoListProviderClassName = PrefsParamUtil.getString(portletPreferences, request, "infoListProviderClassName", "");
 %>
 
 <c:choose>
-	<c:when test="<%= ListUtil.isNotEmpty(assetListProviders) %>">
-		<aui:select label="" name="preferences--assetListProviderClassName--">
+	<c:when test="<%= ListUtil.isNotEmpty(infoListProviders) %>">
+		<aui:select label="" name="preferences--infoListProviderClassName--">
 			<aui:option label="none" value="" />
 
 			<%
-			for (AssetListProvider assetListProvider : assetListProviders) {
-				Class<?> clazz = assetListProvider.getClass();
+			for (InfoListProvider infoListProvider : infoListProviders) {
+				Class<?> clazz = infoListProvider.getClass();
 			%>
 
-				<aui:option label="<%= assetListProvider.getLabel(themeDisplay.getLocale()) %>" value="<%= clazz.getName() %>" />
+				<aui:option label="<%= infoListProvider.getLabel(themeDisplay.getLocale()) %>" value="<%= clazz.getName() %>" selected="<%= curInfoListProviderClassName.equals(clazz.getName()) %>"/>
 
 			<%
 			}

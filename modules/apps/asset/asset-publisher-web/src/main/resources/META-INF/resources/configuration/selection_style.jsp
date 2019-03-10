@@ -23,7 +23,7 @@
 
 	<aui:input checked="<%= assetPublisherDisplayContext.isSelectionStyleAssetList() %>" id="selectionStyleAssetList" label="asset-list" name="preferences--selectionStyle--" onChange='<%= renderResponse.getNamespace() + "chooseSelectionStyle();" %>' type="radio" value="asset-list" />
 
-	<aui:input checked="<%= assetPublisherDisplayContext.isSelectionStyleAssetListProvider() %>" id="selectionStyleAssetListProvider" label="asset-list-provider" name="preferences--selectionStyle--" onChange='<%= renderResponse.getNamespace() + "chooseSelectionStyle();" %>' type="radio" value="asset-list-provider" />
+	<aui:input checked="<%= assetPublisherDisplayContext.isSelectionStyleAssetListProvider() %>" id="selectionStyleInfoListProvider" label="asset-list-provider" name="preferences--selectionStyle--" onChange='<%= renderResponse.getNamespace() + "chooseSelectionStyle();" %>' type="radio" value="asset-list-provider" />
 </aui:fieldset>
 
 <script>

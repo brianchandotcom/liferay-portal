@@ -94,8 +94,7 @@ public class DEDataLayoutServiceImpl implements DEDataLayoutService {
 		if (_deDataLayoutDeleteRequestExecutor == null) {
 			_deDataLayoutDeleteRequestExecutor =
 				new DEDataLayoutDeleteRequestExecutor(
-					_ddmStructureLayoutLocalService,
-					_ddmStructureVersionLocalService);
+					_ddmStructureLayoutLocalService);
 		}
 
 		return _deDataLayoutDeleteRequestExecutor;

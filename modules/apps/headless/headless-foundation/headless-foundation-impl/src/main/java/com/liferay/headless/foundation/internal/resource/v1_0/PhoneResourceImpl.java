@@ -24,11 +24,8 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.OrganizationService;
 import com.liferay.portal.kernel.service.PhoneService;
 import com.liferay.portal.kernel.service.UserService;
-import com.liferay.portal.vulcan.identifier.ClassNameClassPK;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
-
-import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -44,37 +41,38 @@ import org.osgi.service.component.annotations.ServiceScope;
 public class PhoneResourceImpl extends BasePhoneResourceImpl {
 
 	@Override
+	public Page<Phone> getOrganizationPhonesPage(
+			Long organizationId, Pagination pagination)
+		throws Exception {
+
+		Organization organization = _organizationService.getOrganization(
+			organizationId);
+
+		return Page.of(
+			transform(
+				_phoneService.getPhones(
+					organization.getModelClassName(),
+					organization.getOrganizationId()),
+				this::_toPhone));
+	}
+
+	@Override
 	public Phone getPhone(Long phoneId) throws Exception {
 		return _toPhone(_phoneService.getPhone(phoneId));
 	}
 
 	@Override
-	public Page<Phone> getPhonesByClassNameClassPK(
-			ClassNameClassPK classNameClassPK, Pagination pagination)
+	public Page<Phone> getUserAccountPhonesPage(
+			Long userAccountId, Pagination pagination)
 		throws Exception {
 
-		return Page.of(transform(_getPhones(classNameClassPK), this::_toPhone));
-	}
+		User user = _userService.getUserById(userAccountId);
 
-	private List<com.liferay.portal.kernel.model.Phone> _getPhones(
-			ClassNameClassPK classNameClassPK)
-		throws PortalException {
-
-		String className = classNameClassPK.getClassName();
-
-		if (className.equals(Organization.class.getName())) {
-			Organization organization = _organizationService.getOrganization(
-				classNameClassPK.getClassPK());
-
-			return _phoneService.getPhones(
-				organization.getModelClassName(),
-				organization.getOrganizationId());
-		}
-
-		User user = _userService.getUserById(classNameClassPK.getClassPK());
-
-		return _phoneService.getPhones(
-			Contact.class.getName(), user.getContactId());
+		return Page.of(
+			transform(
+				_phoneService.getPhones(
+					Contact.class.getName(), user.getContactId()),
+				this::_toPhone));
 	}
 
 	private Phone _toPhone(com.liferay.portal.kernel.model.Phone phone)

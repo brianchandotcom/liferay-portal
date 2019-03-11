@@ -870,6 +870,10 @@ public class StructuredContentResourceImpl
 		Fields newFields = _ddm.getFields(
 			ddmStructure.getStructureId(), serviceContext);
 
+		if (ArrayUtil.isEmpty(contentFields)) {
+			return newFields;
+		}
+
 		Fields fields = _journalConverter.getDDMFields(
 			journalArticle.getDDMStructure(), journalArticle.getContent());
 

@@ -411,6 +411,7 @@ definition {
 	@description = "This test ensures that only the last two versions of a file are kept when the max version limit is set."
 	@priority = "5"
 	test LimitMaxFileVersion {
+		property test.name.skip.portal.instance = "CPDocumentsandmedia#LimitMaxFileVersion";
 
 		ProductMenu.gotoPortlet(
 			category = "Configuration",

@@ -57,11 +57,11 @@ public abstract class BaseBulkActionResponseResourceImpl
 	@Override
 	@Consumes("application/json")
 	@POST
-	@Path("/categories/{category-class-name-id}")
+	@Path("/categories/{class-name-id}")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "BulkActionResponse")})
-	public BulkActionResponse postCategoryCategoryClassName(
-			@PathParam("category-class-name-id") Long categoryClassNameId,
+	public BulkActionResponse postCategoryClassName(
+			@PathParam("class-name-id") Long classNameId,
 			BulkAssetEntryUpdateCategoriesAction
 				bulkAssetEntryUpdateCategoriesAction)
 		throws Exception {
@@ -72,13 +72,13 @@ public abstract class BaseBulkActionResponseResourceImpl
 	@Override
 	@Consumes("application/json")
 	@POST
-	@Path("/categories/{category-group-id}/{category-class-name-id}/common")
+	@Path("/categories/{content-space-id}/{class-name-id}/common")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "BulkActionResponse")})
 	public BulkAssetEntryCommonCategories
-			postCategoryCategoryGroupCategoryClassNameCommon(
-				@PathParam("category-group-id") Long categoryGroupId,
-				@PathParam("category-class-name-id") Long categoryClassNameId,
+			postCategoryContentSpaceClassNameCommon(
+				@PathParam("content-space-id") Long contentSpaceId,
+				@PathParam("class-name-id") Long classNameId,
 				BulkAssetEntryAction bulkAssetEntryAction)
 		throws Exception {
 
@@ -88,11 +88,11 @@ public abstract class BaseBulkActionResponseResourceImpl
 	@Override
 	@Consumes("application/json")
 	@POST
-	@Path("/tags/{tag-class-name-id}")
+	@Path("/tags/{class-name-id}")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "BulkActionResponse")})
-	public BulkActionResponse postTagTagClassName(
-			@PathParam("tag-class-name-id") Long tagClassNameId,
+	public BulkActionResponse postTagClassName(
+			@PathParam("class-name-id") Long classNameId,
 			BulkAssetEntryUpdateTagsAction bulkAssetEntryUpdateTagsAction)
 		throws Exception {
 
@@ -102,12 +102,12 @@ public abstract class BaseBulkActionResponseResourceImpl
 	@Override
 	@Consumes("application/json")
 	@POST
-	@Path("/tags/{tag-group-id}/{tag-class-name-id}/common")
+	@Path("/tags/{content-space-id}/{class-name-id}/common")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "BulkActionResponse")})
-	public BulkAssetEntryCommonTags postTagTagGroupTagClassNameCommon(
-			@PathParam("tag-group-id") Long tagGroupId,
-			@PathParam("tag-class-name-id") Long tagClassNameId,
+	public BulkAssetEntryCommonTags postTagContentSpaceClassNameCommon(
+			@PathParam("content-space-id") Long contentSpaceId,
+			@PathParam("class-name-id") Long classNameId,
 			BulkAssetEntryAction bulkAssetEntryAction)
 		throws Exception {
 

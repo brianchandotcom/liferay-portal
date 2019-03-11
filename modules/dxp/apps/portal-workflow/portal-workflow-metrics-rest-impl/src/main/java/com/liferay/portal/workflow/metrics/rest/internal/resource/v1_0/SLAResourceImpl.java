@@ -115,20 +115,17 @@ public class SLAResourceImpl extends BaseSLAResourceImpl {
 
 		return new SLA() {
 			{
-				setDescription(workflowMetricsSLADefinition.getDescription());
-				setDuration(workflowMetricsSLADefinition.getDuration());
-				setId(workflowMetricsSLADefinition.getPrimaryKey());
-				setName(workflowMetricsSLADefinition.getName());
-				setPauseNodeNames(
-					StringUtil.split(
-						workflowMetricsSLADefinition.getPauseNodeNames()));
-				setProcessId(workflowMetricsSLADefinition.getProcessId());
-				setStartNodeNames(
-					StringUtil.split(
-						workflowMetricsSLADefinition.getStartNodeNames()));
-				setStopNodeNames(
-					StringUtil.split(
-						workflowMetricsSLADefinition.getStopNodeNames()));
+				description = workflowMetricsSLADefinition.getDescription();
+				duration = workflowMetricsSLADefinition.getDuration();
+				id = workflowMetricsSLADefinition.getPrimaryKey();
+				name = workflowMetricsSLADefinition.getName();
+				pauseNodeNames = StringUtil.split(
+					workflowMetricsSLADefinition.getPauseNodeNames());
+				processId = workflowMetricsSLADefinition.getProcessId();
+				startNodeNames = StringUtil.split(
+					workflowMetricsSLADefinition.getStartNodeNames());
+				stopNodeNames = StringUtil.split(
+					workflowMetricsSLADefinition.getStopNodeNames());
 			}
 		};
 	}

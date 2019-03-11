@@ -103,13 +103,19 @@ public class OrganizationResourceImpl extends BaseOrganizationResourceImpl {
 	}
 
 	private HoursAvailable _createHoursAvailable(
-		String closes, int dayOfWeek, int opens) {
+		String day, int openHour, int closeHour) {
 
 		return new HoursAvailable() {
 			{
-				setCloses(closes);
-				setDayOfWeek(String.valueOf(dayOfWeek));
-				setOpens(String.valueOf(opens));
+				if (closeHour != -1) {
+					closes = String.valueOf(closeHour);
+				}
+
+				dayOfWeek = day;
+
+				if (openHour != -1) {
+					opens = String.valueOf(openHour);
+				}
 			}
 		};
 	}

@@ -149,7 +149,7 @@ public class ProcessResourceImpl extends BaseProcessResourceImpl {
 					setPreBooleanFilter(_createProcessBooleanFilter());
 				}
 			});
-		searchSearchRequest.setSize(pagination.getItemsPerPage());
+		searchSearchRequest.setSize(pagination.getPageSize());
 		searchSearchRequest.setSorts(sorts);
 		searchSearchRequest.setStart(pagination.getStartPosition());
 		searchSearchRequest.setStats(Collections.emptyMap());
@@ -163,7 +163,7 @@ public class ProcessResourceImpl extends BaseProcessResourceImpl {
 
 		List<Hits> hitsList = ListUtil.subList(
 			new ArrayList<>(hitsMap.values()), pagination.getStartPosition(),
-			pagination.getStartPosition() + pagination.getItemsPerPage());
+			pagination.getStartPosition() + pagination.getPageSize());
 
 		for (Hits hits : hitsList) {
 			Document[] documents = hits.getDocs();

@@ -56,7 +56,7 @@ public class SLAResourceImpl extends BaseSLAResourceImpl {
 	}
 
 	@Override
-	public Page<SLA> getProcessSLAsPage(Long processId, Pagination pagination)
+	public Page<SLA> getProcessSlasPage(Long processId, Pagination pagination)
 		throws Exception {
 
 		return Page.of(
@@ -72,7 +72,7 @@ public class SLAResourceImpl extends BaseSLAResourceImpl {
 	}
 
 	@Override
-	public SLA postProcessSlas(Long processId, SLA sla) throws Exception {
+	public SLA postProcessSla(Long processId, SLA sla) throws Exception {
 		return _toSLA(
 			_workflowMetricsSLADefinitionLocalService.
 				addWorkflowMetricsSLADefinition(

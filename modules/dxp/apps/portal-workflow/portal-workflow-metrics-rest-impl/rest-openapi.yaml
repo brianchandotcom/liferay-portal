@@ -1,5 +1,13 @@
 components:
     schemas:
+        GenericError:
+            description: https://www.schema.org/GenericError
+            properties:
+                fieldName:
+                    type: string
+                message:
+                    type: string
+            type: object
         Process:
             description: https://www.schema.org/Process
             properties:
@@ -126,6 +134,12 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/SLA"
                     description: ""
+                400:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/GenericError"
+                    description: ""
             tags: ["SLA"]
     "/processes/{process-id}/slas/{sla-id}":
         delete:
@@ -195,5 +209,11 @@ paths:
                         application/json:
                             schema:
                                 $ref: "#/components/schemas/SLA"
+                    description: ""
+                400:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/GenericError"
                     description: ""
             tags: ["SLA"]

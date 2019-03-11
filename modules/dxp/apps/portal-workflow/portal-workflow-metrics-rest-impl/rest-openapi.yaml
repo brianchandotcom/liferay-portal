@@ -15,10 +15,13 @@ components:
                     format: int64
                     type: integer
                 instanceCount:
+                    format: int64
                     type: integer
                 ontimeInstanceCount:
+                    format: int64
                     type: integer
                 overdueInstanceCount:
+                    format: int64
                     type: integer
                 title:
                     type: string
@@ -73,6 +76,10 @@ paths:
                       type: integer
                 - in: query
                   name: title
+                  schema:
+                      type: string
+                - in: query
+                  name: sort
                   schema:
                       type: string
             responses:

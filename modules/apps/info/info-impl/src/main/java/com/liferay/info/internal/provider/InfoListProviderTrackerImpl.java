@@ -46,7 +46,7 @@ public class InfoListProviderTrackerImpl implements InfoListProviderTracker {
 
 	@Override
 	public List<InfoListProvider> getInfoListProviders() {
-		return new ArrayList(_infoListProviders.values());
+		return new ArrayList<>(_infoListProviders.values());
 	}
 
 	@Override
@@ -55,7 +55,7 @@ public class InfoListProviderTrackerImpl implements InfoListProviderTracker {
 			_infoListProvidersByItemClass.get(itemClass);
 
 		if (infoListProviders != null) {
-			return new ArrayList(infoListProviders);
+			return new ArrayList<>(infoListProviders);
 		}
 
 		return Collections.emptyList();
@@ -70,17 +70,10 @@ public class InfoListProviderTrackerImpl implements InfoListProviderTracker {
 
 		_infoListProviders.put(clazz.getName(), infoListProvider);
 
-		Class<?> itemClass = infoListProvider.getItemClass();
-
 		List<InfoListProvider> infoListProvidersByItemClass =
-			_infoListProvidersByItemClass.get(itemClass);
-
-		if (infoListProvidersByItemClass == null) {
-			infoListProvidersByItemClass = new ArrayList();
-
-			_infoListProvidersByItemClass.put(
-				itemClass, infoListProvidersByItemClass);
-		}
+			_infoListProvidersByItemClass.computeIfAbsent(
+				infoListProvider.getItemClass(),
+				itemClass -> new ArrayList<>());
 
 		infoListProvidersByItemClass.add(infoListProvider);
 	}

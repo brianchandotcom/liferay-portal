@@ -49,7 +49,7 @@ public class PhoneResourceImpl extends BasePhoneResourceImpl {
 	}
 
 	@Override
-	public Page<Phone> getPhonesByClassNameClassPK(
+	public Page<Phone> getByClassNameClassPKPhonesPage(
 			ClassNameClassPK classNameClassPK, Pagination pagination)
 		throws Exception {
 

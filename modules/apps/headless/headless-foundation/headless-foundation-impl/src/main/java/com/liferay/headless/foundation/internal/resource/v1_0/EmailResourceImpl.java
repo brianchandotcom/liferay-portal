@@ -50,7 +50,7 @@ public class EmailResourceImpl extends BaseEmailResourceImpl {
 	}
 
 	@Override
-	public Page<Email> getEmailsByClassNameClassPK(
+	public Page<Email> getByClassNameClassPKEmailsPage(
 			ClassNameClassPK classNameClassPK, Pagination pagination)
 		throws Exception {
 

@@ -50,7 +50,7 @@ public class WebUrlResourceImpl extends BaseWebUrlResourceImpl {
 	}
 
 	@Override
-	public Page<WebUrl> getWebUrlsByClassNameClassPK(
+	public Page<WebUrl> getByClassNameClassPKWebUrlsPage(
 			ClassNameClassPK classNameClassPK, Pagination pagination)
 		throws Exception {
 

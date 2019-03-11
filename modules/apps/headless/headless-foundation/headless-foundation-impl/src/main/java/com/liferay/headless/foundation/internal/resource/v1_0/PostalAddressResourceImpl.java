@@ -60,7 +60,7 @@ public class PostalAddressResourceImpl extends BasePostalAddressResourceImpl {
 	}
 
 	@Override
-	public Page<PostalAddress> getPostalAddressesByClassNameClassPK(
+	public Page<PostalAddress> getByClassNameClassPKPostalAddressesPage(
 			ClassNameClassPK classNameClassPK, Pagination pagination)
 		throws Exception {
 

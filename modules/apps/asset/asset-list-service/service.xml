@@ -73,6 +73,7 @@
 		<!-- Other fields -->
 
 		<column name="assetListEntryId" type="long" />
+		<column name="segmentsEntryId" type="long" />
 		<column name="assetEntryId" type="long" />
 		<column name="position" type="int" />
 		<column name="lastPublishDate" type="Date" />

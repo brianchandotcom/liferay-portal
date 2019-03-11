@@ -160,7 +160,7 @@ public class BulkActionResponseResourceImpl
 						contextAcceptLanguage.getPreferredLocale());
 					status = "success";
 					vocabularies = assetCategoriesStream.map(
-						entry -> _toVocabulary(entry.getKey(), entry.getValue())
+						entry -> _toVocabulary(entry.getValue(), entry.getKey())
 					).toArray(
 						Vocabulary[]::new
 					);
@@ -420,7 +420,7 @@ public class BulkActionResponseResourceImpl
 	}
 
 	private Vocabulary _toVocabulary(
-		AssetVocabulary assetVocabulary, List<AssetCategory> assetCategories) {
+		List<AssetCategory> assetCategories, AssetVocabulary assetVocabulary) {
 
 		return new Vocabulary() {
 			{

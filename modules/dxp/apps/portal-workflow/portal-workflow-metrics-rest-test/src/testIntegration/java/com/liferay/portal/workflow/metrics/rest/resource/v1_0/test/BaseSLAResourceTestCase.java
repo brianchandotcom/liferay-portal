@@ -268,9 +268,11 @@ public abstract class BaseSLAResourceTestCase {
 	public void testDeleteProcessSla() throws Exception {
 		SLA sLA = testDeleteProcessSla_addSLA();
 
-		assertResponseCode(200, invokeDeleteProcessSlaResponse(sLA.getId()));
+		assertResponseCode(200, invokeDeleteProcessSlaResponse(
+			sLA.getProcessId(), sLA.getId()));
 
-		assertResponseCode(404, invokeGetProcessSlaResponse(sLA.getId()));
+		assertResponseCode(404, invokeGetProcessSlaResponse(
+			sLA.getProcessId(), sLA.getId()));
 	}
 
 	protected SLA testDeleteProcessSla_addSLA() throws Exception {
@@ -318,7 +320,8 @@ public abstract class BaseSLAResourceTestCase {
 	public void testGetProcessSla() throws Exception {
 		SLA postSLA = testGetProcessSla_addSLA();
 
-		SLA getSLA = invokeGetProcessSla(postSLA.getId());
+		SLA getSLA = invokeGetProcessSla(
+			postSLA.getProcessId(), postSLA.getId());
 
 		assertEquals(postSLA, getSLA);
 		assertValid(getSLA);
@@ -367,12 +370,14 @@ public abstract class BaseSLAResourceTestCase {
 
 		SLA randomSLA = randomSLA();
 
-		SLA putSLA = invokePutSLA(postSLA.getId(), randomSLA);
+		SLA putSLA = invokePutProcessSla(
+			postSLA.getProcessId(), postSLA.getId(), randomSLA);
 
 		assertEquals(randomSLA, putSLA);
 		assertValid(putSLA);
 
-		SLA getSLA = invokeGetSLA(putSLA.getId());
+		SLA getSLA = invokeGetProcessSla(
+			postSLA.getProcessId(), putSLA.getId());
 
 		assertEquals(randomSLA, getSLA);
 		assertValid(getSLA);

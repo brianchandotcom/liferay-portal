@@ -14,7 +14,9 @@
 
 package com.liferay.document.library.preview.video.internal;
 
-import com.liferay.document.library.kernel.util.VideoProcessorUtil;
+import com.liferay.document.library.kernel.model.DLProcessorConstants;
+import com.liferay.document.library.kernel.util.DLProcessorRegistry;
+import com.liferay.document.library.kernel.util.VideoProcessor;
 import com.liferay.document.library.preview.DLPreviewRendererProvider;
 import com.liferay.document.library.service.DLFileVersionPreviewLocalService;
 import com.liferay.document.library.util.DLURLHelper;
@@ -44,7 +46,11 @@ public class VideoDLPreviewRendererProviderFactory {
 	protected void activate(BundleContext bundleContext) {
 		Dictionary<String, Object[]> properties = new HashMapDictionary<>();
 
-		Set<String> videoMimeTypes = VideoProcessorUtil.getVideoMimeTypes();
+		VideoProcessor videoProcessor =
+			(VideoProcessor)_dlProcessorRegistry.getDLProcessor(
+				DLProcessorConstants.VIDEO_PROCESSOR);
+
+		Set<String> videoMimeTypes = videoProcessor.getVideoMimeTypes();
 
 		properties.put("content.type", videoMimeTypes.toArray());
 
@@ -67,6 +73,9 @@ public class VideoDLPreviewRendererProviderFactory {
 
 	private ServiceRegistration<DLPreviewRendererProvider>
 		_dlPreviewRendererProviderServiceRegistration;
+
+	@Reference
+	private DLProcessorRegistry _dlProcessorRegistry;
 
 	@Reference
 	private DLURLHelper _dlurlHelper;

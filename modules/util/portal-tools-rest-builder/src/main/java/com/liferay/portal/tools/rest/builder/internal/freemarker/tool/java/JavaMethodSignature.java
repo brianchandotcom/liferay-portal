@@ -25,13 +25,15 @@ import java.util.List;
 public class JavaMethodSignature {
 
 	public JavaMethodSignature(
-		String path, PathItem pathItem, Operation operation, String schemaName,
+		String path, PathItem pathItem, Operation operation,
+		String requestBodyMediaType, String schemaName,
 		List<JavaMethodParameter> javaMethodParameters, String methodName,
 		String returnType) {
 
 		_path = path;
 		_pathItem = pathItem;
 		_operation = operation;
+		_requestBodyMediaType = requestBodyMediaType;
 		_schemaName = schemaName;
 		_javaMethodParameters = javaMethodParameters;
 		_methodName = methodName;
@@ -58,6 +60,10 @@ public class JavaMethodSignature {
 		return _pathItem;
 	}
 
+	public String getRequestBodyMediaType() {
+		return _requestBodyMediaType;
+	}
+
 	public String getReturnType() {
 		return _returnType;
 	}
@@ -71,6 +77,7 @@ public class JavaMethodSignature {
 	private final Operation _operation;
 	private final String _path;
 	private final PathItem _pathItem;
+	private final String _requestBodyMediaType;
 	private final String _returnType;
 	private final String _schemaName;
 

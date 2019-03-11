@@ -138,7 +138,7 @@ public class AssetDisplayPageFriendlyURLResolver
 
 		if (assetDisplayContributor == null) {
 			throw new PortalException(
-				"Display page not available for " + friendlyURLShortcut);
+				"Display page is not available for " + friendlyURLShortcut);
 		}
 
 		return assetDisplayContributor;

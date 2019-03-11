@@ -35,7 +35,7 @@ import org.osgi.framework.FrameworkUtil;
 import org.osgi.util.tracker.ServiceTracker;
 
 /**
- * @author Alejandro Tard�n
+ * @author Alejandro Tardín
  * @generated
  */
 @Generated("")

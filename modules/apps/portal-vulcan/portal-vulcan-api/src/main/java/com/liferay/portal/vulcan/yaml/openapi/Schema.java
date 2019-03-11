@@ -25,9 +25,9 @@ public class Schema {
 	public Schema() {
 	}
 
-	public Schema(boolean shortSyntax) {
-		if (shortSyntax) {
-			setType("string");
+	public Schema(boolean freeFormObject) {
+		if (freeFormObject) {
+			setType("?");
 		}
 	}
 

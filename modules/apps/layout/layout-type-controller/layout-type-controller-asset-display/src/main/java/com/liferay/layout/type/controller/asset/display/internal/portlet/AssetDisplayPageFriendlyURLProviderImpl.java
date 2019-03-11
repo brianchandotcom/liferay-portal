@@ -71,7 +71,7 @@ public class AssetDisplayPageFriendlyURLProviderImpl
 		if (mainFriendlyURLEntry != null) {
 			sb.append(
 				AssetDisplayPageFriendlyURLResolverConstants.
-					ASSET_DISPLAY_PAGE_URL_TITLE_URL_SEPARATOR);
+					ASSET_DISPLAY_PAGE_URL_SEPARATOR);
 			sb.append(assetDisplayContributor.getFriendlyURLShortcut());
 			sb.append(StringPool.SLASH);
 			sb.append(

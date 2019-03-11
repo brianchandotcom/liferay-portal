@@ -21,7 +21,4 @@ public class AssetDisplayPageFriendlyURLResolverConstants {
 
 	public static final String ASSET_DISPLAY_PAGE_URL_SEPARATOR = "/a/";
 
-	public static final String ASSET_DISPLAY_PAGE_URL_TITLE_URL_SEPARATOR =
-		"/_";
-
 }

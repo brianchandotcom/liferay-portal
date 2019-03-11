@@ -15,13 +15,39 @@
 package com.liferay.layout.type.controller.asset.display.internal.portlet;
 
 import com.liferay.asset.display.contributor.AssetDisplayContributor;
+import com.liferay.asset.display.contributor.AssetDisplayContributorTracker;
+import com.liferay.asset.display.contributor.constants.AssetDisplayWebKeys;
+import com.liferay.asset.display.page.constants.AssetDisplayPageConstants;
+import com.liferay.asset.display.page.model.AssetDisplayPageEntry;
+import com.liferay.asset.display.page.service.AssetDisplayPageEntryLocalService;
+import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
 import com.liferay.asset.kernel.model.AssetEntry;
+import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.asset.kernel.service.AssetEntryService;
+import com.liferay.asset.util.AssetHelper;
+import com.liferay.friendly.url.model.FriendlyURLEntry;
+import com.liferay.friendly.url.service.FriendlyURLEntryLocalService;
+import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
+import com.liferay.layout.page.template.service.LayoutPageTemplateEntryService;
 import com.liferay.layout.type.controller.asset.display.internal.constants.AssetDisplayPageFriendlyURLResolverConstants;
 import com.liferay.petra.string.CharPool;
+import com.liferay.petra.string.StringPool;
+import com.liferay.petra.string.StringUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.model.LayoutFriendlyURLComposite;
 import com.liferay.portal.kernel.portlet.FriendlyURLResolver;
+import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.util.WebKeys;
+
+import java.util.List;
+import java.util.Locale;
+import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -31,7 +57,57 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = FriendlyURLResolver.class)
 public class AssetDisplayPageFriendlyURLResolver
-	extends BaseAssetDisplayPageFriendlyURLResolver {
+	implements FriendlyURLResolver {
+
+	@Override
+	public String getActualURL(
+			long companyId, long groupId, boolean privateLayout,
+			String mainPath, String friendlyURL, Map<String, String[]> params,
+			Map<String, Object> requestContext)
+		throws PortalException {
+
+		HttpServletRequest request = (HttpServletRequest)requestContext.get(
+			"request");
+
+		request.setAttribute(
+			AssetDisplayWebKeys.ASSET_DISPLAY_CONTRIBUTOR,
+			_getAssetDisplayContributor(groupId, friendlyURL));
+
+		AssetEntry assetEntry = _getAssetEntry(groupId, friendlyURL);
+
+		request.setAttribute(WebKeys.LAYOUT_ASSET_ENTRY, assetEntry);
+
+		request.setAttribute(
+			AssetDisplayWebKeys.VERSION_CLASS_PK,
+			_getVersionClassPK(friendlyURL));
+
+		Locale locale = _portal.getLocale(request);
+
+		_portal.setPageTitle(assetEntry.getTitle(locale), request);
+		_portal.setPageDescription(assetEntry.getDescription(locale), request);
+
+		_portal.setPageKeywords(
+			_assetHelper.getAssetKeywords(
+				assetEntry.getClassName(), assetEntry.getClassPK()),
+			request);
+
+		Layout layout = _getAssetEntryLayout(assetEntry);
+
+		return _portal.getLayoutActualURL(layout, mainPath);
+	}
+
+	@Override
+	public LayoutFriendlyURLComposite getLayoutFriendlyURLComposite(
+			long companyId, long groupId, boolean privateLayout,
+			String friendlyURL, Map<String, String[]> params,
+			Map<String, Object> requestContext)
+		throws PortalException {
+
+		Layout layout = _getAssetEntryLayout(
+			_getAssetEntry(groupId, friendlyURL));
+
+		return new LayoutFriendlyURLComposite(layout, friendlyURL);
+	}
 
 	@Override
 	public String getURLSeparator() {
@@ -39,64 +115,170 @@ public class AssetDisplayPageFriendlyURLResolver
 			ASSET_DISPLAY_PAGE_URL_SEPARATOR;
 	}
 
-	@Override
-	protected AssetDisplayContributor getAssetDisplayContributor(
+	private AssetDisplayContributor _getAssetDisplayContributor(
 			long groupId, String friendlyURL)
 		throws PortalException {
 
-		AssetEntry assetEntry = getAssetEntry(groupId, friendlyURL);
+		String friendlyURLShortcut = _getFriendlyURLShortcut(friendlyURL);
 
-		AssetDisplayContributor assetDisplayContributor =
-			assetDisplayContributorTracker.getAssetDisplayContributor(
-				assetEntry.getClassName());
+		AssetDisplayContributor assetDisplayContributor = null;
+
+		if (Validator.isNotNull(friendlyURLShortcut)) {
+			assetDisplayContributor =
+				_assetDisplayContributorTracker.
+					getAssetDisplayContributorByFriendlyURLShortcut(
+						friendlyURLShortcut);
+		}
+		else {
+			AssetEntry assetEntry = _getAssetEntry(groupId, friendlyURL);
+
+			assetDisplayContributor =
+				_assetDisplayContributorTracker.getAssetDisplayContributor(
+					assetEntry.getClassName());
+		}
 
 		if (assetDisplayContributor == null) {
 			throw new PortalException(
-				"Display page not available for className" +
-					assetEntry.getClassName());
+				"Display page not available for " + friendlyURLShortcut);
 		}
 
 		return assetDisplayContributor;
 	}
 
-	@Override
-	protected AssetEntry getAssetEntry(long groupId, String friendlyURL)
+	private AssetEntry _getAssetEntry(long groupId, String friendlyURL)
 		throws PortalException {
 
-		long assetEntryId = 0;
+		long assetEntryId = _getAssetEntryId(friendlyURL);
 
-		String urlSeparator = getURLSeparator();
-
-		String path = friendlyURL.substring(urlSeparator.length());
-
-		if (path.indexOf(CharPool.SLASH) != -1) {
-			assetEntryId = GetterUtil.getLong(
-				path.substring(0, path.indexOf(CharPool.SLASH)));
-		}
-		else {
-			assetEntryId = GetterUtil.getLong(path);
+		if (assetEntryId > 0) {
+			return _assetEntryService.getEntry(assetEntryId);
 		}
 
-		return _assetEntryService.getEntry(assetEntryId);
+		AssetDisplayContributor assetDisplayContributor =
+			_getAssetDisplayContributor(groupId, friendlyURL);
+
+		String className = assetDisplayContributor.getClassName();
+
+		long classNameId = _portal.getClassNameId(className);
+
+		FriendlyURLEntry friendlyURLEntry =
+			_friendlyURLEntryLocalService.fetchFriendlyURLEntry(
+				groupId, classNameId, _getUrlTitle(friendlyURL));
+
+		AssetRendererFactory assetRendererFactory =
+			AssetRendererFactoryRegistryUtil.
+				getAssetRendererFactoryByClassNameId(classNameId);
+
+		return assetRendererFactory.getAssetEntry(
+			className, friendlyURLEntry.getClassPK());
 	}
 
-	@Override
-	protected long getVersionClassPK(String friendlyURL) {
-		long versionClassPK = 0L;
+	private long _getAssetEntryId(String friendlyURL) {
+		List<String> paths = StringUtil.split(friendlyURL, CharPool.SLASH);
 
-		String urlSeparator = getURLSeparator();
+		String assetEntryId = paths.get(1);
 
-		String path = friendlyURL.substring(urlSeparator.length());
-
-		if (path.indexOf(CharPool.SLASH) != -1) {
-			versionClassPK = GetterUtil.getLong(
-				path.substring(path.indexOf(CharPool.SLASH) + 1));
+		if (Validator.isNumber(assetEntryId)) {
+			return GetterUtil.getLong(assetEntryId);
 		}
 
-		return versionClassPK;
+		return 0;
+	}
+
+	private Layout _getAssetEntryLayout(AssetEntry assetEntry) {
+		AssetDisplayPageEntry assetDisplayPageEntry =
+			_assetDisplayPageEntryLocalService.fetchAssetDisplayPageEntry(
+				assetEntry.getGroupId(), assetEntry.getClassNameId(),
+				assetEntry.getClassPK());
+
+		if ((assetDisplayPageEntry != null) &&
+			(assetDisplayPageEntry.getType() !=
+				AssetDisplayPageConstants.TYPE_DEFAULT)) {
+
+			return _layoutLocalService.fetchLayout(
+				assetDisplayPageEntry.getPlid());
+		}
+
+		LayoutPageTemplateEntry layoutPageTemplateEntry =
+			_layoutPageTemplateEntryService.fetchDefaultLayoutPageTemplateEntry(
+				assetEntry.getGroupId(), assetEntry.getClassNameId(),
+				assetEntry.getClassTypeId());
+
+		if (layoutPageTemplateEntry != null) {
+			return _layoutLocalService.fetchLayout(
+				layoutPageTemplateEntry.getPlid());
+		}
+
+		return null;
+	}
+
+	private String _getFriendlyURLShortcut(String friendlyURL) {
+		List<String> paths = StringUtil.split(friendlyURL, CharPool.SLASH);
+
+		String friendlyURLShortcut = paths.get(1);
+
+		if (Validator.isNumber(friendlyURLShortcut)) {
+			return StringPool.BLANK;
+		}
+
+		return friendlyURLShortcut;
+	}
+
+	private String _getUrlTitle(String friendlyURL) {
+		List<String> paths = StringUtil.split(friendlyURL, CharPool.SLASH);
+
+		if (paths.size() < 3) {
+			return StringPool.BLANK;
+		}
+
+		if (Validator.isNumber(paths.get(1))) {
+			return StringPool.BLANK;
+		}
+
+		return paths.get(2);
+	}
+
+	private long _getVersionClassPK(String friendlyURL) {
+		List<String> paths = StringUtil.split(friendlyURL, CharPool.SLASH);
+
+		if (Validator.isNumber(paths.get(1))) {
+			if (paths.size() < 3) {
+				return 0;
+			}
+
+			return GetterUtil.getLong(paths.get(2));
+		}
+
+		if (paths.size() < 4) {
+			return 0;
+		}
+
+		return GetterUtil.getLong(paths.get(3));
 	}
 
 	@Reference
+	private AssetDisplayContributorTracker _assetDisplayContributorTracker;
+
+	@Reference
+	private AssetDisplayPageEntryLocalService
+		_assetDisplayPageEntryLocalService;
+
+	@Reference
 	private AssetEntryService _assetEntryService;
+
+	@Reference
+	private AssetHelper _assetHelper;
+
+	@Reference
+	private FriendlyURLEntryLocalService _friendlyURLEntryLocalService;
+
+	@Reference
+	private LayoutLocalService _layoutLocalService;
+
+	@Reference
+	private LayoutPageTemplateEntryService _layoutPageTemplateEntryService;
+
+	@Reference
+	private Portal _portal;
 
 }

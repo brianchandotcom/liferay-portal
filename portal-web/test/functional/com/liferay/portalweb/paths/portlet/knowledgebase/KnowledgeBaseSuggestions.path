@@ -25,7 +25,7 @@
 </tr>
 <tr>
 	<td>USER_NAME</td>
-	<td>//div/ul/li[contains(@class,'list-group-item')]/div[contains(@class,'autofit-col')]/h5[contains(.,'${kbSuggestionUserName}')]</td>
+	<td>//div/ul/li[contains(@class,'list-group-item')]/div[contains(@class,'autofit-col')]/span[contains(.,'${kbSuggestionUserName}')]</td>
 	<td></td>
 </tr>
 <tr>

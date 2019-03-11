@@ -132,6 +132,16 @@ public class ${schemaName} <#if freeMarkerTool.getDTOParentClassName(openAPIYAML
 			return ${javaMethodParameter.parameterName};
 		}
 
+		<#if enumSimpleClassNames?seq_contains(javaMethodParameter.parameterType)>
+			public String get${javaMethodParameter.parameterName?cap_first}AsString() {
+				if (${javaMethodParameter.parameterName} == null) {
+					return null;
+				}
+
+				return ${javaMethodParameter.parameterName}.toString();
+			}
+		</#if>
+
 		public void set${javaMethodParameter.parameterName?cap_first}(${javaDataType} ${javaMethodParameter.parameterName}) {
 			this.${javaMethodParameter.parameterName} = ${javaMethodParameter.parameterName};
 		}

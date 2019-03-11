@@ -31,9 +31,9 @@ public interface InfoListProviderContext {
 
 	public Optional<AssetEntry> getAssetEntryOptional();
 
-	public Optional<Layout> getLayout();
+	public Group getGroup();
 
-	public Group getScopeGroup();
+	public Optional<Layout> getLayoutOptional();
 
 	public User getUser();
 

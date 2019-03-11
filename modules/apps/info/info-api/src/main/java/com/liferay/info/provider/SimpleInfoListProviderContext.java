@@ -37,13 +37,13 @@ public class SimpleInfoListProviderContext implements InfoListProviderContext {
 	}
 
 	@Override
-	public Optional<Layout> getLayout() {
-		return Optional.of(_layout);
+	public Group getGroup() {
+		return _scopeGroup;
 	}
 
 	@Override
-	public Group getScopeGroup() {
-		return _scopeGroup;
+	public Optional<Layout> getLayoutOptional() {
+		return Optional.of(_layout);
 	}
 
 	@Override

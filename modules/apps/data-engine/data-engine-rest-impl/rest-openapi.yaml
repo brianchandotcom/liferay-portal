@@ -330,3 +330,38 @@ paths:
                                 $ref: "#/components/schemas/DataRecordCollection"
                     description: ""
             tags: ["DataRecordCollection"]
+    "/data-record-collections/search":
+        get:
+            parameters:
+                - in: query
+                  name: page
+                  required: true
+                  schema:
+                      type: integer
+                - in: query
+                  name: pageSize
+                  required: true
+                  schema:
+                      type: integer
+                - in: query
+                  name: groupId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+                - in: query
+                  name: keywords
+                  required: true
+                  schema:
+                      type: string
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/DataRecordCollection"
+                                type:
+                                    array
+                    description: ""
+            tags: ["DataRecordCollection"]

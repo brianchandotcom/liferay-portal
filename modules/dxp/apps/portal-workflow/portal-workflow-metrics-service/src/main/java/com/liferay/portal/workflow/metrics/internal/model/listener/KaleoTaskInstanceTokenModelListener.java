@@ -17,17 +17,10 @@ package com.liferay.portal.workflow.metrics.internal.model.listener;
 import com.liferay.portal.kernel.exception.ModelListenerException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.BaseModelListener;
 import com.liferay.portal.kernel.model.ModelListener;
-import com.liferay.portal.kernel.search.Document;
-import com.liferay.portal.kernel.search.DocumentImpl;
-import com.liferay.portal.workflow.kaleo.model.KaleoDefinition;
-import com.liferay.portal.workflow.kaleo.model.KaleoDefinitionVersion;
 import com.liferay.portal.workflow.kaleo.model.KaleoTaskInstanceToken;
-import com.liferay.portal.workflow.kaleo.service.KaleoDefinitionVersionLocalService;
-
-import java.time.Duration;
-
-import java.util.Date;
+import com.liferay.portal.workflow.metrics.internal.search.index.TokenWorkflowMetricsIndexer;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -37,14 +30,14 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(immediate = true, service = ModelListener.class)
 public class KaleoTaskInstanceTokenModelListener
-	extends BaseKaleoModelListener<KaleoTaskInstanceToken> {
+	extends BaseModelListener<KaleoTaskInstanceToken> {
 
 	@Override
 	public void onAfterCreate(KaleoTaskInstanceToken kaleoTaskInstanceToken)
 		throws ModelListenerException {
 
 		try {
-			addDocument(kaleoTaskInstanceToken);
+			_tokenWorkflowMetricsIndexer.addDocument(kaleoTaskInstanceToken);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -56,7 +49,7 @@ public class KaleoTaskInstanceTokenModelListener
 		throws ModelListenerException {
 
 		try {
-			deleteDocument(kaleoTaskInstanceToken);
+			_tokenWorkflowMetricsIndexer.deleteDocument(kaleoTaskInstanceToken);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -68,89 +61,17 @@ public class KaleoTaskInstanceTokenModelListener
 		throws ModelListenerException {
 
 		try {
-			updateDocument(kaleoTaskInstanceToken);
+			_tokenWorkflowMetricsIndexer.updateDocument(kaleoTaskInstanceToken);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
 		}
 	}
 
-	@Override
-	protected Document createDocument(
-		KaleoTaskInstanceToken kaleoTaskInstanceToken) {
-
-		Document document = new DocumentImpl();
-
-		document.addUID(
-			"WorkflowMetricsToken",
-			digest(
-				kaleoTaskInstanceToken.getCompanyId(),
-				kaleoTaskInstanceToken.getKaleoDefinitionVersionId(),
-				kaleoTaskInstanceToken.getKaleoInstanceId(),
-				kaleoTaskInstanceToken.getKaleoTaskId(),
-				kaleoTaskInstanceToken.getKaleoTaskInstanceTokenId()));
-		document.addKeyword("className", kaleoTaskInstanceToken.getClassName());
-		document.addKeyword("classPK", kaleoTaskInstanceToken.getClassPK());
-		document.addKeyword("companyId", kaleoTaskInstanceToken.getCompanyId());
-		document.addKeyword("completed", kaleoTaskInstanceToken.isCompleted());
-		document.addDateSortable(
-			"createDate", kaleoTaskInstanceToken.getCreateDate());
-		document.addKeyword("deleted", false);
-		document.addKeyword(
-			"instanceId", kaleoTaskInstanceToken.getKaleoInstanceId());
-		document.addDateSortable(
-			"modifiedDate", kaleoTaskInstanceToken.getModifiedDate());
-
-		KaleoDefinitionVersion kaleoDefinitionVersion =
-			_kaleoDefinitionVersionLocalService.fetchKaleoDefinitionVersion(
-				kaleoTaskInstanceToken.getKaleoDefinitionVersionId());
-
-		if (kaleoDefinitionVersion != null) {
-			KaleoDefinition kaleoDefinition =
-				kaleoDefinitionVersion.fetchKaleoDefinition();
-
-			if (kaleoDefinition != null) {
-				document.addKeyword(
-					"processId", kaleoDefinition.getKaleoDefinitionId());
-			}
-		}
-
-		document.addKeyword("taskId", kaleoTaskInstanceToken.getKaleoTaskId());
-		document.addKeyword(
-			"tokenId", kaleoTaskInstanceToken.getKaleoTaskInstanceTokenId());
-		document.addKeyword("userId", kaleoTaskInstanceToken.getUserId());
-
-		if (kaleoTaskInstanceToken.isCompleted()) {
-			Date completionDate = kaleoTaskInstanceToken.getCompletionDate();
-
-			document.addDateSortable("completionDate", completionDate);
-
-			Date createDate = kaleoTaskInstanceToken.getCreateDate();
-
-			Duration duration = Duration.between(
-				createDate.toInstant(), completionDate.toInstant());
-
-			document.addNumber("duration", duration.toMillis());
-		}
-
-		return document;
-	}
-
-	@Override
-	protected String getIndexName() {
-		return "workflow-metrics-tokens";
-	}
-
-	@Override
-	protected String getIndexType() {
-		return "WorkflowMetricsTokenType";
-	}
-
 	private static final Log _log = LogFactoryUtil.getLog(
 		KaleoTaskInstanceTokenModelListener.class);
 
 	@Reference
-	private KaleoDefinitionVersionLocalService
-		_kaleoDefinitionVersionLocalService;
+	private TokenWorkflowMetricsIndexer _tokenWorkflowMetricsIndexer;
 
 }

@@ -203,7 +203,7 @@ public class DLFileEntrySearchTest extends BaseSearchTestCase {
 		int initialBaseModelsSearchCount = 0;
 
 		assertBaseModelsCount(
-			initialBaseModelsSearchCount, "Word", searchContext);
+			initialBaseModelsSearchCount, "Enterprise", searchContext);
 
 		String fileName = "OSX_Test.docx";
 
@@ -229,7 +229,7 @@ public class DLFileEntrySearchTest extends BaseSearchTestCase {
 		}
 
 		assertBaseModelsCount(
-			initialBaseModelsSearchCount + 1, "Word", searchContext);
+			initialBaseModelsSearchCount + 1, "Enterprise", searchContext);
 	}
 
 	protected BaseModel<?> addBaseModel(

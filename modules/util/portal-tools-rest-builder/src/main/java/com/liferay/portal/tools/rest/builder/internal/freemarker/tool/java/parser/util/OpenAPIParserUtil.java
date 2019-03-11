@@ -126,9 +126,7 @@ public class OpenAPIParserUtil {
 			return Object.class.getName();
 		}
 
-		if (StringUtil.equals(schema.getType(), "array") &&
-			(schema.getItems() != null)) {
-
+		if (StringUtil.equals(schema.getType(), "array")) {
 			Items items = schema.getItems();
 
 			String javaDataType = null;

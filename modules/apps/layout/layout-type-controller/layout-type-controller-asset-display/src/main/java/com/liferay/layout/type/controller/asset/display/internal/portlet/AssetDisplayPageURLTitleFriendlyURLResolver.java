@@ -20,6 +20,7 @@ import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.friendly.url.model.FriendlyURLEntry;
 import com.liferay.layout.type.controller.asset.display.internal.constants.AssetDisplayPageFriendlyURLResolverConstants;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.FriendlyURLResolver;
 
@@ -85,11 +86,12 @@ public class AssetDisplayPageURLTitleFriendlyURLResolver
 		String urlSeparator = getURLSeparator();
 
 		return friendlyURL.substring(
-			urlSeparator.length(), friendlyURL.lastIndexOf("/"));
+			urlSeparator.length(), friendlyURL.lastIndexOf(StringPool.SLASH));
 	}
 
 	private String _getUrlTitle(String friendlyURL) {
-		return friendlyURL.substring(friendlyURL.lastIndexOf("/") + 1);
+		return friendlyURL.substring(
+			friendlyURL.lastIndexOf(StringPool.SLASH) + 1);
 	}
 
 }

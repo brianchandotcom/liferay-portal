@@ -208,8 +208,7 @@ public class BulkActionResponseResourceImpl
 							bulkAssetEntryUpdateTagsAction.getAppend());
 						put(
 							"toAddTagNames",
-							bulkAssetEntryUpdateTagsAction.
-								getToAddTagNames());
+							bulkAssetEntryUpdateTagsAction.getToAddTagNames());
 						put(
 							"toRemoveTagNames",
 							bulkAssetEntryUpdateTagsAction.
@@ -247,7 +246,8 @@ public class BulkActionResponseResourceImpl
 					description = assetEntryBulkSelection.describe(
 						contextAcceptLanguage.getPreferredLocale());
 					groupIds = ArrayUtil.toLongArray(
-						_portal.getCurrentAndAncestorSiteGroupIds(contentSpaceId));
+						_portal.getCurrentAndAncestorSiteGroupIds(
+							contentSpaceId));
 					status = "success";
 
 					tagNames = stream.map(
@@ -289,6 +289,31 @@ public class BulkActionResponseResourceImpl
 				_assetCategoryLocalService.getCategories(
 					assetEntry.getClassName(), assetEntry.getClassPK()));
 		};
+	}
+
+	private Map<AssetVocabulary, List<AssetCategory>> _getAssetCategoriesMap(
+			Long groupId, Long classNameId, Set<AssetCategory> assetCategories)
+		throws Exception {
+
+		List<AssetVocabulary> assetVocabularies = _getAssetVocabularies(
+			groupId, classNameId);
+
+		Stream<AssetVocabulary> assetVocabulariesStream =
+			assetVocabularies.stream();
+
+		Stream<AssetCategory> assetCategoriesStream = assetCategories.stream();
+
+		Map<Long, List<AssetCategory>> assetCategoriesMap =
+			assetCategoriesStream.collect(
+				Collectors.groupingBy(
+					assetCategory -> assetCategory.getVocabularyId()));
+
+		return assetVocabulariesStream.collect(
+			Collectors.toMap(
+				Function.identity(),
+				assetVocabulary -> assetCategoriesMap.computeIfAbsent(
+					assetVocabulary.getVocabularyId(),
+					key -> new ArrayList<>())));
 	}
 
 	private Function<AssetEntry, Set<String>> _getAssetTagNamesFunction(
@@ -383,31 +408,6 @@ public class BulkActionResponseResourceImpl
 				put("selectAll", new String[] {Boolean.toString(selectAll)});
 			}
 		};
-	}
-
-	private Map<AssetVocabulary, List<AssetCategory>> _getAssetCategoriesMap(
-			Long groupId, Long classNameId, Set<AssetCategory> assetCategories)
-		throws Exception {
-
-		List<AssetVocabulary> assetVocabularies = _getAssetVocabularies(
-			groupId, classNameId);
-
-		Stream<AssetVocabulary> assetVocabulariesStream =
-			assetVocabularies.stream();
-
-		Stream<AssetCategory> assetCategoriesStream = assetCategories.stream();
-
-		Map<Long, List<AssetCategory>> assetCategoriesMap =
-			assetCategoriesStream.collect(
-				Collectors.groupingBy(
-					assetCategory -> assetCategory.getVocabularyId()));
-
-		return assetVocabulariesStream.collect(
-			Collectors.toMap(
-				Function.identity(),
-				assetVocabulary -> assetCategoriesMap.computeIfAbsent(
-					assetVocabulary.getVocabularyId(),
-					key -> new ArrayList<>())));
 	}
 
 	private BulkActionResponse _toBulkActionResponse(Exception e) {

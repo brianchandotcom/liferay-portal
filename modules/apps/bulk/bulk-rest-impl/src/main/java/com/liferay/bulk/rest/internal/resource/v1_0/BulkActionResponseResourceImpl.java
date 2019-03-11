@@ -140,7 +140,7 @@ public class BulkActionResponseResourceImpl
 			Stream<AssetEntry> stream = assetEntryBulkSelection.stream();
 
 			Set<AssetCategory> assetCategories = stream.map(
-				_getAssetEntryCategoriesFunction(
+				_getAssetCategoriesFunction(
 					PermissionCheckerFactoryUtil.create(_user))
 			).reduce(
 				SetUtil::intersect
@@ -247,7 +247,7 @@ public class BulkActionResponseResourceImpl
 					status = "success";
 
 					tagNames = stream.map(
-						_getAssetEntryTagsFunction(
+						_getAssetTagNamesFunction(
 							PermissionCheckerFactoryUtil.create(_user))
 					).reduce(
 						SetUtil::intersect
@@ -270,7 +270,7 @@ public class BulkActionResponseResourceImpl
 	}
 
 	private Function<AssetEntry, Set<AssetCategory>>
-		_getAssetEntryCategoriesFunction(PermissionChecker permissionChecker) {
+		_getAssetCategoriesFunction(PermissionChecker permissionChecker) {
 
 		return assetEntry -> {
 			if (BaseModelPermissionCheckerUtil.containsBaseModelPermission(
@@ -287,7 +287,7 @@ public class BulkActionResponseResourceImpl
 		};
 	}
 
-	private Function<AssetEntry, Set<String>> _getAssetEntryTagsFunction(
+	private Function<AssetEntry, Set<String>> _getAssetTagNamesFunction(
 		PermissionChecker permissionChecker) {
 
 		return assetEntry -> {

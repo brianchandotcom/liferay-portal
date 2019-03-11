@@ -35,7 +35,6 @@ import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
@@ -105,6 +104,7 @@ public class ScopeLocatorImpl implements ScopeLocator {
 
 		Bundle bundle = getBundle(serviceReference);
 
+		Set<LiferayOAuth2Scope> locatedScopes = new HashSet<>(scopes.size());
 		Map<String, Boolean> matchCache = new HashMap<>();
 		PrefixHandler prefixHandler = prefixHandlerFactory.create(
 			serviceReference::getProperty);
@@ -112,40 +112,28 @@ public class ScopeLocatorImpl implements ScopeLocator {
 			companyId, applicationName);
 		ScopeMatcherFactory scopeMatcherFactory = getScopeMatcherFactory(
 			companyId);
-		Queue<String> matchedScopesUnmapped = new LinkedList<>();
+		Queue<String> queue = new LinkedList<>();
 
-		Map<String, Set<String>> mappedScopesScopes = new HashMap<>();
-
-		Set<String> processedUnmappedScopes = new HashSet<>(scopes.size());
+		Map<String, Set<String>> mappedScopeToUnmappedScopes = new HashMap<>();
 
 		for (String scope : scopes) {
 			for (String mappedScope : scopeMapper.map(scope)) {
 				boolean matched = matchCache.computeIfAbsent(
 					mappedScope,
-					input -> scopeMatchesScopesAlias(
-						input, scopeMatcherFactory, prefixHandler,
-						scopesAlias));
+					key -> scopeMatchesScopesAlias(
+						key, scopeMatcherFactory, prefixHandler, scopesAlias));
 
-				if (matched && processedUnmappedScopes.add(scope)) {
-					matchedScopesUnmapped.add(scope);
+				if (matched) {
+					queue.add(scope);
 				}
 
-				mappedScopesScopes.computeIfPresent(
-					mappedScope,
-					(k, v) -> {
-						v.add(scope);
+				Set<String> mappedScopeUnmappedScopes =
+					mappedScopeToUnmappedScopes.computeIfAbsent(
+						mappedScope, key -> new HashSet());
 
-						return v;
-					});
-
-				mappedScopesScopes.computeIfAbsent(
-					mappedScope,
-					k -> new HashSet<String>(Arrays.asList(scope)));
+				mappedScopeUnmappedScopes.add(scope);
 			}
 		}
-
-		String matchedScopeUnmapped;
-		Set<LiferayOAuth2Scope> liferayOAuth2Scopes = new HashSet<>();
 
 		ScopeLocatorConfigurationProvider scopeLocatorConfigurationProvider =
 			_scopedScopeLocatorConfigurationProviders.getService(
@@ -154,10 +142,13 @@ public class ScopeLocatorImpl implements ScopeLocator {
 		ScopeLocatorConfiguration scopeLocatorConfiguration =
 			scopeLocatorConfigurationProvider.getScopeLocatorConfiguration();
 
-		while ((matchedScopeUnmapped = matchedScopesUnmapped.poll()) != null) {
-			liferayOAuth2Scopes.add(
-				new LiferayOAuth2ScopeImpl(
-					applicationName, bundle, matchedScopeUnmapped));
+		Set<String> processedByQueue = new HashSet<>(queue.size());
+
+		for (String scope = queue.poll(); scope != null; scope = queue.poll()) {
+			processedByQueue.add(scope);
+
+			locatedScopes.add(
+				new LiferayOAuth2ScopeImpl(applicationName, bundle, scope));
 
 			if (!scopeLocatorConfiguration.
 					includeScopesImpliedBeforeScopeMapping()) {
@@ -165,19 +156,18 @@ public class ScopeLocatorImpl implements ScopeLocator {
 				continue;
 			}
 
-			ScopeMatcher scopeMatcher = scopeMatcherFactory.create(
-				matchedScopeUnmapped);
+			ScopeMatcher scopeMatcher = scopeMatcherFactory.create(scope);
 
-			mappedScopesScopes.forEach(
+			mappedScopeToUnmappedScopes.forEach(
 				(mappedScope, unmappedScopes) -> {
 					boolean matched = matchCache.compute(
 						mappedScope,
-						(k, v) -> {
-							if ((v == null) || !v) {
-								return scopeMatcher.match(k);
+						(key, matches) -> {
+							if (!matches) {
+								return scopeMatcher.match(mappedScope);
 							}
 
-							return v;
+							return matches;
 						});
 
 					if (!matched) {
@@ -185,14 +175,14 @@ public class ScopeLocatorImpl implements ScopeLocator {
 					}
 
 					for (String unmappedScope : unmappedScopes) {
-						if (processedUnmappedScopes.add(unmappedScope)) {
-							matchedScopesUnmapped.add(unmappedScope);
+						if (!processedByQueue.contains(unmappedScope)) {
+							queue.add(unmappedScope);
 						}
 					}
 				});
 		}
 
-		return liferayOAuth2Scopes;
+		return locatedScopes;
 	}
 
 	@Override

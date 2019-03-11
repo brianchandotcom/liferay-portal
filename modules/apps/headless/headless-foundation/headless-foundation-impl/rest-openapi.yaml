@@ -1103,6 +1103,9 @@ paths:
             parameters: []
             requestBody:
                 content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/UserAccount"
                     multipart/form-data:
                         schema:
                             properties:

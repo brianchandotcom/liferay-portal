@@ -121,6 +121,15 @@ class FloatingToolbarMappingPanel extends PortletBase {
 	}
 
 	/**
+	 * Clears fields
+	 * @private
+	 * @review
+	 */
+	_clearFields() {
+		this._fields = [];
+	}
+
+	/**
 	 * Handle source option change
 	 * @param {Event} event
 	 * @private
@@ -247,7 +256,7 @@ class FloatingToolbarMappingPanel extends PortletBase {
 				);
 		}
 		else if (this._fields.length) {
-			this._fields = [];
+			this._clearFields();
 		}
 	}
 

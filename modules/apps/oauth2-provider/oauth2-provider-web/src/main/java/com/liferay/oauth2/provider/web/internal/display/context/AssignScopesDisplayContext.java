@@ -203,7 +203,6 @@ public class AssignScopesDisplayContext
 			AssignableScopes applicationAssignableScopes =
 				assignableScopes.getApplicationAssignableScopes(
 					applicationName);
-
 			boolean applicationUnassignableScopes = true;
 
 			for (Map.Entry<AssignableScopes, Relations> entry :

@@ -533,23 +533,11 @@ public class StructuredContentResourceImpl
 					ddmFormField -> _toContentFields(
 						ddmFieldsCounter, ddmStructure, fields,
 						ddmFormField.getName(), fieldDisplayValues));
+				repeatableId = StringUtil.extractLast(
+					fieldDisplayValue, DDM.INSTANCE_SEPARATOR);
 				value = _toValue(
 					ddmFieldsCounter, field,
 					contextAcceptLanguage.getPreferredLocale());
-
-				setRepeatableId(
-					() -> {
-						Field field = fields.get(DDM.FIELDS_DISPLAY_NAME);
-
-						String[] fieldsDisplayValues = StringUtil.split(
-							(String)field.getValue());
-
-						String fieldsDisplayValue = fieldsDisplayValues
-							[ddmFieldsCounter.get(field.getName())];
-
-						return StringUtil.extractLast(
-							fieldsDisplayValue, DDM.INSTANCE_SEPARATOR);
-					});
 			}
 		};
 	}

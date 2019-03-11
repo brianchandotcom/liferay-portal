@@ -92,6 +92,19 @@
 		</sequential>
 	</macrodef>
 
+	<macrodef name="update-websphere-java-opts">
+		<sequential>
+			<replace
+				file="${app.server.websphere.instance.dir}/config/cells/liferay-cell/nodes/liferay-node/servers/server1/server.xml"
+			>
+				<replacefilter
+					token="maximumHeapSize=&quot;1024&quot;"
+					value="maximumHeapSize=&quot;2048&quot;"
+				/>
+			</replace>
+		</sequential>
+	</macrodef>
+
 	<target name="build-dist-glassfish">
 		<app-server-properties-update>
 			app.server.type=glassfish
@@ -3122,6 +3135,8 @@ and put it in ${app.server.parent.dir}. Then rerun this task.
 			<replacetoken><![CDATA[<secureSessionCookie xmi:id="SecureSessionCookie_1" cookieDomain="*" cookieName="JSESSIONID" cookiePath="/"/>]]></replacetoken>
 			<replacevalue><![CDATA[]]></replacevalue>
 		</replace>
+
+		<update-websphere-java-opts />
 	</target>
 
 	<target name="unzip-websphere-custom">
@@ -3205,6 +3220,8 @@ this task.
 				</replace>
 			</then>
 		</if>
+
+		<update-websphere-java-opts />
 	</target>
 
 	<target name="unzip-wildfly">

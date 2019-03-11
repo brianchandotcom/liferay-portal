@@ -159,6 +159,11 @@ public class NPMRegistryImpl implements NPMRegistry {
 		return _resolvedJSModules.values();
 	}
 
+	@Override
+	public JSPackage getResolvedJSPackage(String identifier) {
+		return _resolvedJSPackages.get(identifier);
+	}
+
 	/**
 	 * Returns all resolved packages deployed to the portal.
 	 *

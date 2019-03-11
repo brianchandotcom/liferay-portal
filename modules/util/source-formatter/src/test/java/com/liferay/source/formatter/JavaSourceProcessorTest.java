@@ -125,6 +125,7 @@ public class JavaSourceProcessorTest extends BaseSourceProcessorTestCase {
 		test("IfClauseIncorrectLineBreaks.testjava");
 	}
 
+	@Test
 	public void testIfClauseParentheses() throws Exception {
 		test(
 			"IfClauseParentheses.testjava",
@@ -142,12 +143,11 @@ public class JavaSourceProcessorTest extends BaseSourceProcessorTestCase {
 				"Missing parentheses around the left hand side argument of " +
 					"the '&&' operator",
 				"Unnecessary parentheses around expression.",
-				"Redundant parentheses",
 				"Unnecessary parentheses around expression.",
 				"Missing parentheses between the '&&' operator and the '||' " +
 					"operator"
 			},
-			new Integer[] {25, 25, 29, 33, 39, 43, 43, 47, 51, 59});
+			new Integer[] {25, 25, 29, 33, 39, 43, 43, 47, 55});
 	}
 
 	@Test

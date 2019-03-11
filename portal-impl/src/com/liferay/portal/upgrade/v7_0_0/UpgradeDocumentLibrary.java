@@ -557,10 +557,13 @@ public class UpgradeDocumentLibrary extends UpgradeProcess {
 	}
 
 	private void _populateEmptyTitles(String tableName) throws Exception {
-		runSQL(
-			StringBundler.concat(
-				"update ", tableName, " set title = CONCAT('unknown-title-', ",
-				"fileEntryId) where title = '' or title is null"));
+		try (LoggingTimer loggingTimer = new LoggingTimer()) {
+			runSQL(
+				StringBundler.concat(
+					"update ", tableName, " set title = ",
+					"CONCAT('unknown-title-', fileEntryId) where title = '' ",
+					"or title is null"));
+		}
 	}
 
 	private void _updateLongFileNames(String tableName) throws Exception {

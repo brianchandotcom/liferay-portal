@@ -43,11 +43,11 @@ public class AssetDisplayContributorTrackerImpl
 
 	@Override
 	public AssetDisplayContributor
-		getAssetDisplayContributorByFriendlyURLShortcut(
-			String friendlyURLShortcut) {
+		getAssetDisplayContributorByAssetURLSeparator(
+			String assetURLSeparator) {
 
-		return _assetDisplayContributorByFriendlyURLShortcut.get(
-			friendlyURLShortcut);
+		return _assetDisplayContributorByAssetURLSeparator.get(
+			assetURLSeparator);
 	}
 
 	@Override
@@ -64,8 +64,8 @@ public class AssetDisplayContributorTrackerImpl
 
 		_assetDisplayContributor.put(
 			assetDisplayContributor.getClassName(), assetDisplayContributor);
-		_assetDisplayContributorByFriendlyURLShortcut.put(
-			assetDisplayContributor.getFriendlyURLShortcut(),
+		_assetDisplayContributorByAssetURLSeparator.put(
+			assetDisplayContributor.getAssetURLSeparator(),
 			assetDisplayContributor);
 	}
 
@@ -73,14 +73,13 @@ public class AssetDisplayContributorTrackerImpl
 		AssetDisplayContributor assetDisplayContributor) {
 
 		_assetDisplayContributor.remove(assetDisplayContributor.getClassName());
-		_assetDisplayContributorByFriendlyURLShortcut.remove(
-			assetDisplayContributor.getFriendlyURLShortcut());
+		_assetDisplayContributorByAssetURLSeparator.remove(
+			assetDisplayContributor.getAssetURLSeparator());
 	}
 
 	private final Map<String, AssetDisplayContributor>
 		_assetDisplayContributor = new ConcurrentHashMap<>();
 	private final Map<String, AssetDisplayContributor>
-		_assetDisplayContributorByFriendlyURLShortcut =
-			new ConcurrentHashMap<>();
+		_assetDisplayContributorByAssetURLSeparator = new ConcurrentHashMap<>();
 
 }

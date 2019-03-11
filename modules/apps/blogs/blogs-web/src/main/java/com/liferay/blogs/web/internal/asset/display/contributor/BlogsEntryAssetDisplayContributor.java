@@ -73,13 +73,13 @@ public class BlogsEntryAssetDisplayContributor
 	}
 
 	@Override
-	public String getClassName() {
-		return BlogsEntry.class.getName();
+	public String getAssetURLSeparator() {
+		return "blogs";
 	}
 
 	@Override
-	public String getFriendlyURLShortcut() {
-		return "blogs";
+	public String getClassName() {
+		return BlogsEntry.class.getName();
 	}
 
 	@Override

@@ -69,7 +69,7 @@ public class AssetDisplayPageFriendlyURLProviderImpl
 			sb.append(
 				AssetDisplayPageFriendlyURLResolverConstants.
 					ASSET_DISPLAY_PAGE_URL_SEPARATOR);
-			sb.append(assetDisplayContributor.getFriendlyURLShortcut());
+			sb.append(assetDisplayContributor.getAssetURLSeparator());
 			sb.append(StringPool.SLASH);
 			sb.append(assetRenderer.getUrlTitle(themeDisplay.getLocale()));
 		}

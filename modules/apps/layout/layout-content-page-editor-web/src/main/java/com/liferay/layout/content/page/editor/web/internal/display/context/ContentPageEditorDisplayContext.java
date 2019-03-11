@@ -564,23 +564,23 @@ public class ContentPageEditorDisplayContext {
 						continue;
 					}
 
-					SoyContext mappedAssetEntrySoyContext =
-						SoyContextFactoryUtil.createSoyContext();
-
-					mappedAssetEntrySoyContext.put(
-						"classNameId", editableJSONObject.get("classNameId"));
-					mappedAssetEntrySoyContext.put(
-						"classPK", editableJSONObject.get("classPK"));
+					long classNameId = editableJSONObject.getLong(
+						"classNameId");
+					long classPK = editableJSONObject.getLong("classPK");
 
 					AssetEntry assetEntry =
 						AssetEntryLocalServiceUtil.fetchEntry(
-							editableJSONObject.getLong("classNameId"),
-							editableJSONObject.getLong("classPK"));
+							classNameId, classPK);
 
 					if (assetEntry == null) {
 						continue;
 					}
 
+					SoyContext mappedAssetEntrySoyContext =
+						SoyContextFactoryUtil.createSoyContext();
+
+					mappedAssetEntrySoyContext.put("classNameId", classNameId);
+					mappedAssetEntrySoyContext.put("classPK", classPK);
 					mappedAssetEntrySoyContext.put(
 						"title", assetEntry.getTitle(themeDisplay.getLocale()));
 

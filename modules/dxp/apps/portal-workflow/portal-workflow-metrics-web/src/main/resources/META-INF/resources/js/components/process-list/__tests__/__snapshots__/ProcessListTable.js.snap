@@ -71,7 +71,7 @@ exports[`Should render component 1`] = `
           </div>
         </td>
         <td>
-           items
+           Items
         </td>
         <td />
         <td />

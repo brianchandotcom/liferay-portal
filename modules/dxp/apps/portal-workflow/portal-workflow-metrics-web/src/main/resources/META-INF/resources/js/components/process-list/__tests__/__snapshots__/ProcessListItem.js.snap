@@ -20,7 +20,7 @@ exports[`Should render component 1`] = `
     </div>
   </td>
   <td>
-    10 items
+    10 Items
   </td>
   <td>
     5
@@ -51,7 +51,7 @@ exports[`Should render component with 1 instance count 1`] = `
     </div>
   </td>
   <td>
-    1 item
+    1 Item
   </td>
   <td>
     5

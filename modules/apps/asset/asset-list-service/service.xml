@@ -102,6 +102,44 @@
 
 		<reference entity="User" package-path="com.liferay.portal" />
 	</entity>
+	<entity local-service="true" name="AssetListEntrySegmentsEntryRel" remote-service="true" uuid="true">
+
+		<!-- PK fields -->
+
+		<column db-name="assetListSegmentRelId" name="assetListEntrySegmentsEntryRelId" primary="true" type="long" />
+
+		<!-- Group instance -->
+
+		<column name="groupId" type="long" />
+
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long" />
+		<column name="userId" type="long" />
+		<column name="userName" type="String" />
+		<column name="createDate" type="Date" />
+		<column name="modifiedDate" type="Date" />
+
+		<!-- Other fields -->
+
+		<column name="assetListEntryId" type="long" />
+		<column name="segmentsEntryId" type="long" />
+		<column name="typeSettings" type="String" />
+		<column name="lastPublishDate" type="Date" />
+
+		<!-- Finder methods -->
+
+		<finder name="AssetListEntryId" return-type="Collection">
+			<finder-column name="assetListEntryId" />
+		</finder>
+		<finder name="SegmentsEntryId" return-type="Collection">
+			<finder-column name="segmentsEntryId" />
+		</finder>
+		<finder name="A_S" return-type="AssetListSegmentRel" unique="true">
+			<finder-column name="assetListEntryId" />
+			<finder-column name="segmentsEntryId" />
+		</finder>
+	</entity>
 	<entity local-service="true" name="AssetListEntryUsage" remote-service="false" uuid="true">
 
 		<!-- PK fields -->

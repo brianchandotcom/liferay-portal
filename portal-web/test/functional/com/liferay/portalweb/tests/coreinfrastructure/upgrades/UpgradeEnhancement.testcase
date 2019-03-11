@@ -42,4 +42,72 @@ definition {
 			fail("FAIL! Cannot find the warning message.");
 		}
 	}
+
+	@priority = "5"
+	test RemoveModulesWithSchemaVersionChange {
+		property osgi.modules.includes = "revert-schema-version";
+
+		User.firstLoginPG();
+
+		GogoShell.openGogoShellAdmin();
+
+		GogoShell.executeCommand(commandName = "dm wtf");
+
+		GogoShell.viewOutput(outputContent = "No missing dependencies found.");
+
+		// Change schema version from 2.1.1 to 2.1.0.
+
+		AntCommand(
+			locator1 = "build-test.xml",
+			value1 = "redeploy-osgi-modules -Dmodule.base.dir=modules/test/upgrade -Dupdate.properties.original=2.1.1 -Dupdate.properties=2.1.0"
+		);
+
+		Pause(locator1 = "15000");
+
+		User.firstLoginPG();
+
+		GogoShell.openGogoShellAdmin();
+
+		GogoShell.executeCommand(commandName = "dm wtf");
+
+		GogoShell.viewOutput(outputContent = "No missing dependencies found.");
+
+		// Change schema version from 2.1.0 to 2.0.0.
+
+		AntCommand(
+			locator1 = "build-test.xml",
+			value1 = "redeploy-osgi-modules -Dmodule.base.dir=modules/test/upgrade -Dupdate.properties.original=2.1.0 -Dupdate.properties=2.0.0"
+		);
+
+		Pause(locator1 = "15000");
+
+		User.firstLoginPG();
+
+		GogoShell.openGogoShellAdmin();
+
+		GogoShell.executeCommand(commandName = "dm wtf");
+
+		for (var outputContent : list "1 missing dependencies found,The following service(s) are missing,release.bundle.symbolic.name=revert.schema.version,release.schema.version>=2.0.0,release.schema.version>=2.1.0,is not found in the service registry") {
+			GogoShell.viewOutput(outputContent = "${outputContent}");
+		}
+
+		// Change schema version from 2.0.0 to 1.0.0.
+
+		AntCommand(
+			locator1 = "build-test.xml",
+			value1 = "redeploy-osgi-modules -Dmodule.base.dir=modules/test/upgrade -Dupdate.properties.original=2.0.0 -Dupdate.properties=1.0.0"
+		);
+
+		Pause(locator1 = "15000");
+
+		User.firstLoginPG();
+
+		GogoShell.openGogoShellAdmin();
+
+		GogoShell.executeCommand(commandName = "dm wtf");
+
+		for (var outputContent : list "1 missing dependencies found,The following service(s) are missing,release.bundle.symbolic.name=revert.schema.version,release.schema.version>=1.0.0,release.schema.version>=1.1.0,is not found in the service registry") {
+			GogoShell.viewOutput(outputContent = "${outputContent}");
+		}
+	}
 }

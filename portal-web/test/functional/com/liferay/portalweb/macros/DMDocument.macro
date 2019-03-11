@@ -1357,9 +1357,7 @@ definition {
 			value1 = "${dmDocumentTitle}"
 		);
 
-		AssertElementPresent(locator1 = "Icon#INFO");
-
-		Click(locator1 = "Icon#INFO");
+		DMDocument.expandInfo();
 
 		if ((isSet(dmDocumentSize)) && (!(contains("${dmDocumentSize}", "{dmDocumentSize}")))) {
 			var key_dmDocumentSize = "${dmDocumentSize}";

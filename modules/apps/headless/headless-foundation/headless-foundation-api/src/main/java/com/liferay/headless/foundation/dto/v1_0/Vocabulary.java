@@ -14,9 +14,11 @@
 
 package com.liferay.headless.foundation.dto.v1_0;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonFilter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonValue;
 
 import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.petra.string.StringBundler;
@@ -25,6 +27,7 @@ import graphql.annotations.annotationTypes.GraphQLField;
 import graphql.annotations.annotationTypes.GraphQLName;
 
 import java.util.Date;
+import java.util.Objects;
 
 import javax.annotation.Generated;
 
@@ -39,6 +42,63 @@ import javax.xml.bind.annotation.XmlRootElement;
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "Vocabulary")
 public class Vocabulary {
+
+	public static enum ViewableBy {
+
+		ANYONE("Anyone"), MEMBERS("Members"), OWNER("Owner");
+
+		@JsonCreator
+		public static ViewableBy create(String value) {
+			for (ViewableBy viewableBy : values()) {
+				if (Objects.equals(viewableBy.getValue(), value)) {
+					return viewableBy;
+				}
+			}
+
+			return null;
+		}
+
+		@JsonValue
+		public String getValue() {
+			return _value;
+		}
+
+		@Override
+		public String toString() {
+			return _value;
+		}
+
+		private ViewableBy(String value) {
+			_value = value;
+		}
+
+		private final String _value;
+
+	}
+
+	public AssetType[] getAssetTypes() {
+		return assetTypes;
+	}
+
+	public void setAssetTypes(AssetType[] assetTypes) {
+		this.assetTypes = assetTypes;
+	}
+
+	@JsonIgnore
+	public void setAssetTypes(
+		UnsafeSupplier<AssetType[], Exception> assetTypesUnsafeSupplier) {
+
+		try {
+			assetTypes = assetTypesUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected AssetType[] assetTypes;
 
 	public String[] getAvailableLanguages() {
 		return availableLanguages;
@@ -252,17 +312,25 @@ public class Vocabulary {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String name;
 
-	public String getViewableBy() {
+	public ViewableBy getViewableBy() {
 		return viewableBy;
 	}
 
-	public void setViewableBy(String viewableBy) {
+	public String getViewableByAsString() {
+		if (viewableBy == null) {
+			return null;
+		}
+
+		return viewableBy.toString();
+	}
+
+	public void setViewableBy(ViewableBy viewableBy) {
 		this.viewableBy = viewableBy;
 	}
 
 	@JsonIgnore
 	public void setViewableBy(
-		UnsafeSupplier<String, Exception> viewableByUnsafeSupplier) {
+		UnsafeSupplier<ViewableBy, Exception> viewableByUnsafeSupplier) {
 
 		try {
 			viewableBy = viewableByUnsafeSupplier.get();
@@ -274,12 +342,33 @@ public class Vocabulary {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-	protected String viewableBy;
+	protected ViewableBy viewableBy;
 
 	public String toString() {
 		StringBundler sb = new StringBundler();
 
 		sb.append("{");
+
+		sb.append("\"assetTypes\": ");
+
+		if (assetTypes == null) {
+			sb.append("null");
+		}
+		else {
+			sb.append("[");
+
+			for (int i = 0; i < assetTypes.length; i++) {
+				sb.append(assetTypes[i]);
+
+				if ((i + 1) < assetTypes.length) {
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
+		}
+
+		sb.append(", ");
 
 		sb.append("\"availableLanguages\": ");
 

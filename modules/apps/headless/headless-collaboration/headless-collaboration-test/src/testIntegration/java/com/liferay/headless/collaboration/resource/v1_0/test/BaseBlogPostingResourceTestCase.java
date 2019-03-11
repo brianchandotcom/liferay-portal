@@ -941,11 +941,8 @@ public abstract class BaseBlogPostingResourceTestCase {
 		}
 
 		if (entityFieldName.equals("viewableBy")) {
-			sb.append("'");
-			sb.append(String.valueOf(blogPosting.getViewableBy()));
-			sb.append("'");
-
-			return sb.toString();
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
 		}
 
 		throw new IllegalArgumentException(
@@ -969,7 +966,6 @@ public abstract class BaseBlogPostingResourceTestCase {
 				headline = RandomTestUtil.randomString();
 				id = RandomTestUtil.randomLong();
 				imageId = RandomTestUtil.randomLong();
-				viewableBy = RandomTestUtil.randomString();
 			}
 		};
 	}

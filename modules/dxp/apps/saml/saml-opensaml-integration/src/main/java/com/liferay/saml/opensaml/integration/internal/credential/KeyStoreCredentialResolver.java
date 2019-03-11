@@ -228,16 +228,13 @@ public class KeyStoreCredentialResolver
 			X509Certificate x509Certificate, CertificateUsage certificateUsage)
 		throws Exception {
 
-		KeyStore.PrivateKeyEntry privateKeyEntry = new KeyStore.PrivateKeyEntry(
-			privateKey, new Certificate[] {x509Certificate});
-
 		KeyStore keyStore = _keyStoreManager.getKeyStore();
 
-		String entryAlias = getAlias(
-			getLocalEntityId(), getUsageType(certificateUsage));
-
 		keyStore.setEntry(
-			entryAlias, privateKeyEntry,
+			getAlias(
+				getLocalEntityId(), getUsageType(certificateUsage)),
+			new KeyStore.PrivateKeyEntry(
+				privateKey, new Certificate[] {x509Certificate}),
 			new KeyStore.PasswordProtection(
 				certificateKeyPassword.toCharArray()));
 

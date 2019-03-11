@@ -456,7 +456,17 @@ public class ResourceOpenAPIParser {
 		if (StringUtil.startsWith(
 				returnType, "com.liferay.portal.vulcan.pagination.Page<")) {
 
-			methodNameSegments.add(pluralSchemaName);
+			String methodNameSegment = methodNameSegments.get(
+				methodNameSegments.size() - 1);
+
+			if (Objects.equals(methodNameSegment, schemaName)) {
+				methodNameSegments.remove(methodNameSegments.size() - 1);
+
+				methodNameSegments.add(pluralSchemaName);
+			}
+			else if (!Objects.equals(methodNameSegment, pluralSchemaName)) {
+				methodNameSegments.add(pluralSchemaName);
+			}
 
 			methodNameSegments.add("Page");
 		}

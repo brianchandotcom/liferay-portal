@@ -244,6 +244,7 @@ public class BulkActionResponseResourceImpl
 						contextAcceptLanguage.getPreferredLocale());
 					groupIds = ArrayUtil.toLongArray(
 						_portal.getCurrentAndAncestorSiteGroupIds(tagGroupId));
+					status = "success";
 
 					tagNames = stream.map(
 						_getAssetEntryTagsFunction(
@@ -255,8 +256,6 @@ public class BulkActionResponseResourceImpl
 					).toArray(
 						new String[0]
 					);
-
-					status = "success";
 				}
 			};
 		}

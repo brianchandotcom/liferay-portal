@@ -703,7 +703,9 @@ public class SharepointConnectionTest {
 		List<SharepointObject> sharepointObjects, String name) {
 
 		for (SharepointObject sharepointObject : sharepointObjects) {
-			Assert.assertTrue(sharepointObject.getName().contains(name));
+			String sharepointObjectName = sharepointObject.getName();
+
+			Assert.assertTrue(sharepointObjectName.contains(name));
 		}
 	}
 

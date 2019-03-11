@@ -319,7 +319,10 @@ public class XMLSecurityTest extends BaseSamlTestCase {
 		InOutOperationContext<AuthnRequest, ?> inOutOperationContext =
 			samlMessageContext.getSubcontext(InOutOperationContext.class);
 
-		return inOutOperationContext.getInboundMessageContext().getMessage();
+		MessageContext<AuthnRequest> inboundMessageContext =
+			inOutOperationContext.getInboundMessageContext();
+
+		return inboundMessageContext.getMessage();
 	}
 
 	protected String getAuthnRequestRedirectURL() throws Exception {

@@ -76,15 +76,15 @@ public class BulkActionResponseResourceImpl
 	extends BaseBulkActionResponseResourceImpl {
 
 	@Override
-	public BulkActionResponse postCategoryCategoryClassName(
-		Long categoryClassNameId,
+	public BulkActionResponse postCategoryClassName(
+		Long classNameId,
 		BulkAssetEntryUpdateCategoriesAction
 			bulkAssetEntryUpdateCategoriesAction) {
 
 		try {
 			BulkSelectionFactory<?> bulkSelectionFactory =
 				_bulkSelectionFactoryRegistry.getBulkSelectionFactory(
-					categoryClassNameId);
+					classNameId);
 
 			BulkSelection<?> bulkSelection = bulkSelectionFactory.create(
 				_getParameterMap(bulkAssetEntryUpdateCategoriesAction));
@@ -121,14 +121,14 @@ public class BulkActionResponseResourceImpl
 
 	@Override
 	public BulkAssetEntryCommonCategories
-		postCategoryCategoryGroupCategoryClassNameCommon(
-			Long categoryGroupId, Long categoryClassNameId,
+		postCategoryContentSpaceClassNameCommon(
+			Long contentSpaceId, Long classNameId,
 			BulkAssetEntryAction bulkAssetEntryAction) {
 
 		try {
 			BulkSelectionFactory<?> bulkSelectionFactory =
 				_bulkSelectionFactoryRegistry.getBulkSelectionFactory(
-					categoryClassNameId);
+					classNameId);
 
 			BulkSelection<?> bulkSelection = bulkSelectionFactory.create(
 				_getParameterMap(bulkAssetEntryAction));
@@ -149,7 +149,7 @@ public class BulkActionResponseResourceImpl
 
 			Map<AssetVocabulary, List<AssetCategory>> assetCatogoriesMap =
 				_getAssetCategoriesMap(
-					categoryGroupId, categoryClassNameId, assetCategories);
+					contentSpaceId, classNameId, assetCategories);
 
 			Set<Map.Entry<AssetVocabulary, List<AssetCategory>>> entries =
 				assetCatogoriesMap.entrySet();
@@ -182,14 +182,14 @@ public class BulkActionResponseResourceImpl
 	}
 
 	@Override
-	public BulkActionResponse postTagTagClassName(
-		Long tagClassNameId,
+	public BulkActionResponse postTagClassName(
+		Long classNameId,
 		BulkAssetEntryUpdateTagsAction bulkAssetEntryUpdateTagsAction) {
 
 		try {
 			BulkSelectionFactory<?> bulkSelectionFactory =
 				_bulkSelectionFactoryRegistry.getBulkSelectionFactory(
-					tagClassNameId);
+					classNameId);
 
 			BulkSelection<?> bulkSelection = bulkSelectionFactory.create(
 				_getParameterMap(bulkAssetEntryUpdateTagsAction));
@@ -225,14 +225,14 @@ public class BulkActionResponseResourceImpl
 	}
 
 	@Override
-	public BulkAssetEntryCommonTags postTagTagGroupTagClassNameCommon(
-		Long tagGroupId, Long tagClassNameId,
+	public BulkAssetEntryCommonTags postTagContentSpaceClassNameCommon(
+		Long contentSpaceId, Long classNameId,
 		BulkAssetEntryAction bulkAssetEntryAction) {
 
 		try {
 			BulkSelectionFactory<?> bulkSelectionFactory =
 				_bulkSelectionFactoryRegistry.getBulkSelectionFactory(
-					tagClassNameId);
+					classNameId);
 
 			BulkSelection<?> bulkSelection = bulkSelectionFactory.create(
 				_getParameterMap(bulkAssetEntryAction));
@@ -247,7 +247,7 @@ public class BulkActionResponseResourceImpl
 					description = assetEntryBulkSelection.describe(
 						contextAcceptLanguage.getPreferredLocale());
 					groupIds = ArrayUtil.toLongArray(
-						_portal.getCurrentAndAncestorSiteGroupIds(tagGroupId));
+						_portal.getCurrentAndAncestorSiteGroupIds(contentSpaceId));
 					status = "success";
 
 					tagNames = stream.map(

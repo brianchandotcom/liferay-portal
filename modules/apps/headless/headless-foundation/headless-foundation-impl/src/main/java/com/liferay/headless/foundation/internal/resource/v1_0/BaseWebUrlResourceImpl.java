@@ -61,12 +61,30 @@ public abstract class BaseWebUrlResourceImpl implements WebUrlResource {
 			@Parameter(in = ParameterIn.QUERY, name = "pageSize")
 		}
 	)
-	@Path("/web-urls-by/{classNameClassPK}")
+	@Path("/organizations/{organization-id}/web-urls")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "WebUrl")})
-	public Page<WebUrl> getWebUrlsByClassNameClassPK(
-			@Context com.liferay.portal.vulcan.identifier.ClassNameClassPK
-				classNameClassPK,
+	public Page<WebUrl> getOrganizationWebUrlsPage(
+			@PathParam("organization-id") Long organizationId,
+			@Context Pagination pagination)
+		throws Exception {
+
+		return Page.of(Collections.emptyList());
+	}
+
+	@Override
+	@GET
+	@Parameters(
+		value = {
+			@Parameter(in = ParameterIn.QUERY, name = "page"),
+			@Parameter(in = ParameterIn.QUERY, name = "pageSize")
+		}
+	)
+	@Path("/user-accounts/{user-account-id}/web-urls")
+	@Produces("application/json")
+	@Tags(value = {@Tag(name = "WebUrl")})
+	public Page<WebUrl> getUserAccountWebUrlsPage(
+			@PathParam("user-account-id") Long userAccountId,
 			@Context Pagination pagination)
 		throws Exception {
 

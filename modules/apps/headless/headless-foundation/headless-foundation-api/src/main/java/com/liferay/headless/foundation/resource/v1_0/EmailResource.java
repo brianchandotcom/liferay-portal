@@ -32,13 +32,15 @@ import javax.annotation.Generated;
 @Generated("")
 public interface EmailResource {
 
-	public Page<Email> getEmailsByClassNameClassPK(
-			com.liferay.portal.vulcan.identifier.ClassNameClassPK
-				classNameClassPK,
-			Pagination pagination)
+	public Email getEmail(Long emailId) throws Exception;
+
+	public Page<Email> getOrganizationEmailsPage(
+			Long organizationId, Pagination pagination)
 		throws Exception;
 
-	public Email getEmail(Long emailId) throws Exception;
+	public Page<Email> getUserAccountEmailsPage(
+			Long userAccountId, Pagination pagination)
+		throws Exception;
 
 	public void setContextCompany(Company contextCompany);
 

@@ -96,17 +96,16 @@ public abstract class BasePhoneResourceTestCase {
 	}
 
 	@Test
-	public void testGetPhonesByClassNameClassPK() throws Exception {
-		com.liferay.portal.vulcan.identifier.ClassNameClassPK classNameClassPK =
-			testGetPhonesByClassNameClassPK_getClassNameClassPK();
+	public void testGetOrganizationPhonesPage() throws Exception {
+		Long organizationId = testGetOrganizationPhonesPage_getOrganizationId();
 
-		Phone phone1 = testGetPhonesByClassNameClassPK_addPhone(
-			classNameClassPK, randomPhone());
-		Phone phone2 = testGetPhonesByClassNameClassPK_addPhone(
-			classNameClassPK, randomPhone());
+		Phone phone1 = testGetOrganizationPhonesPage_addPhone(
+			organizationId, randomPhone());
+		Phone phone2 = testGetOrganizationPhonesPage_addPhone(
+			organizationId, randomPhone());
 
-		Page<Phone> page = invokeGetPhonesByClassNameClassPK(
-			classNameClassPK, Pagination.of(1, 2));
+		Page<Phone> page = invokeGetOrganizationPhonesPage(
+			organizationId, Pagination.of(1, 2));
 
 		Assert.assertEquals(2, page.getTotalCount());
 
@@ -116,28 +115,25 @@ public abstract class BasePhoneResourceTestCase {
 	}
 
 	@Test
-	public void testGetPhonesByClassNameClassPKWithPagination()
-		throws Exception {
+	public void testGetOrganizationPhonesPageWithPagination() throws Exception {
+		Long organizationId = testGetOrganizationPhonesPage_getOrganizationId();
 
-		com.liferay.portal.vulcan.identifier.ClassNameClassPK classNameClassPK =
-			testGetPhonesByClassNameClassPK_getClassNameClassPK();
+		Phone phone1 = testGetOrganizationPhonesPage_addPhone(
+			organizationId, randomPhone());
+		Phone phone2 = testGetOrganizationPhonesPage_addPhone(
+			organizationId, randomPhone());
+		Phone phone3 = testGetOrganizationPhonesPage_addPhone(
+			organizationId, randomPhone());
 
-		Phone phone1 = testGetPhonesByClassNameClassPK_addPhone(
-			classNameClassPK, randomPhone());
-		Phone phone2 = testGetPhonesByClassNameClassPK_addPhone(
-			classNameClassPK, randomPhone());
-		Phone phone3 = testGetPhonesByClassNameClassPK_addPhone(
-			classNameClassPK, randomPhone());
-
-		Page<Phone> page1 = invokeGetPhonesByClassNameClassPK(
-			classNameClassPK, Pagination.of(1, 2));
+		Page<Phone> page1 = invokeGetOrganizationPhonesPage(
+			organizationId, Pagination.of(1, 2));
 
 		List<Phone> phones1 = (List<Phone>)page1.getItems();
 
 		Assert.assertEquals(phones1.toString(), 2, phones1.size());
 
-		Page<Phone> page2 = invokeGetPhonesByClassNameClassPK(
-			classNameClassPK, Pagination.of(2, 2));
+		Page<Phone> page2 = invokeGetOrganizationPhonesPage(
+			organizationId, Pagination.of(2, 2));
 
 		Assert.assertEquals(3, page2.getTotalCount());
 
@@ -155,35 +151,31 @@ public abstract class BasePhoneResourceTestCase {
 			});
 	}
 
-	protected Phone testGetPhonesByClassNameClassPK_addPhone(
-			com.liferay.portal.vulcan.identifier.ClassNameClassPK
-				classNameClassPK,
-			Phone phone)
+	protected Phone testGetOrganizationPhonesPage_addPhone(
+			Long organizationId, Phone phone)
 		throws Exception {
 
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
 	}
 
-	protected com.liferay.portal.vulcan.identifier.ClassNameClassPK
-			testGetPhonesByClassNameClassPK_getClassNameClassPK()
+	protected Long testGetOrganizationPhonesPage_getOrganizationId()
 		throws Exception {
 
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
 	}
 
-	protected Page<Phone> invokeGetPhonesByClassNameClassPK(
-			com.liferay.portal.vulcan.identifier.ClassNameClassPK
-				classNameClassPK,
-			Pagination pagination)
+	protected Page<Phone> invokeGetOrganizationPhonesPage(
+			Long organizationId, Pagination pagination)
 		throws Exception {
 
 		Http.Options options = _createHttpOptions();
 
 		String location =
 			_resourceURL +
-				_toPath("/phones-by/{classNameClassPK}", classNameClassPK);
+				_toPath(
+					"/organizations/{organization-id}/phones", organizationId);
 
 		location = HttpUtil.addParameter(
 			location, "page", pagination.getPage());
@@ -198,17 +190,16 @@ public abstract class BasePhoneResourceTestCase {
 			});
 	}
 
-	protected Http.Response invokeGetPhonesByClassNameClassPKResponse(
-			com.liferay.portal.vulcan.identifier.ClassNameClassPK
-				classNameClassPK,
-			Pagination pagination)
+	protected Http.Response invokeGetOrganizationPhonesPageResponse(
+			Long organizationId, Pagination pagination)
 		throws Exception {
 
 		Http.Options options = _createHttpOptions();
 
 		String location =
 			_resourceURL +
-				_toPath("/phones-by/{classNameClassPK}", classNameClassPK);
+				_toPath(
+					"/organizations/{organization-id}/phones", organizationId);
 
 		location = HttpUtil.addParameter(
 			location, "page", pagination.getPage());
@@ -254,6 +245,124 @@ public abstract class BasePhoneResourceTestCase {
 		Http.Options options = _createHttpOptions();
 
 		String location = _resourceURL + _toPath("/phones/{phone-id}", phoneId);
+
+		options.setLocation(location);
+
+		HttpUtil.URLtoString(options);
+
+		return options.getResponse();
+	}
+
+	@Test
+	public void testGetUserAccountPhonesPage() throws Exception {
+		Long userAccountId = testGetUserAccountPhonesPage_getUserAccountId();
+
+		Phone phone1 = testGetUserAccountPhonesPage_addPhone(
+			userAccountId, randomPhone());
+		Phone phone2 = testGetUserAccountPhonesPage_addPhone(
+			userAccountId, randomPhone());
+
+		Page<Phone> page = invokeGetUserAccountPhonesPage(
+			userAccountId, Pagination.of(1, 2));
+
+		Assert.assertEquals(2, page.getTotalCount());
+
+		assertEqualsIgnoringOrder(
+			Arrays.asList(phone1, phone2), (List<Phone>)page.getItems());
+		assertValid(page);
+	}
+
+	@Test
+	public void testGetUserAccountPhonesPageWithPagination() throws Exception {
+		Long userAccountId = testGetUserAccountPhonesPage_getUserAccountId();
+
+		Phone phone1 = testGetUserAccountPhonesPage_addPhone(
+			userAccountId, randomPhone());
+		Phone phone2 = testGetUserAccountPhonesPage_addPhone(
+			userAccountId, randomPhone());
+		Phone phone3 = testGetUserAccountPhonesPage_addPhone(
+			userAccountId, randomPhone());
+
+		Page<Phone> page1 = invokeGetUserAccountPhonesPage(
+			userAccountId, Pagination.of(1, 2));
+
+		List<Phone> phones1 = (List<Phone>)page1.getItems();
+
+		Assert.assertEquals(phones1.toString(), 2, phones1.size());
+
+		Page<Phone> page2 = invokeGetUserAccountPhonesPage(
+			userAccountId, Pagination.of(2, 2));
+
+		Assert.assertEquals(3, page2.getTotalCount());
+
+		List<Phone> phones2 = (List<Phone>)page2.getItems();
+
+		Assert.assertEquals(phones2.toString(), 1, phones2.size());
+
+		assertEqualsIgnoringOrder(
+			Arrays.asList(phone1, phone2, phone3),
+			new ArrayList<Phone>() {
+				{
+					addAll(phones1);
+					addAll(phones2);
+				}
+			});
+	}
+
+	protected Phone testGetUserAccountPhonesPage_addPhone(
+			Long userAccountId, Phone phone)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected Long testGetUserAccountPhonesPage_getUserAccountId()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected Page<Phone> invokeGetUserAccountPhonesPage(
+			Long userAccountId, Pagination pagination)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		String location =
+			_resourceURL +
+				_toPath(
+					"/user-accounts/{user-account-id}/phones", userAccountId);
+
+		location = HttpUtil.addParameter(
+			location, "page", pagination.getPage());
+		location = HttpUtil.addParameter(
+			location, "pageSize", pagination.getPageSize());
+
+		options.setLocation(location);
+
+		return _outputObjectMapper.readValue(
+			HttpUtil.URLtoString(options),
+			new TypeReference<Page<Phone>>() {
+			});
+	}
+
+	protected Http.Response invokeGetUserAccountPhonesPageResponse(
+			Long userAccountId, Pagination pagination)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		String location =
+			_resourceURL +
+				_toPath(
+					"/user-accounts/{user-account-id}/phones", userAccountId);
+
+		location = HttpUtil.addParameter(
+			location, "page", pagination.getPage());
+		location = HttpUtil.addParameter(
+			location, "pageSize", pagination.getPageSize());
 
 		options.setLocation(location);
 

@@ -55,18 +55,28 @@ public abstract class BaseEmailResourceImpl implements EmailResource {
 
 	@Override
 	@GET
+	@Path("/emails/{email-id}")
+	@Produces("application/json")
+	@Tags(value = {@Tag(name = "Email")})
+	public Email getEmail(@PathParam("email-id") Long emailId)
+		throws Exception {
+
+		return new Email();
+	}
+
+	@Override
+	@GET
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.QUERY, name = "page"),
 			@Parameter(in = ParameterIn.QUERY, name = "pageSize")
 		}
 	)
-	@Path("/emails-by/{classNameClassPK}")
+	@Path("/organizations/{organization-id}/emails")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "Email")})
-	public Page<Email> getEmailsByClassNameClassPK(
-			@Context com.liferay.portal.vulcan.identifier.ClassNameClassPK
-				classNameClassPK,
+	public Page<Email> getOrganizationEmailsPage(
+			@PathParam("organization-id") Long organizationId,
 			@Context Pagination pagination)
 		throws Exception {
 
@@ -75,13 +85,21 @@ public abstract class BaseEmailResourceImpl implements EmailResource {
 
 	@Override
 	@GET
-	@Path("/emails/{email-id}")
+	@Parameters(
+		value = {
+			@Parameter(in = ParameterIn.QUERY, name = "page"),
+			@Parameter(in = ParameterIn.QUERY, name = "pageSize")
+		}
+	)
+	@Path("/user-accounts/{user-account-id}/emails")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "Email")})
-	public Email getEmail(@PathParam("email-id") Long emailId)
+	public Page<Email> getUserAccountEmailsPage(
+			@PathParam("user-account-id") Long userAccountId,
+			@Context Pagination pagination)
 		throws Exception {
 
-		return new Email();
+		return Page.of(Collections.emptyList());
 	}
 
 	public void setContextCompany(Company contextCompany) {

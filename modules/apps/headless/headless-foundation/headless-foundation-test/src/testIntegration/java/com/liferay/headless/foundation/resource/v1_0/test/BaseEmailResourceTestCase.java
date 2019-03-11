@@ -96,133 +96,6 @@ public abstract class BaseEmailResourceTestCase {
 	}
 
 	@Test
-	public void testGetEmailsByClassNameClassPK() throws Exception {
-		com.liferay.portal.vulcan.identifier.ClassNameClassPK classNameClassPK =
-			testGetEmailsByClassNameClassPK_getClassNameClassPK();
-
-		Email email1 = testGetEmailsByClassNameClassPK_addEmail(
-			classNameClassPK, randomEmail());
-		Email email2 = testGetEmailsByClassNameClassPK_addEmail(
-			classNameClassPK, randomEmail());
-
-		Page<Email> page = invokeGetEmailsByClassNameClassPK(
-			classNameClassPK, Pagination.of(1, 2));
-
-		Assert.assertEquals(2, page.getTotalCount());
-
-		assertEqualsIgnoringOrder(
-			Arrays.asList(email1, email2), (List<Email>)page.getItems());
-		assertValid(page);
-	}
-
-	@Test
-	public void testGetEmailsByClassNameClassPKWithPagination()
-		throws Exception {
-
-		com.liferay.portal.vulcan.identifier.ClassNameClassPK classNameClassPK =
-			testGetEmailsByClassNameClassPK_getClassNameClassPK();
-
-		Email email1 = testGetEmailsByClassNameClassPK_addEmail(
-			classNameClassPK, randomEmail());
-		Email email2 = testGetEmailsByClassNameClassPK_addEmail(
-			classNameClassPK, randomEmail());
-		Email email3 = testGetEmailsByClassNameClassPK_addEmail(
-			classNameClassPK, randomEmail());
-
-		Page<Email> page1 = invokeGetEmailsByClassNameClassPK(
-			classNameClassPK, Pagination.of(1, 2));
-
-		List<Email> emails1 = (List<Email>)page1.getItems();
-
-		Assert.assertEquals(emails1.toString(), 2, emails1.size());
-
-		Page<Email> page2 = invokeGetEmailsByClassNameClassPK(
-			classNameClassPK, Pagination.of(2, 2));
-
-		Assert.assertEquals(3, page2.getTotalCount());
-
-		List<Email> emails2 = (List<Email>)page2.getItems();
-
-		Assert.assertEquals(emails2.toString(), 1, emails2.size());
-
-		assertEqualsIgnoringOrder(
-			Arrays.asList(email1, email2, email3),
-			new ArrayList<Email>() {
-				{
-					addAll(emails1);
-					addAll(emails2);
-				}
-			});
-	}
-
-	protected Email testGetEmailsByClassNameClassPK_addEmail(
-			com.liferay.portal.vulcan.identifier.ClassNameClassPK
-				classNameClassPK,
-			Email email)
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	protected com.liferay.portal.vulcan.identifier.ClassNameClassPK
-			testGetEmailsByClassNameClassPK_getClassNameClassPK()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	protected Page<Email> invokeGetEmailsByClassNameClassPK(
-			com.liferay.portal.vulcan.identifier.ClassNameClassPK
-				classNameClassPK,
-			Pagination pagination)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		String location =
-			_resourceURL +
-				_toPath("/emails-by/{classNameClassPK}", classNameClassPK);
-
-		location = HttpUtil.addParameter(
-			location, "page", pagination.getPage());
-		location = HttpUtil.addParameter(
-			location, "pageSize", pagination.getPageSize());
-
-		options.setLocation(location);
-
-		return _outputObjectMapper.readValue(
-			HttpUtil.URLtoString(options),
-			new TypeReference<Page<Email>>() {
-			});
-	}
-
-	protected Http.Response invokeGetEmailsByClassNameClassPKResponse(
-			com.liferay.portal.vulcan.identifier.ClassNameClassPK
-				classNameClassPK,
-			Pagination pagination)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		String location =
-			_resourceURL +
-				_toPath("/emails-by/{classNameClassPK}", classNameClassPK);
-
-		location = HttpUtil.addParameter(
-			location, "page", pagination.getPage());
-		location = HttpUtil.addParameter(
-			location, "pageSize", pagination.getPageSize());
-
-		options.setLocation(location);
-
-		HttpUtil.URLtoString(options);
-
-		return options.getResponse();
-	}
-
-	@Test
 	public void testGetEmail() throws Exception {
 		Email postEmail = testGetEmail_addEmail();
 
@@ -254,6 +127,242 @@ public abstract class BaseEmailResourceTestCase {
 		Http.Options options = _createHttpOptions();
 
 		String location = _resourceURL + _toPath("/emails/{email-id}", emailId);
+
+		options.setLocation(location);
+
+		HttpUtil.URLtoString(options);
+
+		return options.getResponse();
+	}
+
+	@Test
+	public void testGetOrganizationEmailsPage() throws Exception {
+		Long organizationId = testGetOrganizationEmailsPage_getOrganizationId();
+
+		Email email1 = testGetOrganizationEmailsPage_addEmail(
+			organizationId, randomEmail());
+		Email email2 = testGetOrganizationEmailsPage_addEmail(
+			organizationId, randomEmail());
+
+		Page<Email> page = invokeGetOrganizationEmailsPage(
+			organizationId, Pagination.of(1, 2));
+
+		Assert.assertEquals(2, page.getTotalCount());
+
+		assertEqualsIgnoringOrder(
+			Arrays.asList(email1, email2), (List<Email>)page.getItems());
+		assertValid(page);
+	}
+
+	@Test
+	public void testGetOrganizationEmailsPageWithPagination() throws Exception {
+		Long organizationId = testGetOrganizationEmailsPage_getOrganizationId();
+
+		Email email1 = testGetOrganizationEmailsPage_addEmail(
+			organizationId, randomEmail());
+		Email email2 = testGetOrganizationEmailsPage_addEmail(
+			organizationId, randomEmail());
+		Email email3 = testGetOrganizationEmailsPage_addEmail(
+			organizationId, randomEmail());
+
+		Page<Email> page1 = invokeGetOrganizationEmailsPage(
+			organizationId, Pagination.of(1, 2));
+
+		List<Email> emails1 = (List<Email>)page1.getItems();
+
+		Assert.assertEquals(emails1.toString(), 2, emails1.size());
+
+		Page<Email> page2 = invokeGetOrganizationEmailsPage(
+			organizationId, Pagination.of(2, 2));
+
+		Assert.assertEquals(3, page2.getTotalCount());
+
+		List<Email> emails2 = (List<Email>)page2.getItems();
+
+		Assert.assertEquals(emails2.toString(), 1, emails2.size());
+
+		assertEqualsIgnoringOrder(
+			Arrays.asList(email1, email2, email3),
+			new ArrayList<Email>() {
+				{
+					addAll(emails1);
+					addAll(emails2);
+				}
+			});
+	}
+
+	protected Email testGetOrganizationEmailsPage_addEmail(
+			Long organizationId, Email email)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected Long testGetOrganizationEmailsPage_getOrganizationId()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected Page<Email> invokeGetOrganizationEmailsPage(
+			Long organizationId, Pagination pagination)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		String location =
+			_resourceURL +
+				_toPath(
+					"/organizations/{organization-id}/emails", organizationId);
+
+		location = HttpUtil.addParameter(
+			location, "page", pagination.getPage());
+		location = HttpUtil.addParameter(
+			location, "pageSize", pagination.getPageSize());
+
+		options.setLocation(location);
+
+		return _outputObjectMapper.readValue(
+			HttpUtil.URLtoString(options),
+			new TypeReference<Page<Email>>() {
+			});
+	}
+
+	protected Http.Response invokeGetOrganizationEmailsPageResponse(
+			Long organizationId, Pagination pagination)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		String location =
+			_resourceURL +
+				_toPath(
+					"/organizations/{organization-id}/emails", organizationId);
+
+		location = HttpUtil.addParameter(
+			location, "page", pagination.getPage());
+		location = HttpUtil.addParameter(
+			location, "pageSize", pagination.getPageSize());
+
+		options.setLocation(location);
+
+		HttpUtil.URLtoString(options);
+
+		return options.getResponse();
+	}
+
+	@Test
+	public void testGetUserAccountEmailsPage() throws Exception {
+		Long userAccountId = testGetUserAccountEmailsPage_getUserAccountId();
+
+		Email email1 = testGetUserAccountEmailsPage_addEmail(
+			userAccountId, randomEmail());
+		Email email2 = testGetUserAccountEmailsPage_addEmail(
+			userAccountId, randomEmail());
+
+		Page<Email> page = invokeGetUserAccountEmailsPage(
+			userAccountId, Pagination.of(1, 2));
+
+		Assert.assertEquals(2, page.getTotalCount());
+
+		assertEqualsIgnoringOrder(
+			Arrays.asList(email1, email2), (List<Email>)page.getItems());
+		assertValid(page);
+	}
+
+	@Test
+	public void testGetUserAccountEmailsPageWithPagination() throws Exception {
+		Long userAccountId = testGetUserAccountEmailsPage_getUserAccountId();
+
+		Email email1 = testGetUserAccountEmailsPage_addEmail(
+			userAccountId, randomEmail());
+		Email email2 = testGetUserAccountEmailsPage_addEmail(
+			userAccountId, randomEmail());
+		Email email3 = testGetUserAccountEmailsPage_addEmail(
+			userAccountId, randomEmail());
+
+		Page<Email> page1 = invokeGetUserAccountEmailsPage(
+			userAccountId, Pagination.of(1, 2));
+
+		List<Email> emails1 = (List<Email>)page1.getItems();
+
+		Assert.assertEquals(emails1.toString(), 2, emails1.size());
+
+		Page<Email> page2 = invokeGetUserAccountEmailsPage(
+			userAccountId, Pagination.of(2, 2));
+
+		Assert.assertEquals(3, page2.getTotalCount());
+
+		List<Email> emails2 = (List<Email>)page2.getItems();
+
+		Assert.assertEquals(emails2.toString(), 1, emails2.size());
+
+		assertEqualsIgnoringOrder(
+			Arrays.asList(email1, email2, email3),
+			new ArrayList<Email>() {
+				{
+					addAll(emails1);
+					addAll(emails2);
+				}
+			});
+	}
+
+	protected Email testGetUserAccountEmailsPage_addEmail(
+			Long userAccountId, Email email)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected Long testGetUserAccountEmailsPage_getUserAccountId()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected Page<Email> invokeGetUserAccountEmailsPage(
+			Long userAccountId, Pagination pagination)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		String location =
+			_resourceURL +
+				_toPath(
+					"/user-accounts/{user-account-id}/emails", userAccountId);
+
+		location = HttpUtil.addParameter(
+			location, "page", pagination.getPage());
+		location = HttpUtil.addParameter(
+			location, "pageSize", pagination.getPageSize());
+
+		options.setLocation(location);
+
+		return _outputObjectMapper.readValue(
+			HttpUtil.URLtoString(options),
+			new TypeReference<Page<Email>>() {
+			});
+	}
+
+	protected Http.Response invokeGetUserAccountEmailsPageResponse(
+			Long userAccountId, Pagination pagination)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		String location =
+			_resourceURL +
+				_toPath(
+					"/user-accounts/{user-account-id}/emails", userAccountId);
+
+		location = HttpUtil.addParameter(
+			location, "page", pagination.getPage());
+		location = HttpUtil.addParameter(
+			location, "pageSize", pagination.getPageSize());
 
 		options.setLocation(location);
 

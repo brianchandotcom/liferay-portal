@@ -62,12 +62,11 @@ public abstract class BasePostalAddressResourceImpl
 			@Parameter(in = ParameterIn.QUERY, name = "pageSize")
 		}
 	)
-	@Path("/postal-addresses-by/{classNameClassPK}")
+	@Path("/organizations/{organization-id}/postal-addresses")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "PostalAddress")})
-	public Page<PostalAddress> getPostalAddressesByClassNameClassPK(
-			@Context com.liferay.portal.vulcan.identifier.ClassNameClassPK
-				classNameClassPK,
+	public Page<PostalAddress> getOrganizationPostalAddressesPage(
+			@PathParam("organization-id") Long organizationId,
 			@Context Pagination pagination)
 		throws Exception {
 
@@ -84,6 +83,25 @@ public abstract class BasePostalAddressResourceImpl
 		throws Exception {
 
 		return new PostalAddress();
+	}
+
+	@Override
+	@GET
+	@Parameters(
+		value = {
+			@Parameter(in = ParameterIn.QUERY, name = "page"),
+			@Parameter(in = ParameterIn.QUERY, name = "pageSize")
+		}
+	)
+	@Path("/user-accounts/{user-account-id}/postal-addresses")
+	@Produces("application/json")
+	@Tags(value = {@Tag(name = "PostalAddress")})
+	public Page<PostalAddress> getUserAccountPostalAddressesPage(
+			@PathParam("user-account-id") Long userAccountId,
+			@Context Pagination pagination)
+		throws Exception {
+
+		return Page.of(Collections.emptyList());
 	}
 
 	public void setContextCompany(Company contextCompany) {

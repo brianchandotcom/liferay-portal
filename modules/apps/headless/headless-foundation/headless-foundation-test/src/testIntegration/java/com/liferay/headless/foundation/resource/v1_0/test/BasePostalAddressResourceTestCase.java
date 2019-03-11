@@ -96,19 +96,19 @@ public abstract class BasePostalAddressResourceTestCase {
 	}
 
 	@Test
-	public void testGetPostalAddressesByClassNameClassPK() throws Exception {
-		com.liferay.portal.vulcan.identifier.ClassNameClassPK classNameClassPK =
-			testGetPostalAddressesByClassNameClassPK_getClassNameClassPK();
+	public void testGetOrganizationPostalAddressesPage() throws Exception {
+		Long organizationId =
+			testGetOrganizationPostalAddressesPage_getOrganizationId();
 
 		PostalAddress postalAddress1 =
-			testGetPostalAddressesByClassNameClassPK_addPostalAddress(
-				classNameClassPK, randomPostalAddress());
+			testGetOrganizationPostalAddressesPage_addPostalAddress(
+				organizationId, randomPostalAddress());
 		PostalAddress postalAddress2 =
-			testGetPostalAddressesByClassNameClassPK_addPostalAddress(
-				classNameClassPK, randomPostalAddress());
+			testGetOrganizationPostalAddressesPage_addPostalAddress(
+				organizationId, randomPostalAddress());
 
-		Page<PostalAddress> page = invokeGetPostalAddressesByClassNameClassPK(
-			classNameClassPK, Pagination.of(1, 2));
+		Page<PostalAddress> page = invokeGetOrganizationPostalAddressesPage(
+			organizationId, Pagination.of(1, 2));
 
 		Assert.assertEquals(2, page.getTotalCount());
 
@@ -119,24 +119,24 @@ public abstract class BasePostalAddressResourceTestCase {
 	}
 
 	@Test
-	public void testGetPostalAddressesByClassNameClassPKWithPagination()
+	public void testGetOrganizationPostalAddressesPageWithPagination()
 		throws Exception {
 
-		com.liferay.portal.vulcan.identifier.ClassNameClassPK classNameClassPK =
-			testGetPostalAddressesByClassNameClassPK_getClassNameClassPK();
+		Long organizationId =
+			testGetOrganizationPostalAddressesPage_getOrganizationId();
 
 		PostalAddress postalAddress1 =
-			testGetPostalAddressesByClassNameClassPK_addPostalAddress(
-				classNameClassPK, randomPostalAddress());
+			testGetOrganizationPostalAddressesPage_addPostalAddress(
+				organizationId, randomPostalAddress());
 		PostalAddress postalAddress2 =
-			testGetPostalAddressesByClassNameClassPK_addPostalAddress(
-				classNameClassPK, randomPostalAddress());
+			testGetOrganizationPostalAddressesPage_addPostalAddress(
+				organizationId, randomPostalAddress());
 		PostalAddress postalAddress3 =
-			testGetPostalAddressesByClassNameClassPK_addPostalAddress(
-				classNameClassPK, randomPostalAddress());
+			testGetOrganizationPostalAddressesPage_addPostalAddress(
+				organizationId, randomPostalAddress());
 
-		Page<PostalAddress> page1 = invokeGetPostalAddressesByClassNameClassPK(
-			classNameClassPK, Pagination.of(1, 2));
+		Page<PostalAddress> page1 = invokeGetOrganizationPostalAddressesPage(
+			organizationId, Pagination.of(1, 2));
 
 		List<PostalAddress> postalAddresses1 =
 			(List<PostalAddress>)page1.getItems();
@@ -144,8 +144,8 @@ public abstract class BasePostalAddressResourceTestCase {
 		Assert.assertEquals(
 			postalAddresses1.toString(), 2, postalAddresses1.size());
 
-		Page<PostalAddress> page2 = invokeGetPostalAddressesByClassNameClassPK(
-			classNameClassPK, Pagination.of(2, 2));
+		Page<PostalAddress> page2 = invokeGetOrganizationPostalAddressesPage(
+			organizationId, Pagination.of(2, 2));
 
 		Assert.assertEquals(3, page2.getTotalCount());
 
@@ -166,28 +166,23 @@ public abstract class BasePostalAddressResourceTestCase {
 	}
 
 	protected PostalAddress
-			testGetPostalAddressesByClassNameClassPK_addPostalAddress(
-				com.liferay.portal.vulcan.identifier.ClassNameClassPK
-					classNameClassPK,
-				PostalAddress postalAddress)
+			testGetOrganizationPostalAddressesPage_addPostalAddress(
+				Long organizationId, PostalAddress postalAddress)
 		throws Exception {
 
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
 	}
 
-	protected com.liferay.portal.vulcan.identifier.ClassNameClassPK
-			testGetPostalAddressesByClassNameClassPK_getClassNameClassPK()
+	protected Long testGetOrganizationPostalAddressesPage_getOrganizationId()
 		throws Exception {
 
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
 	}
 
-	protected Page<PostalAddress> invokeGetPostalAddressesByClassNameClassPK(
-			com.liferay.portal.vulcan.identifier.ClassNameClassPK
-				classNameClassPK,
-			Pagination pagination)
+	protected Page<PostalAddress> invokeGetOrganizationPostalAddressesPage(
+			Long organizationId, Pagination pagination)
 		throws Exception {
 
 		Http.Options options = _createHttpOptions();
@@ -195,8 +190,8 @@ public abstract class BasePostalAddressResourceTestCase {
 		String location =
 			_resourceURL +
 				_toPath(
-					"/postal-addresses-by/{classNameClassPK}",
-					classNameClassPK);
+					"/organizations/{organization-id}/postal-addresses",
+					organizationId);
 
 		location = HttpUtil.addParameter(
 			location, "page", pagination.getPage());
@@ -211,10 +206,8 @@ public abstract class BasePostalAddressResourceTestCase {
 			});
 	}
 
-	protected Http.Response invokeGetPostalAddressesByClassNameClassPKResponse(
-			com.liferay.portal.vulcan.identifier.ClassNameClassPK
-				classNameClassPK,
-			Pagination pagination)
+	protected Http.Response invokeGetOrganizationPostalAddressesPageResponse(
+			Long organizationId, Pagination pagination)
 		throws Exception {
 
 		Http.Options options = _createHttpOptions();
@@ -222,8 +215,8 @@ public abstract class BasePostalAddressResourceTestCase {
 		String location =
 			_resourceURL +
 				_toPath(
-					"/postal-addresses-by/{classNameClassPK}",
-					classNameClassPK);
+					"/organizations/{organization-id}/postal-addresses",
+					organizationId);
 
 		location = HttpUtil.addParameter(
 			location, "page", pagination.getPage());
@@ -281,6 +274,141 @@ public abstract class BasePostalAddressResourceTestCase {
 			_resourceURL +
 				_toPath(
 					"/postal-addresses/{postal-address-id}", postalAddressId);
+
+		options.setLocation(location);
+
+		HttpUtil.URLtoString(options);
+
+		return options.getResponse();
+	}
+
+	@Test
+	public void testGetUserAccountPostalAddressesPage() throws Exception {
+		Long userAccountId =
+			testGetUserAccountPostalAddressesPage_getUserAccountId();
+
+		PostalAddress postalAddress1 =
+			testGetUserAccountPostalAddressesPage_addPostalAddress(
+				userAccountId, randomPostalAddress());
+		PostalAddress postalAddress2 =
+			testGetUserAccountPostalAddressesPage_addPostalAddress(
+				userAccountId, randomPostalAddress());
+
+		Page<PostalAddress> page = invokeGetUserAccountPostalAddressesPage(
+			userAccountId, Pagination.of(1, 2));
+
+		Assert.assertEquals(2, page.getTotalCount());
+
+		assertEqualsIgnoringOrder(
+			Arrays.asList(postalAddress1, postalAddress2),
+			(List<PostalAddress>)page.getItems());
+		assertValid(page);
+	}
+
+	@Test
+	public void testGetUserAccountPostalAddressesPageWithPagination()
+		throws Exception {
+
+		Long userAccountId =
+			testGetUserAccountPostalAddressesPage_getUserAccountId();
+
+		PostalAddress postalAddress1 =
+			testGetUserAccountPostalAddressesPage_addPostalAddress(
+				userAccountId, randomPostalAddress());
+		PostalAddress postalAddress2 =
+			testGetUserAccountPostalAddressesPage_addPostalAddress(
+				userAccountId, randomPostalAddress());
+		PostalAddress postalAddress3 =
+			testGetUserAccountPostalAddressesPage_addPostalAddress(
+				userAccountId, randomPostalAddress());
+
+		Page<PostalAddress> page1 = invokeGetUserAccountPostalAddressesPage(
+			userAccountId, Pagination.of(1, 2));
+
+		List<PostalAddress> postalAddresses1 =
+			(List<PostalAddress>)page1.getItems();
+
+		Assert.assertEquals(
+			postalAddresses1.toString(), 2, postalAddresses1.size());
+
+		Page<PostalAddress> page2 = invokeGetUserAccountPostalAddressesPage(
+			userAccountId, Pagination.of(2, 2));
+
+		Assert.assertEquals(3, page2.getTotalCount());
+
+		List<PostalAddress> postalAddresses2 =
+			(List<PostalAddress>)page2.getItems();
+
+		Assert.assertEquals(
+			postalAddresses2.toString(), 1, postalAddresses2.size());
+
+		assertEqualsIgnoringOrder(
+			Arrays.asList(postalAddress1, postalAddress2, postalAddress3),
+			new ArrayList<PostalAddress>() {
+				{
+					addAll(postalAddresses1);
+					addAll(postalAddresses2);
+				}
+			});
+	}
+
+	protected PostalAddress
+			testGetUserAccountPostalAddressesPage_addPostalAddress(
+				Long userAccountId, PostalAddress postalAddress)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected Long testGetUserAccountPostalAddressesPage_getUserAccountId()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected Page<PostalAddress> invokeGetUserAccountPostalAddressesPage(
+			Long userAccountId, Pagination pagination)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		String location =
+			_resourceURL +
+				_toPath(
+					"/user-accounts/{user-account-id}/postal-addresses",
+					userAccountId);
+
+		location = HttpUtil.addParameter(
+			location, "page", pagination.getPage());
+		location = HttpUtil.addParameter(
+			location, "pageSize", pagination.getPageSize());
+
+		options.setLocation(location);
+
+		return _outputObjectMapper.readValue(
+			HttpUtil.URLtoString(options),
+			new TypeReference<Page<PostalAddress>>() {
+			});
+	}
+
+	protected Http.Response invokeGetUserAccountPostalAddressesPageResponse(
+			Long userAccountId, Pagination pagination)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		String location =
+			_resourceURL +
+				_toPath(
+					"/user-accounts/{user-account-id}/postal-addresses",
+					userAccountId);
+
+		location = HttpUtil.addParameter(
+			location, "page", pagination.getPage());
+		location = HttpUtil.addParameter(
+			location, "pageSize", pagination.getPageSize());
 
 		options.setLocation(location);
 

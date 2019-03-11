@@ -61,12 +61,11 @@ public abstract class BasePhoneResourceImpl implements PhoneResource {
 			@Parameter(in = ParameterIn.QUERY, name = "pageSize")
 		}
 	)
-	@Path("/phones-by/{classNameClassPK}")
+	@Path("/organizations/{organization-id}/phones")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "Phone")})
-	public Page<Phone> getPhonesByClassNameClassPK(
-			@Context com.liferay.portal.vulcan.identifier.ClassNameClassPK
-				classNameClassPK,
+	public Page<Phone> getOrganizationPhonesPage(
+			@PathParam("organization-id") Long organizationId,
 			@Context Pagination pagination)
 		throws Exception {
 
@@ -82,6 +81,25 @@ public abstract class BasePhoneResourceImpl implements PhoneResource {
 		throws Exception {
 
 		return new Phone();
+	}
+
+	@Override
+	@GET
+	@Parameters(
+		value = {
+			@Parameter(in = ParameterIn.QUERY, name = "page"),
+			@Parameter(in = ParameterIn.QUERY, name = "pageSize")
+		}
+	)
+	@Path("/user-accounts/{user-account-id}/phones")
+	@Produces("application/json")
+	@Tags(value = {@Tag(name = "Phone")})
+	public Page<Phone> getUserAccountPhonesPage(
+			@PathParam("user-account-id") Long userAccountId,
+			@Context Pagination pagination)
+		throws Exception {
+
+		return Page.of(Collections.emptyList());
 	}
 
 	public void setContextCompany(Company contextCompany) {

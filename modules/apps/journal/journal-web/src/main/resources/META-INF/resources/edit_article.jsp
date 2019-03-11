@@ -153,20 +153,6 @@ long classNameId = ParamUtil.getLong(request, "classNameId");
 				<liferay-ui:message arguments="<%= TextFormatter.formatStorageSize(LiferayFileItem.THRESHOLD_SIZE, locale) %>" key="please-enter-valid-content-with-valid-content-size-no-larger-than-x" translateArguments="<%= false %>" />
 			</liferay-ui:error>
 
-			<c:if test="<%= journalEditArticleDisplayContext.getClassNameId() == JournalArticleConstants.CLASSNAME_ID_DEFAULT %>">
-				<c:if test="<%= journalEditArticleDisplayContext.isApproved() %>">
-					<div class="alert alert-info">
-						<liferay-ui:message key="a-new-version-is-created-automatically-if-this-content-is-modified" />
-					</div>
-				</c:if>
-
-				<c:if test="<%= journalEditArticleDisplayContext.isPending() %>">
-					<div class="alert alert-info">
-						<liferay-ui:message key="there-is-a-publication-workflow-in-process" />
-					</div>
-				</c:if>
-			</c:if>
-
 			<liferay-util:include page="/article/content.jsp" servletContext="<%= application %>" />
 		</div>
 	</div>

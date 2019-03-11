@@ -15,6 +15,7 @@
 package com.liferay.headless.collaboration.internal.resource.v1_0;
 
 import com.liferay.blogs.service.BlogsEntryService;
+import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLVersionNumberIncrease;
 import com.liferay.document.library.kernel.service.DLAppService;
 import com.liferay.document.library.util.DLURLHelper;
@@ -23,12 +24,9 @@ import com.liferay.headless.collaboration.resource.v1_0.BlogPostingImageResource
 import com.liferay.headless.common.spi.service.context.ServiceContextUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.Folder;
-import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Sort;
-import com.liferay.portal.kernel.search.filter.BooleanFilter;
 import com.liferay.portal.kernel.search.filter.Filter;
-import com.liferay.portal.kernel.search.filter.TermFilter;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -82,25 +80,17 @@ public class BlogPostingImageResourceImpl
 			Sort[] sorts)
 		throws Exception {
 
+		Folder folder = _blogsEntryService.addAttachmentsFolder(contentSpaceId);
+
 		return SearchUtil.search(
 			booleanQuery -> {
-				BooleanFilter booleanFilter =
-					booleanQuery.getPreBooleanFilter();
-
-				Folder folder = _blogsEntryService.addAttachmentsFolder(
-					contentSpaceId);
-
-				booleanFilter.add(
-					new TermFilter(
-						Field.FOLDER_ID, String.valueOf(folder.getFolderId())),
-					BooleanClauseOccur.MUST);
 			},
-			filter, Folder.class, pagination,
+			filter, DLFileEntry.class, pagination,
 			queryConfig -> queryConfig.setSelectedFieldNames(
 				Field.ENTRY_CLASS_PK),
 			searchContext -> {
 				searchContext.setCompanyId(contextCompany.getCompanyId());
-				searchContext.setGroupIds(new long[] {contentSpaceId});
+				searchContext.setFolderIds(new long[] {folder.getFolderId()});
 			},
 			document -> _toBlogPostingImage(
 				_dlAppService.getFileEntry(

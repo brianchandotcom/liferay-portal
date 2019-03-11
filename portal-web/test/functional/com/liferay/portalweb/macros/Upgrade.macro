@@ -1309,20 +1309,9 @@ definition {
 
 		Navigator.gotoPage(pageName = "Document");
 
-		var key_menuItem = "List";
-
-		Click(locator1 = "Icon#CURRENT_DISPLAY_STYLE");
-
-		if (IsElementPresent(locator1 = "MenuItem#ANY_MENU_ITEM")) {
-			Click(locator1 = "MenuItem#ANY_MENU_ITEM");
-		}
-		else {
-			Navigator.gotoPage(pageName = "Document");
-
-			Click(locator1 = "Icon#CURRENT_DISPLAY_STYLE");
-
-			Click(locator1 = "MenuItem#ANY_MENU_ITEM");
-		}
+		ManagementBar.changeDisplayStyle(
+			displayStyle = "List"
+		);
 
 		DMDocument.viewPG(dmDocumentTitle = "Document1");
 

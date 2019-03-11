@@ -42,6 +42,9 @@ public interface UserAccountResource {
 	public Page<UserAccount> getUserAccountsPage(Pagination pagination)
 		throws Exception;
 
+	public UserAccount postUserAccount(UserAccount userAccount)
+		throws Exception;
+
 	public UserAccount postUserAccount(MultipartBody multipartBody)
 		throws Exception;
 

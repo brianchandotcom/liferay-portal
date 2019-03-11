@@ -108,6 +108,18 @@ public abstract class BaseUserAccountResourceImpl
 	}
 
 	@Override
+	@Consumes("application/json")
+	@POST
+	@Path("/user-accounts")
+	@Produces("application/json")
+	@Tags(value = {@Tag(name = "UserAccount")})
+	public UserAccount postUserAccount(UserAccount userAccount)
+		throws Exception {
+
+		return new UserAccount();
+	}
+
+	@Override
 	@Consumes("multipart/form-data")
 	@POST
 	@Path("/user-accounts")

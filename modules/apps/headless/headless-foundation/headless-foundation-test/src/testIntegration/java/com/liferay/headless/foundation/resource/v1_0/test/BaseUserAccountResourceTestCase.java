@@ -343,6 +343,38 @@ public abstract class BaseUserAccountResourceTestCase {
 			"This method needs to be implemented");
 	}
 
+	protected UserAccount invokePostUserAccount(UserAccount userAccount)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		String location = _resourceURL + _toPath("/user-accounts", userAccount);
+
+		options.setLocation(location);
+
+		options.setPost(true);
+
+		return _outputObjectMapper.readValue(
+			HttpUtil.URLtoString(options), UserAccount.class);
+	}
+
+	protected Http.Response invokePostUserAccountResponse(
+			UserAccount userAccount)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		String location = _resourceURL + _toPath("/user-accounts", userAccount);
+
+		options.setLocation(location);
+
+		options.setPost(true);
+
+		HttpUtil.URLtoString(options);
+
+		return options.getResponse();
+	}
+
 	protected UserAccount invokePostUserAccount(MultipartBody multipartBody)
 		throws Exception {
 

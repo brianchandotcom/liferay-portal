@@ -122,6 +122,17 @@ public class Mutation {
 	@GraphQLField
 	@GraphQLInvokeDetached
 	public UserAccount postUserAccount(
+			@GraphQLName("UserAccount") UserAccount userAccount)
+		throws Exception {
+
+		UserAccountResource userAccountResource = _createUserAccountResource();
+
+		return userAccountResource.postUserAccount(userAccount);
+	}
+
+	@GraphQLField
+	@GraphQLInvokeDetached
+	public UserAccount postUserAccount(
 			@GraphQLName("MultipartBody") MultipartBody multipartBody)
 		throws Exception {
 

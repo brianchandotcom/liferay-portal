@@ -109,16 +109,16 @@ String introKey = StringPool.BLANK;
 </c:choose>
 
 <portlet:renderURL copyCurrentRenderParameters="<%= false %>" var="replaceCertificateURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
-	<portlet:param name="cmd" value="replace" />
 	<portlet:param name="mvcRenderCommandName" value="/admin/updateCertificate" />
+	<portlet:param name="<%= Constants.CMD %>" value="replace" />
 	<portlet:param name="certificateUsage" value="<%= certificateUsage.name() %>" />
 </portlet:renderURL>
 
 <%= certificateInfo %>
 
 <portlet:actionURL name="/admin/updateCertificate" var="deleteCertificateURL">
+	<portlet:param name="<%= Constants.CMD %>" value="delete" />
 	<portlet:param name="tabs1" value="general" />
-	<portlet:param name="cmd" value="delete" />
 	<portlet:param name="certificateUsage" value="<%= certificateUsage.name() %>" />
 </portlet:actionURL>
 
@@ -146,8 +146,8 @@ String introKey = StringPool.BLANK;
 	</c:when>
 	<c:when test="<%= certificateAuthNeeded %>">
 		<portlet:renderURL copyCurrentRenderParameters="<%= false %>" var="authCertificateURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
-			<portlet:param name="cmd" value="auth" />
 			<portlet:param name="mvcRenderCommandName" value="/admin/updateCertificate" />
+			<portlet:param name="<%= Constants.CMD %>" value="auth" />
 			<portlet:param name="certificateUsage" value="<%= certificateUsage.name() %>" />
 		</portlet:renderURL>
 

@@ -25,6 +25,7 @@ taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 
 <%@ page import="com.liferay.portal.kernel.language.UnicodeLanguageUtil" %><%@
 page import="com.liferay.portal.kernel.portlet.LiferayWindowState" %><%@
+page import="com.liferay.portal.kernel.util.Constants" %><%@
 page import="com.liferay.portal.kernel.util.GetterUtil" %><%@
 page import="com.liferay.portal.kernel.util.HtmlUtil" %><%@
 page import="com.liferay.portal.kernel.util.ParamUtil" %><%@
@@ -71,14 +72,11 @@ page import="java.util.List" %>
 <portlet:defineObjects />
 
 <%
-GeneralTabDefaultViewDisplayContext
-	generalTabDefaultViewDisplayContext = (GeneralTabDefaultViewDisplayContext)renderRequest.getAttribute(GeneralTabDefaultViewDisplayContext.class.getName());
-
 String currentURL = PortalUtil.getCurrentURL(request);
 
-NameIdTypeValues nameIdTypeValues = NameIdTypeValuesUtilHelper.getNameIdTypeValues();
-
 LocalEntityManager localEntityManager = (LocalEntityManager)request.getAttribute(LocalEntityManager.class.getName());
+NameIdTypeValues nameIdTypeValues = NameIdTypeValuesUtilHelper.getNameIdTypeValues();
+GeneralTabDefaultViewDisplayContext generalTabDefaultViewDisplayContext = (GeneralTabDefaultViewDisplayContext)renderRequest.getAttribute(GeneralTabDefaultViewDisplayContext.class.getName());
 SamlProviderConfigurationHelper samlProviderConfigurationHelper = (SamlProviderConfigurationHelper)request.getAttribute(SamlProviderConfigurationHelper.class.getName());
 
 SamlProviderConfiguration samlProviderConfiguration = null;

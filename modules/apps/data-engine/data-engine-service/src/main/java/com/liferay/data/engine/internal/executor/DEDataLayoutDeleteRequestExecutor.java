@@ -18,7 +18,6 @@ import com.liferay.data.engine.exception.DEDataLayoutException;
 import com.liferay.data.engine.service.DEDataLayoutDeleteRequest;
 import com.liferay.data.engine.service.DEDataLayoutDeleteResponse;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLayoutLocalService;
-import com.liferay.dynamic.data.mapping.service.DDMStructureVersionLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
 
 /**
@@ -27,11 +26,9 @@ import com.liferay.portal.kernel.exception.PortalException;
 public class DEDataLayoutDeleteRequestExecutor {
 
 	public DEDataLayoutDeleteRequestExecutor(
-		DDMStructureLayoutLocalService ddmStructureLayoutLocalService,
-		DDMStructureVersionLocalService ddmStructureVersionLocalService) {
+		DDMStructureLayoutLocalService ddmStructureLayoutLocalService) {
 
 		_ddmStructureLayoutLocalService = ddmStructureLayoutLocalService;
-		_ddmStructureVersionLocalService = ddmStructureVersionLocalService;
 	}
 
 	public DEDataLayoutDeleteResponse execute(
@@ -41,9 +38,6 @@ public class DEDataLayoutDeleteRequestExecutor {
 		Long deDataLayoutId = deDataLayoutDeleteRequest.getDEDataLayoutId();
 
 		try {
-			_ddmStructureVersionLocalService.deleteDDMStructureVersion(
-				deDataLayoutId);
-
 			_ddmStructureLayoutLocalService.deleteDDMStructureLayout(
 				deDataLayoutId);
 		}
@@ -56,7 +50,5 @@ public class DEDataLayoutDeleteRequestExecutor {
 
 	private final DDMStructureLayoutLocalService
 		_ddmStructureLayoutLocalService;
-	private final DDMStructureVersionLocalService
-		_ddmStructureVersionLocalService;
 
 }

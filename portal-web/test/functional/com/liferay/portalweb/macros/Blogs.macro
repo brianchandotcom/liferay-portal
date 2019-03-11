@@ -571,7 +571,7 @@ definition {
 			listEntry = "${entryTitle}"
 		);
 	}
-	
+
 	macro viewEntryPresent {
 		LexiconCard.viewCardPresent(
 			card = "${entryTitle}"
@@ -579,7 +579,7 @@ definition {
 	}
 
 	macro viewEntryTitle
-	 {
+	{
 		LexiconList.viewListEntryTitle(
 			listEntry = "${entryTitle}"
 		);

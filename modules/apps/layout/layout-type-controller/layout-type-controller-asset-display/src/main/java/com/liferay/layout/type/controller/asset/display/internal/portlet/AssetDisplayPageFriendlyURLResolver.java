@@ -22,11 +22,10 @@ import com.liferay.asset.display.page.model.AssetDisplayPageEntry;
 import com.liferay.asset.display.page.service.AssetDisplayPageEntryLocalService;
 import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
 import com.liferay.asset.kernel.model.AssetEntry;
+import com.liferay.asset.kernel.model.AssetRenderer;
 import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.asset.kernel.service.AssetEntryService;
 import com.liferay.asset.util.AssetHelper;
-import com.liferay.friendly.url.model.FriendlyURLEntry;
-import com.liferay.friendly.url.service.FriendlyURLEntryLocalService;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryService;
 import com.liferay.layout.type.controller.asset.display.internal.constants.AssetDisplayPageFriendlyURLResolverConstants;
@@ -159,18 +158,16 @@ public class AssetDisplayPageFriendlyURLResolver
 
 		String className = assetDisplayContributor.getClassName();
 
-		long classNameId = _portal.getClassNameId(className);
-
-		FriendlyURLEntry friendlyURLEntry =
-			_friendlyURLEntryLocalService.fetchFriendlyURLEntry(
-				groupId, classNameId, _getUrlTitle(friendlyURL));
-
 		AssetRendererFactory assetRendererFactory =
 			AssetRendererFactoryRegistryUtil.
-				getAssetRendererFactoryByClassNameId(classNameId);
+				getAssetRendererFactoryByClassNameId(
+					_portal.getClassNameId(className));
+
+		AssetRenderer assetRenderer = assetRendererFactory.getAssetRenderer(
+			groupId, _getUrlTitle(friendlyURL));
 
 		return assetRendererFactory.getAssetEntry(
-			className, friendlyURLEntry.getClassPK());
+			className, assetRenderer.getClassPK());
 	}
 
 	private long _getAssetEntryId(String friendlyURL) {
@@ -268,9 +265,6 @@ public class AssetDisplayPageFriendlyURLResolver
 
 	@Reference
 	private AssetHelper _assetHelper;
-
-	@Reference
-	private FriendlyURLEntryLocalService _friendlyURLEntryLocalService;
 
 	@Reference
 	private LayoutLocalService _layoutLocalService;

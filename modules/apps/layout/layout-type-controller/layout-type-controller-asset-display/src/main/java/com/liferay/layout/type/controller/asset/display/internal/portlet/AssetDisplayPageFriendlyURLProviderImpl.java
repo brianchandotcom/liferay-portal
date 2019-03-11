@@ -19,9 +19,8 @@ import com.liferay.asset.display.contributor.AssetDisplayContributorTracker;
 import com.liferay.asset.display.page.portlet.AssetDisplayPageFriendlyURLProvider;
 import com.liferay.asset.display.page.util.AssetDisplayPageHelper;
 import com.liferay.asset.kernel.model.AssetEntry;
+import com.liferay.asset.kernel.model.AssetRenderer;
 import com.liferay.asset.kernel.service.AssetEntryLocalService;
-import com.liferay.friendly.url.model.FriendlyURLEntry;
-import com.liferay.friendly.url.service.FriendlyURLEntryLocalService;
 import com.liferay.layout.type.controller.asset.display.internal.constants.AssetDisplayPageFriendlyURLResolverConstants;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -64,18 +63,15 @@ public class AssetDisplayPageFriendlyURLProviderImpl
 			_portal.getGroupFriendlyURL(
 				themeDisplay.getLayoutSet(), themeDisplay));
 
-		FriendlyURLEntry mainFriendlyURLEntry =
-			_friendlyURLEntryLocalService.getMainFriendlyURLEntry(
-				assetEntry.getClassNameId(), assetEntry.getClassPK());
+		AssetRenderer assetRenderer = assetEntry.getAssetRenderer();
 
-		if (mainFriendlyURLEntry != null) {
+		if (assetRenderer != null) {
 			sb.append(
 				AssetDisplayPageFriendlyURLResolverConstants.
 					ASSET_DISPLAY_PAGE_URL_SEPARATOR);
 			sb.append(assetDisplayContributor.getFriendlyURLShortcut());
 			sb.append(StringPool.SLASH);
-			sb.append(
-				mainFriendlyURLEntry.getUrlTitle(themeDisplay.getLanguageId()));
+			sb.append(assetRenderer.getUrlTitle(themeDisplay.getLocale()));
 		}
 		else {
 			sb.append(
@@ -107,9 +103,6 @@ public class AssetDisplayPageFriendlyURLProviderImpl
 
 	@Reference
 	private AssetEntryLocalService _assetEntryLocalService;
-
-	@Reference
-	private FriendlyURLEntryLocalService _friendlyURLEntryLocalService;
 
 	@Reference
 	private Portal _portal;

@@ -40,7 +40,6 @@ import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.dynamic.data.mapping.storage.Field;
 import com.liferay.dynamic.data.mapping.storage.Fields;
 import com.liferay.dynamic.data.mapping.util.DDM;
-import com.liferay.dynamic.data.mapping.util.DDMFieldsCounter;
 import com.liferay.headless.common.spi.service.context.ServiceContextUtil;
 import com.liferay.headless.web.experience.dto.v1_0.Categories;
 import com.liferay.headless.web.experience.dto.v1_0.ContentDocument;
@@ -638,8 +637,7 @@ public class StructuredContentResourceImpl
 	}
 
 	private ContentField _toContentField(
-			DDMFieldsCounter ddmFieldsCounter, DDMFormField ddmFormField,
-			DDMStructure ddmStructure, Field field,
+			DDMFormField ddmFormField, DDMStructure ddmStructure, Field field,
 			List<String> fieldDisplayValues, Fields fields)
 		throws Exception {
 
@@ -654,8 +652,7 @@ public class StructuredContentResourceImpl
 				nestedFields = _toContentFields(
 					ddmFormField.getNestedDDMFormFields(),
 					ddmFormField -> _toContentFields(
-						ddmFieldsCounter, ddmStructure, fields,
-						ddmFormField.getName(),
+						ddmStructure, fields, ddmFormField.getName(),
 						fieldDisplayValues.subList(
 							1, fieldDisplayValues.size())));
 				repeatable = field.isRepeatable();
@@ -667,8 +664,8 @@ public class StructuredContentResourceImpl
 	}
 
 	private ContentField[] _toContentFields(
-			DDMFieldsCounter ddmFieldsCounter, DDMStructure ddmStructure,
-			Fields fields, String fieldName, List<String> fieldDisplayValues)
+			DDMStructure ddmStructure, Fields fields, String fieldName,
+			List<String> fieldDisplayValues)
 		throws Exception {
 
 		Field field = fields.get(fieldName);
@@ -681,21 +678,17 @@ public class StructuredContentResourceImpl
 
 		if (ddmFormField.isRepeatable()) {
 			return _toRepeatableContentField(
-				ddmFieldsCounter, ddmStructure, ddmFormField, fields,
-				fieldDisplayValues);
+				ddmStructure, ddmFormField, fields, fieldDisplayValues);
 		}
 
 		return new ContentField[] {
 			_toContentField(
-				ddmFieldsCounter, ddmFormField, ddmStructure, field,
-				fieldDisplayValues, fields)
+				ddmFormField, ddmStructure, field, fieldDisplayValues, fields)
 		};
 	}
 
 	private ContentField[] _toContentFields(JournalArticle journalArticle)
 		throws Exception {
-
-		DDMFieldsCounter ddmFieldsCounter = new DDMFieldsCounter();
 
 		DDMStructure ddmStructure = journalArticle.getDDMStructure();
 
@@ -707,8 +700,7 @@ public class StructuredContentResourceImpl
 		return _toContentFields(
 			ddmStructure.getRootFieldNames(),
 			fieldName -> _toContentFields(
-				ddmFieldsCounter, ddmStructure, fields, fieldName,
-				fieldDisplayValues));
+				ddmStructure, fields, fieldName, fieldDisplayValues));
 	}
 
 	private <T> ContentField[] _toContentFields(
@@ -932,8 +924,7 @@ public class StructuredContentResourceImpl
 	}
 
 	private ContentField[] _toRepeatableContentField(
-			DDMFieldsCounter ddmFieldsCounter, DDMStructure ddmStructure,
-			DDMFormField ddmFormField, Fields fields,
+			DDMStructure ddmStructure, DDMFormField ddmFormField, Fields fields,
 			List<String> fieldDisplayValues)
 		throws Exception {
 
@@ -946,7 +937,7 @@ public class StructuredContentResourceImpl
 		for (List<String> substring : fieldsDisplaySubstrings) {
 			contentFields.add(
 				_toContentField(
-					ddmFieldsCounter, ddmFormField, ddmStructure,
+					ddmFormField, ddmStructure,
 					fields.get(ddmFormField.getName()), substring, fields));
 		}
 

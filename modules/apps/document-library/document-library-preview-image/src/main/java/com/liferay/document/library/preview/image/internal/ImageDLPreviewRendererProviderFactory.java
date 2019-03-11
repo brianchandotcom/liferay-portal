@@ -14,7 +14,9 @@
 
 package com.liferay.document.library.preview.image.internal;
 
-import com.liferay.document.library.kernel.util.ImageProcessorUtil;
+import com.liferay.document.library.kernel.model.DLProcessorConstants;
+import com.liferay.document.library.kernel.util.DLProcessorRegistry;
+import com.liferay.document.library.kernel.util.ImageProcessor;
 import com.liferay.document.library.preview.DLPreviewRendererProvider;
 import com.liferay.document.library.service.DLFileVersionPreviewLocalService;
 import com.liferay.portal.kernel.util.HashMapDictionary;
@@ -43,7 +45,11 @@ public class ImageDLPreviewRendererProviderFactory {
 	protected void activate(BundleContext bundleContext) {
 		Dictionary<String, Object[]> properties = new HashMapDictionary<>();
 
-		Set<String> imageMimeTypes = ImageProcessorUtil.getImageMimeTypes();
+		ImageProcessor imageProcessor =
+			(ImageProcessor)_dlProcessorRegistry.getDLProcessor(
+				DLProcessorConstants.IMAGE_PROCESSOR);
+
+		Set<String> imageMimeTypes = imageProcessor.getImageMimeTypes();
 
 		properties.put("content.type", imageMimeTypes.toArray());
 
@@ -65,6 +71,9 @@ public class ImageDLPreviewRendererProviderFactory {
 
 	private ServiceRegistration<DLPreviewRendererProvider>
 		_dlPreviewRendererProviderServiceRegistration;
+
+	@Reference
+	private DLProcessorRegistry _dlProcessorRegistry;
 
 	@Reference(
 		target = "(osgi.web.symbolicname=com.liferay.document.library.preview.image)"

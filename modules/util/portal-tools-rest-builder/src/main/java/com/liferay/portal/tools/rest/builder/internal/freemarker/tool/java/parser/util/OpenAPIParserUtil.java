@@ -126,10 +126,11 @@ public class OpenAPIParserUtil {
 			return Object.class.getName();
 		}
 
-		Items items = schema.getItems();
-		String type = schema.getType();
+		if (StringUtil.equals(schema.getType(), "array") &&
+			(schema.getItems() != null)) {
 
-		if (StringUtil.equals(type, "array") && (items != null)) {
+			Items items = schema.getItems();
+
 			String javaDataType = null;
 
 			if (items.getType() != null) {
@@ -160,17 +161,19 @@ public class OpenAPIParserUtil {
 			return getArrayClassName(javaDataType);
 		}
 
-		if (type != null) {
+		if (schema.getType() != null) {
 			String javaDataType = _openAPIDataTypeMap.get(
 				new AbstractMap.SimpleImmutableEntry<>(
-					type, schema.getFormat()));
+					schema.getType(), schema.getFormat()));
 
 			if (javaDataType == null) {
 				javaDataType = javaDataTypeMap.get(
-					StringUtil.upperCaseFirstLetter(type));
+					StringUtil.upperCaseFirstLetter(schema.getType()));
 			}
 
-			if ((javaDataType == null) && Objects.equals(type, "object")) {
+			if ((javaDataType == null) &&
+				Objects.equals(schema.getType(), "object")) {
+
 				if (schema.getAdditionalPropertySchema() != null) {
 					javaDataType = Map.class.getName();
 				}

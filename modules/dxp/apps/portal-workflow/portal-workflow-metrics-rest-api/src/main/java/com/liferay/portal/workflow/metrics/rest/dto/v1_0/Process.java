@@ -60,17 +60,17 @@ public class Process {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long id;
 
-	public Integer getInstanceCount() {
+	public Long getInstanceCount() {
 		return instanceCount;
 	}
 
-	public void setInstanceCount(Integer instanceCount) {
+	public void setInstanceCount(Long instanceCount) {
 		this.instanceCount = instanceCount;
 	}
 
 	@JsonIgnore
 	public void setInstanceCount(
-		UnsafeSupplier<Integer, Exception> instanceCountUnsafeSupplier) {
+		UnsafeSupplier<Long, Exception> instanceCountUnsafeSupplier) {
 
 		try {
 			instanceCount = instanceCountUnsafeSupplier.get();
@@ -82,19 +82,19 @@ public class Process {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Integer instanceCount;
+	protected Long instanceCount;
 
-	public Integer getOntimeInstanceCount() {
+	public Long getOntimeInstanceCount() {
 		return ontimeInstanceCount;
 	}
 
-	public void setOntimeInstanceCount(Integer ontimeInstanceCount) {
+	public void setOntimeInstanceCount(Long ontimeInstanceCount) {
 		this.ontimeInstanceCount = ontimeInstanceCount;
 	}
 
 	@JsonIgnore
 	public void setOntimeInstanceCount(
-		UnsafeSupplier<Integer, Exception> ontimeInstanceCountUnsafeSupplier) {
+		UnsafeSupplier<Long, Exception> ontimeInstanceCountUnsafeSupplier) {
 
 		try {
 			ontimeInstanceCount = ontimeInstanceCountUnsafeSupplier.get();
@@ -106,19 +106,19 @@ public class Process {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Integer ontimeInstanceCount;
+	protected Long ontimeInstanceCount;
 
-	public Integer getOverdueInstanceCount() {
+	public Long getOverdueInstanceCount() {
 		return overdueInstanceCount;
 	}
 
-	public void setOverdueInstanceCount(Integer overdueInstanceCount) {
+	public void setOverdueInstanceCount(Long overdueInstanceCount) {
 		this.overdueInstanceCount = overdueInstanceCount;
 	}
 
 	@JsonIgnore
 	public void setOverdueInstanceCount(
-		UnsafeSupplier<Integer, Exception> overdueInstanceCountUnsafeSupplier) {
+		UnsafeSupplier<Long, Exception> overdueInstanceCountUnsafeSupplier) {
 
 		try {
 			overdueInstanceCount = overdueInstanceCountUnsafeSupplier.get();
@@ -130,7 +130,7 @@ public class Process {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Integer overdueInstanceCount;
+	protected Long overdueInstanceCount;
 
 	public String getTitle() {
 		return title;

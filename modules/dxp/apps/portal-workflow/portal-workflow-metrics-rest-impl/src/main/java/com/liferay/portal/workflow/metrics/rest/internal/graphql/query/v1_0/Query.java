@@ -14,6 +14,7 @@
 
 package com.liferay.portal.workflow.metrics.rest.internal.graphql.query.v1_0;
 
+import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
 import com.liferay.portal.vulcan.pagination.Page;
@@ -47,13 +48,13 @@ public class Query {
 	public Collection<Process> getProcessesPage(
 			@GraphQLName("title") String title,
 			@GraphQLName("pageSize") int pageSize,
-			@GraphQLName("page") int page)
+			@GraphQLName("page") int page, @GraphQLName("Sort[]") Sort[] sorts)
 		throws Exception {
 
 		ProcessResource processResource = _createProcessResource();
 
 		Page paginationPage = processResource.getProcessesPage(
-			title, Pagination.of(pageSize, page));
+			title, Pagination.of(pageSize, page), sorts);
 
 		return paginationPage.getItems();
 	}

@@ -15,6 +15,7 @@
 package com.liferay.portal.workflow.metrics.rest.resource.v1_0;
 
 import com.liferay.portal.kernel.model.Company;
+import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.workflow.metrics.rest.dto.v1_0.Process;
@@ -32,7 +33,8 @@ import javax.annotation.Generated;
 @Generated("")
 public interface ProcessResource {
 
-	public Page<Process> getProcessesPage(String title, Pagination pagination)
+	public Page<Process> getProcessesPage(
+			String title, Pagination pagination, Sort[] sorts)
 		throws Exception;
 
 	public void setContextCompany(Company contextCompany);

@@ -17,6 +17,7 @@ package com.liferay.portal.workflow.metrics.rest.internal.resource.v1_0;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Company;
+import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
@@ -58,14 +59,16 @@ public abstract class BaseProcessResourceImpl implements ProcessResource {
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.QUERY, name = "page"),
-			@Parameter(in = ParameterIn.QUERY, name = "pageSize")
+			@Parameter(in = ParameterIn.QUERY, name = "pageSize"),
+			@Parameter(in = ParameterIn.QUERY, name = "sorts")
 		}
 	)
 	@Path("/processes")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "Process")})
 	public Page<Process> getProcessesPage(
-			@QueryParam("title") String title, @Context Pagination pagination)
+			@QueryParam("title") String title, @Context Pagination pagination,
+			@Context Sort[] sorts)
 		throws Exception {
 
 		return Page.of(Collections.emptyList());

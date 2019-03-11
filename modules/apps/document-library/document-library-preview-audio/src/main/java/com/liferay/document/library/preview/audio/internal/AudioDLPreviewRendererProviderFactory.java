@@ -14,7 +14,9 @@
 
 package com.liferay.document.library.preview.audio.internal;
 
-import com.liferay.document.library.kernel.util.AudioProcessorUtil;
+import com.liferay.document.library.kernel.model.DLProcessorConstants;
+import com.liferay.document.library.kernel.util.AudioProcessor;
+import com.liferay.document.library.kernel.util.DLProcessorRegistry;
 import com.liferay.document.library.preview.DLPreviewRendererProvider;
 import com.liferay.document.library.service.DLFileVersionPreviewLocalService;
 import com.liferay.document.library.util.DLURLHelper;
@@ -44,7 +46,11 @@ public class AudioDLPreviewRendererProviderFactory {
 	protected void activate(BundleContext bundleContext) {
 		Dictionary<String, Object[]> properties = new HashMapDictionary<>();
 
-		Set<String> audioMimeTypes = AudioProcessorUtil.getAudioMimeTypes();
+		AudioProcessor audioProcessor =
+			(AudioProcessor)_dlProcessorRegistry.getDLProcessor(
+				DLProcessorConstants.AUDIO_PROCESSOR);
+
+		Set<String> audioMimeTypes = audioProcessor.getAudioMimeTypes();
 
 		properties.put("content.type", audioMimeTypes.toArray());
 
@@ -67,6 +73,9 @@ public class AudioDLPreviewRendererProviderFactory {
 
 	private ServiceRegistration<DLPreviewRendererProvider>
 		_dlPreviewRendererProviderServiceRegistration;
+
+	@Reference
+	private DLProcessorRegistry _dlProcessorRegistry;
 
 	@Reference
 	private DLURLHelper _dlurlHelper;

@@ -229,8 +229,7 @@ public class MetadataManagerImpl
 		catch (Exception e) {
 			if (_log.isDebugEnabled()) {
 				_log.debug(
-					"Could not retrieve encrytion credential: " +
-						e.getMessage(),
+					"Unable to get encryption credential: " + e.getMessage(),
 					e);
 			}
 		}

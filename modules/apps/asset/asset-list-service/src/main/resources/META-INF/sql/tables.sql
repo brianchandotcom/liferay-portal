@@ -40,7 +40,7 @@ create table AssetListEntrySegmentsEntryRel (
 	modifiedDate DATE null,
 	assetListEntryId LONG,
 	segmentsEntryId LONG,
-	typeSettings VARCHAR(75) null,
+	typeSettings TEXT null,
 	lastPublishDate DATE null
 );
 

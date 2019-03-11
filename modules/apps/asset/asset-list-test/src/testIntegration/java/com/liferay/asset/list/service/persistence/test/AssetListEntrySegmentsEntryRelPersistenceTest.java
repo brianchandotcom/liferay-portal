@@ -297,8 +297,7 @@ public class AssetListEntrySegmentsEntryRelPersistenceTest {
 			"assetListEntrySegmentsEntryRelId", true, "groupId", true,
 			"companyId", true, "userId", true, "userName", true, "createDate",
 			true, "modifiedDate", true, "assetListEntryId", true,
-			"segmentsEntryId", true, "typeSettings", true, "lastPublishDate",
-			true);
+			"segmentsEntryId", true, "lastPublishDate", true);
 	}
 
 	@Test

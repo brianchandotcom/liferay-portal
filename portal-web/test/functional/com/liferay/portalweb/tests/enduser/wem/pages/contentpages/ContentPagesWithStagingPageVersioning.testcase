@@ -51,6 +51,10 @@ definition {
 				fragmentName = "Rich Text"
 			);
 		}
+
+		task ("Publish the content page") {
+			PageEditor.clickPublishPage();
+		}
 	}
 
 	tearDown {

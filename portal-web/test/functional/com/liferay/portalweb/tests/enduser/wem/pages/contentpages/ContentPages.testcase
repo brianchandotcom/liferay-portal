@@ -68,6 +68,10 @@ definition {
 			);
 		}
 
+		task ("Publish the content page") {
+			PageEditor.clickPublishPage();
+		}
+
 		task ("Navigate to the content page") {
 			Navigator.openWithAppendToBaseURL(
 				urlAppend = "web/test-site-name/test-content-page-name"
@@ -147,6 +151,10 @@ definition {
 			);
 		}
 
+		task ("Publish the content page") {
+			PageEditor.clickPublishPage();
+		}
+
 		task ("Navigate to the content page") {
 			Navigator.gotoSitePage(pageName = "Test Page Name", siteName = "Test Site Name");
 		}
@@ -186,6 +194,10 @@ definition {
 				id = "content",
 				text = "New editable fragment text"
 			);
+		}
+
+		task ("Publish the content page") {
+			PageEditor.clickPublishPage();
 		}
 
 		task ("Navigate to the content page") {
@@ -266,6 +278,10 @@ definition {
 			);
 		}
 
+		task ("Publish the content page") {
+			PageEditor.clickPublishPage();
+		}
+
 		task ("Navigate to the content page") {
 			Navigator.openWithAppendToBaseURL(
 				urlAppend = "web/test-site-name/test-content-page-name"
@@ -289,6 +305,10 @@ definition {
 				id = "rich-text",
 				text = "New editable fragment text"
 			);
+		}
+
+		task ("Publish the content page") {
+			PageEditor.clickPublishPage();
 		}
 
 		task ("Navigate to the content page's 'View Mode' using the mode toggle") {

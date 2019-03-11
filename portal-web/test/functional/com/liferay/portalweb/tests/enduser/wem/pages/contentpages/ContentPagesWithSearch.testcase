@@ -65,6 +65,10 @@ definition {
 			);
 		}
 
+		task ("Publish the content page") {
+			PageEditor.clickPublishPage();
+		}
+
 		task ("Add a web content article with the same text as the Static Text fragment") {
 			JSONWebcontent.addWebContent(
 				content = "This is static text",
@@ -118,6 +122,10 @@ definition {
 			);
 		}
 
+		task ("Publish the content page") {
+			PageEditor.clickPublishPage();
+		}
+
 		task ("Navigate to the content page") {
 			Navigator.openWithAppendToBaseURL(
 				urlAppend = "web/test-site-name/test-content-page-name"
@@ -144,6 +152,10 @@ definition {
 				id = "rich-text",
 				text = "New editable fragment text"
 			);
+		}
+
+		task ("Publish the content page") {
+			PageEditor.clickPublishPage();
 		}
 
 		task ("Navigate to the content page") {
@@ -179,6 +191,10 @@ definition {
 				collectionName = "Collection Name",
 				fragmentName = "Static Text"
 			);
+		}
+
+		task ("Publish the content page") {
+			PageEditor.clickPublishPage();
 		}
 
 		task ("Navigate to the content page") {

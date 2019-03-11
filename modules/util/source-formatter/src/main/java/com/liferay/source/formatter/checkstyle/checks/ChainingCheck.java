@@ -112,18 +112,6 @@ public class ChainingCheck extends BaseCheck {
 				if (name1.equals("concat") || name2.equals("concat")) {
 					continue;
 				}
-
-				FileContents fileContents = getFileContents();
-
-				String fileName = StringUtil.replace(
-					fileContents.getFileName(), CharPool.BACK_SLASH,
-					CharPool.SLASH);
-
-				if (fileName.contains("/test/") ||
-					fileName.contains("/testIntegration/")) {
-
-					continue;
-				}
 			}
 
 			if (_isAllowedChainingMethodCall(

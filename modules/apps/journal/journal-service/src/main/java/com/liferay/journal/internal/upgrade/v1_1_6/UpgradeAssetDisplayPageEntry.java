@@ -121,8 +121,8 @@ public class UpgradeAssetDisplayPageEntry extends UpgradeProcess {
 
 				if (!success) {
 					throw new UpgradeException(
-						"Unable to copy journal article images to the file " +
-							"repository");
+						"Unable to add asset display pages for the journal " +
+							"articles");
 				}
 			}
 		}

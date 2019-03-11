@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.util.CamelCaseUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.TextFormatter;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.tools.rest.builder.internal.freemarker.tool.java.JavaMethodParameter;
 import com.liferay.portal.tools.rest.builder.internal.freemarker.tool.java.JavaMethodSignature;
@@ -85,7 +86,7 @@ public class ResourceOpenAPIParser {
 					List<JavaMethodParameter> javaMethodParameters =
 						_getJavaMethodParameters(javaDataTypeMap, operation);
 					String methodName = _getMethodName(
-						operation, path, returnType);
+						operation, path, returnType, schemaName);
 
 					javaMethodSignatures.add(
 						new JavaMethodSignature(
@@ -402,7 +403,8 @@ public class ResourceOpenAPIParser {
 	}
 
 	private static String _getMethodName(
-		Operation operation, String path, String returnType) {
+		Operation operation, String path, String returnType,
+		String schemaName) {
 
 		if (operation.getOperationId() != null) {
 			return operation.getOperationId();
@@ -415,10 +417,9 @@ public class ResourceOpenAPIParser {
 		methodNameSegments.add(httpMethod);
 
 		String[] pathSegments = path.split("/");
+		String pluralSchemaName = TextFormatter.formatPlural(schemaName);
 
-		for (int i = 0; i < pathSegments.length; i++) {
-			String pathSegment = pathSegments[i];
-
+		for (String pathSegment : pathSegments) {
 			if (pathSegment.isEmpty()) {
 				continue;
 			}
@@ -435,13 +436,6 @@ public class ResourceOpenAPIParser {
 					methodNameSegments.add(pathName);
 				}
 			}
-			else if ((i == (pathSegments.length - 1)) &&
-					 StringUtil.startsWith(
-						 returnType,
-						 "com.liferay.portal.vulcan.pagination.Page<")) {
-
-				methodNameSegments.add(pathName + "Page");
-			}
 			else {
 				String name = pathName;
 
@@ -457,6 +451,14 @@ public class ResourceOpenAPIParser {
 
 				methodNameSegments.add(name);
 			}
+		}
+
+		if (StringUtil.startsWith(
+				returnType, "com.liferay.portal.vulcan.pagination.Page<")) {
+
+			methodNameSegments.add(pluralSchemaName);
+
+			methodNameSegments.add("Page");
 		}
 
 		return String.join("", methodNameSegments);

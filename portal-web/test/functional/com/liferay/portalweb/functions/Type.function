@@ -1,4 +1,4 @@
-@default = "type"
+@default = "clickAtType"
 @summary = "Type to '${locator1}' the value '${value1}'"
 definition {
 	function clickAtType {

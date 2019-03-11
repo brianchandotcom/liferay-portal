@@ -35,25 +35,25 @@ import javax.annotation.Generated;
 @Generated("")
 public interface BulkActionResponseResource {
 
-	public BulkActionResponse postCategoryCategoryClassName(
-			Long categoryClassNameId,
+	public BulkActionResponse postCategoryClassName(
+			Long classNameId,
 			BulkAssetEntryUpdateCategoriesAction
 				bulkAssetEntryUpdateCategoriesAction)
 		throws Exception;
 
 	public BulkAssetEntryCommonCategories
-			postCategoryCategoryGroupCategoryClassNameCommon(
-				Long categoryGroupId, Long categoryClassNameId,
+			postCategoryContentSpaceClassNameCommon(
+				Long contentSpaceId, Long classNameId,
 				BulkAssetEntryAction bulkAssetEntryAction)
 		throws Exception;
 
-	public BulkActionResponse postTagTagClassName(
-			Long tagClassNameId,
+	public BulkActionResponse postTagClassName(
+			Long classNameId,
 			BulkAssetEntryUpdateTagsAction bulkAssetEntryUpdateTagsAction)
 		throws Exception;
 
-	public BulkAssetEntryCommonTags postTagTagGroupTagClassNameCommon(
-			Long tagGroupId, Long tagClassNameId,
+	public BulkAssetEntryCommonTags postTagContentSpaceClassNameCommon(
+			Long contentSpaceId, Long classNameId,
 			BulkAssetEntryAction bulkAssetEntryAction)
 		throws Exception;
 

@@ -91,7 +91,8 @@ public class ResourceOpenAPIParser {
 									javaDataTypeMap, operation,
 									requestBodyMediaType);
 							String methodName = _getMethodName(
-								operation, path, returnType);
+								operation, path, requestBodyMediaType,
+								returnType);
 
 							javaMethodSignatures.add(
 								new JavaMethodSignature(
@@ -369,7 +370,8 @@ public class ResourceOpenAPIParser {
 	}
 
 	private static String _getMethodName(
-		Operation operation, String path, String returnType) {
+		Operation operation, String path, String requestBodyMediaType,
+		String returnType) {
 
 		if (operation.getOperationId() != null) {
 			return operation.getOperationId();
@@ -380,6 +382,22 @@ public class ResourceOpenAPIParser {
 		String httpMethod = OpenAPIParserUtil.getHTTPMethod(operation);
 
 		methodNameSegments.add(httpMethod);
+
+		if (requestBodyMediaType != null) {
+			RequestBody requestBody = operation.getRequestBody();
+
+			Map<String, Content> contents = requestBody.getContent();
+
+			List<String> mediaTypes = new ArrayList<>(contents.keySet());
+
+			if (mediaTypes.size() > 1) {
+				Collections.sort(mediaTypes);
+
+				methodNameSegments.add(
+					"MediaType" +
+						(char)(mediaTypes.indexOf(requestBodyMediaType) + 65));
+			}
+		}
 
 		String[] pathSegments = path.split("/");
 

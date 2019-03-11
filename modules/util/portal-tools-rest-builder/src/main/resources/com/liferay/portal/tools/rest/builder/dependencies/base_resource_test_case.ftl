@@ -430,25 +430,23 @@ public abstract class Base${schemaName}ResourceTestCase {
 				throw new UnsupportedOperationException("This method needs to be implemented");
 			}
 		<#elseif freeMarkerTool.hasHTTPMethod(javaMethodSignature, "post")>
-			<#if stringUtil.equals(javaMethodSignature.operation.requestBody.content?keys?first, javaMethodSignature.requestBodyMediaType)>
-				@Test
-				public void test${javaMethodSignature.methodName?cap_first}() throws Exception {
-					<#if arguments?ends_with(",multipartBody")>
-						Assert.assertTrue(true);
-					<#else>
-						${schemaName} random${schemaName} = random${schemaName}();
+			@Test
+			public void test${javaMethodSignature.methodName?cap_first}() throws Exception {
+				<#if arguments?ends_with(",multipartBody")>
+					Assert.assertTrue(true);
+				<#else>
+					${schemaName} random${schemaName} = random${schemaName}();
 
-						${schemaName} post${schemaName} = test${javaMethodSignature.methodName?cap_first}_add${schemaName}(random${schemaName});
+					${schemaName} post${schemaName} = test${javaMethodSignature.methodName?cap_first}_add${schemaName}(random${schemaName});
 
-						assertEquals(random${schemaName}, post${schemaName});
-						assertValid(post${schemaName});
-					</#if>
-				}
+					assertEquals(random${schemaName}, post${schemaName});
+					assertValid(post${schemaName});
+				</#if>
+			}
 
-				protected ${schemaName} test${javaMethodSignature.methodName?cap_first}_add${schemaName}(${schemaName} ${schemaVarName}) throws Exception {
-					throw new UnsupportedOperationException("This method needs to be implemented");
-				}
-			</#if>
+			protected ${schemaName} test${javaMethodSignature.methodName?cap_first}_add${schemaName}(${schemaName} ${schemaVarName}) throws Exception {
+				throw new UnsupportedOperationException("This method needs to be implemented");
+			}
 		<#elseif freeMarkerTool.hasHTTPMethod(javaMethodSignature, "put")>
 			@Test
 			public void test${javaMethodSignature.methodName?cap_first}() throws Exception {

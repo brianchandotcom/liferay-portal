@@ -30,7 +30,7 @@
 </tr>
 <tr>
 	<td>NOTIFICATIONS_BADGE_COUNT</td>
-	<td>//a[contains(@class,'list-group-heading') and (@aria-expanded='true')]/..//span[contains(@class,'badge')]</td>
+	<td>//a[contains(@class,'list-group-heading') and (@aria-expanded='true')]/..//a[contains(.,'Notifications')]//span[contains(@class,'badge')]</td>
 	<td></td>
 </tr>
 <tr>

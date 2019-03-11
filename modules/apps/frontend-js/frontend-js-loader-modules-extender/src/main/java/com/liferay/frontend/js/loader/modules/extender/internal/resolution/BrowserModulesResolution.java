@@ -65,6 +65,10 @@ public class BrowserModulesResolution {
 		_explainIndentation--;
 	}
 
+	public List<String> getResolvedModuleNames() {
+		return _resolvedModuleNames;
+	}
+
 	public void indentExplanation() {
 		_explainIndentation++;
 	}
@@ -80,9 +84,23 @@ public class BrowserModulesResolution {
 	}
 
 	public void putMappedModuleName(
-		String moduleName, String mappedModuleName) {
+		String moduleName, String mappedModuleName, boolean exactMatch) {
 
-		_mappedModuleNamesMap.put(moduleName, mappedModuleName);
+		Object value;
+
+		if (exactMatch) {
+			Map<String, Object> map = new HashMap<>();
+
+			map.put("exactMatch", true);
+			map.put("value", mappedModuleName);
+
+			value = map;
+		}
+		else {
+			value = mappedModuleName;
+		}
+
+		_mappedModuleNamesMap.put(moduleName, value);
 	}
 
 	public void putPath(String moduleName, String path) {
@@ -110,7 +128,7 @@ public class BrowserModulesResolution {
 	private int _explainIndentation;
 	private List<String> _explanation;
 	private final JSONFactory _jsonFactory;
-	private final Map<String, String> _mappedModuleNamesMap = new HashMap<>();
+	private final Map<String, Object> _mappedModuleNamesMap = new HashMap<>();
 	private final Map<String, String> _pathsMap = new HashMap<>();
 	private final Set<String> _processedModuleNames = new HashSet<>();
 	private final List<String> _resolvedModuleNames = new ArrayList<>();

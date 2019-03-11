@@ -45,7 +45,7 @@ public interface ConfigurableScopeCheckerFeatureConfiguration {
 		description = "osgi-jaxrs-name-description", id = "osgi.jaxrs.name",
 		name = "osgi-jaxrs-name"
 	)
-	public String osgiJAXRSName();
+	public String osgiJaxRsName();
 
 	@Meta.AD(
 		deflt = "", description = "patterns-description", id = "patters",

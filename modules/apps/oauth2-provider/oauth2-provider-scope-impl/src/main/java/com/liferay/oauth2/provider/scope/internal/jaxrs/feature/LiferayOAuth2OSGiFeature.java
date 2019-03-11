@@ -86,7 +86,7 @@ public class LiferayOAuth2OSGiFeature implements Feature {
 
 		Class<? extends Application> applicationClass = _application.getClass();
 
-		String osgiJAXRSName = MapUtil.getString(
+		String osgiJaxRsName = MapUtil.getString(
 			applicationProperties, "osgi.jaxrs.name",
 			applicationClass.getName());
 
@@ -95,7 +95,7 @@ public class LiferayOAuth2OSGiFeature implements Feature {
 
 				@Override
 				public void filter(ContainerRequestContext requestContext) {
-					_scopeContext.setApplicationName(osgiJAXRSName);
+					_scopeContext.setApplicationName(osgiJaxRsName);
 					_scopeContext.setBundle(_bundle);
 					_scopeContext.setCompanyId(getCompanyId());
 				}
@@ -128,7 +128,7 @@ public class LiferayOAuth2OSGiFeature implements Feature {
 			},
 			Priorities.AUTHORIZATION - 9);
 
-		registerDescriptors(osgiJAXRSName);
+		registerDescriptors(osgiJaxRsName);
 
 		return true;
 	}
@@ -162,7 +162,7 @@ public class LiferayOAuth2OSGiFeature implements Feature {
 		}
 	}
 
-	protected void registerDescriptors(String osgiJAXRSName) {
+	protected void registerDescriptors(String osgiJaxRsName) {
 		String bundleSymbolicName = _bundle.getSymbolicName();
 
 		StringBundler sb = new StringBundler(5);
@@ -182,7 +182,7 @@ public class LiferayOAuth2OSGiFeature implements Feature {
 		Dictionary<String, Object> properties = new HashMapDictionary<>();
 
 		properties.put(
-			OAuth2ProviderScopeConstants.OSGI_JAXRS_NAME, osgiJAXRSName);
+			OAuth2ProviderScopeConstants.OSGI_JAXRS_NAME, osgiJaxRsName);
 
 		_serviceRegistrations.add(
 			_bundleContext.registerService(
@@ -190,7 +190,7 @@ public class LiferayOAuth2OSGiFeature implements Feature {
 					ScopeDescriptor.class.getName(),
 					ApplicationDescriptor.class.getName()
 				},
-				new ApplicationDescriptorsImpl(serviceTracker, osgiJAXRSName),
+				new ApplicationDescriptorsImpl(serviceTracker, osgiJaxRsName),
 				properties));
 	}
 
@@ -230,10 +230,10 @@ public class LiferayOAuth2OSGiFeature implements Feature {
 
 		public ApplicationDescriptorsImpl(
 			ServiceTracker<?, ResourceBundleLoader> serviceTracker,
-			String osgiJAXRSName) {
+			String osgiJaxRsName) {
 
 			_serviceTracker = serviceTracker;
-			_osgiJAXRSName = osgiJAXRSName;
+			_osgiJaxRsName = osgiJaxRsName;
 		}
 
 		@Override
@@ -242,10 +242,10 @@ public class LiferayOAuth2OSGiFeature implements Feature {
 				_serviceTracker.getService();
 
 			if (resourceBundleLoader == null) {
-				return _osgiJAXRSName;
+				return _osgiJaxRsName;
 			}
 
-			String key = "oauth2.application.description." + _osgiJAXRSName;
+			String key = "oauth2.application.description." + _osgiJaxRsName;
 
 			return GetterUtil.getString(
 				ResourceBundleUtil.getString(
@@ -270,7 +270,7 @@ public class LiferayOAuth2OSGiFeature implements Feature {
 				_defaultScopeDescriptor.describeScope(scope, locale));
 		}
 
-		private final String _osgiJAXRSName;
+		private final String _osgiJaxRsName;
 		private final ServiceTracker<?, ResourceBundleLoader> _serviceTracker;
 
 	}

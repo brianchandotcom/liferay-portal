@@ -632,7 +632,7 @@ public class ScopeLocatorImplTest extends PowerMockito {
 		}
 
 		@Override
-		public String osgiJAXRSName() {
+		public String osgiJaxRsName() {
 			return "Default";
 		}
 

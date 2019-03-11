@@ -39,7 +39,7 @@ public interface ScopeLocatorConfiguration {
 		id = OAuth2ProviderScopeConstants.OSGI_JAXRS_NAME,
 		name = "osgi-jaxrs-name", required = false
 	)
-	public String osgiJAXRSName();
+	public String osgiJaxRsName();
 
 	@Meta.AD(
 		deflt = "true",

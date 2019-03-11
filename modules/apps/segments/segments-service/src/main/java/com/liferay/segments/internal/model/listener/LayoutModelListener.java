@@ -51,6 +51,10 @@ public class LayoutModelListener extends BaseModelListener<Layout> {
 	}
 
 	private boolean _isContentLayout(Layout layout) {
+		if (layout == null) {
+			return false;
+		}
+
 		if (Objects.equals(layout.getType(), LayoutConstants.TYPE_CONTENT)) {
 			return true;
 		}

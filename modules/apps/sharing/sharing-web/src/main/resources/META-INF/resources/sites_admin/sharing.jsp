@@ -17,7 +17,8 @@
 <%@ include file="/portal_settings/init.jsp" %>
 
 <%
+SharingConfiguration companySharingConfiguration = (SharingConfiguration)request.getAttribute(SharingWebKeys.COMPANY_SHARING_CONFIGURATION);
 SharingConfiguration sharingConfiguration = (SharingConfiguration)request.getAttribute(SharingConfiguration.class.getName());
 %>
 
-<aui:input label="enabled" name="TypeSettingsProperties--sharingEnabled--" type="toggle-switch" value="<%= sharingConfiguration.isEnabled() %>" />
+<aui:input disabled="<%= !companySharingConfiguration.isEnabled() %>" label="enabled" name="TypeSettingsProperties--sharingEnabled--" type="toggle-switch" value="<%= sharingConfiguration.isEnabled() %>" />

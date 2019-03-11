@@ -1,4 +1,3 @@
-<%--
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -12,12 +11,15 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
---%>
 
-<%@ page import="com.liferay.sharing.configuration.SharingConfiguration" %><%@
-page import="com.liferay.sharing.web.internal.constants.PortalSettingsSharingConstants" %><%@
-page import="com.liferay.sharing.web.internal.constants.SharingWebKeys" %>
+package com.liferay.sharing.web.internal.constants;
 
-<%@ page import="javax.portlet.ActionRequest" %>
+/**
+ * @author Adolfo Pérez
+ */
+public class SharingWebKeys {
 
-<%@ taglib uri="http://liferay.com/tld/aui" prefix="aui" %>
+	public static final String COMPANY_SHARING_CONFIGURATION =
+		"COMPANY_SHARING_CONFIGURATION";
+
+}

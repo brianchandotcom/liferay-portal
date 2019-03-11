@@ -147,7 +147,7 @@ String referringPortletResource = ParamUtil.getString(request, "referringPortlet
 
 						<liferay-ui:search-container-column-text>
 							<clay:vertical-card
-								verticalCard="<%= new JournalArticleVerticalCard(curArticle, renderRequest, renderResponse, searchContainer.getRowChecker(), trashHelper) %>"
+								verticalCard="<%= new JournalArticleVerticalCard(curArticle, renderRequest, renderResponse, searchContainer.getRowChecker(), assetDisplayPageFriendlyURLProvider, trashHelper) %>"
 							/>
 						</liferay-ui:search-container-column-text>
 					</c:when>

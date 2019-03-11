@@ -75,7 +75,7 @@
 
 				<liferay-ui:search-container-column-text>
 					<clay:vertical-card
-						verticalCard="<%= new JournalArticleVersionVerticalCard(articleVersion, renderRequest, renderResponse, searchContainer.getRowChecker(), trashHelper) %>"
+						verticalCard="<%= new JournalArticleVersionVerticalCard(articleVersion, renderRequest, renderResponse, searchContainer.getRowChecker(), assetDisplayPageFriendlyURLProvider, trashHelper) %>"
 					/>
 				</liferay-ui:search-container-column-text>
 			</c:when>

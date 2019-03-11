@@ -16,6 +16,7 @@ package com.liferay.journal.web.internal.portlet;
 
 import com.liferay.asset.display.page.constants.AssetDisplayPageConstants;
 import com.liferay.asset.display.page.model.AssetDisplayPageEntry;
+import com.liferay.asset.display.page.portlet.AssetDisplayPageFriendlyURLProvider;
 import com.liferay.asset.display.page.service.AssetDisplayPageEntryLocalService;
 import com.liferay.asset.kernel.exception.AssetCategoryException;
 import com.liferay.asset.kernel.exception.AssetTagException;
@@ -474,6 +475,10 @@ public class JournalPortlet extends MVCPortlet {
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws IOException, PortletException {
 
+		renderRequest.setAttribute(
+			AssetDisplayPageFriendlyURLProvider.class.getName(),
+			_assetDisplayPageFriendlyURLProvider);
+
 		renderRequest.setAttribute(TrashWebKeys.TRASH_HELPER, _trashHelper);
 
 		String path = getPath(renderRequest, renderResponse);
@@ -520,6 +525,10 @@ public class JournalPortlet extends MVCPortlet {
 	public void serveResource(
 			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
 		throws IOException, PortletException {
+
+		resourceRequest.setAttribute(
+			AssetDisplayPageFriendlyURLProvider.class.getName(),
+			_assetDisplayPageFriendlyURLProvider);
 
 		resourceRequest.setAttribute(
 			DDMTemplateHelper.class.getName(), _ddmTemplateHelper);
@@ -1557,6 +1566,10 @@ public class JournalPortlet extends MVCPortlet {
 	@Reference
 	private AssetDisplayPageEntryLocalService
 		_assetDisplayPageEntryLocalService;
+
+	@Reference
+	private AssetDisplayPageFriendlyURLProvider
+		_assetDisplayPageFriendlyURLProvider;
 
 	@Reference
 	private AssetEntryLocalService _assetEntryLocalService;

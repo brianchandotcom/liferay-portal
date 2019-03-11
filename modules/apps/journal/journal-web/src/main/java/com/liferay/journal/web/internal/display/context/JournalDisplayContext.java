@@ -14,6 +14,7 @@
 
 package com.liferay.journal.web.internal.display.context;
 
+import com.liferay.asset.display.page.portlet.AssetDisplayPageFriendlyURLProvider;
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.service.AssetEntryLocalServiceUtil;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
@@ -107,11 +108,14 @@ public class JournalDisplayContext {
 	public JournalDisplayContext(
 		HttpServletRequest request, LiferayPortletRequest liferayPortletRequest,
 		LiferayPortletResponse liferayPortletResponse,
+		AssetDisplayPageFriendlyURLProvider assetDisplayPageFriendlyURLProvider,
 		TrashHelper trashHelper) {
 
 		_request = request;
 		_liferayPortletRequest = liferayPortletRequest;
 		_liferayPortletResponse = liferayPortletResponse;
+		_assetDisplayPageFriendlyURLProvider =
+			assetDisplayPageFriendlyURLProvider;
 		_trashHelper = trashHelper;
 
 		_journalWebConfiguration =
@@ -176,7 +180,7 @@ public class JournalDisplayContext {
 			articleActionDropdownItemsProvider =
 				new JournalArticleActionDropdownItemsProvider(
 					article, _liferayPortletRequest, _liferayPortletResponse,
-					_trashHelper);
+					_assetDisplayPageFriendlyURLProvider, _trashHelper);
 
 		return articleActionDropdownItemsProvider.getActionDropdownItems();
 	}
@@ -216,7 +220,7 @@ public class JournalDisplayContext {
 			articleActionDropdownItemsProvider =
 				new JournalArticleActionDropdownItemsProvider(
 					article, _liferayPortletRequest, _liferayPortletResponse,
-					_trashHelper);
+					_assetDisplayPageFriendlyURLProvider, _trashHelper);
 
 		return articleActionDropdownItemsProvider.
 			getArticleHistoryActionDropdownItems();
@@ -237,7 +241,7 @@ public class JournalDisplayContext {
 			articleActionDropdownItemsProvider =
 				new JournalArticleActionDropdownItemsProvider(
 					article, _liferayPortletRequest, _liferayPortletResponse,
-					_trashHelper);
+					_assetDisplayPageFriendlyURLProvider, _trashHelper);
 
 		return articleActionDropdownItemsProvider.
 			getArticleVersionActionDropdownItems();
@@ -1238,6 +1242,8 @@ public class JournalDisplayContext {
 	private JournalArticle _article;
 	private JournalArticleDisplay _articleDisplay;
 	private SearchContainer _articleSearchContainer;
+	private final AssetDisplayPageFriendlyURLProvider
+		_assetDisplayPageFriendlyURLProvider;
 	private String _ddmStructureKey;
 	private String _ddmStructureName;
 	private List<DDMStructure> _ddmStructures;

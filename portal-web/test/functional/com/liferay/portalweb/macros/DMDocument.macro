@@ -893,7 +893,7 @@ definition {
 
 	macro expandInfo {
 		if (IsElementNotPresent(locator1 = "DocumentsAndMedia#SIDEBAR_INFO_ACTIVE")) {
-			Click(locator1 = "Icon#INFO");
+			ManagementBar.clickInfo();
 		}
 
 		AssertVisible(locator1 = "DocumentsAndMedia#SIDEBAR_INFO_ACTIVE");

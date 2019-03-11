@@ -21,7 +21,7 @@ import javax.ws.rs.core.Application;
 import org.osgi.service.component.annotations.Component;
 
 /**
- * @author Alejandro Tard�n
+ * @author Alejandro Tardín
  * @generated
  */
 @Component(

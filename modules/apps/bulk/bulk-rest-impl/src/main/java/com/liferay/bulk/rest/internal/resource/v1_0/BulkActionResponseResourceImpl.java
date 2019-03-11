@@ -135,7 +135,7 @@ public class BulkActionResponseResourceImpl
 
 			Stream<AssetEntry> stream = assetEntryBulkSelection.stream();
 
-			Set<AssetCategory> commonCategories = stream.map(
+			Set<AssetCategory> assetCategories = stream.map(
 				_getAssetEntryCategoriesFunction(
 					PermissionCheckerFactoryUtil.create(_user))
 			).reduce(
@@ -144,12 +144,12 @@ public class BulkActionResponseResourceImpl
 				Collections.emptySet()
 			);
 
-			Map<AssetVocabulary, List<AssetCategory>> assetVocabularyListMap =
+			Map<AssetVocabulary, List<AssetCategory>> assetCatogoriesMap =
 				_groupByAssetVocabulary(
-					categoryGroupId, categoryClassNameId, commonCategories);
+					categoryGroupId, categoryClassNameId, assetCategories);
 
 			Set<Map.Entry<AssetVocabulary, List<AssetCategory>>> entries =
-				assetVocabularyListMap.entrySet();
+				assetCatogoriesMap.entrySet();
 
 			Stream<Map.Entry<AssetVocabulary, List<AssetCategory>>>
 				assetCategoriesStream = entries.stream();
@@ -369,23 +369,23 @@ public class BulkActionResponseResourceImpl
 	}
 
 	private Map<AssetVocabulary, List<AssetCategory>> _groupByAssetVocabulary(
-			long groupId, long classNameId, Set<AssetCategory> commonCategories)
+			long groupId, long classNameId, Set<AssetCategory> assetCategories)
 		throws PortalException {
 
 		List<AssetVocabulary> assetVocabularies = _getAssetVocabularies(
 			groupId, classNameId);
 
-		Stream<AssetCategory> assetCategoryStream = commonCategories.stream();
+		Stream<AssetCategory> assetCategoriesStream = assetCategories.stream();
 
 		Map<Long, List<AssetCategory>> assetVocabularyIdMap =
-			assetCategoryStream.collect(
+			assetCategoriesStream.collect(
 				Collectors.groupingBy(
 					assetCategory -> assetCategory.getVocabularyId()));
 
-		Stream<AssetVocabulary> assetVocabularyStream =
+		Stream<AssetVocabulary> assetVocabulariesStream =
 			assetVocabularies.stream();
 
-		return assetVocabularyStream.collect(
+		return assetVocabulariesStream.collect(
 			Collectors.toMap(
 				Function.identity(),
 				assetVocabulary -> assetVocabularyIdMap.computeIfAbsent(

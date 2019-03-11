@@ -40,6 +40,8 @@ import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.ratings.kernel.service.RatingsStatsLocalService;
 
+import java.util.Optional;
+
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ServiceScope;
@@ -190,7 +192,13 @@ public class KnowledgeBaseArticleResourceImpl
 					knowledgeBaseArticle.getKeywords(),
 					knowledgeBaseArticle.getCategoryIds(),
 					knowledgeBaseArticle.getContentSpace(),
-					knowledgeBaseArticle.getViewableBy())));
+					Optional.ofNullable(
+						knowledgeBaseArticle.getViewableBy()
+					).map(
+						KnowledgeBaseArticle.ViewableBy::getValue
+					).orElse(
+						null
+					))));
 	}
 
 	private KnowledgeBaseArticle _getKnowledgeBaseArticle(
@@ -210,7 +218,13 @@ public class KnowledgeBaseArticleResourceImpl
 				ServiceContextUtil.createServiceContext(
 					knowledgeBaseArticle.getKeywords(),
 					knowledgeBaseArticle.getCategoryIds(), contentSpaceId,
-					knowledgeBaseArticle.getViewableBy())));
+					Optional.ofNullable(
+						knowledgeBaseArticle.getViewableBy()
+					).map(
+						KnowledgeBaseArticle.ViewableBy::getValue
+					).orElse(
+						null
+					))));
 	}
 
 	private KnowledgeBaseArticle _toKBArticle(KBArticle kbArticle)

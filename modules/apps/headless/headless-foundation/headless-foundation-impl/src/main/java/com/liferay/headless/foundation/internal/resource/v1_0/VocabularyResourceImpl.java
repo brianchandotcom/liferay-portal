@@ -59,6 +59,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 
 import javax.servlet.http.HttpServletResponse;
 
@@ -145,7 +146,14 @@ public class VocabularyResourceImpl
 					vocabulary.getDescription()),
 				_toSettings(vocabulary.getAssetTypes(), contentSpaceId),
 				ServiceContextUtil.createServiceContext(
-					contentSpaceId, vocabulary.getViewableBy())));
+					contentSpaceId,
+					Optional.ofNullable(
+						vocabulary.getViewableBy()
+					).map(
+						Vocabulary.ViewableBy::getValue
+					).orElse(
+						null
+					))));
 	}
 
 	@Override

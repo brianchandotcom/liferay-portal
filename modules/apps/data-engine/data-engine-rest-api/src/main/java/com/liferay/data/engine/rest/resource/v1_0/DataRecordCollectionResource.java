@@ -52,6 +52,10 @@ public interface DataRecordCollectionResource {
 			DataRecordCollection dataRecordCollection)
 		throws Exception;
 
+	public Page<DataRecordCollection> getDataRecordCollectionSearchPage(
+			Long groupId, String keywords, Pagination pagination)
+		throws Exception;
+
 	public void setContextCompany(Company contextCompany);
 
 }

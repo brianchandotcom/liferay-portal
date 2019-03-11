@@ -122,6 +122,25 @@ public class Query {
 			dataRecordCollectionId);
 	}
 
+	@GraphQLField
+	@GraphQLInvokeDetached
+	public Collection<DataRecordCollection> getDataRecordCollectionSearchPage(
+			@GraphQLName("groupId") Long groupId,
+			@GraphQLName("keywords") String keywords,
+			@GraphQLName("pageSize") int pageSize,
+			@GraphQLName("page") int page)
+		throws Exception {
+
+		DataRecordCollectionResource dataRecordCollectionResource =
+			_createDataRecordCollectionResource();
+
+		Page paginationPage =
+			dataRecordCollectionResource.getDataRecordCollectionSearchPage(
+				groupId, keywords, Pagination.of(pageSize, page));
+
+		return paginationPage.getItems();
+	}
+
 	private static DataDefinitionResource _createDataDefinitionResource()
 		throws Exception {
 

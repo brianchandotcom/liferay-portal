@@ -26,7 +26,6 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(
 	property = {
-		"oauth2.scope.checker.type=annotations",
 		"osgi.jaxrs.application.base=/portal-workflow-metrics-rest",
 		"osgi.jaxrs.extension.select=(osgi.jaxrs.name=Liferay.Vulcan)",
 		"osgi.jaxrs.name=portal-workflow-metrics-rest-application"

@@ -14,6 +14,7 @@
 
 package com.liferay.portal.workflow.metrics.rest.dto.v1_0;
 
+import com.fasterxml.jackson.annotation.JsonFilter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -33,27 +34,12 @@ import javax.xml.bind.annotation.XmlRootElement;
  */
 @Generated("")
 @GraphQLName("Process")
+@JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "Process")
 public class Process {
 
 	public Long getId() {
 		return id;
-	}
-
-	public Integer getInstanceCount() {
-		return instanceCount;
-	}
-
-	public Integer getOntimeInstanceCount() {
-		return ontimeInstanceCount;
-	}
-
-	public Integer getOverdueInstanceCount() {
-		return overdueInstanceCount;
-	}
-
-	public String getTitle() {
-		return title;
 	}
 
 	public void setId(Long id) {
@@ -68,6 +54,14 @@ public class Process {
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Long id;
+
+	public Integer getInstanceCount() {
+		return instanceCount;
 	}
 
 	public void setInstanceCount(Integer instanceCount) {
@@ -86,6 +80,14 @@ public class Process {
 		}
 	}
 
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Integer instanceCount;
+
+	public Integer getOntimeInstanceCount() {
+		return ontimeInstanceCount;
+	}
+
 	public void setOntimeInstanceCount(Integer ontimeInstanceCount) {
 		this.ontimeInstanceCount = ontimeInstanceCount;
 	}
@@ -100,6 +102,14 @@ public class Process {
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Integer ontimeInstanceCount;
+
+	public Integer getOverdueInstanceCount() {
+		return overdueInstanceCount;
 	}
 
 	public void setOverdueInstanceCount(Integer overdueInstanceCount) {
@@ -118,6 +128,14 @@ public class Process {
 		}
 	}
 
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Integer overdueInstanceCount;
+
+	public String getTitle() {
+		return title;
+	}
+
 	public void setTitle(String title) {
 		this.title = title;
 	}
@@ -134,50 +152,44 @@ public class Process {
 		}
 	}
 
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected String title;
+
 	public String toString() {
-		StringBundler sb = new StringBundler(12);
+		StringBundler sb = new StringBundler();
 
 		sb.append("{");
 
-		sb.append("id=");
+		sb.append("\"id\": ");
 
 		sb.append(id);
-		sb.append(", instanceCount=");
+		sb.append(", ");
+
+		sb.append("\"instanceCount\": ");
 
 		sb.append(instanceCount);
-		sb.append(", ontimeInstanceCount=");
+		sb.append(", ");
+
+		sb.append("\"ontimeInstanceCount\": ");
 
 		sb.append(ontimeInstanceCount);
-		sb.append(", overdueInstanceCount=");
+		sb.append(", ");
+
+		sb.append("\"overdueInstanceCount\": ");
 
 		sb.append(overdueInstanceCount);
-		sb.append(", title=");
+		sb.append(", ");
 
+		sb.append("\"title\": ");
+
+		sb.append("\"");
 		sb.append(title);
+		sb.append("\"");
 
 		sb.append("}");
 
 		return sb.toString();
 	}
-
-	@GraphQLField
-	@JsonProperty
-	protected Long id;
-
-	@GraphQLField
-	@JsonProperty
-	protected Integer instanceCount;
-
-	@GraphQLField
-	@JsonProperty
-	protected Integer ontimeInstanceCount;
-
-	@GraphQLField
-	@JsonProperty
-	protected Integer overdueInstanceCount;
-
-	@GraphQLField
-	@JsonProperty
-	protected String title;
 
 }

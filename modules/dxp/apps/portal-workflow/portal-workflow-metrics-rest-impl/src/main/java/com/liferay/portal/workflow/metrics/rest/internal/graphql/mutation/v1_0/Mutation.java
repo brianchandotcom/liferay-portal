@@ -14,8 +14,9 @@
 
 package com.liferay.portal.workflow.metrics.rest.internal.graphql.mutation.v1_0;
 
+import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
+import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
 import com.liferay.portal.workflow.metrics.rest.dto.v1_0.SLA;
-import com.liferay.portal.workflow.metrics.rest.internal.resource.v1_0.SLAResourceImpl;
 import com.liferay.portal.workflow.metrics.rest.resource.v1_0.SLAResource;
 
 import graphql.annotations.annotationTypes.GraphQLField;
@@ -24,12 +25,28 @@ import graphql.annotations.annotationTypes.GraphQLName;
 
 import javax.annotation.Generated;
 
+import org.osgi.framework.Bundle;
+import org.osgi.framework.FrameworkUtil;
+import org.osgi.util.tracker.ServiceTracker;
+
 /**
  * @author Rafael Praxedes
  * @generated
  */
 @Generated("")
 public class Mutation {
+
+	@GraphQLField
+	@GraphQLInvokeDetached
+	public SLA postProcessSla(
+			@GraphQLName("process-id") Long processId,
+			@GraphQLName("SLA") SLA sLA)
+		throws Exception {
+
+		SLAResource sLAResource = _createSLAResource();
+
+		return sLAResource.postProcessSla(processId, sLA);
+	}
 
 	@GraphQLInvokeDetached
 	public boolean deleteProcessSla(
@@ -40,18 +57,6 @@ public class Mutation {
 		SLAResource sLAResource = _createSLAResource();
 
 		return sLAResource.deleteProcessSla(processId, slaId);
-	}
-
-	@GraphQLField
-	@GraphQLInvokeDetached
-	public SLA postProcessSlas(
-			@GraphQLName("process-id") Long processId,
-			@GraphQLName("SLA") SLA sLA)
-		throws Exception {
-
-		SLAResource sLAResource = _createSLAResource();
-
-		return sLAResource.postProcessSlas(processId, sLA);
 	}
 
 	@GraphQLInvokeDetached
@@ -65,8 +70,29 @@ public class Mutation {
 		return sLAResource.putProcessSla(processId, slaId, sLA);
 	}
 
-	private static SLAResource _createSLAResource() {
-		return new SLAResourceImpl();
+	private static SLAResource _createSLAResource() throws Exception {
+		SLAResource sLAResource = _sLAResourceServiceTracker.getService();
+
+		sLAResource.setContextCompany(
+			CompanyLocalServiceUtil.getCompany(
+				CompanyThreadLocal.getCompanyId()));
+
+		return sLAResource;
+	}
+
+	private static final ServiceTracker<SLAResource, SLAResource>
+		_sLAResourceServiceTracker;
+
+	static {
+		Bundle bundle = FrameworkUtil.getBundle(Mutation.class);
+
+		ServiceTracker<SLAResource, SLAResource> sLAResourceServiceTracker =
+			new ServiceTracker<>(
+				bundle.getBundleContext(), SLAResource.class, null);
+
+		sLAResourceServiceTracker.open();
+
+		_sLAResourceServiceTracker = sLAResourceServiceTracker;
 	}
 
 }

@@ -14,6 +14,7 @@
 
 package com.liferay.portal.workflow.metrics.rest.dto.v1_0;
 
+import com.fasterxml.jackson.annotation.JsonFilter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -33,35 +34,12 @@ import javax.xml.bind.annotation.XmlRootElement;
  */
 @Generated("")
 @GraphQLName("SLA")
+@JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "SLA")
 public class SLA {
 
 	public String getDescription() {
 		return description;
-	}
-
-	public Long getDuration() {
-		return duration;
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public String[] getPauseNodeNames() {
-		return pauseNodeNames;
-	}
-
-	public Long getProcessId() {
-		return processId;
-	}
-
-	public String[] getStartNodeNames() {
-		return startNodeNames;
-	}
-
-	public String[] getStopNodeNames() {
-		return stopNodeNames;
 	}
 
 	public void setDescription(String description) {
@@ -80,6 +58,14 @@ public class SLA {
 		}
 	}
 
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected String description;
+
+	public Long getDuration() {
+		return duration;
+	}
+
 	public void setDuration(Long duration) {
 		this.duration = duration;
 	}
@@ -96,6 +82,36 @@ public class SLA {
 		}
 	}
 
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Long duration;
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	@JsonIgnore
+	public void setId(UnsafeSupplier<Long, Exception> idUnsafeSupplier) {
+		try {
+			id = idUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Long id;
+
+	public String getName() {
+		return name;
+	}
+
 	public void setName(String name) {
 		this.name = name;
 	}
@@ -108,6 +124,14 @@ public class SLA {
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected String name;
+
+	public String[] getPauseNodeNames() {
+		return pauseNodeNames;
 	}
 
 	public void setPauseNodeNames(String[] pauseNodeNames) {
@@ -126,6 +150,14 @@ public class SLA {
 		}
 	}
 
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected String[] pauseNodeNames;
+
+	public Long getProcessId() {
+		return processId;
+	}
+
 	public void setProcessId(Long processId) {
 		this.processId = processId;
 	}
@@ -140,6 +172,14 @@ public class SLA {
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Long processId;
+
+	public String[] getStartNodeNames() {
+		return startNodeNames;
 	}
 
 	public void setStartNodeNames(String[] startNodeNames) {
@@ -158,6 +198,14 @@ public class SLA {
 		}
 	}
 
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected String[] startNodeNames;
+
+	public String[] getStopNodeNames() {
+		return stopNodeNames;
+	}
+
 	public void setStopNodeNames(String[] stopNodeNames) {
 		this.stopNodeNames = stopNodeNames;
 	}
@@ -174,64 +222,114 @@ public class SLA {
 		}
 	}
 
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected String[] stopNodeNames;
+
 	public String toString() {
-		StringBundler sb = new StringBundler(16);
+		StringBundler sb = new StringBundler();
 
 		sb.append("{");
 
-		sb.append("name=");
+		sb.append("\"description\": ");
 
-		sb.append(name);
-		sb.append(", description=");
-
+		sb.append("\"");
 		sb.append(description);
-		sb.append(", duration=");
+		sb.append("\"");
+		sb.append(", ");
+
+		sb.append("\"duration\": ");
 
 		sb.append(duration);
-		sb.append(", processId=");
+		sb.append(", ");
+
+		sb.append("\"id\": ");
+
+		sb.append(id);
+		sb.append(", ");
+
+		sb.append("\"name\": ");
+
+		sb.append("\"");
+		sb.append(name);
+		sb.append("\"");
+		sb.append(", ");
+
+		sb.append("\"pauseNodeNames\": ");
+
+		if (pauseNodeNames == null) {
+			sb.append("null");
+		}
+		else {
+			sb.append("[");
+
+			for (int i = 0; i < pauseNodeNames.length; i++) {
+				sb.append("\"");
+				sb.append(pauseNodeNames[i]);
+				sb.append("\"");
+
+				if ((i + 1) < pauseNodeNames.length) {
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
+		}
+
+		sb.append(", ");
+
+		sb.append("\"processId\": ");
 
 		sb.append(processId);
-		sb.append(", startNodeNames=");
+		sb.append(", ");
 
-		sb.append(startNodeNames);
-		sb.append(", pauseNodeNames=");
+		sb.append("\"startNodeNames\": ");
 
-		sb.append(pauseNodeNames);
-		sb.append(", stopNodeNames=");
+		if (startNodeNames == null) {
+			sb.append("null");
+		}
+		else {
+			sb.append("[");
 
-		sb.append(stopNodeNames);
+			for (int i = 0; i < startNodeNames.length; i++) {
+				sb.append("\"");
+				sb.append(startNodeNames[i]);
+				sb.append("\"");
+
+				if ((i + 1) < startNodeNames.length) {
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
+		}
+
+		sb.append(", ");
+
+		sb.append("\"stopNodeNames\": ");
+
+		if (stopNodeNames == null) {
+			sb.append("null");
+		}
+		else {
+			sb.append("[");
+
+			for (int i = 0; i < stopNodeNames.length; i++) {
+				sb.append("\"");
+				sb.append(stopNodeNames[i]);
+				sb.append("\"");
+
+				if ((i + 1) < stopNodeNames.length) {
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
+		}
 
 		sb.append("}");
 
 		return sb.toString();
 	}
-
-	@GraphQLField
-	@JsonProperty
-	protected String description;
-
-	@GraphQLField
-	@JsonProperty
-	protected Long duration;
-
-	@GraphQLField
-	@JsonProperty
-	protected String name;
-
-	@GraphQLField
-	@JsonProperty
-	protected String[] pauseNodeNames;
-
-	@GraphQLField
-	@JsonProperty
-	protected Long processId;
-
-	@GraphQLField
-	@JsonProperty
-	protected String[] startNodeNames;
-
-	@GraphQLField
-	@JsonProperty
-	protected String[] stopNodeNames;
 
 }

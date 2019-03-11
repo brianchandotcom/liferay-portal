@@ -20,8 +20,6 @@ import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.workflow.metrics.rest.dto.v1_0.Process;
 import com.liferay.portal.workflow.metrics.rest.dto.v1_0.SLA;
-import com.liferay.portal.workflow.metrics.rest.internal.resource.v1_0.ProcessResourceImpl;
-import com.liferay.portal.workflow.metrics.rest.internal.resource.v1_0.SLAResourceImpl;
 import com.liferay.portal.workflow.metrics.rest.resource.v1_0.ProcessResource;
 import com.liferay.portal.workflow.metrics.rest.resource.v1_0.SLAResource;
 
@@ -32,6 +30,10 @@ import graphql.annotations.annotationTypes.GraphQLName;
 import java.util.Collection;
 
 import javax.annotation.Generated;
+
+import org.osgi.framework.Bundle;
+import org.osgi.framework.FrameworkUtil;
+import org.osgi.util.tracker.ServiceTracker;
 
 /**
  * @author Rafael Praxedes
@@ -50,12 +52,24 @@ public class Query {
 
 		ProcessResource processResource = _createProcessResource();
 
-		processResource.setContextCompany(
-			CompanyLocalServiceUtil.getCompany(
-				CompanyThreadLocal.getCompanyId()));
-
 		Page paginationPage = processResource.getProcessesPage(
 			title, Pagination.of(pageSize, page));
+
+		return paginationPage.getItems();
+	}
+
+	@GraphQLField
+	@GraphQLInvokeDetached
+	public Collection<SLA> getProcessSlasPage(
+			@GraphQLName("process-id") Long processId,
+			@GraphQLName("pageSize") int pageSize,
+			@GraphQLName("page") int page)
+		throws Exception {
+
+		SLAResource sLAResource = _createSLAResource();
+
+		Page paginationPage = sLAResource.getProcessSlasPage(
+			processId, Pagination.of(pageSize, page));
 
 		return paginationPage.getItems();
 	}
@@ -69,39 +83,53 @@ public class Query {
 
 		SLAResource sLAResource = _createSLAResource();
 
-		sLAResource.setContextCompany(
-			CompanyLocalServiceUtil.getCompany(
-				CompanyThreadLocal.getCompanyId()));
-
 		return sLAResource.getProcessSla(processId, slaId);
 	}
 
-	@GraphQLField
-	@GraphQLInvokeDetached
-	public Collection<SLA> getProcessSLAsPage(
-			@GraphQLName("process-id") Long processId,
-			@GraphQLName("pageSize") int pageSize,
-			@GraphQLName("page") int page)
-		throws Exception {
+	private static ProcessResource _createProcessResource() throws Exception {
+		ProcessResource processResource =
+			_processResourceServiceTracker.getService();
 
-		SLAResource sLAResource = _createSLAResource();
+		processResource.setContextCompany(
+			CompanyLocalServiceUtil.getCompany(
+				CompanyThreadLocal.getCompanyId()));
+
+		return processResource;
+	}
+
+	private static final ServiceTracker<ProcessResource, ProcessResource>
+		_processResourceServiceTracker;
+
+	private static SLAResource _createSLAResource() throws Exception {
+		SLAResource sLAResource = _sLAResourceServiceTracker.getService();
 
 		sLAResource.setContextCompany(
 			CompanyLocalServiceUtil.getCompany(
 				CompanyThreadLocal.getCompanyId()));
 
-		Page paginationPage = sLAResource.getProcessSLAsPage(
-			processId, Pagination.of(pageSize, page));
-
-		return paginationPage.getItems();
+		return sLAResource;
 	}
 
-	private static ProcessResource _createProcessResource() {
-		return new ProcessResourceImpl();
-	}
+	private static final ServiceTracker<SLAResource, SLAResource>
+		_sLAResourceServiceTracker;
 
-	private static SLAResource _createSLAResource() {
-		return new SLAResourceImpl();
+	static {
+		Bundle bundle = FrameworkUtil.getBundle(Query.class);
+
+		ServiceTracker<ProcessResource, ProcessResource>
+			processResourceServiceTracker = new ServiceTracker<>(
+				bundle.getBundleContext(), ProcessResource.class, null);
+
+		processResourceServiceTracker.open();
+
+		_processResourceServiceTracker = processResourceServiceTracker;
+		ServiceTracker<SLAResource, SLAResource> sLAResourceServiceTracker =
+			new ServiceTracker<>(
+				bundle.getBundleContext(), SLAResource.class, null);
+
+		sLAResourceServiceTracker.open();
+
+		_sLAResourceServiceTracker = sLAResourceServiceTracker;
 	}
 
 }

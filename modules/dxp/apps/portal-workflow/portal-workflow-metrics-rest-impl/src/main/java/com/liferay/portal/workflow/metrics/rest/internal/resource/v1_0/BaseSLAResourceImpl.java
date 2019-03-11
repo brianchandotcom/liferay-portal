@@ -14,8 +14,8 @@
 
 package com.liferay.portal.workflow.metrics.rest.internal.resource.v1_0;
 
-import com.liferay.oauth2.provider.scope.RequiresScope;
 import com.liferay.petra.function.UnsafeFunction;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.portal.vulcan.pagination.Page;
@@ -23,6 +23,12 @@ import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.util.TransformUtil;
 import com.liferay.portal.workflow.metrics.rest.dto.v1_0.SLA;
 import com.liferay.portal.workflow.metrics.rest.resource.v1_0.SLAResource;
+
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.Parameters;
+import io.swagger.v3.oas.annotations.enums.ParameterIn;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import io.swagger.v3.oas.annotations.tags.Tags;
 
 import java.net.URI;
 
@@ -51,11 +57,42 @@ import javax.ws.rs.core.UriInfo;
 @Path("/v1.0")
 public abstract class BaseSLAResourceImpl implements SLAResource {
 
-	@DELETE
 	@Override
+	@GET
+	@Parameters(
+		value = {
+			@Parameter(in = ParameterIn.QUERY, name = "page"),
+			@Parameter(in = ParameterIn.QUERY, name = "pageSize")
+		}
+	)
+	@Path("/processes/{process-id}/slas")
+	@Produces("application/json")
+	@Tags(value = {@Tag(name = "SLA")})
+	public Page<SLA> getProcessSlasPage(
+			@PathParam("process-id") Long processId,
+			@Context Pagination pagination)
+		throws Exception {
+
+		return Page.of(Collections.emptyList());
+	}
+
+	@Override
+	@Consumes("application/json")
+	@POST
+	@Path("/processes/{process-id}/slas")
+	@Produces({"application/json", "application/json"})
+	@Tags(value = {@Tag(name = "SLA")})
+	public SLA postProcessSla(@PathParam("process-id") Long processId, SLA sLA)
+		throws Exception {
+
+		return new SLA();
+	}
+
+	@Override
+	@DELETE
 	@Path("/processes/{process-id}/slas/{sla-id}")
 	@Produces("application/json")
-	@RequiresScope("everything.read")
+	@Tags(value = {@Tag(name = "SLA")})
 	public boolean deleteProcessSla(
 			@PathParam("process-id") Long processId,
 			@PathParam("sla-id") Long slaId)
@@ -64,11 +101,11 @@ public abstract class BaseSLAResourceImpl implements SLAResource {
 		return false;
 	}
 
-	@GET
 	@Override
+	@GET
 	@Path("/processes/{process-id}/slas/{sla-id}")
 	@Produces("application/json")
-	@RequiresScope("everything.read")
+	@Tags(value = {@Tag(name = "SLA")})
 	public SLA getProcessSla(
 			@PathParam("process-id") Long processId,
 			@PathParam("sla-id") Long slaId)
@@ -77,37 +114,12 @@ public abstract class BaseSLAResourceImpl implements SLAResource {
 		return new SLA();
 	}
 
-	@GET
 	@Override
-	@Path("/processes/{process-id}/slas")
-	@Produces("application/json")
-	@RequiresScope("everything.read")
-	public Page<SLA> getProcessSLAsPage(
-			@PathParam("process-id") Long processId,
-			@Context Pagination pagination)
-		throws Exception {
-
-		return Page.of(Collections.emptyList());
-	}
-
 	@Consumes("application/json")
-	@Override
-	@Path("/processes/{process-id}/slas")
-	@POST
-	@Produces("application/json")
-	@RequiresScope("everything.read")
-	public SLA postProcessSlas(@PathParam("process-id") Long processId, SLA sLA)
-		throws Exception {
-
-		return new SLA();
-	}
-
-	@Consumes("application/json")
-	@Override
-	@Path("/processes/{process-id}/slas/{sla-id}")
-	@Produces("application/json")
 	@PUT
-	@RequiresScope("everything.read")
+	@Path("/processes/{process-id}/slas/{sla-id}")
+	@Produces({"application/json", "application/json"})
+	@Tags(value = {@Tag(name = "SLA")})
 	public SLA putProcessSla(
 			@PathParam("process-id") Long processId,
 			@PathParam("sla-id") Long slaId, SLA sLA)
@@ -121,7 +133,12 @@ public abstract class BaseSLAResourceImpl implements SLAResource {
 	}
 
 	protected String getJAXRSLink(String methodName, Object... values) {
-		URI baseURI = contextUriInfo.getBaseUri();
+		String baseURIString = String.valueOf(contextUriInfo.getBaseUri());
+
+		if (baseURIString.endsWith(StringPool.FORWARD_SLASH)) {
+			baseURIString = baseURIString.substring(
+				0, baseURIString.length() - 1);
+		}
 
 		URI resourceURI = UriBuilder.fromResource(
 			BaseSLAResourceImpl.class
@@ -133,14 +150,36 @@ public abstract class BaseSLAResourceImpl implements SLAResource {
 			values
 		);
 
-		return baseURI.toString() + resourceURI.toString() +
-			methodURI.toString();
+		return baseURIString + resourceURI.toString() + methodURI.toString();
+	}
+
+	protected void preparePatch(SLA sLA) {
 	}
 
 	protected <T, R> List<R> transform(
 		List<T> list, UnsafeFunction<T, R, Exception> unsafeFunction) {
 
 		return TransformUtil.transform(list, unsafeFunction);
+	}
+
+	protected <T, R> R[] transform(
+		T[] array, UnsafeFunction<T, R, Exception> unsafeFunction,
+		Class<?> clazz) {
+
+		return TransformUtil.transform(array, unsafeFunction, clazz);
+	}
+
+	protected <T, R> R[] transformToArray(
+		List<T> list, UnsafeFunction<T, R, Exception> unsafeFunction,
+		Class<?> clazz) {
+
+		return TransformUtil.transformToArray(list, unsafeFunction, clazz);
+	}
+
+	protected <T, R> List<R> transformToList(
+		T[] array, UnsafeFunction<T, R, Exception> unsafeFunction) {
+
+		return TransformUtil.transformToList(array, unsafeFunction);
 	}
 
 	@Context

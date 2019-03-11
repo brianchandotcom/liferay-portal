@@ -193,6 +193,14 @@ public class ParsedJavaTerm implements Comparable<ParsedJavaTerm> {
 				previousParsedJavaTerm);
 		}
 
+		if ((_className.equals(JavaConstructorDefinition.class.getName()) ||
+			 _className.equals(JavaMethodDefinition.class.getName())) &&
+			!StringUtil.startsWith(
+				StringUtil.trim(_content), StringPool.CLOSE_CURLY_BRACE)) {
+
+			return DOUBLE_LINE_BREAK_REQUIRED;
+		}
+
 		if (StringUtil.endsWith(
 				previousParsedJavaTerm.getContent(),
 				CharPool.OPEN_CURLY_BRACE)) {
@@ -213,14 +221,12 @@ public class ParsedJavaTerm implements Comparable<ParsedJavaTerm> {
 
 		if (_className.equals(JavaAnnotationFieldDefinition.class.getName()) ||
 			_className.equals(JavaBreakStatement.class.getName()) ||
-			_className.equals(JavaConstructorDefinition.class.getName()) ||
 			_className.equals(JavaContinueStatement.class.getName()) ||
 			_className.equals(JavaDoStatement.class.getName()) ||
 			_className.equals(JavaEnhancedForStatement.class.getName()) ||
 			_className.equals(JavaEnumConstantDefinitions.class.getName()) ||
 			_className.equals(JavaForStatement.class.getName()) ||
 			_className.equals(JavaIfStatement.class.getName()) ||
-			_className.equals(JavaMethodDefinition.class.getName()) ||
 			_className.equals(JavaReturnStatement.class.getName()) ||
 			_className.equals(JavaStaticInitialization.class.getName()) ||
 			_className.equals(JavaSynchronizedStatement.class.getName()) ||

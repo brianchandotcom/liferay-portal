@@ -6,6 +6,12 @@ definition {
 			MetalComponent.waitForManagementBar();
 		}
 
+		MouseOver(locator1 = "Icon#CURRENT_DISPLAY_STYLE");
+
+		AssertElementPresent(locator1 = "Tooltip#GENERIC_TOOLTIP");
+
+		AssertElementPresent(locator1 = "Tooltip#GENERIC_TOOLTIP_VISIBLE");
+
 		Click(
 			locator1 = "Icon#CURRENT_DISPLAY_STYLE"
 		);
@@ -40,6 +46,12 @@ definition {
 	}
 
 	macro clickInfo {
+		MouseOver(locator1 = "Icon#INFO");
+
+		AssertElementPresent(locator1 = "Tooltip#GENERIC_TOOLTIP");
+
+		AssertElementPresent(locator1 = "Tooltip#GENERIC_TOOLTIP_VISIBLE");
+
 		Click(
 			locator1 = "Icon#INFO"
 		);

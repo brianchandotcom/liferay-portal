@@ -81,14 +81,16 @@ long classNameId = ParamUtil.getLong(request, "classNameId");
 
 				<li class="tbar-item tbar-item-expand">
 					<div class="journal-article-button-row tbar-section text-right">
-						<aui:button cssClass="btn-sm" href="<%= journalEditArticleDisplayContext.getRedirect() %>" type="cancel" />
+						<a class="btn btn-outline-borderless btn-outline-secondary btn-sm mr-3" href="<%= journalEditArticleDisplayContext.getRedirect() %>">
+							<liferay-ui:message key="cancel" />
+						</a>
 
 						<c:if test="<%= journalEditArticleDisplayContext.hasSavePermission() %>">
-							<aui:button cssClass="btn-sm" data-actionname="<%= Constants.PUBLISH %>" disabled="<%= journalEditArticleDisplayContext.isPending() %>" name="publishButton" type="submit" value="<%= journalEditArticleDisplayContext.getPublishButtonLabel() %>" />
-
 							<c:if test="<%= journalEditArticleDisplayContext.getClassNameId() == JournalArticleConstants.CLASSNAME_ID_DEFAULT %>">
-								<aui:button cssClass="btn-sm" data-actionname='<%= ((article == null) || Validator.isNull(article.getArticleId())) ? "addArticle" : "updateArticle" %>' name="saveButton" primary="<%= false %>" type="submit" value="<%= journalEditArticleDisplayContext.getSaveButtonLabel() %>" />
+								<aui:button cssClass="btn-sm mr-3" data-actionname='<%= ((article == null) || Validator.isNull(article.getArticleId())) ? "addArticle" : "updateArticle" %>' name="saveButton" primary="<%= false %>" type="submit" value="<%= journalEditArticleDisplayContext.getSaveButtonLabel() %>" />
 							</c:if>
+
+							<aui:button cssClass="btn-sm" data-actionname="<%= Constants.PUBLISH %>" disabled="<%= journalEditArticleDisplayContext.isPending() %>" name="publishButton" type="submit" value="<%= journalEditArticleDisplayContext.getPublishButtonLabel() %>" />
 						</c:if>
 
 						<%

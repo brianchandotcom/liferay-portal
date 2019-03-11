@@ -96,7 +96,7 @@ public class SortContextProviderTest {
 
 		Sort[] sorts = _contextProvider.createContext(
 			new MockMessage(
-				mockHttpServletRequest,
+				mockHttpServletRequest, _mockResource,
 				clazz.getMethod(MockResource.METHOD_NAME, String.class)));
 
 		Assert.assertEquals(Arrays.toString(sorts), 1, sorts.length);

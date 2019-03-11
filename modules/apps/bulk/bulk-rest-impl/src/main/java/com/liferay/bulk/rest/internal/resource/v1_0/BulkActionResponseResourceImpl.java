@@ -90,11 +90,8 @@ public class BulkActionResponseResourceImpl
 			BulkSelection<?> bulkSelection = bulkSelectionFactory.create(
 				_getParameterMap(bulkAssetEntryUpdateCategoriesAction));
 
-			BulkSelection<AssetEntry> assetEntryBulkSelection =
-				bulkSelection.toAssetEntryBulkSelection();
-
 			_bulkSelectionRunner.run(
-				_user, assetEntryBulkSelection,
+				_user, bulkSelection.toAssetEntryBulkSelection(),
 				_editCategoriesBulkSelectionAction,
 				new HashMap<String, Serializable>() {
 					{
@@ -192,11 +189,9 @@ public class BulkActionResponseResourceImpl
 			BulkSelection<?> bulkSelection = bulkSelectionFactory.create(
 				_getParameterMap(bulkAssetEntryUpdateTagsAction));
 
-			BulkSelection<AssetEntry> assetEntryBulkSelection =
-				bulkSelection.toAssetEntryBulkSelection();
-
 			_bulkSelectionRunner.run(
-				_user, assetEntryBulkSelection, _editTagsBulkSelectionAction,
+				_user, bulkSelection.toAssetEntryBulkSelection(),
+				_editTagsBulkSelectionAction,
 				new HashMap<String, Serializable>() {
 					{
 						put(

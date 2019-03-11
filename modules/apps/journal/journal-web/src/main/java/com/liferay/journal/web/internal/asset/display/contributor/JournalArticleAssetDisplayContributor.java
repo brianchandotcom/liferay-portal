@@ -57,7 +57,7 @@ public class JournalArticleAssetDisplayContributor
 
 	@Override
 	public String getFriendlyURLShortcut() {
-		return "article";
+		return "web-content";
 	}
 
 	@Override

@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.model.ModelListener;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.DocumentImpl;
 import com.liferay.portal.workflow.kaleo.model.KaleoDefinition;
-import com.liferay.portal.workflow.kaleo.model.KaleoDefinitionVersion;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -29,15 +28,15 @@ import org.osgi.service.component.annotations.Component;
  * @author Inácio Nery
  */
 @Component(immediate = true, service = ModelListener.class)
-public class KaleoDefinitionVersionModelListener
-	extends BaseKaleoModelListener<KaleoDefinitionVersion> {
+public class KaleoDefinitionModelListener
+	extends BaseKaleoModelListener<KaleoDefinition> {
 
 	@Override
-	public void onAfterCreate(KaleoDefinitionVersion kaleoDefinitionVersion)
+	public void onAfterCreate(KaleoDefinition kaleoDefinition)
 		throws ModelListenerException {
 
 		try {
-			addDocument(kaleoDefinitionVersion);
+			addDocument(kaleoDefinition);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -45,11 +44,11 @@ public class KaleoDefinitionVersionModelListener
 	}
 
 	@Override
-	public void onAfterRemove(KaleoDefinitionVersion kaleoDefinitionVersion)
+	public void onAfterRemove(KaleoDefinition kaleoDefinition)
 		throws ModelListenerException {
 
 		try {
-			deleteDocument(kaleoDefinitionVersion);
+			deleteDocument(kaleoDefinition);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -57,11 +56,11 @@ public class KaleoDefinitionVersionModelListener
 	}
 
 	@Override
-	public void onAfterUpdate(KaleoDefinitionVersion kaleoDefinitionVersion)
+	public void onAfterUpdate(KaleoDefinition kaleoDefinition)
 		throws ModelListenerException {
 
 		try {
-			updateDocument(kaleoDefinitionVersion);
+			updateDocument(kaleoDefinition);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -69,43 +68,28 @@ public class KaleoDefinitionVersionModelListener
 	}
 
 	@Override
-	protected Document createDocument(
-		KaleoDefinitionVersion kaleoDefinitionVersion) {
-
+	protected Document createDocument(KaleoDefinition kaleoDefinition) {
 		Document document = new DocumentImpl();
 
 		document.addUID(
 			"WorkflowMetricsProcess",
 			digest(
-				kaleoDefinitionVersion.getCompanyId(),
-				kaleoDefinitionVersion.getKaleoDefinitionVersionId()));
+				kaleoDefinition.getCompanyId(),
+				kaleoDefinition.getKaleoDefinitionId()));
 
-		Boolean active = false;
-
-		KaleoDefinition kaleoDefinition =
-			kaleoDefinitionVersion.fetchKaleoDefinition();
-
-		if (kaleoDefinition != null) {
-			active = kaleoDefinition.isActive();
-		}
-
-		document.addKeyword("active", active);
-
-		document.addKeyword("companyId", kaleoDefinitionVersion.getCompanyId());
-		document.addDateSortable(
-			"createDate", kaleoDefinitionVersion.getCreateDate());
+		document.addKeyword("active", kaleoDefinition.isActive());
+		document.addKeyword("companyId", kaleoDefinition.getCompanyId());
+		document.addDateSortable("createDate", kaleoDefinition.getCreateDate());
 		document.addKeyword("deleted", false);
-		document.addText(
-			"description", kaleoDefinitionVersion.getDescription());
+		document.addText("description", kaleoDefinition.getDescription());
 		document.addDateSortable(
-			"modifiedDate", kaleoDefinitionVersion.getModifiedDate());
-		document.addKeyword("name", kaleoDefinitionVersion.getName());
+			"modifiedDate", kaleoDefinition.getModifiedDate());
+		document.addKeyword("name", kaleoDefinition.getName());
 		document.addKeyword(
-			"processId", kaleoDefinitionVersion.getKaleoDefinitionVersionId());
-		document.addLocalizedText(
-			"title", kaleoDefinitionVersion.getTitleMap());
-		document.addKeyword("userId", kaleoDefinitionVersion.getUserId());
-		document.addKeyword("version", kaleoDefinitionVersion.getVersion());
+			"processId", kaleoDefinition.getKaleoDefinitionId());
+		document.addLocalizedText("title", kaleoDefinition.getTitleMap());
+		document.addKeyword("userId", kaleoDefinition.getUserId());
+		document.addKeyword("version", kaleoDefinition.getVersion());
 
 		return document;
 	}
@@ -121,6 +105,6 @@ public class KaleoDefinitionVersionModelListener
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		KaleoDefinitionVersionModelListener.class);
+		KaleoDefinitionModelListener.class);
 
 }

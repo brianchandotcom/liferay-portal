@@ -20,13 +20,17 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.ModelListener;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.DocumentImpl;
+import com.liferay.portal.workflow.kaleo.model.KaleoDefinition;
+import com.liferay.portal.workflow.kaleo.model.KaleoDefinitionVersion;
 import com.liferay.portal.workflow.kaleo.model.KaleoInstance;
+import com.liferay.portal.workflow.kaleo.service.KaleoDefinitionVersionLocalService;
 
 import java.time.Duration;
 
 import java.util.Date;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Inácio Nery
@@ -78,11 +82,11 @@ public class KaleoInstanceModelListener
 		Date createDate = kaleoInstance.getCreateDate();
 
 		document.addUID(
-			"InstanceWorkflowMetrics",
+			"WorkflowMetricsInstance",
 			digest(
 				kaleoInstance.getCompanyId(),
-				kaleoInstance.getKaleoInstanceId(),
-				kaleoInstance.getKaleoDefinitionVersionId()));
+				kaleoInstance.getKaleoDefinitionVersionId(),
+				kaleoInstance.getKaleoInstanceId()));
 		document.addKeyword("className", kaleoInstance.getClassName());
 		document.addKeyword("classPK", kaleoInstance.getClassPK());
 		document.addKeyword("companyId", kaleoInstance.getCompanyId());
@@ -92,8 +96,21 @@ public class KaleoInstanceModelListener
 		document.addKeyword("instanceId", kaleoInstance.getKaleoInstanceId());
 		document.addDateSortable(
 			"modifiedDate", kaleoInstance.getModifiedDate());
-		document.addKeyword(
-			"processId", kaleoInstance.getKaleoDefinitionVersionId());
+
+		KaleoDefinitionVersion kaleoDefinitionVersion =
+			_kaleoDefinitionVersionLocalService.fetchKaleoDefinitionVersion(
+				kaleoInstance.getKaleoDefinitionVersionId());
+
+		if (kaleoDefinitionVersion != null) {
+			KaleoDefinition kaleoDefinition =
+				kaleoDefinitionVersion.fetchKaleoDefinition();
+
+			if (kaleoDefinition != null) {
+				document.addKeyword(
+					"processId", kaleoDefinition.getKaleoDefinitionId());
+			}
+		}
+
 		document.addKeyword("userId", kaleoInstance.getUserId());
 
 		if (kaleoInstance.isCompleted()) {
@@ -122,5 +139,9 @@ public class KaleoInstanceModelListener
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		KaleoInstanceModelListener.class);
+
+	@Reference
+	private KaleoDefinitionVersionLocalService
+		_kaleoDefinitionVersionLocalService;
 
 }

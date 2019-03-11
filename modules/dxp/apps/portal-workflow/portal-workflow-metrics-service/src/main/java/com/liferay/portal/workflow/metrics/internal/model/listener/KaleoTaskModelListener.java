@@ -20,9 +20,13 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.ModelListener;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.DocumentImpl;
+import com.liferay.portal.workflow.kaleo.model.KaleoDefinition;
+import com.liferay.portal.workflow.kaleo.model.KaleoDefinitionVersion;
 import com.liferay.portal.workflow.kaleo.model.KaleoTask;
+import com.liferay.portal.workflow.kaleo.service.KaleoDefinitionVersionLocalService;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Inácio Nery
@@ -59,16 +63,30 @@ public class KaleoTaskModelListener extends BaseKaleoModelListener<KaleoTask> {
 		Document document = new DocumentImpl();
 
 		document.addUID(
-			"TaskWorkflowMetrics",
+			"WorkflowMetricsTask",
 			digest(
-				kaleoTask.getCompanyId(), kaleoTask.getKaleoTaskId(),
-				kaleoTask.getKaleoDefinitionVersionId()));
+				kaleoTask.getCompanyId(),
+				kaleoTask.getKaleoDefinitionVersionId(),
+				kaleoTask.getKaleoTaskId()));
 		document.addKeyword("companyId", kaleoTask.getCompanyId());
 		document.addDateSortable("createDate", kaleoTask.getCreateDate());
 		document.addDateSortable("modifiedDate", kaleoTask.getModifiedDate());
 		document.addKeyword("name", kaleoTask.getName());
-		document.addKeyword(
-			"processId", kaleoTask.getKaleoDefinitionVersionId());
+
+		KaleoDefinitionVersion kaleoDefinitionVersion =
+			_kaleoDefinitionVersionLocalService.fetchKaleoDefinitionVersion(
+				kaleoTask.getKaleoDefinitionVersionId());
+
+		if (kaleoDefinitionVersion != null) {
+			KaleoDefinition kaleoDefinition =
+				kaleoDefinitionVersion.fetchKaleoDefinition();
+
+			if (kaleoDefinition != null) {
+				document.addKeyword(
+					"processId", kaleoDefinition.getKaleoDefinitionId());
+			}
+		}
+
 		document.addKeyword("taskId", kaleoTask.getKaleoTaskId());
 
 		return document;
@@ -86,5 +104,9 @@ public class KaleoTaskModelListener extends BaseKaleoModelListener<KaleoTask> {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		KaleoTaskModelListener.class);
+
+	@Reference
+	private KaleoDefinitionVersionLocalService
+		_kaleoDefinitionVersionLocalService;
 
 }

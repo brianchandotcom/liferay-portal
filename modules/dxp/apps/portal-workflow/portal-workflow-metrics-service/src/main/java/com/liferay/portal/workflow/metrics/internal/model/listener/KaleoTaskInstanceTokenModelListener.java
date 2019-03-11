@@ -20,13 +20,17 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.ModelListener;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.DocumentImpl;
+import com.liferay.portal.workflow.kaleo.model.KaleoDefinition;
+import com.liferay.portal.workflow.kaleo.model.KaleoDefinitionVersion;
 import com.liferay.portal.workflow.kaleo.model.KaleoTaskInstanceToken;
+import com.liferay.portal.workflow.kaleo.service.KaleoDefinitionVersionLocalService;
 
 import java.time.Duration;
 
 import java.util.Date;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Inácio Nery
@@ -81,10 +85,10 @@ public class KaleoTaskInstanceTokenModelListener
 			"WorkflowMetricsToken",
 			digest(
 				kaleoTaskInstanceToken.getCompanyId(),
+				kaleoTaskInstanceToken.getKaleoDefinitionVersionId(),
 				kaleoTaskInstanceToken.getKaleoInstanceId(),
 				kaleoTaskInstanceToken.getKaleoTaskId(),
-				kaleoTaskInstanceToken.getKaleoInstanceTokenId(),
-				kaleoTaskInstanceToken.getKaleoDefinitionVersionId()));
+				kaleoTaskInstanceToken.getKaleoTaskInstanceTokenId()));
 		document.addKeyword("className", kaleoTaskInstanceToken.getClassName());
 		document.addKeyword("classPK", kaleoTaskInstanceToken.getClassPK());
 		document.addKeyword("companyId", kaleoTaskInstanceToken.getCompanyId());
@@ -96,11 +100,24 @@ public class KaleoTaskInstanceTokenModelListener
 			"instanceId", kaleoTaskInstanceToken.getKaleoInstanceId());
 		document.addDateSortable(
 			"modifiedDate", kaleoTaskInstanceToken.getModifiedDate());
-		document.addKeyword(
-			"processId", kaleoTaskInstanceToken.getKaleoDefinitionVersionId());
+
+		KaleoDefinitionVersion kaleoDefinitionVersion =
+			_kaleoDefinitionVersionLocalService.fetchKaleoDefinitionVersion(
+				kaleoTaskInstanceToken.getKaleoDefinitionVersionId());
+
+		if (kaleoDefinitionVersion != null) {
+			KaleoDefinition kaleoDefinition =
+				kaleoDefinitionVersion.fetchKaleoDefinition();
+
+			if (kaleoDefinition != null) {
+				document.addKeyword(
+					"processId", kaleoDefinition.getKaleoDefinitionId());
+			}
+		}
+
 		document.addKeyword("taskId", kaleoTaskInstanceToken.getKaleoTaskId());
 		document.addKeyword(
-			"tokenId", kaleoTaskInstanceToken.getKaleoInstanceTokenId());
+			"tokenId", kaleoTaskInstanceToken.getKaleoTaskInstanceTokenId());
 		document.addKeyword("userId", kaleoTaskInstanceToken.getUserId());
 
 		if (kaleoTaskInstanceToken.isCompleted()) {
@@ -131,5 +148,9 @@ public class KaleoTaskInstanceTokenModelListener
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		KaleoTaskInstanceTokenModelListener.class);
+
+	@Reference
+	private KaleoDefinitionVersionLocalService
+		_kaleoDefinitionVersionLocalService;
 
 }

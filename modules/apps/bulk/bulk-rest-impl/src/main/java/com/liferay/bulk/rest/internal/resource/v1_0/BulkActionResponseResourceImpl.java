@@ -323,9 +323,13 @@ public class BulkActionResponseResourceImpl
 			assetVocabulary -> assetVocabulary.isAssociatedToClassNameId(
 				classNameId)
 		).filter(
-			assetVocabulary ->
-				_assetCategoryLocalService.getVocabularyCategoriesCount(
-					assetVocabulary.getVocabularyId()) > 0
+			assetVocabulary -> {
+				int count =
+					_assetCategoryLocalService.getVocabularyCategoriesCount(
+						assetVocabulary.getVocabularyId());
+
+				return count > 0;
+			}
 		).collect(
 			Collectors.toList()
 		);

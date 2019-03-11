@@ -80,7 +80,7 @@
 </tr>
 <tr>
 	<td>WORKFLOW_STATUS</td>
-	<td>//div[contains(@class,'status')]/span[contains(.,'${key_status}')]</td>
+	<td>//*[contains(@class,'status')]/span[contains(.,'${key_status}')]</td>
 	<td></td>
 </tr>
 <tr>

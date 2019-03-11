@@ -322,7 +322,7 @@ public class BulkActionResponseResourceImpl
 	private Map<String, String[]> _getParameterMap(
 		BulkAssetEntryAction bulkAssetEntryAction) {
 
-		return _getStringMap(
+		return _getParamterMap(
 			bulkAssetEntryAction.getSelection(),
 			bulkAssetEntryAction.getRepositoryId(),
 			bulkAssetEntryAction.getFolderId(),
@@ -332,7 +332,7 @@ public class BulkActionResponseResourceImpl
 	private Map<String, String[]> _getParameterMap(
 		BulkAssetEntryUpdateCategoriesAction bulkAssetEntryUpdateTagsAction) {
 
-		return _getStringMap(
+		return _getParamterMap(
 			bulkAssetEntryUpdateTagsAction.getSelection(),
 			bulkAssetEntryUpdateTagsAction.getRepositoryId(),
 			bulkAssetEntryUpdateTagsAction.getFolderId(),
@@ -342,14 +342,14 @@ public class BulkActionResponseResourceImpl
 	private Map<String, String[]> _getParameterMap(
 		BulkAssetEntryUpdateTagsAction bulkAssetEntryUpdateTagsAction) {
 
-		return _getStringMap(
+		return _getParamterMap(
 			bulkAssetEntryUpdateTagsAction.getSelection(),
 			bulkAssetEntryUpdateTagsAction.getRepositoryId(),
 			bulkAssetEntryUpdateTagsAction.getFolderId(),
 			bulkAssetEntryUpdateTagsAction.getSelectAll());
 	}
 
-	private Map<String, String[]> _getStringMap(
+	private Map<String, String[]> _getParamterMap(
 		String[] values, Long repositoryId, Long folderId, Boolean selectAll) {
 
 		if (repositoryId == 0) {

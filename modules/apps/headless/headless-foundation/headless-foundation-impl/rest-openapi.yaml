@@ -669,32 +669,6 @@ paths:
                                 $ref: "#/components/schemas/Vocabulary"
                     description: ""
             tags: ["Vocabulary"]
-    "/emails-by/{classNameClassPK}":
-        get:
-            parameters:
-                - in: path
-                  name: classNameClassPK
-                  required: true
-                  schema:
-                      type: string
-                - in: query
-                  name: page
-                  schema:
-                      type: integer
-                - in: query
-                  name: pageSize
-                  schema:
-                      type: integer
-            responses:
-                200:
-                    content:
-                        application/json:
-                            schema:
-                                items:
-                                    $ref: "#/components/schemas/Email"
-                                type: array
-                    description: ""
-            tags: ["Email"]
     "/emails/{email-id}":
         get:
             parameters:
@@ -873,6 +847,33 @@ paths:
                                 $ref: "#/components/schemas/Organization"
                     description: ""
             tags: ["Organization"]
+    "/organizations/{organization-id}/emails":
+        get:
+            parameters:
+                - in: path
+                  name: organization-id
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+                - in: query
+                  name: page
+                  schema:
+                      type: integer
+                - in: query
+                  name: pageSize
+                  schema:
+                      type: integer
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/Email"
+                                type: array
+                    description: ""
+            tags: ["Email"]
     "/organizations/{organization-id}/organizations":
         get:
             parameters:
@@ -900,6 +901,60 @@ paths:
                                 type: array
                     description: ""
             tags: ["Organization"]
+    "/organizations/{organization-id}/phones":
+        get:
+            parameters:
+                - in: query
+                  name: page
+                  schema:
+                      type: integer
+                - in: query
+                  name: pageSize
+                  schema:
+                      type: integer
+                - in: path
+                  name: organization-id
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/Phone"
+                                type: array
+                    description: ""
+            tags: ["Phone"]
+    "/organizations/{organization-id}/postal-addresses":
+        get:
+            parameters:
+                - in: query
+                  name: page
+                  schema:
+                      type: integer
+                - in: query
+                  name: pageSize
+                  schema:
+                      type: integer
+                - in: path
+                  name: organization-id
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/PostalAddress"
+                                type: array
+                    description: ""
+            tags: ["PostalAddress"]
     "/organizations/{organization-id}/user-accounts":
         get:
             parameters:
@@ -927,7 +982,7 @@ paths:
                                 type: array
                     description: ""
             tags: ["UserAccount"]
-    "/phones-by/{classNameClassPK}":
+    "/organizations/{organization-id}/web-urls":
         get:
             parameters:
                 - in: query
@@ -939,20 +994,21 @@ paths:
                   schema:
                       type: integer
                 - in: path
-                  name: classNameClassPK
+                  name: organization-id
                   required: true
                   schema:
-                      type: string
+                      format: int64
+                      type: integer
             responses:
                 200:
                     content:
                         application/json:
                             schema:
                                 items:
-                                    $ref: "#/components/schemas/Phone"
+                                    $ref: "#/components/schemas/WebUrl"
                                 type: array
                     description: ""
-            tags: ["Phone"]
+            tags: ["WebUrl"]
     "/phones/{phone-id}":
         get:
             parameters:
@@ -970,32 +1026,6 @@ paths:
                                 $ref: "#/components/schemas/Phone"
                     description: ""
             tags: ["Phone"]
-    "/postal-addresses-by/{classNameClassPK}":
-        get:
-            parameters:
-                - in: query
-                  name: page
-                  schema:
-                      type: integer
-                - in: query
-                  name: pageSize
-                  schema:
-                      type: integer
-                - in: path
-                  name: classNameClassPK
-                  required: true
-                  schema:
-                      type: string
-            responses:
-                200:
-                    content:
-                        application/json:
-                            schema:
-                                items:
-                                    $ref: "#/components/schemas/PostalAddress"
-                                type: array
-                    description: ""
-            tags: ["PostalAddress"]
     "/postal-addresses/{postal-address-id}":
         get:
             parameters:
@@ -1172,6 +1202,33 @@ paths:
                                 $ref: "#/components/schemas/UserAccount"
                     description: ""
             tags: ["UserAccount"]
+    "/user-accounts/{user-account-id}/emails":
+        get:
+            parameters:
+                - in: path
+                  name: user-account-id
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+                - in: query
+                  name: page
+                  schema:
+                      type: integer
+                - in: query
+                  name: pageSize
+                  schema:
+                      type: integer
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/Email"
+                                type: array
+                    description: ""
+            tags: ["Email"]
     "/user-accounts/{user-account-id}/organizations":
         get:
             parameters:
@@ -1199,6 +1256,60 @@ paths:
                                 type: array
                     description: ""
             tags: ["Organization"]
+    "/user-accounts/{user-account-id}/phones":
+        get:
+            parameters:
+                - in: query
+                  name: page
+                  schema:
+                      type: integer
+                - in: query
+                  name: pageSize
+                  schema:
+                      type: integer
+                - in: path
+                  name: user-account-id
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/Phone"
+                                type: array
+                    description: ""
+            tags: ["Phone"]
+    "/user-accounts/{user-account-id}/postal-addresses":
+        get:
+            parameters:
+                - in: query
+                  name: page
+                  schema:
+                      type: integer
+                - in: query
+                  name: pageSize
+                  schema:
+                      type: integer
+                - in: path
+                  name: user-account-id
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/PostalAddress"
+                                type: array
+                    description: ""
+            tags: ["PostalAddress"]
     "/user-accounts/{user-account-id}/roles":
         get:
             parameters:
@@ -1226,6 +1337,33 @@ paths:
                                 type: array
                     description: ""
             tags: ["Role"]
+    "/user-accounts/{user-account-id}/web-urls":
+        get:
+            parameters:
+                -   in: query
+                  name: page
+                  schema:
+                      type: integer
+                -   in: query
+                  name: pageSize
+                  schema:
+                      type: integer
+                -   in: path
+                  name: user-account-id
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/WebUrl"
+                                type: array
+                    description: ""
+            tags: ["WebUrl"]
     "/user-accounts/{user-id}/segments":
         get:
             parameters:
@@ -1388,32 +1526,6 @@ paths:
                                 type: array
                     description: ""
             tags: ["UserAccount"]
-    "/web-urls-by/{classNameClassPK}":
-        get:
-            parameters:
-                - in: query
-                  name: page
-                  schema:
-                      type: integer
-                - in: query
-                  name: pageSize
-                  schema:
-                      type: integer
-                - in: path
-                  name: classNameClassPK
-                  required: true
-                  schema:
-                      type: string
-            responses:
-                200:
-                    content:
-                        application/json:
-                            schema:
-                                items:
-                                    $ref: "#/components/schemas/WebUrl"
-                                type: array
-                    description: ""
-            tags: ["WebUrl"]
     "/web-urls/{web-url-id}":
         get:
             parameters:

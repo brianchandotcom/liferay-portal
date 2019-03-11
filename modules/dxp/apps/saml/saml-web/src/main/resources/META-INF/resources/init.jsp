@@ -72,7 +72,7 @@ page import="java.util.List" %>
 
 <%
 GeneralTabDefaultViewDisplayContext
-	certificateBindsDisplayContext = (GeneralTabDefaultViewDisplayContext)renderRequest.getAttribute(GeneralTabDefaultViewDisplayContext.class.getName());
+	generalTabDefaultViewDisplayContext = (GeneralTabDefaultViewDisplayContext)renderRequest.getAttribute(GeneralTabDefaultViewDisplayContext.class.getName());
 
 String currentURL = PortalUtil.getCurrentURL(request);
 

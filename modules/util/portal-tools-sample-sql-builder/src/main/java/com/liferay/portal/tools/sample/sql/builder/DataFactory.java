@@ -261,8 +261,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 import java.util.TimeZone;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import javax.portlet.PortletPreferences;
 
@@ -2222,16 +2220,29 @@ public class DataFactory {
 		return layoutSetVersionModels;
 	}
 
-	public List<LayoutVersionModel> newLayoutVersionModels(
-		List<LayoutModel> layoutModels) {
+	public LayoutVersionModel newLayoutVersionModel(LayoutModel layoutModel) {
+		LayoutVersionModel layoutVersionModel = new LayoutVersionModelImpl();
 
-		Stream<LayoutModel> layoutModelStream = layoutModels.stream();
+		long layoutVersionId = _counter.get();
 
-		return layoutModelStream.map(
-			this::newLayoutVersionModel
-		).collect(
-			Collectors.toList()
-		);
+		layoutVersionModel.setLayoutVersionId(layoutVersionId);
+
+		layoutVersionModel.setUuid(SequentialUUID.generate());
+		layoutVersionModel.setPlid(layoutModel.getPlid());
+		layoutVersionModel.setGroupId(layoutModel.getGroupId());
+		layoutVersionModel.setCompanyId(_companyId);
+		layoutVersionModel.setUserId(_sampleUserId);
+		layoutVersionModel.setUserName(_SAMPLE_USER_NAME);
+		layoutVersionModel.setCreateDate(new Date());
+		layoutVersionModel.setModifiedDate(new Date());
+		layoutVersionModel.setLayoutId(layoutModel.getLayoutId());
+		layoutVersionModel.setName(layoutModel.getName());
+		layoutVersionModel.setType(layoutModel.getType());
+		layoutVersionModel.setFriendlyURL(layoutModel.getFriendlyURL());
+		layoutVersionModel.setTypeSettings(layoutModel.getTypeSettings());
+		layoutVersionModel.setLastPublishDate(new Date());
+
+		return layoutVersionModel;
 	}
 
 	public List<MBCategoryModel> newMBCategoryModels(long groupId) {
@@ -3492,33 +3503,6 @@ public class DataFactory {
 		layoutSetVersionModel.setPageCount(layoutSetModel.getPageCount());
 
 		return layoutSetVersionModel;
-	}
-
-	protected LayoutVersionModel newLayoutVersionModel(
-		LayoutModel layoutModel) {
-
-		LayoutVersionModel layoutVersionModel = new LayoutVersionModelImpl();
-
-		long layoutVersionId = _counter.get();
-
-		layoutVersionModel.setLayoutVersionId(layoutVersionId);
-
-		layoutVersionModel.setUuid(SequentialUUID.generate());
-		layoutVersionModel.setPlid(layoutModel.getPlid());
-		layoutVersionModel.setGroupId(layoutModel.getGroupId());
-		layoutVersionModel.setCompanyId(_companyId);
-		layoutVersionModel.setUserId(_sampleUserId);
-		layoutVersionModel.setUserName(_SAMPLE_USER_NAME);
-		layoutVersionModel.setCreateDate(new Date());
-		layoutVersionModel.setModifiedDate(new Date());
-		layoutVersionModel.setLayoutId(layoutModel.getLayoutId());
-		layoutVersionModel.setName(layoutModel.getName());
-		layoutVersionModel.setType(layoutModel.getType());
-		layoutVersionModel.setFriendlyURL(layoutModel.getFriendlyURL());
-		layoutVersionModel.setTypeSettings(layoutModel.getTypeSettings());
-		layoutVersionModel.setLastPublishDate(new Date());
-
-		return layoutVersionModel;
 	}
 
 	protected MBCategoryModel newMBCategoryModel(long groupId, int index) {

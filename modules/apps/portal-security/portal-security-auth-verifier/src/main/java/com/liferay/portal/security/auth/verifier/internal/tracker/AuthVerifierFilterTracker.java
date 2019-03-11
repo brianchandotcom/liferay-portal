@@ -214,15 +214,6 @@ public class AuthVerifierFilterTracker {
 		public ServiceRegistrations addingService(
 			ServiceReference<ServletContextHelper> serviceReference) {
 
-			Map<String, Object> properties = new HashMap<>(
-				_getWhiteboardProperties(serviceReference));
-
-			properties.put(
-				"service.ranking",
-				MapUtil.getInteger(
-					properties, "remote.access.filter.service.ranking",
-					_defaultRemoteAccessFilterServiceRanking));
-
 			return new ServiceRegistrations(
 				_bundleContext.registerService(
 					Filter.class, new AuthVerifierFilter(),
@@ -230,7 +221,9 @@ public class AuthVerifierFilterTracker {
 						_buildProperties(serviceReference))),
 				_bundleContext.registerService(
 					Filter.class, new RemoteAccessFilter(),
-					new HashMapDictionary<>(properties)));
+					new HashMapDictionary<>(
+						_buildPropertiesForRemoteAccessFilter(
+							serviceReference))));
 		}
 
 		@Override
@@ -247,17 +240,9 @@ public class AuthVerifierFilterTracker {
 			ServiceRegistration<Filter> remoteAccessFilterServiceRegistration =
 				serviceRegistrations.getRemoteAccessFilterServiceRegistration();
 
-			Map<String, Object> properties = new HashMap<>(
-				_getWhiteboardProperties(serviceReference));
-
-			properties.put(
-				"service.ranking",
-				MapUtil.getInteger(
-					properties, "remote.access.filter.service.ranking",
-					_defaultRemoteAccessFilterServiceRanking));
-
 			remoteAccessFilterServiceRegistration.setProperties(
-				new HashMapDictionary<>(properties));
+				new HashMapDictionary<>(
+					_buildPropertiesForRemoteAccessFilter(serviceReference)));
 		}
 
 		@Override
@@ -300,6 +285,21 @@ public class AuthVerifierFilterTracker {
 			}
 
 			properties.putAll(_getWhiteboardProperties(serviceReference));
+
+			return properties;
+		}
+
+		private Map<String, Object> _buildPropertiesForRemoteAccessFilter(
+			ServiceReference<ServletContextHelper> serviceReference) {
+
+			Map<String, Object> properties = new HashMap<>(
+				_getWhiteboardProperties(serviceReference));
+
+			properties.put(
+				"service.ranking",
+				MapUtil.getInteger(
+					properties, "remote.access.filter.service.ranking",
+					_defaultRemoteAccessFilterServiceRanking));
 
 			return properties;
 		}

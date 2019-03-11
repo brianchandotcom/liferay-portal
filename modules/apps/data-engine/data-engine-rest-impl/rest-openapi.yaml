@@ -59,6 +59,25 @@ components:
                         $ref: '#/components/schemas/LocalizedValue'
                     type: array
             type: object
+        DataRecordCollection:
+            description: https://www.schema.org/DataRecordCollection
+            properties:
+                dataDefinitionId:
+                    format: int64
+                    type: integer
+                id:
+                    format: int64
+                    type: integer
+                description:
+                    items:
+                        $ref: '#/components/schemas/LocalizedValue'
+                    type: array
+                name:
+                    items:
+                        $ref: '#/components/schemas/LocalizedValue'
+                    type: array
+
+            type: object
         LocalizedValue:
             description: https://www.schema.org/LocalizedValue
             properties:
@@ -105,7 +124,7 @@ paths:
             parameters:
                 - in: query
                   name: groupId
-                  reqired: true
+                  required: true
                   schema:
                       format: int64
                       type: integer
@@ -120,6 +139,7 @@ paths:
                         application/json:
                             schema:
                                 $ref: "#/components/schemas/DataDefinition"
+                    description: ""
             tags: ["DataDefinition"]
     "/data-definitions/search":
         get:
@@ -208,3 +228,105 @@ paths:
                                 $ref: "#/components/schemas/DataDefinition"
                     description: ""
             tags: ["DataDefinition"]
+    "/data-record-collections":
+        get:
+            parameters:
+                - in: query
+                  name: page
+                  required: true
+                  schema:
+                      type: integer
+                - in: query
+                  name: pageSize
+                  required: true
+                  schema:
+                      type: integer
+                - in: query
+                  name: groupId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/DataRecordCollection"
+                                type: array
+                    description: ""
+            tags: ["DataRecordCollection"]
+        post:
+            parameters:
+                - in: query
+                  name: groupId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/DataRecordCollection"
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/DataRecordCollection"
+                    description: ""
+            tags: ["DataRecordCollection"]
+    "/data-record-collections/{data-record-collection-id}":
+        delete:
+            parameters:
+                - in: path
+                  name: data-record-collection-id
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            responses:
+                204:
+                    content:
+                        application/json: {}
+                    description: ""
+            tags: ["DataRecordCollection"]
+        get:
+            parameters:
+                - in: path
+                  name: data-record-collection-id
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/DataRecordCollection"
+                    description: ""
+            tags: ["DataRecordCollection"]
+        put:
+            parameters:
+                - in: path
+                  name: data-record-collection-id
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/DataRecordCollection"
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/DataRecordCollection"
+                    description: ""
+            tags: ["DataRecordCollection"]

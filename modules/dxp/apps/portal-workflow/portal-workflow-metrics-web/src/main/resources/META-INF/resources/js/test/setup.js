@@ -9,6 +9,8 @@ const path = require('path');
 const properties = require('properties');
 
 const LANG_KEY_PATH = path.resolve(
+	'..',
+	'portal-workflow-metrics-lang',
 	'src',
 	'main',
 	'resources',

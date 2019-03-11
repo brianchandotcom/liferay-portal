@@ -218,7 +218,8 @@ public class AuthVerifierFilterTracker {
 				_bundleContext.registerService(
 					Filter.class, new AuthVerifierFilter(),
 					new HashMapDictionary<>(
-						_buildProperties(serviceReference))),
+						_buildPropertiesForAuthVerifierFilter(
+							serviceReference))),
 				_bundleContext.registerService(
 					Filter.class, new RemoteAccessFilter(),
 					new HashMapDictionary<>(
@@ -235,7 +236,8 @@ public class AuthVerifierFilterTracker {
 				serviceRegistrations.getAuthVerifierFilterServiceRegistration();
 
 			authVerifierFilterServiceRegistration.setProperties(
-				new HashMapDictionary<>(_buildProperties(serviceReference)));
+				new HashMapDictionary<>(
+					_buildPropertiesForAuthVerifierFilter(serviceReference)));
 
 			ServiceRegistration<Filter> remoteAccessFilterServiceRegistration =
 				serviceRegistrations.getRemoteAccessFilterServiceRegistration();
@@ -261,7 +263,7 @@ public class AuthVerifierFilterTracker {
 			remoteAccessFilterServiceRegistration.unregister();
 		}
 
-		private Map<String, Object> _buildProperties(
+		private Map<String, Object> _buildPropertiesForAuthVerifierFilter(
 			ServiceReference<ServletContextHelper> serviceReference) {
 
 			Map<String, Object> properties = new HashMap<>();

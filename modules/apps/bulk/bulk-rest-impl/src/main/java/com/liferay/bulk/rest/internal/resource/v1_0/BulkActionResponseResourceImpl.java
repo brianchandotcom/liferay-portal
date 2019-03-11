@@ -93,22 +93,28 @@ public class BulkActionResponseResourceImpl
 			BulkSelection<AssetEntry> assetEntryBulkSelection =
 				bulkSelection.toAssetEntryBulkSelection();
 
-			Map<String, Serializable> inputMap = new HashMap<>();
-
-			inputMap.put(
-				BulkSelectionInputParameters.ASSET_ENTRY_BULK_SELECTION, true);
-			inputMap.put(
-				"append", bulkAssetEntryUpdateCategoriesAction.getAppend());
-			inputMap.put(
-				"toAddCategoryIds",
-				bulkAssetEntryUpdateCategoriesAction.getToAddCategoryIds());
-			inputMap.put(
-				"toRemoveCategoryIds",
-				bulkAssetEntryUpdateCategoriesAction.getToRemoveCategoryIds());
-
 			_bulkSelectionRunner.run(
 				_user, assetEntryBulkSelection,
-				_editCategoriesBulkSelectionAction, inputMap);
+				_editCategoriesBulkSelectionAction,
+				new HashMap<String, Serializable>() {
+					{
+						put(
+							BulkSelectionInputParameters.
+								ASSET_ENTRY_BULK_SELECTION,
+							true);
+						put(
+							"append",
+							bulkAssetEntryUpdateCategoriesAction.getAppend());
+						put(
+							"toAddCategoryIds",
+							bulkAssetEntryUpdateCategoriesAction.
+								getToAddCategoryIds());
+						put(
+							"toRemoveCategoryIds",
+							bulkAssetEntryUpdateCategoriesAction.
+								getToRemoveCategoryIds());
+					}
+				});
 
 			return _toBulkActionResponse(null);
 		}
@@ -189,21 +195,27 @@ public class BulkActionResponseResourceImpl
 			BulkSelection<AssetEntry> assetEntryBulkSelection =
 				bulkSelection.toAssetEntryBulkSelection();
 
-			Map<String, Serializable> inputMap = new HashMap<>();
-
-			inputMap.put(
-				BulkSelectionInputParameters.ASSET_ENTRY_BULK_SELECTION, true);
-			inputMap.put("append", bulkAssetEntryUpdateTagsAction.getAppend());
-			inputMap.put(
-				"toAddTagNames",
-				bulkAssetEntryUpdateTagsAction.getToAddTagNames());
-			inputMap.put(
-				"toRemoveTagNames",
-				bulkAssetEntryUpdateTagsAction.getToRemoveTagNames());
-
 			_bulkSelectionRunner.run(
 				_user, assetEntryBulkSelection, _editTagsBulkSelectionAction,
-				inputMap);
+				new HashMap<String, Serializable>() {
+					{
+						put(
+							BulkSelectionInputParameters.
+								ASSET_ENTRY_BULK_SELECTION,
+							true);
+						put(
+							"append",
+							bulkAssetEntryUpdateTagsAction.getAppend());
+						put(
+							"toAddTagNames",
+							bulkAssetEntryUpdateTagsAction.
+								getToAddTagNames());
+						put(
+							"toRemoveTagNames",
+							bulkAssetEntryUpdateTagsAction.
+								getToRemoveTagNames());
+					}
+				});
 
 			return _toBulkActionResponse(null);
 		}
@@ -358,16 +370,16 @@ public class BulkActionResponseResourceImpl
 			return Collections.singletonMap("rowIdsFileEntry", rowIdsFileEntry);
 		}
 
-		Map<String, String[]> parameterMap = new HashMap<>();
-
-		parameterMap.put("folderId", new String[] {String.valueOf(folderId)});
-		parameterMap.put(
-			"repositoryId", new String[] {String.valueOf(repositoryId)});
-		parameterMap.put("rowIdsFileEntry", rowIdsFileEntry);
-		parameterMap.put(
-			"selectAll", new String[] {Boolean.toString(selectAll)});
-
-		return parameterMap;
+		return new HashMap<String, String[]>() {
+			{
+				put("folderId", new String[] {String.valueOf(folderId)});
+				put(
+					"repositoryId",
+					new String[] {String.valueOf(repositoryId)});
+				put("rowIdsFileEntry", rowIdsFileEntry);
+				put("selectAll", new String[] {Boolean.toString(selectAll)});
+			}
+		};
 	}
 
 	private Map<AssetVocabulary, List<AssetCategory>> _groupByAssetVocabulary(

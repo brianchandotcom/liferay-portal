@@ -29,7 +29,7 @@ import javax.annotation.Generated;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
- * @author Alejandro Tard�n
+ * @author Alejandro Tardín
  * @generated
  */
 @Generated("")

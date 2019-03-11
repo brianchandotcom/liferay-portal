@@ -52,11 +52,15 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement(name = "${schemaName}")
 public class ${schemaName} <#if freeMarkerTool.getDTOParentClassName(openAPIYAML, schemaName)??>extends ${freeMarkerTool.getParentClass(openAPIYAML, schemaName)}</#if> {
 
+	<#assign enumSimpleClassNames = [] />
+
 	<#if schema.propertySchemas??>
 		<#list schema.propertySchemas?keys as propertySchemaName>
 			<#assign propertySchema = schema.propertySchemas[propertySchemaName] />
 
 			<#if propertySchema.enumValues?? && (propertySchema.enumValues?size > 0)>
+				<#assign enumSimpleClassNames = enumSimpleClassNames + [propertySchemaName?cap_first] />
+
 				public static enum ${propertySchemaName?cap_first} {
 
 					<#list propertySchema.enumValues as enumValue>
@@ -177,8 +181,8 @@ public class ${schemaName} <#if freeMarkerTool.getDTOParentClassName(openAPIYAML
 				else {
 					sb.append("[");
 
-					for (int i = 0; i < ${javaMethodParameter.parameterName}.length; i++){
-						<#if javaMethodParameter.parameterType?ends_with("Date;") || javaMethodParameter.parameterType?ends_with("String;")>
+					for (int i = 0; i < ${javaMethodParameter.parameterName}.length; i++) {
+						<#if javaMethodParameter.parameterType?ends_with("Date;") || javaMethodParameter.parameterType?ends_with("String;") || enumSimpleClassNames?seq_contains(javaMethodParameter.parameterType)>
 							sb.append("\"");
 							sb.append(${javaMethodParameter.parameterName}[i]);
 							sb.append("\"");
@@ -194,7 +198,7 @@ public class ${schemaName} <#if freeMarkerTool.getDTOParentClassName(openAPIYAML
 					sb.append("]");
 				}
 			<#else>
-				<#if javaMethodParameter.parameterType?ends_with("Date") || javaMethodParameter.parameterType?ends_with("String")>
+				<#if javaMethodParameter.parameterType?ends_with("Date") || javaMethodParameter.parameterType?ends_with("String") || enumSimpleClassNames?seq_contains(javaMethodParameter.parameterType)>
 					sb.append("\"");
 					sb.append(${javaMethodParameter.parameterName});
 					sb.append("\"");

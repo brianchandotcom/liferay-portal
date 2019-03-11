@@ -274,8 +274,7 @@ public class AssetListSegmentRelPersistenceTest {
 			"AssetListSegmentRel", "uuid", true, "assetListSegmentRelId", true,
 			"groupId", true, "companyId", true, "userId", true, "userName",
 			true, "createDate", true, "modifiedDate", true, "assetListEntryId",
-			true, "segmentsEntryId", true, "typeSettings", true,
-			"lastPublishDate", true);
+			true, "segmentsEntryId", true, "lastPublishDate", true);
 	}
 
 	@Test

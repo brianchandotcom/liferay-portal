@@ -17,7 +17,8 @@
 <%@ include file="/portal_settings/init.jsp" %>
 
 <%
+boolean groupSharingConfigurationDisabled = GetterUtil.getBoolean(request.getAttribute("groupSharingConfigurationDisabled"));
 SharingConfiguration sharingConfiguration = (SharingConfiguration)request.getAttribute(SharingConfiguration.class.getName());
 %>
 
-<aui:input label="enabled" name="TypeSettingsProperties--sharingEnabled--" type="toggle-switch" value="<%= sharingConfiguration.isEnabled() %>" />
+<aui:input disabled="<%= groupSharingConfigurationDisabled %>" label="enabled" name="TypeSettingsProperties--sharingEnabled--" type="toggle-switch" value="<%= sharingConfiguration.isEnabled() %>" />

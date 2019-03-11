@@ -19,7 +19,9 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.servlet.taglib.ui.BaseJSPFormNavigatorEntry;
 import com.liferay.portal.kernel.servlet.taglib.ui.FormNavigatorConstants;
 import com.liferay.portal.kernel.servlet.taglib.ui.FormNavigatorEntry;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ResourceBundleLoader;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.sharing.configuration.SharingConfiguration;
 import com.liferay.sharing.configuration.SharingConfigurationFactory;
 
@@ -77,6 +79,17 @@ public class SharingSitesFormNavigatorEntry
 			SharingConfiguration.class.getName(),
 			_sharingConfigurationFactory.getGroupSharingConfiguration(
 				liveGroup));
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		SharingConfiguration companySharingConfiguration =
+			_sharingConfigurationFactory.getCompanySharingConfiguration(
+				themeDisplay.getCompany());
+
+		request.setAttribute(
+			"groupSharingConfigurationDisabled",
+			!companySharingConfiguration.isEnabled());
 
 		super.include(request, response);
 	}

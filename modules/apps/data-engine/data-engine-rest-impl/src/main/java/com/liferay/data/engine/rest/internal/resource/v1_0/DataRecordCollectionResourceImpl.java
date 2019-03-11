@@ -56,6 +56,25 @@ public class DataRecordCollectionResourceImpl
 	}
 
 	@Override
+	public Page<DataRecordCollection> getDataRecordCollectionSearchPage(
+			Long groupId, String keywords, Pagination pagination)
+		throws Exception {
+
+		return Page.of(
+			transform(
+				_ddlRecordSetLocalService.search(
+					contextCompany.getCompanyId(), groupId, keywords,
+					DDLRecordSetConstants.SCOPE_DATA_ENGINE,
+					pagination.getStartPosition(), pagination.getEndPosition(),
+					null),
+				this::_toDataRecordCollection),
+			pagination,
+			_ddlRecordSetLocalService.searchCount(
+				contextCompany.getCompanyId(), groupId, keywords,
+				DDLRecordSetConstants.SCOPE_DATA_ENGINE));
+	}
+
+	@Override
 	public Page<DataRecordCollection> getDataRecordCollectionsPage(
 			Long groupId, Pagination pagination)
 		throws Exception {

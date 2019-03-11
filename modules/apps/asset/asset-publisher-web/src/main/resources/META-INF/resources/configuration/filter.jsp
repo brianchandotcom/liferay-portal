@@ -48,7 +48,7 @@ Map<String, Object> context = new HashMap<>();
 
 context.put("categorySelectorURL", assetPublisherDisplayContext.getCategorySelectorURL());
 context.put("id", "autofield");
-context.put("groupIds", StringUtil.merge(assetPublisherDisplayContext.getReferencedModelsGroupIds()));
+context.put("groupIds", ListUtil.toList(assetPublisherDisplayContext.getReferencedModelsGroupIds()));
 context.put("namespace", liferayPortletResponse.getNamespace());
 context.put("pathThemeImages", themeDisplay.getPathThemeImages());
 context.put("rules", assetPublisherDisplayContext.getAutoFieldRulesJSONArray());

@@ -480,8 +480,8 @@ public class AssetPublisherConfigurationAction
 				actionRequest, "queryTagNames" + index);
 		}
 		else {
-			values = StringUtil.split(
-				ParamUtil.getString(actionRequest, "queryCategoryIds" + index));
+			values = ParamUtil.getStringValues(
+				actionRequest, "queryCategoryIds" + index);
 		}
 
 		return new AssetQueryRule(contains, andOperator, name, values);

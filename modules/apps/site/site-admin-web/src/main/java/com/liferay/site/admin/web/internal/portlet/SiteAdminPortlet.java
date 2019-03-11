@@ -385,15 +385,12 @@ public class SiteAdminPortlet extends MVCPortlet {
 			groupId = themeDisplay.getScopeGroupId();
 		}
 
-		if (groupId > 0) {
-			try {
-				GroupPermissionUtil.check(
-					themeDisplay.getPermissionChecker(), groupId,
-					ActionKeys.VIEW);
-			}
-			catch (PortalException pe) {
-				SessionErrors.add(renderRequest, pe.getClass());
-			}
+		try {
+			GroupPermissionUtil.check(
+				themeDisplay.getPermissionChecker(), groupId, ActionKeys.VIEW);
+		}
+		catch (PortalException pe) {
+			SessionErrors.add(renderRequest, pe.getClass());
 		}
 
 		renderRequest.setAttribute(

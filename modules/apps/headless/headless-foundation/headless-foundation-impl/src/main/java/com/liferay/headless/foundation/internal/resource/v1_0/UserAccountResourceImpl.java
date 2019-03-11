@@ -16,6 +16,7 @@ package com.liferay.headless.foundation.internal.resource.v1_0;
 
 import com.liferay.headless.foundation.dto.v1_0.ContactInformation;
 import com.liferay.headless.foundation.dto.v1_0.UserAccount;
+import com.liferay.headless.foundation.internal.resource.UserServiceHelper;
 import com.liferay.headless.foundation.resource.v1_0.UserAccountResource;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -26,7 +27,6 @@ import com.liferay.portal.kernel.model.ListType;
 import com.liferay.portal.kernel.model.ListTypeConstants;
 import com.liferay.portal.kernel.model.ListTypeModel;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.model.UserConstants;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
@@ -35,9 +35,7 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.service.UserService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.comparator.UserLastNameComparator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.vulcan.multipart.MultipartBody;
@@ -153,20 +151,10 @@ public class UserAccountResourceImpl extends BaseUserAccountResourceImpl {
 			userAccount.getHonorificSuffix(), ListTypeConstants.CONTACT_SUFFIX);
 		Calendar birthDateCalendar = _getBirthDateCalendar(userAccount);
 
-		User user = _userLocalService.addUser(
-			UserConstants.USER_ID_DEFAULT, contextCompany.getCompanyId(), true,
-			null, null, Validator.isNull(userAccount.getAlternateName()),
-			userAccount.getAlternateName(), userAccount.getEmail(), 0,
-			StringPool.BLANK, LocaleUtil.getDefault(),
-			userAccount.getGivenName(), StringPool.BLANK,
-			userAccount.getFamilyName(), prefixId, suffixId, true,
-			birthDateCalendar.get(Calendar.MONTH),
-			birthDateCalendar.get(Calendar.DATE),
-			birthDateCalendar.get(Calendar.YEAR), userAccount.getJobTitle(),
-			null, null, null, null, false, new ServiceContext());
-
-		_userLocalService.updatePortrait(
-			user.getUserId(), multipartBody.getBinaryFileAsBytes("file"));
+		User user = _userServiceHelper.addUserWithPortrait(
+			userAccount, contextCompany.getCompanyId(),
+			multipartBody.getBinaryFileAsBytes("file"), prefixId, suffixId,
+			birthDateCalendar);
 
 		return _toUserAccount(user);
 	}
@@ -335,5 +323,8 @@ public class UserAccountResourceImpl extends BaseUserAccountResourceImpl {
 
 	@Reference
 	private UserService _userService;
+
+	@Reference
+	private UserServiceHelper _userServiceHelper;
 
 }

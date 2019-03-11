@@ -341,8 +341,8 @@ public class AssignScopesDisplayContext
 		@Override
 		public String toString() {
 			return StringBundler.concat(
-				"[", String.join(",", getScopeAliases()), "][",
-				String.join(",", getGlobalScopeAliases()), "]");
+				"[", StringUtil.merge(getScopeAliases()), "][",
+				StringUtil.merge(getGlobalScopeAliases()), "]");
 		}
 
 		private Set<AssignableScopes> _globalAssignableScopes = new HashSet<>();

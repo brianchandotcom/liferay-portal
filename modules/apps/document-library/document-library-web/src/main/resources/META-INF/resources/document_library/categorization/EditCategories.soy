@@ -1,6 +1,7 @@
 {namespace EditCategories}
 
 {template .render}
+	{@param hiddenInput: string}
 	{@param loading: bool}
 	{@param showModal: bool}
 	{@param spritemap: string}
@@ -20,6 +21,7 @@
 				{else}
 					{call .categories}
 						{param description: $description /}
+						{param hiddenInput: $hiddenInput /}
 						{param multiple: $multiple /}
 						{param namespace: $namespace /}
 						{param selectCategoriesUrl: $selectCategoriesUrl /}
@@ -59,6 +61,7 @@
 {template .categories}
 	{@param? vocabularies: list<?>}
 	{@param? namespace: string}
+	{@param hiddenInput: string}
 	{@param selectCategoriesUrl: string}
 	{@param spritemap: string}
 	{@param? description: string}
@@ -101,7 +104,7 @@
 			{param elementClasses: 'clay-multi-select' /}
 			{param eventName: $namespace + 'selectCategories' /}
 			{param id: $namespace + 'assetTagsSelector' /}
-			{param inputName: $namespace + '_hiddenInput_' /}
+			{param inputName: $namespace + $hiddenInput /}
 			{param portletURL: $selectCategoriesUrl /}
 			{param spritemap: $spritemap /}
 			{param vocabularies: $vocabularies /}

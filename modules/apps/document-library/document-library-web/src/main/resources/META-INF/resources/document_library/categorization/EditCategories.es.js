@@ -123,11 +123,16 @@ class EditCategories extends Component {
 	 */
 	_getFinalCategories() {
 		let finalCategories = [];
+		let inputElementName = this.namespace + this.hiddenInput;
 
 		this.vocabularies.forEach(
 			vocabulary => {
-				let categoryIds = vocabulary.selectedItems.map(item => item.value);
-				finalCategories = finalCategories.concat(categoryIds);
+				let inputNode = document.getElementById(inputElementName + vocabulary.id);
+
+				if (inputNode.value) {
+					let categoryIds = inputNode.value.split(',');
+					finalCategories = finalCategories.concat(categoryIds);
+				}
 			}
 		);
 
@@ -287,6 +292,13 @@ EditCategories.STATE = {
 	 * @type {String}
 	 */
 	folderId: Config.string(),
+
+	/**
+	* Hidden input name
+	*
+	* @type {String}
+	 */
+	hiddenInput: Config.string().value('assetCategoryIds_').internal(),
 
 	/**
 	 * Original categoryIds

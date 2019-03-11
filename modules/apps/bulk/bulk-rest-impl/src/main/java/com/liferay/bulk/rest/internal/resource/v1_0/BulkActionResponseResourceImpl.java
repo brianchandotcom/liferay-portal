@@ -310,7 +310,7 @@ public class BulkActionResponseResourceImpl
 	}
 
 	private List<AssetVocabulary> _getAssetVocabularies(
-			long groupId, long classNameId)
+			Long groupId, Long classNameId)
 		throws Exception {
 
 		List<AssetVocabulary> assetVocabularies =
@@ -386,7 +386,7 @@ public class BulkActionResponseResourceImpl
 	}
 
 	private Map<AssetVocabulary, List<AssetCategory>> _getAssetCategoriesMap(
-			long groupId, long classNameId, Set<AssetCategory> assetCategories)
+			Long groupId, Long classNameId, Set<AssetCategory> assetCategories)
 		throws Exception {
 
 		List<AssetVocabulary> assetVocabularies = _getAssetVocabularies(

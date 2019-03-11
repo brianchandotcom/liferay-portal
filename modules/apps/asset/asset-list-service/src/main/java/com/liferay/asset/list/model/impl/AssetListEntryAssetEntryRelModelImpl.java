@@ -75,8 +75,9 @@ public class AssetListEntryAssetEntryRelModelImpl
 		{"groupId", Types.BIGINT}, {"companyId", Types.BIGINT},
 		{"userId", Types.BIGINT}, {"userName", Types.VARCHAR},
 		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
-		{"assetListEntryId", Types.BIGINT}, {"assetEntryId", Types.BIGINT},
-		{"position", Types.INTEGER}, {"lastPublishDate", Types.TIMESTAMP}
+		{"assetListEntryId", Types.BIGINT}, {"segmentsEntryId", Types.BIGINT},
+		{"assetEntryId", Types.BIGINT}, {"position", Types.INTEGER},
+		{"lastPublishDate", Types.TIMESTAMP}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
@@ -92,13 +93,14 @@ public class AssetListEntryAssetEntryRelModelImpl
 		TABLE_COLUMNS_MAP.put("createDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("modifiedDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("assetListEntryId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("segmentsEntryId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("assetEntryId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("position", Types.INTEGER);
 		TABLE_COLUMNS_MAP.put("lastPublishDate", Types.TIMESTAMP);
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table AssetListEntryAssetEntryRel (uuid_ VARCHAR(75) null,assetListEntryAssetEntryRelId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,assetListEntryId LONG,assetEntryId LONG,position INTEGER,lastPublishDate DATE null)";
+		"create table AssetListEntryAssetEntryRel (uuid_ VARCHAR(75) null,assetListEntryAssetEntryRelId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,assetListEntryId LONG,segmentsEntryId LONG,assetEntryId LONG,position INTEGER,lastPublishDate DATE null)";
 
 	public static final String TABLE_SQL_DROP =
 		"drop table AssetListEntryAssetEntryRel";
@@ -308,6 +310,12 @@ public class AssetListEntryAssetEntryRelModelImpl
 			(BiConsumer<AssetListEntryAssetEntryRel, Long>)
 				AssetListEntryAssetEntryRel::setAssetListEntryId);
 		attributeGetterFunctions.put(
+			"segmentsEntryId", AssetListEntryAssetEntryRel::getSegmentsEntryId);
+		attributeSetterBiConsumers.put(
+			"segmentsEntryId",
+			(BiConsumer<AssetListEntryAssetEntryRel, Long>)
+				AssetListEntryAssetEntryRel::setSegmentsEntryId);
+		attributeGetterFunctions.put(
 			"assetEntryId", AssetListEntryAssetEntryRel::getAssetEntryId);
 		attributeSetterBiConsumers.put(
 			"assetEntryId",
@@ -503,6 +511,16 @@ public class AssetListEntryAssetEntryRelModelImpl
 	}
 
 	@Override
+	public long getSegmentsEntryId() {
+		return _segmentsEntryId;
+	}
+
+	@Override
+	public void setSegmentsEntryId(long segmentsEntryId) {
+		_segmentsEntryId = segmentsEntryId;
+	}
+
+	@Override
 	public long getAssetEntryId() {
 		return _assetEntryId;
 	}
@@ -597,6 +615,8 @@ public class AssetListEntryAssetEntryRelModelImpl
 		assetListEntryAssetEntryRelImpl.setModifiedDate(getModifiedDate());
 		assetListEntryAssetEntryRelImpl.setAssetListEntryId(
 			getAssetListEntryId());
+		assetListEntryAssetEntryRelImpl.setSegmentsEntryId(
+			getSegmentsEntryId());
 		assetListEntryAssetEntryRelImpl.setAssetEntryId(getAssetEntryId());
 		assetListEntryAssetEntryRelImpl.setPosition(getPosition());
 		assetListEntryAssetEntryRelImpl.setLastPublishDate(
@@ -756,6 +776,9 @@ public class AssetListEntryAssetEntryRelModelImpl
 		assetListEntryAssetEntryRelCacheModel.assetListEntryId =
 			getAssetListEntryId();
 
+		assetListEntryAssetEntryRelCacheModel.segmentsEntryId =
+			getSegmentsEntryId();
+
 		assetListEntryAssetEntryRelCacheModel.assetEntryId = getAssetEntryId();
 
 		assetListEntryAssetEntryRelCacheModel.position = getPosition();
@@ -864,6 +887,7 @@ public class AssetListEntryAssetEntryRelModelImpl
 	private long _assetListEntryId;
 	private long _originalAssetListEntryId;
 	private boolean _setOriginalAssetListEntryId;
+	private long _segmentsEntryId;
 	private long _assetEntryId;
 	private int _position;
 	private int _originalPosition;

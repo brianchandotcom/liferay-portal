@@ -23,23 +23,23 @@ import java.util.Date;
 import java.util.List;
 
 /**
- * This class is used by SOAP remote services.
+ * This class is used by SOAP remote services, specifically {@link com.liferay.asset.list.service.http.AssetListEntrySegmentsEntryRelServiceSoap}.
  *
  * @author Brian Wing Shun Chan
  * @generated
  */
 @ProviderType
-public class AssetListEntryAssetEntryRelSoap implements Serializable {
+public class AssetListEntrySegmentsEntryRelSoap implements Serializable {
 
-	public static AssetListEntryAssetEntryRelSoap toSoapModel(
-		AssetListEntryAssetEntryRel model) {
+	public static AssetListEntrySegmentsEntryRelSoap toSoapModel(
+		AssetListEntrySegmentsEntryRel model) {
 
-		AssetListEntryAssetEntryRelSoap soapModel =
-			new AssetListEntryAssetEntryRelSoap();
+		AssetListEntrySegmentsEntryRelSoap soapModel =
+			new AssetListEntrySegmentsEntryRelSoap();
 
 		soapModel.setUuid(model.getUuid());
-		soapModel.setAssetListEntryAssetEntryRelId(
-			model.getAssetListEntryAssetEntryRelId());
+		soapModel.setAssetListEntrySegmentsEntryRelId(
+			model.getAssetListEntrySegmentsEntryRelId());
 		soapModel.setGroupId(model.getGroupId());
 		soapModel.setCompanyId(model.getCompanyId());
 		soapModel.setUserId(model.getUserId());
@@ -48,18 +48,17 @@ public class AssetListEntryAssetEntryRelSoap implements Serializable {
 		soapModel.setModifiedDate(model.getModifiedDate());
 		soapModel.setAssetListEntryId(model.getAssetListEntryId());
 		soapModel.setSegmentsEntryId(model.getSegmentsEntryId());
-		soapModel.setAssetEntryId(model.getAssetEntryId());
-		soapModel.setPosition(model.getPosition());
+		soapModel.setTypeSettings(model.getTypeSettings());
 		soapModel.setLastPublishDate(model.getLastPublishDate());
 
 		return soapModel;
 	}
 
-	public static AssetListEntryAssetEntryRelSoap[] toSoapModels(
-		AssetListEntryAssetEntryRel[] models) {
+	public static AssetListEntrySegmentsEntryRelSoap[] toSoapModels(
+		AssetListEntrySegmentsEntryRel[] models) {
 
-		AssetListEntryAssetEntryRelSoap[] soapModels =
-			new AssetListEntryAssetEntryRelSoap[models.length];
+		AssetListEntrySegmentsEntryRelSoap[] soapModels =
+			new AssetListEntrySegmentsEntryRelSoap[models.length];
 
 		for (int i = 0; i < models.length; i++) {
 			soapModels[i] = toSoapModel(models[i]);
@@ -68,17 +67,17 @@ public class AssetListEntryAssetEntryRelSoap implements Serializable {
 		return soapModels;
 	}
 
-	public static AssetListEntryAssetEntryRelSoap[][] toSoapModels(
-		AssetListEntryAssetEntryRel[][] models) {
+	public static AssetListEntrySegmentsEntryRelSoap[][] toSoapModels(
+		AssetListEntrySegmentsEntryRel[][] models) {
 
-		AssetListEntryAssetEntryRelSoap[][] soapModels = null;
+		AssetListEntrySegmentsEntryRelSoap[][] soapModels = null;
 
 		if (models.length > 0) {
-			soapModels = new AssetListEntryAssetEntryRelSoap
+			soapModels = new AssetListEntrySegmentsEntryRelSoap
 				[models.length][models[0].length];
 		}
 		else {
-			soapModels = new AssetListEntryAssetEntryRelSoap[0][0];
+			soapModels = new AssetListEntrySegmentsEntryRelSoap[0][0];
 		}
 
 		for (int i = 0; i < models.length; i++) {
@@ -88,29 +87,29 @@ public class AssetListEntryAssetEntryRelSoap implements Serializable {
 		return soapModels;
 	}
 
-	public static AssetListEntryAssetEntryRelSoap[] toSoapModels(
-		List<AssetListEntryAssetEntryRel> models) {
+	public static AssetListEntrySegmentsEntryRelSoap[] toSoapModels(
+		List<AssetListEntrySegmentsEntryRel> models) {
 
-		List<AssetListEntryAssetEntryRelSoap> soapModels =
-			new ArrayList<AssetListEntryAssetEntryRelSoap>(models.size());
+		List<AssetListEntrySegmentsEntryRelSoap> soapModels =
+			new ArrayList<AssetListEntrySegmentsEntryRelSoap>(models.size());
 
-		for (AssetListEntryAssetEntryRel model : models) {
+		for (AssetListEntrySegmentsEntryRel model : models) {
 			soapModels.add(toSoapModel(model));
 		}
 
 		return soapModels.toArray(
-			new AssetListEntryAssetEntryRelSoap[soapModels.size()]);
+			new AssetListEntrySegmentsEntryRelSoap[soapModels.size()]);
 	}
 
-	public AssetListEntryAssetEntryRelSoap() {
+	public AssetListEntrySegmentsEntryRelSoap() {
 	}
 
 	public long getPrimaryKey() {
-		return _assetListEntryAssetEntryRelId;
+		return _assetListEntrySegmentsEntryRelId;
 	}
 
 	public void setPrimaryKey(long pk) {
-		setAssetListEntryAssetEntryRelId(pk);
+		setAssetListEntrySegmentsEntryRelId(pk);
 	}
 
 	public String getUuid() {
@@ -121,14 +120,14 @@ public class AssetListEntryAssetEntryRelSoap implements Serializable {
 		_uuid = uuid;
 	}
 
-	public long getAssetListEntryAssetEntryRelId() {
-		return _assetListEntryAssetEntryRelId;
+	public long getAssetListEntrySegmentsEntryRelId() {
+		return _assetListEntrySegmentsEntryRelId;
 	}
 
-	public void setAssetListEntryAssetEntryRelId(
-		long assetListEntryAssetEntryRelId) {
+	public void setAssetListEntrySegmentsEntryRelId(
+		long assetListEntrySegmentsEntryRelId) {
 
-		_assetListEntryAssetEntryRelId = assetListEntryAssetEntryRelId;
+		_assetListEntrySegmentsEntryRelId = assetListEntrySegmentsEntryRelId;
 	}
 
 	public long getGroupId() {
@@ -195,20 +194,12 @@ public class AssetListEntryAssetEntryRelSoap implements Serializable {
 		_segmentsEntryId = segmentsEntryId;
 	}
 
-	public long getAssetEntryId() {
-		return _assetEntryId;
+	public String getTypeSettings() {
+		return _typeSettings;
 	}
 
-	public void setAssetEntryId(long assetEntryId) {
-		_assetEntryId = assetEntryId;
-	}
-
-	public int getPosition() {
-		return _position;
-	}
-
-	public void setPosition(int position) {
-		_position = position;
+	public void setTypeSettings(String typeSettings) {
+		_typeSettings = typeSettings;
 	}
 
 	public Date getLastPublishDate() {
@@ -220,7 +211,7 @@ public class AssetListEntryAssetEntryRelSoap implements Serializable {
 	}
 
 	private String _uuid;
-	private long _assetListEntryAssetEntryRelId;
+	private long _assetListEntrySegmentsEntryRelId;
 	private long _groupId;
 	private long _companyId;
 	private long _userId;
@@ -229,8 +220,7 @@ public class AssetListEntryAssetEntryRelSoap implements Serializable {
 	private Date _modifiedDate;
 	private long _assetListEntryId;
 	private long _segmentsEntryId;
-	private long _assetEntryId;
-	private int _position;
+	private String _typeSettings;
 	private Date _lastPublishDate;
 
 }

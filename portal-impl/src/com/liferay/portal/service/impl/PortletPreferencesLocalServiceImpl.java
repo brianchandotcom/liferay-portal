@@ -373,10 +373,8 @@ public class PortletPreferencesLocalServiceImpl
 			return 0;
 		}
 
-		plid = _swapPlidForPortletPreferences(plid);
-
 		return portletPreferencesPersistence.countByO_P_P(
-			ownerType, plid, portletId);
+			ownerType, _swapPlidForPortletPreferences(plid), portletId);
 	}
 
 	@Override

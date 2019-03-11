@@ -15,36 +15,48 @@
 package com.liferay.portal.workflow.metrics.rest.internal.resource.v1_0;
 
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
-import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
-import com.liferay.portal.kernel.search.GroupBy;
-import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.search.Sort;
-import com.liferay.portal.kernel.search.facet.Facet;
-import com.liferay.portal.kernel.search.facet.collector.FacetCollector;
-import com.liferay.portal.kernel.search.facet.collector.TermCollector;
 import com.liferay.portal.kernel.search.filter.BooleanFilter;
 import com.liferay.portal.kernel.search.filter.TermsFilter;
 import com.liferay.portal.kernel.search.generic.BooleanQueryImpl;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.search.engine.adapter.search.CountSearchRequest;
-import com.liferay.portal.search.engine.adapter.search.CountSearchResponse;
+import com.liferay.portal.odata.entity.EntityModel;
+import com.liferay.portal.search.aggregation.AggregationResult;
+import com.liferay.portal.search.aggregation.Aggregations;
+import com.liferay.portal.search.aggregation.bucket.Bucket;
+import com.liferay.portal.search.aggregation.bucket.TermsAggregation;
+import com.liferay.portal.search.aggregation.bucket.TermsAggregationResult;
+import com.liferay.portal.search.aggregation.metrics.CardinalityAggregation;
+import com.liferay.portal.search.aggregation.metrics.CardinalityAggregationResult;
+import com.liferay.portal.search.aggregation.pipeline.BucketSortPipelineAggregation;
+import com.liferay.portal.search.document.Document;
 import com.liferay.portal.search.engine.adapter.search.SearchRequestExecutor;
 import com.liferay.portal.search.engine.adapter.search.SearchSearchRequest;
 import com.liferay.portal.search.engine.adapter.search.SearchSearchResponse;
-import com.liferay.portal.search.facet.custom.CustomFacetFactory;
+import com.liferay.portal.search.hits.SearchHit;
+import com.liferay.portal.search.hits.SearchHits;
+import com.liferay.portal.search.sort.FieldSort;
+import com.liferay.portal.search.sort.SortOrder;
+import com.liferay.portal.search.sort.Sorts;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
+import com.liferay.portal.vulcan.resource.EntityModelResource;
 import com.liferay.portal.workflow.metrics.rest.dto.v1_0.Process;
+import com.liferay.portal.workflow.metrics.rest.internal.odata.entity.v1_0.ProcessEntityModel;
 import com.liferay.portal.workflow.metrics.rest.resource.v1_0.ProcessResource;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.LinkedHashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
+
+import javax.ws.rs.core.MultivaluedMap;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -55,25 +67,83 @@ import org.osgi.service.component.annotations.ServiceScope;
  */
 @Component(
 	properties = "OSGI-INF/liferay/rest/v1_0/process.properties",
-	scope = ServiceScope.PROTOTYPE, service = ProcessResource.class
+	scope = ServiceScope.PROTOTYPE,
+	service = {EntityModelResource.class, ProcessResource.class}
 )
-public class ProcessResourceImpl extends BaseProcessResourceImpl {
+public class ProcessResourceImpl
+	extends BaseProcessResourceImpl implements EntityModelResource {
 
 	@Override
-	public Page<Process> getProcessesPage(String title, Pagination pagination)
+	public EntityModel getEntityModel(MultivaluedMap multivaluedMap)
 		throws Exception {
 
-		return Page.of(
-			_getProcesses(title, pagination), pagination,
-			_getProcessesCount(title));
+		return _entityModel;
 	}
 
-	private Facet _createFacet(String fieldName) {
-		Facet facet = _customFacetFactory.newInstance(null);
+	@Override
+	public Page<Process> getProcessesPage(
+			String title, Pagination pagination, Sort[] sorts)
+		throws Exception {
 
-		facet.setFieldName(fieldName);
+		FieldSort fieldSort = _createFieldSort(sorts);
 
-		return facet;
+		SearchSearchResponse searchSearchResponse =
+			_getProcessesSearchSearchResponse(fieldSort, pagination, title);
+
+		long count = searchSearchResponse.getCount();
+
+		if (count > 0) {
+			return Page.of(
+				_getProcesses(
+					fieldSort, pagination,
+					searchSearchResponse.getSearchHits()),
+				pagination, count);
+		}
+
+		return Page.of(Collections.emptyList());
+	}
+
+	private FieldSort _createFieldSort(Sort[] sorts) {
+		String titleField = _getTitleField();
+
+		titleField = Field.getSortableFieldName(titleField);
+
+		Sort sort = new Sort(titleField, false);
+
+		if (sorts != null) {
+			sort = sorts[0];
+		}
+
+		String fieldName = sort.getFieldName();
+
+		if (_isOrderByTitle(fieldName)) {
+			fieldName = titleField;
+		}
+
+		FieldSort fieldSort = _sorts.field(fieldName);
+
+		fieldSort.setSortOrder(
+			sort.isReverse() ? SortOrder.DESC : SortOrder.ASC);
+
+		return fieldSort;
+	}
+
+	private BooleanFilter _createInstanceBooleanFilter(Set<Long> processIds) {
+		return new BooleanFilter() {
+			{
+				addRequiredTerm("companyId", contextCompany.getCompanyId());
+				addRequiredTerm("completed", false);
+				addRequiredTerm("deleted", false);
+
+				TermsFilter termsFilter = new TermsFilter("processId");
+
+				for (long processId : processIds) {
+					termsFilter.addValue(String.valueOf(processId));
+				}
+
+				add(termsFilter, BooleanClauseOccur.MUST);
+			}
+		};
 	}
 
 	private BooleanFilter _createProcessBooleanFilter() {
@@ -86,104 +156,112 @@ public class ProcessResourceImpl extends BaseProcessResourceImpl {
 		};
 	}
 
-	private int _getInstanceCount(String name) {
-		BooleanFilter booleanFilter = new BooleanFilter() {
-			{
-				addRequiredTerm("companyId", contextCompany.getCompanyId());
-				addRequiredTerm("completed", false);
-				addRequiredTerm("deleted", false);
-
-				TermsFilter termsFilter = new TermsFilter("processId");
-
-				for (long processId : _getProcessIds(name)) {
-					termsFilter.addValue(String.valueOf(processId));
-				}
-
-				add(termsFilter, BooleanClauseOccur.MUST);
-			}
-		};
-
-		CountSearchResponse countSearchResponse =
-			_searchRequestExecutor.executeSearchRequest(
-				new CountSearchRequest() {
-					{
-						setIndexNames("workflow-metrics-instances");
-						setQuery(
-							new BooleanQueryImpl() {
-								{
-									setPreBooleanFilter(booleanFilter);
-								}
-							});
-					}
-				});
-
-		return (int)countSearchResponse.getCount();
-	}
-
-	private Collection<Process> _getProcesses(
-			String title, Pagination pagination)
-		throws Exception {
-
-		List<Process> processes = new ArrayList<>();
+	private Map<String, AggregationResult> _getAggregationResults(
+		FieldSort fieldSort, Pagination pagination, Set<Long> processIds) {
 
 		SearchSearchRequest searchSearchRequest = new SearchSearchRequest();
 
-		Sort[] sorts = {new Sort(Field.getSortableFieldName("date"), true)};
+		TermsAggregation terms = _aggregations.terms("processIds", "processId");
 
-		searchSearchRequest.setGroupBy(
-			new GroupBy("name") {
-				{
-					setSize(1);
-					setSorts(sorts);
-				}
-			});
+		CardinalityAggregation cardinality = _aggregations.cardinality(
+			"instanceCount", "instanceId");
 
-		searchSearchRequest.setIndexNames("workflow-metrics-processes");
+		terms.addChildAggregation(cardinality);
+
+		if (!_isOrderByTitle(fieldSort.getField())) {
+			BucketSortPipelineAggregation bucketSort = _aggregations.bucketSort(
+				"sort");
+
+			bucketSort.addSortFields(fieldSort);
+
+			bucketSort.setFrom(pagination.getStartPosition());
+			bucketSort.setSize(pagination.getPageSize());
+
+			terms.addPipelineAggregation(bucketSort);
+		}
+
+		terms.setSize(processIds.size());
+
+		searchSearchRequest.addAggregation(terms);
+
+		searchSearchRequest.setIndexNames("workflow-metrics-instances");
+
 		searchSearchRequest.setQuery(
 			new BooleanQueryImpl() {
 				{
-					if (Validator.isNotNull(title)) {
-						addTerm("title", title);
-					}
-
-					setPreBooleanFilter(_createProcessBooleanFilter());
+					setPreBooleanFilter(
+						_createInstanceBooleanFilter(processIds));
 				}
 			});
-		searchSearchRequest.setSize(pagination.getPageSize());
-		searchSearchRequest.setSorts(sorts);
-		searchSearchRequest.setStart(pagination.getStartPosition());
-		searchSearchRequest.setStats(Collections.emptyMap());
 
 		SearchSearchResponse searchSearchResponse =
 			_searchRequestExecutor.executeSearchRequest(searchSearchRequest);
 
-		Hits searchSearchResponseHits = searchSearchResponse.getHits();
+		return searchSearchResponse.getAggregationResultsMap();
+	}
 
-		Map<String, Hits> hitsMap = searchSearchResponseHits.getGroupedHits();
+	private Collection<Process> _getProcesses(
+			FieldSort fieldSort, Pagination pagination, SearchHits searchHits)
+		throws Exception {
 
-		List<Hits> hitsList = ListUtil.subList(
-			new ArrayList<>(hitsMap.values()), pagination.getStartPosition(),
-			pagination.getStartPosition() + pagination.getPageSize());
+		Map<Long, Process> processes = new LinkedHashMap<>();
 
-		for (Hits hits : hitsList) {
-			Document[] documents = hits.getDocs();
+		for (SearchHit searchHit : searchHits.getSearchHits()) {
+			Process process = new Process();
 
-			Document document = documents[0];
+			Document document = searchHit.getDocument();
 
-			Process process = _toProcess(document);
+			process.setId(
+				GetterUtil.getLong(document.getFieldValue("processId")));
 
-			processes.add(process);
+			process.setInstanceCount(0L);
+			process.setOntimeInstanceCount(0L);
+			process.setOverdueInstanceCount(0L);
+
+			process.setTitle(
+				GetterUtil.getString(document.getFieldValue(_getTitleField())));
+
+			processes.put(process.getId(), process);
+		}
+
+		return _getProcesses(
+			_getAggregationResults(fieldSort, pagination, processes.keySet()),
+			fieldSort, processes);
+	}
+
+	private List<Process> _getProcesses(
+			Map<String, AggregationResult> aggregationResults,
+			FieldSort fieldSort, Map<Long, Process> processesMap)
+		throws Exception {
+
+		List<Process> processes = new LinkedList<>();
+
+		TermsAggregationResult termsAggregationResult =
+			(TermsAggregationResult)aggregationResults.get("processIds");
+
+		if (_isOrderByTitle(fieldSort.getField())) {
+			for (Process process : processesMap.values()) {
+				_populateProcesses(
+					termsAggregationResult.getBucket(
+						String.valueOf(process.getId())),
+					process, processes);
+			}
+		}
+		else {
+			for (Bucket bucket : termsAggregationResult.getBuckets()) {
+				_populateProcesses(
+					bucket, processesMap.remove(Long.valueOf(bucket.getKey())),
+					processes);
+			}
 		}
 
 		return processes;
 	}
 
-	private int _getProcessesCount(String title) throws Exception {
+	private SearchSearchResponse _getProcessesSearchSearchResponse(
+		FieldSort fieldSort, Pagination pagination, String title) {
+
 		SearchSearchRequest searchSearchRequest = new SearchSearchRequest();
-
-		Facet facet = _createFacet("name");
-
-		searchSearchRequest.putFacet(facet.getFieldName(), facet);
 
 		searchSearchRequest.setIndexNames("workflow-metrics-processes");
 		searchSearchRequest.setQuery(
@@ -196,71 +274,56 @@ public class ProcessResourceImpl extends BaseProcessResourceImpl {
 					setPreBooleanFilter(_createProcessBooleanFilter());
 				}
 			});
-		searchSearchRequest.setStats(Collections.emptyMap());
 
-		_searchRequestExecutor.executeSearchRequest(searchSearchRequest);
+		searchSearchRequest.setSelectedFieldNames(
+			"processId", _getTitleField());
 
-		FacetCollector facetCollector = facet.getFacetCollector();
-
-		List<TermCollector> termCollectors = facetCollector.getTermCollectors();
-
-		return termCollectors.size();
-	}
-
-	private long[] _getProcessIds(String name) {
-		SearchSearchRequest searchSearchRequest = new SearchSearchRequest();
-
-		Facet facet = _createFacet("processId");
-
-		searchSearchRequest.putFacet(facet.getFieldName(), facet);
-
-		searchSearchRequest.setIndexNames("workflow-metrics-processes");
-
-		BooleanFilter booleanFilter = _createProcessBooleanFilter();
-
-		booleanFilter.addRequiredTerm("name", name);
-
-		searchSearchRequest.setQuery(
-			new BooleanQueryImpl() {
-				{
-					setPreBooleanFilter(booleanFilter);
-				}
-			});
-
-		searchSearchRequest.setStats(Collections.emptyMap());
-
-		_searchRequestExecutor.executeSearchRequest(searchSearchRequest);
-
-		FacetCollector facetCollector = facet.getFacetCollector();
-
-		List<TermCollector> termCollectors = facetCollector.getTermCollectors();
-
-		long[] processIds = new long[termCollectors.size()];
-
-		for (int i = 0; i < termCollectors.size(); i++) {
-			TermCollector termCollector = termCollectors.get(i);
-
-			long processId = GetterUtil.getLong(termCollector.getTerm());
-
-			processIds[i] = processId;
+		if (_isOrderByTitle(fieldSort.getField())) {
+			searchSearchRequest.setSize(pagination.getPageSize());
+			searchSearchRequest.setSorts(Collections.singletonList(fieldSort));
+			searchSearchRequest.setStart(pagination.getStartPosition());
+		}
+		else {
+			searchSearchRequest.setSize(10000);
+			searchSearchRequest.setStart(0);
 		}
 
-		return processIds;
+		return _searchRequestExecutor.executeSearchRequest(searchSearchRequest);
 	}
 
-	private Process _toProcess(Document document) {
-		return new Process() {
-			{
-				instanceCount = _getInstanceCount(document.get("name"));
-				title = document.get("title");
-			}
-		};
+	private String _getTitleField() {
+		return Field.getLocalizedName(
+			contextAcceptLanguage.getPreferredLocale(), "title");
 	}
+
+	private boolean _isOrderByTitle(String fieldName) {
+		return StringUtil.startsWith(fieldName, "title");
+	}
+
+	private void _populateProcesses(
+		Bucket bucket, Process process, List<Process> processes) {
+
+		if (bucket != null) {
+			CardinalityAggregationResult cardinalityAggregationResult =
+				(CardinalityAggregationResult)bucket.getChildAggregationResult(
+					"instanceCount");
+
+			process.setInstanceCount(
+				cardinalityAggregationResult.getValue() - 1);
+		}
+
+		processes.add(process);
+	}
+
+	private static final EntityModel _entityModel = new ProcessEntityModel();
 
 	@Reference
-	private CustomFacetFactory _customFacetFactory;
+	private Aggregations _aggregations;
 
 	@Reference
 	private SearchRequestExecutor _searchRequestExecutor;
+
+	@Reference
+	private Sorts _sorts;
 
 }

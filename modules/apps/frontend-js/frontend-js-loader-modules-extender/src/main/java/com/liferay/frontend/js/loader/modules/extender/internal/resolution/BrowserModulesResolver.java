@@ -21,15 +21,20 @@ import com.liferay.frontend.js.loader.modules.extender.internal.configuration.De
 import com.liferay.frontend.js.loader.modules.extender.internal.resolution.adapter.JSBrowserModule;
 import com.liferay.frontend.js.loader.modules.extender.internal.resolution.adapter.JSConfigGeneratorBrowserModule;
 import com.liferay.frontend.js.loader.modules.extender.npm.JSModule;
+import com.liferay.frontend.js.loader.modules.extender.npm.JSModuleAlias;
+import com.liferay.frontend.js.loader.modules.extender.npm.JSPackage;
 import com.liferay.frontend.js.loader.modules.extender.npm.ModuleNameUtil;
 import com.liferay.frontend.js.loader.modules.extender.npm.NPMRegistry;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.util.Portal;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -55,6 +60,8 @@ public class BrowserModulesResolver {
 		for (String moduleName : moduleNames) {
 			_resolve(browserModulesMap, moduleName, browserModulesResolution);
 		}
+
+		_populateMappedModuleNames(browserModulesResolution);
 
 		return browserModulesResolution;
 	}
@@ -93,6 +100,38 @@ public class BrowserModulesResolver {
 		}
 
 		return browserModulesMap;
+	}
+
+	private void _populateMappedModuleNames(
+		BrowserModulesResolution browserModulesResolution) {
+
+		Set<JSPackage> jsPackages = new HashSet<>();
+
+		for (String moduleName :
+				browserModulesResolution.getResolvedModuleNames()) {
+
+			String packageName = ModuleNameUtil.getPackageName(moduleName);
+
+			JSPackage jsPackage = _npmRegistry.getResolvedJSPackage(
+				packageName);
+
+			if (jsPackage == null) {
+				continue;
+			}
+
+			jsPackages.add(jsPackage);
+		}
+
+		for (JSPackage jsPackage : jsPackages) {
+			for (JSModuleAlias jsModuleAlias : jsPackage.getJSModuleAliases()) {
+				browserModulesResolution.putMappedModuleName(
+					jsPackage.getResolvedId() + StringPool.SLASH +
+						jsModuleAlias.getAlias(),
+					jsPackage.getResolvedId() + StringPool.SLASH +
+						jsModuleAlias.getModuleName(),
+					true);
+			}
+		}
 	}
 
 	private boolean _processBrowserModule(
@@ -155,13 +194,17 @@ public class BrowserModulesResolver {
 
 		BrowserModule browserModule = browserModulesMap.get(mappedModuleName);
 
-		if (browserModule != null) {
-			browserModulesResolution.putMappedModuleName(
-				moduleName, mappedModuleName);
-
-			_processBrowserModule(
-				browserModulesMap, browserModule, browserModulesResolution);
+		if (browserModule == null) {
+			return;
 		}
+
+		if (!moduleName.equals(mappedModuleName)) {
+			browserModulesResolution.putMappedModuleName(
+				moduleName, mappedModuleName, false);
+		}
+
+		_processBrowserModule(
+			browserModulesMap, browserModule, browserModulesResolution);
 	}
 
 	@Reference

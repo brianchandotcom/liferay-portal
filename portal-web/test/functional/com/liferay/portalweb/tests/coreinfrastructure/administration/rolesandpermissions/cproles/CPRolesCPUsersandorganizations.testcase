@@ -39,7 +39,6 @@ definition {
 			userEmailAddress = "userea@liferay.com",
 			userFirstName = "userfn",
 			userLastName = "userln",
-			userLoginEmailAddress = "userea@liferay.com",
 			userLoginEmailAddress = "test@liferay.com",
 			userLoginFullName = "Test Test",
 			userScreenName = "usersn"
@@ -134,7 +133,6 @@ definition {
 			userEmailAddress = "userea@liferay.com",
 			userFirstName = "userfn",
 			userLastName = "userln",
-			userLoginEmailAddress = "userea@liferay.com",
 			userLoginEmailAddress = "test@liferay.com",
 			userLoginFullName = "Test Test",
 			userScreenName = "usersn"

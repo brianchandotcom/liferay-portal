@@ -980,7 +980,6 @@ definition {
 
 			AssertElementNotPresent(
 				locator1 = "Ratings#YOUR_RATING_STAR",
-				key_ratingStarPosition = "${ratingPosition}",
 				key_ratingStarPosition = MathUtil.sum("${ratingPosition}", "1")
 			);
 		}

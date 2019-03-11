@@ -18,7 +18,6 @@ definition {
 	macro configureDisplayStylePG {
 		Portlet.gotoPortletOptions(
 			portletName = "Tags Navigation",
-			portletName = "${portletName}",
 			portletOption = "Configuration"
 		);
 
@@ -34,7 +33,6 @@ definition {
 	macro configureFlaggableSettingsPG {
 		Portlet.gotoPortletOptions(
 			portletName = "Tags Navigation",
-			portletName = "${portletName}",
 			portletOption = "Configuration"
 		);
 
@@ -87,7 +85,6 @@ definition {
 	macro viewTagCloudConfiguration {
 		Portlet.gotoPortletOptions(
 			portletName = "Tag Cloud",
-			portletName = "${portletName}",
 			portletOption = "Configuration"
 		);
 

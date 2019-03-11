@@ -601,7 +601,6 @@ definition {
 		);
 
 		DMFolder.moveToFolderCP(
-			dmFolderName = "DM Folder1 Name",
 			dmFolderName = "DM Folder2 Name",
 			dmFolderName1 = "DM Folder1 Name",
 			dmFolderName2 = "DM Folder2 Name"

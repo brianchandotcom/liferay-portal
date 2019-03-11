@@ -92,8 +92,14 @@ public class AssetDisplayPageFriendlyURLProviderImpl
 			String className, long classPK, ThemeDisplay themeDisplay)
 		throws PortalException {
 
-		return getFriendlyURL(
-			_assetEntryLocalService.getEntry(className, classPK), themeDisplay);
+		AssetEntry assetEntry = _assetEntryLocalService.fetchEntry(
+			className, classPK);
+
+		if (assetEntry != null) {
+			return getFriendlyURL(assetEntry, themeDisplay);
+		}
+
+		return StringPool.BLANK;
 	}
 
 	@Reference

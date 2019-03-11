@@ -1,7 +1,0 @@
-{
-    "ignore": [
-		"**/asset_taglib_categories_selector.js",
-		"**/asset_taglib_tags_selector.js",
-        "**/config.js"
-    ]
-}

@@ -159,10 +159,6 @@ definition {
 				Button.viewPresent(button = "${button}");
 			}
 
-			Button.clickNoError(button = "Submit");
-
-			AssertConfirm(value1 = "Form submitted");
-
 			IFrame.selectTopFrame();
 		}
 	}

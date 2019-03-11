@@ -141,10 +141,10 @@ public class ScopeLocatorImpl implements ScopeLocator {
 		ScopeLocatorConfiguration scopeLocatorConfiguration =
 			scopeLocatorConfigurationProvider.getScopeLocatorConfiguration();
 
-		Set<String> processedByQueue = new HashSet<>(queue.size());
+		Set<String> processedScopes = new HashSet<>(queue.size());
 
 		for (String scope = queue.poll(); scope != null; scope = queue.poll()) {
-			processedByQueue.add(scope);
+			processedScopes.add(scope);
 
 			locatedScopes.add(
 				new LiferayOAuth2ScopeImpl(applicationName, bundle, scope));
@@ -174,7 +174,7 @@ public class ScopeLocatorImpl implements ScopeLocator {
 					}
 
 					for (String unmappedScope : unmappedScopes) {
-						if (!processedByQueue.contains(unmappedScope)) {
+						if (!processedScopes.contains(unmappedScope)) {
 							queue.add(unmappedScope);
 						}
 					}

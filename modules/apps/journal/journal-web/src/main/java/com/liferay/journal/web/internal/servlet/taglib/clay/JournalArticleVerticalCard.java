@@ -14,6 +14,7 @@
 
 package com.liferay.journal.web.internal.servlet.taglib.clay;
 
+import com.liferay.asset.display.page.portlet.AssetDisplayPageFriendlyURLProvider;
 import com.liferay.frontend.taglib.clay.servlet.taglib.soy.BaseVerticalCard;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItem;
@@ -55,11 +56,14 @@ public class JournalArticleVerticalCard extends BaseVerticalCard {
 	public JournalArticleVerticalCard(
 		BaseModel<?> baseModel, RenderRequest renderRequest,
 		RenderResponse renderResponse, RowChecker rowChecker,
+		AssetDisplayPageFriendlyURLProvider assetDisplayPageFriendlyURLProvider,
 		TrashHelper trashHelper) {
 
 		super(baseModel, renderRequest, rowChecker);
 
 		_renderResponse = renderResponse;
+		_assetDisplayPageFriendlyURLProvider =
+			assetDisplayPageFriendlyURLProvider;
 		_trashHelper = trashHelper;
 
 		_article = (JournalArticle)baseModel;
@@ -78,7 +82,7 @@ public class JournalArticleVerticalCard extends BaseVerticalCard {
 			articleActionDropdownItemsProvider =
 				new JournalArticleActionDropdownItemsProvider(
 					_article, liferayPortletRequest, liferayPortletResponse,
-					_trashHelper);
+					_assetDisplayPageFriendlyURLProvider, _trashHelper);
 
 		try {
 			return articleActionDropdownItemsProvider.getActionDropdownItems();
@@ -196,6 +200,8 @@ public class JournalArticleVerticalCard extends BaseVerticalCard {
 	}
 
 	private final JournalArticle _article;
+	private final AssetDisplayPageFriendlyURLProvider
+		_assetDisplayPageFriendlyURLProvider;
 	private final RenderResponse _renderResponse;
 	private final HttpServletRequest _request;
 	private final TrashHelper _trashHelper;

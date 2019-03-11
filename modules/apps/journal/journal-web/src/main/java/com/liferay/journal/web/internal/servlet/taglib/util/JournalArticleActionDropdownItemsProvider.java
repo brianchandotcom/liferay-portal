@@ -14,6 +14,7 @@
 
 package com.liferay.journal.web.internal.servlet.taglib.util;
 
+import com.liferay.asset.display.page.portlet.AssetDisplayPageFriendlyURLProvider;
 import com.liferay.asset.display.page.util.AssetDisplayPageHelper;
 import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
 import com.liferay.asset.kernel.model.AssetEntry;
@@ -82,11 +83,14 @@ public class JournalArticleActionDropdownItemsProvider {
 	public JournalArticleActionDropdownItemsProvider(
 		JournalArticle article, LiferayPortletRequest liferayPortletRequest,
 		LiferayPortletResponse liferayPortletResponse,
+		AssetDisplayPageFriendlyURLProvider assetDisplayPageFriendlyURLProvider,
 		TrashHelper trashHelper) {
 
 		_article = article;
 		_liferayPortletRequest = liferayPortletRequest;
 		_liferayPortletResponse = liferayPortletResponse;
+		_assetDisplayPageFriendlyURLProvider =
+			assetDisplayPageFriendlyURLProvider;
 		_trashHelper = trashHelper;
 
 		_journalWebConfiguration =
@@ -504,13 +508,11 @@ public class JournalArticleActionDropdownItemsProvider {
 		if (AssetDisplayPageHelper.hasAssetDisplayPage(
 				_themeDisplay.getScopeGroupId(), assetEntry)) {
 
-			StringBundler sb = new StringBundler(5);
+			StringBundler sb = new StringBundler(3);
 
 			sb.append(
-				PortalUtil.getGroupFriendlyURL(
-					_themeDisplay.getLayoutSet(), _themeDisplay));
-			sb.append("/a/");
-			sb.append(assetEntry.getEntryId());
+				_assetDisplayPageFriendlyURLProvider.getFriendlyURL(
+					assetEntry, _themeDisplay));
 			sb.append(StringPool.SLASH);
 			sb.append(_article.getId());
 
@@ -791,6 +793,8 @@ public class JournalArticleActionDropdownItemsProvider {
 		JournalArticleActionDropdownItemsProvider.class);
 
 	private final JournalArticle _article;
+	private final AssetDisplayPageFriendlyURLProvider
+		_assetDisplayPageFriendlyURLProvider;
 	private final JournalWebConfiguration _journalWebConfiguration;
 	private final LiferayPortletRequest _liferayPortletRequest;
 	private final LiferayPortletResponse _liferayPortletResponse;

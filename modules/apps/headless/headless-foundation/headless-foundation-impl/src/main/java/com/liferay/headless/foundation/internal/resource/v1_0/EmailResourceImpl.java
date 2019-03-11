@@ -25,11 +25,8 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.EmailAddressService;
 import com.liferay.portal.kernel.service.OrganizationService;
 import com.liferay.portal.kernel.service.UserService;
-import com.liferay.portal.vulcan.identifier.ClassNameClassPK;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
-
-import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -50,32 +47,33 @@ public class EmailResourceImpl extends BaseEmailResourceImpl {
 	}
 
 	@Override
-	public Page<Email> getEmailsByClassNameClassPK(
-			ClassNameClassPK classNameClassPK, Pagination pagination)
+	public Page<Email> getOrganizationEmailsPage(
+			Long organizationId, Pagination pagination)
 		throws Exception {
 
+		Organization organization = _organizationService.getOrganization(
+			organizationId);
+
 		return Page.of(
-			transform(_getEmailPage(classNameClassPK), this::_toEmail));
+			transform(
+				_emailAddressService.getEmailAddresses(
+					organization.getModelClassName(),
+					organization.getOrganizationId()),
+				this::_toEmail));
 	}
 
-	private List<EmailAddress> _getEmailPage(ClassNameClassPK classNameClassPK)
-		throws PortalException {
+	@Override
+	public Page<Email> getUserAccountEmailsPage(
+			Long userAccountId, Pagination pagination)
+		throws Exception {
 
-		String className = classNameClassPK.getClassName();
+		User user = _userService.getUserById(userAccountId);
 
-		if (className.equals(Organization.class.getName())) {
-			Organization organization = _organizationService.getOrganization(
-				classNameClassPK.getClassPK());
-
-			return _emailAddressService.getEmailAddresses(
-				organization.getModelClassName(),
-				organization.getOrganizationId());
-		}
-
-		User user = _userService.getUserById(classNameClassPK.getClassPK());
-
-		return _emailAddressService.getEmailAddresses(
-			Contact.class.getName(), user.getContactId());
+		return Page.of(
+			transform(
+				_emailAddressService.getEmailAddresses(
+					Contact.class.getName(), user.getContactId()),
+				this::_toEmail));
 	}
 
 	private Email _toEmail(EmailAddress emailAddress) throws PortalException {

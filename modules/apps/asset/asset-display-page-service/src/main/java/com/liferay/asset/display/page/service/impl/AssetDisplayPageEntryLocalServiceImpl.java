@@ -20,6 +20,7 @@ import com.liferay.asset.display.page.service.base.AssetDisplayPageEntryLocalSer
 import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.model.AssetRendererFactory;
+import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryService;
 import com.liferay.portal.aop.AopService;
@@ -171,8 +172,20 @@ public class AssetDisplayPageEntryLocalServiceImpl
 			AssetRendererFactoryRegistryUtil.
 				getAssetRendererFactoryByClassNameId(classNameId);
 
-		AssetEntry assetEntry = assetRendererFactory.getAssetEntry(
-			_portal.getClassName(classNameId), classPK);
+		AssetEntry assetEntry = null;
+
+		if (assetRendererFactory != null) {
+			assetEntry = assetRendererFactory.getAssetEntry(
+				_portal.getClassName(classNameId), classPK);
+		}
+		else {
+			assetEntry = _assetEntryLocalService.fetchEntry(
+				classNameId, classPK);
+		}
+
+		if (assetEntry == null) {
+			return LayoutConstants.DEFAULT_PLID;
+		}
 
 		LayoutPageTemplateEntry layoutPageTemplateEntry = Optional.ofNullable(
 			_layoutPageTemplateEntryService.fetchLayoutPageTemplateEntry(
@@ -202,6 +215,9 @@ public class AssetDisplayPageEntryLocalServiceImpl
 
 		return LayoutConstants.DEFAULT_PLID;
 	}
+
+	@Reference
+	private AssetEntryLocalService _assetEntryLocalService;
 
 	@Reference
 	private LayoutLocalService _layoutLocalService;

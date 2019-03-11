@@ -770,6 +770,11 @@ public abstract class BaseVocabularyResourceTestCase {
 		sb.append(operator);
 		sb.append(" ");
 
+		if (entityFieldName.equals("assetTypes")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
 		if (entityFieldName.equals("availableLanguages")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
@@ -824,11 +829,8 @@ public abstract class BaseVocabularyResourceTestCase {
 		}
 
 		if (entityFieldName.equals("viewableBy")) {
-			sb.append("'");
-			sb.append(String.valueOf(vocabulary.getViewableBy()));
-			sb.append("'");
-
-			return sb.toString();
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
 		}
 
 		throw new IllegalArgumentException(
@@ -845,7 +847,6 @@ public abstract class BaseVocabularyResourceTestCase {
 				hasCategories = RandomTestUtil.randomBoolean();
 				id = RandomTestUtil.randomLong();
 				name = RandomTestUtil.randomString();
-				viewableBy = RandomTestUtil.randomString();
 			}
 		};
 	}

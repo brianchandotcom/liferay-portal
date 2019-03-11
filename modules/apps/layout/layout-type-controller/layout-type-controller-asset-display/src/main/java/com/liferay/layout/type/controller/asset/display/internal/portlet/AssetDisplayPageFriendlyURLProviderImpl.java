@@ -24,6 +24,7 @@ import com.liferay.friendly.url.model.FriendlyURLEntry;
 import com.liferay.friendly.url.service.FriendlyURLEntryLocalService;
 import com.liferay.layout.type.controller.asset.display.internal.constants.AssetDisplayPageFriendlyURLResolverConstants;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Portal;
@@ -72,7 +73,7 @@ public class AssetDisplayPageFriendlyURLProviderImpl
 				AssetDisplayPageFriendlyURLResolverConstants.
 					ASSET_DISPLAY_PAGE_URL_TITLE_URL_SEPARATOR);
 			sb.append(assetDisplayContributor.getFriendlyURLShortcut());
-			sb.append("/");
+			sb.append(StringPool.SLASH);
 			sb.append(
 				mainFriendlyURLEntry.getUrlTitle(themeDisplay.getLanguageId()));
 		}

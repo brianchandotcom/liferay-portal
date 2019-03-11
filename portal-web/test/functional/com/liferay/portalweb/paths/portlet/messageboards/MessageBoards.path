@@ -119,7 +119,7 @@
 </tr>
 <tr>
 	<td>CATEGORY_LIST_CATEGORY</td>
-	<td>//*[@data-qa-id='rowItemContent']/h4/a[contains(.,'${key_categoryName}')]</td>
+	<td>//*[@data-qa-id='rowItemContent']/h2/a[contains(.,'${key_categoryName}')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -227,7 +227,7 @@
 </tr>
 <tr>
 	<td>THREAD_LIST_THREAD</td>
-	<td>//*[@data-qa-id='rowItemContent']/h4/a[contains(.,'${key_threadSubject}')]</td>
+	<td>//*[@data-qa-id='rowItemContent']/h2/a[contains(.,'${key_threadSubject}')]</td>
 	<td></td>
 </tr>
 <tr>

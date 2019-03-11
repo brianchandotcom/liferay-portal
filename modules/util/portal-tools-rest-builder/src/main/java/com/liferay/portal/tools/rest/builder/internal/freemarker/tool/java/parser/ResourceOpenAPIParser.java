@@ -428,7 +428,12 @@ public class ResourceOpenAPIParser {
 				CamelCaseUtil.toCamelCase(
 					pathSegment.replaceAll("\\{|-id|}", "")));
 
-			if (pathSegment.contains("{")) {
+			if ((methodNameSegments.size() == 1) &&
+				Objects.equals(pathName, pluralSchemaName + "By")) {
+
+				methodNameSegments.add("By");
+			}
+			else if (pathSegment.contains("{")) {
 				String previousPath = methodNameSegments.get(
 					methodNameSegments.size() - 1);
 

@@ -66,6 +66,7 @@ import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.events.EventsProcessorUtil;
 import com.liferay.portal.kernel.comment.CommentManager;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -81,6 +82,7 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.servlet.DummyHttpServletResponse;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleThreadLocal;
@@ -113,7 +115,9 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 import java.util.Objects;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import javax.servlet.http.HttpServletRequest;
@@ -244,6 +248,72 @@ public class StructuredContentResourceImpl
 		return content.replaceAll("[\\t\\n]", "");
 	}
 
+	public Map<Locale, String> patchLocalizedMap(
+		Map<Locale, String> map, Map.Entry<Locale, String> mapEntry) {
+
+		if (mapEntry.getValue() != null) {
+			map.put(mapEntry.getKey(), mapEntry.getValue());
+		}
+
+		return map;
+	}
+
+	@Override
+	public StructuredContent patchStructuredContent(
+			Long structuredContentId, StructuredContent structuredContent)
+		throws Exception {
+
+		JournalArticle journalArticle = _journalArticleService.getLatestArticle(
+			structuredContentId);
+
+		_checkLanguageAvailable(
+			journalArticle.getAvailableLanguageIds(),
+			contextAcceptLanguage.getPreferredLocale());
+
+		DDMStructure ddmStructure = journalArticle.getDDMStructure();
+
+		LocalDateTime localDateTime = toLocalDateTime(
+			structuredContent.getDatePublished(),
+			journalArticle.getDisplayDate());
+
+		return _toStructuredContent(
+			_journalArticleService.updateArticle(
+				journalArticle.getGroupId(), journalArticle.getFolderId(),
+				journalArticle.getArticleId(), journalArticle.getVersion(),
+				patchLocalizedMap(
+					journalArticle.getTitleMap(),
+					new AbstractMap.SimpleEntry<>(
+						contextAcceptLanguage.getPreferredLocale(),
+						structuredContent.getTitle())),
+				patchLocalizedMap(
+					journalArticle.getDescriptionMap(),
+					new AbstractMap.SimpleEntry<>(
+						contextAcceptLanguage.getPreferredLocale(),
+						structuredContent.getDescription())),
+				patchLocalizedMap(
+					journalArticle.getFriendlyURLMap(),
+					new AbstractMap.SimpleEntry<>(
+						contextAcceptLanguage.getPreferredLocale(),
+						structuredContent.getTitle())),
+				_journalConverter.getContent(
+					ddmStructure,
+					_toPatchedFields(
+						structuredContent.getContentFields(), journalArticle)),
+				journalArticle.getDDMStructureKey(),
+				_getDDMTemplateKey(ddmStructure),
+				journalArticle.getLayoutUuid(),
+				localDateTime.getMonthValue() - 1,
+				localDateTime.getDayOfMonth(), localDateTime.getYear(),
+				localDateTime.getHour(), localDateTime.getMinute(), 0, 0, 0, 0,
+				0, true, 0, 0, 0, 0, 0, true, true, false, null, null, null,
+				null,
+				ServiceContextUtil.createServiceContext(
+					structuredContent.getKeywords(),
+					structuredContent.getCategoryIds(),
+					journalArticle.getGroupId(),
+					structuredContent.getViewableBy())));
+	}
+
 	@Override
 	public StructuredContent postContentSpaceStructuredContent(
 			Long contentSpaceId, StructuredContent structuredContent)
@@ -309,6 +379,7 @@ public class StructuredContentResourceImpl
 			structuredContentId);
 
 		DDMStructure ddmStructure = journalArticle.getDDMStructure();
+
 		LocalDateTime localDateTime = toLocalDateTime(
 			structuredContent.getDatePublished(),
 			journalArticle.getDisplayDate());
@@ -351,6 +422,34 @@ public class StructuredContentResourceImpl
 					structuredContent.getViewableBy())));
 	}
 
+	private void _checkLanguageAvailable(
+		String[] availableLanguageIds, Locale locale) {
+
+		if (!ArrayUtil.contains(
+				availableLanguageIds, LocaleUtil.toLanguageId(locale))) {
+
+			throw new BadRequestException(
+				"Structured contents can only be patched with the existing " +
+					"languages " + availableLanguageIds);
+		}
+	}
+
+	private void _checkNoRepeatableFields(Fields fields)
+		throws PortalException {
+
+		Iterator<Field> iterator = fields.iterator();
+
+		while (iterator.hasNext()) {
+			Field field = iterator.next();
+
+			if (field.isRepeatable()) {
+				throw new BadRequestException(
+					"Patching in structured content with repeatable field is " +
+						"not supported, use PUT");
+			}
+		}
+	}
+
 	private void _createFieldsDisplayValue(
 		ContentField contentField, List<String> fieldsDisplayValue) {
 
@@ -363,8 +462,13 @@ public class StructuredContentResourceImpl
 		fieldsDisplayValue.add(
 			contentField.getName() + DDM.INSTANCE_SEPARATOR + repeatableId);
 
-		for (ContentField nestedContentField : contentField.getNestedFields()) {
-			_createFieldsDisplayValue(nestedContentField, fieldsDisplayValue);
+		if (contentField.getNestedFields() != null) {
+			for (ContentField nestedContentField :
+					contentField.getNestedFields()) {
+
+				_createFieldsDisplayValue(
+					nestedContentField, fieldsDisplayValue);
+			}
 		}
 	}
 
@@ -432,6 +536,23 @@ public class StructuredContentResourceImpl
 		String fieldDisplayValue = (String)field.getValue();
 
 		return ListUtil.toList(StringUtil.split(fieldDisplayValue));
+	}
+
+	private int _getFieldIndex(
+		String fieldDisplayName, String fieldName, Fields fields) {
+
+		List<String> fieldDisplayValues = _getFieldDisplayValue(fields);
+
+		Stream<String> stream = fieldDisplayValues.stream();
+
+		List<String> fieldValues = stream.filter(
+			fieldDisplayValue -> fieldDisplayValue.startsWith(
+				fieldName + DDM.INSTANCE_SEPARATOR)
+		).collect(
+			Collectors.toList()
+		);
+
+		return fieldValues.indexOf(fieldDisplayName);
 	}
 
 	private List<List<String>> _getFieldsDisplaySubstrings(
@@ -537,10 +658,9 @@ public class StructuredContentResourceImpl
 						ddmFormField.getName(),
 						fieldDisplayValues.subList(
 							1, fieldDisplayValues.size())));
-				repeatableId = StringUtil.extractLast(
-					fieldDisplayValue, DDM.INSTANCE_SEPARATOR);
+				repeatable = field.isRepeatable();
 				value = _toValue(
-					ddmFieldsCounter, field,
+					fieldDisplayValue, field, fields,
 					contextAcceptLanguage.getPreferredLocale());
 			}
 		};
@@ -778,6 +898,35 @@ public class StructuredContentResourceImpl
 		return fields;
 	}
 
+	private Fields _toPatchedFields(
+			ContentField[] contentFields, JournalArticle journalArticle)
+		throws Exception {
+
+		DDMStructure ddmStructure = journalArticle.getDDMStructure();
+
+		Fields fields = _journalConverter.getDDMFields(
+			journalArticle.getDDMStructure(), journalArticle.getContent());
+
+		if (!ArrayUtil.isEmpty(contentFields)) {
+			_checkNoRepeatableFields(fields);
+
+			for (ContentField contentField : contentFields) {
+				_updateFields(
+					contentField, ddmStructure, fields,
+					contextAcceptLanguage.getPreferredLocale());
+
+				ContentField[] nestedContentFields =
+					contentField.getNestedFields();
+
+				if (nestedContentFields != null) {
+					_toPatchedFields(nestedContentFields, journalArticle);
+				}
+			}
+		}
+
+		return fields;
+	}
+
 	private ContentField[] _toRepeatableContentField(
 			DDMFieldsCounter ddmFieldsCounter, DDMStructure ddmStructure,
 			DDMFormField ddmFormField, Fields fields,
@@ -879,18 +1028,18 @@ public class StructuredContentResourceImpl
 	}
 
 	private Value _toValue(
-			DDMFieldsCounter ddmFieldsCounter, Field field, Locale locale)
+			String fieldDisplayValue, Field field, Fields fields, Locale locale)
 		throws Exception {
+
+		int fieldIndex = _getFieldIndex(
+			fieldDisplayValue, field.getName(), fields);
 
 		DDMStructure ddmStructure = field.getDDMStructure();
 
 		DDMFormField ddmFormField = ddmStructure.getDDMFormField(
 			field.getName());
 
-		String value = String.valueOf(
-			field.getValue(locale, ddmFieldsCounter.get(field.getName())));
-
-		ddmFieldsCounter.incrementKey(field.getName());
+		String value = String.valueOf(field.getValue(locale, fieldIndex));
 
 		if (Objects.equals(
 				DDMFormFieldType.DOCUMENT_LIBRARY, ddmFormField.getType())) {
@@ -1025,6 +1174,19 @@ public class StructuredContentResourceImpl
 				data = value;
 			}
 		};
+	}
+
+	private void _updateFields(
+			ContentField contentField, DDMStructure ddmStructure, Fields fields,
+			Locale locale)
+		throws Exception {
+
+		Field field = fields.get(contentField.getName());
+
+		com.liferay.dynamic.data.mapping.model.Value value = _toDDMValue(
+			contentField, ddmStructure, locale);
+
+		field.setValue(locale, value.getString(locale));
 	}
 
 	@Reference

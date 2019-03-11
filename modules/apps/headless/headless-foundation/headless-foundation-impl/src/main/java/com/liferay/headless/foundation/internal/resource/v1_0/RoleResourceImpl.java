@@ -100,7 +100,8 @@ public class RoleResourceImpl extends BaseRoleResourceImpl {
 				description = role.getDescription(
 					contextAcceptLanguage.getPreferredLocale());
 				id = role.getRoleId();
-				name = role.getName();
+				name = role.getTitle(
+					contextAcceptLanguage.getPreferredLocale());
 				roleType = role.getTypeLabel();
 			}
 		};

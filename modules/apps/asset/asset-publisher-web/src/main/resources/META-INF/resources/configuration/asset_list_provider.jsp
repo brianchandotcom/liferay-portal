@@ -18,7 +18,6 @@
 
 <%
 List<InfoListProvider> infoListProviders = assetPublisherDisplayContext.getAssetInfoListProviders();
-String curInfoListProviderClassName = PrefsParamUtil.getString(portletPreferences, request, "infoListProviderClassName", "");
 %>
 
 <c:choose>
@@ -27,6 +26,8 @@ String curInfoListProviderClassName = PrefsParamUtil.getString(portletPreference
 			<aui:option label="none" value="" />
 
 			<%
+			String curInfoListProviderClassName = PrefsParamUtil.getString(portletPreferences, request, "infoListProviderClassName", StringPool.BLANK);
+
 			for (InfoListProvider infoListProvider : infoListProviders) {
 				Class<?> clazz = infoListProvider.getClass();
 			%>

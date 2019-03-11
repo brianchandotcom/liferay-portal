@@ -60,7 +60,7 @@ public abstract class BaseFieldsetGroupTag extends com.liferay.taglib.util.Inclu
 
 	@Override
 	protected void setAttributes(HttpServletRequest request) {
-		request.setAttribute("aui:fieldset-group:markupView", _markupView);
+		setNamespacedAttribute(request, "markupView", _markupView);
 	}
 
 	protected static final String _ATTRIBUTE_NAMESPACE = "aui:fieldset-group:";

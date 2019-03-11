@@ -78,9 +78,9 @@ public abstract class BaseContainerTag extends com.liferay.taglib.util.IncludeTa
 
 	@Override
 	protected void setAttributes(HttpServletRequest request) {
-		request.setAttribute("aui:container:cssClass", _cssClass);
-		request.setAttribute("aui:container:fluid", String.valueOf(_fluid));
-		request.setAttribute("aui:container:id", _id);
+		setNamespacedAttribute(request, "cssClass", _cssClass);
+		setNamespacedAttribute(request, "fluid", _fluid);
+		setNamespacedAttribute(request, "id", _id);
 	}
 
 	protected static final String _ATTRIBUTE_NAMESPACE = "aui:container:";

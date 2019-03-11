@@ -82,10 +82,10 @@ public abstract class BaseNavBarTag extends com.liferay.taglib.util.IncludeTag {
 
 	@Override
 	protected void setAttributes(HttpServletRequest request) {
-		request.setAttribute("aui:nav-bar:cssClass", _cssClass);
-		request.setAttribute("aui:nav-bar:data", _data);
-		request.setAttribute("aui:nav-bar:id", _id);
-		request.setAttribute("aui:nav-bar:markupView", _markupView);
+		setNamespacedAttribute(request, "cssClass", _cssClass);
+		setNamespacedAttribute(request, "data", _data);
+		setNamespacedAttribute(request, "id", _id);
+		setNamespacedAttribute(request, "markupView", _markupView);
 	}
 
 	protected static final String _ATTRIBUTE_NAMESPACE = "aui:nav-bar:";

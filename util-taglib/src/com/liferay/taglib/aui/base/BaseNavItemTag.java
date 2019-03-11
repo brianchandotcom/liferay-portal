@@ -244,28 +244,28 @@ public abstract class BaseNavItemTag extends com.liferay.taglib.util.IncludeTag 
 
 	@Override
 	protected void setAttributes(HttpServletRequest request) {
-		request.setAttribute("aui:nav-item:anchorCssClass", _anchorCssClass);
-		request.setAttribute("aui:nav-item:anchorData", _anchorData);
-		request.setAttribute("aui:nav-item:anchorId", _anchorId);
-		request.setAttribute("aui:nav-item:ariaLabel", _ariaLabel);
-		request.setAttribute("aui:nav-item:ariaRole", _ariaRole);
-		request.setAttribute("aui:nav-item:cssClass", _cssClass);
-		request.setAttribute("aui:nav-item:data", _data);
-		request.setAttribute("aui:nav-item:dropdown", String.valueOf(_dropdown));
-		request.setAttribute("aui:nav-item:href", _href);
-		request.setAttribute("aui:nav-item:iconCssClass", _iconCssClass);
-		request.setAttribute("aui:nav-item:iconSrc", _iconSrc);
-		request.setAttribute("aui:nav-item:id", _id);
-		request.setAttribute("aui:nav-item:label", _label);
-		request.setAttribute("aui:nav-item:localizeLabel", String.valueOf(_localizeLabel));
-		request.setAttribute("aui:nav-item:selected", String.valueOf(_selected));
-		request.setAttribute("aui:nav-item:state", _state);
-		request.setAttribute("aui:nav-item:target", _target);
-		request.setAttribute("aui:nav-item:title", _title);
-		request.setAttribute("aui:nav-item:toggle", String.valueOf(_toggle));
-		request.setAttribute("aui:nav-item:toggleTouch", String.valueOf(_toggleTouch));
-		request.setAttribute("aui:nav-item:useDialog", String.valueOf(_useDialog));
-		request.setAttribute("aui:nav-item:wrapDropDownMenu", String.valueOf(_wrapDropDownMenu));
+		setNamespacedAttribute(request, "anchorCssClass", _anchorCssClass);
+		setNamespacedAttribute(request, "anchorData", _anchorData);
+		setNamespacedAttribute(request, "anchorId", _anchorId);
+		setNamespacedAttribute(request, "ariaLabel", _ariaLabel);
+		setNamespacedAttribute(request, "ariaRole", _ariaRole);
+		setNamespacedAttribute(request, "cssClass", _cssClass);
+		setNamespacedAttribute(request, "data", _data);
+		setNamespacedAttribute(request, "dropdown", _dropdown);
+		setNamespacedAttribute(request, "href", _href);
+		setNamespacedAttribute(request, "iconCssClass", _iconCssClass);
+		setNamespacedAttribute(request, "iconSrc", _iconSrc);
+		setNamespacedAttribute(request, "id", _id);
+		setNamespacedAttribute(request, "label", _label);
+		setNamespacedAttribute(request, "localizeLabel", _localizeLabel);
+		setNamespacedAttribute(request, "selected", _selected);
+		setNamespacedAttribute(request, "state", _state);
+		setNamespacedAttribute(request, "target", _target);
+		setNamespacedAttribute(request, "title", _title);
+		setNamespacedAttribute(request, "toggle", _toggle);
+		setNamespacedAttribute(request, "toggleTouch", _toggleTouch);
+		setNamespacedAttribute(request, "useDialog", _useDialog);
+		setNamespacedAttribute(request, "wrapDropDownMenu", _wrapDropDownMenu);
 	}
 
 	protected static final String _ATTRIBUTE_NAMESPACE = "aui:nav-item:";

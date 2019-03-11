@@ -172,20 +172,20 @@ public abstract class BaseButtonTag extends com.liferay.taglib.util.IncludeTag {
 
 	@Override
 	protected void setAttributes(HttpServletRequest request) {
-		request.setAttribute("aui:button:cssClass", _cssClass);
-		request.setAttribute("aui:button:data", _data);
-		request.setAttribute("aui:button:disabled", String.valueOf(_disabled));
-		request.setAttribute("aui:button:href", _href);
-		request.setAttribute("aui:button:icon", _icon);
-		request.setAttribute("aui:button:iconAlign", _iconAlign);
-		request.setAttribute("aui:button:id", _id);
-		request.setAttribute("aui:button:name", _name);
-		request.setAttribute("aui:button:onClick", _onClick);
-		request.setAttribute("aui:button:primary", _primary);
-		request.setAttribute("aui:button:type", _type);
-		request.setAttribute("aui:button:useDialog", String.valueOf(_useDialog));
-		request.setAttribute("aui:button:useNamespace", String.valueOf(_useNamespace));
-		request.setAttribute("aui:button:value", _value);
+		setNamespacedAttribute(request, "cssClass", _cssClass);
+		setNamespacedAttribute(request, "data", _data);
+		setNamespacedAttribute(request, "disabled", _disabled);
+		setNamespacedAttribute(request, "href", _href);
+		setNamespacedAttribute(request, "icon", _icon);
+		setNamespacedAttribute(request, "iconAlign", _iconAlign);
+		setNamespacedAttribute(request, "id", _id);
+		setNamespacedAttribute(request, "name", _name);
+		setNamespacedAttribute(request, "onClick", _onClick);
+		setNamespacedAttribute(request, "primary", _primary);
+		setNamespacedAttribute(request, "type", _type);
+		setNamespacedAttribute(request, "useDialog", _useDialog);
+		setNamespacedAttribute(request, "useNamespace", _useNamespace);
+		setNamespacedAttribute(request, "value", _value);
 	}
 
 	protected static final String _ATTRIBUTE_NAMESPACE = "aui:button:";

@@ -114,13 +114,13 @@ public abstract class BaseAlertTag extends com.liferay.taglib.util.IncludeTag {
 
 	@Override
 	protected void setAttributes(HttpServletRequest request) {
-		request.setAttribute("aui:alert:animated", String.valueOf(_animated));
-		request.setAttribute("aui:alert:closeable", String.valueOf(_closeable));
-		request.setAttribute("aui:alert:cssClass", _cssClass);
-		request.setAttribute("aui:alert:destroyOnHide", String.valueOf(_destroyOnHide));
-		request.setAttribute("aui:alert:duration", _duration);
-		request.setAttribute("aui:alert:id", _id);
-		request.setAttribute("aui:alert:type", _type);
+		setNamespacedAttribute(request, "animated", _animated);
+		setNamespacedAttribute(request, "closeable", _closeable);
+		setNamespacedAttribute(request, "cssClass", _cssClass);
+		setNamespacedAttribute(request, "destroyOnHide", _destroyOnHide);
+		setNamespacedAttribute(request, "duration", _duration);
+		setNamespacedAttribute(request, "id", _id);
+		setNamespacedAttribute(request, "type", _type);
 	}
 
 	protected static final String _ATTRIBUTE_NAMESPACE = "aui:alert:";

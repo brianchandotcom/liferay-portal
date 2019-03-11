@@ -127,15 +127,15 @@ public abstract class BaseIconTag extends com.liferay.taglib.util.IncludeTag {
 
 	@Override
 	protected void setAttributes(HttpServletRequest request) {
-		request.setAttribute("aui:icon:cssClass", _cssClass);
-		request.setAttribute("aui:icon:data", _data);
-		request.setAttribute("aui:icon:id", _id);
-		request.setAttribute("aui:icon:image", _image);
-		request.setAttribute("aui:icon:label", _label);
-		request.setAttribute("aui:icon:markupView", _markupView);
-		request.setAttribute("aui:icon:src", _src);
-		request.setAttribute("aui:icon:target", _target);
-		request.setAttribute("aui:icon:url", _url);
+		setNamespacedAttribute(request, "cssClass", _cssClass);
+		setNamespacedAttribute(request, "data", _data);
+		setNamespacedAttribute(request, "id", _id);
+		setNamespacedAttribute(request, "image", _image);
+		setNamespacedAttribute(request, "label", _label);
+		setNamespacedAttribute(request, "markupView", _markupView);
+		setNamespacedAttribute(request, "src", _src);
+		setNamespacedAttribute(request, "target", _target);
+		setNamespacedAttribute(request, "url", _url);
 	}
 
 	protected static final String _ATTRIBUTE_NAMESPACE = "aui:icon:";

@@ -141,16 +141,16 @@ public abstract class BaseFormTag extends com.liferay.taglib.util.IncludeTag {
 
 	@Override
 	protected void setAttributes(HttpServletRequest request) {
-		request.setAttribute("aui:form:action", _action);
-		request.setAttribute("aui:form:cssClass", _cssClass);
-		request.setAttribute("aui:form:escapeXml", String.valueOf(_escapeXml));
-		request.setAttribute("aui:form:inlineLabels", String.valueOf(_inlineLabels));
-		request.setAttribute("aui:form:method", _method);
-		request.setAttribute("aui:form:name", _name);
-		request.setAttribute("aui:form:onSubmit", _onSubmit);
-		request.setAttribute("aui:form:portletNamespace", _portletNamespace);
-		request.setAttribute("aui:form:useNamespace", String.valueOf(_useNamespace));
-		request.setAttribute("aui:form:validateOnBlur", String.valueOf(_validateOnBlur));
+		setNamespacedAttribute(request, "action", _action);
+		setNamespacedAttribute(request, "cssClass", _cssClass);
+		setNamespacedAttribute(request, "escapeXml", _escapeXml);
+		setNamespacedAttribute(request, "inlineLabels", _inlineLabels);
+		setNamespacedAttribute(request, "method", _method);
+		setNamespacedAttribute(request, "name", _name);
+		setNamespacedAttribute(request, "onSubmit", _onSubmit);
+		setNamespacedAttribute(request, "portletNamespace", _portletNamespace);
+		setNamespacedAttribute(request, "useNamespace", _useNamespace);
+		setNamespacedAttribute(request, "validateOnBlur", _validateOnBlur);
 	}
 
 	protected static final String _ATTRIBUTE_NAMESPACE = "aui:form:";

@@ -145,17 +145,17 @@ public abstract class BaseWorkflowStatusTag extends com.liferay.taglib.util.Incl
 
 	@Override
 	protected void setAttributes(HttpServletRequest request) {
-		request.setAttribute("aui:workflow-status:bean", _bean);
-		request.setAttribute("aui:workflow-status:helpMessage", _helpMessage);
-		request.setAttribute("aui:workflow-status:id", _id);
-		request.setAttribute("aui:workflow-status:markupView", _markupView);
-		request.setAttribute("aui:workflow-status:model", _model);
-		request.setAttribute("aui:workflow-status:showHelpMessage", String.valueOf(_showHelpMessage));
-		request.setAttribute("aui:workflow-status:showIcon", String.valueOf(_showIcon));
-		request.setAttribute("aui:workflow-status:showLabel", String.valueOf(_showLabel));
-		request.setAttribute("aui:workflow-status:status", _status);
-		request.setAttribute("aui:workflow-status:statusMessage", _statusMessage);
-		request.setAttribute("aui:workflow-status:version", _version);
+		setNamespacedAttribute(request, "bean", _bean);
+		setNamespacedAttribute(request, "helpMessage", _helpMessage);
+		setNamespacedAttribute(request, "id", _id);
+		setNamespacedAttribute(request, "markupView", _markupView);
+		setNamespacedAttribute(request, "model", _model);
+		setNamespacedAttribute(request, "showHelpMessage", _showHelpMessage);
+		setNamespacedAttribute(request, "showIcon", _showIcon);
+		setNamespacedAttribute(request, "showLabel", _showLabel);
+		setNamespacedAttribute(request, "status", _status);
+		setNamespacedAttribute(request, "statusMessage", _statusMessage);
+		setNamespacedAttribute(request, "version", _version);
 	}
 
 	protected static final String _ATTRIBUTE_NAMESPACE = "aui:workflow-status:";

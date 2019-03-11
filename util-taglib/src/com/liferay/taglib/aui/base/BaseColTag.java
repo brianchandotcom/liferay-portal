@@ -123,14 +123,14 @@ public abstract class BaseColTag extends com.liferay.taglib.util.IncludeTag {
 
 	@Override
 	protected void setAttributes(HttpServletRequest request) {
-		request.setAttribute("aui:col:cssClass", _cssClass);
-		request.setAttribute("aui:col:id", _id);
-		request.setAttribute("aui:col:lg", _lg);
-		request.setAttribute("aui:col:md", _md);
-		request.setAttribute("aui:col:sm", _sm);
-		request.setAttribute("aui:col:span", String.valueOf(_span));
-		request.setAttribute("aui:col:width", String.valueOf(_width));
-		request.setAttribute("aui:col:xs", _xs);
+		setNamespacedAttribute(request, "cssClass", _cssClass);
+		setNamespacedAttribute(request, "id", _id);
+		setNamespacedAttribute(request, "lg", _lg);
+		setNamespacedAttribute(request, "md", _md);
+		setNamespacedAttribute(request, "sm", _sm);
+		setNamespacedAttribute(request, "span", _span);
+		setNamespacedAttribute(request, "width", _width);
+		setNamespacedAttribute(request, "xs", _xs);
 	}
 
 	protected static final String _ATTRIBUTE_NAMESPACE = "aui:col:";

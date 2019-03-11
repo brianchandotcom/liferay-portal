@@ -127,15 +127,15 @@ public abstract class BaseOptionTag extends com.liferay.taglib.util.IncludeTag {
 
 	@Override
 	protected void setAttributes(HttpServletRequest request) {
-		request.setAttribute("aui:option:cssClass", _cssClass);
-		request.setAttribute("aui:option:data", _data);
-		request.setAttribute("aui:option:disabled", String.valueOf(_disabled));
-		request.setAttribute("aui:option:label", _label);
-		request.setAttribute("aui:option:localizeLabel", String.valueOf(_localizeLabel));
-		request.setAttribute("aui:option:selected", String.valueOf(_selected));
-		request.setAttribute("aui:option:style", _style);
-		request.setAttribute("aui:option:useModelValue", String.valueOf(_useModelValue));
-		request.setAttribute("aui:option:value", _value);
+		setNamespacedAttribute(request, "cssClass", _cssClass);
+		setNamespacedAttribute(request, "data", _data);
+		setNamespacedAttribute(request, "disabled", _disabled);
+		setNamespacedAttribute(request, "label", _label);
+		setNamespacedAttribute(request, "localizeLabel", _localizeLabel);
+		setNamespacedAttribute(request, "selected", _selected);
+		setNamespacedAttribute(request, "style", _style);
+		setNamespacedAttribute(request, "useModelValue", _useModelValue);
+		setNamespacedAttribute(request, "value", _value);
 	}
 
 	protected static final String _ATTRIBUTE_NAMESPACE = "aui:option:";

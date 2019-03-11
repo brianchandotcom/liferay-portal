@@ -118,14 +118,14 @@ public abstract class BaseNavTag extends com.liferay.taglib.util.IncludeTag {
 
 	@Override
 	protected void setAttributes(HttpServletRequest request) {
-		request.setAttribute("aui:nav:ariaLabel", _ariaLabel);
-		request.setAttribute("aui:nav:ariaRole", _ariaRole);
-		request.setAttribute("aui:nav:collapsible", String.valueOf(_collapsible));
-		request.setAttribute("aui:nav:cssClass", _cssClass);
-		request.setAttribute("aui:nav:icon", _icon);
-		request.setAttribute("aui:nav:id", _id);
-		request.setAttribute("aui:nav:searchContainer", _searchContainer);
-		request.setAttribute("aui:nav:useNamespace", String.valueOf(_useNamespace));
+		setNamespacedAttribute(request, "ariaLabel", _ariaLabel);
+		setNamespacedAttribute(request, "ariaRole", _ariaRole);
+		setNamespacedAttribute(request, "collapsible", _collapsible);
+		setNamespacedAttribute(request, "cssClass", _cssClass);
+		setNamespacedAttribute(request, "icon", _icon);
+		setNamespacedAttribute(request, "id", _id);
+		setNamespacedAttribute(request, "searchContainer", _searchContainer);
+		setNamespacedAttribute(request, "useNamespace", _useNamespace);
 	}
 
 	protected static final String _ATTRIBUTE_NAMESPACE = "aui:nav:";

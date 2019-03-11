@@ -87,10 +87,10 @@ public abstract class BaseNavBarSearchTag extends com.liferay.taglib.util.Includ
 
 	@Override
 	protected void setAttributes(HttpServletRequest request) {
-		request.setAttribute("aui:nav-bar-search:cssClass", _cssClass);
-		request.setAttribute("aui:nav-bar-search:file", _file);
-		request.setAttribute("aui:nav-bar-search:id", _id);
-		request.setAttribute("aui:nav-bar-search:searchContainer", _searchContainer);
+		setNamespacedAttribute(request, "cssClass", _cssClass);
+		setNamespacedAttribute(request, "file", _file);
+		setNamespacedAttribute(request, "id", _id);
+		setNamespacedAttribute(request, "searchContainer", _searchContainer);
 	}
 
 	protected static final String _ATTRIBUTE_NAMESPACE = "aui:nav-bar-search:";

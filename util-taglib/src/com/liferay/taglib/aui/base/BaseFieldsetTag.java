@@ -132,15 +132,15 @@ public abstract class BaseFieldsetTag extends com.liferay.taglib.util.IncludeTag
 
 	@Override
 	protected void setAttributes(HttpServletRequest request) {
-		request.setAttribute("aui:fieldset:collapsed", String.valueOf(_collapsed));
-		request.setAttribute("aui:fieldset:collapsible", String.valueOf(_collapsible));
-		request.setAttribute("aui:fieldset:column", String.valueOf(_column));
-		request.setAttribute("aui:fieldset:cssClass", _cssClass);
-		request.setAttribute("aui:fieldset:helpMessage", _helpMessage);
-		request.setAttribute("aui:fieldset:id", _id);
-		request.setAttribute("aui:fieldset:label", _label);
-		request.setAttribute("aui:fieldset:localizeLabel", String.valueOf(_localizeLabel));
-		request.setAttribute("aui:fieldset:markupView", _markupView);
+		setNamespacedAttribute(request, "collapsed", _collapsed);
+		setNamespacedAttribute(request, "collapsible", _collapsible);
+		setNamespacedAttribute(request, "column", _column);
+		setNamespacedAttribute(request, "cssClass", _cssClass);
+		setNamespacedAttribute(request, "helpMessage", _helpMessage);
+		setNamespacedAttribute(request, "id", _id);
+		setNamespacedAttribute(request, "label", _label);
+		setNamespacedAttribute(request, "localizeLabel", _localizeLabel);
+		setNamespacedAttribute(request, "markupView", _markupView);
 	}
 
 	protected static final String _ATTRIBUTE_NAMESPACE = "aui:fieldset:";

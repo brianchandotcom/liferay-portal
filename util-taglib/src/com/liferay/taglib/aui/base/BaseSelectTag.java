@@ -330,37 +330,37 @@ public abstract class BaseSelectTag extends com.liferay.taglib.BaseValidatorTagS
 
 	@Override
 	protected void setAttributes(HttpServletRequest request) {
-		request.setAttribute("aui:select:bean", _bean);
-		request.setAttribute("aui:select:changesContext", String.valueOf(_changesContext));
-		request.setAttribute("aui:select:cssClass", _cssClass);
-		request.setAttribute("aui:select:data", _data);
-		request.setAttribute("aui:select:disabled", String.valueOf(_disabled));
-		request.setAttribute("aui:select:field", _field);
-		request.setAttribute("aui:select:first", String.valueOf(_first));
-		request.setAttribute("aui:select:helpMessage", _helpMessage);
-		request.setAttribute("aui:select:id", _id);
-		request.setAttribute("aui:select:ignoreRequestValue", String.valueOf(_ignoreRequestValue));
-		request.setAttribute("aui:select:inlineField", String.valueOf(_inlineField));
-		request.setAttribute("aui:select:inlineLabel", _inlineLabel);
-		request.setAttribute("aui:select:label", _label);
-		request.setAttribute("aui:select:last", String.valueOf(_last));
-		request.setAttribute("aui:select:listType", _listType);
-		request.setAttribute("aui:select:listTypeFieldName", _listTypeFieldName);
-		request.setAttribute("aui:select:localizeLabel", String.valueOf(_localizeLabel));
-		request.setAttribute("aui:select:model", _model);
-		request.setAttribute("aui:select:multiple", String.valueOf(_multiple));
-		request.setAttribute("aui:select:name", _name);
-		request.setAttribute("aui:select:onChange", _onChange);
-		request.setAttribute("aui:select:onClick", _onClick);
-		request.setAttribute("aui:select:prefix", _prefix);
-		request.setAttribute("aui:select:required", String.valueOf(_required));
-		request.setAttribute("aui:select:showEmptyOption", String.valueOf(_showEmptyOption));
-		request.setAttribute("aui:select:showRequiredLabel", String.valueOf(_showRequiredLabel));
-		request.setAttribute("aui:select:suffix", _suffix);
-		request.setAttribute("aui:select:title", _title);
-		request.setAttribute("aui:select:useNamespace", String.valueOf(_useNamespace));
-		request.setAttribute("aui:select:value", _value);
-		request.setAttribute("aui:select:wrapperCssClass", _wrapperCssClass);
+		setNamespacedAttribute(request, "bean", _bean);
+		setNamespacedAttribute(request, "changesContext", _changesContext);
+		setNamespacedAttribute(request, "cssClass", _cssClass);
+		setNamespacedAttribute(request, "data", _data);
+		setNamespacedAttribute(request, "disabled", _disabled);
+		setNamespacedAttribute(request, "field", _field);
+		setNamespacedAttribute(request, "first", _first);
+		setNamespacedAttribute(request, "helpMessage", _helpMessage);
+		setNamespacedAttribute(request, "id", _id);
+		setNamespacedAttribute(request, "ignoreRequestValue", _ignoreRequestValue);
+		setNamespacedAttribute(request, "inlineField", _inlineField);
+		setNamespacedAttribute(request, "inlineLabel", _inlineLabel);
+		setNamespacedAttribute(request, "label", _label);
+		setNamespacedAttribute(request, "last", _last);
+		setNamespacedAttribute(request, "listType", _listType);
+		setNamespacedAttribute(request, "listTypeFieldName", _listTypeFieldName);
+		setNamespacedAttribute(request, "localizeLabel", _localizeLabel);
+		setNamespacedAttribute(request, "model", _model);
+		setNamespacedAttribute(request, "multiple", _multiple);
+		setNamespacedAttribute(request, "name", _name);
+		setNamespacedAttribute(request, "onChange", _onChange);
+		setNamespacedAttribute(request, "onClick", _onClick);
+		setNamespacedAttribute(request, "prefix", _prefix);
+		setNamespacedAttribute(request, "required", _required);
+		setNamespacedAttribute(request, "showEmptyOption", _showEmptyOption);
+		setNamespacedAttribute(request, "showRequiredLabel", _showRequiredLabel);
+		setNamespacedAttribute(request, "suffix", _suffix);
+		setNamespacedAttribute(request, "title", _title);
+		setNamespacedAttribute(request, "useNamespace", _useNamespace);
+		setNamespacedAttribute(request, "value", _value);
+		setNamespacedAttribute(request, "wrapperCssClass", _wrapperCssClass);
 	}
 
 	protected static final String _ATTRIBUTE_NAMESPACE = "aui:select:";

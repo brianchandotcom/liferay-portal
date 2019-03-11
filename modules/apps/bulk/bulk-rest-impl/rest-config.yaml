@@ -4,5 +4,5 @@ application:
     baseURI: "/bulk"
     className: "BulkRESTApplication"
     name: "Liferay.Bulk.REST"
-author: "Alejandro Tardín"
+author: "Alejandro TardÃ­n"
 testDir: "../bulk-rest-test/src/testIntegration/java"

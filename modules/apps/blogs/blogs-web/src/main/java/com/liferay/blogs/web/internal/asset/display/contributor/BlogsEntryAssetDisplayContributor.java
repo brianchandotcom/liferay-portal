@@ -65,9 +65,6 @@ public class BlogsEntryAssetDisplayContributor
 			new AssetDisplayField(
 				"subtitle", LanguageUtil.get(resourceBundle, "subtitle"),
 				"text"));
-		fields.add(
-			new AssetDisplayField(
-				"title", LanguageUtil.get(resourceBundle, "title"), "text"));
 
 		return fields;
 	}
@@ -86,7 +83,6 @@ public class BlogsEntryAssetDisplayContributor
 		fieldValues.put("content", blogsEntry.getContent());
 		fieldValues.put("coverImage", _getCoverImageURL(blogsEntry));
 		fieldValues.put("subtitle", blogsEntry.getSubtitle());
-		fieldValues.put("title", blogsEntry.getTitle());
 
 		return fieldValues;
 	}

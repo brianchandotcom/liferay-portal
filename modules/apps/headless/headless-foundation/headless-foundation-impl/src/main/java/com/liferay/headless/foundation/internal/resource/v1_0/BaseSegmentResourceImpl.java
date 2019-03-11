@@ -80,11 +80,12 @@ public abstract class BaseSegmentResourceImpl implements SegmentResource {
 			@Parameter(in = ParameterIn.QUERY, name = "pageSize")
 		}
 	)
-	@Path("/user-accounts/{user-id}/segments")
+	@Path("/user-accounts/{user-account-id}/segments")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "Segment")})
-	public Page<Segment> getUserAccountUserSegmentsPage(
-			@PathParam("user-id") Long userId, @Context Pagination pagination)
+	public Page<Segment> getUserAccountSegmentsPage(
+			@PathParam("user-account-id") Long userAccountId,
+			@Context Pagination pagination)
 		throws Exception {
 
 		return Page.of(Collections.emptyList());

@@ -223,16 +223,16 @@ public abstract class BaseSegmentResourceTestCase {
 	}
 
 	@Test
-	public void testGetUserAccountUserSegmentsPage() throws Exception {
-		Long userId = testGetUserAccountUserSegmentsPage_getUserId();
+	public void testGetUserAccountSegmentsPage() throws Exception {
+		Long userAccountId = testGetUserAccountSegmentsPage_getUserAccountId();
 
-		Segment segment1 = testGetUserAccountUserSegmentsPage_addSegment(
-			userId, randomSegment());
-		Segment segment2 = testGetUserAccountUserSegmentsPage_addSegment(
-			userId, randomSegment());
+		Segment segment1 = testGetUserAccountSegmentsPage_addSegment(
+			userAccountId, randomSegment());
+		Segment segment2 = testGetUserAccountSegmentsPage_addSegment(
+			userAccountId, randomSegment());
 
-		Page<Segment> page = invokeGetUserAccountUserSegmentsPage(
-			userId, Pagination.of(1, 2));
+		Page<Segment> page = invokeGetUserAccountSegmentsPage(
+			userAccountId, Pagination.of(1, 2));
 
 		Assert.assertEquals(2, page.getTotalCount());
 
@@ -242,27 +242,27 @@ public abstract class BaseSegmentResourceTestCase {
 	}
 
 	@Test
-	public void testGetUserAccountUserSegmentsPageWithPagination()
+	public void testGetUserAccountSegmentsPageWithPagination()
 		throws Exception {
 
-		Long userId = testGetUserAccountUserSegmentsPage_getUserId();
+		Long userAccountId = testGetUserAccountSegmentsPage_getUserAccountId();
 
-		Segment segment1 = testGetUserAccountUserSegmentsPage_addSegment(
-			userId, randomSegment());
-		Segment segment2 = testGetUserAccountUserSegmentsPage_addSegment(
-			userId, randomSegment());
-		Segment segment3 = testGetUserAccountUserSegmentsPage_addSegment(
-			userId, randomSegment());
+		Segment segment1 = testGetUserAccountSegmentsPage_addSegment(
+			userAccountId, randomSegment());
+		Segment segment2 = testGetUserAccountSegmentsPage_addSegment(
+			userAccountId, randomSegment());
+		Segment segment3 = testGetUserAccountSegmentsPage_addSegment(
+			userAccountId, randomSegment());
 
-		Page<Segment> page1 = invokeGetUserAccountUserSegmentsPage(
-			userId, Pagination.of(1, 2));
+		Page<Segment> page1 = invokeGetUserAccountSegmentsPage(
+			userAccountId, Pagination.of(1, 2));
 
 		List<Segment> segments1 = (List<Segment>)page1.getItems();
 
 		Assert.assertEquals(segments1.toString(), 2, segments1.size());
 
-		Page<Segment> page2 = invokeGetUserAccountUserSegmentsPage(
-			userId, Pagination.of(2, 2));
+		Page<Segment> page2 = invokeGetUserAccountSegmentsPage(
+			userAccountId, Pagination.of(2, 2));
 
 		Assert.assertEquals(3, page2.getTotalCount());
 
@@ -280,29 +280,31 @@ public abstract class BaseSegmentResourceTestCase {
 			});
 	}
 
-	protected Segment testGetUserAccountUserSegmentsPage_addSegment(
-			Long userId, Segment segment)
+	protected Segment testGetUserAccountSegmentsPage_addSegment(
+			Long userAccountId, Segment segment)
 		throws Exception {
 
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
 	}
 
-	protected Long testGetUserAccountUserSegmentsPage_getUserId()
+	protected Long testGetUserAccountSegmentsPage_getUserAccountId()
 		throws Exception {
 
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
 	}
 
-	protected Page<Segment> invokeGetUserAccountUserSegmentsPage(
-			Long userId, Pagination pagination)
+	protected Page<Segment> invokeGetUserAccountSegmentsPage(
+			Long userAccountId, Pagination pagination)
 		throws Exception {
 
 		Http.Options options = _createHttpOptions();
 
 		String location =
-			_resourceURL + _toPath("/user-accounts/{user-id}/segments", userId);
+			_resourceURL +
+				_toPath(
+					"/user-accounts/{user-account-id}/segments", userAccountId);
 
 		location = HttpUtil.addParameter(
 			location, "page", pagination.getPage());
@@ -317,14 +319,16 @@ public abstract class BaseSegmentResourceTestCase {
 			});
 	}
 
-	protected Http.Response invokeGetUserAccountUserSegmentsPageResponse(
-			Long userId, Pagination pagination)
+	protected Http.Response invokeGetUserAccountSegmentsPageResponse(
+			Long userAccountId, Pagination pagination)
 		throws Exception {
 
 		Http.Options options = _createHttpOptions();
 
 		String location =
-			_resourceURL + _toPath("/user-accounts/{user-id}/segments", userId);
+			_resourceURL +
+				_toPath(
+					"/user-accounts/{user-account-id}/segments", userAccountId);
 
 		location = HttpUtil.addParameter(
 			location, "page", pagination.getPage());

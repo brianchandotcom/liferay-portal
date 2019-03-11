@@ -422,16 +422,16 @@ public class Query {
 
 	@GraphQLField
 	@GraphQLInvokeDetached
-	public Collection<Segment> getUserAccountUserSegmentsPage(
-			@GraphQLName("user-id") Long userId,
+	public Collection<Segment> getUserAccountSegmentsPage(
+			@GraphQLName("user-account-id") Long userAccountId,
 			@GraphQLName("pageSize") int pageSize,
 			@GraphQLName("page") int page)
 		throws Exception {
 
 		SegmentResource segmentResource = _createSegmentResource();
 
-		Page paginationPage = segmentResource.getUserAccountUserSegmentsPage(
-			userId, Pagination.of(pageSize, page));
+		Page paginationPage = segmentResource.getUserAccountSegmentsPage(
+			userAccountId, Pagination.of(pageSize, page));
 
 		return paginationPage.getItems();
 	}

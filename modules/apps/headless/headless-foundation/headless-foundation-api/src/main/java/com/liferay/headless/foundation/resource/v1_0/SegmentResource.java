@@ -36,8 +36,8 @@ public interface SegmentResource {
 			Long contentSpaceId, Pagination pagination)
 		throws Exception;
 
-	public Page<Segment> getUserAccountUserSegmentsPage(
-			Long userId, Pagination pagination)
+	public Page<Segment> getUserAccountSegmentsPage(
+			Long userAccountId, Pagination pagination)
 		throws Exception;
 
 	public void setContextCompany(Company contextCompany);

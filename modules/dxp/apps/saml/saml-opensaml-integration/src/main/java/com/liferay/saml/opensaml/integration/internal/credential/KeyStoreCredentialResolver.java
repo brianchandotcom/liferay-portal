@@ -168,7 +168,7 @@ public class KeyStoreCredentialResolver
 			}
 
 			if (entityId.equals(samlProviderConfiguration.entityId())) {
-				String keyStoreCredentialPassword;
+				String keyStoreCredentialPassword = null;
 
 				if (usageType == UsageType.ENCRYPTION) {
 					keyStoreCredentialPassword =

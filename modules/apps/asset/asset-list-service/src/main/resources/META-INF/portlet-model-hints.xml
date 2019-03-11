@@ -60,7 +60,9 @@
 		<field name="modifiedDate" type="Date" />
 		<field name="assetListEntryId" type="long" />
 		<field name="segmentsEntryId" type="long" />
-		<field name="typeSettings" type="String" />
+		<field name="typeSettings" type="String">
+			<hint-collection name="CLOB" />
+		</field>
 		<field name="lastPublishDate" type="Date" />
 	</model>
 </model-hints>

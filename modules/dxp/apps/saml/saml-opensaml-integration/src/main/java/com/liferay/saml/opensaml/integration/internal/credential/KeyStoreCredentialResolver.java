@@ -286,16 +286,13 @@ public class KeyStoreCredentialResolver
 	}
 
 	protected UsageType getUsageType(CertificateUsage certificateUsage) {
-		UsageType usageType;
+		UsageType usageType = null;
 
 		if (certificateUsage == CertificateUsage.ENCRYPTION) {
 			usageType = UsageType.ENCRYPTION;
 		}
 		else if (certificateUsage == CertificateUsage.SIGNING) {
 			usageType = UsageType.SIGNING;
-		}
-		else {
-			return null;
 		}
 
 		return usageType;

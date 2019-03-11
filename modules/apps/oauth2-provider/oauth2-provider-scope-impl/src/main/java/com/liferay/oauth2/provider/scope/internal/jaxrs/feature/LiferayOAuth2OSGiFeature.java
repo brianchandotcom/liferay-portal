@@ -66,8 +66,8 @@ import org.osgi.util.tracker.ServiceTracker;
  */
 @Component(
 	property = {
+		LiferayOAuth2OSGiFeature.OAUTH2_SERVICE_ACCESS_POLICY_NAME + "=AUTHORIZED_OAUTH2_SAP",
 		"liferay.extension=OAuth2",
-		"oauth2.service.access.policy.name=AUTHORIZED_OAUTH2_SAP",
 		"osgi.jaxrs.application.select=(!(liferay.oauth2=false))",
 		"osgi.jaxrs.extension=true", "osgi.jaxrs.name=Liferay.OAuth2"
 	},
@@ -108,7 +108,7 @@ public class LiferayOAuth2OSGiFeature implements Feature {
 			Priorities.AUTHORIZATION - 9);
 
 		String oauth2ServiceAccessPolicyName = MapUtil.getString(
-			applicationProperties, "oauth2.service.access.policy.name",
+			applicationProperties, OAUTH2_SERVICE_ACCESS_POLICY_NAME,
 			_oauth2ServiceAccessPolicyName);
 
 		featureContext.register(
@@ -142,7 +142,7 @@ public class LiferayOAuth2OSGiFeature implements Feature {
 		_bundleContext = componentContext.getBundleContext();
 
 		_oauth2ServiceAccessPolicyName = MapUtil.getString(
-			properties, "oauth2.service.access.policy.name");
+			properties, OAUTH2_SERVICE_ACCESS_POLICY_NAME);
 	}
 
 	@Deactivate
@@ -193,6 +193,9 @@ public class LiferayOAuth2OSGiFeature implements Feature {
 				new ApplicationDescriptorsImpl(serviceTracker, osgiJAXRSName),
 				properties));
 	}
+
+	protected static final String OAUTH2_SERVICE_ACCESS_POLICY_NAME =
+		"oauth2.service.access.policy.name";
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		LiferayOAuth2OSGiFeature.class);

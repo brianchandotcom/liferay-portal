@@ -273,17 +273,17 @@ public class BulkActionResponseResourceImpl
 		_getAssetCategoriesFunction(PermissionChecker permissionChecker) {
 
 		return assetEntry -> {
-			if (BaseModelPermissionCheckerUtil.containsBaseModelPermission(
+			if (!BaseModelPermissionCheckerUtil.containsBaseModelPermission(
 					permissionChecker, assetEntry.getGroupId(),
 					assetEntry.getClassName(), assetEntry.getClassPK(),
 					ActionKeys.UPDATE)) {
 
-				return new HashSet<>(
-					_assetCategoryLocalService.getCategories(
-						assetEntry.getClassName(), assetEntry.getClassPK()));
+				return Collections.emptySet();
 			}
 
-			return Collections.emptySet();
+			return new HashSet<>(
+				_assetCategoryLocalService.getCategories(
+					assetEntry.getClassName(), assetEntry.getClassPK()));
 		};
 	}
 
@@ -291,17 +291,17 @@ public class BulkActionResponseResourceImpl
 		PermissionChecker permissionChecker) {
 
 		return assetEntry -> {
-			if (BaseModelPermissionCheckerUtil.containsBaseModelPermission(
+			if (!BaseModelPermissionCheckerUtil.containsBaseModelPermission(
 					permissionChecker, assetEntry.getGroupId(),
 					assetEntry.getClassName(), assetEntry.getClassPK(),
 					ActionKeys.UPDATE)) {
 
-				return SetUtil.fromArray(
-					_assetTagLocalService.getTagNames(
-						assetEntry.getClassName(), assetEntry.getClassPK()));
+				return Collections.emptySet();
 			}
 
-			return Collections.emptySet();
+			return SetUtil.fromArray(
+				_assetTagLocalService.getTagNames(
+					assetEntry.getClassName(), assetEntry.getClassPK()));
 		};
 	}
 

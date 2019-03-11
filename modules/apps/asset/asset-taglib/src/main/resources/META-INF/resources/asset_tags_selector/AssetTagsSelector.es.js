@@ -182,7 +182,7 @@ AssetTagsSelector.STATE = {
 	 * @type {?string}
 	 */
 
-	groupIds: Config.array(),
+	groupIds: Config.array().value([]),
 
 	/**
 	 * The URL of a portlet to display the tags
@@ -215,7 +215,7 @@ AssetTagsSelector.STATE = {
 	 * @type {?string}
 	 */
 
-	tagNames: Config.string()
+	tagNames: Config.string().value('')
 };
 
 Soy.register(AssetTagsSelector, templates);

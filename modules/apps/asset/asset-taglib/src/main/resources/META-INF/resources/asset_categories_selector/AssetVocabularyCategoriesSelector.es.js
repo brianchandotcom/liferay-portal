@@ -39,7 +39,7 @@ class AssetVocabularyCategoriesSelector extends Component {
 							item => item.value
 						).join(),
 						singleSelect: this.singleSelect,
-						vocabularyIds: this.vocabularyId
+						vocabularyIds: this.vocabularyIds.concat()
 					}
 				);
 
@@ -133,10 +133,10 @@ class AssetVocabularyCategoriesSelector extends Component {
 			(resolve, reject) => {
 				const serviceOptions = {
 					end: 20,
-					groupId: themeDisplay.getScopeGroupId(),
-					keywords: query,
+					groupIds: this.groupIds,
+					name: `%${query}%`,
 					start: 0,
-					vocabularyId: this.vocabularyId
+					vocabularyIds: this.vocabularyIds
 				};
 
 				serviceOptions['-obc'] = null;
@@ -173,6 +173,8 @@ AssetVocabularyCategoriesSelector.STATE = {
 
 	categoryIds: Config.string().value(''),
 
+	groupIds: Config.array().value([]),
+
 	/**
 	 * Event name which fires when user selects a display page using item selector
 	 * @default undefined
@@ -206,9 +208,9 @@ AssetVocabularyCategoriesSelector.STATE = {
 
 	selectedItems: Config.array().value([]),
 
-	singleSelect: Config.bool(),
+	singleSelect: Config.bool().value(false),
 
-	vocabularyId: Config.string()
+	vocabularyIds: Config.array().value([])
 };
 
 Soy.register(AssetVocabularyCategoriesSelector, templates);

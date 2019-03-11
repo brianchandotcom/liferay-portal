@@ -61,6 +61,7 @@ public class AssetCategoriesSelectorTag extends ComponentRendererTag {
 
 		try {
 			putValue("eventName", getEventName());
+			putValue("groupIds", ListUtil.toList(getGroupIds()));
 			putValue("id", _getNamespace() + "assetCategoriesSelector");
 			putValue("inputName", _getInputName());
 			putValue("portletURL", getPortletURL().toString());

@@ -26,17 +26,6 @@ AssetCategoriesSelector.STATE = {
 	eventName: Config.string(),
 
 	/**
-	 * List of groupIds where tags should be located
-	 * @default undefined
-	 * @instance
-	 * @memberof AssetCategoriesSelector
-	 * @review
-	 * @type {?string}
-	 */
-
-	groupIds: Config.array(),
-
-	/**
 	 * The URL of a portlet to display the tags
 	 * @default undefined
 	 * @instance

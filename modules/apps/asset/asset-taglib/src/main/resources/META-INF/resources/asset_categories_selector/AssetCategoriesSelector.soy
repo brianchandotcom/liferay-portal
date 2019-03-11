@@ -4,6 +4,7 @@
  * AssetCategoriesSelector
  */
 {template .render}
+	{@param groupIds: list<string>}
 	{@param id: string}
 	{@param inputName: string}
 	{@param portletURL: string}
@@ -31,13 +32,14 @@
 				<div class="lfr-tags-selector-content" id="namespace_assetCategoriesSelector_{$vocabulary.id}">
 					{call com.liferay.asset.taglib.AssetVocabularyCategoriesSelector.render data="all"}
 						{param categoryIds: $vocabulary.selectedCategoryIds /}
+						{param groupdIds: $groupIds /}
 						{param id: $id /}
 						{param inputName: $inputName + $vocabulary.id /}
 						{param portletURL: $portletURL /}
 						{param selectedItems: $vocabulary.selectedItems /}
 						{param singleSelect: $vocabulary.singleSelect /}
 						{param spritemap: $spritemap /}
-						{param vocabularyId: $vocabulary.id /}
+						{param vocabularyIds: [$vocabulary.id] /}
 					{/call}
 				</div>
 			</div>

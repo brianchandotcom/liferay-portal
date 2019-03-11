@@ -9,13 +9,16 @@
 	{@param spritemap: string}
 	{@param? categoryIds: string}
 	{@param? selectedItems: list<?>}
+	{@param? useFallbackInput: bool}
 	{@param? _dataSource: ?}
 	{@param? _handleButtonClicked: any}
 	{@param? _handleItemAdded: any}
 	{@param? _handleItemRemoved: any}
 
 	<div class="lfr-tags-selector-content" id="{$id}">
-		<input id="{$inputName}" name="{$inputName}" type="hidden" value="{$categoryIds}" />
+		{if $useFallbackInput}
+			<input id="{$inputName}" name="{$inputName}" type="hidden" value="{$categoryIds}" />
+		{/if}
 
 		{call ClayMultiSelect.render}
 			{param dataSource: $_dataSource ?: [] /}

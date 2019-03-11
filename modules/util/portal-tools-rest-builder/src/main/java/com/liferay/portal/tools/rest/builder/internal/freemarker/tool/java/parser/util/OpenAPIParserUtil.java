@@ -111,6 +111,21 @@ public class OpenAPIParserUtil {
 	public static String getJavaDataType(
 		Map<String, String> javaDataTypeMap, Schema schema) {
 
+		if (schema.getAllOfSchemas() != null) {
+			for (Schema allOfSchema : schema.getAllOfSchemas()) {
+				if (Validator.isNotNull(allOfSchema.getReference())) {
+					return javaDataTypeMap.get(
+						getReferenceName(allOfSchema.getReference()));
+				}
+			}
+		}
+
+		if ((schema.getAnyOfSchemas() != null) ||
+			(schema.getOneOfSchemas() != null)) {
+
+			return Object.class.getName();
+		}
+
 		Items items = schema.getItems();
 		String type = schema.getType();
 
@@ -166,23 +181,6 @@ public class OpenAPIParserUtil {
 			}
 
 			return javaDataType;
-		}
-
-		List<Schema> allOfSchemas = schema.getAllOfSchemas();
-
-		if (allOfSchemas != null) {
-			for (Schema allOfSchema : allOfSchemas) {
-				if (Validator.isNotNull(allOfSchema.getReference())) {
-					return javaDataTypeMap.get(
-						getReferenceName(allOfSchema.getReference()));
-				}
-			}
-		}
-
-		if ((schema.getAnyOfSchemas() != null) ||
-			(schema.getOneOfSchemas() != null)) {
-
-			return Object.class.getName();
 		}
 
 		return javaDataTypeMap.get(getReferenceName(schema.getReference()));

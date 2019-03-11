@@ -45,17 +45,17 @@ import org.osgi.service.component.annotations.ServiceScope;
 public class WebUrlResourceImpl extends BaseWebUrlResourceImpl {
 
 	@Override
-	public WebUrl getWebUrl(Long webUrlId) throws Exception {
-		return _toWebUrl(_websiteService.getWebsite(webUrlId));
-	}
-
-	@Override
 	public Page<WebUrl> getByClassNameClassPKWebUrlsPage(
 			ClassNameClassPK classNameClassPK, Pagination pagination)
 		throws Exception {
 
 		return Page.of(
 			transform(_getWebsites(classNameClassPK), this::_toWebUrl));
+	}
+
+	@Override
+	public WebUrl getWebUrl(Long webUrlId) throws Exception {
+		return _toWebUrl(_websiteService.getWebsite(webUrlId));
 	}
 
 	private List<Website> _getWebsites(ClassNameClassPK classNameClassPK)

@@ -53,19 +53,19 @@ import org.osgi.service.component.annotations.ServiceScope;
 public class PostalAddressResourceImpl extends BasePostalAddressResourceImpl {
 
 	@Override
-	public PostalAddress getPostalAddress(Long postalAddressId)
-		throws Exception {
-
-		return _toPostalAddress(_addressService.getAddress(postalAddressId));
-	}
-
-	@Override
 	public Page<PostalAddress> getByClassNameClassPKPostalAddressesPage(
 			ClassNameClassPK classNameClassPK, Pagination pagination)
 		throws Exception {
 
 		return Page.of(
 			transform(_getAddresses(classNameClassPK), this::_toPostalAddress));
+	}
+
+	@Override
+	public PostalAddress getPostalAddress(Long postalAddressId)
+		throws Exception {
+
+		return _toPostalAddress(_addressService.getAddress(postalAddressId));
 	}
 
 	private List<Address> _getAddresses(ClassNameClassPK classNameClassPK)

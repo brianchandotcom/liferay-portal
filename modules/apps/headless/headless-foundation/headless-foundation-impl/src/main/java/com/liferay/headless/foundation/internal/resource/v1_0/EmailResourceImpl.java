@@ -45,17 +45,17 @@ import org.osgi.service.component.annotations.ServiceScope;
 public class EmailResourceImpl extends BaseEmailResourceImpl {
 
 	@Override
-	public Email getEmail(Long emailId) throws Exception {
-		return _toEmail(_emailAddressService.getEmailAddress(emailId));
-	}
-
-	@Override
 	public Page<Email> getByClassNameClassPKEmailsPage(
 			ClassNameClassPK classNameClassPK, Pagination pagination)
 		throws Exception {
 
 		return Page.of(
 			transform(_getEmailPage(classNameClassPK), this::_toEmail));
+	}
+
+	@Override
+	public Email getEmail(Long emailId) throws Exception {
+		return _toEmail(_emailAddressService.getEmailAddress(emailId));
 	}
 
 	private List<EmailAddress> _getEmailPage(ClassNameClassPK classNameClassPK)

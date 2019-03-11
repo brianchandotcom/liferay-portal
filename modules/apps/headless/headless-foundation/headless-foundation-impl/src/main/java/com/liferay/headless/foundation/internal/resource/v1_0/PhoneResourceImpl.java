@@ -44,16 +44,16 @@ import org.osgi.service.component.annotations.ServiceScope;
 public class PhoneResourceImpl extends BasePhoneResourceImpl {
 
 	@Override
-	public Phone getPhone(Long phoneId) throws Exception {
-		return _toPhone(_phoneService.getPhone(phoneId));
-	}
-
-	@Override
 	public Page<Phone> getByClassNameClassPKPhonesPage(
 			ClassNameClassPK classNameClassPK, Pagination pagination)
 		throws Exception {
 
 		return Page.of(transform(_getPhones(classNameClassPK), this::_toPhone));
+	}
+
+	@Override
+	public Phone getPhone(Long phoneId) throws Exception {
+		return _toPhone(_phoneService.getPhone(phoneId));
 	}
 
 	private List<com.liferay.portal.kernel.model.Phone> _getPhones(

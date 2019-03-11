@@ -70,6 +70,14 @@ public class FolderResourceTest extends BaseFolderResourceTestCase {
 		};
 	}
 
+	protected Folder randomPatchFolder() {
+		return new Folder() {
+			{
+				description = RandomTestUtil.randomString();
+			}
+		};
+	}
+
 	@Override
 	protected Folder testDeleteFolder_addFolder() throws Exception {
 		return invokePostContentSpaceFolder(

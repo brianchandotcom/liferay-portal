@@ -114,7 +114,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
-import java.util.Optional;
 import java.util.stream.Stream;
 
 import javax.servlet.http.HttpServletRequest;
@@ -298,13 +297,7 @@ public class StructuredContentResourceImpl
 				ServiceContextUtil.createServiceContext(
 					structuredContent.getKeywords(),
 					structuredContent.getCategoryIds(), contentSpaceId,
-					Optional.ofNullable(
-						structuredContent.getViewableBy()
-					).map(
-						StructuredContent.ViewableBy::getValue
-					).orElse(
-						null
-					))));
+					structuredContent.getViewableByAsString())));
 	}
 
 	@Override
@@ -355,13 +348,7 @@ public class StructuredContentResourceImpl
 					structuredContent.getKeywords(),
 					structuredContent.getCategoryIds(),
 					journalArticle.getGroupId(),
-					Optional.ofNullable(
-						structuredContent.getViewableBy()
-					).map(
-						StructuredContent.ViewableBy::getValue
-					).orElse(
-						null
-					))));
+					structuredContent.getViewableByAsString())));
 	}
 
 	private void _createFieldsDisplayValue(

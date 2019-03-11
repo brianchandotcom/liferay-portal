@@ -49,7 +49,6 @@ import com.liferay.portal.vulcan.util.SearchUtil;
 
 import java.util.AbstractMap;
 import java.util.Collections;
-import java.util.Optional;
 
 import javax.servlet.http.HttpServletResponse;
 
@@ -164,13 +163,7 @@ public class CategoryResourceImpl
 				assetCategory.getVocabularyId(), null,
 				ServiceContextUtil.createServiceContext(
 					assetCategory.getGroupId(),
-					Optional.ofNullable(
-						category.getViewableBy()
-					).map(
-						Category.ViewableBy::getValue
-					).orElse(
-						null
-					))));
+					category.getViewableByAsString())));
 	}
 
 	@Override
@@ -192,13 +185,7 @@ public class CategoryResourceImpl
 				vocabularyId, null,
 				ServiceContextUtil.createServiceContext(
 					assetVocabulary.getGroupId(),
-					Optional.ofNullable(
-						category.getViewableBy()
-					).map(
-						Category.ViewableBy::getValue
-					).orElse(
-						null
-					))));
+					category.getViewableByAsString())));
 	}
 
 	@Override

@@ -53,7 +53,6 @@ import com.liferay.ratings.kernel.service.RatingsStatsLocalService;
 import java.time.LocalDateTime;
 
 import java.util.Date;
-import java.util.Optional;
 
 import javax.ws.rs.BadRequestException;
 import javax.ws.rs.core.MultivaluedMap;
@@ -134,14 +133,7 @@ public class BlogPostingResourceImpl
 				_getImageSelector(blogPosting), null,
 				ServiceContextUtil.createServiceContext(
 					blogPosting.getKeywords(), blogPosting.getCategoryIds(),
-					contentSpaceId,
-					Optional.ofNullable(
-						blogPosting.getViewableBy()
-					).map(
-						BlogPosting.ViewableBy::getValue
-					).orElse(
-						null
-					))));
+					contentSpaceId, blogPosting.getViewableByAsString())));
 	}
 
 	@Override
@@ -165,13 +157,7 @@ public class BlogPostingResourceImpl
 				ServiceContextUtil.createServiceContext(
 					blogPosting.getKeywords(), blogPosting.getCategoryIds(),
 					blogPosting.getContentSpace(),
-					Optional.ofNullable(
-						blogPosting.getViewableBy()
-					).map(
-						BlogPosting.ViewableBy::getValue
-					).orElse(
-						null
-					))));
+					blogPosting.getViewableByAsString())));
 	}
 
 	@Override

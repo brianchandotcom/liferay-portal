@@ -122,14 +122,7 @@ public class FolderResourceImpl extends BaseFolderResourceImpl {
 				documentsRepositoryId, parentFolderId, folder.getName(),
 				folder.getDescription(),
 				ServiceContextUtil.createServiceContext(
-					documentsRepositoryId,
-					Optional.ofNullable(
-						folder.getViewableBy()
-					).map(
-						Folder.ViewableBy::getValue
-					).orElse(
-						null
-					))));
+					documentsRepositoryId, folder.getViewableByAsString())));
 	}
 
 	private Page<Folder> _getFolderPage(

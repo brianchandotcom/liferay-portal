@@ -160,14 +160,7 @@ public class BlogPostingImageResourceImpl
 			),
 			null, null, binaryFile.getInputStream(), binaryFile.getSize(),
 			ServiceContextUtil.createServiceContext(
-				contentSpaceId,
-				Optional.ofNullable(
-					blogPostingImage.getViewableBy()
-				).map(
-					BlogPostingImage.ViewableBy::getValue
-				).orElse(
-					null
-				)));
+				contentSpaceId, blogPostingImage.getViewableByAsString()));
 
 		return _toBlogPostingImage(fileEntry);
 	}

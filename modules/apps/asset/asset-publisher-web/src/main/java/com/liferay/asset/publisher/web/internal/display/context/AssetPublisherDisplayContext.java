@@ -119,22 +119,22 @@ public class AssetPublisherDisplayContext {
 	public AssetPublisherDisplayContext(
 			AssetEntryActionRegistry assetEntryActionRegistry,
 			AssetHelper assetHelper,
-			InfoListProviderTracker infoListProviderTracker,
 			AssetPublisherCustomizer assetPublisherCustomizer,
 			AssetPublisherHelper assetPublisherHelper,
 			AssetPublisherWebConfiguration assetPublisherWebConfiguration,
 			AssetPublisherWebUtil assetPublisherWebUtil,
+			InfoListProviderTracker infoListProviderTracker,
 			PortletRequest portletRequest, PortletResponse portletResponse,
 			PortletPreferences portletPreferences)
 		throws ConfigurationException {
 
 		_assetEntryActionRegistry = assetEntryActionRegistry;
 		_assetHelper = assetHelper;
-		_infoListProviderTracker = infoListProviderTracker;
 		_assetPublisherCustomizer = assetPublisherCustomizer;
 		_assetPublisherHelper = assetPublisherHelper;
 		_assetPublisherWebConfiguration = assetPublisherWebConfiguration;
 		_assetPublisherWebUtil = assetPublisherWebUtil;
+		_infoListProviderTracker = infoListProviderTracker;
 		_portletRequest = portletRequest;
 		_portletResponse = portletResponse;
 		_portletPreferences = portletPreferences;

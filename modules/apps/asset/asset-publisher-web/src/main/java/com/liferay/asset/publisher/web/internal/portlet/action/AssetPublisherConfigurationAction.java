@@ -142,10 +142,10 @@ public class AssetPublisherConfigurationAction
 
 		AssetPublisherDisplayContext assetPublisherDisplayContext =
 			new AssetPublisherDisplayContext(
-				assetEntryActionRegistry, assetHelper, infoListProviderTracker,
-				assetPublisherCustomizer, assetPublisherHelper,
-				assetPublisherWebConfiguration, assetPublisherWebUtil,
-				renderRequest, renderResponse, renderRequest.getPreferences());
+				assetEntryActionRegistry, assetHelper, assetPublisherCustomizer,
+				assetPublisherHelper, assetPublisherWebConfiguration,
+				assetPublisherWebUtil, infoListProviderTracker, renderRequest,
+				renderResponse, renderRequest.getPreferences());
 
 		request.setAttribute(
 			AssetPublisherWebKeys.ASSET_PUBLISHER_DISPLAY_CONTEXT,

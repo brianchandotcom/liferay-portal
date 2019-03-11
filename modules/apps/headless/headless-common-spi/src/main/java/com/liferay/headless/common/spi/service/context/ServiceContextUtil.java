@@ -16,8 +16,7 @@ package com.liferay.headless.common.spi.service.context;
 
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.ArrayUtil;
-
-import java.util.Objects;
+import com.liferay.portal.kernel.util.StringUtil;
 
 /**
  * @author Víctor Galán
@@ -37,11 +36,11 @@ public class ServiceContextUtil {
 
 		return new ServiceContext() {
 			{
-				if (Objects.equals(viewableBy, "anyone")) {
+				if (StringUtil.equalsIgnoreCase(viewableBy, "anyone")) {
 					setAddGuestPermissions(true);
 					setAddGroupPermissions(true);
 				}
-				else if (Objects.equals(viewableBy, "members")) {
+				else if (StringUtil.equalsIgnoreCase(viewableBy, "members")) {
 					setAddGuestPermissions(false);
 					setAddGroupPermissions(true);
 				}

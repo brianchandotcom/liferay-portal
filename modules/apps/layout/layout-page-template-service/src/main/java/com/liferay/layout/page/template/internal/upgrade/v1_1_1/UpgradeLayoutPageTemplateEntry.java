@@ -39,9 +39,9 @@ public class UpgradeLayoutPageTemplateEntry extends UpgradeProcess {
 	protected void doUpgrade() throws Exception {
 		StringBundler sb = new StringBundler(6);
 
-		sb.append("select layoutPageTemplateEntryId, companyId, ");
-		sb.append("layoutPrototypeId, name from LayoutPageTemplateEntry ");
-		sb.append("where type_ = ");
+		sb.append("select layoutPageTemplateEntryId, companyId, name, ");
+		sb.append("layoutPrototypeId from LayoutPageTemplateEntry where ");
+		sb.append("type_ = ");
 		sb.append(LayoutPageTemplateEntryTypeConstants.TYPE_WIDGET_PAGE);
 		sb.append(" and groupId in (select groupId from Group_ where site = ");
 		sb.append("[$FALSE$])");
@@ -54,19 +54,19 @@ public class UpgradeLayoutPageTemplateEntry extends UpgradeProcess {
 				long layoutPageTemplateEntryId = rs.getLong(
 					"layoutPageTemplateEntryId");
 				long companyId = rs.getLong("companyId");
-				long layoutPrototypeId = rs.getLong("layoutPrototypeId");
 				String name = rs.getString("name");
+				long layoutPrototypeId = rs.getLong("layoutPrototypeId");
 
 				_updateLayoutPageTemplateEntry(
-					layoutPageTemplateEntryId, companyId, layoutPrototypeId,
-					name);
+					layoutPageTemplateEntryId, companyId, name,
+					layoutPrototypeId);
 			}
 		}
 	}
 
 	private void _updateLayoutPageTemplateEntry(
-			long layoutPageTemplateEntryId, long companyId,
-			long layoutPrototypeId, String name)
+			long layoutPageTemplateEntryId, long companyId, String name,
+			long layoutPrototypeId)
 		throws Exception {
 
 		Company company = _companyLocalService.getCompany(companyId);

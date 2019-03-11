@@ -210,7 +210,7 @@ public abstract class BaseAssetDisplayContributor<T>
 		for (AssetDisplayContributorField assetDisplayContributorField :
 				_getAssetDisplayContributorFields(AssetEntry.class.getName())) {
 
-			assetDisplayFieldsValues.put(
+			assetDisplayFieldsValues.putIfAbsent(
 				assetDisplayContributorField.getKey(),
 				assetDisplayContributorField.getValue(assetEntry, locale));
 		}
@@ -235,7 +235,7 @@ public abstract class BaseAssetDisplayContributor<T>
 		for (AssetDisplayContributorField assetDisplayContributorField :
 				assetDisplayContributorFields) {
 
-			parameterMap.put(
+			parameterMap.putIfAbsent(
 				assetDisplayContributorField.getKey(),
 				assetDisplayContributorField.getValue(assetObject, locale));
 		}

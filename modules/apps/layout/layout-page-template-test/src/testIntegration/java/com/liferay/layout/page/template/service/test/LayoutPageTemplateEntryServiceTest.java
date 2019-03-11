@@ -36,6 +36,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
@@ -471,13 +472,21 @@ public class LayoutPageTemplateEntryServiceTest {
 			ServiceContextTestUtil.getServiceContext(
 				_group.getGroupId(), TestPropsValues.getUserId());
 
+		ServiceContextThreadLocal.pushServiceContext(serviceContext);
+
 		LayoutPageTemplateEntry layoutPageTemplateEntry =
 			_getLayoutPageTemplateEntry(serviceContext);
 
-		layoutPageTemplateEntry =
-			LayoutPageTemplateEntryServiceUtil.updateLayoutPageTemplateEntry(
-				layoutPageTemplateEntry.getLayoutPageTemplateEntryId(),
-				"Layout Page Template Entry New");
+		try {
+			layoutPageTemplateEntry =
+				LayoutPageTemplateEntryServiceUtil.
+					updateLayoutPageTemplateEntry(
+						layoutPageTemplateEntry.getLayoutPageTemplateEntryId(),
+						"Layout Page Template Entry New");
+		}
+		finally {
+			ServiceContextThreadLocal.popServiceContext();
+		}
 
 		Assert.assertEquals(
 			"Layout Page Template Entry New",

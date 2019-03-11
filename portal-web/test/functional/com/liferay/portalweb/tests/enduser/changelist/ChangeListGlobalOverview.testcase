@@ -49,6 +49,8 @@ definition {
 	@description = "Create New Change List"
 	@priority = "5"
 	test CreateNewChangeListAndActivate {
+		property test.name.skip.portal.instance = "ChangeListGlobalOverview#CreateNewChangeListAndActivate";
+
 		ProductMenu.gotoPortlet(
 			category = "Change Lists",
 			panel = "Control Panel",

@@ -64,7 +64,7 @@ public class UpgradeAssetDisplayPageEntry extends UpgradeProcess {
 		sb.append("and AssetDisplayPageEntry.classNameId = ? and ");
 		sb.append("AssetDisplayPageEntry.classPK = ");
 		sb.append("JournalArticle.resourcePrimKey ) ");
-		sb.append("group by resourcePrimKey");
+		sb.append("group by groupId, userId, resourcePrimKey");
 
 		long journalArticleClassNameId = PortalUtil.getClassNameId(
 			JournalArticle.class);

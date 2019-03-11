@@ -442,10 +442,10 @@ public class StructuredContentResourceImpl
 		int offset = 0;
 
 		for (int i = 1; i < fieldDisplayNames.size(); i++) {
-			if (fieldName.equals(fieldDisplayNames.get(i))) {
 			if (fieldName.equals(
 					StringUtil.extractFirst(
 						fieldDisplayNames.get(i), DDM.INSTANCE_SEPARATOR))) {
+
 				substrings.add(fieldDisplayNames.subList(offset, i));
 
 				offset = i;
@@ -522,6 +522,8 @@ public class StructuredContentResourceImpl
 			List<String> fieldDisplayValues, Fields fields)
 		throws Exception {
 
+		String fieldDisplayValue = fieldDisplayValues.get(0);
+
 		return new ContentField() {
 			{
 				dataType = ContentStructureUtil.toDataType(ddmFormField);
@@ -532,7 +534,9 @@ public class StructuredContentResourceImpl
 					ddmFormField.getNestedDDMFormFields(),
 					ddmFormField -> _toContentFields(
 						ddmFieldsCounter, ddmStructure, fields,
-						ddmFormField.getName(), fieldDisplayValues));
+						ddmFormField.getName(),
+						fieldDisplayValues.subList(
+							1, fieldDisplayValues.size())));
 				repeatableId = StringUtil.extractLast(
 					fieldDisplayValue, DDM.INSTANCE_SEPARATOR);
 				value = _toValue(
@@ -556,10 +560,6 @@ public class StructuredContentResourceImpl
 		DDMFormField ddmFormField = ddmStructure.getDDMFormField(fieldName);
 
 		if (ddmFormField.isRepeatable()) {
-			if (fieldDisplayValues.isEmpty()) {
-				fieldDisplayValues = _getFieldDisplayValue(fields);
-			}
-
 			return _toRepeatableContentField(
 				ddmFieldsCounter, ddmStructure, ddmFormField, fields,
 				fieldDisplayValues);
@@ -568,8 +568,7 @@ public class StructuredContentResourceImpl
 		return new ContentField[] {
 			_toContentField(
 				ddmFieldsCounter, ddmFormField, ddmStructure, field,
-				fieldDisplayValues.subList(1, fieldDisplayValues.size()),
-				fields)
+				fieldDisplayValues, fields)
 		};
 	}
 
@@ -795,8 +794,7 @@ public class StructuredContentResourceImpl
 			contentFields.add(
 				_toContentField(
 					ddmFieldsCounter, ddmFormField, ddmStructure,
-					fields.get(ddmFormField.getName()),
-					substring.subList(1, substring.size()), fields));
+					fields.get(ddmFormField.getName()), substring, fields));
 		}
 
 		return contentFields.toArray(new ContentField[0]);

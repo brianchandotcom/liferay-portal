@@ -147,28 +147,19 @@ public class UserAccountResourceImpl extends BaseUserAccountResourceImpl {
 		UserAccount userAccount = multipartBody.getValueAsInstance(
 			"userAccount", UserAccount.class);
 
-		long prefixId = _getListTypeId(
-			userAccount.getHonorificPrefix(), ListTypeConstants.CONTACT_PREFIX);
-		long suffixId = _getListTypeId(
-			userAccount.getHonorificSuffix(), ListTypeConstants.CONTACT_SUFFIX);
-		Calendar birthDateCalendar = _getBirthDateCalendar(userAccount);
-
-		User user = _userLocalService.addUser(
-			UserConstants.USER_ID_DEFAULT, contextCompany.getCompanyId(), true,
-			null, null, Validator.isNull(userAccount.getAlternateName()),
-			userAccount.getAlternateName(), userAccount.getEmail(), 0,
-			StringPool.BLANK, LocaleUtil.getDefault(),
-			userAccount.getGivenName(), StringPool.BLANK,
-			userAccount.getFamilyName(), prefixId, suffixId, true,
-			birthDateCalendar.get(Calendar.MONTH),
-			birthDateCalendar.get(Calendar.DATE),
-			birthDateCalendar.get(Calendar.YEAR), userAccount.getJobTitle(),
-			null, null, null, null, false, new ServiceContext());
+		User user = _addUser(userAccount);
 
 		_userLocalService.updatePortrait(
 			user.getUserId(), multipartBody.getBinaryFileAsBytes("file"));
 
 		return _toUserAccount(user);
+	}
+
+	@Override
+	public UserAccount postUserAccount(UserAccount userAccount)
+		throws Exception {
+
+		return _toUserAccount(_addUser(userAccount));
 	}
 
 	@Override
@@ -205,6 +196,26 @@ public class UserAccountResourceImpl extends BaseUserAccountResourceImpl {
 				userAccount.getJobTitle(), user.getGroupIds(),
 				user.getOrganizationIds(), user.getRoleIds(), null,
 				user.getUserGroupIds(), new ServiceContext()));
+	}
+
+	private User _addUser(UserAccount userAccount) throws PortalException {
+		long prefixId = _getListTypeId(
+			userAccount.getHonorificPrefix(), ListTypeConstants.CONTACT_PREFIX);
+		long suffixId = _getListTypeId(
+			userAccount.getHonorificSuffix(), ListTypeConstants.CONTACT_SUFFIX);
+		Calendar birthDateCalendar = _getBirthDateCalendar(userAccount);
+
+		return _userLocalService.addUser(
+			UserConstants.USER_ID_DEFAULT, contextCompany.getCompanyId(), true,
+			null, null, Validator.isNull(userAccount.getAlternateName()),
+			userAccount.getAlternateName(), userAccount.getEmail(), 0,
+			StringPool.BLANK, LocaleUtil.getDefault(),
+			userAccount.getGivenName(), StringPool.BLANK,
+			userAccount.getFamilyName(), prefixId, suffixId, true,
+			birthDateCalendar.get(Calendar.MONTH),
+			birthDateCalendar.get(Calendar.DATE),
+			birthDateCalendar.get(Calendar.YEAR), userAccount.getJobTitle(),
+			null, null, null, null, false, new ServiceContext());
 	}
 
 	private Calendar _getBirthDateCalendar(UserAccount userAccount) {

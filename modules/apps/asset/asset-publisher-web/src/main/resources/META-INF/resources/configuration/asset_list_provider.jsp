@@ -31,7 +31,7 @@ String curInfoListProviderClassName = PrefsParamUtil.getString(portletPreference
 				Class<?> clazz = infoListProvider.getClass();
 			%>
 
-				<aui:option label="<%= infoListProvider.getLabel(themeDisplay.getLocale()) %>" value="<%= clazz.getName() %>" selected="<%= curInfoListProviderClassName.equals(clazz.getName()) %>"/>
+				<aui:option label="<%= infoListProvider.getLabel(themeDisplay.getLocale()) %>" selected="<%= curInfoListProviderClassName.equals(clazz.getName()) %>" value="<%= clazz.getName() %>" />
 
 			<%
 			}

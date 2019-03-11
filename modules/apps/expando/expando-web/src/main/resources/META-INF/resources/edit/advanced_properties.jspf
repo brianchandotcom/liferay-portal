@@ -56,7 +56,7 @@
 
 				<div class="<%= (propertyIndexType != ExpandoColumnConstants.INDEX_TYPE_NONE) ? "" : "hide" %>" id="<portlet:namespace />propertyIndexType">
 					<div class="radio">
-						<aui:input checked="<%= (column != null) ? (propertyIndexType == ExpandoColumnConstants.INDEX_TYPE_KEYWORD) : true %>" label="as-keyword" name="Property--index-type--" type="radio" value="<%= ExpandoColumnConstants.INDEX_TYPE_KEYWORD %>" />
+						<aui:input checked="<%= true %>" label="as-keyword" name="Property--index-type--" type="radio" value="<%= ExpandoColumnConstants.INDEX_TYPE_KEYWORD %>" />
 					</div>
 
 					<div class="radio">

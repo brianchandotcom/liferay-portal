@@ -132,7 +132,8 @@ public class ResourceOpenAPIParser {
 			String parameterName = javaMethodParameter.getParameterName();
 
 			if (parameterName.equals("filter") ||
-				parameterName.equals("sorts")) {
+				parameterName.equals("sorts") ||
+				parameterName.equals("classNameClassPK")) {
 
 				sb.append(
 					"@Parameter(in = ParameterIn.QUERY, name = \"" +

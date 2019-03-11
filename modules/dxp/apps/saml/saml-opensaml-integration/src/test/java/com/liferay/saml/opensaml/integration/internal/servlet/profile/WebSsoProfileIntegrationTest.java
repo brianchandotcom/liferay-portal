@@ -597,6 +597,7 @@ public class WebSsoProfileIntegrationTest extends BaseSamlTestCase {
 
 		metadataManagerImpl.setCredentialResolver(credentialResolver);
 		metadataManagerImpl.setHttp(HttpUtil.getHttp());
+		metadataManagerImpl.setLocalEntityManager(credentialResolver);
 		metadataManagerImpl.setMetadataResolver(
 			new MockMetadataResolver(false));
 		metadataManagerImpl.setParserPool(parserPool);

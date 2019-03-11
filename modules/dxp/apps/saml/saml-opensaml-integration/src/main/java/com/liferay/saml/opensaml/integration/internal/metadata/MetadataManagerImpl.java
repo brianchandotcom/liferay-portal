@@ -532,6 +532,11 @@ public class MetadataManagerImpl
 		_http = http;
 	}
 
+	@Reference(unbind = "-")
+	public void setLocalEntityManager(LocalEntityManager localEntityManager) {
+		_localEntityManager = localEntityManager;
+	}
+
 	@Reference(
 		cardinality = ReferenceCardinality.AT_LEAST_ONE,
 		policyOption = ReferencePolicyOption.GREEDY,
@@ -616,10 +621,7 @@ public class MetadataManagerImpl
 	private ChainingSignatureTrustEngine _chainingSignatureTrustEngine;
 	private CredentialResolver _credentialResolver;
 	private Http _http;
-
-	@Reference
 	private LocalEntityManager _localEntityManager;
-
 	private MetadataCredentialResolver _metadataCredentialResolver;
 	private ParserPool _parserPool;
 	private Portal _portal;

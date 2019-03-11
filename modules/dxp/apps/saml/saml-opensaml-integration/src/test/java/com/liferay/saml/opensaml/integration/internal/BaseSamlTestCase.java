@@ -54,6 +54,7 @@ import com.liferay.saml.opensaml.integration.internal.servlet.profile.Identifier
 import com.liferay.saml.opensaml.integration.internal.velocity.VelocityEngineFactory;
 import com.liferay.saml.runtime.configuration.SamlProviderConfiguration;
 import com.liferay.saml.runtime.configuration.SamlProviderConfigurationHelper;
+import com.liferay.saml.runtime.metadata.LocalEntityManager;
 import com.liferay.saml.util.PortletPropsKeys;
 
 import java.io.UnsupportedEncodingException;
@@ -513,6 +514,8 @@ public abstract class BaseSamlTestCase extends PowerMockito {
 
 		metadataManagerImpl.setPortal(portal);
 
+		metadataManagerImpl.setLocalEntityManager(credentialResolver);
+
 		metadataManagerImpl.activate();
 	}
 
@@ -677,6 +680,7 @@ public abstract class BaseSamlTestCase extends PowerMockito {
 		identifierGenerationStrategyFactory;
 	protected List<String> identifiers = new ArrayList<>();
 	protected FileSystemKeyStoreManagerImpl keyStoreManager;
+	protected LocalEntityManager localEntityManager;
 	protected MetadataManagerImpl metadataManagerImpl;
 	protected ParserPool parserPool;
 	protected Portal portal;

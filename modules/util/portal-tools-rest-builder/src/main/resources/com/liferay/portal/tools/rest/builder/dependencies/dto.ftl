@@ -83,6 +83,11 @@ public class ${schemaName} <#if freeMarkerTool.getDTOParentClassName(openAPIYAML
 						return _value;
 					}
 
+					@Override
+					public String toString() {
+						return _value;
+					}
+
 					private ${propertySchemaName?cap_first}(String value) {
 						_value = value;
 					}

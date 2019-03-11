@@ -148,7 +148,7 @@ public class BulkActionResponseResourceImpl
 			);
 
 			Map<AssetVocabulary, List<AssetCategory>> assetCatogoriesMap =
-				_groupByAssetVocabulary(
+				_getAssetCategoriesMap(
 					categoryGroupId, categoryClassNameId, assetCategories);
 
 			Set<Map.Entry<AssetVocabulary, List<AssetCategory>>> entries =
@@ -385,27 +385,27 @@ public class BulkActionResponseResourceImpl
 		};
 	}
 
-	private Map<AssetVocabulary, List<AssetCategory>> _groupByAssetVocabulary(
+	private Map<AssetVocabulary, List<AssetCategory>> _getAssetCategoriesMap(
 			long groupId, long classNameId, Set<AssetCategory> assetCategories)
 		throws Exception {
 
 		List<AssetVocabulary> assetVocabularies = _getAssetVocabularies(
 			groupId, classNameId);
 
+		Stream<AssetVocabulary> assetVocabulariesStream =
+			assetVocabularies.stream();
+
 		Stream<AssetCategory> assetCategoriesStream = assetCategories.stream();
 
-		Map<Long, List<AssetCategory>> assetVocabularyIdMap =
+		Map<Long, List<AssetCategory>> assetCategoriesMap =
 			assetCategoriesStream.collect(
 				Collectors.groupingBy(
 					assetCategory -> assetCategory.getVocabularyId()));
 
-		Stream<AssetVocabulary> assetVocabulariesStream =
-			assetVocabularies.stream();
-
 		return assetVocabulariesStream.collect(
 			Collectors.toMap(
 				Function.identity(),
-				assetVocabulary -> assetVocabularyIdMap.computeIfAbsent(
+				assetVocabulary -> assetCategoriesMap.computeIfAbsent(
 					assetVocabulary.getVocabularyId(),
 					key -> new ArrayList<>())));
 	}

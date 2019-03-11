@@ -100,11 +100,9 @@ public class PublishLayoutMVCActionCommand extends BaseMVCActionCommand {
 
 			layout = _layoutCopyHelper.copyLayout(draftLayout, layout);
 
-			Date now = new Date();
-
 			_layoutLocalService.updateLayout(
 				layout.getGroupId(), layout.isPrivateLayout(),
-				layout.getLayoutId(), now);
+				layout.getLayoutId(), new Date());
 
 			return null;
 		}

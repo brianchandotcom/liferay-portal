@@ -50,12 +50,6 @@ public class AssetDisplayPageFriendlyURLProviderImpl
 			return null;
 		}
 
-		StringBundler sb = new StringBundler(5);
-
-		sb.append(
-			_portal.getGroupFriendlyURL(
-				themeDisplay.getLayoutSet(), themeDisplay));
-
 		AssetDisplayContributor assetDisplayContributor =
 			_assetDisplayContributorTracker.getAssetDisplayContributor(
 				assetEntry.getClassName());
@@ -63,6 +57,12 @@ public class AssetDisplayPageFriendlyURLProviderImpl
 		if (assetDisplayContributor == null) {
 			return null;
 		}
+
+		StringBundler sb = new StringBundler(5);
+
+		sb.append(
+			_portal.getGroupFriendlyURL(
+				themeDisplay.getLayoutSet(), themeDisplay));
 
 		FriendlyURLEntry mainFriendlyURLEntry =
 			_friendlyURLEntryLocalService.getMainFriendlyURLEntry(

@@ -77,7 +77,6 @@ String samlRole = properties.getProperty(PortletPropsKeys.SAML_ROLE, samlProvide
 	<c:when test="<%= Validator.isNotNull(entityId) %>">
 		<aui:fieldset label="certificate-and-private-key">
 			<liferay-util:include page="/admin/certificate_info.jsp" servletContext="<%= application %>">
-				<liferay-util:param name="entityId" value="<%= entityId %>" />
 				<liferay-util:param name="certificateUsage" value="<%= LocalEntityManager.CertificateUsage.SIGNING.name() %>" />
 			</liferay-util:include>
 		</aui:fieldset>
@@ -85,7 +84,6 @@ String samlRole = properties.getProperty(PortletPropsKeys.SAML_ROLE, samlProvide
 		<c:if test='<%= samlRole.equals("sp") %>'>
 			<aui:fieldset label="encryption-certificate-and-private-key">
 				<liferay-util:include page="/admin/certificate_info.jsp" servletContext="<%= application %>">
-					<liferay-util:param name="entityId" value="<%= entityId %>" />
 					<liferay-util:param name="certificateUsage" value="<%= LocalEntityManager.CertificateUsage.ENCRYPTION.name() %>" />
 				</liferay-util:include>
 			</aui:fieldset>

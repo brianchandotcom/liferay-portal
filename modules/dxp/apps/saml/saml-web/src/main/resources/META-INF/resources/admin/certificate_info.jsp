@@ -17,8 +17,6 @@
 <%@ include file="/init.jsp" %>
 
 <%
-String entityId = ParamUtil.getString(request, "entityId");
-
 CertificateTool certificateTool = (CertificateTool)request.getAttribute(SamlWebKeys.SAML_CERTIFICATE_TOOL);
 
 LocalEntityManager.CertificateUsage certificateUsage = LocalEntityManager.CertificateUsage.valueOf(ParamUtil.getString(request, "certificateUsage"));

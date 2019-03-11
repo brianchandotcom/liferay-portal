@@ -12,26 +12,18 @@
  * details.
  */
 
-package com.liferay.data.engine.rest.internal.jaxrs.application;
+package com.liferay.data.engine.rest.resource.v1_0.test;
 
-import javax.annotation.Generated;
+import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 
-import javax.ws.rs.core.Application;
-
-import org.osgi.service.component.annotations.Component;
+import org.junit.Ignore;
+import org.junit.runner.RunWith;
 
 /**
  * @author Jeyvison Nascimento
- * @generated
  */
-@Component(
-	property = {
-		"osgi.jaxrs.application.base=/data-engine",
-		"osgi.jaxrs.extension.select=(osgi.jaxrs.name=Liferay.Vulcan)",
-		"osgi.jaxrs.name=Liferay.Data.Engine.REST"
-	},
-	service = Application.class
-)
-@Generated("")
-public class DataEngineRESTApplication extends Application {
+@Ignore
+@RunWith(Arquillian.class)
+public class DataRecordCollectionResourceTest
+	extends BaseDataRecordCollectionResourceTestCase {
 }

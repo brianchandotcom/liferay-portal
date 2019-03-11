@@ -67,26 +67,7 @@ public class DataDefinitionResourceImpl extends BaseDataDefinitionResourceImpl {
 	}
 
 	@Override
-	public Page<DataDefinition> getDataDefinitionsPage(
-			Long groupId, Pagination pagination)
-		throws Exception {
-
-		return Page.of(
-			transform(
-				_ddmStructureService.getStructures(
-					contextCompany.getCompanyId(), new long[] {groupId},
-					_portal.getClassNameId(DataDefinition.class),
-					pagination.getStartPosition(), pagination.getEndPosition(),
-					null),
-				this::_toDataDefinition),
-			pagination,
-			_ddmStructureService.getStructuresCount(
-				contextCompany.getCompanyId(), new long[] {groupId},
-				_portal.getClassNameId(DataDefinition.class)));
-	}
-
-	@Override
-	public Page<DataDefinition> getDataDefinitionsSearchPage(
+	public Page<DataDefinition> getDataDefinitionSearchPage(
 			Long groupId, String keywords, Pagination pagination)
 		throws Exception {
 
@@ -103,6 +84,25 @@ public class DataDefinitionResourceImpl extends BaseDataDefinitionResourceImpl {
 				contextCompany.getCompanyId(), new long[] {groupId},
 				_portal.getClassNameId(DataDefinition.class), keywords,
 				WorkflowConstants.STATUS_ANY));
+	}
+
+	@Override
+	public Page<DataDefinition> getDataDefinitionsPage(
+			Long groupId, Pagination pagination)
+		throws Exception {
+
+		return Page.of(
+			transform(
+				_ddmStructureService.getStructures(
+					contextCompany.getCompanyId(), new long[] {groupId},
+					_portal.getClassNameId(DataDefinition.class),
+					pagination.getStartPosition(), pagination.getEndPosition(),
+					null),
+				this::_toDataDefinition),
+			pagination,
+			_ddmStructureService.getStructuresCount(
+				contextCompany.getCompanyId(), new long[] {groupId},
+				_portal.getClassNameId(DataDefinition.class)));
 	}
 
 	@Override

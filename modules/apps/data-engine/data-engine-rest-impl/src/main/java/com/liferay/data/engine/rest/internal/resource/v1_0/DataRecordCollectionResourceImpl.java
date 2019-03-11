@@ -12,26 +12,20 @@
  * details.
  */
 
-package com.liferay.data.engine.rest.internal.jaxrs.application;
+package com.liferay.data.engine.rest.internal.resource.v1_0;
 
-import javax.annotation.Generated;
-
-import javax.ws.rs.core.Application;
+import com.liferay.data.engine.rest.resource.v1_0.DataRecordCollectionResource;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.ServiceScope;
 
 /**
  * @author Jeyvison Nascimento
- * @generated
  */
 @Component(
-	property = {
-		"osgi.jaxrs.application.base=/data-engine",
-		"osgi.jaxrs.extension.select=(osgi.jaxrs.name=Liferay.Vulcan)",
-		"osgi.jaxrs.name=Liferay.Data.Engine.REST"
-	},
-	service = Application.class
+	properties = "OSGI-INF/liferay/rest/v1_0/Data-record-collection.properties",
+	scope = ServiceScope.PROTOTYPE, service = DataRecordCollectionResource.class
 )
-@Generated("")
-public class DataEngineRESTApplication extends Application {
+public class DataRecordCollectionResourceImpl
+	extends BaseDataRecordCollectionResourceImpl {
 }

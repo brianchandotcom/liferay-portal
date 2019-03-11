@@ -14,6 +14,7 @@
 
 package com.liferay.data.engine.rest.dto.v1_0;
 
+import com.fasterxml.jackson.annotation.JsonFilter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -33,15 +34,12 @@ import javax.xml.bind.annotation.XmlRootElement;
  */
 @Generated("")
 @GraphQLName("LocalizedValue")
+@JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "LocalizedValue")
 public class LocalizedValue {
 
 	public String getKey() {
 		return key;
-	}
-
-	public String getValue() {
-		return value;
 	}
 
 	public void setKey(String key) {
@@ -56,6 +54,14 @@ public class LocalizedValue {
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected String key;
+
+	public String getValue() {
+		return value;
 	}
 
 	public void setValue(String value) {
@@ -74,8 +80,12 @@ public class LocalizedValue {
 		}
 	}
 
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected String value;
+
 	public String toString() {
-		StringBundler sb = new StringBundler(11);
+		StringBundler sb = new StringBundler();
 
 		sb.append("{");
 
@@ -96,13 +106,5 @@ public class LocalizedValue {
 
 		return sb.toString();
 	}
-
-	@GraphQLField
-	@JsonProperty
-	protected String key;
-
-	@GraphQLField
-	@JsonProperty
-	protected String value;
 
 }

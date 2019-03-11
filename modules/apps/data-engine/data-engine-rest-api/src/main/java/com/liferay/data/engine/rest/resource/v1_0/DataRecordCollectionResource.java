@@ -14,7 +14,7 @@
 
 package com.liferay.data.engine.rest.resource.v1_0;
 
-import com.liferay.data.engine.rest.dto.v1_0.DataDefinition;
+import com.liferay.data.engine.rest.dto.v1_0.DataRecordCollection;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
@@ -30,27 +30,26 @@ import javax.annotation.Generated;
  * @generated
  */
 @Generated("")
-public interface DataDefinitionResource {
+public interface DataRecordCollectionResource {
 
-	public Page<DataDefinition> getDataDefinitionsPage(
+	public Page<DataRecordCollection> getDataRecordCollectionsPage(
 			Long groupId, Pagination pagination)
 		throws Exception;
 
-	public DataDefinition postDataDefinition(
-			Long groupId, DataDefinition dataDefinition)
+	public DataRecordCollection postDataRecordCollection(
+			Long groupId, DataRecordCollection dataRecordCollection)
 		throws Exception;
 
-	public Page<DataDefinition> getDataDefinitionSearchPage(
-			Long groupId, String keywords, Pagination pagination)
+	public boolean deleteDataRecordCollection(Long dataRecordCollectionId)
 		throws Exception;
 
-	public boolean deleteDataDefinition(Long dataDefinitionId) throws Exception;
-
-	public DataDefinition getDataDefinition(Long dataDefinitionId)
+	public DataRecordCollection getDataRecordCollection(
+			Long dataRecordCollectionId)
 		throws Exception;
 
-	public DataDefinition putDataDefinition(
-			Long dataDefinitionId, DataDefinition dataDefinition)
+	public DataRecordCollection putDataRecordCollection(
+			Long dataRecordCollectionId,
+			DataRecordCollection dataRecordCollection)
 		throws Exception;
 
 	public void setContextCompany(Company contextCompany);

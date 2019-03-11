@@ -82,50 +82,56 @@ JSONArray collaboratorsJSONArray = JSONFactoryUtil.createJSONArray();
 	</div>
 </div>
 
-<div class="autofit-row sidebar-panel">
-	<clay:button
-		elementClasses="manage-collaborators-btn"
-		id='<%= liferayPortletResponse.getNamespace() + "manageCollaboratorsButton" %>'
-		label='<%= LanguageUtil.get(resourceBundle, "manage-collaborators") %>'
-		size="sm"
-		style="link"
-	/>
-</div>
-
 <%
-PortletURL manageCollaboratorsRenderURL = PortletProviderUtil.getPortletURL(request, SharingEntry.class.getName(), PortletProvider.Action.MANAGE);
-
-manageCollaboratorsRenderURL.setParameter("classNameId", String.valueOf(ClassNameLocalServiceUtil.getClassNameId(DLFileEntry.class.getName())));
-manageCollaboratorsRenderURL.setParameter("classPK", String.valueOf(fileEntry.getFileEntryId()));
-manageCollaboratorsRenderURL.setParameter("manageCollaboratorDialogId", liferayPortletResponse.getNamespace() + "manageCollaboratorsDialog");
-manageCollaboratorsRenderURL.setWindowState(LiferayWindowState.POP_UP);
+boolean showManageCollaborators = GetterUtil.getBoolean(request.getAttribute("info_panel_file_entry.jsp-showManageCollaborators"));
 %>
 
-<aui:script>
-	var button = document.getElementById('<portlet:namespace/>manageCollaboratorsButton');
+<c:if test="<%= showManageCollaborators %>">
+	<div class="autofit-row sidebar-panel">
+		<clay:button
+			elementClasses="manage-collaborators-btn"
+			id='<%= liferayPortletResponse.getNamespace() + "manageCollaboratorsButton" %>'
+			label='<%= LanguageUtil.get(resourceBundle, "manage-collaborators") %>'
+			size="sm"
+			style="link"
+		/>
+	</div>
 
-	button.addEventListener(
-		'click',
-		function() {
-			Liferay.Util.openWindow(
-				{
-					dialog: {
-						destroyOnHide: true,
-						height: 470,
-						width: 600,
-						on: {
-							visibleChange: function(event) {
-								if (!event.newVal) {
-									Liferay.Util.getOpener().Liferay.fire('refreshInfoPanel');
+	<%
+	PortletURL manageCollaboratorsRenderURL = PortletProviderUtil.getPortletURL(request, SharingEntry.class.getName(), PortletProvider.Action.MANAGE);
+
+	manageCollaboratorsRenderURL.setParameter("classNameId", String.valueOf(ClassNameLocalServiceUtil.getClassNameId(DLFileEntry.class.getName())));
+	manageCollaboratorsRenderURL.setParameter("classPK", String.valueOf(fileEntry.getFileEntryId()));
+	manageCollaboratorsRenderURL.setParameter("manageCollaboratorDialogId", liferayPortletResponse.getNamespace() + "manageCollaboratorsDialog");
+	manageCollaboratorsRenderURL.setWindowState(LiferayWindowState.POP_UP);
+	%>
+
+	<aui:script>
+		var button = document.getElementById('<portlet:namespace/>manageCollaboratorsButton');
+
+		button.addEventListener(
+			'click',
+			function() {
+				Liferay.Util.openWindow(
+					{
+						dialog: {
+							destroyOnHide: true,
+							height: 470,
+							width: 600,
+							on: {
+								visibleChange: function(event) {
+									if (!event.newVal) {
+										Liferay.Util.getOpener().Liferay.fire('refreshInfoPanel');
+									}
 								}
 							}
-						}
-					},
-					id: '<portlet:namespace />manageCollaboratorsDialog',
-					title: '<%= LanguageUtil.get(resourceBundle, "collaborators") %>',
-					uri: '<%= manageCollaboratorsRenderURL.toString() %>'
-				}
-			);
-		}
-	);
-</aui:script>
+						},
+						id: '<portlet:namespace />manageCollaboratorsDialog',
+						title: '<%= LanguageUtil.get(resourceBundle, "collaborators") %>',
+						uri: '<%= manageCollaboratorsRenderURL.toString() %>'
+					}
+				);
+			}
+		);
+	</aui:script>
+</c:if>

@@ -163,6 +163,7 @@ public class BulkActionResponseResourceImpl
 					description = bulkSelection.describe(
 						contextAcceptLanguage.getPreferredLocale());
 					status = "success";
+
 					vocabularies = assetCategoriesStream.map(
 						entry -> _toVocabulary(entry.getValue(), entry.getKey())
 					).toArray(

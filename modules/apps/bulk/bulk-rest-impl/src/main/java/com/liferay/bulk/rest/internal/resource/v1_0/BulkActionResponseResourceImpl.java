@@ -323,9 +323,9 @@ public class BulkActionResponseResourceImpl
 		BulkAssetEntryAction bulkAssetEntryAction) {
 
 		return _getParamterMap(
-			bulkAssetEntryAction.getSelection(),
-			bulkAssetEntryAction.getRepositoryId(),
 			bulkAssetEntryAction.getFolderId(),
+			bulkAssetEntryAction.getRepositoryId(),
+			bulkAssetEntryAction.getSelection(),
 			bulkAssetEntryAction.getSelectAll());
 	}
 
@@ -333,9 +333,9 @@ public class BulkActionResponseResourceImpl
 		BulkAssetEntryUpdateCategoriesAction bulkAssetEntryUpdateTagsAction) {
 
 		return _getParamterMap(
-			bulkAssetEntryUpdateTagsAction.getSelection(),
-			bulkAssetEntryUpdateTagsAction.getRepositoryId(),
 			bulkAssetEntryUpdateTagsAction.getFolderId(),
+			bulkAssetEntryUpdateTagsAction.getRepositoryId(),
+			bulkAssetEntryUpdateTagsAction.getSelection(),
 			bulkAssetEntryUpdateTagsAction.getSelectAll());
 	}
 
@@ -343,17 +343,17 @@ public class BulkActionResponseResourceImpl
 		BulkAssetEntryUpdateTagsAction bulkAssetEntryUpdateTagsAction) {
 
 		return _getParamterMap(
-			bulkAssetEntryUpdateTagsAction.getSelection(),
-			bulkAssetEntryUpdateTagsAction.getRepositoryId(),
 			bulkAssetEntryUpdateTagsAction.getFolderId(),
+			bulkAssetEntryUpdateTagsAction.getRepositoryId(),
+			bulkAssetEntryUpdateTagsAction.getSelection(),
 			bulkAssetEntryUpdateTagsAction.getSelectAll());
 	}
 
 	private Map<String, String[]> _getParamterMap(
-		String[] values, Long repositoryId, Long folderId, Boolean selectAll) {
+		Long folderId, Long repositoryId, String[] rowIdsFileEntry, Boolean selectAll) {
 
 		if (repositoryId == 0) {
-			return Collections.singletonMap("rowIdsFileEntry", values);
+			return Collections.singletonMap("rowIdsFileEntry", rowIdsFileEntry);
 		}
 
 		Map<String, String[]> parameterMap = new HashMap<>();
@@ -361,7 +361,7 @@ public class BulkActionResponseResourceImpl
 		parameterMap.put("folderId", new String[] {String.valueOf(folderId)});
 		parameterMap.put(
 			"repositoryId", new String[] {String.valueOf(repositoryId)});
-		parameterMap.put("rowIdsFileEntry", values);
+		parameterMap.put("rowIdsFileEntry", rowIdsFileEntry);
 		parameterMap.put(
 			"selectAll", new String[] {Boolean.toString(selectAll)});
 

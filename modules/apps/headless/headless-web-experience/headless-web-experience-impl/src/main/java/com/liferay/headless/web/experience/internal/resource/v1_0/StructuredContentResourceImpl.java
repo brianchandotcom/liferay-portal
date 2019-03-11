@@ -431,9 +431,7 @@ public class StructuredContentResourceImpl
 
 		String fieldDisplayValue = (String)field.getValue();
 
-		return transformToList(
-			StringUtil.split(fieldDisplayValue),
-			value -> StringUtil.extractFirst(value, DDM.INSTANCE_SEPARATOR));
+		return ListUtil.toList(StringUtil.split(fieldDisplayValue));
 	}
 
 	private List<List<String>> _getFieldsDisplaySubstrings(
@@ -445,6 +443,9 @@ public class StructuredContentResourceImpl
 
 		for (int i = 1; i < fieldDisplayNames.size(); i++) {
 			if (fieldName.equals(fieldDisplayNames.get(i))) {
+			if (fieldName.equals(
+					StringUtil.extractFirst(
+						fieldDisplayNames.get(i), DDM.INSTANCE_SEPARATOR))) {
 				substrings.add(fieldDisplayNames.subList(offset, i));
 
 				offset = i;
@@ -594,11 +595,13 @@ public class StructuredContentResourceImpl
 		Fields fields = _journalConverter.getDDMFields(
 			ddmStructure, journalArticle.getContent());
 
+		List<String> fieldDisplayValues = _getFieldDisplayValue(fields);
+
 		return _toContentFields(
 			ddmStructure.getRootFieldNames(),
 			fieldName -> _toContentFields(
 				ddmFieldsCounter, ddmStructure, fields, fieldName,
-				Collections.emptyList()));
+				fieldDisplayValues));
 	}
 
 	private <T> ContentField[] _toContentFields(

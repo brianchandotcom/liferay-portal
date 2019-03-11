@@ -23,6 +23,7 @@ create table AssetListEntryAssetEntryRel (
 	createDate DATE null,
 	modifiedDate DATE null,
 	assetListEntryId LONG,
+	segmentsEntryId LONG,
 	assetEntryId LONG,
 	position INTEGER,
 	lastPublishDate DATE null
@@ -41,5 +42,20 @@ create table AssetListEntryUsage (
 	classNameId LONG,
 	classPK LONG,
 	portletId VARCHAR(200) null,
+	lastPublishDate DATE null
+);
+
+create table AssetListSegmentRel (
+	uuid_ VARCHAR(75) null,
+	assetListSegmentRelId LONG not null primary key,
+	groupId LONG,
+	companyId LONG,
+	userId LONG,
+	userName VARCHAR(75) null,
+	createDate DATE null,
+	modifiedDate DATE null,
+	assetListEntryId LONG,
+	segmentsEntryId LONG,
+	typeSettings TEXT null,
 	lastPublishDate DATE null
 );

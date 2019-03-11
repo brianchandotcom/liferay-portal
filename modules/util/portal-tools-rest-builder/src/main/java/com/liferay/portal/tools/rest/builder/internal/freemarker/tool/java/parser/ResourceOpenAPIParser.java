@@ -412,9 +412,7 @@ public class ResourceOpenAPIParser {
 
 		List<String> methodNameSegments = new ArrayList<>();
 
-		String httpMethod = OpenAPIParserUtil.getHTTPMethod(operation);
-
-		methodNameSegments.add(httpMethod);
+		methodNameSegments.add(OpenAPIParserUtil.getHTTPMethod(operation));
 
 		String[] pathSegments = path.split("/");
 		String pluralSchemaName = TextFormatter.formatPlural(schemaName);

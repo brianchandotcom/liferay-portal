@@ -118,9 +118,10 @@ public class BulkActionResponseResourceImpl
 	}
 
 	@Override
-	public BulkAssetEntryCommonCategories postCategoryCategoryGroupCategoryClassNameCommon(
-		Long categoryGroupId, Long categoryClassNameId,
-		BulkAssetEntryAction bulkAssetEntryAction) {
+	public BulkAssetEntryCommonCategories
+		postCategoryCategoryGroupCategoryClassNameCommon(
+			Long categoryGroupId, Long categoryClassNameId,
+			BulkAssetEntryAction bulkAssetEntryAction) {
 
 		try {
 			BulkSelectionFactory<?> bulkSelectionFactory =
@@ -350,7 +351,8 @@ public class BulkActionResponseResourceImpl
 	}
 
 	private Map<String, String[]> _getParamterMap(
-		Long folderId, Long repositoryId, String[] rowIdsFileEntry, Boolean selectAll) {
+		Long folderId, Long repositoryId, String[] rowIdsFileEntry,
+		Boolean selectAll) {
 
 		if (repositoryId == 0) {
 			return Collections.singletonMap("rowIdsFileEntry", rowIdsFileEntry);

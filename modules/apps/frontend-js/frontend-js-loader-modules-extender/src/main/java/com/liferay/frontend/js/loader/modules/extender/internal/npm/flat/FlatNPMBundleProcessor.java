@@ -321,9 +321,9 @@ public class FlatNPMBundleProcessor implements JSBundleProcessor {
 				continue;
 			}
 
-			String main = jsonObject.getString("main");
+			String main = jsonObject.getString("main", null);
 
-			if (main != null) {
+			if (Validator.isNotNull(main)) {
 				String folderPath = filePath.substring(
 					0, filePath.lastIndexOf(StringPool.SLASH));
 

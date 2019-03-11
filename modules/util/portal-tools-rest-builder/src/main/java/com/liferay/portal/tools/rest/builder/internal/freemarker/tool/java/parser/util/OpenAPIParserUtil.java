@@ -173,7 +173,8 @@ public class OpenAPIParserUtil {
 		if (allOfSchemas != null) {
 			for (Schema allOfSchema : allOfSchemas) {
 				if (Validator.isNotNull(allOfSchema.getReference())) {
-					return getReferenceName(allOfSchema.getReference());
+					return javaDataTypeMap.get(
+						getReferenceName(allOfSchema.getReference()));
 				}
 			}
 		}

@@ -25,8 +25,6 @@ import com.liferay.sharing.document.library.internal.security.permission.resourc
 import com.liferay.sharing.model.SharingEntry;
 import com.liferay.sharing.service.SharingEntryLocalService;
 
-import java.util.List;
-
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -63,7 +61,7 @@ public class SharingPermissionHelper {
 			fileEntryId);
 
 		if ((sharingEntry != null) && sharingEntry.isShareable()) {
-				return true;
+			return true;
 		}
 
 		return false;

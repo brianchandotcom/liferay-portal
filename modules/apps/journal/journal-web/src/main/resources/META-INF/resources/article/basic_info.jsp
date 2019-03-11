@@ -54,6 +54,10 @@ DDMStructure ddmStructure = journalEditArticleDisplayContext.getDDMStructure();
 
 			<aui:input checked="<%= true %>" label="autogenerate-id" name="autoArticleId" onChange="<%= taglibOnChange %>" type="checkbox" value="<%= true %>" wrapperCssClass="mb-3" />
 		</div>
+
+		<aui:script>
+			Liferay.Util.disableToggleBoxes('<portlet:namespace />autoArticleId', '<portlet:namespace />newArticleId', true);
+		</aui:script>
 	</c:when>
 	<c:otherwise>
 		<aui:input name="newArticleId" type="hidden" />

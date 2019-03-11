@@ -22,8 +22,6 @@ JournalArticle article = journalDisplayContext.getArticle();
 JournalEditArticleDisplayContext journalEditArticleDisplayContext = new JournalEditArticleDisplayContext(request, liferayPortletResponse, article);
 
 long classNameId = ParamUtil.getLong(request, "classNameId");
-
-String newArticleId = ParamUtil.getString(request, "newArticleId");
 %>
 
 <liferay-ui:error-marker
@@ -110,7 +108,3 @@ String newArticleId = ParamUtil.getString(request, "newArticleId");
 
 	<aui:input label="searchable" name="indexable" type="toggle-switch" value="<%= (article != null) ? article.isIndexable() : true %>" />
 </liferay-frontend:fieldset>
-
-<aui:script>
-	Liferay.Util.disableToggleBoxes('<portlet:namespace />autoArticleId', '<portlet:namespace />newArticleId', true);
-</aui:script>

@@ -44,16 +44,16 @@ public class AssetDisplayPageURLTitleFriendlyURLResolver
 			long groupId, String friendlyURL)
 		throws PortalException {
 
-		String classNameShortcut = _getClassNameShortcut(friendlyURL);
+		String friendlyURLShortcut = _getFriendlyURLShortcut(friendlyURL);
 
 		AssetDisplayContributor assetDisplayContributor =
 			assetDisplayContributorTracker.
 				getAssetDisplayContributorByFriendlyURLShortcut(
-					classNameShortcut);
+					friendlyURLShortcut);
 
 		if (assetDisplayContributor == null) {
 			throw new PortalException(
-				"Display page not available for " + classNameShortcut);
+				"Display page not available for " + friendlyURLShortcut);
 		}
 
 		return assetDisplayContributor;
@@ -82,7 +82,7 @@ public class AssetDisplayPageURLTitleFriendlyURLResolver
 			className, friendlyURLEntry.getClassPK());
 	}
 
-	private String _getClassNameShortcut(String friendlyURL) {
+	private String _getFriendlyURLShortcut(String friendlyURL) {
 		String urlSeparator = getURLSeparator();
 
 		return friendlyURL.substring(

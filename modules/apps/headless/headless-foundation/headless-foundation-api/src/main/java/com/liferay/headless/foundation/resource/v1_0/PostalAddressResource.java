@@ -32,7 +32,7 @@ import javax.annotation.Generated;
 @Generated("")
 public interface PostalAddressResource {
 
-	public Page<PostalAddress> getPostalAddressesByClassNameClassPK(
+	public Page<PostalAddress> getByClassNameClassPKPostalAddressesPage(
 			com.liferay.portal.vulcan.identifier.ClassNameClassPK
 				classNameClassPK,
 			Pagination pagination)

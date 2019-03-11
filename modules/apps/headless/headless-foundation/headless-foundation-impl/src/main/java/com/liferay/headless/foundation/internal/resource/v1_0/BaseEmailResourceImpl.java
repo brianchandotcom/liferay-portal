@@ -64,7 +64,7 @@ public abstract class BaseEmailResourceImpl implements EmailResource {
 	@Path("/emails-by/{classNameClassPK}")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "Email")})
-	public Page<Email> getEmailsByClassNameClassPK(
+	public Page<Email> getByClassNameClassPKEmailsPage(
 			@Context com.liferay.portal.vulcan.identifier.ClassNameClassPK
 				classNameClassPK,
 			@Context Pagination pagination)

@@ -96,19 +96,22 @@ public abstract class BasePostalAddressResourceTestCase {
 	}
 
 	@Test
-	public void testGetPostalAddressesByClassNameClassPK() throws Exception {
+	public void testGetByClassNameClassPKPostalAddressesPage()
+		throws Exception {
+
 		com.liferay.portal.vulcan.identifier.ClassNameClassPK classNameClassPK =
-			testGetPostalAddressesByClassNameClassPK_getClassNameClassPK();
+			testGetByClassNameClassPKPostalAddressesPage_getClassNameClassPK();
 
 		PostalAddress postalAddress1 =
-			testGetPostalAddressesByClassNameClassPK_addPostalAddress(
+			testGetByClassNameClassPKPostalAddressesPage_addPostalAddress(
 				classNameClassPK, randomPostalAddress());
 		PostalAddress postalAddress2 =
-			testGetPostalAddressesByClassNameClassPK_addPostalAddress(
+			testGetByClassNameClassPKPostalAddressesPage_addPostalAddress(
 				classNameClassPK, randomPostalAddress());
 
-		Page<PostalAddress> page = invokeGetPostalAddressesByClassNameClassPK(
-			classNameClassPK, Pagination.of(1, 2));
+		Page<PostalAddress> page =
+			invokeGetByClassNameClassPKPostalAddressesPage(
+				classNameClassPK, Pagination.of(1, 2));
 
 		Assert.assertEquals(2, page.getTotalCount());
 
@@ -119,24 +122,25 @@ public abstract class BasePostalAddressResourceTestCase {
 	}
 
 	@Test
-	public void testGetPostalAddressesByClassNameClassPKWithPagination()
+	public void testGetByClassNameClassPKPostalAddressesPageWithPagination()
 		throws Exception {
 
 		com.liferay.portal.vulcan.identifier.ClassNameClassPK classNameClassPK =
-			testGetPostalAddressesByClassNameClassPK_getClassNameClassPK();
+			testGetByClassNameClassPKPostalAddressesPage_getClassNameClassPK();
 
 		PostalAddress postalAddress1 =
-			testGetPostalAddressesByClassNameClassPK_addPostalAddress(
+			testGetByClassNameClassPKPostalAddressesPage_addPostalAddress(
 				classNameClassPK, randomPostalAddress());
 		PostalAddress postalAddress2 =
-			testGetPostalAddressesByClassNameClassPK_addPostalAddress(
+			testGetByClassNameClassPKPostalAddressesPage_addPostalAddress(
 				classNameClassPK, randomPostalAddress());
 		PostalAddress postalAddress3 =
-			testGetPostalAddressesByClassNameClassPK_addPostalAddress(
+			testGetByClassNameClassPKPostalAddressesPage_addPostalAddress(
 				classNameClassPK, randomPostalAddress());
 
-		Page<PostalAddress> page1 = invokeGetPostalAddressesByClassNameClassPK(
-			classNameClassPK, Pagination.of(1, 2));
+		Page<PostalAddress> page1 =
+			invokeGetByClassNameClassPKPostalAddressesPage(
+				classNameClassPK, Pagination.of(1, 2));
 
 		List<PostalAddress> postalAddresses1 =
 			(List<PostalAddress>)page1.getItems();
@@ -144,8 +148,9 @@ public abstract class BasePostalAddressResourceTestCase {
 		Assert.assertEquals(
 			postalAddresses1.toString(), 2, postalAddresses1.size());
 
-		Page<PostalAddress> page2 = invokeGetPostalAddressesByClassNameClassPK(
-			classNameClassPK, Pagination.of(2, 2));
+		Page<PostalAddress> page2 =
+			invokeGetByClassNameClassPKPostalAddressesPage(
+				classNameClassPK, Pagination.of(2, 2));
 
 		Assert.assertEquals(3, page2.getTotalCount());
 
@@ -166,7 +171,7 @@ public abstract class BasePostalAddressResourceTestCase {
 	}
 
 	protected PostalAddress
-			testGetPostalAddressesByClassNameClassPK_addPostalAddress(
+			testGetByClassNameClassPKPostalAddressesPage_addPostalAddress(
 				com.liferay.portal.vulcan.identifier.ClassNameClassPK
 					classNameClassPK,
 				PostalAddress postalAddress)
@@ -177,17 +182,18 @@ public abstract class BasePostalAddressResourceTestCase {
 	}
 
 	protected com.liferay.portal.vulcan.identifier.ClassNameClassPK
-			testGetPostalAddressesByClassNameClassPK_getClassNameClassPK()
+			testGetByClassNameClassPKPostalAddressesPage_getClassNameClassPK()
 		throws Exception {
 
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
 	}
 
-	protected Page<PostalAddress> invokeGetPostalAddressesByClassNameClassPK(
-			com.liferay.portal.vulcan.identifier.ClassNameClassPK
-				classNameClassPK,
-			Pagination pagination)
+	protected Page<PostalAddress>
+			invokeGetByClassNameClassPKPostalAddressesPage(
+				com.liferay.portal.vulcan.identifier.ClassNameClassPK
+					classNameClassPK,
+				Pagination pagination)
 		throws Exception {
 
 		Http.Options options = _createHttpOptions();
@@ -211,10 +217,11 @@ public abstract class BasePostalAddressResourceTestCase {
 			});
 	}
 
-	protected Http.Response invokeGetPostalAddressesByClassNameClassPKResponse(
-			com.liferay.portal.vulcan.identifier.ClassNameClassPK
-				classNameClassPK,
-			Pagination pagination)
+	protected Http.Response
+			invokeGetByClassNameClassPKPostalAddressesPageResponse(
+				com.liferay.portal.vulcan.identifier.ClassNameClassPK
+					classNameClassPK,
+				Pagination pagination)
 		throws Exception {
 
 		Http.Options options = _createHttpOptions();

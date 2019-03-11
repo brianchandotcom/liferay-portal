@@ -32,7 +32,7 @@ import javax.annotation.Generated;
 @Generated("")
 public interface SegmentUserResource {
 
-	public Page<SegmentUser> getSegmentUserAccountsPage(
+	public Page<SegmentUser> getSegmentUserAccountSegmentUsersPage(
 			Long segmentId, Pagination pagination)
 		throws Exception;
 

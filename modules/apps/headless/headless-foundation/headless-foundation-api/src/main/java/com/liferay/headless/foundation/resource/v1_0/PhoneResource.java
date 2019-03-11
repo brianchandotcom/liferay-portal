@@ -32,7 +32,7 @@ import javax.annotation.Generated;
 @Generated("")
 public interface PhoneResource {
 
-	public Page<Phone> getPhonesByClassNameClassPK(
+	public Page<Phone> getByClassNameClassPKPhonesPage(
 			com.liferay.portal.vulcan.identifier.ClassNameClassPK
 				classNameClassPK,
 			Pagination pagination)

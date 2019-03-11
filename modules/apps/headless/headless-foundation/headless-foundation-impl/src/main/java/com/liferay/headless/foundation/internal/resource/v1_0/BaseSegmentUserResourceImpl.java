@@ -65,7 +65,7 @@ public abstract class BaseSegmentUserResourceImpl
 	@Path("/segments/{segment-id}/user-accounts")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "SegmentUser")})
-	public Page<SegmentUser> getSegmentUserAccountsPage(
+	public Page<SegmentUser> getSegmentUserAccountSegmentUsersPage(
 			@PathParam("segment-id") Long segmentId,
 			@Context Pagination pagination)
 		throws Exception {

@@ -96,16 +96,16 @@ public abstract class BaseEmailResourceTestCase {
 	}
 
 	@Test
-	public void testGetEmailsByClassNameClassPK() throws Exception {
+	public void testGetByClassNameClassPKEmailsPage() throws Exception {
 		com.liferay.portal.vulcan.identifier.ClassNameClassPK classNameClassPK =
-			testGetEmailsByClassNameClassPK_getClassNameClassPK();
+			testGetByClassNameClassPKEmailsPage_getClassNameClassPK();
 
-		Email email1 = testGetEmailsByClassNameClassPK_addEmail(
+		Email email1 = testGetByClassNameClassPKEmailsPage_addEmail(
 			classNameClassPK, randomEmail());
-		Email email2 = testGetEmailsByClassNameClassPK_addEmail(
+		Email email2 = testGetByClassNameClassPKEmailsPage_addEmail(
 			classNameClassPK, randomEmail());
 
-		Page<Email> page = invokeGetEmailsByClassNameClassPK(
+		Page<Email> page = invokeGetByClassNameClassPKEmailsPage(
 			classNameClassPK, Pagination.of(1, 2));
 
 		Assert.assertEquals(2, page.getTotalCount());
@@ -116,27 +116,27 @@ public abstract class BaseEmailResourceTestCase {
 	}
 
 	@Test
-	public void testGetEmailsByClassNameClassPKWithPagination()
+	public void testGetByClassNameClassPKEmailsPageWithPagination()
 		throws Exception {
 
 		com.liferay.portal.vulcan.identifier.ClassNameClassPK classNameClassPK =
-			testGetEmailsByClassNameClassPK_getClassNameClassPK();
+			testGetByClassNameClassPKEmailsPage_getClassNameClassPK();
 
-		Email email1 = testGetEmailsByClassNameClassPK_addEmail(
+		Email email1 = testGetByClassNameClassPKEmailsPage_addEmail(
 			classNameClassPK, randomEmail());
-		Email email2 = testGetEmailsByClassNameClassPK_addEmail(
+		Email email2 = testGetByClassNameClassPKEmailsPage_addEmail(
 			classNameClassPK, randomEmail());
-		Email email3 = testGetEmailsByClassNameClassPK_addEmail(
+		Email email3 = testGetByClassNameClassPKEmailsPage_addEmail(
 			classNameClassPK, randomEmail());
 
-		Page<Email> page1 = invokeGetEmailsByClassNameClassPK(
+		Page<Email> page1 = invokeGetByClassNameClassPKEmailsPage(
 			classNameClassPK, Pagination.of(1, 2));
 
 		List<Email> emails1 = (List<Email>)page1.getItems();
 
 		Assert.assertEquals(emails1.toString(), 2, emails1.size());
 
-		Page<Email> page2 = invokeGetEmailsByClassNameClassPK(
+		Page<Email> page2 = invokeGetByClassNameClassPKEmailsPage(
 			classNameClassPK, Pagination.of(2, 2));
 
 		Assert.assertEquals(3, page2.getTotalCount());
@@ -155,7 +155,7 @@ public abstract class BaseEmailResourceTestCase {
 			});
 	}
 
-	protected Email testGetEmailsByClassNameClassPK_addEmail(
+	protected Email testGetByClassNameClassPKEmailsPage_addEmail(
 			com.liferay.portal.vulcan.identifier.ClassNameClassPK
 				classNameClassPK,
 			Email email)
@@ -166,14 +166,14 @@ public abstract class BaseEmailResourceTestCase {
 	}
 
 	protected com.liferay.portal.vulcan.identifier.ClassNameClassPK
-			testGetEmailsByClassNameClassPK_getClassNameClassPK()
+			testGetByClassNameClassPKEmailsPage_getClassNameClassPK()
 		throws Exception {
 
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
 	}
 
-	protected Page<Email> invokeGetEmailsByClassNameClassPK(
+	protected Page<Email> invokeGetByClassNameClassPKEmailsPage(
 			com.liferay.portal.vulcan.identifier.ClassNameClassPK
 				classNameClassPK,
 			Pagination pagination)
@@ -198,7 +198,7 @@ public abstract class BaseEmailResourceTestCase {
 			});
 	}
 
-	protected Http.Response invokeGetEmailsByClassNameClassPKResponse(
+	protected Http.Response invokeGetByClassNameClassPKEmailsPageResponse(
 			com.liferay.portal.vulcan.identifier.ClassNameClassPK
 				classNameClassPK,
 			Pagination pagination)

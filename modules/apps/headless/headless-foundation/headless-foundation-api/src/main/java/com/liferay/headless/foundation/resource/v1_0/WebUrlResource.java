@@ -32,7 +32,7 @@ import javax.annotation.Generated;
 @Generated("")
 public interface WebUrlResource {
 
-	public Page<WebUrl> getWebUrlsByClassNameClassPK(
+	public Page<WebUrl> getByClassNameClassPKWebUrlsPage(
 			com.liferay.portal.vulcan.identifier.ClassNameClassPK
 				classNameClassPK,
 			Pagination pagination)

@@ -110,7 +110,7 @@ public class Query {
 
 	@GraphQLField
 	@GraphQLInvokeDetached
-	public Collection<Email> getEmailsByClassNameClassPK(
+	public Collection<Email> getByClassNameClassPKEmailsPage(
 			@GraphQLName("classNameClassPK")
 				com.liferay.portal.vulcan.identifier.ClassNameClassPK
 					classNameClassPK,
@@ -120,7 +120,7 @@ public class Query {
 
 		EmailResource emailResource = _createEmailResource();
 
-		Page paginationPage = emailResource.getEmailsByClassNameClassPK(
+		Page paginationPage = emailResource.getByClassNameClassPKEmailsPage(
 			classNameClassPK, Pagination.of(pageSize, page));
 
 		return paginationPage.getItems();
@@ -247,7 +247,7 @@ public class Query {
 
 	@GraphQLField
 	@GraphQLInvokeDetached
-	public Collection<Phone> getPhonesByClassNameClassPK(
+	public Collection<Phone> getByClassNameClassPKPhonesPage(
 			@GraphQLName("classNameClassPK")
 				com.liferay.portal.vulcan.identifier.ClassNameClassPK
 					classNameClassPK,
@@ -257,7 +257,7 @@ public class Query {
 
 		PhoneResource phoneResource = _createPhoneResource();
 
-		Page paginationPage = phoneResource.getPhonesByClassNameClassPK(
+		Page paginationPage = phoneResource.getByClassNameClassPKPhonesPage(
 			classNameClassPK, Pagination.of(pageSize, page));
 
 		return paginationPage.getItems();
@@ -275,7 +275,7 @@ public class Query {
 
 	@GraphQLField
 	@GraphQLInvokeDetached
-	public Collection<PostalAddress> getPostalAddressesByClassNameClassPK(
+	public Collection<PostalAddress> getByClassNameClassPKPostalAddressesPage(
 			@GraphQLName("classNameClassPK")
 				com.liferay.portal.vulcan.identifier.ClassNameClassPK
 					classNameClassPK,
@@ -287,7 +287,7 @@ public class Query {
 			_createPostalAddressResource();
 
 		Page paginationPage =
-			postalAddressResource.getPostalAddressesByClassNameClassPK(
+			postalAddressResource.getByClassNameClassPKPostalAddressesPage(
 				classNameClassPK, Pagination.of(pageSize, page));
 
 		return paginationPage.getItems();
@@ -378,7 +378,7 @@ public class Query {
 
 	@GraphQLField
 	@GraphQLInvokeDetached
-	public Collection<SegmentUser> getSegmentUserAccountsPage(
+	public Collection<SegmentUser> getSegmentUserAccountSegmentUsersPage(
 			@GraphQLName("segment-id") Long segmentId,
 			@GraphQLName("pageSize") int pageSize,
 			@GraphQLName("page") int page)
@@ -386,8 +386,9 @@ public class Query {
 
 		SegmentUserResource segmentUserResource = _createSegmentUserResource();
 
-		Page paginationPage = segmentUserResource.getSegmentUserAccountsPage(
-			segmentId, Pagination.of(pageSize, page));
+		Page paginationPage =
+			segmentUserResource.getSegmentUserAccountSegmentUsersPage(
+				segmentId, Pagination.of(pageSize, page));
 
 		return paginationPage.getItems();
 	}
@@ -493,7 +494,7 @@ public class Query {
 
 	@GraphQLField
 	@GraphQLInvokeDetached
-	public Collection<WebUrl> getWebUrlsByClassNameClassPK(
+	public Collection<WebUrl> getByClassNameClassPKWebUrlsPage(
 			@GraphQLName("classNameClassPK")
 				com.liferay.portal.vulcan.identifier.ClassNameClassPK
 					classNameClassPK,
@@ -503,7 +504,7 @@ public class Query {
 
 		WebUrlResource webUrlResource = _createWebUrlResource();
 
-		Page paginationPage = webUrlResource.getWebUrlsByClassNameClassPK(
+		Page paginationPage = webUrlResource.getByClassNameClassPKWebUrlsPage(
 			classNameClassPK, Pagination.of(pageSize, page));
 
 		return paginationPage.getItems();

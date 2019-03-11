@@ -96,16 +96,16 @@ public abstract class BaseWebUrlResourceTestCase {
 	}
 
 	@Test
-	public void testGetWebUrlsByClassNameClassPK() throws Exception {
+	public void testGetByClassNameClassPKWebUrlsPage() throws Exception {
 		com.liferay.portal.vulcan.identifier.ClassNameClassPK classNameClassPK =
-			testGetWebUrlsByClassNameClassPK_getClassNameClassPK();
+			testGetByClassNameClassPKWebUrlsPage_getClassNameClassPK();
 
-		WebUrl webUrl1 = testGetWebUrlsByClassNameClassPK_addWebUrl(
+		WebUrl webUrl1 = testGetByClassNameClassPKWebUrlsPage_addWebUrl(
 			classNameClassPK, randomWebUrl());
-		WebUrl webUrl2 = testGetWebUrlsByClassNameClassPK_addWebUrl(
+		WebUrl webUrl2 = testGetByClassNameClassPKWebUrlsPage_addWebUrl(
 			classNameClassPK, randomWebUrl());
 
-		Page<WebUrl> page = invokeGetWebUrlsByClassNameClassPK(
+		Page<WebUrl> page = invokeGetByClassNameClassPKWebUrlsPage(
 			classNameClassPK, Pagination.of(1, 2));
 
 		Assert.assertEquals(2, page.getTotalCount());
@@ -116,27 +116,27 @@ public abstract class BaseWebUrlResourceTestCase {
 	}
 
 	@Test
-	public void testGetWebUrlsByClassNameClassPKWithPagination()
+	public void testGetByClassNameClassPKWebUrlsPageWithPagination()
 		throws Exception {
 
 		com.liferay.portal.vulcan.identifier.ClassNameClassPK classNameClassPK =
-			testGetWebUrlsByClassNameClassPK_getClassNameClassPK();
+			testGetByClassNameClassPKWebUrlsPage_getClassNameClassPK();
 
-		WebUrl webUrl1 = testGetWebUrlsByClassNameClassPK_addWebUrl(
+		WebUrl webUrl1 = testGetByClassNameClassPKWebUrlsPage_addWebUrl(
 			classNameClassPK, randomWebUrl());
-		WebUrl webUrl2 = testGetWebUrlsByClassNameClassPK_addWebUrl(
+		WebUrl webUrl2 = testGetByClassNameClassPKWebUrlsPage_addWebUrl(
 			classNameClassPK, randomWebUrl());
-		WebUrl webUrl3 = testGetWebUrlsByClassNameClassPK_addWebUrl(
+		WebUrl webUrl3 = testGetByClassNameClassPKWebUrlsPage_addWebUrl(
 			classNameClassPK, randomWebUrl());
 
-		Page<WebUrl> page1 = invokeGetWebUrlsByClassNameClassPK(
+		Page<WebUrl> page1 = invokeGetByClassNameClassPKWebUrlsPage(
 			classNameClassPK, Pagination.of(1, 2));
 
 		List<WebUrl> webUrls1 = (List<WebUrl>)page1.getItems();
 
 		Assert.assertEquals(webUrls1.toString(), 2, webUrls1.size());
 
-		Page<WebUrl> page2 = invokeGetWebUrlsByClassNameClassPK(
+		Page<WebUrl> page2 = invokeGetByClassNameClassPKWebUrlsPage(
 			classNameClassPK, Pagination.of(2, 2));
 
 		Assert.assertEquals(3, page2.getTotalCount());
@@ -155,7 +155,7 @@ public abstract class BaseWebUrlResourceTestCase {
 			});
 	}
 
-	protected WebUrl testGetWebUrlsByClassNameClassPK_addWebUrl(
+	protected WebUrl testGetByClassNameClassPKWebUrlsPage_addWebUrl(
 			com.liferay.portal.vulcan.identifier.ClassNameClassPK
 				classNameClassPK,
 			WebUrl webUrl)
@@ -166,14 +166,14 @@ public abstract class BaseWebUrlResourceTestCase {
 	}
 
 	protected com.liferay.portal.vulcan.identifier.ClassNameClassPK
-			testGetWebUrlsByClassNameClassPK_getClassNameClassPK()
+			testGetByClassNameClassPKWebUrlsPage_getClassNameClassPK()
 		throws Exception {
 
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
 	}
 
-	protected Page<WebUrl> invokeGetWebUrlsByClassNameClassPK(
+	protected Page<WebUrl> invokeGetByClassNameClassPKWebUrlsPage(
 			com.liferay.portal.vulcan.identifier.ClassNameClassPK
 				classNameClassPK,
 			Pagination pagination)
@@ -198,7 +198,7 @@ public abstract class BaseWebUrlResourceTestCase {
 			});
 	}
 
-	protected Http.Response invokeGetWebUrlsByClassNameClassPKResponse(
+	protected Http.Response invokeGetByClassNameClassPKWebUrlsPageResponse(
 			com.liferay.portal.vulcan.identifier.ClassNameClassPK
 				classNameClassPK,
 			Pagination pagination)

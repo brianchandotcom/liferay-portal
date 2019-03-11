@@ -64,7 +64,7 @@ public abstract class BasePhoneResourceImpl implements PhoneResource {
 	@Path("/phones-by/{classNameClassPK}")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "Phone")})
-	public Page<Phone> getPhonesByClassNameClassPK(
+	public Page<Phone> getByClassNameClassPKPhonesPage(
 			@Context com.liferay.portal.vulcan.identifier.ClassNameClassPK
 				classNameClassPK,
 			@Context Pagination pagination)

@@ -64,7 +64,7 @@ public abstract class BaseWebUrlResourceImpl implements WebUrlResource {
 	@Path("/web-urls-by/{classNameClassPK}")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "WebUrl")})
-	public Page<WebUrl> getWebUrlsByClassNameClassPK(
+	public Page<WebUrl> getByClassNameClassPKWebUrlsPage(
 			@Context com.liferay.portal.vulcan.identifier.ClassNameClassPK
 				classNameClassPK,
 			@Context Pagination pagination)

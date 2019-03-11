@@ -65,7 +65,7 @@ public abstract class BasePostalAddressResourceImpl
 	@Path("/postal-addresses-by/{classNameClassPK}")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "PostalAddress")})
-	public Page<PostalAddress> getPostalAddressesByClassNameClassPK(
+	public Page<PostalAddress> getByClassNameClassPKPostalAddressesPage(
 			@Context com.liferay.portal.vulcan.identifier.ClassNameClassPK
 				classNameClassPK,
 			@Context Pagination pagination)

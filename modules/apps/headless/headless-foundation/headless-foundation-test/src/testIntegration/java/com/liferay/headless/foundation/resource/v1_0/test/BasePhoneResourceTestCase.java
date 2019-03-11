@@ -96,16 +96,16 @@ public abstract class BasePhoneResourceTestCase {
 	}
 
 	@Test
-	public void testGetPhonesByClassNameClassPK() throws Exception {
+	public void testGetByClassNameClassPKPhonesPage() throws Exception {
 		com.liferay.portal.vulcan.identifier.ClassNameClassPK classNameClassPK =
-			testGetPhonesByClassNameClassPK_getClassNameClassPK();
+			testGetByClassNameClassPKPhonesPage_getClassNameClassPK();
 
-		Phone phone1 = testGetPhonesByClassNameClassPK_addPhone(
+		Phone phone1 = testGetByClassNameClassPKPhonesPage_addPhone(
 			classNameClassPK, randomPhone());
-		Phone phone2 = testGetPhonesByClassNameClassPK_addPhone(
+		Phone phone2 = testGetByClassNameClassPKPhonesPage_addPhone(
 			classNameClassPK, randomPhone());
 
-		Page<Phone> page = invokeGetPhonesByClassNameClassPK(
+		Page<Phone> page = invokeGetByClassNameClassPKPhonesPage(
 			classNameClassPK, Pagination.of(1, 2));
 
 		Assert.assertEquals(2, page.getTotalCount());
@@ -116,27 +116,27 @@ public abstract class BasePhoneResourceTestCase {
 	}
 
 	@Test
-	public void testGetPhonesByClassNameClassPKWithPagination()
+	public void testGetByClassNameClassPKPhonesPageWithPagination()
 		throws Exception {
 
 		com.liferay.portal.vulcan.identifier.ClassNameClassPK classNameClassPK =
-			testGetPhonesByClassNameClassPK_getClassNameClassPK();
+			testGetByClassNameClassPKPhonesPage_getClassNameClassPK();
 
-		Phone phone1 = testGetPhonesByClassNameClassPK_addPhone(
+		Phone phone1 = testGetByClassNameClassPKPhonesPage_addPhone(
 			classNameClassPK, randomPhone());
-		Phone phone2 = testGetPhonesByClassNameClassPK_addPhone(
+		Phone phone2 = testGetByClassNameClassPKPhonesPage_addPhone(
 			classNameClassPK, randomPhone());
-		Phone phone3 = testGetPhonesByClassNameClassPK_addPhone(
+		Phone phone3 = testGetByClassNameClassPKPhonesPage_addPhone(
 			classNameClassPK, randomPhone());
 
-		Page<Phone> page1 = invokeGetPhonesByClassNameClassPK(
+		Page<Phone> page1 = invokeGetByClassNameClassPKPhonesPage(
 			classNameClassPK, Pagination.of(1, 2));
 
 		List<Phone> phones1 = (List<Phone>)page1.getItems();
 
 		Assert.assertEquals(phones1.toString(), 2, phones1.size());
 
-		Page<Phone> page2 = invokeGetPhonesByClassNameClassPK(
+		Page<Phone> page2 = invokeGetByClassNameClassPKPhonesPage(
 			classNameClassPK, Pagination.of(2, 2));
 
 		Assert.assertEquals(3, page2.getTotalCount());
@@ -155,7 +155,7 @@ public abstract class BasePhoneResourceTestCase {
 			});
 	}
 
-	protected Phone testGetPhonesByClassNameClassPK_addPhone(
+	protected Phone testGetByClassNameClassPKPhonesPage_addPhone(
 			com.liferay.portal.vulcan.identifier.ClassNameClassPK
 				classNameClassPK,
 			Phone phone)
@@ -166,14 +166,14 @@ public abstract class BasePhoneResourceTestCase {
 	}
 
 	protected com.liferay.portal.vulcan.identifier.ClassNameClassPK
-			testGetPhonesByClassNameClassPK_getClassNameClassPK()
+			testGetByClassNameClassPKPhonesPage_getClassNameClassPK()
 		throws Exception {
 
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
 	}
 
-	protected Page<Phone> invokeGetPhonesByClassNameClassPK(
+	protected Page<Phone> invokeGetByClassNameClassPKPhonesPage(
 			com.liferay.portal.vulcan.identifier.ClassNameClassPK
 				classNameClassPK,
 			Pagination pagination)
@@ -198,7 +198,7 @@ public abstract class BasePhoneResourceTestCase {
 			});
 	}
 
-	protected Http.Response invokeGetPhonesByClassNameClassPKResponse(
+	protected Http.Response invokeGetByClassNameClassPKPhonesPageResponse(
 			com.liferay.portal.vulcan.identifier.ClassNameClassPK
 				classNameClassPK,
 			Pagination pagination)

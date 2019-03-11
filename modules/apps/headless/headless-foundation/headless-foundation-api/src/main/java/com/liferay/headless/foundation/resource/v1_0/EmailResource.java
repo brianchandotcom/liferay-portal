@@ -32,7 +32,7 @@ import javax.annotation.Generated;
 @Generated("")
 public interface EmailResource {
 
-	public Page<Email> getEmailsByClassNameClassPK(
+	public Page<Email> getByClassNameClassPKEmailsPage(
 			com.liferay.portal.vulcan.identifier.ClassNameClassPK
 				classNameClassPK,
 			Pagination pagination)

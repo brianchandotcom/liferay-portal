@@ -226,7 +226,7 @@ paths:
                                 $ref: "#/components/schemas/BulkAssetEntryCommonTags"
                     description: ""
             tags: ["BulkActionResponse"]
-    /status:
+    "/status":
         get:
             responses:
                 200:

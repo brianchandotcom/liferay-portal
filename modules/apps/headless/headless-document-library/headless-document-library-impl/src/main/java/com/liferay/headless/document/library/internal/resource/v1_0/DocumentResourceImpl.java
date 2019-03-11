@@ -180,12 +180,6 @@ public class DocumentResourceImpl
 					DLFileEntry.class.getName(), documentId))
 		);
 
-		String viewableBy = optional.map(
-			Document::getViewableBy
-		).orElse(
-			null
-		);
-
 		FileEntry fileEntry = _dlAppService.updateFileEntry(
 			documentId, binaryFile.getFileName(), binaryFile.getContentType(),
 			optional.map(
@@ -202,7 +196,13 @@ public class DocumentResourceImpl
 			binaryFile.getInputStream(), binaryFile.getSize(),
 			ServiceContextUtil.createServiceContext(
 				keywords, categoryIds, existingFileEntry.getGroupId(),
-				viewableBy));
+				optional.map(
+					Document::getViewableBy
+				).map(
+					Document.ViewableBy::getValue
+				).orElse(
+					null
+				)));
 
 		return _toDocument(
 			fileEntry, fileEntry.getFileVersion(),
@@ -249,7 +249,14 @@ public class DocumentResourceImpl
 			binaryFile.getInputStream(), binaryFile.getSize(),
 			ServiceContextUtil.createServiceContext(
 				document.getKeywords(), document.getCategoryIds(),
-				existingFileEntry.getGroupId(), document.getViewableBy()));
+				existingFileEntry.getGroupId(),
+				Optional.ofNullable(
+					document.getViewableBy()
+				).map(
+					Document.ViewableBy::getValue
+				).orElse(
+					null
+				)));
 
 		return _toDocument(
 			fileEntry, fileEntry.getFileVersion(),
@@ -262,8 +269,17 @@ public class DocumentResourceImpl
 		throws Exception {
 
 		BinaryFile binaryFile = multipartBody.getBinaryFile("file");
+
 		Document document = multipartBody.getValueAsInstance(
 			"document", Document.class);
+
+		String viewableBy = Optional.ofNullable(
+			document.getViewableBy()
+		).map(
+			Document.ViewableBy::getValue
+		).orElse(
+			null
+		);
 
 		FileEntry fileEntry = _dlAppService.addFileEntry(
 			repositoryId, folderId, binaryFile.getFileName(),
@@ -277,7 +293,7 @@ public class DocumentResourceImpl
 			binaryFile.getSize(),
 			ServiceContextUtil.createServiceContext(
 				document.getKeywords(), document.getCategoryIds(), groupId,
-				document.getViewableBy()));
+				viewableBy));
 
 		return _toDocument(
 			fileEntry, fileEntry.getFileVersion(),

@@ -139,11 +139,6 @@ public class OpenAPIParserUtil {
 					new AbstractMap.SimpleImmutableEntry<>(
 						itemsType, itemsFormat));
 
-				if (javaDataType == null) {
-					javaDataType = javaDataTypeMap.get(
-						StringUtil.upperCaseFirstLetter(itemsType));
-				}
-
 				if ((javaDataType == null) &&
 					Objects.equals(itemsType, "object")) {
 
@@ -163,11 +158,6 @@ public class OpenAPIParserUtil {
 			String javaDataType = _openAPIDataTypeMap.get(
 				new AbstractMap.SimpleImmutableEntry<>(
 					schema.getType(), schema.getFormat()));
-
-			if (javaDataType == null) {
-				javaDataType = javaDataTypeMap.get(
-					StringUtil.upperCaseFirstLetter(schema.getType()));
-			}
 
 			if ((javaDataType == null) &&
 				Objects.equals(schema.getType(), "object")) {

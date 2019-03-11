@@ -172,7 +172,12 @@ public class BulkActionResponseResourceImpl
 			};
 		}
 		catch (Exception e) {
-			return _toBulkAssetEntryCommonCategories(e);
+			return new BulkAssetEntryCommonCategories() {
+				{
+					description = e.getMessage();
+					status = "error";
+				}
+			};
 		}
 	}
 
@@ -412,17 +417,6 @@ public class BulkActionResponseResourceImpl
 					description = e.getMessage();
 					status = "error";
 				}
-			}
-		};
-	}
-
-	private BulkAssetEntryCommonCategories _toBulkAssetEntryCommonCategories(
-		Exception e) {
-
-		return new BulkAssetEntryCommonCategories() {
-			{
-				description = e.getMessage();
-				status = "error";
 			}
 		};
 	}

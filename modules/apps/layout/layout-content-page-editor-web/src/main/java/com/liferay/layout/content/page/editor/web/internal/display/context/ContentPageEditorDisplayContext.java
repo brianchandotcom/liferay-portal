@@ -186,10 +186,12 @@ public class ContentPageEditorDisplayContext {
 		soyContext.put(
 			"layoutData", JSONFactoryUtil.createJSONObject(_getLayoutData()));
 
-		Stream<SoyContext> mappedAssetEntriesStream =
-			_mappedAssetEntries.stream();
+		Set<SoyContext> mappedAssetEntries = _getMappedAssetEntries();
 
-		_mappedAssetEntries = mappedAssetEntriesStream.collect(
+		Stream<SoyContext> mappedAssetEntriesStream =
+			mappedAssetEntries.stream();
+
+		mappedAssetEntries = mappedAssetEntriesStream.collect(
 			Collectors.collectingAndThen(
 				Collectors.toCollection(
 					() -> new TreeSet<>(
@@ -198,7 +200,7 @@ public class ContentPageEditorDisplayContext {
 								mappedSoyContext.get("classPK"))))),
 				HashSet::new));
 
-		soyContext.put("mappedAssetEntries", _mappedAssetEntries);
+		soyContext.put("mappedAssetEntries", mappedAssetEntries);
 
 		soyContext.put("portletNamespace", _renderResponse.getNamespace());
 		soyContext.put(
@@ -332,55 +334,6 @@ public class ContentPageEditorDisplayContext {
 	protected final long classPK;
 	protected final HttpServletRequest request;
 	protected final ThemeDisplay themeDisplay;
-
-	private void _addMappedAssetEntries(JSONObject editableValuesJSONObject) {
-		Iterator<String> keysIterator = editableValuesJSONObject.keys();
-
-		while (keysIterator.hasNext()) {
-			String key = keysIterator.next();
-
-			JSONObject editableProcessorJSONObject =
-				editableValuesJSONObject.getJSONObject(key);
-
-			Iterator<String> editableKeysIterator =
-				editableProcessorJSONObject.keys();
-
-			while (editableKeysIterator.hasNext()) {
-				String editableKey = editableKeysIterator.next();
-
-				JSONObject editableJSONObject =
-					editableProcessorJSONObject.getJSONObject(editableKey);
-
-				if (!editableJSONObject.has("classNameId") ||
-					!editableJSONObject.has("classPK") ||
-					!editableJSONObject.has("fieldName")) {
-
-					continue;
-				}
-
-				SoyContext mappedAssetEntrySoyContext =
-					SoyContextFactoryUtil.createSoyContext();
-
-				mappedAssetEntrySoyContext.put(
-					"classNameId", editableJSONObject.get("classNameId"));
-				mappedAssetEntrySoyContext.put(
-					"classPK", editableJSONObject.get("classPK"));
-
-				AssetEntry assetEntry = AssetEntryLocalServiceUtil.fetchEntry(
-					editableJSONObject.getLong("classNameId"),
-					editableJSONObject.getLong("classPK"));
-
-				if (assetEntry == null) {
-					continue;
-				}
-
-				mappedAssetEntrySoyContext.put(
-					"title", assetEntry.getTitle(themeDisplay.getLocale()));
-
-				_mappedAssetEntries.add(mappedAssetEntrySoyContext);
-			}
-		}
-	}
 
 	private SoyContext _getAvailableLanguagesSoyContext() {
 		SoyContext availableLanguagesSoyContext =
@@ -573,6 +526,70 @@ public class ContentPageEditorDisplayContext {
 		_layoutData = layoutPageTemplateStructure.getData();
 
 		return _layoutData;
+	}
+
+	private Set<SoyContext> _getMappedAssetEntries() throws Exception {
+		Set<SoyContext> mappedAssetEntries = new HashSet<>();
+
+		List<FragmentEntryLink> fragmentEntryLinks =
+			FragmentEntryLinkLocalServiceUtil.getFragmentEntryLinks(
+				getGroupId(), classNameId, classPK);
+
+		for (FragmentEntryLink fragmentEntryLink : fragmentEntryLinks) {
+			JSONObject editableValuesJSONObject =
+				JSONFactoryUtil.createJSONObject(
+					fragmentEntryLink.getEditableValues());
+
+			Iterator<String> keysIterator = editableValuesJSONObject.keys();
+
+			while (keysIterator.hasNext()) {
+				String key = keysIterator.next();
+
+				JSONObject editableProcessorJSONObject =
+					editableValuesJSONObject.getJSONObject(key);
+
+				Iterator<String> editableKeysIterator =
+					editableProcessorJSONObject.keys();
+
+				while (editableKeysIterator.hasNext()) {
+					String editableKey = editableKeysIterator.next();
+
+					JSONObject editableJSONObject =
+						editableProcessorJSONObject.getJSONObject(editableKey);
+
+					if (!editableJSONObject.has("classNameId") ||
+						!editableJSONObject.has("classPK") ||
+						!editableJSONObject.has("fieldName")) {
+
+						continue;
+					}
+
+					SoyContext mappedAssetEntrySoyContext =
+						SoyContextFactoryUtil.createSoyContext();
+
+					mappedAssetEntrySoyContext.put(
+						"classNameId", editableJSONObject.get("classNameId"));
+					mappedAssetEntrySoyContext.put(
+						"classPK", editableJSONObject.get("classPK"));
+
+					AssetEntry assetEntry =
+						AssetEntryLocalServiceUtil.fetchEntry(
+							editableJSONObject.getLong("classNameId"),
+							editableJSONObject.getLong("classPK"));
+
+					if (assetEntry == null) {
+						continue;
+					}
+
+					mappedAssetEntrySoyContext.put(
+						"title", assetEntry.getTitle(themeDisplay.getLocale()));
+
+					mappedAssetEntries.add(mappedAssetEntrySoyContext);
+				}
+			}
+		}
+
+		return mappedAssetEntries;
 	}
 
 	private String _getPortletCategoryTitle(PortletCategory portletCategory) {
@@ -801,8 +818,6 @@ public class ContentPageEditorDisplayContext {
 					JSONFactoryUtil.createJSONObject(
 						fragmentEntryLink.getEditableValues());
 
-				_addMappedAssetEntries(editableValuesJSONObject);
-
 				soyContext.put("editableValues", editableValuesJSONObject);
 
 				soyContext.put(
@@ -938,7 +953,6 @@ public class ContentPageEditorDisplayContext {
 	private ItemSelectorCriterion _imageItemSelectorCriterion;
 	private final ItemSelector _itemSelector;
 	private String _layoutData;
-	private Set<SoyContext> _mappedAssetEntries = new HashSet<>();
 	private String _redirect;
 	private final RenderResponse _renderResponse;
 	private List<SoyContext> _sidebarPanelSoyContexts;

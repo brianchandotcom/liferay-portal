@@ -97,12 +97,12 @@ public abstract class BaseBulkActionResponseResourceTestCase {
 	}
 
 	@Test
-	public void testPostCategoryCategoryClassName() throws Exception {
+	public void testPostCategoryClassName() throws Exception {
 		BulkActionResponse randomBulkActionResponse =
 			randomBulkActionResponse();
 
 		BulkActionResponse postBulkActionResponse =
-			testPostCategoryCategoryClassName_addBulkActionResponse(
+			testPostCategoryClassName_addBulkActionResponse(
 				randomBulkActionResponse);
 
 		assertEquals(randomBulkActionResponse, postBulkActionResponse);
@@ -110,7 +110,7 @@ public abstract class BaseBulkActionResponseResourceTestCase {
 	}
 
 	protected BulkActionResponse
-			testPostCategoryCategoryClassName_addBulkActionResponse(
+			testPostCategoryClassName_addBulkActionResponse(
 				BulkActionResponse bulkActionResponse)
 		throws Exception {
 
@@ -118,8 +118,8 @@ public abstract class BaseBulkActionResponseResourceTestCase {
 			"This method needs to be implemented");
 	}
 
-	protected BulkActionResponse invokePostCategoryCategoryClassName(
-			Long categoryClassNameId,
+	protected BulkActionResponse invokePostCategoryClassName(
+			Long classNameId,
 			BulkAssetEntryUpdateCategoriesAction
 				bulkAssetEntryUpdateCategoriesAction)
 		throws Exception {
@@ -127,10 +127,7 @@ public abstract class BaseBulkActionResponseResourceTestCase {
 		Http.Options options = _createHttpOptions();
 
 		String location =
-			_resourceURL +
-				_toPath(
-					"/categories/{category-class-name-id}",
-					categoryClassNameId);
+			_resourceURL + _toPath("/categories/{class-name-id}", classNameId);
 
 		options.setLocation(location);
 
@@ -140,8 +137,8 @@ public abstract class BaseBulkActionResponseResourceTestCase {
 			HttpUtil.URLtoString(options), BulkActionResponse.class);
 	}
 
-	protected Http.Response invokePostCategoryCategoryClassNameResponse(
-			Long categoryClassNameId,
+	protected Http.Response invokePostCategoryClassNameResponse(
+			Long classNameId,
 			BulkAssetEntryUpdateCategoriesAction
 				bulkAssetEntryUpdateCategoriesAction)
 		throws Exception {
@@ -149,10 +146,7 @@ public abstract class BaseBulkActionResponseResourceTestCase {
 		Http.Options options = _createHttpOptions();
 
 		String location =
-			_resourceURL +
-				_toPath(
-					"/categories/{category-class-name-id}",
-					categoryClassNameId);
+			_resourceURL + _toPath("/categories/{class-name-id}", classNameId);
 
 		options.setLocation(location);
 
@@ -164,14 +158,12 @@ public abstract class BaseBulkActionResponseResourceTestCase {
 	}
 
 	@Test
-	public void testPostCategoryCategoryGroupCategoryClassNameCommon()
-		throws Exception {
-
+	public void testPostCategoryContentSpaceClassNameCommon() throws Exception {
 		BulkActionResponse randomBulkActionResponse =
 			randomBulkActionResponse();
 
 		BulkActionResponse postBulkActionResponse =
-			testPostCategoryCategoryGroupCategoryClassNameCommon_addBulkActionResponse(
+			testPostCategoryContentSpaceClassNameCommon_addBulkActionResponse(
 				randomBulkActionResponse);
 
 		assertEquals(randomBulkActionResponse, postBulkActionResponse);
@@ -179,7 +171,7 @@ public abstract class BaseBulkActionResponseResourceTestCase {
 	}
 
 	protected BulkActionResponse
-			testPostCategoryCategoryGroupCategoryClassNameCommon_addBulkActionResponse(
+			testPostCategoryContentSpaceClassNameCommon_addBulkActionResponse(
 				BulkActionResponse bulkActionResponse)
 		throws Exception {
 
@@ -188,8 +180,8 @@ public abstract class BaseBulkActionResponseResourceTestCase {
 	}
 
 	protected BulkAssetEntryCommonCategories
-			invokePostCategoryCategoryGroupCategoryClassNameCommon(
-				Long categoryGroupId, Long categoryClassNameId,
+			invokePostCategoryContentSpaceClassNameCommon(
+				Long contentSpaceId, Long classNameId,
 				BulkAssetEntryAction bulkAssetEntryAction)
 		throws Exception {
 
@@ -198,8 +190,8 @@ public abstract class BaseBulkActionResponseResourceTestCase {
 		String location =
 			_resourceURL +
 				_toPath(
-					"/categories/{category-group-id}/{category-class-name-id}/common",
-					categoryGroupId);
+					"/categories/{content-space-id}/{class-name-id}/common",
+					contentSpaceId);
 
 		options.setLocation(location);
 
@@ -211,8 +203,8 @@ public abstract class BaseBulkActionResponseResourceTestCase {
 	}
 
 	protected Http.Response
-			invokePostCategoryCategoryGroupCategoryClassNameCommonResponse(
-				Long categoryGroupId, Long categoryClassNameId,
+			invokePostCategoryContentSpaceClassNameCommonResponse(
+				Long contentSpaceId, Long classNameId,
 				BulkAssetEntryAction bulkAssetEntryAction)
 		throws Exception {
 
@@ -221,8 +213,8 @@ public abstract class BaseBulkActionResponseResourceTestCase {
 		String location =
 			_resourceURL +
 				_toPath(
-					"/categories/{category-group-id}/{category-class-name-id}/common",
-					categoryGroupId);
+					"/categories/{content-space-id}/{class-name-id}/common",
+					contentSpaceId);
 
 		options.setLocation(location);
 
@@ -234,19 +226,19 @@ public abstract class BaseBulkActionResponseResourceTestCase {
 	}
 
 	@Test
-	public void testPostTagTagClassName() throws Exception {
+	public void testPostTagClassName() throws Exception {
 		BulkActionResponse randomBulkActionResponse =
 			randomBulkActionResponse();
 
 		BulkActionResponse postBulkActionResponse =
-			testPostTagTagClassName_addBulkActionResponse(
+			testPostTagClassName_addBulkActionResponse(
 				randomBulkActionResponse);
 
 		assertEquals(randomBulkActionResponse, postBulkActionResponse);
 		assertValid(postBulkActionResponse);
 	}
 
-	protected BulkActionResponse testPostTagTagClassName_addBulkActionResponse(
+	protected BulkActionResponse testPostTagClassName_addBulkActionResponse(
 			BulkActionResponse bulkActionResponse)
 		throws Exception {
 
@@ -254,15 +246,15 @@ public abstract class BaseBulkActionResponseResourceTestCase {
 			"This method needs to be implemented");
 	}
 
-	protected BulkActionResponse invokePostTagTagClassName(
-			Long tagClassNameId,
+	protected BulkActionResponse invokePostTagClassName(
+			Long classNameId,
 			BulkAssetEntryUpdateTagsAction bulkAssetEntryUpdateTagsAction)
 		throws Exception {
 
 		Http.Options options = _createHttpOptions();
 
 		String location =
-			_resourceURL + _toPath("/tags/{tag-class-name-id}", tagClassNameId);
+			_resourceURL + _toPath("/tags/{class-name-id}", classNameId);
 
 		options.setLocation(location);
 
@@ -272,15 +264,15 @@ public abstract class BaseBulkActionResponseResourceTestCase {
 			HttpUtil.URLtoString(options), BulkActionResponse.class);
 	}
 
-	protected Http.Response invokePostTagTagClassNameResponse(
-			Long tagClassNameId,
+	protected Http.Response invokePostTagClassNameResponse(
+			Long classNameId,
 			BulkAssetEntryUpdateTagsAction bulkAssetEntryUpdateTagsAction)
 		throws Exception {
 
 		Http.Options options = _createHttpOptions();
 
 		String location =
-			_resourceURL + _toPath("/tags/{tag-class-name-id}", tagClassNameId);
+			_resourceURL + _toPath("/tags/{class-name-id}", classNameId);
 
 		options.setLocation(location);
 
@@ -292,12 +284,12 @@ public abstract class BaseBulkActionResponseResourceTestCase {
 	}
 
 	@Test
-	public void testPostTagTagGroupTagClassNameCommon() throws Exception {
+	public void testPostTagContentSpaceClassNameCommon() throws Exception {
 		BulkActionResponse randomBulkActionResponse =
 			randomBulkActionResponse();
 
 		BulkActionResponse postBulkActionResponse =
-			testPostTagTagGroupTagClassNameCommon_addBulkActionResponse(
+			testPostTagContentSpaceClassNameCommon_addBulkActionResponse(
 				randomBulkActionResponse);
 
 		assertEquals(randomBulkActionResponse, postBulkActionResponse);
@@ -305,7 +297,7 @@ public abstract class BaseBulkActionResponseResourceTestCase {
 	}
 
 	protected BulkActionResponse
-			testPostTagTagGroupTagClassNameCommon_addBulkActionResponse(
+			testPostTagContentSpaceClassNameCommon_addBulkActionResponse(
 				BulkActionResponse bulkActionResponse)
 		throws Exception {
 
@@ -313,8 +305,8 @@ public abstract class BaseBulkActionResponseResourceTestCase {
 			"This method needs to be implemented");
 	}
 
-	protected BulkAssetEntryCommonTags invokePostTagTagGroupTagClassNameCommon(
-			Long tagGroupId, Long tagClassNameId,
+	protected BulkAssetEntryCommonTags invokePostTagContentSpaceClassNameCommon(
+			Long contentSpaceId, Long classNameId,
 			BulkAssetEntryAction bulkAssetEntryAction)
 		throws Exception {
 
@@ -323,8 +315,8 @@ public abstract class BaseBulkActionResponseResourceTestCase {
 		String location =
 			_resourceURL +
 				_toPath(
-					"/tags/{tag-group-id}/{tag-class-name-id}/common",
-					tagGroupId);
+					"/tags/{content-space-id}/{class-name-id}/common",
+					contentSpaceId);
 
 		options.setLocation(location);
 
@@ -334,8 +326,8 @@ public abstract class BaseBulkActionResponseResourceTestCase {
 			HttpUtil.URLtoString(options), BulkAssetEntryCommonTags.class);
 	}
 
-	protected Http.Response invokePostTagTagGroupTagClassNameCommonResponse(
-			Long tagGroupId, Long tagClassNameId,
+	protected Http.Response invokePostTagContentSpaceClassNameCommonResponse(
+			Long contentSpaceId, Long classNameId,
 			BulkAssetEntryAction bulkAssetEntryAction)
 		throws Exception {
 
@@ -344,8 +336,8 @@ public abstract class BaseBulkActionResponseResourceTestCase {
 		String location =
 			_resourceURL +
 				_toPath(
-					"/tags/{tag-group-id}/{tag-class-name-id}/common",
-					tagGroupId);
+					"/tags/{content-space-id}/{class-name-id}/common",
+					contentSpaceId);
 
 		options.setLocation(location);
 

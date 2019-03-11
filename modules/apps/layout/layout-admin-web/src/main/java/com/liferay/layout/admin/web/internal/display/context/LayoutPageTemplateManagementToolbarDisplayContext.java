@@ -117,7 +117,6 @@ public class LayoutPageTemplateManagementToolbarDisplayContext
 						dropdownItem.putData(
 							"addPageTemplateURL",
 							_getAddLayoutPageTemplateEntryURL());
-						dropdownItem.setHref("#");
 						dropdownItem.setLabel(
 							LanguageUtil.get(
 								request, "standard-page-template"));
@@ -133,7 +132,6 @@ public class LayoutPageTemplateManagementToolbarDisplayContext
 							dropdownItem.putData(
 								"addPageTemplateURL",
 								_getAddLayoutPrototypeURL());
-							dropdownItem.setHref("#");
 							dropdownItem.setLabel(
 								LanguageUtil.get(
 									request, "widget-page-template"));

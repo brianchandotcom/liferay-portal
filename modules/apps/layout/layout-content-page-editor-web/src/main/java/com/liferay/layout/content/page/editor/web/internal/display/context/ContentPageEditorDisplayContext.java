@@ -59,7 +59,6 @@ import com.liferay.portal.kernel.service.PortletPreferencesLocalServiceUtil;
 import com.liferay.portal.kernel.service.permission.PortletPermissionUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -86,7 +85,6 @@ import com.liferay.segments.service.SegmentsExperienceLocalServiceUtil;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -94,7 +92,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.Set;
-import java.util.TreeSet;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -185,23 +182,7 @@ public class ContentPageEditorDisplayContext {
 		soyContext.put("languageId", themeDisplay.getLanguageId());
 		soyContext.put(
 			"layoutData", JSONFactoryUtil.createJSONObject(_getLayoutData()));
-
-		Set<SoyContext> mappedAssetEntries = _getMappedAssetEntries();
-
-		Stream<SoyContext> mappedAssetEntriesStream =
-			mappedAssetEntries.stream();
-
-		mappedAssetEntries = mappedAssetEntriesStream.collect(
-			Collectors.collectingAndThen(
-				Collectors.toCollection(
-					() -> new TreeSet<>(
-						Comparator.comparingLong(
-							mappedSoyContext -> GetterUtil.getLong(
-								mappedSoyContext.get("classPK"))))),
-				HashSet::new));
-
-		soyContext.put("mappedAssetEntries", mappedAssetEntries);
-
+		soyContext.put("mappedAssetEntries", _getMappedAssetEntries());
 		soyContext.put("portletNamespace", _renderResponse.getNamespace());
 		soyContext.put(
 			"renderFragmentEntryURL",
@@ -531,6 +512,8 @@ public class ContentPageEditorDisplayContext {
 	private Set<SoyContext> _getMappedAssetEntries() throws Exception {
 		Set<SoyContext> mappedAssetEntries = new HashSet<>();
 
+		List<Long> mappedClassPKs = new ArrayList<>();
+
 		List<FragmentEntryLink> fragmentEntryLinks =
 			FragmentEntryLinkLocalServiceUtil.getFragmentEntryLinks(
 				getGroupId(), classNameId, classPK);
@@ -564,9 +547,16 @@ public class ContentPageEditorDisplayContext {
 						continue;
 					}
 
+					long classPK = editableJSONObject.getLong("classPK");
+
+					if (mappedClassPKs.contains(classPK)) {
+						continue;
+					}
+
+					mappedClassPKs.add(classPK);
+
 					long classNameId = editableJSONObject.getLong(
 						"classNameId");
-					long classPK = editableJSONObject.getLong("classPK");
 
 					AssetEntry assetEntry =
 						AssetEntryLocalServiceUtil.fetchEntry(

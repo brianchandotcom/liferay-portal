@@ -10,12 +10,12 @@
 <tbody>
 <tr>
 	<td>SITES_TABLE_NAME</td>
-	<td>//div[contains(@id,'ocerSearchContainerSearchContainer')]//tr[contains(.,'${key_siteName}')]/td[1]</td>
+	<td>//div[contains(@id,'SearchContainer')]//tr[contains(.,'${key_siteName}')]/td[1]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>SITES_TABLE_TYPE</td>
-	<td>//div[contains(@id,'ocerSearchContainerSearchContainer')]//tr[contains(.,'${key_siteName}')]/td[2]</td>
+	<td>//div[contains(@id,'SearchContainer')]//tr[contains(.,'${key_siteName}')]/td[2]</td>
 	<td></td>
 </tr>
 </tbody>

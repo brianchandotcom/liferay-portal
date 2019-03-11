@@ -433,7 +433,6 @@ public class BulkActionResponseResourceImpl
 						}
 					},
 					Category.class);
-
 				multiValued = assetVocabulary.isMultiValued();
 				name = assetVocabulary.getName();
 				vocabularyId = assetVocabulary.getVocabularyId();

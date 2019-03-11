@@ -25,11 +25,8 @@ import com.liferay.portal.kernel.model.Website;
 import com.liferay.portal.kernel.service.OrganizationService;
 import com.liferay.portal.kernel.service.UserService;
 import com.liferay.portal.kernel.service.WebsiteService;
-import com.liferay.portal.vulcan.identifier.ClassNameClassPK;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
-
-import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -45,37 +42,38 @@ import org.osgi.service.component.annotations.ServiceScope;
 public class WebUrlResourceImpl extends BaseWebUrlResourceImpl {
 
 	@Override
-	public WebUrl getWebUrl(Long webUrlId) throws Exception {
-		return _toWebUrl(_websiteService.getWebsite(webUrlId));
+	public Page<WebUrl> getOrganizationWebUrlsPage(
+			Long organizationId, Pagination pagination)
+		throws Exception {
+
+		Organization organization = _organizationService.getOrganization(
+			organizationId);
+
+		return Page.of(
+			transform(
+				_websiteService.getWebsites(
+					organization.getModelClassName(),
+					organization.getOrganizationId()),
+				this::_toWebUrl));
 	}
 
 	@Override
-	public Page<WebUrl> getWebUrlsByClassNameClassPK(
-			ClassNameClassPK classNameClassPK, Pagination pagination)
+	public Page<WebUrl> getUserAccountWebUrlsPage(
+			Long userAccountId, Pagination pagination)
 		throws Exception {
 
+		User user = _userService.getUserById(userAccountId);
+
 		return Page.of(
-			transform(_getWebsites(classNameClassPK), this::_toWebUrl));
+			transform(
+				_websiteService.getWebsites(
+					Contact.class.getName(), user.getContactId()),
+				this::_toWebUrl));
 	}
 
-	private List<Website> _getWebsites(ClassNameClassPK classNameClassPK)
-		throws PortalException {
-
-		String className = classNameClassPK.getClassName();
-
-		if (className.equals(Organization.class.getName())) {
-			Organization organization = _organizationService.getOrganization(
-				classNameClassPK.getClassPK());
-
-			return _websiteService.getWebsites(
-				organization.getModelClassName(),
-				organization.getOrganizationId());
-		}
-
-		User user = _userService.getUserById(classNameClassPK.getClassPK());
-
-		return _websiteService.getWebsites(
-			Contact.class.getName(), user.getContactId());
+	@Override
+	public WebUrl getWebUrl(Long webUrlId) throws Exception {
+		return _toWebUrl(_websiteService.getWebsite(webUrlId));
 	}
 
 	private WebUrl _toWebUrl(Website website) throws PortalException {

@@ -54,6 +54,10 @@ public class FieldsQueryParamContextProvider
 			return () -> null;
 		}
 
+		if (fieldNames.isEmpty()) {
+			return Collections::emptySet;
+		}
+
 		Stream<String> stream = Arrays.stream(fieldNames.split(","));
 
 		Set<String> fields = stream.map(

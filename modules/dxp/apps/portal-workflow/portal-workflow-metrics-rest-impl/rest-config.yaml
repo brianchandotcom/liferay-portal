@@ -3,5 +3,5 @@ apiPackagePath: "com.liferay.portal.workflow.metrics.rest"
 application:
     baseURI: "/portal-workflow-metrics-rest"
     className: "PortalWorkflowMetricsRestApplication"
-    name: "portal-workflow-metrics-rest-application"
+    name: "Liferay.Portal.Workflow.Metrics"
 author: "Rafael Praxedes"

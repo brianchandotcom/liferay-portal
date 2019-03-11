@@ -28,7 +28,7 @@ import org.osgi.service.component.annotations.Component;
 	property = {
 		"osgi.jaxrs.application.base=/portal-workflow-metrics-rest",
 		"osgi.jaxrs.extension.select=(osgi.jaxrs.name=Liferay.Vulcan)",
-		"osgi.jaxrs.name=portal-workflow-metrics-rest-application"
+		"osgi.jaxrs.name=Liferay.Portal.Workflow.Metrics"
 	},
 	service = Application.class
 )

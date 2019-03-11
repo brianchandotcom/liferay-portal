@@ -495,6 +495,141 @@ public abstract class BaseDataRecordCollectionResourceTestCase {
 		return options.getResponse();
 	}
 
+	@Test
+	public void testGetDataRecordCollectionSearchPage() throws Exception {
+		Long groupId = testGetDataRecordCollectionSearchPage_getGroupId();
+
+		DataRecordCollection dataRecordCollection1 =
+			testGetDataRecordCollectionSearchPage_addDataRecordCollection(
+				groupId, randomDataRecordCollection());
+		DataRecordCollection dataRecordCollection2 =
+			testGetDataRecordCollectionSearchPage_addDataRecordCollection(
+				groupId, randomDataRecordCollection());
+
+		Page<DataRecordCollection> page =
+			invokeGetDataRecordCollectionSearchPage(
+				groupId, Pagination.of(1, 2));
+
+		Assert.assertEquals(2, page.getTotalCount());
+
+		assertEqualsIgnoringOrder(
+			Arrays.asList(dataRecordCollection1, dataRecordCollection2),
+			(List<DataRecordCollection>)page.getItems());
+		assertValid(page);
+	}
+
+	@Test
+	public void testGetDataRecordCollectionSearchPageWithPagination()
+		throws Exception {
+
+		Long groupId = testGetDataRecordCollectionSearchPage_getGroupId();
+
+		DataRecordCollection dataRecordCollection1 =
+			testGetDataRecordCollectionSearchPage_addDataRecordCollection(
+				groupId, randomDataRecordCollection());
+		DataRecordCollection dataRecordCollection2 =
+			testGetDataRecordCollectionSearchPage_addDataRecordCollection(
+				groupId, randomDataRecordCollection());
+		DataRecordCollection dataRecordCollection3 =
+			testGetDataRecordCollectionSearchPage_addDataRecordCollection(
+				groupId, randomDataRecordCollection());
+
+		Page<DataRecordCollection> page1 =
+			invokeGetDataRecordCollectionSearchPage(
+				groupId, Pagination.of(1, 2));
+
+		List<DataRecordCollection> dataRecordCollections1 =
+			(List<DataRecordCollection>)page1.getItems();
+
+		Assert.assertEquals(
+			dataRecordCollections1.toString(), 2,
+			dataRecordCollections1.size());
+
+		Page<DataRecordCollection> page2 =
+			invokeGetDataRecordCollectionSearchPage(
+				groupId, Pagination.of(2, 2));
+
+		Assert.assertEquals(3, page2.getTotalCount());
+
+		List<DataRecordCollection> dataRecordCollections2 =
+			(List<DataRecordCollection>)page2.getItems();
+
+		Assert.assertEquals(
+			dataRecordCollections2.toString(), 1,
+			dataRecordCollections2.size());
+
+		assertEqualsIgnoringOrder(
+			Arrays.asList(
+				dataRecordCollection1, dataRecordCollection2,
+				dataRecordCollection3),
+			new ArrayList<DataRecordCollection>() {
+				{
+					addAll(dataRecordCollections1);
+					addAll(dataRecordCollections2);
+				}
+			});
+	}
+
+	protected DataRecordCollection
+			testGetDataRecordCollectionSearchPage_addDataRecordCollection(
+				Long groupId, DataRecordCollection dataRecordCollection)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected Long testGetDataRecordCollectionSearchPage_getGroupId()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected Page<DataRecordCollection>
+			invokeGetDataRecordCollectionSearchPage(
+				Long groupId, String keywords, Pagination pagination)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		String location =
+			_resourceURL + _toPath("/data-record-collections/search", groupId);
+
+		location = HttpUtil.addParameter(
+			location, "page", pagination.getPage());
+		location = HttpUtil.addParameter(
+			location, "pageSize", pagination.getPageSize());
+
+		options.setLocation(location);
+
+		return _outputObjectMapper.readValue(
+			HttpUtil.URLtoString(options),
+			new TypeReference<Page<DataRecordCollection>>() {
+			});
+	}
+
+	protected Http.Response invokeGetDataRecordCollectionSearchPageResponse(
+			Long groupId, String keywords, Pagination pagination)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		String location =
+			_resourceURL + _toPath("/data-record-collections/search", groupId);
+
+		location = HttpUtil.addParameter(
+			location, "page", pagination.getPage());
+		location = HttpUtil.addParameter(
+			location, "pageSize", pagination.getPageSize());
+
+		options.setLocation(location);
+
+		HttpUtil.URLtoString(options);
+
+		return options.getResponse();
+	}
+
 	protected void assertResponseCode(
 		int expectedResponseCode, Http.Response actualResponse) {
 

@@ -129,6 +129,26 @@ public abstract class BaseDataRecordCollectionResourceImpl
 		return new DataRecordCollection();
 	}
 
+	@Override
+	@GET
+	@Parameters(
+		value = {
+			@Parameter(in = ParameterIn.QUERY, name = "page"),
+			@Parameter(in = ParameterIn.QUERY, name = "pageSize")
+		}
+	)
+	@Path("/data-record-collections/search")
+	@Produces("application/json")
+	@Tags(value = {@Tag(name = "DataRecordCollection")})
+	public Page<DataRecordCollection> getDataRecordCollectionSearchPage(
+			@QueryParam("groupId") Long groupId,
+			@QueryParam("keywords") String keywords,
+			@Context Pagination pagination)
+		throws Exception {
+
+		return Page.of(Collections.emptyList());
+	}
+
 	public void setContextCompany(Company contextCompany) {
 		this.contextCompany = contextCompany;
 	}

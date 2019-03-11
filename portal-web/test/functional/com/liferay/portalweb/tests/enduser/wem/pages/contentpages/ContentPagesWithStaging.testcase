@@ -48,6 +48,10 @@ definition {
 				fragmentName = "Rich Text"
 			);
 		}
+
+		task ("Publish the content page") {
+			PageEditor.clickPublishPage();
+		}
 	}
 
 	tearDown {
@@ -206,6 +210,10 @@ definition {
 				id = "rich-text",
 				text = "New editable fragment text"
 			);
+		}
+
+		task ("Publish the content page") {
+			PageEditor.clickPublishPage();
 		}
 
 		task ("Navigate to the content page's 'View Mode' using the mode toggle") {

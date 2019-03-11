@@ -68,6 +68,10 @@ definition {
 			);
 		}
 
+		task ("Publish the content page") {
+			PageEditor.clickPublishPage();
+		}
+
 		task ("Add a content page with a Title fragment to the first site") {
 			SitePages.openPagesAdmin(siteURLKey = "test-site-name-1-staging");
 
@@ -77,6 +81,10 @@ definition {
 				collectionName = "Collection Name",
 				fragmentName = "Title"
 			);
+		}
+
+		task ("Publish the content page") {
+			PageEditor.clickPublishPage();
 		}
 
 		task ("Add a navigation menu to the first site") {

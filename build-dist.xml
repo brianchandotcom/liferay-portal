@@ -2229,7 +2229,7 @@ closeTemplate()
 							@echo off
 
 							set "MW_HOME=${app.server.weblogic.dir.windows}"
-							set "USER_MEM_ARGS=-Xmx1024m -XX:MetaspaceSize=256m"
+							set "USER_MEM_ARGS=-Xmx2048mm -XX:MetaspaceSize=512m"
 							set "WL_HOME=${app.server.weblogic.wlserver.dir.windows}"
 
 							call %MW_HOME%/oracle_common/common/bin/commEnv.cmd
@@ -2251,7 +2251,7 @@ closeTemplate()
 							@echo off
 
 							set "MW_HOME=${app.server.weblogic.dir.windows}"
-							set "USER_MEM_ARGS=-Xmx1024m -XX:MetaspaceSize=256m"
+							set "USER_MEM_ARGS=-Xmx2048m -XX:MetaspaceSize=512m"
 							set "WL_HOME=${app.server.weblogic.wlserver.dir.windows}"
 
 							call %WL_HOME%/common/bin/commEnv.cmd
@@ -2279,7 +2279,7 @@ closeTemplate()
 							set DERBY_FLAG="false"
 							set "JAVA_OPTIONS=%JAVA_OPTIONS% -Dfile.encoding=UTF-8 -Duser.timezone=GMT -da:org.apache.lucene... -da:org.aspectj..."
 							set "MW_HOME=${app.server.weblogic.dir.windows}"
-							set "USER_MEM_ARGS=-Xmx1024m -XX:PermSize=512m"
+							set "USER_MEM_ARGS=-Xmx2048m -XX:PermSize=512m"
 						]]>
 					</replacevalue>
 				</replace>
@@ -2406,7 +2406,7 @@ closeTemplate()
 							#!/bin/sh
 
 							export MW_HOME="${app.server.weblogic.dir}"
-							export USER_MEM_ARGS="-Xmx1024m -XX:MetaspaceSize=256m"
+							export USER_MEM_ARGS="-Xmx2048m -XX:MetaspaceSize=512m"
 							export WL_HOME="${app.server.weblogic.wlserver.dir}"
 
 							${source.command} ${MW_HOME}/oracle_common/common/bin/commEnv.sh
@@ -2421,7 +2421,7 @@ closeTemplate()
 							#!/bin/sh
 
 							export MW_HOME="${app.server.weblogic.dir}"
-							export USER_MEM_ARGS="-Xmx1024m -XX:MetaspaceSize=256m"
+							export USER_MEM_ARGS="-Xmx2048m -XX:MetaspaceSize=512m"
 							export WL_HOME="${app.server.weblogic.wlserver.dir}"
 
 							${source.command} ${WL_HOME}/common/bin/commEnv.sh
@@ -2453,7 +2453,7 @@ closeTemplate()
 							export DERBY_FLAG="false"
 							export JAVA_OPTIONS="${JAVA_OPTIONS} -Dfile.encoding=UTF-8 -Duser.timezone=GMT -da:org.apache.lucene... -da:org.aspectj... "
 							export MW_HOME="${app.server.weblogic.dir}"
-							export USER_MEM_ARGS="-Xmx1024m -XX:MetaspaceSize=512m"
+							export USER_MEM_ARGS="-Xmx2048m -XX:MetaspaceSize=512m"
 						]]>
 					</replacevalue>
 				</replace>
@@ -2618,6 +2618,13 @@ this task.
 				</then>
 			</elseif>
 		</if>
+
+		<replace
+			file="${app.server.weblogic.instance.dir}/startWebLogic.cmd"
+		>
+			<replacetoken><![CDATA[-Xmx1024m]]></replacetoken>
+			<replacevalue><![CDATA[-Xmx2048m]]></replacevalue>
+		</replace>
 	</target>
 
 	<target name="unzip-websphere">

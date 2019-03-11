@@ -8524,7 +8524,7 @@ public class JournalArticleLocalServiceImpl
 					classNameLocalService.getClassNameId(JournalArticle.class),
 					id);
 
-			ddmStorageLink.setStructureId(ddmStructure.getStructureId());
+			ddmStructureLink.setStructureId(ddmStructure.getStructureId());
 
 			ddmStructureLinkLocalService.updateDDMStructureLink(
 				ddmStructureLink);

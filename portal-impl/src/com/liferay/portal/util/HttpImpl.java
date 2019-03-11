@@ -1746,10 +1746,13 @@ public class HttpImpl implements Http {
 
 			RequestBuilder requestBuilder = null;
 
-			if (method.equals(Http.Method.POST) ||
+			if (method.equals(Method.PATCH) || method.equals(Method.POST) ||
 				method.equals(Http.Method.PUT)) {
 
-				if (method.equals(Http.Method.POST)) {
+				if (method.equals(Method.PATCH)) {
+					requestBuilder = RequestBuilder.patch(location);
+				}
+				else if (method.equals(Http.Method.POST)) {
 					requestBuilder = RequestBuilder.post(location);
 				}
 				else {
@@ -1798,7 +1801,8 @@ public class HttpImpl implements Http {
 				}
 			}
 
-			if ((method.equals(Http.Method.POST) ||
+			if ((method.equals(Method.PATCH) ||
+				 method.equals(Http.Method.POST) ||
 				 method.equals(Http.Method.PUT)) &&
 				((body != null) ||
 				 ((fileParts != null) && !fileParts.isEmpty()) ||

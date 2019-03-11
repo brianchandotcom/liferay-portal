@@ -15,8 +15,6 @@
 package com.liferay.sharing.service.impl;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.security.auth.PrincipalException;
-import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.spring.extender.service.ServiceReference;
 import com.liferay.sharing.model.SharingEntry;
@@ -66,13 +64,18 @@ public class SharingEntryServiceImpl extends SharingEntryServiceBaseImpl {
 			Date expirationDate, ServiceContext serviceContext)
 		throws PortalException {
 
-		sharingPermission.check(
-			getPermissionChecker(), classNameId, classPK, groupId,
-			sharingEntryActions);
+		SharingEntry sharingEntry = sharingEntryPersistence.fetchByTU_C_C(
+			toUserId, classNameId, classPK);
 
-		return sharingEntryLocalService.addOrUpdateSharingEntry(
-			getUserId(), toUserId, classNameId, classPK, groupId, shareable,
-			sharingEntryActions, expirationDate, serviceContext);
+		if (sharingEntry == null) {
+			return sharingEntryService.addSharingEntry(
+				toUserId, classNameId, classPK, groupId, shareable,
+				sharingEntryActions, expirationDate, serviceContext);
+		}
+
+		return sharingEntryService.updateSharingEntry(
+			sharingEntry.getSharingEntryId(), sharingEntryActions, shareable,
+			expirationDate, serviceContext);
 	}
 
 	/**
@@ -120,11 +123,9 @@ public class SharingEntryServiceImpl extends SharingEntryServiceBaseImpl {
 		SharingEntry sharingEntry = sharingEntryLocalService.getSharingEntry(
 			sharingEntryId);
 
-		if (getUserId() != sharingEntry.getUserId()) {
-			throw new PrincipalException.MustHavePermission(
-				getUserId(), sharingEntry.getModelClassName(), sharingEntryId,
-				ActionKeys.DELETE);
-		}
+		sharingPermission.checkManageCollaboratorsPermission(
+			getPermissionChecker(), sharingEntry.getClassNameId(),
+			sharingEntry.getClassPK(), sharingEntry.getGroupId());
 
 		return sharingEntryLocalService.deleteSharingEntry(sharingEntry);
 	}
@@ -155,10 +156,9 @@ public class SharingEntryServiceImpl extends SharingEntryServiceBaseImpl {
 		SharingEntry sharingEntry = sharingEntryPersistence.findByPrimaryKey(
 			sharingEntryId);
 
-		sharingPermission.check(
+		sharingPermission.checkManageCollaboratorsPermission(
 			getPermissionChecker(), sharingEntry.getClassNameId(),
-			sharingEntry.getClassPK(), sharingEntry.getGroupId(),
-			sharingEntryActions);
+			sharingEntry.getClassPK(), sharingEntry.getGroupId());
 
 		return sharingEntryLocalService.updateSharingEntry(
 			sharingEntryId, sharingEntryActions, shareable, expirationDate,

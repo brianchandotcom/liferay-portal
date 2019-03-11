@@ -55,6 +55,8 @@ public interface AssetDisplayContributor {
 			AssetEntry assetEntry, String fieldName, Locale locale)
 		throws PortalException;
 
+	public String getAssetURLSeparator();
+
 	public String getClassName();
 
 	public default List<AssetDisplayField> getClassTypeFields(
@@ -116,8 +118,6 @@ public interface AssetDisplayContributor {
 		return classTypeReader.getAvailableClassTypes(
 			PortalUtil.getCurrentAndAncestorSiteGroupIds(groupId), locale);
 	}
-
-	public String getFriendlyURLShortcut();
 
 	public String getLabel(Locale locale);
 

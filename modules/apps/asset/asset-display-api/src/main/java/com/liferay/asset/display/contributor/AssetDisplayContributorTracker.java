@@ -24,8 +24,7 @@ public interface AssetDisplayContributorTracker {
 	public AssetDisplayContributor getAssetDisplayContributor(String className);
 
 	public AssetDisplayContributor
-		getAssetDisplayContributorByFriendlyURLShortcut(
-			String friendlyURLShortcut);
+		getAssetDisplayContributorByAssetURLSeparator(String assetURLSeparator);
 
 	public List<AssetDisplayContributor> getAssetDisplayContributors();
 

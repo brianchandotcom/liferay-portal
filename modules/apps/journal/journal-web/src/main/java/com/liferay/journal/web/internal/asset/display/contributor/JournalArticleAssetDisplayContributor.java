@@ -51,13 +51,13 @@ public class JournalArticleAssetDisplayContributor
 	extends BaseAssetDisplayContributor<JournalArticle> {
 
 	@Override
-	public String getClassName() {
-		return JournalArticle.class.getName();
+	public String getAssetURLSeparator() {
+		return "web-content";
 	}
 
 	@Override
-	public String getFriendlyURLShortcut() {
-		return "web-content";
+	public String getClassName() {
+		return JournalArticle.class.getName();
 	}
 
 	@Override

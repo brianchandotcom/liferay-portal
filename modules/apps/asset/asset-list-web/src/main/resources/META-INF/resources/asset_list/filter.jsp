@@ -58,7 +58,7 @@
 				Map<String, Object> context = new HashMap<>();
 
 				context.put("categorySelectorURL", editAssetListDisplayContext.getCategorySelectorURL());
-				context.put("groupIds", StringUtil.merge(editAssetListDisplayContext.getReferencedModelsGroupIds()));
+				context.put("groupIds", ListUtil.toList(editAssetListDisplayContext.getReferencedModelsGroupIds()));
 				context.put("id", "autofield");
 				context.put("namespace", liferayPortletResponse.getNamespace());
 				context.put("pathThemeImages", themeDisplay.getPathThemeImages());

@@ -185,22 +185,23 @@ public class EditAssetListDisplayContext {
 					_request, "queryCategoryIds" + queryLogicIndex,
 					queryValues);
 
-				JSONArray categoryIdsTitles = JSONFactoryUtil.createJSONArray();
-
 				List<AssetCategory> categories = _filterAssetCategories(
 					GetterUtil.getLongValues(queryValues.split(",")));
 
+				List<HashMap<String, Object>> selectedItems = new ArrayList<>();
+
 				for (AssetCategory category : categories) {
-					categoryIdsTitles.put(
-						category.getTitle(_themeDisplay.getLocale()));
+					HashMap<String, Object> selectedCategory = new HashMap<>();
+
+					selectedItems.add(selectedCategory);
+
+					selectedCategory.put(
+						"label", category.getTitle(_themeDisplay.getLocale()));
+
+					selectedCategory.put("value", category.getCategoryId());
 				}
 
-				List<Long> categoryIds = ListUtil.toList(
-					categories, AssetCategory.CATEGORY_ID_ACCESSOR);
-
-				queryValues = StringUtil.merge(categoryIds, ",");
-
-				ruleJSONObject.put("categoryIdsTitles", categoryIdsTitles);
+				ruleJSONObject.put("selectedItems", selectedItems);
 			}
 
 			if (Validator.isNull(queryValues)) {
@@ -702,12 +703,12 @@ public class EditAssetListDisplayContext {
 		return null;
 	}
 
-	public String getVocabularyIds() {
+	public List<Long> getVocabularyIds() {
 		List<AssetVocabulary> vocabularies =
 			AssetVocabularyServiceUtil.getGroupsVocabularies(
 				new long[] {_themeDisplay.getScopeGroupId()});
 
-		return ListUtil.toString(
+		return ListUtil.toList(
 			vocabularies, AssetVocabulary.VOCABULARY_ID_ACCESSOR);
 	}
 

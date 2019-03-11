@@ -5,7 +5,7 @@
  */
 {template .render}
 	{@param categorySelectorURL: string}
-	{@param groupIds: string}
+	{@param groupIds: list<string>}
 	{@param id: string}
 	{@param? namespace: string}
 	{@param pathThemeImages: string}
@@ -20,7 +20,7 @@
 		]>
 	]>}
 	{@param tagSelectorURL: string}
-	{@param vocabularyIds: string}
+	{@param vocabularyIds: list<string>}
 
 	{@param? queryLogicIndexes: string}
 
@@ -89,7 +89,7 @@
  */
 {template .rule}
 	{@param categorySelectorURL: string}
-	{@param groupIds: string}
+	{@param groupIds: list<string>}
 	{@param index: int}
 	{@param? namespace: string}
 	{@param pathThemeImages: string}
@@ -104,7 +104,7 @@
 		]>
 	]}
 	{@param tagSelectorURL: string}
-	{@param vocabularyIds: string}
+	{@param vocabularyIds: list<string>}
 
 	<li class="timeline-item">
 		<div class="panel panel-default">
@@ -141,19 +141,21 @@
 				</div>
 
 				{if $rule.type == 'assetCategories'}
-					{call com.liferay.asset.list.web.CategorySelector.render}
+					{call com.liferay.asset.taglib.AssetVocabularyCategoriesSelector.render}
+						{param categoryIds: $rule.queryValues ?: '' /}
 						{param eventName: $namespace + 'selectCategory' /}
 						{param groupIds: $groupIds /}
-						{param index: $index /}
-						{param namespace: $namespace /}
-						{param categorySelectorURL: $categorySelectorURL /}
-						{param rule: $rule /}
+						{param id: $namespace + 'assetCategoriesSelector' + $index /}
+						{param inputName: $namespace + 'queryCategoryIds' + $index /}
+						{param spritemap: $pathThemeImages + '/lexicon/icons.svg' /}
+						{param portletURL: $categorySelectorURL /}
+						{param selectedItems: $rule.selectedItems ?: [] /}
 						{param vocabularyIds: $vocabularyIds /}
 					{/call}
 				{else}
 					{call com.liferay.asset.taglib.AssetTagsSelector.render}
 						{param eventName: $namespace + 'selectTag' /}
-						{param groupIds: [] /}
+						{param groupIds: $groupIds /}
 						{param id: $namespace + 'assetTagsSelector' + $index /}
 						{param inputName: $namespace + 'queryTagNames' + $index /}
 						{param spritemap: $pathThemeImages + '/lexicon/icons.svg' /}

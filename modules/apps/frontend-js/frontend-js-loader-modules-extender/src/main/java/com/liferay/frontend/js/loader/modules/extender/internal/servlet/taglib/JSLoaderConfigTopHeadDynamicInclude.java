@@ -31,7 +31,10 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Iván Zaera Avellón
  */
-@Component(immediate = true, service = DynamicInclude.class)
+@Component(
+	immediate = true, property = "service.ranking:Integer=" + Integer.MAX_VALUE,
+	service = DynamicInclude.class
+)
 public class JSLoaderConfigTopHeadDynamicInclude extends BaseDynamicInclude {
 
 	@Override

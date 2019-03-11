@@ -265,28 +265,30 @@ public class AssetPublisherDisplayContext {
 				_portletPreferences.getValue(
 					"infoListProviderClassName", null));
 
-			if (Validator.isNotNull(infoListProviderClassName)) {
-				InfoListProvider infoListProvider =
-					_infoListProviderTracker.getInfoListProvider(
-						infoListProviderClassName);
-
-				if (infoListProvider != null) {
-					SimpleInfoListProviderContext context =
-						new SimpleInfoListProviderContext(
-							_themeDisplay.getUser(),
-							_themeDisplay.getScopeGroup());
-
-					AssetEntry assetEntry =
-						(AssetEntry)_portletRequest.getAttribute(
-							WebKeys.LAYOUT_ASSET_ENTRY);
-
-					context.setAssetEntry(assetEntry);
-
-					context.setLayout(_themeDisplay.getLayout());
-
-					return infoListProvider.getInfoList(context);
-				}
+			if (Validator.isNull(infoListProviderClassName)) {
+				return Collections.emptyList();
 			}
+
+			InfoListProvider infoListProvider =
+				_infoListProviderTracker.getInfoListProvider(
+					infoListProviderClassName);
+
+			if (infoListProvider == null) {
+				return Collections.emptyList();
+			}
+
+			SimpleInfoListProviderContext context =
+				new SimpleInfoListProviderContext(
+					_themeDisplay.getUser(), _themeDisplay.getScopeGroup());
+
+			AssetEntry assetEntry = (AssetEntry)_portletRequest.getAttribute(
+				WebKeys.LAYOUT_ASSET_ENTRY);
+
+			context.setAssetEntry(assetEntry);
+
+			context.setLayout(_themeDisplay.getLayout());
+
+			return infoListProvider.getInfoList(context);
 		}
 
 		return Collections.emptyList();

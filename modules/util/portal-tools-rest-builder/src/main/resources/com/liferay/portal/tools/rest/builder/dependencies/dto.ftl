@@ -52,6 +52,48 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement(name = "${schemaName}")
 public class ${schemaName} <#if freeMarkerTool.getDTOParentClassName(openAPIYAML, schemaName)??>extends ${freeMarkerTool.getParentClass(openAPIYAML, schemaName)}</#if> {
 
+	<#if schema.propertySchemas??>
+		<#list schema.propertySchemas?keys as propertySchemaName>
+			<#assign propertySchema = schema.propertySchemas[propertySchemaName] />
+
+			<#if propertySchema.enumValues?? && (propertySchema.enumValues?size > 0)>
+				public static enum ${propertySchemaName?cap_first} {
+
+					<#list propertySchema.enumValues as enumValue>
+						${freeMarkerTool.getEnumFieldName(enumValue)}("${enumValue}")
+
+						<#if enumValue_has_next>
+							,
+						</#if>
+					</#list>;
+
+					@JsonCreator
+					public static ${propertySchemaName?cap_first} create(String value) {
+						for (${propertySchemaName?cap_first} ${propertySchemaName} : values()) {
+							if (Objects.equals(${propertySchemaName}.getValue(), value)) {
+								return ${propertySchemaName};
+							}
+						}
+
+						return null;
+					}
+
+					@JsonValue
+					public String getValue() {
+						return _value;
+					}
+
+					private ${propertySchemaName?cap_first}(String value) {
+						_value = value;
+					}
+
+					private final String _value;
+
+				}
+			</#if>
+		</#list>
+	</#if>
+
 	<#list freeMarkerTool.getDTOJavaMethodParameters(configYAML, openAPIYAML, schema) as javaMethodParameter>
 		<#assign
 			javaDataType = javaMethodParameter.parameterType
@@ -161,47 +203,5 @@ public class ${schemaName} <#if freeMarkerTool.getDTOParentClassName(openAPIYAML
 
 		return sb.toString();
 	}
-
-	<#if schema.propertySchemas??>
-		<#list schema.propertySchemas?keys as propertySchemaName>
-			<#assign propertySchema = schema.propertySchemas[propertySchemaName] />
-
-			<#if propertySchema.enumValues?? && (propertySchema.enumValues?size > 0)>
-				public static enum ${propertySchemaName?cap_first} {
-
-					<#list propertySchema.enumValues as enumValue>
-						${freeMarkerTool.getEnumFieldName(enumValue)}("${enumValue}")
-
-						<#if enumValue_has_next>
-							,
-						</#if>
-					</#list>;
-
-					@JsonCreator
-					public static ${propertySchemaName?cap_first} create(String value) {
-						for (${propertySchemaName?cap_first} ${propertySchemaName} : values()) {
-							if (Objects.equals(${propertySchemaName}.getValue(), value)) {
-								return ${propertySchemaName};
-							}
-						}
-
-						return null;
-					}
-
-					@JsonValue
-					public String getValue() {
-						return _value;
-					}
-
-					private ${propertySchemaName?cap_first}(String value) {
-						_value = value;
-					}
-
-					private final String _value;
-
-				}
-			</#if>
-		</#list>
-	</#if>
 
 }

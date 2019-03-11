@@ -87,7 +87,6 @@ public class SegmentsServicePreAction extends Action {
 		}
 
 		long[] segmentsEntryIds = null;
-		long[] segmentsExperienceIds = null;
 
 		Layout layout = themeDisplay.getLayout();
 		long classNameId = _classNameLocalService.getClassNameId(
@@ -101,10 +100,6 @@ public class SegmentsServicePreAction extends Action {
 
 				segmentsEntryIds = _segmentsEntryProvider.getSegmentsEntryIds(
 					User.class.getName(), themeDisplay.getUserId(), context);
-
-				segmentsExperienceIds = _getSegmentsExperienceIds(
-					layout.getGroupId(), segmentsEntryIds, classNameId,
-					layout.getPrimaryKey());
 			}
 			catch (PortalException pe) {
 				if (_log.isWarnEnabled()) {
@@ -123,19 +118,13 @@ public class SegmentsServicePreAction extends Action {
 			};
 		}
 
-		if (segmentsExperienceIds == null) {
-			SegmentsExperience defaultSegmentsExperience =
-				_segmentsExperienceLocalService.getDefaultSegmentsExperience(
-					layout.getGroupId(), classNameId, layout.getPrimaryKey(),
-					true);
-
-			segmentsExperienceIds = new long[] {
-				defaultSegmentsExperience.getSegmentsExperienceId()
-			};
-		}
-
 		request.setAttribute(
 			SegmentsWebKeys.SEGMENTS_ENTRY_IDS, segmentsEntryIds);
+
+		long[] segmentsExperienceIds = _getSegmentsExperienceIds(
+			layout.getGroupId(), segmentsEntryIds, classNameId,
+			layout.getPrimaryKey());
+
 		request.setAttribute(
 			SegmentsWebKeys.SEGMENTS_EXPERIENCE_IDS, segmentsExperienceIds);
 	}

@@ -105,6 +105,7 @@ public class ScopeLocatorImpl implements ScopeLocator {
 		Bundle bundle = getBundle(serviceReference);
 
 		Set<LiferayOAuth2Scope> locatedScopes = new HashSet<>(scopes.size());
+		Map<String, Set<String>> mappedScopeToUnmappedScopes = new HashMap<>();
 		Map<String, Boolean> matchCache = new HashMap<>();
 		PrefixHandler prefixHandler = prefixHandlerFactory.create(
 			serviceReference::getProperty);
@@ -113,8 +114,6 @@ public class ScopeLocatorImpl implements ScopeLocator {
 		ScopeMatcherFactory scopeMatcherFactory = getScopeMatcherFactory(
 			companyId);
 		Queue<String> queue = new LinkedList<>();
-
-		Map<String, Set<String>> mappedScopeToUnmappedScopes = new HashMap<>();
 
 		for (String scope : scopes) {
 			for (String mappedScope : scopeMapper.map(scope)) {

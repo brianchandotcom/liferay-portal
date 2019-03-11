@@ -15,8 +15,8 @@
 package com.liferay.data.engine.rest.internal.resource.v1_0;
 
 import com.liferay.data.engine.rest.dto.v1_0.DataDefinition;
-import com.liferay.data.engine.rest.dto.v1_0.LocalizedValue;
 import com.liferay.data.engine.rest.internal.dto.v1_0.util.DataDefinitionUtil;
+import com.liferay.data.engine.rest.internal.dto.v1_0.util.DataEngineUtil;
 import com.liferay.data.engine.rest.resource.v1_0.DataDefinitionResource;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.DDMStructureConstants;
@@ -24,17 +24,10 @@ import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMStructureService;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -115,8 +108,9 @@ public class DataDefinitionResourceImpl extends BaseDataDefinitionResourceImpl {
 				PrincipalThreadLocal.getUserId(), groupId,
 				DDMStructureConstants.DEFAULT_PARENT_STRUCTURE_ID,
 				_portal.getClassNameId(DataDefinition.class), null,
-				_toLocalizationMap(dataDefinition.getName()),
-				_toLocalizationMap(dataDefinition.getDescription()),
+				DataEngineUtil.toLocalizationMap(dataDefinition.getName()),
+				DataEngineUtil.toLocalizationMap(
+					dataDefinition.getDescription()),
 				DataDefinitionUtil.toJSON(dataDefinition),
 				dataDefinition.getStorageType(), new ServiceContext()));
 	}
@@ -130,8 +124,9 @@ public class DataDefinitionResourceImpl extends BaseDataDefinitionResourceImpl {
 			_ddmStructureLocalService.updateStructure(
 				PrincipalThreadLocal.getUserId(), dataDefinition.getId(),
 				DDMStructureConstants.DEFAULT_PARENT_STRUCTURE_ID,
-				_toLocalizationMap(dataDefinition.getName()),
-				_toLocalizationMap(dataDefinition.getDescription()),
+				DataEngineUtil.toLocalizationMap(dataDefinition.getName()),
+				DataEngineUtil.toLocalizationMap(
+					dataDefinition.getDescription()),
 				DataDefinitionUtil.toJSON(dataDefinition),
 				new ServiceContext()));
 	}
@@ -145,42 +140,14 @@ public class DataDefinitionResourceImpl extends BaseDataDefinitionResourceImpl {
 		dataDefinition.setDateCreated(ddmStructure.getCreateDate());
 		dataDefinition.setDateModified(ddmStructure.getModifiedDate());
 		dataDefinition.setDescription(
-			_toLocalizedValues(ddmStructure.getDescriptionMap()));
+			DataEngineUtil.toLocalizedValues(ddmStructure.getDescriptionMap()));
 		dataDefinition.setId(ddmStructure.getStructureId());
-		dataDefinition.setName(_toLocalizedValues(ddmStructure.getNameMap()));
+		dataDefinition.setName(
+			DataEngineUtil.toLocalizedValues(ddmStructure.getNameMap()));
 		dataDefinition.setStorageType(ddmStructure.getStorageType());
 		dataDefinition.setUserId(ddmStructure.getUserId());
 
 		return dataDefinition;
-	}
-
-	private Map<Locale, String> _toLocalizationMap(
-		LocalizedValue[] localizedValues) {
-
-		Map<Locale, String> localizationMap = new HashMap<>();
-
-		for (LocalizedValue localizedValue : localizedValues) {
-			localizationMap.put(
-				LocaleUtil.fromLanguageId(localizedValue.getKey()),
-				localizedValue.getValue());
-		}
-
-		return localizationMap;
-	}
-
-	private LocalizedValue[] _toLocalizedValues(Map<Locale, String> map) {
-		List<LocalizedValue> localizedValues = new ArrayList<>();
-
-		for (Map.Entry<Locale, String> entry : map.entrySet()) {
-			LocalizedValue localizedValue = new LocalizedValue();
-
-			localizedValue.setKey(String.valueOf(entry.getKey()));
-			localizedValue.setValue(entry.getValue());
-
-			localizedValues.add(localizedValue);
-		}
-
-		return localizedValues.toArray(new LocalizedValue[map.size()]);
 	}
 
 	@Reference

@@ -129,52 +129,38 @@ public class OpenAPIParserUtil {
 		if (StringUtil.equals(schema.getType(), "array")) {
 			Items items = schema.getItems();
 
-			String javaDataType = null;
-
-			if (items.getType() != null) {
-				String itemsFormat = items.getFormat();
-				String itemsType = items.getType();
-
-				javaDataType = _openAPIDataTypeMap.get(
-					new AbstractMap.SimpleImmutableEntry<>(
-						itemsType, itemsFormat));
-
-				if ((javaDataType == null) &&
-					Objects.equals(itemsType, "object")) {
-
-					javaDataType = Object.class.getName();
-				}
-			}
+			String javaDataType = _openAPIDataTypeMap.get(
+				new AbstractMap.SimpleImmutableEntry<>(
+					items.getType(), items.getFormat()));
 
 			if (items.getReference() != null) {
 				javaDataType = javaDataTypeMap.get(
 					getReferenceName(items.getReference()));
 			}
+			else if (Objects.equals(items.getType(), "object")) {
+				javaDataType = Object.class.getName();
+			}
 
 			return getArrayClassName(javaDataType);
 		}
 
-		if (schema.getType() != null) {
-			String javaDataType = _openAPIDataTypeMap.get(
-				new AbstractMap.SimpleImmutableEntry<>(
-					schema.getType(), schema.getFormat()));
+		if (Objects.equals(schema.getType(), "object")) {
+			String javaDataType = Object.class.getName();
 
-			if ((javaDataType == null) &&
-				Objects.equals(schema.getType(), "object")) {
-
-				if (schema.getAdditionalPropertySchema() != null) {
-					javaDataType = Map.class.getName();
-				}
-
-				if (javaDataType == null) {
-					javaDataType = Object.class.getName();
-				}
+			if (schema.getAdditionalPropertySchema() != null) {
+				javaDataType = Map.class.getName();
 			}
 
 			return javaDataType;
 		}
 
-		return javaDataTypeMap.get(getReferenceName(schema.getReference()));
+		if (schema.getReference() != null) {
+			return javaDataTypeMap.get(getReferenceName(schema.getReference()));
+		}
+
+		return _openAPIDataTypeMap.get(
+			new AbstractMap.SimpleImmutableEntry<>(
+				schema.getType(), schema.getFormat()));
 	}
 
 	public static Map<String, String> getJavaDataTypeMap(

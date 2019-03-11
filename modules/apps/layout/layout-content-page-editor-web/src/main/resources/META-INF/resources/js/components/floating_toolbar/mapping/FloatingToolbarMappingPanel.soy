@@ -132,6 +132,12 @@
 	{@param? handleFieldOptionChange: any}
 	{@param? mappedFieldId: ?}
 
+	{let $fieldsDisabled kind="attributes"}
+		{if $fields.length < 1}
+			disabled
+		{/if}
+	{/let}
+
 	<label for="floatingToolbarMappingPanelFieldSelect">
 		{msg desc=""}field{/msg}
 	</label>
@@ -140,6 +146,7 @@
 		class="form-control form-control-sm"
 		data-onchange="{$handleFieldOptionChange}"
 		id="floatingToolbarMappingPanelFieldSelect"
+		{$fieldsDisabled}
 	>
 		{call .selectOption}
 			{param optionId: '' /}

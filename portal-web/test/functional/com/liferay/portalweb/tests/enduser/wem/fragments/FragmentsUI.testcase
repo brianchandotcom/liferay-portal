@@ -119,10 +119,6 @@ definition {
 			AssertElementPresent(locator1 = "Button#SUBMIT");
 
 			AssertElementPresent(locator1 = "Button#CANCEL");
-
-			AssertClickNoError(locator1 = "Button#SUBMIT", value1 = "Submit");
-
-			AssertConfirm(value1 = "Form submitted");
 		}
 	}
 
@@ -201,10 +197,6 @@ definition {
 			AssertElementPresent(locator1 = "Button#SUBMIT");
 
 			AssertElementPresent(locator1 = "Button#CANCEL");
-
-			AssertClickNoError(locator1 = "Button#SUBMIT", value1 = "Submit");
-
-			AssertConfirm(value1 = "Form submitted");
 
 			SelectFrameTop();
 		}

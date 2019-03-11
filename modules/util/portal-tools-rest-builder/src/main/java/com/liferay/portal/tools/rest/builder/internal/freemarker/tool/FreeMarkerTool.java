@@ -144,6 +144,14 @@ public class FreeMarkerTool {
 		return OpenAPIParserUtil.getHTTPMethod(operation);
 	}
 
+	public String getJavaDataType(
+		ConfigYAML configYAML, OpenAPIYAML openAPIYAML, Schema schema) {
+
+		return OpenAPIParserUtil.getJavaDataType(
+			OpenAPIParserUtil.getJavaDataTypeMap(configYAML, openAPIYAML),
+			schema);
+	}
+
 	public String getResourceArguments(
 		List<JavaMethodParameter> javaMethodParameters) {
 

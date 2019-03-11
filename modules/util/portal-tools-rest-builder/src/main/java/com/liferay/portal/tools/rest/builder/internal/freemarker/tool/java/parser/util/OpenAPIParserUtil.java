@@ -148,7 +148,21 @@ public class OpenAPIParserUtil {
 			String javaDataType = Object.class.getName();
 
 			if (schema.getAdditionalPropertySchema() != null) {
-				javaDataType = Map.class.getName();
+				Schema additionalPropertySchema =
+					schema.getAdditionalPropertySchema();
+
+				if (additionalPropertySchema.getReference() != null) {
+					javaDataType = Map.class.getName();
+				}
+
+				AbstractMap.SimpleImmutableEntry<String, String> key =
+					new AbstractMap.SimpleImmutableEntry<>(
+						additionalPropertySchema.getType(),
+						additionalPropertySchema.getFormat());
+
+				if (_openAPIDataTypeMap.containsKey(key)) {
+					javaDataType = Map.class.getName();
+				}
 			}
 
 			return javaDataType;

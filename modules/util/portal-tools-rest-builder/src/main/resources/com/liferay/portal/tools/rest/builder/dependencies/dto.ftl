@@ -68,7 +68,7 @@ public class ${schemaName} <#if freeMarkerTool.getDTOParentClassName(openAPIYAML
 		<#elseif javaDataType?starts_with("[L")>
 			<#assign javaDataType = javaDataType[2..(javaDataType?length - 2)] + "[]" />
 		<#elseif stringUtil.equals(javaDataType, "java.util.Map")>
-			<#assign javaDataType = "Map<String, String>" />
+			<#assign javaDataType = "Map<String, " + freeMarkerTool.getJavaDataType(configYAML, openAPIYAML, propertySchema.additionalPropertySchema) + ">" />
 		</#if>
 
 		<#if propertySchema.description??>

@@ -60,6 +60,7 @@ public class AssetListEntryAssetEntryRelWrapper
 		attributes.put("createDate", getCreateDate());
 		attributes.put("modifiedDate", getModifiedDate());
 		attributes.put("assetListEntryId", getAssetListEntryId());
+		attributes.put("segmentsEntryId", getSegmentsEntryId());
 		attributes.put("assetEntryId", getAssetEntryId());
 		attributes.put("position", getPosition());
 		attributes.put("lastPublishDate", getLastPublishDate());
@@ -122,6 +123,12 @@ public class AssetListEntryAssetEntryRelWrapper
 
 		if (assetListEntryId != null) {
 			setAssetListEntryId(assetListEntryId);
+		}
+
+		Long segmentsEntryId = (Long)attributes.get("segmentsEntryId");
+
+		if (segmentsEntryId != null) {
+			setSegmentsEntryId(segmentsEntryId);
 		}
 
 		Long assetEntryId = (Long)attributes.get("assetEntryId");
@@ -246,6 +253,16 @@ public class AssetListEntryAssetEntryRelWrapper
 	@Override
 	public long getPrimaryKey() {
 		return model.getPrimaryKey();
+	}
+
+	/**
+	 * Returns the segments entry ID of this asset list entry asset entry rel.
+	 *
+	 * @return the segments entry ID of this asset list entry asset entry rel
+	 */
+	@Override
+	public long getSegmentsEntryId() {
+		return model.getSegmentsEntryId();
 	}
 
 	/**
@@ -393,6 +410,16 @@ public class AssetListEntryAssetEntryRelWrapper
 	@Override
 	public void setPrimaryKey(long primaryKey) {
 		model.setPrimaryKey(primaryKey);
+	}
+
+	/**
+	 * Sets the segments entry ID of this asset list entry asset entry rel.
+	 *
+	 * @param segmentsEntryId the segments entry ID of this asset list entry asset entry rel
+	 */
+	@Override
+	public void setSegmentsEntryId(long segmentsEntryId) {
+		model.setSegmentsEntryId(segmentsEntryId);
 	}
 
 	/**

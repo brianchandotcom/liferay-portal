@@ -11,3 +11,8 @@ create index IX_6CA44DF8 on AssetListEntryUsage (assetListEntryId, classNameId);
 create unique index IX_CA8F030D on AssetListEntryUsage (classNameId, classPK, portletId[$COLUMN_LENGTH:200$]);
 create index IX_4976B637 on AssetListEntryUsage (uuid_[$COLUMN_LENGTH:75$], companyId);
 create unique index IX_E2D55E79 on AssetListEntryUsage (uuid_[$COLUMN_LENGTH:75$], groupId);
+
+create unique index IX_7C1F150 on AssetListSegmentRel (assetListEntryId, segmentsEntryId);
+create index IX_FAA8E943 on AssetListSegmentRel (segmentsEntryId);
+create index IX_37E038CE on AssetListSegmentRel (uuid_[$COLUMN_LENGTH:75$], companyId);
+create unique index IX_861C9AD0 on AssetListSegmentRel (uuid_[$COLUMN_LENGTH:75$], groupId);

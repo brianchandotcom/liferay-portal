@@ -14,4 +14,7 @@
 	<bean class="com.liferay.asset.list.service.persistence.impl.AssetListEntryAssetEntryRelPersistenceImpl" id="com.liferay.asset.list.service.persistence.AssetListEntryAssetEntryRelPersistence" />
 	<bean class="com.liferay.asset.list.service.impl.AssetListEntryUsageLocalServiceImpl" id="com.liferay.asset.list.service.AssetListEntryUsageLocalService" />
 	<bean class="com.liferay.asset.list.service.persistence.impl.AssetListEntryUsagePersistenceImpl" id="com.liferay.asset.list.service.persistence.AssetListEntryUsagePersistence" />
+	<bean class="com.liferay.asset.list.service.impl.AssetListSegmentRelLocalServiceImpl" id="com.liferay.asset.list.service.AssetListSegmentRelLocalService" />
+	<bean class="com.liferay.asset.list.service.impl.AssetListSegmentRelServiceImpl" id="com.liferay.asset.list.service.AssetListSegmentRelService" />
+	<bean class="com.liferay.asset.list.service.persistence.impl.AssetListSegmentRelPersistenceImpl" id="com.liferay.asset.list.service.persistence.AssetListSegmentRelPersistence" />
 </beans>

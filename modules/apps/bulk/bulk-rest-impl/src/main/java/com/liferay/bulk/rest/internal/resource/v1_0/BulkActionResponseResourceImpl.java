@@ -37,7 +37,6 @@ import com.liferay.bulk.selection.BulkSelectionRunner;
 import com.liferay.document.library.bulk.selection.EditCategoriesBulkSelectionAction;
 import com.liferay.document.library.bulk.selection.EditTagsBulkSelectionAction;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.BaseModelPermissionCheckerUtil;
@@ -307,7 +306,7 @@ public class BulkActionResponseResourceImpl
 
 	private List<AssetVocabulary> _getAssetVocabularies(
 			long groupId, long classNameId)
-		throws PortalException {
+		throws Exception {
 
 		List<AssetVocabulary> assetVocabularies =
 			_assetVocabularyLocalService.getGroupVocabularies(
@@ -379,7 +378,7 @@ public class BulkActionResponseResourceImpl
 
 	private Map<AssetVocabulary, List<AssetCategory>> _groupByAssetVocabulary(
 			long groupId, long classNameId, Set<AssetCategory> assetCategories)
-		throws PortalException {
+		throws Exception {
 
 		List<AssetVocabulary> assetVocabularies = _getAssetVocabularies(
 			groupId, classNameId);

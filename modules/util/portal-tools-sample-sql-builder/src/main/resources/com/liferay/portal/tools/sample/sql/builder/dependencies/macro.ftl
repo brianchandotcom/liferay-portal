@@ -139,7 +139,7 @@
 <#macro insertLayout
 	_layoutModel
 >
-	<#local layoutVersionModel = dataFactory.newLayoutVersionModel(_layoutModel)>
+	<#local layoutVersionModel = dataFactory.newLayoutVersionModels(_layoutModel)>
 
 	${dataFactory.toInsertSQL(_layoutModel)}
 

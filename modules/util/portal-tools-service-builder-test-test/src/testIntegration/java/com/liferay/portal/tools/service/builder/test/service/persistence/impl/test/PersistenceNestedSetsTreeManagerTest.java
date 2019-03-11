@@ -101,6 +101,12 @@ public class PersistenceNestedSetsTreeManagerTest {
 			_nestedSetsTreeEntryPersistence, "_sessionFactory",
 			_sessionFactoryInvocationHandler.getTarget());
 
+		for (NestedSetsTreeEntry nestedSetsTreeEntry : _nestedSetsTreeEntries) {
+			if (nestedSetsTreeEntry != null) {
+				_nestedSetsTreeEntryPersistence.remove(nestedSetsTreeEntry);
+			}
+		}
+
 		_groupLocalService.deleteGroup(_group);
 
 		_nestedSetsTreeEntryPersistence.setRebuildTreeEnabled(true);

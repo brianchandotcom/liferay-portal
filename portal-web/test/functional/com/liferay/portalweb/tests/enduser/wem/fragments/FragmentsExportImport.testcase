@@ -153,7 +153,7 @@ definition {
 				entry = "Fragment Name"
 			);
 
-			SelectFrame(locator1 = "FragmentEditor#PREVIEW_IFRAME");
+			SelectFrame.selectFrameNoLoading(locator1 = "FragmentEditor#PREVIEW_IFRAME");
 
 			for (var button : list "Submit,Cancel") {
 				Button.viewPresent(button = "${button}");

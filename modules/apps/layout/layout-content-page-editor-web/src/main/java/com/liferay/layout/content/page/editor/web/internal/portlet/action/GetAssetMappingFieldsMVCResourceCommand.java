@@ -59,42 +59,49 @@ public class GetAssetMappingFieldsMVCResourceCommand
 		throws Exception {
 
 		long classNameId = ParamUtil.getLong(resourceRequest, "classNameId");
-		long classPK = ParamUtil.getLong(resourceRequest, "classPK");
-
-		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
 
 		AssetDisplayContributor assetDisplayContributor =
 			_assetDisplayContributorTracker.getAssetDisplayContributor(
 				_portal.getClassName(classNameId));
 
-		if (assetDisplayContributor != null) {
-			AssetEntry assetEntry = _assetEntryLocalService.fetchEntry(
-				classNameId, classPK);
+		if (assetDisplayContributor == null) {
+			JSONPortletResponseUtil.writeJSON(
+				resourceRequest, resourceResponse,
+				JSONFactoryUtil.createJSONArray());
 
-			if (assetEntry == null) {
-				JSONPortletResponseUtil.writeJSON(
-					resourceRequest, resourceResponse, jsonArray);
+			return;
+		}
 
-				return;
-			}
+		long classPK = ParamUtil.getLong(resourceRequest, "classPK");
 
-			ThemeDisplay themeDisplay =
-				(ThemeDisplay)resourceRequest.getAttribute(
-					WebKeys.THEME_DISPLAY);
+		AssetEntry assetEntry = _assetEntryLocalService.fetchEntry(
+			classNameId, classPK);
 
-			Set<AssetDisplayField> assetEntryFields =
-				assetDisplayContributor.getAssetDisplayFields(
-					assetEntry.getClassTypeId(), themeDisplay.getLocale());
+		if (assetEntry == null) {
+			JSONPortletResponseUtil.writeJSON(
+				resourceRequest, resourceResponse,
+				JSONFactoryUtil.createJSONArray());
 
-			for (AssetDisplayField assetEntryField : assetEntryFields) {
-				JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
+			return;
+		}
 
-				jsonObject.put("key", assetEntryField.getKey());
-				jsonObject.put("label", assetEntryField.getLabel());
-				jsonObject.put("type", assetEntryField.getType());
+		ThemeDisplay themeDisplay = (ThemeDisplay)resourceRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
 
-				jsonArray.put(jsonObject);
-			}
+		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
+
+		Set<AssetDisplayField> assetEntryFields =
+			assetDisplayContributor.getAssetDisplayFields(
+				assetEntry.getClassTypeId(), themeDisplay.getLocale());
+
+		for (AssetDisplayField assetEntryField : assetEntryFields) {
+			JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
+
+			jsonObject.put("key", assetEntryField.getKey());
+			jsonObject.put("label", assetEntryField.getLabel());
+			jsonObject.put("type", assetEntryField.getType());
+
+			jsonArray.put(jsonObject);
 		}
 
 		JSONPortletResponseUtil.writeJSON(

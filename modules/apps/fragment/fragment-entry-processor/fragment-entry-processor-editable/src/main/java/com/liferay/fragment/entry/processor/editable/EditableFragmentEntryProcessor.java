@@ -378,30 +378,30 @@ public class EditableFragmentEntryProcessor implements FragmentEntryProcessor {
 				editableElementParser.getFieldTemplate(), "field_name", value);
 		}
 
-		if (_isMapped(jsonObject, mode)) {
-			long assetEntryClassNameId = jsonObject.getLong(
-				"assetEntryClassNameId");
-			long assetEntryClassPK = jsonObject.getLong("assetEntryClassPK");
-			String assetEntryFieldName = jsonObject.getString(
-				"assetEntryFieldName");
-
-			AssetEntry assetEntry = _assetEntryLocalService.fetchEntry(
-				assetEntryClassNameId, assetEntryClassPK);
-
-			if (assetEntry != null) {
-				AssetDisplayContributor assetDisplayContributor =
-					_assetDisplayContributorTracker.getAssetDisplayContributor(
-						_portal.getClassName(assetEntryClassNameId));
-
-				Object fieldValue =
-					assetDisplayContributor.getAssetDisplayFieldValue(
-						assetEntry, assetEntryFieldName, locale);
-
-				return GetterUtil.get(fieldValue, StringPool.BLANK);
-			}
+		if (!_isMapped(jsonObject, mode)) {
+			return StringPool.BLANK;
 		}
 
-		return StringPool.BLANK;
+		long assetEntryClassNameId = jsonObject.getLong("classNameId");
+		long assetEntryClassPK = jsonObject.getLong("classPK");
+
+		AssetEntry assetEntry = _assetEntryLocalService.fetchEntry(
+			assetEntryClassNameId, assetEntryClassPK);
+
+		if (assetEntry == null) {
+			return StringPool.BLANK;
+		}
+
+		AssetDisplayContributor assetDisplayContributor =
+			_assetDisplayContributorTracker.getAssetDisplayContributor(
+				_portal.getClassName(assetEntryClassNameId));
+
+		String assetEntryFieldName = jsonObject.getString("fieldName");
+
+		Object fieldValue = assetDisplayContributor.getAssetDisplayFieldValue(
+			assetEntry, assetEntryFieldName, locale);
+
+		return GetterUtil.get(fieldValue, StringPool.BLANK);
 	}
 
 	private String _getSegmentsExperienceValue(

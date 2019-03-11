@@ -195,7 +195,7 @@ public class ContentPageEditorDisplayContext {
 					() -> new TreeSet<>(
 						Comparator.comparingLong(
 							mappedSoyContext -> GetterUtil.getLong(
-								mappedSoyContext.get("assetEntryClassPK"))))),
+								mappedSoyContext.get("classPK"))))),
 				HashSet::new));
 
 		soyContext.put("mappedAssetEntries", _mappedAssetEntries);
@@ -351,35 +351,33 @@ public class ContentPageEditorDisplayContext {
 				JSONObject editableJSONObject =
 					editableProcessorJSONObject.getJSONObject(editableKey);
 
-				if (editableJSONObject.has("assetEntryClassNameId") &&
-					editableJSONObject.has("assetEntryClassPK") &&
-					editableJSONObject.has("assetEntryFieldName")) {
+				if (!editableJSONObject.has("classNameId") ||
+					!editableJSONObject.has("classPK") ||
+					!editableJSONObject.has("fieldName")) {
 
-					SoyContext mappedAssetEntrySoyContext =
-						SoyContextFactoryUtil.createSoyContext();
-
-					mappedAssetEntrySoyContext.put(
-						"assetEntryClassNameId",
-						editableJSONObject.get("assetEntryClassNameId"));
-					mappedAssetEntrySoyContext.put(
-						"assetEntryClassPK",
-						editableJSONObject.get("assetEntryClassPK"));
-
-					AssetEntry assetEntry =
-						AssetEntryLocalServiceUtil.fetchEntry(
-							editableJSONObject.getLong("assetEntryClassNameId"),
-							editableJSONObject.getLong("assetEntryClassPK"));
-
-					if (assetEntry == null) {
-						continue;
-					}
-
-					mappedAssetEntrySoyContext.put(
-						"assetEntryTitle",
-						assetEntry.getTitle(themeDisplay.getLocale()));
-
-					_mappedAssetEntries.add(mappedAssetEntrySoyContext);
+					continue;
 				}
+
+				SoyContext mappedAssetEntrySoyContext =
+					SoyContextFactoryUtil.createSoyContext();
+
+				mappedAssetEntrySoyContext.put(
+					"classNameId", editableJSONObject.get("classNameId"));
+				mappedAssetEntrySoyContext.put(
+					"classPK", editableJSONObject.get("classPK"));
+
+				AssetEntry assetEntry = AssetEntryLocalServiceUtil.fetchEntry(
+					editableJSONObject.getLong("classNameId"),
+					editableJSONObject.getLong("classPK"));
+
+				if (assetEntry == null) {
+					continue;
+				}
+
+				mappedAssetEntrySoyContext.put(
+					"title", assetEntry.getTitle(themeDisplay.getLocale()));
+
+				_mappedAssetEntries.add(mappedAssetEntrySoyContext);
 			}
 		}
 	}

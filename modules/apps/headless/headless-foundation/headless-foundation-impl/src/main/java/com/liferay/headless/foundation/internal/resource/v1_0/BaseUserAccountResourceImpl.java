@@ -113,7 +113,7 @@ public abstract class BaseUserAccountResourceImpl
 	@Path("/user-accounts")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "UserAccount")})
-	public UserAccount postUserAccount(UserAccount userAccount)
+	public UserAccount postMediaTypeAUserAccount(UserAccount userAccount)
 		throws Exception {
 
 		return new UserAccount();
@@ -125,7 +125,7 @@ public abstract class BaseUserAccountResourceImpl
 	@Path("/user-accounts")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "UserAccount")})
-	public UserAccount postUserAccount(MultipartBody multipartBody)
+	public UserAccount postMediaTypeBUserAccount(MultipartBody multipartBody)
 		throws Exception {
 
 		return new UserAccount();

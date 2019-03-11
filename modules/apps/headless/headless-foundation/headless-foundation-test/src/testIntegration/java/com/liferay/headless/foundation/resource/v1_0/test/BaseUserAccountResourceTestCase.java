@@ -325,17 +325,17 @@ public abstract class BaseUserAccountResourceTestCase {
 	}
 
 	@Test
-	public void testPostUserAccount() throws Exception {
+	public void testPostMediaTypeAUserAccount() throws Exception {
 		UserAccount randomUserAccount = randomUserAccount();
 
-		UserAccount postUserAccount = testPostUserAccount_addUserAccount(
-			randomUserAccount);
+		UserAccount postUserAccount =
+			testPostMediaTypeAUserAccount_addUserAccount(randomUserAccount);
 
 		assertEquals(randomUserAccount, postUserAccount);
 		assertValid(postUserAccount);
 	}
 
-	protected UserAccount testPostUserAccount_addUserAccount(
+	protected UserAccount testPostMediaTypeAUserAccount_addUserAccount(
 			UserAccount userAccount)
 		throws Exception {
 
@@ -343,7 +343,8 @@ public abstract class BaseUserAccountResourceTestCase {
 			"This method needs to be implemented");
 	}
 
-	protected UserAccount invokePostUserAccount(UserAccount userAccount)
+	protected UserAccount invokePostMediaTypeAUserAccount(
+			UserAccount userAccount)
 		throws Exception {
 
 		Http.Options options = _createHttpOptions();
@@ -358,7 +359,7 @@ public abstract class BaseUserAccountResourceTestCase {
 			HttpUtil.URLtoString(options), UserAccount.class);
 	}
 
-	protected Http.Response invokePostUserAccountResponse(
+	protected Http.Response invokePostMediaTypeAUserAccountResponse(
 			UserAccount userAccount)
 		throws Exception {
 
@@ -375,7 +376,27 @@ public abstract class BaseUserAccountResourceTestCase {
 		return options.getResponse();
 	}
 
-	protected UserAccount invokePostUserAccount(MultipartBody multipartBody)
+	@Test
+	public void testPostMediaTypeBUserAccount() throws Exception {
+		UserAccount randomUserAccount = randomUserAccount();
+
+		UserAccount postUserAccount =
+			testPostMediaTypeBUserAccount_addUserAccount(randomUserAccount);
+
+		assertEquals(randomUserAccount, postUserAccount);
+		assertValid(postUserAccount);
+	}
+
+	protected UserAccount testPostMediaTypeBUserAccount_addUserAccount(
+			UserAccount userAccount)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected UserAccount invokePostMediaTypeBUserAccount(
+			MultipartBody multipartBody)
 		throws Exception {
 
 		Http.Options options = _createHttpOptions();
@@ -391,7 +412,7 @@ public abstract class BaseUserAccountResourceTestCase {
 			HttpUtil.URLtoString(options), UserAccount.class);
 	}
 
-	protected Http.Response invokePostUserAccountResponse(
+	protected Http.Response invokePostMediaTypeBUserAccountResponse(
 			MultipartBody multipartBody)
 		throws Exception {
 

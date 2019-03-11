@@ -111,6 +111,10 @@ public class YAMLUtil {
 			"$ref", String.class, "getReference", "setReference");
 
 		schemaTypeDescription.substituteProperty(
+			"additionalProperties", Schema.class,
+			"getAdditionalPropertySchema", "setAdditionalPropertySchema");
+
+		schemaTypeDescription.substituteProperty(
 			"allOf", List.class, "getAllOfSchemas", "setAllOfSchemas");
 
 		schemaTypeDescription.addPropertyParameters("allOf", Schema.class);

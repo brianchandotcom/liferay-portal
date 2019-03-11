@@ -22,8 +22,8 @@ import java.util.Map;
  */
 public class Schema {
 
-	public String getAdditionalProperties() {
-		return _additionalProperties;
+	public Schema getAdditionalPropertySchema() {
+		return _additionalPropertySchema;
 	}
 
 	public List<Schema> getAllOfSchemas() {
@@ -74,8 +74,8 @@ public class Schema {
 		return _writeOnly;
 	}
 
-	public void setAdditionalProperties(String additionalProperties) {
-		_additionalProperties = additionalProperties;
+	public void setAdditionalPropertySchema(Schema additionalPropertySchema) {
+		_additionalPropertySchema = additionalPropertySchema;
 	}
 
 	public void setAllOfSchemas(List<Schema> allOfSchemas) {
@@ -128,7 +128,7 @@ public class Schema {
 		_writeOnly = writeOnly;
 	}
 
-	private String _additionalProperties;
+	private Schema _additionalPropertySchema;
 	private List<Schema> _allOfSchemas;
 	private List<Schema> _anyOfSchemas;
 	private String _description;

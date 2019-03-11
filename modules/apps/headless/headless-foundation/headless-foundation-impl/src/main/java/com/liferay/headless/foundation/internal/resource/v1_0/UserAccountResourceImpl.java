@@ -141,7 +141,7 @@ public class UserAccountResourceImpl extends BaseUserAccountResourceImpl {
 	}
 
 	@Override
-	public UserAccount postMediaTypeBUserAccount(MultipartBody multipartBody)
+	public UserAccount postMediaType2UserAccount(MultipartBody multipartBody)
 		throws Exception {
 
 		UserAccount userAccount = multipartBody.getValueAsInstance(

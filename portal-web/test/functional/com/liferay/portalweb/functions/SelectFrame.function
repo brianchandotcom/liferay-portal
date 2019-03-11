@@ -23,6 +23,25 @@ definition {
 		WaitForSPARefresh();
 	}
 
+	function selectFrameNoLoading {
+		if (contains("${locator1}", "/iframe")) {
+			selenium.waitForVisible();
+
+			selenium.mouseOver();
+
+			selenium.selectFrame();
+
+			selenium.assertJavaScriptErrors();
+
+			selenium.assertLiferayErrors();
+		}
+		else {
+			SelectFrame.selectFrameTop();
+		}
+
+		WaitForSPARefresh();
+	}
+
 	function selectFrameTop {
 		selenium.selectFrame("relative=top");
 

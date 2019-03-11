@@ -15,7 +15,6 @@
 package com.liferay.asset.publisher.web.internal.portlet;
 
 import com.liferay.asset.constants.AssetWebKeys;
-import com.liferay.asset.list.provider.AssetListProviderTracker;
 import com.liferay.asset.publisher.constants.AssetPublisherPortletKeys;
 import com.liferay.asset.publisher.constants.AssetPublisherWebKeys;
 import com.liferay.asset.publisher.util.AssetPublisherHelper;
@@ -31,6 +30,7 @@ import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.storage.Field;
 import com.liferay.dynamic.data.mapping.storage.Fields;
 import com.liferay.dynamic.data.mapping.util.DDMUtil;
+import com.liferay.info.provider.InfoListProviderTracker;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.exception.NoSuchGroupException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -238,9 +238,9 @@ public class AssetPublisherPortlet extends MVCPortlet {
 			AssetPublisherDisplayContext assetPublisherDisplayContext =
 				new AssetPublisherDisplayContext(
 					assetEntryActionRegistry, assetHelper,
-					assetListProviderTracker, assetPublisherCustomizer,
-					assetPublisherHelper, assetPublisherWebConfiguration,
-					assetPublisherWebUtil, resourceRequest, resourceResponse,
+					assetPublisherCustomizer, assetPublisherHelper,
+					assetPublisherWebConfiguration, assetPublisherWebUtil,
+					infoListProviderTracker, resourceRequest, resourceResponse,
 					resourceRequest.getPreferences());
 
 			resourceRequest.setAttribute(
@@ -337,9 +337,9 @@ public class AssetPublisherPortlet extends MVCPortlet {
 			AssetPublisherDisplayContext assetPublisherDisplayContext =
 				new AssetPublisherDisplayContext(
 					assetEntryActionRegistry, assetHelper,
-					assetListProviderTracker, assetPublisherCustomizer,
-					assetPublisherHelper, assetPublisherWebConfiguration,
-					assetPublisherWebUtil, renderRequest, renderResponse,
+					assetPublisherCustomizer, assetPublisherHelper,
+					assetPublisherWebConfiguration, assetPublisherWebUtil,
+					infoListProviderTracker, renderRequest, renderResponse,
 					renderRequest.getPreferences());
 
 			renderRequest.setAttribute(
@@ -394,9 +394,6 @@ public class AssetPublisherPortlet extends MVCPortlet {
 	protected AssetHelper assetHelper;
 
 	@Reference
-	protected AssetListProviderTracker assetListProviderTracker;
-
-	@Reference
 	protected AssetPublisherCustomizerRegistry assetPublisherCustomizerRegistry;
 
 	@Reference
@@ -409,6 +406,9 @@ public class AssetPublisherPortlet extends MVCPortlet {
 
 	@Reference
 	protected AssetRSSUtil assetRSSUtil;
+
+	@Reference
+	protected InfoListProviderTracker infoListProviderTracker;
 
 	@Reference
 	protected Portal portal;

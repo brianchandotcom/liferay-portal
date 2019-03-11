@@ -12,31 +12,34 @@
  * details.
  */
 
-package com.liferay.asset.list.provider;
-
-import com.liferay.asset.kernel.model.AssetEntry;
-
-import java.util.List;
-import java.util.Locale;
-
-import javax.portlet.PortletRequest;
+package com.liferay.info.pagination;
 
 /**
- * @author Eudaldo Alonso
+ * @author Jorge Ferrer
  */
-public interface AssetListProvider {
+public class PaginationImpl implements Pagination {
 
-	public List<AssetEntry> getAssetEntries(PortletRequest portletRequest);
-
-	public List<AssetEntry> getAssetEntries(
-		PortletRequest portletRequest, int start, int end);
-
-	public int getAssetEntriesCount(PortletRequest portletRequest);
-
-	public String getLabel(Locale locale);
-
-	public default boolean isViewable(PortletRequest portletRequest) {
-		return true;
+	public PaginationImpl(int start, int end) {
+		_start = start;
+		_end = end;
 	}
+
+	@Override
+	public int getEnd() {
+		return _end;
+	}
+
+	@Override
+	public int getItemsPerPage() {
+		return _end - _start;
+	}
+
+	@Override
+	public int getStart() {
+		return _start;
+	}
+
+	private final int _end;
+	private final int _start;
 
 }

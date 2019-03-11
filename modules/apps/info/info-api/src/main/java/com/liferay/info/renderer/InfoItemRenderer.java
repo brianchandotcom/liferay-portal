@@ -12,17 +12,18 @@
  * details.
  */
 
-package com.liferay.asset.list.provider;
+package com.liferay.info.renderer;
 
-import java.util.List;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 /**
- * @author Eudaldo Alonso
+ * @author Jorge Ferrer
  */
-public interface AssetListProviderTracker {
+public interface InfoItemRenderer<T> {
 
-	public AssetListProvider getAssetListProvider(String className);
-
-	public List<AssetListProvider> getAssetListProviders();
+	public void render(
+		T t, HttpServletRequest httpServletRequest,
+		HttpServletResponse httpServletResponse);
 
 }

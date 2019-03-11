@@ -32,8 +32,6 @@ import com.liferay.asset.kernel.service.AssetVocabularyServiceUtil;
 import com.liferay.asset.kernel.service.persistence.AssetEntryQuery;
 import com.liferay.asset.list.constants.AssetListEntryTypeConstants;
 import com.liferay.asset.list.model.AssetListEntry;
-import com.liferay.asset.list.provider.AssetListProvider;
-import com.liferay.asset.list.provider.AssetListProviderTracker;
 import com.liferay.asset.list.service.AssetListEntryServiceUtil;
 import com.liferay.asset.publisher.constants.AssetPublisherPortletKeys;
 import com.liferay.asset.publisher.util.AssetEntryResult;
@@ -46,6 +44,9 @@ import com.liferay.asset.publisher.web.internal.util.AssetPublisherWebUtil;
 import com.liferay.asset.util.AssetHelper;
 import com.liferay.asset.util.AssetPublisherAddItemHolder;
 import com.liferay.document.library.kernel.document.conversion.DocumentConversionUtil;
+import com.liferay.info.provider.InfoListProvider;
+import com.liferay.info.provider.InfoListProviderTracker;
+import com.liferay.info.provider.SimpleInfoListProviderContext;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -118,22 +119,22 @@ public class AssetPublisherDisplayContext {
 	public AssetPublisherDisplayContext(
 			AssetEntryActionRegistry assetEntryActionRegistry,
 			AssetHelper assetHelper,
-			AssetListProviderTracker assetListProviderTracker,
 			AssetPublisherCustomizer assetPublisherCustomizer,
 			AssetPublisherHelper assetPublisherHelper,
 			AssetPublisherWebConfiguration assetPublisherWebConfiguration,
 			AssetPublisherWebUtil assetPublisherWebUtil,
+			InfoListProviderTracker infoListProviderTracker,
 			PortletRequest portletRequest, PortletResponse portletResponse,
 			PortletPreferences portletPreferences)
 		throws ConfigurationException {
 
 		_assetEntryActionRegistry = assetEntryActionRegistry;
 		_assetHelper = assetHelper;
-		_assetListProviderTracker = assetListProviderTracker;
 		_assetPublisherCustomizer = assetPublisherCustomizer;
 		_assetPublisherHelper = assetPublisherHelper;
 		_assetPublisherWebConfiguration = assetPublisherWebConfiguration;
 		_assetPublisherWebUtil = assetPublisherWebUtil;
+		_infoListProviderTracker = infoListProviderTracker;
 		_portletRequest = portletRequest;
 		_portletResponse = portletResponse;
 		_portletPreferences = portletPreferences;
@@ -260,19 +261,34 @@ public class AssetPublisherDisplayContext {
 			return assetListEntry.getAssetEntries();
 		}
 		else if (isSelectionStyleAssetListProvider()) {
-			String assetListProviderClassName = GetterUtil.getString(
+			String infoListProviderClassName = GetterUtil.getString(
 				_portletPreferences.getValue(
-					"assetListProviderClassName", null));
+					"infoListProviderClassName", null));
 
-			if (Validator.isNotNull(assetListProviderClassName)) {
-				AssetListProvider assetListProvider =
-					_assetListProviderTracker.getAssetListProvider(
-						assetListProviderClassName);
-
-				if (assetListProvider != null) {
-					return assetListProvider.getAssetEntries(_portletRequest);
-				}
+			if (Validator.isNull(infoListProviderClassName)) {
+				return Collections.emptyList();
 			}
+
+			InfoListProvider infoListProvider =
+				_infoListProviderTracker.getInfoListProvider(
+					infoListProviderClassName);
+
+			if (infoListProvider == null) {
+				return Collections.emptyList();
+			}
+
+			SimpleInfoListProviderContext context =
+				new SimpleInfoListProviderContext(
+					_themeDisplay.getUser(), _themeDisplay.getScopeGroup());
+
+			AssetEntry assetEntry = (AssetEntry)_portletRequest.getAttribute(
+				WebKeys.LAYOUT_ASSET_ENTRY);
+
+			context.setAssetEntry(assetEntry);
+
+			context.setLayout(_themeDisplay.getLayout());
+
+			return infoListProvider.getInfoList(context);
 		}
 
 		return Collections.emptyList();
@@ -358,6 +374,10 @@ public class AssetPublisherDisplayContext {
 		return _assetEntryResults;
 	}
 
+	public List<InfoListProvider> getAssetInfoListProviders() {
+		return _infoListProviderTracker.getInfoListProviders(AssetEntry.class);
+	}
+
 	public String getAssetLinkBehavior() {
 		if (_assetLinkBehavior != null) {
 			return _assetLinkBehavior;
@@ -367,10 +387,6 @@ public class AssetPublisherDisplayContext {
 			_portletPreferences.getValue("assetLinkBehavior", "viewInPortlet"));
 
 		return _assetLinkBehavior;
-	}
-
-	public List<AssetListProvider> getAssetListProviders() {
-		return _assetListProviderTracker.getAssetListProviders();
 	}
 
 	public String getAssetListSelectorURL() throws Exception {
@@ -1808,7 +1824,6 @@ public class AssetPublisherDisplayContext {
 	private final AssetHelper _assetHelper;
 	private String _assetLinkBehavior;
 	private AssetListEntry _assetListEntry;
-	private final AssetListProviderTracker _assetListProviderTracker;
 	private final AssetPublisherCustomizer _assetPublisherCustomizer;
 	private final AssetPublisherHelper _assetPublisherHelper;
 	private final AssetPublisherPortletInstanceConfiguration
@@ -1842,6 +1857,7 @@ public class AssetPublisherDisplayContext {
 	private Boolean _excludeZeroViewCount;
 	private String[] _extensions;
 	private long[] _groupIds;
+	private final InfoListProviderTracker _infoListProviderTracker;
 	private Boolean _mergeURLTags;
 	private String[] _metadataFields;
 	private String _orderByColumn1;

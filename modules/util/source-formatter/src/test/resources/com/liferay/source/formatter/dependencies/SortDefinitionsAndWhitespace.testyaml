@@ -1,3 +1,22 @@
+#
+# See http://elasticsearch.org/guide/en/elasticsearch/reference/current/setup-configuration.html
+# For more information.
+#
+
+http.host: _local_
+
+# ZZZZZ
+    # CCCC
+    # BBBB
+        # AAAA
+
+cachepool:
+    bulk:
+        # bbbbb
+        response_size: 100
+        request_size: 200
+        # aaaaa
+
 components:
   schemas:
     WebUrl:

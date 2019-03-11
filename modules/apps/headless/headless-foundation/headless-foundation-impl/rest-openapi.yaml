@@ -1403,7 +1403,7 @@ paths:
                                 type: array
                     description: ""
             tags: ["WebUrl"]
-    "/user-accounts/{user-id}/segments":
+    "/user-accounts/{user-account-id}/segments":
         get:
             parameters:
                 - in: query
@@ -1415,7 +1415,7 @@ paths:
                   schema:
                       type: integer
                 - in: path
-                  name: user-id
+                  name: user-account-id
                   required: true
                   schema:
                       format: int64

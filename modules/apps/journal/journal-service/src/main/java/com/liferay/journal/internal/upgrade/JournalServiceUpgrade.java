@@ -182,7 +182,7 @@ public class JournalServiceUpgrade implements UpgradeStepRegistrator {
 		registry.register(
 			"1.1.5", "1.1.6",
 			new UpgradeAssetDisplayPageEntry(
-				_assetDisplayPageEntryLocalService));
+				_assetDisplayPageEntryLocalService, _companyLocalService));
 
 		registry.register(
 			"1.1.6", "1.1.7",

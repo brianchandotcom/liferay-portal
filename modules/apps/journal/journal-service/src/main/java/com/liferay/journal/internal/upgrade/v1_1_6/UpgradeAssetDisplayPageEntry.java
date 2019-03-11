@@ -19,6 +19,9 @@ import com.liferay.asset.display.page.service.AssetDisplayPageEntryLocalService;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Company;
+import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.upgrade.UpgradeException;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
@@ -43,37 +46,49 @@ import java.util.concurrent.Future;
 public class UpgradeAssetDisplayPageEntry extends UpgradeProcess {
 
 	public UpgradeAssetDisplayPageEntry(
-		AssetDisplayPageEntryLocalService assetDisplayPageEntryLocalService) {
+		AssetDisplayPageEntryLocalService assetDisplayPageEntryLocalService,
+		CompanyLocalService companyLocalService) {
 
 		_assetDisplayPageEntryLocalService = assetDisplayPageEntryLocalService;
+		_companyLocalService = companyLocalService;
 	}
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		updateAssetDisplayPageEntry();
+		List<Company> companies = _companyLocalService.getCompanies();
+
+		for (Company company : companies) {
+			updateAssetDisplayPageEntry(company);
+		}
 	}
 
-	protected void updateAssetDisplayPageEntry() throws Exception {
+	protected void updateAssetDisplayPageEntry(Company company)
+		throws Exception {
+
 		StringBuilder sb = new StringBuilder(9);
 
-		sb.append("select groupId, userId, resourcePrimKey from ");
-		sb.append("JournalArticle where JournalArticle.layoutUuid is not null");
-		sb.append(" and JournalArticle.layoutUuid != '' and not exists ( ");
+		sb.append("select groupId, resourcePrimKey from JournalArticle ");
+		sb.append("where JournalArticle.companyId = ? and ");
+		sb.append("JournalArticle.layoutUuid is not null and ");
+		sb.append("JournalArticle.layoutUuid != '' and not exists ( ");
 		sb.append("select 1 from AssetDisplayPageEntry where ");
 		sb.append("AssetDisplayPageEntry.groupId = JournalArticle.groupId ");
 		sb.append("and AssetDisplayPageEntry.classNameId = ? and ");
 		sb.append("AssetDisplayPageEntry.classPK = ");
 		sb.append("JournalArticle.resourcePrimKey ) ");
-		sb.append("group by groupId, userId, resourcePrimKey");
+		sb.append("group by groupId, resourcePrimKey");
 
 		long journalArticleClassNameId = PortalUtil.getClassNameId(
 			JournalArticle.class);
+
+		User user = company.getDefaultUser();
 
 		try (LoggingTimer loggingTimer = new LoggingTimer();
 			PreparedStatement ps1 = connection.prepareStatement(
 				sb.toString())) {
 
-			ps1.setLong(1, journalArticleClassNameId);
+			ps1.setLong(1, company.getCompanyId());
+			ps1.setLong(2, journalArticleClassNameId);
 
 			List<SaveAssetDisplayPageEntryCallable>
 				saveAssetDisplayPageEntryCallables = new ArrayList<>();
@@ -81,14 +96,13 @@ public class UpgradeAssetDisplayPageEntry extends UpgradeProcess {
 			try (ResultSet rs = ps1.executeQuery()) {
 				while (rs.next()) {
 					long groupId = rs.getLong("groupId");
-					long userId = rs.getLong("userId");
 					long resourcePrimKey = rs.getLong("resourcePrimKey");
 
 					SaveAssetDisplayPageEntryCallable
 						saveAssetDisplayPageEntryCallable =
 							new SaveAssetDisplayPageEntryCallable(
-								groupId, userId, journalArticleClassNameId,
-								resourcePrimKey);
+								groupId, user.getUserId(),
+								journalArticleClassNameId, resourcePrimKey);
 
 					saveAssetDisplayPageEntryCallables.add(
 						saveAssetDisplayPageEntryCallable);
@@ -119,6 +133,7 @@ public class UpgradeAssetDisplayPageEntry extends UpgradeProcess {
 
 	private final AssetDisplayPageEntryLocalService
 		_assetDisplayPageEntryLocalService;
+	private final CompanyLocalService _companyLocalService;
 
 	private class SaveAssetDisplayPageEntryCallable
 		implements Callable<Boolean> {

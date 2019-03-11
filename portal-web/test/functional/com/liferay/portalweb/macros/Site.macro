@@ -62,6 +62,10 @@ definition {
 				var siteTemplateName = "${siteType} Site";
 			}
 
+			MetalComponent.waitForCard(
+				card = "${siteTemplateName}"
+			);
+
 			LexiconCard.clickCard(
 				card = "${siteTemplateName}"
 			);

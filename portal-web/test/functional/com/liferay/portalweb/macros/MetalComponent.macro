@@ -1,4 +1,12 @@
 definition {
+	macro waitForCard {
+		AssertVisible(locator1 = "//div[contains(@class,'card')][contains(.,'${card}')]");
+
+		MetalComponent.waitForMetalComponent(
+			id = selenium.getAttribute("//div[contains(@class,'card')][contains(.,'${card}')]@id")
+		);
+	}
+
 	macro waitForLayout {
 		AssertVisible(locator1 = "//div[@class='portlet-body']/form/div");
 

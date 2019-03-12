@@ -27,7 +27,7 @@ List<AssetEntryUsage> assetEntryUsages = AssetEntryUsageLocalServiceUtil.getAsse
 
 <c:choose>
 	<c:when test="<%= ListUtil.isNotEmpty(assetEntryUsages) %>">
-		<ul class="asset-links-list list-group">
+		<ul class="asset-links-list list-group" id="<portlet:namespace/>assetEntryUsagesList">
 
 			<%
 			for (AssetEntryUsage assetEntryUsage : assetEntryUsages) {
@@ -38,6 +38,7 @@ List<AssetEntryUsage> assetEntryUsages = AssetEntryUsageLocalServiceUtil.getAsse
 
 						<%
 						String name = StringPool.BLANK;
+						String previewURL = StringPool.BLANK;
 
 						long classNameId = assetEntryUsage.getClassNameId();
 
@@ -46,6 +47,8 @@ List<AssetEntryUsage> assetEntryUsages = AssetEntryUsageLocalServiceUtil.getAsse
 
 							if (curLayout != null) {
 								name = curLayout.getName(locale);
+
+								previewURL = PortalUtil.getLayoutFriendlyURL(curLayout, themeDisplay);
 							}
 						}
 						else {
@@ -53,6 +56,10 @@ List<AssetEntryUsage> assetEntryUsages = AssetEntryUsageLocalServiceUtil.getAsse
 
 							if (layoutPageTemplateEntry != null) {
 								name = layoutPageTemplateEntry.getName();
+
+								Layout curLayout = LayoutLocalServiceUtil.fetchLayout(layoutPageTemplateEntry.getPlid());
+
+								previewURL = PortalUtil.getLayoutFriendlyURL(curLayout, themeDisplay);
 							}
 						}
 						%>
@@ -78,6 +85,25 @@ List<AssetEntryUsage> assetEntryUsages = AssetEntryUsageLocalServiceUtil.getAsse
 							</c:choose>
 						</h6>
 					</div>
+
+					<c:if test="<%= Validator.isNotNull(previewURL) %>">
+						<div class="dropdown dropdown-action">
+
+							<%
+							Map<String, String> data = new HashMap<>();
+
+							data.put("href", previewURL);
+							data.put("title", assetEntry.getTitle(locale));
+							%>
+
+							<clay:button
+								data="<%= data %>"
+								elementClasses="preview-asset-entry-usage"
+								icon="view"
+								style="secondary"
+							/>
+						</div>
+					</c:if>
 				</li>
 
 			<%
@@ -85,6 +111,33 @@ List<AssetEntryUsage> assetEntryUsages = AssetEntryUsageLocalServiceUtil.getAsse
 			%>
 
 		</ul>
+
+		<aui:script require="metal-dom/src/all/dom as dom">
+			var previewAssetEntryUsagesList = dom.delegate(
+				document.querySelector('#<portlet:namespace/>assetEntryUsagesList'),
+				'click',
+				'.preview-asset-entry-usage',
+				function(event) {
+					var delegateTarget = event.delegateTarget;
+
+					Liferay.fire(
+						'previewArticle',
+						{
+							title: delegateTarget.getAttribute('data-title'),
+							uri: delegateTarget.getAttribute('data-href')
+						}
+					);
+				}
+			);
+
+			function removeListener() {
+				previewAssetEntryUsagesList.removeListener();
+
+				Liferay.detach('destroyPortlet', removeListener);
+			}
+
+			Liferay.on('destroyPortlet', removeListener);
+		</aui:script>
 	</c:when>
 	<c:otherwise>
 		<p class="text-secondary">

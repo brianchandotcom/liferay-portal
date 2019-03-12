@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.util.CamelCaseUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.TextFormatter;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.tools.rest.builder.internal.freemarker.tool.java.JavaMethodParameter;
 import com.liferay.portal.tools.rest.builder.internal.freemarker.tool.java.JavaMethodSignature;
@@ -92,7 +93,7 @@ public class ResourceOpenAPIParser {
 									requestBodyMediaType);
 							String methodName = _getMethodName(
 								operation, path, requestBodyMediaType,
-								returnType);
+								returnType, schemaName);
 
 							javaMethodSignatures.add(
 								new JavaMethodSignature(
@@ -371,7 +372,7 @@ public class ResourceOpenAPIParser {
 
 	private static String _getMethodName(
 		Operation operation, String path, String requestBodyMediaType,
-		String returnType) {
+		String returnType, String schemaName) {
 
 		if (operation.getOperationId() != null) {
 			return operation.getOperationId();
@@ -400,6 +401,7 @@ public class ResourceOpenAPIParser {
 		}
 
 		String[] pathSegments = path.split("/");
+		String pluralSchemaName = TextFormatter.formatPlural(schemaName);
 
 		for (int i = 0; i < pathSegments.length; i++) {
 			String pathSegment = pathSegments[i];
@@ -408,9 +410,18 @@ public class ResourceOpenAPIParser {
 				continue;
 			}
 
-			String pathName = StringUtil.upperCaseFirstLetter(
-				CamelCaseUtil.toCamelCase(
-					pathSegment.replaceAll("\\{|-id|}", "")));
+			String pathName = CamelCaseUtil.toCamelCase(
+				pathSegment.replaceAll("\\{|-id|}", ""));
+
+			if (StringUtil.equalsIgnoreCase(pathName, schemaName)) {
+				pathName = schemaName;
+			}
+			else if (StringUtil.equalsIgnoreCase(pathName, pluralSchemaName)) {
+				pathName = pluralSchemaName;
+			}
+			else {
+				pathName = StringUtil.upperCaseFirstLetter(pathName);
+			}
 
 			if (pathSegment.contains("{")) {
 				String previousPath = methodNameSegments.get(

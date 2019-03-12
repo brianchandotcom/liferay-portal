@@ -14,6 +14,7 @@
 
 package com.liferay.portal.tools.service.builder;
 
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.Accessor;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -260,9 +261,10 @@ public class Entity implements Comparable<Entity> {
 		while (iterator.hasNext()) {
 			EntityColumn entityColumn = iterator.next();
 
+			String dbName = entityColumn.getDBName();
 			String name = entityColumn.getName();
 
-			if (name.equals(entityColumn.getDBName())) {
+			if (name.equals(dbName) || !dbName.endsWith(StringPool.UNDERLINE)) {
 				iterator.remove();
 			}
 		}

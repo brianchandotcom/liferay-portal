@@ -424,10 +424,10 @@ public class ResourceOpenAPIParser {
 			}
 
 			if (pathSegment.contains("{")) {
-				String previousPath = methodNameSegments.get(
+				String prevMethodNameSegment = methodNameSegments.get(
 					methodNameSegments.size() - 1);
 
-				if (!previousPath.equals(pathName)) {
+				if (!prevMethodNameSegment.equals(pathName)) {
 					methodNameSegments.add(pathName);
 				}
 			}

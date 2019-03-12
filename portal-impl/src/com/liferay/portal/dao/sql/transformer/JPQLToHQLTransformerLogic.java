@@ -19,7 +19,9 @@ import java.util.regex.Pattern;
 
 /**
  * @author Manuel de la Peña
+ * @deprecated As of Mueller (7.2.x), with no direct replacement
  */
+@Deprecated
 public class JPQLToHQLTransformerLogic {
 
 	public static final String replaceCount(String sql) {

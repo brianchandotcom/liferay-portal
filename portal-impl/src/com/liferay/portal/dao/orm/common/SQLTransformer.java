@@ -48,6 +48,10 @@ public class SQLTransformer {
 		return transformFromJPQLToHQL(sql);
 	}
 
+	/**
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #transform(String)}
+	 */
+	@Deprecated
 	public static String transformFromJPQLToHQL(String sql) {
 		String newSQL = _transformedSqls.get(sql);
 

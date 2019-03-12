@@ -803,6 +803,10 @@ public class KaleoTaskInstanceTokenLocalServiceImpl
 		return stream.map(
 			field -> {
 				if (StringUtil.endsWith(field, "date")) {
+					if (field.equals("modifiedDate")) {
+						field = "modified";
+					}
+
 					return new Sort(
 						field, Sort.LONG_TYPE,
 						!orderByComparator.isAscending());

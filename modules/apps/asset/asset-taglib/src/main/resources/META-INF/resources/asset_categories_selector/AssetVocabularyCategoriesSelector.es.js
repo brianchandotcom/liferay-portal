@@ -59,6 +59,8 @@ class AssetVocabularyCategoriesSelector extends Component {
 											};
 										}
 									);
+
+									this.categoryIds = this._getCategoryIds();
 								}
 							}.bind(this)
 						},

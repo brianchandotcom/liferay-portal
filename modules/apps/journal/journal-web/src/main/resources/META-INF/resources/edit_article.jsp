@@ -90,11 +90,11 @@ long classNameId = ParamUtil.getLong(request, "classNameId");
 								<aui:button cssClass="btn-sm mr-3" data-actionname='<%= ((article == null) || Validator.isNull(article.getArticleId())) ? "addArticle" : "updateArticle" %>' name="saveButton" primary="<%= false %>" type="submit" value="<%= journalEditArticleDisplayContext.getSaveButtonLabel() %>" />
 							</c:if>
 
-							<aui:button cssClass="btn-sm" data-actionname="<%= Constants.PUBLISH %>" disabled="<%= journalEditArticleDisplayContext.isPending() %>" name="publishButton" type="submit" value="<%= journalEditArticleDisplayContext.getPublishButtonLabel() %>" />
+							<aui:button cssClass="btn-sm mr-3" data-actionname="<%= Constants.PUBLISH %>" disabled="<%= journalEditArticleDisplayContext.isPending() %>" name="publishButton" type="submit" value="<%= journalEditArticleDisplayContext.getPublishButtonLabel() %>" />
 						</c:if>
 
 						<%
-						Map<String, Object> data = new HashMap<String, Object>();
+						Map<String, Object> data = new HashMap<>();
 
 						String contextualSidebarId = renderResponse.getNamespace() + "contextualSidebar";
 
@@ -104,8 +104,8 @@ long classNameId = ParamUtil.getLong(request, "classNameId");
 						data.put("type-mobile", "fixed");
 						%>
 
-						<aui:a cssClass="btn btn-default btn-sm btn-unstyled contextual-sidebar-btn" data="<%= data %>" href="javascript:;">
-							<aui:icon cssClass="icon-monospaced" image="cog" markupView="lexicon" />
+						<aui:a cssClass="btn btn-sm contextual-sidebar-btn text-secondary" data="<%= data %>" href="javascript:;">
+							<aui:icon image="cog" markupView="lexicon" />
 						</aui:a>
 					</div>
 				</li>

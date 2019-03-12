@@ -63,45 +63,6 @@ $productMenuWidth: 320px;
 		}
 	}
 
-	@include media-query(null, $screen-sm-max) {
-		.edit-article-sidebar {
-			top: 49px !important;
-		}
-	}
-
-	@include media-query($screen-md-min, null) {
-		.contextual-sidebar.closed {
-			visibility: visible;
-			width: 320px;
-		}
-
-		.contextual-sidebar-btn {
-			display: none;
-		}
-	}
-
-	@include media-query(null, $screen-md-max) {
-		.contextual-sidebar-content {
-			.sheet {
-				margin-right: auto;
-			}
-		}
-
-		.contextual-sidebar.closed {
-			transform: translateX(100%);
-			visibility: hidden;
-		}
-
-		.contextual-sidebar.open {
-			transform: translateX(0);
-			visibility: visible;
-		}
-
-		.contextual-sidebar-btn {
-			display: initial;
-		}
-	}
-
 	.edit-article-form {
 		.component-tbar {
 			height: $controlMenuHeight;

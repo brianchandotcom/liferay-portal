@@ -82,7 +82,6 @@ AssetVocabulariesManagementToolbarDisplayContext assetVocabulariesManagementTool
 						<span class="text-default">
 							<%= HtmlUtil.escape(vocabulary.getDescription(locale)) %>
 						</span>
-
 						<span class="text-default">
 							<strong><liferay-ui:message key="number-of-categories" /></strong>:
 
@@ -95,7 +94,6 @@ AssetVocabulariesManagementToolbarDisplayContext assetVocabulariesManagementTool
 								</c:otherwise>
 							</c:choose>
 						</span>
-
 						<span class="text-default">
 							<strong><liferay-ui:message key="asset-type" /></strong>: <%= assetCategoriesDisplayContext.getAssetType(vocabulary) %>
 						</span>

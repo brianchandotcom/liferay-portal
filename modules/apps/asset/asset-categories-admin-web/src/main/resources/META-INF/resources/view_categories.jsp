@@ -84,7 +84,6 @@ AssetCategoriesManagementToolbarDisplayContext assetCategoriesManagementToolbarD
 						<span class="text-default">
 							<%= HtmlUtil.escape(curCategory.getDescription(locale)) %>
 						</span>
-
 						<span class="text-default">
 							<liferay-ui:message arguments="<%= subcategoriesCount %>" key="x-subcategories" />
 						</span>

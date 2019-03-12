@@ -25,11 +25,11 @@ class AssetCategoriesManagementToolbarDefaultEventHandler extends DefaultEventHa
 								if (category) {
 									location.href = Liferay.Util.addParams(namespace + 'categoryId=' + category.categoryId, itemData.viewCategoriesURL);
 								}
-							}.bind(this)
+							}
 						},
 						strings: {
-							add:  Liferay.Language.get('select'),
-							cancel:  Liferay.Language.get('cancel')
+							add: Liferay.Language.get('select'),
+							cancel: Liferay.Language.get('cancel')
 						},
 						title: Liferay.Language.get('select-category'),
 						url: itemData.categoriesSelectorURL

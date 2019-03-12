@@ -99,10 +99,6 @@
 			<param name="app.server.bin.dir" value="${app.server.bin.dir}" />
 		</antcall>
 
-		<delete file="${liferay.home}/osgi/modules/com.liferay.chat.api.jar" />
-		<delete file="${liferay.home}/osgi/modules/com.liferay.chat.service.jar" />
-		<delete file="${liferay.home}/osgi/modules/com.liferay.chat.web.jar" />
-
 		<echo
 			file="${liferay.home}/osgi/modules/com.liferay.portlet.tck.bridge.configuration.PortletTCKBridgeConfiguration.cfg"
 		>tckDeployFilesDir=${tck.home}/deploy/target/deploy-files</echo>

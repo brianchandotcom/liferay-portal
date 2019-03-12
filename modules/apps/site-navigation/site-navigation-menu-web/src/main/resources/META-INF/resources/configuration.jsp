@@ -225,185 +225,288 @@ else {
 	</liferay-frontend:edit-form-footer>
 </liferay-frontend:edit-form>
 
-<aui:script sandbox="<%= true %>" use="liferay-item-selector-dialog">
-	var form = $('#<portlet:namespace />fm');
+<aui:script require="metal-dom/src/dom as dom">
+	AUI().use(
+		'liferay-item-selector-dialog',
+		function(A) {
+			var form = document.<portlet:namespace />fm;
 
-	var curPortletBoundaryId = '#p_p_id_<%= HtmlUtil.escapeJS(portletResource) %>_';
+			var curPortletBoundaryId = '#p_p_id_<%= HtmlUtil.escapeJS(portletResource) %>_';
 
-	form.on(
-		'change',
-		'select',
-		function() {
-			<portlet:namespace/>resetPreview();
-		}
-	);
+			form.addEventListener(
+				'change',
+				function() {
+					<portlet:namespace/>resetPreview();
+				}
+			);
 
-	function <portlet:namespace/>resetPreview() {
-		var selectDisplayDepth = form.fm('displayDepth');
-		var selectDisplayStyle = form.fm('displayStyle');
-		var selectExpandedLevels = form.fm('expandedLevels');
-		var selectRootMenuItemLevel = form.fm('rootMenuItemLevel');
-		var selectRootMenuItemType = form.fm('rootMenuItemType');
-		var selectRootMenuItemId = form.fm('rootMenuItemId');
-		var selectSiteNavigationMenuId = form.fm('siteNavigationMenuId');
-		var selectSiteNavigationMenuType = form.fm('siteNavigationMenuType');
+			form.addEventListener(
+				'select',
+				function() {
+					<portlet:namespace/>resetPreview();
+				}
+			);
 
-		var data = {
-			displayStyle: selectDisplayStyle.val(),
-			preview: true
-		};
+			function <portlet:namespace/>resetPreview() {
+				var displayDepthSelect = Liferay.Util.getFormElement(form, 'displayDepth');
+				var displayStyleSelect = Liferay.Util.getFormElement(form, 'displayStyle');
+				var expandedLevelsSelect = Liferay.Util.getFormElement(form, 'expandedLevels');
+				var rootMenuItemIdInput = Liferay.Util.getFormElement(form, 'rootMenuItemId');
+				var rootMenuItemLevelSelect = Liferay.Util.getFormElement(form, 'rootMenuItemLevel');
+				var rootMenuItemTypeSelect = Liferay.Util.getFormElement(form, 'rootMenuItemType');
+				var siteNavigationMenuIdInput = Liferay.Util.getFormElement(form, 'siteNavigationMenuId');
+				var siteNavigationMenuTypeInput = Liferay.Util.getFormElement(form, 'siteNavigationMenuType');
 
-		data.displayDepth = selectDisplayDepth.val();
-		data.expandedLevels = selectExpandedLevels.val();
-		data.rootMenuItemLevel = selectRootMenuItemLevel.val();
-		data.rootMenuItemType = selectRootMenuItemType.val();
-		data.rootMenuItemId = selectRootMenuItemId.val();
-		data.siteNavigationMenuId = selectSiteNavigationMenuId.val();
-		data.siteNavigationMenuType = selectSiteNavigationMenuType.val();
+				var data = {
+					preview: true
+				};
 
-		data = Liferay.Util.ns('_<%= HtmlUtil.escapeJS(portletResource) %>_', data);
+				if (displayDepthSelect && displayStyleSelect && expandedLevelsSelect && rootMenuItemIdInput && rootMenuItemLevelSelect && rootMenuItemTypeSelect && siteNavigationMenuIdInput && siteNavigationMenuTypeInput) {
+					data.displayDepth = displayDepthSelect.value;
+					data.displayStyle = displayStyleSelect.value;
+					data.expandedLevels = expandedLevelsSelect.value;
+					data.rootMenuItemLevel = rootMenuItemLevelSelect.value;
+					data.rootMenuItemType = rootMenuItemTypeSelect.value;
+					data.rootMenuItemId = rootMenuItemIdInput.value;
+					data.siteNavigationMenuId = siteNavigationMenuIdInput.value;
+					data.siteNavigationMenuType = siteNavigationMenuTypeInput.value;
+				}
 
-		Liferay.Portlet.refresh(curPortletBoundaryId, data);
-	}
+				data = Liferay.Util.ns('_<%= HtmlUtil.escapeJS(portletResource) %>_', data);
 
-	var chooseRootMenuItem = $('#<portlet:namespace />chooseRootMenuItem');
+				Liferay.Portlet.refresh(curPortletBoundaryId, data);
+			}
 
-	chooseRootMenuItem.on(
-		'click',
-		function(event) {
-			event.preventDefault();
+			var chooseRootMenuItemButton = document.getElementById('<portlet:namespace />chooseRootMenuItem');
 
-			var siteNavigationMenuId = $('#<portlet:namespace />siteNavigationMenuId').val();
-			var selectSiteNavigationMenuType = $('#<portlet:namespace />selectSiteNavigationMenuType').val();
+			if (chooseRootMenuItemButton) {
+				chooseRootMenuItemButton.addEventListener(
+					'click',
+					function(event) {
+						event.preventDefault();
 
-			var uri = '<%= siteNavigationMenuDisplayContext.getRootMenuItemSelectorURL() %>';
+						var siteNavigationMenuIdInput = document.getElementById('<portlet:namespace />siteNavigationMenuId');
 
-			uri = Liferay.Util.addParams('<%= PortalUtil.getPortletNamespace(ItemSelectorPortletKeys.ITEM_SELECTOR) %>siteNavigationMenuId=' + siteNavigationMenuId, uri);
-			uri = Liferay.Util.addParams('<%= PortalUtil.getPortletNamespace(ItemSelectorPortletKeys.ITEM_SELECTOR) %>siteNavigationMenuType=' + selectSiteNavigationMenuType, uri);
+						if (siteNavigationMenuIdInput) {
+							var siteNavigationMenuId = siteNavigationMenuIdInput.value;
+						}
 
-			var itemSelectorDialog = new A.LiferayItemSelectorDialog(
-				{
-					eventName: '<%= siteNavigationMenuDisplayContext.getRootMenuItemEventName() %>',
-					on: {
-						selectedItemChange: function(event) {
-							var selectedItem = event.newVal;
+						var selectSiteNavigationMenuTypeSelect = document.getElementById('<portlet:namespace />selectSiteNavigationMenuType');
 
-							if (selectedItem) {
-								$('#<portlet:namespace />rootMenuItemId').val(selectedItem.selectSiteNavigationMenuItemId);
+						if (selectSiteNavigationMenuTypeSelect) {
+							var selectSiteNavigationMenuType = selectSiteNavigationMenuTypeSelect.value;
+						}
 
-								$('#<portlet:namespace />rootMenuItemName').text(selectedItem.selectSiteNavigationMenuItemName);
+						var uri = '<%= siteNavigationMenuDisplayContext.getRootMenuItemSelectorURL() %>';
+
+						uri = Liferay.Util.addParams('<%= PortalUtil.getPortletNamespace(ItemSelectorPortletKeys.ITEM_SELECTOR) %>siteNavigationMenuId=' + siteNavigationMenuId, uri);
+						uri = Liferay.Util.addParams('<%= PortalUtil.getPortletNamespace(ItemSelectorPortletKeys.ITEM_SELECTOR) %>siteNavigationMenuType=' + selectSiteNavigationMenuType, uri);
+
+						var itemSelectorDialog = new A.LiferayItemSelectorDialog(
+							{
+								eventName: '<%= siteNavigationMenuDisplayContext.getRootMenuItemEventName() %>',
+								on: {
+									selectedItemChange: function(event) {
+										var selectedItem = event.newVal;
+
+										if (selectedItem) {
+											var rootMenuItemIdInput = document.getElementById('<portlet:namespace />rootMenuItemId');
+
+											if (rootMenuItemIdInput) {
+												rootMenuItemIdInput.value = selectedItem.selectSiteNavigationMenuItemId;
+											}
+
+											var rootMenuItemNameSpan = document.getElementById('<portlet:namespace />rootMenuItemName');
+
+											if (rootMenuItemNameSpan) {
+												rootMenuItemNameSpan.innerText = selectedItem.selectSiteNavigationMenuItemName;
+											}
+
+											<portlet:namespace/>resetPreview();
+										}
+									}
+								},
+								'strings.add': '<liferay-ui:message key="done" />',
+								title: '<liferay-ui:message key="select-site-navigation-menu-item" />',
+								url: uri
+							}
+						);
+
+						itemSelectorDialog.open();
+					}
+				);
+			}
+
+			var chooseSiteNavigationMenuButton = document.getElementById('<portlet:namespace />chooseSiteNavigationMenu');
+
+			chooseSiteNavigationMenuButton.addEventListener(
+				'click',
+				function(event) {
+					Liferay.Util.selectEntity(
+						{
+							dialog: {
+								constrain: true,
+								destroyOnHide: true,
+								modal: true
+							},
+							eventName: '<%= siteNavigationMenuDisplayContext.getSiteNavigationMenuEventName() %>',
+							id: '<portlet:namespace />selectSiteNavigationMenu',
+							title: '<liferay-ui:message key="select-site-navigation-menu" />',
+							uri: '<%= siteNavigationMenuDisplayContext.getSiteNavigationMenuItemSelectorURL() %>'
+						},
+						function(selectedItem) {
+							if (selectedItem.id) {
+								var siteNavigationMenuIdInput = document.getElementById('<portlet:namespace />siteNavigationMenuId');
+
+								if (siteNavigationMenuIdInput) {
+									siteNavigationMenuIdInput.value = selectedItem.id;
+								}
+
+								var navigationMenuName = document.getElementById('<portlet:namespace />navigationMenuName');
+
+								if (navigationMenuName) {
+									navigationMenuName.innerText = selectedItem.name;
+								}
+
+								var rootMenuItemIdInput = document.getElementById('<portlet:namespace />rootMenuItemId');
+
+								if (rootMenuItemIdInput) {
+									rootMenuItemIdInput.value = '0';
+								}
+
+								var rootMenuItemNameSpan = document.getElementById('<portlet:namespace />rootMenuItemName');
+
+								if (rootMenuItemNameSpan) {
+									rootMenuItemNameSpan.innerText = selectedItem.name;
+								}
+
+								var removeSiteNavigationMenu = document.getElementById('<portlet:namespace />removeSiteNavigationMenu');
+
+								if (removeSiteNavigationMenu) {
+									dom.toggleClasses(removeSiteNavigationMenu, 'hide');
+								}
 
 								<portlet:namespace/>resetPreview();
 							}
 						}
-					},
-					'strings.add': '<liferay-ui:message key="done" />',
-					title: '<liferay-ui:message key="select-site-navigation-menu-item" />',
-					url: uri
+					);
 				}
 			);
 
-			itemSelectorDialog.open();
-		}
-	);
+			var removeSiteNavigationMenuButton = document.getElementById('<portlet:namespace />removeSiteNavigationMenu');
 
-	$('#<portlet:namespace />chooseSiteNavigationMenu').on(
-		'click',
-		function(event) {
-			Liferay.Util.selectEntity(
-				{
-					dialog: {
-						constrain: true,
-						destroyOnHide: true,
-						modal: true
-					},
-					eventName: '<%= siteNavigationMenuDisplayContext.getSiteNavigationMenuEventName() %>',
-					id: '<portlet:namespace />selectSiteNavigationMenu',
-					title: '<liferay-ui:message key="select-site-navigation-menu" />',
-					uri: '<%= siteNavigationMenuDisplayContext.getSiteNavigationMenuItemSelectorURL() %>'
-				},
-				function(selectedItem) {
-					if (selectedItem.id) {
-						$('#<portlet:namespace />siteNavigationMenuId').val(selectedItem.id);
+			if (removeSiteNavigationMenuButton) {
+				removeSiteNavigationMenuButton.addEventListener(
+					'click',
+					function(event) {
+						var siteNavigationMenuIdInput = document.getElementById('<portlet:namespace />siteNavigationMenuId');
 
-						$('#<portlet:namespace />navigationMenuName').text(selectedItem.name);
+						if (siteNavigationMenuIdInput) {
+							siteNavigationMenuIdInput.value = '0';
+						}
 
-						$('#<portlet:namespace />rootMenuItemId').val('0');
+						var navigationMenuName = document.getElementById('<portlet:namespace />navigationMenuName');
 
-						$('#<portlet:namespace />rootMenuItemName').text(selectedItem.name);
+						if (navigationMenuName) {
+							navigationMenuName.innerText = '';
+						}
 
-						$('#<portlet:namespace />removeSiteNavigationMenu').toggleClass('hide');
+						var rootMenuItemIdInput = document.getElementById('<portlet:namespace />rootMenuItemId');
+
+						if (rootMenuItemIdInput) {
+							rootMenuItemIdInput.value = '0';
+						}
+
+						var rootMenuItemNameSpan = document.getElementById('<portlet:namespace />rootMenuItemName');
+
+						if (rootMenuItemNameSpan) {
+							rootMenuItemNameSpan.innerText = '';
+						}
+
+						var removeSiteNavigationMenu = document.getElementById('<portlet:namespace />removeSiteNavigationMenu');
+
+						if (removeSiteNavigationMenu) {
+							dom.toggleClasses(removeSiteNavigationMenu, 'hide');
+						}
 
 						<portlet:namespace/>resetPreview();
 					}
+				);
+			}
+
+			Liferay.Util.toggleSelectBox('<portlet:namespace />rootMenuItemType', 'select', '<portlet:namespace />rootMenuItemIdPanel');
+
+			Liferay.Util.toggleSelectBox(
+				'<portlet:namespace />rootMenuItemType',
+				function(currentValue, value) {
+					return currentValue === 'absolute' || currentValue === 'relative';
+				},
+				'<portlet:namespace />rootMenuItemLevel'
+			);
+
+			var selectSiteNavigationMenuTypeSelect = document.getElementById('<portlet:namespace />selectSiteNavigationMenuType');
+
+			if (selectSiteNavigationMenuTypeSelect) {
+				selectSiteNavigationMenuTypeSelect.addEventListener(
+					'change',
+					function() {
+						var rootMenuItemNameSpan = document.getElementById('<portlet:namespace />rootMenuItemName');
+
+						if (rootMenuItemNameSpan) {
+							var selectedSelectSiteNavigationMenuType = document.querySelector('#<portlet:namespace />selectSiteNavigationMenuType option:checked');
+
+							rootMenuItemNameSpan.innerText = selectedSelectSiteNavigationMenuType.innerText;
+						}
+
+						var siteNavigationMenuType = document.getElementById('<portlet:namespace />siteNavigationMenuType');
+
+						if (siteNavigationMenuType) {
+							siteNavigationMenuType.value = selectSiteNavigationMenuTypeSelect.value;
+						}
+					}
+				);
+			}
+
+			dom.delegate(
+				document.<portlet:namespace />fm,
+				'change',
+				'.select-navigation',
+				function() {
+					var siteNavigationDisabled = selectSiteNavigationMenuTypeSelect.disabled;
+
+					var chooseSiteNavigationMenu = document.getElementById('<portlet:namespace />chooseSiteNavigationMenu');
+
+					Liferay.Util.toggleDisabled(chooseSiteNavigationMenu, siteNavigationDisabled);
+
+					Liferay.Util.toggleDisabled(selectSiteNavigationMenuTypeSelect, !siteNavigationDisabled);
+
+					var siteNavigationMenuIdInput = document.getElementById('<portlet:namespace />siteNavigationMenuId');
+
+					if (siteNavigationMenuIdInput) {
+						siteNavigationMenuIdInput.value = 0;
+					}
+
+					var siteNavigationMenuType = document.getElementById('<portlet:namespace />siteNavigationMenuType');
+
+					if (siteNavigationMenuType) {
+						siteNavigationMenuType.value = -1;
+					}
+
+					var navigationMenuName = document.getElementById('<portlet:namespace />navigationMenuName');
+
+					if (navigationMenuName) {
+						navigationMenuName.innerText = '';
+					}
+
+					var removeSiteNavigationMenu = document.getElementById('<portlet:namespace />removeSiteNavigationMenu');
+
+					if (removeSiteNavigationMenu) {
+						removeSiteNavigationMenu.classList.add('hide');
+					}
+
+					<portlet:namespace/>resetPreview();
 				}
 			);
-		}
-	);
-
-	$('#<portlet:namespace />removeSiteNavigationMenu').on(
-		'click',
-		function(event) {
-			$('#<portlet:namespace />siteNavigationMenuId').val('0');
-
-			$('#<portlet:namespace />navigationMenuName').text('');
-
-			$('#<portlet:namespace />rootMenuItemId').val('0');
-
-			$('#<portlet:namespace />rootMenuItemName').text('');
-
-			$('#<portlet:namespace />removeSiteNavigationMenu').toggleClass('hide');
-
-			<portlet:namespace/>resetPreview();
-		}
-	);
-
-	Liferay.Util.toggleSelectBox('<portlet:namespace />rootMenuItemType', 'select', '<portlet:namespace />rootMenuItemIdPanel');
-
-	Liferay.Util.toggleSelectBox(
-		'<portlet:namespace />rootMenuItemType',
-		function(currentValue, value) {
-			return currentValue === 'absolute' || currentValue === 'relative';
-		},
-		'<portlet:namespace />rootMenuItemLevel'
-	);
-
-	var selectSiteNavigationMenuType = $('#<portlet:namespace />selectSiteNavigationMenuType');
-
-	selectSiteNavigationMenuType.on(
-		'change',
-		function() {
-			var siteNavigationMenuType = $('#<portlet:namespace />siteNavigationMenuType');
-
-			var selectedSelectSiteNavigationMenuType = $('#<portlet:namespace />selectSiteNavigationMenuType option:selected');
-
-			$('#<portlet:namespace />rootMenuItemName').text(selectedSelectSiteNavigationMenuType.text());
-
-			siteNavigationMenuType.val(selectSiteNavigationMenuType.val());
-		}
-	);
-
-	$('.select-navigation').on(
-		'change',
-		function() {
-			var chooseSiteNavigationMenu = $('#<portlet:namespace />chooseSiteNavigationMenu');
-
-			var state = selectSiteNavigationMenuType.prop('disabled');
-
-			chooseSiteNavigationMenu.prop('disabled', state);
-			chooseSiteNavigationMenu.toggleClass('disabled', state);
-
-			selectSiteNavigationMenuType.prop('disabled', !state);
-
-			$('#<portlet:namespace />siteNavigationMenuId').val(0);
-
-			$('#<portlet:namespace />siteNavigationMenuType').val(-1);
-
-			$('#<portlet:namespace />navigationMenuName').text('');
-
-			$('#<portlet:namespace />removeSiteNavigationMenu').addClass('hide');
-
-			<portlet:namespace/>resetPreview();
 		}
 	);
 </aui:script>

@@ -21,7 +21,7 @@ definition {
 		}
 	}
 
-	test addAndEditApplication {
+	test AddAndEditApplication {
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
@@ -112,7 +112,7 @@ definition {
 		OAuth2.deleteApplication(applicationName = "OAuth Application Edited");
 	}
 
-	test editApplicationScopes {
+	test EditApplicationScopes {
 		property prepare.oauth2.global.scopes = "true";
 
 		ProductMenu.gotoPortlet(
@@ -185,7 +185,7 @@ definition {
 		);
 	}
 
-	test viewAndRevokeGrantedAuthorizations {
+	test ViewAndRevokeGrantedAuthorizations {
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",

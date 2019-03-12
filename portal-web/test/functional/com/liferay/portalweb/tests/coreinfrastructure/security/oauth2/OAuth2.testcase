@@ -20,7 +20,7 @@ definition {
 		}
 	}
 
-	test addAndEditApplication {
+	test AddAndEditApplication {
 		property app.server.types = "jboss,resin,tcserver,tomcat,weblogic,websphere,wildfly";
 		property database.types = "db2,hypersonic,mariadb,mysql,oracle,postgresql,sqlserver,sybase";
 		property environment.acceptance = "true";
@@ -115,7 +115,7 @@ definition {
 		OAuth2.deleteApplication(applicationName = "OAuth Application Edited");
 	}
 
-	test editApplicationScopes {
+	test EditApplicationScopes {
 		property prepare.oauth2.global.scopes = "true";
 
 		ProductMenu.gotoPortlet(
@@ -212,7 +212,7 @@ definition {
 		);
 	}
 
-	test viewAndRevokeGrantedAuthorizations {
+	test ViewAndRevokeGrantedAuthorizations {
 		property app.server.types = "jboss,resin,tcserver,tomcat,weblogic,websphere,wildfly";
 		property database.types = "db2,hypersonic,mariadb,mysql,oracle,postgresql,sqlserver,sybase";
 		property environment.acceptance = "true";

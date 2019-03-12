@@ -1428,6 +1428,23 @@ public class ServicePreAction extends Action {
 		return layoutComposite;
 	}
 
+	/**
+	 * @deprecated As of Judson (7.1.x), replaced by {@link
+	 *             #getDefaultViewableLayoutComposite(
+	 *                 HttpServletRequest,User,PermissionChecker,long, boolean,
+	 *                 boolean)}
+	 */
+	@Deprecated
+	protected LayoutComposite getDefaultViewableLayoutComposite(
+			HttpServletRequest request, User user,
+			PermissionChecker permissionChecker, long doAsGroupId,
+			boolean signedIn)
+		throws PortalException {
+
+		return getDefaultViewableLayoutComposite(request, user,
+			permissionChecker, doAsGroupId, signedIn, false);
+	}
+
 	protected LayoutComposite getDefaultViewableLayoutComposite(
 			HttpServletRequest request, User user,
 			PermissionChecker permissionChecker, long doAsGroupId,

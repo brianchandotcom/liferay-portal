@@ -104,9 +104,8 @@ public class ProcessResourceImpl
 	}
 
 	private FieldSort _toFieldSort(Sort[] sorts) {
-		String titleFieldName = _getTitleFieldName();
-
-		titleFieldName = Field.getSortableFieldName(titleFieldName);
+		String titleFieldName = Field.getSortableFieldName(
+			_getTitleFieldName());
 
 		Sort sort = new Sort(titleFieldName, false);
 

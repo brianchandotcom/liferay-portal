@@ -14,7 +14,7 @@
 
 package com.liferay.oauth2.provider.rest.internal.endpoint.liferay;
 
-import com.liferay.portal.kernel.cluster.ClusterMasterExecutorUtil;
+import com.liferay.portal.kernel.cluster.ClusterMasterExecutor;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.MapUtil;
@@ -38,6 +38,7 @@ import org.apache.cxf.rs.security.oauth2.grants.code.ServerAuthorizationCodeGran
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Carlos Sierra Andrés
@@ -48,14 +49,14 @@ import org.osgi.service.component.annotations.Component;
 public class CodeGrantsClusterSupport {
 
 	public ServerAuthorizationCodeGrant getCodeGrant(String code) {
-		if (!ClusterMasterExecutorUtil.isEnabled() ||
-			ClusterMasterExecutorUtil.isMaster()) {
+		if (!_clusterMasterExecutor.isEnabled() ||
+			_clusterMasterExecutor.isMaster()) {
 
 			return _getCodeGrant(code);
 		}
 
 		Future<ServerAuthorizationCodeGrant> future =
-			ClusterMasterExecutorUtil.executeOnMaster(
+			_clusterMasterExecutor.executeOnMaster(
 				new MethodHandler(_getCodeGrantMethodKey, code));
 
 		try {
@@ -71,14 +72,14 @@ public class CodeGrantsClusterSupport {
 	public List<ServerAuthorizationCodeGrant> getCodeGrants(
 		Client client, UserSubject userSubject) {
 
-		if (!ClusterMasterExecutorUtil.isEnabled() ||
-			ClusterMasterExecutorUtil.isMaster()) {
+		if (!_clusterMasterExecutor.isEnabled() ||
+			_clusterMasterExecutor.isMaster()) {
 
 			return _getCodeGrants(client, userSubject);
 		}
 
 		Future<List<ServerAuthorizationCodeGrant>> future =
-			ClusterMasterExecutorUtil.executeOnMaster(
+			_clusterMasterExecutor.executeOnMaster(
 				new MethodHandler(
 					_getCodeGrantsMethodKey, client, userSubject));
 
@@ -95,13 +96,13 @@ public class CodeGrantsClusterSupport {
 	public void putCodeGrant(
 		ServerAuthorizationCodeGrant serverAuthorizationCodeGrant) {
 
-		if (!ClusterMasterExecutorUtil.isEnabled() ||
-			ClusterMasterExecutorUtil.isMaster()) {
+		if (!_clusterMasterExecutor.isEnabled() ||
+			_clusterMasterExecutor.isMaster()) {
 
 			_putCodeGrant(serverAuthorizationCodeGrant);
 		}
 		else {
-			Future<?> future = ClusterMasterExecutorUtil.executeOnMaster(
+			Future<?> future = _clusterMasterExecutor.executeOnMaster(
 				new MethodHandler(
 					_putGrantMethodKey, serverAuthorizationCodeGrant));
 
@@ -115,14 +116,14 @@ public class CodeGrantsClusterSupport {
 	}
 
 	public ServerAuthorizationCodeGrant removeCodeGrant(String code) {
-		if (!ClusterMasterExecutorUtil.isEnabled() ||
-			ClusterMasterExecutorUtil.isMaster()) {
+		if (!_clusterMasterExecutor.isEnabled() ||
+			_clusterMasterExecutor.isMaster()) {
 
 			return _removeCodeGrant(code);
 		}
 
 		Future<ServerAuthorizationCodeGrant> future =
-			ClusterMasterExecutorUtil.executeOnMaster(
+			_clusterMasterExecutor.executeOnMaster(
 				new MethodHandler(_removeGrantMethodKey, code));
 
 		try {
@@ -239,6 +240,9 @@ public class CodeGrantsClusterSupport {
 		CodeGrantsClusterSupport.class, "_removeCodeGrant", String.class);
 	private static final DelayQueue<ServerAuthorizationCodeGrantDelayed>
 		_serverAuthorizationCodeGrantDelayeds = new DelayQueue<>();
+
+	@Reference
+	private ClusterMasterExecutor _clusterMasterExecutor;
 
 	private int _timeout;
 

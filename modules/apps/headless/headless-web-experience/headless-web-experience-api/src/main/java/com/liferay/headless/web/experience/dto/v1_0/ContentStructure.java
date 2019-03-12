@@ -88,6 +88,33 @@ public class ContentStructure {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long contentSpace;
 
+	public ContentStructureField[] getContentStructureFields() {
+		return contentStructureFields;
+	}
+
+	public void setContentStructureFields(
+		ContentStructureField[] contentStructureFields) {
+
+		this.contentStructureFields = contentStructureFields;
+	}
+
+	@JsonIgnore
+	public void setContentStructureFields(
+		UnsafeSupplier<ContentStructureField[], Exception>
+			contentStructureFieldsUnsafeSupplier) {
+
+		try {
+			contentStructureFields = contentStructureFieldsUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected ContentStructureField[] contentStructureFields;
+
 	public Creator getCreator() {
 		return creator;
 	}
@@ -184,30 +211,6 @@ public class ContentStructure {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String description;
 
-	public Fields[] getFields() {
-		return fields;
-	}
-
-	public void setFields(Fields[] fields) {
-		this.fields = fields;
-	}
-
-	@JsonIgnore
-	public void setFields(
-		UnsafeSupplier<Fields[], Exception> fieldsUnsafeSupplier) {
-
-		try {
-			fields = fieldsUnsafeSupplier.get();
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Fields[] fields;
-
 	public Long getId() {
 		return id;
 	}
@@ -285,6 +288,27 @@ public class ContentStructure {
 		sb.append(contentSpace);
 		sb.append(", ");
 
+		sb.append("\"contentStructureFields\": ");
+
+		if (contentStructureFields == null) {
+			sb.append("null");
+		}
+		else {
+			sb.append("[");
+
+			for (int i = 0; i < contentStructureFields.length; i++) {
+				sb.append(contentStructureFields[i]);
+
+				if ((i + 1) < contentStructureFields.length) {
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
+		}
+
+		sb.append(", ");
+
 		sb.append("\"creator\": ");
 
 		sb.append(creator);
@@ -309,27 +333,6 @@ public class ContentStructure {
 		sb.append("\"");
 		sb.append(description);
 		sb.append("\"");
-		sb.append(", ");
-
-		sb.append("\"fields\": ");
-
-		if (fields == null) {
-			sb.append("null");
-		}
-		else {
-			sb.append("[");
-
-			for (int i = 0; i < fields.length; i++) {
-				sb.append(fields[i]);
-
-				if ((i + 1) < fields.length) {
-					sb.append(", ");
-				}
-			}
-
-			sb.append("]");
-		}
-
 		sb.append(", ");
 
 		sb.append("\"id\": ");

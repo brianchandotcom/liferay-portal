@@ -640,6 +640,11 @@ public abstract class BaseContentStructureResourceTestCase {
 				"Invalid entity field " + entityFieldName);
 		}
 
+		if (entityFieldName.equals("contentStructureFields")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
 		if (entityFieldName.equals("creator")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
@@ -663,11 +668,6 @@ public abstract class BaseContentStructureResourceTestCase {
 			sb.append("'");
 
 			return sb.toString();
-		}
-
-		if (entityFieldName.equals("fields")) {
-			throw new IllegalArgumentException(
-				"Invalid entity field " + entityFieldName);
 		}
 
 		if (entityFieldName.equals("id")) {

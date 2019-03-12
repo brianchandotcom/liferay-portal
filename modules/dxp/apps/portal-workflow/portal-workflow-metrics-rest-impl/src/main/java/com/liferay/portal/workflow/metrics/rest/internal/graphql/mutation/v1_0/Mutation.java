@@ -38,36 +38,36 @@ public class Mutation {
 
 	@GraphQLField
 	@GraphQLInvokeDetached
-	public SLA postProcessSla(
+	public SLA postProcessSLA(
 			@GraphQLName("process-id") Long processId,
 			@GraphQLName("SLA") SLA sLA)
 		throws Exception {
 
 		SLAResource sLAResource = _createSLAResource();
 
-		return sLAResource.postProcessSla(processId, sLA);
+		return sLAResource.postProcessSLA(processId, sLA);
 	}
 
 	@GraphQLInvokeDetached
-	public boolean deleteProcessSla(
+	public boolean deleteProcessSLA(
 			@GraphQLName("process-id") Long processId,
 			@GraphQLName("sla-id") Long slaId)
 		throws Exception {
 
 		SLAResource sLAResource = _createSLAResource();
 
-		return sLAResource.deleteProcessSla(processId, slaId);
+		return sLAResource.deleteProcessSLA(processId, slaId);
 	}
 
 	@GraphQLInvokeDetached
-	public SLA putProcessSla(
+	public SLA putProcessSLA(
 			@GraphQLName("process-id") Long processId,
 			@GraphQLName("sla-id") Long slaId, @GraphQLName("SLA") SLA sLA)
 		throws Exception {
 
 		SLAResource sLAResource = _createSLAResource();
 
-		return sLAResource.putProcessSla(processId, slaId, sLA);
+		return sLAResource.putProcessSLA(processId, slaId, sLA);
 	}
 
 	private static SLAResource _createSLAResource() throws Exception {

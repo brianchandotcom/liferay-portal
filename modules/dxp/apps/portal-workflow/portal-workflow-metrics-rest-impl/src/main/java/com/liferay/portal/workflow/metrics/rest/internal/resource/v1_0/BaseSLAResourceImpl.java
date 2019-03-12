@@ -68,7 +68,7 @@ public abstract class BaseSLAResourceImpl implements SLAResource {
 	@Path("/processes/{process-id}/slas")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "SLA")})
-	public Page<SLA> getProcessSlasPage(
+	public Page<SLA> getProcessSLAsPage(
 			@PathParam("process-id") Long processId,
 			@Context Pagination pagination)
 		throws Exception {
@@ -82,7 +82,7 @@ public abstract class BaseSLAResourceImpl implements SLAResource {
 	@Path("/processes/{process-id}/slas")
 	@Produces({"application/json", "application/json"})
 	@Tags(value = {@Tag(name = "SLA")})
-	public SLA postProcessSla(@PathParam("process-id") Long processId, SLA sLA)
+	public SLA postProcessSLA(@PathParam("process-id") Long processId, SLA sLA)
 		throws Exception {
 
 		return new SLA();
@@ -93,7 +93,7 @@ public abstract class BaseSLAResourceImpl implements SLAResource {
 	@Path("/processes/{process-id}/slas/{sla-id}")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "SLA")})
-	public boolean deleteProcessSla(
+	public boolean deleteProcessSLA(
 			@PathParam("process-id") Long processId,
 			@PathParam("sla-id") Long slaId)
 		throws Exception {
@@ -106,7 +106,7 @@ public abstract class BaseSLAResourceImpl implements SLAResource {
 	@Path("/processes/{process-id}/slas/{sla-id}")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "SLA")})
-	public SLA getProcessSla(
+	public SLA getProcessSLA(
 			@PathParam("process-id") Long processId,
 			@PathParam("sla-id") Long slaId)
 		throws Exception {
@@ -120,7 +120,7 @@ public abstract class BaseSLAResourceImpl implements SLAResource {
 	@Path("/processes/{process-id}/slas/{sla-id}")
 	@Produces({"application/json", "application/json"})
 	@Tags(value = {@Tag(name = "SLA")})
-	public SLA putProcessSla(
+	public SLA putProcessSLA(
 			@PathParam("process-id") Long processId,
 			@PathParam("sla-id") Long slaId, SLA sLA)
 		throws Exception {

@@ -60,7 +60,7 @@ public class Query {
 
 	@GraphQLField
 	@GraphQLInvokeDetached
-	public Collection<SLA> getProcessSlasPage(
+	public Collection<SLA> getProcessSLAsPage(
 			@GraphQLName("process-id") Long processId,
 			@GraphQLName("pageSize") int pageSize,
 			@GraphQLName("page") int page)
@@ -68,7 +68,7 @@ public class Query {
 
 		SLAResource sLAResource = _createSLAResource();
 
-		Page paginationPage = sLAResource.getProcessSlasPage(
+		Page paginationPage = sLAResource.getProcessSLAsPage(
 			processId, Pagination.of(pageSize, page));
 
 		return paginationPage.getItems();
@@ -76,14 +76,14 @@ public class Query {
 
 	@GraphQLField
 	@GraphQLInvokeDetached
-	public SLA getProcessSla(
+	public SLA getProcessSLA(
 			@GraphQLName("process-id") Long processId,
 			@GraphQLName("sla-id") Long slaId)
 		throws Exception {
 
 		SLAResource sLAResource = _createSLAResource();
 
-		return sLAResource.getProcessSla(processId, slaId);
+		return sLAResource.getProcessSLA(processId, slaId);
 	}
 
 	private static ProcessResource _createProcessResource() throws Exception {

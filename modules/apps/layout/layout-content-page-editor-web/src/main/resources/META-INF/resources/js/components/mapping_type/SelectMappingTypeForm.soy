@@ -26,7 +26,7 @@
 
   <form>
     {let $fieldsetAttributes kind="attributes"}
-      {if $selectedMappingTypes and $selectedMappingTypes.type and $selectedMappingTypes.subtype}
+      {if $selectedMappingTypes and $selectedMappingTypes.type}
         disabled
       {/if}
     {/let}
@@ -87,7 +87,7 @@
       {/if}
 
       <div class="btn-group d-flex justify-content-end">
-        {if (not $selectedMappingTypes) or (not $selectedMappingTypes.type) or (not $selectedMappingTypes.subtype)}
+        {if (not $selectedMappingTypes) or (not $selectedMappingTypes.type)}
           <div class="btn-group-item">
             <button
               class="btn btn-secondary"
@@ -125,7 +125,7 @@
               </span>
 
               {msg desc=""}saving-changes{/msg}
-            {elseif $selectedMappingTypes and $selectedMappingTypes.type and $selectedMappingTypes.subtype}
+            {elseif $selectedMappingTypes and $selectedMappingTypes.type}
               {msg desc=""}saved{/msg}
             {else}
               {msg desc=""}save{/msg}

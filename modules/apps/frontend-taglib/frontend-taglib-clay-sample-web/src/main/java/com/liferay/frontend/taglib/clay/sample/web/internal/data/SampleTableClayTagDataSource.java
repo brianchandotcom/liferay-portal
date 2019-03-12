@@ -15,6 +15,7 @@
 package com.liferay.frontend.taglib.clay.sample.web.internal.data;
 
 import com.liferay.frontend.taglib.clay.servlet.taglib.data.ClayTagDataSource;
+import com.liferay.frontend.taglib.clay.servlet.taglib.data.Pagination;
 
 import java.util.Arrays;
 import java.util.HashMap;
@@ -35,11 +36,19 @@ import org.osgi.service.component.annotations.Component;
 public class SampleTableClayTagDataSource
 	implements ClayTagDataSource<Map<String, Object>> {
 
-	@Override
-	public List<Map<String, Object>> getItems(HttpServletRequest request) {
-		return Arrays.asList(
+	public SampleTableClayTagDataSource() {
+		_items = Arrays.asList(
 			_getItem("Blueberry", 57, 100), _getItem("Strawberry", 33, 100),
 			_getItem("Raspberry", 53, 100));
+	}
+
+	@Override
+	public List<Map<String, Object>> getItems(
+		HttpServletRequest request, Pagination pagination) {
+
+		return _items.subList(
+			pagination.getStartPosition(),
+			Math.min(pagination.getEndPosition(), _items.size()));
 	}
 
 	private Map<String, Object> _getItem(
@@ -53,5 +62,7 @@ public class SampleTableClayTagDataSource
 
 		return item;
 	}
+
+	private final List<Map<String, Object>> _items;
 
 }

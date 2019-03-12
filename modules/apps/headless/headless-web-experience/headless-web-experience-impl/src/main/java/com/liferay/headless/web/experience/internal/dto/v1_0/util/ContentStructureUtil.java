@@ -20,7 +20,7 @@ import com.liferay.dynamic.data.mapping.model.DDMFormFieldType;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 import com.liferay.headless.web.experience.dto.v1_0.ContentStructure;
-import com.liferay.headless.web.experience.dto.v1_0.Fields;
+import com.liferay.headless.web.experience.dto.v1_0.ContentStructureField;
 import com.liferay.headless.web.experience.dto.v1_0.Options;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -63,9 +63,10 @@ public class ContentStructureUtil {
 
 				setFields(
 					() -> TransformUtil.transformToArray(
-						ddmStructure.getDDMFormFields(true),
-						ddmFormField -> _toFields(ddmFormField, locale),
-						Fields.class));
+						ddmStructure.getRootFieldNames(),
+						fieldName -> _toContentStructureField(
+							ddmStructure.getDDMFormField(fieldName), locale),
+						ContentStructureField.class));
 			}
 		};
 	}
@@ -104,13 +105,20 @@ public class ContentStructureUtil {
 		return null;
 	}
 
-	private static Fields _toFields(DDMFormField ddmFormField, Locale locale) {
-		return new Fields() {
+	private static ContentStructureField _toContentStructureField(
+		DDMFormField ddmFormField, Locale locale) {
+
+		return new ContentStructureField() {
 			{
 				label = _toString(ddmFormField.getLabel(), locale);
 				localizable = ddmFormField.isLocalizable();
 				multiple = ddmFormField.isMultiple();
 				name = ddmFormField.getName();
+				nestedFields = TransformUtil.transformToArray(
+					ddmFormField.getNestedDDMFormFields(),
+					ddmFormField -> _toContentStructureField(
+						ddmFormField, locale),
+					ContentStructureField.class);
 				predefinedValue = _toString(
 					ddmFormField.getPredefinedValue(), locale);
 				repeatable = ddmFormField.isRepeatable();

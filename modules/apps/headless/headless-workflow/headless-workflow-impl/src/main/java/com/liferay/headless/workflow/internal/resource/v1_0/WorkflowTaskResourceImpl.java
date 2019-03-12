@@ -15,7 +15,7 @@
 package com.liferay.headless.workflow.internal.resource.v1_0;
 
 import com.liferay.blogs.model.BlogsEntry;
-import com.liferay.headless.workflow.dto.v1_0.ChangeDescription;
+import com.liferay.headless.workflow.dto.v1_0.ChangeTransition;
 import com.liferay.headless.workflow.dto.v1_0.ObjectReviewed;
 import com.liferay.headless.workflow.dto.v1_0.WorkflowTask;
 import com.liferay.headless.workflow.dto.v1_0.WorkflowTaskAssignToMe;
@@ -25,6 +25,7 @@ import com.liferay.message.boards.model.MBDiscussion;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.workflow.WorkflowTaskManager;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
@@ -129,7 +130,7 @@ public class WorkflowTaskResourceImpl extends BaseWorkflowTaskResourceImpl {
 			WorkflowTaskAssignToUser workflowTaskAssignToUser)
 		throws Exception {
 
-		long assigneeId = workflowTaskAssignToUser.getAssignee();
+		long assigneeId = workflowTaskAssignToUser.getAssigneeId();
 
 		return _toWorkflowTask(
 			_workflowTaskManager.assignWorkflowTaskToUser(
@@ -139,10 +140,10 @@ public class WorkflowTaskResourceImpl extends BaseWorkflowTaskResourceImpl {
 
 	@Override
 	public WorkflowTask postWorkflowTaskChangeTransition(
-			Long workflowTaskId, ChangeDescription changeDescription)
+			Long workflowTaskId, ChangeTransition changeTransition)
 		throws Exception {
 
-		String transition = changeDescription.getTransition();
+		String transition = changeTransition.getTransition();
 
 		List<String> transitionsNames = _getTaskTransitionsNames(
 			_workflowTaskManager.getWorkflowTask(
@@ -205,36 +206,6 @@ public class WorkflowTaskResourceImpl extends BaseWorkflowTaskResourceImpl {
 		return type;
 	}
 
-	private String _getResourceURL(
-		Map<String, Serializable> optionalAttributes) {
-
-		Map<String, String> map = new HashMap<String, String>() {
-			{
-				put(BlogsEntry.class.getName(), "blog-posting");
-				put(MBDiscussion.class.getName(), "comment");
-			}
-		};
-
-		String entryClassName = map.get(
-			optionalAttributes.get("entryClassName"));
-
-		if (entryClassName == null) {
-			return null;
-		}
-
-		StringBuilder sb = new StringBuilder();
-
-		sb.append("p/");
-		sb.append(entryClassName);
-		sb.append("/");
-
-		String entryClassPK = (String)optionalAttributes.get("entryClassPK");
-
-		sb.append(entryClassPK);
-
-		return sb.toString();
-	}
-
 	private List<String> _getTaskTransitionsNames(
 			com.liferay.portal.kernel.workflow.WorkflowTask workflowTask)
 		throws PortalException {
@@ -252,7 +223,7 @@ public class WorkflowTaskResourceImpl extends BaseWorkflowTaskResourceImpl {
 
 		return new ObjectReviewed() {
 			{
-				identifier = _getResourceURL(optionalAttributes);
+				id = GetterUtil.getLong(optionalAttributes.get("entryClassPK"));
 				resourceType = _getResourceType(optionalAttributes);
 			}
 		};

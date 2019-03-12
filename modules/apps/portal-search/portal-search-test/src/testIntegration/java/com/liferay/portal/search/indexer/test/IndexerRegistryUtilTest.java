@@ -14,6 +14,7 @@
 
 package com.liferay.portal.search.indexer.test;
 
+import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.kernel.model.Contact;
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.User;
@@ -29,10 +30,12 @@ import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TestRule;
+import org.junit.runner.RunWith;
 
 /**
  * @author Gregory Amerson
  */
+@RunWith(Arquillian.class)
 public class IndexerRegistryUtilTest {
 
 	@ClassRule

@@ -14,6 +14,7 @@
 
 package com.liferay.portal.search.test;
 
+import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.portal.kernel.search.BaseIndexer;
 import com.liferay.portal.kernel.search.Document;
@@ -46,10 +47,12 @@ import javax.portlet.PortletResponse;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 
 /**
  * @author André de Oliveira
  */
+@RunWith(Arquillian.class)
 public class BaseIndexerGetFullQueryTest {
 
 	@Before

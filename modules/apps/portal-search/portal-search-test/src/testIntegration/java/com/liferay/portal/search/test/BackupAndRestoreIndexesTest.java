@@ -14,6 +14,7 @@
 
 package com.liferay.portal.search.test;
 
+import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.search.IndexAdminHelperUtil;
 import com.liferay.portal.kernel.search.SearchEngineHelper;
@@ -30,10 +31,12 @@ import java.util.Map;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 
 /**
  * @author Cristina González
  */
+@RunWith(Arquillian.class)
 public class BackupAndRestoreIndexesTest {
 
 	@ClassRule

@@ -534,6 +534,10 @@ public class ContentPageEditorDisplayContext {
 				JSONObject editableProcessorJSONObject =
 					editableValuesJSONObject.getJSONObject(key);
 
+				if (editableProcessorJSONObject == null) {
+					continue;
+				}
+
 				Iterator<String> editableKeysIterator =
 					editableProcessorJSONObject.keys();
 

@@ -64,8 +64,6 @@ AUI.add(
 					function(tagName, fieldData) {
 						fieldData.results.forEach(
 							function(item, index, collection) {
-								var description = jsonParse(item.description);
-
 								var type = tagName;
 
 								if (item.initial) {
@@ -89,7 +87,7 @@ AUI.add(
 									{
 										actions: FieldNormalizer.normalizeToActions(item.actions),
 										assignments: FieldNormalizer.normalizeToAssignments(item.assignments),
-										description: description,
+										description: item.description,
 										fields: [{}],
 										initial: item.initial,
 										metadata: metadata,

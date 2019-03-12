@@ -70,7 +70,7 @@ AUI.add(
 					buffer.push(xmlNode.open, XMLUtil.create('name', name));
 
 					if (description) {
-						buffer.push(XMLUtil.create('description', cdata(jsonStringify(description))));
+						buffer.push(XMLUtil.create('description', description));
 					}
 
 					if (metadata) {
@@ -127,7 +127,7 @@ AUI.add(
 						buffer.push(xmlAction.open, XMLUtil.create('name', item));
 
 						if (description) {
-							buffer.push(XMLUtil.create('description', cdata(description[index])));
+							buffer.push(XMLUtil.create('description', description[index]));
 						}
 
 						if (script) {

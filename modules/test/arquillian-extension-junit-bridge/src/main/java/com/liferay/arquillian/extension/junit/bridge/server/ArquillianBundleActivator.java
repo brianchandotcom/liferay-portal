@@ -14,16 +14,6 @@
 
 package com.liferay.arquillian.extension.junit.bridge.server;
 
-import java.lang.management.ManagementFactory;
-
-import java.util.List;
-
-import javax.management.JMException;
-import javax.management.MBeanServer;
-import javax.management.MBeanServerFactory;
-import javax.management.MalformedObjectNameException;
-import javax.management.ObjectName;
-
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleActivator;
 import org.osgi.framework.BundleContext;
@@ -35,50 +25,19 @@ import org.osgi.framework.wiring.BundleWiring;
 public class ArquillianBundleActivator implements BundleActivator {
 
 	@Override
-	public void start(BundleContext bundleContext) throws JMException {
-		MBeanServer mBeanServer = _findOrCreateMBeanServer();
-
+	public void start(BundleContext bundleContext) throws Exception {
 		Bundle bundle = bundleContext.getBundle();
 
 		BundleWiring bundleWiring = bundle.adapt(BundleWiring.class);
 
-		mBeanServer.registerMBean(
-			new JMXTestRunner(bundleWiring.getClassLoader()), _objectName);
+		JMXTestRunner jmxTestRunner = new JMXTestRunner(
+			bundleWiring.getClassLoader());
+
+		jmxTestRunner.runTestClass();
 	}
 
 	@Override
-	public void stop(BundleContext bundleContext) throws JMException {
-		MBeanServer mBeanServer = _findOrCreateMBeanServer();
-
-		mBeanServer.unregisterMBean(_objectName);
-	}
-
-	private MBeanServer _findOrCreateMBeanServer() {
-		MBeanServer mBeanServer = null;
-
-		List<MBeanServer> mBeanServers = MBeanServerFactory.findMBeanServer(
-			null);
-
-		if (!mBeanServers.isEmpty()) {
-			mBeanServer = mBeanServers.get(0);
-		}
-
-		if (mBeanServer == null) {
-			mBeanServer = ManagementFactory.getPlatformMBeanServer();
-		}
-
-		return mBeanServer;
-	}
-
-	private static final ObjectName _objectName;
-
-	static {
-		try {
-			_objectName = new ObjectName(JMXTestRunnerMBean.OBJECT_NAME);
-		}
-		catch (MalformedObjectNameException mone) {
-			throw new ExceptionInInitializerError(mone);
-		}
+	public void stop(BundleContext bundleContext) {
 	}
 
 }

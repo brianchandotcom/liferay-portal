@@ -51,24 +51,36 @@ import java.util.Set;
  */
 public class BndBundleUtil {
 
-	public static Path createBundle() throws Exception {
+	public static Path createBundle(
+			String className, List<String> filteredMethods, String hostAddress,
+			int port)
+		throws Exception {
+
 		ClassLoader classLoader = new URLClassLoader(_getClassPathURLs(), null);
 
 		Class<?> clazz = classLoader.loadClass(BndBundleUtil.class.getName());
 
-		Method method = clazz.getDeclaredMethod("_createBundle");
+		Method method = clazz.getDeclaredMethod(
+			"_createBundle", String.class, List.class, String.class,
+			Integer.TYPE);
 
 		method.setAccessible(true);
 
-		return (Path)method.invoke(null);
+		return (Path)method.invoke(
+			null, className, filteredMethods, hostAddress, port);
 	}
 
-	private static Path _createBundle() throws Exception {
+	private static Path _createBundle(
+			String className, List<String> filteredMethods, String hostAddress,
+			int port)
+		throws Exception {
+
 		File buildDir = new File(System.getProperty("user.dir"));
 
 		try (Workspace workspace = new Workspace(buildDir);
 			Project project = new Project(workspace, buildDir);
-			ProjectBuilder projectBuilder = _createProjectBuilder(project);
+			ProjectBuilder projectBuilder = _createProjectBuilder(
+				project, className, filteredMethods, hostAddress, port);
 			Jar jar = projectBuilder.build();
 			Analyzer analyzer = new Analyzer()) {
 
@@ -85,7 +97,9 @@ public class BndBundleUtil {
 		}
 	}
 
-	private static ProjectBuilder _createProjectBuilder(Project project)
+	private static ProjectBuilder _createProjectBuilder(
+			Project project, String className, List<String> filteredMethods,
+			String hostAddress, int port)
 		throws Exception {
 
 		project.setProperty(
@@ -107,6 +121,13 @@ public class BndBundleUtil {
 		project.setProperty(
 			"Import-Package",
 			StringUtil.merge(importPackages, StringPool.COMMA));
+
+		project.setProperty("Class-Name", className);
+		project.setProperty(
+			"Filtered-Methods",
+			StringUtil.merge(filteredMethods, StringPool.COMMA));
+		project.setProperty("Host-Address", hostAddress);
+		project.setProperty("Port", String.valueOf(port));
 
 		Set<String> includeResources = new LinkedHashSet<>();
 

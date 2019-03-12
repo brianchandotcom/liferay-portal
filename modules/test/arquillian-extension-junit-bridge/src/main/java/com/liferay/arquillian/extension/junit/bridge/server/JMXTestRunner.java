@@ -15,18 +15,25 @@
 package com.liferay.arquillian.extension.junit.bridge.server;
 
 import com.liferay.petra.io.unsync.UnsyncBufferedOutputStream;
+import com.liferay.petra.string.CharPool;
+import com.liferay.petra.string.StringUtil;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.ObjectOutputStream;
 
 import java.lang.annotation.Annotation;
 
 import java.net.InetAddress;
 import java.net.Socket;
+import java.net.URL;
+import java.net.UnknownHostException;
 
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
+import java.util.jar.Attributes;
+import java.util.jar.Manifest;
 
 import org.junit.AssumptionViolatedException;
 import org.junit.Ignore;
@@ -41,74 +48,52 @@ import org.junit.runners.model.TestClass;
 /**
  * @author Matthew Tambara
  */
-public class JMXTestRunner implements JMXTestRunnerMBean {
+public class JMXTestRunner {
 
 	public JMXTestRunner(ClassLoader classLoader) {
 		_classLoader = classLoader;
 	}
 
-	@Override
-	public void runTestMethod(
-		String className, String methodName, List<String> filterMethodNames,
-		InetAddress inetAddress, int port) {
+	public void runTestClass() throws ClassNotFoundException {
+		Manifest manifest = new Manifest();
 
-		ClientBridge clientBridge = new ClientBridge(inetAddress, port);
+		URL url = _classLoader.getResource("/META-INF/MANIFEST.MF");
 
-		Description description = Description.createTestDescription(
-			className, methodName);
+		try (InputStream inputStream = url.openStream()) {
+			manifest.read(inputStream);
+		}
+		catch (IOException ioe) {
+			throw new IllegalArgumentException(
+				"Unable to read test manifest", ioe);
+		}
 
-		clientBridge.bridge("fireTestStarted", description);
+		final Attributes attributes = manifest.getMainAttributes();
+
+		String hostName = attributes.getValue("Host-Name");
+
+		InetAddress inetAddress = null;
 
 		try {
-			TestClass testClass = new TestClass(
-				_classLoader.loadClass(className)) {
-
-				@Override
-				protected void scanAnnotatedMembers(
-					Map<Class<? extends Annotation>, List<FrameworkMethod>>
-						frameworkMethodsMap,
-					Map<Class<? extends Annotation>, List<FrameworkField>>
-						frameworkFieldsMap) {
-
-					super.scanAnnotatedMembers(
-						frameworkMethodsMap, frameworkFieldsMap);
-
-					List<FrameworkMethod> testFrameworkMethods =
-						frameworkMethodsMap.get(Test.class);
-
-					List<FrameworkMethod> ignoreFrameworkMethods =
-						frameworkMethodsMap.get(Ignore.class);
-
-					if (ignoreFrameworkMethods != null) {
-						testFrameworkMethods.removeAll(ignoreFrameworkMethods);
-					}
-
-					testFrameworkMethods.removeIf(
-						frameworkMethod -> filterMethodNames.contains(
-							frameworkMethod.getName()));
-
-					testFrameworkMethods.sort(
-						Comparator.comparing(FrameworkMethod::getName));
-				}
-
-			};
-
-			for (FrameworkMethod frameworkMethod :
-					testClass.getAnnotatedMethods(Test.class)) {
-
-				if (!methodName.equals(frameworkMethod.getName())) {
-					continue;
-				}
-
-				TestExecutorUtil.execute(
-					testClass, frameworkMethod.getMethod());
-			}
+			inetAddress = InetAddress.getByName(hostName);
 		}
-		catch (Throwable t) {
-			_processThrowable(t, clientBridge, description);
+		catch (UnknownHostException uhe) {
+			throw new IllegalArgumentException(
+				"Invalid host name " + hostName, uhe);
+		}
+
+		ClientBridge clientBridge = new ClientBridge(
+			inetAddress, Integer.valueOf(attributes.getValue("Port")));
+
+		String className = attributes.getValue("Class-Name");
+
+		List<String> filterMethodNames = StringUtil.split(
+			attributes.getValue("Filtered-Methods"), CharPool.COMMA);
+
+		try {
+			_runTestClass(clientBridge, className, filterMethodNames);
 		}
 		finally {
-			clientBridge.bridge("fireTestFinished", description);
+			clientBridge.bridge("kill", null);
 		}
 	}
 
@@ -143,6 +128,64 @@ public class JMXTestRunner implements JMXTestRunnerMBean {
 		}
 	}
 
+	private void _runTestClass(
+			ClientBridge clientBridge, String className,
+			List<String> filterMethodNames)
+		throws ClassNotFoundException {
+
+		TestClass testClass = new TestClass(_classLoader.loadClass(className)) {
+
+			@Override
+			protected void scanAnnotatedMembers(
+				Map<Class<? extends Annotation>, List<FrameworkMethod>>
+					frameworkMethodsMap,
+				Map<Class<? extends Annotation>, List<FrameworkField>>
+					frameworkFieldsMap) {
+
+				super.scanAnnotatedMembers(
+					frameworkMethodsMap, frameworkFieldsMap);
+
+				List<FrameworkMethod> testFrameworkMethods =
+					frameworkMethodsMap.get(Test.class);
+
+				List<FrameworkMethod> ignoreFrameworkMethods =
+					frameworkMethodsMap.get(Ignore.class);
+
+				if (ignoreFrameworkMethods != null) {
+					testFrameworkMethods.removeAll(ignoreFrameworkMethods);
+				}
+
+				testFrameworkMethods.removeIf(
+					frameworkMethod -> filterMethodNames.contains(
+						frameworkMethod.getName()));
+
+				testFrameworkMethods.sort(
+					Comparator.comparing(FrameworkMethod::getName));
+			}
+
+		};
+
+		for (FrameworkMethod frameworkMethod :
+				testClass.getAnnotatedMethods(Test.class)) {
+
+			Description description = Description.createTestDescription(
+				className, frameworkMethod.getName());
+
+			try {
+				clientBridge.bridge("fireTestStarted", description);
+
+				TestExecutorUtil.execute(
+					testClass, frameworkMethod.getMethod());
+			}
+			catch (Throwable t) {
+				_processThrowable(t, clientBridge, description);
+			}
+			finally {
+				clientBridge.bridge("fireTestFinished", description);
+			}
+		}
+	}
+
 	private final ClassLoader _classLoader;
 
 	private class ClientBridge {
@@ -158,7 +201,10 @@ public class JMXTestRunner implements JMXTestRunnerMBean {
 					new UnsyncBufferedOutputStream(socket.getOutputStream()))) {
 
 				objectOutputStream.writeUTF(methodName);
-				objectOutputStream.writeObject(object);
+
+				if (object != null) {
+					objectOutputStream.writeObject(object);
+				}
 			}
 			catch (IOException ioe) {
 				throw new RuntimeException(ioe);

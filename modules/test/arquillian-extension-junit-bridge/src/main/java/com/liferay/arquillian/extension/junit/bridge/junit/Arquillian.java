@@ -16,7 +16,6 @@ package com.liferay.arquillian.extension.junit.bridge.junit;
 
 import com.liferay.arquillian.extension.junit.bridge.client.BndBundleUtil;
 import com.liferay.arquillian.extension.junit.bridge.client.MBeans;
-import com.liferay.arquillian.extension.junit.bridge.server.JMXTestRunnerMBean;
 import com.liferay.petra.io.unsync.UnsyncBufferedInputStream;
 
 import java.io.Closeable;
@@ -110,25 +109,15 @@ public class Arquillian extends Runner implements Filterable {
 			return;
 		}
 
+		Thread thread = _startServerThread(runNotifier);
+
 		try (Closeable closeable = _installBundle()) {
 
 			// Enforce client side test class initialization
 
 			Class.forName(_clazz.getName(), true, _clazz.getClassLoader());
 
-			JMXTestRunnerMBean jmxTestRunnerMBean =
-				MBeans.getJmxTestRunnerMBean();
-
-			for (FrameworkMethod frameworkMethod : frameworkMethods) {
-				Thread thread = _startServerThread(runNotifier);
-
-				jmxTestRunnerMBean.runTestMethod(
-					_clazz.getName(), frameworkMethod.getName(),
-					_filteredSortedTestClass._filteredMethodNames, _inetAddress,
-					_port);
-
-				thread.join();
-			}
+			thread.join();
 		}
 		catch (Throwable t) {
 			runNotifier.fireTestFailure(new Failure(getDescription(), t));
@@ -154,7 +143,9 @@ public class Arquillian extends Runner implements Filterable {
 	}
 
 	private Closeable _installBundle() throws Exception {
-		Path path = BndBundleUtil.createBundle();
+		Path path = BndBundleUtil.createBundle(
+			_clazz.getName(), _filteredSortedTestClass._filteredMethodNames,
+			_inetAddress.getHostAddress(), _port);
 
 		URI uri = path.toUri();
 
@@ -194,7 +185,7 @@ public class Arquillian extends Runner implements Filterable {
 
 	static {
 		try {
-			_inetAddress = InetAddress.getByName("localhost");
+			_inetAddress = InetAddress.getByName("127.0.0.1");
 		}
 		catch (Exception e) {
 			throw new ExceptionInInitializerError(e);
@@ -269,18 +260,18 @@ public class Arquillian extends Runner implements Filterable {
 
 					String methodName = objectInputStream.readUTF();
 
+					if (methodName.equals("kill")) {
+						_serverSocket.close();
+
+						break;
+					}
+
 					Object object = objectInputStream.readObject();
 
 					Method method = clazz.getMethod(
 						methodName, object.getClass());
 
 					method.invoke(_runNotifier, object);
-
-					if (methodName.equals("fireTestFinished")) {
-						_serverSocket.close();
-
-						break;
-					}
 				}
 				catch (Exception e) {
 					throw new RuntimeException(e);

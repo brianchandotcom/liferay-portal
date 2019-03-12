@@ -17,7 +17,6 @@
 	]>}
 	{@param? _fields: ?}
 	{@param? _handleAssetOptionChange: any}
-	{@param? _handleBrowseAllAssetsButtonClick: any}
 	{@param? _handleFieldOptionChange: any}
 	{@param? _handleSourceTypeChange: any}
 	{@param? _handleUnmapButtonClick: any}
@@ -31,6 +30,7 @@
 		label: string
 	]>}
 	{@param? mappingFieldsURL: string}
+	{@param? spritemap: string}
 
 	<div class="floating-toolbar-mapping-panel">
 		{if $mappingFieldsURL}
@@ -49,12 +49,9 @@
 					{param handleAssetOptionChange: $_handleAssetOptionChange /}
 					{param selectedAssetEntryEncodedId: $item.editableValues.encodedId /}
 					{param assetEntries: $mappedAssetEntries /}
+					{param spritemap: $spritemap /}
 				{/call}
 			</div>
-
-			{call .browseAllAssetsButton}
-				{param handleBrowseAllAssetsButtonClick: $_handleBrowseAllAssetsButtonClick /}
-			{/call}
 		{/if}
 
 		<div class="form-group">
@@ -81,47 +78,51 @@
 	]>}
 	{@param? handleAssetOptionChange: any}
 	{@param? selectedAssetEntryEncodedId: string}
+	{@param? spritemap: string}
 
 	<label for="floatingToolbarMappingPanelAssetSelect">
 		{msg desc=""}content{/msg}
 	</label>
 
-	<select
-		class="form-control form-control-sm"
-		data-onchange="{$handleAssetOptionChange}"
-		id="floatingToolbarMappingPanelAssetSelect"
-	>
-		{call .selectOption}
-			{param optionId: '' /}
-			{param optionLabel: '-' /}
-			{param selectedId: $selectedAssetEntryEncodedId or '' /}
-		{/call}
+	<div class="d-flex">
+		<input
+			class="form-control form-control-sm mr-2"
+			disabled
+			type="text"
+			value="{$selectedAssetEntryEncodedId}"
+		/>
 
-		{if $assetEntries}
-			{foreach $assetEntry in $assetEntries}
-				{call .selectOption}
-					{param optionId: $assetEntry.encodedId /}
-					{param optionLabel: $assetEntry.assetEntryTitle /}
-					{param key: $assetEntry.encodedId /}
-					{param selectedId: $selectedAssetEntryEncodedId /}
-				{/call}
-			{/foreach}
-		{/if}
-	</select>
-{/template}
+		<div class="btn-group">
+			<button
+				aria-expanded="false"
+				aria-haspopup="true"
+				class="btn btn-monospaced btn-secondary btn-sm dropdown-toggle"
+				data-toggle="dropdown"
+				type="button"
+			>
+				<svg class="lexicon-icon">
+					<use xlink:href="{$spritemap ?: ''}#plus"></use>
+				</svg>
+			</button>
 
-/**
- * Browse all assets button
- */
-{template .browseAllAssetsButton}
-	{@param? handleBrowseAllAssetsButtonClick: any}
+			<div class="dropdown-menu">
+				<div class="dropdown-divider"></div>
 
-	<button
-		class="btn btn-unstyled btn-link link-secondary"
-		data-onclick="{$handleBrowseAllAssetsButtonClick}"
-	>
-		{msg desc=""}browse-all{/msg}
-	</button>
+				{if $assetEntries}
+					{foreach $assetEntry in $assetEntries}
+						<button
+							class="dropdown-item"
+							data-onclick="{$handleAssetOptionChange}"
+							key="{$assetEntry.encodedId}"
+							type="button"
+						>
+							{$assetEntry.assetEntryTitle}
+						</button>
+					{/foreach}
+				{/if}
+			</div>
+		</div>
+	</div>
 {/template}
 
 /**

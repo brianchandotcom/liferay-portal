@@ -1,3 +1,4 @@
+import 'clay-dropdown';
 import PortletBase from 'frontend-js-web/liferay/PortletBase.es';
 import Soy, {Config} from 'metal-soy';
 
@@ -161,16 +162,6 @@ class FloatingToolbarMappingPanel extends PortletBase {
 				this._loadFields();
 			}
 		);
-	}
-
-	/**
-	 * Handle browse all button click
-	 * @param {Event} event
-	 * @private
-	 * @review
-	 */
-	_handleBrowseAllAssetsButtonClick(event) {
-		this._loadFields();
 	}
 
 	/**
@@ -348,7 +339,8 @@ const ConnectedFloatingToolbarMappingPanel = getConnectedComponent(
 		'mappedAssetEntries',
 		'mappingFieldsURL',
 		'portletNamespace',
-		'selectedMappingTypes'
+		'selectedMappingTypes',
+		'spritemap'
 	]
 );
 

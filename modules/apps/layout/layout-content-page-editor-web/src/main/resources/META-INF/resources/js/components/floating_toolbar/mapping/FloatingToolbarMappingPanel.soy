@@ -11,7 +11,7 @@
 			mappedField: string
 		]
 	]}
-	{@param? _assetEntries: list<[
+	{@param? mappedAssetEntries: list<[
 		assetEntryTitle: string,
 		encodedId: string
 	]>}
@@ -48,7 +48,7 @@
 				{call .assetSelect}
 					{param handleAssetOptionChange: $_handleAssetOptionChange /}
 					{param selectedAssetEntryEncodedId: $item.editableValues.assetEntryEncodedId /}
-					{param assetEntries: $_assetEntries /}
+					{param assetEntries: $mappedAssetEntries /}
 				{/call}
 			</div>
 

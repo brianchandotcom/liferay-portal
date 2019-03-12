@@ -39,10 +39,7 @@ public interface DLOpenerGoogleDriveCompanyConfiguration {
 	 *
 	 * @return the client ID
 	 */
-	@Meta.AD(
-		description = "client-id-description", name = "client-id",
-		required = false
-	)
+	@Meta.AD(name = "client-id", required = false)
 	public String clientId();
 
 	/**
@@ -52,10 +49,7 @@ public interface DLOpenerGoogleDriveCompanyConfiguration {
 	 *
 	 * @return the client secret
 	 */
-	@Meta.AD(
-		description = "client-secret-description", name = "client-secret",
-		required = false
-	)
+	@Meta.AD(name = "client-secret", required = false)
 	public String clientSecret();
 
 }

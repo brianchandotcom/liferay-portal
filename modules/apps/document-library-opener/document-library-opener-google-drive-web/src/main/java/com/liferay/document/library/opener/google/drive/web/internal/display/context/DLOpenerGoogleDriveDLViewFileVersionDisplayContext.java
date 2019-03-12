@@ -129,7 +129,9 @@ public class DLOpenerGoogleDriveDLViewFileVersionDisplayContext
 		return menu;
 	}
 
-	private MenuItem _createEditInGoogleDocsMenuItem(String cmd) {
+	private MenuItem _createEditInGoogleDocsMenuItem(String cmd)
+		throws PortalException {
+
 		URLMenuItem urlMenuItem = new URLMenuItem();
 
 		urlMenuItem.setLabel(LanguageUtil.get(_resourceBundle, _getLabelKey()));
@@ -139,7 +141,7 @@ public class DLOpenerGoogleDriveDLViewFileVersionDisplayContext
 		return urlMenuItem;
 	}
 
-	private String _getActionURL(String cmd) {
+	private String _getActionURL(String cmd) throws PortalException {
 		LiferayPortletURL liferayPortletURL = PortletURLFactoryUtil.create(
 			request, _portal.getPortletId(request),
 			PortletRequest.ACTION_PHASE);
@@ -149,6 +151,12 @@ public class DLOpenerGoogleDriveDLViewFileVersionDisplayContext
 		liferayPortletURL.setParameter(Constants.CMD, cmd);
 		liferayPortletURL.setParameter(
 			"fileEntryId", String.valueOf(fileVersion.getFileEntryId()));
+
+		FileEntry fileEntry = fileVersion.getFileEntry();
+
+		liferayPortletURL.setParameter(
+			"folderId", String.valueOf(fileEntry.getFolderId()));
+
 		liferayPortletURL.setParameter(
 			"googleDocsRedirect", _portal.getCurrentCompleteURL(request));
 

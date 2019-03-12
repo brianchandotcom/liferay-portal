@@ -84,13 +84,10 @@ public class UpgradePortletId
 				if (portletIds.length > 1) {
 					portletIds = ArrayUtil.remove(portletIds, oldRootPortletId);
 
+					String mergedPortletIds = StringUtil.merge(portletIds);
+
 					typeSettingsProperties.setProperty(
-						key,
-						StringUtil.merge(
-							portletIds
-						).concat(
-							StringPool.COMMA
-						));
+						key, mergedPortletIds.concat(StringPool.COMMA));
 				}
 				else {
 					itr.remove();

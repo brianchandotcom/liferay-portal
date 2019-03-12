@@ -92,7 +92,7 @@
 	</entity>
 	<exceptions>
 		<exception>WorkflowMetricsSLADefinitionDuplicateName</exception>
-		<exception>WorkflowMetricsSLADefinitionInvalidDuration</exception>
+		<exception>WorkflowMetricsSLADefinitionDuration</exception>
 		<exception>WorkflowMetricsSLADefinitionName</exception>
 	</exceptions>
 </service-builder>

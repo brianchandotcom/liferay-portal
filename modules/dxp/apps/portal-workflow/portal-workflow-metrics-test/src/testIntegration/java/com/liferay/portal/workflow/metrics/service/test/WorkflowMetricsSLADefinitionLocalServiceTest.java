@@ -21,7 +21,7 @@ import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.workflow.metrics.exception.WorkflowMetricsSLADefinitionDuplicateNameException;
-import com.liferay.portal.workflow.metrics.exception.WorkflowMetricsSLADefinitionInvalidDurationException;
+import com.liferay.portal.workflow.metrics.exception.WorkflowMetricsSLADefinitionDurationException;
 import com.liferay.portal.workflow.metrics.exception.WorkflowMetricsSLADefinitionNameException;
 import com.liferay.portal.workflow.metrics.model.WorkflowMetricsSLADefinition;
 import com.liferay.portal.workflow.metrics.service.WorkflowMetricsSLADefinitionLocalServiceUtil;
@@ -70,8 +70,8 @@ public class WorkflowMetricsSLADefinitionLocalServiceTest {
 					new String[0], ServiceContextTestUtil.getServiceContext()));
 	}
 
-	@Test(expected = WorkflowMetricsSLADefinitionInvalidDurationException.class)
-	public void testAddSLADefinitionInvalidDuration1() throws Exception {
+	@Test(expected = WorkflowMetricsSLADefinitionDurationException.class)
+	public void testAddSLADefinitionDuration1() throws Exception {
 		_workflowMetricsSLADefinition.add(
 			WorkflowMetricsSLADefinitionLocalServiceUtil.
 				addWorkflowMetricsSLADefinition(
@@ -79,8 +79,8 @@ public class WorkflowMetricsSLADefinitionLocalServiceTest {
 					new String[0], ServiceContextTestUtil.getServiceContext()));
 	}
 
-	@Test(expected = WorkflowMetricsSLADefinitionInvalidDurationException.class)
-	public void testAddSLADefinitionInvalidDuration2() throws Exception {
+	@Test(expected = WorkflowMetricsSLADefinitionDurationException.class)
+	public void testAddSLADefinitionDuration2() throws Exception {
 		_workflowMetricsSLADefinition.add(
 			WorkflowMetricsSLADefinitionLocalServiceUtil.
 				addWorkflowMetricsSLADefinition(

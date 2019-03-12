@@ -22,25 +22,23 @@ import com.liferay.portal.kernel.exception.PortalException;
  * @author Brian Wing Shun Chan
  */
 @ProviderType
-public class WorkflowMetricsSLADefinitionInvalidDurationException
+public class WorkflowMetricsSLADefinitionDurationException
 	extends PortalException {
 
-	public WorkflowMetricsSLADefinitionInvalidDurationException() {
+	public WorkflowMetricsSLADefinitionDurationException() {
 	}
 
-	public WorkflowMetricsSLADefinitionInvalidDurationException(String msg) {
+	public WorkflowMetricsSLADefinitionDurationException(String msg) {
 		super(msg);
 	}
 
-	public WorkflowMetricsSLADefinitionInvalidDurationException(
+	public WorkflowMetricsSLADefinitionDurationException(
 		String msg, Throwable cause) {
 
 		super(msg, cause);
 	}
 
-	public WorkflowMetricsSLADefinitionInvalidDurationException(
-		Throwable cause) {
-
+	public WorkflowMetricsSLADefinitionDurationException(Throwable cause) {
 		super(cause);
 	}
 

@@ -20,7 +20,7 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.workflow.metrics.exception.WorkflowMetricsSLADefinitionDuplicateNameException;
-import com.liferay.portal.workflow.metrics.exception.WorkflowMetricsSLADefinitionInvalidDurationException;
+import com.liferay.portal.workflow.metrics.exception.WorkflowMetricsSLADefinitionDurationException;
 import com.liferay.portal.workflow.metrics.exception.WorkflowMetricsSLADefinitionNameException;
 import com.liferay.portal.workflow.metrics.model.WorkflowMetricsSLADefinition;
 import com.liferay.portal.workflow.metrics.service.base.WorkflowMetricsSLADefinitionLocalServiceBaseImpl;
@@ -134,7 +134,7 @@ public class WorkflowMetricsSLADefinitionLocalServiceImpl
 		}
 
 		if (duration <= 0) {
-			throw new WorkflowMetricsSLADefinitionInvalidDurationException();
+			throw new WorkflowMetricsSLADefinitionDurationException();
 		}
 
 		WorkflowMetricsSLADefinition workflowMetricsSLADefinition =

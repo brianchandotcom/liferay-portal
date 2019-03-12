@@ -14,7 +14,7 @@
 
 package com.liferay.portal.workflow.metrics.rest.internal.jaxrs.exception.mapper;
 
-import com.liferay.portal.workflow.metrics.exception.WorkflowMetricsSLADefinitionInvalidDurationException;
+import com.liferay.portal.workflow.metrics.exception.WorkflowMetricsSLADefinitionDurationException;
 
 import javax.ws.rs.ext.ExceptionMapper;
 
@@ -27,13 +27,13 @@ import org.osgi.service.component.annotations.Component;
 	property = {
 		"osgi.jaxrs.application.select=(osgi.jaxrs.name=Liferay.Portal.Workflow.Metrics.REST)",
 		"osgi.jaxrs.extension=true",
-		"osgi.jaxrs.name=Liferay.Portal.Workflow.Metrics.REST.WorkflowMetricsSLADefinitionInvalidDurationExceptionMapper"
+		"osgi.jaxrs.name=Liferay.Portal.Workflow.Metrics.REST.WorkflowMetricsSLADefinitionDurationExceptionMapper"
 	},
 	service = ExceptionMapper.class
 )
-public class WorkflowMetricsSLADefinitionInvalidDurationExceptionMapper
+public class WorkflowMetricsSLADefinitionDurationExceptionMapper
 	extends BaseWorkflowMetricsSLAExceptionMapper
-		<WorkflowMetricsSLADefinitionInvalidDurationException> {
+		<WorkflowMetricsSLADefinitionDurationException> {
 
 	@Override
 	public String getFieldName() {

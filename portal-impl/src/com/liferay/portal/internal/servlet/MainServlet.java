@@ -1189,7 +1189,9 @@ public class MainServlet extends HttpServlet {
 			return;
 		}
 
-		String redirect = PortalUtil.getPathMain().concat("/portal/login");
+		String mainPath = PortalUtil.getPathMain();
+
+		String redirect = mainPath.concat("/portal/login");
 
 		String currentURL = PortalUtil.getCurrentURL(request);
 

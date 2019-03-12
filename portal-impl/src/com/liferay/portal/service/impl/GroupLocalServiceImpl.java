@@ -1396,12 +1396,9 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 	@Override
 	@Transactional(enabled = false)
 	public Group fetchGroup(long companyId, String groupKey) {
-		Group group = _systemGroupsMap.get(
-			StringUtil.toHexString(
-				companyId
-			).concat(
-				groupKey
-			));
+		String companyIdHexString = StringUtil.toHexString(companyId);
+
+		Group group = _systemGroupsMap.get(companyIdHexString.concat(groupKey));
 
 		if (group != null) {
 			return group;
@@ -1657,12 +1654,9 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 	public Group getGroup(long companyId, String groupKey)
 		throws PortalException {
 
-		Group group = _systemGroupsMap.get(
-			StringUtil.toHexString(
-				companyId
-			).concat(
-				groupKey
-			));
+		String companyIdHexString = StringUtil.toHexString(companyId);
+
+		Group group = _systemGroupsMap.get(companyIdHexString.concat(groupKey));
 
 		if (group != null) {
 			return group;

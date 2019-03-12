@@ -102,7 +102,9 @@ public abstract class BaseUserDemoDataCreator implements UserDemoDataCreator {
 			}
 
 			if (Validator.isNull(emailAddress)) {
-				emailAddress = StringUtil.randomString().concat("@liferay.com");
+				String randomString = StringUtil.randomString();
+
+				emailAddress = randomString.concat("@liferay.com");
 			}
 		}
 

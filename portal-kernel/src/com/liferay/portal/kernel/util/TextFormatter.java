@@ -264,11 +264,10 @@ public class TextFormatter {
 		s = StringUtil.removeChar(s, CharPool.SPACE);
 
 		if (Character.isUpperCase(s.charAt(0))) {
-			s = StringUtil.toLowerCase(
-				s.substring(0, 1)
-			).concat(
-				s.substring(1)
-			);
+			String lowerCaseFirstChar = StringUtil.toLowerCase(
+				s.substring(0, 1));
+
+			s = lowerCaseFirstChar.concat(s.substring(1));
 		}
 
 		return s;
@@ -276,11 +275,10 @@ public class TextFormatter {
 
 	private static String _formatG(String s) {
 		if (Character.isLowerCase(s.charAt(0))) {
-			s = StringUtil.toUpperCase(
-				s.substring(0, 1)
-			).concat(
-				s.substring(1)
-			);
+			String upperCaseFirstChar = StringUtil.toUpperCase(
+				s.substring(0, 1));
+
+			s = upperCaseFirstChar.concat(s.substring(1));
 		}
 
 		return s;
@@ -324,11 +322,10 @@ public class TextFormatter {
 		if (Character.isUpperCase(s.charAt(0)) &&
 			Character.isLowerCase(s.charAt(1))) {
 
-			return s = StringUtil.toLowerCase(
-				s.substring(0, 1)
-			).concat(
-				s.substring(1)
-			);
+			String lowerCaseFirstChar = StringUtil.toLowerCase(
+				s.substring(0, 1));
+
+			return s = lowerCaseFirstChar.concat(s.substring(1));
 		}
 
 		StringBuilder sb = new StringBuilder(s);
@@ -381,11 +378,9 @@ public class TextFormatter {
 			return s;
 		}
 
-		return s = StringUtil.toLowerCase(
-			s.substring(0, 1)
-		).concat(
-			s.substring(1)
-		);
+		String lowerCaseFirstChar = StringUtil.toLowerCase(s.substring(0, 1));
+
+		return s = lowerCaseFirstChar.concat(s.substring(1));
 	}
 
 	private static String _formatM(String s) {

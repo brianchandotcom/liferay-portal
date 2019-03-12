@@ -280,10 +280,13 @@ public class StringParser {
 			pattern = StringUtil.replace(
 				pattern, chunk, stringParserFragment.getToken());
 
+			String stringParserFragmentPattern =
+				stringParserFragment.getPattern();
+
 			regex = StringUtil.replace(
 				regex, escapeRegex(chunk),
 				StringPool.OPEN_PARENTHESIS.concat(
-					stringParserFragment.getPattern().concat(
+					stringParserFragmentPattern.concat(
 						StringPool.CLOSE_PARENTHESIS)));
 		}
 

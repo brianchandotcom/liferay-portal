@@ -70,11 +70,9 @@ public class LiferayOAuthStoreProvider implements Provider<OAuthStore> {
 
 		String consumerSecret = null;
 
-		String path = PropsUtil.get(
-			PropsKeys.LIFERAY_HOME
-		).concat(
-			_KEY_DIR
-		);
+		String liferayHome = PropsUtil.get(PropsKeys.LIFERAY_HOME);
+
+		String path = liferayHome.concat(_KEY_DIR);
 
 		path = StringUtil.removeChar(path, CharPool.QUOTE);
 

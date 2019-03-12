@@ -64,9 +64,11 @@ public class AssetCategoriesSelectorTag extends ComponentRendererTag {
 			putValue("id", _getNamespace() + "assetCategoriesSelector");
 			putValue("inputName", _getInputName());
 			putValue("portletURL", getPortletURL().toString());
-			putValue(
-				"spritemap",
-				themeDisplay.getPathThemeImages().concat("/clay/icons.svg"));
+
+			String pathThemeImages = themeDisplay.getPathThemeImages();
+
+			putValue("spritemap", pathThemeImages.concat("/clay/icons.svg"));
+
 			putValue("vocabularies", getVocabularies());
 		}
 		catch (Exception e) {

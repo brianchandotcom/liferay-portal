@@ -44,11 +44,9 @@ public class DefaultCollatorImpl implements Collator {
 				String suggestion = suggestions.get(0);
 
 				if (Character.isUpperCase(token.charAt(0))) {
-					suggestion = StringUtil.toUpperCase(
-						suggestion.substring(0, 1)
-					).concat(
-						suggestion.substring(1)
-					);
+					suggestion =
+						StringUtil.toUpperCase(suggestion.substring(0, 1)) +
+							suggestion.substring(1);
 				}
 
 				sb.append(suggestion);

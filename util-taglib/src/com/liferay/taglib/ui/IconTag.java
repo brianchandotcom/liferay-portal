@@ -661,7 +661,9 @@ public class IconTag extends IncludeTag {
 		}
 
 		if (isAUIImage()) {
-			return themeDisplay.getPathThemeImages().concat("/spacer.png");
+			String pathThemeImages = themeDisplay.getPathThemeImages();
+
+			return pathThemeImages.concat("/spacer.png");
 		}
 		else if (Validator.isNotNull(_image)) {
 			StringBundler sb = new StringBundler(4);

@@ -16,16 +16,13 @@ package com.liferay.portal.search.highlight;
 
 import aQute.bnd.annotation.ProviderType;
 
-import java.util.List;
-
 /**
- * @author Michael C. Han
+ * @author Wade Cao
+ * @author André de Oliveira
  */
 @ProviderType
-public interface HighlightField {
+public interface HighlightFieldBuilderFactory {
 
-	public List<String> getFragments();
-
-	public String getName();
+	public HighlightFieldBuilder builder();
 
 }

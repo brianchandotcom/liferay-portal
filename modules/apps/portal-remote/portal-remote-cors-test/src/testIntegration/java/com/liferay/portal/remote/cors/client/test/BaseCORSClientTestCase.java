@@ -42,7 +42,7 @@ import org.osgi.framework.BundleActivator;
 /**
  * @author Marta Medio
  */
-public abstract class BaseCorsClientTestCase {
+public abstract class BaseCORSClientTestCase {
 
 	public static Archive<?> getArchive(
 			Class<? extends BundleActivator> bundleActivatorClass)

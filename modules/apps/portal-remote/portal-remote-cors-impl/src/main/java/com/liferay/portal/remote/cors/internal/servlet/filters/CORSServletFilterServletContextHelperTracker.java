@@ -22,7 +22,7 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.remote.cors.configuration.WebContextCORSConfiguration;
-import com.liferay.portal.remote.cors.internal.CorsSupport;
+import com.liferay.portal.remote.cors.internal.CORSSupport;
 
 import java.util.Dictionary;
 import java.util.Map;
@@ -63,7 +63,7 @@ public class CORSServletFilterServletContextHelperTracker {
 			ConfigurableUtil.createConfigurable(
 				WebContextCORSConfiguration.class, properties);
 
-		_corsHeaders = CorsSupport.buildCorsHeaders(
+		_corsHeaders = CORSSupport.buildCorsHeaders(
 			webContextCORSConfiguration.headers());
 		_filterMappingUrlPatterns =
 			webContextCORSConfiguration.filterMappingURLPatterns();

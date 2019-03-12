@@ -16,8 +16,8 @@ package com.liferay.portal.remote.cors.internal.servlet.filters;
 
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.util.HashMapDictionary;
-import com.liferay.portal.remote.cors.configuration.PortalCorsConfiguration;
-import com.liferay.portal.remote.cors.internal.CorsSupport;
+import com.liferay.portal.remote.cors.configuration.PortalCORSConfiguration;
+import com.liferay.portal.remote.cors.internal.CORSSupport;
 
 import java.util.Dictionary;
 import java.util.Map;
@@ -35,7 +35,7 @@ import org.osgi.service.component.annotations.Deactivate;
  * @author Tomas Polesovsky
  */
 @Component(
-	configurationPid = "com.liferay.portal.remote.cors.configuration.PortalCorsConfiguration",
+	configurationPid = "com.liferay.portal.remote.cors.configuration.PortalCORSConfiguration",
 	configurationPolicy = ConfigurationPolicy.OPTIONAL, immediate = true,
 	service = {}
 )
@@ -45,15 +45,15 @@ public class ConfigurablePortalCORSServletFilterPublisher {
 	protected void activate(
 		BundleContext bundleContext, Map<String, Object> properties) {
 
-		PortalCorsConfiguration portalCorsConfiguration =
+		PortalCORSConfiguration portalCorsConfiguration =
 			ConfigurableUtil.createConfigurable(
-				PortalCorsConfiguration.class, properties);
+				PortalCORSConfiguration.class, properties);
 
 		if (!portalCorsConfiguration.enabled()) {
 			return;
 		}
 
-		Map<String, String> corsHeaders = CorsSupport.buildCorsHeaders(
+		Map<String, String> corsHeaders = CORSSupport.buildCorsHeaders(
 			portalCorsConfiguration.headers());
 
 		CORSServletFilter corsServletFilter = new CORSServletFilter();

@@ -16,7 +16,7 @@ package com.liferay.portal.remote.cors.internal.servlet.filters;
 
 import com.liferay.portal.kernel.servlet.HttpMethods;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.remote.cors.internal.CorsSupport;
+import com.liferay.portal.remote.cors.internal.CORSSupport;
 
 import java.io.IOException;
 
@@ -94,6 +94,6 @@ public class CORSServletFilter implements Filter {
 		corsSupport.setCorsHeaders(corsHeaders);
 	}
 
-	protected final CorsSupport corsSupport = new CorsSupport();
+	protected final CORSSupport corsSupport = new CORSSupport();
 
 }

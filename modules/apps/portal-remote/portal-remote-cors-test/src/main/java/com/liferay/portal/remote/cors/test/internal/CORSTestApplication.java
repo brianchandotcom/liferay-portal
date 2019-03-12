@@ -28,7 +28,7 @@ import javax.ws.rs.core.Application;
  */
 @CORS
 @Path("/cors-app")
-public class CorsTestApplication extends Application {
+public class CORSTestApplication extends Application {
 
 	@Override
 	public Set<Object> getSingletons() {

@@ -31,7 +31,7 @@ import java.util.function.Function;
  * @author Carlos Sierra Andrés
  * @author Tomas Polesovsky
  */
-public class CorsSupport {
+public class CORSSupport {
 
 	public static final String ACCESS_CONTROL_ALLOW_CREDENTIALS =
 		"Access-Control-Allow-Credentials";
@@ -200,7 +200,7 @@ public class CorsSupport {
 		}
 	}
 
-	private static final Log _log = LogFactoryUtil.getLog(CorsSupport.class);
+	private static final Log _log = LogFactoryUtil.getLog(CORSSupport.class);
 
 	private final Map<String, String> _corsHeaders = new HashMap<>();
 

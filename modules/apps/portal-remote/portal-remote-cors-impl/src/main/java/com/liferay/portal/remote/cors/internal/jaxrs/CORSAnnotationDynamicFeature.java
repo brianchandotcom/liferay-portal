@@ -18,7 +18,7 @@ import com.liferay.petra.reflect.AnnotationLocator;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.remote.cors.annotation.CORS;
-import com.liferay.portal.remote.cors.internal.CorsSupport;
+import com.liferay.portal.remote.cors.internal.CORSSupport;
 
 import java.io.IOException;
 
@@ -50,14 +50,14 @@ import org.osgi.service.component.annotations.ServiceScope;
 	},
 	scope = ServiceScope.PROTOTYPE, service = DynamicFeature.class
 )
-public class CorsAnnotationDynamicFeature implements DynamicFeature {
+public class CORSAnnotationDynamicFeature implements DynamicFeature {
 
 	@Override
 	public void configure(ResourceInfo resourceInfo, FeatureContext context) {
 		CORS cors = getCors(resourceInfo);
 
 		if (cors != null) {
-			CorsSupport corsSupport = getCorsSupport(cors);
+			CORSSupport corsSupport = getCorsSupport(cors);
 
 			context.register(
 				new CorsPreflighContainerRequestFilter(corsSupport));
@@ -66,7 +66,7 @@ public class CorsAnnotationDynamicFeature implements DynamicFeature {
 	}
 
 	protected ContainerResponseFilter buildCorsResponseFilter(
-		CorsSupport corsSupport) {
+		CORSSupport corsSupport) {
 
 		return (containerRequestContext, containerResponseContext) -> {
 			MultivaluedMap<String, String> requestHeaders =
@@ -93,27 +93,27 @@ public class CorsAnnotationDynamicFeature implements DynamicFeature {
 			CORS.class);
 	}
 
-	protected CorsSupport getCorsSupport(CORS cors) {
-		CorsSupport corsSupport = new CorsSupport();
+	protected CORSSupport getCorsSupport(CORS cors) {
+		CORSSupport corsSupport = new CORSSupport();
 
 		Map<String, String> corsHeaders = new HashMap<>();
 
 		corsHeaders.put(
-			CorsSupport.ACCESS_CONTROL_ALLOW_ORIGIN, cors.allowOrigin());
+			CORSSupport.ACCESS_CONTROL_ALLOW_ORIGIN, cors.allowOrigin());
 		corsHeaders.put(
-			CorsSupport.ACCESS_CONTROL_ALLOW_CREDENTIALS,
+			CORSSupport.ACCESS_CONTROL_ALLOW_CREDENTIALS,
 			String.valueOf(cors.allowCredentials()));
 		corsHeaders.put(
-			CorsSupport.ACCESS_CONTROL_ALLOW_HEADERS,
+			CORSSupport.ACCESS_CONTROL_ALLOW_HEADERS,
 			StringUtil.merge(cors.allowHeaders(), StringPool.COMMA));
 		corsHeaders.put(
-			CorsSupport.ACCESS_CONTROL_ALLOW_METHODS,
+			CORSSupport.ACCESS_CONTROL_ALLOW_METHODS,
 			StringUtil.merge(cors.allowMethods(), StringPool.COMMA));
 		corsHeaders.put(
-			CorsSupport.ACCESS_CONTROL_EXPOSE_HEADERS,
+			CORSSupport.ACCESS_CONTROL_EXPOSE_HEADERS,
 			StringUtil.merge(cors.exposeHeaders(), StringPool.COMMA));
 		corsHeaders.put(
-			CorsSupport.ACCESS_CONTROL_MAX_AGE, String.valueOf(cors.maxAge()));
+			CORSSupport.ACCESS_CONTROL_MAX_AGE, String.valueOf(cors.maxAge()));
 
 		corsSupport.setCorsHeaders(corsHeaders);
 
@@ -127,7 +127,7 @@ public class CorsAnnotationDynamicFeature implements DynamicFeature {
 	private static class CorsPreflighContainerRequestFilter
 		implements ContainerRequestFilter {
 
-		public CorsPreflighContainerRequestFilter(CorsSupport corsSupport) {
+		public CorsPreflighContainerRequestFilter(CORSSupport corsSupport) {
 			_corsSupport = corsSupport;
 		}
 
@@ -158,7 +158,7 @@ public class CorsAnnotationDynamicFeature implements DynamicFeature {
 			}
 		}
 
-		private final CorsSupport _corsSupport;
+		private final CORSSupport _corsSupport;
 
 	}
 

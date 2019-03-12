@@ -16,7 +16,7 @@ package com.liferay.portal.remote.cors.client.test;
 
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.HashMapDictionary;
-import com.liferay.portal.remote.cors.test.internal.CorsTestApplication;
+import com.liferay.portal.remote.cors.test.internal.CORSTestApplication;
 import com.liferay.portal.remote.cors.test.internal.activator.BaseTestPreparatorBundleActivator;
 
 import javax.ws.rs.HttpMethod;
@@ -38,12 +38,12 @@ import org.junit.runner.RunWith;
  */
 @RunAsClient
 @RunWith(Arquillian.class)
-public class CorsAnnotationClientTest extends BaseCorsClientTestCase {
+public class CORSAnnotationClientTest extends BaseCORSClientTestCase {
 
 	@Deployment
 	public static Archive<?> getDeployment() throws Exception {
-		return BaseCorsClientTestCase.getArchive(
-			CorsApplicationTestPreparatorBundleActivator.class);
+		return BaseCORSClientTestCase.getArchive(
+			CORSAnnotationTestPreparatorBundleActivator.class);
 	}
 
 	@Test
@@ -72,7 +72,7 @@ public class CorsAnnotationClientTest extends BaseCorsClientTestCase {
 			StringPool.BLANK, response.readEntity(String.class));
 	}
 
-	public static class CorsApplicationTestPreparatorBundleActivator
+	public static class CORSAnnotationTestPreparatorBundleActivator
 		extends BaseTestPreparatorBundleActivator {
 
 		protected void prepareTest() {
@@ -82,7 +82,7 @@ public class CorsAnnotationClientTest extends BaseCorsClientTestCase {
 			properties.put("liferay.cors.annotation", true);
 
 			registerJaxRsApplication(
-				new CorsTestApplication(), "test", properties);
+				new CORSTestApplication(), "test", properties);
 		}
 
 	}

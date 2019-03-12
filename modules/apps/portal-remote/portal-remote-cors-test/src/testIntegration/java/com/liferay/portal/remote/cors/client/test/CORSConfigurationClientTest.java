@@ -16,7 +16,7 @@ package com.liferay.portal.remote.cors.client.test;
 
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.HashMapDictionary;
-import com.liferay.portal.remote.cors.test.internal.CorsTestApplication;
+import com.liferay.portal.remote.cors.test.internal.CORSTestApplication;
 import com.liferay.portal.remote.cors.test.internal.activator.BaseTestPreparatorBundleActivator;
 
 import javax.ws.rs.HttpMethod;
@@ -38,12 +38,12 @@ import org.junit.runner.RunWith;
  */
 @RunAsClient
 @RunWith(Arquillian.class)
-public class CorsConfigurationClientTest extends BaseCorsClientTestCase {
+public class CORSConfigurationClientTest extends BaseCORSClientTestCase {
 
 	@Deployment
 	public static Archive<?> getDeployment() throws Exception {
-		return BaseCorsClientTestCase.getArchive(
-			CorsApplicationTestPreparatorBundleActivator.class);
+		return BaseCORSClientTestCase.getArchive(
+			CORSConfigurationTestPreparatorBundleActivator.class);
 	}
 
 	@Test
@@ -137,7 +137,7 @@ public class CorsConfigurationClientTest extends BaseCorsClientTestCase {
 			StringPool.BLANK, response.readEntity(String.class));
 	}
 
-	public static class CorsApplicationTestPreparatorBundleActivator
+	public static class CORSConfigurationTestPreparatorBundleActivator
 		extends BaseTestPreparatorBundleActivator {
 
 		protected void prepareTest() {
@@ -147,7 +147,7 @@ public class CorsConfigurationClientTest extends BaseCorsClientTestCase {
 			properties.put("osgi.jaxrs.name", "test-cors");
 
 			registerJaxRsApplication(
-				new CorsTestApplication(), "cors", properties);
+				new CORSTestApplication(), "cors", properties);
 
 			properties = new HashMapDictionary<>();
 
@@ -165,7 +165,7 @@ public class CorsConfigurationClientTest extends BaseCorsClientTestCase {
 			properties.put("osgi.jaxrs.name", "test-cors-url");
 
 			registerJaxRsApplication(
-				new CorsTestApplication(), "test-cors-url", properties);
+				new CORSTestApplication(), "test-cors-url", properties);
 
 			properties = new HashMapDictionary<>();
 
@@ -180,7 +180,7 @@ public class CorsConfigurationClientTest extends BaseCorsClientTestCase {
 				properties);
 
 			registerJaxRsApplication(
-				new CorsTestApplication(), "no-cors",
+				new CORSTestApplication(), "no-cors",
 				new HashMapDictionary<>());
 
 			properties = new HashMapDictionary<>();
@@ -188,7 +188,7 @@ public class CorsConfigurationClientTest extends BaseCorsClientTestCase {
 			properties.put("osgi.jaxrs.name", "test-cors-wrong-url");
 
 			registerJaxRsApplication(
-				new CorsTestApplication(), "test-cors-wrong-url", properties);
+				new CORSTestApplication(), "test-cors-wrong-url", properties);
 
 			properties = new HashMapDictionary<>();
 

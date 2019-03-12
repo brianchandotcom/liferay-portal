@@ -28,10 +28,10 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 )
 @Meta.OCD(
 	description = "portal-cors-configuration-description", factory = true,
-	id = "com.liferay.portal.remote.cors.configuration.PortalCorsConfiguration",
+	id = "com.liferay.portal.remote.cors.configuration.PortalCORSConfiguration",
 	localization = "content/Language", name = "portal-cors-configuration"
 )
-public interface PortalCorsConfiguration {
+public interface PortalCORSConfiguration {
 
 	@Meta.AD(deflt = "true", name = "enabled", required = false)
 	public boolean enabled();

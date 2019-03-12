@@ -6,11 +6,7 @@ definition {
 			MetalComponent.waitForManagementBar();
 		}
 
-		MouseOver(locator1 = "Icon#CURRENT_DISPLAY_STYLE");
-
-		AssertElementPresent(locator1 = "Tooltip#GENERIC_TOOLTIP");
-
-		AssertElementPresent(locator1 = "Tooltip#GENERIC_TOOLTIP_VISIBLE");
+		Click.clickNoMouseOver(locator1 = "Icon#CURRENT_DISPLAY_STYLE");
 
 		Click.clickNoMouseOver(
 			locator1 = "Icon#CURRENT_DISPLAY_STYLE"
@@ -32,7 +28,7 @@ definition {
 			MetalComponent.waitForManagementBar();
 		}
 
-		Click(
+		Click.clickNoMouseOver(
 			locator1 = "Button#PLUS"
 		);
 	}
@@ -46,11 +42,7 @@ definition {
 	}
 
 	macro clickInfo {
-		MouseOver(locator1 = "Icon#INFO");
-
-		AssertElementPresent(locator1 = "Tooltip#GENERIC_TOOLTIP");
-
-		AssertElementPresent(locator1 = "Tooltip#GENERIC_TOOLTIP_VISIBLE");
+		Click.clickNoMouseOver(locator1 = "Icon#INFO");
 
 		Click.clickNoMouseOver(
 			locator1 = "Icon#INFO"

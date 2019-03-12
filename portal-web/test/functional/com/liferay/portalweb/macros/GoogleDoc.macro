@@ -8,9 +8,13 @@ definition {
 	}
 
 	macro editTitleInGoogleDoc {
+		SelectFrame(locator1 = "IFrame#GOOGLE_DOC");
+
 		Click(locator1 = "GoogleDoc#TITLE");
 
 		Type(locator1 = "GoogleDoc#TITLE", value1 = "${dmDocumentTitle}");
+
+		SelectFrameTop();
 	}
 
 	macro gotoEdit {

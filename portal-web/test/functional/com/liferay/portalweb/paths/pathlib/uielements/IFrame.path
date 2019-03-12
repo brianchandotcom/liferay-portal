@@ -44,6 +44,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>GOOGLE_DOC</td>
+	<td>//iframe[contains(@class,'google-docs')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>IFRAME_TITLE</td>
 	<td>//div[contains(@class,'modal-header')]/h3[@class='modal-title' and contains(.,'${key_iframeTitle}')]</td>
 	<td></td>

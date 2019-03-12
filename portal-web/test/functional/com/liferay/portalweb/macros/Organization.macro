@@ -120,9 +120,9 @@ definition {
 
 		Type(locator1 = "TextInput#NAME", value1 = "${orgName}");
 
-		Button.clickSave();
+		ScrollWebElementIntoView(locator1 = "Button#SAVE");
 
-		Pause(locator1 = "4000");
+		Button.clickSave();
 
 		if ("${organizationName}" == "Duplicate") {
 			Alert.viewRequestFailedToComplete();

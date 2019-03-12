@@ -180,30 +180,6 @@ public class ContentField {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean repeatable;
 
-	public String getRepeatableId() {
-		return repeatableId;
-	}
-
-	public void setRepeatableId(String repeatableId) {
-		this.repeatableId = repeatableId;
-	}
-
-	@JsonIgnore
-	public void setRepeatableId(
-		UnsafeSupplier<String, Exception> repeatableIdUnsafeSupplier) {
-
-		try {
-			repeatableId = repeatableIdUnsafeSupplier.get();
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected String repeatableId;
-
 	public Value getValue() {
 		return value;
 	}
@@ -283,13 +259,6 @@ public class ContentField {
 		sb.append("\"repeatable\": ");
 
 		sb.append(repeatable);
-		sb.append(", ");
-
-		sb.append("\"repeatableId\": ");
-
-		sb.append("\"");
-		sb.append(repeatableId);
-		sb.append("\"");
 		sb.append(", ");
 
 		sb.append("\"value\": ");

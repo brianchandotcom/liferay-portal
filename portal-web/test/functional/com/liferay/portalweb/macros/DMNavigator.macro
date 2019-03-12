@@ -179,7 +179,7 @@ definition {
 	}
 
 	macro gotoURLDetail {
-		Click(locator1 = "Icon#INFO");
+		DMDocument.expandInfo();
 
 		Click(locator1 = "DocumentsAndMediaDocument#DETAILS_URL");
 	}

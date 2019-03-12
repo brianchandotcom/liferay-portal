@@ -39,7 +39,7 @@ import org.osgi.service.component.annotations.ServiceScope;
 public class SLAResourceImpl extends BaseSLAResourceImpl {
 
 	@Override
-	public boolean deleteProcessSla(Long processId, Long slaId)
+	public boolean deleteProcessSLA(Long processId, Long slaId)
 		throws Exception {
 
 		_workflowMetricsSLADefinitionLocalService.
@@ -49,14 +49,14 @@ public class SLAResourceImpl extends BaseSLAResourceImpl {
 	}
 
 	@Override
-	public SLA getProcessSla(Long processId, Long slaId) throws Exception {
+	public SLA getProcessSLA(Long processId, Long slaId) throws Exception {
 		return _toSLA(
 			_workflowMetricsSLADefinitionLocalService.
 				getWorkflowMetricsSLADefinition(slaId));
 	}
 
 	@Override
-	public Page<SLA> getProcessSlasPage(Long processId, Pagination pagination)
+	public Page<SLA> getProcessSLAsPage(Long processId, Pagination pagination)
 		throws Exception {
 
 		return Page.of(
@@ -72,7 +72,7 @@ public class SLAResourceImpl extends BaseSLAResourceImpl {
 	}
 
 	@Override
-	public SLA postProcessSla(Long processId, SLA sla) throws Exception {
+	public SLA postProcessSLA(Long processId, SLA sla) throws Exception {
 		return _toSLA(
 			_workflowMetricsSLADefinitionLocalService.
 				addWorkflowMetricsSLADefinition(
@@ -82,7 +82,7 @@ public class SLAResourceImpl extends BaseSLAResourceImpl {
 	}
 
 	@Override
-	public SLA putProcessSla(Long processId, Long slaId, SLA sla)
+	public SLA putProcessSLA(Long processId, Long slaId, SLA sla)
 		throws Exception {
 
 		return _toSLA(

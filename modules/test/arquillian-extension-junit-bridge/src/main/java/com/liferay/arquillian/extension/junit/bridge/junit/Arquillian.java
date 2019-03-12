@@ -111,13 +111,15 @@ public class Arquillian extends Runner implements Filterable {
 
 		Thread thread = _startServerThread(runNotifier);
 
-		try (Closeable closeable = _installBundle()) {
+		try {
 
 			// Enforce client side test class initialization
 
 			Class.forName(_clazz.getName(), true, _clazz.getClassLoader());
 
-			thread.join();
+			try (Closeable closeable = _installBundle()) {
+				thread.join();
+			}
 		}
 		catch (Throwable t) {
 			runNotifier.fireTestFailure(new Failure(getDescription(), t));

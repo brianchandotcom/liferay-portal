@@ -8,10 +8,11 @@
 	{@param? availableSegmentsEntries: ?}
 	{@param? _handleToggleContextualSidebarButtonClick: any}
 	{@param? classPK: ?}
+	{@param? draft: bool}
 	{@param? fragmentsEditorSidebarVisible: bool}
 	{@param? lastSaveDate: string}
 	{@param? portletNamespace: string}
-	{@param? publishLayoutPageTemplateEntryURL: string}
+	{@param? publishURL: string}
 	{@param? redirectURL: string}
 	{@param? savingChanges: bool}
 	{@param? spritemap: string}
@@ -49,8 +50,10 @@
 					<span class="navbar-text">
 						{if $savingChanges}
 							{msg desc=""}saving-changes{/msg}
-						{elseif $lastSaveDate}
+						{elseif $lastSaveDate and not $draft}
 							{msg desc=""}changes-saved-at-{$lastSaveDate}{/msg}
+						{elseif $lastSaveDate and $draft}
+							{msg desc=""}draft-saved-at-{$lastSaveDate}{/msg}
 						{/if}
 					</span>
 				</li>
@@ -63,9 +66,9 @@
 					</li>
 				{/if}
 
-				{if $publishLayoutPageTemplateEntryURL}
+				{if $publishURL}
 					<li class="nav-item">
-						<form action="{$publishLayoutPageTemplateEntryURL}" method="POST">
+						<form action="{$publishURL}" method="POST">
 							<input
 								name="{$portletNamespace ?: ''}classPK"
 								type="hidden"
@@ -78,8 +81,12 @@
 								value="{$redirectURL}"
 							/>
 
-							<button class="btn btn-outline-light nav-btn" type="submit">
-								{msg desc=""}publish{/msg}
+							<button class="btn btn-primary nav-btn" type="submit">
+								{if $draft}
+									{msg desc=""}publish-page{/msg}
+								{else}
+									{msg desc=""}publish{/msg}
+								{/if}
 							</button>
 						</form>
 					</li>

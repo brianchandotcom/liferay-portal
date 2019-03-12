@@ -44,7 +44,7 @@ const ConnectedFragmentsEditorToolbar = getConnectedComponent(
 		'fragmentsEditorSidebarVisible',
 		'lastSaveDate',
 		'portletNamespace',
-		'publishLayoutPageTemplateEntryURL',
+		'publishURL',
 		'redirectURL',
 		'savingChanges',
 		'spritemap',

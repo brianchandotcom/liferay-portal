@@ -777,6 +777,16 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 			layout.getCompanyId(), Layout.class.getName(),
 			ResourceConstants.SCOPE_INDIVIDUAL, layout.getPlid());
 
+		// Draft layout
+
+		Layout draftLayout = fetchLayout(
+			classNameLocalService.getClassNameId(Layout.class),
+			layout.getPlid());
+
+		if (draftLayout != null) {
+			layoutLocalService.deleteLayout(draftLayout);
+		}
+
 		// Layout
 
 		layout = layoutPersistence.remove(layout);
@@ -1252,6 +1262,11 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 		long groupId, boolean privateLayout, long layoutId) {
 
 		return layoutPersistence.fetchByG_P_L(groupId, privateLayout, layoutId);
+	}
+
+	@Override
+	public Layout fetchLayout(long classNameId, long classPK) {
+		return layoutPersistence.fetchByC_C(classNameId, classPK);
 	}
 
 	@Override

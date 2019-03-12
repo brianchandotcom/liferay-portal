@@ -16,6 +16,7 @@ package com.liferay.layout.content.page.editor.web.internal.display.context;
 
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.service.AssetEntryLocalServiceUtil;
+import com.liferay.fragment.constants.FragmentEntryLinkConstants;
 import com.liferay.fragment.constants.FragmentEntryTypeConstants;
 import com.liferay.fragment.contributor.FragmentCollectionContributor;
 import com.liferay.fragment.contributor.FragmentCollectionContributorTracker;
@@ -46,6 +47,7 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.model.PortletApp;
 import com.liferay.portal.kernel.model.PortletCategory;
@@ -54,11 +56,13 @@ import com.liferay.portal.kernel.portlet.PortletConfigFactoryUtil;
 import com.liferay.portal.kernel.portlet.PortletIdCodec;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.service.PortletLocalServiceUtil;
 import com.liferay.portal.kernel.service.PortletPreferencesLocalServiceUtil;
 import com.liferay.portal.kernel.service.permission.PortletPermissionUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -185,6 +189,13 @@ public class ContentPageEditorDisplayContext {
 		soyContext.put(
 			"mappedAssetEntries", _getMappedAssetEntriesSoyContexts());
 		soyContext.put("portletNamespace", _renderResponse.getNamespace());
+
+		if (classNameId == PortalUtil.getClassNameId(Layout.class)) {
+			soyContext.put(
+				"publishURL",
+				getFragmentEntryActionURL("/content_layout/publish_layout"));
+		}
+
 		soyContext.put(
 			"renderFragmentEntryURL",
 			getFragmentEntryActionURL("/content_layout/render_fragment_entry"));
@@ -213,6 +224,8 @@ public class ContentPageEditorDisplayContext {
 
 		soyContext.put(
 			"availableLanguages", _getAvailableLanguagesSoyContext());
+		soyContext.put(
+			"draft", classNameId == PortalUtil.getClassNameId(Layout.class));
 		soyContext.put("classPK", themeDisplay.getPlid());
 		soyContext.put("defaultLanguageId", themeDisplay.getLanguageId());
 		soyContext.put("defaultSegmentsEntryId", _getDefaultSegmentsEntryId());
@@ -400,6 +413,16 @@ public class ContentPageEditorDisplayContext {
 			SegmentsExperience segmentsExperience =
 				SegmentsExperienceLocalServiceUtil.getDefaultSegmentsExperience(
 					getGroupId(), classNameId, classPK, true);
+
+			if (classNameId == PortalUtil.getClassNameId(Layout.class)) {
+				Layout draftLayout = LayoutLocalServiceUtil.getLayout(classPK);
+
+				segmentsExperience =
+					SegmentsExperienceLocalServiceUtil.
+						getDefaultSegmentsExperience(
+							getGroupId(), classNameId, draftLayout.getClassPK(),
+							true);
+			}
 
 			_defaultSegmentsExperienceId = String.valueOf(
 				segmentsExperience.getSegmentsExperienceId());
@@ -702,11 +725,15 @@ public class ContentPageEditorDisplayContext {
 	}
 
 	private String _getRedirect() {
-		if (_redirect != null) {
+		if (Validator.isNotNull(_redirect)) {
 			return _redirect;
 		}
 
 		_redirect = ParamUtil.getString(request, "redirect");
+
+		if (Validator.isNull(_redirect)) {
+			_redirect = themeDisplay.getURLCurrent();
+		}
 
 		return _redirect;
 	}
@@ -796,6 +823,10 @@ public class ContentPageEditorDisplayContext {
 
 		themeDisplay.setIsolated(true);
 
+		long[] segmentsExperienceIds = {
+			GetterUtil.getLong(_getDefaultSegmentsExperienceId())
+		};
+
 		try {
 			for (FragmentEntryLink fragmentEntryLink : fragmentEntryLinks) {
 				FragmentEntry fragmentEntry =
@@ -807,7 +838,9 @@ public class ContentPageEditorDisplayContext {
 
 				String content =
 					FragmentEntryRenderUtil.renderFragmentEntryLink(
-						fragmentEntryLink, request,
+						fragmentEntryLink, FragmentEntryLinkConstants.EDIT,
+						new HashMap<>(), themeDisplay.getLocale(),
+						segmentsExperienceIds, request,
 						PortalUtil.getHttpServletResponse(_renderResponse));
 
 				soyContext.putHTML("content", content);

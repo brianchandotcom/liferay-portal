@@ -1877,6 +1877,56 @@ public interface LayoutPersistence extends BasePersistence<Layout> {
 	public int countByP_I(boolean privateLayout, long iconImageId);
 
 	/**
+	 * Returns the layout where classNameId = &#63; and classPK = &#63; or throws a <code>NoSuchLayoutException</code> if it could not be found.
+	 *
+	 * @param classNameId the class name ID
+	 * @param classPK the class pk
+	 * @return the matching layout
+	 * @throws NoSuchLayoutException if a matching layout could not be found
+	 */
+	public Layout findByC_C(long classNameId, long classPK)
+		throws NoSuchLayoutException;
+
+	/**
+	 * Returns the layout where classNameId = &#63; and classPK = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param classNameId the class name ID
+	 * @param classPK the class pk
+	 * @return the matching layout, or <code>null</code> if a matching layout could not be found
+	 */
+	public Layout fetchByC_C(long classNameId, long classPK);
+
+	/**
+	 * Returns the layout where classNameId = &#63; and classPK = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 *
+	 * @param classNameId the class name ID
+	 * @param classPK the class pk
+	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @return the matching layout, or <code>null</code> if a matching layout could not be found
+	 */
+	public Layout fetchByC_C(
+		long classNameId, long classPK, boolean retrieveFromCache);
+
+	/**
+	 * Removes the layout where classNameId = &#63; and classPK = &#63; from the database.
+	 *
+	 * @param classNameId the class name ID
+	 * @param classPK the class pk
+	 * @return the layout that was removed
+	 */
+	public Layout removeByC_C(long classNameId, long classPK)
+		throws NoSuchLayoutException;
+
+	/**
+	 * Returns the number of layouts where classNameId = &#63; and classPK = &#63;.
+	 *
+	 * @param classNameId the class name ID
+	 * @param classPK the class pk
+	 * @return the number of matching layouts
+	 */
+	public int countByC_C(long classNameId, long classPK);
+
+	/**
 	 * Returns the layout where groupId = &#63; and privateLayout = &#63; and layoutId = &#63; or throws a <code>NoSuchLayoutException</code> if it could not be found.
 	 *
 	 * @param groupId the group ID

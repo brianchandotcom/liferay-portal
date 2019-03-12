@@ -96,8 +96,7 @@ public class ContentPageLayoutEditorDisplayContext
 				SoyContextFactoryUtil.createSoyContext();
 
 			segmentsEntrySoyContext.put(
-				"name",
-				segmentsEntry.getName(themeDisplay.getLocale()));
+				"name", segmentsEntry.getName(themeDisplay.getLocale()));
 			segmentsEntrySoyContext.put(
 				"segmentsEntryId",
 				String.valueOf(segmentsEntry.getSegmentsEntryId()));

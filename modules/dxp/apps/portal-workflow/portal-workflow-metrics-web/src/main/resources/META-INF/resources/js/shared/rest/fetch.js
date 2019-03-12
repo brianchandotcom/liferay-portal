@@ -7,7 +7,7 @@
  * */
 const restClient = (url, config = {}) => {
 	if (url) {
-		url = `/o/portal-workflow-metrics-rest/v1.0${url}`;
+		url = `/o/portal-workflow-metrics/v1.0${url}`;
 	}
 
 	return fetch(url, config).then(res => {

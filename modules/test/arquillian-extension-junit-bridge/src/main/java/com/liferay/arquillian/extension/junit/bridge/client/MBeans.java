@@ -14,8 +14,6 @@
 
 package com.liferay.arquillian.extension.junit.bridge.client;
 
-import com.liferay.arquillian.extension.junit.bridge.server.JMXTestRunnerMBean;
-
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.Set;
@@ -38,12 +36,7 @@ public class MBeans {
 		return _frameworkMBean;
 	}
 
-	public static JMXTestRunnerMBean getJmxTestRunnerMBean() {
-		return _jmxTestRunnerMBean;
-	}
-
 	private static final FrameworkMBean _frameworkMBean;
-	private static final JMXTestRunnerMBean _jmxTestRunnerMBean;
 
 	static {
 		try {
@@ -71,11 +64,6 @@ public class MBeans {
 			_frameworkMBean = MBeanServerInvocationHandler.newProxyInstance(
 				mBeanServerConnection, iterator.next(), FrameworkMBean.class,
 				false);
-
-			_jmxTestRunnerMBean = MBeanServerInvocationHandler.newProxyInstance(
-				mBeanServerConnection,
-				new ObjectName(JMXTestRunnerMBean.OBJECT_NAME),
-				JMXTestRunnerMBean.class, false);
 		}
 		catch (Exception e) {
 			throw new ExceptionInInitializerError(e);

@@ -4,7 +4,6 @@
  * FragmentsEditor
  */
 {template .render}
-	{@param classPK: ?}
 	{@param defaultEditorConfigurations: ?}
 	{@param defaultLanguageId: string}
 	{@param defaultSegmentsExperienceId: string}
@@ -15,8 +14,6 @@
 	{@param portletNamespace: string}
 	{@param spritemap: string}
 	{@param? fragmentsEditorSidebarVisible: bool}
-	{@param? getAssetClassTypesURL: any}
-	{@param? getAssetDisplayContributorsURL: any}
 	{@param? id: string}
 	{@param? mappingFieldsURL: string}
 	{@param? experienceId: string}
@@ -25,7 +22,6 @@
 	{@param? selectMappingDialogFragmentEntryLinkId: string}
 	{@param? selectMappingDialogMappedFieldId: string}
 	{@param? selectMappingDialogVisible: bool}
-	{@param? selectMappingTypeDialogVisible: bool}
 	{@param? selectedMappingTypes: [
 		subtype: [
 			id: string,
@@ -37,7 +33,6 @@
 		]
 	]}
 	{@param? store: ?}
-	{@param? updateLayoutPageTemplateEntryAssetTypeURL: any}
 
 	<div class="fragments-editor" id="{$id}">
 		{call com.liferay.layout.content.page.editor.web.FragmentsEditorSidebar.render}
@@ -75,19 +70,9 @@
 				{param store: $store /}
 			{/call}
 		{/if}
-		{if $getAssetClassTypesURL
-			and $getAssetDisplayContributorsURL
-			and $updateLayoutPageTemplateEntryAssetTypeURL
-			and $selectMappingTypeDialogVisible}
-			{call com.liferay.layout.content.page.editor.web.SelectMappingTypeDialog.render}
-				{param classPK: $classPK /}
-				{param getAssetClassTypesURL: $getAssetClassTypesURL /}
-				{param getAssetDisplayContributorsURL: $getAssetDisplayContributorsURL /}
-				{param portletNamespace: $portletNamespace /}
-				{param spritemap: $spritemap /}
-				{param store: $store /}
-				{param updateLayoutPageTemplateEntryAssetTypeURL: $updateLayoutPageTemplateEntryAssetTypeURL /}
-			{/call}
-		{/if}
+
+    {call com.liferay.layout.content.page.editor.web.SelectMappingTypeDialog.render}
+      {param store: $store /}
+    {/call}
 	</div>
 {/template}

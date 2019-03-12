@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.DocumentImpl;
+import com.liferay.portal.search.engine.adapter.document.BulkDocumentRequest;
 import com.liferay.portal.search.engine.adapter.document.IndexDocumentRequest;
 import com.liferay.portal.workflow.kaleo.model.KaleoDefinition;
 import com.liferay.portal.workflow.kaleo.service.KaleoDefinitionLocalService;
@@ -35,13 +36,16 @@ public class ProcessWorkflowMetricsIndexer
 
 	@Override
 	public void addDocument(KaleoDefinition kaleoDefinition) {
+		BulkDocumentRequest bulkDocumentRequest = new BulkDocumentRequest();
+
 		IndexDocumentRequest processIndexDocumentRequest =
 			new IndexDocumentRequest(
 				getIndexName(), createDocument(kaleoDefinition));
 
 		processIndexDocumentRequest.setType(getIndexType());
 
-		searchEngineAdapter.execute(processIndexDocumentRequest);
+		bulkDocumentRequest.addBulkableDocumentRequest(
+			processIndexDocumentRequest);
 
 		IndexDocumentRequest instanceIndexDocumentRequest =
 			new IndexDocumentRequest(
@@ -51,7 +55,10 @@ public class ProcessWorkflowMetricsIndexer
 		instanceIndexDocumentRequest.setType(
 			_instanceWorkflowMetricsIndexer.getIndexType());
 
-		searchEngineAdapter.execute(instanceIndexDocumentRequest);
+		bulkDocumentRequest.addBulkableDocumentRequest(
+			instanceIndexDocumentRequest);
+
+		searchEngineAdapter.execute(bulkDocumentRequest);
 	}
 
 	@Activate

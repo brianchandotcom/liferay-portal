@@ -94,6 +94,11 @@ public abstract class BaseWorkflowMetricsIndexer<T> {
 			JSONUtil.put(
 				"mappings",
 				JSONUtil.put(getIndexType(), jsonObject.get(getIndexType()))
+			).put(
+				"settings",
+				JSONFactoryUtil.createJSONObject(
+					StringUtil.read(
+						getClass(), "/META-INF/search/settings.json"))
 			).toString());
 
 		searchEngineAdapter.execute(createIndexRequest);

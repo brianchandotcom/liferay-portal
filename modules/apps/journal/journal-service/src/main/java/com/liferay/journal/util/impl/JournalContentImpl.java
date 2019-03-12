@@ -198,7 +198,13 @@ public class JournalContentImpl
 			GetterUtil.getString(ddmTemplateKey));
 
 		long layoutSetId = 0;
+		boolean lifecycleRender = false;
 		boolean secure = false;
+
+		if (portletRequestModel != null) {
+			lifecycleRender = RenderRequest.RENDER_PHASE.equals(
+				portletRequestModel.getLifecycle());
+		}
 
 		if (themeDisplay != null) {
 			try {
@@ -217,6 +223,10 @@ public class JournalContentImpl
 			layoutSetId = layoutSet.getLayoutSetId();
 
 			secure = themeDisplay.isSecure();
+
+			if (!lifecycleRender && (portletRequestModel == null)) {
+				lifecycleRender = themeDisplay.isLifecycleRender();
+			}
 		}
 
 		if (Validator.isNull(ddmTemplateKey)) {
@@ -229,17 +239,6 @@ public class JournalContentImpl
 
 		JournalArticleDisplay articleDisplay = _portalCache.get(
 			journalContentKey);
-
-		boolean lifecycleRender = false;
-
-		if (portletRequestModel != null) {
-			lifecycleRender = RenderRequest.RENDER_PHASE.equals(
-				portletRequestModel.getLifecycle());
-		}
-
-		if (!lifecycleRender && (themeDisplay != null)) {
-			lifecycleRender = themeDisplay.isLifecycleRender();
-		}
 
 		if ((articleDisplay == null) || !lifecycleRender) {
 			articleDisplay = getArticleDisplay(

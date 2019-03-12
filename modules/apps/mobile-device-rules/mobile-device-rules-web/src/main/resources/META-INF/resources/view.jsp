@@ -203,7 +203,6 @@ ruleGroupSearch.setResults(mdrRuleGroups);
 						<span class="text-default">
 							<%= HtmlUtil.escape(ruleGroup.getDescription(locale)) %>
 						</span>
-
 						<span class="text-default">
 							<strong><liferay-ui:message key="scope" /></strong>: <%= LanguageUtil.get(resourceBundle, group.getScopeLabel(themeDisplay)) %>
 						</span>

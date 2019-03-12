@@ -179,7 +179,6 @@ renderResponse.setTitle(ruleGroup.getName(locale));
 						<span class="text-default">
 							<%= rule.getDescription(locale) %>
 						</span>
-
 						<span class="text-default">
 							<strong><liferay-ui:message key="type" /></strong>: <%= rule.getType() %>
 						</span>

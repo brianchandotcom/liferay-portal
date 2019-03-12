@@ -335,6 +335,7 @@ FloatingToolbarMappingPanel.STATE = {
 const ConnectedFloatingToolbarMappingPanel = getConnectedComponent(
 	FloatingToolbarMappingPanel,
 	[
+		'assetBrowserLinks',
 		'getAssetMappingFieldsURL',
 		'mappedAssetEntries',
 		'mappingFieldsURL',

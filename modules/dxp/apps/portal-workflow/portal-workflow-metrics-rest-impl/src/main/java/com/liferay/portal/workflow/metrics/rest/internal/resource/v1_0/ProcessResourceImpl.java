@@ -130,10 +130,6 @@ public class ProcessResourceImpl
 	private BooleanFilter _createInstanceBooleanFilter(Set<Long> processIds) {
 		return new BooleanFilter() {
 			{
-				addRequiredTerm("companyId", contextCompany.getCompanyId());
-				addRequiredTerm("completed", false);
-				addRequiredTerm("deleted", false);
-
 				TermsFilter termsFilter = new TermsFilter("processId");
 
 				for (long processId : processIds) {
@@ -141,6 +137,10 @@ public class ProcessResourceImpl
 				}
 
 				add(termsFilter, BooleanClauseOccur.MUST);
+
+				addRequiredTerm("companyId", contextCompany.getCompanyId());
+				addRequiredTerm("completed", false);
+				addRequiredTerm("deleted", false);
 			}
 		};
 	}

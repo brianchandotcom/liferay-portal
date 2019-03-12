@@ -12,24 +12,28 @@
  * details.
  */
 
-package com.liferay.portal.upgrade.v7_0_3;
+package com.liferay.portal.upgrade.v7_0_3.test;
 
+import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.db.DBType;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-import com.liferay.portal.upgrade.BaseUpgradeDBColumnSizeTestCase;
+import com.liferay.portal.upgrade.test.BaseUpgradeDBColumnSizeTestCase;
+import com.liferay.portal.upgrade.v7_0_3.UpgradeSybase;
 
 import org.junit.Assume;
 import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Rule;
+import org.junit.runner.RunWith;
 
 /**
  * @author Preston Crary
  */
-public class UpgradeSQLServerTest extends BaseUpgradeDBColumnSizeTestCase {
+@RunWith(Arquillian.class)
+public class UpgradeSybaseTest extends BaseUpgradeDBColumnSizeTestCase {
 
 	@ClassRule
 	@Rule
@@ -40,28 +44,28 @@ public class UpgradeSQLServerTest extends BaseUpgradeDBColumnSizeTestCase {
 	public static void setUpClass() {
 		DB db = DBManagerUtil.getDB();
 
-		Assume.assumeTrue(DBType.SQLSERVER.equals(db.getDBType()));
+		Assume.assumeTrue(DBType.SYBASE.equals(db.getDBType()));
 	}
 
 	@Override
 	protected String getCreateTestTableSQL() {
-		return "create table TestTable (testTableId int not null primary " +
-			"key, testValue varchar(2000) null)";
+		return "create table TestTable (testTableId decimal(20, 0) not null " +
+			"primary key, testValue varchar(1000) null)";
 	}
 
 	@Override
 	protected int getInitialSize() {
-		return 2000;
+		return 1000;
 	}
 
 	@Override
 	protected String getTypeName() {
-		return "nvarchar";
+		return "varchar";
 	}
 
 	@Override
-	protected UpgradeSQLServer getUpgradeProcess() {
-		return new UpgradeSQLServer();
+	protected UpgradeSybase getUpgradeProcess() {
+		return new UpgradeSybase();
 	}
 
 }

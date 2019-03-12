@@ -72,8 +72,7 @@ public class FriendlyURLEntryStagedModelRepository
 
 	@Override
 	public void deleteStagedModel(
-			String uuid, long groupId, String className, String extraData)
-		throws PortalException {
+		String uuid, long groupId, String className, String extraData) {
 
 		FriendlyURLEntry friendlyURLEntry = fetchStagedModelByUuidAndGroupId(
 			uuid, groupId);

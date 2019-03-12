@@ -19,11 +19,7 @@ import com.liferay.oauth2.provider.service.persistence.OAuth2ScopeGrantPersisten
 import com.liferay.oauth2.provider.service.persistence.impl.constants.OAuthTwoPersistenceConstants;
 import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.dao.orm.SessionFactory;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
-
-import java.util.Set;
 
 import javax.sql.DataSource;
 
@@ -38,11 +34,6 @@ public abstract class OAuth2ScopeGrantFinderBaseImpl
 
 	public OAuth2ScopeGrantFinderBaseImpl() {
 		setModelClass(OAuth2ScopeGrant.class);
-	}
-
-	@Override
-	public Set<String> getBadColumnNames() {
-		return oAuth2ScopeGrantPersistence.getBadColumnNames();
 	}
 
 	@Override
@@ -74,8 +65,5 @@ public abstract class OAuth2ScopeGrantFinderBaseImpl
 
 	@Reference
 	protected OAuth2ScopeGrantPersistence oAuth2ScopeGrantPersistence;
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		OAuth2ScopeGrantFinderBaseImpl.class);
 
 }

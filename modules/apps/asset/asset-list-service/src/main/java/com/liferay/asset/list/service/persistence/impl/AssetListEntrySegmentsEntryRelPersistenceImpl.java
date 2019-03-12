@@ -3850,6 +3850,6 @@ public class AssetListEntrySegmentsEntryRelPersistenceImpl
 		AssetListEntrySegmentsEntryRelPersistenceImpl.class);
 
 	private static final Set<String> _badColumnNames = SetUtil.fromArray(
-		new String[] {"uuid", "assetListEntrySegmentsEntryRelId"});
+		new String[] {"uuid"});
 
 }

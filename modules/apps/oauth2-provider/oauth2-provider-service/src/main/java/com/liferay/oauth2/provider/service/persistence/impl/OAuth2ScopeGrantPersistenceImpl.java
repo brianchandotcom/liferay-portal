@@ -2002,11 +2002,6 @@ public class OAuth2ScopeGrantPersistenceImpl
 	}
 
 	@Override
-	public Set<String> getBadColumnNames() {
-		return _badColumnNames;
-	}
-
-	@Override
 	protected EntityCache getEntityCache() {
 		return entityCache;
 	}
@@ -2185,8 +2180,5 @@ public class OAuth2ScopeGrantPersistenceImpl
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		OAuth2ScopeGrantPersistenceImpl.class);
-
-	private static final Set<String> _badColumnNames = SetUtil.fromArray(
-		new String[] {"oAuth2ApplicationScopeAliasesId"});
 
 }

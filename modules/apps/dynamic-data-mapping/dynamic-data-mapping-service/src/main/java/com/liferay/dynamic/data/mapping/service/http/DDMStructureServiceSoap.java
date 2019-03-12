@@ -70,40 +70,6 @@ public class DDMStructureServiceSoap {
 
 	public static com.liferay.dynamic.data.mapping.model.DDMStructureSoap
 			addStructure(
-				long groupId, long classNameId, String[] nameMapLanguageIds,
-				String[] nameMapValues, String[] descriptionMapLanguageIds,
-				String[] descriptionMapValues,
-				com.liferay.dynamic.data.mapping.model.DDMForm ddmForm,
-				com.liferay.dynamic.data.mapping.model.DDMFormLayout
-					ddmFormLayout,
-				String storageType,
-				com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws RemoteException {
-
-		try {
-			Map<Locale, String> nameMap = LocalizationUtil.getLocalizationMap(
-				nameMapLanguageIds, nameMapValues);
-			Map<Locale, String> descriptionMap =
-				LocalizationUtil.getLocalizationMap(
-					descriptionMapLanguageIds, descriptionMapValues);
-
-			com.liferay.dynamic.data.mapping.model.DDMStructure returnValue =
-				DDMStructureServiceUtil.addStructure(
-					groupId, classNameId, nameMap, descriptionMap, ddmForm,
-					ddmFormLayout, storageType, serviceContext);
-
-			return com.liferay.dynamic.data.mapping.model.DDMStructureSoap.
-				toSoapModel(returnValue);
-		}
-		catch (Exception e) {
-			_log.error(e, e);
-
-			throw new RemoteException(e.getMessage());
-		}
-	}
-
-	public static com.liferay.dynamic.data.mapping.model.DDMStructureSoap
-			addStructure(
 				long groupId, long parentStructureId, long classNameId,
 				String structureKey, String[] nameMapLanguageIds,
 				String[] nameMapValues, String[] descriptionMapLanguageIds,
@@ -127,6 +93,40 @@ public class DDMStructureServiceSoap {
 					groupId, parentStructureId, classNameId, structureKey,
 					nameMap, descriptionMap, ddmForm, ddmFormLayout,
 					storageType, type, serviceContext);
+
+			return com.liferay.dynamic.data.mapping.model.DDMStructureSoap.
+				toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.dynamic.data.mapping.model.DDMStructureSoap
+			addStructure(
+				long groupId, long classNameId, String[] nameMapLanguageIds,
+				String[] nameMapValues, String[] descriptionMapLanguageIds,
+				String[] descriptionMapValues,
+				com.liferay.dynamic.data.mapping.model.DDMForm ddmForm,
+				com.liferay.dynamic.data.mapping.model.DDMFormLayout
+					ddmFormLayout,
+				String storageType,
+				com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws RemoteException {
+
+		try {
+			Map<Locale, String> nameMap = LocalizationUtil.getLocalizationMap(
+				nameMapLanguageIds, nameMapValues);
+			Map<Locale, String> descriptionMap =
+				LocalizationUtil.getLocalizationMap(
+					descriptionMapLanguageIds, descriptionMapValues);
+
+			com.liferay.dynamic.data.mapping.model.DDMStructure returnValue =
+				DDMStructureServiceUtil.addStructure(
+					groupId, classNameId, nameMap, descriptionMap, ddmForm,
+					ddmFormLayout, storageType, serviceContext);
 
 			return com.liferay.dynamic.data.mapping.model.DDMStructureSoap.
 				toSoapModel(returnValue);

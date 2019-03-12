@@ -56,13 +56,14 @@ public class DDMStructureServiceHttp {
 
 	public static com.liferay.dynamic.data.mapping.model.DDMStructure
 			addStructure(
-				HttpPrincipal httpPrincipal, long groupId, long classNameId,
+				HttpPrincipal httpPrincipal, long groupId,
+				long parentStructureId, long classNameId, String structureKey,
 				java.util.Map<java.util.Locale, String> nameMap,
 				java.util.Map<java.util.Locale, String> descriptionMap,
 				com.liferay.dynamic.data.mapping.model.DDMForm ddmForm,
 				com.liferay.dynamic.data.mapping.model.DDMFormLayout
 					ddmFormLayout,
-				String storageType,
+				String storageType, int type,
 				com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
@@ -72,8 +73,9 @@ public class DDMStructureServiceHttp {
 				_addStructureParameterTypes0);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, groupId, classNameId, nameMap, descriptionMap,
-				ddmForm, ddmFormLayout, storageType, serviceContext);
+				methodKey, groupId, parentStructureId, classNameId,
+				structureKey, nameMap, descriptionMap, ddmForm, ddmFormLayout,
+				storageType, type, serviceContext);
 
 			Object returnObj = null;
 
@@ -104,14 +106,13 @@ public class DDMStructureServiceHttp {
 
 	public static com.liferay.dynamic.data.mapping.model.DDMStructure
 			addStructure(
-				HttpPrincipal httpPrincipal, long groupId,
-				long parentStructureId, long classNameId, String structureKey,
+				HttpPrincipal httpPrincipal, long groupId, long classNameId,
 				java.util.Map<java.util.Locale, String> nameMap,
 				java.util.Map<java.util.Locale, String> descriptionMap,
 				com.liferay.dynamic.data.mapping.model.DDMForm ddmForm,
 				com.liferay.dynamic.data.mapping.model.DDMFormLayout
 					ddmFormLayout,
-				String storageType, int type,
+				String storageType,
 				com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
@@ -121,9 +122,8 @@ public class DDMStructureServiceHttp {
 				_addStructureParameterTypes1);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, groupId, parentStructureId, classNameId,
-				structureKey, nameMap, descriptionMap, ddmForm, ddmFormLayout,
-				storageType, type, serviceContext);
+				methodKey, groupId, classNameId, nameMap, descriptionMap,
+				ddmForm, ddmFormLayout, storageType, serviceContext);
 
 			Object returnObj = null;
 
@@ -1012,18 +1012,18 @@ public class DDMStructureServiceHttp {
 		DDMStructureServiceHttp.class);
 
 	private static final Class<?>[] _addStructureParameterTypes0 = new Class[] {
-		long.class, long.class, java.util.Map.class, java.util.Map.class,
-		com.liferay.dynamic.data.mapping.model.DDMForm.class,
-		com.liferay.dynamic.data.mapping.model.DDMFormLayout.class,
-		String.class, com.liferay.portal.kernel.service.ServiceContext.class
-	};
-	private static final Class<?>[] _addStructureParameterTypes1 = new Class[] {
 		long.class, long.class, long.class, String.class, java.util.Map.class,
 		java.util.Map.class,
 		com.liferay.dynamic.data.mapping.model.DDMForm.class,
 		com.liferay.dynamic.data.mapping.model.DDMFormLayout.class,
 		String.class, int.class,
 		com.liferay.portal.kernel.service.ServiceContext.class
+	};
+	private static final Class<?>[] _addStructureParameterTypes1 = new Class[] {
+		long.class, long.class, java.util.Map.class, java.util.Map.class,
+		com.liferay.dynamic.data.mapping.model.DDMForm.class,
+		com.liferay.dynamic.data.mapping.model.DDMFormLayout.class,
+		String.class, com.liferay.portal.kernel.service.ServiceContext.class
 	};
 	private static final Class<?>[] _addStructureParameterTypes2 = new Class[] {
 		long.class, String.class, long.class, String.class, java.util.Map.class,

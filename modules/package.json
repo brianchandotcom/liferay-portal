@@ -1,0 +1,36 @@
+{
+	"private": true,
+	"workspaces": {
+		"packages": [
+			"apps/**/*-taglib",
+			"apps/**/*-web",
+			"apps/analytics/analytics-client-js",
+			"apps/document-library/document-library-preview-audio",
+			"apps/document-library/document-library-preview-image",
+			"apps/document-library/document-library-preview-pdf",
+			"apps/document-library/document-library-preview-video",
+			"apps/dynamic-data-mapping/dynamic-data-mapping-form-builder",
+			"apps/dynamic-data-mapping/dynamic-data-mapping-form-field-type",
+			"apps/dynamic-data-mapping/dynamic-data-mapping-form-renderer",
+			"apps/frontend-image-editor/frontend-image-editor-capability-brightness",
+			"apps/frontend-image-editor/frontend-image-editor-capability-contrast",
+			"apps/frontend-image-editor/frontend-image-editor-capability-crop",
+			"apps/frontend-image-editor/frontend-image-editor-capability-effects",
+			"apps/frontend-image-editor/frontend-image-editor-capability-resize",
+			"apps/frontend-image-editor/frontend-image-editor-capability-rotate",
+			"apps/frontend-image-editor/frontend-image-editor-capability-saturation",
+			"apps/frontend-js/frontend-js-node-shims",
+			"apps/frontend-taglib/frontend-taglib-chart",
+			"apps/frontend-taglib/frontend-taglib-clay",
+			"apps/frontend-theme/frontend-theme-admin",
+			"apps/frontend-theme/frontend-theme-classic",
+			"apps/frontend-theme-fjord/frontend-theme-fjord",
+			"apps/frontend-theme-porygon/frontend-theme-porygon",
+			"apps/frontend-theme-westeros-bank/frontend-theme-westeros-bank",
+			"apps/map/map-common",
+			"apps/map/map-google-maps",
+			"apps/map/map-openstreetmap",
+			"apps/portal-portlet-bridge/portal-portlet-bridge-soy-impl"
+		]
+	}
+}

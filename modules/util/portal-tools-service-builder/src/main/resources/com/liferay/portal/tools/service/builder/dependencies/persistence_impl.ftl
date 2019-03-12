@@ -2145,10 +2145,10 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 		private static final String _SQL_SELECT_${entity.alias?upper_case}_WHERE = "SELECT ${entity.alias} FROM ${entity.name} ${entity.alias} WHERE ";
 	</#if>
 
-	private static final String _SQL_COUNT_${entity.alias?upper_case} = "SELECT COUNT(${entity.alias}) FROM ${entity.name} ${entity.alias}";
+	private static final String _SQL_COUNT_${entity.alias?upper_case} = "SELECT COUNT(*) FROM ${entity.name} ${entity.alias}";
 
 	<#if entity.entityFinders?size != 0>
-		private static final String _SQL_COUNT_${entity.alias?upper_case}_WHERE = "SELECT COUNT(${entity.alias}) FROM ${entity.name} ${entity.alias} WHERE ";
+		private static final String _SQL_COUNT_${entity.alias?upper_case}_WHERE = "SELECT COUNT(*) FROM ${entity.name} ${entity.alias} WHERE ";
 	</#if>
 
 	<#if entity.isPermissionCheckEnabled()>

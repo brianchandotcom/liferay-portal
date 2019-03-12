@@ -79,7 +79,7 @@ class FloatingToolbarMappingPanel extends PortletBase {
 		) {
 			nextState = setIn(
 				nextState,
-				['item', 'editableValues', 'assetEntryEncodedId'],
+				['item', 'editableValues', 'encodedId'],
 				encodeAssetId(nextState.item.editableValues).encodedId
 			);
 		}

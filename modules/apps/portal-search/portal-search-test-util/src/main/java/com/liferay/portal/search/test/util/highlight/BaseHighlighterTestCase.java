@@ -53,13 +53,19 @@ public abstract class BaseHighlighterTestCase extends BaseIndexingTestCase {
 
 		Query query = queries.string(fieldName.concat(":alpha"));
 
-		Highlight highlight = new Highlight();
-
-		highlight.addFieldConfigs(fieldName);
-		highlight.addPreTags("[H]");
-		highlight.addPostTags("[/H]");
-
-		highlight.setFragmentSize(20);
+		Highlight highlight = highlights.builder(
+		).addFieldConfig(
+			highlights.fieldConfigBuilder(
+			).field(
+				fieldName
+			).build()
+		).fragmentSize(
+			20
+		).postTags(
+			"[/H]"
+		).preTags(
+			"[H]"
+		).build();
 
 		assertSearch(
 			fieldName, query, highlight,
@@ -99,18 +105,12 @@ public abstract class BaseHighlighterTestCase extends BaseIndexingTestCase {
 
 				List<String> actualValues = new ArrayList<>();
 
-				searchHitList.forEach(
-					searchHit -> {
-						Map<String, HighlightField> highlightFields =
-							searchHit.getHighlightFieldsMap();
-
-						HighlightField highlightField = highlightFields.get(
-							fieldName);
-
-						List<String> fragments = highlightField.getFragments();
-
-						actualValues.addAll(fragments);
-					});
+				searchHitList.stream(
+				).map(
+					searchHit -> getFragments(fieldName, searchHit)
+				).forEach(
+					actualValues::addAll
+				);
 
 				Collections.sort(actualValues);
 
@@ -120,6 +120,15 @@ public abstract class BaseHighlighterTestCase extends BaseIndexingTestCase {
 					"Highlighted texts ->" + actualValues,
 					expectedValues.toString(), actualValues.toString());
 			});
+	}
+
+	protected List<String> getFragments(String fieldName, SearchHit searchHit) {
+		Map<String, HighlightField> highlightFields =
+			searchHit.getHighlightFieldsMap();
+
+		HighlightField highlightField = highlightFields.get(fieldName);
+
+		return highlightField.getFragments();
 	}
 
 }

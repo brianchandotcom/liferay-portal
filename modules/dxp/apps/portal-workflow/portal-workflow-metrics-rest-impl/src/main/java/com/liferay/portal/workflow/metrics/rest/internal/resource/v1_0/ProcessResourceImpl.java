@@ -182,7 +182,6 @@ public class ProcessResourceImpl
 		searchSearchRequest.addAggregation(termsAggregation);
 
 		searchSearchRequest.setIndexNames("workflow-metrics-instances");
-
 		searchSearchRequest.setQuery(
 			new BooleanQueryImpl() {
 				{

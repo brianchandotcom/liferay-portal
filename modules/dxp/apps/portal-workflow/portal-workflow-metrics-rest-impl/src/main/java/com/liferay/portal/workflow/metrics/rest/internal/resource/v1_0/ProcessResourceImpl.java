@@ -160,12 +160,12 @@ public class ProcessResourceImpl
 
 		SearchSearchRequest searchSearchRequest = new SearchSearchRequest();
 
-		TermsAggregation terms = _aggregations.terms("processIds", "processId");
+		TermsAggregation termsAggregation = _aggregations.terms("processIds", "processId");
 
 		CardinalityAggregation cardinality = _aggregations.cardinality(
 			"instanceCount", "instanceId");
 
-		terms.addChildAggregation(cardinality);
+		termsAggregation.addChildAggregation(cardinality);
 
 		if (!_isOrderByTitle(fieldSort.getField())) {
 			BucketSortPipelineAggregation bucketSort = _aggregations.bucketSort(
@@ -176,12 +176,12 @@ public class ProcessResourceImpl
 			bucketSort.setFrom(pagination.getStartPosition());
 			bucketSort.setSize(pagination.getPageSize());
 
-			terms.addPipelineAggregation(bucketSort);
+			termsAggregation.addPipelineAggregation(bucketSort);
 		}
 
-		terms.setSize(processIds.size());
+		termsAggregation.setSize(processIds.size());
 
-		searchSearchRequest.addAggregation(terms);
+		searchSearchRequest.addAggregation(termsAggregation);
 
 		searchSearchRequest.setIndexNames("workflow-metrics-instances");
 

@@ -4,7 +4,7 @@ import Component from 'metal-component';
 import {Config} from 'metal-state';
 import Soy from 'metal-soy';
 import 'frontend-js-web/liferay/compat/modal/Modal.es';
-import './InputCategoriesSelector.es';
+import 'asset-taglib/asset_categories_selector/AssetCategoriesSelector.es';
 import templates from './EditCategories.soy';
 
 /**
@@ -123,11 +123,16 @@ class EditCategories extends Component {
 	 */
 	_getFinalCategories() {
 		let finalCategories = [];
+		let inputElementName = this.namespace + this.hiddenInput;
 
 		this.vocabularies.forEach(
 			vocabulary => {
-				let categoryIds = vocabulary.categories.map(item => item.value);
-				finalCategories = finalCategories.concat(categoryIds);
+				let inputNode = document.getElementById(inputElementName + vocabulary.id);
+
+				if (inputNode.value) {
+					let categoryIds = inputNode.value.split(',').map(Number);
+					finalCategories = finalCategories.concat(categoryIds);
+				}
 			}
 		);
 
@@ -202,16 +207,17 @@ class EditCategories extends Component {
 			vocabulary => {
 				let categories = this._parseCategories(vocabulary.categories);
 
+				let categoryIds = categories.map(item => item.value);
+
 				let obj = {
-					categories: categories,
-					id: vocabulary.vocabularyId,
-					multiValued: vocabulary.multiValued,
-					name: vocabulary.name
+					id: vocabulary.vocabularyId.toString(),
+					selectedCategoryIds: categoryIds.join(','),
+					selectedItems: categories,
+					singleSelect: !vocabulary.multiValued,
+					title: vocabulary.name
 				};
 
 				vocabulariesList.push(obj);
-
-				let categoryIds = categories.map(item => item.value);
 
 				initialCategories = initialCategories.concat(categoryIds);
 			}
@@ -286,6 +292,13 @@ EditCategories.STATE = {
 	 * @type {String}
 	 */
 	folderId: Config.string(),
+
+	/**
+	* Hidden input name
+	*
+	* @type {String}
+	 */
+	hiddenInput: Config.string().value('assetCategoryIds_').internal(),
 
 	/**
 	 * Original categoryIds

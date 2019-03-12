@@ -14,7 +14,7 @@
 
 package com.liferay.portal.workflow.metrics.internal.search.index;
 
-import com.liferay.portal.kernel.json.JSONException;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -73,7 +73,7 @@ public abstract class BaseWorkflowMetricsIndexer<T> {
 
 	protected abstract Document createDocument(T t);
 
-	protected void createIndex() throws JSONException {
+	protected void createIndex() throws PortalException {
 		IndicesExistsIndexRequest indicesExistsIndexRequest =
 			new IndicesExistsIndexRequest(getIndexName());
 
@@ -137,7 +137,7 @@ public abstract class BaseWorkflowMetricsIndexer<T> {
 		return 0;
 	}
 
-	protected abstract void populateIndex();
+	protected abstract void populateIndex() throws PortalException;
 
 	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED, unbind = "-")
 	protected void setModuleServiceLifecycle(

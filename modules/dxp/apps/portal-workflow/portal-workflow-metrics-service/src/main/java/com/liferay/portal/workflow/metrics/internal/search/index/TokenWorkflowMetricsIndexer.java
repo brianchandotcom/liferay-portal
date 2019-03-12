@@ -14,7 +14,8 @@
 
 package com.liferay.portal.workflow.metrics.internal.search.index;
 
-import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.DocumentImpl;
 import com.liferay.portal.workflow.kaleo.model.KaleoTaskInstanceToken;
@@ -23,7 +24,6 @@ import com.liferay.portal.workflow.kaleo.service.KaleoTaskInstanceTokenLocalServ
 import java.time.Duration;
 
 import java.util.Date;
-import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -96,16 +96,15 @@ public class TokenWorkflowMetricsIndexer
 	}
 
 	@Override
-	protected void populateIndex() {
-		List<KaleoTaskInstanceToken> kaleoTaskInstanceTokens =
-			_kaleoTaskInstanceTokenLocalService.getKaleoTaskInstanceTokens(
-				QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+	protected void populateIndex() throws PortalException {
+		ActionableDynamicQuery actionableDynamicQuery =
+			_kaleoTaskInstanceTokenLocalService.getActionableDynamicQuery();
 
-		for (KaleoTaskInstanceToken kaleoTaskInstanceToken :
-				kaleoTaskInstanceTokens) {
+		actionableDynamicQuery.setPerformActionMethod(
+			(KaleoTaskInstanceToken kaleoTaskInstanceToken) -> addDocument(
+				kaleoTaskInstanceToken));
 
-			addDocument(kaleoTaskInstanceToken);
-		}
+		actionableDynamicQuery.performActions();
 	}
 
 	@Reference

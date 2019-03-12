@@ -14,14 +14,13 @@
 
 package com.liferay.portal.workflow.metrics.internal.search.index;
 
-import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.DocumentImpl;
 import com.liferay.portal.search.engine.adapter.document.IndexDocumentRequest;
 import com.liferay.portal.workflow.kaleo.model.KaleoDefinition;
 import com.liferay.portal.workflow.kaleo.service.KaleoDefinitionLocalService;
-
-import java.util.List;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -102,14 +101,14 @@ public class ProcessWorkflowMetricsIndexer
 	}
 
 	@Override
-	protected void populateIndex() {
-		List<KaleoDefinition> kaleoDefinitions =
-			_kaleoDefinitionLocalService.getKaleoDefinitions(
-				QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+	protected void populateIndex() throws PortalException {
+		ActionableDynamicQuery actionableDynamicQuery =
+			_kaleoDefinitionLocalService.getActionableDynamicQuery();
 
-		for (KaleoDefinition kaleoDefinition : kaleoDefinitions) {
-			addDocument(kaleoDefinition);
-		}
+		actionableDynamicQuery.setPerformActionMethod(
+			(KaleoDefinition kaleoDefinition) -> addDocument(kaleoDefinition));
+
+		actionableDynamicQuery.performActions();
 	}
 
 	private Document _createWorkflowMetricsInstanceDocument(

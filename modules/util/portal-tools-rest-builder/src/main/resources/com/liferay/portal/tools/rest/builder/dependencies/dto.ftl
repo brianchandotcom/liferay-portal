@@ -50,7 +50,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @GraphQLName("${schemaName}")
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "${schemaName}")
-public class ${schemaName} <#if freeMarkerTool.getDTOParentClassName(openAPIYAML, schemaName)??>extends ${freeMarkerTool.getParentClass(openAPIYAML, schemaName)}</#if> {
+public class ${schemaName} <#if freeMarkerTool.getDTOParentClassName(openAPIYAML, schemaName)??>extends ${freeMarkerTool.getDTOParentClassName(openAPIYAML, schemaName)}</#if> {
 
 	<#assign enumSimpleClassNames = [] />
 

@@ -237,7 +237,7 @@ public class DEDataLayoutServiceTest {
 			deDataLayoutDeleteResponse.getDEDataLayoutId());
 	}
 
-	@Test
+	@Test(expected = DEDataLayoutException.class)
 	public void testDeleteMultiplesDEDataLayout() throws Exception {
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(
@@ -248,18 +248,20 @@ public class DEDataLayoutServiceTest {
 		List<DEDataLayoutSaveResponse> deDataLayoutSaveResponses =
 			new ArrayList<>();
 
-		DEDataDefinition deDataDefinition =
-			DEDataEngineTestUtil.insertDEDataDefinition(
-				_user, _group, "description", "definition",
-				_deDataDefinitionService);
-
-		DEDataLayout deDataLayout = _createDEDataLayout(
-			"layout", "this is a layout", "wizard", "en_US");
-
-		deDataLayout.setDEDataDefinitionId(
-			deDataDefinition.getDEDataDefinitionId());
+		ServiceContextThreadLocal.pushServiceContext(serviceContext);
 
 		for (int i = 0; i < 5; i++) {
+			DEDataDefinition deDataDefinition =
+				DEDataEngineTestUtil.insertDEDataDefinition(
+					_user, _group, "description" + i, "definition" + i,
+					_deDataDefinitionService);
+
+			DEDataLayout deDataLayout = _createDEDataLayout(
+				"layout", "this is a layout", "wizard", "en_US");
+
+			deDataLayout.setDEDataDefinitionId(
+				deDataDefinition.getDEDataDefinitionId());
+
 			DEDataLayoutSaveRequest deDataLayoutSaveRequest =
 				DEDataLayoutRequestBuilder.saveBuilder(
 					deDataLayout
@@ -272,14 +274,14 @@ public class DEDataLayoutServiceTest {
 			DEDataLayoutSaveResponse deDataLayoutSaveResponse =
 				_deDataLayoutService.execute(deDataLayoutSaveRequest);
 
+			deDataLayout.setDEDataLayoutId(
+				deDataLayoutSaveResponse.getDEDataLayoutId());
+
 			deDataLayoutSaveResponses.add(deDataLayoutSaveResponse);
 		}
 
 		for (DEDataLayoutSaveResponse deDataLayoutSaveResponse :
 				deDataLayoutSaveResponses) {
-
-			deDataLayout.setDEDataLayoutId(
-				deDataLayoutSaveResponse.getDEDataLayoutId());
 
 			DEDataLayoutDeleteRequest deDataLayoutDeleteRequest =
 				DEDataLayoutRequestBuilder.deleteBuilder(
@@ -290,9 +292,79 @@ public class DEDataLayoutServiceTest {
 			_deDataLayoutService.execute(deDataLayoutDeleteRequest);
 		}
 
-		Assert.assertEquals(
-			deDataLayoutSaveResponses.toString(), 5,
-			deDataLayoutSaveResponses.size());
+		DEDataLayoutGetRequest deDataLayoutGetRequest =
+			DEDataLayoutRequestBuilder.getBuilder(
+			).byId(
+				deDataLayoutSaveResponses.get(
+					0
+				).getDEDataLayoutId()
+			).build();
+
+		_deDataLayoutService.execute(deDataLayoutGetRequest);
+	}
+
+	@Test(expected = DEDataLayoutException.class)
+	public void testDeleteOneInCollectionDEDataLayout() throws Exception {
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				_group, _user.getGroupId());
+
+		ServiceContextThreadLocal.pushServiceContext(serviceContext);
+
+		List<DEDataLayoutSaveResponse> deDataLayoutSaveResponses =
+			new ArrayList<>();
+
+		for (int i = 0; i < 5; i++) {
+			DEDataDefinition deDataDefinition =
+				DEDataEngineTestUtil.insertDEDataDefinition(
+					_user, _group, "description" + i, "definition" + i,
+					_deDataDefinitionService);
+
+			DEDataLayout deDataLayout = _createDEDataLayout(
+				"layout", "this is a layout", "wizard", "en_US");
+
+			deDataLayout.setDEDataDefinitionId(
+				deDataDefinition.getDEDataDefinitionId());
+
+			DEDataLayoutSaveRequest deDataLayoutSaveRequest =
+				DEDataLayoutRequestBuilder.saveBuilder(
+					deDataLayout
+				).inGroup(
+					_user.getGroupId()
+				).onBehalfOf(
+					_user.getUserId()
+				).build();
+
+			DEDataLayoutSaveResponse deDataLayoutSaveResponse =
+				_deDataLayoutService.execute(deDataLayoutSaveRequest);
+
+			deDataLayout.setDEDataLayoutId(
+				deDataLayoutSaveResponse.getDEDataLayoutId());
+
+			deDataLayoutSaveResponses.add(deDataLayoutSaveResponse);
+		}
+
+		DEDataLayoutDeleteRequest deDataLayoutDeleteRequest =
+			DEDataLayoutRequestBuilder.deleteBuilder(
+			).byId(
+				deDataLayoutSaveResponses.get(
+					0
+				).getDEDataLayoutId()
+			).build();
+
+		_deDataLayoutService.execute(deDataLayoutDeleteRequest);
+
+		for (DEDataLayoutSaveResponse deDataLayoutSaveResponse :
+				deDataLayoutSaveResponses) {
+
+			DEDataLayoutGetRequest deDataLayoutGetRequest =
+				DEDataLayoutRequestBuilder.getBuilder(
+				).byId(
+					deDataLayoutSaveResponse.getDEDataLayoutId()
+				).build();
+
+			_deDataLayoutService.execute(deDataLayoutGetRequest);
+		}
 	}
 
 	@Test(expected = DEDataLayoutException.class)

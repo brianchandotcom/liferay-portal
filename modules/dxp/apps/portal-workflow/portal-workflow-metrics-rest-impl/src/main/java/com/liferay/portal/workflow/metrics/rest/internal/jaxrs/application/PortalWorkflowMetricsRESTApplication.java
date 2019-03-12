@@ -26,12 +26,12 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(
 	property = {
-		"osgi.jaxrs.application.base=/portal-workflow-metrics-rest",
+		"osgi.jaxrs.application.base=/portal-workflow-metrics",
 		"osgi.jaxrs.extension.select=(osgi.jaxrs.name=Liferay.Vulcan)",
-		"osgi.jaxrs.name=Liferay.Portal.Workflow.Metrics"
+		"osgi.jaxrs.name=Liferay.Portal.Workflow.Metrics.REST"
 	},
 	service = Application.class
 )
 @Generated("")
-public class PortalWorkflowMetricsRestApplication extends Application {
+public class PortalWorkflowMetricsRESTApplication extends Application {
 }

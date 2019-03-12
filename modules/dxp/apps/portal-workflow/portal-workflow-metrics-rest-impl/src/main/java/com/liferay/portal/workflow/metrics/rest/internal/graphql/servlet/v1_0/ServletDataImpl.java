@@ -37,7 +37,7 @@ public class ServletDataImpl implements ServletData {
 
 	@Override
 	public String getPath() {
-		return "/portal-workflow-metrics-rest-graphql/v1_0";
+		return "/portal-workflow-metrics-graphql/v1_0";
 	}
 
 	@Override

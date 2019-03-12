@@ -24,7 +24,7 @@ import javax.annotation.Generated;
 /**
  * To access this resource, run:
  *
- *     curl -u your@email.com:yourpassword -D - http://localhost:8080/o/portal-workflow-metrics-rest/v1.0
+ *     curl -u your@email.com:yourpassword -D - http://localhost:8080/o/portal-workflow-metrics/v1.0
  *
  * @author Rafael Praxedes
  * @generated

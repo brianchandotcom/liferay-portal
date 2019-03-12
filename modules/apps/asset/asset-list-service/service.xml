@@ -102,7 +102,7 @@
 
 		<reference entity="User" package-path="com.liferay.portal" />
 	</entity>
-	<entity local-service="true" name="AssetListEntrySegmentsEntryRel" remote-service="true" uuid="true">
+	<entity local-service="true" name="AssetListEntrySegmentsEntryRel" remote-service="false" uuid="true">
 
 		<!-- PK fields -->
 

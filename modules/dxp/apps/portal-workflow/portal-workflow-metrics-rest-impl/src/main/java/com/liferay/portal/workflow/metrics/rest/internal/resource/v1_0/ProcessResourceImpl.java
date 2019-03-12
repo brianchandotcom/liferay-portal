@@ -29,7 +29,6 @@ import com.liferay.portal.search.aggregation.Aggregations;
 import com.liferay.portal.search.aggregation.bucket.Bucket;
 import com.liferay.portal.search.aggregation.bucket.TermsAggregation;
 import com.liferay.portal.search.aggregation.bucket.TermsAggregationResult;
-import com.liferay.portal.search.aggregation.metrics.CardinalityAggregation;
 import com.liferay.portal.search.aggregation.metrics.CardinalityAggregationResult;
 import com.liferay.portal.search.aggregation.pipeline.BucketSortPipelineAggregation;
 import com.liferay.portal.search.document.Document;
@@ -103,30 +102,6 @@ public class ProcessResourceImpl
 		return Page.of(Collections.emptyList());
 	}
 
-	private FieldSort _toFieldSort(Sort[] sorts) {
-		String titleFieldName = Field.getSortableFieldName(
-			_getTitleFieldName());
-
-		Sort sort = new Sort(titleFieldName, false);
-
-		if (sorts != null) {
-			sort = sorts[0];
-		}
-
-		String fieldName = sort.getFieldName();
-
-		if (_isOrderByTitle(fieldName)) {
-			fieldName = titleFieldName;
-		}
-
-		FieldSort fieldSort = _sorts.field(fieldName);
-
-		fieldSort.setSortOrder(
-			sort.isReverse() ? SortOrder.DESC : SortOrder.ASC);
-
-		return fieldSort;
-	}
-
 	private BooleanFilter _createInstanceBooleanFilter(Set<Long> processIds) {
 		return new BooleanFilter() {
 			{
@@ -171,10 +146,12 @@ public class ProcessResourceImpl
 				_aggregations.bucketSort("sort");
 
 			bucketSortPipelineAggregation.addSortFields(fieldSort);
-			bucketSortPipelineAggregation.setFrom(pagination.getStartPosition());
+			bucketSortPipelineAggregation.setFrom(
+				pagination.getStartPosition());
 			bucketSortPipelineAggregation.setSize(pagination.getPageSize());
 
-			termsAggregation.addPipelineAggregation(bucketSortPipelineAggregation);
+			termsAggregation.addPipelineAggregation(
+				bucketSortPipelineAggregation);
 		}
 
 		termsAggregation.setSize(processIds.size());
@@ -214,13 +191,15 @@ public class ProcessResourceImpl
 			process.setOntimeInstanceCount(0L);
 			process.setOverdueInstanceCount(0L);
 			process.setTitle(
-				GetterUtil.getString(document.getFieldValue(_getTitleFieldName())));
+				GetterUtil.getString(
+					document.getFieldValue(_getTitleFieldName())));
 
 			processesMap.put(process.getId(), process);
 		}
 
 		return _getProcesses(
-			_getAggregationResults(fieldSort, pagination, processesMap.keySet()),
+			_getAggregationResults(
+				fieldSort, pagination, processesMap.keySet()),
 			fieldSort, processesMap);
 	}
 
@@ -307,6 +286,30 @@ public class ProcessResourceImpl
 		}
 
 		processes.add(process);
+	}
+
+	private FieldSort _toFieldSort(Sort[] sorts) {
+		String titleFieldName = Field.getSortableFieldName(
+			_getTitleFieldName());
+
+		Sort sort = new Sort(titleFieldName, false);
+
+		if (sorts != null) {
+			sort = sorts[0];
+		}
+
+		String fieldName = sort.getFieldName();
+
+		if (_isOrderByTitle(fieldName)) {
+			fieldName = titleFieldName;
+		}
+
+		FieldSort fieldSort = _sorts.field(fieldName);
+
+		fieldSort.setSortOrder(
+			sort.isReverse() ? SortOrder.DESC : SortOrder.ASC);
+
+		return fieldSort;
 	}
 
 	private static final EntityModel _entityModel = new ProcessEntityModel();

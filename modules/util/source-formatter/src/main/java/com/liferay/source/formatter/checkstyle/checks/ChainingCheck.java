@@ -109,7 +109,7 @@ public class ChainingCheck extends BaseCheck {
 				String name1 = chain.get(0);
 				String name2 = chain.get(1);
 
-				if (name1.equals("concat") || name2.equals("concat")) {
+				if (name1.equals("concat") && name2.equals("concat")) {
 					continue;
 				}
 			}

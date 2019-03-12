@@ -10,7 +10,7 @@ alter table Layout add publishDate DATE null;
 
 COMMIT_TRANSACTION;
 
-update Layout set system_ = FALSE, head = TRUE, headId = -1 * plid;
+update Layout set headId = -1 * plid, head = TRUE, system_ = FALSE;
 
 create table LayoutSetVersion (
 	layoutSetVersionId LONG not null primary key,

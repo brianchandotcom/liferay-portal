@@ -301,7 +301,6 @@ definition {
 		);
 	}
 
-	@ignore = "true"
 	@priority = "5"
 	test EditCustomFieldUserTextField {
 		property app.server.types = "jboss,resin,tcserver,tomcat,weblogic,websphere,wildfly";

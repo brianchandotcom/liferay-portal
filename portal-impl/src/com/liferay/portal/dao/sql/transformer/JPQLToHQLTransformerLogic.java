@@ -25,6 +25,14 @@ import java.util.regex.Pattern;
 public class JPQLToHQLTransformerLogic {
 
 	public static final String replaceCount(String sql) {
+		int index = sql.indexOf(_SELECT_COUNT);
+
+		if ((index == -1) ||
+			sql.regionMatches(index + _SELECT_COUNT.length(), "*)", 0, 2)) {
+
+			return sql;
+		}
+
 		Matcher matcher = _jpqlCountPattern.matcher(sql);
 
 		if (matcher.find()) {
@@ -40,6 +48,8 @@ public class JPQLToHQLTransformerLogic {
 	}
 
 	private static final String _HQL_COUNT_SQL = "SELECT COUNT(*) FROM $2 $3";
+
+	private static final String _SELECT_COUNT = "SELECT COUNT(";
 
 	private static final Pattern _jpqlCountPattern = Pattern.compile(
 		"SELECT COUNT\\((\\S+)\\) FROM (\\S+) (\\S+)");

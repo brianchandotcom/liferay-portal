@@ -461,6 +461,7 @@ public abstract class LayoutLocalServiceBaseImpl
 	 *
 	 * @param layout the layout
 	 * @return the layout that was updated
+	 * @throws PortalException
 	 */
 	@Indexable(type = IndexableType.REINDEX)
 	@Override

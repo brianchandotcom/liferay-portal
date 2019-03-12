@@ -1,105 +1,5 @@
 components:
     schemas:
-        BulkActionResponse:
-            properties:
-                description:
-                    type: string
-                status:
-                    type: string
-        BulkAssetEntryAction:
-            properties:
-                folderId:
-                    format: int64
-                    type: integer
-                repositoryId:
-                    format: int64
-                    type: integer
-                selectAll:
-                    type: boolean
-                selection:
-                    items:
-                        type: string
-                    type: array
-        BulkAssetEntryCommonCategories:
-            properties:
-                description:
-                    type: string
-                status:
-                    type: string
-                vocabularies:
-                    items:
-                        $ref: "#/components/schemas/Vocabulary"
-                    type: array
-        BulkAssetEntryCommonTags:
-            properties:
-                description:
-                    type: string
-                groupIds:
-                    items:
-                        format: int64
-                        type: integer
-                    type: array
-                status:
-                    type: string
-                tagNames:
-                    items:
-                        type: string
-                    type: array
-        BulkAssetEntryUpdateCategoriesAction:
-            properties:
-                append:
-                    type: boolean
-                folderId:
-                    format: int64
-                    type: integer
-                repositoryId:
-                    format: int64
-                    type: integer
-                selectAll:
-                    type: boolean
-                selection:
-                    items:
-                        type: string
-                    type: array
-                toAddCategoryIds:
-                    items:
-                        format: int64
-                        type: integer
-                    type: array
-                toRemoveCategoryIds:
-                    items:
-                        format: int64
-                        type: integer
-                    type: array
-        BulkAssetEntryUpdateTagsAction:
-            properties:
-                append:
-                    type: boolean
-                folderId:
-                    format: int64
-                    type: integer
-                repositoryId:
-                    format: int64
-                    type: integer
-                selectAll:
-                    type: boolean
-                selection:
-                    items:
-                        type: string
-                    type: array
-                toAddTagNames:
-                    items:
-                        type: string
-                    type: array
-                toRemoveTagNames:
-                    items:
-                        type: string
-                    type: array
-        BulkStatus:
-            properties:
-                busy:
-                    type: boolean
-            type: object
         Category:
             properties:
                 categoryId:
@@ -107,6 +7,65 @@ components:
                     type: integer
                 name:
                     type: string
+        DocumentSelection:
+            oneOf:
+                - type: object
+                  properties:
+                      selectionToAddCategoryIds:
+                          items:
+                              format: int64
+                              type: integer
+                          type: array
+                      selectionToRemoveCategoryIds:
+                          items:
+                              format: int64
+                              type: integer
+                          type: array
+                - type: object
+                  properties:
+                      selectionToAddTagNames:
+                          items:
+                              type: string
+                          type: array
+                      selectionToRemoveTagNames:
+                          items:
+                              type: string
+                          type: array
+            properties:
+                documentIds:
+                    items:
+                        type: string
+                    type: array
+                selectionScope:
+                    properties:
+                        folderId:
+                            format: int64
+                            type: integer
+                        repositoryId:
+                            format: int64
+                            type: integer
+                        selectAll:
+                            type: boolean
+                    type: object
+        GenericError:
+            description: https://www.schema.org/GenericError
+            properties:
+                message:
+                    type: string
+            type: object
+        Keyword:
+            properties:
+                name:
+                    type: string
+        MessageSelection:
+            properties:
+                description:
+                    type: string
+        Status:
+            properties:
+                actionInProgress:
+                    type: boolean
+            type: object
         Vocabulary:
             properties:
                 categories:
@@ -126,7 +85,85 @@ info:
     version: v1.0
 openapi: "3.0.1"
 paths:
-    "/categories/{class-name-id}":
+    "/asset/{class-name-id}/categories/batch":
+        patch:
+            parameters:
+                - in: path
+                  name: class-name-id
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/DocumentSelection"
+            responses:
+                200:
+                    content:
+                        {}
+                    description: ""
+            tags: ["Category"]
+        put:
+            parameters:
+                - in: path
+                  name: class-name-id
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/DocumentSelection"
+            responses:
+                200:
+                    content:
+                        {}
+                    description: ""
+            tags: ["Category"]
+    "/asset/{class-name-id}/keywords/batch":
+        patch:
+            parameters:
+                - in: path
+                  name: class-name-id
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/DocumentSelection"
+            responses:
+                200:
+                    content:
+                        {}
+                    description: ""
+            tags: ["Keyword"]
+        put:
+            parameters:
+                - in: path
+                  name: class-name-id
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/DocumentSelection"
+            responses:
+                200:
+                    content:
+                        {}
+                    description: ""
+            tags: ["Keyword"]
+    "/asset/{class-name-id}/keywords/common":
         post:
             parameters:
                 - in: path
@@ -139,16 +176,68 @@ paths:
                 content:
                     application/json:
                         schema:
-                            $ref: "#/components/schemas/BulkAssetEntryUpdateCategoriesAction"
+                            $ref: "#/components/schemas/DocumentSelection"
             responses:
                 200:
                     content:
                         application/json:
                             schema:
-                                $ref: "#/components/schemas/BulkActionResponse"
+                                items:
+                                    $ref: "#/components/schemas/Keyword"
+                                type: array
                     description: ""
-            tags: ["BulkActionResponse"]
-    "/categories/{content-space-id}/{class-name-id}/common":
+            tags: ["Keyword"]
+    "/asset/{class-name-id}/keywords/message-selection":
+        post:
+            parameters:
+                - in: path
+                  name: class-name-id
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/DocumentSelection"
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/MessageSelection"
+                    description: ""
+            tags: ["MessageSelection"]
+    "/asset/{class-name-id}/vocabularies/message-selection":
+        post:
+            parameters:
+                - in: path
+                  name: class-name-id
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/DocumentSelection"
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/MessageSelection"
+                    description: ""
+                500:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/GenericError"
+                    description: ""
+            tags: ["MessageSelection"]
+    "/content-spaces/{content-space-id}/asset/{class-name-id}/vocabularies/common":
         post:
             parameters:
                 - in: path
@@ -167,65 +256,17 @@ paths:
                 content:
                     application/json:
                         schema:
-                            $ref: "#/components/schemas/BulkAssetEntryAction"
+                            $ref: "#/components/schemas/DocumentSelection"
             responses:
                 200:
                     content:
                         application/json:
                             schema:
-                                $ref: "#/components/schemas/BulkAssetEntryCommonCategories"
+                                items:
+                                    $ref: "#/components/schemas/Vocabulary"
+                                type: array
                     description: ""
-            tags: ["BulkActionResponse"]
-    "/tags/{class-name-id}":
-        post:
-            parameters:
-                - in: path
-                  name: class-name-id
-                  required: true
-                  schema:
-                      format: int64
-                      type: integer
-            requestBody:
-                content:
-                    application/json:
-                        schema:
-                            $ref: "#/components/schemas/BulkAssetEntryUpdateTagsAction"
-            responses:
-                200:
-                    content:
-                        application/json:
-                            schema:
-                                $ref: "#/components/schemas/BulkActionResponse"
-                    description: ""
-            tags: ["BulkActionResponse"]
-    "/tags/{content-space-id}/{class-name-id}/common":
-        post:
-            parameters:
-                - in: path
-                  name: content-space-id
-                  required: true
-                  schema:
-                      format: int64
-                      type: integer
-                - in: path
-                  name: class-name-id
-                  required: true
-                  schema:
-                      format: int64
-                      type: integer
-            requestBody:
-                content:
-                    application/json:
-                        schema:
-                            $ref: "#/components/schemas/BulkAssetEntryAction"
-            responses:
-                200:
-                    content:
-                        application/json:
-                            schema:
-                                $ref: "#/components/schemas/BulkAssetEntryCommonTags"
-                    description: ""
-            tags: ["BulkActionResponse"]
+            tags: ["Vocabulary"]
     "/status":
         get:
             responses:
@@ -233,6 +274,6 @@ paths:
                     content:
                         application/json:
                             schema:
-                                $ref: "#/components/schemas/BulkStatus"
+                                $ref: "#/components/schemas/Status"
                     description: ""
-            tags: ["BulkStatus"]
+            tags: ["Status"]

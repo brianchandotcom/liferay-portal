@@ -6,7 +6,7 @@
 {template .render}
 	{@param item: [
 		editableValues: [
-			assetEntryEncodedId: string,
+			encodedId: string,
 			fieldId: string,
 			mappedField: string
 		]
@@ -47,7 +47,7 @@
 			<div class="form-group floating-toolbar-mapping-panel__asset-select">
 				{call .assetSelect}
 					{param handleAssetOptionChange: $_handleAssetOptionChange /}
-					{param selectedAssetEntryEncodedId: $item.editableValues.assetEntryEncodedId /}
+					{param selectedAssetEntryEncodedId: $item.editableValues.encodedId /}
 					{param assetEntries: $mappedAssetEntries /}
 				{/call}
 			</div>

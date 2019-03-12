@@ -93,20 +93,12 @@ long classNameId = ParamUtil.getLong(request, "classNameId");
 							<aui:button cssClass="btn-sm mr-3" data-actionname="<%= Constants.PUBLISH %>" disabled="<%= journalEditArticleDisplayContext.isPending() %>" name="publishButton" type="submit" value="<%= journalEditArticleDisplayContext.getPublishButtonLabel() %>" />
 						</c:if>
 
-						<%
-						Map<String, Object> data = new HashMap<>();
-
-						String contextualSidebarId = renderResponse.getNamespace() + "contextualSidebar";
-
-						data.put("target", "#" + contextualSidebarId);
-						data.put("toggle", "sidenav");
-						data.put("type", "fixed-push");
-						data.put("type-mobile", "fixed");
-						%>
-
-						<aui:a cssClass="btn btn-sm contextual-sidebar-btn text-secondary" data="<%= data %>" href="javascript:;">
-							<aui:icon image="cog" markupView="lexicon" />
-						</aui:a>
+						<clay:button
+							icon="cog"
+							id='<%= renderResponse.getNamespace() + "contextualSidebarButton" %>'
+							size="sm"
+							style="borderless"
+						/>
 					</div>
 				</li>
 			</ul>
@@ -159,7 +151,7 @@ long classNameId = ParamUtil.getLong(request, "classNameId");
 		</div>
 	</div>
 
-	<div class="closed contextual-sidebar contextual-sidebar-visible edit-article-sidebar sidebar-light sidenav-fixed sidenav-menu-slider sidenav-right" id="<%= contextualSidebarId %>">
+	<div class="contextual-sidebar contextual-sidebar-visible edit-article-sidebar sidebar-light" id="<portlet:namespace />contextualSidebarContainer">
 		<div class="sidebar-body">
 
 			<%
@@ -214,4 +206,23 @@ long classNameId = ParamUtil.getLong(request, "classNameId");
 			'strings.saveAsDraftBeforePreview': '<liferay-ui:message key="in-order-to-preview-your-changes,-the-web-content-is-saved-as-a-draft" />'
 		}
 	);
+
+	var contextualSidebarButton = document.getElementById('<portlet:namespace />contextualSidebarButton');
+
+	if (contextualSidebarButton) {
+		contextualSidebarButton.addEventListener(
+			'click',
+			function(event) {
+				var contextualSidebarContainer = document.getElementById('<portlet:namespace />contextualSidebarContainer');
+
+				if (contextualSidebarContainer.classList.contains('contextual-sidebar-visible')) {
+					contextualSidebarContainer.classList.remove('contextual-sidebar-visible');
+
+				}
+				else {
+					contextualSidebarContainer.classList.add('contextual-sidebar-visible');
+				}
+			}
+		);
+	}
 </aui:script>

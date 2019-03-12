@@ -269,7 +269,6 @@ public class ProcessResourceImpl
 					setPreBooleanFilter(_createProcessBooleanFilter());
 				}
 			});
-
 		searchSearchRequest.setSelectedFieldNames(
 			"processId", _getTitleFieldName());
 

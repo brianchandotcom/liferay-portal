@@ -233,8 +233,8 @@ const INITIAL_STATE = {
 							{
 								classNameId: Config.string().value(''),
 								classPK: Config.string().value(''),
-								fieldId: Config.string().value(''),
 								defaultValue: Config.string().required(),
+								fieldId: Config.string().value(''),
 								mappedField: Config.string().value('')
 							}
 						)

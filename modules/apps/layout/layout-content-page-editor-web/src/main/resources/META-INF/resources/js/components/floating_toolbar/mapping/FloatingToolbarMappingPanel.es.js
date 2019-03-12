@@ -63,12 +63,18 @@ class FloatingToolbarMappingPanel extends PortletBase {
 			SOURCE_TYPE_IDS
 		);
 
-		if (nextState.mappingFieldsURL) {
+		if (
+      nextState.mappingFieldsURL &&
+      nextState.selectedMappingTypes &&
+      nextState.selectedMappingTypes.type
+    ) {
 			nextState = setIn(
 				nextState,
 				['_sourceTypes'],
 				FloatingToolbarMappingPanel._getSourceTypes(
-					nextState.selectedMappingTypes.subtype.label
+          nextState.selectedMappingTypes.subtype ?
+            nextState.selectedMappingTypes.subtype.label :
+  					nextState.selectedMappingTypes.type.label
 				)
 			);
 		}
@@ -223,13 +229,15 @@ class FloatingToolbarMappingPanel extends PortletBase {
 		this._clearFields();
 
 		if (this._selectedSourceTypeId === SOURCE_TYPE_IDS.structure) {
-			promise = this.fetch(
-				this.mappingFieldsURL,
-				{
-					classNameId: this.selectedMappingTypes.type.id,
-					classTypeId: this.selectedMappingTypes.subtype.id
-				}
-			);
+      const data = {
+        classNameId: this.selectedMappingTypes.type.id
+      };
+
+      if (this.selectedMappingTypes.subtype) {
+        data.classTypeId = this.selectedMappingTypes.subtype.id;
+      }
+
+			promise = this.fetch(this.mappingFieldsURL, data);
 		}
 		else if (
 			this._selectedSourceTypeId === SOURCE_TYPE_IDS.content &&

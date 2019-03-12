@@ -7,6 +7,10 @@
 	{@param? store: ?}
 
 	<div class="sidebar-mapping">
+    <p class="text-secondary small pb-2">
+      {msg desc=""}you-can-select-here-the-content-source-for-this-display-page{/msg}.
+    </p>
+
     {call com.liferay.layout.content.page.editor.web.SelectMappingTypeForm.render}
       {param store: $store /}
     {/call}

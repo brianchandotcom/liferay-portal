@@ -43,8 +43,8 @@ describe(
 					'should add an encoded id to a given asset object',
 					() => {
 						const asset = {
-							assetEntryClassNameId: 11111,
-							assetEntryClassPK: 22222,
+							classNameId: 11111,
+							classPK: 22222,
 							assetEntryTitle: 'My asset'
 						};
 

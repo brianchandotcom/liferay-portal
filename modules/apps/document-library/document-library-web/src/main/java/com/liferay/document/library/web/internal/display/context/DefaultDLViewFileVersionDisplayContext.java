@@ -182,6 +182,7 @@ public class DefaultDLViewFileVersionDisplayContext
 		menu.setDirection("left-side");
 		menu.setMarkupView("lexicon");
 		menu.setMenuItems(_getMenuItems());
+		menu.setMessage(LanguageUtil.get(_resourceBundle, "actions"));
 		menu.setScroll(false);
 		menu.setShowWhenSingleIcon(true);
 		menu.setTriggerCssClass("component-action");

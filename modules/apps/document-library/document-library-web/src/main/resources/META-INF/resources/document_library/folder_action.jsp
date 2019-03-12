@@ -102,7 +102,7 @@ if ((row == null) && portletName.equals(DLPortletKeys.MEDIA_GALLERY_DISPLAY)) {
 		direction="left-side"
 		icon="<%= StringPool.BLANK %>"
 		markupView="lexicon"
-		message="<%= StringPool.BLANK %>"
+		message='<%= LanguageUtil.get(request, "actions") %>'
 		showWhenSingleIcon="<%= true %>"
 	>
 

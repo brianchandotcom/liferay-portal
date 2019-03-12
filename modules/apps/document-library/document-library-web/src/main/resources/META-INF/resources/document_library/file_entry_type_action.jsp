@@ -26,7 +26,7 @@ DLFileEntryType fileEntryType = (DLFileEntryType)row.getObject();
 	direction="left-side"
 	icon="<%= StringPool.BLANK %>"
 	markupView="lexicon"
-	message="<%= StringPool.BLANK %>"
+	message='<%= LanguageUtil.get(request, "actions") %>'
 	showWhenSingleIcon="<%= true %>"
 >
 	<c:if test="<%= DLFileEntryTypePermission.contains(permissionChecker, fileEntryType, ActionKeys.UPDATE) %>">

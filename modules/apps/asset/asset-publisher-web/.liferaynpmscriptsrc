@@ -1,14 +1,14 @@
 {
 	"build": {
 		"dependencies": [
+			"asset-taglib",
 			"clay-autocomplete",
 			"clay-button",
 			"clay-data-provider",
 			"clay-icon",
 			"clay-label",
 			"clay-link",
-			"clay-multi-select",
-			"com.liferay.asset.taglib"
+			"clay-multi-select"
 		]
 	}
 }

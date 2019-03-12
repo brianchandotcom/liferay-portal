@@ -66,8 +66,6 @@ components:
                     type: array
                 repeatable:
                     type: boolean
-                repeatableId:
-                    type: string
                 value:
                     properties:
                         data:

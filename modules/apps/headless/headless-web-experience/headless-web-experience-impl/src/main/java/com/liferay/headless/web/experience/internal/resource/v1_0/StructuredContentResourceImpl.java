@@ -414,14 +414,9 @@ public class StructuredContentResourceImpl
 	private void _createFieldsDisplayValue(
 		ContentField contentField, List<String> fieldsDisplayValue) {
 
-		String repeatableId = contentField.getRepeatableId();
-
-		if (repeatableId == null) {
-			repeatableId = StringUtil.randomId();
-		}
-
 		fieldsDisplayValue.add(
-			contentField.getName() + DDM.INSTANCE_SEPARATOR + repeatableId);
+			contentField.getName() + DDM.INSTANCE_SEPARATOR +
+				StringUtil.randomId());
 
 		if (contentField.getNestedFields() == null) {
 			return;
@@ -711,7 +706,6 @@ public class StructuredContentResourceImpl
 			Arrays.asList(contentFields),
 			contentFieldValue -> new DDMFormFieldValue() {
 				{
-					setInstanceId(contentFieldValue.getRepeatableId());
 					setName(contentFieldValue.getName());
 					setNestedDDMFormFields(
 						_toDDMFormFieldValues(

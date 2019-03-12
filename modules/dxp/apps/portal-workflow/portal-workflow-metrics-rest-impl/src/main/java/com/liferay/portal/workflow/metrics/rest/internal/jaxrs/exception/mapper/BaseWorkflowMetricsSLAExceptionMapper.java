@@ -58,17 +58,17 @@ public abstract class BaseWorkflowMetricsSLAExceptionMapper
 	}
 
 	protected String getMessage() {
-		return language.get(
+		return _language.get(
 			ResourceBundleUtil.getBundle(
-				contextAcceptLanguage.getPreferredLocale(),
+				_acceptLanguage.getPreferredLocale(),
 				BaseWorkflowMetricsSLAExceptionMapper.class),
 			getKey());
 	}
 
 	@Context
-	protected AcceptLanguage contextAcceptLanguage;
+	private AcceptLanguage _acceptLanguage;
 
 	@Reference
-	protected Language language;
+	private Language _language;
 
 }

@@ -242,6 +242,7 @@ message.
 	<target name="compile">
 		<setup-libs />
 		<setup-sdk />
+		<setup-yarn />
 
 		<delete file="javac.output.txt" />
 

@@ -1686,6 +1686,14 @@ artifact.url=${remote.repository.url}/com/liferay/portal/com.liferay.${processed
 		</sequential>
 	</macrodef>
 
+	<macrodef name="setup-yarn">
+		<sequential>
+			<gradle-execute task="setUpYarn">
+				<arg value="--build-file=${project.dir}/modules/util.gradle" />
+			</gradle-execute>
+		</sequential>
+	</macrodef>
+
 	<macrodef name="ssh-execute">
 		<attribute default="${ssh.host}" name="ssh.host" />
 		<attribute default="${ssh.password}" name="ssh.password" />

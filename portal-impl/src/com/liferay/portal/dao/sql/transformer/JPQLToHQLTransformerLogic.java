@@ -24,7 +24,7 @@ import java.util.regex.Pattern;
 @Deprecated
 public class JPQLToHQLTransformerLogic {
 
-	public static final String replaceCount(String sql) {
+	public static String replaceCount(String sql) {
 		int index = sql.indexOf(_SELECT_COUNT);
 
 		if ((index == -1) ||

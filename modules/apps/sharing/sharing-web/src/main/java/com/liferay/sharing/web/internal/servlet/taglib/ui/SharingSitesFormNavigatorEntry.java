@@ -77,7 +77,7 @@ public class SharingSitesFormNavigatorEntry
 		Group liveGroup = (Group)request.getAttribute("site.liveGroup");
 
 		request.setAttribute(
-			SharingConfiguration.class.getName(),
+			SharingWebKeys.GROUP_SHARING_CONFIGURATION,
 			_sharingConfigurationFactory.getGroupSharingConfiguration(
 				liveGroup));
 

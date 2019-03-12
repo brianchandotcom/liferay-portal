@@ -18,7 +18,7 @@
 
 <%
 SharingConfiguration companySharingConfiguration = (SharingConfiguration)request.getAttribute(SharingWebKeys.COMPANY_SHARING_CONFIGURATION);
-SharingConfiguration sharingConfiguration = (SharingConfiguration)request.getAttribute(SharingConfiguration.class.getName());
+SharingConfiguration groupSharingConfiguration = (SharingConfiguration)request.getAttribute(SharingWebKeys.GROUP_SHARING_CONFIGURATION);
 %>
 
-<aui:input disabled="<%= !companySharingConfiguration.isEnabled() %>" label="enabled" name="TypeSettingsProperties--sharingEnabled--" type="toggle-switch" value="<%= sharingConfiguration.isEnabled() %>" />
+<aui:input disabled="<%= !companySharingConfiguration.isEnabled() %>" label="enabled" name="TypeSettingsProperties--sharingEnabled--" type="toggle-switch" value="<%= groupSharingConfiguration.isEnabled() %>" />

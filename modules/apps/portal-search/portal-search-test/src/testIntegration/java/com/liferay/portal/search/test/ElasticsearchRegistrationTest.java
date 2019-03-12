@@ -17,8 +17,6 @@ package com.liferay.portal.search.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.kernel.search.SearchEngine;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-import com.liferay.registry.Registry;
-import com.liferay.registry.RegistryUtil;
 
 import java.util.Collection;
 
@@ -27,6 +25,11 @@ import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+
+import org.osgi.framework.Bundle;
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.FrameworkUtil;
+import org.osgi.framework.ServiceReference;
 
 /**
  * @author Cristina González
@@ -41,14 +44,24 @@ public class ElasticsearchRegistrationTest {
 
 	@Test
 	public void testGetSearchEngineService() throws Exception {
-		Registry registry = RegistryUtil.getRegistry();
+		Bundle bundle = FrameworkUtil.getBundle(getClass());
 
-		Collection<SearchEngine> searchEngines = registry.getServices(
-			SearchEngine.class, "(search.engine.id=SYSTEM_ENGINE)");
+		BundleContext bundleContext = bundle.getBundleContext();
 
-		Assert.assertEquals(searchEngines.toString(), 1, searchEngines.size());
+		Collection<ServiceReference<SearchEngine>> searchEngineReferences =
+			bundleContext.getServiceReferences(
+				SearchEngine.class, "(search.engine.id=SYSTEM_ENGINE)");
 
-		for (SearchEngine searchEngine : searchEngines) {
+		Assert.assertEquals(
+			searchEngineReferences.toString(), 1,
+			searchEngineReferences.size());
+
+		for (ServiceReference<SearchEngine> searchEngineReference :
+				searchEngineReferences) {
+
+			SearchEngine searchEngine = bundleContext.getService(
+				searchEngineReference);
+
 			Class<? extends SearchEngine> searchEngineClass =
 				searchEngine.getClass();
 

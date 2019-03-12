@@ -184,17 +184,18 @@ public class ContentStructure {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String description;
 
-	public Fields[] getFields() {
+	public ContentStructureField[] getFields() {
 		return fields;
 	}
 
-	public void setFields(Fields[] fields) {
+	public void setFields(ContentStructureField[] fields) {
 		this.fields = fields;
 	}
 
 	@JsonIgnore
 	public void setFields(
-		UnsafeSupplier<Fields[], Exception> fieldsUnsafeSupplier) {
+		UnsafeSupplier<ContentStructureField[], Exception>
+			fieldsUnsafeSupplier) {
 
 		try {
 			fields = fieldsUnsafeSupplier.get();
@@ -206,7 +207,7 @@ public class ContentStructure {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Fields[] fields;
+	protected ContentStructureField[] fields;
 
 	public Long getId() {
 		return id;

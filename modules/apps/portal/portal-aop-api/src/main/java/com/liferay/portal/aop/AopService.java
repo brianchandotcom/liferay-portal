@@ -33,7 +33,10 @@ public interface AopService {
 	 * The interfaces under which to register this AopService.
 	 *
 	 * If null or empty, the service types for this AopService are all the
-	 * <i>directly</i> implemented interfaces of the AopService.
+	 * <i>directly</i> implemented interfaces of the AopService. If the
+	 * AopService is registered under OSGi prototype scope, then the result of
+	 * this method must be the same for <code>PrototypeServiceFactory</code>
+	 * service instances.
 	 */
 	public default Class<?>[] getAopInterfaces() {
 		return null;

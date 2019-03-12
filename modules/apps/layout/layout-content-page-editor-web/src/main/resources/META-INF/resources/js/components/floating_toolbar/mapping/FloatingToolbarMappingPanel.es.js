@@ -203,11 +203,13 @@ class FloatingToolbarMappingPanel extends PortletBase {
 	 * @review
 	 */
 	_handleUnmapButtonClick() {
-		this._selectedSourceTypeId = this.mappingFieldsURL ?
-			SOURCE_TYPE_IDS.structure :
-			SOURCE_TYPE_IDS.content;
-
 		this._clearEditableValues();
+
+		this.store.done(
+			() => {
+		this._loadFields();
+	}
+		);
 	}
 
 	/**

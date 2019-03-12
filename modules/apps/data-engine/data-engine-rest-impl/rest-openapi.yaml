@@ -3,6 +3,9 @@ components:
         DataDefinition:
             description: https://www.schema.org/DataDefinition
             properties:
+                contentSpaceId:
+                    format: int64
+                    type: integer
                 dataDefinitionFields:
                     items:
                         $ref: '#/components/schemas/DataDefinitionField'
@@ -17,9 +20,6 @@ components:
                     items:
                         $ref: '#/components/schemas/LocalizedValue'
                     type: array
-                contentSpaceId:
-                    format: int64
-                    type: integer
                 id:
                     format: int64
                     type: integer
@@ -65,13 +65,13 @@ components:
                 dataDefinitionId:
                     format: int64
                     type: integer
-                id:
-                    format: int64
-                    type: integer
                 description:
                     items:
                         $ref: '#/components/schemas/LocalizedValue'
                     type: array
+                id:
+                    format: int64
+                    type: integer
                 name:
                     items:
                         $ref: '#/components/schemas/LocalizedValue'

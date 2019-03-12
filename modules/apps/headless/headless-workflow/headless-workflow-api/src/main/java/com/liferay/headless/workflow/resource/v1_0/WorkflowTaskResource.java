@@ -14,7 +14,7 @@
 
 package com.liferay.headless.workflow.resource.v1_0;
 
-import com.liferay.headless.workflow.dto.v1_0.ChangeDescription;
+import com.liferay.headless.workflow.dto.v1_0.ChangeTransition;
 import com.liferay.headless.workflow.dto.v1_0.WorkflowTask;
 import com.liferay.headless.workflow.dto.v1_0.WorkflowTaskAssignToMe;
 import com.liferay.headless.workflow.dto.v1_0.WorkflowTaskAssignToUser;
@@ -39,8 +39,12 @@ public interface WorkflowTaskResource {
 			Long roleId, Pagination pagination)
 		throws Exception;
 
-	public Page<WorkflowTask> getWorkflowTasksByWorkflowTask(
-			String workflowTaskId, Pagination pagination)
+	public Page<WorkflowTask> getWorkflowTaskAssignedToMePage(
+			Pagination pagination)
+		throws Exception;
+
+	public Page<WorkflowTask> getWorkflowTaskAssignedToMyRolesPage(
+			Pagination pagination)
 		throws Exception;
 
 	public WorkflowTask getWorkflowTask(Long workflowTaskId) throws Exception;
@@ -55,7 +59,7 @@ public interface WorkflowTaskResource {
 		throws Exception;
 
 	public WorkflowTask postWorkflowTaskChangeTransition(
-			Long workflowTaskId, ChangeDescription changeDescription)
+			Long workflowTaskId, ChangeTransition changeTransition)
 		throws Exception;
 
 	public WorkflowTask postWorkflowTaskUpdateDueDate(

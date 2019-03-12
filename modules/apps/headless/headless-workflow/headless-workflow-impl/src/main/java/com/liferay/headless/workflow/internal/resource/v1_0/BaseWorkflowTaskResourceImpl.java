@@ -14,7 +14,7 @@
 
 package com.liferay.headless.workflow.internal.resource.v1_0;
 
-import com.liferay.headless.workflow.dto.v1_0.ChangeDescription;
+import com.liferay.headless.workflow.dto.v1_0.ChangeTransition;
 import com.liferay.headless.workflow.dto.v1_0.WorkflowTask;
 import com.liferay.headless.workflow.dto.v1_0.WorkflowTaskAssignToMe;
 import com.liferay.headless.workflow.dto.v1_0.WorkflowTaskAssignToUser;
@@ -85,11 +85,28 @@ public abstract class BaseWorkflowTaskResourceImpl
 			@Parameter(in = ParameterIn.QUERY, name = "pageSize")
 		}
 	)
-	@Path("/workflow-tasks-by/{workflow-task-id}")
+	@Path("/workflow-tasks/assigned-to-me")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "WorkflowTask")})
-	public Page<WorkflowTask> getWorkflowTasksByWorkflowTask(
-			@PathParam("workflow-task-id") String workflowTaskId,
+	public Page<WorkflowTask> getWorkflowTaskAssignedToMePage(
+			@Context Pagination pagination)
+		throws Exception {
+
+		return Page.of(Collections.emptyList());
+	}
+
+	@Override
+	@GET
+	@Parameters(
+		value = {
+			@Parameter(in = ParameterIn.QUERY, name = "page"),
+			@Parameter(in = ParameterIn.QUERY, name = "pageSize")
+		}
+	)
+	@Path("/workflow-tasks/assigned-to-my-roles")
+	@Produces("application/json")
+	@Tags(value = {@Tag(name = "WorkflowTask")})
+	public Page<WorkflowTask> getWorkflowTaskAssignedToMyRolesPage(
 			@Context Pagination pagination)
 		throws Exception {
 
@@ -144,7 +161,7 @@ public abstract class BaseWorkflowTaskResourceImpl
 	@Tags(value = {@Tag(name = "WorkflowTask")})
 	public WorkflowTask postWorkflowTaskChangeTransition(
 			@PathParam("workflow-task-id") Long workflowTaskId,
-			ChangeDescription changeDescription)
+			ChangeTransition changeTransition)
 		throws Exception {
 
 		return new WorkflowTask();

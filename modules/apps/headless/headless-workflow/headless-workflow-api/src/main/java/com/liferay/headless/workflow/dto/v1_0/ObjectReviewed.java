@@ -60,30 +60,6 @@ public class ObjectReviewed {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long id;
 
-	public String getIdentifier() {
-		return identifier;
-	}
-
-	public void setIdentifier(String identifier) {
-		this.identifier = identifier;
-	}
-
-	@JsonIgnore
-	public void setIdentifier(
-		UnsafeSupplier<String, Exception> identifierUnsafeSupplier) {
-
-		try {
-			identifier = identifierUnsafeSupplier.get();
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected String identifier;
-
 	public String getResourceType() {
 		return resourceType;
 	}
@@ -116,13 +92,6 @@ public class ObjectReviewed {
 		sb.append("\"id\": ");
 
 		sb.append(id);
-		sb.append(", ");
-
-		sb.append("\"identifier\": ");
-
-		sb.append("\"");
-		sb.append(identifier);
-		sb.append("\"");
 		sb.append(", ");
 
 		sb.append("\"resourceType\": ");

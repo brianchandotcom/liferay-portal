@@ -40,20 +40,20 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement(name = "WorkflowTaskAssignToUser")
 public class WorkflowTaskAssignToUser {
 
-	public Long getAssignee() {
-		return assignee;
+	public Long getAssigneeId() {
+		return assigneeId;
 	}
 
-	public void setAssignee(Long assignee) {
-		this.assignee = assignee;
+	public void setAssigneeId(Long assigneeId) {
+		this.assigneeId = assigneeId;
 	}
 
 	@JsonIgnore
-	public void setAssignee(
-		UnsafeSupplier<Long, Exception> assigneeUnsafeSupplier) {
+	public void setAssigneeId(
+		UnsafeSupplier<Long, Exception> assigneeIdUnsafeSupplier) {
 
 		try {
-			assignee = assigneeUnsafeSupplier.get();
+			assigneeId = assigneeIdUnsafeSupplier.get();
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
@@ -62,7 +62,7 @@ public class WorkflowTaskAssignToUser {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Long assignee;
+	protected Long assigneeId;
 
 	public String getComment() {
 		return comment;
@@ -117,9 +117,9 @@ public class WorkflowTaskAssignToUser {
 
 		sb.append("{");
 
-		sb.append("\"assignee\": ");
+		sb.append("\"assigneeId\": ");
 
-		sb.append(assignee);
+		sb.append(assigneeId);
 		sb.append(", ");
 
 		sb.append("\"comment\": ");

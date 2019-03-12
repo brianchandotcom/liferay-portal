@@ -206,54 +206,6 @@ public class WorkflowTask {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long id;
 
-	public WorkflowLog[] getLogs() {
-		return logs;
-	}
-
-	public void setLogs(WorkflowLog[] logs) {
-		this.logs = logs;
-	}
-
-	@JsonIgnore
-	public void setLogs(
-		UnsafeSupplier<WorkflowLog[], Exception> logsUnsafeSupplier) {
-
-		try {
-			logs = logsUnsafeSupplier.get();
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
-	protected WorkflowLog[] logs;
-
-	public Long[] getLogsIds() {
-		return logsIds;
-	}
-
-	public void setLogsIds(Long[] logsIds) {
-		this.logsIds = logsIds;
-	}
-
-	@JsonIgnore
-	public void setLogsIds(
-		UnsafeSupplier<Long[], Exception> logsIdsUnsafeSupplier) {
-
-		try {
-			logsIds = logsIdsUnsafeSupplier.get();
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-	protected Long[] logsIds;
-
 	public String getName() {
 		return name;
 	}
@@ -373,48 +325,6 @@ public class WorkflowTask {
 		sb.append("\"id\": ");
 
 		sb.append(id);
-		sb.append(", ");
-
-		sb.append("\"logs\": ");
-
-		if (logs == null) {
-			sb.append("null");
-		}
-		else {
-			sb.append("[");
-
-			for (int i = 0; i < logs.length; i++) {
-				sb.append(logs[i]);
-
-				if ((i + 1) < logs.length) {
-					sb.append(", ");
-				}
-			}
-
-			sb.append("]");
-		}
-
-		sb.append(", ");
-
-		sb.append("\"logsIds\": ");
-
-		if (logsIds == null) {
-			sb.append("null");
-		}
-		else {
-			sb.append("[");
-
-			for (int i = 0; i < logsIds.length; i++) {
-				sb.append(logsIds[i]);
-
-				if ((i + 1) < logsIds.length) {
-					sb.append(", ");
-				}
-			}
-
-			sb.append("]");
-		}
-
 		sb.append(", ");
 
 		sb.append("\"name\": ");

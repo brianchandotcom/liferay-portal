@@ -21,7 +21,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
 import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
 
-import com.liferay.headless.workflow.dto.v1_0.ChangeDescription;
+import com.liferay.headless.workflow.dto.v1_0.ChangeTransition;
 import com.liferay.headless.workflow.dto.v1_0.WorkflowTask;
 import com.liferay.headless.workflow.dto.v1_0.WorkflowTaskAssignToMe;
 import com.liferay.headless.workflow.dto.v1_0.WorkflowTaskAssignToUser;
@@ -225,100 +225,19 @@ public abstract class BaseWorkflowTaskResourceTestCase {
 	}
 
 	@Test
-	public void testGetWorkflowTasksByWorkflowTask() throws Exception {
-		String workflowTaskId =
-			testGetWorkflowTasksByWorkflowTask_getWorkflowTaskId();
-
-		WorkflowTask workflowTask1 =
-			testGetWorkflowTasksByWorkflowTask_addWorkflowTask(
-				workflowTaskId, randomWorkflowTask());
-		WorkflowTask workflowTask2 =
-			testGetWorkflowTasksByWorkflowTask_addWorkflowTask(
-				workflowTaskId, randomWorkflowTask());
-
-		Page<WorkflowTask> page = invokeGetWorkflowTasksByWorkflowTask(
-			workflowTaskId, Pagination.of(1, 2));
-
-		Assert.assertEquals(2, page.getTotalCount());
-
-		assertEqualsIgnoringOrder(
-			Arrays.asList(workflowTask1, workflowTask2),
-			(List<WorkflowTask>)page.getItems());
-		assertValid(page);
+	public void testGetWorkflowTaskAssignedToMePage() throws Exception {
+		Assert.assertTrue(true);
 	}
 
-	@Test
-	public void testGetWorkflowTasksByWorkflowTaskWithPagination()
-		throws Exception {
-
-		String workflowTaskId =
-			testGetWorkflowTasksByWorkflowTask_getWorkflowTaskId();
-
-		WorkflowTask workflowTask1 =
-			testGetWorkflowTasksByWorkflowTask_addWorkflowTask(
-				workflowTaskId, randomWorkflowTask());
-		WorkflowTask workflowTask2 =
-			testGetWorkflowTasksByWorkflowTask_addWorkflowTask(
-				workflowTaskId, randomWorkflowTask());
-		WorkflowTask workflowTask3 =
-			testGetWorkflowTasksByWorkflowTask_addWorkflowTask(
-				workflowTaskId, randomWorkflowTask());
-
-		Page<WorkflowTask> page1 = invokeGetWorkflowTasksByWorkflowTask(
-			workflowTaskId, Pagination.of(1, 2));
-
-		List<WorkflowTask> workflowTasks1 =
-			(List<WorkflowTask>)page1.getItems();
-
-		Assert.assertEquals(
-			workflowTasks1.toString(), 2, workflowTasks1.size());
-
-		Page<WorkflowTask> page2 = invokeGetWorkflowTasksByWorkflowTask(
-			workflowTaskId, Pagination.of(2, 2));
-
-		Assert.assertEquals(3, page2.getTotalCount());
-
-		List<WorkflowTask> workflowTasks2 =
-			(List<WorkflowTask>)page2.getItems();
-
-		Assert.assertEquals(
-			workflowTasks2.toString(), 1, workflowTasks2.size());
-
-		assertEqualsIgnoringOrder(
-			Arrays.asList(workflowTask1, workflowTask2, workflowTask3),
-			new ArrayList<WorkflowTask>() {
-				{
-					addAll(workflowTasks1);
-					addAll(workflowTasks2);
-				}
-			});
-	}
-
-	protected WorkflowTask testGetWorkflowTasksByWorkflowTask_addWorkflowTask(
-			String workflowTaskId, WorkflowTask workflowTask)
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	protected String testGetWorkflowTasksByWorkflowTask_getWorkflowTaskId()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	protected Page<WorkflowTask> invokeGetWorkflowTasksByWorkflowTask(
-			String workflowTaskId, Pagination pagination)
+	protected Page<WorkflowTask> invokeGetWorkflowTaskAssignedToMePage(
+			Pagination pagination)
 		throws Exception {
 
 		Http.Options options = _createHttpOptions();
 
 		String location =
 			_resourceURL +
-				_toPath(
-					"/workflow-tasks-by/{workflow-task-id}", workflowTaskId);
+				_toPath("/workflow-tasks/assigned-to-me", pagination);
 
 		location = HttpUtil.addParameter(
 			location, "page", pagination.getPage());
@@ -333,16 +252,65 @@ public abstract class BaseWorkflowTaskResourceTestCase {
 			});
 	}
 
-	protected Http.Response invokeGetWorkflowTasksByWorkflowTaskResponse(
-			String workflowTaskId, Pagination pagination)
+	protected Http.Response invokeGetWorkflowTaskAssignedToMePageResponse(
+			Pagination pagination)
 		throws Exception {
 
 		Http.Options options = _createHttpOptions();
 
 		String location =
 			_resourceURL +
-				_toPath(
-					"/workflow-tasks-by/{workflow-task-id}", workflowTaskId);
+				_toPath("/workflow-tasks/assigned-to-me", pagination);
+
+		location = HttpUtil.addParameter(
+			location, "page", pagination.getPage());
+		location = HttpUtil.addParameter(
+			location, "pageSize", pagination.getPageSize());
+
+		options.setLocation(location);
+
+		HttpUtil.URLtoString(options);
+
+		return options.getResponse();
+	}
+
+	@Test
+	public void testGetWorkflowTaskAssignedToMyRolesPage() throws Exception {
+		Assert.assertTrue(true);
+	}
+
+	protected Page<WorkflowTask> invokeGetWorkflowTaskAssignedToMyRolesPage(
+			Pagination pagination)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		String location =
+			_resourceURL +
+				_toPath("/workflow-tasks/assigned-to-my-roles", pagination);
+
+		location = HttpUtil.addParameter(
+			location, "page", pagination.getPage());
+		location = HttpUtil.addParameter(
+			location, "pageSize", pagination.getPageSize());
+
+		options.setLocation(location);
+
+		return _outputObjectMapper.readValue(
+			HttpUtil.URLtoString(options),
+			new TypeReference<Page<WorkflowTask>>() {
+			});
+	}
+
+	protected Http.Response invokeGetWorkflowTaskAssignedToMyRolesPageResponse(
+			Pagination pagination)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		String location =
+			_resourceURL +
+				_toPath("/workflow-tasks/assigned-to-my-roles", pagination);
 
 		location = HttpUtil.addParameter(
 			location, "page", pagination.getPage());
@@ -549,7 +517,7 @@ public abstract class BaseWorkflowTaskResourceTestCase {
 	}
 
 	protected WorkflowTask invokePostWorkflowTaskChangeTransition(
-			Long workflowTaskId, ChangeDescription changeDescription)
+			Long workflowTaskId, ChangeTransition changeTransition)
 		throws Exception {
 
 		Http.Options options = _createHttpOptions();
@@ -569,7 +537,7 @@ public abstract class BaseWorkflowTaskResourceTestCase {
 	}
 
 	protected Http.Response invokePostWorkflowTaskChangeTransitionResponse(
-			Long workflowTaskId, ChangeDescription changeDescription)
+			Long workflowTaskId, ChangeTransition changeTransition)
 		throws Exception {
 
 		Http.Options options = _createHttpOptions();
@@ -817,16 +785,6 @@ public abstract class BaseWorkflowTaskResourceTestCase {
 		}
 
 		if (entityFieldName.equals("id")) {
-			throw new IllegalArgumentException(
-				"Invalid entity field " + entityFieldName);
-		}
-
-		if (entityFieldName.equals("logs")) {
-			throw new IllegalArgumentException(
-				"Invalid entity field " + entityFieldName);
-		}
-
-		if (entityFieldName.equals("logsIds")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
 		}

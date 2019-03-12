@@ -89,8 +89,7 @@ public class Query {
 
 	@GraphQLField
 	@GraphQLInvokeDetached
-	public Collection<WorkflowTask> getWorkflowTasksByWorkflowTask(
-			@GraphQLName("workflow-task-id") String workflowTaskId,
+	public Collection<WorkflowTask> getWorkflowTaskAssignedToMePage(
 			@GraphQLName("pageSize") int pageSize,
 			@GraphQLName("page") int page)
 		throws Exception {
@@ -99,8 +98,25 @@ public class Query {
 			_createWorkflowTaskResource();
 
 		Page paginationPage =
-			workflowTaskResource.getWorkflowTasksByWorkflowTask(
-				workflowTaskId, Pagination.of(pageSize, page));
+			workflowTaskResource.getWorkflowTaskAssignedToMePage(
+				Pagination.of(pageSize, page));
+
+		return paginationPage.getItems();
+	}
+
+	@GraphQLField
+	@GraphQLInvokeDetached
+	public Collection<WorkflowTask> getWorkflowTaskAssignedToMyRolesPage(
+			@GraphQLName("pageSize") int pageSize,
+			@GraphQLName("page") int page)
+		throws Exception {
+
+		WorkflowTaskResource workflowTaskResource =
+			_createWorkflowTaskResource();
+
+		Page paginationPage =
+			workflowTaskResource.getWorkflowTaskAssignedToMyRolesPage(
+				Pagination.of(pageSize, page));
 
 		return paginationPage.getItems();
 	}

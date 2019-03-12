@@ -14,7 +14,7 @@
 
 package com.liferay.headless.workflow.internal.graphql.mutation.v1_0;
 
-import com.liferay.headless.workflow.dto.v1_0.ChangeDescription;
+import com.liferay.headless.workflow.dto.v1_0.ChangeTransition;
 import com.liferay.headless.workflow.dto.v1_0.WorkflowTask;
 import com.liferay.headless.workflow.dto.v1_0.WorkflowTaskAssignToMe;
 import com.liferay.headless.workflow.dto.v1_0.WorkflowTaskAssignToUser;
@@ -73,15 +73,14 @@ public class Mutation {
 	@GraphQLInvokeDetached
 	public WorkflowTask postWorkflowTaskChangeTransition(
 			@GraphQLName("workflow-task-id") Long workflowTaskId,
-			@GraphQLName("ChangeDescription") ChangeDescription
-				changeDescription)
+			@GraphQLName("ChangeTransition") ChangeTransition changeTransition)
 		throws Exception {
 
 		WorkflowTaskResource workflowTaskResource =
 			_createWorkflowTaskResource();
 
 		return workflowTaskResource.postWorkflowTaskChangeTransition(
-			workflowTaskId, changeDescription);
+			workflowTaskId, changeTransition);
 	}
 
 	@GraphQLField

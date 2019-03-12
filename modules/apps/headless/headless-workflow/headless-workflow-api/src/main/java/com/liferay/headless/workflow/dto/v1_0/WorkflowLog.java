@@ -230,30 +230,6 @@ public class WorkflowLog {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String state;
 
-	public WorkflowTask getTask() {
-		return task;
-	}
-
-	public void setTask(WorkflowTask task) {
-		this.task = task;
-	}
-
-	@JsonIgnore
-	public void setTask(
-		UnsafeSupplier<WorkflowTask, Exception> taskUnsafeSupplier) {
-
-		try {
-			task = taskUnsafeSupplier.get();
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
-	protected WorkflowTask task;
-
 	public Long getTaskId() {
 		return taskId;
 	}
@@ -275,7 +251,7 @@ public class WorkflowLog {
 	}
 
 	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long taskId;
 
 	public String getType() {
@@ -351,11 +327,6 @@ public class WorkflowLog {
 		sb.append("\"");
 		sb.append(state);
 		sb.append("\"");
-		sb.append(", ");
-
-		sb.append("\"task\": ");
-
-		sb.append(task);
 		sb.append(", ");
 
 		sb.append("\"taskId\": ");

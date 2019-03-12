@@ -33,10 +33,10 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
-@GraphQLName("ChangeDescription")
+@GraphQLName("ChangeTransition")
 @JsonFilter("Liferay.Vulcan")
-@XmlRootElement(name = "ChangeDescription")
-public class ChangeDescription {
+@XmlRootElement(name = "ChangeTransition")
+public class ChangeTransition {
 
 	public String getTransition() {
 		return transition;

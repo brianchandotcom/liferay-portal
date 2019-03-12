@@ -4,12 +4,53 @@ import Soy from 'metal-soy';
 
 import getConnectedComponent from '../../store/ConnectedComponent.es';
 import {HIDE_MAPPING_TYPE_DIALOG, SELECT_MAPPEABLE_TYPE} from '../../actions/actions.es';
+import {setIn} from '../../utils/FragmentsEditorUpdateUtils.es';
 import templates from './SelectMappingTypeForm.soy';
 
 /**
  * SelectMappingTypeForm
  */
 class SelectMappingTypeForm extends PortletBase {
+
+  /**
+   * @inheritdoc
+   * @review
+   */
+  prepareStateForRender(state) {
+    let nextState = state;
+
+    if (state.selectedMappingTypes) {
+      if (state.selectedMappingTypes.type) {
+        nextState = setIn(
+          nextState,
+          ['_mappingTypes'],
+          [state.selectedMappingTypes.type]
+        );
+
+        nextState = setIn(
+          nextState,
+          ['_selectedMappingTypeId'],
+          state.selectedMappingTypes.type.id
+        );
+      }
+
+      if (state.selectedMappingTypes.subtype) {
+        nextState = setIn(
+          nextState,
+          ['_mappingSubtypes'],
+          [state.selectedMappingTypes.subtype]
+        );
+
+        nextState = setIn(
+          nextState,
+          ['_selectedMappingSubtypeId'],
+          state.selectedMappingTypes.subtype.id
+        );
+      }
+    }
+
+    return nextState;
+  }
 
 	/**
 	 * @inheritDoc
@@ -267,7 +308,8 @@ const ConnectedSelectMappingTypeForm = getConnectedComponent(
     'getAssetClassTypesURL',
     'getAssetDisplayContributorsURL',
     'portletNamespace',
-    'savingChanges'
+    'savingChanges',
+    'selectedMappingTypes'
   ]
 );
 

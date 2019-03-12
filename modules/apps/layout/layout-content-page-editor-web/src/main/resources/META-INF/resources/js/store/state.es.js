@@ -417,6 +417,15 @@ const INITIAL_STATE = {
 		),
 
 	/**
+	 * @default []
+	 * @review
+	 * @type {object[]}
+	 */
+	mappedAssetEntries: Config
+		.array()
+		.value([]),
+
+	/**
 	 * URL for getting the list of mapping fields
 	 * @default ''
 	 * @review

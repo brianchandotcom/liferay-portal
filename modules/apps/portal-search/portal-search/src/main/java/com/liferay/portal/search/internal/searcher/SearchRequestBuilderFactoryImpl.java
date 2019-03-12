@@ -19,9 +19,12 @@ import com.liferay.portal.search.internal.legacy.searcher.SearchRequestBuilderIm
 import com.liferay.portal.search.searcher.SearchRequestBuilder;
 import com.liferay.portal.search.searcher.SearchRequestBuilderFactory;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author André de Oliveira
  */
+@Component(immediate = true, service = SearchRequestBuilderFactory.class)
 public class SearchRequestBuilderFactoryImpl
 	implements SearchRequestBuilderFactory {
 

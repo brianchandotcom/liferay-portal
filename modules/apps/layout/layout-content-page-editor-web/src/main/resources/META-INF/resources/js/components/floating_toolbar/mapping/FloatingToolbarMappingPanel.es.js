@@ -218,6 +218,8 @@ class FloatingToolbarMappingPanel extends PortletBase {
 	_loadFields() {
 		let promise;
 
+		this._clearFields();
+
 		if (this._selectedSourceTypeId === SOURCE_TYPE_IDS.structure) {
 			promise = this.fetch(
 				this.mappingFieldsURL,

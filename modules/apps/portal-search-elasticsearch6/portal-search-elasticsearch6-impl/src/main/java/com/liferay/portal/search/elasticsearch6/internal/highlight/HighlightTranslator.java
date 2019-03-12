@@ -14,7 +14,8 @@
 
 package com.liferay.portal.search.elasticsearch6.internal.highlight;
 
-import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.search.highlight.FieldConfig;
 import com.liferay.portal.search.highlight.Highlight;
 import com.liferay.portal.search.query.QueryTranslator;
 
@@ -33,27 +34,14 @@ public class HighlightTranslator {
 
 		HighlightBuilder highlightBuilder = new HighlightBuilder();
 
-		List<Highlight.FieldConfig> fieldConfigs = highlight.getFieldConfigs();
+		List<FieldConfig> fieldConfigs = highlight.getFieldConfigs();
 
-		fieldConfigs.forEach(
-			fieldConfig -> {
-				HighlightBuilder.Field field = new HighlightBuilder.Field(
-					fieldConfig.getField());
-
-				if (fieldConfig.getFragmentOffset() != null) {
-					field.fragmentOffset(fieldConfig.getFragmentOffset());
-				}
-
-				if (fieldConfig.getFragmentSize() != null) {
-					field.fragmentSize(fieldConfig.getFragmentSize());
-				}
-
-				if (fieldConfig.getNumFragments() != null) {
-					field.numOfFragments(fieldConfig.getNumFragments());
-				}
-
-				highlightBuilder.field(field);
-			});
+		fieldConfigs.stream(
+		).map(
+			this::translate
+		).forEach(
+			highlightBuilder::field
+		);
 
 		if (highlight.getForceSource() != null) {
 			highlightBuilder.forceSource(highlight.getForceSource());
@@ -76,10 +64,8 @@ public class HighlightTranslator {
 		}
 
 		if (highlight.getHighlightQuery() != null) {
-			QueryBuilder highlightQueryBuilder = queryTranslator.translate(
-				highlight.getHighlightQuery());
-
-			highlightBuilder.highlightQuery(highlightQueryBuilder);
+			highlightBuilder.highlightQuery(
+				queryTranslator.translate(highlight.getHighlightQuery()));
 		}
 
 		if (highlight.getHighlighterType() != null) {
@@ -90,18 +76,12 @@ public class HighlightTranslator {
 			highlightBuilder.numOfFragments(highlight.getNumOfFragments());
 		}
 
-		List<String> preTags = highlight.getPreTags();
-
-		if (ListUtil.isNotEmpty(preTags)) {
-			highlightBuilder.preTags(
-				preTags.toArray(new String[preTags.size()]));
+		if (ArrayUtil.isNotEmpty(highlight.getPreTags())) {
+			highlightBuilder.preTags(highlight.getPreTags());
 		}
 
-		List<String> postTags = highlight.getPostTags();
-
-		if (ListUtil.isNotEmpty(postTags)) {
-			highlightBuilder.postTags(
-				postTags.toArray(new String[postTags.size()]));
+		if (ArrayUtil.isNotEmpty(highlight.getPostTags())) {
+			highlightBuilder.postTags(highlight.getPostTags());
 		}
 
 		if (highlight.getRequireFieldMatch() != null) {
@@ -110,6 +90,25 @@ public class HighlightTranslator {
 		}
 
 		return highlightBuilder;
+	}
+
+	protected HighlightBuilder.Field translate(FieldConfig fieldConfig) {
+		HighlightBuilder.Field field = new HighlightBuilder.Field(
+			fieldConfig.getField());
+
+		if (fieldConfig.getFragmentOffset() != null) {
+			field.fragmentOffset(fieldConfig.getFragmentOffset());
+		}
+
+		if (fieldConfig.getFragmentSize() != null) {
+			field.fragmentSize(fieldConfig.getFragmentSize());
+		}
+
+		if (fieldConfig.getNumFragments() != null) {
+			field.numOfFragments(fieldConfig.getNumFragments());
+		}
+
+		return field;
 	}
 
 }

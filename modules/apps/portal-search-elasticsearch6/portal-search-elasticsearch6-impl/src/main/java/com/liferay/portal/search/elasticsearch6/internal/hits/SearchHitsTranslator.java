@@ -23,6 +23,7 @@ import com.liferay.portal.search.document.DocumentBuilder;
 import com.liferay.portal.search.document.DocumentBuilderFactory;
 import com.liferay.portal.search.geolocation.GeoLocationPoint;
 import com.liferay.portal.search.highlight.HighlightField;
+import com.liferay.portal.search.highlight.HighlightFieldBuilderFactory;
 import com.liferay.portal.search.hits.SearchHit;
 import com.liferay.portal.search.hits.SearchHitBuilder;
 import com.liferay.portal.search.hits.SearchHitBuilderFactory;
@@ -47,11 +48,13 @@ public class SearchHitsTranslator {
 	public SearchHitsTranslator(
 		SearchHitBuilderFactory searchHitBuilderFactory,
 		SearchHitsBuilderFactory searchHitsBuilderFactory,
-		DocumentBuilderFactory documentBuilderFactory) {
+		DocumentBuilderFactory documentBuilderFactory,
+		HighlightFieldBuilderFactory highlightFieldBuilderFactory) {
 
 		_searchHitBuilderFactory = searchHitBuilderFactory;
 		_searchHitsBuilderFactory = searchHitsBuilderFactory;
 		_documentBuilderFactory = documentBuilderFactory;
+		_highlightFieldBuilderFactory = highlightFieldBuilderFactory;
 	}
 
 	public SearchHits translate(
@@ -189,17 +192,16 @@ public class SearchHitsTranslator {
 		org.elasticsearch.search.fetch.subphase.highlight.HighlightField
 			elasticsearchHighlightField) {
 
-		HighlightField highlightField = new HighlightField(
-			elasticsearchHighlightField.getName());
-
-		highlightField.addFragments(
+		return _highlightFieldBuilderFactory.builder(
+		).fragments(
 			Stream.of(
 				elasticsearchHighlightField.getFragments()
 			).map(
 				Text::string
-			));
-
-		return highlightField;
+			)
+		).name(
+			elasticsearchHighlightField.getName()
+		).build();
 	}
 
 	protected Stream<HighlightField> translateHighlightFields(
@@ -225,6 +227,7 @@ public class SearchHitsTranslator {
 	private static final String _UID_FIELD_NAME = "uid";
 
 	private final DocumentBuilderFactory _documentBuilderFactory;
+	private final HighlightFieldBuilderFactory _highlightFieldBuilderFactory;
 	private final SearchHitBuilderFactory _searchHitBuilderFactory;
 	private final SearchHitsBuilderFactory _searchHitsBuilderFactory;
 

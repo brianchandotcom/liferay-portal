@@ -713,9 +713,8 @@ public class KaleoDesignerDisplayContext {
 			_kaleoDefinitionVersionLocalService.
 				getLatestKaleoDefinitionVersions(
 					_kaleoDesignerRequestHelper.getCompanyId(), getKeywords(),
-					WorkflowConstants.STATUS_ANY, searchContainer.getStart(),
-					searchContainer.getEnd(),
-					searchContainer.getOrderByComparator());
+					WorkflowConstants.STATUS_ANY, QueryUtil.ALL_POS,
+					QueryUtil.ALL_POS, searchContainer.getOrderByComparator());
 
 		kaleoDefinitionVersions = ListUtil.filter(
 			kaleoDefinitionVersions,

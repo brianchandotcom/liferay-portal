@@ -1,7 +1,7 @@
 components:
     schemas:
-        ChangeDescription:
-            description: https://www.schema.org/ChangeDescription
+        ChangeTransition:
+            description: https://www.schema.org/ChangeTransition
             properties:
                 transition:
                     type: string
@@ -33,9 +33,6 @@ components:
                 id:
                     format: int64
                     type: integer
-                identifier:
-                    format: uri
-                    type: string
                 resourceType:
                     type: string
             type: object
@@ -87,17 +84,6 @@ components:
                 id:
                     format: int64
                     type: integer
-                logs:
-                    items:
-                        $ref: "#/components/schemas/WorkflowLog"
-                    readOnly: true
-                    type: array
-                logsIds:
-                    items:
-                        format: int64
-                        type: integer
-                    type: array
-                    writeOnly: true
                 name:
                     type: string
                 objectReviewed:
@@ -119,7 +105,7 @@ components:
         WorkflowTaskAssignToUser:
             description: https://www.schema.org/WorkflowTaskAssignToUser
             properties:
-                assignee:
+                assigneeId:
                     format: int64
                     type: integer
                 comment:
@@ -178,14 +164,30 @@ paths:
                                 $ref: "#/components/schemas/WorkflowLog"
                     description: ""
             tags: ["WorkflowLog"]
-    "/workflow-tasks-by/{workflow-task-id}":
+    "/workflow-tasks/assigned-to-me":
         get:
             parameters:
-                - in: path
-                  name: workflow-task-id
-                  required: true
+                - in: query
+                  name: page
                   schema:
-                      type: string
+                      type: integer
+                - in: query
+                  name: pageSize
+                  schema:
+                      type: integer
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/WorkflowTask"
+                                type: array
+                    description: ""
+            tags: ["WorkflowTask"]
+    "/workflow-tasks/assigned-to-my-roles":
+        get:
+            parameters:
                 - in: query
                   name: page
                   schema:
@@ -278,7 +280,7 @@ paths:
                 content:
                     application/json:
                         schema:
-                            $ref: "#/components/schemas/ChangeDescription"
+                            $ref: "#/components/schemas/ChangeTransition"
             responses:
                 200:
                     content:

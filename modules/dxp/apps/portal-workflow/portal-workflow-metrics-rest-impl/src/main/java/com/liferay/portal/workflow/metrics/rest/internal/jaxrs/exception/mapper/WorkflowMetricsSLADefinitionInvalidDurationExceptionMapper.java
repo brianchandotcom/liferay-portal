@@ -25,9 +25,9 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(
 	property = {
-		"osgi.jaxrs.application.select=(osgi.jaxrs.name=Liferay.Portal.Workflow.Metrics)",
+		"osgi.jaxrs.application.select=(osgi.jaxrs.name=Liferay.Portal.Workflow.Metrics.REST)",
 		"osgi.jaxrs.extension=true",
-		"osgi.jaxrs.name=Liferay.Portal.Workflow.Metrics.WorkflowMetricsSLADefinitionInvalidDurationExceptionMapper"
+		"osgi.jaxrs.name=Liferay.Portal.Workflow.Metrics.REST.WorkflowMetricsSLADefinitionInvalidDurationExceptionMapper"
 	},
 	service = ExceptionMapper.class
 )

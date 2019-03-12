@@ -25,7 +25,7 @@ import com.liferay.data.engine.exception.DEDataLayoutException;
 public interface DEDataLayoutService {
 
 	/**
-	 * Retrive a DEDataLayout
+	 * Retrieve a DEDataLayout
 	 * @param deDataLayoutGetRequest
 	 * @return The {@link DEDataLayoutGetResponse} object
 	 * @throws DEDataLayoutException
@@ -33,6 +33,17 @@ public interface DEDataLayoutService {
 	 */
 	public DEDataLayoutGetResponse execute(
 			DEDataLayoutGetRequest deDataLayoutGetRequest)
+		throws DEDataLayoutException;
+
+	/**
+	 * List DEDataLayouts
+	 * @param deDataLayoutListRequest
+	 * @return The {@link DEDataLayoutListResponse} object
+	 * @throws DEDataLayoutException
+	 * @review
+	 */
+	public DEDataLayoutListResponse execute(
+			DEDataLayoutListRequest deDataLayoutListRequest)
 		throws DEDataLayoutException;
 
 	/**

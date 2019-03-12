@@ -16,11 +16,14 @@ package com.liferay.data.engine.internal.service;
 
 import com.liferay.data.engine.exception.DEDataLayoutException;
 import com.liferay.data.engine.internal.executor.DEDataLayoutGetRequestExecutor;
+import com.liferay.data.engine.internal.executor.DEDataLayoutListRequestExecutor;
 import com.liferay.data.engine.internal.executor.DEDataLayoutSaveRequestExecutor;
 import com.liferay.data.engine.internal.io.DEDataLayoutDeserializerTracker;
 import com.liferay.data.engine.internal.io.DEDataLayoutSerializerTracker;
 import com.liferay.data.engine.service.DEDataLayoutGetRequest;
 import com.liferay.data.engine.service.DEDataLayoutGetResponse;
+import com.liferay.data.engine.service.DEDataLayoutListRequest;
+import com.liferay.data.engine.service.DEDataLayoutListResponse;
 import com.liferay.data.engine.service.DEDataLayoutSaveRequest;
 import com.liferay.data.engine.service.DEDataLayoutSaveResponse;
 import com.liferay.data.engine.service.DEDataLayoutService;
@@ -49,6 +52,17 @@ public class DEDataLayoutServiceImpl implements DEDataLayoutService {
 	}
 
 	@Override
+	public DEDataLayoutListResponse execute(
+			DEDataLayoutListRequest deDataLayoutListRequest)
+		throws DEDataLayoutException {
+
+		DEDataLayoutListRequestExecutor deDataLayoutListRequestExecutor =
+			getDEDataLayoutListRequestExecutor();
+
+		return deDataLayoutListRequestExecutor.execute(deDataLayoutListRequest);
+	}
+
+	@Override
 	public DEDataLayoutSaveResponse execute(
 			DEDataLayoutSaveRequest deDataLayoutSaveRequest)
 		throws DEDataLayoutException {
@@ -69,6 +83,20 @@ public class DEDataLayoutServiceImpl implements DEDataLayoutService {
 		}
 
 		return _deDataLayoutGetRequestExecutor;
+	}
+
+	public DEDataLayoutListRequestExecutor
+		getDEDataLayoutListRequestExecutor() {
+
+		if (_deDataLayoutListRequestExecutor == null) {
+			_deDataLayoutListRequestExecutor =
+				new DEDataLayoutListRequestExecutor(
+					_ddmStructureLayoutLocalService,
+					_ddmStructureVersionLocalService,
+					_deDataLayoutDeserializerTracker);
+		}
+
+		return _deDataLayoutListRequestExecutor;
 	}
 
 	public DEDataLayoutSaveRequestExecutor
@@ -98,6 +126,7 @@ public class DEDataLayoutServiceImpl implements DEDataLayoutService {
 	private DEDataLayoutDeserializerTracker _deDataLayoutDeserializerTracker;
 
 	private DEDataLayoutGetRequestExecutor _deDataLayoutGetRequestExecutor;
+	private DEDataLayoutListRequestExecutor _deDataLayoutListRequestExecutor;
 	private DEDataLayoutSaveRequestExecutor _deDataLayoutSaveRequestExecutor;
 
 	@Reference

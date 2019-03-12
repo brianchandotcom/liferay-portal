@@ -14,6 +14,7 @@
 
 package com.liferay.layout.content.page.editor.web.internal.display.context;
 
+import com.liferay.asset.display.contributor.AssetDisplayContributorTracker;
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.service.AssetEntryLocalServiceUtil;
 import com.liferay.fragment.constants.FragmentEntryLinkConstants;
@@ -126,6 +127,9 @@ public class ContentPageEditorDisplayContext {
 		_renderResponse = renderResponse;
 		this.classPK = classPK;
 
+		assetDisplayContributorTracker =
+			(AssetDisplayContributorTracker)request.getAttribute(
+				ContentPageEditorWebKeys.ASSET_DISPLAY_CONTRIBUTOR_TRACKER);
 		classNameId = PortalUtil.getClassNameId(className);
 		themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
@@ -324,6 +328,8 @@ public class ContentPageEditorDisplayContext {
 		return _sidebarPanelSoyContexts;
 	}
 
+	protected final AssetDisplayContributorTracker
+		assetDisplayContributorTracker;
 	protected final long classNameId;
 	protected final long classPK;
 	protected final HttpServletRequest request;

@@ -160,23 +160,21 @@ public class ProcessResourceImpl
 
 		SearchSearchRequest searchSearchRequest = new SearchSearchRequest();
 
-		TermsAggregation termsAggregation = _aggregations.terms("processIds", "processId");
+		TermsAggregation termsAggregation = _aggregations.terms(
+			"processIds", "processId");
 
-		CardinalityAggregation cardinality = _aggregations.cardinality(
-			"instanceCount", "instanceId");
-
-		termsAggregation.addChildAggregation(cardinality);
+		termsAggregation.addChildAggregation(
+			_aggregations.cardinality("instanceCount", "instanceId"));
 
 		if (!_isOrderByTitle(fieldSort.getField())) {
-			BucketSortPipelineAggregation bucketSort = _aggregations.bucketSort(
-				"sort");
+			BucketSortPipelineAggregation bucketSortPipelineAggregation =
+				_aggregations.bucketSort("sort");
 
-			bucketSort.addSortFields(fieldSort);
+			bucketSortPipelineAggregation.addSortFields(fieldSort);
+			bucketSortPipelineAggregation.setFrom(pagination.getStartPosition());
+			bucketSortPipelineAggregation.setSize(pagination.getPageSize());
 
-			bucketSort.setFrom(pagination.getStartPosition());
-			bucketSort.setSize(pagination.getPageSize());
-
-			termsAggregation.addPipelineAggregation(bucketSort);
+			termsAggregation.addPipelineAggregation(bucketSortPipelineAggregation);
 		}
 
 		termsAggregation.setSize(processIds.size());

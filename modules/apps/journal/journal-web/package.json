@@ -11,15 +11,15 @@
 		}
 	},
 	"dependencies": {
-		"clay-dropdown": "^2.5.0",
-		"clay-label": "^2.5.0",
+		"clay-dropdown": "2.10.0",
+		"clay-label": "2.10.0",
 		"metal": "^2.5.18",
 		"metal-dom": "^2.5.18",
 		"metal-soy": "^2.4.5",
 		"metal-state": "^2.6.4"
 	},
 	"devDependencies": {
-		"liferay-npm-scripts": "1.2.0"
+		"liferay-npm-scripts": "1.4.3"
 	},
 	"name": "journal-web",
 	"scripts": {

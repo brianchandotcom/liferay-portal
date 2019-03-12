@@ -17,7 +17,7 @@
 	},
 	"name": "document-library-preview-video",
 	"scripts": {
-		"build": "metalsoy --soyDeps \"node_modules/+(clay-*|com.liferay.frontend.js.web)/**/*.soy\" && cross-env NODE_ENV=production babel --source-maps -d classes/META-INF/resources src/main/resources/META-INF/resources && liferay-npm-bundler && npm run cleanSoy",
+		"build": "metalsoy --soyDeps \"../../../node_modules/+(clay-*|frontend-js-web)/src/**/*.soy\" && cross-env NODE_ENV=production babel --source-maps -d classes/META-INF/resources src/main/resources/META-INF/resources && liferay-npm-bundler && npm run cleanSoy",
 		"checkFormat": "npm run csf",
 		"cleanSoy": "rimraf src/**/*.soy.js",
 		"csf": "csf src/**/*.{js,soy,scss}",

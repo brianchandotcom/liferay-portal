@@ -1,15 +1,15 @@
 {
 	"dependencies": {
-		"clay-alert": "^2.8.3",
-		"clay-autocomplete": "^2.8.3",
-		"clay-button": "^2.8.3",
-		"clay-data-provider": "^2.8.3",
-		"clay-label": "^2.8.3",
-		"clay-link": "^2.8.3",
-		"clay-multi-select": "^2.8.3",
-		"clay-progress-bar": "^2.8.3",
-		"clay-select": "^2.8.3",
-		"clay-sticker": "^2.8.3",
+		"clay-alert": "2.10.0",
+		"clay-autocomplete": "2.10.0",
+		"clay-button": "2.10.0",
+		"clay-data-provider": "2.10.0",
+		"clay-label": "2.10.0",
+		"clay-link": "2.10.0",
+		"clay-multi-select": "2.10.0",
+		"clay-progress-bar": "2.10.0",
+		"clay-select": "2.10.0",
+		"clay-sticker": "2.10.0",
 		"metal": "^2.16.7",
 		"metal-component": "^2.16.7",
 		"metal-dom": "^2.6.4",
@@ -17,7 +17,7 @@
 		"metal-state": "^2.16.7"
 	},
 	"devDependencies": {
-		"liferay-npm-scripts": "1.2.0"
+		"liferay-npm-scripts": "1.4.3"
 	},
 	"name": "change-tracking-change-lists-history-web",
 	"scripts": {

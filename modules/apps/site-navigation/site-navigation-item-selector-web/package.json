@@ -12,12 +12,13 @@
 		"cross-env": "^5.2.0",
 		"liferay-npm-bundler": "^2.6.1",
 		"liferay-npm-bundler-preset-liferay-dev": "^1.1.1",
-		"metal-tools-soy": "^4.2.9"
+		"metal-tools-soy": "^4.2.9",
+		"rimraf": "^2.6.3"
 	},
 	"name": "site-navigation-item-selector-web",
 	"scripts": {
 		"build": "npm run build:soy && npm run compile && liferay-npm-bundler && npm run cleanSoy",
-		"build:soy": "metalsoy --soyDeps \"node_modules/+(com.liferay.frontend.js.web|com.liferay.frontend.js.metal.web|com.liferay.frontend.taglib)/**/*.soy\"",
+		"build:soy": "metalsoy --soyDeps \"../../../node_modules/+(frontend-js-web|frontend-js-metal-web|frontend-taglib)/src/**/*.soy\"",
 		"checkFormat": "npm run csf",
 		"cleanSoy": "rimraf src/**/*.soy.js",
 		"compile": "cross-env NODE_ENV=production babel --source-maps -d classes/META-INF/resources src/main/resources/META-INF/resources",

@@ -48,8 +48,9 @@
 		"liferay-npm-bridge-generator": "^2.0.0",
 		"liferay-npm-bundler": "^2.1.0",
 		"metal-tools-soy": "^4.2.1",
-		"webpack": "4.17.2",
-		"webpack-cli": "^2.0.15",
+		"rimraf": "^2.6.3",
+		"webpack": "4.29.5",
+		"webpack-cli": "^3.2.3",
 		"webpack-dev-server": "^3.1.3",
 		"webpack-merge": "^4.1.2"
 	},

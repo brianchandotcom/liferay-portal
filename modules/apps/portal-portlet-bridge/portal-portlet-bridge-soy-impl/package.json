@@ -10,7 +10,7 @@
 		"senna": "^2.5.6"
 	},
 	"devDependencies": {
-		"liferay-npm-scripts": "1.2.0"
+		"liferay-npm-scripts": "1.4.3"
 	},
 	"name": "portal-portlet-bridge-soy-impl",
 	"scripts": {

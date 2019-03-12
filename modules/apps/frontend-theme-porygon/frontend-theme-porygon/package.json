@@ -30,5 +30,8 @@
 	"main": "package.json",
 	"name": "liferay-porygon-theme",
 	"repository": "liferay/liferay-portal",
+	"scripts": {
+		"build": "gulp build"
+	},
 	"version": "2.0.0"
 }

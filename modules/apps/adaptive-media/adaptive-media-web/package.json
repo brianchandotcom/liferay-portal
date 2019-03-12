@@ -5,12 +5,10 @@
 		"metal-component": "^2.6.4",
 		"metal-dom": "^2.6.4",
 		"metal-events": "^2.6.4",
-		"metal-progressbar": "^2.0.1",
-		"metal-soy": "^2.7.0",
-		"metal-tooltip": "^2.0.3"
+		"metal-soy": "^2.7.0"
 	},
 	"devDependencies": {
-		"liferay-npm-scripts": "1.2.0"
+		"liferay-npm-scripts": "1.4.3"
 	},
 	"name": "adaptive-media-web",
 	"scripts": {

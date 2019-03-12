@@ -15,9 +15,9 @@
 		}
 	},
 	"dependencies": {
-		"clay-badge": "^2.10.0",
-		"clay-checkbox": "^2.6.0",
-		"clay-dropdown": "^2.5.1",
+		"clay-badge": "2.10.0",
+		"clay-checkbox": "2.10.0",
+		"clay-dropdown": "2.10.0",
 		"metal": "^2.16.5",
 		"metal-component": "^2.16.3",
 		"metal-debounce": "^2.0.0",
@@ -31,7 +31,7 @@
 		"metal-uri": "^3.1.0"
 	},
 	"devDependencies": {
-		"liferay-npm-scripts": "1.2.0"
+		"liferay-npm-scripts": "1.4.3"
 	},
 	"name": "layout-admin-web",
 	"scripts": {

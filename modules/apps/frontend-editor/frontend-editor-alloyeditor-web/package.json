@@ -16,7 +16,7 @@
 		"alloyeditor": "2.0.0-beta.3"
 	},
 	"devDependencies": {
-		"liferay-npm-scripts": "1.2.0"
+		"liferay-npm-scripts": "1.4.3"
 	},
 	"name": "frontend-editor-alloyeditor-web",
 	"scripts": {

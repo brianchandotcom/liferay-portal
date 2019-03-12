@@ -51,7 +51,7 @@
 		"babel-preset-env": "^1.7.0",
 		"babel-preset-react": "^6.0.0",
 		"check-source-formatting": "^2.0.14",
-		"clay-css": "^2.5.1",
+		"clay-css": "2.10.0",
 		"css-loader": "^2.0.1",
 		"eslint": "^5.8.0",
 		"eslint-config-liferay": "^2.0.18",
@@ -71,8 +71,8 @@
 		"sass-loader": "^7.1.0",
 		"snapshot-diff": "^0.4.1",
 		"style-loader": "^0.23.1",
-		"webpack": "^4.27.0",
-		"webpack-cli": "^3.1.2",
+		"webpack": "^4.29.5",
+		"webpack-cli": "^3.2.3",
 		"webpack-dev-server": "^3.1.10"
 	},
 	"jest": {

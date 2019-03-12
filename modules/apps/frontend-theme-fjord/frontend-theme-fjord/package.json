@@ -21,5 +21,8 @@
 	"main": "package.json",
 	"name": "liferay-fjord-theme",
 	"repository": "liferay/liferay-portal",
+	"scripts": {
+		"build": "gulp build"
+	},
 	"version": "3.0.0"
 }

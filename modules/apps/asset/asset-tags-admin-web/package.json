@@ -3,7 +3,7 @@
 		"metal-state": "^2.16.7"
 	},
 	"devDependencies": {
-		"liferay-npm-scripts": "1.2.0"
+		"liferay-npm-scripts": "1.4.3"
 	},
 	"name": "asset-tags-admin-web",
 	"scripts": {

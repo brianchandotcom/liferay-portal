@@ -15,24 +15,28 @@ Object {
                   "localizedValue": Object {
                     "en_US": "Multiple Selection",
                   },
+                  "multiple": undefined,
                   "type": "text",
                   "value": "Mock Field",
                   "visible": true,
                 },
                 Object {
                   "fieldName": "name",
+                  "multiple": undefined,
                   "type": "text",
                   "value": undefined,
                   "visible": true,
                 },
                 Object {
                   "fieldName": "showLabel",
+                  "multiple": undefined,
                   "type": "checkbox",
                   "value": true,
                   "visible": true,
                 },
                 Object {
                   "fieldName": "required",
+                  "multiple": undefined,
                   "type": "checkbox",
                   "visible": true,
                 },

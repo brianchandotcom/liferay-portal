@@ -118,9 +118,11 @@ exports[`Select should have a predefinedValue 1`] = `
 <div class="form-group">
   <div class="dropdown ddm-btn-full ddm-select-dropdown"><button aria-expanded="false" aria-haspopup="true" class="dropdown-toggle btn btn-unstyled" ref="triggerButton" type="button">
       <div class="form-builder-select-field input-group-container">
-        <div class="form-control select-field-trigger"><a class="select-arrow-down-container" href="javascript:;"><svg class="lexicon-icon lexicon-icon-caret-double" focusable="false" role="presentation">
+        <div class="form-control select-field-trigger">
+          <div class="option-selected option-selected-placeholder">choose-an-option</div><a class="select-arrow-down-container" href="javascript:;"><svg class="lexicon-icon lexicon-icon-caret-double" focusable="false" role="presentation">
               <use xlink:href="icons.svg#caret-double"></use>
-            </svg></a></div>
+            </svg></a>
+        </div>
       </div>
     </button></div>
 </div>
@@ -154,9 +156,11 @@ exports[`Select should have a value 1`] = `
 <div class="form-group">
   <div class="dropdown ddm-btn-full ddm-select-dropdown"><button aria-expanded="false" aria-haspopup="true" class="dropdown-toggle btn btn-unstyled" ref="triggerButton" type="button">
       <div class="form-builder-select-field input-group-container">
-        <div class="form-control select-field-trigger"><a class="select-arrow-down-container" href="javascript:;"><svg class="lexicon-icon lexicon-icon-caret-double" focusable="false" role="presentation">
+        <div class="form-control select-field-trigger">
+          <div class="option-selected option-selected-placeholder">choose-an-option</div><a class="select-arrow-down-container" href="javascript:;"><svg class="lexicon-icon lexicon-icon-caret-double" focusable="false" role="presentation">
               <use xlink:href="icons.svg#caret-double"></use>
-            </svg></a></div>
+            </svg></a>
+        </div>
       </div>
     </button></div>
 </div>

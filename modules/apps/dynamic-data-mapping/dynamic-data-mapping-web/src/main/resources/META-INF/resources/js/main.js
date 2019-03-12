@@ -813,7 +813,7 @@ AUI.add(
 			},
 
 			validateFieldName: function(fieldName) {
-				return (/^[\w]+$/).test(fieldName);
+				return (/^[^-–—]+$/).test(fieldName);
 			}
 		};
 

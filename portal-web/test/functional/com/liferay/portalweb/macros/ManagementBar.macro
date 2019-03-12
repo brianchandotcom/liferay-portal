@@ -12,7 +12,7 @@ definition {
 
 		AssertElementPresent(locator1 = "Tooltip#GENERIC_TOOLTIP_VISIBLE");
 
-		Click(
+		Click.clickNoMouseOver(
 			locator1 = "Icon#CURRENT_DISPLAY_STYLE"
 		);
 
@@ -52,7 +52,7 @@ definition {
 
 		AssertElementPresent(locator1 = "Tooltip#GENERIC_TOOLTIP_VISIBLE");
 
-		Click(
+		Click.clickNoMouseOver(
 			locator1 = "Icon#INFO"
 		);
 	}

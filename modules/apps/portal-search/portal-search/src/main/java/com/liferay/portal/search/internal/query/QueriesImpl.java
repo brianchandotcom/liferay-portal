@@ -14,8 +14,8 @@
 
 package com.liferay.portal.search.internal.query;
 
-import com.liferay.portal.kernel.search.geolocation.GeoDistance;
-import com.liferay.portal.kernel.search.geolocation.GeoLocationPoint;
+import com.liferay.portal.search.geolocation.GeoDistance;
+import com.liferay.portal.search.geolocation.GeoLocationPoint;
 import com.liferay.portal.search.geolocation.ShapeBuilder;
 import com.liferay.portal.search.query.BooleanQuery;
 import com.liferay.portal.search.query.BoostingQuery;

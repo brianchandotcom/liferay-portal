@@ -177,12 +177,15 @@ public class UpgradeClient {
 		commands.add("-cp");
 		commands.add(_getBootstrapClassPath());
 
-		Collections.addAll(commands, _jvmOpts.split(" "));
+		String jvmOptsCommands = _jvmOpts.concat(
+			" -Dexternal-properties=portal-upgrade.properties " +
+				"-Dserver.detector.server.id=" +
+					_appServer.getServerDetectorServerId());
 
-		commands.add("-Dexternal-properties=portal-upgrade.properties");
-		commands.add(
-			"-Dserver.detector.server.id=" +
-				_appServer.getServerDetectorServerId());
+		System.out.println("JVM arguments: " + jvmOptsCommands);
+
+		Collections.addAll(commands, jvmOptsCommands.split(" "));
+
 		commands.add(DBUpgraderLauncher.class.getName());
 
 		processBuilder.command(commands);

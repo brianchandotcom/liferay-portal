@@ -33,10 +33,10 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
-@GraphQLName("Fields")
+@GraphQLName("ContentStructureField")
 @JsonFilter("Liferay.Vulcan")
-@XmlRootElement(name = "Fields")
-public class Fields {
+@XmlRootElement(name = "ContentStructureField")
+public class ContentStructureField {
 
 	public String getDataType() {
 		return dataType;
@@ -179,6 +179,31 @@ public class Fields {
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String name;
+
+	public ContentStructureField[] getNestedFields() {
+		return nestedFields;
+	}
+
+	public void setNestedFields(ContentStructureField[] nestedFields) {
+		this.nestedFields = nestedFields;
+	}
+
+	@JsonIgnore
+	public void setNestedFields(
+		UnsafeSupplier<ContentStructureField[], Exception>
+			nestedFieldsUnsafeSupplier) {
+
+		try {
+			nestedFields = nestedFieldsUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected ContentStructureField[] nestedFields;
 
 	public Options[] getOptions() {
 		return options;
@@ -341,6 +366,27 @@ public class Fields {
 		sb.append("\"");
 		sb.append(name);
 		sb.append("\"");
+		sb.append(", ");
+
+		sb.append("\"nestedFields\": ");
+
+		if (nestedFields == null) {
+			sb.append("null");
+		}
+		else {
+			sb.append("[");
+
+			for (int i = 0; i < nestedFields.length; i++) {
+				sb.append(nestedFields[i]);
+
+				if ((i + 1) < nestedFields.length) {
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
+		}
+
 		sb.append(", ");
 
 		sb.append("\"options\": ");

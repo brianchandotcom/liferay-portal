@@ -17,7 +17,6 @@ package com.liferay.portal.dao.orm.common;
 import com.liferay.portal.dao.sql.transformer.HQLToJPQLTransformerLogic;
 import com.liferay.portal.dao.sql.transformer.JPQLToHQLTransformerLogic;
 import com.liferay.portal.dao.sql.transformer.SQLTransformerFactory;
-import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 
 import java.util.Arrays;
@@ -34,14 +33,14 @@ import java.util.function.Function;
 public class SQLTransformer {
 
 	public static void reloadSQLTransformer() {
-		_instance._reloadSQLTransformer();
+		_sqlTransformer = SQLTransformerFactory.getSQLTransformer(
+			DBManagerUtil.getDB());
+
+		_transformedSqls.clear();
 	}
 
 	public static String transform(String sql) {
-		com.liferay.portal.dao.sql.transformer.SQLTransformer sqlTransformer =
-			_instance._getSQLTransformer();
-
-		return sqlTransformer.transform(sql);
+		return _sqlTransformer.transform(sql);
 	}
 
 	/**
@@ -54,7 +53,7 @@ public class SQLTransformer {
 	}
 
 	public static String transformFromHQLToJQPL(String sql) {
-		return _instance._transformFromHQLToJPQL(sql);
+		return _transformFromHQLToJPQL(sql);
 	}
 
 	/**
@@ -67,33 +66,10 @@ public class SQLTransformer {
 	}
 
 	public static String transformFromJPQLToHQL(String sql) {
-		return _instance._transformFromJPQLToHQL(sql);
+		return _transformFromJPQLToHQL(sql);
 	}
 
-	private SQLTransformer() {
-		_reloadSQLTransformer();
-	}
-
-	private com.liferay.portal.dao.sql.transformer.SQLTransformer
-		_getSQLTransformer() {
-
-		return _sqlTransformer;
-	}
-
-	private void _reloadSQLTransformer() {
-		if (_transformedSqls == null) {
-			_transformedSqls = new ConcurrentHashMap<>();
-		}
-		else {
-			_transformedSqls.clear();
-		}
-
-		DB db = DBManagerUtil.getDB();
-
-		_sqlTransformer = SQLTransformerFactory.getSQLTransformer(db);
-	}
-
-	private String _transformFromHQLToJPQL(String sql) {
+	private static String _transformFromHQLToJPQL(String sql) {
 		String newSQL = _transformedSqls.get(sql);
 
 		if (newSQL != null) {
@@ -116,7 +92,7 @@ public class SQLTransformer {
 		return newSQL;
 	}
 
-	private String _transformFromJPQLToHQL(String sql) {
+	private static String _transformFromJPQLToHQL(String sql) {
 		String newSQL = _transformedSqls.get(sql);
 
 		if (newSQL != null) {
@@ -132,10 +108,10 @@ public class SQLTransformer {
 		return newSQL;
 	}
 
-	private static final SQLTransformer _instance = new SQLTransformer();
-
-	private com.liferay.portal.dao.sql.transformer.SQLTransformer
-		_sqlTransformer;
-	private Map<String, String> _transformedSqls;
+	private static volatile
+		com.liferay.portal.dao.sql.transformer.SQLTransformer _sqlTransformer =
+			SQLTransformerFactory.getSQLTransformer(DBManagerUtil.getDB());
+	private static final Map<String, String> _transformedSqls =
+		new ConcurrentHashMap<>();
 
 }

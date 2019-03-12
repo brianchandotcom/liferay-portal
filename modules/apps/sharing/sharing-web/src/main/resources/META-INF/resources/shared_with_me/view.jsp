@@ -70,16 +70,10 @@ sharedWithMeViewDisplayContext.populateResults(sharingEntriesSearchContainer);
 				value="<%= sharedWithMeViewDisplayContext.getAssetTypeTitle(sharingEntry) %>"
 			/>
 
-			<%
-			Date modifiedDate = sharingEntry.getModifiedDate();
-
-			String modifiedDateDescription = LanguageUtil.getTimeDescription(request, System.currentTimeMillis() - modifiedDate.getTime(), true);
-			%>
-
-			<liferay-ui:search-container-column-text
+			<liferay-ui:search-container-column-date
 				name="shared-date"
 				orderable="<%= false %>"
-				value="<%= modifiedDateDescription %>"
+				value="<%= sharingEntry.getModifiedDate() %>"
 			/>
 
 			<liferay-ui:search-container-column-jsp

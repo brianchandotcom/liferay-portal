@@ -79,38 +79,37 @@ public class WorkflowTaskResourceImpl extends BaseWorkflowTaskResourceImpl {
 	}
 
 	@Override
-	public Page<WorkflowTask> getWorkflowTasksByWorkflowTask(
-			String workflowTaskId, Pagination pagination)
+	public Page<WorkflowTask> getWorkflowTaskAssignedToMePage(
+			Pagination pagination)
 		throws Exception {
 
-		if (workflowTaskId.equals(WorkflowTaskType.TO_ME.getName())) {
-			return Page.of(
-				transform(
-					_workflowTaskManager.getWorkflowTasksByUser(
-						contextCompany.getCompanyId(), _user.getUserId(), null,
-						pagination.getStartPosition(),
-						pagination.getEndPosition(), null),
-					this::_toWorkflowTask),
-				pagination,
-				_workflowTaskManager.getWorkflowTaskCountByUser(
-					contextCompany.getCompanyId(), _user.getUserId(), null));
-		}
-		else if (workflowTaskId.equals(
-					WorkflowTaskType.TO_MY_ROLES.getName())) {
+		return Page.of(
+			transform(
+				_workflowTaskManager.getWorkflowTasksByUser(
+					contextCompany.getCompanyId(), _user.getUserId(), null,
+					pagination.getStartPosition(), pagination.getEndPosition(),
+					null),
+				this::_toWorkflowTask),
+			pagination,
+			_workflowTaskManager.getWorkflowTaskCountByUser(
+				contextCompany.getCompanyId(), _user.getUserId(), null));
+	}
 
-			return Page.of(
-				transform(
-					_workflowTaskManager.getWorkflowTasksByUserRoles(
-						contextCompany.getCompanyId(), _user.getUserId(), null,
-						pagination.getStartPosition(),
-						pagination.getEndPosition(), null),
-					this::_toWorkflowTask),
-				pagination,
-				_workflowTaskManager.getWorkflowTaskCountByUserRoles(
-					contextCompany.getCompanyId(), _user.getUserId(), null));
-		}
+	@Override
+	public Page<WorkflowTask> getWorkflowTaskAssignedToMyRolesPage(
+			Pagination pagination)
+		throws Exception {
 
-		return null;
+		return Page.of(
+			transform(
+				_workflowTaskManager.getWorkflowTasksByUserRoles(
+					contextCompany.getCompanyId(), _user.getUserId(), null,
+					pagination.getStartPosition(), pagination.getEndPosition(),
+					null),
+				this::_toWorkflowTask),
+			pagination,
+			_workflowTaskManager.getWorkflowTaskCountByUserRoles(
+				contextCompany.getCompanyId(), _user.getUserId(), null));
 	}
 
 	@Override
@@ -170,22 +169,6 @@ public class WorkflowTaskResourceImpl extends BaseWorkflowTaskResourceImpl {
 				_user.getCompanyId(), _user.getUserId(), workflowTaskId,
 				workflowTaskAssignToMe.getComment(),
 				workflowTaskAssignToMe.getDueDate()));
-	}
-
-	public enum WorkflowTaskType {
-
-		TO_ME("assigned-to-me"), TO_MY_ROLES("assigned-to-my-roles");
-
-		public String getName() {
-			return _name;
-		}
-
-		private WorkflowTaskType(String name) {
-			_name = name;
-		}
-
-		private final String _name;
-
 	}
 
 	private String _getResourceType(

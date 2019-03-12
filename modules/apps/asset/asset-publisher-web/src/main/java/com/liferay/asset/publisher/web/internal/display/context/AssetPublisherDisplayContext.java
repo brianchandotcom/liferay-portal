@@ -511,20 +511,19 @@ public class AssetPublisherDisplayContext {
 					_request, "queryCategoryIds" + queryLogicIndex,
 					queryValues);
 
+				List<HashMap<String, Object>> selectedItems = new ArrayList<>();
+
 				List<AssetCategory> categories = _filterAssetCategories(
 					GetterUtil.getLongValues(queryValues.split(",")));
-
-				List<HashMap<String, Object>> selectedItems = new ArrayList<>();
 
 				for (AssetCategory category : categories) {
 					HashMap<String, Object> selectedCategory = new HashMap<>();
 
-					selectedItems.add(selectedCategory);
-
 					selectedCategory.put(
 						"label", category.getTitle(_themeDisplay.getLocale()));
-
 					selectedCategory.put("value", category.getCategoryId());
+
+					selectedItems.add(selectedCategory);
 				}
 
 				ruleJSONObject.put("selectedItems", selectedItems);

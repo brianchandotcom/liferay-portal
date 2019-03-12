@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.model.impl;
+package com.liferay.portal.upgrade.test.model.impl;
 
 import java.sql.Types;
 

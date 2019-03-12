@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
 
 <model-hints>
-	<model name="com.liferay.portal.model.BuildAutoUpgradeTestEntity" />
+	<model name="com.liferay.portal.upgrade.test.model.BuildAutoUpgradeTestEntity" />
 </model-hints>

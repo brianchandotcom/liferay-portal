@@ -200,7 +200,7 @@ public class ProcessResourceImpl
 			FieldSort fieldSort, Pagination pagination, SearchHits searchHits)
 		throws Exception {
 
-		Map<Long, Process> processes = new LinkedHashMap<>();
+		Map<Long, Process> processesMap = new LinkedHashMap<>();
 
 		for (SearchHit searchHit : searchHits.getSearchHits()) {
 			Process process = new Process();
@@ -216,12 +216,12 @@ public class ProcessResourceImpl
 			process.setTitle(
 				GetterUtil.getString(document.getFieldValue(_getTitleFieldName())));
 
-			processes.put(process.getId(), process);
+			processesMap.put(process.getId(), process);
 		}
 
 		return _getProcesses(
-			_getAggregationResults(fieldSort, pagination, processes.keySet()),
-			fieldSort, processes);
+			_getAggregationResults(fieldSort, pagination, processesMap.keySet()),
+			fieldSort, processesMap);
 	}
 
 	private List<Process> _getProcesses(

@@ -10972,6 +10972,8 @@ module.framework.properties.blacklist.portal.profile.names=${blacklist.portal.pr
 
 		<remake-dir dir="${selenium.output.dir.name}" />
 
+		<antcall target="deploy-lcs-environment-token" />
+
 		<get-testcase-property property.name="skip.start-app-server" />
 
 		<if>

@@ -8,7 +8,7 @@ let componentsCache = {};
 let componentsFn = {};
 
 const DEFAULT_CACHE_VALIDATION_PARAMS = ['p_p_id', 'p_p_lifecycle'];
-const DEFAULT_CACHE_VALIDATION_PORTLET_PARAMS = ['folderId'];
+const DEFAULT_CACHE_VALIDATION_PORTLET_PARAMS = ['ddmStructureKey', 'fileEntryTypeId', 'folderId', 'navigation', 'status'];
 
 const LIFERAY_COMPONENT = 'liferay.component';
 

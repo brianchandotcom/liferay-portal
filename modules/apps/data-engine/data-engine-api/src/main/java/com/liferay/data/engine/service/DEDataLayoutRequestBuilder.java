@@ -25,6 +25,10 @@ public class DEDataLayoutRequestBuilder {
 		return new DEDataLayoutGetRequest.Builder();
 	}
 
+	public static DEDataLayoutListRequest.Builder listBuilder() {
+		return new DEDataLayoutListRequest.Builder();
+	}
+
 	public static DEDataLayoutSaveRequest.Builder saveBuilder(
 		DEDataLayout deDataLayout) {
 

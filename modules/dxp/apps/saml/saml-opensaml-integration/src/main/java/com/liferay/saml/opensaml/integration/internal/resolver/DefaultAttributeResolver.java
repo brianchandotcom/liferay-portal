@@ -94,7 +94,7 @@ public class DefaultAttributeResolver implements AttributeResolver {
 				attributeName = attributeName.substring(4);
 
 				addMapAttribute(
-					user, attributes, attributeName, namespaceEnabled);
+					user, attributePublisher, attributeName, namespaceEnabled);
 			}
 			else if (attributeName.equals("organizations")) {
 				addOrganizationsAttribute(
@@ -245,7 +245,7 @@ public class DefaultAttributeResolver implements AttributeResolver {
 	}
 
 	protected void addMapAttribute(
-		User user, List<Attribute> attributes, String attributeName,
+		User user, AttributePublisher attributePublisher, String attributeName,
 		boolean namespaceEnabled) {
 
 		if (attributeName.indexOf(StringPool.EQUAL) <= 0) {
@@ -258,20 +258,21 @@ public class DefaultAttributeResolver implements AttributeResolver {
 			return;
 		}
 
-		Attribute attribute = null;
-
 		Serializable attributeValue =
 			(Serializable)BeanPropertiesUtil.getObject(user, values[1]);
 
-		if (!namespaceEnabled) {
-			attribute = OpenSamlUtil.buildAttribute(values[0], attributeValue);
+		String nameFormat = null;
+
+		if (namespaceEnabled) {
+			nameFormat = Attribute.URI_REFERENCE;
 		}
 		else {
-			attribute = OpenSamlUtil.buildAttribute(
-				values[0], Attribute.URI_REFERENCE, attributeValue);
+			nameFormat = Attribute.UNSPECIFIED;
 		}
 
-		attributes.add(attribute);
+		attributePublisher.publish(
+			values[0], nameFormat,
+			attributePublisher.buildString(attributeValue.toString()));
 	}
 
 	protected void addOrganizationRolesAttribute(

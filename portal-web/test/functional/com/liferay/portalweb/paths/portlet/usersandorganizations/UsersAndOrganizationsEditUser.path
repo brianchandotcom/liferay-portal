@@ -227,11 +227,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>CUSTOM_FIELDS_SELECT</td>
-	<td>//div[contains(.,'${key_customFieldName}')]/select</td>
-	<td></td>
-</tr>
-<tr>
 	<td></td>
 	<td></td>
 	<td></td>

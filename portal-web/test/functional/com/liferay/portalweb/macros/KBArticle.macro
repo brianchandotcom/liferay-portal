@@ -209,7 +209,7 @@ definition {
 		}
 	}
 
-	macro addCPWithBooleanCustomField {
+	macro addCPWithTextFieldCustomField {
 		LexiconEntry.gotoAdd();
 
 		MenuItem.click(menuItem = "Basic Article");
@@ -223,10 +223,7 @@ definition {
 
 		Panel.expandPanel(panel = "Custom Fields");
 
-		Select(
-			locator1 = "KnowledgeBaseArticle#CUSTOM_FIELD_BOOLEAN",
-			value1 = "${selectBoolean}"
-		);
+		Type(locator1 = "TextInput#CUSTOM_FIELD", value1 = "${customFieldText}");
 
 		PortletEntry.publish();
 	}
@@ -626,13 +623,10 @@ definition {
 			KBArticle.selectAttachmentCP(kbArticleAttachment = "${kbArticleAttachment}");
 		}
 
-		if (isSet(selectBoolean)) {
+		if (isSet(customFieldTextEdit)) {
 			Panel.expandPanel(panel = "Custom Fields");
 
-			Select(
-				locator1 = "KnowledgeBaseArticle#CUSTOM_FIELD_BOOLEAN",
-				value1 = "${selectBoolean}"
-			);
+			Type(locator1 = "TextInput#CUSTOM_FIELD", value1 = "${customFieldTextEdit}");
 		}
 
 		if ("${cancel}" == "true") {

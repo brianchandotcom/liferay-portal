@@ -9,11 +9,37 @@ definition {
 
 		LexiconEntry.gotoAdd();
 
+		var key_customFieldType = "${customFieldType}";
+
+		Click(locator1 = "CustomFields#CUSTOM_FIELD_TYPE");
+
 		var customFieldKey = StringUtil.lowerCase("${customFieldName}");
 
 		PortletEntry.inputName(name = "${customFieldKey}");
 
-		Select(locator1 = "Select#TYPE", value1 = "${customFieldType}");
+		if (isSet(startingValue)) {
+			if ("${customFieldType}" == "Text Field") {
+				PortletEntry.inputText(
+					fieldLabel = "Starting Value",
+					text = "${startingValue}"
+				);
+			}
+		}
+
+		if (("${customFieldType}" == "Dropdown") || ("${customFieldType}" == "Checkbox") || ("${customFieldType}" == "Radio")) {
+			PortletEntry.inputTextArea(fieldId = "Value", text = "${customFieldType}");
+		}
+
+		if ("${localization}" == "true") {
+			Check(locator1 = "Checkbox#ANY_CHECKBOX", checkboxName = "Make Field Localizable");
+		}
+
+		if ("${searchable}" == "true") {
+			Check.checkToggleSwitch(
+				locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH",
+				key_toggleSwitchLabel = "Searchable"
+			);
+		}
 
 		Button.clickSave();
 
@@ -43,9 +69,12 @@ definition {
 
 		MenuItem.click(menuItem = "Edit");
 
-		if (isSet(defaultValue)) {
-			if ("${customFieldType}" == "True/False") {
-				Select(locator1 = "Select#DEFAULT_VALUE_SELECT", value1 = "${defaultValue}");
+		if (isSet(startingValue)) {
+			if ("${customFieldType}" == "Text Field") {
+				PortletEntry.inputText(
+					fieldLabel = "Starting Value",
+					text = "${startingValue}"
+				);
 			}
 		}
 

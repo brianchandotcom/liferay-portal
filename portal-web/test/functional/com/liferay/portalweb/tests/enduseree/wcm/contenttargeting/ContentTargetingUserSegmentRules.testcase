@@ -429,8 +429,9 @@ definition {
 
 		CustomFields.addCP(
 			customFieldName = "Usercustomfield",
-			customFieldType = "Text Field - Indexed",
-			resourceName = "User"
+			customFieldType = "Text Field",
+			resourceName = "User",
+			searchable = "true"
 		);
 
 		ProductMenu.gotoSite(site = "Site Name");
@@ -1327,8 +1328,9 @@ definition {
 
 		CustomFields.addCP(
 			customFieldName = "Usercustomfield",
-			customFieldType = "Text Field - Indexed",
-			resourceName = "User"
+			customFieldType = "Text Field",
+			resourceName = "User",
+			searchable = "true"
 		);
 
 		ProductMenu.gotoSite(site = "Site Name");

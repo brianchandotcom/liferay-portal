@@ -34,8 +34,8 @@ definition {
 		);
 
 		CustomFields.addCP(
-			customFieldName = "Boolean",
-			customFieldType = "True/False",
+			customFieldName = "Text Area",
+			customFieldType = "Text Area",
 			resourceName = "Blogs Entry"
 		);
 
@@ -58,8 +58,8 @@ definition {
 		);
 
 		CustomFields.addCP(
-			customFieldName = "Decimal",
-			customFieldType = "Decimal Number (64-bit)",
+			customFieldName = "Number",
+			customFieldType = "Number",
 			resourceName = "Bookmarks Folder"
 		);
 
@@ -70,8 +70,20 @@ definition {
 		);
 
 		CustomFields.addCP(
-			customFieldName = "Decimal",
-			customFieldType = "Group of Decimal Numbers (64-bit)",
+			customFieldName = "Dropdown",
+			customFieldType = "Dropdown",
+			resourceName = "Calendar Event"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "Custom Fields"
+		);
+
+		CustomFields.addCP(
+			customFieldName = "Checkbox",
+			customFieldType = "Checkbox",
 			resourceName = "Document"
 		);
 
@@ -82,8 +94,8 @@ definition {
 		);
 
 		CustomFields.addCP(
-			customFieldName = "Decimal",
-			customFieldType = "Decimal Number (32-bit)",
+			customFieldName = "Geolocation",
+			customFieldType = "Geolocation",
 			resourceName = "Documents Folder"
 		);
 
@@ -94,8 +106,32 @@ definition {
 		);
 
 		CustomFields.addCP(
-			customFieldName = "Integer",
-			customFieldType = "Integer (64-bit)",
+			customFieldName = "Text Field",
+			customFieldType = "Text Field",
+			resourceName = "Knowledge Base Article"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "Custom Fields"
+		);
+
+		CustomFields.addCP(
+			customFieldName = "Text Area",
+			customFieldType = "Text Area",
+			resourceName = "Knowledge Base Folder"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "Custom Fields"
+		);
+
+		CustomFields.addCP(
+			customFieldName = "Text Field",
+			customFieldType = "Text Field",
 			resourceName = "Message Boards Category"
 		);
 
@@ -106,8 +142,8 @@ definition {
 		);
 
 		CustomFields.addCP(
-			customFieldName = "Integer",
-			customFieldType = "Group of Integers (64-bit)",
+			customFieldName = "Number",
+			customFieldType = "Number",
 			resourceName = "Message Boards Message"
 		);
 
@@ -118,8 +154,8 @@ definition {
 		);
 
 		CustomFields.addCP(
-			customFieldName = "Number",
-			customFieldType = "Decimal Number or Integer (64-bit)",
+			customFieldName = "Dropdown",
+			customFieldType = "Dropdown",
 			resourceName = "Organization"
 		);
 
@@ -130,8 +166,8 @@ definition {
 		);
 
 		CustomFields.addCP(
-			customFieldName = "Integer",
-			customFieldType = "Integer (16-bit)",
+			customFieldName = "Checkbox",
+			customFieldType = "Checkbox",
 			resourceName = "Page"
 		);
 
@@ -142,8 +178,8 @@ definition {
 		);
 
 		CustomFields.addCP(
-			customFieldName = "Integer",
-			customFieldType = "Group of Integers (16-bit)",
+			customFieldName = "Radio",
+			customFieldType = "Radio",
 			resourceName = "Role"
 		);
 
@@ -154,8 +190,8 @@ definition {
 		);
 
 		CustomFields.addCP(
-			customFieldName = "Text",
-			customFieldType = "Text",
+			customFieldName = "Geolocation",
+			customFieldType = "Geolocation",
 			resourceName = "Site"
 		);
 
@@ -166,8 +202,8 @@ definition {
 		);
 
 		CustomFields.addCP(
-			customFieldName = "Text",
-			customFieldType = "Group of Text Values",
+			customFieldName = "Geolocation",
+			customFieldType = "Geolocation",
 			resourceName = "User"
 		);
 
@@ -178,8 +214,8 @@ definition {
 		);
 
 		CustomFields.addCP(
-			customFieldName = "Text",
-			customFieldType = "Group of Text Values",
+			customFieldName = "Date",
+			customFieldType = "Date",
 			resourceName = "User Group"
 		);
 
@@ -190,8 +226,9 @@ definition {
 		);
 
 		CustomFields.addCP(
-			customFieldName = "Text",
-			customFieldType = "Localized Text",
+			customFieldName = "Text Field",
+			customFieldType = "Text Field",
+			localization = "true",
 			resourceName = "Web Content Article"
 		);
 
@@ -202,14 +239,12 @@ definition {
 		);
 
 		CustomFields.addCP(
-			customFieldName = "Number",
-			customFieldType = "Group of Decimal Numbers or Integers (64-bit)",
-			resourceName = "Wiki Page"
+			customFieldName = "Text Area",
+			customFieldType = "Text Area",
+			localization = "true",
+			resourceName = "Web Content Folder"
 		);
-	}
 
-	@priority = "5"
-	test AddCustomFieldUserBoolean {
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
@@ -217,9 +252,25 @@ definition {
 		);
 
 		CustomFields.addCP(
-			customFieldName = "Boolean",
-			customFieldType = "True/False",
-			resourceName = "User"
+			customFieldName = "Number",
+			customFieldType = "Number",
+			resourceName = "Wiki Page"
+		);
+	}
+
+	@priority = "5"
+	test AddCustomFieldUserTextField {
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "Custom Fields"
+		);
+
+		CustomFields.addCP(
+			customFieldName = "Nickname",
+			customFieldType = "Text Field",
+			resourceName = "User",
+			startingValue = "Nickname"
 		);
 
 		ProductMenu.gotoPortlet(
@@ -244,14 +295,15 @@ definition {
 		User.gotoEditCP(userScreenName = "usersn");
 
 		User.viewUserCustomFieldsCP(
-			customFieldName = "Boolean",
-			customFieldValue = "False"
+			customFieldName = "Nickname",
+			customFieldType = "Text Field",
+			startingValue = "Nickname"
 		);
 	}
 
 	@ignore = "true"
 	@priority = "5"
-	test EditCustomFieldUserBoolean {
+	test EditCustomFieldUserTextField {
 		property app.server.types = "jboss,resin,tcserver,tomcat,weblogic,websphere,wildfly";
 		property database.types = "db2,hypersonic,mariadb,mysql,oracle,postgresql,sqlserver,sybase";
 		property environment.acceptance = "true";
@@ -264,8 +316,8 @@ definition {
 		);
 
 		CustomFields.addCP(
-			customFieldName = "Boolean",
-			customFieldType = "True/False",
+			customFieldName = "Text Field",
+			customFieldType = "Text Field",
 			resourceName = "User"
 		);
 
@@ -276,9 +328,9 @@ definition {
 		);
 
 		CustomFields.editCP(
-			customFieldName = "Boolean",
-			customFieldType = "True/False",
-			defaultValue = "True",
+			customFieldName = "Text Field",
+			customFieldType = "Text Field",
+			startingValue = "Text Field",
 			resourceName = "User"
 		);
 
@@ -304,8 +356,9 @@ definition {
 		User.gotoEditCP(userScreenName = "usersn");
 
 		User.viewUserCustomFieldsCP(
-			customFieldName = "Boolean",
-			customFieldValue = "True"
+			customFieldName = "Text Field",
+			customFieldValue = "Text Field",
+			startingValue = "Nickname"
 		);
 	}
 
@@ -318,8 +371,8 @@ definition {
 		);
 
 		CustomFields.addCP(
-			customFieldName = "Text",
-			customFieldType = "Text",
+			customFieldName = "Text Field",
+			customFieldType = "Text Field",
 			resourceName = "Wiki Page"
 		);
 

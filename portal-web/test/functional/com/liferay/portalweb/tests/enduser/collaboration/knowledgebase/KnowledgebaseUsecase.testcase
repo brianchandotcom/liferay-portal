@@ -352,8 +352,8 @@ definition {
 		);
 
 		CustomFields.addCP(
-			customFieldName = "Boolean",
-			customFieldType = "True/False",
+			customFieldName = "Text Field",
+			customFieldType = "Text Field",
 			resourceName = "Knowledge Base Article"
 		);
 
@@ -387,17 +387,17 @@ definition {
 			portlet = "Knowledge Base"
 		);
 
-		KBArticle.addCPWithBooleanCustomField(
+		KBArticle.addCPWithTextFieldCustomField(
 			kbArticleContent = "KB Article Content",
 			kbArticleTitle = "KB Article Title",
-			selectBoolean = "True"
+			customFieldText = "KB Article Custom Field"
 		);
 
 		Navigator.gotoPage(pageName = "Knowledge Base Page");
 
 		KBArticle.viewPG(
-			customFieldName = "Boolean",
-			customFieldValue = "true",
+			customFieldName = "Text Field",
+			customFieldValue = "KB Article Custom Field",
 			kbArticleContent = "KB Article Content",
 			kbArticleTitle = "KB Article Title"
 		);
@@ -415,14 +415,14 @@ definition {
 			kbArticleContentEdit = "KB Article Content Edited",
 			kbArticleTitle = "KB Article Title",
 			kbArticleTitleEdit = "KB Article Title Edited",
-			selectBoolean = "False"
+			customFieldTextEdit = "KB Article Custom Field Edited"
 		);
 
 		Navigator.gotoPage(pageName = "Knowledge Base Page");
 
 		KBArticle.viewPG(
-			customFieldName = "Boolean",
-			customFieldValue = "false",
+			customFieldName = "Text Field",
+			customFieldValue = "KB Article Custom Field Edited",
 			kbArticleContent = "KB Article Content Edited",
 			kbArticleTitle = "KB Article Title Edited"
 		);

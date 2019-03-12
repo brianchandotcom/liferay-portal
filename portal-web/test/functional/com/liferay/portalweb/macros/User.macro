@@ -2336,11 +2336,14 @@ definition {
 			value1 = "${customFieldName}"
 		);
 
-		if ("${customFieldName}" == "Boolean") {
-			AssertSelectedLabel(
-				locator1 = "UsersAndOrganizationsEditUser#CUSTOM_FIELDS_SELECT",
-				value1 = "${customFieldValue}"
-			);
+		if (isSet(startingValue)) {
+			if ("${customFieldType}" == "Text Field") {
+				AssertTextEquals(
+					locator1 = "TextInput#GENERIC_TEXT_INPUT",
+					value1 = "${startingValue}",
+					key_fieldLabel = "${customFieldName}"
+				);
+			}
 		}
 	}
 

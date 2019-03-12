@@ -151,7 +151,8 @@ definition {
 
 		CustomFields.addCP(
 			customFieldName = '''<script>alert(123);</script>''',
-			customFieldType = "Localized Text",
+			customFieldType = "Text Field",
+			localization = "true",
 			resourceName = "Documents Folder"
 		);
 

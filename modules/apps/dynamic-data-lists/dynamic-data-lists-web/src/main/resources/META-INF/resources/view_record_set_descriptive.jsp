@@ -39,7 +39,6 @@ String href = (String)request.getAttribute(WebKeys.SEARCH_ENTRY_HREF);
 		<%= HtmlUtil.escape(ddlRecordSet.getDescription(locale)) %>
 	</div>
 </span>
-
 <span class="text-default">
 	<span class="record-set-id">
 		<liferay-ui:message key="id" />: <%= ddlRecordSet.getRecordSetId() %>

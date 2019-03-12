@@ -12,8 +12,9 @@
  * details.
  */
 
-package com.liferay.portal.upgrade.v7_1_x;
+package com.liferay.portal.upgrade.v7_1_x.test;
 
+import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.kernel.cache.CacheRegistryUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Organization;
@@ -30,6 +31,7 @@ import com.liferay.portal.kernel.upgrade.util.UpgradeProcessUtil;
 import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+import com.liferay.portal.upgrade.v7_1_x.UpgradePortalPreferences;
 
 import java.util.Locale;
 import java.util.Set;
@@ -43,10 +45,12 @@ import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 
 /**
  * @author Christopher Kian
  */
+@RunWith(Arquillian.class)
 public class UpgradePortletPreferencesTest extends UpgradePortalPreferences {
 
 	@ClassRule

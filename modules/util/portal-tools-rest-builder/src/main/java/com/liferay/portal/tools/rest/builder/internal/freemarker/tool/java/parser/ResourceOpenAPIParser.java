@@ -512,6 +512,10 @@ public class ResourceOpenAPIParser {
 			if (schema.getType() != null) {
 				StringBuilder sb = new StringBuilder();
 
+				if (parameter.isRequired()) {
+					sb.append("@NotNull ");
+				}
+
 				sb.append("@");
 				sb.append(StringUtil.upperCaseFirstLetter(parameter.getIn()));
 				sb.append("Param(\"");

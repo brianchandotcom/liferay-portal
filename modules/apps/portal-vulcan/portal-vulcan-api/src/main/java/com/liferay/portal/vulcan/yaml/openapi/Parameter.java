@@ -35,6 +35,10 @@ public class Parameter {
 		return _schema;
 	}
 
+	public boolean isRequired() {
+		return _required;
+	}
+
 	public void setIn(String in) {
 		_in = in;
 	}
@@ -47,6 +51,10 @@ public class Parameter {
 		_reference = reference;
 	}
 
+	public void setRequired(boolean required) {
+		_required = required;
+	}
+
 	public void setSchema(Schema schema) {
 		_schema = schema;
 	}
@@ -54,6 +62,7 @@ public class Parameter {
 	private String _in;
 	private String _name;
 	private String _reference;
+	private boolean _required;
 	private Schema _schema;
 
 }

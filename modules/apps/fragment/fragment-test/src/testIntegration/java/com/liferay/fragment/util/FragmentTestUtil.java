@@ -28,6 +28,8 @@ import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
+import java.util.Date;
+
 /**
  * @author Pavel Savinov
  */
@@ -41,6 +43,45 @@ public class FragmentTestUtil {
 
 		return FragmentCollectionLocalServiceUtil.addFragmentCollection(
 			TestPropsValues.getUserId(), groupId, RandomTestUtil.randomString(),
+			StringPool.BLANK, serviceContext);
+	}
+
+	public static FragmentCollection addFragmentCollection(
+			long groupId, String name)
+		throws PortalException {
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(groupId);
+
+		return FragmentCollectionLocalServiceUtil.addFragmentCollection(
+			TestPropsValues.getUserId(), groupId, name, StringPool.BLANK,
+			serviceContext);
+	}
+
+	public static FragmentCollection addFragmentCollection(
+			long groupId, String name, Date createDate)
+		throws PortalException {
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(groupId);
+
+		serviceContext.setCreateDate(createDate);
+		serviceContext.setModifiedDate(createDate);
+
+		return FragmentCollectionLocalServiceUtil.addFragmentCollection(
+			TestPropsValues.getUserId(), groupId, name, StringPool.BLANK,
+			serviceContext);
+	}
+
+	public static FragmentCollection addFragmentCollection(
+			long groupId, String name, String fragmentCollectionKey)
+		throws PortalException {
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(groupId);
+
+		return FragmentCollectionLocalServiceUtil.addFragmentCollection(
+			TestPropsValues.getUserId(), groupId, fragmentCollectionKey, name,
 			StringPool.BLANK, serviceContext);
 	}
 

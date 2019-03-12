@@ -17,6 +17,7 @@ package com.liferay.portal.workflow.metrics.rest.internal.jaxrs.exception.mapper
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
+import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.portal.workflow.metrics.rest.dto.v1_0.GenericError;
 
@@ -58,7 +59,10 @@ public abstract class BaseWorkflowMetricsSLAExceptionMapper
 
 	protected String getMessage() {
 		return language.get(
-			contextAcceptLanguage.getPreferredLocale(), getKey());
+			ResourceBundleUtil.getBundle(
+				contextAcceptLanguage.getPreferredLocale(),
+				BaseWorkflowMetricsSLAExceptionMapper.class),
+			getKey());
 	}
 
 	@Context

@@ -37,7 +37,7 @@ function destroy() {
  * @return {object[]} Floating toolbar panels
  */
 function getFloatingToolbarPanels(editableValues) {
-	return editableValues.mappedField ? [
+	return editableValues.mappedField || editableValues.fieldId ? [
 		FLOATING_TOOLBAR_PANELS.textProperties,
 		FLOATING_TOOLBAR_PANELS.map
 	] : [

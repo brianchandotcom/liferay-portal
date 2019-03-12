@@ -14,7 +14,7 @@
 
 package com.liferay.portal.search.elasticsearch6.internal.query;
 
-import com.liferay.portal.kernel.search.geolocation.GeoDistance;
+import com.liferay.portal.search.geolocation.GeoDistance;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.search.query.GeoDistanceRangeQuery;
 import com.liferay.portal.search.query.geolocation.ShapeRelation;

@@ -59,6 +59,8 @@ definition {
 			MenuItem.click(menuItem = "All Pages");
 		}
 
+		LexiconEntry.changeDisplayStyle(displayStyle = "list");
+
 		LexiconList.clickListEntryTitle(
 			listEntry = "${wikiPageTitle}"
 		);

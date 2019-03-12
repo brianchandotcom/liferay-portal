@@ -76,6 +76,12 @@ public class FriendlyURLEntryStagedModelDataHandler
 		friendlyURLEntryElement.addAttribute(
 			"resource-class-name", friendlyURLEntry.getClassName());
 
+		String modelPath = ExportImportPathUtil.getModelPath(
+			friendlyURLEntry, friendlyURLEntry.getUuid());
+
+		portletDataContext.addZipEntry(
+			modelPath, friendlyURLEntry.getUrlTitleMapAsXML());
+
 		if (friendlyURLEntry.isMain()) {
 			friendlyURLEntryElement.addAttribute(
 				"mainEntry", Boolean.TRUE.toString());
@@ -127,6 +133,9 @@ public class FriendlyURLEntryStagedModelDataHandler
 				friendlyURLEntry.getClassPK());
 
 			importedFriendlyURLEntry.setClassPK(classPK);
+
+			importedFriendlyURLEntry.setDefaultLanguageId(
+				friendlyURLEntry.getDefaultLanguageId());
 
 			_stagedModelRepository.addStagedModel(
 				portletDataContext, importedFriendlyURLEntry);

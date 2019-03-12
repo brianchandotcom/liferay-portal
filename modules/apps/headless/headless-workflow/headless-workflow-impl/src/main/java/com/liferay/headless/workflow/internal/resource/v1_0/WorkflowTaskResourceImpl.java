@@ -32,6 +32,7 @@ import com.liferay.portal.vulcan.pagination.Pagination;
 
 import java.io.Serializable;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -210,12 +211,16 @@ public class WorkflowTaskResourceImpl extends BaseWorkflowTaskResourceImpl {
 			com.liferay.portal.kernel.workflow.WorkflowTask workflowTask)
 		throws PortalException {
 
-		User user = _userLocalService.getUserById(
-			workflowTask.getAssigneeUserId());
+		if (workflowTask.getAssigneeUserId() > 0) {
+			User user = _userLocalService.getUserById(
+				workflowTask.getAssigneeUserId());
 
-		return _workflowTaskManager.getNextTransitionNames(
-			user.getCompanyId(), workflowTask.getAssigneeUserId(),
-			workflowTask.getWorkflowTaskId());
+			return _workflowTaskManager.getNextTransitionNames(
+				user.getCompanyId(), workflowTask.getAssigneeUserId(),
+				workflowTask.getWorkflowTaskId());
+		}
+
+		return Collections.emptyList();
 	}
 
 	private ObjectReviewed _toObjectReviewed(

@@ -119,6 +119,10 @@ components:
                 contentSpace:
                     format: int64
                     type: integer
+                contentStructureFields:
+                    items:
+                        $ref: "#/components/schemas/ContentStructureField"
+                    type: array
                 creator:
                     $ref: "#/components/schemas/Creator"
                 dateCreated:
@@ -129,45 +133,48 @@ components:
                     type: string
                 description:
                     type: string
-                fields:
-                    items:
-                        properties:
-                            dataType:
-                                type: string
-                            inputControl:
-                                type: string
-                            label:
-                                type: string
-                            localizable:
-                                type: boolean
-                            multiple:
-                                type: boolean
-                            name:
-                                type: string
-                            options:
-                                items:
-                                    properties:
-                                        label:
-                                            type: string
-                                        value:
-                                            type: string
-                                    type: object
-                                type: array
-                            predefinedValue:
-                                type: string
-                            repeatable:
-                                type: boolean
-                            required:
-                                type: boolean
-                            showLabel:
-                                type: boolean
-                        type: object
-                    type: array
                 id:
                     format: int64
                     type: integer
                 name:
                     type: string
+            type: object
+        ContentStructureField:
+            description: https://www.schema.org/ContentStructureField
+            properties:
+                dataType:
+                    type: string
+                inputControl:
+                    type: string
+                label:
+                    type: string
+                localizable:
+                    type: boolean
+                multiple:
+                    type: boolean
+                name:
+                    type: string
+                nestedContentStructureFields:
+                    items:
+                        $ref: "#/components/schemas/ContentStructureField"
+                    type: array
+                options:
+                    items:
+                        properties:
+                            label:
+                                type: string
+                            value:
+                                type: string
+                        type: object
+                    type: array
+                predefinedValue:
+                    type: string
+                repeatable:
+                    type: boolean
+                required:
+                    type: boolean
+                showLabel:
+                    type: boolean
             type: object
         Creator:
             description: https://www.schema.org/Creator

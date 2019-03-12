@@ -2,8 +2,8 @@ import Component from 'metal-component';
 import Soy from 'metal-soy';
 import {Config} from 'metal-state';
 
-import './components/dialogs/SelectMappingDialog.es';
-import './components/dialogs/SelectMappingTypeDialog.es';
+import './components/mapping_type/SelectMappingDialog.es';
+import './components/mapping_type/SelectMappingTypeDialog.es';
 import './components/fragment_entry_link/FragmentEntryLinkList.es';
 import './components/sidebar/FragmentsEditorSidebar.es';
 import './components/toolbar/FragmentsEditorToolbar.es';

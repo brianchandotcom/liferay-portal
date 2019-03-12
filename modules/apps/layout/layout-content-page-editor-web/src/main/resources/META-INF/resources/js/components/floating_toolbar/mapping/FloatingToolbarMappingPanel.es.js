@@ -53,8 +53,8 @@ class FloatingToolbarMappingPanel extends PortletBase {
 
 		nextState = setIn(
 			nextState,
-			['_assetEntries'],
-			nextState._assetEntries.map(encodeAssetId)
+			['mappedAssetEntries'],
+			nextState.mappedAssetEntries.map(encodeAssetId)
 		);
 
 		nextState = setIn(
@@ -207,8 +207,8 @@ class FloatingToolbarMappingPanel extends PortletBase {
 
 		this.store.done(
 			() => {
-		this._loadFields();
-	}
+				this._loadFields();
+			}
 		);
 	}
 
@@ -311,7 +311,7 @@ FloatingToolbarMappingPanel.STATE = {
 		.required(),
 
 	/**
-	 * @default undefined
+	 * @default []
 	 * @memberOf FloatingToolbarMappingPanel
 	 * @private
 	 * @review
@@ -321,17 +321,6 @@ FloatingToolbarMappingPanel.STATE = {
 		.array()
 		.internal()
 		.value([]),
-
-	/**
-	 * @default []
-	 * @memberOf FloatingToolbarMappingPanel
-	 * @private
-	 * @review
-	 * @type {object[]}
-	 */
-	_assetEntries: Config
-		.array()
-		.internal(),
 
 	/**
 	 * @default undefined
@@ -348,6 +337,7 @@ const ConnectedFloatingToolbarMappingPanel = getConnectedComponent(
 	FloatingToolbarMappingPanel,
 	[
 		'getAssetMappingFieldsURL',
+		'mappedAssetEntries',
 		'mappingFieldsURL',
 		'portletNamespace',
 		'selectedMappingTypes'

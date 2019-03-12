@@ -52,6 +52,24 @@ const INITIAL_STATE = {
 		.value(''),
 
 	/**
+	 * List of asset browser links that can be used
+	 * for selecting an asset
+	 * @default []
+	 * @review
+	 * @type {object[]}
+	 */
+	assetBrowserLinks: Config
+		.arrayOf(
+			Config.shapeOf(
+				{
+					href: Config.string(),
+					typeName: Config.string()
+				}
+			)
+		)
+		.value([]),
+
+	/**
 	 * Object of available languages.
 	 * @default {}
 	 * @review

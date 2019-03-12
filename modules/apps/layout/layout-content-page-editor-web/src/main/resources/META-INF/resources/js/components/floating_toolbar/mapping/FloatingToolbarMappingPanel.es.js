@@ -144,10 +144,10 @@ class FloatingToolbarMappingPanel extends PortletBase {
 
 			this._updateEditableValues('classNameId', classNameId);
 			this._updateEditableValues('classPK', classPK);
+			this._updateEditableValues('fieldId', '');
 		}
 		else {
-			this._updateEditableValues('classNameId', '');
-			this._updateEditableValues('classPK', '');
+			this._clearEditableValues();
 		}
 
 		this.store.done(

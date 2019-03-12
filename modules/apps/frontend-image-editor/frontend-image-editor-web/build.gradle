@@ -13,6 +13,4 @@ dependencies {
 	compileOnly project(":core:osgi-service-tracker-collections")
 	compileOnly project(":core:petra:petra-string")
 	compileOnly project(":core:registry-api")
-
-	jsCompile project(":apps:frontend-js:frontend-js-web")
 }

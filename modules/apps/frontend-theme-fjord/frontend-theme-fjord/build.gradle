@@ -1,3 +1,11 @@
+assemble {
+	dependsOn npmRunBuild
+}
+
+gulpBuild {
+	enabled = false
+}
+
 publishNodeModule {
 	enabled = false
 }

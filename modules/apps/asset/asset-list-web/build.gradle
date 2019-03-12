@@ -26,6 +26,4 @@ dependencies {
 	compileOnly project(":core:petra:petra-function")
 	compileOnly project(":core:petra:petra-lang")
 	compileOnly project(":core:petra:petra-string")
-
-	jsCompile project(":apps:asset:asset-taglib")
 }

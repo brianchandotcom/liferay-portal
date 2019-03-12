@@ -4631,7 +4631,12 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 						}
 					}
 
-					friendlyURL = friendlyURL + CharPool.DASH + ++i;
+					if (StringUtil.endsWith(friendlyURL, CharPool.DASH)) {
+						friendlyURL = friendlyURL + ++i;
+					}
+					else {
+						friendlyURL = friendlyURL + CharPool.DASH + ++i;
+					}
 				}
 				else if (type == GroupFriendlyURLException.ENDS_WITH_DASH) {
 					friendlyURL = StringUtil.replaceLast(

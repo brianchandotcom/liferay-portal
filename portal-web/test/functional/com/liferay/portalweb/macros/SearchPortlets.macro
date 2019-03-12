@@ -102,29 +102,6 @@ definition {
 		IFrame.closeFrame();
 	}
 
-	macro configureWidgetDestination {
-		SearchPortlets.gotoWidgetOptions(portletOption = "Configuration");
-
-		SelectFrame(locator1 = "IFrame#CONFIGURATION");
-
-		if (isSet(destinationPage)) {
-			if (contains("${destinationPage}", " ")) {
-				var destinationPage = StringUtil.replace("${destinationPage}", " ", "-");
-			}
-
-			var destinationPage = StringUtil.toLowerCase("${destinationPage}");
-
-			Type(
-				locator1 = "SearchConfiguration#DESTINATION_PAGE",
-				value1 = "${destinationPage}"
-			);
-		}
-
-		PortletEntry.save();
-
-		IFrame.closeFrame();
-	}
-
 	macro configureWidgetParameterNames {
 		SearchPortlets.gotoWidgetOptions(portletOption = "Configuration");
 

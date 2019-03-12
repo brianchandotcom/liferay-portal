@@ -11,10 +11,6 @@
 			mappedField: string
 		]
 	]}
-	{@param? mappedAssetEntries: list<[
-		assetEntryTitle: string,
-		encodedId: string
-	]>}
 	{@param? _fields: ?}
 	{@param? _handleAssetOptionChange: any}
 	{@param? _handleFieldOptionChange: any}
@@ -28,6 +24,10 @@
 	{@param? _sourceTypes: list<[
 		id: string,
 		label: string
+	]>}
+	{@param? assetBrowserLinks: list<[
+		href: string,
+		typeName: string
 	]>}
 	{@param? mappingFieldsURL: string}
 	{@param? spritemap: string}
@@ -48,7 +48,7 @@
 				{call .assetSelect}
 					{param handleAssetOptionChange: $_handleAssetOptionChange /}
 					{param selectedAssetEntryEncodedId: $item.editableValues.encodedId /}
-					{param assetEntries: $mappedAssetEntries /}
+					{param assetBrowserLinks: $assetBrowserLinks /}
 					{param spritemap: $spritemap /}
 				{/call}
 			</div>
@@ -72,9 +72,9 @@
  * Asset select
  */
 {template .assetSelect}
-	{@param? assetEntries: list<[
-		assetEntryTitle: string,
-		encodedId: string
+	{@param? assetBrowserLinks: list<[
+		href: string,
+		typeName: string
 	]>}
 	{@param? handleAssetOptionChange: any}
 	{@param? selectedAssetEntryEncodedId: string}
@@ -106,17 +106,16 @@
 			</button>
 
 			<div class="dropdown-menu">
-				<div class="dropdown-divider"></div>
-
-				{if $assetEntries}
-					{foreach $assetEntry in $assetEntries}
+				{if $assetBrowserLinks}
+					{foreach $assetBrowserLink in $assetBrowserLinks}
 						<button
 							class="dropdown-item"
 							data-onclick="{$handleAssetOptionChange}"
-							key="{$assetEntry.encodedId}"
+							data-asset-type-url="{$assetBrowserLink.href}"
+							key="{$assetBrowserLink.href}"
 							type="button"
 						>
-							{$assetEntry.assetEntryTitle}
+							{$assetBrowserLink.typeName}
 						</button>
 					{/foreach}
 				{/if}

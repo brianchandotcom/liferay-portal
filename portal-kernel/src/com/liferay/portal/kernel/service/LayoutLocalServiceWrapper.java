@@ -2452,6 +2452,7 @@ public class LayoutLocalServiceWrapper
 	 *
 	 * @param layout the layout
 	 * @return the layout that was updated
+	 * @throws PortalException
 	 */
 	@Override
 	public com.liferay.portal.kernel.model.Layout updateLayout(

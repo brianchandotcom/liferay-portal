@@ -176,6 +176,7 @@ public class LayoutCacheModel
 		}
 
 		layoutImpl.setHeadId(headId);
+		layoutImpl.setHead(head);
 		layoutImpl.setPlid(plid);
 		layoutImpl.setGroupId(groupId);
 		layoutImpl.setCompanyId(companyId);
@@ -325,8 +326,6 @@ public class LayoutCacheModel
 			layoutImpl.setLastPublishDate(new Date(lastPublishDate));
 		}
 
-		layoutImpl.setHead(head);
-
 		layoutImpl.resetOriginalValues();
 
 		return layoutImpl;
@@ -338,6 +337,8 @@ public class LayoutCacheModel
 		uuid = objectInput.readUTF();
 
 		headId = objectInput.readLong();
+
+		head = objectInput.readBoolean();
 
 		plid = objectInput.readLong();
 
@@ -390,8 +391,6 @@ public class LayoutCacheModel
 		sourcePrototypeLayoutUuid = objectInput.readUTF();
 		publishDate = objectInput.readLong();
 		lastPublishDate = objectInput.readLong();
-
-		head = objectInput.readBoolean();
 	}
 
 	@Override
@@ -406,6 +405,8 @@ public class LayoutCacheModel
 		}
 
 		objectOutput.writeLong(headId);
+
+		objectOutput.writeBoolean(head);
 
 		objectOutput.writeLong(plid);
 
@@ -544,13 +545,12 @@ public class LayoutCacheModel
 
 		objectOutput.writeLong(publishDate);
 		objectOutput.writeLong(lastPublishDate);
-
-		objectOutput.writeBoolean(head);
 	}
 
 	public long mvccVersion;
 	public String uuid;
 	public long headId;
+	public boolean head;
 	public long plid;
 	public long groupId;
 	public long companyId;
@@ -586,6 +586,5 @@ public class LayoutCacheModel
 	public String sourcePrototypeLayoutUuid;
 	public long publishDate;
 	public long lastPublishDate;
-	public boolean head;
 
 }

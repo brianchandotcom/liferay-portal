@@ -1800,6 +1800,7 @@ public interface LayoutLocalService
 	 *
 	 * @param layout the layout
 	 * @return the layout that was updated
+	 * @throws PortalException
 	 */
 	@Indexable(type = IndexableType.REINDEX)
 	public Layout updateLayout(Layout draftLayout) throws PortalException;

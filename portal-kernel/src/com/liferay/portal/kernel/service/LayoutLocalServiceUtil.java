@@ -2314,6 +2314,7 @@ public class LayoutLocalServiceUtil {
 	 *
 	 * @param layout the layout
 	 * @return the layout that was updated
+	 * @throws PortalException
 	 */
 	public static com.liferay.portal.kernel.model.Layout updateLayout(
 			com.liferay.portal.kernel.model.Layout draftLayout)

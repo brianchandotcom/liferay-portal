@@ -11012,7 +11012,7 @@ module.framework.properties.blacklist.portal.profile.names=${blacklist.portal.pr
 					<param name="database.type" value="@{database.type}" />
 				</antcall>
 
-				<start-app-server />
+				<antcall target="start-app-server-preserve-liferay-home" />
 
 				<get-testcase-property property.name="app.server.bundles.size" />
 

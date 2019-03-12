@@ -1376,33 +1376,6 @@ paths:
                                 type: array
                     description: ""
             tags: ["Role"]
-    "/user-accounts/{user-account-id}/web-urls":
-        get:
-            parameters:
-                - in: query
-                  name: page
-                  schema:
-                      type: integer
-                - in: query
-                  name: pageSize
-                  schema:
-                      type: integer
-                - in: path
-                  name: user-account-id
-                  required: true
-                  schema:
-                      format: int64
-                      type: integer
-            responses:
-                200:
-                    content:
-                        application/json:
-                            schema:
-                                items:
-                                    $ref: "#/components/schemas/WebUrl"
-                                type: array
-                    description: ""
-            tags: ["WebUrl"]
     "/user-accounts/{user-account-id}/segments":
         get:
             parameters:
@@ -1430,6 +1403,33 @@ paths:
                                 type: array
                     description: ""
             tags: ["Segment"]
+    "/user-accounts/{user-account-id}/web-urls":
+        get:
+            parameters:
+                - in: query
+                  name: page
+                  schema:
+                      type: integer
+                - in: query
+                  name: pageSize
+                  schema:
+                      type: integer
+                - in: path
+                  name: user-account-id
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/WebUrl"
+                                type: array
+                    description: ""
+            tags: ["WebUrl"]
     "/vocabularies/{vocabulary-id}":
         delete:
             parameters:

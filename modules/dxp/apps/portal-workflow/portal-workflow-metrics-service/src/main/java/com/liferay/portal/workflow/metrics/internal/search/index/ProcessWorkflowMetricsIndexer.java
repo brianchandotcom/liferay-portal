@@ -38,15 +38,6 @@ public class ProcessWorkflowMetricsIndexer
 	public void addDocument(KaleoDefinition kaleoDefinition) {
 		BulkDocumentRequest bulkDocumentRequest = new BulkDocumentRequest();
 
-		IndexDocumentRequest processIndexDocumentRequest =
-			new IndexDocumentRequest(
-				getIndexName(), createDocument(kaleoDefinition));
-
-		processIndexDocumentRequest.setType(getIndexType());
-
-		bulkDocumentRequest.addBulkableDocumentRequest(
-			processIndexDocumentRequest);
-
 		IndexDocumentRequest instanceIndexDocumentRequest =
 			new IndexDocumentRequest(
 				_instanceWorkflowMetricsIndexer.getIndexName(),
@@ -57,6 +48,15 @@ public class ProcessWorkflowMetricsIndexer
 
 		bulkDocumentRequest.addBulkableDocumentRequest(
 			instanceIndexDocumentRequest);
+
+		IndexDocumentRequest processIndexDocumentRequest =
+			new IndexDocumentRequest(
+				getIndexName(), createDocument(kaleoDefinition));
+
+		processIndexDocumentRequest.setType(getIndexType());
+
+		bulkDocumentRequest.addBulkableDocumentRequest(
+			processIndexDocumentRequest);
 
 		searchEngineAdapter.execute(bulkDocumentRequest);
 	}

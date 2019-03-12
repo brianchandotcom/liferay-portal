@@ -224,7 +224,7 @@ public class JournalContentImpl
 
 			secure = themeDisplay.isSecure();
 
-			if (!lifecycleRender && (portletRequestModel == null)) {
+			if (portletRequestModel == null) {
 				lifecycleRender = themeDisplay.isLifecycleRender();
 			}
 		}

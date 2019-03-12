@@ -53,23 +53,6 @@ public class SQLTransformer {
 	}
 
 	public static String transformFromHQLToJQPL(String sql) {
-		return _transformFromHQLToJPQL(sql);
-	}
-
-	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link
-	 *             #transformFromJPQLToHQL(String)}
-	 */
-	@Deprecated
-	public static String transformFromJpqlToHql(String sql) {
-		return transformFromJPQLToHQL(sql);
-	}
-
-	public static String transformFromJPQLToHQL(String sql) {
-		return _transformFromJPQLToHQL(sql);
-	}
-
-	private static String _transformFromHQLToJPQL(String sql) {
 		String newSQL = _transformedSqls.get(sql);
 
 		if (newSQL != null) {
@@ -92,7 +75,16 @@ public class SQLTransformer {
 		return newSQL;
 	}
 
-	private static String _transformFromJPQLToHQL(String sql) {
+	/**
+	 * @deprecated As of Judson (7.1.x), replaced by {@link
+	 *             #transformFromJPQLToHQL(String)}
+	 */
+	@Deprecated
+	public static String transformFromJpqlToHql(String sql) {
+		return transformFromJPQLToHQL(sql);
+	}
+
+	public static String transformFromJPQLToHQL(String sql) {
 		String newSQL = _transformedSqls.get(sql);
 
 		if (newSQL != null) {

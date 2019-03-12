@@ -547,6 +547,7 @@ create table Layout (
 	mvccVersion LONG default 0 not null,
 	uuid_ VARCHAR(75) null,
 	headId LONG,
+	head BOOLEAN,
 	plid LONG not null primary key,
 	groupId LONG,
 	companyId LONG,
@@ -581,8 +582,7 @@ create table Layout (
 	layoutPrototypeLinkEnabled BOOLEAN,
 	sourcePrototypeLayoutUuid VARCHAR(75) null,
 	publishDate DATE null,
-	lastPublishDate DATE null,
-	head BOOLEAN
+	lastPublishDate DATE null
 );
 
 create table LayoutBranch (

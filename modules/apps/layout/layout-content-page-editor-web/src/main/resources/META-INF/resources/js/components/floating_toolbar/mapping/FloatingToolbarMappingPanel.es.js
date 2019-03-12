@@ -137,6 +137,29 @@ class FloatingToolbarMappingPanel extends PortletBase {
 	}
 
 	/**
+	 * @param {MouseEvent} event
+	 * @private
+	 * @review
+	 */
+	_handleAssetBrowserLinkClick(event) {
+		const { assetBrowserUrl, assetBrowserWindowTitle } = event.delegateTarget.dataset;
+
+		Liferay.Util.openWindow(
+			{
+				dialog: {
+					destroyOnHide: true,
+					modal: true
+				},
+				dialogIframe: {
+					bodyCssClass: 'dialog-with-footer'
+				},
+				title: assetBrowserWindowTitle,
+				uri: assetBrowserUrl
+			}
+		);
+	}
+
+	/**
 	 * Handle source option change
 	 * @param {Event} event
 	 * @private

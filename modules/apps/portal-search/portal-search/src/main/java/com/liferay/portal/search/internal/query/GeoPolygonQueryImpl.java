@@ -14,7 +14,7 @@
 
 package com.liferay.portal.search.internal.query;
 
-import com.liferay.portal.kernel.search.geolocation.GeoLocationPoint;
+import com.liferay.portal.search.geolocation.GeoLocationPoint;
 import com.liferay.portal.search.query.GeoPolygonQuery;
 import com.liferay.portal.search.query.QueryVisitor;
 import com.liferay.portal.search.query.geolocation.GeoValidationMethod;

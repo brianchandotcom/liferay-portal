@@ -12,7 +12,7 @@
 		]
 	]}
 	{@param? _fields: ?}
-	{@param? _handleAssetOptionChange: any}
+	{@param? _handleAssetBrowserLinkClick: any}
 	{@param? _handleFieldOptionChange: any}
 	{@param? _handleSourceTypeChange: any}
 	{@param? _handleUnmapButtonClick: any}
@@ -46,7 +46,7 @@
 		{if not $mappingFieldsURL or $_selectedSourceTypeId == $_sourceTypeIds.content}
 			<div class="form-group floating-toolbar-mapping-panel__asset-select">
 				{call .assetSelect}
-					{param handleAssetOptionChange: $_handleAssetOptionChange /}
+					{param handleAssetBrowserLinkClick: $_handleAssetBrowserLinkClick /}
 					{param selectedAssetEntryEncodedId: $item.editableValues.encodedId /}
 					{param assetBrowserLinks: $assetBrowserLinks /}
 					{param spritemap: $spritemap /}
@@ -76,7 +76,7 @@
 		href: string,
 		typeName: string
 	]>}
-	{@param? handleAssetOptionChange: any}
+	{@param? handleAssetBrowserLinkClick: any}
 	{@param? selectedAssetEntryEncodedId: string}
 	{@param? spritemap: string}
 
@@ -110,8 +110,9 @@
 					{foreach $assetBrowserLink in $assetBrowserLinks}
 						<button
 							class="dropdown-item"
-							data-onclick="{$handleAssetOptionChange}"
-							data-asset-type-url="{$assetBrowserLink.href}"
+							data-onclick="{$handleAssetBrowserLinkClick}"
+							data-asset-browser-url="{$assetBrowserLink.href}"
+							data-asset-browser-window-title="{$assetBrowserLink.typeName}"
 							key="{$assetBrowserLink.href}"
 							type="button"
 						>

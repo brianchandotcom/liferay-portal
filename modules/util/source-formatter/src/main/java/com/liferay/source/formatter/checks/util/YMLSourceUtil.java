@@ -36,7 +36,13 @@ public class YMLSourceUtil {
 		StringBundler sb = new StringBundler();
 
 		for (String line : lines) {
-			if (Validator.isNull(line) || !line.startsWith(indent)) {
+			if (Validator.isNull(line)) {
+				sb.append("\n");
+
+				continue;
+			}
+
+			if (!line.startsWith(indent)) {
 				continue;
 			}
 

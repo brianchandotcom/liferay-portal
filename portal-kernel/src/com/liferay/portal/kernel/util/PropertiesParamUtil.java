@@ -14,12 +14,15 @@
 
 package com.liferay.portal.kernel.util;
 
+import com.liferay.petra.string.StringPool;
+import com.liferay.petra.string.StringUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 
 import java.io.Serializable;
 
 import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Properties;
 
 import javax.portlet.PortletRequest;
@@ -463,17 +466,11 @@ public class PropertiesParamUtil {
 				// call to StringUtil.merge(String[]) below by replacing each
 				// null value with the empty string.
 
-				if (values != null) {
-					for (int i = 0; i < values.length; i++) {
-						if (values[i] == null) {
-							values[i] = "";
-						}
-					}
-				}
-
-				String value = StringUtil.merge(values);
-
-				properties.setProperty(key, value);
+				properties.setProperty(
+					key,
+					StringUtil.merge(
+						values, s -> Objects.toString(s, StringPool.BLANK),
+						StringPool.COMMA));
 			}
 		}
 

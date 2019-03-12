@@ -18,8 +18,10 @@ import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.list.constants.AssetListEntryTypeConstants;
 import com.liferay.asset.list.model.AssetListEntry;
 import com.liferay.asset.list.model.AssetListEntryAssetEntryRel;
+import com.liferay.asset.list.model.AssetListEntrySegmentsEntryRel;
 import com.liferay.asset.list.service.AssetListEntryAssetEntryRelLocalServiceUtil;
 import com.liferay.asset.list.service.AssetListEntryLocalServiceUtil;
+import com.liferay.asset.list.service.AssetListEntrySegmentsEntryRelLocalServiceUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -78,6 +80,21 @@ public class AssetListTestUtil {
 			addAssetListEntryAssetEntryRel(
 				assetListEntry.getAssetListEntryId(), assetEntry.getEntryId(),
 				position, serviceContext);
+	}
+
+	public static AssetListEntrySegmentsEntryRel
+			addAssetListEntrySegmentsEntryRel(
+				long groupId, AssetListEntry assetListEntry)
+		throws Exception {
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(groupId);
+
+		return AssetListEntrySegmentsEntryRelLocalServiceUtil.
+			addAssetListEntrySegmentsEntryRel(
+				TestPropsValues.getUserId(), groupId,
+				assetListEntry.getAssetListEntryId(), RandomTestUtil.nextLong(),
+				RandomTestUtil.randomString(), serviceContext);
 	}
 
 }

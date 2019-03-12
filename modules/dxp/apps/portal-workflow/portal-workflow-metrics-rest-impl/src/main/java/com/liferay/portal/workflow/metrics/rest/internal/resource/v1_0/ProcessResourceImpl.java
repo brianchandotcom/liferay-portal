@@ -85,7 +85,7 @@ public class ProcessResourceImpl
 			String title, Pagination pagination, Sort[] sorts)
 		throws Exception {
 
-		FieldSort fieldSort = _createFieldSort(sorts);
+		FieldSort fieldSort = _toFieldSort(sorts);
 
 		SearchSearchResponse searchSearchResponse =
 			_getProcessesSearchSearchResponse(fieldSort, pagination, title);
@@ -103,7 +103,7 @@ public class ProcessResourceImpl
 		return Page.of(Collections.emptyList());
 	}
 
-	private FieldSort _createFieldSort(Sort[] sorts) {
+	private FieldSort _toFieldSort(Sort[] sorts) {
 		String titleField = _getTitleField();
 
 		titleField = Field.getSortableFieldName(titleField);

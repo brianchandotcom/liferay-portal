@@ -11,9 +11,6 @@
 		<suppress checks="ConstantNameCheck" files="portal-kernel/test/unit/com/liferay/portal/kernel/resiliency/spi/agent/annotation/DistributedRegistryTest\.java" />
 		<suppress checks="ConstantNameCheck" files="portal-test/src/com/liferay/portal/kernel/test/rule/CodeCoverageAssertor\.java" />
 		<suppress checks="EnumConstantOrderCheck" files="portal-kernel/src/com/liferay/portal/kernel/process/ProcessLog\.java" />
-		<suppress checks="IndentationCheck" files="portal-impl/test/integration/com/liferay/portal/xmlrpc/XmlRpcParserTest\.java" />
-		<suppress checks="IndentationCheck" files="portal-impl/test/unit/com/liferay/portal/nio/intraband/proxy/IntrabandProxyUtilTest\.java" />
-		<suppress checks="IndentationCheck" files="portal-kernel/src/com/liferay/portal/kernel/io/BigEndianCodec\.java" />
 		<suppress checks="JavadocCheck" files="portal-kernel/src/com/liferay/portal/kernel/cal/DayAndPosition\.java" />
 		<suppress checks="JavadocCheck" files="portal-kernel/src/com/liferay/portal/kernel/cal/Duration\.java" />
 		<suppress checks="JavadocCheck" files="portal-kernel/src/com/liferay/portal/kernel/cal/Recurrence\.java" />

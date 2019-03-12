@@ -5,7 +5,6 @@
 		<suppress checks="AppendCheck" files="modules/core/petra/petra-string/src/test/java/com/liferay/petra/string/StringBundlerTest\.java" />
 		<suppress checks="ConcatCheck" files="modules/core/petra/petra-string/src/test/java/com/liferay/petra/string/StringBundlerTest\.java" />
 		<suppress checks="EnumConstantOrderCheck" files="modules/core/petra/petra-process/src/main/java/com/liferay/petra/process/ProcessLog\.java" />
-		<suppress checks="IndentationCheck" files="modules/core/petra/petra-io/src/main/java/com/liferay/petra/io/BigEndianCodec\.java" />
 		<suppress checks="MethodNameCheck" files="modules/core/petra/petra-reflect/src/test/java/com/liferay/petra/reflect/AnnotationLocatorTest\.java" />
 		<suppress checks="MissingModifierCheck" files="modules/core/petra/petra-io/src/main/java/com/liferay/petra/io/unsync/BoundaryCheckerUtil\.java" />
 		<suppress checks="MissingModifierCheck" files="modules/core/petra/petra-process/src/main/java/com/liferay/petra/process/local/AsyncBrokerThreadLocal\.java" />

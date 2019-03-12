@@ -1,7 +1,0 @@
-<?xml version="1.0"?>
-
-<suppressions>
-	<checkstyle>
-		<suppress checks="IndentationCheck" files="modules/apps/portal-settings/portal-settings-authentication-ldap-web/src/main/java/com/liferay/portal/settings/authentication/ldap/web/internal/portlet/action/PortalSettingsLDAPFormMVCActionCommand\.java" />
-	</checkstyle>
-</suppressions>

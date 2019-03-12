@@ -1,7 +1,0 @@
-<?xml version="1.0"?>
-
-<suppressions>
-	<checkstyle>
-		<suppress checks="IndentationCheck" files="modules/apps/data-engine/data-engine-test/src/testIntegration/java/com/liferay/data/engine/service/test/DEDataRecordCollectionServiceTest\.java" />
-	</checkstyle>
-</suppressions>

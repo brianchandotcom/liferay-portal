@@ -136,7 +136,7 @@ kbArticlePortletInstanceConfiguration = ParameterMapUtil.setParameterMap(KBArtic
 						var kbArticleData = {
 							idString: 'resourcePrimKey',
 							idValue: event.resourceprimkey,
-							nameString: 'configurationKBArticle',
+							nameString: 'configurationKBObject',
 							nameValue: event.title
 						};
 

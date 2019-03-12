@@ -1,9 +1,0 @@
-{
-	"build": {
-		"dependencies": [
-			"metal-progressbar",
-			"metal-tooltip",
-			"com.liferay.frontend.js.web"
-		]
-	}
-}

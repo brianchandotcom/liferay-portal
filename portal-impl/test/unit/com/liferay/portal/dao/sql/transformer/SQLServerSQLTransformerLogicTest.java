@@ -39,7 +39,7 @@ public class SQLServerSQLTransformerLogicTest
 	public void testReplaceCastText() {
 		Assert.assertEquals(
 			"select CAST(foo AS NVARCHAR(MAX)) from Foo",
-			sqlTransformer.transform(getCastTextOriginalSQL()));
+			sqlTransformerFunction.apply(getCastTextOriginalSQL()));
 	}
 
 	@Override

@@ -15,7 +15,10 @@
 package com.liferay.portal.dao.sql.transformer;
 
 import com.liferay.petra.string.CharPool;
+import com.liferay.portal.dao.db.DBManagerImpl;
 import com.liferay.portal.kernel.dao.db.DB;
+import com.liferay.portal.kernel.dao.db.DBManager;
+import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 
 import java.util.function.Function;
@@ -30,21 +33,27 @@ import org.junit.Test;
 public abstract class BaseSQLTransformerLogicTestCase {
 
 	public BaseSQLTransformerLogicTestCase(DB db) {
-		sqlTransformer = SQLTransformerFactory.getSQLTransformer(db);
+		DBManager dbManager = new DBManagerImpl();
+
+		DBManagerUtil.setDBManager(dbManager);
+
+		dbManager.setDB(db);
+
+		sqlTransformerFunction = SQLTransformerFunctionFactory.create();
 	}
 
 	@Test
 	public void testReplaceBitwiseCheck() {
 		Assert.assertEquals(
 			getBitwiseCheckTransformedSQL(),
-			sqlTransformer.transform(getBitwiseCheckOriginalSQL()));
+			sqlTransformerFunction.apply(getBitwiseCheckOriginalSQL()));
 	}
 
 	@Test
 	public void testReplaceBitwiseCheckWithExtraWhitespace() {
 		Assert.assertEquals(
 			getBitwiseCheckTransformedSQL(),
-			sqlTransformer.transform(
+			sqlTransformerFunction.apply(
 				_addExtraWhitespaceFunction.apply(
 					getBitwiseCheckOriginalSQL())));
 	}
@@ -53,49 +62,50 @@ public abstract class BaseSQLTransformerLogicTestCase {
 	public void testReplaceBoolean() {
 		Assert.assertEquals(
 			getBooleanTransformedSQL(),
-			sqlTransformer.transform(getBooleanOriginalSQL()));
+			sqlTransformerFunction.apply(getBooleanOriginalSQL()));
 	}
 
 	@Test
 	public void testReplaceCastClobText() {
 		Assert.assertEquals(
 			getCastClobTextTransformedSQL(),
-			sqlTransformer.transform(getCastClobTextOriginalSQL()));
+			sqlTransformerFunction.apply(getCastClobTextOriginalSQL()));
 	}
 
 	@Test
 	public void testReplaceCastLong() {
 		Assert.assertEquals(
 			getCastLongTransformedSQL(),
-			sqlTransformer.transform(getCastLongOriginalSQL()));
+			sqlTransformerFunction.apply(getCastLongOriginalSQL()));
 	}
 
 	@Test
 	public void testReplaceCrossJoin() {
 		Assert.assertEquals(
 			getCrossJoinTransformedSQL(),
-			sqlTransformer.transform(getCrossJoinOriginalSQL()));
+			sqlTransformerFunction.apply(getCrossJoinOriginalSQL()));
 	}
 
 	@Test
 	public void testReplaceDropTableIfExistsText() {
 		Assert.assertEquals(
 			getDropTableIfExistsTextTransformedSQL(),
-			sqlTransformer.transform(getDropTableIfExistsTextOriginalSQL()));
+			sqlTransformerFunction.apply(
+				getDropTableIfExistsTextOriginalSQL()));
 	}
 
 	@Test
 	public void testReplaceInstr() {
 		Assert.assertEquals(
 			getInstrTransformedSQL(),
-			sqlTransformer.transform(getInstrOriginalSQL()));
+			sqlTransformerFunction.apply(getInstrOriginalSQL()));
 	}
 
 	@Test
 	public void testReplaceInstrWithExtraWhitespace() {
 		Assert.assertEquals(
 			getInstrTransformedSQL(),
-			sqlTransformer.transform(
+			sqlTransformerFunction.apply(
 				_addExtraWhitespaceFunction.apply(getInstrOriginalSQL())));
 	}
 
@@ -103,14 +113,14 @@ public abstract class BaseSQLTransformerLogicTestCase {
 	public void testReplaceIntegerDivision() {
 		Assert.assertEquals(
 			getIntegerDivisionTransformedSQL(),
-			sqlTransformer.transform(getIntegerDivisionOriginalSQL()));
+			sqlTransformerFunction.apply(getIntegerDivisionOriginalSQL()));
 	}
 
 	@Test
 	public void testReplaceIntegerDivisionWithExtraWhitespace() {
 		Assert.assertEquals(
 			getIntegerDivisionTransformedSQL(),
-			sqlTransformer.transform(
+			sqlTransformerFunction.apply(
 				_addExtraWhitespaceFunction.apply(
 					getIntegerDivisionOriginalSQL())));
 	}
@@ -119,14 +129,14 @@ public abstract class BaseSQLTransformerLogicTestCase {
 	public void testReplaceMod() {
 		Assert.assertEquals(
 			getModTransformedSQL(),
-			sqlTransformer.transform(getModOriginalSQL()));
+			sqlTransformerFunction.apply(getModOriginalSQL()));
 	}
 
 	@Test
 	public void testReplaceModWithExtraWhitespace() {
 		Assert.assertEquals(
 			getModTransformedSQL(),
-			sqlTransformer.transform(
+			sqlTransformerFunction.apply(
 				_addExtraWhitespaceFunction.apply(getModOriginalSQL())));
 	}
 
@@ -134,28 +144,28 @@ public abstract class BaseSQLTransformerLogicTestCase {
 	public void testReplaceNullDate() {
 		Assert.assertEquals(
 			getNullDateTransformedSQL(),
-			sqlTransformer.transform(getNullDateOriginalSQL()));
+			sqlTransformerFunction.apply(getNullDateOriginalSQL()));
 	}
 
 	@Test
 	public void testReplaceReplace() {
 		Assert.assertEquals(
 			getReplaceTransformedSQL(),
-			sqlTransformer.transform(getReplaceOriginalSQL()));
+			sqlTransformerFunction.apply(getReplaceOriginalSQL()));
 	}
 
 	@Test
 	public void testReplaceSubstr() {
 		Assert.assertEquals(
 			getSubstrTransformedSQL(),
-			sqlTransformer.transform(getSubstrOriginalSQL()));
+			sqlTransformerFunction.apply(getSubstrOriginalSQL()));
 	}
 
 	@Test
 	public void testReplaceSubstrWithExtraWhitespace() {
 		Assert.assertEquals(
 			getSubstrTransformedSQL(),
-			sqlTransformer.transform(
+			sqlTransformerFunction.apply(
 				_addExtraWhitespaceFunction.apply(getSubstrOriginalSQL())));
 	}
 
@@ -163,7 +173,7 @@ public abstract class BaseSQLTransformerLogicTestCase {
 	public void testTransform() {
 		String sql = "select * from Foo";
 
-		Assert.assertEquals(sql, sqlTransformer.transform(sql));
+		Assert.assertEquals(sql, sqlTransformerFunction.apply(sql));
 	}
 
 	protected String getBitwiseCheckOriginalSQL() {
@@ -266,7 +276,7 @@ public abstract class BaseSQLTransformerLogicTestCase {
 		return getSubstrOriginalSQL();
 	}
 
-	protected SQLTransformer sqlTransformer;
+	protected Function<String, String> sqlTransformerFunction;
 
 	private final Function<String, String> _addExtraWhitespaceFunction =
 		sql -> StringUtil.replace(sql, CharPool.COMMA, "   ,   ");

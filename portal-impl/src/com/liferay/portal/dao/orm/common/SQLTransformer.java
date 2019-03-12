@@ -15,11 +15,11 @@
 package com.liferay.portal.dao.orm.common;
 
 import com.liferay.portal.dao.sql.transformer.JPQLToHQLTransformerLogic;
-import com.liferay.portal.dao.sql.transformer.SQLTransformerFactory;
-import com.liferay.portal.kernel.dao.db.DBManagerUtil;
+import com.liferay.portal.dao.sql.transformer.SQLTransformerFunctionFactory;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.function.Function;
 
 /**
  * @author Brian Wing Shun Chan
@@ -29,14 +29,13 @@ import java.util.concurrent.ConcurrentHashMap;
 public class SQLTransformer {
 
 	public static void reloadSQLTransformer() {
-		_sqlTransformer = SQLTransformerFactory.getSQLTransformer(
-			DBManagerUtil.getDB());
+		_sqlTransformerFunction = SQLTransformerFunctionFactory.create();
 
 		_transformedSqls.clear();
 	}
 
 	public static String transform(String sql) {
-		return _sqlTransformer.transform(sql);
+		return _sqlTransformerFunction.apply(sql);
 	}
 
 	/**
@@ -59,7 +58,7 @@ public class SQLTransformer {
 			return newSQL;
 		}
 
-		newSQL = _sqlTransformer.transform(sql);
+		newSQL = _sqlTransformerFunction.apply(sql);
 
 		newSQL = JPQLToHQLTransformerLogic.replaceCount(newSQL);
 
@@ -68,9 +67,8 @@ public class SQLTransformer {
 		return newSQL;
 	}
 
-	private static volatile
-		com.liferay.portal.dao.sql.transformer.SQLTransformer _sqlTransformer =
-			SQLTransformerFactory.getSQLTransformer(DBManagerUtil.getDB());
+	private static volatile Function<String, String> _sqlTransformerFunction =
+		SQLTransformerFunctionFactory.create();
 	private static final Map<String, String> _transformedSqls =
 		new ConcurrentHashMap<>();
 

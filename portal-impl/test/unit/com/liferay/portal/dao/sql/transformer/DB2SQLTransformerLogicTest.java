@@ -39,7 +39,7 @@ public class DB2SQLTransformerLogicTest
 	public void testReplaceAlterColumnType() {
 		Assert.assertEquals(
 			"ALTER TABLE T ALTER COLUMN C SET DATA TYPE VARCHAR(256)",
-			sqlTransformer.transform("ALTER_COLUMN_TYPE T C VARCHAR(256)"));
+			sqlTransformerFunction.apply("ALTER_COLUMN_TYPE T C VARCHAR(256)"));
 	}
 
 	@Override
@@ -47,7 +47,7 @@ public class DB2SQLTransformerLogicTest
 	public void testReplaceBitwiseCheckWithExtraWhitespace() {
 		Assert.assertEquals(
 			getBitwiseCheckTransformedSQL(),
-			sqlTransformer.transform(getBitwiseCheckOriginalSQL()));
+			sqlTransformerFunction.apply(getBitwiseCheckOriginalSQL()));
 	}
 
 	@Test
@@ -55,7 +55,8 @@ public class DB2SQLTransformerLogicTest
 		Assert.assertEquals(
 			"select foo from Foo where foo LIKE COALESCE(" +
 				"CAST(? AS VARCHAR(32672)),'')",
-			sqlTransformer.transform("select foo from Foo where foo LIKE ?"));
+			sqlTransformerFunction.apply(
+				"select foo from Foo where foo LIKE ?"));
 	}
 
 	@Override
@@ -63,7 +64,7 @@ public class DB2SQLTransformerLogicTest
 	public void testReplaceModWithExtraWhitespace() {
 		Assert.assertEquals(
 			getModTransformedSQL(),
-			sqlTransformer.transform(getModOriginalSQL()));
+			sqlTransformerFunction.apply(getModOriginalSQL()));
 	}
 
 	@Override

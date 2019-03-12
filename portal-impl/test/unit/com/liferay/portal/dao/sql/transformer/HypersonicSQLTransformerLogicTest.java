@@ -40,7 +40,7 @@ public class HypersonicSQLTransformerLogicTest
 	public void testReplaceBitwiseCheckWithExtraWhitespace() {
 		Assert.assertEquals(
 			getBitwiseCheckTransformedSQL(),
-			sqlTransformer.transform(getBitwiseCheckOriginalSQL()));
+			sqlTransformerFunction.apply(getBitwiseCheckOriginalSQL()));
 	}
 
 	@Override
@@ -48,7 +48,7 @@ public class HypersonicSQLTransformerLogicTest
 	public void testReplaceModWithExtraWhitespace() {
 		Assert.assertEquals(
 			getModTransformedSQL(),
-			sqlTransformer.transform(getModOriginalSQL()));
+			sqlTransformerFunction.apply(getModOriginalSQL()));
 	}
 
 	@Override

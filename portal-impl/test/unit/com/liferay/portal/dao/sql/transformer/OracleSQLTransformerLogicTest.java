@@ -53,21 +53,22 @@ public class OracleSQLTransformerLogicTest
 	public void testReplaceBitwiseCheckWithExtraWhitespace() {
 		Assert.assertEquals(
 			getBitwiseCheckTransformedSQL(),
-			sqlTransformer.transform(getBitwiseCheckOriginalSQL()));
+			sqlTransformerFunction.apply(getBitwiseCheckOriginalSQL()));
 	}
 
 	@Test
 	public void testReplaceCastText() {
 		Assert.assertEquals(
 			"select CAST(foo AS VARCHAR(4000)) from Foo",
-			sqlTransformer.transform(getCastTextOriginalSQL()));
+			sqlTransformerFunction.apply(getCastTextOriginalSQL()));
 	}
 
 	@Test
 	public void testReplaceEscape() {
 		Assert.assertEquals(
 			"select foo from Foo where foo LIKE ? ESCAPE '\\'",
-			sqlTransformer.transform("select foo from Foo where foo LIKE ?"));
+			sqlTransformerFunction.apply(
+				"select foo from Foo where foo LIKE ?"));
 	}
 
 	@Override
@@ -75,14 +76,14 @@ public class OracleSQLTransformerLogicTest
 	public void testReplaceModWithExtraWhitespace() {
 		Assert.assertEquals(
 			getModTransformedSQL(),
-			sqlTransformer.transform(getModOriginalSQL()));
+			sqlTransformerFunction.apply(getModOriginalSQL()));
 	}
 
 	@Test
 	public void testReplaceNotEqualsBlankString() {
 		Assert.assertEquals(
 			"select * from Foo where foo IS NOT NULL",
-			sqlTransformer.transform("select * from Foo where foo != ''"));
+			sqlTransformerFunction.apply("select * from Foo where foo != ''"));
 	}
 
 	@Override

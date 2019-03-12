@@ -39,17 +39,17 @@ public class PostgreSQLTransformerLogicTest
 	public void testReplaceModWithExtraWhitespace() {
 		Assert.assertEquals(
 			getModTransformedSQL(),
-			sqlTransformer.transform(getModOriginalSQL()));
+			sqlTransformerFunction.apply(getModOriginalSQL()));
 	}
 
 	@Test
 	public void testReplaceNegativeComparison() {
 		Assert.assertEquals(
 			"select * from Foo where foo != (-1)",
-			sqlTransformer.transform("select * from Foo where foo != -1"));
+			sqlTransformerFunction.apply("select * from Foo where foo != -1"));
 		Assert.assertEquals(
 			"select * from Foo where foo != (-1) and bar != (-1)",
-			sqlTransformer.transform(
+			sqlTransformerFunction.apply(
 				"select * from Foo where foo != -1 and bar != -1"));
 	}
 

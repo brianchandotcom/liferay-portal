@@ -15,20 +15,21 @@
 package com.liferay.portal.dao.sql.transformer;
 
 import com.liferay.portal.kernel.dao.db.DB;
+import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.db.DBType;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Function;
 
 /**
- * @author Manuel de la Peña
- * @author Brian Wing Shun Chan
+ * @author Shuyang Zhou
  */
-public class SQLTransformerFactory {
+public class SQLTransformerFunctionFactory {
 
-	public static SQLTransformer getSQLTransformer(DB db) {
-		DBType dbType = db.getDBType();
+	public static Function<String, String> create() {
+		DB db = DBManagerUtil.getDB();
 
 		List<Function<String, String>> functions = new ArrayList<>();
 
@@ -39,6 +40,8 @@ public class SQLTransformerFactory {
 		if (!db.isSupportsStringCaseSensitiveQuery()) {
 			functions.add(CommonReplaces::replaceLower);
 		}
+
+		DBType dbType = db.getDBType();
 
 		if (dbType == DBType.DB2) {
 			DB2Replaces.addReplaces(functions);
@@ -62,10 +65,26 @@ public class SQLTransformerFactory {
 			SybaseReplaces.addReplaces(functions);
 		}
 		else {
-			return sql -> sql;
+			return Function.identity();
 		}
 
-		return new DefaultSQLTransformer(functions);
+		return sql -> _transform(sql, functions);
+	}
+
+	private static String _transform(
+		String sql, List<Function<String, String>> functions) {
+
+		if (Validator.isBlank(sql)) {
+			return sql;
+		}
+
+		String transformedSQL = sql;
+
+		for (Function<String, String> function : functions) {
+			transformedSQL = function.apply(transformedSQL);
+		}
+
+		return transformedSQL;
 	}
 
 }

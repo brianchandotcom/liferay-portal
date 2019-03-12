@@ -32,25 +32,24 @@ create table LayoutSetVersion (
 );
 
 insert into LayoutSetVersion
-
-select
-	layoutSetId as layoutSetVersionId,
-	1 as version,
-	layoutSetId,
-	groupId,
-	companyId,
-	createDate,
-	modifiedDate,
-	privateLayout,
-	logoId,
-	themeId,
-	colorSchemeId,
-	css,
-	pageCount,
-	settings_,
-	layoutSetPrototypeUuid,
-	layoutSetPrototypeLinkEnabled
-from LayoutSet;
+	select
+		layoutSetId as layoutSetVersionId,
+		1 as version,
+		layoutSetId,
+		groupId,
+		companyId,
+		createDate,
+		modifiedDate,
+		privateLayout,
+		logoId,
+		themeId,
+		colorSchemeId,
+		css,
+		pageCount,
+		settings_,
+		layoutSetPrototypeUuid,
+		layoutSetPrototypeLinkEnabled
+	from LayoutSet;
 
 insert into Counter (name, currentId)
 
@@ -131,7 +130,7 @@ insert into Counter (name, currentId)
 		max(plid) as currentId
 	from Layout;
 
-insert into LayoutVersion (
+insert into LayoutVersion
 	select
 		plid as layoutVersionId,
 		1 as version,
@@ -172,7 +171,7 @@ insert into LayoutVersion (
 		publishDate,
 		lastPublishDate
 	from
-		Layout);
+		Layout;
 
 insert into Counter (name, currentId)
 	select

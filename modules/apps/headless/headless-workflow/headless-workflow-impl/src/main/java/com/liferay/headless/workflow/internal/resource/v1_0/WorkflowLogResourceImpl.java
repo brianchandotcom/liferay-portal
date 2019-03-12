@@ -76,12 +76,20 @@ public class WorkflowLogResourceImpl extends BaseWorkflowLogResourceImpl {
 				commentLog = workflowLog.getComment();
 				dateCreated = workflowLog.getCreateDate();
 				id = workflowLog.getWorkflowLogId();
-				person = CreatorUtil.toCreator(
-					_portal,
-					_userLocalService.getUser(workflowLog.getUserId()));
-				previousPerson = CreatorUtil.toCreator(
-					_portal,
-					_userLocalService.getUser(workflowLog.getPreviousUserId()));
+
+				if (workflowLog.getUserId() > 0) {
+					person = CreatorUtil.toCreator(
+						_portal,
+						_userLocalService.getUser(workflowLog.getUserId()));
+				}
+
+				if (workflowLog.getPreviousUserId() > 0) {
+					previousPerson = CreatorUtil.toCreator(
+						_portal,
+						_userLocalService.getUser(
+							workflowLog.getPreviousUserId()));
+				}
+
 				previousState = workflowLog.getPreviousState();
 				state = workflowLog.getState();
 				taskId = workflowLog.getWorkflowTaskId();

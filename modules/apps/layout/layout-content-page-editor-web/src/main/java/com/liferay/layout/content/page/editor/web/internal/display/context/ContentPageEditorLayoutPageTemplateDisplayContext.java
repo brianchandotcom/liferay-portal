@@ -15,12 +15,10 @@
 package com.liferay.layout.content.page.editor.web.internal.display.context;
 
 import com.liferay.asset.display.contributor.AssetDisplayContributor;
-import com.liferay.asset.display.contributor.AssetDisplayContributorTracker;
 import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
 import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.asset.kernel.model.ClassType;
 import com.liferay.asset.kernel.model.ClassTypeReader;
-import com.liferay.layout.content.page.editor.constants.ContentPageEditorWebKeys;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryServiceUtil;
 import com.liferay.petra.string.StringPool;
@@ -48,10 +46,6 @@ public class ContentPageEditorLayoutPageTemplateDisplayContext
 		super(request, renderResponse, className, classPK);
 
 		_showMapping = showMapping;
-
-		_assetDisplayContributorTracker =
-			(AssetDisplayContributorTracker)request.getAttribute(
-				ContentPageEditorWebKeys.ASSET_DISPLAY_CONTRIBUTOR_TRACKER);
 	}
 
 	@Override
@@ -172,7 +166,7 @@ public class ContentPageEditorLayoutPageTemplateDisplayContext
 			_getLayoutPageTemplateEntry();
 
 		AssetDisplayContributor assetDisplayContributor =
-			_assetDisplayContributorTracker.getAssetDisplayContributor(
+			assetDisplayContributorTracker.getAssetDisplayContributor(
 				layoutPageTemplateEntry.getClassName());
 
 		if (assetDisplayContributor == null) {
@@ -215,8 +209,6 @@ public class ContentPageEditorLayoutPageTemplateDisplayContext
 		return soyContext;
 	}
 
-	private final AssetDisplayContributorTracker
-		_assetDisplayContributorTracker;
 	private SoyContext _editorSoyContext;
 	private SoyContext _fragmentsEditorToolbarSoyContext;
 	private LayoutPageTemplateEntry _layoutPageTemplateEntry;

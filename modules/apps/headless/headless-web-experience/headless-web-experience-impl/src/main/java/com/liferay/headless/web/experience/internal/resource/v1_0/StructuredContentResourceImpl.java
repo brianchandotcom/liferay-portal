@@ -608,16 +608,25 @@ public class StructuredContentResourceImpl
 				inputControl = ContentStructureUtil.toInputControl(
 					ddmFormField);
 				name = field.getName();
-				nestedFields = _toContentFields(
-					ddmFormField.getNestedDDMFormFields(),
-					ddmFormField -> _toContentFields(
-						ddmStructure, fields, ddmFormField.getName(),
-						fieldDisplayValues.subList(
-							1, fieldDisplayValues.size())));
+
 				repeatable = field.isRepeatable();
 				value = _toValue(
 					field, fieldDisplayValues.get(0), fields,
 					contextAcceptLanguage.getPreferredLocale());
+
+				setNestedFields(
+					() -> {
+						if (fieldDisplayValues.size() <= 1) {
+							return new ContentField[0];
+						}
+
+						return _toContentFields(
+							ddmFormField.getNestedDDMFormFields(),
+							ddmFormField -> _toContentFields(
+								ddmStructure, fields, ddmFormField.getName(),
+								fieldDisplayValues.subList(
+									1, fieldDisplayValues.size())));
+					});
 			}
 		};
 	}
@@ -665,6 +674,10 @@ public class StructuredContentResourceImpl
 	private <T> ContentField[] _toContentFields(
 		List<T> list,
 		UnsafeFunction<T, ContentField[], Exception> unsafeFunction) {
+
+		if (ListUtil.isEmpty(list)) {
+			return new ContentField[0];
+		}
 
 		Stream<T> stream = list.stream();
 

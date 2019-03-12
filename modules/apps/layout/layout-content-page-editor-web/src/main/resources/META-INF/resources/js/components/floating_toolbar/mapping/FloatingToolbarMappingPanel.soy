@@ -7,7 +7,7 @@
 	{@param item: [
 		editableValues: [
 			assetEntryEncodedId: string,
-			assetEntryFieldId: string,
+			fieldId: string,
 			mappedField: string
 		]
 	]}
@@ -61,7 +61,7 @@
 			{call .fieldSelect}
 				{param fields: $_fields /}
 				{param handleFieldOptionChange: $_handleFieldOptionChange /}
-				{param mappedFieldId: $item.editableValues.mappedField or $item.editableValues.assetEntryFieldId /}
+				{param mappedFieldId: $item.editableValues.mappedField or $item.editableValues.fieldId /}
 			{/call}
 		</div>
 

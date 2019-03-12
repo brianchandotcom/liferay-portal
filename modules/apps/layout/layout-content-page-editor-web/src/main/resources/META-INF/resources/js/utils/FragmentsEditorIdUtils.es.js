@@ -42,15 +42,15 @@ function encodeAssetId(asset) {
 	if (!(asset && typeof asset === 'object')) {
 		throw new TypeError('Expect input to be an object');
 	}
-	else if (!(asset.assetEntryClassNameId && asset.assetEntryClassPK)) {
+	else if (!(asset.classNameId && asset.classPK)) {
 		throw new Error('Expect input to be an asset');
 	}
 
 	return _addEncodedId(
 		asset,
 		[
-			'assetEntryClassNameId',
-			'assetEntryClassPK'
+			'classNameId',
+			'classPK'
 		]
 	);
 }

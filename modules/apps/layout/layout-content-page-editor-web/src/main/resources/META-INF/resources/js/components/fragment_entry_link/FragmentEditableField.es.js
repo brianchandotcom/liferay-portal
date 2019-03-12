@@ -85,9 +85,9 @@ class FragmentEditableField extends Component {
 		const mapped = Boolean(
 			this.editableValues.mappedField ||
 			(
-				this.editableValues.assetEntryClassNameId &&
-				this.editableValues.assetEntryClassPK &&
-				this.editableValues.assetEntryFieldId
+				this.editableValues.classNameId &&
+				this.editableValues.classPK &&
+				this.editableValues.fieldId
 			)
 		);
 

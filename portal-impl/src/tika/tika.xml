@@ -36,6 +36,7 @@
 		<parser class="org.apache.tika.parser.microsoft.OfficeParser" />
 		<parser class="org.apache.tika.parser.microsoft.OldExcelParser" />
 		<parser class="org.apache.tika.parser.microsoft.TNEFParser" />
+		<parser class="org.apache.tika.parser.microsoft.ooxml.OOXMLParser" />
 		<parser class="org.apache.tika.parser.mp3.Mp3Parser" />
 		<parser class="org.apache.tika.parser.mp4.MP4Parser" />
 		<parser class="org.apache.tika.parser.netcdf.NetCDFParser" />

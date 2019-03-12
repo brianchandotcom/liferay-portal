@@ -104,11 +104,11 @@ public class ProcessResourceImpl
 	}
 
 	private FieldSort _toFieldSort(Sort[] sorts) {
-		String titleField = _getTitleField();
+		String titleFieldName = _getTitleFieldName();
 
-		titleField = Field.getSortableFieldName(titleField);
+		titleFieldName = Field.getSortableFieldName(titleFieldName);
 
-		Sort sort = new Sort(titleField, false);
+		Sort sort = new Sort(titleFieldName, false);
 
 		if (sorts != null) {
 			sort = sorts[0];
@@ -117,7 +117,7 @@ public class ProcessResourceImpl
 		String fieldName = sort.getFieldName();
 
 		if (_isOrderByTitle(fieldName)) {
-			fieldName = titleField;
+			fieldName = titleFieldName;
 		}
 
 		FieldSort fieldSort = _sorts.field(fieldName);
@@ -219,7 +219,7 @@ public class ProcessResourceImpl
 			process.setOverdueInstanceCount(0L);
 
 			process.setTitle(
-				GetterUtil.getString(document.getFieldValue(_getTitleField())));
+				GetterUtil.getString(document.getFieldValue(_getTitleFieldName())));
 
 			processes.put(process.getId(), process);
 		}
@@ -276,7 +276,7 @@ public class ProcessResourceImpl
 			});
 
 		searchSearchRequest.setSelectedFieldNames(
-			"processId", _getTitleField());
+			"processId", _getTitleFieldName());
 
 		if (_isOrderByTitle(fieldSort.getField())) {
 			searchSearchRequest.setSize(pagination.getPageSize());
@@ -291,7 +291,7 @@ public class ProcessResourceImpl
 		return _searchRequestExecutor.executeSearchRequest(searchSearchRequest);
 	}
 
-	private String _getTitleField() {
+	private String _getTitleFieldName() {
 		return Field.getLocalizedName(
 			contextAcceptLanguage.getPreferredLocale(), "title");
 	}

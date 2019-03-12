@@ -27,6 +27,34 @@ definition {
 		}
 	}
 
+	@description = "Ensure that LCS token is successfully deployed and LCS Client successfully connects to LCS server"
+	@priority = "5"
+	test LCSClientSmoke {
+		property deploy.lcs.token.file = "true";
+		property environment.acceptance = "false";
+		property portal.release = "false";
+		property portal.smoke = "false";
+		property portal.upstream = "false";
+
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "Liferay Connected Services"
+		);
+
+		SiteAdmin.viewPortletTitle(
+			portletTitle = "Liferay Connected Services"
+		);
+
+		Alert.viewSuccessMessageText(
+			successMessage = "Connected"
+		);
+
+		AssertElementPresent(locator1 = "LCSClient#PROJECT_HOME_LINK");
+		AssertElementPresent(locator1 = "LCSClient#ENVIRONMENT_LINK");
+		AssertElementPresent(locator1 = "LCSClient#SERVER_DASHBOARD_LINK");
+	}
+
 	@description = "Ensure that the super admin can add pages, add portlets, navigate to the product menu, use the WYSIWYG editor, and view alert messages."
 	@priority = "5"
 	test Smoke {

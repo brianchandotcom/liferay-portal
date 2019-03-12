@@ -213,7 +213,6 @@ public class ProcessResourceImpl
 			process.setInstanceCount(0L);
 			process.setOntimeInstanceCount(0L);
 			process.setOverdueInstanceCount(0L);
-
 			process.setTitle(
 				GetterUtil.getString(document.getFieldValue(_getTitleFieldName())));
 

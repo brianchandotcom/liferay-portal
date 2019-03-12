@@ -5805,6 +5805,19 @@ go</echo>
 	</target>
 
 	<target name="deploy-lcs-environment-token">
+		<if>
+			<and>
+				<isset property="portal.lcs.license.url" />
+				<matches pattern="https?://" string="${portal.lcs.license.url}" />
+			</and>
+			<then>
+				<mirrors-get
+					dest="${selenium.output.dir.name}"
+					src="${portal.lcs.license.url}"
+				/>
+			</then>
+		</if>
+
 		<get-testcase-property property.name="app.server.bundles.size" />
 
 		<if>

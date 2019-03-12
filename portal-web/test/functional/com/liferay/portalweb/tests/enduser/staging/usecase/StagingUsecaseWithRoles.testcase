@@ -713,7 +713,7 @@ definition {
 			AssertElementNotPresent(locator1 = "Home#PAGE_2_GUEST_VIEW");
 		}
 
-		Pause(locator1 = "120000");
+		Pause(locator1 = "180000");
 
 		Navigator.gotoSitePage(pageName = "Home", siteName = "Community Site Name");
 

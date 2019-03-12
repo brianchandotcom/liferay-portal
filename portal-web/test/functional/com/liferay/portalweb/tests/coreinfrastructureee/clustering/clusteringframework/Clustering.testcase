@@ -422,7 +422,7 @@ definition {
 			value1 = "New Page Name"
 		);
 
-		Pause(locator1 = "120000");
+		Pause(locator1 = "180000");
 
 		Navigator.gotoSpecificURLPage(
 			pageName = "Welcome",

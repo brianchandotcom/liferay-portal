@@ -2001,10 +2001,10 @@ public class FriendlyURLEntryLocalizationPersistenceImpl
 		"SELECT friendlyURLEntryLocalization FROM FriendlyURLEntryLocalization friendlyURLEntryLocalization WHERE ";
 
 	private static final String _SQL_COUNT_FRIENDLYURLENTRYLOCALIZATION =
-		"SELECT COUNT(friendlyURLEntryLocalization) FROM FriendlyURLEntryLocalization friendlyURLEntryLocalization";
+		"SELECT COUNT(*) FROM FriendlyURLEntryLocalization friendlyURLEntryLocalization";
 
 	private static final String _SQL_COUNT_FRIENDLYURLENTRYLOCALIZATION_WHERE =
-		"SELECT COUNT(friendlyURLEntryLocalization) FROM FriendlyURLEntryLocalization friendlyURLEntryLocalization WHERE ";
+		"SELECT COUNT(*) FROM FriendlyURLEntryLocalization friendlyURLEntryLocalization WHERE ";
 
 	private static final String _ORDER_BY_ENTITY_ALIAS =
 		"friendlyURLEntryLocalization.";

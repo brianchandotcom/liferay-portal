@@ -2104,10 +2104,10 @@ public class KaleoConditionPersistenceImpl
 		"SELECT kaleoCondition FROM KaleoCondition kaleoCondition WHERE ";
 
 	private static final String _SQL_COUNT_KALEOCONDITION =
-		"SELECT COUNT(kaleoCondition) FROM KaleoCondition kaleoCondition";
+		"SELECT COUNT(*) FROM KaleoCondition kaleoCondition";
 
 	private static final String _SQL_COUNT_KALEOCONDITION_WHERE =
-		"SELECT COUNT(kaleoCondition) FROM KaleoCondition kaleoCondition WHERE ";
+		"SELECT COUNT(*) FROM KaleoCondition kaleoCondition WHERE ";
 
 	private static final String _ORDER_BY_ENTITY_ALIAS = "kaleoCondition.";
 

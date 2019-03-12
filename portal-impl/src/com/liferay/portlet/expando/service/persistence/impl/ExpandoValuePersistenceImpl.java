@@ -6026,10 +6026,10 @@ public class ExpandoValuePersistenceImpl
 		"SELECT expandoValue FROM ExpandoValue expandoValue WHERE ";
 
 	private static final String _SQL_COUNT_EXPANDOVALUE =
-		"SELECT COUNT(expandoValue) FROM ExpandoValue expandoValue";
+		"SELECT COUNT(*) FROM ExpandoValue expandoValue";
 
 	private static final String _SQL_COUNT_EXPANDOVALUE_WHERE =
-		"SELECT COUNT(expandoValue) FROM ExpandoValue expandoValue WHERE ";
+		"SELECT COUNT(*) FROM ExpandoValue expandoValue WHERE ";
 
 	private static final String _ORDER_BY_ENTITY_ALIAS = "expandoValue.";
 

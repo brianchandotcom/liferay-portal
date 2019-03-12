@@ -1524,10 +1524,10 @@ public class PasswordPolicyRelPersistenceImpl
 		"SELECT passwordPolicyRel FROM PasswordPolicyRel passwordPolicyRel WHERE ";
 
 	private static final String _SQL_COUNT_PASSWORDPOLICYREL =
-		"SELECT COUNT(passwordPolicyRel) FROM PasswordPolicyRel passwordPolicyRel";
+		"SELECT COUNT(*) FROM PasswordPolicyRel passwordPolicyRel";
 
 	private static final String _SQL_COUNT_PASSWORDPOLICYREL_WHERE =
-		"SELECT COUNT(passwordPolicyRel) FROM PasswordPolicyRel passwordPolicyRel WHERE ";
+		"SELECT COUNT(*) FROM PasswordPolicyRel passwordPolicyRel WHERE ";
 
 	private static final String _ORDER_BY_ENTITY_ALIAS = "passwordPolicyRel.";
 

@@ -3531,10 +3531,10 @@ public class UserGroupRolePersistenceImpl
 		"SELECT userGroupRole FROM UserGroupRole userGroupRole WHERE ";
 
 	private static final String _SQL_COUNT_USERGROUPROLE =
-		"SELECT COUNT(userGroupRole) FROM UserGroupRole userGroupRole";
+		"SELECT COUNT(*) FROM UserGroupRole userGroupRole";
 
 	private static final String _SQL_COUNT_USERGROUPROLE_WHERE =
-		"SELECT COUNT(userGroupRole) FROM UserGroupRole userGroupRole WHERE ";
+		"SELECT COUNT(*) FROM UserGroupRole userGroupRole WHERE ";
 
 	private static final String _ORDER_BY_ENTITY_ALIAS = "userGroupRole.";
 

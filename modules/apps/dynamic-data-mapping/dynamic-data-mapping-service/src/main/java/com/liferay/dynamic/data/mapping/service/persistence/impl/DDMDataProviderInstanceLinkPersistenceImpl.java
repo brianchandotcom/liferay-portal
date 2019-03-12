@@ -2194,10 +2194,10 @@ public class DDMDataProviderInstanceLinkPersistenceImpl
 		"SELECT ddmDataProviderInstanceLink FROM DDMDataProviderInstanceLink ddmDataProviderInstanceLink WHERE ";
 
 	private static final String _SQL_COUNT_DDMDATAPROVIDERINSTANCELINK =
-		"SELECT COUNT(ddmDataProviderInstanceLink) FROM DDMDataProviderInstanceLink ddmDataProviderInstanceLink";
+		"SELECT COUNT(*) FROM DDMDataProviderInstanceLink ddmDataProviderInstanceLink";
 
 	private static final String _SQL_COUNT_DDMDATAPROVIDERINSTANCELINK_WHERE =
-		"SELECT COUNT(ddmDataProviderInstanceLink) FROM DDMDataProviderInstanceLink ddmDataProviderInstanceLink WHERE ";
+		"SELECT COUNT(*) FROM DDMDataProviderInstanceLink ddmDataProviderInstanceLink WHERE ";
 
 	private static final String _ORDER_BY_ENTITY_ALIAS =
 		"ddmDataProviderInstanceLink.";

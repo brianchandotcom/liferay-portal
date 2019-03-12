@@ -2583,10 +2583,10 @@ public class StatusPersistenceImpl
 		"SELECT status FROM Status status WHERE ";
 
 	private static final String _SQL_COUNT_STATUS =
-		"SELECT COUNT(status) FROM Status status";
+		"SELECT COUNT(*) FROM Status status";
 
 	private static final String _SQL_COUNT_STATUS_WHERE =
-		"SELECT COUNT(status) FROM Status status WHERE ";
+		"SELECT COUNT(*) FROM Status status WHERE ";
 
 	private static final String _ORDER_BY_ENTITY_ALIAS = "status.";
 

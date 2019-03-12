@@ -2166,10 +2166,10 @@ public class AssetAutoTaggerEntryPersistenceImpl
 		"SELECT assetAutoTaggerEntry FROM AssetAutoTaggerEntry assetAutoTaggerEntry WHERE ";
 
 	private static final String _SQL_COUNT_ASSETAUTOTAGGERENTRY =
-		"SELECT COUNT(assetAutoTaggerEntry) FROM AssetAutoTaggerEntry assetAutoTaggerEntry";
+		"SELECT COUNT(*) FROM AssetAutoTaggerEntry assetAutoTaggerEntry";
 
 	private static final String _SQL_COUNT_ASSETAUTOTAGGERENTRY_WHERE =
-		"SELECT COUNT(assetAutoTaggerEntry) FROM AssetAutoTaggerEntry assetAutoTaggerEntry WHERE ";
+		"SELECT COUNT(*) FROM AssetAutoTaggerEntry assetAutoTaggerEntry WHERE ";
 
 	private static final String _ORDER_BY_ENTITY_ALIAS =
 		"assetAutoTaggerEntry.";

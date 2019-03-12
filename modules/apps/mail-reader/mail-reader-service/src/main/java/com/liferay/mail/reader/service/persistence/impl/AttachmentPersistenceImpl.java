@@ -1203,10 +1203,10 @@ public class AttachmentPersistenceImpl
 		"SELECT attachment FROM Attachment attachment WHERE ";
 
 	private static final String _SQL_COUNT_ATTACHMENT =
-		"SELECT COUNT(attachment) FROM Attachment attachment";
+		"SELECT COUNT(*) FROM Attachment attachment";
 
 	private static final String _SQL_COUNT_ATTACHMENT_WHERE =
-		"SELECT COUNT(attachment) FROM Attachment attachment WHERE ";
+		"SELECT COUNT(*) FROM Attachment attachment WHERE ";
 
 	private static final String _ORDER_BY_ENTITY_ALIAS = "attachment.";
 

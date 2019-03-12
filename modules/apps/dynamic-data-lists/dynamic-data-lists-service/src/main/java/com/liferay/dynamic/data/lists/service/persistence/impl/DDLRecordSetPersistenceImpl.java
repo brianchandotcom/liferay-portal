@@ -3951,10 +3951,10 @@ public class DDLRecordSetPersistenceImpl
 		"SELECT ddlRecordSet FROM DDLRecordSet ddlRecordSet WHERE ";
 
 	private static final String _SQL_COUNT_DDLRECORDSET =
-		"SELECT COUNT(ddlRecordSet) FROM DDLRecordSet ddlRecordSet";
+		"SELECT COUNT(*) FROM DDLRecordSet ddlRecordSet";
 
 	private static final String _SQL_COUNT_DDLRECORDSET_WHERE =
-		"SELECT COUNT(ddlRecordSet) FROM DDLRecordSet ddlRecordSet WHERE ";
+		"SELECT COUNT(*) FROM DDLRecordSet ddlRecordSet WHERE ";
 
 	private static final String _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN =
 		"ddlRecordSet.recordSetId";

@@ -1970,10 +1970,10 @@ public class CompanyPersistenceImpl
 		"SELECT company FROM Company company WHERE ";
 
 	private static final String _SQL_COUNT_COMPANY =
-		"SELECT COUNT(company) FROM Company company";
+		"SELECT COUNT(*) FROM Company company";
 
 	private static final String _SQL_COUNT_COMPANY_WHERE =
-		"SELECT COUNT(company) FROM Company company WHERE ";
+		"SELECT COUNT(*) FROM Company company WHERE ";
 
 	private static final String _ORDER_BY_ENTITY_ALIAS = "company.";
 

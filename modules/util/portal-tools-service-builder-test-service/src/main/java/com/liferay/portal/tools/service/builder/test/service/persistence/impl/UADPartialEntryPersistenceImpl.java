@@ -754,7 +754,7 @@ public class UADPartialEntryPersistenceImpl
 		"SELECT uadPartialEntry FROM UADPartialEntry uadPartialEntry WHERE uadPartialEntryId IN (";
 
 	private static final String _SQL_COUNT_UADPARTIALENTRY =
-		"SELECT COUNT(uadPartialEntry) FROM UADPartialEntry uadPartialEntry";
+		"SELECT COUNT(*) FROM UADPartialEntry uadPartialEntry";
 
 	private static final String _ORDER_BY_ENTITY_ALIAS = "uadPartialEntry.";
 

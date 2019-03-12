@@ -2889,10 +2889,10 @@ public class VersionedEntryVersionPersistenceImpl
 		"SELECT versionedEntryVersion FROM VersionedEntryVersion versionedEntryVersion WHERE ";
 
 	private static final String _SQL_COUNT_VERSIONEDENTRYVERSION =
-		"SELECT COUNT(versionedEntryVersion) FROM VersionedEntryVersion versionedEntryVersion";
+		"SELECT COUNT(*) FROM VersionedEntryVersion versionedEntryVersion";
 
 	private static final String _SQL_COUNT_VERSIONEDENTRYVERSION_WHERE =
-		"SELECT COUNT(versionedEntryVersion) FROM VersionedEntryVersion versionedEntryVersion WHERE ";
+		"SELECT COUNT(*) FROM VersionedEntryVersion versionedEntryVersion WHERE ";
 
 	private static final String _ORDER_BY_ENTITY_ALIAS =
 		"versionedEntryVersion.";

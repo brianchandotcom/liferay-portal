@@ -3553,10 +3553,10 @@ public class DDLRecordVersionPersistenceImpl
 		"SELECT ddlRecordVersion FROM DDLRecordVersion ddlRecordVersion WHERE ";
 
 	private static final String _SQL_COUNT_DDLRECORDVERSION =
-		"SELECT COUNT(ddlRecordVersion) FROM DDLRecordVersion ddlRecordVersion";
+		"SELECT COUNT(*) FROM DDLRecordVersion ddlRecordVersion";
 
 	private static final String _SQL_COUNT_DDLRECORDVERSION_WHERE =
-		"SELECT COUNT(ddlRecordVersion) FROM DDLRecordVersion ddlRecordVersion WHERE ";
+		"SELECT COUNT(*) FROM DDLRecordVersion ddlRecordVersion WHERE ";
 
 	private static final String _ORDER_BY_ENTITY_ALIAS = "ddlRecordVersion.";
 

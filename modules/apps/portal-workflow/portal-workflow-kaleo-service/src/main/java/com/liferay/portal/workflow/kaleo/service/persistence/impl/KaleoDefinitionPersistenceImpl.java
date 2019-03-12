@@ -2883,10 +2883,10 @@ public class KaleoDefinitionPersistenceImpl
 		"SELECT kaleoDefinition FROM KaleoDefinition kaleoDefinition WHERE ";
 
 	private static final String _SQL_COUNT_KALEODEFINITION =
-		"SELECT COUNT(kaleoDefinition) FROM KaleoDefinition kaleoDefinition";
+		"SELECT COUNT(*) FROM KaleoDefinition kaleoDefinition";
 
 	private static final String _SQL_COUNT_KALEODEFINITION_WHERE =
-		"SELECT COUNT(kaleoDefinition) FROM KaleoDefinition kaleoDefinition WHERE ";
+		"SELECT COUNT(*) FROM KaleoDefinition kaleoDefinition WHERE ";
 
 	private static final String _ORDER_BY_ENTITY_ALIAS = "kaleoDefinition.";
 

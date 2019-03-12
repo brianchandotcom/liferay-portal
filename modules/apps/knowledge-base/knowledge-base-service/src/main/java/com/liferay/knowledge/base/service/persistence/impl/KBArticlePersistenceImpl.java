@@ -36806,10 +36806,10 @@ public class KBArticlePersistenceImpl
 		"SELECT kbArticle FROM KBArticle kbArticle WHERE ";
 
 	private static final String _SQL_COUNT_KBARTICLE =
-		"SELECT COUNT(kbArticle) FROM KBArticle kbArticle";
+		"SELECT COUNT(*) FROM KBArticle kbArticle";
 
 	private static final String _SQL_COUNT_KBARTICLE_WHERE =
-		"SELECT COUNT(kbArticle) FROM KBArticle kbArticle WHERE ";
+		"SELECT COUNT(*) FROM KBArticle kbArticle WHERE ";
 
 	private static final String _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN =
 		"kbArticle.rootResourcePrimKey";

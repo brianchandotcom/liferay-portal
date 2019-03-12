@@ -2435,10 +2435,10 @@ public class KaleoNodePersistenceImpl
 		"SELECT kaleoNode FROM KaleoNode kaleoNode WHERE ";
 
 	private static final String _SQL_COUNT_KALEONODE =
-		"SELECT COUNT(kaleoNode) FROM KaleoNode kaleoNode";
+		"SELECT COUNT(*) FROM KaleoNode kaleoNode";
 
 	private static final String _SQL_COUNT_KALEONODE_WHERE =
-		"SELECT COUNT(kaleoNode) FROM KaleoNode kaleoNode WHERE ";
+		"SELECT COUNT(*) FROM KaleoNode kaleoNode WHERE ";
 
 	private static final String _ORDER_BY_ENTITY_ALIAS = "kaleoNode.";
 

@@ -944,10 +944,10 @@ public class PortalPreferencesPersistenceImpl
 		"SELECT portalPreferences FROM PortalPreferences portalPreferences WHERE ";
 
 	private static final String _SQL_COUNT_PORTALPREFERENCES =
-		"SELECT COUNT(portalPreferences) FROM PortalPreferences portalPreferences";
+		"SELECT COUNT(*) FROM PortalPreferences portalPreferences";
 
 	private static final String _SQL_COUNT_PORTALPREFERENCES_WHERE =
-		"SELECT COUNT(portalPreferences) FROM PortalPreferences portalPreferences WHERE ";
+		"SELECT COUNT(*) FROM PortalPreferences portalPreferences WHERE ";
 
 	private static final String _ORDER_BY_ENTITY_ALIAS = "portalPreferences.";
 

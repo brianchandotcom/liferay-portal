@@ -13921,10 +13921,10 @@ public class BookmarksEntryPersistenceImpl
 		"SELECT bookmarksEntry FROM BookmarksEntry bookmarksEntry WHERE ";
 
 	private static final String _SQL_COUNT_BOOKMARKSENTRY =
-		"SELECT COUNT(bookmarksEntry) FROM BookmarksEntry bookmarksEntry";
+		"SELECT COUNT(*) FROM BookmarksEntry bookmarksEntry";
 
 	private static final String _SQL_COUNT_BOOKMARKSENTRY_WHERE =
-		"SELECT COUNT(bookmarksEntry) FROM BookmarksEntry bookmarksEntry WHERE ";
+		"SELECT COUNT(*) FROM BookmarksEntry bookmarksEntry WHERE ";
 
 	private static final String _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN =
 		"bookmarksEntry.entryId";

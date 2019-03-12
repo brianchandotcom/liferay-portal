@@ -3153,10 +3153,10 @@ public class JournalArticleResourcePersistenceImpl
 		"SELECT journalArticleResource FROM JournalArticleResource journalArticleResource WHERE ";
 
 	private static final String _SQL_COUNT_JOURNALARTICLERESOURCE =
-		"SELECT COUNT(journalArticleResource) FROM JournalArticleResource journalArticleResource";
+		"SELECT COUNT(*) FROM JournalArticleResource journalArticleResource";
 
 	private static final String _SQL_COUNT_JOURNALARTICLERESOURCE_WHERE =
-		"SELECT COUNT(journalArticleResource) FROM JournalArticleResource journalArticleResource WHERE ";
+		"SELECT COUNT(*) FROM JournalArticleResource journalArticleResource WHERE ";
 
 	private static final String _ORDER_BY_ENTITY_ALIAS =
 		"journalArticleResource.";

@@ -4091,10 +4091,10 @@ public class LayoutSetBranchPersistenceImpl
 		"SELECT layoutSetBranch FROM LayoutSetBranch layoutSetBranch WHERE ";
 
 	private static final String _SQL_COUNT_LAYOUTSETBRANCH =
-		"SELECT COUNT(layoutSetBranch) FROM LayoutSetBranch layoutSetBranch";
+		"SELECT COUNT(*) FROM LayoutSetBranch layoutSetBranch";
 
 	private static final String _SQL_COUNT_LAYOUTSETBRANCH_WHERE =
-		"SELECT COUNT(layoutSetBranch) FROM LayoutSetBranch layoutSetBranch WHERE ";
+		"SELECT COUNT(*) FROM LayoutSetBranch layoutSetBranch WHERE ";
 
 	private static final String _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN =
 		"layoutSetBranch.layoutSetBranchId";

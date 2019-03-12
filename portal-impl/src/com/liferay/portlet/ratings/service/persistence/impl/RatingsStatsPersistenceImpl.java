@@ -1353,10 +1353,10 @@ public class RatingsStatsPersistenceImpl
 		"SELECT ratingsStats FROM RatingsStats ratingsStats WHERE ";
 
 	private static final String _SQL_COUNT_RATINGSSTATS =
-		"SELECT COUNT(ratingsStats) FROM RatingsStats ratingsStats";
+		"SELECT COUNT(*) FROM RatingsStats ratingsStats";
 
 	private static final String _SQL_COUNT_RATINGSSTATS_WHERE =
-		"SELECT COUNT(ratingsStats) FROM RatingsStats ratingsStats WHERE ";
+		"SELECT COUNT(*) FROM RatingsStats ratingsStats WHERE ";
 
 	private static final String _ORDER_BY_ENTITY_ALIAS = "ratingsStats.";
 

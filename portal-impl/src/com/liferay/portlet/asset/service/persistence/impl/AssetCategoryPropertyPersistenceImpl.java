@@ -2837,10 +2837,10 @@ public class AssetCategoryPropertyPersistenceImpl
 		"SELECT assetCategoryProperty FROM AssetCategoryProperty assetCategoryProperty WHERE ";
 
 	private static final String _SQL_COUNT_ASSETCATEGORYPROPERTY =
-		"SELECT COUNT(assetCategoryProperty) FROM AssetCategoryProperty assetCategoryProperty";
+		"SELECT COUNT(*) FROM AssetCategoryProperty assetCategoryProperty";
 
 	private static final String _SQL_COUNT_ASSETCATEGORYPROPERTY_WHERE =
-		"SELECT COUNT(assetCategoryProperty) FROM AssetCategoryProperty assetCategoryProperty WHERE ";
+		"SELECT COUNT(*) FROM AssetCategoryProperty assetCategoryProperty WHERE ";
 
 	private static final String _ORDER_BY_ENTITY_ALIAS =
 		"assetCategoryProperty.";

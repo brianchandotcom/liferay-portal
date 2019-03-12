@@ -1590,10 +1590,10 @@ public class VersionedEntryPersistenceImpl
 		"SELECT versionedEntry FROM VersionedEntry versionedEntry WHERE ";
 
 	private static final String _SQL_COUNT_VERSIONEDENTRY =
-		"SELECT COUNT(versionedEntry) FROM VersionedEntry versionedEntry";
+		"SELECT COUNT(*) FROM VersionedEntry versionedEntry";
 
 	private static final String _SQL_COUNT_VERSIONEDENTRY_WHERE =
-		"SELECT COUNT(versionedEntry) FROM VersionedEntry versionedEntry WHERE ";
+		"SELECT COUNT(*) FROM VersionedEntry versionedEntry WHERE ";
 
 	private static final String _ORDER_BY_ENTITY_ALIAS = "versionedEntry.";
 

@@ -10922,10 +10922,10 @@ public class RolePersistenceImpl
 		"SELECT role_ FROM Role role_ WHERE ";
 
 	private static final String _SQL_COUNT_ROLE_ =
-		"SELECT COUNT(role_) FROM Role role_";
+		"SELECT COUNT(*) FROM Role role_";
 
 	private static final String _SQL_COUNT_ROLE__WHERE =
-		"SELECT COUNT(role_) FROM Role role_ WHERE ";
+		"SELECT COUNT(*) FROM Role role_ WHERE ";
 
 	private static final String _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN =
 		"role_.roleId";

@@ -2160,10 +2160,10 @@ public class DDMTemplateVersionPersistenceImpl
 		"SELECT ddmTemplateVersion FROM DDMTemplateVersion ddmTemplateVersion WHERE ";
 
 	private static final String _SQL_COUNT_DDMTEMPLATEVERSION =
-		"SELECT COUNT(ddmTemplateVersion) FROM DDMTemplateVersion ddmTemplateVersion";
+		"SELECT COUNT(*) FROM DDMTemplateVersion ddmTemplateVersion";
 
 	private static final String _SQL_COUNT_DDMTEMPLATEVERSION_WHERE =
-		"SELECT COUNT(ddmTemplateVersion) FROM DDMTemplateVersion ddmTemplateVersion WHERE ";
+		"SELECT COUNT(*) FROM DDMTemplateVersion ddmTemplateVersion WHERE ";
 
 	private static final String _ORDER_BY_ENTITY_ALIAS = "ddmTemplateVersion.";
 

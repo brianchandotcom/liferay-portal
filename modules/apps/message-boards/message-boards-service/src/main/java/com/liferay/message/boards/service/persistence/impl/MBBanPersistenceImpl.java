@@ -4116,10 +4116,10 @@ public class MBBanPersistenceImpl
 		"SELECT mbBan FROM MBBan mbBan WHERE ";
 
 	private static final String _SQL_COUNT_MBBAN =
-		"SELECT COUNT(mbBan) FROM MBBan mbBan";
+		"SELECT COUNT(*) FROM MBBan mbBan";
 
 	private static final String _SQL_COUNT_MBBAN_WHERE =
-		"SELECT COUNT(mbBan) FROM MBBan mbBan WHERE ";
+		"SELECT COUNT(*) FROM MBBan mbBan WHERE ";
 
 	private static final String _ORDER_BY_ENTITY_ALIAS = "mbBan.";
 

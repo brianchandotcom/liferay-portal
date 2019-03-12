@@ -1839,10 +1839,10 @@ public class UserIdMapperPersistenceImpl
 		"SELECT userIdMapper FROM UserIdMapper userIdMapper WHERE ";
 
 	private static final String _SQL_COUNT_USERIDMAPPER =
-		"SELECT COUNT(userIdMapper) FROM UserIdMapper userIdMapper";
+		"SELECT COUNT(*) FROM UserIdMapper userIdMapper";
 
 	private static final String _SQL_COUNT_USERIDMAPPER_WHERE =
-		"SELECT COUNT(userIdMapper) FROM UserIdMapper userIdMapper WHERE ";
+		"SELECT COUNT(*) FROM UserIdMapper userIdMapper WHERE ";
 
 	private static final String _ORDER_BY_ENTITY_ALIAS = "userIdMapper.";
 

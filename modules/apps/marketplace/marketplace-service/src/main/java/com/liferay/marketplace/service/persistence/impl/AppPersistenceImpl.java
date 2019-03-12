@@ -3292,11 +3292,10 @@ public class AppPersistenceImpl
 	private static final String _SQL_SELECT_APP_WHERE =
 		"SELECT app FROM App app WHERE ";
 
-	private static final String _SQL_COUNT_APP =
-		"SELECT COUNT(app) FROM App app";
+	private static final String _SQL_COUNT_APP = "SELECT COUNT(*) FROM App app";
 
 	private static final String _SQL_COUNT_APP_WHERE =
-		"SELECT COUNT(app) FROM App app WHERE ";
+		"SELECT COUNT(*) FROM App app WHERE ";
 
 	private static final String _ORDER_BY_ENTITY_ALIAS = "app.";
 

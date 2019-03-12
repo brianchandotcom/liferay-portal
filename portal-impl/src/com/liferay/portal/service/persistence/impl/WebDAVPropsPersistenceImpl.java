@@ -951,10 +951,10 @@ public class WebDAVPropsPersistenceImpl
 		"SELECT webDAVProps FROM WebDAVProps webDAVProps WHERE ";
 
 	private static final String _SQL_COUNT_WEBDAVPROPS =
-		"SELECT COUNT(webDAVProps) FROM WebDAVProps webDAVProps";
+		"SELECT COUNT(*) FROM WebDAVProps webDAVProps";
 
 	private static final String _SQL_COUNT_WEBDAVPROPS_WHERE =
-		"SELECT COUNT(webDAVProps) FROM WebDAVProps webDAVProps WHERE ";
+		"SELECT COUNT(*) FROM WebDAVProps webDAVProps WHERE ";
 
 	private static final String _ORDER_BY_ENTITY_ALIAS = "webDAVProps.";
 

@@ -2317,10 +2317,10 @@ public class KaleoDefinitionVersionPersistenceImpl
 		"SELECT kaleoDefinitionVersion FROM KaleoDefinitionVersion kaleoDefinitionVersion WHERE ";
 
 	private static final String _SQL_COUNT_KALEODEFINITIONVERSION =
-		"SELECT COUNT(kaleoDefinitionVersion) FROM KaleoDefinitionVersion kaleoDefinitionVersion";
+		"SELECT COUNT(*) FROM KaleoDefinitionVersion kaleoDefinitionVersion";
 
 	private static final String _SQL_COUNT_KALEODEFINITIONVERSION_WHERE =
-		"SELECT COUNT(kaleoDefinitionVersion) FROM KaleoDefinitionVersion kaleoDefinitionVersion WHERE ";
+		"SELECT COUNT(*) FROM KaleoDefinitionVersion kaleoDefinitionVersion WHERE ";
 
 	private static final String _ORDER_BY_ENTITY_ALIAS =
 		"kaleoDefinitionVersion.";

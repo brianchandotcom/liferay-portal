@@ -3167,10 +3167,10 @@ public class SystemEventPersistenceImpl
 		"SELECT systemEvent FROM SystemEvent systemEvent WHERE ";
 
 	private static final String _SQL_COUNT_SYSTEMEVENT =
-		"SELECT COUNT(systemEvent) FROM SystemEvent systemEvent";
+		"SELECT COUNT(*) FROM SystemEvent systemEvent";
 
 	private static final String _SQL_COUNT_SYSTEMEVENT_WHERE =
-		"SELECT COUNT(systemEvent) FROM SystemEvent systemEvent WHERE ";
+		"SELECT COUNT(*) FROM SystemEvent systemEvent WHERE ";
 
 	private static final String _ORDER_BY_ENTITY_ALIAS = "systemEvent.";
 

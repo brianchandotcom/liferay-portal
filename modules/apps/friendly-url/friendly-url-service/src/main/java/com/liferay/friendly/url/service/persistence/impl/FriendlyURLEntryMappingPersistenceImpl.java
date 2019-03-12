@@ -967,10 +967,10 @@ public class FriendlyURLEntryMappingPersistenceImpl
 		"SELECT friendlyURLEntryMapping FROM FriendlyURLEntryMapping friendlyURLEntryMapping WHERE ";
 
 	private static final String _SQL_COUNT_FRIENDLYURLENTRYMAPPING =
-		"SELECT COUNT(friendlyURLEntryMapping) FROM FriendlyURLEntryMapping friendlyURLEntryMapping";
+		"SELECT COUNT(*) FROM FriendlyURLEntryMapping friendlyURLEntryMapping";
 
 	private static final String _SQL_COUNT_FRIENDLYURLENTRYMAPPING_WHERE =
-		"SELECT COUNT(friendlyURLEntryMapping) FROM FriendlyURLEntryMapping friendlyURLEntryMapping WHERE ";
+		"SELECT COUNT(*) FROM FriendlyURLEntryMapping friendlyURLEntryMapping WHERE ";
 
 	private static final String _ORDER_BY_ENTITY_ALIAS =
 		"friendlyURLEntryMapping.";

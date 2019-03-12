@@ -2709,10 +2709,10 @@ public class RecentLayoutRevisionPersistenceImpl
 		"SELECT recentLayoutRevision FROM RecentLayoutRevision recentLayoutRevision WHERE ";
 
 	private static final String _SQL_COUNT_RECENTLAYOUTREVISION =
-		"SELECT COUNT(recentLayoutRevision) FROM RecentLayoutRevision recentLayoutRevision";
+		"SELECT COUNT(*) FROM RecentLayoutRevision recentLayoutRevision";
 
 	private static final String _SQL_COUNT_RECENTLAYOUTREVISION_WHERE =
-		"SELECT COUNT(recentLayoutRevision) FROM RecentLayoutRevision recentLayoutRevision WHERE ";
+		"SELECT COUNT(*) FROM RecentLayoutRevision recentLayoutRevision WHERE ";
 
 	private static final String _ORDER_BY_ENTITY_ALIAS =
 		"recentLayoutRevision.";

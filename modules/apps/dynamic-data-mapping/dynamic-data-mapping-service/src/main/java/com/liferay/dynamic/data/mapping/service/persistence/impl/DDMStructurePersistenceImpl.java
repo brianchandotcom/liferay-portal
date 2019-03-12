@@ -12103,10 +12103,10 @@ public class DDMStructurePersistenceImpl
 		"SELECT ddmStructure FROM DDMStructure ddmStructure WHERE ";
 
 	private static final String _SQL_COUNT_DDMSTRUCTURE =
-		"SELECT COUNT(ddmStructure) FROM DDMStructure ddmStructure";
+		"SELECT COUNT(*) FROM DDMStructure ddmStructure";
 
 	private static final String _SQL_COUNT_DDMSTRUCTURE_WHERE =
-		"SELECT COUNT(ddmStructure) FROM DDMStructure ddmStructure WHERE ";
+		"SELECT COUNT(*) FROM DDMStructure ddmStructure WHERE ";
 
 	private static final String _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN =
 		"ddmStructure.structureId";

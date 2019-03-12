@@ -2478,10 +2478,10 @@ public class MemberRequestPersistenceImpl
 		"SELECT memberRequest FROM MemberRequest memberRequest WHERE ";
 
 	private static final String _SQL_COUNT_MEMBERREQUEST =
-		"SELECT COUNT(memberRequest) FROM MemberRequest memberRequest";
+		"SELECT COUNT(*) FROM MemberRequest memberRequest";
 
 	private static final String _SQL_COUNT_MEMBERREQUEST_WHERE =
-		"SELECT COUNT(memberRequest) FROM MemberRequest memberRequest WHERE ";
+		"SELECT COUNT(*) FROM MemberRequest memberRequest WHERE ";
 
 	private static final String _ORDER_BY_ENTITY_ALIAS = "memberRequest.";
 

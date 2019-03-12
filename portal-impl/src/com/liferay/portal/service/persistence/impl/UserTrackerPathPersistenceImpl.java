@@ -1230,10 +1230,10 @@ public class UserTrackerPathPersistenceImpl
 		"SELECT userTrackerPath FROM UserTrackerPath userTrackerPath WHERE ";
 
 	private static final String _SQL_COUNT_USERTRACKERPATH =
-		"SELECT COUNT(userTrackerPath) FROM UserTrackerPath userTrackerPath";
+		"SELECT COUNT(*) FROM UserTrackerPath userTrackerPath";
 
 	private static final String _SQL_COUNT_USERTRACKERPATH_WHERE =
-		"SELECT COUNT(userTrackerPath) FROM UserTrackerPath userTrackerPath WHERE ";
+		"SELECT COUNT(*) FROM UserTrackerPath userTrackerPath WHERE ";
 
 	private static final String _ORDER_BY_ENTITY_ALIAS = "userTrackerPath.";
 

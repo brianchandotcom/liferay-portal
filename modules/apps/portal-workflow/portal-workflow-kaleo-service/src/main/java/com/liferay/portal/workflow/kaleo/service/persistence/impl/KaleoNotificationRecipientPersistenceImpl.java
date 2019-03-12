@@ -2500,10 +2500,10 @@ public class KaleoNotificationRecipientPersistenceImpl
 		"SELECT kaleoNotificationRecipient FROM KaleoNotificationRecipient kaleoNotificationRecipient WHERE ";
 
 	private static final String _SQL_COUNT_KALEONOTIFICATIONRECIPIENT =
-		"SELECT COUNT(kaleoNotificationRecipient) FROM KaleoNotificationRecipient kaleoNotificationRecipient";
+		"SELECT COUNT(*) FROM KaleoNotificationRecipient kaleoNotificationRecipient";
 
 	private static final String _SQL_COUNT_KALEONOTIFICATIONRECIPIENT_WHERE =
-		"SELECT COUNT(kaleoNotificationRecipient) FROM KaleoNotificationRecipient kaleoNotificationRecipient WHERE ";
+		"SELECT COUNT(*) FROM KaleoNotificationRecipient kaleoNotificationRecipient WHERE ";
 
 	private static final String _ORDER_BY_ENTITY_ALIAS =
 		"kaleoNotificationRecipient.";

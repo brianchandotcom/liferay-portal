@@ -9392,10 +9392,10 @@ public class LayoutRevisionPersistenceImpl
 		"SELECT layoutRevision FROM LayoutRevision layoutRevision WHERE ";
 
 	private static final String _SQL_COUNT_LAYOUTREVISION =
-		"SELECT COUNT(layoutRevision) FROM LayoutRevision layoutRevision";
+		"SELECT COUNT(*) FROM LayoutRevision layoutRevision";
 
 	private static final String _SQL_COUNT_LAYOUTREVISION_WHERE =
-		"SELECT COUNT(layoutRevision) FROM LayoutRevision layoutRevision WHERE ";
+		"SELECT COUNT(*) FROM LayoutRevision layoutRevision WHERE ";
 
 	private static final String _ORDER_BY_ENTITY_ALIAS = "layoutRevision.";
 

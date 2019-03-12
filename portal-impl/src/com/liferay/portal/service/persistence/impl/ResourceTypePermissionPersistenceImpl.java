@@ -2337,10 +2337,10 @@ public class ResourceTypePermissionPersistenceImpl
 		"SELECT resourceTypePermission FROM ResourceTypePermission resourceTypePermission WHERE ";
 
 	private static final String _SQL_COUNT_RESOURCETYPEPERMISSION =
-		"SELECT COUNT(resourceTypePermission) FROM ResourceTypePermission resourceTypePermission";
+		"SELECT COUNT(*) FROM ResourceTypePermission resourceTypePermission";
 
 	private static final String _SQL_COUNT_RESOURCETYPEPERMISSION_WHERE =
-		"SELECT COUNT(resourceTypePermission) FROM ResourceTypePermission resourceTypePermission WHERE ";
+		"SELECT COUNT(*) FROM ResourceTypePermission resourceTypePermission WHERE ";
 
 	private static final String _ORDER_BY_ENTITY_ALIAS =
 		"resourceTypePermission.";

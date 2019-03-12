@@ -4732,10 +4732,10 @@ public class DDMFormInstanceRecordPersistenceImpl
 		"SELECT ddmFormInstanceRecord FROM DDMFormInstanceRecord ddmFormInstanceRecord WHERE ";
 
 	private static final String _SQL_COUNT_DDMFORMINSTANCERECORD =
-		"SELECT COUNT(ddmFormInstanceRecord) FROM DDMFormInstanceRecord ddmFormInstanceRecord";
+		"SELECT COUNT(*) FROM DDMFormInstanceRecord ddmFormInstanceRecord";
 
 	private static final String _SQL_COUNT_DDMFORMINSTANCERECORD_WHERE =
-		"SELECT COUNT(ddmFormInstanceRecord) FROM DDMFormInstanceRecord ddmFormInstanceRecord WHERE ";
+		"SELECT COUNT(*) FROM DDMFormInstanceRecord ddmFormInstanceRecord WHERE ";
 
 	private static final String _ORDER_BY_ENTITY_ALIAS =
 		"ddmFormInstanceRecord.";

@@ -23014,10 +23014,10 @@ public class LayoutPageTemplateEntryPersistenceImpl
 		"SELECT layoutPageTemplateEntry FROM LayoutPageTemplateEntry layoutPageTemplateEntry WHERE ";
 
 	private static final String _SQL_COUNT_LAYOUTPAGETEMPLATEENTRY =
-		"SELECT COUNT(layoutPageTemplateEntry) FROM LayoutPageTemplateEntry layoutPageTemplateEntry";
+		"SELECT COUNT(*) FROM LayoutPageTemplateEntry layoutPageTemplateEntry";
 
 	private static final String _SQL_COUNT_LAYOUTPAGETEMPLATEENTRY_WHERE =
-		"SELECT COUNT(layoutPageTemplateEntry) FROM LayoutPageTemplateEntry layoutPageTemplateEntry WHERE ";
+		"SELECT COUNT(*) FROM LayoutPageTemplateEntry layoutPageTemplateEntry WHERE ";
 
 	private static final String _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN =
 		"layoutPageTemplateEntry.layoutPageTemplateEntryId";

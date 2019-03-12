@@ -1597,10 +1597,10 @@ public class JournalArticleLocalizationPersistenceImpl
 		"SELECT journalArticleLocalization FROM JournalArticleLocalization journalArticleLocalization WHERE ";
 
 	private static final String _SQL_COUNT_JOURNALARTICLELOCALIZATION =
-		"SELECT COUNT(journalArticleLocalization) FROM JournalArticleLocalization journalArticleLocalization";
+		"SELECT COUNT(*) FROM JournalArticleLocalization journalArticleLocalization";
 
 	private static final String _SQL_COUNT_JOURNALARTICLELOCALIZATION_WHERE =
-		"SELECT COUNT(journalArticleLocalization) FROM JournalArticleLocalization journalArticleLocalization WHERE ";
+		"SELECT COUNT(*) FROM JournalArticleLocalization journalArticleLocalization WHERE ";
 
 	private static final String _ORDER_BY_ENTITY_ALIAS =
 		"journalArticleLocalization.";

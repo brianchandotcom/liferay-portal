@@ -2575,10 +2575,10 @@ public class ReadingTimeEntryPersistenceImpl
 		"SELECT readingTimeEntry FROM ReadingTimeEntry readingTimeEntry WHERE ";
 
 	private static final String _SQL_COUNT_READINGTIMEENTRY =
-		"SELECT COUNT(readingTimeEntry) FROM ReadingTimeEntry readingTimeEntry";
+		"SELECT COUNT(*) FROM ReadingTimeEntry readingTimeEntry";
 
 	private static final String _SQL_COUNT_READINGTIMEENTRY_WHERE =
-		"SELECT COUNT(readingTimeEntry) FROM ReadingTimeEntry readingTimeEntry WHERE ";
+		"SELECT COUNT(*) FROM ReadingTimeEntry readingTimeEntry WHERE ";
 
 	private static final String _ORDER_BY_ENTITY_ALIAS = "readingTimeEntry.";
 

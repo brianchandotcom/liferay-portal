@@ -10813,10 +10813,10 @@ public class OrganizationPersistenceImpl
 		"SELECT organization FROM Organization organization WHERE ";
 
 	private static final String _SQL_COUNT_ORGANIZATION =
-		"SELECT COUNT(organization) FROM Organization organization";
+		"SELECT COUNT(*) FROM Organization organization";
 
 	private static final String _SQL_COUNT_ORGANIZATION_WHERE =
-		"SELECT COUNT(organization) FROM Organization organization WHERE ";
+		"SELECT COUNT(*) FROM Organization organization WHERE ";
 
 	private static final String _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN =
 		"organization.organizationId";

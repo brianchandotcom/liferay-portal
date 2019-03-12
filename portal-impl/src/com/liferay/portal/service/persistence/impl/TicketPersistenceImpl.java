@@ -2271,10 +2271,10 @@ public class TicketPersistenceImpl
 		"SELECT ticket FROM Ticket ticket WHERE ";
 
 	private static final String _SQL_COUNT_TICKET =
-		"SELECT COUNT(ticket) FROM Ticket ticket";
+		"SELECT COUNT(*) FROM Ticket ticket";
 
 	private static final String _SQL_COUNT_TICKET_WHERE =
-		"SELECT COUNT(ticket) FROM Ticket ticket WHERE ";
+		"SELECT COUNT(*) FROM Ticket ticket WHERE ";
 
 	private static final String _ORDER_BY_ENTITY_ALIAS = "ticket.";
 

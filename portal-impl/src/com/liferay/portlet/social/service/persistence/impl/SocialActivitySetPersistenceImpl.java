@@ -4509,10 +4509,10 @@ public class SocialActivitySetPersistenceImpl
 		"SELECT socialActivitySet FROM SocialActivitySet socialActivitySet WHERE ";
 
 	private static final String _SQL_COUNT_SOCIALACTIVITYSET =
-		"SELECT COUNT(socialActivitySet) FROM SocialActivitySet socialActivitySet";
+		"SELECT COUNT(*) FROM SocialActivitySet socialActivitySet";
 
 	private static final String _SQL_COUNT_SOCIALACTIVITYSET_WHERE =
-		"SELECT COUNT(socialActivitySet) FROM SocialActivitySet socialActivitySet WHERE ";
+		"SELECT COUNT(*) FROM SocialActivitySet socialActivitySet WHERE ";
 
 	private static final String _ORDER_BY_ENTITY_ALIAS = "socialActivitySet.";
 

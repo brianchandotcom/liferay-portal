@@ -2371,10 +2371,10 @@ public class ContactPersistenceImpl
 		"SELECT contact FROM Contact contact WHERE ";
 
 	private static final String _SQL_COUNT_CONTACT =
-		"SELECT COUNT(contact) FROM Contact contact";
+		"SELECT COUNT(*) FROM Contact contact";
 
 	private static final String _SQL_COUNT_CONTACT_WHERE =
-		"SELECT COUNT(contact) FROM Contact contact WHERE ";
+		"SELECT COUNT(*) FROM Contact contact WHERE ";
 
 	private static final String _ORDER_BY_ENTITY_ALIAS = "contact.";
 

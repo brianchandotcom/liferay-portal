@@ -4576,10 +4576,10 @@ public class FragmentCollectionPersistenceImpl
 		"SELECT fragmentCollection FROM FragmentCollection fragmentCollection WHERE ";
 
 	private static final String _SQL_COUNT_FRAGMENTCOLLECTION =
-		"SELECT COUNT(fragmentCollection) FROM FragmentCollection fragmentCollection";
+		"SELECT COUNT(*) FROM FragmentCollection fragmentCollection";
 
 	private static final String _SQL_COUNT_FRAGMENTCOLLECTION_WHERE =
-		"SELECT COUNT(fragmentCollection) FROM FragmentCollection fragmentCollection WHERE ";
+		"SELECT COUNT(*) FROM FragmentCollection fragmentCollection WHERE ";
 
 	private static final String _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN =
 		"fragmentCollection.fragmentCollectionId";

@@ -5537,10 +5537,10 @@ public class AssetListEntryPersistenceImpl
 		"SELECT assetListEntry FROM AssetListEntry assetListEntry WHERE ";
 
 	private static final String _SQL_COUNT_ASSETLISTENTRY =
-		"SELECT COUNT(assetListEntry) FROM AssetListEntry assetListEntry";
+		"SELECT COUNT(*) FROM AssetListEntry assetListEntry";
 
 	private static final String _SQL_COUNT_ASSETLISTENTRY_WHERE =
-		"SELECT COUNT(assetListEntry) FROM AssetListEntry assetListEntry WHERE ";
+		"SELECT COUNT(*) FROM AssetListEntry assetListEntry WHERE ";
 
 	private static final String _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN =
 		"assetListEntry.assetListEntryId";

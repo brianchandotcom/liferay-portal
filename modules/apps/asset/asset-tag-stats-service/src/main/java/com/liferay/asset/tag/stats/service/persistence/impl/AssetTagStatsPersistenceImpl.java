@@ -2047,10 +2047,10 @@ public class AssetTagStatsPersistenceImpl
 		"SELECT assetTagStats FROM AssetTagStats assetTagStats WHERE ";
 
 	private static final String _SQL_COUNT_ASSETTAGSTATS =
-		"SELECT COUNT(assetTagStats) FROM AssetTagStats assetTagStats";
+		"SELECT COUNT(*) FROM AssetTagStats assetTagStats";
 
 	private static final String _SQL_COUNT_ASSETTAGSTATS_WHERE =
-		"SELECT COUNT(assetTagStats) FROM AssetTagStats assetTagStats WHERE ";
+		"SELECT COUNT(*) FROM AssetTagStats assetTagStats WHERE ";
 
 	private static final String _ORDER_BY_ENTITY_ALIAS = "assetTagStats.";
 

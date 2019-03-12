@@ -901,10 +901,10 @@ public class BrowserTrackerPersistenceImpl
 		"SELECT browserTracker FROM BrowserTracker browserTracker WHERE ";
 
 	private static final String _SQL_COUNT_BROWSERTRACKER =
-		"SELECT COUNT(browserTracker) FROM BrowserTracker browserTracker";
+		"SELECT COUNT(*) FROM BrowserTracker browserTracker";
 
 	private static final String _SQL_COUNT_BROWSERTRACKER_WHERE =
-		"SELECT COUNT(browserTracker) FROM BrowserTracker browserTracker WHERE ";
+		"SELECT COUNT(*) FROM BrowserTracker browserTracker WHERE ";
 
 	private static final String _ORDER_BY_ENTITY_ALIAS = "browserTracker.";
 

@@ -4704,10 +4704,10 @@ public class LayoutPageTemplateCollectionPersistenceImpl
 		"SELECT layoutPageTemplateCollection FROM LayoutPageTemplateCollection layoutPageTemplateCollection WHERE ";
 
 	private static final String _SQL_COUNT_LAYOUTPAGETEMPLATECOLLECTION =
-		"SELECT COUNT(layoutPageTemplateCollection) FROM LayoutPageTemplateCollection layoutPageTemplateCollection";
+		"SELECT COUNT(*) FROM LayoutPageTemplateCollection layoutPageTemplateCollection";
 
 	private static final String _SQL_COUNT_LAYOUTPAGETEMPLATECOLLECTION_WHERE =
-		"SELECT COUNT(layoutPageTemplateCollection) FROM LayoutPageTemplateCollection layoutPageTemplateCollection WHERE ";
+		"SELECT COUNT(*) FROM LayoutPageTemplateCollection layoutPageTemplateCollection WHERE ";
 
 	private static final String _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN =
 		"layoutPageTemplateCollection.layoutPageTemplateCollectionId";

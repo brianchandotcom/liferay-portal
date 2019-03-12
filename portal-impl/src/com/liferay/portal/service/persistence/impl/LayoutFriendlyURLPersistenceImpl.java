@@ -6493,10 +6493,10 @@ public class LayoutFriendlyURLPersistenceImpl
 		"SELECT layoutFriendlyURL FROM LayoutFriendlyURL layoutFriendlyURL WHERE ";
 
 	private static final String _SQL_COUNT_LAYOUTFRIENDLYURL =
-		"SELECT COUNT(layoutFriendlyURL) FROM LayoutFriendlyURL layoutFriendlyURL";
+		"SELECT COUNT(*) FROM LayoutFriendlyURL layoutFriendlyURL";
 
 	private static final String _SQL_COUNT_LAYOUTFRIENDLYURL_WHERE =
-		"SELECT COUNT(layoutFriendlyURL) FROM LayoutFriendlyURL layoutFriendlyURL WHERE ";
+		"SELECT COUNT(*) FROM LayoutFriendlyURL layoutFriendlyURL WHERE ";
 
 	private static final String _ORDER_BY_ENTITY_ALIAS = "layoutFriendlyURL.";
 

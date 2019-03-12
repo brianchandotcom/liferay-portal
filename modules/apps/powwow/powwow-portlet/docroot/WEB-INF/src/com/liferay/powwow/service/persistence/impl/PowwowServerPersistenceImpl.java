@@ -1327,10 +1327,10 @@ public class PowwowServerPersistenceImpl
 		"SELECT powwowServer FROM PowwowServer powwowServer WHERE ";
 
 	private static final String _SQL_COUNT_POWWOWSERVER =
-		"SELECT COUNT(powwowServer) FROM PowwowServer powwowServer";
+		"SELECT COUNT(*) FROM PowwowServer powwowServer";
 
 	private static final String _SQL_COUNT_POWWOWSERVER_WHERE =
-		"SELECT COUNT(powwowServer) FROM PowwowServer powwowServer WHERE ";
+		"SELECT COUNT(*) FROM PowwowServer powwowServer WHERE ";
 
 	private static final String _ORDER_BY_ENTITY_ALIAS = "powwowServer.";
 

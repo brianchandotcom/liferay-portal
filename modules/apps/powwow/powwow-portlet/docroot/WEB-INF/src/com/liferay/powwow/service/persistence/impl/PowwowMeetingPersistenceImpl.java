@@ -3954,10 +3954,10 @@ public class PowwowMeetingPersistenceImpl
 		"SELECT powwowMeeting FROM PowwowMeeting powwowMeeting WHERE ";
 
 	private static final String _SQL_COUNT_POWWOWMEETING =
-		"SELECT COUNT(powwowMeeting) FROM PowwowMeeting powwowMeeting";
+		"SELECT COUNT(*) FROM PowwowMeeting powwowMeeting";
 
 	private static final String _SQL_COUNT_POWWOWMEETING_WHERE =
-		"SELECT COUNT(powwowMeeting) FROM PowwowMeeting powwowMeeting WHERE ";
+		"SELECT COUNT(*) FROM PowwowMeeting powwowMeeting WHERE ";
 
 	private static final String _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN =
 		"powwowMeeting.powwowMeetingId";

@@ -2548,10 +2548,10 @@ public class BigDecimalEntryPersistenceImpl
 		"SELECT bigDecimalEntry FROM BigDecimalEntry bigDecimalEntry WHERE ";
 
 	private static final String _SQL_COUNT_BIGDECIMALENTRY =
-		"SELECT COUNT(bigDecimalEntry) FROM BigDecimalEntry bigDecimalEntry";
+		"SELECT COUNT(*) FROM BigDecimalEntry bigDecimalEntry";
 
 	private static final String _SQL_COUNT_BIGDECIMALENTRY_WHERE =
-		"SELECT COUNT(bigDecimalEntry) FROM BigDecimalEntry bigDecimalEntry WHERE ";
+		"SELECT COUNT(*) FROM BigDecimalEntry bigDecimalEntry WHERE ";
 
 	private static final String _ORDER_BY_ENTITY_ALIAS = "bigDecimalEntry.";
 

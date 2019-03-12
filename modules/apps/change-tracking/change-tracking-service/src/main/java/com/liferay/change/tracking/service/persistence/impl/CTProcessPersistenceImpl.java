@@ -2295,10 +2295,10 @@ public class CTProcessPersistenceImpl
 		"SELECT ctProcess FROM CTProcess ctProcess WHERE ";
 
 	private static final String _SQL_COUNT_CTPROCESS =
-		"SELECT COUNT(ctProcess) FROM CTProcess ctProcess";
+		"SELECT COUNT(*) FROM CTProcess ctProcess";
 
 	private static final String _SQL_COUNT_CTPROCESS_WHERE =
-		"SELECT COUNT(ctProcess) FROM CTProcess ctProcess WHERE ";
+		"SELECT COUNT(*) FROM CTProcess ctProcess WHERE ";
 
 	private static final String _ORDER_BY_ENTITY_ALIAS = "ctProcess.";
 

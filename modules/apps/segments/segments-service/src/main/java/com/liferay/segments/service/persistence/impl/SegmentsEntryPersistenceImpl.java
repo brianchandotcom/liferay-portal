@@ -7569,10 +7569,10 @@ public class SegmentsEntryPersistenceImpl
 		"SELECT segmentsEntry FROM SegmentsEntry segmentsEntry WHERE ";
 
 	private static final String _SQL_COUNT_SEGMENTSENTRY =
-		"SELECT COUNT(segmentsEntry) FROM SegmentsEntry segmentsEntry";
+		"SELECT COUNT(*) FROM SegmentsEntry segmentsEntry";
 
 	private static final String _SQL_COUNT_SEGMENTSENTRY_WHERE =
-		"SELECT COUNT(segmentsEntry) FROM SegmentsEntry segmentsEntry WHERE ";
+		"SELECT COUNT(*) FROM SegmentsEntry segmentsEntry WHERE ";
 
 	private static final String _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN =
 		"segmentsEntry.segmentsEntryId";

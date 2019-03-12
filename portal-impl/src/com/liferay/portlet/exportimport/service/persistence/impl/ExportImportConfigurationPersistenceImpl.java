@@ -3765,10 +3765,10 @@ public class ExportImportConfigurationPersistenceImpl
 		"SELECT exportImportConfiguration FROM ExportImportConfiguration exportImportConfiguration WHERE ";
 
 	private static final String _SQL_COUNT_EXPORTIMPORTCONFIGURATION =
-		"SELECT COUNT(exportImportConfiguration) FROM ExportImportConfiguration exportImportConfiguration";
+		"SELECT COUNT(*) FROM ExportImportConfiguration exportImportConfiguration";
 
 	private static final String _SQL_COUNT_EXPORTIMPORTCONFIGURATION_WHERE =
-		"SELECT COUNT(exportImportConfiguration) FROM ExportImportConfiguration exportImportConfiguration WHERE ";
+		"SELECT COUNT(*) FROM ExportImportConfiguration exportImportConfiguration WHERE ";
 
 	private static final String _ORDER_BY_ENTITY_ALIAS =
 		"exportImportConfiguration.";

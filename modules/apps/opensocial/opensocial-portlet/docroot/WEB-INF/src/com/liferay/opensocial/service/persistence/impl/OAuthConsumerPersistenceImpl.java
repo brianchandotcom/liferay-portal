@@ -1633,10 +1633,10 @@ public class OAuthConsumerPersistenceImpl
 		"SELECT oAuthConsumer FROM OAuthConsumer oAuthConsumer WHERE ";
 
 	private static final String _SQL_COUNT_OAUTHCONSUMER =
-		"SELECT COUNT(oAuthConsumer) FROM OAuthConsumer oAuthConsumer";
+		"SELECT COUNT(*) FROM OAuthConsumer oAuthConsumer";
 
 	private static final String _SQL_COUNT_OAUTHCONSUMER_WHERE =
-		"SELECT COUNT(oAuthConsumer) FROM OAuthConsumer oAuthConsumer WHERE ";
+		"SELECT COUNT(*) FROM OAuthConsumer oAuthConsumer WHERE ";
 
 	private static final String _ORDER_BY_ENTITY_ALIAS = "oAuthConsumer.";
 

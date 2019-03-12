@@ -4962,10 +4962,10 @@ public class SubscriptionPersistenceImpl
 		"SELECT subscription FROM Subscription subscription WHERE ";
 
 	private static final String _SQL_COUNT_SUBSCRIPTION =
-		"SELECT COUNT(subscription) FROM Subscription subscription";
+		"SELECT COUNT(*) FROM Subscription subscription";
 
 	private static final String _SQL_COUNT_SUBSCRIPTION_WHERE =
-		"SELECT COUNT(subscription) FROM Subscription subscription WHERE ";
+		"SELECT COUNT(*) FROM Subscription subscription WHERE ";
 
 	private static final String _ORDER_BY_ENTITY_ALIAS = "subscription.";
 

@@ -660,7 +660,7 @@ public class AccountPersistenceImpl
 		"SELECT account FROM Account account";
 
 	private static final String _SQL_COUNT_ACCOUNT =
-		"SELECT COUNT(account) FROM Account account";
+		"SELECT COUNT(*) FROM Account account";
 
 	private static final String _ORDER_BY_ENTITY_ALIAS = "account.";
 

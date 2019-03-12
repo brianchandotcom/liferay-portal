@@ -3238,10 +3238,10 @@ public class LayoutPageTemplateStructurePersistenceImpl
 		"SELECT layoutPageTemplateStructure FROM LayoutPageTemplateStructure layoutPageTemplateStructure WHERE ";
 
 	private static final String _SQL_COUNT_LAYOUTPAGETEMPLATESTRUCTURE =
-		"SELECT COUNT(layoutPageTemplateStructure) FROM LayoutPageTemplateStructure layoutPageTemplateStructure";
+		"SELECT COUNT(*) FROM LayoutPageTemplateStructure layoutPageTemplateStructure";
 
 	private static final String _SQL_COUNT_LAYOUTPAGETEMPLATESTRUCTURE_WHERE =
-		"SELECT COUNT(layoutPageTemplateStructure) FROM LayoutPageTemplateStructure layoutPageTemplateStructure WHERE ";
+		"SELECT COUNT(*) FROM LayoutPageTemplateStructure layoutPageTemplateStructure WHERE ";
 
 	private static final String _ORDER_BY_ENTITY_ALIAS =
 		"layoutPageTemplateStructure.";

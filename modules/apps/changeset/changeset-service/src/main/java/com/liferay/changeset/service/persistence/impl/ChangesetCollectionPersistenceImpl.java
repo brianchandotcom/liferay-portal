@@ -3405,10 +3405,10 @@ public class ChangesetCollectionPersistenceImpl
 		"SELECT changesetCollection FROM ChangesetCollection changesetCollection WHERE ";
 
 	private static final String _SQL_COUNT_CHANGESETCOLLECTION =
-		"SELECT COUNT(changesetCollection) FROM ChangesetCollection changesetCollection";
+		"SELECT COUNT(*) FROM ChangesetCollection changesetCollection";
 
 	private static final String _SQL_COUNT_CHANGESETCOLLECTION_WHERE =
-		"SELECT COUNT(changesetCollection) FROM ChangesetCollection changesetCollection WHERE ";
+		"SELECT COUNT(*) FROM ChangesetCollection changesetCollection WHERE ";
 
 	private static final String _ORDER_BY_ENTITY_ALIAS = "changesetCollection.";
 

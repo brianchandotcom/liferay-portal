@@ -6068,10 +6068,10 @@ public class LVEntryVersionPersistenceImpl
 		"SELECT lvEntryVersion FROM LVEntryVersion lvEntryVersion WHERE ";
 
 	private static final String _SQL_COUNT_LVENTRYVERSION =
-		"SELECT COUNT(lvEntryVersion) FROM LVEntryVersion lvEntryVersion";
+		"SELECT COUNT(*) FROM LVEntryVersion lvEntryVersion";
 
 	private static final String _SQL_COUNT_LVENTRYVERSION_WHERE =
-		"SELECT COUNT(lvEntryVersion) FROM LVEntryVersion lvEntryVersion WHERE ";
+		"SELECT COUNT(*) FROM LVEntryVersion lvEntryVersion WHERE ";
 
 	private static final String _ORDER_BY_ENTITY_ALIAS = "lvEntryVersion.";
 

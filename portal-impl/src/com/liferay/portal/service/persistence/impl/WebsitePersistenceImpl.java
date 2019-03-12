@@ -4984,10 +4984,10 @@ public class WebsitePersistenceImpl
 		"SELECT website FROM Website website WHERE ";
 
 	private static final String _SQL_COUNT_WEBSITE =
-		"SELECT COUNT(website) FROM Website website";
+		"SELECT COUNT(*) FROM Website website";
 
 	private static final String _SQL_COUNT_WEBSITE_WHERE =
-		"SELECT COUNT(website) FROM Website website WHERE ";
+		"SELECT COUNT(*) FROM Website website WHERE ";
 
 	private static final String _ORDER_BY_ENTITY_ALIAS = "website.";
 

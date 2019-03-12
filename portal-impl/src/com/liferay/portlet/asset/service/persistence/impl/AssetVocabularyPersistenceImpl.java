@@ -5918,10 +5918,10 @@ public class AssetVocabularyPersistenceImpl
 		"SELECT assetVocabulary FROM AssetVocabulary assetVocabulary WHERE ";
 
 	private static final String _SQL_COUNT_ASSETVOCABULARY =
-		"SELECT COUNT(assetVocabulary) FROM AssetVocabulary assetVocabulary";
+		"SELECT COUNT(*) FROM AssetVocabulary assetVocabulary";
 
 	private static final String _SQL_COUNT_ASSETVOCABULARY_WHERE =
-		"SELECT COUNT(assetVocabulary) FROM AssetVocabulary assetVocabulary WHERE ";
+		"SELECT COUNT(*) FROM AssetVocabulary assetVocabulary WHERE ";
 
 	private static final String _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN =
 		"assetVocabulary.vocabularyId";

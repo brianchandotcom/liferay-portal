@@ -3843,10 +3843,10 @@ public class BlogsStatsUserPersistenceImpl
 		"SELECT blogsStatsUser FROM BlogsStatsUser blogsStatsUser WHERE ";
 
 	private static final String _SQL_COUNT_BLOGSSTATSUSER =
-		"SELECT COUNT(blogsStatsUser) FROM BlogsStatsUser blogsStatsUser";
+		"SELECT COUNT(*) FROM BlogsStatsUser blogsStatsUser";
 
 	private static final String _SQL_COUNT_BLOGSSTATSUSER_WHERE =
-		"SELECT COUNT(blogsStatsUser) FROM BlogsStatsUser blogsStatsUser WHERE ";
+		"SELECT COUNT(*) FROM BlogsStatsUser blogsStatsUser WHERE ";
 
 	private static final String _ORDER_BY_ENTITY_ALIAS = "blogsStatsUser.";
 

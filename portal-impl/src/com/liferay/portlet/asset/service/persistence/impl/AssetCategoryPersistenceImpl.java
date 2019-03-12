@@ -14210,10 +14210,10 @@ public class AssetCategoryPersistenceImpl
 		"SELECT assetCategory FROM AssetCategory assetCategory WHERE ";
 
 	private static final String _SQL_COUNT_ASSETCATEGORY =
-		"SELECT COUNT(assetCategory) FROM AssetCategory assetCategory";
+		"SELECT COUNT(*) FROM AssetCategory assetCategory";
 
 	private static final String _SQL_COUNT_ASSETCATEGORY_WHERE =
-		"SELECT COUNT(assetCategory) FROM AssetCategory assetCategory WHERE ";
+		"SELECT COUNT(*) FROM AssetCategory assetCategory WHERE ";
 
 	private static final String _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN =
 		"assetCategory.categoryId";

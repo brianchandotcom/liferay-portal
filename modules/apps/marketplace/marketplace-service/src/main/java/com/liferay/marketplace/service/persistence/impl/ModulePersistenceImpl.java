@@ -4343,10 +4343,10 @@ public class ModulePersistenceImpl
 		"SELECT module FROM Module module WHERE ";
 
 	private static final String _SQL_COUNT_MODULE =
-		"SELECT COUNT(module) FROM Module module";
+		"SELECT COUNT(*) FROM Module module";
 
 	private static final String _SQL_COUNT_MODULE_WHERE =
-		"SELECT COUNT(module) FROM Module module WHERE ";
+		"SELECT COUNT(*) FROM Module module WHERE ";
 
 	private static final String _ORDER_BY_ENTITY_ALIAS = "module.";
 

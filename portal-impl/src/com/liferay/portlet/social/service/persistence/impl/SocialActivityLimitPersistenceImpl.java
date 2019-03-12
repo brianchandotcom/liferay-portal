@@ -2856,10 +2856,10 @@ public class SocialActivityLimitPersistenceImpl
 		"SELECT socialActivityLimit FROM SocialActivityLimit socialActivityLimit WHERE ";
 
 	private static final String _SQL_COUNT_SOCIALACTIVITYLIMIT =
-		"SELECT COUNT(socialActivityLimit) FROM SocialActivityLimit socialActivityLimit";
+		"SELECT COUNT(*) FROM SocialActivityLimit socialActivityLimit";
 
 	private static final String _SQL_COUNT_SOCIALACTIVITYLIMIT_WHERE =
-		"SELECT COUNT(socialActivityLimit) FROM SocialActivityLimit socialActivityLimit WHERE ";
+		"SELECT COUNT(*) FROM SocialActivityLimit socialActivityLimit WHERE ";
 
 	private static final String _ORDER_BY_ENTITY_ALIAS = "socialActivityLimit.";
 

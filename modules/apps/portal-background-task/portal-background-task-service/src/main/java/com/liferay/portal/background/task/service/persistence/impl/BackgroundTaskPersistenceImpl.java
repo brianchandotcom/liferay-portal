@@ -10224,10 +10224,10 @@ public class BackgroundTaskPersistenceImpl
 		"SELECT backgroundTask FROM BackgroundTask backgroundTask WHERE ";
 
 	private static final String _SQL_COUNT_BACKGROUNDTASK =
-		"SELECT COUNT(backgroundTask) FROM BackgroundTask backgroundTask";
+		"SELECT COUNT(*) FROM BackgroundTask backgroundTask";
 
 	private static final String _SQL_COUNT_BACKGROUNDTASK_WHERE =
-		"SELECT COUNT(backgroundTask) FROM BackgroundTask backgroundTask WHERE ";
+		"SELECT COUNT(*) FROM BackgroundTask backgroundTask WHERE ";
 
 	private static final String _ORDER_BY_ENTITY_ALIAS = "backgroundTask.";
 

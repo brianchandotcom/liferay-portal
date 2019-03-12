@@ -2069,10 +2069,10 @@ public class DDMTemplateLinkPersistenceImpl
 		"SELECT ddmTemplateLink FROM DDMTemplateLink ddmTemplateLink WHERE ";
 
 	private static final String _SQL_COUNT_DDMTEMPLATELINK =
-		"SELECT COUNT(ddmTemplateLink) FROM DDMTemplateLink ddmTemplateLink";
+		"SELECT COUNT(*) FROM DDMTemplateLink ddmTemplateLink";
 
 	private static final String _SQL_COUNT_DDMTEMPLATELINK_WHERE =
-		"SELECT COUNT(ddmTemplateLink) FROM DDMTemplateLink ddmTemplateLink WHERE ";
+		"SELECT COUNT(*) FROM DDMTemplateLink ddmTemplateLink WHERE ";
 
 	private static final String _ORDER_BY_ENTITY_ALIAS = "ddmTemplateLink.";
 

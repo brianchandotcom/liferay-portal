@@ -2241,10 +2241,10 @@ public class CTCollectionPersistenceImpl
 		"SELECT ctCollection FROM CTCollection ctCollection WHERE ";
 
 	private static final String _SQL_COUNT_CTCOLLECTION =
-		"SELECT COUNT(ctCollection) FROM CTCollection ctCollection";
+		"SELECT COUNT(*) FROM CTCollection ctCollection";
 
 	private static final String _SQL_COUNT_CTCOLLECTION_WHERE =
-		"SELECT COUNT(ctCollection) FROM CTCollection ctCollection WHERE ";
+		"SELECT COUNT(*) FROM CTCollection ctCollection WHERE ";
 
 	private static final String _ORDER_BY_ENTITY_ALIAS = "ctCollection.";
 

@@ -3333,10 +3333,10 @@ public class DDMContentPersistenceImpl
 		"SELECT ddmContent FROM DDMContent ddmContent WHERE ";
 
 	private static final String _SQL_COUNT_DDMCONTENT =
-		"SELECT COUNT(ddmContent) FROM DDMContent ddmContent";
+		"SELECT COUNT(*) FROM DDMContent ddmContent";
 
 	private static final String _SQL_COUNT_DDMCONTENT_WHERE =
-		"SELECT COUNT(ddmContent) FROM DDMContent ddmContent WHERE ";
+		"SELECT COUNT(*) FROM DDMContent ddmContent WHERE ";
 
 	private static final String _ORDER_BY_ENTITY_ALIAS = "ddmContent.";
 

@@ -602,7 +602,7 @@ public class ClusterGroupPersistenceImpl
 		"SELECT clusterGroup FROM ClusterGroup clusterGroup";
 
 	private static final String _SQL_COUNT_CLUSTERGROUP =
-		"SELECT COUNT(clusterGroup) FROM ClusterGroup clusterGroup";
+		"SELECT COUNT(*) FROM ClusterGroup clusterGroup";
 
 	private static final String _ORDER_BY_ENTITY_ALIAS = "clusterGroup.";
 

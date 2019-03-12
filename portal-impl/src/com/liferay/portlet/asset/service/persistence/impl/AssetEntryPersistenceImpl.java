@@ -6852,10 +6852,10 @@ public class AssetEntryPersistenceImpl
 		"SELECT assetEntry FROM AssetEntry assetEntry WHERE ";
 
 	private static final String _SQL_COUNT_ASSETENTRY =
-		"SELECT COUNT(assetEntry) FROM AssetEntry assetEntry";
+		"SELECT COUNT(*) FROM AssetEntry assetEntry";
 
 	private static final String _SQL_COUNT_ASSETENTRY_WHERE =
-		"SELECT COUNT(assetEntry) FROM AssetEntry assetEntry WHERE ";
+		"SELECT COUNT(*) FROM AssetEntry assetEntry WHERE ";
 
 	private static final String _ORDER_BY_ENTITY_ALIAS = "assetEntry.";
 

@@ -1950,10 +1950,10 @@ public class LVEntryLocalizationPersistenceImpl
 		"SELECT lvEntryLocalization FROM LVEntryLocalization lvEntryLocalization WHERE ";
 
 	private static final String _SQL_COUNT_LVENTRYLOCALIZATION =
-		"SELECT COUNT(lvEntryLocalization) FROM LVEntryLocalization lvEntryLocalization";
+		"SELECT COUNT(*) FROM LVEntryLocalization lvEntryLocalization";
 
 	private static final String _SQL_COUNT_LVENTRYLOCALIZATION_WHERE =
-		"SELECT COUNT(lvEntryLocalization) FROM LVEntryLocalization lvEntryLocalization WHERE ";
+		"SELECT COUNT(*) FROM LVEntryLocalization lvEntryLocalization WHERE ";
 
 	private static final String _ORDER_BY_ENTITY_ALIAS = "lvEntryLocalization.";
 

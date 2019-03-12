@@ -1405,10 +1405,10 @@ public class WorkflowInstanceLinkPersistenceImpl
 		"SELECT workflowInstanceLink FROM WorkflowInstanceLink workflowInstanceLink WHERE ";
 
 	private static final String _SQL_COUNT_WORKFLOWINSTANCELINK =
-		"SELECT COUNT(workflowInstanceLink) FROM WorkflowInstanceLink workflowInstanceLink";
+		"SELECT COUNT(*) FROM WorkflowInstanceLink workflowInstanceLink";
 
 	private static final String _SQL_COUNT_WORKFLOWINSTANCELINK_WHERE =
-		"SELECT COUNT(workflowInstanceLink) FROM WorkflowInstanceLink workflowInstanceLink WHERE ";
+		"SELECT COUNT(*) FROM WorkflowInstanceLink workflowInstanceLink WHERE ";
 
 	private static final String _ORDER_BY_ENTITY_ALIAS =
 		"workflowInstanceLink.";

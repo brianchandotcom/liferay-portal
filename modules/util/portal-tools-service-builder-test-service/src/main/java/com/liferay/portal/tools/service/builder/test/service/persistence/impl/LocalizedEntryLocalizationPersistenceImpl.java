@@ -1777,10 +1777,10 @@ public class LocalizedEntryLocalizationPersistenceImpl
 		"SELECT localizedEntryLocalization FROM LocalizedEntryLocalization localizedEntryLocalization WHERE ";
 
 	private static final String _SQL_COUNT_LOCALIZEDENTRYLOCALIZATION =
-		"SELECT COUNT(localizedEntryLocalization) FROM LocalizedEntryLocalization localizedEntryLocalization";
+		"SELECT COUNT(*) FROM LocalizedEntryLocalization localizedEntryLocalization";
 
 	private static final String _SQL_COUNT_LOCALIZEDENTRYLOCALIZATION_WHERE =
-		"SELECT COUNT(localizedEntryLocalization) FROM LocalizedEntryLocalization localizedEntryLocalization WHERE ";
+		"SELECT COUNT(*) FROM LocalizedEntryLocalization localizedEntryLocalization WHERE ";
 
 	private static final String _ORDER_BY_ENTITY_ALIAS =
 		"localizedEntryLocalization.";

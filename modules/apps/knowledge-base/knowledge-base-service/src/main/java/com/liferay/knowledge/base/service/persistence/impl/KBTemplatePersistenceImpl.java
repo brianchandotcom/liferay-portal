@@ -3191,10 +3191,10 @@ public class KBTemplatePersistenceImpl
 		"SELECT kbTemplate FROM KBTemplate kbTemplate WHERE ";
 
 	private static final String _SQL_COUNT_KBTEMPLATE =
-		"SELECT COUNT(kbTemplate) FROM KBTemplate kbTemplate";
+		"SELECT COUNT(*) FROM KBTemplate kbTemplate";
 
 	private static final String _SQL_COUNT_KBTEMPLATE_WHERE =
-		"SELECT COUNT(kbTemplate) FROM KBTemplate kbTemplate WHERE ";
+		"SELECT COUNT(*) FROM KBTemplate kbTemplate WHERE ";
 
 	private static final String _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN =
 		"kbTemplate.kbTemplateId";

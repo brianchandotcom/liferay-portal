@@ -6897,10 +6897,10 @@ public class DLFileVersionPersistenceImpl
 		"SELECT dlFileVersion FROM DLFileVersion dlFileVersion WHERE ";
 
 	private static final String _SQL_COUNT_DLFILEVERSION =
-		"SELECT COUNT(dlFileVersion) FROM DLFileVersion dlFileVersion";
+		"SELECT COUNT(*) FROM DLFileVersion dlFileVersion";
 
 	private static final String _SQL_COUNT_DLFILEVERSION_WHERE =
-		"SELECT COUNT(dlFileVersion) FROM DLFileVersion dlFileVersion WHERE ";
+		"SELECT COUNT(*) FROM DLFileVersion dlFileVersion WHERE ";
 
 	private static final String _ORDER_BY_ENTITY_ALIAS = "dlFileVersion.";
 

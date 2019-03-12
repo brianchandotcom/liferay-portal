@@ -4796,10 +4796,10 @@ public class LayoutSetPrototypePersistenceImpl
 		"SELECT layoutSetPrototype FROM LayoutSetPrototype layoutSetPrototype WHERE ";
 
 	private static final String _SQL_COUNT_LAYOUTSETPROTOTYPE =
-		"SELECT COUNT(layoutSetPrototype) FROM LayoutSetPrototype layoutSetPrototype";
+		"SELECT COUNT(*) FROM LayoutSetPrototype layoutSetPrototype";
 
 	private static final String _SQL_COUNT_LAYOUTSETPROTOTYPE_WHERE =
-		"SELECT COUNT(layoutSetPrototype) FROM LayoutSetPrototype layoutSetPrototype WHERE ";
+		"SELECT COUNT(*) FROM LayoutSetPrototype layoutSetPrototype WHERE ";
 
 	private static final String _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN =
 		"layoutSetPrototype.layoutSetPrototypeId";

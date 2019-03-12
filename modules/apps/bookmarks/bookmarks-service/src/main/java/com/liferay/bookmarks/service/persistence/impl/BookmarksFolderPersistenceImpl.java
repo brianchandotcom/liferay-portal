@@ -7931,10 +7931,10 @@ public class BookmarksFolderPersistenceImpl
 		"SELECT bookmarksFolder FROM BookmarksFolder bookmarksFolder WHERE ";
 
 	private static final String _SQL_COUNT_BOOKMARKSFOLDER =
-		"SELECT COUNT(bookmarksFolder) FROM BookmarksFolder bookmarksFolder";
+		"SELECT COUNT(*) FROM BookmarksFolder bookmarksFolder";
 
 	private static final String _SQL_COUNT_BOOKMARKSFOLDER_WHERE =
-		"SELECT COUNT(bookmarksFolder) FROM BookmarksFolder bookmarksFolder WHERE ";
+		"SELECT COUNT(*) FROM BookmarksFolder bookmarksFolder WHERE ";
 
 	private static final String _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN =
 		"bookmarksFolder.folderId";

@@ -2076,10 +2076,10 @@ public class KaleoTaskPersistenceImpl
 		"SELECT kaleoTask FROM KaleoTask kaleoTask WHERE ";
 
 	private static final String _SQL_COUNT_KALEOTASK =
-		"SELECT COUNT(kaleoTask) FROM KaleoTask kaleoTask";
+		"SELECT COUNT(*) FROM KaleoTask kaleoTask";
 
 	private static final String _SQL_COUNT_KALEOTASK_WHERE =
-		"SELECT COUNT(kaleoTask) FROM KaleoTask kaleoTask WHERE ";
+		"SELECT COUNT(*) FROM KaleoTask kaleoTask WHERE ";
 
 	private static final String _ORDER_BY_ENTITY_ALIAS = "kaleoTask.";
 

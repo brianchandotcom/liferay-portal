@@ -1530,10 +1530,10 @@ public class FolderPersistenceImpl
 		"SELECT folder FROM Folder folder WHERE ";
 
 	private static final String _SQL_COUNT_FOLDER =
-		"SELECT COUNT(folder) FROM Folder folder";
+		"SELECT COUNT(*) FROM Folder folder";
 
 	private static final String _SQL_COUNT_FOLDER_WHERE =
-		"SELECT COUNT(folder) FROM Folder folder WHERE ";
+		"SELECT COUNT(*) FROM Folder folder WHERE ";
 
 	private static final String _ORDER_BY_ENTITY_ALIAS = "folder.";
 

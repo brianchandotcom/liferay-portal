@@ -3817,10 +3817,10 @@ public class AssetDisplayPageEntryPersistenceImpl
 		"SELECT assetDisplayPageEntry FROM AssetDisplayPageEntry assetDisplayPageEntry WHERE ";
 
 	private static final String _SQL_COUNT_ASSETDISPLAYPAGEENTRY =
-		"SELECT COUNT(assetDisplayPageEntry) FROM AssetDisplayPageEntry assetDisplayPageEntry";
+		"SELECT COUNT(*) FROM AssetDisplayPageEntry assetDisplayPageEntry";
 
 	private static final String _SQL_COUNT_ASSETDISPLAYPAGEENTRY_WHERE =
-		"SELECT COUNT(assetDisplayPageEntry) FROM AssetDisplayPageEntry assetDisplayPageEntry WHERE ";
+		"SELECT COUNT(*) FROM AssetDisplayPageEntry assetDisplayPageEntry WHERE ";
 
 	private static final String _ORDER_BY_ENTITY_ALIAS =
 		"assetDisplayPageEntry.";

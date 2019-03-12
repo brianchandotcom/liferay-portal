@@ -751,7 +751,7 @@ public class LocalizedEntryPersistenceImpl
 		"SELECT localizedEntry FROM LocalizedEntry localizedEntry WHERE localizedEntryId IN (";
 
 	private static final String _SQL_COUNT_LOCALIZEDENTRY =
-		"SELECT COUNT(localizedEntry) FROM LocalizedEntry localizedEntry";
+		"SELECT COUNT(*) FROM LocalizedEntry localizedEntry";
 
 	private static final String _ORDER_BY_ENTITY_ALIAS = "localizedEntry.";
 

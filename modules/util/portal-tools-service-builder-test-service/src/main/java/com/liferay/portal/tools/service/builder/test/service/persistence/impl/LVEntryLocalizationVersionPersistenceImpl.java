@@ -4008,10 +4008,10 @@ public class LVEntryLocalizationVersionPersistenceImpl
 		"SELECT lvEntryLocalizationVersion FROM LVEntryLocalizationVersion lvEntryLocalizationVersion WHERE ";
 
 	private static final String _SQL_COUNT_LVENTRYLOCALIZATIONVERSION =
-		"SELECT COUNT(lvEntryLocalizationVersion) FROM LVEntryLocalizationVersion lvEntryLocalizationVersion";
+		"SELECT COUNT(*) FROM LVEntryLocalizationVersion lvEntryLocalizationVersion";
 
 	private static final String _SQL_COUNT_LVENTRYLOCALIZATIONVERSION_WHERE =
-		"SELECT COUNT(lvEntryLocalizationVersion) FROM LVEntryLocalizationVersion lvEntryLocalizationVersion WHERE ";
+		"SELECT COUNT(*) FROM LVEntryLocalizationVersion lvEntryLocalizationVersion WHERE ";
 
 	private static final String _ORDER_BY_ENTITY_ALIAS =
 		"lvEntryLocalizationVersion.";

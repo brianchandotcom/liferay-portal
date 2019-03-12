@@ -1599,10 +1599,10 @@ public class ServiceComponentPersistenceImpl
 		"SELECT serviceComponent FROM ServiceComponent serviceComponent WHERE ";
 
 	private static final String _SQL_COUNT_SERVICECOMPONENT =
-		"SELECT COUNT(serviceComponent) FROM ServiceComponent serviceComponent";
+		"SELECT COUNT(*) FROM ServiceComponent serviceComponent";
 
 	private static final String _SQL_COUNT_SERVICECOMPONENT_WHERE =
-		"SELECT COUNT(serviceComponent) FROM ServiceComponent serviceComponent WHERE ";
+		"SELECT COUNT(*) FROM ServiceComponent serviceComponent WHERE ";
 
 	private static final String _ORDER_BY_ENTITY_ALIAS = "serviceComponent.";
 

@@ -7618,10 +7618,10 @@ public class SocialRequestPersistenceImpl
 		"SELECT socialRequest FROM SocialRequest socialRequest WHERE ";
 
 	private static final String _SQL_COUNT_SOCIALREQUEST =
-		"SELECT COUNT(socialRequest) FROM SocialRequest socialRequest";
+		"SELECT COUNT(*) FROM SocialRequest socialRequest";
 
 	private static final String _SQL_COUNT_SOCIALREQUEST_WHERE =
-		"SELECT COUNT(socialRequest) FROM SocialRequest socialRequest WHERE ";
+		"SELECT COUNT(*) FROM SocialRequest socialRequest WHERE ";
 
 	private static final String _ORDER_BY_ENTITY_ALIAS = "socialRequest.";
 

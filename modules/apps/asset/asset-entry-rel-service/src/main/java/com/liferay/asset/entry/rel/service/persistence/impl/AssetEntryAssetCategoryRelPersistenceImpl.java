@@ -2163,10 +2163,10 @@ public class AssetEntryAssetCategoryRelPersistenceImpl
 		"SELECT assetEntryAssetCategoryRel FROM AssetEntryAssetCategoryRel assetEntryAssetCategoryRel WHERE ";
 
 	private static final String _SQL_COUNT_ASSETENTRYASSETCATEGORYREL =
-		"SELECT COUNT(assetEntryAssetCategoryRel) FROM AssetEntryAssetCategoryRel assetEntryAssetCategoryRel";
+		"SELECT COUNT(*) FROM AssetEntryAssetCategoryRel assetEntryAssetCategoryRel";
 
 	private static final String _SQL_COUNT_ASSETENTRYASSETCATEGORYREL_WHERE =
-		"SELECT COUNT(assetEntryAssetCategoryRel) FROM AssetEntryAssetCategoryRel assetEntryAssetCategoryRel WHERE ";
+		"SELECT COUNT(*) FROM AssetEntryAssetCategoryRel assetEntryAssetCategoryRel WHERE ";
 
 	private static final String _ORDER_BY_ENTITY_ALIAS =
 		"assetEntryAssetCategoryRel.";

@@ -2132,10 +2132,10 @@ public class ResourceBlockPermissionPersistenceImpl
 		"SELECT resourceBlockPermission FROM ResourceBlockPermission resourceBlockPermission WHERE ";
 
 	private static final String _SQL_COUNT_RESOURCEBLOCKPERMISSION =
-		"SELECT COUNT(resourceBlockPermission) FROM ResourceBlockPermission resourceBlockPermission";
+		"SELECT COUNT(*) FROM ResourceBlockPermission resourceBlockPermission";
 
 	private static final String _SQL_COUNT_RESOURCEBLOCKPERMISSION_WHERE =
-		"SELECT COUNT(resourceBlockPermission) FROM ResourceBlockPermission resourceBlockPermission WHERE ";
+		"SELECT COUNT(*) FROM ResourceBlockPermission resourceBlockPermission WHERE ";
 
 	private static final String _ORDER_BY_ENTITY_ALIAS =
 		"resourceBlockPermission.";

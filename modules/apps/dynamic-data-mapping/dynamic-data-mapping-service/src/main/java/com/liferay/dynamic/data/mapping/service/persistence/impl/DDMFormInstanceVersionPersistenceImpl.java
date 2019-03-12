@@ -2206,10 +2206,10 @@ public class DDMFormInstanceVersionPersistenceImpl
 		"SELECT ddmFormInstanceVersion FROM DDMFormInstanceVersion ddmFormInstanceVersion WHERE ";
 
 	private static final String _SQL_COUNT_DDMFORMINSTANCEVERSION =
-		"SELECT COUNT(ddmFormInstanceVersion) FROM DDMFormInstanceVersion ddmFormInstanceVersion";
+		"SELECT COUNT(*) FROM DDMFormInstanceVersion ddmFormInstanceVersion";
 
 	private static final String _SQL_COUNT_DDMFORMINSTANCEVERSION_WHERE =
-		"SELECT COUNT(ddmFormInstanceVersion) FROM DDMFormInstanceVersion ddmFormInstanceVersion WHERE ";
+		"SELECT COUNT(*) FROM DDMFormInstanceVersion ddmFormInstanceVersion WHERE ";
 
 	private static final String _ORDER_BY_ENTITY_ALIAS =
 		"ddmFormInstanceVersion.";

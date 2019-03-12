@@ -9108,10 +9108,10 @@ public class MicroblogsEntryPersistenceImpl
 		"SELECT microblogsEntry FROM MicroblogsEntry microblogsEntry WHERE ";
 
 	private static final String _SQL_COUNT_MICROBLOGSENTRY =
-		"SELECT COUNT(microblogsEntry) FROM MicroblogsEntry microblogsEntry";
+		"SELECT COUNT(*) FROM MicroblogsEntry microblogsEntry";
 
 	private static final String _SQL_COUNT_MICROBLOGSENTRY_WHERE =
-		"SELECT COUNT(microblogsEntry) FROM MicroblogsEntry microblogsEntry WHERE ";
+		"SELECT COUNT(*) FROM MicroblogsEntry microblogsEntry WHERE ";
 
 	private static final String _ORDER_BY_ENTITY_ALIAS = "microblogsEntry.";
 

@@ -7328,10 +7328,10 @@ public class SharingEntryPersistenceImpl
 		"SELECT sharingEntry FROM SharingEntry sharingEntry WHERE ";
 
 	private static final String _SQL_COUNT_SHARINGENTRY =
-		"SELECT COUNT(sharingEntry) FROM SharingEntry sharingEntry";
+		"SELECT COUNT(*) FROM SharingEntry sharingEntry";
 
 	private static final String _SQL_COUNT_SHARINGENTRY_WHERE =
-		"SELECT COUNT(sharingEntry) FROM SharingEntry sharingEntry WHERE ";
+		"SELECT COUNT(*) FROM SharingEntry sharingEntry WHERE ";
 
 	private static final String _ORDER_BY_ENTITY_ALIAS = "sharingEntry.";
 

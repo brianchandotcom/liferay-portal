@@ -1118,10 +1118,10 @@ public class ImagePersistenceImpl
 		"SELECT image FROM Image image WHERE ";
 
 	private static final String _SQL_COUNT_IMAGE =
-		"SELECT COUNT(image) FROM Image image";
+		"SELECT COUNT(*) FROM Image image";
 
 	private static final String _SQL_COUNT_IMAGE_WHERE =
-		"SELECT COUNT(image) FROM Image image WHERE ";
+		"SELECT COUNT(*) FROM Image image WHERE ";
 
 	private static final String _ORDER_BY_ENTITY_ALIAS = "image.";
 

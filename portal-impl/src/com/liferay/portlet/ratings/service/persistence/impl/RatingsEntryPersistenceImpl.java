@@ -3897,10 +3897,10 @@ public class RatingsEntryPersistenceImpl
 		"SELECT ratingsEntry FROM RatingsEntry ratingsEntry WHERE ";
 
 	private static final String _SQL_COUNT_RATINGSENTRY =
-		"SELECT COUNT(ratingsEntry) FROM RatingsEntry ratingsEntry";
+		"SELECT COUNT(*) FROM RatingsEntry ratingsEntry";
 
 	private static final String _SQL_COUNT_RATINGSENTRY_WHERE =
-		"SELECT COUNT(ratingsEntry) FROM RatingsEntry ratingsEntry WHERE ";
+		"SELECT COUNT(*) FROM RatingsEntry ratingsEntry WHERE ";
 
 	private static final String _ORDER_BY_ENTITY_ALIAS = "ratingsEntry.";
 

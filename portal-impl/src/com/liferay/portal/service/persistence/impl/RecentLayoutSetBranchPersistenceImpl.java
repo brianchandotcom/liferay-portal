@@ -2685,10 +2685,10 @@ public class RecentLayoutSetBranchPersistenceImpl
 		"SELECT recentLayoutSetBranch FROM RecentLayoutSetBranch recentLayoutSetBranch WHERE ";
 
 	private static final String _SQL_COUNT_RECENTLAYOUTSETBRANCH =
-		"SELECT COUNT(recentLayoutSetBranch) FROM RecentLayoutSetBranch recentLayoutSetBranch";
+		"SELECT COUNT(*) FROM RecentLayoutSetBranch recentLayoutSetBranch";
 
 	private static final String _SQL_COUNT_RECENTLAYOUTSETBRANCH_WHERE =
-		"SELECT COUNT(recentLayoutSetBranch) FROM RecentLayoutSetBranch recentLayoutSetBranch WHERE ";
+		"SELECT COUNT(*) FROM RecentLayoutSetBranch recentLayoutSetBranch WHERE ";
 
 	private static final String _ORDER_BY_ENTITY_ALIAS =
 		"recentLayoutSetBranch.";

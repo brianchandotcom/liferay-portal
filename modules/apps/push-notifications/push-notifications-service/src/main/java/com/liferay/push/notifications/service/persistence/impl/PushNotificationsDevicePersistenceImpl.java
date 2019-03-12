@@ -1964,10 +1964,10 @@ public class PushNotificationsDevicePersistenceImpl
 		"SELECT pushNotificationsDevice FROM PushNotificationsDevice pushNotificationsDevice WHERE ";
 
 	private static final String _SQL_COUNT_PUSHNOTIFICATIONSDEVICE =
-		"SELECT COUNT(pushNotificationsDevice) FROM PushNotificationsDevice pushNotificationsDevice";
+		"SELECT COUNT(*) FROM PushNotificationsDevice pushNotificationsDevice";
 
 	private static final String _SQL_COUNT_PUSHNOTIFICATIONSDEVICE_WHERE =
-		"SELECT COUNT(pushNotificationsDevice) FROM PushNotificationsDevice pushNotificationsDevice WHERE ";
+		"SELECT COUNT(*) FROM PushNotificationsDevice pushNotificationsDevice WHERE ";
 
 	private static final String _ORDER_BY_ENTITY_ALIAS =
 		"pushNotificationsDevice.";

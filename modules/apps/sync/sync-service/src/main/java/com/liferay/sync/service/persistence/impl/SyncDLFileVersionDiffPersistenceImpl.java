@@ -2165,10 +2165,10 @@ public class SyncDLFileVersionDiffPersistenceImpl
 		"SELECT syncDLFileVersionDiff FROM SyncDLFileVersionDiff syncDLFileVersionDiff WHERE ";
 
 	private static final String _SQL_COUNT_SYNCDLFILEVERSIONDIFF =
-		"SELECT COUNT(syncDLFileVersionDiff) FROM SyncDLFileVersionDiff syncDLFileVersionDiff";
+		"SELECT COUNT(*) FROM SyncDLFileVersionDiff syncDLFileVersionDiff";
 
 	private static final String _SQL_COUNT_SYNCDLFILEVERSIONDIFF_WHERE =
-		"SELECT COUNT(syncDLFileVersionDiff) FROM SyncDLFileVersionDiff syncDLFileVersionDiff WHERE ";
+		"SELECT COUNT(*) FROM SyncDLFileVersionDiff syncDLFileVersionDiff WHERE ";
 
 	private static final String _ORDER_BY_ENTITY_ALIAS =
 		"syncDLFileVersionDiff.";

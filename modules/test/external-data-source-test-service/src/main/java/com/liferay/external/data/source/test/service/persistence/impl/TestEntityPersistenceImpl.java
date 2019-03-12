@@ -767,7 +767,7 @@ public class TestEntityPersistenceImpl
 		"SELECT testEntity FROM TestEntity testEntity WHERE id_ IN (";
 
 	private static final String _SQL_COUNT_TESTENTITY =
-		"SELECT COUNT(testEntity) FROM TestEntity testEntity";
+		"SELECT COUNT(*) FROM TestEntity testEntity";
 
 	private static final String _ORDER_BY_ENTITY_ALIAS = "testEntity.";
 

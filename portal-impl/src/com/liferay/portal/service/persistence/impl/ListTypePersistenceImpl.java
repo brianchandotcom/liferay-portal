@@ -1573,10 +1573,10 @@ public class ListTypePersistenceImpl
 		"SELECT listType FROM ListType listType WHERE ";
 
 	private static final String _SQL_COUNT_LISTTYPE =
-		"SELECT COUNT(listType) FROM ListType listType";
+		"SELECT COUNT(*) FROM ListType listType";
 
 	private static final String _SQL_COUNT_LISTTYPE_WHERE =
-		"SELECT COUNT(listType) FROM ListType listType WHERE ";
+		"SELECT COUNT(*) FROM ListType listType WHERE ";
 
 	private static final String _ORDER_BY_ENTITY_ALIAS = "listType.";
 

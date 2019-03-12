@@ -2775,10 +2775,10 @@ public class LockPersistenceImpl
 		"SELECT lock_ FROM Lock lock_ WHERE ";
 
 	private static final String _SQL_COUNT_LOCK_ =
-		"SELECT COUNT(lock_) FROM Lock lock_";
+		"SELECT COUNT(*) FROM Lock lock_";
 
 	private static final String _SQL_COUNT_LOCK__WHERE =
-		"SELECT COUNT(lock_) FROM Lock lock_ WHERE ";
+		"SELECT COUNT(*) FROM Lock lock_ WHERE ";
 
 	private static final String _ORDER_BY_ENTITY_ALIAS = "lock_.";
 

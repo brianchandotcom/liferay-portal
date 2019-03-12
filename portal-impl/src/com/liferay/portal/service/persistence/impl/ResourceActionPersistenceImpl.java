@@ -1576,10 +1576,10 @@ public class ResourceActionPersistenceImpl
 		"SELECT resourceAction FROM ResourceAction resourceAction WHERE ";
 
 	private static final String _SQL_COUNT_RESOURCEACTION =
-		"SELECT COUNT(resourceAction) FROM ResourceAction resourceAction";
+		"SELECT COUNT(*) FROM ResourceAction resourceAction";
 
 	private static final String _SQL_COUNT_RESOURCEACTION_WHERE =
-		"SELECT COUNT(resourceAction) FROM ResourceAction resourceAction WHERE ";
+		"SELECT COUNT(*) FROM ResourceAction resourceAction WHERE ";
 
 	private static final String _ORDER_BY_ENTITY_ALIAS = "resourceAction.";
 

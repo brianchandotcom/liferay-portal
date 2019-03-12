@@ -3391,10 +3391,10 @@ public class OAuth2AuthorizationPersistenceImpl
 		"SELECT oAuth2Authorization FROM OAuth2Authorization oAuth2Authorization WHERE ";
 
 	private static final String _SQL_COUNT_OAUTH2AUTHORIZATION =
-		"SELECT COUNT(oAuth2Authorization) FROM OAuth2Authorization oAuth2Authorization";
+		"SELECT COUNT(*) FROM OAuth2Authorization oAuth2Authorization";
 
 	private static final String _SQL_COUNT_OAUTH2AUTHORIZATION_WHERE =
-		"SELECT COUNT(oAuth2Authorization) FROM OAuth2Authorization oAuth2Authorization WHERE ";
+		"SELECT COUNT(*) FROM OAuth2Authorization oAuth2Authorization WHERE ";
 
 	private static final String _ORDER_BY_ENTITY_ALIAS = "oAuth2Authorization.";
 

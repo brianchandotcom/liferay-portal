@@ -1405,10 +1405,10 @@ public class DLSyncEventPersistenceImpl
 		"SELECT dlSyncEvent FROM DLSyncEvent dlSyncEvent WHERE ";
 
 	private static final String _SQL_COUNT_DLSYNCEVENT =
-		"SELECT COUNT(dlSyncEvent) FROM DLSyncEvent dlSyncEvent";
+		"SELECT COUNT(*) FROM DLSyncEvent dlSyncEvent";
 
 	private static final String _SQL_COUNT_DLSYNCEVENT_WHERE =
-		"SELECT COUNT(dlSyncEvent) FROM DLSyncEvent dlSyncEvent WHERE ";
+		"SELECT COUNT(*) FROM DLSyncEvent dlSyncEvent WHERE ";
 
 	private static final String _ORDER_BY_ENTITY_ALIAS = "dlSyncEvent.";
 

@@ -3186,10 +3186,10 @@ public class PollsQuestionPersistenceImpl
 		"SELECT pollsQuestion FROM PollsQuestion pollsQuestion WHERE ";
 
 	private static final String _SQL_COUNT_POLLSQUESTION =
-		"SELECT COUNT(pollsQuestion) FROM PollsQuestion pollsQuestion";
+		"SELECT COUNT(*) FROM PollsQuestion pollsQuestion";
 
 	private static final String _SQL_COUNT_POLLSQUESTION_WHERE =
-		"SELECT COUNT(pollsQuestion) FROM PollsQuestion pollsQuestion WHERE ";
+		"SELECT COUNT(*) FROM PollsQuestion pollsQuestion WHERE ";
 
 	private static final String _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN =
 		"pollsQuestion.questionId";

@@ -3187,10 +3187,10 @@ public class LVEntryPersistenceImpl
 		"SELECT lvEntry FROM LVEntry lvEntry WHERE ";
 
 	private static final String _SQL_COUNT_LVENTRY =
-		"SELECT COUNT(lvEntry) FROM LVEntry lvEntry";
+		"SELECT COUNT(*) FROM LVEntry lvEntry";
 
 	private static final String _SQL_COUNT_LVENTRY_WHERE =
-		"SELECT COUNT(lvEntry) FROM LVEntry lvEntry WHERE ";
+		"SELECT COUNT(*) FROM LVEntry lvEntry WHERE ";
 
 	private static final String _ORDER_BY_ENTITY_ALIAS = "lvEntry.";
 

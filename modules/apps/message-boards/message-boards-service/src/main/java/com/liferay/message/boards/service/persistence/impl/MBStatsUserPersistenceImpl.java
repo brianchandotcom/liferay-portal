@@ -2624,10 +2624,10 @@ public class MBStatsUserPersistenceImpl
 		"SELECT mbStatsUser FROM MBStatsUser mbStatsUser WHERE ";
 
 	private static final String _SQL_COUNT_MBSTATSUSER =
-		"SELECT COUNT(mbStatsUser) FROM MBStatsUser mbStatsUser";
+		"SELECT COUNT(*) FROM MBStatsUser mbStatsUser";
 
 	private static final String _SQL_COUNT_MBSTATSUSER_WHERE =
-		"SELECT COUNT(mbStatsUser) FROM MBStatsUser mbStatsUser WHERE ";
+		"SELECT COUNT(*) FROM MBStatsUser mbStatsUser WHERE ";
 
 	private static final String _ORDER_BY_ENTITY_ALIAS = "mbStatsUser.";
 

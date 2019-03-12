@@ -2908,10 +2908,10 @@ public class KaleoTimerInstanceTokenPersistenceImpl
 		"SELECT kaleoTimerInstanceToken FROM KaleoTimerInstanceToken kaleoTimerInstanceToken WHERE ";
 
 	private static final String _SQL_COUNT_KALEOTIMERINSTANCETOKEN =
-		"SELECT COUNT(kaleoTimerInstanceToken) FROM KaleoTimerInstanceToken kaleoTimerInstanceToken";
+		"SELECT COUNT(*) FROM KaleoTimerInstanceToken kaleoTimerInstanceToken";
 
 	private static final String _SQL_COUNT_KALEOTIMERINSTANCETOKEN_WHERE =
-		"SELECT COUNT(kaleoTimerInstanceToken) FROM KaleoTimerInstanceToken kaleoTimerInstanceToken WHERE ";
+		"SELECT COUNT(*) FROM KaleoTimerInstanceToken kaleoTimerInstanceToken WHERE ";
 
 	private static final String _ORDER_BY_ENTITY_ALIAS =
 		"kaleoTimerInstanceToken.";

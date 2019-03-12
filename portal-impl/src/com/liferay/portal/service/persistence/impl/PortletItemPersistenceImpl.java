@@ -2397,10 +2397,10 @@ public class PortletItemPersistenceImpl
 		"SELECT portletItem FROM PortletItem portletItem WHERE ";
 
 	private static final String _SQL_COUNT_PORTLETITEM =
-		"SELECT COUNT(portletItem) FROM PortletItem portletItem";
+		"SELECT COUNT(*) FROM PortletItem portletItem";
 
 	private static final String _SQL_COUNT_PORTLETITEM_WHERE =
-		"SELECT COUNT(portletItem) FROM PortletItem portletItem WHERE ";
+		"SELECT COUNT(*) FROM PortletItem portletItem WHERE ";
 
 	private static final String _ORDER_BY_ENTITY_ALIAS = "portletItem.";
 

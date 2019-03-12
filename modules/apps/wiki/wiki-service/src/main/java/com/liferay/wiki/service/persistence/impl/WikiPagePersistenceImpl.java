@@ -24679,10 +24679,10 @@ public class WikiPagePersistenceImpl
 		"SELECT wikiPage FROM WikiPage wikiPage WHERE ";
 
 	private static final String _SQL_COUNT_WIKIPAGE =
-		"SELECT COUNT(wikiPage) FROM WikiPage wikiPage";
+		"SELECT COUNT(*) FROM WikiPage wikiPage";
 
 	private static final String _SQL_COUNT_WIKIPAGE_WHERE =
-		"SELECT COUNT(wikiPage) FROM WikiPage wikiPage WHERE ";
+		"SELECT COUNT(*) FROM WikiPage wikiPage WHERE ";
 
 	private static final String _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN =
 		"wikiPage.resourcePrimKey";

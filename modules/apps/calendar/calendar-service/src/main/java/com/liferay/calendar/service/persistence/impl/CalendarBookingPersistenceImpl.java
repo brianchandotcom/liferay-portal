@@ -6735,10 +6735,10 @@ public class CalendarBookingPersistenceImpl
 		"SELECT calendarBooking FROM CalendarBooking calendarBooking WHERE ";
 
 	private static final String _SQL_COUNT_CALENDARBOOKING =
-		"SELECT COUNT(calendarBooking) FROM CalendarBooking calendarBooking";
+		"SELECT COUNT(*) FROM CalendarBooking calendarBooking";
 
 	private static final String _SQL_COUNT_CALENDARBOOKING_WHERE =
-		"SELECT COUNT(calendarBooking) FROM CalendarBooking calendarBooking WHERE ";
+		"SELECT COUNT(*) FROM CalendarBooking calendarBooking WHERE ";
 
 	private static final String _ORDER_BY_ENTITY_ALIAS = "calendarBooking.";
 

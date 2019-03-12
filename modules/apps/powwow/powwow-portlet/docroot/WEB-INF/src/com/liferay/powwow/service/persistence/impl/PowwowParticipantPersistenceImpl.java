@@ -2504,10 +2504,10 @@ public class PowwowParticipantPersistenceImpl
 		"SELECT powwowParticipant FROM PowwowParticipant powwowParticipant WHERE ";
 
 	private static final String _SQL_COUNT_POWWOWPARTICIPANT =
-		"SELECT COUNT(powwowParticipant) FROM PowwowParticipant powwowParticipant";
+		"SELECT COUNT(*) FROM PowwowParticipant powwowParticipant";
 
 	private static final String _SQL_COUNT_POWWOWPARTICIPANT_WHERE =
-		"SELECT COUNT(powwowParticipant) FROM PowwowParticipant powwowParticipant WHERE ";
+		"SELECT COUNT(*) FROM PowwowParticipant powwowParticipant WHERE ";
 
 	private static final String _ORDER_BY_ENTITY_ALIAS = "powwowParticipant.";
 

@@ -2024,10 +2024,10 @@ public class ExpandoRowPersistenceImpl
 		"SELECT expandoRow FROM ExpandoRow expandoRow WHERE ";
 
 	private static final String _SQL_COUNT_EXPANDOROW =
-		"SELECT COUNT(expandoRow) FROM ExpandoRow expandoRow";
+		"SELECT COUNT(*) FROM ExpandoRow expandoRow";
 
 	private static final String _SQL_COUNT_EXPANDOROW_WHERE =
-		"SELECT COUNT(expandoRow) FROM ExpandoRow expandoRow WHERE ";
+		"SELECT COUNT(*) FROM ExpandoRow expandoRow WHERE ";
 
 	private static final String _ORDER_BY_ENTITY_ALIAS = "expandoRow.";
 

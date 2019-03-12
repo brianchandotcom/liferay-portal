@@ -1195,10 +1195,10 @@ public class AuditEventPersistenceImpl
 		"SELECT auditEvent FROM AuditEvent auditEvent WHERE ";
 
 	private static final String _SQL_COUNT_AUDITEVENT =
-		"SELECT COUNT(auditEvent) FROM AuditEvent auditEvent";
+		"SELECT COUNT(*) FROM AuditEvent auditEvent";
 
 	private static final String _SQL_COUNT_AUDITEVENT_WHERE =
-		"SELECT COUNT(auditEvent) FROM AuditEvent auditEvent WHERE ";
+		"SELECT COUNT(*) FROM AuditEvent auditEvent WHERE ";
 
 	private static final String _ORDER_BY_ENTITY_ALIAS = "auditEvent.";
 

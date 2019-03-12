@@ -1972,10 +1972,10 @@ public class CountryPersistenceImpl
 		"SELECT country FROM Country country WHERE ";
 
 	private static final String _SQL_COUNT_COUNTRY =
-		"SELECT COUNT(country) FROM Country country";
+		"SELECT COUNT(*) FROM Country country";
 
 	private static final String _SQL_COUNT_COUNTRY_WHERE =
-		"SELECT COUNT(country) FROM Country country WHERE ";
+		"SELECT COUNT(*) FROM Country country WHERE ";
 
 	private static final String _ORDER_BY_ENTITY_ALIAS = "country.";
 

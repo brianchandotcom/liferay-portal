@@ -2777,10 +2777,10 @@ public class MDRRulePersistenceImpl
 		"SELECT mdrRule FROM MDRRule mdrRule WHERE ";
 
 	private static final String _SQL_COUNT_MDRRULE =
-		"SELECT COUNT(mdrRule) FROM MDRRule mdrRule";
+		"SELECT COUNT(*) FROM MDRRule mdrRule";
 
 	private static final String _SQL_COUNT_MDRRULE_WHERE =
-		"SELECT COUNT(mdrRule) FROM MDRRule mdrRule WHERE ";
+		"SELECT COUNT(*) FROM MDRRule mdrRule WHERE ";
 
 	private static final String _ORDER_BY_ENTITY_ALIAS = "mdrRule.";
 

@@ -5503,10 +5503,10 @@ public class FragmentEntryLinkPersistenceImpl
 		"SELECT fragmentEntryLink FROM FragmentEntryLink fragmentEntryLink WHERE ";
 
 	private static final String _SQL_COUNT_FRAGMENTENTRYLINK =
-		"SELECT COUNT(fragmentEntryLink) FROM FragmentEntryLink fragmentEntryLink";
+		"SELECT COUNT(*) FROM FragmentEntryLink fragmentEntryLink";
 
 	private static final String _SQL_COUNT_FRAGMENTENTRYLINK_WHERE =
-		"SELECT COUNT(fragmentEntryLink) FROM FragmentEntryLink fragmentEntryLink WHERE ";
+		"SELECT COUNT(*) FROM FragmentEntryLink fragmentEntryLink WHERE ";
 
 	private static final String _ORDER_BY_ENTITY_ALIAS = "fragmentEntryLink.";
 

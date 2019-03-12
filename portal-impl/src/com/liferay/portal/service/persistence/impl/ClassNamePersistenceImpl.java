@@ -907,10 +907,10 @@ public class ClassNamePersistenceImpl
 		"SELECT className FROM ClassName className WHERE ";
 
 	private static final String _SQL_COUNT_CLASSNAME =
-		"SELECT COUNT(className) FROM ClassName className";
+		"SELECT COUNT(*) FROM ClassName className";
 
 	private static final String _SQL_COUNT_CLASSNAME_WHERE =
-		"SELECT COUNT(className) FROM ClassName className WHERE ";
+		"SELECT COUNT(*) FROM ClassName className WHERE ";
 
 	private static final String _ORDER_BY_ENTITY_ALIAS = "className.";
 

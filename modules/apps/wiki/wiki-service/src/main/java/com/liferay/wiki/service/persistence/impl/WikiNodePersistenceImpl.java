@@ -5594,10 +5594,10 @@ public class WikiNodePersistenceImpl
 		"SELECT wikiNode FROM WikiNode wikiNode WHERE ";
 
 	private static final String _SQL_COUNT_WIKINODE =
-		"SELECT COUNT(wikiNode) FROM WikiNode wikiNode";
+		"SELECT COUNT(*) FROM WikiNode wikiNode";
 
 	private static final String _SQL_COUNT_WIKINODE_WHERE =
-		"SELECT COUNT(wikiNode) FROM WikiNode wikiNode WHERE ";
+		"SELECT COUNT(*) FROM WikiNode wikiNode WHERE ";
 
 	private static final String _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN =
 		"wikiNode.nodeId";

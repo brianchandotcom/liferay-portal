@@ -3351,10 +3351,10 @@ public class CalendarNotificationTemplatePersistenceImpl
 		"SELECT calendarNotificationTemplate FROM CalendarNotificationTemplate calendarNotificationTemplate WHERE ";
 
 	private static final String _SQL_COUNT_CALENDARNOTIFICATIONTEMPLATE =
-		"SELECT COUNT(calendarNotificationTemplate) FROM CalendarNotificationTemplate calendarNotificationTemplate";
+		"SELECT COUNT(*) FROM CalendarNotificationTemplate calendarNotificationTemplate";
 
 	private static final String _SQL_COUNT_CALENDARNOTIFICATIONTEMPLATE_WHERE =
-		"SELECT COUNT(calendarNotificationTemplate) FROM CalendarNotificationTemplate calendarNotificationTemplate WHERE ";
+		"SELECT COUNT(*) FROM CalendarNotificationTemplate calendarNotificationTemplate WHERE ";
 
 	private static final String _ORDER_BY_ENTITY_ALIAS =
 		"calendarNotificationTemplate.";

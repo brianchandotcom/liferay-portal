@@ -5174,10 +5174,10 @@ public class AssetEntryUsagePersistenceImpl
 		"SELECT assetEntryUsage FROM AssetEntryUsage assetEntryUsage WHERE ";
 
 	private static final String _SQL_COUNT_ASSETENTRYUSAGE =
-		"SELECT COUNT(assetEntryUsage) FROM AssetEntryUsage assetEntryUsage";
+		"SELECT COUNT(*) FROM AssetEntryUsage assetEntryUsage";
 
 	private static final String _SQL_COUNT_ASSETENTRYUSAGE_WHERE =
-		"SELECT COUNT(assetEntryUsage) FROM AssetEntryUsage assetEntryUsage WHERE ";
+		"SELECT COUNT(*) FROM AssetEntryUsage assetEntryUsage WHERE ";
 
 	private static final String _ORDER_BY_ENTITY_ALIAS = "assetEntryUsage.";
 

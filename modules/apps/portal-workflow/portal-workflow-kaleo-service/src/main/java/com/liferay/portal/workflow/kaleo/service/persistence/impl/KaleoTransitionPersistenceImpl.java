@@ -3028,10 +3028,10 @@ public class KaleoTransitionPersistenceImpl
 		"SELECT kaleoTransition FROM KaleoTransition kaleoTransition WHERE ";
 
 	private static final String _SQL_COUNT_KALEOTRANSITION =
-		"SELECT COUNT(kaleoTransition) FROM KaleoTransition kaleoTransition";
+		"SELECT COUNT(*) FROM KaleoTransition kaleoTransition";
 
 	private static final String _SQL_COUNT_KALEOTRANSITION_WHERE =
-		"SELECT COUNT(kaleoTransition) FROM KaleoTransition kaleoTransition WHERE ";
+		"SELECT COUNT(*) FROM KaleoTransition kaleoTransition WHERE ";
 
 	private static final String _ORDER_BY_ENTITY_ALIAS = "kaleoTransition.";
 

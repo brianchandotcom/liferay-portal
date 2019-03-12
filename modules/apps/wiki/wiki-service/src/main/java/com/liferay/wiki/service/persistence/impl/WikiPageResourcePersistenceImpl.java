@@ -2535,10 +2535,10 @@ public class WikiPageResourcePersistenceImpl
 		"SELECT wikiPageResource FROM WikiPageResource wikiPageResource WHERE ";
 
 	private static final String _SQL_COUNT_WIKIPAGERESOURCE =
-		"SELECT COUNT(wikiPageResource) FROM WikiPageResource wikiPageResource";
+		"SELECT COUNT(*) FROM WikiPageResource wikiPageResource";
 
 	private static final String _SQL_COUNT_WIKIPAGERESOURCE_WHERE =
-		"SELECT COUNT(wikiPageResource) FROM WikiPageResource wikiPageResource WHERE ";
+		"SELECT COUNT(*) FROM WikiPageResource wikiPageResource WHERE ";
 
 	private static final String _ORDER_BY_ENTITY_ALIAS = "wikiPageResource.";
 

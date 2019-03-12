@@ -3879,10 +3879,10 @@ public class SiteFriendlyURLPersistenceImpl
 		"SELECT siteFriendlyURL FROM SiteFriendlyURL siteFriendlyURL WHERE ";
 
 	private static final String _SQL_COUNT_SITEFRIENDLYURL =
-		"SELECT COUNT(siteFriendlyURL) FROM SiteFriendlyURL siteFriendlyURL";
+		"SELECT COUNT(*) FROM SiteFriendlyURL siteFriendlyURL";
 
 	private static final String _SQL_COUNT_SITEFRIENDLYURL_WHERE =
-		"SELECT COUNT(siteFriendlyURL) FROM SiteFriendlyURL siteFriendlyURL WHERE ";
+		"SELECT COUNT(*) FROM SiteFriendlyURL siteFriendlyURL WHERE ";
 
 	private static final String _ORDER_BY_ENTITY_ALIAS = "siteFriendlyURL.";
 

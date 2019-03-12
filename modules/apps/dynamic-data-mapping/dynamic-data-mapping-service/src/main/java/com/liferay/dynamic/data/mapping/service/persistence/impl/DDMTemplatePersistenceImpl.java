@@ -13565,10 +13565,10 @@ public class DDMTemplatePersistenceImpl
 		"SELECT ddmTemplate FROM DDMTemplate ddmTemplate WHERE ";
 
 	private static final String _SQL_COUNT_DDMTEMPLATE =
-		"SELECT COUNT(ddmTemplate) FROM DDMTemplate ddmTemplate";
+		"SELECT COUNT(*) FROM DDMTemplate ddmTemplate";
 
 	private static final String _SQL_COUNT_DDMTEMPLATE_WHERE =
-		"SELECT COUNT(ddmTemplate) FROM DDMTemplate ddmTemplate WHERE ";
+		"SELECT COUNT(*) FROM DDMTemplate ddmTemplate WHERE ";
 
 	private static final String _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN =
 		"ddmTemplate.templateId";

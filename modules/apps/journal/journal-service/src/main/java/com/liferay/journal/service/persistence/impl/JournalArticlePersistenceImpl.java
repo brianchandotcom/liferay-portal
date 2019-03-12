@@ -35504,10 +35504,10 @@ public class JournalArticlePersistenceImpl
 		"SELECT journalArticle FROM JournalArticle journalArticle WHERE ";
 
 	private static final String _SQL_COUNT_JOURNALARTICLE =
-		"SELECT COUNT(journalArticle) FROM JournalArticle journalArticle";
+		"SELECT COUNT(*) FROM JournalArticle journalArticle";
 
 	private static final String _SQL_COUNT_JOURNALARTICLE_WHERE =
-		"SELECT COUNT(journalArticle) FROM JournalArticle journalArticle WHERE ";
+		"SELECT COUNT(*) FROM JournalArticle journalArticle WHERE ";
 
 	private static final String _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN =
 		"journalArticle.resourcePrimKey";

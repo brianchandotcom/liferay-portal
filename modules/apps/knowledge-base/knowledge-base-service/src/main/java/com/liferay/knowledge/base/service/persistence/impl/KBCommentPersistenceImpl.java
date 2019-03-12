@@ -6223,10 +6223,10 @@ public class KBCommentPersistenceImpl
 		"SELECT kbComment FROM KBComment kbComment WHERE ";
 
 	private static final String _SQL_COUNT_KBCOMMENT =
-		"SELECT COUNT(kbComment) FROM KBComment kbComment";
+		"SELECT COUNT(*) FROM KBComment kbComment";
 
 	private static final String _SQL_COUNT_KBCOMMENT_WHERE =
-		"SELECT COUNT(kbComment) FROM KBComment kbComment WHERE ";
+		"SELECT COUNT(*) FROM KBComment kbComment WHERE ";
 
 	private static final String _ORDER_BY_ENTITY_ALIAS = "kbComment.";
 

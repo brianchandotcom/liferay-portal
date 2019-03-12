@@ -5029,10 +5029,10 @@ public class SAPEntryPersistenceImpl
 		"SELECT sapEntry FROM SAPEntry sapEntry WHERE ";
 
 	private static final String _SQL_COUNT_SAPENTRY =
-		"SELECT COUNT(sapEntry) FROM SAPEntry sapEntry";
+		"SELECT COUNT(*) FROM SAPEntry sapEntry";
 
 	private static final String _SQL_COUNT_SAPENTRY_WHERE =
-		"SELECT COUNT(sapEntry) FROM SAPEntry sapEntry WHERE ";
+		"SELECT COUNT(*) FROM SAPEntry sapEntry WHERE ";
 
 	private static final String _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN =
 		"sapEntry.sapEntryId";

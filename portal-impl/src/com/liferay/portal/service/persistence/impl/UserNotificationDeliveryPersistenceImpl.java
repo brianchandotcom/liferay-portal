@@ -1678,10 +1678,10 @@ public class UserNotificationDeliveryPersistenceImpl
 		"SELECT userNotificationDelivery FROM UserNotificationDelivery userNotificationDelivery WHERE ";
 
 	private static final String _SQL_COUNT_USERNOTIFICATIONDELIVERY =
-		"SELECT COUNT(userNotificationDelivery) FROM UserNotificationDelivery userNotificationDelivery";
+		"SELECT COUNT(*) FROM UserNotificationDelivery userNotificationDelivery";
 
 	private static final String _SQL_COUNT_USERNOTIFICATIONDELIVERY_WHERE =
-		"SELECT COUNT(userNotificationDelivery) FROM UserNotificationDelivery userNotificationDelivery WHERE ";
+		"SELECT COUNT(*) FROM UserNotificationDelivery userNotificationDelivery WHERE ";
 
 	private static final String _ORDER_BY_ENTITY_ALIAS =
 		"userNotificationDelivery.";

@@ -3337,10 +3337,10 @@ public class DLFileRankPersistenceImpl
 		"SELECT dlFileRank FROM DLFileRank dlFileRank WHERE ";
 
 	private static final String _SQL_COUNT_DLFILERANK =
-		"SELECT COUNT(dlFileRank) FROM DLFileRank dlFileRank";
+		"SELECT COUNT(*) FROM DLFileRank dlFileRank";
 
 	private static final String _SQL_COUNT_DLFILERANK_WHERE =
-		"SELECT COUNT(dlFileRank) FROM DLFileRank dlFileRank WHERE ";
+		"SELECT COUNT(*) FROM DLFileRank dlFileRank WHERE ";
 
 	private static final String _ORDER_BY_ENTITY_ALIAS = "dlFileRank.";
 

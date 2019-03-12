@@ -3303,10 +3303,10 @@ public class MBDiscussionPersistenceImpl
 		"SELECT mbDiscussion FROM MBDiscussion mbDiscussion WHERE ";
 
 	private static final String _SQL_COUNT_MBDISCUSSION =
-		"SELECT COUNT(mbDiscussion) FROM MBDiscussion mbDiscussion";
+		"SELECT COUNT(*) FROM MBDiscussion mbDiscussion";
 
 	private static final String _SQL_COUNT_MBDISCUSSION_WHERE =
-		"SELECT COUNT(mbDiscussion) FROM MBDiscussion mbDiscussion WHERE ";
+		"SELECT COUNT(*) FROM MBDiscussion mbDiscussion WHERE ";
 
 	private static final String _ORDER_BY_ENTITY_ALIAS = "mbDiscussion.";
 

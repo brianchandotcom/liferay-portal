@@ -5756,10 +5756,10 @@ public class JournalContentSearchPersistenceImpl
 		"SELECT journalContentSearch FROM JournalContentSearch journalContentSearch WHERE ";
 
 	private static final String _SQL_COUNT_JOURNALCONTENTSEARCH =
-		"SELECT COUNT(journalContentSearch) FROM JournalContentSearch journalContentSearch";
+		"SELECT COUNT(*) FROM JournalContentSearch journalContentSearch";
 
 	private static final String _SQL_COUNT_JOURNALCONTENTSEARCH_WHERE =
-		"SELECT COUNT(journalContentSearch) FROM JournalContentSearch journalContentSearch WHERE ";
+		"SELECT COUNT(*) FROM JournalContentSearch journalContentSearch WHERE ";
 
 	private static final String _ORDER_BY_ENTITY_ALIAS =
 		"journalContentSearch.";

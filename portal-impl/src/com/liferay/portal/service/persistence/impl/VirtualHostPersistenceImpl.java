@@ -1194,10 +1194,10 @@ public class VirtualHostPersistenceImpl
 		"SELECT virtualHost FROM VirtualHost virtualHost WHERE ";
 
 	private static final String _SQL_COUNT_VIRTUALHOST =
-		"SELECT COUNT(virtualHost) FROM VirtualHost virtualHost";
+		"SELECT COUNT(*) FROM VirtualHost virtualHost";
 
 	private static final String _SQL_COUNT_VIRTUALHOST_WHERE =
-		"SELECT COUNT(virtualHost) FROM VirtualHost virtualHost WHERE ";
+		"SELECT COUNT(*) FROM VirtualHost virtualHost WHERE ";
 
 	private static final String _ORDER_BY_ENTITY_ALIAS = "virtualHost.";
 

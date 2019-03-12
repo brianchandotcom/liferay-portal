@@ -1199,10 +1199,10 @@ public class OrgLaborPersistenceImpl
 		"SELECT orgLabor FROM OrgLabor orgLabor WHERE ";
 
 	private static final String _SQL_COUNT_ORGLABOR =
-		"SELECT COUNT(orgLabor) FROM OrgLabor orgLabor";
+		"SELECT COUNT(*) FROM OrgLabor orgLabor";
 
 	private static final String _SQL_COUNT_ORGLABOR_WHERE =
-		"SELECT COUNT(orgLabor) FROM OrgLabor orgLabor WHERE ";
+		"SELECT COUNT(*) FROM OrgLabor orgLabor WHERE ";
 
 	private static final String _ORDER_BY_ENTITY_ALIAS = "orgLabor.";
 

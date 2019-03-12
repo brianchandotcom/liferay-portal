@@ -2170,10 +2170,10 @@ public class OAuth2ScopeGrantPersistenceImpl
 		"SELECT oAuth2ScopeGrant FROM OAuth2ScopeGrant oAuth2ScopeGrant WHERE ";
 
 	private static final String _SQL_COUNT_OAUTH2SCOPEGRANT =
-		"SELECT COUNT(oAuth2ScopeGrant) FROM OAuth2ScopeGrant oAuth2ScopeGrant";
+		"SELECT COUNT(*) FROM OAuth2ScopeGrant oAuth2ScopeGrant";
 
 	private static final String _SQL_COUNT_OAUTH2SCOPEGRANT_WHERE =
-		"SELECT COUNT(oAuth2ScopeGrant) FROM OAuth2ScopeGrant oAuth2ScopeGrant WHERE ";
+		"SELECT COUNT(*) FROM OAuth2ScopeGrant oAuth2ScopeGrant WHERE ";
 
 	private static final String _ORDER_BY_ENTITY_ALIAS = "oAuth2ScopeGrant.";
 

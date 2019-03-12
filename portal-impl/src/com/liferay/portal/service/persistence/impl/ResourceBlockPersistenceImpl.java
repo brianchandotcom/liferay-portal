@@ -2412,10 +2412,10 @@ public class ResourceBlockPersistenceImpl
 		"SELECT resourceBlock FROM ResourceBlock resourceBlock WHERE ";
 
 	private static final String _SQL_COUNT_RESOURCEBLOCK =
-		"SELECT COUNT(resourceBlock) FROM ResourceBlock resourceBlock";
+		"SELECT COUNT(*) FROM ResourceBlock resourceBlock";
 
 	private static final String _SQL_COUNT_RESOURCEBLOCK_WHERE =
-		"SELECT COUNT(resourceBlock) FROM ResourceBlock resourceBlock WHERE ";
+		"SELECT COUNT(*) FROM ResourceBlock resourceBlock WHERE ";
 
 	private static final String _ORDER_BY_ENTITY_ALIAS = "resourceBlock.";
 

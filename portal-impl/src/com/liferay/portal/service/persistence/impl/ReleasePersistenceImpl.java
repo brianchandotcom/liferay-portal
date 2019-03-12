@@ -958,10 +958,10 @@ public class ReleasePersistenceImpl
 		"SELECT release_ FROM Release release_ WHERE ";
 
 	private static final String _SQL_COUNT_RELEASE_ =
-		"SELECT COUNT(release_) FROM Release release_";
+		"SELECT COUNT(*) FROM Release release_";
 
 	private static final String _SQL_COUNT_RELEASE__WHERE =
-		"SELECT COUNT(release_) FROM Release release_ WHERE ";
+		"SELECT COUNT(*) FROM Release release_ WHERE ";
 
 	private static final String _ORDER_BY_ENTITY_ALIAS = "release_.";
 

@@ -4542,10 +4542,10 @@ public class KaleoInstancePersistenceImpl
 		"SELECT kaleoInstance FROM KaleoInstance kaleoInstance WHERE ";
 
 	private static final String _SQL_COUNT_KALEOINSTANCE =
-		"SELECT COUNT(kaleoInstance) FROM KaleoInstance kaleoInstance";
+		"SELECT COUNT(*) FROM KaleoInstance kaleoInstance";
 
 	private static final String _SQL_COUNT_KALEOINSTANCE_WHERE =
-		"SELECT COUNT(kaleoInstance) FROM KaleoInstance kaleoInstance WHERE ";
+		"SELECT COUNT(*) FROM KaleoInstance kaleoInstance WHERE ";
 
 	private static final String _ORDER_BY_ENTITY_ALIAS = "kaleoInstance.";
 

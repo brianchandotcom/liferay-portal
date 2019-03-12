@@ -7835,10 +7835,10 @@ public class ResourcePermissionPersistenceImpl
 		"SELECT resourcePermission FROM ResourcePermission resourcePermission WHERE ";
 
 	private static final String _SQL_COUNT_RESOURCEPERMISSION =
-		"SELECT COUNT(resourcePermission) FROM ResourcePermission resourcePermission";
+		"SELECT COUNT(*) FROM ResourcePermission resourcePermission";
 
 	private static final String _SQL_COUNT_RESOURCEPERMISSION_WHERE =
-		"SELECT COUNT(resourcePermission) FROM ResourcePermission resourcePermission WHERE ";
+		"SELECT COUNT(*) FROM ResourcePermission resourcePermission WHERE ";
 
 	private static final String _ORDER_BY_ENTITY_ALIAS = "resourcePermission.";
 

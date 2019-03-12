@@ -1212,10 +1212,10 @@ public class PasswordTrackerPersistenceImpl
 		"SELECT passwordTracker FROM PasswordTracker passwordTracker WHERE ";
 
 	private static final String _SQL_COUNT_PASSWORDTRACKER =
-		"SELECT COUNT(passwordTracker) FROM PasswordTracker passwordTracker";
+		"SELECT COUNT(*) FROM PasswordTracker passwordTracker";
 
 	private static final String _SQL_COUNT_PASSWORDTRACKER_WHERE =
-		"SELECT COUNT(passwordTracker) FROM PasswordTracker passwordTracker WHERE ";
+		"SELECT COUNT(*) FROM PasswordTracker passwordTracker WHERE ";
 
 	private static final String _ORDER_BY_ENTITY_ALIAS = "passwordTracker.";
 

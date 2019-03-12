@@ -1394,10 +1394,10 @@ public class WeDeployAuthTokenPersistenceImpl
 		"SELECT weDeployAuthToken FROM WeDeployAuthToken weDeployAuthToken WHERE ";
 
 	private static final String _SQL_COUNT_WEDEPLOYAUTHTOKEN =
-		"SELECT COUNT(weDeployAuthToken) FROM WeDeployAuthToken weDeployAuthToken";
+		"SELECT COUNT(*) FROM WeDeployAuthToken weDeployAuthToken";
 
 	private static final String _SQL_COUNT_WEDEPLOYAUTHTOKEN_WHERE =
-		"SELECT COUNT(weDeployAuthToken) FROM WeDeployAuthToken weDeployAuthToken WHERE ";
+		"SELECT COUNT(*) FROM WeDeployAuthToken weDeployAuthToken WHERE ";
 
 	private static final String _ORDER_BY_ENTITY_ALIAS = "weDeployAuthToken.";
 

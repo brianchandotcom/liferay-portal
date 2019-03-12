@@ -3929,10 +3929,10 @@ public class KBFolderPersistenceImpl
 		"SELECT kbFolder FROM KBFolder kbFolder WHERE ";
 
 	private static final String _SQL_COUNT_KBFOLDER =
-		"SELECT COUNT(kbFolder) FROM KBFolder kbFolder";
+		"SELECT COUNT(*) FROM KBFolder kbFolder";
 
 	private static final String _SQL_COUNT_KBFOLDER_WHERE =
-		"SELECT COUNT(kbFolder) FROM KBFolder kbFolder WHERE ";
+		"SELECT COUNT(*) FROM KBFolder kbFolder WHERE ";
 
 	private static final String _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN =
 		"kbFolder.kbFolderId";

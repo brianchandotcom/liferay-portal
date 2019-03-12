@@ -1956,10 +1956,10 @@ public class CTEntryAggregatePersistenceImpl
 		"SELECT ctEntryAggregate FROM CTEntryAggregate ctEntryAggregate WHERE ";
 
 	private static final String _SQL_COUNT_CTENTRYAGGREGATE =
-		"SELECT COUNT(ctEntryAggregate) FROM CTEntryAggregate ctEntryAggregate";
+		"SELECT COUNT(*) FROM CTEntryAggregate ctEntryAggregate";
 
 	private static final String _SQL_COUNT_CTENTRYAGGREGATE_WHERE =
-		"SELECT COUNT(ctEntryAggregate) FROM CTEntryAggregate ctEntryAggregate WHERE ";
+		"SELECT COUNT(*) FROM CTEntryAggregate ctEntryAggregate WHERE ";
 
 	private static final String _ORDER_BY_ENTITY_ALIAS = "ctEntryAggregate.";
 

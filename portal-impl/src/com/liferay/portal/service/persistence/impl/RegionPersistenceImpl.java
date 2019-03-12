@@ -2642,10 +2642,10 @@ public class RegionPersistenceImpl
 		"SELECT region FROM Region region WHERE ";
 
 	private static final String _SQL_COUNT_REGION =
-		"SELECT COUNT(region) FROM Region region";
+		"SELECT COUNT(*) FROM Region region";
 
 	private static final String _SQL_COUNT_REGION_WHERE =
-		"SELECT COUNT(region) FROM Region region WHERE ";
+		"SELECT COUNT(*) FROM Region region WHERE ";
 
 	private static final String _ORDER_BY_ENTITY_ALIAS = "region.";
 

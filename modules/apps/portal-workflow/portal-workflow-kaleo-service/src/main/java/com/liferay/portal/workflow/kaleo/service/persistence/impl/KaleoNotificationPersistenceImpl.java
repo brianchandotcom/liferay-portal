@@ -3271,10 +3271,10 @@ public class KaleoNotificationPersistenceImpl
 		"SELECT kaleoNotification FROM KaleoNotification kaleoNotification WHERE ";
 
 	private static final String _SQL_COUNT_KALEONOTIFICATION =
-		"SELECT COUNT(kaleoNotification) FROM KaleoNotification kaleoNotification";
+		"SELECT COUNT(*) FROM KaleoNotification kaleoNotification";
 
 	private static final String _SQL_COUNT_KALEONOTIFICATION_WHERE =
-		"SELECT COUNT(kaleoNotification) FROM KaleoNotification kaleoNotification WHERE ";
+		"SELECT COUNT(*) FROM KaleoNotification kaleoNotification WHERE ";
 
 	private static final String _ORDER_BY_ENTITY_ALIAS = "kaleoNotification.";
 

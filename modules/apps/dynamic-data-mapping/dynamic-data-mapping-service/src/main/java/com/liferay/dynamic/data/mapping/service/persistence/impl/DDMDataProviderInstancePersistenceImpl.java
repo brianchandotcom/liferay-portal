@@ -4334,10 +4334,10 @@ public class DDMDataProviderInstancePersistenceImpl
 		"SELECT ddmDataProviderInstance FROM DDMDataProviderInstance ddmDataProviderInstance WHERE ";
 
 	private static final String _SQL_COUNT_DDMDATAPROVIDERINSTANCE =
-		"SELECT COUNT(ddmDataProviderInstance) FROM DDMDataProviderInstance ddmDataProviderInstance";
+		"SELECT COUNT(*) FROM DDMDataProviderInstance ddmDataProviderInstance";
 
 	private static final String _SQL_COUNT_DDMDATAPROVIDERINSTANCE_WHERE =
-		"SELECT COUNT(ddmDataProviderInstance) FROM DDMDataProviderInstance ddmDataProviderInstance WHERE ";
+		"SELECT COUNT(*) FROM DDMDataProviderInstance ddmDataProviderInstance WHERE ";
 
 	private static final String _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN =
 		"ddmDataProviderInstance.dataProviderInstanceId";

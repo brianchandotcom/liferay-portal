@@ -9848,10 +9848,10 @@ public class UserNotificationEventPersistenceImpl
 		"SELECT userNotificationEvent FROM UserNotificationEvent userNotificationEvent WHERE ";
 
 	private static final String _SQL_COUNT_USERNOTIFICATIONEVENT =
-		"SELECT COUNT(userNotificationEvent) FROM UserNotificationEvent userNotificationEvent";
+		"SELECT COUNT(*) FROM UserNotificationEvent userNotificationEvent";
 
 	private static final String _SQL_COUNT_USERNOTIFICATIONEVENT_WHERE =
-		"SELECT COUNT(userNotificationEvent) FROM UserNotificationEvent userNotificationEvent WHERE ";
+		"SELECT COUNT(*) FROM UserNotificationEvent userNotificationEvent WHERE ";
 
 	private static final String _ORDER_BY_ENTITY_ALIAS =
 		"userNotificationEvent.";

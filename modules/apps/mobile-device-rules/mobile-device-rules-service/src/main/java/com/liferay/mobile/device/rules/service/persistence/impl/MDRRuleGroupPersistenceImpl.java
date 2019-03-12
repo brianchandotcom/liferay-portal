@@ -3655,10 +3655,10 @@ public class MDRRuleGroupPersistenceImpl
 		"SELECT mdrRuleGroup FROM MDRRuleGroup mdrRuleGroup WHERE ";
 
 	private static final String _SQL_COUNT_MDRRULEGROUP =
-		"SELECT COUNT(mdrRuleGroup) FROM MDRRuleGroup mdrRuleGroup";
+		"SELECT COUNT(*) FROM MDRRuleGroup mdrRuleGroup";
 
 	private static final String _SQL_COUNT_MDRRULEGROUP_WHERE =
-		"SELECT COUNT(mdrRuleGroup) FROM MDRRuleGroup mdrRuleGroup WHERE ";
+		"SELECT COUNT(*) FROM MDRRuleGroup mdrRuleGroup WHERE ";
 
 	private static final String _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN =
 		"mdrRuleGroup.ruleGroupId";

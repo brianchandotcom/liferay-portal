@@ -22562,10 +22562,10 @@ public class MBMessagePersistenceImpl
 		"SELECT mbMessage FROM MBMessage mbMessage WHERE ";
 
 	private static final String _SQL_COUNT_MBMESSAGE =
-		"SELECT COUNT(mbMessage) FROM MBMessage mbMessage";
+		"SELECT COUNT(*) FROM MBMessage mbMessage";
 
 	private static final String _SQL_COUNT_MBMESSAGE_WHERE =
-		"SELECT COUNT(mbMessage) FROM MBMessage mbMessage WHERE ";
+		"SELECT COUNT(*) FROM MBMessage mbMessage WHERE ";
 
 	private static final String _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN =
 		"mbMessage.rootMessageId";

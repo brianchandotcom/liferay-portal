@@ -7501,10 +7501,10 @@ public class SegmentsExperiencePersistenceImpl
 		"SELECT segmentsExperience FROM SegmentsExperience segmentsExperience WHERE ";
 
 	private static final String _SQL_COUNT_SEGMENTSEXPERIENCE =
-		"SELECT COUNT(segmentsExperience) FROM SegmentsExperience segmentsExperience";
+		"SELECT COUNT(*) FROM SegmentsExperience segmentsExperience";
 
 	private static final String _SQL_COUNT_SEGMENTSEXPERIENCE_WHERE =
-		"SELECT COUNT(segmentsExperience) FROM SegmentsExperience segmentsExperience WHERE ";
+		"SELECT COUNT(*) FROM SegmentsExperience segmentsExperience WHERE ";
 
 	private static final String _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN =
 		"segmentsExperience.segmentsExperienceId";

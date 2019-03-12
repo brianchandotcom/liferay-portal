@@ -1375,10 +1375,10 @@ public class WeDeployAuthAppPersistenceImpl
 		"SELECT weDeployAuthApp FROM WeDeployAuthApp weDeployAuthApp WHERE ";
 
 	private static final String _SQL_COUNT_WEDEPLOYAUTHAPP =
-		"SELECT COUNT(weDeployAuthApp) FROM WeDeployAuthApp weDeployAuthApp";
+		"SELECT COUNT(*) FROM WeDeployAuthApp weDeployAuthApp";
 
 	private static final String _SQL_COUNT_WEDEPLOYAUTHAPP_WHERE =
-		"SELECT COUNT(weDeployAuthApp) FROM WeDeployAuthApp weDeployAuthApp WHERE ";
+		"SELECT COUNT(*) FROM WeDeployAuthApp weDeployAuthApp WHERE ";
 
 	private static final String _ORDER_BY_ENTITY_ALIAS = "weDeployAuthApp.";
 

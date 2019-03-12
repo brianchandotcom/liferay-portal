@@ -2415,10 +2415,10 @@ public class LayoutSetPersistenceImpl
 		"SELECT layoutSet FROM LayoutSet layoutSet WHERE ";
 
 	private static final String _SQL_COUNT_LAYOUTSET =
-		"SELECT COUNT(layoutSet) FROM LayoutSet layoutSet";
+		"SELECT COUNT(*) FROM LayoutSet layoutSet";
 
 	private static final String _SQL_COUNT_LAYOUTSET_WHERE =
-		"SELECT COUNT(layoutSet) FROM LayoutSet layoutSet WHERE ";
+		"SELECT COUNT(*) FROM LayoutSet layoutSet WHERE ";
 
 	private static final String _ORDER_BY_ENTITY_ALIAS = "layoutSet.";
 

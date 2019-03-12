@@ -3821,10 +3821,10 @@ public class AssetListEntryUsagePersistenceImpl
 		"SELECT assetListEntryUsage FROM AssetListEntryUsage assetListEntryUsage WHERE ";
 
 	private static final String _SQL_COUNT_ASSETLISTENTRYUSAGE =
-		"SELECT COUNT(assetListEntryUsage) FROM AssetListEntryUsage assetListEntryUsage";
+		"SELECT COUNT(*) FROM AssetListEntryUsage assetListEntryUsage";
 
 	private static final String _SQL_COUNT_ASSETLISTENTRYUSAGE_WHERE =
-		"SELECT COUNT(assetListEntryUsage) FROM AssetListEntryUsage assetListEntryUsage WHERE ";
+		"SELECT COUNT(*) FROM AssetListEntryUsage assetListEntryUsage WHERE ";
 
 	private static final String _ORDER_BY_ENTITY_ALIAS = "assetListEntryUsage.";
 

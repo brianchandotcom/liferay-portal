@@ -3916,10 +3916,10 @@ public class KaleoTaskFormInstancePersistenceImpl
 		"SELECT kaleoTaskFormInstance FROM KaleoTaskFormInstance kaleoTaskFormInstance WHERE ";
 
 	private static final String _SQL_COUNT_KALEOTASKFORMINSTANCE =
-		"SELECT COUNT(kaleoTaskFormInstance) FROM KaleoTaskFormInstance kaleoTaskFormInstance";
+		"SELECT COUNT(*) FROM KaleoTaskFormInstance kaleoTaskFormInstance";
 
 	private static final String _SQL_COUNT_KALEOTASKFORMINSTANCE_WHERE =
-		"SELECT COUNT(kaleoTaskFormInstance) FROM KaleoTaskFormInstance kaleoTaskFormInstance WHERE ";
+		"SELECT COUNT(*) FROM KaleoTaskFormInstance kaleoTaskFormInstance WHERE ";
 
 	private static final String _ORDER_BY_ENTITY_ALIAS =
 		"kaleoTaskFormInstance.";

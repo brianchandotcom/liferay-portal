@@ -4341,10 +4341,10 @@ public class DLFileEntryTypePersistenceImpl
 		"SELECT dlFileEntryType FROM DLFileEntryType dlFileEntryType WHERE ";
 
 	private static final String _SQL_COUNT_DLFILEENTRYTYPE =
-		"SELECT COUNT(dlFileEntryType) FROM DLFileEntryType dlFileEntryType";
+		"SELECT COUNT(*) FROM DLFileEntryType dlFileEntryType";
 
 	private static final String _SQL_COUNT_DLFILEENTRYTYPE_WHERE =
-		"SELECT COUNT(dlFileEntryType) FROM DLFileEntryType dlFileEntryType WHERE ";
+		"SELECT COUNT(*) FROM DLFileEntryType dlFileEntryType WHERE ";
 
 	private static final String _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN =
 		"dlFileEntryType.fileEntryTypeId";

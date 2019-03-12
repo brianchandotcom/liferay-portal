@@ -2922,10 +2922,10 @@ public class FriendlyURLEntryPersistenceImpl
 		"SELECT friendlyURLEntry FROM FriendlyURLEntry friendlyURLEntry WHERE ";
 
 	private static final String _SQL_COUNT_FRIENDLYURLENTRY =
-		"SELECT COUNT(friendlyURLEntry) FROM FriendlyURLEntry friendlyURLEntry";
+		"SELECT COUNT(*) FROM FriendlyURLEntry friendlyURLEntry";
 
 	private static final String _SQL_COUNT_FRIENDLYURLENTRY_WHERE =
-		"SELECT COUNT(friendlyURLEntry) FROM FriendlyURLEntry friendlyURLEntry WHERE ";
+		"SELECT COUNT(*) FROM FriendlyURLEntry friendlyURLEntry WHERE ";
 
 	private static final String _ORDER_BY_ENTITY_ALIAS = "friendlyURLEntry.";
 

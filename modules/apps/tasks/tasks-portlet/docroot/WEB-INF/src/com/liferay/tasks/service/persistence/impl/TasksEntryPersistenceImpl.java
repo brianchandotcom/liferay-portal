@@ -11382,10 +11382,10 @@ public class TasksEntryPersistenceImpl
 		"SELECT tasksEntry FROM TasksEntry tasksEntry WHERE ";
 
 	private static final String _SQL_COUNT_TASKSENTRY =
-		"SELECT COUNT(tasksEntry) FROM TasksEntry tasksEntry";
+		"SELECT COUNT(*) FROM TasksEntry tasksEntry";
 
 	private static final String _SQL_COUNT_TASKSENTRY_WHERE =
-		"SELECT COUNT(tasksEntry) FROM TasksEntry tasksEntry WHERE ";
+		"SELECT COUNT(*) FROM TasksEntry tasksEntry WHERE ";
 
 	private static final String _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN =
 		"tasksEntry.tasksEntryId";

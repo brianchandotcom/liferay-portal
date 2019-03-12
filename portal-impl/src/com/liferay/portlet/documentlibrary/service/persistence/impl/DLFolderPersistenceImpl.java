@@ -14318,10 +14318,10 @@ public class DLFolderPersistenceImpl
 		"SELECT dlFolder FROM DLFolder dlFolder WHERE ";
 
 	private static final String _SQL_COUNT_DLFOLDER =
-		"SELECT COUNT(dlFolder) FROM DLFolder dlFolder";
+		"SELECT COUNT(*) FROM DLFolder dlFolder";
 
 	private static final String _SQL_COUNT_DLFOLDER_WHERE =
-		"SELECT COUNT(dlFolder) FROM DLFolder dlFolder WHERE ";
+		"SELECT COUNT(*) FROM DLFolder dlFolder WHERE ";
 
 	private static final String _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN =
 		"dlFolder.folderId";

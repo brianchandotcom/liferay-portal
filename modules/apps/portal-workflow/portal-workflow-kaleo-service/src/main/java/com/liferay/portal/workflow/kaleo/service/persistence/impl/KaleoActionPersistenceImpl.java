@@ -3225,10 +3225,10 @@ public class KaleoActionPersistenceImpl
 		"SELECT kaleoAction FROM KaleoAction kaleoAction WHERE ";
 
 	private static final String _SQL_COUNT_KALEOACTION =
-		"SELECT COUNT(kaleoAction) FROM KaleoAction kaleoAction";
+		"SELECT COUNT(*) FROM KaleoAction kaleoAction";
 
 	private static final String _SQL_COUNT_KALEOACTION_WHERE =
-		"SELECT COUNT(kaleoAction) FROM KaleoAction kaleoAction WHERE ";
+		"SELECT COUNT(*) FROM KaleoAction kaleoAction WHERE ";
 
 	private static final String _ORDER_BY_ENTITY_ALIAS = "kaleoAction.";
 

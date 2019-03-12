@@ -4421,10 +4421,10 @@ public class KaleoLogPersistenceImpl
 		"SELECT kaleoLog FROM KaleoLog kaleoLog WHERE ";
 
 	private static final String _SQL_COUNT_KALEOLOG =
-		"SELECT COUNT(kaleoLog) FROM KaleoLog kaleoLog";
+		"SELECT COUNT(*) FROM KaleoLog kaleoLog";
 
 	private static final String _SQL_COUNT_KALEOLOG_WHERE =
-		"SELECT COUNT(kaleoLog) FROM KaleoLog kaleoLog WHERE ";
+		"SELECT COUNT(*) FROM KaleoLog kaleoLog WHERE ";
 
 	private static final String _ORDER_BY_ENTITY_ALIAS = "kaleoLog.";
 

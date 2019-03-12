@@ -6892,10 +6892,10 @@ public class SocialRelationPersistenceImpl
 		"SELECT socialRelation FROM SocialRelation socialRelation WHERE ";
 
 	private static final String _SQL_COUNT_SOCIALRELATION =
-		"SELECT COUNT(socialRelation) FROM SocialRelation socialRelation";
+		"SELECT COUNT(*) FROM SocialRelation socialRelation";
 
 	private static final String _SQL_COUNT_SOCIALRELATION_WHERE =
-		"SELECT COUNT(socialRelation) FROM SocialRelation socialRelation WHERE ";
+		"SELECT COUNT(*) FROM SocialRelation socialRelation WHERE ";
 
 	private static final String _ORDER_BY_ENTITY_ALIAS = "socialRelation.";
 

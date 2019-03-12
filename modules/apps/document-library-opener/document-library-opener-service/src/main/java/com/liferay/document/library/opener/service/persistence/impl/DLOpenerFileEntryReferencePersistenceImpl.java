@@ -994,10 +994,10 @@ public class DLOpenerFileEntryReferencePersistenceImpl
 		"SELECT dlOpenerFileEntryReference FROM DLOpenerFileEntryReference dlOpenerFileEntryReference WHERE ";
 
 	private static final String _SQL_COUNT_DLOPENERFILEENTRYREFERENCE =
-		"SELECT COUNT(dlOpenerFileEntryReference) FROM DLOpenerFileEntryReference dlOpenerFileEntryReference";
+		"SELECT COUNT(*) FROM DLOpenerFileEntryReference dlOpenerFileEntryReference";
 
 	private static final String _SQL_COUNT_DLOPENERFILEENTRYREFERENCE_WHERE =
-		"SELECT COUNT(dlOpenerFileEntryReference) FROM DLOpenerFileEntryReference dlOpenerFileEntryReference WHERE ";
+		"SELECT COUNT(*) FROM DLOpenerFileEntryReference dlOpenerFileEntryReference WHERE ";
 
 	private static final String _ORDER_BY_ENTITY_ALIAS =
 		"dlOpenerFileEntryReference.";

@@ -3686,10 +3686,10 @@ public class DDMFormInstancePersistenceImpl
 		"SELECT ddmFormInstance FROM DDMFormInstance ddmFormInstance WHERE ";
 
 	private static final String _SQL_COUNT_DDMFORMINSTANCE =
-		"SELECT COUNT(ddmFormInstance) FROM DDMFormInstance ddmFormInstance";
+		"SELECT COUNT(*) FROM DDMFormInstance ddmFormInstance";
 
 	private static final String _SQL_COUNT_DDMFORMINSTANCE_WHERE =
-		"SELECT COUNT(ddmFormInstance) FROM DDMFormInstance ddmFormInstance WHERE ";
+		"SELECT COUNT(*) FROM DDMFormInstance ddmFormInstance WHERE ";
 
 	private static final String _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN =
 		"ddmFormInstance.formInstanceId";

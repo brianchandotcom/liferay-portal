@@ -2725,10 +2725,10 @@ public class DDMStructureLinkPersistenceImpl
 		"SELECT ddmStructureLink FROM DDMStructureLink ddmStructureLink WHERE ";
 
 	private static final String _SQL_COUNT_DDMSTRUCTURELINK =
-		"SELECT COUNT(ddmStructureLink) FROM DDMStructureLink ddmStructureLink";
+		"SELECT COUNT(*) FROM DDMStructureLink ddmStructureLink";
 
 	private static final String _SQL_COUNT_DDMSTRUCTURELINK_WHERE =
-		"SELECT COUNT(ddmStructureLink) FROM DDMStructureLink ddmStructureLink WHERE ";
+		"SELECT COUNT(*) FROM DDMStructureLink ddmStructureLink WHERE ";
 
 	private static final String _ORDER_BY_ENTITY_ALIAS = "ddmStructureLink.";
 

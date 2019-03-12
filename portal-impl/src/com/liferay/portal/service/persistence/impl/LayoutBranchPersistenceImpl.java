@@ -2835,10 +2835,10 @@ public class LayoutBranchPersistenceImpl
 		"SELECT layoutBranch FROM LayoutBranch layoutBranch WHERE ";
 
 	private static final String _SQL_COUNT_LAYOUTBRANCH =
-		"SELECT COUNT(layoutBranch) FROM LayoutBranch layoutBranch";
+		"SELECT COUNT(*) FROM LayoutBranch layoutBranch";
 
 	private static final String _SQL_COUNT_LAYOUTBRANCH_WHERE =
-		"SELECT COUNT(layoutBranch) FROM LayoutBranch layoutBranch WHERE ";
+		"SELECT COUNT(*) FROM LayoutBranch layoutBranch WHERE ";
 
 	private static final String _ORDER_BY_ENTITY_ALIAS = "layoutBranch.";
 

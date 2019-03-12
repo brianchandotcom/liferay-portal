@@ -11193,10 +11193,10 @@ public class UserPersistenceImpl
 		"SELECT user FROM User user WHERE ";
 
 	private static final String _SQL_COUNT_USER =
-		"SELECT COUNT(user) FROM User user";
+		"SELECT COUNT(*) FROM User user";
 
 	private static final String _SQL_COUNT_USER_WHERE =
-		"SELECT COUNT(user) FROM User user WHERE ";
+		"SELECT COUNT(*) FROM User user WHERE ";
 
 	private static final String _ORDER_BY_ENTITY_ALIAS = "user.";
 

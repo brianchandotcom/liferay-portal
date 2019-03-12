@@ -5474,10 +5474,10 @@ public class AMImageEntryPersistenceImpl
 		"SELECT amImageEntry FROM AMImageEntry amImageEntry WHERE ";
 
 	private static final String _SQL_COUNT_AMIMAGEENTRY =
-		"SELECT COUNT(amImageEntry) FROM AMImageEntry amImageEntry";
+		"SELECT COUNT(*) FROM AMImageEntry amImageEntry";
 
 	private static final String _SQL_COUNT_AMIMAGEENTRY_WHERE =
-		"SELECT COUNT(amImageEntry) FROM AMImageEntry amImageEntry WHERE ";
+		"SELECT COUNT(*) FROM AMImageEntry amImageEntry WHERE ";
 
 	private static final String _ORDER_BY_ENTITY_ALIAS = "amImageEntry.";
 

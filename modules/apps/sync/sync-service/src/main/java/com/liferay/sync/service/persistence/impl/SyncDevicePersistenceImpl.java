@@ -3067,10 +3067,10 @@ public class SyncDevicePersistenceImpl
 		"SELECT syncDevice FROM SyncDevice syncDevice WHERE ";
 
 	private static final String _SQL_COUNT_SYNCDEVICE =
-		"SELECT COUNT(syncDevice) FROM SyncDevice syncDevice";
+		"SELECT COUNT(*) FROM SyncDevice syncDevice";
 
 	private static final String _SQL_COUNT_SYNCDEVICE_WHERE =
-		"SELECT COUNT(syncDevice) FROM SyncDevice syncDevice WHERE ";
+		"SELECT COUNT(*) FROM SyncDevice syncDevice WHERE ";
 
 	private static final String _ORDER_BY_ENTITY_ALIAS = "syncDevice.";
 

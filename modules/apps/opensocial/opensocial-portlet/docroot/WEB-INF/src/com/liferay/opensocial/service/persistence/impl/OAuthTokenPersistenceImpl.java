@@ -1835,10 +1835,10 @@ public class OAuthTokenPersistenceImpl
 		"SELECT oAuthToken FROM OAuthToken oAuthToken WHERE ";
 
 	private static final String _SQL_COUNT_OAUTHTOKEN =
-		"SELECT COUNT(oAuthToken) FROM OAuthToken oAuthToken";
+		"SELECT COUNT(*) FROM OAuthToken oAuthToken";
 
 	private static final String _SQL_COUNT_OAUTHTOKEN_WHERE =
-		"SELECT COUNT(oAuthToken) FROM OAuthToken oAuthToken WHERE ";
+		"SELECT COUNT(*) FROM OAuthToken oAuthToken WHERE ";
 
 	private static final String _ORDER_BY_ENTITY_ALIAS = "oAuthToken.";
 

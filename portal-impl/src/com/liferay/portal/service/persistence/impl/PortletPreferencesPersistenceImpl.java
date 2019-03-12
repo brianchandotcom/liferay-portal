@@ -6843,10 +6843,10 @@ public class PortletPreferencesPersistenceImpl
 		"SELECT portletPreferences FROM PortletPreferences portletPreferences WHERE ";
 
 	private static final String _SQL_COUNT_PORTLETPREFERENCES =
-		"SELECT COUNT(portletPreferences) FROM PortletPreferences portletPreferences";
+		"SELECT COUNT(*) FROM PortletPreferences portletPreferences";
 
 	private static final String _SQL_COUNT_PORTLETPREFERENCES_WHERE =
-		"SELECT COUNT(portletPreferences) FROM PortletPreferences portletPreferences WHERE ";
+		"SELECT COUNT(*) FROM PortletPreferences portletPreferences WHERE ";
 
 	private static final String _ORDER_BY_ENTITY_ALIAS = "portletPreferences.";
 

@@ -2453,10 +2453,10 @@ public class ExpandoColumnPersistenceImpl
 		"SELECT expandoColumn FROM ExpandoColumn expandoColumn WHERE ";
 
 	private static final String _SQL_COUNT_EXPANDOCOLUMN =
-		"SELECT COUNT(expandoColumn) FROM ExpandoColumn expandoColumn";
+		"SELECT COUNT(*) FROM ExpandoColumn expandoColumn";
 
 	private static final String _SQL_COUNT_EXPANDOCOLUMN_WHERE =
-		"SELECT COUNT(expandoColumn) FROM ExpandoColumn expandoColumn WHERE ";
+		"SELECT COUNT(*) FROM ExpandoColumn expandoColumn WHERE ";
 
 	private static final String _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN =
 		"expandoColumn.columnId";

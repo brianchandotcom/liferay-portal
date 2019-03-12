@@ -3458,10 +3458,10 @@ public class JournalFeedPersistenceImpl
 		"SELECT journalFeed FROM JournalFeed journalFeed WHERE ";
 
 	private static final String _SQL_COUNT_JOURNALFEED =
-		"SELECT COUNT(journalFeed) FROM JournalFeed journalFeed";
+		"SELECT COUNT(*) FROM JournalFeed journalFeed";
 
 	private static final String _SQL_COUNT_JOURNALFEED_WHERE =
-		"SELECT COUNT(journalFeed) FROM JournalFeed journalFeed WHERE ";
+		"SELECT COUNT(*) FROM JournalFeed journalFeed WHERE ";
 
 	private static final String _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN =
 		"journalFeed.id_";

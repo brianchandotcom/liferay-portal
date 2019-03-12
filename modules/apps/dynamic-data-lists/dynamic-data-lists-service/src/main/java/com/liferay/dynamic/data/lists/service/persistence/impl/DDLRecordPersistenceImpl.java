@@ -4595,10 +4595,10 @@ public class DDLRecordPersistenceImpl
 		"SELECT ddlRecord FROM DDLRecord ddlRecord WHERE ";
 
 	private static final String _SQL_COUNT_DDLRECORD =
-		"SELECT COUNT(ddlRecord) FROM DDLRecord ddlRecord";
+		"SELECT COUNT(*) FROM DDLRecord ddlRecord";
 
 	private static final String _SQL_COUNT_DDLRECORD_WHERE =
-		"SELECT COUNT(ddlRecord) FROM DDLRecord ddlRecord WHERE ";
+		"SELECT COUNT(*) FROM DDLRecord ddlRecord WHERE ";
 
 	private static final String _ORDER_BY_ENTITY_ALIAS = "ddlRecord.";
 

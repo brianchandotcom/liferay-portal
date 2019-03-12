@@ -8133,10 +8133,10 @@ public class AnnouncementsEntryPersistenceImpl
 		"SELECT announcementsEntry FROM AnnouncementsEntry announcementsEntry WHERE ";
 
 	private static final String _SQL_COUNT_ANNOUNCEMENTSENTRY =
-		"SELECT COUNT(announcementsEntry) FROM AnnouncementsEntry announcementsEntry";
+		"SELECT COUNT(*) FROM AnnouncementsEntry announcementsEntry";
 
 	private static final String _SQL_COUNT_ANNOUNCEMENTSENTRY_WHERE =
-		"SELECT COUNT(announcementsEntry) FROM AnnouncementsEntry announcementsEntry WHERE ";
+		"SELECT COUNT(*) FROM AnnouncementsEntry announcementsEntry WHERE ";
 
 	private static final String _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN =
 		"announcementsEntry.entryId";

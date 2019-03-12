@@ -3608,10 +3608,10 @@ public class MBThreadFlagPersistenceImpl
 		"SELECT mbThreadFlag FROM MBThreadFlag mbThreadFlag WHERE ";
 
 	private static final String _SQL_COUNT_MBTHREADFLAG =
-		"SELECT COUNT(mbThreadFlag) FROM MBThreadFlag mbThreadFlag";
+		"SELECT COUNT(*) FROM MBThreadFlag mbThreadFlag";
 
 	private static final String _SQL_COUNT_MBTHREADFLAG_WHERE =
-		"SELECT COUNT(mbThreadFlag) FROM MBThreadFlag mbThreadFlag WHERE ";
+		"SELECT COUNT(*) FROM MBThreadFlag mbThreadFlag WHERE ";
 
 	private static final String _ORDER_BY_ENTITY_ALIAS = "mbThreadFlag.";
 

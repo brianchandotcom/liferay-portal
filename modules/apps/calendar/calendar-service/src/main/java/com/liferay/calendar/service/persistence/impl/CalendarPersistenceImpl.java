@@ -4332,10 +4332,10 @@ public class CalendarPersistenceImpl
 		"SELECT calendar FROM Calendar calendar WHERE ";
 
 	private static final String _SQL_COUNT_CALENDAR =
-		"SELECT COUNT(calendar) FROM Calendar calendar";
+		"SELECT COUNT(*) FROM Calendar calendar";
 
 	private static final String _SQL_COUNT_CALENDAR_WHERE =
-		"SELECT COUNT(calendar) FROM Calendar calendar WHERE ";
+		"SELECT COUNT(*) FROM Calendar calendar WHERE ";
 
 	private static final String _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN =
 		"calendar.calendarId";

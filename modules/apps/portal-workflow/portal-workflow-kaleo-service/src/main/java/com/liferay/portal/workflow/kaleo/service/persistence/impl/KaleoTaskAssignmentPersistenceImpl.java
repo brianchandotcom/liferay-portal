@@ -3286,10 +3286,10 @@ public class KaleoTaskAssignmentPersistenceImpl
 		"SELECT kaleoTaskAssignment FROM KaleoTaskAssignment kaleoTaskAssignment WHERE ";
 
 	private static final String _SQL_COUNT_KALEOTASKASSIGNMENT =
-		"SELECT COUNT(kaleoTaskAssignment) FROM KaleoTaskAssignment kaleoTaskAssignment";
+		"SELECT COUNT(*) FROM KaleoTaskAssignment kaleoTaskAssignment";
 
 	private static final String _SQL_COUNT_KALEOTASKASSIGNMENT_WHERE =
-		"SELECT COUNT(kaleoTaskAssignment) FROM KaleoTaskAssignment kaleoTaskAssignment WHERE ";
+		"SELECT COUNT(*) FROM KaleoTaskAssignment kaleoTaskAssignment WHERE ";
 
 	private static final String _ORDER_BY_ENTITY_ALIAS = "kaleoTaskAssignment.";
 

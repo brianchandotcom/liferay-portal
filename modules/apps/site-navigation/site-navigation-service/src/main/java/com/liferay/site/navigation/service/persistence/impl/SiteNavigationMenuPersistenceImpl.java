@@ -6588,10 +6588,10 @@ public class SiteNavigationMenuPersistenceImpl
 		"SELECT siteNavigationMenu FROM SiteNavigationMenu siteNavigationMenu WHERE ";
 
 	private static final String _SQL_COUNT_SITENAVIGATIONMENU =
-		"SELECT COUNT(siteNavigationMenu) FROM SiteNavigationMenu siteNavigationMenu";
+		"SELECT COUNT(*) FROM SiteNavigationMenu siteNavigationMenu";
 
 	private static final String _SQL_COUNT_SITENAVIGATIONMENU_WHERE =
-		"SELECT COUNT(siteNavigationMenu) FROM SiteNavigationMenu siteNavigationMenu WHERE ";
+		"SELECT COUNT(*) FROM SiteNavigationMenu siteNavigationMenu WHERE ";
 
 	private static final String _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN =
 		"siteNavigationMenu.siteNavigationMenuId";

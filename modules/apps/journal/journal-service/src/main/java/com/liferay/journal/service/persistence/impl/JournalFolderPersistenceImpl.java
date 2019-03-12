@@ -8545,10 +8545,10 @@ public class JournalFolderPersistenceImpl
 		"SELECT journalFolder FROM JournalFolder journalFolder WHERE ";
 
 	private static final String _SQL_COUNT_JOURNALFOLDER =
-		"SELECT COUNT(journalFolder) FROM JournalFolder journalFolder";
+		"SELECT COUNT(*) FROM JournalFolder journalFolder";
 
 	private static final String _SQL_COUNT_JOURNALFOLDER_WHERE =
-		"SELECT COUNT(journalFolder) FROM JournalFolder journalFolder WHERE ";
+		"SELECT COUNT(*) FROM JournalFolder journalFolder WHERE ";
 
 	private static final String _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN =
 		"journalFolder.folderId";

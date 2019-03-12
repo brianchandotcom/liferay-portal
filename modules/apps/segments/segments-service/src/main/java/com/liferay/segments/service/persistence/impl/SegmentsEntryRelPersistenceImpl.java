@@ -2857,10 +2857,10 @@ public class SegmentsEntryRelPersistenceImpl
 		"SELECT segmentsEntryRel FROM SegmentsEntryRel segmentsEntryRel WHERE ";
 
 	private static final String _SQL_COUNT_SEGMENTSENTRYREL =
-		"SELECT COUNT(segmentsEntryRel) FROM SegmentsEntryRel segmentsEntryRel";
+		"SELECT COUNT(*) FROM SegmentsEntryRel segmentsEntryRel";
 
 	private static final String _SQL_COUNT_SEGMENTSENTRYREL_WHERE =
-		"SELECT COUNT(segmentsEntryRel) FROM SegmentsEntryRel segmentsEntryRel WHERE ";
+		"SELECT COUNT(*) FROM SegmentsEntryRel segmentsEntryRel WHERE ";
 
 	private static final String _ORDER_BY_ENTITY_ALIAS = "segmentsEntryRel.";
 

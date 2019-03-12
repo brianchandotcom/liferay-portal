@@ -1016,10 +1016,10 @@ public class HtmlPreviewEntryPersistenceImpl
 		"SELECT htmlPreviewEntry FROM HtmlPreviewEntry htmlPreviewEntry WHERE ";
 
 	private static final String _SQL_COUNT_HTMLPREVIEWENTRY =
-		"SELECT COUNT(htmlPreviewEntry) FROM HtmlPreviewEntry htmlPreviewEntry";
+		"SELECT COUNT(*) FROM HtmlPreviewEntry htmlPreviewEntry";
 
 	private static final String _SQL_COUNT_HTMLPREVIEWENTRY_WHERE =
-		"SELECT COUNT(htmlPreviewEntry) FROM HtmlPreviewEntry htmlPreviewEntry WHERE ";
+		"SELECT COUNT(*) FROM HtmlPreviewEntry htmlPreviewEntry WHERE ";
 
 	private static final String _ORDER_BY_ENTITY_ALIAS = "htmlPreviewEntry.";
 

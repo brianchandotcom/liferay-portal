@@ -5424,10 +5424,10 @@ public class EntryPersistenceImpl
 		"SELECT entry FROM Entry entry WHERE ";
 
 	private static final String _SQL_COUNT_ENTRY =
-		"SELECT COUNT(entry) FROM Entry entry";
+		"SELECT COUNT(*) FROM Entry entry";
 
 	private static final String _SQL_COUNT_ENTRY_WHERE =
-		"SELECT COUNT(entry) FROM Entry entry WHERE ";
+		"SELECT COUNT(*) FROM Entry entry WHERE ";
 
 	private static final String _ORDER_BY_ENTITY_ALIAS = "entry.";
 

@@ -2210,10 +2210,10 @@ public class CTEntryPersistenceImpl
 		"SELECT ctEntry FROM CTEntry ctEntry WHERE ";
 
 	private static final String _SQL_COUNT_CTENTRY =
-		"SELECT COUNT(ctEntry) FROM CTEntry ctEntry";
+		"SELECT COUNT(*) FROM CTEntry ctEntry";
 
 	private static final String _SQL_COUNT_CTENTRY_WHERE =
-		"SELECT COUNT(ctEntry) FROM CTEntry ctEntry WHERE ";
+		"SELECT COUNT(*) FROM CTEntry ctEntry WHERE ";
 
 	private static final String _ORDER_BY_ENTITY_ALIAS = "ctEntry.";
 

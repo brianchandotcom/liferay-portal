@@ -3239,10 +3239,10 @@ public class TrashEntryPersistenceImpl
 		"SELECT trashEntry FROM TrashEntry trashEntry WHERE ";
 
 	private static final String _SQL_COUNT_TRASHENTRY =
-		"SELECT COUNT(trashEntry) FROM TrashEntry trashEntry";
+		"SELECT COUNT(*) FROM TrashEntry trashEntry";
 
 	private static final String _SQL_COUNT_TRASHENTRY_WHERE =
-		"SELECT COUNT(trashEntry) FROM TrashEntry trashEntry WHERE ";
+		"SELECT COUNT(*) FROM TrashEntry trashEntry WHERE ";
 
 	private static final String _ORDER_BY_ENTITY_ALIAS = "trashEntry.";
 

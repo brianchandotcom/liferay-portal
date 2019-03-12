@@ -3046,10 +3046,10 @@ public class MembershipRequestPersistenceImpl
 		"SELECT membershipRequest FROM MembershipRequest membershipRequest WHERE ";
 
 	private static final String _SQL_COUNT_MEMBERSHIPREQUEST =
-		"SELECT COUNT(membershipRequest) FROM MembershipRequest membershipRequest";
+		"SELECT COUNT(*) FROM MembershipRequest membershipRequest";
 
 	private static final String _SQL_COUNT_MEMBERSHIPREQUEST_WHERE =
-		"SELECT COUNT(membershipRequest) FROM MembershipRequest membershipRequest WHERE ";
+		"SELECT COUNT(*) FROM MembershipRequest membershipRequest WHERE ";
 
 	private static final String _ORDER_BY_ENTITY_ALIAS = "membershipRequest.";
 

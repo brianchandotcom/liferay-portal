@@ -1597,10 +1597,10 @@ public class PluginSettingPersistenceImpl
 		"SELECT pluginSetting FROM PluginSetting pluginSetting WHERE ";
 
 	private static final String _SQL_COUNT_PLUGINSETTING =
-		"SELECT COUNT(pluginSetting) FROM PluginSetting pluginSetting";
+		"SELECT COUNT(*) FROM PluginSetting pluginSetting";
 
 	private static final String _SQL_COUNT_PLUGINSETTING_WHERE =
-		"SELECT COUNT(pluginSetting) FROM PluginSetting pluginSetting WHERE ";
+		"SELECT COUNT(*) FROM PluginSetting pluginSetting WHERE ";
 
 	private static final String _ORDER_BY_ENTITY_ALIAS = "pluginSetting.";
 

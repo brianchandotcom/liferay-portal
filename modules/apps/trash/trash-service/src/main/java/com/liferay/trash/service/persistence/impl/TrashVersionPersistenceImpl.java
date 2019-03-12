@@ -2085,10 +2085,10 @@ public class TrashVersionPersistenceImpl
 		"SELECT trashVersion FROM TrashVersion trashVersion WHERE ";
 
 	private static final String _SQL_COUNT_TRASHVERSION =
-		"SELECT COUNT(trashVersion) FROM TrashVersion trashVersion";
+		"SELECT COUNT(*) FROM TrashVersion trashVersion";
 
 	private static final String _SQL_COUNT_TRASHVERSION_WHERE =
-		"SELECT COUNT(trashVersion) FROM TrashVersion trashVersion WHERE ";
+		"SELECT COUNT(*) FROM TrashVersion trashVersion WHERE ";
 
 	private static final String _ORDER_BY_ENTITY_ALIAS = "trashVersion.";
 

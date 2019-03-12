@@ -3288,10 +3288,10 @@ public class KaleoTaskFormPersistenceImpl
 		"SELECT kaleoTaskForm FROM KaleoTaskForm kaleoTaskForm WHERE ";
 
 	private static final String _SQL_COUNT_KALEOTASKFORM =
-		"SELECT COUNT(kaleoTaskForm) FROM KaleoTaskForm kaleoTaskForm";
+		"SELECT COUNT(*) FROM KaleoTaskForm kaleoTaskForm";
 
 	private static final String _SQL_COUNT_KALEOTASKFORM_WHERE =
-		"SELECT COUNT(kaleoTaskForm) FROM KaleoTaskForm kaleoTaskForm WHERE ";
+		"SELECT COUNT(*) FROM KaleoTaskForm kaleoTaskForm WHERE ";
 
 	private static final String _ORDER_BY_ENTITY_ALIAS = "kaleoTaskForm.";
 

@@ -3075,10 +3075,10 @@ public class MBMailingListPersistenceImpl
 		"SELECT mbMailingList FROM MBMailingList mbMailingList WHERE ";
 
 	private static final String _SQL_COUNT_MBMAILINGLIST =
-		"SELECT COUNT(mbMailingList) FROM MBMailingList mbMailingList";
+		"SELECT COUNT(*) FROM MBMailingList mbMailingList";
 
 	private static final String _SQL_COUNT_MBMAILINGLIST_WHERE =
-		"SELECT COUNT(mbMailingList) FROM MBMailingList mbMailingList WHERE ";
+		"SELECT COUNT(*) FROM MBMailingList mbMailingList WHERE ";
 
 	private static final String _ORDER_BY_ENTITY_ALIAS = "mbMailingList.";
 

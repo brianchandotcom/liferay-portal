@@ -2034,10 +2034,10 @@ public class KaleoTimerPersistenceImpl
 		"SELECT kaleoTimer FROM KaleoTimer kaleoTimer WHERE ";
 
 	private static final String _SQL_COUNT_KALEOTIMER =
-		"SELECT COUNT(kaleoTimer) FROM KaleoTimer kaleoTimer";
+		"SELECT COUNT(*) FROM KaleoTimer kaleoTimer";
 
 	private static final String _SQL_COUNT_KALEOTIMER_WHERE =
-		"SELECT COUNT(kaleoTimer) FROM KaleoTimer kaleoTimer WHERE ";
+		"SELECT COUNT(*) FROM KaleoTimer kaleoTimer WHERE ";
 
 	private static final String _ORDER_BY_ENTITY_ALIAS = "kaleoTimer.";
 

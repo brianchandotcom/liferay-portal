@@ -15280,10 +15280,10 @@ public class LayoutPersistenceImpl
 		"SELECT layout FROM Layout layout WHERE ";
 
 	private static final String _SQL_COUNT_LAYOUT =
-		"SELECT COUNT(layout) FROM Layout layout";
+		"SELECT COUNT(*) FROM Layout layout";
 
 	private static final String _SQL_COUNT_LAYOUT_WHERE =
-		"SELECT COUNT(layout) FROM Layout layout WHERE ";
+		"SELECT COUNT(*) FROM Layout layout WHERE ";
 
 	private static final String _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN =
 		"layout.plid";

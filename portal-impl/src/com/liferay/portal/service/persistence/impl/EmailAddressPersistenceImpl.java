@@ -5006,10 +5006,10 @@ public class EmailAddressPersistenceImpl
 		"SELECT emailAddress FROM EmailAddress emailAddress WHERE ";
 
 	private static final String _SQL_COUNT_EMAILADDRESS =
-		"SELECT COUNT(emailAddress) FROM EmailAddress emailAddress";
+		"SELECT COUNT(*) FROM EmailAddress emailAddress";
 
 	private static final String _SQL_COUNT_EMAILADDRESS_WHERE =
-		"SELECT COUNT(emailAddress) FROM EmailAddress emailAddress WHERE ";
+		"SELECT COUNT(*) FROM EmailAddress emailAddress WHERE ";
 
 	private static final String _ORDER_BY_ENTITY_ALIAS = "emailAddress.";
 

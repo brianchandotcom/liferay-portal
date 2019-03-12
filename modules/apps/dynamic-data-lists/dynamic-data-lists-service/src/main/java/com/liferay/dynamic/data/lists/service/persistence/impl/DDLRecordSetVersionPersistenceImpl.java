@@ -2174,10 +2174,10 @@ public class DDLRecordSetVersionPersistenceImpl
 		"SELECT ddlRecordSetVersion FROM DDLRecordSetVersion ddlRecordSetVersion WHERE ";
 
 	private static final String _SQL_COUNT_DDLRECORDSETVERSION =
-		"SELECT COUNT(ddlRecordSetVersion) FROM DDLRecordSetVersion ddlRecordSetVersion";
+		"SELECT COUNT(*) FROM DDLRecordSetVersion ddlRecordSetVersion";
 
 	private static final String _SQL_COUNT_DDLRECORDSETVERSION_WHERE =
-		"SELECT COUNT(ddlRecordSetVersion) FROM DDLRecordSetVersion ddlRecordSetVersion WHERE ";
+		"SELECT COUNT(*) FROM DDLRecordSetVersion ddlRecordSetVersion WHERE ";
 
 	private static final String _ORDER_BY_ENTITY_ALIAS = "ddlRecordSetVersion.";
 

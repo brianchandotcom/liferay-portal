@@ -5060,10 +5060,10 @@ public class KaleoTaskAssignmentInstancePersistenceImpl
 		"SELECT kaleoTaskAssignmentInstance FROM KaleoTaskAssignmentInstance kaleoTaskAssignmentInstance WHERE ";
 
 	private static final String _SQL_COUNT_KALEOTASKASSIGNMENTINSTANCE =
-		"SELECT COUNT(kaleoTaskAssignmentInstance) FROM KaleoTaskAssignmentInstance kaleoTaskAssignmentInstance";
+		"SELECT COUNT(*) FROM KaleoTaskAssignmentInstance kaleoTaskAssignmentInstance";
 
 	private static final String _SQL_COUNT_KALEOTASKASSIGNMENTINSTANCE_WHERE =
-		"SELECT COUNT(kaleoTaskAssignmentInstance) FROM KaleoTaskAssignmentInstance kaleoTaskAssignmentInstance WHERE ";
+		"SELECT COUNT(*) FROM KaleoTaskAssignmentInstance kaleoTaskAssignmentInstance WHERE ";
 
 	private static final String _ORDER_BY_ENTITY_ALIAS =
 		"kaleoTaskAssignmentInstance.";

@@ -3384,10 +3384,10 @@ public class DLFileEntryMetadataPersistenceImpl
 		"SELECT dlFileEntryMetadata FROM DLFileEntryMetadata dlFileEntryMetadata WHERE ";
 
 	private static final String _SQL_COUNT_DLFILEENTRYMETADATA =
-		"SELECT COUNT(dlFileEntryMetadata) FROM DLFileEntryMetadata dlFileEntryMetadata";
+		"SELECT COUNT(*) FROM DLFileEntryMetadata dlFileEntryMetadata";
 
 	private static final String _SQL_COUNT_DLFILEENTRYMETADATA_WHERE =
-		"SELECT COUNT(dlFileEntryMetadata) FROM DLFileEntryMetadata dlFileEntryMetadata WHERE ";
+		"SELECT COUNT(*) FROM DLFileEntryMetadata dlFileEntryMetadata WHERE ";
 
 	private static final String _ORDER_BY_ENTITY_ALIAS = "dlFileEntryMetadata.";
 

@@ -3831,11 +3831,11 @@ public class AssetListEntrySegmentsEntryRelPersistenceImpl
 			"SELECT assetListEntrySegmentsEntryRel FROM AssetListEntrySegmentsEntryRel assetListEntrySegmentsEntryRel WHERE ";
 
 	private static final String _SQL_COUNT_ASSETLISTENTRYSEGMENTSENTRYREL =
-		"SELECT COUNT(assetListEntrySegmentsEntryRel) FROM AssetListEntrySegmentsEntryRel assetListEntrySegmentsEntryRel";
+		"SELECT COUNT(*) FROM AssetListEntrySegmentsEntryRel assetListEntrySegmentsEntryRel";
 
 	private static final String
 		_SQL_COUNT_ASSETLISTENTRYSEGMENTSENTRYREL_WHERE =
-			"SELECT COUNT(assetListEntrySegmentsEntryRel) FROM AssetListEntrySegmentsEntryRel assetListEntrySegmentsEntryRel WHERE ";
+			"SELECT COUNT(*) FROM AssetListEntrySegmentsEntryRel assetListEntrySegmentsEntryRel WHERE ";
 
 	private static final String _ORDER_BY_ENTITY_ALIAS =
 		"assetListEntrySegmentsEntryRel.";

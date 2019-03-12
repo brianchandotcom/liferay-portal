@@ -4086,10 +4086,10 @@ public class TeamPersistenceImpl
 		"SELECT team FROM Team team WHERE ";
 
 	private static final String _SQL_COUNT_TEAM =
-		"SELECT COUNT(team) FROM Team team";
+		"SELECT COUNT(*) FROM Team team";
 
 	private static final String _SQL_COUNT_TEAM_WHERE =
-		"SELECT COUNT(team) FROM Team team WHERE ";
+		"SELECT COUNT(*) FROM Team team WHERE ";
 
 	private static final String _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN =
 		"team.teamId";

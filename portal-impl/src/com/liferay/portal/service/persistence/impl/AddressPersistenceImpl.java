@@ -5688,10 +5688,10 @@ public class AddressPersistenceImpl
 		"SELECT address FROM Address address WHERE ";
 
 	private static final String _SQL_COUNT_ADDRESS =
-		"SELECT COUNT(address) FROM Address address";
+		"SELECT COUNT(*) FROM Address address";
 
 	private static final String _SQL_COUNT_ADDRESS_WHERE =
-		"SELECT COUNT(address) FROM Address address WHERE ";
+		"SELECT COUNT(*) FROM Address address WHERE ";
 
 	private static final String _ORDER_BY_ENTITY_ALIAS = "address.";
 

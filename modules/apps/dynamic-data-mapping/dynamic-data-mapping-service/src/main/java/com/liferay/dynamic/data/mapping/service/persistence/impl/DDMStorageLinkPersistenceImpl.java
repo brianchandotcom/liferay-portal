@@ -3600,10 +3600,10 @@ public class DDMStorageLinkPersistenceImpl
 		"SELECT ddmStorageLink FROM DDMStorageLink ddmStorageLink WHERE ";
 
 	private static final String _SQL_COUNT_DDMSTORAGELINK =
-		"SELECT COUNT(ddmStorageLink) FROM DDMStorageLink ddmStorageLink";
+		"SELECT COUNT(*) FROM DDMStorageLink ddmStorageLink";
 
 	private static final String _SQL_COUNT_DDMSTORAGELINK_WHERE =
-		"SELECT COUNT(ddmStorageLink) FROM DDMStorageLink ddmStorageLink WHERE ";
+		"SELECT COUNT(*) FROM DDMStorageLink ddmStorageLink WHERE ";
 
 	private static final String _ORDER_BY_ENTITY_ALIAS = "ddmStorageLink.";
 

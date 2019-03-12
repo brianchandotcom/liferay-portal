@@ -15540,10 +15540,10 @@ public class GroupPersistenceImpl
 		"SELECT group_ FROM Group group_ WHERE ";
 
 	private static final String _SQL_COUNT_GROUP_ =
-		"SELECT COUNT(group_) FROM Group group_";
+		"SELECT COUNT(*) FROM Group group_";
 
 	private static final String _SQL_COUNT_GROUP__WHERE =
-		"SELECT COUNT(group_) FROM Group group_ WHERE ";
+		"SELECT COUNT(*) FROM Group group_ WHERE ";
 
 	private static final String _ORDER_BY_ENTITY_ALIAS = "group_.";
 

@@ -4965,10 +4965,10 @@ public class PhonePersistenceImpl
 		"SELECT phone FROM Phone phone WHERE ";
 
 	private static final String _SQL_COUNT_PHONE =
-		"SELECT COUNT(phone) FROM Phone phone";
+		"SELECT COUNT(*) FROM Phone phone";
 
 	private static final String _SQL_COUNT_PHONE_WHERE =
-		"SELECT COUNT(phone) FROM Phone phone WHERE ";
+		"SELECT COUNT(*) FROM Phone phone WHERE ";
 
 	private static final String _ORDER_BY_ENTITY_ALIAS = "phone.";
 

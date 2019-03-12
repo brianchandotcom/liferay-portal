@@ -2174,10 +2174,10 @@ public class DDMStructureVersionPersistenceImpl
 		"SELECT ddmStructureVersion FROM DDMStructureVersion ddmStructureVersion WHERE ";
 
 	private static final String _SQL_COUNT_DDMSTRUCTUREVERSION =
-		"SELECT COUNT(ddmStructureVersion) FROM DDMStructureVersion ddmStructureVersion";
+		"SELECT COUNT(*) FROM DDMStructureVersion ddmStructureVersion";
 
 	private static final String _SQL_COUNT_DDMSTRUCTUREVERSION_WHERE =
-		"SELECT COUNT(ddmStructureVersion) FROM DDMStructureVersion ddmStructureVersion WHERE ";
+		"SELECT COUNT(*) FROM DDMStructureVersion ddmStructureVersion WHERE ";
 
 	private static final String _ORDER_BY_ENTITY_ALIAS = "ddmStructureVersion.";
 

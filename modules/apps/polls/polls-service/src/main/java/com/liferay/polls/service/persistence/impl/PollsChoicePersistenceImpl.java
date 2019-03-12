@@ -3090,10 +3090,10 @@ public class PollsChoicePersistenceImpl
 		"SELECT pollsChoice FROM PollsChoice pollsChoice WHERE ";
 
 	private static final String _SQL_COUNT_POLLSCHOICE =
-		"SELECT COUNT(pollsChoice) FROM PollsChoice pollsChoice";
+		"SELECT COUNT(*) FROM PollsChoice pollsChoice";
 
 	private static final String _SQL_COUNT_POLLSCHOICE_WHERE =
-		"SELECT COUNT(pollsChoice) FROM PollsChoice pollsChoice WHERE ";
+		"SELECT COUNT(*) FROM PollsChoice pollsChoice WHERE ";
 
 	private static final String _ORDER_BY_ENTITY_ALIAS = "pollsChoice.";
 

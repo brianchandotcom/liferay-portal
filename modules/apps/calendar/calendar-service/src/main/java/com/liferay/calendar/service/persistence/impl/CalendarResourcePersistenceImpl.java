@@ -7373,10 +7373,10 @@ public class CalendarResourcePersistenceImpl
 		"SELECT calendarResource FROM CalendarResource calendarResource WHERE ";
 
 	private static final String _SQL_COUNT_CALENDARRESOURCE =
-		"SELECT COUNT(calendarResource) FROM CalendarResource calendarResource";
+		"SELECT COUNT(*) FROM CalendarResource calendarResource";
 
 	private static final String _SQL_COUNT_CALENDARRESOURCE_WHERE =
-		"SELECT COUNT(calendarResource) FROM CalendarResource calendarResource WHERE ";
+		"SELECT COUNT(*) FROM CalendarResource calendarResource WHERE ";
 
 	private static final String _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN =
 		"calendarResource.calendarResourceId";

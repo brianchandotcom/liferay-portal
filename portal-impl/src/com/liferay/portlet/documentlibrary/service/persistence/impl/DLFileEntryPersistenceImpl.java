@@ -16498,10 +16498,10 @@ public class DLFileEntryPersistenceImpl
 		"SELECT dlFileEntry FROM DLFileEntry dlFileEntry WHERE ";
 
 	private static final String _SQL_COUNT_DLFILEENTRY =
-		"SELECT COUNT(dlFileEntry) FROM DLFileEntry dlFileEntry";
+		"SELECT COUNT(*) FROM DLFileEntry dlFileEntry";
 
 	private static final String _SQL_COUNT_DLFILEENTRY_WHERE =
-		"SELECT COUNT(dlFileEntry) FROM DLFileEntry dlFileEntry WHERE ";
+		"SELECT COUNT(*) FROM DLFileEntry dlFileEntry WHERE ";
 
 	private static final String _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN =
 		"dlFileEntry.fileEntryId";

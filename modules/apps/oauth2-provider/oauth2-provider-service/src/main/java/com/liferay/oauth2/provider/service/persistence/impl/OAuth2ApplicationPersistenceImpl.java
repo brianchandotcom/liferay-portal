@@ -1999,10 +1999,10 @@ public class OAuth2ApplicationPersistenceImpl
 		"SELECT oAuth2Application FROM OAuth2Application oAuth2Application WHERE ";
 
 	private static final String _SQL_COUNT_OAUTH2APPLICATION =
-		"SELECT COUNT(oAuth2Application) FROM OAuth2Application oAuth2Application";
+		"SELECT COUNT(*) FROM OAuth2Application oAuth2Application";
 
 	private static final String _SQL_COUNT_OAUTH2APPLICATION_WHERE =
-		"SELECT COUNT(oAuth2Application) FROM OAuth2Application oAuth2Application WHERE ";
+		"SELECT COUNT(*) FROM OAuth2Application oAuth2Application WHERE ";
 
 	private static final String _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN =
 		"oAuth2Application.oAuth2ApplicationId";

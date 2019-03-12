@@ -1540,10 +1540,10 @@ public class AnnouncementsFlagPersistenceImpl
 		"SELECT announcementsFlag FROM AnnouncementsFlag announcementsFlag WHERE ";
 
 	private static final String _SQL_COUNT_ANNOUNCEMENTSFLAG =
-		"SELECT COUNT(announcementsFlag) FROM AnnouncementsFlag announcementsFlag";
+		"SELECT COUNT(*) FROM AnnouncementsFlag announcementsFlag";
 
 	private static final String _SQL_COUNT_ANNOUNCEMENTSFLAG_WHERE =
-		"SELECT COUNT(announcementsFlag) FROM AnnouncementsFlag announcementsFlag WHERE ";
+		"SELECT COUNT(*) FROM AnnouncementsFlag announcementsFlag WHERE ";
 
 	private static final String _ORDER_BY_ENTITY_ALIAS = "announcementsFlag.";
 

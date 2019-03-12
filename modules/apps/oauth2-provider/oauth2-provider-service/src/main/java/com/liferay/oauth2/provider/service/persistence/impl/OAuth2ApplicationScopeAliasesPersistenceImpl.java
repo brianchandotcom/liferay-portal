@@ -2552,10 +2552,10 @@ public class OAuth2ApplicationScopeAliasesPersistenceImpl
 			"SELECT oAuth2ApplicationScopeAliases FROM OAuth2ApplicationScopeAliases oAuth2ApplicationScopeAliases WHERE ";
 
 	private static final String _SQL_COUNT_OAUTH2APPLICATIONSCOPEALIASES =
-		"SELECT COUNT(oAuth2ApplicationScopeAliases) FROM OAuth2ApplicationScopeAliases oAuth2ApplicationScopeAliases";
+		"SELECT COUNT(*) FROM OAuth2ApplicationScopeAliases oAuth2ApplicationScopeAliases";
 
 	private static final String _SQL_COUNT_OAUTH2APPLICATIONSCOPEALIASES_WHERE =
-		"SELECT COUNT(oAuth2ApplicationScopeAliases) FROM OAuth2ApplicationScopeAliases oAuth2ApplicationScopeAliases WHERE ";
+		"SELECT COUNT(*) FROM OAuth2ApplicationScopeAliases oAuth2ApplicationScopeAliases WHERE ";
 
 	private static final String _ORDER_BY_ENTITY_ALIAS =
 		"oAuth2ApplicationScopeAliases.";

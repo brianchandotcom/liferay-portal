@@ -3005,10 +3005,10 @@ public class DLContentPersistenceImpl
 		"SELECT dlContent FROM DLContent dlContent WHERE ";
 
 	private static final String _SQL_COUNT_DLCONTENT =
-		"SELECT COUNT(dlContent) FROM DLContent dlContent";
+		"SELECT COUNT(*) FROM DLContent dlContent";
 
 	private static final String _SQL_COUNT_DLCONTENT_WHERE =
-		"SELECT COUNT(dlContent) FROM DLContent dlContent WHERE ";
+		"SELECT COUNT(*) FROM DLContent dlContent WHERE ";
 
 	private static final String _ORDER_BY_ENTITY_ALIAS = "dlContent.";
 

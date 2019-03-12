@@ -5493,10 +5493,10 @@ public class AssetTagPersistenceImpl
 		"SELECT assetTag FROM AssetTag assetTag WHERE ";
 
 	private static final String _SQL_COUNT_ASSETTAG =
-		"SELECT COUNT(assetTag) FROM AssetTag assetTag";
+		"SELECT COUNT(*) FROM AssetTag assetTag";
 
 	private static final String _SQL_COUNT_ASSETTAG_WHERE =
-		"SELECT COUNT(assetTag) FROM AssetTag assetTag WHERE ";
+		"SELECT COUNT(*) FROM AssetTag assetTag WHERE ";
 
 	private static final String _ORDER_BY_ENTITY_ALIAS = "assetTag.";
 

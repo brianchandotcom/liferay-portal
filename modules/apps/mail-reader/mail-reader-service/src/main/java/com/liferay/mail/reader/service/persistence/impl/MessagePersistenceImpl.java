@@ -2065,10 +2065,10 @@ public class MessagePersistenceImpl
 		"SELECT message FROM Message message WHERE ";
 
 	private static final String _SQL_COUNT_MESSAGE =
-		"SELECT COUNT(message) FROM Message message";
+		"SELECT COUNT(*) FROM Message message";
 
 	private static final String _SQL_COUNT_MESSAGE_WHERE =
-		"SELECT COUNT(message) FROM Message message WHERE ";
+		"SELECT COUNT(*) FROM Message message WHERE ";
 
 	private static final String _ORDER_BY_ENTITY_ALIAS = "message.";
 

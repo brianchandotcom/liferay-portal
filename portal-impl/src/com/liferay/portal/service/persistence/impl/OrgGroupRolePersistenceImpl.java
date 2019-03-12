@@ -1751,10 +1751,10 @@ public class OrgGroupRolePersistenceImpl
 		"SELECT orgGroupRole FROM OrgGroupRole orgGroupRole WHERE ";
 
 	private static final String _SQL_COUNT_ORGGROUPROLE =
-		"SELECT COUNT(orgGroupRole) FROM OrgGroupRole orgGroupRole";
+		"SELECT COUNT(*) FROM OrgGroupRole orgGroupRole";
 
 	private static final String _SQL_COUNT_ORGGROUPROLE_WHERE =
-		"SELECT COUNT(orgGroupRole) FROM OrgGroupRole orgGroupRole WHERE ";
+		"SELECT COUNT(*) FROM OrgGroupRole orgGroupRole WHERE ";
 
 	private static final String _ORDER_BY_ENTITY_ALIAS = "orgGroupRole.";
 

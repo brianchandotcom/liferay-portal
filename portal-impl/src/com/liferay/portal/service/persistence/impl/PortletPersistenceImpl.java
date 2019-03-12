@@ -1502,10 +1502,10 @@ public class PortletPersistenceImpl
 		"SELECT portlet FROM Portlet portlet WHERE ";
 
 	private static final String _SQL_COUNT_PORTLET =
-		"SELECT COUNT(portlet) FROM Portlet portlet";
+		"SELECT COUNT(*) FROM Portlet portlet";
 
 	private static final String _SQL_COUNT_PORTLET_WHERE =
-		"SELECT COUNT(portlet) FROM Portlet portlet WHERE ";
+		"SELECT COUNT(*) FROM Portlet portlet WHERE ";
 
 	private static final String _ORDER_BY_ENTITY_ALIAS = "portlet.";
 

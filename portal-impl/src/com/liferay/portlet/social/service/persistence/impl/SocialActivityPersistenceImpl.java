@@ -7491,10 +7491,10 @@ public class SocialActivityPersistenceImpl
 		"SELECT socialActivity FROM SocialActivity socialActivity WHERE ";
 
 	private static final String _SQL_COUNT_SOCIALACTIVITY =
-		"SELECT COUNT(socialActivity) FROM SocialActivity socialActivity";
+		"SELECT COUNT(*) FROM SocialActivity socialActivity";
 
 	private static final String _SQL_COUNT_SOCIALACTIVITY_WHERE =
-		"SELECT COUNT(socialActivity) FROM SocialActivity socialActivity WHERE ";
+		"SELECT COUNT(*) FROM SocialActivity socialActivity WHERE ";
 
 	private static final String _ORDER_BY_ENTITY_ALIAS = "socialActivity.";
 

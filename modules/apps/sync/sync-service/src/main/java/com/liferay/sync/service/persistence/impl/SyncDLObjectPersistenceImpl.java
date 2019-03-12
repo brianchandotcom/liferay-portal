@@ -7326,10 +7326,10 @@ public class SyncDLObjectPersistenceImpl
 		"SELECT syncDLObject FROM SyncDLObject syncDLObject WHERE ";
 
 	private static final String _SQL_COUNT_SYNCDLOBJECT =
-		"SELECT COUNT(syncDLObject) FROM SyncDLObject syncDLObject";
+		"SELECT COUNT(*) FROM SyncDLObject syncDLObject";
 
 	private static final String _SQL_COUNT_SYNCDLOBJECT_WHERE =
-		"SELECT COUNT(syncDLObject) FROM SyncDLObject syncDLObject WHERE ";
+		"SELECT COUNT(*) FROM SyncDLObject syncDLObject WHERE ";
 
 	private static final String _ORDER_BY_ENTITY_ALIAS = "syncDLObject.";
 

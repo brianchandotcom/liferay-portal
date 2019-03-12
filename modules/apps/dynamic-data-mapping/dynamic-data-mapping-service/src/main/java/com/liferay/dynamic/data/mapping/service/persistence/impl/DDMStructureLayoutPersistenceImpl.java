@@ -2550,10 +2550,10 @@ public class DDMStructureLayoutPersistenceImpl
 		"SELECT ddmStructureLayout FROM DDMStructureLayout ddmStructureLayout WHERE ";
 
 	private static final String _SQL_COUNT_DDMSTRUCTURELAYOUT =
-		"SELECT COUNT(ddmStructureLayout) FROM DDMStructureLayout ddmStructureLayout";
+		"SELECT COUNT(*) FROM DDMStructureLayout ddmStructureLayout";
 
 	private static final String _SQL_COUNT_DDMSTRUCTURELAYOUT_WHERE =
-		"SELECT COUNT(ddmStructureLayout) FROM DDMStructureLayout ddmStructureLayout WHERE ";
+		"SELECT COUNT(*) FROM DDMStructureLayout ddmStructureLayout WHERE ";
 
 	private static final String _ORDER_BY_ENTITY_ALIAS = "ddmStructureLayout.";
 

@@ -2423,10 +2423,10 @@ public class DLFileVersionPreviewPersistenceImpl
 		"SELECT dlFileVersionPreview FROM DLFileVersionPreview dlFileVersionPreview WHERE ";
 
 	private static final String _SQL_COUNT_DLFILEVERSIONPREVIEW =
-		"SELECT COUNT(dlFileVersionPreview) FROM DLFileVersionPreview dlFileVersionPreview";
+		"SELECT COUNT(*) FROM DLFileVersionPreview dlFileVersionPreview";
 
 	private static final String _SQL_COUNT_DLFILEVERSIONPREVIEW_WHERE =
-		"SELECT COUNT(dlFileVersionPreview) FROM DLFileVersionPreview dlFileVersionPreview WHERE ";
+		"SELECT COUNT(*) FROM DLFileVersionPreview dlFileVersionPreview WHERE ";
 
 	private static final String _ORDER_BY_ENTITY_ALIAS =
 		"dlFileVersionPreview.";

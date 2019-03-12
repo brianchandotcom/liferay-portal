@@ -4342,10 +4342,10 @@ public class PasswordPolicyPersistenceImpl
 		"SELECT passwordPolicy FROM PasswordPolicy passwordPolicy WHERE ";
 
 	private static final String _SQL_COUNT_PASSWORDPOLICY =
-		"SELECT COUNT(passwordPolicy) FROM PasswordPolicy passwordPolicy";
+		"SELECT COUNT(*) FROM PasswordPolicy passwordPolicy";
 
 	private static final String _SQL_COUNT_PASSWORDPOLICY_WHERE =
-		"SELECT COUNT(passwordPolicy) FROM PasswordPolicy passwordPolicy WHERE ";
+		"SELECT COUNT(*) FROM PasswordPolicy passwordPolicy WHERE ";
 
 	private static final String _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN =
 		"passwordPolicy.passwordPolicyId";

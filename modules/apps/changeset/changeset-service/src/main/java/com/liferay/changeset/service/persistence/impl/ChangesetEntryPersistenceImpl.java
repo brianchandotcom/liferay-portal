@@ -3933,10 +3933,10 @@ public class ChangesetEntryPersistenceImpl
 		"SELECT changesetEntry FROM ChangesetEntry changesetEntry WHERE ";
 
 	private static final String _SQL_COUNT_CHANGESETENTRY =
-		"SELECT COUNT(changesetEntry) FROM ChangesetEntry changesetEntry";
+		"SELECT COUNT(*) FROM ChangesetEntry changesetEntry";
 
 	private static final String _SQL_COUNT_CHANGESETENTRY_WHERE =
-		"SELECT COUNT(changesetEntry) FROM ChangesetEntry changesetEntry WHERE ";
+		"SELECT COUNT(*) FROM ChangesetEntry changesetEntry WHERE ";
 
 	private static final String _ORDER_BY_ENTITY_ALIAS = "changesetEntry.";
 

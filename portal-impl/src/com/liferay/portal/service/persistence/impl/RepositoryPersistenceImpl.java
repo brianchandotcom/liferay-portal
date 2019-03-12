@@ -3142,10 +3142,10 @@ public class RepositoryPersistenceImpl
 		"SELECT repository FROM Repository repository WHERE ";
 
 	private static final String _SQL_COUNT_REPOSITORY =
-		"SELECT COUNT(repository) FROM Repository repository";
+		"SELECT COUNT(*) FROM Repository repository";
 
 	private static final String _SQL_COUNT_REPOSITORY_WHERE =
-		"SELECT COUNT(repository) FROM Repository repository WHERE ";
+		"SELECT COUNT(*) FROM Repository repository WHERE ";
 
 	private static final String _ORDER_BY_ENTITY_ALIAS = "repository.";
 

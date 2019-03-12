@@ -4778,10 +4778,10 @@ public class SiteNavigationMenuItemPersistenceImpl
 		"SELECT siteNavigationMenuItem FROM SiteNavigationMenuItem siteNavigationMenuItem WHERE ";
 
 	private static final String _SQL_COUNT_SITENAVIGATIONMENUITEM =
-		"SELECT COUNT(siteNavigationMenuItem) FROM SiteNavigationMenuItem siteNavigationMenuItem";
+		"SELECT COUNT(*) FROM SiteNavigationMenuItem siteNavigationMenuItem";
 
 	private static final String _SQL_COUNT_SITENAVIGATIONMENUITEM_WHERE =
-		"SELECT COUNT(siteNavigationMenuItem) FROM SiteNavigationMenuItem siteNavigationMenuItem WHERE ";
+		"SELECT COUNT(*) FROM SiteNavigationMenuItem siteNavigationMenuItem WHERE ";
 
 	private static final String _ORDER_BY_ENTITY_ALIAS =
 		"siteNavigationMenuItem.";

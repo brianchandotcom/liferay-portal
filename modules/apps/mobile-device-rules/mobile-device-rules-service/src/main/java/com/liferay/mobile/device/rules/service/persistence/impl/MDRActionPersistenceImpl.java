@@ -2802,10 +2802,10 @@ public class MDRActionPersistenceImpl
 		"SELECT mdrAction FROM MDRAction mdrAction WHERE ";
 
 	private static final String _SQL_COUNT_MDRACTION =
-		"SELECT COUNT(mdrAction) FROM MDRAction mdrAction";
+		"SELECT COUNT(*) FROM MDRAction mdrAction";
 
 	private static final String _SQL_COUNT_MDRACTION_WHERE =
-		"SELECT COUNT(mdrAction) FROM MDRAction mdrAction WHERE ";
+		"SELECT COUNT(*) FROM MDRAction mdrAction WHERE ";
 
 	private static final String _ORDER_BY_ENTITY_ALIAS = "mdrAction.";
 

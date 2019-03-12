@@ -10730,10 +10730,10 @@ public class FragmentEntryPersistenceImpl
 		"SELECT fragmentEntry FROM FragmentEntry fragmentEntry WHERE ";
 
 	private static final String _SQL_COUNT_FRAGMENTENTRY =
-		"SELECT COUNT(fragmentEntry) FROM FragmentEntry fragmentEntry";
+		"SELECT COUNT(*) FROM FragmentEntry fragmentEntry";
 
 	private static final String _SQL_COUNT_FRAGMENTENTRY_WHERE =
-		"SELECT COUNT(fragmentEntry) FROM FragmentEntry fragmentEntry WHERE ";
+		"SELECT COUNT(*) FROM FragmentEntry fragmentEntry WHERE ";
 
 	private static final String _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN =
 		"fragmentEntry.fragmentEntryId";

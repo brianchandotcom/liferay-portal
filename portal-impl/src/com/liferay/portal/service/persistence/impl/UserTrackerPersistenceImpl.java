@@ -2343,10 +2343,10 @@ public class UserTrackerPersistenceImpl
 		"SELECT userTracker FROM UserTracker userTracker WHERE ";
 
 	private static final String _SQL_COUNT_USERTRACKER =
-		"SELECT COUNT(userTracker) FROM UserTracker userTracker";
+		"SELECT COUNT(*) FROM UserTracker userTracker";
 
 	private static final String _SQL_COUNT_USERTRACKER_WHERE =
-		"SELECT COUNT(userTracker) FROM UserTracker userTracker WHERE ";
+		"SELECT COUNT(*) FROM UserTracker userTracker WHERE ";
 
 	private static final String _ORDER_BY_ENTITY_ALIAS = "userTracker.";
 

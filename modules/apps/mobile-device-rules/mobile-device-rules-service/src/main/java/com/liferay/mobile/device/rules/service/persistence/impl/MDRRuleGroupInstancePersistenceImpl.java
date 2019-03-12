@@ -5832,10 +5832,10 @@ public class MDRRuleGroupInstancePersistenceImpl
 		"SELECT mdrRuleGroupInstance FROM MDRRuleGroupInstance mdrRuleGroupInstance WHERE ";
 
 	private static final String _SQL_COUNT_MDRRULEGROUPINSTANCE =
-		"SELECT COUNT(mdrRuleGroupInstance) FROM MDRRuleGroupInstance mdrRuleGroupInstance";
+		"SELECT COUNT(*) FROM MDRRuleGroupInstance mdrRuleGroupInstance";
 
 	private static final String _SQL_COUNT_MDRRULEGROUPINSTANCE_WHERE =
-		"SELECT COUNT(mdrRuleGroupInstance) FROM MDRRuleGroupInstance mdrRuleGroupInstance WHERE ";
+		"SELECT COUNT(*) FROM MDRRuleGroupInstance mdrRuleGroupInstance WHERE ";
 
 	private static final String _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN =
 		"mdrRuleGroupInstance.ruleGroupInstanceId";

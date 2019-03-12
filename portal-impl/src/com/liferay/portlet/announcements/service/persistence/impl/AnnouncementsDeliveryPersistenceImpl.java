@@ -1568,10 +1568,10 @@ public class AnnouncementsDeliveryPersistenceImpl
 		"SELECT announcementsDelivery FROM AnnouncementsDelivery announcementsDelivery WHERE ";
 
 	private static final String _SQL_COUNT_ANNOUNCEMENTSDELIVERY =
-		"SELECT COUNT(announcementsDelivery) FROM AnnouncementsDelivery announcementsDelivery";
+		"SELECT COUNT(*) FROM AnnouncementsDelivery announcementsDelivery";
 
 	private static final String _SQL_COUNT_ANNOUNCEMENTSDELIVERY_WHERE =
-		"SELECT COUNT(announcementsDelivery) FROM AnnouncementsDelivery announcementsDelivery WHERE ";
+		"SELECT COUNT(*) FROM AnnouncementsDelivery announcementsDelivery WHERE ";
 
 	private static final String _ORDER_BY_ENTITY_ALIAS =
 		"announcementsDelivery.";

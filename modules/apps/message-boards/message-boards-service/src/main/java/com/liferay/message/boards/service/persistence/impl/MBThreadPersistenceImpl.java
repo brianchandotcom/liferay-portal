@@ -14567,10 +14567,10 @@ public class MBThreadPersistenceImpl
 		"SELECT mbThread FROM MBThread mbThread WHERE ";
 
 	private static final String _SQL_COUNT_MBTHREAD =
-		"SELECT COUNT(mbThread) FROM MBThread mbThread";
+		"SELECT COUNT(*) FROM MBThread mbThread";
 
 	private static final String _SQL_COUNT_MBTHREAD_WHERE =
-		"SELECT COUNT(mbThread) FROM MBThread mbThread WHERE ";
+		"SELECT COUNT(*) FROM MBThread mbThread WHERE ";
 
 	private static final String _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN =
 		"mbThread.threadId";

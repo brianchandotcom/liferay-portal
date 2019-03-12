@@ -3803,10 +3803,10 @@ public class WorkflowDefinitionLinkPersistenceImpl
 		"SELECT workflowDefinitionLink FROM WorkflowDefinitionLink workflowDefinitionLink WHERE ";
 
 	private static final String _SQL_COUNT_WORKFLOWDEFINITIONLINK =
-		"SELECT COUNT(workflowDefinitionLink) FROM WorkflowDefinitionLink workflowDefinitionLink";
+		"SELECT COUNT(*) FROM WorkflowDefinitionLink workflowDefinitionLink";
 
 	private static final String _SQL_COUNT_WORKFLOWDEFINITIONLINK_WHERE =
-		"SELECT COUNT(workflowDefinitionLink) FROM WorkflowDefinitionLink workflowDefinitionLink WHERE ";
+		"SELECT COUNT(*) FROM WorkflowDefinitionLink workflowDefinitionLink WHERE ";
 
 	private static final String _ORDER_BY_ENTITY_ALIAS =
 		"workflowDefinitionLink.";

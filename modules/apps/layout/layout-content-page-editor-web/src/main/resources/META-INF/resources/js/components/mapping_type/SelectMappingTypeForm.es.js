@@ -12,45 +12,45 @@ import templates from './SelectMappingTypeForm.soy';
  */
 class SelectMappingTypeForm extends PortletBase {
 
-  /**
+	/**
    * @inheritdoc
    * @review
    */
-  prepareStateForRender(state) {
-    let nextState = state;
+	prepareStateForRender(state) {
+		let nextState = state;
 
-    if (state.selectedMappingTypes) {
-      if (state.selectedMappingTypes.type) {
-        nextState = setIn(
-          nextState,
-          ['_mappingTypes'],
-          [state.selectedMappingTypes.type]
-        );
+		if (state.selectedMappingTypes) {
+			if (state.selectedMappingTypes.type) {
+				nextState = setIn(
+					nextState,
+					['_mappingTypes'],
+					[state.selectedMappingTypes.type]
+				);
 
-        nextState = setIn(
-          nextState,
-          ['_selectedMappingTypeId'],
-          state.selectedMappingTypes.type.id
-        );
-      }
+				nextState = setIn(
+					nextState,
+					['_selectedMappingTypeId'],
+					state.selectedMappingTypes.type.id
+				);
+			}
 
-      if (state.selectedMappingTypes.subtype) {
-        nextState = setIn(
-          nextState,
-          ['_mappingSubtypes'],
-          [state.selectedMappingTypes.subtype]
-        );
+			if (state.selectedMappingTypes.subtype) {
+				nextState = setIn(
+					nextState,
+					['_mappingSubtypes'],
+					[state.selectedMappingTypes.subtype]
+				);
 
-        nextState = setIn(
-          nextState,
-          ['_selectedMappingSubtypeId'],
-          state.selectedMappingTypes.subtype.id
-        );
-      }
-    }
+				nextState = setIn(
+					nextState,
+					['_selectedMappingSubtypeId'],
+					state.selectedMappingTypes.subtype.id
+				);
+			}
+		}
 
-    return nextState;
-  }
+		return nextState;
+	}
 
 	/**
 	 * @inheritDoc
@@ -84,10 +84,10 @@ class SelectMappingTypeForm extends PortletBase {
 	 * @review
 	 */
 	_handleCancelButtonClick() {
-    this._mappingSubtypes = [];
-    this._mappingTypes = null;
-    this._selectedMappingTypeId = '';
-    this._selectedMappingSubtypeId = '';
+		this._mappingSubtypes = [];
+		this._mappingTypes = null;
+		this._selectedMappingTypeId = '';
+		this._selectedMappingSubtypeId = '';
 
 		this.store
 			.dispatchAction(
@@ -159,9 +159,9 @@ class SelectMappingTypeForm extends PortletBase {
 		}
 
 		this.store
-      .dispatchAction(
-        HIDE_MAPPING_TYPE_DIALOG
-      )
+			.dispatchAction(
+				HIDE_MAPPING_TYPE_DIALOG
+			)
 			.dispatchAction(
 				SELECT_MAPPEABLE_TYPE,
 				{
@@ -169,7 +169,7 @@ class SelectMappingTypeForm extends PortletBase {
 					selectedMappingSubtypeId: this._selectedMappingSubtypeId,
 					selectedMappingTypeId: this._selectedMappingTypeId
 				}
-      );
+			);
 	}
 
 	/**
@@ -302,15 +302,15 @@ SelectMappingTypeForm.STATE = {
 };
 
 const ConnectedSelectMappingTypeForm = getConnectedComponent(
-  SelectMappingTypeForm,
-  [
-    'classPK',
-    'getAssetClassTypesURL',
-    'getAssetDisplayContributorsURL',
-    'portletNamespace',
-    'savingChanges',
-    'selectedMappingTypes'
-  ]
+	SelectMappingTypeForm,
+	[
+		'classPK',
+		'getAssetClassTypesURL',
+		'getAssetDisplayContributorsURL',
+		'portletNamespace',
+		'savingChanges',
+		'selectedMappingTypes'
+	]
 );
 
 Soy.register(ConnectedSelectMappingTypeForm, templates);

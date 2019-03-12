@@ -11,6 +11,7 @@ import templates from './SelectMappingTypeDialog.soy';
  * SelectMappingTypeDialog
  */
 class SelectMappingTypeDialog extends Component {
+
 	/**
 	 * Change asset type selection dialog visibility.
 	 * @private
@@ -33,11 +34,11 @@ class SelectMappingTypeDialog extends Component {
 SelectMappingTypeDialog.STATE = {};
 
 const ConnectedSelectMappingTypeDialog = getConnectedComponent(
-  SelectMappingTypeDialog,
-  [
-    'selectMappingTypeDialogVisible',
-    'spritemap'
-  ]
+	SelectMappingTypeDialog,
+	[
+		'selectMappingTypeDialogVisible',
+		'spritemap'
+	]
 );
 
 Soy.register(ConnectedSelectMappingTypeDialog, templates);

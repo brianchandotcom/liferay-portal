@@ -303,29 +303,29 @@ const INITIAL_STATE = {
 	 */
 	dropTargetItemType: Config
 		.string()
-    .value(''),
+		.value(''),
 
-  /**
+	/**
    * URL for obtaining the asset types for which asset display pages can be
    * created.
    * @default '''
    * @review
    * @type {string}
    */
-  getAssetClassTypesURL: Config
-    .string()
-    .value(''),
+	getAssetClassTypesURL: Config
+		.string()
+		.value(''),
 
-  /**
+	/**
    * URL for obtaining the asset types for which asset display pages can be
    * created.
    * @default '''
    * @review
    * @type {string}
    */
-  getAssetDisplayContributorsURL: Config
-    .string()
-    .value(''),
+	getAssetDisplayContributorsURL: Config
+		.string()
+		.value(''),
 
 	/**
 	 * Get asset mapping fields url

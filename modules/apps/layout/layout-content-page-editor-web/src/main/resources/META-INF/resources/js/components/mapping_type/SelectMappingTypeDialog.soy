@@ -6,25 +6,25 @@
 {template .render}
 	{@param? _handleVisibleChanged: any}
 	{@param? spritemap: string}
-  {@param? selectMappingTypeDialogVisible: bool}
-  {@param? store: ?}
+{@param? selectMappingTypeDialogVisible: bool}
+{@param? store: ?}
 
-  {if $selectMappingTypeDialogVisible}
-    {call liferay.frontend.Modal.render}
-      {param body kind="html"}
-        {call com.liferay.layout.content.page.editor.web.SelectMappingTypeForm.render}
-          {param store: $store /}
-        {/call}
-      {/param}
+{if $selectMappingTypeDialogVisible}
+	{call liferay.frontend.Modal.render}
+	  {param body kind="html"}
+		{call com.liferay.layout.content.page.editor.web.SelectMappingTypeForm.render}
+		  {param store: $store /}
+		{/call}
+	  {/param}
 
-      {param dialogClasses: 'modal-dialog-sm' /}
-      {param events: ['visibleChanged': $_handleVisibleChanged] /}
+	  {param dialogClasses: 'modal-dialog-sm' /}
+	  {param events: ['visibleChanged': $_handleVisibleChanged] /}
 
-      {param header kind="html"}
-        {msg desc=""}select-asset-type{/msg}
-      {/param}
+	  {param header kind="html"}
+		{msg desc=""}select-asset-type{/msg}
+	  {/param}
 
-      {param spritemap: $spritemap ?: '' /}
-    {/call}
-  {/if}
+	  {param spritemap: $spritemap ?: '' /}
+	{/call}
+{/if}
 {/template}

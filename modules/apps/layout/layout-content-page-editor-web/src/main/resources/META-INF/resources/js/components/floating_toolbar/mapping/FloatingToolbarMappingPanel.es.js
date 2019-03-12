@@ -4,7 +4,7 @@ import Soy, {Config} from 'metal-soy';
 
 import './FloatingToolbarMappingPanelDelegateTemplate.soy';
 import {COMPATIBLE_TYPES} from '../../../utils/constants';
-import {decodeId, encodeAssetId} from '../../../utils/FragmentsEditorIdUtils.es';
+import {encodeAssetId} from '../../../utils/FragmentsEditorIdUtils.es';
 import getConnectedComponent from '../../../store/ConnectedComponent.es';
 import {setIn} from '../../../utils/FragmentsEditorUpdateUtils.es';
 import templates from './FloatingToolbarMappingPanel.soy';
@@ -66,17 +66,17 @@ class FloatingToolbarMappingPanel extends PortletBase {
 		);
 
 		if (
-      nextState.mappingFieldsURL &&
-      nextState.selectedMappingTypes &&
-      nextState.selectedMappingTypes.type
-    ) {
+			nextState.mappingFieldsURL &&
+			nextState.selectedMappingTypes &&
+			nextState.selectedMappingTypes.type
+		) {
 			nextState = setIn(
 				nextState,
 				['_sourceTypes'],
 				FloatingToolbarMappingPanel._getSourceTypes(
-          nextState.selectedMappingTypes.subtype ?
-            nextState.selectedMappingTypes.subtype.label :
-  					nextState.selectedMappingTypes.type.label
+					nextState.selectedMappingTypes.subtype ?
+						nextState.selectedMappingTypes.subtype.label :
+						nextState.selectedMappingTypes.type.label
 				)
 			);
 		}
@@ -159,7 +159,7 @@ class FloatingToolbarMappingPanel extends PortletBase {
 	 * @review
 	 */
 	_handleAssetBrowserLinkClick(event) {
-		const { assetBrowserUrl, assetBrowserWindowTitle } = event.delegateTarget.dataset;
+		const {assetBrowserUrl, assetBrowserWindowTitle} = event.delegateTarget.dataset;
 
 		openAssetBrowser(
 			assetBrowserUrl,
@@ -260,13 +260,13 @@ class FloatingToolbarMappingPanel extends PortletBase {
 		this._clearFields();
 
 		if (this._selectedSourceTypeId === SOURCE_TYPE_IDS.structure) {
-      const data = {
-        classNameId: this.selectedMappingTypes.type.id
-      };
+			const data = {
+				classNameId: this.selectedMappingTypes.type.id
+			};
 
-      if (this.selectedMappingTypes.subtype) {
-        data.classTypeId = this.selectedMappingTypes.subtype.id;
-      }
+			if (this.selectedMappingTypes.subtype) {
+				data.classTypeId = this.selectedMappingTypes.subtype.id;
+			}
 
 			promise = this.fetch(this.mappingFieldsURL, data);
 		}

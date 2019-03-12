@@ -2208,6 +2208,18 @@
 		</attribute>
 		<attribute>
 			<description></description>
+			<name>itemsPerPage</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description></description>
+			<name>pageNumber</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description></description>
 			<name>schema</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>

@@ -21,6 +21,7 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.contributor.ClayTableTagS
 import com.liferay.frontend.taglib.clay.servlet.taglib.data.ClayTagDataSource;
 import com.liferay.frontend.taglib.clay.servlet.taglib.model.table.Schema;
 import com.liferay.frontend.taglib.clay.servlet.taglib.model.table.Size;
+import com.liferay.frontend.taglib.clay.servlet.taglib.data.Pagination;
 import com.liferay.frontend.taglib.clay.servlet.taglib.soy.base.BaseClayTag;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -80,6 +81,14 @@ public class TableTag<T> extends BaseClayTag {
 
 	public void setItems(Collection<?> items) {
 		putValue("items", items);
+	}
+
+	public void setItemsPerPage(int itemsPerPage) {
+		putValue("itemsPerPage", itemsPerPage);
+	}
+
+	public void setPageNumber(int pageNumber) {
+		putValue("pageNumber", pageNumber);
 	}
 
 	public void setSchema(Schema schema) {
@@ -157,7 +166,13 @@ public class TableTag<T> extends BaseClayTag {
 		Map<String, Object> context = getContext();
 
 		if (context.get("items") == null) {
-			setItems(clayTagDataSource.getItems(request));
+			int itemsPerPage = (int)context.getOrDefault(
+				"itemsPerPage", Integer.MAX_VALUE);
+			int pageNumber = (int)context.getOrDefault("pageNumber", 1);
+
+			setItems(
+				clayTagDataSource.getItems(
+					request, new Pagination(itemsPerPage, pageNumber)));
 		}
 	}
 

@@ -161,11 +161,38 @@ long classNameId = ParamUtil.getLong(request, "classNameId");
 
 	<div class="closed contextual-sidebar contextual-sidebar-visible edit-article-sidebar sidebar-light sidenav-fixed sidenav-menu-slider sidenav-right" id="<%= contextualSidebarId %>">
 		<div class="sidebar-body">
-			<liferay-frontend:form-navigator
-				formModelBean="<%= article %>"
-				id="<%= FormNavigatorConstants.FORM_NAVIGATOR_ID_JOURNAL %>"
-				showButtons="<%= false %>"
-			/>
+
+			<%
+			String tabNames = "properties,usages";
+
+			if ((article == null) || (journalEditArticleDisplayContext.getClassNameId() != JournalArticleConstants.CLASSNAME_ID_DEFAULT)) {
+				tabNames = "properties";
+			}
+			%>
+
+			<liferay-ui:tabs
+				names="<%= tabNames %>"
+				param="tabs1"
+				refresh="<%= false %>"
+				type="tabs nav-tabs-default"
+			>
+				<liferay-ui:section>
+					<liferay-frontend:form-navigator
+						formModelBean="<%= article %>"
+						id="<%= FormNavigatorConstants.FORM_NAVIGATOR_ID_JOURNAL %>"
+						showButtons="<%= false %>"
+					/>
+				</liferay-ui:section>
+
+				<c:if test="<%= (article != null) && (journalEditArticleDisplayContext.getClassNameId() == JournalArticleConstants.CLASSNAME_ID_DEFAULT) %>">
+					<liferay-ui:section>
+						<liferay-asset:asset-view-usages
+							className="<%= JournalArticle.class.getName() %>"
+							classPK="<%= article.getResourcePrimKey() %>"
+						/>
+					</liferay-ui:section>
+				</c:if>
+			</liferay-ui:tabs>
 		</div>
 	</div>
 </aui:form>

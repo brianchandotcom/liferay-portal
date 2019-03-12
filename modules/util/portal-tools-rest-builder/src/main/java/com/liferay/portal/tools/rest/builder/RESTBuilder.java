@@ -14,7 +14,6 @@
 
 package com.liferay.portal.tools.rest.builder;
 
-import com.liferay.portal.kernel.util.CamelCaseUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.StringUtil_IW;
@@ -600,7 +599,8 @@ public class RESTBuilder {
 
 		context.put("schema", schema);
 		context.put("schemaName", schemaName);
-		context.put("schemaPath", CamelCaseUtil.fromCamelCase(schemaName));
+		context.put(
+			"schemaPath", TextFormatter.format(schemaName, TextFormatter.K));
 
 		String schemaVarName = StringUtil.lowerCaseFirstLetter(schemaName);
 

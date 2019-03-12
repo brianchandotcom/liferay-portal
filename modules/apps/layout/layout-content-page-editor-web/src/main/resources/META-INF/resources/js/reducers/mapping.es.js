@@ -1,5 +1,5 @@
-import {ADD_MAPPED_ASSET_ENTRY} from "../actions/actions.es";
-import {setIn} from "../utils/FragmentsEditorUpdateUtils.es";
+import {ADD_MAPPED_ASSET_ENTRY} from '../actions/actions.es';
+import {setIn} from '../utils/FragmentsEditorUpdateUtils.es';
 
 /**
  * @param {object} state

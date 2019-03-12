@@ -62,11 +62,13 @@ function openAssetBrowser(assetBrowserURL, modalTitle, portletNamespace, callbac
 		},
 		event => {
 			if (event.assetclassnameid) {
-				callback({
-					classNameId: event.assetclassnameid,
-					classPK: event.assetclasspk,
-					title: event.assettitle
-				});
+				callback(
+					{
+						classNameId: event.assetclassnameid,
+						classPK: event.assetclasspk,
+						title: event.assettitle
+					}
+				);
 			}
 			else if (destroyedCallback) {
 				destroyedCallback();

@@ -74,8 +74,8 @@ class FloatingToolbarMappingPanel extends PortletBase {
 		}
 
 		if (
-			nextState.item.editableValues.assetEntryClassNameId &&
-			nextState.item.editableValues.assetEntryClassPK
+			nextState.item.editableValues.classNameId &&
+			nextState.item.editableValues.classPK
 		) {
 			nextState = setIn(
 				nextState,
@@ -99,7 +99,7 @@ class FloatingToolbarMappingPanel extends PortletBase {
 			if (
 				this.item &&
 				this.mappingFieldsURL &&
-				!this.item.editableValues.assetEntryClassNameId
+				!this.item.editableValues.classNameId
 			) {
 				this._selectedSourceTypeId = SOURCE_TYPE_IDS.structure;
 			}
@@ -114,9 +114,9 @@ class FloatingToolbarMappingPanel extends PortletBase {
 	 * @review
 	 */
 	_clearEditableValues() {
-		this._updateEditableValues('assetEntryClassNameId', '');
-		this._updateEditableValues('assetEntryClassPK', '');
-		this._updateEditableValues('assetEntryFieldId', '');
+		this._updateEditableValues('classNameId', '');
+		this._updateEditableValues('classPK', '');
+		this._updateEditableValues('fieldId', '');
 		this._updateEditableValues('mappedField', '');
 	}
 
@@ -129,16 +129,16 @@ class FloatingToolbarMappingPanel extends PortletBase {
 	_handleAssetOptionChange(event) {
 		if (event.delegateTarget.value) {
 			const {
-				assetEntryClassNameId,
-				assetEntryClassPK
+				classNameId,
+				classPK
 			} = decodeId(event.delegateTarget.value);
 
-			this._updateEditableValues('assetEntryClassNameId', assetEntryClassNameId);
-			this._updateEditableValues('assetEntryClassPK', assetEntryClassPK);
+			this._updateEditableValues('classNameId', classNameId);
+			this._updateEditableValues('classPK', classPK);
 		}
 		else {
-			this._updateEditableValues('assetEntryClassNameId', '');
-			this._updateEditableValues('assetEntryClassPK', '');
+			this._updateEditableValues('classNameId', '');
+			this._updateEditableValues('classPK', '');
 		}
 
 		this.store.done(
@@ -168,7 +168,7 @@ class FloatingToolbarMappingPanel extends PortletBase {
 		const fieldId = event.delegateTarget.value;
 
 		if (this._selectedSourceTypeId === SOURCE_TYPE_IDS.content) {
-			this._updateEditableValues('assetEntryFieldId', fieldId);
+			this._updateEditableValues('fieldId', fieldId);
 		}
 		else if (this._selectedSourceTypeId === SOURCE_TYPE_IDS.structure) {
 			this._updateEditableValues('mappedField', fieldId);
@@ -220,14 +220,14 @@ class FloatingToolbarMappingPanel extends PortletBase {
 		}
 		else if (
 			this._selectedSourceTypeId === SOURCE_TYPE_IDS.content &&
-			this.item.editableValues.assetEntryClassNameId &&
-			this.item.editableValues.assetEntryClassPK
+			this.item.editableValues.classNameId &&
+			this.item.editableValues.classPK
 		) {
 			promise = this.fetch(
 				this.getAssetMappingFieldsURL,
 				{
-					classNameId: this.item.editableValues.assetEntryClassNameId,
-					classPK: this.item.editableValues.assetEntryClassPK
+					classNameId: this.item.editableValues.classNameId,
+					classPK: this.item.editableValues.classPK
 				}
 			);
 		}

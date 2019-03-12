@@ -382,11 +382,11 @@ public class EditableFragmentEntryProcessor implements FragmentEntryProcessor {
 			return StringPool.BLANK;
 		}
 
-		long assetEntryClassNameId = jsonObject.getLong("classNameId");
-		long assetEntryClassPK = jsonObject.getLong("classPK");
+		long classNameId = jsonObject.getLong("classNameId");
+		long classPK = jsonObject.getLong("classPK");
 
 		AssetEntry assetEntry = _assetEntryLocalService.fetchEntry(
-			assetEntryClassNameId, assetEntryClassPK);
+			classNameId, classPK);
 
 		if (assetEntry == null) {
 			return StringPool.BLANK;
@@ -394,7 +394,7 @@ public class EditableFragmentEntryProcessor implements FragmentEntryProcessor {
 
 		AssetDisplayContributor assetDisplayContributor =
 			_assetDisplayContributorTracker.getAssetDisplayContributor(
-				_portal.getClassName(assetEntryClassNameId));
+				_portal.getClassName(classNameId));
 
 		String assetEntryFieldName = jsonObject.getString("fieldName");
 
@@ -461,14 +461,12 @@ public class EditableFragmentEntryProcessor implements FragmentEntryProcessor {
 	}
 
 	private boolean _isMapped(JSONObject jsonObject, String mode) {
-		long assetEntryClassNameId = jsonObject.getLong(
-			"assetEntryClassNameId");
-		long assetEntryClassPK = jsonObject.getLong("assetEntryClassPK");
-		String assetEntryFieldName = jsonObject.getString(
-			"assetEntryFieldName");
+		long classNameId = jsonObject.getLong("classNameId");
+		long classPK = jsonObject.getLong("classPK");
+		String fieldName = jsonObject.getString("fieldName");
 
-		if ((assetEntryClassNameId > 0) && (assetEntryClassPK > 0) &&
-			Validator.isNotNull(assetEntryFieldName)) {
+		if ((classNameId > 0) && (classPK > 0) &&
+			Validator.isNotNull(fieldName)) {
 
 			return true;
 		}

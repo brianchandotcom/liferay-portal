@@ -321,6 +321,11 @@ public interface DDMStructureLayoutLocalService
 	public DDMFormLayout getStructureLayoutDDMFormLayout(
 		DDMStructureLayout structureLayout);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<DDMStructureLayout> getStructureLayouts(
+			long groupId, int start, int end)
+		throws PortalException;
+
 	/**
 	 * Updates the ddm structure layout in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	 *

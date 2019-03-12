@@ -36,6 +36,7 @@ import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
@@ -151,6 +152,14 @@ public class DDMStructureLayoutLocalServiceImpl
 				ddmFormLayoutDeserializer.deserialize(builder.build());
 
 		return ddmFormLayoutDeserializerDeserializeResponse.getDDMFormLayout();
+	}
+
+	@Override
+	public List<DDMStructureLayout> getStructureLayouts(
+			long groupId, int start, int end)
+		throws PortalException {
+
+		return ddmStructureLayoutPersistence.findByGroupId(groupId, start, end);
 	}
 
 	@Override

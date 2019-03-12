@@ -443,6 +443,16 @@ public class DDMStructureLayoutLocalServiceWrapper
 			structureLayout);
 	}
 
+	@Override
+	public java.util.List
+		<com.liferay.dynamic.data.mapping.model.DDMStructureLayout>
+				getStructureLayouts(long groupId, int start, int end)
+			throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _ddmStructureLayoutLocalService.getStructureLayouts(
+			groupId, start, end);
+	}
+
 	/**
 	 * Updates the ddm structure layout in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	 *

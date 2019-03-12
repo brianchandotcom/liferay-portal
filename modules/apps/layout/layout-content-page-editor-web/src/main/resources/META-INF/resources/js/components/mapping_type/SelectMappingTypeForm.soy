@@ -16,8 +16,8 @@
 		id: string,
 		label: string
 	]>}
-	{@param? _selectedMappingSubtypeId: any}
-	{@param? _selectedMappingTypeId: any}
+	{@param? _selectedMappingSubtypeId: string}
+	{@param? _selectedMappingTypeId: string}
   {@param? savingChanges: bool}
 
   <form>
@@ -34,7 +34,9 @@
           ref="selectMappingType"
         >
           {if length($_mappingTypes) != 1}
-            <option disabled value=""></option>
+            {call .defaultOption}
+              {param selectedValue: $_selectedMappingTypeId /}
+            {/call}
           {/if}
 
           {foreach $mappingType in $_mappingTypes}
@@ -59,7 +61,9 @@
           ref="selectMappingSubtype"
         >
           {if length($_mappingSubtypes) != 1}
-            <option disabled value=""></option>
+            {call .defaultOption}
+              {param selectedValue: $_selectedMappingSubtypeId /}
+            {/call}
           {/if}
 
           {foreach $mappingSubtype in $_mappingSubtypes}
@@ -115,4 +119,21 @@
       </div>
     </div>
   </form>
+{/template}
+
+/**
+ * Default option
+ */
+{template .defaultOption}
+  {@param? selectedValue: string}
+
+  {let $defaultOptionAttributes kind="attributes"}
+    value=""
+
+    {if (not $selectedValue) or ($selectedValue == '')}
+      selected
+    {/if}
+  {/let}
+
+  <option {$defaultOptionAttributes}>-</option>
 {/template}

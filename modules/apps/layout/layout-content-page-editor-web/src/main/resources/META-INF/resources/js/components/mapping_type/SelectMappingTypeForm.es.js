@@ -43,6 +43,11 @@ class SelectMappingTypeForm extends PortletBase {
 	 * @review
 	 */
 	_handleCancelButtonClick() {
+    this._mappingSubtypes = [];
+    this._mappingTypes = null;
+    this._selectedMappingTypeId = '';
+    this._selectedMappingSubtypeId = '';
+
 		this.store
 			.dispatchAction(
 				HIDE_MAPPING_TYPE_DIALOG

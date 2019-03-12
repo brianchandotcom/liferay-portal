@@ -33,56 +33,57 @@ boolean versionSpecific = GetterUtil.getBoolean(request.getAttribute("file_entry
 	</c:if>
 </liferay-util:buffer>
 
-<div class="tbar upper-tbar">
-	<div class="container-fluid container-fluid-max-xl">
-		<ul class="tbar-nav">
-			<li class="tbar-item tbar-item-expand">
-				<div class="tbar-section text-left">
-					<h2 class="text-truncate-inline upper-tbar-title" title="<%= HtmlUtil.escapeAttribute(documentTitle) %>">
-						<span class="text-truncate"><%= HtmlUtil.escape(documentTitle) %></span>
-					</h2>
+<div class="upper-tbar-container-fixed">
+	<div class="tbar upper-tbar">
+		<div class="container-fluid container-fluid-max-xl">
+			<ul class="tbar-nav">
+				<li class="tbar-item tbar-item-expand">
+					<div class="tbar-section text-left">
+						<h2 class="text-truncate-inline upper-tbar-title" title="<%= HtmlUtil.escapeAttribute(documentTitle) %>">
+							<span class="text-truncate"><%= HtmlUtil.escape(documentTitle) %></span>
+						</h2>
 
-					<c:if test="<%= fileEntry.hasLock() || fileEntry.isCheckedOut() %>">
-						<span>
-							<aui:icon cssClass="icon-monospaced" image="lock" markupView="lexicon" message="locked" />
-						</span>
-					</c:if>
-				</div>
-			</li>
-			<li class="tbar-item">
-				<liferay-frontend:info-bar-sidenav-toggler-button
-					cssClass="btn-sm"
-					label="info"
-				/>
-			</li>
-
-			<c:if test="<%= dlViewFileVersionDisplayContext.isSharingLinkVisible() %>">
+						<c:if test="<%= fileEntry.hasLock() || fileEntry.isCheckedOut() %>">
+							<span>
+								<aui:icon cssClass="icon-monospaced" image="lock" markupView="lexicon" message="locked" />
+							</span>
+						</c:if>
+					</div>
+				</li>
 				<li class="tbar-item">
-					<liferay-sharing:button
-						className="<%= DLFileEntryConstants.getClassName() %>"
-						classPK="<%= fileEntry.getFileEntryId() %>"
+					<liferay-frontend:info-bar-sidenav-toggler-button
+						cssClass="btn-sm"
+						label="info"
 					/>
 				</li>
-			</c:if>
+				<c:if test="<%= dlViewFileVersionDisplayContext.isSharingLinkVisible() %>">
+					<li class="tbar-item">
+						<liferay-sharing:button
+							className="<%= DLFileEntryConstants.getClassName() %>"
+							classPK="<%= fileEntry.getFileEntryId() %>"
+						/>
+					</li>
+				</c:if>
 
-			<c:if test="<%= dlViewFileVersionDisplayContext.isDownloadLinkVisible() %>">
+				<c:if test="<%= dlViewFileVersionDisplayContext.isDownloadLinkVisible() %>">
+					<li class="tbar-item">
+						<clay:link
+							buttonStyle="primary"
+							elementClasses="btn-sm"
+							href="<%= DLURLHelperUtil.getDownloadURL(fileEntry, fileVersion, themeDisplay, StringPool.BLANK) %>"
+							icon="download"
+							label='<%= LanguageUtil.get(resourceBundle, "download") %>'
+							title='<%= LanguageUtil.get(resourceBundle, "download") + " (" + TextFormatter.formatStorageSize(fileVersion.getSize(), locale) + ")" %>'
+						/>
+					</li>
+				</c:if>
+
 				<li class="tbar-item">
-					<clay:link
-						buttonStyle="primary"
-						elementClasses="btn-sm"
-						href="<%= DLURLHelperUtil.getDownloadURL(fileEntry, fileVersion, themeDisplay, StringPool.BLANK) %>"
-						icon="download"
-						label='<%= LanguageUtil.get(resourceBundle, "download") %>'
-						title='<%= LanguageUtil.get(resourceBundle, "download") + " (" + TextFormatter.formatStorageSize(fileVersion.getSize(), locale) + ")" %>'
+					<liferay-ui:menu
+						menu="<%= dlViewFileVersionDisplayContext.getMenu() %>"
 					/>
 				</li>
-			</c:if>
-
-			<li class="tbar-item">
-				<liferay-ui:menu
-					menu="<%= dlViewFileVersionDisplayContext.getMenu() %>"
-				/>
-			</li>
-		</ul>
+			</ul>
+		</div>
 	</div>
 </div>

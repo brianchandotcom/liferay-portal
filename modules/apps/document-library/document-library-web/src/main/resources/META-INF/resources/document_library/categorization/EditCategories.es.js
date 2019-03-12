@@ -130,7 +130,7 @@ class EditCategories extends Component {
 				let inputNode = document.getElementById(inputElementName + vocabulary.id);
 
 				if (inputNode.value) {
-					let categoryIds = inputNode.value.split(',');
+					let categoryIds = inputNode.value.split(',').map(Number);
 					finalCategories = finalCategories.concat(categoryIds);
 				}
 			}
@@ -210,7 +210,7 @@ class EditCategories extends Component {
 				let categoryIds = categories.map(item => item.value);
 
 				let obj = {
-					id: vocabulary.vocabularyId + '', //TODO
+					id: vocabulary.vocabularyId.toString(),
 					selectedCategoryIds: categoryIds.join(','),
 					selectedItems: categories,
 					singleSelect: !vocabulary.multiValued,

@@ -14,6 +14,7 @@
 
 package com.liferay.layout.content.page.editor.web.internal.display.context;
 
+import com.liferay.asset.display.contributor.AssetDisplayContributor;
 import com.liferay.asset.display.contributor.AssetDisplayContributorTracker;
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.service.AssetEntryLocalServiceUtil;
@@ -53,8 +54,11 @@ import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.model.PortletApp;
 import com.liferay.portal.kernel.model.PortletCategory;
 import com.liferay.portal.kernel.model.Theme;
+import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.PortletConfigFactoryUtil;
 import com.liferay.portal.kernel.portlet.PortletIdCodec;
+import com.liferay.portal.kernel.portlet.PortletProvider;
+import com.liferay.portal.kernel.portlet.PortletProviderUtil;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
@@ -101,6 +105,7 @@ import java.util.stream.Stream;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.PortletConfig;
+import javax.portlet.PortletMode;
 import javax.portlet.PortletURL;
 import javax.portlet.RenderResponse;
 import javax.portlet.ResourceURL;
@@ -151,6 +156,7 @@ public class ContentPageEditorDisplayContext {
 		soyContext.put(
 			"addPortletURL",
 			getFragmentEntryActionURL("/content_layout/add_portlet"));
+		soyContext.put("assetBrowserLinks", _getAssetBrowserLinksSoyContexts());
 		soyContext.put(
 			"availableLanguages", _getAvailableLanguagesSoyContext());
 		soyContext.put("classNameId", classNameId);
@@ -334,6 +340,68 @@ public class ContentPageEditorDisplayContext {
 	protected final long classPK;
 	protected final HttpServletRequest request;
 	protected final ThemeDisplay themeDisplay;
+
+	private List<SoyContext> _getAssetBrowserLinksSoyContexts()
+		throws Exception {
+
+		if (_assetBrowserLinksSoyContexts != null) {
+			return _assetBrowserLinksSoyContexts;
+		}
+
+		List<SoyContext> soyContexts = new ArrayList<>();
+
+		List<AssetDisplayContributor> assetDisplayContributors =
+			assetDisplayContributorTracker.getAssetDisplayContributors();
+
+		for (AssetDisplayContributor assetDisplayContributor :
+				assetDisplayContributors) {
+
+			if (assetDisplayContributor == null) {
+				continue;
+			}
+
+			PortletURL assetBrowserURL = PortletProviderUtil.getPortletURL(
+				request, assetDisplayContributor.getClassName(),
+				PortletProvider.Action.BROWSE);
+
+			if (assetBrowserURL == null) {
+				continue;
+			}
+
+			SoyContext assetBrowserSoyContext =
+				SoyContextFactoryUtil.createSoyContext();
+
+			assetBrowserURL.setParameter(
+				"groupId", String.valueOf(themeDisplay.getScopeGroupId()));
+			assetBrowserURL.setParameter(
+				"multipleSelection", String.valueOf(Boolean.TRUE));
+			assetBrowserURL.setParameter(
+				"selectedGroupIds",
+				String.valueOf(themeDisplay.getScopeGroupId()));
+			assetBrowserURL.setParameter(
+				"typeSelection", assetDisplayContributor.getClassName());
+			assetBrowserURL.setParameter(
+				"showNonindexable", String.valueOf(Boolean.TRUE));
+			assetBrowserURL.setParameter(
+				"showScheduled", String.valueOf(Boolean.TRUE));
+			assetBrowserURL.setParameter(
+				"eventName", _renderResponse.getNamespace() + "selectAsset");
+			assetBrowserURL.setPortletMode(PortletMode.VIEW);
+			assetBrowserURL.setWindowState(LiferayWindowState.POP_UP);
+
+			assetBrowserSoyContext.put("href", assetBrowserURL.toString());
+
+			assetBrowserSoyContext.put(
+				"typeName",
+				assetDisplayContributor.getLabel(themeDisplay.getLocale()));
+
+			soyContexts.add(assetBrowserSoyContext);
+		}
+
+		_assetBrowserLinksSoyContexts = soyContexts;
+
+		return _assetBrowserLinksSoyContexts;
+	}
 
 	private SoyContext _getAvailableLanguagesSoyContext() {
 		SoyContext availableLanguagesSoyContext =
@@ -987,6 +1055,7 @@ public class ContentPageEditorDisplayContext {
 	private static final Log _log = LogFactoryUtil.getLog(
 		ContentPageEditorDisplayContext.class);
 
+	private List<SoyContext> _assetBrowserLinksSoyContexts;
 	private Map<String, Object> _defaultConfigurations;
 	private String _defaultSegmentsEntryId;
 	private String _defaultSegmentsExperienceId;

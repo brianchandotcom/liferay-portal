@@ -4,69 +4,120 @@ components:
             description: https://www.schema.org/AggregateRating
             properties:
                 bestRating:
+                    #@review
+                    description: "The highest rating"
                     type: number
                 ratingCount:
+                    #@review
+                    description: "The number of ratings"
                     type: number
                 ratingValue:
+                    #@review
+                    description: "The average of the ratings"
                     type: number
                 worstRating:
+                    #@review
+                    description: "The lowest rating"
                     type: number
             type: object
         Comment:
             description: https://www.schema.org/Comment
             properties:
                 creator:
+                    #@review
                     $ref: "#/components/schemas/Creator"
+                    description: "Adds a comment to a structured content"
+                    readOnly: true
                 dateCreated:
+                    #@review
+                    description: "The creation date"
                     format: date-time
+                    readOnly: true
                     type: string
                 dateModified:
+                    #@review
+                    description: "The date of the last modification"
                     format: date-time
+                    readOnly: true
                     type: string
                 hasComments:
+                    #@review
+                    description: "Whether or not this comment has child comments"
+                    readOnly: true
                     type: boolean
                 id:
+                    #@review
+                    description: "The comment's ID"
                     format: int64
+                    readOnly: true
                     type: integer
                 text:
+                    #@review
+                    description: "The comment's body"
                     type: string
             type: object
         ContentDocument:
             description: https://www.schema.org/ContentDocument
             properties:
                 contentUrl:
+                    #@review
+                    description: "The url to download the contents of the document"
                     format: uri
                     type: string
                 encodingFormat:
+                    #@review
+                    description: "The encoding format"
                     type: string
                 fileExtension:
+                    #@review
+                    description: "The document's file extension"
                     type: string
                 id:
+                    #@review
+                    description: "The document's ID"
                     format: int64
                     type: integer
                 sizeInBytes:
+                    #@review
+                    description: "The document's size in bytes"
                     type: number
                 title:
+                    #@review
+                    description: "The document's title"
                     type: string
             type: object
         ContentField:
             description: https://www.schema.org/ContentField
             properties:
                 dataType:
+                    #@review
+                    description: "The field's data type. In some cases extra information is available in the inputControl property"
                     type: string
                 inputControl:
+                    #@review
+                    description: "The field's input control. Additional information need to add extra context to the data type. Not always present"
                     type: string
                 label:
+                    #@review
+                    description: "The human readable label of the field"
                     type: string
                 name:
+                    #@review
+                    description: "The internal name of the field"
                     type: string
                 nestedFields:
+                    #@review
+                    description: "The content field's nested fields"
                     items:
                         $ref: "#/components/schemas/ContentField"
                     type: array
                 repeatable:
+                    #@review
+                    description: "Whether or not the field is repeatable"
                     type: boolean
                 value:
+                    #@review
+                    description: "The value of the field"
                     properties:
                         data:
                             type: string
@@ -113,100 +164,195 @@ components:
             description: https://www.schema.org/ContentStructure
             properties:
                 availableLanguages:
+                    #@review
+                    description: "The content structure's available translations"
                     items:
                         type: string
+                    readOnly: true
                     type: array
                 contentSpace:
+                    #@review
+                    description: "The content space ID where the content structure is stored"
                     format: int64
+                    readOnly: true
                     type: integer
                 contentStructureFields:
+                    #@review
+                    description: "The content structure's fields"
                     items:
                         $ref: "#/components/schemas/ContentStructureField"
+                    readOnly: true
                     type: array
                 creator:
+                    #@review
                     $ref: "#/components/schemas/Creator"
+                    description: "The content structure's creator"
+                    readOnly: true
                 dateCreated:
+                    #@review
+                    description: "The creation date"
                     format: date-time
+                    readOnly: true
                     type: string
                 dateModified:
+                    #@review
+                    description: "The date of the last modification"
                     format: date-time
+                    readOnly: true
                     type: string
                 description:
+                    #@review
+                    description: "The content structure's description"
+                    readOnly: true
                     type: string
                 id:
+                    #@review
+                    description: "The content structure's ID"
                     format: int64
+                    readOnly: true
                     type: integer
                 name:
+                    #@review
+                    description: "The content structure's name"
+                    readOnly: true
                     type: string
             type: object
         ContentStructureField:
             description: https://www.schema.org/ContentStructureField
             properties:
                 dataType:
+                    #@review
+                    description: "The field's data type. In some cases extra information is available in the inputControl property"
+                    readOnly: true
                     type: string
                 inputControl:
+                    #@review
+                    description: "Not always present. The field's input control.
+                        Additional information needed to add extra context to the data type"
+                    readOnly: true
                     type: string
                 label:
+                    #@review
+                    description: "The human readable label of the field"
+                    readOnly: true
                     type: string
                 localizable:
+                    #@review
+                    description: "Whether or not the field is localizable"
+                    readOnly: true
                     type: boolean
                 multiple:
+                    #@review
+                    description: "Whether or not the field is multiple"
+                    readOnly: true
                     type: boolean
                 name:
+                    #@review
+                    description: "The field's name"
+                    readOnly: true
                     type: string
                 nestedContentStructureFields:
+                    #@review
+                    description: "The field's nested fields"
                     items:
                         $ref: "#/components/schemas/ContentStructureField"
+                    readOnly: true
                     type: array
                 options:
+                    #@review
+                    description: "The field's option available. Not always present"
                     items:
                         properties:
                             label:
+                                readOnly: true
                                 type: string
                             value:
+                                readOnly: true
                                 type: string
                         type: object
+                    readOnly: true
                     type: array
                 predefinedValue:
+                    #@review
+                    description: "The field's default value"
+                    readOnly: true
                     type: string
                 repeatable:
+                    #@review
+                    description: "Whether or not this field is repeatable"
+                    readOnly: true
                     type: boolean
                 required:
+                    #@review
+                    description: "Whether or not this field is required"
+                    readOnly: true
                     type: boolean
                 showLabel:
+                    #@review
+                    description: "Whether or not the field label must be shown"
+                    readOnly: true
                     type: boolean
             type: object
         Creator:
             description: https://www.schema.org/Creator
             properties:
                 additionalName:
+                    #@review
+                    description: "The creator's additional name"
+                    readOnly: true
                     type: string
                 familyName:
+                    #@review
+                    description: "The creator's family name"
+                    readOnly: true
                     type: string
                 givenName:
+                    #@review
+                    description: "The creator's given name"
+                    readOnly: true
                     type: string
                 id:
+                    #@review
+                    description: "The creator's ID"
                     format: int64
+                    readOnly: true
                     type: integer
                 image:
+                    #@review
+                    description: "The creator's image URL"
                     format: uri
+                    readOnly: true
                     type: string
                 name:
+                    #@review
+                    description: "The creator's name"
+                    readOnly: true
                     type: string
                 profileURL:
+                    #@review
+                    description: "The creator's profile URL"
                     format: uri
+                    readOnly: true
                     type: string
             type: object
         StructuredContent:
             description: https://www.schema.org/StructuredContent
             properties:
                 aggregateRating:
+                    #@review
                     $ref: "#/components/schemas/AggregateRating"
+                    description: "The structured content's aggregate rating"
+                    readOnly: true
                 availableLanguages:
+                    #@review
+                    description: "The structured content's available translations"
                     items:
                         type: string
+                    readOnly: true
                     type: array
                 categories:
+                    #@review
+                    description: "The structured content's categories"
                     items:
                         properties:
                             categoryId:
@@ -215,62 +361,104 @@ components:
                             categoryName:
                                 type: string
                         type: object
+                    readOnly: true
                     type: array
                 categoryIds:
+                    #@review
+                    description: "The structured content's category Ids"
                     items:
                         format: int64
                         type: integer
                     type: array
                     writeOnly: true
                 contentFields:
+                    #@review
+                    description: "The structured content's structure fields"
                     items:
                         $ref: "#/components/schemas/ContentField"
                     type: array
                 contentSpace:
+                    #@review
+                    description: "The content space ID where the structured content is stored"
                     format: int64
+                    readOnly: true
                     type: integer
                 contentStructureId:
+                    #@review
+                    description: "The structured content's content structure id"
                     format: int64
                     type: integer
                 creator:
+                    #@review
                     $ref: "#/components/schemas/Creator"
+                    description: "The structured content's creator"
+                    readOnly: true
                 dateCreated:
+                    #@review
+                    description: "The date of creation"
                     format: date-time
+                    readOnly: true
                     type: string
                 dateModified:
+                    #@review
+                    description: "The date of the last modification"
                     format: date-time
+                    readOnly: true
                     type: string
                 datePublished:
+                    #@review
+                    description: "The structured content's publication date"
                     format: date-time
                     type: string
                 description:
+                    #@review
+                    description: "The structured content's description"
                     type: string
                 hasComments:
+                    #@review
+                    description: "Wheter or not this structured content has comments"
+                    readOnly: true
                     type: boolean
                 id:
+                    #@review
+                    description: "The structured content's ID"
                     format: int64
+                    readOnly: true
                     type: integer
                 keywords:
+                    #@review
+                    description: "The structured content's keywords"
                     items:
                         type: string
                     type: array
                 lastReviewed:
+                    #@review
+                    description: "The structured content's last reviewed date"
                     format: date-time
+                    readOnly: true
                     type: string
                 renderedContents:
-                    description: https://www.schema.org/templates
+                    #@review
+                    description: "A list of all structured contents rendered content URLs"
                     items:
                         properties:
                             renderedContentURL:
                                 format: uri
+                                readOnly: true
                                 type: string
                             templateName:
+                                readOnly: true
                                 type: string
                         type: object
+                    readOnly: true
                     type: array
                 title:
+                    #@review
+                    description: "The structured content's title"
                     type: string
                 viewableBy:
+                    #@review
+                    description: "The permission level to be used on the structured content. Only available on creation"
                     enum: [Anyone, Members, Owner]
                     type: string
                     writeOnly: true
@@ -278,31 +466,58 @@ components:
             description: https://www.schema.org/StructuredContentImage
             properties:
                 contentUrl:
+                    #@review
+                    description: "The url to download the contents of the image"
                     format: uri
+                    readOnly: true
                     type: string
                 creator:
+                    #@review
                     $ref: "#/components/schemas/Creator"
+                    description: "The image's creator"
+                    readOnly: true
                 dateCreated:
+                    #@review
+                    description: "The creation date"
                     format: date-time
+                    readOnly: true
                     type: string
                 dateModified:
+                    #@review
+                    description: "The modified date"
                     format: date-time
+                    readOnly: true
                     type: string
                 description:
+                    #@review
+                    description: "The image's description"
+                    readOnly: true
                     type: string
                 encodingFormat:
+                    #@review
+                    description: "The image's encoding format"
+                    readOnly: true
                     type: string
                 fileExtension:
+                    #@review
+                    description: "The image's extension"
+                    readOnly: true
                     type: string
                 id:
+                    #@review
+                    description: "The image's ID"
                     format: int64
+                    readOnly: true
                     type: integer
                 sizeInBytes:
+                    #@review
+                    description: "The image's size in bytes"
+                    readOnly: true
                     type: number
-                structuredContentId:
-                    format: int64
-                    type: integer
                 title:
+                    #@review
+                    description: "The image's title"
+                    readOnly: true
                     type: string
             type: object
 info:
@@ -313,6 +528,8 @@ openapi: 3.0.1
 paths:
     "/comments/{comment-id}":
         delete:
+            #@review
+            description: "Remove a comment"
             parameters:
                 - in: path
                   name: comment-id
@@ -327,6 +544,8 @@ paths:
                     description: ""
             tags: ["Comment"]
         get:
+            #@review
+            description: "Retrieve a comment"
             parameters:
                 - in: path
                   name: comment-id
@@ -343,6 +562,8 @@ paths:
                     description: ""
             tags: ["Comment"]
         put:
+            #@review
+            description: "Update a comment"
             parameters:
                 - in: path
                   name: comment-id
@@ -365,7 +586,8 @@ paths:
             tags: ["Comment"]
     "/comments/{comment-id}/comments":
         get:
-            description: retrieve the child comments of a comment thread
+            #@review
+            description: "Retrieve the child comments of a comment thread"
             parameters:
                 - in: query
                   name: filter
@@ -400,6 +622,8 @@ paths:
                     description: ""
             tags: ["Comment"]
         post:
+            #@review
+            description: "Add a child comment to a comment thread"
             parameters:
                 - in: path
                   name: comment-id
@@ -421,6 +645,8 @@ paths:
                     description: ""
             tags: ["Comment"]
     "/content-spaces/{content-space-id}/content-structures":
+        #@review
+        description: "Retrieve the content structures of a content space"
         get:
             parameters:
                 - in: query
@@ -457,6 +683,11 @@ paths:
             tags: ["ContentStructure"]
     "/content-spaces/{content-space-id}/structured-contents":
         get:
+            #@review
+            description: "Retrieve the structured contents of a content space.
+                dateCreated, dateModified, datePublished, creatorId, contentStructureId,
+                title and any field of its structure"
+                This collection can be filtered and sorted using: categoryIds, keywords,
             parameters:
                 - in: query
                   name: page
@@ -495,6 +726,8 @@ paths:
                     description: ""
             tags: ["StructuredContent"]
         post:
+            #@review
+            description: "Add a structured content to a content space"
             parameters:
                 - in: path
                   name: content-space-id
@@ -521,6 +754,8 @@ paths:
             tags: ["StructuredContent"]
     "/content-structures/{content-structure-id}":
         get:
+            #@review
+            description: "Retrieve a content structure"
             parameters:
                 - in: path
                   name: content-structure-id
@@ -538,6 +773,11 @@ paths:
             tags: ["ContentStructure"]
     "/content-structures/{content-structure-id}/structured-contents":
         get:
+            #@review
+            description: "Retrieve the structured contents that are using the structure ID provided.
+                dateCreated, dateModified, datePublished, creatorId, title and any field of
+                its structure"
+                This collection can be filtered and sorted using: categoryIds, keywords,
             parameters:
                 - in: query
                   name: page
@@ -577,6 +817,8 @@ paths:
             tags: ["StructuredContent"]
     "/structured-contents/{structured-content-id}":
         delete:
+            #@review
+            description: "Remove a structured content"
             parameters:
                 - in: path
                   name: structured-content-id
@@ -591,6 +833,8 @@ paths:
                     description: ""
             tags: ["StructuredContent"]
         get:
+            #@review
+            description: "Retrieve a structured content"
             parameters:
                 - in: path
                   name: structured-content-id
@@ -611,6 +855,9 @@ paths:
                     description: ""
             tags: ["StructuredContent"]
         patch:
+            #@review
+            description: "Update the properties of a structured content.
+                Structured contents with repeatable fields don't support this operation"
             parameters:
                 - in: path
                   name: structured-content-id
@@ -636,6 +883,8 @@ paths:
                     description: ""
             tags: ["StructuredContent"]
         put:
+            #@review
+            description: "Update the properties of a structured content"
             parameters:
                 - in: path
                   name: structured-content-id
@@ -662,6 +911,8 @@ paths:
             tags: ["StructuredContent"]
     "/structured-contents/{structured-content-id}/comments":
         get:
+            #@review
+            description: "Retrieve the comment of a structured content"
             parameters:
                 - in: query
                   name: filter
@@ -696,6 +947,8 @@ paths:
                     description: ""
             tags: ["Comment"]
         post:
+            #@review
+            description: "Add a comment to a structured content"
             parameters:
                 - in: path
                   name: structured-content-id
@@ -718,6 +971,8 @@ paths:
             tags: ["Comment"]
     "/structured-contents/{structured-content-id}/rendered-content/{template-id}":
         get:
+            #@review
+            description: "Retrieve the rendered html of a structured content using the template ID provided"
             parameters:
                 - in: path
                   name: structured-content-id

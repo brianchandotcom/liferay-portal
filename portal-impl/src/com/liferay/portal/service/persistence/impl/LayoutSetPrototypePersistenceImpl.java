@@ -52,6 +52,7 @@ import java.lang.reflect.InvocationHandler;
 
 import java.util.Collections;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -3968,6 +3969,14 @@ public class LayoutSetPrototypePersistenceImpl
 		setModelImplClass(LayoutSetPrototypeImpl.class);
 		setModelPKClass(long.class);
 		setEntityCacheEnabled(LayoutSetPrototypeModelImpl.ENTITY_CACHE_ENABLED);
+
+		Map<String, String> dbColumnNames = new HashMap<String, String>();
+
+		dbColumnNames.put("uuid", "uuid_");
+		dbColumnNames.put("settings", "settings_");
+		dbColumnNames.put("active", "active_");
+
+		setDBColumnNames(dbColumnNames);
 	}
 
 	/**

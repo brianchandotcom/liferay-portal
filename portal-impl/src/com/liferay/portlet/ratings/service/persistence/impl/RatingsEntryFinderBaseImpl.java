@@ -21,6 +21,8 @@ import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.ratings.kernel.model.RatingsEntry;
 import com.liferay.ratings.kernel.service.persistence.RatingsEntryPersistence;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -34,6 +36,12 @@ public class RatingsEntryFinderBaseImpl
 
 	public RatingsEntryFinderBaseImpl() {
 		setModelClass(RatingsEntry.class);
+
+		Map<String, String> dbColumnNames = new HashMap<String, String>();
+
+		dbColumnNames.put("uuid", "uuid_");
+
+		setDBColumnNames(dbColumnNames);
 	}
 
 	@Override

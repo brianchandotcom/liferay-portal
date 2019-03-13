@@ -23,6 +23,8 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Set;
 
 import javax.sql.DataSource;
@@ -38,6 +40,13 @@ public abstract class OAuth2ScopeGrantFinderBaseImpl
 
 	public OAuth2ScopeGrantFinderBaseImpl() {
 		setModelClass(OAuth2ScopeGrant.class);
+
+		Map<String, String> dbColumnNames = new HashMap<String, String>();
+
+		dbColumnNames.put(
+			"oAuth2ApplicationScopeAliasesId", "oA2AScopeAliasesId");
+
+		setDBColumnNames(dbColumnNames);
 	}
 
 	@Override

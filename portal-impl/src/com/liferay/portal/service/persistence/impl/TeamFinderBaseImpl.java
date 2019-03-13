@@ -21,6 +21,8 @@ import com.liferay.portal.kernel.model.Team;
 import com.liferay.portal.kernel.service.persistence.TeamPersistence;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -31,6 +33,12 @@ public class TeamFinderBaseImpl extends BasePersistenceImpl<Team> {
 
 	public TeamFinderBaseImpl() {
 		setModelClass(Team.class);
+
+		Map<String, String> dbColumnNames = new HashMap<String, String>();
+
+		dbColumnNames.put("uuid", "uuid_");
+
+		setDBColumnNames(dbColumnNames);
 	}
 
 	@Override

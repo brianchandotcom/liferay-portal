@@ -21,6 +21,8 @@ import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.wiki.model.WikiPage;
 import com.liferay.wiki.service.persistence.WikiPagePersistence;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -31,6 +33,12 @@ public class WikiPageFinderBaseImpl extends BasePersistenceImpl<WikiPage> {
 
 	public WikiPageFinderBaseImpl() {
 		setModelClass(WikiPage.class);
+
+		Map<String, String> dbColumnNames = new HashMap<String, String>();
+
+		dbColumnNames.put("uuid", "uuid_");
+
+		setDBColumnNames(dbColumnNames);
 	}
 
 	@Override

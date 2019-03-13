@@ -21,6 +21,8 @@ import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.social.kernel.model.SocialActivity;
 import com.liferay.social.kernel.service.persistence.SocialActivityPersistence;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -32,6 +34,12 @@ public class SocialActivityFinderBaseImpl
 
 	public SocialActivityFinderBaseImpl() {
 		setModelClass(SocialActivity.class);
+
+		Map<String, String> dbColumnNames = new HashMap<String, String>();
+
+		dbColumnNames.put("type", "type_");
+
+		setDBColumnNames(dbColumnNames);
 	}
 
 	@Override

@@ -42,6 +42,7 @@ import com.liferay.portal.model.impl.ImageModelImpl;
 import java.io.Serializable;
 
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -571,6 +572,13 @@ public class ImagePersistenceImpl
 		setModelImplClass(ImageImpl.class);
 		setModelPKClass(long.class);
 		setEntityCacheEnabled(ImageModelImpl.ENTITY_CACHE_ENABLED);
+
+		Map<String, String> dbColumnNames = new HashMap<String, String>();
+
+		dbColumnNames.put("type", "type_");
+		dbColumnNames.put("size", "size_");
+
+		setDBColumnNames(dbColumnNames);
 	}
 
 	/**

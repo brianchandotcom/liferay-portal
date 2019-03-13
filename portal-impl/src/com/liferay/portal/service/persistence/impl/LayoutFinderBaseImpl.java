@@ -21,6 +21,8 @@ import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.service.persistence.LayoutPersistence;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -31,6 +33,15 @@ public class LayoutFinderBaseImpl extends BasePersistenceImpl<Layout> {
 
 	public LayoutFinderBaseImpl() {
 		setModelClass(Layout.class);
+
+		Map<String, String> dbColumnNames = new HashMap<String, String>();
+
+		dbColumnNames.put("uuid", "uuid_");
+		dbColumnNames.put("type", "type_");
+		dbColumnNames.put("hidden", "hidden_");
+		dbColumnNames.put("system", "system_");
+
+		setDBColumnNames(dbColumnNames);
 	}
 
 	@Override

@@ -49,6 +49,7 @@ import java.sql.Timestamp;
 
 import java.util.Collections;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -2027,6 +2028,13 @@ public class LockPersistenceImpl
 		setModelImplClass(LockImpl.class);
 		setModelPKClass(long.class);
 		setEntityCacheEnabled(LockModelImpl.ENTITY_CACHE_ENABLED);
+
+		Map<String, String> dbColumnNames = new HashMap<String, String>();
+
+		dbColumnNames.put("uuid", "uuid_");
+		dbColumnNames.put("key", "key_");
+
+		setDBColumnNames(dbColumnNames);
 	}
 
 	/**

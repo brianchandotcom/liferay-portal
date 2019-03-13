@@ -21,6 +21,8 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -32,6 +34,14 @@ public class DDMTemplateFinderBaseImpl
 
 	public DDMTemplateFinderBaseImpl() {
 		setModelClass(DDMTemplate.class);
+
+		Map<String, String> dbColumnNames = new HashMap<String, String>();
+
+		dbColumnNames.put("uuid", "uuid_");
+		dbColumnNames.put("type", "type_");
+		dbColumnNames.put("mode", "mode_");
+
+		setDBColumnNames(dbColumnNames);
 	}
 
 	@Override

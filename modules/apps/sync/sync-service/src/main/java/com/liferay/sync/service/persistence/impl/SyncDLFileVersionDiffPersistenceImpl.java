@@ -45,6 +45,7 @@ import java.sql.Timestamp;
 
 import java.util.Collections;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -1416,6 +1417,12 @@ public class SyncDLFileVersionDiffPersistenceImpl
 		setModelPKClass(long.class);
 		setEntityCacheEnabled(
 			SyncDLFileVersionDiffModelImpl.ENTITY_CACHE_ENABLED);
+
+		Map<String, String> dbColumnNames = new HashMap<String, String>();
+
+		dbColumnNames.put("size", "size_");
+
+		setDBColumnNames(dbColumnNames);
 	}
 
 	/**

@@ -50,6 +50,7 @@ import java.lang.reflect.InvocationHandler;
 
 import java.util.Collections;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -1981,6 +1982,12 @@ public class AssetCategoryPropertyPersistenceImpl
 
 		setModelImplClass(AssetCategoryPropertyImpl.class);
 		setModelPKClass(long.class);
+
+		Map<String, String> dbColumnNames = new HashMap<String, String>();
+
+		dbColumnNames.put("key", "key_");
+
+		setDBColumnNames(dbColumnNames);
 	}
 
 	/**

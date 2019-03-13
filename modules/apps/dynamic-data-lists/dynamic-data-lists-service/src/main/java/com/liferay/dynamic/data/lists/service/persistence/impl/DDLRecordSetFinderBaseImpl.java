@@ -21,6 +21,8 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -32,6 +34,13 @@ public class DDLRecordSetFinderBaseImpl
 
 	public DDLRecordSetFinderBaseImpl() {
 		setModelClass(DDLRecordSet.class);
+
+		Map<String, String> dbColumnNames = new HashMap<String, String>();
+
+		dbColumnNames.put("uuid", "uuid_");
+		dbColumnNames.put("settings", "settings_");
+
+		setDBColumnNames(dbColumnNames);
 	}
 
 	@Override

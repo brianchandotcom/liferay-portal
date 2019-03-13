@@ -45,6 +45,7 @@ import java.io.Serializable;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -2217,6 +2218,14 @@ public class DLContentPersistenceImpl
 		setModelImplClass(DLContentImpl.class);
 		setModelPKClass(long.class);
 		setEntityCacheEnabled(DLContentModelImpl.ENTITY_CACHE_ENABLED);
+
+		Map<String, String> dbColumnNames = new HashMap<String, String>();
+
+		dbColumnNames.put("path", "path_");
+		dbColumnNames.put("data", "data_");
+		dbColumnNames.put("size", "size_");
+
+		setDBColumnNames(dbColumnNames);
 	}
 
 	/**

@@ -58,6 +58,7 @@ import java.lang.reflect.InvocationHandler;
 
 import java.util.Collections;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -12429,6 +12430,13 @@ public class DLFolderPersistenceImpl
 		setModelImplClass(DLFolderImpl.class);
 		setModelPKClass(long.class);
 		setEntityCacheEnabled(DLFolderModelImpl.ENTITY_CACHE_ENABLED);
+
+		Map<String, String> dbColumnNames = new HashMap<String, String>();
+
+		dbColumnNames.put("uuid", "uuid_");
+		dbColumnNames.put("hidden", "hidden_");
+
+		setDBColumnNames(dbColumnNames);
 	}
 
 	/**

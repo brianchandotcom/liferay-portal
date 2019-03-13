@@ -21,6 +21,8 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.persistence.UserPersistence;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -31,6 +33,14 @@ public class UserFinderBaseImpl extends BasePersistenceImpl<User> {
 
 	public UserFinderBaseImpl() {
 		setModelClass(User.class);
+
+		Map<String, String> dbColumnNames = new HashMap<String, String>();
+
+		dbColumnNames.put("uuid", "uuid_");
+		dbColumnNames.put("password", "password_");
+		dbColumnNames.put("groups", "groups_");
+
+		setDBColumnNames(dbColumnNames);
 	}
 
 	@Override

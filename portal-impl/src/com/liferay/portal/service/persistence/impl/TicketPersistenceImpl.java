@@ -46,6 +46,7 @@ import java.io.Serializable;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -1535,6 +1536,13 @@ public class TicketPersistenceImpl
 		setModelImplClass(TicketImpl.class);
 		setModelPKClass(long.class);
 		setEntityCacheEnabled(TicketModelImpl.ENTITY_CACHE_ENABLED);
+
+		Map<String, String> dbColumnNames = new HashMap<String, String>();
+
+		dbColumnNames.put("key", "key_");
+		dbColumnNames.put("type", "type_");
+
+		setDBColumnNames(dbColumnNames);
 	}
 
 	/**

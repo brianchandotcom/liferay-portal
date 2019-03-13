@@ -61,6 +61,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -9106,6 +9107,14 @@ public class RolePersistenceImpl
 		setModelImplClass(RoleImpl.class);
 		setModelPKClass(long.class);
 		setEntityCacheEnabled(RoleModelImpl.ENTITY_CACHE_ENABLED);
+
+		Map<String, String> dbColumnNames = new HashMap<String, String>();
+
+		dbColumnNames.put("uuid", "uuid_");
+		dbColumnNames.put("type", "type_");
+		dbColumnNames.put("groups", "groups_");
+
+		setDBColumnNames(dbColumnNames);
 	}
 
 	/**

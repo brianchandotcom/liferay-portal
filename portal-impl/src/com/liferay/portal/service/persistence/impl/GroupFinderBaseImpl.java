@@ -21,6 +21,8 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.service.persistence.GroupPersistence;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -31,6 +33,14 @@ public class GroupFinderBaseImpl extends BasePersistenceImpl<Group> {
 
 	public GroupFinderBaseImpl() {
 		setModelClass(Group.class);
+
+		Map<String, String> dbColumnNames = new HashMap<String, String>();
+
+		dbColumnNames.put("uuid", "uuid_");
+		dbColumnNames.put("type", "type_");
+		dbColumnNames.put("active", "active_");
+
+		setDBColumnNames(dbColumnNames);
 	}
 
 	@Override

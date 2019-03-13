@@ -49,6 +49,7 @@ import java.lang.reflect.InvocationHandler;
 
 import java.util.Collections;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -2478,6 +2479,13 @@ public class DDMContentPersistenceImpl
 		setModelImplClass(DDMContentImpl.class);
 		setModelPKClass(long.class);
 		setEntityCacheEnabled(DDMContentModelImpl.ENTITY_CACHE_ENABLED);
+
+		Map<String, String> dbColumnNames = new HashMap<String, String>();
+
+		dbColumnNames.put("uuid", "uuid_");
+		dbColumnNames.put("data", "data_");
+
+		setDBColumnNames(dbColumnNames);
 	}
 
 	/**

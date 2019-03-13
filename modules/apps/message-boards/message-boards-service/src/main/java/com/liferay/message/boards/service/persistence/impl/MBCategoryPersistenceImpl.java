@@ -54,6 +54,7 @@ import java.lang.reflect.InvocationHandler;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -11630,6 +11631,12 @@ public class MBCategoryPersistenceImpl
 		setModelImplClass(MBCategoryImpl.class);
 		setModelPKClass(long.class);
 		setEntityCacheEnabled(MBCategoryModelImpl.ENTITY_CACHE_ENABLED);
+
+		Map<String, String> dbColumnNames = new HashMap<String, String>();
+
+		dbColumnNames.put("uuid", "uuid_");
+
+		setDBColumnNames(dbColumnNames);
 	}
 
 	/**

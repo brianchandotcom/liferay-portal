@@ -21,6 +21,8 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -31,6 +33,13 @@ public class DLFolderFinderBaseImpl extends BasePersistenceImpl<DLFolder> {
 
 	public DLFolderFinderBaseImpl() {
 		setModelClass(DLFolder.class);
+
+		Map<String, String> dbColumnNames = new HashMap<String, String>();
+
+		dbColumnNames.put("uuid", "uuid_");
+		dbColumnNames.put("hidden", "hidden_");
+
+		setDBColumnNames(dbColumnNames);
 	}
 
 	@Override

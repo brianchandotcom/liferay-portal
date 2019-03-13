@@ -62,6 +62,7 @@ import java.lang.reflect.InvocationHandler;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -12028,6 +12029,12 @@ public class AssetCategoryPersistenceImpl
 		setModelImplClass(AssetCategoryImpl.class);
 		setModelPKClass(long.class);
 		setEntityCacheEnabled(AssetCategoryModelImpl.ENTITY_CACHE_ENABLED);
+
+		Map<String, String> dbColumnNames = new HashMap<String, String>();
+
+		dbColumnNames.put("uuid", "uuid_");
+
+		setDBColumnNames(dbColumnNames);
 	}
 
 	/**

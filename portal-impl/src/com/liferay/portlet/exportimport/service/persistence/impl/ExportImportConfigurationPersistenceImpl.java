@@ -48,6 +48,7 @@ import java.lang.reflect.InvocationHandler;
 
 import java.util.Collections;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -2843,6 +2844,13 @@ public class ExportImportConfigurationPersistenceImpl
 		setModelPKClass(long.class);
 		setEntityCacheEnabled(
 			ExportImportConfigurationModelImpl.ENTITY_CACHE_ENABLED);
+
+		Map<String, String> dbColumnNames = new HashMap<String, String>();
+
+		dbColumnNames.put("type", "type_");
+		dbColumnNames.put("settings", "settings_");
+
+		setDBColumnNames(dbColumnNames);
 	}
 
 	/**

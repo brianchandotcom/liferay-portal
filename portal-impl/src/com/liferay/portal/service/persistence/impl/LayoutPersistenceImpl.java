@@ -59,6 +59,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -13298,6 +13299,15 @@ public class LayoutPersistenceImpl
 		setModelImplClass(LayoutImpl.class);
 		setModelPKClass(long.class);
 		setEntityCacheEnabled(LayoutModelImpl.ENTITY_CACHE_ENABLED);
+
+		Map<String, String> dbColumnNames = new HashMap<String, String>();
+
+		dbColumnNames.put("uuid", "uuid_");
+		dbColumnNames.put("type", "type_");
+		dbColumnNames.put("hidden", "hidden_");
+		dbColumnNames.put("system", "system_");
+
+		setDBColumnNames(dbColumnNames);
 	}
 
 	/**

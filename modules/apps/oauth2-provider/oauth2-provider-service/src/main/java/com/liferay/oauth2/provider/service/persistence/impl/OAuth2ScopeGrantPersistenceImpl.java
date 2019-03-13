@@ -53,6 +53,7 @@ import java.io.Serializable;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -1052,6 +1053,13 @@ public class OAuth2ScopeGrantPersistenceImpl
 
 		setModelImplClass(OAuth2ScopeGrantImpl.class);
 		setModelPKClass(long.class);
+
+		Map<String, String> dbColumnNames = new HashMap<String, String>();
+
+		dbColumnNames.put(
+			"oAuth2ApplicationScopeAliasesId", "oA2AScopeAliasesId");
+
+		setDBColumnNames(dbColumnNames);
 	}
 
 	/**

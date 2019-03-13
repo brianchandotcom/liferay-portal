@@ -21,6 +21,8 @@ import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.sharing.model.SharingEntry;
 import com.liferay.sharing.service.persistence.SharingEntryPersistence;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -32,6 +34,12 @@ public class SharingEntryFinderBaseImpl
 
 	public SharingEntryFinderBaseImpl() {
 		setModelClass(SharingEntry.class);
+
+		Map<String, String> dbColumnNames = new HashMap<String, String>();
+
+		dbColumnNames.put("uuid", "uuid_");
+
+		setDBColumnNames(dbColumnNames);
 	}
 
 	@Override

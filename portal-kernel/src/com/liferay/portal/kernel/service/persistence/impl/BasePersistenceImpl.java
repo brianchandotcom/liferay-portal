@@ -670,7 +670,11 @@ public class BasePersistenceImpl<T extends BaseModel<T>>
 	protected String getColumnName(
 		String entityAlias, String fieldName, boolean sqlQuery) {
 
-		String columnName = _getDBColumnName(fieldName);
+		String columnName = fieldName;
+
+		if (_dbColumnNames != null) {
+			columnName = _dbColumnNames.getOrDefault(fieldName, fieldName);
+		}
 
 		if (sqlQuery) {
 			fieldName = columnName;
@@ -811,14 +815,6 @@ public class BasePersistenceImpl<T extends BaseModel<T>>
 	 */
 	@Deprecated
 	protected ModelListener<T>[] listeners = new ModelListener[0];
-
-	private String _getDBColumnName(String fieldName) {
-		if (_dbColumnNames == null) {
-			return fieldName;
-		}
-
-		return _dbColumnNames.getOrDefault(fieldName, fieldName);
-	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		BasePersistenceImpl.class);

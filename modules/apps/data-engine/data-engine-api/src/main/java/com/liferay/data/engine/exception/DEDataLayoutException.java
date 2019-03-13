@@ -24,6 +24,10 @@ public class DEDataLayoutException extends PortalException {
 	public DEDataLayoutException() {
 	}
 
+	public DEDataLayoutException(String msg, Throwable cause) {
+		super(msg, cause);
+	}
+
 	public DEDataLayoutException(Throwable cause) {
 		super(cause);
 	}
@@ -34,6 +38,60 @@ public class DEDataLayoutException extends PortalException {
 		}
 
 		public InvalidName(Throwable cause) {
+			super(cause);
+		}
+
+	}
+
+	public static class MustHavePermission extends DEDataLayoutException {
+
+		public MustHavePermission(String[] actionId, Throwable cause) {
+			super(cause);
+
+			_actionId = actionId;
+		}
+
+		public String[] getActionId() {
+			return _actionId;
+		}
+
+		private final String[] _actionId;
+
+	}
+
+	public static class NoSuchDataLayout extends DEDataLayoutException {
+
+		public NoSuchDataLayout(long deDataLayoutId, Throwable cause) {
+			super(cause);
+
+			_deDataLayoutId = deDataLayoutId;
+		}
+
+		public long getDEDataLayoutId() {
+			return _deDataLayoutId;
+		}
+
+		private final long _deDataLayoutId;
+
+	}
+
+	public static class NoSuchRoles extends DEDataLayoutException {
+
+		public NoSuchRoles(String[] roleNames) {
+			_roleNames = roleNames;
+		}
+
+		public String[] getRoleNames() {
+			return _roleNames;
+		}
+
+		private final String[] _roleNames;
+
+	}
+
+	public static class PrincipalException extends DEDataLayoutException {
+
+		public PrincipalException(Throwable cause) {
 			super(cause);
 		}
 

@@ -15,7 +15,6 @@
 package com.liferay.asset.publisher.web.internal.util;
 
 import com.liferay.asset.publisher.constants.AssetPublisherPortletKeys;
-import com.liferay.asset.util.AssetEntryQueryProcessor;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.util.PropsValues;
 
@@ -65,28 +64,6 @@ public class RecentContentAssetPublisherCustomizer
 			return false;
 		}
 
-		return true;
-	}
-
-	@Override
-	public boolean isSelectionStyleEnabled(HttpServletRequest request) {
-		return true;
-	}
-
-	@Override
-	public boolean isShowAssetEntryQueryProcessor(
-		AssetEntryQueryProcessor assetEntryQueryProcessor) {
-
-		return true;
-	}
-
-	@Override
-	public boolean isShowEnableAddContentButton(HttpServletRequest request) {
-		return true;
-	}
-
-	@Override
-	public boolean isShowScopeSelector(HttpServletRequest request) {
 		return true;
 	}
 

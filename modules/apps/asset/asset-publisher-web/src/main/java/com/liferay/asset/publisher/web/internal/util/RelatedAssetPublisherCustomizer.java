@@ -17,7 +17,6 @@ package com.liferay.asset.publisher.web.internal.util;
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.service.persistence.AssetEntryQuery;
 import com.liferay.asset.publisher.constants.AssetPublisherPortletKeys;
-import com.liferay.asset.util.AssetEntryQueryProcessor;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import javax.servlet.http.HttpServletRequest;
@@ -54,18 +53,6 @@ public class RelatedAssetPublisherCustomizer
 	@Override
 	public boolean isSelectionStyleEnabled(HttpServletRequest request) {
 		return false;
-	}
-
-	@Override
-	public boolean isShowAssetEntryQueryProcessor(
-		AssetEntryQueryProcessor assetEntryQueryProcessor) {
-
-		return true;
-	}
-
-	@Override
-	public boolean isShowEnableAddContentButton(HttpServletRequest request) {
-		return true;
 	}
 
 	@Override

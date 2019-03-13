@@ -15,7 +15,6 @@
 package com.liferay.asset.publisher.web.internal.util;
 
 import com.liferay.asset.publisher.constants.AssetPublisherPortletKeys;
-import com.liferay.asset.util.AssetEntryQueryProcessor;
 import com.liferay.portal.kernel.util.GetterUtil;
 
 import javax.portlet.PortletPreferences;
@@ -73,20 +72,8 @@ public class MostViewedAssetPublisherCustomizer
 	}
 
 	@Override
-	public boolean isShowAssetEntryQueryProcessor(
-		AssetEntryQueryProcessor assetEntryQueryProcessor) {
-
-		return true;
-	}
-
-	@Override
 	public boolean isShowEnableAddContentButton(HttpServletRequest request) {
 		return false;
-	}
-
-	@Override
-	public boolean isShowScopeSelector(HttpServletRequest request) {
-		return true;
 	}
 
 	@Override

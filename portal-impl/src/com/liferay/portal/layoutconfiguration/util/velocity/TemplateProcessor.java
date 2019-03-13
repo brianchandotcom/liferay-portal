@@ -214,6 +214,8 @@ public class TemplateProcessor implements ColumnProcessor {
 			if (!layoutTypePortlet.hasPortletId(portletId, true) &&
 				!layout.isPortletEmbedded(portletId, layout.getGroupId())) {
 
+				String defaultPreferences = portlet.getDefaultPreferences();
+
 				Settings currentSettings = SettingsFactoryUtil.getSettings(
 					new PortletInstanceSettingsLocator(layout, portletId));
 
@@ -222,8 +224,6 @@ public class TemplateProcessor implements ColumnProcessor {
 
 				Collection<String> currentModifiableSettingsKeys =
 					currentModifiableSettings.getModifiedKeys();
-
-				String portletPreferences = portlet.getDefaultPreferences();
 
 				if (!currentModifiableSettingsKeys.isEmpty()) {
 					StringBundler sb = new StringBundler();
@@ -251,14 +251,14 @@ public class TemplateProcessor implements ColumnProcessor {
 
 					sb.append("</portlet-preferences>");
 
-					portletPreferences = sb.toString();
+					defaultPreferences = sb.toString();
 				}
 
 				PortletPreferencesFactoryUtil.getLayoutPortletSetup(
 					layout.getCompanyId(), layout.getGroupId(),
 					PortletKeys.PREFS_OWNER_TYPE_LAYOUT,
 					PortletKeys.PREFS_PLID_SHARED, portletId,
-					portletPreferences);
+					defaultPreferences);
 			}
 		}
 

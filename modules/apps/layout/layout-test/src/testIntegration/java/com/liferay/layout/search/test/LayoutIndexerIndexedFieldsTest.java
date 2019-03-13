@@ -66,12 +66,15 @@ public class LayoutIndexerIndexedFieldsTest {
 
 	@Before
 	public void setUp() throws Exception {
-		setUpIndexedFieldsFixture();
-		setUpLayoutIndexerFixture();
-		setUpLocale();
 		setUpUserSearchFixture();
 
+		setUpIndexedFieldsFixture();
+
 		setUpLayoutFixture();
+
+		setUpLayoutIndexerFixture();
+
+		defaultLocale = LocaleThreadLocal.getDefaultLocale();
 	}
 
 	@After
@@ -119,10 +122,6 @@ public class LayoutIndexerIndexedFieldsTest {
 		layoutIndexerFixture = new IndexerFixture<>(Layout.class);
 	}
 
-	protected void setUpLocale() {
-		tearDownLocale();
-	}
-
 	protected void setUpUserSearchFixture() throws Exception {
 		userSearchFixture = new UserSearchFixture();
 
@@ -133,10 +132,6 @@ public class LayoutIndexerIndexedFieldsTest {
 		_groups = userSearchFixture.getGroups();
 
 		_users = userSearchFixture.getUsers();
-	}
-
-	protected void tearDownLocale() {
-		defaultLocale = LocaleThreadLocal.getDefaultLocale();
 	}
 
 	protected Locale defaultLocale;

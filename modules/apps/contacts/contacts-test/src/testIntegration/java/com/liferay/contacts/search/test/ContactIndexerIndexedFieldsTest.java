@@ -64,11 +64,12 @@ public class ContactIndexerIndexedFieldsTest {
 
 	@Before
 	public void setUp() throws Exception {
-		setUpContactIndexerFixture();
-		setUpIndexedFieldsFixture();
 		setUpUserSearchFixture();
 
 		setUpContactFixture();
+		setUpContactIndexerFixture();
+
+		setUpIndexedFieldsFixture();
 	}
 
 	@Test

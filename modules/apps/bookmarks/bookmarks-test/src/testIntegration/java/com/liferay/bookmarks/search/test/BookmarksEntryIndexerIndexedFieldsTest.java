@@ -64,11 +64,13 @@ public class BookmarksEntryIndexerIndexedFieldsTest {
 
 	@Before
 	public void setUp() throws Exception {
-		setUpBookmarksEntryIndexerFixture();
-		setUpIndexedFieldsFixture();
 		setUpUserSearchFixture();
 
 		setUpBookmarksEntryFixture();
+
+		setUpBookmarksEntryIndexerFixture();
+
+		setUpIndexedFieldsFixture();
 	}
 
 	@Test

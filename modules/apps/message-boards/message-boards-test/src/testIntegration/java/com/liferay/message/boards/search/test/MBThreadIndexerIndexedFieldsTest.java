@@ -68,10 +68,9 @@ public class MBThreadIndexerIndexedFieldsTest {
 
 	@Before
 	public void setUp() throws Exception {
+		setUpUserSearchFixture();
 		setUpIndexedFieldsFixture();
 		setUpMBThreadIndexerFixture();
-		setUpUserSearchFixture();
-
 		setUpMBFixture();
 	}
 

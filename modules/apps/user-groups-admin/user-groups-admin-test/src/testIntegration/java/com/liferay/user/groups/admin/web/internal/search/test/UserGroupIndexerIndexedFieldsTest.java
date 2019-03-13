@@ -71,9 +71,12 @@ public class UserGroupIndexerIndexedFieldsTest {
 	@Before
 	public void setUp() throws Exception {
 		setUpExpandoTableSearchFixture();
-		setUpIndexedFieldsFixture();
-		setUpUserGroupIndexerFixture();
+
 		setUpUserSearchFixture();
+
+		setUpIndexedFieldsFixture();
+
+		setUpUserGroupIndexerFixture();
 
 		setUpUserGroupFixture();
 	}

@@ -80,7 +80,9 @@ public class UserIndexerIndexedFieldsTest {
 	@Before
 	public void setUp() throws Exception {
 		setUpIndexedFieldsFixture();
+
 		setUpIndexerFixture();
+
 		setUpUserSearchFixture();
 	}
 

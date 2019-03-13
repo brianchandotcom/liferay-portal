@@ -68,11 +68,13 @@ public class AssetCategoryIndexerIndexedFieldsTest {
 
 	@Before
 	public void setUp() throws Exception {
-		setUpAssetCategoryIndexerFixture();
-		setUpIndexedFieldsFixture();
 		setUpUserSearchFixture();
 
 		setUpAssetCategoryFixture();
+
+		setUpAssetCategoryIndexerFixture();
+
+		setUpIndexedFieldsFixture();
 	}
 
 	@Test

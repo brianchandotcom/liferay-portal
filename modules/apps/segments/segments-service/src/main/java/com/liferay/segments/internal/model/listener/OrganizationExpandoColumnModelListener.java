@@ -37,7 +37,6 @@ import com.liferay.portal.kernel.model.ModelListener;
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
-import com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.UnicodeProperties;
@@ -46,6 +45,7 @@ import com.liferay.portal.odata.entity.DateTimeEntityField;
 import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.odata.entity.StringEntityField;
+import com.liferay.portal.odata.util.Normalizer;
 import com.liferay.segments.internal.odata.entity.OrganizationEntityModel;
 import com.liferay.segments.service.SegmentsEntryLocalService;
 
@@ -151,7 +151,7 @@ public class OrganizationExpandoColumnModelListener
 		return StringBundler.concat(
 			StringPool.UNDERLINE, expandoColumn.getColumnId(),
 			StringPool.UNDERLINE,
-			FriendlyURLNormalizerUtil.normalize(expandoColumn.getName()));
+			Normalizer.normalizeIdentifier(expandoColumn.getName()));
 	}
 
 	private Optional<EntityField> _getOrganizationEntityFieldOptional(

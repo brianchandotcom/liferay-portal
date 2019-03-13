@@ -25,8 +25,8 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.odata.util.Normalizer;
 import com.liferay.segments.criteria.Criteria;
 import com.liferay.segments.criteria.contributor.SegmentsCriteriaContributor;
 
@@ -88,7 +88,7 @@ public class CustomFieldRuleConverter implements RuleConverter {
 		return StringBundler.concat(
 			StringPool.UNDERLINE, expandoColumn.getColumnId(),
 			StringPool.UNDERLINE,
-			FriendlyURLNormalizerUtil.normalize(expandoColumn.getName()));
+			Normalizer.normalizeIdentifier(expandoColumn.getName()));
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

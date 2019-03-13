@@ -52,13 +52,10 @@ public class TaglibUtil {
 				}
 			}
 
-			StringBundler sb = new StringBundler(3);
+			StringBundler sb = new StringBundler(5);
 
 			if (extendedClassName.startsWith("com.liferay.taglib")) {
 				sb.append(utilTaglibSrcDirName);
-				sb.append(
-					StringUtil.replace(
-						extendedClassName, CharPool.PERIOD, CharPool.SLASH));
 			}
 			else if (!extendedClassName.contains(StringPool.PERIOD) ||
 					 extendedClassName.startsWith(javaClass.getPackageName())) {
@@ -70,15 +67,27 @@ public class TaglibUtil {
 				extendedClassName = StringUtil.removeSubstring(
 					extendedClassName,
 					javaClass.getPackageName() + StringPool.PERIOD);
+			}
+			else if (extendedClassName.startsWith(
+						"com.liferay.frontend.taglib.soy.")) {
 
-				sb.append(
-					StringUtil.replace(
-						extendedClassName, CharPool.PERIOD, CharPool.SLASH));
+				int pos = absolutePath.indexOf("/modules/apps/");
+
+				if (pos == -1) {
+					continue;
+				}
+
+				sb.append(absolutePath.substring(0, pos));
+				sb.append("/modules/apps/frontend-taglib/frontend-taglib-soy");
+				sb.append("/src/main/java/");
 			}
 			else {
 				continue;
 			}
 
+			sb.append(
+				StringUtil.replace(
+					extendedClassName, CharPool.PERIOD, CharPool.SLASH));
 			sb.append(".java");
 
 			extendedTagFilesNames.add(sb.toString());

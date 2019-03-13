@@ -193,6 +193,18 @@ gradle.beforeProject {
 			}
 		}
 
+		pluginManager.withPlugin("com.liferay.js.module.config.generator") {
+			downloadLiferayModuleConfigGenerator {
+				enabled = false
+			}
+		}
+
+		pluginManager.withPlugin("com.liferay.js.transpiler") {
+			downloadMetalCli {
+				enabled = false
+			}
+		}
+
 		pluginManager.withPlugin("com.liferay.node") {
 			afterEvaluate {
 				tasks.withType(ExecuteNpmTask) {

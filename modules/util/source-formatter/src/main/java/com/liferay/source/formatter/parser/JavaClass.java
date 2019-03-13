@@ -120,7 +120,7 @@ public class JavaClass extends BaseJavaTerm {
 
 			for (String importName : _imports) {
 				if (importName.endsWith("." + className)) {
-					fullyQualifiedClassNames.add(className);
+					fullyQualifiedClassNames.add(importName);
 
 					continue outerLoop;
 				}

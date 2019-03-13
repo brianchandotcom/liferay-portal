@@ -78,6 +78,57 @@ import org.osgi.service.component.annotations.Reference;
 public class DEDataLayoutServiceImpl
 	extends DEBaseServiceImpl implements DEDataLayoutService {
 
+	@Override
+	public DEDataLayoutDeleteModelPermissionsResponse execute(
+			DEDataLayoutDeleteModelPermissionsRequest
+				deDataLayoutDeleteModelPermissionsRequest)
+		throws DEDataLayoutException {
+
+		try {
+			checkPermission(
+				deDataLayoutDeleteModelPermissionsRequest.getScopedGroupId(),
+				ActionKeys.DEFINE_PERMISSIONS, getPermissionChecker());
+
+			return _deDataLayoutDeleteModelPermissionsRequestExecutor.execute(
+				deDataLayoutDeleteModelPermissionsRequest);
+		}
+		catch (PrincipalException.MustHavePermission mhp) {
+			throw new DEDataLayoutException.MustHavePermission(
+				mhp.actionId, mhp);
+		}
+		catch (DEDataLayoutException dedle) {
+			throw dedle;
+		}
+		catch (Exception e) {
+			throw new DEDataLayoutException(e);
+		}
+	}
+
+	@Override
+	public DEDataLayoutDeletePermissionsResponse execute(
+			DEDataLayoutDeletePermissionsRequest
+				deDataLayoutDeletePermissionsRequest)
+		throws DEDataLayoutException {
+
+		try {
+			checkPermission(
+				deDataLayoutDeletePermissionsRequest.getScopedGroupId(),
+				ActionKeys.DEFINE_PERMISSIONS, getPermissionChecker());
+
+			return _deDataLayoutDeletePermissionsRequestExecutor.execute(
+				deDataLayoutDeletePermissionsRequest);
+		}
+		catch (PrincipalException.MustHavePermission mhp) {
+			throw new DEDataLayoutException.MustHavePermission(
+				mhp.actionId, mhp);
+		}
+		catch (DEDataLayoutException dedle) {
+			throw dedle;
+		}
+		catch (Exception e) {
+			throw new DEDataLayoutException(e);
+		}
+	}
 
 	public DEDataLayoutCountResponse execute(
 			DEDataLayoutCountRequest deDataLayoutCountRequest)
@@ -275,6 +326,14 @@ public class DEDataLayoutServiceImpl
 
 	@Activate
 	protected void setUpExecutors() {
+		_deDataLayoutDeleteModelPermissionsRequestExecutor =
+			new DEDataLayoutDeleteModelPermissionsRequestExecutor(
+				resourcePermissionLocalService, roleLocalService);
+
+		_deDataLayoutDeletePermissionsRequestExecutor =
+			new DEDataLayoutDeletePermissionsRequestExecutor(
+				resourcePermissionLocalService, roleLocalService);
+
 		_deDataLayoutGetRequestExecutor = new DEDataLayoutGetRequestExecutor(
 			_ddmStructureLayoutLocalService, _ddmStructureVersionLocalService,
 			_deDataLayoutDeserializerTracker);
@@ -321,6 +380,10 @@ public class DEDataLayoutServiceImpl
 	private DEDataLayoutCountRequestExecutor _deDataLayoutCountRequestExecutor;
 	private DEDataLayoutDeleteRequestExecutor
 		_deDataLayoutDeleteRequestExecutor;
+	private DEDataLayoutDeleteModelPermissionsRequestExecutor
+		_deDataLayoutDeleteModelPermissionsRequestExecutor;
+	private DEDataLayoutDeletePermissionsRequestExecutor
+		_deDataLayoutDeletePermissionsRequestExecutor;
 
 	@Reference
 	private DEDataLayoutDeserializerTracker _deDataLayoutDeserializerTracker;

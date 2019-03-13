@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.List;
@@ -64,12 +65,20 @@ public class JournalViewMoreMenuItemsDisplayContext {
 		ThemeDisplay themeDisplay = (ThemeDisplay)_renderRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		_ddmStructures = JournalFolderServiceUtil.searchDDMStructures(
-			themeDisplay.getCompanyId(),
-			PortalUtil.getCurrentAndAncestorSiteGroupIds(
-				themeDisplay.getScopeGroupId()),
-			_folderId, _restrictionType, _getKeywords(), QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS, _getOrderByComparator());
+		if (Validator.isNull(_getKeywords())) {
+			_ddmStructures = JournalFolderServiceUtil.getDDMStructures(
+				PortalUtil.getCurrentAndAncestorSiteGroupIds(
+					themeDisplay.getScopeGroupId()),
+				_folderId, _restrictionType);
+		}
+		else {
+			_ddmStructures = JournalFolderServiceUtil.searchDDMStructures(
+				themeDisplay.getCompanyId(),
+				PortalUtil.getCurrentAndAncestorSiteGroupIds(
+					themeDisplay.getScopeGroupId()),
+				_folderId, _restrictionType, _getKeywords(), QueryUtil.ALL_POS,
+				QueryUtil.ALL_POS, _getOrderByComparator());
+		}
 
 		return _ddmStructures;
 	}

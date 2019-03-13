@@ -82,14 +82,30 @@ class FloatingToolbarMappingPanel extends PortletBase {
 		}
 
 		if (
+			nextState.mappedAssetEntries &&
 			nextState.item.editableValues.classNameId &&
 			nextState.item.editableValues.classPK
 		) {
-			nextState = setIn(
-				nextState,
-				['item', 'editableValues', 'encodedId'],
-				encodeAssetId(nextState.item.editableValues).encodedId
+			const mappedAssetEntry = nextState.mappedAssetEntries.find(
+				assetEntry => (
+					(nextState.item.editableValues.classNameId === assetEntry.classNameId) &&
+					(nextState.item.editableValues.classPK === assetEntry.classPK)
+				)
 			);
+
+			if (mappedAssetEntry) {
+				nextState = setIn(
+					nextState,
+					['item', 'editableValues', 'title'],
+					mappedAssetEntry.title
+				);
+
+				nextState = setIn(
+					nextState,
+					['item', 'editableValues', 'encodedId'],
+					mappedAssetEntry
+				);
+			}
 		}
 
 		return nextState;

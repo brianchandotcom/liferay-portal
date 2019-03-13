@@ -24,6 +24,8 @@ import com.liferay.data.engine.model.DEDataLayoutRow;
 import com.liferay.data.engine.service.DEDataDefinitionService;
 import com.liferay.data.engine.service.DEDataLayoutGetRequest;
 import com.liferay.data.engine.service.DEDataLayoutGetResponse;
+import com.liferay.data.engine.service.DEDataLayoutListRequest;
+import com.liferay.data.engine.service.DEDataLayoutListResponse;
 import com.liferay.data.engine.service.DEDataLayoutRequestBuilder;
 import com.liferay.data.engine.service.DEDataLayoutSaveRequest;
 import com.liferay.data.engine.service.DEDataLayoutSaveResponse;
@@ -76,42 +78,19 @@ public class DEDataLayoutServiceTest {
 
 	@Test
 	public void testCreateDEDataLayout() throws Exception {
+		DEDataLayout deDataLayout = saveDataLayout(
+			_group, _user, "layout", "this is a layout");
+
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(
 				_group, _user.getGroupId());
 
 		ServiceContextThreadLocal.pushServiceContext(serviceContext);
 
-		DEDataDefinition deDataDefinition =
-			DEDataEngineTestUtil.insertDEDataDefinition(
-				_user, _group, "description", "definition",
-				_deDataDefinitionService);
-
-		DEDataLayout deDataLayout = _createDEDataLayout(
-			"layout", "this is a layout", "wizard", "en_US");
-
-		deDataLayout.setDEDataDefinitionId(
-			deDataDefinition.getDEDataDefinitionId());
-
-		DEDataLayoutSaveRequest deDataLayoutSaveRequest =
-			DEDataLayoutRequestBuilder.saveBuilder(
-				deDataLayout
-			).inGroup(
-				_user.getGroupId()
-			).onBehalfOf(
-				_user.getUserId()
-			).build();
-
-		DEDataLayoutSaveResponse deDataLayoutSaveResponse =
-			_deDataLayoutService.execute(deDataLayoutSaveRequest);
-
-		deDataLayout.setDEDataLayoutId(
-			deDataLayoutSaveResponse.getDEDataLayoutId());
-
 		DEDataLayoutGetRequest deDataLayoutGetRequest =
 			DEDataLayoutRequestBuilder.getBuilder(
 			).byId(
-				deDataLayoutSaveResponse.getDEDataLayoutId()
+				deDataLayout.getDEDataLayoutId()
 			).build();
 
 		DEDataLayoutGetResponse deDataLayoutGetResponse =
@@ -280,6 +259,146 @@ public class DEDataLayoutServiceTest {
 		_deDataLayoutService.execute(deDataLayoutSaveRequest);
 	}
 
+	@Test
+	public void testListDEDataLayout() throws Exception {
+		int total = 5;
+
+		for (int i = 0; i < total; i++) {
+			saveDataLayout(_group, _user, "layout", "this is a layout");
+		}
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				_group, _user.getGroupId());
+
+		ServiceContextThreadLocal.pushServiceContext(serviceContext);
+
+		DEDataLayoutListRequest deDataLayoutListRequest =
+			DEDataLayoutRequestBuilder.listBuilder(
+			).inGroup(
+				_group.getGroupId()
+			).build();
+
+		DEDataLayoutListResponse deDataLayoutListResponse =
+			_deDataLayoutService.execute(deDataLayoutListRequest);
+
+		List<DEDataLayout> deDataLayouts =
+			deDataLayoutListResponse.getDEDataLayouts();
+
+		Assert.assertEquals(deDataLayouts.toString(), 5, deDataLayouts.size());
+	}
+
+	@Test
+	public void testListDEDataLayoutInvalidGroup() throws Exception {
+		int total = 5;
+
+		for (int i = 0; i < total; i++) {
+			saveDataLayout(_group, _user, "layout", "this is a layout");
+		}
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				_group, _user.getGroupId());
+
+		ServiceContextThreadLocal.pushServiceContext(serviceContext);
+
+		DEDataLayoutListRequest deDataLayoutListRequest =
+			DEDataLayoutRequestBuilder.listBuilder(
+			).inGroup(
+				-1
+			).build();
+
+		DEDataLayoutListResponse deDataLayoutListResponse =
+			_deDataLayoutService.execute(deDataLayoutListRequest);
+
+		List<DEDataLayout> deDataLayouts =
+			deDataLayoutListResponse.getDEDataLayouts();
+
+		Assert.assertEquals(deDataLayouts.toString(), 0, deDataLayouts.size());
+	}
+
+	@Test
+	public void testListDEDataLayoutWithNoData() throws Exception {
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				_group, _user.getGroupId());
+
+		ServiceContextThreadLocal.pushServiceContext(serviceContext);
+
+		DEDataLayoutListRequest deDataLayoutListRequest =
+			DEDataLayoutRequestBuilder.listBuilder(
+			).inGroup(
+				_group.getGroupId()
+			).build();
+
+		DEDataLayoutListResponse deDataLayoutListResponse =
+			_deDataLayoutService.execute(deDataLayoutListRequest);
+
+		List<DEDataLayout> deDataLayouts =
+			deDataLayoutListResponse.getDEDataLayouts();
+
+		Assert.assertEquals(deDataLayouts.toString(), 0, deDataLayouts.size());
+	}
+
+	@Test
+	public void testListDEDataLayoutWithNoGroup() throws Exception {
+		int total = 5;
+
+		for (int i = 0; i < total; i++) {
+			saveDataLayout(_group, _user, "layout", "this is a layout");
+		}
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				_group, _user.getGroupId());
+
+		ServiceContextThreadLocal.pushServiceContext(serviceContext);
+
+		DEDataLayoutListRequest deDataLayoutListRequest =
+			DEDataLayoutRequestBuilder.listBuilder().build();
+
+		DEDataLayoutListResponse deDataLayoutListResponse =
+			_deDataLayoutService.execute(deDataLayoutListRequest);
+
+		List<DEDataLayout> deDataLayouts =
+			deDataLayoutListResponse.getDEDataLayouts();
+
+		Assert.assertEquals(deDataLayouts.toString(), 0, deDataLayouts.size());
+	}
+
+	@Test
+	public void testListDEDataLayoutWithPagination() throws Exception {
+		int total = 5;
+
+		for (int i = 0; i < total; i++) {
+			saveDataLayout(_group, _user, "layout", "this is a layout");
+		}
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				_group, _user.getGroupId());
+
+		ServiceContextThreadLocal.pushServiceContext(serviceContext);
+
+		DEDataLayoutListRequest deDataLayoutListRequest =
+			DEDataLayoutRequestBuilder.listBuilder(
+			).startingAt(
+				4
+			).endingAt(
+				5
+			).inGroup(
+				_group.getGroupId()
+			).build();
+
+		DEDataLayoutListResponse deDataLayoutListResponse =
+			_deDataLayoutService.execute(deDataLayoutListRequest);
+
+		List<DEDataLayout> deDataLayouts =
+			deDataLayoutListResponse.getDEDataLayouts();
+
+		Assert.assertEquals(deDataLayouts.toString(), 1, deDataLayouts.size());
+	}
+
 	@Test(expected = DEDataLayoutException.class)
 	public void testSaveDEDataLayoutWithNoDataDefinition() throws Exception {
 		ServiceContext serviceContext =
@@ -336,22 +455,10 @@ public class DEDataLayoutServiceTest {
 
 	@Test
 	public void testUpdateDEDataLayout() throws Exception {
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(
-				_group, _user.getGroupId());
+		DEDataLayout deDataLayout = saveDataLayout(
+			_group, _user, "layout", "this is a layout");
 
-		ServiceContextThreadLocal.pushServiceContext(serviceContext);
-
-		DEDataDefinition deDataDefinition =
-			DEDataEngineTestUtil.insertDEDataDefinition(
-				_user, _group, "description", "definition",
-				_deDataDefinitionService);
-
-		DEDataLayout deDataLayout = _createDEDataLayout(
-			"layout", "this is a layout", "wizard", "en_US");
-
-		deDataLayout.setDEDataDefinitionId(
-			deDataDefinition.getDEDataDefinitionId());
+		deDataLayout.setPaginationMode("pagination");
 
 		DEDataLayoutSaveRequest deDataLayoutSaveRequest =
 			DEDataLayoutRequestBuilder.saveBuilder(
@@ -365,22 +472,6 @@ public class DEDataLayoutServiceTest {
 		DEDataLayoutSaveResponse deDataLayoutSaveResponse =
 			_deDataLayoutService.execute(deDataLayoutSaveRequest);
 
-		deDataLayout.setDEDataLayoutId(
-			deDataLayoutSaveResponse.getDEDataLayoutId());
-
-		deDataLayout.setPaginationMode("pagination");
-
-		deDataLayoutSaveRequest = DEDataLayoutRequestBuilder.saveBuilder(
-			deDataLayout
-		).inGroup(
-			_user.getGroupId()
-		).onBehalfOf(
-			_user.getUserId()
-		).build();
-
-		deDataLayoutSaveResponse = _deDataLayoutService.execute(
-			deDataLayoutSaveRequest);
-
 		DEDataLayoutGetRequest deDataLayoutGetRequest =
 			DEDataLayoutRequestBuilder.getBuilder(
 			).byId(
@@ -392,6 +483,44 @@ public class DEDataLayoutServiceTest {
 
 		Assert.assertEquals(
 			deDataLayout, deDataLayoutGetResponse.getDEDataLayout());
+	}
+
+	protected DEDataLayout saveDataLayout(
+			Group group, User user, String nameLayout, String descriptionLayout)
+		throws Exception {
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(group, user.getGroupId());
+
+		ServiceContextThreadLocal.pushServiceContext(serviceContext);
+
+		DEDataDefinition deDataDefinition =
+			DEDataEngineTestUtil.insertDEDataDefinition(
+				user, group, "description", "definition",
+				_deDataDefinitionService);
+
+		DEDataLayout deDataLayout = _createDEDataLayout(
+			nameLayout, descriptionLayout, "wizard", "en_US");
+
+		deDataLayout.setDEDataDefinitionId(
+			deDataDefinition.getDEDataDefinitionId());
+
+		DEDataLayoutSaveRequest deDataLayoutSaveRequest =
+			DEDataLayoutRequestBuilder.saveBuilder(
+				deDataLayout
+			).inGroup(
+				group.getGroupId()
+			).onBehalfOf(
+				user.getUserId()
+			).build();
+
+		DEDataLayoutSaveResponse deDataLayoutSaveResponse =
+			_deDataLayoutService.execute(deDataLayoutSaveRequest);
+
+		deDataLayout.setDEDataLayoutId(
+			deDataLayoutSaveResponse.getDEDataLayoutId());
+
+		return deDataLayout;
 	}
 
 	private DEDataLayout _createDEDataLayout(

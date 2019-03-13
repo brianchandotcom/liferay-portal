@@ -66,6 +66,7 @@
 	<liferay-ui:search-iterator
 		markupView="lexicon"
 		paginate="<%= false %>"
+		searchResultCssClass="table table-autofit table-heading-nowrap"
 	/>
 </liferay-ui:search-container>
 

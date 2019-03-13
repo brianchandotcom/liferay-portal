@@ -33,25 +33,25 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
-@GraphQLName("DataRecordCollection")
+@GraphQLName("DataRecord")
 @JsonFilter("Liferay.Vulcan")
-@XmlRootElement(name = "DataRecordCollection")
-public class DataRecordCollection {
+@XmlRootElement(name = "DataRecord")
+public class DataRecord {
 
-	public Long getDataDefinitionId() {
-		return dataDefinitionId;
+	public Long getDataRecordCollectionId() {
+		return dataRecordCollectionId;
 	}
 
-	public void setDataDefinitionId(Long dataDefinitionId) {
-		this.dataDefinitionId = dataDefinitionId;
+	public void setDataRecordCollectionId(Long dataRecordCollectionId) {
+		this.dataRecordCollectionId = dataRecordCollectionId;
 	}
 
 	@JsonIgnore
-	public void setDataDefinitionId(
-		UnsafeSupplier<Long, Exception> dataDefinitionIdUnsafeSupplier) {
+	public void setDataRecordCollectionId(
+		UnsafeSupplier<Long, Exception> dataRecordCollectionIdUnsafeSupplier) {
 
 		try {
-			dataDefinitionId = dataDefinitionIdUnsafeSupplier.get();
+			dataRecordCollectionId = dataRecordCollectionIdUnsafeSupplier.get();
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
@@ -60,22 +60,23 @@ public class DataRecordCollection {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Long dataDefinitionId;
+	protected Long dataRecordCollectionId;
 
-	public LocalizedValue[] getDescription() {
-		return description;
+	public DataRecordValue[] getDataRecordValues() {
+		return dataRecordValues;
 	}
 
-	public void setDescription(LocalizedValue[] description) {
-		this.description = description;
+	public void setDataRecordValues(DataRecordValue[] dataRecordValues) {
+		this.dataRecordValues = dataRecordValues;
 	}
 
 	@JsonIgnore
-	public void setDescription(
-		UnsafeSupplier<LocalizedValue[], Exception> descriptionUnsafeSupplier) {
+	public void setDataRecordValues(
+		UnsafeSupplier<DataRecordValue[], Exception>
+			dataRecordValuesUnsafeSupplier) {
 
 		try {
-			description = descriptionUnsafeSupplier.get();
+			dataRecordValues = dataRecordValuesUnsafeSupplier.get();
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
@@ -84,7 +85,7 @@ public class DataRecordCollection {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected LocalizedValue[] description;
+	protected DataRecordValue[] dataRecordValues;
 
 	public Long getId() {
 		return id;
@@ -108,52 +109,28 @@ public class DataRecordCollection {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long id;
 
-	public LocalizedValue[] getName() {
-		return name;
-	}
-
-	public void setName(LocalizedValue[] name) {
-		this.name = name;
-	}
-
-	@JsonIgnore
-	public void setName(
-		UnsafeSupplier<LocalizedValue[], Exception> nameUnsafeSupplier) {
-
-		try {
-			name = nameUnsafeSupplier.get();
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected LocalizedValue[] name;
-
 	public String toString() {
 		StringBundler sb = new StringBundler();
 
 		sb.append("{");
 
-		sb.append("\"dataDefinitionId\": ");
+		sb.append("\"dataRecordCollectionId\": ");
 
-		sb.append(dataDefinitionId);
+		sb.append(dataRecordCollectionId);
 		sb.append(", ");
 
-		sb.append("\"description\": ");
+		sb.append("\"dataRecordValues\": ");
 
-		if (description == null) {
+		if (dataRecordValues == null) {
 			sb.append("null");
 		}
 		else {
 			sb.append("[");
 
-			for (int i = 0; i < description.length; i++) {
-				sb.append(description[i]);
+			for (int i = 0; i < dataRecordValues.length; i++) {
+				sb.append(dataRecordValues[i]);
 
-				if ((i + 1) < description.length) {
+				if ((i + 1) < dataRecordValues.length) {
 					sb.append(", ");
 				}
 			}
@@ -166,26 +143,6 @@ public class DataRecordCollection {
 		sb.append("\"id\": ");
 
 		sb.append(id);
-		sb.append(", ");
-
-		sb.append("\"name\": ");
-
-		if (name == null) {
-			sb.append("null");
-		}
-		else {
-			sb.append("[");
-
-			for (int i = 0; i < name.length; i++) {
-				sb.append(name[i]);
-
-				if ((i + 1) < name.length) {
-					sb.append(", ");
-				}
-			}
-
-			sb.append("]");
-		}
 
 		sb.append("}");
 

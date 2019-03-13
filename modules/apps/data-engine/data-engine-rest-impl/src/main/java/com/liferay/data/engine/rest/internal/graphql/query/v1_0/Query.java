@@ -15,6 +15,7 @@
 package com.liferay.data.engine.rest.internal.graphql.query.v1_0;
 
 import com.liferay.data.engine.rest.dto.v1_0.DataDefinition;
+import com.liferay.data.engine.rest.dto.v1_0.DataRecord;
 import com.liferay.data.engine.rest.dto.v1_0.DataRecordCollection;
 import com.liferay.data.engine.rest.resource.v1_0.DataDefinitionResource;
 import com.liferay.data.engine.rest.resource.v1_0.DataRecordCollectionResource;
@@ -103,6 +104,41 @@ public class Query {
 
 		return dataRecordCollectionResource.getDataRecordCollection(
 			dataRecordCollectionId);
+	}
+
+	@GraphQLField
+	@GraphQLInvokeDetached
+	public Collection<DataRecord> getDataRecordCollectionRecordsPage(
+			@GraphQLName("data-record-collection-id") Long
+				dataRecordCollectionId,
+			@GraphQLName("pageSize") int pageSize,
+			@GraphQLName("page") int page)
+		throws Exception {
+
+		DataRecordCollectionResource dataRecordCollectionResource =
+			_createDataRecordCollectionResource();
+
+		Page paginationPage =
+			dataRecordCollectionResource.getDataRecordCollectionRecordsPage(
+				dataRecordCollectionId, Pagination.of(pageSize, page));
+
+		return paginationPage.getItems();
+	}
+
+	@GraphQLField
+	@GraphQLInvokeDetached
+	public DataRecord getDataRecordCollectionRecordDataRecord(
+			@GraphQLName("data-record-collection-id") Long
+				dataRecordCollectionId,
+			@GraphQLName("data-record-id") Long dataRecordId)
+		throws Exception {
+
+		DataRecordCollectionResource dataRecordCollectionResource =
+			_createDataRecordCollectionResource();
+
+		return dataRecordCollectionResource.
+			getDataRecordCollectionRecordDataRecord(
+				dataRecordCollectionId, dataRecordId);
 	}
 
 	private static DataDefinitionResource _createDataDefinitionResource()

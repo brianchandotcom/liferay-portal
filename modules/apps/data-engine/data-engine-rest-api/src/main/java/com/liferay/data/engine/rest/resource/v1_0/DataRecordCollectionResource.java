@@ -14,6 +14,7 @@
 
 package com.liferay.data.engine.rest.resource.v1_0;
 
+import com.liferay.data.engine.rest.dto.v1_0.DataRecord;
 import com.liferay.data.engine.rest.dto.v1_0.DataRecordCollection;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.vulcan.pagination.Page;
@@ -50,6 +51,28 @@ public interface DataRecordCollectionResource {
 	public DataRecordCollection putDataRecordCollection(
 			Long dataRecordCollectionId,
 			DataRecordCollection dataRecordCollection)
+		throws Exception;
+
+	public Page<DataRecord> getDataRecordCollectionRecordsPage(
+			Long dataRecordCollectionId, Pagination pagination)
+		throws Exception;
+
+	public DataRecord postDataRecordCollectionRecord(
+			Long dataRecordCollectionId, Long contentSpaceId,
+			DataRecord dataRecord)
+		throws Exception;
+
+	public boolean deleteDataRecordCollectionRecordDataRecord(
+			Long dataRecordCollectionId, Long dataRecordId)
+		throws Exception;
+
+	public DataRecord getDataRecordCollectionRecordDataRecord(
+			Long dataRecordCollectionId, Long dataRecordId)
+		throws Exception;
+
+	public DataRecord putDataRecordCollectionRecordDataRecord(
+			Long dataRecordCollectionId, Long dataRecordId, Long contentSpaceId,
+			DataRecord dataRecord)
 		throws Exception;
 
 	public void setContextCompany(Company contextCompany);

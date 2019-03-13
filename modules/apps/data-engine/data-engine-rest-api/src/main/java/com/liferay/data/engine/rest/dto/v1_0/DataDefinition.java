@@ -40,6 +40,30 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement(name = "DataDefinition")
 public class DataDefinition {
 
+	public Long getContentSpaceId() {
+		return contentSpaceId;
+	}
+
+	public void setContentSpaceId(Long contentSpaceId) {
+		this.contentSpaceId = contentSpaceId;
+	}
+
+	@JsonIgnore
+	public void setContentSpaceId(
+		UnsafeSupplier<Long, Exception> contentSpaceIdUnsafeSupplier) {
+
+		try {
+			contentSpaceId = contentSpaceIdUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Long contentSpaceId;
+
 	public DataDefinitionField[] getDataDefinitionFields() {
 		return dataDefinitionFields;
 	}
@@ -138,30 +162,6 @@ public class DataDefinition {
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected LocalizedValue[] description;
-
-	public Long getContentSpaceId() {
-		return contentSpaceId;
-	}
-
-	public void setContentSpaceId(Long contentSpaceId) {
-		this.contentSpaceId = contentSpaceId;
-	}
-
-	@JsonIgnore
-	public void setContentSpaceId(
-		UnsafeSupplier<Long, Exception> contentSpaceIdUnsafeSupplier) {
-
-		try {
-			contentSpaceId = contentSpaceIdUnsafeSupplier.get();
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Long contentSpaceId;
 
 	public Long getId() {
 		return id;
@@ -262,6 +262,11 @@ public class DataDefinition {
 
 		sb.append("{");
 
+		sb.append("\"contentSpaceId\": ");
+
+		sb.append(contentSpaceId);
+		sb.append(", ");
+
 		sb.append("\"dataDefinitionFields\": ");
 
 		if (dataDefinitionFields == null) {
@@ -316,11 +321,6 @@ public class DataDefinition {
 			sb.append("]");
 		}
 
-		sb.append(", ");
-
-		sb.append("\"contentSpaceId\": ");
-
-		sb.append(contentSpaceId);
 		sb.append(", ");
 
 		sb.append("\"id\": ");

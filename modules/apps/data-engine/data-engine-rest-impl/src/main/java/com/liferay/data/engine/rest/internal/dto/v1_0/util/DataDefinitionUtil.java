@@ -26,11 +26,26 @@ import com.liferay.portal.kernel.util.Validator;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author Jeyvison Nascimento
  */
 public class DataDefinitionUtil {
+
+	public static Object getDataDefinitionFieldValue(
+		DataDefinitionField dataDefinitionField, Map<String, Object> values) {
+
+		if (dataDefinitionField.getLocalizable()) {
+			return (Map<String, Object>)values.get(
+				dataDefinitionField.getName());
+		}
+		else if (dataDefinitionField.getRepeatable()) {
+			return (Object[])values.get(dataDefinitionField.getName());
+		}
+
+		return values.get(dataDefinitionField.getName());
+	}
 
 	public static DataDefinition toDataDefinition(String json)
 		throws Exception {

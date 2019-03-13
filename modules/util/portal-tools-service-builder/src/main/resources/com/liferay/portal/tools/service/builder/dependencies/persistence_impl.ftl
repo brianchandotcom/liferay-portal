@@ -219,7 +219,9 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 			<#if !dependencyInjectorDS>
 				setEntityCacheEnabled(${entityCacheEnabled});
 			</#if>
-		<#elseif entity.badEntityColumns?size != 0>
+		</#if>
+
+		<#if entity.badEntityColumns?size != 0>
 			try {
 				Field field = BasePersistenceImpl.class.getDeclaredField("_dbColumnNames");
 

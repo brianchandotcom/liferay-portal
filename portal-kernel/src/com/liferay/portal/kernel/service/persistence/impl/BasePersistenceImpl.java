@@ -809,14 +809,7 @@ public class BasePersistenceImpl<T extends BaseModel<T>>
 
 	private String _getDBColumnName(String fieldName) {
 		if (_dbColumnNames == null) {
-			Map<String, String> dbColumnNames = new HashMap<>();
-
-			for (String badColumnName : getBadColumnNames()) {
-				dbColumnNames.put(
-					badColumnName, badColumnName.concat(StringPool.UNDERLINE));
-			}
-
-			_dbColumnNames = dbColumnNames;
+			return fieldName;
 		}
 
 		return _dbColumnNames.getOrDefault(fieldName, fieldName);

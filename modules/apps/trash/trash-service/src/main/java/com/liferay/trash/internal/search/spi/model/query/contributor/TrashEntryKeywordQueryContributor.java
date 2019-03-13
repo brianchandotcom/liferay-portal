@@ -49,10 +49,13 @@ public class TrashEntryKeywordQueryContributor
 
 		queryHelper.addSearchLocalizedTerm(
 			booleanQuery, searchContext, Field.CONTENT, true);
+
 		queryHelper.addSearchLocalizedTerm(
 			booleanQuery, searchContext, Field.DESCRIPTION, true);
+
 		queryHelper.addSearchTerm(
 			booleanQuery, searchContext, Field.REMOVED_BY_USER_NAME, true);
+
 		queryHelper.addSearchLocalizedTerm(
 			booleanQuery, searchContext, Field.TITLE, true);
 		queryHelper.addSearchTerm(

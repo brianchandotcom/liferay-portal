@@ -40,6 +40,8 @@ import java.util.List;
 
 import javax.annotation.Generated;
 
+import javax.validation.constraints.NotNull;
+
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -68,7 +70,7 @@ public abstract class BaseBlogPostingResourceImpl
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "BlogPosting")})
 	public boolean deleteBlogPosting(
-			@PathParam("blog-posting-id") Long blogPostingId)
+			@NotNull @PathParam("blog-posting-id") Long blogPostingId)
 		throws Exception {
 
 		return false;
@@ -80,7 +82,7 @@ public abstract class BaseBlogPostingResourceImpl
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "BlogPosting")})
 	public BlogPosting getBlogPosting(
-			@PathParam("blog-posting-id") Long blogPostingId)
+			@NotNull @PathParam("blog-posting-id") Long blogPostingId)
 		throws Exception {
 
 		return new BlogPosting();
@@ -93,7 +95,7 @@ public abstract class BaseBlogPostingResourceImpl
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "BlogPosting")})
 	public BlogPosting patchBlogPosting(
-			@PathParam("blog-posting-id") Long blogPostingId,
+			@NotNull @PathParam("blog-posting-id") Long blogPostingId,
 			BlogPosting blogPosting)
 		throws Exception {
 
@@ -179,7 +181,7 @@ public abstract class BaseBlogPostingResourceImpl
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "BlogPosting")})
 	public BlogPosting putBlogPosting(
-			@PathParam("blog-posting-id") Long blogPostingId,
+			@NotNull @PathParam("blog-posting-id") Long blogPostingId,
 			BlogPosting blogPosting)
 		throws Exception {
 
@@ -200,7 +202,7 @@ public abstract class BaseBlogPostingResourceImpl
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "BlogPosting")})
 	public Page<BlogPosting> getContentSpaceBlogPostingsPage(
-			@PathParam("content-space-id") Long contentSpaceId,
+			@NotNull @PathParam("content-space-id") Long contentSpaceId,
 			@Context Filter filter, @Context Pagination pagination,
 			@Context Sort[] sorts)
 		throws Exception {
@@ -215,7 +217,7 @@ public abstract class BaseBlogPostingResourceImpl
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "BlogPosting")})
 	public BlogPosting postContentSpaceBlogPosting(
-			@PathParam("content-space-id") Long contentSpaceId,
+			@NotNull @PathParam("content-space-id") Long contentSpaceId,
 			BlogPosting blogPosting)
 		throws Exception {
 

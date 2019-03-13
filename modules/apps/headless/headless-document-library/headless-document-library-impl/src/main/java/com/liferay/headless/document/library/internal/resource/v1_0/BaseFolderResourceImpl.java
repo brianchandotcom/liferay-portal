@@ -38,6 +38,8 @@ import java.util.List;
 
 import javax.annotation.Generated;
 
+import javax.validation.constraints.NotNull;
+
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -71,7 +73,7 @@ public abstract class BaseFolderResourceImpl implements FolderResource {
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "Folder")})
 	public Page<Folder> getContentSpaceFoldersPage(
-			@PathParam("content-space-id") Long contentSpaceId,
+			@NotNull @PathParam("content-space-id") Long contentSpaceId,
 			@Context Pagination pagination)
 		throws Exception {
 
@@ -85,7 +87,8 @@ public abstract class BaseFolderResourceImpl implements FolderResource {
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "Folder")})
 	public Folder postContentSpaceFolder(
-			@PathParam("content-space-id") Long contentSpaceId, Folder folder)
+			@NotNull @PathParam("content-space-id") Long contentSpaceId,
+			Folder folder)
 		throws Exception {
 
 		return new Folder();
@@ -96,7 +99,7 @@ public abstract class BaseFolderResourceImpl implements FolderResource {
 	@Path("/folders/{folder-id}")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "Folder")})
-	public boolean deleteFolder(@PathParam("folder-id") Long folderId)
+	public boolean deleteFolder(@NotNull @PathParam("folder-id") Long folderId)
 		throws Exception {
 
 		return false;
@@ -107,7 +110,7 @@ public abstract class BaseFolderResourceImpl implements FolderResource {
 	@Path("/folders/{folder-id}")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "Folder")})
-	public Folder getFolder(@PathParam("folder-id") Long folderId)
+	public Folder getFolder(@NotNull @PathParam("folder-id") Long folderId)
 		throws Exception {
 
 		return new Folder();
@@ -120,7 +123,7 @@ public abstract class BaseFolderResourceImpl implements FolderResource {
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "Folder")})
 	public Folder patchFolder(
-			@PathParam("folder-id") Long folderId, Folder folder)
+			@NotNull @PathParam("folder-id") Long folderId, Folder folder)
 		throws Exception {
 
 		preparePatch(folder);
@@ -169,7 +172,7 @@ public abstract class BaseFolderResourceImpl implements FolderResource {
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "Folder")})
 	public Folder putFolder(
-			@PathParam("folder-id") Long folderId, Folder folder)
+			@NotNull @PathParam("folder-id") Long folderId, Folder folder)
 		throws Exception {
 
 		return new Folder();
@@ -187,7 +190,7 @@ public abstract class BaseFolderResourceImpl implements FolderResource {
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "Folder")})
 	public Page<Folder> getFolderFoldersPage(
-			@PathParam("folder-id") Long folderId,
+			@NotNull @PathParam("folder-id") Long folderId,
 			@Context Pagination pagination)
 		throws Exception {
 
@@ -201,7 +204,7 @@ public abstract class BaseFolderResourceImpl implements FolderResource {
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "Folder")})
 	public Folder postFolderFolder(
-			@PathParam("folder-id") Long folderId, Folder folder)
+			@NotNull @PathParam("folder-id") Long folderId, Folder folder)
 		throws Exception {
 
 		return new Folder();

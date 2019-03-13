@@ -37,6 +37,8 @@ import java.util.List;
 
 import javax.annotation.Generated;
 
+import javax.validation.constraints.NotNull;
+
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
@@ -66,7 +68,7 @@ public abstract class BasePostalAddressResourceImpl
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "PostalAddress")})
 	public Page<PostalAddress> getOrganizationPostalAddressesPage(
-			@PathParam("organization-id") Long organizationId,
+			@NotNull @PathParam("organization-id") Long organizationId,
 			@Context Pagination pagination)
 		throws Exception {
 
@@ -79,7 +81,7 @@ public abstract class BasePostalAddressResourceImpl
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "PostalAddress")})
 	public PostalAddress getPostalAddress(
-			@PathParam("postal-address-id") Long postalAddressId)
+			@NotNull @PathParam("postal-address-id") Long postalAddressId)
 		throws Exception {
 
 		return new PostalAddress();
@@ -97,7 +99,7 @@ public abstract class BasePostalAddressResourceImpl
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "PostalAddress")})
 	public Page<PostalAddress> getUserAccountPostalAddressesPage(
-			@PathParam("user-account-id") Long userAccountId,
+			@NotNull @PathParam("user-account-id") Long userAccountId,
 			@Context Pagination pagination)
 		throws Exception {
 

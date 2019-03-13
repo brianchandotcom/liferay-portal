@@ -37,6 +37,8 @@ import java.util.List;
 
 import javax.annotation.Generated;
 
+import javax.validation.constraints.NotNull;
+
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
@@ -65,7 +67,7 @@ public abstract class BasePhoneResourceImpl implements PhoneResource {
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "Phone")})
 	public Page<Phone> getOrganizationPhonesPage(
-			@PathParam("organization-id") Long organizationId,
+			@NotNull @PathParam("organization-id") Long organizationId,
 			@Context Pagination pagination)
 		throws Exception {
 
@@ -77,7 +79,7 @@ public abstract class BasePhoneResourceImpl implements PhoneResource {
 	@Path("/phones/{phone-id}")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "Phone")})
-	public Phone getPhone(@PathParam("phone-id") Long phoneId)
+	public Phone getPhone(@NotNull @PathParam("phone-id") Long phoneId)
 		throws Exception {
 
 		return new Phone();
@@ -95,7 +97,7 @@ public abstract class BasePhoneResourceImpl implements PhoneResource {
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "Phone")})
 	public Page<Phone> getUserAccountPhonesPage(
-			@PathParam("user-account-id") Long userAccountId,
+			@NotNull @PathParam("user-account-id") Long userAccountId,
 			@Context Pagination pagination)
 		throws Exception {
 

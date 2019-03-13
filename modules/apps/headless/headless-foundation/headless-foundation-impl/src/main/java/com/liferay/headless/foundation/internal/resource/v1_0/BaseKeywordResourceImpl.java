@@ -39,6 +39,8 @@ import java.util.List;
 
 import javax.annotation.Generated;
 
+import javax.validation.constraints.NotNull;
+
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -73,7 +75,7 @@ public abstract class BaseKeywordResourceImpl implements KeywordResource {
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "Keyword")})
 	public Page<Keyword> getContentSpaceKeywordsPage(
-			@PathParam("content-space-id") Long contentSpaceId,
+			@NotNull @PathParam("content-space-id") Long contentSpaceId,
 			@Context Filter filter, @Context Pagination pagination,
 			@Context Sort[] sorts)
 		throws Exception {
@@ -88,7 +90,8 @@ public abstract class BaseKeywordResourceImpl implements KeywordResource {
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "Keyword")})
 	public Keyword postContentSpaceKeyword(
-			@PathParam("content-space-id") Long contentSpaceId, Keyword keyword)
+			@NotNull @PathParam("content-space-id") Long contentSpaceId,
+			Keyword keyword)
 		throws Exception {
 
 		return new Keyword();
@@ -99,7 +102,8 @@ public abstract class BaseKeywordResourceImpl implements KeywordResource {
 	@Path("/keywords/{keyword-id}")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "Keyword")})
-	public boolean deleteKeyword(@PathParam("keyword-id") Long keywordId)
+	public boolean deleteKeyword(
+			@NotNull @PathParam("keyword-id") Long keywordId)
 		throws Exception {
 
 		return false;
@@ -110,7 +114,7 @@ public abstract class BaseKeywordResourceImpl implements KeywordResource {
 	@Path("/keywords/{keyword-id}")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "Keyword")})
-	public Keyword getKeyword(@PathParam("keyword-id") Long keywordId)
+	public Keyword getKeyword(@NotNull @PathParam("keyword-id") Long keywordId)
 		throws Exception {
 
 		return new Keyword();
@@ -123,7 +127,7 @@ public abstract class BaseKeywordResourceImpl implements KeywordResource {
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "Keyword")})
 	public Keyword putKeyword(
-			@PathParam("keyword-id") Long keywordId, Keyword keyword)
+			@NotNull @PathParam("keyword-id") Long keywordId, Keyword keyword)
 		throws Exception {
 
 		return new Keyword();

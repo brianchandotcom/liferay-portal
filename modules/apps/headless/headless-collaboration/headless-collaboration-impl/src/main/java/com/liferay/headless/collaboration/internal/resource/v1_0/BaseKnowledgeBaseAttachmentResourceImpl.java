@@ -34,6 +34,8 @@ import java.util.List;
 
 import javax.annotation.Generated;
 
+import javax.validation.constraints.NotNull;
+
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -63,7 +65,7 @@ public abstract class BaseKnowledgeBaseAttachmentResourceImpl
 	@Tags(value = {@Tag(name = "KnowledgeBaseAttachment")})
 	public Page<KnowledgeBaseAttachment>
 			getKnowledgeBaseArticleKnowledgeBaseAttachmentsPage(
-				@PathParam("knowledge-base-article-id") Long
+				@NotNull @PathParam("knowledge-base-article-id") Long
 					knowledgeBaseArticleId)
 		throws Exception {
 
@@ -80,7 +82,7 @@ public abstract class BaseKnowledgeBaseAttachmentResourceImpl
 	@Tags(value = {@Tag(name = "KnowledgeBaseAttachment")})
 	public KnowledgeBaseAttachment
 			postKnowledgeBaseArticleKnowledgeBaseAttachment(
-				@PathParam("knowledge-base-article-id") Long
+				@NotNull @PathParam("knowledge-base-article-id") Long
 					knowledgeBaseArticleId,
 				MultipartBody multipartBody)
 		throws Exception {
@@ -94,7 +96,7 @@ public abstract class BaseKnowledgeBaseAttachmentResourceImpl
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "KnowledgeBaseAttachment")})
 	public boolean deleteKnowledgeBaseAttachment(
-			@PathParam("knowledge-base-attachment-id") Long
+			@NotNull @PathParam("knowledge-base-attachment-id") Long
 				knowledgeBaseAttachmentId)
 		throws Exception {
 
@@ -107,7 +109,7 @@ public abstract class BaseKnowledgeBaseAttachmentResourceImpl
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "KnowledgeBaseAttachment")})
 	public KnowledgeBaseAttachment getKnowledgeBaseAttachment(
-			@PathParam("knowledge-base-attachment-id") Long
+			@NotNull @PathParam("knowledge-base-attachment-id") Long
 				knowledgeBaseAttachmentId)
 		throws Exception {
 

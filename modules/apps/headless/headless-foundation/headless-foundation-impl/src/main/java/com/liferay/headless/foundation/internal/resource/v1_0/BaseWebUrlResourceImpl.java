@@ -37,6 +37,8 @@ import java.util.List;
 
 import javax.annotation.Generated;
 
+import javax.validation.constraints.NotNull;
+
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
@@ -65,7 +67,7 @@ public abstract class BaseWebUrlResourceImpl implements WebUrlResource {
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "WebUrl")})
 	public Page<WebUrl> getOrganizationWebUrlsPage(
-			@PathParam("organization-id") Long organizationId,
+			@NotNull @PathParam("organization-id") Long organizationId,
 			@Context Pagination pagination)
 		throws Exception {
 
@@ -84,7 +86,7 @@ public abstract class BaseWebUrlResourceImpl implements WebUrlResource {
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "WebUrl")})
 	public Page<WebUrl> getUserAccountWebUrlsPage(
-			@PathParam("user-account-id") Long userAccountId,
+			@NotNull @PathParam("user-account-id") Long userAccountId,
 			@Context Pagination pagination)
 		throws Exception {
 
@@ -96,7 +98,7 @@ public abstract class BaseWebUrlResourceImpl implements WebUrlResource {
 	@Path("/web-urls/{web-url-id}")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "WebUrl")})
-	public WebUrl getWebUrl(@PathParam("web-url-id") Long webUrlId)
+	public WebUrl getWebUrl(@NotNull @PathParam("web-url-id") Long webUrlId)
 		throws Exception {
 
 		return new WebUrl();

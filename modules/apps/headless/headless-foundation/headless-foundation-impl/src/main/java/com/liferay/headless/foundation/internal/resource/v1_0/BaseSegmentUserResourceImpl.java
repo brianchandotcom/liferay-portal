@@ -37,6 +37,8 @@ import java.util.List;
 
 import javax.annotation.Generated;
 
+import javax.validation.constraints.NotNull;
+
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
@@ -66,7 +68,7 @@ public abstract class BaseSegmentUserResourceImpl
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "SegmentUser")})
 	public Page<SegmentUser> getSegmentUserAccountsPage(
-			@PathParam("segment-id") Long segmentId,
+			@NotNull @PathParam("segment-id") Long segmentId,
 			@Context Pagination pagination)
 		throws Exception {
 

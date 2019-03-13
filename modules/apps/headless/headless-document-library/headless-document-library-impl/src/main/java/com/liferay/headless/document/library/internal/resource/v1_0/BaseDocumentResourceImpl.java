@@ -40,6 +40,8 @@ import java.util.List;
 
 import javax.annotation.Generated;
 
+import javax.validation.constraints.NotNull;
+
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -75,7 +77,7 @@ public abstract class BaseDocumentResourceImpl implements DocumentResource {
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "Document")})
 	public Page<Document> getContentSpaceDocumentsPage(
-			@PathParam("content-space-id") Long contentSpaceId,
+			@NotNull @PathParam("content-space-id") Long contentSpaceId,
 			@Context Filter filter, @Context Pagination pagination,
 			@Context Sort[] sorts)
 		throws Exception {
@@ -90,7 +92,7 @@ public abstract class BaseDocumentResourceImpl implements DocumentResource {
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "Document")})
 	public Document postContentSpaceDocument(
-			@PathParam("content-space-id") Long contentSpaceId,
+			@NotNull @PathParam("content-space-id") Long contentSpaceId,
 			MultipartBody multipartBody)
 		throws Exception {
 
@@ -102,7 +104,8 @@ public abstract class BaseDocumentResourceImpl implements DocumentResource {
 	@Path("/documents/{document-id}")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "Document")})
-	public boolean deleteDocument(@PathParam("document-id") Long documentId)
+	public boolean deleteDocument(
+			@NotNull @PathParam("document-id") Long documentId)
 		throws Exception {
 
 		return false;
@@ -113,7 +116,8 @@ public abstract class BaseDocumentResourceImpl implements DocumentResource {
 	@Path("/documents/{document-id}")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "Document")})
-	public Document getDocument(@PathParam("document-id") Long documentId)
+	public Document getDocument(
+			@NotNull @PathParam("document-id") Long documentId)
 		throws Exception {
 
 		return new Document();
@@ -126,7 +130,7 @@ public abstract class BaseDocumentResourceImpl implements DocumentResource {
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "Document")})
 	public Document patchDocument(
-			@PathParam("document-id") Long documentId,
+			@NotNull @PathParam("document-id") Long documentId,
 			MultipartBody multipartBody)
 		throws Exception {
 
@@ -140,7 +144,7 @@ public abstract class BaseDocumentResourceImpl implements DocumentResource {
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "Document")})
 	public Document putDocument(
-			@PathParam("document-id") Long documentId,
+			@NotNull @PathParam("document-id") Long documentId,
 			MultipartBody multipartBody)
 		throws Exception {
 
@@ -161,8 +165,9 @@ public abstract class BaseDocumentResourceImpl implements DocumentResource {
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "Document")})
 	public Page<Document> getFolderDocumentsPage(
-			@PathParam("folder-id") Long folderId, @Context Filter filter,
-			@Context Pagination pagination, @Context Sort[] sorts)
+			@NotNull @PathParam("folder-id") Long folderId,
+			@Context Filter filter, @Context Pagination pagination,
+			@Context Sort[] sorts)
 		throws Exception {
 
 		return Page.of(Collections.emptyList());
@@ -175,7 +180,8 @@ public abstract class BaseDocumentResourceImpl implements DocumentResource {
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "Document")})
 	public Document postFolderDocument(
-			@PathParam("folder-id") Long folderId, MultipartBody multipartBody)
+			@NotNull @PathParam("folder-id") Long folderId,
+			MultipartBody multipartBody)
 		throws Exception {
 
 		return new Document();

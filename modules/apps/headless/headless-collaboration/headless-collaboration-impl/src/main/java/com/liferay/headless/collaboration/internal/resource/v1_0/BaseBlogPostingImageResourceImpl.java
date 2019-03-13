@@ -40,6 +40,8 @@ import java.util.List;
 
 import javax.annotation.Generated;
 
+import javax.validation.constraints.NotNull;
+
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -68,7 +70,8 @@ public abstract class BaseBlogPostingImageResourceImpl
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "BlogPostingImage")})
 	public boolean deleteBlogPostingImage(
-			@PathParam("blog-posting-image-id") Long blogPostingImageId)
+			@NotNull @PathParam("blog-posting-image-id") Long
+				blogPostingImageId)
 		throws Exception {
 
 		return false;
@@ -80,7 +83,8 @@ public abstract class BaseBlogPostingImageResourceImpl
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "BlogPostingImage")})
 	public BlogPostingImage getBlogPostingImage(
-			@PathParam("blog-posting-image-id") Long blogPostingImageId)
+			@NotNull @PathParam("blog-posting-image-id") Long
+				blogPostingImageId)
 		throws Exception {
 
 		return new BlogPostingImage();
@@ -93,7 +97,8 @@ public abstract class BaseBlogPostingImageResourceImpl
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "BlogPostingImage")})
 	public BlogPostingImage patchBlogPostingImage(
-			@PathParam("blog-posting-image-id") Long blogPostingImageId,
+			@NotNull @PathParam("blog-posting-image-id") Long
+				blogPostingImageId,
 			MultipartBody multipartBody)
 		throws Exception {
 
@@ -107,7 +112,8 @@ public abstract class BaseBlogPostingImageResourceImpl
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "BlogPostingImage")})
 	public BlogPostingImage putBlogPostingImage(
-			@PathParam("blog-posting-image-id") Long blogPostingImageId,
+			@NotNull @PathParam("blog-posting-image-id") Long
+				blogPostingImageId,
 			MultipartBody multipartBody)
 		throws Exception {
 
@@ -128,7 +134,7 @@ public abstract class BaseBlogPostingImageResourceImpl
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "BlogPostingImage")})
 	public Page<BlogPostingImage> getContentSpaceBlogPostingImagesPage(
-			@PathParam("content-space-id") Long contentSpaceId,
+			@NotNull @PathParam("content-space-id") Long contentSpaceId,
 			@Context Filter filter, @Context Pagination pagination,
 			@Context Sort[] sorts)
 		throws Exception {
@@ -143,7 +149,7 @@ public abstract class BaseBlogPostingImageResourceImpl
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "BlogPostingImage")})
 	public BlogPostingImage postContentSpaceBlogPostingImage(
-			@PathParam("content-space-id") Long contentSpaceId,
+			@NotNull @PathParam("content-space-id") Long contentSpaceId,
 			MultipartBody multipartBody)
 		throws Exception {
 

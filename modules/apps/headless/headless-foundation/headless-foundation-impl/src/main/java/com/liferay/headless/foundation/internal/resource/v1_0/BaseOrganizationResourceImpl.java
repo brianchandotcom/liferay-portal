@@ -37,6 +37,8 @@ import java.util.List;
 
 import javax.annotation.Generated;
 
+import javax.validation.constraints.NotNull;
+
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
@@ -66,7 +68,7 @@ public abstract class BaseOrganizationResourceImpl
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "Organization")})
 	public Page<Organization> getMyUserAccountOrganizationsPage(
-			@PathParam("my-user-account-id") Long myUserAccountId,
+			@NotNull @PathParam("my-user-account-id") Long myUserAccountId,
 			@Context Pagination pagination)
 		throws Exception {
 
@@ -97,7 +99,7 @@ public abstract class BaseOrganizationResourceImpl
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "Organization")})
 	public Organization getOrganization(
-			@PathParam("organization-id") Long organizationId)
+			@NotNull @PathParam("organization-id") Long organizationId)
 		throws Exception {
 
 		return new Organization();
@@ -115,7 +117,7 @@ public abstract class BaseOrganizationResourceImpl
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "Organization")})
 	public Page<Organization> getOrganizationOrganizationsPage(
-			@PathParam("organization-id") Long organizationId,
+			@NotNull @PathParam("organization-id") Long organizationId,
 			@Context Pagination pagination)
 		throws Exception {
 
@@ -134,7 +136,7 @@ public abstract class BaseOrganizationResourceImpl
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "Organization")})
 	public Page<Organization> getUserAccountOrganizationsPage(
-			@PathParam("user-account-id") Long userAccountId,
+			@NotNull @PathParam("user-account-id") Long userAccountId,
 			@Context Pagination pagination)
 		throws Exception {
 

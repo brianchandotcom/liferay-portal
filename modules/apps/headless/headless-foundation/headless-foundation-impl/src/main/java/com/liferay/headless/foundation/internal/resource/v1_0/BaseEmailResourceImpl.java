@@ -37,6 +37,8 @@ import java.util.List;
 
 import javax.annotation.Generated;
 
+import javax.validation.constraints.NotNull;
+
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
@@ -58,7 +60,7 @@ public abstract class BaseEmailResourceImpl implements EmailResource {
 	@Path("/emails/{email-id}")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "Email")})
-	public Email getEmail(@PathParam("email-id") Long emailId)
+	public Email getEmail(@NotNull @PathParam("email-id") Long emailId)
 		throws Exception {
 
 		return new Email();
@@ -76,7 +78,7 @@ public abstract class BaseEmailResourceImpl implements EmailResource {
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "Email")})
 	public Page<Email> getOrganizationEmailsPage(
-			@PathParam("organization-id") Long organizationId,
+			@NotNull @PathParam("organization-id") Long organizationId,
 			@Context Pagination pagination)
 		throws Exception {
 
@@ -95,7 +97,7 @@ public abstract class BaseEmailResourceImpl implements EmailResource {
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "Email")})
 	public Page<Email> getUserAccountEmailsPage(
-			@PathParam("user-account-id") Long userAccountId,
+			@NotNull @PathParam("user-account-id") Long userAccountId,
 			@Context Pagination pagination)
 		throws Exception {
 

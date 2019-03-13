@@ -37,6 +37,8 @@ import java.util.List;
 
 import javax.annotation.Generated;
 
+import javax.validation.constraints.NotNull;
+
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -62,7 +64,7 @@ public abstract class BaseFormRecordResourceImpl implements FormRecordResource {
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "FormRecord")})
 	public FormRecord getFormRecord(
-			@PathParam("form-record-id") Long formRecordId)
+			@NotNull @PathParam("form-record-id") Long formRecordId)
 		throws Exception {
 
 		return new FormRecord();
@@ -75,7 +77,7 @@ public abstract class BaseFormRecordResourceImpl implements FormRecordResource {
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "FormRecord")})
 	public FormRecord putFormRecord(
-			@PathParam("form-record-id") Long formRecordId,
+			@NotNull @PathParam("form-record-id") Long formRecordId,
 			FormRecord formRecord)
 		throws Exception {
 
@@ -94,7 +96,8 @@ public abstract class BaseFormRecordResourceImpl implements FormRecordResource {
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "FormRecord")})
 	public Page<FormRecord> getFormFormRecordsPage(
-			@PathParam("form-id") Long formId, @Context Pagination pagination)
+			@NotNull @PathParam("form-id") Long formId,
+			@Context Pagination pagination)
 		throws Exception {
 
 		return Page.of(Collections.emptyList());
@@ -107,7 +110,7 @@ public abstract class BaseFormRecordResourceImpl implements FormRecordResource {
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "FormRecord")})
 	public FormRecord postFormFormRecord(
-			@PathParam("form-id") Long formId, FormRecord formRecord)
+			@NotNull @PathParam("form-id") Long formId, FormRecord formRecord)
 		throws Exception {
 
 		return new FormRecord();

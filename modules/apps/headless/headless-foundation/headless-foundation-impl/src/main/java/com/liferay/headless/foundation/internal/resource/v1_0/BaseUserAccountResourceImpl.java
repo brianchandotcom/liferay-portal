@@ -38,6 +38,8 @@ import java.util.List;
 
 import javax.annotation.Generated;
 
+import javax.validation.constraints.NotNull;
+
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -65,7 +67,7 @@ public abstract class BaseUserAccountResourceImpl
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "UserAccount")})
 	public UserAccount getMyUserAccount(
-			@PathParam("my-user-account-id") Long myUserAccountId)
+			@NotNull @PathParam("my-user-account-id") Long myUserAccountId)
 		throws Exception {
 
 		return new UserAccount();
@@ -83,7 +85,7 @@ public abstract class BaseUserAccountResourceImpl
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "UserAccount")})
 	public Page<UserAccount> getOrganizationUserAccountsPage(
-			@PathParam("organization-id") Long organizationId,
+			@NotNull @PathParam("organization-id") Long organizationId,
 			@Context Pagination pagination)
 		throws Exception {
 
@@ -137,7 +139,7 @@ public abstract class BaseUserAccountResourceImpl
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "UserAccount")})
 	public boolean deleteUserAccount(
-			@PathParam("user-account-id") Long userAccountId)
+			@NotNull @PathParam("user-account-id") Long userAccountId)
 		throws Exception {
 
 		return false;
@@ -149,7 +151,7 @@ public abstract class BaseUserAccountResourceImpl
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "UserAccount")})
 	public UserAccount getUserAccount(
-			@PathParam("user-account-id") Long userAccountId)
+			@NotNull @PathParam("user-account-id") Long userAccountId)
 		throws Exception {
 
 		return new UserAccount();
@@ -162,7 +164,7 @@ public abstract class BaseUserAccountResourceImpl
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "UserAccount")})
 	public UserAccount putUserAccount(
-			@PathParam("user-account-id") Long userAccountId,
+			@NotNull @PathParam("user-account-id") Long userAccountId,
 			UserAccount userAccount)
 		throws Exception {
 
@@ -181,7 +183,7 @@ public abstract class BaseUserAccountResourceImpl
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "UserAccount")})
 	public Page<UserAccount> getWebSiteUserAccountsPage(
-			@PathParam("web-site-id") Long webSiteId,
+			@NotNull @PathParam("web-site-id") Long webSiteId,
 			@Context Pagination pagination)
 		throws Exception {
 

@@ -39,6 +39,8 @@ import java.util.List;
 
 import javax.annotation.Generated;
 
+import javax.validation.constraints.NotNull;
+
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
@@ -70,7 +72,7 @@ public abstract class BaseContentStructureResourceImpl
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "ContentStructure")})
 	public Page<ContentStructure> getContentSpaceContentStructuresPage(
-			@PathParam("content-space-id") Long contentSpaceId,
+			@NotNull @PathParam("content-space-id") Long contentSpaceId,
 			@Context Filter filter, @Context Pagination pagination,
 			@Context Sort[] sorts)
 		throws Exception {
@@ -84,7 +86,7 @@ public abstract class BaseContentStructureResourceImpl
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "ContentStructure")})
 	public ContentStructure getContentStructure(
-			@PathParam("content-structure-id") Long contentStructureId)
+			@NotNull @PathParam("content-structure-id") Long contentStructureId)
 		throws Exception {
 
 		return new ContentStructure();

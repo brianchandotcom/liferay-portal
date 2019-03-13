@@ -40,6 +40,8 @@ import java.util.List;
 
 import javax.annotation.Generated;
 
+import javax.validation.constraints.NotNull;
+
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -76,7 +78,7 @@ public abstract class BaseStructuredContentResourceImpl
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "StructuredContent")})
 	public Page<StructuredContent> getContentSpaceStructuredContentsPage(
-			@PathParam("content-space-id") Long contentSpaceId,
+			@NotNull @PathParam("content-space-id") Long contentSpaceId,
 			@Context Filter filter, @Context Pagination pagination,
 			@Context Sort[] sorts)
 		throws Exception {
@@ -91,7 +93,7 @@ public abstract class BaseStructuredContentResourceImpl
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "StructuredContent")})
 	public StructuredContent postContentSpaceStructuredContent(
-			@PathParam("content-space-id") Long contentSpaceId,
+			@NotNull @PathParam("content-space-id") Long contentSpaceId,
 			StructuredContent structuredContent)
 		throws Exception {
 
@@ -112,7 +114,7 @@ public abstract class BaseStructuredContentResourceImpl
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "StructuredContent")})
 	public Page<StructuredContent> getContentStructureStructuredContentsPage(
-			@PathParam("content-structure-id") Long contentStructureId,
+			@NotNull @PathParam("content-structure-id") Long contentStructureId,
 			@Context Filter filter, @Context Pagination pagination,
 			@Context Sort[] sorts)
 		throws Exception {
@@ -126,7 +128,8 @@ public abstract class BaseStructuredContentResourceImpl
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "StructuredContent")})
 	public boolean deleteStructuredContent(
-			@PathParam("structured-content-id") Long structuredContentId)
+			@NotNull @PathParam("structured-content-id") Long
+				structuredContentId)
 		throws Exception {
 
 		return false;
@@ -138,7 +141,8 @@ public abstract class BaseStructuredContentResourceImpl
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "StructuredContent")})
 	public StructuredContent getStructuredContent(
-			@PathParam("structured-content-id") Long structuredContentId)
+			@NotNull @PathParam("structured-content-id") Long
+				structuredContentId)
 		throws Exception {
 
 		return new StructuredContent();
@@ -151,7 +155,8 @@ public abstract class BaseStructuredContentResourceImpl
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "StructuredContent")})
 	public StructuredContent patchStructuredContent(
-			@PathParam("structured-content-id") Long structuredContentId,
+			@NotNull @PathParam("structured-content-id") Long
+				structuredContentId,
 			StructuredContent structuredContent)
 		throws Exception {
 
@@ -235,7 +240,8 @@ public abstract class BaseStructuredContentResourceImpl
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "StructuredContent")})
 	public StructuredContent putStructuredContent(
-			@PathParam("structured-content-id") Long structuredContentId,
+			@NotNull @PathParam("structured-content-id") Long
+				structuredContentId,
 			StructuredContent structuredContent)
 		throws Exception {
 
@@ -250,8 +256,9 @@ public abstract class BaseStructuredContentResourceImpl
 	@Produces("text/html")
 	@Tags(value = {@Tag(name = "StructuredContent")})
 	public String getStructuredContentRenderedContentTemplate(
-			@PathParam("structured-content-id") Long structuredContentId,
-			@PathParam("template-id") Long templateId)
+			@NotNull @PathParam("structured-content-id") Long
+				structuredContentId,
+			@NotNull @PathParam("template-id") Long templateId)
 		throws Exception {
 
 		return StringPool.BLANK;

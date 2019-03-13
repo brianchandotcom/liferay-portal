@@ -37,6 +37,8 @@ import java.util.List;
 
 import javax.annotation.Generated;
 
+import javax.validation.constraints.NotNull;
+
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
@@ -65,7 +67,7 @@ public abstract class BaseRoleResourceImpl implements RoleResource {
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "Role")})
 	public Page<Role> getMyUserAccountRolesPage(
-			@PathParam("my-user-account-id") Long myUserAccountId,
+			@NotNull @PathParam("my-user-account-id") Long myUserAccountId,
 			@Context Pagination pagination)
 		throws Exception {
 
@@ -94,7 +96,9 @@ public abstract class BaseRoleResourceImpl implements RoleResource {
 	@Path("/roles/{role-id}")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "Role")})
-	public Role getRole(@PathParam("role-id") Long roleId) throws Exception {
+	public Role getRole(@NotNull @PathParam("role-id") Long roleId)
+		throws Exception {
+
 		return new Role();
 	}
 
@@ -110,7 +114,7 @@ public abstract class BaseRoleResourceImpl implements RoleResource {
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "Role")})
 	public Page<Role> getUserAccountRolesPage(
-			@PathParam("user-account-id") Long userAccountId,
+			@NotNull @PathParam("user-account-id") Long userAccountId,
 			@Context Pagination pagination)
 		throws Exception {
 

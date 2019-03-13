@@ -31,6 +31,8 @@ import java.util.List;
 
 import javax.annotation.Generated;
 
+import javax.validation.constraints.NotNull;
+
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
@@ -55,7 +57,7 @@ public abstract class BaseFormDocumentResourceImpl
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "FormDocument")})
 	public boolean deleteFormDocument(
-			@PathParam("form-document-id") Long formDocumentId)
+			@NotNull @PathParam("form-document-id") Long formDocumentId)
 		throws Exception {
 
 		return false;
@@ -67,7 +69,7 @@ public abstract class BaseFormDocumentResourceImpl
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "FormDocument")})
 	public FormDocument getFormDocument(
-			@PathParam("form-document-id") Long formDocumentId)
+			@NotNull @PathParam("form-document-id") Long formDocumentId)
 		throws Exception {
 
 		return new FormDocument();

@@ -37,6 +37,8 @@ import java.util.List;
 
 import javax.annotation.Generated;
 
+import javax.validation.constraints.NotNull;
+
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -67,7 +69,7 @@ public abstract class BaseFormResourceImpl implements FormResource {
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "Form")})
 	public Page<Form> getContentSpaceFormsPage(
-			@PathParam("content-space-id") Long contentSpaceId,
+			@NotNull @PathParam("content-space-id") Long contentSpaceId,
 			@Context Pagination pagination)
 		throws Exception {
 
@@ -79,7 +81,9 @@ public abstract class BaseFormResourceImpl implements FormResource {
 	@Path("/forms/{form-id}")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "Form")})
-	public Form getForm(@PathParam("form-id") Long formId) throws Exception {
+	public Form getForm(@NotNull @PathParam("form-id") Long formId)
+		throws Exception {
+
 		return new Form();
 	}
 
@@ -90,7 +94,7 @@ public abstract class BaseFormResourceImpl implements FormResource {
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "Form")})
 	public Form postFormEvaluateContext(
-			@PathParam("form-id") Long formId, Form form)
+			@NotNull @PathParam("form-id") Long formId, Form form)
 		throws Exception {
 
 		return new Form();
@@ -101,7 +105,8 @@ public abstract class BaseFormResourceImpl implements FormResource {
 	@Path("/forms/{form-id}/fetch-latest-draft")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "Form")})
-	public Form getFormFetchLatestDraft(@PathParam("form-id") Long formId)
+	public Form getFormFetchLatestDraft(
+			@NotNull @PathParam("form-id") Long formId)
 		throws Exception {
 
 		return new Form();
@@ -113,7 +118,8 @@ public abstract class BaseFormResourceImpl implements FormResource {
 	@Path("/forms/{form-id}/upload-file")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "Form")})
-	public Form postFormUploadFile(@PathParam("form-id") Long formId, Form form)
+	public Form postFormUploadFile(
+			@NotNull @PathParam("form-id") Long formId, Form form)
 		throws Exception {
 
 		return new Form();

@@ -39,6 +39,8 @@ import java.util.List;
 
 import javax.annotation.Generated;
 
+import javax.validation.constraints.NotNull;
+
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -73,7 +75,7 @@ public abstract class BaseVocabularyResourceImpl implements VocabularyResource {
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "Vocabulary")})
 	public Page<Vocabulary> getContentSpaceVocabulariesPage(
-			@PathParam("content-space-id") Long contentSpaceId,
+			@NotNull @PathParam("content-space-id") Long contentSpaceId,
 			@Context Filter filter, @Context Pagination pagination,
 			@Context Sort[] sorts)
 		throws Exception {
@@ -88,7 +90,7 @@ public abstract class BaseVocabularyResourceImpl implements VocabularyResource {
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "Vocabulary")})
 	public Vocabulary postContentSpaceVocabulary(
-			@PathParam("content-space-id") Long contentSpaceId,
+			@NotNull @PathParam("content-space-id") Long contentSpaceId,
 			Vocabulary vocabulary)
 		throws Exception {
 
@@ -101,7 +103,7 @@ public abstract class BaseVocabularyResourceImpl implements VocabularyResource {
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "Vocabulary")})
 	public boolean deleteVocabulary(
-			@PathParam("vocabulary-id") Long vocabularyId)
+			@NotNull @PathParam("vocabulary-id") Long vocabularyId)
 		throws Exception {
 
 		return false;
@@ -113,7 +115,7 @@ public abstract class BaseVocabularyResourceImpl implements VocabularyResource {
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "Vocabulary")})
 	public Vocabulary getVocabulary(
-			@PathParam("vocabulary-id") Long vocabularyId)
+			@NotNull @PathParam("vocabulary-id") Long vocabularyId)
 		throws Exception {
 
 		return new Vocabulary();
@@ -126,7 +128,7 @@ public abstract class BaseVocabularyResourceImpl implements VocabularyResource {
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "Vocabulary")})
 	public Vocabulary putVocabulary(
-			@PathParam("vocabulary-id") Long vocabularyId,
+			@NotNull @PathParam("vocabulary-id") Long vocabularyId,
 			Vocabulary vocabulary)
 		throws Exception {
 

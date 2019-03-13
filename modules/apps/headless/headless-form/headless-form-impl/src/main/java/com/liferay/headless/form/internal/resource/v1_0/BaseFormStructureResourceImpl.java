@@ -37,6 +37,8 @@ import java.util.List;
 
 import javax.annotation.Generated;
 
+import javax.validation.constraints.NotNull;
+
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
@@ -66,7 +68,7 @@ public abstract class BaseFormStructureResourceImpl
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "FormStructure")})
 	public Page<FormStructure> getContentSpaceFormStructuresPage(
-			@PathParam("content-space-id") Long contentSpaceId,
+			@NotNull @PathParam("content-space-id") Long contentSpaceId,
 			@Context Pagination pagination)
 		throws Exception {
 
@@ -79,7 +81,7 @@ public abstract class BaseFormStructureResourceImpl
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "FormStructure")})
 	public FormStructure getFormStructure(
-			@PathParam("form-structure-id") Long formStructureId)
+			@NotNull @PathParam("form-structure-id") Long formStructureId)
 		throws Exception {
 
 		return new FormStructure();

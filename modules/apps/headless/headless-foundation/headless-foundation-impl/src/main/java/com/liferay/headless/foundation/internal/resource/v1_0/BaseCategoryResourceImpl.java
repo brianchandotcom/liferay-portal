@@ -39,6 +39,8 @@ import java.util.List;
 
 import javax.annotation.Generated;
 
+import javax.validation.constraints.NotNull;
+
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -64,7 +66,8 @@ public abstract class BaseCategoryResourceImpl implements CategoryResource {
 	@Path("/categories/{category-id}")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "Category")})
-	public boolean deleteCategory(@PathParam("category-id") Long categoryId)
+	public boolean deleteCategory(
+			@NotNull @PathParam("category-id") Long categoryId)
 		throws Exception {
 
 		return false;
@@ -75,7 +78,8 @@ public abstract class BaseCategoryResourceImpl implements CategoryResource {
 	@Path("/categories/{category-id}")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "Category")})
-	public Category getCategory(@PathParam("category-id") Long categoryId)
+	public Category getCategory(
+			@NotNull @PathParam("category-id") Long categoryId)
 		throws Exception {
 
 		return new Category();
@@ -88,7 +92,8 @@ public abstract class BaseCategoryResourceImpl implements CategoryResource {
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "Category")})
 	public Category putCategory(
-			@PathParam("category-id") Long categoryId, Category category)
+			@NotNull @PathParam("category-id") Long categoryId,
+			Category category)
 		throws Exception {
 
 		return new Category();
@@ -108,8 +113,9 @@ public abstract class BaseCategoryResourceImpl implements CategoryResource {
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "Category")})
 	public Page<Category> getCategoryCategoriesPage(
-			@PathParam("category-id") Long categoryId, @Context Filter filter,
-			@Context Pagination pagination, @Context Sort[] sorts)
+			@NotNull @PathParam("category-id") Long categoryId,
+			@Context Filter filter, @Context Pagination pagination,
+			@Context Sort[] sorts)
 		throws Exception {
 
 		return Page.of(Collections.emptyList());
@@ -122,7 +128,8 @@ public abstract class BaseCategoryResourceImpl implements CategoryResource {
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "Category")})
 	public Category postCategoryCategory(
-			@PathParam("category-id") Long categoryId, Category category)
+			@NotNull @PathParam("category-id") Long categoryId,
+			Category category)
 		throws Exception {
 
 		return new Category();
@@ -142,7 +149,7 @@ public abstract class BaseCategoryResourceImpl implements CategoryResource {
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "Category")})
 	public Page<Category> getVocabularyCategoriesPage(
-			@PathParam("vocabulary-id") Long vocabularyId,
+			@NotNull @PathParam("vocabulary-id") Long vocabularyId,
 			@Context Filter filter, @Context Pagination pagination,
 			@Context Sort[] sorts)
 		throws Exception {
@@ -157,7 +164,8 @@ public abstract class BaseCategoryResourceImpl implements CategoryResource {
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "Category")})
 	public Category postVocabularyCategory(
-			@PathParam("vocabulary-id") Long vocabularyId, Category category)
+			@NotNull @PathParam("vocabulary-id") Long vocabularyId,
+			Category category)
 		throws Exception {
 
 		return new Category();

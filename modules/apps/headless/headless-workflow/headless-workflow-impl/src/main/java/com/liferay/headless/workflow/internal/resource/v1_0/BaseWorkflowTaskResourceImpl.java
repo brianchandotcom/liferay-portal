@@ -37,6 +37,8 @@ import java.util.List;
 
 import javax.annotation.Generated;
 
+import javax.validation.constraints.NotNull;
+
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -68,7 +70,8 @@ public abstract class BaseWorkflowTaskResourceImpl
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "WorkflowTask")})
 	public Page<WorkflowTask> getRoleWorkflowTasksPage(
-			@PathParam("role-id") Long roleId, @Context Pagination pagination)
+			@NotNull @PathParam("role-id") Long roleId,
+			@Context Pagination pagination)
 		throws Exception {
 
 		return Page.of(Collections.emptyList());
@@ -98,7 +101,7 @@ public abstract class BaseWorkflowTaskResourceImpl
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "WorkflowTask")})
 	public WorkflowTask getWorkflowTask(
-			@PathParam("workflow-task-id") Long workflowTaskId)
+			@NotNull @PathParam("workflow-task-id") Long workflowTaskId)
 		throws Exception {
 
 		return new WorkflowTask();
@@ -111,7 +114,7 @@ public abstract class BaseWorkflowTaskResourceImpl
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "WorkflowTask")})
 	public WorkflowTask postWorkflowTaskAssignToMe(
-			@PathParam("workflow-task-id") Long workflowTaskId,
+			@NotNull @PathParam("workflow-task-id") Long workflowTaskId,
 			WorkflowTask workflowTask)
 		throws Exception {
 
@@ -125,7 +128,7 @@ public abstract class BaseWorkflowTaskResourceImpl
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "WorkflowTask")})
 	public WorkflowTask postWorkflowTaskAssignToUser(
-			@PathParam("workflow-task-id") Long workflowTaskId,
+			@NotNull @PathParam("workflow-task-id") Long workflowTaskId,
 			WorkflowTask workflowTask)
 		throws Exception {
 
@@ -139,7 +142,7 @@ public abstract class BaseWorkflowTaskResourceImpl
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "WorkflowTask")})
 	public WorkflowTask postWorkflowTaskChangeTransition(
-			@PathParam("workflow-task-id") Long workflowTaskId,
+			@NotNull @PathParam("workflow-task-id") Long workflowTaskId,
 			WorkflowTask workflowTask)
 		throws Exception {
 
@@ -153,7 +156,7 @@ public abstract class BaseWorkflowTaskResourceImpl
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "WorkflowTask")})
 	public WorkflowTask postWorkflowTaskUpdateDueDate(
-			@PathParam("workflow-task-id") Long workflowTaskId,
+			@NotNull @PathParam("workflow-task-id") Long workflowTaskId,
 			WorkflowTask workflowTask)
 		throws Exception {
 

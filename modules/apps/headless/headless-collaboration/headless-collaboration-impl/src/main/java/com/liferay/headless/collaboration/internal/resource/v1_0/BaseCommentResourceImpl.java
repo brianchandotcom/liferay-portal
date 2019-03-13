@@ -39,6 +39,8 @@ import java.util.List;
 
 import javax.annotation.Generated;
 
+import javax.validation.constraints.NotNull;
+
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -73,7 +75,7 @@ public abstract class BaseCommentResourceImpl implements CommentResource {
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "Comment")})
 	public Page<Comment> getBlogPostingCommentsPage(
-			@PathParam("blog-posting-id") Long blogPostingId,
+			@NotNull @PathParam("blog-posting-id") Long blogPostingId,
 			@Context Filter filter, @Context Pagination pagination,
 			@Context Sort[] sorts)
 		throws Exception {
@@ -88,7 +90,8 @@ public abstract class BaseCommentResourceImpl implements CommentResource {
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "Comment")})
 	public Comment postBlogPostingComment(
-			@PathParam("blog-posting-id") Long blogPostingId, Comment comment)
+			@NotNull @PathParam("blog-posting-id") Long blogPostingId,
+			Comment comment)
 		throws Exception {
 
 		return new Comment();
@@ -99,7 +102,8 @@ public abstract class BaseCommentResourceImpl implements CommentResource {
 	@Path("/comments/{comment-id}")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "Comment")})
-	public boolean deleteComment(@PathParam("comment-id") Long commentId)
+	public boolean deleteComment(
+			@NotNull @PathParam("comment-id") Long commentId)
 		throws Exception {
 
 		return false;
@@ -110,7 +114,7 @@ public abstract class BaseCommentResourceImpl implements CommentResource {
 	@Path("/comments/{comment-id}")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "Comment")})
-	public Comment getComment(@PathParam("comment-id") Long commentId)
+	public Comment getComment(@NotNull @PathParam("comment-id") Long commentId)
 		throws Exception {
 
 		return new Comment();
@@ -123,7 +127,7 @@ public abstract class BaseCommentResourceImpl implements CommentResource {
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "Comment")})
 	public Comment putComment(
-			@PathParam("comment-id") Long commentId, Comment comment)
+			@NotNull @PathParam("comment-id") Long commentId, Comment comment)
 		throws Exception {
 
 		return new Comment();
@@ -143,8 +147,9 @@ public abstract class BaseCommentResourceImpl implements CommentResource {
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "Comment")})
 	public Page<Comment> getCommentCommentsPage(
-			@PathParam("comment-id") Long commentId, @Context Filter filter,
-			@Context Pagination pagination, @Context Sort[] sorts)
+			@NotNull @PathParam("comment-id") Long commentId,
+			@Context Filter filter, @Context Pagination pagination,
+			@Context Sort[] sorts)
 		throws Exception {
 
 		return Page.of(Collections.emptyList());
@@ -157,7 +162,7 @@ public abstract class BaseCommentResourceImpl implements CommentResource {
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "Comment")})
 	public Comment postCommentComment(
-			@PathParam("comment-id") Long commentId, Comment comment)
+			@NotNull @PathParam("comment-id") Long commentId, Comment comment)
 		throws Exception {
 
 		return new Comment();

@@ -17,9 +17,13 @@ package com.liferay.bookmarks.web.internal.portlet.action;
 import com.liferay.bookmarks.constants.BookmarksWebKeys;
 import com.liferay.bookmarks.exception.NoSuchFolderException;
 import com.liferay.bookmarks.model.BookmarksFolder;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.servlet.SessionErrors;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.WebKeys;
 
 import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;
@@ -38,6 +42,11 @@ public abstract class GetFolderMVCRenderCommand implements MVCRenderCommand {
 		try {
 			BookmarksFolder folder = ActionUtil.getFolder(renderRequest);
 
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)renderRequest.getAttribute(WebKeys.THEME_DISPLAY);
+
+			checkPermissions(themeDisplay.getPermissionChecker(), folder);
+
 			renderRequest.setAttribute(
 				BookmarksWebKeys.BOOKMARKS_FOLDER, folder);
 		}
@@ -54,6 +63,11 @@ public abstract class GetFolderMVCRenderCommand implements MVCRenderCommand {
 		}
 
 		return getPath();
+	}
+
+	protected void checkPermissions(
+			PermissionChecker permissionChecker, BookmarksFolder folder)
+		throws PortalException {
 	}
 
 	protected abstract String getPath();

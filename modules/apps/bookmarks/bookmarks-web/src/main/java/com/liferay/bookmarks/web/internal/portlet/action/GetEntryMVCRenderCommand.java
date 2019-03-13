@@ -17,9 +17,13 @@ package com.liferay.bookmarks.web.internal.portlet.action;
 import com.liferay.bookmarks.constants.BookmarksWebKeys;
 import com.liferay.bookmarks.exception.NoSuchEntryException;
 import com.liferay.bookmarks.model.BookmarksEntry;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.servlet.SessionErrors;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.WebKeys;
 
 import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;
@@ -38,6 +42,11 @@ public abstract class GetEntryMVCRenderCommand implements MVCRenderCommand {
 		try {
 			BookmarksEntry entry = ActionUtil.getEntry(renderRequest);
 
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)renderRequest.getAttribute(WebKeys.THEME_DISPLAY);
+
+			checkPermissions(themeDisplay.getPermissionChecker(), entry);
+
 			renderRequest.setAttribute(BookmarksWebKeys.BOOKMARKS_ENTRY, entry);
 		}
 		catch (Exception e) {
@@ -53,6 +62,11 @@ public abstract class GetEntryMVCRenderCommand implements MVCRenderCommand {
 		}
 
 		return getPath();
+	}
+
+	protected void checkPermissions(
+			PermissionChecker permissionChecker, BookmarksEntry entry)
+		throws PortalException {
 	}
 
 	protected abstract String getPath();

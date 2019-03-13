@@ -8,7 +8,8 @@
 		editableValues: [
 			encodedId: string,
 			fieldId: string,
-			mappedField: string
+			mappedField: string,
+			title: string
 		]
 	]}
 	{@param? _fields: ?}
@@ -47,7 +48,7 @@
 			<div class="form-group floating-toolbar-mapping-panel__asset-select">
 				{call .assetSelect}
 					{param handleAssetBrowserLinkClick: $_handleAssetBrowserLinkClick /}
-					{param selectedAssetEntryEncodedId: $item.editableValues.encodedId /}
+					{param selectedAssetEntryTitle: $item.editableValues.title /}
 					{param assetBrowserLinks: $assetBrowserLinks /}
 					{param spritemap: $spritemap /}
 				{/call}
@@ -77,7 +78,7 @@
 		typeName: string
 	]>}
 	{@param? handleAssetBrowserLinkClick: any}
-	{@param? selectedAssetEntryEncodedId: string}
+	{@param? selectedAssetEntryTitle: string}
 	{@param? spritemap: string}
 
 	<label for="floatingToolbarMappingPanelAssetSelect">
@@ -89,7 +90,7 @@
 			class="form-control form-control-sm mr-2"
 			disabled
 			type="text"
-			value="{$selectedAssetEntryEncodedId}"
+			value="{$selectedAssetEntryTitle ?: ''}"
 		/>
 
 		<div class="btn-group">

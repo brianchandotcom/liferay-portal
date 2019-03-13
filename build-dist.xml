@@ -2568,6 +2568,13 @@ this task.
 						<include name="**/*.sh" />
 					</fileset>
 				</chmod>
+
+				<replace
+					file="${app.server.weblogic.instance.dir}/startWebLogic.sh"
+				>
+					<replacetoken><![CDATA[-Xmx1024m]]></replacetoken>
+					<replacevalue><![CDATA[-Xmx2048m]]></replacevalue>
+				</replace>
 			</then>
 			<elseif>
 				<os family="windows" />
@@ -2618,13 +2625,6 @@ this task.
 				</then>
 			</elseif>
 		</if>
-
-		<replace
-			file="${app.server.weblogic.instance.dir}/startWebLogic.cmd"
-		>
-			<replacetoken><![CDATA[-Xmx1024m]]></replacetoken>
-			<replacevalue><![CDATA[-Xmx2048m]]></replacevalue>
-		</replace>
 	</target>
 
 	<target name="unzip-websphere">

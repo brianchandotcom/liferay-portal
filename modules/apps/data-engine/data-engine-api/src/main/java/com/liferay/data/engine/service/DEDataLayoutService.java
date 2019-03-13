@@ -24,6 +24,10 @@ import com.liferay.data.engine.exception.DEDataLayoutException;
  */
 public interface DEDataLayoutService {
 
+	public DEDataLayoutCountResponse execute(
+			DEDataLayoutCountRequest deDataLayoutCountRequest)
+		throws DEDataLayoutException;
+
 	/**
 	 * Delete a DEDataLayout
 	 * @param deDataLayoutDeleteRequest

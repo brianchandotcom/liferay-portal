@@ -42,7 +42,8 @@ public class Database {
 			"lportal",
 			"?characterEncoding=UTF-8&dontTrackOpenResources=true" +
 				"&holdResultsOpenOverStatementClose=true" +
-					"&useFastDateParsing=false&useUnicode=true");
+					"&serverTimezone=GMT" +
+						"&useFastDateParsing=false&useUnicode=true");
 	}
 
 	public static Database getOracleDataSource() {

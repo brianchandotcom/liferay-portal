@@ -36,9 +36,12 @@ public class BulkAssetEntryCommonCategoriesModel {
 
 	public BulkAssetEntryCommonCategoriesModel(
 		String description,
-		Map<AssetVocabulary, List<AssetCategory>> assetVocabularyMap) {
+		Map<AssetVocabulary, List<AssetCategory>> assetVocabularyMap,
+		long[] groupIds) {
 
 		_description = description;
+
+		_groupIds = groupIds;
 
 		Set<Map.Entry<AssetVocabulary, List<AssetCategory>>> entries =
 			assetVocabularyMap.entrySet();
@@ -57,11 +60,17 @@ public class BulkAssetEntryCommonCategoriesModel {
 
 	public BulkAssetEntryCommonCategoriesModel(Throwable throwable) {
 		_description = throwable.getMessage();
+		_groupIds = null;
 		_status = "error";
+		_vocabularies = null;
 	}
 
 	public String getDescription() {
 		return _description;
+	}
+
+	public long[] getGroupIds() {
+		return _groupIds;
 	}
 
 	public String getStatus() {
@@ -74,6 +83,10 @@ public class BulkAssetEntryCommonCategoriesModel {
 
 	public void setDescription(String description) {
 		_description = description;
+	}
+
+	public void setGroupIds(long[] groupIds) {
+		_groupIds = groupIds;
 	}
 
 	public void setStatus(String status) {
@@ -181,6 +194,7 @@ public class BulkAssetEntryCommonCategoriesModel {
 	}
 
 	private String _description;
+	private long[] _groupIds;
 	private String _status;
 	private List<AssetVocabularyModel> _vocabularies;
 

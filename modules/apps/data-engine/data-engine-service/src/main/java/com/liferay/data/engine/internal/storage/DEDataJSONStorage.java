@@ -25,7 +25,6 @@ import com.liferay.data.engine.io.DEDataRecordValuesSerializerApplyRequest;
 import com.liferay.data.engine.io.DEDataRecordValuesSerializerApplyResponse;
 import com.liferay.data.engine.model.DEDataDefinition;
 import com.liferay.data.engine.model.DEDataRecord;
-import com.liferay.data.engine.storage.DEDataStorage;
 import com.liferay.data.engine.storage.DEDataStorageDeleteRequest;
 import com.liferay.data.engine.storage.DEDataStorageDeleteResponse;
 import com.liferay.data.engine.storage.DEDataStorageGetRequest;
@@ -47,12 +46,10 @@ import org.osgi.service.component.annotations.Reference;
  * @author Leonardo Barros
  */
 @Component(
-	immediate = true, property = "de.data.storage.type=json",
-	service = DEDataStorage.class
+	immediate = true, property = "de.data.storage.type=json", service = {}
 )
-public class DEDataJSONStorage implements DEDataStorage {
+public class DEDataJSONStorage {
 
-	@Override
 	public DEDataStorageDeleteResponse delete(
 			DEDataStorageDeleteRequest deDataStorageDeleteRequest)
 		throws PortalException {
@@ -69,7 +66,6 @@ public class DEDataJSONStorage implements DEDataStorage {
 		).build();
 	}
 
-	@Override
 	public DEDataStorageGetResponse get(
 			DEDataStorageGetRequest deDataStorageGetRequest)
 		throws PortalException {
@@ -101,7 +97,6 @@ public class DEDataJSONStorage implements DEDataStorage {
 		).build();
 	}
 
-	@Override
 	public DEDataStorageSaveResponse save(
 			DEDataStorageSaveRequest deDataStorageSaveRequest)
 		throws PortalException {

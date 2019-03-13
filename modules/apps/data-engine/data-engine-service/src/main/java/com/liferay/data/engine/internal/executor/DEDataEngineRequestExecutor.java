@@ -25,9 +25,7 @@ import com.liferay.data.engine.model.DEDataDefinition;
 import com.liferay.data.engine.model.DEDataRecord;
 import com.liferay.data.engine.model.DEDataRecordCollection;
 import com.liferay.data.engine.storage.DEDataStorage;
-import com.liferay.data.engine.storage.DEDataStorageGetRequest;
 import com.liferay.data.engine.storage.DEDataStorageGetResponse;
-import com.liferay.data.engine.storage.DEDataStorageRequestBuilder;
 import com.liferay.dynamic.data.lists.model.DDLRecord;
 import com.liferay.dynamic.data.lists.model.DDLRecordSet;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
@@ -62,13 +60,7 @@ public class DEDataEngineRequestExecutor {
 				deDataDefinition.getStorageType());
 		}
 
-		DEDataStorageGetRequest deDataStorageGetRequest =
-			DEDataStorageRequestBuilder.getBuilder(
-				ddlRecord.getDDMStorageId(), deDataDefinition
-			).build();
-
-		DEDataStorageGetResponse deDataStorageGetResponse = deDataStorage.get(
-			deDataStorageGetRequest);
+		DEDataStorageGetResponse deDataStorageGetResponse = null;
 
 		DEDataRecord deDataRecord = new DEDataRecord();
 
@@ -122,19 +114,7 @@ public class DEDataEngineRequestExecutor {
 		deDataRecord.setDEDataRecordCollection(deDataRecordCollection);
 		deDataRecord.setDEDataRecordId(ddlRecord.getRecordId());
 
-		DEDataDefinition deDataDefinition =
-			deDataRecordCollection.getDEDataDefinition();
-
-		DEDataStorage deDataStorage = _deDataStorageTracker.getDEDataStorage(
-			deDataDefinition.getStorageType());
-
-		DEDataStorageGetRequest deDataStorageGetRequest =
-			DEDataStorageRequestBuilder.getBuilder(
-				ddlRecord.getDDMStorageId(), deDataDefinition
-			).build();
-
-		DEDataStorageGetResponse deDataStorageGetResponse = deDataStorage.get(
-			deDataStorageGetRequest);
+		DEDataStorageGetResponse deDataStorageGetResponse = null;
 
 		deDataRecord.setValues(deDataStorageGetResponse.getValues());
 

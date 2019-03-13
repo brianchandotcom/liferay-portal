@@ -19,8 +19,6 @@ import com.liferay.data.engine.internal.storage.DEDataStorageTracker;
 import com.liferay.data.engine.service.DEDataRecordCollectionDeleteRecordRequest;
 import com.liferay.data.engine.service.DEDataRecordCollectionDeleteRecordResponse;
 import com.liferay.data.engine.storage.DEDataStorage;
-import com.liferay.data.engine.storage.DEDataStorageDeleteRequest;
-import com.liferay.data.engine.storage.DEDataStorageRequestBuilder;
 import com.liferay.dynamic.data.lists.model.DDLRecord;
 import com.liferay.dynamic.data.lists.model.DDLRecordSet;
 import com.liferay.dynamic.data.lists.service.DDLRecordLocalService;
@@ -63,14 +61,7 @@ public class DEDataRecordCollectionDeleteRecordRequestExecutor {
 				storageType);
 		}
 
-		DEDataStorageDeleteRequest deDataStorageDeleteRequest =
-			DEDataStorageRequestBuilder.deleteBuilder(
-				ddlRecord.getDDMStorageId()
-			).build();
-
 		_ddlRecordLocalService.deleteRecord(ddlRecord);
-
-		deDataStorage.delete(deDataStorageDeleteRequest);
 
 		return DEDataRecordCollectionDeleteRecordResponse.Builder.of(
 			deDataRecordId);

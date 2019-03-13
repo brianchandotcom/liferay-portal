@@ -10,7 +10,7 @@ definition {
 
 		User.firstLoginPG();
 
-		//TestCase.enableMetal();
+		TestCase.enableMetal();
 	}
 
 	tearDown {
@@ -386,5 +386,714 @@ definition {
 		);
 
 		FormRules.viewConditionOperatorOptionsIsPresent(conditionRowNumber = "1");
+	}
+
+	//pending to migrate below
+
+	@description = "This is a use case for LPS-70446."
+	@priority = "5"
+	test ConfigureAutofillRule {
+		property portal.acceptance = "false";
+		property test.name.skip.portal.instance = "FormRules#ConfigureAutofillRule";
+		var portalURL = PropsUtil.get("portal.url");
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			panel = "Site Administration",
+			portlet = "Forms"
+		);
+
+		LexiconEntry.gotoHeaderMenuItem(menuItem = "Data Providers");
+
+		FormsAdminNavigator.gotoAddDataProvider();
+
+		FormsAdmin.editDataProvider(
+			name = "Liferay Countries",
+			outputParameterLabel = "Countries Full Name",
+			outputParameterName = "Country Name",
+			outputParameterPath = "nameCurrentValue",
+			outputParameterType = "List",
+			password = "test",
+			url = "${portalURL}/api/jsonws/country/get-countries",
+			username = "test@liferay.com"
+		);
+
+		FormsAdmin.saveDataProvider();
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			panel = "Site Administration",
+			portlet = "Forms"
+		);
+
+		FormsAdminNavigator.gotoAddForm();
+
+		Form.editName();
+
+		Form.editDescription();
+
+		Form.gotoAddField(fieldType = "Text Field");
+
+		Form.editFieldLabelMetal(fieldValue = "Text Field");
+
+		Form.closeSidebar();
+
+		Form.gotoAddField(fieldType = "Select from List");
+
+		Form.editFieldLabelMetal(fieldValue = "Countries");
+
+		Form.closeSidebar();
+
+		FormsAdminNavigator.gotoRules();
+
+		FormRules.addRule();
+
+		FormRules.configureConditionOptions(
+			conditionField = "Text Field",
+			conditionFieldValue = "country",
+			conditionOperator = "Contains",
+			conditionRowNumber = "1",
+			conditionValueType = "Value"
+		);
+
+		FormRules.configureActionOptions(
+			action = "Autofill",
+			actionRowNumber = "1",
+			actionTarget = "Liferay Countries"
+		);
+
+		FormRules.selectAutofillOutput(dataProviderOutput = "Countries");
+
+		FormRules.save();
+
+		FormsAdminNavigator.gotoFormBuilder();
+
+		Form.save();
+
+		ProductMenu.gotoPortlet(
+			category = "Build",
+			panel = "Site Administration",
+			portlet = "Pages"
+		);
+
+		SitePages.addPublicPage(pageName = "Form Page");
+
+		Navigator.gotoPage(pageName = "Form Page");
+
+		Portlet.addPG(pageName = "Form Page", portletName = "Form");
+
+		FormPortletNavigator.gotoSelectForm();
+
+		FormPortletConfiguration.selectForm();
+
+		PortletEntry.save();
+
+		Navigator.gotoPage(pageName = "Form Page");
+
+		FormFields.viewTextLabel(fieldLabel = "Text Field", fieldName = "TextField");
+
+		FormFields.editText(fieldName = "TextField", fieldValue = "test");
+
+		FormFields.viewSelectOptionsList(
+			fieldName = "Countries",
+			selectOption = "Option"
+		);
+
+		FormFields.editText(fieldName = "TextField", fieldValue = "country");
+
+		FormFields.viewSelectOptionsList(
+			fieldName = "Countries",
+			selectOption = "Afghanistan"
+		);
+	}
+
+	@description = "This is a use case for LPS-71592."
+	@priority = "5"
+	test ConfigureCalculateRule {
+		property portal.acceptance = "true";
+		var portalURL = PropsUtil.get("portal.url");
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			panel = "Site Administration",
+			portlet = "Forms"
+		);
+
+		FormsAdminNavigator.gotoAddForm();
+
+		Form.editName();
+
+		Form.gotoAddField(fieldType = "Numeric");
+
+		Form.editFieldLabelMetal(fieldValue = "Quantity");
+
+		Form.closeSidebar();
+
+		Form.gotoAddField(fieldType = "Numeric");
+
+		Form.editFieldLabelMetal(fieldValue = "Value");
+
+		Form.closeSidebar();
+
+		Form.gotoAddField(fieldType = "Numeric");
+
+		Form.editFieldLabelMetal(fieldValue = "Total");
+
+		Form.closeSidebar();
+
+		FormsAdminNavigator.gotoRules();
+
+		FormRules.addRule();
+
+		FormRules.selectConditionField(
+			conditionField = "Quantity",
+			conditionRowNumber = "1"
+		);
+
+		FormRules.selectConditionOperator(
+			conditionOperator = "Is not empty",
+			conditionRowNumber = "1"
+		);
+
+		FormRules.selectAction(action = "Calculate", actionRowNumber = "1");
+
+		FormRules.selectCalculateResultField(calculateResultField = "Total");
+
+		FormRules.selectCalculateField(calculateFieldOption = "Value");
+
+		FormRules.chooseCalculateOperator(calculateOperator = "*");
+
+		FormRules.selectCalculateField(calculateFieldOption = "Quantity");
+
+		FormRules.save();
+
+		FormsAdminNavigator.gotoFormBuilder();
+
+		Form.save();
+
+		ProductMenu.gotoPortlet(
+			category = "Build",
+			panel = "Site Administration",
+			portlet = "Pages"
+		);
+
+		SitePages.addPublicPage(pageName = "Form Page");
+
+		Navigator.gotoPage(pageName = "Form Page");
+
+		Portlet.addPG(pageName = "Form Page", portletName = "Form");
+
+		FormPortletNavigator.gotoSelectForm();
+
+		FormPortletConfiguration.selectForm();
+
+		PortletEntry.save();
+
+		Navigator.gotoPage(pageName = "Form Page");
+
+		FormFields.editText(fieldName = "Value", fieldValue = "5");
+
+		FormFields.editText(fieldName = "Quantity", fieldValue = "10");
+
+		FormFields.viewTextValue(fieldName = "Total", fieldValue = "50");
+	}
+
+	@priority = "5"
+	test ConfigureRequireRule {
+		property test.name.skip.portal.instance = "FormRules#ConfigureRequireRule";
+		property portal.acceptance = "true";
+		var portalURL = PropsUtil.get("portal.url");
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			panel = "Site Administration",
+			portlet = "Forms"
+		);
+
+		FormsAdminNavigator.gotoAddForm();
+
+		Form.editName();
+
+		Form.gotoAddField(fieldType = "Text Field");
+
+		Form.editFieldLabelMetal(fieldValue = "Text Field");
+
+		Form.closeSidebar();
+
+		Form.gotoAddField(fieldType = "Date");
+
+		Form.editFieldLabelMetal(fieldValue = "Date Field");
+
+		Form.closeSidebar();
+
+		FormsAdminNavigator.gotoRules();
+
+		FormRules.addRule();
+
+		FormRules.configureConditionOptions(
+			conditionField = "Text Field",
+			conditionFieldValue = "test",
+			conditionOperator = "Is equal to",
+			conditionRowNumber = "1",
+			conditionValueType = "Value"
+		);
+
+		FormRules.configureActionOptions(
+			action = "Require",
+			actionRowNumber = "1",
+			actionTarget = "Date Field"
+		);
+
+		FormRules.save();
+
+		FormsAdminNavigator.gotoFormBuilder();
+
+		Form.save();
+
+		ProductMenu.gotoPortlet(
+			category = "Build",
+			panel = "Site Administration",
+			portlet = "Pages"
+		);
+
+		SitePages.addPublicPage(pageName = "Form Page");
+
+		Navigator.gotoPage(pageName = "Form Page");
+
+		Portlet.addPG(pageName = "Form Page", portletName = "Form");
+
+		FormPortletNavigator.gotoSelectForm();
+
+		FormPortletConfiguration.selectForm();
+
+		PortletEntry.save();
+
+		Navigator.gotoPage(pageName = "Form Page");
+
+		FormFields.viewRequiredAsteriskNotPresent();
+
+		FormFields.editText(fieldName = "TextField", fieldValue = "test");
+
+		FormFields.viewRequiredAsterisk();
+
+		FormPortlet.submitWithValidationError();
+	}
+
+	@priority = "5"
+	test ConfigureShowRuleUsingAndCondition {
+		property portal.acceptance = "true";
+		property test.name.skip.portal.instance = "Forms#ConfigureShowRuleUsingAndCondition";
+		var portalURL = PropsUtil.get("portal.url");
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			panel = "Site Administration",
+			portlet = "Forms"
+		);
+
+		FormsAdminNavigator.gotoAddForm();
+
+		Form.editName();
+
+		Form.gotoAddField(fieldType = "Text Field");
+
+		Form.editFieldLabelMetal(fieldValue = "Text Field 1");
+
+		Form.closeSidebar();
+
+		Form.gotoAddField(fieldType = "Text Field");
+
+		Form.editFieldLabelMetal(fieldValue = "Text Field 2");
+
+		Form.closeSidebar();
+
+		Form.gotoAddField(fieldType = "Date");
+
+		Form.editFieldLabelMetal(fieldValue = "Date Field");
+
+		Form.closeSidebar();
+
+		FormsAdminNavigator.gotoRules();
+
+		FormRules.addRule();
+
+		FormRules.viewRuleConditionDropdownDisabled();
+
+		FormRules.addCondition();
+
+		FormRules.viewRuleConditionDropdownEnabled();
+
+		FormRules.selectRuleCondition(condition = "AND");
+
+		FormRules.viewRuleCondition(condition = "AND", conditonRowNumber = "1");
+
+		FormRules.configureConditionOptions(
+			conditionField = "Text Field 1",
+			conditionFieldValue = "test",
+			conditionOperator = "Is equal to",
+			conditionRowNumber = "1",
+			conditionValueType = "Value"
+		);
+
+		FormRules.configureConditionOptions(
+			conditionField = "Text Field 2",
+			conditionFieldValue = "test",
+			conditionOperator = "Is equal to",
+			conditionRowNumber = "2",
+			conditionValueType = "Value"
+		);
+
+		FormRules.configureActionOptions(
+			action = "Show",
+			actionRowNumber = "1",
+			actionTarget = "Date Field"
+		);
+
+		FormRules.save();
+
+		FormsAdminNavigator.gotoFormBuilder();
+
+		Form.save();
+
+		ProductMenu.gotoPortlet(
+			category = "Build",
+			panel = "Site Administration",
+			portlet = "Pages"
+		);
+
+		SitePages.addPublicPage(pageName = "Form Page");
+
+		Navigator.gotoPage(pageName = "Form Page");
+
+		Portlet.addPG(pageName = "Form Page", portletName = "Form");
+
+		FormPortletNavigator.gotoSelectForm();
+
+		FormPortletConfiguration.selectForm();
+
+		PortletEntry.save();
+
+		Navigator.gotoPage(pageName = "Form Page");
+
+		FormFields.editText(fieldName = "TextField1", fieldValue = "test");
+
+		FormFields.viewDateFieldNotPresent(
+			fieldLabel = "Date Field",
+			fieldName = "Date"
+		);
+
+		FormFields.editText(fieldName = "TextField2", fieldValue = "test");
+
+		FormFields.viewDateField(fieldLabel = "Date Field", fieldName = "Date");
+	}
+
+	@priority = "4"
+	test ConfigureUserBelongsToRule {
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			panel = "Site Administration",
+			portlet = "Forms"
+		);
+
+		FormsAdminNavigator.gotoAddForm();
+
+		Form.editName();
+
+		Form.gotoAddField(fieldType = "Text Field");
+
+		Form.editFieldLabelMetal(fieldValue = "Public");
+
+		Form.closeSidebar();
+
+		Form.gotoAddField(fieldType = "Text Field");
+
+		Form.editFieldLabelMetal(fieldValue = "Manager");
+
+		Form.closeSidebar();
+
+		FormsAdminNavigator.gotoRules();
+
+		FormRules.addRule();
+
+		FormRules.configureConditionOptions(
+			conditionField = "User",
+			conditionOperator = "Belongs to",
+			conditionRowNumber = "1",
+			conditionValueType = "Site Administrator"
+		);
+
+		FormRules.configureActionOptions(
+			action = "Show",
+			actionRowNumber = "1",
+			actionTarget = "Manager"
+		);
+
+		FormRules.addAction();
+
+		FormRules.configureActionOptions(
+			action = "Require",
+			actionRowNumber = "2",
+			actionTarget = "Manager"
+		);
+
+		FormRules.save();
+
+		FormRules.viewSummary(
+			action = "Require",
+			actionTarget = "Manager",
+			conditionField = "User",
+			conditionFieldConstant = "Site Administrator",
+			conditionOperator = "Belongs to",
+			ruleNumber = "1"
+		);
+
+		FormRules.viewSummary(
+			action = "Show",
+			actionTarget = "Manager",
+			conditionField = "User",
+			conditionFieldConstant = "Site Administrator",
+			conditionOperator = "Belongs to",
+			ruleNumber = "1"
+		);
+
+		FormsAdminNavigator.gotoFormBuilder();
+
+		Form.save();
+
+		ProductMenu.gotoPortlet(
+			category = "Build",
+			panel = "Site Administration",
+			portlet = "Pages"
+		);
+
+		SitePages.addPublicPage(pageName = "Form Page");
+
+		Navigator.gotoPage(pageName = "Form Page");
+
+		Portlet.addPG(pageName = "Form Page", portletName = "Form");
+
+		FormPortletNavigator.gotoSelectForm();
+
+		FormPortletConfiguration.selectForm();
+
+		PortletEntry.save();
+
+		Navigator.gotoPage(pageName = "Form Page");
+
+		FormFields.viewTextField(fieldLabel = "Public", fieldName = "Public");
+
+		FormFields.viewTextFieldNotVisible(
+			fieldLabel = "Manager",
+			fieldName = "Manager"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations"
+		);
+
+		User.assignSiteRoleCP(
+			siteRoleName = "Site Administrator",
+			userScreenName = "test"
+		);
+
+		Navigator.gotoPage(pageName = "Form Page");
+
+		FormFields.viewTextField(fieldLabel = "Public", fieldName = "Public");
+
+		FormFields.viewTextField(fieldLabel = "Manager", fieldName = "Manager");
+
+		FormFields.editText(fieldName = "Public", fieldValue = "Message");
+
+		FormFields.editText(fieldName = "Manager", fieldValue = "Admin Comments");
+
+		FormFields.viewTextField(fieldLabel = "Manager", fieldName = "Manager");
+
+		FormPortlet.submitSuccessfully();
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			panel = "Site Administration",
+			portlet = "Forms"
+		);
+
+		FormsAdminNavigator.gotoViewEntries();
+
+		FormsAdmin.viewFormTableEntry(fieldLabel = "Public", fieldValue = "Message");
+
+		FormsAdmin.viewFormTableEntry(
+			fieldLabel = "Manager",
+			fieldValue = "Admin Comments"
+		);
+	}
+
+	@description = "This is a use case for LPS-71399."
+	@priority = "4"
+	test UseIsNotEmptyRuleToShowField {
+		property test.name.skip.portal.instance = "FormRules#UseIsNotEmptyRuleToShowField";
+
+		Navigator.openURL();
+		
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			panel = "Site Administration",
+			portlet = "Forms"
+		);
+
+		FormsAdminNavigator.gotoAddForm();
+
+		Form.editName();
+
+		Form.gotoAddField(fieldType = "Text Field");
+
+		Form.editFieldLabelMetal(fieldValue = "Text Field");
+
+		Form.closeSidebar();
+
+		Form.gotoAddField(fieldType = "Date");
+
+		Form.editFieldLabelMetal(fieldValue = "Date Field");
+
+		Form.closeSidebar();
+
+		FormsAdminNavigator.gotoRules();
+
+		FormRules.addRule();
+
+		FormRules.configureConditionOptions(
+			conditionField = "Text Field",
+			conditionOperator = "Is not empty",
+			conditionRowNumber = "1"
+		);
+
+		FormRules.configureActionOptions(
+			action = "Show",
+			actionRowNumber = "1",
+			actionTarget = "Date Field"
+		);
+
+		FormRules.save();
+
+		FormsAdminNavigator.gotoFormBuilder();
+
+		Form.save();
+
+		Form.publishForm();
+
+		FormsAdminNavigator.openPublishURL(publishFormURL = "${publishedFormPublicURL}");
+
+		FormFields.viewDateFieldNotPresent(
+			fieldLabel = "Date Field",
+			fieldName = "DateField"
+		);
+
+		FormFields.editText(fieldName = "TextField", fieldValue = "1");
+
+		FormFields.viewDateField(fieldLabel = "Date Field", fieldName = "DateField");
+
+		FormFields.editText(fieldName = "TextField", fieldValue = "Test");
+
+		FormFields.viewDateField(fieldLabel = "Date Field", fieldName = "DateField");
+
+		FormFields.editText(fieldName = "TextField", fieldValue = "%");
+
+		FormFields.viewDateField(fieldLabel = "Date Field", fieldName = "DateField");
+
+		FormFields.editTextWithBackspace(fieldName = "TextField");
+
+		FormFields.viewDateFieldNotPresent(
+			fieldLabel = "Date Field",
+			fieldName = "DateField"
+		);
+	}
+
+	@description = "This is a use case for LPS-75495."
+	@priority = "3"
+	test ViewShowRuleActivationAfterInputtingUnrelatedField {
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			panel = "Site Administration",
+			portlet = "Forms"
+		);
+
+		FormsAdminNavigator.gotoAddForm();
+
+		Form.editName(formName = "Test Form");
+
+		Form.gotoAddField(fieldType = "Text Field");
+
+		Form.editFieldLabelMetal(fieldValue = "Text Field 1");
+
+		Form.closeSidebar();
+
+		Form.gotoAddField(fieldType = "Text Field");
+
+		Form.editFieldLabelMetal(fieldValue = "Text Field 2");
+
+		Form.closeSidebar();
+
+		Form.gotoAddField(fieldType = "Date");
+
+		Form.editFieldLabelMetal(fieldValue = "Date Field");
+
+		FormFields.enableSwitcher(fieldName = "required");
+
+		Form.closeSidebar();
+
+		FormsAdminNavigator.gotoRules();
+
+		FormRules.addRule();
+
+		FormRules.configureConditionOptions(
+			conditionField = "Text Field 1",
+			conditionFieldValue = "test",
+			conditionOperator = "Is equal to",
+			conditionRowNumber = "1",
+			conditionValueType = "Value"
+		);
+
+		FormRules.configureActionOptions(
+			action = "Show",
+			actionRowNumber = "1",
+			actionTarget = "Date Field"
+		);
+
+		FormRules.save();
+
+		FormsAdminNavigator.gotoFormBuilder();
+
+		Form.save();
+
+		Form.publishForm();
+
+		FormsAdminNavigator.gotoPublishedForm();
+
+		FormFields.editText(fieldName = "TextField2", fieldValue = "testing");
+
+		FormFields.viewDateFieldNotPresent(
+			fieldLabel = "Date Field",
+			fieldName = "DateField"
+		);
+
+		FormFields.editText(fieldName = "TextField1", fieldValue = "test");
+
+		FormFields.viewDateField(fieldLabel = "Date Field", fieldName = "DateField");
 	}
 }

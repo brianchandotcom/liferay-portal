@@ -170,7 +170,7 @@ definition {
 
 		FormFields.viewFieldName(fieldName = "${fieldName}");
 
-		AssertTextEquals(locator1 = "Form#FIELD_LABEL", value1 = "${key_fieldName}");
+		AssertTextEquals(locator1 = "Form#FIELD_LABEL", value1 = "${fieldValue}");
 
 		Form.gotoBasicTab();
 	}

@@ -20,12 +20,12 @@
 </tr>
 <tr>
 	<td>FIELD_NAME_EDIT</td>
-	<td>//div[contains(@class,'key-value-editor')]/input[contains(@class, 'input')] | //div[contains(@class, 'form-group')]//input[contains(@name, 'name')]</td>
+	<td>//div[contains(@class, 'form-group')]//input[contains(@name, 'name')] | //div[contains(@class,'key-value-editor')]/input[contains(@class, 'input')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>LABEL</td>
-	<td>//div[contains(@data-fieldname,'${key_fieldName}')]//label[contains(.,'${key_fieldLabel}')] | //label[contains(.,'${key_fieldLabel}')]</td>
+	<td>//div[contains(@data-fieldname,'${key_fieldName}')]//label[contains(.,'${key_fieldLabel}')] | //label[text()='${key_fieldLabel}']</td>
 	<td></td>
 </tr>
 <tr>
@@ -187,7 +187,7 @@
 </tr>
 <tr>
 	<td>TEXT_FIELD</td>
-	<td>//input[@type='text' and contains(@id,'${key_fieldName}')] | //input[@type='text' and contains(@name,'${key_fieldName}')]</td>
+	<td>//input[@type='text' and contains(@id,'${key_fieldName}')] | //input[@type='text' and contains(@name,'${key_fieldName}')] | //div[contains(@class,'form-group')]//label[text()='${key_fieldLabel}']</td>
 	<td></td>
 </tr>
 <tr>
@@ -250,7 +250,7 @@
 <!--SELECT-->
 <tr>
 	<td>SELECT_FIELD</td>
-	<td>//label[contains(text(),'${key_fieldName}')]/following-sibling::div[contains(@class,'input-group-container')]/div[contains(@class,'select-field-trigger')]</td>
+	<td>//label[contains(text(),'${key_fieldName}')]/following-sibling::div[contains(@class,'input-group-container')]/div[contains(@class,'select-field-trigger')] | //div[contains(@class,'select-field-trigger') and contains(@name,'${key_fieldName}')]</td>
 	<td></td>
 </tr>
 <tr>

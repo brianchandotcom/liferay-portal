@@ -787,7 +787,8 @@ definition {
 
 		AssertElementPresent.assertVisible(
 			locator1 = "FormFields#TEXT_FIELD",
-			key_fieldName = "${fieldName}"
+			key_fieldName = "${fieldName}",
+			key_fieldLabel = "${fieldLabel}"
 		);
 	}
 

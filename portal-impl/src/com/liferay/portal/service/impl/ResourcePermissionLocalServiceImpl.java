@@ -90,11 +90,6 @@ import java.util.Set;
 public class ResourcePermissionLocalServiceImpl
 	extends ResourcePermissionLocalServiceBaseImpl {
 
-	/**
-	 * @see com.liferay.portal.verify.VerifyPermission#fixOrganizationRolePermissions
-	 */
-	public static final String[] EMPTY_ACTION_IDS = {null};
-
 	@Override
 	public void addModelResourcePermissions(
 			AuditedModel auditedModel, ServiceContext serviceContext)

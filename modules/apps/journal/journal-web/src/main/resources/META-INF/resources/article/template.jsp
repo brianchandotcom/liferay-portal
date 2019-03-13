@@ -37,9 +37,10 @@ DDMTemplate ddmTemplate = journalEditArticleDisplayContext.getDDMTemplate();
 
 			<c:if test="<%= (ddmTemplate != null) && DDMTemplatePermission.contains(permissionChecker, ddmTemplate, ActionKeys.UPDATE) %>">
 				<clay:button
-					elementClasses="ml-1"
+					elementClasses="ml-2"
 					icon="pencil"
 					id='<%= liferayPortletResponse.getNamespace() + "editDDMTemplate" %>'
+					monospaced="<%= true %>"
 					size="sm"
 					style="secondary"
 				/>
@@ -47,9 +48,10 @@ DDMTemplate ddmTemplate = journalEditArticleDisplayContext.getDDMTemplate();
 
 			<c:if test="<%= (article != null) && (ddmTemplate != null) %>">
 				<clay:button
-					elementClasses="ml-1"
+					elementClasses="ml-2"
 					icon="view"
 					id='<%= liferayPortletResponse.getNamespace() + "previewWithTemplate" %>'
+					monospaced="<%= true %>"
 					size="sm"
 					style="secondary"
 				/>

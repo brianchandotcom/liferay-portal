@@ -2037,4 +2037,10 @@ definition {
 			AssertTextEquals(locator1 = "DocumentsAndMedia#TAG", value1 = "${tagName}");
 		}
 	}
+
+	macro viewCardTitle {
+		LexiconCard.viewCardTitle(
+			card = "${dmDocumentTitle}"
+		);
+	}
 }

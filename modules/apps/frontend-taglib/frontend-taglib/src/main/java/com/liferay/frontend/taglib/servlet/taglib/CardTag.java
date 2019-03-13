@@ -102,6 +102,10 @@ public class CardTag extends IncludeTag {
 	}
 
 	public void setRowChecker(RowChecker rowChecker) {
+		String cssClass = rowChecker.getCssClass();
+
+		rowChecker.setCssClass("custom-control-input " + cssClass);
+
 		_rowChecker = rowChecker;
 	}
 

@@ -386,10 +386,31 @@ public class ResourceOpenAPIParser {
 			}
 		}
 
-		if ((operation.getOperationId() != null) &&
-			(requestBodyMediaTypes.size() < 2)) {
+		if (operation.getOperationId() != null) {
+			String operationId = operation.getOperationId();
 
-			return operation.getOperationId();
+			if (requestBodyMediaTypes.size() < 2) {
+				return operationId;
+			}
+
+			int index = 0;
+
+			for (int i = 0; i < operationId.length(); i++) {
+				if (Character.isUpperCase(operationId.charAt(i))) {
+					index = i;
+
+					break;
+				}
+			}
+
+			StringBuilder sb = new StringBuilder();
+
+			sb.append(operationId.substring(0, index));
+			sb.append("MediaType");
+			sb.append(requestBodyMediaTypes.indexOf(requestBodyMediaType) + 1);
+			sb.append(operationId.substring(index));
+
+			return sb.toString();
 		}
 
 		List<String> methodNameSegments = new ArrayList<>();

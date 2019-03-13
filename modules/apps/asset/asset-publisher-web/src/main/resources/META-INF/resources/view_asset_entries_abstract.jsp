@@ -56,9 +56,16 @@ for (AssetEntry assetEntry : assetEntryResult.getAssetEntries()) {
 			<div class="autofit-row autofit-row-center mb-3">
 				<div class="autofit-col">
 					<h4 class="asset-title component-title">
-						<a class="h2" href="<%= viewURL %>">
-							<%= HtmlUtil.escape(title) %>
-						</a>
+						<c:choose>
+							<c:when test="<%= assetPublisherDisplayContext.isShowContextLink() %>">
+								<a class="h2" href="<%= viewURL %>">
+									<%= HtmlUtil.escape(title) %>
+								</a>
+							</c:when>
+							<c:otherwise>
+								<%= HtmlUtil.escape(title) %>
+							</c:otherwise>
+						</c:choose>
 					</h4>
 				</div>
 

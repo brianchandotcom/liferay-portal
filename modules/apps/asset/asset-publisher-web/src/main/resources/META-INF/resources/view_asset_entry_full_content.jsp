@@ -83,9 +83,16 @@ String viewInContextURL = assetRenderer.getURLViewInContext(liferayPortletReques
 						/>
 					</c:if>
 
-					<a class="h2" href="<%= viewInContextURL %>">
-						<%= HtmlUtil.escape(title) %>
-					</a>
+					<c:choose>
+						<c:when test="<%= assetPublisherDisplayContext.isShowContextLink() %>">
+							<a class="h2" href="<%= viewInContextURL %>">
+								<%= HtmlUtil.escape(title) %>
+							</a>
+						</c:when>
+						<c:otherwise>
+							<%= HtmlUtil.escape(title) %>
+						</c:otherwise>
+					</c:choose>
 				</h4>
 			</div>
 		</c:if>

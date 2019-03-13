@@ -18,12 +18,10 @@
 
 <%@ include file="/card/vertical_card/start.jspf" %>
 
-<div class="aspect-ratio aspect-ratio-bg-center aspect-ratio-bg-cover vertical-card-container">
-	<aui:icon cssClass="icon-vertical-card-image" image="<%= icon %>" markupView="lexicon" />
+<aui:icon cssClass="aspect-ratio-item-center-middle aspect-ratio-item-fluid card-type-asset-icon" image="<%= icon %>" markupView="lexicon" />
 
-	<c:if test="<%= Validator.isNotNull(stickerBottom) %>">
-		<%= stickerBottom %>
-	</c:if>
-</div>
+<c:if test="<%= Validator.isNotNull(stickerBottom) %>">
+	<%= stickerBottom %>
+</c:if>
 
 <%@ include file="/card/vertical_card/end.jspf" %>

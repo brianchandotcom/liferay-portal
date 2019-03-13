@@ -20,8 +20,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
 import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
 
-import com.liferay.bulk.rest.dto.v1_0.BulkStatus;
-import com.liferay.bulk.rest.resource.v1_0.BulkStatusResource;
+import com.liferay.bulk.rest.dto.v1_0.DocumentSelection;
+import com.liferay.bulk.rest.dto.v1_0.MessageSelection;
+import com.liferay.bulk.rest.resource.v1_0.MessageSelectionResource;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
@@ -36,6 +37,8 @@ import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
+
+import java.lang.reflect.InvocationTargetException;
 
 import java.net.URL;
 
@@ -52,6 +55,9 @@ import java.util.stream.Stream;
 import javax.annotation.Generated;
 
 import javax.ws.rs.core.MultivaluedHashMap;
+import javax.ws.rs.core.Response;
+
+import org.apache.commons.beanutils.BeanUtilsBean;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -66,7 +72,7 @@ import org.junit.Test;
  * @generated
  */
 @Generated("")
-public abstract class BaseBulkStatusResourceTestCase {
+public abstract class BaseMessageSelectionResourceTestCase {
 
 	@ClassRule
 	@Rule
@@ -92,37 +98,115 @@ public abstract class BaseBulkStatusResourceTestCase {
 	}
 
 	@Test
-	public void testGetStatu() throws Exception {
-		BulkStatus postBulkStatus = testGetStatu_addBulkStatus();
+	public void testPostKeywordMessageSelection() throws Exception {
+		MessageSelection randomMessageSelection = randomMessageSelection();
 
-		BulkStatus getBulkStatus = invokeGetStatu(postBulkStatus.getId());
+		MessageSelection postMessageSelection =
+			testPostKeywordMessageSelection_addMessageSelection(
+				randomMessageSelection);
 
-		assertEquals(postBulkStatus, getBulkStatus);
-		assertValid(getBulkStatus);
+		assertEquals(randomMessageSelection, postMessageSelection);
+		assertValid(postMessageSelection);
 	}
 
-	protected BulkStatus testGetStatu_addBulkStatus() throws Exception {
+	protected MessageSelection
+			testPostKeywordMessageSelection_addMessageSelection(
+				MessageSelection messageSelection)
+		throws Exception {
+
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
 	}
 
-	protected BulkStatus invokeGetStatu() throws Exception {
+	protected MessageSelection invokePostKeywordMessageSelection(
+			DocumentSelection documentSelection)
+		throws Exception {
+
 		Http.Options options = _createHttpOptions();
 
-		String location = _resourceURL + "/status";
+		String location =
+			_resourceURL +
+				_toPath("/keywords/message-selection", documentSelection);
 
 		options.setLocation(location);
+
+		options.setPost(true);
 
 		return _outputObjectMapper.readValue(
-			HttpUtil.URLtoString(options), BulkStatus.class);
+			HttpUtil.URLtoString(options), MessageSelection.class);
 	}
 
-	protected Http.Response invokeGetStatuResponse() throws Exception {
+	protected Http.Response invokePostKeywordMessageSelectionResponse(
+			DocumentSelection documentSelection)
+		throws Exception {
+
 		Http.Options options = _createHttpOptions();
 
-		String location = _resourceURL + "/status";
+		String location =
+			_resourceURL +
+				_toPath("/keywords/message-selection", documentSelection);
 
 		options.setLocation(location);
+
+		options.setPost(true);
+
+		HttpUtil.URLtoString(options);
+
+		return options.getResponse();
+	}
+
+	@Test
+	public void testPostVocabularyMessageSelection() throws Exception {
+		MessageSelection randomMessageSelection = randomMessageSelection();
+
+		MessageSelection postMessageSelection =
+			testPostVocabularyMessageSelection_addMessageSelection(
+				randomMessageSelection);
+
+		assertEquals(randomMessageSelection, postMessageSelection);
+		assertValid(postMessageSelection);
+	}
+
+	protected MessageSelection
+			testPostVocabularyMessageSelection_addMessageSelection(
+				MessageSelection messageSelection)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected MessageSelection invokePostVocabularyMessageSelection(
+			DocumentSelection documentSelection)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		String location =
+			_resourceURL +
+				_toPath("/vocabularies/message-selection", documentSelection);
+
+		options.setLocation(location);
+
+		options.setPost(true);
+
+		return _outputObjectMapper.readValue(
+			HttpUtil.URLtoString(options), MessageSelection.class);
+	}
+
+	protected Http.Response invokePostVocabularyMessageSelectionResponse(
+			DocumentSelection documentSelection)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		String location =
+			_resourceURL +
+				_toPath("/vocabularies/message-selection", documentSelection);
+
+		options.setLocation(location);
+
+		options.setPost(true);
 
 		HttpUtil.URLtoString(options);
 
@@ -137,36 +221,41 @@ public abstract class BaseBulkStatusResourceTestCase {
 	}
 
 	protected void assertEquals(
-		BulkStatus bulkStatus1, BulkStatus bulkStatus2) {
+		MessageSelection messageSelection1,
+		MessageSelection messageSelection2) {
 
 		Assert.assertTrue(
-			bulkStatus1 + " does not equal " + bulkStatus2,
-			equals(bulkStatus1, bulkStatus2));
+			messageSelection1 + " does not equal " + messageSelection2,
+			equals(messageSelection1, messageSelection2));
 	}
 
 	protected void assertEquals(
-		List<BulkStatus> bulkStatuses1, List<BulkStatus> bulkStatuses2) {
+		List<MessageSelection> messageSelections1,
+		List<MessageSelection> messageSelections2) {
 
-		Assert.assertEquals(bulkStatuses1.size(), bulkStatuses2.size());
+		Assert.assertEquals(
+			messageSelections1.size(), messageSelections2.size());
 
-		for (int i = 0; i < bulkStatuses1.size(); i++) {
-			BulkStatus bulkStatus1 = bulkStatuses1.get(i);
-			BulkStatus bulkStatus2 = bulkStatuses2.get(i);
+		for (int i = 0; i < messageSelections1.size(); i++) {
+			MessageSelection messageSelection1 = messageSelections1.get(i);
+			MessageSelection messageSelection2 = messageSelections2.get(i);
 
-			assertEquals(bulkStatus1, bulkStatus2);
+			assertEquals(messageSelection1, messageSelection2);
 		}
 	}
 
 	protected void assertEqualsIgnoringOrder(
-		List<BulkStatus> bulkStatuses1, List<BulkStatus> bulkStatuses2) {
+		List<MessageSelection> messageSelections1,
+		List<MessageSelection> messageSelections2) {
 
-		Assert.assertEquals(bulkStatuses1.size(), bulkStatuses2.size());
+		Assert.assertEquals(
+			messageSelections1.size(), messageSelections2.size());
 
-		for (BulkStatus bulkStatus1 : bulkStatuses1) {
+		for (MessageSelection messageSelection1 : messageSelections1) {
 			boolean contains = false;
 
-			for (BulkStatus bulkStatus2 : bulkStatuses2) {
-				if (equals(bulkStatus1, bulkStatus2)) {
+			for (MessageSelection messageSelection2 : messageSelections2) {
+				if (equals(messageSelection1, messageSelection2)) {
 					contains = true;
 
 					break;
@@ -174,21 +263,22 @@ public abstract class BaseBulkStatusResourceTestCase {
 			}
 
 			Assert.assertTrue(
-				bulkStatuses2 + " does not contain " + bulkStatus1, contains);
+				messageSelections2 + " does not contain " + messageSelection1,
+				contains);
 		}
 	}
 
-	protected void assertValid(BulkStatus bulkStatus) {
+	protected void assertValid(MessageSelection messageSelection) {
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
 	}
 
-	protected void assertValid(Page<BulkStatus> page) {
+	protected void assertValid(Page<MessageSelection> page) {
 		boolean valid = false;
 
-		Collection<BulkStatus> bulkStatuses = page.getItems();
+		Collection<MessageSelection> messageSelections = page.getItems();
 
-		int size = bulkStatuses.size();
+		int size = messageSelections.size();
 
 		if ((page.getLastPage() > 0) && (page.getPage() > 0) &&
 			(page.getPageSize() > 0) && (page.getTotalCount() > 0) &&
@@ -200,8 +290,11 @@ public abstract class BaseBulkStatusResourceTestCase {
 		Assert.assertTrue(valid);
 	}
 
-	protected boolean equals(BulkStatus bulkStatus1, BulkStatus bulkStatus2) {
-		if (bulkStatus1 == bulkStatus2) {
+	protected boolean equals(
+		MessageSelection messageSelection1,
+		MessageSelection messageSelection2) {
+
+		if (messageSelection1 == messageSelection2) {
 			return true;
 		}
 
@@ -209,13 +302,13 @@ public abstract class BaseBulkStatusResourceTestCase {
 	}
 
 	protected Collection<EntityField> getEntityFields() throws Exception {
-		if (!(_bulkStatusResource instanceof EntityModelResource)) {
+		if (!(_messageSelectionResource instanceof EntityModelResource)) {
 			throw new UnsupportedOperationException(
 				"Resource is not an instance of EntityModelResource");
 		}
 
 		EntityModelResource entityModelResource =
-			(EntityModelResource)_bulkStatusResource;
+			(EntityModelResource)_messageSelectionResource;
 
 		EntityModel entityModel = entityModelResource.getEntityModel(
 			new MultivaluedHashMap());
@@ -241,7 +334,8 @@ public abstract class BaseBulkStatusResourceTestCase {
 	}
 
 	protected String getFilterString(
-		EntityField entityField, String operator, BulkStatus bulkStatus) {
+		EntityField entityField, String operator,
+		MessageSelection messageSelection) {
 
 		StringBundler sb = new StringBundler();
 
@@ -253,21 +347,28 @@ public abstract class BaseBulkStatusResourceTestCase {
 		sb.append(operator);
 		sb.append(" ");
 
-		if (entityFieldName.equals("busy")) {
-			throw new IllegalArgumentException(
-				"Invalid entity field " + entityFieldName);
+		if (entityFieldName.equals("description")) {
+			sb.append("'");
+			sb.append(String.valueOf(messageSelection.getDescription()));
+			sb.append("'");
+
+			return sb.toString();
 		}
 
 		throw new IllegalArgumentException(
 			"Invalid entity field " + entityFieldName);
 	}
 
-	protected BulkStatus randomBulkStatus() {
-		return new BulkStatus() {
+	protected MessageSelection randomMessageSelection() {
+		return new MessageSelection() {
 			{
-				busy = RandomTestUtil.randomBoolean();
+				description = RandomTestUtil.randomString();
 			}
 		};
+	}
+
+	protected MessageSelection randomPatchMessageSelection() {
+		return randomMessageSelection();
 	}
 
 	protected Group testGroup;
@@ -333,6 +434,18 @@ public abstract class BaseBulkStatusResourceTestCase {
 		return template.replaceFirst("\\{.*\\}", String.valueOf(value));
 	}
 
+	private static BeanUtilsBean _beanUtilsBean = new BeanUtilsBean() {
+
+		@Override
+		public void copyProperty(Object bean, String name, Object value)
+			throws IllegalAccessException, InvocationTargetException {
+
+			if (value != null) {
+				super.copyProperty(bean, name, value);
+			}
+		}
+
+	};
 	private static DateFormat _dateFormat;
 	private final static ObjectMapper _inputObjectMapper = new ObjectMapper() {
 		{
@@ -361,7 +474,7 @@ public abstract class BaseBulkStatusResourceTestCase {
 	};
 
 	@Inject
-	private BulkStatusResource _bulkStatusResource;
+	private MessageSelectionResource _messageSelectionResource;
 
 	private URL _resourceURL;
 

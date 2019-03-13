@@ -32,12 +32,7 @@ definition {
 			);
 		}
 
-		AssertElementPresent(locator1 = "DocumentsAndMedia#ICON_FOLDER_THUMBNAIL");
-
-		AssertTextEquals(
-			locator1 = "DocumentsAndMedia#ICON_FOLDER_TITLE",
-			value1 = "${dmFolderName}"
-		);
+		DMFolder.viewEntryPresent(dmFolderName = "${dmFolderName}");
 	}
 
 	macro addPG {
@@ -193,7 +188,9 @@ definition {
 	macro cannotViewCP {
 		var key_dmFolderName = "${dmFolderName}";
 
-		AssertElementNotPresent(locator1 = "DocumentsAndMedia#ICON_FOLDER_THUMBNAIL");
+		LexiconCard.viewCardNotPresent(
+			card = "${dmFolderName}"
+		);
 	}
 
 	macro configureWorkflowCP {
@@ -300,12 +297,7 @@ definition {
 	macro editCP {
 		var key_dmFolderName = "${dmFolderName}";
 
-		AssertElementPresent(locator1 = "DocumentsAndMedia#ICON_FOLDER_THUMBNAIL");
-
-		AssertTextEquals(
-			locator1 = "DocumentsAndMedia#ICON_FOLDER_THUMBNAIL",
-			value1 = "${dmFolderName}"
-		);
+		DMFolder.viewEntryPresent(dmFolderName = "${dmFolderName}");
 
 		AssertElementPresent(
 			locator1 = "DocumentsAndMedia#DESCRIPTIVE_LIST_VERTICAL_ELLIPSIS"
@@ -321,12 +313,7 @@ definition {
 
 		PortletEntry.save();
 
-		AssertElementPresent(locator1 = "DocumentsAndMedia#ICON_FOLDER_THUMBNAIL");
-
-		AssertTextEquals(
-			locator1 = "DocumentsAndMedia#ICON_FOLDER_THUMBNAIL",
-			value1 = "${dmFolderNameEdit}"
-		);
+		DMFolder.viewEntryPresent(dmFolderName = "${dmFolderName}");
 	}
 
 	macro editPG {
@@ -374,10 +361,7 @@ definition {
 	macro gotoEditCP {
 		var key_dmFolderName = "${folderName}";
 
-		AssertTextEquals(
-			locator1 = "DocumentsAndMedia#ICON_FOLDER_THUMBNAIL",
-			value1 = "${folderName}"
-		);
+		DMFolder.viewEntryPresent(dmFolderName = "${folderName}");
 
 		Click(locator1 = "DocumentsAndMedia#DESCRIPTIVE_LIST_VERTICAL_ELLIPSIS");
 
@@ -463,12 +447,7 @@ definition {
 	macro moveToRecycleBinCP {
 		var key_dmFolderName = "${dmFolderName}";
 
-		AssertElementPresent(locator1 = "DocumentsAndMedia#ICON_FOLDER_THUMBNAIL");
-
-		AssertTextEquals(
-			locator1 = "DocumentsAndMedia#ICON_FOLDER_THUMBNAIL",
-			value1 = "${dmFolderName}"
-		);
+		DMFolder.viewEntryPresent(dmFolderName = "${dmFolderName}");
 
 		Click(locator1 = "DocumentsAndMedia#ICON_FOLDER_CHECKBOX");
 
@@ -579,12 +558,7 @@ definition {
 			);
 		}
 		else {
-			AssertElementPresent(locator1 = "DocumentsAndMedia#ICON_FOLDER_THUMBNAIL");
-
-			AssertTextEquals(
-				locator1 = "DocumentsAndMedia#ICON_FOLDER_THUMBNAIL",
-				value1 = "${dmFolderName}"
-			);
+			DMFolder.viewEntryPresent(dmFolderName = "${dmFolderName}");
 		}
 
 		if ("${specificNameFolder}" == "true") {

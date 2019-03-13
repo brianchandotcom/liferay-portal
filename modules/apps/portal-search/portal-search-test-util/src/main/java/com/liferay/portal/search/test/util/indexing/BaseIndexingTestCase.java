@@ -143,13 +143,6 @@ public abstract class BaseIndexingTestCase {
 			_indexWriter.addDocument(createSearchContext(), document);
 		}
 		catch (SearchException se) {
-			Throwable t = se.getCause();
-
-			if (t instanceof RuntimeException) {
-				throw (RuntimeException)t;
-			}
-
-			throw new RuntimeException(se);
 		}
 	}
 
@@ -232,12 +225,6 @@ public abstract class BaseIndexingTestCase {
 			return _indexSearcher.search(searchContext, query);
 		}
 		catch (SearchException se) {
-			Throwable t = se.getCause();
-
-			if (t instanceof RuntimeException) {
-				throw (RuntimeException)t;
-			}
-
 			throw new RuntimeException(se);
 		}
 	}
@@ -247,12 +234,6 @@ public abstract class BaseIndexingTestCase {
 			return _indexSearcher.searchCount(searchContext, query);
 		}
 		catch (SearchException se) {
-			Throwable t = se.getCause();
-
-			if (t instanceof RuntimeException) {
-				throw (RuntimeException)t;
-			}
-
 			throw new RuntimeException(se);
 		}
 	}

@@ -16,7 +16,7 @@
 
 <%@ include file="/document_library/init.jsp" %>
 
-<ul class="sidebar-block tabular-list-group-unstyled">
+<ul class="list-group sidebar-list-group">
 
 	<%
 	FileEntry fileEntry = (FileEntry)request.getAttribute("info_panel.jsp-fileEntry");
@@ -33,29 +33,29 @@
 		request.setAttribute("info_panel.jsp-fileVersion", fileVersion);
 	%>
 
-		<li class="list-group-item">
-			<div class="list-group-item-content">
-				<div class="h5">
+		<li class="list-group-item list-group-item-flex">
+			<div class="autofit-col autofit-col-expand">
+				<div class="list-group-title">
 					<liferay-ui:message arguments="<%= fileVersion.getVersion() %>" key="version-x" />
 				</div>
 
-				<c:choose>
-					<c:when test="<%= Validator.isNull(fileVersion.getChangeLog()) %>">
-						<div class="h6 sidebar-caption">
-							<liferay-ui:message key="no-change-log" />
-						</div>
-					</c:when>
-					<c:otherwise>
-						<%= fileVersion.getChangeLog() %>
-					</c:otherwise>
-				</c:choose>
-
-				<div class="h6">
+				<div class="list-group-subtitle">
 					<liferay-ui:message arguments="<%= new Object[] {HtmlUtil.escape(fileVersion.getUserName()), dateFormatDateTime.format(fileVersion.getCreateDate())} %>" key="by-x-on-x" translateArguments="<%= false %>" />
+				</div>
+
+				<div class="list-group-subtext">
+					<c:choose>
+						<c:when test="<%= Validator.isNull(fileVersion.getChangeLog()) %>">
+							<liferay-ui:message key="no-change-log" />
+						</c:when>
+						<c:otherwise>
+							<%= fileVersion.getChangeLog() %>
+						</c:otherwise>
+					</c:choose>
 				</div>
 			</div>
 
-			<div class="list-group-item-field">
+			<div class="autofit-col">
 				<liferay-util:include page="/document_library/file_entry_history_action.jsp" servletContext="<%= application %>" />
 			</div>
 		</li>

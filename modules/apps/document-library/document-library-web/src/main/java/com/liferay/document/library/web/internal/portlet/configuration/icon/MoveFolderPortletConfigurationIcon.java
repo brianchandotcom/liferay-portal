@@ -16,7 +16,9 @@ package com.liferay.document.library.web.internal.portlet.configuration.icon;
 
 import com.liferay.document.library.constants.DLPortletKeys;
 import com.liferay.document.library.web.internal.portlet.action.ActionUtil;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigurationIcon;
 import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIcon;
 import com.liferay.portal.kernel.repository.model.Folder;
@@ -29,7 +31,6 @@ import com.liferay.portal.kernel.util.WebKeys;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
-import javax.portlet.PortletURL;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -58,32 +59,19 @@ public class MoveFolderPortletConfigurationIcon
 	public String getURL(
 		PortletRequest portletRequest, PortletResponse portletResponse) {
 
-		PortletURL portletURL = _portal.getControlPanelPortletURL(
-			portletRequest, DLPortletKeys.DOCUMENT_LIBRARY_ADMIN,
-			PortletRequest.RENDER_PHASE);
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		portletURL.setParameter(
-			"mvcRenderCommandName", "/document_library/move_entry");
-		portletURL.setParameter("redirect", themeDisplay.getURLCurrent());
-
-		Folder folder = null;
-
 		try {
-			folder = ActionUtil.getFolder(portletRequest);
+			LiferayPortletResponse liferayPortletResponse =
+				_portal.getLiferayPortletResponse(portletResponse);
+
+			Folder folder = ActionUtil.getFolder(portletRequest);
+
+			return StringBundler.concat(
+				"javascript:", liferayPortletResponse.getNamespace(),
+				"move(1, 'rowIdsFolder', ", folder.getFolderId(), ");");
 		}
 		catch (Exception e) {
 			return null;
 		}
-
-		portletURL.setParameter(
-			"repositoryId", String.valueOf(folder.getRepositoryId()));
-		portletURL.setParameter(
-			"rowIdsFolder", String.valueOf(folder.getFolderId()));
-
-		return portletURL.toString();
 	}
 
 	@Override

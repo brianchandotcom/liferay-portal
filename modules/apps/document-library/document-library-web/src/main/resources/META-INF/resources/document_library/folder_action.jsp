@@ -162,16 +162,9 @@ if ((row == null) && portletName.equals(DLPortletKeys.MEDIA_GALLERY_DISPLAY)) {
 				</c:if>
 
 				<c:if test="<%= hasUpdatePermission && !folder.isMountPoint() %>">
-					<portlet:renderURL var="moveURL">
-						<portlet:param name="mvcRenderCommandName" value="/document_library/move_entry" />
-						<portlet:param name="redirect" value="<%= redirect %>" />
-						<portlet:param name="repositoryId" value="<%= String.valueOf(repositoryId) %>" />
-						<portlet:param name="rowIdsFolder" value="<%= String.valueOf(folderId) %>" />
-					</portlet:renderURL>
-
 					<liferay-ui:icon
 						message="move"
-						url="<%= moveURL %>"
+						url='<%= "javascript:" + renderResponse.getNamespace() + "move(1, 'rowIdsFolder', " + folderId + ");" %>'
 					/>
 				</c:if>
 

@@ -91,6 +91,14 @@ public class JavaClass extends BaseJavaTerm {
 		return _imports;
 	}
 
+	public String getName(boolean fullyQualifiedClassName) {
+		if (!fullyQualifiedClassName) {
+			return getName();
+		}
+
+		return _packageName + "." + getName();
+	}
+
 	public String getPackageName() {
 		return _packageName;
 	}

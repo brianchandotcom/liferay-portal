@@ -35,6 +35,96 @@ definition {
 		}
 	}
 
+	@priority = "5"
+	test AssertOnChangesDisplayedOnOverview {
+		ProductMenu.gotoPortlet(
+			category = "Change Lists",
+			panel = "Control Panel",
+			portlet = "Overview"
+		);
+
+		ChangeList.addNewChangeList(
+			changeListDescription = "Change List Description",
+			changeListName = "Change List Name"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			panel = "Site Administration",
+			portlet = "Web Content"
+		);
+
+		WebContentNavigator.gotoAddCP();
+
+		WebContent.addCP(
+			webContentContent = "WC WebContent Content",
+			webContentTitle = "Web Content Title"
+		);
+
+		PortletEntry.publish();
+
+		ProductMenu.gotoPortlet(
+			category = "Change Lists",
+			panel = "Control Panel",
+			portlet = "Overview"
+		);
+
+		ChangeList.viewChangeOnOverview(
+			contentTitle = "Web Content Title",
+			contentType = "Web Content",
+			contentChangeType = "Added"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			panel = "Site Administration",
+			portlet = "Web Content"
+		);
+
+		WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title");
+
+		WebContent.editCP(
+			webContentContentEdit = "WC WebContent Content Edit",
+			webContentTitle = "Web Content Title",
+			webContentTitleEdit = "Web Content Title Edit"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Change Lists",
+			panel = "Control Panel",
+			portlet = "Overview"
+		);
+
+		ChangeList.viewChangeOnOverview(
+			contentTitle = "Web Content Title Edit",
+			contentType = "Web Content",
+			contentChangeType = "Modified"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			panel = "Site Administration",
+			portlet = "Web Content"
+		);
+
+		WebContent.moveToRecycleBinCP(
+			assetType = "Web Content Article",
+			webContentTitle = "Web Content Title Edit"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Change Lists",
+			panel = "Control Panel",
+			portlet = "Overview"
+		);
+
+		ChangeList.viewChangeOnOverview(
+			contentTitle = "Web Content Title Edit",
+			contentType = "Web Content",
+			contentChangeType = "Deleted"
+		);
+	}
+
 	@priority = "3"
 	test CancelChangeListCreation {
 		ProductMenu.gotoPortlet(

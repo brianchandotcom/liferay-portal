@@ -104,6 +104,29 @@ definition {
 		);
 	}
 
+	macro viewChangeOnOverview {
+		var key_contentTitle = "${contentTitle}";
+
+		AssertTextEquals(
+			locator1 = "ChangeList#LATEST_CHANGES_TITLE",
+			value1 = "${contentTitle}"
+		);
+
+		var key_contentType = "${contentType}";
+
+		AssertTextEquals(
+			locator1 = "ChangeList#LATEST_CHANGES_CONTENT_TYPE",
+			value1 = "${contentType}"
+		);
+
+		var key_contentChangeType = "${contentChangeType}";
+
+		AssertTextEquals(
+			locator1 = "ChangeList#LATEST_CHANGES_CHANGE_TYPE",
+			value1 = "${contentChangeType}"
+		);
+	}
+
 	macro viewNoStagingMenuitemsNotAvailable {
 		AssertElementNotPresent(locator1 = "Icon#HEADER_VERTICAL_ELLIPSIS");
 

@@ -29,6 +29,21 @@
 	<td></td>
 </tr>
 <tr>
+	<td>LATEST_CHANGES_CHANGE_TYPE</td>
+	<td>//div[contains(@id,'change-entry-change-type') and contains(.,'${key_contentChangeType}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>LATEST_CHANGES_CONTENT_TYPE</td>
+	<td>//div[contains(@id,'change-entry-content-type') and contains(.,'${key_contentType}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>LATEST_CHANGES_TITLE</td>
+	<td>//div[contains(@id,'change-entry-title') and contains(.,'${key_contentTitle}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>OVERVIEW_PAGE_TITLE</td>
 	<td>//span[contains(@data-qa-id,'headerTitle')]</td>
 	<td></td>

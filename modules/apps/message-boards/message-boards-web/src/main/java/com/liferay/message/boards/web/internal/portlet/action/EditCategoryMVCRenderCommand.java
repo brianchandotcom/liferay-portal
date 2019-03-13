@@ -55,12 +55,15 @@ public class EditCategoryMVCRenderCommand implements MVCRenderCommand {
 		try {
 			MBCategory category = ActionUtil.getCategory(renderRequest);
 
-			ThemeDisplay themeDisplay =
-				(ThemeDisplay)renderRequest.getAttribute(WebKeys.THEME_DISPLAY);
+			if (category != null) {
+				ThemeDisplay themeDisplay =
+					(ThemeDisplay)renderRequest.getAttribute(
+						WebKeys.THEME_DISPLAY);
 
-			_mbCategoryModelResourcePermission.check(
-				themeDisplay.getPermissionChecker(), category,
-				ActionKeys.UPDATE);
+				_mbCategoryModelResourcePermission.check(
+					themeDisplay.getPermissionChecker(), category,
+					ActionKeys.UPDATE);
+			}
 
 			renderRequest.setAttribute(
 				WebKeys.MESSAGE_BOARDS_CATEGORY, category);

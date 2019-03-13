@@ -42,10 +42,13 @@ public abstract class GetFolderMVCRenderCommand implements MVCRenderCommand {
 		try {
 			BookmarksFolder folder = ActionUtil.getFolder(renderRequest);
 
-			ThemeDisplay themeDisplay =
-				(ThemeDisplay)renderRequest.getAttribute(WebKeys.THEME_DISPLAY);
+			if (folder != null) {
+				ThemeDisplay themeDisplay =
+					(ThemeDisplay)renderRequest.getAttribute(
+						WebKeys.THEME_DISPLAY);
 
-			checkPermissions(themeDisplay.getPermissionChecker(), folder);
+				checkPermissions(themeDisplay.getPermissionChecker(), folder);
+			}
 
 			renderRequest.setAttribute(
 				BookmarksWebKeys.BOOKMARKS_FOLDER, folder);

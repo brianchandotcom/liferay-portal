@@ -41,10 +41,13 @@ public abstract class GetMessageMVCRenderCommand implements MVCRenderCommand {
 		try {
 			MBMessage message = ActionUtil.getMessage(renderRequest);
 
-			ThemeDisplay themeDisplay =
-				(ThemeDisplay)renderRequest.getAttribute(WebKeys.THEME_DISPLAY);
+			if (message != null) {
+				ThemeDisplay themeDisplay =
+					(ThemeDisplay)renderRequest.getAttribute(
+						WebKeys.THEME_DISPLAY);
 
-			checkPermissions(themeDisplay.getPermissionChecker(), message);
+				checkPermissions(themeDisplay.getPermissionChecker(), message);
+			}
 
 			renderRequest.setAttribute(WebKeys.MESSAGE_BOARDS_MESSAGE, message);
 		}

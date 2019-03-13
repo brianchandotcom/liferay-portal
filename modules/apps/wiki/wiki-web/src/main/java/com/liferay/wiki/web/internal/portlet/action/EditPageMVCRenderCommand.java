@@ -79,12 +79,6 @@ public class EditPageMVCRenderCommand implements MVCRenderCommand {
 
 			WikiNode node = ActionUtil.getNode(renderRequest);
 
-			ThemeDisplay themeDisplay =
-				(ThemeDisplay)renderRequest.getAttribute(WebKeys.THEME_DISPLAY);
-
-			_wikiNodeModelResourcePermission.check(
-				themeDisplay.getPermissionChecker(), node, ActionKeys.UPDATE);
-
 			renderRequest.setAttribute(WikiWebKeys.WIKI_NODE, node);
 
 			if (!SessionErrors.contains(

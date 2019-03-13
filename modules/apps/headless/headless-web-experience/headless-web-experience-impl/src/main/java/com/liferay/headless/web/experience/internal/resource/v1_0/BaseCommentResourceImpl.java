@@ -62,6 +62,7 @@ public abstract class BaseCommentResourceImpl implements CommentResource {
 
 	@Override
 	@DELETE
+	@Operation(description = "Remove a comment")
 	@Path("/comments/{comment-id}")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "Comment")})
@@ -73,6 +74,7 @@ public abstract class BaseCommentResourceImpl implements CommentResource {
 
 	@Override
 	@GET
+	@Operation(description = "Retrieve a comment")
 	@Path("/comments/{comment-id}")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "Comment")})
@@ -84,6 +86,7 @@ public abstract class BaseCommentResourceImpl implements CommentResource {
 
 	@Override
 	@Consumes("application/json")
+	@Operation(description = "Update a comment")
 	@PUT
 	@Path("/comments/{comment-id}")
 	@Produces("application/json")
@@ -97,7 +100,7 @@ public abstract class BaseCommentResourceImpl implements CommentResource {
 
 	@Override
 	@GET
-	@Operation(description = "retrieve the child comments of a comment thread")
+	@Operation(description = "Retrieve the child comments of a comment thread")
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.QUERY, name = "filter"),
@@ -119,6 +122,7 @@ public abstract class BaseCommentResourceImpl implements CommentResource {
 
 	@Override
 	@Consumes("application/json")
+	@Operation(description = "Add a child comment to a comment thread")
 	@POST
 	@Path("/comments/{comment-id}/comments")
 	@Produces("application/json")
@@ -132,6 +136,7 @@ public abstract class BaseCommentResourceImpl implements CommentResource {
 
 	@Override
 	@GET
+	@Operation(description = "Retrieve the comment of a structured content")
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.QUERY, name = "filter"),
@@ -154,6 +159,7 @@ public abstract class BaseCommentResourceImpl implements CommentResource {
 
 	@Override
 	@Consumes("application/json")
+	@Operation(description = "Add a comment to a structured content")
 	@POST
 	@Path("/structured-contents/{structured-content-id}/comments")
 	@Produces("application/json")

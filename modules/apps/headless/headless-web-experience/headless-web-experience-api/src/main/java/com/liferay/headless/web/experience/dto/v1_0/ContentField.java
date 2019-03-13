@@ -24,6 +24,8 @@ import com.liferay.petra.string.StringBundler;
 import graphql.annotations.annotationTypes.GraphQLField;
 import graphql.annotations.annotationTypes.GraphQLName;
 
+import io.swagger.v3.oas.annotations.media.Schema;
+
 import javax.annotation.Generated;
 
 import javax.xml.bind.annotation.XmlRootElement;
@@ -38,6 +40,9 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement(name = "ContentField")
 public class ContentField {
 
+	@Schema(
+		description = "The field's data type. In some cases extra information is available in the inputControl property"
+	)
 	public String getDataType() {
 		return dataType;
 	}
@@ -62,6 +67,9 @@ public class ContentField {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String dataType;
 
+	@Schema(
+		description = "The field's input control. Additional information need to add extra context to the data type. Not always present"
+	)
 	public String getInputControl() {
 		return inputControl;
 	}
@@ -86,6 +94,7 @@ public class ContentField {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String inputControl;
 
+	@Schema(description = "The human readable label of the field")
 	public String getLabel() {
 		return label;
 	}
@@ -110,6 +119,7 @@ public class ContentField {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String label;
 
+	@Schema(description = "The internal name of the field")
 	public String getName() {
 		return name;
 	}
@@ -132,6 +142,7 @@ public class ContentField {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String name;
 
+	@Schema(description = "The content field's nested fields")
 	public ContentField[] getNestedFields() {
 		return nestedFields;
 	}
@@ -156,6 +167,7 @@ public class ContentField {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected ContentField[] nestedFields;
 
+	@Schema(description = "Whether or not the field is repeatable")
 	public Boolean getRepeatable() {
 		return repeatable;
 	}
@@ -180,6 +192,7 @@ public class ContentField {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean repeatable;
 
+	@Schema(description = "The value of the field")
 	public Value getValue() {
 		return value;
 	}

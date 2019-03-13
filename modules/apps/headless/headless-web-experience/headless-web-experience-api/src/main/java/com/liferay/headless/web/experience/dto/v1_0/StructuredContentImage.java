@@ -24,6 +24,8 @@ import com.liferay.petra.string.StringBundler;
 import graphql.annotations.annotationTypes.GraphQLField;
 import graphql.annotations.annotationTypes.GraphQLName;
 
+import io.swagger.v3.oas.annotations.media.Schema;
+
 import java.util.Date;
 
 import javax.annotation.Generated;
@@ -40,6 +42,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement(name = "StructuredContentImage")
 public class StructuredContentImage {
 
+	@Schema(description = "The url to download the contents of the image")
 	public String getContentUrl() {
 		return contentUrl;
 	}
@@ -61,9 +64,10 @@ public class StructuredContentImage {
 	}
 
 	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String contentUrl;
 
+	@Schema(description = "The image's creator")
 	public Creator getCreator() {
 		return creator;
 	}
@@ -85,9 +89,10 @@ public class StructuredContentImage {
 	}
 
 	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Creator creator;
 
+	@Schema(description = "The creation date")
 	public Date getDateCreated() {
 		return dateCreated;
 	}
@@ -109,9 +114,10 @@ public class StructuredContentImage {
 	}
 
 	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Date dateCreated;
 
+	@Schema(description = "The modified date")
 	public Date getDateModified() {
 		return dateModified;
 	}
@@ -133,9 +139,10 @@ public class StructuredContentImage {
 	}
 
 	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Date dateModified;
 
+	@Schema(description = "The image's description")
 	public String getDescription() {
 		return description;
 	}
@@ -157,9 +164,10 @@ public class StructuredContentImage {
 	}
 
 	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String description;
 
+	@Schema(description = "The image's encoding format")
 	public String getEncodingFormat() {
 		return encodingFormat;
 	}
@@ -181,9 +189,10 @@ public class StructuredContentImage {
 	}
 
 	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String encodingFormat;
 
+	@Schema(description = "The image's extension")
 	public String getFileExtension() {
 		return fileExtension;
 	}
@@ -205,9 +214,10 @@ public class StructuredContentImage {
 	}
 
 	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String fileExtension;
 
+	@Schema(description = "The image's ID")
 	public Long getId() {
 		return id;
 	}
@@ -227,9 +237,10 @@ public class StructuredContentImage {
 	}
 
 	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long id;
 
+	@Schema(description = "The image's size in bytes")
 	public Number getSizeInBytes() {
 		return sizeInBytes;
 	}
@@ -251,33 +262,10 @@ public class StructuredContentImage {
 	}
 
 	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Number sizeInBytes;
 
-	public Long getStructuredContentId() {
-		return structuredContentId;
-	}
-
-	public void setStructuredContentId(Long structuredContentId) {
-		this.structuredContentId = structuredContentId;
-	}
-
-	@JsonIgnore
-	public void setStructuredContentId(
-		UnsafeSupplier<Long, Exception> structuredContentIdUnsafeSupplier) {
-
-		try {
-			structuredContentId = structuredContentIdUnsafeSupplier.get();
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Long structuredContentId;
-
+	@Schema(description = "The image's title")
 	public String getTitle() {
 		return title;
 	}
@@ -299,7 +287,7 @@ public class StructuredContentImage {
 	}
 
 	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String title;
 
 	public String toString() {
@@ -362,11 +350,6 @@ public class StructuredContentImage {
 		sb.append("\"sizeInBytes\": ");
 
 		sb.append(sizeInBytes);
-		sb.append(", ");
-
-		sb.append("\"structuredContentId\": ");
-
-		sb.append(structuredContentId);
 		sb.append(", ");
 
 		sb.append("\"title\": ");

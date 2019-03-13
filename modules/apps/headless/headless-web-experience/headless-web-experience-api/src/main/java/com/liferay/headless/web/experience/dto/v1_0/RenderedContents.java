@@ -59,7 +59,7 @@ public class RenderedContents {
 	}
 
 	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String renderedContentURL;
 
 	public String getTemplateName() {
@@ -83,7 +83,7 @@ public class RenderedContents {
 	}
 
 	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String templateName;
 
 	public String toString() {

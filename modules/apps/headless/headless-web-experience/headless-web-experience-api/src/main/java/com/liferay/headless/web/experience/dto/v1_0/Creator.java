@@ -24,6 +24,8 @@ import com.liferay.petra.string.StringBundler;
 import graphql.annotations.annotationTypes.GraphQLField;
 import graphql.annotations.annotationTypes.GraphQLName;
 
+import io.swagger.v3.oas.annotations.media.Schema;
+
 import javax.annotation.Generated;
 
 import javax.xml.bind.annotation.XmlRootElement;
@@ -38,6 +40,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement(name = "Creator")
 public class Creator {
 
+	@Schema(description = "The creator's additional name")
 	public String getAdditionalName() {
 		return additionalName;
 	}
@@ -59,9 +62,10 @@ public class Creator {
 	}
 
 	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String additionalName;
 
+	@Schema(description = "The creator's family name")
 	public String getFamilyName() {
 		return familyName;
 	}
@@ -83,9 +87,10 @@ public class Creator {
 	}
 
 	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String familyName;
 
+	@Schema(description = "The creator's given name")
 	public String getGivenName() {
 		return givenName;
 	}
@@ -107,9 +112,10 @@ public class Creator {
 	}
 
 	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String givenName;
 
+	@Schema(description = "The creator's ID")
 	public Long getId() {
 		return id;
 	}
@@ -129,9 +135,10 @@ public class Creator {
 	}
 
 	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long id;
 
+	@Schema(description = "The creator's image URL")
 	public String getImage() {
 		return image;
 	}
@@ -153,9 +160,10 @@ public class Creator {
 	}
 
 	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String image;
 
+	@Schema(description = "The creator's name")
 	public String getName() {
 		return name;
 	}
@@ -175,9 +183,10 @@ public class Creator {
 	}
 
 	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String name;
 
+	@Schema(description = "The creator's profile URL")
 	public String getProfileURL() {
 		return profileURL;
 	}
@@ -199,7 +208,7 @@ public class Creator {
 	}
 
 	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String profileURL;
 
 	public String toString() {

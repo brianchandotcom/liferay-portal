@@ -733,6 +733,10 @@ public class BasePersistenceImpl<T extends BaseModel<T>>
 		throw new UnsupportedOperationException();
 	}
 
+	protected void setDBColumnNames(Map<String, String> dbColumnNames) {
+		_dbColumnNames = dbColumnNames;
+	}
+
 	protected void setEntityCacheEnabled(boolean entityCacheEnabled) {
 		this.entityCacheEnabled = entityCacheEnabled;
 	}
@@ -798,6 +802,7 @@ public class BasePersistenceImpl<T extends BaseModel<T>>
 	protected static final NullModel nullModel = new NullModel();
 
 	protected int databaseInMaxParameters;
+	protected Map<String, String> dbColumnNames;
 	protected boolean entityCacheEnabled;
 	protected boolean finderCacheEnabled;
 

@@ -27,8 +27,10 @@
 		</aui:a>
 	</c:when>
 	<c:otherwise>
-		<div class="aspect-ratio aspect-ratio-bg-center aspect-ratio-bg-cover <%= colorCssClass %>">
-			<span class="h1 user-vertical-card-initials"><%= userInitials %></span>
+		<div class="aspect-ratio-item-center-middle aspect-ratio-item-fluid card-type-asset-icon">
+			<span class="sticker sticker-xl">
+				<span class="sticker-overlay <%= colorCssClass %>"><%= userInitials %></span>
+			</span>
 		</div>
 	</c:otherwise>
 </c:choose>

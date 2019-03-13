@@ -40,7 +40,6 @@ String href = (String)request.getAttribute(WebKeys.SEARCH_ENTRY_HREF);
 			<%= HtmlUtil.escape(ddmFormInstance.getDescription(locale)) %>
 		</div>
 	</span>
-
 	<span class="text-default">
 		<span class="form-instance-id">
 			<liferay-ui:message key="id" />: <%= ddmFormInstance.getFormInstanceId() %>

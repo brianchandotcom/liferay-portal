@@ -388,13 +388,12 @@ public class JSPTagAttributesCheck extends TagAttributesCheck {
 			setMethodsMap.put(methodName, javaParameter.getParameterType());
 		}
 
-		String extendedFileName = TaglibUtil.getExtendedFileName(
-			tagFileContent, tagFileName, javaClass.getImports(),
-			utilTaglibSrcDirName);
+		List<String> extendedTagFileNames = TaglibUtil.getExtendedTagFileNames(
+			javaClass, tagFileName, utilTaglibSrcDirName);
 
-		if (extendedFileName != null) {
+		for (String extendedTagFileName : extendedTagFileNames) {
 			setMethodsMap.putAll(
-				_getSetMethodsMap(extendedFileName, utilTaglibSrcDirName));
+				_getSetMethodsMap(extendedTagFileName, utilTaglibSrcDirName));
 		}
 
 		_classSetMethodsMap.put(tagFileName, setMethodsMap);

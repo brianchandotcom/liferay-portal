@@ -20,66 +20,71 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.tools.ToolsUtil;
 import com.liferay.source.formatter.SourceFormatterExcludes;
+import com.liferay.source.formatter.parser.JavaClass;
 import com.liferay.source.formatter.util.SourceFormatterUtil;
 
 import java.io.File;
 import java.io.IOException;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 /**
  * @author Hugo Huijser
  */
 public class TaglibUtil {
 
-	public static String getExtendedFileName(
-		String content, String fileName, List<String> imports,
-		String utilTaglibSrcDirName) {
+	public static List<String> getExtendedTagFileNames(
+		JavaClass javaClass, String absolutePath, String utilTaglibSrcDirName) {
 
-		Matcher matcher = _extendedClassPattern.matcher(content);
+		List<String> extendedTagFilesNames = new ArrayList<>();
 
-		if (!matcher.find()) {
-			return null;
-		}
+		for (String extendedClassName : javaClass.getExtendedClassNames()) {
+			if (!extendedClassName.contains(StringPool.PERIOD)) {
+				for (String importName : javaClass.getImports()) {
+					if (importName.endsWith(
+							StringPool.PERIOD + extendedClassName)) {
 
-		String extendedClassName = matcher.group(1);
+						extendedClassName = importName;
 
-		if (!extendedClassName.contains(StringPool.PERIOD)) {
-			for (String importName : imports) {
-				if (importName.endsWith(
-						StringPool.PERIOD + extendedClassName)) {
-
-					extendedClassName = importName;
-
-					break;
+						break;
+					}
 				}
 			}
+
+			StringBundler sb = new StringBundler(3);
+
+			if (extendedClassName.startsWith("com.liferay.taglib")) {
+				sb.append(utilTaglibSrcDirName);
+				sb.append(
+					StringUtil.replace(
+						extendedClassName, CharPool.PERIOD, CharPool.SLASH));
+			}
+			else if (!extendedClassName.contains(StringPool.PERIOD) ||
+					 extendedClassName.startsWith(javaClass.getPackageName())) {
+
+				int pos = absolutePath.lastIndexOf(CharPool.SLASH);
+
+				sb.append(absolutePath.substring(0, pos + 1));
+
+				extendedClassName = StringUtil.removeSubstring(
+					extendedClassName,
+					javaClass.getPackageName() + StringPool.PERIOD);
+
+				sb.append(
+					StringUtil.replace(
+						extendedClassName, CharPool.PERIOD, CharPool.SLASH));
+			}
+			else {
+				continue;
+			}
+
+			sb.append(".java");
+
+			extendedTagFilesNames.add(sb.toString());
 		}
 
-		StringBundler sb = new StringBundler(3);
-
-		if (extendedClassName.startsWith("com.liferay.taglib")) {
-			sb.append(utilTaglibSrcDirName);
-			sb.append(
-				StringUtil.replace(
-					extendedClassName, CharPool.PERIOD, CharPool.SLASH));
-		}
-		else if (!extendedClassName.contains(StringPool.PERIOD)) {
-			int pos = fileName.lastIndexOf(CharPool.SLASH);
-
-			sb.append(fileName.substring(0, pos + 1));
-
-			sb.append(extendedClassName);
-		}
-		else {
-			return null;
-		}
-
-		sb.append(".java");
-
-		return sb.toString();
+		return extendedTagFilesNames;
 	}
 
 	public static List<String> getTLDFileNames(
@@ -131,8 +136,5 @@ public class TaglibUtil {
 
 		return SourceUtil.getAbsolutePath(utilTaglibDir) + StringPool.SLASH;
 	}
-
-	private static final Pattern _extendedClassPattern = Pattern.compile(
-		"\\sextends\\s+(\\w+)\\W");
 
 }

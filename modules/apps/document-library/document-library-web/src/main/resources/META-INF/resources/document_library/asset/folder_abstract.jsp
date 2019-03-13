@@ -22,6 +22,18 @@ int abstractLength = GetterUtil.getInteger(request.getAttribute(WebKeys.ASSET_EN
 Folder folder = (Folder)request.getAttribute(WebKeys.DOCUMENT_LIBRARY_FOLDER);
 %>
 
-<p class="asset-description">
+<div class="asset-summary">
+	<div class="container">
+		<div class="aspect-ratio aspect-ratio-8-to-3 bg-light card">
+			<div class="aspect-ratio-item-center-middle aspect-ratio-item-fluid card-type-asset-icon">
+				<div class="color-dark">
+					<svg aria-hidden="true" class="lexicon-icon lexicon-icon-folder reference-mark user-icon-xl">
+						<use xlink:href="<%= themeDisplay.getPathThemeImages() %>/lexicon/icons.svg#folder" />
+					</svg>
+				</div>
+			</div>
+		</div>
+	</div>
+
 	<%= HtmlUtil.replaceNewLine(HtmlUtil.escape(StringUtil.shorten(folder.getDescription(), abstractLength))) %>
-</p>
+</div>

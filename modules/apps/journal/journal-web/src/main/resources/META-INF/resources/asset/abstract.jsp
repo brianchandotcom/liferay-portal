@@ -18,32 +18,22 @@
 
 <%
 int abstractLength = GetterUtil.getInteger(request.getAttribute(WebKeys.ASSET_ENTRY_ABSTRACT_LENGTH), AssetHelper.ASSET_ENTRY_ABSTRACT_LENGTH);
-String viewURL = (String)request.getAttribute(WebKeys.ASSET_ENTRY_VIEW_URL);
 
 JournalArticleDisplay articleDisplay = (JournalArticleDisplay)request.getAttribute(WebKeys.JOURNAL_ARTICLE_DISPLAY);
 %>
 
-<c:if test="<%= articleDisplay.isSmallImage() %>">
-	<div class="asset-small-image">
-		<c:choose>
-			<c:when test="<%= Validator.isNotNull(viewURL) %>">
-				<a href="<%= HtmlUtil.escapeAttribute(viewURL) %>">
-					<img alt="<%= HtmlUtil.escapeAttribute(articleDisplay.getTitle()) %>" class="asset-small-image img-thumbnail" src="<%= HtmlUtil.escapeAttribute(articleDisplay.getArticleDisplayImageURL(themeDisplay)) %>" width="150" />
-				</a>
-			</c:when>
-			<c:otherwise>
-				<img alt="" class="asset-small-image img-thumbnail" src="<%= HtmlUtil.escapeAttribute(articleDisplay.getArticleDisplayImageURL(themeDisplay)) %>" width="150" />
-			</c:otherwise>
-		</c:choose>
-	</div>
-</c:if>
+<div class="asset-summary">
+	<c:if test="<%= articleDisplay.isSmallImage() %>">
+		<div class="aspect-ratio aspect-ratio-8-to-3 aspect-ratio-bg-cover cover-image mb-3" style="background-image: url(<%= articleDisplay.getArticleDisplayImageURL(themeDisplay) %>)"></div>
+	</c:if>
 
-<%
-String summary = articleDisplay.getDescription();
+	<%
+	String summary = articleDisplay.getDescription();
 
-if (Validator.isNull(summary)) {
-	summary = articleDisplay.getContent();
-}
-%>
+	if (Validator.isNull(summary)) {
+		summary = articleDisplay.getContent();
+	}
+	%>
 
-<%= HtmlUtil.replaceNewLine(StringUtil.shorten(HtmlUtil.stripHtml(summary), abstractLength)) %>
+	<%= HtmlUtil.replaceNewLine(StringUtil.shorten(HtmlUtil.stripHtml(summary), abstractLength)) %>
+</div>

@@ -28,4 +28,6 @@ if (message.isFormatBBCode()) {
 }
 %>
 
-<%= StringUtil.shorten(HtmlUtil.stripHtml(summary), abstractLength) %>
+<div class="asset-summary">
+	<%= StringUtil.shorten(HtmlUtil.stripHtml(summary), abstractLength) %>
+</div>

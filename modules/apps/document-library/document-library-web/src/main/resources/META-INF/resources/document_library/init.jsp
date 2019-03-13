@@ -28,6 +28,8 @@ page import="com.liferay.portal.util.RepositoryUtil" %><%@
 page import="com.liferay.staging.StagingGroupHelper" %><%@
 page import="com.liferay.staging.StagingGroupHelperUtil" %>
 
+<%@ page import="java.util.Objects" %>
+
 <%@ taglib uri="http://liferay.com/tld/soy" prefix="soy" %>
 
 <%

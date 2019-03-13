@@ -20,4 +20,6 @@
 MicroblogsEntry microblogsEntry = (MicroblogsEntry)request.getAttribute(WebKeys.MICROBLOGS_ENTRY);
 %>
 
-<%= HtmlUtil.stripHtml(microblogsEntry.getContent()) %>
+<div class="asset-summary">
+	<%= HtmlUtil.stripHtml(microblogsEntry.getContent()) %>
+</div>

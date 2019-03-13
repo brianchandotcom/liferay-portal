@@ -20,8 +20,8 @@
 int abstractLength = GetterUtil.getInteger(request.getAttribute(WebKeys.ASSET_ENTRY_ABSTRACT_LENGTH), AssetHelper.ASSET_ENTRY_ABSTRACT_LENGTH);
 
 Comment comment = (Comment)request.getAttribute(WebKeys.COMMENT);
-
-String summary = StringUtil.shorten(comment.getTranslatedBody(themeDisplay.getPathThemeImages()), abstractLength);
 %>
 
-<%= summary %>
+<div class="asset-summary">
+	<%= StringUtil.shorten(comment.getTranslatedBody(themeDisplay.getPathThemeImages()), abstractLength) %>
+</div>

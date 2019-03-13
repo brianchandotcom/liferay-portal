@@ -17,6 +17,8 @@ package com.liferay.bulk.rest.dto.v1_0;
 import com.fasterxml.jackson.annotation.JsonFilter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonSubTypes;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
 
 import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.petra.string.StringBundler;
@@ -32,26 +34,42 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @author Alejandro Tardín
  * @generated
  */
+@JsonSubTypes(
+	{
+		@JsonSubTypes.Type(
+			name = "selectionToAddCategoryIds",
+			value = SelectionToAddCategoryIds.class
+		),
+		@JsonSubTypes.Type(
+			name = "selectionToAddTagNames",
+			value = SelectionToAddTagNames.class
+		)
+	}
+)
+@JsonTypeInfo(
+	include = JsonTypeInfo.As.PROPERTY, property = "type",
+	use = JsonTypeInfo.Id.NAME
+)
 @Generated("")
-@GraphQLName("BulkAssetEntryCommonCategories")
+@GraphQLName("DocumentSelection")
 @JsonFilter("Liferay.Vulcan")
-@XmlRootElement(name = "BulkAssetEntryCommonCategories")
-public class BulkAssetEntryCommonCategories {
+@XmlRootElement(name = "DocumentSelection")
+public class DocumentSelection {
 
-	public String getDescription() {
-		return description;
+	public String[] getDocumentIds() {
+		return documentIds;
 	}
 
-	public void setDescription(String description) {
-		this.description = description;
+	public void setDocumentIds(String[] documentIds) {
+		this.documentIds = documentIds;
 	}
 
 	@JsonIgnore
-	public void setDescription(
-		UnsafeSupplier<String, Exception> descriptionUnsafeSupplier) {
+	public void setDocumentIds(
+		UnsafeSupplier<String[], Exception> documentIdsUnsafeSupplier) {
 
 		try {
-			description = descriptionUnsafeSupplier.get();
+			documentIds = documentIdsUnsafeSupplier.get();
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
@@ -60,22 +78,23 @@ public class BulkAssetEntryCommonCategories {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected String description;
+	protected String[] documentIds;
 
-	public String getStatus() {
-		return status;
+	public SelectionScope getSelectionScope() {
+		return selectionScope;
 	}
 
-	public void setStatus(String status) {
-		this.status = status;
+	public void setSelectionScope(SelectionScope selectionScope) {
+		this.selectionScope = selectionScope;
 	}
 
 	@JsonIgnore
-	public void setStatus(
-		UnsafeSupplier<String, Exception> statusUnsafeSupplier) {
+	public void setSelectionScope(
+		UnsafeSupplier<SelectionScope, Exception>
+			selectionScopeUnsafeSupplier) {
 
 		try {
-			status = statusUnsafeSupplier.get();
+			selectionScope = selectionScopeUnsafeSupplier.get();
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
@@ -84,69 +103,39 @@ public class BulkAssetEntryCommonCategories {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected String status;
-
-	public Vocabulary[] getVocabularies() {
-		return vocabularies;
-	}
-
-	public void setVocabularies(Vocabulary[] vocabularies) {
-		this.vocabularies = vocabularies;
-	}
-
-	@JsonIgnore
-	public void setVocabularies(
-		UnsafeSupplier<Vocabulary[], Exception> vocabulariesUnsafeSupplier) {
-
-		try {
-			vocabularies = vocabulariesUnsafeSupplier.get();
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Vocabulary[] vocabularies;
+	protected SelectionScope selectionScope;
 
 	public String toString() {
 		StringBundler sb = new StringBundler();
 
 		sb.append("{");
 
-		sb.append("\"description\": ");
+		sb.append("\"documentIds\": ");
 
-		sb.append("\"");
-		sb.append(description);
-		sb.append("\"");
-		sb.append(", ");
-
-		sb.append("\"status\": ");
-
-		sb.append("\"");
-		sb.append(status);
-		sb.append("\"");
-		sb.append(", ");
-
-		sb.append("\"vocabularies\": ");
-
-		if (vocabularies == null) {
+		if (documentIds == null) {
 			sb.append("null");
 		}
 		else {
 			sb.append("[");
 
-			for (int i = 0; i < vocabularies.length; i++) {
-				sb.append(vocabularies[i]);
+			for (int i = 0; i < documentIds.length; i++) {
+				sb.append("\"");
+				sb.append(documentIds[i]);
+				sb.append("\"");
 
-				if ((i + 1) < vocabularies.length) {
+				if ((i + 1) < documentIds.length) {
 					sb.append(", ");
 				}
 			}
 
 			sb.append("]");
 		}
+
+		sb.append(", ");
+
+		sb.append("\"selectionScope\": ");
+
+		sb.append(selectionScope);
 
 		sb.append("}");
 

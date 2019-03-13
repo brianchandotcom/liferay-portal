@@ -124,7 +124,7 @@ public class LayoutPageTemplateManagementToolbarDisplayContext
 
 				Group scopeGroup = _themeDisplay.getScopeGroup();
 
-				if (scopeGroup.isSite()) {
+				if (!scopeGroup.isLayoutSetPrototype()) {
 					addPrimaryDropdownItem(
 						dropdownItem -> {
 							dropdownItem.putData(

@@ -22,13 +22,19 @@ import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.settings.LocationVariableResolver;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapDictionary;
+import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.io.Serializable;
 
 import java.util.Dictionary;
+import java.util.HashSet;
+import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
 import org.osgi.framework.BundleContext;
@@ -56,17 +62,23 @@ public class ScopedConfigurationManager implements ManagedServiceFactory {
 
 	@Override
 	public void deleted(String pid) {
-		ScopeKey scopeKey = _stringScopeKeyMap.remove(pid);
-
-		if (scopeKey != null) {
-			_configurationBeans.remove(scopeKey);
-		}
+		_removePidConfigurations(pid);
 	}
 
 	public Object getConfiguration(
 		ExtendedObjectClassDefinition.Scope scope, Serializable scopePK) {
 
-		return _configurationBeans.get(new ScopeKey(scopePK, scope));
+		Map<String, Object> scopeConfigurationBeans = _configurationBeans2.get(
+			new ScopeKey(scopePK, scope));
+
+		if (!MapUtil.isEmpty(scopeConfigurationBeans)) {
+			List<Object> valuesList = ListUtil.fromCollection(
+				scopeConfigurationBeans.values());
+
+			return valuesList.get(valuesList.size() - 1);
+		}
+
+		return null;
 	}
 
 	public LocationVariableResolver getLocationVariableResolver() {
@@ -96,12 +108,6 @@ public class ScopedConfigurationManager implements ManagedServiceFactory {
 	public void updated(String pid, Dictionary<String, ?> properties)
 		throws ConfigurationException {
 
-		ScopeKey scopeKey = _stringScopeKeyMap.get(pid);
-
-		if (scopeKey != null) {
-			_configurationBeans.remove(scopeKey);
-		}
-
 		long companyId = GetterUtil.getLong(
 			properties.get(
 				ExtendedObjectClassDefinition.Scope.COMPANY.getPropertyKey()),
@@ -111,8 +117,6 @@ public class ScopedConfigurationManager implements ManagedServiceFactory {
 			_updateEntries(
 				pid, companyId, ExtendedObjectClassDefinition.Scope.COMPANY,
 				properties);
-
-			return;
 		}
 
 		long groupId = GetterUtil.getLong(
@@ -124,8 +128,6 @@ public class ScopedConfigurationManager implements ManagedServiceFactory {
 			_updateEntries(
 				pid, groupId, ExtendedObjectClassDefinition.Scope.GROUP,
 				properties);
-
-			return;
 		}
 
 		String portletInstanceId = GetterUtil.getString(
@@ -138,9 +140,33 @@ public class ScopedConfigurationManager implements ManagedServiceFactory {
 				pid, portletInstanceId,
 				ExtendedObjectClassDefinition.Scope.PORTLET_INSTANCE,
 				properties);
-
-			return;
 		}
+	}
+
+	private void _removePidConfigurations(String pid) {
+		_pidScopeKeys.computeIfPresent(
+			pid,
+			(key, scopeKeys) -> {
+				for (ScopeKey scopeKey : scopeKeys) {
+					_removeScopePidConfigurations(pid, scopeKey);
+				}
+
+				return null;
+			});
+	}
+
+	private void _removeScopePidConfigurations(String pid, ScopeKey scopeKey) {
+		_configurationBeans2.computeIfPresent(
+			scopeKey,
+			(key, scopeConfigurations) -> {
+				scopeConfigurations.remove(pid);
+
+				if (!scopeConfigurations.isEmpty()) {
+					return scopeConfigurations;
+				}
+
+				return null;
+			});
 	}
 
 	private void _updateEntries(
@@ -149,23 +175,45 @@ public class ScopedConfigurationManager implements ManagedServiceFactory {
 
 		ScopeKey scopeKey = new ScopeKey(scopePK, scope);
 
-		_stringScopeKeyMap.put(pid, scopeKey);
+		_pidScopeKeys.compute(
+			pid,
+			(key, scopeKeys) -> {
+				if (scopeKeys == null) {
+					scopeKeys = new HashSet<>();
+				}
 
-		_configurationBeans.put(
+				scopeKeys.add(scopeKey);
+
+				return scopeKeys;
+			});
+
+		_configurationBeans2.compute(
 			scopeKey,
-			ConfigurableUtil.createConfigurable(
-				_configurationBeanClass, properties));
+			(key, scopeConfigurations) -> {
+				if (scopeConfigurations == null) {
+					scopeConfigurations = new LinkedHashMap<>();
+				}
+
+				scopeConfigurations.remove(pid);
+
+				scopeConfigurations.put(
+					pid,
+					ConfigurableUtil.createConfigurable(
+						_configurationBeanClass, properties));
+
+				return scopeConfigurations;
+			});
 	}
 
 	private final BundleContext _bundleContext;
 	private final Class<?> _configurationBeanClass;
-	private final Map<ScopeKey, Object> _configurationBeans =
+	private final Map<ScopeKey, Map<String, Object>> _configurationBeans2 =
 		new ConcurrentHashMap<>();
 	private final String _factoryPid;
 	private final LocationVariableResolver _locationVariableResolver;
 	private ServiceRegistration<ManagedServiceFactory>
 		_managedServiceFactoryServiceRegistration;
-	private final Map<String, ScopeKey> _stringScopeKeyMap =
+	private final Map<String, Set<ScopeKey>> _pidScopeKeys =
 		new ConcurrentHashMap<>();
 
 	private class ScopeKey {

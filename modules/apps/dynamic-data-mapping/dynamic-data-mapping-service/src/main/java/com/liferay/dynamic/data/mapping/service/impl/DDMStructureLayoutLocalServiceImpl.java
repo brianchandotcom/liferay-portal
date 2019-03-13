@@ -103,6 +103,11 @@ public class DDMStructureLayoutLocalServiceImpl
 	}
 
 	@Override
+	public int countStructureLayoutByGroupId(long groupId) {
+		return ddmStructureLayoutPersistence.countByGroupId(groupId);
+	}
+
+	@Override
 	@SystemEvent(type = SystemEventConstants.TYPE_DELETE)
 	public void deleteStructureLayout(DDMStructureLayout structureLayout) {
 		ddmStructureLayoutPersistence.remove(structureLayout);

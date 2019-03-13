@@ -15,12 +15,15 @@
 package com.liferay.data.engine.internal.service;
 
 import com.liferay.data.engine.exception.DEDataLayoutException;
+import com.liferay.data.engine.internal.executor.DEDataLayoutCountRequestExecutor;
 import com.liferay.data.engine.internal.executor.DEDataLayoutDeleteRequestExecutor;
 import com.liferay.data.engine.internal.executor.DEDataLayoutGetRequestExecutor;
 import com.liferay.data.engine.internal.executor.DEDataLayoutListRequestExecutor;
 import com.liferay.data.engine.internal.executor.DEDataLayoutSaveRequestExecutor;
 import com.liferay.data.engine.internal.io.DEDataLayoutDeserializerTracker;
 import com.liferay.data.engine.internal.io.DEDataLayoutSerializerTracker;
+import com.liferay.data.engine.service.DEDataLayoutCountRequest;
+import com.liferay.data.engine.service.DEDataLayoutCountResponse;
 import com.liferay.data.engine.service.DEDataLayoutDeleteRequest;
 import com.liferay.data.engine.service.DEDataLayoutDeleteResponse;
 import com.liferay.data.engine.service.DEDataLayoutGetRequest;
@@ -43,6 +46,17 @@ import org.osgi.service.component.annotations.Reference;
 @Component(immediate = true, service = DEDataLayoutService.class)
 public class DEDataLayoutServiceImpl implements DEDataLayoutService {
 
+	public DEDataLayoutCountResponse execute(
+		DEDataLayoutCountRequest deDataLayoutCountRequest)
+		throws DEDataLayoutException {
+
+		DEDataLayoutCountRequestExecutor deDataLayoutCountRequestExecutor =
+			getDEDataLayoutCountRequestExecutor();
+
+		return deDataLayoutCountRequestExecutor.execute(
+			deDataLayoutCountRequest);
+	}
+
 	@Override
 	public DEDataLayoutDeleteResponse execute(
 			DEDataLayoutDeleteRequest deDataLayoutDeleteRequest)
@@ -54,7 +68,7 @@ public class DEDataLayoutServiceImpl implements DEDataLayoutService {
 		return deDataLayoutDeleteRequestExecutor.execute(
 			deDataLayoutDeleteRequest);
 	}
-
+	
 	@Override
 	public DEDataLayoutGetResponse execute(
 			DEDataLayoutGetRequest deDataLayoutGetRequest)
@@ -86,6 +100,18 @@ public class DEDataLayoutServiceImpl implements DEDataLayoutService {
 			getDEDataLayoutSaveRequestExecutor();
 
 		return deDataLayoutSaveRequestExecutor.execute(deDataLayoutSaveRequest);
+	}
+
+	public DEDataLayoutCountRequestExecutor
+		getDEDataLayoutCountRequestExecutor() {
+
+		if (_deDataLayoutCountRequestExecutor == null) {
+			_deDataLayoutCountRequestExecutor =
+				new DEDataLayoutCountRequestExecutor(
+					_ddmStructureLayoutLocalService);
+		}
+
+		return _deDataLayoutCountRequestExecutor;
 	}
 
 	public DEDataLayoutDeleteRequestExecutor
@@ -149,11 +175,12 @@ public class DEDataLayoutServiceImpl implements DEDataLayoutService {
 	@Reference
 	private DDMStructureVersionLocalService _ddmStructureVersionLocalService;
 
-	private DEDataLayoutDeleteRequestExecutor
-		_deDataLayoutDeleteRequestExecutor;
-
 	@Reference
 	private DEDataLayoutDeserializerTracker _deDataLayoutDeserializerTracker;
+
+	private DEDataLayoutCountRequestExecutor _deDataLayoutCountRequestExecutor;
+	private DEDataLayoutDeleteRequestExecutor
+		_deDataLayoutDeleteRequestExecutor;
 
 	private DEDataLayoutGetRequestExecutor _deDataLayoutGetRequestExecutor;
 	private DEDataLayoutListRequestExecutor _deDataLayoutListRequestExecutor;

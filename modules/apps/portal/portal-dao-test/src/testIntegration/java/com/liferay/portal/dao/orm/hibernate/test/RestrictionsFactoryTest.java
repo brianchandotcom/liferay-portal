@@ -12,8 +12,12 @@
  * details.
  */
 
-package com.liferay.portal.dao.orm.hibernate;
+package com.liferay.portal.dao.orm.hibernate.test;
 
+import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.portal.dao.orm.hibernate.CriterionImpl;
+import com.liferay.portal.dao.orm.hibernate.DisjunctionImpl;
+import com.liferay.portal.dao.orm.hibernate.RestrictionsFactoryImpl;
 import com.liferay.portal.kernel.dao.orm.Criterion;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactory;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
@@ -27,10 +31,12 @@ import org.junit.Assert;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 
 /**
  * @author Roberto Díaz
  */
+@RunWith(Arquillian.class)
 public class RestrictionsFactoryTest {
 
 	@ClassRule

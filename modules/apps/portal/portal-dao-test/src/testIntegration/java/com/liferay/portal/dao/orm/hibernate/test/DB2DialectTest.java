@@ -12,8 +12,9 @@
  * details.
  */
 
-package com.liferay.portal.dao.orm.hibernate;
+package com.liferay.portal.dao.orm.hibernate.test;
 
+import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.db.DBType;
@@ -35,10 +36,12 @@ import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 
 /**
  * @author László Csontos
  */
+@RunWith(Arquillian.class)
 public class DB2DialectTest {
 
 	@ClassRule

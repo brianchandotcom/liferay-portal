@@ -12,8 +12,10 @@
  * details.
  */
 
-package com.liferay.portal.dao.orm.hibernate;
+package com.liferay.portal.dao.orm.hibernate.test;
 
+import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.portal.dao.orm.hibernate.RestrictionsFactoryImpl;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.OrderFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.Property;
@@ -36,11 +38,13 @@ import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 
 /**
  * @author Máté Thurzó
  * @author Shuyang Zhou
  */
+@RunWith(Arquillian.class)
 public class DynamicQueryTest {
 
 	@ClassRule

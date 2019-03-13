@@ -354,7 +354,7 @@ public class InputAssetLinksDisplayContext {
 			PortletProvider.Action.BROWSE);
 
 		if (portletURL == null) {
-			return portletURL;
+			return null;
 		}
 
 		long groupId = _getAssetBrowserGroupId(assetRendererFactory);

@@ -335,7 +335,7 @@ public class ResourceOpenAPIParser {
 			return null;
 		}
 
-		List<String> mediaTypes = new ArrayList<>();
+		Set<String> mediaTypes = new TreeSet<>(String.CASE_INSENSITIVE_ORDER);
 
 		for (Response response : responses.values()) {
 			Map<String, Content> contents = response.getContent();
@@ -351,17 +351,15 @@ public class ResourceOpenAPIParser {
 			return null;
 		}
 
-		Collections.sort(mediaTypes);
-
 		StringBuilder sb = new StringBuilder();
 
-		for (int i = 0; i < mediaTypes.size(); i++) {
-			sb.append(StringUtil.quote(mediaTypes.get(i), "\""));
+		for (String mediaType : mediaTypes) {
+			sb.append(StringUtil.quote(mediaType, "\""));
 
-			if (i < (mediaTypes.size() - 1)) {
-				sb.append(", ");
-			}
+			sb.append(", ");
 		}
+
+		sb.setLength(sb.length() - 2);
 
 		if (mediaTypes.size() > 1) {
 			return "@Produces({" + sb.toString() + "})";

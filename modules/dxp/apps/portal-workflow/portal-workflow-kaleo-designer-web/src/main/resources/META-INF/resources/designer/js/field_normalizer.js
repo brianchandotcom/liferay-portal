@@ -54,10 +54,15 @@ AUI.add(
 			}
 		};
 
-		var _put = function(obj, key, value) {
+		var _put = function(obj, key, value, index) {
 			obj[key] = obj[key] || [];
 
-			obj[key].push(value);
+			if (index === undefined) {
+				obj[key].push(value);
+			}
+			else {
+				obj[key][index] = value;
+			}
 		};
 
 		var FieldNormalizer = {
@@ -76,7 +81,7 @@ AUI.add(
 										item2 = Lang.trim(item2);
 									}
 
-									_put(actions, index2, item2);
+									_put(actions, index2, item2, index1);
 								}
 							}
 						);
@@ -188,7 +193,7 @@ AUI.add(
 										item2 = FieldNormalizer.normalizeToAssignments(item2);
 									}
 
-									_put(notifications, index2, item2);
+									_put(notifications, index2, item2, index1);
 								}
 							}
 						);
@@ -222,7 +227,7 @@ AUI.add(
 										item2 = FieldNormalizer.normalizeToAssignments(item2);
 									}
 
-									_put(taskTimers, index2, item2);
+									_put(taskTimers, index2, item2, index1);
 								}
 							}
 						);

@@ -126,19 +126,19 @@ AUI.add(
 					function(item, index, collection) {
 						buffer.push(xmlAction.open, XMLUtil.create('name', item));
 
-						if (description) {
+						if (_shouldAppend(description, index)) {
 							buffer.push(XMLUtil.create('description', description[index]));
 						}
 
-						if (script) {
+						if (_shouldAppend(script, index)) {
 							buffer.push(XMLUtil.create('script', cdata(script[index])));
 						}
 
-						if (language) {
+						if (_shouldAppend(language, index)) {
 							buffer.push(XMLUtil.create('scriptLanguage', language[index]));
 						}
 
-						if (executionType) {
+						if (_shouldAppend(executionType, index)) {
 							buffer.push(XMLUtil.create('executionType', executionType[index]));
 						}
 
@@ -299,19 +299,19 @@ AUI.add(
 					function(item, index, collection) {
 						buffer.push(xmlNotification.open, XMLUtil.create('name', item));
 
-						if (description) {
+						if (_shouldAppend(description, index)) {
 							buffer.push(XMLUtil.create('description', cdata(description[index])));
 						}
 
-						if (template) {
+						if (_shouldAppend(template, index)) {
 							buffer.push(XMLUtil.create('template', cdata(template[index])));
 						}
 
-						if (templateLanguage) {
+						if (_shouldAppend(templateLanguage, index)) {
 							buffer.push(XMLUtil.create('templateLanguage', templateLanguage[index]));
 						}
 
-						if (notificationTypes && notificationTypes[index]) {
+						if (_shouldAppend(notificationTypes, index)) {
 							notificationTypes[index].forEach(
 								function(item) {
 									buffer.push(XMLUtil.create('notificationType', item.notificationType));
@@ -361,7 +361,7 @@ AUI.add(
 					function(item, index, collection) {
 						buffer.push(xmlTaskTimer.open, XMLUtil.create('name', item));
 
-						if (description) {
+						if (_shouldAppend(description, index)) {
 							buffer.push(XMLUtil.create('description', description[index]));
 						}
 
@@ -447,6 +447,10 @@ AUI.add(
 				buffer.push(xmlTransitions.close);
 			}
 		};
+
+		var _shouldAppend = function(elements, index) {
+			return elements && elements[index] !== undefined;
+		}
 
 		Liferay.KaleoDesignerXMLDefinitionSerializer = serializeDefinition;
 	},

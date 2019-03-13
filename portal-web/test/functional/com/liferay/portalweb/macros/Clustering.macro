@@ -45,7 +45,7 @@ definition {
 		);
 
 		ServerAdministration.addCategoryLogLevels(
-			categoryName = "com.liferay.portal.cache.ehcache.internal.event.PortalCacheCacheEventListener.test.cache",
+			categoryName = "${categoryName}",
 			categoryPriority = "DEBUG"
 		);
 	}

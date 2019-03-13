@@ -54,11 +54,12 @@ boolean versionSpecific = GetterUtil.getBoolean(request.getAttribute("file_entry
 					<clay:button
 						elementClasses="btn-outline-borderless btn-outline-secondary"
 						icon="info-circle-open"
+						id='<%= liferayPortletResponse.getNamespace() + "OpenContextualSidebar" %>'
 						monospaced="true"
 						size="sm"
-						id='<%= liferayPortletResponse.getNamespace() + "OpenContextualSidebar" %>'
 					/>
 				</li>
+
 				<c:if test="<%= dlViewFileVersionDisplayContext.isSharingLinkVisible() %>">
 					<li class="tbar-item">
 						<liferay-sharing:button

@@ -42,8 +42,8 @@ $upper-tbar-height: 4rem;
 	height: $upper-tbar-height;
 
 	.upper-tbar {
-		position: fixed;
 		left: 0;
+		position: fixed;
 		right: 0;
 		top: $control-menu-height;
 		z-index: 1;

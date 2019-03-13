@@ -49,24 +49,29 @@ function _openItemSelector(url, title, eventName, callback, destroyedCallback) {
  * @param {function} [destroyedCallback=null]
  */
 function openAssetBrowser(assetBrowserURL, modalTitle, portletNamespace, callback, destroyedCallback = null) {
-	_openItemSelector(
-		assetBrowserURL,
-		modalTitle,
-		`${portletNamespace}selectAsset`,
-		event => {
-			if (event.newVal && event.newVal[0]) {
-				const data = event.newVal[0];
-
-				callback(
-					{
-						classNameId: data.assetclassnameid,
-						classPK: data.assetclasspk,
-						title: data.assettitle
-					}
-				);
-			}
+	Liferay.Util.selectEntity(
+		{
+			dialog: {
+				constrain: true,
+				destroyOnHide: true,
+				modal: true
+			},
+			eventName: `${portletNamespace}selectAsset`,
+			title: modalTitle,
+			uri: assetBrowserURL
 		},
-		destroyedCallback
+		event => {
+			if (event.assetclassnameid) {
+				callback({
+					classNameId: event.assetclassnameid,
+					classPK: event.assetclasspk,
+					title: event.assettitle
+				});
+			}
+			else if (destroyedCallback) {
+				destroyedCallback();
+			}
+		}
 	);
 }
 

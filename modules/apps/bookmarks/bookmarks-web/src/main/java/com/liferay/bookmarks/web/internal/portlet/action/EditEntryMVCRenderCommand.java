@@ -15,9 +15,17 @@
 package com.liferay.bookmarks.web.internal.portlet.action;
 
 import com.liferay.bookmarks.constants.BookmarksPortletKeys;
+import com.liferay.bookmarks.model.BookmarksEntry;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.component.annotations.ReferencePolicy;
+import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
  * @author Brian Wing Shun Chan
@@ -35,8 +43,25 @@ import org.osgi.service.component.annotations.Component;
 public class EditEntryMVCRenderCommand extends GetEntryMVCRenderCommand {
 
 	@Override
+	protected void checkPermissions(
+			PermissionChecker permissionChecker, BookmarksEntry entry)
+		throws PortalException {
+
+		_bookmarksEntryModelResourcePermission.check(
+			permissionChecker, entry, ActionKeys.UPDATE);
+	}
+
+	@Override
 	protected String getPath() {
 		return "/bookmarks/edit_entry.jsp";
 	}
+
+	@Reference(
+		policy = ReferencePolicy.DYNAMIC,
+		policyOption = ReferencePolicyOption.GREEDY,
+		target = "(model.class.name=com.liferay.bookmarks.model.BookmarksEntry)"
+	)
+	private volatile ModelResourcePermission<BookmarksEntry>
+		_bookmarksEntryModelResourcePermission;
 
 }

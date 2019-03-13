@@ -42,10 +42,13 @@ public abstract class GetEntryMVCRenderCommand implements MVCRenderCommand {
 		try {
 			BookmarksEntry entry = ActionUtil.getEntry(renderRequest);
 
-			ThemeDisplay themeDisplay =
-				(ThemeDisplay)renderRequest.getAttribute(WebKeys.THEME_DISPLAY);
+			if (entry != null) {
+				ThemeDisplay themeDisplay =
+					(ThemeDisplay)renderRequest.getAttribute(
+						WebKeys.THEME_DISPLAY);
 
-			checkPermissions(themeDisplay.getPermissionChecker(), entry);
+				checkPermissions(themeDisplay.getPermissionChecker(), entry);
+			}
 
 			renderRequest.setAttribute(BookmarksWebKeys.BOOKMARKS_ENTRY, entry);
 		}

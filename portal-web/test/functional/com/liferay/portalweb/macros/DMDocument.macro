@@ -924,6 +924,12 @@ definition {
 		return "${dmDocumentURL}";
 	}
 
+	macro gotoEntry {
+		LexiconCard.clickCard(
+			card = "${dmDocumentTitle}"
+		);
+	}
+
 	macro linkImage {
 		ItemSelector.gotoItemSelectorViaAlloyEditor();
 

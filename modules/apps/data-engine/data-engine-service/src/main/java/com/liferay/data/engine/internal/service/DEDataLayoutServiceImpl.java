@@ -17,23 +17,11 @@ package com.liferay.data.engine.internal.service;
 import com.liferay.data.engine.constants.DEActionKeys;
 import com.liferay.data.engine.exception.DEDataLayoutException;
 import com.liferay.data.engine.internal.executor.DEDataLayoutCountRequestExecutor;
+import com.liferay.data.engine.internal.executor.DEDataLayoutDeleteModelPermissionsRequestExecutor;
+import com.liferay.data.engine.internal.executor.DEDataLayoutDeletePermissionsRequestExecutor;
 import com.liferay.data.engine.internal.executor.DEDataLayoutDeleteRequestExecutor;
 import com.liferay.data.engine.internal.executor.DEDataLayoutGetRequestExecutor;
 import com.liferay.data.engine.internal.executor.DEDataLayoutListRequestExecutor;
-import com.liferay.data.engine.internal.executor.DEDataLayoutSaveRequestExecutor;
-import com.liferay.data.engine.internal.io.DEDataLayoutDeserializerTracker;
-import com.liferay.data.engine.internal.io.DEDataLayoutSerializerTracker;
-import com.liferay.data.engine.service.DEDataLayoutCountRequest;
-import com.liferay.data.engine.service.DEDataLayoutCountResponse;
-import com.liferay.data.engine.service.DEDataLayoutDeleteRequest;
-import com.liferay.data.engine.service.DEDataLayoutDeleteResponse;
-import com.liferay.data.engine.service.DEDataLayoutGetRequest;
-import com.liferay.data.engine.service.DEDataLayoutGetResponse;
-import com.liferay.data.engine.service.DEDataLayoutListRequest;
-import com.liferay.data.engine.service.DEDataLayoutListResponse;
-import com.liferay.data.engine.internal.executor.DEDataLayoutDeleteModelPermissionsRequestExecutor;
-import com.liferay.data.engine.internal.executor.DEDataLayoutDeletePermissionsRequestExecutor;
-import com.liferay.data.engine.internal.executor.DEDataLayoutGetRequestExecutor;
 import com.liferay.data.engine.internal.executor.DEDataLayoutSaveModelPermissionsRequestExecutor;
 import com.liferay.data.engine.internal.executor.DEDataLayoutSavePermissionsRequestExecutor;
 import com.liferay.data.engine.internal.executor.DEDataLayoutSaveRequestExecutor;
@@ -41,12 +29,18 @@ import com.liferay.data.engine.internal.io.DEDataLayoutDeserializerTracker;
 import com.liferay.data.engine.internal.io.DEDataLayoutSerializerTracker;
 import com.liferay.data.engine.internal.security.permission.DEDataEnginePermissionSupport;
 import com.liferay.data.engine.model.DEDataLayout;
+import com.liferay.data.engine.service.DEDataLayoutCountRequest;
+import com.liferay.data.engine.service.DEDataLayoutCountResponse;
 import com.liferay.data.engine.service.DEDataLayoutDeleteModelPermissionsRequest;
 import com.liferay.data.engine.service.DEDataLayoutDeleteModelPermissionsResponse;
 import com.liferay.data.engine.service.DEDataLayoutDeletePermissionsRequest;
 import com.liferay.data.engine.service.DEDataLayoutDeletePermissionsResponse;
+import com.liferay.data.engine.service.DEDataLayoutDeleteRequest;
+import com.liferay.data.engine.service.DEDataLayoutDeleteResponse;
 import com.liferay.data.engine.service.DEDataLayoutGetRequest;
 import com.liferay.data.engine.service.DEDataLayoutGetResponse;
+import com.liferay.data.engine.service.DEDataLayoutListRequest;
+import com.liferay.data.engine.service.DEDataLayoutListResponse;
 import com.liferay.data.engine.service.DEDataLayoutSaveModelPermissionsRequest;
 import com.liferay.data.engine.service.DEDataLayoutSaveModelPermissionsResponse;
 import com.liferay.data.engine.service.DEDataLayoutSavePermissionsRequest;
@@ -77,6 +71,14 @@ import org.osgi.service.component.annotations.Reference;
 @Component(immediate = true, service = DEDataLayoutService.class)
 public class DEDataLayoutServiceImpl
 	extends DEBaseServiceImpl implements DEDataLayoutService {
+
+	public DEDataLayoutCountResponse execute(
+			DEDataLayoutCountRequest deDataLayoutCountRequest)
+		throws DEDataLayoutException {
+
+		return _deDataLayoutCountRequestExecutor.execute(
+			deDataLayoutCountRequest);
+	}
 
 	@Override
 	public DEDataLayoutDeleteModelPermissionsResponse execute(
@@ -130,25 +132,16 @@ public class DEDataLayoutServiceImpl
 		}
 	}
 
-	public DEDataLayoutCountResponse execute(
-			DEDataLayoutCountRequest deDataLayoutCountRequest)
-		throws DEDataLayoutException {
-
-		DEDataLayoutCountRequestExecutor deDataLayoutCountRequestExecutor =
-			getDEDataLayoutCountRequestExecutor();
-
-		return deDataLayoutCountRequestExecutor.execute(
-			deDataLayoutCountRequest);
-	}
-
 	@Override
 	public DEDataLayoutDeleteResponse execute(
 			DEDataLayoutDeleteRequest deDataLayoutDeleteRequest)
 		throws DEDataLayoutException {
 
 		try {
-		DEDataLayoutDeleteRequestExecutor deDataLayoutDeleteRequestExecutor =
-			getDEDataLayoutDeleteRequestExecutor();
+			long deDataLayoutId = deDataLayoutDeleteRequest.getDEDataLayoutId();
+
+			_modelResourcePermission.check(
+				getPermissionChecker(), deDataLayoutId, ActionKeys.DELETE);
 
 			return _deDataLayoutDeleteRequestExecutor.execute(
 				deDataLayoutDeleteRequest);
@@ -198,7 +191,17 @@ public class DEDataLayoutServiceImpl
 			DEDataLayoutListRequest deDataLayoutListRequest)
 		throws DEDataLayoutException {
 
-		return deDataLayoutGetRequestExecutor.execute(deDataLayoutGetRequest);
+		try {
+			return _deDataLayoutListRequestExecutor.execute(
+				deDataLayoutListRequest);
+		}
+		catch (DEDataLayoutException dedle) {
+			throw dedle;
+		}
+		catch (Exception e) {
+			throw new DEDataLayoutException(e);
+		}
+	}
 
 	public DEDataLayoutSaveModelPermissionsResponse execute(
 			DEDataLayoutSaveModelPermissionsRequest
@@ -255,59 +258,43 @@ public class DEDataLayoutServiceImpl
 	}
 
 	@Override
-	public DEDataLayoutListResponse execute(
-			DEDataLayoutListRequest deDataLayoutListRequest)
-		throws DEDataLayoutException {
-
-		DEDataLayoutListRequestExecutor deDataLayoutListRequestExecutor =
-			getDEDataLayoutListRequestExecutor();
-
-		return deDataLayoutListRequestExecutor.execute(deDataLayoutListRequest);
-	}
-
-	@Override
 	public DEDataLayoutSaveResponse execute(
 			DEDataLayoutSaveRequest deDataLayoutSaveRequest)
 		throws DEDataLayoutException {
 
-		DEDataLayoutSaveRequestExecutor deDataLayoutSaveRequestExecutor =
-			getDEDataLayoutSaveRequestExecutor();
+		DEDataLayout deDataLayout = deDataLayoutSaveRequest.getDEDataLayout();
 
-		return deDataLayoutSaveRequestExecutor.execute(deDataLayoutSaveRequest);
-	}
+		try {
+			long deDataLayoutId = deDataLayout.getDEDataLayoutId();
 
-	public DEDataLayoutCountRequestExecutor
-		getDEDataLayoutCountRequestExecutor() {
+			if (deDataLayoutId == 0) {
+				checkPermission(
+					deDataLayoutSaveRequest.getGroupId(),
+					DEActionKeys.ADD_DATA_LAYOUT, getPermissionChecker());
+			}
+			else {
+				_modelResourcePermission.check(
+					getPermissionChecker(), deDataLayoutId, ActionKeys.UPDATE);
+			}
 
-		if (_deDataLayoutCountRequestExecutor == null) {
-			_deDataLayoutCountRequestExecutor =
-				new DEDataLayoutCountRequestExecutor(
-					_ddmStructureLayoutLocalService);
+			return _deDataLayoutSaveRequestExecutor.execute(
+				deDataLayoutSaveRequest);
 		}
-
-		return _deDataLayoutCountRequestExecutor;
-	}
-
-	public DEDataLayoutDeleteRequestExecutor
-		getDEDataLayoutDeleteRequestExecutor() {
-
-		if (_deDataLayoutDeleteRequestExecutor == null) {
-			_deDataLayoutDeleteRequestExecutor =
-				new DEDataLayoutDeleteRequestExecutor(
-					_ddmStructureLayoutLocalService);
+		catch (NoSuchStructureException nsse) {
+			throw new DEDataLayoutException.NoSuchDataLayout(
+				deDataLayout.getDEDataLayoutId(), nsse);
 		}
-
-		return _deDataLayoutDeleteRequestExecutor;
-	}
-
-	public DEDataLayoutGetRequestExecutor getDEDataLayoutGetRequestExecutor() {
-		if (_deDataLayoutGetRequestExecutor == null) {
-			_deDataLayoutGetRequestExecutor =
-				new DEDataLayoutGetRequestExecutor(
-					_ddmStructureLayoutLocalService,
-					_ddmStructureVersionLocalService,
-					_deDataLayoutDeserializerTracker);
+		catch (PrincipalException.MustHavePermission mhp) {
+			throw new DEDataLayoutException.MustHavePermission(
+				mhp.actionId, mhp);
 		}
+		catch (DEDataLayoutException dedle) {
+			throw dedle;
+		}
+		catch (Exception e) {
+			throw new DEDataLayoutException(e);
+		}
+	}
 
 	@Override
 	protected DEDataEnginePermissionSupport getDEDataEnginePermissionSupport() {
@@ -326,6 +313,10 @@ public class DEDataLayoutServiceImpl
 
 	@Activate
 	protected void setUpExecutors() {
+		_deDataLayoutCountRequestExecutor =
+			new DEDataLayoutCountRequestExecutor(
+				_ddmStructureLayoutLocalService);
+
 		_deDataLayoutDeleteModelPermissionsRequestExecutor =
 			new DEDataLayoutDeleteModelPermissionsRequestExecutor(
 				resourcePermissionLocalService, roleLocalService);
@@ -333,6 +324,10 @@ public class DEDataLayoutServiceImpl
 		_deDataLayoutDeletePermissionsRequestExecutor =
 			new DEDataLayoutDeletePermissionsRequestExecutor(
 				resourcePermissionLocalService, roleLocalService);
+
+		_deDataLayoutDeleteRequestExecutor =
+			new DEDataLayoutDeleteRequestExecutor(
+				_ddmStructureLayoutLocalService);
 
 		_deDataLayoutGetRequestExecutor = new DEDataLayoutGetRequestExecutor(
 			_ddmStructureLayoutLocalService, _ddmStructureVersionLocalService,
@@ -378,12 +373,12 @@ public class DEDataLayoutServiceImpl
 	private DDMStructureVersionLocalService _ddmStructureVersionLocalService;
 
 	private DEDataLayoutCountRequestExecutor _deDataLayoutCountRequestExecutor;
-	private DEDataLayoutDeleteRequestExecutor
-		_deDataLayoutDeleteRequestExecutor;
 	private DEDataLayoutDeleteModelPermissionsRequestExecutor
 		_deDataLayoutDeleteModelPermissionsRequestExecutor;
 	private DEDataLayoutDeletePermissionsRequestExecutor
 		_deDataLayoutDeletePermissionsRequestExecutor;
+	private DEDataLayoutDeleteRequestExecutor
+		_deDataLayoutDeleteRequestExecutor;
 
 	@Reference
 	private DEDataLayoutDeserializerTracker _deDataLayoutDeserializerTracker;

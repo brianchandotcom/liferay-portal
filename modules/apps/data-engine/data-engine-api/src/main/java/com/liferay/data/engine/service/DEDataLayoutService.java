@@ -32,17 +32,6 @@ public interface DEDataLayoutService {
 		throws DEDataLayoutException;
 
 	/**
-	 * Delete a DEDataLayout
-	 * @param deDataLayoutDeleteRequest
-	 * @return The {@link DEDataLayoutDeleteResponse} object
-	 * @throws DEDataLayoutException
-	 * @review
-	 */
-	public DEDataLayoutDeleteResponse execute(
-			DEDataLayoutDeleteRequest deDataLayoutDeleteRequest)
-		throws DEDataLayoutException;
-
-	/**
 	 * Execute the Delete Model Permissions Request which can revoke a
 	 * permission to a role to not perform actions involving a Data Layout model
 	 *
@@ -66,6 +55,17 @@ public interface DEDataLayoutService {
 	public DEDataLayoutDeletePermissionsResponse execute(
 			DEDataLayoutDeletePermissionsRequest
 				deDataLayoutDeletePermissionsRequest)
+		throws DEDataLayoutException;
+
+	/**
+	 * Delete a DEDataLayout
+	 * @param deDataLayoutDeleteRequest
+	 * @return The {@link DEDataLayoutDeleteResponse} object
+	 * @throws DEDataLayoutException
+	 * @review
+	 */
+	public DEDataLayoutDeleteResponse execute(
+			DEDataLayoutDeleteRequest deDataLayoutDeleteRequest)
 		throws DEDataLayoutException;
 
 	/**

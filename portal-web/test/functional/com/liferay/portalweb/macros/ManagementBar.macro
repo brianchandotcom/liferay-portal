@@ -8,10 +8,6 @@ definition {
 
 		Click.clickNoMouseOver(locator1 = "Icon#CURRENT_DISPLAY_STYLE");
 
-		Click.clickNoMouseOver(
-			locator1 = "Icon#CURRENT_DISPLAY_STYLE"
-		);
-
 		MenuItem.click(
 			menuItem = "${displayStyle}"
 		);
@@ -43,10 +39,6 @@ definition {
 
 	macro clickInfo {
 		Click.clickNoMouseOver(locator1 = "Icon#INFO");
-
-		Click.clickNoMouseOver(
-			locator1 = "Icon#INFO"
-		);
 	}
 
 	macro clickSelectAllCheckbox {

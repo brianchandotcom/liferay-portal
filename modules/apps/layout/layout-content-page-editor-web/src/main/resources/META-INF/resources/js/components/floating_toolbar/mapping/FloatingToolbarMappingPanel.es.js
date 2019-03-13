@@ -9,7 +9,7 @@ import getConnectedComponent from '../../../store/ConnectedComponent.es';
 import {setIn} from '../../../utils/FragmentsEditorUpdateUtils.es';
 import templates from './FloatingToolbarMappingPanel.soy';
 import {openAssetBrowser} from '../../../utils/FragmentsEditorDialogUtils';
-import {UPDATE_EDITABLE_VALUE} from '../../../actions/actions.es';
+import {ADD_MAPPED_ASSET_ENTRY, UPDATE_EDITABLE_VALUE} from '../../../actions/actions.es';
 
 const SOURCE_TYPE_IDS = {
 	content: 'specific_content',
@@ -151,6 +151,11 @@ class FloatingToolbarMappingPanel extends PortletBase {
 			this.portletNamespace,
 			selectedAssetEntry => {
 				this._selectAssetEntry(selectedAssetEntry);
+
+				this.store.dispatchAction(
+					ADD_MAPPED_ASSET_ENTRY,
+					selectedAssetEntry
+				);
 			}
 		);
 	}

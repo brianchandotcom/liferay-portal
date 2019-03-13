@@ -445,6 +445,9 @@ public class ResourceOpenAPIParser {
 
 				methodNameSegments.add(pathName + "Page");
 			}
+			else if (Objects.equals(pathName, schemaName)) {
+				methodNameSegments.add(pathName);
+			}
 			else {
 				String name = pathName;
 

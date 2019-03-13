@@ -206,28 +206,40 @@ else {
 	</aui:button-row>
 </aui:form>
 
-<aui:script>
+<script>
 	function <portlet:namespace />updateUserGroupGroupRoleUsers(redirect) {
 		var Util = Liferay.Util;
 
-		var form = AUI.$(document.<portlet:namespace />fm);
+		var form = document.<portlet:namespace />fm;
 
-		form.fm('redirect').val(redirect);
-		form.fm('addUserGroupIds').val(Util.listCheckedExcept(form, '<portlet:namespace />allRowIds'));
-		form.fm('removeUserGroupIds').val(Util.listUncheckedExcept(form, '<portlet:namespace />allRowIds'));
-
-		submitForm(form, '<portlet:actionURL name="editUserGroupGroupRoleUsers" />');
+		Util.postForm(
+			form,
+			{
+				data: {
+					'redirect': redirect,
+					'addUserGroupIds': Util.listCheckedExcept(form, '<portlet:namespace />allRowIds'),
+					'removeUserGroupIds': Util.listUncheckedExcept(form, '<portlet:namespace />allRowIds')
+				},
+				url: '<portlet:actionURL name="editUserGroupGroupRoleUsers" />'
+			}
+		);
 	}
 
 	function <portlet:namespace />updateUserGroupRoleUsers(redirect) {
 		var Util = Liferay.Util;
 
-		var form = AUI.$(document.<portlet:namespace />fm);
+		var form = document.<portlet:namespace />fm;
 
-		form.fm('redirect').val(redirect);
-		form.fm('addUserIds').val(Util.listCheckedExcept(form, '<portlet:namespace />allRowIds'));
-		form.fm('removeUserIds').val(Util.listUncheckedExcept(form, '<portlet:namespace />allRowIds'));
-
-		submitForm(form, '<portlet:actionURL name="editUserGroupRoleUsers" />');
+		Util.postForm(
+			form,
+			{
+				data: {
+					'redirect': redirect,
+					'addUserIds': Util.listCheckedExcept(form, '<portlet:namespace />allRowIds'),
+					'removeUserIds': Util.listUncheckedExcept(form, '<portlet:namespace />allRowIds')
+				},
+				url: '<portlet:actionURL name="editUserGroupRoleUsers" />'
+			}
+		);
 	}
-</aui:script>
+</script>

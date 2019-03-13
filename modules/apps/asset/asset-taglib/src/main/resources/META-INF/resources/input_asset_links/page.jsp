@@ -46,7 +46,9 @@
 		AssetEntry assetLinkEntry = inputAssetLinksDisplayContext.getAssetLinkEntry(assetLink);
 		%>
 
-		<liferay-ui:search-container-column-text>
+		<liferay-ui:search-container-column-text
+			name="title"
+		>
 			<h5>
 				<%= HtmlUtil.escape(assetLinkEntry.getTitle(locale)) %>
 			</h5>

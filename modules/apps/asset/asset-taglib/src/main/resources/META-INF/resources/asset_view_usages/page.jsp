@@ -67,7 +67,9 @@ List<AssetEntryUsage> assetEntryUsages = AssetEntryUsageLocalServiceUtil.getAsse
 		}
 		%>
 
-		<liferay-ui:search-container-column-text>
+		<liferay-ui:search-container-column-text
+			name="pages"
+		>
 			<h5>
 				<%= HtmlUtil.escape(name) %>
 			</h5>

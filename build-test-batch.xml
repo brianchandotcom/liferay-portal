@@ -791,6 +791,7 @@ mariadb.executable=${mariadb.executable}]]></echo>
 		<attribute name="app.server.type" />
 
 		<sequential>
+			<lstopwatch action="start" name="prepare.bundles.@{app.server.type}" />
 			<var name="app.server.type" value="@{app.server.type}" />
 
 			<echo append="true" file="app.server.${env.HOSTNAME}.properties"><![CDATA[
@@ -798,17 +799,27 @@ app.server.type=@{app.server.type}]]></echo>
 
 			<record-git-commit-portal />
 
+			<lstopwatch action="start" name="prepare.bundles.@{app.server.type}.compile" />
 			<antcall inheritAll="false" target="compile" />
+			<lstopwatch action="total" name="prepare.bundles.@{app.server.type}.compile" />
 
 			<if>
 				<equals arg1="@{app.server.type}" arg2="websphere" />
 				<then>
+					<lstopwatch action="start" name="prepare.bundles.@{app.server.type}.prepare-test-build-custom" />
+
 					<antcall inheritAll="false" target="prepare-test-build-custom">
 						<param name="app.server.type" value="@{app.server.type}" />
 					</antcall>
+
+					<lstopwatch action="total" name="prepare.bundles.@{app.server.type}.prepare-test-build-custom" />
 				</then>
 				<else>
+					<lstopwatch action="start" name="prepare.bundles.build-dist-@{app.server.type}" />
+
 					<ant antfile="build-dist.xml" inheritAll="false" target="build-dist-@{app.server.type}" />
+
+					<lstopwatch action="total" name="prepare.bundles.build-dist-@{app.server.type}" />
 				</else>
 			</if>
 
@@ -825,7 +836,13 @@ app.server.type=@{app.server.type}]]></echo>
 
 			<prepare-elasticsearch-configuration />
 
+			<lstopwatch action="start" name="prepare.bundles.@{app.server.type}.compile-test" />
+
 			<antcall inheritAll="false" target="compile-test" />
+
+			<lstopwatch action="total" name="prepare.bundles.@{app.server.type}.compile.test" />
+
+			<lstopwatch action="start" name="prepare.bundles.@{app.server.type}.compress" />
 
 			<delete>
 				<fileset
@@ -875,6 +892,10 @@ app.server.type=@{app.server.type}]]></echo>
 					tar --file=liferay-portal-bundle-@{app.server.type}.tar.gz --gzip --list --verbose
 				]]>
 			</execute>
+
+			<lstopwatch action="total" name="prepare.bundles.@{app.server.type}.compress" />
+
+			<lstopwatch action="total" name="prepare.bundles.@{app.server.type}" />
 		</sequential>
 	</macrodef>
 

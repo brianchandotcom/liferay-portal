@@ -43,9 +43,10 @@ public class DDMTemplateKeywordQueryContributor
 		KeywordQueryContributorHelper keywordQueryContributorHelper) {
 
 		addSearchLocalizedTerm(
-			booleanQuery, keywordQueryContributorHelper, Field.DESCRIPTION);
-		addSearchLocalizedTerm(
 			booleanQuery, keywordQueryContributorHelper, Field.NAME);
+
+		addSearchLocalizedTerm(
+			booleanQuery, keywordQueryContributorHelper, Field.DESCRIPTION);
 	}
 
 	protected void addSearchLocalizedTerm(

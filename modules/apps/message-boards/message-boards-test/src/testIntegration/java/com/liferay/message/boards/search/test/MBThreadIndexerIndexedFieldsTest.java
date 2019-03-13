@@ -154,6 +154,7 @@ public class MBThreadIndexerIndexedFieldsTest {
 		map.put(Field.STATUS, String.valueOf(mbThread.getStatus()));
 		map.put(Field.USER_ID, String.valueOf(mbThread.getUserId()));
 		map.put(Field.USER_NAME, StringUtil.lowerCase(mbThread.getUserName()));
+
 		map.put("discussion", "false");
 
 		Date lastPostDate = mbThread.getLastPostDate();

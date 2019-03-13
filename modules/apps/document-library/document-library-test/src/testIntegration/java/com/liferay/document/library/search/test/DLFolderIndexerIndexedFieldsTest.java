@@ -154,6 +154,7 @@ public class DLFolderIndexerIndexedFieldsTest extends BaseDLIndexerTestCase {
 			StringUtil.lowerCase(dlFolder.getName()));
 		map.put(Field.USER_ID, String.valueOf(dlFolder.getUserId()));
 		map.put(Field.USER_NAME, StringUtil.lowerCase(dlFolder.getUserName()));
+
 		map.put("visible", "true");
 
 		populateDates(dlFolder, map);

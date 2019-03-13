@@ -76,6 +76,7 @@ public abstract class BaseSegmentResourceImpl implements SegmentResource {
 
 	@Override
 	@GET
+	@Operation(description = "Get segments of a user")
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.QUERY, name = "page"),

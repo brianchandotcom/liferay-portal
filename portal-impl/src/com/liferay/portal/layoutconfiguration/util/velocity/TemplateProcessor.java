@@ -15,6 +15,7 @@
 package com.liferay.portal.layoutconfiguration.util.velocity;
 
 import com.liferay.petra.string.StringPool;
+import com.liferay.petra.xml.XMLUtil;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.Layout;
@@ -39,7 +40,6 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.layoutconfiguration.util.PortletRenderer;
-import com.liferay.portal.template.TemplatePortletPreferences;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -226,12 +226,32 @@ public class TemplateProcessor implements ColumnProcessor {
 				String portletPreferences = portlet.getDefaultPreferences();
 
 				if (!currentModifiableSettingsKeys.isEmpty()) {
-					TemplatePortletPreferences templatePortletPreferences =
-						new TemplatePortletPreferences();
+					StringBundler sb = new StringBundler();
 
-					portletPreferences =
-						templatePortletPreferences.getPreferences(
-							currentModifiableSettings);
+					sb.append("<portlet-preferences>");
+
+					for (String key : currentModifiableSettingsKeys) {
+						String[] values = currentModifiableSettings.getValues(
+							key, null);
+
+						if (values != null) {
+							sb.append("<preference><name>");
+							sb.append(key);
+							sb.append("</name>");
+
+							for (String value : values) {
+								sb.append("<value>");
+								sb.append(XMLUtil.toCompactSafe(value));
+								sb.append("</value>");
+							}
+
+							sb.append("</preference>");
+						}
+					}
+
+					sb.append("</portlet-preferences>");
+
+					portletPreferences = sb.toString();
 				}
 
 				PortletPreferencesFactoryUtil.getLayoutPortletSetup(

@@ -20,7 +20,6 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.PortletConstants;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
-import com.liferay.portal.kernel.settings.ModifiableSettings;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portlet.PortletPreferencesImpl;
 
@@ -68,34 +67,6 @@ public class TemplatePortletPreferences {
 			}
 
 			sb.append("</preference>");
-		}
-
-		sb.append("</portlet-preferences>");
-
-		return sb.toString();
-	}
-
-	public String getPreferences(ModifiableSettings settings) {
-		StringBundler sb = new StringBundler();
-
-		sb.append("<portlet-preferences>");
-
-		for (String key : settings.getModifiedKeys()) {
-			String[] values = settings.getValues(key, null);
-
-			if (values != null) {
-				sb.append("<preference><name>");
-				sb.append(key);
-				sb.append("</name>");
-
-				for (String value : values) {
-					sb.append("<value>");
-					sb.append(XMLUtil.toCompactSafe(value));
-					sb.append("</value>");
-				}
-
-				sb.append("</preference>");
-			}
 		}
 
 		sb.append("</portlet-preferences>");

@@ -1,16 +1,16 @@
 @import "mixins";
 
-$controlMenuDesktopHeight: 56px;
-$controlMenuHeight: 49px;
-$productMenuWidth: 320px;
-$upperTbarHeight: 4rem;
+$control-menu-height-desktop: 56px;
+$control-menu-height: 49px;
+$product-menu-width: 320px;
+$upper-tbar-height: 4rem;
 
 .upper-tbar {
 	background-color: #FFF;
 	border-color: #E7E7ED;
 	border-style: solid;
 	border-width: 0 0 1px;
-	height: $upperTbarHeight;
+	height: $upper-tbar-height;
 
 	.tbar-nav {
 		padding: 0 calc(1.25rem - 12px);
@@ -39,20 +39,20 @@ $upperTbarHeight: 4rem;
 }
 
 .upper-tbar-container-fixed {
-	height: $upperTbarHeight;
+	height: $upper-tbar-height;
 
 	.upper-tbar {
 		position: fixed;
 		left: 0;
 		right: 0;
-		top: $controlMenuHeight;
+		top: $control-menu-height;
 		z-index: 1;
 
 		@include sm {
-			top: $controlMenuDesktopHeight;
+			top: $control-menu-height-desktop;
 
 			body.open & {
-				left: $productMenuWidth;
+				left: $product-menu-width;
 			}
 
 			body.sidenav-transition & {

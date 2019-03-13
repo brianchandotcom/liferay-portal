@@ -273,14 +273,17 @@ components:
                 - name
             type: object
         SegmentUser:
-            description: https://www.schema.org/UserAccount
+            description: This model describes a user who belongs to a segment
             properties:
                 email:
+                    description: User's email
                     type: string
                 id:
+                    description: Internal ID of the user
                     format: int64
                     type: integer
                 name:
+                    description: User's full name
                     type: string
             type: object
         UserAccount:

@@ -59,6 +59,19 @@ components:
                         $ref: '#/components/schemas/LocalizedValue'
                     type: array
             type: object
+        DataRecord:
+            description: https://www.schema.org/DataRecord
+            properties:
+                dataRecordCollectionId:
+                    format: int64
+                    type: integer
+                dataRecordValues:
+                    items:
+                        $ref: '#/components/schemas/DataRecordValue'
+                    type: array
+                id:
+                    format: int64
+                    type: integer
         DataRecordCollection:
             description: https://www.schema.org/DataRecordCollection
             properties:
@@ -76,8 +89,13 @@ components:
                     items:
                         $ref: '#/components/schemas/LocalizedValue'
                     type: array
-
             type: object
+        DataRecordValue:
+            properties:
+                key:
+                    type: string
+                value:
+                    type: object
         LocalizedValue:
             description: https://www.schema.org/LocalizedValue
             properties:
@@ -301,5 +319,137 @@ paths:
                         application/json:
                             schema:
                                 $ref: "#/components/schemas/DataRecordCollection"
+                    description: ""
+            tags: ["DataRecordCollection"]
+    "/data-record-collections/{data-record-collection-id}/records":
+        get:
+            parameters:
+                - in: path
+                  name: data-record-collection-id
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+                - in: query
+                  name: page
+                  required: true
+                  schema:
+                      type: integer
+                - in: query
+                  name: pageSize
+                  required: true
+                  schema:
+                      type: integer
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/DataRecord"
+                                type: array
+                    description: ""
+            tags: ["DataRecordCollection"]
+        post:
+            parameters:
+                - in: path
+                  name: data-record-collection-id
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+                - in: query
+                  name: contentSpaceId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/DataRecord"
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/DataRecord"
+                    description: ""
+            tags: ["DataRecordCollection"]
+    "/data-record-collections/{data-record-collection-id}/records/{data-record-id}":
+        delete:
+            parameters:
+                - in: path
+                  name: data-record-collection-id
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+                - in: path
+                  name: data-record-id
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            responses:
+                204:
+                    content:
+                        application/json: {}
+                    description: ""
+            tags: ["DataRecordCollection"]
+        get:
+            parameters:
+                - in: path
+                  name: data-record-collection-id
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+                - in: path
+                  name: data-record-id
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/DataRecord"
+                    description: ""
+            tags: ["DataRecordCollection"]
+        put:
+            parameters:
+                - in: path
+                  name: data-record-collection-id
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+                - in: path
+                  name: data-record-id
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+                - in: query
+                  name: contentSpaceId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/DataRecord"
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/DataRecord"
                     description: ""
             tags: ["DataRecordCollection"]

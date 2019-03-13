@@ -398,9 +398,8 @@ definition {
 
 		var key_dmDocumentTitle = "${dmDocumentTitle}";
 
-		AssertTextEquals(
-			locator1 = "DocumentsAndMedia#ICON_DOCUMENT_TITLE",
-			value1 = "${dmDocumentTitle}"
+		DMDocument.viewCardTitle(
+			dmDocumentTitle = "${dmDocumentTitle}"
 		);
 	}
 
@@ -1010,9 +1009,8 @@ definition {
 
 		AssertElementPresent(locator1 = "DocumentsAndMedia#ICON_DOCUMENT");
 
-		AssertTextEquals(
-			locator1 = "DocumentsAndMedia#ICON_DOCUMENT_TITLE",
-			value1 = "${dmDocumentTitle}"
+		DMDocument.viewCardTitle(
+			dmDocumentTitle = "${dmDocumentTitle}"
 		);
 
 		MouseOver(locator1 = "DocumentsAndMedia#ICON_DOCUMENT");
@@ -1637,9 +1635,8 @@ definition {
 
 		DMDocument.gotoEntry(dmDocumentTitle = "${dmDocumentTitleEdit}");
 
-		AssertTextEquals(
-			locator1 = "DocumentsAndMediaDocument#DOCUMENT_INFO_TITLE",
-			value1 = "${dmDocumentTitleEdit}"
+		DMDocument.viewCardTitle(
+			dmDocumentTitle = "${dmDocumentTitleEdit}"
 		);
 
 		if (isSet(dmDocumentVersionNumber)) {
@@ -1891,9 +1888,8 @@ definition {
 		var key_dmDocumentTitle = "${dmDocumentTitle}";
 
 		if ("${documentAdded}" == "true") {
-			AssertTextEquals(
-				locator1 = "DocumentsAndMedia#ICON_DOCUMENT_TITLE",
-				value1 = "${dmDocumentTitle}"
+			DMDocument.viewCardTitle(
+				dmDocumentTitle = "${dmDocumentTitle}"
 			);
 
 			AssertClick.assertPartialTextClickAt(

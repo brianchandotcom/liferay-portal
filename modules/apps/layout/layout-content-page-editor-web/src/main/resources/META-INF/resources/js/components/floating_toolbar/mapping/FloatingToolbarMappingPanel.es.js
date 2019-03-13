@@ -172,6 +172,12 @@ class FloatingToolbarMappingPanel extends PortletBase {
 					ADD_MAPPED_ASSET_ENTRY,
 					selectedAssetEntry
 				);
+
+				requestAnimationFrame(
+					() => {
+						this.refs.panel.focus();
+					}
+				);
 			}
 		);
 	}
@@ -188,6 +194,12 @@ class FloatingToolbarMappingPanel extends PortletBase {
 			{
 				classNameId: data.classNameId,
 				classPK: data.classPk
+			}
+		);
+
+		requestAnimationFrame(
+			() => {
+				this.refs.panel.focus();
 			}
 		);
 	}

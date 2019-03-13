@@ -5,4 +5,5 @@ Export-Package:\
 	com.liferay.portal.odata.entity,\
 	com.liferay.portal.odata.filter,\
 	com.liferay.portal.odata.filter.expression,\
-	com.liferay.portal.odata.sort
+	com.liferay.portal.odata.sort,\
+	com.liferay.portal.odata.util

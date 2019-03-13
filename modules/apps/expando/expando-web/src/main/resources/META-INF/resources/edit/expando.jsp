@@ -73,6 +73,40 @@ portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(redirect);
 
 renderResponse.setTitle(modelResourceName + ": " + ((column == null) ? LanguageUtil.get(request, "new-custom-field") : column.getName()));
+
+PortletURL customFieldURL = renderResponse.createRenderURL();
+
+customFieldURL.setParameter("mvcPath", "/view.jsp");
+customFieldURL.setParameter("redirect", redirect);
+
+PortletURL viewAttributesURL = renderResponse.createRenderURL();
+
+viewAttributesURL.setParameter("mvcPath", "/view_attributes.jsp");
+viewAttributesURL.setParameter("redirect", redirect);
+viewAttributesURL.setParameter("modelResource", modelResource);
+
+PortletURL newCustomFieldURL = renderResponse.createRenderURL();
+
+newCustomFieldURL.setParameter("mvcPath", "/edit/select_field_type.jsp");
+newCustomFieldURL.setParameter("redirect", redirect);
+newCustomFieldURL.setParameter("modelResource", modelResource);
+
+PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "custom-field"), customFieldURL.toString());
+PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "view-attributes"), viewAttributesURL.toString());
+PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "new-custom-field"), newCustomFieldURL.toString());
+
+String displayType = LanguageUtil.get(request, propertyDisplayType);
+
+if (column != null) {
+	String editAttributeBreadcrumb = LanguageUtil.format(request, "edit-x", new Object[] {column.getName()}, false);
+
+	PortalUtil.addPortletBreadcrumbEntry(request, editAttributeBreadcrumb, null);
+}
+else {
+	String newAttributeBreadcrumb = LanguageUtil.format(request, "new-x", new Object[] {displayType}, false);
+
+	PortalUtil.addPortletBreadcrumbEntry(request, newAttributeBreadcrumb, null);
+}
 %>
 
 <liferay-ui:error exception="<%= ColumnNameException.class %>" message="please-enter-a-valid-name" />
@@ -83,6 +117,15 @@ renderResponse.setTitle(modelResourceName + ": " + ((column == null) ? LanguageU
 <portlet:actionURL name='<%= (column == null) ? "addExpando" : "updateExpando" %>' var="editExpandoURL">
 	<portlet:param name="mvcPath" value="/edit/expando.jsp" />
 </portlet:actionURL>
+
+<div class="container-fluid container-fluid-max-xl">
+	<liferay-ui:breadcrumb
+		showCurrentGroup="<%= false %>"
+		showGuestGroup="<%= false %>"
+		showLayout="<%= false %>"
+		showPortletBreadcrumb="<%= true %>"
+	/>
+</div>
 
 <liferay-frontend:edit-form
 	action="<%= editExpandoURL %>"

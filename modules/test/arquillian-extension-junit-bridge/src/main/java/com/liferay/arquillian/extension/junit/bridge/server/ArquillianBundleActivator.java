@@ -48,6 +48,8 @@ import org.junit.runners.model.TestClass;
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleActivator;
 import org.osgi.framework.BundleContext;
+import org.osgi.framework.BundleEvent;
+import org.osgi.framework.BundleListener;
 import org.osgi.framework.wiring.BundleWiring;
 
 /**
@@ -57,15 +59,15 @@ public class ArquillianBundleActivator implements BundleActivator {
 
 	@Override
 	public void start(BundleContext bundleContext) throws Exception {
-		Bundle bundle = bundleContext.getBundle();
+		Bundle testBundle = bundleContext.getBundle();
 
-		BundleWiring bundleWiring = bundle.adapt(BundleWiring.class);
+		BundleWiring bundleWiring = testBundle.adapt(BundleWiring.class);
 
 		_classLoader = bundleWiring.getClassLoader();
 
 		Manifest manifest = new Manifest();
 
-		URL url = bundle.getResource("/META-INF/MANIFEST.MF");
+		URL url = testBundle.getResource("/META-INF/MANIFEST.MF");
 
 		try (InputStream inputStream = url.openStream()) {
 			manifest.read(inputStream);
@@ -97,16 +99,38 @@ public class ArquillianBundleActivator implements BundleActivator {
 		List<String> filterMethodNames = StringUtil.split(
 			attributes.getValue("Filtered-Methods"), CharPool.COMMA);
 
-		try {
-			_runTestClass(clientBridge, className, filterMethodNames);
-		}
-		finally {
-			clientBridge.bridge("kill", null);
-		}
+		_bundleListener = new BundleListener() {
+
+			@Override
+			public void bundleChanged(BundleEvent bundleEvent) {
+				Bundle bundle = bundleEvent.getBundle();
+
+				if (!testBundle.equals(bundle) ||
+					(bundle.getState() != Bundle.ACTIVE)) {
+
+					return;
+				}
+
+				try {
+					_runTestClass(clientBridge, className, filterMethodNames);
+				}
+				catch (ClassNotFoundException cnfe) {
+					throw new RuntimeException(
+						"Unable to load test class " + className, cnfe);
+				}
+				finally {
+					clientBridge.bridge("kill", null);
+				}
+			}
+
+		};
+
+		bundleContext.addBundleListener(_bundleListener);
 	}
 
 	@Override
 	public void stop(BundleContext bundleContext) {
+		bundleContext.removeBundleListener(_bundleListener);
 	}
 
 	private void _processThrowable(
@@ -198,6 +222,7 @@ public class ArquillianBundleActivator implements BundleActivator {
 		}
 	}
 
+	private BundleListener _bundleListener;
 	private ClassLoader _classLoader;
 
 	private class ClientBridge {

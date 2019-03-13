@@ -14,6 +14,7 @@
 
 package com.liferay.data.engine.internal.service;
 
+import com.liferay.data.engine.constants.DEActionKeys;
 import com.liferay.data.engine.exception.DEDataLayoutException;
 import com.liferay.data.engine.internal.executor.DEDataLayoutCountRequestExecutor;
 import com.liferay.data.engine.internal.executor.DEDataLayoutDeleteRequestExecutor;
@@ -30,13 +31,43 @@ import com.liferay.data.engine.service.DEDataLayoutGetRequest;
 import com.liferay.data.engine.service.DEDataLayoutGetResponse;
 import com.liferay.data.engine.service.DEDataLayoutListRequest;
 import com.liferay.data.engine.service.DEDataLayoutListResponse;
+import com.liferay.data.engine.internal.executor.DEDataLayoutDeleteModelPermissionsRequestExecutor;
+import com.liferay.data.engine.internal.executor.DEDataLayoutDeletePermissionsRequestExecutor;
+import com.liferay.data.engine.internal.executor.DEDataLayoutGetRequestExecutor;
+import com.liferay.data.engine.internal.executor.DEDataLayoutSaveModelPermissionsRequestExecutor;
+import com.liferay.data.engine.internal.executor.DEDataLayoutSavePermissionsRequestExecutor;
+import com.liferay.data.engine.internal.executor.DEDataLayoutSaveRequestExecutor;
+import com.liferay.data.engine.internal.io.DEDataLayoutDeserializerTracker;
+import com.liferay.data.engine.internal.io.DEDataLayoutSerializerTracker;
+import com.liferay.data.engine.internal.security.permission.DEDataEnginePermissionSupport;
+import com.liferay.data.engine.model.DEDataLayout;
+import com.liferay.data.engine.service.DEDataLayoutDeleteModelPermissionsRequest;
+import com.liferay.data.engine.service.DEDataLayoutDeleteModelPermissionsResponse;
+import com.liferay.data.engine.service.DEDataLayoutDeletePermissionsRequest;
+import com.liferay.data.engine.service.DEDataLayoutDeletePermissionsResponse;
+import com.liferay.data.engine.service.DEDataLayoutGetRequest;
+import com.liferay.data.engine.service.DEDataLayoutGetResponse;
+import com.liferay.data.engine.service.DEDataLayoutSaveModelPermissionsRequest;
+import com.liferay.data.engine.service.DEDataLayoutSaveModelPermissionsResponse;
+import com.liferay.data.engine.service.DEDataLayoutSavePermissionsRequest;
+import com.liferay.data.engine.service.DEDataLayoutSavePermissionsResponse;
 import com.liferay.data.engine.service.DEDataLayoutSaveRequest;
 import com.liferay.data.engine.service.DEDataLayoutSaveResponse;
 import com.liferay.data.engine.service.DEDataLayoutService;
+import com.liferay.dynamic.data.mapping.exception.NoSuchStructureException;
+import com.liferay.dynamic.data.mapping.exception.NoSuchStructureLayoutException;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLayoutLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMStructureVersionLocalService;
+import com.liferay.portal.kernel.security.auth.PrincipalException;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
+import com.liferay.portal.kernel.service.GroupLocalService;
+import com.liferay.portal.kernel.service.ResourceLocalService;
+import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
+import com.liferay.portal.kernel.service.RoleLocalService;
 
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -44,7 +75,9 @@ import org.osgi.service.component.annotations.Reference;
  * @author Jeyvison Nascimento
  */
 @Component(immediate = true, service = DEDataLayoutService.class)
-public class DEDataLayoutServiceImpl implements DEDataLayoutService {
+public class DEDataLayoutServiceImpl
+	extends DEBaseServiceImpl implements DEDataLayoutService {
+
 
 	public DEDataLayoutCountResponse execute(
 			DEDataLayoutCountRequest deDataLayoutCountRequest)
@@ -62,11 +95,24 @@ public class DEDataLayoutServiceImpl implements DEDataLayoutService {
 			DEDataLayoutDeleteRequest deDataLayoutDeleteRequest)
 		throws DEDataLayoutException {
 
+		try {
 		DEDataLayoutDeleteRequestExecutor deDataLayoutDeleteRequestExecutor =
 			getDEDataLayoutDeleteRequestExecutor();
 
-		return deDataLayoutDeleteRequestExecutor.execute(
-			deDataLayoutDeleteRequest);
+			return _deDataLayoutDeleteRequestExecutor.execute(
+				deDataLayoutDeleteRequest);
+		}
+		catch (PrincipalException.MustHavePermission mhp) {
+			throw new DEDataLayoutException.MustHavePermission(
+				mhp.actionId, mhp);
+		}
+		catch (NoSuchStructureLayoutException nssle) {
+			throw new DEDataLayoutException.NoSuchDataLayout(
+				deDataLayoutDeleteRequest.getDEDataLayoutId(), nssle);
+		}
+		catch (Exception e) {
+			throw new DEDataLayoutException(e);
+		}
 	}
 
 	@Override
@@ -74,10 +120,87 @@ public class DEDataLayoutServiceImpl implements DEDataLayoutService {
 			DEDataLayoutGetRequest deDataLayoutGetRequest)
 		throws DEDataLayoutException {
 
-		DEDataLayoutGetRequestExecutor deDataLayoutGetRequestExecutor =
-			getDEDataLayoutGetRequestExecutor();
+		long deDataLayoutId = deDataLayoutGetRequest.getDEDataLayoutId();
+
+		try {
+			_modelResourcePermission.check(
+				getPermissionChecker(), deDataLayoutId, ActionKeys.VIEW);
+
+			return _deDataLayoutGetRequestExecutor.execute(
+				deDataLayoutGetRequest);
+		}
+		catch (PrincipalException.MustHavePermission mhp) {
+			throw new DEDataLayoutException.MustHavePermission(
+				mhp.actionId, mhp);
+		}
+		catch (NoSuchStructureLayoutException nssle) {
+			throw new DEDataLayoutException.NoSuchDataLayout(
+				deDataLayoutId, nssle);
+		}
+		catch (Exception e) {
+			throw new DEDataLayoutException(e);
+		}
+	}
+
+	@Override
+	public DEDataLayoutListResponse execute(
+			DEDataLayoutListRequest deDataLayoutListRequest)
+		throws DEDataLayoutException {
 
 		return deDataLayoutGetRequestExecutor.execute(deDataLayoutGetRequest);
+
+	public DEDataLayoutSaveModelPermissionsResponse execute(
+			DEDataLayoutSaveModelPermissionsRequest
+				deDataLayoutSaveModelPermissionsRequest)
+		throws DEDataLayoutException {
+
+		try {
+			checkPermission(
+				deDataLayoutSaveModelPermissionsRequest.getScopedGroupId(),
+				ActionKeys.DEFINE_PERMISSIONS, getPermissionChecker());
+
+			return _deDataLayoutSaveModelPermissionsRequestExecutor.execute(
+				deDataLayoutSaveModelPermissionsRequest);
+		}
+		catch (PrincipalException.MustHavePermission mhp) {
+			throw new DEDataLayoutException.MustHavePermission(
+				mhp.actionId, mhp);
+		}
+		catch (PrincipalException pe) {
+			throw new DEDataLayoutException.PrincipalException(pe);
+		}
+		catch (Exception e) {
+			throw new DEDataLayoutException(e);
+		}
+	}
+
+	@Override
+	public DEDataLayoutSavePermissionsResponse execute(
+			DEDataLayoutSavePermissionsRequest
+				deDataLayoutSavePermissionsRequest)
+		throws DEDataLayoutException {
+
+		try {
+			checkPermission(
+				deDataLayoutSavePermissionsRequest.getScopedGroupId(),
+				ActionKeys.DEFINE_PERMISSIONS, getPermissionChecker());
+
+			return _deDataLayoutSavePermissionsRequestExecutor.execute(
+				deDataLayoutSavePermissionsRequest);
+		}
+		catch (PrincipalException.MustHavePermission mhp) {
+			throw new DEDataLayoutException.MustHavePermission(
+				mhp.actionId, mhp);
+		}
+		catch (PrincipalException pe) {
+			throw new DEDataLayoutException.PrincipalException(pe);
+		}
+		catch (DEDataLayoutException dedle) {
+			throw dedle;
+		}
+		catch (Exception e) {
+			throw new DEDataLayoutException(e);
+		}
 	}
 
 	@Override
@@ -135,36 +258,56 @@ public class DEDataLayoutServiceImpl implements DEDataLayoutService {
 					_deDataLayoutDeserializerTracker);
 		}
 
-		return _deDataLayoutGetRequestExecutor;
+	@Override
+	protected DEDataEnginePermissionSupport getDEDataEnginePermissionSupport() {
+		return new DEDataEnginePermissionSupport(groupLocalService);
 	}
 
-	public DEDataLayoutListRequestExecutor
-		getDEDataLayoutListRequestExecutor() {
+	@Reference(
+		target = "(model.class.name=com.liferay.data.engine.model.DEDataLayout)",
+		unbind = "-"
+	)
+	protected void setModelResourcePermission(
+		ModelResourcePermission<DEDataLayout> modelResourcePermission) {
 
-		if (_deDataLayoutListRequestExecutor == null) {
-			_deDataLayoutListRequestExecutor =
-				new DEDataLayoutListRequestExecutor(
-					_ddmStructureLayoutLocalService,
-					_ddmStructureVersionLocalService,
-					_deDataLayoutDeserializerTracker);
-		}
-
-		return _deDataLayoutListRequestExecutor;
+		_modelResourcePermission = modelResourcePermission;
 	}
 
-	public DEDataLayoutSaveRequestExecutor
-		getDEDataLayoutSaveRequestExecutor() {
+	@Activate
+	protected void setUpExecutors() {
+		_deDataLayoutGetRequestExecutor = new DEDataLayoutGetRequestExecutor(
+			_ddmStructureLayoutLocalService, _ddmStructureVersionLocalService,
+			_deDataLayoutDeserializerTracker);
 
-		if (_deDataLayoutSaveRequestExecutor == null) {
-			_deDataLayoutSaveRequestExecutor =
-				new DEDataLayoutSaveRequestExecutor(
-					_ddmStructureLayoutLocalService,
-					_ddmStructureVersionLocalService, _ddmStructureLocalService,
-					_deDataLayoutSerializerTracker);
-		}
+		_deDataLayoutListRequestExecutor = new DEDataLayoutListRequestExecutor(
+			_ddmStructureLayoutLocalService, _ddmStructureVersionLocalService,
+			_deDataLayoutDeserializerTracker);
 
-		return _deDataLayoutSaveRequestExecutor;
+		_deDataLayoutSaveModelPermissionsRequestExecutor =
+			new DEDataLayoutSaveModelPermissionsRequestExecutor(
+				resourcePermissionLocalService);
+
+		_deDataLayoutSavePermissionsRequestExecutor =
+			new DEDataLayoutSavePermissionsRequestExecutor(
+				resourcePermissionLocalService, roleLocalService);
+
+		_deDataLayoutSaveRequestExecutor = new DEDataLayoutSaveRequestExecutor(
+			_ddmStructureLayoutLocalService, _ddmStructureVersionLocalService,
+			_ddmStructureLocalService, _deDataLayoutSerializerTracker,
+			resourceLocalService);
 	}
+
+	@Reference
+	protected GroupLocalService groupLocalService;
+
+	@Reference
+	protected ResourceLocalService resourceLocalService;
+
+	@Reference
+	protected ResourcePermissionLocalService resourcePermissionLocalService;
+
+	@Reference
+	protected RoleLocalService roleLocalService;
 
 	@Reference
 	private DDMStructureLayoutLocalService _ddmStructureLayoutLocalService;
@@ -184,9 +327,15 @@ public class DEDataLayoutServiceImpl implements DEDataLayoutService {
 
 	private DEDataLayoutGetRequestExecutor _deDataLayoutGetRequestExecutor;
 	private DEDataLayoutListRequestExecutor _deDataLayoutListRequestExecutor;
+	private DEDataLayoutSaveModelPermissionsRequestExecutor
+		_deDataLayoutSaveModelPermissionsRequestExecutor;
+	private DEDataLayoutSavePermissionsRequestExecutor
+		_deDataLayoutSavePermissionsRequestExecutor;
 	private DEDataLayoutSaveRequestExecutor _deDataLayoutSaveRequestExecutor;
 
 	@Reference
 	private DEDataLayoutSerializerTracker _deDataLayoutSerializerTracker;
+
+	private ModelResourcePermission<DEDataLayout> _modelResourcePermission;
 
 }

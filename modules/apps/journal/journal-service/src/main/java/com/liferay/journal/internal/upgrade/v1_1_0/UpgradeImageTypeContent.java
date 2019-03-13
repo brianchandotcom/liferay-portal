@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.upgrade.UpgradeException;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LoggingTimer;
+import com.liferay.portal.kernel.util.MimeTypesUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 
 import java.sql.ResultSet;
@@ -155,11 +156,14 @@ public class UpgradeImageTypeContent extends UpgradeProcess {
 					return null;
 				}
 
+				String mimeType = MimeTypesUtil.getContentType(
+					String.valueOf(_articleImageId) + "." + image.getType());
+
 				PortletFileRepositoryUtil.addPortletFileEntry(
 					_groupId, _userId, JournalArticle.class.getName(),
 					_resourcePrimaryKey, JournalConstants.SERVICE_NAME,
 					_folderId, image.getTextObj(),
-					String.valueOf(_articleImageId), image.getType(), false);
+					String.valueOf(_articleImageId), mimeType, false);
 			}
 			catch (Exception e) {
 				_log.error(

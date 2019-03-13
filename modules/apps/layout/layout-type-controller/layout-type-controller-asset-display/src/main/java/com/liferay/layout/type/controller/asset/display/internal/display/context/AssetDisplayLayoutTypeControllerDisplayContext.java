@@ -77,16 +77,15 @@ public class AssetDisplayLayoutTypeControllerDisplayContext {
 				_assetEntry.getGroupId(), _assetEntry.getClassNameId(),
 				_assetEntry.getClassPK());
 
-		if ((assetDisplayPageEntry != null) &&
+		if ((assetDisplayPageEntry == null) ||
 			(assetDisplayPageEntry.getType() ==
 				AssetDisplayPageConstants.TYPE_NONE)) {
 
 			return 0;
 		}
 
-		if ((assetDisplayPageEntry != null) &&
-			(assetDisplayPageEntry.getType() ==
-				AssetDisplayPageConstants.TYPE_SPECIFIC)) {
+		if (assetDisplayPageEntry.getType() ==
+				AssetDisplayPageConstants.TYPE_SPECIFIC) {
 
 			return assetDisplayPageEntry.getLayoutPageTemplateEntryId();
 		}

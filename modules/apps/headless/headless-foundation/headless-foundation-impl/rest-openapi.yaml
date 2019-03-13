@@ -242,6 +242,7 @@ components:
                     type: string
             type: object
         Segment:
+            #@review
             description: This model allows you to divide your audience into user segments and then target specific content to different user segments
             properties:
                 active:
@@ -273,6 +274,7 @@ components:
                 - name
             type: object
         SegmentUser:
+            #@review
             description: This model describes a user who belongs to a segment
             properties:
                 email:
@@ -637,6 +639,7 @@ paths:
             tags: ["Keyword"]
     "/content-spaces/{content-space-id}/segments":
         get:
+            #@review
             description: Get segments of a content space
             parameters:
                 - in: path
@@ -1133,6 +1136,7 @@ paths:
             tags: ["Role"]
     "/segments/{segment-id}/user-accounts":
         get:
+            #@review
             description: Get users of a segment
             parameters:
                 - in: query
@@ -1393,6 +1397,7 @@ paths:
             tags: ["Role"]
     "/user-accounts/{user-account-id}/segments":
         get:
+            #@review
             description: Get segments of a user
             parameters:
                 - in: query

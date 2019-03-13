@@ -97,7 +97,7 @@ if (portletTitleBasedNavigation) {
 	<liferay-util:include page="/document_library/file_entry_upper_tbar.jsp" servletContext="<%= application %>" />
 </c:if>
 
-<div class="closed container-fluid-1280 sidenav-container sidenav-right" id="<portlet:namespace />infoPanelId">
+<div class="container-fluid-1280" id="<portlet:namespace />FileEntry">
 	<portlet:actionURL name="/document_library/edit_file_entry" var="editFileEntry" />
 
 	<aui:form action="<%= editFileEntry %>" method="post" name="fm">
@@ -138,7 +138,7 @@ if (portletTitleBasedNavigation) {
 		</div>
 	</c:if>
 
-	<liferay-frontend:sidebar-panel>
+	<div class="contextual-sidebar contextual-sidebar-preview sidebar-light">
 
 		<%
 		request.setAttribute("info_panel.jsp-fileEntry", fileEntry);
@@ -146,9 +146,9 @@ if (portletTitleBasedNavigation) {
 		%>
 
 		<liferay-util:include page="/document_library/info_panel_file_entry.jsp" servletContext="<%= application %>" />
-	</liferay-frontend:sidebar-panel>
+	</div>
 
-	<div class="sidenav-content">
+	<div class="contextual-sidebar-content">
 		<div class="alert alert-danger hide" id="<portlet:namespace />openMSOfficeError"></div>
 
 		<c:if test="<%= (fileEntry.getLock() != null) && DLFileEntryPermission.contains(permissionChecker, fileEntry, ActionKeys.UPDATE) %>">
@@ -237,3 +237,15 @@ if (addPortletBreadcrumbEntries) {
 %>
 
 <liferay-util:dynamic-include key="com.liferay.document.library.web#/document_library/view_file_entry.jsp#post" />
+
+<aui:script>
+	var button = document.getElementById('<portlet:namespace />OpenContextualSidebar');
+
+	button.addEventListener(
+		'click',
+		function() {
+			document.querySelector('#<portlet:namespace />FileEntry .contextual-sidebar-preview')
+				.classList.toggle('contextual-sidebar-visible');
+		}
+	);
+</aui:script>

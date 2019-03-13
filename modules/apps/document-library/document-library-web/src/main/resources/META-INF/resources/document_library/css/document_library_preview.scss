@@ -1,3 +1,5 @@
+@import "mixins";
+
 .preview-file {
 	@import "floating_bar";
 
@@ -27,5 +29,35 @@
 		position: absolute;
 		text-align: center;
 		width: 100%;
+	}
+}
+
+.contextual-sidebar.contextual-sidebar-preview {
+	$control-menu-height-sm: 56px;
+	$control-menu-height: 49px;
+	$upper-tbar-height: 64px;
+	$sidebar-width: 320px;
+
+	$top: $control-menu-height + $upper-tbar-height;
+
+	height: calc(100vh - #{$top});
+	overflow-y: scroll;
+	top: $top;
+	z-index: 1;
+
+	@include sm {
+		$top-sm: $control-menu-height-sm + $upper-tbar-height;
+
+		height: calc(100vh - #{$top-sm});
+		top: $top-sm;
+
+		& + .contextual-sidebar-content {
+			padding-right: 0;
+			transition: padding-right ease 0.5s;
+		}
+
+		&.contextual-sidebar-visible + .contextual-sidebar-content {
+			padding-right: $sidebar-width;
+		}
 	}
 }

@@ -83,7 +83,7 @@ String viewInContextURL = assetRenderer.getURLViewInContext(liferayPortletReques
 						/>
 					</c:if>
 
-					<a href="<%= viewInContextURL %>">
+					<a class="h2" href="<%= viewInContextURL %>">
 						<%= HtmlUtil.escape(title) %>
 					</a>
 				</h4>

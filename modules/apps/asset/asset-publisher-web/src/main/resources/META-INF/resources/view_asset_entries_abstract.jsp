@@ -56,7 +56,7 @@ for (AssetEntry assetEntry : assetEntryResult.getAssetEntries()) {
 			<div class="autofit-row autofit-row-center mb-3">
 				<div class="autofit-col">
 					<h4 class="asset-title component-title">
-						<a href="<%= viewURL %>">
+						<a class="h2" href="<%= viewURL %>">
 							<%= HtmlUtil.escape(title) %>
 						</a>
 					</h4>

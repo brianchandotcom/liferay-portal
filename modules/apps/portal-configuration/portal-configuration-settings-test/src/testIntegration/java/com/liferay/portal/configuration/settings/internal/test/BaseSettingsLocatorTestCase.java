@@ -15,10 +15,13 @@
 package com.liferay.portal.configuration.settings.internal.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
 import com.liferay.portal.configuration.settings.internal.constants.SettingsLocatorTestConstants;
 import com.liferay.portal.configuration.test.util.ConfigurationTestUtil;
 import com.liferay.portal.kernel.model.PortletPreferences;
+import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.service.PortletPreferencesLocalService;
 import com.liferay.portal.kernel.settings.Settings;
 import com.liferay.portal.kernel.settings.SettingsLocator;
@@ -28,8 +31,12 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.PortletKeys;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+
+import java.io.IOException;
+import java.io.Serializable;
 
 import java.util.ArrayList;
 import java.util.Dictionary;
@@ -42,6 +49,10 @@ import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.runner.RunWith;
+
+import org.osgi.framework.InvalidSyntaxException;
+import org.osgi.service.cm.Configuration;
+import org.osgi.service.cm.ConfigurationAdmin;
 
 /**
  * @author Drew Brokke
@@ -77,6 +88,57 @@ public abstract class BaseSettingsLocatorTestCase {
 		_factoryConfigurationPids.clear();
 	}
 
+	protected void deleteFactoryConfiguration(
+			String factoryPid, ExtendedObjectClassDefinition.Scope scope,
+			Serializable scopePrimKey, String propertyKey,
+			Serializable propertyValue)
+		throws Exception {
+
+		Configuration configuration = getFactoryConfiguration(
+			factoryPid, scope, scopePrimKey, propertyKey, propertyValue);
+
+		if (configuration != null) {
+			ConfigurationTestUtil.deleteConfiguration(configuration);
+		}
+	}
+
+	protected Configuration getFactoryConfiguration(
+			String factoryPid, ExtendedObjectClassDefinition.Scope scope,
+			Serializable scopePK, String propertyKey,
+			Serializable propertyValue)
+		throws ConfigurationException {
+
+		try {
+			String filterString = StringBundler.concat(
+				"(&", getPropertyFilterString("service.factoryPid", factoryPid),
+				getPropertyFilterString(scope.getPropertyKey(), scopePK),
+				getPropertyFilterString(propertyKey, propertyValue), ")");
+
+			Configuration[] configurations =
+				_configurationAdmin.listConfigurations(filterString);
+
+			if (configurations != null) {
+				return configurations[0];
+			}
+
+			return null;
+		}
+		catch (InvalidSyntaxException | IOException e) {
+			throw new ConfigurationException(
+				"Unable to retrieve factory configuration " + factoryPid, e);
+		}
+	}
+
+	protected String getPropertyFilterString(String key, Serializable value) {
+		if (Validator.isNull(key) || Validator.isNull(value)) {
+			return StringPool.BLANK;
+		}
+
+		return StringBundler.concat(
+			StringPool.OPEN_PARENTHESIS, key, StringPool.EQUAL, value,
+			StringPool.CLOSE_PARENTHESIS);
+	}
+
 	protected String getSettingsValue() throws Exception {
 		if (settingsLocator == null) {
 			return null;
@@ -110,7 +172,17 @@ public abstract class BaseSettingsLocatorTestCase {
 
 	protected String saveFactoryConfiguration(
 			String factoryPid, ExtendedObjectClassDefinition.Scope scope,
-			String scopePrimKey)
+			Serializable scopePrimKey)
+		throws Exception {
+
+		return saveFactoryConfiguration(
+			factoryPid, scope, scopePrimKey, null, null);
+	}
+
+	protected String saveFactoryConfiguration(
+			String factoryPid, ExtendedObjectClassDefinition.Scope scope,
+			Serializable scopePrimKey, String propertyKey,
+			Serializable propertyValue)
 		throws Exception {
 
 		String value = RandomTestUtil.randomString();
@@ -118,6 +190,12 @@ public abstract class BaseSettingsLocatorTestCase {
 		Dictionary<String, Object> properties = new HashMapDictionary<>();
 
 		properties.put(scope.getPropertyKey(), scopePrimKey);
+
+		if (Validator.isNotNull(propertyKey) &&
+			Validator.isNotNull(propertyValue)) {
+
+			properties.put(propertyKey, propertyValue);
+		}
 
 		properties.put(SettingsLocatorTestConstants.TEST_KEY, value);
 
@@ -153,14 +231,8 @@ public abstract class BaseSettingsLocatorTestCase {
 	}
 
 	protected String saveScopedConfiguration(
-			ExtendedObjectClassDefinition.Scope scope, long scopePrimKey)
-		throws Exception {
-
-		return saveScopedConfiguration(scope, String.valueOf(scopePrimKey));
-	}
-
-	protected String saveScopedConfiguration(
-			ExtendedObjectClassDefinition.Scope scope, String scopePrimKey)
+			ExtendedObjectClassDefinition.Scope scope,
+			Serializable scopePrimKey)
 		throws Exception {
 
 		return saveFactoryConfiguration(
@@ -181,6 +253,9 @@ public abstract class BaseSettingsLocatorTestCase {
 	@Inject
 	private static PortletPreferencesLocalService
 		_portletPreferencesLocalService;
+
+	@Inject
+	private ConfigurationAdmin _configurationAdmin;
 
 	@DeleteAfterTestRun
 	private final List<PortletPreferences> _portletPreferencesList =

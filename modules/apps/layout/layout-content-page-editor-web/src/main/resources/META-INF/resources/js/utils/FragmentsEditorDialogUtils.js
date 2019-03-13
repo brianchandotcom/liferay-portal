@@ -7,55 +7,99 @@ const IMAGE_SELECTOR_RETURN_TYPES = {
 };
 
 /**
+ * @param {string} url
+ * @param {string} title
+ * @param {string} eventName
+ * @param {function} callback
+ * @param {function} destroyedCallback
+ */
+function _openItemSelector(url, title, eventName, callback, destroyedCallback) {
+	AUI().use(
+		'liferay-item-selector-dialog',
+		A => {
+			const itemSelector = new A.LiferayItemSelectorDialog(
+				{
+					eventName,
+					on: {
+						selectedItemChange: event => {
+							callback(event);
+						},
+
+						visibleChange: event => {
+							if ((event.newVal === false) && destroyedCallback) {
+								destroyedCallback();
+							}
+						}
+					},
+					title,
+					url
+				}
+			);
+
+			itemSelector.open();
+		}
+	);
+}
+
+/**
+ * @param {string} assetBrowserURL
+ * @param {string} modalTitle
+ * @param {string} portletNamespace
+ * @param {function} callback
+ * @param {function} [destroyedCallback=null]
+ */
+function openAssetBrowser(assetBrowserURL, modalTitle, portletNamespace, callback, destroyedCallback = null) {
+	_openItemSelector(
+		assetBrowserURL,
+		modalTitle,
+		`${portletNamespace}selectAsset`,
+		event => {
+			if (event.newVal && event.newVal[0]) {
+				const data = event.newVal[0];
+
+				callback(
+					{
+						classNameId: data.assetclassnameid,
+						classPK: data.assetclasspk
+					}
+				);
+			}
+		},
+		destroyedCallback
+	);
+}
+
+/**
  * @param {string} imageSelectorURL
  * @param {string} portletNamespace
  * @param {function} callback
  * @param {function} destroyedCallback
  */
 function openImageSelector(imageSelectorURL, portletNamespace, callback, destroyedCallback) {
-	const eventName = `${portletNamespace}selectImage`;
-	const title = Liferay.Language.get('select');
+	_openItemSelector(
+		imageSelectorURL,
+		Liferay.Language.get('select'),
+		`${portletNamespace}selectImage`,
+		event => {
+			const selectedItem = event.newVal || {};
 
-	AUI().use(
-		'liferay-item-selector-dialog',
-		A => {
-			const itemSelectorDialog = new A.LiferayItemSelectorDialog(
-				{
-					eventName,
-					on: {
-						selectedItemChange: changeEvent => {
-							const selectedItem = changeEvent.newVal || {};
+			const {returnType, value} = selectedItem;
+			let selectedImageURL = '';
 
-							const {returnType, value} = selectedItem;
-							let selectedImageURL = '';
+			if (returnType === IMAGE_SELECTOR_RETURN_TYPES.url) {
+				selectedImageURL = value;
+			}
 
-							if (returnType === IMAGE_SELECTOR_RETURN_TYPES.url) {
-								selectedImageURL = value;
-							}
+			if (returnType === IMAGE_SELECTOR_RETURN_TYPES.fileEntryItemSelector) {
+				selectedImageURL = JSON.parse(value).url;
+			}
 
-							if (returnType === IMAGE_SELECTOR_RETURN_TYPES.fileEntryItemSelector) {
-								selectedImageURL = JSON.parse(value).url;
-							}
-
-							if (selectedImageURL) {
-								callback(selectedImageURL);
-							}
-						},
-
-						visibleChange: change => {
-							if ((change.newVal === false) && destroyedCallback) {
-								destroyedCallback();
-							}
-						}
-					},
-					title,
-					url: imageSelectorURL
-				}
-			);
-
-			itemSelectorDialog.open();
-		}
+			if (selectedImageURL) {
+				callback(selectedImageURL);
+			}
+		},
+		destroyedCallback
 	);
 }
 
-export {openImageSelector};
+export {openAssetBrowser, openImageSelector};

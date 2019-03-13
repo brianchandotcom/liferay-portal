@@ -8,6 +8,7 @@ import {decodeId, encodeAssetId} from '../../../utils/FragmentsEditorIdUtils.es'
 import getConnectedComponent from '../../../store/ConnectedComponent.es';
 import {setIn} from '../../../utils/FragmentsEditorUpdateUtils.es';
 import templates from './FloatingToolbarMappingPanel.soy';
+import {openAssetBrowser} from '../../../utils/FragmentsEditorDialogUtils';
 import {UPDATE_EDITABLE_VALUE} from '../../../actions/actions.es';
 
 const SOURCE_TYPE_IDS = {
@@ -144,45 +145,12 @@ class FloatingToolbarMappingPanel extends PortletBase {
 	_handleAssetBrowserLinkClick(event) {
 		const { assetBrowserUrl, assetBrowserWindowTitle } = event.delegateTarget.dataset;
 
-		Liferay.Util.openWindow(
-			{
-				dialog: {
-					destroyOnHide: true,
-					modal: true
-				},
-				dialogIframe: {
-					bodyCssClass: 'dialog-with-footer'
-				},
-				title: assetBrowserWindowTitle,
-				uri: assetBrowserUrl
-			}
-		);
-	}
-
-	/**
-	 * Handle source option change
-	 * @param {Event} event
-	 * @private
-	 * @review
-	 */
-	_handleAssetOptionChange(event) {
-		if (event.delegateTarget.value) {
-			const {
-				classNameId,
-				classPK
-			} = decodeId(event.delegateTarget.value);
-
-			this._updateEditableValues('classNameId', classNameId);
-			this._updateEditableValues('classPK', classPK);
-			this._updateEditableValues('fieldId', '');
-		}
-		else {
-			this._clearEditableValues();
-		}
-
-		this.store.done(
-			() => {
-				this._loadFields();
+		openAssetBrowser(
+			assetBrowserUrl,
+			assetBrowserWindowTitle,
+			this.portletNamespace,
+			selectedAssetEntry => {
+				this._selectAssetEntry(selectedAssetEntry);
 			}
 		);
 	}
@@ -284,6 +252,25 @@ class FloatingToolbarMappingPanel extends PortletBase {
 		else if (this._fields.length) {
 			this._clearFields();
 		}
+	}
+
+	/**
+	 * @param {object} assetEntry
+	 * @param {string} assetEntry.classNameId
+	 * @param {string} assetEntry.classPK
+	 * @private
+	 * @review
+	 */
+	_selectAssetEntry(assetEntry) {
+		this._updateEditableValues('classNameId', assetEntry.classNameId);
+		this._updateEditableValues('classPK', assetEntry.classPK);
+		this._updateEditableValues('fieldId', '');
+
+		this.store.done(
+			() => {
+				this._loadFields();
+			}
+		);
 	}
 
 	/**

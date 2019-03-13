@@ -46,12 +46,18 @@ public class Mutation {
 				Response.ResponseBuilder responseBuilder = Response.ok();
 
 				return responseBuilder.build();
+			<#elseif javaMethodSignature.returnType?contains("Collection<")>
+				${javaMethodSignature.schemaName}Resource ${javaMethodSignature.schemaName?uncap_first}Resource = _create${javaMethodSignature.schemaName}Resource();
+
+				<#assign arguments = freeMarkerTool.getGraphQLArguments(javaMethodSignature.javaMethodParameters) />
+
+				Page paginationPage = ${javaMethodSignature.schemaName?uncap_first}Resource.${javaMethodSignature.methodName}(${arguments?replace("pageSize,page", "Pagination.of(pageSize, page)")});
+
+				return paginationPage.getItems();
 			<#else>
-				<#assign schemaName = javaMethodSignature.schemaName />
+				${javaMethodSignature.schemaName}Resource ${javaMethodSignature.schemaName?uncap_first}Resource = _create${javaMethodSignature.schemaName}Resource();
 
-				${schemaName}Resource ${schemaName?uncap_first}Resource = _create${schemaName}Resource();
-
-				return ${schemaName?uncap_first}Resource.${javaMethodSignature.methodName}(${freeMarkerTool.getGraphQLArguments(javaMethodSignature.javaMethodParameters)});
+				return ${javaMethodSignature.schemaName?uncap_first}Resource.${javaMethodSignature.methodName}(${freeMarkerTool.getGraphQLArguments(javaMethodSignature.javaMethodParameters)});
 			</#if>
 		}
 	</#list>

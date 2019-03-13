@@ -12,8 +12,9 @@
  * details.
  */
 
-package com.liferay.portal.dao.orm;
+package com.liferay.portal.dao.orm.test;
 
+import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.dao.orm.common.SQLTransformer;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
@@ -31,10 +32,12 @@ import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 
 /**
  * @author Cristina González
  */
+@RunWith(Arquillian.class)
 public class SQLInstrTest {
 
 	@ClassRule

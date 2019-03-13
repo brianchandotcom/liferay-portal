@@ -12,8 +12,9 @@
  * details.
  */
 
-package com.liferay.portal.dao.orm;
+package com.liferay.portal.dao.orm.test;
 
+import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.dao.orm.common.SQLTransformer;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
@@ -22,19 +23,22 @@ import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.Statement;
 
 import org.junit.AfterClass;
+import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 
 /**
- * @author Adolfo Pérez
+ * @author Cristina González
  */
-public class SQLNullDateTest {
+@RunWith(Arquillian.class)
+public class SQLSubstrTest {
 
 	@ClassRule
 	@Rule
@@ -46,36 +50,55 @@ public class SQLNullDateTest {
 		_db = DBManagerUtil.getDB();
 
 		_db.runSQL(
-			"create table SQLNullDateTest1 (id LONG not null primary key, " +
-				"date_ DATE null)");
+			"create table SQLSubstrTest (id LONG not null primary key, data " +
+				"VARCHAR(10) null)");
 
-		_db.runSQL("insert into SQLNullDateTest1 (id) values (1)");
-
-		_db.runSQL("create table SQLNullDateTest2 (id LONG not null)");
-
-		_db.runSQL("insert into SQLNullDateTest2 (id) values (1)");
+		_db.runSQL("insert into SQLSubstrTest values (1, 'EXAMPLE')");
 	}
 
 	@AfterClass
 	public static void tearDownClass() throws Exception {
-		_db.runSQL("drop table SQLNullDateTest1");
-
-		_db.runSQL("drop table SQLNullDateTest2");
+		_db.runSQL("drop table SQLSubstrTest");
 	}
 
 	@Test
-	public void testNullDate() throws Exception {
+	public void testSubstr() throws Exception {
+		String sql = _db.buildSQL(
+			"select SUBSTR(data, 3, 2) from SQLSubstrTest where id = 1");
+
+		sql = SQLTransformer.transform(sql);
+
 		try (Connection connection = DataAccess.getConnection();
-			Statement statement = connection.createStatement()) {
+			PreparedStatement preparedStatement = connection.prepareStatement(
+				sql)) {
 
-			String sql =
-				"(select date_ from SQLNullDateTest1) union all (select " +
-					"[$NULL_DATE$] from SQLNullDateTest2)";
+			ResultSet resultSet = preparedStatement.executeQuery();
 
-			ResultSet resultSet = statement.executeQuery(
-				SQLTransformer.transform(sql));
+			Assert.assertNotNull(resultSet.next());
 
-			resultSet.close();
+			String substring = resultSet.getString(1);
+
+			Assert.assertEquals("AM", substring);
+		}
+	}
+
+	@Test
+	public void testSubstrStart() throws Exception {
+		String sql = _db.buildSQL(
+			"select SUBSTR(data, 1, 3) from SQLSubstrTest where id = 1");
+
+		sql = SQLTransformer.transform(sql);
+
+		try (Connection connection = DataAccess.getConnection();
+			PreparedStatement ps = connection.prepareStatement(sql)) {
+
+			ResultSet rs = ps.executeQuery();
+
+			Assert.assertNotNull(rs.next());
+
+			String substring = rs.getString(1);
+
+			Assert.assertEquals("EXA", substring);
 		}
 	}
 

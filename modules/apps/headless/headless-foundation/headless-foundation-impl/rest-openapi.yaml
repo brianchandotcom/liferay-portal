@@ -243,31 +243,31 @@ components:
             type: object
         Segment:
             #@review
-            description: This model allows you to divide your audience into user segments and then target specific content to different user segments
+            description: Represents a set of users that meet certain criteria. Segments may be used to create customized experiences for their members.
             properties:
                 active:
-                    description: Returns true if the segment is active
+                    description: The active of the segment
                     type: boolean
                 criteria:
-                    description: Inclusion criteria of the segment
+                    description: The criteria of the segment
                     type: string
                 dateCreated:
-                    description: The date the segment was created
+                    description: The create date of the segment
                     format: date-time
                     type: string
                 dateModified:
-                    description: The date the segment was last modified
+                    description: The modified date of the segment
                     format: date-time
                     type: string
                 id:
-                    description: Internal ID of the segment
+                    description: The internal ID of the segment
                     format: int64
                     type: integer
                 name:
-                    description: Segment's name
+                    description: The name of the segment
                     type: string
                 source:
-                    description: The source of the segment. It can be from Analytics Cloud or from Liferay instance
+                    description: The source of the segment
                     type: string
             required:
                 - criteria
@@ -275,7 +275,7 @@ components:
             type: object
         SegmentUser:
             #@review
-            description: This model describes a user who belongs to a segment
+            description: Represents a user who belongs to a segment.
             properties:
                 email:
                     description: User's email
@@ -640,7 +640,7 @@ paths:
     "/content-spaces/{content-space-id}/segments":
         get:
             #@review
-            description: Get segments of a content space
+            description: Obtains the segments of a content space.
             parameters:
                 - in: path
                   name: content-space-id
@@ -1137,7 +1137,7 @@ paths:
     "/segments/{segment-id}/user-accounts":
         get:
             #@review
-            description: Get users of a segment
+            description: Obtains the users of a segment.
             parameters:
                 - in: query
                   name: page
@@ -1398,7 +1398,7 @@ paths:
     "/user-accounts/{user-account-id}/segments":
         get:
             #@review
-            description: Get segments of a user
+            description: Obtains the segments of a user.
             parameters:
                 - in: query
                   name: page

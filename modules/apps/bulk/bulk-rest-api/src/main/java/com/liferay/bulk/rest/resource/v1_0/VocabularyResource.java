@@ -14,8 +14,10 @@
 
 package com.liferay.bulk.rest.resource.v1_0;
 
-import com.liferay.bulk.rest.dto.v1_0.BulkStatus;
+import com.liferay.bulk.rest.dto.v1_0.DocumentSelection;
+import com.liferay.bulk.rest.dto.v1_0.Vocabulary;
 import com.liferay.portal.kernel.model.Company;
+import com.liferay.portal.vulcan.pagination.Page;
 
 import javax.annotation.Generated;
 
@@ -28,9 +30,11 @@ import javax.annotation.Generated;
  * @generated
  */
 @Generated("")
-public interface BulkStatusResource {
+public interface VocabularyResource {
 
-	public BulkStatus getStatu() throws Exception;
+	public Page<Vocabulary> postContentSpaceVocabularyCommonPage(
+			Long contentSpaceId, DocumentSelection documentSelection)
+		throws Exception;
 
 	public void setContextCompany(Company contextCompany);
 

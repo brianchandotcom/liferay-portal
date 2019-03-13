@@ -33,23 +33,25 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
-@GraphQLName("BulkStatus")
+@GraphQLName("Status")
 @JsonFilter("Liferay.Vulcan")
-@XmlRootElement(name = "BulkStatus")
-public class BulkStatus {
+@XmlRootElement(name = "Status")
+public class Status {
 
-	public Boolean getBusy() {
-		return busy;
+	public Boolean getActionInProgress() {
+		return actionInProgress;
 	}
 
-	public void setBusy(Boolean busy) {
-		this.busy = busy;
+	public void setActionInProgress(Boolean actionInProgress) {
+		this.actionInProgress = actionInProgress;
 	}
 
 	@JsonIgnore
-	public void setBusy(UnsafeSupplier<Boolean, Exception> busyUnsafeSupplier) {
+	public void setActionInProgress(
+		UnsafeSupplier<Boolean, Exception> actionInProgressUnsafeSupplier) {
+
 		try {
-			busy = busyUnsafeSupplier.get();
+			actionInProgress = actionInProgressUnsafeSupplier.get();
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
@@ -58,16 +60,16 @@ public class BulkStatus {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Boolean busy;
+	protected Boolean actionInProgress;
 
 	public String toString() {
 		StringBundler sb = new StringBundler();
 
 		sb.append("{");
 
-		sb.append("\"busy\": ");
+		sb.append("\"actionInProgress\": ");
 
-		sb.append(busy);
+		sb.append(actionInProgress);
 
 		sb.append("}");
 

@@ -14,17 +14,14 @@
 
 package com.liferay.bulk.rest.internal.resource.v1_0;
 
-import com.liferay.bulk.rest.dto.v1_0.BulkActionResponse;
-import com.liferay.bulk.rest.dto.v1_0.BulkAssetEntryAction;
-import com.liferay.bulk.rest.dto.v1_0.BulkAssetEntryCommonCategories;
-import com.liferay.bulk.rest.dto.v1_0.BulkAssetEntryCommonTags;
-import com.liferay.bulk.rest.dto.v1_0.BulkAssetEntryUpdateCategoriesAction;
-import com.liferay.bulk.rest.dto.v1_0.BulkAssetEntryUpdateTagsAction;
-import com.liferay.bulk.rest.resource.v1_0.BulkActionResponseResource;
+import com.liferay.bulk.rest.dto.v1_0.DocumentSelection;
+import com.liferay.bulk.rest.dto.v1_0.Keyword;
+import com.liferay.bulk.rest.resource.v1_0.KeywordResource;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
+import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.util.TransformUtil;
 
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -32,14 +29,16 @@ import io.swagger.v3.oas.annotations.tags.Tags;
 
 import java.net.URI;
 
+import java.util.Collections;
 import java.util.List;
 
 import javax.annotation.Generated;
 
 import javax.ws.rs.Consumes;
+import javax.ws.rs.PATCH;
 import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.UriBuilder;
@@ -51,67 +50,41 @@ import javax.ws.rs.core.UriInfo;
  */
 @Generated("")
 @Path("/v1.0")
-public abstract class BaseBulkActionResponseResourceImpl
-	implements BulkActionResponseResource {
+public abstract class BaseKeywordResourceImpl implements KeywordResource {
 
 	@Override
 	@Consumes("application/json")
-	@POST
-	@Path("/categories/{class-name-id}")
-	@Produces("application/json")
-	@Tags(value = {@Tag(name = "BulkActionResponse")})
-	public BulkActionResponse postCategoryClassName(
-			@PathParam("class-name-id") Long classNameId,
-			BulkAssetEntryUpdateCategoriesAction
-				bulkAssetEntryUpdateCategoriesAction)
+	@PATCH
+	@Path("/keywords/batch")
+	@Tags(value = {@Tag(name = "Keyword")})
+	public boolean patchKeywordBatch(DocumentSelection documentSelection)
 		throws Exception {
 
-		return new BulkActionResponse();
+		return false;
+	}
+
+	@Override
+	@Consumes("application/json")
+	@PUT
+	@Path("/keywords/batch")
+	@Tags(value = {@Tag(name = "Keyword")})
+	public boolean putKeywordBatch(DocumentSelection documentSelection)
+		throws Exception {
+
+		return false;
 	}
 
 	@Override
 	@Consumes("application/json")
 	@POST
-	@Path("/categories/{content-space-id}/{class-name-id}/common")
+	@Path("/keywords/common")
 	@Produces("application/json")
-	@Tags(value = {@Tag(name = "BulkActionResponse")})
-	public BulkAssetEntryCommonCategories
-			postCategoryContentSpaceClassNameCommon(
-				@PathParam("content-space-id") Long contentSpaceId,
-				@PathParam("class-name-id") Long classNameId,
-				BulkAssetEntryAction bulkAssetEntryAction)
+	@Tags(value = {@Tag(name = "Keyword")})
+	public Page<Keyword> postKeywordCommonPage(
+			DocumentSelection documentSelection)
 		throws Exception {
 
-		return new BulkAssetEntryCommonCategories();
-	}
-
-	@Override
-	@Consumes("application/json")
-	@POST
-	@Path("/tags/{class-name-id}")
-	@Produces("application/json")
-	@Tags(value = {@Tag(name = "BulkActionResponse")})
-	public BulkActionResponse postTagClassName(
-			@PathParam("class-name-id") Long classNameId,
-			BulkAssetEntryUpdateTagsAction bulkAssetEntryUpdateTagsAction)
-		throws Exception {
-
-		return new BulkActionResponse();
-	}
-
-	@Override
-	@Consumes("application/json")
-	@POST
-	@Path("/tags/{content-space-id}/{class-name-id}/common")
-	@Produces("application/json")
-	@Tags(value = {@Tag(name = "BulkActionResponse")})
-	public BulkAssetEntryCommonTags postTagContentSpaceClassNameCommon(
-			@PathParam("content-space-id") Long contentSpaceId,
-			@PathParam("class-name-id") Long classNameId,
-			BulkAssetEntryAction bulkAssetEntryAction)
-		throws Exception {
-
-		return new BulkAssetEntryCommonTags();
+		return Page.of(Collections.emptyList());
 	}
 
 	public void setContextCompany(Company contextCompany) {
@@ -127,11 +100,11 @@ public abstract class BaseBulkActionResponseResourceImpl
 		}
 
 		URI resourceURI = UriBuilder.fromResource(
-			BaseBulkActionResponseResourceImpl.class
+			BaseKeywordResourceImpl.class
 		).build();
 
 		URI methodURI = UriBuilder.fromMethod(
-			BaseBulkActionResponseResourceImpl.class, methodName
+			BaseKeywordResourceImpl.class, methodName
 		).build(
 			values
 		);
@@ -139,7 +112,7 @@ public abstract class BaseBulkActionResponseResourceImpl
 		return baseURIString + resourceURI.toString() + methodURI.toString();
 	}
 
-	protected void preparePatch(BulkActionResponse bulkActionResponse) {
+	protected void preparePatch(Keyword keyword) {
 	}
 
 	protected <T, R> List<R> transform(

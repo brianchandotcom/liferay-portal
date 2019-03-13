@@ -14,19 +14,22 @@
 
 package com.liferay.bulk.rest.internal.graphql.mutation.v1_0;
 
-import com.liferay.bulk.rest.dto.v1_0.BulkActionResponse;
-import com.liferay.bulk.rest.dto.v1_0.BulkAssetEntryAction;
-import com.liferay.bulk.rest.dto.v1_0.BulkAssetEntryCommonCategories;
-import com.liferay.bulk.rest.dto.v1_0.BulkAssetEntryCommonTags;
-import com.liferay.bulk.rest.dto.v1_0.BulkAssetEntryUpdateCategoriesAction;
-import com.liferay.bulk.rest.dto.v1_0.BulkAssetEntryUpdateTagsAction;
-import com.liferay.bulk.rest.resource.v1_0.BulkActionResponseResource;
+import com.liferay.bulk.rest.dto.v1_0.DocumentSelection;
+import com.liferay.bulk.rest.dto.v1_0.Keyword;
+import com.liferay.bulk.rest.dto.v1_0.MessageSelection;
+import com.liferay.bulk.rest.dto.v1_0.Vocabulary;
+import com.liferay.bulk.rest.resource.v1_0.CategoryResource;
+import com.liferay.bulk.rest.resource.v1_0.KeywordResource;
+import com.liferay.bulk.rest.resource.v1_0.MessageSelectionResource;
+import com.liferay.bulk.rest.resource.v1_0.VocabularyResource;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
 
 import graphql.annotations.annotationTypes.GraphQLField;
 import graphql.annotations.annotationTypes.GraphQLInvokeDetached;
 import graphql.annotations.annotationTypes.GraphQLName;
+
+import java.util.Collection;
 
 import javax.annotation.Generated;
 
@@ -41,101 +44,198 @@ import org.osgi.util.tracker.ServiceTracker;
 @Generated("")
 public class Mutation {
 
-	@GraphQLField
 	@GraphQLInvokeDetached
-	public BulkActionResponse postCategoryClassName(
-			@GraphQLName("class-name-id") Long classNameId,
-			@GraphQLName("BulkAssetEntryUpdateCategoriesAction")
-				BulkAssetEntryUpdateCategoriesAction
-					bulkAssetEntryUpdateCategoriesAction)
+	public boolean patchCategoryBatch(
+			@GraphQLName("DocumentSelection") DocumentSelection
+				documentSelection)
 		throws Exception {
 
-		BulkActionResponseResource bulkActionResponseResource =
-			_createBulkActionResponseResource();
+		CategoryResource categoryResource = _createCategoryResource();
 
-		return bulkActionResponseResource.postCategoryClassName(
-			classNameId, bulkAssetEntryUpdateCategoriesAction);
+		return categoryResource.patchCategoryBatch(documentSelection);
+	}
+
+	@GraphQLInvokeDetached
+	public boolean putCategoryBatch(
+			@GraphQLName("DocumentSelection") DocumentSelection
+				documentSelection)
+		throws Exception {
+
+		CategoryResource categoryResource = _createCategoryResource();
+
+		return categoryResource.putCategoryBatch(documentSelection);
+	}
+
+	@GraphQLInvokeDetached
+	public boolean patchKeywordBatch(
+			@GraphQLName("DocumentSelection") DocumentSelection
+				documentSelection)
+		throws Exception {
+
+		KeywordResource keywordResource = _createKeywordResource();
+
+		return keywordResource.patchKeywordBatch(documentSelection);
+	}
+
+	@GraphQLInvokeDetached
+	public boolean putKeywordBatch(
+			@GraphQLName("DocumentSelection") DocumentSelection
+				documentSelection)
+		throws Exception {
+
+		KeywordResource keywordResource = _createKeywordResource();
+
+		return keywordResource.putKeywordBatch(documentSelection);
 	}
 
 	@GraphQLField
 	@GraphQLInvokeDetached
-	public BulkAssetEntryCommonCategories
-			postCategoryContentSpaceClassNameCommon(
-				@GraphQLName("content-space-id") Long contentSpaceId,
-				@GraphQLName("class-name-id") Long classNameId,
-				@GraphQLName("BulkAssetEntryAction") BulkAssetEntryAction
-					bulkAssetEntryAction)
+	public Collection<Keyword> postKeywordCommonPage(
+			@GraphQLName("DocumentSelection") DocumentSelection
+				documentSelection)
 		throws Exception {
 
-		BulkActionResponseResource bulkActionResponseResource =
-			_createBulkActionResponseResource();
+		KeywordResource keywordResource = _createKeywordResource();
 
-		return bulkActionResponseResource.
-			postCategoryContentSpaceClassNameCommon(
-				contentSpaceId, classNameId, bulkAssetEntryAction);
+		return keywordResource.postKeywordCommonPage(documentSelection);
 	}
 
 	@GraphQLField
 	@GraphQLInvokeDetached
-	public BulkActionResponse postTagClassName(
-			@GraphQLName("class-name-id") Long classNameId,
-			@GraphQLName("BulkAssetEntryUpdateTagsAction")
-				BulkAssetEntryUpdateTagsAction bulkAssetEntryUpdateTagsAction)
+	public MessageSelection postKeywordMessageSelection(
+			@GraphQLName("DocumentSelection") DocumentSelection
+				documentSelection)
 		throws Exception {
 
-		BulkActionResponseResource bulkActionResponseResource =
-			_createBulkActionResponseResource();
+		MessageSelectionResource messageSelectionResource =
+			_createMessageSelectionResource();
 
-		return bulkActionResponseResource.postTagClassName(
-			classNameId, bulkAssetEntryUpdateTagsAction);
+		return messageSelectionResource.postKeywordMessageSelection(
+			documentSelection);
 	}
 
 	@GraphQLField
 	@GraphQLInvokeDetached
-	public BulkAssetEntryCommonTags postTagContentSpaceClassNameCommon(
+	public MessageSelection postVocabularyMessageSelection(
+			@GraphQLName("DocumentSelection") DocumentSelection
+				documentSelection)
+		throws Exception {
+
+		MessageSelectionResource messageSelectionResource =
+			_createMessageSelectionResource();
+
+		return messageSelectionResource.postVocabularyMessageSelection(
+			documentSelection);
+	}
+
+	@GraphQLField
+	@GraphQLInvokeDetached
+	public Collection<Vocabulary> postContentSpaceVocabularyCommonPage(
 			@GraphQLName("content-space-id") Long contentSpaceId,
-			@GraphQLName("class-name-id") Long classNameId,
-			@GraphQLName("BulkAssetEntryAction") BulkAssetEntryAction
-				bulkAssetEntryAction)
+			@GraphQLName("DocumentSelection") DocumentSelection
+				documentSelection)
 		throws Exception {
 
-		BulkActionResponseResource bulkActionResponseResource =
-			_createBulkActionResponseResource();
+		VocabularyResource vocabularyResource = _createVocabularyResource();
 
-		return bulkActionResponseResource.postTagContentSpaceClassNameCommon(
-			contentSpaceId, classNameId, bulkAssetEntryAction);
+		return vocabularyResource.postContentSpaceVocabularyCommonPage(
+			contentSpaceId, documentSelection);
 	}
 
-	private static BulkActionResponseResource
-			_createBulkActionResponseResource()
-		throws Exception {
+	private static CategoryResource _createCategoryResource() throws Exception {
+		CategoryResource categoryResource =
+			_categoryResourceServiceTracker.getService();
 
-		BulkActionResponseResource bulkActionResponseResource =
-			_bulkActionResponseResourceServiceTracker.getService();
-
-		bulkActionResponseResource.setContextCompany(
+		categoryResource.setContextCompany(
 			CompanyLocalServiceUtil.getCompany(
 				CompanyThreadLocal.getCompanyId()));
 
-		return bulkActionResponseResource;
+		return categoryResource;
+	}
+
+	private static final ServiceTracker<CategoryResource, CategoryResource>
+		_categoryResourceServiceTracker;
+
+	private static KeywordResource _createKeywordResource() throws Exception {
+		KeywordResource keywordResource =
+			_keywordResourceServiceTracker.getService();
+
+		keywordResource.setContextCompany(
+			CompanyLocalServiceUtil.getCompany(
+				CompanyThreadLocal.getCompanyId()));
+
+		return keywordResource;
+	}
+
+	private static final ServiceTracker<KeywordResource, KeywordResource>
+		_keywordResourceServiceTracker;
+
+	private static MessageSelectionResource _createMessageSelectionResource()
+		throws Exception {
+
+		MessageSelectionResource messageSelectionResource =
+			_messageSelectionResourceServiceTracker.getService();
+
+		messageSelectionResource.setContextCompany(
+			CompanyLocalServiceUtil.getCompany(
+				CompanyThreadLocal.getCompanyId()));
+
+		return messageSelectionResource;
 	}
 
 	private static final ServiceTracker
-		<BulkActionResponseResource, BulkActionResponseResource>
-			_bulkActionResponseResourceServiceTracker;
+		<MessageSelectionResource, MessageSelectionResource>
+			_messageSelectionResourceServiceTracker;
+
+	private static VocabularyResource _createVocabularyResource()
+		throws Exception {
+
+		VocabularyResource vocabularyResource =
+			_vocabularyResourceServiceTracker.getService();
+
+		vocabularyResource.setContextCompany(
+			CompanyLocalServiceUtil.getCompany(
+				CompanyThreadLocal.getCompanyId()));
+
+		return vocabularyResource;
+	}
+
+	private static final ServiceTracker<VocabularyResource, VocabularyResource>
+		_vocabularyResourceServiceTracker;
 
 	static {
 		Bundle bundle = FrameworkUtil.getBundle(Mutation.class);
 
-		ServiceTracker<BulkActionResponseResource, BulkActionResponseResource>
-			bulkActionResponseResourceServiceTracker = new ServiceTracker<>(
-				bundle.getBundleContext(), BulkActionResponseResource.class,
+		ServiceTracker<CategoryResource, CategoryResource>
+			categoryResourceServiceTracker = new ServiceTracker<>(
+				bundle.getBundleContext(), CategoryResource.class, null);
+
+		categoryResourceServiceTracker.open();
+
+		_categoryResourceServiceTracker = categoryResourceServiceTracker;
+		ServiceTracker<KeywordResource, KeywordResource>
+			keywordResourceServiceTracker = new ServiceTracker<>(
+				bundle.getBundleContext(), KeywordResource.class, null);
+
+		keywordResourceServiceTracker.open();
+
+		_keywordResourceServiceTracker = keywordResourceServiceTracker;
+		ServiceTracker<MessageSelectionResource, MessageSelectionResource>
+			messageSelectionResourceServiceTracker = new ServiceTracker<>(
+				bundle.getBundleContext(), MessageSelectionResource.class,
 				null);
 
-		bulkActionResponseResourceServiceTracker.open();
+		messageSelectionResourceServiceTracker.open();
 
-		_bulkActionResponseResourceServiceTracker =
-			bulkActionResponseResourceServiceTracker;
+		_messageSelectionResourceServiceTracker =
+			messageSelectionResourceServiceTracker;
+		ServiceTracker<VocabularyResource, VocabularyResource>
+			vocabularyResourceServiceTracker = new ServiceTracker<>(
+				bundle.getBundleContext(), VocabularyResource.class, null);
+
+		vocabularyResourceServiceTracker.open();
+
+		_vocabularyResourceServiceTracker = vocabularyResourceServiceTracker;
 	}
 
 }

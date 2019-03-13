@@ -14,8 +14,8 @@
 
 package com.liferay.bulk.rest.internal.graphql.query.v1_0;
 
-import com.liferay.bulk.rest.dto.v1_0.BulkStatus;
-import com.liferay.bulk.rest.resource.v1_0.BulkStatusResource;
+import com.liferay.bulk.rest.dto.v1_0.Status;
+import com.liferay.bulk.rest.resource.v1_0.StatusResource;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
 
@@ -37,38 +37,36 @@ public class Query {
 
 	@GraphQLField
 	@GraphQLInvokeDetached
-	public BulkStatus getStatu() throws Exception {
-		BulkStatusResource bulkStatusResource = _createBulkStatusResource();
+	public Status getStatu() throws Exception {
+		StatusResource statusResource = _createStatusResource();
 
-		return bulkStatusResource.getStatu();
+		return statusResource.getStatu();
 	}
 
-	private static BulkStatusResource _createBulkStatusResource()
-		throws Exception {
+	private static StatusResource _createStatusResource() throws Exception {
+		StatusResource statusResource =
+			_statusResourceServiceTracker.getService();
 
-		BulkStatusResource bulkStatusResource =
-			_bulkStatusResourceServiceTracker.getService();
-
-		bulkStatusResource.setContextCompany(
+		statusResource.setContextCompany(
 			CompanyLocalServiceUtil.getCompany(
 				CompanyThreadLocal.getCompanyId()));
 
-		return bulkStatusResource;
+		return statusResource;
 	}
 
-	private static final ServiceTracker<BulkStatusResource, BulkStatusResource>
-		_bulkStatusResourceServiceTracker;
+	private static final ServiceTracker<StatusResource, StatusResource>
+		_statusResourceServiceTracker;
 
 	static {
 		Bundle bundle = FrameworkUtil.getBundle(Query.class);
 
-		ServiceTracker<BulkStatusResource, BulkStatusResource>
-			bulkStatusResourceServiceTracker = new ServiceTracker<>(
-				bundle.getBundleContext(), BulkStatusResource.class, null);
+		ServiceTracker<StatusResource, StatusResource>
+			statusResourceServiceTracker = new ServiceTracker<>(
+				bundle.getBundleContext(), StatusResource.class, null);
 
-		bulkStatusResourceServiceTracker.open();
+		statusResourceServiceTracker.open();
 
-		_bulkStatusResourceServiceTracker = bulkStatusResourceServiceTracker;
+		_statusResourceServiceTracker = statusResourceServiceTracker;
 	}
 
 }

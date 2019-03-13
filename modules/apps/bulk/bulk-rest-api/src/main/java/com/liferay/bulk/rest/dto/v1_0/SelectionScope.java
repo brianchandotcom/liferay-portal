@@ -33,10 +33,10 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
-@GraphQLName("BulkAssetEntryAction")
+@GraphQLName("SelectionScope")
 @JsonFilter("Liferay.Vulcan")
-@XmlRootElement(name = "BulkAssetEntryAction")
-public class BulkAssetEntryAction {
+@XmlRootElement(name = "SelectionScope")
+public class SelectionScope {
 
 	public Long getFolderId() {
 		return folderId;
@@ -110,30 +110,6 @@ public class BulkAssetEntryAction {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean selectAll;
 
-	public String[] getSelection() {
-		return selection;
-	}
-
-	public void setSelection(String[] selection) {
-		this.selection = selection;
-	}
-
-	@JsonIgnore
-	public void setSelection(
-		UnsafeSupplier<String[], Exception> selectionUnsafeSupplier) {
-
-		try {
-			selection = selectionUnsafeSupplier.get();
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected String[] selection;
-
 	public String toString() {
 		StringBundler sb = new StringBundler();
 
@@ -152,28 +128,6 @@ public class BulkAssetEntryAction {
 		sb.append("\"selectAll\": ");
 
 		sb.append(selectAll);
-		sb.append(", ");
-
-		sb.append("\"selection\": ");
-
-		if (selection == null) {
-			sb.append("null");
-		}
-		else {
-			sb.append("[");
-
-			for (int i = 0; i < selection.length; i++) {
-				sb.append("\"");
-				sb.append(selection[i]);
-				sb.append("\"");
-
-				if ((i + 1) < selection.length) {
-					sb.append(", ");
-				}
-			}
-
-			sb.append("]");
-		}
 
 		sb.append("}");
 

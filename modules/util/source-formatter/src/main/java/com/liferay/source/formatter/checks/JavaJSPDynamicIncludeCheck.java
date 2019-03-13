@@ -58,9 +58,11 @@ public class JavaJSPDynamicIncludeCheck extends BaseJavaTermCheck {
 
 		JavaClass javaClass = (JavaClass)javaTerm;
 
-		List<String> extendedClassNames = javaClass.getExtendedClassNames();
+		List<String> extendedClassNames = javaClass.getExtendedClassNames(true);
 
-		if (extendedClassNames.contains("BaseJSPDynamicInclude") &&
+		if (extendedClassNames.contains(
+				"com.liferay.portal.kernel.servlet.taglib." +
+					"BaseJSPDynamicInclude") &&
 			!className.endsWith("JSPDynamicInclude")) {
 
 			addMessage(

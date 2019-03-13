@@ -39,27 +39,13 @@ public class TaglibUtil {
 
 		List<String> extendedTagFilesNames = new ArrayList<>();
 
-		for (String extendedClassName : javaClass.getExtendedClassNames()) {
-			if (!extendedClassName.contains(StringPool.PERIOD)) {
-				for (String importName : javaClass.getImports()) {
-					if (importName.endsWith(
-							StringPool.PERIOD + extendedClassName)) {
-
-						extendedClassName = importName;
-
-						break;
-					}
-				}
-			}
-
+		for (String extendedClassName : javaClass.getExtendedClassNames(true)) {
 			StringBundler sb = new StringBundler(5);
 
 			if (extendedClassName.startsWith("com.liferay.taglib")) {
 				sb.append(utilTaglibSrcDirName);
 			}
-			else if (!extendedClassName.contains(StringPool.PERIOD) ||
-					 extendedClassName.startsWith(javaClass.getPackageName())) {
-
+			else if (extendedClassName.startsWith(javaClass.getPackageName())) {
 				int pos = absolutePath.lastIndexOf(CharPool.SLASH);
 
 				sb.append(absolutePath.substring(0, pos + 1));

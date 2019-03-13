@@ -624,31 +624,17 @@ public class DeprecatedUsageCheck extends BaseCheck {
 				}
 			}
 
-			for (String extendedClassName : javaClass.getExtendedClassNames()) {
-				String fullyQualifiedName = null;
-
-				if (extendedClassName.matches("([a-z]\\w*\\.){2,}[A-Z]\\w*")) {
-					fullyQualifiedName = extendedClassName;
-				}
-				else {
-					for (String importName : javaClass.getImports()) {
-						if (importName.endsWith("." + extendedClassName)) {
-							fullyQualifiedName = importName;
-
-							break;
-						}
-					}
-				}
+			for (String fullyQualifiedName :
+					javaClass.getExtendedClassNames(true)) {
 
 				ClassInfo extendedClassInfo = null;
 
-				if (fullyQualifiedName != null) {
+				if (!fullyQualifiedName.startsWith(
+						javaClass.getPackageName())) {
+
 					extendedClassInfo = _getClassInfo(fullyQualifiedName);
 				}
 				else {
-					fullyQualifiedName =
-						javaClass.getPackageName() + "." + extendedClassName;
-
 					String absolutePath = SourceUtil.getAbsolutePath(file);
 
 					int x = absolutePath.lastIndexOf("/");

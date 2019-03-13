@@ -108,14 +108,7 @@ renderResponse.setTitle(role.getTitle(locale));
 </portlet:actionURL>
 
 <aui:script use="liferay-item-selector-dialog,liferay-portlet-url">
-	var form = AUI.$(document.<portlet:namespace />fm);
-
-	<portlet:renderURL var="selectAssigneesURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
-		<portlet:param name="mvcPath" value="/select_assignees.jsp" />
-		<portlet:param name="roleId" value="<%= String.valueOf(roleId) %>" />
-		<portlet:param name="displayStyle" value="<%= displayStyle %>" />
-		<portlet:param name="tabs2" value="<%= tabs2 %>" />
-	</portlet:renderURL>
+	var form = document.<portlet:namespace />fm;
 
 	var addAssignees = function(event) {
 		var itemSelectorDialog = new A.LiferayItemSelectorDialog(
@@ -128,22 +121,38 @@ renderResponse.setTitle(role.getTitle(locale));
 						if (selectedItem) {
 							var assignmentsRedirect = Liferay.PortletURL.createURL('<%= portletURL.toString() %>');
 
-							if (selectedItem.type === 'users') {
-								form.fm('addUserIds').val(selectedItem.value);
-							}
-							else {
-								form.fm('addGroupIds').val(selectedItem.value);
-							}
-
 							assignmentsRedirect.setParameter('tabs2', selectedItem.type);
 
-							form.fm('redirect').val(assignmentsRedirect.toString());
+							var data = {
+								redirect: assignmentsRedirect.toString()
+							};
 
-							submitForm(form, '<%= editRoleAssignmentsURL %>');
+							if (selectedItem.type === 'users') {
+								data.addUserIds = selectedItem.value;
+							}
+							else {
+								data.addGroupIds = selectedItem.value;
+							}
+
+							Liferay.Util.postForm(
+								form,
+								{
+									data: data,
+									url: '<%= editRoleAssignmentsURL %>'
+								}
+							);
 						}
 					}
 				},
 				title: '<liferay-ui:message arguments="<%= HtmlUtil.escape(role.getName()) %>" key="add-assignees-to-x" />',
+
+				<portlet:renderURL var="selectAssigneesURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
+					<portlet:param name="mvcPath" value="/select_assignees.jsp" />
+					<portlet:param name="roleId" value="<%= String.valueOf(roleId) %>" />
+					<portlet:param name="displayStyle" value="<%= displayStyle %>" />
+					<portlet:param name="tabs2" value="<%= tabs2 %>" />
+				</portlet:renderURL>
+
 				url: '<%= selectAssigneesURL %>'
 			}
 		);
@@ -155,17 +164,25 @@ renderResponse.setTitle(role.getTitle(locale));
 		var assigneeType = '<%= HtmlUtil.escapeJS(tabs2) %>';
 		var ids = Liferay.Util.listCheckedExcept(form, '<portlet:namespace />allRowIds');
 
-		form.fm('assignmentsRedirect').val('<%= portletURL.toString() %>');
+		var data = {
+			assignmentsRedirect: '<%= portletURL.toString() %>'
+		};
 
 		if (assigneeType === 'users') {
-			form.fm('removeUserIds').val(ids);
+			data.removeUserIds = ids;
 		}
 		else {
-			form.fm('removeGroupIds').val(ids);
+			data.removeGroupIds = ids;
 		}
 
-		submitForm(form, '<%= editRoleAssignmentsURL %>');
-	}
+		Liferay.Util.postForm(
+			form,
+			{
+				data: data,
+				url: '<%= editRoleAssignmentsURL %>'
+			}
+		);
+	};
 
 	Liferay.componentReady('editRoleAssignmentsManagementToolbar').then(
 		function(managementToolbar) {

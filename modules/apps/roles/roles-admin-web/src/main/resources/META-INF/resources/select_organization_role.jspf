@@ -140,23 +140,29 @@ SearchContainer roleSearchContainer = SelectRoleManagementToolbarDisplayContext.
 				/>
 			</liferay-ui:search-container>
 
-			<aui:script sandbox="<%= true %>">
-				$('#<portlet:namespace />selectOrganizationRoleFm').on(
+			<aui:script require="metal-dom/src/dom as dom">
+				var form = document.<portlet:namespace />selectOrganizationRoleFm;
+
+				dom.delegate(
+					form,
 					'click',
 					'.organization-selector-button',
 					function(event) {
-						var organizationId = $(event.currentTarget).data('organizationid');
+						Liferay.Util.postForm(
+							form,
+							{
+								data: {
+									organizationId: event.delegateTarget.dataset.organizationid
+								},
 
-						var form = $(document.<portlet:namespace />selectOrganizationRoleFm);
+								<%
+								portletURL.setParameter("resetCur", Boolean.TRUE.toString());
+								portletURL.setParameter("step", "2");
+								%>
 
-						form.fm('organizationId').val(organizationId);
-
-						<%
-						portletURL.setParameter("resetCur", Boolean.TRUE.toString());
-						portletURL.setParameter("step", "2");
-						%>
-
-						submitForm(form, '<%= portletURL.toString() %>');
+								url: '<%= portletURL.toString() %>'
+							}
+						);
 					}
 				);
 			</aui:script>

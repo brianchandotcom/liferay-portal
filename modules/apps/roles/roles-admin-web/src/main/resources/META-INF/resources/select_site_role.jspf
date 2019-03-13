@@ -122,23 +122,29 @@ SearchContainer roleSearchContainer = SelectRoleManagementToolbarDisplayContext.
 				/>
 			</liferay-ui:search-container>
 
-			<aui:script sandbox="<%= true %>">
-				$('#<portlet:namespace />selectSiteRoleFm').on(
+			<aui:script require="metal-dom/src/dom as dom">
+				var form = document.<portlet:namespace />selectSiteRoleFm;
+
+				dom.delegate(
+					form,
 					'click',
 					'.group-selector-button',
 					function(event) {
-						var groupId = $(event.currentTarget).data('groupid');
+						Liferay.Util.postForm(
+							form,
+							{
+								data: {
+									groupId: event.delegateTarget.dataset.groupid
+								},
 
-						var form = $(document.<portlet:namespace />selectSiteRoleFm);
+								<%
+								portletURL.setParameter("resetCur", Boolean.TRUE.toString());
+								portletURL.setParameter("step", "2");
+								%>
 
-						form.fm('groupId').val(groupId);
-
-						<%
-						portletURL.setParameter("resetCur", Boolean.TRUE.toString());
-						portletURL.setParameter("step", "2");
-						%>
-
-						submitForm(form, '<%= portletURL.toString() %>');
+								url: '<%= portletURL.toString() %>'
+							}
+						);
 					}
 				);
 			</aui:script>

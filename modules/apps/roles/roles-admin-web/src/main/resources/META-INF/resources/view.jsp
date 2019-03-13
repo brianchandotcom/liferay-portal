@@ -101,20 +101,29 @@ PortletURL portletURL = viewRolesManagementToolbarDisplayContext.getPortletURL()
 
 <aui:script sandbox="<%= true %>">
 	var deleteRoles = function(deleteRoleIds) {
-		var form = $(document.<portlet:namespace />fm);
+		var form = document.<portlet:namespace />fm;
 
-		form.attr('method', 'post');
-
-		form.fm('deleteRoleIds').val(deleteRoleIds);
-
-		var p_p_lifecycle = document.<portlet:namespace />fm.p_p_lifecycle;
+		var p_p_lifecycle = form.p_p_lifecycle;
 
 		if (p_p_lifecycle) {
 			p_p_lifecycle.value = '1';
 		}
 
 		if (confirm('<%= UnicodeLanguageUtil.get(request, "are-you-sure-you-want-to-delete-this-role") %>')) {
-			submitForm(form, '<portlet:actionURL name="deleteRoles"><portlet:param name="redirect" value="<%= portletURL.toString() %>" /></portlet:actionURL>');
+			Liferay.Util.postForm(
+				form,
+				{
+					data: {
+						deleteRoleIds: deleteRoleIds
+					},
+
+					<portlet:actionURL name="deleteRoles" var="deleteRolesURL">
+						<portlet:param name="redirect" value="<%= portletURL.toString() %>" />
+					</portlet:actionURL>
+
+					url: '<%= deleteRolesURL %>'
+				}
+			);
 		}
 	};
 

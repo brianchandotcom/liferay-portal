@@ -267,58 +267,69 @@ if (!portletName.equals(PortletKeys.SERVER_ADMIN)) {
 
 				href = Liferay.Util.addParams('p_p_isolated=true', href);
 
-				AUI.$.ajax(
+				permissionContentContainerNode.plug(A.LoadingMask);
+
+				permissionContentContainerNode.loadingmask.show();
+
+				permissionContentContainerNode.unplug(AParseContent);
+
+				fetch(
 					href,
 					{
-						beforeSend: function() {
-							permissionContentContainerNode.plug(A.LoadingMask);
-
-							permissionContentContainerNode.loadingmask.show();
-
-							permissionContentContainerNode.unplug(AParseContent);
-						},
-						complete: function() {
-							permissionContentContainerNode.loadingmask.hide();
-
-							permissionContentContainerNode.unplug(A.LoadingMask);
-						},
-						error: function(obj) {
-							if (obj.status === 401) {
-								window.location.reload();
-
-								return;
-							}
-
-							new Liferay.Notification(
-								{
-									closeable: true,
-									delay: {
-										hide: 0,
-										show: 0
-									},
-									duration: 500,
-									message: '<liferay-ui:message key="sorry,-we-were-not-able-to-access-the-server" />',
-									render: true,
-									title: '<liferay-ui:message key="warning" />',
-									type: 'warning'
-								}
-							);
-						},
-						success: function(responseData) {
-							permissionContentContainerNode.plug(AParseContent);
-
-							permissionContentContainerNode.empty();
-
-							permissionContentContainerNode.setContent(responseData);
-
-							var checkedNodes = permissionContentContainerNode.all(':checked');
-
-							originalSelectedValues = checkedNodes.val();
-
-							A.all('.permission-navigation-link').removeClass('active')
-
-							event.currentTarget.addClass('active');
+						credentials: 'include'
+					}
+				).then(
+					function(response) {
+						if (response.status === 401) {
+							window.location.reload();
 						}
+						else if (response.ok) {
+							return response.text();
+						}
+						else {
+							throw new Error('<liferay-ui:message key="sorry,-we-were-not-able-to-access-the-server" />');
+						}
+					}
+				).then(
+					function(response) {
+						permissionContentContainerNode.loadingmask.hide();
+
+						permissionContentContainerNode.unplug(A.LoadingMask);
+
+						permissionContentContainerNode.plug(AParseContent);
+
+						permissionContentContainerNode.empty();
+
+						permissionContentContainerNode.setContent(response);
+
+						var checkedNodes = permissionContentContainerNode.all(':checked');
+
+						originalSelectedValues = checkedNodes.val();
+
+						A.all('.permission-navigation-link').removeClass('active')
+
+						event.currentTarget.addClass('active');
+					}
+				).catch(
+					function(error) {
+						permissionContentContainerNode.loadingmask.hide();
+
+						permissionContentContainerNode.unplug(A.LoadingMask)
+
+						new Liferay.Notification(
+							{
+								closeable: true,
+								delay: {
+									hide: 0,
+									show: 0
+								},
+								duration: 500,
+								message: error.message,
+								render: true,
+								title: '<liferay-ui:message key="warning" />',
+								type: 'warning'
+							}
+						);
 					}
 				);
 			},
@@ -410,12 +421,17 @@ if (!portletName.equals(PortletKeys.SERVER_ADMIN)) {
 
 <aui:script>
 	function <portlet:namespace />updateActions() {
-		var form = AUI.$(document.<portlet:namespace />fm);
+		var form = document.<portlet:namespace />fm;
 
-		form.fm('redirect').val('<%= HtmlUtil.escapeJS(portletURL.toString()) %>');
-		form.fm('selectedTargets').val(Liferay.Util.listCheckedExcept(form, '<portlet:namespace />allRowIds'));
-		form.fm('unselectedTargets').val(Liferay.Util.listUncheckedExcept(form, '<portlet:namespace />allRowIds'));
-
-		submitForm(form);
+		Liferay.Util.postForm(
+			form,
+			{
+				data: {
+					redirect: '<%= HtmlUtil.escapeJS(portletURL.toString()) %>',
+					selectedTargets: Liferay.Util.listCheckedExcept(form, '<portlet:namespace />allRowIds'),
+					unselectedTargets: Liferay.Util.listUncheckedExcept(form, '<portlet:namespace />allRowIds')
+				}
+			}
+		);
 	}
 </aui:script>

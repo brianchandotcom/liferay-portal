@@ -301,8 +301,8 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 	public static final String UPDATE_FILE_VERSIONS_TASK_NAME =
 		"updateFileVersions";
 
-	public static final String ZIP_FRAGMENTS_DIRECTORY_TASK_NAME =
-		"zipFragmentsDirectory";
+	public static final String ZIP_ZIPPABLE_RESOURCES_TASK_NAME =
+		"zipZippableResources";
 
 	@Override
 	public void apply(final Project project) {
@@ -418,7 +418,7 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 			project, liferayExtension);
 		Copy deployDependenciesTask = _addTaskDeployDependencies(
 			project, liferayExtension);
-		Zip zipFragmentsDirectoryTask = _addTaskZipFragmentsDirectory(project);
+		Task zipZippableResourcesTask = _addTaskZipZippableResources(project);
 
 		if (deployToAppServerLibs) {
 			_addTaskAlias(
@@ -461,7 +461,7 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 		_configureSourceSetMain(project);
 		_configureTaskDeploy(
 			project, deployConfigsTask, deployDependenciesTask);
-		_configureTaskJar(jar, zipFragmentsDirectoryTask, testProject);
+		_configureTaskJar(jar, zipZippableResourcesTask, testProject);
 		_configureTaskJavadoc(project, portalRootDir);
 		_configureTaskTest(project);
 		_configureTaskTestIntegration(project);
@@ -1618,24 +1618,51 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 		return replaceRegexTask;
 	}
 
-	private Zip _addTaskZipFragmentsDirectory(Project project) {
-		Zip zip = GradleUtil.addTask(
-			project, ZIP_FRAGMENTS_DIRECTORY_TASK_NAME, Zip.class);
+	private Zip _addTaskZipDirectory(
+		Project project, String taskName, File dir, File destinationDir) {
 
-		File fragmentsDir = project.file(
-			"src/main/zippableResources/fragments");
+		Zip zip = GradleUtil.addTask(project, taskName, Zip.class);
 
-		zip.from(fragmentsDir);
-
-		zip.setArchiveName("fragments.zip");
-		zip.setDestinationDir(project.file("classes"));
+		zip.from(dir);
+		zip.setArchiveName(dir.getName() + ".zip");
+		zip.setDestinationDir(destinationDir);
 
 		zip.setDescription(
 			"Assembles " + project.relativePath(zip.getArchivePath()) +
-				" with the contents of the " +
-					project.relativePath(fragmentsDir) + " directory.");
+				" with the contents of the " + project.relativePath(dir) +
+					" directory.");
 
 		return zip;
+	}
+
+	private Task _addTaskZipZippableResources(Project project) {
+		Task task = project.task(ZIP_ZIPPABLE_RESOURCES_TASK_NAME);
+
+		File zippableResourcesDir = project.file("src/main/zippableResources");
+
+		StringBuilder sb = new StringBuilder();
+
+		sb.append("Assembles Zip files from the subdirectories of ");
+		sb.append(project.relativePath(zippableResourcesDir));
+		sb.append('.');
+
+		task.setDescription(sb.toString());
+
+		File[] dirs = FileUtil.getDirectories(zippableResourcesDir);
+
+		if (dirs != null) {
+			for (File dir : dirs) {
+				String taskName = GradleUtil.getTaskName(
+					ZIP_ZIPPABLE_RESOURCES_TASK_NAME, dir);
+
+				Zip zip = _addTaskZipDirectory(
+					project, taskName, dir, project.file("classes"));
+
+				task.dependsOn(zip);
+			}
+		}
+
+		return task;
 	}
 
 	private void _applyConfigScripts(Project project) {
@@ -3219,9 +3246,9 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 	}
 
 	private void _configureTaskJar(
-		Jar jar, Zip zipFragmentsDirectoryTask, boolean testProject) {
+		Jar jar, Task zipZippableResourcesTask, boolean testProject) {
 
-		jar.dependsOn(zipFragmentsDirectoryTask);
+		jar.dependsOn(zipZippableResourcesTask);
 
 		if (testProject) {
 			jar.dependsOn(JavaPlugin.TEST_CLASSES_TASK_NAME);

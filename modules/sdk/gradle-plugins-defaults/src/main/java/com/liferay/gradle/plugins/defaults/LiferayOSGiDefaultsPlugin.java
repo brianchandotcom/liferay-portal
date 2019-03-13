@@ -208,6 +208,7 @@ import org.gradle.api.tasks.TaskOutputs;
 import org.gradle.api.tasks.Upload;
 import org.gradle.api.tasks.VerificationTask;
 import org.gradle.api.tasks.bundling.Jar;
+import org.gradle.api.tasks.bundling.Zip;
 import org.gradle.api.tasks.compile.CompileOptions;
 import org.gradle.api.tasks.compile.JavaCompile;
 import org.gradle.api.tasks.javadoc.Javadoc;
@@ -299,6 +300,9 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 
 	public static final String UPDATE_FILE_VERSIONS_TASK_NAME =
 		"updateFileVersions";
+
+	public static final String ZIP_FRAGMENTS_DIRECTORY_TASK_NAME =
+		"zipFragmentsDirectory";
 
 	@Override
 	public void apply(final Project project) {
@@ -414,6 +418,7 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 			project, liferayExtension);
 		Copy deployDependenciesTask = _addTaskDeployDependencies(
 			project, liferayExtension);
+		Zip zipFragmentsDirectoryTask = _addTaskZipFragmentsDirectory(project);
 
 		if (deployToAppServerLibs) {
 			_addTaskAlias(
@@ -456,7 +461,7 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 		_configureSourceSetMain(project);
 		_configureTaskDeploy(
 			project, deployConfigsTask, deployDependenciesTask);
-		_configureTaskJar(jar, testProject);
+		_configureTaskJar(jar, zipFragmentsDirectoryTask, testProject);
 		_configureTaskJavadoc(project, portalRootDir);
 		_configureTaskTest(project);
 		_configureTaskTestIntegration(project);
@@ -1611,6 +1616,26 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 			IncrementVersionClosure.MICRO_INCREMENT);
 
 		return replaceRegexTask;
+	}
+
+	private Zip _addTaskZipFragmentsDirectory(Project project) {
+		Zip zip = GradleUtil.addTask(
+			project, ZIP_FRAGMENTS_DIRECTORY_TASK_NAME, Zip.class);
+
+		File fragmentsDir = project.file(
+			"src/main/zippableResources/fragments");
+
+		zip.from(fragmentsDir);
+
+		zip.setArchiveName("fragments.zip");
+		zip.setDestinationDir(project.file("classes"));
+
+		zip.setDescription(
+			"Assembles " + project.relativePath(zip.getArchivePath()) +
+				" with the contents of the " +
+					project.relativePath(fragmentsDir) + " directory.");
+
+		return zip;
 	}
 
 	private void _applyConfigScripts(Project project) {
@@ -3193,7 +3218,11 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 		}
 	}
 
-	private void _configureTaskJar(Jar jar, boolean testProject) {
+	private void _configureTaskJar(
+		Jar jar, Zip zipFragmentsDirectoryTask, boolean testProject) {
+
+		jar.dependsOn(zipFragmentsDirectoryTask);
+
 		if (testProject) {
 			jar.dependsOn(JavaPlugin.TEST_CLASSES_TASK_NAME);
 

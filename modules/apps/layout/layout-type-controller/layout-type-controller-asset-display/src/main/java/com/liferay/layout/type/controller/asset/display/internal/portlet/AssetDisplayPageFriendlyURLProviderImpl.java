@@ -27,6 +27,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.Validator;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -65,18 +66,22 @@ public class AssetDisplayPageFriendlyURLProviderImpl
 
 		AssetRenderer assetRenderer = assetEntry.getAssetRenderer();
 
+		sb.append(
+			AssetDisplayPageFriendlyURLResolverConstants.
+				ASSET_DISPLAY_PAGE_URL_SEPARATOR);
+
+		String urlTitle = null;
+
 		if (assetRenderer != null) {
-			sb.append(
-				AssetDisplayPageFriendlyURLResolverConstants.
-					ASSET_DISPLAY_PAGE_URL_SEPARATOR);
+			urlTitle = assetRenderer.getUrlTitle(themeDisplay.getLocale());
+		}
+
+		if (Validator.isNotNull(urlTitle)) {
 			sb.append(assetDisplayContributor.getAssetURLSeparator());
 			sb.append(StringPool.SLASH);
 			sb.append(assetRenderer.getUrlTitle(themeDisplay.getLocale()));
 		}
 		else {
-			sb.append(
-				AssetDisplayPageFriendlyURLResolverConstants.
-					ASSET_DISPLAY_PAGE_URL_SEPARATOR);
 			sb.append(assetEntry.getEntryId());
 		}
 

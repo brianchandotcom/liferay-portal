@@ -36,7 +36,8 @@ page import="com.liferay.site.item.selector.web.internal.constants.SitesItemSele
 page import="com.liferay.site.item.selector.web.internal.display.context.SitesItemSelectorViewDisplayContext" %><%@
 page import="com.liferay.site.item.selector.web.internal.display.context.SitesItemSelectorViewManagementToolbarDisplayContext" %><%@
 page import="com.liferay.site.item.selector.web.internal.servlet.taglib.clay.SiteVerticalCard" %><%@
-page import="com.liferay.site.util.GroupURLProvider" %>
+page import="com.liferay.site.util.GroupURLProvider" %><%@
+page import="com.liferay.taglib.aui.AUIUtil" %>
 
 <%@ page import="java.util.HashMap" %><%@
 page import="java.util.List" %><%@

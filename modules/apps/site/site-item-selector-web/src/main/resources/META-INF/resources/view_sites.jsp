@@ -123,7 +123,7 @@ GroupSearch groupSearch = siteItemSelectorViewDisplayContext.getGroupSearch();
 						<c:choose>
 							<c:when test="<%= Validator.isNotNull(siteVerticalCard.getImageSrc()) %>">
 								<div class="card card-type-asset">
-									<div class="aspect-ratio bg-checkered card-item-first">
+									<div class="aspect-ratio bg-checkered card-item-first selector-button" <%= AUIUtil.buildData(data) %>>
 										<img alt="thumbnail" class="aspect-ratio-item-center-middle aspect-ratio-item-fluid" src="<%= siteVerticalCard.getImageSrc() %>" />
 									</div>
 
@@ -156,7 +156,7 @@ GroupSearch groupSearch = siteItemSelectorViewDisplayContext.getGroupSearch();
 							</c:when>
 							<c:otherwise>
 								<div class="card card-type-asset file-card">
-									<div class="aspect-ratio card-item-first">
+									<div class="aspect-ratio card-item-first selector-button" <%= AUIUtil.buildData(data) %>>
 										<div class="aspect-ratio-item-center-middle aspect-ratio-item-fluid card-type-asset-icon">
 											<svg class="lexicon-icon" focusable="false" role="presentation">
 												<use xlink:href="<%= themeDisplay.getPathThemeImages() %>/lexicon/icons.svg#sites" />

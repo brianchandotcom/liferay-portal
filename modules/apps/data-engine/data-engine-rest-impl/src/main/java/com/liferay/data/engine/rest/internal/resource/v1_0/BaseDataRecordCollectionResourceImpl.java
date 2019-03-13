@@ -14,6 +14,7 @@
 
 package com.liferay.data.engine.rest.internal.resource.v1_0;
 
+import com.liferay.data.engine.rest.dto.v1_0.DataRecord;
 import com.liferay.data.engine.rest.dto.v1_0.DataRecordCollection;
 import com.liferay.data.engine.rest.resource.v1_0.DataRecordCollectionResource;
 import com.liferay.petra.function.UnsafeFunction;
@@ -134,6 +135,88 @@ public abstract class BaseDataRecordCollectionResourceImpl
 		throws Exception {
 
 		return new DataRecordCollection();
+	}
+
+	@Override
+	@GET
+	@Parameters(
+		value = {
+			@Parameter(in = ParameterIn.QUERY, name = "page"),
+			@Parameter(in = ParameterIn.QUERY, name = "pageSize")
+		}
+	)
+	@Path("/data-record-collections/{data-record-collection-id}/records")
+	@Produces("application/json")
+	@Tags(value = {@Tag(name = "DataRecordCollection")})
+	public Page<DataRecord> getDataRecordCollectionRecordsPage(
+			@PathParam("data-record-collection-id") Long dataRecordCollectionId,
+			@Context Pagination pagination)
+		throws Exception {
+
+		return Page.of(Collections.emptyList());
+	}
+
+	@Override
+	@Consumes("application/json")
+	@POST
+	@Path("/data-record-collections/{data-record-collection-id}/records")
+	@Produces("application/json")
+	@Tags(value = {@Tag(name = "DataRecordCollection")})
+	public DataRecord postDataRecordCollectionRecord(
+			@PathParam("data-record-collection-id") Long dataRecordCollectionId,
+			@QueryParam("contentSpaceId") Long contentSpaceId,
+			DataRecord dataRecord)
+		throws Exception {
+
+		return new DataRecord();
+	}
+
+	@Override
+	@DELETE
+	@Path(
+		"/data-record-collections/{data-record-collection-id}/records/{data-record-id}"
+	)
+	@Produces("application/json")
+	@Tags(value = {@Tag(name = "DataRecordCollection")})
+	public boolean deleteDataRecordCollectionRecordDataRecord(
+			@PathParam("data-record-collection-id") Long dataRecordCollectionId,
+			@PathParam("data-record-id") Long dataRecordId)
+		throws Exception {
+
+		return false;
+	}
+
+	@Override
+	@GET
+	@Path(
+		"/data-record-collections/{data-record-collection-id}/records/{data-record-id}"
+	)
+	@Produces("application/json")
+	@Tags(value = {@Tag(name = "DataRecordCollection")})
+	public DataRecord getDataRecordCollectionRecordDataRecord(
+			@PathParam("data-record-collection-id") Long dataRecordCollectionId,
+			@PathParam("data-record-id") Long dataRecordId)
+		throws Exception {
+
+		return new DataRecord();
+	}
+
+	@Override
+	@Consumes("application/json")
+	@PUT
+	@Path(
+		"/data-record-collections/{data-record-collection-id}/records/{data-record-id}"
+	)
+	@Produces("application/json")
+	@Tags(value = {@Tag(name = "DataRecordCollection")})
+	public DataRecord putDataRecordCollectionRecordDataRecord(
+			@PathParam("data-record-collection-id") Long dataRecordCollectionId,
+			@PathParam("data-record-id") Long dataRecordId,
+			@QueryParam("contentSpaceId") Long contentSpaceId,
+			DataRecord dataRecord)
+		throws Exception {
+
+		return new DataRecord();
 	}
 
 	public void setContextCompany(Company contextCompany) {

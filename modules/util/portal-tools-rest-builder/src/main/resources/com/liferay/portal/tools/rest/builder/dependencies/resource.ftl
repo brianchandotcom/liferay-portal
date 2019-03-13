@@ -17,6 +17,8 @@ import java.util.Date;
 
 import javax.annotation.Generated;
 
+import javax.ws.rs.core.Response;
+
 /**
  * To access this resource, run:
  *

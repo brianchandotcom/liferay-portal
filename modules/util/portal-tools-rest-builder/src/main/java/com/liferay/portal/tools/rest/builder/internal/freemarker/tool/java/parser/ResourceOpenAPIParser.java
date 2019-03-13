@@ -525,6 +525,10 @@ public class ResourceOpenAPIParser {
 			return boolean.class.getName();
 		}
 
+		if (responses.size() > 1) {
+			return javax.ws.rs.core.Response.class.getName();
+		}
+
 		for (Response response : responses.values()) {
 			Map<String, Content> contents = response.getContent();
 

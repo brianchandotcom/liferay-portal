@@ -46,6 +46,25 @@ assetPublisherDisplayContext.setLayoutAssetEntry(assetEntry);
 assetEntry = assetPublisherDisplayContext.incrementViewCounter(assetEntry);
 
 String title = assetRenderer.getTitle(locale);
+
+PortletURL viewFullContentURL = renderResponse.createRenderURL();
+
+viewFullContentURL.setParameter("mvcPath", "/view_content.jsp");
+viewFullContentURL.setParameter("type", assetRendererFactory.getType());
+
+if (print) {
+	viewFullContentURL.setParameter("viewMode", Constants.PRINT);
+}
+
+if (Validator.isNotNull(assetRenderer.getUrlTitle())) {
+	if (assetRenderer.getGroupId() != scopeGroupId) {
+		viewFullContentURL.setParameter("groupId", String.valueOf(assetRenderer.getGroupId()));
+	}
+
+	viewFullContentURL.setParameter("urlTitle", assetRenderer.getUrlTitle());
+}
+
+String viewInContextURL = assetRenderer.getURLViewInContext(liferayPortletRequest, liferayPortletResponse, HttpUtil.setParameter(viewFullContentURL.toString(), "redirect", currentURL));
 %>
 
 <div class="asset-full-content clearfix <%= assetPublisherDisplayContext.isDefaultAssetPublisher() ? "default-asset-publisher" : StringPool.BLANK %> <%= assetPublisherDisplayContext.isShowAssetTitle() ? "show-asset-title" : "no-title" %>">
@@ -64,7 +83,9 @@ String title = assetRenderer.getTitle(locale);
 						/>
 					</c:if>
 
-					<%= HtmlUtil.escape(title) %>
+					<a href="<%= viewInContextURL %>">
+						<%= HtmlUtil.escape(title) %>
+					</a>
 				</h4>
 			</div>
 		</c:if>
@@ -215,23 +236,6 @@ String title = assetRenderer.getTitle(locale);
 	</c:if>
 
 	<%
-	PortletURL viewFullContentURL = renderResponse.createRenderURL();
-
-	viewFullContentURL.setParameter("mvcPath", "/view_content.jsp");
-	viewFullContentURL.setParameter("type", assetRendererFactory.getType());
-
-	if (print) {
-		viewFullContentURL.setParameter("viewMode", Constants.PRINT);
-	}
-
-	if (Validator.isNotNull(assetRenderer.getUrlTitle())) {
-		if (assetRenderer.getGroupId() != scopeGroupId) {
-			viewFullContentURL.setParameter("groupId", String.valueOf(assetRenderer.getGroupId()));
-		}
-
-		viewFullContentURL.setParameter("urlTitle", assetRenderer.getUrlTitle());
-	}
-
 	boolean showContextLink = assetPublisherDisplayContext.isShowContextLink(assetRenderer.getGroupId(), assetRendererFactory.getPortletId()) && !print && assetEntry.isVisible();
 	boolean showConversions = assetPublisherDisplayContext.isEnableConversions() && assetRenderer.isConvertible() && !print;
 	boolean showLocalization = (assetPublisherDisplayContext.isShowAvailableLocales() && assetRenderer.isLocalizable() && !print);
@@ -244,7 +248,7 @@ String title = assetRenderer.getTitle(locale);
 		<div class="asset-details autofit-row autofit-row-center">
 			<c:if test="<%= showContextLink %>">
 				<div class="asset-more autofit-col mr-3">
-					<a href="<%= assetRenderer.getURLViewInContext(liferayPortletRequest, liferayPortletResponse, HttpUtil.setParameter(viewFullContentURL.toString(), "redirect", currentURL)) %>"><liferay-ui:message key="<%= assetRenderer.getViewInContextMessage() %>" /> &raquo;</a>
+					<a href="<%= viewInContextURL %>"><liferay-ui:message key="<%= assetRenderer.getViewInContextMessage() %>" /> &raquo;</a>
 				</div>
 			</c:if>
 

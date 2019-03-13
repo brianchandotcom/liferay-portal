@@ -56,7 +56,9 @@ for (AssetEntry assetEntry : assetEntryResult.getAssetEntries()) {
 			<div class="autofit-row autofit-row-center mb-3">
 				<div class="autofit-col">
 					<h4 class="asset-title component-title">
-						<%= HtmlUtil.escape(title) %>
+						<a href="<%= viewURL %>">
+							<%= HtmlUtil.escape(title) %>
+						</a>
 					</h4>
 				</div>
 
@@ -150,10 +152,6 @@ for (AssetEntry assetEntry : assetEntryResult.getAssetEntries()) {
 					template="<%= AssetRenderer.TEMPLATE_ABSTRACT %>"
 					viewURL="<%= viewURL %>"
 				/>
-
-				<a href="<%= viewURL %>">
-					<liferay-ui:message key="read-more" />
-				</a>
 			</div>
 
 			<c:if test="<%= assetPublisherDisplayContext.isShowCategories() %>">

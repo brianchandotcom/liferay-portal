@@ -374,7 +374,23 @@ public class ResourceOpenAPIParser {
 		Operation operation, String path, String requestBodyMediaType,
 		String returnType, String schemaName) {
 
-		if (operation.getOperationId() != null) {
+		List<String> requestBodyMediaTypes = new ArrayList<>();
+
+		if (operation.getRequestBody() != null) {
+			RequestBody requestBody = operation.getRequestBody();
+
+			if (requestBody.getContent() != null) {
+				Map<String, Content> contents = requestBody.getContent();
+
+				requestBodyMediaTypes.addAll(contents.keySet());
+
+				Collections.sort(requestBodyMediaTypes);
+			}
+		}
+
+		if ((operation.getOperationId() != null) &&
+			(requestBodyMediaTypes.size() < 2)) {
+
 			return operation.getOperationId();
 		}
 
@@ -385,18 +401,10 @@ public class ResourceOpenAPIParser {
 		methodNameSegments.add(httpMethod);
 
 		if (requestBodyMediaType != null) {
-			RequestBody requestBody = operation.getRequestBody();
+			if (requestBodyMediaTypes.size() > 1) {
+				int i = requestBodyMediaTypes.indexOf(requestBodyMediaType) + 1;
 
-			Map<String, Content> contents = requestBody.getContent();
-
-			List<String> mediaTypes = new ArrayList<>(contents.keySet());
-
-			if (mediaTypes.size() > 1) {
-				Collections.sort(mediaTypes);
-
-				int count = mediaTypes.indexOf(requestBodyMediaType) + 1;
-
-				methodNameSegments.add("MediaType" + count);
+				methodNameSegments.add("MediaType" + i);
 			}
 		}
 

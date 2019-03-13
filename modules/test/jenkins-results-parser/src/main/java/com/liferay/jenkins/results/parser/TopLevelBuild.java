@@ -1592,13 +1592,13 @@ public class TopLevelBuild extends BaseBuild {
 				return compareToValue;
 			}
 
-			compareToValue = _duration.compareTo(stopwatchRecord.getDuration());
+			compareToValue = _name.compareTo(stopwatchRecord.getName());
 
 			if (compareToValue != 0) {
 				return compareToValue;
 			}
 
-			return _name.compareTo(stopwatchRecord.getName());
+			return _duration.compareTo(stopwatchRecord.getDuration());
 		}
 
 		public Long getDuration() {

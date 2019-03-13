@@ -14,14 +14,24 @@
 
 package com.liferay.data.engine.rest.internal.resource.v1_0;
 
+import com.liferay.data.engine.rest.dto.v1_0.DataRecord;
 import com.liferay.data.engine.rest.dto.v1_0.DataRecordCollection;
 import com.liferay.data.engine.rest.internal.dto.v1_0.util.LocalizedValueUtil;
+import com.liferay.data.engine.rest.internal.storage.DEDataStorageTracker;
 import com.liferay.data.engine.rest.resource.v1_0.DataRecordCollectionResource;
+import com.liferay.data.engine.storage.DEDataStorage;
+import com.liferay.dynamic.data.lists.model.DDLRecord;
 import com.liferay.dynamic.data.lists.model.DDLRecordSet;
 import com.liferay.dynamic.data.lists.model.DDLRecordSetConstants;
+import com.liferay.dynamic.data.lists.model.DDLRecordSetVersion;
+import com.liferay.dynamic.data.lists.service.DDLRecordLocalService;
 import com.liferay.dynamic.data.lists.service.DDLRecordSetLocalService;
+import com.liferay.dynamic.data.mapping.model.DDMStructure;
+import com.liferay.dynamic.data.mapping.model.DDMStructureVersion;
+import com.liferay.dynamic.data.mapping.service.DDMStorageLinkLocalService;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 
@@ -40,12 +50,56 @@ public class DataRecordCollectionResourceImpl
 	extends BaseDataRecordCollectionResourceImpl {
 
 	@Override
+	public boolean deleteDataRecordCollectionRecordDataRecord(
+			Long dataRecordCollectionId, Long dataRecordId)
+		throws Exception {
+
+		DDLRecord ddlRecord = _ddlRecordLocalService.getDDLRecord(dataRecordId);
+
+		DDLRecordSet ddlRecordSet = ddlRecord.getRecordSet();
+
+		DDMStructure ddmStructure = ddlRecordSet.getDDMStructure();
+
+		DEDataStorage deDataStorage = _deDataStorageTracker.getDEDataStorage(
+			ddmStructure.getStorageType());
+
+		deDataStorage.delete(ddlRecord.getDDMStorageId());
+
+		_ddlRecordLocalService.deleteDDLRecord(ddlRecord);
+
+		return true;
+	}
+
+	@Override
 	public DataRecordCollection getDataRecordCollection(
 			Long dataRecordCollectionId)
 		throws Exception {
 
 		return _toDataRecordCollection(
 			_ddlRecordSetLocalService.getRecordSet(dataRecordCollectionId));
+	}
+
+	@Override
+	public DataRecord getDataRecordCollectionRecordDataRecord(
+			Long dataRecordCollectionId, Long dataRecordId)
+		throws Exception {
+
+		return _toDataRecord(_ddlRecordLocalService.getDDLRecord(dataRecordId));
+	}
+
+	@Override
+	public Page<DataRecord> getDataRecordCollectionRecordsPage(
+			Long dataRecordCollectionId, Pagination pagination)
+		throws Exception {
+
+		return Page.of(
+			transform(
+				_ddlRecordLocalService.getRecords(
+					dataRecordCollectionId, pagination.getStartPosition(),
+					pagination.getEndPosition(), null),
+				this::_toDataRecord),
+			pagination,
+			_ddlRecordLocalService.getRecordsCount(dataRecordCollectionId));
 	}
 
 	@Override
@@ -96,6 +150,26 @@ public class DataRecordCollectionResourceImpl
 	}
 
 	@Override
+	public DataRecord postDataRecordCollectionRecord(
+			Long dataRecordCollectionId, Long contentSpaceId,
+			DataRecord dataRecord)
+		throws Exception {
+
+		long storageId = _saveDataRecordOnStorage(
+			dataRecordCollectionId, contentSpaceId, dataRecord);
+
+		DDLRecord ddlRecord = _ddlRecordLocalService.addRecord(
+			PrincipalThreadLocal.getUserId(), contentSpaceId, storageId,
+			dataRecordCollectionId, new ServiceContext());
+
+		dataRecord.setId(ddlRecord.getRecordId());
+
+		_addStorageLink(storageId, ddlRecord);
+
+		return dataRecord;
+	}
+
+	@Override
 	public DataRecordCollection putDataRecordCollection(
 			Long dataRecordCollectionId,
 			DataRecordCollection dataRecordCollection)
@@ -110,6 +184,79 @@ public class DataRecordCollectionResourceImpl
 				LocalizedValueUtil.toLocalizationMap(
 					dataRecordCollection.getDescription()),
 				0, new ServiceContext()));
+	}
+
+	@Override
+	public DataRecord putDataRecordCollectionRecordDataRecord(
+			Long dataRecordCollectionId, Long dataRecordId, Long contentSpaceId,
+			DataRecord dataRecord)
+		throws Exception {
+
+		long storageId = _saveDataRecordOnStorage(
+			dataRecordCollectionId, contentSpaceId, dataRecord);
+
+		DDLRecord ddlRecord = _ddlRecordLocalService.updateRecord(
+			PrincipalThreadLocal.getUserId(), dataRecordId, storageId,
+			new ServiceContext());
+
+		dataRecord.setId(ddlRecord.getRecordId());
+
+		_addStorageLink(storageId, ddlRecord);
+
+		return dataRecord;
+	}
+
+	private void _addStorageLink(long storageId, DDLRecord ddlRecord)
+		throws Exception {
+
+		DDLRecordSet ddlRecordSet = ddlRecord.getRecordSet();
+
+		DDLRecordSetVersion ddlRecordSetVersion =
+			ddlRecordSet.getRecordSetVersion();
+
+		DDMStructureVersion ddmStructureVersion =
+			ddlRecordSetVersion.getDDMStructureVersion();
+
+		_ddmStorageLinkLocalService.addStorageLink(
+			_portal.getClassNameId(DataRecord.class.getName()), storageId,
+			ddmStructureVersion.getStructureVersionId(), new ServiceContext());
+	}
+
+	private long _saveDataRecordOnStorage(
+			Long dataRecordCollectionId, Long contentSpaceId,
+			DataRecord dataRecord)
+		throws Exception {
+
+		DDLRecordSet ddlRecordSet = _ddlRecordSetLocalService.getDDLRecordSet(
+			dataRecordCollectionId);
+
+		DDMStructure ddmStructure = ddlRecordSet.getDDMStructure();
+
+		DEDataStorage deDataStorage = _deDataStorageTracker.getDEDataStorage(
+			ddmStructure.getStorageType());
+
+		return deDataStorage.save(contentSpaceId, dataRecord);
+	}
+
+	private DataRecord _toDataRecord(DDLRecord ddlRecord) throws Exception {
+		DDLRecordSet ddlRecordSet = ddlRecord.getRecordSet();
+
+		DDMStructure ddmStructure = ddlRecordSet.getDDMStructure();
+
+		DEDataStorage deDataStorage = _deDataStorageTracker.getDEDataStorage(
+			ddmStructure.getStorageType());
+
+		deDataStorage.get(
+			ddmStructure.getStructureId(), ddlRecord.getDDMStorageId());
+
+		return new DataRecord() {
+			{
+				dataRecordCollectionId = ddlRecordSet.getRecordSetId();
+				id = ddlRecord.getRecordId();
+				dataRecordValues = deDataStorage.get(
+					ddmStructure.getStructureId(), ddlRecord.getDDMStorageId());
+			}
+		};
 	}
 
 	private DataRecordCollection _toDataRecordCollection(
@@ -128,6 +275,18 @@ public class DataRecordCollectionResourceImpl
 	}
 
 	@Reference
+	private DDLRecordLocalService _ddlRecordLocalService;
+
+	@Reference
 	private DDLRecordSetLocalService _ddlRecordSetLocalService;
+
+	@Reference
+	private DDMStorageLinkLocalService _ddmStorageLinkLocalService;
+
+	@Reference
+	private DEDataStorageTracker _deDataStorageTracker;
+
+	@Reference
+	private Portal _portal;
 
 }

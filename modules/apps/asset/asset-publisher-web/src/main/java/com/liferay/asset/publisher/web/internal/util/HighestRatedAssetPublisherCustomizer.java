@@ -81,11 +81,6 @@ public class HighestRatedAssetPublisherCustomizer
 	}
 
 	@Override
-	public boolean isShowEnableRelatedAssets(HttpServletRequest request) {
-		return true;
-	}
-
-	@Override
 	public boolean isShowScopeSelector(HttpServletRequest request) {
 		return true;
 	}

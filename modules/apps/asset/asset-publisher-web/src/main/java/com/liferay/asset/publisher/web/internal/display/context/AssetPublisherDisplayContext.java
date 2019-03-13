@@ -1202,7 +1202,7 @@ public class AssetPublisherDisplayContext {
 		}
 
 		_enableRelatedAssets = GetterUtil.getBoolean(
-			_portletPreferences.getValue("enableRelatedAssets", null), true);
+			_portletPreferences.getValue("enableRelatedAssets", null));
 
 		return _enableRelatedAssets;
 	}

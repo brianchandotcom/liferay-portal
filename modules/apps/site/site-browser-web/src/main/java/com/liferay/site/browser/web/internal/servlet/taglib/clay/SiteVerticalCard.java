@@ -96,7 +96,7 @@ public class SiteVerticalCard implements VerticalCard {
 	@Override
 	public String getSubtitle() {
 		if (_group.isCompany()) {
-			return StringPool.DASH;
+			return StringPool.NBSP;
 		}
 
 		List<Group> childSites = _group.getChildren(true);

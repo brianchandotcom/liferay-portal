@@ -175,7 +175,7 @@ public class DisplayPageVerticalCard
 		String typeLabel = _getTypeLabel();
 
 		if (Validator.isNull(typeLabel)) {
-			return StringPool.DASH;
+			return StringPool.NBSP;
 		}
 
 		String subtypeLabel = StringPool.BLANK;

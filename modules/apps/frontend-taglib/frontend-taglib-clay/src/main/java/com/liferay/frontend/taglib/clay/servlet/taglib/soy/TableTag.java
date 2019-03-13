@@ -37,7 +37,7 @@ public class TableTag<T> extends BaseClayTag {
 
 	@Override
 	public int doStartTag() {
-		setComponentBaseName("ClayTable");
+		setComponentBaseName("com.liferay.frontend.taglib.clay.Table");
 		setHydrate(true);
 		setModuleBaseName("table");
 
@@ -69,6 +69,18 @@ public class TableTag<T> extends BaseClayTag {
 		setShowCheckbox(showCheckbox);
 
 		return returnValue;
+	}
+
+	@Override
+	public String getModule() {
+		NPMResolver npmResolver = NPMResolverProvider.getNPMResolver();
+
+		if (npmResolver == null) {
+			return StringPool.BLANK;
+		}
+
+		return npmResolver.resolveModuleName(
+			"frontend-taglib-clay/table/Table.es");
 	}
 
 	public void setActionsMenuVariant(String actionsMenuVariant) {

@@ -53,7 +53,11 @@ renderResponse.setTitle(editSegmentsEntryDisplayContext.getTitle(locale));
 	String segmentEditRootElementId = renderResponse.getNamespace() + "-segment-edit-root";
 	%>
 
-	<div id="<%= segmentEditRootElementId %>"></div>
+	<div id="<%= segmentEditRootElementId %>">
+		<div class="inline-item my-5 p-5 w-100">
+			<span aria-hidden="true" class="loading-animation"></span>
+		</div>
+	</div>
 
 	<portlet:renderURL var="previewMembersURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
 		<portlet:param name="mvcRenderCommandName" value="previewSegmentsEntryUsers" />

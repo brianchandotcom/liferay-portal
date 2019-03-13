@@ -98,7 +98,8 @@ public class OrganizationODataRetriever
 		}
 		catch (Exception e) {
 			throw new PortalException(
-				"Unable to retrieve organizations: " + e.getMessage(), e);
+				"Unable to retrieve organizations with filter " + filterString,
+				e);
 		}
 	}
 
@@ -137,7 +138,9 @@ public class OrganizationODataRetriever
 		}
 		catch (Exception e) {
 			throw new PortalException(
-				"Unable to retrieve organizations count: " + e.getMessage(), e);
+				"Unable to retrieve organizations count with filter " +
+					filterString,
+				e);
 		}
 	}
 

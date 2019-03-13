@@ -101,7 +101,7 @@ public class UserODataRetriever implements ODataRetriever<User> {
 		}
 		catch (Exception e) {
 			throw new PortalException(
-				"Unable to retrieve users: " + e.getMessage(), e);
+				"Unable to retrieve users with filter " + filterString, e);
 		}
 	}
 
@@ -140,7 +140,8 @@ public class UserODataRetriever implements ODataRetriever<User> {
 		}
 		catch (Exception e) {
 			throw new PortalException(
-				"Unable to retrieve users count: " + e.getMessage(), e);
+				"Unable to retrieve users count with filter " + filterString,
+				e);
 		}
 	}
 

@@ -465,11 +465,8 @@ authentication compared to NTLM.
 
 #### What changed?
 
-Three OpenID modules have been moved from the `portal-security-sso` project to a
-new project named `portal-security-sso-openid`. Same applies to the settings module,
-now named `portal-settings-authentication-openid` and login module, now named
-`login-authentication-openid`.
-Those new projects are deprecated and available to download from Liferay Marketplace.
+OpenID modules have been moved to a new project named `portal-security-sso-openid`. 
+This new project is deprecated and available to download from Liferay Marketplace.
 
 #### Who is affected?
 
@@ -478,7 +475,7 @@ This affects anyone using OpenID as an authentication system.
 #### How should I update my code?
 
 If you want to continue using OpenID as an authentication system, you must
-download the corresponding modules from Liferay Marketplace. Alternatively, you
+download the corresponding module from Liferay Marketplace. Alternatively, you
 should migrate to OpenID Connect, available on Liferay Portal Distribution.
 
 #### Why was this change made?

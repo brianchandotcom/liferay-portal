@@ -5,6 +5,7 @@ import aQute.bnd.osgi.Resource
 import java.util.jar.Manifest
 
 dependencies {
+	compileInclude group: "com.fasterxml", name: "classmate", version: "1.4.0"
 	compileInclude group: "com.fasterxml.jackson.dataformat", name: "jackson-dataformat-xml", version: "2.9.8"
 	compileInclude group: "com.fasterxml.jackson.dataformat", name: "jackson-dataformat-yaml", version: "2.9.8"
 	compileInclude group: "com.fasterxml.jackson.datatype", name: "jackson-datatype-jdk8", version: "2.9.8"
@@ -18,8 +19,8 @@ dependencies {
 	compileInclude group: "io.swagger.core.v3", name: "swagger-jaxrs2", version: "2.0.5"
 	compileInclude group: "io.swagger.core.v3", name: "swagger-models", version: "2.0.5"
 	compileInclude group: "org.antlr", name: "antlr4-runtime", version: "4.7.1"
-	compileInclude group: "org.apache.bval", name: "org.apache.bval.bundle", version: "2.0.0"
 	compileInclude group: "org.apache.commons", name: "commons-lang3", version: "3.8"
+	compileInclude group: "org.hibernate.validator", name: "hibernate-validator", version: "6.0.15.Final"
 	compileInclude group: "org.javassist", name: "javassist", version: "3.23.1-GA"
 	compileInclude group: "org.reactivestreams", name: "reactive-streams", version: "1.0.2"
 	compileInclude group: "org.reflections", name: "reflections", version: "0.9.11"

@@ -29,13 +29,10 @@ import java.lang.reflect.Type;
 import java.util.Optional;
 import java.util.Set;
 
-import javax.validation.Configuration;
 import javax.validation.ConstraintViolation;
-import javax.validation.Validation;
 import javax.validation.ValidationException;
 import javax.validation.Validator;
 import javax.validation.ValidatorFactory;
-import javax.validation.bootstrap.ProviderSpecificBootstrap;
 
 import javax.ws.rs.InternalServerErrorException;
 import javax.ws.rs.Produces;
@@ -45,8 +42,6 @@ import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.ext.MessageBodyReader;
 import javax.ws.rs.ext.Provider;
 import javax.ws.rs.ext.Providers;
-
-import org.apache.bval.jsr.ApacheValidationProvider;
 
 /**
  * @author Javier Gamarra
@@ -98,7 +93,7 @@ public class JSONMessageBodyReader implements MessageBodyReader {
 
 	private void _validate(Object value) {
 		ValidatorFactory validatorFactory =
-			ValidatorFactoryHolder._validatorFactory;
+			ValidatorFactoryHolder.VALIDATOR_FACTORY;
 
 		Validator validator = validatorFactory.getValidator();
 
@@ -124,20 +119,5 @@ public class JSONMessageBodyReader implements MessageBodyReader {
 
 	@Context
 	private Providers _providers;
-
-	private static class ValidatorFactoryHolder {
-
-		private static final ValidatorFactory _validatorFactory;
-
-		static {
-			ProviderSpecificBootstrap providerSpecificBootstrap =
-				Validation.byProvider(ApacheValidationProvider.class);
-
-			Configuration configure = providerSpecificBootstrap.configure();
-
-			_validatorFactory = configure.buildValidatorFactory();
-		}
-
-	}
 
 }

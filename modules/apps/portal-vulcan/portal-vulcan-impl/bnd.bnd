@@ -8,9 +8,17 @@ Import-Package:\
 	!com.sun.jdi.*,\
 	!com.sun.tools.*,\
 	\
-	!javafx.*,\
+	!com.thoughtworks.paranamer.*,\
+	\
+	!javafx.beans.*,\
+	\
+	!javax.money.*,\
 	\
 	!org.checkerframework.checker.nullness.qual.*,\
+	\
+	!org.joda.time.*,\
+	\
+	!org.jsoup.*,\
 	\
 	graphql.annotations.annotationTypes;version="5.4",\
 	\

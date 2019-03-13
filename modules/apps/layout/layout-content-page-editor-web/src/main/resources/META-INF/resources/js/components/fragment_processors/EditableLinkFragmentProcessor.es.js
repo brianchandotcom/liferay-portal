@@ -37,7 +37,20 @@ function render(content, value, editableValues) {
 			link.target = config.target;
 		}
 
-		if (config.buttonType) {
+		const classList = [...link.classList];
+
+		classList.forEach(
+			elementClass => {
+				if(elementClass.startsWith('btn')) {
+					link.classList.remove(elementClass);
+				}
+			}
+		);
+
+		if (config.buttonType && config.buttonType === 'link') {
+			link.classList.add('link');
+		}
+		else {
 			link.classList.add('btn');
 			link.classList.add(`btn-${config.buttonType}`);
 		}

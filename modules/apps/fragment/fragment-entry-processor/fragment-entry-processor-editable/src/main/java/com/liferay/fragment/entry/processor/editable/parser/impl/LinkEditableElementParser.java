@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.ResourceBundle;
 
 import org.jsoup.nodes.Element;
@@ -106,8 +107,22 @@ public class LinkEditableElementParser implements EditableElementParser {
 
 		EditableElementParserUtil.addAttribute(
 			replaceableElement, configJSONObject, "target", "target");
-		EditableElementParserUtil.addClass(
-			replaceableElement, configJSONObject, "btn btn-", "buttonType");
+
+		for (String className : replaceableElement.classNames()) {
+			if (className.startsWith("btn")) {
+				replaceableElement.removeClass(className);
+			}
+		}
+
+		String buttonType = configJSONObject.getString("buttonType");
+
+		if (Objects.equals(buttonType, _BUTTON_TYPE_LINK)) {
+			replaceableElement.addClass("link");
+		}
+		else {
+			EditableElementParserUtil.addClass(
+				replaceableElement, configJSONObject, "btn btn-", "buttonType");
+		}
 
 		replaceableElement.html(bodyElement.html());
 	}
@@ -127,6 +142,8 @@ public class LinkEditableElementParser implements EditableElementParser {
 					new Object[] {"<em>", "</em>"}, false));
 		}
 	}
+
+	private static final String _BUTTON_TYPE_LINK = "link";
 
 	private static final String _TMPL_LINK_FIELD_TEMPLATE = StringUtil.read(
 		EditableFragmentEntryProcessor.class,

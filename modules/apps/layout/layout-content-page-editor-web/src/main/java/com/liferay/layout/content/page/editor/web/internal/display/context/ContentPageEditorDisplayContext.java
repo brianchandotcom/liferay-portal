@@ -623,7 +623,7 @@ public class ContentPageEditorDisplayContext {
 
 					if (!editableJSONObject.has("classNameId") ||
 						!editableJSONObject.has("classPK") ||
-						!editableJSONObject.has("fieldName")) {
+						!editableJSONObject.has("fieldId")) {
 
 						continue;
 					}

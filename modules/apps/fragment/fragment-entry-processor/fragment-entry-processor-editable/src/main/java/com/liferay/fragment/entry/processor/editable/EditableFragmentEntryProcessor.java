@@ -396,10 +396,10 @@ public class EditableFragmentEntryProcessor implements FragmentEntryProcessor {
 			_assetDisplayContributorTracker.getAssetDisplayContributor(
 				_portal.getClassName(classNameId));
 
-		String assetEntryFieldName = jsonObject.getString("fieldName");
+		String fieldId = jsonObject.getString("fieldId");
 
 		Object fieldValue = assetDisplayContributor.getAssetDisplayFieldValue(
-			assetEntry, assetEntryFieldName, locale);
+			assetEntry, fieldId, locale);
 
 		return GetterUtil.get(fieldValue, StringPool.BLANK);
 	}
@@ -463,10 +463,10 @@ public class EditableFragmentEntryProcessor implements FragmentEntryProcessor {
 	private boolean _isMapped(JSONObject jsonObject, String mode) {
 		long classNameId = jsonObject.getLong("classNameId");
 		long classPK = jsonObject.getLong("classPK");
-		String fieldName = jsonObject.getString("fieldName");
+		String fieldId = jsonObject.getString("fieldId");
 
 		if ((classNameId > 0) && (classPK > 0) &&
-			Validator.isNotNull(fieldName)) {
+			Validator.isNotNull(fieldId)) {
 
 			return true;
 		}

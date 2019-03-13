@@ -40,7 +40,11 @@
 	{@param? mappingFieldsURL: string}
 	{@param? spritemap: string}
 
-	<div class="floating-toolbar-mapping-panel">
+	<div
+		class="floating-toolbar-mapping-panel"
+		ref="panel"
+		tabindex="-1"
+	>
 		{if $mappingFieldsURL}
 			<div class="form-group">
 				{call .sourceTypeSelect}

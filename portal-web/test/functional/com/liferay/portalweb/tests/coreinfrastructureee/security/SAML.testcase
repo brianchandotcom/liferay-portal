@@ -141,6 +141,33 @@ definition {
 	}
 
 	@priority = "4"
+	test AssertSignedSAMLMetadata {
+		property test.name.skip.portal.instance = "SAML#AssertSignedSAMLMetadata";
+
+		SAML.configureLiferaySAMLAsIdP(samlEntityID = "samlidp");
+
+		Navigator.openSpecificURL(url = "http://localhost:8080/c/portal/saml/metadata");
+
+		AssertHTMLSourceTextPresent(value1 = "ds:Signature");
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "SAML Admin"
+		);
+
+		SAMLNavigation.gotoIdentityProvider();
+
+		SAMLPortlet.configureIdentityProvider(signMetadata = "disable");
+
+		Navigator.openSpecificURL(url = "http://localhost:8080/c/portal/saml/metadata");
+
+		AssertHTMLSourceTextNotPresent(value1 = "ds:Signature");
+	}
+
+	@priority = "4"
 	test AssertSSOIdleSessionTakesPrecedenceOverIdPSessionTimeout {
 		property test.name.skip.portal.instance = "SAML#AssertSSOIdleSessionTakesPrecedenceOverIdPSessionTimeout";
 		property web.xml.timeout = "2";

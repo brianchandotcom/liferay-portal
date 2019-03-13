@@ -361,6 +361,7 @@ public class InputAssetLinksDisplayContext {
 
 		portletURL.setParameter("groupId", String.valueOf(groupId));
 
+		portletURL.setParameter("showAddButton", String.valueOf(Boolean.FALSE));
 		portletURL.setParameter(
 			"multipleSelection", String.valueOf(Boolean.TRUE));
 		portletURL.setParameter("selectedGroupId", String.valueOf(groupId));

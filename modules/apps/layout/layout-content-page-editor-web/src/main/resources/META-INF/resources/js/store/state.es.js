@@ -198,6 +198,12 @@ const INITIAL_STATE = {
 		)
 		.value({}),
 
+	/**
+	 * Object to control the process of the experience creation
+	 * @default { creatingSegmentsExperience: false, error: null }
+	 * @review
+	 * @type {object}
+	 */
 	experienceSegmentsCreation: Config
 		.shapeOf(
 			{
@@ -209,6 +215,30 @@ const INITIAL_STATE = {
 			{
 				creatingSegmentsExperience: false,
 				error: null
+			}
+		),
+
+	/**
+	 * Object to control the process of the experience edition
+	 * @default { error: null, name: null, segmentsEntryId: null, segmentsExperienceId: null }
+	 * @review
+	 * @type {object}
+	 */
+	segmentsExperienceEdition: Config
+		.shapeOf(
+			{
+				error: Config.string(),
+				name: Config.string(),
+				segmentsEntryId: Config.string(),
+				segmentsExperienceId: Config.string()
+			}
+		)
+		.value(
+			{
+				error: null,
+				name: null,
+				segmentsEntryId: null,
+				segmentsExperienceId: null
 			}
 		),
 

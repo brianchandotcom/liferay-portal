@@ -6,7 +6,7 @@ import {hideMappingDialogReducer, hideMappingTypeDialogReducer, openAssetTypeDia
 import {languageIdReducer, translationStatusReducer} from './translations.es';
 import {saveChangesReducer} from './changes.es';
 import {updateActiveItemReducer, updateDropTargetReducer, updateHoveredItemReducer} from './placeholders.es';
-import {createSegmentsExperienceReducer, deleteSegmentsExperienceReducer, endCreateSegmentsExperience, selectSegmentsExperienceReducer, startCreateSegmentsExperience} from './segmentsExperiences.es';
+import {createSegmentsExperienceReducer, deleteSegmentsExperienceReducer, editSegmentsExperienceReducer, endCreateSegmentsExperience, endEditExperienceReducer, selectSegmentsExperienceReducer, startCreateSegmentsExperience, startEditExperienceReducer} from './segmentsExperiences.es';
 
 /**
  * List of reducers
@@ -31,6 +31,9 @@ const reducers = [
 	selectSegmentsExperienceReducer,
 	createSegmentsExperienceReducer,
 	deleteSegmentsExperienceReducer,
+	startEditExperienceReducer,
+	endEditExperienceReducer,
+	editSegmentsExperienceReducer,
 	endCreateSegmentsExperience,
 	startCreateSegmentsExperience,
 	toggleFragmentsEditorSidebarReducer,

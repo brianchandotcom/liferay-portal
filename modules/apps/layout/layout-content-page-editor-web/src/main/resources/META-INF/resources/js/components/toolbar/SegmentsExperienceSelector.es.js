@@ -1,9 +1,8 @@
 import Component from 'metal-component';
 import Soy, {Config} from 'metal-soy';
-
 import getConnectedComponent from '../../store/ConnectedComponent.es';
 import templates from './SegmentsExperienceSelector.soy';
-import {CREATE_SEGMENTS_EXPERIENCE, DELETE_SEGMENTS_EXPERIENCE, END_CREATE_SEGMENTS_EXPERIENCE, SELECT_SEGMENTS_EXPERIENCE, START_CREATE_SEGMENTS_EXPERIENCE} from '../../actions/actions.es';
+import {CREATE_SEGMENTS_EXPERIENCE, DELETE_SEGMENTS_EXPERIENCE, EDIT_SEGMENTS_EXPERIENCE, END_CREATE_SEGMENTS_EXPERIENCE, END_EDIT_SEGMENTS_EXPERIENCE, SELECT_SEGMENTS_EXPERIENCE, START_CREATE_SEGMENTS_EXPERIENCE, START_EDIT_SEGMENTS_EXPERIENCE} from '../../actions/actions.es';
 import 'frontend-js-web/liferay/compat/modal/Modal.es';
 import {setIn} from '../../utils/FragmentsEditorUpdateUtils.es';
 
@@ -69,7 +68,7 @@ class SegmentsExperienceSelector extends Component {
 
 					const updatedExperience = setIn(
 						experience,
-						['segmentsEntryLabel'],
+						['segmentsEntryName'],
 						name
 					);
 
@@ -159,6 +158,24 @@ class SegmentsExperienceSelector extends Component {
 	}
 
 	/**
+	 * @param {!string} segmentsExperienceId
+	 * @param {!string} name
+	 * @memberof SegmentsExperienceSelector
+	 */
+	_editSegmentsExperience({segmentsExperienceId, name, segmentsEntryId}) {
+		this.store.dispatchAction(
+			EDIT_SEGMENTS_EXPERIENCE,
+			{
+				name,
+				segmentsEntryId,
+				segmentsExperienceId
+			}
+		).dispatchAction(
+			END_EDIT_SEGMENTS_EXPERIENCE
+		);
+	}
+
+	/**
 	 * Callback that is executed on delete button click
 	 * @memberof SegmentsExperienceSelector
 	 * @param {!Event} event
@@ -215,6 +232,27 @@ class SegmentsExperienceSelector extends Component {
 	}
 
 	/**
+	 * Callback executed on edit button click
+	 * @memberof SegmentsExperienceSelector
+	 * @param {Event} event
+	 * @private
+	 * @review
+	 */
+	_handleEditButtonClick(event) {
+		const name = event.currentTarget.getAttribute('data-name');
+		const segmentsEntryId = event.currentTarget.getAttribute('data-segmentsEntryId');
+		const segmentsExperienceId = event.currentTarget.getAttribute('data-segmentsExperienceId');
+
+		this._openEditModal(
+			{
+				name,
+				segmentsEntryId,
+				segmentsExperienceId
+			}
+		);
+	}
+
+	/**
 	 * Callback that is executed on experience click
 	 * @memberof SegmentsExperienceSelector
 	 * @param {Event} event
@@ -224,6 +262,23 @@ class SegmentsExperienceSelector extends Component {
 	_handleSegmentsExperienceClick(event) {
 		const segmentsExperienceId = event.delegateTarget.dataset.segmentsExperienceId;
 		this._selectSegmentsExperience(segmentsExperienceId);
+	}
+
+	/**
+	 * @memberof SegmentsExperienceSelector
+	 * @review
+	 * @param {Event} event
+	 */
+	_handleEditFormSubmit(event) {
+		event.preventDefault();
+
+		this._editSegmentsExperience(
+			{
+				name: this.refs.editModal.refs.experienceName.value,
+				segmentsEntryId: this.refs.editModal.refs.experienceSegmentId.value,
+				segmentsExperienceId: this.segmentsExperienceEdition.segmentsExperienceId
+			}
+		);
 	}
 
 	/**
@@ -263,6 +318,29 @@ class SegmentsExperienceSelector extends Component {
 	}
 
 	/**
+	 * Opens edit experience modal
+	 * @memberof SegmentsExperienceSelector
+	 * @private
+	 * @review
+	 */
+	_openEditModal(
+		{
+			name,
+			segmentsEntryId,
+			segmentsExperienceId
+		}
+	) {
+		this.store.dispatchAction(
+			START_EDIT_SEGMENTS_EXPERIENCE,
+			{
+				name,
+				segmentsEntryId,
+				segmentsExperienceId
+			}
+		);
+	}
+
+	/**
 	 * Dispatches action to select an experience
 	 * @memberof SegmentsExperienceSelector
 	 * @param {!string} segmentsExperienceId
@@ -276,6 +354,31 @@ class SegmentsExperienceSelector extends Component {
 				segmentsExperienceId
 			}
 		);
+	}
+
+	/**
+	 * @memberof SegmentsExperienceSelector
+	 * @private
+	 * @review
+	 */
+	_closeEditModal() {
+		this.store.dispatchAction(
+			END_EDIT_SEGMENTS_EXPERIENCE
+		);
+	}
+
+	/**
+	 * Toggles the modal
+	 * @memberof SegmentsExperienceSelector
+	 * @private
+	 * @review
+	 */
+	_toggleEditModal() {
+		const modalEditAction = this.segmentsExperienceEdition.segmentsExperienceId ?
+			this._closeEditModal :
+			this._openEditModal;
+
+		modalEditAction.call(this);
 	}
 
 	/**

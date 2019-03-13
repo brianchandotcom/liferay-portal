@@ -1,9 +1,11 @@
-import {CREATE_SEGMENTS_EXPERIENCE, DELETE_SEGMENTS_EXPERIENCE, END_CREATE_SEGMENTS_EXPERIENCE, SELECT_SEGMENTS_EXPERIENCE, START_CREATE_SEGMENTS_EXPERIENCE} from '../actions/actions.es';
+import {CREATE_SEGMENTS_EXPERIENCE, DELETE_SEGMENTS_EXPERIENCE, EDIT_SEGMENTS_EXPERIENCE, END_CREATE_SEGMENTS_EXPERIENCE, END_EDIT_SEGMENTS_EXPERIENCE, SELECT_SEGMENTS_EXPERIENCE, START_CREATE_SEGMENTS_EXPERIENCE, START_EDIT_SEGMENTS_EXPERIENCE} from '../actions/actions.es';
 import {setIn} from '../utils/utils.es';
 
 const CREATE_SEGMENTS_EXPERIENCE_URL = '/segments.segmentsexperience/add-segments-experience';
 
 const DELETE_SEGMENTS_EXPERIENCE_URL = '/segments.segmentsexperience/delete-segments-experience';
+
+const EDIT_SEGMENTS_EXPERIENCE_URL = '/segments.segmentsexperience/update-segments-experience';
 
 /**
  * @param {!object} state
@@ -89,7 +91,6 @@ function createSegmentsExperienceReducer(state, actionType, payload) {
 }
 
 /**
- * @export
  * @param {!object} state
  * @param {!string} actionType
  * @param {object} payload
@@ -137,6 +138,25 @@ function deleteSegmentsExperienceReducer(state, actionType, payload) {
 	);
 }
 
+function startEditExperienceReducer(state, actionType, payload) {
+	let nextState = state;
+	if (actionType === START_EDIT_SEGMENTS_EXPERIENCE) {
+		const {name, segmentsEntryId, segmentsExperienceId} = payload;
+		nextState = setIn(
+			nextState,
+			['segmentsExperienceEdition'],
+			{
+				error: null,
+				name,
+				segmentsEntryId,
+				segmentsExperienceId
+			}
+		);
+	}
+
+	return nextState;
+}
+
 /**
  * @param {!object} state
  * @param {!string} actionType
@@ -182,6 +202,32 @@ function endCreateSegmentsExperience(state, actionType) {
 }
 
 /**
+ * @param {!object} state
+ * @param {!string} actionType
+ * @return {object}
+ * @review
+ */
+function endEditExperienceReducer(state, actionType) {
+	let nextState = state;
+
+	if (actionType === END_EDIT_SEGMENTS_EXPERIENCE) {
+		nextState = setIn(
+			nextState,
+			['segmentsExperienceEdition'],
+			{
+				error: null,
+				name: null,
+				segmentsEntryId: null,
+				segmentsExperienceId: null
+			}
+		);
+	}
+	return nextState;
+}
+
+/**
+ *
+ *
  * @export
  * @param {!object} state
  * @param {!string} actionType
@@ -203,10 +249,92 @@ function selectSegmentsExperienceReducer(state, actionType, payload) {
 	return nextState;
 }
 
+/**
+ * @param {!object} state
+ * @param {!string} actionType
+ * @param {!object} payload
+ * @param {!string} payload.segmentsEntryId
+ * @param {!string} payload.name
+ * @param {!string} payload.segmentsExperienceId
+ * @return {object}
+ * @review
+ */
+function editSegmentsExperienceReducer(state, actionType, payload) {
+	return new Promise(
+		resolve => {
+			let nextState = state;
+			if (actionType === EDIT_SEGMENTS_EXPERIENCE) {
+				const {
+					name,
+					segmentsEntryId,
+					segmentsExperienceId
+				} = payload;
+
+				const nameMap = JSON.stringify(
+					{
+						[state.defaultLanguageId]: name
+					}
+				);
+
+				const priority = Object.values(nextState.availableSegmentsExperiences || []).length;
+
+				// TODO
+
+				Liferay.Service(
+					EDIT_SEGMENTS_EXPERIENCE_URL,
+					{
+						active: true,
+						nameMap,
+						priority,
+						segmentsEntryId,
+						segmentsExperienceId
+					},
+					(obj) => {
+
+						const {
+							active,
+							nameCurrentValue,
+							priority,
+							segmentsEntryId,
+							segmentsExperienceId
+						} = obj;
+
+						nextState = setIn(
+							nextState,
+							[
+								'availableSegmentsExperiences',
+								segmentsExperienceId
+							],
+							{
+								active,
+								name: nameCurrentValue,
+								priority,
+								segmentsEntryId,
+								segmentsExperienceId
+							}
+						);
+
+						resolve(nextState);
+					},
+					error => {
+						resolve(nextState);
+					}
+				);
+			}
+			else {
+				resolve(nextState);
+			}
+		}
+	);
+}
+
 export {
 	createSegmentsExperienceReducer,
 	deleteSegmentsExperienceReducer,
 	startCreateSegmentsExperience,
+	startEditExperienceReducer,
+	endEditExperienceReducer,
+	editSegmentsExperienceReducer,
 	endCreateSegmentsExperience,
 	selectSegmentsExperienceReducer
 };

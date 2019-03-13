@@ -8,17 +8,22 @@
 	{@param? availableSegmentsExperiences: list<[
 		segmentsExperienceId: string,
 		name: string,
-		segmentsEntryLabel: string
+		segmentsEntryName: string,
+		segmentsEntryId: string
 	]>}
 	{@param? defaultSegmentsExperienceId: string }
 	{@param? _closeModal: any }
+	{@param? _closeEditModal: any }
 	{@param? _handleDeleteButtonClick: any }
+	{@param? _handleEditButtonClick: any }
 	{@param? _handleSegmentsExperienceClick: any}
 	{@param? _handleDropdownBlur: any}
 	{@param? _handleDropdownFocus: any}
 	{@param? _handleDropdownButtonClick: any}
+	{@param? _handleEditFormSubmit: any }
 	{@param? _handleFormSubmit: any }
 	{@param? _openModal: any }
+	{@param? _toggleEditModal: any }
 	{@param? _toggleModal: any }
 	{@param? availableSegmentsEntries: list<[
 		segmentsEntryId: string,
@@ -29,6 +34,7 @@
 	{@param? portletNamespace: string}
 	{@param spritemap: string}
 	{@param? experienceSegmentsCreation: ?}
+	{@param? segmentsExperienceEdition: ?}
 
 	{if $availableSegmentsExperiences and length($availableSegmentsExperiences) > 0}
 		<div
@@ -92,12 +98,28 @@
 										{sp}-{sp}
 									</span>
 
-									{$experience.segmentsEntryLabel}
+									{$experience.segmentsEntryName}
 								</span>
 							</button>
 
 							{if $defaultSegmentsExperienceId != $experience.segmentsExperienceId }
 								<div class="align-items-center d-flex dropdown-menu__experience--btn-group">
+									{call ClayButton.render}
+										{param ariaLabel: 'edit' /}
+										{param data: [
+											'segmentsExperienceId': $experience.segmentsExperienceId,
+											'name': $experience.name,
+											'segmentsEntryId': $experience.segmentsEntryId
+										]/}
+										{param elementClasses: 'btn-borderless mx-2 text-dark' /}
+										{param events: [
+											'click': $_handleEditButtonClick,
+										] /}
+										{param icon: 'pencil' /}
+										{param monospaced: true /}
+										{param spritemap: $spritemap /}
+										{param style: 'unstyled' /}
+									{/call}
 									{call ClayButton.render}
 										{param ariaLabel: 'delete' /}
 										{param data: [
@@ -123,7 +145,7 @@
 		{if $experienceSegmentsCreation and $experienceSegmentsCreation.creatingSegmentsExperience }
 			{call liferay.frontend.Modal.render}
 				{param body kind="html"}
-					<form autocomplete="off" class="mb-3" data-onsubmit="{$_handleFormSubmit}">
+					<form autocomplete="off" class="mb-3" data-onsubmit="{$_handleFormSubmit}" id="{$portletNamespace}CreateForm">
 						<div class="form-group my-2">
 							<label for="{$portletNamespace}CreateExperience">
 								{msg desc=""}name{/msg}
@@ -177,6 +199,8 @@
 							<button
 								class="btn btn-primary ml-3"
 								data-onclick="{$_handleFormSubmit}"
+								form="{$portletNamespace}CreateForm"
+								type="button"
 							>
 								{msg desc=""}save{/msg}
 							</button>
@@ -193,6 +217,92 @@
 				{/param}
 
 				{param ref: 'modal' /}
+				{param spritemap: $spritemap /}
+			{/call}
+		{/if}
+
+		{if $segmentsExperienceEdition and $segmentsExperienceEdition.segmentsExperienceId }
+			{call liferay.frontend.Modal.render}
+				{param body kind="html"}
+					<form autocomplete="off" class="mb-3" data-onsubmit="{$_handleEditFormSubmit}" id="{$portletNamespace}EditForm">
+						<div class="form-group my-2">
+							<label for="{$portletNamespace}EditExperience">
+								{msg desc=""}name{/msg}
+							</label>
+
+							<input
+								class="form-control"
+								id="{$portletNamespace}EditExperience"
+								name="experienceName"
+								value="{$segmentsExperienceEdition.name}"
+								placeholder="{msg desc=""}experience-name{/msg}"
+								ref="experienceName"
+								type="text"
+							/>
+						</div>
+
+						<div class="form-group my-2">
+							{if $availableSegmentsEntries and length($availableSegmentsEntries) > 0}
+									<label for="{$portletNamespace}SegmentSelector">
+										{msg desc=""}audience{/msg}
+									</label>
+
+									<select
+										class="form-control"
+										id="{$portletNamespace}SegmentSelector"
+										name="experienceSegmentId"
+										ref="experienceSegmentId"
+									>
+										{foreach $segment in $availableSegmentsEntries}
+											{if $segment.segmentsEntryId == $segmentsExperienceEdition.segmentsExperienceId }
+												<option selected value="{$segment.segmentsEntryId}">
+													{$segment.name}
+												</option>
+											{else}
+												<option value="{$segment.segmentsEntryId}">
+													{$segment.name}
+												</option>
+											{/if}
+										{/foreach}
+									</select>
+							{/if}
+						</div>
+					</form>
+				{/param}
+
+				{param footer kind="html"}
+					<div class="btn-group">
+						<div class="btn-group-item">
+							<button
+								class="btn btn-secondary"
+								data-dismiss="modal"
+								data-onclick="{$_closeEditModal}"
+								type="button"
+							>
+								{msg desc=""}cancel{/msg}
+							</button>
+
+							<button
+								class="btn btn-primary ml-3"
+								data-onclick="{$_handleEditFormSubmit}"
+								form="{$portletNamespace}EditForm"
+								type="button"
+							>
+								{msg desc=""}save{/msg}
+							</button>
+						</div>
+					</div>
+				{/param}
+
+				{param dialogClasses: 'modal-dialog-sm' /}
+				{param portalElement: 'body' /}
+				{param events: ['visibleChanged': $_toggleEditModal] /}
+
+				{param header kind="html"}
+					{msg desc=""}new-experience{/msg}
+				{/param}
+
+				{param ref: 'editModal' /}
 				{param spritemap: $spritemap /}
 			{/call}
 		{/if}

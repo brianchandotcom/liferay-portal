@@ -1571,7 +1571,7 @@ public class TopLevelBuild extends BaseBuild {
 				"\\s*\\[echo\\] (?<name>.*)\\.start\\.timestamp: ",
 				"(?<timestamp>.*)$"));
 	protected static final SimpleDateFormat stopwatchTimestampSimpleDateFormat =
-		new SimpleDateFormat("MM-dd-yyyy HH:mm:ss z");
+		new SimpleDateFormat("MM-dd-yyyy HH:mm:ss:SSS z");
 
 	protected int stopwatchRecordConsoleReadCursor;
 	protected Map<String, StopwatchRecord> stopwatchRecordMap = new HashMap<>();

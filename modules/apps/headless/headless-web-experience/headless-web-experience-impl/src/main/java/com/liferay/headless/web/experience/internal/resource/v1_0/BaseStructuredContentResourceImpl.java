@@ -27,6 +27,7 @@ import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.util.TransformUtil;
 
+import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.Parameters;
 import io.swagger.v3.oas.annotations.enums.ParameterIn;
@@ -64,6 +65,9 @@ public abstract class BaseStructuredContentResourceImpl
 
 	@Override
 	@GET
+	@Operation(
+		description = "Retrieve the structured contents of a content space. This collection can be filtered and sorted using: categoryIds, keywords, dateCreated, dateModified, datePublished, creatorId, contentStructureId, title and any field of its structure"
+	)
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.QUERY, name = "filter"),
@@ -86,6 +90,7 @@ public abstract class BaseStructuredContentResourceImpl
 
 	@Override
 	@Consumes("application/json")
+	@Operation(description = "Add a structured content to a content space")
 	@POST
 	@Path("/content-spaces/{content-space-id}/structured-contents")
 	@Produces("application/json")
@@ -100,6 +105,9 @@ public abstract class BaseStructuredContentResourceImpl
 
 	@Override
 	@GET
+	@Operation(
+		description = "Retrieve the structured contents that are using the structure ID provided. This collection can be filtered and sorted using: categoryIds, keywords, dateCreated, dateModified, datePublished, creatorId, title and any field of its structure"
+	)
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.QUERY, name = "filter"),
@@ -122,6 +130,7 @@ public abstract class BaseStructuredContentResourceImpl
 
 	@Override
 	@DELETE
+	@Operation(description = "Remove a structured content")
 	@Path("/structured-contents/{structured-content-id}")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "StructuredContent")})
@@ -134,6 +143,7 @@ public abstract class BaseStructuredContentResourceImpl
 
 	@Override
 	@GET
+	@Operation(description = "Retrieve a structured content")
 	@Path("/structured-contents/{structured-content-id}")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "StructuredContent")})
@@ -146,6 +156,9 @@ public abstract class BaseStructuredContentResourceImpl
 
 	@Override
 	@Consumes("application/json")
+	@Operation(
+		description = "Update the properties of a structured content. Structured contents with repeatable fields don't support this operation"
+	)
 	@PATCH
 	@Path("/structured-contents/{structured-content-id}")
 	@Produces("application/json")
@@ -230,6 +243,7 @@ public abstract class BaseStructuredContentResourceImpl
 
 	@Override
 	@Consumes("application/json")
+	@Operation(description = "Update the properties of a structured content")
 	@PUT
 	@Path("/structured-contents/{structured-content-id}")
 	@Produces("application/json")
@@ -244,6 +258,9 @@ public abstract class BaseStructuredContentResourceImpl
 
 	@Override
 	@GET
+	@Operation(
+		description = "Retrieve the rendered html of a structured content using the template ID provided"
+	)
 	@Path(
 		"/structured-contents/{structured-content-id}/rendered-content/{template-id}"
 	)

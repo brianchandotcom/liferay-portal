@@ -24,6 +24,8 @@ import com.liferay.petra.string.StringBundler;
 import graphql.annotations.annotationTypes.GraphQLField;
 import graphql.annotations.annotationTypes.GraphQLName;
 
+import io.swagger.v3.oas.annotations.media.Schema;
+
 import java.util.Date;
 
 import javax.annotation.Generated;
@@ -40,6 +42,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement(name = "ContentStructure")
 public class ContentStructure {
 
+	@Schema(description = "The content structure's available translations")
 	public String[] getAvailableLanguages() {
 		return availableLanguages;
 	}
@@ -61,9 +64,12 @@ public class ContentStructure {
 	}
 
 	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String[] availableLanguages;
 
+	@Schema(
+		description = "The content space ID where the content structure is stored"
+	)
 	public Long getContentSpace() {
 		return contentSpace;
 	}
@@ -85,9 +91,10 @@ public class ContentStructure {
 	}
 
 	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long contentSpace;
 
+	@Schema(description = "The content structure's fields")
 	public ContentStructureField[] getContentStructureFields() {
 		return contentStructureFields;
 	}
@@ -112,9 +119,10 @@ public class ContentStructure {
 	}
 
 	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected ContentStructureField[] contentStructureFields;
 
+	@Schema(description = "The content structure's creator")
 	public Creator getCreator() {
 		return creator;
 	}
@@ -136,9 +144,10 @@ public class ContentStructure {
 	}
 
 	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Creator creator;
 
+	@Schema(description = "The creation date")
 	public Date getDateCreated() {
 		return dateCreated;
 	}
@@ -160,9 +169,10 @@ public class ContentStructure {
 	}
 
 	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Date dateCreated;
 
+	@Schema(description = "The date of the last modification")
 	public Date getDateModified() {
 		return dateModified;
 	}
@@ -184,9 +194,10 @@ public class ContentStructure {
 	}
 
 	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Date dateModified;
 
+	@Schema(description = "The content structure's description")
 	public String getDescription() {
 		return description;
 	}
@@ -208,9 +219,10 @@ public class ContentStructure {
 	}
 
 	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String description;
 
+	@Schema(description = "The content structure's ID")
 	public Long getId() {
 		return id;
 	}
@@ -230,9 +242,10 @@ public class ContentStructure {
 	}
 
 	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long id;
 
+	@Schema(description = "The content structure's name")
 	public String getName() {
 		return name;
 	}
@@ -252,7 +265,7 @@ public class ContentStructure {
 	}
 
 	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String name;
 
 	public String toString() {

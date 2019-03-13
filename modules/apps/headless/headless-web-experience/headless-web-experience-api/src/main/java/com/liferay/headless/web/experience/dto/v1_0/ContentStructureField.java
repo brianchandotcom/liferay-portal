@@ -24,6 +24,8 @@ import com.liferay.petra.string.StringBundler;
 import graphql.annotations.annotationTypes.GraphQLField;
 import graphql.annotations.annotationTypes.GraphQLName;
 
+import io.swagger.v3.oas.annotations.media.Schema;
+
 import javax.annotation.Generated;
 
 import javax.xml.bind.annotation.XmlRootElement;
@@ -38,6 +40,9 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement(name = "ContentStructureField")
 public class ContentStructureField {
 
+	@Schema(
+		description = "The field's data type. In some cases extra information is available in the inputControl property"
+	)
 	public String getDataType() {
 		return dataType;
 	}
@@ -59,9 +64,12 @@ public class ContentStructureField {
 	}
 
 	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String dataType;
 
+	@Schema(
+		description = "Not always present. The field's input control. Additional information needed to add extra context to the data type"
+	)
 	public String getInputControl() {
 		return inputControl;
 	}
@@ -83,9 +91,10 @@ public class ContentStructureField {
 	}
 
 	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String inputControl;
 
+	@Schema(description = "The human readable label of the field")
 	public String getLabel() {
 		return label;
 	}
@@ -107,9 +116,10 @@ public class ContentStructureField {
 	}
 
 	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String label;
 
+	@Schema(description = "Whether or not the field is localizable")
 	public Boolean getLocalizable() {
 		return localizable;
 	}
@@ -131,9 +141,10 @@ public class ContentStructureField {
 	}
 
 	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Boolean localizable;
 
+	@Schema(description = "Whether or not the field is multiple")
 	public Boolean getMultiple() {
 		return multiple;
 	}
@@ -155,9 +166,10 @@ public class ContentStructureField {
 	}
 
 	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Boolean multiple;
 
+	@Schema(description = "The field's name")
 	public String getName() {
 		return name;
 	}
@@ -177,9 +189,10 @@ public class ContentStructureField {
 	}
 
 	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String name;
 
+	@Schema(description = "The field's nested fields")
 	public ContentStructureField[] getNestedContentStructureFields() {
 		return nestedContentStructureFields;
 	}
@@ -205,9 +218,10 @@ public class ContentStructureField {
 	}
 
 	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected ContentStructureField[] nestedContentStructureFields;
 
+	@Schema(description = "The field's option available. Not always present")
 	public Options[] getOptions() {
 		return options;
 	}
@@ -229,9 +243,10 @@ public class ContentStructureField {
 	}
 
 	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Options[] options;
 
+	@Schema(description = "The field's default value")
 	public String getPredefinedValue() {
 		return predefinedValue;
 	}
@@ -253,9 +268,10 @@ public class ContentStructureField {
 	}
 
 	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String predefinedValue;
 
+	@Schema(description = "Whether or not this field is repeatable")
 	public Boolean getRepeatable() {
 		return repeatable;
 	}
@@ -277,9 +293,10 @@ public class ContentStructureField {
 	}
 
 	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Boolean repeatable;
 
+	@Schema(description = "Whether or not this field is required")
 	public Boolean getRequired() {
 		return required;
 	}
@@ -301,9 +318,10 @@ public class ContentStructureField {
 	}
 
 	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Boolean required;
 
+	@Schema(description = "Whether or not the field label must be shown")
 	public Boolean getShowLabel() {
 		return showLabel;
 	}
@@ -325,7 +343,7 @@ public class ContentStructureField {
 	}
 
 	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Boolean showLabel;
 
 	public String toString() {

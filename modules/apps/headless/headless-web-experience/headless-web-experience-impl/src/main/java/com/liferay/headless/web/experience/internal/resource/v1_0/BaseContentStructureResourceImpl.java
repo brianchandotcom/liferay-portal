@@ -26,6 +26,7 @@ import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.util.TransformUtil;
 
+import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.Parameters;
 import io.swagger.v3.oas.annotations.enums.ParameterIn;
@@ -80,6 +81,7 @@ public abstract class BaseContentStructureResourceImpl
 
 	@Override
 	@GET
+	@Operation(description = "Retrieve a content structure")
 	@Path("/content-structures/{content-structure-id}")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "ContentStructure")})

@@ -60,6 +60,7 @@ import java.util.stream.Stream;
 import javax.annotation.Generated;
 
 import javax.ws.rs.core.MultivaluedHashMap;
+import javax.ws.rs.core.Response;
 
 import org.apache.commons.beanutils.BeanUtilsBean;
 

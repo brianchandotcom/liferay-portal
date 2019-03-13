@@ -24,6 +24,8 @@ import com.liferay.petra.string.StringBundler;
 import graphql.annotations.annotationTypes.GraphQLField;
 import graphql.annotations.annotationTypes.GraphQLName;
 
+import io.swagger.v3.oas.annotations.media.Schema;
+
 import javax.annotation.Generated;
 
 import javax.xml.bind.annotation.XmlRootElement;
@@ -38,6 +40,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement(name = "ContentDocument")
 public class ContentDocument {
 
+	@Schema(description = "The url to download the contents of the document")
 	public String getContentUrl() {
 		return contentUrl;
 	}
@@ -62,6 +65,7 @@ public class ContentDocument {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String contentUrl;
 
+	@Schema(description = "The encoding format")
 	public String getEncodingFormat() {
 		return encodingFormat;
 	}
@@ -86,6 +90,7 @@ public class ContentDocument {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String encodingFormat;
 
+	@Schema(description = "The document's file extension")
 	public String getFileExtension() {
 		return fileExtension;
 	}
@@ -110,6 +115,7 @@ public class ContentDocument {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String fileExtension;
 
+	@Schema(description = "The document's ID")
 	public Long getId() {
 		return id;
 	}
@@ -132,6 +138,7 @@ public class ContentDocument {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long id;
 
+	@Schema(description = "The document's size in bytes")
 	public Number getSizeInBytes() {
 		return sizeInBytes;
 	}
@@ -156,6 +163,7 @@ public class ContentDocument {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Number sizeInBytes;
 
+	@Schema(description = "The document's title")
 	public String getTitle() {
 		return title;
 	}

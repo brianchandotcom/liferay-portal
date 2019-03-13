@@ -78,6 +78,7 @@ public class StructuredContent {
 
 	}
 
+	@Schema(description = "The structured content's aggregate rating")
 	public AggregateRating getAggregateRating() {
 		return aggregateRating;
 	}
@@ -100,9 +101,10 @@ public class StructuredContent {
 	}
 
 	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected AggregateRating aggregateRating;
 
+	@Schema(description = "The structured content's available translations")
 	public String[] getAvailableLanguages() {
 		return availableLanguages;
 	}
@@ -124,9 +126,10 @@ public class StructuredContent {
 	}
 
 	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String[] availableLanguages;
 
+	@Schema(description = "The structured content's categories")
 	public Categories[] getCategories() {
 		return categories;
 	}
@@ -148,9 +151,10 @@ public class StructuredContent {
 	}
 
 	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Categories[] categories;
 
+	@Schema(description = "The structured content's category Ids")
 	public Long[] getCategoryIds() {
 		return categoryIds;
 	}
@@ -175,6 +179,7 @@ public class StructuredContent {
 	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
 	protected Long[] categoryIds;
 
+	@Schema(description = "The structured content's structure fields")
 	public ContentField[] getContentFields() {
 		return contentFields;
 	}
@@ -199,6 +204,9 @@ public class StructuredContent {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected ContentField[] contentFields;
 
+	@Schema(
+		description = "The content space ID where the structured content is stored"
+	)
 	public Long getContentSpace() {
 		return contentSpace;
 	}
@@ -220,9 +228,10 @@ public class StructuredContent {
 	}
 
 	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long contentSpace;
 
+	@Schema(description = "The structured content's content structure id")
 	public Long getContentStructureId() {
 		return contentStructureId;
 	}
@@ -247,6 +256,7 @@ public class StructuredContent {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long contentStructureId;
 
+	@Schema(description = "The structured content's creator")
 	public Creator getCreator() {
 		return creator;
 	}
@@ -268,9 +278,10 @@ public class StructuredContent {
 	}
 
 	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Creator creator;
 
+	@Schema(description = "The date of creation")
 	public Date getDateCreated() {
 		return dateCreated;
 	}
@@ -292,9 +303,10 @@ public class StructuredContent {
 	}
 
 	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Date dateCreated;
 
+	@Schema(description = "The date of the last modification")
 	public Date getDateModified() {
 		return dateModified;
 	}
@@ -316,9 +328,10 @@ public class StructuredContent {
 	}
 
 	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Date dateModified;
 
+	@Schema(description = "The structured content's publication date")
 	public Date getDatePublished() {
 		return datePublished;
 	}
@@ -343,6 +356,7 @@ public class StructuredContent {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Date datePublished;
 
+	@Schema(description = "The structured content's description")
 	public String getDescription() {
 		return description;
 	}
@@ -367,6 +381,7 @@ public class StructuredContent {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String description;
 
+	@Schema(description = "Wheter or not this structured content has comments")
 	public Boolean getHasComments() {
 		return hasComments;
 	}
@@ -388,9 +403,10 @@ public class StructuredContent {
 	}
 
 	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Boolean hasComments;
 
+	@Schema(description = "The structured content's ID")
 	public Long getId() {
 		return id;
 	}
@@ -410,9 +426,10 @@ public class StructuredContent {
 	}
 
 	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long id;
 
+	@Schema(description = "The structured content's keywords")
 	public String[] getKeywords() {
 		return keywords;
 	}
@@ -437,6 +454,7 @@ public class StructuredContent {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String[] keywords;
 
+	@Schema(description = "The structured content's last reviewed date")
 	public Date getLastReviewed() {
 		return lastReviewed;
 	}
@@ -458,10 +476,12 @@ public class StructuredContent {
 	}
 
 	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Date lastReviewed;
 
-	@Schema(description = "https://www.schema.org/templates")
+	@Schema(
+		description = "A list of all structured contents rendered content URLs"
+	)
 	public RenderedContents[] getRenderedContents() {
 		return renderedContents;
 	}
@@ -484,9 +504,10 @@ public class StructuredContent {
 	}
 
 	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected RenderedContents[] renderedContents;
 
+	@Schema(description = "The structured content's title")
 	public String getTitle() {
 		return title;
 	}
@@ -511,6 +532,9 @@ public class StructuredContent {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String title;
 
+	@Schema(
+		description = "The permission level to be used on the structured content. Only available on creation"
+	)
 	public ViewableBy getViewableBy() {
 		return viewableBy;
 	}

@@ -24,6 +24,8 @@ import com.liferay.petra.string.StringBundler;
 import graphql.annotations.annotationTypes.GraphQLField;
 import graphql.annotations.annotationTypes.GraphQLName;
 
+import io.swagger.v3.oas.annotations.media.Schema;
+
 import java.util.Date;
 
 import javax.annotation.Generated;
@@ -40,6 +42,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement(name = "Comment")
 public class Comment {
 
+	@Schema(description = "Adds a comment to a structured content")
 	public Creator getCreator() {
 		return creator;
 	}
@@ -61,9 +64,10 @@ public class Comment {
 	}
 
 	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Creator creator;
 
+	@Schema(description = "The creation date")
 	public Date getDateCreated() {
 		return dateCreated;
 	}
@@ -85,9 +89,10 @@ public class Comment {
 	}
 
 	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Date dateCreated;
 
+	@Schema(description = "The date of the last modification")
 	public Date getDateModified() {
 		return dateModified;
 	}
@@ -109,9 +114,10 @@ public class Comment {
 	}
 
 	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Date dateModified;
 
+	@Schema(description = "Whether or not this comment has child comments")
 	public Boolean getHasComments() {
 		return hasComments;
 	}
@@ -133,9 +139,10 @@ public class Comment {
 	}
 
 	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Boolean hasComments;
 
+	@Schema(description = "The comment's ID")
 	public Long getId() {
 		return id;
 	}
@@ -155,9 +162,10 @@ public class Comment {
 	}
 
 	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long id;
 
+	@Schema(description = "The comment's body")
 	public String getText() {
 		return text;
 	}

@@ -1379,10 +1379,7 @@ definition {
 				value1 = "${dmDocumentStatus}"
 			);
 
-			AssertClick(
-				locator1 = "DocumentsAndMedia#ICON_DOCUMENT_TITLE_LINK",
-				value1 = "${dmDocumentTitle}"
-			);
+			DMDocument.gotoEntry(dmDocumentTitle = "${dmDocumentTitle}");
 
 			AssertTextEquals(locator1 = "TextInput#TITLE", value1 = "${dmDocumentTitle}");
 		}
@@ -1638,10 +1635,7 @@ definition {
 
 		AssertElementPresent(locator1 = "DocumentsAndMedia#ICON_DOCUMENT");
 
-		AssertClick(
-			locator1 = "DocumentsAndMedia#ICON_DOCUMENT_TITLE_LINK",
-			value1 = "${dmDocumentTitleEdit}"
-		);
+		DMDocument.gotoEntry(dmDocumentTitle = "${dmDocumentTitleEdit}");
 
 		AssertTextEquals(
 			locator1 = "DocumentsAndMediaDocument#DOCUMENT_INFO_TITLE",

@@ -10,10 +10,7 @@ definition {
 	macro gotoDocumentURL {
 		var key_dmDocumentTitle = "${dmDocumentTitle}";
 
-		AssertClick(
-			locator1 = "DocumentsAndMedia#ICON_DOCUMENT_TITLE_LINK",
-			value1 = "${dmDocumentTitle}"
-		);
+		DMDocument.gotoEntry(dmDocumentTitle = "${dmDocumentTitle}");
 
 		DMDocument.expandInfo();
 

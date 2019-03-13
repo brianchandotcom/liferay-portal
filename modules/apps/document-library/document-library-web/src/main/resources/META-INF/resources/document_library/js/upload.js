@@ -511,10 +511,6 @@ AUI.add(
 
 							var entryTitle = entryLink;
 
-							if (displayStyle === CSS_ICON) {
-								entryTitle = entryNode.one(SELECTOR_ENTRY_TITLE_TEXT);
-							}
-
 							entryLink.attr('title', name);
 
 							entryTitle.setContent(name);

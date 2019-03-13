@@ -79,7 +79,7 @@ public class SharingEntryServiceTest {
 	@Before
 	public void setUp() throws Exception {
 		_group = GroupTestUtil.addGroup();
-		_fromUser = UserTestUtil.addUser();
+		_fromUser = UserTestUtil.addOmniAdminUser();
 		_toUser = UserTestUtil.addUser();
 		_user = UserTestUtil.addUser();
 
@@ -125,8 +125,7 @@ public class SharingEntryServiceTest {
 
 		Assert.assertEquals(_group.getCompanyId(), sharingEntry.getCompanyId());
 		Assert.assertEquals(_group.getGroupId(), sharingEntry.getGroupId());
-		Assert.assertEquals(
-			_fromUser.getUserId(), sharingEntry.getFromUserId());
+		Assert.assertEquals(_fromUser.getUserId(), sharingEntry.getUserId());
 		Assert.assertEquals(_toUser.getUserId(), sharingEntry.getToUserId());
 		Assert.assertEquals(classNameId, sharingEntry.getClassNameId());
 		Assert.assertEquals(classPK, sharingEntry.getClassPK());
@@ -280,8 +279,7 @@ public class SharingEntryServiceTest {
 
 		Assert.assertEquals(_group.getCompanyId(), sharingEntry.getCompanyId());
 		Assert.assertEquals(_group.getGroupId(), sharingEntry.getGroupId());
-		Assert.assertEquals(
-			_fromUser.getUserId(), sharingEntry.getFromUserId());
+		Assert.assertEquals(_fromUser.getUserId(), sharingEntry.getUserId());
 		Assert.assertEquals(_toUser.getUserId(), sharingEntry.getToUserId());
 		Assert.assertEquals(classNameId, sharingEntry.getClassNameId());
 		Assert.assertEquals(classPK, sharingEntry.getClassPK());
@@ -462,8 +460,7 @@ public class SharingEntryServiceTest {
 
 		Assert.assertEquals(_group.getCompanyId(), sharingEntry.getCompanyId());
 		Assert.assertEquals(_group.getGroupId(), sharingEntry.getGroupId());
-		Assert.assertEquals(
-			_fromUser.getUserId(), sharingEntry.getFromUserId());
+		Assert.assertEquals(_fromUser.getUserId(), sharingEntry.getUserId());
 		Assert.assertEquals(_toUser.getUserId(), sharingEntry.getToUserId());
 		Assert.assertEquals(classNameId, sharingEntry.getClassNameId());
 		Assert.assertEquals(classPK, sharingEntry.getClassPK());
@@ -585,7 +582,7 @@ public class SharingEntryServiceTest {
 				sharingEntry.getSharingEntryId()));
 	}
 
-	@Test(expected = PrincipalException.MustHavePermission.class)
+	@Test(expected = PrincipalException.class)
 	public void testSharingEntryCannotBeDeletedByAnyUserOtherThanTheSharer()
 		throws Exception {
 
@@ -735,15 +732,14 @@ public class SharingEntryServiceTest {
 		Assert.assertEquals(3, sharingEntry.getActionIds());
 		Assert.assertEquals(_group.getCompanyId(), sharingEntry.getCompanyId());
 		Assert.assertEquals(_group.getGroupId(), sharingEntry.getGroupId());
-		Assert.assertEquals(
-			_fromUser.getUserId(), sharingEntry.getFromUserId());
+		Assert.assertEquals(_fromUser.getUserId(), sharingEntry.getUserId());
 		Assert.assertEquals(_toUser.getUserId(), sharingEntry.getToUserId());
 		Assert.assertEquals(classNameId, sharingEntry.getClassNameId());
 		Assert.assertEquals(classPK, sharingEntry.getClassPK());
 		Assert.assertTrue(sharingEntry.isShareable());
 	}
 
-	@Test(expected = PrincipalException.MustHavePermission.class)
+	@Test(expected = PrincipalException.class)
 	public void testUpdateSharingEntryWithUpdateAndViewPermissionWhenUserHasViewPermission()
 		throws Exception {
 
@@ -768,7 +764,7 @@ public class SharingEntryServiceTest {
 			true, null, serviceContext);
 	}
 
-	@Test(expected = PrincipalException.MustHavePermission.class)
+	@Test(expected = PrincipalException.class)
 	public void testUpdateSharingEntryWithUpdatePermissionWhenUserHasViewPermission()
 		throws Exception {
 
@@ -789,8 +785,8 @@ public class SharingEntryServiceTest {
 
 		_sharingEntryService.updateSharingEntry(
 			sharingEntry.getSharingEntryId(),
-			Arrays.asList(SharingEntryAction.UPDATE), true, null,
-			serviceContext);
+			Arrays.asList(SharingEntryAction.UPDATE, SharingEntryAction.VIEW),
+			true, null, serviceContext);
 	}
 
 	private void _registerSharingPermissionChecker(

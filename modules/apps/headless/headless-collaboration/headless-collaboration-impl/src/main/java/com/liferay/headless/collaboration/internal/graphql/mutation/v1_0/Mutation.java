@@ -26,6 +26,9 @@ import com.liferay.headless.collaboration.resource.v1_0.CommentResource;
 import com.liferay.headless.collaboration.resource.v1_0.KnowledgeBaseArticleResource;
 import com.liferay.headless.collaboration.resource.v1_0.KnowledgeBaseAttachmentResource;
 import com.liferay.headless.collaboration.resource.v1_0.KnowledgeBaseFolderResource;
+import com.liferay.petra.function.UnsafeConsumer;
+import com.liferay.petra.function.UnsafeFunction;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
 import com.liferay.portal.vulcan.multipart.MultipartBody;
@@ -36,9 +39,7 @@ import graphql.annotations.annotationTypes.GraphQLName;
 
 import javax.annotation.Generated;
 
-import org.osgi.framework.Bundle;
-import org.osgi.framework.FrameworkUtil;
-import org.osgi.util.tracker.ServiceTracker;
+import org.osgi.service.component.ComponentServiceObjects;
 
 /**
  * @author Javier Gamarra
@@ -47,14 +48,64 @@ import org.osgi.util.tracker.ServiceTracker;
 @Generated("")
 public class Mutation {
 
+	public static void setBlogPostingImageResourceComponentServiceObjects(
+		ComponentServiceObjects<BlogPostingImageResource>
+			blogPostingImageResourceComponentServiceObjects) {
+
+		_blogPostingImageResourceComponentServiceObjects =
+			blogPostingImageResourceComponentServiceObjects;
+	}
+
+	public static void setBlogPostingResourceComponentServiceObjects(
+		ComponentServiceObjects<BlogPostingResource>
+			blogPostingResourceComponentServiceObjects) {
+
+		_blogPostingResourceComponentServiceObjects =
+			blogPostingResourceComponentServiceObjects;
+	}
+
+	public static void setCommentResourceComponentServiceObjects(
+		ComponentServiceObjects<CommentResource>
+			commentResourceComponentServiceObjects) {
+
+		_commentResourceComponentServiceObjects =
+			commentResourceComponentServiceObjects;
+	}
+
+	public static void setKnowledgeBaseArticleResourceComponentServiceObjects(
+		ComponentServiceObjects<KnowledgeBaseArticleResource>
+			knowledgeBaseArticleResourceComponentServiceObjects) {
+
+		_knowledgeBaseArticleResourceComponentServiceObjects =
+			knowledgeBaseArticleResourceComponentServiceObjects;
+	}
+
+	public static void setKnowledgeBaseAttachmentResourceComponentServiceObjects(
+		ComponentServiceObjects<KnowledgeBaseAttachmentResource>
+			knowledgeBaseAttachmentResourceComponentServiceObjects) {
+
+		_knowledgeBaseAttachmentResourceComponentServiceObjects =
+			knowledgeBaseAttachmentResourceComponentServiceObjects;
+	}
+
+	public static void setKnowledgeBaseFolderResourceComponentServiceObjects(
+		ComponentServiceObjects<KnowledgeBaseFolderResource>
+			knowledgeBaseFolderResourceComponentServiceObjects) {
+
+		_knowledgeBaseFolderResourceComponentServiceObjects =
+			knowledgeBaseFolderResourceComponentServiceObjects;
+	}
+
 	@GraphQLInvokeDetached
 	public boolean deleteBlogPosting(
 			@GraphQLName("blog-posting-id") Long blogPostingId)
 		throws Exception {
 
-		BlogPostingResource blogPostingResource = _createBlogPostingResource();
-
-		return blogPostingResource.deleteBlogPosting(blogPostingId);
+		return _applyComponentServiceObjects(
+			_blogPostingResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			blogPostingResource -> blogPostingResource.deleteBlogPosting(
+				blogPostingId));
 	}
 
 	@GraphQLInvokeDetached
@@ -63,9 +114,11 @@ public class Mutation {
 			@GraphQLName("BlogPosting") BlogPosting blogPosting)
 		throws Exception {
 
-		BlogPostingResource blogPostingResource = _createBlogPostingResource();
-
-		return blogPostingResource.patchBlogPosting(blogPostingId, blogPosting);
+		return _applyComponentServiceObjects(
+			_blogPostingResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			blogPostingResource -> blogPostingResource.patchBlogPosting(
+				blogPostingId, blogPosting));
 	}
 
 	@GraphQLInvokeDetached
@@ -74,9 +127,11 @@ public class Mutation {
 			@GraphQLName("BlogPosting") BlogPosting blogPosting)
 		throws Exception {
 
-		BlogPostingResource blogPostingResource = _createBlogPostingResource();
-
-		return blogPostingResource.putBlogPosting(blogPostingId, blogPosting);
+		return _applyComponentServiceObjects(
+			_blogPostingResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			blogPostingResource -> blogPostingResource.putBlogPosting(
+				blogPostingId, blogPosting));
 	}
 
 	@GraphQLField
@@ -86,10 +141,12 @@ public class Mutation {
 			@GraphQLName("BlogPosting") BlogPosting blogPosting)
 		throws Exception {
 
-		BlogPostingResource blogPostingResource = _createBlogPostingResource();
-
-		return blogPostingResource.postContentSpaceBlogPosting(
-			contentSpaceId, blogPosting);
+		return _applyComponentServiceObjects(
+			_blogPostingResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			blogPostingResource ->
+				blogPostingResource.postContentSpaceBlogPosting(
+					contentSpaceId, blogPosting));
 	}
 
 	@GraphQLInvokeDetached
@@ -97,11 +154,12 @@ public class Mutation {
 			@GraphQLName("blog-posting-image-id") Long blogPostingImageId)
 		throws Exception {
 
-		BlogPostingImageResource blogPostingImageResource =
-			_createBlogPostingImageResource();
-
-		return blogPostingImageResource.deleteBlogPostingImage(
-			blogPostingImageId);
+		return _applyComponentServiceObjects(
+			_blogPostingImageResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			blogPostingImageResource ->
+				blogPostingImageResource.deleteBlogPostingImage(
+					blogPostingImageId));
 	}
 
 	@GraphQLInvokeDetached
@@ -110,11 +168,12 @@ public class Mutation {
 			@GraphQLName("MultipartBody") MultipartBody multipartBody)
 		throws Exception {
 
-		BlogPostingImageResource blogPostingImageResource =
-			_createBlogPostingImageResource();
-
-		return blogPostingImageResource.patchBlogPostingImage(
-			blogPostingImageId, multipartBody);
+		return _applyComponentServiceObjects(
+			_blogPostingImageResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			blogPostingImageResource ->
+				blogPostingImageResource.patchBlogPostingImage(
+					blogPostingImageId, multipartBody));
 	}
 
 	@GraphQLInvokeDetached
@@ -123,11 +182,12 @@ public class Mutation {
 			@GraphQLName("MultipartBody") MultipartBody multipartBody)
 		throws Exception {
 
-		BlogPostingImageResource blogPostingImageResource =
-			_createBlogPostingImageResource();
-
-		return blogPostingImageResource.putBlogPostingImage(
-			blogPostingImageId, multipartBody);
+		return _applyComponentServiceObjects(
+			_blogPostingImageResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			blogPostingImageResource ->
+				blogPostingImageResource.putBlogPostingImage(
+					blogPostingImageId, multipartBody));
 	}
 
 	@GraphQLField
@@ -137,11 +197,12 @@ public class Mutation {
 			@GraphQLName("MultipartBody") MultipartBody multipartBody)
 		throws Exception {
 
-		BlogPostingImageResource blogPostingImageResource =
-			_createBlogPostingImageResource();
-
-		return blogPostingImageResource.postContentSpaceBlogPostingImage(
-			contentSpaceId, multipartBody);
+		return _applyComponentServiceObjects(
+			_blogPostingImageResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			blogPostingImageResource ->
+				blogPostingImageResource.postContentSpaceBlogPostingImage(
+					contentSpaceId, multipartBody));
 	}
 
 	@GraphQLField
@@ -151,18 +212,21 @@ public class Mutation {
 			@GraphQLName("Comment") Comment comment)
 		throws Exception {
 
-		CommentResource commentResource = _createCommentResource();
-
-		return commentResource.postBlogPostingComment(blogPostingId, comment);
+		return _applyComponentServiceObjects(
+			_commentResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			commentResource -> commentResource.postBlogPostingComment(
+				blogPostingId, comment));
 	}
 
 	@GraphQLInvokeDetached
 	public boolean deleteComment(@GraphQLName("comment-id") Long commentId)
 		throws Exception {
 
-		CommentResource commentResource = _createCommentResource();
-
-		return commentResource.deleteComment(commentId);
+		return _applyComponentServiceObjects(
+			_commentResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			commentResource -> commentResource.deleteComment(commentId));
 	}
 
 	@GraphQLInvokeDetached
@@ -171,9 +235,10 @@ public class Mutation {
 			@GraphQLName("Comment") Comment comment)
 		throws Exception {
 
-		CommentResource commentResource = _createCommentResource();
-
-		return commentResource.putComment(commentId, comment);
+		return _applyComponentServiceObjects(
+			_commentResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			commentResource -> commentResource.putComment(commentId, comment));
 	}
 
 	@GraphQLField
@@ -183,9 +248,10 @@ public class Mutation {
 			@GraphQLName("Comment") Comment comment)
 		throws Exception {
 
-		CommentResource commentResource = _createCommentResource();
-
-		return commentResource.postCommentComment(commentId, comment);
+		return _applyComponentServiceObjects(
+			_commentResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			commentResource -> commentResource.putComment(commentId, comment));
 	}
 
 	@GraphQLField
@@ -196,12 +262,13 @@ public class Mutation {
 				knowledgeBaseArticle)
 		throws Exception {
 
-		KnowledgeBaseArticleResource knowledgeBaseArticleResource =
-			_createKnowledgeBaseArticleResource();
-
-		return knowledgeBaseArticleResource.
-			postContentSpaceKnowledgeBaseArticle(
-				contentSpaceId, knowledgeBaseArticle);
+		return _applyComponentServiceObjects(
+			_knowledgeBaseArticleResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			knowledgeBaseArticleResource ->
+				knowledgeBaseArticleResource.
+					postContentSpaceKnowledgeBaseArticle(
+						contentSpaceId, knowledgeBaseArticle));
 	}
 
 	@GraphQLInvokeDetached
@@ -210,11 +277,12 @@ public class Mutation {
 				knowledgeBaseArticleId)
 		throws Exception {
 
-		KnowledgeBaseArticleResource knowledgeBaseArticleResource =
-			_createKnowledgeBaseArticleResource();
-
-		return knowledgeBaseArticleResource.deleteKnowledgeBaseArticle(
-			knowledgeBaseArticleId);
+		return _applyComponentServiceObjects(
+			_knowledgeBaseArticleResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			knowledgeBaseArticleResource ->
+				knowledgeBaseArticleResource.deleteKnowledgeBaseArticle(
+					knowledgeBaseArticleId));
 	}
 
 	@GraphQLInvokeDetached
@@ -225,11 +293,12 @@ public class Mutation {
 				knowledgeBaseArticle)
 		throws Exception {
 
-		KnowledgeBaseArticleResource knowledgeBaseArticleResource =
-			_createKnowledgeBaseArticleResource();
-
-		return knowledgeBaseArticleResource.patchKnowledgeBaseArticle(
-			knowledgeBaseArticleId, knowledgeBaseArticle);
+		return _applyComponentServiceObjects(
+			_knowledgeBaseArticleResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			knowledgeBaseArticleResource ->
+				knowledgeBaseArticleResource.patchKnowledgeBaseArticle(
+					knowledgeBaseArticleId, knowledgeBaseArticle));
 	}
 
 	@GraphQLInvokeDetached
@@ -240,11 +309,12 @@ public class Mutation {
 				knowledgeBaseArticle)
 		throws Exception {
 
-		KnowledgeBaseArticleResource knowledgeBaseArticleResource =
-			_createKnowledgeBaseArticleResource();
-
-		return knowledgeBaseArticleResource.putKnowledgeBaseArticle(
-			knowledgeBaseArticleId, knowledgeBaseArticle);
+		return _applyComponentServiceObjects(
+			_knowledgeBaseArticleResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			knowledgeBaseArticleResource ->
+				knowledgeBaseArticleResource.putKnowledgeBaseArticle(
+					knowledgeBaseArticleId, knowledgeBaseArticle));
 	}
 
 	@GraphQLField
@@ -256,12 +326,13 @@ public class Mutation {
 				knowledgeBaseArticle)
 		throws Exception {
 
-		KnowledgeBaseArticleResource knowledgeBaseArticleResource =
-			_createKnowledgeBaseArticleResource();
-
-		return knowledgeBaseArticleResource.
-			postKnowledgeBaseArticleKnowledgeBaseArticle(
-				knowledgeBaseArticleId, knowledgeBaseArticle);
+		return _applyComponentServiceObjects(
+			_knowledgeBaseArticleResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			knowledgeBaseArticleResource ->
+				knowledgeBaseArticleResource.
+					postKnowledgeBaseArticleKnowledgeBaseArticle(
+						knowledgeBaseArticleId, knowledgeBaseArticle));
 	}
 
 	@GraphQLField
@@ -272,12 +343,13 @@ public class Mutation {
 				knowledgeBaseArticle)
 		throws Exception {
 
-		KnowledgeBaseArticleResource knowledgeBaseArticleResource =
-			_createKnowledgeBaseArticleResource();
-
-		return knowledgeBaseArticleResource.
-			postKnowledgeBaseFolderKnowledgeBaseArticle(
-				knowledgeBaseFolderId, knowledgeBaseArticle);
+		return _applyComponentServiceObjects(
+			_knowledgeBaseArticleResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			knowledgeBaseArticleResource ->
+				knowledgeBaseArticleResource.
+					postKnowledgeBaseFolderKnowledgeBaseArticle(
+						knowledgeBaseFolderId, knowledgeBaseArticle));
 	}
 
 	@GraphQLField
@@ -289,12 +361,13 @@ public class Mutation {
 				@GraphQLName("MultipartBody") MultipartBody multipartBody)
 		throws Exception {
 
-		KnowledgeBaseAttachmentResource knowledgeBaseAttachmentResource =
-			_createKnowledgeBaseAttachmentResource();
-
-		return knowledgeBaseAttachmentResource.
-			postKnowledgeBaseArticleKnowledgeBaseAttachment(
-				knowledgeBaseArticleId, multipartBody);
+		return _applyComponentServiceObjects(
+			_knowledgeBaseAttachmentResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			knowledgeBaseAttachmentResource ->
+				knowledgeBaseAttachmentResource.
+					postKnowledgeBaseArticleKnowledgeBaseAttachment(
+						knowledgeBaseArticleId, multipartBody));
 	}
 
 	@GraphQLInvokeDetached
@@ -303,11 +376,12 @@ public class Mutation {
 				knowledgeBaseAttachmentId)
 		throws Exception {
 
-		KnowledgeBaseAttachmentResource knowledgeBaseAttachmentResource =
-			_createKnowledgeBaseAttachmentResource();
-
-		return knowledgeBaseAttachmentResource.deleteKnowledgeBaseAttachment(
-			knowledgeBaseAttachmentId);
+		return _applyComponentServiceObjects(
+			_knowledgeBaseAttachmentResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			knowledgeBaseAttachmentResource ->
+				knowledgeBaseAttachmentResource.deleteKnowledgeBaseAttachment(
+					knowledgeBaseAttachmentId));
 	}
 
 	@GraphQLField
@@ -318,11 +392,12 @@ public class Mutation {
 				knowledgeBaseFolder)
 		throws Exception {
 
-		KnowledgeBaseFolderResource knowledgeBaseFolderResource =
-			_createKnowledgeBaseFolderResource();
-
-		return knowledgeBaseFolderResource.postContentSpaceKnowledgeBaseFolder(
-			contentSpaceId, knowledgeBaseFolder);
+		return _applyComponentServiceObjects(
+			_knowledgeBaseFolderResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			knowledgeBaseFolderResource ->
+				knowledgeBaseFolderResource.postContentSpaceKnowledgeBaseFolder(
+					contentSpaceId, knowledgeBaseFolder));
 	}
 
 	@GraphQLInvokeDetached
@@ -330,11 +405,12 @@ public class Mutation {
 			@GraphQLName("knowledge-base-folder-id") Long knowledgeBaseFolderId)
 		throws Exception {
 
-		KnowledgeBaseFolderResource knowledgeBaseFolderResource =
-			_createKnowledgeBaseFolderResource();
-
-		return knowledgeBaseFolderResource.deleteKnowledgeBaseFolder(
-			knowledgeBaseFolderId);
+		return _applyComponentServiceObjects(
+			_knowledgeBaseFolderResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			knowledgeBaseFolderResource ->
+				knowledgeBaseFolderResource.deleteKnowledgeBaseFolder(
+					knowledgeBaseFolderId));
 	}
 
 	@GraphQLInvokeDetached
@@ -344,11 +420,12 @@ public class Mutation {
 				knowledgeBaseFolder)
 		throws Exception {
 
-		KnowledgeBaseFolderResource knowledgeBaseFolderResource =
-			_createKnowledgeBaseFolderResource();
-
-		return knowledgeBaseFolderResource.patchKnowledgeBaseFolder(
-			knowledgeBaseFolderId, knowledgeBaseFolder);
+		return _applyComponentServiceObjects(
+			_knowledgeBaseFolderResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			knowledgeBaseFolderResource ->
+				knowledgeBaseFolderResource.patchKnowledgeBaseFolder(
+					knowledgeBaseFolderId, knowledgeBaseFolder));
 	}
 
 	@GraphQLInvokeDetached
@@ -358,11 +435,12 @@ public class Mutation {
 				knowledgeBaseFolder)
 		throws Exception {
 
-		KnowledgeBaseFolderResource knowledgeBaseFolderResource =
-			_createKnowledgeBaseFolderResource();
-
-		return knowledgeBaseFolderResource.putKnowledgeBaseFolder(
-			knowledgeBaseFolderId, knowledgeBaseFolder);
+		return _applyComponentServiceObjects(
+			_knowledgeBaseFolderResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			knowledgeBaseFolderResource ->
+				knowledgeBaseFolderResource.putKnowledgeBaseFolder(
+					knowledgeBaseFolderId, knowledgeBaseFolder));
 	}
 
 	@GraphQLField
@@ -373,173 +451,97 @@ public class Mutation {
 				knowledgeBaseFolder)
 		throws Exception {
 
-		KnowledgeBaseFolderResource knowledgeBaseFolderResource =
-			_createKnowledgeBaseFolderResource();
-
-		return knowledgeBaseFolderResource.
-			postKnowledgeBaseFolderKnowledgeBaseFolder(
-				knowledgeBaseFolderId, knowledgeBaseFolder);
+		return _applyComponentServiceObjects(
+			_knowledgeBaseFolderResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			knowledgeBaseFolderResource ->
+				knowledgeBaseFolderResource.putKnowledgeBaseFolder(
+					knowledgeBaseFolderId, knowledgeBaseFolder));
 	}
 
-	private static BlogPostingResource _createBlogPostingResource()
-		throws Exception {
+	private <T, R, E1 extends Throwable, E2 extends Throwable> R
+		_applyComponentServiceObjects(
+			ComponentServiceObjects<T> componentServiceObjects,
+			UnsafeConsumer<T, E1> unsafeConsumer,
+			UnsafeFunction<T, R, E2> unsafeFunction)
+		throws E1, E2 {
 
-		BlogPostingResource blogPostingResource =
-			_blogPostingResourceServiceTracker.getService();
+		T resource = componentServiceObjects.getService();
 
-		blogPostingResource.setContextCompany(
-			CompanyLocalServiceUtil.getCompany(
-				CompanyThreadLocal.getCompanyId()));
+		try {
+			unsafeConsumer.accept(resource);
 
-		return blogPostingResource;
+			return unsafeFunction.apply(resource);
+		}
+		finally {
+			componentServiceObjects.ungetService(resource);
+		}
 	}
 
-	private static final ServiceTracker
-		<BlogPostingResource, BlogPostingResource>
-			_blogPostingResourceServiceTracker;
-
-	private static BlogPostingImageResource _createBlogPostingImageResource()
-		throws Exception {
-
-		BlogPostingImageResource blogPostingImageResource =
-			_blogPostingImageResourceServiceTracker.getService();
+	private void _populateResourceContext(
+			BlogPostingImageResource blogPostingImageResource)
+		throws PortalException {
 
 		blogPostingImageResource.setContextCompany(
 			CompanyLocalServiceUtil.getCompany(
 				CompanyThreadLocal.getCompanyId()));
-
-		return blogPostingImageResource;
 	}
 
-	private static final ServiceTracker
-		<BlogPostingImageResource, BlogPostingImageResource>
-			_blogPostingImageResourceServiceTracker;
+	private void _populateResourceContext(
+			BlogPostingResource blogPostingResource)
+		throws PortalException {
 
-	private static CommentResource _createCommentResource() throws Exception {
-		CommentResource commentResource =
-			_commentResourceServiceTracker.getService();
+		blogPostingResource.setContextCompany(
+			CompanyLocalServiceUtil.getCompany(
+				CompanyThreadLocal.getCompanyId()));
+	}
+
+	private void _populateResourceContext(CommentResource commentResource)
+		throws PortalException {
 
 		commentResource.setContextCompany(
 			CompanyLocalServiceUtil.getCompany(
 				CompanyThreadLocal.getCompanyId()));
-
-		return commentResource;
 	}
 
-	private static final ServiceTracker<CommentResource, CommentResource>
-		_commentResourceServiceTracker;
-
-	private static KnowledgeBaseArticleResource
-			_createKnowledgeBaseArticleResource()
-		throws Exception {
-
-		KnowledgeBaseArticleResource knowledgeBaseArticleResource =
-			_knowledgeBaseArticleResourceServiceTracker.getService();
+	private void _populateResourceContext(
+			KnowledgeBaseArticleResource knowledgeBaseArticleResource)
+		throws PortalException {
 
 		knowledgeBaseArticleResource.setContextCompany(
 			CompanyLocalServiceUtil.getCompany(
 				CompanyThreadLocal.getCompanyId()));
-
-		return knowledgeBaseArticleResource;
 	}
 
-	private static final ServiceTracker
-		<KnowledgeBaseArticleResource, KnowledgeBaseArticleResource>
-			_knowledgeBaseArticleResourceServiceTracker;
-
-	private static KnowledgeBaseAttachmentResource
-			_createKnowledgeBaseAttachmentResource()
-		throws Exception {
-
-		KnowledgeBaseAttachmentResource knowledgeBaseAttachmentResource =
-			_knowledgeBaseAttachmentResourceServiceTracker.getService();
+	private void _populateResourceContext(
+			KnowledgeBaseAttachmentResource knowledgeBaseAttachmentResource)
+		throws PortalException {
 
 		knowledgeBaseAttachmentResource.setContextCompany(
 			CompanyLocalServiceUtil.getCompany(
 				CompanyThreadLocal.getCompanyId()));
-
-		return knowledgeBaseAttachmentResource;
 	}
 
-	private static final ServiceTracker
-		<KnowledgeBaseAttachmentResource, KnowledgeBaseAttachmentResource>
-			_knowledgeBaseAttachmentResourceServiceTracker;
-
-	private static KnowledgeBaseFolderResource
-			_createKnowledgeBaseFolderResource()
-		throws Exception {
-
-		KnowledgeBaseFolderResource knowledgeBaseFolderResource =
-			_knowledgeBaseFolderResourceServiceTracker.getService();
+	private void _populateResourceContext(
+			KnowledgeBaseFolderResource knowledgeBaseFolderResource)
+		throws PortalException {
 
 		knowledgeBaseFolderResource.setContextCompany(
 			CompanyLocalServiceUtil.getCompany(
 				CompanyThreadLocal.getCompanyId()));
-
-		return knowledgeBaseFolderResource;
 	}
 
-	private static final ServiceTracker
-		<KnowledgeBaseFolderResource, KnowledgeBaseFolderResource>
-			_knowledgeBaseFolderResourceServiceTracker;
-
-	static {
-		Bundle bundle = FrameworkUtil.getBundle(Mutation.class);
-
-		ServiceTracker<BlogPostingResource, BlogPostingResource>
-			blogPostingResourceServiceTracker = new ServiceTracker<>(
-				bundle.getBundleContext(), BlogPostingResource.class, null);
-
-		blogPostingResourceServiceTracker.open();
-
-		_blogPostingResourceServiceTracker = blogPostingResourceServiceTracker;
-		ServiceTracker<BlogPostingImageResource, BlogPostingImageResource>
-			blogPostingImageResourceServiceTracker = new ServiceTracker<>(
-				bundle.getBundleContext(), BlogPostingImageResource.class,
-				null);
-
-		blogPostingImageResourceServiceTracker.open();
-
-		_blogPostingImageResourceServiceTracker =
-			blogPostingImageResourceServiceTracker;
-		ServiceTracker<CommentResource, CommentResource>
-			commentResourceServiceTracker = new ServiceTracker<>(
-				bundle.getBundleContext(), CommentResource.class, null);
-
-		commentResourceServiceTracker.open();
-
-		_commentResourceServiceTracker = commentResourceServiceTracker;
-		ServiceTracker
-			<KnowledgeBaseArticleResource, KnowledgeBaseArticleResource>
-				knowledgeBaseArticleResourceServiceTracker =
-					new ServiceTracker<>(
-						bundle.getBundleContext(),
-						KnowledgeBaseArticleResource.class, null);
-
-		knowledgeBaseArticleResourceServiceTracker.open();
-
-		_knowledgeBaseArticleResourceServiceTracker =
-			knowledgeBaseArticleResourceServiceTracker;
-		ServiceTracker
-			<KnowledgeBaseAttachmentResource, KnowledgeBaseAttachmentResource>
-				knowledgeBaseAttachmentResourceServiceTracker =
-					new ServiceTracker<>(
-						bundle.getBundleContext(),
-						KnowledgeBaseAttachmentResource.class, null);
-
-		knowledgeBaseAttachmentResourceServiceTracker.open();
-
-		_knowledgeBaseAttachmentResourceServiceTracker =
-			knowledgeBaseAttachmentResourceServiceTracker;
-		ServiceTracker<KnowledgeBaseFolderResource, KnowledgeBaseFolderResource>
-			knowledgeBaseFolderResourceServiceTracker = new ServiceTracker<>(
-				bundle.getBundleContext(), KnowledgeBaseFolderResource.class,
-				null);
-
-		knowledgeBaseFolderResourceServiceTracker.open();
-
-		_knowledgeBaseFolderResourceServiceTracker =
-			knowledgeBaseFolderResourceServiceTracker;
-	}
+	private static ComponentServiceObjects<BlogPostingImageResource>
+		_blogPostingImageResourceComponentServiceObjects;
+	private static ComponentServiceObjects<BlogPostingResource>
+		_blogPostingResourceComponentServiceObjects;
+	private static ComponentServiceObjects<CommentResource>
+		_commentResourceComponentServiceObjects;
+	private static ComponentServiceObjects<KnowledgeBaseArticleResource>
+		_knowledgeBaseArticleResourceComponentServiceObjects;
+	private static ComponentServiceObjects<KnowledgeBaseAttachmentResource>
+		_knowledgeBaseAttachmentResourceComponentServiceObjects;
+	private static ComponentServiceObjects<KnowledgeBaseFolderResource>
+		_knowledgeBaseFolderResourceComponentServiceObjects;
 
 }

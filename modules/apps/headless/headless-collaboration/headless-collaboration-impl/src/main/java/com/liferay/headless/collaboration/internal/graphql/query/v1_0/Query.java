@@ -26,6 +26,9 @@ import com.liferay.headless.collaboration.resource.v1_0.CommentResource;
 import com.liferay.headless.collaboration.resource.v1_0.KnowledgeBaseArticleResource;
 import com.liferay.headless.collaboration.resource.v1_0.KnowledgeBaseAttachmentResource;
 import com.liferay.headless.collaboration.resource.v1_0.KnowledgeBaseFolderResource;
+import com.liferay.petra.function.UnsafeConsumer;
+import com.liferay.petra.function.UnsafeFunction;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
@@ -41,9 +44,7 @@ import java.util.Collection;
 
 import javax.annotation.Generated;
 
-import org.osgi.framework.Bundle;
-import org.osgi.framework.FrameworkUtil;
-import org.osgi.util.tracker.ServiceTracker;
+import org.osgi.service.component.ComponentServiceObjects;
 
 /**
  * @author Javier Gamarra
@@ -52,15 +53,65 @@ import org.osgi.util.tracker.ServiceTracker;
 @Generated("")
 public class Query {
 
+	public static void setBlogPostingImageResourceComponentServiceObjects(
+		ComponentServiceObjects<BlogPostingImageResource>
+			blogPostingImageResourceComponentServiceObjects) {
+
+		_blogPostingImageResourceComponentServiceObjects =
+			blogPostingImageResourceComponentServiceObjects;
+	}
+
+	public static void setBlogPostingResourceComponentServiceObjects(
+		ComponentServiceObjects<BlogPostingResource>
+			blogPostingResourceComponentServiceObjects) {
+
+		_blogPostingResourceComponentServiceObjects =
+			blogPostingResourceComponentServiceObjects;
+	}
+
+	public static void setCommentResourceComponentServiceObjects(
+		ComponentServiceObjects<CommentResource>
+			commentResourceComponentServiceObjects) {
+
+		_commentResourceComponentServiceObjects =
+			commentResourceComponentServiceObjects;
+	}
+
+	public static void setKnowledgeBaseArticleResourceComponentServiceObjects(
+		ComponentServiceObjects<KnowledgeBaseArticleResource>
+			knowledgeBaseArticleResourceComponentServiceObjects) {
+
+		_knowledgeBaseArticleResourceComponentServiceObjects =
+			knowledgeBaseArticleResourceComponentServiceObjects;
+	}
+
+	public static void setKnowledgeBaseAttachmentResourceComponentServiceObjects(
+		ComponentServiceObjects<KnowledgeBaseAttachmentResource>
+			knowledgeBaseAttachmentResourceComponentServiceObjects) {
+
+		_knowledgeBaseAttachmentResourceComponentServiceObjects =
+			knowledgeBaseAttachmentResourceComponentServiceObjects;
+	}
+
+	public static void setKnowledgeBaseFolderResourceComponentServiceObjects(
+		ComponentServiceObjects<KnowledgeBaseFolderResource>
+			knowledgeBaseFolderResourceComponentServiceObjects) {
+
+		_knowledgeBaseFolderResourceComponentServiceObjects =
+			knowledgeBaseFolderResourceComponentServiceObjects;
+	}
+
 	@GraphQLField
 	@GraphQLInvokeDetached
 	public BlogPosting getBlogPosting(
 			@GraphQLName("blog-posting-id") Long blogPostingId)
 		throws Exception {
 
-		BlogPostingResource blogPostingResource = _createBlogPostingResource();
-
-		return blogPostingResource.getBlogPosting(blogPostingId);
+		return _applyComponentServiceObjects(
+			_blogPostingResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			blogPostingResource -> blogPostingResource.getBlogPosting(
+				blogPostingId));
 	}
 
 	@GraphQLField
@@ -72,13 +123,17 @@ public class Query {
 			@GraphQLName("page") int page, @GraphQLName("Sort[]") Sort[] sorts)
 		throws Exception {
 
-		BlogPostingResource blogPostingResource = _createBlogPostingResource();
+		return _applyComponentServiceObjects(
+			_blogPostingResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			blogPostingResource -> {
+				Page paginationPage =
+					blogPostingResource.getContentSpaceBlogPostingsPage(
+						contentSpaceId, filter, Pagination.of(pageSize, page),
+						sorts);
 
-		Page paginationPage =
-			blogPostingResource.getContentSpaceBlogPostingsPage(
-				contentSpaceId, filter, Pagination.of(pageSize, page), sorts);
-
-		return paginationPage.getItems();
+				return paginationPage.getItems();
+			});
 	}
 
 	@GraphQLField
@@ -87,10 +142,12 @@ public class Query {
 			@GraphQLName("blog-posting-image-id") Long blogPostingImageId)
 		throws Exception {
 
-		BlogPostingImageResource blogPostingImageResource =
-			_createBlogPostingImageResource();
-
-		return blogPostingImageResource.getBlogPostingImage(blogPostingImageId);
+		return _applyComponentServiceObjects(
+			_blogPostingImageResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			blogPostingImageResource ->
+				blogPostingImageResource.getBlogPostingImage(
+					blogPostingImageId));
 	}
 
 	@GraphQLField
@@ -102,14 +159,18 @@ public class Query {
 			@GraphQLName("page") int page, @GraphQLName("Sort[]") Sort[] sorts)
 		throws Exception {
 
-		BlogPostingImageResource blogPostingImageResource =
-			_createBlogPostingImageResource();
+		return _applyComponentServiceObjects(
+			_blogPostingImageResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			blogPostingImageResource -> {
+				Page paginationPage =
+					blogPostingImageResource.
+						getContentSpaceBlogPostingImagesPage(
+							contentSpaceId, filter,
+							Pagination.of(pageSize, page), sorts);
 
-		Page paginationPage =
-			blogPostingImageResource.getContentSpaceBlogPostingImagesPage(
-				contentSpaceId, filter, Pagination.of(pageSize, page), sorts);
-
-		return paginationPage.getItems();
+				return paginationPage.getItems();
+			});
 	}
 
 	@GraphQLField
@@ -121,12 +182,17 @@ public class Query {
 			@GraphQLName("page") int page, @GraphQLName("Sort[]") Sort[] sorts)
 		throws Exception {
 
-		CommentResource commentResource = _createCommentResource();
+		return _applyComponentServiceObjects(
+			_commentResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			commentResource -> {
+				Page paginationPage =
+					commentResource.getBlogPostingCommentsPage(
+						blogPostingId, filter, Pagination.of(pageSize, page),
+						sorts);
 
-		Page paginationPage = commentResource.getBlogPostingCommentsPage(
-			blogPostingId, filter, Pagination.of(pageSize, page), sorts);
-
-		return paginationPage.getItems();
+				return paginationPage.getItems();
+			});
 	}
 
 	@GraphQLField
@@ -134,9 +200,10 @@ public class Query {
 	public Comment getComment(@GraphQLName("comment-id") Long commentId)
 		throws Exception {
 
-		CommentResource commentResource = _createCommentResource();
-
-		return commentResource.getComment(commentId);
+		return _applyComponentServiceObjects(
+			_commentResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			commentResource -> commentResource.getComment(commentId));
 	}
 
 	@GraphQLField
@@ -148,12 +215,17 @@ public class Query {
 			@GraphQLName("page") int page, @GraphQLName("Sort[]") Sort[] sorts)
 		throws Exception {
 
-		CommentResource commentResource = _createCommentResource();
+		return _applyComponentServiceObjects(
+			_commentResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			commentResource -> {
+				Page paginationPage =
+					commentResource.getCommentCommentsPage(
+						commentId, filter, Pagination.of(pageSize, page),
+						sorts);
 
-		Page paginationPage = commentResource.getCommentCommentsPage(
-			commentId, filter, Pagination.of(pageSize, page), sorts);
-
-		return paginationPage.getItems();
+				return paginationPage.getItems();
+			});
 	}
 
 	@GraphQLField
@@ -165,15 +237,17 @@ public class Query {
 				@GraphQLName("page") int page)
 		throws Exception {
 
-		KnowledgeBaseArticleResource knowledgeBaseArticleResource =
-			_createKnowledgeBaseArticleResource();
+		return _applyComponentServiceObjects(
+			_knowledgeBaseArticleResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			knowledgeBaseArticleResource -> {
+				Page paginationPage =
+					knowledgeBaseArticleResource.
+						getContentSpaceKnowledgeBaseArticlesPage(
+							contentSpaceId, Pagination.of(pageSize, page));
 
-		Page paginationPage =
-			knowledgeBaseArticleResource.
-				getContentSpaceKnowledgeBaseArticlesPage(
-					contentSpaceId, Pagination.of(pageSize, page));
-
-		return paginationPage.getItems();
+				return paginationPage.getItems();
+			});
 	}
 
 	@GraphQLField
@@ -183,11 +257,12 @@ public class Query {
 				knowledgeBaseArticleId)
 		throws Exception {
 
-		KnowledgeBaseArticleResource knowledgeBaseArticleResource =
-			_createKnowledgeBaseArticleResource();
-
-		return knowledgeBaseArticleResource.getKnowledgeBaseArticle(
-			knowledgeBaseArticleId);
+		return _applyComponentServiceObjects(
+			_knowledgeBaseArticleResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			knowledgeBaseArticleResource ->
+				knowledgeBaseArticleResource.getKnowledgeBaseArticle(
+					knowledgeBaseArticleId));
 	}
 
 	@GraphQLField
@@ -200,15 +275,18 @@ public class Query {
 				@GraphQLName("page") int page)
 		throws Exception {
 
-		KnowledgeBaseArticleResource knowledgeBaseArticleResource =
-			_createKnowledgeBaseArticleResource();
+		return _applyComponentServiceObjects(
+			_knowledgeBaseArticleResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			knowledgeBaseArticleResource -> {
+				Page paginationPage =
+					knowledgeBaseArticleResource.
+						getKnowledgeBaseArticleKnowledgeBaseArticlesPage(
+							knowledgeBaseArticleId,
+							Pagination.of(pageSize, page));
 
-		Page paginationPage =
-			knowledgeBaseArticleResource.
-				getKnowledgeBaseArticleKnowledgeBaseArticlesPage(
-					knowledgeBaseArticleId, Pagination.of(pageSize, page));
-
-		return paginationPage.getItems();
+				return paginationPage.getItems();
+			});
 	}
 
 	@GraphQLField
@@ -221,15 +299,18 @@ public class Query {
 				@GraphQLName("page") int page)
 		throws Exception {
 
-		KnowledgeBaseArticleResource knowledgeBaseArticleResource =
-			_createKnowledgeBaseArticleResource();
+		return _applyComponentServiceObjects(
+			_knowledgeBaseArticleResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			knowledgeBaseArticleResource -> {
+				Page paginationPage =
+					knowledgeBaseArticleResource.
+						getKnowledgeBaseFolderKnowledgeBaseArticlesPage(
+							knowledgeBaseFolderId,
+							Pagination.of(pageSize, page));
 
-		Page paginationPage =
-			knowledgeBaseArticleResource.
-				getKnowledgeBaseFolderKnowledgeBaseArticlesPage(
-					knowledgeBaseFolderId, Pagination.of(pageSize, page));
-
-		return paginationPage.getItems();
+				return paginationPage.getItems();
+			});
 	}
 
 	@GraphQLField
@@ -240,15 +321,17 @@ public class Query {
 					knowledgeBaseArticleId)
 		throws Exception {
 
-		KnowledgeBaseAttachmentResource knowledgeBaseAttachmentResource =
-			_createKnowledgeBaseAttachmentResource();
+		return _applyComponentServiceObjects(
+			_knowledgeBaseAttachmentResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			knowledgeBaseAttachmentResource -> {
+				Page paginationPage =
+					knowledgeBaseAttachmentResource.
+						getKnowledgeBaseArticleKnowledgeBaseAttachmentsPage(
+							knowledgeBaseArticleId);
 
-		Page paginationPage =
-			knowledgeBaseAttachmentResource.
-				getKnowledgeBaseArticleKnowledgeBaseAttachmentsPage(
-					knowledgeBaseArticleId);
-
-		return paginationPage.getItems();
+				return paginationPage.getItems();
+			});
 	}
 
 	@GraphQLField
@@ -258,11 +341,12 @@ public class Query {
 				knowledgeBaseAttachmentId)
 		throws Exception {
 
-		KnowledgeBaseAttachmentResource knowledgeBaseAttachmentResource =
-			_createKnowledgeBaseAttachmentResource();
-
-		return knowledgeBaseAttachmentResource.getKnowledgeBaseAttachment(
-			knowledgeBaseAttachmentId);
+		return _applyComponentServiceObjects(
+			_knowledgeBaseAttachmentResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			knowledgeBaseAttachmentResource ->
+				knowledgeBaseAttachmentResource.getKnowledgeBaseAttachment(
+					knowledgeBaseAttachmentId));
 	}
 
 	@GraphQLField
@@ -274,14 +358,17 @@ public class Query {
 				@GraphQLName("page") int page)
 		throws Exception {
 
-		KnowledgeBaseFolderResource knowledgeBaseFolderResource =
-			_createKnowledgeBaseFolderResource();
+		return _applyComponentServiceObjects(
+			_knowledgeBaseFolderResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			knowledgeBaseFolderResource -> {
+				Page paginationPage =
+					knowledgeBaseFolderResource.
+						getContentSpaceKnowledgeBaseFoldersPage(
+							contentSpaceId, Pagination.of(pageSize, page));
 
-		Page paginationPage =
-			knowledgeBaseFolderResource.getContentSpaceKnowledgeBaseFoldersPage(
-				contentSpaceId, Pagination.of(pageSize, page));
-
-		return paginationPage.getItems();
+				return paginationPage.getItems();
+			});
 	}
 
 	@GraphQLField
@@ -290,11 +377,12 @@ public class Query {
 			@GraphQLName("knowledge-base-folder-id") Long knowledgeBaseFolderId)
 		throws Exception {
 
-		KnowledgeBaseFolderResource knowledgeBaseFolderResource =
-			_createKnowledgeBaseFolderResource();
-
-		return knowledgeBaseFolderResource.getKnowledgeBaseFolder(
-			knowledgeBaseFolderId);
+		return _applyComponentServiceObjects(
+			_knowledgeBaseFolderResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			knowledgeBaseFolderResource ->
+				knowledgeBaseFolderResource.getKnowledgeBaseFolder(
+					knowledgeBaseFolderId));
 	}
 
 	@GraphQLField
@@ -307,176 +395,103 @@ public class Query {
 				@GraphQLName("page") int page)
 		throws Exception {
 
-		KnowledgeBaseFolderResource knowledgeBaseFolderResource =
-			_createKnowledgeBaseFolderResource();
+		return _applyComponentServiceObjects(
+			_knowledgeBaseFolderResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			knowledgeBaseFolderResource -> {
+				Page paginationPage =
+					knowledgeBaseFolderResource.
+						getKnowledgeBaseFolderKnowledgeBaseFoldersPage(
+							knowledgeBaseFolderId,
+							Pagination.of(pageSize, page));
 
-		Page paginationPage =
-			knowledgeBaseFolderResource.
-				getKnowledgeBaseFolderKnowledgeBaseFoldersPage(
-					knowledgeBaseFolderId, Pagination.of(pageSize, page));
-
-		return paginationPage.getItems();
+				return paginationPage.getItems();
+			});
 	}
 
-	private static BlogPostingResource _createBlogPostingResource()
-		throws Exception {
+	private <T, R, E1 extends Throwable, E2 extends Throwable> R
+		_applyComponentServiceObjects(
+			ComponentServiceObjects<T> componentServiceObjects,
+			UnsafeConsumer<T, E1> unsafeConsumer,
+			UnsafeFunction<T, R, E2> unsafeFunction)
+		throws E1, E2 {
 
-		BlogPostingResource blogPostingResource =
-			_blogPostingResourceServiceTracker.getService();
+		T resource = componentServiceObjects.getService();
 
-		blogPostingResource.setContextCompany(
-			CompanyLocalServiceUtil.getCompany(
-				CompanyThreadLocal.getCompanyId()));
+		try {
+			unsafeConsumer.accept(resource);
 
-		return blogPostingResource;
+			return unsafeFunction.apply(resource);
+		}
+		finally {
+			componentServiceObjects.ungetService(resource);
+		}
 	}
 
-	private static final ServiceTracker
-		<BlogPostingResource, BlogPostingResource>
-			_blogPostingResourceServiceTracker;
-
-	private static BlogPostingImageResource _createBlogPostingImageResource()
-		throws Exception {
-
-		BlogPostingImageResource blogPostingImageResource =
-			_blogPostingImageResourceServiceTracker.getService();
+	private void _populateResourceContext(
+			BlogPostingImageResource blogPostingImageResource)
+		throws PortalException {
 
 		blogPostingImageResource.setContextCompany(
 			CompanyLocalServiceUtil.getCompany(
 				CompanyThreadLocal.getCompanyId()));
-
-		return blogPostingImageResource;
 	}
 
-	private static final ServiceTracker
-		<BlogPostingImageResource, BlogPostingImageResource>
-			_blogPostingImageResourceServiceTracker;
+	private void _populateResourceContext(
+			BlogPostingResource blogPostingResource)
+		throws PortalException {
 
-	private static CommentResource _createCommentResource() throws Exception {
-		CommentResource commentResource =
-			_commentResourceServiceTracker.getService();
+		blogPostingResource.setContextCompany(
+			CompanyLocalServiceUtil.getCompany(
+				CompanyThreadLocal.getCompanyId()));
+	}
+
+	private void _populateResourceContext(CommentResource commentResource)
+		throws PortalException {
 
 		commentResource.setContextCompany(
 			CompanyLocalServiceUtil.getCompany(
 				CompanyThreadLocal.getCompanyId()));
-
-		return commentResource;
 	}
 
-	private static final ServiceTracker<CommentResource, CommentResource>
-		_commentResourceServiceTracker;
-
-	private static KnowledgeBaseArticleResource
-			_createKnowledgeBaseArticleResource()
-		throws Exception {
-
-		KnowledgeBaseArticleResource knowledgeBaseArticleResource =
-			_knowledgeBaseArticleResourceServiceTracker.getService();
+	private void _populateResourceContext(
+			KnowledgeBaseArticleResource knowledgeBaseArticleResource)
+		throws PortalException {
 
 		knowledgeBaseArticleResource.setContextCompany(
 			CompanyLocalServiceUtil.getCompany(
 				CompanyThreadLocal.getCompanyId()));
-
-		return knowledgeBaseArticleResource;
 	}
 
-	private static final ServiceTracker
-		<KnowledgeBaseArticleResource, KnowledgeBaseArticleResource>
-			_knowledgeBaseArticleResourceServiceTracker;
-
-	private static KnowledgeBaseAttachmentResource
-			_createKnowledgeBaseAttachmentResource()
-		throws Exception {
-
-		KnowledgeBaseAttachmentResource knowledgeBaseAttachmentResource =
-			_knowledgeBaseAttachmentResourceServiceTracker.getService();
+	private void _populateResourceContext(
+			KnowledgeBaseAttachmentResource knowledgeBaseAttachmentResource)
+		throws PortalException {
 
 		knowledgeBaseAttachmentResource.setContextCompany(
 			CompanyLocalServiceUtil.getCompany(
 				CompanyThreadLocal.getCompanyId()));
-
-		return knowledgeBaseAttachmentResource;
 	}
 
-	private static final ServiceTracker
-		<KnowledgeBaseAttachmentResource, KnowledgeBaseAttachmentResource>
-			_knowledgeBaseAttachmentResourceServiceTracker;
-
-	private static KnowledgeBaseFolderResource
-			_createKnowledgeBaseFolderResource()
-		throws Exception {
-
-		KnowledgeBaseFolderResource knowledgeBaseFolderResource =
-			_knowledgeBaseFolderResourceServiceTracker.getService();
+	private void _populateResourceContext(
+			KnowledgeBaseFolderResource knowledgeBaseFolderResource)
+		throws PortalException {
 
 		knowledgeBaseFolderResource.setContextCompany(
 			CompanyLocalServiceUtil.getCompany(
 				CompanyThreadLocal.getCompanyId()));
-
-		return knowledgeBaseFolderResource;
 	}
 
-	private static final ServiceTracker
-		<KnowledgeBaseFolderResource, KnowledgeBaseFolderResource>
-			_knowledgeBaseFolderResourceServiceTracker;
-
-	static {
-		Bundle bundle = FrameworkUtil.getBundle(Query.class);
-
-		ServiceTracker<BlogPostingResource, BlogPostingResource>
-			blogPostingResourceServiceTracker = new ServiceTracker<>(
-				bundle.getBundleContext(), BlogPostingResource.class, null);
-
-		blogPostingResourceServiceTracker.open();
-
-		_blogPostingResourceServiceTracker = blogPostingResourceServiceTracker;
-		ServiceTracker<BlogPostingImageResource, BlogPostingImageResource>
-			blogPostingImageResourceServiceTracker = new ServiceTracker<>(
-				bundle.getBundleContext(), BlogPostingImageResource.class,
-				null);
-
-		blogPostingImageResourceServiceTracker.open();
-
-		_blogPostingImageResourceServiceTracker =
-			blogPostingImageResourceServiceTracker;
-		ServiceTracker<CommentResource, CommentResource>
-			commentResourceServiceTracker = new ServiceTracker<>(
-				bundle.getBundleContext(), CommentResource.class, null);
-
-		commentResourceServiceTracker.open();
-
-		_commentResourceServiceTracker = commentResourceServiceTracker;
-		ServiceTracker
-			<KnowledgeBaseArticleResource, KnowledgeBaseArticleResource>
-				knowledgeBaseArticleResourceServiceTracker =
-					new ServiceTracker<>(
-						bundle.getBundleContext(),
-						KnowledgeBaseArticleResource.class, null);
-
-		knowledgeBaseArticleResourceServiceTracker.open();
-
-		_knowledgeBaseArticleResourceServiceTracker =
-			knowledgeBaseArticleResourceServiceTracker;
-		ServiceTracker
-			<KnowledgeBaseAttachmentResource, KnowledgeBaseAttachmentResource>
-				knowledgeBaseAttachmentResourceServiceTracker =
-					new ServiceTracker<>(
-						bundle.getBundleContext(),
-						KnowledgeBaseAttachmentResource.class, null);
-
-		knowledgeBaseAttachmentResourceServiceTracker.open();
-
-		_knowledgeBaseAttachmentResourceServiceTracker =
-			knowledgeBaseAttachmentResourceServiceTracker;
-		ServiceTracker<KnowledgeBaseFolderResource, KnowledgeBaseFolderResource>
-			knowledgeBaseFolderResourceServiceTracker = new ServiceTracker<>(
-				bundle.getBundleContext(), KnowledgeBaseFolderResource.class,
-				null);
-
-		knowledgeBaseFolderResourceServiceTracker.open();
-
-		_knowledgeBaseFolderResourceServiceTracker =
-			knowledgeBaseFolderResourceServiceTracker;
-	}
+	private static ComponentServiceObjects<BlogPostingImageResource>
+		_blogPostingImageResourceComponentServiceObjects;
+	private static ComponentServiceObjects<BlogPostingResource>
+		_blogPostingResourceComponentServiceObjects;
+	private static ComponentServiceObjects<CommentResource>
+		_commentResourceComponentServiceObjects;
+	private static ComponentServiceObjects<KnowledgeBaseArticleResource>
+		_knowledgeBaseArticleResourceComponentServiceObjects;
+	private static ComponentServiceObjects<KnowledgeBaseAttachmentResource>
+		_knowledgeBaseAttachmentResourceComponentServiceObjects;
+	private static ComponentServiceObjects<KnowledgeBaseFolderResource>
+		_knowledgeBaseFolderResourceComponentServiceObjects;
 
 }

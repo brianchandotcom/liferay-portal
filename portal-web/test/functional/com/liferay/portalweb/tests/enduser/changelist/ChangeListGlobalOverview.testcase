@@ -76,6 +76,11 @@ definition {
 			value1 = "Second Change List Name"
 		);
 
+		AssertTextEquals(
+			locator1 = "ChangeList#EMPTY_PRODUCTION_VIEW_TEXT",
+			value1 = "No change list has been published yet."
+		);
+
 		ChangeList.selectChangeList(
 			changeListName = "Select Change List"
 		);
@@ -99,6 +104,11 @@ definition {
 		AssertTextEquals(
 			locator1 = "ChangeList#ACTIVE_CHANGE_LIST_TITLE",
 			value1 = "Second Change List Name"
+		);
+
+		AssertTextEquals(
+			locator1 = "ChangeList#EMPTY_PRODUCTION_VIEW_TEXT",
+			value1 = "No change list has been published yet."
 		);
 	}
 

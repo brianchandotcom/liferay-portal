@@ -29,6 +29,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>EMPTY_PRODUCTION_VIEW_TEXT</td>
+	<td>//div[contains(@class,'sheet-text text-center text-strong empty-production-view')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>OVERVIEW_PAGE_TITLE</td>
 	<td>//span[contains(@data-qa-id,'headerTitle')]</td>
 	<td></td>

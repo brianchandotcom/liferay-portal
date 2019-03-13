@@ -359,7 +359,9 @@ definition {
 			);
 		}
 
-		Click(locator1 = "ItemSelector#SELECT_FILE_IMAGE_PREVIEW");
+		LexiconCard.clickCard(
+			card = "${dmDocumentTitle}"
+		);
 
 		SelectFrameTop(value1 = "relative=top");
 

@@ -80,7 +80,9 @@ definition {
 			value1 = "Blog Images"
 		);
 
-		AssertElementNotPresent(locator1 = "ItemSelector#SELECT_FILE_IMAGE_PREVIEW");
+		LexiconCard.viewCardNotPresent(
+			card = "${imageFileName}"
+		);
 
 		var key_navTab = "Documents and Media";
 
@@ -98,7 +100,9 @@ definition {
 			value1 = "1 Results for ${imageFileName}"
 		);
 
-		AssertElementPresent(locator1 = "ItemSelector#SELECT_FILE_IMAGE_PREVIEW");
+		LexiconCard.viewCardPresent(
+			card = "${imageFileName}"
+		);
 
 		SelectFrameTop(value1 = "relative=top");
 	}
@@ -155,7 +159,9 @@ definition {
 
 		var key_imageFileName = StringUtil.replace("${imageFileName}", " ", "+");
 
-		Click(locator1 = "ItemSelector#SELECT_FILE_IMAGE_PREVIEW");
+		LexiconCard.clickCard(
+			card = "${imageFileName}"
+		);
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "ItemSelector#CAPTION",

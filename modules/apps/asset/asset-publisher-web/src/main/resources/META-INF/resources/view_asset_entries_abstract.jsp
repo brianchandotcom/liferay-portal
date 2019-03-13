@@ -65,78 +65,81 @@ for (AssetEntry assetEntry : assetEntryResult.getAssetEntries()) {
 				</div>
 			</div>
 
-			<%
-			User assetRendererUser = UserLocalServiceUtil.getUser(assetRenderer.getUserId());
-			%>
+			<c:if test="<%= assetPublisherDisplayContext.isShowAuthor() || (assetPublisherDisplayContext.isShowCreateDate() && (assetEntry.getCreateDate() != null)) || (assetPublisherDisplayContext.isShowPublishDate() && (assetEntry.getPublishDate() != null)) || (assetPublisherDisplayContext.isShowExpirationDate() && (assetEntry.getExpirationDate() != null)) || (assetPublisherDisplayContext.isShowModifiedDate() && (assetEntry.getModifiedDate() != null)) || assetPublisherDisplayContext.isShowViewCount() %>">
 
-			<div class="autofit-row mb-3 metadata-author">
-				<c:if test="<%= assetPublisherDisplayContext.isShowAuthor() %>">
-					<div class="asset-avatar autofit-col inline-item-before mr-3 pt-1">
-						<liferay-ui:user-portrait
-							cssClass="sticker-lg"
-							user="<%= assetRendererUser %>"
-						/>
-					</div>
-				</c:if>
+				<%
+				User assetRendererUser = UserLocalServiceUtil.getUser(assetRenderer.getUserId());
+				%>
 
-				<div class="autofit-col autofit-col-expand">
-					<div class="autofit-row">
-						<div class="autofit-col autofit-col-expand">
-							<c:if test="<%= assetPublisherDisplayContext.isShowAuthor() %>">
-								<div class="text-truncate-inline">
-									<span class="text-truncate user-info"><strong><%= HtmlUtil.escape(assetRendererUser.getFullName()) %></strong></span>
+				<div class="autofit-row mb-3 metadata-author">
+					<c:if test="<%= assetPublisherDisplayContext.isShowAuthor() %>">
+						<div class="asset-avatar autofit-col inline-item-before mr-3 pt-1">
+							<liferay-ui:user-portrait
+								cssClass="sticker-lg"
+								user="<%= assetRendererUser %>"
+							/>
+						</div>
+					</c:if>
+
+					<div class="autofit-col autofit-col-expand">
+						<div class="autofit-row">
+							<div class="autofit-col autofit-col-expand">
+								<c:if test="<%= assetPublisherDisplayContext.isShowAuthor() %>">
+									<div class="text-truncate-inline">
+										<span class="text-truncate user-info"><strong><%= HtmlUtil.escape(assetRendererUser.getFullName()) %></strong></span>
+									</div>
+								</c:if>
+
+								<%
+								StringBundler sb = new StringBundler(13);
+
+								if (assetPublisherDisplayContext.isShowCreateDate() && (assetEntry.getCreateDate() != null)) {
+									sb.append(LanguageUtil.get(request, "created"));
+									sb.append(StringPool.SPACE);
+									sb.append(dateFormatDate.format(assetEntry.getCreateDate()));
+									sb.append(" - ");
+								}
+
+								if (assetPublisherDisplayContext.isShowPublishDate() && (assetEntry.getPublishDate() != null)) {
+									sb.append(LanguageUtil.get(request, "published"));
+									sb.append(StringPool.SPACE);
+									sb.append(dateFormatDate.format(assetEntry.getPublishDate()));
+									sb.append(" - ");
+								}
+
+								if (assetPublisherDisplayContext.isShowExpirationDate() && (assetEntry.getExpirationDate() != null)) {
+									sb.append(LanguageUtil.get(request, "expired"));
+									sb.append(StringPool.SPACE);
+									sb.append(dateFormatDate.format(assetEntry.getExpirationDate()));
+									sb.append(" - ");
+								}
+
+								if (assetPublisherDisplayContext.isShowModifiedDate() && (assetEntry.getModifiedDate() != null)) {
+									Date modifiedDate = assetEntry.getModifiedDate();
+
+									String modifiedDateDescription = LanguageUtil.getTimeDescription(request, System.currentTimeMillis() - modifiedDate.getTime(), true);
+
+									sb.append(LanguageUtil.format(request, "modified-x-ago", modifiedDateDescription));
+								}
+								else if (sb.index() > 1) {
+									sb.setIndex(sb.index() - 1);
+								}
+								%>
+
+								<div class="asset-user-info text-secondary">
+									<span class="date-info"><%= sb.toString() %></span>
 								</div>
-							</c:if>
 
-							<%
-							StringBundler sb = new StringBundler(13);
-
-							if (assetPublisherDisplayContext.isShowCreateDate() && (assetEntry.getCreateDate() != null)) {
-								sb.append(LanguageUtil.get(request, "created"));
-								sb.append(StringPool.SPACE);
-								sb.append(dateFormatDate.format(assetEntry.getCreateDate()));
-								sb.append(" - ");
-							}
-
-							if (assetPublisherDisplayContext.isShowPublishDate() && (assetEntry.getPublishDate() != null)) {
-								sb.append(LanguageUtil.get(request, "published"));
-								sb.append(StringPool.SPACE);
-								sb.append(dateFormatDate.format(assetEntry.getPublishDate()));
-								sb.append(" - ");
-							}
-
-							if (assetPublisherDisplayContext.isShowExpirationDate() && (assetEntry.getExpirationDate() != null)) {
-								sb.append(LanguageUtil.get(request, "expired"));
-								sb.append(StringPool.SPACE);
-								sb.append(dateFormatDate.format(assetEntry.getExpirationDate()));
-								sb.append(" - ");
-							}
-
-							if (assetPublisherDisplayContext.isShowModifiedDate() && (assetEntry.getModifiedDate() != null)) {
-								Date modifiedDate = assetEntry.getModifiedDate();
-
-								String modifiedDateDescription = LanguageUtil.getTimeDescription(request, System.currentTimeMillis() - modifiedDate.getTime(), true);
-
-								sb.append(LanguageUtil.format(request, "modified-x-ago", modifiedDateDescription));
-							}
-							else if (sb.index() > 1) {
-								sb.setIndex(sb.index() - 1);
-							}
-							%>
-
-							<div class="asset-user-info text-secondary">
-								<span class="date-info"><%= sb.toString() %></span>
+								<c:if test="<%= assetPublisherDisplayContext.isShowViewCount() %>">
+									<div class="asset-view-count-info text-secondary">
+										<span class="view-count-info"><%= assetEntry.getViewCount() %> <liferay-ui:message key='<%= (assetEntry.getViewCount() == 1) ? "view" : "views" %>' /></span>
+									</div>
+								</c:if>
 							</div>
-
-							<c:if test="<%= assetPublisherDisplayContext.isShowViewCount() %>">
-								<div class="asset-view-count-info text-secondary">
-									<span class="view-count-info"><%= assetEntry.getViewCount() %> <liferay-ui:message key='<%= (assetEntry.getViewCount() == 1) ? "view" : "views" %>' /></span>
-								</div>
-							</c:if>
 						</div>
 					</div>
 				</div>
-			</div>
+			</c:if>
 
 			<div class="asset-content mb-3">
 				<liferay-asset:asset-display

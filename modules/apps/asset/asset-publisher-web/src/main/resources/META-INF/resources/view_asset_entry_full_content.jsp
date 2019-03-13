@@ -87,7 +87,7 @@ String title = assetRenderer.getTitle(locale);
 		</c:if>
 	</div>
 
-	<c:if test="<%= assetPublisherDisplayContext.isShowAuthor() %>">
+	<c:if test="<%= assetPublisherDisplayContext.isShowAuthor() || (assetPublisherDisplayContext.isShowCreateDate() && (assetEntry.getCreateDate() != null)) || (assetPublisherDisplayContext.isShowPublishDate() && (assetEntry.getPublishDate() != null)) || (assetPublisherDisplayContext.isShowExpirationDate() && (assetEntry.getExpirationDate() != null)) || (assetPublisherDisplayContext.isShowModifiedDate() && (assetEntry.getModifiedDate() != null)) || assetPublisherDisplayContext.isShowViewCount() %>">
 
 		<%
 		User assetRendererUser = UserLocalServiceUtil.getUser(assetRenderer.getUserId());

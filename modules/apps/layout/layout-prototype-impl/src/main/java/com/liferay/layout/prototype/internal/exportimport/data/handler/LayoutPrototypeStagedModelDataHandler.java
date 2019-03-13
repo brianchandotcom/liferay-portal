@@ -226,20 +226,13 @@ public class LayoutPrototypeStagedModelDataHandler
 		String uuid, long companyId, String name, String languageId,
 		boolean preloaded) {
 
-		LayoutPrototype existingLayoutPrototype = null;
-
-		if (!preloaded) {
-			existingLayoutPrototype =
-				_layoutPrototypeLocalService.
-					fetchLayoutPrototypeByUuidAndCompanyId(uuid, companyId);
-		}
-		else {
-			existingLayoutPrototype =
-				_layoutPrototypeLocalService.fetchLayoutPrototype(
-					companyId, name, LocaleUtil.fromLanguageId(languageId));
+		if (preloaded) {
+			return _layoutPrototypeLocalService.fetchLayoutPrototype(
+				companyId, name, LocaleUtil.fromLanguageId(languageId));
 		}
 
-		return existingLayoutPrototype;
+		return _layoutPrototypeLocalService.
+			fetchLayoutPrototypeByUuidAndCompanyId(uuid, companyId);
 	}
 
 	protected void importLayouts(

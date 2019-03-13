@@ -28,6 +28,7 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.PortalPreferences;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
@@ -38,6 +39,8 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.segments.model.SegmentsEntry;
+import com.liferay.segments.service.SegmentsEntryLocalServiceUtil;
 
 import java.util.List;
 import java.util.function.Consumer;
@@ -85,7 +88,9 @@ public class AssetListDisplayContext {
 		};
 	}
 
-	public SearchContainer<AssetEntry> getAssetListContentSearchContainer() {
+	public SearchContainer<AssetEntry> getAssetListContentSearchContainer()
+		throws PortalException {
+
 		if (_assetListContentSearchContainer != null) {
 			return _assetListContentSearchContainer;
 		}
@@ -96,11 +101,13 @@ public class AssetListDisplayContext {
 
 		AssetListEntry assetListEntry = getAssetListEntry();
 
-		List<AssetEntry> assetEntries = assetListEntry.getAssetEntries();
+		List<AssetEntry> assetEntries = assetListEntry.getAssetEntries(
+			getSegmentsEntryId());
 
 		searchContainer.setResults(assetEntries);
 
-		int totalCount = assetListEntry.getAssetEntriesCount();
+		int totalCount = assetListEntry.getAssetEntriesCount(
+			getSegmentsEntryId());
 
 		searchContainer.setTotal(totalCount);
 
@@ -317,6 +324,24 @@ public class AssetListDisplayContext {
 		return portletURL;
 	}
 
+	public long getSegmentsEntryId() throws PortalException {
+		if (_segmentsEntryId != null) {
+			return _segmentsEntryId;
+		}
+
+		_segmentsEntryId = ParamUtil.getLong(_request, "segmentsEntryId");
+
+		if (_segmentsEntryId == 0) {
+			SegmentsEntry defaultSegmentsEntry =
+				SegmentsEntryLocalServiceUtil.getDefaultSegmentsEntry(
+					_themeDisplay.getScopeGroupId());
+
+			_segmentsEntryId = defaultSegmentsEntry.getSegmentsEntryId();
+		}
+
+		return _segmentsEntryId;
+	}
+
 	public boolean isShowAddAssetListEntryAction() {
 		return AssetListPermission.contains(
 			_themeDisplay.getPermissionChecker(),
@@ -393,6 +418,7 @@ public class AssetListDisplayContext {
 	private final RenderRequest _renderRequest;
 	private final RenderResponse _renderResponse;
 	private final HttpServletRequest _request;
+	private Long _segmentsEntryId;
 	private final ThemeDisplay _themeDisplay;
 
 }

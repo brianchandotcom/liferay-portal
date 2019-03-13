@@ -51,6 +51,8 @@ public class AddScopeGroupMVCActionCommand extends BaseMVCActionCommand {
 
 		long assetListEntryId = ParamUtil.getLong(
 			actionRequest, "assetListEntryId");
+		long segmentsEntryId = ParamUtil.getLong(
+			actionRequest, "segmentsEntryId");
 
 		AssetListEntry assetListEntry =
 			_assetListEntryService.fetchAssetListEntry(assetListEntryId);
@@ -58,7 +60,8 @@ public class AddScopeGroupMVCActionCommand extends BaseMVCActionCommand {
 		if (assetListEntry != null) {
 			UnicodeProperties properties = new UnicodeProperties(true);
 
-			properties.fastLoad(assetListEntry.getTypeSettings());
+			properties.fastLoad(
+				assetListEntry.getTypeSettings(segmentsEntryId));
 
 			long[] groupIds = GetterUtil.getLongValues(
 				StringUtil.split(properties.getProperty("groupIds")));
@@ -76,7 +79,7 @@ public class AddScopeGroupMVCActionCommand extends BaseMVCActionCommand {
 			properties.setProperty("groupIds", StringUtil.merge(groupIds));
 
 			_assetListEntryService.updateAssetListEntryTypeSettings(
-				assetListEntryId, properties.toString());
+				assetListEntryId, segmentsEntryId, properties.toString());
 		}
 	}
 

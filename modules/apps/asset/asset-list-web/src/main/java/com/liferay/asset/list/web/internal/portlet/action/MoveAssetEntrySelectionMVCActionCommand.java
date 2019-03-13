@@ -47,12 +47,14 @@ public class MoveAssetEntrySelectionMVCActionCommand
 
 		long assetListEntryId = ParamUtil.getLong(
 			actionRequest, "assetListEntryId");
+		long segmentsEntryId = ParamUtil.getLong(
+			actionRequest, "segmentsEntryId");
 
 		int position = ParamUtil.getInteger(actionRequest, "position");
 		int newPosition = ParamUtil.getInteger(actionRequest, "newPosition");
 
 		_assetListEntryService.moveAssetEntrySelection(
-			assetListEntryId, position, newPosition);
+			assetListEntryId, segmentsEntryId, position, newPosition);
 	}
 
 	@Reference

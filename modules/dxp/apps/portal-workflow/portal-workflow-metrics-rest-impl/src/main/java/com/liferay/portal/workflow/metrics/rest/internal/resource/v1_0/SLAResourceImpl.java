@@ -33,7 +33,7 @@ import org.osgi.service.component.annotations.ServiceScope;
  * @author Rafael Praxedes
  */
 @Component(
-	properties = "OSGI-INF/liferay/rest/v1_0/s-la.properties",
+	properties = "OSGI-INF/liferay/rest/v1_0/sla.properties",
 	scope = ServiceScope.PROTOTYPE, service = SLAResource.class
 )
 public class SLAResourceImpl extends BaseSLAResourceImpl {

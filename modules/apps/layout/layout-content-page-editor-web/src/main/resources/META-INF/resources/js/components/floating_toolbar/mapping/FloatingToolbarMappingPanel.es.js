@@ -177,6 +177,22 @@ class FloatingToolbarMappingPanel extends PortletBase {
 	}
 
 	/**
+	 * @param {MouseEvent} event
+	 * @private
+	 * @review
+	 */
+	_handleAssetEntryLinkClick(event) {
+		const data = event.delegateTarget.dataset;
+
+		this._selectAssetEntry(
+			{
+				classNameId: data.classNameId,
+				classPK: data.classPk
+			}
+		);
+	}
+
+	/**
 	 * Handle field option change
 	 * @param {Event} event
 	 * @private

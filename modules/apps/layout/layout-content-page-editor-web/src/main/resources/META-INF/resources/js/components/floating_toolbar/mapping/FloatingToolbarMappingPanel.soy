@@ -14,6 +14,7 @@
 	]}
 	{@param? _fields: ?}
 	{@param? _handleAssetBrowserLinkClick: any}
+	{@param? _handleAssetEntryLinkClick: any}
 	{@param? _handleFieldOptionChange: any}
 	{@param? _handleSourceTypeChange: any}
 	{@param? _handleUnmapButtonClick: any}
@@ -29,6 +30,12 @@
 	{@param? assetBrowserLinks: list<[
 		href: string,
 		typeName: string
+	]>}
+	{@param? mappedAssetEntries: list<[
+		encodedId: string,
+		classNameId: string,
+		classPK: string,
+		title: string
 	]>}
 	{@param? mappingFieldsURL: string}
 	{@param? spritemap: string}
@@ -48,6 +55,8 @@
 			<div class="form-group floating-toolbar-mapping-panel__asset-select">
 				{call .assetSelect}
 					{param handleAssetBrowserLinkClick: $_handleAssetBrowserLinkClick /}
+					{param handleAssetEntryLinkClick: $_handleAssetEntryLinkClick /}
+					{param mappedAssetEntries: $mappedAssetEntries /}
 					{param selectedAssetEntryTitle: $item.editableValues.title /}
 					{param assetBrowserLinks: $assetBrowserLinks /}
 					{param spritemap: $spritemap /}
@@ -77,7 +86,14 @@
 		href: string,
 		typeName: string
 	]>}
+	{@param? mappedAssetEntries: list<[
+		encodedId: string,
+		classNameId: string,
+		classPK: string,
+		title: string
+	]>}
 	{@param? handleAssetBrowserLinkClick: any}
+	{@param? handleAssetEntryLinkClick: any}
 	{@param? selectedAssetEntryTitle: string}
 	{@param? spritemap: string}
 
@@ -118,6 +134,26 @@
 							type="button"
 						>
 							{$assetBrowserLink.typeName}
+						</button>
+					{/foreach}
+				{/if}
+				{if $mappedAssetEntries}
+					<div
+						aria-hidden="true"
+						class="dropdown-divider"
+						role="presentation"
+					></div>
+
+					{foreach $mappedAssetField in $mappedAssetEntries}
+						<button
+							class="dropdown-item"
+							data-class-name-id="{$mappedAssetField.classNameId}"
+							data-class-pk="{$mappedAssetField.classPK}"
+							data-onclick="{$handleAssetEntryLinkClick}"
+							key="{$mappedAssetField.encodedId}"
+							type="button"
+						>
+							{$mappedAssetField.title}
 						</button>
 					{/foreach}
 				{/if}

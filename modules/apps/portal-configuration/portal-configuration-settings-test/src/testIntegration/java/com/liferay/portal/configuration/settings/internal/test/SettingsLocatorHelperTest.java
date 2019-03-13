@@ -19,6 +19,7 @@ import com.liferay.portal.configuration.settings.internal.constants.SettingsLoca
 import com.liferay.portal.kernel.settings.Settings;
 import com.liferay.portal.kernel.settings.SettingsLocatorHelper;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.test.rule.Inject;
 
 import org.junit.Assert;
@@ -70,6 +71,54 @@ public class SettingsLocatorHelperTest extends BaseSettingsLocatorTestCase {
 			companySettings.getValue(
 				SettingsLocatorTestConstants.TEST_KEY,
 				SettingsLocatorTestConstants.TEST_DEFAULT_VALUE));
+	}
+
+	@Test
+	public void testGetCompanyScopedFactoryConfigurationSettings()
+		throws Exception {
+
+		String testKey = "factoryAlternateKey";
+		String testValue1 = RandomTestUtil.randomString();
+		String testValue2 = RandomTestUtil.randomString();
+
+		// Adds two configurations to the same scope
+
+		saveFactoryConfiguration(
+			SettingsLocatorTestConstants.TEST_CONFIGURATION_PID,
+			ExtendedObjectClassDefinition.Scope.COMPANY,
+			TestPropsValues.getCompanyId(), testKey, testValue1);
+
+		saveFactoryConfiguration(
+			SettingsLocatorTestConstants.TEST_CONFIGURATION_PID,
+			ExtendedObjectClassDefinition.Scope.COMPANY,
+			TestPropsValues.getCompanyId(), testKey, testValue2);
+
+		Settings companySettings =
+			_settingsLocatorHelper.getCompanyConfigurationBeanSettings(
+				TestPropsValues.getCompanyId(),
+				SettingsLocatorTestConstants.TEST_CONFIGURATION_PID, null);
+
+		// Asserts that the second one (most recently added) is returned
+
+		Assert.assertEquals(
+			testValue2, companySettings.getValue(testKey, null));
+
+		// Delete the most recent one
+
+		deleteFactoryConfiguration(
+			SettingsLocatorTestConstants.TEST_CONFIGURATION_PID,
+			ExtendedObjectClassDefinition.Scope.COMPANY,
+			TestPropsValues.getCompanyId(), testKey, testValue2);
+
+		companySettings =
+			_settingsLocatorHelper.getCompanyConfigurationBeanSettings(
+				TestPropsValues.getCompanyId(),
+				SettingsLocatorTestConstants.TEST_CONFIGURATION_PID, null);
+
+		// Asserts that the first one is returned
+
+		Assert.assertEquals(
+			testValue1, companySettings.getValue(testKey, null));
 	}
 
 	@Test

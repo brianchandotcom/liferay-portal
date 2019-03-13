@@ -1,0 +1,57 @@
+{namespace com.liferay.frontend.taglib.clay.Table}
+
+/**
+ *
+ */
+{template .render}
+	{@param _handlePageClicked: any}
+	{@param _handleItemToggled: any}
+	{@param _handleItemsPerPageClicked: any}
+	{@param spritemap: string}
+	{@param? actionsMenuVariant: string}
+	{@param? pageNumber: int}
+	{@param? dataSourceKey: string}
+	{@param? id: string}
+	{@param? items : ?}
+	{@param? paginationBaseHref : string}
+	{@param? paginationEntries : ?}
+	{@param? paginationSelectedEntry : int}
+	{@param? schema : ?}
+	{@param? selectable : bool}
+	{@param? showActionsMenu : bool}
+	{@param? size : string}
+	{@param? tableClasses : string}
+	{@param? totalItems : int}
+	{@param? useDefaultClasses : bool}
+	{@param? wrapTable : bool}
+
+	<div id="{$id}">
+		{call ClayTable.render}
+		  {param events: ['itemToggled': $_handleItemToggled ] /}
+		  {param id: $id + 'Table'/}
+		  {param items: $items /}
+		  {param schema: $schema /}
+		  {param selectable: $selectable /}
+		  {param showActionsMenu : $showActionsMenu /}
+		  {param spritemap: $spritemap /}
+		  {param tableClasses: $tableClasses /}
+		  {param useDefaultClasses: $useDefaultClasses /}
+		  {param wrapTable: $wrapTable /}
+		  {param size: $size /}
+		  {param actionsMenuVariant: $actionsMenuVariant /}
+		{/call}
+
+		{if $dataSourceKey}
+		  {call ClayPaginationBar.render}
+			{param events: ['itemsPerPageClicked': $_handleItemsPerPageClicked, 'pageClicked': $_handlePageClicked ] /}
+			{param currentPage: $pageNumber ?: 0 /}
+			{param selectedEntry: $paginationSelectedEntry ?: 0 /}
+			{param entries: $paginationEntries /}
+			{param spritemap: $spritemap /}
+			{param totalEntries: $totalItems ?: 0 /}
+			{param baseHref: $paginationBaseHref /}
+			{param id: $id + 'Pagination' /}
+		  {/call}
+		{/if}
+	</div>
+{/template}

@@ -135,6 +135,12 @@ public class TemplateRendererTag extends ParamAndPropertyAncestorTagImpl {
 		}
 	}
 
+	public <T> T getValue(String key) {
+		Map<String, Object> context = getContext();
+
+		return (T)context.get(key);
+	}
+
 	public void putValue(String key, Object value) {
 		Map<String, Object> context = getContext();
 

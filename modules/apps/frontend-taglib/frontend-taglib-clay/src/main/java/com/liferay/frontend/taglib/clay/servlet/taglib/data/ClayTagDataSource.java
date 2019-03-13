@@ -25,4 +25,6 @@ public interface ClayTagDataSource<T> {
 
 	public List<T> getItems(HttpServletRequest request, Pagination pagination);
 
+	public int getTotalItemsCount();
+
 }

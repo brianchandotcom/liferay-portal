@@ -3,16 +3,16 @@
  */
 export const BUTTON_TYPES = [
 	{
-		buttonTypeId: '',
-		label: '-'
+		buttonTypeId: 'link',
+		label: Liferay.Language.get('link')
 	},
 	{
 		buttonTypeId: 'primary',
-		label: Liferay.Language.get('primary')
+		label: Liferay.Language.get('primary-button')
 	},
 	{
 		buttonTypeId: 'secondary',
-		label: Liferay.Language.get('secondary')
+		label: Liferay.Language.get('secondary-button')
 	}
 ];
 

@@ -19,7 +19,10 @@ import com.liferay.message.boards.exception.NoSuchCategoryException;
 import com.liferay.message.boards.model.MBCategory;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.servlet.SessionErrors;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import javax.portlet.PortletException;
@@ -27,6 +30,9 @@ import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.component.annotations.ReferencePolicy;
+import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
  * @author Adolfo Pérez
@@ -49,6 +55,13 @@ public class EditCategoryMVCRenderCommand implements MVCRenderCommand {
 		try {
 			MBCategory category = ActionUtil.getCategory(renderRequest);
 
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)renderRequest.getAttribute(WebKeys.THEME_DISPLAY);
+
+			_mbCategoryModelResourcePermission.check(
+				themeDisplay.getPermissionChecker(), category,
+				ActionKeys.UPDATE);
+
 			renderRequest.setAttribute(
 				WebKeys.MESSAGE_BOARDS_CATEGORY, category);
 		}
@@ -66,5 +79,13 @@ public class EditCategoryMVCRenderCommand implements MVCRenderCommand {
 
 		return "/message_boards/edit_category.jsp";
 	}
+
+	@Reference(
+		policy = ReferencePolicy.DYNAMIC,
+		policyOption = ReferencePolicyOption.GREEDY,
+		target = "(model.class.name=com.liferay.message.boards.model.MBCategory)"
+	)
+	private volatile ModelResourcePermission<MBCategory>
+		_mbCategoryModelResourcePermission;
 
 }

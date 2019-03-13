@@ -45,6 +45,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
@@ -72,6 +73,11 @@ public class PortletPreferencesLocalServiceTest {
 
 		_portlet = PortletLocalServiceUtil.getPortletById(
 			_layout.getCompanyId(), String.valueOf(_PORTLET_ID));
+	}
+
+	@After
+	public void tearDown() {
+		PortletLocalServiceUtil.clearCache();
 	}
 
 	@Test
@@ -830,6 +836,8 @@ public class PortletPreferencesLocalServiceTest {
 		PortletPreferencesTestUtil.addLayoutPortletPreferences(
 			_layout, _portlet);
 
+		PortletLocalServiceUtil.deployPortlet(_portlet);
+
 		Assert.assertEquals(
 			1,
 			PortletPreferencesLocalServiceUtil.getPortletPreferencesCount(
@@ -1176,6 +1184,8 @@ public class PortletPreferencesLocalServiceTest {
 
 		PortletPreferencesTestUtil.addLayoutPortletPreferences(
 			_layout, _portlet);
+
+		PortletLocalServiceUtil.deployPortlet(_portlet);
 
 		Assert.assertEquals(
 			1,
@@ -1530,7 +1540,10 @@ public class PortletPreferencesLocalServiceTest {
 	private final List<Group> _groups = new ArrayList<>();
 
 	private Layout _layout;
+
+	@DeleteAfterTestRun
 	private Portlet _portlet;
+
 	private ServiceBag<PortletPreferencesLocalService> _serviceBag;
 
 	private static class TestPortletPreferencesLocalServiceWrapper

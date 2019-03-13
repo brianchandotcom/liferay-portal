@@ -207,6 +207,10 @@ public class AssetBrowserDisplayContext {
 				"selectedGroupId", String.valueOf(selectedGroupId));
 		}
 
+		if (isShowAddButton()) {
+			portletURL.setParameter("showAddButton", Boolean.TRUE.toString());
+		}
+
 		if (isMultipleSelection()) {
 			portletURL.setParameter(
 				"multipleSelection", Boolean.TRUE.toString());
@@ -305,6 +309,16 @@ public class AssetBrowserDisplayContext {
 			_request, "multipleSelection");
 
 		return _multipleSelection;
+	}
+
+	public boolean isShowAddButton() {
+		if (_showAddButton != null) {
+			return _showAddButton;
+		}
+
+		_showAddButton = ParamUtil.getBoolean(_request, "showAddButton", true);
+
+		return _showAddButton;
 	}
 
 	private long[] _getClassNameIds() {
@@ -414,6 +428,7 @@ public class AssetBrowserDisplayContext {
 	private final RenderRequest _renderRequest;
 	private final RenderResponse _renderResponse;
 	private final HttpServletRequest _request;
+	private Boolean _showAddButton;
 	private Boolean _showNonindexable;
 	private Boolean _showScheduled;
 	private Long _subtypeSelectionId;

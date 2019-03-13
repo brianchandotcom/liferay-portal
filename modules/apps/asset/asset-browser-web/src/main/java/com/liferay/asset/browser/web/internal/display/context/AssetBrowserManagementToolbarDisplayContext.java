@@ -80,6 +80,10 @@ public class AssetBrowserManagementToolbarDisplayContext
 
 	@Override
 	public CreationMenu getCreationMenu() {
+		if (!_assetBrowserDisplayContext.isShowAddButton()) {
+			return null;
+		}
+
 		String addButtonURL = _getAddButtonURL();
 
 		if (Validator.isNull(addButtonURL)) {

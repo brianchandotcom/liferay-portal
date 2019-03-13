@@ -188,7 +188,9 @@ public class FriendlyURLEntryStagedModelRepository
 		Map<String, String> languageIdLocalizationMap = new HashMap<>(
 			localeLocalizationMap.size());
 
-		for (Map.Entry<Locale, String> entry : localeLocalizationMap.entrySet()) {
+		for (Map.Entry<Locale, String> entry :
+				localeLocalizationMap.entrySet()) {
+
 			languageIdLocalizationMap.put(
 				_language.getLanguageId(entry.getKey()), entry.getValue());
 		}

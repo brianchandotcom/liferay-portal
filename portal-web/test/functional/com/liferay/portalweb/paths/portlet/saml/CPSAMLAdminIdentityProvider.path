@@ -15,7 +15,7 @@
 	<td></td>
 </tr>
 <tr>
-	<td>IDENTITY_PROVIDER_AUTH_REQUEST_SIGNATURE_REQUIRED_CHECKBOX</td>
+	<td>IDENTITY_PROVIDER_AUTHN_REQUEST_SIGNATURE_REQUIRED_CHECKBOX</td>
 	<td>//input[contains(@id,'SamlAdminPortlet_saml-idp-authn-request-signature-required')]</td>
 	<td></td>
 </tr>

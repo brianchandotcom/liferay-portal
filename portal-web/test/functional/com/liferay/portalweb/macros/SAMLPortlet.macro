@@ -90,13 +90,27 @@ definition {
 	}
 
 	macro configureIdentityProvider {
-		Check(
-			locator1 = "CPSAMLAdminIdentityProvider#IDENTITY_PROVIDER_SIGN_METADATA_CHECKBOX"
-		);
+		if ("${signMetadata}" == "disable") {
+			Uncheck(
+				locator1 = "CPSAMLAdminIdentityProvider#IDENTITY_PROVIDER_SIGN_METADATA_CHECKBOX"
+			);
+		}
+		else {
+			Check(
+				locator1 = "CPSAMLAdminIdentityProvider#IDENTITY_PROVIDER_SIGN_METADATA_CHECKBOX"
+			);
+		}
 
-		Check(
-			locator1 = "CPSAMLAdminIdentityProvider#IDENTITY_PROVIDER_AUTH_REQUEST_SIGNATURE_REQUIRED_CHECKBOX"
-		);
+		if ("${authnRequestSignatureRequired}" == "disable") {
+			Uncheck(
+				locator1 = "CPSAMLAdminIdentityProvider#IDENTITY_PROVIDER_AUTHN_REQUEST_SIGNATURE_REQUIRED_CHECKBOX"
+			);
+		}
+		else {
+			Check(
+				locator1 = "CPSAMLAdminIdentityProvider#IDENTITY_PROVIDER_AUTHN_REQUEST_SIGNATURE_REQUIRED_CHECKBOX"
+			);
+		}
 
 		PortletEntry.save();
 	}

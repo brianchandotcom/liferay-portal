@@ -103,10 +103,7 @@ definition {
 
 		var key_mgFolderName = "${mgFolderName}";
 
-		AssertTextEquals(
-			locator1 = "MediaGallery#FOLDER_NAME",
-			value1 = "${mgFolderName}"
-		);
+		DMFolder.viewEntryPresent(dmFolderName = "${mgFolderName}");
 	}
 
 	macro addSubfolderCP {
@@ -371,10 +368,7 @@ definition {
 
 		var key_mgFolderName = "${mgFolderName}";
 
-		AssertTextEquals(
-			locator1 = "MediaGallery#FOLDER_NAME",
-			value1 = "${mgFolderNameEdit}"
-		);
+		DMFolder.viewEntryPresent(dmFolderName = "${mgFolderNameEdit}");
 	}
 
 	macro gotoEditCP {
@@ -399,7 +393,7 @@ definition {
 	macro gotoPGViaMG {
 		var key_mgFolderName = "${mgFolderName}";
 
-		Click(locator1 = "MediaGallery#FOLDER_NAME");
+		DMFolder.gotoEntry(dmFolderName = "${mgFolderName}");
 
 		AssertTextEquals(
 			locator1 = "MediaGallery#BREADCRUMB",
@@ -655,7 +649,7 @@ definition {
 	macro viewPGViaMG {
 		var key_mgFolderName = "${mgFolderName}";
 
-		Click(locator1 = "MediaGallery#FOLDER_NAME");
+		DMFolder.gotoEntry(dmFolderName = "${mgFolderName}");
 
 		AssertTextEquals(
 			locator1 = "MediaGallery#FOLDER_HEADER_TITLE",

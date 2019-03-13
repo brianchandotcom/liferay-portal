@@ -60,7 +60,8 @@ function openAssetBrowser(assetBrowserURL, modalTitle, portletNamespace, callbac
 				callback(
 					{
 						classNameId: data.assetclassnameid,
-						classPK: data.assetclasspk
+						classPK: data.assetclasspk,
+						title: data.assettitle
 					}
 				);
 			}

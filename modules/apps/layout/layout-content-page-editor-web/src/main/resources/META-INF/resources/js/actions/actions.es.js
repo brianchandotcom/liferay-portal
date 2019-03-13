@@ -1,3 +1,5 @@
+export const ADD_MAPPED_ASSET_ENTRY = 'addMappedAssetEntry';
+
 export const HIDE_MAPPING_TYPE_DIALOG = 'hideMappingTypeDialog';
 export const OPEN_ASSET_TYPE_DIALOG = 'openAssetTypeDialog';
 export const OPEN_MAPPING_FIELDS_DIALOG = 'openMappingFieldsDialog';

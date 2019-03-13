@@ -104,7 +104,7 @@ public class AddOrUpdateSharingUserNotificationTest
 				group.getGroupId(), TestPropsValues.getUserId());
 
 		return _sharingEntryLocalService.addOrUpdateSharingEntry(
-			sharingEntry.getFromUserId(), sharingEntry.getToUserId(),
+			sharingEntry.getUserId(), sharingEntry.getToUserId(),
 			sharingEntry.getClassNameId(), sharingEntry.getClassPK(),
 			sharingEntry.getGroupId(), sharingEntry.isShareable(),
 			Arrays.asList(SharingEntryAction.VIEW, SharingEntryAction.UPDATE),

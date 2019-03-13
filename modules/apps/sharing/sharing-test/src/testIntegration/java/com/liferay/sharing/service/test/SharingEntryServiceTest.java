@@ -125,8 +125,7 @@ public class SharingEntryServiceTest {
 
 		Assert.assertEquals(_group.getCompanyId(), sharingEntry.getCompanyId());
 		Assert.assertEquals(_group.getGroupId(), sharingEntry.getGroupId());
-		Assert.assertEquals(
-			_fromUser.getUserId(), sharingEntry.getFromUserId());
+		Assert.assertEquals(_fromUser.getUserId(), sharingEntry.getUserId());
 		Assert.assertEquals(_toUser.getUserId(), sharingEntry.getToUserId());
 		Assert.assertEquals(classNameId, sharingEntry.getClassNameId());
 		Assert.assertEquals(classPK, sharingEntry.getClassPK());
@@ -280,8 +279,7 @@ public class SharingEntryServiceTest {
 
 		Assert.assertEquals(_group.getCompanyId(), sharingEntry.getCompanyId());
 		Assert.assertEquals(_group.getGroupId(), sharingEntry.getGroupId());
-		Assert.assertEquals(
-			_fromUser.getUserId(), sharingEntry.getFromUserId());
+		Assert.assertEquals(_fromUser.getUserId(), sharingEntry.getUserId());
 		Assert.assertEquals(_toUser.getUserId(), sharingEntry.getToUserId());
 		Assert.assertEquals(classNameId, sharingEntry.getClassNameId());
 		Assert.assertEquals(classPK, sharingEntry.getClassPK());
@@ -462,8 +460,7 @@ public class SharingEntryServiceTest {
 
 		Assert.assertEquals(_group.getCompanyId(), sharingEntry.getCompanyId());
 		Assert.assertEquals(_group.getGroupId(), sharingEntry.getGroupId());
-		Assert.assertEquals(
-			_fromUser.getUserId(), sharingEntry.getFromUserId());
+		Assert.assertEquals(_fromUser.getUserId(), sharingEntry.getUserId());
 		Assert.assertEquals(_toUser.getUserId(), sharingEntry.getToUserId());
 		Assert.assertEquals(classNameId, sharingEntry.getClassNameId());
 		Assert.assertEquals(classPK, sharingEntry.getClassPK());
@@ -735,8 +732,7 @@ public class SharingEntryServiceTest {
 		Assert.assertEquals(3, sharingEntry.getActionIds());
 		Assert.assertEquals(_group.getCompanyId(), sharingEntry.getCompanyId());
 		Assert.assertEquals(_group.getGroupId(), sharingEntry.getGroupId());
-		Assert.assertEquals(
-			_fromUser.getUserId(), sharingEntry.getFromUserId());
+		Assert.assertEquals(_fromUser.getUserId(), sharingEntry.getUserId());
 		Assert.assertEquals(_toUser.getUserId(), sharingEntry.getToUserId());
 		Assert.assertEquals(classNameId, sharingEntry.getClassNameId());
 		Assert.assertEquals(classPK, sharingEntry.getClassPK());

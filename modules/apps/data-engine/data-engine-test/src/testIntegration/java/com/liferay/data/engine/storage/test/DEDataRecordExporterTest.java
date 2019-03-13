@@ -54,6 +54,7 @@ import java.util.Map;
 
 import org.junit.Before;
 import org.junit.ClassRule;
+import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -64,6 +65,7 @@ import org.skyscreamer.jsonassert.JSONAssert;
  * @author Leonardo Barros
  */
 @RunWith(Arquillian.class)
+@Ignore
 public class DEDataRecordExporterTest {
 
 	@ClassRule

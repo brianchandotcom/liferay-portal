@@ -21,8 +21,6 @@ import com.liferay.data.engine.model.DEDataRecord;
 import com.liferay.data.engine.service.DEDataRecordCollectionSaveRecordRequest;
 import com.liferay.data.engine.service.DEDataRecordCollectionSaveRecordResponse;
 import com.liferay.data.engine.storage.DEDataStorage;
-import com.liferay.data.engine.storage.DEDataStorageRequestBuilder;
-import com.liferay.data.engine.storage.DEDataStorageSaveRequest;
 import com.liferay.data.engine.storage.DEDataStorageSaveResponse;
 import com.liferay.dynamic.data.lists.model.DDLRecord;
 import com.liferay.dynamic.data.lists.model.DDLRecordSet;
@@ -74,17 +72,7 @@ public class DEDataRecordCollectionSaveRecordRequestExecutor {
 				storageType);
 		}
 
-		DEDataStorageSaveRequest deDataStorageSaveRequest =
-			DEDataStorageRequestBuilder.saveBuilder(
-				deDataRecord
-			).inGroup(
-				deDataRecordCollectionSaveRecordRequest.getGroupId()
-			).onBehalfOf(
-				deDataRecordCollectionSaveRecordRequest.getUserId()
-			).build();
-
-		DEDataStorageSaveResponse deDataStorageSaveResponse =
-			deDataStorage.save(deDataStorageSaveRequest);
+		DEDataStorageSaveResponse deDataStorageSaveResponse = null;
 
 		ServiceContext serviceContext =
 			ServiceContextThreadLocal.getServiceContext();

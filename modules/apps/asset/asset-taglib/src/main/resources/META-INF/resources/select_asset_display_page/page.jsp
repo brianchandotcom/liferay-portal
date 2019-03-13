@@ -32,7 +32,7 @@
 	String defaultAssetDisplayPageName = selectAssetDisplayPageDisplayContext.getDefaultAssetDisplayPageName();
 	%>
 
-	<aui:input disabled="<%= true %>" label="" name="defaultDisplayPageNameInput" title="default-display-page" value='<%= Validator.isNotNull(defaultAssetDisplayPageName) ? defaultAssetDisplayPageName : LanguageUtil.get(resourceBundle, "no-default-display-page") %>' wrapperCssClass="input-group-item mb-0" />
+	<input class="field form-control lfr-input-text" id="<portlet:namespace />defaultDisplayPageNameInput" readonly="readonly" title="<%= LanguageUtil.get(resourceBundle, "default-display-page") %>" type="text" value="<%= Validator.isNotNull(defaultAssetDisplayPageName) ? defaultAssetDisplayPageName : LanguageUtil.get(resourceBundle, "no-default-display-page") %>" />
 
 	<c:if test="<%= selectAssetDisplayPageDisplayContext.isAssetDisplayPageTypeDefault() && selectAssetDisplayPageDisplayContext.isShowViewInContextLink() && selectAssetDisplayPageDisplayContext.isURLViewInContext() %>">
 		<clay:button
@@ -52,7 +52,7 @@
 		String specificAssetDisplayPageName = selectAssetDisplayPageDisplayContext.getSpecificAssetDisplayPageName();
 		%>
 
-		<aui:input disabled="<%= true %>" label="" name="specificDisplayPageNameInput" title="specific-display-page" value='<%= Validator.isNotNull(specificAssetDisplayPageName) ? specificAssetDisplayPageName : LanguageUtil.get(resourceBundle, "no-display-page-selected") %>' wrapperCssClass="input-group-item mb-0" />
+		<input class="field form-control lfr-input-text" id="<portlet:namespace />specificDisplayPageNameInput" readonly="readonly" title="<%= LanguageUtil.get(resourceBundle, "specific-display-page") %>" type="text" value="<%= Validator.isNotNull(specificAssetDisplayPageName) ? specificAssetDisplayPageName : LanguageUtil.get(resourceBundle, "no-display-page-selected") %>" />
 
 		<c:if test="<%= selectAssetDisplayPageDisplayContext.isAssetDisplayPageTypeSpecific() && selectAssetDisplayPageDisplayContext.isShowViewInContextLink() && selectAssetDisplayPageDisplayContext.isURLViewInContext() %>">
 			<clay:button

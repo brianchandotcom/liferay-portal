@@ -451,6 +451,16 @@ if (portletTitleBasedNavigation) {
 					</aui:fieldset>
 				</c:if>
 
+				<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="display-page">
+					<liferay-asset:select-asset-display-page
+						classNameId="<%= PortalUtil.getClassNameId(DLFileEntry.class) %>"
+						classPK="<%= (fileEntry != null) ? fileEntry.getFileEntryId() : 0 %>"
+						groupId="<%= scopeGroupId %>"
+						showPortletLayouts="<%= true %>"
+						showViewInContextLink="<%= true %>"
+					/>
+				</aui:fieldset>
+
 				<c:if test="<%= (folder == null) || folder.isSupportsMetadata() %>">
 					<liferay-expando:custom-attributes-available
 						className="<%= DLFileEntryConstants.getClassName() %>"

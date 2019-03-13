@@ -216,9 +216,8 @@ public class TestExecutorUtil {
 	}
 
 	private static Statement _withClassRule(
-			Statement statement, TestClass junitTestClass, Object target,
-			Description description, boolean firstMethod, boolean lastMethod)
-		throws Throwable {
+		Statement statement, TestClass junitTestClass, Object target,
+		Description description, boolean firstMethod, boolean lastMethod) {
 
 		if (!firstMethod && !lastMethod) {
 			return statement;

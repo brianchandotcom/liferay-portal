@@ -20,42 +20,38 @@
 List<Tuple> assetLinkEntries = (List<Tuple>)request.getAttribute("liferay-asset:asset-links:assetLinkEntries");
 %>
 
-<div class="taglib-asset-links">
-	<ul class="asset-links-list list-group">
-		<li class="list-group-header">
-			<h3 class="list-group-header-title">
-				<liferay-ui:message key="related-assets" />
-			</h3>
-		</li>
+<liferay-ui:search-container
+	total="<%= assetLinkEntries.size() %>"
+>
+	<liferay-ui:search-container-results
+		results="<%= assetLinkEntries %>"
+	/>
+
+	<liferay-ui:search-container-row
+		className="com.liferay.portal.kernel.util.Tuple"
+		modelVar="tuple"
+	>
 
 		<%
-		for (Tuple tuple : assetLinkEntries) {
-			AssetEntry assetLinkEntry = (AssetEntry)tuple.getObject(0);
+		AssetEntry assetLinkEntry = (AssetEntry)tuple.getObject(0);
 
-			AssetRenderer assetRenderer = assetLinkEntry.getAssetRenderer();
+		AssetRenderer assetRenderer = assetLinkEntry.getAssetRenderer();
 		%>
 
-			<li class="list-group-item list-group-item-flex">
-				<div class="autofit-col">
-					<div class="sticker sticker-secondary">
-						<span class="inline-item">
-							<aui:icon image="<%= assetRenderer.getIconCssClass() %>" markupView="lexicon" />
-						</span>
-					</div>
-				</div>
+		<liferay-ui:search-container-column-text
+			name="related-assets"
+		>
+			<aui:icon cssClass="mr-2" image="<%= assetRenderer.getIconCssClass() %>" markupView="lexicon" />
 
-				<div class="autofit-col autofit-col-expand">
-					<h4 class="list-group-title text-truncate">
-						<aui:a href="<%= (String)tuple.getObject(1) %>" target='<%= themeDisplay.isStatePopUp() ? "_blank" : "_self" %>'>
-							<%= HtmlUtil.escape(assetLinkEntry.getTitle(locale)) %>
-						</aui:a>
-					</h4>
-				</div>
-			</li>
+			<aui:a href="<%= (String)tuple.getObject(1) %>" target='<%= themeDisplay.isStatePopUp() ? "_blank" : "_self" %>'>
+				<%= HtmlUtil.escape(assetLinkEntry.getTitle(locale)) %>
+			</aui:a>
+		</liferay-ui:search-container-column-text>
+	</liferay-ui:search-container-row>
 
-		<%
-		}
-		%>
-
-	</ul>
-</div>
+	<liferay-ui:search-iterator
+		markupView="lexicon"
+		paginate="<%= false %>"
+		searchResultCssClass="table table-autofit table-heading-nowrap"
+	/>
+</liferay-ui:search-container>

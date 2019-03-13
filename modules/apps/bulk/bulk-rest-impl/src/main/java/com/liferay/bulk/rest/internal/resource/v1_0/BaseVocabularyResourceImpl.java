@@ -14,12 +14,14 @@
 
 package com.liferay.bulk.rest.internal.resource.v1_0;
 
-import com.liferay.bulk.rest.dto.v1_0.BulkStatus;
-import com.liferay.bulk.rest.resource.v1_0.BulkStatusResource;
+import com.liferay.bulk.rest.dto.v1_0.DocumentSelection;
+import com.liferay.bulk.rest.dto.v1_0.Vocabulary;
+import com.liferay.bulk.rest.resource.v1_0.VocabularyResource;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
+import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.util.TransformUtil;
 
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -27,12 +29,15 @@ import io.swagger.v3.oas.annotations.tags.Tags;
 
 import java.net.URI;
 
+import java.util.Collections;
 import java.util.List;
 
 import javax.annotation.Generated;
 
-import javax.ws.rs.GET;
+import javax.ws.rs.Consumes;
+import javax.ws.rs.POST;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.UriBuilder;
@@ -44,15 +49,20 @@ import javax.ws.rs.core.UriInfo;
  */
 @Generated("")
 @Path("/v1.0")
-public abstract class BaseBulkStatusResourceImpl implements BulkStatusResource {
+public abstract class BaseVocabularyResourceImpl implements VocabularyResource {
 
 	@Override
-	@GET
-	@Path("/status")
+	@Consumes("application/json")
+	@POST
+	@Path("/content-spaces/{content-space-id}/vocabularies/common")
 	@Produces("application/json")
-	@Tags(value = {@Tag(name = "BulkStatus")})
-	public BulkStatus getStatu() throws Exception {
-		return new BulkStatus();
+	@Tags(value = {@Tag(name = "Vocabulary")})
+	public Page<Vocabulary> postContentSpaceVocabularyCommonPage(
+			@PathParam("content-space-id") Long contentSpaceId,
+			DocumentSelection documentSelection)
+		throws Exception {
+
+		return Page.of(Collections.emptyList());
 	}
 
 	public void setContextCompany(Company contextCompany) {
@@ -68,11 +78,11 @@ public abstract class BaseBulkStatusResourceImpl implements BulkStatusResource {
 		}
 
 		URI resourceURI = UriBuilder.fromResource(
-			BaseBulkStatusResourceImpl.class
+			BaseVocabularyResourceImpl.class
 		).build();
 
 		URI methodURI = UriBuilder.fromMethod(
-			BaseBulkStatusResourceImpl.class, methodName
+			BaseVocabularyResourceImpl.class, methodName
 		).build(
 			values
 		);
@@ -80,7 +90,7 @@ public abstract class BaseBulkStatusResourceImpl implements BulkStatusResource {
 		return baseURIString + resourceURI.toString() + methodURI.toString();
 	}
 
-	protected void preparePatch(BulkStatus bulkStatus) {
+	protected void preparePatch(Vocabulary vocabulary) {
 	}
 
 	protected <T, R> List<R> transform(

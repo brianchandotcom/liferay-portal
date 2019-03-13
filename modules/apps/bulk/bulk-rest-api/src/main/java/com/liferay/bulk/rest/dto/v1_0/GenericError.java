@@ -33,25 +33,25 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
-@GraphQLName("BulkActionResponse")
+@GraphQLName("GenericError")
 @JsonFilter("Liferay.Vulcan")
-@XmlRootElement(name = "BulkActionResponse")
-public class BulkActionResponse {
+@XmlRootElement(name = "GenericError")
+public class GenericError {
 
-	public String getDescription() {
-		return description;
+	public String getMessage() {
+		return message;
 	}
 
-	public void setDescription(String description) {
-		this.description = description;
+	public void setMessage(String message) {
+		this.message = message;
 	}
 
 	@JsonIgnore
-	public void setDescription(
-		UnsafeSupplier<String, Exception> descriptionUnsafeSupplier) {
+	public void setMessage(
+		UnsafeSupplier<String, Exception> messageUnsafeSupplier) {
 
 		try {
-			description = descriptionUnsafeSupplier.get();
+			message = messageUnsafeSupplier.get();
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
@@ -60,48 +60,17 @@ public class BulkActionResponse {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected String description;
-
-	public String getStatus() {
-		return status;
-	}
-
-	public void setStatus(String status) {
-		this.status = status;
-	}
-
-	@JsonIgnore
-	public void setStatus(
-		UnsafeSupplier<String, Exception> statusUnsafeSupplier) {
-
-		try {
-			status = statusUnsafeSupplier.get();
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected String status;
+	protected String message;
 
 	public String toString() {
 		StringBundler sb = new StringBundler();
 
 		sb.append("{");
 
-		sb.append("\"description\": ");
+		sb.append("\"message\": ");
 
 		sb.append("\"");
-		sb.append(description);
-		sb.append("\"");
-		sb.append(", ");
-
-		sb.append("\"status\": ");
-
-		sb.append("\"");
-		sb.append(status);
+		sb.append(message);
 		sb.append("\"");
 
 		sb.append("}");

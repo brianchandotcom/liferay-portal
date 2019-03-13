@@ -722,9 +722,11 @@ public class LayoutPageTemplateEntryLocalServiceImpl
 				"Name must not be null for group " + groupId);
 		}
 
-		if (!Validator.isAlphanumericName(name)) {
-			throw new LayoutPageTemplateEntryNameException(
-				"Name must alphanumeric");
+		for (char c : _BLACKLIST_CHAR) {
+			if (name.indexOf(c) >= 0) {
+				throw new LayoutPageTemplateEntryNameException(
+					"Invalid character in name");
+			}
 		}
 
 		int nameMaxLength = ModelHintsUtil.getMaxLength(
@@ -779,6 +781,11 @@ public class LayoutPageTemplateEntryLocalServiceImpl
 			layoutType, StringPool.BLANK, true, true, new HashMap<>(),
 			serviceContext);
 	}
+
+	private static final char[] _BLACKLIST_CHAR = {
+		';', '/', '?', ':', '@', '=', '&', '\"', '<', '>', '#', '%', '{', '}',
+		'|', '\\', '^', '~', '[', ']', '`'
+	};
 
 	@ServiceReference(type = CompanyLocalService.class)
 	private CompanyLocalService _companyLocalService;

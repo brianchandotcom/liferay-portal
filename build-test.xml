@@ -9183,6 +9183,8 @@ ANT_OPTS=${env.ANT_OPTS}</echo>
 			</then>
 		</if>
 
+		<lstopwatch action="start" name="prepare.bundles.${app.server.name}" />
+
 		<if>
 			<matches pattern="(file|https?)://" string="${test.build.bundle.zip.url}" />
 			<then>
@@ -9536,6 +9538,8 @@ ANT_OPTS=${env.ANT_OPTS}</echo>
 				<antcall target="prepare-tomcat-ext-environment" />
 			</then>
 		</if>
+
+		<lstopwatch action="total" name="prepare.bundles.${app.server.name}" />
 	</target>
 
 	<target name="prepare-tomcat-ext-environment">

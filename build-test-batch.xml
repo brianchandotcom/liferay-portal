@@ -770,6 +770,8 @@ mariadb.executable=${mariadb.executable}]]></echo>
 		<attribute name="app.server.type" />
 
 		<sequential>
+			<lstopwatch action="start" name="prepare-test-build-dist.bundles.@{app.server.type}" />
+
 			<var name="app.server.type" value="@{app.server.type}" />
 
 			<echo append="true" file="app.server.${env.HOSTNAME}.properties"><![CDATA[
@@ -790,7 +792,11 @@ app.server.type=@{app.server.type}]]></echo>
 					</antcall>
 				</then>
 				<else>
+					<lstopwatch action="start" name="prepare-test-build-dist.bundles.@{app.server.type}.build-dist" />
+
 					<ant antfile="build-dist.xml" inheritAll="false" target="build-dist-@{app.server.type}" />
+
+					<lstopwatch action="total" name="prepare-test-build-dist.bundles.@{app.server.type}.build-dist" />
 				</else>
 			</if>
 
@@ -807,7 +813,13 @@ app.server.type=@{app.server.type}]]></echo>
 
 			<prepare-elasticsearch-configuration />
 
+			<lstopwatch action="start" name="prepare-test-build-dist.bundles.@{app.server.type}.compile-test" />
+
 			<antcall inheritAll="false" target="compile-test" />
+
+			<lstopwatch action="total" name="prepare-test-build-dist.bundles.@{app.server.type}.compile-test" />
+
+			<lstopwatch action="start" name="prepare-test-build-dist.bundles.@{app.server.type}.compress" />
 
 			<delete>
 				<fileset
@@ -857,6 +869,10 @@ app.server.type=@{app.server.type}]]></echo>
 					tar --file=liferay-portal-bundle-@{app.server.type}.tar.gz --gzip --list --verbose
 				]]>
 			</execute>
+
+			<lstopwatch action="total" name="prepare-test-build-dist.bundles.@{app.server.type}.compress" />
+
+			<lstopwatch action="total" name="prepare-test-build-dist.bundles.@{app.server.type}" />
 		</sequential>
 	</macrodef>
 

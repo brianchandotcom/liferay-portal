@@ -59,6 +59,75 @@ components:
                         $ref: '#/components/schemas/LocalizedValue'
                     type: array
             type: object
+        DataLayout:
+            properties:
+                dataDefinitionId:
+                    format: int64
+                    type: integer
+                dataLayoutPages:
+                    items:
+                        $ref: '#/components/schemas/DataLayoutPage'
+                    type:
+                        array
+                dateCreated:
+                    format: date-time
+                    type: string
+                dateModified:
+                    format: date-time
+                    type: string
+                defaultLanguageId:
+                    type: string
+                description:
+                    items:
+                        $ref: '#/components/schemas/LocalizedValue'
+                    type: array
+                id:
+                    format: int64
+                    type: integer
+                name:
+                    items:
+                        $ref: '#/components/schemas/LocalizedValue'
+                    type: array
+                paginationMode:
+                    type: string
+                userId:
+                    format: int64
+                    type: integer
+            type: object
+        DataLayoutColumn:
+            properties:
+                columnSize:
+                    type: integer
+                fieldsName:
+                    items:
+                        type: string
+                    type:
+                        array
+            type: object
+        DataLayoutPage:
+            properties:
+                dataLayoutRows:
+                    items:
+                        $ref: '#/components/schemas/DataLayoutRow'
+                    type:
+                        array
+                description:
+                    items:
+                        $ref: '#/components/schemas/LocalizedValue'
+                    type: array
+                title:
+                    items:
+                        $ref: '#/components/schemas/LocalizedValue'
+                    type: array
+            type: object
+        DataLayoutRow:
+            properties:
+                dataLayoutColums:
+                    items:
+                        $ref: '#/components/schemas/DataLayoutColumn'
+                    type:
+                        array
+            type: object
         DataRecord:
             description: https://www.schema.org/DataRecord
             properties:
@@ -215,6 +284,80 @@ paths:
                                 $ref: "#/components/schemas/DataDefinition"
                     description: ""
             tags: ["DataDefinition"]
+    "/data-layouts":
+        post:
+            parameters:
+                - in: query
+                  name: contentSpaceId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/DataLayout"
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/DataLayout"
+                    description: ""
+            tags: ["DataLayout"]
+    "/data-layouts/{data-layout-id}":
+        delete:
+            parameters:
+                - in: path
+                  name: data-layout-id
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            responses:
+                204:
+                    content:
+                        application/json: {}
+                    description: ""
+            tags: ["DataLayout"]
+        get:
+            parameters:
+                - in: path
+                  name: data-layout-id
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/DataLayout"
+                    description: ""
+            tags: ["DataLayout"]
+        put:
+            parameters:
+                - in: path
+                  name: data-layout-id
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/DataLayout"
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/DataLayout"
+                    description: ""
+            tags: ["DataLayout"]
     "/data-record-collections":
         get:
             parameters:

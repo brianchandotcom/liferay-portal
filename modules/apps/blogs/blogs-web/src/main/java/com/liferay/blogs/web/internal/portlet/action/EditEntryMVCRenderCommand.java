@@ -21,7 +21,10 @@ import com.liferay.blogs.web.constants.BlogsWebKeys;
 import com.liferay.blogs.web.internal.BlogsItemSelectorHelper;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.servlet.SessionErrors;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 
@@ -33,6 +36,8 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.component.annotations.ReferencePolicy;
+import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
  * @author Sergio González
@@ -57,6 +62,12 @@ public class EditEntryMVCRenderCommand implements MVCRenderCommand {
 
 		try {
 			BlogsEntry entry = ActionUtil.getEntry(renderRequest);
+
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)renderRequest.getAttribute(WebKeys.THEME_DISPLAY);
+
+			_blogsEntryModelResourcePermission.check(
+				themeDisplay.getPermissionChecker(), entry, ActionKeys.UPDATE);
 
 			HttpServletRequest request = _portal.getHttpServletRequest(
 				renderRequest);
@@ -88,6 +99,14 @@ public class EditEntryMVCRenderCommand implements MVCRenderCommand {
 
 		_blogsItemSelectorHelper = blogsItemSelectorHelper;
 	}
+
+	@Reference(
+		policy = ReferencePolicy.DYNAMIC,
+		policyOption = ReferencePolicyOption.GREEDY,
+		target = "(model.class.name=com.liferay.blogs.model.BlogsEntry)"
+	)
+	private volatile ModelResourcePermission<BlogsEntry>
+		_blogsEntryModelResourcePermission;
 
 	private BlogsItemSelectorHelper _blogsItemSelectorHelper;
 

@@ -120,8 +120,8 @@ public class BulkAssetEntryResource {
 
 			return new BulkAssetEntryCommonCategoriesModel(
 				bulkSelection.describe(locale),
-				_groupByAssetVocabulary(
-					groupId, classNameId, commonCategories), groupIds);
+				_groupByAssetVocabulary(groupId, classNameId, commonCategories),
+				groupIds);
 		}
 		catch (Exception e) {
 			return new BulkAssetEntryCommonCategoriesModel(e);

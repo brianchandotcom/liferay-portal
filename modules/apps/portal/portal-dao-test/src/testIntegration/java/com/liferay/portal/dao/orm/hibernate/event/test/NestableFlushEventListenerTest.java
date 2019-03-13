@@ -12,8 +12,9 @@
  * details.
  */
 
-package com.liferay.portal.dao.orm.hibernate.event;
+package com.liferay.portal.dao.orm.hibernate.event.test;
 
+import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.dao.orm.hibernate.SessionFactoryImpl;
 import com.liferay.portal.dao.orm.hibernate.VerifySessionFactoryWrapper;
 import com.liferay.portal.kernel.model.CacheModel;
@@ -46,10 +47,12 @@ import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 
 /**
  * @author Matthew Tambara
  */
+@RunWith(Arquillian.class)
 public class NestableFlushEventListenerTest {
 
 	@ClassRule

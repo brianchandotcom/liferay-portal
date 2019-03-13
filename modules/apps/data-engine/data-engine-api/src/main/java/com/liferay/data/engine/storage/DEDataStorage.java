@@ -14,7 +14,8 @@
 
 package com.liferay.data.engine.storage;
 
-import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.data.engine.rest.dto.v1_0.DataRecord;
+import com.liferay.data.engine.rest.dto.v1_0.DataRecordValue;
 
 /**
  * Provides the remote service interface for the Data Storage.
@@ -28,36 +29,33 @@ public interface DEDataStorage {
 	 * Deletes a data record on a data storage using the id passed
 	 * on the delete request.
 	 *
-	 * @param deDataStorageDeleteRequest
-	 * @return {@link DEDataStorageDeleteResponse}
-	 * @review
+	 * @param dataStorageId
+	 * @return
+	 * @throws Exception
 	 */
-	public DEDataStorageDeleteResponse delete(
-			DEDataStorageDeleteRequest deDataStorageDeleteRequest)
-		throws PortalException;
+	public long delete(long dataStorageId) throws Exception;
 
 	/**
 	 * Retrieves a data record on a data storage using an id
 	 * and a data definition passed on the get request.
 	 *
-	 * @param deDataStorageGetRequest
-	 * @return {@link DEDataStorageGetResponse}
-	 * @review
+	 * @param dataDefinitionId
+	 * @param dataStorageId
+	 * @return
+	 * @throws Exception
 	 */
-	public DEDataStorageGetResponse get(
-			DEDataStorageGetRequest deDataStorageGetRequest)
-		throws PortalException;
+	public DataRecordValue[] get(long dataDefinitionId, long dataStorageId)
+		throws Exception;
 
 	/**
 	 * Saves a data record on a data storage using the data record
 	 * passed on the get request.
 	 *
-	 * @param deDataStorageSaveRequest
-	 * @return {@link DEDataStorageSaveResponse}
-	 * @review
+	 * @param groupId
+	 * @param dataRecord
+	 * @return dataStorageId
+	 * @throws Exception
 	 */
-	public DEDataStorageSaveResponse save(
-			DEDataStorageSaveRequest deDataStorageSaveRequest)
-		throws PortalException;
+	public long save(long groupId, DataRecord dataRecord) throws Exception;
 
 }

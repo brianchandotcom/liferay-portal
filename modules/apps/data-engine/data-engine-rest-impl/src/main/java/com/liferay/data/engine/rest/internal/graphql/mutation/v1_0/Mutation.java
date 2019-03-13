@@ -15,9 +15,11 @@
 package com.liferay.data.engine.rest.internal.graphql.mutation.v1_0;
 
 import com.liferay.data.engine.rest.dto.v1_0.DataDefinition;
+import com.liferay.data.engine.rest.dto.v1_0.DataLayout;
 import com.liferay.data.engine.rest.dto.v1_0.DataRecord;
 import com.liferay.data.engine.rest.dto.v1_0.DataRecordCollection;
 import com.liferay.data.engine.rest.resource.v1_0.DataDefinitionResource;
+import com.liferay.data.engine.rest.resource.v1_0.DataLayoutResource;
 import com.liferay.data.engine.rest.resource.v1_0.DataRecordCollectionResource;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
@@ -75,6 +77,39 @@ public class Mutation {
 
 		return dataDefinitionResource.putDataDefinition(
 			dataDefinitionId, dataDefinition);
+	}
+
+	@GraphQLField
+	@GraphQLInvokeDetached
+	public DataLayout postDataLayout(
+			@GraphQLName("contentSpaceId") Long contentSpaceId,
+			@GraphQLName("DataLayout") DataLayout dataLayout)
+		throws Exception {
+
+		DataLayoutResource dataLayoutResource = _createDataLayoutResource();
+
+		return dataLayoutResource.postDataLayout(contentSpaceId, dataLayout);
+	}
+
+	@GraphQLInvokeDetached
+	public boolean deleteDataLayout(
+			@GraphQLName("data-layout-id") Long dataLayoutId)
+		throws Exception {
+
+		DataLayoutResource dataLayoutResource = _createDataLayoutResource();
+
+		return dataLayoutResource.deleteDataLayout(dataLayoutId);
+	}
+
+	@GraphQLInvokeDetached
+	public DataLayout putDataLayout(
+			@GraphQLName("data-layout-id") Long dataLayoutId,
+			@GraphQLName("DataLayout") DataLayout dataLayout)
+		throws Exception {
+
+		DataLayoutResource dataLayoutResource = _createDataLayoutResource();
+
+		return dataLayoutResource.putDataLayout(dataLayoutId, dataLayout);
 	}
 
 	@GraphQLField
@@ -186,6 +221,22 @@ public class Mutation {
 		<DataDefinitionResource, DataDefinitionResource>
 			_dataDefinitionResourceServiceTracker;
 
+	private static DataLayoutResource _createDataLayoutResource()
+		throws Exception {
+
+		DataLayoutResource dataLayoutResource =
+			_dataLayoutResourceServiceTracker.getService();
+
+		dataLayoutResource.setContextCompany(
+			CompanyLocalServiceUtil.getCompany(
+				CompanyThreadLocal.getCompanyId()));
+
+		return dataLayoutResource;
+	}
+
+	private static final ServiceTracker<DataLayoutResource, DataLayoutResource>
+		_dataLayoutResourceServiceTracker;
+
 	private static DataRecordCollectionResource
 			_createDataRecordCollectionResource()
 		throws Exception {
@@ -215,6 +266,13 @@ public class Mutation {
 
 		_dataDefinitionResourceServiceTracker =
 			dataDefinitionResourceServiceTracker;
+		ServiceTracker<DataLayoutResource, DataLayoutResource>
+			dataLayoutResourceServiceTracker = new ServiceTracker<>(
+				bundle.getBundleContext(), DataLayoutResource.class, null);
+
+		dataLayoutResourceServiceTracker.open();
+
+		_dataLayoutResourceServiceTracker = dataLayoutResourceServiceTracker;
 		ServiceTracker
 			<DataRecordCollectionResource, DataRecordCollectionResource>
 				dataRecordCollectionResourceServiceTracker =

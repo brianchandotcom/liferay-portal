@@ -76,6 +76,8 @@ public class OpenAPIResourceImpl {
 		{
 			add(DataDefinitionResourceImpl.class);
 
+			add(DataLayoutResourceImpl.class);
+
 			add(DataRecordCollectionResourceImpl.class);
 
 			add(OpenAPIResourceImpl.class);

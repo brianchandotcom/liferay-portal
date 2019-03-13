@@ -15,9 +15,11 @@
 package com.liferay.data.engine.rest.internal.graphql.query.v1_0;
 
 import com.liferay.data.engine.rest.dto.v1_0.DataDefinition;
+import com.liferay.data.engine.rest.dto.v1_0.DataLayout;
 import com.liferay.data.engine.rest.dto.v1_0.DataRecord;
 import com.liferay.data.engine.rest.dto.v1_0.DataRecordCollection;
 import com.liferay.data.engine.rest.resource.v1_0.DataDefinitionResource;
+import com.liferay.data.engine.rest.resource.v1_0.DataLayoutResource;
 import com.liferay.data.engine.rest.resource.v1_0.DataRecordCollectionResource;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
@@ -71,6 +73,17 @@ public class Query {
 			_createDataDefinitionResource();
 
 		return dataDefinitionResource.getDataDefinition(dataDefinitionId);
+	}
+
+	@GraphQLField
+	@GraphQLInvokeDetached
+	public DataLayout getDataLayout(
+			@GraphQLName("data-layout-id") Long dataLayoutId)
+		throws Exception {
+
+		DataLayoutResource dataLayoutResource = _createDataLayoutResource();
+
+		return dataLayoutResource.getDataLayout(dataLayoutId);
 	}
 
 	@GraphQLField
@@ -158,6 +171,22 @@ public class Query {
 		<DataDefinitionResource, DataDefinitionResource>
 			_dataDefinitionResourceServiceTracker;
 
+	private static DataLayoutResource _createDataLayoutResource()
+		throws Exception {
+
+		DataLayoutResource dataLayoutResource =
+			_dataLayoutResourceServiceTracker.getService();
+
+		dataLayoutResource.setContextCompany(
+			CompanyLocalServiceUtil.getCompany(
+				CompanyThreadLocal.getCompanyId()));
+
+		return dataLayoutResource;
+	}
+
+	private static final ServiceTracker<DataLayoutResource, DataLayoutResource>
+		_dataLayoutResourceServiceTracker;
+
 	private static DataRecordCollectionResource
 			_createDataRecordCollectionResource()
 		throws Exception {
@@ -187,6 +216,13 @@ public class Query {
 
 		_dataDefinitionResourceServiceTracker =
 			dataDefinitionResourceServiceTracker;
+		ServiceTracker<DataLayoutResource, DataLayoutResource>
+			dataLayoutResourceServiceTracker = new ServiceTracker<>(
+				bundle.getBundleContext(), DataLayoutResource.class, null);
+
+		dataLayoutResourceServiceTracker.open();
+
+		_dataLayoutResourceServiceTracker = dataLayoutResourceServiceTracker;
 		ServiceTracker
 			<DataRecordCollectionResource, DataRecordCollectionResource>
 				dataRecordCollectionResourceServiceTracker =

@@ -16,49 +16,57 @@ package com.liferay.portal.search.document;
 
 import aQute.bnd.annotation.ProviderType;
 
-import java.util.Collections;
-import java.util.HashMap;
+import com.liferay.portal.search.geolocation.GeoLocationPoint;
+
 import java.util.List;
 import java.util.Map;
 
 /**
  * @author Michael C. Han
+ * @author Wade Cao
  */
 @ProviderType
-public class Document {
+public interface Document {
 
-	public void addField(Field field) {
-		_fields.put(field.getName(), field);
-	}
+	public String getDate(String name);
 
-	public Field getField(String name) {
-		return _fields.get(name);
-	}
+	public List<String> getDates(String name);
 
-	public Map<String, Field> getFields() {
-		return Collections.unmodifiableMap(_fields);
-	}
+	public Double getDouble(String name);
 
-	public Object getFieldValue(String name) {
-		Field field = _fields.get(name);
+	public List<Double> getDoubles(String name);
 
-		if (field == null) {
-			return null;
-		}
+	public Map<String, Field> getFields();
 
-		return field.getValue();
-	}
+	/**
+	 * @deprecated As of Mueller (7.2.x), replaced by
+	 * 		{@link Document#getValue(String)}
+	 */
+	@Deprecated
+	public Object getFieldValue(String name);
 
-	public List<Object> getFieldValues(String name) {
-		Field field = _fields.get(name);
+	public Float getFloat(String name);
 
-		if (field == null) {
-			return null;
-		}
+	public List<Float> getFloats(String name);
 
-		return field.getValues();
-	}
+	public GeoLocationPoint getGeoLocationPoint(String name);
 
-	private final Map<String, Field> _fields = new HashMap<>();
+	public List<GeoLocationPoint> getGeoLocationPoints(String name);
+
+	public Integer getInteger(String name);
+
+	public List<Integer> getIntegers(String name);
+
+	public Long getLong(String name);
+
+	public List<Long> getLongs(String name);
+
+	public String getString(String name);
+
+	public List<String> getStrings(String name);
+
+	public Object getValue(String name);
+
+	public List<Object> getValues(String name);
 
 }

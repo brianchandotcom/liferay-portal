@@ -12,23 +12,19 @@
  * details.
  */
 
-package com.liferay.portal.search.document;
+package com.liferay.portal.search.legacy.document;
 
 import aQute.bnd.annotation.ProviderType;
 
-import java.util.List;
+import com.liferay.portal.kernel.search.Document;
+import com.liferay.portal.search.document.DocumentBuilder;
 
 /**
- * @author Michael C. Han
  * @author André de Oliveira
  */
 @ProviderType
-public interface Field {
+public interface DocumentBuilderFactory {
 
-	public String getName();
-
-	public Object getValue();
-
-	public List<Object> getValues();
+	public DocumentBuilder builder(Document document);
 
 }

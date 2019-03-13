@@ -16,19 +16,13 @@ package com.liferay.portal.search.document;
 
 import aQute.bnd.annotation.ProviderType;
 
-import java.util.List;
-
 /**
- * @author Michael C. Han
+ * @author Wade Cao
  * @author André de Oliveira
  */
 @ProviderType
-public interface Field {
+public interface DocumentBuilderFactory {
 
-	public String getName();
-
-	public Object getValue();
-
-	public List<Object> getValues();
+	public DocumentBuilder builder();
 
 }

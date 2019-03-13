@@ -40,6 +40,7 @@ import com.liferay.portal.vulcan.internal.jaxrs.exception.mapper.PrincipalExcept
 import com.liferay.portal.vulcan.internal.jaxrs.exception.mapper.UnrecognizedPropertyExceptionMapper;
 import com.liferay.portal.vulcan.internal.jaxrs.exception.mapper.ValidationExceptionMapper;
 import com.liferay.portal.vulcan.internal.jaxrs.exception.mapper.WebApplicationExceptionMapper;
+import com.liferay.portal.vulcan.internal.jaxrs.message.body.BeanValidationReader;
 import com.liferay.portal.vulcan.internal.jaxrs.message.body.JSONMessageBodyReader;
 import com.liferay.portal.vulcan.internal.jaxrs.message.body.JSONMessageBodyWriter;
 import com.liferay.portal.vulcan.internal.jaxrs.message.body.MultipartBodyMessageBodyReader;
@@ -73,6 +74,7 @@ public class VulcanFeature implements Feature {
 
 	@Override
 	public boolean configure(FeatureContext featureContext) {
+		featureContext.register(BeanValidationReader.class);
 		featureContext.register(ExceptionMapper.class);
 		featureContext.register(FieldsQueryParamContextProvider.class);
 		featureContext.register(JacksonJsonProvider.class);

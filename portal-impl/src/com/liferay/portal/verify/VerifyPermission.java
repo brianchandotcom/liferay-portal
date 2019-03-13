@@ -14,11 +14,8 @@
 
 package com.liferay.portal.verify;
 
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
 import com.liferay.portal.kernel.service.ResourceActionLocalServiceUtil;
-import com.liferay.portal.kernel.util.LoggingTimer;
 
 import java.util.List;
 
@@ -30,33 +27,27 @@ import java.util.List;
  */
 public class VerifyPermission extends VerifyProcess {
 
-	protected void checkPermissions() throws Exception {
-		try (LoggingTimer loggingTimer = new LoggingTimer()) {
-			List<String> modelNames = ResourceActionsUtil.getModelNames();
-
-			for (String modelName : modelNames) {
-				List<String> actionIds =
-					ResourceActionsUtil.getModelResourceActions(modelName);
-
-				ResourceActionLocalServiceUtil.checkResourceActions(
-					modelName, actionIds, true);
-			}
-
-			List<String> portletNames = ResourceActionsUtil.getPortletNames();
-
-			for (String portletName : portletNames) {
-				List<String> actionIds =
-					ResourceActionsUtil.getPortletResourceActions(portletName);
-
-				ResourceActionLocalServiceUtil.checkResourceActions(
-					portletName, actionIds, true);
-			}
-		}
-	}
-
 	@Override
 	protected void doVerify() throws Exception {
-		checkPermissions();
+		List<String> modelNames = ResourceActionsUtil.getModelNames();
+
+		for (String modelName : modelNames) {
+			List<String> actionIds =
+				ResourceActionsUtil.getModelResourceActions(modelName);
+
+			ResourceActionLocalServiceUtil.checkResourceActions(
+				modelName, actionIds, true);
+		}
+
+		List<String> portletNames = ResourceActionsUtil.getPortletNames();
+
+		for (String portletName : portletNames) {
+			List<String> actionIds =
+				ResourceActionsUtil.getPortletResourceActions(portletName);
+
+			ResourceActionLocalServiceUtil.checkResourceActions(
+				portletName, actionIds, true);
+		}
 	}
 
 }

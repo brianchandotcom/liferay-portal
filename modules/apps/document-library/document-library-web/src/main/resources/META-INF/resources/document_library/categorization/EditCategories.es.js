@@ -108,6 +108,7 @@ class EditCategories extends Component {
 				if (response) {
 					this.loading = false;
 					this.description = response.description;
+					this.groupIds = response.groupIds;
 					this.multiple = (this.fileEntries.length > 1) || this.selectAll;
 					this.vocabularies = this._parseVocabularies(response.vocabularies);
 				}
@@ -292,6 +293,13 @@ EditCategories.STATE = {
 	 * @type {String}
 	 */
 	folderId: Config.string(),
+
+	/**
+	 * Group Ids.
+	 *
+	 * @type {List<String>}
+	 */
+	groupIds: Config.array().value([]),
 
 	/**
 	* Hidden input name

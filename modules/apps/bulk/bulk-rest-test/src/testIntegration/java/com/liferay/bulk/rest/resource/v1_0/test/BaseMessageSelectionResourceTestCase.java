@@ -20,13 +20,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
 import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
 
-import com.liferay.bulk.rest.dto.v1_0.BulkActionResponse;
-import com.liferay.bulk.rest.dto.v1_0.BulkAssetEntryAction;
-import com.liferay.bulk.rest.dto.v1_0.BulkAssetEntryCommonCategories;
-import com.liferay.bulk.rest.dto.v1_0.BulkAssetEntryCommonTags;
-import com.liferay.bulk.rest.dto.v1_0.BulkAssetEntryUpdateCategoriesAction;
-import com.liferay.bulk.rest.dto.v1_0.BulkAssetEntryUpdateTagsAction;
-import com.liferay.bulk.rest.resource.v1_0.BulkActionResponseResource;
+import com.liferay.bulk.rest.dto.v1_0.DocumentSelection;
+import com.liferay.bulk.rest.dto.v1_0.MessageSelection;
+import com.liferay.bulk.rest.resource.v1_0.MessageSelectionResource;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
@@ -41,6 +37,8 @@ import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
+
+import java.lang.reflect.InvocationTargetException;
 
 import java.net.URL;
 
@@ -58,6 +56,8 @@ import javax.annotation.Generated;
 
 import javax.ws.rs.core.MultivaluedHashMap;
 
+import org.apache.commons.beanutils.BeanUtilsBean;
+
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -71,7 +71,7 @@ import org.junit.Test;
  * @generated
  */
 @Generated("")
-public abstract class BaseBulkActionResponseResourceTestCase {
+public abstract class BaseMessageSelectionResourceTestCase {
 
 	@ClassRule
 	@Rule
@@ -97,92 +97,30 @@ public abstract class BaseBulkActionResponseResourceTestCase {
 	}
 
 	@Test
-	public void testPostCategoryClassName() throws Exception {
-		BulkActionResponse randomBulkActionResponse =
-			randomBulkActionResponse();
+	public void testPostAssetClassNameKeywordMessageSelection()
+		throws Exception {
 
-		BulkActionResponse postBulkActionResponse =
-			testPostCategoryClassName_addBulkActionResponse(
-				randomBulkActionResponse);
+		MessageSelection randomMessageSelection = randomMessageSelection();
 
-		assertEquals(randomBulkActionResponse, postBulkActionResponse);
-		assertValid(postBulkActionResponse);
+		MessageSelection postMessageSelection =
+			testPostAssetClassNameKeywordMessageSelection_addMessageSelection(
+				randomMessageSelection);
+
+		assertEquals(randomMessageSelection, postMessageSelection);
+		assertValid(postMessageSelection);
 	}
 
-	protected BulkActionResponse
-			testPostCategoryClassName_addBulkActionResponse(
-				BulkActionResponse bulkActionResponse)
+	protected MessageSelection
+			testPostAssetClassNameKeywordMessageSelection_addMessageSelection(
+				MessageSelection messageSelection)
 		throws Exception {
 
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
 	}
 
-	protected BulkActionResponse invokePostCategoryClassName(
-			Long classNameId,
-			BulkAssetEntryUpdateCategoriesAction
-				bulkAssetEntryUpdateCategoriesAction)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		String location =
-			_resourceURL + _toPath("/categories/{class-name-id}", classNameId);
-
-		options.setLocation(location);
-
-		options.setPost(true);
-
-		return _outputObjectMapper.readValue(
-			HttpUtil.URLtoString(options), BulkActionResponse.class);
-	}
-
-	protected Http.Response invokePostCategoryClassNameResponse(
-			Long classNameId,
-			BulkAssetEntryUpdateCategoriesAction
-				bulkAssetEntryUpdateCategoriesAction)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		String location =
-			_resourceURL + _toPath("/categories/{class-name-id}", classNameId);
-
-		options.setLocation(location);
-
-		options.setPost(true);
-
-		HttpUtil.URLtoString(options);
-
-		return options.getResponse();
-	}
-
-	@Test
-	public void testPostCategoryContentSpaceClassNameCommon() throws Exception {
-		BulkActionResponse randomBulkActionResponse =
-			randomBulkActionResponse();
-
-		BulkActionResponse postBulkActionResponse =
-			testPostCategoryContentSpaceClassNameCommon_addBulkActionResponse(
-				randomBulkActionResponse);
-
-		assertEquals(randomBulkActionResponse, postBulkActionResponse);
-		assertValid(postBulkActionResponse);
-	}
-
-	protected BulkActionResponse
-			testPostCategoryContentSpaceClassNameCommon_addBulkActionResponse(
-				BulkActionResponse bulkActionResponse)
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	protected BulkAssetEntryCommonCategories
-			invokePostCategoryContentSpaceClassNameCommon(
-				Long contentSpaceId, Long classNameId,
-				BulkAssetEntryAction bulkAssetEntryAction)
+	protected MessageSelection invokePostAssetClassNameKeywordMessageSelection(
+			Long classNameId, DocumentSelection documentSelection)
 		throws Exception {
 
 		Http.Options options = _createHttpOptions();
@@ -190,22 +128,20 @@ public abstract class BaseBulkActionResponseResourceTestCase {
 		String location =
 			_resourceURL +
 				_toPath(
-					"/categories/{content-space-id}/{class-name-id}/common",
-					contentSpaceId);
+					"/asset/{class-name-id}/keywords/message-selection",
+					classNameId);
 
 		options.setLocation(location);
 
 		options.setPost(true);
 
 		return _outputObjectMapper.readValue(
-			HttpUtil.URLtoString(options),
-			BulkAssetEntryCommonCategories.class);
+			HttpUtil.URLtoString(options), MessageSelection.class);
 	}
 
 	protected Http.Response
-			invokePostCategoryContentSpaceClassNameCommonResponse(
-				Long contentSpaceId, Long classNameId,
-				BulkAssetEntryAction bulkAssetEntryAction)
+			invokePostAssetClassNameKeywordMessageSelectionResponse(
+				Long classNameId, DocumentSelection documentSelection)
 		throws Exception {
 
 		Http.Options options = _createHttpOptions();
@@ -213,8 +149,8 @@ public abstract class BaseBulkActionResponseResourceTestCase {
 		String location =
 			_resourceURL +
 				_toPath(
-					"/categories/{content-space-id}/{class-name-id}/common",
-					contentSpaceId);
+					"/asset/{class-name-id}/keywords/message-selection",
+					classNameId);
 
 		options.setLocation(location);
 
@@ -226,88 +162,31 @@ public abstract class BaseBulkActionResponseResourceTestCase {
 	}
 
 	@Test
-	public void testPostTagClassName() throws Exception {
-		BulkActionResponse randomBulkActionResponse =
-			randomBulkActionResponse();
+	public void testPostAssetClassNameVocabularyMessageSelection()
+		throws Exception {
 
-		BulkActionResponse postBulkActionResponse =
-			testPostTagClassName_addBulkActionResponse(
-				randomBulkActionResponse);
+		MessageSelection randomMessageSelection = randomMessageSelection();
 
-		assertEquals(randomBulkActionResponse, postBulkActionResponse);
-		assertValid(postBulkActionResponse);
+		MessageSelection postMessageSelection =
+			testPostAssetClassNameVocabularyMessageSelection_addMessageSelection(
+				randomMessageSelection);
+
+		assertEquals(randomMessageSelection, postMessageSelection);
+		assertValid(postMessageSelection);
 	}
 
-	protected BulkActionResponse testPostTagClassName_addBulkActionResponse(
-			BulkActionResponse bulkActionResponse)
+	protected MessageSelection
+			testPostAssetClassNameVocabularyMessageSelection_addMessageSelection(
+				MessageSelection messageSelection)
 		throws Exception {
 
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
 	}
 
-	protected BulkActionResponse invokePostTagClassName(
-			Long classNameId,
-			BulkAssetEntryUpdateTagsAction bulkAssetEntryUpdateTagsAction)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		String location =
-			_resourceURL + _toPath("/tags/{class-name-id}", classNameId);
-
-		options.setLocation(location);
-
-		options.setPost(true);
-
-		return _outputObjectMapper.readValue(
-			HttpUtil.URLtoString(options), BulkActionResponse.class);
-	}
-
-	protected Http.Response invokePostTagClassNameResponse(
-			Long classNameId,
-			BulkAssetEntryUpdateTagsAction bulkAssetEntryUpdateTagsAction)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		String location =
-			_resourceURL + _toPath("/tags/{class-name-id}", classNameId);
-
-		options.setLocation(location);
-
-		options.setPost(true);
-
-		HttpUtil.URLtoString(options);
-
-		return options.getResponse();
-	}
-
-	@Test
-	public void testPostTagContentSpaceClassNameCommon() throws Exception {
-		BulkActionResponse randomBulkActionResponse =
-			randomBulkActionResponse();
-
-		BulkActionResponse postBulkActionResponse =
-			testPostTagContentSpaceClassNameCommon_addBulkActionResponse(
-				randomBulkActionResponse);
-
-		assertEquals(randomBulkActionResponse, postBulkActionResponse);
-		assertValid(postBulkActionResponse);
-	}
-
-	protected BulkActionResponse
-			testPostTagContentSpaceClassNameCommon_addBulkActionResponse(
-				BulkActionResponse bulkActionResponse)
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	protected BulkAssetEntryCommonTags invokePostTagContentSpaceClassNameCommon(
-			Long contentSpaceId, Long classNameId,
-			BulkAssetEntryAction bulkAssetEntryAction)
+	protected MessageSelection
+			invokePostAssetClassNameVocabularyMessageSelection(
+				Long classNameId, DocumentSelection documentSelection)
 		throws Exception {
 
 		Http.Options options = _createHttpOptions();
@@ -315,20 +194,20 @@ public abstract class BaseBulkActionResponseResourceTestCase {
 		String location =
 			_resourceURL +
 				_toPath(
-					"/tags/{content-space-id}/{class-name-id}/common",
-					contentSpaceId);
+					"/asset/{class-name-id}/vocabularies/message-selection",
+					classNameId);
 
 		options.setLocation(location);
 
 		options.setPost(true);
 
 		return _outputObjectMapper.readValue(
-			HttpUtil.URLtoString(options), BulkAssetEntryCommonTags.class);
+			HttpUtil.URLtoString(options), MessageSelection.class);
 	}
 
-	protected Http.Response invokePostTagContentSpaceClassNameCommonResponse(
-			Long contentSpaceId, Long classNameId,
-			BulkAssetEntryAction bulkAssetEntryAction)
+	protected Http.Response
+			invokePostAssetClassNameVocabularyMessageSelectionResponse(
+				Long classNameId, DocumentSelection documentSelection)
 		throws Exception {
 
 		Http.Options options = _createHttpOptions();
@@ -336,8 +215,8 @@ public abstract class BaseBulkActionResponseResourceTestCase {
 		String location =
 			_resourceURL +
 				_toPath(
-					"/tags/{content-space-id}/{class-name-id}/common",
-					contentSpaceId);
+					"/asset/{class-name-id}/vocabularies/message-selection",
+					classNameId);
 
 		options.setLocation(location);
 
@@ -356,45 +235,41 @@ public abstract class BaseBulkActionResponseResourceTestCase {
 	}
 
 	protected void assertEquals(
-		BulkActionResponse bulkActionResponse1,
-		BulkActionResponse bulkActionResponse2) {
+		MessageSelection messageSelection1,
+		MessageSelection messageSelection2) {
 
 		Assert.assertTrue(
-			bulkActionResponse1 + " does not equal " + bulkActionResponse2,
-			equals(bulkActionResponse1, bulkActionResponse2));
+			messageSelection1 + " does not equal " + messageSelection2,
+			equals(messageSelection1, messageSelection2));
 	}
 
 	protected void assertEquals(
-		List<BulkActionResponse> bulkActionResponses1,
-		List<BulkActionResponse> bulkActionResponses2) {
+		List<MessageSelection> messageSelections1,
+		List<MessageSelection> messageSelections2) {
 
 		Assert.assertEquals(
-			bulkActionResponses1.size(), bulkActionResponses2.size());
+			messageSelections1.size(), messageSelections2.size());
 
-		for (int i = 0; i < bulkActionResponses1.size(); i++) {
-			BulkActionResponse bulkActionResponse1 = bulkActionResponses1.get(
-				i);
-			BulkActionResponse bulkActionResponse2 = bulkActionResponses2.get(
-				i);
+		for (int i = 0; i < messageSelections1.size(); i++) {
+			MessageSelection messageSelection1 = messageSelections1.get(i);
+			MessageSelection messageSelection2 = messageSelections2.get(i);
 
-			assertEquals(bulkActionResponse1, bulkActionResponse2);
+			assertEquals(messageSelection1, messageSelection2);
 		}
 	}
 
 	protected void assertEqualsIgnoringOrder(
-		List<BulkActionResponse> bulkActionResponses1,
-		List<BulkActionResponse> bulkActionResponses2) {
+		List<MessageSelection> messageSelections1,
+		List<MessageSelection> messageSelections2) {
 
 		Assert.assertEquals(
-			bulkActionResponses1.size(), bulkActionResponses2.size());
+			messageSelections1.size(), messageSelections2.size());
 
-		for (BulkActionResponse bulkActionResponse1 : bulkActionResponses1) {
+		for (MessageSelection messageSelection1 : messageSelections1) {
 			boolean contains = false;
 
-			for (BulkActionResponse bulkActionResponse2 :
-					bulkActionResponses2) {
-
-				if (equals(bulkActionResponse1, bulkActionResponse2)) {
+			for (MessageSelection messageSelection2 : messageSelections2) {
+				if (equals(messageSelection1, messageSelection2)) {
 					contains = true;
 
 					break;
@@ -402,23 +277,22 @@ public abstract class BaseBulkActionResponseResourceTestCase {
 			}
 
 			Assert.assertTrue(
-				bulkActionResponses2 + " does not contain " +
-					bulkActionResponse1,
+				messageSelections2 + " does not contain " + messageSelection1,
 				contains);
 		}
 	}
 
-	protected void assertValid(BulkActionResponse bulkActionResponse) {
+	protected void assertValid(MessageSelection messageSelection) {
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
 	}
 
-	protected void assertValid(Page<BulkActionResponse> page) {
+	protected void assertValid(Page<MessageSelection> page) {
 		boolean valid = false;
 
-		Collection<BulkActionResponse> bulkActionResponses = page.getItems();
+		Collection<MessageSelection> messageSelections = page.getItems();
 
-		int size = bulkActionResponses.size();
+		int size = messageSelections.size();
 
 		if ((page.getLastPage() > 0) && (page.getPage() > 0) &&
 			(page.getPageSize() > 0) && (page.getTotalCount() > 0) &&
@@ -431,10 +305,10 @@ public abstract class BaseBulkActionResponseResourceTestCase {
 	}
 
 	protected boolean equals(
-		BulkActionResponse bulkActionResponse1,
-		BulkActionResponse bulkActionResponse2) {
+		MessageSelection messageSelection1,
+		MessageSelection messageSelection2) {
 
-		if (bulkActionResponse1 == bulkActionResponse2) {
+		if (messageSelection1 == messageSelection2) {
 			return true;
 		}
 
@@ -442,13 +316,13 @@ public abstract class BaseBulkActionResponseResourceTestCase {
 	}
 
 	protected Collection<EntityField> getEntityFields() throws Exception {
-		if (!(_bulkActionResponseResource instanceof EntityModelResource)) {
+		if (!(_messageSelectionResource instanceof EntityModelResource)) {
 			throw new UnsupportedOperationException(
 				"Resource is not an instance of EntityModelResource");
 		}
 
 		EntityModelResource entityModelResource =
-			(EntityModelResource)_bulkActionResponseResource;
+			(EntityModelResource)_messageSelectionResource;
 
 		EntityModel entityModel = entityModelResource.getEntityModel(
 			new MultivaluedHashMap());
@@ -475,7 +349,7 @@ public abstract class BaseBulkActionResponseResourceTestCase {
 
 	protected String getFilterString(
 		EntityField entityField, String operator,
-		BulkActionResponse bulkActionResponse) {
+		MessageSelection messageSelection) {
 
 		StringBundler sb = new StringBundler();
 
@@ -489,15 +363,7 @@ public abstract class BaseBulkActionResponseResourceTestCase {
 
 		if (entityFieldName.equals("description")) {
 			sb.append("'");
-			sb.append(String.valueOf(bulkActionResponse.getDescription()));
-			sb.append("'");
-
-			return sb.toString();
-		}
-
-		if (entityFieldName.equals("status")) {
-			sb.append("'");
-			sb.append(String.valueOf(bulkActionResponse.getStatus()));
+			sb.append(String.valueOf(messageSelection.getDescription()));
 			sb.append("'");
 
 			return sb.toString();
@@ -507,13 +373,16 @@ public abstract class BaseBulkActionResponseResourceTestCase {
 			"Invalid entity field " + entityFieldName);
 	}
 
-	protected BulkActionResponse randomBulkActionResponse() {
-		return new BulkActionResponse() {
+	protected MessageSelection randomMessageSelection() {
+		return new MessageSelection() {
 			{
 				description = RandomTestUtil.randomString();
-				status = RandomTestUtil.randomString();
 			}
 		};
+	}
+
+	protected MessageSelection randomPatchMessageSelection() {
+		return randomMessageSelection();
 	}
 
 	protected Group testGroup;
@@ -579,6 +448,18 @@ public abstract class BaseBulkActionResponseResourceTestCase {
 		return template.replaceFirst("\\{.*\\}", String.valueOf(value));
 	}
 
+	private static BeanUtilsBean _beanUtilsBean = new BeanUtilsBean() {
+
+		@Override
+		public void copyProperty(Object bean, String name, Object value)
+			throws IllegalAccessException, InvocationTargetException {
+
+			if (value != null) {
+				super.copyProperty(bean, name, value);
+			}
+		}
+
+	};
 	private static DateFormat _dateFormat;
 	private final static ObjectMapper _inputObjectMapper = new ObjectMapper() {
 		{
@@ -607,7 +488,7 @@ public abstract class BaseBulkActionResponseResourceTestCase {
 	};
 
 	@Inject
-	private BulkActionResponseResource _bulkActionResponseResource;
+	private MessageSelectionResource _messageSelectionResource;
 
 	private URL _resourceURL;
 

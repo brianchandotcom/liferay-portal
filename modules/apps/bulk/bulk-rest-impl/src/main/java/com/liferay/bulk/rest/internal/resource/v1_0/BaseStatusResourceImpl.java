@@ -14,8 +14,8 @@
 
 package com.liferay.bulk.rest.internal.resource.v1_0;
 
-import com.liferay.bulk.rest.dto.v1_0.BulkStatus;
-import com.liferay.bulk.rest.resource.v1_0.BulkStatusResource;
+import com.liferay.bulk.rest.dto.v1_0.Status;
+import com.liferay.bulk.rest.resource.v1_0.StatusResource;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Company;
@@ -44,15 +44,15 @@ import javax.ws.rs.core.UriInfo;
  */
 @Generated("")
 @Path("/v1.0")
-public abstract class BaseBulkStatusResourceImpl implements BulkStatusResource {
+public abstract class BaseStatusResourceImpl implements StatusResource {
 
 	@Override
 	@GET
 	@Path("/status")
 	@Produces("application/json")
-	@Tags(value = {@Tag(name = "BulkStatus")})
-	public BulkStatus getStatu() throws Exception {
-		return new BulkStatus();
+	@Tags(value = {@Tag(name = "Status")})
+	public Status getStatu() throws Exception {
+		return new Status();
 	}
 
 	public void setContextCompany(Company contextCompany) {
@@ -68,11 +68,11 @@ public abstract class BaseBulkStatusResourceImpl implements BulkStatusResource {
 		}
 
 		URI resourceURI = UriBuilder.fromResource(
-			BaseBulkStatusResourceImpl.class
+			BaseStatusResourceImpl.class
 		).build();
 
 		URI methodURI = UriBuilder.fromMethod(
-			BaseBulkStatusResourceImpl.class, methodName
+			BaseStatusResourceImpl.class, methodName
 		).build(
 			values
 		);
@@ -80,7 +80,7 @@ public abstract class BaseBulkStatusResourceImpl implements BulkStatusResource {
 		return baseURIString + resourceURI.toString() + methodURI.toString();
 	}
 
-	protected void preparePatch(BulkStatus bulkStatus) {
+	protected void preparePatch(Status status) {
 	}
 
 	protected <T, R> List<R> transform(

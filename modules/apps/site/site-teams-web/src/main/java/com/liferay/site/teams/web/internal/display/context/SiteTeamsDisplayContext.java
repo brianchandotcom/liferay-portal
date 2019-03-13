@@ -92,7 +92,7 @@ public class SiteTeamsDisplayContext {
 		SearchContainer searchContainer = new TeamSearch(
 			_renderRequest, getPortletURL());
 
-		searchContainer.setEmptyResultsMessage("there-are-no-site-teams");
+		searchContainer.setEmptyResultsMessage("there-are-no-teams");
 
 		searchContainer.setId("teams");
 		searchContainer.setOrderByCol(getOrderByCol());

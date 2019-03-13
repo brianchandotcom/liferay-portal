@@ -59,8 +59,7 @@ public class SiteTeamsPortletDataHandler extends BasePortletDataHandler {
 		setDataAlwaysStaged(true);
 		setExportControls(
 			new PortletDataHandlerBoolean(
-				NAMESPACE, "site-teams", true, true, null,
-				Team.class.getName()));
+				NAMESPACE, "teams", true, true, null, Team.class.getName()));
 		setPublishToLiveByDefault(true);
 		setRank(80);
 		setStagingControls(getExportControls());

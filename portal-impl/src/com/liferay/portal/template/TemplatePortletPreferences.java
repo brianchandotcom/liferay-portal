@@ -81,33 +81,21 @@ public class TemplatePortletPreferences {
 		sb.append("<portlet-preferences>");
 
 		for (String key : settings.getModifiedKeys()) {
-			sb.append("<preference><name>");
-			sb.append(key);
-			sb.append("</name>");
+			String[] values = settings.getValues(key, null);
 
-			Object valueObject = settings.getValue(key, null);
+			if (values != null) {
+				sb.append("<preference><name>");
+				sb.append(key);
+				sb.append("</name>");
 
-			if (valueObject != null) {
-				if (valueObject instanceof String) {
+				for (String value : values) {
 					sb.append("<value>");
-					sb.append(XMLUtil.toCompactSafe((String)valueObject));
+					sb.append(XMLUtil.toCompactSafe(value));
 					sb.append("</value>");
 				}
-				else if (valueObject instanceof String[]) {
-					for (String value : (String[])valueObject) {
-						sb.append("<value>");
-						sb.append(XMLUtil.toCompactSafe(value));
-						sb.append("</value>");
-					}
-				}
-				else {
-					sb.setIndex(sb.index() - 3);
 
-					continue;
-				}
+				sb.append("</preference>");
 			}
-
-			sb.append("</preference>");
 		}
 
 		sb.append("</portlet-preferences>");

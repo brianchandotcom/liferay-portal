@@ -60,6 +60,13 @@
 					<include name="apps/*" />
 					<include name="private/apps/*" />
 					<exclude name="${build.exclude.dirs}" />
+					<present targetdir="${modules.dir}">
+						<mapper
+							from="*"
+							to="*/app.bnd"
+							type="glob"
+						/>
+					</present>
 				</dirset>
 			</path>
 

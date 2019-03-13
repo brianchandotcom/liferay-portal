@@ -116,6 +116,22 @@
 	<td>//li[contains(@class,'move-article') and contains(.,'${key_webContentTitle}')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--SIDEBAR -->
+<tr>
+	<td>SIDEBAR_BODY</td>
+	<td>//div[@class='sidebar-body']//div[contains(@id,'TabsSection')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SIDEBAR_BUTTON</td>
+	<td>//button[contains(@class,'btn-borderless') and contains(@id,'SidebarButton')]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

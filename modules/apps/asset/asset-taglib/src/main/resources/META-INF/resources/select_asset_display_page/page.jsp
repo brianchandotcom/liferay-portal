@@ -66,7 +66,7 @@
 	</div>
 
 	<div class="button-holder">
-		<aui:button name="chooseSpecificDisplayPage" value="choose" />
+		<aui:button name="chooseSpecificDisplayPage" value="select" />
 	</div>
 </div>
 

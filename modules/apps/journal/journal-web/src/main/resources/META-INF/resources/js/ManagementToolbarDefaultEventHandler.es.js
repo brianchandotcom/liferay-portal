@@ -3,10 +3,13 @@ import {Config} from 'metal-state';
 
 class ManagementToolbarDefaultEventHandler extends DefaultEventHandler {
 	created() {
+		let addArticleURL = this.addArticleURL;
+		let namespace = this.namespace;
+
 		Liferay.on(
 			this.ns('selectAddMenuItem'),
 			function(event) {
-				location.href = Liferay.Util.addParams(this.ns('ddmStructureKey') + '=' + event.ddmStructureKey, this.addArticleURL);
+				location.href = Liferay.Util.addParams(namespace + 'ddmStructureKey=' + event.ddmStructureKey, addArticleURL);
 			}
 		);
 	}

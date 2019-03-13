@@ -60,6 +60,8 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.segments.model.SegmentsEntry;
+import com.liferay.segments.service.SegmentsEntryLocalServiceUtil;
 import com.liferay.site.item.selector.criteria.SiteItemSelectorReturnType;
 import com.liferay.site.item.selector.criterion.SiteItemSelectorCriterion;
 
@@ -635,7 +637,7 @@ public class EditAssetListDisplayContext {
 		return _referencedModelsGroupIds;
 	}
 
-	public SearchContainer getSearchContainer() {
+	public SearchContainer getSearchContainer() throws PortalException {
 		if (_searchContainer != null) {
 			return _searchContainer;
 		}
@@ -646,17 +648,36 @@ public class EditAssetListDisplayContext {
 
 		searchContainer.setTotal(
 			AssetListEntryAssetEntryRelLocalServiceUtil.
-				getAssetListEntryAssetEntryRelsCount(getAssetListEntryId()));
+				getAssetListEntryAssetEntryRelsCount(
+					getAssetListEntryId(), getSegmentsEntryId()));
 
 		searchContainer.setResults(
 			AssetListEntryAssetEntryRelLocalServiceUtil.
 				getAssetListEntryAssetEntryRels(
-					getAssetListEntryId(), searchContainer.getStart(),
-					searchContainer.getEnd()));
+					getAssetListEntryId(), getSegmentsEntryId(),
+					searchContainer.getStart(), searchContainer.getEnd()));
 
 		_searchContainer = searchContainer;
 
 		return _searchContainer;
+	}
+
+	public long getSegmentsEntryId() throws PortalException {
+		if (_segmentsEntryId != null) {
+			return _segmentsEntryId;
+		}
+
+		_segmentsEntryId = ParamUtil.getLong(_request, "segmentsEntryId");
+
+		if (_segmentsEntryId == 0) {
+			SegmentsEntry defaultSegmentsEntry =
+				SegmentsEntryLocalServiceUtil.getDefaultSegmentsEntry(
+					_themeDisplay.getScopeGroupId());
+
+			_segmentsEntryId = defaultSegmentsEntry.getSegmentsEntryId();
+		}
+
+		return _segmentsEntryId;
 	}
 
 	public List<Group> getSelectedGroups() throws PortalException {
@@ -872,6 +893,7 @@ public class EditAssetListDisplayContext {
 	private long[] _referencedModelsGroupIds;
 	private final HttpServletRequest _request;
 	private SearchContainer _searchContainer;
+	private Long _segmentsEntryId;
 	private Boolean _subtypeFieldsFilterEnabled;
 	private final ThemeDisplay _themeDisplay;
 

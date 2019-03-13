@@ -59,9 +59,12 @@ public class DeleteScopeGroupMVCActionCommand extends BaseMVCActionCommand {
 			return;
 		}
 
+		long segmentsEntryId = ParamUtil.getLong(
+			actionRequest, "segmentsEntryId");
+
 		UnicodeProperties properties = new UnicodeProperties(true);
 
-		properties.fastLoad(assetListEntry.getTypeSettings());
+		properties.fastLoad(assetListEntry.getTypeSettings(segmentsEntryId));
 
 		long[] groupIds = GetterUtil.getLongValues(
 			StringUtil.split(properties.getProperty("groupIds")));
@@ -73,7 +76,7 @@ public class DeleteScopeGroupMVCActionCommand extends BaseMVCActionCommand {
 		properties.setProperty("groupIds", StringUtil.merge(groupIds));
 
 		_assetListEntryService.updateAssetListEntryTypeSettings(
-			assetListEntryId, properties.toString());
+			assetListEntryId, segmentsEntryId, properties.toString());
 	}
 
 	@Reference

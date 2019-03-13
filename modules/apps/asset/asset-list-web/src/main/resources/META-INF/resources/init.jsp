@@ -104,7 +104,7 @@ UnicodeProperties properties = new UnicodeProperties();
 AssetListEntry curAssetListEntry = assetListDisplayContext.getAssetListEntry();
 
 if (curAssetListEntry != null) {
-	properties.load(curAssetListEntry.getTypeSettings());
+	properties.load(curAssetListEntry.getTypeSettings(assetListDisplayContext.getSegmentsEntryId()));
 }
 
 EditAssetListDisplayContext editAssetListDisplayContext = new EditAssetListDisplayContext(renderRequest, renderResponse, properties);

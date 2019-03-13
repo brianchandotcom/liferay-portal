@@ -228,7 +228,11 @@ public class EditRoleAssignmentsManagementToolbarDisplayContext {
 		LinkedHashMap<String, Object> organizationParams =
 			new LinkedHashMap<>();
 
+		boolean forceDatabase = false;
+
 		if (_tabs3.equals("current")) {
+			forceDatabase = true;
+
 			organizationParams.put(
 				"organizationsRoles", Long.valueOf(_role.getRoleId()));
 		}
@@ -242,7 +246,7 @@ public class EditRoleAssignmentsManagementToolbarDisplayContext {
 		Indexer<?> indexer = IndexerRegistryUtil.nullSafeGetIndexer(
 			Organization.class);
 
-		if (indexer.isIndexerEnabled() &&
+		if (!forceDatabase && indexer.isIndexerEnabled() &&
 			PropsValues.ORGANIZATIONS_SEARCH_WITH_INDEX) {
 
 			organizationParams.put("expandoAttributes", getKeywords());

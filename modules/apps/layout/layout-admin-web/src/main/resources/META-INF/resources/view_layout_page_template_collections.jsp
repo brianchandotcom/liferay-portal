@@ -124,8 +124,10 @@ List<LayoutPageTemplateCollection> layoutPageTemplateCollections = layoutPageTem
 				<div class="sheet">
 					<h3 class="sheet-title">
 						<div class="autofit-row autofit-row-center">
-							<div class="autofit-col">
-								<%= HtmlUtil.escape(layoutPageTemplateCollection.getName()) %>
+							<div class="autofit-col autofit-col-expand">
+								<span class="text-uppercase">
+									<%= HtmlUtil.escape(layoutPageTemplateCollection.getName()) %>
+								</span>
 							</div>
 
 							<div class="autofit-col autofit-col-end inline-item-after">

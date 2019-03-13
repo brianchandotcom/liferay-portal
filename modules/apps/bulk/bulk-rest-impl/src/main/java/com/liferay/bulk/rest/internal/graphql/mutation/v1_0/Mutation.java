@@ -25,6 +25,7 @@ import com.liferay.bulk.rest.resource.v1_0.VocabularyResource;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
 
+import com.liferay.portal.vulcan.pagination.Page;
 import graphql.annotations.annotationTypes.GraphQLField;
 import graphql.annotations.annotationTypes.GraphQLInvokeDetached;
 import graphql.annotations.annotationTypes.GraphQLName;
@@ -97,7 +98,10 @@ public class Mutation {
 
 		KeywordResource keywordResource = _createKeywordResource();
 
-		return keywordResource.postKeywordCommonPage(documentSelection);
+		Page<Keyword> keywordPage =
+			keywordResource.postKeywordCommonPage(documentSelection);
+
+		return keywordPage.getItems();
 	}
 
 	@GraphQLField
@@ -138,8 +142,11 @@ public class Mutation {
 
 		VocabularyResource vocabularyResource = _createVocabularyResource();
 
-		return vocabularyResource.postContentSpaceVocabularyCommonPage(
-			contentSpaceId, documentSelection);
+		Page<Vocabulary> vocabularyPage =
+			vocabularyResource.postContentSpaceVocabularyCommonPage(
+				contentSpaceId, documentSelection);
+
+		return vocabularyPage.getItems();
 	}
 
 	private static CategoryResource _createCategoryResource() throws Exception {

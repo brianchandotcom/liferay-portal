@@ -143,10 +143,10 @@ public class WebBundleDeployer {
 		if ((bundleRevision.getTypes() & BundleRevision.TYPE_FRAGMENT) ==
 				BundleRevision.TYPE_FRAGMENT) {
 
-			return false;
+			return true;
 		}
 
-		return true;
+		return false;
 	}
 
 	protected void handleCollidedWABs(Bundle bundle) {

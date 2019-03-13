@@ -73,15 +73,19 @@ public class EditAssetListEntryFiltersMVCActionCommand
 			return;
 		}
 
+		long segmentsEntryId = ParamUtil.getLong(
+			actionRequest, "segmentsEntryId");
+
 		try {
 			UnicodeProperties properties = new UnicodeProperties(true);
 
-			properties.fastLoad(assetListEntry.getTypeSettings());
+			properties.fastLoad(
+				assetListEntry.getTypeSettings(segmentsEntryId));
 
 			updateQueryLogic(actionRequest, properties);
 
 			_assetListEntryService.updateAssetListEntryTypeSettings(
-				assetListEntryId, properties.toString());
+				assetListEntryId, segmentsEntryId, properties.toString());
 		}
 		catch (DuplicateQueryRuleException dqre) {
 			if (_log.isDebugEnabled()) {

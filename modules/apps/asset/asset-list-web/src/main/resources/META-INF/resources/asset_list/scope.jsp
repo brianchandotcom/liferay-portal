@@ -25,6 +25,7 @@ PortletURL portletURL = editAssetListDisplayContext.getPortletURL();
 <portlet:actionURL name="/asset_list/add_scope_group" var="addGroupURL">
 	<portlet:param name="redirect" value="<%= portletURL.toString() %>" />
 	<portlet:param name="assetListEntryId" value="<%= String.valueOf(editAssetListDisplayContext.getAssetListEntryId()) %>" />
+	<portlet:param name="segmentsEntryId" value="<%= String.valueOf(editAssetListDisplayContext.getSegmentsEntryId()) %>" />
 </portlet:actionURL>
 
 <liferay-frontend:edit-form
@@ -70,6 +71,7 @@ PortletURL portletURL = editAssetListDisplayContext.getPortletURL();
 					<portlet:actionURL name="/asset_list/delete_scope_group" var="deleteScopeGroupURL">
 						<portlet:param name="redirect" value="<%= portletURL.toString() %>" />
 						<portlet:param name="assetListEntryId" value="<%= String.valueOf(editAssetListDisplayContext.getAssetListEntryId()) %>" />
+						<portlet:param name="segmentsEntryId" value="<%= String.valueOf(editAssetListDisplayContext.getSegmentsEntryId()) %>" />
 						<portlet:param name="groupId" value="<%= String.valueOf(group.getGroupId()) %>" />
 					</portlet:actionURL>
 
@@ -106,6 +108,7 @@ PortletURL portletURL = editAssetListDisplayContext.getPortletURL();
 					<portlet:param name="redirect" value="<%= portletURL.toString() %>" />
 					<portlet:param name="assetListEntryId" value="<%= String.valueOf(editAssetListDisplayContext.getAssetListEntryId()) %>" />
 					<portlet:param name="groupId" value="<%= String.valueOf(group.getGroupId()) %>" />
+					<portlet:param name="segmentsEntryId" value="<%= String.valueOf(editAssetListDisplayContext.getSegmentsEntryId()) %>" />
 				</portlet:actionURL>
 
 				<liferay-ui:icon

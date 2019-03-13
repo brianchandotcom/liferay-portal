@@ -30,6 +30,7 @@ List<AssetRendererFactory<?>> classTypesAssetRendererFactories = new ArrayList()
 >
 	<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
 	<aui:input name="assetListEntryId" type="hidden" value="<%= assetListDisplayContext.getAssetListEntryId() %>" />
+	<aui:input name="segmentsEntryId" type="hidden" value="<%= assetListDisplayContext.getSegmentsEntryId() %>" />
 
 	<liferay-frontend:edit-form-body>
 		<h1 class="sheet-title">

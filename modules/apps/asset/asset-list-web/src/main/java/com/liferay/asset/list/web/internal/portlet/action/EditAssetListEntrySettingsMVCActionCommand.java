@@ -49,13 +49,16 @@ public class EditAssetListEntrySettingsMVCActionCommand
 
 		long assetListEntryId = ParamUtil.getLong(
 			actionRequest, "assetListEntryId");
+		long segmentsEntryId = ParamUtil.getLong(
+			actionRequest, "segmentsEntryId");
 
 		UnicodeProperties typeSettingsProperties =
 			PropertiesParamUtil.getProperties(
 				actionRequest, "TypeSettingsProperties--");
 
 		_assetListEntryService.updateAssetListEntryTypeSettingsProperties(
-			assetListEntryId, typeSettingsProperties.toString());
+			assetListEntryId, segmentsEntryId,
+			typeSettingsProperties.toString());
 	}
 
 	@Reference

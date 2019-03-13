@@ -231,21 +231,8 @@ else {
 		function(A) {
 			var form = document.<portlet:namespace />fm;
 
-			var curPortletBoundaryId = '#p_p_id_<%= HtmlUtil.escapeJS(portletResource) %>_';
-
-			form.addEventListener(
-				'change',
-				function() {
-					<portlet:namespace/>resetPreview();
-				}
-			);
-
-			form.addEventListener(
-				'select',
-				function() {
-					<portlet:namespace/>resetPreview();
-				}
-			);
+			form.addEventListener('change', <portlet:namespace/>resetPreview);
+			form.addEventListener('select', <portlet:namespace/>resetPreview);
 
 			function <portlet:namespace/>resetPreview() {
 				var displayDepthSelect = Liferay.Util.getFormElement(form, 'displayDepth');
@@ -274,33 +261,25 @@ else {
 
 				data = Liferay.Util.ns('_<%= HtmlUtil.escapeJS(portletResource) %>_', data);
 
-				Liferay.Portlet.refresh(curPortletBoundaryId, data);
+				Liferay.Portlet.refresh('#p_p_id_<%= HtmlUtil.escapeJS(portletResource) %>_', data);
 			}
 
 			var chooseRootMenuItemButton = document.getElementById('<portlet:namespace />chooseRootMenuItem');
+			var rootMenuItemIdInput = document.getElementById('<portlet:namespace />rootMenuItemId');
+			var rootMenuItemNameSpan = document.getElementById('<portlet:namespace />rootMenuItemName');
+			var selectSiteNavigationMenuTypeSelect = document.getElementById('<portlet:namespace />selectSiteNavigationMenuType');
+			var siteNavigationMenuIdInput = document.getElementById('<portlet:namespace />siteNavigationMenuId');
 
-			if (chooseRootMenuItemButton) {
+			if (chooseRootMenuItemButton && rootMenuItemIdInput && rootMenuItemNameSpan && selectSiteNavigationMenuTypeSelect && siteNavigationMenuIdInput) {
 				chooseRootMenuItemButton.addEventListener(
 					'click',
 					function(event) {
 						event.preventDefault();
 
-						var siteNavigationMenuIdInput = document.getElementById('<portlet:namespace />siteNavigationMenuId');
-
-						if (siteNavigationMenuIdInput) {
-							var siteNavigationMenuId = siteNavigationMenuIdInput.value;
-						}
-
-						var selectSiteNavigationMenuTypeSelect = document.getElementById('<portlet:namespace />selectSiteNavigationMenuType');
-
-						if (selectSiteNavigationMenuTypeSelect) {
-							var selectSiteNavigationMenuType = selectSiteNavigationMenuTypeSelect.value;
-						}
-
 						var uri = '<%= siteNavigationMenuDisplayContext.getRootMenuItemSelectorURL() %>';
 
-						uri = Liferay.Util.addParams('<%= PortalUtil.getPortletNamespace(ItemSelectorPortletKeys.ITEM_SELECTOR) %>siteNavigationMenuId=' + siteNavigationMenuId, uri);
-						uri = Liferay.Util.addParams('<%= PortalUtil.getPortletNamespace(ItemSelectorPortletKeys.ITEM_SELECTOR) %>siteNavigationMenuType=' + selectSiteNavigationMenuType, uri);
+						uri = Liferay.Util.addParams('<%= PortalUtil.getPortletNamespace(ItemSelectorPortletKeys.ITEM_SELECTOR) %>siteNavigationMenuType=' + selectSiteNavigationMenuTypeSelect.value, uri);
+						uri = Liferay.Util.addParams('<%= PortalUtil.getPortletNamespace(ItemSelectorPortletKeys.ITEM_SELECTOR) %>siteNavigationMenuId=' + siteNavigationMenuIdInput.value, uri);
 
 						var itemSelectorDialog = new A.LiferayItemSelectorDialog(
 							{
@@ -310,17 +289,8 @@ else {
 										var selectedItem = event.newVal;
 
 										if (selectedItem) {
-											var rootMenuItemIdInput = document.getElementById('<portlet:namespace />rootMenuItemId');
-
-											if (rootMenuItemIdInput) {
-												rootMenuItemIdInput.value = selectedItem.selectSiteNavigationMenuItemId;
-											}
-
-											var rootMenuItemNameSpan = document.getElementById('<portlet:namespace />rootMenuItemName');
-
-											if (rootMenuItemNameSpan) {
-												rootMenuItemNameSpan.innerText = selectedItem.selectSiteNavigationMenuItemName;
-											}
+											rootMenuItemIdInput.value = selectedItem.selectSiteNavigationMenuItemId;
+											rootMenuItemNameSpan.innerText = selectedItem.selectSiteNavigationMenuItemName;
 
 											<portlet:namespace/>resetPreview();
 										}
@@ -338,96 +308,54 @@ else {
 			}
 
 			var chooseSiteNavigationMenuButton = document.getElementById('<portlet:namespace />chooseSiteNavigationMenu');
+			var navigationMenuName = document.getElementById('<portlet:namespace />navigationMenuName');
+			var removeSiteNavigationMenu = document.getElementById('<portlet:namespace />removeSiteNavigationMenu');
 
-			chooseSiteNavigationMenuButton.addEventListener(
-				'click',
-				function(event) {
-					Liferay.Util.selectEntity(
-						{
-							dialog: {
-								constrain: true,
-								destroyOnHide: true,
-								modal: true
+			if (chooseSiteNavigationMenuButton && navigationMenuName && removeSiteNavigationMenu && rootMenuItemIdInput && rootMenuItemNameSpan && siteNavigationMenuIdInput) {
+				chooseSiteNavigationMenuButton.addEventListener(
+					'click',
+					function(event) {
+						Liferay.Util.selectEntity(
+							{
+								dialog: {
+									constrain: true,
+									destroyOnHide: true,
+									modal: true
+								},
+								eventName: '<%= siteNavigationMenuDisplayContext.getSiteNavigationMenuEventName() %>',
+								id: '<portlet:namespace />selectSiteNavigationMenu',
+								title: '<liferay-ui:message key="select-site-navigation-menu" />',
+								uri: '<%= siteNavigationMenuDisplayContext.getSiteNavigationMenuItemSelectorURL() %>'
 							},
-							eventName: '<%= siteNavigationMenuDisplayContext.getSiteNavigationMenuEventName() %>',
-							id: '<portlet:namespace />selectSiteNavigationMenu',
-							title: '<liferay-ui:message key="select-site-navigation-menu" />',
-							uri: '<%= siteNavigationMenuDisplayContext.getSiteNavigationMenuItemSelectorURL() %>'
-						},
-						function(selectedItem) {
-							if (selectedItem.id) {
-								var siteNavigationMenuIdInput = document.getElementById('<portlet:namespace />siteNavigationMenuId');
-
-								if (siteNavigationMenuIdInput) {
-									siteNavigationMenuIdInput.value = selectedItem.id;
-								}
-
-								var navigationMenuName = document.getElementById('<portlet:namespace />navigationMenuName');
-
-								if (navigationMenuName) {
+							function(selectedItem) {
+								if (selectedItem) {
 									navigationMenuName.innerText = selectedItem.name;
-								}
-
-								var rootMenuItemIdInput = document.getElementById('<portlet:namespace />rootMenuItemId');
-
-								if (rootMenuItemIdInput) {
 									rootMenuItemIdInput.value = '0';
-								}
-
-								var rootMenuItemNameSpan = document.getElementById('<portlet:namespace />rootMenuItemName');
-
-								if (rootMenuItemNameSpan) {
 									rootMenuItemNameSpan.innerText = selectedItem.name;
-								}
+									siteNavigationMenuIdInput.value = selectedItem.id;
 
-								var removeSiteNavigationMenu = document.getElementById('<portlet:namespace />removeSiteNavigationMenu');
-
-								if (removeSiteNavigationMenu) {
 									dom.toggleClasses(removeSiteNavigationMenu, 'hide');
-								}
 
-								<portlet:namespace/>resetPreview();
+									<portlet:namespace/>resetPreview();
+								}
 							}
-						}
-					);
-				}
-			);
+						);
+					}
+				);
+			}
 
 			var removeSiteNavigationMenuButton = document.getElementById('<portlet:namespace />removeSiteNavigationMenu');
 
-			if (removeSiteNavigationMenuButton) {
+			if (navigationMenuName && removeSiteNavigationMenu && removeSiteNavigationMenuButton && rootMenuItemIdInput && rootMenuItemNameSpan && siteNavigationMenuIdInput) {
 				removeSiteNavigationMenuButton.addEventListener(
 					'click',
 					function(event) {
-						var siteNavigationMenuIdInput = document.getElementById('<portlet:namespace />siteNavigationMenuId');
+						navigationMenuName.innerText = '';
+						rootMenuItemIdInput.value = '0';
+						rootMenuItemNameSpan.innerText = '';
+						siteNavigationMenuIdInput.value = '0';
 
-						if (siteNavigationMenuIdInput) {
-							siteNavigationMenuIdInput.value = '0';
-						}
-
-						var navigationMenuName = document.getElementById('<portlet:namespace />navigationMenuName');
-
-						if (navigationMenuName) {
-							navigationMenuName.innerText = '';
-						}
-
-						var rootMenuItemIdInput = document.getElementById('<portlet:namespace />rootMenuItemId');
-
-						if (rootMenuItemIdInput) {
-							rootMenuItemIdInput.value = '0';
-						}
-
-						var rootMenuItemNameSpan = document.getElementById('<portlet:namespace />rootMenuItemName');
-
-						if (rootMenuItemNameSpan) {
-							rootMenuItemNameSpan.innerText = '';
-						}
-
-						var removeSiteNavigationMenu = document.getElementById('<portlet:namespace />removeSiteNavigationMenu');
-
-						if (removeSiteNavigationMenu) {
-							dom.toggleClasses(removeSiteNavigationMenu, 'hide');
-						}
+						dom.toggleClasses(removeSiteNavigationMenu, 'hide');
 
 						<portlet:namespace/>resetPreview();
 					}
@@ -444,69 +372,46 @@ else {
 				'<portlet:namespace />rootMenuItemLevel'
 			);
 
-			var selectSiteNavigationMenuTypeSelect = document.getElementById('<portlet:namespace />selectSiteNavigationMenuType');
+			var siteNavigationMenuType = document.getElementById('<portlet:namespace />siteNavigationMenuType');
 
-			if (selectSiteNavigationMenuTypeSelect) {
+			if (rootMenuItemNameSpan && selectSiteNavigationMenuTypeSelect && siteNavigationMenuType) {
 				selectSiteNavigationMenuTypeSelect.addEventListener(
 					'change',
 					function() {
-						var rootMenuItemNameSpan = document.getElementById('<portlet:namespace />rootMenuItemName');
+						var selectedSelectSiteNavigationMenuType = document.querySelector('#<portlet:namespace />selectSiteNavigationMenuType option:checked');
 
-						if (rootMenuItemNameSpan) {
-							var selectedSelectSiteNavigationMenuType = document.querySelector('#<portlet:namespace />selectSiteNavigationMenuType option:checked');
-
+						if (selectedSelectSiteNavigationMenuType) {
 							rootMenuItemNameSpan.innerText = selectedSelectSiteNavigationMenuType.innerText;
 						}
 
-						var siteNavigationMenuType = document.getElementById('<portlet:namespace />siteNavigationMenuType');
-
-						if (siteNavigationMenuType) {
-							siteNavigationMenuType.value = selectSiteNavigationMenuTypeSelect.value;
-						}
+						siteNavigationMenuType.value = selectSiteNavigationMenuTypeSelect.value;
 					}
 				);
 			}
 
-			dom.delegate(
-				document.<portlet:namespace />fm,
-				'change',
-				'.select-navigation',
-				function() {
-					var siteNavigationDisabled = selectSiteNavigationMenuTypeSelect.disabled;
+			var chooseSiteNavigationMenu = document.getElementById('<portlet:namespace />chooseSiteNavigationMenu');
 
-					var chooseSiteNavigationMenu = document.getElementById('<portlet:namespace />chooseSiteNavigationMenu');
+			if (chooseSiteNavigationMenu && navigationMenuName && removeSiteNavigationMenu && siteNavigationMenuIdInput && siteNavigationMenuType) {
+				dom.delegate(
+					document.<portlet:namespace />fm,
+					'change',
+					'.select-navigation',
+					function() {
+						var siteNavigationDisabled = selectSiteNavigationMenuTypeSelect.disabled;
 
-					Liferay.Util.toggleDisabled(chooseSiteNavigationMenu, siteNavigationDisabled);
+						Liferay.Util.toggleDisabled(chooseSiteNavigationMenu, siteNavigationDisabled);
+						Liferay.Util.toggleDisabled(selectSiteNavigationMenuTypeSelect, !siteNavigationDisabled);
 
-					Liferay.Util.toggleDisabled(selectSiteNavigationMenuTypeSelect, !siteNavigationDisabled);
-
-					var siteNavigationMenuIdInput = document.getElementById('<portlet:namespace />siteNavigationMenuId');
-
-					if (siteNavigationMenuIdInput) {
-						siteNavigationMenuIdInput.value = 0;
-					}
-
-					var siteNavigationMenuType = document.getElementById('<portlet:namespace />siteNavigationMenuType');
-
-					if (siteNavigationMenuType) {
-						siteNavigationMenuType.value = -1;
-					}
-
-					var navigationMenuName = document.getElementById('<portlet:namespace />navigationMenuName');
-
-					if (navigationMenuName) {
 						navigationMenuName.innerText = '';
-					}
+						siteNavigationMenuIdInput.value = 0;
+						siteNavigationMenuType.value = -1;
 
-					var removeSiteNavigationMenu = document.getElementById('<portlet:namespace />removeSiteNavigationMenu');
-
-					if (removeSiteNavigationMenu) {
 						removeSiteNavigationMenu.classList.add('hide');
-					}
 
-					<portlet:namespace/>resetPreview();
-				}
-			);
+						<portlet:namespace/>resetPreview();
+					}
+				);
+			}
 		}
 	);
 </aui:script>

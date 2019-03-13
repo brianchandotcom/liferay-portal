@@ -62,11 +62,29 @@ public class JavaClass extends BaseJavaTerm {
 	}
 
 	public List<String> getExtendedClassNames() {
-		return _extendedClassNames;
+		return getExtendedClassNames(false);
+	}
+
+	public List<String> getExtendedClassNames(boolean fullyQualifiedClassName) {
+		if (!fullyQualifiedClassName || _extendedClassNames.isEmpty()) {
+			return _extendedClassNames;
+		}
+
+		return _getFullyQualifiedClassNames(_extendedClassNames);
 	}
 
 	public List<String> getImplementedClassNames() {
-		return _implementedClassNames;
+		return getImplementedClassNames(false);
+	}
+
+	public List<String> getImplementedClassNames(
+		boolean fullyQualifiedClassName) {
+
+		if (!fullyQualifiedClassName || _implementedClassNames.isEmpty()) {
+			return _implementedClassNames;
+		}
+
+		return _getFullyQualifiedClassNames(_implementedClassNames);
 	}
 
 	public List<String> getImports() {
@@ -87,6 +105,31 @@ public class JavaClass extends BaseJavaTerm {
 
 	public void setPackageName(String packageName) {
 		_packageName = packageName;
+	}
+
+	private List<String> _getFullyQualifiedClassNames(List<String> classNames) {
+		List<String> fullyQualifiedClassNames = new ArrayList<>();
+
+		outerLoop:
+		for (String className : classNames) {
+			if (className.matches("([a-z]\\w*\\.){2,}[A-Z]\\w*")) {
+				fullyQualifiedClassNames.add(className);
+
+				continue;
+			}
+
+			for (String importName : _imports) {
+				if (importName.endsWith("." + className)) {
+					fullyQualifiedClassNames.add(className);
+
+					continue outerLoop;
+				}
+			}
+
+			fullyQualifiedClassNames.add(_packageName + "." + className);
+		}
+
+		return fullyQualifiedClassNames;
 	}
 
 	private final boolean _anonymous;

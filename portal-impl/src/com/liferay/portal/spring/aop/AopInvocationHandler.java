@@ -57,7 +57,11 @@ public class AopInvocationHandler implements InvocationHandler {
 		_chainableMethodAdvices = chainableMethodAdvices;
 	}
 
-	protected void reset() {
+	protected void setChainableMethodAdvices(
+		ChainableMethodAdvice[] chainableMethodAdvices) {
+
+		_chainableMethodAdvices = chainableMethodAdvices;
+
 		_aopMethodInvocations.clear();
 	}
 
@@ -105,7 +109,7 @@ public class AopInvocationHandler implements InvocationHandler {
 
 	private final Map<Method, AopMethodInvocation> _aopMethodInvocations =
 		new ConcurrentHashMap<>();
-	private final ChainableMethodAdvice[] _chainableMethodAdvices;
+	private volatile ChainableMethodAdvice[] _chainableMethodAdvices;
 	private volatile Object _target;
 
 }

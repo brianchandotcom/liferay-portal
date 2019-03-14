@@ -33,12 +33,18 @@ import com.liferay.portal.spring.transaction.TransactionExecutor;
 import com.liferay.portal.spring.transaction.TransactionInterceptor;
 import com.liferay.portal.systemevent.SystemEventAdvice;
 import com.liferay.portal.util.PropsValues;
+import com.liferay.registry.Registry;
+import com.liferay.registry.RegistryUtil;
+import com.liferay.registry.ServiceReference;
+import com.liferay.registry.ServiceTracker;
+import com.liferay.registry.ServiceTrackerCustomizer;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * @author Preston Crary
@@ -53,25 +59,37 @@ public class AopCacheManager {
 			new ChainableMethodAdviceDependencies(
 				transactionExecutor, serviceMonitoringControl);
 
-		AopInvocationHandler aopInvocationHandler = new AopInvocationHandler(
-			target,
-			_createChainableMethodAdvices(chainableMethodAdviceDependencies));
+		synchronized (AopCacheManager.class) {
+			AopInvocationHandler aopInvocationHandler =
+				new AopInvocationHandler(
+					target,
+					_createChainableMethodAdvices(
+						chainableMethodAdviceDependencies));
 
-		_aopInvocationHandlers.put(
-			aopInvocationHandler, chainableMethodAdviceDependencies);
+			_aopInvocationHandlers.put(
+				aopInvocationHandler, chainableMethodAdviceDependencies);
 
-		return aopInvocationHandler;
+			return aopInvocationHandler;
+		}
 	}
 
-	public static void destroy(AopInvocationHandler aopInvocationHandler) {
+	public static synchronized void destroy(
+		AopInvocationHandler aopInvocationHandler) {
+
 		_aopInvocationHandlers.remove(aopInvocationHandler);
 	}
 
-	public static void reset() {
-		for (AopInvocationHandler aopInvocationHandler :
-				_aopInvocationHandlers.keySet()) {
+	public static synchronized void reset() {
+		for (Map.Entry<AopInvocationHandler, ChainableMethodAdviceDependencies>
+				entry : _aopInvocationHandlers.entrySet()) {
 
-			aopInvocationHandler.reset();
+			AopInvocationHandler aopInvocationHandler = entry.getKey();
+			ChainableMethodAdviceDependencies
+				chainableMethodAdviceDependencies = entry.getValue();
+
+			aopInvocationHandler.setChainableMethodAdvices(
+				_createChainableMethodAdvices(
+					chainableMethodAdviceDependencies));
 		}
 	}
 
@@ -111,7 +129,7 @@ public class AopCacheManager {
 
 	private static final Map
 		<AopInvocationHandler, ChainableMethodAdviceDependencies>
-			_aopInvocationHandlers = new ConcurrentHashMap<>();
+			_aopInvocationHandlers = new HashMap<>();
 
 	private static final List<ChainableMethodAdvice> _chainableMethodAdvices =
 		new ArrayList<ChainableMethodAdvice>() {
@@ -178,6 +196,70 @@ public class AopCacheManager {
 		private final ServiceMonitoringControl _serviceMonitoringControl;
 		private final TransactionExecutor _transactionExecutor;
 
+	}
+
+	private static class ChainableMethodAdviceServiceTrackerCustomizer
+		implements ServiceTrackerCustomizer
+			<ChainableMethodAdvice, ChainableMethodAdvice> {
+
+		@Override
+		public ChainableMethodAdvice addingService(
+			ServiceReference<ChainableMethodAdvice> serviceReference) {
+
+			Registry registry = RegistryUtil.getRegistry();
+
+			ChainableMethodAdvice chainableMethodAdvice = registry.getService(
+				serviceReference);
+
+			synchronized (AopCacheManager.class) {
+				int index = Collections.binarySearch(
+					_chainableMethodAdvices, chainableMethodAdvice,
+					_CHAINABLE_METHOD_ADVICE_COMPARATOR);
+
+				if (index < 0) {
+					index = -index - 1;
+				}
+
+				_chainableMethodAdvices.add(index, chainableMethodAdvice);
+
+				reset();
+			}
+
+			return chainableMethodAdvice;
+		}
+
+		@Override
+		public void modifiedService(
+			ServiceReference<ChainableMethodAdvice> serviceReference,
+			ChainableMethodAdvice chainableMethodAdvice) {
+		}
+
+		@Override
+		public void removedService(
+			ServiceReference<ChainableMethodAdvice> serviceReference,
+			ChainableMethodAdvice chainableMethodAdvice) {
+
+			synchronized (AopCacheManager.class) {
+				_chainableMethodAdvices.remove(chainableMethodAdvice);
+
+				reset();
+			}
+
+			Registry registry = RegistryUtil.getRegistry();
+
+			registry.ungetService(serviceReference);
+		}
+
+	}
+
+	static {
+		Registry registry = RegistryUtil.getRegistry();
+
+		ServiceTracker<?, ?> serviceTracker = registry.trackServices(
+			ChainableMethodAdvice.class,
+			new ChainableMethodAdviceServiceTrackerCustomizer());
+
+		serviceTracker.open();
 	}
 
 }

@@ -2115,7 +2115,7 @@ definition {
 
 		Role.viewPermissionCP(
 			permissionDefinitionValue = "View Site Administration Menu",
-			permissionNavigationValue = "Site Settings &gt; Site"
+			permissionNavigationValue = "Settings &gt; Site"
 		);
 	}
 

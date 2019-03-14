@@ -94,10 +94,6 @@ public class AopCacheManager {
 			chainableMethodAdvices.add(new PortalResiliencyAdvice());
 		}
 
-		chainableMethodAdvices.add(
-			new ServiceMonitorAdvice(
-				chainableMethodAdviceDependencies._serviceMonitoringControl));
-
 		AsyncAdvice asyncAdvice = new AsyncAdvice();
 
 		asyncAdvice.setDefaultDestinationName("liferay/async_service");
@@ -116,12 +112,6 @@ public class AopCacheManager {
 
 		chainableMethodAdvices.add(new RetryAdvice());
 
-		TransactionInterceptor transactionInterceptor =
-			new TransactionInterceptor();
-
-		transactionInterceptor.setTransactionExecutor(
-			chainableMethodAdviceDependencies._transactionExecutor);
-
 		DynamicDataSourceTargetSource dynamicDataSourceTargetSource =
 			InfrastructureUtil.getDynamicDataSourceTargetSource();
 
@@ -134,6 +124,16 @@ public class AopCacheManager {
 
 			chainableMethodAdvices.add(dynamicDataSourceAdvice);
 		}
+
+		chainableMethodAdvices.add(
+			new ServiceMonitorAdvice(
+				chainableMethodAdviceDependencies._serviceMonitoringControl));
+
+		TransactionInterceptor transactionInterceptor =
+			new TransactionInterceptor();
+
+		transactionInterceptor.setTransactionExecutor(
+			chainableMethodAdviceDependencies._transactionExecutor);
 
 		chainableMethodAdvices.add(transactionInterceptor);
 

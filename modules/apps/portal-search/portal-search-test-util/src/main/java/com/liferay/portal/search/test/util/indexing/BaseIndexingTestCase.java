@@ -38,8 +38,10 @@ import com.liferay.portal.search.aggregation.HierarchicalAggregationResult;
 import com.liferay.portal.search.aggregation.bucket.Bucket;
 import com.liferay.portal.search.aggregation.pipeline.PipelineAggregation;
 import com.liferay.portal.search.engine.adapter.SearchEngineAdapter;
+import com.liferay.portal.search.geolocation.GeoBuilders;
 import com.liferay.portal.search.highlight.Highlights;
 import com.liferay.portal.search.internal.aggregation.AggregationsImpl;
+import com.liferay.portal.search.internal.geolocation.GeoBuildersImpl;
 import com.liferay.portal.search.internal.highlight.HighlightsImpl;
 import com.liferay.portal.search.internal.legacy.searcher.SearchRequestBuilderImpl;
 import com.liferay.portal.search.internal.legacy.searcher.SearchResponseBuilderImpl;
@@ -258,6 +260,7 @@ public abstract class BaseIndexingTestCase {
 	protected static final long GROUP_ID = RandomTestUtil.randomLong();
 
 	protected final Aggregations aggregations = new AggregationsImpl();
+	protected final GeoBuilders geoBuilders = new GeoBuildersImpl();
 	protected final Highlights highlights = new HighlightsImpl();
 	protected final Queries queries = new QueriesImpl();
 	protected final Scripts scripts = new ScriptsImpl();

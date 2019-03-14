@@ -58,24 +58,28 @@ public abstract class BaseGeoBoundsAggregationTestCase
 
 				Assert.assertNotNull(geoBoundsAggregationResult);
 
-				GeoLocationPoint bottomRight =
+				GeoLocationPoint bottomRightGeoLocationPoint =
 					geoBoundsAggregationResult.getBottomRight();
 
-				Assert.assertNotNull(bottomRight);
+				Assert.assertNotNull(bottomRightGeoLocationPoint);
 
 				Assert.assertEquals(
-					48.85999997612089, bottomRight.getLatitude(), 0);
+					48.85999997612089,
+					bottomRightGeoLocationPoint.getLatitude(), 0);
 				Assert.assertEquals(
-					2.3363889567553997, bottomRight.getLongitude(), 0);
+					2.3363889567553997,
+					bottomRightGeoLocationPoint.getLongitude(), 0);
 
-				GeoLocationPoint topLeft =
+				GeoLocationPoint topLeftGeoLocationPoint =
 					geoBoundsAggregationResult.getTopLeft();
 
-				Assert.assertNotNull(topLeft);
+				Assert.assertNotNull(topLeftGeoLocationPoint);
 
 				Assert.assertEquals(
-					48.86111099738628, topLeft.getLatitude(), 0);
-				Assert.assertEquals(2.3269999679178, topLeft.getLongitude(), 0);
+					48.86111099738628, topLeftGeoLocationPoint.getLatitude(),
+					0);
+				Assert.assertEquals(
+					2.3269999679178, topLeftGeoLocationPoint.getLongitude(), 0);
 			});
 	}
 

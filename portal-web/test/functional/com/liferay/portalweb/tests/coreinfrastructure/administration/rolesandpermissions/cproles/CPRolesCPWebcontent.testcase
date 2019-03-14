@@ -595,7 +595,11 @@ definition {
 			portlet = "Web Content"
 		);
 
-		WebContentNavigator.gotoAddCP();
+		AssertVisible(locator1 = "Button#PLUS");
+
+		Pause(locator1 = "3000");
+
+		LexiconEntry.gotoAdd();
 
 		WebContent.addCP(
 			webContentContent = "WC WebContent Content",

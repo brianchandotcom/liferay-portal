@@ -29,6 +29,7 @@ page import="com.liferay.petra.string.StringPool" %><%@
 page import="com.liferay.portal.kernel.util.HtmlUtil" %><%@
 page import="com.liferay.portal.kernel.util.PortalUtil" %><%@
 page import="com.liferay.portal.kernel.util.SessionClicks" %><%@
+page import="com.liferay.portal.kernel.webserver.WebServerServletTokenUtil" %><%@
 page import="com.liferay.product.navigation.product.menu.constants.ProductNavigationProductMenuWebKeys" %><%@
 page import="com.liferay.product.navigation.product.menu.display.context.ProductMenuDisplayContext" %><%@
 page import="com.liferay.taglib.aui.AUIUtil" %><%@

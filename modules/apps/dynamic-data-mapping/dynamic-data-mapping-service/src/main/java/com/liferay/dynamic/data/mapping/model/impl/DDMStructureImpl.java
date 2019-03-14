@@ -365,22 +365,10 @@ public class DDMStructureImpl extends DDMStructureBaseImpl {
 
 	@Override
 	public boolean hasField(String fieldName) {
-		DDMForm ddmForm = _getDDMForm();
+		DDMFormField ddmFormField = _fetchDDMFormField(fieldName);
 
-		for (DDMFormField ddmFormField : ddmForm.getDDMFormFields()) {
-			DDMFormField targetDDMFormField = null;
-
-			if (fieldName.equals(ddmFormField.getName())) {
-				targetDDMFormField = ddmFormField;
-			}
-			else {
-				targetDDMFormField = _getNestedDDMFormField(
-					ddmFormField, fieldName);
-			}
-
-			if (targetDDMFormField != null) {
-				return true;
-			}
+		if (ddmFormField != null) {
+			return true;
 		}
 
 		try {
@@ -480,6 +468,28 @@ public class DDMStructureImpl extends DDMStructureBaseImpl {
 		return parentStructure;
 	}
 
+	private DDMFormField _fetchDDMFormField(String fieldName) {
+		DDMForm ddmForm = _getDDMForm();
+
+		for (DDMFormField ddmFormField : ddmForm.getDDMFormFields()) {
+			DDMFormField targetDDMFormField = null;
+
+			if (fieldName.equals(ddmFormField.getName())) {
+				targetDDMFormField = ddmFormField;
+			}
+			else {
+				targetDDMFormField = _getNestedDDMFormField(
+					ddmFormField, fieldName);
+			}
+
+			if (targetDDMFormField != null) {
+				return targetDDMFormField;
+			}
+		}
+
+		return null;
+	}
+
 	private DDMForm _getDDMForm() {
 		if (_ddmForm == null) {
 			try {
@@ -499,22 +509,10 @@ public class DDMStructureImpl extends DDMStructureBaseImpl {
 	private DDMFormField _getDDMFormField(String fieldName)
 		throws PortalException {
 
-		DDMForm ddmForm = _getDDMForm();
+		DDMFormField ddmFormField = _fetchDDMFormField(fieldName);
 
-		for (DDMFormField ddmFormField : ddmForm.getDDMFormFields()) {
-			DDMFormField targetDDMFormField = null;
-
-			if (fieldName.equals(ddmFormField.getName())) {
-				targetDDMFormField = ddmFormField;
-			}
-			else {
-				targetDDMFormField = _getNestedDDMFormField(
-					ddmFormField, fieldName);
-			}
-
-			if (targetDDMFormField != null) {
-				return targetDDMFormField;
-			}
+		if (ddmFormField != null) {
+			return ddmFormField;
 		}
 
 		try {

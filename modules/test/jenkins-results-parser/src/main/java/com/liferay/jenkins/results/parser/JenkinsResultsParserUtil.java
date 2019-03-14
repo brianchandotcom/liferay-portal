@@ -80,6 +80,7 @@ import javax.net.ssl.HttpsURLConnection;
 import javax.net.ssl.SSLContext;
 
 import org.apache.commons.codec.binary.Base64;
+import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.SystemUtils;
 
 import org.json.JSONArray;
@@ -1470,6 +1471,10 @@ public class JenkinsResultsParserUtil {
 		return getSlaves(getBuildProperties(), jenkinsMasterPatternString);
 	}
 
+	public static File getSshDir() {
+		return _sshDir;
+	}
+
 	public static List<File> getSubdirectories(int depth, File rootDirectory) {
 		if (!rootDirectory.isDirectory()) {
 			return Collections.emptyList();
@@ -1491,6 +1496,38 @@ public class JenkinsResultsParserUtil {
 		}
 
 		return subdirectories;
+	}
+
+	public static File getUserHome() {
+		if (_userHome != null) {
+			return _userHome;
+		}
+
+		try {
+			Process process = executeBashCommands("eval echo \"~${USER}\"");
+
+			String userHome = readInputStream(process.getInputStream());
+
+			userHome = userHome.replaceAll(
+				"\\nFinished executing Bash commands.\\n", "");
+
+			if (isWindows()) {
+				Matcher matcher = _windowsPathPattern.matcher(userHome);
+
+				String driverLetter = matcher.group("driveLetter");
+
+				userHome = combine(
+					StringUtils.upperCase(driverLetter), ":/",
+					matcher.group("relativePath"));
+			}
+
+			_userHome = new File(userHome);
+
+			return _userHome;
+		}
+		catch (IOException | TimeoutException e) {
+			throw new RuntimeException(e);
+		}
 	}
 
 	public static boolean isCINode() {
@@ -2412,6 +2449,49 @@ public class JenkinsResultsParserUtil {
 		}
 	}
 
+	public static void writeSshIdRsa(String idRsa) {
+		if ((idRsa == null) || idRsa.isEmpty()) {
+			return;
+		}
+
+		if (_sshIdRsaFile.exists()) {
+			_sshIdRsaFile.delete();
+		}
+
+		try {
+			write(_sshIdRsaFile, idRsa);
+
+			executeBashCommands(
+				combine("chmod 400 ", getCanonicalPath(_sshIdRsaFile)));
+		}
+		catch (IOException | TimeoutException e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	public static void writeSshKnownHosts(String knownHosts) {
+		if ((knownHosts == null) || knownHosts.isEmpty()) {
+			return;
+		}
+
+		if (_sshKnownHostsFile.exists()) {
+			_sshKnownHostsFile.delete();
+		}
+
+		for (String knownHost : knownHosts.split(",")) {
+			String command = combine(
+				"ssh-keyscan ", knownHost, " >> ",
+				getCanonicalPath(_sshKnownHostsFile));
+
+			try {
+				executeBashCommands(command);
+			}
+			catch (IOException | TimeoutException e) {
+				throw new RuntimeException(e);
+			}
+		}
+	}
+
 	public static class BasicHTTPAuthorization extends HTTPAuthorization {
 
 		public BasicHTTPAuthorization(String password, String username) {
@@ -2733,7 +2813,20 @@ public class JenkinsResultsParserUtil {
 		"https://test.liferay.com/([0-9]+)/");
 	private static final Pattern _remoteURLAuthorityPattern2 = Pattern.compile(
 		"https://(test-[0-9]+-[0-9]+).liferay.com/");
+	private static final File _sshDir = new File(getUserHome(), ".ssh") {
+		{
+			if (!exists()) {
+				mkdirs();
+			}
+		}
+	};
+	private static final File _sshIdRsaFile = new File(getSshDir(), "id_rsa");
+	private static final File _sshKnownHostsFile = new File(
+		getSshDir(), "known_hosts");
 	private static final Set<String> _timeStamps = new HashSet<>();
+	private static File _userHome;
+	private static final Pattern _windowsPathPattern = Pattern.compile(
+		"/?(?<driveLetter>([a-z]|[A-Z])):?[\\\\/](?<relativePath>.*)");
 
 	static {
 		System.out.println("Securing standard error and out");

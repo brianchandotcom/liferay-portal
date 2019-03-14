@@ -124,15 +124,27 @@ public class DLAdminDisplayContextTest {
 			_addDLFileEntry("alpha_" + i + ".txt", "alpha");
 		}
 
-		MockHttpServletRequest mockHttpServletRequest =
-			new MockHttpServletRequest();
+		DLAdminDisplayContext dlAdminDisplayContext =
+			_dlAdminDisplayContextProvider.getDLAdminDisplayContext(
+				_getHttpServletRequest(_getMockHttpServletRequest()), null);
 
-		mockHttpServletRequest.setAttribute(
-			WebKeys.THEME_DISPLAY, _getThemeDisplay());
+		SearchContainer searchContainer =
+			dlAdminDisplayContext.getSearchContainer();
+
+		Assert.assertEquals(25, searchContainer.getTotal());
+	}
+
+	@Test
+	public void testGetSearchContainerWithSearch() throws Exception {
+		for (int i = 0; i < 25; i++) {
+			_addDLFileEntry("alpha_" + i + ".txt", "alpha");
+		}
 
 		DLAdminDisplayContext dlAdminDisplayContext =
 			_dlAdminDisplayContextProvider.getDLAdminDisplayContext(
-				_getHttpServletRequest(mockHttpServletRequest), null);
+				_getHttpServletRequest(
+					_getMockHttpServletRequestWithSearch("alpha")),
+				null);
 
 		SearchContainer searchContainer =
 			dlAdminDisplayContext.getSearchContainer();
@@ -167,6 +179,33 @@ public class DLAdminDisplayContextTest {
 		mockHttpServletRequest.setAttribute(
 			JavaConstants.JAVAX_PORTLET_RESPONSE,
 			new MockLiferayPortletresponse());
+
+		return mockHttpServletRequest;
+	}
+
+	private MockHttpServletRequest _getMockHttpServletRequest()
+		throws PortalException {
+
+		MockHttpServletRequest mockHttpServletRequest =
+			new MockHttpServletRequest();
+
+		mockHttpServletRequest.setAttribute(
+			WebKeys.THEME_DISPLAY, _getThemeDisplay());
+
+		return mockHttpServletRequest;
+	}
+
+	private MockHttpServletRequest _getMockHttpServletRequestWithSearch(
+			String keywords)
+		throws PortalException {
+
+		MockHttpServletRequest mockHttpServletRequest =
+			_getMockHttpServletRequest();
+
+		mockHttpServletRequest.setParameter(
+			"mvcRenderCommandName", "/document_library/search");
+
+		mockHttpServletRequest.setParameter("keywords", keywords);
 
 		return mockHttpServletRequest;
 	}

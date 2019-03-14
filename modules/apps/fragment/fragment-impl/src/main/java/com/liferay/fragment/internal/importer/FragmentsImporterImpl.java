@@ -406,8 +406,10 @@ public class FragmentsImporterImpl implements FragmentsImporter {
 				groupId, FragmentPortletKeys.FRAGMENT);
 
 		if (repository == null) {
-			ServiceContext serviceContext =
-				ServiceContextThreadLocal.getServiceContext();
+			ServiceContext serviceContext = new ServiceContext();
+
+			serviceContext.setAddGroupPermissions(true);
+			serviceContext.setAddGuestPermissions(true);
 
 			repository = PortletFileRepositoryUtil.addPortletRepository(
 				groupId, FragmentPortletKeys.FRAGMENT, serviceContext);

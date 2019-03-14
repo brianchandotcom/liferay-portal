@@ -87,13 +87,13 @@ public class LayoutPageTemplateEntryStagedModelDataHandlerTest
 				fetchFirstLayoutPageTemplateEntry(
 					_layoutPrototype.getLayoutPrototypeId());
 
-		_company2 = CompanyTestUtil.addCompany();
+		_targetCompany = CompanyTestUtil.addCompany();
 
-		User defaultUser2 = _company2.getDefaultUser();
+		User targetDefaultUser = _targetCompany.getDefaultUser();
 
 		addLayoutPrototype(
-			_company2.getCompanyId(), _company2.getGroupId(),
-			"Test Layout Prototype", defaultUser2.getUserId());
+			_targetCompany.getCompanyId(), _targetCompany.getGroupId(),
+			"Test Layout Prototype", targetDefaultUser.getUserId());
 
 		initExport(companyGroup);
 
@@ -107,10 +107,10 @@ public class LayoutPageTemplateEntryStagedModelDataHandlerTest
 			ExportImportThreadLocal.setPortletExportInProcess(false);
 		}
 
-		initImport(companyGroup, _company2.getGroup());
+		initImport(companyGroup, _targetCompany.getGroup());
 
 		portletDataContext.setUserIdStrategy(
-			new TestUserIdStrategy(defaultUser2));
+			new TestUserIdStrategy(targetDefaultUser));
 
 		StagedModel exportedStagedModel = readExportedStagedModel(
 			layoutPageTemplateEntry);
@@ -205,9 +205,9 @@ public class LayoutPageTemplateEntryStagedModelDataHandlerTest
 	}
 
 	@DeleteAfterTestRun
-	private Company _company2;
+	private LayoutPrototype _layoutPrototype;
 
 	@DeleteAfterTestRun
-	private LayoutPrototype _layoutPrototype;
+	private Company _targetCompany;
 
 }

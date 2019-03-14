@@ -14,15 +14,13 @@
 
 package com.liferay.frontend.taglib.clay.internal.servlet.taglib.display.context;
 
-import com.liferay.portal.kernel.util.Validator;
-
 /**
  * @author Carlos Lancha
  */
 public class TableDefaults {
 
 	public static Boolean isShowCheckbox(Boolean selectable) {
-        return selectable;
+		return selectable;
 	}
 
 }

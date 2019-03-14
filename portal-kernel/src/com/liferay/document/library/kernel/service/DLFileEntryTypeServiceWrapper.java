@@ -122,6 +122,19 @@ public class DLFileEntryTypeServiceWrapper
 	@Override
 	public java.util.List
 		<com.liferay.document.library.kernel.model.DLFileEntryType> search(
+				long companyId, long folderId, long[] groupIds, String keywords,
+				boolean includeBasicFileEntryType, boolean inherited, int start,
+				int end)
+			throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _dlFileEntryTypeService.search(
+			companyId, folderId, groupIds, keywords, includeBasicFileEntryType,
+			inherited, start, end);
+	}
+
+	@Override
+	public java.util.List
+		<com.liferay.document.library.kernel.model.DLFileEntryType> search(
 			long companyId, long[] groupIds, String keywords,
 			boolean includeBasicFileEntryType, int start, int end,
 			com.liferay.portal.kernel.util.OrderByComparator

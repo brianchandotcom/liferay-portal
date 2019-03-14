@@ -1815,13 +1815,31 @@ public class JenkinsResultsParserUtil {
 			"ssh-keyscan ", knownHosts.replaceAll("\\s*,\\s*", " "), " >> ",
 			getCanonicalPath(_sshKnownHostsFile));
 
+		Process process = null;
+
 		try {
-			executeBashCommands(command);
+			process = executeBashCommands(command);
 		}
 		catch (IOException | TimeoutException e) {
 			throw new RuntimeException(
 				"Unable to regenerate known_hosts file for hosts " + knownHosts,
 				e);
+		}
+
+		if ((process != null) && (process.exitValue() != 0)) {
+			String errorString = null;
+
+			try {
+				errorString = readInputStream(process.getErrorStream());
+			}
+			catch (IOException ioe) {
+				ioe.printStackTrace();
+			}
+
+			throw new RuntimeException(
+				combine(
+					"Unable to regenerate known_hosts file for hosts ",
+					knownHosts, "\n", errorString));
 		}
 	}
 

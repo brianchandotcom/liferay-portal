@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.Document;
+import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
@@ -35,7 +36,6 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.workflow.kaleo.exception.NoSuchInstanceException;
@@ -50,6 +50,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Stream;
@@ -547,14 +548,15 @@ public class KaleoInstanceLocalServiceImpl
 			orderByComparator.getOrderByFields());
 
 		return stream.map(
-			field -> {
-				if (StringUtil.endsWith(field, "date")) {
-					return new Sort(
-						field, Sort.LONG_TYPE,
-						!orderByComparator.isAscending());
-				}
+			orderByCol -> {
+				String fieldName = _fieldNameOrderByColMap.getOrDefault(
+					orderByCol, orderByCol);
 
-				return new Sort(field, !orderByComparator.isAscending());
+				int sortType = _fieldNameSortTypeMap.getOrDefault(
+					fieldName, Sort.STRING_TYPE);
+
+				return new Sort(
+					fieldName, sortType, !orderByComparator.isAscending());
 			}
 		).toArray(
 			Sort[]::new
@@ -563,5 +565,27 @@ public class KaleoInstanceLocalServiceImpl
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		KaleoInstanceLocalServiceImpl.class);
+
+	private static final Map<String, String> _fieldNameOrderByColMap =
+		new HashMap<String, String>() {
+			{
+				put("completed", KaleoInstanceTokenField.COMPLETED);
+				put("completionDate", KaleoInstanceTokenField.COMPLETION_DATE);
+				put("createDate", Field.CREATE_DATE);
+				put(
+					"kaleoInstanceId",
+					KaleoInstanceTokenField.KALEO_INSTANCE_ID);
+				put("modifiedDate", Field.MODIFIED_DATE);
+				put("state", KaleoInstanceTokenField.CURRENT_KALEO_NODE_NAME);
+			}
+		};
+	private static final Map<String, Integer> _fieldNameSortTypeMap =
+		new HashMap<String, Integer>() {
+			{
+				put(Field.CREATE_DATE, Sort.LONG_TYPE);
+				put(Field.MODIFIED_DATE, Sort.LONG_TYPE);
+				put(KaleoInstanceTokenField.COMPLETION_DATE, Sort.LONG_TYPE);
+			}
+		};
 
 }

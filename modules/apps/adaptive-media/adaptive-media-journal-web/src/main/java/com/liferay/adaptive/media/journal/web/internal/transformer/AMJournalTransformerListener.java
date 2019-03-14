@@ -56,19 +56,10 @@ public class AMJournalTransformerListener extends BaseTransformerListener {
 		_journalContent.clearCache();
 	}
 
-	@Reference(unbind = "-")
-	protected void setContentTransformerHandler(
-		ContentTransformerHandler contentTransformerHandler) {
-
-		_contentTransformerHandler = contentTransformerHandler;
-	}
-
-	@Reference(unbind = "-")
-	protected void setJournalContent(JournalContent journalContent) {
-		_journalContent = journalContent;
-	}
-
+	@Reference
 	private ContentTransformerHandler _contentTransformerHandler;
+
+	@Reference
 	private JournalContent _journalContent;
 
 }

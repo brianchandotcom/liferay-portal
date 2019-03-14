@@ -39,11 +39,7 @@ public class AMJournalImageConfigurationMessageListener
 		_journalContent.clearCache();
 	}
 
-	@Reference(unbind = "-")
-	protected void setJournalContent(JournalContent journalContent) {
-		_journalContent = journalContent;
-	}
-
+	@Reference
 	private JournalContent _journalContent;
 
 }

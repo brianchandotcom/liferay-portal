@@ -119,32 +119,6 @@ public class AMImageFinderImpl implements AMImageFinder {
 		);
 	}
 
-	@Reference(unbind = "-")
-	public void setAMImageConfigurationHelper(
-		AMImageConfigurationHelper amImageConfigurationHelper) {
-
-		_amImageConfigurationHelper = amImageConfigurationHelper;
-	}
-
-	@Reference(unbind = "-")
-	public void setAMImageEntryLocalService(
-		AMImageEntryLocalService amImageEntryLocalService) {
-
-		_amImageEntryLocalService = amImageEntryLocalService;
-	}
-
-	@Reference(unbind = "-")
-	public void setAMImageMimeTypeProvider(
-		AMImageMimeTypeProvider amImageMimeTypeProvider) {
-
-		_amImageMimeTypeProvider = amImageMimeTypeProvider;
-	}
-
-	@Reference(unbind = "-")
-	public void setAMImageURLFactory(AMImageURLFactory amImageURLFactory) {
-		_amImageURLFactory = amImageURLFactory;
-	}
-
 	private AdaptiveMedia<AMImageProcessor> _createMedia(
 		FileVersion fileVersion,
 		BiFunction<FileVersion, AMImageConfigurationEntry, URI> uriFactory,
@@ -234,9 +208,16 @@ public class AMImageFinderImpl implements AMImageFinder {
 		return true;
 	}
 
+	@Reference
 	private AMImageConfigurationHelper _amImageConfigurationHelper;
+
+	@Reference
 	private AMImageEntryLocalService _amImageEntryLocalService;
+
+	@Reference
 	private AMImageMimeTypeProvider _amImageMimeTypeProvider;
+
+	@Reference
 	private AMImageURLFactory _amImageURLFactory;
 
 }

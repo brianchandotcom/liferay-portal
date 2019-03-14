@@ -98,38 +98,17 @@ public class AMJournalArticleExportImportContentProcessor
 		}
 	}
 
-	@Reference(unbind = "-")
-	protected void setAMJournalArticleContentHTMLReplacer(
-		AMJournalArticleContentHTMLReplacer
-			amJournalArticleContentHTMLReplacer) {
-
-		_amJournalArticleContentHTMLReplacer =
-			amJournalArticleContentHTMLReplacer;
-	}
-
-	@Reference(target = "(adaptive.media.format=html)", unbind = "-")
-	protected void setHTMLExportImportContentProcessor(
-		ExportImportContentProcessor<String> htmlExportImportContentProcessor) {
-
-		_htmlExportImportContentProcessor = htmlExportImportContentProcessor;
-	}
-
-	@Reference(
-		target = "(&(model.class.name=com.liferay.journal.model.JournalArticle)(!(component.name=com.liferay.adaptive.media.journal.web.internal.exportimport.content.processor.AMJournalArticleExportImportContentProcessor)))",
-		unbind = "-"
-	)
-	protected void setJournalArticleExportImportContentProcessor(
-		ExportImportContentProcessor<String>
-			journalArticleExportImportContentProcessor) {
-
-		_journalArticleExportImportContentProcessor =
-			journalArticleExportImportContentProcessor;
-	}
-
+	@Reference
 	private AMJournalArticleContentHTMLReplacer
 		_amJournalArticleContentHTMLReplacer;
+
+	@Reference(target = "(adaptive.media.format=html)")
 	private ExportImportContentProcessor<String>
 		_htmlExportImportContentProcessor;
+
+	@Reference(
+		target = "(&(model.class.name=com.liferay.journal.model.JournalArticle)(!(component.name=com.liferay.adaptive.media.journal.web.internal.exportimport.content.processor.AMJournalArticleExportImportContentProcessor)))"
+	)
 	private ExportImportContentProcessor<String>
 		_journalArticleExportImportContentProcessor;
 

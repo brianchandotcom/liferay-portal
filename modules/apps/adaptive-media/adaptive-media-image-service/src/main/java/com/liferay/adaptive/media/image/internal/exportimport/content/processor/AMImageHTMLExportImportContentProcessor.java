@@ -87,25 +87,6 @@ public class AMImageHTMLExportImportContentProcessor
 		}
 	}
 
-	@Reference(unbind = "-")
-	protected void setAMEmbeddedReferenceSetFactory(
-		AMEmbeddedReferenceSetFactory amEmbeddedReferenceSetFactory) {
-
-		_amEmbeddedReferenceSetFactory = amEmbeddedReferenceSetFactory;
-	}
-
-	@Reference(unbind = "-")
-	protected void setAMImageHTMLTagFactory(
-		AMImageHTMLTagFactory amImageHTMLTagFactory) {
-
-		_amImageHTMLTagFactory = amImageHTMLTagFactory;
-	}
-
-	@Reference(unbind = "-")
-	protected void setDLAppLocalService(DLAppLocalService dlAppLocalService) {
-		_dlAppLocalService = dlAppLocalService;
-	}
-
 	private FileEntry _getFileEntry(long fileEntryId) {
 		try {
 			return _dlAppLocalService.getFileEntry(fileEntryId);
@@ -237,8 +218,13 @@ public class AMImageHTMLExportImportContentProcessor
 	private static final Log _log = LogFactoryUtil.getLog(
 		AMImageHTMLExportImportContentProcessor.class);
 
+	@Reference
 	private AMEmbeddedReferenceSetFactory _amEmbeddedReferenceSetFactory;
+
+	@Reference
 	private AMImageHTMLTagFactory _amImageHTMLTagFactory;
+
+	@Reference
 	private DLAppLocalService _dlAppLocalService;
 
 }

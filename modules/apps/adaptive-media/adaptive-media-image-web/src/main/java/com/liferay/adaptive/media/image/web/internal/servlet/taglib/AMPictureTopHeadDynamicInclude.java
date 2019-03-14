@@ -74,8 +74,7 @@ public class AMPictureTopHeadDynamicInclude extends BaseDynamicInclude {
 	private Portal _portal;
 
 	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.adaptive.media.image.web)",
-		unbind = "-"
+		target = "(osgi.web.symbolicname=com.liferay.adaptive.media.image.web)"
 	)
 	private ServletContext _servletContext;
 

@@ -102,23 +102,14 @@ public class AMBackwardsCompatibilityHtmlContentTransformer
 		return _amImageHTMLTagFactory.create(originalImgTag, fileEntry);
 	}
 
-	@Reference(unbind = "-")
-	protected void setAMImageHTMLTagFactory(
-		AMImageHTMLTagFactory amImageHTMLTagFactory) {
-
-		_amImageHTMLTagFactory = amImageHTMLTagFactory;
-	}
-
-	@Reference(unbind = "-")
-	protected void setDLAppLocalService(DLAppLocalService dlAppLocalService) {
-		_dlAppLocalService = dlAppLocalService;
-	}
-
 	private static final Pattern _pattern = Pattern.compile(
 		"<img\\s+src=['\"]/documents/(\\d+)/(\\d+)/([^/?]+)" +
 			"(?:/([-0-9a-fA-F]+))?(?:\\?t=\\d+)?['\"]\\s*/>");
 
+	@Reference
 	private AMImageHTMLTagFactory _amImageHTMLTagFactory;
+
+	@Reference
 	private DLAppLocalService _dlAppLocalService;
 
 }

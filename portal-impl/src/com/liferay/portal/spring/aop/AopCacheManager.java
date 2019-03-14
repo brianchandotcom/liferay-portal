@@ -59,6 +59,18 @@ public class AopCacheManager {
 		return aopInvocationHandler;
 	}
 
+	public static void destroy(AopInvocationHandler aopInvocationHandler) {
+		_aopInvocationHandlers.remove(aopInvocationHandler);
+	}
+
+	public static void reset() {
+		for (AopInvocationHandler aopInvocationHandler :
+				_aopInvocationHandlers) {
+
+			aopInvocationHandler.reset();
+		}
+	}
+
 	private static ChainableMethodAdvice[] _createChainableMethodAdvices(
 		TransactionExecutor transactionExecutor,
 		ServiceMonitoringControl serviceMonitoringControl) {
@@ -123,18 +135,6 @@ public class AopCacheManager {
 
 		return chainableMethodAdvices.toArray(
 			new ChainableMethodAdvice[chainableMethodAdvices.size()]);
-	}
-
-	public static void destroy(AopInvocationHandler aopInvocationHandler) {
-		_aopInvocationHandlers.remove(aopInvocationHandler);
-	}
-
-	public static void reset() {
-		for (AopInvocationHandler aopInvocationHandler :
-				_aopInvocationHandlers) {
-
-			aopInvocationHandler.reset();
-		}
 	}
 
 	private AopCacheManager() {

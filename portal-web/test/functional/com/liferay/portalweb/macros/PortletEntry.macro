@@ -1,6 +1,6 @@
 definition {
 	macro changeLocale {
-		Click(locator1 = "Button#LOCALIZATION", key_fieldName = "${fieldName}");
+		Click.clickNoMouseOver(locator1 = "Button#LOCALIZATION", key_fieldName = "${fieldName}");
 
 		Click(
 			locator1 = "Translation#LOCALIZATION_NAME",

@@ -31,7 +31,7 @@ public class ConfigurationScopedPidUtil {
 
 	public static String buildConfigurationScopedPid(
 		String basePid, ExtendedObjectClassDefinition.Scope scope,
-		String scopePrimKey) {
+		String scopePK) {
 
 		Objects.requireNonNull(
 			basePid,
@@ -45,12 +45,12 @@ public class ConfigurationScopedPidUtil {
 		}
 
 		Objects.requireNonNull(
-			scopePrimKey,
+			scopePK,
 			"The scope primary key must not be null. A scoped PID must " +
 				"correspond to a primary key for its scope.");
 
 		return StringBundler.concat(
-			basePid, scope.getDelimiterString(), scopePrimKey);
+			basePid, scope.getDelimiterString(), scopePK);
 	}
 
 	public static String getBasePid(String scopedPid) {
@@ -89,7 +89,7 @@ public class ConfigurationScopedPidUtil {
 		return ExtendedObjectClassDefinition.Scope.SYSTEM;
 	}
 
-	public static String getScopePrimKey(String scopedPid) {
+	public static String getscopePK(String scopedPid) {
 		if (Validator.isNull(scopedPid)) {
 			return null;
 		}

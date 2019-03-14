@@ -46,17 +46,20 @@ import java.util.concurrent.ConcurrentHashMap;
 public class AopCacheManager {
 
 	public static AopInvocationHandler create(
-		Object target, ChainableMethodAdvice[] chainableMethodAdvices) {
+		Object target, TransactionExecutor transactionExecutor,
+		ServiceMonitoringControl serviceMonitoringControl) {
 
 		AopInvocationHandler aopInvocationHandler = new AopInvocationHandler(
-			target, chainableMethodAdvices);
+			target,
+			_createChainableMethodAdvices(
+				transactionExecutor, serviceMonitoringControl));
 
 		_aopInvocationHandlers.add(aopInvocationHandler);
 
 		return aopInvocationHandler;
 	}
 
-	public static ChainableMethodAdvice[] createChainableMethodAdvices(
+	private static ChainableMethodAdvice[] _createChainableMethodAdvices(
 		TransactionExecutor transactionExecutor,
 		ServiceMonitoringControl serviceMonitoringControl) {
 

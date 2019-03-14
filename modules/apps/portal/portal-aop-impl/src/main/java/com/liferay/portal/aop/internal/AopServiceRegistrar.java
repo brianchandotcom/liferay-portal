@@ -70,9 +70,7 @@ public class AopServiceRegistrar {
 		ServiceMonitoringControl serviceMonitoringControl) {
 
 		_aopInvocationHandler = AopCacheManager.create(
-			_aopService,
-			AopCacheManager.createChainableMethodAdvices(
-				transactionExecutor, serviceMonitoringControl));
+			_aopService, transactionExecutor, serviceMonitoringControl);
 
 		Class<? extends AopService> aopServiceClass = _aopService.getClass();
 

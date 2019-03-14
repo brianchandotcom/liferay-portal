@@ -347,12 +347,8 @@ public class AopConfigurableApplicationContextConfigurator
 
 		@Override
 		protected AopInvocationHandler createAopInvocationHandler(Object bean) {
-			ChainableMethodAdvice[] chainableMethodAdvices =
-				AopCacheManager.createChainableMethodAdvices(
-					_transactionExecutor, _serviceMonitoringControl);
-
 			AopInvocationHandler aopInvocationHandler = AopCacheManager.create(
-				bean, chainableMethodAdvices);
+				bean, _transactionExecutor, _serviceMonitoringControl);
 
 			_aopInvocationHandlers.add(aopInvocationHandler);
 

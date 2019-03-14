@@ -16,7 +16,7 @@ package com.liferay.portal.search.internal.query;
 
 import com.liferay.portal.search.geolocation.GeoDistance;
 import com.liferay.portal.search.geolocation.GeoLocationPoint;
-import com.liferay.portal.search.geolocation.ShapeBuilder;
+import com.liferay.portal.search.geolocation.Shape;
 import com.liferay.portal.search.query.BooleanQuery;
 import com.liferay.portal.search.query.BoostingQuery;
 import com.liferay.portal.search.query.CommonTermsQuery;
@@ -149,8 +149,8 @@ public class QueriesImpl implements Queries {
 	}
 
 	@Override
-	public GeoShapeQuery geoShape(String field, ShapeBuilder shapeBuilder) {
-		return new GeoShapeQueryImpl(field, shapeBuilder);
+	public GeoShapeQuery geoShape(String field, Shape shape) {
+		return new GeoShapeQueryImpl(field, shape);
 	}
 
 	@Override

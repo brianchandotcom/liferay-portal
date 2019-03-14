@@ -93,7 +93,7 @@ public class DDMFormValuesMergerImpl implements DDMFormValuesMerger {
 	}
 
 	protected void mergeValue(Value newValue, Value existingValue) {
-		if (existingValue == null) {
+		if ((newValue == null) || (existingValue == null)) {
 			return;
 		}
 

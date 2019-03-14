@@ -172,6 +172,10 @@ public class DDMFormFieldTemplateContextFactory {
 
 		List<Object> ddmFormFieldTemplateContexts = new ArrayList<>();
 
+		if (ddmFormFieldValues == null) {
+			return ddmFormFieldTemplateContexts;
+		}
+
 		int index = 0;
 
 		for (DDMFormFieldValue ddmFormFieldValue : ddmFormFieldValues) {

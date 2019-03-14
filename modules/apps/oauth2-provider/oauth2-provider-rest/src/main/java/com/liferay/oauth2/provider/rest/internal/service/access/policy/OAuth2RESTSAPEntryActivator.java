@@ -44,7 +44,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Tomas Polesovsky
  */
 @Component(immediate = true, service = {})
-public class OAuth2RestSAPEntryActivator {
+public class OAuth2RESTSAPEntryActivator {
 
 	public void addSAPEntries(long companyId) throws PortalException {
 		for (String[] sapEntryObjectArray : _SAP_ENTRY_OBJECT_ARRAYS) {
@@ -102,7 +102,7 @@ public class OAuth2RestSAPEntryActivator {
 	};
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		OAuth2RestSAPEntryActivator.class);
+		OAuth2RESTSAPEntryActivator.class);
 
 	@Reference
 	private SAPEntryLocalService _sapEntryLocalService;

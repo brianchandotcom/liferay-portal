@@ -2460,13 +2460,18 @@ public class JenkinsResultsParserUtil {
 
 		try {
 			write(_sshIdRsaFile, idRsa);
+		}
+		catch (IOException ioe) {
+			throw new RuntimeException("Unable to write id_rsa file", ioe);
+		}
 
-			executeBashCommands(
-				combine("chmod 400 ", getCanonicalPath(_sshIdRsaFile)));
-		}
-		catch (IOException | TimeoutException e) {
-			throw new RuntimeException(e);
-		}
+		_sshIdRsaFile.setExecutable(false, false);
+
+		_sshIdRsaFile.setReadable(false, false);
+
+		_sshIdRsaFile.setReadable(true, true);
+
+		_sshIdRsaFile.setWritable(false, false);
 	}
 
 	public static void writeSshKnownHosts(String knownHosts) {

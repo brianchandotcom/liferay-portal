@@ -27,7 +27,7 @@ import java.util.Locale;
 import java.util.Map;
 
 /**
- * @author Pei-Jung Lan
+ * @author Samuel Trong Tran
  */
 public class UADHierarchyResultRowSplitter implements ResultRowSplitter {
 
@@ -51,19 +51,13 @@ public class UADHierarchyResultRowSplitter implements ResultRowSplitter {
 		}
 
 		for (ResultRow resultRow : resultRows) {
-			Object object = resultRow.getObject();
+			UADEntity uadEntity = (UADEntity)resultRow.getObject();
 
-			UADEntity uadEntity = (UADEntity)object;
+			if (classResultRowsMap.containsKey(uadEntity.getTypeClass())) {
+				List<ResultRow> classResultRows = classResultRowsMap.get(
+					uadEntity.getTypeClass());
 
-			for (UADDisplay uadDisplay : _uadDisplays) {
-				Class<?> typeClass = uadDisplay.getTypeClass();
-
-				if (typeClass.isInstance(uadEntity.getEntity())) {
-					List<ResultRow> classResultRows = classResultRowsMap.get(
-						typeClass);
-
-					classResultRows.add(resultRow);
-				}
+				classResultRows.add(resultRow);
 			}
 		}
 

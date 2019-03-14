@@ -35,6 +35,14 @@ import java.util.Map;
 public class AccessControlAdvice extends ChainableMethodAdvice {
 
 	@Override
+	public Object createMethodContext(
+		Class<?> targetClass, Method method,
+		Map<Class<? extends Annotation>, Annotation> annotations) {
+
+		return annotations.get(AccessControlled.class);
+	}
+
+	@Override
 	protected Object before(
 		AopMethodInvocation aopMethodInvocation, Object[] arguments) {
 
@@ -47,21 +55,6 @@ public class AccessControlAdvice extends ChainableMethodAdvice {
 			aopMethodInvocation.getMethod(), arguments, accessControlled);
 
 		return null;
-	}
-
-	@Override
-	public Object createMethodContext(
-		Class<?> targetClass, Method method,
-		Map<Class<? extends Annotation>, Annotation> annotations) {
-
-		return annotations.get(AccessControlled.class);
-	}
-
-	@Override
-	protected void duringFinally(
-		AopMethodInvocation aopMethodInvocation, Object[] arguments) {
-
-		decrementServiceDepth();
 	}
 
 	protected void decrementServiceDepth() {
@@ -86,6 +79,13 @@ public class AccessControlAdvice extends ChainableMethodAdvice {
 		settings.put(
 			AccessControlContext.Settings.SERVICE_DEPTH.toString(),
 			serviceDepth);
+	}
+
+	@Override
+	protected void duringFinally(
+		AopMethodInvocation aopMethodInvocation, Object[] arguments) {
+
+		decrementServiceDepth();
 	}
 
 	protected void incrementServiceDepth() {

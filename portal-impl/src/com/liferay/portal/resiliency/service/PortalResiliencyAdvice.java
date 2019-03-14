@@ -39,6 +39,28 @@ import java.util.concurrent.Future;
 public class PortalResiliencyAdvice extends ChainableMethodAdvice {
 
 	@Override
+	public Object createMethodContext(
+		Class<?> targetClass, Method method,
+		Map<Class<? extends Annotation>, Annotation> annotations) {
+
+		Annotation annotation = annotations.get(AccessControlled.class);
+
+		if (annotation == null) {
+			return null;
+		}
+
+		String servletContextName =
+			ServletContextClassLoaderPool.getServletContextName(
+				targetClass.getClassLoader());
+
+		if (servletContextName == null) {
+			return null;
+		}
+
+		return SPIRegistryUtil.getServletContextSPI(servletContextName);
+	}
+
+	@Override
 	protected Object before(
 			AopMethodInvocation aopMethodInvocation, Object[] arguments)
 		throws Throwable {
@@ -71,28 +93,6 @@ public class PortalResiliencyAdvice extends ChainableMethodAdvice {
 		}
 
 		return result;
-	}
-
-	@Override
-	public Object createMethodContext(
-		Class<?> targetClass, Method method,
-		Map<Class<? extends Annotation>, Annotation> annotations) {
-
-		Annotation annotation = annotations.get(AccessControlled.class);
-
-		if (annotation == null) {
-			return null;
-		}
-
-		String servletContextName =
-			ServletContextClassLoaderPool.getServletContextName(
-				targetClass.getClassLoader());
-
-		if (servletContextName == null) {
-			return null;
-		}
-
-		return SPIRegistryUtil.getServletContextSPI(servletContextName);
 	}
 
 }

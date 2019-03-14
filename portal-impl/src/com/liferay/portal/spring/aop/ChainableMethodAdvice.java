@@ -25,32 +25,9 @@ import java.util.Map;
  */
 public abstract class ChainableMethodAdvice {
 
-	protected void afterReturning(
-			AopMethodInvocation aopMethodInvocation, Object[] arguments,
-			Object result)
-		throws Throwable {
-	}
-
-	protected void afterThrowing(
-			AopMethodInvocation aopMethodInvocation, Object[] arguments,
-			Throwable throwable)
-		throws Throwable {
-	}
-
-	protected Object before(
-			AopMethodInvocation aopMethodInvocation, Object[] arguments)
-		throws Throwable {
-
-		return null;
-	}
-
 	public abstract Object createMethodContext(
 		Class<?> targetClass, Method method,
 		Map<Class<? extends Annotation>, Annotation> annotations);
-
-	protected void duringFinally(
-		AopMethodInvocation aopMethodInvocation, Object[] arguments) {
-	}
 
 	public Object invoke(
 			AopMethodInvocation aopMethodInvocation, Object[] arguments)
@@ -81,6 +58,29 @@ public abstract class ChainableMethodAdvice {
 		}
 
 		return returnValue;
+	}
+
+	protected void afterReturning(
+			AopMethodInvocation aopMethodInvocation, Object[] arguments,
+			Object result)
+		throws Throwable {
+	}
+
+	protected void afterThrowing(
+			AopMethodInvocation aopMethodInvocation, Object[] arguments,
+			Throwable throwable)
+		throws Throwable {
+	}
+
+	protected Object before(
+			AopMethodInvocation aopMethodInvocation, Object[] arguments)
+		throws Throwable {
+
+		return null;
+	}
+
+	protected void duringFinally(
+		AopMethodInvocation aopMethodInvocation, Object[] arguments) {
 	}
 
 	protected static Object nullResult = new Object();

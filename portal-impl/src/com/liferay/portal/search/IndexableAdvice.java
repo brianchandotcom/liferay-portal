@@ -38,6 +38,32 @@ import java.util.Map;
 public class IndexableAdvice extends ChainableMethodAdvice {
 
 	@Override
+	public Object createMethodContext(
+		Class<?> targetClass, Method method,
+		Map<Class<? extends Annotation>, Annotation> annotations) {
+
+		Indexable indexable = (Indexable)annotations.get(Indexable.class);
+
+		if (indexable == null) {
+			return null;
+		}
+
+		Class<?> returnType = method.getReturnType();
+
+		if (!BaseModel.class.isAssignableFrom(returnType)) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(method + " does not have a valid return type");
+			}
+
+			return null;
+		}
+
+		return new IndexableContext(
+			returnType.getName(), indexable.type(),
+			_getServiceContextParameterIndex(method));
+	}
+
+	@Override
 	protected void afterReturning(
 			AopMethodInvocation aopMethodInvocation, Object[] arguments,
 			Object result)
@@ -103,32 +129,6 @@ public class IndexableAdvice extends ChainableMethodAdvice {
 		else {
 			indexer.reindex(result);
 		}
-	}
-
-	@Override
-	public Object createMethodContext(
-		Class<?> targetClass, Method method,
-		Map<Class<? extends Annotation>, Annotation> annotations) {
-
-		Indexable indexable = (Indexable)annotations.get(Indexable.class);
-
-		if (indexable == null) {
-			return null;
-		}
-
-		Class<?> returnType = method.getReturnType();
-
-		if (!BaseModel.class.isAssignableFrom(returnType)) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(method + " does not have a valid return type");
-			}
-
-			return null;
-		}
-
-		return new IndexableContext(
-			returnType.getName(), indexable.type(),
-			_getServiceContextParameterIndex(method));
 	}
 
 	private int _getServiceContextParameterIndex(Method method) {

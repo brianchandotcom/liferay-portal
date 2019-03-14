@@ -375,6 +375,7 @@ public class Recurrence implements Serializable {
 		myCurrent.set(Calendar.MILLISECOND, 0);
 
 		Date myCurrentDate = myCurrent.getTime();
+
 		Date dtStartDate = dtStart.getTime();
 
 		if (myCurrentDate.getTime() < dtStartDate.getTime()) {
@@ -525,6 +526,7 @@ public class Recurrence implements Serializable {
 		tempEnd.setTimeZone(TimeZoneUtil.getTimeZone(StringPool.UTC));
 
 		Date tempEndDate = tempEnd.getTime();
+
 		Date dtStartDate = dtStart.getTime();
 
 		duration.setInterval(tempEndDate.getTime() - dtStartDate.getTime());

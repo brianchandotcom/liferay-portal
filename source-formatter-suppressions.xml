@@ -3,7 +3,6 @@
 <suppressions>
 	<checkstyle>
 		<suppress checks="AppendCheck" files="portal-kernel/test/unit/com/liferay/portal/kernel/util/StringBundlerTest\.java" />
-		<suppress checks="ChainingCheck" files="portal-kernel/src/com/liferay/portal/kernel/cal/Recurrence\.java" />
 		<suppress checks="ConcatCheck" files="portal-impl/test/integration/com/liferay/portal/xmlrpc/XmlRpcParserTest\.java" />
 		<suppress checks="ConcatCheck" files="portal-kernel/test/unit/com/liferay/portal/kernel/util/StringBundlerTest\.java" />
 		<suppress checks="ConstantNameCheck" files="portal-kernel/src/com/liferay/portal/kernel/nio/intraband/BaseIntraband\.java" />

@@ -349,6 +349,17 @@ public class SharingEntryLocalServiceImpl
 	}
 
 	/**
+	 * Returns the the group's sharing entries count.
+	 *
+	 * @param  groupId the primary key of the group
+	 * @return the sharing entries count
+	 */
+	@Override
+	public int getGroupSharingEntriesCount(long groupId) {
+		return sharingEntryPersistence.countByGroupId(groupId);
+	}
+
+	/**
 	 * Returns the resource's sharing entries. The class name ID and class
 	 * primary key identify the resource's type and instance, respectively.
 	 *

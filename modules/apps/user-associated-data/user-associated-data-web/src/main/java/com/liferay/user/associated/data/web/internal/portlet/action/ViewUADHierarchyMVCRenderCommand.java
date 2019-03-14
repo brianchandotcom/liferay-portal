@@ -31,7 +31,7 @@ import com.liferay.user.associated.data.web.internal.registry.UADRegistry;
 import com.liferay.user.associated.data.web.internal.search.UADHierarchyResultRowSplitter;
 import com.liferay.user.associated.data.web.internal.util.SelectedUserHelper;
 import com.liferay.user.associated.data.web.internal.util.UADApplicationSummaryHelper;
-import com.liferay.user.associated.data.web.internal.util.UADReviewDataHelper;
+import com.liferay.user.associated.data.web.internal.util.UADSearchContainerBuilder;
 
 import javax.portlet.PortletException;
 import javax.portlet.PortletURL;
@@ -105,7 +105,7 @@ public class ViewUADHierarchyMVCRenderCommand implements MVCRenderCommand {
 				renderRequest, "parentContainerId");
 
 			viewUADEntitiesDisplay.setSearchContainer(
-				_uadReviewDataHelper.getSearchContainer(
+				_uadSearchContainerBuilder.getSearchContainer(
 					renderRequest, liferayPortletResponse, applicationKey,
 					currentURL, null, typeClass, parentContainerId,
 					selectedUser, uadHierarchyDisplay));
@@ -137,6 +137,6 @@ public class ViewUADHierarchyMVCRenderCommand implements MVCRenderCommand {
 	private UADRegistry _uadRegistry;
 
 	@Reference
-	private UADReviewDataHelper _uadReviewDataHelper;
+	private UADSearchContainerBuilder _uadSearchContainerBuilder;
 
 }

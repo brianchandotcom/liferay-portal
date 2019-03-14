@@ -52,8 +52,8 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Samuel Trong Tran
  */
-@Component(immediate = true, service = UADReviewDataHelper.class)
-public class UADReviewDataHelper {
+@Component(immediate = true, service = UADSearchContainerBuilder.class)
+public class UADSearchContainerBuilder {
 
 	public SearchContainer<UADEntity> getSearchContainer(
 		RenderRequest renderRequest,
@@ -328,7 +328,7 @@ public class UADReviewDataHelper {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		UADReviewDataHelper.class);
+		UADSearchContainerBuilder.class);
 
 	@Reference
 	private Portal _portal;

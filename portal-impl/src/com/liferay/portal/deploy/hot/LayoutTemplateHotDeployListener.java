@@ -127,7 +127,7 @@ public class LayoutTemplateHotDeployListener extends BaseHotDeployListener {
 			_log.debug("Invoking undeploy for " + servletContextName);
 		}
 
-		List<LayoutTemplate> layoutTemplates = _layoutTemplates.get(
+		List<LayoutTemplate> layoutTemplates = _layoutTemplates.remove(
 			servletContextName);
 
 		if (layoutTemplates == null) {

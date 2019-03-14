@@ -37,11 +37,13 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
 import java.util.TreeMap;
+import java.util.TreeSet;
 import java.util.concurrent.ExecutorService;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -321,7 +323,7 @@ public class TopLevelBuild extends BaseBuild {
 		return super.getStatusSummary();
 	}
 
-	public Map<String, StopwatchRecord> getStopwatchRecordMap() {
+	public StopwatchRecordsGroup getStopwatchRecordsGroup() {
 		String consoleText = getConsoleText();
 
 		int consoleTextLength = consoleText.length();
@@ -345,9 +347,9 @@ public class TopLevelBuild extends BaseBuild {
 
 				String stopwatchName = matcher.group("name");
 
-				stopwatchRecordMap.put(
-					stopwatchName,
-					new StopwatchRecord(stopwatchName, timestamp.getTime()));
+				stopwatchRecordsGroup.add(
+					new StopwatchRecord(
+						stopwatchName, timestamp.getTime(), this));
 
 				continue;
 			}
@@ -371,7 +373,7 @@ public class TopLevelBuild extends BaseBuild {
 
 				String stopwatchName = matcher.group("name");
 
-				StopwatchRecord stopwatchRecord = stopwatchRecordMap.get(
+				StopwatchRecord stopwatchRecord = stopwatchRecordsGroup.get(
 					stopwatchName);
 
 				if (stopwatchRecord != null) {
@@ -382,7 +384,7 @@ public class TopLevelBuild extends BaseBuild {
 
 		stopwatchRecordConsoleReadCursor = consoleTextLength;
 
-		return stopwatchRecordMap;
+		return stopwatchRecordsGroup;
 	}
 
 	@Override
@@ -437,6 +439,248 @@ public class TopLevelBuild extends BaseBuild {
 						"build_slave_usage_gauge", -1, getMetricLabels()));
 			}
 		}
+	}
+
+	public static class StopwatchRecord implements Comparable<StopwatchRecord> {
+
+		public StopwatchRecord(
+			String name, long startTimestamp, TopLevelBuild topLevelBuild) {
+
+			_name = name;
+			_startTimestamp = startTimestamp;
+			_topLevelBuild = topLevelBuild;
+		}
+
+		public void addChildStopwatchRecord(
+			StopwatchRecord newChildStopwatchRecord) {
+
+			if (_childStopwatchRecords == null) {
+				_childStopwatchRecords = new TreeSet<>();
+			}
+
+			for (StopwatchRecord childStopwatchRecord :
+					_childStopwatchRecords) {
+
+				if (childStopwatchRecord.isParentOf(newChildStopwatchRecord)) {
+					childStopwatchRecord.addChildStopwatchRecord(
+						newChildStopwatchRecord);
+
+					return;
+				}
+			}
+
+			newChildStopwatchRecord.setParentStopwatchRecord(this);
+
+			_childStopwatchRecords.add(newChildStopwatchRecord);
+		}
+
+		@Override
+		public int compareTo(StopwatchRecord stopwatchRecord) {
+			int compareToValue = _startTimestamp.compareTo(
+				stopwatchRecord.getStartTimestamp());
+
+			if (compareToValue != 0) {
+				return compareToValue;
+			}
+
+			compareToValue = _name.compareTo(stopwatchRecord.getName());
+
+			if (compareToValue != 0) {
+				return compareToValue;
+			}
+
+			return _duration.compareTo(stopwatchRecord.getDuration());
+		}
+
+		public int getDepth() {
+			if (_parentStopwatchRecord == null) {
+				return 0;
+			}
+
+			return _parentStopwatchRecord.getDepth() + 1;
+		}
+
+		public Long getDuration() {
+			return _duration;
+		}
+
+		public String getName() {
+			return _name;
+		}
+
+		public StopwatchRecord getParentStopwatchRecord() {
+			return _parentStopwatchRecord;
+		}
+
+		public Long getStartTimestamp() {
+			return _startTimestamp;
+		}
+
+		public boolean isParentOf(StopwatchRecord stopwatchRecord) {
+			if ((stopwatchRecord.getDuration() == null) ||
+				(getDuration() == null)) {
+
+				return false;
+			}
+
+			if ((stopwatchRecord.getStartTimestamp() >= getStartTimestamp()) &&
+				(stopwatchRecord.getDuration() <= getDuration())) {
+
+				return true;
+			}
+
+			return false;
+		}
+
+		public void setDuration(long duration) {
+			_duration = duration;
+		}
+
+		@Override
+		public String toString() {
+			return JenkinsResultsParserUtil.combine(
+				getName(), " started at ",
+				JenkinsResultsParserUtil.toDateString(
+					new Date(getStartTimestamp()), "America/Los_Angeles"),
+				" and ran for ",
+				JenkinsResultsParserUtil.toDurationString(getDuration()), ".");
+		}
+
+		protected String getIndentedName() {
+			StringBuilder sb = new StringBuilder();
+
+			for (int i = 0; i < (getDepth() * _INDENTATION_SIZE); i++) {
+				sb.append("&nbsp;");
+			}
+
+			String name = getName();
+
+			StopwatchRecord parentStopwatchRecord = getParentStopwatchRecord();
+
+			if (parentStopwatchRecord != null) {
+				name.replace(
+					Pattern.quote(parentStopwatchRecord.getName()), "");
+			}
+
+			sb.append(name);
+
+			return sb.toString();
+		}
+
+		protected List<Element> getJenkinsReportTableRowElements() {
+			Element buildInfoElement = Dom4JUtil.getNewElement("tr", null);
+
+			Dom4JUtil.getNewElement("td", buildInfoElement, getIndentedName());
+
+			Dom4JUtil.getNewElement("td", buildInfoElement, "&nbsp;");
+
+			Dom4JUtil.getNewElement("td", buildInfoElement, "&nbsp;");
+
+			Dom4JUtil.getNewElement(
+				"td", buildInfoElement,
+				_topLevelBuild.toJenkinsReportDateString(
+					new Date(getStartTimestamp()),
+					_topLevelBuild.getJenkinsReportTimeZoneName()));
+
+			if (getDuration() == null) {
+				Dom4JUtil.getNewElement("td", buildInfoElement, "&nbsp");
+			}
+			else {
+				Dom4JUtil.getNewElement(
+					"td", buildInfoElement,
+					JenkinsResultsParserUtil.toDurationString(getDuration()));
+			}
+
+			Dom4JUtil.getNewElement("td", buildInfoElement, "&nbsp;");
+
+			Dom4JUtil.getNewElement("td", buildInfoElement, "&nbsp;");
+
+			List<Element> jenkinsReportTableRowElements = new ArrayList<>();
+
+			jenkinsReportTableRowElements.add(buildInfoElement);
+
+			for (StopwatchRecord childStopwatchRecord :
+					_childStopwatchRecords) {
+
+				jenkinsReportTableRowElements.addAll(
+					childStopwatchRecord.getJenkinsReportTableRowElements());
+			}
+
+			return jenkinsReportTableRowElements;
+		}
+
+		protected void setParentStopwatchRecord(
+			StopwatchRecord stopwatchRecord) {
+
+			_parentStopwatchRecord = stopwatchRecord;
+		}
+
+		private static final int _INDENTATION_SIZE = 4;
+
+		private Set<StopwatchRecord> _childStopwatchRecords;
+		private Long _duration;
+		private final String _name;
+		private StopwatchRecord _parentStopwatchRecord;
+		private final Long _startTimestamp;
+		private final TopLevelBuild _topLevelBuild;
+
+	}
+
+	public static class StopwatchRecordsGroup
+		implements Iterable<StopwatchRecord> {
+
+		public void add(StopwatchRecord newStopwatchRecord) {
+			List<String> cleanupStopwatchRecordNames = new ArrayList<>();
+
+			for (StopwatchRecord stopwatchRecord :
+					_stopwatchRecordsMap.values()) {
+
+				if (stopwatchRecord.isParentOf(newStopwatchRecord)) {
+					stopwatchRecord.addChildStopwatchRecord(newStopwatchRecord);
+
+					continue;
+				}
+
+				if (newStopwatchRecord.isParentOf(stopwatchRecord)) {
+					cleanupStopwatchRecordNames.add(stopwatchRecord.getName());
+
+					newStopwatchRecord.addChildStopwatchRecord(stopwatchRecord);
+				}
+
+				_stopwatchRecordsMap.put(
+					newStopwatchRecord.getName(), newStopwatchRecord);
+			}
+
+			for (String cleanupStopwatchRecordName :
+					cleanupStopwatchRecordNames) {
+
+				_stopwatchRecordsMap.remove(cleanupStopwatchRecordName);
+			}
+		}
+
+		public StopwatchRecord get(String name) {
+			return _stopwatchRecordsMap.get(name);
+		}
+
+		@Override
+		public Iterator<StopwatchRecord> iterator() {
+			List<StopwatchRecord> list = toList();
+
+			return list.iterator();
+		}
+
+		public List<StopwatchRecord> toList() {
+			ArrayList<StopwatchRecord> list = new ArrayList<>(
+				_stopwatchRecordsMap.values());
+
+			Collections.sort(list);
+
+			return list;
+		}
+
+		private final Map<String, StopwatchRecord> _stopwatchRecordsMap =
+			new HashMap<>();
+
 	}
 
 	protected TopLevelBuild(String url) {
@@ -1220,24 +1464,16 @@ public class TopLevelBuild extends BaseBuild {
 			topLevelTableElement, getJenkinsReportTableColumnHeadersElement(),
 			getJenkinsReportTableRowElement());
 
-		Map<String, StopwatchRecord> stopwatchRecordMap =
-			getStopwatchRecordMap();
-
-		List<StopwatchRecord> stopwatchRecords = new ArrayList<>(
-			stopwatchRecordMap.size());
-
-		stopwatchRecords.addAll(stopwatchRecordMap.values());
-
-		Collections.sort(stopwatchRecords);
-
-		for (StopwatchRecord stopwatchRecord : stopwatchRecords) {
+		for (StopwatchRecord stopwatchRecord : getStopwatchRecordsGroup()) {
 			if (stopwatchRecord.getDuration() == null) {
 				continue;
 			}
 
+			List<Element> jenkinsReportTableRowElements =
+				stopwatchRecord.getJenkinsReportTableRowElements();
+
 			Dom4JUtil.addToElement(
-				topLevelTableElement,
-				stopwatchRecord.getJenkinsReportTableRowElement());
+				topLevelTableElement, jenkinsReportTableRowElements.toArray());
 		}
 
 		return topLevelTableElement;
@@ -1574,95 +1810,8 @@ public class TopLevelBuild extends BaseBuild {
 		new SimpleDateFormat("MM-dd-yyyy HH:mm:ss:SSS z");
 
 	protected int stopwatchRecordConsoleReadCursor;
-	protected Map<String, StopwatchRecord> stopwatchRecordMap = new HashMap<>();
-
-	protected class StopwatchRecord implements Comparable<StopwatchRecord> {
-
-		public StopwatchRecord(String name, long startTimestamp) {
-			_name = name;
-			_startTimestamp = startTimestamp;
-		}
-
-		@Override
-		public int compareTo(StopwatchRecord stopwatchRecord) {
-			int compareToValue = _startTimestamp.compareTo(
-				stopwatchRecord.getStartTimestamp());
-
-			if (compareToValue != 0) {
-				return compareToValue;
-			}
-
-			compareToValue = _name.compareTo(stopwatchRecord.getName());
-
-			if (compareToValue != 0) {
-				return compareToValue;
-			}
-
-			return _duration.compareTo(stopwatchRecord.getDuration());
-		}
-
-		public Long getDuration() {
-			return _duration;
-		}
-
-		public String getName() {
-			return _name;
-		}
-
-		public Long getStartTimestamp() {
-			return _startTimestamp;
-		}
-
-		public void setDuration(long duration) {
-			_duration = duration;
-		}
-
-		@Override
-		public String toString() {
-			return JenkinsResultsParserUtil.combine(
-				getName(), " started at ",
-				JenkinsResultsParserUtil.toDateString(
-					new Date(getStartTimestamp()), "America/Los_Angeles"),
-				" and ran for ",
-				JenkinsResultsParserUtil.toDurationString(getDuration()), ".");
-		}
-
-		protected Element getJenkinsReportTableRowElement() {
-			Element buildInfoElement = Dom4JUtil.getNewElement("tr", null);
-
-			Dom4JUtil.getNewElement("td", buildInfoElement, getName());
-
-			Dom4JUtil.getNewElement("td", buildInfoElement, "&nbsp;");
-
-			Dom4JUtil.getNewElement("td", buildInfoElement, "&nbsp;");
-
-			Dom4JUtil.getNewElement(
-				"td", buildInfoElement,
-				toJenkinsReportDateString(
-					new Date(getStartTimestamp()),
-					getJenkinsReportTimeZoneName()));
-
-			if (getDuration() == null) {
-				Dom4JUtil.getNewElement("td", buildInfoElement, "&nbsp");
-			}
-			else {
-				Dom4JUtil.getNewElement(
-					"td", buildInfoElement,
-					JenkinsResultsParserUtil.toDurationString(getDuration()));
-			}
-
-			Dom4JUtil.getNewElement("td", buildInfoElement, "&nbsp;");
-
-			Dom4JUtil.getNewElement("td", buildInfoElement, "&nbsp;");
-
-			return buildInfoElement;
-		}
-
-		private Long _duration;
-		private final String _name;
-		private final Long _startTimestamp;
-
-	}
+	protected StopwatchRecordsGroup stopwatchRecordsGroup =
+		new StopwatchRecordsGroup();
 
 	private Map<Map<String, String>, Integer> _getSlaveUsageByLabels() {
 		Map<Map<String, String>, Integer> slaveUsages = new HashMap<>();

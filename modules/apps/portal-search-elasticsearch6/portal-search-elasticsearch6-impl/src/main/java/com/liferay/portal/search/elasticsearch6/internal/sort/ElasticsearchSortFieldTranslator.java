@@ -16,6 +16,7 @@ package com.liferay.portal.search.elasticsearch6.internal.sort;
 
 import com.liferay.portal.search.elasticsearch6.internal.geolocation.DistanceUnitTranslator;
 import com.liferay.portal.search.elasticsearch6.internal.geolocation.GeoDistanceTypeTranslator;
+import com.liferay.portal.search.elasticsearch6.internal.geolocation.GeoLocationPointTranslator;
 import com.liferay.portal.search.elasticsearch6.internal.script.ScriptTranslator;
 import com.liferay.portal.search.geolocation.GeoLocationPoint;
 import com.liferay.portal.search.query.QueryTranslator;
@@ -91,15 +92,12 @@ public class ElasticsearchSortFieldTranslator
 		List<GeoLocationPoint> geoLocationPoints =
 			geoDistanceSort.getGeoLocationPoints();
 
-		GeoPoint[] geoPoints = new GeoPoint[geoLocationPoints.size()];
-
-		int i = 0;
-
-		geoLocationPoints.forEach(
-			geoLocationPoint ->
-				geoPoints[i] = new GeoPoint(
-					geoLocationPoint.getLatitude(),
-					geoLocationPoint.getLongitude()));
+		GeoPoint[] geoPoints = geoLocationPoints.stream(
+		).map(
+			GeoLocationPointTranslator::translate
+		).toArray(
+			GeoPoint[]::new
+		);
 
 		GeoDistanceSortBuilder geoDistanceSortBuilder =
 			SortBuilders.geoDistanceSort(geoDistanceSort.getField(), geoPoints);

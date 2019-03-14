@@ -21,7 +21,7 @@ import com.liferay.portal.search.aggregation.pipeline.PipelineAggregationTransla
 import com.liferay.portal.search.elasticsearch6.internal.aggregation.BaseFieldAggregationTranslator;
 import com.liferay.portal.search.elasticsearch6.internal.geolocation.DistanceUnitTranslator;
 import com.liferay.portal.search.elasticsearch6.internal.geolocation.GeoDistanceTypeTranslator;
-import com.liferay.portal.search.geolocation.GeoLocationPoint;
+import com.liferay.portal.search.elasticsearch6.internal.geolocation.GeoLocationPointTranslator;
 
 import java.util.List;
 
@@ -48,11 +48,8 @@ public class GeoDistanceAggregationTranslatorImpl
 		PipelineAggregationTranslator<PipelineAggregationBuilder>
 			pipelineAggregationTranslator) {
 
-		GeoLocationPoint geoLocationPoint =
-			geoDistanceAggregation.getGeoLocationPoint();
-
-		GeoPoint geoPoint = new GeoPoint(
-			geoLocationPoint.getLatitude(), geoLocationPoint.getLongitude());
+		GeoPoint geoPoint = GeoLocationPointTranslator.translate(
+			geoDistanceAggregation.getGeoLocationPoint());
 
 		GeoDistanceAggregationBuilder geoDistanceAggregationBuilder =
 			_baseFieldAggregationTranslator.translate(

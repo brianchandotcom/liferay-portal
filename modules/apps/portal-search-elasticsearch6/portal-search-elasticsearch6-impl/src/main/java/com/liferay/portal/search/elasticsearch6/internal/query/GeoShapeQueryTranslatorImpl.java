@@ -15,8 +15,8 @@
 package com.liferay.portal.search.elasticsearch6.internal.query;
 
 import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.search.elasticsearch6.internal.geolocation.ElasticsearchShapeBuilderTranslator;
-import com.liferay.portal.search.geolocation.ShapeBuilder;
+import com.liferay.portal.search.elasticsearch6.internal.geolocation.ElasticsearchShapeTranslator;
+import com.liferay.portal.search.geolocation.Shape;
 import com.liferay.portal.search.query.GeoShapeQuery;
 import com.liferay.portal.search.query.geolocation.ShapeRelation;
 import com.liferay.portal.search.query.geolocation.SpatialStrategy;
@@ -37,40 +37,8 @@ public class GeoShapeQueryTranslatorImpl implements GeoShapeQueryTranslator {
 
 	@Override
 	public QueryBuilder translate(GeoShapeQuery geoShapeQuery) {
-		GeoShapeQueryBuilder geoShapeQueryBuilder = null;
-
-		if (geoShapeQuery.getIndexedShapeId() != null) {
-			geoShapeQueryBuilder = QueryBuilders.geoShapeQuery(
-				geoShapeQuery.getField(), geoShapeQuery.getIndexedShapeId(),
-				geoShapeQuery.getIndexedShapeType());
-
-			if (geoShapeQuery.getIndexedShapeIndex() != null) {
-				geoShapeQueryBuilder.indexedShapeIndex(
-					geoShapeQuery.getIndexedShapeIndex());
-			}
-
-			if (geoShapeQuery.getIndexedShapePath() != null) {
-				geoShapeQueryBuilder.indexedShapePath(
-					geoShapeQuery.getIndexedShapePath());
-			}
-
-			if (geoShapeQuery.getIndexedShapeRouting() != null) {
-				geoShapeQueryBuilder.indexedShapeRouting(
-					geoShapeQuery.getIndexedShapeRouting());
-			}
-		}
-		else {
-			try {
-				ShapeBuilder shapeBuilder = geoShapeQuery.getShapeBuilder();
-
-				geoShapeQueryBuilder = QueryBuilders.geoShapeQuery(
-					geoShapeQuery.getField(),
-					shapeBuilder.accept(_elasticsearchShapeBuilderTranslator));
-			}
-			catch (IOException ioe) {
-				throw new SystemException(ioe);
-			}
-		}
+		GeoShapeQueryBuilder geoShapeQueryBuilder = translateQuery(
+			geoShapeQuery);
 
 		if (geoShapeQuery.getIgnoreUnmapped() != null) {
 			geoShapeQueryBuilder.ignoreUnmapped(
@@ -119,7 +87,8 @@ public class GeoShapeQueryTranslatorImpl implements GeoShapeQueryTranslator {
 		if (spatialStrategy == SpatialStrategy.RECURSIVE) {
 			return org.elasticsearch.common.geo.SpatialStrategy.RECURSIVE;
 		}
-		else if (spatialStrategy == SpatialStrategy.TERM) {
+
+		if (spatialStrategy == SpatialStrategy.TERM) {
 			return org.elasticsearch.common.geo.SpatialStrategy.TERM;
 		}
 
@@ -127,8 +96,44 @@ public class GeoShapeQueryTranslatorImpl implements GeoShapeQueryTranslator {
 			"Invalid SpatialStrategy: " + spatialStrategy);
 	}
 
-	private final ElasticsearchShapeBuilderTranslator
-		_elasticsearchShapeBuilderTranslator =
-			new ElasticsearchShapeBuilderTranslator();
+	protected GeoShapeQueryBuilder translateQuery(GeoShapeQuery geoShapeQuery) {
+		if (geoShapeQuery.getIndexedShapeId() != null) {
+			GeoShapeQueryBuilder geoShapeQueryBuilder =
+				QueryBuilders.geoShapeQuery(
+					geoShapeQuery.getField(), geoShapeQuery.getIndexedShapeId(),
+					geoShapeQuery.getIndexedShapeType());
+
+			if (geoShapeQuery.getIndexedShapeIndex() != null) {
+				geoShapeQueryBuilder.indexedShapeIndex(
+					geoShapeQuery.getIndexedShapeIndex());
+			}
+
+			if (geoShapeQuery.getIndexedShapePath() != null) {
+				geoShapeQueryBuilder.indexedShapePath(
+					geoShapeQuery.getIndexedShapePath());
+			}
+
+			if (geoShapeQuery.getIndexedShapeRouting() != null) {
+				geoShapeQueryBuilder.indexedShapeRouting(
+					geoShapeQuery.getIndexedShapeRouting());
+			}
+
+			return geoShapeQueryBuilder;
+		}
+
+		try {
+			Shape shape = geoShapeQuery.getShape();
+
+			return QueryBuilders.geoShapeQuery(
+				geoShapeQuery.getField(),
+				shape.accept(_elasticsearchShapeTranslator));
+		}
+		catch (IOException ioe) {
+			throw new SystemException(ioe);
+		}
+	}
+
+	private final ElasticsearchShapeTranslator _elasticsearchShapeTranslator =
+		new ElasticsearchShapeTranslator();
 
 }

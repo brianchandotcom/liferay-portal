@@ -14,13 +14,14 @@
 
 package com.liferay.portal.search.elasticsearch6.internal.query;
 
+import com.liferay.portal.search.elasticsearch6.internal.geolocation.GeoLocationPointTranslator;
 import com.liferay.portal.search.elasticsearch6.internal.query.geolocation.GeoValidationMethodTranslator;
 import com.liferay.portal.search.geolocation.GeoLocationPoint;
 import com.liferay.portal.search.query.GeoPolygonQuery;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import org.elasticsearch.common.geo.GeoPoint;
 import org.elasticsearch.index.query.GeoPolygonQueryBuilder;
@@ -41,13 +42,12 @@ public class GeoPolygonQueryTranslatorImpl
 		Set<GeoLocationPoint> geoLocationPoints =
 			geoPolygonQuery.getGeoLocationPoints();
 
-		List<GeoPoint> geoPoints = new ArrayList<>(geoLocationPoints.size());
-
-		geoLocationPoints.forEach(
-			geoLocationPoint -> geoPoints.add(
-				new GeoPoint(
-					geoLocationPoint.getLatitude(),
-					geoLocationPoint.getLongitude())));
+		List<GeoPoint> geoPoints = geoLocationPoints.stream(
+		).map(
+			GeoLocationPointTranslator::translate
+		).collect(
+			Collectors.toList()
+		);
 
 		GeoPolygonQueryBuilder geoPolygonQueryBuilder =
 			QueryBuilders.geoPolygonQuery(

@@ -123,10 +123,22 @@ class FloatingToolbarSpacingPanel extends Component {
 		const newValue = event.delegateTarget.value;
 		const prevValue = this.item.columns.length;
 
-		if (newValue < prevValue && !confirm(Liferay.Language.get('reducing-the-number-of-columns-will-lose-the-content-added-to-the-deleted-columns-are-you-sure-you-want-to-proced'))) {
-			event.preventDefault();
-			event.delegateTarget.querySelector(`option[value="${prevValue}"]`).selected = true;
-			return false;
+		if (newValue < prevValue) {
+			let columnsToRemove = this.item.columns.slice(newValue - prevValue);
+			let showConfirmation;
+
+			for (let i = 0; i < columnsToRemove.length; i++) {
+				if (columnsToRemove[i].fragmentEntryLinkIds.length > 0) {
+					showConfirmation = true;
+					break;
+				}
+			}
+
+			if (showConfirmation && !confirm(Liferay.Language.get('reducing-the-number-of-columns-will-lose-the-content-added-to-the-deleted-columns-are-you-sure-you-want-to-proced'))) {
+				event.preventDefault();
+				event.delegateTarget.querySelector(`option[value="${prevValue}"]`).selected = true;
+				return false;
+			}
 		}
 
 		this._updateSection(UPDATE_SECTION_COLUMNS, {

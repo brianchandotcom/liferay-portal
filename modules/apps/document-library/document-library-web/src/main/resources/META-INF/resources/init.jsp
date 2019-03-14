@@ -106,6 +106,7 @@ page import="com.liferay.document.library.web.internal.display.context.DLAdminNa
 page import="com.liferay.document.library.web.internal.display.context.DLDisplayContextProvider" %><%@
 page import="com.liferay.document.library.web.internal.display.context.DLSelectRestrictedFileEntryTypesDisplayContext" %><%@
 page import="com.liferay.document.library.web.internal.display.context.DLViewFileEntryTypesDisplayContext" %><%@
+page import="com.liferay.document.library.web.internal.display.context.DLViewMoreMenuItemsDisplayContext" %><%@
 page import="com.liferay.document.library.web.internal.display.context.IGDisplayContextProvider" %><%@
 page import="com.liferay.document.library.web.internal.display.context.logic.DLPortletInstanceSettingsHelper" %><%@
 page import="com.liferay.document.library.web.internal.display.context.logic.DLVisualizationHelper" %><%@

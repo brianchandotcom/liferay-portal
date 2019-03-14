@@ -236,6 +236,7 @@ String navigation = ParamUtil.getString(request, "navigation");
 						},
 						maxFileSize: <%= dlConfiguration.fileMaxSize() %>,
 						namespace: '<portlet:namespace />',
+						openViewMoreFileEntryTypesURL: '<portlet:renderURL windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="mvcPath" value="/document_library/view_more_menu_items.jsp" /><portlet:param name="folderId" value="<%= String.valueOf(folderId) %>" /><portlet:param name="eventName" value='<%= liferayPortletResponse.getNamespace() + "selectAddMenuItem" %>' /></portlet:renderURL>',
 						portletId: '<%= HtmlUtil.escapeJS(portletId) %>',
 						redirect: encodeURIComponent('<%= currentURL %>'),
 						repositories: [
@@ -284,6 +285,23 @@ String navigation = ParamUtil.getString(request, "navigation");
 			};
 
 			Liferay.on('changeScope', changeScopeHandles);
+
+			<portlet:renderURL var="addFileEntryURL">
+				<portlet:param name="mvcRenderCommandName" value="/document_library/edit_file_entry" />
+				<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.ADD %>" />
+				<portlet:param name="redirect" value="<%= currentURL %>" />
+				<portlet:param name="repositoryId" value="<%= String.valueOf(repositoryId) %>" />
+				<portlet:param name="groupId" value="<%= String.valueOf(scopeGroupId) %>" />
+				<portlet:param name="folderId" value="<%= String.valueOf(folderId) %>" />
+			</portlet:renderURL>
+
+			var editFileEntryHandler = function(event) {
+				var uri = '<%= addFileEntryURL %>'
+
+				location.href = Liferay.Util.addParams('<portlet:namespace />fileEntryTypeId' + '=' + event.fileEntryTypeId, uri);
+			};
+
+			Liferay.on( '<portlet:namespace />selectAddMenuItem', editFileEntryHandler);
 		</aui:script>
 
 		<%

@@ -36,7 +36,7 @@ import org.osgi.service.component.annotations.ServiceScope;
  * @author Jeyvison Nascimento
  */
 @Component(
-	properties = "OSGI-INF/liferay/rest/v1_0/Data-layout.properties",
+	properties = "OSGI-INF/liferay/rest/v1_0/data-layout.properties",
 	scope = ServiceScope.PROTOTYPE, service = DataLayoutResource.class
 )
 public class DataLayoutResourceImpl extends BaseDataLayoutResourceImpl {

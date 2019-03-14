@@ -35,6 +35,7 @@ import com.liferay.portal.systemevent.SystemEventAdvice;
 import com.liferay.portal.util.PropsValues;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -78,52 +79,7 @@ public class AopCacheManager {
 		ChainableMethodAdviceDependencies chainableMethodAdviceDependencies) {
 
 		List<ChainableMethodAdvice> chainableMethodAdvices = new ArrayList<>(
-			14);
-
-		if (SPIUtil.isSPI()) {
-			chainableMethodAdvices.add(new SPIClusterableAdvice());
-		}
-
-		if (PropsValues.CLUSTER_LINK_ENABLED) {
-			chainableMethodAdvices.add(new ClusterableAdvice());
-		}
-
-		chainableMethodAdvices.add(new AccessControlAdvice());
-
-		if (PropsValues.PORTAL_RESILIENCY_ENABLED) {
-			chainableMethodAdvices.add(new PortalResiliencyAdvice());
-		}
-
-		AsyncAdvice asyncAdvice = new AsyncAdvice();
-
-		asyncAdvice.setDefaultDestinationName("liferay/async_service");
-
-		chainableMethodAdvices.add(asyncAdvice);
-
-		chainableMethodAdvices.add(new ThreadLocalCacheAdvice());
-
-		chainableMethodAdvices.add(new BufferedIncrementAdvice());
-
-		chainableMethodAdvices.add(new IndexableAdvice());
-
-		chainableMethodAdvices.add(new SystemEventAdvice());
-
-		chainableMethodAdvices.add(new ServiceContextAdvice());
-
-		chainableMethodAdvices.add(new RetryAdvice());
-
-		DynamicDataSourceTargetSource dynamicDataSourceTargetSource =
-			InfrastructureUtil.getDynamicDataSourceTargetSource();
-
-		if (dynamicDataSourceTargetSource != null) {
-			DynamicDataSourceAdvice dynamicDataSourceAdvice =
-				new DynamicDataSourceAdvice();
-
-			dynamicDataSourceAdvice.setDynamicDataSourceTargetSource(
-				dynamicDataSourceTargetSource);
-
-			chainableMethodAdvices.add(dynamicDataSourceAdvice);
-		}
+			_chainableMethodAdvices);
 
 		chainableMethodAdvices.add(
 			new ServiceMonitorAdvice(
@@ -144,9 +100,70 @@ public class AopCacheManager {
 	private AopCacheManager() {
 	}
 
+	private static final Comparator<ChainableMethodAdvice>
+		_CHAINABLE_METHOD_ADVICE_COMPARATOR = Comparator.comparing(
+			chainableMethodAdvice -> {
+				Class<? extends ChainableMethodAdvice> clazz =
+					chainableMethodAdvice.getClass();
+
+				return clazz.getName();
+			});
+
 	private static final Map
 		<AopInvocationHandler, ChainableMethodAdviceDependencies>
 			_aopInvocationHandlers = new ConcurrentHashMap<>();
+
+	private static final List<ChainableMethodAdvice> _chainableMethodAdvices =
+		new ArrayList<ChainableMethodAdvice>() {
+			{
+				if (SPIUtil.isSPI()) {
+					add(new SPIClusterableAdvice());
+				}
+
+				if (PropsValues.CLUSTER_LINK_ENABLED) {
+					add(new ClusterableAdvice());
+				}
+
+				add(new AccessControlAdvice());
+
+				if (PropsValues.PORTAL_RESILIENCY_ENABLED) {
+					add(new PortalResiliencyAdvice());
+				}
+
+				AsyncAdvice asyncAdvice = new AsyncAdvice();
+
+				asyncAdvice.setDefaultDestinationName("liferay/async_service");
+
+				add(asyncAdvice);
+
+				add(new ThreadLocalCacheAdvice());
+
+				add(new BufferedIncrementAdvice());
+
+				add(new IndexableAdvice());
+
+				add(new SystemEventAdvice());
+
+				add(new ServiceContextAdvice());
+
+				add(new RetryAdvice());
+
+				DynamicDataSourceTargetSource dynamicDataSourceTargetSource =
+					InfrastructureUtil.getDynamicDataSourceTargetSource();
+
+				if (dynamicDataSourceTargetSource != null) {
+					DynamicDataSourceAdvice dynamicDataSourceAdvice =
+						new DynamicDataSourceAdvice();
+
+					dynamicDataSourceAdvice.setDynamicDataSourceTargetSource(
+						dynamicDataSourceTargetSource);
+
+					add(dynamicDataSourceAdvice);
+				}
+
+				sort(_CHAINABLE_METHOD_ADVICE_COMPARATOR);
+			}
+		};
 
 	private static class ChainableMethodAdviceDependencies {
 

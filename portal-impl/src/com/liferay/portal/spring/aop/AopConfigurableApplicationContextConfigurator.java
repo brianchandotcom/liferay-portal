@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.transaction.TransactionInvokerUtil;
 import com.liferay.portal.kernel.util.InfrastructureUtil;
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
-import com.liferay.portal.monitoring.statistics.service.ServiceMonitoringControlImpl;
 import com.liferay.portal.spring.bean.BeanReferenceAnnotationBeanPostProcessor;
 import com.liferay.portal.spring.configurator.ConfigurableApplicationContextConfigurator;
 import com.liferay.portal.spring.hibernate.PortletHibernateConfiguration;
@@ -151,10 +150,6 @@ public class AopConfigurableApplicationContextConfigurator
 
 				configurableListableBeanFactory.addBeanPostProcessor(
 					counterServiceBeanAutoProxyCreator);
-
-				configurableListableBeanFactory.registerSingleton(
-					"serviceMonitoringControl",
-					new ServiceMonitoringControlImpl());
 			}
 
 			// Service AOP

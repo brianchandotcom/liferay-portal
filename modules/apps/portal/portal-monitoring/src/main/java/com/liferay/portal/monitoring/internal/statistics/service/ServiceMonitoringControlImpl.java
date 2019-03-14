@@ -12,11 +12,13 @@
  * details.
  */
 
-package com.liferay.portal.monitoring.statistics.service;
+package com.liferay.portal.monitoring.internal.statistics.service;
 
 import com.liferay.portal.kernel.monitoring.MethodSignature;
 import com.liferay.portal.kernel.monitoring.ServiceMonitoringControl;
 import com.liferay.portal.spring.aop.AopCacheManager;
+
+import org.osgi.service.component.annotations.Component;
 
 import java.util.Collections;
 import java.util.HashSet;
@@ -25,6 +27,9 @@ import java.util.Set;
 /**
  * @author Preston Crary
  */
+@Component(
+	enabled = false, immediate = true, service = ServiceMonitoringControl.class
+)
 public class ServiceMonitoringControlImpl implements ServiceMonitoringControl {
 
 	@Override

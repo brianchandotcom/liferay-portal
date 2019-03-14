@@ -14,6 +14,7 @@
 
 package com.liferay.frontend.taglib.clay.servlet.taglib.display.context;
 
+import com.liferay.frontend.taglib.clay.internal.servlet.taglib.display.context.TableDefaults;
 import com.liferay.frontend.taglib.clay.servlet.taglib.display.context.table.Schema;
 import com.liferay.frontend.taglib.clay.servlet.taglib.display.context.table.Size;
 
@@ -66,6 +67,10 @@ public interface TableDisplayContext {
 
 	public default Boolean isShowActionsMenu() {
 		return null;
+	}
+
+	public default Boolean isShowCheckbox() {
+		return TableDefaults.isShowCheckbox(isSelectable());
 	}
 
 	public default Boolean isUseDefaultClasses() {

@@ -15,11 +15,13 @@
 package com.liferay.frontend.taglib.clay.servlet.taglib.soy;
 
 import com.liferay.frontend.taglib.clay.internal.ClayTagDataSourceProvider;
+import com.liferay.frontend.taglib.clay.internal.servlet.taglib.display.context.TableDefaults;
 import com.liferay.frontend.taglib.clay.servlet.taglib.data.ClayTagDataSource;
 import com.liferay.frontend.taglib.clay.servlet.taglib.display.context.TableDisplayContext;
 import com.liferay.frontend.taglib.clay.servlet.taglib.display.context.table.Schema;
 import com.liferay.frontend.taglib.clay.servlet.taglib.display.context.table.Size;
 import com.liferay.frontend.taglib.clay.servlet.taglib.soy.base.BaseClayTag;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.Collection;
@@ -48,6 +50,16 @@ public class TableTag<T> extends BaseClayTag {
 		if (clayTagDataSource != null) {
 			_populateContext(clayTagDataSource);
 		}
+
+		Map<String, Object> context = getContext();
+
+		boolean selectable = GetterUtil.getBoolean(context.get("selectable"));
+
+		boolean showCheckbox = GetterUtil.getBoolean(
+			context.get("showCheckbox"),
+			TableDefaults.isShowCheckbox(selectable));
+
+		setShowCheckbox(showCheckbox);
 
 		return returnValue;
 	}
@@ -88,6 +100,10 @@ public class TableTag<T> extends BaseClayTag {
 
 	public void setShowActionsMenu(Boolean showActionsMenu) {
 		putValue("showActionsMenu", showActionsMenu);
+	}
+
+	public void setShowCheckbox(Boolean showCheckbox) {
+		putValue("showCheckbox", showCheckbox);
 	}
 
 	public void setSize(Size size) {
@@ -174,6 +190,10 @@ public class TableTag<T> extends BaseClayTag {
 
 		if (context.get("showActionsMenu") == null) {
 			setShowActionsMenu(tableDisplayContext.isShowActionsMenu());
+		}
+
+		if (context.get("showCheckbox") == null) {
+			setShowCheckbox(tableDisplayContext.isShowCheckbox());
 		}
 
 		if (context.get("items") == null) {

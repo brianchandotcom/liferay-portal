@@ -1,0 +1,6 @@
+Bundle-Name: Liferay Document Library Web Test Fragment
+Bundle-SymbolicName: com.liferay.document.library.web.test.fragment
+Bundle-Version: 1.0.0
+Export-Package: com.liferay.document.library.web.internal.display.context
+Fragment-Host: com.liferay.document.library.web
+-fixupmessages: Exporting an empty package...;is:=ignore

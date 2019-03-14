@@ -34,6 +34,9 @@ import com.liferay.portal.spring.transaction.TransactionExecutorFactory;
 import com.liferay.portal.spring.transaction.TransactionInvokerImpl;
 import com.liferay.portal.spring.transaction.TransactionManagerFactory;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.sql.DataSource;
 
 import org.hibernate.engine.SessionFactoryImplementor;
@@ -142,22 +145,16 @@ public class AopConfigurableApplicationContextConfigurator
 				transactionInvokerUtil.setTransactionInvoker(
 					transactionInvokerImpl);
 
-				ChainableMethodAdvice[] chainableMethodAdvices = {
-					configurableListableBeanFactory.getBean(
-						"counterTransactionAdvice", ChainableMethodAdvice.class)
-				};
-
-				ServiceBeanAutoProxyCreator serviceBeanAutoProxyCreator =
-					new ServiceBeanAutoProxyCreator(
-						new ServiceBeanMatcher(true), _classLoader,
-						chainableMethodAdvices);
-
-				defaultSingletonBeanRegistry.registerDisposableBean(
-					"counterServiceBeanAutoProxyCreatorDestroyer",
-					serviceBeanAutoProxyCreator::destroy);
+				CounterServiceBeanAutoProxyCreator
+					counterServiceBeanAutoProxyCreator =
+						new CounterServiceBeanAutoProxyCreator(
+							_classLoader,
+							configurableListableBeanFactory.getBean(
+								"counterTransactionAdvice",
+								ChainableMethodAdvice.class));
 
 				configurableListableBeanFactory.addBeanPostProcessor(
-					serviceBeanAutoProxyCreator);
+					counterServiceBeanAutoProxyCreator);
 
 				serviceMonitoringControl = new ServiceMonitoringControlImpl();
 
@@ -174,9 +171,8 @@ public class AopConfigurableApplicationContextConfigurator
 
 			ServiceBeanAutoProxyCreator serviceBeanAutoProxyCreator =
 				new ServiceBeanAutoProxyCreator(
-					new ServiceBeanMatcher(false), _classLoader,
-					AopCacheManager.createChainableMethodAdvices(
-						transactionExecutor, serviceMonitoringControl));
+					_classLoader, transactionExecutor,
+					serviceMonitoringControl);
 
 			defaultSingletonBeanRegistry.registerDisposableBean(
 				"serviceBeanAutoProxyCreatorDestroyer",
@@ -313,6 +309,70 @@ public class AopConfigurableApplicationContextConfigurator
 
 		private final DataSource _dataSource;
 		private final SessionFactory _sessionFactory;
+
+	}
+
+	private static class CounterServiceBeanAutoProxyCreator
+		extends BaseServiceBeanAutoProxyCreator {
+
+		@Override
+		protected AopInvocationHandler createAopInvocationHandler(Object bean) {
+			return new AopInvocationHandler(
+				bean, new ChainableMethodAdvice[] {_counterTransactionAdvice});
+		}
+
+		private CounterServiceBeanAutoProxyCreator(
+			ClassLoader classLoader,
+			ChainableMethodAdvice counterTransactionAdvice) {
+
+			super(new ServiceBeanMatcher(true), classLoader);
+
+			_counterTransactionAdvice = counterTransactionAdvice;
+		}
+
+		private final ChainableMethodAdvice _counterTransactionAdvice;
+
+	}
+
+	private static class ServiceBeanAutoProxyCreator
+		extends BaseServiceBeanAutoProxyCreator {
+
+		public void destroy() {
+			for (AopInvocationHandler aopInvocationHandler :
+					_aopInvocationHandlers) {
+
+				AopCacheManager.destroy(aopInvocationHandler);
+			}
+		}
+
+		@Override
+		protected AopInvocationHandler createAopInvocationHandler(Object bean) {
+			ChainableMethodAdvice[] chainableMethodAdvices =
+				AopCacheManager.createChainableMethodAdvices(
+					_transactionExecutor, _serviceMonitoringControl);
+
+			AopInvocationHandler aopInvocationHandler = AopCacheManager.create(
+				bean, chainableMethodAdvices);
+
+			_aopInvocationHandlers.add(aopInvocationHandler);
+
+			return aopInvocationHandler;
+		}
+
+		private ServiceBeanAutoProxyCreator(
+			ClassLoader classLoader, TransactionExecutor transactionExecutor,
+			ServiceMonitoringControl serviceMonitoringControl) {
+
+			super(new ServiceBeanMatcher(false), classLoader);
+
+			_transactionExecutor = transactionExecutor;
+			_serviceMonitoringControl = serviceMonitoringControl;
+		}
+
+		private final List<AopInvocationHandler> _aopInvocationHandlers =
+			new ArrayList<>();
+		private final ServiceMonitoringControl _serviceMonitoringControl;
+		private final TransactionExecutor _transactionExecutor;
 
 	}
 

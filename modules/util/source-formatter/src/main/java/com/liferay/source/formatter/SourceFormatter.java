@@ -479,6 +479,7 @@ public class SourceFormatter {
 		Set<String> dependentFileNames = new HashSet<>();
 
 		boolean buildPropertiesAdded = false;
+		boolean tagJavaFilesAdded = false;
 
 		for (String recentChangesFileName : recentChangesFileNames) {
 			if (!buildPropertiesAdded &&
@@ -499,6 +500,16 @@ public class SourceFormatter {
 			if (recentChangesFileName.endsWith("ServiceImpl.java")) {
 				dependentFileNames = _addServiceXMLFileName(
 					dependentFileNames, recentChangesFileName);
+			}
+			else if (!tagJavaFilesAdded &&
+					 recentChangesFileName.endsWith(".tld")) {
+
+				dependentFileNames.addAll(SourceFormatterUtil.filterFileNames(
+					_allFileNames, new String[0],
+					new String[] {"**/*Tag.java"},
+					_sourceFormatterExcludes, false));
+
+				tagJavaFilesAdded = true;
 			}
 		}
 

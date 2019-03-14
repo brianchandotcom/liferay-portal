@@ -561,7 +561,10 @@ definition {
 			portlet = "Recycle Bin"
 		);
 
-		WikiTable.restoreEntry(wikiPageTitle = "Wiki Page 1 Original");
+		LexiconTable.clickEllipsisItem(
+			item = "Restore",
+			tableEntry = "Wiki Page 1 Original"
+		);
 
 		RecycleBinWarning.selectRename();
 

@@ -94,7 +94,8 @@ public class DefaultAttributeResolver implements AttributeResolver {
 				attributeName = attributeName.substring(4);
 
 				addMapAttribute(
-					user, attributePublisher, attributeName, namespaceEnabled);
+					user, attributeResolverSAMLContext, attributePublisher,
+					attributeName, namespaceEnabled);
 			}
 			else if (attributeName.equals("organizations")) {
 				addOrganizationsAttribute(
@@ -245,7 +246,8 @@ public class DefaultAttributeResolver implements AttributeResolver {
 	}
 
 	protected void addMapAttribute(
-		User user, AttributePublisher attributePublisher, String attributeName,
+		User user, AttributeResolverSAMLContext attributeResolverSAMLContext,
+		AttributePublisher attributePublisher, String attributeName,
 		boolean namespaceEnabled) {
 
 		if (attributeName.indexOf(StringPool.EQUAL) <= 0) {
@@ -258,21 +260,18 @@ public class DefaultAttributeResolver implements AttributeResolver {
 			return;
 		}
 
-		Serializable attributeValue =
-			(Serializable)BeanPropertiesUtil.getObject(user, values[1]);
-
-		String nameFormat = null;
+		String attributeValue = BeanPropertiesUtil.getString(user, values[1]);
 
 		if (namespaceEnabled) {
-			nameFormat = Attribute.URI_REFERENCE;
+			attributePublisher.publish(
+				values[0], Attribute.URI_REFERENCE,
+				attributePublisher.buildString(attributeValue));
 		}
 		else {
-			nameFormat = Attribute.UNSPECIFIED;
+			attributePublisher.publish(
+				values[0], Attribute.UNSPECIFIED,
+				attributePublisher.buildString(attributeValue));
 		}
-
-		attributePublisher.publish(
-			values[0], nameFormat,
-			attributePublisher.buildString(attributeValue.toString()));
 	}
 
 	protected void addOrganizationRolesAttribute(

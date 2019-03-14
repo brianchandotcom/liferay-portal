@@ -14,12 +14,11 @@
 
 package com.liferay.portal.search.elasticsearch6.internal.query;
 
+import com.liferay.portal.search.elasticsearch6.internal.geolocation.GeoLocationPointTranslator;
 import com.liferay.portal.search.elasticsearch6.internal.query.geolocation.GeoExecTypeTranslator;
 import com.liferay.portal.search.elasticsearch6.internal.query.geolocation.GeoValidationMethodTranslator;
-import com.liferay.portal.search.geolocation.GeoLocationPoint;
 import com.liferay.portal.search.query.GeoBoundingBoxQuery;
 
-import org.elasticsearch.common.geo.GeoPoint;
 import org.elasticsearch.index.query.GeoBoundingBoxQueryBuilder;
 import org.elasticsearch.index.query.QueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
@@ -38,22 +37,11 @@ public class GeoBoundingBoxQueryTranslatorImpl
 		GeoBoundingBoxQueryBuilder geoBoundingBoxQueryBuilder =
 			QueryBuilders.geoBoundingBoxQuery(geoBoundingBoxQuery.getField());
 
-		GeoLocationPoint bottomRightGeoLocationPoint =
-			geoBoundingBoxQuery.getBottomRightGeoLocationPoint();
-
-		GeoPoint bottomRightGeoPoint = new GeoPoint(
-			bottomRightGeoLocationPoint.getLatitude(),
-			bottomRightGeoLocationPoint.getLongitude());
-
-		GeoLocationPoint topLeftGeoLocationPoint =
-			geoBoundingBoxQuery.getTopLeftGeoLocationPoint();
-
-		GeoPoint topLeftGeoPoint = new GeoPoint(
-			topLeftGeoLocationPoint.getLatitude(),
-			topLeftGeoLocationPoint.getLongitude());
-
 		geoBoundingBoxQueryBuilder.setCorners(
-			topLeftGeoPoint, bottomRightGeoPoint);
+			GeoLocationPointTranslator.translate(
+				geoBoundingBoxQuery.getTopLeftGeoLocationPoint()),
+			GeoLocationPointTranslator.translate(
+				geoBoundingBoxQuery.getBottomRightGeoLocationPoint()));
 
 		if (geoBoundingBoxQuery.getGeoExecType() != null) {
 			geoBoundingBoxQueryBuilder.type(

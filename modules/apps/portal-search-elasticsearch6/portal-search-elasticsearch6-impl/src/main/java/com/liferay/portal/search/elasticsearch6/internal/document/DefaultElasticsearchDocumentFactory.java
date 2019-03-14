@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.search.document.Document;
 import com.liferay.portal.search.document.Field;
+import com.liferay.portal.search.elasticsearch6.internal.geolocation.GeoLocationPointTranslator;
 import com.liferay.portal.search.geolocation.GeoLocationPoint;
 
 import java.io.IOException;
@@ -301,11 +302,8 @@ public class DefaultElasticsearchDocumentFactory
 
 	protected Object toElasticsearchValue(Object value) {
 		if (value instanceof GeoLocationPoint) {
-			GeoLocationPoint geoLocationPoint = (GeoLocationPoint)value;
-
-			return new GeoPoint(
-				geoLocationPoint.getLatitude(),
-				geoLocationPoint.getLongitude());
+			return GeoLocationPointTranslator.translate(
+				(GeoLocationPoint)value);
 		}
 
 		return value;

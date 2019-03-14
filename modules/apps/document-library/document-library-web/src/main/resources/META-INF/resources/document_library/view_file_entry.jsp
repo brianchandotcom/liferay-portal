@@ -234,7 +234,7 @@ if (portletTitleBasedNavigation) {
 <portlet:actionURL name="/document_library/edit_entry" var="editEntryURL" />
 
 <aui:script>
-	function <portlet:namespace />move(parameterName, parameterValue) {
+	function <portlet:namespace />move(selectedItems, parameterName, parameterValue) {
 		var namespace = '<portlet:namespace />';
 
 		Liferay.Util.selectEntity(

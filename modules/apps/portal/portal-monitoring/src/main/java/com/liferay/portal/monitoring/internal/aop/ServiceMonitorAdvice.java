@@ -23,9 +23,6 @@ import com.liferay.portal.monitoring.statistics.service.DataSampleFactoryUtil;
 import com.liferay.portal.spring.aop.AopMethodInvocation;
 import com.liferay.portal.spring.aop.ChainableMethodAdvice;
 
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
 
@@ -35,31 +32,26 @@ import java.util.Set;
 /**
  * @author Michael C. Han
  */
-@Component(
-	enabled = false, immediate = true, service = ChainableMethodAdvice.class
-)
 public class ServiceMonitorAdvice extends ChainableMethodAdvice {
+
+	public ServiceMonitorAdvice(
+		ServiceMonitoringControl serviceMonitoringControl) {
+
+		_serviceMonitoringControl = serviceMonitoringControl;
+	}
 
 	@Override
 	public Object createMethodContext(
 		Class<?> targetClass, Method method,
 		Map<Class<? extends Annotation>, Annotation> annotations) {
 
-		if (_serviceMonitoringControl.isMonitorServiceRequest()) {
-			return nullResult;
-		}
-
-		return null;
+		return nullResult;
 	}
 
 	@Override
 	public Object invoke(
 			AopMethodInvocation aopMethodInvocation, Object[] arguments)
 		throws Throwable {
-
-		if (!_serviceMonitoringControl.isMonitorServiceRequest()) {
-			return aopMethodInvocation.proceed(arguments);
-		}
 
 		boolean included = false;
 
@@ -109,7 +101,6 @@ public class ServiceMonitorAdvice extends ChainableMethodAdvice {
 		}
 	}
 
-	@Reference
-	private ServiceMonitoringControl _serviceMonitoringControl;
+	private final ServiceMonitoringControl _serviceMonitoringControl;
 
 }

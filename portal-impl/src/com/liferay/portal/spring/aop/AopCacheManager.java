@@ -70,18 +70,6 @@ public class AopCacheManager {
 		_aopInvocationHandlers.remove(aopInvocationHandler);
 	}
 
-	public static synchronized void reset() {
-		for (Map.Entry<AopInvocationHandler, TransactionExecutor> entry :
-				_aopInvocationHandlers.entrySet()) {
-
-			AopInvocationHandler aopInvocationHandler = entry.getKey();
-			TransactionExecutor transactionExecutor = entry.getValue();
-
-			aopInvocationHandler.setChainableMethodAdvices(
-				_createChainableMethodAdvices(transactionExecutor));
-		}
-	}
-
 	private static ChainableMethodAdvice[] _createChainableMethodAdvices(
 		TransactionExecutor transactionExecutor) {
 
@@ -190,7 +178,7 @@ public class AopCacheManager {
 
 				_chainableMethodAdvices.add(index, chainableMethodAdvice);
 
-				reset();
+				_reset();
 			}
 
 			return chainableMethodAdvice;
@@ -210,12 +198,24 @@ public class AopCacheManager {
 			synchronized (AopCacheManager.class) {
 				_chainableMethodAdvices.remove(chainableMethodAdvice);
 
-				reset();
+				_reset();
 			}
 
 			Registry registry = RegistryUtil.getRegistry();
 
 			registry.ungetService(serviceReference);
+		}
+
+		private static void _reset() {
+			for (Map.Entry<AopInvocationHandler, TransactionExecutor> entry :
+					_aopInvocationHandlers.entrySet()) {
+
+				AopInvocationHandler aopInvocationHandler = entry.getKey();
+				TransactionExecutor transactionExecutor = entry.getValue();
+
+				aopInvocationHandler.setChainableMethodAdvices(
+					_createChainableMethodAdvices(transactionExecutor));
+			}
 		}
 
 	}

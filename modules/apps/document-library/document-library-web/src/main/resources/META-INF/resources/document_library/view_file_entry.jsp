@@ -132,16 +132,18 @@ if (portletTitleBasedNavigation) {
 		</div>
 	</c:if>
 
-	<div class="contextual-sidebar sidebar-light sidebar-preview">
+	<c:if test="<%= portletTitleBasedNavigation %>">
+		<div class="contextual-sidebar sidebar-light sidebar-preview">
 
-		<%
-		request.setAttribute("info_panel.jsp-fileEntry", fileEntry);
-		request.setAttribute("info_panel.jsp-fileVersion", fileVersion);
-		request.setAttribute("info_panel_file_entry.jsp-hideActions", true);
-		%>
+			<%
+			request.setAttribute("info_panel.jsp-fileEntry", fileEntry);
+			request.setAttribute("info_panel.jsp-fileVersion", fileVersion);
+			request.setAttribute("info_panel_file_entry.jsp-hideActions", true);
+			%>
 
-		<liferay-util:include page="/document_library/info_panel_file_entry.jsp" servletContext="<%= application %>" />
-	</div>
+			<liferay-util:include page="/document_library/info_panel_file_entry.jsp" servletContext="<%= application %>" />
+		</div>
+	</c:if>
 
 	<div class="contextual-sidebar-content">
 		<div class="alert alert-danger hide" id="<portlet:namespace />openMSOfficeError"></div>
@@ -233,14 +235,18 @@ if (addPortletBreadcrumbEntries) {
 
 <liferay-util:dynamic-include key="com.liferay.document.library.web#/document_library/view_file_entry.jsp#post" />
 
-<aui:script>
-	var openContextualSidebarButton = document.getElementById('<portlet:namespace />OpenContextualSidebar');
+<c:if test="<%= portletTitleBasedNavigation %>">
+	<aui:script>
+		var openContextualSidebarButton = document.getElementById('<portlet:namespace />OpenContextualSidebar');
 
-	openContextualSidebarButton.addEventListener(
-		'click',
-		function() {
-			document.querySelector('#<portlet:namespace />FileEntry .contextual-sidebar')
-				.classList.toggle('contextual-sidebar-visible');
+		if (openContextualSidebarButton) {
+			openContextualSidebarButton.addEventListener(
+				'click',
+				function() {
+					document.querySelector('#<portlet:namespace />FileEntry .contextual-sidebar')
+						.classList.toggle('contextual-sidebar-visible');
+				}
+			);
 		}
-	);
-</aui:script>
+	</aui:script>
+</c:if>

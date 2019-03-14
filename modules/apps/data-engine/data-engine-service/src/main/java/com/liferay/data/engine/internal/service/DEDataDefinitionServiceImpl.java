@@ -31,7 +31,7 @@ import com.liferay.data.engine.internal.executor.DEDataEngineRequestExecutor;
 import com.liferay.data.engine.internal.io.DEDataDefinitionDeserializerTracker;
 import com.liferay.data.engine.internal.io.DEDataDefinitionSerializerTracker;
 import com.liferay.data.engine.internal.security.permission.DEDataEnginePermissionSupport;
-import com.liferay.data.engine.internal.storage.DEDataStorageTracker;
+import com.liferay.data.engine.internal.storage.DataStorageTracker;
 import com.liferay.data.engine.model.DEDataDefinition;
 import com.liferay.data.engine.service.DEDataDefinitionCountRequest;
 import com.liferay.data.engine.service.DEDataDefinitionCountResponse;
@@ -340,7 +340,7 @@ public class DEDataDefinitionServiceImpl
 	@Activate
 	protected void activate() {
 		_deDataEngineRequestExecutor = new DEDataEngineRequestExecutor(
-			deDataDefinitionDeserializerTracker, deDataStorageTracker);
+			deDataDefinitionDeserializerTracker, dataStorageTracker);
 
 		_deDataDefinitionCountRequestExecutor =
 			new DEDataDefinitionCountRequestExecutor(
@@ -405,6 +405,9 @@ public class DEDataDefinitionServiceImpl
 	}
 
 	@Reference
+	protected DataStorageTracker dataStorageTracker;
+
+	@Reference
 	protected DDLRecordSetLocalService ddlRecordSetLocalService;
 
 	@Reference
@@ -423,9 +426,6 @@ public class DEDataDefinitionServiceImpl
 	@Reference
 	protected DEDataDefinitionSerializerTracker
 		deDataDefinitionFieldsSerializerTracker;
-
-	@Reference
-	protected DEDataStorageTracker deDataStorageTracker;
 
 	@Reference
 	protected GroupLocalService groupLocalService;

@@ -19,9 +19,9 @@ import com.liferay.data.engine.io.DEDataRecordValuesSerializer;
 import com.liferay.data.engine.io.DEDataRecordValuesSerializerApplyRequest;
 import com.liferay.data.engine.io.DEDataRecordValuesSerializerApplyResponse;
 import com.liferay.data.engine.model.DEDataRecord;
-import com.liferay.data.engine.storage.DEDataRecordExporter;
 import com.liferay.data.engine.storage.DEDataRecordExporterApplyRequest;
 import com.liferay.data.engine.storage.DEDataRecordExporterApplyResponse;
+import com.liferay.data.engine.storage.DataRecordExporter;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactory;
@@ -38,11 +38,11 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	immediate = true, property = "de.data.record.exporter.format=json",
-	service = DEDataRecordExporter.class
+	service = DEDataRecordJSONExporter.class
 )
-public class DEDataRecordJSONExporter implements DEDataRecordExporter {
+public class DEDataRecordJSONExporter {
 
-	@Override
+
 	public DEDataRecordExporterApplyResponse apply(
 		DEDataRecordExporterApplyRequest deDataRecordExporterApplyRequest) {
 

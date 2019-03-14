@@ -14,7 +14,7 @@
 
 package com.liferay.data.engine.internal.storage;
 
-import com.liferay.data.engine.storage.DEDataRecordExporter;
+import com.liferay.data.engine.storage.DataRecordExporter;
 import com.liferay.portal.kernel.util.MapUtil;
 
 import java.util.Map;
@@ -33,7 +33,7 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
 @Component(immediate = true, service = DEDataRecordExporterTracker.class)
 public class DEDataRecordExporterTracker {
 
-	public DEDataRecordExporter getDEDataRecordExporter(String format) {
+	public DataRecordExporter getDEDataRecordExporter(String format) {
 		return _deDataRecordExporters.get(format);
 	}
 
@@ -43,13 +43,12 @@ public class DEDataRecordExporterTracker {
 		policyOption = ReferencePolicyOption.GREEDY
 	)
 	protected void addDEDataRecordExporter(
-		DEDataRecordExporter deDataRecordExporter,
-		Map<String, Object> properties) {
+		DataRecordExporter dataRecordExporter, Map<String, Object> properties) {
 
 		String format = MapUtil.getString(
 			properties, "de.data.record.exporter.format");
 
-		_deDataRecordExporters.put(format, deDataRecordExporter);
+		_deDataRecordExporters.put(format, dataRecordExporter);
 	}
 
 	@Deactivate
@@ -58,7 +57,7 @@ public class DEDataRecordExporterTracker {
 	}
 
 	protected void removeDEDataRecordExporter(
-		DEDataRecordExporter dataExporter, Map<String, Object> properties) {
+		DataRecordExporter dataExporter, Map<String, Object> properties) {
 
 		String format = MapUtil.getString(
 			properties, "de.data.record.exporter.format");
@@ -66,7 +65,7 @@ public class DEDataRecordExporterTracker {
 		_deDataRecordExporters.remove(format);
 	}
 
-	private final Map<String, DEDataRecordExporter> _deDataRecordExporters =
+	private final Map<String, DataRecordExporter> _deDataRecordExporters =
 		new TreeMap<>();
 
 }

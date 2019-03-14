@@ -12,9 +12,9 @@
  * details.
  */
 
-package com.liferay.data.engine.rest.internal.storage;
+package com.liferay.data.engine.internal.storage;
 
-import com.liferay.data.engine.storage.DEDataStorage;
+import com.liferay.data.engine.storage.DataStorage;
 import com.liferay.portal.kernel.util.MapUtil;
 
 import java.util.Map;
@@ -30,11 +30,11 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
 /**
  * @author Leonardo Barros
  */
-@Component(immediate = true, service = DEDataStorageTracker.class)
-public class DEDataStorageTracker {
+@Component(immediate = true, service = DataStorageTracker.class)
+public class DataStorageTracker {
 
-	public DEDataStorage getDEDataStorage(String type) {
-		return _deDataStorages.get(type);
+	public DataStorage getDataStorage(String type) {
+		return _dataStorages.get(type);
 	}
 
 	@Reference(
@@ -42,27 +42,27 @@ public class DEDataStorageTracker {
 		policy = ReferencePolicy.DYNAMIC,
 		policyOption = ReferencePolicyOption.GREEDY
 	)
-	protected void addDEDataStorage(
-		DEDataStorage deDataStorage, Map<String, Object> properties) {
+	protected void addDataStorage(
+		DataStorage dataStorage, Map<String, Object> properties) {
 
 		String type = MapUtil.getString(properties, "de.data.storage.type");
 
-		_deDataStorages.put(type, deDataStorage);
+		_dataStorages.put(type, dataStorage);
 	}
 
 	@Deactivate
 	protected void deactivate() {
-		_deDataStorages.clear();
+		_dataStorages.clear();
 	}
 
-	protected void removeDEDataStorage(
-		DEDataStorage deDataStorage, Map<String, Object> properties) {
+	protected void removeDataStorage(
+		DataStorage dataStorage, Map<String, Object> properties) {
 
 		String type = MapUtil.getString(properties, "de.data.storage.type");
 
-		_deDataStorages.remove(type);
+		_dataStorages.remove(type);
 	}
 
-	private final Map<String, DEDataStorage> _deDataStorages = new TreeMap<>();
+	private final Map<String, DataStorage> _dataStorages = new TreeMap<>();
 
 }

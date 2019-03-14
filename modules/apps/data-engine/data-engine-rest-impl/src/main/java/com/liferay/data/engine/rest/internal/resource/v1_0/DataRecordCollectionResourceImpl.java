@@ -17,9 +17,9 @@ package com.liferay.data.engine.rest.internal.resource.v1_0;
 import com.liferay.data.engine.rest.dto.v1_0.DataRecord;
 import com.liferay.data.engine.rest.dto.v1_0.DataRecordCollection;
 import com.liferay.data.engine.rest.internal.dto.v1_0.util.LocalizedValueUtil;
-import com.liferay.data.engine.rest.internal.storage.DEDataStorageTracker;
+import com.liferay.data.engine.rest.internal.storage.DataStorageTracker;
 import com.liferay.data.engine.rest.resource.v1_0.DataRecordCollectionResource;
-import com.liferay.data.engine.storage.DEDataStorage;
+import com.liferay.data.engine.storage.DataStorage;
 import com.liferay.dynamic.data.lists.model.DDLRecord;
 import com.liferay.dynamic.data.lists.model.DDLRecordSet;
 import com.liferay.dynamic.data.lists.model.DDLRecordSetConstants;
@@ -67,10 +67,10 @@ public class DataRecordCollectionResourceImpl
 
 		DDMStructure ddmStructure = ddlRecordSet.getDDMStructure();
 
-		DEDataStorage deDataStorage = _deDataStorageTracker.getDEDataStorage(
+		DataStorage dataStorage = _dataStorageTracker.getDEDataStorage(
 			ddmStructure.getStorageType());
 
-		deDataStorage.delete(ddlRecord.getDDMStorageId());
+		dataStorage.delete(ddlRecord.getDDMStorageId());
 
 		_ddlRecordLocalService.deleteDDLRecord(ddlRecord);
 
@@ -239,10 +239,10 @@ public class DataRecordCollectionResourceImpl
 
 		DDMStructure ddmStructure = ddlRecordSet.getDDMStructure();
 
-		DEDataStorage deDataStorage = _deDataStorageTracker.getDEDataStorage(
+		DataStorage dataStorage = _dataStorageTracker.getDEDataStorage(
 			ddmStructure.getStorageType());
 
-		return deDataStorage.save(contentSpaceId, dataRecord);
+		return dataStorage.save(contentSpaceId, dataRecord);
 	}
 
 	private DataRecord _toDataRecord(DDLRecord ddlRecord) throws Exception {
@@ -250,17 +250,17 @@ public class DataRecordCollectionResourceImpl
 
 		DDMStructure ddmStructure = ddlRecordSet.getDDMStructure();
 
-		DEDataStorage deDataStorage = _deDataStorageTracker.getDEDataStorage(
+		DataStorage dataStorage = _dataStorageTracker.getDEDataStorage(
 			ddmStructure.getStorageType());
 
-		deDataStorage.get(
+		dataStorage.get(
 			ddmStructure.getStructureId(), ddlRecord.getDDMStorageId());
 
 		return new DataRecord() {
 			{
 				dataRecordCollectionId = ddlRecordSet.getRecordSetId();
 				id = ddlRecord.getRecordId();
-				dataRecordValues = deDataStorage.get(
+				dataRecordValues = dataStorage.get(
 					ddmStructure.getStructureId(), ddlRecord.getDDMStorageId());
 			}
 		};
@@ -282,6 +282,9 @@ public class DataRecordCollectionResourceImpl
 	}
 
 	@Reference
+	private DataStorageTracker _dataStorageTracker;
+
+	@Reference
 	private DDLRecordLocalService _ddlRecordLocalService;
 
 	@Reference
@@ -289,9 +292,6 @@ public class DataRecordCollectionResourceImpl
 
 	@Reference
 	private DDMStorageLinkLocalService _ddmStorageLinkLocalService;
-
-	@Reference
-	private DEDataStorageTracker _deDataStorageTracker;
 
 	@Reference
 	private Portal _portal;

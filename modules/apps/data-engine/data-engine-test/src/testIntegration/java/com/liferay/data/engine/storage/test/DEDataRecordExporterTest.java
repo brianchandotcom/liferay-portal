@@ -25,7 +25,7 @@ import com.liferay.data.engine.service.DEDataDefinitionSaveResponse;
 import com.liferay.data.engine.service.DEDataDefinitionService;
 import com.liferay.data.engine.service.DEDataRecordCollectionService;
 import com.liferay.data.engine.service.test.DEDataEngineTestUtil;
-import com.liferay.data.engine.storage.DEDataRecordExporter;
+import com.liferay.data.engine.storage.DataRecordExporter;
 import com.liferay.data.engine.storage.DEDataRecordExporterApplyRequest;
 import com.liferay.data.engine.storage.DEDataRecordExporterApplyResponse;
 import com.liferay.portal.kernel.model.Group;
@@ -182,7 +182,7 @@ public class DEDataRecordExporterTest {
 				).build();
 
 			DEDataRecordExporterApplyResponse
-				deDataRecordExporterApplyResponse = _deDataRecordExporter.apply(
+				deDataRecordExporterApplyResponse = _dataRecordExporter.apply(
 					deDataRecordExporterApplyRequest);
 
 			JSONAssert.assertEquals(
@@ -215,9 +215,9 @@ public class DEDataRecordExporterTest {
 
 	@Inject(
 		filter = "de.data.record.exporter.format=json",
-		type = DEDataRecordExporter.class
+		type = DataRecordExporter.class
 	)
-	private DEDataRecordExporter _deDataRecordExporter;
+	private DataRecordExporter _dataRecordExporter;
 
 	@DeleteAfterTestRun
 	private Group _group;

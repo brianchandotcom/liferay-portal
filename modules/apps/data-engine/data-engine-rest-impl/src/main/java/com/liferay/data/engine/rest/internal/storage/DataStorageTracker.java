@@ -14,7 +14,7 @@
 
 package com.liferay.data.engine.rest.internal.storage;
 
-import com.liferay.data.engine.storage.DEDataRecordExporter;
+import com.liferay.data.engine.storage.DataStorage;
 import com.liferay.portal.kernel.util.MapUtil;
 
 import java.util.Map;
@@ -30,11 +30,11 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
 /**
  * @author Leonardo Barros
  */
-@Component(immediate = true, service = DEDataRecordExporterTracker.class)
-public class DEDataRecordExporterTracker {
+@Component(immediate = true, service = DataStorageTracker.class)
+public class DataStorageTracker {
 
-	public DEDataRecordExporter getDEDataRecordExporter(String format) {
-		return _deDataRecordExporters.get(format);
+	public DataStorage getDEDataStorage(String type) {
+		return _dataStorages.get(type);
 	}
 
 	@Reference(
@@ -42,31 +42,27 @@ public class DEDataRecordExporterTracker {
 		policy = ReferencePolicy.DYNAMIC,
 		policyOption = ReferencePolicyOption.GREEDY
 	)
-	protected void addDEDataRecordExporter(
-		DEDataRecordExporter deDataRecordExporter,
-		Map<String, Object> properties) {
+	protected void addDEDataStorage(
+		DataStorage dataStorage, Map<String, Object> properties) {
 
-		String format = MapUtil.getString(
-			properties, "de.data.record.exporter.format");
+		String type = MapUtil.getString(properties, "data.storage.type");
 
-		_deDataRecordExporters.put(format, deDataRecordExporter);
+		_dataStorages.put(type, dataStorage);
 	}
 
 	@Deactivate
 	protected void deactivate() {
-		_deDataRecordExporters.clear();
+		_dataStorages.clear();
 	}
 
-	protected void removeDEDataRecordExporter(
-		DEDataRecordExporter dataExporter, Map<String, Object> properties) {
+	protected void removeDEDataStorage(
+		DataStorage dataStorage, Map<String, Object> properties) {
 
-		String format = MapUtil.getString(
-			properties, "de.data.record.exporter.format");
+		String type = MapUtil.getString(properties, "data.storage.type");
 
-		_deDataRecordExporters.remove(format);
+		_dataStorages.remove(type);
 	}
 
-	private final Map<String, DEDataRecordExporter> _deDataRecordExporters =
-		new TreeMap<>();
+	private final Map<String, DataStorage> _dataStorages = new TreeMap<>();
 
 }

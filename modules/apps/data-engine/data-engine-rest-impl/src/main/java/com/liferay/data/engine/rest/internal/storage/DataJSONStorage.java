@@ -18,10 +18,10 @@ import com.liferay.data.engine.model.DEDataRecord;
 import com.liferay.data.engine.rest.dto.v1_0.DataRecord;
 import com.liferay.data.engine.rest.dto.v1_0.DataRecordCollection;
 import com.liferay.data.engine.rest.dto.v1_0.DataRecordValue;
-import com.liferay.data.engine.rest.internal.dto.v1_0.util.DataRecordUtil;
+import com.liferay.data.engine.rest.internal.dto.v1_0.util.DataRecordValueUtil;
 import com.liferay.data.engine.rest.resource.v1_0.DataDefinitionResource;
 import com.liferay.data.engine.rest.resource.v1_0.DataRecordCollectionResource;
-import com.liferay.data.engine.storage.DEDataStorage;
+import com.liferay.data.engine.storage.DataStorage;
 import com.liferay.dynamic.data.mapping.model.DDMContent;
 import com.liferay.dynamic.data.mapping.service.DDMContentLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -35,10 +35,10 @@ import org.osgi.service.component.annotations.Reference;
  * @author Leonardo Barros
  */
 @Component(
-	immediate = true, property = "de.data.storage.type=json",
-	service = DEDataStorage.class
+	immediate = true, property = "data.storage.type=json",
+	service = DataStorage.class
 )
-public class DEDataJSONStorage implements DEDataStorage {
+public class DataJSONStorage implements DataStorage {
 
 	@Override
 	public long delete(long dataStorageId) throws Exception {
@@ -59,7 +59,7 @@ public class DEDataJSONStorage implements DEDataStorage {
 		DDMContent ddmContent = ddmContentLocalService.getContent(
 			dataStorageId);
 
-		return DataRecordUtil.toDataRecordValues(
+		return DataRecordValueUtil.toDataRecordValues(
 			dataDefinitionResource.getDataDefinition(dataDefinitionId),
 			ddmContent.getData());
 	}
@@ -72,7 +72,7 @@ public class DEDataJSONStorage implements DEDataStorage {
 
 		return insert(
 			PrincipalThreadLocal.getUserId(), groupId,
-			DataRecordUtil.toJSONString(
+			DataRecordValueUtil.toJSONString(
 				dataDefinitionResource.getDataDefinition(
 					dataRecordCollection.getDataDefinitionId()),
 				dataRecord.getDataRecordValues()));

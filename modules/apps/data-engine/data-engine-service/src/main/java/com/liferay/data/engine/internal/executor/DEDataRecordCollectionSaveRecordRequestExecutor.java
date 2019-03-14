@@ -15,13 +15,13 @@
 package com.liferay.data.engine.internal.executor;
 
 import com.liferay.data.engine.exception.DEDataRecordCollectionException;
-import com.liferay.data.engine.internal.storage.DEDataStorageTracker;
+import com.liferay.data.engine.internal.storage.DataStorageTracker;
 import com.liferay.data.engine.model.DEDataDefinition;
 import com.liferay.data.engine.model.DEDataRecord;
 import com.liferay.data.engine.service.DEDataRecordCollectionSaveRecordRequest;
 import com.liferay.data.engine.service.DEDataRecordCollectionSaveRecordResponse;
-import com.liferay.data.engine.storage.DEDataStorage;
 import com.liferay.data.engine.storage.DEDataStorageSaveResponse;
+import com.liferay.data.engine.storage.DataStorage;
 import com.liferay.dynamic.data.lists.model.DDLRecord;
 import com.liferay.dynamic.data.lists.model.DDLRecordSet;
 import com.liferay.dynamic.data.lists.model.DDLRecordSetVersion;
@@ -39,11 +39,11 @@ public class DEDataRecordCollectionSaveRecordRequestExecutor {
 
 	public DEDataRecordCollectionSaveRecordRequestExecutor(
 		DDLRecordLocalService ddlRecordLocalService,
-		DEDataStorageTracker deDataStorageTracker,
+		DataStorageTracker dataStorageTracker,
 		DDMStorageLinkLocalService ddmStorageLinkLocalService, Portal portal) {
 
 		_ddlRecordLocalService = ddlRecordLocalService;
-		_deDataStorageTracker = deDataStorageTracker;
+		_dataStorageTracker = dataStorageTracker;
 		_ddmStorageLinkLocalService = ddmStorageLinkLocalService;
 		_portal = portal;
 	}
@@ -64,7 +64,7 @@ public class DEDataRecordCollectionSaveRecordRequestExecutor {
 
 		String storageType = deDataDefinition.getStorageType();
 
-		DEDataStorage deDataStorage = _deDataStorageTracker.getDEDataStorage(
+		DataStorage deDataStorage = _dataStorageTracker.getDataStorage(
 			storageType);
 
 		if (deDataStorage == null) {
@@ -124,9 +124,9 @@ public class DEDataRecordCollectionSaveRecordRequestExecutor {
 			serviceContext);
 	}
 
+	private final DataStorageTracker _dataStorageTracker;
 	private final DDLRecordLocalService _ddlRecordLocalService;
 	private final DDMStorageLinkLocalService _ddmStorageLinkLocalService;
-	private final DEDataStorageTracker _deDataStorageTracker;
 	private final Portal _portal;
 
 }

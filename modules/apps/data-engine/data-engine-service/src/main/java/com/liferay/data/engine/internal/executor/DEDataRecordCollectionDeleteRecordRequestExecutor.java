@@ -15,10 +15,10 @@
 package com.liferay.data.engine.internal.executor;
 
 import com.liferay.data.engine.exception.DEDataRecordCollectionException;
-import com.liferay.data.engine.internal.storage.DEDataStorageTracker;
+import com.liferay.data.engine.internal.storage.DataStorageTracker;
 import com.liferay.data.engine.service.DEDataRecordCollectionDeleteRecordRequest;
 import com.liferay.data.engine.service.DEDataRecordCollectionDeleteRecordResponse;
-import com.liferay.data.engine.storage.DEDataStorage;
+import com.liferay.data.engine.storage.DataStorage;
 import com.liferay.dynamic.data.lists.model.DDLRecord;
 import com.liferay.dynamic.data.lists.model.DDLRecordSet;
 import com.liferay.dynamic.data.lists.service.DDLRecordLocalService;
@@ -30,10 +30,10 @@ import com.liferay.dynamic.data.mapping.model.DDMStructure;
 public class DEDataRecordCollectionDeleteRecordRequestExecutor {
 
 	public DEDataRecordCollectionDeleteRecordRequestExecutor(
-		DEDataStorageTracker deDataStorageTracker,
+		DataStorageTracker dataStorageTracker,
 		DDLRecordLocalService ddlRecordLocalService) {
 
-		_deDataStorageTracker = deDataStorageTracker;
+		_dataStorageTracker = dataStorageTracker;
 		_ddlRecordLocalService = ddlRecordLocalService;
 	}
 
@@ -53,7 +53,7 @@ public class DEDataRecordCollectionDeleteRecordRequestExecutor {
 
 		String storageType = ddmStructure.getStorageType();
 
-		DEDataStorage deDataStorage = _deDataStorageTracker.getDEDataStorage(
+		DataStorage deDataStorage = _dataStorageTracker.getDataStorage(
 			storageType);
 
 		if (deDataStorage == null) {
@@ -67,7 +67,7 @@ public class DEDataRecordCollectionDeleteRecordRequestExecutor {
 			deDataRecordId);
 	}
 
+	private final DataStorageTracker _dataStorageTracker;
 	private final DDLRecordLocalService _ddlRecordLocalService;
-	private final DEDataStorageTracker _deDataStorageTracker;
 
 }

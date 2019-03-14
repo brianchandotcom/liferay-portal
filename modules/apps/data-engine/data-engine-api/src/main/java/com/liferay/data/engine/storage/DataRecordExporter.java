@@ -14,21 +14,21 @@
 
 package com.liferay.data.engine.storage;
 
+import com.liferay.data.engine.rest.dto.v1_0.DataRecord;
+
 /**
  * Provides an interface to export data records.
  *
  * @author Leonardo Barros
  */
-public interface DEDataRecordExporter {
+public interface DataRecordExporter {
 
 	/**
 	 * Export a list of data records according to the format requested.
 	 *
-	 * @param deDataRecordExporterApplyRequest
-	 * @return {@link DEDataRecordExporterApplyResponse}
-	 * @review
+	 * @param dataRecords
+	 * @return
 	 */
-	public DEDataRecordExporterApplyResponse apply(
-		DEDataRecordExporterApplyRequest deDataRecordExporterApplyRequest);
+	public String apply(DataRecord[] dataRecords) throws Exception;
 
 }

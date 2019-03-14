@@ -36,7 +36,7 @@ import java.util.stream.Stream;
 /**
  * @author Jeyvison Nascimento
  */
-public class DataRecordUtil {
+public class DataRecordValueUtil {
 
 	public static DataRecordValue[] toDataRecordValues(
 			DataDefinition dataDefinition, String json)

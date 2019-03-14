@@ -17,15 +17,15 @@ package com.liferay.data.engine.internal.executor;
 import com.liferay.data.engine.exception.DEDataDefinitionDeserializerException;
 import com.liferay.data.engine.exception.DEDataRecordCollectionException;
 import com.liferay.data.engine.internal.io.DEDataDefinitionDeserializerTracker;
-import com.liferay.data.engine.internal.storage.DEDataStorageTracker;
+import com.liferay.data.engine.internal.storage.DataStorageTracker;
 import com.liferay.data.engine.io.DEDataDefinitionDeserializer;
 import com.liferay.data.engine.io.DEDataDefinitionDeserializerApplyRequest;
 import com.liferay.data.engine.io.DEDataDefinitionDeserializerApplyResponse;
 import com.liferay.data.engine.model.DEDataDefinition;
 import com.liferay.data.engine.model.DEDataRecord;
 import com.liferay.data.engine.model.DEDataRecordCollection;
-import com.liferay.data.engine.storage.DEDataStorage;
 import com.liferay.data.engine.storage.DEDataStorageGetResponse;
+import com.liferay.data.engine.storage.DataStorage;
 import com.liferay.dynamic.data.lists.model.DDLRecord;
 import com.liferay.dynamic.data.lists.model.DDLRecordSet;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
@@ -38,11 +38,11 @@ public class DEDataEngineRequestExecutor {
 
 	public DEDataEngineRequestExecutor(
 		DEDataDefinitionDeserializerTracker deDataDefinitionDeserializerTracker,
-		DEDataStorageTracker deDataStorageTracker) {
+		DataStorageTracker dataStorageTracker) {
 
 		_deDataDefinitionDeserializerTracker =
 			deDataDefinitionDeserializerTracker;
-		_deDataStorageTracker = deDataStorageTracker;
+		_dataStorageTracker = dataStorageTracker;
 	}
 
 	public DEDataRecord map(DDLRecord ddlRecord) throws PortalException {
@@ -52,7 +52,7 @@ public class DEDataEngineRequestExecutor {
 		DEDataDefinition deDataDefinition =
 			deDataRecordCollection.getDEDataDefinition();
 
-		DEDataStorage deDataStorage = _deDataStorageTracker.getDEDataStorage(
+		DataStorage deDataStorage = _dataStorageTracker.getDataStorage(
 			deDataDefinition.getStorageType());
 
 		if (deDataStorage == null) {
@@ -142,8 +142,8 @@ public class DEDataEngineRequestExecutor {
 		return deDataDefinitionDeserializerApplyResponse.getDEDataDefinition();
 	}
 
+	private final DataStorageTracker _dataStorageTracker;
 	private final DEDataDefinitionDeserializerTracker
 		_deDataDefinitionDeserializerTracker;
-	private final DEDataStorageTracker _deDataStorageTracker;
 
 }

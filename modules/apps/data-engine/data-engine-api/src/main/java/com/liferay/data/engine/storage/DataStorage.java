@@ -23,7 +23,7 @@ import com.liferay.data.engine.rest.dto.v1_0.DataRecordValue;
  * @author Leonardo Barros
  * @review
  */
-public interface DEDataStorage {
+public interface DataStorage {
 
 	/**
 	 * Deletes a data record on a data storage using the id passed

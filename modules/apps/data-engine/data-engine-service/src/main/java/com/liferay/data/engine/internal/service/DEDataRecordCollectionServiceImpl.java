@@ -35,7 +35,7 @@ import com.liferay.data.engine.internal.io.DEDataDefinitionDeserializerTracker;
 import com.liferay.data.engine.internal.rule.DEDataDefinitionRuleFunctionTracker;
 import com.liferay.data.engine.internal.security.permission.DEDataEnginePermissionSupport;
 import com.liferay.data.engine.internal.storage.DEDataRecordExporterTracker;
-import com.liferay.data.engine.internal.storage.DEDataStorageTracker;
+import com.liferay.data.engine.internal.storage.DataStorageTracker;
 import com.liferay.data.engine.internal.util.DEDataEngineUtil;
 import com.liferay.data.engine.model.DEDataDefinition;
 import com.liferay.data.engine.model.DEDataDefinitionField;
@@ -75,8 +75,6 @@ import com.liferay.data.engine.service.DEDataRecordCollectionSaveResponse;
 import com.liferay.data.engine.service.DEDataRecordCollectionSearchRequest;
 import com.liferay.data.engine.service.DEDataRecordCollectionSearchResponse;
 import com.liferay.data.engine.service.DEDataRecordCollectionService;
-import com.liferay.data.engine.storage.DEDataRecordExporter;
-import com.liferay.data.engine.storage.DEDataRecordExporterApplyRequest;
 import com.liferay.data.engine.storage.DEDataRecordExporterApplyResponse;
 import com.liferay.dynamic.data.lists.exception.NoSuchRecordException;
 import com.liferay.dynamic.data.lists.exception.NoSuchRecordSetException;
@@ -267,33 +265,8 @@ public class DEDataRecordCollectionServiceImpl
 				getPermissionChecker(), deDataRecordCollectionId,
 				DEActionKeys.EXPORT_DATA_RECORDS);
 
-			DEDataRecordCollectionListRecordRequest
-				deDataRecordCollectionListRecordRequest =
-					DEDataRecordCollectionRequestBuilder.listRecordBuilder(
-						deDataRecordCollectionId
-					).build();
-
-			DEDataRecordCollectionListRecordResponse
-				deDataRecordCollectionListRecordResponse =
-					_deDataRecordCollectionListRecordRequestExecutor.execute(
-						deDataRecordCollectionListRecordRequest);
-
-			String format =
-				deDataRecordCollectionExportRecordsRequest.getFormat();
-
-			DEDataRecordExporter deDataRecordExporter =
-				deDataRecordExporterTracker.getDEDataRecordExporter(format);
-
-			DEDataRecordExporterApplyRequest deDataRecordExporterApplyRequest =
-				DEDataRecordExporterApplyRequest.Builder.newBuilder(
-					deDataRecordCollectionListRecordResponse.getDEDataRecords()
-				).exportTo(
-					format
-				).build();
-
 			DEDataRecordExporterApplyResponse
-				deDataRecordExporterApplyResponse = deDataRecordExporter.apply(
-					deDataRecordExporterApplyRequest);
+				deDataRecordExporterApplyResponse = null;
 
 			return DEDataRecordCollectionExportRecordsResponse.Builder.of(
 				deDataRecordExporterApplyResponse.getContent());
@@ -704,7 +677,7 @@ public class DEDataRecordCollectionServiceImpl
 	@Activate
 	protected void setUpExecutors() {
 		_deDataEngineRequestExecutor = new DEDataEngineRequestExecutor(
-			deDataDefinitionDeserializerTracker, deDataStorageTracker);
+			deDataDefinitionDeserializerTracker, dataStorageTracker);
 
 		_deDataRecordCollectionDeleteModelPermissionsRequestExecutor =
 			new DEDataRecordCollectionDeleteModelPermissionsRequestExecutor(
@@ -716,7 +689,7 @@ public class DEDataRecordCollectionServiceImpl
 
 		_deDataRecordCollectionDeleteRecordRequestExecutor =
 			new DEDataRecordCollectionDeleteRecordRequestExecutor(
-				deDataStorageTracker, ddlRecordLocalService);
+				dataStorageTracker, ddlRecordLocalService);
 
 		_deDataRecordCollectionDeleteRequestExecutor =
 			new DEDataRecordCollectionDeleteRequestExecutor(
@@ -748,7 +721,7 @@ public class DEDataRecordCollectionServiceImpl
 
 		_deDataRecordCollectionSaveRecordRequestExecutor =
 			new DEDataRecordCollectionSaveRecordRequestExecutor(
-				ddlRecordLocalService, deDataStorageTracker,
+				ddlRecordLocalService, dataStorageTracker,
 				ddmStorageLinkLocalService, portal);
 
 		_deDataRecordCollectionSaveRequestExecutor =
@@ -848,6 +821,9 @@ public class DEDataRecordCollectionServiceImpl
 	}
 
 	@Reference
+	protected DataStorageTracker dataStorageTracker;
+
+	@Reference
 	protected DDLRecordLocalService ddlRecordLocalService;
 
 	@Reference
@@ -866,9 +842,6 @@ public class DEDataRecordCollectionServiceImpl
 
 	@Reference
 	protected DEDataRecordExporterTracker deDataRecordExporterTracker;
-
-	@Reference
-	protected DEDataStorageTracker deDataStorageTracker;
 
 	@Reference
 	protected GroupLocalService groupLocalService;

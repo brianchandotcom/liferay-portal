@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.spring.extender.service.ServiceReference;
+import com.liferay.sharing.exception.DuplicateSharingEntryException;
 import com.liferay.sharing.exception.InvalidSharingEntryActionException;
 import com.liferay.sharing.exception.InvalidSharingEntryExpirationDateException;
 import com.liferay.sharing.exception.InvalidSharingEntryUserException;
@@ -136,6 +137,15 @@ public class SharingEntryLocalServiceImpl
 		_validateUsers(userId, toUserId);
 
 		_validateExpirationDate(expirationDate);
+
+		if (sharingEntryPersistence.fetchByTU_C_C(toUserId, classNameId, classPK) != null) {
+			throw new DuplicateSharingEntryException(
+				StringBundler.concat(
+					"A sharing entry already exists for user ",
+					String.valueOf(toUserId), " with classNameId ",
+					String.valueOf(classNameId), " and classPK ",
+					String.valueOf(classPK)));
+		}
 
 		long sharingEntryId = counterLocalService.increment();
 

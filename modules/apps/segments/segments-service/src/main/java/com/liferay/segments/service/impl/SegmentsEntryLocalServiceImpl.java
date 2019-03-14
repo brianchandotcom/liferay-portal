@@ -216,6 +216,21 @@ public class SegmentsEntryLocalServiceImpl
 	}
 
 	@Override
+	public SegmentsEntry getDefaultSegmentsEntry(long groupId)
+		throws PortalException {
+
+		SegmentsEntry defaultSegmentsEntry = fetchSegmentsEntry(
+			groupId, SegmentsConstants.KEY_DEFAULT, true);
+
+		if (defaultSegmentsEntry != null) {
+			return defaultSegmentsEntry;
+		}
+
+		throw new DefaultSegmentsEntryException(
+			"Default segments entry is not available for group " + groupId);
+	}
+
+	@Override
 	public List<SegmentsEntry> getSegmentsEntries(
 		boolean active, String type, int start, int end,
 		OrderByComparator<SegmentsEntry> orderByComparator) {

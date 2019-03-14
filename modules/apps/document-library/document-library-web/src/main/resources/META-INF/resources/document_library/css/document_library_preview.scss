@@ -32,32 +32,38 @@
 	}
 }
 
-.contextual-sidebar.contextual-sidebar-preview {
-	$control-menu-height-sm: 56px;
-	$control-menu-height: 49px;
-	$upper-tbar-height: 64px;
-	$sidebar-width: 320px;
+.sidebar-preview {
+	.sidebar-panel {
+		background-color: #FFF;
+	}
 
-	$top: $control-menu-height + $upper-tbar-height;
+	&.contextual-sidebar {
+		$control-menu-height-sm: 56px;
+		$control-menu-height: 49px;
+		$sidebar-width: 320px;
+		$upper-tbar-height: 64px;
 
-	height: calc(100vh - #{$top});
-	overflow-y: scroll;
-	top: $top;
-	z-index: 1;
+		$top: $control-menu-height + $upper-tbar-height;
 
-	@include sm {
-		$top-sm: $control-menu-height-sm + $upper-tbar-height;
+		height: calc(100vh - #{$top});
+		overflow-y: scroll;
+		top: $top;
+		z-index: 1;
 
-		height: calc(100vh - #{$top-sm});
-		top: $top-sm;
+		@include sm {
+			$top-sm: $control-menu-height-sm + $upper-tbar-height;
 
-		& + .contextual-sidebar-content {
-			padding-right: 0;
-			transition: padding-right ease 0.5s;
-		}
+			height: calc(100vh - #{$top-sm});
+			top: $top-sm;
 
-		&.contextual-sidebar-visible + .contextual-sidebar-content {
-			padding-right: $sidebar-width;
+			& + .contextual-sidebar-content {
+				padding-right: 0;
+				transition: padding-right ease 0.5s;
+			}
+
+			&.contextual-sidebar-visible + .contextual-sidebar-content {
+				padding-right: $sidebar-width;
+			}
 		}
 	}
 }

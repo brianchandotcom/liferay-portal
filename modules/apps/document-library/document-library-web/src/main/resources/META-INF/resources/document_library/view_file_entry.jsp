@@ -132,7 +132,7 @@ if (portletTitleBasedNavigation) {
 		</div>
 	</c:if>
 
-	<div class="contextual-sidebar contextual-sidebar-preview sidebar-light">
+	<div class="contextual-sidebar sidebar-light sidebar-preview">
 
 		<%
 		request.setAttribute("info_panel.jsp-fileEntry", fileEntry);
@@ -233,12 +233,12 @@ if (addPortletBreadcrumbEntries) {
 <liferay-util:dynamic-include key="com.liferay.document.library.web#/document_library/view_file_entry.jsp#post" />
 
 <aui:script>
-	var button = document.getElementById('<portlet:namespace />OpenContextualSidebar');
+	var openContextualSidebarButton = document.getElementById('<portlet:namespace />OpenContextualSidebar');
 
-	button.addEventListener(
+	openContextualSidebarButton.addEventListener(
 		'click',
 		function() {
-			document.querySelector('#<portlet:namespace />FileEntry .contextual-sidebar-preview')
+			document.querySelector('#<portlet:namespace />FileEntry .contextual-sidebar')
 				.classList.toggle('contextual-sidebar-visible');
 		}
 	);

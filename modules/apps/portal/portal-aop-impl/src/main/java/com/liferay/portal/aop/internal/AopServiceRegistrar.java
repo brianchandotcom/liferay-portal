@@ -149,9 +149,7 @@ public class AopServiceRegistrar {
 		}
 
 		_aopInvocationHandler = AopCacheManager.create(
-			_aopService,
-			AopCacheManager.createChainableMethodAdvices(
-				transactionExecutor, serviceMonitoringControl));
+			_aopService, transactionExecutor, serviceMonitoringControl);
 
 		Class<? extends AopService> aopServiceClass = _aopService.getClass();
 
@@ -205,9 +203,7 @@ public class AopServiceRegistrar {
 			}
 
 			AopInvocationHandler aopInvocationHandler = AopCacheManager.create(
-				aopService,
-				AopCacheManager.createChainableMethodAdvices(
-					_transactionExecutor, _serviceMonitoringControl));
+				aopService, _transactionExecutor, _serviceMonitoringControl);
 
 			_aopServices.put(aopInvocationHandler, aopService);
 

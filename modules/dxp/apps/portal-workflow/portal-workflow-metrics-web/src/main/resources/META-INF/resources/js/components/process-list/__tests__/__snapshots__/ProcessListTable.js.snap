@@ -27,7 +27,7 @@ exports[`Should render component 1`] = `
             }
           }
         >
-          Total Open
+          Overdue
         </th>
         <th
           className="table-cell-expand table-head-title"
@@ -47,7 +47,7 @@ exports[`Should render component 1`] = `
             }
           }
         >
-          Overdue
+          Total Pending
         </th>
         <th />
       </tr>
@@ -71,9 +71,7 @@ exports[`Should render component 1`] = `
             </span>
           </div>
         </td>
-        <td>
-           Items
-        </td>
+        <td />
         <td />
         <td />
         <td>

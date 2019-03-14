@@ -20,13 +20,13 @@ exports[`Should render component with 1 instance count 1`] = `
     </div>
   </td>
   <td>
-    1 Item
-  </td>
-  <td>
     5
   </td>
   <td>
     5
+  </td>
+  <td>
+    1
   </td>
   <td>
     <div
@@ -90,13 +90,13 @@ exports[`Should render component with one list item 1`] = `
     </div>
   </td>
   <td>
-    10 Items
-  </td>
-  <td>
     5
   </td>
   <td>
     5
+  </td>
+  <td>
+    10
   </td>
   <td>
     <div

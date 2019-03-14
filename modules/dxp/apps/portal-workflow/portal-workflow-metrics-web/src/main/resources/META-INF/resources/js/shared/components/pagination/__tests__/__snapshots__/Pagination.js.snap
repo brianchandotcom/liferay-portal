@@ -5,73 +5,99 @@ exports[`Should change page 1`] = `
   className="pagination pull-right"
 >
   <PageItem
+    disabled={false}
+    key="process_list_pag_prev_1"
     onChangePage={[Function]}
     page={1}
     type="prev"
   />
   <PageItem
-    active={false}
+    highlighted={false}
     key="process_list_pag_1"
     onChangePage={[Function]}
     page={1}
   />
   <PageItem
-    active={true}
-    key="process_list_pag_2"
+    highlighted={true}
+    key="process_list_pag_active_2"
     onChangePage={[Function]}
     page={2}
   />
   <PageItem
-    active={false}
-    key="process_list_pag_3"
+    key="process_list_pag_plus_3"
     onChangePage={[Function]}
     page={3}
   />
-  <PageItem
-    active={false}
+  <li
+    className="dropdown page-item"
     key="process_list_pag_4"
-    onChangePage={[Function]}
-    page={4}
-  />
+  >
+    <a
+      className="dropdown-toggle page-link"
+      data-toggle="dropdown"
+      href="javascript:;"
+    >
+      <span
+        aria-hidden="true"
+      >
+        ...
+      </span>
+      <span
+        className="sr-only"
+      />
+    </a>
+    <div
+      className="dropdown-menu dropdown-menu-top-center"
+    >
+      <ul
+        className="inline-scroller link-list"
+        data-current-index="4"
+        key="process_list_pag_sublist_4"
+      >
+        <PageLink
+          key="process_list_pag_sublist_item_4"
+          onChangePage={[Function]}
+          page={4}
+        />
+        <PageLink
+          key="process_list_pag_sublist_item_5"
+          onChangePage={[Function]}
+          page={5}
+        />
+        <PageLink
+          key="process_list_pag_sublist_item_6"
+          onChangePage={[Function]}
+          page={6}
+        />
+        <PageLink
+          key="process_list_pag_sublist_item_7"
+          onChangePage={[Function]}
+          page={7}
+        />
+        <PageLink
+          key="process_list_pag_sublist_item_8"
+          onChangePage={[Function]}
+          page={8}
+        />
+        <PageLink
+          key="process_list_pag_sublist_item_9"
+          onChangePage={[Function]}
+          page={9}
+        />
+      </ul>
+    </div>
+  </li>
   <PageItem
-    active={false}
-    key="process_list_pag_5"
-    onChangePage={[Function]}
-    page={5}
-  />
-  <PageItem
-    active={false}
-    key="process_list_pag_6"
-    onChangePage={[Function]}
-    page={6}
-  />
-  <PageItem
-    active={false}
-    key="process_list_pag_7"
-    onChangePage={[Function]}
-    page={7}
-  />
-  <PageItem
-    active={false}
-    key="process_list_pag_8"
-    onChangePage={[Function]}
-    page={8}
-  />
-  <PageItem
-    active={false}
-    key="process_list_pag_9"
-    onChangePage={[Function]}
-    page={9}
-  />
-  <PageItem
-    active={false}
-    key="process_list_pag_10"
+    highlighted={false}
+    key="process_list_pag_last_10"
     onChangePage={[Function]}
     page={10}
   />
   <PageItem
+    disabled={false}
+    key="process_list_pag_next_3"
     onChangePage={[Function]}
-    page={10}
+    page={3}
     type="next"
   />
 </ul>
@@ -82,12 +108,13 @@ exports[`Should render component 1`] = `
   className="pagination pull-right"
 >
   <li
-    className="page-item"
+    className="page-item disabled"
     onClick={[Function]}
   >
     <a
       className="page-link"
-      href="#1"
+      data-senna-off={true}
+      href="#-1"
       role="button"
     >
       <svg
@@ -108,6 +135,248 @@ exports[`Should render component 1`] = `
   </li>
   <li
     className="page-item"
+    onClick={[Function]}
+  >
+    <a
+      className="page-link"
+      href="#1"
+    >
+      1
+    </a>
+  </li>
+  <li
+    className="page-item active"
+    onClick={[Function]}
+  >
+    <a
+      className="page-link"
+      href="#0"
+    >
+      0
+    </a>
+  </li>
+  <li
+    className="page-item"
+    onClick={[Function]}
+  >
+    <a
+      className="page-link"
+      href="#1"
+    >
+      1
+    </a>
+  </li>
+  <li
+    className="dropdown page-item"
+  >
+    <a
+      className="dropdown-toggle page-link"
+      data-toggle="dropdown"
+      href="javascript:;"
+    >
+      <span
+        aria-hidden="true"
+      >
+        ...
+      </span>
+      <span
+        className="sr-only"
+      />
+    </a>
+    <div
+      className="dropdown-menu dropdown-menu-top-center"
+    >
+      <ul
+        className="inline-scroller link-list"
+        data-current-index="2"
+      >
+        <li
+          className="page-item"
+          onClick={[Function]}
+        >
+          <a
+            className="page-link"
+            href="#2"
+          >
+            <span
+              className="sr-only"
+            />
+            2
+          </a>
+        </li>
+        <li
+          className="page-item"
+          onClick={[Function]}
+        >
+          <a
+            className="page-link"
+            href="#3"
+          >
+            <span
+              className="sr-only"
+            />
+            3
+          </a>
+        </li>
+        <li
+          className="page-item"
+          onClick={[Function]}
+        >
+          <a
+            className="page-link"
+            href="#4"
+          >
+            <span
+              className="sr-only"
+            />
+            4
+          </a>
+        </li>
+        <li
+          className="page-item"
+          onClick={[Function]}
+        >
+          <a
+            className="page-link"
+            href="#5"
+          >
+            <span
+              className="sr-only"
+            />
+            5
+          </a>
+        </li>
+        <li
+          className="page-item"
+          onClick={[Function]}
+        >
+          <a
+            className="page-link"
+            href="#6"
+          >
+            <span
+              className="sr-only"
+            />
+            6
+          </a>
+        </li>
+        <li
+          className="page-item"
+          onClick={[Function]}
+        >
+          <a
+            className="page-link"
+            href="#7"
+          >
+            <span
+              className="sr-only"
+            />
+            7
+          </a>
+        </li>
+        <li
+          className="page-item"
+          onClick={[Function]}
+        >
+          <a
+            className="page-link"
+            href="#8"
+          >
+            <span
+              className="sr-only"
+            />
+            8
+          </a>
+        </li>
+        <li
+          className="page-item"
+          onClick={[Function]}
+        >
+          <a
+            className="page-link"
+            href="#9"
+          >
+            <span
+              className="sr-only"
+            />
+            9
+          </a>
+        </li>
+      </ul>
+    </div>
+  </li>
+  <li
+    className="page-item"
+    onClick={[Function]}
+  >
+    <a
+      className="page-link"
+      href="#10"
+    >
+      10
+    </a>
+  </li>
+  <li
+    className="page-item"
+    onClick={[Function]}
+  >
+    <a
+      className="page-link"
+      data-senna-off={true}
+      href="#1"
+      role="button"
+    >
+      <svg
+        className="lexicon-icon lexicon-icon-angle-right"
+        focusable="false"
+        role="presentation"
+      >
+        <use
+          href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#angle-right"
+        />
+      </svg>
+      <span
+        className="sr-only"
+      >
+        Next
+      </span>
+    </a>
+  </li>
+</ul>
+`;
+
+exports[`Should render component at page 1 1`] = `
+<ul
+  className="pagination pull-right"
+>
+  <li
+    className="page-item disabled"
+    onClick={[Function]}
+  >
+    <a
+      className="page-link"
+      data-senna-off={true}
+      href="#0"
+      role="button"
+    >
+      <svg
+        className="lexicon-icon lexicon-icon-angle-left"
+        focusable="false"
+        role="presentation"
+      >
+        <use
+          href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#angle-left"
+        />
+      </svg>
+      <span
+        className="sr-only"
+      >
+        Previous
+      </span>
+    </a>
+  </li>
+  <li
+    className="page-item active"
     onClick={[Function]}
   >
     <a
@@ -140,26 +409,59 @@ exports[`Should render component 1`] = `
     </a>
   </li>
   <li
-    className="page-item"
-    onClick={[Function]}
+    className="dropdown page-item"
   >
     <a
-      className="page-link"
-      href="#4"
+      className="dropdown-toggle page-link"
+      data-toggle="dropdown"
+      href="javascript:;"
     >
-      4
+      <span
+        aria-hidden="true"
+      >
+        ...
+      </span>
+      <span
+        className="sr-only"
+      />
     </a>
-  </li>
-  <li
-    className="page-item"
-    onClick={[Function]}
-  >
-    <a
-      className="page-link"
-      href="#5"
+    <div
+      className="dropdown-menu dropdown-menu-top-center"
     >
-      5
-    </a>
+      <ul
+        className="inline-scroller link-list"
+        data-current-index="4"
+      >
+        <li
+          className="page-item"
+          onClick={[Function]}
+        >
+          <a
+            className="page-link"
+            href="#4"
+          >
+            <span
+              className="sr-only"
+            />
+            4
+          </a>
+        </li>
+        <li
+          className="page-item"
+          onClick={[Function]}
+        >
+          <a
+            className="page-link"
+            href="#5"
+          >
+            <span
+              className="sr-only"
+            />
+            5
+          </a>
+        </li>
+      </ul>
+    </div>
   </li>
   <li
     className="page-item"
@@ -178,9 +480,57 @@ exports[`Should render component 1`] = `
   >
     <a
       className="page-link"
-      href="#7"
+      data-senna-off={true}
+      href="#2"
+      role="button"
     >
-      7
+      <svg
+        className="lexicon-icon lexicon-icon-angle-right"
+        focusable="false"
+        role="presentation"
+      >
+        <use
+          href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#angle-right"
+        />
+      </svg>
+      <span
+        className="sr-only"
+      >
+        Next
+      </span>
+    </a>
+  </li>
+</ul>
+`;
+
+exports[`Should render component at page 2 1`] = `
+<ul
+  className="pagination pull-right"
+>
+  <li
+    className="page-item disabled"
+    onClick={[Function]}
+  >
+    <a
+      className="page-link"
+      data-senna-off={true}
+      href="#-1"
+      role="button"
+    >
+      <svg
+        className="lexicon-icon lexicon-icon-angle-left"
+        focusable="false"
+        role="presentation"
+      >
+        <use
+          href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#angle-left"
+        />
+      </svg>
+      <span
+        className="sr-only"
+      >
+        Previous
+      </span>
     </a>
   </li>
   <li
@@ -189,9 +539,20 @@ exports[`Should render component 1`] = `
   >
     <a
       className="page-link"
-      href="#8"
+      href="#1"
     >
-      8
+      1
+    </a>
+  </li>
+  <li
+    className="page-item active"
+    onClick={[Function]}
+  >
+    <a
+      className="page-link"
+      href="#0"
+    >
+      0
     </a>
   </li>
   <li
@@ -200,9 +561,103 @@ exports[`Should render component 1`] = `
   >
     <a
       className="page-link"
-      href="#9"
+      href="#1"
     >
-      9
+      1
+    </a>
+  </li>
+  <li
+    className="dropdown page-item"
+  >
+    <a
+      className="dropdown-toggle page-link"
+      data-toggle="dropdown"
+      href="javascript:;"
+    >
+      <span
+        aria-hidden="true"
+      >
+        ...
+      </span>
+      <span
+        className="sr-only"
+      />
+    </a>
+    <div
+      className="dropdown-menu dropdown-menu-top-center"
+    >
+      <ul
+        className="inline-scroller link-list"
+        data-current-index="2"
+      >
+        <li
+          className="page-item"
+          onClick={[Function]}
+        >
+          <a
+            className="page-link"
+            href="#2"
+          >
+            <span
+              className="sr-only"
+            />
+            2
+          </a>
+        </li>
+        <li
+          className="page-item"
+          onClick={[Function]}
+        >
+          <a
+            className="page-link"
+            href="#3"
+          >
+            <span
+              className="sr-only"
+            />
+            3
+          </a>
+        </li>
+        <li
+          className="page-item"
+          onClick={[Function]}
+        >
+          <a
+            className="page-link"
+            href="#4"
+          >
+            <span
+              className="sr-only"
+            />
+            4
+          </a>
+        </li>
+        <li
+          className="page-item"
+          onClick={[Function]}
+        >
+          <a
+            className="page-link"
+            href="#5"
+          >
+            <span
+              className="sr-only"
+            />
+            5
+          </a>
+        </li>
+      </ul>
+    </div>
+  </li>
+  <li
+    className="page-item"
+    onClick={[Function]}
+  >
+    <a
+      className="page-link"
+      href="#6"
+    >
+      6
     </a>
   </li>
   <li
@@ -211,9 +666,57 @@ exports[`Should render component 1`] = `
   >
     <a
       className="page-link"
-      href="#10"
+      data-senna-off={true}
+      href="#1"
+      role="button"
     >
-      10
+      <svg
+        className="lexicon-icon lexicon-icon-angle-right"
+        focusable="false"
+        role="presentation"
+      >
+        <use
+          href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#angle-right"
+        />
+      </svg>
+      <span
+        className="sr-only"
+      >
+        Next
+      </span>
+    </a>
+  </li>
+</ul>
+`;
+
+exports[`Should render component at page 3 1`] = `
+<ul
+  className="pagination pull-right"
+>
+  <li
+    className="page-item disabled"
+    onClick={[Function]}
+  >
+    <a
+      className="page-link"
+      data-senna-off={true}
+      href="#-1"
+      role="button"
+    >
+      <svg
+        className="lexicon-icon lexicon-icon-angle-left"
+        focusable="false"
+        role="presentation"
+      >
+        <use
+          href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#angle-left"
+        />
+      </svg>
+      <span
+        className="sr-only"
+      >
+        Previous
+      </span>
     </a>
   </li>
   <li
@@ -222,7 +725,507 @@ exports[`Should render component 1`] = `
   >
     <a
       className="page-link"
-      href="#10"
+      href="#1"
+    >
+      1
+    </a>
+  </li>
+  <li
+    className="page-item active"
+    onClick={[Function]}
+  >
+    <a
+      className="page-link"
+      href="#0"
+    >
+      0
+    </a>
+  </li>
+  <li
+    className="page-item"
+    onClick={[Function]}
+  >
+    <a
+      className="page-link"
+      href="#1"
+    >
+      1
+    </a>
+  </li>
+  <li
+    className="dropdown page-item"
+  >
+    <a
+      className="dropdown-toggle page-link"
+      data-toggle="dropdown"
+      href="javascript:;"
+    >
+      <span
+        aria-hidden="true"
+      >
+        ...
+      </span>
+      <span
+        className="sr-only"
+      />
+    </a>
+    <div
+      className="dropdown-menu dropdown-menu-top-center"
+    >
+      <ul
+        className="inline-scroller link-list"
+        data-current-index="2"
+      >
+        <li
+          className="page-item"
+          onClick={[Function]}
+        >
+          <a
+            className="page-link"
+            href="#2"
+          >
+            <span
+              className="sr-only"
+            />
+            2
+          </a>
+        </li>
+        <li
+          className="page-item"
+          onClick={[Function]}
+        >
+          <a
+            className="page-link"
+            href="#3"
+          >
+            <span
+              className="sr-only"
+            />
+            3
+          </a>
+        </li>
+        <li
+          className="page-item"
+          onClick={[Function]}
+        >
+          <a
+            className="page-link"
+            href="#4"
+          >
+            <span
+              className="sr-only"
+            />
+            4
+          </a>
+        </li>
+        <li
+          className="page-item"
+          onClick={[Function]}
+        >
+          <a
+            className="page-link"
+            href="#5"
+          >
+            <span
+              className="sr-only"
+            />
+            5
+          </a>
+        </li>
+      </ul>
+    </div>
+  </li>
+  <li
+    className="page-item"
+    onClick={[Function]}
+  >
+    <a
+      className="page-link"
+      href="#6"
+    >
+      6
+    </a>
+  </li>
+  <li
+    className="page-item"
+    onClick={[Function]}
+  >
+    <a
+      className="page-link"
+      data-senna-off={true}
+      href="#1"
+      role="button"
+    >
+      <svg
+        className="lexicon-icon lexicon-icon-angle-right"
+        focusable="false"
+        role="presentation"
+      >
+        <use
+          href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#angle-right"
+        />
+      </svg>
+      <span
+        className="sr-only"
+      >
+        Next
+      </span>
+    </a>
+  </li>
+</ul>
+`;
+
+exports[`Should render component at page 4 1`] = `
+<ul
+  className="pagination pull-right"
+>
+  <li
+    className="page-item disabled"
+    onClick={[Function]}
+  >
+    <a
+      className="page-link"
+      data-senna-off={true}
+      href="#-1"
+      role="button"
+    >
+      <svg
+        className="lexicon-icon lexicon-icon-angle-left"
+        focusable="false"
+        role="presentation"
+      >
+        <use
+          href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#angle-left"
+        />
+      </svg>
+      <span
+        className="sr-only"
+      >
+        Previous
+      </span>
+    </a>
+  </li>
+  <li
+    className="page-item"
+    onClick={[Function]}
+  >
+    <a
+      className="page-link"
+      href="#1"
+    >
+      1
+    </a>
+  </li>
+  <li
+    className="page-item active"
+    onClick={[Function]}
+  >
+    <a
+      className="page-link"
+      href="#0"
+    >
+      0
+    </a>
+  </li>
+  <li
+    className="page-item"
+    onClick={[Function]}
+  >
+    <a
+      className="page-link"
+      href="#1"
+    >
+      1
+    </a>
+  </li>
+  <li
+    className="dropdown page-item"
+  >
+    <a
+      className="dropdown-toggle page-link"
+      data-toggle="dropdown"
+      href="javascript:;"
+    >
+      <span
+        aria-hidden="true"
+      >
+        ...
+      </span>
+      <span
+        className="sr-only"
+      />
+    </a>
+    <div
+      className="dropdown-menu dropdown-menu-top-center"
+    >
+      <ul
+        className="inline-scroller link-list"
+        data-current-index="2"
+      >
+        <li
+          className="page-item"
+          onClick={[Function]}
+        >
+          <a
+            className="page-link"
+            href="#2"
+          >
+            <span
+              className="sr-only"
+            />
+            2
+          </a>
+        </li>
+        <li
+          className="page-item"
+          onClick={[Function]}
+        >
+          <a
+            className="page-link"
+            href="#3"
+          >
+            <span
+              className="sr-only"
+            />
+            3
+          </a>
+        </li>
+        <li
+          className="page-item"
+          onClick={[Function]}
+        >
+          <a
+            className="page-link"
+            href="#4"
+          >
+            <span
+              className="sr-only"
+            />
+            4
+          </a>
+        </li>
+        <li
+          className="page-item"
+          onClick={[Function]}
+        >
+          <a
+            className="page-link"
+            href="#5"
+          >
+            <span
+              className="sr-only"
+            />
+            5
+          </a>
+        </li>
+      </ul>
+    </div>
+  </li>
+  <li
+    className="page-item"
+    onClick={[Function]}
+  >
+    <a
+      className="page-link"
+      href="#6"
+    >
+      6
+    </a>
+  </li>
+  <li
+    className="page-item"
+    onClick={[Function]}
+  >
+    <a
+      className="page-link"
+      data-senna-off={true}
+      href="#1"
+      role="button"
+    >
+      <svg
+        className="lexicon-icon lexicon-icon-angle-right"
+        focusable="false"
+        role="presentation"
+      >
+        <use
+          href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#angle-right"
+        />
+      </svg>
+      <span
+        className="sr-only"
+      >
+        Next
+      </span>
+    </a>
+  </li>
+</ul>
+`;
+
+exports[`Should render component at page 5 1`] = `
+<ul
+  className="pagination pull-right"
+>
+  <li
+    className="page-item disabled"
+    onClick={[Function]}
+  >
+    <a
+      className="page-link"
+      data-senna-off={true}
+      href="#-1"
+      role="button"
+    >
+      <svg
+        className="lexicon-icon lexicon-icon-angle-left"
+        focusable="false"
+        role="presentation"
+      >
+        <use
+          href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#angle-left"
+        />
+      </svg>
+      <span
+        className="sr-only"
+      >
+        Previous
+      </span>
+    </a>
+  </li>
+  <li
+    className="page-item"
+    onClick={[Function]}
+  >
+    <a
+      className="page-link"
+      href="#1"
+    >
+      1
+    </a>
+  </li>
+  <li
+    className="page-item active"
+    onClick={[Function]}
+  >
+    <a
+      className="page-link"
+      href="#0"
+    >
+      0
+    </a>
+  </li>
+  <li
+    className="page-item"
+    onClick={[Function]}
+  >
+    <a
+      className="page-link"
+      href="#1"
+    >
+      1
+    </a>
+  </li>
+  <li
+    className="dropdown page-item"
+  >
+    <a
+      className="dropdown-toggle page-link"
+      data-toggle="dropdown"
+      href="javascript:;"
+    >
+      <span
+        aria-hidden="true"
+      >
+        ...
+      </span>
+      <span
+        className="sr-only"
+      />
+    </a>
+    <div
+      className="dropdown-menu dropdown-menu-top-center"
+    >
+      <ul
+        className="inline-scroller link-list"
+        data-current-index="2"
+      >
+        <li
+          className="page-item"
+          onClick={[Function]}
+        >
+          <a
+            className="page-link"
+            href="#2"
+          >
+            <span
+              className="sr-only"
+            />
+            2
+          </a>
+        </li>
+        <li
+          className="page-item"
+          onClick={[Function]}
+        >
+          <a
+            className="page-link"
+            href="#3"
+          >
+            <span
+              className="sr-only"
+            />
+            3
+          </a>
+        </li>
+        <li
+          className="page-item"
+          onClick={[Function]}
+        >
+          <a
+            className="page-link"
+            href="#4"
+          >
+            <span
+              className="sr-only"
+            />
+            4
+          </a>
+        </li>
+        <li
+          className="page-item"
+          onClick={[Function]}
+        >
+          <a
+            className="page-link"
+            href="#5"
+          >
+            <span
+              className="sr-only"
+            />
+            5
+          </a>
+        </li>
+      </ul>
+    </div>
+  </li>
+  <li
+    className="page-item"
+    onClick={[Function]}
+  >
+    <a
+      className="page-link"
+      href="#6"
+    >
+      6
+    </a>
+  </li>
+  <li
+    className="page-item"
+    onClick={[Function]}
+  >
+    <a
+      className="page-link"
+      data-senna-off={true}
+      href="#1"
       role="button"
     >
       <svg

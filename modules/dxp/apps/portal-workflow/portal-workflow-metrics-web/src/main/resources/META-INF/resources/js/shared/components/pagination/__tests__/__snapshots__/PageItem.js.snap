@@ -16,7 +16,7 @@ exports[`Should change page 1`] = `
 
 exports[`Should render component as active 1`] = `
 <li
-  className="page-item active"
+  className="page-item"
   onClick={[Function]}
 >
   <a
@@ -35,6 +35,7 @@ exports[`Should render component as type Next 1`] = `
 >
   <a
     className="page-link"
+    data-senna-off={true}
     href="#1"
     role="button"
   >
@@ -63,6 +64,7 @@ exports[`Should render component as type Previous 1`] = `
 >
   <a
     className="page-link"
+    data-senna-off={true}
     href="#1"
     role="button"
   >
@@ -94,6 +96,20 @@ exports[`Should render component as type default 1`] = `
     href="#1"
   >
     1
+  </a>
+</li>
+`;
+
+exports[`Should test change page when disabled 1`] = `
+<li
+  className="page-item disabled"
+  onClick={[Function]}
+>
+  <a
+    className="page-link"
+    href="#2"
+  >
+    2
   </a>
 </li>
 `;

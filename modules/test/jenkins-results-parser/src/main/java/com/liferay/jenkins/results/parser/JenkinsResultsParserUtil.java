@@ -2478,17 +2478,17 @@ public class JenkinsResultsParserUtil {
 			_sshKnownHostsFile.delete();
 		}
 
-		for (String knownHost : knownHosts.split(",")) {
-			String command = combine(
-				"ssh-keyscan ", knownHost, " >> ",
-				getCanonicalPath(_sshKnownHostsFile));
+		String command = combine(
+			"ssh-keyscan ", knownHosts.replaceAll("\\s*,\\s*", " "), " >> ",
+			getCanonicalPath(_sshKnownHostsFile));
 
-			try {
-				executeBashCommands(command);
-			}
-			catch (IOException | TimeoutException e) {
-				throw new RuntimeException(e);
-			}
+		try {
+			executeBashCommands(command);
+		}
+		catch (IOException | TimeoutException e) {
+			throw new RuntimeException(
+				"Unable to get write known_hosts file for hosts " + knownHosts,
+				e);
 		}
 	}
 

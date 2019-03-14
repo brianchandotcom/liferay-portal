@@ -79,24 +79,15 @@ public class HtmlContentTransformerImpl
 		return _amImageHTMLTagFactory.create(originalImgTag, fileEntry);
 	}
 
-	@Reference(unbind = "-")
-	protected void setAMImageHTMLTagFactory(
-		AMImageHTMLTagFactory amImageHTMLTagFactory) {
-
-		_amImageHTMLTagFactory = amImageHTMLTagFactory;
-	}
-
-	@Reference(unbind = "-")
-	protected void setDLAppLocalService(DLAppLocalService dlAppLocalService) {
-		_dlAppLocalService = dlAppLocalService;
-	}
-
 	private static final Pattern _pattern = Pattern.compile(
 		"<img [^>]*?\\s*" + AMImageHTMLConstants.ATTRIBUTE_NAME_FILE_ENTRY_ID +
 			"=\"(\\d+)\".*?/>",
 		Pattern.CASE_INSENSITIVE | Pattern.DOTALL);
 
+	@Reference
 	private AMImageHTMLTagFactory _amImageHTMLTagFactory;
+
+	@Reference
 	private DLAppLocalService _dlAppLocalService;
 
 }

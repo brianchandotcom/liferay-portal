@@ -53,20 +53,6 @@ public abstract class BaseCapability
 			this::_updateAdaptiveMedia);
 	}
 
-	@Reference(unbind = "-")
-	public void setAMAsyncProcessorLocator(
-		AMAsyncProcessorLocator amAsyncProcessorLocator) {
-
-		_amAsyncProcessorLocator = amAsyncProcessorLocator;
-	}
-
-	@Reference(unbind = "-")
-	public void setAMImageEntryLocalService(
-		AMImageEntryLocalService amImageEntryLocalService) {
-
-		_amImageEntryLocalService = amImageEntryLocalService;
-	}
-
 	private void _deleteAdaptiveMedia(FileEntry fileEntry) {
 		if (ExportImportThreadLocal.isImportInProcess()) {
 			return;
@@ -116,7 +102,10 @@ public abstract class BaseCapability
 		}
 	}
 
+	@Reference
 	private AMAsyncProcessorLocator _amAsyncProcessorLocator;
+
+	@Reference
 	private AMImageEntryLocalService _amImageEntryLocalService;
 
 }

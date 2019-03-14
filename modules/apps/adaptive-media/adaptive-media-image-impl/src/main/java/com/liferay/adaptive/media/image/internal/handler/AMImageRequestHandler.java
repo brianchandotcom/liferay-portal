@@ -82,30 +82,6 @@ public class AMImageRequestHandler
 			});
 	}
 
-	@Reference(unbind = "-")
-	public void setAMAsyncProcessorLocator(
-		AMAsyncProcessorLocator amAsyncProcessorLocator) {
-
-		_amAsyncProcessorLocator = amAsyncProcessorLocator;
-	}
-
-	@Reference(unbind = "-")
-	public void setAMImageConfigurationHelper(
-		AMImageConfigurationHelper amImageConfigurationHelper) {
-
-		_amImageConfigurationHelper = amImageConfigurationHelper;
-	}
-
-	@Reference(unbind = "-")
-	public void setAMImageFinder(AMImageFinder amImageFinder) {
-		_amImageFinder = amImageFinder;
-	}
-
-	@Reference(unbind = "-")
-	public void setPathInterpreter(PathInterpreter pathInterpreter) {
-		_pathInterpreter = pathInterpreter;
-	}
-
 	private AdaptiveMedia<AMImageProcessor> _createRawAdaptiveMedia(
 			FileVersion fileVersion)
 		throws PortalException {
@@ -347,9 +323,16 @@ public class AMImageRequestHandler
 	private static final Log _log = LogFactoryUtil.getLog(
 		AMImageRequestHandler.class);
 
+	@Reference
 	private AMAsyncProcessorLocator _amAsyncProcessorLocator;
+
+	@Reference
 	private AMImageConfigurationHelper _amImageConfigurationHelper;
+
+	@Reference
 	private AMImageFinder _amImageFinder;
+
+	@Reference
 	private PathInterpreter _pathInterpreter;
 
 }

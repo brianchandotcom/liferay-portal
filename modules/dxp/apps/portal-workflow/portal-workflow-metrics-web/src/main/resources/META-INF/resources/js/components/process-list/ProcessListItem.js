@@ -32,8 +32,11 @@ export default class ProcessListItem extends React.Component {
 						</span>
 					</div>
 				</td>
+
 				<td>{sub(instanceMessage, [instanceCount])}</td>
+
 				<td>{ontimeInstanceCount}</td>
+
 				<td>{overdueInstanceCount}</td>
 				<td>
 					<div className="dropdown dropdown-action">

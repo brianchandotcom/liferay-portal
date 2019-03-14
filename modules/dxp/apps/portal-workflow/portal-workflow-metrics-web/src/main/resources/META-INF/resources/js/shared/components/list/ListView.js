@@ -39,7 +39,7 @@ export default class ListView extends React.Component {
 
 		return (
 			<div>
-				{emptySearchRender(emptyContentRender(emptyLoadingState(children)))}
+				{emptyLoadingState(emptySearchRender(emptyContentRender(children)))}
 			</div>
 		);
 	}

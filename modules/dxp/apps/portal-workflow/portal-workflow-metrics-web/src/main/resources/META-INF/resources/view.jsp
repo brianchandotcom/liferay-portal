@@ -16,7 +16,9 @@
 
 <%@ include file="/init.jsp" %>
 
-<div id="<portlet:namespace />-root"></div>
+<div id="<portlet:namespace />-root">
+	<span aria-hidden="true" class="loading-animation"></span>
+</div>
 
 <aui:script require='<%= npmResolvedPackageName + " as bootstrapRequire" %>'>
 	bootstrapRequire.default('<portlet:namespace />-root');

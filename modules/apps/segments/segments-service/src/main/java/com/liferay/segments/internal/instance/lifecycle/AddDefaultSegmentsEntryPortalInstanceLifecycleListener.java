@@ -29,7 +29,7 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.ResourceBundleLoader;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.segments.constants.SegmentsConstants;
-import com.liferay.segments.model.SegmentsEntry;
+import com.liferay.segments.exception.DefaultSegmentsEntryException;
 import com.liferay.segments.service.SegmentsEntryLocalService;
 
 import java.util.Collections;
@@ -76,22 +76,19 @@ public class AddDefaultSegmentsEntryPortalInstanceLifecycleListener
 	private void _addDefaultSegmentsEntry(ServiceContext serviceContext)
 		throws PortalException {
 
-		SegmentsEntry segmentsEntry =
-			_segmentsEntryLocalService.fetchSegmentsEntry(
-				serviceContext.getScopeGroupId(), SegmentsConstants.KEY_DEFAULT,
-				true);
-
-		if (segmentsEntry != null) {
-			return;
+		try {
+			_segmentsEntryLocalService.getDefaultSegmentsEntry(
+				serviceContext.getScopeGroupId());
 		}
+		catch (DefaultSegmentsEntryException dsee) {
+			Map<Locale, String> nameMap = ResourceBundleUtil.getLocalizationMap(
+				_resourceBundleLoader, "default-segment-name");
 
-		Map<Locale, String> nameMap = ResourceBundleUtil.getLocalizationMap(
-			_resourceBundleLoader, "default-segment-name");
-
-		_segmentsEntryLocalService.addSegmentsEntry(
-			nameMap, Collections.emptyMap(), true, StringPool.BLANK,
-			SegmentsConstants.KEY_DEFAULT, SegmentsConstants.SOURCE_DEFAULT,
-			User.class.getName(), serviceContext);
+			_segmentsEntryLocalService.addSegmentsEntry(
+				nameMap, Collections.emptyMap(), true, StringPool.BLANK,
+				SegmentsConstants.KEY_DEFAULT, SegmentsConstants.SOURCE_DEFAULT,
+				User.class.getName(), serviceContext);
+		}
 	}
 
 	@Reference

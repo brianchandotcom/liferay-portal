@@ -35,9 +35,7 @@ import com.liferay.portal.service.test.ServiceTestUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.util.test.LayoutTestUtil;
-import com.liferay.segments.constants.SegmentsConstants;
 import com.liferay.segments.exception.DefaultSegmentsExperienceException;
-import com.liferay.segments.exception.SegmentsExperienceSegmentsEntryException;
 import com.liferay.segments.model.SegmentsEntry;
 import com.liferay.segments.model.SegmentsExperience;
 import com.liferay.segments.service.SegmentsEntryLocalService;
@@ -95,11 +93,12 @@ public class SegmentsExperienceLocalServiceTest {
 
 		Assert.assertEquals(nameMap, segmentsExperience.getNameMap());
 
-		SegmentsEntry segmentsEntry = _getDefaultSegmentsEntry(
-			_group.getGroupId());
+		SegmentsEntry defaultSegmentsEntry =
+			_segmentsEntryLocalService.getDefaultSegmentsEntry(
+				_group.getGroupId());
 
 		Assert.assertEquals(
-			segmentsEntry.getSegmentsEntryId(),
+			defaultSegmentsEntry.getSegmentsEntryId(),
 			segmentsExperience.getSegmentsEntryId());
 	}
 
@@ -110,8 +109,9 @@ public class SegmentsExperienceLocalServiceTest {
 		_segmentsExperienceLocalService.addDefaultSegmentsExperience(
 			_group.getGroupId(), _classNameId, _classPK);
 
-		SegmentsEntry defaultSegmentsEntry = _getDefaultSegmentsEntry(
-			_group.getGroupId());
+		SegmentsEntry defaultSegmentsEntry =
+			_segmentsEntryLocalService.getDefaultSegmentsEntry(
+				_group.getGroupId());
 
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
@@ -223,21 +223,6 @@ public class SegmentsExperienceLocalServiceTest {
 			segmentsEntry.getSegmentsEntryId(), _classNameId, _classPK,
 			RandomTestUtil.randomLocaleStringMap(), RandomTestUtil.randomInt(),
 			true, serviceContext);
-	}
-
-	private SegmentsEntry _getDefaultSegmentsEntry(long groupId)
-		throws PortalException {
-
-		SegmentsEntry segmentsEntry =
-			_segmentsEntryLocalService.fetchSegmentsEntry(
-				groupId, SegmentsConstants.KEY_DEFAULT, true);
-
-		if (segmentsEntry == null) {
-			throw new SegmentsExperienceSegmentsEntryException(
-				"Unable to get default segments entry");
-		}
-
-		return segmentsEntry;
 	}
 
 	private long _classNameId;

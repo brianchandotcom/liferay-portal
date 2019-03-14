@@ -30,7 +30,6 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-import com.liferay.segments.constants.SegmentsConstants;
 import com.liferay.segments.context.Context;
 import com.liferay.segments.criteria.Criteria;
 import com.liferay.segments.criteria.CriteriaSerializer;
@@ -66,8 +65,9 @@ public class SegmentsEntryProviderTest {
 	public void setUp() throws Exception {
 		_group = GroupTestUtil.addGroup();
 
-		_defaultSegment = _segmentsEntryLocalService.fetchSegmentsEntry(
-			_group.getGroupId(), SegmentsConstants.KEY_DEFAULT, true);
+		_defaultSegmentsEntry =
+			_segmentsEntryLocalService.getDefaultSegmentsEntry(
+				_group.getGroupId());
 	}
 
 	@Test
@@ -218,14 +218,14 @@ public class SegmentsEntryProviderTest {
 		Assert.assertEquals(
 			segmentsEntryIds.toString(), 4, segmentsEntryIds.length);
 		Assert.assertEquals(
-			_defaultSegment.getSegmentsEntryId(), segmentsEntryIds[3]);
+			_defaultSegmentsEntry.getSegmentsEntryId(), segmentsEntryIds[3]);
 		Assert.assertTrue(
 			ArrayUtil.containsAll(
 				new long[] {
 					segmentsEntry1.getSegmentsEntryId(),
 					segmentsEntry2.getSegmentsEntryId(),
 					segmentsEntry3.getSegmentsEntryId(),
-					_defaultSegment.getSegmentsEntryId()
+					_defaultSegmentsEntry.getSegmentsEntryId()
 				},
 				segmentsEntryIds));
 	}
@@ -279,13 +279,13 @@ public class SegmentsEntryProviderTest {
 		Assert.assertEquals(
 			segmentsEntryIds.toString(), 3, segmentsEntryIds.length);
 		Assert.assertEquals(
-			_defaultSegment.getSegmentsEntryId(), segmentsEntryIds[2]);
+			_defaultSegmentsEntry.getSegmentsEntryId(), segmentsEntryIds[2]);
 		Assert.assertTrue(
 			ArrayUtil.containsAll(
 				new long[] {
 					segmentsEntry1.getSegmentsEntryId(),
 					segmentsEntry2.getSegmentsEntryId(),
-					_defaultSegment.getSegmentsEntryId()
+					_defaultSegmentsEntry.getSegmentsEntryId()
 				},
 				segmentsEntryIds));
 	}
@@ -327,14 +327,14 @@ public class SegmentsEntryProviderTest {
 		Assert.assertEquals(
 			segmentsEntryIds.toString(), 3, segmentsEntryIds.length);
 		Assert.assertEquals(
-			_defaultSegment.getSegmentsEntryId(), segmentsEntryIds[2]);
+			_defaultSegmentsEntry.getSegmentsEntryId(), segmentsEntryIds[2]);
 		Assert.assertTrue(
 			ArrayUtil.containsAll(
 				segmentsEntryIds,
 				new long[] {
 					segmentsEntry1.getSegmentsEntryId(),
 					segmentsEntry2.getSegmentsEntryId(),
-					_defaultSegment.getSegmentsEntryId()
+					_defaultSegmentsEntry.getSegmentsEntryId()
 				}));
 	}
 
@@ -377,13 +377,13 @@ public class SegmentsEntryProviderTest {
 		Assert.assertEquals(
 			segmentsEntryIds.toString(), 3, segmentsEntryIds.length);
 		Assert.assertEquals(
-			_defaultSegment.getSegmentsEntryId(), segmentsEntryIds[2]);
+			_defaultSegmentsEntry.getSegmentsEntryId(), segmentsEntryIds[2]);
 		Assert.assertTrue(
 			ArrayUtil.containsAll(
 				new long[] {
 					segmentsEntry1.getSegmentsEntryId(),
 					segmentsEntry2.getSegmentsEntryId(),
-					_defaultSegment.getSegmentsEntryId()
+					_defaultSegmentsEntry.getSegmentsEntryId()
 				},
 				segmentsEntryIds));
 	}
@@ -394,7 +394,7 @@ public class SegmentsEntryProviderTest {
 	)
 	private SegmentsCriteriaContributor _contextSegmentsCriteriaContributor;
 
-	private SegmentsEntry _defaultSegment;
+	private SegmentsEntry _defaultSegmentsEntry;
 
 	@DeleteAfterTestRun
 	private Group _group;

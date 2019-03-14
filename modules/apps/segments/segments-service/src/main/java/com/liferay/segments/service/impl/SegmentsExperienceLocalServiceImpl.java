@@ -26,9 +26,7 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ResourceBundleLoader;
 import com.liferay.portal.kernel.util.ResourceBundleLoaderUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
-import com.liferay.segments.constants.SegmentsConstants;
 import com.liferay.segments.exception.DefaultSegmentsExperienceException;
-import com.liferay.segments.exception.SegmentsExperienceSegmentsEntryException;
 import com.liferay.segments.model.SegmentsEntry;
 import com.liferay.segments.model.SegmentsExperience;
 import com.liferay.segments.service.base.SegmentsExperienceLocalServiceBaseImpl;
@@ -172,11 +170,12 @@ public class SegmentsExperienceLocalServiceImpl
 			boolean addDefaultExperience)
 		throws PortalException {
 
-		SegmentsEntry segmentsEntry = _getDefaultSegmentsEntry(groupId);
+		SegmentsEntry defaultSegmentsEntry =
+			segmentsEntryLocalService.getDefaultSegmentsEntry(groupId);
 
 		SegmentsExperience segmentsExperience =
 			segmentsExperiencePersistence.fetchByG_S_C_C_First(
-				groupId, segmentsEntry.getSegmentsEntryId(), classNameId,
+				groupId, defaultSegmentsEntry.getSegmentsEntryId(), classNameId,
 				classPK, null);
 
 		if (segmentsExperience != null) {
@@ -188,7 +187,8 @@ public class SegmentsExperienceLocalServiceImpl
 		}
 
 		return _addDefaultSegmentsExperience(
-			groupId, segmentsEntry.getSegmentsEntryId(), classNameId, classPK);
+			groupId, defaultSegmentsEntry.getSegmentsEntryId(), classNameId,
+			classPK);
 	}
 
 	@Override
@@ -325,21 +325,6 @@ public class SegmentsExperienceLocalServiceImpl
 			serviceContext);
 	}
 
-	private SegmentsEntry _getDefaultSegmentsEntry(long groupId)
-		throws PortalException {
-
-		SegmentsEntry segmentsEntry =
-			segmentsEntryLocalService.fetchSegmentsEntry(
-				groupId, SegmentsConstants.KEY_DEFAULT, true);
-
-		if (segmentsEntry == null) {
-			throw new SegmentsExperienceSegmentsEntryException(
-				"Unable to get default segments entry");
-		}
-
-		return segmentsEntry;
-	}
-
 	private ResourceBundleLoader _getResourceBundleLoader() {
 		return ResourceBundleLoaderUtil.
 			getResourceBundleLoaderByBundleSymbolicName(
@@ -350,7 +335,8 @@ public class SegmentsExperienceLocalServiceImpl
 			long segmentsEntryId, long groupId, long classNameId, long classPK)
 		throws PortalException {
 
-		SegmentsEntry defaultSegmentsEntry = _getDefaultSegmentsEntry(groupId);
+		SegmentsEntry defaultSegmentsEntry =
+			segmentsEntryLocalService.getDefaultSegmentsEntry(groupId);
 
 		if (defaultSegmentsEntry.getSegmentsEntryId() != segmentsEntryId) {
 			return;

@@ -76,7 +76,6 @@ import com.liferay.portal.template.soy.util.SoyContext;
 import com.liferay.portal.template.soy.util.SoyContextFactoryUtil;
 import com.liferay.portal.util.PortletCategoryUtil;
 import com.liferay.portal.util.WebAppPool;
-import com.liferay.segments.constants.SegmentsConstants;
 import com.liferay.segments.model.SegmentsEntry;
 import com.liferay.segments.model.SegmentsExperience;
 import com.liferay.segments.service.SegmentsEntryLocalServiceUtil;
@@ -379,12 +378,19 @@ public class ContentPageEditorDisplayContext {
 			return _defaultSegmentsEntryId;
 		}
 
-		SegmentsEntry segmentsEntry =
-			SegmentsEntryLocalServiceUtil.fetchSegmentsEntry(
-				getGroupId(), SegmentsConstants.KEY_DEFAULT, true);
+		_defaultSegmentsEntryId = StringPool.BLANK;
 
-		_defaultSegmentsEntryId = String.valueOf(
-			segmentsEntry.getSegmentsEntryId());
+		try {
+			SegmentsEntry defaultSegmentsEntry =
+				SegmentsEntryLocalServiceUtil.getDefaultSegmentsEntry(
+					getGroupId());
+
+			_defaultSegmentsEntryId = String.valueOf(
+				defaultSegmentsEntry.getSegmentsEntryId());
+		}
+		catch (PortalException pe) {
+			_log.error("Unable to get default segment", pe);
+		}
 
 		return _defaultSegmentsEntryId;
 	}

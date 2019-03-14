@@ -30,7 +30,6 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.service.test.ServiceTestUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-import com.liferay.segments.constants.SegmentsConstants;
 import com.liferay.segments.exception.DefaultSegmentsEntryException;
 import com.liferay.segments.exception.RequiredSegmentsEntryException;
 import com.liferay.segments.exception.SegmentsEntryKeyException;
@@ -129,8 +128,8 @@ public class SegmentsEntryLocalServiceTest {
 	)
 	public void testDeleteDefaultSegmentsEntry() throws PortalException {
 		SegmentsEntry defaultSegmentsEntry =
-			_segmentsEntryLocalService.fetchSegmentsEntry(
-				_group.getGroupId(), SegmentsConstants.KEY_DEFAULT, true);
+			_segmentsEntryLocalService.getDefaultSegmentsEntry(
+				_group.getGroupId());
 
 		_segmentsEntryLocalService.deleteSegmentsEntry(defaultSegmentsEntry);
 	}
@@ -275,8 +274,8 @@ public class SegmentsEntryLocalServiceTest {
 	)
 	public void testUpdateDefaultSegmentsEntry() throws PortalException {
 		SegmentsEntry defaultSegmentsEntry =
-			_segmentsEntryLocalService.fetchSegmentsEntry(
-				_group.getGroupId(), SegmentsConstants.KEY_DEFAULT, true);
+			_segmentsEntryLocalService.getDefaultSegmentsEntry(
+				_group.getGroupId());
 
 		_segmentsEntryLocalService.updateSegmentsEntry(
 			defaultSegmentsEntry.getSegmentsEntryId(),

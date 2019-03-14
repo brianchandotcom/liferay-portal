@@ -27,7 +27,6 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.segments.constants.SegmentsConstants;
 import com.liferay.segments.constants.SegmentsWebKeys;
 import com.liferay.segments.context.Context;
 import com.liferay.segments.internal.configuration.SegmentsServiceConfiguration;
@@ -115,22 +114,23 @@ public class SegmentsServicePreAction extends Action {
 		}
 
 		if (segmentsEntryIds == null) {
-			SegmentsEntry segmentsEntry =
-				_segmentsEntryLocalService.fetchSegmentsEntry(
-					themeDisplay.getCompanyGroupId(),
-					SegmentsConstants.KEY_DEFAULT, true);
+			SegmentsEntry defaultSegmentsEntry =
+				_segmentsEntryLocalService.getDefaultSegmentsEntry(
+					themeDisplay.getCompanyGroupId());
 
-			segmentsEntryIds = new long[] {segmentsEntry.getSegmentsEntryId()};
+			segmentsEntryIds = new long[] {
+				defaultSegmentsEntry.getSegmentsEntryId()
+			};
 		}
 
 		if (segmentsExperienceIds == null) {
-			SegmentsExperience segmentsExperience =
+			SegmentsExperience defaultSegmentsExperience =
 				_segmentsExperienceLocalService.getDefaultSegmentsExperience(
 					layout.getGroupId(), classNameId, layout.getPrimaryKey(),
 					true);
 
 			segmentsExperienceIds = new long[] {
-				segmentsExperience.getSegmentsExperienceId()
+				defaultSegmentsExperience.getSegmentsExperienceId()
 			};
 		}
 

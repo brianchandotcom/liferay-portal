@@ -80,9 +80,13 @@
 				<%= HtmlUtil.escape(assetLinkEntry.getTitle(locale)) %>
 			</h5>
 
-			<div class="text-secondary">
+			<h6 class="text-secondary">
 				<%= inputAssetLinksDisplayContext.getAssetType(assetLinkEntry) %>
-			</div>
+			</h6>
+
+			<h6 class="text-secondary">
+				<liferay-ui:message key="scope" />: <%= HtmlUtil.escape(inputAssetLinksDisplayContext.getGroupDescriptiveName(assetLinkEntry)) %>
+			</h6>
 		</liferay-ui:search-container-column-text>
 
 		<liferay-ui:search-container-column-text

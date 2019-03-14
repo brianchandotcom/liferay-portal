@@ -263,6 +263,46 @@ public class LayoutPageTemplateEntryServiceTest {
 			actualLayoutPageTemplateEntriesCount.size());
 	}
 
+	@Test(expected = LayoutPageTemplateEntryNameException.class)
+	public void testAddLayoutPageTemplateEntryWithSymbolInName()
+		throws Exception {
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				_group.getGroupId(), TestPropsValues.getUserId());
+
+		LayoutPageTemplateCollection layoutPageTemplateCollection =
+			LayoutPageTemplateCollectionServiceUtil.
+				addLayoutPageTemplateCollection(
+					_group.getGroupId(), RandomTestUtil.randomString(),
+					null, serviceContext);
+
+		LayoutPageTemplateEntryServiceUtil.addLayoutPageTemplateEntry(
+			_group.getGroupId(),
+			layoutPageTemplateCollection.getLayoutPageTemplateCollectionId(),
+			"Test %&# Name", serviceContext);
+	}
+
+	@Test
+	public void testAddLayoutPageTemplateEntryWithUTF8CharsInName()
+		throws Exception {
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				_group.getGroupId(), TestPropsValues.getUserId());
+
+		LayoutPageTemplateCollection layoutPageTemplateCollection =
+			LayoutPageTemplateCollectionServiceUtil.
+				addLayoutPageTemplateCollection(
+					_group.getGroupId(), RandomTestUtil.randomString(),
+					null, serviceContext);
+
+		LayoutPageTemplateEntryServiceUtil.addLayoutPageTemplateEntry(
+			_group.getGroupId(),
+			layoutPageTemplateCollection.getLayoutPageTemplateCollectionId(),
+			"你好andこんにちは", serviceContext);
+	}
+
 	@Test
 	public void testAddMultipleLayoutPageTemplateEntries()
 		throws PortalException {

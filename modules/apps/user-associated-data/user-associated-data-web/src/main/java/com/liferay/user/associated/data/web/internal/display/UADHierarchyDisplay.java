@@ -417,7 +417,8 @@ public class UADHierarchyDisplay {
 				containerUADDisplay.getPrimaryKey(topLevelContainer);
 
 			if (containerClass.isAssignableFrom(userItem.getClass()) &&
-				(containerUADDisplay.getParentContainerId((T)userItem) ==
+				Objects.equals(
+					containerUADDisplay.getParentContainerId((T)userItem),
 					parentContainerId)) {
 
 				topLevelCategories.putIfAbsent(

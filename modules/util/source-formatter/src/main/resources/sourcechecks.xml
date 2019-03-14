@@ -20,6 +20,7 @@
 			<property name="enabled" value="false" />
 		</check>
 		<check name="BNDLineBreaksCheck" />
+		<check name="BNDMultipleAppBNDsCheck" />
 		<check name="BNDRangeCheck" />
 		<check name="BNDSchemaVersionCheck" />
 		<check name="BNDStylingCheck" />

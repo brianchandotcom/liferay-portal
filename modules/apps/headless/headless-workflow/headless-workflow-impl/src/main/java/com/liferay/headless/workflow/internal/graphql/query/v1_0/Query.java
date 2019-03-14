@@ -18,6 +18,9 @@ import com.liferay.headless.workflow.dto.v1_0.WorkflowLog;
 import com.liferay.headless.workflow.dto.v1_0.WorkflowTask;
 import com.liferay.headless.workflow.resource.v1_0.WorkflowLogResource;
 import com.liferay.headless.workflow.resource.v1_0.WorkflowTaskResource;
+import com.liferay.petra.function.UnsafeConsumer;
+import com.liferay.petra.function.UnsafeFunction;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
 import com.liferay.portal.vulcan.pagination.Page;
@@ -31,9 +34,7 @@ import java.util.Collection;
 
 import javax.annotation.Generated;
 
-import org.osgi.framework.Bundle;
-import org.osgi.framework.FrameworkUtil;
-import org.osgi.util.tracker.ServiceTracker;
+import org.osgi.service.component.ComponentServiceObjects;
 
 /**
  * @author Javier Gamarra
@@ -42,15 +43,33 @@ import org.osgi.util.tracker.ServiceTracker;
 @Generated("")
 public class Query {
 
+	public static void setWorkflowLogResourceComponentServiceObjects(
+		ComponentServiceObjects<WorkflowLogResource>
+			workflowLogResourceComponentServiceObjects) {
+
+		_workflowLogResourceComponentServiceObjects =
+			workflowLogResourceComponentServiceObjects;
+	}
+
+	public static void setWorkflowTaskResourceComponentServiceObjects(
+		ComponentServiceObjects<WorkflowTaskResource>
+			workflowTaskResourceComponentServiceObjects) {
+
+		_workflowTaskResourceComponentServiceObjects =
+			workflowTaskResourceComponentServiceObjects;
+	}
+
 	@GraphQLField
 	@GraphQLInvokeDetached
 	public WorkflowLog getWorkflowLog(
 			@GraphQLName("workflow-log-id") Long workflowLogId)
 		throws Exception {
 
-		WorkflowLogResource workflowLogResource = _createWorkflowLogResource();
-
-		return workflowLogResource.getWorkflowLog(workflowLogId);
+		return _applyComponentServiceObjects(
+			_workflowLogResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			workflowLogResource -> workflowLogResource.getWorkflowLog(
+				workflowLogId));
 	}
 
 	@GraphQLField
@@ -61,13 +80,16 @@ public class Query {
 			@GraphQLName("page") int page)
 		throws Exception {
 
-		WorkflowLogResource workflowLogResource = _createWorkflowLogResource();
+		return _applyComponentServiceObjects(
+			_workflowLogResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			workflowLogResource -> {
+				Page paginationPage =
+					workflowLogResource.getWorkflowTaskWorkflowLogsPage(
+						workflowTaskId, Pagination.of(pageSize, page));
 
-		Page paginationPage =
-			workflowLogResource.getWorkflowTaskWorkflowLogsPage(
-				workflowTaskId, Pagination.of(pageSize, page));
-
-		return paginationPage.getItems();
+				return paginationPage.getItems();
+			});
 	}
 
 	@GraphQLField
@@ -78,13 +100,16 @@ public class Query {
 			@GraphQLName("page") int page)
 		throws Exception {
 
-		WorkflowTaskResource workflowTaskResource =
-			_createWorkflowTaskResource();
+		return _applyComponentServiceObjects(
+			_workflowTaskResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			workflowTaskResource -> {
+				Page paginationPage =
+					workflowTaskResource.getRoleWorkflowTasksPage(
+						roleId, Pagination.of(pageSize, page));
 
-		Page paginationPage = workflowTaskResource.getRoleWorkflowTasksPage(
-			roleId, Pagination.of(pageSize, page));
-
-		return paginationPage.getItems();
+				return paginationPage.getItems();
+			});
 	}
 
 	@GraphQLField
@@ -94,13 +119,15 @@ public class Query {
 			@GraphQLName("page") int page)
 		throws Exception {
 
-		WorkflowTaskResource workflowTaskResource =
-			_createWorkflowTaskResource();
+		return _applyComponentServiceObjects(
+			_workflowTaskResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			workflowTaskResource -> {
+				Page paginationPage = workflowTaskResource.getWorkflowTasksPage(
+					Pagination.of(pageSize, page));
 
-		Page paginationPage = workflowTaskResource.getWorkflowTasksPage(
-			Pagination.of(pageSize, page));
-
-		return paginationPage.getItems();
+				return paginationPage.getItems();
+			});
 	}
 
 	@GraphQLField
@@ -109,64 +136,53 @@ public class Query {
 			@GraphQLName("workflow-task-id") Long workflowTaskId)
 		throws Exception {
 
-		WorkflowTaskResource workflowTaskResource =
-			_createWorkflowTaskResource();
-
-		return workflowTaskResource.getWorkflowTask(workflowTaskId);
+		return _applyComponentServiceObjects(
+			_workflowTaskResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			workflowTaskResource -> workflowTaskResource.getWorkflowTask(
+				workflowTaskId));
 	}
 
-	private static WorkflowLogResource _createWorkflowLogResource()
-		throws Exception {
+	private <T, R, E1 extends Throwable, E2 extends Throwable> R
+			_applyComponentServiceObjects(
+				ComponentServiceObjects<T> componentServiceObjects,
+				UnsafeConsumer<T, E1> unsafeConsumer,
+				UnsafeFunction<T, R, E2> unsafeFunction)
+		throws E1, E2 {
 
-		WorkflowLogResource workflowLogResource =
-			_workflowLogResourceServiceTracker.getService();
+		T resource = componentServiceObjects.getService();
+
+		try {
+			unsafeConsumer.accept(resource);
+
+			return unsafeFunction.apply(resource);
+		}
+		finally {
+			componentServiceObjects.ungetService(resource);
+		}
+	}
+
+	private void _populateResourceContext(
+			WorkflowLogResource workflowLogResource)
+		throws PortalException {
 
 		workflowLogResource.setContextCompany(
 			CompanyLocalServiceUtil.getCompany(
 				CompanyThreadLocal.getCompanyId()));
-
-		return workflowLogResource;
 	}
 
-	private static final ServiceTracker
-		<WorkflowLogResource, WorkflowLogResource>
-			_workflowLogResourceServiceTracker;
-
-	private static WorkflowTaskResource _createWorkflowTaskResource()
-		throws Exception {
-
-		WorkflowTaskResource workflowTaskResource =
-			_workflowTaskResourceServiceTracker.getService();
+	private void _populateResourceContext(
+			WorkflowTaskResource workflowTaskResource)
+		throws PortalException {
 
 		workflowTaskResource.setContextCompany(
 			CompanyLocalServiceUtil.getCompany(
 				CompanyThreadLocal.getCompanyId()));
-
-		return workflowTaskResource;
 	}
 
-	private static final ServiceTracker
-		<WorkflowTaskResource, WorkflowTaskResource>
-			_workflowTaskResourceServiceTracker;
-
-	static {
-		Bundle bundle = FrameworkUtil.getBundle(Query.class);
-
-		ServiceTracker<WorkflowLogResource, WorkflowLogResource>
-			workflowLogResourceServiceTracker = new ServiceTracker<>(
-				bundle.getBundleContext(), WorkflowLogResource.class, null);
-
-		workflowLogResourceServiceTracker.open();
-
-		_workflowLogResourceServiceTracker = workflowLogResourceServiceTracker;
-		ServiceTracker<WorkflowTaskResource, WorkflowTaskResource>
-			workflowTaskResourceServiceTracker = new ServiceTracker<>(
-				bundle.getBundleContext(), WorkflowTaskResource.class, null);
-
-		workflowTaskResourceServiceTracker.open();
-
-		_workflowTaskResourceServiceTracker =
-			workflowTaskResourceServiceTracker;
-	}
+	private static ComponentServiceObjects<WorkflowLogResource>
+		_workflowLogResourceComponentServiceObjects;
+	private static ComponentServiceObjects<WorkflowTaskResource>
+		_workflowTaskResourceComponentServiceObjects;
 
 }

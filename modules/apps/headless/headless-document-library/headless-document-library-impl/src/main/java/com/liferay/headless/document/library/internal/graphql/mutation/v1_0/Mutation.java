@@ -20,6 +20,9 @@ import com.liferay.headless.document.library.dto.v1_0.Folder;
 import com.liferay.headless.document.library.resource.v1_0.CommentResource;
 import com.liferay.headless.document.library.resource.v1_0.DocumentResource;
 import com.liferay.headless.document.library.resource.v1_0.FolderResource;
+import com.liferay.petra.function.UnsafeConsumer;
+import com.liferay.petra.function.UnsafeFunction;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
 import com.liferay.portal.vulcan.multipart.MultipartBody;
@@ -30,9 +33,7 @@ import graphql.annotations.annotationTypes.GraphQLName;
 
 import javax.annotation.Generated;
 
-import org.osgi.framework.Bundle;
-import org.osgi.framework.FrameworkUtil;
-import org.osgi.util.tracker.ServiceTracker;
+import org.osgi.service.component.ComponentServiceObjects;
 
 /**
  * @author Javier Gamarra
@@ -41,13 +42,38 @@ import org.osgi.util.tracker.ServiceTracker;
 @Generated("")
 public class Mutation {
 
+	public static void setCommentResourceComponentServiceObjects(
+		ComponentServiceObjects<CommentResource>
+			commentResourceComponentServiceObjects) {
+
+		_commentResourceComponentServiceObjects =
+			commentResourceComponentServiceObjects;
+	}
+
+	public static void setDocumentResourceComponentServiceObjects(
+		ComponentServiceObjects<DocumentResource>
+			documentResourceComponentServiceObjects) {
+
+		_documentResourceComponentServiceObjects =
+			documentResourceComponentServiceObjects;
+	}
+
+	public static void setFolderResourceComponentServiceObjects(
+		ComponentServiceObjects<FolderResource>
+			folderResourceComponentServiceObjects) {
+
+		_folderResourceComponentServiceObjects =
+			folderResourceComponentServiceObjects;
+	}
+
 	@GraphQLInvokeDetached
 	public boolean deleteComment(@GraphQLName("comment-id") Long commentId)
 		throws Exception {
 
-		CommentResource commentResource = _createCommentResource();
-
-		return commentResource.deleteComment(commentId);
+		return _applyComponentServiceObjects(
+			_commentResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			commentResource -> commentResource.deleteComment(commentId));
 	}
 
 	@GraphQLInvokeDetached
@@ -56,9 +82,10 @@ public class Mutation {
 			@GraphQLName("Comment") Comment comment)
 		throws Exception {
 
-		CommentResource commentResource = _createCommentResource();
-
-		return commentResource.putComment(commentId, comment);
+		return _applyComponentServiceObjects(
+			_commentResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			commentResource -> commentResource.putComment(commentId, comment));
 	}
 
 	@GraphQLField
@@ -68,9 +95,11 @@ public class Mutation {
 			@GraphQLName("Comment") Comment comment)
 		throws Exception {
 
-		CommentResource commentResource = _createCommentResource();
-
-		return commentResource.postCommentComment(commentId, comment);
+		return _applyComponentServiceObjects(
+			_commentResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			commentResource -> commentResource.postCommentComment(
+				commentId, comment));
 	}
 
 	@GraphQLField
@@ -80,9 +109,11 @@ public class Mutation {
 			@GraphQLName("Comment") Comment comment)
 		throws Exception {
 
-		CommentResource commentResource = _createCommentResource();
-
-		return commentResource.postDocumentComment(documentId, comment);
+		return _applyComponentServiceObjects(
+			_commentResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			commentResource -> commentResource.postDocumentComment(
+				documentId, comment));
 	}
 
 	@GraphQLField
@@ -92,19 +123,21 @@ public class Mutation {
 			@GraphQLName("MultipartBody") MultipartBody multipartBody)
 		throws Exception {
 
-		DocumentResource documentResource = _createDocumentResource();
-
-		return documentResource.postContentSpaceDocument(
-			contentSpaceId, multipartBody);
+		return _applyComponentServiceObjects(
+			_documentResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			documentResource -> documentResource.postContentSpaceDocument(
+				contentSpaceId, multipartBody));
 	}
 
 	@GraphQLInvokeDetached
 	public boolean deleteDocument(@GraphQLName("document-id") Long documentId)
 		throws Exception {
 
-		DocumentResource documentResource = _createDocumentResource();
-
-		return documentResource.deleteDocument(documentId);
+		return _applyComponentServiceObjects(
+			_documentResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			documentResource -> documentResource.deleteDocument(documentId));
 	}
 
 	@GraphQLInvokeDetached
@@ -113,9 +146,11 @@ public class Mutation {
 			@GraphQLName("MultipartBody") MultipartBody multipartBody)
 		throws Exception {
 
-		DocumentResource documentResource = _createDocumentResource();
-
-		return documentResource.patchDocument(documentId, multipartBody);
+		return _applyComponentServiceObjects(
+			_documentResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			documentResource -> documentResource.patchDocument(
+				documentId, multipartBody));
 	}
 
 	@GraphQLInvokeDetached
@@ -124,9 +159,11 @@ public class Mutation {
 			@GraphQLName("MultipartBody") MultipartBody multipartBody)
 		throws Exception {
 
-		DocumentResource documentResource = _createDocumentResource();
-
-		return documentResource.putDocument(documentId, multipartBody);
+		return _applyComponentServiceObjects(
+			_documentResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			documentResource -> documentResource.putDocument(
+				documentId, multipartBody));
 	}
 
 	@GraphQLField
@@ -136,9 +173,11 @@ public class Mutation {
 			@GraphQLName("MultipartBody") MultipartBody multipartBody)
 		throws Exception {
 
-		DocumentResource documentResource = _createDocumentResource();
-
-		return documentResource.postFolderDocument(folderId, multipartBody);
+		return _applyComponentServiceObjects(
+			_documentResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			documentResource -> documentResource.postFolderDocument(
+				folderId, multipartBody));
 	}
 
 	@GraphQLField
@@ -148,18 +187,21 @@ public class Mutation {
 			@GraphQLName("Folder") Folder folder)
 		throws Exception {
 
-		FolderResource folderResource = _createFolderResource();
-
-		return folderResource.postContentSpaceFolder(contentSpaceId, folder);
+		return _applyComponentServiceObjects(
+			_folderResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			folderResource -> folderResource.postContentSpaceFolder(
+				contentSpaceId, folder));
 	}
 
 	@GraphQLInvokeDetached
 	public boolean deleteFolder(@GraphQLName("folder-id") Long folderId)
 		throws Exception {
 
-		FolderResource folderResource = _createFolderResource();
-
-		return folderResource.deleteFolder(folderId);
+		return _applyComponentServiceObjects(
+			_folderResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			folderResource -> folderResource.deleteFolder(folderId));
 	}
 
 	@GraphQLInvokeDetached
@@ -168,9 +210,10 @@ public class Mutation {
 			@GraphQLName("Folder") Folder folder)
 		throws Exception {
 
-		FolderResource folderResource = _createFolderResource();
-
-		return folderResource.patchFolder(folderId, folder);
+		return _applyComponentServiceObjects(
+			_folderResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			folderResource -> folderResource.patchFolder(folderId, folder));
 	}
 
 	@GraphQLInvokeDetached
@@ -179,9 +222,10 @@ public class Mutation {
 			@GraphQLName("Folder") Folder folder)
 		throws Exception {
 
-		FolderResource folderResource = _createFolderResource();
-
-		return folderResource.putFolder(folderId, folder);
+		return _applyComponentServiceObjects(
+			_folderResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			folderResource -> folderResource.putFolder(folderId, folder));
 	}
 
 	@GraphQLField
@@ -191,77 +235,61 @@ public class Mutation {
 			@GraphQLName("Folder") Folder folder)
 		throws Exception {
 
-		FolderResource folderResource = _createFolderResource();
-
-		return folderResource.postFolderFolder(folderId, folder);
+		return _applyComponentServiceObjects(
+			_folderResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			folderResource -> folderResource.postFolderFolder(
+				folderId, folder));
 	}
 
-	private static CommentResource _createCommentResource() throws Exception {
-		CommentResource commentResource =
-			_commentResourceServiceTracker.getService();
+	private <T, R, E1 extends Throwable, E2 extends Throwable> R
+			_applyComponentServiceObjects(
+				ComponentServiceObjects<T> componentServiceObjects,
+				UnsafeConsumer<T, E1> unsafeConsumer,
+				UnsafeFunction<T, R, E2> unsafeFunction)
+		throws E1, E2 {
+
+		T resource = componentServiceObjects.getService();
+
+		try {
+			unsafeConsumer.accept(resource);
+
+			return unsafeFunction.apply(resource);
+		}
+		finally {
+			componentServiceObjects.ungetService(resource);
+		}
+	}
+
+	private void _populateResourceContext(CommentResource commentResource)
+		throws PortalException {
 
 		commentResource.setContextCompany(
 			CompanyLocalServiceUtil.getCompany(
 				CompanyThreadLocal.getCompanyId()));
-
-		return commentResource;
 	}
 
-	private static final ServiceTracker<CommentResource, CommentResource>
-		_commentResourceServiceTracker;
-
-	private static DocumentResource _createDocumentResource() throws Exception {
-		DocumentResource documentResource =
-			_documentResourceServiceTracker.getService();
+	private void _populateResourceContext(DocumentResource documentResource)
+		throws PortalException {
 
 		documentResource.setContextCompany(
 			CompanyLocalServiceUtil.getCompany(
 				CompanyThreadLocal.getCompanyId()));
-
-		return documentResource;
 	}
 
-	private static final ServiceTracker<DocumentResource, DocumentResource>
-		_documentResourceServiceTracker;
-
-	private static FolderResource _createFolderResource() throws Exception {
-		FolderResource folderResource =
-			_folderResourceServiceTracker.getService();
+	private void _populateResourceContext(FolderResource folderResource)
+		throws PortalException {
 
 		folderResource.setContextCompany(
 			CompanyLocalServiceUtil.getCompany(
 				CompanyThreadLocal.getCompanyId()));
-
-		return folderResource;
 	}
 
-	private static final ServiceTracker<FolderResource, FolderResource>
-		_folderResourceServiceTracker;
-
-	static {
-		Bundle bundle = FrameworkUtil.getBundle(Mutation.class);
-
-		ServiceTracker<CommentResource, CommentResource>
-			commentResourceServiceTracker = new ServiceTracker<>(
-				bundle.getBundleContext(), CommentResource.class, null);
-
-		commentResourceServiceTracker.open();
-
-		_commentResourceServiceTracker = commentResourceServiceTracker;
-		ServiceTracker<DocumentResource, DocumentResource>
-			documentResourceServiceTracker = new ServiceTracker<>(
-				bundle.getBundleContext(), DocumentResource.class, null);
-
-		documentResourceServiceTracker.open();
-
-		_documentResourceServiceTracker = documentResourceServiceTracker;
-		ServiceTracker<FolderResource, FolderResource>
-			folderResourceServiceTracker = new ServiceTracker<>(
-				bundle.getBundleContext(), FolderResource.class, null);
-
-		folderResourceServiceTracker.open();
-
-		_folderResourceServiceTracker = folderResourceServiceTracker;
-	}
+	private static ComponentServiceObjects<CommentResource>
+		_commentResourceComponentServiceObjects;
+	private static ComponentServiceObjects<DocumentResource>
+		_documentResourceComponentServiceObjects;
+	private static ComponentServiceObjects<FolderResource>
+		_folderResourceComponentServiceObjects;
 
 }

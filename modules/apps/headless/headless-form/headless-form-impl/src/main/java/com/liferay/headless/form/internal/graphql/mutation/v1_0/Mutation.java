@@ -19,6 +19,9 @@ import com.liferay.headless.form.dto.v1_0.FormRecord;
 import com.liferay.headless.form.resource.v1_0.FormDocumentResource;
 import com.liferay.headless.form.resource.v1_0.FormRecordResource;
 import com.liferay.headless.form.resource.v1_0.FormResource;
+import com.liferay.petra.function.UnsafeConsumer;
+import com.liferay.petra.function.UnsafeFunction;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
 
@@ -28,9 +31,7 @@ import graphql.annotations.annotationTypes.GraphQLName;
 
 import javax.annotation.Generated;
 
-import org.osgi.framework.Bundle;
-import org.osgi.framework.FrameworkUtil;
-import org.osgi.util.tracker.ServiceTracker;
+import org.osgi.service.component.ComponentServiceObjects;
 
 /**
  * @author Javier Gamarra
@@ -39,15 +40,40 @@ import org.osgi.util.tracker.ServiceTracker;
 @Generated("")
 public class Mutation {
 
+	public static void setFormResourceComponentServiceObjects(
+		ComponentServiceObjects<FormResource>
+			formResourceComponentServiceObjects) {
+
+		_formResourceComponentServiceObjects =
+			formResourceComponentServiceObjects;
+	}
+
+	public static void setFormDocumentResourceComponentServiceObjects(
+		ComponentServiceObjects<FormDocumentResource>
+			formDocumentResourceComponentServiceObjects) {
+
+		_formDocumentResourceComponentServiceObjects =
+			formDocumentResourceComponentServiceObjects;
+	}
+
+	public static void setFormRecordResourceComponentServiceObjects(
+		ComponentServiceObjects<FormRecordResource>
+			formRecordResourceComponentServiceObjects) {
+
+		_formRecordResourceComponentServiceObjects =
+			formRecordResourceComponentServiceObjects;
+	}
+
 	@GraphQLField
 	@GraphQLInvokeDetached
 	public Form postFormEvaluateContext(
 			@GraphQLName("form-id") Long formId, @GraphQLName("Form") Form form)
 		throws Exception {
 
-		FormResource formResource = _createFormResource();
-
-		return formResource.postFormEvaluateContext(formId, form);
+		return _applyComponentServiceObjects(
+			_formResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			formResource -> formResource.postFormEvaluateContext(formId, form));
 	}
 
 	@GraphQLField
@@ -56,9 +82,10 @@ public class Mutation {
 			@GraphQLName("form-id") Long formId, @GraphQLName("Form") Form form)
 		throws Exception {
 
-		FormResource formResource = _createFormResource();
-
-		return formResource.postFormUploadFile(formId, form);
+		return _applyComponentServiceObjects(
+			_formResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			formResource -> formResource.postFormUploadFile(formId, form));
 	}
 
 	@GraphQLInvokeDetached
@@ -66,10 +93,11 @@ public class Mutation {
 			@GraphQLName("form-document-id") Long formDocumentId)
 		throws Exception {
 
-		FormDocumentResource formDocumentResource =
-			_createFormDocumentResource();
-
-		return formDocumentResource.deleteFormDocument(formDocumentId);
+		return _applyComponentServiceObjects(
+			_formDocumentResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			formDocumentResource -> formDocumentResource.deleteFormDocument(
+				formDocumentId));
 	}
 
 	@GraphQLInvokeDetached
@@ -78,9 +106,11 @@ public class Mutation {
 			@GraphQLName("FormRecord") FormRecord formRecord)
 		throws Exception {
 
-		FormRecordResource formRecordResource = _createFormRecordResource();
-
-		return formRecordResource.putFormRecord(formRecordId, formRecord);
+		return _applyComponentServiceObjects(
+			_formRecordResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			formRecordResource -> formRecordResource.putFormRecord(
+				formRecordId, formRecord));
 	}
 
 	@GraphQLField
@@ -90,82 +120,62 @@ public class Mutation {
 			@GraphQLName("FormRecord") FormRecord formRecord)
 		throws Exception {
 
-		FormRecordResource formRecordResource = _createFormRecordResource();
-
-		return formRecordResource.postFormFormRecord(formId, formRecord);
+		return _applyComponentServiceObjects(
+			_formRecordResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			formRecordResource -> formRecordResource.postFormFormRecord(
+				formId, formRecord));
 	}
 
-	private static FormResource _createFormResource() throws Exception {
-		FormResource formResource = _formResourceServiceTracker.getService();
+	private <T, R, E1 extends Throwable, E2 extends Throwable> R
+			_applyComponentServiceObjects(
+				ComponentServiceObjects<T> componentServiceObjects,
+				UnsafeConsumer<T, E1> unsafeConsumer,
+				UnsafeFunction<T, R, E2> unsafeFunction)
+		throws E1, E2 {
+
+		T resource = componentServiceObjects.getService();
+
+		try {
+			unsafeConsumer.accept(resource);
+
+			return unsafeFunction.apply(resource);
+		}
+		finally {
+			componentServiceObjects.ungetService(resource);
+		}
+	}
+
+	private void _populateResourceContext(FormResource formResource)
+		throws PortalException {
 
 		formResource.setContextCompany(
 			CompanyLocalServiceUtil.getCompany(
 				CompanyThreadLocal.getCompanyId()));
-
-		return formResource;
 	}
 
-	private static final ServiceTracker<FormResource, FormResource>
-		_formResourceServiceTracker;
-
-	private static FormDocumentResource _createFormDocumentResource()
-		throws Exception {
-
-		FormDocumentResource formDocumentResource =
-			_formDocumentResourceServiceTracker.getService();
+	private void _populateResourceContext(
+			FormDocumentResource formDocumentResource)
+		throws PortalException {
 
 		formDocumentResource.setContextCompany(
 			CompanyLocalServiceUtil.getCompany(
 				CompanyThreadLocal.getCompanyId()));
-
-		return formDocumentResource;
 	}
 
-	private static final ServiceTracker
-		<FormDocumentResource, FormDocumentResource>
-			_formDocumentResourceServiceTracker;
-
-	private static FormRecordResource _createFormRecordResource()
-		throws Exception {
-
-		FormRecordResource formRecordResource =
-			_formRecordResourceServiceTracker.getService();
+	private void _populateResourceContext(FormRecordResource formRecordResource)
+		throws PortalException {
 
 		formRecordResource.setContextCompany(
 			CompanyLocalServiceUtil.getCompany(
 				CompanyThreadLocal.getCompanyId()));
-
-		return formRecordResource;
 	}
 
-	private static final ServiceTracker<FormRecordResource, FormRecordResource>
-		_formRecordResourceServiceTracker;
-
-	static {
-		Bundle bundle = FrameworkUtil.getBundle(Mutation.class);
-
-		ServiceTracker<FormResource, FormResource> formResourceServiceTracker =
-			new ServiceTracker<>(
-				bundle.getBundleContext(), FormResource.class, null);
-
-		formResourceServiceTracker.open();
-
-		_formResourceServiceTracker = formResourceServiceTracker;
-		ServiceTracker<FormDocumentResource, FormDocumentResource>
-			formDocumentResourceServiceTracker = new ServiceTracker<>(
-				bundle.getBundleContext(), FormDocumentResource.class, null);
-
-		formDocumentResourceServiceTracker.open();
-
-		_formDocumentResourceServiceTracker =
-			formDocumentResourceServiceTracker;
-		ServiceTracker<FormRecordResource, FormRecordResource>
-			formRecordResourceServiceTracker = new ServiceTracker<>(
-				bundle.getBundleContext(), FormRecordResource.class, null);
-
-		formRecordResourceServiceTracker.open();
-
-		_formRecordResourceServiceTracker = formRecordResourceServiceTracker;
-	}
+	private static ComponentServiceObjects<FormResource>
+		_formResourceComponentServiceObjects;
+	private static ComponentServiceObjects<FormDocumentResource>
+		_formDocumentResourceComponentServiceObjects;
+	private static ComponentServiceObjects<FormRecordResource>
+		_formRecordResourceComponentServiceObjects;
 
 }

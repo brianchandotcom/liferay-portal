@@ -16,11 +16,18 @@ package com.liferay.headless.workflow.internal.graphql.servlet.v1_0;
 
 import com.liferay.headless.workflow.internal.graphql.mutation.v1_0.Mutation;
 import com.liferay.headless.workflow.internal.graphql.query.v1_0.Query;
+import com.liferay.headless.workflow.resource.v1_0.WorkflowLogResource;
+import com.liferay.headless.workflow.resource.v1_0.WorkflowTaskResource;
 import com.liferay.portal.vulcan.graphql.servlet.ServletData;
 
 import javax.annotation.Generated;
 
+import org.osgi.framework.BundleContext;
+import org.osgi.service.component.ComponentServiceObjects;
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.component.annotations.ReferenceScope;
 
 /**
  * @author Javier Gamarra
@@ -29,6 +36,17 @@ import org.osgi.service.component.annotations.Component;
 @Component(immediate = true, service = ServletData.class)
 @Generated("")
 public class ServletDataImpl implements ServletData {
+
+	@Activate
+	public void activate(BundleContext bundleContext) {
+		Mutation.setWorkflowTaskResourceComponentServiceObjects(
+			_workflowTaskResourceComponentServiceObjects);
+
+		Query.setWorkflowLogResourceComponentServiceObjects(
+			_workflowLogResourceComponentServiceObjects);
+		Query.setWorkflowTaskResourceComponentServiceObjects(
+			_workflowTaskResourceComponentServiceObjects);
+	}
 
 	@Override
 	public Mutation getMutation() {
@@ -44,5 +62,13 @@ public class ServletDataImpl implements ServletData {
 	public Query getQuery() {
 		return new Query();
 	}
+
+	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
+	private ComponentServiceObjects<WorkflowTaskResource>
+		_workflowTaskResourceComponentServiceObjects;
+
+	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
+	private ComponentServiceObjects<WorkflowLogResource>
+		_workflowLogResourceComponentServiceObjects;
 
 }

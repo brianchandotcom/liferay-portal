@@ -16,11 +16,19 @@ package com.liferay.headless.web.experience.internal.graphql.servlet.v1_0;
 
 import com.liferay.headless.web.experience.internal.graphql.mutation.v1_0.Mutation;
 import com.liferay.headless.web.experience.internal.graphql.query.v1_0.Query;
+import com.liferay.headless.web.experience.resource.v1_0.CommentResource;
+import com.liferay.headless.web.experience.resource.v1_0.ContentStructureResource;
+import com.liferay.headless.web.experience.resource.v1_0.StructuredContentResource;
 import com.liferay.portal.vulcan.graphql.servlet.ServletData;
 
 import javax.annotation.Generated;
 
+import org.osgi.framework.BundleContext;
+import org.osgi.service.component.ComponentServiceObjects;
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.component.annotations.ReferenceScope;
 
 /**
  * @author Javier Gamarra
@@ -29,6 +37,21 @@ import org.osgi.service.component.annotations.Component;
 @Component(immediate = true, service = ServletData.class)
 @Generated("")
 public class ServletDataImpl implements ServletData {
+
+	@Activate
+	public void activate(BundleContext bundleContext) {
+		Mutation.setCommentResourceComponentServiceObjects(
+			_commentResourceComponentServiceObjects);
+		Mutation.setStructuredContentResourceComponentServiceObjects(
+			_structuredContentResourceComponentServiceObjects);
+
+		Query.setCommentResourceComponentServiceObjects(
+			_commentResourceComponentServiceObjects);
+		Query.setContentStructureResourceComponentServiceObjects(
+			_contentStructureResourceComponentServiceObjects);
+		Query.setStructuredContentResourceComponentServiceObjects(
+			_structuredContentResourceComponentServiceObjects);
+	}
 
 	@Override
 	public Mutation getMutation() {
@@ -44,5 +67,17 @@ public class ServletDataImpl implements ServletData {
 	public Query getQuery() {
 		return new Query();
 	}
+
+	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
+	private ComponentServiceObjects<CommentResource>
+		_commentResourceComponentServiceObjects;
+
+	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
+	private ComponentServiceObjects<StructuredContentResource>
+		_structuredContentResourceComponentServiceObjects;
+
+	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
+	private ComponentServiceObjects<ContentStructureResource>
+		_contentStructureResourceComponentServiceObjects;
 
 }

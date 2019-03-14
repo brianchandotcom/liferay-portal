@@ -53,20 +53,20 @@ import org.osgi.service.component.ComponentServiceObjects;
 @Generated("")
 public class Query {
 
-	public static void setBlogPostingImageResourceComponentServiceObjects(
-		ComponentServiceObjects<BlogPostingImageResource>
-			blogPostingImageResourceComponentServiceObjects) {
-
-		_blogPostingImageResourceComponentServiceObjects =
-			blogPostingImageResourceComponentServiceObjects;
-	}
-
 	public static void setBlogPostingResourceComponentServiceObjects(
 		ComponentServiceObjects<BlogPostingResource>
 			blogPostingResourceComponentServiceObjects) {
 
 		_blogPostingResourceComponentServiceObjects =
 			blogPostingResourceComponentServiceObjects;
+	}
+
+	public static void setBlogPostingImageResourceComponentServiceObjects(
+		ComponentServiceObjects<BlogPostingImageResource>
+			blogPostingImageResourceComponentServiceObjects) {
+
+		_blogPostingImageResourceComponentServiceObjects =
+			blogPostingImageResourceComponentServiceObjects;
 	}
 
 	public static void setCommentResourceComponentServiceObjects(
@@ -85,9 +85,10 @@ public class Query {
 			knowledgeBaseArticleResourceComponentServiceObjects;
 	}
 
-	public static void setKnowledgeBaseAttachmentResourceComponentServiceObjects(
-		ComponentServiceObjects<KnowledgeBaseAttachmentResource>
-			knowledgeBaseAttachmentResourceComponentServiceObjects) {
+	public static void
+		setKnowledgeBaseAttachmentResourceComponentServiceObjects(
+			ComponentServiceObjects<KnowledgeBaseAttachmentResource>
+				knowledgeBaseAttachmentResourceComponentServiceObjects) {
 
 		_knowledgeBaseAttachmentResourceComponentServiceObjects =
 			knowledgeBaseAttachmentResourceComponentServiceObjects;
@@ -219,10 +220,8 @@ public class Query {
 			_commentResourceComponentServiceObjects,
 			this::_populateResourceContext,
 			commentResource -> {
-				Page paginationPage =
-					commentResource.getCommentCommentsPage(
-						commentId, filter, Pagination.of(pageSize, page),
-						sorts);
+				Page paginationPage = commentResource.getCommentCommentsPage(
+					commentId, filter, Pagination.of(pageSize, page), sorts);
 
 				return paginationPage.getItems();
 			});
@@ -410,10 +409,10 @@ public class Query {
 	}
 
 	private <T, R, E1 extends Throwable, E2 extends Throwable> R
-		_applyComponentServiceObjects(
-			ComponentServiceObjects<T> componentServiceObjects,
-			UnsafeConsumer<T, E1> unsafeConsumer,
-			UnsafeFunction<T, R, E2> unsafeFunction)
+			_applyComponentServiceObjects(
+				ComponentServiceObjects<T> componentServiceObjects,
+				UnsafeConsumer<T, E1> unsafeConsumer,
+				UnsafeFunction<T, R, E2> unsafeFunction)
 		throws E1, E2 {
 
 		T resource = componentServiceObjects.getService();
@@ -429,19 +428,19 @@ public class Query {
 	}
 
 	private void _populateResourceContext(
-			BlogPostingImageResource blogPostingImageResource)
+			BlogPostingResource blogPostingResource)
 		throws PortalException {
 
-		blogPostingImageResource.setContextCompany(
+		blogPostingResource.setContextCompany(
 			CompanyLocalServiceUtil.getCompany(
 				CompanyThreadLocal.getCompanyId()));
 	}
 
 	private void _populateResourceContext(
-			BlogPostingResource blogPostingResource)
+			BlogPostingImageResource blogPostingImageResource)
 		throws PortalException {
 
-		blogPostingResource.setContextCompany(
+		blogPostingImageResource.setContextCompany(
 			CompanyLocalServiceUtil.getCompany(
 				CompanyThreadLocal.getCompanyId()));
 	}
@@ -481,10 +480,10 @@ public class Query {
 				CompanyThreadLocal.getCompanyId()));
 	}
 
-	private static ComponentServiceObjects<BlogPostingImageResource>
-		_blogPostingImageResourceComponentServiceObjects;
 	private static ComponentServiceObjects<BlogPostingResource>
 		_blogPostingResourceComponentServiceObjects;
+	private static ComponentServiceObjects<BlogPostingImageResource>
+		_blogPostingImageResourceComponentServiceObjects;
 	private static ComponentServiceObjects<CommentResource>
 		_commentResourceComponentServiceObjects;
 	private static ComponentServiceObjects<KnowledgeBaseArticleResource>

@@ -43,10 +43,10 @@ public class ServletDataImpl implements ServletData {
 
 	@Activate
 	public void activate(BundleContext bundleContext) {
-		Mutation.setBlogPostingImageResourceComponentServiceObjects(
-			_blogPostingImageResourceComponentServiceObjects);
 		Mutation.setBlogPostingResourceComponentServiceObjects(
 			_blogPostingResourceComponentServiceObjects);
+		Mutation.setBlogPostingImageResourceComponentServiceObjects(
+			_blogPostingImageResourceComponentServiceObjects);
 		Mutation.setCommentResourceComponentServiceObjects(
 			_commentResourceComponentServiceObjects);
 		Mutation.setKnowledgeBaseArticleResourceComponentServiceObjects(
@@ -56,10 +56,10 @@ public class ServletDataImpl implements ServletData {
 		Mutation.setKnowledgeBaseFolderResourceComponentServiceObjects(
 			_knowledgeBaseFolderResourceComponentServiceObjects);
 
-		Query.setBlogPostingImageResourceComponentServiceObjects(
-			_blogPostingImageResourceComponentServiceObjects);
 		Query.setBlogPostingResourceComponentServiceObjects(
 			_blogPostingResourceComponentServiceObjects);
+		Query.setBlogPostingImageResourceComponentServiceObjects(
+			_blogPostingImageResourceComponentServiceObjects);
 		Query.setCommentResourceComponentServiceObjects(
 			_commentResourceComponentServiceObjects);
 		Query.setKnowledgeBaseArticleResourceComponentServiceObjects(
@@ -86,12 +86,12 @@ public class ServletDataImpl implements ServletData {
 	}
 
 	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
-	private ComponentServiceObjects<BlogPostingImageResource>
-		_blogPostingImageResourceComponentServiceObjects;
-
-	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
 	private ComponentServiceObjects<BlogPostingResource>
 		_blogPostingResourceComponentServiceObjects;
+
+	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
+	private ComponentServiceObjects<BlogPostingImageResource>
+		_blogPostingImageResourceComponentServiceObjects;
 
 	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
 	private ComponentServiceObjects<CommentResource>

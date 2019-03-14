@@ -18,6 +18,9 @@ import com.liferay.headless.web.experience.dto.v1_0.Comment;
 import com.liferay.headless.web.experience.dto.v1_0.StructuredContent;
 import com.liferay.headless.web.experience.resource.v1_0.CommentResource;
 import com.liferay.headless.web.experience.resource.v1_0.StructuredContentResource;
+import com.liferay.petra.function.UnsafeConsumer;
+import com.liferay.petra.function.UnsafeFunction;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
 
@@ -27,9 +30,7 @@ import graphql.annotations.annotationTypes.GraphQLName;
 
 import javax.annotation.Generated;
 
-import org.osgi.framework.Bundle;
-import org.osgi.framework.FrameworkUtil;
-import org.osgi.util.tracker.ServiceTracker;
+import org.osgi.service.component.ComponentServiceObjects;
 
 /**
  * @author Javier Gamarra
@@ -38,13 +39,30 @@ import org.osgi.util.tracker.ServiceTracker;
 @Generated("")
 public class Mutation {
 
+	public static void setCommentResourceComponentServiceObjects(
+		ComponentServiceObjects<CommentResource>
+			commentResourceComponentServiceObjects) {
+
+		_commentResourceComponentServiceObjects =
+			commentResourceComponentServiceObjects;
+	}
+
+	public static void setStructuredContentResourceComponentServiceObjects(
+		ComponentServiceObjects<StructuredContentResource>
+			structuredContentResourceComponentServiceObjects) {
+
+		_structuredContentResourceComponentServiceObjects =
+			structuredContentResourceComponentServiceObjects;
+	}
+
 	@GraphQLInvokeDetached
 	public boolean deleteComment(@GraphQLName("comment-id") Long commentId)
 		throws Exception {
 
-		CommentResource commentResource = _createCommentResource();
-
-		return commentResource.deleteComment(commentId);
+		return _applyComponentServiceObjects(
+			_commentResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			commentResource -> commentResource.deleteComment(commentId));
 	}
 
 	@GraphQLInvokeDetached
@@ -53,9 +71,10 @@ public class Mutation {
 			@GraphQLName("Comment") Comment comment)
 		throws Exception {
 
-		CommentResource commentResource = _createCommentResource();
-
-		return commentResource.putComment(commentId, comment);
+		return _applyComponentServiceObjects(
+			_commentResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			commentResource -> commentResource.putComment(commentId, comment));
 	}
 
 	@GraphQLField
@@ -65,9 +84,11 @@ public class Mutation {
 			@GraphQLName("Comment") Comment comment)
 		throws Exception {
 
-		CommentResource commentResource = _createCommentResource();
-
-		return commentResource.postCommentComment(commentId, comment);
+		return _applyComponentServiceObjects(
+			_commentResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			commentResource -> commentResource.postCommentComment(
+				commentId, comment));
 	}
 
 	@GraphQLField
@@ -77,10 +98,11 @@ public class Mutation {
 			@GraphQLName("Comment") Comment comment)
 		throws Exception {
 
-		CommentResource commentResource = _createCommentResource();
-
-		return commentResource.postStructuredContentComment(
-			structuredContentId, comment);
+		return _applyComponentServiceObjects(
+			_commentResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			commentResource -> commentResource.postStructuredContentComment(
+				structuredContentId, comment));
 	}
 
 	@GraphQLField
@@ -91,11 +113,12 @@ public class Mutation {
 				structuredContent)
 		throws Exception {
 
-		StructuredContentResource structuredContentResource =
-			_createStructuredContentResource();
-
-		return structuredContentResource.postContentSpaceStructuredContent(
-			contentSpaceId, structuredContent);
+		return _applyComponentServiceObjects(
+			_structuredContentResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			structuredContentResource ->
+				structuredContentResource.postContentSpaceStructuredContent(
+					contentSpaceId, structuredContent));
 	}
 
 	@GraphQLInvokeDetached
@@ -103,11 +126,12 @@ public class Mutation {
 			@GraphQLName("structured-content-id") Long structuredContentId)
 		throws Exception {
 
-		StructuredContentResource structuredContentResource =
-			_createStructuredContentResource();
-
-		return structuredContentResource.deleteStructuredContent(
-			structuredContentId);
+		return _applyComponentServiceObjects(
+			_structuredContentResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			structuredContentResource ->
+				structuredContentResource.deleteStructuredContent(
+					structuredContentId));
 	}
 
 	@GraphQLInvokeDetached
@@ -117,11 +141,12 @@ public class Mutation {
 				structuredContent)
 		throws Exception {
 
-		StructuredContentResource structuredContentResource =
-			_createStructuredContentResource();
-
-		return structuredContentResource.patchStructuredContent(
-			structuredContentId, structuredContent);
+		return _applyComponentServiceObjects(
+			_structuredContentResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			structuredContentResource ->
+				structuredContentResource.patchStructuredContent(
+					structuredContentId, structuredContent));
 	}
 
 	@GraphQLInvokeDetached
@@ -131,63 +156,53 @@ public class Mutation {
 				structuredContent)
 		throws Exception {
 
-		StructuredContentResource structuredContentResource =
-			_createStructuredContentResource();
-
-		return structuredContentResource.putStructuredContent(
-			structuredContentId, structuredContent);
+		return _applyComponentServiceObjects(
+			_structuredContentResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			structuredContentResource ->
+				structuredContentResource.putStructuredContent(
+					structuredContentId, structuredContent));
 	}
 
-	private static CommentResource _createCommentResource() throws Exception {
-		CommentResource commentResource =
-			_commentResourceServiceTracker.getService();
+	private <T, R, E1 extends Throwable, E2 extends Throwable> R
+			_applyComponentServiceObjects(
+				ComponentServiceObjects<T> componentServiceObjects,
+				UnsafeConsumer<T, E1> unsafeConsumer,
+				UnsafeFunction<T, R, E2> unsafeFunction)
+		throws E1, E2 {
+
+		T resource = componentServiceObjects.getService();
+
+		try {
+			unsafeConsumer.accept(resource);
+
+			return unsafeFunction.apply(resource);
+		}
+		finally {
+			componentServiceObjects.ungetService(resource);
+		}
+	}
+
+	private void _populateResourceContext(CommentResource commentResource)
+		throws PortalException {
 
 		commentResource.setContextCompany(
 			CompanyLocalServiceUtil.getCompany(
 				CompanyThreadLocal.getCompanyId()));
-
-		return commentResource;
 	}
 
-	private static final ServiceTracker<CommentResource, CommentResource>
-		_commentResourceServiceTracker;
-
-	private static StructuredContentResource _createStructuredContentResource()
-		throws Exception {
-
-		StructuredContentResource structuredContentResource =
-			_structuredContentResourceServiceTracker.getService();
+	private void _populateResourceContext(
+			StructuredContentResource structuredContentResource)
+		throws PortalException {
 
 		structuredContentResource.setContextCompany(
 			CompanyLocalServiceUtil.getCompany(
 				CompanyThreadLocal.getCompanyId()));
-
-		return structuredContentResource;
 	}
 
-	private static final ServiceTracker
-		<StructuredContentResource, StructuredContentResource>
-			_structuredContentResourceServiceTracker;
-
-	static {
-		Bundle bundle = FrameworkUtil.getBundle(Mutation.class);
-
-		ServiceTracker<CommentResource, CommentResource>
-			commentResourceServiceTracker = new ServiceTracker<>(
-				bundle.getBundleContext(), CommentResource.class, null);
-
-		commentResourceServiceTracker.open();
-
-		_commentResourceServiceTracker = commentResourceServiceTracker;
-		ServiceTracker<StructuredContentResource, StructuredContentResource>
-			structuredContentResourceServiceTracker = new ServiceTracker<>(
-				bundle.getBundleContext(), StructuredContentResource.class,
-				null);
-
-		structuredContentResourceServiceTracker.open();
-
-		_structuredContentResourceServiceTracker =
-			structuredContentResourceServiceTracker;
-	}
+	private static ComponentServiceObjects<CommentResource>
+		_commentResourceComponentServiceObjects;
+	private static ComponentServiceObjects<StructuredContentResource>
+		_structuredContentResourceComponentServiceObjects;
 
 }

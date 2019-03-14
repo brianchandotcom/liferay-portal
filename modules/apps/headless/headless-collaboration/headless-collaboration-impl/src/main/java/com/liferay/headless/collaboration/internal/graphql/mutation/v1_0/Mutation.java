@@ -48,20 +48,20 @@ import org.osgi.service.component.ComponentServiceObjects;
 @Generated("")
 public class Mutation {
 
-	public static void setBlogPostingImageResourceComponentServiceObjects(
-		ComponentServiceObjects<BlogPostingImageResource>
-			blogPostingImageResourceComponentServiceObjects) {
-
-		_blogPostingImageResourceComponentServiceObjects =
-			blogPostingImageResourceComponentServiceObjects;
-	}
-
 	public static void setBlogPostingResourceComponentServiceObjects(
 		ComponentServiceObjects<BlogPostingResource>
 			blogPostingResourceComponentServiceObjects) {
 
 		_blogPostingResourceComponentServiceObjects =
 			blogPostingResourceComponentServiceObjects;
+	}
+
+	public static void setBlogPostingImageResourceComponentServiceObjects(
+		ComponentServiceObjects<BlogPostingImageResource>
+			blogPostingImageResourceComponentServiceObjects) {
+
+		_blogPostingImageResourceComponentServiceObjects =
+			blogPostingImageResourceComponentServiceObjects;
 	}
 
 	public static void setCommentResourceComponentServiceObjects(
@@ -80,9 +80,10 @@ public class Mutation {
 			knowledgeBaseArticleResourceComponentServiceObjects;
 	}
 
-	public static void setKnowledgeBaseAttachmentResourceComponentServiceObjects(
-		ComponentServiceObjects<KnowledgeBaseAttachmentResource>
-			knowledgeBaseAttachmentResourceComponentServiceObjects) {
+	public static void
+		setKnowledgeBaseAttachmentResourceComponentServiceObjects(
+			ComponentServiceObjects<KnowledgeBaseAttachmentResource>
+				knowledgeBaseAttachmentResourceComponentServiceObjects) {
 
 		_knowledgeBaseAttachmentResourceComponentServiceObjects =
 			knowledgeBaseAttachmentResourceComponentServiceObjects;
@@ -251,7 +252,8 @@ public class Mutation {
 		return _applyComponentServiceObjects(
 			_commentResourceComponentServiceObjects,
 			this::_populateResourceContext,
-			commentResource -> commentResource.putComment(commentId, comment));
+			commentResource -> commentResource.postCommentComment(
+				commentId, comment));
 	}
 
 	@GraphQLField
@@ -455,15 +457,16 @@ public class Mutation {
 			_knowledgeBaseFolderResourceComponentServiceObjects,
 			this::_populateResourceContext,
 			knowledgeBaseFolderResource ->
-				knowledgeBaseFolderResource.putKnowledgeBaseFolder(
-					knowledgeBaseFolderId, knowledgeBaseFolder));
+				knowledgeBaseFolderResource.
+					postKnowledgeBaseFolderKnowledgeBaseFolder(
+						knowledgeBaseFolderId, knowledgeBaseFolder));
 	}
 
 	private <T, R, E1 extends Throwable, E2 extends Throwable> R
-		_applyComponentServiceObjects(
-			ComponentServiceObjects<T> componentServiceObjects,
-			UnsafeConsumer<T, E1> unsafeConsumer,
-			UnsafeFunction<T, R, E2> unsafeFunction)
+			_applyComponentServiceObjects(
+				ComponentServiceObjects<T> componentServiceObjects,
+				UnsafeConsumer<T, E1> unsafeConsumer,
+				UnsafeFunction<T, R, E2> unsafeFunction)
 		throws E1, E2 {
 
 		T resource = componentServiceObjects.getService();
@@ -479,19 +482,19 @@ public class Mutation {
 	}
 
 	private void _populateResourceContext(
-			BlogPostingImageResource blogPostingImageResource)
+			BlogPostingResource blogPostingResource)
 		throws PortalException {
 
-		blogPostingImageResource.setContextCompany(
+		blogPostingResource.setContextCompany(
 			CompanyLocalServiceUtil.getCompany(
 				CompanyThreadLocal.getCompanyId()));
 	}
 
 	private void _populateResourceContext(
-			BlogPostingResource blogPostingResource)
+			BlogPostingImageResource blogPostingImageResource)
 		throws PortalException {
 
-		blogPostingResource.setContextCompany(
+		blogPostingImageResource.setContextCompany(
 			CompanyLocalServiceUtil.getCompany(
 				CompanyThreadLocal.getCompanyId()));
 	}
@@ -531,10 +534,10 @@ public class Mutation {
 				CompanyThreadLocal.getCompanyId()));
 	}
 
-	private static ComponentServiceObjects<BlogPostingImageResource>
-		_blogPostingImageResourceComponentServiceObjects;
 	private static ComponentServiceObjects<BlogPostingResource>
 		_blogPostingResourceComponentServiceObjects;
+	private static ComponentServiceObjects<BlogPostingImageResource>
+		_blogPostingImageResourceComponentServiceObjects;
 	private static ComponentServiceObjects<CommentResource>
 		_commentResourceComponentServiceObjects;
 	private static ComponentServiceObjects<KnowledgeBaseArticleResource>

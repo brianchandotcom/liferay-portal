@@ -919,7 +919,7 @@ definition {
 			portlet = "Users and Organizations"
 		);
 
-		Organization.editOrganizationCP(orgName = "${orgName}");
+		Organization.editOrganizationCP(orgName = "Organization Name 1");
 
 		Organization.addCategorizationCP(
 			orgName = "Organization Name 1",
@@ -953,7 +953,7 @@ definition {
 			portlet = "Users and Organizations"
 		);
 
-		Organization.editOrganizationCP(orgName = "${orgName}");
+		Organization.editOrganizationCP(orgName = "Organization Name 2");
 
 		Organization.addCategorizationCP(
 			orgName = "Organization Name 2",

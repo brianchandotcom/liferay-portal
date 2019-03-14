@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
@@ -93,7 +94,8 @@ public class SiteVerticalCard implements VerticalCard {
 	@Override
 	public String getTitle() {
 		try {
-			return _group.getDescriptiveName(_themeDisplay.getLocale());
+			return HtmlUtil.escape(
+				_group.getDescriptiveName(_themeDisplay.getLocale()));
 		}
 		catch (Exception e) {
 		}

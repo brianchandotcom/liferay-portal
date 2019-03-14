@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.site.admin.web.internal.constants.SiteAdminWebKeys;
@@ -133,7 +134,8 @@ public class SiteVerticalCard extends BaseBaseClayCard implements VerticalCard {
 	@Override
 	public String getTitle() {
 		try {
-			return _group.getDescriptiveName(_themeDisplay.getLocale());
+			return HtmlUtil.escape(
+				_group.getDescriptiveName(_themeDisplay.getLocale()));
 		}
 		catch (Exception e) {
 		}

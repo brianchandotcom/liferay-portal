@@ -24,8 +24,6 @@ import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermi
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
-import org.osgi.service.component.annotations.ReferencePolicy;
-import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
  * @author Adolfo Pérez
@@ -55,8 +53,6 @@ public class EditMessageMVCRenderCommand extends GetMessageMVCRenderCommand {
 	}
 
 	@Reference(
-		policy = ReferencePolicy.DYNAMIC,
-		policyOption = ReferencePolicyOption.GREEDY,
 		target = "(model.class.name=com.liferay.message.boards.model.MBMessage)"
 	)
 	private volatile ModelResourcePermission<MBMessage>

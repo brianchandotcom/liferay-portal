@@ -46,8 +46,6 @@ import javax.portlet.RenderResponse;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
-import org.osgi.service.component.annotations.ReferencePolicy;
-import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
  * @author Brian Wing Shun Chan
@@ -205,19 +203,11 @@ public class EditPageMVCRenderCommand implements MVCRenderCommand {
 
 	private WikiEngineRenderer _wikiEngineRenderer;
 
-	@Reference(
-		policy = ReferencePolicy.DYNAMIC,
-		policyOption = ReferencePolicyOption.GREEDY,
-		target = "(model.class.name=com.liferay.wiki.model.WikiNode)"
-	)
+	@Reference(target = "(model.class.name=com.liferay.wiki.model.WikiNode)")
 	private volatile ModelResourcePermission<WikiNode>
 		_wikiNodeModelResourcePermission;
 
-	@Reference(
-		policy = ReferencePolicy.DYNAMIC,
-		policyOption = ReferencePolicyOption.GREEDY,
-		target = "(model.class.name=com.liferay.wiki.model.WikiPage)"
-	)
+	@Reference(target = "(model.class.name=com.liferay.wiki.model.WikiPage)")
 	private volatile ModelResourcePermission<WikiPage>
 		_wikiPageModelResourcePermission;
 

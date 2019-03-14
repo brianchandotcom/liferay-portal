@@ -36,8 +36,6 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
-import org.osgi.service.component.annotations.ReferencePolicy;
-import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
  * @author Sergio González
@@ -104,11 +102,7 @@ public class EditEntryMVCRenderCommand implements MVCRenderCommand {
 		_blogsItemSelectorHelper = blogsItemSelectorHelper;
 	}
 
-	@Reference(
-		policy = ReferencePolicy.DYNAMIC,
-		policyOption = ReferencePolicyOption.GREEDY,
-		target = "(model.class.name=com.liferay.blogs.model.BlogsEntry)"
-	)
+	@Reference(target = "(model.class.name=com.liferay.blogs.model.BlogsEntry)")
 	private volatile ModelResourcePermission<BlogsEntry>
 		_blogsEntryModelResourcePermission;
 

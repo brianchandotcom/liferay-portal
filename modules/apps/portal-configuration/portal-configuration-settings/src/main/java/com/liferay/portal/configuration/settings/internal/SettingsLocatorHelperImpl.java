@@ -323,7 +323,7 @@ public class SettingsLocatorHelperImpl implements SettingsLocatorHelper {
 	}
 
 	private Settings _getScopedConfigurationBeanSettings(
-		ExtendedObjectClassDefinition.Scope scope, Serializable scopePrimKey,
+		ExtendedObjectClassDefinition.Scope scope, Serializable scopePK,
 		String configurationPid, Settings parentSettings) {
 
 		ScopedConfigurationManager scopedConfigurationManager =
@@ -334,7 +334,7 @@ public class SettingsLocatorHelperImpl implements SettingsLocatorHelper {
 		}
 
 		Object configurationBean = scopedConfigurationManager.getConfiguration(
-			scope, scopePrimKey);
+			scope, scopePK);
 
 		if (configurationBean == null) {
 			return parentSettings;

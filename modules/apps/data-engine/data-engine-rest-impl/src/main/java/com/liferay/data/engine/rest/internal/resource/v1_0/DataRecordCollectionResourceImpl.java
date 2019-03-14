@@ -50,7 +50,14 @@ public class DataRecordCollectionResourceImpl
 	extends BaseDataRecordCollectionResourceImpl {
 
 	@Override
-	public boolean deleteDataRecordCollectionRecordDataRecord(
+	public boolean deleteDataRecordCollection(Long dataRecordCollectionId)
+		throws Exception {
+
+		return super.deleteDataRecordCollection(dataRecordCollectionId);
+	}
+
+	@Override
+	public boolean deleteDataRecordCollectionDataRecord(
 			Long dataRecordCollectionId, Long dataRecordId)
 		throws Exception {
 
@@ -80,7 +87,7 @@ public class DataRecordCollectionResourceImpl
 	}
 
 	@Override
-	public DataRecord getDataRecordCollectionRecordDataRecord(
+	public DataRecord getDataRecordCollectionDataRecord(
 			Long dataRecordCollectionId, Long dataRecordId)
 		throws Exception {
 
@@ -88,7 +95,7 @@ public class DataRecordCollectionResourceImpl
 	}
 
 	@Override
-	public Page<DataRecord> getDataRecordCollectionRecordsPage(
+	public Page<DataRecord> getDataRecordCollectionDataRecordsPage(
 			Long dataRecordCollectionId, Pagination pagination)
 		throws Exception {
 
@@ -150,7 +157,7 @@ public class DataRecordCollectionResourceImpl
 	}
 
 	@Override
-	public DataRecord postDataRecordCollectionRecord(
+	public DataRecord postDataRecordCollectionDataRecord(
 			Long dataRecordCollectionId, Long contentSpaceId,
 			DataRecord dataRecord)
 		throws Exception {
@@ -187,7 +194,7 @@ public class DataRecordCollectionResourceImpl
 	}
 
 	@Override
-	public DataRecord putDataRecordCollectionRecordDataRecord(
+	public DataRecord putDataRecordCollectionDataRecord(
 			Long dataRecordCollectionId, Long dataRecordId, Long contentSpaceId,
 			DataRecord dataRecord)
 		throws Exception {

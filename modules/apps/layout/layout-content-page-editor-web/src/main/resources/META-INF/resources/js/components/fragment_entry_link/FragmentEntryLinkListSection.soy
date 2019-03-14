@@ -31,7 +31,6 @@
 	{@param? hoveredItemId: string}
 	{@param? hoveredItemType: string}
 	{@param? mappingFieldsURL: string}
-	{@param? experienceId: string}
 	{@param? selectedMappingTypes: [
 		subtype: [
 			id: string,
@@ -169,7 +168,6 @@
 						{param hoveredItemType: $hoveredItemType /}
 						{param key: $column.columnId /}
 						{param mappingFieldsURL: $mappingFieldsURL /}
-						{param experienceId: $experienceId /}
 						{param selectedMappingTypes: $selectedMappingTypes /}
 						{param size: $column.size /}
 						{param store: $store /}
@@ -198,7 +196,6 @@
 	{@param? hoveredItemId: string}
 	{@param? hoveredItemType: string}
 	{@param? mappingFieldsURL: string}
-	{@param? experienceId: string}
 	{@param? selectedMappingTypes: [
 		subtype: [
 			id: string,
@@ -253,7 +250,6 @@
 					{param key: $fragmentEntryLink.fragmentEntryLinkId /}
 					{param mappingFieldsURL: $mappingFieldsURL /}
 					{param name: $fragmentEntryLink.name /}
-					{param experienceId: $experienceId /}
 					{param selectedMappingTypes: $selectedMappingTypes /}
 					{param store: $store /}
 					{param _handleFragmentMove: $_handleFragmentMove /}
@@ -284,7 +280,6 @@
 	{@param? _handleFragmentMove: ?}
 	{@param? content: ?}
 	{@param? dropTargetItemTypes: ?}
-	{@param? experienceId: string}
 
 	{let $styleModifier kind="text"}
 		{if $dropTargetItemId == $fragmentEntryLinkId and $dropTargetItemType == $dropTargetItemTypes.fragment}
@@ -309,7 +304,6 @@
 		{param key: $key /}
 		{param name: $name /}
 		{param ref: $key /}
-		{param experienceId: $experienceId /}
 		{param showMapping: $selectedMappingTypes and $mappingFieldsURL ? true : false /}
 		{param store: $store /}
 		{param styleModifier: $styleModifier /}

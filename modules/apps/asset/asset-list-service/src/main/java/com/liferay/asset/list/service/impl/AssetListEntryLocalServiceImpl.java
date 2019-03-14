@@ -20,6 +20,7 @@ import com.liferay.asset.list.exception.DuplicateAssetListEntryTitleException;
 import com.liferay.asset.list.model.AssetListEntry;
 import com.liferay.asset.list.model.AssetListEntrySegmentsEntryRel;
 import com.liferay.asset.list.service.base.AssetListEntryLocalServiceBaseImpl;
+import com.liferay.exportimport.kernel.lar.ExportImportThreadLocal;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.ResourceConstants;
@@ -146,14 +147,17 @@ public class AssetListEntryLocalServiceImpl
 
 		// Asset list segments entry rel
 
-		SegmentsEntry defaultSegmentsEntry =
-			_segmentsEntryLocalService.getDefaultSegmentsEntry(groupId);
+		if (!ExportImportThreadLocal.isImportInProcess()) {
+			SegmentsEntry defaultSegmentsEntry =
+				_segmentsEntryLocalService.getDefaultSegmentsEntry(groupId);
 
-		assetListEntrySegmentsEntryRelLocalService.
-			addAssetListEntrySegmentsEntryRel(
-				serviceContext.getUserId(), serviceContext.getScopeGroupId(),
-				assetListEntryId, defaultSegmentsEntry.getSegmentsEntryId(),
-				typeSettings, serviceContext);
+			assetListEntrySegmentsEntryRelLocalService.
+				addAssetListEntrySegmentsEntryRel(
+					serviceContext.getUserId(),
+					serviceContext.getScopeGroupId(), assetListEntryId,
+					defaultSegmentsEntry.getSegmentsEntryId(), typeSettings,
+					serviceContext);
+		}
 
 		return assetListEntry;
 	}

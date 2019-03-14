@@ -17,10 +17,13 @@ package com.liferay.asset.list.internal.exportimport.data.handler;
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.model.AssetRenderer;
 import com.liferay.asset.kernel.model.AssetRendererFactory;
+import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.asset.list.constants.AssetListEntryTypeConstants;
 import com.liferay.asset.list.model.AssetListEntry;
 import com.liferay.asset.list.model.AssetListEntryAssetEntryRel;
+import com.liferay.asset.list.model.AssetListEntrySegmentsEntryRel;
 import com.liferay.asset.list.service.AssetListEntryAssetEntryRelLocalService;
+import com.liferay.asset.list.service.AssetListEntrySegmentsEntryRelLocalService;
 import com.liferay.exportimport.data.handler.base.BaseStagedModelDataHandler;
 import com.liferay.exportimport.kernel.lar.ExportImportPathUtil;
 import com.liferay.exportimport.kernel.lar.ExportImportThreadLocal;
@@ -38,6 +41,8 @@ import com.liferay.staging.StagingGroupHelper;
 
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -91,6 +96,9 @@ public class AssetListEntryStagedModelDataHandler
 			assetListEntry);
 
 		_exportAssetListEntryAssetEntryRels(portletDataContext, assetListEntry);
+
+		_exportAssetListEntrySegmentsEntryRels(
+			portletDataContext, assetListEntry);
 
 		_exportAssetObjects(portletDataContext, assetListEntry);
 	}
@@ -158,6 +166,9 @@ public class AssetListEntryStagedModelDataHandler
 
 		_importAssetEntryListAssetEntryRelElements(
 			portletDataContext, assetListEntry);
+
+		_importAssetEntryListSegmentsEntryRelElements(
+			portletDataContext, assetListEntry);
 	}
 
 	@Override
@@ -190,6 +201,27 @@ public class AssetListEntryStagedModelDataHandler
 		}
 	}
 
+	private void _exportAssetListEntrySegmentsEntryRels(
+			PortletDataContext portletDataContext,
+			AssetListEntry assetListEntry)
+		throws PortletDataException {
+
+		List<AssetListEntrySegmentsEntryRel> assetListEntrySegmentsEntryRels =
+			_assetListEntrySegmentsEntryRelLocalService.
+				getAssetListEntrySegmentsEntryRels(
+					assetListEntry.getAssetListEntryId(), QueryUtil.ALL_POS,
+					QueryUtil.ALL_POS);
+
+		for (AssetListEntrySegmentsEntryRel assetListEntrySegmentsEntryRel :
+				assetListEntrySegmentsEntryRels) {
+
+			StagedModelDataHandlerUtil.exportReferenceStagedModel(
+				portletDataContext, assetListEntry,
+				assetListEntrySegmentsEntryRel,
+				PortletDataContext.REFERENCE_TYPE_CHILD);
+		}
+	}
+
 	private void _exportAssetObjects(
 			PortletDataContext portletDataContext,
 			AssetListEntry assetListEntry)
@@ -198,7 +230,22 @@ public class AssetListEntryStagedModelDataHandler
 		if (assetListEntry.getType() ==
 				AssetListEntryTypeConstants.TYPE_MANUAL) {
 
-			List<AssetEntry> assetEntries = assetListEntry.getAssetEntries();
+			List<AssetListEntryAssetEntryRel> assetListEntryAssetEntryRels =
+				_assetListEntryAssetEntryRelLocalService.
+					getAssetListEntryAssetEntryRels(
+						assetListEntry.getAssetListEntryId(), QueryUtil.ALL_POS,
+						QueryUtil.ALL_POS);
+
+			Stream<AssetListEntryAssetEntryRel> stream =
+				assetListEntryAssetEntryRels.stream();
+
+			List<AssetEntry> assetEntries = stream.map(
+				assetListEntryAssetEntryRel ->
+					_assetEntryLocalService.fetchEntry(
+						assetListEntryAssetEntryRel.getAssetEntryId())
+			).collect(
+				Collectors.toList()
+			);
 
 			for (AssetEntry assetEntry : assetEntries) {
 				AssetRenderer<?> assetRenderer = assetEntry.getAssetRenderer();
@@ -246,6 +293,24 @@ public class AssetListEntryStagedModelDataHandler
 		}
 	}
 
+	private void _importAssetEntryListSegmentsEntryRelElements(
+			PortletDataContext portletDataContext,
+			AssetListEntry assetListEntry)
+		throws PortletDataException {
+
+		List<Element> assetEntryListSegmentsEntryRelElements =
+			portletDataContext.getReferenceDataElements(
+				assetListEntry, AssetListEntrySegmentsEntryRel.class,
+				PortletDataContext.REFERENCE_TYPE_CHILD);
+
+		for (Element assetEntryListSegmentsEntryRelElement :
+				assetEntryListSegmentsEntryRelElements) {
+
+			StagedModelDataHandlerUtil.importStagedModel(
+				portletDataContext, assetEntryListSegmentsEntryRelElement);
+		}
+	}
+
 	private void _importAssetObjects(PortletDataContext portletDataContext)
 		throws Exception {
 
@@ -271,8 +336,15 @@ public class AssetListEntryStagedModelDataHandler
 	}
 
 	@Reference
+	private AssetEntryLocalService _assetEntryLocalService;
+
+	@Reference
 	private AssetListEntryAssetEntryRelLocalService
 		_assetListEntryAssetEntryRelLocalService;
+
+	@Reference
+	private AssetListEntrySegmentsEntryRelLocalService
+		_assetListEntrySegmentsEntryRelLocalService;
 
 	@Reference(
 		target = "(model.class.name=com.liferay.asset.list.model.AssetListEntry)",

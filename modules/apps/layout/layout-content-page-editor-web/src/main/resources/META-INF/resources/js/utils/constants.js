@@ -1,4 +1,9 @@
 /**
+ * Max section columns
+ */
+export const MAX_SECTION_COLUMNS = 12;
+
+/**
  * List of editable types and their compatibilities
  * with the corresponding mappeable types
  * @review
@@ -104,6 +109,32 @@ export const ITEM_CONFIG_KEYS = {
 	containerType: 'containerType',
 	padding: 'padding'
 };
+
+/**
+ * Available values for containerType config key
+ */
+export const COLUMNS_NUMBER_OPTIONS = [
+	{
+		columnsNumberId: '1',
+		label: '1'
+	},
+	{
+		columnsNumberId: '2',
+		label: '2'
+	},
+	{
+		columnsNumberId: '3',
+		label: '3'
+	},
+	{
+		columnsNumberId: '4',
+		label: '4'
+	},
+	{
+		columnsNumberId: '6',
+		label: '6'
+	},
+];
 
 /**
  * Available values for containerType config key

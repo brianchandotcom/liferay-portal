@@ -1015,9 +1015,9 @@ definition {
 
 		MouseOver(locator1 = "DocumentsAndMedia#ICON_DOCUMENT");
 
-		AssertElementPresent(locator1 = "DocumentsAndMedia#ICON_DOCUMENT_CHECKBOX");
-
-		Check(locator1 = "DocumentsAndMedia#ICON_DOCUMENT_CHECKBOX");
+		LexiconCard.checkCardCheckbox(
+			card = "${dmDocumentTitle}"
+		);
 
 		Click(locator1 = "Icon#MOVE_TO_RECYCLE_BIN");
 

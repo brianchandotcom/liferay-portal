@@ -449,7 +449,9 @@ definition {
 
 		DMFolder.viewEntryPresent(dmFolderName = "${dmFolderName}");
 
-		Click(locator1 = "DocumentsAndMedia#ICON_FOLDER_CHECKBOX");
+		LexiconCard.checkCardCheckbox(
+			card = "${dmFolderName}"
+		);
 
 		Click(locator1 = "DocumentsAndMedia#DESCRIPTIVE_LIST_VERTICAL_ELLIPSIS");
 

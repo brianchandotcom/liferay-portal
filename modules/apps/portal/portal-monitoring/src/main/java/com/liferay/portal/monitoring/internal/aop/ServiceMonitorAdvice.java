@@ -12,15 +12,19 @@
  * details.
  */
 
-package com.liferay.portal.monitoring.statistics.service;
+package com.liferay.portal.monitoring.internal.aop;
 
 import com.liferay.portal.kernel.monitoring.DataSample;
 import com.liferay.portal.kernel.monitoring.DataSampleThreadLocal;
 import com.liferay.portal.kernel.monitoring.MethodSignature;
 import com.liferay.portal.kernel.monitoring.RequestStatus;
 import com.liferay.portal.kernel.monitoring.ServiceMonitoringControl;
+import com.liferay.portal.monitoring.statistics.service.DataSampleFactoryUtil;
 import com.liferay.portal.spring.aop.AopMethodInvocation;
 import com.liferay.portal.spring.aop.ChainableMethodAdvice;
+
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
@@ -31,13 +35,10 @@ import java.util.Set;
 /**
  * @author Michael C. Han
  */
+@Component(
+	enabled = false, immediate = true, service = ChainableMethodAdvice.class
+)
 public class ServiceMonitorAdvice extends ChainableMethodAdvice {
-
-	public ServiceMonitorAdvice(
-		ServiceMonitoringControl serviceMonitoringControl) {
-
-		_serviceMonitoringControl = serviceMonitoringControl;
-	}
 
 	@Override
 	public Object createMethodContext(
@@ -108,6 +109,7 @@ public class ServiceMonitorAdvice extends ChainableMethodAdvice {
 		}
 	}
 
-	private final ServiceMonitoringControl _serviceMonitoringControl;
+	@Reference
+	private ServiceMonitoringControl _serviceMonitoringControl;
 
 }

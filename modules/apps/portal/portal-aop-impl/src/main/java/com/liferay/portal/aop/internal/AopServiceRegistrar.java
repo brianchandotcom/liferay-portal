@@ -16,7 +16,6 @@ package com.liferay.portal.aop.internal;
 
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.aop.AopService;
-import com.liferay.portal.kernel.monitoring.ServiceMonitoringControl;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.spring.aop.AopCacheManager;
@@ -65,12 +64,9 @@ public class AopServiceRegistrar {
 		return _liferayService;
 	}
 
-	public void register(
-		TransactionExecutor transactionExecutor,
-		ServiceMonitoringControl serviceMonitoringControl) {
-
+	public void register(TransactionExecutor transactionExecutor) {
 		_aopInvocationHandler = AopCacheManager.create(
-			_aopService, transactionExecutor, serviceMonitoringControl);
+			_aopService, transactionExecutor);
 
 		Class<? extends AopService> aopServiceClass = _aopService.getClass();
 

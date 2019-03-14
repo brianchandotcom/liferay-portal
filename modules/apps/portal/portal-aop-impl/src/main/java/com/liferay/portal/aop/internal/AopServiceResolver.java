@@ -14,8 +14,6 @@
 
 package com.liferay.portal.aop.internal;
 
-import com.liferay.portal.kernel.monitoring.ServiceMonitoringControl;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -28,12 +26,6 @@ import java.util.Set;
  */
 public class AopServiceResolver {
 
-	public AopServiceResolver(
-		ServiceMonitoringControl serviceMonitoringControl) {
-
-		_serviceMonitoringControl = serviceMonitoringControl;
-	}
-
 	public void addAopServiceRegistrar(
 		AopServiceRegistrar aopServiceRegistrar) {
 
@@ -44,8 +36,7 @@ public class AopServiceResolver {
 				_transactionExecutorHolders.get(0);
 
 			aopServiceRegistrar.register(
-				topRankingTransactionExecutorHolder.getTransactionExecutor(),
-				_serviceMonitoringControl);
+				topRankingTransactionExecutorHolder.getTransactionExecutor());
 		}
 	}
 
@@ -72,8 +63,7 @@ public class AopServiceResolver {
 			aopServiceRegistrar.unregister();
 
 			aopServiceRegistrar.register(
-				transactionExecutorHolder.getTransactionExecutor(),
-				_serviceMonitoringControl);
+				transactionExecutorHolder.getTransactionExecutor());
 		}
 	}
 
@@ -124,14 +114,12 @@ public class AopServiceResolver {
 
 		for (AopServiceRegistrar aopServiceRegistrar : _aopServiceRegistrars) {
 			aopServiceRegistrar.register(
-				topRankingTransactionExecutorHolder.getTransactionExecutor(),
-				_serviceMonitoringControl);
+				topRankingTransactionExecutorHolder.getTransactionExecutor());
 		}
 	}
 
 	private final Set<AopServiceRegistrar> _aopServiceRegistrars =
 		new HashSet<>();
-	private final ServiceMonitoringControl _serviceMonitoringControl;
 	private final List<TransactionExecutorHolder> _transactionExecutorHolders =
 		new ArrayList<>(1);
 

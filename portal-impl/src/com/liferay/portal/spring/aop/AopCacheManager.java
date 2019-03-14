@@ -20,11 +20,9 @@ import com.liferay.portal.increment.BufferedIncrementAdvice;
 import com.liferay.portal.internal.cluster.ClusterableAdvice;
 import com.liferay.portal.internal.cluster.SPIClusterableAdvice;
 import com.liferay.portal.kernel.dao.jdbc.aop.DynamicDataSourceTargetSource;
-import com.liferay.portal.kernel.monitoring.ServiceMonitoringControl;
 import com.liferay.portal.kernel.resiliency.spi.SPIUtil;
 import com.liferay.portal.kernel.util.InfrastructureUtil;
 import com.liferay.portal.messaging.async.AsyncAdvice;
-import com.liferay.portal.monitoring.statistics.service.ServiceMonitorAdvice;
 import com.liferay.portal.resiliency.service.PortalResiliencyAdvice;
 import com.liferay.portal.search.IndexableAdvice;
 import com.liferay.portal.security.access.control.AccessControlAdvice;
@@ -52,22 +50,15 @@ import java.util.Map;
 public class AopCacheManager {
 
 	public static AopInvocationHandler create(
-		Object target, TransactionExecutor transactionExecutor,
-		ServiceMonitoringControl serviceMonitoringControl) {
-
-		ChainableMethodAdviceDependencies chainableMethodAdviceDependencies =
-			new ChainableMethodAdviceDependencies(
-				transactionExecutor, serviceMonitoringControl);
+		Object target, TransactionExecutor transactionExecutor) {
 
 		synchronized (AopCacheManager.class) {
 			AopInvocationHandler aopInvocationHandler =
 				new AopInvocationHandler(
-					target,
-					_createChainableMethodAdvices(
-						chainableMethodAdviceDependencies));
+					target, _createChainableMethodAdvices(transactionExecutor));
 
 			_aopInvocationHandlers.put(
-				aopInvocationHandler, chainableMethodAdviceDependencies);
+				aopInvocationHandler, transactionExecutor);
 
 			return aopInvocationHandler;
 		}
@@ -80,34 +71,27 @@ public class AopCacheManager {
 	}
 
 	public static synchronized void reset() {
-		for (Map.Entry<AopInvocationHandler, ChainableMethodAdviceDependencies>
-				entry : _aopInvocationHandlers.entrySet()) {
+		for (Map.Entry<AopInvocationHandler, TransactionExecutor> entry :
+				_aopInvocationHandlers.entrySet()) {
 
 			AopInvocationHandler aopInvocationHandler = entry.getKey();
-			ChainableMethodAdviceDependencies
-				chainableMethodAdviceDependencies = entry.getValue();
+			TransactionExecutor transactionExecutor = entry.getValue();
 
 			aopInvocationHandler.setChainableMethodAdvices(
-				_createChainableMethodAdvices(
-					chainableMethodAdviceDependencies));
+				_createChainableMethodAdvices(transactionExecutor));
 		}
 	}
 
 	private static ChainableMethodAdvice[] _createChainableMethodAdvices(
-		ChainableMethodAdviceDependencies chainableMethodAdviceDependencies) {
+		TransactionExecutor transactionExecutor) {
 
 		List<ChainableMethodAdvice> chainableMethodAdvices = new ArrayList<>(
 			_chainableMethodAdvices);
 
-		chainableMethodAdvices.add(
-			new ServiceMonitorAdvice(
-				chainableMethodAdviceDependencies._serviceMonitoringControl));
-
 		TransactionInterceptor transactionInterceptor =
 			new TransactionInterceptor();
 
-		transactionInterceptor.setTransactionExecutor(
-			chainableMethodAdviceDependencies._transactionExecutor);
+		transactionInterceptor.setTransactionExecutor(transactionExecutor);
 
 		chainableMethodAdvices.add(transactionInterceptor);
 
@@ -127,9 +111,8 @@ public class AopCacheManager {
 				return clazz.getName();
 			});
 
-	private static final Map
-		<AopInvocationHandler, ChainableMethodAdviceDependencies>
-			_aopInvocationHandlers = new HashMap<>();
+	private static final Map<AopInvocationHandler, TransactionExecutor>
+		_aopInvocationHandlers = new HashMap<>();
 
 	private static final List<ChainableMethodAdvice> _chainableMethodAdvices =
 		new ArrayList<ChainableMethodAdvice>() {
@@ -182,21 +165,6 @@ public class AopCacheManager {
 				sort(_CHAINABLE_METHOD_ADVICE_COMPARATOR);
 			}
 		};
-
-	private static class ChainableMethodAdviceDependencies {
-
-		private ChainableMethodAdviceDependencies(
-			TransactionExecutor transactionExecutor,
-			ServiceMonitoringControl serviceMonitoringControl) {
-
-			_transactionExecutor = transactionExecutor;
-			_serviceMonitoringControl = serviceMonitoringControl;
-		}
-
-		private final ServiceMonitoringControl _serviceMonitoringControl;
-		private final TransactionExecutor _transactionExecutor;
-
-	}
 
 	private static class ChainableMethodAdviceServiceTrackerCustomizer
 		implements ServiceTrackerCustomizer

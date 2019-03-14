@@ -17,9 +17,7 @@ package com.liferay.portal.spring.aop;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.portal.dao.orm.hibernate.SessionFactoryImpl;
 import com.liferay.portal.dao.orm.hibernate.VerifySessionFactoryWrapper;
-import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
 import com.liferay.portal.kernel.dao.orm.SessionFactory;
-import com.liferay.portal.kernel.monitoring.ServiceMonitoringControl;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.transaction.TransactionInvokerUtil;
 import com.liferay.portal.kernel.util.InfrastructureUtil;
@@ -130,8 +128,6 @@ public class AopConfigurableApplicationContextConfigurator
 
 			// Portal Spring context only
 
-			ServiceMonitoringControl serviceMonitoringControl = null;
-
 			if (PortalClassLoaderUtil.isPortalClassLoader(_classLoader)) {
 				TransactionInvokerImpl transactionInvokerImpl =
 					new TransactionInvokerImpl();
@@ -156,23 +152,16 @@ public class AopConfigurableApplicationContextConfigurator
 				configurableListableBeanFactory.addBeanPostProcessor(
 					counterServiceBeanAutoProxyCreator);
 
-				serviceMonitoringControl = new ServiceMonitoringControlImpl();
-
 				configurableListableBeanFactory.registerSingleton(
-					"serviceMonitoringControl", serviceMonitoringControl);
-			}
-			else {
-				serviceMonitoringControl =
-					(ServiceMonitoringControl)PortalBeanLocatorUtil.locate(
-						"serviceMonitoringControl");
+					"serviceMonitoringControl",
+					new ServiceMonitoringControlImpl());
 			}
 
 			// Service AOP
 
 			ServiceBeanAutoProxyCreator serviceBeanAutoProxyCreator =
 				new ServiceBeanAutoProxyCreator(
-					_classLoader, transactionExecutor,
-					serviceMonitoringControl);
+					_classLoader, transactionExecutor);
 
 			defaultSingletonBeanRegistry.registerDisposableBean(
 				"serviceBeanAutoProxyCreatorDestroyer",
@@ -348,7 +337,7 @@ public class AopConfigurableApplicationContextConfigurator
 		@Override
 		protected AopInvocationHandler createAopInvocationHandler(Object bean) {
 			AopInvocationHandler aopInvocationHandler = AopCacheManager.create(
-				bean, _transactionExecutor, _serviceMonitoringControl);
+				bean, _transactionExecutor);
 
 			_aopInvocationHandlers.add(aopInvocationHandler);
 
@@ -356,18 +345,15 @@ public class AopConfigurableApplicationContextConfigurator
 		}
 
 		private ServiceBeanAutoProxyCreator(
-			ClassLoader classLoader, TransactionExecutor transactionExecutor,
-			ServiceMonitoringControl serviceMonitoringControl) {
+			ClassLoader classLoader, TransactionExecutor transactionExecutor) {
 
 			super(new ServiceBeanMatcher(false), classLoader);
 
 			_transactionExecutor = transactionExecutor;
-			_serviceMonitoringControl = serviceMonitoringControl;
 		}
 
 		private final List<AopInvocationHandler> _aopInvocationHandlers =
 			new ArrayList<>();
-		private final ServiceMonitoringControl _serviceMonitoringControl;
 		private final TransactionExecutor _transactionExecutor;
 
 	}

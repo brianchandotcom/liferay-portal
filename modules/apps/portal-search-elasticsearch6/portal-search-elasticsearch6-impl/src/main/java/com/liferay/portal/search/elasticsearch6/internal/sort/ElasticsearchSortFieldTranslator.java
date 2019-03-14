@@ -222,7 +222,7 @@ public class ElasticsearchSortFieldTranslator
 	protected org.elasticsearch.search.sort.SortOrder translate(
 		SortOrder sortOrder) {
 
-		if (sortOrder == SortOrder.ASC) {
+		if ((sortOrder == SortOrder.ASC) || (sortOrder == null)) {
 			return org.elasticsearch.search.sort.SortOrder.ASC;
 		}
 		else if (sortOrder == SortOrder.DESC) {

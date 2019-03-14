@@ -1326,6 +1326,37 @@ public class CalendarBookingLocalServiceTest {
 	}
 
 	@Test
+	public void testInviteUserCalendarWithWorkflowShouldNotifieInviteCalendarBookingOnlyAfterApprovedAndPublished()
+		throws Exception {
+
+		_group = GroupTestUtil.addGroup();
+
+		CalendarWorkflowTestUtil.activateWorkflow(_group);
+
+		_invitingUser = UserTestUtil.addUser();
+
+		Calendar invitedCalendar = CalendarTestUtil.addCalendar(_invitingUser);
+
+		Calendar invitingCalendar = CalendarTestUtil.getDefaultCalendar(_group);
+
+		CalendarBooking calendarBooking =
+			CalendarBookingTestUtil.addMasterCalendarBookingWithWorkflow(
+				invitingCalendar, invitedCalendar,
+				WorkflowConstants.ACTION_PUBLISH);
+
+		String mailMessageSubject =
+			"Calendar: Event Notification for " + StringPool.QUOTE +
+				calendarBooking.getTitle(LocaleUtil.getDefault()) +
+					StringPool.QUOTE;
+
+		assertMailSubjectCount(mailMessageSubject, 0);
+
+		CalendarWorkflowTestUtil.completeWorkflow(_group);
+
+		assertMailSubjectCount(mailMessageSubject, 1);
+	}
+
+	@Test
 	public void testInviteUserResourceCalendar() throws Exception {
 		ServiceContext serviceContext = createServiceContext();
 

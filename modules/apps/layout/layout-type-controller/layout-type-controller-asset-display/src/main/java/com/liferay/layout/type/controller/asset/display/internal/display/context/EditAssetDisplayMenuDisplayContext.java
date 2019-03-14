@@ -133,7 +133,7 @@ public class EditAssetDisplayMenuDisplayContext {
 			"redirect", _themeDisplay.getURLCurrent());
 		editAssetEntryURL.setParameter(
 			"hideDefaultSuccessMessage", Boolean.TRUE.toString());
-		editAssetEntryURL.setParameter("showHeader", Boolean.FALSE.toString());
+		editAssetEntryURL.setParameter("showHeader", Boolean.TRUE.toString());
 
 		return editAssetEntryURL.toString();
 	}

@@ -36,29 +36,6 @@ import java.util.Map;
 public class AsyncAdvice extends ChainableMethodAdvice {
 
 	@Override
-	protected Object before(
-		AopMethodInvocation aopMethodInvocation, Object[] arguments) {
-
-		if (AsyncInvokeThreadLocal.isEnabled()) {
-			return null;
-		}
-
-		String callbackDestinationName =
-			aopMethodInvocation.getAdviceMethodContext();
-
-		TransactionCommitCallbackUtil.registerCallback(
-			() -> {
-				MessageBusUtil.sendMessage(
-					callbackDestinationName,
-					new AsyncProcessCallable(aopMethodInvocation, arguments));
-
-				return null;
-			});
-
-		return nullResult;
-	}
-
-	@Override
 	public Object createMethodContext(
 		Class<?> targetClass, Method method,
 		Map<Class<? extends Annotation>, Annotation> annotations) {
@@ -102,6 +79,29 @@ public class AsyncAdvice extends ChainableMethodAdvice {
 
 	public void setDestinationNames(Map<Class<?>, String> destinationNames) {
 		_destinationNames = destinationNames;
+	}
+
+	@Override
+	protected Object before(
+		AopMethodInvocation aopMethodInvocation, Object[] arguments) {
+
+		if (AsyncInvokeThreadLocal.isEnabled()) {
+			return null;
+		}
+
+		String callbackDestinationName =
+			aopMethodInvocation.getAdviceMethodContext();
+
+		TransactionCommitCallbackUtil.registerCallback(
+			() -> {
+				MessageBusUtil.sendMessage(
+					callbackDestinationName,
+					new AsyncProcessCallable(aopMethodInvocation, arguments));
+
+				return null;
+			});
+
+		return nullResult;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(AsyncAdvice.class);

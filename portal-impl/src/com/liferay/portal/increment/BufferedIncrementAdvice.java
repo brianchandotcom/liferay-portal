@@ -43,6 +43,30 @@ import java.util.Map;
 public class BufferedIncrementAdvice extends ChainableMethodAdvice {
 
 	@Override
+	public Object createMethodContext(
+		Class<?> targetClass, Method method,
+		Map<Class<? extends Annotation>, Annotation> annotations) {
+
+		BufferedIncrement bufferedIncrement =
+			(BufferedIncrement)annotations.get(BufferedIncrement.class);
+
+		if (bufferedIncrement == null) {
+			return null;
+		}
+
+		BufferedIncrementProcessor bufferedIncrementProcessor =
+			BufferedIncrementProcessorUtil.getBufferedIncrementProcessor(
+				bufferedIncrement.configuration());
+
+		if (bufferedIncrementProcessor == null) {
+			return null;
+		}
+
+		return new BufferedIncrementContext(
+			bufferedIncrementProcessor, bufferedIncrement.incrementClass());
+	}
+
+	@Override
 	@SuppressWarnings("rawtypes")
 	protected Object before(
 		AopMethodInvocation aopMethodInvocation, Object[] arguments) {
@@ -90,30 +114,6 @@ public class BufferedIncrementAdvice extends ChainableMethodAdvice {
 		}
 
 		return nullResult;
-	}
-
-	@Override
-	public Object createMethodContext(
-		Class<?> targetClass, Method method,
-		Map<Class<? extends Annotation>, Annotation> annotations) {
-
-		BufferedIncrement bufferedIncrement =
-			(BufferedIncrement)annotations.get(BufferedIncrement.class);
-
-		if (bufferedIncrement == null) {
-			return null;
-		}
-
-		BufferedIncrementProcessor bufferedIncrementProcessor =
-			BufferedIncrementProcessorUtil.getBufferedIncrementProcessor(
-				bufferedIncrement.configuration());
-
-		if (bufferedIncrementProcessor == null) {
-			return null;
-		}
-
-		return new BufferedIncrementContext(
-			bufferedIncrementProcessor, bufferedIncrement.incrementClass());
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

@@ -36,24 +36,6 @@ import java.util.concurrent.Future;
 public class SPIClusterableAdvice extends ChainableMethodAdvice {
 
 	@Override
-	protected void afterReturning(
-			AopMethodInvocation aopMethodInvocation, Object[] arguments,
-			Object result)
-		throws Throwable {
-
-		Clusterable clusterable = aopMethodInvocation.getAdviceMethodContext();
-
-		SPI spi = SPIUtil.getSPI();
-
-		IntrabandRPCUtil.execute(
-			spi.getRegistrationReference(),
-			new MethodHandlerProcessCallable<Serializable>(
-				ClusterableInvokerUtil.createMethodHandler(
-					clusterable.acceptor(), aopMethodInvocation.getThis(),
-					aopMethodInvocation.getMethod(), arguments)));
-	}
-
-	@Override
 	public Object before(
 			AopMethodInvocation aopMethodInvocation, Object[] arguments)
 		throws Throwable {
@@ -92,6 +74,24 @@ public class SPIClusterableAdvice extends ChainableMethodAdvice {
 		Map<Class<? extends Annotation>, Annotation> annotations) {
 
 		return annotations.get(Clusterable.class);
+	}
+
+	@Override
+	protected void afterReturning(
+			AopMethodInvocation aopMethodInvocation, Object[] arguments,
+			Object result)
+		throws Throwable {
+
+		Clusterable clusterable = aopMethodInvocation.getAdviceMethodContext();
+
+		SPI spi = SPIUtil.getSPI();
+
+		IntrabandRPCUtil.execute(
+			spi.getRegistrationReference(),
+			new MethodHandlerProcessCallable<Serializable>(
+				ClusterableInvokerUtil.createMethodHandler(
+					clusterable.acceptor(), aopMethodInvocation.getThis(),
+					aopMethodInvocation.getMethod(), arguments)));
 	}
 
 }

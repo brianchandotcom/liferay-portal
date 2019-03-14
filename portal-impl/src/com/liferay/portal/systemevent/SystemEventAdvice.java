@@ -45,6 +45,41 @@ import java.util.Map;
 public class SystemEventAdvice extends ChainableMethodAdvice {
 
 	@Override
+	public Object before(
+			AopMethodInvocation aopMethodInvocation, Object[] arguments)
+		throws Throwable {
+
+		SystemEvent systemEvent = aopMethodInvocation.getAdviceMethodContext();
+
+		if (systemEvent.action() != SystemEventConstants.ACTION_NONE) {
+			if (!isValid(aopMethodInvocation, arguments, _PHASE_BEFORE)) {
+				return null;
+			}
+
+			ClassedModel classedModel = (ClassedModel)arguments[0];
+
+			SystemEventHierarchyEntry systemEventHierarchyEntry =
+				SystemEventHierarchyEntryThreadLocal.push(
+					getClassName(classedModel), getClassPK(classedModel),
+					systemEvent.action());
+
+			if (systemEventHierarchyEntry != null) {
+				systemEventHierarchyEntry.setUuid(getUuid(classedModel));
+			}
+		}
+
+		return null;
+	}
+
+	@Override
+	public Object createMethodContext(
+		Class<?> targetClass, Method method,
+		Map<Class<? extends Annotation>, Annotation> annotations) {
+
+		return annotations.get(SystemEvent.class);
+	}
+
+	@Override
 	protected void afterReturning(
 			AopMethodInvocation aopMethodInvocation, Object[] arguments,
 			Object result)
@@ -109,41 +144,6 @@ public class SystemEventAdvice extends ChainableMethodAdvice {
 				getUuid(classedModel), referrerClassName, systemEvent.type(),
 				StringPool.BLANK);
 		}
-	}
-
-	@Override
-	public Object before(
-			AopMethodInvocation aopMethodInvocation, Object[] arguments)
-		throws Throwable {
-
-		SystemEvent systemEvent = aopMethodInvocation.getAdviceMethodContext();
-
-		if (systemEvent.action() != SystemEventConstants.ACTION_NONE) {
-			if (!isValid(aopMethodInvocation, arguments, _PHASE_BEFORE)) {
-				return null;
-			}
-
-			ClassedModel classedModel = (ClassedModel)arguments[0];
-
-			SystemEventHierarchyEntry systemEventHierarchyEntry =
-				SystemEventHierarchyEntryThreadLocal.push(
-					getClassName(classedModel), getClassPK(classedModel),
-					systemEvent.action());
-
-			if (systemEventHierarchyEntry != null) {
-				systemEventHierarchyEntry.setUuid(getUuid(classedModel));
-			}
-		}
-
-		return null;
-	}
-
-	@Override
-	public Object createMethodContext(
-		Class<?> targetClass, Method method,
-		Map<Class<? extends Annotation>, Annotation> annotations) {
-
-		return annotations.get(SystemEvent.class);
 	}
 
 	@Override

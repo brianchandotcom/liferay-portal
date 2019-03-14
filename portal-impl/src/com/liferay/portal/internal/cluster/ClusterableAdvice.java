@@ -32,6 +32,14 @@ import java.util.Map;
 public class ClusterableAdvice extends ChainableMethodAdvice {
 
 	@Override
+	public Object createMethodContext(
+		Class<?> targetClass, Method method,
+		Map<Class<? extends Annotation>, Annotation> annotations) {
+
+		return annotations.get(Clusterable.class);
+	}
+
+	@Override
 	protected void afterReturning(
 			AopMethodInvocation aopMethodInvocation, Object[] arguments,
 			Object result)
@@ -83,14 +91,6 @@ public class ClusterableAdvice extends ChainableMethodAdvice {
 		}
 
 		return result;
-	}
-
-	@Override
-	public Object createMethodContext(
-		Class<?> targetClass, Method method,
-		Map<Class<? extends Annotation>, Annotation> annotations) {
-
-		return annotations.get(Clusterable.class);
 	}
 
 }

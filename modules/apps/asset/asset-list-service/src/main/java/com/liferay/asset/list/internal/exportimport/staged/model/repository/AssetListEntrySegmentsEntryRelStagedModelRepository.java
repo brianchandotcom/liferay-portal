@@ -14,9 +14,8 @@
 
 package com.liferay.asset.list.internal.exportimport.staged.model.repository;
 
-import com.liferay.asset.kernel.model.AssetEntry;
-import com.liferay.asset.list.model.AssetEntryAssetListEntryRel;
-import com.liferay.asset.list.service.AssetEntryAssetListEntryRelLocalService;
+import com.liferay.asset.list.model.AssetListEntrySegmentsEntryRel;
+import com.liferay.asset.list.service.AssetListEntrySegmentsEntryRelLocalService;
 import com.liferay.asset.util.StagingAssetEntryHelper;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.kernel.lar.StagedModelModifiedDateComparator;
@@ -33,52 +32,46 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
- * @author Jürgen Kappler
+ * @author Eduardo García
  */
 @Component(
 	immediate = true,
-	property = "model.class.name=com.liferay.asset.list.model.AssetEntryAssetListEntryRel",
+	property = "model.class.name=com.liferay.asset.list.model.AssetListEntrySegmentsEntryRel",
 	service = StagedModelRepository.class
 )
-public class AssetEntryAssetListEntryRelStagedModelRepository
-	implements StagedModelRepository<AssetEntryAssetListEntryRel> {
+public class AssetListEntrySegmentsEntryRelStagedModelRepository
+	implements StagedModelRepository<AssetListEntrySegmentsEntryRel> {
 
 	@Override
-	public AssetEntryAssetListEntryRel addStagedModel(
+	public AssetListEntrySegmentsEntryRel addStagedModel(
 			PortletDataContext portletDataContext,
-			AssetEntryAssetListEntryRel assetEntryAssetListEntryRel)
+			AssetListEntrySegmentsEntryRel assetListEntrySegmentsEntryRel)
 		throws PortalException {
 
-		AssetEntry assetEntry = _stagingAssetEntryHelper.fetchAssetEntry(
-			portletDataContext.getScopeGroupId(),
-			assetEntryAssetListEntryRel.getAssetEntryUuid());
-
-		if (assetEntry == null) {
-			return null;
-		}
-
 		ServiceContext serviceContext = portletDataContext.createServiceContext(
-			assetEntryAssetListEntryRel);
+			assetListEntrySegmentsEntryRel);
 
 		if (portletDataContext.isDataStrategyMirror()) {
-			serviceContext.setUuid(assetEntryAssetListEntryRel.getUuid());
+			serviceContext.setUuid(assetListEntrySegmentsEntryRel.getUuid());
 		}
 
-		return _assetEntryAssetListEntryRelLocalService.
-			addAssetEntryAssetListEntryRel(
-				assetEntry.getEntryId(),
-				assetEntryAssetListEntryRel.getAssetListEntryId(),
-				assetEntryAssetListEntryRel.getSegmentsEntryId(),
-				assetEntryAssetListEntryRel.getPosition(), serviceContext);
+		return _assetListEntrySegmentsEntryRelLocalService.
+			addAssetListEntrySegmentsEntryRel(
+				serviceContext.getUserId(), serviceContext.getScopeGroupId(),
+				assetListEntrySegmentsEntryRel.getAssetListEntryId(),
+				assetListEntrySegmentsEntryRel.getSegmentsEntryId(),
+				assetListEntrySegmentsEntryRel.getTypeSettings(),
+				serviceContext);
 	}
 
 	@Override
 	public void deleteStagedModel(
-			AssetEntryAssetListEntryRel assetEntryAssetListEntryRel)
+			AssetListEntrySegmentsEntryRel assetListEntrySegmentsEntryRel)
 		throws PortalException {
 
-		_assetEntryAssetListEntryRelLocalService.
-			deleteAssetEntryAssetListEntryRel(assetEntryAssetListEntryRel);
+		_assetListEntrySegmentsEntryRelLocalService.
+			deleteAssetListEntrySegmentsEntryRel(
+				assetListEntrySegmentsEntryRel);
 	}
 
 	@Override
@@ -86,11 +79,11 @@ public class AssetEntryAssetListEntryRelStagedModelRepository
 			String uuid, long groupId, String className, String extraData)
 		throws PortalException {
 
-		AssetEntryAssetListEntryRel assetEntryAssetListEntryRel =
+		AssetListEntrySegmentsEntryRel assetListEntrySegmentsEntryRel =
 			fetchStagedModelByUuidAndGroupId(uuid, groupId);
 
-		if (assetEntryAssetListEntryRel != null) {
-			deleteStagedModel(assetEntryAssetListEntryRel);
+		if (assetListEntrySegmentsEntryRel != null) {
+			deleteStagedModel(assetListEntrySegmentsEntryRel);
 		}
 	}
 
@@ -100,7 +93,7 @@ public class AssetEntryAssetListEntryRelStagedModelRepository
 	}
 
 	@Override
-	public AssetEntryAssetListEntryRel fetchMissingReference(
+	public AssetListEntrySegmentsEntryRel fetchMissingReference(
 		String uuid, long groupId) {
 
 		return _stagedModelRepositoryHelper.fetchMissingReference(
@@ -108,19 +101,19 @@ public class AssetEntryAssetListEntryRelStagedModelRepository
 	}
 
 	@Override
-	public AssetEntryAssetListEntryRel fetchStagedModelByUuidAndGroupId(
+	public AssetListEntrySegmentsEntryRel fetchStagedModelByUuidAndGroupId(
 		String uuid, long groupId) {
 
-		return _assetEntryAssetListEntryRelLocalService.
-			fetchAssetEntryAssetListEntryRelByUuidAndGroupId(uuid, groupId);
+		return _assetListEntrySegmentsEntryRelLocalService.
+			fetchAssetListEntrySegmentsEntryRelByUuidAndGroupId(uuid, groupId);
 	}
 
 	@Override
-	public List<AssetEntryAssetListEntryRel>
+	public List<AssetListEntrySegmentsEntryRel>
 		fetchStagedModelsByUuidAndCompanyId(String uuid, long companyId) {
 
-		return _assetEntryAssetListEntryRelLocalService.
-			getAssetEntryAssetListEntryRelsByUuidAndCompanyId(
+		return _assetListEntrySegmentsEntryRelLocalService.
+			getAssetListEntrySegmentsEntryRelsByUuidAndCompanyId(
 				uuid, companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
 				new StagedModelModifiedDateComparator<>());
 	}
@@ -129,45 +122,44 @@ public class AssetEntryAssetListEntryRelStagedModelRepository
 	public ExportActionableDynamicQuery getExportActionableDynamicQuery(
 		PortletDataContext portletDataContext) {
 
-		return _assetEntryAssetListEntryRelLocalService.
+		return _assetListEntrySegmentsEntryRelLocalService.
 			getExportActionableDynamicQuery(portletDataContext);
 	}
 
 	@Override
-	public AssetEntryAssetListEntryRel getStagedModel(long id)
+	public AssetListEntrySegmentsEntryRel getStagedModel(long id)
 		throws PortalException {
 
-		return _assetEntryAssetListEntryRelLocalService.
-			getAssetEntryAssetListEntryRel(id);
+		return _assetListEntrySegmentsEntryRelLocalService.
+			getAssetListEntrySegmentsEntryRel(id);
 	}
 
 	@Override
-	public AssetEntryAssetListEntryRel saveStagedModel(
-			AssetEntryAssetListEntryRel assetEntryAssetListEntryRel)
+	public AssetListEntrySegmentsEntryRel saveStagedModel(
+			AssetListEntrySegmentsEntryRel assetListEntrySegmentsEntryRel)
 		throws PortalException {
 
-		return _assetEntryAssetListEntryRelLocalService.
-			updateAssetEntryAssetListEntryRel(assetEntryAssetListEntryRel);
+		return _assetListEntrySegmentsEntryRelLocalService.
+			updateAssetListEntrySegmentsEntryRel(
+				assetListEntrySegmentsEntryRel);
 	}
 
 	@Override
-	public AssetEntryAssetListEntryRel updateStagedModel(
+	public AssetListEntrySegmentsEntryRel updateStagedModel(
 			PortletDataContext portletDataContext,
-			AssetEntryAssetListEntryRel assetEntryAssetListEntryRel)
+			AssetListEntrySegmentsEntryRel assetListEntrySegmentsEntryRel)
 		throws PortalException {
 
-		return _assetEntryAssetListEntryRelLocalService.
-			updateAssetEntryAssetListEntryRel(
-				assetEntryAssetListEntryRel.getAssetEntryAssetListEntryRelId(),
-				assetEntryAssetListEntryRel.getAssetEntryId(),
-				assetEntryAssetListEntryRel.getAssetListEntryId(),
-				assetEntryAssetListEntryRel.getSegmentsEntryId(),
-				assetEntryAssetListEntryRel.getPosition());
+		return _assetListEntrySegmentsEntryRelLocalService.
+			updateAssetListEntrySegmentsEntryRelTypeSettings(
+				assetListEntrySegmentsEntryRel.getAssetListEntryId(),
+				assetListEntrySegmentsEntryRel.getSegmentsEntryId(),
+				assetListEntrySegmentsEntryRel.getTypeSettings());
 	}
 
 	@Reference
-	private AssetEntryAssetListEntryRelLocalService
-		_assetEntryAssetListEntryRelLocalService;
+	private AssetListEntrySegmentsEntryRelLocalService
+		_assetListEntrySegmentsEntryRelLocalService;
 
 	@Reference
 	private StagedModelRepositoryHelper _stagedModelRepositoryHelper;

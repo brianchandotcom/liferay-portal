@@ -59,8 +59,7 @@ public class AssetListEntryStagedModelRepository
 
 		return _assetListEntryLocalService.addAssetListEntry(
 			userId, assetListEntry.getGroupId(), assetListEntry.getTitle(),
-			assetListEntry.getType(), assetListEntry.getTypeSettings(),
-			serviceContext);
+			assetListEntry.getType(), serviceContext);
 	}
 
 	@Override

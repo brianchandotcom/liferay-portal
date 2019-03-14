@@ -14,6 +14,7 @@
 
 package com.liferay.portal.security.permission.test;
 
+import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.kernel.exception.NoSuchResourcePermissionException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Company;
@@ -58,11 +59,13 @@ import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 
 /**
  * @author Roberto Díaz
  * @author Tomas Polesovsky
  */
+@RunWith(Arquillian.class)
 public class PermissionCheckerTest {
 
 	@ClassRule

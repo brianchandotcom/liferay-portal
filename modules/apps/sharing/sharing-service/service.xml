@@ -55,6 +55,7 @@
 		</finder>
 	</entity>
 	<exceptions>
+		<exception>DuplicateSharingEntry</exception>
 		<exception>InvalidSharingEntryAction</exception>
 		<exception>InvalidSharingEntryExpirationDate</exception>
 		<exception>InvalidSharingEntryUser</exception>

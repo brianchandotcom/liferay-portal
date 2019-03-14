@@ -26,6 +26,18 @@ definition {
 		selenium.assertLiferayErrors();
 	}
 
+	function assertPartialTextClickAtNoMouseOver {
+		WaitForSPARefresh();
+
+		AssertTextEquals.assertPartialText();
+
+		selenium.clickAt();
+
+		selenium.assertJavaScriptErrors();
+
+		selenium.assertLiferayErrors();
+	}
+
 	function assertTextClickAt {
 		WaitForSPARefresh();
 

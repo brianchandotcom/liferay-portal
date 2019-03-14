@@ -16,39 +16,24 @@ package com.liferay.portal.search.geolocation;
 
 import aQute.bnd.annotation.ProviderType;
 
+import java.util.List;
+
 /**
- * @author Michael C. Han
+ * @author André de Oliveira
  */
 @ProviderType
-public class CircleShapeBuilder extends ShapeBuilder {
+public interface CircleShapeBuilder {
 
-	public CircleShapeBuilder(GeoDistance radius, Coordinate center) {
-		_radius = radius;
-		_center = center;
-	}
+	public CircleShapeBuilder addCoordinate(Coordinate coordinate);
 
-	@Override
-	public <T> T accept(ShapeBuilderTranslator<T> shapeBuilderTranslator) {
-		return shapeBuilderTranslator.translate(this);
-	}
+	public CircleShape build();
 
-	public Coordinate getCenter() {
-		return _center;
-	}
+	public CircleShapeBuilder center(Coordinate coordinate);
 
-	public GeoDistance getRadius() {
-		return _radius;
-	}
+	public CircleShapeBuilder coordinates(Coordinate... coordinates);
 
-	public void setCenter(Coordinate center) {
-		_center = center;
-	}
+	public CircleShapeBuilder coordinates(List<Coordinate> coordinates);
 
-	public void setRadius(GeoDistance radius) {
-		_radius = radius;
-	}
-
-	private Coordinate _center;
-	private GeoDistance _radius;
+	public CircleShapeBuilder radius(GeoDistance geoDistance);
 
 }

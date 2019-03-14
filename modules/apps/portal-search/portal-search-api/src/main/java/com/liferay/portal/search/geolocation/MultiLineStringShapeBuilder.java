@@ -22,14 +22,24 @@ import java.util.List;
  * @author André de Oliveira
  */
 @ProviderType
-public interface LineStringShapeBuilder {
+public interface MultiLineStringShapeBuilder {
 
-	public LineStringShapeBuilder addCoordinate(Coordinate coordinate);
+	public MultiLineStringShapeBuilder addCoordinate(Coordinate coordinate);
 
-	public LineStringShape build();
+	public MultiLineStringShapeBuilder addLineStringShape(
+		LineStringShape lineStringShape);
 
-	public LineStringShapeBuilder coordinates(Coordinate... coordinates);
+	public MultiLineStringShape build();
 
-	public LineStringShapeBuilder coordinates(List<Coordinate> coordinates);
+	public MultiLineStringShapeBuilder coordinates(Coordinate... coordinates);
+
+	public MultiLineStringShapeBuilder coordinates(
+		List<Coordinate> coordinates);
+
+	public MultiLineStringShapeBuilder lineStringShapes(
+		LineStringShape... lineStringShapes);
+
+	public MultiLineStringShapeBuilder lineStringShapes(
+		List<LineStringShape> lineStringShapes);
 
 }

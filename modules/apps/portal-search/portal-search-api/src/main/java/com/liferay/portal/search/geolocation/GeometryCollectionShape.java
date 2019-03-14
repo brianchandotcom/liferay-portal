@@ -19,17 +19,11 @@ import aQute.bnd.annotation.ProviderType;
 import java.util.List;
 
 /**
- * @author André de Oliveira
+ * @author Michael C. Han
  */
 @ProviderType
-public interface LineStringShapeBuilder {
+public interface GeometryCollectionShape extends Shape {
 
-	public LineStringShapeBuilder addCoordinate(Coordinate coordinate);
-
-	public LineStringShape build();
-
-	public LineStringShapeBuilder coordinates(Coordinate... coordinates);
-
-	public LineStringShapeBuilder coordinates(List<Coordinate> coordinates);
+	public List<Shape> getShapes();
 
 }

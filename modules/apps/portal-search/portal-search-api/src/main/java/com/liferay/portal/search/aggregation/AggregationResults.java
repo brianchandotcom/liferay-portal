@@ -102,10 +102,11 @@ public interface AggregationResults {
 	public FiltersAggregationResult filters(String name);
 
 	public GeoBoundsAggregationResult geoBounds(
-		String name, GeoLocationPoint topLeft, GeoLocationPoint bottomRight);
+		String name, GeoLocationPoint topLeftGeoLocationPoint,
+		GeoLocationPoint bottomRightGeoLocationPoint);
 
 	public GeoCentroidAggregationResult geoCentroid(
-		String name, GeoLocationPoint centroid, long count);
+		String name, GeoLocationPoint centroidGeoLocationPoint, long count);
 
 	public GeoDistanceAggregationResult geoDistance(String name);
 

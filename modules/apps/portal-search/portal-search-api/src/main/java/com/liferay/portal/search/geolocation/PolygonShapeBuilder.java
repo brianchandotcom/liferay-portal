@@ -16,56 +16,28 @@ package com.liferay.portal.search.geolocation;
 
 import aQute.bnd.annotation.ProviderType;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 /**
- * @author Michael C. Han
+ * @author André de Oliveira
  */
 @ProviderType
-public class PolygonShapeBuilder extends ShapeBuilder {
+public interface PolygonShapeBuilder {
 
-	public PolygonShapeBuilder(
-		LineStringShapeBuilder shell, Orientation orientation) {
+	public PolygonShapeBuilder addCoordinate(Coordinate coordinate);
 
-		_shell = shell;
-		_orientation = orientation;
-	}
+	public PolygonShapeBuilder addHole(LineStringShape lineStringShape);
 
-	@Override
-	public <T> T accept(ShapeBuilderTranslator<T> shapeBuilderTranslator) {
-		return shapeBuilderTranslator.translate(this);
-	}
+	public PolygonShape build();
 
-	public void addHolesLineStringShapeBuilder(
-		LineStringShapeBuilder lineStringShapeBuilder) {
+	public PolygonShapeBuilder coordinates(Coordinate... coordinates);
 
-		_holesLineStringShapeBuilders.add(lineStringShapeBuilder);
-	}
+	public PolygonShapeBuilder coordinates(List<Coordinate> coordinates);
 
-	public void addHolesLineStringShapeBuilders(
-		LineStringShapeBuilder... lineStringShapeBuilders) {
+	public PolygonShapeBuilder holes(LineStringShape... lineStringShapes);
 
-		Collections.addAll(
-			_holesLineStringShapeBuilders, lineStringShapeBuilders);
-	}
+	public PolygonShapeBuilder orientation(Orientation orientation);
 
-	public List<LineStringShapeBuilder> getHolesLineStringShapeBuilders() {
-		return Collections.unmodifiableList(_holesLineStringShapeBuilders);
-	}
-
-	public Orientation getOrientation() {
-		return _orientation;
-	}
-
-	public LineStringShapeBuilder getShell() {
-		return _shell;
-	}
-
-	private final List<LineStringShapeBuilder> _holesLineStringShapeBuilders =
-		new ArrayList<>();
-	private final Orientation _orientation;
-	private final LineStringShapeBuilder _shell;
+	public PolygonShapeBuilder shell(LineStringShape shell);
 
 }

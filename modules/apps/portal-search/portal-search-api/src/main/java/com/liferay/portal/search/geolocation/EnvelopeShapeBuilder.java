@@ -16,31 +16,24 @@ package com.liferay.portal.search.geolocation;
 
 import aQute.bnd.annotation.ProviderType;
 
+import java.util.List;
+
 /**
- * @author Michael C. Han
+ * @author André de Oliveira
  */
 @ProviderType
-public class EnvelopeShapeBuilder extends ShapeBuilder {
+public interface EnvelopeShapeBuilder {
 
-	public EnvelopeShapeBuilder(Coordinate topLeft, Coordinate bottomRight) {
-		_topLeft = topLeft;
-		_bottomRight = bottomRight;
-	}
+	public EnvelopeShapeBuilder addCoordinate(Coordinate coordinate);
 
-	@Override
-	public <T> T accept(ShapeBuilderTranslator<T> shapeBuilderTranslator) {
-		return shapeBuilderTranslator.translate(this);
-	}
+	public EnvelopeShapeBuilder bottomRight(Coordinate coordinate);
 
-	public Coordinate getBottomRight() {
-		return _bottomRight;
-	}
+	public EnvelopeShape build();
 
-	public Coordinate getTopLeft() {
-		return _topLeft;
-	}
+	public EnvelopeShapeBuilder coordinates(Coordinate... coordinates);
 
-	private final Coordinate _bottomRight;
-	private final Coordinate _topLeft;
+	public EnvelopeShapeBuilder coordinates(List<Coordinate> coordinates);
+
+	public EnvelopeShapeBuilder topLeft(Coordinate coordinate);
 
 }

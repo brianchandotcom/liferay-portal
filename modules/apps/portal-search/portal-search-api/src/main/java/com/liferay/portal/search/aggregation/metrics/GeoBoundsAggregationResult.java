@@ -29,8 +29,8 @@ public interface GeoBoundsAggregationResult extends AggregationResult {
 
 	public GeoLocationPoint getTopLeft();
 
-	public void setBottomRight(GeoLocationPoint bottomRight);
+	public void setBottomRight(GeoLocationPoint geoLocationPoint);
 
-	public void setTopLeft(GeoLocationPoint topLeft);
+	public void setTopLeft(GeoLocationPoint geoLocationPoint);
 
 }

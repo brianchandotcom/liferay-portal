@@ -16,7 +16,7 @@ package com.liferay.portal.search.query;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.portal.search.geolocation.ShapeBuilder;
+import com.liferay.portal.search.geolocation.Shape;
 import com.liferay.portal.search.query.geolocation.ShapeRelation;
 import com.liferay.portal.search.query.geolocation.SpatialStrategy;
 
@@ -40,7 +40,7 @@ public interface GeoShapeQuery extends Query {
 
 	public String getIndexedShapeType();
 
-	public ShapeBuilder getShapeBuilder();
+	public Shape getShape();
 
 	public ShapeRelation getShapeRelation();
 

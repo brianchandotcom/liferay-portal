@@ -16,74 +16,18 @@ package com.liferay.portal.search.geolocation;
 
 import aQute.bnd.annotation.ProviderType;
 
-import java.util.Objects;
-
 /**
  * @author Michael C. Han
  */
 @ProviderType
-public class GeoLocationPoint {
+public interface GeoLocationPoint {
 
-	public GeoLocationPoint(double latitude, double longitude) {
-		_latitude = latitude;
-		_longitude = longitude;
+	public String getGeoHash();
 
-		_geoHash = null;
-	}
+	public Long getGeoHashLong();
 
-	public GeoLocationPoint(String geoHash) {
-		_geoHash = geoHash;
+	public Double getLatitude();
 
-		_longitude = 0;
-		_latitude = 0;
-	}
-
-	@Override
-	public boolean equals(Object object) {
-		if (this == object) {
-			return true;
-		}
-
-		if ((object == null) || (getClass() != object.getClass())) {
-			return false;
-		}
-
-		final GeoLocationPoint geoLocationPoint = (GeoLocationPoint)object;
-
-		if ((_latitude == 0) && (_longitude == 0)) {
-			return Objects.equals(geoLocationPoint.getGeoHash(), getGeoHash());
-		}
-
-		if (Double.compare(geoLocationPoint._latitude, _latitude) != 0) {
-			return false;
-		}
-
-		if (Double.compare(geoLocationPoint._longitude, _longitude) != 0) {
-			return false;
-		}
-
-		return true;
-	}
-
-	public String getGeoHash() {
-		return _geoHash;
-	}
-
-	public double getLatitude() {
-		return _latitude;
-	}
-
-	public double getLongitude() {
-		return _longitude;
-	}
-
-	@Override
-	public int hashCode() {
-		return Objects.hash(_latitude, _longitude, _geoHash);
-	}
-
-	private final String _geoHash;
-	private final double _latitude;
-	private final double _longitude;
+	public Double getLongitude();
 
 }

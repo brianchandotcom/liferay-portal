@@ -2420,7 +2420,7 @@ public class JenkinsResultsParserUtil {
 		}
 	}
 
-	public static void writeSshIdRsa(String idRsa) {
+	public static void regenerateSshIdRsa(String idRsa) {
 		if ((idRsa == null) || idRsa.isEmpty()) {
 			return;
 		}
@@ -2433,7 +2433,7 @@ public class JenkinsResultsParserUtil {
 			write(_sshIdRsaFile, idRsa);
 		}
 		catch (IOException ioe) {
-			throw new RuntimeException("Unable to write id_rsa file", ioe);
+			throw new RuntimeException("Unable to regenerate id_rsa file", ioe);
 		}
 
 		_sshIdRsaFile.setExecutable(false, false);
@@ -2445,7 +2445,7 @@ public class JenkinsResultsParserUtil {
 		_sshIdRsaFile.setWritable(false, false);
 	}
 
-	public static void writeSshKnownHosts(String knownHosts) {
+	public static void regenerateSshKnownHosts(String knownHosts) {
 		if ((knownHosts == null) || knownHosts.isEmpty()) {
 			return;
 		}
@@ -2463,7 +2463,7 @@ public class JenkinsResultsParserUtil {
 		}
 		catch (IOException | TimeoutException e) {
 			throw new RuntimeException(
-				"Unable to get write known_hosts file for hosts " + knownHosts,
+				"Unable to regenerate known_hosts file for hosts " + knownHosts,
 				e);
 		}
 	}

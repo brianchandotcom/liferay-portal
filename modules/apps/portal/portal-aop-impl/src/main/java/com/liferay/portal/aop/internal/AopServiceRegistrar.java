@@ -245,7 +245,7 @@ public class AopServiceRegistrar {
 			_serviceMonitoringControl = serviceMonitoringControl;
 		}
 
-		private Map<AopInvocationHandler, AopService> _aopServices =
+		private final Map<AopInvocationHandler, AopService> _aopServices =
 			new ConcurrentHashMap<>();
 		private final ServiceMonitoringControl _serviceMonitoringControl;
 		private final ServiceObjects<AopService> _serviceObjects;

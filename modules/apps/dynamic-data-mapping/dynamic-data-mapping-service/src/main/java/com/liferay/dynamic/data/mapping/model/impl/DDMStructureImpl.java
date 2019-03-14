@@ -522,8 +522,8 @@ public class DDMStructureImpl extends DDMStructureBaseImpl {
 				return parentDDMStructure.getDDMFormField(fieldName);
 			}
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (PortalException pe) {
+			_log.error(pe, pe);
 		}
 
 		throw new StructureFieldException("Unable to find field " + fieldName);

@@ -1777,6 +1777,54 @@ public class JenkinsResultsParserUtil {
 		return string;
 	}
 
+	public static void regenerateSshIdRsa(String idRsa) {
+		if ((idRsa == null) || idRsa.isEmpty()) {
+			return;
+		}
+
+		if (_sshIdRsaFile.exists()) {
+			_sshIdRsaFile.delete();
+		}
+
+		try {
+			write(_sshIdRsaFile, idRsa);
+		}
+		catch (IOException ioe) {
+			throw new RuntimeException("Unable to regenerate id_rsa file", ioe);
+		}
+
+		_sshIdRsaFile.setExecutable(false, false);
+
+		_sshIdRsaFile.setReadable(false, false);
+
+		_sshIdRsaFile.setReadable(true, true);
+
+		_sshIdRsaFile.setWritable(false, false);
+	}
+
+	public static void regenerateSshKnownHosts(String knownHosts) {
+		if ((knownHosts == null) || knownHosts.isEmpty()) {
+			return;
+		}
+
+		if (_sshKnownHostsFile.exists()) {
+			_sshKnownHostsFile.delete();
+		}
+
+		String command = combine(
+			"ssh-keyscan ", knownHosts.replaceAll("\\s*,\\s*", " "), " >> ",
+			getCanonicalPath(_sshKnownHostsFile));
+
+		try {
+			executeBashCommands(command);
+		}
+		catch (IOException | TimeoutException e) {
+			throw new RuntimeException(
+				"Unable to regenerate known_hosts file for hosts " + knownHosts,
+				e);
+		}
+	}
+
 	public static List<File> removeExcludedFiles(
 		List<PathMatcher> excludesPathMatchers, List<File> files) {
 
@@ -2417,54 +2465,6 @@ public class JenkinsResultsParserUtil {
 				throw new RuntimeException(
 					"Unable to read properties file " + propertiesFile, ioe);
 			}
-		}
-	}
-
-	public static void regenerateSshIdRsa(String idRsa) {
-		if ((idRsa == null) || idRsa.isEmpty()) {
-			return;
-		}
-
-		if (_sshIdRsaFile.exists()) {
-			_sshIdRsaFile.delete();
-		}
-
-		try {
-			write(_sshIdRsaFile, idRsa);
-		}
-		catch (IOException ioe) {
-			throw new RuntimeException("Unable to regenerate id_rsa file", ioe);
-		}
-
-		_sshIdRsaFile.setExecutable(false, false);
-
-		_sshIdRsaFile.setReadable(false, false);
-
-		_sshIdRsaFile.setReadable(true, true);
-
-		_sshIdRsaFile.setWritable(false, false);
-	}
-
-	public static void regenerateSshKnownHosts(String knownHosts) {
-		if ((knownHosts == null) || knownHosts.isEmpty()) {
-			return;
-		}
-
-		if (_sshKnownHostsFile.exists()) {
-			_sshKnownHostsFile.delete();
-		}
-
-		String command = combine(
-			"ssh-keyscan ", knownHosts.replaceAll("\\s*,\\s*", " "), " >> ",
-			getCanonicalPath(_sshKnownHostsFile));
-
-		try {
-			executeBashCommands(command);
-		}
-		catch (IOException | TimeoutException e) {
-			throw new RuntimeException(
-				"Unable to regenerate known_hosts file for hosts " + knownHosts,
-				e);
 		}
 	}
 

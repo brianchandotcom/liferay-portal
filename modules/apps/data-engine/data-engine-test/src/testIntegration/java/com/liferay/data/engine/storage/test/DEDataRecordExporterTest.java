@@ -25,9 +25,9 @@ import com.liferay.data.engine.service.DEDataDefinitionSaveResponse;
 import com.liferay.data.engine.service.DEDataDefinitionService;
 import com.liferay.data.engine.service.DEDataRecordCollectionService;
 import com.liferay.data.engine.service.test.DEDataEngineTestUtil;
-import com.liferay.data.engine.storage.DataRecordExporter;
 import com.liferay.data.engine.storage.DEDataRecordExporterApplyRequest;
 import com.liferay.data.engine.storage.DEDataRecordExporterApplyResponse;
+import com.liferay.data.engine.storage.DataRecordExporter;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
@@ -207,17 +207,17 @@ public class DEDataRecordExporterTest {
 			PermissionThreadLocal.getPermissionChecker();
 	}
 
-	@Inject(type = DEDataDefinitionService.class)
-	private DEDataDefinitionService _deDataDefinitionService;
-
-	@Inject(type = DEDataRecordCollectionService.class)
-	private DEDataRecordCollectionService _deDataRecordCollectionService;
-
 	@Inject(
 		filter = "de.data.record.exporter.format=json",
 		type = DataRecordExporter.class
 	)
 	private DataRecordExporter _dataRecordExporter;
+
+	@Inject(type = DEDataDefinitionService.class)
+	private DEDataDefinitionService _deDataDefinitionService;
+
+	@Inject(type = DEDataRecordCollectionService.class)
+	private DEDataRecordCollectionService _deDataRecordCollectionService;
 
 	@DeleteAfterTestRun
 	private Group _group;

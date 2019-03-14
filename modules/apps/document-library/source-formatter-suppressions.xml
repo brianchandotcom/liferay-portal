@@ -7,4 +7,7 @@
 		<suppress checks="SubnameCheck" files="modules/apps/document-library/document-library-repository-cmis-impl/src/main/java/com/liferay/document/library/repository/cmis/internal/CMISRepository\.java" />
 		<suppress checks="TestClassCheck" files="modules/apps/document-library/document-library-test/src/testIntegration/java/com/liferay/document/library/webdav/test/BaseWebDAVTestCase\.java" />
 	</checkstyle>
+	<source-check>
+		<suppress checks="BNDExportsCheck" files="modules/apps/document-library/document-library-web-test-fragment/bnd\.bnd" />
+	</source-check>
 </suppressions>

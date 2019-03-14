@@ -68,55 +68,6 @@ class FloatingToolbarSpacingPanel extends Component {
 	}
 
 	/**
-	 * Updates section
-	 * @param {string} updateAction Update action name
-	 * @param {object} payload Section payload
-	 * @private
-	 * @review
-	 */
-	_updateSection(updateAction, payload) {
-		this.store
-			.dispatchAction(
-				UPDATE_SAVING_CHANGES_STATUS,
-				{
-					savingChanges: true
-				}
-			)
-			.dispatchAction(
-				updateAction,
-				payload
-			)
-			.dispatchAction(
-				UPDATE_TRANSLATION_STATUS
-			)
-			.dispatchAction(
-				UPDATE_LAST_SAVE_DATE,
-				{
-					lastSaveDate: new Date()
-				}
-			)
-			.dispatchAction(
-				UPDATE_SAVING_CHANGES_STATUS,
-				{
-					savingChanges: false
-				}
-			);
-	}
-
-	/**
-	 * Updates section configuration
-	 * @param {object} config Section configuration
-	 * @private
-	 * @review
-	 */
-	_updateSectionConfig(config) {
-		this._updateSection(UPDATE_SECTION_CONFIG, {
-			config,
-			sectionId: this.itemId
-		});
-	}
-
-	/**
 	 * Handle container option change
 	 * @param {Event} event
 	 */
@@ -184,6 +135,54 @@ class FloatingToolbarSpacingPanel extends Component {
 		);
 	}
 
+	/**
+	 * Updates section
+	 * @param {string} updateAction Update action name
+	 * @param {object} payload Section payload
+	 * @private
+	 * @review
+	 */
+	_updateSection(updateAction, payload) {
+		this.store
+			.dispatchAction(
+				UPDATE_SAVING_CHANGES_STATUS,
+				{
+					savingChanges: true
+				}
+			)
+			.dispatchAction(
+				updateAction,
+				payload
+			)
+			.dispatchAction(
+				UPDATE_TRANSLATION_STATUS
+			)
+			.dispatchAction(
+				UPDATE_LAST_SAVE_DATE,
+				{
+					lastSaveDate: new Date()
+				}
+			)
+			.dispatchAction(
+				UPDATE_SAVING_CHANGES_STATUS,
+				{
+					savingChanges: false
+				}
+			);
+	}
+
+	/**
+	 * Updates section configuration
+	 * @param {object} config Section configuration
+	 * @private
+	 * @review
+	 */
+	_updateSectionConfig(config) {
+		this._updateSection(UPDATE_SECTION_CONFIG, {
+			config,
+			sectionId: this.itemId
+		});
+	}
 }
 
 /**
@@ -193,26 +192,6 @@ class FloatingToolbarSpacingPanel extends Component {
  * @type {!Object}
  */
 FloatingToolbarSpacingPanel.STATE = {
-
-	/**
-	 * @default undefined
-	 * @memberof FloatingToolbarSpacingPanel
-	 * @review
-	 * @type {object}
-	 */
-	store: Config
-		.object()
-		.value(null),
-
-	/**
-	 * @default undefined
-	 * @memberof FloatingToolbarSpacingPanel
-	 * @review
-	 * @type {!string}
-	 */
-	itemId: Config
-		.string()
-		.required(),
 
 	/**
 	 * @default CONTAINER_TYPES
@@ -236,7 +215,27 @@ FloatingToolbarSpacingPanel.STATE = {
 	_containerTypes: Config
 		.array()
 		.internal()
-		.value(CONTAINER_TYPES)
+		.value(CONTAINER_TYPES),
+
+	/**
+	 * @default undefined
+	 * @memberof FloatingToolbarSpacingPanel
+	 * @review
+	 * @type {!string}
+	 */
+	itemId: Config
+		.string()
+		.required(),
+
+	/**
+	 * @default undefined
+	 * @memberof FloatingToolbarSpacingPanel
+	 * @review
+	 * @type {object}
+	 */
+	store: Config
+		.object()
+		.value(null)
 };
 
 const ConnectedFloatingToolbarSpacingPanel = getConnectedComponent(

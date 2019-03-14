@@ -77,58 +77,6 @@
 {/template}
 
 /**
- * Container padding options
- */
-{template .containerPaddingOptions}
-	{@param label: string}
-	{@param paddingDirectionId: string}
-	{@param paddingSizes: list<string>}
-	{@param selectedPaddingSize: string}
-	{@param? handleContainerPaddingOptionChange: any}
-
-	<div class="form-group-item">
-		<label for="floatingToolbarSpacingPanelPadding{$paddingDirectionId}Option">
-			{$label}
-		</label>
-
-		<select
-			class="form-control form-control-sm"
-			data-onchange="{$handleContainerPaddingOptionChange}"
-			data-padding-direction-id="{$paddingDirectionId}"
-			id="floatingToolbarSpacingPanelPadding{$paddingDirectionId}Option"
-		>
-			{foreach $paddingSize in $paddingSizes}
-				{call .containerPaddingOption}
-					{param key: $paddingSize /}
-					{param paddingSize: $paddingSize /}
-					{param selectedPaddingSize: $selectedPaddingSize /}
-				{/call}
-			{/foreach}
-		</select>
-	</div>
-{/template}
-
-/**
- * Container padding option
- */
-{template .containerPaddingOption}
-	{@param paddingSize: string}
-	{@param selectedPaddingSize: string}
-
-	{let $optionAttributes kind="attributes"}
-		value="{$paddingSize}"
-
-		{if $paddingSize == $selectedPaddingSize}
-			selected
-		{/if}
-	{/let}
-
-	<option {$optionAttributes}>
-		x{$paddingSize}
-	</option>
-{/template}
-
-/**
  * Columns number
  */
 {template .columnsNumberOptions}
@@ -211,6 +159,58 @@
 		] /}
 		{param label: $spacingCheckboxLabel /}
 	{/call}
+{/template}
+
+/**
+ * Container padding options
+ */
+{template .containerPaddingOptions}
+	{@param label: string}
+	{@param paddingDirectionId: string}
+	{@param paddingSizes: list<string>}
+	{@param selectedPaddingSize: string}
+	{@param? handleContainerPaddingOptionChange: any}
+
+	<div class="form-group-item">
+		<label for="floatingToolbarSpacingPanelPadding{$paddingDirectionId}Option">
+			{$label}
+		</label>
+
+		<select
+			class="form-control form-control-sm"
+			data-onchange="{$handleContainerPaddingOptionChange}"
+			data-padding-direction-id="{$paddingDirectionId}"
+			id="floatingToolbarSpacingPanelPadding{$paddingDirectionId}Option"
+		>
+			{foreach $paddingSize in $paddingSizes}
+				{call .containerPaddingOption}
+					{param key: $paddingSize /}
+					{param paddingSize: $paddingSize /}
+					{param selectedPaddingSize: $selectedPaddingSize /}
+				{/call}
+			{/foreach}
+		</select>
+	</div>
+{/template}
+
+/**
+ * Container padding option
+ */
+{template .containerPaddingOption}
+	{@param paddingSize: string}
+	{@param selectedPaddingSize: string}
+
+	{let $optionAttributes kind="attributes"}
+		value="{$paddingSize}"
+
+		{if $paddingSize == $selectedPaddingSize}
+			selected
+		{/if}
+	{/let}
+
+	<option {$optionAttributes}>
+		x{$paddingSize}
+	</option>
 {/template}
 
 /**

@@ -17,6 +17,8 @@ definition {
 
 		ChangeList.enableChangeList();
 
+		Refresh();
+
 		ProductMenu.gotoPortlet(
 			category = "Change Lists",
 			panel = "Control Panel",
@@ -69,9 +71,20 @@ definition {
 			portlet = "Overview"
 		);
 
-		ChangeList.publishChangeList();
+		ChangeList.publishChangeList(
+			changeListName = "Change List Name" 
+		);
 
-		Click(locator1 = "Icon#CLOSE");
+		ProductMenu.gotoPortlet(
+			category = "Change Lists",
+			panel = "Control Panel",
+			portlet = "Overview"
+		);
+
+		ChangeList.addNewChangeList(
+			changeListDescription = "Change List Description",
+			changeListName = "New Change List Name"
+		);
 
 		ChangeList.viewPublishedChangeListDetails(
 			changeListDescription = "Change List Description",

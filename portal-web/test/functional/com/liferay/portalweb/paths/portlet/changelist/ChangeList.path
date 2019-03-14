@@ -29,6 +29,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>HISTORY_CHANGE_LIST_STATUS</td>
+	<td>//h4[contains(.,'${key_changeListName}')]//following-sibling::span[contains(@class,'label-success')]//span</td>
+	<td></td>
+</tr>
+<tr>
 	<td>LATEST_CHANGES_CHANGE_TYPE</td>
 	<td>//div[contains(@id,'change-entry-change-type') and contains(.,'${key_contentChangeType}')]</td>
 	<td></td>

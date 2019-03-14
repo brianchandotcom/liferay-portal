@@ -58,6 +58,18 @@ definition {
 		Click(locator1 = "ChangeList#PUBLISH_BUTTON");
 
 		Alert.viewSuccessMessage();
+
+		AssertTextEquals(
+			locator1 = "ChangeList#OVERVIEW_PAGE_TITLE",
+			value1 = "History"
+		);
+
+		var key_changeListName = "${changeListName}";
+
+		AssertTextEquals(
+			locator1 = "ChangeList#HISTORY_CHANGE_LIST_STATUS",
+			value1 = "Published"
+		);
 	}
 
 	macro searchForChangeList {

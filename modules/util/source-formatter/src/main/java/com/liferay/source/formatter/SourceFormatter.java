@@ -504,10 +504,11 @@ public class SourceFormatter {
 			else if (!tagJavaFilesAdded &&
 					 recentChangesFileName.endsWith(".tld")) {
 
-				dependentFileNames.addAll(SourceFormatterUtil.filterFileNames(
-					_allFileNames, new String[0],
-					new String[] {"**/*Tag.java"},
-					_sourceFormatterExcludes, false));
+				dependentFileNames.addAll(
+					SourceFormatterUtil.filterFileNames(
+						_allFileNames, new String[0],
+						new String[] {"**/*Tag.java"}, _sourceFormatterExcludes,
+						false));
 
 				tagJavaFilesAdded = true;
 			}

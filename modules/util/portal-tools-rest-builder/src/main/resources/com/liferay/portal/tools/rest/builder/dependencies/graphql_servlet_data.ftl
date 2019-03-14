@@ -1,5 +1,11 @@
 package ${configYAML.apiPackagePath}.internal.graphql.servlet.${escapedVersion};
 
+<#compress>
+	<#list openAPIYAML.components.schemas?keys as schemaName>
+		import ${configYAML.apiPackagePath}.resource.${escapedVersion}.${schemaName}Resource;
+	</#list>
+</#compress>
+
 import ${configYAML.apiPackagePath}.internal.graphql.mutation.${escapedVersion}.Mutation;
 import ${configYAML.apiPackagePath}.internal.graphql.query.${escapedVersion}.Query;
 
@@ -7,7 +13,12 @@ import com.liferay.portal.vulcan.graphql.servlet.ServletData;
 
 import javax.annotation.Generated;
 
+import org.osgi.framework.BundleContext;
+import org.osgi.service.component.ComponentServiceObjects;
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.component.annotations.ReferenceScope;
 
 /**
  * @author ${configYAML.author}
@@ -16,6 +27,24 @@ import org.osgi.service.component.annotations.Component;
 @Component(immediate = true, service = ServletData.class)
 @Generated("")
 public class ServletDataImpl implements ServletData {
+
+	<#assign
+		mutationSchemaNames = freeMarkerTool.getGraphQLSchemaNames(freeMarkerTool.getGraphQLJavaMethodSignatures(configYAML, "mutation", openAPIYAML))
+		querySchemaNames = freeMarkerTool.getGraphQLSchemaNames(freeMarkerTool.getGraphQLJavaMethodSignatures(configYAML, "query", openAPIYAML))
+	/>
+
+	@Activate
+	public void activate(BundleContext bundleContext) {
+		<#list mutationSchemaNames as schemaName>
+			Mutation.set${schemaName}ResourceComponentServiceObjects(
+				_${schemaName?uncap_first}ResourceComponentServiceObjects);
+		</#list>
+
+		<#list querySchemaNames as schemaName>
+			Query.set${schemaName}ResourceComponentServiceObjects(
+				_${schemaName?uncap_first}ResourceComponentServiceObjects);
+		</#list>
+	}
 
 	@Override
 	public Mutation getMutation() {
@@ -31,5 +60,19 @@ public class ServletDataImpl implements ServletData {
 	public Query getQuery() {
 		return new Query();
 	}
+
+	<#assign schemaNames = mutationSchemaNames />
+
+	<#list querySchemaNames as schemaName>
+		<#if !schemaNames?seq_contains(schemaName)>
+			<#assign schemaNames = schemaNames + [schemaName] />
+		</#if>
+	</#list>
+
+	<#list schemaNames as schemaName>
+		@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
+		private ComponentServiceObjects<${schemaName}Resource>
+			_${schemaName?uncap_first}ResourceComponentServiceObjects;
+	</#list>
 
 }

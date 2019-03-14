@@ -7,6 +7,9 @@ package ${configYAML.apiPackagePath}.internal.graphql.mutation.${escapedVersion}
 	</#list>
 </#compress>
 
+import com.liferay.petra.function.UnsafeConsumer;
+import com.liferay.petra.function.UnsafeFunction;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
@@ -26,9 +29,7 @@ import javax.annotation.Generated;
 
 import javax.ws.rs.core.Response;
 
-import org.osgi.framework.Bundle;
-import org.osgi.framework.FrameworkUtil;
-import org.osgi.util.tracker.ServiceTracker;
+import org.osgi.service.component.ComponentServiceObjects;
 
 /**
  * @author ${configYAML.author}
@@ -37,7 +38,21 @@ import org.osgi.util.tracker.ServiceTracker;
 @Generated("")
 public class Mutation {
 
-	<#assign javaMethodSignatures = freeMarkerTool.getGraphQLJavaMethodSignatures(configYAML, "mutation", openAPIYAML) />
+	<#assign
+		javaMethodSignatures = freeMarkerTool.getGraphQLJavaMethodSignatures(configYAML, "mutation", openAPIYAML)
+
+		schemaNames = freeMarkerTool.getGraphQLSchemaNames(javaMethodSignatures)
+	/>
+
+	<#list schemaNames as schemaName>
+		public static void set${schemaName}ResourceComponentServiceObjects(
+			ComponentServiceObjects<${schemaName}Resource>
+				${schemaName?uncap_first}ResourceComponentServiceObjects) {
+
+			_${schemaName?uncap_first}ResourceComponentServiceObjects =
+				${schemaName?uncap_first}ResourceComponentServiceObjects;
+		}
+	</#list>
 
 	<#list javaMethodSignatures as javaMethodSignature>
 		${freeMarkerTool.getGraphQLMethodAnnotations(javaMethodSignature)}
@@ -50,47 +65,61 @@ public class Mutation {
 
 				return responseBuilder.build();
 			<#elseif javaMethodSignature.returnType?contains("Collection<")>
-				${javaMethodSignature.schemaName}Resource ${javaMethodSignature.schemaName?uncap_first}Resource = _create${javaMethodSignature.schemaName}Resource();
+				return _applyComponentServiceObjects(
+					_${javaMethodSignature.schemaName?uncap_first}ResourceComponentServiceObjects,
+					this::_populateResourceContext,
+					${javaMethodSignature.schemaName?uncap_first}Resource -> {
+						<#assign arguments = freeMarkerTool.getGraphQLArguments(javaMethodSignature.javaMethodParameters) />
 
-				<#assign arguments = freeMarkerTool.getGraphQLArguments(javaMethodSignature.javaMethodParameters) />
+						Page paginationPage =
+							${javaMethodSignature.schemaName?uncap_first}Resource.${javaMethodSignature.methodName}(
+								${arguments?replace("pageSize,page", "Pagination.of(pageSize, page)")});
 
-				Page paginationPage = ${javaMethodSignature.schemaName?uncap_first}Resource.${javaMethodSignature.methodName}(${arguments?replace("pageSize,page", "Pagination.of(pageSize, page)")});
-
-				return paginationPage.getItems();
+						return paginationPage.getItems();
+					});
 			<#else>
-				${javaMethodSignature.schemaName}Resource ${javaMethodSignature.schemaName?uncap_first}Resource = _create${javaMethodSignature.schemaName}Resource();
-
-				return ${javaMethodSignature.schemaName?uncap_first}Resource.${javaMethodSignature.methodName}(${freeMarkerTool.getGraphQLArguments(javaMethodSignature.javaMethodParameters)});
+				return _applyComponentServiceObjects(
+					_${javaMethodSignature.schemaName?uncap_first}ResourceComponentServiceObjects,
+					this::_populateResourceContext,
+					${javaMethodSignature.schemaName?uncap_first}Resource -> ${javaMethodSignature.schemaName?uncap_first}Resource.${javaMethodSignature.methodName}(
+						${freeMarkerTool.getGraphQLArguments(javaMethodSignature.javaMethodParameters)}));
 			</#if>
 		}
 	</#list>
 
-	<#assign schemaNames = freeMarkerTool.getGraphQLSchemaNames(javaMethodSignatures) />
+	private <T, R, E1 extends Throwable, E2 extends Throwable> R
+			_applyComponentServiceObjects(
+				ComponentServiceObjects<T> componentServiceObjects,
+				UnsafeConsumer<T, E1> unsafeConsumer,
+				UnsafeFunction<T, R, E2> unsafeFunction)
+		throws E1, E2 {
+
+		T resource = componentServiceObjects.getService();
+
+		try {
+			unsafeConsumer.accept(resource);
+
+			return unsafeFunction.apply(resource);
+		}
+		finally {
+			componentServiceObjects.ungetService(resource);
+		}
+	}
 
 	<#list schemaNames as schemaName>
-		private static ${schemaName}Resource _create${schemaName}Resource() throws Exception {
-			${schemaName}Resource ${schemaName?uncap_first}Resource = _${schemaName?uncap_first}ResourceServiceTracker.getService();
+		private void _populateResourceContext(
+				${schemaName}Resource ${schemaName?uncap_first}Resource)
+			throws PortalException {
 
-			${schemaName?uncap_first}Resource.setContextCompany(CompanyLocalServiceUtil.getCompany(CompanyThreadLocal.getCompanyId()));
-
-			return ${schemaName?uncap_first}Resource;
+			${schemaName?uncap_first}Resource.setContextCompany(
+				CompanyLocalServiceUtil.getCompany(
+					CompanyThreadLocal.getCompanyId()));
 		}
-
-		private static final ServiceTracker<${schemaName}Resource, ${schemaName}Resource> _${schemaName?uncap_first}ResourceServiceTracker;
 	</#list>
 
-	<#if schemaNames?size != 0>
-		static {
-			Bundle bundle = FrameworkUtil.getBundle(Mutation.class);
-
-			<#list schemaNames as schemaName>
-				ServiceTracker<${schemaName}Resource, ${schemaName}Resource> ${schemaName?uncap_first}ResourceServiceTracker = new ServiceTracker<>(bundle.getBundleContext(), ${schemaName}Resource.class, null);
-
-				${schemaName?uncap_first}ResourceServiceTracker.open();
-
-				_${schemaName?uncap_first}ResourceServiceTracker = ${schemaName?uncap_first}ResourceServiceTracker;
-			</#list>
-		}
-	</#if>
+	<#list schemaNames as schemaName>
+		private static ComponentServiceObjects<${schemaName}Resource>
+			_${schemaName?uncap_first}ResourceComponentServiceObjects;
+	</#list>
 
 }

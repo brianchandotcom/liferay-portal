@@ -25,17 +25,17 @@ public class GeoCentroidAggregationResultImpl
 	extends BaseAggregationResult implements GeoCentroidAggregationResult {
 
 	public GeoCentroidAggregationResultImpl(
-		String name, GeoLocationPoint centroid, long count) {
+		String name, GeoLocationPoint centroidGeoLocationPoint, long count) {
 
 		super(name);
 
-		_centroid = centroid;
+		_centroidGeoLocationPoint = centroidGeoLocationPoint;
 		_count = count;
 	}
 
 	@Override
 	public GeoLocationPoint getCentroid() {
-		return _centroid;
+		return _centroidGeoLocationPoint;
 	}
 
 	@Override
@@ -43,7 +43,7 @@ public class GeoCentroidAggregationResultImpl
 		return _count;
 	}
 
-	private final GeoLocationPoint _centroid;
+	private final GeoLocationPoint _centroidGeoLocationPoint;
 	private final long _count;
 
 }

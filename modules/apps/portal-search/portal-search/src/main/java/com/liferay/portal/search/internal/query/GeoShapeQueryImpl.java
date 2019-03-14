@@ -14,7 +14,7 @@
 
 package com.liferay.portal.search.internal.query;
 
-import com.liferay.portal.search.geolocation.ShapeBuilder;
+import com.liferay.portal.search.geolocation.Shape;
 import com.liferay.portal.search.query.GeoShapeQuery;
 import com.liferay.portal.search.query.QueryVisitor;
 import com.liferay.portal.search.query.geolocation.ShapeRelation;
@@ -25,9 +25,9 @@ import com.liferay.portal.search.query.geolocation.SpatialStrategy;
  */
 public class GeoShapeQueryImpl extends BaseQueryImpl implements GeoShapeQuery {
 
-	public GeoShapeQueryImpl(String field, ShapeBuilder shapeBuilder) {
+	public GeoShapeQueryImpl(String field, Shape shape) {
 		_field = field;
-		_shapeBuilder = shapeBuilder;
+		_shape = shape;
 
 		_indexedShapeId = null;
 		_indexedShapeType = null;
@@ -40,7 +40,7 @@ public class GeoShapeQueryImpl extends BaseQueryImpl implements GeoShapeQuery {
 		_indexedShapeId = indexedShapeId;
 		_indexedShapeType = indexedShapeType;
 
-		_shapeBuilder = null;
+		_shape = null;
 	}
 
 	@Override
@@ -76,8 +76,8 @@ public class GeoShapeQueryImpl extends BaseQueryImpl implements GeoShapeQuery {
 		return _indexedShapeType;
 	}
 
-	public ShapeBuilder getShapeBuilder() {
-		return _shapeBuilder;
+	public Shape getShape() {
+		return _shape;
 	}
 
 	public ShapeRelation getShapeRelation() {
@@ -121,7 +121,7 @@ public class GeoShapeQueryImpl extends BaseQueryImpl implements GeoShapeQuery {
 	private String _indexedShapePath;
 	private String _indexedShapeRouting;
 	private final String _indexedShapeType;
-	private final ShapeBuilder _shapeBuilder;
+	private final Shape _shape;
 	private ShapeRelation _shapeRelation;
 	private SpatialStrategy _spatialStrategy;
 

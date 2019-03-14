@@ -202,16 +202,19 @@ public class AggregationResultsImpl implements AggregationResults {
 
 	@Override
 	public GeoBoundsAggregationResult geoBounds(
-		String name, GeoLocationPoint topLeft, GeoLocationPoint bottomRight) {
+		String name, GeoLocationPoint topLeftGeoLocationPoint,
+		GeoLocationPoint bottomRightGeoLocationPoint) {
 
-		return new GeoBoundsAggregationResultImpl(name, topLeft, bottomRight);
+		return new GeoBoundsAggregationResultImpl(
+			name, topLeftGeoLocationPoint, bottomRightGeoLocationPoint);
 	}
 
 	@Override
 	public GeoCentroidAggregationResult geoCentroid(
-		String name, GeoLocationPoint centroid, long count) {
+		String name, GeoLocationPoint centroidGeoLocationPoint, long count) {
 
-		return new GeoCentroidAggregationResultImpl(name, centroid, count);
+		return new GeoCentroidAggregationResultImpl(
+			name, centroidGeoLocationPoint, count);
 	}
 
 	@Override

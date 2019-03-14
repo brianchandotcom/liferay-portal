@@ -25,35 +25,36 @@ public class GeoBoundsAggregationResultImpl
 	extends BaseAggregationResult implements GeoBoundsAggregationResult {
 
 	public GeoBoundsAggregationResultImpl(
-		String name, GeoLocationPoint topLeft, GeoLocationPoint bottomRight) {
+		String name, GeoLocationPoint topLeftGeoLocationPoint,
+		GeoLocationPoint bottomRightGeoLocationPoint) {
 
 		super(name);
 
-		_topLeft = topLeft;
-		_bottomRight = bottomRight;
+		_topLeftGeolocationPoint = topLeftGeoLocationPoint;
+		_bottomRightGeoLocationPoint = bottomRightGeoLocationPoint;
 	}
 
 	@Override
 	public GeoLocationPoint getBottomRight() {
-		return _bottomRight;
+		return _bottomRightGeoLocationPoint;
 	}
 
 	@Override
 	public GeoLocationPoint getTopLeft() {
-		return _topLeft;
+		return _topLeftGeolocationPoint;
 	}
 
 	@Override
-	public void setBottomRight(GeoLocationPoint bottomRight) {
-		_bottomRight = bottomRight;
+	public void setBottomRight(GeoLocationPoint geoLocationPoint) {
+		_bottomRightGeoLocationPoint = geoLocationPoint;
 	}
 
 	@Override
-	public void setTopLeft(GeoLocationPoint topLeft) {
-		_topLeft = topLeft;
+	public void setTopLeft(GeoLocationPoint geoLocationPoint) {
+		_topLeftGeolocationPoint = geoLocationPoint;
 	}
 
-	private GeoLocationPoint _bottomRight;
-	private GeoLocationPoint _topLeft;
+	private GeoLocationPoint _bottomRightGeoLocationPoint;
+	private GeoLocationPoint _topLeftGeolocationPoint;
 
 }

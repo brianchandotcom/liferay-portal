@@ -114,27 +114,21 @@ if (portletTitleBasedNavigation) {
 		/>
 	</c:if>
 
-	<c:if test="<%= !portletTitleBasedNavigation %>">
+	<c:if test="<%= !portletTitleBasedNavigation && dlPortletInstanceSettingsHelper.isShowActions() %>">
 		<div class="btn-group">
-			<liferay-frontend:management-bar-sidenav-toggler-button
-				label="info"
-			/>
 
-			<c:if test="<%= dlPortletInstanceSettingsHelper.isShowActions() %>">
+			<%
+			for (ToolbarItem toolbarItem : dlViewFileVersionDisplayContext.getToolbarItems()) {
+			%>
 
-				<%
-				for (ToolbarItem toolbarItem : dlViewFileVersionDisplayContext.getToolbarItems()) {
-				%>
+				<liferay-ui:toolbar-item
+					toolbarItem="<%= toolbarItem %>"
+				/>
 
-					<liferay-ui:toolbar-item
-						toolbarItem="<%= toolbarItem %>"
-					/>
+			<%
+			}
+			%>
 
-				<%
-				}
-				%>
-
-			</c:if>
 		</div>
 	</c:if>
 

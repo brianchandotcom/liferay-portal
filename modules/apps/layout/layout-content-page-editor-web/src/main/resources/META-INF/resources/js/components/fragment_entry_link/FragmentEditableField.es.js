@@ -347,6 +347,8 @@ class FragmentEditableField extends Component {
 			event.preventDefault();
 
 			this._enableEditor();
+
+			this._disposeFloatingToolbar();
 		}
 		else if (panelId === FLOATING_TOOLBAR_PANELS.map.panelId) {
 			event.preventDefault();

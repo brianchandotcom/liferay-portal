@@ -41,7 +41,10 @@ public class Mutation {
 
 	<#list javaMethodSignatures as javaMethodSignature>
 		${freeMarkerTool.getGraphQLMethodAnnotations(javaMethodSignature)}
-		public ${javaMethodSignature.returnType} ${javaMethodSignature.methodName}(${freeMarkerTool.getGraphQLParameters(javaMethodSignature.javaMethodParameters, javaMethodSignature.operation, true)}) throws Exception {
+		public ${javaMethodSignature.returnType} ${javaMethodSignature.methodName}(
+				${freeMarkerTool.getGraphQLParameters(javaMethodSignature.javaMethodParameters, javaMethodSignature.operation, true)})
+			throws Exception {
+
 			<#if stringUtil.equals(javaMethodSignature.returnType, "javax.ws.rs.core.Response")>
 				Response.ResponseBuilder responseBuilder = Response.ok();
 

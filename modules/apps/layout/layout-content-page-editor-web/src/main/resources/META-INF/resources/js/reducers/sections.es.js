@@ -202,7 +202,7 @@ function updateSectionColumnsReducer(state, actionType, payload) {
 
 				let fragmentEntryLinkIdsToRemove = [],
 					nextData;
-				
+
 				const columnSize = (MAX_SECTION_COLUMNS / columnsNumber).toString();
 
 				if (columnsNumber > columns.length) {
@@ -216,11 +216,11 @@ function updateSectionColumnsReducer(state, actionType, payload) {
 								column => {
 									column.size = columnSize;
 								}
-							)
+							);
 
 							const newColumnsNumber = columnsNumber - columns.length;
 
-							for (let i=0; i < newColumnsNumber ; i++) {
+							for (let i = 0; i < newColumnsNumber; i++) {
 								columns.push(
 									{
 										columnId: `${nextColumnId}`,
@@ -228,7 +228,7 @@ function updateSectionColumnsReducer(state, actionType, payload) {
 										size: columnSize
 									}
 								);
-					
+
 								nextColumnId += 1;
 							}
 
@@ -238,7 +238,7 @@ function updateSectionColumnsReducer(state, actionType, payload) {
 
 					nextData = setIn(nextState.layoutData, ['nextColumnId'], nextColumnId);
 				}
-				else {
+				else {
 					let columnsToRemove = columns.slice(columnsNumber - columns.length);
 
 					let fragmentEntryLinkIdsToRemove = getSectionFragmentEntryLinkIds(
@@ -246,7 +246,7 @@ function updateSectionColumnsReducer(state, actionType, payload) {
 							columns: columnsToRemove
 						}
 					);
-					
+
 					fragmentEntryLinkIdsToRemove.forEach(
 						fragmentEntryLinkId => {
 							nextState = updateWidgets(nextState, fragmentEntryLinkId);
@@ -263,7 +263,7 @@ function updateSectionColumnsReducer(state, actionType, payload) {
 								column => {
 									column.size = columnSize;
 								}
-							)
+							);
 
 							return columns;
 						}

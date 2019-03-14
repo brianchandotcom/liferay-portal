@@ -75,9 +75,9 @@ class FloatingToolbarSpacingPanel extends Component {
 		const newValue = event.delegateTarget.value;
 		const prevValue = this.item.columns.length;
 
-		if(newValue < prevValue && !confirm(Liferay.Language.get('reducing-the-number-of-columns-will-lose-the-content-added-to-the-deleted-columns-are-you-sure-you-want-to-proced'))) {
+		if (newValue < prevValue && !confirm(Liferay.Language.get('reducing-the-number-of-columns-will-lose-the-content-added-to-the-deleted-columns-are-you-sure-you-want-to-proced'))) {
 			event.preventDefault();
-			event.delegateTarget.querySelector(`option[value="${prevValue}"]`).selected = true
+			event.delegateTarget.querySelector(`option[value="${prevValue}"]`).selected = true;
 			return false;
 		}
 
@@ -205,7 +205,7 @@ FloatingToolbarSpacingPanel.STATE = {
 		.internal()
 		.value(COLUMNS_NUMBER_OPTIONS),
 
-		/**
+	/**
 	 * @default CONTAINER_TYPES
 	 * @memberOf FloatingToolbarSpacingPanel
 	 * @private

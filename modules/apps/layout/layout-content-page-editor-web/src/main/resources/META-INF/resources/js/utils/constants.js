@@ -39,7 +39,7 @@ export const COLUMNS_NUMBER_OPTIONS = [
 	{
 		columnsNumberId: '6',
 		label: '6'
-	},
+	}
 ];
 
 /**

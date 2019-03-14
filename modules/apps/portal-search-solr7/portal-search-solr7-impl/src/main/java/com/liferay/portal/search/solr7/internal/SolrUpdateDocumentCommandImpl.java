@@ -15,11 +15,11 @@
 package com.liferay.portal.search.solr7.internal;
 
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.SearchContext;
-import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.search.solr7.internal.connection.SolrClientManager;
 import com.liferay.portal.search.solr7.internal.document.SolrDocumentFactory;
 import com.liferay.portal.search.solr7.internal.document.SolrUpdateDocumentCommand;
@@ -46,8 +46,7 @@ public class SolrUpdateDocumentCommandImpl
 
 	@Override
 	public String updateDocument(
-			SearchContext searchContext, Document document, boolean deleteFirst)
-		throws SearchException {
+		SearchContext searchContext, Document document, boolean deleteFirst) {
 
 		doUpdateDocuments(searchContext, Arrays.asList(document), deleteFirst);
 
@@ -58,9 +57,8 @@ public class SolrUpdateDocumentCommandImpl
 
 	@Override
 	public void updateDocuments(
-			SearchContext searchContext, Collection<Document> documents,
-			boolean deleteFirst)
-		throws SearchException {
+		SearchContext searchContext, Collection<Document> documents,
+		boolean deleteFirst) {
 
 		if (documents.isEmpty()) {
 			return;
@@ -70,9 +68,8 @@ public class SolrUpdateDocumentCommandImpl
 	}
 
 	protected UpdateResponse doUpdateDocuments(
-			SearchContext searchContext, Collection<Document> documents,
-			boolean deleteFirst)
-		throws SearchException {
+		SearchContext searchContext, Collection<Document> documents,
+		boolean deleteFirst) {
 
 		SolrClient solrClient = _solrClientManager.getSolrClient();
 
@@ -108,9 +105,7 @@ public class SolrUpdateDocumentCommandImpl
 			return updateResponse;
 		}
 		catch (Exception e) {
-			_log.error(e, e);
-
-			throw new SearchException(e);
+			throw new SystemException(e);
 		}
 	}
 

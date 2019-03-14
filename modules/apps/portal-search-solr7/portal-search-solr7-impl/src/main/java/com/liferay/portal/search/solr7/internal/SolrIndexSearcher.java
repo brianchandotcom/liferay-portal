@@ -19,6 +19,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.search.SearchPaginationUtil;
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -34,7 +35,6 @@ import com.liferay.portal.kernel.search.IndexSearcher;
 import com.liferay.portal.kernel.search.Query;
 import com.liferay.portal.kernel.search.QueryConfig;
 import com.liferay.portal.kernel.search.SearchContext;
-import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.Stats;
 import com.liferay.portal.kernel.search.StatsResults;
@@ -127,9 +127,7 @@ public class SolrIndexSearcher extends BaseIndexSearcher {
 	}
 
 	@Override
-	public Hits search(SearchContext searchContext, Query query)
-		throws SearchException {
-
+	public Hits search(SearchContext searchContext, Query query) {
 		StopWatch stopWatch = new StopWatch();
 
 		stopWatch.start();
@@ -176,12 +174,15 @@ public class SolrIndexSearcher extends BaseIndexSearcher {
 			return hits;
 		}
 		catch (Exception e) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(e, e);
+			if (_logExceptionsOnly) {
+				_log.error(e, e);
 			}
+			else {
+				if (e instanceof RuntimeException) {
+					throw (RuntimeException)e;
+				}
 
-			if (!_logExceptionsOnly) {
-				throw new SearchException(e.getMessage(), e);
+				throw new SystemException(e.getMessage(), e);
 			}
 
 			return new HitsImpl();
@@ -199,9 +200,7 @@ public class SolrIndexSearcher extends BaseIndexSearcher {
 	}
 
 	@Override
-	public long searchCount(SearchContext searchContext, Query query)
-		throws SearchException {
-
+	public long searchCount(SearchContext searchContext, Query query) {
 		StopWatch stopWatch = new StopWatch();
 
 		stopWatch.start();
@@ -210,12 +209,15 @@ public class SolrIndexSearcher extends BaseIndexSearcher {
 			return doSearchCount(searchContext, query);
 		}
 		catch (Exception e) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(e, e);
+			if (_logExceptionsOnly) {
+				_log.error(e, e);
 			}
+			else {
+				if (e instanceof RuntimeException) {
+					throw (RuntimeException)e;
+				}
 
-			if (!_logExceptionsOnly) {
-				throw new SearchException(e.getMessage(), e);
+				throw new SystemException(e.getMessage(), e);
 			}
 
 			return 0;

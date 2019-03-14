@@ -7,6 +7,12 @@ AUI.add(
 
 		var HTML5_UPLOAD = WIN && WIN.File && WIN.FormData && WIN.XMLHttpRequest;
 
+		var TPL_MOVE_FORM = '<form action="{actionUrl}" method="POST"><input name="{namespace}cmd" value="move"/>' +
+			'<input name="{namespace}newFolderId" value="{newFolderId}"/>' +
+			'<input name="{namespace}{parameterName}" value="{parameterValue}"/>' +
+			'<input name="{namespace}redirect" value="{redirectUrl}"/>' +
+			'</form>';
+
 		var DocumentLibrary = A.Component.create(
 			{
 				ATTRS: {
@@ -203,12 +209,11 @@ AUI.add(
 							},
 							function(event) {
 								if (parameterName && parameterValue) {
-									var form = instance.get('form').node;
-
-									form.get(namespace + parameterName).val(parameterValue);
+									instance._moveSingleElement(event.folderid, parameterName, parameterValue);
 								}
-
-								instance._processMoveAction(event.folderid);
+								else {
+									instance._processMoveAction(event.folderid);
+								}
 							}
 						);
 					},
@@ -224,6 +229,31 @@ AUI.add(
 						else {
 							instance._selectedFileEntries = [];
 						}
+					},
+
+					_moveSingleElement: function(newFolderId, parameterName, parameterValue) {
+						var instance = this;
+
+						var actionUrl = instance.get('editEntryUrl');
+						var namespace = instance.NS;
+						var originalForm = instance.get('form').node;
+						var redirectUrl = originalForm.get(namespace + 'redirect').val();
+
+						var formNode = A.Node.create(
+							A.Lang.sub(
+								TPL_MOVE_FORM,
+								{
+									actionUrl: actionUrl,
+									namespace: namespace,
+									newFolderId: newFolderId,
+									parameterName: parameterName,
+									parameterValue: parameterValue,
+									redirectUrl: redirectUrl
+								}
+							)
+						);
+
+						submitForm(formNode, actionUrl, false);
 					},
 
 					_moveToFolder: function(obj) {

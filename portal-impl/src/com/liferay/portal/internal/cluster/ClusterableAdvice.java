@@ -32,7 +32,7 @@ import java.util.Map;
 public class ClusterableAdvice extends ChainableMethodAdvice {
 
 	@Override
-	public void afterReturning(
+	protected void afterReturning(
 			AopMethodInvocation aopMethodInvocation, Object[] arguments,
 			Object result)
 		throws Throwable {
@@ -49,7 +49,7 @@ public class ClusterableAdvice extends ChainableMethodAdvice {
 	}
 
 	@Override
-	public Object before(
+	protected Object before(
 			AopMethodInvocation aopMethodInvocation, Object[] arguments)
 		throws Throwable {
 

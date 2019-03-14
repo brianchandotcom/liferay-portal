@@ -44,7 +44,7 @@ public class BufferedIncrementAdvice extends ChainableMethodAdvice {
 
 	@Override
 	@SuppressWarnings("rawtypes")
-	public Object before(
+	protected Object before(
 		AopMethodInvocation aopMethodInvocation, Object[] arguments) {
 
 		BufferedIncrementContext bufferedIncrementContext =

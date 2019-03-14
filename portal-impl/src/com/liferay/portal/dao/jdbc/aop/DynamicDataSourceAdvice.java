@@ -36,7 +36,7 @@ import org.springframework.transaction.interceptor.TransactionAttribute;
 public class DynamicDataSourceAdvice extends ChainableMethodAdvice {
 
 	@Override
-	public Object before(
+	protected Object before(
 		AopMethodInvocation aopMethodInvocation, Object[] arguments) {
 
 		Operation operation = aopMethodInvocation.getAdviceMethodContext();
@@ -74,7 +74,7 @@ public class DynamicDataSourceAdvice extends ChainableMethodAdvice {
 	}
 
 	@Override
-	public void duringFinally(
+	protected void duringFinally(
 		AopMethodInvocation aopMethodInvocation, Object[] arguments) {
 
 		_dynamicDataSourceTargetSource.popOperation();

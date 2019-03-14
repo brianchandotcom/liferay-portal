@@ -25,19 +25,19 @@ import java.util.Map;
  */
 public abstract class ChainableMethodAdvice {
 
-	public void afterReturning(
+	protected void afterReturning(
 			AopMethodInvocation aopMethodInvocation, Object[] arguments,
 			Object result)
 		throws Throwable {
 	}
 
-	public void afterThrowing(
+	protected void afterThrowing(
 			AopMethodInvocation aopMethodInvocation, Object[] arguments,
 			Throwable throwable)
 		throws Throwable {
 	}
 
-	public Object before(
+	protected Object before(
 			AopMethodInvocation aopMethodInvocation, Object[] arguments)
 		throws Throwable {
 
@@ -48,7 +48,7 @@ public abstract class ChainableMethodAdvice {
 		Class<?> targetClass, Method method,
 		Map<Class<? extends Annotation>, Annotation> annotations);
 
-	public void duringFinally(
+	protected void duringFinally(
 		AopMethodInvocation aopMethodInvocation, Object[] arguments) {
 	}
 

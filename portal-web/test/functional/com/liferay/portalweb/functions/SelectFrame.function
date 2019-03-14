@@ -12,6 +12,8 @@ definition {
 
 			selenium.selectFrame();
 
+			selenium.waitForElementPresent("//body");
+
 			selenium.assertJavaScriptErrors();
 
 			selenium.assertLiferayErrors();

@@ -67,6 +67,9 @@ public class KaleoInstanceTokenModelDocumentContributor
 			KaleoInstanceTokenField.CURRENT_KALEO_NODE_NAME,
 			kaleoInstanceToken.getCurrentKaleoNodeName());
 		document.addKeyword(
+			KaleoInstanceTokenField.KALEO_INSTANCE_ID,
+			kaleoInstanceToken.getKaleoInstanceId());
+		document.addKeyword(
 			KaleoInstanceTokenField.KALEO_INSTANCE_TOKEN_ID,
 			kaleoInstanceToken.getKaleoInstanceTokenId());
 		document.addKeyword(
@@ -79,9 +82,6 @@ public class KaleoInstanceTokenModelDocumentContributor
 			document.addKeyword(
 				KaleoInstanceTokenField.KALEO_DEFINITION_NAME,
 				kaleoInstance.getKaleoDefinitionName());
-			document.addKeyword(
-				KaleoInstanceTokenField.KALEO_INSTANCE_ID,
-				kaleoInstance.getKaleoInstanceId());
 		}
 		catch (PortalException pe) {
 			if (_log.isWarnEnabled()) {

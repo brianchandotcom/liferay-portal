@@ -35,8 +35,6 @@ import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LoggingTimer;
-import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.util.PortalInstances;
 
@@ -51,23 +49,8 @@ public class VerifyGroup extends VerifyProcess {
 
 	@Override
 	protected void doVerify() throws Exception {
-		verifySites();
 		verifyStagedGroups();
 		verifyTree();
-	}
-
-	protected void verifySites() throws Exception {
-		try (LoggingTimer loggingTimer = new LoggingTimer()) {
-			long organizationClassNameId = PortalUtil.getClassNameId(
-				Organization.class);
-
-			runSQL(
-				StringBundler.concat(
-					"update Group_ set site = [$TRUE$] where classNameId = ",
-					String.valueOf(organizationClassNameId),
-					" and site = [$FALSE$] and exists (select 1 from Layout ",
-					"where Layout.groupId = Group_.groupId)"));
-		}
 	}
 
 	protected void verifyStagedGroups() throws Exception {

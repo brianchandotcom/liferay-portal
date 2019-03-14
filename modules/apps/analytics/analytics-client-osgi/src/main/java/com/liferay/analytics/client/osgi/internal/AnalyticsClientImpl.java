@@ -173,33 +173,6 @@ public class AnalyticsClientImpl implements AnalyticsClient {
 			(JSONWebServiceClient)componentInstance.getInstance();
 	}
 
-	@Reference(
-		target = "(component.factory=JSONWebServiceClient)", unbind = "-"
-	)
-	protected void setComponentFactory(ComponentFactory componentFactory) {
-		_componentFactory = componentFactory;
-	}
-
-	@Reference(unbind = "-")
-	protected void setIdentityClient(IdentityClient identityClient) {
-		_identityClient = identityClient;
-	}
-
-	@Reference(
-		target = "(model=com.liferay.analytics.model.AnalyticsEventsMessage)",
-		unbind = "-"
-	)
-	protected void setJSONObjectMapper(
-		JSONObjectMapper<AnalyticsEventsMessage> jsonObjectMapper) {
-
-		_jsonObjectMapper = jsonObjectMapper;
-	}
-
-	@Reference(unbind = "-")
-	protected void setUserLocalService(UserLocalService userLocalService) {
-		_userLocalService = userLocalService;
-	}
-
 	private static final String _REQUEST_ATTRIBUTE_NAME_ANALYTICS_USER_ID =
 		"ANALYTICS_USER_ID";
 
@@ -207,10 +180,21 @@ public class AnalyticsClientImpl implements AnalyticsClient {
 		AnalyticsClientImpl.class);
 
 	private volatile AnalyticsClientConfiguration _analyticsClientConfiguration;
+
+	@Reference(target = "(component.factory=JSONWebServiceClient)")
 	private ComponentFactory _componentFactory;
+
+	@Reference
 	private IdentityClient _identityClient;
+
+	@Reference(
+		target = "(model=com.liferay.analytics.model.AnalyticsEventsMessage)"
+	)
 	private JSONObjectMapper<AnalyticsEventsMessage> _jsonObjectMapper;
+
 	private JSONWebServiceClient _jsonWebServiceClient;
+
+	@Reference
 	private UserLocalService _userLocalService;
 
 }

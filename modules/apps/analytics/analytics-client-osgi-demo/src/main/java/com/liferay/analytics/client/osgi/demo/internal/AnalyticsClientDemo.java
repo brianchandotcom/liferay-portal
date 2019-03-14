@@ -73,22 +73,13 @@ public class AnalyticsClientDemo extends BasePortalInstanceLifecycleListener {
 		_basicUserDemoDataCreator.delete();
 	}
 
-	@Reference(unbind = "-")
-	protected void setAnalyticsClient(AnalyticsClient analyticsClient) {
-		_analyticsClient = analyticsClient;
-	}
-
-	@Reference(unbind = "-")
-	protected void setBasicUserDemoDataCreator(
-		BasicUserDemoDataCreator basicUserDemoDataCreator) {
-
-		_basicUserDemoDataCreator = basicUserDemoDataCreator;
-	}
-
 	private static final Log _log = LogFactoryUtil.getLog(
 		AnalyticsClientDemo.class);
 
+	@Reference
 	private AnalyticsClient _analyticsClient;
+
+	@Reference
 	private BasicUserDemoDataCreator _basicUserDemoDataCreator;
 
 }

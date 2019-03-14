@@ -71,14 +71,10 @@ public class AnalyticsClientDemoPortlet extends MVCPortlet {
 		}
 	}
 
-	@Reference(unbind = "-")
-	protected void setAnalyticsClient(AnalyticsClient analyticsClient) {
-		_analyticsClient = analyticsClient;
-	}
-
 	private static final Log _log = LogFactoryUtil.getLog(
 		AnalyticsClientDemoPortlet.class);
 
+	@Reference
 	private AnalyticsClient _analyticsClient;
 
 }

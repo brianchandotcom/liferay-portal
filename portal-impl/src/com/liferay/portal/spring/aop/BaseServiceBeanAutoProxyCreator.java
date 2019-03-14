@@ -22,9 +22,7 @@ import java.beans.PropertyDescriptor;
 
 import java.lang.reflect.Constructor;
 
-import java.util.ArrayList;
 import java.util.Collections;
-import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
@@ -35,24 +33,14 @@ import org.springframework.beans.factory.config.SmartInstantiationAwareBeanPostP
 /**
  * @author Shuyang Zhou
  */
-public class ServiceBeanAutoProxyCreator
+public abstract class BaseServiceBeanAutoProxyCreator
 	implements SmartInstantiationAwareBeanPostProcessor {
 
-	public ServiceBeanAutoProxyCreator(
-		BeanMatcher beanMatcher, ClassLoader classLoader,
-		ChainableMethodAdvice[] chainableMethodAdvices) {
+	public BaseServiceBeanAutoProxyCreator(
+		BeanMatcher beanMatcher, ClassLoader classLoader) {
 
 		_beanMatcher = beanMatcher;
 		_classLoader = classLoader;
-		_chainableMethodAdvices = chainableMethodAdvices;
-	}
-
-	public void destroy() {
-		for (AopInvocationHandler aopInvocationHandler :
-				_aopInvocationHandlers) {
-
-			AopCacheManager.destroy(aopInvocationHandler);
-		}
 	}
 
 	@Override
@@ -120,21 +108,19 @@ public class ServiceBeanAutoProxyCreator
 		return null;
 	}
 
-	private Object _createProxy(Object bean) {
-		AopInvocationHandler aopInvocationHandler = AopCacheManager.create(
-			bean, _chainableMethodAdvices);
+	protected abstract AopInvocationHandler createAopInvocationHandler(
+		Object bean);
 
-		_aopInvocationHandlers.add(aopInvocationHandler);
+	private Object _createProxy(Object bean) {
+		AopInvocationHandler aopInvocationHandler = createAopInvocationHandler(
+			bean);
 
 		return ProxyUtil.newProxyInstance(
 			_classLoader, ReflectionUtil.getInterfaces(bean),
 			aopInvocationHandler);
 	}
 
-	private final List<AopInvocationHandler> _aopInvocationHandlers =
-		new ArrayList<>();
 	private final BeanMatcher _beanMatcher;
-	private final ChainableMethodAdvice[] _chainableMethodAdvices;
 	private final ClassLoader _classLoader;
 	private final Set<CacheKey> _earlyProxyReferences =
 		Collections.newSetFromMap(new ConcurrentHashMap<>());

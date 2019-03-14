@@ -14,7 +14,6 @@
 
 package com.liferay.fragment.model.impl;
 
-import com.liferay.document.library.kernel.service.DLAppLocalServiceUtil;
 import com.liferay.document.library.kernel.util.DLUtil;
 import com.liferay.fragment.constants.FragmentEntryTypeConstants;
 import com.liferay.fragment.constants.FragmentExportImportConstants;
@@ -26,6 +25,7 @@ import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.portletfilerepository.PortletFileRepositoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Validator;
@@ -128,7 +128,8 @@ public class FragmentEntryImpl extends FragmentEntryBaseImpl {
 		}
 
 		try {
-			return DLAppLocalServiceUtil.getFileEntry(getPreviewFileEntryId());
+			return PortletFileRepositoryUtil.getPortletFileEntry(
+				getPreviewFileEntryId());
 		}
 		catch (PortalException pe) {
 			if (_log.isDebugEnabled()) {

@@ -16,7 +16,6 @@ package com.liferay.layout.page.template.model.impl;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.document.library.kernel.service.DLAppLocalServiceUtil;
 import com.liferay.document.library.kernel.util.DLUtil;
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.service.FragmentEntryLinkLocalServiceUtil;
@@ -26,6 +25,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.portletfilerepository.PortletFileRepositoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -78,7 +78,7 @@ public class LayoutPageTemplateEntryImpl
 		}
 
 		try {
-			FileEntry fileEntry = DLAppLocalServiceUtil.getFileEntry(
+			FileEntry fileEntry = PortletFileRepositoryUtil.getPortletFileEntry(
 				getPreviewFileEntryId());
 
 			if (fileEntry == null) {

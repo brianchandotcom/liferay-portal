@@ -32,7 +32,7 @@ public class ClassLoaderTrackerBundleActivator implements BundleActivator {
 	@Override
 	public void start(BundleContext bundleContext) {
 		_bundleTracker = new BundleTracker<ClassLoader>(
-			bundleContext, Bundle.ACTIVE, null) {
+			bundleContext, Bundle.STARTING | Bundle.ACTIVE, null) {
 
 			@Override
 			public ClassLoader addingBundle(

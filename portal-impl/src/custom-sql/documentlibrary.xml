@@ -308,6 +308,26 @@
 				)
 		]]>
 	</sql>
+	<sql id="com.liferay.document.library.kernel.service.persistence.DLFileEntryTypeFinder.findByC_F_G_N_D_S">
+		<![CDATA[
+			[$BASIC_DOCUMENT$]
+			SELECT
+				DISTINCT {DLFileEntryType.*}
+			FROM
+				DLFileEntryType
+			INNER JOIN
+				DLFileEntryTypes_DLFolders ON
+					DLFileEntryTypes_DLFolders.fileEntryTypeId = DLFileEntryType.fileEntryTypeId
+			WHERE
+				(DLFileEntryType.companyId = ?) AND
+				(DLFileEntryTypes_DLFolders.folderId = ?) AND
+				[$GROUP_ID$]
+				(
+					(LOWER(DLFileEntryType.name) LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
+					(DLFileEntryType.description LIKE ? [$AND_OR_NULL_CHECK$])
+				)
+		]]>
+	</sql>
 	<sql id="com.liferay.document.library.kernel.service.persistence.DLFileEntryTypeFinder.findByC_G_N_D_S">
 		<![CDATA[
 			[$BASIC_DOCUMENT$]

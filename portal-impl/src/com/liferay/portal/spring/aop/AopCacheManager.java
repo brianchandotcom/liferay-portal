@@ -35,9 +35,8 @@ import com.liferay.portal.systemevent.SystemEventAdvice;
 import com.liferay.portal.util.PropsValues;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
-import java.util.Set;
+import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
@@ -49,12 +48,16 @@ public class AopCacheManager {
 		Object target, TransactionExecutor transactionExecutor,
 		ServiceMonitoringControl serviceMonitoringControl) {
 
+		ChainableMethodAdviceDependencies chainableMethodAdviceDependencies =
+			new ChainableMethodAdviceDependencies(
+				transactionExecutor, serviceMonitoringControl);
+
 		AopInvocationHandler aopInvocationHandler = new AopInvocationHandler(
 			target,
-			_createChainableMethodAdvices(
-				transactionExecutor, serviceMonitoringControl));
+			_createChainableMethodAdvices(chainableMethodAdviceDependencies));
 
-		_aopInvocationHandlers.add(aopInvocationHandler);
+		_aopInvocationHandlers.put(
+			aopInvocationHandler, chainableMethodAdviceDependencies);
 
 		return aopInvocationHandler;
 	}
@@ -65,15 +68,14 @@ public class AopCacheManager {
 
 	public static void reset() {
 		for (AopInvocationHandler aopInvocationHandler :
-				_aopInvocationHandlers) {
+				_aopInvocationHandlers.keySet()) {
 
 			aopInvocationHandler.reset();
 		}
 	}
 
 	private static ChainableMethodAdvice[] _createChainableMethodAdvices(
-		TransactionExecutor transactionExecutor,
-		ServiceMonitoringControl serviceMonitoringControl) {
+		ChainableMethodAdviceDependencies chainableMethodAdviceDependencies) {
 
 		List<ChainableMethodAdvice> chainableMethodAdvices = new ArrayList<>(
 			14);
@@ -93,7 +95,8 @@ public class AopCacheManager {
 		}
 
 		chainableMethodAdvices.add(
-			new ServiceMonitorAdvice(serviceMonitoringControl));
+			new ServiceMonitorAdvice(
+				chainableMethodAdviceDependencies._serviceMonitoringControl));
 
 		AsyncAdvice asyncAdvice = new AsyncAdvice();
 
@@ -116,7 +119,8 @@ public class AopCacheManager {
 		TransactionInterceptor transactionInterceptor =
 			new TransactionInterceptor();
 
-		transactionInterceptor.setTransactionExecutor(transactionExecutor);
+		transactionInterceptor.setTransactionExecutor(
+			chainableMethodAdviceDependencies._transactionExecutor);
 
 		DynamicDataSourceTargetSource dynamicDataSourceTargetSource =
 			InfrastructureUtil.getDynamicDataSourceTargetSource();
@@ -140,7 +144,23 @@ public class AopCacheManager {
 	private AopCacheManager() {
 	}
 
-	private static final Set<AopInvocationHandler> _aopInvocationHandlers =
-		Collections.newSetFromMap(new ConcurrentHashMap<>());
+	private static final Map
+		<AopInvocationHandler, ChainableMethodAdviceDependencies>
+			_aopInvocationHandlers = new ConcurrentHashMap<>();
+
+	private static class ChainableMethodAdviceDependencies {
+
+		private ChainableMethodAdviceDependencies(
+			TransactionExecutor transactionExecutor,
+			ServiceMonitoringControl serviceMonitoringControl) {
+
+			_transactionExecutor = transactionExecutor;
+			_serviceMonitoringControl = serviceMonitoringControl;
+		}
+
+		private final ServiceMonitoringControl _serviceMonitoringControl;
+		private final TransactionExecutor _transactionExecutor;
+
+	}
 
 }

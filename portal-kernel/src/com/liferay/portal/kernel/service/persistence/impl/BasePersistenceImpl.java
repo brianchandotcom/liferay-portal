@@ -670,11 +670,7 @@ public class BasePersistenceImpl<T extends BaseModel<T>>
 	protected String getColumnName(
 		String entityAlias, String fieldName, boolean sqlQuery) {
 
-		String columnName = fieldName;
-
-		if (_dbColumnNames != null) {
-			columnName = _dbColumnNames.getOrDefault(fieldName, fieldName);
-		}
+		String columnName = _dbColumnNames.getOrDefault(fieldName, fieldName);
 
 		if (sqlQuery) {
 			fieldName = columnName;
@@ -822,7 +818,7 @@ public class BasePersistenceImpl<T extends BaseModel<T>>
 	private int _databaseOrderByMaxColumns;
 	private DataSource _dataSource;
 	private DB _db;
-	private Map<String, String> _dbColumnNames;
+	private Map<String, String> _dbColumnNames = Collections.emptyMap();
 	private Dialect _dialect;
 	private Class<T> _modelClass;
 	private Class<? extends T> _modelImplClass;

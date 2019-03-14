@@ -26,15 +26,23 @@ export default class Pagination extends React.Component {
 
 	render() {
 		const {page, pageSize, totalCount} = this.props;
+
 		const activePage = page === 1 ? page : this.state.activePage;
 		const lastPage = Math.ceil(totalCount / pageSize);
+
+		const nextPage = activePage + 1;
+		const prevPage = activePage - 1;
+
+		const hasNextPage = nextPage <= lastPage;
+		const hasPreviousPage = prevPage > 0;
+
 		const renderPages = () => {
 			const rows = [];
 
 			for (let i = 1; i <= lastPage; i++) {
 				rows.push(
 					<PageItem
-						active={i === activePage ? true : false}
+						highlighted={i === activePage ? true : false}
 						key={`process_list_pag_${i}`}
 						onChangePage={this.goToPage}
 						page={i}
@@ -47,11 +55,23 @@ export default class Pagination extends React.Component {
 
 		return (
 			<ul className="pagination pull-right">
-				<PageItem onChangePage={this.goToPage} page={1} type="prev" />
+				<PageItem
+					disabled={!hasPreviousPage}
+					key={`process_list_pag_prev_${prevPage}`}
+					onChangePage={this.goToPage}
+					page={prevPage}
+					type="prev"
+				/>
 
 				{renderPages()}
 
-				<PageItem onChangePage={this.goToPage} page={lastPage} type="next" />
+				<PageItem
+					disabled={!hasNextPage}
+					key={`process_list_pag_next_${nextPage}`}
+					onChangePage={this.goToPage}
+					page={nextPage}
+					type="next"
+				/>
 			</ul>
 		);
 	}

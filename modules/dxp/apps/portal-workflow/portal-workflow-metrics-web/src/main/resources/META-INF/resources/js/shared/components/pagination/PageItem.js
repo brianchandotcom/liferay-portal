@@ -9,16 +9,21 @@ import React from 'react';
 export default class PageItem extends React.Component {
 	@autobind
 	setPage() {
-		const {onChangePage, page} = this.props;
+		const {disabled, onChangePage, page} = this.props;
 
-		onChangePage(page);
+		if (!disabled) {
+			onChangePage(page);
+		}
 	}
 
 	render() {
-		const {active, page, type} = this.props;
+		const {disabled, highlighted, page, type} = this.props;
 		const classNames = ['page-item'];
 
-		if (active) {
+		if (disabled) {
+			classNames.push('disabled');
+		}
+		if (highlighted) {
 			classNames.push('active');
 		}
 

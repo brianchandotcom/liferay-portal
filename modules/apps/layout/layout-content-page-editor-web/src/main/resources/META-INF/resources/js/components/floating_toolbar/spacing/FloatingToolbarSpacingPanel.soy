@@ -5,7 +5,9 @@
  */
 {template .render}
 	{@param item: ?}
+	{@param? _columnsNumberOptions: ?}
 	{@param? _containerTypes: ?}
+	{@param? _handleColumnsNumberOptionChange: any}
 	{@param? _handleColumnSpacingOptionChange: any}
 	{@param? _handleColumnSpacingOptionMousedown: any}
 	{@param? _handleContainerPaddingOptionChange: any}
@@ -18,6 +20,14 @@
 	]}
 
 	<div class="floating-toolbar-spacing-panel">
+		<div class="form-group">
+			{call .columnsNumberOptions}
+				{param columnsNumberOptions: $_columnsNumberOptions /}
+				{param handleColumnsNumberOptionChange: $_handleColumnsNumberOptionChange /}
+				{param item: $item /}
+			{/call}
+		</div>
+
 		<div class="form-group">
 			{call .containerTypeOptions}
 				{param containerTypes: $_containerTypes /}
@@ -115,6 +125,65 @@
 
 	<option {$optionAttributes}>
 		x{$paddingSize}
+	</option>
+{/template}
+
+/**
+ * Columns number
+ */
+{template .columnsNumberOptions}
+	{@param item: [
+		columns: list<?>
+	]}
+	{@param? columnsNumberOptions: list<[
+		columnsNumberId: string,
+		label: string
+	]>}
+	{@param? handleColumnsNumberOptionChange: any}
+
+	{if $columnsNumberOptions}
+		<label for="floatingToolbarSpacingPanelColumnsNumberOption">
+			{msg desc=""}number-of-columns{/msg}
+		</label>
+
+		<select
+			class="form-control form-control-sm"
+			data-onchange="{$handleColumnsNumberOptionChange}"
+			id="floatingToolbarSpacingPanelColumnsNumberOption"
+		>
+			{foreach $columnsNumberOption in $columnsNumberOptions}
+				{call .columnsNumberOption}
+					{param columnsNumberOption: $columnsNumberOption /}
+					{param item: $item /}
+					{param key: $columnsNumberOption.columnsNumberId /}
+				{/call}
+			{/foreach}
+		</select>
+	{/if}
+{/template}
+
+/**
+ * Columns number option
+ */
+{template .columnsNumberOption}
+	{@param columnsNumberOption: [
+		columnsNumberId: string,
+		label: string
+	]}
+	{@param item: [
+		columns: list<?>
+	]}
+
+	{let $optionAttributes kind="attributes"}
+		value="{$columnsNumberOption.columnsNumberId}"
+
+		{if $item.columns and length($item.columns) == $columnsNumberOption.columnsNumberId}
+			selected
+		{/if}
+	{/let}
+
+	<option {$optionAttributes}>
+		{$columnsNumberOption.label}
 	</option>
 {/template}
 

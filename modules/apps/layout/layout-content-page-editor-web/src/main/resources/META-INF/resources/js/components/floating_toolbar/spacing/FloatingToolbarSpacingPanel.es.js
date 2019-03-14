@@ -3,10 +3,11 @@ import Component from 'metal-component';
 import Soy, {Config} from 'metal-soy';
 
 import './FloatingToolbarSpacingPanelDelegateTemplate.soy';
-import {CONTAINER_TYPES, ITEM_CONFIG_KEYS} from '../../../utils/constants';
+import {COLUMNS_NUMBER_OPTIONS, CONTAINER_TYPES, ITEM_CONFIG_KEYS} from '../../../utils/constants';
 import {setIn} from '../../../utils/FragmentsEditorUpdateUtils.es';
 import templates from './FloatingToolbarSpacingPanel.soy';
-import {UPDATE_LAST_SAVE_DATE, UPDATE_SAVING_CHANGES_STATUS, UPDATE_SECTION_CONFIG, UPDATE_TRANSLATION_STATUS} from '../../../actions/actions.es';
+import {UPDATE_SECTION_COLUMNS, UPDATE_LAST_SAVE_DATE, UPDATE_SAVING_CHANGES_STATUS, UPDATE_SECTION_CONFIG, UPDATE_TRANSLATION_STATUS} from '../../../actions/actions.es';
+import getConnectedComponent from '../../../store/ConnectedComponent.es';
 
 /**
  * @type {string}
@@ -67,12 +68,13 @@ class FloatingToolbarSpacingPanel extends Component {
 	}
 
 	/**
-	 * Updates section configuration
-	 * @param {object} config Section configuration
+	 * Updates section
+	 * @param {string} updateAction Update action name
+	 * @param {object} payload Section payload
 	 * @private
 	 * @review
 	 */
-	_updateSectionConfig(config) {
+	_updateSection(updateAction, payload) {
 		this.store
 			.dispatchAction(
 				UPDATE_SAVING_CHANGES_STATUS,
@@ -81,11 +83,8 @@ class FloatingToolbarSpacingPanel extends Component {
 				}
 			)
 			.dispatchAction(
-				UPDATE_SECTION_CONFIG,
-				{
-					config,
-					sectionId: this.itemId
-				}
+				updateAction,
+				payload
 			)
 			.dispatchAction(
 				UPDATE_TRANSLATION_STATUS
@@ -102,6 +101,39 @@ class FloatingToolbarSpacingPanel extends Component {
 					savingChanges: false
 				}
 			);
+	}
+
+	/**
+	 * Updates section configuration
+	 * @param {object} config Section configuration
+	 * @private
+	 * @review
+	 */
+	_updateSectionConfig(config) {
+		this._updateSection(UPDATE_SECTION_CONFIG, {
+			config,
+			sectionId: this.itemId
+		});
+	}
+
+	/**
+	 * Handle container option change
+	 * @param {Event} event
+	 */
+	_handleColumnsNumberOptionChange(event) {
+		const newValue = event.delegateTarget.value;
+		const prevValue = this.item.columns.length;
+
+		if(newValue < prevValue && !confirm(Liferay.Language.get('reducing-the-number-of-columns-will-lose-the-content-added-to-the-deleted-columns-are-you-sure-you-want-to-proced'))) {
+			event.preventDefault();
+			event.delegateTarget.querySelector(`option[value="${prevValue}"]`).selected = true
+			return false;
+		}
+
+		this._updateSection(UPDATE_SECTION_COLUMNS, {
+			columnsNumber: event.delegateTarget.value,
+			sectionId: this.itemId
+		});
 	}
 
 	/**
@@ -189,13 +221,33 @@ FloatingToolbarSpacingPanel.STATE = {
 	 * @review
 	 * @type {object[]}
 	 */
+	_columnsNumberOptions: Config
+		.array()
+		.internal()
+		.value(COLUMNS_NUMBER_OPTIONS),
+
+		/**
+	 * @default CONTAINER_TYPES
+	 * @memberOf FloatingToolbarSpacingPanel
+	 * @private
+	 * @review
+	 * @type {object[]}
+	 */
 	_containerTypes: Config
 		.array()
 		.internal()
 		.value(CONTAINER_TYPES)
 };
 
-Soy.register(FloatingToolbarSpacingPanel, templates);
+const ConnectedFloatingToolbarSpacingPanel = getConnectedComponent(
+	FloatingToolbarSpacingPanel,
+	[
+		'layoutData',
+		'spritemap'
+	]
+);
+
+Soy.register(ConnectedFloatingToolbarSpacingPanel, templates);
 
 export {FloatingToolbarSpacingPanel};
 export default FloatingToolbarSpacingPanel;

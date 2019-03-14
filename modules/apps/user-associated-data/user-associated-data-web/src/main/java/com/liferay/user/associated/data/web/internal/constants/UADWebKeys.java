@@ -41,6 +41,4 @@ public class UADWebKeys {
 	public static final String VIEW_UAD_ENTITIES_DISPLAY =
 		"VIEW_UAD_ENTITIES_DISPLAY";
 
-	public static final String VIEW_UAD_SUMMARY_STEP = "VIEW_UAD_SUMMARY_STEP";
-
 }

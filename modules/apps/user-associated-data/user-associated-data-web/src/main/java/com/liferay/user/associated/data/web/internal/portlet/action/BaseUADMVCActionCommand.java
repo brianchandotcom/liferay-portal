@@ -28,7 +28,6 @@ import com.liferay.user.associated.data.display.UADDisplay;
 import com.liferay.user.associated.data.web.internal.registry.UADRegistry;
 import com.liferay.user.associated.data.web.internal.util.SelectedUserHelper;
 import com.liferay.user.associated.data.web.internal.util.UADApplicationSummaryHelper;
-import com.liferay.user.associated.data.web.internal.util.UADReviewDataHelper;
 
 import java.io.Serializable;
 
@@ -205,8 +204,5 @@ public abstract class BaseUADMVCActionCommand extends BaseMVCActionCommand {
 
 	@Reference
 	protected UADRegistry uadRegistry;
-
-	@Reference
-	protected UADReviewDataHelper uadReviewDataHelper;
 
 }

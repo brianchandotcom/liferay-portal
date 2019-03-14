@@ -30,7 +30,6 @@ import com.liferay.portal.kernel.util.TextFormatter;
 import com.liferay.user.associated.data.display.UADDisplay;
 import com.liferay.user.associated.data.web.internal.display.UADEntity;
 import com.liferay.user.associated.data.web.internal.display.UADHierarchyDisplay;
-import com.liferay.user.associated.data.web.internal.registry.UADRegistry;
 import com.liferay.user.associated.data.web.internal.search.UADHierarchyChecker;
 
 import java.io.Serializable;
@@ -333,8 +332,5 @@ public class UADReviewDataHelper {
 
 	@Reference
 	private Portal _portal;
-
-	@Reference
-	private UADRegistry _uadRegistry;
 
 }

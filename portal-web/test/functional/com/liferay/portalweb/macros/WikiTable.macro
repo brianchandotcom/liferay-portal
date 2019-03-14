@@ -12,17 +12,6 @@ definition {
 		PortletEntry.clickMoveToRecycleBin();
 	}
 
-	macro restoreEntry {
-		var key_wikiPageTitle = "${wikiPageTitle}";
-
-		Click(
-			locator1 = "WikiTable#ALL_PAGES_VERTICAL_ELLIPSIS",
-			value1 = "${wikiPageTitle}"
-		);
-
-		MenuItem.click(menuItem = "Restore");
-	}
-
 	macro viewEntry {
 		var key_wikiPageTitle = "${wikiPageTitle}";
 

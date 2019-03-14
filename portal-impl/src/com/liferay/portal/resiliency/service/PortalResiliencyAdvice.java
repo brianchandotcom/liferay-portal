@@ -39,7 +39,7 @@ import java.util.concurrent.Future;
 public class PortalResiliencyAdvice extends ChainableMethodAdvice {
 
 	@Override
-	public Object before(
+	protected Object before(
 			AopMethodInvocation aopMethodInvocation, Object[] arguments)
 		throws Throwable {
 

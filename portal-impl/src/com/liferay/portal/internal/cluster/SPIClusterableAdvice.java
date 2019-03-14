@@ -36,7 +36,7 @@ import java.util.concurrent.Future;
 public class SPIClusterableAdvice extends ChainableMethodAdvice {
 
 	@Override
-	public void afterReturning(
+	protected void afterReturning(
 			AopMethodInvocation aopMethodInvocation, Object[] arguments,
 			Object result)
 		throws Throwable {

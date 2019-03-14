@@ -36,7 +36,7 @@ import java.util.Map;
 public class AsyncAdvice extends ChainableMethodAdvice {
 
 	@Override
-	public Object before(
+	protected Object before(
 		AopMethodInvocation aopMethodInvocation, Object[] arguments) {
 
 		if (AsyncInvokeThreadLocal.isEnabled()) {

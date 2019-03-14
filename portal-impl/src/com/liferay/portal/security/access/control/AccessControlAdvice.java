@@ -35,7 +35,7 @@ import java.util.Map;
 public class AccessControlAdvice extends ChainableMethodAdvice {
 
 	@Override
-	public Object before(
+	protected Object before(
 		AopMethodInvocation aopMethodInvocation, Object[] arguments) {
 
 		incrementServiceDepth();
@@ -58,7 +58,7 @@ public class AccessControlAdvice extends ChainableMethodAdvice {
 	}
 
 	@Override
-	public void duringFinally(
+	protected void duringFinally(
 		AopMethodInvocation aopMethodInvocation, Object[] arguments) {
 
 		decrementServiceDepth();

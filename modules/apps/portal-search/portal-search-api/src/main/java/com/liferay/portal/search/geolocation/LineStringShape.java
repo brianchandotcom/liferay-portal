@@ -20,26 +20,5 @@ import aQute.bnd.annotation.ProviderType;
  * @author Michael C. Han
  */
 @ProviderType
-public interface ShapeBuilderTranslator<T> {
-
-	public T translate(CircleShapeBuilder circleShapeBuilder);
-
-	public T translate(EnvelopeShapeBuilder envelopeShapeBuilder);
-
-	public T translate(
-		GeometryCollectionShapeBuilder geometryCollectionShapeBuilder);
-
-	public T translate(LineStringShapeBuilder lineStringShapeBuilder);
-
-	public T translate(
-		MultipleLineStringShapeBuilder multipleLineStringShapeBuilder);
-
-	public T translate(MultiPointShapeBuilder multiPointShapeBuilder);
-
-	public T translate(MultiPolygonShapeBuilder multiPolygonShapeBuilder);
-
-	public T translate(PointShapeBuilder pointShapeBuilder);
-
-	public T translate(PolygonShapeBuilder polygonShapeBuilder);
-
+public interface LineStringShape extends Shape {
 }

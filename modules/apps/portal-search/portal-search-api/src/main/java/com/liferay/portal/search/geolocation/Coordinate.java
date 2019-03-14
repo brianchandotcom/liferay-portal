@@ -20,35 +20,12 @@ import aQute.bnd.annotation.ProviderType;
  * @author Michael C. Han
  */
 @ProviderType
-public class Coordinate {
+public interface Coordinate {
 
-	public Coordinate(double x, double y) {
-		_x = x;
-		_y = y;
+	public double getX();
 
-		_z = 0;
-	}
+	public double getY();
 
-	public Coordinate(double x, double y, double z) {
-		_x = x;
-		_y = y;
-		_z = z;
-	}
-
-	public double getX() {
-		return _x;
-	}
-
-	public double getY() {
-		return _y;
-	}
-
-	public double getZ() {
-		return _z;
-	}
-
-	private final double _x;
-	private final double _y;
-	private final double _z;
+	public double getZ();
 
 }

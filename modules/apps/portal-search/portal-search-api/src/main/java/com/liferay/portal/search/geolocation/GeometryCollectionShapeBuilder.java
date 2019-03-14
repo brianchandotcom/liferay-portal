@@ -16,33 +16,26 @@ package com.liferay.portal.search.geolocation;
 
 import aQute.bnd.annotation.ProviderType;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 /**
- * @author Michael C. Han
+ * @author André de Oliveira
  */
 @ProviderType
-public class GeometryCollectionShapeBuilder extends ShapeBuilder {
+public interface GeometryCollectionShapeBuilder {
 
-	@Override
-	public <T> T accept(ShapeBuilderTranslator<T> shapeBuilderTranslator) {
-		return shapeBuilderTranslator.translate(this);
-	}
+	public GeometryCollectionShapeBuilder addCoordinate(Coordinate coordinate);
 
-	public void addShapeBuilder(ShapeBuilder shapeBuilder) {
-		_shapeBuilders.add(shapeBuilder);
-	}
+	public GeometryCollectionShapeBuilder addShape(Shape shape);
 
-	public void addShapeBuilders(ShapeBuilder... shapeBuilders) {
-		Collections.addAll(_shapeBuilders, shapeBuilders);
-	}
+	public GeometryCollectionShape build();
 
-	public List<ShapeBuilder> getShapeBuilders() {
-		return Collections.unmodifiableList(_shapeBuilders);
-	}
+	public GeometryCollectionShapeBuilder coordinates(
+		Coordinate... coordinates);
 
-	private final List<ShapeBuilder> _shapeBuilders = new ArrayList<>();
+	public GeometryCollectionShapeBuilder coordinates(
+		List<Coordinate> coordinates);
+
+	public GeometryCollectionShapeBuilder shapes(Shape... shapeBuilders);
 
 }

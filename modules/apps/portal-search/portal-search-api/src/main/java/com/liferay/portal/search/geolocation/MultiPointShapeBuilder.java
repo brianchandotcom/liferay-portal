@@ -19,18 +19,17 @@ import aQute.bnd.annotation.ProviderType;
 import java.util.List;
 
 /**
- * @author Michael C. Han
+ * @author André de Oliveira
  */
 @ProviderType
-public class MultiPointShapeBuilder extends ShapeBuilder {
+public interface MultiPointShapeBuilder {
 
-	public MultiPointShapeBuilder(List<Coordinate> coodinates) {
-		addCoordinates(coodinates);
-	}
+	public MultiPointShapeBuilder addCoordinate(Coordinate coordinate);
 
-	@Override
-	public <T> T accept(ShapeBuilderTranslator<T> shapeBuilderTranslator) {
-		return shapeBuilderTranslator.translate(this);
-	}
+	public MultiPointShape build();
+
+	public MultiPointShapeBuilder coordinates(Coordinate... coordinates);
+
+	public MultiPointShapeBuilder coordinates(List<Coordinate> coordinates);
 
 }

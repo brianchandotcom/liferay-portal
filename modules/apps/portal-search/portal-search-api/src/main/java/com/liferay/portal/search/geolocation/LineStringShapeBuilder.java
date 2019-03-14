@@ -19,18 +19,17 @@ import aQute.bnd.annotation.ProviderType;
 import java.util.List;
 
 /**
- * @author Michael C. Han
+ * @author André de Oliveira
  */
 @ProviderType
-public class LineStringShapeBuilder extends ShapeBuilder {
+public interface LineStringShapeBuilder {
 
-	public LineStringShapeBuilder(List<Coordinate> coordinates) {
-		addCoordinates(coordinates);
-	}
+	public LineStringShapeBuilder addCoordinate(Coordinate coordinate);
 
-	@Override
-	public <T> T accept(ShapeBuilderTranslator<T> shapeBuilderTranslator) {
-		return shapeBuilderTranslator.translate(this);
-	}
+	public LineStringShape build();
+
+	public LineStringShapeBuilder coordinates(Coordinate... coordinates);
+
+	public LineStringShapeBuilder coordinates(List<Coordinate> coordinates);
 
 }

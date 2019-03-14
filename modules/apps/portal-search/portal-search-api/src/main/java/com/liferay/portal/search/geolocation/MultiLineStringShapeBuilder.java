@@ -22,18 +22,24 @@ import java.util.List;
  * @author André de Oliveira
  */
 @ProviderType
-public interface CircleShapeBuilder {
+public interface MultiLineStringShapeBuilder {
 
-	public CircleShapeBuilder addCoordinate(Coordinate coordinate);
+	public MultiLineStringShapeBuilder addCoordinate(Coordinate coordinate);
 
-	public CircleShape build();
+	public MultiLineStringShapeBuilder addLineStringShape(
+		LineStringShape lineStringShape);
 
-	public CircleShapeBuilder center(Coordinate center);
+	public MultiLineStringShape build();
 
-	public CircleShapeBuilder coordinates(Coordinate... coordinates);
+	public MultiLineStringShapeBuilder coordinates(Coordinate... coordinates);
 
-	public CircleShapeBuilder coordinates(List<Coordinate> coordinates);
+	public MultiLineStringShapeBuilder coordinates(
+		List<Coordinate> coordinates);
 
-	public CircleShapeBuilder radius(GeoDistance radius);
+	public MultiLineStringShapeBuilder lineStringShapes(
+		LineStringShape... lineStringShapes);
+
+	public MultiLineStringShapeBuilder lineStringShapes(
+		List<LineStringShape> lineStringShapes);
 
 }

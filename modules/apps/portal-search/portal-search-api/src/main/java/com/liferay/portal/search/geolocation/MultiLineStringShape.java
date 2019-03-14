@@ -19,21 +19,11 @@ import aQute.bnd.annotation.ProviderType;
 import java.util.List;
 
 /**
- * @author André de Oliveira
+ * @author Michael C. Han
  */
 @ProviderType
-public interface CircleShapeBuilder {
+public interface MultiLineStringShape extends Shape {
 
-	public CircleShapeBuilder addCoordinate(Coordinate coordinate);
-
-	public CircleShape build();
-
-	public CircleShapeBuilder center(Coordinate center);
-
-	public CircleShapeBuilder coordinates(Coordinate... coordinates);
-
-	public CircleShapeBuilder coordinates(List<Coordinate> coordinates);
-
-	public CircleShapeBuilder radius(GeoDistance radius);
+	public List<LineStringShape> getLineStringShapes();
 
 }

@@ -137,7 +137,7 @@ public class AopServiceRegistrar {
 		BundleContext bundleContext, TransactionExecutor transactionExecutor,
 		ServiceMonitoringControl serviceMonitoringControl) {
 
-		String serviceScope = (String)_serviceReference.getProperty(
+		Object serviceScope = _serviceReference.getProperty(
 			Constants.SERVICE_SCOPE);
 
 		if (Constants.SCOPE_PROTOTYPE.equals(serviceScope)) {

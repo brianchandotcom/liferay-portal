@@ -40,6 +40,7 @@ import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.dynamic.data.mapping.storage.Field;
 import com.liferay.dynamic.data.mapping.storage.Fields;
 import com.liferay.dynamic.data.mapping.util.DDM;
+import com.liferay.dynamic.data.mapping.util.FieldsToDDMFormValuesConverter;
 import com.liferay.headless.common.spi.service.context.ServiceContextUtil;
 import com.liferay.headless.web.experience.dto.v1_0.Categories;
 import com.liferay.headless.web.experience.dto.v1_0.ContentDocument;
@@ -61,7 +62,6 @@ import com.liferay.journal.model.JournalArticleDisplay;
 import com.liferay.journal.service.JournalArticleService;
 import com.liferay.journal.util.JournalContent;
 import com.liferay.journal.util.JournalConverter;
-import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.events.EventsProcessorUtil;
@@ -115,8 +115,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -485,55 +483,6 @@ public class StructuredContentResourceImpl
 		return ddmTemplate.getTemplateKey();
 	}
 
-	private List<String> _getFieldDisplayValues(Fields fields) {
-		Field field = fields.get(DDM.FIELDS_DISPLAY_NAME);
-
-		String fieldDisplayValue = (String)field.getValue();
-
-		return ListUtil.toList(StringUtil.split(fieldDisplayValue));
-	}
-
-	private int _getFieldIndex(
-		String fieldDisplayName, String fieldName, Fields fields) {
-
-		List<String> fieldDisplayValues = _getFieldDisplayValues(fields);
-
-		Stream<String> stream = fieldDisplayValues.stream();
-
-		List<String> fieldValues = stream.filter(
-			fieldDisplayValue -> fieldDisplayValue.startsWith(
-				fieldName + DDM.INSTANCE_SEPARATOR)
-		).collect(
-			Collectors.toList()
-		);
-
-		return fieldValues.indexOf(fieldDisplayName);
-	}
-
-	private List<List<String>> _getFieldsDisplaySubstrings(
-		String fieldName, List<String> fieldDisplayNames) {
-
-		List<List<String>> substrings = new ArrayList<>();
-
-		int offset = 0;
-
-		for (int i = 1; i < fieldDisplayNames.size(); i++) {
-			String firstString = StringUtil.extractFirst(
-				fieldDisplayNames.get(i), DDM.INSTANCE_SEPARATOR);
-
-			if (fieldName.equals(firstString)) {
-				substrings.add(fieldDisplayNames.subList(offset, i));
-
-				offset = i;
-			}
-		}
-
-		substrings.add(
-			fieldDisplayNames.subList(offset, fieldDisplayNames.size()));
-
-		return substrings;
-	}
-
 	private Page<StructuredContent> _getStructuredContentsPage(
 			Long contentSpaceId, Long contentStructureId, Filter filter,
 			Pagination pagination, Sort[] sorts)
@@ -592,60 +541,26 @@ public class StructuredContentResourceImpl
 		return false;
 	}
 
-	private ContentField _toContentField(
-			DDMFormField ddmFormField, DDMStructure ddmStructure, Field field,
-			List<String> fieldDisplayValues, Fields fields)
+	private ContentField _toContentField(DDMFormFieldValue ddmFormFieldValue)
 		throws Exception {
+
+		DDMFormField ddmFormField = ddmFormFieldValue.getDDMFormField();
 
 		return new ContentField() {
 			{
 				dataType = ContentStructureUtil.toDataType(ddmFormField);
 				inputControl = ContentStructureUtil.toInputControl(
 					ddmFormField);
-				name = field.getName();
-				repeatable = field.isRepeatable();
+				name = ddmFormField.getName();
+				repeatable = ddmFormField.isRepeatable();
 				value = _toValue(
-					field, fieldDisplayValues.get(0), fields,
+					ddmFormFieldValue,
 					contextAcceptLanguage.getPreferredLocale());
 
-				setNestedFields(
-					() -> {
-						if (fieldDisplayValues.size() <= 1) {
-							return new ContentField[0];
-						}
-
-						return _toContentFields(
-							ddmFormField.getNestedDDMFormFields(),
-							ddmFormField -> _toContentFields(
-								ddmStructure, fields, ddmFormField.getName(),
-								fieldDisplayValues.subList(
-									1, fieldDisplayValues.size())));
-					});
+				nestedFields = transformToArray(
+					ddmFormFieldValue.getNestedDDMFormFieldValues(),
+					value -> _toContentField(value), ContentField.class);
 			}
-		};
-	}
-
-	private ContentField[] _toContentFields(
-			DDMStructure ddmStructure, Fields fields, String fieldName,
-			List<String> fieldDisplayValues)
-		throws Exception {
-
-		Field field = fields.get(fieldName);
-
-		if (field == null) {
-			return null;
-		}
-
-		DDMFormField ddmFormField = ddmStructure.getDDMFormField(fieldName);
-
-		if (ddmFormField.isRepeatable()) {
-			return _toRepeatableContentField(
-				ddmStructure, ddmFormField, fields, fieldDisplayValues);
-		}
-
-		return new ContentField[] {
-			_toContentField(
-				ddmFormField, ddmStructure, field, fieldDisplayValues, fields)
 		};
 	}
 
@@ -657,40 +572,12 @@ public class StructuredContentResourceImpl
 		Fields fields = _journalConverter.getDDMFields(
 			ddmStructure, journalArticle.getContent());
 
-		List<String> fieldDisplayValues = _getFieldDisplayValues(fields);
+		DDMFormValues ddmFormValues = _fieldsToDDMFormValuesConverter.convert(
+			ddmStructure, fields);
 
-		return _toContentFields(
-			ddmStructure.getRootFieldNames(),
-			fieldName -> _toContentFields(
-				ddmStructure, fields, fieldName, fieldDisplayValues));
-	}
-
-	private <T> ContentField[] _toContentFields(
-		List<T> list,
-		UnsafeFunction<T, ContentField[], Exception> unsafeFunction) {
-
-		if (ListUtil.isEmpty(list)) {
-			return new ContentField[0];
-		}
-
-		Stream<T> stream = list.stream();
-
-		return stream.map(
-			t -> {
-				try {
-					return unsafeFunction.apply(t);
-				}
-				catch (Exception e) {
-					throw new RuntimeException(e);
-				}
-			}
-		).filter(
-			Objects::nonNull
-		).flatMap(
-			Stream::of
-		).toArray(
-			ContentField[]::new
-		);
+		return transformToArray(
+			ddmFormValues.getDDMFormFieldValues(), this::_toContentField,
+			ContentField.class);
 	}
 
 	private List<DDMFormFieldValue> _toDDMFormFieldValues(
@@ -905,27 +792,6 @@ public class StructuredContentResourceImpl
 		return fields;
 	}
 
-	private ContentField[] _toRepeatableContentField(
-			DDMStructure ddmStructure, DDMFormField ddmFormField, Fields fields,
-			List<String> fieldDisplayValues)
-		throws Exception {
-
-		List<ContentField> contentFields = new ArrayList<>();
-
-		List<List<String>> fieldsDisplaySubstrings =
-			_getFieldsDisplaySubstrings(
-				ddmFormField.getName(), fieldDisplayValues);
-
-		for (List<String> substring : fieldsDisplaySubstrings) {
-			contentFields.add(
-				_toContentField(
-					ddmFormField, ddmStructure,
-					fields.get(ddmFormField.getName()), substring, fields));
-		}
-
-		return contentFields.toArray(new ContentField[0]);
-	}
-
 	private String _toString(DDMFormValues ddmFormValues) {
 		DDMFormValuesSerializer ddmFormValuesSerializer =
 			_ddmFormValuesSerializerTracker.getDDMFormValuesSerializer("json");
@@ -1004,24 +870,25 @@ public class StructuredContentResourceImpl
 		};
 	}
 
-	private Value _toValue(
-			Field field, String fieldDisplayValue, Fields fields, Locale locale)
+	private Value _toValue(DDMFormFieldValue ddmFormFieldValue, Locale locale)
 		throws Exception {
 
-		DDMStructure ddmStructure = field.getDDMStructure();
+		com.liferay.dynamic.data.mapping.model.Value value =
+			ddmFormFieldValue.getValue();
 
-		DDMFormField ddmFormField = ddmStructure.getDDMFormField(
-			field.getName());
+		if (value == null) {
+			return null;
+		}
 
-		String value = String.valueOf(
-			field.getValue(
-				locale,
-				_getFieldIndex(fieldDisplayValue, field.getName(), fields)));
+		DDMFormField ddmFormField = ddmFormFieldValue.getDDMFormField();
+
+		String valueString = String.valueOf(value.getString(locale));
 
 		if (Objects.equals(
 				DDMFormFieldType.DOCUMENT_LIBRARY, ddmFormField.getType())) {
 
-			JSONObject jsonObject = JSONFactoryUtil.createJSONObject(value);
+			JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
+				valueString);
 
 			long classPK = jsonObject.getLong("classPK");
 
@@ -1052,7 +919,8 @@ public class StructuredContentResourceImpl
 		if (Objects.equals(
 				DDMFormFieldType.GEOLOCATION, ddmFormField.getType())) {
 
-			JSONObject jsonObject = JSONFactoryUtil.createJSONObject(value);
+			JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
+				valueString);
 
 			return new Value() {
 				{
@@ -1067,7 +935,8 @@ public class StructuredContentResourceImpl
 		}
 
 		if (Objects.equals(DDMFormFieldType.IMAGE, ddmFormField.getType())) {
-			JSONObject jsonObject = JSONFactoryUtil.createJSONObject(value);
+			JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
+				valueString);
 
 			long fileEntryId = jsonObject.getLong("fileEntryId");
 
@@ -1099,7 +968,8 @@ public class StructuredContentResourceImpl
 		if (Objects.equals(
 				DDMFormFieldType.JOURNAL_ARTICLE, ddmFormField.getType())) {
 
-			JSONObject jsonObject = JSONFactoryUtil.createJSONObject(value);
+			JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
+				valueString);
 
 			long classPK = jsonObject.getLong("classPK");
 
@@ -1125,7 +995,8 @@ public class StructuredContentResourceImpl
 		if (Objects.equals(
 				DDMFormFieldType.LINK_TO_PAGE, ddmFormField.getType())) {
 
-			JSONObject jsonObject = JSONFactoryUtil.createJSONObject(value);
+			JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
+				valueString);
 
 			long layoutId = jsonObject.getLong("layoutId");
 
@@ -1148,7 +1019,7 @@ public class StructuredContentResourceImpl
 
 		return new Value() {
 			{
-				data = value;
+				data = valueString;
 			}
 		};
 	}
@@ -1191,6 +1062,9 @@ public class StructuredContentResourceImpl
 
 	@Reference
 	private EntityFieldsProvider _entityFieldsProvider;
+
+	@Reference
+	private FieldsToDDMFormValuesConverter _fieldsToDDMFormValuesConverter;
 
 	@Reference
 	private JournalArticleService _journalArticleService;

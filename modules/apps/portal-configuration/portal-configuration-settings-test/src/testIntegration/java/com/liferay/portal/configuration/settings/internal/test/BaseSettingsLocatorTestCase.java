@@ -90,12 +90,12 @@ public abstract class BaseSettingsLocatorTestCase {
 
 	protected void deleteFactoryConfiguration(
 			String factoryPid, ExtendedObjectClassDefinition.Scope scope,
-			Serializable scopePrimKey, String propertyKey,
+			Serializable scopePK, String propertyKey,
 			Serializable propertyValue)
 		throws Exception {
 
 		Configuration configuration = getFactoryConfiguration(
-			factoryPid, scope, scopePrimKey, propertyKey, propertyValue);
+			factoryPid, scope, scopePK, propertyKey, propertyValue);
 
 		if (configuration != null) {
 			ConfigurationTestUtil.deleteConfiguration(configuration);
@@ -172,22 +172,21 @@ public abstract class BaseSettingsLocatorTestCase {
 
 	protected String saveFactoryConfiguration(
 			String factoryPid, ExtendedObjectClassDefinition.Scope scope,
-			Serializable scopePrimKey)
+			Serializable scopePK)
 		throws Exception {
 
-		return saveFactoryConfiguration(
-			factoryPid, scope, scopePrimKey, null, null);
+		return saveFactoryConfiguration(factoryPid, scope, scopePK, null, null);
 	}
 
 	protected String saveFactoryConfiguration(
 			String factoryPid, ExtendedObjectClassDefinition.Scope scope,
-			Serializable scopePrimKey, String propertyKey,
+			Serializable scopePK, String propertyKey,
 			Serializable propertyValue)
 		throws Exception {
 
 		Dictionary<String, Object> properties = new HashMapDictionary<>();
 
-		properties.put(scope.getPropertyKey(), scopePrimKey);
+		properties.put(scope.getPropertyKey(), scopePK);
 
 		if (Validator.isNotNull(propertyKey) &&
 			Validator.isNotNull(propertyValue)) {
@@ -231,13 +230,12 @@ public abstract class BaseSettingsLocatorTestCase {
 	}
 
 	protected String saveScopedConfiguration(
-			ExtendedObjectClassDefinition.Scope scope,
-			Serializable scopePrimKey)
+			ExtendedObjectClassDefinition.Scope scope, Serializable scopePK)
 		throws Exception {
 
 		return saveFactoryConfiguration(
 			SettingsLocatorTestConstants.TEST_CONFIGURATION_PID, scope,
-			scopePrimKey);
+			scopePK);
 	}
 
 	protected static long companyId;

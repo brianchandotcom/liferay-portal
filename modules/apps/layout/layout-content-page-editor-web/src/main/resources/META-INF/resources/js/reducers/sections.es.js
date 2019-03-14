@@ -192,58 +192,22 @@ function updateSectionColumnsReducer(state, actionType, payload) {
 		resolve => {
 			if (actionType === UPDATE_SECTION_COLUMNS) {
 
-				const sectionIndex = getSectionIndex(nextState.layoutData.structure, payload.sectionId);
-
-				const section = nextState.layoutData.structure[sectionIndex];
-
-				let columns = section.columns;
-
-				const columnsNumber = payload.columnsNumber;
-
 				let fragmentEntryLinkIdsToRemove = [],
 					nextData;
 
-				const columnSize = (MAX_SECTION_COLUMNS / columnsNumber).toString();
+				const numberOfColumns = payload.numberOfColumns;
+				const columnsSize = (MAX_SECTION_COLUMNS / numberOfColumns).toString();
+				const sectionIndex = getSectionIndex(nextState.layoutData.structure, payload.sectionId);
 
-				if (columnsNumber > columns.length) {
-					let nextColumnId = nextState.layoutData.nextColumnId || 0;
+				let columns = nextState.layoutData.structure[sectionIndex].columns;
 
-					nextData = updateIn(
-						nextState.layoutData,
-						['structure', sectionIndex, 'columns'],
-						columns => {
-							columns.forEach(
-								column => {
-									column.size = columnSize;
-								}
-							);
-
-							const newColumnsNumber = columnsNumber - columns.length;
-
-							for (let i = 0; i < newColumnsNumber; i++) {
-								columns.push(
-									{
-										columnId: `${nextColumnId}`,
-										fragmentEntryLinkIds: [],
-										size: columnSize
-									}
-								);
-
-								nextColumnId += 1;
-							}
-
-							return columns;
-						}
-					);
-
-					nextData = setIn(nextState.layoutData, ['nextColumnId'], nextColumnId);
+				if (numberOfColumns > columns.length) {
+					nextData = _addColumns(nextState.layoutData, sectionIndex, numberOfColumns, columnsSize);
 				}
 				else {
-					let columnsToRemove = columns.slice(columnsNumber - columns.length);
-
 					let fragmentEntryLinkIdsToRemove = getSectionFragmentEntryLinkIds(
 						{
-							columns: columnsToRemove
+							columns: columns.slice(numberOfColumns - columns.length)
 						}
 					);
 
@@ -253,21 +217,7 @@ function updateSectionColumnsReducer(state, actionType, payload) {
 						}
 					);
 
-					nextData = updateIn(
-						nextState.layoutData,
-						['structure', sectionIndex, 'columns'],
-						columns => {
-							columns = columns.slice(0, columnsNumber);
-
-							columns.forEach(
-								column => {
-									column.size = columnSize;
-								}
-							);
-
-							return columns;
-						}
-					);
+					nextData = _removeColumns(nextState.layoutData, sectionIndex, numberOfColumns, columnsSize);
 				}
 
 				updateLayoutData(
@@ -368,6 +318,83 @@ const updateSectionConfigReducer = (state, actionType, payload) => new Promise(
 		}
 	}
 );
+
+/**
+ * Returns a new layoutData with the given columns inserted in the specified
+ * section with the specified size and resizes the rest of columns to the
+ * same size.
+ *
+ * @param {object} layoutData
+ * @param {number} sectionIndex
+ * @param {number} numberOfColumns
+ * @param {number} columnsSize
+ * @return {object}
+ */
+function _addColumns(layoutData, sectionIndex, numberOfColumns, columnsSize) {
+	let nextColumnId = layoutData.nextColumnId || 0;
+
+	let nextData = updateIn(
+		layoutData,
+		['structure', sectionIndex, 'columns'],
+		columns => {
+			columns.forEach(
+				column => {
+					column.size = columnsSize;
+				}
+			);
+
+			const numberOfNewColumns = numberOfColumns - columns.length;
+
+			for (let i = 0; i < numberOfNewColumns; i++) {
+				columns.push(
+					{
+						columnId: `${nextColumnId}`,
+						fragmentEntryLinkIds: [],
+						size: columnsSize
+					}
+				);
+
+				nextColumnId += 1;
+			}
+
+			return columns;
+		}
+	);
+
+	nextData = setIn(layoutData, ['nextColumnId'], nextColumnId);
+
+	return nextData;
+}
+
+/**
+ * Returns a new layoutData without the columns out of range in the specified
+ * section and resizes the rest of columns to the specified size.
+ *
+ * @param {object} layoutData
+ * @param {number} sectionIndex
+ * @param {number} numberOfColumns
+ * @param {number} columnsSize
+ * @return {object}
+ */
+function _removeColumns(layoutData, sectionIndex, numberOfColumns, columnsSize) {
+	let nextData = updateIn(
+		layoutData,
+		['structure', sectionIndex, 'columns'],
+		columns => {
+			columns = columns.slice(0, numberOfColumns);
+
+			columns.forEach(
+				column => {
+					column.size = columnsSize;
+				}
+			);
+
+			return columns;
+		}
+	);
+
+	return nextData;
+}
 
 /**
  * Returns a new layoutData with the given columns inserted as a new section

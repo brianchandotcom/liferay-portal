@@ -3,7 +3,7 @@ import Component from 'metal-component';
 import Soy, {Config} from 'metal-soy';
 
 import './FloatingToolbarSpacingPanelDelegateTemplate.soy';
-import {COLUMNS_NUMBER_OPTIONS, CONTAINER_TYPES, ITEM_CONFIG_KEYS} from '../../../utils/constants';
+import {NUMBER_OF_COLUMNS_OPTIONS, CONTAINER_TYPES, ITEM_CONFIG_KEYS} from '../../../utils/constants';
 import {setIn} from '../../../utils/FragmentsEditorUpdateUtils.es';
 import templates from './FloatingToolbarSpacingPanel.soy';
 import {UPDATE_SECTION_COLUMNS, UPDATE_LAST_SAVE_DATE, UPDATE_SAVING_CHANGES_STATUS, UPDATE_SECTION_CONFIG, UPDATE_TRANSLATION_STATUS} from '../../../actions/actions.es';
@@ -71,26 +71,6 @@ class FloatingToolbarSpacingPanel extends Component {
 	 * Handle container option change
 	 * @param {Event} event
 	 */
-	_handleColumnsNumberOptionChange(event) {
-		const newValue = event.delegateTarget.value;
-		const prevValue = this.item.columns.length;
-
-		if (newValue < prevValue && !confirm(Liferay.Language.get('reducing-the-number-of-columns-will-lose-the-content-added-to-the-deleted-columns-are-you-sure-you-want-to-proced'))) {
-			event.preventDefault();
-			event.delegateTarget.querySelector(`option[value="${prevValue}"]`).selected = true;
-			return false;
-		}
-
-		this._updateSection(UPDATE_SECTION_COLUMNS, {
-			columnsNumber: event.delegateTarget.value,
-			sectionId: this.itemId
-		});
-	}
-
-	/**
-	 * Handle container option change
-	 * @param {Event} event
-	 */
 	_handleColumnSpacingOptionChange(event) {
 		this._updateSectionConfig(
 			{
@@ -133,6 +113,26 @@ class FloatingToolbarSpacingPanel extends Component {
 				[ITEM_CONFIG_KEYS.containerType]: event.delegateTarget.value
 			}
 		);
+	}
+
+	/**
+	 * Handle number of columns option change
+	 * @param {Event} event
+	 */
+	_handleNumberOfColumnsOptionChange(event) {
+		const newValue = event.delegateTarget.value;
+		const prevValue = this.item.columns.length;
+
+		if (newValue < prevValue && !confirm(Liferay.Language.get('reducing-the-number-of-columns-will-lose-the-content-added-to-the-deleted-columns-are-you-sure-you-want-to-proced'))) {
+			event.preventDefault();
+			event.delegateTarget.querySelector(`option[value="${prevValue}"]`).selected = true;
+			return false;
+		}
+
+		this._updateSection(UPDATE_SECTION_COLUMNS, {
+			numberOfColumns: event.delegateTarget.value,
+			sectionId: this.itemId
+		});
 	}
 
 	/**
@@ -200,10 +200,10 @@ FloatingToolbarSpacingPanel.STATE = {
 	 * @review
 	 * @type {object[]}
 	 */
-	_columnsNumberOptions: Config
+	_containerTypes: Config
 		.array()
 		.internal()
-		.value(COLUMNS_NUMBER_OPTIONS),
+		.value(CONTAINER_TYPES),
 
 	/**
 	 * @default CONTAINER_TYPES
@@ -212,10 +212,10 @@ FloatingToolbarSpacingPanel.STATE = {
 	 * @review
 	 * @type {object[]}
 	 */
-	_containerTypes: Config
+	_numberOfColumnsOptions: Config
 		.array()
 		.internal()
-		.value(CONTAINER_TYPES),
+		.value(NUMBER_OF_COLUMNS_OPTIONS),
 
 	/**
 	 * @default undefined

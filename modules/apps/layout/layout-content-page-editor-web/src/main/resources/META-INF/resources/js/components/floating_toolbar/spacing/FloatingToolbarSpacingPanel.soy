@@ -5,13 +5,13 @@
  */
 {template .render}
 	{@param item: ?}
-	{@param? _columnsNumberOptions: ?}
 	{@param? _containerTypes: ?}
-	{@param? _handleColumnsNumberOptionChange: any}
 	{@param? _handleColumnSpacingOptionChange: any}
 	{@param? _handleColumnSpacingOptionMousedown: any}
 	{@param? _handleContainerPaddingOptionChange: any}
 	{@param? _handleContainerTypeOptionChange: any}
+	{@param? _handleNumberOfColumnsOptionChange: any}
+	{@param? _numberOfColumnsOptions: ?}
 	{@param? _paddingSizes: list<string>}
 	{@param? _sectionColumnsCount: number}
 	{@param? _selectedPaddingSizes: [
@@ -21,9 +21,9 @@
 
 	<div class="floating-toolbar-spacing-panel">
 		<div class="form-group">
-			{call .columnsNumberOptions}
-				{param columnsNumberOptions: $_columnsNumberOptions /}
-				{param handleColumnsNumberOptionChange: $_handleColumnsNumberOptionChange /}
+			{call .numberOfColumnsOptions}
+				{param handleNumberOfColumnsOptionChange: $_handleNumberOfColumnsOptionChange /}
+				{param numberOfColumnsOptions: $_numberOfColumnsOptions /}
 				{param item: $item /}
 			{/call}
 		</div>
@@ -79,31 +79,31 @@
 /**
  * Columns number
  */
-{template .columnsNumberOptions}
+{template .numberOfColumnsOptions}
 	{@param item: [
 		columns: list<?>
 	]}
-	{@param? columnsNumberOptions: list<[
-		columnsNumberId: string,
-		label: string
+	{@param? numberOfColumnsOptions: list<[
+		label: string,
+		numberOfColumnId: string
 	]>}
-	{@param? handleColumnsNumberOptionChange: any}
+	{@param? handleNumberOfColumnsOptionChange: any}
 
-	{if $columnsNumberOptions}
-		<label for="floatingToolbarSpacingPanelColumnsNumberOption">
+	{if $numberOfColumnsOptions}
+		<label for="floatingToolbarSpacingPanelNumberOfColumnsOption">
 			{msg desc=""}number-of-columns{/msg}
 		</label>
 
 		<select
 			class="form-control form-control-sm"
-			data-onchange="{$handleColumnsNumberOptionChange}"
-			id="floatingToolbarSpacingPanelColumnsNumberOption"
+			data-onchange="{$handleNumberOfColumnsOptionChange}"
+			id="floatingToolbarSpacingPanelNumberOfColumnsOption"
 		>
-			{foreach $columnsNumberOption in $columnsNumberOptions}
-				{call .columnsNumberOption}
-					{param columnsNumberOption: $columnsNumberOption /}
+			{foreach $numberOfColumnsOption in $numberOfColumnsOptions}
+				{call .numberOfColumnsOption}
 					{param item: $item /}
-					{param key: $columnsNumberOption.columnsNumberId /}
+					{param key: $numberOfColumnsOption.numberOfColumnId /}
+					{param numberOfColumnsOption: $numberOfColumnsOption /}
 				{/call}
 			{/foreach}
 		</select>
@@ -113,25 +113,25 @@
 /**
  * Columns number option
  */
-{template .columnsNumberOption}
-	{@param columnsNumberOption: [
-		columnsNumberId: string,
-		label: string
+{template .numberOfColumnsOption}
+	{@param numberOfColumnsOption: [
+		label: string,
+		numberOfColumnId: string
 	]}
 	{@param item: [
 		columns: list<?>
 	]}
 
 	{let $optionAttributes kind="attributes"}
-		value="{$columnsNumberOption.columnsNumberId}"
+		value="{$numberOfColumnsOption.numberOfColumnId}"
 
-		{if $item.columns and length($item.columns) == $columnsNumberOption.columnsNumberId}
+		{if $item.columns and length($item.columns) == $numberOfColumnsOption.numberOfColumnId}
 			selected
 		{/if}
 	{/let}
 
 	<option {$optionAttributes}>
-		{$columnsNumberOption.label}
+		{$numberOfColumnsOption.label}
 	</option>
 {/template}
 

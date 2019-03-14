@@ -19,26 +19,26 @@ export const BUTTON_TYPES = [
 /**
  * Available values for containerType config key
  */
-export const COLUMNS_NUMBER_OPTIONS = [
+export const NUMBER_OF_COLUMNS_OPTIONS = [
 	{
-		columnsNumberId: '1',
-		label: '1'
+		label: '1',
+		numberOfColumnId: '1'
 	},
 	{
-		columnsNumberId: '2',
-		label: '2'
+		label: '2',
+		numberOfColumnId: '2'
 	},
 	{
-		columnsNumberId: '3',
-		label: '3'
+		label: '3',
+		numberOfColumnId: '3'
 	},
 	{
-		columnsNumberId: '4',
-		label: '4'
+		label: '4',
+		numberOfColumnId: '4'
 	},
 	{
-		columnsNumberId: '6',
-		label: '6'
+		label: '6',
+		numberOfColumnId: '6'
 	}
 ];
 

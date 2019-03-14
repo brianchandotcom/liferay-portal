@@ -1,7 +1,7 @@
 import {addFragmentEntryLinkReducer, moveFragmentEntryLinkReducer, removeFragmentEntryLinkReducer, updateEditableValueReducer, updateFragmentEntryLinkConfigReducer} from './fragments.es';
 import {addMappingAssetEntry} from './mapping.es';
 import {addPortletReducer} from './portlets.es';
-import {addSectionReducer, moveSectionReducer, removeSectionReducer, updateSectionConfigReducer} from './sections.es';
+import {addSectionReducer, moveSectionReducer, removeSectionReducer, updateSectionColumnsReducer, updateSectionConfigReducer} from './sections.es';
 import {createSegmentsExperienceReducer, deleteSegmentsExperienceReducer, editSegmentsExperienceReducer, endCreateSegmentsExperience, endEditExperienceReducer, selectSegmentsExperienceReducer, startCreateSegmentsExperience, startEditExperienceReducer} from './segmentsExperiences.es';
 import {hideFragmentsEditorSidebarReducer, toggleFragmentsEditorSidebarReducer} from './sidebar.es';
 import {hideMappingDialogReducer, hideMappingTypeDialogReducer, openAssetTypeDialogReducer, openMappingFieldsDialogReducer, selectMappeableTypeReducer} from './dialogs.es';
@@ -45,6 +45,7 @@ const reducers = [
 	updateEditableValueReducer,
 	updateFragmentEntryLinkConfigReducer,
 	updateHoveredItemReducer,
+	updateSectionColumnsReducer,
 	updateSectionConfigReducer
 ];
 

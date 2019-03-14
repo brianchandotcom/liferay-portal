@@ -1,4 +1,5 @@
-import {ADD_SECTION, MOVE_SECTION, REMOVE_SECTION, UPDATE_SECTION_CONFIG} from '../actions/actions.es';
+import {ADD_SECTION, MOVE_SECTION, REMOVE_SECTION, UPDATE_SECTION_CONFIG, UPDATE_SECTION_COLUMNS} from '../actions/actions.es';
+import {MAX_SECTION_COLUMNS} from '../utils/constants';
 import {add, remove, setIn, updateIn, updateLayoutData, updateWidgets} from '../utils/FragmentsEditorUpdateUtils.es';
 import {getDropSectionPosition, getSectionFragmentEntryLinkIds, getSectionIndex} from '../utils/FragmentsEditorGetUtils.es';
 
@@ -132,9 +133,10 @@ function removeSectionReducer(state, actionType, payload) {
 					payload.sectionId
 				);
 
+				const section = nextState.layoutData.structure[getSectionIndex(nextState.layoutData.structure, payload.sectionId)];
+
 				const fragmentEntryLinkIds = getSectionFragmentEntryLinkIds(
-					nextState.layoutData.structure,
-					payload.sectionId
+					section
 				);
 
 				fragmentEntryLinkIds.forEach(
@@ -150,6 +152,131 @@ function removeSectionReducer(state, actionType, payload) {
 					nextState.classPK,
 					nextData,
 					fragmentEntryLinkIds
+				)
+					.then(
+						() => {
+							nextState = setIn(
+								nextState,
+								['layoutData'],
+								nextData
+							);
+
+							resolve(nextState);
+						}
+					)
+					.catch(
+						() => {
+							resolve(nextState);
+						}
+					);
+			}
+			else {
+				resolve(nextState);
+			}
+		}
+	);
+}
+
+/**
+ * @param {!object} state
+ * @param {!string} actionType
+ * @param {!object} payload
+ * @param {!Array} payload.sectionId
+ * @return {object}
+ * @review
+ */
+function updateSectionColumnsReducer(state, actionType, payload) {
+	let nextState = state;
+
+	return new Promise(
+		resolve => {
+			if (actionType === UPDATE_SECTION_COLUMNS) {
+
+				const sectionIndex = getSectionIndex(nextState.layoutData.structure, payload.sectionId);
+
+				const section = nextState.layoutData.structure[sectionIndex];
+
+				let columns = section.columns;
+
+				const columnsNumber = payload.columnsNumber;
+
+				let fragmentEntryLinkIdsToRemove = [],
+					nextData;
+				
+				const columnSize = (MAX_SECTION_COLUMNS / columnsNumber).toString();
+
+				if (columnsNumber > columns.length) {
+					let nextColumnId = nextState.layoutData.nextColumnId || 0;
+
+					nextData = updateIn(
+						nextState.layoutData,
+						['structure', sectionIndex, 'columns'],
+						columns => {
+							columns.forEach(
+								column => {
+									column.size = columnSize;
+								}
+							)
+
+							const newColumnsNumber = columnsNumber - columns.length;
+
+							for (let i=0; i < newColumnsNumber ; i++) {
+								columns.push(
+									{
+										columnId: `${nextColumnId}`,
+										fragmentEntryLinkIds: [],
+										size: columnSize
+									}
+								);
+					
+								nextColumnId += 1;
+							}
+
+							return columns;
+						}
+					);
+
+					nextData = setIn(nextState.layoutData, ['nextColumnId'], nextColumnId);
+				}
+				else {
+					let columnsToRemove = columns.slice(columnsNumber - columns.length);
+
+					let fragmentEntryLinkIdsToRemove = getSectionFragmentEntryLinkIds(
+						{
+							columns: columnsToRemove
+						}
+					);
+					
+					fragmentEntryLinkIdsToRemove.forEach(
+						fragmentEntryLinkId => {
+							nextState = updateWidgets(nextState, fragmentEntryLinkId);
+						}
+					);
+
+					nextData = updateIn(
+						nextState.layoutData,
+						['structure', sectionIndex, 'columns'],
+						columns => {
+							columns = columns.slice(0, columnsNumber);
+
+							columns.forEach(
+								column => {
+									column.size = columnSize;
+								}
+							)
+
+							return columns;
+						}
+					);
+				}
+
+				updateLayoutData(
+					nextState.updateLayoutPageTemplateDataURL,
+					nextState.portletNamespace,
+					nextState.classNameId,
+					nextState.classPK,
+					nextData,
+					fragmentEntryLinkIdsToRemove
 				)
 					.then(
 						() => {
@@ -341,5 +468,6 @@ export {
 	addSectionReducer,
 	moveSectionReducer,
 	removeSectionReducer,
+	updateSectionColumnsReducer,
 	updateSectionConfigReducer
 };

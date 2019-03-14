@@ -27,6 +27,7 @@ export const START_EDIT_SEGMENTS_EXPERIENCE = 'START_EDIT_SEGMENTS_EXPERIENCE';
 export const ADD_SECTION = 'addSection';
 export const MOVE_SECTION = 'moveSection';
 export const REMOVE_SECTION = 'removeSection';
+export const UPDATE_SECTION_COLUMNS = 'updateSectionColumns';
 export const UPDATE_SECTION_CONFIG = 'updateSectionConfig';
 
 export const ADD_FRAGMENT_ENTRY_LINK = 'addFragmentEntryLink';

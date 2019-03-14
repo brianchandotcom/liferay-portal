@@ -117,14 +117,11 @@ function getItemMoveDirection(keycode) {
 
 /**
  * Get the fragmentEntryLinkIds of the fragments inside the given section
- * @param {array} structure
- * @param {string} sectionId
+ * @param {array} section
  * @return {string[]}
  * @review
  */
-function getSectionFragmentEntryLinkIds(structure, sectionId) {
-	const section = structure[getSectionIndex(structure, sectionId)];
-
+function getSectionFragmentEntryLinkIds(section) {
 	let fragmentEntryLinkIds = [];
 
 	section.columns.forEach(

@@ -29,6 +29,8 @@ definition {
 	function uploadCommonFileHiddenNoMouseOver {
 		WaitForSPARefresh();
 
+		selenium.waitForElementPresent();
+
 		selenium.uploadCommonFile();
 
 		selenium.assertJavaScriptErrors();

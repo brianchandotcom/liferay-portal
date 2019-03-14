@@ -16,6 +16,15 @@
 
 <%@ include file="/init.jsp" %>
 
+<%
+String redirect = ParamUtil.getString(request, "redirect");
+
+if (Validator.isNotNull(redirect)) {
+	portletDisplay.setShowBackIcon(true);
+	portletDisplay.setURLBack(redirect);
+}
+%>
+
 <liferay-site-navigation:breadcrumb
 	breadcrumbEntries="<%= layoutsAdminDisplayContext.getPortletBreadcrumbEntries() %>"
 />

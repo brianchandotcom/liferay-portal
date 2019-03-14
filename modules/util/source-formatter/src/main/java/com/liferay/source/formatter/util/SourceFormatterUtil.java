@@ -157,10 +157,8 @@ public class SourceFormatterUtil {
 	}
 
 	public static List<String> filterRecentChangesFileNames(
-			String baseDirName, List<String> recentChangesFileNames,
-			String[] excludes, String[] includes,
-			SourceFormatterExcludes sourceFormatterExcludes,
-			boolean includeSubrepositories)
+			Set<String> recentChangesFileNames, String[] excludes,
+			String[] includes, SourceFormatterExcludes sourceFormatterExcludes)
 		throws IOException {
 
 		if (ArrayUtil.isEmpty(includes)) {
@@ -171,7 +169,7 @@ public class SourceFormatterUtil {
 			excludes, includes, sourceFormatterExcludes);
 
 		return _filterRecentChangesFileNames(
-			baseDirName, recentChangesFileNames, pathMatchers);
+			recentChangesFileNames, pathMatchers);
 	}
 
 	public static List<String> getAttributeNames(
@@ -442,16 +440,13 @@ public class SourceFormatterUtil {
 	}
 
 	private static List<String> _filterRecentChangesFileNames(
-			String baseDirName, List<String> recentChangesFileNames,
-			PathMatchers pathMatchers)
+			Set<String> recentChangesFileNames, PathMatchers pathMatchers)
 		throws IOException {
 
 		List<String> fileNames = new ArrayList<>();
 
 		recentChangesFileNamesLoop:
 		for (String fileName : recentChangesFileNames) {
-			fileName = baseDirName.concat(fileName);
-
 			File file = new File(fileName);
 
 			File canonicalFile = file.getCanonicalFile();

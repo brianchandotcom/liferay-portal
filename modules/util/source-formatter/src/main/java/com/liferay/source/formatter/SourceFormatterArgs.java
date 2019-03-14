@@ -15,6 +15,8 @@
 package com.liferay.source.formatter;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -56,9 +58,16 @@ public class SourceFormatterArgs {
 
 	public static final boolean THROW_EXCEPTION = false;
 
-	public void addRecentChangesFileNames(Set<String> fileNames) {
-		if (_recentChangesFileNames != null) {
-			_recentChangesFileNames.addAll(fileNames);
+	public void addRecentChangesFileNames(
+		Collection<String> fileNames, String baseDirName) {
+
+		for (String fileName : fileNames) {
+			if (baseDirName != null) {
+				_recentChangesFileNames.add(_baseDirName.concat(fileName));
+			}
+			else {
+				_recentChangesFileNames.add(fileName);
+			}
 		}
 	}
 
@@ -90,7 +99,7 @@ public class SourceFormatterArgs {
 		return _processorThreadCount;
 	}
 
-	public List<String> getRecentChangesFileNames() {
+	public Set<String> getRecentChangesFileNames() {
 		return _recentChangesFileNames;
 	}
 
@@ -215,10 +224,6 @@ public class SourceFormatterArgs {
 		_processorThreadCount = processorThreadCount;
 	}
 
-	public void setRecentChangesFileNames(List<String> recentChangesFileNames) {
-		_recentChangesFileNames = recentChangesFileNames;
-	}
-
 	public void setShowDebugInformation(boolean showDebugInformation) {
 		_showDebugInformation = showDebugInformation;
 	}
@@ -253,7 +258,7 @@ public class SourceFormatterArgs {
 	private int _maxLineLength = MAX_LINE_LENGTH;
 	private boolean _printErrors = PRINT_ERRORS;
 	private int _processorThreadCount = PROCESSOR_THREAD_COUNT;
-	private List<String> _recentChangesFileNames;
+	private final Set<String> _recentChangesFileNames = new HashSet<>();
 	private boolean _showDebugInformation = SHOW_DEBUG_INFORMATION;
 	private boolean _showDocumentation = SHOW_DOCUMENTATION;
 	private boolean _showStatusUpdates = SHOW_STATUS_UPDATES;

@@ -146,17 +146,20 @@ public class SourceFormatter {
 				sourceFormatterArgs.setGitWorkingBranchName(
 					gitWorkingBranchName);
 
-				sourceFormatterArgs.setRecentChangesFileNames(
+				sourceFormatterArgs.addRecentChangesFileNames(
 					GitUtil.getCurrentBranchFileNames(
-						baseDirName, gitWorkingBranchName, false));
+						baseDirName, gitWorkingBranchName, false),
+					baseDirName);
 			}
 			else if (formatLatestAuthor) {
-				sourceFormatterArgs.setRecentChangesFileNames(
-					GitUtil.getLatestAuthorFileNames(baseDirName, false));
+				sourceFormatterArgs.addRecentChangesFileNames(
+					GitUtil.getLatestAuthorFileNames(baseDirName, false),
+					baseDirName);
 			}
 			else if (formatLocalChanges) {
-				sourceFormatterArgs.setRecentChangesFileNames(
-					GitUtil.getLocalChangesFileNames(baseDirName, false));
+				sourceFormatterArgs.addRecentChangesFileNames(
+					GitUtil.getLocalChangesFileNames(baseDirName, false),
+					baseDirName);
 			}
 
 			String fileNamesString = ArgumentsUtil.getString(
@@ -189,10 +192,10 @@ public class SourceFormatter {
 				arguments, "include.subrepositories",
 				SourceFormatterArgs.INCLUDE_SUBREPOSITORIES);
 
-			List<String> recentChangesFileNames =
+			Set<String> recentChangesFileNames =
 				sourceFormatterArgs.getRecentChangesFileNames();
 
-			if (recentChangesFileNames != null) {
+			if (!recentChangesFileNames.isEmpty()) {
 				includeSubrepositories = true;
 			}
 
@@ -466,7 +469,7 @@ public class SourceFormatter {
 	}
 
 	private void _addDependentFileNames() {
-		List<String> recentChangesFileNames =
+		Set<String> recentChangesFileNames =
 			_sourceFormatterArgs.getRecentChangesFileNames();
 
 		if (recentChangesFileNames == null) {
@@ -479,13 +482,15 @@ public class SourceFormatter {
 
 		for (String recentChangesFileName : recentChangesFileNames) {
 			if (!buildPropertiesAdded &&
-				recentChangesFileName.startsWith("module/")) {
+				recentChangesFileName.contains("/module/")) {
 
 				File file = new File(
 					_sourceFormatterArgs.getBaseDirName() + "build.properties");
 
 				if (file.exists()) {
-					dependentFileNames.add("build.properties");
+					dependentFileNames.add(
+						_sourceFormatterArgs.getBaseDirName() +
+							"build.properties");
 				}
 
 				buildPropertiesAdded = true;
@@ -497,7 +502,8 @@ public class SourceFormatter {
 			}
 		}
 
-		_sourceFormatterArgs.addRecentChangesFileNames(dependentFileNames);
+		_sourceFormatterArgs.addRecentChangesFileNames(
+			dependentFileNames, null);
 	}
 
 	private Set<String> _addServiceXMLFileName(
@@ -513,7 +519,8 @@ public class SourceFormatter {
 				_sourceFormatterArgs.getBaseDirName() + serviceFileName);
 
 			if (file.exists()) {
-				dependentFileNames.add(serviceFileName);
+				dependentFileNames.add(
+					_sourceFormatterArgs.getBaseDirName() + serviceFileName);
 
 				return dependentFileNames;
 			}

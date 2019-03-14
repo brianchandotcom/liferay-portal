@@ -14,7 +14,6 @@
 
 package com.liferay.portal.verify;
 
-import com.liferay.portal.kernel.dao.jdbc.AutoBatchPreparedStatementUtil;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -39,11 +38,7 @@ import com.liferay.portal.kernel.util.LoggingTimer;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.UnicodeProperties;
-import com.liferay.portal.service.impl.GroupLocalServiceImpl;
 import com.liferay.portal.util.PortalInstances;
-
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 
 import java.util.Iterator;
 import java.util.List;
@@ -56,63 +51,9 @@ public class VerifyGroup extends VerifyProcess {
 
 	@Override
 	protected void doVerify() throws Exception {
-		verifyOrganizationNames();
 		verifySites();
 		verifyStagedGroups();
 		verifyTree();
-	}
-
-	protected void verifyOrganizationNames() throws Exception {
-		try (LoggingTimer loggingTimer = new LoggingTimer()) {
-			StringBundler sb = new StringBundler(5);
-
-			sb.append("select groupId, name from Group_ where name like '%");
-			sb.append(GroupLocalServiceImpl.ORGANIZATION_NAME_SUFFIX);
-			sb.append("%' and name not like '%");
-			sb.append(GroupLocalServiceImpl.ORGANIZATION_NAME_SUFFIX);
-			sb.append("'");
-
-			try (PreparedStatement ps1 = connection.prepareStatement(
-					sb.toString());
-				PreparedStatement ps2 =
-					AutoBatchPreparedStatementUtil.concurrentAutoBatch(
-						connection,
-						"update Group_ set name = ? where groupId = ?");
-				ResultSet rs = ps1.executeQuery()) {
-
-				while (rs.next()) {
-					String name = rs.getString("name");
-
-					if (name.endsWith(
-							GroupLocalServiceImpl.ORGANIZATION_NAME_SUFFIX) ||
-						name.endsWith(
-							GroupLocalServiceImpl.
-								ORGANIZATION_STAGING_SUFFIX)) {
-
-						continue;
-					}
-
-					int pos = name.indexOf(
-						GroupLocalServiceImpl.ORGANIZATION_NAME_SUFFIX);
-
-					pos = name.indexOf(" ", pos + 1);
-
-					String newName =
-						name.substring(pos + 1) +
-							GroupLocalServiceImpl.ORGANIZATION_NAME_SUFFIX;
-
-					ps2.setString(1, newName);
-
-					long groupId = rs.getLong("groupId");
-
-					ps2.setLong(2, groupId);
-
-					ps2.addBatch();
-				}
-
-				ps2.executeBatch();
-			}
-		}
 	}
 
 	protected void verifySites() throws Exception {

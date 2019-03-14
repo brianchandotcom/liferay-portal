@@ -91,6 +91,10 @@ definition {
 			);
 		}
 
+		task ("Publish the content page") {
+			PageEditor.clickPublishPage();
+		}
+
 		task ("Navigate to the content page") {
 			Navigator.openWithAppendToBaseURL(
 				urlAppend = "web/test-site-name/test-content-page-name"

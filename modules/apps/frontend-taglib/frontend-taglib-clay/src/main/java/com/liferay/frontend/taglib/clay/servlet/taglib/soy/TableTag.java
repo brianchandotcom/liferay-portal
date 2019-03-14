@@ -17,8 +17,8 @@ package com.liferay.frontend.taglib.clay.servlet.taglib.soy;
 import com.liferay.frontend.taglib.clay.internal.ClayTagDataSourceProvider;
 import com.liferay.frontend.taglib.clay.servlet.taglib.data.ClayTagDataSource;
 import com.liferay.frontend.taglib.clay.servlet.taglib.display.context.TableDisplayContext;
-import com.liferay.frontend.taglib.clay.servlet.taglib.display.context.table.Schema;
-import com.liferay.frontend.taglib.clay.servlet.taglib.display.context.table.Size;
+import com.liferay.frontend.taglib.clay.servlet.taglib.model.table.Schema;
+import com.liferay.frontend.taglib.clay.servlet.taglib.model.table.Size;
 import com.liferay.frontend.taglib.clay.servlet.taglib.soy.base.BaseClayTag;
 import com.liferay.portal.kernel.util.Validator;
 

@@ -12,20 +12,20 @@
  * details.
  */
 
-package com.liferay.frontend.taglib.clay.servlet.taglib.display.context.table;
+package com.liferay.frontend.taglib.clay.servlet.taglib.model.table;
 
 /**
  * @author Iván Zaera Avellón
  */
-public enum SortingOrder {
+public enum Size {
 
-	ASCENDING("asc"), DESCENDING("desc");
+	EXTRA_LARGE("xl"), LARGE("lg"), MEDIUM("md"), SMALL("sm");
 
 	public String getValue() {
 		return _value;
 	}
 
-	private SortingOrder(String value) {
+	private Size(String value) {
 		_value = value;
 	}
 

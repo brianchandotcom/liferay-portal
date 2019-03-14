@@ -122,28 +122,15 @@ public class DLViewMoreMenuItemsDisplayContext {
 		boolean includeBasicFileEntryType = ParamUtil.getBoolean(
 			_renderRequest, "includeBasicFileEntryType");
 
-		Folder folder = DLAppServiceUtil.getFolder(_folderId);
-
-		boolean inherited = true;
-
-		if ((folder != null) && (folder.getModel() instanceof DLFolder)) {
-			DLFolder dlFolder = (DLFolder)folder.getModel();
-
-			if (dlFolder.getRestrictionType() ==
-					DLFolderConstants.
-						RESTRICTION_TYPE_FILE_ENTRY_TYPES_AND_WORKFLOW) {
-
-				inherited = false;
-			}
-		}
+		long folderId = getPrimaryFolderId(_folderId);
 
 		List<DLFileEntryType> dlFileEntryTypes =
 			DLFileEntryTypeServiceUtil.search(
-				themeDisplay.getCompanyId(), _folderId,
+				themeDisplay.getCompanyId(), folderId,
 				PortalUtil.getCurrentAndAncestorSiteGroupIds(
 					themeDisplay.getScopeGroupId()),
-				searchTerms.getKeywords(), includeBasicFileEntryType, inherited,
-				QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+				searchTerms.getKeywords(), includeBasicFileEntryType,
+				_inherited, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 
 		searchContainer.setTotal(dlFileEntryTypes.size());
 
@@ -164,8 +151,32 @@ public class DLViewMoreMenuItemsDisplayContext {
 		return searchContainer.getTotal();
 	}
 
+	protected long getPrimaryFolderId(long folderId) throws PortalException {
+		while (folderId != DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
+			Folder folder = DLAppServiceUtil.getFolder(folderId);
+
+			if ((folder != null) && (folder.getModel() instanceof DLFolder)) {
+				DLFolder dlFolder = (DLFolder)folder.getModel();
+
+				if (dlFolder.getRestrictionType() ==
+						DLFolderConstants.
+							RESTRICTION_TYPE_FILE_ENTRY_TYPES_AND_WORKFLOW) {
+
+					_inherited = false;
+
+					break;
+				}
+
+				folderId = dlFolder.getParentFolderId();
+			}
+		}
+
+		return folderId;
+	}
+
 	private String _eventName;
 	private final long _folderId;
+	private boolean _inherited = true;
 	private final RenderRequest _renderRequest;
 	private final RenderResponse _renderResponse;
 	private final HttpServletRequest _request;

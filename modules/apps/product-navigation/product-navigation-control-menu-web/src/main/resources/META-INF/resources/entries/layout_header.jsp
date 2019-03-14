@@ -32,6 +32,8 @@ ResourceBundle layoutTypeResourceBundle = ResourceBundleUtil.getBundle("content.
 
 	PortletURL administrationPortletURL = PortalUtil.getControlPanelPortletURL(request, LayoutAdminPortletKeys.GROUP_PAGES, PortletRequest.RENDER_PHASE);
 
+	administrationPortletURL.setParameter("redirect", themeDisplay.getURLCurrent());
+
 	context.put("administrationPortletURL", administrationPortletURL.toString());
 
 	LiferayPortletURL findLayoutsURL = PortletURLFactoryUtil.create(request, ProductNavigationControlMenuPortletKeys.PRODUCT_NAVIGATION_CONTROL_MENU, PortletRequest.RESOURCE_PHASE);

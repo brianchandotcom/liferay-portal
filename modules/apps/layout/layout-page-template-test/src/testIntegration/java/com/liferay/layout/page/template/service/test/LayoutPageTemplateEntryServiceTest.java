@@ -274,8 +274,8 @@ public class LayoutPageTemplateEntryServiceTest {
 		LayoutPageTemplateCollection layoutPageTemplateCollection =
 			LayoutPageTemplateCollectionServiceUtil.
 				addLayoutPageTemplateCollection(
-					_group.getGroupId(), RandomTestUtil.randomString(),
-					null, serviceContext);
+					_group.getGroupId(), RandomTestUtil.randomString(), null,
+					serviceContext);
 
 		LayoutPageTemplateEntryServiceUtil.addLayoutPageTemplateEntry(
 			_group.getGroupId(),
@@ -294,8 +294,8 @@ public class LayoutPageTemplateEntryServiceTest {
 		LayoutPageTemplateCollection layoutPageTemplateCollection =
 			LayoutPageTemplateCollectionServiceUtil.
 				addLayoutPageTemplateCollection(
-					_group.getGroupId(), RandomTestUtil.randomString(),
-					null, serviceContext);
+					_group.getGroupId(), RandomTestUtil.randomString(), null,
+					serviceContext);
 
 		LayoutPageTemplateEntryServiceUtil.addLayoutPageTemplateEntry(
 			_group.getGroupId(),

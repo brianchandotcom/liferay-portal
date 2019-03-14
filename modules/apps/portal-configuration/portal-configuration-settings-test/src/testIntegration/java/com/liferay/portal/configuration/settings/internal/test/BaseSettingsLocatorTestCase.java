@@ -157,9 +157,9 @@ public abstract class BaseSettingsLocatorTestCase {
 	protected String saveConfiguration(String configurationPid)
 		throws Exception {
 
-		String value = RandomTestUtil.randomString();
-
 		Dictionary<String, Object> properties = new HashMapDictionary<>();
+
+		String value = RandomTestUtil.randomString();
 
 		properties.put(SettingsLocatorTestConstants.TEST_KEY, value);
 
@@ -185,8 +185,6 @@ public abstract class BaseSettingsLocatorTestCase {
 			Serializable propertyValue)
 		throws Exception {
 
-		String value = RandomTestUtil.randomString();
-
 		Dictionary<String, Object> properties = new HashMapDictionary<>();
 
 		properties.put(scope.getPropertyKey(), scopePrimKey);
@@ -196,6 +194,8 @@ public abstract class BaseSettingsLocatorTestCase {
 
 			properties.put(propertyKey, propertyValue);
 		}
+
+		String value = RandomTestUtil.randomString();
 
 		properties.put(SettingsLocatorTestConstants.TEST_KEY, value);
 

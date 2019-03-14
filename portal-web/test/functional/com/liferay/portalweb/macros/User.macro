@@ -1444,7 +1444,7 @@ definition {
 		);
 
 		Alert.viewSuccessMessageText(
-			successMessage = "Your password was sent to the provided email address."
+			successMessage = "An email has been sent to the provided email address."
 		);
 	}
 

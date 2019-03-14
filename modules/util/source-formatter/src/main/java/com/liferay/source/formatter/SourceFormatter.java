@@ -491,36 +491,41 @@ public class SourceFormatter {
 				buildPropertiesAdded = true;
 			}
 
-			if (!recentChangesFileName.endsWith("ServiceImpl.java")) {
-				continue;
-			}
-
-			String dirName = recentChangesFileName.substring(
-				0, recentChangesFileName.lastIndexOf(CharPool.SLASH));
-
-			while (true) {
-				String serviceFileName = dirName + "/service.xml";
-
-				File file = new File(
-					_sourceFormatterArgs.getBaseDirName() + serviceFileName);
-
-				if (file.exists()) {
-					dependentFileNames.add(serviceFileName);
-
-					break;
-				}
-
-				int pos = dirName.lastIndexOf(CharPool.SLASH);
-
-				if (pos == -1) {
-					break;
-				}
-
-				dirName = dirName.substring(0, pos);
+			if (recentChangesFileName.endsWith("ServiceImpl.java")) {
+				dependentFileNames = _addServiceXMLFileName(
+					dependentFileNames, recentChangesFileName);
 			}
 		}
 
 		_sourceFormatterArgs.addRecentChangesFileNames(dependentFileNames);
+	}
+
+	private Set<String> _addServiceXMLFileName(
+		Set<String> dependentFileNames, String serviceImplFileName) {
+
+		String dirName = serviceImplFileName.substring(
+			0, serviceImplFileName.lastIndexOf(CharPool.SLASH));
+
+		while (true) {
+			String serviceFileName = dirName + "/service.xml";
+
+			File file = new File(
+				_sourceFormatterArgs.getBaseDirName() + serviceFileName);
+
+			if (file.exists()) {
+				dependentFileNames.add(serviceFileName);
+
+				return dependentFileNames;
+			}
+
+			int pos = dirName.lastIndexOf(CharPool.SLASH);
+
+			if (pos == -1) {
+				return dependentFileNames;
+			}
+
+			dirName = dirName.substring(0, pos);
+		}
 	}
 
 	private void _excludeWorkingDirCheckoutPrivateApps(File portalDir)

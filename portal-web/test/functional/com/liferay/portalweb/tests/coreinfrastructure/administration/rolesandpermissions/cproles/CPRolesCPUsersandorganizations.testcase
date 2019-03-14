@@ -84,7 +84,7 @@ definition {
 
 		AssertTextEquals(
 			locator1 = "Message#INFO",
-			value1 = "You do not belong to an organization and are not allowed to view other organizations."
+			value1 = "Info:You do not belong to an organization and are not allowed to view other organizations."
 		);
 
 		Permissions.definePermissionViaJSONAPI(
@@ -165,7 +165,7 @@ definition {
 
 		AssertTextEquals(
 			locator1 = "Message#INFO",
-			value1 = "You do not belong to an organization and are not allowed to view other organizations."
+			value1 = "Info:You do not belong to an organization and are not allowed to view other organizations."
 		);
 
 		AssertElementNotPresent(locator1 = "UsersAndOrganizations#ADD");
@@ -215,7 +215,7 @@ definition {
 
 		AssertTextEquals(
 			locator1 = "Message#INFO",
-			value1 = "You do not belong to an organization and are not allowed to view other organizations."
+			value1 = "Info:You do not belong to an organization and are not allowed to view other organizations."
 		);
 
 		AssertElementNotPresent(locator1 = "UsersAndOrganizations#ADD");

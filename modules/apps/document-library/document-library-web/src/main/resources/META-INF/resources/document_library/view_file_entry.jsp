@@ -137,6 +137,7 @@ if (portletTitleBasedNavigation) {
 		<%
 		request.setAttribute("info_panel.jsp-fileEntry", fileEntry);
 		request.setAttribute("info_panel.jsp-fileVersion", fileVersion);
+		request.setAttribute("info_panel_file_entry.jsp-hideActions", true);
 		%>
 
 		<liferay-util:include page="/document_library/info_panel_file_entry.jsp" servletContext="<%= application %>" />

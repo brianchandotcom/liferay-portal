@@ -19,6 +19,7 @@
 <%
 FileEntry fileEntry = (FileEntry)request.getAttribute("info_panel.jsp-fileEntry");
 FileVersion fileVersion = (FileVersion)request.getAttribute("info_panel.jsp-fileVersion");
+boolean hideActions = GetterUtil.getBoolean(request.getAttribute("info_panel_file_entry.jsp-hideActions"));
 
 DLViewFileVersionDisplayContext dlViewFileVersionDisplayContext = dlDisplayContextProvider.getDLViewFileVersionDisplayContext(request, response, fileVersion);
 
@@ -33,11 +34,13 @@ else {
 %>
 
 <div class="sidebar-header">
-	<ul class="sidebar-header-actions">
-		<li>
-			<liferay-util:include page="/document_library/file_entry_action.jsp" servletContext="<%= application %>" />
-		</li>
-	</ul>
+	<c:if test="<%= !hideActions %>">
+		<ul class="sidebar-header-actions">
+			<li>
+				<liferay-util:include page="/document_library/file_entry_action.jsp" servletContext="<%= application %>" />
+			</li>
+		</ul>
+	</c:if>
 
 	<h4><%= HtmlUtil.escape(fileEntry.getTitle()) %></h4>
 

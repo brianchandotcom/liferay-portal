@@ -53,6 +53,8 @@ else {
 	<aui:workflow-status model="<%= DLFileEntry.class %>" showIcon="<%= false %>" showLabel="<%= false %>" status="<%= fileVersion.getStatus() %>" />
 </div>
 
+<div class="sidebar-body">
+
 <%
 String tabsNames = "details";
 
@@ -65,10 +67,9 @@ if (dlViewFileVersionDisplayContext.isVersionInfoVisible()) {
 	cssClass="navbar-no-collapse"
 	names="<%= tabsNames %>"
 	refresh="<%= false %>"
-	type="dropdown"
+	type="tabs nav-tabs-default"
 >
 	<liferay-ui:section>
-		<div class="sidebar-body">
 
 			<%
 			String thumbnailSrc = DLURLHelperUtil.getThumbnailSrc(fileEntry, fileVersion, themeDisplay);
@@ -440,19 +441,17 @@ if (dlViewFileVersionDisplayContext.isVersionInfoVisible()) {
 				%>
 
 			</liferay-ui:panel-container>
-		</div>
 	</liferay-ui:section>
 
 	<c:if test="<%= dlViewFileVersionDisplayContext.isVersionInfoVisible() %>">
 		<liferay-ui:section>
-			<div class="sidebar-body">
 
 				<%
 				request.setAttribute("info_panel.jsp-fileEntry", fileEntry);
 				%>
 
 				<liferay-util:include page="/document_library/file_entry_history.jsp" servletContext="<%= application %>" />
-			</div>
 		</liferay-ui:section>
 	</c:if>
+	</div>
 </liferay-ui:tabs>

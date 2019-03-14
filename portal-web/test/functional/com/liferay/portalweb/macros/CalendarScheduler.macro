@@ -208,7 +208,7 @@ definition {
 
 			ScrollWebElementIntoView(locator1 = "Calendar#SCHEDULER_VIEW_EVENT_NOT_TODAY");
 
-			AssertClick.assertPartialTextClickAt(
+			AssertClick.assertTextClickNoMouseOver(
 				locator1 = "Calendar#SCHEDULER_VIEW_EVENT_NOT_TODAY",
 				value1 = "${eventTitle}"
 			);
@@ -218,7 +218,7 @@ definition {
 				locator1 = "Calendar#SCHEDULER_VIEW_EVENT_DAY_AND_WEEK_VIEW"
 			);
 
-			AssertClick.assertPartialTextClickAt(
+			AssertClick.assertTextClickNoMouseOver(
 				locator1 = "Calendar#SCHEDULER_VIEW_EVENT_DAY_AND_WEEK_VIEW",
 				value1 = "${eventTitle}"
 			);

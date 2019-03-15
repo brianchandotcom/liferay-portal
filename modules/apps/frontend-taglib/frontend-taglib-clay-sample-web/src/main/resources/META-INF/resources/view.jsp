@@ -19,7 +19,6 @@
 <liferay-ui:tabs
 	names="Alerts,Badges,Buttons,Cards,Dropdowns,Form Elements,Icons,Labels,Links,Management Toolbars,Navigation Bars,Progress Bars,Stickers,Tables"
 	refresh="<%= false %>"
-	type="tabs nav-tabs-default"
 >
 
 	<%

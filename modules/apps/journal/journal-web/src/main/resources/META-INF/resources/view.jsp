@@ -112,7 +112,6 @@ if (Validator.isNotNull(title)) {
 						names="<%= StringUtil.merge(tabsNames) %>"
 						portletURL="<%= journalDisplayContext.getPortletURL() %>"
 						tabsValues="<%= StringUtil.merge(tabsValues) %>"
-						type="tabs nav-tabs-default"
 					/>
 
 					<c:choose>

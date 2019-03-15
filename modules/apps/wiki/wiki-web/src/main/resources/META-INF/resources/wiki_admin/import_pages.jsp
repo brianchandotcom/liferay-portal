@@ -67,7 +67,6 @@ renderResponse.setTitle(LanguageUtil.get(request, "import-pages"));
 			<liferay-ui:tabs
 				names="<%= StringUtil.merge(importers) %>"
 				param="tabs2"
-				type="tabs nav-tabs-default"
 				url="<%= portletURL.toString() %>"
 			/>
 

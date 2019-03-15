@@ -46,7 +46,6 @@ for (int i = 0; i < categoryKeys.length; i++) {
 			names="<%= StringUtil.merge(filterCategoryLabels) %>"
 			param="<%= tabs1Param %>"
 			refresh="<%= false %>"
-			type="tabs nav-tabs-default"
 			value="<%= tabs1Value %>"
 		>
 

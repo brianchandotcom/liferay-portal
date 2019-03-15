@@ -37,7 +37,6 @@ if (ddmForm != null) {
 <liferay-ui:tabs
 	names='<%= LanguageUtil.get(request, "view[action]") + "," + LanguageUtil.get(request, "source") %>'
 	refresh="<%= false %>"
-	type="tabs nav-tabs-default"
 >
 	<liferay-ui:section>
 		<div id="<portlet:namespace />formBuilderTab">

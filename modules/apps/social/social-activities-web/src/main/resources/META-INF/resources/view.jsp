@@ -19,7 +19,6 @@
 <c:if test="<%= socialActivitiesDisplayContext.isTabsVisible() %>">
 	<liferay-ui:tabs
 		names="<%= socialActivitiesDisplayContext.getTabsNames() %>"
-		type="tabs nav-tabs-default"
 		url="<%= socialActivitiesDisplayContext.getTabsURL() %>"
 		value="<%= socialActivitiesDisplayContext.getSelectedTabName() %>"
 	/>

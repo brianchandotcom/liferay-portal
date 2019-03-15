@@ -41,7 +41,6 @@ String rootNodeName = liveGroup.getLayoutRootNodeName(privateLayout, themeDispla
 		names="public-pages,private-pages"
 		param="tabs1"
 		portletURL="<%= portletURL %>"
-		type="pills"
 	/>
 
 	<aui:nav-bar>

@@ -46,7 +46,6 @@ kbDisplayPortletInstanceConfiguration = ParameterMapUtil.setParameterMap(KBDispl
 		<liferay-ui:tabs
 			names="<%= tabsNames %>"
 			refresh="<%= false %>"
-			type="tabs nav-tabs-default"
 		>
 			<liferay-ui:section>
 				<liferay-frontend:fieldset-group>

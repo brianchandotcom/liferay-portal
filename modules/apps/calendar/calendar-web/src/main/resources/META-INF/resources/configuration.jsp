@@ -30,7 +30,6 @@
 			names='<%= "user-settings,display-settings,rss" %>'
 			param="tabs2"
 			refresh="<%= false %>"
-			type="tabs nav-tabs-default"
 		>
 			<liferay-ui:section>
 				<liferay-frontend:fieldset-group>

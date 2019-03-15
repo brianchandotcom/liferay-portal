@@ -155,7 +155,6 @@ renderResponse.setTitle((workflowDefinition == null) ? LanguageUtil.get(request,
 						cssClass="navigation-bar component-navigation-bar navbar-no-collapse"
 						names="details,revision-history"
 						refresh="<%= false %>"
-						type="tabs nav-tabs-default "
 					>
 						<liferay-ui:section>
 							<div style="margin-top:1.5rem;">

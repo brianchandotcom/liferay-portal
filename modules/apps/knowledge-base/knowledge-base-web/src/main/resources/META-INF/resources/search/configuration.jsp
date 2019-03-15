@@ -33,7 +33,6 @@ kbSearchPortletInstanceConfiguration = ParameterMapUtil.setParameterMap(KBSearch
 		<liferay-ui:tabs
 			names="general,display-settings"
 			refresh="<%= false %>"
-			type="tabs nav-tabs-default"
 		>
 			<liferay-ui:section>
 				<liferay-frontend:fieldset-group>

@@ -35,7 +35,6 @@
 		<liferay-ui:tabs
 			names="email-from,document-added-email,document-updated-email"
 			refresh="<%= false %>"
-			type="tabs nav-tabs-default"
 		>
 			<liferay-ui:error key="emailFileEntryAddedBody" message="please-enter-a-valid-body" />
 			<liferay-ui:error key="emailFileEntryAddedSubject" message="please-enter-a-valid-subject" />

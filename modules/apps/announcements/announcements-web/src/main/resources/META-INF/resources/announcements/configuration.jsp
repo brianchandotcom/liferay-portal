@@ -94,7 +94,6 @@ announcementsPortletInstanceConfiguration = ParameterMapUtil.setParameterMap(Ann
 						names="<%= tabs1Names %>"
 						param="tabs1"
 						refresh="<%= false %>"
-						type="tabs nav-tabs-default"
 					>
 						<c:if test="<%= !groups.isEmpty() %>">
 							<liferay-ui:section>

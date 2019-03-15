@@ -43,7 +43,6 @@ String orderByType = ParamUtil.getString(request, "orderByType", "asc");
 	<liferay-ui:tabs
 		names='<%= (selRecordSet == null) ? "lists" : "lists,optional-configuration" %>'
 		refresh="<%= false %>"
-		type="tabs nav-tabs-default"
 	>
 		<aui:form action="<%= configurationRenderURL %>" method="post" name="fm1">
 			<aui:input name="redirect" type="hidden" value="<%= configurationRenderURL.toString() %>" />

@@ -49,7 +49,6 @@ BlogsGroupServiceOverriddenConfiguration blogsGroupServiceOverriddenConfiguratio
 		<liferay-ui:tabs
 			names="<%= tabs1Names %>"
 			refresh="<%= false %>"
-			type="tabs nav-tabs-default"
 		>
 			<liferay-ui:error key="emailFromAddress" message="please-enter-a-valid-email-address" />
 			<liferay-ui:error key="emailFromName" message="please-enter-a-valid-name" />

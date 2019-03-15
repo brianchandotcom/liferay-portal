@@ -119,7 +119,6 @@ JournalEditArticleDisplayContext journalEditArticleDisplayContext = new JournalE
 				names="<%= tabs1Names %>"
 				param="tabs1"
 				refresh="<%= false %>"
-				type="tabs nav-tabs-default"
 			>
 				<liferay-ui:section>
 					<liferay-frontend:form-navigator

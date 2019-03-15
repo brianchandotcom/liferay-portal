@@ -52,7 +52,6 @@ catch (NoSuchFolderException nsfe) {
 		<liferay-ui:tabs
 			names="display-settings,email-from,entry-added-email,entry-updated-email"
 			refresh="<%= false %>"
-			type="tabs nav-tabs-default"
 		>
 			<liferay-ui:error key="emailFromAddress" message="please-enter-a-valid-email-address" />
 			<liferay-ui:error key="emailFromName" message="please-enter-a-valid-name" />

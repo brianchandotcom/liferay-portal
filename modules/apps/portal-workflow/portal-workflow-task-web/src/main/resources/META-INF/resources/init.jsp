@@ -31,7 +31,6 @@ taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 <%@ page import="com.liferay.asset.kernel.model.AssetEntry" %><%@
 page import="com.liferay.asset.kernel.model.AssetRenderer" %><%@
 page import="com.liferay.asset.kernel.model.AssetRendererFactory" %><%@
-page import="com.liferay.asset.kernel.service.AssetEntryLocalService" %><%@
 page import="com.liferay.petra.string.StringPool" %><%@
 page import="com.liferay.portal.kernel.dao.search.ResultRow" %><%@
 page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
@@ -63,9 +62,6 @@ page import="com.liferay.taglib.search.DateSearchEntry" %>
 WorkflowTaskDisplayContext workflowTaskDisplayContext = new WorkflowTaskDisplayContext(liferayPortletRequest, liferayPortletResponse);
 
 String currentURL = workflowTaskDisplayContext.getCurrentURL();
-
-AssetEntryLocalService assetEntryLocalService =
-	(AssetEntryLocalService)request.getAttribute("assetEntryLocalService");
 %>
 
 <%@ include file="/init-ext.jsp" %>

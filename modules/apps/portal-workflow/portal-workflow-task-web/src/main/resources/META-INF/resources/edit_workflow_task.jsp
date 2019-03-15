@@ -31,28 +31,20 @@ if (Validator.isNull(backURL)) {
 
 WorkflowTask workflowTask = workflowTaskDisplayContext.getWorkflowTask();
 
-long workflowContextEntryClassPK =
-	workflowTaskDisplayContext.getWorkflowContextEntryClassPK(workflowTask);
+long classPK = workflowTaskDisplayContext.getWorkflowContextEntryClassPK(workflowTask);
 
-WorkflowHandler<?> workflowHandler =
-	workflowTaskDisplayContext.getWorkflowHandler(workflowTask);
+WorkflowHandler<?> workflowHandler = workflowTaskDisplayContext.getWorkflowHandler(workflowTask);
 
-AssetRenderer<?> assetRenderer =
-	workflowHandler.getAssetRenderer(workflowContextEntryClassPK);
-
-long assetClassPK = assetRenderer.getClassPK();
+AssetRenderer<?> assetRenderer = workflowHandler.getAssetRenderer(classPK);
 
 AssetRendererFactory<?> assetRendererFactory = assetRenderer.getAssetRendererFactory();
 
-AssetEntry assetEntry = assetRendererFactory.getAssetEntry(workflowHandler.getClassName(), assetRenderer.getClassPK());
+long assetClassPK = assetRenderer.getClassPK();
 
-long assetEntryClassPK = assetEntry.getClassPK();
+AssetEntry assetEntry = assetRendererFactory.getAssetEntry(workflowHandler.getClassName(), assetClassPK);
 
-AssetEntry assetRendererAssetEntry =
-	assetEntryLocalService.fetchAssetEntry(assetClassPK);
-
-if (assetRendererAssetEntry == null) {
-	assetClassPK = assetEntryClassPK;
+if (assetClassPK != assetEntry.getEntryId()) {
+	assetClassPK = assetEntry.getClassPK();
 }
 
 String languageId = ParamUtil.getString(request, "languageId", assetRenderer.getDefaultLanguageId());

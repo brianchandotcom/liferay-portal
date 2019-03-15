@@ -288,6 +288,26 @@ else {
 			</liferay-expando:custom-attributes-available>
 		</c:if>
 
+		<liferay-ui:panel
+			cssClass="display-page-panel"
+			defaultState="closed"
+			extended="<%= false %>"
+			id="dlFileEntryDisplayPagePanel"
+			markupView="lexicon"
+			persistState="<%= true %>"
+			title="display-page"
+		>
+			<aui:fieldset>
+				<liferay-asset:select-asset-display-page
+					classNameId="<%= PortalUtil.getClassNameId(DLFileEntry.class) %>"
+					classPK="<%= 0 %>"
+					groupId="<%= scopeGroupId %>"
+					showPortletLayouts="<%= true %>"
+					showViewInContextLink="<%= true %>"
+				/>
+			</aui:fieldset>
+		</liferay-ui:panel>
+
 		<c:if test="<%= (folder == null) || folder.isSupportsSocial() %>">
 			<liferay-ui:panel
 				cssClass="categorization-panel"

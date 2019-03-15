@@ -14,28 +14,129 @@
 
 package com.liferay.asset.list.service.impl;
 
+import com.liferay.asset.list.model.AssetListEntry;
+import com.liferay.asset.list.model.AssetListEntrySegmentsEntryRel;
 import com.liferay.asset.list.service.base.AssetListEntrySegmentsEntryRelLocalServiceBaseImpl;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.SystemEventConstants;
+import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.systemevent.SystemEvent;
+
+import java.util.Date;
+import java.util.List;
 
 /**
- * The implementation of the asset list entry segments entry rel local service.
- *
- * <p>
- * All custom service methods should be put in this class. Whenever methods are added, rerun ServiceBuilder to copy their definitions into the <code>com.liferay.asset.list.service.AssetListEntrySegmentsEntryRelLocalService</code> interface.
- *
- * <p>
- * This is a local service. Methods of this service will not have security checks based on the propagated JAAS credentials because this service can only be accessed from within the same VM.
- * </p>
- *
- * @author Brian Wing Shun Chan
- * @see AssetListEntrySegmentsEntryRelLocalServiceBaseImpl
+ * @author Eduardo García
  */
 public class AssetListEntrySegmentsEntryRelLocalServiceImpl
 	extends AssetListEntrySegmentsEntryRelLocalServiceBaseImpl {
 
-	/**
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never reference this class directly. Use <code>com.liferay.asset.list.service.AssetListEntrySegmentsEntryRelLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.asset.list.service.AssetListEntrySegmentsEntryRelLocalServiceUtil</code>.
-	 */
+	@Override
+	public AssetListEntrySegmentsEntryRel addAssetListEntrySegmentsEntryRel(
+			long assetListEntryId, long segmentsEntryId, String typeSettings,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		User user = userLocalService.getUser(serviceContext.getUserId());
+
+		long assetListEntrySegmentsEntryRelId = counterLocalService.increment();
+
+		AssetListEntrySegmentsEntryRel assetListEntrySegmentsEntryRel =
+			assetListEntrySegmentsEntryRelPersistence.create(
+				assetListEntrySegmentsEntryRelId);
+
+		assetListEntrySegmentsEntryRel.setUuid(serviceContext.getUuid());
+		assetListEntrySegmentsEntryRel.setGroupId(
+			serviceContext.getScopeGroupId());
+		assetListEntrySegmentsEntryRel.setCompanyId(
+			serviceContext.getCompanyId());
+		assetListEntrySegmentsEntryRel.setUserId(serviceContext.getUserId());
+		assetListEntrySegmentsEntryRel.setUserName(user.getFullName());
+		assetListEntrySegmentsEntryRel.setCreateDate(
+			serviceContext.getCreateDate(new Date()));
+		assetListEntrySegmentsEntryRel.setModifiedDate(
+			serviceContext.getModifiedDate(new Date()));
+		assetListEntrySegmentsEntryRel.setAssetListEntryId(assetListEntryId);
+		assetListEntrySegmentsEntryRel.setSegmentsEntryId(segmentsEntryId);
+		assetListEntrySegmentsEntryRel.setTypeSettings(typeSettings);
+
+		return assetListEntrySegmentsEntryRelPersistence.update(
+			assetListEntrySegmentsEntryRel);
+	}
+
+	@Override
+	@SystemEvent(type = SystemEventConstants.TYPE_DELETE)
+	public AssetListEntrySegmentsEntryRel deleteAssetListEntrySegmentsEntryRel(
+			AssetListEntry assetListEntry)
+		throws PortalException {
+
+		return assetListEntrySegmentsEntryRelPersistence.remove(assetListEntry);
+	}
+
+	@Override
+	public void deleteAssetListEntrySegmentsEntryRel(
+			long assetListEntryId, long segmentsEntryId)
+		throws PortalException {
+
+		assetListEntrySegmentsEntryRelPersistence.removeByA_S(
+			assetListEntryId, segmentsEntryId);
+	}
+
+	@Override
+	public void deleteAssetListEntrySegmentsEntryRelByAssetListEntryId(
+		long assetListEntryId) {
+
+		assetListEntrySegmentsEntryRelPersistence.removeByAssetListEntryId(
+			assetListEntryId);
+	}
+
+	@Override
+	public AssetListEntrySegmentsEntryRel fetchAssetListEntrySegmentsEntryRel(
+		long assetListEntryId, long segmentsEntryId) {
+
+		return assetListEntrySegmentsEntryRelPersistence.fetchByA_S(
+			assetListEntryId, segmentsEntryId);
+	}
+
+	@Override
+	public AssetListEntrySegmentsEntryRel getAssetListEntrySegmentsEntryRel(
+			long assetListEntryId, long segmentsEntryId)
+		throws PortalException {
+
+		return assetListEntrySegmentsEntryRelPersistence.findByA_S(
+			assetListEntryId, segmentsEntryId);
+	}
+
+	@Override
+	public List<AssetListEntrySegmentsEntryRel>
+		getAssetListEntrySegmentsEntryRels(
+			long assetListEntryId, int start, int end) {
+
+		return assetListEntrySegmentsEntryRelPersistence.findByAssetListEntryId(
+			assetListEntryId, start, end);
+	}
+
+	@Override
+	public int getAssetListEntrySegmentsEntryRelsCount(long assetListEntryId) {
+		return assetListEntrySegmentsEntryRelPersistence.
+			countByAssetListEntryId(assetListEntryId);
+	}
+
+	@Override
+	public AssetListEntrySegmentsEntryRel
+		updateAssetListEntrySegmentsEntryRelTypeSettings(
+			long assetListEntryId, long segmentsEntryId, String typeSettings) {
+
+		AssetListEntrySegmentsEntryRel assetListEntrySegmentsEntryRel =
+			assetListEntrySegmentsEntryRelPersistence.fetchByA_S(
+				assetListEntryId, segmentsEntryId);
+
+		assetListEntrySegmentsEntryRel.setModifiedDate(new Date());
+		assetListEntrySegmentsEntryRel.setTypeSettings(typeSettings);
+
+		return assetListEntrySegmentsEntryRelPersistence.update(
+			assetListEntrySegmentsEntryRel);
+	}
 
 }

@@ -72,7 +72,7 @@ public class LayoutModelListenerTest {
 			_group.getGroupId(), LayoutConstants.TYPE_CONTENT);
 
 		SegmentsExperience defaultSegmentsExperience =
-			_segmentsExperienceLocalService.fetchDefaultSegmentsExperience(
+			_segmentsExperienceLocalService.getDefaultSegmentsExperience(
 				_group.getGroupId(), _classNameId, layout.getPlid());
 
 		Assert.assertNotNull(defaultSegmentsExperience);
@@ -86,7 +86,7 @@ public class LayoutModelListenerTest {
 			_group.getGroupId(), LayoutConstants.TYPE_PORTLET);
 
 		SegmentsExperience defaultSegmentsExperience =
-			_segmentsExperienceLocalService.fetchDefaultSegmentsExperience(
+			_segmentsExperienceLocalService.getDefaultSegmentsExperience(
 				_group.getGroupId(), _classNameId, layout.getPlid());
 
 		Assert.assertNull(defaultSegmentsExperience);
@@ -96,7 +96,7 @@ public class LayoutModelListenerTest {
 		_layoutLocalService.updateLayout(layout);
 
 		defaultSegmentsExperience =
-			_segmentsExperienceLocalService.fetchDefaultSegmentsExperience(
+			_segmentsExperienceLocalService.getDefaultSegmentsExperience(
 				_group.getGroupId(), _classNameId, layout.getPlid());
 
 		Assert.assertNotNull(defaultSegmentsExperience);
@@ -110,7 +110,7 @@ public class LayoutModelListenerTest {
 			_group.getGroupId(), LayoutConstants.TYPE_PORTLET);
 
 		SegmentsExperience defaultSegmentsExperience =
-			_segmentsExperienceLocalService.fetchDefaultSegmentsExperience(
+			_segmentsExperienceLocalService.getDefaultSegmentsExperience(
 				_group.getGroupId(), _classNameId, layout.getPlid());
 
 		Assert.assertNull(defaultSegmentsExperience);
@@ -124,7 +124,7 @@ public class LayoutModelListenerTest {
 			_group.getGroupId(), LayoutConstants.TYPE_PORTLET);
 
 		SegmentsExperience defaultSegmentsExperience =
-			_segmentsExperienceLocalService.fetchDefaultSegmentsExperience(
+			_segmentsExperienceLocalService.getDefaultSegmentsExperience(
 				_group.getGroupId(), _classNameId, layout.getPlid());
 
 		Assert.assertNull(defaultSegmentsExperience);
@@ -134,7 +134,7 @@ public class LayoutModelListenerTest {
 		_layoutLocalService.updateLayout(layout);
 
 		defaultSegmentsExperience =
-			_segmentsExperienceLocalService.fetchDefaultSegmentsExperience(
+			_segmentsExperienceLocalService.getDefaultSegmentsExperience(
 				_group.getGroupId(), _classNameId, layout.getPlid());
 
 		Assert.assertNull(defaultSegmentsExperience);

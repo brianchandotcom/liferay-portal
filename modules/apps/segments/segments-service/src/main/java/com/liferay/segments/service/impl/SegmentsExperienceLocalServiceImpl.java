@@ -161,19 +161,6 @@ public class SegmentsExperienceLocalServiceImpl
 	}
 
 	@Override
-	public SegmentsExperience fetchDefaultSegmentsExperience(
-			long groupId, long classNameId, long classPK)
-		throws PortalException {
-
-		SegmentsEntry segmentsEntry =
-			segmentsEntryLocalService.getDefaultSegmentsEntry(groupId);
-
-		return segmentsExperiencePersistence.fetchByG_S_C_C_First(
-			groupId, segmentsEntry.getSegmentsEntryId(), classNameId, classPK,
-			null);
-	}
-
-	@Override
 	public SegmentsExperience fetchSegmentsExperience(
 		long segmentsExperienceId) {
 
@@ -189,9 +176,19 @@ public class SegmentsExperienceLocalServiceImpl
 		SegmentsEntry defaultSegmentsEntry =
 			segmentsEntryLocalService.getDefaultSegmentsEntry(groupId);
 
-		return segmentsExperiencePersistence.findByG_S_C_C_First(
-			groupId, defaultSegmentsEntry.getSegmentsEntryId(), classNameId,
-			classPK, null);
+		SegmentsExperience defaultSegmentsExperience =
+			segmentsExperiencePersistence.fetchByG_S_C_C_First(
+				groupId, defaultSegmentsEntry.getSegmentsEntryId(), classNameId,
+				classPK, null);
+
+		if (defaultSegmentsExperience != null) {
+			return defaultSegmentsExperience;
+		}
+
+		throw new DefaultSegmentsExperienceException(
+			StringBundler.concat(
+				"Default segments entry experience is not available for class ",
+				classNameId, " with ID ", classPK));
 	}
 
 	@Override

@@ -20,7 +20,7 @@ import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.ModelListener;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
-import com.liferay.segments.model.SegmentsExperience;
+import com.liferay.segments.exception.DefaultSegmentsExperienceException;
 import com.liferay.segments.service.SegmentsExperienceLocalService;
 
 import java.util.Objects;
@@ -40,15 +40,7 @@ public class LayoutModelListener extends BaseModelListener<Layout> {
 			return;
 		}
 
-		try {
-			_segmentsExperienceLocalService.addDefaultSegmentsExperience(
-				layout.getGroupId(),
-				_classNameLocalService.getClassNameId(Layout.class),
-				layout.getPlid());
-		}
-		catch (Exception e) {
-			throw new ModelListenerException(e);
-		}
+		_addDefaultSegmentsExperience(layout);
 	}
 
 	@Override
@@ -75,16 +67,21 @@ public class LayoutModelListener extends BaseModelListener<Layout> {
 		}
 
 		try {
-			SegmentsExperience segmentsExperience =
-				_segmentsExperienceLocalService.fetchDefaultSegmentsExperience(
-					layout.getGroupId(),
-					_classNameLocalService.getClassNameId(Layout.class),
-					layout.getPlid());
+			_segmentsExperienceLocalService.getDefaultSegmentsExperience(
+				layout.getGroupId(),
+				_classNameLocalService.getClassNameId(Layout.class),
+				layout.getPlid());
+		}
+		catch (DefaultSegmentsExperienceException dsee) {
+			_addDefaultSegmentsExperience(layout);
+		}
+		catch (Exception e) {
+			throw new ModelListenerException(e);
+		}
+	}
 
-			if (segmentsExperience != null) {
-				return;
-			}
-
+	private void _addDefaultSegmentsExperience(Layout layout) {
+		try {
 			_segmentsExperienceLocalService.addDefaultSegmentsExperience(
 				layout.getGroupId(),
 				_classNameLocalService.getClassNameId(Layout.class),

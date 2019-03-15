@@ -488,14 +488,14 @@ public class ContentPageEditorDisplayContext {
 		_defaultSegmentsExperienceId = StringPool.BLANK;
 
 		try {
-			SegmentsExperience segmentsExperience =
+			SegmentsExperience defaultSegmentsExperience =
 				SegmentsExperienceLocalServiceUtil.getDefaultSegmentsExperience(
 					getGroupId(), classNameId, classPK);
 
 			if (classNameId == PortalUtil.getClassNameId(Layout.class)) {
 				Layout draftLayout = LayoutLocalServiceUtil.getLayout(classPK);
 
-				segmentsExperience =
+				defaultSegmentsExperience =
 					SegmentsExperienceLocalServiceUtil.
 						getDefaultSegmentsExperience(
 							getGroupId(), classNameId,
@@ -503,7 +503,7 @@ public class ContentPageEditorDisplayContext {
 			}
 
 			_defaultSegmentsExperienceId = String.valueOf(
-				segmentsExperience.getSegmentsExperienceId());
+				defaultSegmentsExperience.getSegmentsExperienceId());
 		}
 		catch (PortalException pe) {
 			_log.error("Unable to get default segments experience", pe);

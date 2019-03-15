@@ -13,10 +13,17 @@
 		var selectedIndex = event.selectedIndex;
 
 		var tabItem = event.tabItem;
+		var tabLink = tabItem.one('a');
 		var tabSection = event.tabSection;
 
 		if (tabItem) {
-			tabItem.radioClass('active');
+			var previousTabItem = tabItem.siblings().one('.active');
+
+			if (previousTabItem) {
+				previousTabItem.removeClass('active');
+			}
+
+			tabLink.addClass('active');
 		}
 
 		if (tabSection) {
@@ -26,7 +33,7 @@
 		var tabTitle = A.one('#' + event.namespace + 'dropdownTitle');
 
 		if (tabTitle) {
-			tabTitle.html(tabItem.one('a').text());
+			tabTitle.html(tabLink.text());
 		}
 
 		names.splice(selectedIndex, 1);

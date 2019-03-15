@@ -89,7 +89,7 @@ String onClick = GetterUtil.getString((String)request.getAttribute("liferay-ui:t
 
 // Type
 
-String type = GetterUtil.getString((String)request.getAttribute("liferay-ui:tabs:type"), "tabs");
+String type = GetterUtil.getString((String)request.getAttribute("liferay-ui:tabs:type"), "underline");
 %>
 
 <c:if test="<%= names.length > 0 %>">
@@ -132,7 +132,7 @@ String type = GetterUtil.getString((String)request.getAttribute("liferay-ui:tabs
 						</c:if>
 		</c:when>
 		<c:otherwise>
-			<ul class="lfr-nav nav nav-<%= type %> <%= cssClass %>" data-tabs-namespace="<%= namespace + param %>">
+			<ul class="mb-3 mb-lg-4 nav nav-<%= type %> <%= cssClass %>" data-tabs-namespace="<%= namespace + param %>">
 		</c:otherwise>
 	</c:choose>
 
@@ -192,15 +192,15 @@ String type = GetterUtil.getString((String)request.getAttribute("liferay-ui:tabs
 
 		boolean selected = (values.length == 1) || value.equals(values[i]);
 
-		String cssClassName = "tab";
+		String linkCssClass = "nav-link";
 
 		if (selected) {
-			cssClassName += " active";
+			linkCssClass += " active";
 		}
 	%>
 
-		<li class="<%= cssClassName %>" data-tab-name="<%= names[i] %>" id="<%= namespace %><%= param %><%= StringUtil.toCharCode(values[i]) %>TabsId">
-			<a href="<%= Validator.isNotNull(curURL) ? HtmlUtil.escapeAttribute(curURL) : "javascript:;" %>" onClick="<%= Validator.isNotNull(curOnClick) ? curOnClick : StringPool.BLANK %>">
+		<li class="nav-item" data-tab-name="<%= names[i] %>" id="<%= namespace %><%= param %><%= StringUtil.toCharCode(values[i]) %>TabsId">
+			<a class="<%= linkCssClass %>" href="<%= Validator.isNotNull(curURL) ? HtmlUtil.escapeAttribute(curURL) : "javascript:;" %>" onClick="<%= Validator.isNotNull(curOnClick) ? curOnClick : StringPool.BLANK %>">
 				<%= LanguageUtil.get(resourceBundle, HtmlUtil.escape(names[i])) %>
 			</a>
 		</li>

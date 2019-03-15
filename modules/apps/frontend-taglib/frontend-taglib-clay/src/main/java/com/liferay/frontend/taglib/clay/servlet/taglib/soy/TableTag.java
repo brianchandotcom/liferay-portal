@@ -17,7 +17,6 @@ package com.liferay.frontend.taglib.clay.servlet.taglib.soy;
 import com.liferay.frontend.taglib.clay.internal.ClayTagDataSourceProvider;
 import com.liferay.frontend.taglib.clay.internal.servlet.taglib.display.context.TableDefaults;
 import com.liferay.frontend.taglib.clay.servlet.taglib.data.ClayTagDataSource;
-import com.liferay.frontend.taglib.clay.servlet.taglib.display.context.TableDisplayContext;
 import com.liferay.frontend.taglib.clay.servlet.taglib.model.table.Schema;
 import com.liferay.frontend.taglib.clay.servlet.taglib.model.table.Size;
 import com.liferay.frontend.taglib.clay.servlet.taglib.soy.base.BaseClayTag;
@@ -25,7 +24,6 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.Collection;
-import java.util.HashSet;
 import java.util.Map;
 
 /**
@@ -40,10 +38,6 @@ public class TableTag<T> extends BaseClayTag {
 		setModuleBaseName("table");
 
 		int returnValue = super.doStartTag();
-
-		if (_tableDisplayContext != null) {
-			_populateContext(_tableDisplayContext);
-		}
 
 		ClayTagDataSource<T> clayTagDataSource = getClayTagDataSource();
 
@@ -64,20 +58,12 @@ public class TableTag<T> extends BaseClayTag {
 		return returnValue;
 	}
 
-	public TableDisplayContext getDisplayContext() {
-		return _tableDisplayContext;
-	}
-
 	public void setActionsMenuVariant(String actionsMenuVariant) {
 		putValue("actionsMenuVariant", actionsMenuVariant);
 	}
 
 	public void setDataSourceKey(String dataSourceKey) {
 		putValue("dataSourceKey", dataSourceKey);
-	}
-
-	public void setDisplayContext(TableDisplayContext tableDisplayContext) {
-		_tableDisplayContext = tableDisplayContext;
 	}
 
 	public void setItems(Collection<?> items) {
@@ -128,13 +114,6 @@ public class TableTag<T> extends BaseClayTag {
 		putValue("wrapTable", wrapTable);
 	}
 
-	@Override
-	protected void cleanUp() {
-		super.cleanUp();
-
-		_tableDisplayContext = null;
-	}
-
 	protected ClayTagDataSource<T> getClayTagDataSource() {
 		Map<String, Object> context = getContext();
 
@@ -155,72 +134,5 @@ public class TableTag<T> extends BaseClayTag {
 			setItems(clayTagDataSource.getItems(request));
 		}
 	}
-
-	private void _populateContext(TableDisplayContext tableDisplayContext) {
-		Map<String, Object> context = getContext();
-
-		if (context.get("actionsMenuVariant") == null) {
-			setActionsMenuVariant(tableDisplayContext.getActionsMenuVariant());
-		}
-
-		if (context.get("dependencies") == null) {
-			Collection<String> dependencies =
-				tableDisplayContext.getDependencies();
-
-			if (dependencies != null) {
-				setDependencies(new HashSet<>(dependencies));
-			}
-		}
-
-		if (context.get("elementClasses") == null) {
-			setElementClasses(tableDisplayContext.getElementClasses());
-		}
-
-		if (context.get("id") == null) {
-			setId(tableDisplayContext.getId());
-		}
-
-		if (context.get("schema") == null) {
-			setSchema(tableDisplayContext.getSchema());
-		}
-
-		if (context.get("selectable") == null) {
-			setSelectable(tableDisplayContext.isSelectable());
-		}
-
-		if (context.get("showActionsMenu") == null) {
-			setShowActionsMenu(tableDisplayContext.isShowActionsMenu());
-		}
-
-		if (context.get("showCheckbox") == null) {
-			setShowCheckbox(tableDisplayContext.isShowCheckbox());
-		}
-
-		if (context.get("items") == null) {
-			setItems(tableDisplayContext.getItems());
-		}
-
-		if (context.get("size") == null) {
-			setSize(tableDisplayContext.getSize());
-		}
-
-		if (context.get("spritemap") == null) {
-			setSpritemap(tableDisplayContext.getSpritemap());
-		}
-
-		if (context.get("tableClasses") == null) {
-			setTableClasses(tableDisplayContext.getTableClasses());
-		}
-
-		if (context.get("useDefaultClasses") == null) {
-			setUseDefaultClasses(tableDisplayContext.isUseDefaultClasses());
-		}
-
-		if (context.get("wrapTable") == null) {
-			setWrapTable(tableDisplayContext.isWrapTable());
-		}
-	}
-
-	private TableDisplayContext _tableDisplayContext;
 
 }

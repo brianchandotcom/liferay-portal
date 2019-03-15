@@ -15,16 +15,20 @@
 package com.liferay.layout.type.controller.asset.display.internal.display.context;
 
 import com.liferay.asset.display.contributor.AssetDisplayContributor;
+import com.liferay.asset.display.contributor.AssetDisplayContributorTracker;
 import com.liferay.asset.display.contributor.constants.AssetDisplayWebKeys;
 import com.liferay.asset.display.page.constants.AssetDisplayPageConstants;
 import com.liferay.asset.display.page.model.AssetDisplayPageEntry;
 import com.liferay.asset.display.page.service.AssetDisplayPageEntryLocalServiceUtil;
 import com.liferay.asset.kernel.model.AssetEntry;
+import com.liferay.asset.kernel.service.AssetEntryLocalServiceUtil;
+import com.liferay.layout.content.page.editor.constants.ContentPageEditorWebKeys;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryServiceUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.Map;
@@ -41,8 +45,34 @@ public class AssetDisplayLayoutTypeControllerDisplayContext {
 
 		_request = request;
 
-		_assetEntry = (AssetEntry)request.getAttribute(
+		AssetEntry assetEntry = (AssetEntry)request.getAttribute(
 			WebKeys.LAYOUT_ASSET_ENTRY);
+
+		if (assetEntry == null) {
+			long assetEntryId = ParamUtil.getLong(request, "assetEntryId");
+
+			assetEntry = AssetEntryLocalServiceUtil.fetchEntry(assetEntryId);
+
+			request.setAttribute(WebKeys.LAYOUT_ASSET_ENTRY, assetEntry);
+		}
+
+		_assetEntry = assetEntry;
+
+		AssetDisplayContributor assetDisplayContributor =
+			(AssetDisplayContributor)_request.getAttribute(
+				AssetDisplayWebKeys.ASSET_DISPLAY_CONTRIBUTOR);
+
+		if (assetDisplayContributor == null) {
+			AssetDisplayContributorTracker assetDisplayContributorTracker =
+				(AssetDisplayContributorTracker)request.getAttribute(
+					ContentPageEditorWebKeys.ASSET_DISPLAY_CONTRIBUTOR_TRACKER);
+
+			assetDisplayContributor =
+				assetDisplayContributorTracker.getAssetDisplayContributor(
+					_assetEntry.getClassName());
+		}
+
+		_assetDisplayContributor = assetDisplayContributor;
 	}
 
 	public Map<String, Object> getAssetDisplayFieldsValues()
@@ -51,19 +81,15 @@ public class AssetDisplayLayoutTypeControllerDisplayContext {
 		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		AssetDisplayContributor assetDisplayContributor =
-			(AssetDisplayContributor)_request.getAttribute(
-				AssetDisplayWebKeys.ASSET_DISPLAY_CONTRIBUTOR);
-
 		long versionClassPK = GetterUtil.getLong(
 			_request.getAttribute(AssetDisplayWebKeys.VERSION_CLASS_PK));
 
 		if (versionClassPK > 0) {
-			return assetDisplayContributor.getAssetDisplayFieldsValues(
+			return _assetDisplayContributor.getAssetDisplayFieldsValues(
 				_assetEntry, versionClassPK, themeDisplay.getLocale());
 		}
 
-		return assetDisplayContributor.getAssetDisplayFieldsValues(
+		return _assetDisplayContributor.getAssetDisplayFieldsValues(
 			_assetEntry, themeDisplay.getLocale());
 	}
 
@@ -105,6 +131,7 @@ public class AssetDisplayLayoutTypeControllerDisplayContext {
 		return 0;
 	}
 
+	private final AssetDisplayContributor _assetDisplayContributor;
 	private final AssetEntry _assetEntry;
 	private final HttpServletRequest _request;
 

@@ -3,8 +3,11 @@
 		"autobind-decorator": "2.4.0",
 		"clay-charts-react": "2.4.1",
 		"custom-event-polyfill": "1.0.6",
+		"moment": "^2.24.0",
 		"react": "16.6.3",
-		"react-dom": "16.6.3"
+		"react-dom": "16.6.3",
+		"react-text-mask": "^5.4.3",
+		"text-mask-addons": "^3.8.0"
 	},
 	"devDependencies": {
 		"babel-cli": "6.26.0",
@@ -48,7 +51,8 @@
 			}
 		},
 		"moduleNameMapper": {
-			"frontend-js-web/liferay/toast/commands/OpenToast.es": "<rootDir>/src/main/resources/META-INF/resources/js/test/mock/openToast.js"
+			"frontend-js-web/liferay/toast/commands/OpenToast.es": "<rootDir>/src/main/resources/META-INF/resources/js/test/mock/openToast.js",
+			"react-text-mask": "<rootDir>/src/main/resources/META-INF/resources/js/test/mock/reactTextMask.js"
 		},
 		"setupTestFrameworkScriptFile": "<rootDir>src/main/resources/META-INF/resources/js/test/setup.js",
 		"snapshotSerializers": [
@@ -68,7 +72,7 @@
 		"csf": "csf src/main/resources/META-INF/resources/css/**/*.scss",
 		"doc:code": "./node_modules/.bin/jsdoc -c ./jsdoc.json",
 		"format": "prettier-eslint --write 'src/main/resources/META-INF/resources/js/**/*.js'",
-		"lint": "eslint -c ./.eslintrc src/main/resources/META-INF/resources/js/ && npm run csf",
+		"lint": "eslint src/main/resources/META-INF/resources/js/ && npm run csf",
 		"test": "cross-env TZ=Etc/GMT jest --coverage"
 	},
 	"version": "1.0.0"

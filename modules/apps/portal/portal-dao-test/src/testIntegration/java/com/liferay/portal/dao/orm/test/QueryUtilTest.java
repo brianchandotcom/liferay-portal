@@ -22,10 +22,11 @@ import com.liferay.portal.kernel.dao.orm.SQLQuery;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.SessionFactory;
 import com.liferay.portal.kernel.dao.orm.Type;
-import com.liferay.portal.kernel.service.persistence.UserUtil;
+import com.liferay.portal.kernel.service.persistence.UserPersistence;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.TransactionalTestRule;
 
@@ -68,7 +69,7 @@ public class QueryUtilTest {
 	@Before
 	public void setUp() {
 		_sessionFactory = ReflectionTestUtil.getFieldValue(
-			UserUtil.getPersistence(), "_sessionFactory");
+			_userPersistence, "_sessionFactory");
 	}
 
 	@Test
@@ -371,5 +372,8 @@ public class QueryUtilTest {
 	private static DB _db;
 
 	private SessionFactory _sessionFactory;
+
+	@Inject
+	private UserPersistence _userPersistence;
 
 }

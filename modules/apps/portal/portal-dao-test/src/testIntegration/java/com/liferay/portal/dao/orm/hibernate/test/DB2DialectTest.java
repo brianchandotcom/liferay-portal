@@ -22,9 +22,10 @@ import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.SQLQuery;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.SessionFactory;
-import com.liferay.portal.kernel.service.persistence.UserUtil;
+import com.liferay.portal.kernel.service.persistence.UserPersistence;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.TransactionalTestRule;
 
@@ -57,7 +58,7 @@ public class DB2DialectTest {
 		Assume.assumeTrue(db.getDBType() == DBType.DB2);
 
 		_sessionFactory = ReflectionTestUtil.getFieldValue(
-			UserUtil.getPersistence(), "_sessionFactory");
+			_userPersistence, "_sessionFactory");
 	}
 
 	@Test
@@ -112,5 +113,8 @@ public class DB2DialectTest {
 			"BY tabname";
 
 	private SessionFactory _sessionFactory;
+
+	@Inject
+	private UserPersistence _userPersistence;
 
 }

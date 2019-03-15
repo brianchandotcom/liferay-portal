@@ -26,20 +26,13 @@ import com.liferay.gradle.plugins.test.integration.TestIntegrationBasePlugin;
 import com.liferay.gradle.plugins.test.integration.TestIntegrationPlugin;
 import com.liferay.gradle.util.Validator;
 
-import groovy.json.JsonSlurper;
-
 import groovy.lang.Closure;
 
 import java.io.File;
-import java.io.IOException;
-
-import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
 
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
-import java.util.Properties;
 import java.util.regex.Pattern;
 
 import org.gradle.api.Action;
@@ -47,13 +40,11 @@ import org.gradle.api.GradleException;
 import org.gradle.api.Plugin;
 import org.gradle.api.Project;
 import org.gradle.api.Task;
-import org.gradle.api.UncheckedIOException;
 import org.gradle.api.artifacts.Configuration;
 import org.gradle.api.artifacts.DependencySet;
 import org.gradle.api.artifacts.ProjectDependency;
 import org.gradle.api.tasks.SourceSet;
 import org.gradle.api.tasks.TaskContainer;
-import org.gradle.util.GUtil;
 
 /**
  * @author Andrea Di Giorgi
@@ -70,9 +61,15 @@ public class LiferayCIPlugin implements Plugin<Project> {
 
 	@Override
 	public void apply(final Project project) {
+		ReplaceRegexTask restoreHotfixVersionTask =
+			_addTaskRestoreHotfixVersion(project);
+		ReplaceRegexTask updateHotfixVersionTask = _addTaskUpdateHotfixVersion(
+			project);
+
 		_configureTasksDownloadNode(project);
 		_configureTasksExecuteNode(project);
-		_configureTasksExecuteNpm(project);
+		_configureTasksExecuteNpm(
+			project, restoreHotfixVersionTask, updateHotfixVersionTask);
 		_configureTasksNpmInstall(project);
 
 		GradleUtil.withPlugin(
@@ -228,163 +225,17 @@ public class LiferayCIPlugin implements Plugin<Project> {
 	}
 
 	private void _configureTaskExecuteNpm(
-		ExecuteNpmTask executeNpmTask, String registry) {
+		ExecuteNpmTask executeNpmTask, String registry,
+		ReplaceRegexTask restoreHotfixVersionTask,
+		ReplaceRegexTask updateHotfixVersionTask) {
 
 		if (Validator.isNotNull(registry)) {
 			executeNpmTask.setRegistry(registry);
 		}
 
-		executeNpmTask.doFirst(
-			new Action<Task>() {
+		executeNpmTask.dependsOn(updateHotfixVersionTask);
 
-				@Override
-				public void execute(Task task) {
-					Project project = task.getProject();
-
-					String[] fileNames = {
-						"bnd.bnd", "package.json", "package-lock.json"
-					};
-
-					for (String fileName : fileNames) {
-						File file = project.file(fileName);
-
-						if (!file.exists()) {
-							continue;
-						}
-
-						String version = null;
-
-						if (fileName.endsWith(".bnd")) {
-							Properties properties = GUtil.loadProperties(file);
-
-							version = properties.getProperty("Bundle-Version");
-						}
-						else if (fileName.endsWith(".json")) {
-							JsonSlurper jsonSlurper = new JsonSlurper();
-
-							Map<String, Object> map =
-								(Map<String, Object>)jsonSlurper.parse(file);
-
-							version = (String)map.get("version");
-						}
-
-						if (version == null) {
-							continue;
-						}
-
-						String newVersion = _fixHotfixVersion(version);
-
-						if (version.equals(newVersion)) {
-							continue;
-						}
-
-						try {
-							String content = new String(
-								Files.readAllBytes(file.toPath()),
-								StandardCharsets.UTF_8);
-
-							String newContent = content.replace(
-								version, newVersion);
-
-							Files.write(
-								file.toPath(),
-								newContent.getBytes(StandardCharsets.UTF_8));
-						}
-						catch (IOException ioe) {
-							throw new UncheckedIOException(ioe);
-						}
-					}
-				}
-
-				private String _fixHotfixVersion(String version) {
-					int index = version.indexOf(".hotfix");
-
-					if (index == -1) {
-						return version;
-					}
-
-					String prefix = version.substring(0, index);
-					String suffix = version.substring(index + 7);
-
-					return prefix + "-hotfix" + suffix;
-				}
-
-			});
-
-		executeNpmTask.doLast(
-			new Action<Task>() {
-
-				@Override
-				public void execute(Task task) {
-					Project project = task.getProject();
-
-					String[] fileNames = {"bnd.bnd"};
-
-					for (String fileName : fileNames) {
-						File file = project.file(fileName);
-
-						if (!file.exists()) {
-							continue;
-						}
-
-						String version = null;
-
-						if (fileName.endsWith(".bnd")) {
-							Properties properties = GUtil.loadProperties(file);
-
-							version = properties.getProperty("Bundle-Version");
-						}
-						else if (fileName.endsWith(".json")) {
-							JsonSlurper jsonSlurper = new JsonSlurper();
-
-							Map<String, Object> map =
-								(Map<String, Object>)jsonSlurper.parse(file);
-
-							version = (String)map.get("version");
-						}
-
-						if (version == null) {
-							continue;
-						}
-
-						String newVersion = _fixHotfixVersion(version);
-
-						if (version.equals(newVersion)) {
-							continue;
-						}
-
-						try {
-							String content = new String(
-								Files.readAllBytes(file.toPath()),
-								StandardCharsets.UTF_8);
-
-							String newContent = content.replace(
-								version, newVersion);
-
-							Files.write(
-								file.toPath(),
-								newContent.getBytes(StandardCharsets.UTF_8));
-						}
-						catch (IOException ioe) {
-							throw new UncheckedIOException(ioe);
-						}
-					}
-				}
-
-				private String _fixHotfixVersion(String version) {
-					int index = version.indexOf("-hotfix");
-
-					if (index == -1) {
-						return version;
-					}
-
-					String prefix = version.substring(0, index);
-					String suffix = version.substring(index + 7);
-
-					return prefix + ".hotfix" + suffix;
-				}
-
-			});
+		executeNpmTask.finalizedBy(restoreHotfixVersionTask);
 	}
 
 	private void _configureTaskNpmInstall(NpmInstallTask npmInstallTask) {
@@ -426,7 +277,10 @@ public class LiferayCIPlugin implements Plugin<Project> {
 			});
 	}
 
-	private void _configureTasksExecuteNpm(Project project) {
+	private void _configureTasksExecuteNpm(
+		Project project, final ReplaceRegexTask restoreHotfixVersionTask,
+		final ReplaceRegexTask updateHotfixVersionTask) {
+
 		final String ciRegistry = GradleUtil.getProperty(
 			project, "nodejs.npm.ci.registry", (String)null);
 
@@ -438,7 +292,9 @@ public class LiferayCIPlugin implements Plugin<Project> {
 
 				@Override
 				public void execute(ExecuteNpmTask executeNpmTask) {
-					_configureTaskExecuteNpm(executeNpmTask, ciRegistry);
+					_configureTaskExecuteNpm(
+						executeNpmTask, ciRegistry, restoreHotfixVersionTask,
+						updateHotfixVersionTask);
 				}
 
 			});

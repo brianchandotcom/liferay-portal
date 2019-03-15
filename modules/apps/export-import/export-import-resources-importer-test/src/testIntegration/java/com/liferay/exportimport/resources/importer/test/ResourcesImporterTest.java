@@ -91,7 +91,7 @@ import org.osgi.framework.FrameworkUtil;
 import org.osgi.framework.ServiceRegistration;
 
 /**
- * @author Daniel Kocsis
+ * @author Daniel
  */
 @Ignore
 @RunWith(Arquillian.class)

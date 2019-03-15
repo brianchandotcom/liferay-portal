@@ -47,8 +47,12 @@ public class SegmentsExperienceLocalServiceImpl
 			long groupId, long classNameId, long classPK)
 		throws PortalException {
 
-		return segmentsExperienceLocalService.getDefaultSegmentsExperience(
-			groupId, classNameId, classPK, true);
+		SegmentsEntry defaultSegmentsEntry =
+			segmentsEntryLocalService.getDefaultSegmentsEntry(groupId);
+
+		return _addDefaultSegmentsExperience(
+			groupId, defaultSegmentsEntry.getSegmentsEntryId(), classNameId,
+			classPK);
 	}
 
 	@Override
@@ -157,6 +161,19 @@ public class SegmentsExperienceLocalServiceImpl
 	}
 
 	@Override
+	public SegmentsExperience fetchDefaultSegmentsExperience(
+			long groupId, long classNameId, long classPK)
+		throws PortalException {
+
+		SegmentsEntry segmentsEntry =
+			segmentsEntryLocalService.getDefaultSegmentsEntry(groupId);
+
+		return segmentsExperiencePersistence.fetchByG_S_C_C_First(
+			groupId, segmentsEntry.getSegmentsEntryId(), classNameId, classPK,
+			null);
+	}
+
+	@Override
 	public SegmentsExperience fetchSegmentsExperience(
 		long segmentsExperienceId) {
 
@@ -166,29 +183,15 @@ public class SegmentsExperienceLocalServiceImpl
 
 	@Override
 	public SegmentsExperience getDefaultSegmentsExperience(
-			long groupId, long classNameId, long classPK,
-			boolean addDefaultExperience)
+			long groupId, long classNameId, long classPK)
 		throws PortalException {
 
 		SegmentsEntry defaultSegmentsEntry =
 			segmentsEntryLocalService.getDefaultSegmentsEntry(groupId);
 
-		SegmentsExperience segmentsExperience =
-			segmentsExperiencePersistence.fetchByG_S_C_C_First(
-				groupId, defaultSegmentsEntry.getSegmentsEntryId(), classNameId,
-				classPK, null);
-
-		if (segmentsExperience != null) {
-			return segmentsExperience;
-		}
-
-		if (!addDefaultExperience) {
-			return null;
-		}
-
-		return _addDefaultSegmentsExperience(
+		return segmentsExperiencePersistence.findByG_S_C_C_First(
 			groupId, defaultSegmentsEntry.getSegmentsEntryId(), classNameId,
-			classPK);
+			classPK, null);
 	}
 
 	@Override
@@ -201,15 +204,8 @@ public class SegmentsExperienceLocalServiceImpl
 
 	@Override
 	public List<SegmentsExperience> getSegmentsExperiences(
-			long groupId, long classNameId, long classPK, boolean active,
-			boolean addDefaultExperience, int start, int end,
-			OrderByComparator<SegmentsExperience> orderByComparator)
-		throws PortalException {
-
-		if (addDefaultExperience) {
-			segmentsExperienceLocalService.addDefaultSegmentsExperience(
-				groupId, classNameId, classPK);
-		}
+		long groupId, long classNameId, long classPK, boolean active, int start,
+		int end, OrderByComparator<SegmentsExperience> orderByComparator) {
 
 		return segmentsExperiencePersistence.findByG_C_C_A(
 			groupId, classNameId, classPK, active, start, end,
@@ -218,28 +214,9 @@ public class SegmentsExperienceLocalServiceImpl
 
 	@Override
 	public List<SegmentsExperience> getSegmentsExperiences(
-			long groupId, long classNameId, long classPK, boolean active,
-			int start, int end,
-			OrderByComparator<SegmentsExperience> orderByComparator)
-		throws PortalException {
-
-		return segmentsExperienceLocalService.getSegmentsExperiences(
-			groupId, classNameId, classPK, active, true, start, end,
-			orderByComparator);
-	}
-
-	@Override
-	public List<SegmentsExperience> getSegmentsExperiences(
-			long groupId, long[] segmentsEntryIds, long classNameId,
-			long classPK, boolean active, boolean addDefaultExperience,
-			int start, int end,
-			OrderByComparator<SegmentsExperience> orderByComparator)
-		throws PortalException {
-
-		if (addDefaultExperience) {
-			segmentsExperienceLocalService.addDefaultSegmentsExperience(
-				groupId, classNameId, classPK);
-		}
+		long groupId, long[] segmentsEntryIds, long classNameId, long classPK,
+		boolean active, int start, int end,
+		OrderByComparator<SegmentsExperience> orderByComparator) {
 
 		return segmentsExperiencePersistence.findByG_S_C_C_A(
 			groupId, segmentsEntryIds, classNameId, classPK, active, start, end,
@@ -247,36 +224,8 @@ public class SegmentsExperienceLocalServiceImpl
 	}
 
 	@Override
-	public List<SegmentsExperience> getSegmentsExperiences(
-			long groupId, long[] segmentsEntryIds, long classNameId,
-			long classPK, boolean active, int start, int end,
-			OrderByComparator<SegmentsExperience> orderByComparator)
-		throws PortalException {
-
-		return segmentsExperienceLocalService.getSegmentsExperiences(
-			groupId, segmentsEntryIds, classNameId, classPK, active, true,
-			start, end, orderByComparator);
-	}
-
-	@Override
 	public int getSegmentsExperiencesCount(
-			long groupId, long classNameId, long classPK, boolean active)
-		throws PortalException {
-
-		return segmentsExperienceLocalService.getSegmentsExperiencesCount(
-			groupId, classNameId, classPK, active, true);
-	}
-
-	@Override
-	public int getSegmentsExperiencesCount(
-			long groupId, long classNameId, long classPK, boolean active,
-			boolean addDefaultExperience)
-		throws PortalException {
-
-		if (addDefaultExperience) {
-			segmentsExperienceLocalService.addDefaultSegmentsExperience(
-				groupId, classNameId, classPK);
-		}
+		long groupId, long classNameId, long classPK, boolean active) {
 
 		return segmentsExperiencePersistence.countByG_C_C_A(
 			groupId, classNameId, classPK, active);

@@ -15,11 +15,11 @@
 package com.liferay.portal.monitoring.internal.aop;
 
 import com.liferay.portal.kernel.monitoring.DataSample;
+import com.liferay.portal.kernel.monitoring.DataSampleFactory;
 import com.liferay.portal.kernel.monitoring.DataSampleThreadLocal;
 import com.liferay.portal.kernel.monitoring.MethodSignature;
 import com.liferay.portal.kernel.monitoring.RequestStatus;
 import com.liferay.portal.kernel.monitoring.ServiceMonitoringControl;
-import com.liferay.portal.monitoring.statistics.service.DataSampleFactoryUtil;
 import com.liferay.portal.spring.aop.AopMethodInvocation;
 import com.liferay.portal.spring.aop.ChainableMethodAdvice;
 
@@ -35,9 +35,11 @@ import java.util.Set;
 public class ServiceMonitorAdvice extends ChainableMethodAdvice {
 
 	public ServiceMonitorAdvice(
-		ServiceMonitoringControl serviceMonitoringControl) {
+		ServiceMonitoringControl serviceMonitoringControl,
+		DataSampleFactory dataSampleFactory) {
 
 		_serviceMonitoringControl = serviceMonitoringControl;
+		_dataSampleFactory = dataSampleFactory;
 	}
 
 	@Override
@@ -77,8 +79,7 @@ public class ServiceMonitorAdvice extends ChainableMethodAdvice {
 		}
 
 		DataSample dataSample =
-			DataSampleFactoryUtil.createServiceRequestDataSample(
-				methodSignature);
+			_dataSampleFactory.createServiceRequestDataSample(methodSignature);
 
 		dataSample.prepare();
 
@@ -101,6 +102,7 @@ public class ServiceMonitorAdvice extends ChainableMethodAdvice {
 		}
 	}
 
+	private final DataSampleFactory _dataSampleFactory;
 	private final ServiceMonitoringControl _serviceMonitoringControl;
 
 }

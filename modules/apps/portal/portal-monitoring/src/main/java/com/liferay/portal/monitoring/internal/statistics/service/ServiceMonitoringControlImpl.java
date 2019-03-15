@@ -14,6 +14,7 @@
 
 package com.liferay.portal.monitoring.internal.statistics.service;
 
+import com.liferay.portal.kernel.monitoring.DataSampleFactory;
 import com.liferay.portal.kernel.monitoring.MethodSignature;
 import com.liferay.portal.kernel.monitoring.ServiceMonitoringControl;
 import com.liferay.portal.monitoring.internal.aop.ServiceMonitorAdvice;
@@ -28,6 +29,7 @@ import org.osgi.framework.ServiceRegistration;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Preston Crary
@@ -90,8 +92,8 @@ public class ServiceMonitoringControlImpl implements ServiceMonitoringControl {
 
 			if (_serviceRegistration == null) {
 				_serviceRegistration = _bundleContext.registerService(
-					ChainableMethodAdvice.class, new ServiceMonitorAdvice(this),
-					null);
+					ChainableMethodAdvice.class,
+					new ServiceMonitorAdvice(this, _dataSampleFactory), null);
 			}
 			else {
 				_serviceRegistration.unregister();
@@ -116,6 +118,10 @@ public class ServiceMonitoringControlImpl implements ServiceMonitoringControl {
 	}
 
 	private BundleContext _bundleContext;
+
+	@Reference
+	private DataSampleFactory _dataSampleFactory;
+
 	private boolean _inclusiveMode = true;
 	private boolean _monitorServiceRequest;
 	private final Set<String> _serviceClasses = new HashSet<>();

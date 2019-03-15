@@ -30,7 +30,7 @@ import javax.annotation.Generated;
 @Generated("")
 public interface StatusResource {
 
-	public Status getStatu() throws Exception;
+	public Status getStatus() throws Exception;
 
 	public void setContextCompany(Company contextCompany);
 

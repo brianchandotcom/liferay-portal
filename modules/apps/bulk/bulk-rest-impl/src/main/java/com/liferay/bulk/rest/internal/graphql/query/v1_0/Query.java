@@ -16,6 +16,8 @@ package com.liferay.bulk.rest.internal.graphql.query.v1_0;
 
 import com.liferay.bulk.rest.dto.v1_0.Status;
 import com.liferay.bulk.rest.resource.v1_0.StatusResource;
+import com.liferay.petra.function.UnsafeConsumer;
+import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
 
@@ -24,9 +26,7 @@ import graphql.annotations.annotationTypes.GraphQLInvokeDetached;
 
 import javax.annotation.Generated;
 
-import org.osgi.framework.Bundle;
-import org.osgi.framework.FrameworkUtil;
-import org.osgi.util.tracker.ServiceTracker;
+import org.osgi.service.component.ComponentServiceObjects;
 
 /**
  * @author Alejandro Tardín
@@ -35,38 +35,51 @@ import org.osgi.util.tracker.ServiceTracker;
 @Generated("")
 public class Query {
 
-	@GraphQLField
-	@GraphQLInvokeDetached
-	public Status getStatu() throws Exception {
-		StatusResource statusResource = _createStatusResource();
+	public static void setStatusResourceComponentServiceObjects(
+		ComponentServiceObjects<StatusResource>
+			statusResourceComponentServiceObjects) {
 
-		return statusResource.getStatu();
+		_statusResourceComponentServiceObjects =
+			statusResourceComponentServiceObjects;
 	}
 
-	private static StatusResource _createStatusResource() throws Exception {
-		StatusResource statusResource =
-			_statusResourceServiceTracker.getService();
+	@GraphQLField
+	@GraphQLInvokeDetached
+	public Status getStatus() throws Exception {
+		return _applyComponentServiceObjects(
+			_statusResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			statusResource -> statusResource.getStatus());
+	}
+
+	private <T, R, E1 extends Throwable, E2 extends Throwable> R
+			_applyComponentServiceObjects(
+				ComponentServiceObjects<T> componentServiceObjects,
+				UnsafeConsumer<T, E1> unsafeConsumer,
+				UnsafeFunction<T, R, E2> unsafeFunction)
+		throws E1, E2 {
+
+		T resource = componentServiceObjects.getService();
+
+		try {
+			unsafeConsumer.accept(resource);
+
+			return unsafeFunction.apply(resource);
+		}
+		finally {
+			componentServiceObjects.ungetService(resource);
+		}
+	}
+
+	private void _populateResourceContext(StatusResource statusResource)
+		throws Exception {
 
 		statusResource.setContextCompany(
 			CompanyLocalServiceUtil.getCompany(
 				CompanyThreadLocal.getCompanyId()));
-
-		return statusResource;
 	}
 
-	private static final ServiceTracker<StatusResource, StatusResource>
-		_statusResourceServiceTracker;
-
-	static {
-		Bundle bundle = FrameworkUtil.getBundle(Query.class);
-
-		ServiceTracker<StatusResource, StatusResource>
-			statusResourceServiceTracker = new ServiceTracker<>(
-				bundle.getBundleContext(), StatusResource.class, null);
-
-		statusResourceServiceTracker.open();
-
-		_statusResourceServiceTracker = statusResourceServiceTracker;
-	}
+	private static ComponentServiceObjects<StatusResource>
+		_statusResourceComponentServiceObjects;
 
 }

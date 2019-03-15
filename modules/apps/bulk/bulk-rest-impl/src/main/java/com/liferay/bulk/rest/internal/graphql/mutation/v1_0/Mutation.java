@@ -22,10 +22,12 @@ import com.liferay.bulk.rest.resource.v1_0.CategoryResource;
 import com.liferay.bulk.rest.resource.v1_0.KeywordResource;
 import com.liferay.bulk.rest.resource.v1_0.MessageSelectionResource;
 import com.liferay.bulk.rest.resource.v1_0.VocabularyResource;
+import com.liferay.petra.function.UnsafeConsumer;
+import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
-
 import com.liferay.portal.vulcan.pagination.Page;
+
 import graphql.annotations.annotationTypes.GraphQLField;
 import graphql.annotations.annotationTypes.GraphQLInvokeDetached;
 import graphql.annotations.annotationTypes.GraphQLName;
@@ -34,9 +36,7 @@ import java.util.Collection;
 
 import javax.annotation.Generated;
 
-import org.osgi.framework.Bundle;
-import org.osgi.framework.FrameworkUtil;
-import org.osgi.util.tracker.ServiceTracker;
+import org.osgi.service.component.ComponentServiceObjects;
 
 /**
  * @author Alejandro Tardín
@@ -45,15 +45,49 @@ import org.osgi.util.tracker.ServiceTracker;
 @Generated("")
 public class Mutation {
 
+	public static void setCategoryResourceComponentServiceObjects(
+		ComponentServiceObjects<CategoryResource>
+			categoryResourceComponentServiceObjects) {
+
+		_categoryResourceComponentServiceObjects =
+			categoryResourceComponentServiceObjects;
+	}
+
+	public static void setKeywordResourceComponentServiceObjects(
+		ComponentServiceObjects<KeywordResource>
+			keywordResourceComponentServiceObjects) {
+
+		_keywordResourceComponentServiceObjects =
+			keywordResourceComponentServiceObjects;
+	}
+
+	public static void setMessageSelectionResourceComponentServiceObjects(
+		ComponentServiceObjects<MessageSelectionResource>
+			messageSelectionResourceComponentServiceObjects) {
+
+		_messageSelectionResourceComponentServiceObjects =
+			messageSelectionResourceComponentServiceObjects;
+	}
+
+	public static void setVocabularyResourceComponentServiceObjects(
+		ComponentServiceObjects<VocabularyResource>
+			vocabularyResourceComponentServiceObjects) {
+
+		_vocabularyResourceComponentServiceObjects =
+			vocabularyResourceComponentServiceObjects;
+	}
+
 	@GraphQLInvokeDetached
 	public boolean patchCategoryBatch(
 			@GraphQLName("DocumentSelection") DocumentSelection
 				documentSelection)
 		throws Exception {
 
-		CategoryResource categoryResource = _createCategoryResource();
-
-		return categoryResource.patchCategoryBatch(documentSelection);
+		return _applyComponentServiceObjects(
+			_categoryResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			categoryResource -> categoryResource.patchCategoryBatch(
+				documentSelection));
 	}
 
 	@GraphQLInvokeDetached
@@ -62,9 +96,11 @@ public class Mutation {
 				documentSelection)
 		throws Exception {
 
-		CategoryResource categoryResource = _createCategoryResource();
-
-		return categoryResource.putCategoryBatch(documentSelection);
+		return _applyComponentServiceObjects(
+			_categoryResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			categoryResource -> categoryResource.putCategoryBatch(
+				documentSelection));
 	}
 
 	@GraphQLInvokeDetached
@@ -73,9 +109,11 @@ public class Mutation {
 				documentSelection)
 		throws Exception {
 
-		KeywordResource keywordResource = _createKeywordResource();
-
-		return keywordResource.patchKeywordBatch(documentSelection);
+		return _applyComponentServiceObjects(
+			_keywordResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			keywordResource -> keywordResource.patchKeywordBatch(
+				documentSelection));
 	}
 
 	@GraphQLInvokeDetached
@@ -84,9 +122,11 @@ public class Mutation {
 				documentSelection)
 		throws Exception {
 
-		KeywordResource keywordResource = _createKeywordResource();
-
-		return keywordResource.putKeywordBatch(documentSelection);
+		return _applyComponentServiceObjects(
+			_keywordResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			keywordResource -> keywordResource.putKeywordBatch(
+				documentSelection));
 	}
 
 	@GraphQLField
@@ -96,12 +136,15 @@ public class Mutation {
 				documentSelection)
 		throws Exception {
 
-		KeywordResource keywordResource = _createKeywordResource();
+		return _applyComponentServiceObjects(
+			_keywordResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			keywordResource -> {
+				Page paginationPage = keywordResource.postKeywordCommonPage(
+					documentSelection);
 
-		Page<Keyword> keywordPage =
-			keywordResource.postKeywordCommonPage(documentSelection);
-
-		return keywordPage.getItems();
+				return paginationPage.getItems();
+			});
 	}
 
 	@GraphQLField
@@ -111,11 +154,12 @@ public class Mutation {
 				documentSelection)
 		throws Exception {
 
-		MessageSelectionResource messageSelectionResource =
-			_createMessageSelectionResource();
-
-		return messageSelectionResource.postKeywordMessageSelection(
-			documentSelection);
+		return _applyComponentServiceObjects(
+			_messageSelectionResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			messageSelectionResource ->
+				messageSelectionResource.postKeywordMessageSelection(
+					documentSelection));
 	}
 
 	@GraphQLField
@@ -125,11 +169,12 @@ public class Mutation {
 				documentSelection)
 		throws Exception {
 
-		MessageSelectionResource messageSelectionResource =
-			_createMessageSelectionResource();
-
-		return messageSelectionResource.postVocabularyMessageSelection(
-			documentSelection);
+		return _applyComponentServiceObjects(
+			_messageSelectionResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			messageSelectionResource ->
+				messageSelectionResource.postVocabularyMessageSelection(
+					documentSelection));
 	}
 
 	@GraphQLField
@@ -140,109 +185,77 @@ public class Mutation {
 				documentSelection)
 		throws Exception {
 
-		VocabularyResource vocabularyResource = _createVocabularyResource();
+		return _applyComponentServiceObjects(
+			_vocabularyResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			vocabularyResource -> {
+				Page paginationPage =
+					vocabularyResource.postContentSpaceVocabularyCommonPage(
+						contentSpaceId, documentSelection);
 
-		Page<Vocabulary> vocabularyPage =
-			vocabularyResource.postContentSpaceVocabularyCommonPage(
-				contentSpaceId, documentSelection);
-
-		return vocabularyPage.getItems();
+				return paginationPage.getItems();
+			});
 	}
 
-	private static CategoryResource _createCategoryResource() throws Exception {
-		CategoryResource categoryResource =
-			_categoryResourceServiceTracker.getService();
+	private <T, R, E1 extends Throwable, E2 extends Throwable> R
+			_applyComponentServiceObjects(
+				ComponentServiceObjects<T> componentServiceObjects,
+				UnsafeConsumer<T, E1> unsafeConsumer,
+				UnsafeFunction<T, R, E2> unsafeFunction)
+		throws E1, E2 {
+
+		T resource = componentServiceObjects.getService();
+
+		try {
+			unsafeConsumer.accept(resource);
+
+			return unsafeFunction.apply(resource);
+		}
+		finally {
+			componentServiceObjects.ungetService(resource);
+		}
+	}
+
+	private void _populateResourceContext(CategoryResource categoryResource)
+		throws Exception {
 
 		categoryResource.setContextCompany(
 			CompanyLocalServiceUtil.getCompany(
 				CompanyThreadLocal.getCompanyId()));
-
-		return categoryResource;
 	}
 
-	private static final ServiceTracker<CategoryResource, CategoryResource>
-		_categoryResourceServiceTracker;
-
-	private static KeywordResource _createKeywordResource() throws Exception {
-		KeywordResource keywordResource =
-			_keywordResourceServiceTracker.getService();
+	private void _populateResourceContext(KeywordResource keywordResource)
+		throws Exception {
 
 		keywordResource.setContextCompany(
 			CompanyLocalServiceUtil.getCompany(
 				CompanyThreadLocal.getCompanyId()));
-
-		return keywordResource;
 	}
 
-	private static final ServiceTracker<KeywordResource, KeywordResource>
-		_keywordResourceServiceTracker;
-
-	private static MessageSelectionResource _createMessageSelectionResource()
+	private void _populateResourceContext(
+			MessageSelectionResource messageSelectionResource)
 		throws Exception {
-
-		MessageSelectionResource messageSelectionResource =
-			_messageSelectionResourceServiceTracker.getService();
 
 		messageSelectionResource.setContextCompany(
 			CompanyLocalServiceUtil.getCompany(
 				CompanyThreadLocal.getCompanyId()));
-
-		return messageSelectionResource;
 	}
 
-	private static final ServiceTracker
-		<MessageSelectionResource, MessageSelectionResource>
-			_messageSelectionResourceServiceTracker;
-
-	private static VocabularyResource _createVocabularyResource()
+	private void _populateResourceContext(VocabularyResource vocabularyResource)
 		throws Exception {
-
-		VocabularyResource vocabularyResource =
-			_vocabularyResourceServiceTracker.getService();
 
 		vocabularyResource.setContextCompany(
 			CompanyLocalServiceUtil.getCompany(
 				CompanyThreadLocal.getCompanyId()));
-
-		return vocabularyResource;
 	}
 
-	private static final ServiceTracker<VocabularyResource, VocabularyResource>
-		_vocabularyResourceServiceTracker;
-
-	static {
-		Bundle bundle = FrameworkUtil.getBundle(Mutation.class);
-
-		ServiceTracker<CategoryResource, CategoryResource>
-			categoryResourceServiceTracker = new ServiceTracker<>(
-				bundle.getBundleContext(), CategoryResource.class, null);
-
-		categoryResourceServiceTracker.open();
-
-		_categoryResourceServiceTracker = categoryResourceServiceTracker;
-		ServiceTracker<KeywordResource, KeywordResource>
-			keywordResourceServiceTracker = new ServiceTracker<>(
-				bundle.getBundleContext(), KeywordResource.class, null);
-
-		keywordResourceServiceTracker.open();
-
-		_keywordResourceServiceTracker = keywordResourceServiceTracker;
-		ServiceTracker<MessageSelectionResource, MessageSelectionResource>
-			messageSelectionResourceServiceTracker = new ServiceTracker<>(
-				bundle.getBundleContext(), MessageSelectionResource.class,
-				null);
-
-		messageSelectionResourceServiceTracker.open();
-
-		_messageSelectionResourceServiceTracker =
-			messageSelectionResourceServiceTracker;
-		ServiceTracker<VocabularyResource, VocabularyResource>
-			vocabularyResourceServiceTracker = new ServiceTracker<>(
-				bundle.getBundleContext(), VocabularyResource.class, null);
-
-		vocabularyResourceServiceTracker.open();
-
-		_vocabularyResourceServiceTracker = vocabularyResourceServiceTracker;
-	}
+	private static ComponentServiceObjects<CategoryResource>
+		_categoryResourceComponentServiceObjects;
+	private static ComponentServiceObjects<KeywordResource>
+		_keywordResourceComponentServiceObjects;
+	private static ComponentServiceObjects<MessageSelectionResource>
+		_messageSelectionResourceComponentServiceObjects;
+	private static ComponentServiceObjects<VocabularyResource>
+		_vocabularyResourceComponentServiceObjects;
 
 }

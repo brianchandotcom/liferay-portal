@@ -17,12 +17,6 @@ export default class ProcessListItem extends React.Component {
 			title
 		} = this.props;
 
-		let instanceMessage = Liferay.Language.get('x-items');
-
-		if (instanceCount === 1) {
-			instanceMessage = Liferay.Language.get('x-item');
-		}
-
 		return (
 			<tr>
 				<td className="table-cell-expand">
@@ -33,11 +27,12 @@ export default class ProcessListItem extends React.Component {
 					</div>
 				</td>
 
-				<td>{sub(instanceMessage, [instanceCount])}</td>
+				<td>{overdueInstanceCount}</td>
 
 				<td>{ontimeInstanceCount}</td>
 
-				<td>{overdueInstanceCount}</td>
+				<td>{instanceCount}</td>
+
 				<td>
 					<div className="dropdown dropdown-action">
 						<a

@@ -36,7 +36,7 @@ export default class Pagination extends React.Component {
 		const hasNextPage = nextPage <= lastPage;
 		const hasPreviousPage = prevPage > 0;
 
-		const renderPages = () => {
+		const renderPageItems = () => {
 			const rows = [];
 
 			for (let i = 1; i <= lastPage; i++) {
@@ -63,7 +63,7 @@ export default class Pagination extends React.Component {
 					type="prev"
 				/>
 
-				{renderPages()}
+				{renderPageItems()}
 
 				<PageItem
 					disabled={!hasNextPage}

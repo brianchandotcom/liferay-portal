@@ -10,16 +10,6 @@ export default class ListView extends React.Component {
 	render() {
 		const {children, emptyMessageText, emptyTitleText, isFetching, isLoading, isSearching} = this.props;
 
-		const emptySearchRender = secondaryRender =>
-			isSearching ? (
-				<EmptyContent
-					message={emptyMessageText}
-					type="not-found"
-				/>
-			) : (
-				secondaryRender
-			);
-
 		const emptyContentRender = secondaryRender =>
 			isFetching ? (
 				<EmptyContent
@@ -33,6 +23,16 @@ export default class ListView extends React.Component {
 		const emptyLoadingState = secondaryRender =>
 			isLoading ? (
 				<LoadingState />
+			) : (
+				secondaryRender
+			);
+
+		const emptySearchRender = secondaryRender =>
+			isSearching ? (
+				<EmptyContent
+					message={emptyMessageText}
+					type="not-found"
+				/>
 			) : (
 				secondaryRender
 			);

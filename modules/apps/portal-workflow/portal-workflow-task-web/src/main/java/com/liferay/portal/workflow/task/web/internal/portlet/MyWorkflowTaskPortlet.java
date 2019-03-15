@@ -14,6 +14,7 @@
 
 package com.liferay.portal.workflow.task.web.internal.portlet;
 
+import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
@@ -45,6 +46,7 @@ import javax.portlet.RenderResponse;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Modified;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Leonardo Barros
@@ -109,6 +111,8 @@ public class MyWorkflowTaskPortlet extends MVCPortlet {
 				throw new PortletException(e);
 			}
 		}
+
+		request.setAttribute("assetEntryLocalService", _assetEntryLocalService);
 
 		super.render(request, response);
 	}
@@ -192,6 +196,9 @@ public class MyWorkflowTaskPortlet extends MVCPortlet {
 			WorkflowTaskWebConfiguration.class.getName(),
 			_workflowTaskWebConfiguration);
 	}
+
+	@Reference
+	private AssetEntryLocalService _assetEntryLocalService;
 
 	private final WorkflowTaskPermissionChecker _workflowTaskPermissionChecker =
 		new WorkflowTaskPermissionChecker();

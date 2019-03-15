@@ -36,7 +36,7 @@ export default class PageItem extends React.Component {
 
 			if (type) {
 				return (
-					<a className="page-link" href={`#${page}`} role="button">
+					<a className="page-link" data-senna-off href={`#${page}`} role="button">
 						<Icon iconName={iconType} />
 
 						<span className="sr-only">{displayType}</span>

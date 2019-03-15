@@ -19,6 +19,7 @@ export default class PageSizeItem extends React.Component {
 		return (
 			<a
 				className="dropdown-item"
+				data-senna-off
 				href={`#${pageSize}`}
 				onClick={this.setPageSize}
 			>

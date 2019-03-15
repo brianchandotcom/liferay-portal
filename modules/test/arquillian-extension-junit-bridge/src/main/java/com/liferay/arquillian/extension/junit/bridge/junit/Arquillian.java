@@ -41,6 +41,7 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 
 import org.junit.Ignore;
 import org.junit.Test;
@@ -134,12 +135,13 @@ public class Arquillian extends Runner implements Filterable {
 
 				ServerSocket serverSocket = serverSocketChannel.socket();
 
+				_port = new Random().nextInt(65535);
+
 				serverSocket.bind(new InetSocketAddress(_inetAddress, _port));
 
 				return serverSocket;
 			}
 			catch (IOException ioe) {
-				_port++;
 			}
 		}
 	}
@@ -183,7 +185,7 @@ public class Arquillian extends Runner implements Filterable {
 	}
 
 	private static final InetAddress _inetAddress;
-	private static int _port = 12343;
+	private static int _port;
 
 	static {
 		try {

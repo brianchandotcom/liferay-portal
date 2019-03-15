@@ -359,7 +359,10 @@ public class JournalArticleAssetRenderer
 		JournalArticle previousApprovedArticle =
 			JournalArticleLocalServiceUtil.getPreviousApprovedArticle(_article);
 
-		if (previousApprovedArticle.getVersion() == _article.getVersion()) {
+		if ((previousApprovedArticle.getVersion() == _article.getVersion()) ||
+			(_article.getVersion() ==
+				JournalArticleConstants.VERSION_DEFAULT)) {
+
 			return null;
 		}
 

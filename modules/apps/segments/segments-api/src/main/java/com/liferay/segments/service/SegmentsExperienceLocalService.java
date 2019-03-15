@@ -201,11 +201,6 @@ public interface SegmentsExperienceLocalService
 		DynamicQuery dynamicQuery, Projection projection);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public SegmentsExperience fetchDefaultSegmentsExperience(
-			long groupId, long classNameId, long classPK)
-		throws PortalException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public SegmentsExperience fetchSegmentsExperience(
 		long segmentsExperienceId);
 

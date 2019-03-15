@@ -14,6 +14,8 @@
 
 package com.liferay.portal.upgrade.v7_0_5;
 
+import com.liferay.portal.kernel.dao.db.DBType;
+import com.liferay.portal.kernel.dao.db.DBTypeToSQLMap;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 
 /**
@@ -22,9 +24,23 @@ import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 public class UpgradeExpando extends UpgradeProcess {
 
 	protected void deleteOrphanExpandoRow() throws Exception {
-		runSQL(
-			"delete from ExpandoRow where rowId_ not in (select rowId_ from " +
-				"ExpandoValue)");
+		StringBuilder sb = new StringBuilder(2);
+
+		sb.append("delete from ExpandoRow where rowId_ not in (select ");
+		sb.append("rowId_ from ExpandoValue)");
+
+		DBTypeToSQLMap dbTypeToSQLMap = new DBTypeToSQLMap(sb.toString());
+
+		sb = new StringBuilder(2);
+
+		sb.append("delete from ExpandoRow er where not exists (select null ");
+		sb.append("from ExpandoValue ev where ev.rowId_ = er.rowId_)");
+
+		String sql = sb.toString();
+
+		dbTypeToSQLMap.add(DBType.POSTGRESQL, sql);
+
+		runSQL(dbTypeToSQLMap);
 	}
 
 	@Override

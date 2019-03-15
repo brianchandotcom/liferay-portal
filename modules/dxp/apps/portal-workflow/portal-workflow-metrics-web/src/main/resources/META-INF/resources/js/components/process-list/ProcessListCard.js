@@ -87,7 +87,7 @@ export default class ProcessListCard extends React.Component {
 	setPageSize(pageSize) {
 		const page = 1;
 
-		this.requestData({page, pageSize}).then(({items, totalCount}) =>
+		return this.requestData({page, pageSize}).then(({items, totalCount}) =>
 			this.setState({items, page, pageSize, totalCount})
 		);
 	}

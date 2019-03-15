@@ -38,6 +38,7 @@ export default class ProcessListTable extends React.Component {
 							>
 								{Liferay.Language.get('overdue')}
 							</th>
+							<th />
 						</tr>
 					</thead>
 

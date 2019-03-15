@@ -151,18 +151,18 @@ definition {
 
 		task ("Map the Title fragment to the Title field") {
 			PageEditorMapping.mapEditableTextToField(
+				field = "Title",
 				fragmentName = "Title",
 				id = "title",
-				field = "Title",
 				source = "Basic Web Content (Default)"
 			);
 		}
 
 		task ("Map the Rich Text fragment to the Content field") {
 			PageEditorMapping.mapEditableTextToField(
+				field = "Content",
 				fragmentName = "Rich Text",
 				id = "rich-text",
-				field = "Content",
 				source = "Basic Web Content (Default)"
 			);
 		}

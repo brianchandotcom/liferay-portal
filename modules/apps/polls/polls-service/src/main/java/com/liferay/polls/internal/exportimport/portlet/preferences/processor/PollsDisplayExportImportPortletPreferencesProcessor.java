@@ -23,10 +23,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.polls.constants.PollsConstants;
 import com.liferay.polls.constants.PollsPortletKeys;
 import com.liferay.polls.exception.NoSuchQuestionException;
-import com.liferay.polls.internal.exportimport.data.handler.PollsPortletDataHandler;
-import com.liferay.polls.model.PollsChoice;
 import com.liferay.polls.model.PollsQuestion;
-import com.liferay.polls.model.PollsVote;
 import com.liferay.polls.service.persistence.PollsQuestionUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
@@ -110,20 +107,6 @@ public class PollsDisplayExportImportPortletPreferencesProcessor
 
 		StagedModelDataHandlerUtil.exportReferenceStagedModel(
 			portletDataContext, portletId, question);
-
-		for (PollsChoice choice : question.getChoices()) {
-			StagedModelDataHandlerUtil.exportReferenceStagedModel(
-				portletDataContext, portletId, choice);
-		}
-
-		if (portletDataContext.getBooleanParameter(
-				PollsPortletDataHandler.NAMESPACE, "votes")) {
-
-			for (PollsVote vote : question.getVotes()) {
-				StagedModelDataHandlerUtil.exportReferenceStagedModel(
-					portletDataContext, portletId, vote);
-			}
-		}
 
 		return portletPreferences;
 	}

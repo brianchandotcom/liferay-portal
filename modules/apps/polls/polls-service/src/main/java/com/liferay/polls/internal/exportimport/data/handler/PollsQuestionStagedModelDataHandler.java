@@ -19,7 +19,9 @@ import com.liferay.exportimport.kernel.lar.ExportImportPathUtil;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandler;
 import com.liferay.exportimport.kernel.lar.StagedModelModifiedDateComparator;
+import com.liferay.polls.model.PollsChoice;
 import com.liferay.polls.model.PollsQuestion;
+import com.liferay.polls.model.PollsVote;
 import com.liferay.polls.service.PollsQuestionLocalService;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -103,6 +105,27 @@ public class PollsQuestionStagedModelDataHandler
 		portletDataContext.addClassedModel(
 			questionElement, ExportImportPathUtil.getModelPath(question),
 			question);
+
+		for (PollsChoice choice : question.getChoices()) {
+			Element choiceElement = portletDataContext.getExportDataElement(
+				choice);
+
+			portletDataContext.addClassedModel(
+				choiceElement, ExportImportPathUtil.getModelPath(choice),
+				choice);
+		}
+
+		if (portletDataContext.getBooleanParameter(
+				PollsPortletDataHandler.NAMESPACE, "votes")) {
+
+			for (PollsVote vote : question.getVotes()) {
+				Element voteElement = portletDataContext.getExportDataElement(
+					vote);
+
+				portletDataContext.addClassedModel(
+					voteElement, ExportImportPathUtil.getModelPath(vote), vote);
+			}
+		}
 	}
 
 	@Override

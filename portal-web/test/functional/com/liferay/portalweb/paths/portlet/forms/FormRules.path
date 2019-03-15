@@ -132,7 +132,7 @@
 </tr>
 <tr>
 	<td>RULE_BUILDER_AUTOFILL_SELECT_OUTPUT_FIELD</td>
-	<td>//div[contains(@class,'action-rule-data-provider')]//div[contains(@class,'parameter-output')]//div[contains(@id,'action')]/following-sibling::div//li[contains(.,'${key_dataProviderOutput}')]</td>
+	<td>//div[contains(@class, 'dropdown-menu') and contains(@class, 'show')]//button[contains(text(),'${key_dataProviderOutput}')]</td>
 	<td></td>
 </tr>
 <tr>

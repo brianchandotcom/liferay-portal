@@ -10,7 +10,7 @@ definition {
 
 		User.firstLoginPG();
 
-		TestCase.enableMetal();
+		//TestCase.enableMetal();
 	}
 
 	tearDown {
@@ -394,9 +394,9 @@ definition {
 	@priority = "5"
 	test ConfigureAutofillRule {
 		property portal.acceptance = "false";
-		property test.name.skip.portal.instance = "FormRules#ConfigureAutofillRule";
+		property test.name.skip.portal.instance = "MetalFormRules#ConfigureAutofillRule";
 		var portalURL = PropsUtil.get("portal.url");
-
+/*
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
@@ -421,7 +421,7 @@ definition {
 		);
 
 		FormsAdmin.saveDataProvider();
-
+*/
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(

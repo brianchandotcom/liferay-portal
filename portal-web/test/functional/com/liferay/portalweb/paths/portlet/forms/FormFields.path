@@ -20,7 +20,7 @@
 </tr>
 <tr>
 	<td>FIELD_NAME_EDIT</td>
-	<td>//div[contains(@class, 'form-group')]//input[contains(@name, 'name')] | //div[contains(@class,'key-value-editor')]/input[contains(@class, 'input')]</td>
+	<td>//input[contains(@name,'name') and contains(@class,'ddm-field-text')] | //div[contains(@class,'form-group')]//input[contains(@name,'name')]</td>
 	<td></td>
 </tr>
 <tr>

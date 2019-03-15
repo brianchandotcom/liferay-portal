@@ -549,10 +549,6 @@ public class DDMTemplateServiceImpl extends DDMTemplateServiceBaseImpl {
 		int status, int start, int end,
 		OrderByComparator<DDMTemplate> orderByComparator) {
 
-		ddmTemplateFinder.filterFindByKeywords(
-			companyId, groupId, classNameId, classPK, resourceClassNameId,
-			keywords, type, mode, status, start, end, orderByComparator);
-
 		try {
 			SearchContext searchContext =
 				_ddmSearchHelper.buildTemplateSearchContext(
@@ -622,11 +618,6 @@ public class DDMTemplateServiceImpl extends DDMTemplateServiceBaseImpl {
 		String mode, String language, int status, boolean andOperator,
 		int start, int end, OrderByComparator<DDMTemplate> orderByComparator) {
 
-		ddmTemplateFinder.filterFindByC_G_C_C_R_N_D_T_M_L_S(
-			companyId, groupId, classNameId, classPK, resourceClassNameId, name,
-			description, type, mode, language, status, andOperator, start, end,
-			orderByComparator);
-
 		try {
 			SearchContext searchContext =
 				_ddmSearchHelper.buildTemplateSearchContext(
@@ -689,10 +680,6 @@ public class DDMTemplateServiceImpl extends DDMTemplateServiceBaseImpl {
 		long resourceClassNameId, String keywords, String type, String mode,
 		int status, int start, int end,
 		OrderByComparator<DDMTemplate> orderByComparator) {
-
-		ddmTemplateFinder.filterFindByKeywords(
-			companyId, groupIds, classNameIds, classPKs, resourceClassNameId,
-			keywords, type, mode, status, start, end, orderByComparator);
 
 		try {
 			SearchContext searchContext =
@@ -763,11 +750,6 @@ public class DDMTemplateServiceImpl extends DDMTemplateServiceBaseImpl {
 		String mode, String language, int status, boolean andOperator,
 		int start, int end, OrderByComparator<DDMTemplate> orderByComparator) {
 
-		ddmTemplateFinder.filterFindByC_G_C_C_R_N_D_T_M_L_S(
-			companyId, groupIds, classNameIds, classPKs, resourceClassNameId,
-			name, description, type, mode, language, status, andOperator, start,
-			end, orderByComparator);
-
 		try {
 			SearchContext searchContext =
 				_ddmSearchHelper.buildTemplateSearchContext(
@@ -815,10 +797,6 @@ public class DDMTemplateServiceImpl extends DDMTemplateServiceBaseImpl {
 		long companyId, long groupId, long classNameId, long classPK,
 		long resourceClassNameId, String keywords, String type, String mode,
 		int status) {
-
-		ddmTemplateFinder.filterCountByKeywords(
-			companyId, groupId, classNameId, classPK, resourceClassNameId,
-			keywords, type, mode, status);
 
 		try {
 			SearchContext searchContext =
@@ -872,10 +850,6 @@ public class DDMTemplateServiceImpl extends DDMTemplateServiceBaseImpl {
 		long resourceClassNameId, String name, String description, String type,
 		String mode, String language, int status, boolean andOperator) {
 
-		ddmTemplateFinder.filterCountByC_G_C_C_R_N_D_T_M_L_S(
-			companyId, groupId, classNameId, classPK, resourceClassNameId, name,
-			description, type, mode, language, status, andOperator);
-
 		try {
 			SearchContext searchContext =
 				_ddmSearchHelper.buildTemplateSearchContext(
@@ -922,10 +896,6 @@ public class DDMTemplateServiceImpl extends DDMTemplateServiceBaseImpl {
 		long companyId, long[] groupIds, long[] classNameIds, long[] classPKs,
 		long resourceClassNameId, String keywords, String type, String mode,
 		int status) {
-
-		ddmTemplateFinder.filterCountByKeywords(
-			companyId, groupIds, classNameIds, classPKs, resourceClassNameId,
-			keywords, type, mode, status);
 
 		try {
 			SearchContext searchContext =
@@ -978,10 +948,6 @@ public class DDMTemplateServiceImpl extends DDMTemplateServiceBaseImpl {
 		long companyId, long[] groupIds, long[] classNameIds, long[] classPKs,
 		long resourceClassNameId, String name, String description, String type,
 		String mode, String language, int status, boolean andOperator) {
-
-		ddmTemplateFinder.filterCountByC_G_C_C_R_N_D_T_M_L_S(
-			companyId, groupIds, classNameIds, classPKs, resourceClassNameId,
-			name, description, type, mode, language, status, andOperator);
 
 		try {
 			SearchContext searchContext =

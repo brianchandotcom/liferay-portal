@@ -247,7 +247,7 @@ definition {
 	macro viewDefaultCP {
 		var key_teamName = "${teamName}";
 
-		PortletEntry.viewEmptyMessage(entity = "Teams");
+		PortletEntry.viewEmptyMessage(entity = "Site Teams");
 
 		AssertTextNotPresent(
 			locator1 = "SiteTeams#TEAM_TABLE_NAME",

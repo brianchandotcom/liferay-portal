@@ -291,6 +291,10 @@ public class ConfigurationModelRetrieverImpl
 			getConfiguration(pid, scope, scopePK), bundle.getSymbolicName(),
 			StringPool.QUESTION, factory);
 
+		if (scope.equals(scope.COMPANY) && configurationModel.isSystemScope()) {
+			return null;
+		}
+
 		if (configurationModel.isCompanyFactory()) {
 			Configuration configuration = getCompanyDefaultConfiguration(pid);
 

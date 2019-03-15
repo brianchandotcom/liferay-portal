@@ -16,10 +16,16 @@ definition {
 			locator1 = "PageEditor#EDITABLE_FIELD_TOOLBAR_MAP_BUTTON"
 		);
 
-		AssertClick(
-			locator1 = "PageEditor#LIST_GROUP_ITEM",
-			value1 = "${itemName}",
-			key_itemName = "${itemName}"
+		Select(
+			locator1 = "Select#GENERIC_SELECT_FIELD",
+			value1 = "${source}",
+			key_fieldLabel = "Source"
+		);
+
+		Select(
+			locator1 = "Select#GENERIC_SELECT_FIELD",
+			value1 = "${field}",
+			key_fieldLabel = "Field"
 		);
 	}
 

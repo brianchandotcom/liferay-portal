@@ -76,13 +76,15 @@ definition {
 			PageEditorMapping.mapEditableTextToField(
 				fragmentName = "Rich Text",
 				id = "rich-text",
-				itemName = "Author Name"
+				field = "Author Name",
+				source = "Basic Web Content (Default)"
 			);
 
 			PageEditorMapping.mapEditableTextToField(
 				fragmentName = "Image",
 				id = "image",
-				itemName = "Author Profile Image"
+				field = "Author Profile Image",
+				source = "Basic Web Content (Default)"
 			);
 
 			Button.clickPublish();
@@ -161,13 +163,15 @@ definition {
 			PageEditorMapping.mapEditableTextToField(
 				fragmentName = "Rich Text",
 				id = "rich-text",
-				itemName = "Last Editor Name"
+				field = "Last Editor Name",
+				source = "Basic Web Content (Default)"
 			);
 
 			PageEditorMapping.mapEditableTextToField(
 				fragmentName = "Image",
 				id = "image",
-				itemName = "Last Editor Profile Image"
+				field = "Last Editor Profile Image",
+				source = "Basic Web Content (Default)"
 			);
 
 			Button.clickPublish();
@@ -313,25 +317,29 @@ definition {
 			PageEditorMapping.mapEditableTextToField(
 				fragmentName = "Multiple Editables",
 				id = "test1",
-				itemName = "Title"
+				field = "Title",
+				source = "Basic Web Content (Default)"
 			);
 
 			PageEditorMapping.mapEditableTextToField(
 				fragmentName = "Multiple Editables",
 				id = "test2",
-				itemName = "Content"
+				field = "Content",
+				source = "Basic Web Content (Default)"
 			);
 
 			PageEditorMapping.mapEditableTextToField(
 				fragmentName = "Multiple Editables",
 				id = "test3",
-				itemName = "Tags"
+				field = "Tags",
+				source = "Basic Web Content (Default)"
 			);
 
 			PageEditorMapping.mapEditableTextToField(
 				fragmentName = "Multiple Editables",
 				id = "test4",
-				itemName = "Publish Date"
+				field = "Publish Date",
+				source = "Basic Web Content (Default)"
 			);
 		}
 

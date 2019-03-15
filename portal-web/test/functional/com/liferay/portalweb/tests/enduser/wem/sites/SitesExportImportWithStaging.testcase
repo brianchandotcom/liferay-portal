@@ -153,7 +153,8 @@ definition {
 			PageEditorMapping.mapEditableTextToField(
 				fragmentName = "Title",
 				id = "title",
-				itemName = "Title"
+				field = "Title",
+				source = "Basic Web Content (Default)"
 			);
 		}
 
@@ -161,7 +162,8 @@ definition {
 			PageEditorMapping.mapEditableTextToField(
 				fragmentName = "Rich Text",
 				id = "rich-text",
-				itemName = "Content"
+				field = "Content",
+				source = "Basic Web Content (Default)"
 			);
 		}
 

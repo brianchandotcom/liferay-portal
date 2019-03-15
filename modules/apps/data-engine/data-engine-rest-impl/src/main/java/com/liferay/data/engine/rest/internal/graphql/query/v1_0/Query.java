@@ -186,6 +186,28 @@ public class Query {
 
 	@GraphQLField
 	@GraphQLInvokeDetached
+	public Collection<DataRecordCollection> getDataRecordCollectionsPage(
+			@GraphQLName("contentSpaceId") Long contentSpaceId,
+			@GraphQLName("keywords") String keywords,
+			@GraphQLName("pageSize") int pageSize,
+			@GraphQLName("page") int page)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_dataRecordCollectionResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			dataRecordCollectionResource -> {
+				Page paginationPage =
+					dataRecordCollectionResource.getDataRecordCollectionsPage(
+						contentSpaceId, keywords,
+						Pagination.of(pageSize, page));
+
+				return paginationPage.getItems();
+			});
+	}
+
+	@GraphQLField
+	@GraphQLInvokeDetached
 	public DataRecordCollection getDataRecordCollection(
 			@GraphQLName("data-record-collection-id") Long
 				dataRecordCollectionId)

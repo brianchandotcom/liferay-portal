@@ -15,6 +15,8 @@
 package com.liferay.portal.spring.aop;
 
 import com.liferay.petra.reflect.AnnotationLocator;
+import com.liferay.portal.kernel.aop.AopMethodInvocation;
+import com.liferay.portal.kernel.aop.ChainableMethodAdvice;
 import com.liferay.portal.transaction.TransactionsUtil;
 
 import java.lang.annotation.Annotation;

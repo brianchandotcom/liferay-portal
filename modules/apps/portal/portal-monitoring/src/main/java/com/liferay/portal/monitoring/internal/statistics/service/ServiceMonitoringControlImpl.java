@@ -14,11 +14,11 @@
 
 package com.liferay.portal.monitoring.internal.statistics.service;
 
+import com.liferay.portal.kernel.aop.ChainableMethodAdvice;
 import com.liferay.portal.kernel.monitoring.DataSampleFactory;
 import com.liferay.portal.kernel.monitoring.MethodSignature;
 import com.liferay.portal.kernel.monitoring.ServiceMonitoringControl;
 import com.liferay.portal.monitoring.internal.aop.ServiceMonitorAdvice;
-import com.liferay.portal.spring.aop.ChainableMethodAdvice;
 
 import java.util.Collections;
 import java.util.HashSet;

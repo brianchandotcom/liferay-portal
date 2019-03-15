@@ -14,10 +14,10 @@
 
 package com.liferay.portal.internal.messaging.async;
 
+import com.liferay.portal.kernel.aop.AopMethodInvocation;
 import com.liferay.portal.kernel.module.framework.service.IdentifiableOSGiServiceInvokerUtil;
 import com.liferay.portal.kernel.process.ProcessCallable;
 import com.liferay.portal.kernel.util.MethodHandler;
-import com.liferay.portal.spring.aop.AopMethodInvocation;
 
 import java.io.Externalizable;
 import java.io.IOException;

@@ -15,9 +15,9 @@
 package com.liferay.portal.internal.increment;
 
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.aop.AopMethodInvocation;
 import com.liferay.portal.kernel.increment.Increment;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.spring.aop.AopMethodInvocation;
 
 import java.util.Arrays;
 

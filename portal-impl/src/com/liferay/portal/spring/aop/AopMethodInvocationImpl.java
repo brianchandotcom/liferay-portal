@@ -16,6 +16,8 @@ package com.liferay.portal.spring.aop;
 
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.aop.AopMethodInvocation;
+import com.liferay.portal.kernel.aop.ChainableMethodAdvice;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;

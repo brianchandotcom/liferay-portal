@@ -31,6 +31,8 @@ import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleThreadLocal;
 import com.liferay.portal.kernel.util.LocaleUtil;
 
+import java.io.Serializable;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -67,7 +69,8 @@ public class ConfigurationEntryRetrieverImpl
 
 	@Override
 	public ConfigurationCategoryMenuDisplay getConfigurationCategoryMenuDisplay(
-		String configurationCategory, String languageId) {
+		String configurationCategory, String languageId,
+		ExtendedObjectClassDefinition.Scope scope, Serializable scopePK) {
 
 		ConfigurationCategoryDisplay configurationCategoryDisplay =
 			new ConfigurationCategoryDisplay(
@@ -75,19 +78,20 @@ public class ConfigurationEntryRetrieverImpl
 
 		return new ConfigurationCategoryMenuDisplay(
 			configurationCategoryDisplay,
-			getConfigurationEntries(configurationCategory, languageId));
+			getConfigurationEntries(
+				configurationCategory, languageId, scope, scopePK));
 	}
 
 	@Override
 	public List<ConfigurationCategorySectionDisplay>
-		getConfigurationCategorySectionDisplays() {
+		getConfigurationCategorySectionDisplays(
+			ExtendedObjectClassDefinition.Scope scope, Serializable scopePK) {
 
 		Locale locale = LocaleThreadLocal.getThemeDisplayLocale();
 
 		Map<String, ConfigurationModel> configurationModelsMap =
 			_configurationModelRetriever.getConfigurationModels(
-				locale.getLanguage(),
-				ExtendedObjectClassDefinition.Scope.SYSTEM, null);
+				locale.getLanguage(), scope, scopePK);
 
 		Map<String, Set<ConfigurationModel>> categorizedConfigurationModels =
 			_configurationModelRetriever.categorizeConfigurationModels(
@@ -143,7 +147,8 @@ public class ConfigurationEntryRetrieverImpl
 
 	@Override
 	public Set<ConfigurationEntry> getConfigurationEntries(
-		String configurationCategory, String languageId) {
+		String configurationCategory, String languageId,
+		ExtendedObjectClassDefinition.Scope scope, Serializable scopePK) {
 
 		Set<ConfigurationEntry> configurationEntries = new TreeSet(
 			getConfigurationEntryComparator());
@@ -152,8 +157,7 @@ public class ConfigurationEntryRetrieverImpl
 
 		Set<ConfigurationModel> configurationModels =
 			_configurationModelRetriever.getConfigurationModels(
-				configurationCategory, languageId,
-				ExtendedObjectClassDefinition.Scope.SYSTEM, null);
+				configurationCategory, languageId, scope, scopePK);
 
 		for (ConfigurationModel configurationModel : configurationModels) {
 			if (configurationModel.isGenerateUI()) {

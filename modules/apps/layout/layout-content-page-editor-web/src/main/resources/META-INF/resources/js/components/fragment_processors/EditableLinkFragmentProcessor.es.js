@@ -1,14 +1,14 @@
-import {FLOATING_TOOLBAR_PANELS} from '../../utils/constants';
+import {FLOATING_TOOLBAR_BUTTONS} from '../../utils/constants';
 import {destroy, init} from './EditableTextFragmentProcessor.es';
 
 /**
  * @param {object} editableValues
  * @return {object[]} Floating toolbar panels
  */
-function getFloatingToolbarPanels(editableValues) {
+function getFloatingToolbarButtons(editableValues) {
 	return [
-		FLOATING_TOOLBAR_PANELS.edit,
-		FLOATING_TOOLBAR_PANELS.link
+		FLOATING_TOOLBAR_BUTTONS.edit,
+		FLOATING_TOOLBAR_BUTTONS.link
 	];
 }
 
@@ -59,7 +59,7 @@ function render(content, value, editableValues) {
 
 export default {
 	destroy,
-	getFloatingToolbarPanels,
+	getFloatingToolbarButtons,
 	init,
 	render
 };

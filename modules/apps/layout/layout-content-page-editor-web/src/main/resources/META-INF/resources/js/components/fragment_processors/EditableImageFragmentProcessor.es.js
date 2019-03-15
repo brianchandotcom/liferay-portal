@@ -1,4 +1,4 @@
-import {FLOATING_TOOLBAR_PANELS} from '../../utils/constants';
+import {FLOATING_TOOLBAR_BUTTONS} from '../../utils/constants';
 import {openImageSelector} from '../../utils/FragmentsEditorDialogUtils';
 
 /**
@@ -37,13 +37,13 @@ function destroy() {
  * @param {object} editableValues
  * @return {object[]} Floating toolbar panels
  */
-function getFloatingToolbarPanels(editableValues) {
+function getFloatingToolbarButtons(editableValues) {
 	return editableValues.mappedField ? [
-		FLOATING_TOOLBAR_PANELS.imageProperties,
-		FLOATING_TOOLBAR_PANELS.map
+		FLOATING_TOOLBAR_BUTTONS.imageLink,
+		FLOATING_TOOLBAR_BUTTONS.map
 	] : [
-		FLOATING_TOOLBAR_PANELS.edit,
-		FLOATING_TOOLBAR_PANELS.map
+		FLOATING_TOOLBAR_BUTTONS.imageProperties,
+		FLOATING_TOOLBAR_BUTTONS.map
 	];
 }
 
@@ -104,7 +104,7 @@ function render(content, value) {
 
 export default {
 	destroy,
-	getFloatingToolbarPanels,
+	getFloatingToolbarButtons,
 	init,
 	render
 };

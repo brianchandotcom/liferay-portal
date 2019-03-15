@@ -9,7 +9,7 @@ import '../floating_toolbar/text_properties/FloatingToolbarTextPropertiesPanel.e
 import './FragmentEditableFieldTooltip.es';
 
 import {CLEAR_ACTIVE_ITEM, OPEN_ASSET_TYPE_DIALOG, UPDATE_ACTIVE_ITEM, UPDATE_EDITABLE_VALUE, UPDATE_HOVERED_ITEM, UPDATE_LAST_SAVE_DATE, UPDATE_SAVING_CHANGES_STATUS, UPDATE_TRANSLATION_STATUS} from '../../actions/actions.es';
-import {FLOATING_TOOLBAR_PANELS, FRAGMENTS_EDITOR_ITEM_TYPES} from '../../utils/constants';
+import {FLOATING_TOOLBAR_BUTTONS, FRAGMENTS_EDITOR_ITEM_TYPES} from '../../utils/constants';
 import {prefixSegmentsExperienceId} from '../../utils/prefixSegmentsExperienceId.es';
 import {getConnectedComponent} from '../../store/ConnectedComponent.es';
 import {setIn, shouldClearFocus} from '../../utils/FragmentsEditorUpdateUtils.es';
@@ -59,7 +59,7 @@ class FragmentEditableField extends Component {
 		this._handleBeforeUnload = this._handleBeforeUnload.bind(this);
 		this._handleEditableChanged = this._handleEditableChanged.bind(this);
 		this._handleEditableDestroyed = this._handleEditableDestroyed.bind(this);
-		this._handleFloatingToolbarPanelSelected = this._handleFloatingToolbarPanelSelected.bind(this);
+		this._handleFloatingToolbarButtonClicked = this._handleFloatingToolbarButtonClicked.bind(this);
 
 		this._beforeNavigateHandler = Liferay.on(
 			'beforeNavigate',
@@ -168,13 +168,14 @@ class FragmentEditableField extends Component {
 
 		const config = {
 			anchorElement: this.element,
+			buttons: processor.getFloatingToolbarButtons(this.editableValues),
 			classes:
 				this.editableValues.mappedField ||
 				this.editableValues.fieldId ?
 					'fragments-editor__floating-toolbar--mapped-field' :
 					'',
 			events: {
-				panelSelected: this._handleFloatingToolbarPanelSelected
+				buttonClicked: this._handleFloatingToolbarButtonClicked
 			},
 			item: {
 				editableValues: this.editableValues,
@@ -182,7 +183,6 @@ class FragmentEditableField extends Component {
 				type: this.type
 			},
 			itemId: this.editableId,
-			panels: processor.getFloatingToolbarPanels(this.editableValues),
 			portalElement: document.body,
 			store: this.store
 		};
@@ -368,19 +368,26 @@ class FragmentEditableField extends Component {
 		);
 	}
 
-	_handleFloatingToolbarPanelSelected(event, data) {
-		const {panelId} = data;
+	/**
+	 * Callback executed when an floating toolbar button is clicked
+	 * @param {Event} event
+	 * @param {Object} data
+	 * @private
+	 */
+	_handleFloatingToolbarButtonClicked(event, data) {
+		const {panelId, type} = data;
 
-		if (panelId === FLOATING_TOOLBAR_PANELS.edit.panelId) {
+		if (type === 'editor') {
 			event.preventDefault();
 
 			this._enableEditor();
 
 			this._disposeFloatingToolbar();
 		}
-		else if (panelId === FLOATING_TOOLBAR_PANELS.map.panelId &&
-				this.mappingFieldsURL &&
-				!this.selectedMappingTypes.type) {
+		else if (type === 'panel' &&
+			panelId === FLOATING_TOOLBAR_BUTTONS.map.panelId &&
+			this.mappingFieldsURL &&
+			!this.selectedMappingTypes.type) {
 
 			event.preventDefault();
 

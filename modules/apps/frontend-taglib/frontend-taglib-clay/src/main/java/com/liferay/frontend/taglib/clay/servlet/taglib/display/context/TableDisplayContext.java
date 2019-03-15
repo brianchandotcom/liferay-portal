@@ -15,8 +15,8 @@
 package com.liferay.frontend.taglib.clay.servlet.taglib.display.context;
 
 import com.liferay.frontend.taglib.clay.internal.servlet.taglib.display.context.TableDefaults;
-import com.liferay.frontend.taglib.clay.servlet.taglib.display.context.table.Schema;
-import com.liferay.frontend.taglib.clay.servlet.taglib.display.context.table.Size;
+import com.liferay.frontend.taglib.clay.servlet.taglib.model.table.Schema;
+import com.liferay.frontend.taglib.clay.servlet.taglib.model.table.Size;
 
 import java.util.Collection;
 

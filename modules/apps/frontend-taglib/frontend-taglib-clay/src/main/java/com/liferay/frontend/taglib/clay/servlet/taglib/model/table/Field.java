@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.frontend.taglib.clay.servlet.taglib.display.context.table;
+package com.liferay.frontend.taglib.clay.servlet.taglib.model.table;
 
 import com.liferay.petra.string.StringPool;
 

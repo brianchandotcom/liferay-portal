@@ -171,8 +171,6 @@ public class AopServiceManager {
 		private Class<?>[] _getAopInterfaces(AopService aopService) {
 			Class<?>[] aopInterfaces = aopService.getAopInterfaces();
 
-			aopInterfaces = Arrays.copyOf(aopInterfaces, aopInterfaces.length);
-
 			Class<? extends AopService> aopServiceClass = aopService.getClass();
 
 			if (ArrayUtil.isEmpty(aopInterfaces)) {
@@ -201,7 +199,7 @@ public class AopServiceManager {
 				}
 			}
 
-			return aopInterfaces;
+			return Arrays.copyOf(aopInterfaces, aopInterfaces.length);
 		}
 
 	}

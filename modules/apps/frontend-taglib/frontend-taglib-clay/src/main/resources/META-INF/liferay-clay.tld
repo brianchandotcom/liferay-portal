@@ -2202,12 +2202,6 @@
 		</attribute>
 		<attribute>
 			<description></description>
-			<name>displayContext</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
-		<attribute>
-			<description></description>
 			<name>items</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>

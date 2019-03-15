@@ -15,7 +15,9 @@
 package com.liferay.gradle.plugins.defaults.internal;
 
 import com.liferay.gradle.plugins.cache.CachePlugin;
+import com.liferay.gradle.plugins.defaults.internal.util.FileUtil;
 import com.liferay.gradle.plugins.defaults.internal.util.GradleUtil;
+import com.liferay.gradle.plugins.defaults.tasks.ReplaceRegexTask;
 import com.liferay.gradle.plugins.node.tasks.DownloadNodeTask;
 import com.liferay.gradle.plugins.node.tasks.ExecuteNodeTask;
 import com.liferay.gradle.plugins.node.tasks.ExecuteNpmTask;
@@ -25,6 +27,8 @@ import com.liferay.gradle.plugins.test.integration.TestIntegrationPlugin;
 import com.liferay.gradle.util.Validator;
 
 import groovy.json.JsonSlurper;
+
+import groovy.lang.Closure;
 
 import java.io.File;
 import java.io.IOException;
@@ -36,6 +40,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
+import java.util.regex.Pattern;
 
 import org.gradle.api.Action;
 import org.gradle.api.GradleException;
@@ -56,6 +61,12 @@ import org.gradle.util.GUtil;
 public class LiferayCIPlugin implements Plugin<Project> {
 
 	public static final Plugin<Project> INSTANCE = new LiferayCIPlugin();
+
+	public static final String RESTORE_HOTFIX_VERSION_TASK_NAME =
+		"restoreHotfixVersion";
+
+	public static final String UPDATE_HOTFIX_VERSION_TASK_NAME =
+		"updateHotfixVersion";
 
 	@Override
 	public void apply(final Project project) {
@@ -89,6 +100,78 @@ public class LiferayCIPlugin implements Plugin<Project> {
 	}
 
 	private LiferayCIPlugin() {
+	}
+
+	private ReplaceRegexTask _addTaskRestoreHotfixVersion(Project project) {
+		ReplaceRegexTask replaceRegexTask = GradleUtil.addTask(
+			project, RESTORE_HOTFIX_VERSION_TASK_NAME, ReplaceRegexTask.class);
+
+		if (FileUtil.exists(project, _BND_HOTFIX_VERSION_FILE_NAME)) {
+			replaceRegexTask.match(
+				_bndHotfixVersionPattern.pattern(),
+				project.file(_BND_HOTFIX_VERSION_FILE_NAME));
+		}
+
+		replaceRegexTask.setDescription("Updates the project hotfix version.");
+		replaceRegexTask.setReplacement(
+			new Closure<String>(project) {
+
+				@SuppressWarnings("unused")
+				public String doCall(String version) {
+					int index = version.indexOf("-hotfix");
+
+					if (index == -1) {
+						return version;
+					}
+
+					String suffix = version.substring(index + 7);
+
+					return version.substring(0, index) + ".hotfix" + suffix;
+				}
+
+			});
+
+		return replaceRegexTask;
+	}
+
+	private ReplaceRegexTask _addTaskUpdateHotfixVersion(Project project) {
+		ReplaceRegexTask replaceRegexTask = GradleUtil.addTask(
+			project, UPDATE_HOTFIX_VERSION_TASK_NAME, ReplaceRegexTask.class);
+
+		if (FileUtil.exists(project, _BND_HOTFIX_VERSION_FILE_NAME)) {
+			replaceRegexTask.match(
+				_bndHotfixVersionPattern.pattern(),
+				project.file(_BND_HOTFIX_VERSION_FILE_NAME));
+		}
+
+		for (String fileName : _JSON_HOTFIX_VERSION_FILE_NAMES) {
+			if (FileUtil.exists(project, fileName)) {
+				replaceRegexTask.match(
+					_jsonHotfixVersionPattern.pattern(),
+					project.file(fileName));
+			}
+		}
+
+		replaceRegexTask.setDescription("Restores the project hotfix version.");
+		replaceRegexTask.setReplacement(
+			new Closure<String>(project) {
+
+				@SuppressWarnings("unused")
+				public String doCall(String version) {
+					int index = version.indexOf(".hotfix");
+
+					if (index == -1) {
+						return version;
+					}
+
+					String suffix = version.substring(index + 7);
+
+					return version.substring(0, index) + "-hotfix" + suffix;
+				}
+
+			});
+
+		return replaceRegexTask;
 	}
 
 	private void _configureTaskDownloadNode(DownloadNodeTask downloadNodeTask) {
@@ -457,11 +540,22 @@ public class LiferayCIPlugin implements Plugin<Project> {
 		testIntegrationTask.doFirst(action);
 	}
 
+	private static final String _BND_HOTFIX_VERSION_FILE_NAME = "bnd.bnd";
+
+	private static final String[] _JSON_HOTFIX_VERSION_FILE_NAMES = {
+		"package-lock.json", "package.json"
+	};
+
 	private static final File _NODE_MODULES_CACHE_DIR = new File(
 		System.getProperty("user.home"), ".liferay/node-modules-cache");
 
 	private static final int _NPM_INSTALL_RETRIES = 3;
 
 	private static final String _SASS_BINARY_SITE_ARG = "--sass-binary-site=";
+
+	private static final Pattern _bndHotfixVersionPattern = Pattern.compile(
+		"\\nBundle-Version: (.+)");
+	private static final Pattern _jsonHotfixVersionPattern = Pattern.compile(
+		"\\n(\\t|  )\"version\": \"(.+)\"");
 
 }

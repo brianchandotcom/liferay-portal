@@ -53,7 +53,9 @@ public class AssetDisplayLayoutTypeControllerDisplayContext {
 
 			assetEntry = AssetEntryLocalServiceUtil.fetchEntry(assetEntryId);
 
-			request.setAttribute(WebKeys.LAYOUT_ASSET_ENTRY, assetEntry);
+			if (assetEntry != null) {
+				request.setAttribute(WebKeys.LAYOUT_ASSET_ENTRY, assetEntry);
+			}
 		}
 
 		_assetEntry = assetEntry;
@@ -62,7 +64,7 @@ public class AssetDisplayLayoutTypeControllerDisplayContext {
 			(AssetDisplayContributor)_request.getAttribute(
 				AssetDisplayWebKeys.ASSET_DISPLAY_CONTRIBUTOR);
 
-		if (assetDisplayContributor == null) {
+		if ((assetDisplayContributor == null) && (assetEntry != null)) {
 			AssetDisplayContributorTracker assetDisplayContributorTracker =
 				(AssetDisplayContributorTracker)request.getAttribute(
 					ContentPageEditorWebKeys.ASSET_DISPLAY_CONTRIBUTOR_TRACKER);

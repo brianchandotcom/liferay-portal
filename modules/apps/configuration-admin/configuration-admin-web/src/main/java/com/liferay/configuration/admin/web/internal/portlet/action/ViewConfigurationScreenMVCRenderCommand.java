@@ -19,6 +19,7 @@ import com.liferay.configuration.admin.display.ConfigurationScreen;
 import com.liferay.configuration.admin.web.internal.constants.ConfigurationAdminWebKeys;
 import com.liferay.configuration.admin.web.internal.display.ConfigurationCategoryMenuDisplay;
 import com.liferay.configuration.admin.web.internal.display.ConfigurationEntry;
+import com.liferay.configuration.admin.web.internal.display.ConfigurationScopeDisplayContext;
 import com.liferay.configuration.admin.web.internal.display.ConfigurationScreenConfigurationEntry;
 import com.liferay.configuration.admin.web.internal.util.ConfigurationEntryRetriever;
 import com.liferay.configuration.admin.web.internal.util.ResourceBundleLoaderProvider;
@@ -56,6 +57,9 @@ public class ViewConfigurationScreenMVCRenderCommand
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws PortletException {
 
+		ConfigurationScopeDisplayContext configurationScopeDisplayContext =
+			new ConfigurationScopeDisplayContext(renderRequest);
+
 		String configurationScreenKey = ParamUtil.getString(
 			renderRequest, "configurationScreenKey");
 
@@ -69,7 +73,9 @@ public class ViewConfigurationScreenMVCRenderCommand
 		ConfigurationCategoryMenuDisplay configurationCategoryMenuDisplay =
 			_configurationEntryRetriever.getConfigurationCategoryMenuDisplay(
 				configurationScreen.getCategoryKey(),
-				themeDisplay.getLanguageId());
+				themeDisplay.getLanguageId(),
+				configurationScopeDisplayContext.getScope(),
+				configurationScopeDisplayContext.getScopePK());
 
 		renderRequest.setAttribute(
 			ConfigurationAdminWebKeys.CONFIGURATION_CATEGORY_MENU_DISPLAY,

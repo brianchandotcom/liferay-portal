@@ -19,6 +19,7 @@ import com.liferay.configuration.admin.web.internal.constants.ConfigurationAdmin
 import com.liferay.configuration.admin.web.internal.display.ConfigurationCategoryMenuDisplay;
 import com.liferay.configuration.admin.web.internal.display.ConfigurationEntry;
 import com.liferay.configuration.admin.web.internal.display.ConfigurationModelConfigurationEntry;
+import com.liferay.configuration.admin.web.internal.display.ConfigurationScopeDisplayContext;
 import com.liferay.configuration.admin.web.internal.model.ConfigurationModel;
 import com.liferay.configuration.admin.web.internal.util.ConfigurationEntryRetriever;
 import com.liferay.configuration.admin.web.internal.util.ConfigurationModelIterator;
@@ -67,6 +68,9 @@ public class ViewFactoryInstancesMVCRenderCommand implements MVCRenderCommand {
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws PortletException {
 
+		ConfigurationScopeDisplayContext configurationScopeDisplayContext =
+			new ConfigurationScopeDisplayContext(renderRequest);
+
 		String factoryPid = ParamUtil.getString(renderRequest, "factoryPid");
 
 		MVCRenderCommand customRenderCommand = _renderCommands.get(factoryPid);
@@ -91,7 +95,9 @@ public class ViewFactoryInstancesMVCRenderCommand implements MVCRenderCommand {
 				_configurationEntryRetriever.
 					getConfigurationCategoryMenuDisplay(
 						factoryConfigurationModel.getCategory(),
-						themeDisplay.getLanguageId());
+						themeDisplay.getLanguageId(),
+						configurationScopeDisplayContext.getScope(),
+						configurationScopeDisplayContext.getScopePK());
 
 			renderRequest.setAttribute(
 				ConfigurationAdminWebKeys.CONFIGURATION_CATEGORY_MENU_DISPLAY,

@@ -892,10 +892,10 @@ definition {
 
 	@description = "This is a use case for LPS-91017, LPS-89646."
 	@priority = "4"
-	test StagingPublishAPWCWithWebContentField {
+	test StagingPublishWCWithWebContentFieldViaAP {
 		Navigator.gotoStagedSitePage(
 			pageName = "Staging Test Page",
-			siteName = "Site Name"		
+			siteName = "Site Name"
 		);
 
 		Portlet.addPG(portletName = "Asset Publisher");

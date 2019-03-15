@@ -25,7 +25,6 @@
 
 		<column name="title" type="String" />
 		<column name="type" type="int" />
-		<column name="typeSettings" type="String" />
 		<column name="lastPublishDate" type="Date" />
 
 		<!-- Finder methods -->
@@ -49,6 +48,7 @@
 		<!-- References -->
 
 		<reference entity="AssetListEntryAssetEntryRel" package-path="com.liferay.asset.list" />
+		<reference entity="AssetListEntrySegmentsEntryRel" package-path="com.liferay.asset.list" />
 		<reference entity="Resource" package-path="com.liferay.portal" />
 		<reference entity="User" package-path="com.liferay.portal" />
 	</entity>
@@ -145,6 +145,10 @@
 			<finder-column name="assetListEntryId" />
 			<finder-column name="segmentsEntryId" />
 		</finder>
+
+		<!-- References -->
+
+		<reference entity="User" package-path="com.liferay.portal" />
 	</entity>
 	<entity local-service="true" name="AssetListEntryUsage" remote-service="false" uuid="true">
 

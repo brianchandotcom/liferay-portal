@@ -26,14 +26,6 @@ definition {
 	macro selectAssetType {
 		PageEditor.gotoTab(tabName = "Mapping");
 
-		if (contains("${assetType}", "{assetType}")) {
-			var assetType = "Web Content Article";
-
-			if (contains("${subType}", "{subType}")) {
-				var subType = "Basic Web Content";
-			}
-		}
-
 		Select(
 			locator1 = "Select#GENERIC_SELECT_FIELD",
 			value1 = "${assetType}",

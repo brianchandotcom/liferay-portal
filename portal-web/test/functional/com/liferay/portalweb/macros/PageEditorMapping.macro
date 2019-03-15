@@ -37,7 +37,7 @@ definition {
 		Select(
 			locator1 = "Select#GENERIC_SELECT_FIELD",
 			value1 = "${assetType}",
-			key_fieldLabel = "Asset Type"
+			key_fieldLabel = "Content Type"
 		);
 
 		Select(

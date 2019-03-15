@@ -17,6 +17,7 @@
 		"_": true,
 		"alert": true,
 		"confirm": true,
+		"mount": true,
 		"shallow": true,
 		"submitForm": true,
 		"themeDisplay": true,

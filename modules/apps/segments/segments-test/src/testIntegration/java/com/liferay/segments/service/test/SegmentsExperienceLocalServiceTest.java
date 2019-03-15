@@ -79,7 +79,10 @@ public class SegmentsExperienceLocalServiceTest {
 
 		layout = _layoutLocalService.updateLayout(layout);
 
-		_classPK = layout.getPrimaryKey();
+		_classPK = layout.getPlid();
+
+		_segmentsExperienceLocalService.deleteSegmentsExperiences(
+			_group.getGroupId(), _classNameId, _classPK);
 	}
 
 	@Test
@@ -141,7 +144,7 @@ public class SegmentsExperienceLocalServiceTest {
 		Assert.assertEquals(
 			1,
 			_segmentsExperienceLocalService.getSegmentsExperiencesCount(
-				_group.getGroupId(), _classNameId, _classPK, active, false));
+				_group.getGroupId(), _classNameId, _classPK, active));
 
 		Assert.assertEquals(
 			segmentsEntry.getSegmentsEntryId(),
@@ -165,7 +168,7 @@ public class SegmentsExperienceLocalServiceTest {
 
 		List<SegmentsExperience> segmentsExperiences =
 			_segmentsExperienceLocalService.getSegmentsExperiences(
-				_group.getGroupId(), _classNameId, _classPK, true, false,
+				_group.getGroupId(), _classNameId, _classPK, true,
 				QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 
 		Assert.assertEquals(

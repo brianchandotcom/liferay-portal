@@ -43,8 +43,10 @@ import org.gradle.api.Task;
 import org.gradle.api.artifacts.Configuration;
 import org.gradle.api.artifacts.DependencySet;
 import org.gradle.api.artifacts.ProjectDependency;
+import org.gradle.api.plugins.JavaPlugin;
 import org.gradle.api.tasks.SourceSet;
 import org.gradle.api.tasks.TaskContainer;
+import org.gradle.api.tasks.bundling.Jar;
 
 /**
  * @author Andrea Di Giorgi
@@ -243,7 +245,10 @@ public class LiferayCIPlugin implements Plugin<Project> {
 
 		executeNpmTask.dependsOn(updateHotfixVersionTask);
 
-		executeNpmTask.finalizedBy(restoreHotfixVersionTask);
+		Jar jar = (Jar)GradleUtil.getTask(
+			executeNpmTask.getProject(), JavaPlugin.JAR_TASK_NAME);
+
+		jar.finalizedBy(restoreHotfixVersionTask);
 	}
 
 	private void _configureTaskNpmInstall(NpmInstallTask npmInstallTask) {

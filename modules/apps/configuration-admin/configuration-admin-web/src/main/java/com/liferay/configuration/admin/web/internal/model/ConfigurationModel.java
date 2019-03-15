@@ -238,7 +238,7 @@ public class ConfigurationModel implements ExtendedObjectClassDefinition {
 	}
 
 	public boolean isCompanyScope() {
-		return Objects.equals(getScope(), Scope.COMPANY);
+		return isScope(Scope.COMPANY);
 	}
 
 	public boolean isFactory() {
@@ -255,15 +255,15 @@ public class ConfigurationModel implements ExtendedObjectClassDefinition {
 	}
 
 	public boolean isGroupScope() {
-		return Objects.equals(getScope(), Scope.GROUP);
+		return isScope(Scope.GROUP);
 	}
 
 	public boolean isPortletInstanceScope() {
-		return Objects.equals(getScope(), Scope.PORTLET_INSTANCE);
+		return isScope(Scope.PORTLET_INSTANCE);
 	}
 
 	public boolean isSystemScope() {
-		return Objects.equals(getScope(), Scope.SYSTEM);
+		return isScope(Scope.SYSTEM);
 	}
 
 	protected String getLabelAttributeValue() {
@@ -287,6 +287,10 @@ public class ConfigurationModel implements ExtendedObjectClassDefinition {
 		}
 
 		return value;
+	}
+
+	protected boolean isScope(Scope scope) {
+		return scope.equals(getScope());
 	}
 
 	protected ExtendedAttributeDefinition[] removeFactoryInstanceLabelAttribute(

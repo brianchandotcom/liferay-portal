@@ -76,6 +76,12 @@ export default class SLAForm extends React.Component {
 			})
 				.then(() => {
 					redirect('sla-list', {processId});
+				})
+				.catch(errorResponse => {
+					const errorKey = errorResponse.fieldName || ALERT_MESSAGE;
+
+					errors[errorKey] = errorResponse.message;
+					this.setState({errors});
 				});
 		}
 	}

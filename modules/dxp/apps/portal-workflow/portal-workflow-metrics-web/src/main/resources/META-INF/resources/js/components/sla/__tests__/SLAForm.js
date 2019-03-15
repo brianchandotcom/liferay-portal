@@ -1,4 +1,5 @@
 import fetch from '../../../test/mock/fetch';
+import fetchFailure from '../../../test/mock/fetchFailure';
 import React from 'react';
 import renderer from 'react-test-renderer';
 import SLAForm from '../SLAForm';
@@ -82,6 +83,49 @@ test('Should display error when submitting the form with empty name', () => {
 
 	expect(errors.name).toBe('A name is required.');
 	expect(component).toMatchSnapshot();
+});
+
+test('Should display error on alert when receive a server error after submit', () => {
+	const error = {
+		message: 'Error during SLA creation.'
+	};
+	const component = shallow(<SLAForm client={fetchFailure(error)} />);
+
+	const instance = component.instance();
+
+	instance.setState({
+		days: 3,
+		name: 'SLA 1'
+	});
+
+	instance.handleSubmit().then(() => {
+		const {errors} = instance.state;
+
+		expect(errors['alertMessage']).toBe('Error during SLA creation.');
+		expect(component).toMatchSnapshot();
+	});
+});
+
+test('Should display error on field when receive a server error after submit', () => {
+	const error = {
+		fieldName: 'name',
+		message: 'An SLA with the same name already exists.'
+	};
+	const component = shallow(<SLAForm client={fetchFailure(error)} />);
+
+	const instance = component.instance();
+
+	instance.setState({
+		days: 3,
+		name: 'SLA 1'
+	});
+
+	instance.handleSubmit().then(() => {
+		const {errors} = instance.state;
+
+		expect(errors['name']).toBe('An SLA with the same name already exists.');
+		expect(component).toMatchSnapshot();
+	});
 });
 
 test('Should display error when submitting the form with invalid hours', () => {

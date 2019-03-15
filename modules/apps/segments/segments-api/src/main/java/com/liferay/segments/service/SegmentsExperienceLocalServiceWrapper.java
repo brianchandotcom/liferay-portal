@@ -243,16 +243,6 @@ public class SegmentsExperienceLocalServiceWrapper
 
 	@Override
 	public com.liferay.segments.model.SegmentsExperience
-			fetchDefaultSegmentsExperience(
-				long groupId, long classNameId, long classPK)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return _segmentsExperienceLocalService.fetchDefaultSegmentsExperience(
-			groupId, classNameId, classPK);
-	}
-
-	@Override
-	public com.liferay.segments.model.SegmentsExperience
 		fetchSegmentsExperience(long segmentsExperienceId) {
 
 		return _segmentsExperienceLocalService.fetchSegmentsExperience(

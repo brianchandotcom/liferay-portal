@@ -228,15 +228,6 @@ public class SegmentsExperienceLocalServiceUtil {
 	}
 
 	public static com.liferay.segments.model.SegmentsExperience
-			fetchDefaultSegmentsExperience(
-				long groupId, long classNameId, long classPK)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return getService().fetchDefaultSegmentsExperience(
-			groupId, classNameId, classPK);
-	}
-
-	public static com.liferay.segments.model.SegmentsExperience
 		fetchSegmentsExperience(long segmentsExperienceId) {
 
 		return getService().fetchSegmentsExperience(segmentsExperienceId);

@@ -207,7 +207,7 @@
 <!--FIELD-->
 <tr>
 	<td>FIELD_BODY</td>
-	<td>//div[contains(@data-fieldname,'${key_fieldName}')] | //div[contains(@class,'form-group')]//input[contains(@name,'${key_fieldName}')]/parent::div/parent::div</td>
+	<td>//div[contains(@class,'form-group')]//label[contains(text(),'${key_fieldName}')] | //div[contains(@data-fieldname,'${key_fieldName}')] | //div[contains(@class,'form-group')]//input[contains(@name,'${key_fieldName}')]/parent::div/parent::div</td>
 	<td></td>
 </tr>
 <tr>

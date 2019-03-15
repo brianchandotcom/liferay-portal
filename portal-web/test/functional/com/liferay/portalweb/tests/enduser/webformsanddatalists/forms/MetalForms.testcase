@@ -10,7 +10,7 @@ definition {
 
 		User.firstLoginPG();
 
-		TestCase.enableMetal();
+		//TestCase.enableMetal();
 
 	}
 
@@ -2007,7 +2007,7 @@ definition {
 	@description = "This is a use case for LPS-75116 and LPS-79101."
 	@priority = "4"
 	test ChangeFieldType {
-		property test.name.skip.portal.instance = "Forms#ChangeFieldType";
+		property test.name.skip.portal.instance = "MetalForms#ChangeFieldType";
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
@@ -2036,13 +2036,15 @@ definition {
 			);
 		}
 
-		FormFields.enableSwitcher(fieldName = "required");
+		FormFields.enableSwitcher(fieldName = "Required");
 
 		Form.closeSidebar();
 
 		Form.save();
 
-		FormsAdminNavigator.gotoEditField(fieldName = "TestingTitle");
+		FormsAdminNavigator.gotoEditField(fieldName = "Testing Title");
+
+		Pause(locator1 = "2000");
 
 		FormFields.changeFieldType(selectOption = "Text Field");
 
@@ -2429,7 +2431,7 @@ definition {
 	@description = "This is a use case for LPS-74997."
 	@priority = "4"
 	test DeleteSelectFromListOptionAndViewEntries {
-		property test.name.skip.portal.instance = "Forms#DeleteSelectFromListOptionAndViewEntries";
+		property test.name.skip.portal.instance = "MetalForms#DeleteSelectFromListOptionAndViewEntries";
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
@@ -2528,7 +2530,7 @@ definition {
 	@description = "This is a use case for LPS-68362."
 	@priority = "3"
 	test DeleteSelectFromListOptionValue {
-		property test.name.skip.portal.instance = "Forms#DeleteSelectFromListOptionValue";
+		property test.name.skip.portal.instance = "MetalForms#DeleteSelectFromListOptionValue";
 
 		Navigator.openURL();
 		
@@ -2598,7 +2600,7 @@ definition {
 
 	@priority = "4"
 	test EditAllFormFieldNames {
-		property test.name.skip.portal.instance = "Forms#EditAllFormFieldNames";
+		property test.name.skip.portal.instance = "MetalForms#EditAllFormFieldNames";
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
@@ -2997,7 +2999,7 @@ definition {
 	@description = "This is a use case for LPS-76079."
 	@priority = "4"
 	test SelectAndRemoveMultipleOptionsInSelectFromListField {
-		property test.name.skip.portal.instance = "Forms#SelectAndRemoveMultipleOptionsInSelectFromListField";
+		property test.name.skip.portal.instance = "MetalForms#SelectAndRemoveMultipleOptionsInSelectFromListField";
 
 		Navigator.openURL();
 
@@ -3030,7 +3032,7 @@ definition {
 
 		Form.gotoAdvancedTab();
 
-		FormFields.enableSwitcher(fieldName = "multiple");
+		FormFields.enableSwitcher(fieldName = "Multiple");
 
 		Form.closeSidebar();
 
@@ -3638,7 +3640,7 @@ definition {
 
 		FormFields.selectTextFieldLineOption(textFieldLineOption = "Multiple Lines");
 
-		FormFields.enableSwitcher(fieldName = "required");
+		FormFields.enableSwitcher(fieldName = "Required");
 
 		Form.closeSidebar();
 
@@ -3660,7 +3662,7 @@ definition {
 
 		Form.editFieldLabelMetal(fieldValue = "Radio");
 
-		FormFields.enableSwitcher(fieldName = "required");
+		FormFields.enableSwitcher(fieldName = "Required");
 
 		FormFields.editOptionsRow(optionName = "Option1", optionValue = "Option 1");
 
@@ -3682,7 +3684,7 @@ definition {
 
 		Form.editFieldLabelMetal(fieldValue = "Checkbox");
 
-		FormFields.enableSwitcher(fieldName = "required");
+		FormFields.enableSwitcher(fieldName = "Required");
 
 		FormFields.editOptionsRow(
 			optionName = "Checkbox1",
@@ -4154,7 +4156,7 @@ definition {
 
 		Form.editFieldLabelMetal(fieldValue = "Checkbox Field");
 
-		FormFields.enableSwitcher(fieldName = "required");
+		FormFields.enableSwitcher(fieldName = "Required");
 
 		FormFields.editOptionsRow(
 			optionName = "Checkbox1",

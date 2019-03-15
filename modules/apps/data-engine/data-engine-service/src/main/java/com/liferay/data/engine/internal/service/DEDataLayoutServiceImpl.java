@@ -47,7 +47,7 @@ import org.osgi.service.component.annotations.Reference;
 public class DEDataLayoutServiceImpl implements DEDataLayoutService {
 
 	public DEDataLayoutCountResponse execute(
-		DEDataLayoutCountRequest deDataLayoutCountRequest)
+			DEDataLayoutCountRequest deDataLayoutCountRequest)
 		throws DEDataLayoutException {
 
 		DEDataLayoutCountRequestExecutor deDataLayoutCountRequestExecutor =
@@ -68,7 +68,7 @@ public class DEDataLayoutServiceImpl implements DEDataLayoutService {
 		return deDataLayoutDeleteRequestExecutor.execute(
 			deDataLayoutDeleteRequest);
 	}
-	
+
 	@Override
 	public DEDataLayoutGetResponse execute(
 			DEDataLayoutGetRequest deDataLayoutGetRequest)
@@ -175,12 +175,12 @@ public class DEDataLayoutServiceImpl implements DEDataLayoutService {
 	@Reference
 	private DDMStructureVersionLocalService _ddmStructureVersionLocalService;
 
-	@Reference
-	private DEDataLayoutDeserializerTracker _deDataLayoutDeserializerTracker;
-
 	private DEDataLayoutCountRequestExecutor _deDataLayoutCountRequestExecutor;
 	private DEDataLayoutDeleteRequestExecutor
 		_deDataLayoutDeleteRequestExecutor;
+
+	@Reference
+	private DEDataLayoutDeserializerTracker _deDataLayoutDeserializerTracker;
 
 	private DEDataLayoutGetRequestExecutor _deDataLayoutGetRequestExecutor;
 	private DEDataLayoutListRequestExecutor _deDataLayoutListRequestExecutor;

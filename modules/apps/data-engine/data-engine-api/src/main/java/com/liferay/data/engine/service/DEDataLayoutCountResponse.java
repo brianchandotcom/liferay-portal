@@ -43,9 +43,8 @@ public class DEDataLayoutCountResponse {
 			_deDataLayoutCountResponse._total = total;
 		}
 
-		private final DEDataLayoutCountResponse
-			_deDataLayoutCountResponse =
-				new DEDataLayoutCountResponse();
+		private final DEDataLayoutCountResponse _deDataLayoutCountResponse =
+			new DEDataLayoutCountResponse();
 
 	}
 

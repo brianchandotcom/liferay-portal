@@ -35,8 +35,8 @@ public class DEDataLayoutCountRequest {
 			return this;
 		}
 
-		private final DEDataLayoutCountRequest
-			_deDataLayoutCountRequest = new DEDataLayoutCountRequest();
+		private final DEDataLayoutCountRequest _deDataLayoutCountRequest =
+			new DEDataLayoutCountRequest();
 
 	}
 

@@ -92,8 +92,8 @@ public class DEDataLayoutServiceTest {
 
 	@Test
 	public void testCountAfterDelete() throws Exception {
-		DEDataLayout deDataLayout =
-			saveDataLayout(_group, _user, "layout", "this is a layout");
+		DEDataLayout deDataLayout = saveDataLayout(
+			_group, _user, "layout", "this is a layout");
 
 		int total = countDEDataLayouts(_group);
 
@@ -725,6 +725,30 @@ public class DEDataLayoutServiceTest {
 		return deDataLayoutCountResponse.getTotal();
 	}
 
+	protected void deleteDEDataLayout(
+			User user, Group group, long deDataLayoutId)
+		throws Exception {
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				group.getGroupId(), user.getUserId());
+
+		ServiceContextThreadLocal.pushServiceContext(serviceContext);
+
+		try {
+			DEDataLayoutDeleteRequest deDataLayoutDeleteRequest =
+				DEDataLayoutRequestBuilder.deleteBuilder(
+				).byId(
+					deDataLayoutId
+				).build();
+
+			_deDataLayoutService.execute(deDataLayoutDeleteRequest);
+		}
+		finally {
+			ServiceContextThreadLocal.popServiceContext();
+		}
+	}
+
 	protected DEDataLayout saveDataLayout(
 			Group group, User user, String nameLayout, String descriptionLayout)
 		throws Exception {
@@ -842,30 +866,6 @@ public class DEDataLayoutServiceTest {
 		deDataLayoutPage.setDEDataLayoutRows(deDataLayoutRows);
 
 		return deDataLayoutPage;
-	}
-
-	protected void deleteDEDataLayout(User user, Group group,
-			long deDataLayoutId)
-		throws Exception {
-
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(
-				group.getGroupId(), user.getUserId());
-
-		ServiceContextThreadLocal.pushServiceContext(serviceContext);
-
-		try {
-			DEDataLayoutDeleteRequest deDataLayoutDeleteRequest =
-				DEDataLayoutRequestBuilder.deleteBuilder(
-				).byId(
-					deDataLayoutId
-				).build();
-
-				_deDataLayoutService.execute(deDataLayoutDeleteRequest);
-		}
-		finally {
-			ServiceContextThreadLocal.popServiceContext();
-		}
 	}
 
 	private DEDataLayoutRow _createDEDataLayoutRow(

@@ -412,6 +412,39 @@ paths:
                                 $ref: "#/components/schemas/DataLayout"
                     description: ""
             tags: ["DataLayout"]
+    "/data-record-collections":
+        get:
+            parameters:
+                - in: query
+                  name: contentSpaceId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+                - in: query
+                  name: page
+                  required: true
+                  schema:
+                      type: integer
+                - in: query
+                  name: pageSize
+                  required: true
+                  schema:
+                      type: integer
+                - in: query
+                  name: keywords
+                  schema:
+                      type: string
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/DataRecordCollection"
+                                type: array
+                    description: ""
+            tags: ["DataRecordCollection"]
     "/data-record-collections/{data-record-collection-id}":
         delete:
             parameters:

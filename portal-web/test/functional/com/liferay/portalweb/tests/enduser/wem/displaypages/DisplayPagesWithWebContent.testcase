@@ -38,8 +38,8 @@ definition {
 				fragmentName = "Rich Text"
 			);
 
-			PageEditorMapping.selectAssetType(
-				assetType = "Web Content Article",
+			PageEditorMapping.selectContentType(
+				contentType = "Web Content Article",
 				subType = "Basic Web Content"
 			);
 
@@ -685,8 +685,8 @@ definition {
 				fragmentName = "Title"
 			);
 
-			PageEditorMapping.selectAssetType(
-				assetType = "Web Content Article",
+			PageEditorMapping.selectContentType(
+				contentType = "Web Content Article",
 				subType = "Basic Web Content"
 			);
 

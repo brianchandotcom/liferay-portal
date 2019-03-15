@@ -143,8 +143,8 @@ definition {
 		}
 
 		task ("Map the display page to Basic Web Content") {
-			PageEditorMapping.selectAssetType(
-				assetType = "Web Content Article",
+			PageEditorMapping.selectContentType(
+				contentType = "Web Content Article",
 				subType = "Basic Web Content"
 			);
 		}

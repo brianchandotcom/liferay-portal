@@ -68,8 +68,8 @@ definition {
 				fragmentName = "Image"
 			);
 
-			PageEditorMapping.selectAssetType(
-				assetType = "Web Content Article",
+			PageEditorMapping.selectContentType(
+				contentType = "Web Content Article",
 				subType = "Basic Web Content"
 			);
 
@@ -153,8 +153,8 @@ definition {
 				fragmentName = "Image"
 			);
 
-			PageEditorMapping.selectAssetType(
-				assetType = "Web Content Article",
+			PageEditorMapping.selectContentType(
+				contentType = "Web Content Article",
 				subType = "Basic Web Content"
 			);
 
@@ -305,8 +305,8 @@ definition {
 				fragmentName = "Multiple Editables"
 			);
 
-			PageEditorMapping.selectAssetType(
-				assetType = "Web Content Article",
+			PageEditorMapping.selectContentType(
+				contentType = "Web Content Article",
 				subType = "Basic Web Content"
 			);
 

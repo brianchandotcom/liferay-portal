@@ -23,12 +23,12 @@ definition {
 		);
 	}
 
-	macro selectAssetType {
+	macro selectContentType {
 		PageEditor.gotoTab(tabName = "Mapping");
 
 		Select(
 			locator1 = "Select#GENERIC_SELECT_FIELD",
-			value1 = "${assetType}",
+			value1 = "${contentType}",
 			key_fieldLabel = "Content Type"
 		);
 

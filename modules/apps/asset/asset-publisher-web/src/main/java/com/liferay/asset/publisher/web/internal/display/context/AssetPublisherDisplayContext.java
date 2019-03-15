@@ -79,6 +79,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.rss.util.RSSUtil;
+import com.liferay.segments.constants.SegmentsWebKeys;
 
 import java.io.Serializable;
 
@@ -258,7 +259,7 @@ public class AssetPublisherDisplayContext {
 				isEnablePermissions());
 		}
 		else if (isSelectionStyleAssetList() && (assetListEntry != null)) {
-			return assetListEntry.getAssetEntries();
+			return assetListEntry.getAssetEntries(_getSegmentsEntryIds());
 		}
 		else if (isSelectionStyleAssetListProvider()) {
 			String infoListProviderClassName = GetterUtil.getString(
@@ -310,7 +311,8 @@ public class AssetPublisherDisplayContext {
 		AssetListEntry assetListEntry = fetchAssetListEntry();
 
 		if (isSelectionStyleAssetList() && (assetListEntry != null)) {
-			_assetEntryQuery = assetListEntry.getAssetEntryQuery();
+			_assetEntryQuery = assetListEntry.getAssetEntryQuery(
+				_getSegmentsEntryIds());
 		}
 		else {
 			_assetEntryQuery = _assetPublisherHelper.getAssetEntryQuery(
@@ -1818,6 +1820,11 @@ public class AssetPublisherDisplayContext {
 		}
 
 		return filteredCategories;
+	}
+
+	private long[] _getSegmentsEntryIds() {
+		return GetterUtil.getLongValues(
+			_portletRequest.getAttribute(SegmentsWebKeys.SEGMENTS_ENTRY_IDS));
 	}
 
 	private Integer _abstractLength;

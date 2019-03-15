@@ -63,6 +63,7 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
+import com.liferay.segments.constants.SegmentsWebKeys;
 import com.liferay.sites.kernel.util.SitesUtil;
 
 import java.io.Serializable;
@@ -322,7 +323,11 @@ public class AssetPublisherHelperImpl implements AssetPublisherHelper {
 			_assetListEntryService.fetchAssetListEntry(assetListEntryId);
 
 		if (selectionStyle.equals("asset-list") && (assetListEntry != null)) {
-			return assetListEntry.getAssetEntries();
+			long[] segmentsEntryIds = GetterUtil.getLongValues(
+				portletRequest.getAttribute(
+					SegmentsWebKeys.SEGMENTS_ENTRY_IDS));
+
+			return assetListEntry.getAssetEntries(segmentsEntryIds);
 		}
 
 		List<AssetEntry> assetEntries = getAssetEntries(

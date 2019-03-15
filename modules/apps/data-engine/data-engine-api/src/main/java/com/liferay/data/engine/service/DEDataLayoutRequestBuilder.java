@@ -28,7 +28,7 @@ public class DEDataLayoutRequestBuilder {
 	public static DEDataLayoutDeleteRequest.Builder deleteBuilder() {
 		return new DEDataLayoutDeleteRequest.Builder();
 	}
-	
+
 	public static DEDataLayoutGetRequest.Builder getBuilder() {
 		return new DEDataLayoutGetRequest.Builder();
 	}

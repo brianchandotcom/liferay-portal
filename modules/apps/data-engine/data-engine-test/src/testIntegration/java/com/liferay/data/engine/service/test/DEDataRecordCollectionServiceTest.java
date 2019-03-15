@@ -1228,8 +1228,8 @@ public class DEDataRecordCollectionServiceTest {
 		try {
 			DEDataRecordCollectionDeleteRequest
 				deDataRecordCollectionDeleteRequest =
-					DEDataRecordCollectionRequestBuilder.deleteBuilder(
-					).build();
+					DEDataRecordCollectionRequestBuilder.
+						deleteBuilder().build();
 
 			_deDataRecordCollectionService.execute(
 				deDataRecordCollectionDeleteRequest);
@@ -1644,8 +1644,7 @@ public class DEDataRecordCollectionServiceTest {
 
 		try {
 			DEDataRecordCollectionGetRequest deDataRecordCollectionGetRequest =
-				DEDataRecordCollectionRequestBuilder.getBuilder(
-				).build();
+				DEDataRecordCollectionRequestBuilder.getBuilder().build();
 
 			_deDataRecordCollectionService.execute(
 				deDataRecordCollectionGetRequest);

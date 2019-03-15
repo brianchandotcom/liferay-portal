@@ -18,6 +18,7 @@ import com.liferay.asset.entry.rel.model.AssetEntryAssetCategoryRel;
 import com.liferay.asset.entry.rel.service.base.AssetEntryAssetCategoryRelLocalServiceBaseImpl;
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.model.AssetRenderer;
+import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.Indexer;
@@ -26,9 +27,15 @@ import com.liferay.portal.kernel.search.SearchException;
 
 import java.util.List;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Eudaldo Alonso
  */
+@Component(
+	property = "model.class.name=com.liferay.asset.entry.rel.model.AssetEntryAssetCategoryRel",
+	service = AopService.class
+)
 public class AssetEntryAssetCategoryRelLocalServiceImpl
 	extends AssetEntryAssetCategoryRelLocalServiceBaseImpl {
 

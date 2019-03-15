@@ -15,8 +15,8 @@
 package com.liferay.frontend.taglib.clay.servlet.taglib.display.context;
 
 import com.liferay.frontend.taglib.clay.internal.SoyDataFactoryProvider;
-import com.liferay.frontend.taglib.clay.servlet.taglib.display.context.table.Field;
-import com.liferay.frontend.taglib.clay.servlet.taglib.display.context.table.Schema;
+import com.liferay.frontend.taglib.clay.servlet.taglib.model.table.Field;
+import com.liferay.frontend.taglib.clay.servlet.taglib.model.table.Schema;
 import com.liferay.portal.kernel.bean.BeanPropertiesUtil;
 import com.liferay.portal.template.soy.data.SoyDataFactory;
 

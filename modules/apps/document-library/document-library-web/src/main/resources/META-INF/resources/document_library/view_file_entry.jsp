@@ -233,8 +233,6 @@ if (addPortletBreadcrumbEntries) {
 }
 %>
 
-<liferay-util:dynamic-include key="com.liferay.document.library.web#/document_library/view_file_entry.jsp#post" />
-
 <c:if test="<%= portletTitleBasedNavigation %>">
 	<aui:script>
 		var openContextualSidebarButton = document.getElementById('<portlet:namespace />OpenContextualSidebar');
@@ -250,3 +248,5 @@ if (addPortletBreadcrumbEntries) {
 		}
 	</aui:script>
 </c:if>
+
+<liferay-util:dynamic-include key="com.liferay.document.library.web#/document_library/view_file_entry.jsp#post" />

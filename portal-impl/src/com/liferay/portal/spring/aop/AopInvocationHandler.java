@@ -46,7 +46,7 @@ public class AopInvocationHandler implements InvocationHandler {
 		return aopMethodInvocation.proceed(arguments);
 	}
 
-	public void setTarget(Object target) {
+	public synchronized void setTarget(Object target) {
 		_target = target;
 
 		_aopMethodInvocations.clear();
@@ -59,7 +59,7 @@ public class AopInvocationHandler implements InvocationHandler {
 		_chainableMethodAdvices = chainableMethodAdvices;
 	}
 
-	protected void setChainableMethodAdvices(
+	protected synchronized void setChainableMethodAdvices(
 		ChainableMethodAdvice[] chainableMethodAdvices) {
 
 		_chainableMethodAdvices = chainableMethodAdvices;
@@ -67,21 +67,22 @@ public class AopInvocationHandler implements InvocationHandler {
 		_aopMethodInvocations.clear();
 	}
 
-	private AopMethodInvocation _createAopMethodInvocation(Method method) {
+	private static AopMethodInvocation _createAopMethodInvocation(
+		Object target, Method method,
+		ChainableMethodAdvice[] chainableMethodAdvices) {
+
 		AopMethodInvocation aopMethodInvocation = null;
 
 		ChainableMethodAdvice nextChainableMethodAdvice = null;
-
-		Object target = _target;
 
 		Class<?> targetClass = target.getClass();
 
 		Map<Class<? extends Annotation>, Annotation> annotations =
 			AnnotationLocator.index(method, targetClass);
 
-		for (int i = _chainableMethodAdvices.length - 1; i >= 0; i--) {
+		for (int i = chainableMethodAdvices.length - 1; i >= 0; i--) {
 			ChainableMethodAdvice chainableMethodAdvice =
-				_chainableMethodAdvices[i];
+				chainableMethodAdvices[i];
 
 			Object methodContext = chainableMethodAdvice.createMethodContext(
 				targetClass, method, annotations);
@@ -102,8 +103,27 @@ public class AopInvocationHandler implements InvocationHandler {
 
 	private AopMethodInvocation _getAopMethodInvocation(Method method) {
 		if (TransactionsUtil.isEnabled()) {
-			return _aopMethodInvocations.computeIfAbsent(
-				method, this::_createAopMethodInvocation);
+			AopMethodInvocation aopMethodInvocation = _aopMethodInvocations.get(
+				method);
+
+			if (aopMethodInvocation == null) {
+				AopMethodInvocation previousAopMethodInvocation = null;
+
+				synchronized (this) {
+					aopMethodInvocation = _createAopMethodInvocation(
+						_target, method, _chainableMethodAdvices);
+
+					previousAopMethodInvocation =
+						_aopMethodInvocations.putIfAbsent(
+							method, aopMethodInvocation);
+				}
+
+				if (previousAopMethodInvocation != null) {
+					aopMethodInvocation = previousAopMethodInvocation;
+				}
+			}
+
+			return aopMethodInvocation;
 		}
 
 		return new AopMethodInvocationImpl(_target, method, null, null, null);
@@ -111,7 +131,8 @@ public class AopInvocationHandler implements InvocationHandler {
 
 	private final Map<Method, AopMethodInvocation> _aopMethodInvocations =
 		new ConcurrentHashMap<>();
-	private volatile ChainableMethodAdvice[] _chainableMethodAdvices;
+
+	private ChainableMethodAdvice[] _chainableMethodAdvices;
 	private volatile Object _target;
 
 }

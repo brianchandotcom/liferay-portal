@@ -256,30 +256,42 @@ public class Arquillian extends Runner implements Filterable {
 		public void run() {
 			Class<?> clazz = _runNotifier.getClass();
 
+			List<Throwable> throwables = new ArrayList<>();
+
 			try (Socket socket = _serverSocket.accept();
 				InputStream inputStream = socket.getInputStream();
 				ObjectInputStream objectInputStream = new ObjectInputStream(
 					new UnsyncBufferedInputStream(inputStream))) {
 
 				while (true) {
-					String methodName = objectInputStream.readUTF();
+					try {
+						String methodName = objectInputStream.readUTF();
 
-					if (methodName.equals("kill")) {
-						_serverSocket.close();
+						if (methodName.equals("kill")) {
+							_serverSocket.close();
 
-						break;
+							break;
+						}
+
+						Object object = objectInputStream.readObject();
+
+						Method method = clazz.getMethod(
+							methodName, object.getClass());
+
+						method.invoke(_runNotifier, object);
 					}
-
-					Object object = objectInputStream.readObject();
-
-					Method method = clazz.getMethod(
-						methodName, object.getClass());
-
-					method.invoke(_runNotifier, object);
+					catch (Exception e) {
+						throwables.add(e);
+					}
 				}
 			}
 			catch (Throwable t) {
-				throw new RuntimeException(t);
+				throwables.add(t);
+			}
+
+			for (Throwable throwable : throwables) {
+				_runNotifier.fireTestFailure(
+					new Failure(getDescription(), throwable));
 			}
 		}
 

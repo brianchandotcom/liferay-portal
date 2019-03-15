@@ -65,11 +65,6 @@ public class VerifyGroup extends VerifyProcess {
 				UnicodeProperties typeSettingsProperties =
 					group.getTypeSettingsProperties();
 
-				typeSettingsProperties.setProperty(
-					"staged", Boolean.TRUE.toString());
-				typeSettingsProperties.setProperty(
-					"stagedRemotely", Boolean.FALSE.toString());
-
 				verifyStagingTypeSettingsProperties(typeSettingsProperties);
 
 				GroupLocalServiceUtil.updateGroup(

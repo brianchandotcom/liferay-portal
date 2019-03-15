@@ -231,8 +231,7 @@ public class KeyStoreCredentialResolver
 		KeyStore keyStore = _keyStoreManager.getKeyStore();
 
 		keyStore.setEntry(
-			getAlias(
-				getLocalEntityId(), getUsageType(certificateUsage)),
+			getAlias(getLocalEntityId(), getUsageType(certificateUsage)),
 			new KeyStore.PrivateKeyEntry(
 				privateKey, new Certificate[] {x509Certificate}),
 			new KeyStore.PasswordProtection(

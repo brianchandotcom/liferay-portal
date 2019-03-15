@@ -1473,16 +1473,15 @@ definition {
 	}
 
 	macro viewSiteRoleViaSiteMembershipsCP {
-		AssertTextEquals(
-			locator1 = "Card#SPECIFIC_LARGE_TEXT",
-			value1 = "${resourceName}",
-			key_cardText = "${resourceName}"
+		LexiconEntry.changeDisplayStyle(displayStyle = "list");
+
+		LexiconList.viewListEntryTitle(
+			listEntry = "${resourceName}"
 		);
 
-		AssertTextEquals(
-			locator1 = "Card#SPECIFIC_SMALL_TEXT",
-			value1 = "${roleTitle}",
-			key_cardText = "${resourceName}"
+		LexiconList.viewListEntrySubtitle(
+			listEntry = "${resourceName}",
+			listEntrySubtitle = "${roleTitle}"
 		);
 	}
 

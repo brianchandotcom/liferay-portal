@@ -109,6 +109,14 @@ public class LiferayCIPlugin implements Plugin<Project> {
 				project.file(_BND_HOTFIX_VERSION_FILE_NAME));
 		}
 
+		for (String fileName : _JSON_HOTFIX_VERSION_FILE_NAMES) {
+			if (FileUtil.exists(project, fileName)) {
+				replaceRegexTask.match(
+					_jsonHotfixVersionPattern.pattern(),
+					project.file(fileName));
+			}
+		}
+
 		replaceRegexTask.setDescription("Updates the project hotfix version.");
 		replaceRegexTask.setReplacement(
 			new Closure<String>(project) {

@@ -52,7 +52,7 @@ export default class SLAListCard extends React.Component {
 	}
 
 	removeItem() {
-		openToast({message: Liferay.Language.get('sla-deleted')});
+		openToast({message: Liferay.Language.get('sla-was-deleted')});
 	}
 
 	/**

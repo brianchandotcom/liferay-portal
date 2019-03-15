@@ -51,7 +51,7 @@ public abstract class BaseStatusResourceImpl implements StatusResource {
 	@Path("/status")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "Status")})
-	public Status getStatu() throws Exception {
+	public Status getStatus() throws Exception {
 		return new Status();
 	}
 

@@ -97,21 +97,21 @@ public abstract class BaseStatusResourceTestCase {
 	}
 
 	@Test
-	public void testGetStatu() throws Exception {
-		Status postStatus = testGetStatu_addStatus();
+	public void testGetStatus() throws Exception {
+		Status postStatus = testGetStatus_addStatus();
 
-		Status getStatus = invokeGetStatu(postStatus.getId());
+		Status getStatus = invokeGetStatus(postStatus.getId());
 
 		assertEquals(postStatus, getStatus);
 		assertValid(getStatus);
 	}
 
-	protected Status testGetStatu_addStatus() throws Exception {
+	protected Status testGetStatus_addStatus() throws Exception {
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
 	}
 
-	protected Status invokeGetStatu() throws Exception {
+	protected Status invokeGetStatus() throws Exception {
 		Http.Options options = _createHttpOptions();
 
 		String location = _resourceURL + "/status";
@@ -122,7 +122,7 @@ public abstract class BaseStatusResourceTestCase {
 			HttpUtil.URLtoString(options), Status.class);
 	}
 
-	protected Http.Response invokeGetStatuResponse() throws Exception {
+	protected Http.Response invokeGetStatusResponse() throws Exception {
 		Http.Options options = _createHttpOptions();
 
 		String location = _resourceURL + "/status";

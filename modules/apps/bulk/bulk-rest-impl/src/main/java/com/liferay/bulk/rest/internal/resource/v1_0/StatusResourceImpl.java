@@ -35,7 +35,7 @@ import org.osgi.service.component.annotations.ServiceScope;
 public class StatusResourceImpl extends BaseStatusResourceImpl {
 
 	@Override
-	public Status getStatu() {
+	public Status getStatus() {
 		return new Status() {
 			{
 				actionInProgress = _bulkSelectionRunner.isBusy(_user);

@@ -26,8 +26,6 @@ definition {
 	macro selectAssetType {
 		PageEditor.gotoTab(tabName = "Mapping");
 
-		Button.clickSelect();
-
 		if (contains("${assetType}", "{assetType}")) {
 			var assetType = "Web Content Article";
 

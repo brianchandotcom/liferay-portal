@@ -7,7 +7,7 @@ import '../floating_toolbar/background_image/FloatingToolbarBackgroundImagePanel
 import '../floating_toolbar/spacing/FloatingToolbarSpacingPanel.es';
 import './FragmentEntryLink.es';
 import {CLEAR_ACTIVE_ITEM, MOVE_SECTION, REMOVE_SECTION, UPDATE_ACTIVE_ITEM, UPDATE_HOVERED_ITEM} from '../../actions/actions.es';
-import {FLOATING_TOOLBAR_PANELS, FRAGMENTS_EDITOR_ITEM_TYPES} from '../../utils/constants';
+import {FLOATING_TOOLBAR_BUTTONS, FRAGMENTS_EDITOR_ITEM_TYPES} from '../../utils/constants';
 import {getItemMoveDirection, getSectionIndex, getTargetBorder} from '../../utils/FragmentsEditorGetUtils.es';
 import {moveItem, removeItem, shouldClearFocus} from '../../utils/FragmentsEditorUpdateUtils.es';
 import {shouldUpdatePureComponent} from '../../utils/FragmentsEditorComponentUtils.es';
@@ -20,10 +20,10 @@ import templates from './FragmentEntryLinkListSection.soy';
  * @review
  * @type {object[]}
  */
-const SECTION_FLOATING_TOOLBAR_PANELS = [
-	FLOATING_TOOLBAR_PANELS.backgroundColor,
-	FLOATING_TOOLBAR_PANELS.backgroundImage,
-	FLOATING_TOOLBAR_PANELS.spacing
+const SECTION_FLOATING_TOOLBAR_BUTTONS = [
+	FLOATING_TOOLBAR_BUTTONS.backgroundColor,
+	FLOATING_TOOLBAR_BUTTONS.backgroundImage,
+	FLOATING_TOOLBAR_BUTTONS.spacing
 ];
 
 /**
@@ -72,9 +72,9 @@ class FragmentEntryLinkListSection extends Component {
 	_createFloatingToolbar() {
 		const config = {
 			anchorElement: this.element,
+			buttons: SECTION_FLOATING_TOOLBAR_BUTTONS,
 			item: this.row,
 			itemId: this.rowId,
-			panels: SECTION_FLOATING_TOOLBAR_PANELS,
 			portalElement: document.body,
 			store: this.store
 		};

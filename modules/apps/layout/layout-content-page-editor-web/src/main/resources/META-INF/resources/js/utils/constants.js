@@ -119,53 +119,76 @@ export const EDITABLE_FIELD_CONFIG_KEYS = {
 /**
  * FloatingToolbar panels
  */
-export const FLOATING_TOOLBAR_PANELS = {
+export const FLOATING_TOOLBAR_BUTTONS = {
 	backgroundColor: {
 		icon: 'color-picker',
+		id: 'background_color',
 		panelId: 'background_color',
-		title: Liferay.Language.get('background-color')
+		title: Liferay.Language.get('background-color'),
+		type: 'panel'
 	},
 
 	backgroundImage: {
 		icon: 'picture',
+		id: 'background_image',
 		panelId: 'background_image',
-		title: Liferay.Language.get('background-image')
+		title: Liferay.Language.get('background-image'),
+		type: 'panel'
 	},
 
 	edit: {
 		icon: 'pencil',
-		panelId: 'edit',
-		title: Liferay.Language.get('edit')
+		id: 'edit',
+		title: Liferay.Language.get('edit'),
+		type: 'editor'
+	},
+
+	imageLink: {
+		icon: 'link',
+		id: 'image_properties',
+		panelId: 'image_properties',
+		title: Liferay.Language.get('image-properties'),
+		type: 'panel'
 	},
 
 	imageProperties: {
 		icon: 'pencil',
+		id: 'image_properties',
 		panelId: 'image_properties',
-		title: Liferay.Language.get('image-properties')
+		title: Liferay.Language.get('image-properties'),
+		type: 'panel'
 	},
 
 	link: {
 		icon: 'link',
+		id: 'link',
 		panelId: 'link',
-		title: Liferay.Language.get('link')
+		title: Liferay.Language.get('link'),
+		type: 'panel'
 	},
 
 	map: {
 		icon: 'bolt',
+		id: 'mapping',
 		panelId: 'mapping',
-		title: Liferay.Language.get('map')
+		title: Liferay.Language.get('map'),
+		type: 'panel'
 	},
 
 	spacing: {
 		icon: 'table',
+		id: 'spacing',
 		panelId: 'spacing',
-		title: Liferay.Language.get('spacing')
+		title: Liferay.Language.get('spacing'),
+		type: 'panel'
 	},
 
 	textProperties: {
-		icon: 'pencil',
+		icon: 'format',
+		id: 'text_properties',
 		panelId: 'text_properties',
-		title: Liferay.Language.get('text-properties')
+		title: Liferay.Language.get('text-properties'),
+		type: 'panel'
 	}
 };
 

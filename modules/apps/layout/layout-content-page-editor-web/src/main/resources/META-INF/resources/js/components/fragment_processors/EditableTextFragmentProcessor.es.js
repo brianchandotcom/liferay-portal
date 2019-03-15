@@ -1,5 +1,5 @@
 import {EventHandler} from 'metal-events';
-import {FLOATING_TOOLBAR_PANELS} from '../../utils/constants';
+import {FLOATING_TOOLBAR_BUTTONS} from '../../utils/constants';
 import {object} from 'metal';
 
 const KEY_ENTER = 13;
@@ -36,13 +36,13 @@ function destroy() {
  * @param {object} editableValues
  * @return {object[]} Floating toolbar panels
  */
-function getFloatingToolbarPanels(editableValues) {
+function getFloatingToolbarButtons(editableValues) {
 	return editableValues.mappedField || editableValues.fieldId ? [
-		FLOATING_TOOLBAR_PANELS.textProperties,
-		FLOATING_TOOLBAR_PANELS.map
+		FLOATING_TOOLBAR_BUTTONS.textProperties,
+		FLOATING_TOOLBAR_BUTTONS.map
 	] : [
-		FLOATING_TOOLBAR_PANELS.edit,
-		FLOATING_TOOLBAR_PANELS.map
+		FLOATING_TOOLBAR_BUTTONS.edit,
+		FLOATING_TOOLBAR_BUTTONS.map
 	];
 }
 
@@ -209,7 +209,7 @@ function _handleNativeEditorKey(event) {
 export {
 	destroy,
 	getActiveEditableElement,
-	getFloatingToolbarPanels,
+	getFloatingToolbarButtons,
 	init,
 	render
 };
@@ -217,7 +217,7 @@ export {
 export default {
 	destroy,
 	getActiveEditableElement,
-	getFloatingToolbarPanels,
+	getFloatingToolbarButtons,
 	init,
 	render
 };

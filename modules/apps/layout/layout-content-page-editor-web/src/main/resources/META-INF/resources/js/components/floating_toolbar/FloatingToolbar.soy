@@ -6,10 +6,12 @@
 {template .render}
 	{@param item: ?}
 	{@param itemId: string}
-	{@param panels: list<[
+	{@param buttons: list<[
 		icon: string,
+		id: string,
 		panelId: string,
-		title: string
+		title: string,
+		type: string
 	]>}
 	{@param? _handlePanelButtonClick: any}
 	{@param? _handleFloatingToolbarFocusOut: any}
@@ -24,15 +26,15 @@
 		data-onfocusout="{$_handleFloatingToolbarFocusOut}"
 		tabindex="-1"
 	>
-		{if $spritemap and $panels and (length($panels) > 0)}
+		{if $spritemap and $buttons and (length($buttons) > 0)}
 			{if (not $selectedPanelId) or (not $fixSelectedPanel)}
 				<div class="fragments-editor__floating-toolbar-buttons popover">
-					{foreach $panel in $panels}
-						{call .panelButton}
+					{foreach $button in $buttons}
+						{call .button}
 							{param handleButtonClick: $_handlePanelButtonClick /}
-							{param key: $panel.panelId /}
-							{param panel: $panel /}
-							{param ref: $panel.panelId /}
+							{param key: $button.id /}
+							{param button: $button /}
+							{param ref: $button.id /}
 							{param selectedPanelId: $selectedPanelId /}
 							{param spritemap: $spritemap /}
 						{/call}
@@ -58,17 +60,19 @@
 /**
  * Panel button
  */
-{template .panelButton}
-	{@param panel: [
+{template .button}
+	{@param button: [
 		icon: string,
+		id: string,
 		panelId: string,
-		title: string
+		title: string,
+		type: string
 	]}
 	{@param spritemap: string}
 	{@param? handleButtonClick: any}
 	{@param? selectedPanelId: string}
 
-	{let $panelButtonClasses kind="text"}
+	{let $buttonClasses kind="text"}
 		btn
 		{sp}btn-monospaced
 		{sp}btn-outline-borderless
@@ -76,20 +80,21 @@
 		{sp}btn-sm
 		{sp}lfr-portal-tooltip
 
-		{if $panel.panelId == $selectedPanelId}
+		{if $button.type == 'panel' and $button.panelId == $selectedPanelId}
 			{sp}active
 		{/if}
 	{/let}
 
 	<button
-		class="{$panelButtonClasses}"
+		class="{$buttonClasses}"
+		data-type="{$button.type}"
 		data-onclick="{$handleButtonClick}"
-		data-panel-id="{$panel.panelId}"
-		data-title="{$panel.title}"
+		data-panel-id="{$button.panelId}"
+		data-title="{$button.title}"
 		type="button"
 	>
 		<svg class="lexicon-icon">
-			<use xlink:href="{$spritemap}#{$panel.icon}"></use>
+			<use xlink:href="{$spritemap}#{$button.icon}"></use>
 		</svg>
 	</button>
 {/template}

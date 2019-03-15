@@ -2,19 +2,23 @@
 	margin-top: 0 !important;
 	padding-top: 0;
 
-	> div > .sheet {
+	> div > div > .sheet {
 		margin-top: 20px;
 
 		> .sheet-section > h3.sheet-subtitle {
 			margin-bottom: 8px;
-
-			> .reference-mark {
-				color: #B95000;
-				display: inline-block;
-				font-size: 6px;
-				position: relative;
-				vertical-align: super;
-			}
 		}
+	}
+
+	.alert-container {
+		height: auto;
+		margin-left: auto;
+		margin-right: auto;
+		max-width: 800px;
+		padding-top: 1em;
+	}
+
+	.modal-dialog.modal-lg {
+		max-width: 800px;
 	}
 }

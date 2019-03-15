@@ -25,6 +25,7 @@ import com.liferay.configuration.admin.web.internal.display.ConfigurationScreenC
 import com.liferay.configuration.admin.web.internal.model.ConfigurationModel;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
+import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleThreadLocal;
@@ -85,7 +86,8 @@ public class ConfigurationEntryRetrieverImpl
 
 		Map<String, ConfigurationModel> configurationModelsMap =
 			_configurationModelRetriever.getConfigurationModels(
-				locale.getLanguage());
+				locale.getLanguage(),
+				ExtendedObjectClassDefinition.Scope.SYSTEM, null);
 
 		Map<String, Set<ConfigurationModel>> categorizedConfigurationModels =
 			_configurationModelRetriever.categorizeConfigurationModels(
@@ -150,7 +152,8 @@ public class ConfigurationEntryRetrieverImpl
 
 		Set<ConfigurationModel> configurationModels =
 			_configurationModelRetriever.getConfigurationModels(
-				configurationCategory, languageId);
+				configurationCategory, languageId,
+				ExtendedObjectClassDefinition.Scope.SYSTEM, null);
 
 		for (ConfigurationModel configurationModel : configurationModels) {
 			if (configurationModel.isGenerateUI()) {

@@ -27,6 +27,7 @@ import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
 import com.liferay.portal.configuration.persistence.listener.ConfigurationModelListenerException;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.log.Log;
@@ -103,7 +104,8 @@ public class BindConfigurationMVCActionCommand implements MVCActionCommand {
 
 		Map<String, ConfigurationModel> configurationModels =
 			_configurationModelRetriever.getConfigurationModels(
-				themeDisplay.getLanguageId());
+				themeDisplay.getLanguageId(),
+				ExtendedObjectClassDefinition.Scope.SYSTEM, null);
 
 		if (Validator.isNotNull(factoryPid)) {
 			configurationModel = configurationModels.get(factoryPid);
@@ -113,7 +115,8 @@ public class BindConfigurationMVCActionCommand implements MVCActionCommand {
 		}
 
 		Configuration configuration =
-			_configurationModelRetriever.getConfiguration(pid);
+			_configurationModelRetriever.getConfiguration(
+				pid, ExtendedObjectClassDefinition.Scope.SYSTEM, null);
 
 		Dictionary<String, Object> properties = null;
 

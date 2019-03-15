@@ -16,6 +16,7 @@ package com.liferay.configuration.admin.web.internal.portlet.action;
 
 import com.liferay.configuration.admin.constants.ConfigurationAdminPortletKeys;
 import com.liferay.configuration.admin.web.internal.util.ConfigurationModelRetriever;
+import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
@@ -59,7 +60,8 @@ public class DeleteConfigurationMVCActionCommand implements MVCActionCommand {
 
 		try {
 			Configuration configuration =
-				_configurationModelRetriever.getConfiguration(pid);
+				_configurationModelRetriever.getConfiguration(
+					pid, ExtendedObjectClassDefinition.Scope.SYSTEM, null);
 
 			if (configuration == null) {
 				return false;

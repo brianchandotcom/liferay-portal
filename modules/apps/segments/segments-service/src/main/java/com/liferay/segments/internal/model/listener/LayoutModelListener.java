@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.ModelListener;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
+import com.liferay.segments.model.SegmentsExperience;
 import com.liferay.segments.service.SegmentsExperienceLocalService;
 
 import java.util.Objects;
@@ -34,6 +35,23 @@ import org.osgi.service.component.annotations.Reference;
 public class LayoutModelListener extends BaseModelListener<Layout> {
 
 	@Override
+	public void onAfterCreate(Layout layout) throws ModelListenerException {
+		if (!_isContentLayout(layout)) {
+			return;
+		}
+
+		try {
+			_segmentsExperienceLocalService.addDefaultSegmentsExperience(
+				layout.getGroupId(),
+				_classNameLocalService.getClassNameId(Layout.class),
+				layout.getPlid());
+		}
+		catch (Exception e) {
+			throw new ModelListenerException(e);
+		}
+	}
+
+	@Override
 	public void onAfterRemove(Layout layout) throws ModelListenerException {
 		if (!_isContentLayout(layout)) {
 			return;
@@ -43,7 +61,34 @@ public class LayoutModelListener extends BaseModelListener<Layout> {
 			_segmentsExperienceLocalService.deleteSegmentsExperiences(
 				layout.getGroupId(),
 				_classNameLocalService.getClassNameId(Layout.class),
-				layout.getPrimaryKey());
+				layout.getPlid());
+		}
+		catch (Exception e) {
+			throw new ModelListenerException(e);
+		}
+	}
+
+	@Override
+	public void onAfterUpdate(Layout layout) throws ModelListenerException {
+		if (!_isContentLayout(layout)) {
+			return;
+		}
+
+		try {
+			SegmentsExperience segmentsExperience =
+				_segmentsExperienceLocalService.fetchDefaultSegmentsExperience(
+					layout.getGroupId(),
+					_classNameLocalService.getClassNameId(Layout.class),
+					layout.getPlid());
+
+			if (segmentsExperience != null) {
+				return;
+			}
+
+			_segmentsExperienceLocalService.addDefaultSegmentsExperience(
+				layout.getGroupId(),
+				_classNameLocalService.getClassNameId(Layout.class),
+				layout.getPlid());
 		}
 		catch (Exception e) {
 			throw new ModelListenerException(e);

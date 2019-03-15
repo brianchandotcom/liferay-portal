@@ -80,6 +80,12 @@ public class DDMStructureLayoutLocalServiceWrapper
 			serviceContext);
 	}
 
+	@Override
+	public int countStructureLayoutByGroupId(long groupId) {
+		return _ddmStructureLayoutLocalService.countStructureLayoutByGroupId(
+			groupId);
+	}
+
 	/**
 	 * Creates a new ddm structure layout with the primary key. Does not add the ddm structure layout to the database.
 	 *

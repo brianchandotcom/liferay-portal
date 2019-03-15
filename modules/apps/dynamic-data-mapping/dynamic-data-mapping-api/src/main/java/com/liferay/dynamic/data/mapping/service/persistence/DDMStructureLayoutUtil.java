@@ -552,71 +552,6 @@ public class DDMStructureLayoutUtil {
 	}
 
 	/**
-	 * Returns the ddm structure layout where structureVersionId = &#63; or throws a <code>NoSuchStructureLayoutException</code> if it could not be found.
-	 *
-	 * @param structureVersionId the structure version ID
-	 * @return the matching ddm structure layout
-	 * @throws NoSuchStructureLayoutException if a matching ddm structure layout could not be found
-	 */
-	public static DDMStructureLayout findByStructureVersionId(
-			long structureVersionId)
-		throws com.liferay.dynamic.data.mapping.exception.
-			NoSuchStructureLayoutException {
-
-		return getPersistence().findByStructureVersionId(structureVersionId);
-	}
-
-	/**
-	 * Returns the ddm structure layout where structureVersionId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param structureVersionId the structure version ID
-	 * @return the matching ddm structure layout, or <code>null</code> if a matching ddm structure layout could not be found
-	 */
-	public static DDMStructureLayout fetchByStructureVersionId(
-		long structureVersionId) {
-
-		return getPersistence().fetchByStructureVersionId(structureVersionId);
-	}
-
-	/**
-	 * Returns the ddm structure layout where structureVersionId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
-	 *
-	 * @param structureVersionId the structure version ID
-	 * @param retrieveFromCache whether to retrieve from the finder cache
-	 * @return the matching ddm structure layout, or <code>null</code> if a matching ddm structure layout could not be found
-	 */
-	public static DDMStructureLayout fetchByStructureVersionId(
-		long structureVersionId, boolean retrieveFromCache) {
-
-		return getPersistence().fetchByStructureVersionId(
-			structureVersionId, retrieveFromCache);
-	}
-
-	/**
-	 * Removes the ddm structure layout where structureVersionId = &#63; from the database.
-	 *
-	 * @param structureVersionId the structure version ID
-	 * @return the ddm structure layout that was removed
-	 */
-	public static DDMStructureLayout removeByStructureVersionId(
-			long structureVersionId)
-		throws com.liferay.dynamic.data.mapping.exception.
-			NoSuchStructureLayoutException {
-
-		return getPersistence().removeByStructureVersionId(structureVersionId);
-	}
-
-	/**
-	 * Returns the number of ddm structure layouts where structureVersionId = &#63;.
-	 *
-	 * @param structureVersionId the structure version ID
-	 * @return the number of matching ddm structure layouts
-	 */
-	public static int countByStructureVersionId(long structureVersionId) {
-		return getPersistence().countByStructureVersionId(structureVersionId);
-	}
-
-	/**
 	 * Returns all the ddm structure layouts where groupId = &#63;.
 	 *
 	 * @param groupId the group ID
@@ -785,6 +720,71 @@ public class DDMStructureLayoutUtil {
 	 */
 	public static int countByGroupId(long groupId) {
 		return getPersistence().countByGroupId(groupId);
+	}
+
+	/**
+	 * Returns the ddm structure layout where structureVersionId = &#63; or throws a <code>NoSuchStructureLayoutException</code> if it could not be found.
+	 *
+	 * @param structureVersionId the structure version ID
+	 * @return the matching ddm structure layout
+	 * @throws NoSuchStructureLayoutException if a matching ddm structure layout could not be found
+	 */
+	public static DDMStructureLayout findByStructureVersionId(
+			long structureVersionId)
+		throws com.liferay.dynamic.data.mapping.exception.
+			NoSuchStructureLayoutException {
+
+		return getPersistence().findByStructureVersionId(structureVersionId);
+	}
+
+	/**
+	 * Returns the ddm structure layout where structureVersionId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param structureVersionId the structure version ID
+	 * @return the matching ddm structure layout, or <code>null</code> if a matching ddm structure layout could not be found
+	 */
+	public static DDMStructureLayout fetchByStructureVersionId(
+		long structureVersionId) {
+
+		return getPersistence().fetchByStructureVersionId(structureVersionId);
+	}
+
+	/**
+	 * Returns the ddm structure layout where structureVersionId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 *
+	 * @param structureVersionId the structure version ID
+	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @return the matching ddm structure layout, or <code>null</code> if a matching ddm structure layout could not be found
+	 */
+	public static DDMStructureLayout fetchByStructureVersionId(
+		long structureVersionId, boolean retrieveFromCache) {
+
+		return getPersistence().fetchByStructureVersionId(
+			structureVersionId, retrieveFromCache);
+	}
+
+	/**
+	 * Removes the ddm structure layout where structureVersionId = &#63; from the database.
+	 *
+	 * @param structureVersionId the structure version ID
+	 * @return the ddm structure layout that was removed
+	 */
+	public static DDMStructureLayout removeByStructureVersionId(
+			long structureVersionId)
+		throws com.liferay.dynamic.data.mapping.exception.
+			NoSuchStructureLayoutException {
+
+		return getPersistence().removeByStructureVersionId(structureVersionId);
+	}
+
+	/**
+	 * Returns the number of ddm structure layouts where structureVersionId = &#63;.
+	 *
+	 * @param structureVersionId the structure version ID
+	 * @return the number of matching ddm structure layouts
+	 */
+	public static int countByStructureVersionId(long structureVersionId) {
+		return getPersistence().countByStructureVersionId(structureVersionId);
 	}
 
 	/**

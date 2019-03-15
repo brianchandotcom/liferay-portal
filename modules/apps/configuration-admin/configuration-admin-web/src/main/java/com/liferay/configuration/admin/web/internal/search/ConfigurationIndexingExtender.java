@@ -17,6 +17,7 @@ package com.liferay.configuration.admin.web.internal.search;
 import com.liferay.configuration.admin.web.internal.model.ConfigurationModel;
 import com.liferay.configuration.admin.web.internal.util.ConfigurationModelIterator;
 import com.liferay.configuration.admin.web.internal.util.ConfigurationModelRetriever;
+import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
 import com.liferay.portal.kernel.cluster.ClusterMasterExecutor;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -98,7 +99,8 @@ public class ConfigurationIndexingExtender {
 			}
 
 			Map<String, ConfigurationModel> configurationModels =
-				_configurationModelRetriever.getConfigurationModels(bundle);
+				_configurationModelRetriever.getConfigurationModels(
+					bundle, ExtendedObjectClassDefinition.Scope.SYSTEM, null);
 
 			if (configurationModels.isEmpty()) {
 				return null;

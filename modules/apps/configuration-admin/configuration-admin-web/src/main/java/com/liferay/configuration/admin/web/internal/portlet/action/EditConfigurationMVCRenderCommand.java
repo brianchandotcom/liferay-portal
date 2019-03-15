@@ -27,6 +27,7 @@ import com.liferay.configuration.admin.web.internal.util.ConfigurationModelRetri
 import com.liferay.configuration.admin.web.internal.util.DDMFormRendererHelper;
 import com.liferay.configuration.admin.web.internal.util.ResourceBundleLoaderProvider;
 import com.liferay.dynamic.data.mapping.form.renderer.DDMFormRenderer;
+import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -74,7 +75,8 @@ public class EditConfigurationMVCRenderCommand implements MVCRenderCommand {
 
 		Map<String, ConfigurationModel> configurationModels =
 			_configurationModelRetriever.getConfigurationModels(
-				themeDisplay.getLanguageId());
+				themeDisplay.getLanguageId(),
+				ExtendedObjectClassDefinition.Scope.SYSTEM, null);
 
 		ConfigurationModel configurationModel = configurationModels.get(pid);
 
@@ -86,7 +88,8 @@ public class EditConfigurationMVCRenderCommand implements MVCRenderCommand {
 			!configurationModel.isCompanyFactory()) {
 
 			Configuration configuration =
-				_configurationModelRetriever.getConfiguration(pid);
+				_configurationModelRetriever.getConfiguration(
+					pid, ExtendedObjectClassDefinition.Scope.SYSTEM, null);
 
 			configurationModel = new ConfigurationModel(
 				configurationModel.getExtendedObjectClassDefinition(),

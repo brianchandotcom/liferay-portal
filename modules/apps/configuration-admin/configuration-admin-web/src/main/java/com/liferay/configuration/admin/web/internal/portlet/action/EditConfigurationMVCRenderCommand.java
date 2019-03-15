@@ -20,6 +20,7 @@ import com.liferay.configuration.admin.web.internal.constants.ConfigurationAdmin
 import com.liferay.configuration.admin.web.internal.display.ConfigurationCategoryMenuDisplay;
 import com.liferay.configuration.admin.web.internal.display.ConfigurationEntry;
 import com.liferay.configuration.admin.web.internal.display.ConfigurationModelConfigurationEntry;
+import com.liferay.configuration.admin.web.internal.display.ConfigurationScopeDisplayContext;
 import com.liferay.configuration.admin.web.internal.model.ConfigurationModel;
 import com.liferay.configuration.admin.web.internal.util.ConfigurationEntryRetriever;
 import com.liferay.configuration.admin.web.internal.util.ConfigurationFormRendererRetriever;
@@ -27,7 +28,6 @@ import com.liferay.configuration.admin.web.internal.util.ConfigurationModelRetri
 import com.liferay.configuration.admin.web.internal.util.DDMFormRendererHelper;
 import com.liferay.configuration.admin.web.internal.util.ResourceBundleLoaderProvider;
 import com.liferay.dynamic.data.mapping.form.renderer.DDMFormRenderer;
-import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -66,6 +66,9 @@ public class EditConfigurationMVCRenderCommand implements MVCRenderCommand {
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws PortletException {
 
+		ConfigurationScopeDisplayContext configurationScopeDisplayContext =
+			new ConfigurationScopeDisplayContext(renderRequest);
+
 		String factoryPid = ParamUtil.getString(renderRequest, "factoryPid");
 
 		String pid = ParamUtil.getString(renderRequest, "pid", factoryPid);
@@ -76,7 +79,8 @@ public class EditConfigurationMVCRenderCommand implements MVCRenderCommand {
 		Map<String, ConfigurationModel> configurationModels =
 			_configurationModelRetriever.getConfigurationModels(
 				themeDisplay.getLanguageId(),
-				ExtendedObjectClassDefinition.Scope.SYSTEM, null);
+				configurationScopeDisplayContext.getScope(),
+				configurationScopeDisplayContext.getScopePK());
 
 		ConfigurationModel configurationModel = configurationModels.get(pid);
 
@@ -89,7 +93,8 @@ public class EditConfigurationMVCRenderCommand implements MVCRenderCommand {
 
 			Configuration configuration =
 				_configurationModelRetriever.getConfiguration(
-					pid, ExtendedObjectClassDefinition.Scope.SYSTEM, null);
+					pid, configurationScopeDisplayContext.getScope(),
+					configurationScopeDisplayContext.getScopePK());
 
 			configurationModel = new ConfigurationModel(
 				configurationModel.getExtendedObjectClassDefinition(),
@@ -103,7 +108,9 @@ public class EditConfigurationMVCRenderCommand implements MVCRenderCommand {
 				_configurationEntryRetriever.
 					getConfigurationCategoryMenuDisplay(
 						configurationModel.getCategory(),
-						themeDisplay.getLanguageId());
+						themeDisplay.getLanguageId(),
+						configurationScopeDisplayContext.getScope(),
+						configurationScopeDisplayContext.getScopePK());
 
 			renderRequest.setAttribute(
 				ConfigurationAdminWebKeys.CONFIGURATION_CATEGORY_MENU_DISPLAY,

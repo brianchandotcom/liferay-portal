@@ -228,6 +228,15 @@ public class SegmentsExperienceLocalServiceUtil {
 	}
 
 	public static com.liferay.segments.model.SegmentsExperience
+			fetchDefaultSegmentsExperience(
+				long groupId, long classNameId, long classPK)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().fetchDefaultSegmentsExperience(
+			groupId, classNameId, classPK);
+	}
+
+	public static com.liferay.segments.model.SegmentsExperience
 		fetchSegmentsExperience(long segmentsExperienceId) {
 
 		return getService().fetchSegmentsExperience(segmentsExperienceId);
@@ -241,12 +250,11 @@ public class SegmentsExperienceLocalServiceUtil {
 
 	public static com.liferay.segments.model.SegmentsExperience
 			getDefaultSegmentsExperience(
-				long groupId, long classNameId, long classPK,
-				boolean addDefaultExperience)
+				long groupId, long classNameId, long classPK)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return getService().getDefaultSegmentsExperience(
-			groupId, classNameId, classPK, addDefaultExperience);
+			groupId, classNameId, classPK);
 	}
 
 	public static
@@ -304,27 +312,12 @@ public class SegmentsExperienceLocalServiceUtil {
 	}
 
 	public static java.util.List<com.liferay.segments.model.SegmentsExperience>
-			getSegmentsExperiences(
-				long groupId, long classNameId, long classPK, boolean active,
-				boolean addDefaultExperience, int start, int end,
-				com.liferay.portal.kernel.util.OrderByComparator
-					<com.liferay.segments.model.SegmentsExperience>
-						orderByComparator)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return getService().getSegmentsExperiences(
-			groupId, classNameId, classPK, active, addDefaultExperience, start,
-			end, orderByComparator);
-	}
-
-	public static java.util.List<com.liferay.segments.model.SegmentsExperience>
-			getSegmentsExperiences(
-				long groupId, long classNameId, long classPK, boolean active,
-				int start, int end,
-				com.liferay.portal.kernel.util.OrderByComparator
-					<com.liferay.segments.model.SegmentsExperience>
-						orderByComparator)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		getSegmentsExperiences(
+			long groupId, long classNameId, long classPK, boolean active,
+			int start, int end,
+			com.liferay.portal.kernel.util.OrderByComparator
+				<com.liferay.segments.model.SegmentsExperience>
+					orderByComparator) {
 
 		return getService().getSegmentsExperiences(
 			groupId, classNameId, classPK, active, start, end,
@@ -332,28 +325,12 @@ public class SegmentsExperienceLocalServiceUtil {
 	}
 
 	public static java.util.List<com.liferay.segments.model.SegmentsExperience>
-			getSegmentsExperiences(
-				long groupId, long[] segmentsEntryIds, long classNameId,
-				long classPK, boolean active, boolean addDefaultExperience,
-				int start, int end,
-				com.liferay.portal.kernel.util.OrderByComparator
-					<com.liferay.segments.model.SegmentsExperience>
-						orderByComparator)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return getService().getSegmentsExperiences(
-			groupId, segmentsEntryIds, classNameId, classPK, active,
-			addDefaultExperience, start, end, orderByComparator);
-	}
-
-	public static java.util.List<com.liferay.segments.model.SegmentsExperience>
-			getSegmentsExperiences(
-				long groupId, long[] segmentsEntryIds, long classNameId,
-				long classPK, boolean active, int start, int end,
-				com.liferay.portal.kernel.util.OrderByComparator
-					<com.liferay.segments.model.SegmentsExperience>
-						orderByComparator)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		getSegmentsExperiences(
+			long groupId, long[] segmentsEntryIds, long classNameId,
+			long classPK, boolean active, int start, int end,
+			com.liferay.portal.kernel.util.OrderByComparator
+				<com.liferay.segments.model.SegmentsExperience>
+					orderByComparator) {
 
 		return getService().getSegmentsExperiences(
 			groupId, segmentsEntryIds, classNameId, classPK, active, start, end,
@@ -370,20 +347,10 @@ public class SegmentsExperienceLocalServiceUtil {
 	}
 
 	public static int getSegmentsExperiencesCount(
-			long groupId, long classNameId, long classPK, boolean active)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		long groupId, long classNameId, long classPK, boolean active) {
 
 		return getService().getSegmentsExperiencesCount(
 			groupId, classNameId, classPK, active);
-	}
-
-	public static int getSegmentsExperiencesCount(
-			long groupId, long classNameId, long classPK, boolean active,
-			boolean addDefaultExperience)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return getService().getSegmentsExperiencesCount(
-			groupId, classNameId, classPK, active, addDefaultExperience);
 	}
 
 	public static com.liferay.segments.model.SegmentsExperience

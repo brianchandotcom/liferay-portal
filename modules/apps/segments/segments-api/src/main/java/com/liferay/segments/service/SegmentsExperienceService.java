@@ -86,20 +86,16 @@ public interface SegmentsExperienceService extends BaseService {
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<SegmentsExperience> getSegmentsExperiences(
-			long groupId, long classNameId, long classPK, boolean active)
-		throws PortalException;
+		long groupId, long classNameId, long classPK, boolean active);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<SegmentsExperience> getSegmentsExperiences(
-			long groupId, long classNameId, long classPK, boolean active,
-			int start, int end,
-			OrderByComparator<SegmentsExperience> orderByComparator)
-		throws PortalException;
+		long groupId, long classNameId, long classPK, boolean active, int start,
+		int end, OrderByComparator<SegmentsExperience> orderByComparator);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getSegmentsExperiencesCount(
-			long groupId, long classNameId, long classPK, boolean active)
-		throws PortalException;
+		long groupId, long classNameId, long classPK, boolean active);
 
 	public SegmentsExperience updateSegmentsExperience(
 			long segmentsExperienceId, long segmentsEntryId,

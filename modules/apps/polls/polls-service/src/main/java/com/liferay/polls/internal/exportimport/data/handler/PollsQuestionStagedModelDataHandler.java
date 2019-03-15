@@ -107,23 +107,20 @@ public class PollsQuestionStagedModelDataHandler
 			question);
 
 		for (PollsChoice choice : question.getChoices()) {
-			Element choiceElement = portletDataContext.getExportDataElement(
-				choice);
+			Element element = portletDataContext.getExportDataElement(choice);
 
 			portletDataContext.addClassedModel(
-				choiceElement, ExportImportPathUtil.getModelPath(choice),
-				choice);
+				element, ExportImportPathUtil.getModelPath(choice), choice);
 		}
 
 		if (portletDataContext.getBooleanParameter(
 				PollsPortletDataHandler.NAMESPACE, "votes")) {
 
 			for (PollsVote vote : question.getVotes()) {
-				Element voteElement = portletDataContext.getExportDataElement(
-					vote);
+				Element element = portletDataContext.getExportDataElement(vote);
 
 				portletDataContext.addClassedModel(
-					voteElement, ExportImportPathUtil.getModelPath(vote), vote);
+					element, ExportImportPathUtil.getModelPath(vote), vote);
 			}
 		}
 	}

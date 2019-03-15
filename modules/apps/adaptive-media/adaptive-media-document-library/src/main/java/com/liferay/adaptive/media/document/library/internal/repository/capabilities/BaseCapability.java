@@ -53,6 +53,12 @@ public abstract class BaseCapability
 			this::_updateAdaptiveMedia);
 	}
 
+	@Reference
+	protected AMAsyncProcessorLocator amAsyncProcessorLocator;
+
+	@Reference
+	protected AMImageEntryLocalService amImageEntryLocalService;
+
 	private void _deleteAdaptiveMedia(FileEntry fileEntry) {
 		if (ExportImportThreadLocal.isImportInProcess()) {
 			return;
@@ -60,7 +66,7 @@ public abstract class BaseCapability
 
 		try {
 			AMAsyncProcessor<FileVersion, ?> amAsyncProcessor =
-				_amAsyncProcessorLocator.locateForClass(FileVersion.class);
+				amAsyncProcessorLocator.locateForClass(FileVersion.class);
 
 			List<FileVersion> fileVersions = fileEntry.getFileVersions(
 				WorkflowConstants.STATUS_ANY);
@@ -86,12 +92,12 @@ public abstract class BaseCapability
 				true);
 
 			if (AMCleanUpOnUpdateAndCheckInThreadLocal.isEnabled()) {
-				_amImageEntryLocalService.deleteAMImageEntryFileVersion(
+				amImageEntryLocalService.deleteAMImageEntryFileVersion(
 					latestFileVersion);
 			}
 
 			AMAsyncProcessor<FileVersion, ?> amAsyncProcessor =
-				_amAsyncProcessorLocator.locateForClass(FileVersion.class);
+				amAsyncProcessorLocator.locateForClass(FileVersion.class);
 
 			amAsyncProcessor.triggerProcess(
 				latestFileVersion,
@@ -101,11 +107,5 @@ public abstract class BaseCapability
 			throw new RuntimeException(pe);
 		}
 	}
-
-	@Reference
-	private AMAsyncProcessorLocator _amAsyncProcessorLocator;
-
-	@Reference
-	private AMImageEntryLocalService _amImageEntryLocalService;
 
 }

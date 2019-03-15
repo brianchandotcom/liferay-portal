@@ -39,7 +39,7 @@ public class AssetListEntryServiceImpl extends AssetListEntryServiceBaseImpl {
 
 	@Override
 	public void addAssetEntrySelection(
-			long assetListEntryId, long assetEntryId,
+			long assetListEntryId, long segmentsEntryId, long assetEntryId,
 			ServiceContext serviceContext)
 		throws PortalException {
 
@@ -50,7 +50,23 @@ public class AssetListEntryServiceImpl extends AssetListEntryServiceBaseImpl {
 			getPermissionChecker(), assetListEntry, ActionKeys.UPDATE);
 
 		assetListEntryLocalService.addAssetEntrySelection(
-			assetListEntryId, assetEntryId, serviceContext);
+			assetListEntryId, segmentsEntryId, assetEntryId, serviceContext);
+	}
+
+	@Override
+	public void addAssetEntrySelections(
+			long assetListEntryId, long segmentsEntryId, long[] assetEntryIds,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		AssetListEntry assetListEntry =
+			assetListEntryLocalService.getAssetListEntry(assetListEntryId);
+
+		_assetListEntryModelResourcePermission.check(
+			getPermissionChecker(), assetListEntry, ActionKeys.UPDATE);
+
+		assetListEntryLocalService.addAssetEntrySelections(
+			assetListEntryId, segmentsEntryId, assetEntryIds, serviceContext);
 	}
 
 	@Override
@@ -95,7 +111,8 @@ public class AssetListEntryServiceImpl extends AssetListEntryServiceBaseImpl {
 	}
 
 	@Override
-	public void deleteAssetEntrySelection(long assetListEntryId, int position)
+	public void deleteAssetEntrySelection(
+			long assetListEntryId, long segmentsEntryId, int position)
 		throws PortalException {
 
 		AssetListEntry assetListEntry =
@@ -105,7 +122,7 @@ public class AssetListEntryServiceImpl extends AssetListEntryServiceBaseImpl {
 			getPermissionChecker(), assetListEntry, ActionKeys.UPDATE);
 
 		assetListEntryLocalService.deleteAssetEntrySelection(
-			assetListEntryId, position);
+			assetListEntryId, segmentsEntryId, position);
 	}
 
 	@Override
@@ -134,6 +151,21 @@ public class AssetListEntryServiceImpl extends AssetListEntryServiceBaseImpl {
 			getPermissionChecker(), assetListEntry, ActionKeys.DELETE);
 
 		return assetListEntryLocalService.deleteAssetListEntry(assetListEntry);
+	}
+
+	@Override
+	public void deleteAssetListEntry(
+			long assetListEntryId, long segmentsEntryId)
+		throws PortalException {
+
+		AssetListEntry assetListEntry =
+			assetListEntryLocalService.getAssetListEntry(assetListEntryId);
+
+		_assetListEntryModelResourcePermission.check(
+			getPermissionChecker(), assetListEntry, ActionKeys.UPDATE);
+
+		assetListEntryLocalService.deleteAssetListEntry(
+			assetListEntryId, segmentsEntryId);
 	}
 
 	@Override
@@ -185,7 +217,8 @@ public class AssetListEntryServiceImpl extends AssetListEntryServiceBaseImpl {
 
 	@Override
 	public void moveAssetEntrySelection(
-			long assetListEntryId, int position, int newPosition)
+			long assetListEntryId, long segmentsEntryId, int position,
+			int newPosition)
 		throws PortalException {
 
 		AssetListEntry assetListEntry =
@@ -195,7 +228,23 @@ public class AssetListEntryServiceImpl extends AssetListEntryServiceBaseImpl {
 			getPermissionChecker(), assetListEntry, ActionKeys.UPDATE);
 
 		assetListEntryLocalService.moveAssetEntrySelection(
-			assetListEntryId, position, newPosition);
+			assetListEntryId, segmentsEntryId, position, newPosition);
+	}
+
+	@Override
+	public void updateAssetListEntry(
+			long assetListEntryId, long segmentsEntryId, String typeSettings,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		AssetListEntry assetListEntry =
+			assetListEntryLocalService.getAssetListEntry(assetListEntryId);
+
+		_assetListEntryModelResourcePermission.check(
+			getPermissionChecker(), assetListEntry, ActionKeys.UPDATE);
+
+		assetListEntryLocalService.updateAssetListEntry(
+			assetListEntryId, segmentsEntryId, typeSettings, serviceContext);
 	}
 
 	@Override
@@ -214,8 +263,8 @@ public class AssetListEntryServiceImpl extends AssetListEntryServiceBaseImpl {
 	}
 
 	@Override
-	public AssetListEntry updateAssetListEntryTypeSettings(
-			long assetListEntryId, String typeSettings)
+	public void updateAssetListEntryTypeSettings(
+			long assetListEntryId, long segmentsEntryId, String typeSettings)
 		throws PortalException {
 
 		AssetListEntry assetListEntry =
@@ -224,13 +273,14 @@ public class AssetListEntryServiceImpl extends AssetListEntryServiceBaseImpl {
 		_assetListEntryModelResourcePermission.check(
 			getPermissionChecker(), assetListEntry, ActionKeys.UPDATE);
 
-		return assetListEntryLocalService.updateAssetListEntryTypeSettings(
-			assetListEntryId, typeSettings);
+		assetListEntryLocalService.updateAssetListEntryTypeSettings(
+			assetListEntryId, segmentsEntryId, typeSettings);
 	}
 
 	@Override
-	public AssetListEntry updateAssetListEntryTypeSettingsProperties(
-			long assetListEntryId, String typeSettingsProperties)
+	public void updateAssetListEntryTypeSettingsProperties(
+			long assetListEntryId, long segmentsEntryId,
+			String typeSettingsProperties)
 		throws PortalException {
 
 		AssetListEntry assetListEntry =
@@ -239,9 +289,8 @@ public class AssetListEntryServiceImpl extends AssetListEntryServiceBaseImpl {
 		_assetListEntryModelResourcePermission.check(
 			getPermissionChecker(), assetListEntry, ActionKeys.UPDATE);
 
-		return assetListEntryLocalService.
-			updateAssetListEntryTypeSettingsProperties(
-				assetListEntryId, typeSettingsProperties);
+		assetListEntryLocalService.updateAssetListEntryTypeSettingsProperties(
+			assetListEntryId, segmentsEntryId, typeSettingsProperties);
 	}
 
 	private static volatile ModelResourcePermission<AssetListEntry>

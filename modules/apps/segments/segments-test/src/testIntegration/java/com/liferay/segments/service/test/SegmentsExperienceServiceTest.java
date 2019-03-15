@@ -93,7 +93,10 @@ public class SegmentsExperienceServiceTest {
 
 		Layout layout = LayoutTestUtil.addLayout(_group.getGroupId());
 
-		_classPK = layout.getPrimaryKey();
+		_classPK = layout.getPlid();
+
+		_segmentsExperienceLocalService.deleteSegmentsExperiences(
+			_group.getGroupId(), _classNameId, layout.getPlid());
 	}
 
 	@Test

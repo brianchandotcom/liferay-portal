@@ -146,7 +146,7 @@
 										if (searchContainerData.indexOf(entityId) == -1) {
 											var entryLink = '<div class="text-right"><a class="modify-link" data-rowId="' + entityId + '" href="javascript:;"><%= UnicodeFormatter.toString(removeLinkIcon) %></a></div>';
 
-											var entryHtml = '<h5>' + A.Escape.html(assetEntry.assettitle) + '</h5><div class="text-secondary">' + A.Escape.html(assetEntry.assettype) + '</div>';
+											var entryHtml = '<h5>' + A.Escape.html(assetEntry.assettitle) + '</h5><h6 class="text-secondary">' + A.Escape.html(assetEntry.assettype) + '</h6><h6 class="text-secondary">' + A.Escape.html(assetEntry.groupdescriptivename) + '</h6>';
 
 											searchContainer.addRow([entryHtml, entryLink], entityId);
 

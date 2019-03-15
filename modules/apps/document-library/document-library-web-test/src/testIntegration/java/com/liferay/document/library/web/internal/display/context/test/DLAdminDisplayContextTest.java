@@ -213,12 +213,12 @@ public class DLAdminDisplayContextTest {
 	private ThemeDisplay _getThemeDisplay() throws PortalException {
 		ThemeDisplay themeDisplay = new ThemeDisplay();
 
+		themeDisplay.setCompany(_company);
 		themeDisplay.setLayout(_layout);
-		themeDisplay.setUser(TestPropsValues.getUser());
 		themeDisplay.setPermissionChecker(
 			PermissionThreadLocal.getPermissionChecker());
 		themeDisplay.setScopeGroupId(_layout.getGroupId());
-		themeDisplay.setCompany(_company);
+		themeDisplay.setUser(TestPropsValues.getUser());
 
 		return themeDisplay;
 	}

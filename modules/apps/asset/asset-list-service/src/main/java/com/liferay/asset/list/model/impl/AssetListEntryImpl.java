@@ -25,9 +25,12 @@ import com.liferay.asset.kernel.service.AssetTagLocalServiceUtil;
 import com.liferay.asset.kernel.service.persistence.AssetEntryQuery;
 import com.liferay.asset.list.constants.AssetListEntryTypeConstants;
 import com.liferay.asset.list.model.AssetListEntryAssetEntryRel;
+import com.liferay.asset.list.model.AssetListEntrySegmentsEntryRel;
 import com.liferay.asset.list.service.AssetListEntryAssetEntryRelLocalServiceUtil;
+import com.liferay.asset.list.service.AssetListEntrySegmentsEntryRelLocalServiceUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -35,9 +38,11 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
+import java.util.stream.LongStream;
 import java.util.stream.Stream;
 
 /**
@@ -50,40 +55,52 @@ public class AssetListEntryImpl extends AssetListEntryBaseImpl {
 	}
 
 	@Override
-	public List<AssetEntry> getAssetEntries() {
-		return getAssetEntries(QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+	public List<AssetEntry> getAssetEntries(long segmentsEntryId) {
+		return getAssetEntries(
+			segmentsEntryId, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 	}
 
 	@Override
-	public List<AssetEntry> getAssetEntries(int start, int end) {
+	public List<AssetEntry> getAssetEntries(
+		long segmentsEntryId, int start, int end) {
+
 		if (Objects.equals(
 				getType(), AssetListEntryTypeConstants.TYPE_MANUAL)) {
 
-			return _getManualAssetEntries(start, end);
+			return _getManualAssetEntries(segmentsEntryId, start, end);
 		}
 
-		return _getDynamicAssetEntries(start, end);
+		return _getDynamicAssetEntries(segmentsEntryId, start, end);
 	}
 
 	@Override
-	public int getAssetEntriesCount() {
+	public List<AssetEntry> getAssetEntries(long[] segmentsEntryIds)
+		throws PortalException {
+
+		return getAssetEntries(_getFirstSegmentsEntryId(segmentsEntryIds));
+	}
+
+	@Override
+	public int getAssetEntriesCount(long segmentsEntryId) {
 		if (Objects.equals(
 				getType(), AssetListEntryTypeConstants.TYPE_MANUAL)) {
 
 			return AssetListEntryAssetEntryRelLocalServiceUtil.
-				getAssetListEntryAssetEntryRelsCount(getAssetListEntryId());
+				getAssetListEntryAssetEntryRelsCount(
+					getAssetListEntryId(), segmentsEntryId);
 		}
 
-		return AssetEntryLocalServiceUtil.getEntriesCount(getAssetEntryQuery());
+		return AssetEntryLocalServiceUtil.getEntriesCount(
+			getAssetEntryQuery(segmentsEntryId));
 	}
 
 	@Override
-	public AssetEntryQuery getAssetEntryQuery() {
+	public AssetEntryQuery getAssetEntryQuery(long segmentsEntryId) {
 		AssetEntryQuery assetEntryQuery = new AssetEntryQuery();
 
 		UnicodeProperties properties = new UnicodeProperties(true);
 
-		properties.fastLoad(getTypeSettings());
+		properties.fastLoad(getTypeSettings(segmentsEntryId));
 
 		_setCategoriesAndTags(
 			assetEntryQuery, properties, _getAssetCategoryIds(properties),
@@ -144,8 +161,29 @@ public class AssetListEntryImpl extends AssetListEntryBaseImpl {
 	}
 
 	@Override
+	public AssetEntryQuery getAssetEntryQuery(long[] segmentsEntryIds)
+		throws PortalException {
+
+		return getAssetEntryQuery(_getFirstSegmentsEntryId(segmentsEntryIds));
+	}
+
+	@Override
 	public String getTypeLabel() {
 		return AssetListEntryTypeConstants.getTypeLabel(getType());
+	}
+
+	@Override
+	public String getTypeSettings(long segmentsEntryId) {
+		AssetListEntrySegmentsEntryRel assetListEntrySegmentsEntryRel =
+			AssetListEntrySegmentsEntryRelLocalServiceUtil.
+				fetchAssetListEntrySegmentsEntryRel(
+					getAssetListEntryId(), segmentsEntryId);
+
+		if (assetListEntrySegmentsEntryRel != null) {
+			return assetListEntrySegmentsEntryRel.getTypeSettings();
+		}
+
+		return null;
 	}
 
 	private static long[] _getAssetCategoryIds(UnicodeProperties properties) {
@@ -255,8 +293,10 @@ public class AssetListEntryImpl extends AssetListEntryBaseImpl {
 		return availableClassNameIds;
 	}
 
-	private List<AssetEntry> _getDynamicAssetEntries(int start, int end) {
-		AssetEntryQuery assetEntryQuery = getAssetEntryQuery();
+	private List<AssetEntry> _getDynamicAssetEntries(
+		long segmentsEntryId, int start, int end) {
+
+		AssetEntryQuery assetEntryQuery = getAssetEntryQuery(segmentsEntryId);
 
 		assetEntryQuery.setEnd(end);
 		assetEntryQuery.setStart(start);
@@ -264,11 +304,35 @@ public class AssetListEntryImpl extends AssetListEntryBaseImpl {
 		return AssetEntryLocalServiceUtil.getEntries(assetEntryQuery);
 	}
 
-	private List<AssetEntry> _getManualAssetEntries(int start, int end) {
+	private long _getFirstSegmentsEntryId(long[] segmentsEntryIds)
+		throws PortalException {
+
+		LongStream stream = Arrays.stream(segmentsEntryIds);
+
+		return stream.filter(
+			segmentsEntryId -> {
+				AssetListEntrySegmentsEntryRel assetListEntrySegmentsEntryRel =
+					AssetListEntrySegmentsEntryRelLocalServiceUtil.
+						fetchAssetListEntrySegmentsEntryRel(
+							getAssetListEntryId(), segmentsEntryId);
+
+				return assetListEntrySegmentsEntryRel != null;
+			}
+		).findFirst(
+		).orElseThrow(
+			() -> new PortalException(
+				"No segment entry was found for asset list " +
+					getAssetListEntryId())
+		);
+	}
+
+	private List<AssetEntry> _getManualAssetEntries(
+		long segmentsEntryId, int start, int end) {
+
 		List<AssetListEntryAssetEntryRel> assetListEntryAssetEntryRels =
 			AssetListEntryAssetEntryRelLocalServiceUtil.
 				getAssetListEntryAssetEntryRels(
-					getAssetListEntryId(), start, end);
+					getAssetListEntryId(), segmentsEntryId, start, end);
 
 		Stream<AssetListEntryAssetEntryRel> stream =
 			assetListEntryAssetEntryRels.stream();

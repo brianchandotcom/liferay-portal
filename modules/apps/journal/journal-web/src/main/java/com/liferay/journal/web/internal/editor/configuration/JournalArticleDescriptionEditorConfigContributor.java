@@ -33,7 +33,7 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(
 	property = {
-		"editor.config.key=descriptionMapAsXML",
+		"editor.config.key=descriptionMapAsXMLEditor",
 		"javax.portlet.name=" + JournalPortletKeys.JOURNAL
 	},
 	service = EditorConfigContributor.class

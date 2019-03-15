@@ -31,10 +31,12 @@
 				"type": "boolean"
 			},
 			"completionDate": {
+				"format": "yyyyMMddHHmmss",
 				"store": true,
 				"type": "date"
 			},
 			"createDate": {
+				"format": "yyyyMMddHHmmss",
 				"store": true,
 				"type": "date"
 			},
@@ -55,6 +57,7 @@
 				"type": "keyword"
 			},
 			"modifiedDate": {
+				"format": "yyyyMMddHHmmss",
 				"store": true,
 				"type": "date"
 			},
@@ -492,6 +495,7 @@
 				"type": "keyword"
 			},
 			"createDate": {
+				"format": "yyyyMMddHHmmss",
 				"store": true,
 				"type": "date"
 			},
@@ -508,6 +512,7 @@
 				"type": "keyword"
 			},
 			"modifiedDate": {
+				"format": "yyyyMMddHHmmss",
 				"store": true,
 				"type": "date"
 			},
@@ -605,6 +610,7 @@
 				"type": "keyword"
 			},
 			"createDate": {
+				"format": "yyyyMMddHHmmss",
 				"store": true,
 				"type": "date"
 			},
@@ -617,6 +623,7 @@
 				"type": "keyword"
 			},
 			"modifiedDate": {
+				"format": "yyyyMMddHHmmss",
 				"store": true,
 				"type": "date"
 			},
@@ -670,10 +677,12 @@
 				"type": "boolean"
 			},
 			"completionDate": {
+				"format": "yyyyMMddHHmmss",
 				"store": true,
 				"type": "date"
 			},
 			"createDate": {
+				"format": "yyyyMMddHHmmss",
 				"store": true,
 				"type": "date"
 			},
@@ -694,6 +703,7 @@
 				"type": "keyword"
 			},
 			"modifiedDate": {
+				"format": "yyyyMMddHHmmss",
 				"store": true,
 				"type": "date"
 			},

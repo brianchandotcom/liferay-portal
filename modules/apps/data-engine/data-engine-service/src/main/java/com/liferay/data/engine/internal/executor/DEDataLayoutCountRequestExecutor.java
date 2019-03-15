@@ -48,7 +48,9 @@ public class DEDataLayoutCountRequestExecutor {
 		throws DEDataLayoutException {
 
 		return DEDataLayoutCountResponse.Builder.of(
-			_ddmStructureLayoutLocalService.getDDMStructureLayoutsCount()
+			_ddmStructureLayoutLocalService.countStructureLayoutByGroupId(
+				deDataLayoutCountRequest.getGroupId()
+			)
 		);
 	}
 

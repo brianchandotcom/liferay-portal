@@ -19,10 +19,6 @@ package com.liferay.data.engine.service;
  */
 public class DEDataLayoutCountRequest {
 
-	public long getCompanyId() {
-		return _companyId;
-	}
-
 	public long getGroupId() {
 		return _groupId;
 	}
@@ -31,12 +27,6 @@ public class DEDataLayoutCountRequest {
 
 		public DEDataLayoutCountRequest build() {
 			return _deDataLayoutCountRequest;
-		}
-
-		public Builder inCompany(long companyId) {
-			_deDataLayoutCountRequest._companyId = companyId;
-
-			return this;
 		}
 
 		public Builder inGroup(long groupId) {
@@ -53,7 +43,6 @@ public class DEDataLayoutCountRequest {
 	private DEDataLayoutCountRequest() {
 	}
 
-	private long _companyId;
 	private long _groupId;
 
 }

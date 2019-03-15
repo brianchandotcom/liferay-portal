@@ -69,14 +69,13 @@ public abstract class BaseDataRecordCollectionResourceImpl
 			@Parameter(in = ParameterIn.QUERY, name = "pageSize")
 		}
 	)
-	@Path("/data-definitions/{data-definition-id}/data-record-collections")
+	@Path("/content-spaces/{content-space-id}/data-record-collections")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "DataRecordCollection")})
-	public Page<DataRecordCollection>
-			getDataDefinitionDataRecordCollectionsPage(
-				@NotNull @PathParam("data-definition-id") Long dataDefinitionId,
-				@QueryParam("keywords") String keywords,
-				@Context Pagination pagination)
+	public Page<DataRecordCollection> getContentSpaceDataRecordCollectionsPage(
+			@NotNull @PathParam("content-space-id") Long contentSpaceId,
+			@QueryParam("keywords") String keywords,
+			@Context Pagination pagination)
 		throws Exception {
 
 		return Page.of(Collections.emptyList());
@@ -85,11 +84,11 @@ public abstract class BaseDataRecordCollectionResourceImpl
 	@Override
 	@Consumes("application/json")
 	@POST
-	@Path("/data-definitions/{data-definition-id}/data-record-collections")
+	@Path("/content-spaces/{content-space-id}/data-record-collections")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "DataRecordCollection")})
-	public DataRecordCollection postDataDefinitionDataRecordCollection(
-			@NotNull @PathParam("data-definition-id") Long dataDefinitionId,
+	public DataRecordCollection postContentSpaceDataRecordCollection(
+			@NotNull @PathParam("content-space-id") Long contentSpaceId,
 			DataRecordCollection dataRecordCollection)
 		throws Exception {
 

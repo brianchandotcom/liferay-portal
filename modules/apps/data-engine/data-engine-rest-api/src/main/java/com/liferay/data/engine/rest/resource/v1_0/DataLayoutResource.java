@@ -30,8 +30,8 @@ import javax.annotation.Generated;
 @Generated("")
 public interface DataLayoutResource {
 
-	public DataLayout postDataDefinitionDataLayout(
-			Long dataDefinitionId, DataLayout dataLayout)
+	public DataLayout postContentSpaceDataLayout(
+			Long contentSpaceId, DataLayout dataLayout)
 		throws Exception;
 
 	public boolean deleteDataLayout(Long dataLayoutId) throws Exception;

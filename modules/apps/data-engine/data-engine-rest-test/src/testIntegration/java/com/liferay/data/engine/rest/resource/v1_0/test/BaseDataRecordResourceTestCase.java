@@ -102,18 +102,84 @@ public abstract class BaseDataRecordResourceTestCase {
 	}
 
 	@Test
-	public void testGetDataRecordCollectionDataRecordsPage() throws Exception {
+	public void testPostContentSpaceDataRecord() throws Exception {
+		DataRecord randomDataRecord = randomDataRecord();
+
+		DataRecord postDataRecord =
+			testPostContentSpaceDataRecord_addDataRecord(randomDataRecord);
+
+		assertEquals(randomDataRecord, postDataRecord);
+		assertValid(postDataRecord);
+	}
+
+	protected DataRecord testPostContentSpaceDataRecord_addDataRecord(
+			DataRecord dataRecord)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected DataRecord invokePostContentSpaceDataRecord(
+			Long contentSpaceId, DataRecord dataRecord)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		options.setBody(
+			_inputObjectMapper.writeValueAsString(dataRecord),
+			ContentTypes.APPLICATION_JSON, StringPool.UTF8);
+
+		String location =
+			_resourceURL +
+				_toPath(
+					"/content-spaces/{content-space-id}/data-records",
+					contentSpaceId);
+
+		options.setLocation(location);
+
+		options.setPost(true);
+
+		return _outputObjectMapper.readValue(
+			HttpUtil.URLtoString(options), DataRecord.class);
+	}
+
+	protected Http.Response invokePostContentSpaceDataRecordResponse(
+			Long contentSpaceId, DataRecord dataRecord)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		options.setBody(
+			_inputObjectMapper.writeValueAsString(dataRecord),
+			ContentTypes.APPLICATION_JSON, StringPool.UTF8);
+
+		String location =
+			_resourceURL +
+				_toPath(
+					"/content-spaces/{content-space-id}/data-records",
+					contentSpaceId);
+
+		options.setLocation(location);
+
+		options.setPost(true);
+
+		HttpUtil.URLtoString(options);
+
+		return options.getResponse();
+	}
+
+	@Test
+	public void testGetDataRecordsPage() throws Exception {
 		Long dataRecordCollectionId =
-			testGetDataRecordCollectionDataRecordsPage_getDataRecordCollectionId();
+			testGetDataRecordsPage_getDataRecordCollectionId();
 
-		DataRecord dataRecord1 =
-			testGetDataRecordCollectionDataRecordsPage_addDataRecord(
-				dataRecordCollectionId, randomDataRecord());
-		DataRecord dataRecord2 =
-			testGetDataRecordCollectionDataRecordsPage_addDataRecord(
-				dataRecordCollectionId, randomDataRecord());
+		DataRecord dataRecord1 = testGetDataRecordsPage_addDataRecord(
+			dataRecordCollectionId, randomDataRecord());
+		DataRecord dataRecord2 = testGetDataRecordsPage_addDataRecord(
+			dataRecordCollectionId, randomDataRecord());
 
-		Page<DataRecord> page = invokeGetDataRecordCollectionDataRecordsPage(
+		Page<DataRecord> page = invokeGetDataRecordsPage(
 			dataRecordCollectionId, Pagination.of(1, 2));
 
 		Assert.assertEquals(2, page.getTotalCount());
@@ -125,30 +191,25 @@ public abstract class BaseDataRecordResourceTestCase {
 	}
 
 	@Test
-	public void testGetDataRecordCollectionDataRecordsPageWithPagination()
-		throws Exception {
-
+	public void testGetDataRecordsPageWithPagination() throws Exception {
 		Long dataRecordCollectionId =
-			testGetDataRecordCollectionDataRecordsPage_getDataRecordCollectionId();
+			testGetDataRecordsPage_getDataRecordCollectionId();
 
-		DataRecord dataRecord1 =
-			testGetDataRecordCollectionDataRecordsPage_addDataRecord(
-				dataRecordCollectionId, randomDataRecord());
-		DataRecord dataRecord2 =
-			testGetDataRecordCollectionDataRecordsPage_addDataRecord(
-				dataRecordCollectionId, randomDataRecord());
-		DataRecord dataRecord3 =
-			testGetDataRecordCollectionDataRecordsPage_addDataRecord(
-				dataRecordCollectionId, randomDataRecord());
+		DataRecord dataRecord1 = testGetDataRecordsPage_addDataRecord(
+			dataRecordCollectionId, randomDataRecord());
+		DataRecord dataRecord2 = testGetDataRecordsPage_addDataRecord(
+			dataRecordCollectionId, randomDataRecord());
+		DataRecord dataRecord3 = testGetDataRecordsPage_addDataRecord(
+			dataRecordCollectionId, randomDataRecord());
 
-		Page<DataRecord> page1 = invokeGetDataRecordCollectionDataRecordsPage(
+		Page<DataRecord> page1 = invokeGetDataRecordsPage(
 			dataRecordCollectionId, Pagination.of(1, 2));
 
 		List<DataRecord> dataRecords1 = (List<DataRecord>)page1.getItems();
 
 		Assert.assertEquals(dataRecords1.toString(), 2, dataRecords1.size());
 
-		Page<DataRecord> page2 = invokeGetDataRecordCollectionDataRecordsPage(
+		Page<DataRecord> page2 = invokeGetDataRecordsPage(
 			dataRecordCollectionId, Pagination.of(2, 2));
 
 		Assert.assertEquals(3, page2.getTotalCount());
@@ -167,34 +228,29 @@ public abstract class BaseDataRecordResourceTestCase {
 			});
 	}
 
-	protected DataRecord
-			testGetDataRecordCollectionDataRecordsPage_addDataRecord(
-				Long dataRecordCollectionId, DataRecord dataRecord)
+	protected DataRecord testGetDataRecordsPage_addDataRecord(
+			Long dataRecordCollectionId, DataRecord dataRecord)
 		throws Exception {
 
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
 	}
 
-	protected Long
-			testGetDataRecordCollectionDataRecordsPage_getDataRecordCollectionId()
+	protected Long testGetDataRecordsPage_getDataRecordCollectionId()
 		throws Exception {
 
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
 	}
 
-	protected Page<DataRecord> invokeGetDataRecordCollectionDataRecordsPage(
+	protected Page<DataRecord> invokeGetDataRecordsPage(
 			Long dataRecordCollectionId, Pagination pagination)
 		throws Exception {
 
 		Http.Options options = _createHttpOptions();
 
 		String location =
-			_resourceURL +
-				_toPath(
-					"/data-record-collections/{data-record-collection-id}/data-records",
-					dataRecordCollectionId);
+			_resourceURL + _toPath("/data-records", dataRecordCollectionId);
 
 		location = HttpUtil.addParameter(
 			location, "page", pagination.getPage());
@@ -209,18 +265,14 @@ public abstract class BaseDataRecordResourceTestCase {
 			});
 	}
 
-	protected Http.Response
-			invokeGetDataRecordCollectionDataRecordsPageResponse(
-				Long dataRecordCollectionId, Pagination pagination)
+	protected Http.Response invokeGetDataRecordsPageResponse(
+			Long dataRecordCollectionId, Pagination pagination)
 		throws Exception {
 
 		Http.Options options = _createHttpOptions();
 
 		String location =
-			_resourceURL +
-				_toPath(
-					"/data-record-collections/{data-record-collection-id}/data-records",
-					dataRecordCollectionId);
+			_resourceURL + _toPath("/data-records", dataRecordCollectionId);
 
 		location = HttpUtil.addParameter(
 			location, "page", pagination.getPage());
@@ -228,77 +280,6 @@ public abstract class BaseDataRecordResourceTestCase {
 			location, "pageSize", pagination.getPageSize());
 
 		options.setLocation(location);
-
-		HttpUtil.URLtoString(options);
-
-		return options.getResponse();
-	}
-
-	@Test
-	public void testPostDataRecordCollectionDataRecord() throws Exception {
-		DataRecord randomDataRecord = randomDataRecord();
-
-		DataRecord postDataRecord =
-			testPostDataRecordCollectionDataRecord_addDataRecord(
-				randomDataRecord);
-
-		assertEquals(randomDataRecord, postDataRecord);
-		assertValid(postDataRecord);
-	}
-
-	protected DataRecord testPostDataRecordCollectionDataRecord_addDataRecord(
-			DataRecord dataRecord)
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	protected DataRecord invokePostDataRecordCollectionDataRecord(
-			Long dataRecordCollectionId, Long contentSpaceId,
-			DataRecord dataRecord)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		options.setBody(
-			_inputObjectMapper.writeValueAsString(dataRecord),
-			ContentTypes.APPLICATION_JSON, StringPool.UTF8);
-
-		String location =
-			_resourceURL +
-				_toPath(
-					"/data-record-collections/{data-record-collection-id}/data-records",
-					dataRecordCollectionId);
-
-		options.setLocation(location);
-
-		options.setPost(true);
-
-		return _outputObjectMapper.readValue(
-			HttpUtil.URLtoString(options), DataRecord.class);
-	}
-
-	protected Http.Response invokePostDataRecordCollectionDataRecordResponse(
-			Long dataRecordCollectionId, Long contentSpaceId,
-			DataRecord dataRecord)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		options.setBody(
-			_inputObjectMapper.writeValueAsString(dataRecord),
-			ContentTypes.APPLICATION_JSON, StringPool.UTF8);
-
-		String location =
-			_resourceURL +
-				_toPath(
-					"/data-record-collections/{data-record-collection-id}/data-records",
-					dataRecordCollectionId);
-
-		options.setLocation(location);
-
-		options.setPost(true);
 
 		HttpUtil.URLtoString(options);
 

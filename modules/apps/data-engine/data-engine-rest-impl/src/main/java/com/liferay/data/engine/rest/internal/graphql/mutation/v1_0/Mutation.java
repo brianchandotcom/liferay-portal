@@ -116,17 +116,16 @@ public class Mutation {
 
 	@GraphQLField
 	@GraphQLInvokeDetached
-	public DataLayout postDataDefinitionDataLayout(
-			@GraphQLName("data-definition-id") Long dataDefinitionId,
+	public DataLayout postContentSpaceDataLayout(
+			@GraphQLName("content-space-id") Long contentSpaceId,
 			@GraphQLName("DataLayout") DataLayout dataLayout)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
 			_dataLayoutResourceComponentServiceObjects,
 			this::_populateResourceContext,
-			dataLayoutResource ->
-				dataLayoutResource.postDataDefinitionDataLayout(
-					dataDefinitionId, dataLayout));
+			dataLayoutResource -> dataLayoutResource.postContentSpaceDataLayout(
+				contentSpaceId, dataLayout));
 	}
 
 	@GraphQLInvokeDetached
@@ -156,19 +155,16 @@ public class Mutation {
 
 	@GraphQLField
 	@GraphQLInvokeDetached
-	public DataRecord postDataRecordCollectionDataRecord(
-			@GraphQLName("data-record-collection-id") Long
-				dataRecordCollectionId,
-			@GraphQLName("contentSpaceId") Long contentSpaceId,
+	public DataRecord postContentSpaceDataRecord(
+			@GraphQLName("content-space-id") Long contentSpaceId,
 			@GraphQLName("DataRecord") DataRecord dataRecord)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
 			_dataRecordResourceComponentServiceObjects,
 			this::_populateResourceContext,
-			dataRecordResource ->
-				dataRecordResource.postDataRecordCollectionDataRecord(
-					dataRecordCollectionId, contentSpaceId, dataRecord));
+			dataRecordResource -> dataRecordResource.postContentSpaceDataRecord(
+				contentSpaceId, dataRecord));
 	}
 
 	@GraphQLInvokeDetached
@@ -198,8 +194,8 @@ public class Mutation {
 
 	@GraphQLField
 	@GraphQLInvokeDetached
-	public DataRecordCollection postDataDefinitionDataRecordCollection(
-			@GraphQLName("data-definition-id") Long dataDefinitionId,
+	public DataRecordCollection postContentSpaceDataRecordCollection(
+			@GraphQLName("content-space-id") Long contentSpaceId,
 			@GraphQLName("DataRecordCollection") DataRecordCollection
 				dataRecordCollection)
 		throws Exception {
@@ -209,8 +205,8 @@ public class Mutation {
 			this::_populateResourceContext,
 			dataRecordCollectionResource ->
 				dataRecordCollectionResource.
-					postDataDefinitionDataRecordCollection(
-						dataDefinitionId, dataRecordCollection));
+					postContentSpaceDataRecordCollection(
+						contentSpaceId, dataRecordCollection));
 	}
 
 	@GraphQLInvokeDetached

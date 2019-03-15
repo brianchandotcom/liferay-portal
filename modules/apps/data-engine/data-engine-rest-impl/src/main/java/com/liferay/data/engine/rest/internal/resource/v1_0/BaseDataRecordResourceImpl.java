@@ -47,7 +47,6 @@ import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
-import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.UriBuilder;
 import javax.ws.rs.core.UriInfo;
@@ -61,6 +60,20 @@ import javax.ws.rs.core.UriInfo;
 public abstract class BaseDataRecordResourceImpl implements DataRecordResource {
 
 	@Override
+	@Consumes("application/json")
+	@POST
+	@Path("/content-spaces/{content-space-id}/data-records")
+	@Produces("application/json")
+	@Tags(value = {@Tag(name = "DataRecord")})
+	public DataRecord postContentSpaceDataRecord(
+			@NotNull @PathParam("content-space-id") Long contentSpaceId,
+			DataRecord dataRecord)
+		throws Exception {
+
+		return new DataRecord();
+	}
+
+	@Override
 	@GET
 	@Parameters(
 		value = {
@@ -68,32 +81,16 @@ public abstract class BaseDataRecordResourceImpl implements DataRecordResource {
 			@Parameter(in = ParameterIn.QUERY, name = "pageSize")
 		}
 	)
-	@Path("/data-record-collections/{data-record-collection-id}/data-records")
+	@Path("/data-records")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "DataRecord")})
-	public Page<DataRecord> getDataRecordCollectionDataRecordsPage(
+	public Page<DataRecord> getDataRecordsPage(
 			@NotNull @PathParam("data-record-collection-id") Long
 				dataRecordCollectionId,
 			@Context Pagination pagination)
 		throws Exception {
 
 		return Page.of(Collections.emptyList());
-	}
-
-	@Override
-	@Consumes("application/json")
-	@POST
-	@Path("/data-record-collections/{data-record-collection-id}/data-records")
-	@Produces("application/json")
-	@Tags(value = {@Tag(name = "DataRecord")})
-	public DataRecord postDataRecordCollectionDataRecord(
-			@NotNull @PathParam("data-record-collection-id") Long
-				dataRecordCollectionId,
-			@NotNull @QueryParam("contentSpaceId") Long contentSpaceId,
-			DataRecord dataRecord)
-		throws Exception {
-
-		return new DataRecord();
 	}
 
 	@Override

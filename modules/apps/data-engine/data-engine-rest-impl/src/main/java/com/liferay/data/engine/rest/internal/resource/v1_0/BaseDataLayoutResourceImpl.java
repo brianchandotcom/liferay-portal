@@ -56,11 +56,11 @@ public abstract class BaseDataLayoutResourceImpl implements DataLayoutResource {
 	@Override
 	@Consumes("application/json")
 	@POST
-	@Path("/data-definitions/{data-definition-id}/data-layouts")
+	@Path("/content-spaces/{content-space-id}/data-layouts")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "DataLayout")})
-	public DataLayout postDataDefinitionDataLayout(
-			@NotNull @PathParam("data-definition-id") Long dataDefinitionId,
+	public DataLayout postContentSpaceDataLayout(
+			@NotNull @PathParam("content-space-id") Long contentSpaceId,
 			DataLayout dataLayout)
 		throws Exception {
 

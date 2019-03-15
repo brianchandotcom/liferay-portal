@@ -32,13 +32,12 @@ import javax.annotation.Generated;
 @Generated("")
 public interface DataRecordCollectionResource {
 
-	public Page<DataRecordCollection>
-			getDataDefinitionDataRecordCollectionsPage(
-				Long dataDefinitionId, String keywords, Pagination pagination)
+	public Page<DataRecordCollection> getContentSpaceDataRecordCollectionsPage(
+			Long contentSpaceId, String keywords, Pagination pagination)
 		throws Exception;
 
-	public DataRecordCollection postDataDefinitionDataRecordCollection(
-			Long dataDefinitionId, DataRecordCollection dataRecordCollection)
+	public DataRecordCollection postContentSpaceDataRecordCollection(
+			Long contentSpaceId, DataRecordCollection dataRecordCollection)
 		throws Exception;
 
 	public boolean deleteDataRecordCollection(Long dataRecordCollectionId)

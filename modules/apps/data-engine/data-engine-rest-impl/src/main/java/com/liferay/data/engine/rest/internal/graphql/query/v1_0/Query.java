@@ -128,7 +128,7 @@ public class Query {
 
 	@GraphQLField
 	@GraphQLInvokeDetached
-	public Collection<DataRecord> getDataRecordCollectionDataRecordsPage(
+	public Collection<DataRecord> getDataRecordsPage(
 			@GraphQLName("data-record-collection-id") Long
 				dataRecordCollectionId,
 			@GraphQLName("pageSize") int pageSize,
@@ -139,9 +139,8 @@ public class Query {
 			_dataRecordResourceComponentServiceObjects,
 			this::_populateResourceContext,
 			dataRecordResource -> {
-				Page paginationPage =
-					dataRecordResource.getDataRecordCollectionDataRecordsPage(
-						dataRecordCollectionId, Pagination.of(pageSize, page));
+				Page paginationPage = dataRecordResource.getDataRecordsPage(
+					dataRecordCollectionId, Pagination.of(pageSize, page));
 
 				return paginationPage.getItems();
 			});
@@ -163,8 +162,8 @@ public class Query {
 	@GraphQLField
 	@GraphQLInvokeDetached
 	public Collection<DataRecordCollection>
-			getDataDefinitionDataRecordCollectionsPage(
-				@GraphQLName("data-definition-id") Long dataDefinitionId,
+			getContentSpaceDataRecordCollectionsPage(
+				@GraphQLName("content-space-id") Long contentSpaceId,
 				@GraphQLName("keywords") String keywords,
 				@GraphQLName("pageSize") int pageSize,
 				@GraphQLName("page") int page)
@@ -176,8 +175,8 @@ public class Query {
 			dataRecordCollectionResource -> {
 				Page paginationPage =
 					dataRecordCollectionResource.
-						getDataDefinitionDataRecordCollectionsPage(
-							dataDefinitionId, keywords,
+						getContentSpaceDataRecordCollectionsPage(
+							contentSpaceId, keywords,
 							Pagination.of(pageSize, page));
 
 				return paginationPage.getItems();

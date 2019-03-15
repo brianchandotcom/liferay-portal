@@ -99,17 +99,17 @@ public abstract class BaseDataLayoutResourceTestCase {
 	}
 
 	@Test
-	public void testPostDataDefinitionDataLayout() throws Exception {
+	public void testPostContentSpaceDataLayout() throws Exception {
 		DataLayout randomDataLayout = randomDataLayout();
 
 		DataLayout postDataLayout =
-			testPostDataDefinitionDataLayout_addDataLayout(randomDataLayout);
+			testPostContentSpaceDataLayout_addDataLayout(randomDataLayout);
 
 		assertEquals(randomDataLayout, postDataLayout);
 		assertValid(postDataLayout);
 	}
 
-	protected DataLayout testPostDataDefinitionDataLayout_addDataLayout(
+	protected DataLayout testPostContentSpaceDataLayout_addDataLayout(
 			DataLayout dataLayout)
 		throws Exception {
 
@@ -117,8 +117,8 @@ public abstract class BaseDataLayoutResourceTestCase {
 			"This method needs to be implemented");
 	}
 
-	protected DataLayout invokePostDataDefinitionDataLayout(
-			Long dataDefinitionId, DataLayout dataLayout)
+	protected DataLayout invokePostContentSpaceDataLayout(
+			Long contentSpaceId, DataLayout dataLayout)
 		throws Exception {
 
 		Http.Options options = _createHttpOptions();
@@ -130,8 +130,8 @@ public abstract class BaseDataLayoutResourceTestCase {
 		String location =
 			_resourceURL +
 				_toPath(
-					"/data-definitions/{data-definition-id}/data-layouts",
-					dataDefinitionId);
+					"/content-spaces/{content-space-id}/data-layouts",
+					contentSpaceId);
 
 		options.setLocation(location);
 
@@ -141,8 +141,8 @@ public abstract class BaseDataLayoutResourceTestCase {
 			HttpUtil.URLtoString(options), DataLayout.class);
 	}
 
-	protected Http.Response invokePostDataDefinitionDataLayoutResponse(
-			Long dataDefinitionId, DataLayout dataLayout)
+	protected Http.Response invokePostContentSpaceDataLayoutResponse(
+			Long contentSpaceId, DataLayout dataLayout)
 		throws Exception {
 
 		Http.Options options = _createHttpOptions();
@@ -154,8 +154,8 @@ public abstract class BaseDataLayoutResourceTestCase {
 		String location =
 			_resourceURL +
 				_toPath(
-					"/data-definitions/{data-definition-id}/data-layouts",
-					dataDefinitionId);
+					"/content-spaces/{content-space-id}/data-layouts",
+					contentSpaceId);
 
 		options.setLocation(location);
 

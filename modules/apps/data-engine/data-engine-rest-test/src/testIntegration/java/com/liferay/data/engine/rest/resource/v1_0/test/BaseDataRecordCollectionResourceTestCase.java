@@ -102,22 +102,22 @@ public abstract class BaseDataRecordCollectionResourceTestCase {
 	}
 
 	@Test
-	public void testGetDataDefinitionDataRecordCollectionsPage()
+	public void testGetContentSpaceDataRecordCollectionsPage()
 		throws Exception {
 
-		Long dataDefinitionId =
-			testGetDataDefinitionDataRecordCollectionsPage_getDataDefinitionId();
+		Long contentSpaceId =
+			testGetContentSpaceDataRecordCollectionsPage_getContentSpaceId();
 
 		DataRecordCollection dataRecordCollection1 =
-			testGetDataDefinitionDataRecordCollectionsPage_addDataRecordCollection(
-				dataDefinitionId, randomDataRecordCollection());
+			testGetContentSpaceDataRecordCollectionsPage_addDataRecordCollection(
+				contentSpaceId, randomDataRecordCollection());
 		DataRecordCollection dataRecordCollection2 =
-			testGetDataDefinitionDataRecordCollectionsPage_addDataRecordCollection(
-				dataDefinitionId, randomDataRecordCollection());
+			testGetContentSpaceDataRecordCollectionsPage_addDataRecordCollection(
+				contentSpaceId, randomDataRecordCollection());
 
 		Page<DataRecordCollection> page =
-			invokeGetDataDefinitionDataRecordCollectionsPage(
-				dataDefinitionId, null, Pagination.of(1, 2));
+			invokeGetContentSpaceDataRecordCollectionsPage(
+				contentSpaceId, null, Pagination.of(1, 2));
 
 		Assert.assertEquals(2, page.getTotalCount());
 
@@ -128,25 +128,25 @@ public abstract class BaseDataRecordCollectionResourceTestCase {
 	}
 
 	@Test
-	public void testGetDataDefinitionDataRecordCollectionsPageWithPagination()
+	public void testGetContentSpaceDataRecordCollectionsPageWithPagination()
 		throws Exception {
 
-		Long dataDefinitionId =
-			testGetDataDefinitionDataRecordCollectionsPage_getDataDefinitionId();
+		Long contentSpaceId =
+			testGetContentSpaceDataRecordCollectionsPage_getContentSpaceId();
 
 		DataRecordCollection dataRecordCollection1 =
-			testGetDataDefinitionDataRecordCollectionsPage_addDataRecordCollection(
-				dataDefinitionId, randomDataRecordCollection());
+			testGetContentSpaceDataRecordCollectionsPage_addDataRecordCollection(
+				contentSpaceId, randomDataRecordCollection());
 		DataRecordCollection dataRecordCollection2 =
-			testGetDataDefinitionDataRecordCollectionsPage_addDataRecordCollection(
-				dataDefinitionId, randomDataRecordCollection());
+			testGetContentSpaceDataRecordCollectionsPage_addDataRecordCollection(
+				contentSpaceId, randomDataRecordCollection());
 		DataRecordCollection dataRecordCollection3 =
-			testGetDataDefinitionDataRecordCollectionsPage_addDataRecordCollection(
-				dataDefinitionId, randomDataRecordCollection());
+			testGetContentSpaceDataRecordCollectionsPage_addDataRecordCollection(
+				contentSpaceId, randomDataRecordCollection());
 
 		Page<DataRecordCollection> page1 =
-			invokeGetDataDefinitionDataRecordCollectionsPage(
-				dataDefinitionId, null, Pagination.of(1, 2));
+			invokeGetContentSpaceDataRecordCollectionsPage(
+				contentSpaceId, null, Pagination.of(1, 2));
 
 		List<DataRecordCollection> dataRecordCollections1 =
 			(List<DataRecordCollection>)page1.getItems();
@@ -156,8 +156,8 @@ public abstract class BaseDataRecordCollectionResourceTestCase {
 			dataRecordCollections1.size());
 
 		Page<DataRecordCollection> page2 =
-			invokeGetDataDefinitionDataRecordCollectionsPage(
-				dataDefinitionId, null, Pagination.of(2, 2));
+			invokeGetContentSpaceDataRecordCollectionsPage(
+				contentSpaceId, null, Pagination.of(2, 2));
 
 		Assert.assertEquals(3, page2.getTotalCount());
 
@@ -181,9 +181,8 @@ public abstract class BaseDataRecordCollectionResourceTestCase {
 	}
 
 	protected DataRecordCollection
-			testGetDataDefinitionDataRecordCollectionsPage_addDataRecordCollection(
-				Long dataDefinitionId,
-				DataRecordCollection dataRecordCollection)
+			testGetContentSpaceDataRecordCollectionsPage_addDataRecordCollection(
+				Long contentSpaceId, DataRecordCollection dataRecordCollection)
 		throws Exception {
 
 		throw new UnsupportedOperationException(
@@ -191,16 +190,15 @@ public abstract class BaseDataRecordCollectionResourceTestCase {
 	}
 
 	protected Long
-			testGetDataDefinitionDataRecordCollectionsPage_getDataDefinitionId()
+			testGetContentSpaceDataRecordCollectionsPage_getContentSpaceId()
 		throws Exception {
 
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		return testGroup.getGroupId();
 	}
 
 	protected Page<DataRecordCollection>
-			invokeGetDataDefinitionDataRecordCollectionsPage(
-				Long dataDefinitionId, String keywords, Pagination pagination)
+			invokeGetContentSpaceDataRecordCollectionsPage(
+				Long contentSpaceId, String keywords, Pagination pagination)
 		throws Exception {
 
 		Http.Options options = _createHttpOptions();
@@ -208,8 +206,8 @@ public abstract class BaseDataRecordCollectionResourceTestCase {
 		String location =
 			_resourceURL +
 				_toPath(
-					"/data-definitions/{data-definition-id}/data-record-collections",
-					dataDefinitionId);
+					"/content-spaces/{content-space-id}/data-record-collections",
+					contentSpaceId);
 
 		location = HttpUtil.addParameter(
 			location, "page", pagination.getPage());
@@ -225,8 +223,8 @@ public abstract class BaseDataRecordCollectionResourceTestCase {
 	}
 
 	protected Http.Response
-			invokeGetDataDefinitionDataRecordCollectionsPageResponse(
-				Long dataDefinitionId, String keywords, Pagination pagination)
+			invokeGetContentSpaceDataRecordCollectionsPageResponse(
+				Long contentSpaceId, String keywords, Pagination pagination)
 		throws Exception {
 
 		Http.Options options = _createHttpOptions();
@@ -234,8 +232,8 @@ public abstract class BaseDataRecordCollectionResourceTestCase {
 		String location =
 			_resourceURL +
 				_toPath(
-					"/data-definitions/{data-definition-id}/data-record-collections",
-					dataDefinitionId);
+					"/content-spaces/{content-space-id}/data-record-collections",
+					contentSpaceId);
 
 		location = HttpUtil.addParameter(
 			location, "page", pagination.getPage());
@@ -250,12 +248,12 @@ public abstract class BaseDataRecordCollectionResourceTestCase {
 	}
 
 	@Test
-	public void testPostDataDefinitionDataRecordCollection() throws Exception {
+	public void testPostContentSpaceDataRecordCollection() throws Exception {
 		DataRecordCollection randomDataRecordCollection =
 			randomDataRecordCollection();
 
 		DataRecordCollection postDataRecordCollection =
-			testPostDataDefinitionDataRecordCollection_addDataRecordCollection(
+			testPostContentSpaceDataRecordCollection_addDataRecordCollection(
 				randomDataRecordCollection);
 
 		assertEquals(randomDataRecordCollection, postDataRecordCollection);
@@ -263,7 +261,7 @@ public abstract class BaseDataRecordCollectionResourceTestCase {
 	}
 
 	protected DataRecordCollection
-			testPostDataDefinitionDataRecordCollection_addDataRecordCollection(
+			testPostContentSpaceDataRecordCollection_addDataRecordCollection(
 				DataRecordCollection dataRecordCollection)
 		throws Exception {
 
@@ -271,8 +269,8 @@ public abstract class BaseDataRecordCollectionResourceTestCase {
 			"This method needs to be implemented");
 	}
 
-	protected DataRecordCollection invokePostDataDefinitionDataRecordCollection(
-			Long dataDefinitionId, DataRecordCollection dataRecordCollection)
+	protected DataRecordCollection invokePostContentSpaceDataRecordCollection(
+			Long contentSpaceId, DataRecordCollection dataRecordCollection)
 		throws Exception {
 
 		Http.Options options = _createHttpOptions();
@@ -284,8 +282,8 @@ public abstract class BaseDataRecordCollectionResourceTestCase {
 		String location =
 			_resourceURL +
 				_toPath(
-					"/data-definitions/{data-definition-id}/data-record-collections",
-					dataDefinitionId);
+					"/content-spaces/{content-space-id}/data-record-collections",
+					contentSpaceId);
 
 		options.setLocation(location);
 
@@ -295,10 +293,8 @@ public abstract class BaseDataRecordCollectionResourceTestCase {
 			HttpUtil.URLtoString(options), DataRecordCollection.class);
 	}
 
-	protected Http.Response
-			invokePostDataDefinitionDataRecordCollectionResponse(
-				Long dataDefinitionId,
-				DataRecordCollection dataRecordCollection)
+	protected Http.Response invokePostContentSpaceDataRecordCollectionResponse(
+			Long contentSpaceId, DataRecordCollection dataRecordCollection)
 		throws Exception {
 
 		Http.Options options = _createHttpOptions();
@@ -310,8 +306,8 @@ public abstract class BaseDataRecordCollectionResourceTestCase {
 		String location =
 			_resourceURL +
 				_toPath(
-					"/data-definitions/{data-definition-id}/data-record-collections",
-					dataDefinitionId);
+					"/content-spaces/{content-space-id}/data-record-collections",
+					contentSpaceId);
 
 		options.setLocation(location);
 

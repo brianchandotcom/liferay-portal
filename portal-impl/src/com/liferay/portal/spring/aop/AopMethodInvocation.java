@@ -14,105 +14,19 @@
 
 package com.liferay.portal.spring.aop;
 
-import com.liferay.petra.string.StringBundler;
-import com.liferay.petra.string.StringPool;
-
-import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
 /**
- * @author Shuyang Zhou
+ * @author Preston Crary
  */
-public class AopMethodInvocation {
+public interface AopMethodInvocation {
 
-	@SuppressWarnings("unchecked")
-	public <T> T getAdviceMethodContext() {
-		return (T)_adviceMethodContext;
-	}
+	public <T> T getAdviceMethodContext();
 
-	public Method getMethod() {
-		return _method;
-	}
+	public Method getMethod();
 
-	public Object getThis() {
-		return _target;
-	}
+	public Object getThis();
 
-	public Object proceed(Object[] arguments) throws Throwable {
-		if (_nextChainableMethodAdvice == null) {
-			try {
-				return _method.invoke(_target, arguments);
-			}
-			catch (InvocationTargetException ite) {
-				throw ite.getTargetException();
-			}
-		}
-
-		return _nextChainableMethodAdvice.invoke(
-			_nextAopMethodInvocation, arguments);
-	}
-
-	@Override
-	public String toString() {
-		if (_toString != null) {
-			return _toString;
-		}
-
-		Class<?>[] parameterTypes = _method.getParameterTypes();
-
-		StringBundler sb = new StringBundler(parameterTypes.length * 2 + 6);
-
-		Class<?> declaringClass = _method.getDeclaringClass();
-
-		sb.append(declaringClass.getName());
-
-		sb.append(StringPool.PERIOD);
-		sb.append(_method.getName());
-		sb.append(StringPool.OPEN_PARENTHESIS);
-
-		for (Class<?> parameterType : parameterTypes) {
-			sb.append(parameterType.getName());
-
-			sb.append(StringPool.COMMA);
-		}
-
-		if (parameterTypes.length > 0) {
-			sb.setIndex(sb.index() - 1);
-		}
-
-		sb.append(StringPool.CLOSE_PARENTHESIS);
-
-		sb.append(StringPool.AT);
-
-		Class<?> targetClass = _target.getClass();
-
-		sb.append(targetClass.getName());
-
-		_toString = sb.toString();
-
-		return _toString;
-	}
-
-	protected AopMethodInvocation(
-		Object target, Method method, Object adviceMethodContext,
-		ChainableMethodAdvice nextChainableMethodAdvice,
-		AopMethodInvocation nextAopMethodInvocation) {
-
-		_target = target;
-		_method = method;
-
-		_method.setAccessible(true);
-
-		_adviceMethodContext = adviceMethodContext;
-		_nextChainableMethodAdvice = nextChainableMethodAdvice;
-		_nextAopMethodInvocation = nextAopMethodInvocation;
-	}
-
-	private final Object _adviceMethodContext;
-	private final Method _method;
-	private final AopMethodInvocation _nextAopMethodInvocation;
-	private final ChainableMethodAdvice _nextChainableMethodAdvice;
-	private final Object _target;
-	private String _toString;
+	public Object proceed(Object[] arguments) throws Throwable;
 
 }

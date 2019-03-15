@@ -85,7 +85,7 @@ public class AopInvocationHandler implements InvocationHandler {
 				targetClass, method, annotations);
 
 			if (methodContext != null) {
-				aopMethodInvocation = new AopMethodInvocation(
+				aopMethodInvocation = new AopMethodInvocationImpl(
 					target, method, methodContext, nextChainableMethodAdvice,
 					aopMethodInvocation);
 
@@ -93,7 +93,7 @@ public class AopInvocationHandler implements InvocationHandler {
 			}
 		}
 
-		return new AopMethodInvocation(
+		return new AopMethodInvocationImpl(
 			target, method, null, nextChainableMethodAdvice,
 			aopMethodInvocation);
 	}
@@ -104,7 +104,7 @@ public class AopInvocationHandler implements InvocationHandler {
 				method, this::_createAopMethodInvocation);
 		}
 
-		return new AopMethodInvocation(_target, method, null, null, null);
+		return new AopMethodInvocationImpl(_target, method, null, null, null);
 	}
 
 	private final Map<Method, AopMethodInvocation> _aopMethodInvocations =

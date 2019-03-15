@@ -59,20 +59,32 @@ request.setAttribute("websites.classPK", company.getAccountId());
 	/>
 </aui:form>
 
-<aui:script>
+<script>
 	function <portlet:namespace />saveCompany() {
-		var form = AUI.$(document.<portlet:namespace />fm);
-
-		form.fm('<%= Constants.CMD %>').val('<%= Constants.UPDATE %>');
-
 		<portlet:namespace />saveLocales();
 
-		submitForm(form);
+		Liferay.Util.postForm(
+			document.<portlet:namespace />fm,
+			{
+				data: {
+					'<%= Constants.CMD %>': '<%= Constants.UPDATE %>'
+				}
+			}
+		);
 	}
 
 	function <portlet:namespace />saveLocales() {
-		var form = AUI.$(document.<portlet:namespace />fm);
+		var form = document.<portlet:namespace />fm;
 
-		form.fm('<%= PropsKeys.LOCALES %>').val(Liferay.Util.listSelect(form.fm('currentLanguageIds')));
+		var currentLanguageIdsElement = Liferay.Util.getFormElement(form, 'currentLanguageIds');
+
+		if (currentLanguageIdsElement) {
+			Liferay.Util.setFormValues(
+				form,
+				{
+					'<%= PropsKeys.LOCALES %>': Liferay.Util.listSelect(currentLanguageIdsElement)
+				}
+			);
+		}
 	}
-</aui:script>
+</script>

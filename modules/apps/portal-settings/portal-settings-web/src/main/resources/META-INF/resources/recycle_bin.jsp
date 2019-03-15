@@ -26,19 +26,23 @@ boolean trashEnabled = PrefsPropsUtil.getBoolean(company.getCompanyId(), PropsKe
 	<aui:input helpMessage="enable-recycle-bin-default" id="trashEnabled" label="enable-recycle-bin" name='<%= "settings--" + PropsKeys.TRASH_ENABLED + "--" %>' type="checkbox" value="<%= trashEnabled %>" />
 </aui:fieldset>
 
-<aui:script>
-	var trashEnabledCheckbox = AUI.$('#<portlet:namespace />trashEnabled');
+<script>
+	(function() {
+		var trashEnabledCheckbox = document.getElementById('<portlet:namespace />trashEnabled');
 
-	var trashEnabledDefault = trashEnabledCheckbox.prop('checked');
+		if (trashEnabledCheckbox) {
+			var trashEnabledDefault = trashEnabledCheckbox.checked;
 
-	trashEnabledCheckbox.on(
-		'change',
-		function(event) {
-			if (!trashEnabledCheckbox.prop('checked') && trashEnabledDefault) {
-				if (!confirm('<%= HtmlUtil.escapeJS(LanguageUtil.get(request, "disabling-the-recycle-bin-prevents-the-restoring-of-content-that-has-been-moved-to-the-recycle-bin")) %>')) {
-					trashEnabledCheckbox.prop('checked', true);
+			trashEnabledCheckbox.addEventListener(
+				'change',
+				function(event) {
+					if (!trashEnabledCheckbox.checked && trashEnabledDefault) {
+						if (!confirm('<%= HtmlUtil.escapeJS(LanguageUtil.get(request, "disabling-the-recycle-bin-prevents-the-restoring-of-content-that-has-been-moved-to-the-recycle-bin")) %>')) {
+							trashEnabledCheckbox.checked = true;
+						}
+					}
 				}
-			}
+			);
 		}
-	);
-</aui:script>
+	})();
+</script>

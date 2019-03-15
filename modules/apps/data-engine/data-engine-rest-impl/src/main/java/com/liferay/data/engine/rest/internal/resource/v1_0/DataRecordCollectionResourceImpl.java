@@ -20,7 +20,6 @@ import com.liferay.data.engine.rest.resource.v1_0.DataRecordCollectionResource;
 import com.liferay.dynamic.data.lists.model.DDLRecordSet;
 import com.liferay.dynamic.data.lists.model.DDLRecordSetConstants;
 import com.liferay.dynamic.data.lists.service.DDLRecordSetLocalService;
-import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.service.DDMStructureService;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -42,39 +41,42 @@ public class DataRecordCollectionResourceImpl
 	extends BaseDataRecordCollectionResourceImpl {
 
 	@Override
-	public Page<DataRecordCollection>
-			getDataDefinitionDataRecordCollectionsPage(
-				Long dataDefinitionId, String keywords, Pagination pagination)
+	public boolean deleteDataRecordCollection(Long dataRecordCollectionId)
 		throws Exception {
 
-		DDMStructure ddmStructure = _ddmStructureService.getStructure(
-			dataDefinitionId);
+		_ddlRecordSetLocalService.deleteRecordSet(dataRecordCollectionId);
+
+		return true;
+	}
+
+	@Override
+	public Page<DataRecordCollection> getContentSpaceDataRecordCollectionsPage(
+			Long contentSpaceId, String keywords, Pagination pagination)
+		throws Exception {
 
 		if (keywords == null) {
 			return Page.of(
 				transform(
 					_ddlRecordSetLocalService.getRecordSets(
-						ddmStructure.getGroupId(),
-						pagination.getStartPosition(),
+						contentSpaceId, pagination.getStartPosition(),
 						pagination.getEndPosition()),
 					this::_toDataRecordCollection),
 				pagination,
-				_ddlRecordSetLocalService.getRecordSetsCount(
-					ddmStructure.getGroupId()));
+				_ddlRecordSetLocalService.getRecordSetsCount(contentSpaceId));
 		}
 
 		return Page.of(
 			transform(
 				_ddlRecordSetLocalService.search(
-					ddmStructure.getCompanyId(), ddmStructure.getGroupId(),
-					keywords, DDLRecordSetConstants.SCOPE_DATA_ENGINE,
+					contentSpaceId, contentSpaceId, keywords,
+					DDLRecordSetConstants.SCOPE_DATA_ENGINE,
 					pagination.getStartPosition(), pagination.getEndPosition(),
 					null),
 				this::_toDataRecordCollection),
 			pagination,
 			_ddlRecordSetLocalService.searchCount(
-				ddmStructure.getCompanyId(), ddmStructure.getGroupId(),
-				keywords, DDLRecordSetConstants.SCOPE_DATA_ENGINE));
+				contentSpaceId, contentSpaceId, keywords,
+				DDLRecordSetConstants.SCOPE_DATA_ENGINE));
 	}
 
 	@Override
@@ -87,17 +89,14 @@ public class DataRecordCollectionResourceImpl
 	}
 
 	@Override
-	public DataRecordCollection postDataDefinitionDataRecordCollection(
-			Long dataDefinitionId, DataRecordCollection dataRecordCollection)
+	public DataRecordCollection postContentSpaceDataRecordCollection(
+			Long contentSpaceId, DataRecordCollection dataRecordCollection)
 		throws Exception {
-
-		DDMStructure ddmStructure = _ddmStructureService.getStructure(
-			dataDefinitionId);
 
 		return _toDataRecordCollection(
 			_ddlRecordSetLocalService.addRecordSet(
-				PrincipalThreadLocal.getUserId(), ddmStructure.getGroupId(),
-				dataDefinitionId, null,
+				PrincipalThreadLocal.getUserId(), contentSpaceId,
+				dataRecordCollection.getDataDefinitionId(), null,
 				LocalizedValueUtil.toLocalizationMap(
 					dataRecordCollection.getName()),
 				LocalizedValueUtil.toLocalizationMap(

@@ -14,6 +14,7 @@
 
 package com.liferay.portlet.internal;
 
+import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.petra.encryptor.Encryptor;
 import com.liferay.petra.encryptor.EncryptorException;
 import com.liferay.petra.string.CharPool;
@@ -22,6 +23,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.model.PortletApp;
 import com.liferay.portal.kernel.model.PortletURLListener;
@@ -70,6 +72,7 @@ import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 import java.util.function.BiConsumer;
 
@@ -1075,6 +1078,18 @@ public class PortletURLImpl
 				sb.append(StringPool.EQUAL);
 				sb.append(StringPool.AMPERSAND);
 			}
+		}
+
+		AssetEntry assetEntry = (AssetEntry)_request.getAttribute(
+			WebKeys.LAYOUT_ASSET_ENTRY);
+
+		if (Objects.equals(
+				_layout.getType(), LayoutConstants.TYPE_ASSET_DISPLAY) &&
+			(assetEntry != null)) {
+
+			sb.append("assetEntryId=");
+			sb.append(assetEntry.getEntryId());
+			sb.append(StringPool.AMPERSAND);
 		}
 
 		Map<String, String[]> portletURLParams = _portletURLParameterMap;

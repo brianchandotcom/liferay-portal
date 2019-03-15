@@ -106,19 +106,7 @@ public class AopCacheManager {
 	private static final List<ChainableMethodAdvice> _chainableMethodAdvices =
 		new ArrayList<ChainableMethodAdvice>() {
 			{
-				if (SPIUtil.isSPI()) {
-					add(new SPIClusterableAdvice());
-				}
-
-				if (PropsValues.CLUSTER_LINK_ENABLED) {
-					add(new ClusterableAdvice());
-				}
-
 				add(new AccessControlAdvice());
-
-				if (PropsValues.PORTAL_RESILIENCY_ENABLED) {
-					add(new PortalResiliencyAdvice());
-				}
 
 				AsyncAdvice asyncAdvice = new AsyncAdvice();
 
@@ -126,17 +114,11 @@ public class AopCacheManager {
 
 				add(asyncAdvice);
 
-				add(new ThreadLocalCacheAdvice());
-
 				add(new BufferedIncrementAdvice());
 
-				add(new IndexableAdvice());
-
-				add(new SystemEventAdvice());
-
-				add(new ServiceContextAdvice());
-
-				add(new RetryAdvice());
+				if (PropsValues.CLUSTER_LINK_ENABLED) {
+					add(new ClusterableAdvice());
+				}
 
 				DynamicDataSourceTargetSource dynamicDataSourceTargetSource =
 					InfrastructureUtil.getDynamicDataSourceTargetSource();
@@ -150,6 +132,24 @@ public class AopCacheManager {
 
 					add(dynamicDataSourceAdvice);
 				}
+
+				add(new IndexableAdvice());
+
+				if (PropsValues.PORTAL_RESILIENCY_ENABLED) {
+					add(new PortalResiliencyAdvice());
+				}
+
+				add(new RetryAdvice());
+
+				add(new ServiceContextAdvice());
+
+				if (SPIUtil.isSPI()) {
+					add(new SPIClusterableAdvice());
+				}
+
+				add(new SystemEventAdvice());
+
+				add(new ThreadLocalCacheAdvice());
 
 				sort(_CHAINABLE_METHOD_ADVICE_COMPARATOR);
 			}

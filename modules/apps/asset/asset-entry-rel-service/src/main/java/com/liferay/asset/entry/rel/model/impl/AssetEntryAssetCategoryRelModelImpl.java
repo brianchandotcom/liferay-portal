@@ -26,7 +26,6 @@ import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.model.ModelWrapper;
 import com.liferay.portal.kernel.model.impl.BaseModelImpl;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 
 import java.io.Serializable;
@@ -97,30 +96,19 @@ public class AssetEntryAssetCategoryRelModelImpl
 
 	public static final String TX_MANAGER = "liferayTransactionManager";
 
-	public static final boolean ENTITY_CACHE_ENABLED = GetterUtil.getBoolean(
-		com.liferay.asset.entry.rel.service.util.ServiceProps.get(
-			"value.object.entity.cache.enabled.com.liferay.asset.entry.rel.model.AssetEntryAssetCategoryRel"),
-		true);
-
-	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(
-		com.liferay.asset.entry.rel.service.util.ServiceProps.get(
-			"value.object.finder.cache.enabled.com.liferay.asset.entry.rel.model.AssetEntryAssetCategoryRel"),
-		true);
-
-	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(
-		com.liferay.asset.entry.rel.service.util.ServiceProps.get(
-			"value.object.column.bitmask.enabled.com.liferay.asset.entry.rel.model.AssetEntryAssetCategoryRel"),
-		true);
-
 	public static final long ASSETCATEGORYID_COLUMN_BITMASK = 1L;
 
 	public static final long ASSETENTRYID_COLUMN_BITMASK = 2L;
 
 	public static final long ASSETENTRYASSETCATEGORYRELID_COLUMN_BITMASK = 4L;
 
-	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(
-		com.liferay.asset.entry.rel.service.util.ServiceProps.get(
-			"lock.expiration.time.com.liferay.asset.entry.rel.model.AssetEntryAssetCategoryRel"));
+	public static void setEntityCacheEnabled(boolean entityCacheEnabled) {
+		_entityCacheEnabled = entityCacheEnabled;
+	}
+
+	public static void setFinderCacheEnabled(boolean finderCacheEnabled) {
+		_finderCacheEnabled = finderCacheEnabled;
+	}
 
 	public AssetEntryAssetCategoryRelModelImpl() {
 	}
@@ -419,12 +407,12 @@ public class AssetEntryAssetCategoryRelModelImpl
 
 	@Override
 	public boolean isEntityCacheEnabled() {
-		return ENTITY_CACHE_ENABLED;
+		return _entityCacheEnabled;
 	}
 
 	@Override
 	public boolean isFinderCacheEnabled() {
-		return FINDER_CACHE_ENABLED;
+		return _finderCacheEnabled;
 	}
 
 	@Override
@@ -536,6 +524,8 @@ public class AssetEntryAssetCategoryRelModelImpl
 	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
 		AssetEntryAssetCategoryRel.class, ModelWrapper.class
 	};
+	private static boolean _entityCacheEnabled;
+	private static boolean _finderCacheEnabled;
 
 	private long _assetEntryAssetCategoryRelId;
 	private long _assetEntryId;

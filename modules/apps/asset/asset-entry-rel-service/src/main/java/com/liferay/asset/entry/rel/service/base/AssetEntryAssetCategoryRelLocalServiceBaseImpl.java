@@ -19,8 +19,7 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.asset.entry.rel.model.AssetEntryAssetCategoryRel;
 import com.liferay.asset.entry.rel.service.AssetEntryAssetCategoryRelLocalService;
 import com.liferay.asset.entry.rel.service.persistence.AssetEntryAssetCategoryRelPersistence;
-import com.liferay.asset.kernel.service.persistence.AssetEntryPersistence;
-import com.liferay.portal.kernel.bean.BeanReference;
+import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.jdbc.SqlUpdate;
@@ -38,17 +37,18 @@ import com.liferay.portal.kernel.module.framework.service.IdentifiableOSGiServic
 import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.BaseLocalServiceImpl;
-import com.liferay.portal.kernel.service.PersistedModelLocalServiceRegistry;
+import com.liferay.portal.kernel.service.PersistedModelLocalService;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.io.Serializable;
 
 import java.util.List;
 
 import javax.sql.DataSource;
+
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * Provides the base implementation for the asset entry asset category rel local service.
@@ -64,7 +64,8 @@ import javax.sql.DataSource;
 @ProviderType
 public abstract class AssetEntryAssetCategoryRelLocalServiceBaseImpl
 	extends BaseLocalServiceImpl
-	implements AssetEntryAssetCategoryRelLocalService, IdentifiableOSGiService {
+	implements AssetEntryAssetCategoryRelLocalService, AopService,
+			   IdentifiableOSGiService {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -359,129 +360,18 @@ public abstract class AssetEntryAssetCategoryRelLocalServiceBaseImpl
 			assetEntryAssetCategoryRel);
 	}
 
-	/**
-	 * Returns the asset entry asset category rel local service.
-	 *
-	 * @return the asset entry asset category rel local service
-	 */
-	public AssetEntryAssetCategoryRelLocalService
-		getAssetEntryAssetCategoryRelLocalService() {
-
-		return assetEntryAssetCategoryRelLocalService;
+	@Override
+	public Class<?>[] getAopInterfaces() {
+		return new Class<?>[] {
+			AssetEntryAssetCategoryRelLocalService.class,
+			IdentifiableOSGiService.class, PersistedModelLocalService.class
+		};
 	}
 
-	/**
-	 * Sets the asset entry asset category rel local service.
-	 *
-	 * @param assetEntryAssetCategoryRelLocalService the asset entry asset category rel local service
-	 */
-	public void setAssetEntryAssetCategoryRelLocalService(
-		AssetEntryAssetCategoryRelLocalService
-			assetEntryAssetCategoryRelLocalService) {
-
-		this.assetEntryAssetCategoryRelLocalService =
-			assetEntryAssetCategoryRelLocalService;
-	}
-
-	/**
-	 * Returns the asset entry asset category rel persistence.
-	 *
-	 * @return the asset entry asset category rel persistence
-	 */
-	public AssetEntryAssetCategoryRelPersistence
-		getAssetEntryAssetCategoryRelPersistence() {
-
-		return assetEntryAssetCategoryRelPersistence;
-	}
-
-	/**
-	 * Sets the asset entry asset category rel persistence.
-	 *
-	 * @param assetEntryAssetCategoryRelPersistence the asset entry asset category rel persistence
-	 */
-	public void setAssetEntryAssetCategoryRelPersistence(
-		AssetEntryAssetCategoryRelPersistence
-			assetEntryAssetCategoryRelPersistence) {
-
-		this.assetEntryAssetCategoryRelPersistence =
-			assetEntryAssetCategoryRelPersistence;
-	}
-
-	/**
-	 * Returns the counter local service.
-	 *
-	 * @return the counter local service
-	 */
-	public com.liferay.counter.kernel.service.CounterLocalService
-		getCounterLocalService() {
-
-		return counterLocalService;
-	}
-
-	/**
-	 * Sets the counter local service.
-	 *
-	 * @param counterLocalService the counter local service
-	 */
-	public void setCounterLocalService(
-		com.liferay.counter.kernel.service.CounterLocalService
-			counterLocalService) {
-
-		this.counterLocalService = counterLocalService;
-	}
-
-	/**
-	 * Returns the asset entry local service.
-	 *
-	 * @return the asset entry local service
-	 */
-	public com.liferay.asset.kernel.service.AssetEntryLocalService
-		getAssetEntryLocalService() {
-
-		return assetEntryLocalService;
-	}
-
-	/**
-	 * Sets the asset entry local service.
-	 *
-	 * @param assetEntryLocalService the asset entry local service
-	 */
-	public void setAssetEntryLocalService(
-		com.liferay.asset.kernel.service.AssetEntryLocalService
-			assetEntryLocalService) {
-
-		this.assetEntryLocalService = assetEntryLocalService;
-	}
-
-	/**
-	 * Returns the asset entry persistence.
-	 *
-	 * @return the asset entry persistence
-	 */
-	public AssetEntryPersistence getAssetEntryPersistence() {
-		return assetEntryPersistence;
-	}
-
-	/**
-	 * Sets the asset entry persistence.
-	 *
-	 * @param assetEntryPersistence the asset entry persistence
-	 */
-	public void setAssetEntryPersistence(
-		AssetEntryPersistence assetEntryPersistence) {
-
-		this.assetEntryPersistence = assetEntryPersistence;
-	}
-
-	public void afterPropertiesSet() {
-		persistedModelLocalServiceRegistry.register(
-			"com.liferay.asset.entry.rel.model.AssetEntryAssetCategoryRel",
-			assetEntryAssetCategoryRelLocalService);
-	}
-
-	public void destroy() {
-		persistedModelLocalServiceRegistry.unregister(
-			"com.liferay.asset.entry.rel.model.AssetEntryAssetCategoryRel");
+	@Override
+	public void setAopProxy(Object aopProxy) {
+		assetEntryAssetCategoryRelLocalService =
+			(AssetEntryAssetCategoryRelLocalService)aopProxy;
 	}
 
 	/**
@@ -527,31 +417,19 @@ public abstract class AssetEntryAssetCategoryRelLocalServiceBaseImpl
 		}
 	}
 
-	@BeanReference(type = AssetEntryAssetCategoryRelLocalService.class)
 	protected AssetEntryAssetCategoryRelLocalService
 		assetEntryAssetCategoryRelLocalService;
 
-	@BeanReference(type = AssetEntryAssetCategoryRelPersistence.class)
+	@Reference
 	protected AssetEntryAssetCategoryRelPersistence
 		assetEntryAssetCategoryRelPersistence;
 
-	@ServiceReference(
-		type = com.liferay.counter.kernel.service.CounterLocalService.class
-	)
+	@Reference
 	protected com.liferay.counter.kernel.service.CounterLocalService
 		counterLocalService;
 
-	@ServiceReference(
-		type = com.liferay.asset.kernel.service.AssetEntryLocalService.class
-	)
+	@Reference
 	protected com.liferay.asset.kernel.service.AssetEntryLocalService
 		assetEntryLocalService;
-
-	@ServiceReference(type = AssetEntryPersistence.class)
-	protected AssetEntryPersistence assetEntryPersistence;
-
-	@ServiceReference(type = PersistedModelLocalServiceRegistry.class)
-	protected PersistedModelLocalServiceRegistry
-		persistedModelLocalServiceRegistry;
 
 }

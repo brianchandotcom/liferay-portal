@@ -490,7 +490,7 @@ public class ContentPageEditorDisplayContext {
 		try {
 			SegmentsExperience segmentsExperience =
 				SegmentsExperienceLocalServiceUtil.getDefaultSegmentsExperience(
-					getGroupId(), classNameId, classPK, true);
+					getGroupId(), classNameId, classPK);
 
 			if (classNameId == PortalUtil.getClassNameId(Layout.class)) {
 				Layout draftLayout = LayoutLocalServiceUtil.getLayout(classPK);
@@ -498,8 +498,8 @@ public class ContentPageEditorDisplayContext {
 				segmentsExperience =
 					SegmentsExperienceLocalServiceUtil.
 						getDefaultSegmentsExperience(
-							getGroupId(), classNameId, draftLayout.getClassPK(),
-							true);
+							getGroupId(), classNameId,
+							draftLayout.getClassPK());
 			}
 
 			_defaultSegmentsExperienceId = String.valueOf(

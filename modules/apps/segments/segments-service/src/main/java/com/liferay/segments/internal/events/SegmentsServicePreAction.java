@@ -130,13 +130,11 @@ public class SegmentsServicePreAction extends Action {
 	}
 
 	private long[] _getSegmentsExperienceIds(
-			long groupId, long[] segmentsEntryIds, long classNameId,
-			long classPK)
-		throws PortalException {
+		long groupId, long[] segmentsEntryIds, long classNameId, long classPK) {
 
 		List<SegmentsExperience> segmentsExperiences =
 			_segmentsExperienceLocalService.getSegmentsExperiences(
-				groupId, segmentsEntryIds, classNameId, classPK, true, true,
+				groupId, segmentsEntryIds, classNameId, classPK, true,
 				QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 
 		Stream<SegmentsExperience> stream = segmentsExperiences.stream();

@@ -135,15 +135,9 @@ public class LayoutModelDocumentContributor
 		try {
 			SegmentsExperience segmentsExperience =
 				_segmentsExperienceLocalService.getDefaultSegmentsExperience(
-					groupId, classNameId, classPK, true);
+					groupId, classNameId, classPK);
 
-			if (segmentsExperience != null) {
-				return new long[] {
-					segmentsExperience.getSegmentsExperienceId()
-				};
-			}
-
-			return new long[0];
+			return new long[] {segmentsExperience.getSegmentsExperienceId()};
 		}
 		catch (PortalException pe) {
 			throw new SystemException(pe);

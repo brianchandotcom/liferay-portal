@@ -89,12 +89,18 @@
 		<finder name="AssetListEntryId" return-type="Collection">
 			<finder-column name="assetListEntryId" />
 		</finder>
-		<finder name="A_P" return-type="AssetListEntryAssetEntryRel" unique="true">
+		<finder name="A_S" return-type="Collection">
 			<finder-column name="assetListEntryId" />
+			<finder-column name="segmentsEntryId" />
+		</finder>
+		<finder name="A_S_P" return-type="AssetListEntryAssetEntryRel" unique="true">
+			<finder-column name="assetListEntryId" />
+			<finder-column name="segmentsEntryId" />
 			<finder-column name="position" />
 		</finder>
-		<finder name="A_GtP" return-type="Collection">
+		<finder name="A_S_GtP" return-type="Collection">
 			<finder-column name="assetListEntryId" />
+			<finder-column name="segmentsEntryId" />
 			<finder-column comparator="&gt;" name="position" />
 		</finder>
 

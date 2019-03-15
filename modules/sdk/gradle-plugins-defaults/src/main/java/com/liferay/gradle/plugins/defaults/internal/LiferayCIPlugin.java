@@ -245,10 +245,16 @@ public class LiferayCIPlugin implements Plugin<Project> {
 
 		executeNpmTask.dependsOn(updateHotfixVersionTask);
 
-		Jar jar = (Jar)GradleUtil.getTask(
-			executeNpmTask.getProject(), JavaPlugin.JAR_TASK_NAME);
+		Project project = executeNpmTask.getProject();
 
-		jar.finalizedBy(restoreHotfixVersionTask);
+		TaskContainer taskContainer = project.getTasks();
+
+		if (taskContainer.findByName(JavaPlugin.JAR_TASK_NAME) != null) {
+			Jar jar = (Jar)GradleUtil.getTask(
+				executeNpmTask.getProject(), JavaPlugin.JAR_TASK_NAME);
+
+			jar.finalizedBy(restoreHotfixVersionTask);
+		}
 	}
 
 	private void _configureTaskNpmInstall(NpmInstallTask npmInstallTask) {

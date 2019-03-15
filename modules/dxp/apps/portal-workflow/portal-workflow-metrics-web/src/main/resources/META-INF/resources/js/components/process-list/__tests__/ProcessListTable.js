@@ -5,6 +5,7 @@ import renderer from 'react-test-renderer';
 test('Should render component', () => {
 	const data = [
 		{
+			id: 36401,
 			instancesCount: 0,
 			title: 'test'
 		}

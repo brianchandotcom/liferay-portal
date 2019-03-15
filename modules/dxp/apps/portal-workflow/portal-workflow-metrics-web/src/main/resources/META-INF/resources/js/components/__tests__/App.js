@@ -11,7 +11,7 @@ beforeAll(() => {
 	document.body.appendChild(vbody);
 });
 
-test('Should render component', () => {
+test('Should render default component', () => {
 	const component = renderer.create(<App companyId="123" />);
 
 	const tree = component.toJSON();
@@ -19,10 +19,52 @@ test('Should render component', () => {
 	expect(tree).toMatchSnapshot();
 });
 
-test('Should test component navegation', () => {
+test('Should render SLA Form component', () => {
+	const component = renderer.create(
+		<App companyId="123" defaultPath="sla-form" />
+	);
+
+	const tree = component.toJSON();
+
+	expect(tree).toMatchSnapshot();
+});
+
+test('Should render SLA List component', () => {
+	const component = renderer.create(
+		<App companyId="123" defaultPath="sla-list" />
+	);
+
+	const tree = component.toJSON();
+
+	expect(tree).toMatchSnapshot();
+});
+
+test('Should test component navigation', () => {
 	const component = renderer.create(<App companyId="123" />);
 
 	const tree = component.toJSON();
+
+	const linkSlaForm = shallow(
+		<Link
+			className="sla-form"
+			query={{title: 'sla-form'}}
+			text="sla-form"
+			to="sla-form"
+		/>
+	);
+
+	linkSlaForm.find('a').simulate('click');
+
+	const linkSlaList = shallow(
+		<Link
+			className="sla-list"
+			query={{title: 'sla-list'}}
+			text="sla-list"
+			to="sla-list"
+		/>
+	);
+
+	linkSlaList.find('a').simulate('click');
 
 	const linkProcessList = shallow(
 		<Link

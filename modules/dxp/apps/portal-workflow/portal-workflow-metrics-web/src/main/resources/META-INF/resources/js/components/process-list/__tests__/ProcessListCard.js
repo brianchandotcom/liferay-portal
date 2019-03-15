@@ -104,8 +104,9 @@ test('Should change page size', () => {
 	);
 	const instance = component.instance();
 
-	instance.setPageSize(20);
-	expect(component.state('pageSize')).toBe(20);
+	instance
+		.setPageSize(20)
+		.then(() => expect(component.state('pageSize')).toBe(20));
 });
 
 test('Should change page', () => {

@@ -5,7 +5,7 @@ definition {
 		Button.viewNotPresent(button = "Select");
 	}
 
-	macro mapEditableTextToAsset {
+	macro mapEditableTextToField {
 		Click(
 			locator1 = "Fragment#EDITABLE_FIELD",
 			key_fragmentName = "${fragmentName}",

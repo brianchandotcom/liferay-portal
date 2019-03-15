@@ -73,13 +73,13 @@ definition {
 				subType = "Basic Web Content"
 			);
 
-			PageEditorMapping.mapEditableTextToAsset(
+			PageEditorMapping.mapEditableTextToField(
 				fragmentName = "Rich Text",
 				id = "rich-text",
 				itemName = "Author Name"
 			);
 
-			PageEditorMapping.mapEditableTextToAsset(
+			PageEditorMapping.mapEditableTextToField(
 				fragmentName = "Image",
 				id = "image",
 				itemName = "Author Profile Image"
@@ -158,13 +158,13 @@ definition {
 				subType = "Basic Web Content"
 			);
 
-			PageEditorMapping.mapEditableTextToAsset(
+			PageEditorMapping.mapEditableTextToField(
 				fragmentName = "Rich Text",
 				id = "rich-text",
 				itemName = "Last Editor Name"
 			);
 
-			PageEditorMapping.mapEditableTextToAsset(
+			PageEditorMapping.mapEditableTextToField(
 				fragmentName = "Image",
 				id = "image",
 				itemName = "Last Editor Profile Image"
@@ -310,25 +310,25 @@ definition {
 				subType = "Basic Web Content"
 			);
 
-			PageEditorMapping.mapEditableTextToAsset(
+			PageEditorMapping.mapEditableTextToField(
 				fragmentName = "Multiple Editables",
 				id = "test1",
 				itemName = "Title"
 			);
 
-			PageEditorMapping.mapEditableTextToAsset(
+			PageEditorMapping.mapEditableTextToField(
 				fragmentName = "Multiple Editables",
 				id = "test2",
 				itemName = "Content"
 			);
 
-			PageEditorMapping.mapEditableTextToAsset(
+			PageEditorMapping.mapEditableTextToField(
 				fragmentName = "Multiple Editables",
 				id = "test3",
 				itemName = "Tags"
 			);
 
-			PageEditorMapping.mapEditableTextToAsset(
+			PageEditorMapping.mapEditableTextToField(
 				fragmentName = "Multiple Editables",
 				id = "test4",
 				itemName = "Publish Date"

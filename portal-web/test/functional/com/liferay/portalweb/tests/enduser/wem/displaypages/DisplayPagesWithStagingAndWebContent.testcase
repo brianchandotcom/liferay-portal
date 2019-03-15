@@ -49,13 +49,13 @@ definition {
 				subType = "Basic Web Content"
 			);
 
-			PageEditorMapping.mapEditableTextToAsset(
+			PageEditorMapping.mapEditableTextToField(
 				fragmentName = "Title",
 				id = "title",
 				itemName = "Title"
 			);
 
-			PageEditorMapping.mapEditableTextToAsset(
+			PageEditorMapping.mapEditableTextToField(
 				fragmentName = "Rich Text",
 				id = "rich-text",
 				itemName = "Content"
@@ -349,7 +349,7 @@ definition {
 				fragmentName = "Content"
 			);
 
-			PageEditorMapping.mapEditableTextToAsset(
+			PageEditorMapping.mapEditableTextToField(
 				fragmentName = "Content",
 				id = "content",
 				itemName = "Title"

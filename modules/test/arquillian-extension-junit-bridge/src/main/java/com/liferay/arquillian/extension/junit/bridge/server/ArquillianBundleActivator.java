@@ -119,7 +119,7 @@ public class ArquillianBundleActivator implements BundleActivator {
 						"Unable to load test class " + className, cnfe);
 				}
 				finally {
-					clientBridge.bridge("kill", null);
+					clientBridge.close();
 				}
 			}
 
@@ -230,18 +230,42 @@ public class ArquillianBundleActivator implements BundleActivator {
 		public ClientBridge(InetAddress inetAddress, int port) {
 			_inetAddress = inetAddress;
 			_port = port;
+
+			try {
+				_socket = new Socket(_inetAddress, _port);
+
+				_objectOutputStream = new ObjectOutputStream(
+					new UnsyncBufferedOutputStream(_socket.getOutputStream()));
+			}
+			catch (IOException ioe) {
+				throw new RuntimeException(ioe);
+			}
 		}
 
 		public void bridge(String methodName, Object object) {
-			try (Socket socket = new Socket(_inetAddress, _port);
-				ObjectOutputStream objectOutputStream = new ObjectOutputStream(
-					new UnsyncBufferedOutputStream(socket.getOutputStream()))) {
+			while (true) {
+				try {
+					_objectOutputStream.writeUTF(methodName);
 
-				objectOutputStream.writeUTF(methodName);
+					if (object != null) {
+						_objectOutputStream.writeObject(object);
+					}
 
-				if (object != null) {
-					objectOutputStream.writeObject(object);
+					_objectOutputStream.flush();
+
+					return;
 				}
+				catch (IOException ioe) {
+					throw new RuntimeException(ioe);
+				}
+			}
+		}
+
+		public void close() {
+			bridge("kill", null);
+
+			try {
+				_socket.close();
 			}
 			catch (IOException ioe) {
 				throw new RuntimeException(ioe);
@@ -249,7 +273,9 @@ public class ArquillianBundleActivator implements BundleActivator {
 		}
 
 		private final InetAddress _inetAddress;
+		private final ObjectOutputStream _objectOutputStream;
 		private final int _port;
+		private final Socket _socket;
 
 	}
 

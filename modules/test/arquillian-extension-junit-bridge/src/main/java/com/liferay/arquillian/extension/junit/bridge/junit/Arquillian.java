@@ -256,12 +256,12 @@ public class Arquillian extends Runner implements Filterable {
 		public void run() {
 			Class<?> clazz = _runNotifier.getClass();
 
-			while (true) {
-				try (Socket socket = _serverSocket.accept();
-					InputStream inputStream = socket.getInputStream();
-					ObjectInputStream objectInputStream = new ObjectInputStream(
-						new UnsyncBufferedInputStream(inputStream))) {
+			try (Socket socket = _serverSocket.accept();
+				InputStream inputStream = socket.getInputStream();
+				ObjectInputStream objectInputStream = new ObjectInputStream(
+					new UnsyncBufferedInputStream(inputStream))) {
 
+				while (true) {
 					String methodName = objectInputStream.readUTF();
 
 					if (methodName.equals("kill")) {
@@ -277,9 +277,9 @@ public class Arquillian extends Runner implements Filterable {
 
 					method.invoke(_runNotifier, object);
 				}
-				catch (Exception e) {
-					throw new RuntimeException(e);
-				}
+			}
+			catch (Throwable t) {
+				throw new RuntimeException(t);
 			}
 		}
 

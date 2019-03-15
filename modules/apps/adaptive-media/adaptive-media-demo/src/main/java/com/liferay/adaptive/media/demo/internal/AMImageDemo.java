@@ -90,11 +90,6 @@ public class AMImageDemo extends BasePortalInstanceLifecycleListener {
 		_omniAdminUserDemoDataCreator.delete();
 	}
 
-	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED, unbind = "-")
-	protected void setModuleServiceLifecycle(
-		ModuleServiceLifecycle moduleServiceLifecycle) {
-	}
-
 	private static final Log _log = LogFactoryUtil.getLog(AMImageDemo.class);
 
 	@Reference
@@ -106,6 +101,9 @@ public class AMImageDemo extends BasePortalInstanceLifecycleListener {
 
 	@Reference
 	private GroupLocalService _groupLocalService;
+
+	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED)
+	private ModuleServiceLifecycle _moduleServiceLifecycle;
 
 	@Reference
 	private OmniAdminUserDemoDataCreator _omniAdminUserDemoDataCreator;

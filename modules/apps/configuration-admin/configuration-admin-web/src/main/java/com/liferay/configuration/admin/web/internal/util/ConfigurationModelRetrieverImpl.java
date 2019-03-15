@@ -237,6 +237,25 @@ public class ConfigurationModelRetrieverImpl
 		}
 	}
 
+	protected String getAndFilterString(String... filterStrings) {
+		StringBundler sb = new StringBundler(filterStrings.length + 3);
+
+		sb.append(StringPool.OPEN_PARENTHESIS);
+		sb.append(StringPool.AMPERSAND);
+
+		for (String filterString : filterStrings) {
+			if (Validator.isNull(filterString)) {
+				return StringPool.BLANK;
+			}
+
+			sb.append(filterString);
+		}
+
+		sb.append(StringPool.CLOSE_PARENTHESIS);
+
+		return sb.toString();
+	}
+
 	protected Configuration getCompanyDefaultConfiguration(String factoryPid) {
 		Configuration configuration = null;
 
@@ -333,7 +352,10 @@ public class ConfigurationModelRetrieverImpl
 		return configurations;
 	}
 
-	protected String getPidFilterString(String pid, boolean factory) {
+	protected String getPidFilterString(
+		String pid, boolean factory, ExtendedObjectClassDefinition.Scope scope,
+		Serializable scopePK) {
+
 		StringBundler sb = new StringBundler(5);
 
 		sb.append(StringPool.OPEN_PARENTHESIS);
@@ -350,6 +372,16 @@ public class ConfigurationModelRetrieverImpl
 		sb.append(StringPool.CLOSE_PARENTHESIS);
 
 		return sb.toString();
+	}
+
+	protected String getPropertyFilterString(String key, String value) {
+		if (Validator.isNull(key) || Validator.isNull(value)) {
+			return StringPool.BLANK;
+		}
+
+		return StringBundler.concat(
+			StringPool.OPEN_PARENTHESIS, key, StringPool.EQUAL, value,
+			StringPool.CLOSE_PARENTHESIS);
 	}
 
 	private BundleContext _bundleContext;

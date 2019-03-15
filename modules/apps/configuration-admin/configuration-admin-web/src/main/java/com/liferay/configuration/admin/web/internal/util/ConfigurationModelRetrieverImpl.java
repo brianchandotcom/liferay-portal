@@ -89,7 +89,7 @@ public class ConfigurationModelRetrieverImpl
 		Serializable scopePK) {
 
 		try {
-			String pidFilter = getPidFilterString(pid, false, scope, scopePK);
+			String pidFilter = getPidFilterString(pid, scope, scopePK);
 
 			Configuration[] configurations =
 				_configurationAdmin.listConfigurations(pidFilter);
@@ -341,16 +341,10 @@ public class ConfigurationModelRetrieverImpl
 	}
 
 	protected String getPidFilterString(
-		String pid, boolean factory, ExtendedObjectClassDefinition.Scope scope,
+		String pid, ExtendedObjectClassDefinition.Scope scope,
 		Serializable scopePK) {
 
-		String key = Constants.SERVICE_PID;
-
-		if (factory) {
-			key = ConfigurationAdmin.SERVICE_FACTORYPID;
-		}
-
-		return getPropertyFilterString(key, pid);
+		return getPropertyFilterString(Constants.SERVICE_PID, pid);
 	}
 
 	protected String getPropertyFilterString(String key, String value) {

@@ -204,7 +204,6 @@ public class ContentPageEditorDisplayContext {
 				"discardDraftURL",
 				getFragmentEntryActionURL(
 					"/content_layout/discard_draft_layout"));
-
 			soyContext.put(
 				"publishURL",
 				getFragmentEntryActionURL("/content_layout/publish_layout"));

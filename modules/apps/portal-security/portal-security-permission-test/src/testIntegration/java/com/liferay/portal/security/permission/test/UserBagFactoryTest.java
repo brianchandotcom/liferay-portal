@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.security.permission;
+package com.liferay.portal.security.permission.test;
 
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Organization;

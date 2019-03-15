@@ -34,6 +34,8 @@ import java.util.List;
 
 import javax.annotation.Generated;
 
+import javax.validation.constraints.NotNull;
+
 import javax.ws.rs.Consumes;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
@@ -58,7 +60,7 @@ public abstract class BaseVocabularyResourceImpl implements VocabularyResource {
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "Vocabulary")})
 	public Page<Vocabulary> postContentSpaceVocabularyCommonPage(
-			@PathParam("content-space-id") Long contentSpaceId,
+			@NotNull @PathParam("content-space-id") Long contentSpaceId,
 			DocumentSelection documentSelection)
 		throws Exception {
 

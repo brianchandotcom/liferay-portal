@@ -16,11 +16,21 @@ package com.liferay.bulk.rest.internal.graphql.servlet.v1_0;
 
 import com.liferay.bulk.rest.internal.graphql.mutation.v1_0.Mutation;
 import com.liferay.bulk.rest.internal.graphql.query.v1_0.Query;
+import com.liferay.bulk.rest.resource.v1_0.CategoryResource;
+import com.liferay.bulk.rest.resource.v1_0.KeywordResource;
+import com.liferay.bulk.rest.resource.v1_0.MessageSelectionResource;
+import com.liferay.bulk.rest.resource.v1_0.StatusResource;
+import com.liferay.bulk.rest.resource.v1_0.VocabularyResource;
 import com.liferay.portal.vulcan.graphql.servlet.ServletData;
 
 import javax.annotation.Generated;
 
+import org.osgi.framework.BundleContext;
+import org.osgi.service.component.ComponentServiceObjects;
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.component.annotations.ReferenceScope;
 
 /**
  * @author Alejandro Tardín
@@ -29,6 +39,21 @@ import org.osgi.service.component.annotations.Component;
 @Component(immediate = true, service = ServletData.class)
 @Generated("")
 public class ServletDataImpl implements ServletData {
+
+	@Activate
+	public void activate(BundleContext bundleContext) {
+		Mutation.setCategoryResourceComponentServiceObjects(
+			_categoryResourceComponentServiceObjects);
+		Mutation.setKeywordResourceComponentServiceObjects(
+			_keywordResourceComponentServiceObjects);
+		Mutation.setMessageSelectionResourceComponentServiceObjects(
+			_messageSelectionResourceComponentServiceObjects);
+		Mutation.setVocabularyResourceComponentServiceObjects(
+			_vocabularyResourceComponentServiceObjects);
+
+		Query.setStatusResourceComponentServiceObjects(
+			_statusResourceComponentServiceObjects);
+	}
 
 	@Override
 	public Mutation getMutation() {
@@ -44,5 +69,25 @@ public class ServletDataImpl implements ServletData {
 	public Query getQuery() {
 		return new Query();
 	}
+
+	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
+	private ComponentServiceObjects<CategoryResource>
+		_categoryResourceComponentServiceObjects;
+
+	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
+	private ComponentServiceObjects<KeywordResource>
+		_keywordResourceComponentServiceObjects;
+
+	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
+	private ComponentServiceObjects<MessageSelectionResource>
+		_messageSelectionResourceComponentServiceObjects;
+
+	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
+	private ComponentServiceObjects<VocabularyResource>
+		_vocabularyResourceComponentServiceObjects;
+
+	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
+	private ComponentServiceObjects<StatusResource>
+		_statusResourceComponentServiceObjects;
 
 }

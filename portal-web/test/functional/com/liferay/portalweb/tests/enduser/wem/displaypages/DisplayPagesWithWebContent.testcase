@@ -264,6 +264,136 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-90999. A user has access to edit a display page while viewing the article through its display page."
+	@priority = "5"
+	test EditDisplayPageWhenViewingInDisplayPage {
+		task ("Mark the display page as default") {
+			DisplayPagesAdmin.markDisplayPageAsDefault(displayPageName = "Display Page Name");
+		}
+
+		task ("Add a web content article") {
+			WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
+
+			WebContentNavigator.gotoAddCP();
+
+			WebContent.addCP(
+				webContentContent = "Webcontent Content",
+				webContentTitle = "Webcontent Title"
+			);
+
+			PortletEntry.publish();
+		}
+
+		task ("View the web content article through its friendly URL") {
+			Navigator.openWithAppendToBaseURL(
+				urlAppend = "web/test-site-name/-/webcontent-title"
+			);
+		}
+
+		task ("Click the pencil icon > Edit Display Page Template") {
+			DisplayPage.clickPencilItem(
+				item = "Edit Display Page Template"
+			);
+		}
+
+		task ("Edit the display page by adding a Static Text fragment to the display page") {
+			PageEditor.addFragment(
+				collectionName = "Collection Name",
+				fragmentName = "Static Text"
+			);
+
+			Button.clickPublish();
+		}
+
+		task ("View the web content article through its friendly URL") {
+			Navigator.openWithAppendToBaseURL(
+				urlAppend = "web/test-site-name/-/webcontent-title"
+			);
+		}
+
+		task ("Assert the web content article displays with the additional Content fragment in the staging site") {
+			AssertVisible(
+				locator1 = "Fragment#FRAGMENT",
+				key_content = "Webcontent Title",
+				key_fragmentClass = "header",
+				key_position = "1"
+			);
+
+			AssertVisible(
+				locator1 = "Fragment#FRAGMENT",
+				key_content = "Webcontent Content",
+				key_fragmentClass = "rich-text",
+				key_position = "2"
+			);
+
+			AssertVisible(
+				locator1 = "Fragment#FRAGMENT",
+				key_content = "This is static text.",
+				key_fragmentClass = "static-text",
+				key_position = "3"
+			);
+		}
+	}
+
+	@description = "This is a test for LPS-90999. A user has access to edit the web content article while viewing the article through its display page."
+	@priority = "5"
+	test EditWebContentWhenViewingInDisplayPage {
+		task ("Mark the display page as default") {
+			DisplayPagesAdmin.markDisplayPageAsDefault(displayPageName = "Display Page Name");
+		}
+
+		task ("Add a web content article") {
+			WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
+
+			WebContentNavigator.gotoAddCP();
+
+			WebContent.addCP(
+				webContentContent = "Webcontent Content",
+				webContentTitle = "Webcontent Title"
+			);
+
+			PortletEntry.publish();
+		}
+
+		task ("View the web content article through its friendly URL") {
+			Navigator.openWithAppendToBaseURL(
+				urlAppend = "web/test-site-name/-/webcontent-title"
+			);
+		}
+
+		task ("Click the pencil icon > Edit Webcontent Title") {
+			DisplayPage.clickPencilItem(
+				item = "Edit Webcontent Title"
+			);
+		}
+
+		task ("Edit the web content article") {
+			Click(locator1 = "TextInput#TITLE");
+
+			PortletEntry.inputTitle(title = "Webcontent Title Edit");
+
+			AlloyEditor.addContent(content = "Webcontent Content Edit");
+
+			Button.clickPublish();
+		}
+
+		task ("Assert the new version of the web content article displays through the display page") {
+			AssertVisible(
+				locator1 = "Fragment#FRAGMENT",
+				key_content = "Webcontent Title Edit",
+				key_fragmentClass = "header",
+				key_position = "1"
+			);
+
+			AssertVisible(
+				locator1 = "Fragment#FRAGMENT",
+				key_content = "Webcontent Content Edit",
+				key_fragmentClass = "rich-text",
+				key_position = "2"
+			);
+		}
+	}
+
 	@description = "This is a test for LPS-86221. A user can preview a draft status web content article within its display page."
 	@priority = "5"
 	test PreviewDraftWebContent {

@@ -52,6 +52,224 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-90999. A user with permissions has access to edit the web content article or display page while viewing the article through its display page."
+	@priority = "5"
+	test EditWhenViewingInDisplayPageAsUser {
+		task ("Add a display page with fragments mapped to Basic Web Content") {
+			DisplayPagesAdmin.addDisplayPage(displayPageName = "Display Page Name");
+
+			PageEditor.addFragment(
+				collectionName = "Collection Name",
+				fragmentName = "Title"
+			);
+
+			PageEditor.addFragment(
+				collectionName = "Collection Name",
+				fragmentName = "Rich Text"
+			);
+
+			PageEditorMapping.selectContentType(
+				contentType = "Web Content Article",
+				subType = "Basic Web Content"
+			);
+
+			PageEditorMapping.mapEditableTextToField(
+				field = "Title",
+				fragmentName = "Title",
+				id = "title",
+				source = "Basic Web Content (Default)"
+			);
+
+			PageEditorMapping.mapEditableTextToField(
+				field = "Content",
+				fragmentName = "Rich Text",
+				id = "rich-text",
+				source = "Basic Web Content (Default)"
+			);
+
+			Button.clickPublish();
+		}
+
+		task ("Mark the display page as default") {
+			DisplayPagesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+
+			DisplayPagesAdmin.markDisplayPageAsDefault(displayPageName = "Display Page Name");
+		}
+
+		task ("Add a web content article") {
+			WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
+
+			WebContentNavigator.gotoAddCP();
+
+			WebContent.addCP(
+				webContentContent = "Webcontent Content",
+				webContentTitle = "Webcontent Title"
+			);
+
+			PortletEntry.publish();
+		}
+
+		task ("Add a user with permission to edit web content articles and display pages") {
+			JSONUser.addUser(
+				userEmailAddress = "userea1@liferay.com",
+				userFirstName = "Userfn1",
+				userLastName = "Userln1",
+				userScreenName = "usersn1"
+			);
+
+			User.openUsersAdmin();
+
+			User.editPasswordCP(
+				userEmailAddress = "userea1@liferay.com",
+				userScreenName = "usersn1"
+			);
+
+			User.openUsersAdmin();
+
+			User.assignRegularRoleCP(
+				roleTitle = "Administrator",
+				userScreenName = "usersn1"
+			);
+		}
+
+		task ("Add a second user without any permissions") {
+			JSONUser.addUser(
+				userEmailAddress = "userea2@liferay.com",
+				userFirstName = "Userfn2",
+				userLastName = "Userln2",
+				userScreenName = "usersn2"
+			);
+
+			User.openUsersAdmin();
+
+			User.editPasswordCP(
+				userEmailAddress = "userea2@liferay.com",
+				userScreenName = "usersn2"
+			);
+		}
+
+		task ("Sign in as the first user") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "userea1@liferay.com",
+				userLoginFullName = "Userfn1 Userln1"
+			);
+		}
+
+		task ("View the web content article through its friendly URL") {
+			Navigator.openWithAppendToBaseURL(
+				urlAppend = "web/test-site-name/-/webcontent-title"
+			);
+		}
+
+		task ("Click the pencil icon > Edit Display Page Template") {
+			DisplayPage.clickPencilItem(
+				item = "Edit Display Page Template"
+			);
+		}
+
+		task ("Edit the display page by adding a Static Text fragment to the display page") {
+			PageEditor.addFragment(
+				collectionName = "Collection Name",
+				fragmentName = "Static Text"
+			);
+
+			Button.clickPublish();
+		}
+
+		task ("View the web content article through its friendly URL") {
+			Navigator.openWithAppendToBaseURL(
+				urlAppend = "web/test-site-name/-/webcontent-title"
+			);
+		}
+
+		task ("Assert the web content article displays with the additional Content fragment in the staging site") {
+			AssertVisible(
+				locator1 = "Fragment#FRAGMENT",
+				key_content = "Webcontent Title",
+				key_fragmentClass = "header",
+				key_position = "1"
+			);
+
+			AssertVisible(
+				locator1 = "Fragment#FRAGMENT",
+				key_content = "Webcontent Content",
+				key_fragmentClass = "rich-text",
+				key_position = "2"
+			);
+
+			AssertVisible(
+				locator1 = "Fragment#FRAGMENT",
+				key_content = "This is static text.",
+				key_fragmentClass = "static-text",
+				key_position = "3"
+			);
+		}
+
+		task ("View the web content article through its friendly URL") {
+			Navigator.openWithAppendToBaseURL(
+				urlAppend = "web/test-site-name/-/webcontent-title"
+			);
+		}
+
+		task ("Click the pencil icon > Edit Webcontent Title") {
+			DisplayPage.clickPencilItem(
+				item = "Edit Webcontent Title"
+			);
+		}
+
+		task ("Edit the web content article") {
+			Click(locator1 = "TextInput#TITLE");
+
+			PortletEntry.inputTitle(title = "Webcontent Title Edit");
+
+			AlloyEditor.addContent(content = "Webcontent Content Edit");
+
+			Button.clickPublish();
+		}
+
+		task ("Assert the new version of the web content article displays through the display page") {
+			AssertVisible(
+				locator1 = "Fragment#FRAGMENT",
+				key_content = "Webcontent Title Edit",
+				key_fragmentClass = "header",
+				key_position = "1"
+			);
+
+			AssertVisible(
+				locator1 = "Fragment#FRAGMENT",
+				key_content = "Webcontent Content Edit",
+				key_fragmentClass = "rich-text",
+				key_position = "2"
+			);
+
+			AssertVisible(
+				locator1 = "Fragment#FRAGMENT",
+				key_content = "This is static text.",
+				key_fragmentClass = "static-text",
+				key_position = "3"
+			);
+		}
+
+		task ("Sign in as the second user") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "userea2@liferay.com",
+				userLoginFullName = "Userfn2 Userln2"
+			);
+		}
+
+		task ("View the web content article through its friendly URL") {
+			Navigator.openWithAppendToBaseURL(
+				urlAppend = "web/test-site-name/-/webcontent-title"
+			);
+		}
+
+		task ("Assert the user cannot edit the web content article or display page") {
+			AssertElementNotPresent(
+				locator1 = "Button#PENCIL"
+			);
+		}
+	}
+
 	@description = "This is a test for LPS-86550. Users should be able to map author name and author profile image to a fragment editable field in a display page."
 	@priority = "5"
 	test MapWebContentAuthor {

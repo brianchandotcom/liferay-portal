@@ -379,6 +379,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>PENCIL</td>
+	<td>//button//*[contains(@class,'pencil')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>PERMISSIONS</td>
 	<td>//a[contains(.,'Permissions') and contains(@class,'btn')] | //button[contains(.,'Permissions')]</td>
 	<td></td>

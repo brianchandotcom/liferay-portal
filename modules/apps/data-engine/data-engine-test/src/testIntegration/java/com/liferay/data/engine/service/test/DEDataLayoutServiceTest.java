@@ -22,6 +22,8 @@ import com.liferay.data.engine.model.DEDataLayoutColumn;
 import com.liferay.data.engine.model.DEDataLayoutPage;
 import com.liferay.data.engine.model.DEDataLayoutRow;
 import com.liferay.data.engine.service.DEDataDefinitionService;
+import com.liferay.data.engine.service.DEDataLayoutCountRequest;
+import com.liferay.data.engine.service.DEDataLayoutCountResponse;
 import com.liferay.data.engine.service.DEDataLayoutDeleteRequest;
 import com.liferay.data.engine.service.DEDataLayoutDeleteResponse;
 import com.liferay.data.engine.service.DEDataLayoutGetRequest;
@@ -76,6 +78,50 @@ public class DEDataLayoutServiceTest {
 		_group = GroupTestUtil.addGroup();
 
 		_user = UserTestUtil.addOmniAdminUser();
+	}
+
+	@Test
+	public void testCount() throws Exception {
+		saveDataLayout(_group, _user, "layout1", "this is a layout1");
+		saveDataLayout(_group, _user, "layout2", "this is a layout2");
+
+		int total = countDEDataLayouts(_group);
+
+		Assert.assertEquals(2, total);
+	}
+
+	@Test
+	public void testCountAfterDelete() throws Exception {
+		DEDataLayout deDataLayout =
+			saveDataLayout(_group, _user, "layout", "this is a layout");
+
+		int total = countDEDataLayouts(_group);
+
+		Assert.assertEquals(1, total);
+
+		deleteDEDataLayout(_user, _group, deDataLayout.getDEDataLayoutId());
+
+		int totalAfterDelete = countDEDataLayouts(_group);
+
+		Assert.assertEquals(0, totalAfterDelete);
+	}
+
+	@Test
+	public void testCountWithNoRecords() throws Exception {
+		int total = countDEDataLayouts(_group);
+
+		Assert.assertEquals(0, total);
+	}
+
+	@Test
+	public void testCountWithoutPermission() throws Exception {
+		saveDataLayout(_group, _user, "layout1", "this is a layout1");
+
+		Group otherGroup = GroupTestUtil.addGroup();
+
+		int total = countDEDataLayouts(otherGroup);
+
+		Assert.assertEquals(0, total);
 	}
 
 	@Test
@@ -666,6 +712,19 @@ public class DEDataLayoutServiceTest {
 			deDataLayout, deDataLayoutGetResponse.getDEDataLayout());
 	}
 
+	protected int countDEDataLayouts(Group group) throws Exception {
+		DEDataLayoutCountRequest deDataLayoutCountRequest =
+			DEDataLayoutRequestBuilder.countBuilder(
+			).inGroup(
+				group.getGroupId()
+			).build();
+
+		DEDataLayoutCountResponse deDataLayoutCountResponse =
+			_deDataLayoutService.execute(deDataLayoutCountRequest);
+
+		return deDataLayoutCountResponse.getTotal();
+	}
+
 	protected DEDataLayout saveDataLayout(
 			Group group, User user, String nameLayout, String descriptionLayout)
 		throws Exception {
@@ -783,6 +842,30 @@ public class DEDataLayoutServiceTest {
 		deDataLayoutPage.setDEDataLayoutRows(deDataLayoutRows);
 
 		return deDataLayoutPage;
+	}
+
+	protected void deleteDEDataLayout(User user, Group group,
+			long deDataLayoutId)
+		throws Exception {
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				group.getGroupId(), user.getUserId());
+
+		ServiceContextThreadLocal.pushServiceContext(serviceContext);
+
+		try {
+			DEDataLayoutDeleteRequest deDataLayoutDeleteRequest =
+				DEDataLayoutRequestBuilder.deleteBuilder(
+				).byId(
+					deDataLayoutId
+				).build();
+
+				_deDataLayoutService.execute(deDataLayoutDeleteRequest);
+		}
+		finally {
+			ServiceContextThreadLocal.popServiceContext();
+		}
 	}
 
 	private DEDataLayoutRow _createDEDataLayoutRow(

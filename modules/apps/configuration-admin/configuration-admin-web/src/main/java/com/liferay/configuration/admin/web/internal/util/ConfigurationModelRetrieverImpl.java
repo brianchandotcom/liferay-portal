@@ -319,31 +319,19 @@ public class ConfigurationModelRetrieverImpl
 
 		Configuration[] configurations = null;
 
-		StringBundler sb = new StringBundler(13);
+		String filterString = getPropertyFilterString(
+			ConfigurationAdmin.SERVICE_FACTORYPID, factoryPid);
 
-		if (Validator.isNotNull(property) && Validator.isNotNull(value)) {
-			sb.append(StringPool.OPEN_PARENTHESIS);
-			sb.append(StringPool.AMPERSAND);
-		}
+		String propertyFilterString = getPropertyFilterString(property, value);
 
-		sb.append(StringPool.OPEN_PARENTHESIS);
-		sb.append(ConfigurationAdmin.SERVICE_FACTORYPID);
-		sb.append(StringPool.EQUAL);
-		sb.append(factoryPid);
-		sb.append(StringPool.CLOSE_PARENTHESIS);
-
-		if (Validator.isNotNull(property) && Validator.isNotNull(value)) {
-			sb.append(StringPool.OPEN_PARENTHESIS);
-			sb.append(property);
-			sb.append(StringPool.EQUAL);
-			sb.append(value);
-			sb.append(StringPool.CLOSE_PARENTHESIS);
-			sb.append(StringPool.CLOSE_PARENTHESIS);
+		if (Validator.isNotNull(propertyFilterString)) {
+			filterString = getAndFilterString(
+				filterString, propertyFilterString);
 		}
 
 		try {
 			configurations = _configurationAdmin.listConfigurations(
-				sb.toString());
+				filterString);
 		}
 		catch (InvalidSyntaxException ise) {
 			ReflectionUtil.throwException(ise);
@@ -356,22 +344,13 @@ public class ConfigurationModelRetrieverImpl
 		String pid, boolean factory, ExtendedObjectClassDefinition.Scope scope,
 		Serializable scopePK) {
 
-		StringBundler sb = new StringBundler(5);
-
-		sb.append(StringPool.OPEN_PARENTHESIS);
+		String key = Constants.SERVICE_PID;
 
 		if (factory) {
-			sb.append(ConfigurationAdmin.SERVICE_FACTORYPID);
-		}
-		else {
-			sb.append(Constants.SERVICE_PID);
+			key = ConfigurationAdmin.SERVICE_FACTORYPID;
 		}
 
-		sb.append(StringPool.EQUAL);
-		sb.append(pid);
-		sb.append(StringPool.CLOSE_PARENTHESIS);
-
-		return sb.toString();
+		return getPropertyFilterString(key, pid);
 	}
 
 	protected String getPropertyFilterString(String key, String value) {

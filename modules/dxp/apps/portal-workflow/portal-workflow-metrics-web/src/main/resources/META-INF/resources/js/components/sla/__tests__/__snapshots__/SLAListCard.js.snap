@@ -1,0 +1,362 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Should remove a item 1`] = `
+<div>
+  <nav
+    className="management-bar management-bar-light navbar navbar-expand-md"
+  >
+    <div
+      className="container-fluid container-fluid-max-xl"
+    >
+      <ul
+        className="navbar-nav"
+      >
+        <li
+          className="nav-item"
+        >
+          <div
+            className="custom-control custom-checkbox"
+          >
+            <label>
+              <input
+                className="custom-control-input"
+                type="checkbox"
+              />
+              <span
+                className="custom-control-label"
+              />
+            </label>
+          </div>
+        </li>
+      </ul>
+      <div
+        className="navbar-form navbar-form-autofit"
+      >
+        <Search
+          disabled={false}
+          onSearch={[Function]}
+        />
+      </div>
+      <ul
+        className="navbar-nav"
+      >
+        <li
+          className="nav-item"
+        >
+          <Link
+            className="btn btn-primary nav-btn nav-btn-monospaced navbar-breakpoint-down-d-none"
+            query={
+              Object {
+                "processId": undefined,
+              }
+            }
+            to="sla-form"
+          >
+            <Icon
+              iconName="plus"
+            />
+          </Link>
+        </li>
+      </ul>
+    </div>
+  </nav>
+  <div
+    className="container-fluid-1280"
+  >
+    <div
+      className="alert alert-info"
+      role="alert"
+    >
+      <span
+        className="alert-indicator"
+      >
+        <Icon
+          iconName="reload"
+        />
+      </span>
+      <strong
+        className="lead"
+      >
+        Updating:
+      </strong>
+      <span>
+        Instances in this process are being updated according to SLA changes.
+      </span>
+    </div>
+    <span
+      aria-hidden="true"
+      className="loading-animation"
+    />
+  </div>
+</div>
+`;
+
+exports[`Should render component 1`] = `
+<div>
+  <nav
+    className="management-bar management-bar-light navbar navbar-expand-md"
+  >
+    <div
+      className="container-fluid container-fluid-max-xl"
+    >
+      <ul
+        className="navbar-nav"
+      >
+        <li
+          className="nav-item"
+        >
+          <div
+            className="custom-control custom-checkbox"
+          >
+            <label>
+              <input
+                className="custom-control-input"
+                type="checkbox"
+              />
+              <span
+                className="custom-control-label"
+              />
+            </label>
+          </div>
+        </li>
+      </ul>
+      <div
+        className="navbar-form navbar-form-autofit"
+      >
+        <form
+          onSubmit={[Function]}
+          role="search"
+        >
+          <div
+            className="input-group"
+          >
+            <div
+              className="input-group-item"
+            >
+              <input
+                className="form-control input-group-inset input-group-inset-after"
+                disabled={false}
+                onChange={[Function]}
+                placeholder="Search for..."
+                type="text"
+                value=""
+              />
+              <span
+                className="input-group-inset-item input-group-inset-item-after"
+              >
+                <button
+                  className="btn btn-unstyled"
+                  disabled={false}
+                  type="submit"
+                >
+                  <svg
+                    className="lexicon-icon lexicon-icon-search"
+                    focusable="false"
+                    role="presentation"
+                  >
+                    <use
+                      href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#search"
+                    />
+                  </svg>
+                </button>
+              </span>
+            </div>
+          </div>
+        </form>
+      </div>
+      <ul
+        className="navbar-nav"
+      >
+        <li
+          className="nav-item"
+        >
+          <a
+            className="btn btn-primary nav-btn nav-btn-monospaced navbar-breakpoint-down-d-none"
+            data-senna-off={true}
+            href="#processId=undefined&_path=sla-form"
+          >
+            <svg
+              className="lexicon-icon lexicon-icon-plus"
+              focusable="false"
+              role="presentation"
+            >
+              <use
+                href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#plus"
+              />
+            </svg>
+          </a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+  <div
+    className="container-fluid-1280"
+  >
+    <div
+      className="alert alert-info"
+      role="alert"
+    >
+      <span
+        className="alert-indicator"
+      >
+        <svg
+          className="lexicon-icon lexicon-icon-reload"
+          focusable="false"
+          role="presentation"
+        >
+          <use
+            href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#reload"
+          />
+        </svg>
+      </span>
+      <strong
+        className="lead"
+      >
+        Updating:
+      </strong>
+      <span>
+        Instances in this process are being updated according to SLA changes.
+      </span>
+    </div>
+    <span
+      aria-hidden="true"
+      className="loading-animation"
+    />
+  </div>
+</div>
+`;
+
+exports[`Should render component after item was removed 1`] = `
+<div>
+  <nav
+    className="management-bar management-bar-light navbar navbar-expand-md"
+  >
+    <div
+      className="container-fluid container-fluid-max-xl"
+    >
+      <ul
+        className="navbar-nav"
+      >
+        <li
+          className="nav-item"
+        >
+          <div
+            className="custom-control custom-checkbox"
+          >
+            <label>
+              <input
+                className="custom-control-input"
+                type="checkbox"
+              />
+              <span
+                className="custom-control-label"
+              />
+            </label>
+          </div>
+        </li>
+      </ul>
+      <div
+        className="navbar-form navbar-form-autofit"
+      >
+        <form
+          onSubmit={[Function]}
+          role="search"
+        >
+          <div
+            className="input-group"
+          >
+            <div
+              className="input-group-item"
+            >
+              <input
+                className="form-control input-group-inset input-group-inset-after"
+                disabled={false}
+                onChange={[Function]}
+                placeholder="Search for..."
+                type="text"
+                value=""
+              />
+              <span
+                className="input-group-inset-item input-group-inset-item-after"
+              >
+                <button
+                  className="btn btn-unstyled"
+                  disabled={false}
+                  type="submit"
+                >
+                  <svg
+                    className="lexicon-icon lexicon-icon-search"
+                    focusable="false"
+                    role="presentation"
+                  >
+                    <use
+                      href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#search"
+                    />
+                  </svg>
+                </button>
+              </span>
+            </div>
+          </div>
+        </form>
+      </div>
+      <ul
+        className="navbar-nav"
+      >
+        <li
+          className="nav-item"
+        >
+          <a
+            className="btn btn-primary nav-btn nav-btn-monospaced navbar-breakpoint-down-d-none"
+            data-senna-off={true}
+            href="#processId=undefined&_path=sla-form"
+          >
+            <svg
+              className="lexicon-icon lexicon-icon-plus"
+              focusable="false"
+              role="presentation"
+            >
+              <use
+                href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#plus"
+              />
+            </svg>
+          </a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+  <div
+    className="container-fluid-1280"
+  >
+    <div
+      className="alert alert-info"
+      role="alert"
+    >
+      <span
+        className="alert-indicator"
+      >
+        <svg
+          className="lexicon-icon lexicon-icon-reload"
+          focusable="false"
+          role="presentation"
+        >
+          <use
+            href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#reload"
+          />
+        </svg>
+      </span>
+      <strong
+        className="lead"
+      >
+        Updating:
+      </strong>
+      <span>
+        Instances in this process are being updated according to SLA changes.
+      </span>
+    </div>
+    <span
+      aria-hidden="true"
+      className="loading-animation"
+    />
+  </div>
+</div>
+`;

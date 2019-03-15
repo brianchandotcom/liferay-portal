@@ -1,0 +1,59 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Should render component 1`] = `
+<div
+  className="modal"
+  role="dialog"
+  tabIndex="-1"
+>
+  <div
+    className="modal-dialog modal-lg"
+  >
+    <div
+      className="modal-content"
+    >
+      <div
+        className="modal-body"
+      >
+        <p>
+          Deleting SLAs will reflect on report data. This action can't be undone. Are you sure you want to permanently delete it?
+        </p>
+      </div>
+      <div
+        className="modal-footer"
+      >
+        <div
+          className="modal-item-last"
+        >
+          <div
+            className="btn-group"
+          >
+            <div
+              className="btn-group-item"
+            >
+              <a
+                className="btn btn-secondary"
+                data-senna-off={true}
+                href="#_path=sla-list"
+              >
+                Cancel
+              </a>
+            </div>
+            <div
+              className="btn-group-item"
+            >
+              <a
+                className="btn btn-secondary"
+                data-senna-off={true}
+                href="#itemRemoved=test&_path=sla-list"
+              >
+                ok
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;

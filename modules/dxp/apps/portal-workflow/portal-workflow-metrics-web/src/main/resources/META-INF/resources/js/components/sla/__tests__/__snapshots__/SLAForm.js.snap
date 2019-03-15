@@ -1,0 +1,1722 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Should display error on alert when receive a server error after submit 1`] = `
+<div>
+  <div
+    className="alert-container"
+  >
+    <div
+      className="alert alert-danger"
+      role="alert"
+    >
+      <span
+        className="alert-indicator"
+      >
+        <Icon
+          iconName="exclamation-full"
+        />
+      </span>
+      <strong
+        className="lead"
+      >
+        Error:
+      </strong>
+      <span>
+        Error during SLA creation.
+      </span>
+    </div>
+  </div>
+  <form
+    className="sheet sheet-lg"
+    role="form"
+  >
+    <div
+      className="sheet-header"
+    >
+      <h2
+        className="sheet-title"
+      >
+        SLA Definition
+      </h2>
+    </div>
+    <div
+      className="sheet-section"
+    >
+      <div
+        className="row"
+      >
+        <div
+          className="form-group col col-sm-5 "
+        >
+          <FieldLabel
+            fieldId="sla_name"
+            required={true}
+            text="Name"
+          />
+          <input
+            autoFocus={true}
+            className="form-control"
+            id="sla_name"
+            name="name"
+            onChange={[Function]}
+            type="text"
+            value="SLA 1"
+          />
+        </div>
+        <div
+          className="form-group col col-sm-7"
+        >
+          <FieldLabel
+            fieldId="sla_description"
+            text="Description"
+          />
+          <input
+            className="form-control"
+            id="sla_description"
+            name="description"
+            onChange={[Function]}
+            type="text"
+            value=""
+          />
+        </div>
+      </div>
+      <h3
+        className="sheet-subtitle"
+      >
+        <FieldLabel
+          fieldId="sla_description"
+          required={true}
+          text="DURATION TIME"
+        />
+      </h3>
+      <div
+        className="sheet-text"
+      >
+        Define a duration time to be met. Enter at least one of the following fields.
+      </div>
+      <div
+        className="row "
+      >
+        <div
+          className="form-group col col-sm-5 "
+        >
+          <FieldLabel
+            fieldId="sla_duration_days"
+            text="Days"
+          />
+          <reactTextMask
+            className="form-control"
+            id="sla_duration_days"
+            mask={[Function]}
+            name="days"
+            onBlur={[Function]}
+            onChange={[Function]}
+            value={3}
+          />
+          <div
+            className="form-text"
+          >
+            Enter a whole number.
+          </div>
+        </div>
+        <div
+          className="form-group col col-sm-3 "
+        >
+          <FieldLabel
+            fieldId="sla_duration_hours"
+            text="Hours"
+          />
+          <reactTextMask
+            className="form-control"
+            id="sla_duration_hours"
+            mask={
+              Array [
+                /\\\\d/,
+                /\\\\d/,
+                ":",
+                /\\\\d/,
+                /\\\\d/,
+              ]
+            }
+            name="hours"
+            onBlur={[Function]}
+            onChange={[Function]}
+            placeholder="00:00"
+            value=""
+          />
+        </div>
+      </div>
+    </div>
+    <div
+      className="sheet-footer sheet-footer-btn-block-sm-down"
+    >
+      <div
+        className="btn-group"
+      >
+        <div
+          className="btn-group-item"
+        >
+          <button
+            className="btn btn-primary"
+            onClick={[Function]}
+            type="button"
+          >
+            Save
+          </button>
+        </div>
+        <div
+          className="btn-group-item"
+        >
+          <Link
+            className="btn btn-secondary"
+            query={
+              Object {
+                "processId": undefined,
+              }
+            }
+            text="Cancel"
+            to="sla-list"
+          />
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
+`;
+
+exports[`Should display error on field when receive a server error after submit 1`] = `
+<div>
+  <form
+    className="sheet sheet-lg"
+    role="form"
+  >
+    <div
+      className="sheet-header"
+    >
+      <h2
+        className="sheet-title"
+      >
+        SLA Definition
+      </h2>
+    </div>
+    <div
+      className="sheet-section"
+    >
+      <div
+        className="row"
+      >
+        <div
+          className="form-group col col-sm-5 has-error"
+        >
+          <FieldLabel
+            fieldId="sla_name"
+            required={true}
+            text="Name"
+          />
+          <input
+            autoFocus={true}
+            className="form-control"
+            id="sla_name"
+            name="name"
+            onChange={[Function]}
+            type="text"
+            value="SLA 1"
+          />
+          <FieldError
+            error="An SLA with the same name already exists."
+          />
+        </div>
+        <div
+          className="form-group col col-sm-7"
+        >
+          <FieldLabel
+            fieldId="sla_description"
+            text="Description"
+          />
+          <input
+            className="form-control"
+            id="sla_description"
+            name="description"
+            onChange={[Function]}
+            type="text"
+            value=""
+          />
+        </div>
+      </div>
+      <h3
+        className="sheet-subtitle"
+      >
+        <FieldLabel
+          fieldId="sla_description"
+          required={true}
+          text="DURATION TIME"
+        />
+      </h3>
+      <div
+        className="sheet-text"
+      >
+        Define a duration time to be met. Enter at least one of the following fields.
+      </div>
+      <div
+        className="row "
+      >
+        <div
+          className="form-group col col-sm-5 "
+        >
+          <FieldLabel
+            fieldId="sla_duration_days"
+            text="Days"
+          />
+          <reactTextMask
+            className="form-control"
+            id="sla_duration_days"
+            mask={[Function]}
+            name="days"
+            onBlur={[Function]}
+            onChange={[Function]}
+            value={3}
+          />
+          <div
+            className="form-text"
+          >
+            Enter a whole number.
+          </div>
+        </div>
+        <div
+          className="form-group col col-sm-3 "
+        >
+          <FieldLabel
+            fieldId="sla_duration_hours"
+            text="Hours"
+          />
+          <reactTextMask
+            className="form-control"
+            id="sla_duration_hours"
+            mask={
+              Array [
+                /\\\\d/,
+                /\\\\d/,
+                ":",
+                /\\\\d/,
+                /\\\\d/,
+              ]
+            }
+            name="hours"
+            onBlur={[Function]}
+            onChange={[Function]}
+            placeholder="00:00"
+            value=""
+          />
+        </div>
+      </div>
+    </div>
+    <div
+      className="sheet-footer sheet-footer-btn-block-sm-down"
+    >
+      <div
+        className="btn-group"
+      >
+        <div
+          className="btn-group-item"
+        >
+          <button
+            className="btn btn-primary"
+            onClick={[Function]}
+            type="button"
+          >
+            Save
+          </button>
+        </div>
+        <div
+          className="btn-group-item"
+        >
+          <Link
+            className="btn btn-secondary"
+            query={
+              Object {
+                "processId": undefined,
+              }
+            }
+            text="Cancel"
+            to="sla-list"
+          />
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
+`;
+
+exports[`Should display error when submitting the form with empty name 1`] = `
+<div>
+  <div
+    className="alert-container"
+  >
+    <div
+      className="alert alert-danger"
+      role="alert"
+    >
+      <span
+        className="alert-indicator"
+      >
+        <Icon
+          iconName="exclamation-full"
+        />
+      </span>
+      <strong
+        className="lead"
+      >
+        Error:
+      </strong>
+      <span>
+        Please fill in the required fields.
+      </span>
+    </div>
+  </div>
+  <form
+    className="sheet sheet-lg"
+    role="form"
+  >
+    <div
+      className="sheet-header"
+    >
+      <h2
+        className="sheet-title"
+      >
+        SLA Definition
+      </h2>
+    </div>
+    <div
+      className="sheet-section"
+    >
+      <div
+        className="row"
+      >
+        <div
+          className="form-group col col-sm-5 has-error"
+        >
+          <FieldLabel
+            fieldId="sla_name"
+            required={true}
+            text="Name"
+          />
+          <input
+            autoFocus={true}
+            className="form-control"
+            id="sla_name"
+            name="name"
+            onChange={[Function]}
+            type="text"
+            value=""
+          />
+          <FieldError
+            error="A name is required."
+          />
+        </div>
+        <div
+          className="form-group col col-sm-7"
+        >
+          <FieldLabel
+            fieldId="sla_description"
+            text="Description"
+          />
+          <input
+            className="form-control"
+            id="sla_description"
+            name="description"
+            onChange={[Function]}
+            type="text"
+            value=""
+          />
+        </div>
+      </div>
+      <h3
+        className="sheet-subtitle"
+      >
+        <FieldLabel
+          fieldId="sla_description"
+          required={true}
+          text="DURATION TIME"
+        />
+      </h3>
+      <div
+        className="sheet-text"
+      >
+        Define a duration time to be met. Enter at least one of the following fields.
+      </div>
+      <div
+        className="row "
+      >
+        <div
+          className="form-group col col-sm-5 "
+        >
+          <FieldLabel
+            fieldId="sla_duration_days"
+            text="Days"
+          />
+          <reactTextMask
+            className="form-control"
+            id="sla_duration_days"
+            mask={[Function]}
+            name="days"
+            onBlur={[Function]}
+            onChange={[Function]}
+            value={3}
+          />
+          <div
+            className="form-text"
+          >
+            Enter a whole number.
+          </div>
+        </div>
+        <div
+          className="form-group col col-sm-3 "
+        >
+          <FieldLabel
+            fieldId="sla_duration_hours"
+            text="Hours"
+          />
+          <reactTextMask
+            className="form-control"
+            id="sla_duration_hours"
+            mask={
+              Array [
+                /\\\\d/,
+                /\\\\d/,
+                ":",
+                /\\\\d/,
+                /\\\\d/,
+              ]
+            }
+            name="hours"
+            onBlur={[Function]}
+            onChange={[Function]}
+            placeholder="00:00"
+            value="10:50"
+          />
+        </div>
+      </div>
+    </div>
+    <div
+      className="sheet-footer sheet-footer-btn-block-sm-down"
+    >
+      <div
+        className="btn-group"
+      >
+        <div
+          className="btn-group-item"
+        >
+          <button
+            className="btn btn-primary"
+            onClick={[Function]}
+            type="button"
+          >
+            Save
+          </button>
+        </div>
+        <div
+          className="btn-group-item"
+        >
+          <Link
+            className="btn btn-secondary"
+            query={
+              Object {
+                "processId": undefined,
+              }
+            }
+            text="Cancel"
+            to="sla-list"
+          />
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
+`;
+
+exports[`Should display error when submitting the form with invalid hours 1`] = `
+<div>
+  <div
+    className="alert-container"
+  >
+    <div
+      className="alert alert-danger"
+      role="alert"
+    >
+      <span
+        className="alert-indicator"
+      >
+        <Icon
+          iconName="exclamation-full"
+        />
+      </span>
+      <strong
+        className="lead"
+      >
+        Error:
+      </strong>
+      <span>
+        Please fill in the required fields.
+      </span>
+    </div>
+  </div>
+  <form
+    className="sheet sheet-lg"
+    role="form"
+  >
+    <div
+      className="sheet-header"
+    >
+      <h2
+        className="sheet-title"
+      >
+        SLA Definition
+      </h2>
+    </div>
+    <div
+      className="sheet-section"
+    >
+      <div
+        className="row"
+      >
+        <div
+          className="form-group col col-sm-5 "
+        >
+          <FieldLabel
+            fieldId="sla_name"
+            required={true}
+            text="Name"
+          />
+          <input
+            autoFocus={true}
+            className="form-control"
+            id="sla_name"
+            name="name"
+            onChange={[Function]}
+            type="text"
+            value="New SLA"
+          />
+        </div>
+        <div
+          className="form-group col col-sm-7"
+        >
+          <FieldLabel
+            fieldId="sla_description"
+            text="Description"
+          />
+          <input
+            className="form-control"
+            id="sla_description"
+            name="description"
+            onChange={[Function]}
+            type="text"
+            value=""
+          />
+        </div>
+      </div>
+      <h3
+        className="sheet-subtitle"
+      >
+        <FieldLabel
+          fieldId="sla_description"
+          required={true}
+          text="DURATION TIME"
+        />
+      </h3>
+      <div
+        className="sheet-text"
+      >
+        Define a duration time to be met. Enter at least one of the following fields.
+      </div>
+      <div
+        className="row "
+      >
+        <div
+          className="form-group col col-sm-5 "
+        >
+          <FieldLabel
+            fieldId="sla_duration_days"
+            text="Days"
+          />
+          <reactTextMask
+            className="form-control"
+            id="sla_duration_days"
+            mask={[Function]}
+            name="days"
+            onBlur={[Function]}
+            onChange={[Function]}
+            value={3}
+          />
+          <div
+            className="form-text"
+          >
+            Enter a whole number.
+          </div>
+        </div>
+        <div
+          className="form-group col col-sm-3 has-error"
+        >
+          <FieldLabel
+            fieldId="sla_duration_hours"
+            text="Hours"
+          />
+          <reactTextMask
+            className="form-control"
+            id="sla_duration_hours"
+            mask={
+              Array [
+                /\\\\d/,
+                /\\\\d/,
+                ":",
+                /\\\\d/,
+                /\\\\d/,
+              ]
+            }
+            name="hours"
+            onBlur={[Function]}
+            onChange={[Function]}
+            placeholder="00:00"
+            value="99:99"
+          />
+          <FieldError
+            error="Hours must be between 00:00 and 24:00."
+          />
+        </div>
+      </div>
+    </div>
+    <div
+      className="sheet-footer sheet-footer-btn-block-sm-down"
+    >
+      <div
+        className="btn-group"
+      >
+        <div
+          className="btn-group-item"
+        >
+          <button
+            className="btn btn-primary"
+            onClick={[Function]}
+            type="button"
+          >
+            Save
+          </button>
+        </div>
+        <div
+          className="btn-group-item"
+        >
+          <Link
+            className="btn btn-secondary"
+            query={
+              Object {
+                "processId": undefined,
+              }
+            }
+            text="Cancel"
+            to="sla-list"
+          />
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
+`;
+
+exports[`Should display errors when input blur with invalid values 1`] = `
+<div>
+  <form
+    className="sheet sheet-lg"
+    role="form"
+  >
+    <div
+      className="sheet-header"
+    >
+      <h2
+        className="sheet-title"
+      >
+        SLA Definition
+      </h2>
+    </div>
+    <div
+      className="sheet-section"
+    >
+      <div
+        className="row"
+      >
+        <div
+          className="form-group col col-sm-5 "
+        >
+          <FieldLabel
+            fieldId="sla_name"
+            required={true}
+            text="Name"
+          />
+          <input
+            autoFocus={true}
+            className="form-control"
+            id="sla_name"
+            name="name"
+            onChange={[Function]}
+            type="text"
+            value=""
+          />
+        </div>
+        <div
+          className="form-group col col-sm-7"
+        >
+          <FieldLabel
+            fieldId="sla_description"
+            text="Description"
+          />
+          <input
+            className="form-control"
+            id="sla_description"
+            name="description"
+            onChange={[Function]}
+            type="text"
+            value=""
+          />
+        </div>
+      </div>
+      <h3
+        className="sheet-subtitle"
+      >
+        <FieldLabel
+          fieldId="sla_description"
+          required={true}
+          text="DURATION TIME"
+        />
+      </h3>
+      <div
+        className="sheet-text"
+      >
+        Define a duration time to be met. Enter at least one of the following fields.
+      </div>
+      <div
+        className="row "
+      >
+        <div
+          className="form-group col col-sm-5 has-error"
+        >
+          <FieldLabel
+            fieldId="sla_duration_days"
+            text="Days"
+          />
+          <reactTextMask
+            className="form-control"
+            id="sla_duration_days"
+            mask={[Function]}
+            name="days"
+            onBlur={[Function]}
+            onChange={[Function]}
+            value="0"
+          />
+          <div
+            className="form-text"
+          >
+            Enter a whole number.
+          </div>
+          <FieldError
+            error="Value must be an integer above 0."
+          />
+        </div>
+        <div
+          className="form-group col col-sm-3 has-error"
+        >
+          <FieldLabel
+            fieldId="sla_duration_hours"
+            text="Hours"
+          />
+          <reactTextMask
+            className="form-control"
+            id="sla_duration_hours"
+            mask={
+              Array [
+                /\\\\d/,
+                /\\\\d/,
+                ":",
+                /\\\\d/,
+                /\\\\d/,
+              ]
+            }
+            name="hours"
+            onBlur={[Function]}
+            onChange={[Function]}
+            placeholder="00:00"
+            value="99:99"
+          />
+          <FieldError
+            error="Hours must be between 00:00 and 24:00."
+          />
+        </div>
+      </div>
+    </div>
+    <div
+      className="sheet-footer sheet-footer-btn-block-sm-down"
+    >
+      <div
+        className="btn-group"
+      >
+        <div
+          className="btn-group-item"
+        >
+          <button
+            className="btn btn-primary"
+            onClick={[Function]}
+            type="button"
+          >
+            Save
+          </button>
+        </div>
+        <div
+          className="btn-group-item"
+        >
+          <Link
+            className="btn btn-secondary"
+            query={
+              Object {
+                "processId": undefined,
+              }
+            }
+            text="Cancel"
+            to="sla-list"
+          />
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
+`;
+
+exports[`Should display errors when submitting the form with empty values 1`] = `
+<div>
+  <div
+    className="alert-container"
+  >
+    <div
+      className="alert alert-danger"
+      role="alert"
+    >
+      <span
+        className="alert-indicator"
+      >
+        <Icon
+          iconName="exclamation-full"
+        />
+      </span>
+      <strong
+        className="lead"
+      >
+        Error:
+      </strong>
+      <span>
+        Please fill in the required fields.
+      </span>
+    </div>
+  </div>
+  <form
+    className="sheet sheet-lg"
+    role="form"
+  >
+    <div
+      className="sheet-header"
+    >
+      <h2
+        className="sheet-title"
+      >
+        SLA Definition
+      </h2>
+    </div>
+    <div
+      className="sheet-section"
+    >
+      <div
+        className="row"
+      >
+        <div
+          className="form-group col col-sm-5 has-error"
+        >
+          <FieldLabel
+            fieldId="sla_name"
+            required={true}
+            text="Name"
+          />
+          <input
+            autoFocus={true}
+            className="form-control"
+            id="sla_name"
+            name="name"
+            onChange={[Function]}
+            type="text"
+            value=""
+          />
+          <FieldError
+            error="A name is required."
+          />
+        </div>
+        <div
+          className="form-group col col-sm-7"
+        >
+          <FieldLabel
+            fieldId="sla_description"
+            text="Description"
+          />
+          <input
+            className="form-control"
+            id="sla_description"
+            name="description"
+            onChange={[Function]}
+            type="text"
+            value=""
+          />
+        </div>
+      </div>
+      <h3
+        className="sheet-subtitle"
+      >
+        <FieldLabel
+          fieldId="sla_description"
+          required={true}
+          text="DURATION TIME"
+        />
+      </h3>
+      <div
+        className="sheet-text"
+      >
+        Define a duration time to be met. Enter at least one of the following fields.
+      </div>
+      <div
+        className="row has-error"
+      >
+        <div
+          className="form-group col col-sm-5 has-error"
+        >
+          <FieldLabel
+            fieldId="sla_duration_days"
+            text="Days"
+          />
+          <reactTextMask
+            className="form-control"
+            id="sla_duration_days"
+            mask={[Function]}
+            name="days"
+            onBlur={[Function]}
+            onChange={[Function]}
+            value={null}
+          />
+          <div
+            className="form-text"
+          >
+            Enter a whole number.
+          </div>
+          <FieldError
+            error="Value must be an integer above 0."
+          />
+        </div>
+        <div
+          className="form-group col col-sm-3 "
+        >
+          <FieldLabel
+            fieldId="sla_duration_hours"
+            text="Hours"
+          />
+          <reactTextMask
+            className="form-control"
+            id="sla_duration_hours"
+            mask={
+              Array [
+                /\\\\d/,
+                /\\\\d/,
+                ":",
+                /\\\\d/,
+                /\\\\d/,
+              ]
+            }
+            name="hours"
+            onBlur={[Function]}
+            onChange={[Function]}
+            placeholder="00:00"
+            value=""
+          />
+        </div>
+      </div>
+    </div>
+    <div
+      className="sheet-footer sheet-footer-btn-block-sm-down"
+    >
+      <div
+        className="btn-group"
+      >
+        <div
+          className="btn-group-item"
+        >
+          <button
+            className="btn btn-primary"
+            onClick={[Function]}
+            type="button"
+          >
+            Save
+          </button>
+        </div>
+        <div
+          className="btn-group-item"
+        >
+          <Link
+            className="btn btn-secondary"
+            query={
+              Object {
+                "processId": undefined,
+              }
+            }
+            text="Cancel"
+            to="sla-list"
+          />
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
+`;
+
+exports[`Should render component 1`] = `
+<div>
+  <form
+    className="sheet sheet-lg"
+    role="form"
+  >
+    <div
+      className="sheet-header"
+    >
+      <h2
+        className="sheet-title"
+      >
+        SLA Definition
+      </h2>
+    </div>
+    <div
+      className="sheet-section"
+    >
+      <div
+        className="row"
+      >
+        <div
+          className="form-group col col-sm-5 "
+        >
+          <label
+            htmlFor="sla_name"
+          >
+            Name 
+            <span
+              className="reference-mark"
+            >
+              <svg
+                className="lexicon-icon lexicon-icon-asterisk"
+                focusable="false"
+                role="presentation"
+              >
+                <use
+                  href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#asterisk"
+                />
+              </svg>
+            </span>
+          </label>
+          <input
+            autoFocus={true}
+            className="form-control"
+            id="sla_name"
+            name="name"
+            onChange={[Function]}
+            type="text"
+            value=""
+          />
+        </div>
+        <div
+          className="form-group col col-sm-7"
+        >
+          <label
+            htmlFor="sla_description"
+          >
+            Description 
+          </label>
+          <input
+            className="form-control"
+            id="sla_description"
+            name="description"
+            onChange={[Function]}
+            type="text"
+            value=""
+          />
+        </div>
+      </div>
+      <h3
+        className="sheet-subtitle"
+      >
+        <label
+          htmlFor="sla_description"
+        >
+          DURATION TIME 
+          <span
+            className="reference-mark"
+          >
+            <svg
+              className="lexicon-icon lexicon-icon-asterisk"
+              focusable="false"
+              role="presentation"
+            >
+              <use
+                href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#asterisk"
+              />
+            </svg>
+          </span>
+        </label>
+      </h3>
+      <div
+        className="sheet-text"
+      >
+        Define a duration time to be met. Enter at least one of the following fields.
+      </div>
+      <div
+        className="row "
+      >
+        <div
+          className="form-group col col-sm-5 "
+        >
+          <label
+            htmlFor="sla_duration_days"
+          >
+            Days 
+          </label>
+          <input
+            className="form-control"
+            id="sla_duration_days"
+            mask={[Function]}
+            name="days"
+            onBlur={[Function]}
+            onChange={[Function]}
+            type="text"
+            value={null}
+          />
+          <div
+            className="form-text"
+          >
+            Enter a whole number.
+          </div>
+        </div>
+        <div
+          className="form-group col col-sm-3 "
+        >
+          <label
+            htmlFor="sla_duration_hours"
+          >
+            Hours 
+          </label>
+          <input
+            className="form-control"
+            id="sla_duration_hours"
+            mask={
+              Array [
+                /\\\\d/,
+                /\\\\d/,
+                ":",
+                /\\\\d/,
+                /\\\\d/,
+              ]
+            }
+            name="hours"
+            onBlur={[Function]}
+            onChange={[Function]}
+            placeholder="00:00"
+            type="text"
+            value=""
+          />
+        </div>
+      </div>
+    </div>
+    <div
+      className="sheet-footer sheet-footer-btn-block-sm-down"
+    >
+      <div
+        className="btn-group"
+      >
+        <div
+          className="btn-group-item"
+        >
+          <button
+            className="btn btn-primary"
+            onClick={[Function]}
+            type="button"
+          >
+            Save
+          </button>
+        </div>
+        <div
+          className="btn-group-item"
+        >
+          <a
+            className="btn btn-secondary"
+            data-senna-off={true}
+            href="#processId=undefined&_path=sla-list"
+          >
+            Cancel
+          </a>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
+`;
+
+exports[`Should submit the form with valid values 1`] = `
+<div>
+  <form
+    className="sheet sheet-lg"
+    role="form"
+  >
+    <div
+      className="sheet-header"
+    >
+      <h2
+        className="sheet-title"
+      >
+        SLA Definition
+      </h2>
+    </div>
+    <div
+      className="sheet-section"
+    >
+      <div
+        className="row"
+      >
+        <div
+          className="form-group col col-sm-5 "
+        >
+          <FieldLabel
+            fieldId="sla_name"
+            required={true}
+            text="Name"
+          />
+          <input
+            autoFocus={true}
+            className="form-control"
+            id="sla_name"
+            name="name"
+            onChange={[Function]}
+            type="text"
+            value="New SLA"
+          />
+        </div>
+        <div
+          className="form-group col col-sm-7"
+        >
+          <FieldLabel
+            fieldId="sla_description"
+            text="Description"
+          />
+          <input
+            className="form-control"
+            id="sla_description"
+            name="description"
+            onChange={[Function]}
+            type="text"
+            value=""
+          />
+        </div>
+      </div>
+      <h3
+        className="sheet-subtitle"
+      >
+        <FieldLabel
+          fieldId="sla_description"
+          required={true}
+          text="DURATION TIME"
+        />
+      </h3>
+      <div
+        className="sheet-text"
+      >
+        Define a duration time to be met. Enter at least one of the following fields.
+      </div>
+      <div
+        className="row "
+      >
+        <div
+          className="form-group col col-sm-5 "
+        >
+          <FieldLabel
+            fieldId="sla_duration_days"
+            text="Days"
+          />
+          <reactTextMask
+            className="form-control"
+            id="sla_duration_days"
+            mask={[Function]}
+            name="days"
+            onBlur={[Function]}
+            onChange={[Function]}
+            value={3}
+          />
+          <div
+            className="form-text"
+          >
+            Enter a whole number.
+          </div>
+        </div>
+        <div
+          className="form-group col col-sm-3 "
+        >
+          <FieldLabel
+            fieldId="sla_duration_hours"
+            text="Hours"
+          />
+          <reactTextMask
+            className="form-control"
+            id="sla_duration_hours"
+            mask={
+              Array [
+                /\\\\d/,
+                /\\\\d/,
+                ":",
+                /\\\\d/,
+                /\\\\d/,
+              ]
+            }
+            name="hours"
+            onBlur={[Function]}
+            onChange={[Function]}
+            placeholder="00:00"
+            value="10:50"
+          />
+        </div>
+      </div>
+    </div>
+    <div
+      className="sheet-footer sheet-footer-btn-block-sm-down"
+    >
+      <div
+        className="btn-group"
+      >
+        <div
+          className="btn-group-item"
+        >
+          <button
+            className="btn btn-primary"
+            onClick={[Function]}
+            type="button"
+          >
+            Save
+          </button>
+        </div>
+        <div
+          className="btn-group-item"
+        >
+          <Link
+            className="btn btn-secondary"
+            query={
+              Object {
+                "processId": undefined,
+              }
+            }
+            text="Cancel"
+            to="sla-list"
+          />
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
+`;
+
+exports[`Should update state after input changes 1`] = `
+<SLAForm>
+  <div>
+    <form
+      className="sheet sheet-lg"
+      role="form"
+    >
+      <div
+        className="sheet-header"
+      >
+        <h2
+          className="sheet-title"
+        >
+          SLA Definition
+        </h2>
+      </div>
+      <div
+        className="sheet-section"
+      >
+        <div
+          className="row"
+        >
+          <div
+            className="form-group col col-sm-5 has-error"
+          >
+            <FieldLabel
+              fieldId="sla_name"
+              required={true}
+              text="Name"
+            >
+              <label
+                htmlFor="sla_name"
+              >
+                Name 
+                <span
+                  className="reference-mark"
+                >
+                  <Icon
+                    iconName="asterisk"
+                  >
+                    <svg
+                      className="lexicon-icon lexicon-icon-asterisk"
+                      focusable="false"
+                      role="presentation"
+                    >
+                      <use
+                        href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#asterisk"
+                      />
+                    </svg>
+                  </Icon>
+                </span>
+              </label>
+            </FieldLabel>
+            <input
+              autoFocus={true}
+              className="form-control"
+              id="sla_name"
+              name="name"
+              onChange={[Function]}
+              type="text"
+              value=""
+            />
+            <FieldError
+              error="A name is required."
+            >
+              <div
+                className="form-feedback-group"
+              >
+                <div
+                  className="form-feedback-item"
+                >
+                  <span
+                    className="form-feedback-indicator"
+                  >
+                    <Icon
+                      iconName="exclamation-full"
+                    >
+                      <svg
+                        className="lexicon-icon lexicon-icon-exclamation-full"
+                        focusable="false"
+                        role="presentation"
+                      >
+                        <use
+                          href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#exclamation-full"
+                        />
+                      </svg>
+                    </Icon>
+                  </span>
+                  A name is required.
+                </div>
+              </div>
+            </FieldError>
+          </div>
+          <div
+            className="form-group col col-sm-7"
+          >
+            <FieldLabel
+              fieldId="sla_description"
+              text="Description"
+            >
+              <label
+                htmlFor="sla_description"
+              >
+                Description 
+              </label>
+            </FieldLabel>
+            <input
+              className="form-control"
+              id="sla_description"
+              name="description"
+              onChange={[Function]}
+              type="text"
+              value=""
+            />
+          </div>
+        </div>
+        <h3
+          className="sheet-subtitle"
+        >
+          <FieldLabel
+            fieldId="sla_description"
+            required={true}
+            text="DURATION TIME"
+          >
+            <label
+              htmlFor="sla_description"
+            >
+              DURATION TIME 
+              <span
+                className="reference-mark"
+              >
+                <Icon
+                  iconName="asterisk"
+                >
+                  <svg
+                    className="lexicon-icon lexicon-icon-asterisk"
+                    focusable="false"
+                    role="presentation"
+                  >
+                    <use
+                      href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#asterisk"
+                    />
+                  </svg>
+                </Icon>
+              </span>
+            </label>
+          </FieldLabel>
+        </h3>
+        <div
+          className="sheet-text"
+        >
+          Define a duration time to be met. Enter at least one of the following fields.
+        </div>
+        <div
+          className="row "
+        >
+          <div
+            className="form-group col col-sm-5 "
+          >
+            <FieldLabel
+              fieldId="sla_duration_days"
+              text="Days"
+            >
+              <label
+                htmlFor="sla_duration_days"
+              >
+                Days 
+              </label>
+            </FieldLabel>
+            <reactTextMask
+              className="form-control"
+              id="sla_duration_days"
+              mask={[Function]}
+              name="days"
+              onBlur={[Function]}
+              onChange={[Function]}
+              value={null}
+            >
+              <input
+                className="form-control"
+                id="sla_duration_days"
+                mask={[Function]}
+                name="days"
+                onBlur={[Function]}
+                onChange={[Function]}
+                type="text"
+                value={null}
+              />
+            </reactTextMask>
+            <div
+              className="form-text"
+            >
+              Enter a whole number.
+            </div>
+          </div>
+          <div
+            className="form-group col col-sm-3 "
+          >
+            <FieldLabel
+              fieldId="sla_duration_hours"
+              text="Hours"
+            >
+              <label
+                htmlFor="sla_duration_hours"
+              >
+                Hours 
+              </label>
+            </FieldLabel>
+            <reactTextMask
+              className="form-control"
+              id="sla_duration_hours"
+              mask={
+                Array [
+                  /\\\\d/,
+                  /\\\\d/,
+                  ":",
+                  /\\\\d/,
+                  /\\\\d/,
+                ]
+              }
+              name="hours"
+              onBlur={[Function]}
+              onChange={[Function]}
+              placeholder="00:00"
+              value=""
+            >
+              <input
+                className="form-control"
+                id="sla_duration_hours"
+                mask={
+                  Array [
+                    /\\\\d/,
+                    /\\\\d/,
+                    ":",
+                    /\\\\d/,
+                    /\\\\d/,
+                  ]
+                }
+                name="hours"
+                onBlur={[Function]}
+                onChange={[Function]}
+                placeholder="00:00"
+                type="text"
+                value=""
+              />
+            </reactTextMask>
+          </div>
+        </div>
+      </div>
+      <div
+        className="sheet-footer sheet-footer-btn-block-sm-down"
+      >
+        <div
+          className="btn-group"
+        >
+          <div
+            className="btn-group-item"
+          >
+            <button
+              className="btn btn-primary"
+              onClick={[Function]}
+              type="button"
+            >
+              Save
+            </button>
+          </div>
+          <div
+            className="btn-group-item"
+          >
+            <Link
+              className="btn btn-secondary"
+              query={
+                Object {
+                  "_path": "sla-list",
+                  "processId": undefined,
+                }
+              }
+              text="Cancel"
+              to="sla-list"
+            >
+              <a
+                className="btn btn-secondary"
+                data-senna-off={true}
+                href="#processId=undefined&_path=sla-list"
+              >
+                Cancel
+              </a>
+            </Link>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+</SLAForm>
+`;

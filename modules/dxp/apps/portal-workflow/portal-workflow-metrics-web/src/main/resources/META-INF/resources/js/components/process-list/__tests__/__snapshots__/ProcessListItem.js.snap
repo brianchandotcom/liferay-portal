@@ -1,36 +1,5 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Should render component 1`] = `
-<tr>
-  <td
-    className="table-cell-expand"
-  >
-    <div
-      className="table-list-title"
-    >
-      <span
-        className="text-truncate-inline"
-      >
-        <span
-          title="Process test"
-        >
-          Process test
-        </span>
-      </span>
-    </div>
-  </td>
-  <td>
-    10 Items
-  </td>
-  <td>
-    5
-  </td>
-  <td>
-    5
-  </td>
-</tr>
-`;
-
 exports[`Should render component with 1 instance count 1`] = `
 <tr>
   <td
@@ -58,6 +27,115 @@ exports[`Should render component with 1 instance count 1`] = `
   </td>
   <td>
     5
+  </td>
+  <td>
+    <div
+      className="dropdown dropdown-action"
+    >
+      <a
+        aria-expanded="false"
+        aria-haspopup="true"
+        className="component-action dropdown-toggle"
+        data-toggle="dropdown"
+        href="#1"
+        id="dropdownAction1"
+        role="button"
+      >
+        <svg
+          className="lexicon-icon lexicon-icon-ellipsis-v"
+          focusable="false"
+          role="presentation"
+        >
+          <use
+            href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#ellipsis-v"
+          />
+        </svg>
+      </a>
+      <ul
+        aria-labelledby=""
+        className="dropdown-menu dropdown-menu-right"
+      >
+        <li>
+          <a
+            className="dropdown-item"
+            data-senna-off={true}
+            href="#processId=36401&_path=sla-list"
+          >
+            Set Up SLAs
+          </a>
+        </li>
+      </ul>
+    </div>
+  </td>
+</tr>
+`;
+
+exports[`Should render component with one list item 1`] = `
+<tr>
+  <td
+    className="table-cell-expand"
+  >
+    <div
+      className="table-list-title"
+    >
+      <span
+        className="text-truncate-inline"
+      >
+        <span
+          title="Process test"
+        >
+          Process test
+        </span>
+      </span>
+    </div>
+  </td>
+  <td>
+    10 Items
+  </td>
+  <td>
+    5
+  </td>
+  <td>
+    5
+  </td>
+  <td>
+    <div
+      className="dropdown dropdown-action"
+    >
+      <a
+        aria-expanded="false"
+        aria-haspopup="true"
+        className="component-action dropdown-toggle"
+        data-toggle="dropdown"
+        href="#1"
+        id="dropdownAction1"
+        role="button"
+      >
+        <svg
+          className="lexicon-icon lexicon-icon-ellipsis-v"
+          focusable="false"
+          role="presentation"
+        >
+          <use
+            href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#ellipsis-v"
+          />
+        </svg>
+      </a>
+      <ul
+        aria-labelledby=""
+        className="dropdown-menu dropdown-menu-right"
+      >
+        <li>
+          <a
+            className="dropdown-item"
+            data-senna-off={true}
+            href="#processId=36401&_path=sla-list"
+          >
+            Set Up SLAs
+          </a>
+        </li>
+      </ul>
+    </div>
   </td>
 </tr>
 `;

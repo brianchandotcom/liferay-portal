@@ -1,0 +1,314 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Should render component 1`] = `
+<div
+  className="table-responsive"
+>
+  <table
+    className="show-quick-actions-on-hover table table-autofit table-heading-nowrap table-hover table-list"
+  >
+    <thead>
+      <tr>
+        <th />
+        <th
+          className="table-cell-expand table-head-title"
+          style={
+            Object {
+              "width": "40%",
+            }
+          }
+        >
+          SLA Name
+        </th>
+        <th
+          className="table-cell-expand table-head-title"
+          style={
+            Object {
+              "width": "35%",
+            }
+          }
+        >
+          Description
+        </th>
+        <th
+          className="table-cell-expand table-head-title"
+          style={
+            Object {
+              "width": "25%",
+            }
+          }
+        >
+          Duration
+        </th>
+        <th />
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>
+          <div
+            className="custom-control custom-checkbox"
+          >
+            <label>
+              <input
+                className="custom-control-input"
+                type="checkbox"
+              />
+              <span
+                className="custom-control-label"
+              />
+            </label>
+          </div>
+        </td>
+        <td
+          className="table-cell-expand"
+        >
+          <div
+            className="table-list-title"
+          >
+            <span
+              className="text-truncate-inline"
+            >
+              <span
+                title="Total resolution time"
+              >
+                Total resolution time
+              </span>
+            </span>
+          </div>
+        </td>
+        <td>
+          Total time to complete the request.
+        </td>
+        <td>
+          
+        </td>
+        <td>
+          <div
+            className="dropdown dropdown-action"
+          >
+            <a
+              aria-expanded="false"
+              aria-haspopup="true"
+              className="component-action dropdown-toggle"
+              data-toggle="dropdown"
+              href="#1"
+              id="dropdownAction1"
+              role="button"
+            >
+              <svg
+                className="lexicon-icon lexicon-icon-ellipsis-v"
+                focusable="false"
+                role="presentation"
+              >
+                <use
+                  href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#ellipsis-v"
+                />
+              </svg>
+            </a>
+            <ul
+              aria-labelledby=""
+              className="dropdown-menu dropdown-menu-right"
+            >
+              <li>
+                <a
+                  className="dropdown-item"
+                  data-senna-off={true}
+                  href="#processId=undefined&_path=sla-form"
+                >
+                  Edit
+                </a>
+              </li>
+              <li>
+                <a
+                  className="dropdown-item"
+                  data-senna-off={true}
+                  href="#itemToRemove=test&_path=sla-list"
+                >
+                  Delete
+                </a>
+              </li>
+            </ul>
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <div
+            className="custom-control custom-checkbox"
+          >
+            <label>
+              <input
+                className="custom-control-input"
+                type="checkbox"
+              />
+              <span
+                className="custom-control-label"
+              />
+            </label>
+          </div>
+        </td>
+        <td
+          className="table-cell-expand"
+        >
+          <div
+            className="table-list-title"
+          >
+            <span
+              className="text-truncate-inline"
+            >
+              <span
+                title="Total resolution time"
+              >
+                Total resolution time
+              </span>
+            </span>
+          </div>
+        </td>
+        <td>
+          Total time to complete the request.
+        </td>
+        <td>
+          
+        </td>
+        <td>
+          <div
+            className="dropdown dropdown-action"
+          >
+            <a
+              aria-expanded="false"
+              aria-haspopup="true"
+              className="component-action dropdown-toggle"
+              data-toggle="dropdown"
+              href="#1"
+              id="dropdownAction1"
+              role="button"
+            >
+              <svg
+                className="lexicon-icon lexicon-icon-ellipsis-v"
+                focusable="false"
+                role="presentation"
+              >
+                <use
+                  href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#ellipsis-v"
+                />
+              </svg>
+            </a>
+            <ul
+              aria-labelledby=""
+              className="dropdown-menu dropdown-menu-right"
+            >
+              <li>
+                <a
+                  className="dropdown-item"
+                  data-senna-off={true}
+                  href="#processId=undefined&_path=sla-form"
+                >
+                  Edit
+                </a>
+              </li>
+              <li>
+                <a
+                  className="dropdown-item"
+                  data-senna-off={true}
+                  href="#itemToRemove=test&_path=sla-list"
+                >
+                  Delete
+                </a>
+              </li>
+            </ul>
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <div
+            className="custom-control custom-checkbox"
+          >
+            <label>
+              <input
+                className="custom-control-input"
+                type="checkbox"
+              />
+              <span
+                className="custom-control-label"
+              />
+            </label>
+          </div>
+        </td>
+        <td
+          className="table-cell-expand"
+        >
+          <div
+            className="table-list-title"
+          >
+            <span
+              className="text-truncate-inline"
+            >
+              <span
+                title="Total resolution time"
+              >
+                Total resolution time
+              </span>
+            </span>
+          </div>
+        </td>
+        <td>
+          Total time to complete the request.
+        </td>
+        <td>
+          
+        </td>
+        <td>
+          <div
+            className="dropdown dropdown-action"
+          >
+            <a
+              aria-expanded="false"
+              aria-haspopup="true"
+              className="component-action dropdown-toggle"
+              data-toggle="dropdown"
+              href="#1"
+              id="dropdownAction1"
+              role="button"
+            >
+              <svg
+                className="lexicon-icon lexicon-icon-ellipsis-v"
+                focusable="false"
+                role="presentation"
+              >
+                <use
+                  href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#ellipsis-v"
+                />
+              </svg>
+            </a>
+            <ul
+              aria-labelledby=""
+              className="dropdown-menu dropdown-menu-right"
+            >
+              <li>
+                <a
+                  className="dropdown-item"
+                  data-senna-off={true}
+                  href="#processId=undefined&_path=sla-form"
+                >
+                  Edit
+                </a>
+              </li>
+              <li>
+                <a
+                  className="dropdown-item"
+                  data-senna-off={true}
+                  href="#itemToRemove=test&_path=sla-list"
+                >
+                  Delete
+                </a>
+              </li>
+            </ul>
+          </div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+`;

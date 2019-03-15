@@ -212,7 +212,7 @@ AUI.add(
 									instance._moveSingleElement(event.folderid, parameterName, parameterValue);
 								}
 								else {
-									instance._processMoveAction(event.folderid);
+									instance._moveCurrectSelection(event.folderid);
 								}
 							}
 						);
@@ -229,6 +229,23 @@ AUI.add(
 						else {
 							instance._selectedFileEntries = [];
 						}
+					},
+
+					_moveCurrectSelection(newFolderId) {
+						var instance = this;
+
+						var form = instance.get('form').node;
+
+						var actionUrl = instance.get('editEntryUrl');
+
+						form.attr('action', actionUrl);
+						form.attr('method', 'POST');
+						form.attr('enctype', 'multipart/form-data');
+
+						form.get(instance.NS + 'cmd').val('move');
+						form.get(instance.NS + 'newFolderId').val(newFolderId);
+
+						submitForm(form, actionUrl, false);
 					},
 
 					_moveSingleElement: function(newFolderId, parameterName, parameterValue) {
@@ -269,7 +286,7 @@ AUI.add(
 							if (!instance._searchContainer.select ||
 								selectedItems.indexOf(dropTarget.one('input[type=checkbox]'))
 							) {
-								instance._processMoveAction(folderId);
+								instance._moveCurrectSelection(folderId);
 							}
 						}
 					},
@@ -385,23 +402,6 @@ AUI.add(
 						form.get(namespace + 'selectAll').val(bulkSelection);
 
 						submitForm(form, url, false);
-					},
-
-					_processMoveAction(newFolderId) {
-						var instance = this;
-
-						var form = instance.get('form').node;
-
-						var actionUrl = instance.get('editEntryUrl');
-
-						form.attr('action', actionUrl);
-						form.attr('method', 'POST');
-						form.attr('enctype', 'multipart/form-data');
-
-						form.get(instance.NS + 'cmd').val('move');
-						form.get(instance.NS + 'newFolderId').val(newFolderId);
-
-						submitForm(form, actionUrl, false);
 					}
 				}
 			}

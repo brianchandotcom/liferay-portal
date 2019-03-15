@@ -15,16 +15,18 @@ export default class Router extends React.Component {
 		this.state = {
 			firstUrl: url,
 			lastUrl: url,
-			path: props.defautPath,
+			path: props.defaultPath,
 			query: {}
 		};
 	}
 
 	componentDidMount() {
-		window.addEventListener(PAGE_CHANGE, this.changePage);
+		const onPageChanged = () => this.onPageChanged();
+
+		window.addEventListener(PAGE_CHANGE, onPageChanged);
 
 		this.unsub = () => {
-			window.removeEventListener(PAGE_CHANGE, this.changePage);
+			window.removeEventListener(PAGE_CHANGE, onPageChanged);
 		};
 	}
 
@@ -55,12 +57,12 @@ export default class Router extends React.Component {
 		const {_path: path} = query;
 		let {_title: title} = query;
 
-		const {defautPath, paths} = this.props;
+		const {defaultPath, paths} = this.props;
 		const {lastUrl} = this.state;
 
-		const isFirstPage = path ? false : true;
+		const isFirstPage = !path || path === defaultPath;
 
-		const pathToFind = isFirstPage ? defautPath : path;
+		const pathToFind = isFirstPage ? defaultPath : path;
 
 		const componentRender = paths.find(router => router.path === pathToFind);
 

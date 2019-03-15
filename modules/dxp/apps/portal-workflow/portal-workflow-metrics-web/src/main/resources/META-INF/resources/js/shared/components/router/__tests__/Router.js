@@ -17,15 +17,43 @@ beforeEach(() => {
 	document.body.appendChild(vbody);
 });
 
+test('Should navigate when event is dispatched', () => {
+	const paths = [
+		{
+			component: ({title}) => <div>{title}</div>,
+			path: 'test-1',
+			title: 'test-1'
+		},
+		{
+			component: () => <div>{'test-2'}</div>,
+			path: 'test-2'
+		}
+	];
+	const component = shallow(<Router defaultPath="test-1" paths={paths} />);
+	const instance = component.instance();
+
+	instance.componentDidMount();
+	instance.getQuery = () => ({
+		_path: 'test-1',
+		_title: 'test-1'
+	});
+	window.dispatchEvent(new PopStateEvent('popstate', {}));
+
+	instance.getQuery = () => ({
+		_path: 'test-2'
+	});
+	window.dispatchEvent(new PopStateEvent('popstate', {}));
+
+	expect(component).toMatchSnapshot();
+});
+
 test('Should test component render', () => {
-	const component = shallow(<Router defautPath="test" paths={[]} />);
+	const component = shallow(<Router defaultPath="test" paths={[]} />);
 	const instance = component.instance();
 
 	instance.componentDidMount();
 
-	const link = shallow(
-		<Link className="test" text="test" to="test" type="button" />
-	);
+	const link = shallow(<Link className="test" text="test" to="test" />);
 
 	link.find('a').simulate('click');
 
@@ -52,7 +80,7 @@ test('Should test navigate', () => {
 			title: 'test-3'
 		}
 	];
-	const component = shallow(<Router defautPath="test-1" paths={paths} />);
+	const component = shallow(<Router defaultPath="test-1" paths={paths} />);
 	const instance = component.instance();
 
 	instance.componentDidMount();
@@ -63,7 +91,6 @@ test('Should test navigate', () => {
 			query={{title: 'test-2'}}
 			text="test-2"
 			to="test-2"
-			type="button"
 		/>
 	);
 
@@ -90,7 +117,7 @@ test('Should test navigate with title', () => {
 			title: 'test-3'
 		}
 	];
-	const component = shallow(<Router defautPath="test-3" paths={paths} />);
+	const component = shallow(<Router defaultPath="test-3" paths={paths} />);
 	const instance = component.instance();
 
 	instance.componentDidMount();
@@ -101,7 +128,6 @@ test('Should test navigate with title', () => {
 			query={{title: 'test-2'}}
 			text="test"
 			to="test-2"
-			type="button"
 		/>
 	);
 
@@ -128,7 +154,7 @@ test('Should test returning navigate', () => {
 			title: 'test-3'
 		}
 	];
-	const component = shallow(<Router defautPath="test-3" paths={paths} />);
+	const component = shallow(<Router defaultPath="test-3" paths={paths} />);
 	const instance = component.instance();
 
 	instance.componentDidMount();
@@ -140,7 +166,6 @@ test('Should test returning navigate', () => {
 			text="test2"
 			title="test-2"
 			to="test-2"
-			type="button"
 		/>
 	);
 
@@ -173,7 +198,7 @@ test('Should test returning navigate by click', () => {
 			title: 'test-2'
 		}
 	];
-	const component = shallow(<Router defautPath="test-1" paths={paths} />);
+	const component = shallow(<Router defaultPath="test-1" paths={paths} />);
 	const instance = component.instance();
 
 	instance.componentDidMount();
@@ -187,7 +212,6 @@ test('Should test returning navigate by click', () => {
 			text="test2"
 			title="test-2"
 			to="test-2"
-			type="button"
 		/>
 	);
 
@@ -209,7 +233,7 @@ test('Should test query when clicked', () => {
 			title: 'test-2'
 		}
 	];
-	const component = shallow(<Router defautPath="test-1" paths={paths} />);
+	const component = shallow(<Router defaultPath="test-1" paths={paths} />);
 	const instance = component.instance();
 
 	instance.componentDidMount();
@@ -221,7 +245,6 @@ test('Should test query when clicked', () => {
 			text="test2"
 			title="test-2"
 			to="test-2"
-			type="button"
 		/>
 	);
 

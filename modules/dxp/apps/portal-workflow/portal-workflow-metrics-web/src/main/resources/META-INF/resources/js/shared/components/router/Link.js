@@ -1,3 +1,4 @@
+import {jsonToUrl} from '../../util/url';
 import React from 'react';
 
 /**
@@ -5,29 +6,16 @@ import React from 'react';
  * @extends React.Component
  */
 export default class Link extends React.Component {
-	getUrl() {
-		const {query = {}, title, to} = this.props;
-
-		if (title) {
-			query['_title'] = title;
-		}
-
-		query['_path'] = to;
-
-		const url = Object.keys(query).reduce(
-			(old, key) => `${old}&${key}=${query[key]}`,
-			''
-		);
-
-		return `#${url}`;
-	}
-
 	render() {
-		const {className, text, type} = this.props;
+		const {children, className, query = {}, text, title, to} = this.props;
 
 		return (
-			<a className={className} data-senna-off href={this.getUrl()} type={type}>
-				{text}
+			<a
+				className={className}
+				data-senna-off
+				href={jsonToUrl({query, title, to})}
+			>
+				{text || children}
 			</a>
 		);
 	}

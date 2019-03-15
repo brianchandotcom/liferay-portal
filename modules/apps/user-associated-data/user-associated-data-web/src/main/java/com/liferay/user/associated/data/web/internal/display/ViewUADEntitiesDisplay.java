@@ -15,6 +15,7 @@
 package com.liferay.user.associated.data.web.internal.display;
 
 import com.liferay.petra.string.StringPool;
+import com.liferay.petra.string.StringUtil;
 import com.liferay.portal.kernel.dao.search.ResultRowSplitter;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 
@@ -65,9 +66,9 @@ public class ViewUADEntitiesDisplay {
 			}
 		}
 
-		return String.join(
-			StringPool.COMMA,
-			userOwnedPKs.toArray(new String[userOwnedPKs.size()]));
+		return StringUtil.merge(
+			userOwnedPKs.toArray(new String[userOwnedPKs.size()]),
+			StringPool.COMMA);
 	}
 
 	public boolean isHierarchy() {
@@ -108,6 +109,6 @@ public class ViewUADEntitiesDisplay {
 	private SearchContainer<UADEntity> _searchContainer;
 	private Class<?>[] _typeClasses;
 	private String _typeName;
-	private String _uadRegistryKey = "";
+	private String _uadRegistryKey = StringPool.BLANK;
 
 }

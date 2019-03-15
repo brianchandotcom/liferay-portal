@@ -20,6 +20,7 @@ import com.liferay.configuration.admin.web.internal.model.ConfigurationModel;
 import com.liferay.configuration.admin.web.internal.util.ConfigurationEntryRetriever;
 import com.liferay.configuration.admin.web.internal.util.ConfigurationModelRetriever;
 import com.liferay.configuration.admin.web.internal.util.ResourceBundleLoaderProvider;
+import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.CompanyConstants;
 import com.liferay.portal.kernel.search.BaseIndexer;
@@ -285,7 +286,8 @@ public class ConfigurationModelIndexer extends BaseIndexer<ConfigurationModel> {
 	@Override
 	protected void doReindex(String[] ids) throws Exception {
 		Map<String, ConfigurationModel> configurationModels =
-			_configurationModelRetriever.getConfigurationModels();
+			_configurationModelRetriever.getConfigurationModels(
+				ExtendedObjectClassDefinition.Scope.SYSTEM, null);
 
 		for (ConfigurationModel configurationModel :
 				configurationModels.values()) {

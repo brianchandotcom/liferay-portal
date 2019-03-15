@@ -22,6 +22,7 @@ import com.liferay.configuration.admin.web.internal.util.ConfigurationEntryRetri
 import com.liferay.configuration.admin.web.internal.util.ConfigurationModelIterator;
 import com.liferay.configuration.admin.web.internal.util.ConfigurationModelRetriever;
 import com.liferay.configuration.admin.web.internal.util.ResourceBundleLoaderProvider;
+import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
 import com.liferay.portal.kernel.model.CompanyConstants;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.search.Document;
@@ -89,7 +90,8 @@ public class SearchMVCRenderCommand implements MVCRenderCommand {
 			Document[] documents = hits.getDocs();
 
 			Map<String, ConfigurationModel> configurationModels =
-				_configurationModelRetriever.getConfigurationModels();
+				_configurationModelRetriever.getConfigurationModels(
+					ExtendedObjectClassDefinition.Scope.SYSTEM, null);
 
 			List<ConfigurationModel> searchResults = new ArrayList<>(
 				documents.length);

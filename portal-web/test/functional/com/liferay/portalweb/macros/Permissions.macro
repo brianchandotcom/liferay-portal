@@ -415,6 +415,8 @@ definition {
 			portlet = "Instance Settings"
 		);
 
+		Portlet.waitForForm();
+
 		PortalSettings.editConfigurationUsersDefaultUserAssociationsRolesCP(
 			roleTitle = ""
 		);

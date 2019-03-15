@@ -1,5 +1,7 @@
 definition {
 	macro expandPanel {
+		Portlet.waitForForm();
+
 		var key_panel = "${panel}";
 
 		AssertVisible(

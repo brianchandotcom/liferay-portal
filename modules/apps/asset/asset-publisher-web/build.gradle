@@ -35,6 +35,7 @@ dependencies {
 	compileOnly project(":apps:portlet-display-template:portlet-display-template-api")
 	compileOnly project(":apps:rss:rss-api")
 	compileOnly project(":apps:rss:rss-taglib")
+	compileOnly project(":apps:segments:segments-api")
 	compileOnly project(":apps:site:site-api")
 	compileOnly project(":apps:site:site-item-selector-api")
 	compileOnly project(":apps:site:site-taglib")

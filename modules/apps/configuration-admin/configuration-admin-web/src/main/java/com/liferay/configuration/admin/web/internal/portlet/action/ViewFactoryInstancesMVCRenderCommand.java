@@ -52,6 +52,7 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
 @Component(
 	immediate = true,
 	property = {
+		"javax.portlet.name=" + ConfigurationAdminPortletKeys.COMPANY_SETTINGS,
 		"javax.portlet.name=" + ConfigurationAdminPortletKeys.SYSTEM_SETTINGS,
 		"mvc.command.name=/view_factory_instances",
 		"service.ranking:Integer=" + (Integer.MAX_VALUE - 1000)

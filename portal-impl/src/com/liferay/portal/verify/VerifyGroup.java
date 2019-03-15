@@ -72,12 +72,6 @@ public class VerifyGroup extends VerifyProcess {
 
 				Group stagingGroup = group.getStagingGroup();
 
-				if (group.getClassNameId() != stagingGroup.getClassNameId()) {
-					stagingGroup.setClassNameId(group.getClassNameId());
-
-					GroupLocalServiceUtil.updateGroup(stagingGroup);
-				}
-
 				if (!stagingGroup.isStagedRemotely()) {
 					verifyStagingGroupOrganizationMembership(stagingGroup);
 					verifyStagingGroupRoleMembership(stagingGroup);

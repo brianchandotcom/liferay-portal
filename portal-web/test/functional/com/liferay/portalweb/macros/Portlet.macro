@@ -494,4 +494,10 @@ definition {
 			value1 = "This portlet has been undeployed."
 		);
 	}
+
+	macro waitForForm {
+		AssertElementNotPresent(
+			locator1 = "//fieldset[@disabled]"
+		);
+	}
 }

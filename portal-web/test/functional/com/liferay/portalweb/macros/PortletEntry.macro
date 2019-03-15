@@ -1,5 +1,7 @@
 definition {
 	macro changeLocale {
+		Portlet.waitForForm();
+
 		Click.clickNoMouseOver(locator1 = "Button#LOCALIZATION", key_fieldName = "${fieldName}");
 
 		Click(

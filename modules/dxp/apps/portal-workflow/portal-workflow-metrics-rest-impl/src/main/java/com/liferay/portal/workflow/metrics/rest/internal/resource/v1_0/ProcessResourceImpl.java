@@ -123,7 +123,6 @@ public class ProcessResourceImpl
 	private BooleanFilter _createProcessBooleanFilter() {
 		return new BooleanFilter() {
 			{
-				addRequiredTerm("active", true);
 				addRequiredTerm("companyId", contextCompany.getCompanyId());
 				addRequiredTerm("deleted", false);
 			}

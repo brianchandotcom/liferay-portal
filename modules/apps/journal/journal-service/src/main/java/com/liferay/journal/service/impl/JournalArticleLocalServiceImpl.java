@@ -3585,7 +3585,7 @@ public class JournalArticleLocalServiceImpl
 
 		JournalArticle previousApprovedArticle = approvedArticles.get(0);
 
-		if (article.getStatus() == WorkflowConstants.STATUS_APPROVED) {
+		if (previousApprovedArticle.getVersion() == article.getVersion()) {
 			previousApprovedArticle = approvedArticles.get(1);
 		}
 

@@ -57,6 +57,23 @@ public class DefaultLayoutTypeAccessPolicyImpl
 			HttpServletRequest request, Layout layout, Portlet portlet)
 		throws PortalException {
 
+		PermissionChecker permissionChecker =
+			PermissionThreadLocal.getPermissionChecker();
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		String layoutFriendlyURL = layout.getFriendlyURL();
+
+		if (layout.isSystem() &&
+			layoutFriendlyURL.equals(
+				PropsUtil.get(PropsKeys.CONTROL_PANEL_LAYOUT_FRIENDLY_URL)) &&
+			PortletPermissionUtil.hasControlPanelAccessPermission(
+				permissionChecker, themeDisplay.getScopeGroupId(), portlet)) {
+
+			return;
+		}
+
 		if (isAccessAllowedToLayoutPortlet(request, layout, portlet)) {
 			PortalUtil.addPortletDefaultResource(request, portlet);
 

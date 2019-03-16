@@ -29,6 +29,9 @@ public interface ColumnProcessor {
 	public String processColumn(String columnId, String classNames)
 		throws Exception;
 
+	public String processDynamicColumn(String columnId, String classNames)
+		throws Exception;
+
 	public String processMax() throws Exception;
 
 	public String processPortlet(String portletId) throws Exception;

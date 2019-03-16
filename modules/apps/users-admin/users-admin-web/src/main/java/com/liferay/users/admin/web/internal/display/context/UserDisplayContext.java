@@ -46,7 +46,6 @@ import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.users.admin.constants.UsersAdminPortletKeys;
 import com.liferay.users.admin.kernel.util.UsersAdminUtil;
 
 import java.util.ArrayList;
@@ -246,22 +245,18 @@ public class UserDisplayContext {
 				String toolbarItem = ParamUtil.getString(
 					_request, "toolbarItem", "view-all-users");
 
-				if (!portletName.equals(
-						UsersAdminPortletKeys.MY_ORGANIZATIONS)) {
-
-					add(
-						navigationItem -> {
-							navigationItem.setActive(
-								toolbarItem.equals("view-all-users"));
-							navigationItem.setHref(
-								_renderResponse.createRenderURL(),
-								"toolbarItem", "view-all-users",
-								"saveUsersListView", true, "usersListView",
-								UserConstants.LIST_VIEW_FLAT_USERS);
-							navigationItem.setLabel(
-								LanguageUtil.get(_request, "users"));
-						});
-				}
+				add(
+					navigationItem -> {
+						navigationItem.setActive(
+							toolbarItem.equals("view-all-users"));
+						navigationItem.setHref(
+							_renderResponse.createRenderURL(), "toolbarItem",
+							"view-all-users", "saveUsersListView", true,
+							"usersListView",
+							UserConstants.LIST_VIEW_FLAT_USERS);
+						navigationItem.setLabel(
+							LanguageUtil.get(_request, "users"));
+					});
 
 				add(
 					navigationItem -> {

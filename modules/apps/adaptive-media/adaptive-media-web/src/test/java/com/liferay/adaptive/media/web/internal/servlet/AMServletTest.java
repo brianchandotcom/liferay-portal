@@ -17,6 +17,7 @@ package com.liferay.adaptive.media.web.internal.servlet;
 import com.liferay.adaptive.media.exception.AMException;
 import com.liferay.adaptive.media.handler.AMRequestHandler;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 
 import java.util.Optional;
@@ -37,7 +38,8 @@ public class AMServletTest {
 
 	@Before
 	public void setUp() {
-		_amServlet.setAMRequestHandlerLocator(_amRequestHandlerLocator);
+		ReflectionTestUtil.setFieldValue(
+			_amServlet, "_amRequestHandlerLocator", _amRequestHandlerLocator);
 	}
 
 	@Test

@@ -17,6 +17,7 @@ package com.liferay.adaptive.media.journal.web.internal.transformer;
 import com.liferay.adaptive.media.content.transformer.ContentTransformerHandler;
 import com.liferay.adaptive.media.content.transformer.constants.ContentTransformerContentTypes;
 import com.liferay.journal.util.JournalContent;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.xml.Document;
 
@@ -40,9 +41,11 @@ public class AMJournalTransformerListenerTest {
 
 	@Before
 	public void setUp() {
-		_amJournalTransformerListener.setContentTransformerHandler(
+		ReflectionTestUtil.setFieldValue(
+			_amJournalTransformerListener, "_contentTransformerHandler",
 			_contentTransformerHandler);
-		_amJournalTransformerListener.setJournalContent(_journalContent);
+		ReflectionTestUtil.setFieldValue(
+			_amJournalTransformerListener, "_journalContent", _journalContent);
 	}
 
 	@Test

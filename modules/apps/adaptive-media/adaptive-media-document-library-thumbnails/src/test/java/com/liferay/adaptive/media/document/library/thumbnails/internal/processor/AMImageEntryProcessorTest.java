@@ -21,6 +21,7 @@ import com.liferay.adaptive.media.image.validator.AMImageValidator;
 import com.liferay.adaptive.media.processor.AMAsyncProcessor;
 import com.liferay.adaptive.media.processor.AMAsyncProcessorLocator;
 import com.liferay.portal.kernel.repository.model.FileVersion;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 
 import java.io.InputStream;
 
@@ -49,14 +50,18 @@ public class AMImageEntryProcessorTest {
 			FileVersion.class
 		);
 
-		_amImageEntryProcessor.setAMImageFinder(_amImageFinder);
+		ReflectionTestUtil.setFieldValue(
+			_amImageEntryProcessor, "_amImageFinder", _amImageFinder);
 
-		_amImageEntryProcessor.setAMImageMimeTypeProvider(
+		ReflectionTestUtil.setFieldValue(
+			_amImageEntryProcessor, "_amImageMimeTypeProvider",
 			_amImageMimeTypeProvider);
 
-		_amImageEntryProcessor.setAMImageValidator(_amImageValidator);
+		ReflectionTestUtil.setFieldValue(
+			_amImageEntryProcessor, "_amImageValidator", _amImageValidator);
 
-		_amImageEntryProcessor.setAMAsyncProcessorLocator(
+		ReflectionTestUtil.setFieldValue(
+			_amImageEntryProcessor, "_amAsyncProcessorLocator",
 			_amAsyncProcessorLocator);
 	}
 

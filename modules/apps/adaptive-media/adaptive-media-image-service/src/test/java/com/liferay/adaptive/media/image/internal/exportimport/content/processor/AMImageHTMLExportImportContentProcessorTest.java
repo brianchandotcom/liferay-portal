@@ -24,6 +24,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.StagedModel;
 import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 
 import org.junit.Assert;
@@ -46,11 +47,16 @@ public class AMImageHTMLExportImportContentProcessorTest {
 
 	@Before
 	public void setUp() throws Exception {
-		_amImageHTMLExportImportContentProcessor.
-			setAMEmbeddedReferenceSetFactory(_amEmbeddedReferenceSetFactory);
-		_amImageHTMLExportImportContentProcessor.setAMImageHTMLTagFactory(
+		ReflectionTestUtil.setFieldValue(
+			_amImageHTMLExportImportContentProcessor,
+			"_amEmbeddedReferenceSetFactory", _amEmbeddedReferenceSetFactory);
+
+		ReflectionTestUtil.setFieldValue(
+			_amImageHTMLExportImportContentProcessor, "_amImageHTMLTagFactory",
 			_amImageHTMLTagFactory);
-		_amImageHTMLExportImportContentProcessor.setDLAppLocalService(
+
+		ReflectionTestUtil.setFieldValue(
+			_amImageHTMLExportImportContentProcessor, "_dlAppLocalService",
 			_dlAppLocalService);
 
 		Mockito.doReturn(

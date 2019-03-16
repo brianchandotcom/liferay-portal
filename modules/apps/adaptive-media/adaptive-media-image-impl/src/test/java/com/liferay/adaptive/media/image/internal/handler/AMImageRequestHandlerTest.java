@@ -34,6 +34,7 @@ import com.liferay.adaptive.media.processor.AMAsyncProcessor;
 import com.liferay.adaptive.media.processor.AMAsyncProcessorLocator;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.repository.model.FileVersion;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 
 import java.io.InputStream;
@@ -71,12 +72,16 @@ public class AMImageRequestHandlerTest {
 			FileVersion.class
 		);
 
-		_amImageRequestHandler.setAMAsyncProcessorLocator(
+		ReflectionTestUtil.setFieldValue(
+			_amImageRequestHandler, "_amAsyncProcessorLocator",
 			_amAsyncProcessorLocator);
-		_amImageRequestHandler.setAMImageConfigurationHelper(
+		ReflectionTestUtil.setFieldValue(
+			_amImageRequestHandler, "_amImageConfigurationHelper",
 			_amImageConfigurationHelper);
-		_amImageRequestHandler.setAMImageFinder(_amImageFinder);
-		_amImageRequestHandler.setPathInterpreter(_pathInterpreter);
+		ReflectionTestUtil.setFieldValue(
+			_amImageRequestHandler, "_amImageFinder", _amImageFinder);
+		ReflectionTestUtil.setFieldValue(
+			_amImageRequestHandler, "_pathInterpreter", _pathInterpreter);
 
 		_fileVersion = _getFileVersion();
 	}

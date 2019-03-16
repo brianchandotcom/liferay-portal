@@ -18,6 +18,7 @@ import com.liferay.adaptive.media.AMURIResolver;
 import com.liferay.adaptive.media.image.configuration.AMImageConfigurationEntry;
 import com.liferay.adaptive.media.image.internal.configuration.AMImageConfigurationEntryImpl;
 import com.liferay.portal.kernel.repository.model.FileVersion;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 
 import java.net.URI;
 
@@ -71,7 +72,8 @@ public class AMImageURLFactoryImplTest {
 			invocation -> URI.create("prefix/" + invocation.getArguments()[0])
 		);
 
-		_amImageURLFactory.setAMURIResolver(_amURIResolver);
+		ReflectionTestUtil.setFieldValue(
+			_amImageURLFactory, "_amURIResolver", _amURIResolver);
 	}
 
 	@Test

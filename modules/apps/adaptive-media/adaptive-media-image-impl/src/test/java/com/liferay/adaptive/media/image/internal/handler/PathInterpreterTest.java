@@ -23,6 +23,7 @@ import com.liferay.document.library.kernel.service.DLAppService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 
 import java.util.Map;
@@ -41,9 +42,11 @@ public class PathInterpreterTest {
 
 	@Before
 	public void setUp() {
-		_pathInterpreter.setAMImageConfigurationHelper(
+		ReflectionTestUtil.setFieldValue(
+			_pathInterpreter, "_amImageConfigurationHelper",
 			_amImageConfigurationHelper);
-		_pathInterpreter.setDLAppService(_dlAppService);
+		ReflectionTestUtil.setFieldValue(
+			_pathInterpreter, "_dlAppService", _dlAppService);
 	}
 
 	@Test

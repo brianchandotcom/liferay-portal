@@ -19,6 +19,7 @@ import com.liferay.adaptive.media.image.html.AMImageHTMLTagFactory;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 
 import org.junit.Assert;
@@ -41,7 +42,9 @@ public class AMBackwardsCompatibilityHtmlContentTransformerTest {
 			"[REPLACED]"
 		);
 
-		_contentTransformer.setAMImageHTMLTagFactory(_amImageHTMLTagFactory);
+		ReflectionTestUtil.setFieldValue(
+			_contentTransformer, "_amImageHTMLTagFactory",
+			_amImageHTMLTagFactory);
 
 		Mockito.when(
 			_dlAppLocalService.getFileEntryByUuidAndGroupId(
@@ -50,7 +53,8 @@ public class AMBackwardsCompatibilityHtmlContentTransformerTest {
 			_fileEntry
 		);
 
-		_contentTransformer.setDLAppLocalService(_dlAppLocalService);
+		ReflectionTestUtil.setFieldValue(
+			_contentTransformer, "_dlAppLocalService", _dlAppLocalService);
 	}
 
 	@Test

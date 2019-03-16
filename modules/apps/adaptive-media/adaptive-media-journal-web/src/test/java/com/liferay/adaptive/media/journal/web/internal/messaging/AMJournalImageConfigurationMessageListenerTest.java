@@ -16,6 +16,7 @@ package com.liferay.adaptive.media.journal.web.internal.messaging;
 
 import com.liferay.journal.util.JournalContent;
 import com.liferay.portal.kernel.messaging.Message;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -33,7 +34,8 @@ public class AMJournalImageConfigurationMessageListenerTest {
 
 	@Before
 	public void setUp() {
-		_amJournalImageConfigurationMessageListener.setJournalContent(
+		ReflectionTestUtil.setFieldValue(
+			_amJournalImageConfigurationMessageListener, "_journalContent",
 			_journalContent);
 	}
 

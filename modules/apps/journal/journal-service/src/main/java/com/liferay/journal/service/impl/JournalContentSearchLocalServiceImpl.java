@@ -27,9 +27,12 @@ import com.liferay.portal.kernel.model.PortletPreferences;
 import com.liferay.portal.kernel.portlet.DisplayInformationProvider;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.util.PortletKeys;
+import com.liferay.portal.kernel.util.Tuple;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import org.osgi.framework.Bundle;
@@ -63,7 +66,24 @@ public class JournalContentSearchLocalServiceImpl
 			_log.info("Checking journal content search for " + companyId);
 		}
 
-		journalContentSearchPersistence.removeByCompanyId(companyId);
+		List<JournalContentSearch> journalContentSearches =
+			journalContentSearchPersistence.findByCompanyId(companyId);
+
+		Map<Tuple, JournalContentSearch> orphanedContentSearches =
+			new HashMap<>();
+
+		for (JournalContentSearch journalContentSearch :
+				journalContentSearches) {
+
+			Tuple tuple = new Tuple(
+				journalContentSearch.getGroupId(),
+				journalContentSearch.isPrivateLayout(),
+				journalContentSearch.getLayoutId(),
+				journalContentSearch.getPortletId(),
+				journalContentSearch.getArticleId());
+
+			orphanedContentSearches.put(tuple, journalContentSearch);
+		}
 
 		Set<String> rootPortletIds = _serviceTrackerMap.keySet();
 
@@ -103,13 +123,30 @@ public class JournalContentSearchLocalServiceImpl
 						PortletKeys.PREFS_OWNER_TYPE_LAYOUT, plid, portletId,
 						portletPreferences.getPreferences());
 
-				String classPK = displayInformationProvider.getClassPK(
+				long groupId = layout.getGroupId();
+				boolean privateLayout = layout.isPrivateLayout();
+				long layoutId = layout.getLayoutId();
+				String articleId = displayInformationProvider.getClassPK(
 					preferences);
 
-				updateContentSearch(
-					layout.getGroupId(), layout.isPrivateLayout(),
-					layout.getLayoutId(), portletId, classPK);
+				Tuple tuple = new Tuple(
+					groupId, privateLayout, layoutId, portletId, articleId);
+
+				JournalContentSearch existingJournalContentSearch =
+					orphanedContentSearches.remove(tuple);
+
+				if (existingJournalContentSearch == null) {
+					updateContentSearch(
+						layout.getGroupId(), layout.isPrivateLayout(),
+						layout.getLayoutId(), portletId, articleId);
+				}
 			}
+		}
+
+		for (JournalContentSearch journalContentSearch :
+				orphanedContentSearches.values()) {
+
+			journalContentSearchPersistence.remove(journalContentSearch);
 		}
 	}
 

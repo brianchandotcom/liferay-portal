@@ -31,6 +31,9 @@ public interface DocumentRequestExecutor {
 	public DeleteDocumentResponse executeDocumentRequest(
 		DeleteDocumentRequest deleteDocumentRequest);
 
+	public GetDocumentResponse executeDocumentRequest(
+		GetDocumentRequest getDocumentRequest);
+
 	public IndexDocumentResponse executeDocumentRequest(
 		IndexDocumentRequest indexDocumentRequest);
 

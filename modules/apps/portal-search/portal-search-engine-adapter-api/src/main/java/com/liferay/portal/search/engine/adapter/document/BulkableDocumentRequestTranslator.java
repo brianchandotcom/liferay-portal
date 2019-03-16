@@ -24,6 +24,8 @@ public interface BulkableDocumentRequestTranslator {
 
 	public <T> T translate(DeleteDocumentRequest deleteDocumentRequest);
 
+	public <T> T translate(GetDocumentRequest getDocumentRequest);
+
 	public <T> T translate(IndexDocumentRequest indexDocumentRequest);
 
 	public <T> T translate(UpdateDocumentRequest updateDocumentRequest);

@@ -19,6 +19,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition.Scope;
 import com.liferay.portal.configuration.metatype.definitions.ExtendedAttributeDefinition;
 import com.liferay.portal.configuration.metatype.definitions.ExtendedObjectClassDefinition;
+import com.liferay.portal.kernel.model.CompanyConstants;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -221,6 +222,34 @@ public class ConfigurationModel implements ExtendedObjectClassDefinition {
 	@Override
 	public int hashCode() {
 		return HashUtil.hash(0, getID());
+	}
+
+	public boolean hasScopeConfiguration(Scope scope) {
+		if (!hasConfiguration()) {
+			return false;
+		}
+
+		Dictionary properties = _configuration.getProperties();
+
+		if (properties == null) {
+			return false;
+		}
+
+		long companyId = GetterUtil.getLong(
+			properties.get(Scope.COMPANY.getPropertyKey()),
+			CompanyConstants.SYSTEM);
+
+		if ((companyId != CompanyConstants.SYSTEM) &&
+			Scope.COMPANY.equals(scope.getValue())) {
+
+			return true;
+		}
+
+		if (Scope.SYSTEM.equals(scope.getValue())) {
+			return true;
+		}
+
+		return false;
 	}
 
 	public boolean isCompanyFactory() {

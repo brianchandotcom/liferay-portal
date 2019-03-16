@@ -24,7 +24,11 @@ public abstract class SortImpl implements Sort {
 
 	@Override
 	public SortOrder getSortOrder() {
-		return _sortOrder;
+		if (_sortOrder != null) {
+			return _sortOrder;
+		}
+
+		return SortOrder.ASC;
 	}
 
 	@Override
@@ -32,6 +36,6 @@ public abstract class SortImpl implements Sort {
 		_sortOrder = sortOrder;
 	}
 
-	private SortOrder _sortOrder = SortOrder.ASC;
+	private SortOrder _sortOrder;
 
 }

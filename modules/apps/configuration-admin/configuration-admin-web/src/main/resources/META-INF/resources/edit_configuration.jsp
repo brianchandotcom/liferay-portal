@@ -67,6 +67,8 @@ portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(portletURL.toString());
 
 renderResponse.setTitle(categoryDisplayName);
+
+ConfigurationScopeDisplayContext configurationScopeDisplayContext = new ConfigurationScopeDisplayContext(renderRequest);
 %>
 
 <liferay-ui:error exception="<%= ConfigurationModelListenerException.class %>">
@@ -109,7 +111,7 @@ renderResponse.setTitle(categoryDisplayName);
 					String configurationTitle;
 
 					if (configurationModel.isFactory() && !configurationModel.isCompanyFactory()) {
-						if (configurationModel.hasConfiguration()) {
+						if (configurationModel.hasScopeConfiguration(configurationScopeDisplayContext.getScope())) {
 							configurationTitle = configurationModel.getLabel();
 						}
 						else {
@@ -124,7 +126,7 @@ renderResponse.setTitle(categoryDisplayName);
 					<h2>
 						<%= HtmlUtil.escape(configurationTitle) %>
 
-						<c:if test="<%= configurationModel.hasConfiguration() %>">
+						<c:if test="<%= configurationModel.hasScopeConfiguration(configurationScopeDisplayContext.getScope()) %>">
 							<liferay-ui:icon-menu
 								cssClass="float-right"
 								direction="right"
@@ -174,7 +176,7 @@ renderResponse.setTitle(categoryDisplayName);
 						</c:if>
 					</h2>
 
-					<c:if test="<%= !configurationModel.hasConfiguration() %>">
+					<c:if test="<%= !configurationModel.hasScopeConfiguration(configurationScopeDisplayContext.getScope()) %>">
 						<aui:alert closeable="<%= false %>" id="errorAlert" type="info">
 							<liferay-ui:message key="this-configuration-was-not-saved-yet" />
 						</aui:alert>
@@ -198,7 +200,7 @@ renderResponse.setTitle(categoryDisplayName);
 
 					<aui:button-row>
 						<c:choose>
-							<c:when test="<%= configurationModel.hasConfiguration() %>">
+							<c:when test="<%= configurationModel.hasScopeConfiguration(configurationScopeDisplayContext.getScope()) %>">
 								<aui:button name="update" type="submit" value="update" />
 							</c:when>
 							<c:otherwise>

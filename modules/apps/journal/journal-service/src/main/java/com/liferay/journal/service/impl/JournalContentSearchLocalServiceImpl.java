@@ -65,6 +65,8 @@ public class JournalContentSearchLocalServiceImpl
 			_log.info("Checking journal content search for " + companyId);
 		}
 
+		journalContentSearchPersistence.removeByCompanyId(companyId);
+
 		List<Layout> layouts = new ArrayList<>();
 
 		List<Group> groups = groupLocalService.search(
@@ -74,14 +76,10 @@ public class JournalContentSearchLocalServiceImpl
 
 			// Private layouts
 
-			deleteOwnerContentSearches(group.getGroupId(), true);
-
 			layouts.addAll(
 				layoutLocalService.getLayouts(group.getGroupId(), true));
 
 			// Public layouts
-
-			deleteOwnerContentSearches(group.getGroupId(), false);
 
 			layouts.addAll(
 				layoutLocalService.getLayouts(group.getGroupId(), false));

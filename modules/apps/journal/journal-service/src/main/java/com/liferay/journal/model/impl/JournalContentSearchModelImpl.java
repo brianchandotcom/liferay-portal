@@ -118,15 +118,17 @@ public class JournalContentSearchModelImpl
 
 	public static final long ARTICLEID_COLUMN_BITMASK = 1L;
 
-	public static final long GROUPID_COLUMN_BITMASK = 2L;
+	public static final long COMPANYID_COLUMN_BITMASK = 2L;
 
-	public static final long LAYOUTID_COLUMN_BITMASK = 4L;
+	public static final long GROUPID_COLUMN_BITMASK = 4L;
 
-	public static final long PORTLETID_COLUMN_BITMASK = 8L;
+	public static final long LAYOUTID_COLUMN_BITMASK = 8L;
 
-	public static final long PRIVATELAYOUT_COLUMN_BITMASK = 16L;
+	public static final long PORTLETID_COLUMN_BITMASK = 16L;
 
-	public static final long CONTENTSEARCHID_COLUMN_BITMASK = 32L;
+	public static final long PRIVATELAYOUT_COLUMN_BITMASK = 32L;
+
+	public static final long CONTENTSEARCHID_COLUMN_BITMASK = 64L;
 
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(
 		com.liferay.journal.service.util.ServiceProps.get(
@@ -323,7 +325,19 @@ public class JournalContentSearchModelImpl
 
 	@Override
 	public void setCompanyId(long companyId) {
+		_columnBitmask |= COMPANYID_COLUMN_BITMASK;
+
+		if (!_setOriginalCompanyId) {
+			_setOriginalCompanyId = true;
+
+			_originalCompanyId = _companyId;
+		}
+
 		_companyId = companyId;
+	}
+
+	public long getOriginalCompanyId() {
+		return _originalCompanyId;
 	}
 
 	@Override
@@ -533,6 +547,11 @@ public class JournalContentSearchModelImpl
 
 		journalContentSearchModelImpl._setOriginalGroupId = false;
 
+		journalContentSearchModelImpl._originalCompanyId =
+			journalContentSearchModelImpl._companyId;
+
+		journalContentSearchModelImpl._setOriginalCompanyId = false;
+
 		journalContentSearchModelImpl._originalPrivateLayout =
 			journalContentSearchModelImpl._privateLayout;
 
@@ -662,6 +681,8 @@ public class JournalContentSearchModelImpl
 	private long _originalGroupId;
 	private boolean _setOriginalGroupId;
 	private long _companyId;
+	private long _originalCompanyId;
+	private boolean _setOriginalCompanyId;
 	private boolean _privateLayout;
 	private boolean _originalPrivateLayout;
 	private boolean _setOriginalPrivateLayout;

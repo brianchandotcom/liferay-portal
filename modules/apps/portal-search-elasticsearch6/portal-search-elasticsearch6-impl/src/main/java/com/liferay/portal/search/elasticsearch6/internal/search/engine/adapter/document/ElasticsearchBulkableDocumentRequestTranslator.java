@@ -21,11 +21,14 @@ import com.liferay.portal.search.elasticsearch6.internal.connection.Elasticsearc
 import com.liferay.portal.search.elasticsearch6.internal.document.ElasticsearchDocumentFactory;
 import com.liferay.portal.search.engine.adapter.document.BulkableDocumentRequestTranslator;
 import com.liferay.portal.search.engine.adapter.document.DeleteDocumentRequest;
+import com.liferay.portal.search.engine.adapter.document.GetDocumentRequest;
 import com.liferay.portal.search.engine.adapter.document.IndexDocumentRequest;
 import com.liferay.portal.search.engine.adapter.document.UpdateDocumentRequest;
 
 import org.elasticsearch.action.delete.DeleteAction;
 import org.elasticsearch.action.delete.DeleteRequestBuilder;
+import org.elasticsearch.action.get.GetAction;
+import org.elasticsearch.action.get.GetRequestBuilder;
 import org.elasticsearch.action.index.IndexAction;
 import org.elasticsearch.action.index.IndexRequestBuilder;
 import org.elasticsearch.action.support.WriteRequest;
@@ -68,6 +71,25 @@ public class ElasticsearchBulkableDocumentRequestTranslator
 		deleteRequestBuilder.setType(deleteDocumentRequest.getType());
 
 		return deleteRequestBuilder;
+	}
+
+	@Override
+	public GetRequestBuilder translate(GetDocumentRequest getDocumentRequest) {
+		Client client = _elasticsearchClientResolver.getClient();
+
+		GetRequestBuilder getRequestBuilder =
+			GetAction.INSTANCE.newRequestBuilder(client);
+
+		getRequestBuilder.setId(getDocumentRequest.getId());
+		getRequestBuilder.setIndex(getDocumentRequest.getIndexName());
+		getRequestBuilder.setRefresh(getDocumentRequest.isRefresh());
+		getRequestBuilder.setFetchSource(
+			getDocumentRequest.getFetchSourceIncludes(),
+			getDocumentRequest.getFetchSourceExcludes());
+		getRequestBuilder.setStoredFields(getDocumentRequest.getStoredFields());
+		getRequestBuilder.setType(getDocumentRequest.getType());
+
+		return getRequestBuilder;
 	}
 
 	@Override

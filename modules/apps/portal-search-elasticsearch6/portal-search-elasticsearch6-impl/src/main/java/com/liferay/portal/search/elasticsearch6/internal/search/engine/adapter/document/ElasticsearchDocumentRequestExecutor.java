@@ -21,6 +21,8 @@ import com.liferay.portal.search.engine.adapter.document.DeleteByQueryDocumentRe
 import com.liferay.portal.search.engine.adapter.document.DeleteDocumentRequest;
 import com.liferay.portal.search.engine.adapter.document.DeleteDocumentResponse;
 import com.liferay.portal.search.engine.adapter.document.DocumentRequestExecutor;
+import com.liferay.portal.search.engine.adapter.document.GetDocumentRequest;
+import com.liferay.portal.search.engine.adapter.document.GetDocumentResponse;
 import com.liferay.portal.search.engine.adapter.document.IndexDocumentRequest;
 import com.liferay.portal.search.engine.adapter.document.IndexDocumentResponse;
 import com.liferay.portal.search.engine.adapter.document.UpdateByQueryDocumentRequest;
@@ -61,6 +63,13 @@ public class ElasticsearchDocumentRequestExecutor
 		DeleteDocumentRequest deleteDocumentRequest) {
 
 		return _deleteDocumentRequestExecutor.execute(deleteDocumentRequest);
+	}
+
+	@Override
+	public GetDocumentResponse executeDocumentRequest(
+		GetDocumentRequest getDocumentRequest) {
+
+		return _getDocumentRequestExecutor.execute(getDocumentRequest);
 	}
 
 	@Override
@@ -109,6 +118,13 @@ public class ElasticsearchDocumentRequestExecutor
 	}
 
 	@Reference(unbind = "-")
+	protected void setGetDocumentRequestExecutor(
+		GetDocumentRequestExecutor getDocumentRequestExecutor) {
+
+		_getDocumentRequestExecutor = getDocumentRequestExecutor;
+	}
+
+	@Reference(unbind = "-")
 	protected void setIndexDocumentRequestExecutor(
 		IndexDocumentRequestExecutor indexDocumentRequestExecutor) {
 
@@ -135,6 +151,7 @@ public class ElasticsearchDocumentRequestExecutor
 	private DeleteByQueryDocumentRequestExecutor
 		_deleteByQueryDocumentRequestExecutor;
 	private DeleteDocumentRequestExecutor _deleteDocumentRequestExecutor;
+	private GetDocumentRequestExecutor _getDocumentRequestExecutor;
 	private IndexDocumentRequestExecutor _indexDocumentRequestExecutor;
 	private UpdateByQueryDocumentRequestExecutor
 		_updateByQueryDocumentRequestExecutor;

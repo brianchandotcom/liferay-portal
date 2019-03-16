@@ -18,21 +18,19 @@ import com.liferay.journal.model.JournalContentSearch;
 import com.liferay.journal.service.base.JournalContentSearchLocalServiceBaseImpl;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
-import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
-import com.liferay.portal.kernel.model.LayoutTypePortlet;
+import com.liferay.portal.kernel.model.PortletPreferences;
 import com.liferay.portal.kernel.portlet.DisplayInformationProvider;
-import com.liferay.portal.kernel.portlet.PortletIdCodec;
+import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.util.PortletKeys;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import javax.portlet.PortletPreferences;
+import java.util.Set;
 
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
@@ -67,50 +65,46 @@ public class JournalContentSearchLocalServiceImpl
 
 		journalContentSearchPersistence.removeByCompanyId(companyId);
 
-		List<Layout> layouts = new ArrayList<>();
+		Set<String> rootPortletIds = _serviceTrackerMap.keySet();
 
-		List<Group> groups = groupLocalService.search(
-			companyId, null, null, null, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+		for (String rootPortletId : rootPortletIds) {
+			DisplayInformationProvider displayInformationProvider =
+				_serviceTrackerMap.getService(rootPortletId);
 
-		for (Group group : groups) {
+			List<PortletPreferences> portletPreferencesList = new ArrayList<>();
 
-			// Private layouts
+			portletPreferencesList.addAll(
+				portletPreferencesLocalService.getPortletPreferences(
+					companyId, PortletKeys.PREFS_OWNER_ID_DEFAULT,
+					PortletKeys.PREFS_OWNER_TYPE_LAYOUT, rootPortletId));
 
-			layouts.addAll(
-				layoutLocalService.getLayouts(group.getGroupId(), true));
+			portletPreferencesList.addAll(
+				portletPreferencesLocalService.getPortletPreferences(
+					companyId, PortletKeys.PREFS_OWNER_ID_DEFAULT,
+					PortletKeys.PREFS_OWNER_TYPE_LAYOUT,
+					rootPortletId + "_INSTANCE_%"));
 
-			// Public layouts
+			for (PortletPreferences portletPreferences :
+					portletPreferencesList) {
 
-			layouts.addAll(
-				layoutLocalService.getLayouts(group.getGroupId(), false));
-		}
+				long plid = portletPreferences.getPlid();
 
-		for (Layout layout : layouts) {
-			LayoutTypePortlet layoutTypePortlet =
-				(LayoutTypePortlet)layout.getLayoutType();
+				Layout layout = layoutLocalService.fetchLayout(plid);
 
-			List<String> portletIds = layoutTypePortlet.getPortletIds();
-
-			for (String portletId : portletIds) {
-				String rootPortletId = PortletIdCodec.decodePortletName(
-					portletId);
-
-				DisplayInformationProvider displayInformationProvider =
-					_serviceTrackerMap.getService(rootPortletId);
-
-				if (displayInformationProvider == null) {
+				if (layout == null) {
 					continue;
 				}
 
-				PortletPreferences portletPreferences =
-					portletPreferencesLocalService.getPreferences(
-						layout.getCompanyId(),
-						PortletKeys.PREFS_OWNER_ID_DEFAULT,
-						PortletKeys.PREFS_OWNER_TYPE_LAYOUT, layout.getPlid(),
-						portletId);
+				String portletId = portletPreferences.getPortletId();
+
+				javax.portlet.PortletPreferences preferences =
+					PortletPreferencesFactoryUtil.fromXML(
+						companyId, PortletKeys.PREFS_OWNER_ID_DEFAULT,
+						PortletKeys.PREFS_OWNER_TYPE_LAYOUT, plid, portletId,
+						portletPreferences.getPreferences());
 
 				String classPK = displayInformationProvider.getClassPK(
-					portletPreferences);
+					preferences);
 
 				updateContentSearch(
 					layout.getGroupId(), layout.isPrivateLayout(),

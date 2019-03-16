@@ -19,6 +19,7 @@ import com.liferay.fragment.exception.FragmentCollectionNameException;
 import com.liferay.fragment.model.FragmentCollection;
 import com.liferay.fragment.service.FragmentCollectionLocalService;
 import com.liferay.fragment.service.FragmentCollectionLocalServiceUtil;
+import com.liferay.fragment.service.persistence.FragmentCollectionUtil;
 import com.liferay.fragment.util.FragmentTestUtil;
 import com.liferay.fragment.util.comparator.FragmentCollectionCreateDateComparator;
 import com.liferay.fragment.util.comparator.FragmentCollectionNameComparator;
@@ -30,10 +31,13 @@ import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerTestRule;
+import com.liferay.portal.test.rule.PersistenceTestRule;
+import com.liferay.portal.test.rule.TransactionalTestRule;
 
 import java.util.Date;
 import java.util.List;
@@ -56,7 +60,9 @@ public class FragmentCollectionLocalServiceTest {
 	public static final AggregateTestRule aggregateTestRule =
 		new AggregateTestRule(
 			new LiferayIntegrationTestRule(),
-			PermissionCheckerTestRule.INSTANCE);
+			PermissionCheckerTestRule.INSTANCE, PersistenceTestRule.INSTANCE,
+			new TransactionalTestRule(
+				Propagation.REQUIRED, "com.liferay.fragment.service"));
 
 	@Before
 	public void setUp() throws Exception {
@@ -69,8 +75,14 @@ public class FragmentCollectionLocalServiceTest {
 			FragmentTestUtil.addFragmentCollection(
 				_group.getGroupId(), "Fragment Collection");
 
+		FragmentCollection fragmentCollectionActual =
+			FragmentCollectionUtil.fetchByUUID_G(
+				fragmentCollection.getUuid(), fragmentCollection.getGroupId());
+
+		Assert.assertEquals(fragmentCollection, fragmentCollectionActual);
+
 		Assert.assertEquals(
-			"Fragment Collection", fragmentCollection.getName());
+			"Fragment Collection", fragmentCollectionActual.getName());
 	}
 
 	@Test(expected = FragmentCollectionNameException.class)
@@ -88,9 +100,15 @@ public class FragmentCollectionLocalServiceTest {
 				_group.getGroupId(), RandomTestUtil.randomString(),
 				"FRAGMENTCOLLECTIONKEY");
 
+		FragmentCollection fragmentCollectionActual =
+			FragmentCollectionUtil.fetchByUUID_G(
+				fragmentCollection.getUuid(), fragmentCollection.getGroupId());
+
+		Assert.assertEquals(fragmentCollection, fragmentCollectionActual);
+
 		Assert.assertEquals(
 			StringUtil.toLowerCase("FRAGMENTCOLLECTIONKEY"),
-			fragmentCollection.getFragmentCollectionKey());
+			fragmentCollectionActual.getFragmentCollectionKey());
 	}
 
 	@Test(expected = FragmentCollectionNameException.class)

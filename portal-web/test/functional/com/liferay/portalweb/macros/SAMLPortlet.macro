@@ -100,4 +100,21 @@ definition {
 
 		PortletEntry.save();
 	}
+
+	macro configureIdentityProviderConnection {
+		Click.waitForMenuToggleJSClick(
+			locator1 = "CPSAMLAdminIdentityProviderConnection#IDENTITY_PROVIDER_CONNECTION_ACTION_BUTTON",
+			key_idpNameID = "${idpNameID}"
+		);
+
+		MenuItem.click(menuItem = "Edit");
+
+		if ("${forceAuthn}" == "enable") {
+			Check(
+				locator1 = "CPSAMLAdminIdentityProviderConnection#IDENTITY_PROVIDER_CONNECTION_FORCE_AUTHN_CHECKBOX"
+			);
+		}
+
+		PortletEntry.save();
+	}
 }

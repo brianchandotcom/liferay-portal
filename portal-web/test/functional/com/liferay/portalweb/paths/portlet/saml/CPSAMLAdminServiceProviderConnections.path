@@ -13,6 +13,16 @@
 	<td>//a[contains(@class,'btn') and contains(.,'Add Service Provider')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>SERVICE_PROVIDER_CONNECTION_ATTRIBUTE_ENABLE</td>
+	<td>//label[contains(@for,'attributesEnabled')]/input[@type='checkbox']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SERVICE_PROVIDER_CONNECTION_ATTRIBUTE_TEXTAREA</td>
+	<td>//textarea[contains(@id,'SamlAdminPortlet_attributeNames')]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

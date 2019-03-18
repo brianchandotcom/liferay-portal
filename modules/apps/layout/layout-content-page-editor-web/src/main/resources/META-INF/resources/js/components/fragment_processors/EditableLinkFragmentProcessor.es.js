@@ -37,11 +37,9 @@ function render(content, value, editableValues) {
 			link.target = config.target;
 		}
 
-		const classList = [...link.classList];
-
-		classList.forEach(
+		[...link.classList].forEach(
 			elementClass => {
-				if(elementClass.startsWith('btn')) {
+				if (elementClass.startsWith('btn-') || (elementClass === 'btn')) {
 					link.classList.remove(elementClass);
 				}
 			}

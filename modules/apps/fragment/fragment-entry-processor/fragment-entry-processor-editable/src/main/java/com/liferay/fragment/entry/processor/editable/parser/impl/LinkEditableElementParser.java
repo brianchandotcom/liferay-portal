@@ -109,7 +109,9 @@ public class LinkEditableElementParser implements EditableElementParser {
 			replaceableElement, configJSONObject, "target", "target");
 
 		for (String className : replaceableElement.classNames()) {
-			if (className.startsWith("btn")) {
+			if (className.startsWith("btn-") ||
+				Objects.equals(className, "btn")) {
+
 				replaceableElement.removeClass(className);
 			}
 		}

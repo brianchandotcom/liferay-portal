@@ -161,23 +161,14 @@ public class PanelAppRegistry {
 		_serviceTrackerMap.close();
 	}
 
-	@Reference(unbind = "-")
-	protected void setGroupProvider(GroupProvider groupProvider) {
-		this.groupProvider = groupProvider;
-	}
-
-	@Reference(unbind = "-")
-	protected void setPortletLocalService(
-		PortletLocalService portletLocalService) {
-
-		this.portletLocalService = portletLocalService;
-	}
-
-	protected GroupProvider groupProvider;
-	protected PortletLocalService portletLocalService;
-
 	private static final Log _log = LogFactoryUtil.getLog(
 		PanelAppRegistry.class);
+
+	@Reference
+	private GroupProvider _groupProvider;
+
+	@Reference
+	private PortletLocalService _portletLocalService;
 
 	@Reference
 	private PortletPreferencesFactory _portletPreferencesFactory;
@@ -249,9 +240,9 @@ public class PanelAppRegistry {
 			String panelCategoryKey, PanelApp panelApp,
 			List<PanelApp> panelApps) {
 
-			panelApp.setGroupProvider(groupProvider);
+			panelApp.setGroupProvider(_groupProvider);
 
-			Portlet portlet = portletLocalService.getPortletById(
+			Portlet portlet = _portletLocalService.getPortletById(
 				panelApp.getPortletId());
 
 			if (portlet != null) {

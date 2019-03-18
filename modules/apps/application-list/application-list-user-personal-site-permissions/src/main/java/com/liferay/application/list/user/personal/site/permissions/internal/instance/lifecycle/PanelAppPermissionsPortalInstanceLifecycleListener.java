@@ -60,35 +60,16 @@ public class PanelAppPermissionsPortalInstanceLifecycleListener
 			company.getCompanyId(), portlets);
 	}
 
-	@Reference(unbind = "-")
-	protected void setPanelAppRegistry(PanelAppRegistry panelAppRegistry) {
-		_panelAppRegistry = panelAppRegistry;
-	}
-
-	@Reference(unbind = "-")
-	protected void setPanelCategoryRegistry(
-		PanelCategoryRegistry panelCategoryRegistry) {
-
-		_panelCategoryRegistry = panelCategoryRegistry;
-	}
-
-	@Reference(unbind = "-")
-	protected void setPortletLocalService(
-		PortletLocalService portletLocalService) {
-
-		_portletLocalService = portletLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setUserPersonalSitePermissions(
-		UserPersonalSitePermissions userPersonalSitePermissions) {
-
-		_userPersonalSitePermissions = userPersonalSitePermissions;
-	}
-
+	@Reference
 	private PanelAppRegistry _panelAppRegistry;
+
+	@Reference
 	private PanelCategoryRegistry _panelCategoryRegistry;
+
+	@Reference
 	private PortletLocalService _portletLocalService;
+
+	@Reference
 	private UserPersonalSitePermissions _userPersonalSitePermissions;
 
 }

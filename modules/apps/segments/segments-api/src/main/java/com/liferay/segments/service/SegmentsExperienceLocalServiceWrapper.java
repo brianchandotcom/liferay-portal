@@ -329,12 +329,13 @@ public class SegmentsExperienceLocalServiceWrapper
 
 	@Override
 	public java.util.List<com.liferay.segments.model.SegmentsExperience>
-		getSegmentsExperiences(
-			long groupId, long classNameId, long classPK, boolean active,
-			int start, int end,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<com.liferay.segments.model.SegmentsExperience>
-					orderByComparator) {
+			getSegmentsExperiences(
+				long groupId, long classNameId, long classPK, boolean active,
+				int start, int end,
+				com.liferay.portal.kernel.util.OrderByComparator
+					<com.liferay.segments.model.SegmentsExperience>
+						orderByComparator)
+		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _segmentsExperienceLocalService.getSegmentsExperiences(
 			groupId, classNameId, classPK, active, start, end,
@@ -343,12 +344,13 @@ public class SegmentsExperienceLocalServiceWrapper
 
 	@Override
 	public java.util.List<com.liferay.segments.model.SegmentsExperience>
-		getSegmentsExperiences(
-			long groupId, long[] segmentsEntryIds, long classNameId,
-			long classPK, boolean active, int start, int end,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<com.liferay.segments.model.SegmentsExperience>
-					orderByComparator) {
+			getSegmentsExperiences(
+				long groupId, long[] segmentsEntryIds, long classNameId,
+				long classPK, boolean active, int start, int end,
+				com.liferay.portal.kernel.util.OrderByComparator
+					<com.liferay.segments.model.SegmentsExperience>
+						orderByComparator)
+		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _segmentsExperienceLocalService.getSegmentsExperiences(
 			groupId, segmentsEntryIds, classNameId, classPK, active, start, end,

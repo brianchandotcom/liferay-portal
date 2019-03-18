@@ -254,14 +254,17 @@ public interface SegmentsExperienceLocalService
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<SegmentsExperience> getSegmentsExperiences(
-		long groupId, long classNameId, long classPK, boolean active, int start,
-		int end, OrderByComparator<SegmentsExperience> orderByComparator);
+			long groupId, long classNameId, long classPK, boolean active,
+			int start, int end,
+			OrderByComparator<SegmentsExperience> orderByComparator)
+		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<SegmentsExperience> getSegmentsExperiences(
-		long groupId, long[] segmentsEntryIds, long classNameId, long classPK,
-		boolean active, int start, int end,
-		OrderByComparator<SegmentsExperience> orderByComparator);
+			long groupId, long[] segmentsEntryIds, long classNameId,
+			long classPK, boolean active, int start, int end,
+			OrderByComparator<SegmentsExperience> orderByComparator)
+		throws PortalException;
 
 	/**
 	 * Returns the number of segments experiences.

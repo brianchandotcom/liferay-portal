@@ -17,7 +17,7 @@ package com.liferay.oauth2.provider.rest.internal.endpoint.constants;
 /**
  * @author Tomas Polesovsky
  */
-public class OAuth2ProviderRestEndpointConstants {
+public class OAuth2ProviderRESTEndpointConstants {
 
 	/**
 	 * Embraces CXF OAuthConstants naming + RFC grant_type value formats.

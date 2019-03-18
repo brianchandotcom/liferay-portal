@@ -18,10 +18,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.model.Layout;
-import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.template.soy.util.SoyContext;
 import com.liferay.portal.template.soy.util.SoyContextFactoryUtil;
 import com.liferay.segments.model.SegmentsEntry;
@@ -195,16 +192,6 @@ public class ContentPageLayoutEditorDisplayContext
 			SegmentsExperience defaultSegmentsExperience =
 				SegmentsExperienceLocalServiceUtil.getDefaultSegmentsExperience(
 					getGroupId(), classNameId, classPK);
-
-			if (classNameId == PortalUtil.getClassNameId(Layout.class)) {
-				Layout draftLayout = LayoutLocalServiceUtil.getLayout(classPK);
-
-				defaultSegmentsExperience =
-					SegmentsExperienceLocalServiceUtil.
-						getDefaultSegmentsExperience(
-							getGroupId(), classNameId,
-							draftLayout.getClassPK());
-			}
 
 			_defaultSegmentsExperienceId = String.valueOf(
 				defaultSegmentsExperience.getSegmentsExperienceId());

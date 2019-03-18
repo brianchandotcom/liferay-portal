@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
+import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.segments.constants.SegmentsWebKeys;
@@ -89,7 +90,7 @@ public class SegmentsServicePreAction extends Action {
 		long[] segmentsEntryIds = null;
 
 		Layout layout = themeDisplay.getLayout();
-		long classNameId = _classNameLocalService.getClassNameId(
+		long layoutClassNameId = _classNameLocalService.getClassNameId(
 			Layout.class.getName());
 
 		if (_segmentsServiceConfiguration.segmentationEnabled() &&
@@ -123,15 +124,17 @@ public class SegmentsServicePreAction extends Action {
 			SegmentsWebKeys.SEGMENTS_ENTRY_IDS, segmentsEntryIds);
 
 		long[] segmentsExperienceIds = _getSegmentsExperienceIds(
-			layout.getGroupId(), segmentsEntryIds, classNameId,
-			layout.getPrimaryKey());
+			layout.getGroupId(), segmentsEntryIds, layoutClassNameId,
+			layout.getPlid());
 
 		request.setAttribute(
 			SegmentsWebKeys.SEGMENTS_EXPERIENCE_IDS, segmentsExperienceIds);
 	}
 
 	private long[] _getSegmentsExperienceIds(
-		long groupId, long[] segmentsEntryIds, long classNameId, long classPK) {
+			long groupId, long[] segmentsEntryIds, long classNameId,
+			long classPK)
+		throws PortalException {
 
 		List<SegmentsExperience> segmentsExperiences =
 			_segmentsExperienceLocalService.getSegmentsExperiences(
@@ -150,6 +153,9 @@ public class SegmentsServicePreAction extends Action {
 
 	@Reference
 	private ClassNameLocalService _classNameLocalService;
+
+	@Reference
+	private LayoutLocalService _layoutLocalService;
 
 	@Reference
 	private RequestContextMapper _requestContextMapper;

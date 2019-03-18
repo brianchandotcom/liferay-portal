@@ -116,13 +116,10 @@ public class WorkflowMetricsSLAProcessMessageListener
 	private String _getBackgroundTaskName(
 		WorkflowMetricsSLADefinition workflowMetricsSLADefinition) {
 
-		return _BACKGROUND_TASK_NAME_PREFIX +
-			workflowMetricsSLADefinition.getProcessId() +
+		return WorkflowMetricsSLAProcessMessageListener.class.getSimpleName() +
+			"-" + workflowMetricsSLADefinition.getProcessId() +
 				workflowMetricsSLADefinition.getPrimaryKey();
 	}
-
-	private static final String _BACKGROUND_TASK_NAME_PREFIX =
-		"WorkflowMetricsSLAProcessorBackgroundTaskExecutor-";
 
 	@Reference
 	private BackgroundTaskLocalService _backgroundTaskLocalService;

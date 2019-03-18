@@ -246,6 +246,9 @@ components:
             properties:
                 active:
                     type: boolean
+                contentSpaceId:
+                    format: int64
+                    type: integer
                 criteria:
                     type: string
                 dateCreated:
@@ -638,6 +641,39 @@ paths:
                 - in: query
                   name: pageSize
                   schema:
+                      type: integer
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/Segment"
+                                type: array
+                    description: ""
+            tags: ["Segment"]
+    "/content-spaces/{content-space-id}/user-accounts/{user-account-id}/segments":
+        get:
+            parameters:
+                - in: path
+                  name: content-space-id
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+                - in: query
+                  name: page
+                  schema:
+                      type: integer
+                - in: query
+                  name: pageSize
+                  schema:
+                      type: integer
+                - in: path
+                  name: user-account-id
+                  required: true
+                  schema:
+                      format: int64
                       type: integer
             responses:
                 200:
@@ -1376,33 +1412,6 @@ paths:
                                 type: array
                     description: ""
             tags: ["Role"]
-    "/user-accounts/{user-account-id}/segments":
-        get:
-            parameters:
-                - in: query
-                  name: page
-                  schema:
-                      type: integer
-                - in: query
-                  name: pageSize
-                  schema:
-                      type: integer
-                - in: path
-                  name: user-account-id
-                  required: true
-                  schema:
-                      format: int64
-                      type: integer
-            responses:
-                200:
-                    content:
-                        application/json:
-                            schema:
-                                items:
-                                    $ref: "#/components/schemas/Segment"
-                                type: array
-                    description: ""
-            tags: ["Segment"]
     "/user-accounts/{user-account-id}/web-urls":
         get:
             parameters:

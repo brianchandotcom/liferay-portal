@@ -66,14 +66,14 @@ public class SegmentResourceImpl extends BaseSegmentResourceImpl {
 	}
 
 	@Override
-	public Page<Segment> getUserAccountSegmentsPage(
-			Long userAccountId, Pagination pagination)
+	public Page<Segment> getContentSpaceUserAccountSegmentsPage(
+			Long contentSpaceId, Long userAccountId, Pagination pagination)
 		throws Exception {
 
 		User user = _userService.getUserById(userAccountId);
 
 		long[] segmentsEntryIds = _segmentsEntryProvider.getSegmentsEntryIds(
-			user.getModelClassName(), user.getPrimaryKey(),
+			contentSpaceId, user.getModelClassName(), user.getPrimaryKey(),
 			_createSegmentsContext());
 
 		return Page.of(

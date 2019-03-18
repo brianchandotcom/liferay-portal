@@ -17,8 +17,6 @@ package com.liferay.document.library.web.internal.display.context.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
-import com.liferay.document.library.web.internal.display.context.DLAdminDisplayContext;
-import com.liferay.document.library.web.internal.display.context.DLAdminDisplayContextProvider;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -35,6 +33,7 @@ import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.servlet.URLEncoder;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.rule.Sync;
@@ -51,6 +50,9 @@ import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerTestRule;
 import com.liferay.portal.util.test.LayoutTestUtil;
+import com.liferay.registry.Registry;
+import com.liferay.registry.RegistryUtil;
+import com.liferay.registry.ServiceTracker;
 
 import java.io.Writer;
 
@@ -81,8 +83,10 @@ import javax.servlet.http.Part;
 
 import javax.xml.namespace.QName;
 
+import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -110,6 +114,22 @@ public class DLAdminDisplayContextTest {
 			PermissionCheckerTestRule.INSTANCE,
 			SynchronousDestinationTestRule.INSTANCE);
 
+	@BeforeClass
+	public static void setUpClass() {
+		Registry registry = RegistryUtil.getRegistry();
+
+		_serviceTracker = registry.trackServices(
+			"com.liferay.document.library.web.internal.display.context." +
+				"DLAdminDisplayContextProvider");
+
+		_serviceTracker.open();
+	}
+
+	@AfterClass
+	public static void tearDownClass() {
+		_serviceTracker.close();
+	}
+
 	@Before
 	public void setUp() throws Exception {
 		_group = GroupTestUtil.addGroup();
@@ -124,12 +144,8 @@ public class DLAdminDisplayContextTest {
 			_addDLFileEntry("alpha_" + i + ".txt", "alpha");
 		}
 
-		DLAdminDisplayContext dlAdminDisplayContext =
-			_dlAdminDisplayContextProvider.getDLAdminDisplayContext(
-				_getHttpServletRequest(_getMockHttpServletRequest()), null);
-
-		SearchContainer searchContainer =
-			dlAdminDisplayContext.getSearchContainer();
+		SearchContainer searchContainer = _getSearchContainer(
+			_getMockHttpServletRequest());
 
 		Assert.assertEquals(25, searchContainer.getTotal());
 	}
@@ -140,14 +156,8 @@ public class DLAdminDisplayContextTest {
 			_addDLFileEntry("alpha_" + i + ".txt", "alpha");
 		}
 
-		DLAdminDisplayContext dlAdminDisplayContext =
-			_dlAdminDisplayContextProvider.getDLAdminDisplayContext(
-				_getHttpServletRequest(
-					_getMockHttpServletRequestWithSearch("alpha")),
-				null);
-
-		SearchContainer searchContainer =
-			dlAdminDisplayContext.getSearchContainer();
+		SearchContainer searchContainer = _getSearchContainer(
+			_getMockHttpServletRequestWithSearch("alpha"));
 
 		Assert.assertEquals(25, searchContainer.getTotal());
 	}
@@ -210,6 +220,22 @@ public class DLAdminDisplayContextTest {
 		return mockHttpServletRequest;
 	}
 
+	private SearchContainer _getSearchContainer(
+		MockHttpServletRequest mockHttpServletRequest) {
+
+		Object dlAdminDisplayContextProvider = _serviceTracker.getService();
+
+		Object dlAdminDisplayContext = ReflectionTestUtil.invoke(
+			dlAdminDisplayContextProvider, "getDLAdminDisplayContext",
+			new Class<?>[] {
+				HttpServletRequest.class, HttpServletResponse.class
+			},
+			_getHttpServletRequest(mockHttpServletRequest), null);
+
+		return ReflectionTestUtil.invoke(
+			dlAdminDisplayContext, "getSearchContainer", new Class<?>[0], null);
+	}
+
 	private ThemeDisplay _getThemeDisplay() throws PortalException {
 		ThemeDisplay themeDisplay = new ThemeDisplay();
 
@@ -223,13 +249,12 @@ public class DLAdminDisplayContextTest {
 		return themeDisplay;
 	}
 
+	private static ServiceTracker<Object, Object> _serviceTracker;
+
 	private Company _company;
 
 	@Inject
 	private CompanyLocalService _companyLocalService;
-
-	@Inject
-	private DLAdminDisplayContextProvider _dlAdminDisplayContextProvider;
 
 	@Inject
 	private DLAppLocalService _dlAppLocalService;

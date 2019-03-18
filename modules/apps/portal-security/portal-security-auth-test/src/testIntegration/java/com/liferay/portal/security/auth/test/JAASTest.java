@@ -18,7 +18,6 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.events.EventsProcessorUtil;
-import com.liferay.portal.internal.servlet.MainServlet;
 import com.liferay.portal.kernel.events.Action;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
@@ -26,6 +25,7 @@ import com.liferay.portal.kernel.security.jaas.PortalPrincipal;
 import com.liferay.portal.kernel.security.jaas.PortalRole;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.servlet.HttpMethods;
+import com.liferay.portal.kernel.servlet.ServletContextPool;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -34,7 +34,6 @@ import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.security.jaas.JAASHelper;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-import com.liferay.portal.test.rule.MainServletClassTestRule;
 import com.liferay.portal.util.PropsValues;
 
 import java.lang.reflect.Field;
@@ -58,6 +57,8 @@ import javax.security.auth.login.AppConfigurationEntry.LoginModuleControlFlag;
 import javax.security.auth.login.Configuration;
 import javax.security.auth.login.LoginContext;
 
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -67,8 +68,8 @@ import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
-
 import org.junit.runner.RunWith;
+
 import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.mock.web.MockHttpServletResponse;
 
@@ -135,11 +136,9 @@ public class JAASTest {
 
 			});
 
-		MainServlet mainServlet = MainServletClassTestRule.getMainServlet();
-
 		MockHttpServletRequest mockHttpServletRequest =
 			new MockHttpServletRequest(
-				mainServlet.getServletContext(), HttpMethods.GET,
+				ServletContextPool.get(StringPool.BLANK), HttpMethods.GET,
 				StringPool.SLASH);
 
 		mockHttpServletRequest.setRemoteUser(
@@ -340,14 +339,17 @@ public class JAASTest {
 
 	@Test
 	public void testProcessLoginEvents() throws Exception {
-		MainServlet mainServlet = MainServletClassTestRule.getMainServlet();
-
 		Date lastLoginDate = _user.getLastLoginDate();
+
+		ServletContext servletContext = ServletContextPool.get(
+			StringPool.BLANK);
 
 		MockHttpServletRequest mockHttpServletRequest =
 			new MockHttpServletRequest(
-				mainServlet.getServletContext(), HttpMethods.GET,
-				StringPool.SLASH);
+				servletContext, HttpMethods.GET, StringPool.SLASH);
+
+		MockHttpServletResponse mockHttpServletResponse =
+			new MockHttpServletResponse();
 
 		mockHttpServletRequest.setRemoteUser(String.valueOf(_user.getUserId()));
 
@@ -360,8 +362,11 @@ public class JAASTest {
 			EventsProcessorUtil.registerEvent(
 				PropsKeys.LOGIN_EVENTS_POST, postJAASAction);
 
-			mainServlet.service(
-				mockHttpServletRequest, new MockHttpServletResponse());
+			RequestDispatcher requestDispatcher =
+				servletContext.getRequestDispatcher("/c");
+
+			requestDispatcher.include(
+				mockHttpServletRequest, mockHttpServletResponse);
 
 			Assert.assertTrue(preJAASAction.isRan());
 			Assert.assertTrue(postJAASAction.isRan());

@@ -133,6 +133,8 @@ components:
                 contentSpaceId:
                     format: int64
                     type: integer
+                creator:
+                    $ref: "#/components/schemas/Creator"
                 dateCreated:
                     format: date-time
                     type: string

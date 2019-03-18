@@ -743,17 +743,17 @@ public abstract class BaseOrganizationResourceTestCase {
 				"Invalid entity field " + entityFieldName);
 		}
 
-		if (entityFieldName.equals("location")) {
-			throw new IllegalArgumentException(
-				"Invalid entity field " + entityFieldName);
-		}
-
-		if (entityFieldName.equals("logo")) {
+		if (entityFieldName.equals("image")) {
 			sb.append("'");
-			sb.append(String.valueOf(organization.getLogo()));
+			sb.append(String.valueOf(organization.getImage()));
 			sb.append("'");
 
 			return sb.toString();
+		}
+
+		if (entityFieldName.equals("location")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
 		}
 
 		if (entityFieldName.equals("name")) {
@@ -789,7 +789,7 @@ public abstract class BaseOrganizationResourceTestCase {
 				comment = RandomTestUtil.randomString();
 				hasOrganizations = RandomTestUtil.randomBoolean();
 				id = RandomTestUtil.randomLong();
-				logo = RandomTestUtil.randomString();
+				image = RandomTestUtil.randomString();
 				name = RandomTestUtil.randomString();
 				parentOrganizationId = RandomTestUtil.randomLong();
 			}

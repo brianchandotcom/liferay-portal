@@ -110,6 +110,30 @@ public class Organization {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long id;
 
+	public String getImage() {
+		return image;
+	}
+
+	public void setImage(String image) {
+		this.image = image;
+	}
+
+	@JsonIgnore
+	public void setImage(
+		UnsafeSupplier<String, Exception> imageUnsafeSupplier) {
+
+		try {
+			image = imageUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected String image;
+
 	@Schema(description = "https://www.schema.org/PostalAddress")
 	public Location getLocation() {
 		return location;
@@ -134,28 +158,6 @@ public class Organization {
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Location location;
-
-	public String getLogo() {
-		return logo;
-	}
-
-	public void setLogo(String logo) {
-		this.logo = logo;
-	}
-
-	@JsonIgnore
-	public void setLogo(UnsafeSupplier<String, Exception> logoUnsafeSupplier) {
-		try {
-			logo = logoUnsafeSupplier.get();
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected String logo;
 
 	public String getName() {
 		return name;
@@ -275,16 +277,16 @@ public class Organization {
 		sb.append(id);
 		sb.append(", ");
 
+		sb.append("\"image\": ");
+
+		sb.append("\"");
+		sb.append(image);
+		sb.append("\"");
+		sb.append(", ");
+
 		sb.append("\"location\": ");
 
 		sb.append(location);
-		sb.append(", ");
-
-		sb.append("\"logo\": ");
-
-		sb.append("\"");
-		sb.append(logo);
-		sb.append("\"");
 		sb.append(", ");
 
 		sb.append("\"name\": ");

@@ -88,9 +88,18 @@ public class DuplicateDefinitionPortletConfigurationIcon
 		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		return KaleoDefinitionVersionPermission.hasViewPermission(
-			themeDisplay.getPermissionChecker(), kaleoDefinitionVersion,
-			themeDisplay.getCompanyGroupId());
+		try {
+			return KaleoDefinitionVersionPermission.hasViewPermission(
+				themeDisplay.getPermissionChecker(), kaleoDefinitionVersion,
+				themeDisplay.getCompanyGroupId());
+		}
+		catch (PortalException pe) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(pe, pe);
+			}
+		}
+
+		return false;
 	}
 
 	protected KaleoDefinitionVersion getKaleoDefinitionVersion(

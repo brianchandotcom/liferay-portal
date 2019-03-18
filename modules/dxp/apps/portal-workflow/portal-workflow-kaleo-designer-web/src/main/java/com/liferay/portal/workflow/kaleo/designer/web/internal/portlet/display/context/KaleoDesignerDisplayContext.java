@@ -514,11 +514,19 @@ public class KaleoDesignerDisplayContext {
 			return false;
 		}
 
-		if ((kaleoDefinitionVersion != null) &&
-			KaleoDefinitionVersionPermission.contains(
-				permissionChecker, kaleoDefinitionVersion, ActionKeys.UPDATE)) {
+		try {
+			if ((kaleoDefinitionVersion != null) &&
+				KaleoDefinitionVersionPermission.contains(
+					permissionChecker, kaleoDefinitionVersion,
+					ActionKeys.UPDATE)) {
 
-			return false;
+				return false;
+			}
+		}
+		catch (PortalException pe) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(pe, pe);
+			}
 		}
 
 		return true;
@@ -541,8 +549,16 @@ public class KaleoDesignerDisplayContext {
 		KaleoDefinitionVersion kaleoDefinitionVersion) {
 
 		if (kaleoDefinitionVersion != null) {
-			return KaleoDefinitionVersionPermission.contains(
-				permissionChecker, kaleoDefinitionVersion, ActionKeys.UPDATE);
+			try {
+				return KaleoDefinitionVersionPermission.contains(
+					permissionChecker, kaleoDefinitionVersion,
+					ActionKeys.UPDATE);
+			}
+			catch (PortalException pe) {
+				if (_log.isDebugEnabled()) {
+					_log.debug(pe, pe);
+				}
+			}
 		}
 
 		return KaleoDesignerPermission.contains(
@@ -561,9 +577,16 @@ public class KaleoDesignerDisplayContext {
 				kaleoDefinitionVersion);
 
 			if ((kaleoDefinition != null) && !kaleoDefinition.isActive()) {
-				return KaleoDefinitionVersionPermission.contains(
-					permissionChecker, kaleoDefinitionVersion,
-					ActionKeys.UPDATE);
+				try {
+					return KaleoDefinitionVersionPermission.contains(
+						permissionChecker, kaleoDefinitionVersion,
+						ActionKeys.UPDATE);
+				}
+				catch (PortalException pe) {
+					if (_log.isDebugEnabled()) {
+						_log.debug(pe, pe);
+					}
+				}
 			}
 
 			return false;

@@ -14,6 +14,7 @@
 
 package com.liferay.portal.workflow.kaleo.designer.web.internal.portlet.configuration.icon;
 
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -92,10 +93,19 @@ public class PermissionPortletConfigurationIcon
 			(KaleoDefinitionVersion)portletRequest.getAttribute(
 				KaleoDesignerWebKeys.KALEO_DRAFT_DEFINITION);
 
-		if (kaleoDefinitionVersion != null) {
+		if (kaleoDefinitionVersion == null) {
+			return false;
+		}
+
+		try {
 			return KaleoDefinitionVersionPermission.contains(
 				PermissionThreadLocal.getPermissionChecker(),
 				kaleoDefinitionVersion, ActionKeys.PERMISSIONS);
+		}
+		catch (PortalException pe) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(pe, pe);
+			}
 		}
 
 		return false;

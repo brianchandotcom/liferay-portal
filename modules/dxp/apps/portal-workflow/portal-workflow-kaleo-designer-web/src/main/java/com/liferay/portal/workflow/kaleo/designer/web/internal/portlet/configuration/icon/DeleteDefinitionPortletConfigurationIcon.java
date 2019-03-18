@@ -117,15 +117,19 @@ public class DeleteDefinitionPortletConfigurationIcon
 		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		boolean hasDeletePermission = KaleoDefinitionVersionPermission.contains(
-			themeDisplay.getPermissionChecker(), kaleoDefinitionVersion,
-			ActionKeys.DELETE);
-
 		try {
+			boolean hasDeletePermission =
+				KaleoDefinitionVersionPermission.contains(
+					themeDisplay.getPermissionChecker(), kaleoDefinitionVersion,
+					ActionKeys.DELETE);
+
 			KaleoDefinition kaleoDefinition =
 				kaleoDefinitionVersion.getKaleoDefinition();
 
-			if (hasDeletePermission && !kaleoDefinition.isActive()) {
+			if (hasDeletePermission &&
+				(!kaleoDefinition.isActive() ||
+				 kaleoDefinitionVersion.isDraft())) {
+
 				return true;
 			}
 
@@ -135,10 +139,6 @@ public class DeleteDefinitionPortletConfigurationIcon
 			if (_log.isDebugEnabled()) {
 				_log.debug(pe, pe);
 			}
-		}
-
-		if (hasDeletePermission && kaleoDefinitionVersion.isDraft()) {
-			return true;
 		}
 
 		return false;

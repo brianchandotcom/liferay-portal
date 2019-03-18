@@ -14,6 +14,9 @@
 
 package com.liferay.portal.workflow.kaleo.designer.web.internal.util;
 
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.workflow.kaleo.designer.web.internal.permission.KaleoDefinitionVersionPermission;
 import com.liferay.portal.workflow.kaleo.model.KaleoDefinitionVersion;
@@ -35,9 +38,21 @@ public class KaleoDefinitionVersionViewPermissionPredicate
 
 	@Override
 	public boolean test(KaleoDefinitionVersion kaleoDefinitionVersion) {
-		return KaleoDefinitionVersionPermission.hasViewPermission(
-			_permissionChecker, kaleoDefinitionVersion, _companyGroupId);
+		try {
+			return KaleoDefinitionVersionPermission.hasViewPermission(
+				_permissionChecker, kaleoDefinitionVersion, _companyGroupId);
+		}
+		catch (PortalException pe) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(pe, pe);
+			}
+		}
+
+		return false;
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		KaleoDefinitionVersionViewPermissionPredicate.class);
 
 	private final long _companyGroupId;
 	private final PermissionChecker _permissionChecker;

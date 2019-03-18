@@ -100,18 +100,29 @@ public class UnpublishDefinitionPortletConfigurationIcon
 		KaleoDefinition kaleoDefinition = getKaleoDefinition(portletRequest);
 
 		if ((kaleoDefinition != null) && kaleoDefinition.isActive()) {
+			KaleoDefinitionVersion kaleoDefinitionVersion =
+				getKaleoDefinitionVersion(portletRequest);
+
+			if (kaleoDefinitionVersion == null) {
+				return false;
+			}
+
 			ThemeDisplay themeDisplay =
 				(ThemeDisplay)portletRequest.getAttribute(
 					WebKeys.THEME_DISPLAY);
 
-			KaleoDefinitionVersion kaleoDefinitionVersion =
-				getKaleoDefinitionVersion(portletRequest);
+			try {
+				if (KaleoDefinitionVersionPermission.contains(
+						themeDisplay.getPermissionChecker(),
+						kaleoDefinitionVersion, ActionKeys.UPDATE)) {
 
-			if (KaleoDefinitionVersionPermission.contains(
-					themeDisplay.getPermissionChecker(), kaleoDefinitionVersion,
-					ActionKeys.UPDATE)) {
-
-				return true;
+					return true;
+				}
+			}
+			catch (PortalException pe) {
+				if (_log.isDebugEnabled()) {
+					_log.debug(pe, pe);
+				}
 			}
 		}
 

@@ -42,7 +42,7 @@ public class StructuredContentEntityModel implements EntityModel {
 		_entityFieldsMap = Stream.of(
 			new CollectionEntityField(
 				new IntegerEntityField(
-					"categoryIds", locale -> "assetCategoryIds")),
+					"taxonomyCategoryIds", locale -> "assetCategoryIds")),
 			new CollectionEntityField(
 				new StringEntityField(
 					"keywords", locale -> "assetTagNames.raw")),

@@ -40,6 +40,9 @@ public class DocumentEntityModel implements EntityModel {
 	public DocumentEntityModel() {
 		_entityFieldsMap = Stream.of(
 			new CollectionEntityField(
+				new IntegerEntityField(
+					"taxonomyCategoryIds", locale -> "assetCategoryIds")),
+			new CollectionEntityField(
 				new StringEntityField(
 					"keywords", locale -> "assetTagNames.raw")),
 			new DateTimeEntityField(

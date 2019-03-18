@@ -37,7 +37,7 @@ public class BlogPostingEntityModel implements EntityModel {
 		_entityFieldsMap = Stream.of(
 			new CollectionEntityField(
 				new IntegerEntityField(
-					"categoryIds", locale -> "assetCategoryIds")),
+					"taxonomyCategoryIds", locale -> "assetCategoryIds")),
 			new DateTimeEntityField(
 				"dateCreated",
 				locale -> Field.getSortableFieldName(Field.CREATE_DATE),

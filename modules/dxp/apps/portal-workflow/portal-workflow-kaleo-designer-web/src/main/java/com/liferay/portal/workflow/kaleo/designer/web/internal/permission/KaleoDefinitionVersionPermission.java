@@ -15,12 +15,10 @@
 package com.liferay.portal.workflow.kaleo.designer.web.internal.permission;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
-import com.liferay.portal.kernel.security.permission.BaseModelPermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.workflow.kaleo.model.KaleoDefinitionVersion;
-import com.liferay.portal.workflow.kaleo.service.KaleoDefinitionVersionLocalService;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -28,60 +26,22 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Marcellus Tavares
  */
-@Component(
-	immediate = true,
-	property = "model.class.name=com.liferay.portal.workflow.kaleo.model.KaleoDefinitionVersion",
-	service = BaseModelPermissionChecker.class
-)
-public class KaleoDefinitionVersionPermission
-	implements BaseModelPermissionChecker {
-
-	public static void check(
-			PermissionChecker permissionChecker, long kaleoDefinitionVersionId,
-			String actionId)
-		throws PortalException {
-
-		if (!contains(permissionChecker, kaleoDefinitionVersionId, actionId)) {
-			throw new PrincipalException.MustHavePermission(
-				permissionChecker, KaleoDefinitionVersion.class.getName(),
-				kaleoDefinitionVersionId, actionId);
-		}
-	}
+@Component(immediate = true, service = {})
+public class KaleoDefinitionVersionPermission {
 
 	public static boolean contains(
-		PermissionChecker permissionChecker,
-		KaleoDefinitionVersion kaleoDefinitionVersion, String actionId) {
-
-		if (permissionChecker.hasOwnerPermission(
-				kaleoDefinitionVersion.getCompanyId(),
-				KaleoDefinitionVersion.class.getName(),
-				kaleoDefinitionVersion.getKaleoDefinitionVersionId(),
-				kaleoDefinitionVersion.getUserId(), actionId)) {
-
-			return true;
-		}
-
-		return permissionChecker.hasPermission(
-			kaleoDefinitionVersion.getGroupId(),
-			KaleoDefinitionVersion.class.getName(),
-			kaleoDefinitionVersion.getKaleoDefinitionVersionId(), actionId);
-	}
-
-	public static boolean contains(
-			PermissionChecker permissionChecker, long kaleoDefinitionVersionId,
-			String actionId)
+			PermissionChecker permissionChecker,
+			KaleoDefinitionVersion kaleoDefinitionVersion, String actionId)
 		throws PortalException {
 
-		KaleoDefinitionVersion kaleoDefinitionVersion =
-			_kaleoDefinitionVersionLocalService.getKaleoDefinitionVersion(
-				kaleoDefinitionVersionId);
-
-		return contains(permissionChecker, kaleoDefinitionVersion, actionId);
+		return _kaleoDefinitionVersionModelResourcePermission.contains(
+			permissionChecker, kaleoDefinitionVersion, actionId);
 	}
 
 	public static boolean hasViewPermission(
-		PermissionChecker permissionChecker,
-		KaleoDefinitionVersion kaleoDefinitionVersion, long companyGroupId) {
+			PermissionChecker permissionChecker,
+			KaleoDefinitionVersion kaleoDefinitionVersion, long companyGroupId)
+		throws PortalException {
 
 		if (contains(
 				permissionChecker, kaleoDefinitionVersion, ActionKeys.DELETE) ||
@@ -101,24 +61,19 @@ public class KaleoDefinitionVersionPermission
 		return false;
 	}
 
-	@Override
-	public void checkBaseModel(
-			PermissionChecker permissionChecker, long groupId, long primaryKey,
-			String actionId)
-		throws PortalException {
+	@Reference(
+		target = "(model.class.name=com.liferay.portal.workflow.kaleo.model.KaleoDefinitionVersion)",
+		unbind = "-"
+	)
+	protected void setModelPermissionChecker(
+		ModelResourcePermission<KaleoDefinitionVersion>
+			modelResourcePermission) {
 
-		check(permissionChecker, primaryKey, actionId);
+		_kaleoDefinitionVersionModelResourcePermission =
+			modelResourcePermission;
 	}
 
-	@Reference(unbind = "-")
-	protected void setKaleoDefinitionVersionLocalService(
-		KaleoDefinitionVersionLocalService kaleoDefinitionVersionLocalService) {
-
-		_kaleoDefinitionVersionLocalService =
-			kaleoDefinitionVersionLocalService;
-	}
-
-	private static KaleoDefinitionVersionLocalService
-		_kaleoDefinitionVersionLocalService;
+	private static ModelResourcePermission<KaleoDefinitionVersion>
+		_kaleoDefinitionVersionModelResourcePermission;
 
 }

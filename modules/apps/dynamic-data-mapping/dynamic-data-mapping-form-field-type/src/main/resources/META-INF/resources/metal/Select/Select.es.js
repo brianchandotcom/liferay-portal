@@ -295,7 +295,11 @@ class Select extends Component {
 		return {
 			...state,
 			options: newOptions,
-			value: valueArray
+			value: valueArray.filter(
+				value => newOptions.some(
+					option => value === option.value
+				)
+			)
 		};
 	}
 

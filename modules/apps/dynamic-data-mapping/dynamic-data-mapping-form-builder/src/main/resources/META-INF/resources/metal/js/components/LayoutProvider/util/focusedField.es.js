@@ -3,6 +3,7 @@ import {
 	normalizeFieldName,
 	updateFieldValidationProperty
 } from './fields.es';
+import {getField} from '../util/fields.es';
 import {updateSettingsContextProperty} from './settings.es';
 
 const shouldAutoGenerateName = focusedField => {
@@ -85,10 +86,32 @@ export const updateFocusedFieldProperty = (state, focusedField, propertyName, pr
 };
 
 export const updateFocusedFieldOptions = (state, focusedField, options) => {
+	const withNewOptions = updateSettingsContextProperty(state, focusedField.settingsContext, 'options', options);
+
+	const predefinedValue = getField(withNewOptions.pages, 'predefinedValue');
+
+	if (predefinedValue) {
+		const {value} = predefinedValue;
+
+		if (value && Array.isArray(value)) {
+			predefinedValue.value = value.filter(
+				currentValue => options.some(
+					option => option.value === currentValue
+				)
+			);
+		}
+	}
+
 	return {
 		...focusedField,
 		options,
-		settingsContext: updateSettingsContextProperty(state, focusedField.settingsContext, 'options', options)
+		predefinedValue: predefinedValue.value,
+		settingsContext: updateSettingsContextProperty(
+			state,
+			withNewOptions,
+			'predefinedValue',
+			predefinedValue.value
+		)
 	};
 };
 

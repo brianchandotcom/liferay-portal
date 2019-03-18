@@ -18,8 +18,11 @@ import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.service.DLAppService;
 import com.liferay.headless.common.spi.service.context.ServiceContextUtil;
 import com.liferay.headless.document.library.dto.v1_0.Folder;
+import com.liferay.headless.document.library.internal.dto.v1_0.util.CreatorUtil;
 import com.liferay.headless.document.library.resource.v1_0.FolderResource;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 
@@ -149,6 +152,8 @@ public class FolderResourceImpl extends BaseFolderResourceImpl {
 		return new Folder() {
 			{
 				contentSpaceId = folder.getGroupId();
+				creator = CreatorUtil.toCreator(
+					_portal, _userLocalService.getUser(folder.getUserId()));
 				dateCreated = folder.getCreateDate();
 				dateModified = folder.getModifiedDate();
 				description = folder.getDescription();
@@ -183,5 +188,11 @@ public class FolderResourceImpl extends BaseFolderResourceImpl {
 
 	@Reference
 	private DLAppService _dlAppService;
+
+	@Reference
+	private Portal _portal;
+
+	@Reference
+	private UserLocalService _userLocalService;
 
 }

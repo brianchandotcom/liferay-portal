@@ -72,7 +72,7 @@ definition {
 	@description = "Content pages created from page templates can be published to live and will not appear in live until published."
 	@priority = "5"
 	test PublishContentPage {
-		property portal.acceptance = "false";
+		property portal.acceptance = "true";
 
 		task ("Add a content page that uses the page template") {
 			SitePages.openPagesAdmin(siteURLKey = "test-site-name-staging");

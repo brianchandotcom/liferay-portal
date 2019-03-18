@@ -80,7 +80,15 @@
 		}
 	}
 
-	&--mapped-field .lexicon-icon {
-		fill: $fragmentEditableFieldGridMappedColor;
+	&--mapped-field {
+		.fragments-editor__floating-toolbar-buttons {
+			.btn.active, .btn:hover {
+				background-color: $fragmentEditableFieldGridMappedColorFaded;
+			}
+
+			.lexicon-icon {
+				fill: $fragmentEditableFieldGridMappedColor;
+			}
+		}
 	}
 }

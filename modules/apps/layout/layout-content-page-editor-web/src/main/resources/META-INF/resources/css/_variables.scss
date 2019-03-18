@@ -30,6 +30,7 @@ $translationStatusListZIndex: 977;
 $fragmentEditableFieldActiveBorderColor: #0B5FFF;
 $fragmentEditableFieldGridAccentColor: #80ACFF;
 $fragmentEditableFieldGridMappedColor: #AF78FF;
+$fragmentEditableFieldGridMappedColorFaded: fade_out(#AF78FF, 0.9);
 $fragmentEditableFieldGridDefaultColor: #A7A9BC;
 $fragmentEditableFieldGridSize: $fragmentsEditorSpacing;
 $fragmentEditableFieldGridTranslatedColor: #3DC513;

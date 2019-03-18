@@ -193,6 +193,8 @@ components:
                     type: string
                 hasAttachments:
                     type: boolean
+                hasKnowledgeBaseArticles:
+                    type: boolean
                 id:
                     format: int64
                     type: integer
@@ -600,102 +602,6 @@ paths:
                                 $ref: "#/components/schemas/Comment"
                     description: ""
             tags: ["Comment"]
-    "/content-space/{content-space-id}/knowledge-base-articles":
-        get:
-            parameters:
-                - in: query
-                  name: page
-                  schema:
-                      type: integer
-                - in: query
-                  name: pageSize
-                  schema:
-                      type: integer
-                - in: path
-                  name: content-space-id
-                  required: true
-                  schema:
-                      format: int64
-                      type: integer
-            responses:
-                200:
-                    content:
-                        application/json:
-                            schema:
-                                items:
-                                    $ref: "#/components/schemas/KnowledgeBaseArticle"
-                                type: array
-                    description: ""
-            tags: ["KnowledgeBaseArticle"]
-        post:
-            parameters:
-                - in: path
-                  name: content-space-id
-                  required: true
-                  schema:
-                      format: int64
-                      type: integer
-            requestBody:
-                content:
-                    application/json:
-                        schema:
-                            $ref: "#/components/schemas/KnowledgeBaseArticle"
-            responses:
-                200:
-                    content:
-                        application/json:
-                            schema:
-                                $ref: "#/components/schemas/KnowledgeBaseArticle"
-                    description: ""
-            tags: ["KnowledgeBaseArticle"]
-    "/content-space/{content-space-id}/knowledge-base-folders":
-        get:
-            parameters:
-                - in: query
-                  name: page
-                  schema:
-                      type: integer
-                - in: query
-                  name: pageSize
-                  schema:
-                      type: integer
-                - in: path
-                  name: content-space-id
-                  required: true
-                  schema:
-                      format: int64
-                      type: integer
-            responses:
-                200:
-                    content:
-                        application/json:
-                            schema:
-                                items:
-                                    $ref: "#/components/schemas/KnowledgeBaseFolder"
-                                type: array
-                    description: ""
-            tags: ["KnowledgeBaseFolder"]
-        post:
-            parameters:
-                - in: path
-                  name: content-space-id
-                  required: true
-                  schema:
-                      format: int64
-                      type: integer
-            requestBody:
-                content:
-                    application/json:
-                        schema:
-                            $ref: "#/components/schemas/KnowledgeBaseFolder"
-            responses:
-                200:
-                    content:
-                        application/json:
-                            schema:
-                                $ref: "#/components/schemas/KnowledgeBaseFolder"
-                    description: ""
-            tags: ["KnowledgeBaseFolder"]
     "/content-spaces/{content-space-id}/blog-posting-images":
         get:
             parameters:
@@ -814,6 +720,102 @@ paths:
                                 $ref: "#/components/schemas/BlogPosting"
                     description: ""
             tags: ["BlogPosting"]
+    "/content-spaces/{content-space-id}/knowledge-base-articles":
+        get:
+            parameters:
+                - in: query
+                  name: page
+                  schema:
+                      type: integer
+                - in: query
+                  name: pageSize
+                  schema:
+                      type: integer
+                - in: path
+                  name: content-space-id
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/KnowledgeBaseArticle"
+                                type: array
+                    description: ""
+            tags: ["KnowledgeBaseArticle"]
+        post:
+            parameters:
+                - in: path
+                  name: content-space-id
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/KnowledgeBaseArticle"
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/KnowledgeBaseArticle"
+                    description: ""
+            tags: ["KnowledgeBaseArticle"]
+    "/content-spaces/{content-space-id}/knowledge-base-folders":
+        get:
+            parameters:
+                - in: query
+                  name: page
+                  schema:
+                      type: integer
+                - in: query
+                  name: pageSize
+                  schema:
+                      type: integer
+                - in: path
+                  name: content-space-id
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/KnowledgeBaseFolder"
+                                type: array
+                    description: ""
+            tags: ["KnowledgeBaseFolder"]
+        post:
+            parameters:
+                - in: path
+                  name: content-space-id
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/KnowledgeBaseFolder"
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/KnowledgeBaseFolder"
+                    description: ""
+            tags: ["KnowledgeBaseFolder"]
     "/knowledge-base-articles/{knowledge-base-article-id}":
         delete:
             parameters:

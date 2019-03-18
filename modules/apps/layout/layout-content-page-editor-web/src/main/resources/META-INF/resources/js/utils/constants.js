@@ -37,6 +37,10 @@ export const NUMBER_OF_COLUMNS_OPTIONS = [
 		numberOfColumnId: '4'
 	},
 	{
+		label: '5',
+		numberOfColumnId: '5'
+	},
+	{
 		label: '6',
 		numberOfColumnId: '6'
 	}

@@ -82,6 +82,7 @@ import javax.net.ssl.HttpsURLConnection;
 import javax.net.ssl.SSLContext;
 
 import org.apache.commons.codec.binary.Base64;
+import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang.SystemUtils;
 
 import org.json.JSONArray;
@@ -248,6 +249,20 @@ public class JenkinsResultsParserUtil {
 		}
 
 		file.delete();
+	}
+
+	public static void downloadFile(URL url, File file) {
+		try {
+			System.out.println(
+				combine(
+					"Downloading ", url.toString(), " to ",
+					getCanonicalPath(file)));
+
+			FileUtils.copyURLToFile(url, file);
+		}
+		catch (IOException ioe) {
+			throw new RuntimeException(ioe);
+		}
 	}
 
 	public static String encode(String url)

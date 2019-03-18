@@ -15,6 +15,7 @@
 package com.liferay.gradle.plugins.defaults.internal;
 
 import com.liferay.gradle.plugins.cache.CachePlugin;
+import com.liferay.gradle.plugins.defaults.internal.util.CIUtil;
 import com.liferay.gradle.plugins.defaults.internal.util.FileUtil;
 import com.liferay.gradle.plugins.defaults.internal.util.GradleUtil;
 import com.liferay.gradle.plugins.defaults.tasks.ReplaceRegexTask;
@@ -43,6 +44,7 @@ import org.gradle.api.Task;
 import org.gradle.api.artifacts.Configuration;
 import org.gradle.api.artifacts.DependencySet;
 import org.gradle.api.artifacts.ProjectDependency;
+import org.gradle.api.logging.Logger;
 import org.gradle.api.plugins.JavaPlugin;
 import org.gradle.api.tasks.SourceSet;
 import org.gradle.api.tasks.TaskContainer;
@@ -369,6 +371,8 @@ public class LiferayCIPlugin implements Plugin<Project> {
 			public void execute(Task task) {
 				Project project = task.getProject();
 
+				Logger logger = project.getLogger();
+
 				SourceSet sourceSet = GradleUtil.getSourceSet(
 					project,
 					TestIntegrationBasePlugin.TEST_INTEGRATION_SOURCE_SET_NAME);
@@ -383,6 +387,18 @@ public class LiferayCIPlugin implements Plugin<Project> {
 
 					Project dependencyProject =
 						projectDependency.getDependencyProject();
+
+					if (CIUtil.isExcludedDependencyProject(
+							project, dependencyProject)) {
+
+						if (logger.isLifecycleEnabled()) {
+							logger.lifecycle(
+								"Excluded project dependency {} for {}",
+								dependencyProject.getPath(), project.getPath());
+						}
+
+						continue;
+					}
 
 					File lfrBuildCIFile = dependencyProject.file(
 						".lfrbuild-ci");

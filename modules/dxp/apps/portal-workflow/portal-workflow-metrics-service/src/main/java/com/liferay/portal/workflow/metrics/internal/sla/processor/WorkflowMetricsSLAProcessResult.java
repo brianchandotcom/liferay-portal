@@ -22,19 +22,20 @@ import java.time.LocalDateTime;
 public class WorkflowMetricsSLAProcessResult {
 
 	public WorkflowMetricsSLAProcessResult(
-		long companyId, long instanceId, long processId, long slaDefinitionId,
-		long elapsedTime, LocalDateTime lastCheckLocalDateTime, boolean onTime,
-		LocalDateTime overdueLocalDateTime, long remainingTime) {
+		long companyId, long elapsedTime, long instanceId,
+		LocalDateTime lastCheckLocalDateTime, boolean onTime,
+		LocalDateTime overdueLocalDateTime, long processId, long remainingTime,
+		long slaDefinitionId) {
 
 		_companyId = companyId;
-		_instanceId = instanceId;
-		_processId = processId;
-		_slaDefinitionId = slaDefinitionId;
 		_elapsedTime = elapsedTime;
+		_instanceId = instanceId;
 		_lastCheckLocalDateTime = lastCheckLocalDateTime;
 		_onTime = onTime;
 		_overdueLocalDateTime = overdueLocalDateTime;
+		_processId = processId;
 		_remainingTime = remainingTime;
+		_slaDefinitionId = slaDefinitionId;
 	}
 
 	public long getCompanyId() {

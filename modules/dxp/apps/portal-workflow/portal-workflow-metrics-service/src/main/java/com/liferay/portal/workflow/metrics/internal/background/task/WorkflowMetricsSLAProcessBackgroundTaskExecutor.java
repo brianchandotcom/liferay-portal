@@ -104,9 +104,7 @@ public class WorkflowMetricsSLAProcessBackgroundTaskExecutor
 		return null;
 	}
 
-	private Stream<Long> _getInstanceIdsStream(
-		long companyId, long processId) {
-
+	private Stream<Long> _getInstanceIdsStream(long companyId, long processId) {
 		SearchSearchRequest searchSearchRequest = new SearchSearchRequest();
 
 		searchSearchRequest.setIndexNames("workflow-metrics-instances");

@@ -53,17 +53,18 @@ import org.osgi.service.component.annotations.Reference;
 public class WorkflowMetricsSLAProcessor {
 
 	public WorkflowMetricsSLAProcessResult process(
-		long companyId, long instanceId, LocalDateTime now,
+		long companyId, long instanceId, LocalDateTime nowLocalDateTime,
 		WorkflowMetricsSLADefinition workflowMetricsSLADefinition) {
 
 		List<TaskInterval> taskIntervals = getWorkflowMetricsTaskIntervals(
-			companyId, now, instanceId);
+			companyId, nowLocalDateTime, instanceId);
 
 		long elapsedTime = 0;
 
 		for (TaskInterval taskInterval : taskIntervals) {
 			Duration duration = Duration.between(
-				taskInterval.getStartDate(), taskInterval.getEndDate());
+				taskInterval.getStartDateLocalDateTime(),
+				taskInterval.getEndDateLocalDateTime());
 
 			elapsedTime += duration.toMillis();
 		}
@@ -72,17 +73,17 @@ public class WorkflowMetricsSLAProcessor {
 			workflowMetricsSLADefinition.getDuration() - elapsedTime;
 
 		return new WorkflowMetricsSLAProcessResult(
-			companyId, instanceId, workflowMetricsSLADefinition.getProcessId(),
-			workflowMetricsSLADefinition.getWorkflowMetricsSLADefinitionId(),
-			elapsedTime, now,
+			companyId, elapsedTime, instanceId, nowLocalDateTime,
 			elapsedTime <= workflowMetricsSLADefinition.getDuration(),
-			computeOverdueDate(now, remainingTime), remainingTime);
+			computeOverdueLocalDateTime(nowLocalDateTime, remainingTime),
+			workflowMetricsSLADefinition.getProcessId(), remainingTime,
+			workflowMetricsSLADefinition.getWorkflowMetricsSLADefinitionId());
 	}
 
-	protected LocalDateTime computeOverdueDate(
-		LocalDateTime checkLocalDateTime, long remainingTime) {
+	protected LocalDateTime computeOverdueLocalDateTime(
+		LocalDateTime nowLocalDateTime, long remainingTime) {
 
-		return checkLocalDateTime.plus(remainingTime, ChronoUnit.MILLIS);
+		return nowLocalDateTime.plus(remainingTime, ChronoUnit.MILLIS);
 	}
 
 	protected List<Document> getTokenDocuments(
@@ -131,7 +132,7 @@ public class WorkflowMetricsSLAProcessor {
 	}
 
 	protected List<TaskInterval> getWorkflowMetricsTaskIntervals(
-		long companyId, LocalDateTime checkLocalDateTime, long instanceId) {
+		long companyId, LocalDateTime nowLocalDateTime, long instanceId) {
 
 		List<Document> documents = getTokenDocuments(companyId, instanceId);
 
@@ -139,30 +140,35 @@ public class WorkflowMetricsSLAProcessor {
 			return Collections.emptyList();
 		}
 
-		return toNonoverlapingIntervals(checkLocalDateTime, documents);
+		return toNonoverlapingTaskIntervals(nowLocalDateTime, documents);
 	}
 
-	protected Stack<TaskInterval> toNonoverlapingIntervals(
-		LocalDateTime checkLocalDateTime, List<Document> documents) {
+	protected Stack<TaskInterval> toNonoverlapingTaskIntervals(
+		LocalDateTime nowLocalDateTime, List<Document> documents) {
 
 		Stack<TaskInterval> taskIntervals = new Stack<>();
 
-		taskIntervals.push(
-			_toTaskInterval(documents.get(0), checkLocalDateTime));
+		taskIntervals.push(_toTaskInterval(documents.get(0), nowLocalDateTime));
 
 		for (int i = 1; i < documents.size(); i++) {
-			TaskInterval top = taskIntervals.peek();
+			TaskInterval topTaskInterval = taskIntervals.peek();
 
 			TaskInterval taskInterval = _toTaskInterval(
-				documents.get(i), checkLocalDateTime);
+				documents.get(i), nowLocalDateTime);
 
-			LocalDateTime topEndLocalDateTime = top.getEndDate();
+			LocalDateTime topEndLocalDateTime =
+				topTaskInterval.getEndDateLocalDateTime();
 
-			if (topEndLocalDateTime.isBefore(taskInterval.getStartDate())) {
+			if (topEndLocalDateTime.isBefore(
+					taskInterval.getStartDateLocalDateTime())) {
+
 				taskIntervals.push(taskInterval);
 			}
-			else if (topEndLocalDateTime.isBefore(taskInterval.getEndDate())) {
-				top._endDate = taskInterval.getEndDate();
+			else if (topEndLocalDateTime.isBefore(
+						taskInterval.getEndDateLocalDateTime())) {
+
+				topTaskInterval._endDateLocalDateTime =
+					taskInterval.getEndDateLocalDateTime();
 			}
 		}
 
@@ -186,19 +192,20 @@ public class WorkflowMetricsSLAProcessor {
 	}
 
 	private TaskInterval _toTaskInterval(
-		Document document, LocalDateTime checkLocalDateTime) {
+		Document document, LocalDateTime nowLocalDateTime) {
 
 		TaskInterval taskInterval = new TaskInterval();
 
 		if (Validator.isNull(document.getFieldValue("completionDate"))) {
-			taskInterval._endDate = checkLocalDateTime;
+			taskInterval._endDateLocalDateTime = nowLocalDateTime;
 		}
 		else {
-			taskInterval._endDate = _toLocalDateTime(
+			taskInterval._endDateLocalDateTime = _toLocalDateTime(
 				document, "completionDate");
 		}
 
-		taskInterval._startDate = _toLocalDateTime(document, "createDate");
+		taskInterval._startDateLocalDateTime = _toLocalDateTime(
+			document, "createDate");
 
 		return taskInterval;
 	}
@@ -208,16 +215,16 @@ public class WorkflowMetricsSLAProcessor {
 
 	private class TaskInterval {
 
-		public LocalDateTime getEndDate() {
-			return _endDate;
+		public LocalDateTime getEndDateLocalDateTime() {
+			return _endDateLocalDateTime;
 		}
 
-		public LocalDateTime getStartDate() {
-			return _startDate;
+		public LocalDateTime getStartDateLocalDateTime() {
+			return _startDateLocalDateTime;
 		}
 
-		private LocalDateTime _endDate;
-		private LocalDateTime _startDate;
+		private LocalDateTime _endDateLocalDateTime;
+		private LocalDateTime _startDateLocalDateTime;
 
 	}
 

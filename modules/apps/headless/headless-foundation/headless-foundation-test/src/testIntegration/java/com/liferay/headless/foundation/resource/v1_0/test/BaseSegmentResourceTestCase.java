@@ -242,7 +242,7 @@ public abstract class BaseSegmentResourceTestCase {
 				contentSpaceId, userAccountId, randomSegment());
 
 		Page<Segment> page = invokeGetContentSpaceUserAccountSegmentsPage(
-			contentSpaceId, null, Pagination.of(1, 2));
+			contentSpaceId, userAccountId, Pagination.of(1, 2));
 
 		Assert.assertEquals(2, page.getTotalCount());
 
@@ -273,14 +273,14 @@ public abstract class BaseSegmentResourceTestCase {
 				contentSpaceId, userAccountId, randomSegment());
 
 		Page<Segment> page1 = invokeGetContentSpaceUserAccountSegmentsPage(
-			contentSpaceId, null, Pagination.of(1, 2));
+			contentSpaceId, userAccountId, Pagination.of(1, 2));
 
 		List<Segment> segments1 = (List<Segment>)page1.getItems();
 
 		Assert.assertEquals(segments1.toString(), 2, segments1.size());
 
 		Page<Segment> page2 = invokeGetContentSpaceUserAccountSegmentsPage(
-			contentSpaceId, null, Pagination.of(2, 2));
+			contentSpaceId, userAccountId, Pagination.of(2, 2));
 
 		Assert.assertEquals(3, page2.getTotalCount());
 

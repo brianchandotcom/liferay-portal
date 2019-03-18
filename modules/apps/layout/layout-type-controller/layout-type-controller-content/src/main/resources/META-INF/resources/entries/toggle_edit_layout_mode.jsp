@@ -60,7 +60,7 @@ String portletNamespace = PortalUtil.getPortletNamespace(ContentPageEditorPortle
 	$('#<%= portletNamespace %>mode').on(
 		'change',
 		function(event) {
-			Liferay.Util.navigate('<%= redirect %>');
+			Liferay.Util.navigate('<%= HtmlUtil.escapeJS(redirect) %>');
 		}
 	);
 </aui:script>

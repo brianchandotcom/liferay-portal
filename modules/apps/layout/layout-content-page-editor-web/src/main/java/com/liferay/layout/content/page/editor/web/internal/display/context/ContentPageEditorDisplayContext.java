@@ -61,13 +61,11 @@ import com.liferay.portal.kernel.portlet.PortletProvider;
 import com.liferay.portal.kernel.portlet.PortletProviderUtil;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
-import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.service.PortletLocalServiceUtil;
 import com.liferay.portal.kernel.service.PortletPreferencesLocalServiceUtil;
 import com.liferay.portal.kernel.service.permission.PortletPermissionUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -85,10 +83,6 @@ import com.liferay.portal.template.soy.util.SoyContext;
 import com.liferay.portal.template.soy.util.SoyContextFactoryUtil;
 import com.liferay.portal.util.PortletCategoryUtil;
 import com.liferay.portal.util.WebAppPool;
-import com.liferay.segments.model.SegmentsEntry;
-import com.liferay.segments.model.SegmentsExperience;
-import com.liferay.segments.service.SegmentsEntryLocalServiceUtil;
-import com.liferay.segments.service.SegmentsExperienceLocalServiceUtil;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -164,9 +158,6 @@ public class ContentPageEditorDisplayContext {
 		soyContext.put(
 			"defaultEditorConfigurations", _getDefaultConfigurations());
 		soyContext.put("defaultLanguageId", themeDisplay.getLanguageId());
-		soyContext.put("defaultSegmentsEntryId", _getDefaultSegmentsEntryId());
-		soyContext.put(
-			"defaultSegmentsExperienceId", _getDefaultSegmentsExperienceId());
 		soyContext.put(
 			"deleteFragmentEntryLinkURL",
 			getFragmentEntryActionURL(
@@ -243,9 +234,6 @@ public class ContentPageEditorDisplayContext {
 			"availableLanguages", _getAvailableLanguagesSoyContext());
 		soyContext.put("classPK", themeDisplay.getPlid());
 		soyContext.put("defaultLanguageId", themeDisplay.getLanguageId());
-		soyContext.put("defaultSegmentsEntryId", _getDefaultSegmentsEntryId());
-		soyContext.put(
-			"defaultSegmentsExperienceId", _getDefaultSegmentsExperienceId());
 		soyContext.put(
 			"draft", classNameId == PortalUtil.getClassNameId(Layout.class));
 		soyContext.put("lastSaveDate", StringPool.BLANK);
@@ -275,6 +263,10 @@ public class ContentPageEditorDisplayContext {
 			request, "groupId", themeDisplay.getScopeGroupId());
 
 		return _groupId;
+	}
+
+	protected long[] getSegmentsExperienceIds() {
+		return new long[0];
 	}
 
 	protected List<SoyContext> getSidebarPanelSoyContexts(boolean showMapping) {
@@ -464,60 +456,6 @@ public class ContentPageEditorDisplayContext {
 		_defaultConfigurations = configurations;
 
 		return _defaultConfigurations;
-	}
-
-	private String _getDefaultSegmentsEntryId() {
-		if (_defaultSegmentsEntryId != null) {
-			return _defaultSegmentsEntryId;
-		}
-
-		_defaultSegmentsEntryId = StringPool.BLANK;
-
-		try {
-			SegmentsEntry defaultSegmentsEntry =
-				SegmentsEntryLocalServiceUtil.getDefaultSegmentsEntry(
-					getGroupId());
-
-			_defaultSegmentsEntryId = String.valueOf(
-				defaultSegmentsEntry.getSegmentsEntryId());
-		}
-		catch (PortalException pe) {
-			_log.error("Unable to get default segment", pe);
-		}
-
-		return _defaultSegmentsEntryId;
-	}
-
-	private String _getDefaultSegmentsExperienceId() {
-		if (_defaultSegmentsExperienceId != null) {
-			return _defaultSegmentsExperienceId;
-		}
-
-		_defaultSegmentsExperienceId = StringPool.BLANK;
-
-		try {
-			SegmentsExperience defaultSegmentsExperience =
-				SegmentsExperienceLocalServiceUtil.getDefaultSegmentsExperience(
-					getGroupId(), classNameId, classPK);
-
-			if (classNameId == PortalUtil.getClassNameId(Layout.class)) {
-				Layout draftLayout = LayoutLocalServiceUtil.getLayout(classPK);
-
-				defaultSegmentsExperience =
-					SegmentsExperienceLocalServiceUtil.
-						getDefaultSegmentsExperience(
-							getGroupId(), classNameId,
-							draftLayout.getClassPK());
-			}
-
-			_defaultSegmentsExperienceId = String.valueOf(
-				defaultSegmentsExperience.getSegmentsExperienceId());
-		}
-		catch (PortalException pe) {
-			_log.error("Unable to get default segments experience", pe);
-		}
-
-		return _defaultSegmentsExperienceId;
 	}
 
 	private List<SoyContext> _getFragmentEntriesSoyContext(
@@ -909,9 +847,7 @@ public class ContentPageEditorDisplayContext {
 
 		themeDisplay.setIsolated(true);
 
-		long[] segmentsExperienceIds = {
-			GetterUtil.getLong(_getDefaultSegmentsExperienceId())
-		};
+		long[] segmentsExperienceIds = getSegmentsExperienceIds();
 
 		try {
 			for (FragmentEntryLink fragmentEntryLink : fragmentEntryLinks) {
@@ -1063,8 +999,6 @@ public class ContentPageEditorDisplayContext {
 
 	private List<SoyContext> _assetBrowserLinksSoyContexts;
 	private Map<String, Object> _defaultConfigurations;
-	private String _defaultSegmentsEntryId;
-	private String _defaultSegmentsExperienceId;
 	private final FragmentCollectionContributorTracker
 		_fragmentCollectionContributorTracker;
 	private Long _groupId;

@@ -14,12 +14,21 @@
 
 package com.liferay.layout.content.page.editor.web.internal.display.context;
 
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.template.soy.util.SoyContext;
 import com.liferay.portal.template.soy.util.SoyContextFactoryUtil;
 import com.liferay.segments.model.SegmentsEntry;
 import com.liferay.segments.model.SegmentsExperience;
+import com.liferay.segments.service.SegmentsEntryLocalServiceUtil;
 import com.liferay.segments.service.SegmentsEntryServiceUtil;
+import com.liferay.segments.service.SegmentsExperienceLocalServiceUtil;
 import com.liferay.segments.service.SegmentsExperienceServiceUtil;
 
 import java.util.List;
@@ -55,6 +64,9 @@ public class ContentPageLayoutEditorDisplayContext
 		soyContext.put(
 			"availableSegmentsExperiences",
 			_getAvailableSegmentsExperiencesSoyContext());
+		soyContext.put("defaultSegmentsEntryId", _getDefaultSegmentsEntryId());
+		soyContext.put(
+			"defaultSegmentsExperienceId", _getDefaultSegmentsExperienceId());
 		soyContext.put("sidebarPanels", getSidebarPanelSoyContexts(false));
 
 		_editorSoyContext = soyContext;
@@ -78,10 +90,20 @@ public class ContentPageLayoutEditorDisplayContext
 		soyContext.put(
 			"availableSegmentsExperiences",
 			_getAvailableSegmentsExperiencesSoyContext());
+		soyContext.put("defaultSegmentsEntryId", _getDefaultSegmentsEntryId());
+		soyContext.put(
+			"defaultSegmentsExperienceId", _getDefaultSegmentsExperienceId());
 
 		_fragmentsEditorToolbarSoyContext = soyContext;
 
 		return _fragmentsEditorToolbarSoyContext;
+	}
+
+	@Override
+	protected long[] getSegmentsExperienceIds() {
+		return new long[] {
+			GetterUtil.getLong(_getDefaultSegmentsExperienceId())
+		};
 	}
 
 	private SoyContext _getAvailableSegmentsEntriesSoyContext() {
@@ -140,6 +162,65 @@ public class ContentPageLayoutEditorDisplayContext
 		return availableSegmentsEntriesSoyContext;
 	}
 
+	private String _getDefaultSegmentsEntryId() {
+		if (_defaultSegmentsEntryId != null) {
+			return _defaultSegmentsEntryId;
+		}
+
+		_defaultSegmentsEntryId = StringPool.BLANK;
+
+		try {
+			SegmentsEntry defaultSegmentsEntry =
+				SegmentsEntryLocalServiceUtil.getDefaultSegmentsEntry(
+					getGroupId());
+
+			_defaultSegmentsEntryId = String.valueOf(
+				defaultSegmentsEntry.getSegmentsEntryId());
+		}
+		catch (PortalException pe) {
+			_log.error("Unable to get default segment", pe);
+		}
+
+		return _defaultSegmentsEntryId;
+	}
+
+	private String _getDefaultSegmentsExperienceId() {
+		if (_defaultSegmentsExperienceId != null) {
+			return _defaultSegmentsExperienceId;
+		}
+
+		_defaultSegmentsExperienceId = StringPool.BLANK;
+
+		try {
+			SegmentsExperience defaultSegmentsExperience =
+				SegmentsExperienceLocalServiceUtil.getDefaultSegmentsExperience(
+					getGroupId(), classNameId, classPK);
+
+			if (classNameId == PortalUtil.getClassNameId(Layout.class)) {
+				Layout draftLayout = LayoutLocalServiceUtil.getLayout(classPK);
+
+				defaultSegmentsExperience =
+					SegmentsExperienceLocalServiceUtil.
+						getDefaultSegmentsExperience(
+							getGroupId(), classNameId,
+							draftLayout.getClassPK());
+			}
+
+			_defaultSegmentsExperienceId = String.valueOf(
+				defaultSegmentsExperience.getSegmentsExperienceId());
+		}
+		catch (PortalException pe) {
+			_log.error("Unable to get default segments experience", pe);
+		}
+
+		return _defaultSegmentsExperienceId;
+	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		ContentPageLayoutEditorDisplayContext.class);
+
+	private String _defaultSegmentsEntryId;
+	private String _defaultSegmentsExperienceId;
 	private SoyContext _editorSoyContext;
 	private SoyContext _fragmentsEditorToolbarSoyContext;
 

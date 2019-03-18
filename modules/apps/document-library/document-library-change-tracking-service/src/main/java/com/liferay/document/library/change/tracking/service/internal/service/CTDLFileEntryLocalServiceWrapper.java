@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.document.library.change.tracking.internal.service;
+package com.liferay.document.library.change.tracking.service.internal.service;
 
 import com.liferay.change.tracking.CTManager;
 import com.liferay.change.tracking.constants.CTConstants;
@@ -32,15 +32,13 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceWrapper;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 import java.io.File;
 import java.io.InputStream;
-
 import java.util.List;
 import java.util.Map;
-
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Luiz Marins
@@ -85,9 +83,7 @@ public class CTDLFileEntryLocalServiceWrapper
 
 		_unregisterChange(dlFileEntry);
 
-		DLFileEntry fileEntry = super.deleteFileEntry(dlFileEntry);
-
-		return fileEntry;
+		return super.deleteFileEntry(dlFileEntry);
 	}
 
 	@Override
@@ -153,11 +149,11 @@ public class CTDLFileEntryLocalServiceWrapper
 		List<DLFileVersion> fileVersions = fileEntry.getFileVersions(
 			WorkflowConstants.STATUS_ANY);
 
-		for (DLFileVersion fv : fileVersions) {
+		for (DLFileVersion dlFileVersion : fileVersions) {
 			_ctManager.unregisterModelChange(
 				PrincipalThreadLocal.getUserId(),
 				_portal.getClassNameId(DLFileVersion.class.getName()),
-				fv.getFileVersionId());
+				dlFileVersion.getFileVersionId());
 		}
 	}
 

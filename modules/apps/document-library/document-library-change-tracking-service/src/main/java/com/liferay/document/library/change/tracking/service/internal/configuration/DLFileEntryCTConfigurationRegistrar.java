@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.document.library.change.tracking.internal.configuration;
+package com.liferay.document.library.change.tracking.service.internal.configuration;
 
 import com.liferay.change.tracking.configuration.CTConfigurationRegistrar;
 import com.liferay.change.tracking.configuration.builder.CTConfigurationBuilder;
@@ -21,17 +21,21 @@ import com.liferay.document.library.kernel.model.DLFileVersion;
 import com.liferay.document.library.kernel.service.DLFileEntryLocalService;
 import com.liferay.document.library.kernel.service.DLFileVersionLocalService;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.dao.orm.Property;
+import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
-
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ReferenceScope;
+
+import java.util.List;
 
 /**
  * @author Luiz Marins
@@ -48,15 +52,22 @@ public class DLFileEntryCTConfigurationRegistrar {
 				"document"
 			).setEntityClasses(
 				DLFileEntry.class, DLFileVersion.class
+			).setResourceEntitiesByCompanyIdFunction(
+				this::_fetchDLFileEntries
 			).setResourceEntityByResourceEntityIdFunction(
 				_dlFileEntryLocalService::fetchDLFileEntry
 			).setEntityIdsFromResourceEntityFunctions(
 				DLFileEntry::getFileEntryId,
 				this::_versionEntityIdFromResourceEntityFunction
+			).setVersionEntitiesFromResourceEntityFunction(
+				dlFileEntry ->
+					_dlFileVersionLocalService.getFileVersions(
+						dlFileEntry.getFileEntryId(),
+						WorkflowConstants.STATUS_ANY)
 			).setVersionEntityByVersionEntityIdFunction(
 				_dlFileVersionLocalService::fetchDLFileVersion
 			).setVersionEntityDetails(
-				this::_fetchGroupName, DLFileVersion::getTitle,
+				null, this::_fetchGroupName, DLFileVersion::getTitle,
 				DLFileVersion::getVersion
 			).setEntityIdsFromVersionEntityFunctions(
 				DLFileVersion::getFileEntryId, DLFileVersion::getFileVersionId
@@ -67,6 +78,16 @@ public class DLFileEntryCTConfigurationRegistrar {
 				},
 				DLFileVersion::getStatus
 			).build());
+	}
+
+	private List<DLFileEntry> _fetchDLFileEntries(long companyId) {
+		DynamicQuery dynamicQuery = _dlFileEntryLocalService.dynamicQuery();
+
+		Property companyIdProperty = PropertyFactoryUtil.forName("companyId");
+
+		dynamicQuery.add(companyIdProperty.eq(companyId));
+
+		return _dlFileEntryLocalService.dynamicQuery(dynamicQuery);
 	}
 
 	private String _fetchGroupName(DLFileVersion dlFileVersion) {

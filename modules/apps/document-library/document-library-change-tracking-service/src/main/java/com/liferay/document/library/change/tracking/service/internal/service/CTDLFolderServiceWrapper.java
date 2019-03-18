@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.document.library.change.tracking.internal.service;
+package com.liferay.document.library.change.tracking.service.internal.service;
 
 import com.liferay.change.tracking.CTEngineManager;
 import com.liferay.document.library.change.tracking.service.CTDLFolderService;
@@ -24,11 +24,10 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ServiceWrapper;
-
-import java.util.List;
-
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
+
+import java.util.List;
 
 /**
  * @author Luiz Marins

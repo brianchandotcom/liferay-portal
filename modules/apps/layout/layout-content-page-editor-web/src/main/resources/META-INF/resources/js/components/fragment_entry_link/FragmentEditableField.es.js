@@ -299,13 +299,28 @@ class FragmentEditableField extends Component {
 		event.stopPropagation();
 
 		if (!this._editing) {
-			this.store.dispatchAction(
-				UPDATE_ACTIVE_ITEM,
-				{
-					activeItemId: `${this.fragmentEntryLinkId}-${this.editableId}`,
-					activeItemType: FRAGMENTS_EDITOR_ITEM_TYPES.editable
-				}
+			const mapped = FragmentEditableField._isMapped(
+				this.editableValues
 			);
+
+			if (
+				!mapped &&
+				this.activeItemId === `${this.fragmentEntryLinkId}-${this.editableId}` &&
+				this.activeItemType === FRAGMENTS_EDITOR_ITEM_TYPES.editable
+			) {
+				this._enableEditor();
+
+				this._disposeFloatingToolbar();
+			}
+			else {
+				this.store.dispatchAction(
+					UPDATE_ACTIVE_ITEM,
+					{
+						activeItemId: `${this.fragmentEntryLinkId}-${this.editableId}`,
+						activeItemType: FRAGMENTS_EDITOR_ITEM_TYPES.editable
+					}
+				);
+			}
 		}
 	}
 

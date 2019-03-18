@@ -19,6 +19,8 @@ import com.liferay.headless.document.library.resource.v1_0.FolderResource;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Company;
+import com.liferay.portal.kernel.search.Sort;
+import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.portal.vulcan.pagination.Page;
@@ -65,8 +67,10 @@ public abstract class BaseFolderResourceImpl implements FolderResource {
 	@GET
 	@Parameters(
 		value = {
+			@Parameter(in = ParameterIn.QUERY, name = "filter"),
 			@Parameter(in = ParameterIn.QUERY, name = "page"),
-			@Parameter(in = ParameterIn.QUERY, name = "pageSize")
+			@Parameter(in = ParameterIn.QUERY, name = "pageSize"),
+			@Parameter(in = ParameterIn.QUERY, name = "sorts")
 		}
 	)
 	@Path("/content-spaces/{content-space-id}/folders")
@@ -74,7 +78,8 @@ public abstract class BaseFolderResourceImpl implements FolderResource {
 	@Tags(value = {@Tag(name = "Folder")})
 	public Page<Folder> getContentSpaceFoldersPage(
 			@NotNull @PathParam("content-space-id") Long contentSpaceId,
-			@Context Pagination pagination)
+			@Context Filter filter, @Context Pagination pagination,
+			@Context Sort[] sorts)
 		throws Exception {
 
 		return Page.of(Collections.emptyList());
@@ -182,8 +187,10 @@ public abstract class BaseFolderResourceImpl implements FolderResource {
 	@GET
 	@Parameters(
 		value = {
+			@Parameter(in = ParameterIn.QUERY, name = "filter"),
 			@Parameter(in = ParameterIn.QUERY, name = "page"),
-			@Parameter(in = ParameterIn.QUERY, name = "pageSize")
+			@Parameter(in = ParameterIn.QUERY, name = "pageSize"),
+			@Parameter(in = ParameterIn.QUERY, name = "sorts")
 		}
 	)
 	@Path("/folders/{folder-id}/folders")
@@ -191,7 +198,8 @@ public abstract class BaseFolderResourceImpl implements FolderResource {
 	@Tags(value = {@Tag(name = "Folder")})
 	public Page<Folder> getFolderFoldersPage(
 			@NotNull @PathParam("folder-id") Long folderId,
-			@Context Pagination pagination)
+			@Context Filter filter, @Context Pagination pagination,
+			@Context Sort[] sorts)
 		throws Exception {
 
 		return Page.of(Collections.emptyList());

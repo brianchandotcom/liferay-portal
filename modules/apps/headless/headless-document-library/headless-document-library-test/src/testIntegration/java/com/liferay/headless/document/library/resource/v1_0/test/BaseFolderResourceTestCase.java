@@ -50,6 +50,8 @@ import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -63,6 +65,7 @@ import javax.ws.rs.core.Response;
 
 import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.beanutils.BeanUtilsBean;
+import org.apache.commons.lang.time.DateUtils;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -114,13 +117,87 @@ public abstract class BaseFolderResourceTestCase {
 			contentSpaceId, randomFolder());
 
 		Page<Folder> page = invokeGetContentSpaceFoldersPage(
-			contentSpaceId, Pagination.of(1, 2));
+			contentSpaceId, null, Pagination.of(1, 2), null);
 
 		Assert.assertEquals(2, page.getTotalCount());
 
 		assertEqualsIgnoringOrder(
 			Arrays.asList(folder1, folder2), (List<Folder>)page.getItems());
 		assertValid(page);
+	}
+
+	@Test
+	public void testGetContentSpaceFoldersPageWithFilterDateTimeEquals()
+		throws Exception {
+
+		List<EntityField> entityFields = getEntityFields(
+			EntityField.Type.DATE_TIME);
+
+		if (entityFields.isEmpty()) {
+			return;
+		}
+
+		Long contentSpaceId =
+			testGetContentSpaceFoldersPage_getContentSpaceId();
+
+		Folder folder1 = randomFolder();
+		Folder folder2 = randomFolder();
+
+		for (EntityField entityField : entityFields) {
+			BeanUtils.setProperty(
+				folder1, entityField.getName(),
+				DateUtils.addMinutes(new Date(), -2));
+		}
+
+		folder1 = testGetContentSpaceFoldersPage_addFolder(
+			contentSpaceId, folder1);
+
+		Thread.sleep(1000);
+
+		folder2 = testGetContentSpaceFoldersPage_addFolder(
+			contentSpaceId, folder2);
+
+		for (EntityField entityField : entityFields) {
+			Page<Folder> page = invokeGetContentSpaceFoldersPage(
+				contentSpaceId, getFilterString(entityField, "eq", folder1),
+				Pagination.of(1, 2), null);
+
+			assertEquals(
+				Collections.singletonList(folder1),
+				(List<Folder>)page.getItems());
+		}
+	}
+
+	@Test
+	public void testGetContentSpaceFoldersPageWithFilterStringEquals()
+		throws Exception {
+
+		List<EntityField> entityFields = getEntityFields(
+			EntityField.Type.STRING);
+
+		if (entityFields.isEmpty()) {
+			return;
+		}
+
+		Long contentSpaceId =
+			testGetContentSpaceFoldersPage_getContentSpaceId();
+
+		Folder folder1 = testGetContentSpaceFoldersPage_addFolder(
+			contentSpaceId, randomFolder());
+
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		Folder folder2 = testGetContentSpaceFoldersPage_addFolder(
+			contentSpaceId, randomFolder());
+
+		for (EntityField entityField : entityFields) {
+			Page<Folder> page = invokeGetContentSpaceFoldersPage(
+				contentSpaceId, getFilterString(entityField, "eq", folder1),
+				Pagination.of(1, 2), null);
+
+			assertEquals(
+				Collections.singletonList(folder1),
+				(List<Folder>)page.getItems());
+		}
 	}
 
 	@Test
@@ -138,14 +215,14 @@ public abstract class BaseFolderResourceTestCase {
 			contentSpaceId, randomFolder());
 
 		Page<Folder> page1 = invokeGetContentSpaceFoldersPage(
-			contentSpaceId, Pagination.of(1, 2));
+			contentSpaceId, null, Pagination.of(1, 2), null);
 
 		List<Folder> folders1 = (List<Folder>)page1.getItems();
 
 		Assert.assertEquals(folders1.toString(), 2, folders1.size());
 
 		Page<Folder> page2 = invokeGetContentSpaceFoldersPage(
-			contentSpaceId, Pagination.of(2, 2));
+			contentSpaceId, null, Pagination.of(2, 2), null);
 
 		Assert.assertEquals(3, page2.getTotalCount());
 
@@ -163,6 +240,102 @@ public abstract class BaseFolderResourceTestCase {
 			});
 	}
 
+	@Test
+	public void testGetContentSpaceFoldersPageWithSortDateTime()
+		throws Exception {
+
+		List<EntityField> entityFields = getEntityFields(
+			EntityField.Type.DATE_TIME);
+
+		if (entityFields.isEmpty()) {
+			return;
+		}
+
+		Long contentSpaceId =
+			testGetContentSpaceFoldersPage_getContentSpaceId();
+
+		Folder folder1 = randomFolder();
+		Folder folder2 = randomFolder();
+
+		for (EntityField entityField : entityFields) {
+			BeanUtils.setProperty(
+				folder1, entityField.getName(),
+				DateUtils.addMinutes(new Date(), -2));
+		}
+
+		folder1 = testGetContentSpaceFoldersPage_addFolder(
+			contentSpaceId, folder1);
+
+		Thread.sleep(1000);
+
+		folder2 = testGetContentSpaceFoldersPage_addFolder(
+			contentSpaceId, folder2);
+
+		for (EntityField entityField : entityFields) {
+			Page<Folder> ascPage = invokeGetContentSpaceFoldersPage(
+				contentSpaceId, null, Pagination.of(1, 2),
+				entityField.getName() + ":asc");
+
+			assertEquals(
+				Arrays.asList(folder1, folder2),
+				(List<Folder>)ascPage.getItems());
+
+			Page<Folder> descPage = invokeGetContentSpaceFoldersPage(
+				contentSpaceId, null, Pagination.of(1, 2),
+				entityField.getName() + ":desc");
+
+			assertEquals(
+				Arrays.asList(folder2, folder1),
+				(List<Folder>)descPage.getItems());
+		}
+	}
+
+	@Test
+	public void testGetContentSpaceFoldersPageWithSortString()
+		throws Exception {
+
+		List<EntityField> entityFields = getEntityFields(
+			EntityField.Type.STRING);
+
+		if (entityFields.isEmpty()) {
+			return;
+		}
+
+		Long contentSpaceId =
+			testGetContentSpaceFoldersPage_getContentSpaceId();
+
+		Folder folder1 = randomFolder();
+		Folder folder2 = randomFolder();
+
+		for (EntityField entityField : entityFields) {
+			BeanUtils.setProperty(folder1, entityField.getName(), "Aaa");
+			BeanUtils.setProperty(folder2, entityField.getName(), "Bbb");
+		}
+
+		folder1 = testGetContentSpaceFoldersPage_addFolder(
+			contentSpaceId, folder1);
+		folder2 = testGetContentSpaceFoldersPage_addFolder(
+			contentSpaceId, folder2);
+
+		for (EntityField entityField : entityFields) {
+			Page<Folder> ascPage = invokeGetContentSpaceFoldersPage(
+				contentSpaceId, null, Pagination.of(1, 2),
+				entityField.getName() + ":asc");
+
+			assertEquals(
+				Arrays.asList(folder1, folder2),
+				(List<Folder>)ascPage.getItems());
+
+			Page<Folder> descPage = invokeGetContentSpaceFoldersPage(
+				contentSpaceId, null, Pagination.of(1, 2),
+				entityField.getName() + ":desc");
+
+			assertEquals(
+				Arrays.asList(folder2, folder1),
+				(List<Folder>)descPage.getItems());
+		}
+	}
+
 	protected Folder testGetContentSpaceFoldersPage_addFolder(
 			Long contentSpaceId, Folder folder)
 		throws Exception {
@@ -178,7 +351,8 @@ public abstract class BaseFolderResourceTestCase {
 	}
 
 	protected Page<Folder> invokeGetContentSpaceFoldersPage(
-			Long contentSpaceId, Pagination pagination)
+			Long contentSpaceId, String filterString, Pagination pagination,
+			String sortString)
 		throws Exception {
 
 		Http.Options options = _createHttpOptions();
@@ -189,10 +363,14 @@ public abstract class BaseFolderResourceTestCase {
 					"/content-spaces/{content-space-id}/folders",
 					contentSpaceId);
 
+		location = HttpUtil.addParameter(location, "filter", filterString);
+
 		location = HttpUtil.addParameter(
 			location, "page", pagination.getPage());
 		location = HttpUtil.addParameter(
 			location, "pageSize", pagination.getPageSize());
+
+		location = HttpUtil.addParameter(location, "sort", sortString);
 
 		options.setLocation(location);
 
@@ -203,7 +381,8 @@ public abstract class BaseFolderResourceTestCase {
 	}
 
 	protected Http.Response invokeGetContentSpaceFoldersPageResponse(
-			Long contentSpaceId, Pagination pagination)
+			Long contentSpaceId, String filterString, Pagination pagination,
+			String sortString)
 		throws Exception {
 
 		Http.Options options = _createHttpOptions();
@@ -214,10 +393,14 @@ public abstract class BaseFolderResourceTestCase {
 					"/content-spaces/{content-space-id}/folders",
 					contentSpaceId);
 
+		location = HttpUtil.addParameter(location, "filter", filterString);
+
 		location = HttpUtil.addParameter(
 			location, "page", pagination.getPage());
 		location = HttpUtil.addParameter(
 			location, "pageSize", pagination.getPageSize());
+
+		location = HttpUtil.addParameter(location, "sort", sortString);
 
 		options.setLocation(location);
 
@@ -518,13 +701,83 @@ public abstract class BaseFolderResourceTestCase {
 			folderId, randomFolder());
 
 		Page<Folder> page = invokeGetFolderFoldersPage(
-			folderId, Pagination.of(1, 2));
+			folderId, null, Pagination.of(1, 2), null);
 
 		Assert.assertEquals(2, page.getTotalCount());
 
 		assertEqualsIgnoringOrder(
 			Arrays.asList(folder1, folder2), (List<Folder>)page.getItems());
 		assertValid(page);
+	}
+
+	@Test
+	public void testGetFolderFoldersPageWithFilterDateTimeEquals()
+		throws Exception {
+
+		List<EntityField> entityFields = getEntityFields(
+			EntityField.Type.DATE_TIME);
+
+		if (entityFields.isEmpty()) {
+			return;
+		}
+
+		Long folderId = testGetFolderFoldersPage_getFolderId();
+
+		Folder folder1 = randomFolder();
+		Folder folder2 = randomFolder();
+
+		for (EntityField entityField : entityFields) {
+			BeanUtils.setProperty(
+				folder1, entityField.getName(),
+				DateUtils.addMinutes(new Date(), -2));
+		}
+
+		folder1 = testGetFolderFoldersPage_addFolder(folderId, folder1);
+
+		Thread.sleep(1000);
+
+		folder2 = testGetFolderFoldersPage_addFolder(folderId, folder2);
+
+		for (EntityField entityField : entityFields) {
+			Page<Folder> page = invokeGetFolderFoldersPage(
+				folderId, getFilterString(entityField, "eq", folder1),
+				Pagination.of(1, 2), null);
+
+			assertEquals(
+				Collections.singletonList(folder1),
+				(List<Folder>)page.getItems());
+		}
+	}
+
+	@Test
+	public void testGetFolderFoldersPageWithFilterStringEquals()
+		throws Exception {
+
+		List<EntityField> entityFields = getEntityFields(
+			EntityField.Type.STRING);
+
+		if (entityFields.isEmpty()) {
+			return;
+		}
+
+		Long folderId = testGetFolderFoldersPage_getFolderId();
+
+		Folder folder1 = testGetFolderFoldersPage_addFolder(
+			folderId, randomFolder());
+
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		Folder folder2 = testGetFolderFoldersPage_addFolder(
+			folderId, randomFolder());
+
+		for (EntityField entityField : entityFields) {
+			Page<Folder> page = invokeGetFolderFoldersPage(
+				folderId, getFilterString(entityField, "eq", folder1),
+				Pagination.of(1, 2), null);
+
+			assertEquals(
+				Collections.singletonList(folder1),
+				(List<Folder>)page.getItems());
+		}
 	}
 
 	@Test
@@ -539,14 +792,14 @@ public abstract class BaseFolderResourceTestCase {
 			folderId, randomFolder());
 
 		Page<Folder> page1 = invokeGetFolderFoldersPage(
-			folderId, Pagination.of(1, 2));
+			folderId, null, Pagination.of(1, 2), null);
 
 		List<Folder> folders1 = (List<Folder>)page1.getItems();
 
 		Assert.assertEquals(folders1.toString(), 2, folders1.size());
 
 		Page<Folder> page2 = invokeGetFolderFoldersPage(
-			folderId, Pagination.of(2, 2));
+			folderId, null, Pagination.of(2, 2), null);
 
 		Assert.assertEquals(3, page2.getTotalCount());
 
@@ -564,6 +817,92 @@ public abstract class BaseFolderResourceTestCase {
 			});
 	}
 
+	@Test
+	public void testGetFolderFoldersPageWithSortDateTime() throws Exception {
+		List<EntityField> entityFields = getEntityFields(
+			EntityField.Type.DATE_TIME);
+
+		if (entityFields.isEmpty()) {
+			return;
+		}
+
+		Long folderId = testGetFolderFoldersPage_getFolderId();
+
+		Folder folder1 = randomFolder();
+		Folder folder2 = randomFolder();
+
+		for (EntityField entityField : entityFields) {
+			BeanUtils.setProperty(
+				folder1, entityField.getName(),
+				DateUtils.addMinutes(new Date(), -2));
+		}
+
+		folder1 = testGetFolderFoldersPage_addFolder(folderId, folder1);
+
+		Thread.sleep(1000);
+
+		folder2 = testGetFolderFoldersPage_addFolder(folderId, folder2);
+
+		for (EntityField entityField : entityFields) {
+			Page<Folder> ascPage = invokeGetFolderFoldersPage(
+				folderId, null, Pagination.of(1, 2),
+				entityField.getName() + ":asc");
+
+			assertEquals(
+				Arrays.asList(folder1, folder2),
+				(List<Folder>)ascPage.getItems());
+
+			Page<Folder> descPage = invokeGetFolderFoldersPage(
+				folderId, null, Pagination.of(1, 2),
+				entityField.getName() + ":desc");
+
+			assertEquals(
+				Arrays.asList(folder2, folder1),
+				(List<Folder>)descPage.getItems());
+		}
+	}
+
+	@Test
+	public void testGetFolderFoldersPageWithSortString() throws Exception {
+		List<EntityField> entityFields = getEntityFields(
+			EntityField.Type.STRING);
+
+		if (entityFields.isEmpty()) {
+			return;
+		}
+
+		Long folderId = testGetFolderFoldersPage_getFolderId();
+
+		Folder folder1 = randomFolder();
+		Folder folder2 = randomFolder();
+
+		for (EntityField entityField : entityFields) {
+			BeanUtils.setProperty(folder1, entityField.getName(), "Aaa");
+			BeanUtils.setProperty(folder2, entityField.getName(), "Bbb");
+		}
+
+		folder1 = testGetFolderFoldersPage_addFolder(folderId, folder1);
+		folder2 = testGetFolderFoldersPage_addFolder(folderId, folder2);
+
+		for (EntityField entityField : entityFields) {
+			Page<Folder> ascPage = invokeGetFolderFoldersPage(
+				folderId, null, Pagination.of(1, 2),
+				entityField.getName() + ":asc");
+
+			assertEquals(
+				Arrays.asList(folder1, folder2),
+				(List<Folder>)ascPage.getItems());
+
+			Page<Folder> descPage = invokeGetFolderFoldersPage(
+				folderId, null, Pagination.of(1, 2),
+				entityField.getName() + ":desc");
+
+			assertEquals(
+				Arrays.asList(folder2, folder1),
+				(List<Folder>)descPage.getItems());
+		}
+	}
+
 	protected Folder testGetFolderFoldersPage_addFolder(
 			Long folderId, Folder folder)
 		throws Exception {
@@ -578,7 +917,8 @@ public abstract class BaseFolderResourceTestCase {
 	}
 
 	protected Page<Folder> invokeGetFolderFoldersPage(
-			Long folderId, Pagination pagination)
+			Long folderId, String filterString, Pagination pagination,
+			String sortString)
 		throws Exception {
 
 		Http.Options options = _createHttpOptions();
@@ -586,10 +926,14 @@ public abstract class BaseFolderResourceTestCase {
 		String location =
 			_resourceURL + _toPath("/folders/{folder-id}/folders", folderId);
 
+		location = HttpUtil.addParameter(location, "filter", filterString);
+
 		location = HttpUtil.addParameter(
 			location, "page", pagination.getPage());
 		location = HttpUtil.addParameter(
 			location, "pageSize", pagination.getPageSize());
+
+		location = HttpUtil.addParameter(location, "sort", sortString);
 
 		options.setLocation(location);
 
@@ -600,7 +944,8 @@ public abstract class BaseFolderResourceTestCase {
 	}
 
 	protected Http.Response invokeGetFolderFoldersPageResponse(
-			Long folderId, Pagination pagination)
+			Long folderId, String filterString, Pagination pagination,
+			String sortString)
 		throws Exception {
 
 		Http.Options options = _createHttpOptions();
@@ -608,10 +953,14 @@ public abstract class BaseFolderResourceTestCase {
 		String location =
 			_resourceURL + _toPath("/folders/{folder-id}/folders", folderId);
 
+		location = HttpUtil.addParameter(location, "filter", filterString);
+
 		location = HttpUtil.addParameter(
 			location, "page", pagination.getPage());
 		location = HttpUtil.addParameter(
 			location, "pageSize", pagination.getPageSize());
+
+		location = HttpUtil.addParameter(location, "sort", sortString);
 
 		options.setLocation(location);
 
@@ -799,6 +1148,11 @@ public abstract class BaseFolderResourceTestCase {
 		sb.append(" ");
 
 		if (entityFieldName.equals("contentSpaceId")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
+		if (entityFieldName.equals("creator")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
 		}

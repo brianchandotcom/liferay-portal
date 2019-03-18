@@ -100,6 +100,30 @@ public class Folder {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long contentSpaceId;
 
+	public Creator getCreator() {
+		return creator;
+	}
+
+	public void setCreator(Creator creator) {
+		this.creator = creator;
+	}
+
+	@JsonIgnore
+	public void setCreator(
+		UnsafeSupplier<Creator, Exception> creatorUnsafeSupplier) {
+
+		try {
+			creator = creatorUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Creator creator;
+
 	public Date getDateCreated() {
 		return dateCreated;
 	}
@@ -305,6 +329,11 @@ public class Folder {
 		sb.append("\"contentSpaceId\": ");
 
 		sb.append(contentSpaceId);
+		sb.append(", ");
+
+		sb.append("\"creator\": ");
+
+		sb.append(creator);
 		sb.append(", ");
 
 		sb.append("\"dateCreated\": ");

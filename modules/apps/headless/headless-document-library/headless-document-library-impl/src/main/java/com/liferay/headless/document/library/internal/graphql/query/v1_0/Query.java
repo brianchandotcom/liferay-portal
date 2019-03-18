@@ -178,8 +178,9 @@ public class Query {
 	@GraphQLInvokeDetached
 	public Collection<Folder> getContentSpaceFoldersPage(
 			@GraphQLName("content-space-id") Long contentSpaceId,
+			@GraphQLName("filter") Filter filter,
 			@GraphQLName("pageSize") int pageSize,
-			@GraphQLName("page") int page)
+			@GraphQLName("page") int page, @GraphQLName("Sort[]") Sort[] sorts)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
@@ -187,7 +188,8 @@ public class Query {
 			this::_populateResourceContext,
 			folderResource -> {
 				Page paginationPage = folderResource.getContentSpaceFoldersPage(
-					contentSpaceId, Pagination.of(pageSize, page));
+					contentSpaceId, filter, Pagination.of(pageSize, page),
+					sorts);
 
 				return paginationPage.getItems();
 			});
@@ -208,8 +210,9 @@ public class Query {
 	@GraphQLInvokeDetached
 	public Collection<Folder> getFolderFoldersPage(
 			@GraphQLName("folder-id") Long folderId,
+			@GraphQLName("filter") Filter filter,
 			@GraphQLName("pageSize") int pageSize,
-			@GraphQLName("page") int page)
+			@GraphQLName("page") int page, @GraphQLName("Sort[]") Sort[] sorts)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
@@ -217,7 +220,7 @@ public class Query {
 			this::_populateResourceContext,
 			folderResource -> {
 				Page paginationPage = folderResource.getFolderFoldersPage(
-					folderId, Pagination.of(pageSize, page));
+					folderId, filter, Pagination.of(pageSize, page), sorts);
 
 				return paginationPage.getItems();
 			});

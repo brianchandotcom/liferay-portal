@@ -49,12 +49,13 @@ public class DLViewMoreMenuItemsDisplayContext {
 
 	public DLViewMoreMenuItemsDisplayContext(
 		long folderId, RenderRequest renderRequest,
-		RenderResponse renderResponse, HttpServletRequest request) {
+		RenderResponse renderResponse) {
 
 		_folderId = folderId;
 		_renderRequest = renderRequest;
 		_renderResponse = renderResponse;
-		_request = request;
+
+		_request = PortalUtil.getHttpServletRequest(renderRequest);
 	}
 
 	public String getClearResultsURL() {

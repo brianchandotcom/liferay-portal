@@ -19,7 +19,7 @@
 <%
 long folderId = ParamUtil.getLong(request, "folderId");
 
-DLViewMoreMenuItemsDisplayContext dlViewMoreMenuItemsDisplayContext = new DLViewMoreMenuItemsDisplayContext(folderId, renderRequest, renderResponse, request);
+DLViewMoreMenuItemsDisplayContext dlViewMoreMenuItemsDisplayContext = new DLViewMoreMenuItemsDisplayContext(folderId, renderRequest, renderResponse);
 %>
 
 <clay:navigation-bar

@@ -42,7 +42,6 @@ import com.liferay.dynamic.data.mapping.storage.Fields;
 import com.liferay.dynamic.data.mapping.util.DDM;
 import com.liferay.dynamic.data.mapping.util.FieldsToDDMFormValuesConverter;
 import com.liferay.headless.common.spi.service.context.ServiceContextUtil;
-import com.liferay.headless.web.experience.dto.v1_0.Categories;
 import com.liferay.headless.web.experience.dto.v1_0.ContentDocument;
 import com.liferay.headless.web.experience.dto.v1_0.ContentField;
 import com.liferay.headless.web.experience.dto.v1_0.Geo;
@@ -50,6 +49,7 @@ import com.liferay.headless.web.experience.dto.v1_0.RenderedContents;
 import com.liferay.headless.web.experience.dto.v1_0.StructuredContent;
 import com.liferay.headless.web.experience.dto.v1_0.StructuredContentImage;
 import com.liferay.headless.web.experience.dto.v1_0.StructuredContentLink;
+import com.liferay.headless.web.experience.dto.v1_0.TaxonomyCategories;
 import com.liferay.headless.web.experience.dto.v1_0.Value;
 import com.liferay.headless.web.experience.internal.dto.v1_0.util.AggregateRatingUtil;
 import com.liferay.headless.web.experience.internal.dto.v1_0.util.ContentStructureUtil;
@@ -297,7 +297,7 @@ public class StructuredContentResourceImpl
 				null,
 				ServiceContextUtil.createServiceContext(
 					structuredContent.getKeywords(),
-					structuredContent.getCategoryIds(),
+					structuredContent.getTaxonomyCategoryIds(),
 					journalArticle.getGroupId(),
 					structuredContent.getViewableByAsString())));
 	}
@@ -354,7 +354,7 @@ public class StructuredContentResourceImpl
 				0, true, 0, 0, 0, 0, 0, true, true, null,
 				ServiceContextUtil.createServiceContext(
 					structuredContent.getKeywords(),
-					structuredContent.getCategoryIds(), contentSpaceId,
+					structuredContent.getTaxonomyCategoryIds(), contentSpaceId,
 					structuredContent.getViewableByAsString())));
 	}
 
@@ -404,7 +404,7 @@ public class StructuredContentResourceImpl
 				null,
 				ServiceContextUtil.createServiceContext(
 					structuredContent.getKeywords(),
-					structuredContent.getCategoryIds(),
+					structuredContent.getTaxonomyCategoryIds(),
 					journalArticle.getGroupId(),
 					structuredContent.getViewableByAsString())));
 	}
@@ -821,17 +821,6 @@ public class StructuredContentResourceImpl
 					_ratingsStatsLocalService.fetchStats(
 						JournalArticle.class.getName(),
 						journalArticle.getResourcePrimKey()));
-				categories = transformToArray(
-					_assetCategoryLocalService.getCategories(
-						JournalArticle.class.getName(),
-						journalArticle.getResourcePrimKey()),
-					assetCategory -> new Categories() {
-						{
-							categoryId = assetCategory.getCategoryId();
-							categoryName = assetCategory.getName();
-						}
-					},
-					Categories.class);
 				contentFields = _toContentFields(journalArticle);
 				contentSpaceId = journalArticle.getGroupId();
 				contentStructureId = ddmStructure.getStructureId();
@@ -864,6 +853,17 @@ public class StructuredContentResourceImpl
 						}
 					},
 					RenderedContents.class);
+				taxonomyCategories = transformToArray(
+					_assetCategoryLocalService.getCategories(
+						JournalArticle.class.getName(),
+						journalArticle.getResourcePrimKey()),
+					assetCategory -> new TaxonomyCategories() {
+						{
+							taxonomyCategoryId = assetCategory.getCategoryId();
+							taxonomyCategoryName = assetCategory.getName();
+						}
+					},
+					TaxonomyCategories.class);
 				title = journalArticle.getTitle(
 					contextAcceptLanguage.getPreferredLocale());
 			}

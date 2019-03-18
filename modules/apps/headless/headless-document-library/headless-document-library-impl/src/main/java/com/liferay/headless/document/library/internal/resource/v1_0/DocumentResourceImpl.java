@@ -30,8 +30,8 @@ import com.liferay.document.library.kernel.service.DLAppService;
 import com.liferay.document.library.util.DLURLHelper;
 import com.liferay.headless.common.spi.service.context.ServiceContextUtil;
 import com.liferay.headless.document.library.dto.v1_0.AdaptedImages;
-import com.liferay.headless.document.library.dto.v1_0.Categories;
 import com.liferay.headless.document.library.dto.v1_0.Document;
+import com.liferay.headless.document.library.dto.v1_0.TaxonomyCategories;
 import com.liferay.headless.document.library.internal.dto.v1_0.util.AggregateRatingUtil;
 import com.liferay.headless.document.library.internal.dto.v1_0.util.CreatorUtil;
 import com.liferay.headless.document.library.internal.odata.entity.v1_0.DocumentEntityModel;
@@ -173,7 +173,7 @@ public class DocumentResourceImpl
 		);
 
 		Long[] categoryIds = optional.map(
-			Document::getCategoryIds
+			Document::getTaxonomyCategoryIds
 		).orElseGet(
 			() -> ArrayUtil.toArray(
 				_assetCategoryLocalService.getCategoryIds(
@@ -248,7 +248,7 @@ public class DocumentResourceImpl
 			document.getDescription(), null, DLVersionNumberIncrease.AUTOMATIC,
 			binaryFile.getInputStream(), binaryFile.getSize(),
 			ServiceContextUtil.createServiceContext(
-				document.getKeywords(), document.getCategoryIds(),
+				document.getKeywords(), document.getTaxonomyCategoryIds(),
 				existingFileEntry.getGroupId(),
 				document.getViewableByAsString()));
 
@@ -277,8 +277,8 @@ public class DocumentResourceImpl
 			document.getDescription(), null, binaryFile.getInputStream(),
 			binaryFile.getSize(),
 			ServiceContextUtil.createServiceContext(
-				document.getKeywords(), document.getCategoryIds(), groupId,
-				document.getViewableByAsString()));
+				document.getKeywords(), document.getTaxonomyCategoryIds(),
+				groupId, document.getViewableByAsString()));
 
 		return _toDocument(
 			fileEntry, fileEntry.getFileVersion(),
@@ -370,17 +370,6 @@ public class DocumentResourceImpl
 					_ratingsStatsLocalService.fetchStats(
 						DLFileEntry.class.getName(),
 						fileEntry.getFileEntryId()));
-				categories = transformToArray(
-					_assetCategoryLocalService.getCategories(
-						DLFileEntry.class.getName(),
-						fileEntry.getFileEntryId()),
-					assetCategory -> new Categories() {
-						{
-							categoryId = assetCategory.getCategoryId();
-							categoryName = assetCategory.getName();
-						}
-					},
-					Categories.class);
 				contentUrl = _dlURLHelper.getPreviewURL(
 					fileEntry, fileVersion, null, "");
 				creator = CreatorUtil.toCreator(_portal, user);
@@ -397,6 +386,17 @@ public class DocumentResourceImpl
 						fileEntry.getFileEntryId()),
 					AssetTag.NAME_ACCESSOR);
 				sizeInBytes = fileEntry.getSize();
+				taxonomyCategories = transformToArray(
+					_assetCategoryLocalService.getCategories(
+						DLFileEntry.class.getName(),
+						fileEntry.getFileEntryId()),
+					assetCategory -> new TaxonomyCategories() {
+						{
+							taxonomyCategoryId = assetCategory.getCategoryId();
+							taxonomyCategoryName = assetCategory.getName();
+						}
+					},
+					TaxonomyCategories.class);
 				title = fileEntry.getTitle();
 			}
 		};

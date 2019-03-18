@@ -17,8 +17,8 @@ package com.liferay.headless.collaboration.internal.resource.v1_0;
 import com.liferay.asset.kernel.model.AssetTag;
 import com.liferay.asset.kernel.service.AssetCategoryLocalService;
 import com.liferay.asset.kernel.service.AssetTagLocalService;
-import com.liferay.headless.collaboration.dto.v1_0.Categories;
 import com.liferay.headless.collaboration.dto.v1_0.KnowledgeBaseArticle;
+import com.liferay.headless.collaboration.dto.v1_0.TaxonomyCategories;
 import com.liferay.headless.collaboration.internal.dto.v1_0.util.AggregateRatingUtil;
 import com.liferay.headless.collaboration.internal.dto.v1_0.util.CreatorUtil;
 import com.liferay.headless.collaboration.internal.dto.v1_0.util.ParentKnowledgeBaseFolderUtil;
@@ -188,7 +188,7 @@ public class KnowledgeBaseArticleResourceImpl
 				knowledgeBaseArticle.getDescription(), null, null, null, null,
 				ServiceContextUtil.createServiceContext(
 					knowledgeBaseArticle.getKeywords(),
-					knowledgeBaseArticle.getCategoryIds(),
+					knowledgeBaseArticle.getTaxonomyCategoryIds(),
 					knowledgeBaseArticle.getContentSpaceId(),
 					knowledgeBaseArticle.getViewableByAsString())));
 	}
@@ -209,7 +209,8 @@ public class KnowledgeBaseArticleResourceImpl
 				knowledgeBaseArticle.getDescription(), null, null, null,
 				ServiceContextUtil.createServiceContext(
 					knowledgeBaseArticle.getKeywords(),
-					knowledgeBaseArticle.getCategoryIds(), contentSpaceId,
+					knowledgeBaseArticle.getTaxonomyCategoryIds(),
+					contentSpaceId,
 					knowledgeBaseArticle.getViewableByAsString())));
 	}
 
@@ -227,16 +228,6 @@ public class KnowledgeBaseArticleResourceImpl
 						KBArticle.class.getName(),
 						kbArticle.getResourcePrimKey()));
 				articleBody = kbArticle.getContent();
-				categories = transformToArray(
-					_assetCategoryLocalService.getCategories(
-						KBArticle.class.getName(), kbArticle.getClassPK()),
-					assetCategory -> new Categories() {
-						{
-							categoryId = assetCategory.getCategoryId();
-							categoryName = assetCategory.getName();
-						}
-					},
-					Categories.class);
 				creator = CreatorUtil.toCreator(
 					_portal, _userLocalService.getUser(kbArticle.getUserId()));
 				dateCreated = kbArticle.getCreateDate();
@@ -251,6 +242,16 @@ public class KnowledgeBaseArticleResourceImpl
 						KBArticle.class.getName(), kbArticle.getClassPK()),
 					AssetTag.NAME_ACCESSOR);
 				parentKnowledgeBaseFolderId = kbArticle.getKbFolderId();
+				taxonomyCategories = transformToArray(
+					_assetCategoryLocalService.getCategories(
+						KBArticle.class.getName(), kbArticle.getClassPK()),
+					assetCategory -> new TaxonomyCategories() {
+						{
+							taxonomyCategoryId = assetCategory.getCategoryId();
+							taxonomyCategoryName = assetCategory.getName();
+						}
+					},
+					TaxonomyCategories.class);
 				title = kbArticle.getTitle();
 
 				setHasKnowledgeBaseArticles(

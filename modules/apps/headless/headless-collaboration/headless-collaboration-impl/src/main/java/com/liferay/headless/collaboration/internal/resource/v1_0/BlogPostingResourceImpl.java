@@ -24,8 +24,8 @@ import com.liferay.blogs.service.BlogsEntryService;
 import com.liferay.document.library.kernel.service.DLAppService;
 import com.liferay.document.library.util.DLURLHelper;
 import com.liferay.headless.collaboration.dto.v1_0.BlogPosting;
-import com.liferay.headless.collaboration.dto.v1_0.Categories;
 import com.liferay.headless.collaboration.dto.v1_0.Image;
+import com.liferay.headless.collaboration.dto.v1_0.TaxonomyCategories;
 import com.liferay.headless.collaboration.internal.dto.v1_0.util.AggregateRatingUtil;
 import com.liferay.headless.collaboration.internal.dto.v1_0.util.CreatorUtil;
 import com.liferay.headless.collaboration.internal.odata.entity.v1_0.BlogPostingEntityModel;
@@ -132,8 +132,9 @@ public class BlogPostingResourceImpl
 				new String[0], blogPosting.getCaption(),
 				_getImageSelector(blogPosting), null,
 				ServiceContextUtil.createServiceContext(
-					blogPosting.getKeywords(), blogPosting.getCategoryIds(),
-					contentSpaceId, blogPosting.getViewableByAsString())));
+					blogPosting.getKeywords(),
+					blogPosting.getTaxonomyCategoryIds(), contentSpaceId,
+					blogPosting.getViewableByAsString())));
 	}
 
 	@Override
@@ -155,7 +156,8 @@ public class BlogPostingResourceImpl
 				new String[0], blogPosting.getCaption(),
 				_getImageSelector(blogPosting), null,
 				ServiceContextUtil.createServiceContext(
-					blogPosting.getKeywords(), blogPosting.getCategoryIds(),
+					blogPosting.getKeywords(),
+					blogPosting.getTaxonomyCategoryIds(),
 					blogPosting.getContentSpaceId(),
 					blogPosting.getViewableByAsString())));
 	}
@@ -230,16 +232,6 @@ public class BlogPostingResourceImpl
 						BlogsEntry.class.getName(), blogsEntry.getEntryId()));
 				articleBody = blogsEntry.getContent();
 				caption = blogsEntry.getCoverImageCaption();
-				categories = transformToArray(
-					_assetCategoryLocalService.getCategories(
-						BlogsEntry.class.getName(), blogsEntry.getEntryId()),
-					assetCategory -> new Categories() {
-						{
-							categoryId = assetCategory.getCategoryId();
-							categoryName = assetCategory.getName();
-						}
-					},
-					Categories.class);
 				contentSpaceId = blogsEntry.getGroupId();
 				creator = CreatorUtil.toCreator(
 					_portal, _userLocalService.getUser(blogsEntry.getUserId()));
@@ -257,6 +249,16 @@ public class BlogPostingResourceImpl
 					_assetTagLocalService.getTags(
 						BlogsEntry.class.getName(), blogsEntry.getEntryId()),
 					AssetTag.NAME_ACCESSOR);
+				taxonomyCategories = transformToArray(
+					_assetCategoryLocalService.getCategories(
+						BlogsEntry.class.getName(), blogsEntry.getEntryId()),
+					assetCategory -> new TaxonomyCategories() {
+						{
+							taxonomyCategoryId = assetCategory.getCategoryId();
+							taxonomyCategoryName = assetCategory.getName();
+						}
+					},
+					TaxonomyCategories.class);
 			}
 		};
 	}

@@ -129,6 +129,9 @@ components:
                 id:
                     format: int64
                     type: integer
+                image:
+                    format: uri
+                    type: string
                 location:
                     description: https://www.schema.org/PostalAddress
                     properties:
@@ -140,9 +143,6 @@ components:
                             format: int64
                             type: integer
                     type: object
-                logo:
-                    format: uri
-                    type: string
                 name:
                     type: string
                 parentOrganization:

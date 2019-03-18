@@ -36,7 +36,6 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LoggingTimer;
 import com.liferay.portal.kernel.util.UnicodeProperties;
-import com.liferay.portal.util.PortalInstances;
 
 import java.util.Iterator;
 import java.util.List;
@@ -50,7 +49,6 @@ public class VerifyGroup extends VerifyProcess {
 	@Override
 	protected void doVerify() throws Exception {
 		verifyStagedGroups();
-		verifyTree();
 	}
 
 	protected void verifyStagedGroups() throws Exception {
@@ -263,16 +261,6 @@ public class VerifyGroup extends VerifyProcess {
 
 		UserGroupRoleLocalServiceUtil.deleteUserGroupRolesByGroupId(
 			stagingGroup.getGroupId());
-	}
-
-	protected void verifyTree() throws Exception {
-		try (LoggingTimer loggingTimer = new LoggingTimer()) {
-			long[] companyIds = PortalInstances.getCompanyIdsBySQL();
-
-			for (long companyId : companyIds) {
-				GroupLocalServiceUtil.rebuildTree(companyId);
-			}
-		}
 	}
 
 	private static final String[] _LEGACY_STAGED_PORTLET_TYPE_SETTINGS_KEYS = {

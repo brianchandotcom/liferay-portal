@@ -122,7 +122,7 @@ public class DLViewMoreMenuItemsDisplayContext {
 		boolean includeBasicFileEntryType = ParamUtil.getBoolean(
 			_renderRequest, "includeBasicFileEntryType");
 
-		long folderId = getPrimaryFolderId(_folderId);
+		long folderId = _getPrimaryFolderId(_folderId);
 
 		List<DLFileEntryType> dlFileEntryTypes =
 			DLFileEntryTypeServiceUtil.search(
@@ -151,7 +151,7 @@ public class DLViewMoreMenuItemsDisplayContext {
 		return searchContainer.getTotal();
 	}
 
-	protected long getPrimaryFolderId(long folderId) throws PortalException {
+	private long _getPrimaryFolderId(long folderId) throws PortalException {
 		while (folderId != DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
 			Folder folder = DLAppServiceUtil.getFolder(folderId);
 

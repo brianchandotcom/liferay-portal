@@ -553,25 +553,9 @@ public class UIItemsBuilder {
 			return;
 		}
 
-		StringBundler sb = new StringBundler(5);
-
-		sb.append(getNamespace());
-		sb.append("move(1, ");
-
-		if (_fileShortcut != null) {
-			sb.append("'rowIdsDLFileShortcut', ");
-			sb.append(_fileShortcut.getFileShortcutId());
-		}
-		else {
-			sb.append("'rowIdsFileEntry', ");
-			sb.append(_fileEntry.getFileEntryId());
-		}
-
-		sb.append(");");
-
 		_addJavaScriptUIItem(
 			new JavaScriptMenuItem(), menuItems, DLUIItemKeys.MOVE, "move",
-			sb.toString());
+			_getMoveEntryOnClickJavascript());
 	}
 
 	public void addMoveToolbarItem(List<ToolbarItem> toolbarItems)
@@ -581,25 +565,10 @@ public class UIItemsBuilder {
 			return;
 		}
 
-		StringBundler sb = new StringBundler(5);
-
-		sb.append(getNamespace());
-		sb.append("move(1, ");
-
-		if (_fileShortcut != null) {
-			sb.append("'rowIdsDLFileShortcut', ");
-			sb.append(_fileShortcut.getFileShortcutId());
-		}
-		else {
-			sb.append("'rowIdsFileEntry', ");
-			sb.append(_fileEntry.getFileEntryId());
-		}
-
-		sb.append(");");
-
 		_addJavaScriptUIItem(
 			new JavaScriptToolbarItem(), toolbarItems, DLUIItemKeys.MOVE,
-			LanguageUtil.get(_resourceBundle, "move"), sb.toString());
+			LanguageUtil.get(_resourceBundle, "move"),
+			_getMoveEntryOnClickJavascript());
 	}
 
 	public void addMoveToTheRecycleBinToolbarItem(
@@ -1187,6 +1156,26 @@ public class UIItemsBuilder {
 				JavaConstants.JAVAX_PORTLET_RESPONSE);
 
 		return PortalUtil.getLiferayPortletResponse(portletResponse);
+	}
+
+	private String _getMoveEntryOnClickJavascript() {
+		StringBundler sb = new StringBundler(5);
+
+		sb.append(getNamespace());
+		sb.append("move(1, ");
+
+		if (_fileShortcut != null) {
+			sb.append("'rowIdsDLFileShortcut', ");
+			sb.append(_fileShortcut.getFileShortcutId());
+		}
+		else {
+			sb.append("'rowIdsFileEntry', ");
+			sb.append(_fileEntry.getFileEntryId());
+		}
+
+		sb.append(");");
+
+		return sb.toString();
 	}
 
 	private String _getRedirect() {

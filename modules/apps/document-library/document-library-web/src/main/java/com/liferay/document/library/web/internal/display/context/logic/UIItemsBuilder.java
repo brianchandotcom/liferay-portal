@@ -791,7 +791,7 @@ public class UIItemsBuilder {
 		sb.append(UnicodeLanguageUtil.get(_resourceBundle, "permissions"));
 		sb.append("', uri: '");
 		sb.append(permissionsURL);
-		sb.append("'});");
+		sb.append("', dialogIframe: {bodyCssClass: 'dialog-with-footer'}});");
 
 		_addJavaScriptUIItem(
 			new JavaScriptToolbarItem(), toolbarItems, DLUIItemKeys.PERMISSIONS,

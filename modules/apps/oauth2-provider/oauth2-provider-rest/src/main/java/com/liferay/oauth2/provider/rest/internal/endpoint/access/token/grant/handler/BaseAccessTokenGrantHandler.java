@@ -16,7 +16,7 @@ package com.liferay.oauth2.provider.rest.internal.endpoint.access.token.grant.ha
 
 import com.liferay.oauth2.provider.constants.OAuth2ProviderActionKeys;
 import com.liferay.oauth2.provider.model.OAuth2Application;
-import com.liferay.oauth2.provider.rest.internal.endpoint.constants.OAuth2ProviderRestEndpointConstants;
+import com.liferay.oauth2.provider.rest.internal.endpoint.constants.OAuth2ProviderRESTEndpointConstants;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
@@ -81,10 +81,10 @@ public abstract class BaseAccessTokenGrantHandler
 
 		String companyId1 = MapUtil.getString(
 			client1.getProperties(),
-			OAuth2ProviderRestEndpointConstants.PROPERTY_KEY_COMPANY_ID);
+			OAuth2ProviderRESTEndpointConstants.PROPERTY_KEY_COMPANY_ID);
 		String companyId2 = MapUtil.getString(
 			client2.getProperties(),
-			OAuth2ProviderRestEndpointConstants.PROPERTY_KEY_COMPANY_ID);
+			OAuth2ProviderRESTEndpointConstants.PROPERTY_KEY_COMPANY_ID);
 
 		if (Objects.equals(companyId1, companyId2)) {
 			return true;

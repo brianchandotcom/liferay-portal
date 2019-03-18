@@ -16,7 +16,7 @@ package com.liferay.oauth2.provider.rest.internal.endpoint.access.token.grant.ha
 
 import com.liferay.oauth2.provider.configuration.OAuth2ProviderConfiguration;
 import com.liferay.oauth2.provider.model.OAuth2Application;
-import com.liferay.oauth2.provider.rest.internal.endpoint.constants.OAuth2ProviderRestEndpointConstants;
+import com.liferay.oauth2.provider.rest.internal.endpoint.constants.OAuth2ProviderRESTEndpointConstants;
 import com.liferay.oauth2.provider.rest.internal.endpoint.liferay.LiferayOAuthDataProvider;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -152,7 +152,7 @@ public class LiferayAuthorizationAccessTokenCodeGrantHandler
 			List<String> allowedGrantTypes = client.getAllowedGrantTypes();
 
 			if (!allowedGrantTypes.contains(
-					OAuth2ProviderRestEndpointConstants.
+					OAuth2ProviderRESTEndpointConstants.
 						AUTHORIZATION_CODE_PKCE_GRANT)) {
 
 				if (_log.isDebugEnabled()) {

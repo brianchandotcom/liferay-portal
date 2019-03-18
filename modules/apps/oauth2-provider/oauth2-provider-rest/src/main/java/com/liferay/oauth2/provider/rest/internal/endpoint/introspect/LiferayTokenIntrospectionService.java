@@ -15,7 +15,7 @@
 package com.liferay.oauth2.provider.rest.internal.endpoint.introspect;
 
 import com.liferay.oauth2.provider.model.OAuth2Application;
-import com.liferay.oauth2.provider.rest.internal.endpoint.constants.OAuth2ProviderRestEndpointConstants;
+import com.liferay.oauth2.provider.rest.internal.endpoint.constants.OAuth2ProviderRESTEndpointConstants;
 import com.liferay.oauth2.provider.rest.internal.endpoint.liferay.LiferayOAuthDataProvider;
 import com.liferay.oauth2.provider.rest.spi.bearer.token.provider.BearerTokenProvider;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -120,10 +120,10 @@ public class LiferayTokenIntrospectionService extends AbstractTokenService {
 
 		String companyId1 = MapUtil.getString(
 			client1.getProperties(),
-			OAuth2ProviderRestEndpointConstants.PROPERTY_KEY_COMPANY_ID);
+			OAuth2ProviderRESTEndpointConstants.PROPERTY_KEY_COMPANY_ID);
 		String companyId2 = MapUtil.getString(
 			client2.getProperties(),
-			OAuth2ProviderRestEndpointConstants.PROPERTY_KEY_COMPANY_ID);
+			OAuth2ProviderRESTEndpointConstants.PROPERTY_KEY_COMPANY_ID);
 
 		if (Objects.equals(companyId1, companyId2)) {
 			return true;
@@ -270,9 +270,9 @@ public class LiferayTokenIntrospectionService extends AbstractTokenService {
 		Map<String, String> properties = client.getProperties();
 
 		if (!properties.containsKey(
-				OAuth2ProviderRestEndpointConstants.
+				OAuth2ProviderRESTEndpointConstants.
 					PROPERTY_KEY_CLIENT_FEATURE_PREFIX +
-						OAuth2ProviderRestEndpointConstants.
+						OAuth2ProviderRESTEndpointConstants.
 							PROPERTY_KEY_CLIENT_FEATURE_TOKEN_INTROSPECTION)) {
 
 			return false;

@@ -14,7 +14,7 @@
 
 package com.liferay.oauth2.provider.rest.internal.endpoint.liferay;
 
-import com.liferay.oauth2.provider.rest.internal.endpoint.constants.OAuth2ProviderRestEndpointConstants;
+import com.liferay.oauth2.provider.rest.internal.endpoint.constants.OAuth2ProviderRESTEndpointConstants;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.UserLocalService;
@@ -61,7 +61,7 @@ public class LiferaySubjectCreator implements SubjectCreator {
 			Map<String, String> properties = userSubject.getProperties();
 
 			properties.put(
-				OAuth2ProviderRestEndpointConstants.PROPERTY_KEY_COMPANY_ID,
+				OAuth2ProviderRESTEndpointConstants.PROPERTY_KEY_COMPANY_ID,
 				String.valueOf(user.getCompanyId()));
 
 			return userSubject;

@@ -235,21 +235,6 @@ class FloatingToolbarMappingPanel extends PortletBase {
 	}
 
 	/**
-	 * Handle unmap button click
-	 * @private
-	 * @review
-	 */
-	_handleUnmapButtonClick() {
-		this._clearEditableValues();
-
-		this.store.done(
-			() => {
-				this._loadFields();
-			}
-		);
-	}
-
-	/**
 	 * Load the list of fields
 	 * @private
 	 * @review

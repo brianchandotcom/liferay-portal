@@ -24,10 +24,11 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ServiceWrapper;
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 import java.util.List;
+
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Luiz Marins
@@ -57,7 +58,6 @@ public class CTDLFolderServiceWrapper extends DLFolderServiceWrapper {
 
 		return _ctDLFolderLocalService.getFoldersAndFileEntriesAndFileShortcuts(
 			groupId, folderId, mimeTypes, includeMountFolders, queryDefinition);
-
 	}
 
 	@Override

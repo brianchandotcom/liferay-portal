@@ -77,12 +77,13 @@ public class DLFileCTConfigurationTest {
 
 	@Test
 	public void testGetResourceEntityByResourceEntityIdFunction() {
+		Function<Long, DLFileEntry> resourceEntityByResourceEntityIdFunction =
+			(Function<Long, DLFileEntry>)
+				_ctConfiguration.getResourceEntityByResourceEntityIdFunction();
+
 		DLFileEntry resourceEntity =
-			(DLFileEntry)_ctConfiguration.
-				getResourceEntityByResourceEntityIdFunction(
-				).apply(
-					_fileEntry.getFileEntryId()
-				);
+			resourceEntityByResourceEntityIdFunction.apply(
+				_fileEntry.getFileEntryId());
 
 		Assert.assertEquals(
 			"Resource entity by resource entity ID is invalid", _fileEntry,
@@ -102,8 +103,9 @@ public class DLFileCTConfigurationTest {
 	public void testGetResourceEntityIdFromResourceEntityFunction() {
 		Function<DLFileEntry, Serializable>
 			resourceEntityIdFromResourceEntityFunction =
-				(Function<DLFileEntry, Serializable>)_ctConfiguration.
-					getResourceEntityIdFromResourceEntityFunction();
+				(Function<DLFileEntry, Serializable>)
+					_ctConfiguration.
+						getResourceEntityIdFromResourceEntityFunction();
 
 		long resourceEntityId =
 			(long)resourceEntityIdFromResourceEntityFunction.apply(_fileEntry);
@@ -117,8 +119,9 @@ public class DLFileCTConfigurationTest {
 	public void testGetResourceEntityIdFromVersionEntityFunction() {
 		Function<DLFileVersion, Serializable>
 			resourceEntityIdFromVersionEntityFunction =
-				(Function<DLFileVersion, Serializable>)_ctConfiguration.
-					getResourceEntityIdFromVersionEntityFunction();
+				(Function<DLFileVersion, Serializable>)
+					_ctConfiguration.
+						getResourceEntityIdFromVersionEntityFunction();
 
 		long resourceEntityId =
 			(long)resourceEntityIdFromVersionEntityFunction.apply(_fileVersion);
@@ -130,12 +133,13 @@ public class DLFileCTConfigurationTest {
 
 	@Test
 	public void testGetVersionEntityByVersionEntityIdFunction() {
+		Function<Long, DLFileVersion> versionEntityByVersionEntityIdFunction =
+			(Function<Long, DLFileVersion>)
+				_ctConfiguration.getVersionEntityByVersionEntityIdFunction();
+
 		DLFileVersion versionEntity =
-			(DLFileVersion)_ctConfiguration.
-				getVersionEntityByVersionEntityIdFunction(
-				).apply(
-					_fileVersion.getFileVersionId()
-				);
+			versionEntityByVersionEntityIdFunction.apply(
+				_fileVersion.getFileVersionId());
 
 		Assert.assertEquals(
 			"Version entity by version entity ID is invalid", _fileVersion,
@@ -156,8 +160,9 @@ public class DLFileCTConfigurationTest {
 	public void testGetVersionEntityIdFromResourceEntityFunction() {
 		Function<DLFileEntry, Serializable>
 			versionEntityIdFromResourceEntityFunction =
-				(Function<DLFileEntry, Serializable>)_ctConfiguration.
-					getVersionEntityIdFromResourceEntityFunction();
+				(Function<DLFileEntry, Serializable>)
+					_ctConfiguration.
+						getVersionEntityIdFromResourceEntityFunction();
 
 		long versionEntityId =
 			(long)versionEntityIdFromResourceEntityFunction.apply(_fileEntry);
@@ -171,8 +176,9 @@ public class DLFileCTConfigurationTest {
 	public void testGetVersionEntityIdFromVersionEntityFunction() {
 		Function<DLFileVersion, Serializable>
 			versionEntityIdFromVersionEntityFunction =
-				(Function<DLFileVersion, Serializable>)_ctConfiguration.
-					getVersionEntityIdFromVersionEntityFunction();
+				(Function<DLFileVersion, Serializable>)
+					_ctConfiguration.
+						getVersionEntityIdFromVersionEntityFunction();
 
 		long versionEntityId =
 			(long)versionEntityIdFromVersionEntityFunction.apply(_fileVersion);
@@ -185,8 +191,8 @@ public class DLFileCTConfigurationTest {
 	@Test
 	public void testGetVersionEntityStatusFunction() {
 		Function<DLFileVersion, Integer> versionEntityStatusFunction =
-			(Function<DLFileVersion, Integer>)_ctConfiguration.
-				getVersionEntityStatusFunction();
+			(Function<DLFileVersion, Integer>)
+				_ctConfiguration.getVersionEntityStatusFunction();
 
 		int versionEntityStatus = versionEntityStatusFunction.apply(
 			_fileVersion);

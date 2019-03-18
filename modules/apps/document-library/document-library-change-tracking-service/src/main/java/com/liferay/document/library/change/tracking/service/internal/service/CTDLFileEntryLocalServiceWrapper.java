@@ -32,13 +32,15 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceWrapper;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 import java.io.File;
 import java.io.InputStream;
+
 import java.util.List;
 import java.util.Map;
+
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Luiz Marins
@@ -96,10 +98,11 @@ public class CTDLFileEntryLocalServiceWrapper
 		throws PortalException {
 
 		DLFileEntry fileEntry = _ctManager.executeModelUpdate(
-			() -> super.updateFileEntry(userId, fileEntryId, sourceFileName,
-				mimeType, title, description, changeLog,
-				dlVersionNumberIncrease, fileEntryTypeId, ddmFormValuesMap,
-				file, is, size, serviceContext));
+			() -> super.updateFileEntry(
+				userId, fileEntryId, sourceFileName, mimeType, title,
+				description, changeLog, dlVersionNumberIncrease,
+				fileEntryTypeId, ddmFormValuesMap, file, is, size,
+				serviceContext));
 
 		_registerChange(fileEntry, CTConstants.CT_CHANGE_TYPE_MODIFICATION);
 

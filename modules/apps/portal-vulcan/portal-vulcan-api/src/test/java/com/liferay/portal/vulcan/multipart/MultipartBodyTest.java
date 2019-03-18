@@ -31,6 +31,7 @@ import java.io.IOException;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
 import javax.ws.rs.BadRequestException;
 import javax.ws.rs.InternalServerErrorException;
@@ -64,17 +65,7 @@ public class MultipartBodyTest {
 	}
 
 	@Test
-	public void testGetValueAsString() {
-		MultipartBody multipartBody = MultipartBody.of(
-			Collections.emptyMap(), __ -> _objectMapper,
-			Collections.singletonMap("key", "value"));
-
-		assertThat(multipartBody.getValueAsString("key"), is("value"));
-		assertThat(multipartBody.getValueAsString("null"), is(nullValue()));
-	}
-
-	@Test
-	public void testGgetValueAsInstance() throws IOException {
+	public void testGetValueAsInstance() throws IOException {
 
 		// With object mapper
 
@@ -129,6 +120,53 @@ public class MultipartBodyTest {
 
 			assertThat(e.getMessage(), is(expectedMessage));
 		}
+	}
+
+	@Test
+	public void testGetValueAsInstanceOptional() throws IOException {
+
+		// Non empty Optional
+
+		MultipartBody multipartBody = MultipartBody.of(
+			Collections.emptyMap(), __ -> _objectMapper,
+			Collections.singletonMap(
+				"key",
+				JSONUtil.put(
+					"string", "Hello"
+				).put(
+					"number", 42
+				).put(
+					"list", Arrays.asList(1, 2, 3)
+				).toString()));
+
+		Optional<TestClass> testClassOptional =
+			multipartBody.getValueAsInstanceOptional("key", TestClass.class);
+
+		assertThat(testClassOptional.isPresent(), is(true));
+
+		TestClass testClass = testClassOptional.get();
+
+		assertThat(testClass.list, contains(1, 2, 3));
+		assertThat(testClass.number, is(42L));
+		assertThat(testClass.string, is("Hello"));
+		assertThat(testClass.testClass, is(nullValue()));
+
+		// empty Optional
+
+		testClassOptional = multipartBody.getValueAsInstanceOptional(
+			"null", TestClass.class);
+
+		assertThat(testClassOptional.isPresent(), is(false));
+	}
+
+	@Test
+	public void testGetValueAsString() {
+		MultipartBody multipartBody = MultipartBody.of(
+			Collections.emptyMap(), __ -> _objectMapper,
+			Collections.singletonMap("key", "value"));
+
+		assertThat(multipartBody.getValueAsString("key"), is("value"));
+		assertThat(multipartBody.getValueAsString("null"), is(nullValue()));
 	}
 
 	public static class TestClass {

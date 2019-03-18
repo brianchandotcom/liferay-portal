@@ -14,6 +14,7 @@
 
 package com.liferay.gradle.plugins.defaults.internal;
 
+import com.liferay.gradle.plugins.LiferayBasePlugin;
 import com.liferay.gradle.plugins.cache.CachePlugin;
 import com.liferay.gradle.plugins.defaults.internal.util.CIUtil;
 import com.liferay.gradle.plugins.defaults.internal.util.GradleUtil;
@@ -40,10 +41,8 @@ import org.gradle.api.artifacts.Configuration;
 import org.gradle.api.artifacts.DependencySet;
 import org.gradle.api.artifacts.ProjectDependency;
 import org.gradle.api.logging.Logger;
-import org.gradle.api.plugins.JavaPlugin;
 import org.gradle.api.tasks.SourceSet;
 import org.gradle.api.tasks.TaskContainer;
-import org.gradle.api.tasks.bundling.Jar;
 
 /**
  * @author Andrea Di Giorgi
@@ -207,16 +206,17 @@ public class LiferayCIPlugin implements Plugin<Project> {
 
 		TaskContainer taskContainer = project.getTasks();
 
-		Jar jar = (Jar)taskContainer.findByName(JavaPlugin.JAR_TASK_NAME);
+		Task deployTask = taskContainer.findByName(
+			LiferayBasePlugin.DEPLOY_TASK_NAME);
 
-		if (jar != null) {
+		if (deployTask != null) {
 			String hotfixVersion = CIUtil.getBNDHotfixVersion(
-				jar.getProject(), _BND_HOTFIX_VERSION_FILE_NAME);
+				deployTask.getProject(), _BND_HOTFIX_VERSION_FILE_NAME);
 
 			if (hotfixVersion != null) {
 				executeNpmTask.dependsOn(updateHotfixVersionTask);
 
-				jar.finalizedBy(restoreHotfixVersionTask);
+				deployTask.finalizedBy(restoreHotfixVersionTask);
 			}
 		}
 	}

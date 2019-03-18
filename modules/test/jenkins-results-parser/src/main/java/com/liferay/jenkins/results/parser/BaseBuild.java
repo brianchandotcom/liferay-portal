@@ -1574,16 +1574,29 @@ public abstract class BaseBuild implements Build {
 		}
 
 		public boolean isParentOf(StopwatchRecord stopwatchRecord) {
-			if ((stopwatchRecord.getDuration() == null) ||
-				(getDuration() == null)) {
+			Long duration = getDuration();
+			Long stopwatchRecordDuration = stopwatchRecord.getDuration();
 
+			if ((duration != null) && (stopwatchRecordDuration == null)) {
 				return false;
 			}
 
-			if ((stopwatchRecord.getStartTimestamp() >= getStartTimestamp()) &&
-				(stopwatchRecord.getDuration() <= getDuration())) {
+			Long startTimestamp = getStartTimestamp();
+			Long stopwatchRecordStartTimestamp =
+				stopwatchRecord.getStartTimestamp();
 
-				return true;
+			if (startTimestamp <= stopwatchRecordStartTimestamp) {
+				if (duration == null) {
+					return true;
+				}
+
+				Long endTimestamp = startTimestamp + duration;
+				Long stopwatchRecordEndTimestamp =
+					stopwatchRecordStartTimestamp + stopwatchRecordDuration;
+
+				if (endTimestamp > stopwatchRecordEndTimestamp) {
+					return true;
+				}
 			}
 
 			return false;

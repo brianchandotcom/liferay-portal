@@ -212,6 +212,7 @@ class EditCategories extends Component {
 
 				let obj = {
 					id: vocabulary.vocabularyId.toString(),
+					required: vocabulary.required,
 					selectedCategoryIds: categoryIds.join(','),
 					selectedItems: categories,
 					singleSelect: !vocabulary.multiValued,

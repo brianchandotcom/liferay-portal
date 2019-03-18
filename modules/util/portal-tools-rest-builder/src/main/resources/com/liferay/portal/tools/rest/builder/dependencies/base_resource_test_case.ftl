@@ -161,6 +161,8 @@ public abstract class Base${schemaName}ResourceTestCase {
 							${javaMethodParameter.parameterName}
 						<#elseif stringUtil.equals(javaMethodParameter.parameterName, "pagination")>
 							, Pagination.of(1, 2)
+						<#elseif !stringUtil.equals(javaMethodParameter.parameterName, schemaVarName) && freeMarkerTool.isPathParameter(javaMethodParameter, javaMethodSignature.operation)>
+							, ${javaMethodParameter.parameterName}
 						<#else>
 							, null
 						</#if>
@@ -212,6 +214,8 @@ public abstract class Base${schemaName}ResourceTestCase {
 									, getFilterString(entityField, "eq", ${schemaVarName}1)
 								<#elseif stringUtil.equals(javaMethodParameter.parameterName, "pagination")>
 									, Pagination.of(1, 2)
+								<#elseif !stringUtil.equals(javaMethodParameter.parameterName, schemaVarName) && freeMarkerTool.isPathParameter(javaMethodParameter, javaMethodSignature.operation)>
+									, ${javaMethodParameter.parameterName}
 								<#else>
 									, null
 								</#if>
@@ -252,6 +256,8 @@ public abstract class Base${schemaName}ResourceTestCase {
 									, getFilterString(entityField, "eq", ${schemaVarName}1)
 								<#elseif stringUtil.equals(javaMethodParameter.parameterName, "pagination")>
 									, Pagination.of(1, 2)
+								<#elseif !stringUtil.equals(javaMethodParameter.parameterName, schemaVarName) && freeMarkerTool.isPathParameter(javaMethodParameter, javaMethodSignature.operation)>
+									, ${javaMethodParameter.parameterName}
 								<#else>
 									, null
 								</#if>
@@ -310,6 +316,8 @@ public abstract class Base${schemaName}ResourceTestCase {
 								${javaMethodParameter.parameterName}
 							<#elseif stringUtil.equals(javaMethodParameter.parameterName, "pagination")>
 								, Pagination.of(1, 2)
+							<#elseif !stringUtil.equals(javaMethodParameter.parameterName, schemaVarName) && freeMarkerTool.isPathParameter(javaMethodParameter, javaMethodSignature.operation)>
+								, ${javaMethodParameter.parameterName}
 							<#else>
 								, null
 							</#if>
@@ -328,6 +336,8 @@ public abstract class Base${schemaName}ResourceTestCase {
 								${javaMethodParameter.parameterName}
 							<#elseif stringUtil.equals(javaMethodParameter.parameterName, "pagination")>
 								, Pagination.of(2, 2)
+							<#elseif !stringUtil.equals(javaMethodParameter.parameterName, schemaVarName) && freeMarkerTool.isPathParameter(javaMethodParameter, javaMethodSignature.operation)>
+								, ${javaMethodParameter.parameterName}
 							<#else>
 								, null
 							</#if>
@@ -406,6 +416,8 @@ public abstract class Base${schemaName}ResourceTestCase {
 									, Pagination.of(1, 2)
 								<#elseif stringUtil.equals(javaMethodParameter.parameterName, "sorts")>
 									, entityField.getName() + ":asc"
+								<#elseif !stringUtil.equals(javaMethodParameter.parameterName, schemaVarName) && freeMarkerTool.isPathParameter(javaMethodParameter, javaMethodSignature.operation)>
+									, ${javaMethodParameter.parameterName}
 								<#else>
 									, null
 								</#if>
@@ -424,6 +436,8 @@ public abstract class Base${schemaName}ResourceTestCase {
 									, Pagination.of(1, 2)
 								<#elseif stringUtil.equals(javaMethodParameter.parameterName, "sorts")>
 									, entityField.getName() + ":desc"
+								<#elseif !stringUtil.equals(javaMethodParameter.parameterName, schemaVarName) && freeMarkerTool.isPathParameter(javaMethodParameter, javaMethodSignature.operation)>
+									, ${javaMethodParameter.parameterName}
 								<#else>
 									, null
 								</#if>
@@ -487,6 +501,8 @@ public abstract class Base${schemaName}ResourceTestCase {
 									, Pagination.of(1, 2)
 								<#elseif stringUtil.equals(javaMethodParameter.parameterName, "sorts")>
 									, entityField.getName() + ":asc"
+								<#elseif !stringUtil.equals(javaMethodParameter.parameterName, schemaVarName) && freeMarkerTool.isPathParameter(javaMethodParameter, javaMethodSignature.operation)>
+									, ${javaMethodParameter.parameterName}
 								<#else>
 									, null
 								</#if>
@@ -505,6 +521,8 @@ public abstract class Base${schemaName}ResourceTestCase {
 									, Pagination.of(1, 2)
 								<#elseif stringUtil.equals(javaMethodParameter.parameterName, "sorts")>
 									, entityField.getName() + ":desc"
+								<#elseif !stringUtil.equals(javaMethodParameter.parameterName, schemaVarName) && freeMarkerTool.isPathParameter(javaMethodParameter, javaMethodSignature.operation)>
+									, ${javaMethodParameter.parameterName}
 								<#else>
 									, null
 								</#if>

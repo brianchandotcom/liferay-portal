@@ -20,7 +20,8 @@ import com.liferay.portal.kernel.verify.model.VerifiableResourcedModel;
 /**
  * @author Miguel Pastor
  */
-public class LayoutPrototypeVerifiableModel implements VerifiableResourcedModel {
+public class LayoutPrototypeVerifiableModel
+	implements VerifiableResourcedModel {
 
 	@Override
 	public String getModelName() {

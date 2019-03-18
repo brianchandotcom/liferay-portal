@@ -16,9 +16,7 @@ package com.liferay.gradle.plugins.defaults.internal;
 
 import com.liferay.gradle.plugins.cache.CachePlugin;
 import com.liferay.gradle.plugins.defaults.internal.util.CIUtil;
-import com.liferay.gradle.plugins.defaults.internal.util.FileUtil;
 import com.liferay.gradle.plugins.defaults.internal.util.GradleUtil;
-import com.liferay.gradle.plugins.defaults.tasks.ReplaceRegexTask;
 import com.liferay.gradle.plugins.node.tasks.DownloadNodeTask;
 import com.liferay.gradle.plugins.node.tasks.ExecuteNodeTask;
 import com.liferay.gradle.plugins.node.tasks.ExecuteNpmTask;
@@ -27,14 +25,11 @@ import com.liferay.gradle.plugins.test.integration.TestIntegrationBasePlugin;
 import com.liferay.gradle.plugins.test.integration.TestIntegrationPlugin;
 import com.liferay.gradle.util.Validator;
 
-import groovy.lang.Closure;
-
 import java.io.File;
 
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
-import java.util.regex.Pattern;
 
 import org.gradle.api.Action;
 import org.gradle.api.GradleException;
@@ -65,10 +60,8 @@ public class LiferayCIPlugin implements Plugin<Project> {
 
 	@Override
 	public void apply(final Project project) {
-		ReplaceRegexTask restoreHotfixVersionTask =
-			_addTaskRestoreHotfixVersion(project);
-		ReplaceRegexTask updateHotfixVersionTask = _addTaskUpdateHotfixVersion(
-			project);
+		Task restoreHotfixVersionTask = _addTaskRestoreHotfixVersion(project);
+		Task updateHotfixVersionTask = _addTaskUpdateHotfixVersion(project);
 
 		_configureTasksDownloadNode(project);
 		_configureTasksExecuteNode(project);
@@ -103,84 +96,50 @@ public class LiferayCIPlugin implements Plugin<Project> {
 	private LiferayCIPlugin() {
 	}
 
-	private ReplaceRegexTask _addTaskRestoreHotfixVersion(Project project) {
-		ReplaceRegexTask replaceRegexTask = GradleUtil.addTask(
-			project, RESTORE_HOTFIX_VERSION_TASK_NAME, ReplaceRegexTask.class);
+	private Task _addTaskRestoreHotfixVersion(final Project project) {
+		Task task = project.task(RESTORE_HOTFIX_VERSION_TASK_NAME);
 
-		if (FileUtil.exists(project, _BND_HOTFIX_VERSION_FILE_NAME)) {
-			replaceRegexTask.match(
-				_bndHotfixVersionPattern.pattern(),
-				project.file(_BND_HOTFIX_VERSION_FILE_NAME));
-		}
+		task.setDescription("Restores the project hotfix version.");
 
-		for (String fileName : _JSON_HOTFIX_VERSION_FILE_NAMES) {
-			if (FileUtil.exists(project, fileName)) {
-				replaceRegexTask.match(
-					_jsonHotfixVersionPattern.pattern(),
-					project.file(fileName));
-			}
-		}
+		task.doLast(
+			new Action<Task>() {
 
-		replaceRegexTask.setDescription("Restores the project hotfix version.");
-		replaceRegexTask.setReplacement(
-			new Closure<String>(project) {
+				@Override
+				public void execute(Task task) {
+					CIUtil.restoreHotfixVersion(
+						project, _BND_HOTFIX_VERSION_FILE_NAME);
 
-				@SuppressWarnings("unused")
-				public String doCall(String version) {
-					int index = version.indexOf("-hotfix");
-
-					if (index == -1) {
-						return version;
+					for (String fileName : _JSON_HOTFIX_VERSION_FILE_NAMES) {
+						CIUtil.restoreHotfixVersion(project, fileName);
 					}
-
-					String suffix = version.substring(index + 7);
-
-					return version.substring(0, index) + ".hotfix" + suffix;
 				}
 
 			});
 
-		return replaceRegexTask;
+		return task;
 	}
 
-	private ReplaceRegexTask _addTaskUpdateHotfixVersion(Project project) {
-		ReplaceRegexTask replaceRegexTask = GradleUtil.addTask(
-			project, UPDATE_HOTFIX_VERSION_TASK_NAME, ReplaceRegexTask.class);
+	private Task _addTaskUpdateHotfixVersion(final Project project) {
+		Task task = project.task(UPDATE_HOTFIX_VERSION_TASK_NAME);
 
-		if (FileUtil.exists(project, _BND_HOTFIX_VERSION_FILE_NAME)) {
-			replaceRegexTask.match(
-				_bndHotfixVersionPattern.pattern(),
-				project.file(_BND_HOTFIX_VERSION_FILE_NAME));
-		}
+		task.setDescription("Updates the project hotfix version.");
 
-		for (String fileName : _JSON_HOTFIX_VERSION_FILE_NAMES) {
-			if (FileUtil.exists(project, fileName)) {
-				replaceRegexTask.match(
-					_jsonHotfixVersionPattern.pattern(),
-					project.file(fileName));
-			}
-		}
+		task.doLast(
+			new Action<Task>() {
 
-		replaceRegexTask.setDescription("Updates the project hotfix version.");
-		replaceRegexTask.setReplacement(
-			new Closure<String>(project) {
+				@Override
+				public void execute(Task task) {
+					CIUtil.updateHotfixVersion(
+						project, _BND_HOTFIX_VERSION_FILE_NAME);
 
-				@SuppressWarnings("unused")
-				public String doCall(String version) {
-					int index = version.indexOf(".hotfix");
-
-					if (index == -1) {
-						return version;
+					for (String fileName : _JSON_HOTFIX_VERSION_FILE_NAMES) {
+						CIUtil.updateHotfixVersion(project, fileName);
 					}
-
-					String suffix = version.substring(index + 7);
-
-					return version.substring(0, index) + "-hotfix" + suffix;
 				}
 
 			});
 
-		return replaceRegexTask;
+		return task;
 	}
 
 	private void _configureTaskDownloadNode(DownloadNodeTask downloadNodeTask) {
@@ -238,8 +197,7 @@ public class LiferayCIPlugin implements Plugin<Project> {
 
 	private void _configureTaskExecuteNpm(
 		ExecuteNpmTask executeNpmTask, String registry,
-		ReplaceRegexTask restoreHotfixVersionTask,
-		ReplaceRegexTask updateHotfixVersionTask) {
+		Task restoreHotfixVersionTask, Task updateHotfixVersionTask) {
 
 		if (Validator.isNotNull(registry)) {
 			executeNpmTask.setRegistry(registry);
@@ -299,8 +257,8 @@ public class LiferayCIPlugin implements Plugin<Project> {
 	}
 
 	private void _configureTasksExecuteNpm(
-		Project project, final ReplaceRegexTask restoreHotfixVersionTask,
-		final ReplaceRegexTask updateHotfixVersionTask) {
+		Project project, final Task restoreHotfixVersionTask,
+		final Task updateHotfixVersionTask) {
 
 		final String ciRegistry = GradleUtil.getProperty(
 			project, "nodejs.npm.ci.registry", (String)null);
@@ -443,10 +401,5 @@ public class LiferayCIPlugin implements Plugin<Project> {
 	private static final int _NPM_INSTALL_RETRIES = 3;
 
 	private static final String _SASS_BINARY_SITE_ARG = "--sass-binary-site=";
-
-	private static final Pattern _bndHotfixVersionPattern = Pattern.compile(
-		"\\nBundle-Version: (.+)");
-	private static final Pattern _jsonHotfixVersionPattern = Pattern.compile(
-		"\\n(\\t|  )\"version\": \"(.+)\"");
 
 }

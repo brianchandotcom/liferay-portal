@@ -577,7 +577,8 @@ public class Query {
 
 	@GraphQLField
 	@GraphQLInvokeDetached
-	public Collection<Segment> getUserAccountSegmentsPage(
+	public Collection<Segment> getContentSpaceUserAccountSegmentsPage(
+			@GraphQLName("content-space-id") Long contentSpaceId,
 			@GraphQLName("user-account-id") Long userAccountId,
 			@GraphQLName("pageSize") int pageSize,
 			@GraphQLName("page") int page)
@@ -588,8 +589,9 @@ public class Query {
 			this::_populateResourceContext,
 			segmentResource -> {
 				Page paginationPage =
-					segmentResource.getUserAccountSegmentsPage(
-						userAccountId, Pagination.of(pageSize, page));
+					segmentResource.getContentSpaceUserAccountSegmentsPage(
+						contentSpaceId, userAccountId,
+						Pagination.of(pageSize, page));
 
 				return paginationPage.getItems();
 			});

@@ -64,6 +64,30 @@ public class Segment {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean active;
 
+	public Long getContentSpaceId() {
+		return contentSpaceId;
+	}
+
+	public void setContentSpaceId(Long contentSpaceId) {
+		this.contentSpaceId = contentSpaceId;
+	}
+
+	@JsonIgnore
+	public void setContentSpaceId(
+		UnsafeSupplier<Long, Exception> contentSpaceIdUnsafeSupplier) {
+
+		try {
+			contentSpaceId = contentSpaceIdUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Long contentSpaceId;
+
 	public String getCriteria() {
 		return criteria;
 	}
@@ -212,6 +236,11 @@ public class Segment {
 		sb.append("\"active\": ");
 
 		sb.append(active);
+		sb.append(", ");
+
+		sb.append("\"contentSpaceId\": ");
+
+		sb.append(contentSpaceId);
 		sb.append(", ");
 
 		sb.append("\"criteria\": ");

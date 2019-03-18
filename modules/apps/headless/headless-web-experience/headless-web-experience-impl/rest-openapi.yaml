@@ -206,22 +206,6 @@ components:
                     items:
                         type: string
                     type: array
-                categories:
-                    items:
-                        properties:
-                            categoryId:
-                                format: int64
-                                type: integer
-                            categoryName:
-                                type: string
-                        type: object
-                    type: array
-                categoryIds:
-                    items:
-                        format: int64
-                        type: integer
-                    type: array
-                    writeOnly: true
                 contentFields:
                     items:
                         $ref: "#/components/schemas/ContentField"
@@ -268,6 +252,22 @@ components:
                                 type: string
                         type: object
                     type: array
+                taxonomyCategories:
+                    items:
+                        properties:
+                            taxonomyCategoryId:
+                                format: int64
+                                type: integer
+                            taxonomyCategoryName:
+                                type: string
+                        type: object
+                    type: array
+                taxonomyCategoryIds:
+                    items:
+                        format: int64
+                        type: integer
+                    type: array
+                    writeOnly: true
                 title:
                     type: string
                 viewableBy:

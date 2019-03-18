@@ -74,23 +74,6 @@ components:
                     type: array
                 aggregateRating:
                     $ref: "#/components/schemas/AggregateRating"
-                categories:
-                    items:
-                        properties:
-                            categoryId:
-                                format: int64
-                                type: integer
-                            categoryName:
-                                type: string
-                        type: object
-                    readOnly: true
-                    type: array
-                categoryIds:
-                    items:
-                        format: int64
-                        type: integer
-                    type: array
-                    writeOnly: true
                 contentUrl:
                     format: binary
                     type: string
@@ -120,6 +103,23 @@ components:
                     type: array
                 sizeInBytes:
                     type: number
+                taxonomyCategories:
+                    items:
+                        properties:
+                            taxonomyCategoryId:
+                                format: int64
+                                type: integer
+                            taxonomyCategoryName:
+                                type: string
+                        type: object
+                    readOnly: true
+                    type: array
+                taxonomyCategoryIds:
+                    items:
+                        format: int64
+                        type: integer
+                    type: array
+                    writeOnly: true
                 title:
                     type: string
                 viewableBy:

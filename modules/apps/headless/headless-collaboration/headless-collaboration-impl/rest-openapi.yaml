@@ -23,23 +23,6 @@ components:
                     type: string
                 caption:
                     type: string
-                categories:
-                    items:
-                        properties:
-                            categoryId:
-                                format: int64
-                                type: integer
-                            categoryName:
-                                type: string
-                        type: object
-                    readOnly: true
-                    type: array
-                categoryIds:
-                    items:
-                        format: int64
-                        type: integer
-                    type: array
-                    writeOnly: true
                 contentSpaceId:
                     format: int64
                     type: integer
@@ -87,6 +70,23 @@ components:
                     items:
                         type: string
                     type: array
+                taxonomyCategories:
+                    items:
+                        properties:
+                            taxonomyCategoryId:
+                                format: int64
+                                type: integer
+                            taxonomyCategoryName:
+                                type: string
+                        type: object
+                    readOnly: true
+                    type: array
+                taxonomyCategoryIds:
+                    items:
+                        format: int64
+                        type: integer
+                    type: array
+                    writeOnly: true
                 viewableBy:
                     enum: [Anyone, Members, Owner]
                     type: string
@@ -160,22 +160,6 @@ components:
                     $ref: "#/components/schemas/AggregateRating"
                 articleBody:
                     type: string
-                categories:
-                    items:
-                        properties:
-                            categoryId:
-                                format: int64
-                                type: integer
-                            categoryName:
-                                type: string
-                        type: object
-                    type: array
-                categoryIds:
-                    items:
-                        format: int64
-                        type: integer
-                    type: array
-                    writeOnly: true
                 contentSpaceId:
                     format: int64
                     type: integer
@@ -213,6 +197,22 @@ components:
                 parentKnowledgeBaseFolderId:
                     format: int64
                     type: integer
+                    writeOnly: true
+                taxonomyCategories:
+                    items:
+                        properties:
+                            taxonomyCategoryId:
+                                format: int64
+                                type: integer
+                            taxonomyCategoryName:
+                                type: string
+                        type: object
+                    type: array
+                taxonomyCategoryIds:
+                    items:
+                        format: int64
+                        type: integer
+                    type: array
                     writeOnly: true
                 title:
                     type: string

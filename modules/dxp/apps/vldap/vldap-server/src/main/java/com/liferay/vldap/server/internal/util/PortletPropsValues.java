@@ -54,11 +54,16 @@ public class PortletPropsValues {
 	public static final String SSL_KEYSTORE_FILE_NAME = GetterUtil.getString(
 		PortletProps.get(PortletPropsKeys.SSL_KEYSTORE_FILE_NAME));
 
-	public static final char[] SSL_KEYSTORE_PASSWORD = GetterUtil.getString(
-		PortletProps.get(PortletPropsKeys.SSL_KEYSTORE_PASSWORD)
-	).toCharArray();
+	public static final char[] SSL_KEYSTORE_PASSWORD;
 
 	public static final String SSL_PROTOCOL = GetterUtil.getString(
 		PortletProps.get(PortletPropsKeys.SSL_PROTOCOL));
+
+	static {
+		String sslKeystorePassword = GetterUtil.getString(
+			PortletProps.get(PortletPropsKeys.SSL_KEYSTORE_PASSWORD));
+
+		SSL_KEYSTORE_PASSWORD = sslKeystorePassword.toCharArray();
+	}
 
 }

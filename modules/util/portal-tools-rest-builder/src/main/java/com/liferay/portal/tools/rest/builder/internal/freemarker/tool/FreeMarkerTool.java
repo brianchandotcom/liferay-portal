@@ -14,6 +14,7 @@
 
 package com.liferay.portal.tools.rest.builder.internal.freemarker.tool;
 
+import com.liferay.portal.kernel.util.CamelCaseUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.TextFormatter;
 import com.liferay.portal.tools.rest.builder.internal.freemarker.tool.java.JavaMethodParameter;
@@ -27,11 +28,13 @@ import com.liferay.portal.vulcan.yaml.openapi.Components;
 import com.liferay.portal.vulcan.yaml.openapi.Get;
 import com.liferay.portal.vulcan.yaml.openapi.OpenAPIYAML;
 import com.liferay.portal.vulcan.yaml.openapi.Operation;
+import com.liferay.portal.vulcan.yaml.openapi.Parameter;
 import com.liferay.portal.vulcan.yaml.openapi.Schema;
 
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -191,6 +194,23 @@ public class FreeMarkerTool {
 
 		return OpenAPIParserUtil.hasHTTPMethod(
 			javaMethodSignature, httpMethods);
+	}
+
+	public boolean isPathParameter(
+		JavaMethodParameter javaMethodParameter, Operation operation) {
+
+		String name = CamelCaseUtil.fromCamelCase(
+			javaMethodParameter.getParameterName());
+
+		for (Parameter parameter : operation.getParameters()) {
+			if (Objects.equals(parameter.getName(), name) &&
+				Objects.equals(parameter.getIn(), "path")) {
+
+				return true;
+			}
+		}
+
+		return false;
 	}
 
 	public boolean isSchemaParameter(

@@ -1662,11 +1662,14 @@ public abstract class BaseBuild implements Build {
 
 			jenkinsReportTableRowElements.add(buildInfoElement);
 
-			for (StopwatchRecord childStopwatchRecord :
-					_childStopwatchRecords) {
+			if (_childStopwatchRecords != null) {
+				for (StopwatchRecord childStopwatchRecord :
+						_childStopwatchRecords) {
 
-				jenkinsReportTableRowElements.addAll(
-					childStopwatchRecord.getJenkinsReportTableRowElements());
+					jenkinsReportTableRowElements.addAll(
+						childStopwatchRecord.
+							getJenkinsReportTableRowElements());
+				}
 			}
 
 			return jenkinsReportTableRowElements;

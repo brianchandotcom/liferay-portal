@@ -28,6 +28,10 @@ public interface DLFileEntryTypeFinder {
 		boolean includeBasicFileEntryType);
 
 	public int filterCountByKeywords(
+		long companyId, long folderId, long[] groupIds, String keywords,
+		boolean includeBasicFileEntryType, boolean inherited);
+
+	public int filterCountByKeywords(
 		long companyId, long[] groupIds, String keywords,
 		boolean includeBasicFileEntryType);
 

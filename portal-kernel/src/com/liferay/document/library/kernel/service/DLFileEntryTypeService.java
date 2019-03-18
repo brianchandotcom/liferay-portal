@@ -110,6 +110,11 @@ public interface DLFileEntryTypeService extends BaseService {
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int searchCount(
+		long companyId, long folderId, long[] groupIds, String keywords,
+		boolean includeBasicFileEntryType, boolean inherited);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int searchCount(
 		long companyId, long[] groupIds, String keywords,
 		boolean includeBasicFileEntryType);
 

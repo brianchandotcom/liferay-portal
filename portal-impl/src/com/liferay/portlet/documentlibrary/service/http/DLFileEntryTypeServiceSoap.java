@@ -287,6 +287,25 @@ public class DLFileEntryTypeServiceSoap {
 	}
 
 	public static int searchCount(
+			long companyId, long folderId, long[] groupIds, String keywords,
+			boolean includeBasicFileEntryType, boolean inherited)
+		throws RemoteException {
+
+		try {
+			int returnValue = DLFileEntryTypeServiceUtil.searchCount(
+				companyId, folderId, groupIds, keywords,
+				includeBasicFileEntryType, inherited);
+
+			return returnValue;
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static int searchCount(
 			long companyId, long[] groupIds, String keywords,
 			boolean includeBasicFileEntryType)
 		throws RemoteException {

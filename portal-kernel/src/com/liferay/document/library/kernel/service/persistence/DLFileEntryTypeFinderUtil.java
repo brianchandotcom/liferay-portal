@@ -35,6 +35,15 @@ public class DLFileEntryTypeFinderUtil {
 	}
 
 	public static int filterCountByKeywords(
+		long companyId, long folderId, long[] groupIds, String keywords,
+		boolean includeBasicFileEntryType, boolean inherited) {
+
+		return getFinder().filterCountByKeywords(
+			companyId, folderId, groupIds, keywords, includeBasicFileEntryType,
+			inherited);
+	}
+
+	public static int filterCountByKeywords(
 		long companyId, long[] groupIds, String keywords,
 		boolean includeBasicFileEntryType) {
 

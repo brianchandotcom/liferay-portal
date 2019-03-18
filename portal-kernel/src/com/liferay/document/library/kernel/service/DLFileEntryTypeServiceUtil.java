@@ -140,6 +140,15 @@ public class DLFileEntryTypeServiceUtil {
 	}
 
 	public static int searchCount(
+		long companyId, long folderId, long[] groupIds, String keywords,
+		boolean includeBasicFileEntryType, boolean inherited) {
+
+		return getService().searchCount(
+			companyId, folderId, groupIds, keywords, includeBasicFileEntryType,
+			inherited);
+	}
+
+	public static int searchCount(
 		long companyId, long[] groupIds, String keywords,
 		boolean includeBasicFileEntryType) {
 

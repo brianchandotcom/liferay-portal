@@ -148,6 +148,16 @@ public class DLFileEntryTypeServiceWrapper
 
 	@Override
 	public int searchCount(
+		long companyId, long folderId, long[] groupIds, String keywords,
+		boolean includeBasicFileEntryType, boolean inherited) {
+
+		return _dlFileEntryTypeService.searchCount(
+			companyId, folderId, groupIds, keywords, includeBasicFileEntryType,
+			inherited);
+	}
+
+	@Override
+	public int searchCount(
 		long companyId, long[] groupIds, String keywords,
 		boolean includeBasicFileEntryType) {
 

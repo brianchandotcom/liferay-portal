@@ -14,47 +14,38 @@
 
 package com.liferay.portal.workflow.kaleo.designer.web.internal.permission;
 
-import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.security.auth.PrincipalException;
-import com.liferay.portal.kernel.security.permission.BaseResourcePermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
-import com.liferay.portal.kernel.security.permission.ResourcePermissionChecker;
+import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Marcellus Tavares
  */
-@Component(
-	immediate = true,
-	property = "resource.name=" + KaleoDesignerPermission.RESOURCE_NAME,
-	service = ResourcePermissionChecker.class
-)
-public class KaleoDesignerPermission extends BaseResourcePermissionChecker {
+@Component(immediate = true, service = {})
+public class KaleoDesignerPermission {
 
 	public static final String RESOURCE_NAME =
 		"com.liferay.portal.workflow.kaleo.designer";
 
-	public static void check(
-			PermissionChecker permissionChecker, long groupId, String actionId)
-		throws PortalException {
-
-		if (!contains(permissionChecker, groupId, actionId)) {
-			throw new PrincipalException();
-		}
-	}
-
 	public static boolean contains(
 		PermissionChecker permissionChecker, long groupId, String actionId) {
 
-		return contains(permissionChecker, RESOURCE_NAME, groupId, actionId);
+		return _portletResourcePermission.contains(
+			permissionChecker, groupId, actionId);
 	}
 
-	@Override
-	public Boolean checkResource(
-		PermissionChecker permissionChecker, long classPK, String actionId) {
+	@Reference(
+		target = "(resource.name=" + KaleoDesignerPermission.RESOURCE_NAME + ")",
+		unbind = "-"
+	)
+	protected void setPortletResourcePermission(
+		PortletResourcePermission portletResourcePermission) {
 
-		return contains(permissionChecker, classPK, actionId);
+		_portletResourcePermission = portletResourcePermission;
 	}
+
+	private static PortletResourcePermission _portletResourcePermission;
 
 }

@@ -36,6 +36,9 @@ import com.liferay.portal.kernel.webserver.WebServerServletTokenUtil;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
+
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ServiceScope;
@@ -107,17 +110,29 @@ public class OrganizationResourceImpl extends BaseOrganizationResourceImpl {
 
 		return new HoursAvailable() {
 			{
-				if (closeHour != -1) {
-					closes = String.valueOf(closeHour);
-				}
-
+				closes = _formatHour(closeHour);
 				dayOfWeek = day;
-
-				if (openHour != -1) {
-					opens = String.valueOf(openHour);
-				}
+				opens = _formatHour(openHour);
 			}
 		};
+	}
+
+	private String _formatHour(int hour) {
+		if (hour == -1) {
+			return null;
+		}
+
+		DecimalFormat decimalFormat = new DecimalFormat("00,00");
+
+		DecimalFormatSymbols decimalFormatSymbols = new DecimalFormatSymbols();
+
+		decimalFormatSymbols.setGroupingSeparator(':');
+
+		decimalFormat.setDecimalFormatSymbols(decimalFormatSymbols);
+
+		decimalFormat.setGroupingSize(2);
+
+		return decimalFormat.format(hour);
 	}
 
 	private Page<Organization> _getOrganizationsPage(Long userAccountId)

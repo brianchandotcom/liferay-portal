@@ -229,6 +229,80 @@ definition {
 		AssertElementNotPresent(locator1 = "//tbody/tr[2]/td[contains(@class,'table-cell-content')]/a[contains(.,'DM Document Title')]");
 	}
 
+	@description = "This test ensures that Sharing can be disabled at the instance level."
+	@priority = "4"
+	test DisableSharingAtInstanceScope {
+
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "System Settings"
+		);
+
+		SystemSettings.gotoConfiguration(
+			configurationCategory = "Sharing",
+			configurationName = "Virtual Instance Sharing",
+			configurationScope = "Virtual Instance Scope"
+		);
+
+		Uncheck(locator1 = "Checkbox#ANY_CHECKBOX", checkboxName = "Enabled");
+
+		Navigator.openURL();
+
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		DMDocument.addPG(
+			dmDocumentFile = "Document_1.doc",
+			dmDocumentTitle = "Document with sharing disabled"
+		);
+
+		AssertElementNotPresent(locator1="MenuItem#ANY_MENU_ITEM", key_menuItem="Share");
+
+		AssertClick(
+			locator1 = "DocumentsAndMedia#DESCRIPTIVE_LIST_DOCUMENT_TITLE",
+			value1 = "Document with sharing disabled"
+		);
+
+		AssertElementNotPresent(locator1="Button#ANY", key_text="Share");
+	}
+
+	@description = "This test ensures that Sharing can be disabled at the system level."
+	@priority = "4"
+	test DisableSharingAtSystemScope {
+
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "System Settings"
+		);
+
+		SystemSettings.gotoConfiguration(
+			configurationCategory = "Sharing",
+			configurationName = "Sharing",
+			configurationScope = "System Scope"
+		);
+
+		Uncheck(locator1 = "Checkbox#ANY_CHECKBOX", checkboxName = "Enabled");
+
+		Navigator.openURL();
+
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		DMDocument.addPG(
+			dmDocumentFile = "Document_1.doc",
+			dmDocumentTitle = "Document with sharing disabled"
+		);
+
+		AssertElementNotPresent(locator1="MenuItem#ANY_MENU_ITEM", key_menuItem="Share");
+
+		AssertClick(
+			locator1 = "DocumentsAndMedia#DESCRIPTIVE_LIST_DOCUMENT_TITLE",
+			value1 = "Document with sharing disabled"
+		);
+
+		AssertElementNotPresent(locator1="Button#ANY", key_text="Share");
+	}
+
 	@description = "This test ensures that users can Order By Shared Date in the Shared with Me app."
 	@priority = "3"
 	test FilterByAssetType {

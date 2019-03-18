@@ -18,11 +18,13 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistry;
 import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.Portal;
@@ -161,7 +163,12 @@ public class SharingEntryLocalServiceImpl
 		sharingEntry.setCompanyId(group.getCompanyId());
 
 		sharingEntry.setGroupId(groupId);
-		sharingEntry.setUserId(userId);
+
+		User user = _userLocalService.getUser(userId);
+
+		sharingEntry.setUserId(user.getUserId());
+		sharingEntry.setUserName(user.getFullName());
+
 		sharingEntry.setToUserId(toUserId);
 		sharingEntry.setClassNameId(classNameId);
 		sharingEntry.setClassPK(classPK);
@@ -676,5 +683,8 @@ public class SharingEntryLocalServiceImpl
 
 	@ServiceReference(type = Portal.class)
 	private Portal _portal;
+
+	@ServiceReference(type = UserLocalService.class)
+	private UserLocalService _userLocalService;
 
 }

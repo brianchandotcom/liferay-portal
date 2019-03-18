@@ -57,10 +57,10 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
  */
 @Component(
 	immediate = true,
-	property = "auth.verifier.OAuth2RestAuthVerifier.urls.includes=#N/A#",
+	property = "auth.verifier.OAuth2RESTAuthVerifier.urls.includes=#N/A#",
 	service = AuthVerifier.class
 )
-public class OAuth2RestAuthVerifier implements AuthVerifier {
+public class OAuth2RESTAuthVerifier implements AuthVerifier {
 
 	@Override
 	public String getAuthType() {
@@ -204,7 +204,7 @@ public class OAuth2RestAuthVerifier implements AuthVerifier {
 	private static final String _TOKEN_KEY = "Bearer";
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		OAuth2RestAuthVerifier.class);
+		OAuth2RESTAuthVerifier.class);
 
 	@Reference(
 		policy = ReferencePolicy.DYNAMIC,

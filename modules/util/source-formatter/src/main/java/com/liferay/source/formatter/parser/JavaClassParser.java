@@ -354,7 +354,9 @@ public class JavaClassParser {
 		while (matcher.find()) {
 			String javaTermContent = s.substring(0, matcher.end());
 
-			if (ToolsUtil.getLevel(javaTermContent, "{", "}") == 0) {
+			if ((ToolsUtil.getLevel(javaTermContent, "(", ")") == 0) &&
+				(ToolsUtil.getLevel(javaTermContent, "{", "}") == 0)) {
+
 				return lineNumber + StringUtil.count(javaTermContent, "\n") - 1;
 			}
 		}

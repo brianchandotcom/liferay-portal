@@ -75,12 +75,21 @@
 	</liferay-frontend:edit-form-footer>
 </liferay-frontend:edit-form>
 
-<aui:script>
+<script>
 	function <portlet:namespace />saveConfiguration() {
-		var form = AUI.$(document.<portlet:namespace />fm);
+		var form = document.<portlet:namespace />fm;
 
-		form.fm('languageIds').val(Liferay.Util.listSelect(form.fm('currentLanguageIds')));
+		var currentLanguageIdsInput = Liferay.Util.getFormElement(form, 'currentLanguageIds');
 
-		submitForm(form);
+		if (currentLanguageIdsInput) {
+			Liferay.Util.postForm(
+				form,
+				{
+					data: {
+						languageIds: Liferay.Util.listSelect(currentLanguageIdsInput)
+					}
+				}
+			);
+		}
 	}
-</aui:script>
+</script>

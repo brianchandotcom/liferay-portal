@@ -66,76 +66,78 @@ renderResponse.setTitle(LanguageUtil.format(request, "add-x", siteNavigationMenu
 </aui:form>
 
 <aui:script use="liferay-alert">
-	var addButton = $('#<portlet:namespace />addButton');
+	var addButton = document.getElementById('<portlet:namespace />addButton');
 
-	addButton.on(
-		'click',
-		function() {
-			var form = document.getElementById('<portlet:namespace />fm');
-			var formData = new FormData();
+	if (addButton) {
+		addButton.addEventListener(
+			'click',
+			function() {
+				var form = document.getElementById('<portlet:namespace />fm');
+				var formData = new FormData();
 
-			Array.prototype.slice.call(
-				form.querySelectorAll('input')
-			).forEach(
-				function(input) {
-					if (input.name && input.value) {
-						formData.append(input.name, input.value);
+				Array.prototype.slice.call(
+					form.querySelectorAll('input')
+				).forEach(
+					function(input) {
+						if (input.name && input.value) {
+							formData.append(input.name, input.value);
+						}
 					}
+				);
+
+				var formValidator = Liferay.Form.get('<portlet:namespace />fm').formValidator;
+
+				formValidator.validate();
+
+				if (formValidator.hasErrors()) {
+					return;
 				}
-			);
 
-			var formValidator = Liferay.Form.get('<portlet:namespace />fm').formValidator;
+				fetch(
+					form.action,
+					{
+						body: formData,
+						credentials: 'include',
+						method: 'POST'
+					}
+				).then(
+					function(response) {
+						return response.json();
+					}
+				).then(
+					function(response) {
+						if (response.siteNavigationMenuItemId) {
+							Liferay.fire(
+								'closeWindow',
+								{
 
-			formValidator.validate();
+									<%
+									Portlet selPortlet = PortletLocalServiceUtil.getPortletById(company.getCompanyId(), portletDisplay.getId());
+									%>
 
-			if (formValidator.hasErrors()) {
-				return;
+									id: '_<%= HtmlUtil.escapeJS(selPortlet.getPortletId()) %>_addMenuItem',
+									portletAjaxable: <%= selPortlet.isAjaxable() %>,
+									refresh: '<%= HtmlUtil.escapeJS(selPortlet.getPortletId()) %>'
+								}
+							);
+						}
+						else {
+							new Liferay.Alert(
+								{
+									delay: {
+										hide: 500,
+										show: 0
+									},
+									duration: 500,
+									icon: 'exclamation-circle',
+									message: response.errorMessage,
+									type: 'danger'
+								}
+							).render();
+						}
+					}
+				);
 			}
-
-			fetch(
-				form.action,
-				{
-					body: formData,
-					credentials: 'include',
-					method: 'POST'
-				}
-			).then(
-				function(response) {
-					return response.json();
-				}
-			).then(
-				function(response) {
-					if (response.siteNavigationMenuItemId) {
-						Liferay.fire(
-							'closeWindow',
-							{
-
-								<%
-								Portlet selPortlet = PortletLocalServiceUtil.getPortletById(company.getCompanyId(), portletDisplay.getId());
-								%>
-
-								id: '_<%= HtmlUtil.escapeJS(selPortlet.getPortletId()) %>_addMenuItem',
-								portletAjaxable: <%= selPortlet.isAjaxable() %>,
-								refresh: '<%= HtmlUtil.escapeJS(selPortlet.getPortletId()) %>'
-							}
-						);
-					}
-					else {
-						new Liferay.Alert(
-							{
-								delay: {
-									hide: 500,
-									show: 0
-								},
-								duration: 500,
-								icon: 'exclamation-circle',
-								message: response.errorMessage,
-								type: 'danger'
-							}
-						).render();
-					}
-				}
-			);
-		}
-	);
+		);
+	}
 </aui:script>

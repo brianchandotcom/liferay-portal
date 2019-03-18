@@ -86,30 +86,37 @@
 		'_<%= HtmlUtil.escapeJS(siteNavigationBreadcrumbDisplayContext.getPortletResource()) %>_showPortletBreadcrumb': <%= siteNavigationBreadcrumbDisplayContext.isShowPortletBreadcrumb() %>
 	};
 
-	var selectDisplayStyle = $('#<portlet:namespace />displayStyle');
+	var selectDisplayStyle = document.getElementById('<portlet:namespace />displayStyle');
 
-	selectDisplayStyle.on(
-		'change',
-		function(event) {
-			if (selectDisplayStyle.prop('selectedIndex') > -1) {
-				data['_<%= HtmlUtil.escapeJS(siteNavigationBreadcrumbDisplayContext.getPortletResource()) %>_displayStyle'] = selectDisplayStyle.val();
+	if (selectDisplayStyle) {
+		selectDisplayStyle.addEventListener(
+			'change',
+			function(event) {
+				if (selectDisplayStyle.selectedIndex > -1) {
+					data['_<%= HtmlUtil.escapeJS(siteNavigationBreadcrumbDisplayContext.getPortletResource()) %>_displayStyle'] = selectDisplayStyle.value;
 
-				Liferay.Portlet.refresh('#p_p_id_<%= HtmlUtil.escapeJS(siteNavigationBreadcrumbDisplayContext.getPortletResource()) %>_', data);
+					Liferay.Portlet.refresh('#p_p_id_<%= HtmlUtil.escapeJS(siteNavigationBreadcrumbDisplayContext.getPortletResource()) %>_', data);
+				}
 			}
-		}
-	);
+		);
+	}
 
-	$('#<portlet:namespace />checkBoxes').on(
-		'change',
-		'input[type="checkbox"]',
-		function(event) {
-			var currentTarget = $(event.currentTarget);
+	var checkBoxes = document.getElementById('<portlet:namespace />checkBoxes');
 
-			data[currentTarget.data('key')] = currentTarget.prop('checked');
+	if (checkBoxes) {
+		checkBoxes.addEventListener(
+			'change',
+			function(event) {
+				if (event.target.classList.contains('toggle-switch')) {
+					var target = event.target;
 
-			Liferay.Portlet.refresh('#p_p_id_<%= HtmlUtil.escapeJS(siteNavigationBreadcrumbDisplayContext.getPortletResource()) %>_', data);
-		}
-	);
+					data[target.dataset.key] = target.checked;
+
+					Liferay.Portlet.refresh('#p_p_id_<%= HtmlUtil.escapeJS(siteNavigationBreadcrumbDisplayContext.getPortletResource()) %>_', data);
+				}
+			}
+		);
+	}
 
 	var handler = Liferay.on(
 		'portletReady',

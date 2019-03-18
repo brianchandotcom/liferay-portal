@@ -213,7 +213,8 @@ public class SegmentsEntryProviderTest {
 		context.put("languageId", "en");
 
 		long[] segmentsEntryIds = _segmentsEntryProvider.getSegmentsEntryIds(
-			User.class.getName(), _user1.getUserId(), context);
+			_group.getGroupId(), User.class.getName(), _user1.getUserId(),
+			context);
 
 		Assert.assertEquals(
 			segmentsEntryIds.toString(), 4, segmentsEntryIds.length);
@@ -274,7 +275,7 @@ public class SegmentsEntryProviderTest {
 			User.class.getName());
 
 		long[] segmentsEntryIds = _segmentsEntryProvider.getSegmentsEntryIds(
-			User.class.getName(), _user1.getUserId());
+			_group.getGroupId(), User.class.getName(), _user1.getUserId());
 
 		Assert.assertEquals(
 			segmentsEntryIds.toString(), 3, segmentsEntryIds.length);
@@ -322,7 +323,8 @@ public class SegmentsEntryProviderTest {
 		context.put("languageId", "en");
 
 		long[] segmentsEntryIds = _segmentsEntryProvider.getSegmentsEntryIds(
-			User.class.getName(), _user1.getUserId(), context);
+			_group.getGroupId(), User.class.getName(), _user1.getUserId(),
+			context);
 
 		Assert.assertEquals(
 			segmentsEntryIds.toString(), 3, segmentsEntryIds.length);
@@ -372,7 +374,7 @@ public class SegmentsEntryProviderTest {
 			User.class.getName());
 
 		long[] segmentsEntryIds = _segmentsEntryProvider.getSegmentsEntryIds(
-			User.class.getName(), _user1.getUserId());
+			_group.getGroupId(), User.class.getName(), _user1.getUserId());
 
 		Assert.assertEquals(
 			segmentsEntryIds.toString(), 3, segmentsEntryIds.length);

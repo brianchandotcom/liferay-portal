@@ -263,22 +263,41 @@ public class DocumentResourceImpl
 		throws Exception {
 
 		BinaryFile binaryFile = multipartBody.getBinaryFile("file");
-		Document document = multipartBody.getValueAsInstance(
-			"document", Document.class);
+		Optional<Document> documentOptional =
+			multipartBody.getValueAsInstanceOptional(
+				"document", Document.class);
 
 		FileEntry fileEntry = _dlAppService.addFileEntry(
 			repositoryId, folderId, binaryFile.getFileName(),
 			binaryFile.getContentType(),
-			Optional.ofNullable(
-				document.getTitle()
+			documentOptional.map(
+				Document::getTitle
 			).orElse(
 				binaryFile.getFileName()
 			),
-			document.getDescription(), null, binaryFile.getInputStream(),
-			binaryFile.getSize(),
+			documentOptional.map(
+				Document::getDescription
+			).orElse(
+				null
+			),
+			null, binaryFile.getInputStream(), binaryFile.getSize(),
 			ServiceContextUtil.createServiceContext(
-				document.getKeywords(), document.getTaxonomyCategoryIds(),
-				groupId, document.getViewableByAsString()));
+				documentOptional.map(
+					Document::getKeywords
+				).orElse(
+					null
+				),
+				documentOptional.map(
+					Document::getTaxonomyCategoryIds
+				).orElse(
+					null
+				),
+				groupId,
+				documentOptional.map(
+					Document::getViewableByAsString
+				).orElse(
+					Document.ViewableBy.OWNER.getValue()
+				)));
 
 		return _toDocument(
 			fileEntry, fileEntry.getFileVersion(),

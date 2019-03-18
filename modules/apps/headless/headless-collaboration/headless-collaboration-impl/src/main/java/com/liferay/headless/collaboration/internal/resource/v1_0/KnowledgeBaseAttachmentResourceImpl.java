@@ -62,7 +62,7 @@ public class KnowledgeBaseAttachmentResourceImpl
 				Long knowledgeBaseArticleId)
 		throws Exception {
 
-		KBArticle kbArticle = _kbArticleService.fetchLatestKBArticle(
+		KBArticle kbArticle = _kbArticleService.getLatestKBArticle(
 			knowledgeBaseArticleId, WorkflowConstants.STATUS_APPROVED);
 
 		return Page.of(
@@ -87,7 +87,7 @@ public class KnowledgeBaseAttachmentResourceImpl
 				Long knowledgeBaseArticleId, MultipartBody multipartBody)
 		throws Exception {
 
-		KBArticle kbArticle = _kbArticleService.fetchLatestKBArticle(
+		KBArticle kbArticle = _kbArticleService.getLatestKBArticle(
 			knowledgeBaseArticleId, WorkflowConstants.STATUS_APPROVED);
 		BinaryFile binaryFile = multipartBody.getBinaryFile("file");
 

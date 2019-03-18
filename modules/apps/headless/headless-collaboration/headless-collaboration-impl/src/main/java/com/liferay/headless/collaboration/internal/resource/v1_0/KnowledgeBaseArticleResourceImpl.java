@@ -86,7 +86,7 @@ public class KnowledgeBaseArticleResourceImpl
 		throws Exception {
 
 		return _toKBArticle(
-			_kbArticleService.fetchLatestKBArticle(
+			_kbArticleService.getLatestKBArticle(
 				knowledgeBaseArticleId, WorkflowConstants.STATUS_APPROVED));
 	}
 
@@ -96,7 +96,7 @@ public class KnowledgeBaseArticleResourceImpl
 				Long knowledgeBaseArticleId, Pagination pagination)
 		throws Exception {
 
-		KBArticle kbArticle = _kbArticleService.fetchLatestKBArticle(
+		KBArticle kbArticle = _kbArticleService.getLatestKBArticle(
 			knowledgeBaseArticleId, WorkflowConstants.STATUS_APPROVED);
 
 		return Page.of(
@@ -152,7 +152,7 @@ public class KnowledgeBaseArticleResourceImpl
 			KnowledgeBaseArticle knowledgeBaseArticle)
 		throws Exception {
 
-		KBArticle kbArticle = _kbArticleService.fetchLatestKBArticle(
+		KBArticle kbArticle = _kbArticleService.getLatestKBArticle(
 			knowledgeBaseArticleId, WorkflowConstants.STATUS_APPROVED);
 
 		return _getKnowledgeBaseArticle(
@@ -245,7 +245,7 @@ public class KnowledgeBaseArticleResourceImpl
 				friendlyUrlPath = kbArticle.getUrlTitle();
 				hasAttachments = ListUtil.isNotEmpty(
 					kbArticle.getAttachmentsFileEntries());
-				id = kbArticle.getKbArticleId();
+				id = kbArticle.getResourcePrimKey();
 				keywords = ListUtil.toArray(
 					_assetTagLocalService.getTags(
 						KBArticle.class.getName(), kbArticle.getClassPK()),

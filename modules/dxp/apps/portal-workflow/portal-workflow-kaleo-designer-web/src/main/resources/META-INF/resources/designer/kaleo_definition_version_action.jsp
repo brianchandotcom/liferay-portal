@@ -65,11 +65,13 @@ String kaleoNamespace = PortalUtil.getPortletNamespace(KaleoDesignerPortletKeys.
 		</c:otherwise>
 	</c:choose>
 
-	<liferay-ui:icon
-		id='<%= "duplicate" + kaleoDefinition.getKaleoDefinitionId() %>'
-		message="duplicate"
-		url="javascript:;"
-	/>
+	<c:if test="<%= kaleoDesignerDisplayContext.canPublishWorkflowDefinition() %>">
+		<liferay-ui:icon
+			id='<%= "duplicate" + kaleoDefinition.getKaleoDefinitionId() %>'
+			message="duplicate"
+			url="javascript:;"
+		/>
+	</c:if>
 
 	<c:if test="<%= KaleoDefinitionVersionPermission.contains(permissionChecker, kaleoDefinitionVersion, ActionKeys.PERMISSIONS) %>">
 		<liferay-security:permissionsURL

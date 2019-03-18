@@ -14,24 +14,35 @@
 
 package com.liferay.portal.workflow.kaleo.designer.web.internal.portlet.configuration.icon;
 
+import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigurationIcon;
 import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIcon;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.workflow.configuration.WorkflowDefinitionConfiguration;
 import com.liferay.portal.workflow.kaleo.designer.web.constants.KaleoDesignerPortletKeys;
 import com.liferay.portal.workflow.kaleo.designer.web.internal.constants.KaleoDesignerWebKeys;
 import com.liferay.portal.workflow.kaleo.designer.web.internal.permission.KaleoDefinitionVersionPermission;
 import com.liferay.portal.workflow.kaleo.model.KaleoDefinitionVersion;
 
+import java.util.Map;
 import java.util.ResourceBundle;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
 
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.ConfigurationPolicy;
+import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
 
 /**
@@ -40,7 +51,8 @@ import org.osgi.service.component.annotations.Reference;
  * @author Jeyvison Nascimento
  */
 @Component(
-	immediate = true,
+	configurationPid = "com.liferay.portal.workflow.configuration.WorkflowDefinitionConfiguration",
+	configurationPolicy = ConfigurationPolicy.OPTIONAL, immediate = true,
 	property = {
 		"javax.portlet.name=" + KaleoDesignerPortletKeys.KALEO_DESIGNER,
 		"path=/designer/edit_kaleo_definition_version.jsp"
@@ -78,6 +90,10 @@ public class DuplicateDefinitionPortletConfigurationIcon
 
 	@Override
 	public boolean isShow(PortletRequest portletRequest) {
+		if (!checkPermissions()) {
+			return false;
+		}
+
 		KaleoDefinitionVersion kaleoDefinitionVersion =
 			getKaleoDefinitionVersion(portletRequest);
 
@@ -102,12 +118,45 @@ public class DuplicateDefinitionPortletConfigurationIcon
 		return false;
 	}
 
+	@Activate
+	@Modified
+	protected void activate(Map<String, Object> properties) {
+		WorkflowDefinitionConfiguration workflowDefinitionConfiguration =
+			ConfigurableUtil.createConfigurable(
+				WorkflowDefinitionConfiguration.class, properties);
+
+		_companyAdministratorCanPublish =
+			workflowDefinitionConfiguration.companyAdministratorCanPublish();
+	}
+
+	protected boolean checkPermissions() {
+		PermissionChecker permissionChecker =
+			PermissionThreadLocal.getPermissionChecker();
+
+		if (_companyAdministratorCanPublish &&
+			permissionChecker.isCompanyAdmin()) {
+
+			return true;
+		}
+
+		if (permissionChecker.isOmniadmin()) {
+			return true;
+		}
+
+		return false;
+	}
+
 	protected KaleoDefinitionVersion getKaleoDefinitionVersion(
 		PortletRequest portletRequest) {
 
 		return (KaleoDefinitionVersion)portletRequest.getAttribute(
 			KaleoDesignerWebKeys.KALEO_DRAFT_DEFINITION);
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		DuplicateDefinitionPortletConfigurationIcon.class);
+
+	private boolean _companyAdministratorCanPublish;
 
 	@Reference
 	private Portal _portal;

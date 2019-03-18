@@ -18,7 +18,7 @@
 
 <clay:management-toolbar
 	clearResultsURL="<%= kaleoDesignerDisplayContext.getClearResultsURL() %>"
-	creationMenu="<%= kaleoDesignerDisplayContext.getCreationMenu() %>"
+	creationMenu="<%= kaleoDesignerDisplayContext.getCreationMenu(pageContext) %>"
 	filterDropdownItems="<%= kaleoDesignerDisplayContext.getFilterItemsDropdownItems() %>"
 	itemsTotal="<%= kaleoDesignerDisplayContext.getTotalItems() %>"
 	namespace="<%= renderResponse.getNamespace() %>"

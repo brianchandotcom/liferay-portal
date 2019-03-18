@@ -14,9 +14,9 @@
 
 package com.liferay.portal.workflow.kaleo.designer.web.internal.portlet.display.context;
 
-import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.JSPCreationMenu;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
@@ -32,6 +32,7 @@ import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.PortletURLUtil;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -73,6 +74,7 @@ import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.jsp.PageContext;
 
 /**
  * @author Rafael Praxedes
@@ -99,6 +101,23 @@ public class KaleoDesignerDisplayContext {
 			renderRequest);
 	}
 
+	public boolean canPublishWorkflowDefinition() {
+		PermissionChecker permissionChecker =
+			PermissionThreadLocal.getPermissionChecker();
+
+		if (_companyAdministratorCanPublish &&
+			permissionChecker.isCompanyAdmin()) {
+
+			return true;
+		}
+
+		if (permissionChecker.isOmniadmin()) {
+			return true;
+		}
+
+		return false;
+	}
+
 	public String getClearResultsURL() throws PortletException {
 		PortletURL clearResultsURL = PortletURLUtil.clone(
 			getPortletURL(),
@@ -120,32 +139,31 @@ public class KaleoDesignerDisplayContext {
 		return firstKaleoDefinitionVersion.getCreateDate();
 	}
 
-	public CreationMenu getCreationMenu() {
+	public JSPCreationMenu getCreationMenu(PageContext pageContext) {
+		if (!canPublishWorkflowDefinition()) {
+			return null;
+		}
+
 		if (!isSaveKaleoDefinitionVersionButtonVisible(null)) {
 			return null;
 		}
 
-		return new CreationMenu() {
+		LiferayPortletResponse liferayPortletResponse =
+			_kaleoDesignerRequestHelper.getLiferayPortletResponse();
+
+		return new JSPCreationMenu(pageContext) {
 			{
-				LiferayPortletResponse liferayPortletResponse =
-					_kaleoDesignerRequestHelper.getLiferayPortletResponse();
-
-				LiferayPortletURL liferayPortletURL =
-					liferayPortletResponse.createRenderURL(
-						KaleoDesignerPortletKeys.KALEO_DESIGNER);
-
-				liferayPortletURL.setParameter(
-					"mvcPath", "/designer/edit_kaleo_definition_version.jsp");
-				liferayPortletURL.setParameter(
-					"redirect",
-					PortalUtil.getCurrentURL(
-						_kaleoDesignerRequestHelper.getRequest()));
-				liferayPortletURL.setParameter("clearSessionMessage", "true");
-
 				addPrimaryDropdownItem(
 					dropdownItem -> {
-						dropdownItem.setHref(liferayPortletURL);
-
+						dropdownItem.setHref(
+							liferayPortletResponse.createRenderURL(
+								KaleoDesignerPortletKeys.KALEO_DESIGNER),
+							"mvcPath",
+							"/designer/edit_kaleo_definition_version.jsp",
+							"redirect",
+							PortalUtil.getCurrentURL(
+								_kaleoDesignerRequestHelper.getRequest()),
+							"clearSessionMessage", "true");
 						dropdownItem.setLabel(
 							LanguageUtil.get(
 								_kaleoDesignerRequestHelper.getRequest(),
@@ -548,6 +566,10 @@ public class KaleoDesignerDisplayContext {
 		PermissionChecker permissionChecker,
 		KaleoDefinitionVersion kaleoDefinitionVersion) {
 
+		if (!canPublishWorkflowDefinition()) {
+			return false;
+		}
+
 		if (kaleoDefinitionVersion != null) {
 			try {
 				return KaleoDefinitionVersionPermission.contains(
@@ -595,6 +617,12 @@ public class KaleoDesignerDisplayContext {
 		return KaleoDesignerPermission.contains(
 			permissionChecker, _themeDisplay.getCompanyGroupId(),
 			KaleoDesignerActionKeys.ADD_NEW_WORKFLOW);
+	}
+
+	public void setCompanyAdministratorCanPublish(
+		boolean companyAdministratorCanPublish) {
+
+		_companyAdministratorCanPublish = companyAdministratorCanPublish;
 	}
 
 	public void setKaleoDesignerRequestHelper(RenderRequest renderRequest) {
@@ -768,6 +796,7 @@ public class KaleoDesignerDisplayContext {
 	private static final Log _log = LogFactoryUtil.getLog(
 		KaleoDesignerDisplayContext.class);
 
+	private boolean _companyAdministratorCanPublish;
 	private final KaleoDefinitionVersionLocalService
 		_kaleoDefinitionVersionLocalService;
 	private KaleoDesignerRequestHelper _kaleoDesignerRequestHelper;

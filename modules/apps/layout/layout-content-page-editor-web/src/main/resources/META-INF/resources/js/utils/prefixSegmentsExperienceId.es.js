@@ -7,7 +7,7 @@
  * @returns {string}
  */
 export function prefixSegmentsExperienceId(segmentsExperienceId) {
-	return (segmentsExperienceId === undefined) ?
+	return (segmentsExperienceId === undefined || segmentsExperienceId === '') ?
 		undefined :
 		(SEGMENT_EXPERIENCE_ID_PREFIX + segmentsExperienceId);
 }

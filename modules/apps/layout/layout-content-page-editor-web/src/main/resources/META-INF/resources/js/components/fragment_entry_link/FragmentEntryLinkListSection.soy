@@ -10,7 +10,6 @@
 		size: string
 	]>}
 	{@param defaultEditorConfigurations: ?}
-	{@param defaultSegmentsExperienceId: string}
 	{@param fragmentEntryLinks: ?}
 	{@param key: string}
 	{@param row: ?}
@@ -23,6 +22,7 @@
 	{@param? _handleSectionRemoveButtonClick: any}
 	{@param? activeItemId: string}
 	{@param? activeItemType: string}
+	{@param? defaultSegmentsExperienceId: string}
 	{@param? dropTargetItemTypes: ?}
 	{@param? empty: bool}
 	{@param? dropTargetBorder: string}
@@ -186,11 +186,11 @@
 {template .column}
 	{@param columnId: string}
 	{@param defaultEditorConfigurations: ?}
-	{@param defaultSegmentsExperienceId: string}
 	{@param fragmentEntryLinkIds: list<string>}
 	{@param fragmentEntryLinks: ?}
 	{@param key: string}
 	{@param? _handleFragmentMove: any}
+	{@param? defaultSegmentsExperienceId: string}
 	{@param? dropTargetItemTypes: ?}
 	{@param? dropTargetBorder: string}
 	{@param? dropTargetItemId: string}
@@ -268,7 +268,7 @@
  */
 {template .fragmentEntryLink}
 	{@param defaultEditorConfigurations: ?}
-	{@param defaultSegmentsExperienceId: string}
+	{@param? defaultSegmentsExperienceId: string}
 	{@param editableValues: ?}
 	{@param fragmentEntryLinkId: string}
 	{@param key: string}

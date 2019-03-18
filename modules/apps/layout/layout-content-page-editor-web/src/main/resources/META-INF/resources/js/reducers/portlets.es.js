@@ -3,6 +3,7 @@ import {addFragment, getFragmentEntryLinkContent} from './fragments.es';
 import {getWidgetPath} from '../utils/FragmentsEditorGetUtils.es';
 import {setIn, updateLayoutData} from '../utils/FragmentsEditorUpdateUtils.es';
 import editableValuesMigrator from '../utils/fragmentMigrator.es';
+import {prefixSegmentsExperienceId} from '../utils/prefixSegmentsExperienceId.es';
 
 /**
  * @param {!object} state
@@ -152,7 +153,10 @@ function _addPortlet(
 				return {
 					config: {},
 					content: response.content,
-					editableValues: editableValuesMigrator(response.editableValues, defaultSegmentsExperienceId),
+					editableValues: editableValuesMigrator(
+						response.editableValues,
+						prefixSegmentsExperienceId(defaultSegmentsExperienceId)
+					),
 					fragmentEntryLinkId: response.fragmentEntryLinkId,
 					name: response.name
 				};

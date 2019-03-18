@@ -117,10 +117,20 @@ function _getTranslationStatus(languageIds, editableValues, segmentsExperienceId
 			const values = editableValues.map(
 				editableValue => Object.keys(editableValue).map(
 					editableValueId => {
-						return editableValue &&
-							editableValue[editableValueId] &&
-							editableValue[editableValueId][segmentsExperienceId] &&
-							editableValue[editableValueId][segmentsExperienceId][languageId];
+						let result;
+						if (!segmentsExperienceId) {
+							result = editableValue &&
+								editableValue[editableValueId] &&
+								editableValue[editableValueId][languageId];
+						}
+						else {
+							result = editableValue &&
+								editableValue[editableValueId] &&
+								editableValue[editableValueId][segmentsExperienceId] &&
+								editableValue[editableValueId][segmentsExperienceId][languageId];
+						}
+						
+						return result;
 					}
 				)
 			)

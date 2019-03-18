@@ -4,10 +4,10 @@
  * FragmentsEditorToolbar
  */
 {template .render}
-	{@param defaultSegmentsExperienceId: string }
 	{@param? availableSegmentsEntries: ?}
 	{@param? _handleToggleContextualSidebarButtonClick: any}
 	{@param? classPK: ?}
+	{@param? defaultSegmentsExperienceId: string }
 	{@param? discardDraftURL: string}
 	{@param? draft: bool}
 	{@param? fragmentsEditorSidebarVisible: bool}
@@ -34,14 +34,17 @@
 	<div class="{$toolbarClasses}">
 		<div class="container-fluid container-fluid-max-xl">
 			<ul class="navbar-nav">
-				<li class="nav-item">
-					{call com.liferay.layout.content.page.editor.web.SegmentsExperienceSelector.render}
-						{param availableSegmentsEntries: $availableSegmentsEntries /}
-						{param defaultSegmentsExperienceId: $defaultSegmentsExperienceId /}
-						{param spritemap: $spritemap ?: '' /}
-						{param store: $store /}
-					{/call}
-				</li>
+				{if $defaultSegmentsExperienceId }
+					<li class="nav-item">
+						{call com.liferay.layout.content.page.editor.web.SegmentsExperienceSelector.render}
+							{param availableSegmentsEntries: $availableSegmentsEntries /}
+							{param defaultSegmentsExperienceId: $defaultSegmentsExperienceId /}
+							{param spritemap: $spritemap ?: '' /}
+							{param store: $store /}
+						{/call}
+					</li>
+				{/if}
+
 				<li class="nav-item">
 					{call com.liferay.layout.content.page.editor.web.TranslationStatus.render}
 						{param store: $store /}

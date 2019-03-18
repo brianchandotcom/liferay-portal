@@ -21,19 +21,26 @@ function _editableFragmentMigrator(object, defaultSegmentsExperienceKey) {
 
 function editableValuesMigrator(editableValue, defaultSegmentsExperienceKey) {
 	let jsonEditableValues = JSON.parse(editableValue);
-	let object = {
-		[EDITABLE_FRAGMENT_ENTRY_PROCESSOR]: {}
-	};
-	Object.keys(jsonEditableValues[EDITABLE_FRAGMENT_ENTRY_PROCESSOR])
-		.forEach(
-			editableFragmentKey => {
-				object[EDITABLE_FRAGMENT_ENTRY_PROCESSOR][editableFragmentKey] = _editableFragmentMigrator(
-					jsonEditableValues[EDITABLE_FRAGMENT_ENTRY_PROCESSOR][editableFragmentKey],
-					defaultSegmentsExperienceKey
-				);
-			}
-		);
-	return object;
+	let result;
+
+	if (!defaultSegmentsExperienceKey) {
+		result = jsonEditableValues;
+	}
+	else {
+		result = {
+			[EDITABLE_FRAGMENT_ENTRY_PROCESSOR]: {}
+		};
+		Object.keys(jsonEditableValues[EDITABLE_FRAGMENT_ENTRY_PROCESSOR])
+			.forEach(
+				editableFragmentKey => {
+					result[EDITABLE_FRAGMENT_ENTRY_PROCESSOR][editableFragmentKey] = _editableFragmentMigrator(
+						jsonEditableValues[EDITABLE_FRAGMENT_ENTRY_PROCESSOR][editableFragmentKey],
+						defaultSegmentsExperienceKey
+					);
+				}
+			);
+	}
+	return result;
 }
 
 export default editableValuesMigrator;

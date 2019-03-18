@@ -145,13 +145,13 @@ const INITIAL_STATE = {
 
 	/**
 	 * Default experience id.
-	 * @default ''
+	 * @default undefined
 	 * @review
 	 * @type {string}
 	 */
 	defaultSegmentsExperienceId: Config
 		.string()
-		.value(''),
+		.value(undefined),
 
 	/**
 	 * URL for removing fragment entries of the underlying model.

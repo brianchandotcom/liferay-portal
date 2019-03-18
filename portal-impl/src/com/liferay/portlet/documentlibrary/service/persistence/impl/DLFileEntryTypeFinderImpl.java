@@ -45,6 +45,9 @@ public class DLFileEntryTypeFinderImpl
 	public static final String COUNT_BY_C_G_N_D_S =
 		DLFileEntryTypeFinder.class.getName() + ".countByC_G_N_D_S";
 
+	public static final String COUNT_BY_C_F_G_N_D_S =
+		DLFileEntryTypeFinder.class.getName() + ".countByC_F_G_N_D_S";
+
 	public static final String FIND_BY_C_G_N_D_S =
 		DLFileEntryTypeFinder.class.getName() + ".findByC_G_N_D_S";
 
@@ -78,6 +81,28 @@ public class DLFileEntryTypeFinderImpl
 		return doCountByC_G_N_D_S(
 			companyId, groupIds, names, descriptions, andOperator,
 			includeBasicFileEntryType, false);
+	}
+
+	@Override
+	public int filterCountByKeywords(
+		long companyId, long folderId, long[] groupIds, String keywords,
+		boolean includeBasicFileEntryType, boolean inherited) {
+
+		String[] names = null;
+		String[] descriptions = null;
+		boolean andOperator = false;
+
+		if (Validator.isNotNull(keywords)) {
+			names = CustomSQLUtil.keywords(keywords);
+			descriptions = CustomSQLUtil.keywords(keywords, false);
+		}
+		else {
+			andOperator = true;
+		}
+
+		return doCountByC_F_G_N_D_S(
+			companyId, folderId, groupIds, names, descriptions, andOperator,
+			includeBasicFileEntryType, inherited, true);
 	}
 
 	@Override
@@ -221,6 +246,95 @@ public class DLFileEntryTypeFinderImpl
 			}
 
 			qPos.add(companyId);
+			qPos.add(groupIds);
+			qPos.add(names, 2);
+			qPos.add(descriptions, 2);
+
+			int countValue = 0;
+
+			Iterator<Long> itr = q.iterate();
+
+			while (itr.hasNext()) {
+				Long count = itr.next();
+
+				if (count != null) {
+					countValue += count.intValue();
+				}
+			}
+
+			return countValue;
+		}
+		catch (Exception e) {
+			throw new SystemException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	protected int doCountByC_F_G_N_D_S(
+		long companyId, long folderId, long[] groupIds, String[] names,
+		String[] descriptions, boolean andOperator,
+		boolean includeBasicFileEntryType, boolean inherited,
+		boolean inlineSQLHelper) {
+
+		names = CustomSQLUtil.keywords(names);
+		descriptions = CustomSQLUtil.keywords(descriptions, false);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			String sql = CustomSQLUtil.get(COUNT_BY_C_F_G_N_D_S);
+
+			if (inherited) {
+				sql = StringUtil.replace(
+					sql, _INNER_JOIN_SQL, StringPool.BLANK);
+
+				sql = StringUtil.replace(sql, _WHERE_SQL, StringPool.BLANK);
+			}
+
+			if (inlineSQLHelper) {
+				sql = InlineSQLHelperUtil.replacePermissionCheck(
+					sql, DLFileEntryType.class.getName(),
+					"DLFileEntryType.fileEntryTypeId", groupIds);
+			}
+
+			sql = StringUtil.replace(
+				sql, "[$BASIC_DOCUMENT$]",
+				getBasicDocumentCount(includeBasicFileEntryType));
+			sql = StringUtil.replace(
+				sql, "[$GROUP_ID$]", getGroupIds(groupIds.length));
+			sql = CustomSQLUtil.replaceKeywords(
+				sql, "LOWER(DLFileEntryType.name)", StringPool.LIKE, false,
+				names);
+			sql = CustomSQLUtil.replaceKeywords(
+				sql, "DLFileEntryType.description", StringPool.LIKE, true,
+				descriptions);
+			sql = CustomSQLUtil.replaceAndOperator(sql, andOperator);
+
+			if (includeBasicFileEntryType) {
+				sql = sql.concat(StringPool.CLOSE_PARENTHESIS);
+			}
+
+			SQLQuery q = session.createSynchronizedSQLQuery(sql);
+
+			q.addScalar(COUNT_COLUMN_NAME, Type.LONG);
+
+			QueryPos qPos = QueryPos.getInstance(q);
+
+			if (includeBasicFileEntryType) {
+				qPos.add(names, 2);
+				qPos.add(descriptions, 2);
+			}
+
+			qPos.add(companyId);
+
+			if (!inherited) {
+				qPos.add(folderId);
+			}
+
 			qPos.add(groupIds);
 			qPos.add(names, 2);
 			qPos.add(descriptions, 2);

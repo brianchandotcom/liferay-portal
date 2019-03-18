@@ -22,14 +22,12 @@ import com.liferay.document.library.kernel.service.DLFileEntryTypeServiceUtil;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItemList;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.search.DisplayTerms;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -130,15 +128,18 @@ public class DLViewMoreMenuItemsDisplayContext {
 				PortalUtil.getCurrentAndAncestorSiteGroupIds(
 					themeDisplay.getScopeGroupId()),
 				searchTerms.getKeywords(), includeBasicFileEntryType,
-				_inherited, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+				_inherited, searchContainer.getStart(),
+				searchContainer.getEnd());
 
-		searchContainer.setTotal(dlFileEntryTypes.size());
+		searchContainer.setResults(dlFileEntryTypes);
 
-		List<DLFileEntryType> results = ListUtil.subList(
-			dlFileEntryTypes, searchContainer.getStart(),
-			searchContainer.getEnd());
-
-		searchContainer.setResults(results);
+		searchContainer.setTotal(
+			DLFileEntryTypeServiceUtil.searchCount(
+				themeDisplay.getCompanyId(), folderId,
+				PortalUtil.getCurrentAndAncestorSiteGroupIds(
+					themeDisplay.getScopeGroupId()),
+				searchTerms.getKeywords(), includeBasicFileEntryType,
+				_inherited));
 
 		_searchContainer = searchContainer;
 

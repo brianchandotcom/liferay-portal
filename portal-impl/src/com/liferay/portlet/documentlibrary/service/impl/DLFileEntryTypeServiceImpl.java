@@ -150,6 +150,16 @@ public class DLFileEntryTypeServiceImpl extends DLFileEntryTypeServiceBaseImpl {
 
 	@Override
 	public int searchCount(
+		long companyId, long folderId, long[] groupIds, String keywords,
+		boolean includeBasicFileEntryType, boolean inherited) {
+
+		return dlFileEntryTypeFinder.filterCountByKeywords(
+			companyId, folderId, groupIds, keywords, includeBasicFileEntryType,
+			inherited);
+	}
+
+	@Override
+	public int searchCount(
 		long companyId, long[] groupIds, String keywords,
 		boolean includeBasicFileEntryType) {
 

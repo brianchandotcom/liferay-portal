@@ -17,7 +17,6 @@ package com.liferay.sharing.service.impl;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistry;
@@ -157,15 +156,11 @@ public class SharingEntryLocalServiceImpl
 			sharingEntryId);
 
 		sharingEntry.setUuid(serviceContext.getUuid());
-
-		Group group = _groupLocalService.getGroup(groupId);
-
-		sharingEntry.setCompanyId(group.getCompanyId());
-
 		sharingEntry.setGroupId(groupId);
 
 		User user = _userLocalService.getUser(userId);
 
+		sharingEntry.setCompanyId(user.getCompanyId());
 		sharingEntry.setUserId(user.getUserId());
 		sharingEntry.setUserName(user.getFullName());
 

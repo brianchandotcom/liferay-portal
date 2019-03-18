@@ -190,12 +190,12 @@ public class DLFileEntryChangesRegisterCTEntityTest {
 
 		Assert.assertEquals(
 			"Incorrect resource primary key", fileEntry.getFileEntryId(),
-			ctEntry.getResourcePrimKey());
+			ctEntry.getModelResourcePrimKey());
 
 		Assert.assertEquals(
 			"Incorrect classPK",
 			fileEntry.getFileVersion(version).getFileVersionId(),
-			ctEntry.getClassPK());
+			ctEntry.getModelClassPK());
 	}
 
 	private void _deleteCTCollections() throws PortalException {

@@ -55,13 +55,13 @@ public interface SegmentsEntryProvider {
 		throws PortalException;
 
 	/**
-	 * Returns ids of the active {@link SegmentsEntry} objects of a group
-	 * related with the entity
+	 * Returns IDs of the active {@link SegmentsEntry} objects of a group that
+	 * are related with the entity.
 	 *
 	 * @param  groupId the primary key of the group
 	 * @param  className the class name of the entity
 	 * @param  classPK the primary key of the entity
-	 * @return the ids the of active {@link SegmentsEntry} objects related to
+	 * @return the IDs the of active {@link SegmentsEntry} objects related to
 	 *         the entity
 	 * @throws PortalException
 	 * @review
@@ -71,14 +71,14 @@ public interface SegmentsEntryProvider {
 		throws PortalException;
 
 	/**
-	 * Returns ids of the active {@link SegmentsEntry} objects of a group
+	 * Returns IDs of the active {@link SegmentsEntry} objects of a group that
 	 * related with the entity under the given context.
 	 *
 	 * @param  groupId the primary key of the group
 	 * @param  className the class name of the entity
 	 * @param  classPK the primary key of the entity
 	 * @param  context the context
-	 * @return the ids the of active {@link SegmentsEntry} objects related to
+	 * @return the IDs the of active {@link SegmentsEntry} objects related to
 	 *         the entity
 	 * @throws PortalException
 	 * @review

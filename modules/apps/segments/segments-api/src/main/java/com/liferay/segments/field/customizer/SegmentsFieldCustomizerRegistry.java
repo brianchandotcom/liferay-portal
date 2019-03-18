@@ -19,8 +19,8 @@ import aQute.bnd.annotation.ProviderType;
 import java.util.Optional;
 
 /**
- * Provides methods for retrieving segment field customizers defined by
- * {@link SegmentsFieldCustomizer} implementations.
+ * Provides methods for retrieving segment field customizers defined by {@link
+ * SegmentsFieldCustomizer} implementations.
  *
  * @author Eduardo García
  * @review

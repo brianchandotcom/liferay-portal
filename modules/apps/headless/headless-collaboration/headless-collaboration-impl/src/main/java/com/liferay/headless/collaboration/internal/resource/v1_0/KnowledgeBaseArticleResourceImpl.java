@@ -253,6 +253,17 @@ public class KnowledgeBaseArticleResourceImpl
 				parentKnowledgeBaseFolderId = kbArticle.getKbFolderId();
 				title = kbArticle.getTitle();
 
+				setHasKnowledgeBaseArticles(
+					() -> {
+						int kbArticlesCount =
+							_kbArticleService.getKBArticlesCount(
+								kbArticle.getGroupId(),
+								kbArticle.getResourcePrimKey(),
+								WorkflowConstants.STATUS_APPROVED);
+
+						return kbArticlesCount > 0;
+					});
+
 				setParentKnowledgeBaseFolder(
 					() -> {
 						if (kbArticle.getKbFolderId() <= 0) {

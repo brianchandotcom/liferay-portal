@@ -65,7 +65,7 @@ export const FLOATING_TOOLBAR_PANELS = {
 	},
 
 	imageProperties: {
-		icon: 'format',
+		icon: 'pencil',
 		panelId: 'image_properties',
 		title: Liferay.Language.get('image-properties')
 	},
@@ -89,7 +89,7 @@ export const FLOATING_TOOLBAR_PANELS = {
 	},
 
 	textProperties: {
-		icon: 'format',
+		icon: 'pencil',
 		panelId: 'text_properties',
 		title: Liferay.Language.get('text-properties')
 	}

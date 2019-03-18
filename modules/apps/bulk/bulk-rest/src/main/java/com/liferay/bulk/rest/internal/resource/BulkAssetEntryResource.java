@@ -118,7 +118,8 @@ public class BulkAssetEntryResource {
 			return new BulkAssetEntryCommonCategoriesModel(
 				bulkSelection.describe(locale),
 				_groupByAssetVocabulary(groupId, classNameId, commonCategories),
-				_portal.getCurrentAndAncestorSiteGroupIds(groupId));
+				_portal.getCurrentAndAncestorSiteGroupIds(groupId),
+				classNameId);
 		}
 		catch (Exception e) {
 			return new BulkAssetEntryCommonCategoriesModel(e);

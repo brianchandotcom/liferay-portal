@@ -15,6 +15,7 @@
 package com.liferay.bulk.rest.internal.model;
 
 import com.liferay.asset.kernel.model.AssetCategory;
+import com.liferay.asset.kernel.model.AssetCategoryConstants;
 import com.liferay.asset.kernel.model.AssetVocabulary;
 
 import java.util.List;
@@ -37,7 +38,7 @@ public class BulkAssetEntryCommonCategoriesModel {
 	public BulkAssetEntryCommonCategoriesModel(
 		String description,
 		Map<AssetVocabulary, List<AssetCategory>> assetVocabularyMap,
-		long[] groupIds) {
+		long[] groupIds, long classNameId) {
 
 		_description = description;
 		_groupIds = groupIds;
@@ -49,7 +50,8 @@ public class BulkAssetEntryCommonCategoriesModel {
 			entries.stream();
 
 		_vocabularies = stream.map(
-			entry -> _toAssetVocabularyModel(entry.getKey(), entry.getValue())
+			entry -> _toAssetVocabularyModel(
+				entry.getKey(), entry.getValue(), classNameId)
 		).collect(
 			Collectors.toList()
 		);
@@ -128,12 +130,14 @@ public class BulkAssetEntryCommonCategoriesModel {
 
 		public AssetVocabularyModel(
 			AssetVocabulary assetVocabulary,
-			List<AssetCategoryModel> categories) {
+			List<AssetCategoryModel> categories, long classNameId) {
 
 			_categories = categories;
 			_multiValued = assetVocabulary.isMultiValued();
 			_name = assetVocabulary.getName();
 			_vocabularyId = assetVocabulary.getVocabularyId();
+			_required = assetVocabulary.isRequired(
+				classNameId, AssetCategoryConstants.ALL_CLASS_TYPE_PK);
 		}
 
 		public List<AssetCategoryModel> getCategories() {
@@ -152,6 +156,10 @@ public class BulkAssetEntryCommonCategoriesModel {
 			return _multiValued;
 		}
 
+		public boolean isRequired() {
+			return _required;
+		}
+
 		public void setCategories(List<AssetCategoryModel> categories) {
 			_categories = categories;
 		}
@@ -167,6 +175,7 @@ public class BulkAssetEntryCommonCategoriesModel {
 		private List<AssetCategoryModel> _categories;
 		private final boolean _multiValued;
 		private String _name;
+		private final boolean _required;
 		private long _vocabularyId;
 
 	}
@@ -179,7 +188,8 @@ public class BulkAssetEntryCommonCategoriesModel {
 	}
 
 	private AssetVocabularyModel _toAssetVocabularyModel(
-		AssetVocabulary assetVocabulary, List<AssetCategory> assetCategories) {
+		AssetVocabulary assetVocabulary, List<AssetCategory> assetCategories,
+		long classNameId) {
 
 		Stream<AssetCategory> stream = assetCategories.stream();
 
@@ -189,7 +199,8 @@ public class BulkAssetEntryCommonCategoriesModel {
 				this::_toAssetCategoryModel
 			).collect(
 				Collectors.toList()
-			));
+			),
+			classNameId);
 	}
 
 	private String _description;

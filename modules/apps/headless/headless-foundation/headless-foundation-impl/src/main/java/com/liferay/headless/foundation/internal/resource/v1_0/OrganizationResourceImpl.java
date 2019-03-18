@@ -185,7 +185,7 @@ public class OrganizationResourceImpl extends BaseOrganizationResourceImpl {
 
 						return organizationsCount > 0;
 					});
-				setLogo(
+				setImage(
 					() -> {
 						if (organization.getLogoId() <= 0) {
 							return null;

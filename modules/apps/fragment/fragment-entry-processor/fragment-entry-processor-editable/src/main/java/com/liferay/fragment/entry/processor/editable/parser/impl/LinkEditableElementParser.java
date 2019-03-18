@@ -50,15 +50,18 @@ public class LinkEditableElementParser implements EditableElementParser {
 
 		Element replaceableElement = elements.get(0);
 
-		String cssClass = replaceableElement.attr("class");
+		if (replaceableElement.hasClass("btn") &&
+			replaceableElement.hasClass("btn-primary")) {
 
-		if (Validator.isNotNull(cssClass)) {
-			if (cssClass.contains("btn btn-primary")) {
-				jsonObject.put("buttonType", "primary");
-			}
-			else if (cssClass.contains("btn btn-secondary")) {
-				jsonObject.put("buttonType", "secondary");
-			}
+			jsonObject.put("buttonType", "primary");
+		}
+		else if (replaceableElement.hasClass("btn") &&
+				 replaceableElement.hasClass("btn-secondary")) {
+
+			jsonObject.put("buttonType", "secondary");
+		}
+		else {
+			jsonObject.put("buttonType", "link");
 		}
 
 		String href = replaceableElement.attr("href");

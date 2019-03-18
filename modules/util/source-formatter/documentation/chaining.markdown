@@ -25,10 +25,13 @@ String lowerCaseName = name.toLowerCase();
 Chaining on variables is allowed as long as the variable type is one of the
 following types:
 
-`*Builder`, `Column`, `CompletableFuture`, `ContactsEngineClient`, `Dataset`,
-`Description`, `DoubleStream`, `FormsEventDatasetFilter`, `*Function`,
-`HttpSecurity`, `IntSTream`, `LongStream`, `Optional`, `Response`, `Stream` or
-`Try`
+`*Builder`, `Column`, `CompletableFuture`, `*Consumer`, `ContactsEngineClient`,
+`Dataset`, `Description`, `DoubleStream`, `ExecuteActionRequest`,
+`FormsEventDatasetFilter`, `Filter`, `FormsEventDatasetFilter`, `*Function`,
+`HttpSecurity`, `InOrder`, `IntSTream`, `JSONObject`, `JsonPath`, `LongStream`,
+`*Mapper`, `Optional`, `PowerMockitoStubber`, `RequestSpecification`,
+`Response`, `Stream`, `Try`, `UpdateFieldPropertyRequest`, `ValidatableResponse`
+or `WebTarget`
 
 #### Example
 
@@ -50,8 +53,11 @@ usersStream.filter(
 
 Chaining on classes directly is allowed for the following classes:
 
-`*Builder`, `Awaitility`, `EasyMock`, `Mockito`, `Optional`, `Response`,
-`RestAssured`, `Stream` or `Try`
+`ActionSemantics`, `*Builder`, `Assertions`, `Awaitility`, `*Consumer`,
+`DoubleStream`, `EasyMock`, `Either`, `Filter`,
+`FormNavigatorEntryConfigurationRetriever`, `GenericUtil`, `IntStream`,
+`JSONUtil`, `List`, `LongStream`, `MemberMatcher`, `Mockito`, `Optional`,
+`PowerMockito`, `Response`, `RestAssured`, `Stream` or `Try`
 
 #### Examples
 

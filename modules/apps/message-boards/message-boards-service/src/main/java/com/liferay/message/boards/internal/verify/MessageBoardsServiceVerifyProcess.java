@@ -16,10 +16,8 @@ package com.liferay.message.boards.internal.verify;
 
 import com.liferay.message.boards.internal.verify.model.MBDiscussionVerifiableModel;
 import com.liferay.message.boards.internal.verify.model.MBThreadFlagVerifiableModel;
-import com.liferay.message.boards.internal.verify.model.MBThreadVerifiableModel;
 import com.liferay.portal.kernel.model.Release;
 import com.liferay.portal.kernel.util.LoggingTimer;
-import com.liferay.portal.verify.VerifyAuditedModel;
 import com.liferay.portal.verify.VerifyGroupedModel;
 import com.liferay.portal.verify.VerifyProcess;
 
@@ -39,7 +37,6 @@ public class MessageBoardsServiceVerifyProcess extends VerifyProcess {
 
 	@Override
 	protected void doVerify() throws Exception {
-		verifyAuditedModels();
 		verifyGroupedModels();
 	}
 
@@ -50,15 +47,6 @@ public class MessageBoardsServiceVerifyProcess extends VerifyProcess {
 	protected void setRelease(Release release) {
 	}
 
-	protected void verifyAuditedModels() throws Exception {
-		try (LoggingTimer loggingTimer = new LoggingTimer()) {
-			_verifyAuditedModel.verify(
-				new MBDiscussionVerifiableModel(),
-				new MBThreadVerifiableModel(),
-				new MBThreadFlagVerifiableModel());
-		}
-	}
-
 	protected void verifyGroupedModels() throws Exception {
 		try (LoggingTimer loggingTimer = new LoggingTimer()) {
 			_verifyGroupedModel.verify(
@@ -67,8 +55,6 @@ public class MessageBoardsServiceVerifyProcess extends VerifyProcess {
 		}
 	}
 
-	private final VerifyAuditedModel _verifyAuditedModel =
-		new VerifyAuditedModel();
 	private final VerifyGroupedModel _verifyGroupedModel =
 		new VerifyGroupedModel();
 

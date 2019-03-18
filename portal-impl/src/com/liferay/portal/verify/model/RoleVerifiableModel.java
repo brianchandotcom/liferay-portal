@@ -15,19 +15,12 @@
 package com.liferay.portal.verify.model;
 
 import com.liferay.portal.kernel.model.Role;
-import com.liferay.portal.kernel.verify.model.VerifiableAuditedModel;
 import com.liferay.portal.kernel.verify.model.VerifiableResourcedModel;
 
 /**
  * @author Miguel Pastor
  */
-public class RoleVerifiableModel
-	implements VerifiableAuditedModel, VerifiableResourcedModel {
-
-	@Override
-	public String getJoinByTableName() {
-		return null;
-	}
+public class RoleVerifiableModel implements VerifiableResourcedModel {
 
 	@Override
 	public String getModelName() {
@@ -40,16 +33,6 @@ public class RoleVerifiableModel
 	}
 
 	@Override
-	public String getRelatedModelName() {
-		return null;
-	}
-
-	@Override
-	public String getRelatedPKColumnName() {
-		return null;
-	}
-
-	@Override
 	public String getTableName() {
 		return "Role_";
 	}
@@ -57,16 +40,6 @@ public class RoleVerifiableModel
 	@Override
 	public String getUserIdColumnName() {
 		return "userId";
-	}
-
-	@Override
-	public boolean isAnonymousUserAllowed() {
-		return false;
-	}
-
-	@Override
-	public boolean isUpdateDates() {
-		return true;
 	}
 
 }

@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Property;
 import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.repository.capabilities.RelatedModelCapability;
@@ -28,6 +29,7 @@ import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.search.BaseIndexer;
 import com.liferay.portal.kernel.search.BaseRelatedEntryIndexer;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
+import com.liferay.portal.kernel.search.BooleanQuery;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.IndexWriterHelper;
@@ -44,6 +46,8 @@ import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermi
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.trash.TrashHelper;
 import com.liferay.wiki.engine.WikiEngineRenderer;
@@ -83,6 +87,7 @@ public class WikiPageIndexer
 			Field.ASSET_TAG_NAMES, Field.COMPANY_ID, Field.CONTENT,
 			Field.ENTRY_CLASS_NAME, Field.ENTRY_CLASS_PK, Field.GROUP_ID,
 			Field.MODIFIED_DATE, Field.SCOPE_GROUP_ID, Field.TITLE, Field.UID);
+		setDefaultSelectedLocalizedFieldNames(Field.CONTENT, Field.TITLE);
 		setFilterSearch(true);
 		setPermissionAware(true);
 	}
@@ -187,6 +192,17 @@ public class WikiPageIndexer
 	}
 
 	@Override
+	public void postProcessSearchQuery(
+			BooleanQuery searchQuery, BooleanFilter fullQueryBooleanFilter,
+			SearchContext searchContext)
+		throws Exception {
+
+		addSearchLocalizedTerm(
+			searchQuery, searchContext, Field.CONTENT, false);
+		addSearchLocalizedTerm(searchQuery, searchContext, Field.TITLE, false);
+	}
+
+	@Override
 	public void updateFullQuery(SearchContext searchContext) {
 	}
 
@@ -199,8 +215,10 @@ public class WikiPageIndexer
 	protected Document doGetDocument(WikiPage wikiPage) throws Exception {
 		Document document = getBaseModelDocument(CLASS_NAME, wikiPage);
 
+		String content = null;
+
 		try {
-			String content = HtmlUtil.extractText(
+			content = HtmlUtil.extractText(
 				_wikiEngineRenderer.convert(wikiPage, null, null, null));
 
 			document.addText(Field.CONTENT, content);
@@ -222,6 +240,19 @@ public class WikiPageIndexer
 
 		document.addText(Field.TITLE, title);
 
+		for (Locale locale :
+				LanguageUtil.getAvailableLocales(wikiPage.getGroupId())) {
+
+			String languageId = LocaleUtil.toLanguageId(locale);
+
+			document.addText(
+				LocalizationUtil.getLocalizedName(Field.CONTENT, languageId),
+				content);
+			document.addText(
+				LocalizationUtil.getLocalizedName(Field.TITLE, languageId),
+				title);
+		}
+
 		return document;
 	}
 
@@ -230,7 +261,14 @@ public class WikiPageIndexer
 		Document document, Locale locale, String snippet,
 		PortletRequest portletRequest, PortletResponse portletResponse) {
 
-		Summary summary = createSummary(document, Field.TITLE, Field.CONTENT);
+		String languageId = LocaleUtil.toLanguageId(locale);
+
+		String content = LocalizationUtil.getLocalizedName(
+			Field.CONTENT, languageId);
+		String title = LocalizationUtil.getLocalizedName(
+			Field.TITLE, languageId);
+
+		Summary summary = createSummary(document, title, content);
 
 		summary.setMaxContentLength(200);
 

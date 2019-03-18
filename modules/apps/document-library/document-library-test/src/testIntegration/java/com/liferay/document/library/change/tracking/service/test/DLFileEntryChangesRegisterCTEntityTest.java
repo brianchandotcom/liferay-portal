@@ -27,6 +27,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
@@ -192,9 +193,10 @@ public class DLFileEntryChangesRegisterCTEntityTest {
 			"Incorrect resource primary key", fileEntry.getFileEntryId(),
 			ctEntry.getModelResourcePrimKey());
 
+		FileVersion fileVersion = fileEntry.getFileVersion(version);
+
 		Assert.assertEquals(
-			"Incorrect classPK",
-			fileEntry.getFileVersion(version).getFileVersionId(),
+			"Incorrect classPK", fileVersion.getFileVersionId(),
 			ctEntry.getModelClassPK());
 	}
 

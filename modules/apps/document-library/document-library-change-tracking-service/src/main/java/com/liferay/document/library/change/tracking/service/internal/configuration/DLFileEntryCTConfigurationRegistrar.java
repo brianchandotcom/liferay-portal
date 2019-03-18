@@ -30,12 +30,13 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+
+import java.util.List;
+
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ReferenceScope;
-
-import java.util.List;
 
 /**
  * @author Luiz Marins
@@ -60,10 +61,8 @@ public class DLFileEntryCTConfigurationRegistrar {
 				DLFileEntry::getFileEntryId,
 				this::_versionEntityIdFromResourceEntityFunction
 			).setVersionEntitiesFromResourceEntityFunction(
-				dlFileEntry ->
-					_dlFileVersionLocalService.getFileVersions(
-						dlFileEntry.getFileEntryId(),
-						WorkflowConstants.STATUS_ANY)
+				dlFileEntry -> _dlFileVersionLocalService.getFileVersions(
+					dlFileEntry.getFileEntryId(), WorkflowConstants.STATUS_ANY)
 			).setVersionEntityByVersionEntityIdFunction(
 				_dlFileVersionLocalService::fetchDLFileVersion
 			).setVersionEntityDetails(

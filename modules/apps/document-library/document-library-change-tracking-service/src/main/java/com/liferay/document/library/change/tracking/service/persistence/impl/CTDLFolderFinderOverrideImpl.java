@@ -85,7 +85,6 @@ public class CTDLFolderFinderOverrideImpl
 			queryDefinition, qPos, groupId, folderId, mimeTypes);
 
 		long userId = queryDefinition.getOwnerUserId();
-		Group group = _groupLocalService.fetchGroup(groupId);
 
 		Optional<CTCollection> ctCollectionOptional =
 			_ctManager.getActiveCTCollectionOptional(userId);
@@ -94,7 +93,7 @@ public class CTDLFolderFinderOverrideImpl
 			return;
 		}
 
-		CTCollection ctCollection = ctCollectionOptional.get();
+		Group group = _groupLocalService.fetchGroup(groupId);
 
 		Optional<CTCollection> productionCTCollectionOptional =
 			_ctEngineManager.getProductionCTCollectionOptional(
@@ -103,6 +102,8 @@ public class CTDLFolderFinderOverrideImpl
 		if (!productionCTCollectionOptional.isPresent()) {
 			return;
 		}
+
+		CTCollection ctCollection = ctCollectionOptional.get();
 
 		CTCollection productionCollection =
 			productionCTCollectionOptional.get();

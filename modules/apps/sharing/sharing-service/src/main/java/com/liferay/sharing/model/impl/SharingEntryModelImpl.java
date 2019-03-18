@@ -76,12 +76,12 @@ public class SharingEntryModelImpl
 
 	public static final Object[][] TABLE_COLUMNS = {
 		{"uuid_", Types.VARCHAR}, {"sharingEntryId", Types.BIGINT},
-		{"groupId", Types.BIGINT}, {"userId", Types.BIGINT},
-		{"companyId", Types.BIGINT}, {"createDate", Types.TIMESTAMP},
-		{"modifiedDate", Types.TIMESTAMP}, {"toUserId", Types.BIGINT},
-		{"classNameId", Types.BIGINT}, {"classPK", Types.BIGINT},
-		{"shareable", Types.BOOLEAN}, {"actionIds", Types.BIGINT},
-		{"expirationDate", Types.TIMESTAMP}
+		{"groupId", Types.BIGINT}, {"companyId", Types.BIGINT},
+		{"userId", Types.BIGINT}, {"userName", Types.VARCHAR},
+		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
+		{"toUserId", Types.BIGINT}, {"classNameId", Types.BIGINT},
+		{"classPK", Types.BIGINT}, {"shareable", Types.BOOLEAN},
+		{"actionIds", Types.BIGINT}, {"expirationDate", Types.TIMESTAMP}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
@@ -91,8 +91,9 @@ public class SharingEntryModelImpl
 		TABLE_COLUMNS_MAP.put("uuid_", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("sharingEntryId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("groupId", Types.BIGINT);
-		TABLE_COLUMNS_MAP.put("userId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("userId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("userName", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("createDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("modifiedDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("toUserId", Types.BIGINT);
@@ -104,7 +105,7 @@ public class SharingEntryModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table SharingEntry (uuid_ VARCHAR(75) null,sharingEntryId LONG not null primary key,groupId LONG,userId LONG,companyId LONG,createDate DATE null,modifiedDate DATE null,toUserId LONG,classNameId LONG,classPK LONG,shareable BOOLEAN,actionIds LONG,expirationDate DATE null)";
+		"create table SharingEntry (uuid_ VARCHAR(75) null,sharingEntryId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,toUserId LONG,classNameId LONG,classPK LONG,shareable BOOLEAN,actionIds LONG,expirationDate DATE null)";
 
 	public static final String TABLE_SQL_DROP = "drop table SharingEntry";
 
@@ -167,8 +168,9 @@ public class SharingEntryModelImpl
 		model.setUuid(soapModel.getUuid());
 		model.setSharingEntryId(soapModel.getSharingEntryId());
 		model.setGroupId(soapModel.getGroupId());
-		model.setUserId(soapModel.getUserId());
 		model.setCompanyId(soapModel.getCompanyId());
+		model.setUserId(soapModel.getUserId());
+		model.setUserName(soapModel.getUserName());
 		model.setCreateDate(soapModel.getCreateDate());
 		model.setModifiedDate(soapModel.getModifiedDate());
 		model.setToUserId(soapModel.getToUserId());
@@ -317,13 +319,17 @@ public class SharingEntryModelImpl
 		attributeSetterBiConsumers.put(
 			"groupId",
 			(BiConsumer<SharingEntry, Long>)SharingEntry::setGroupId);
-		attributeGetterFunctions.put("userId", SharingEntry::getUserId);
-		attributeSetterBiConsumers.put(
-			"userId", (BiConsumer<SharingEntry, Long>)SharingEntry::setUserId);
 		attributeGetterFunctions.put("companyId", SharingEntry::getCompanyId);
 		attributeSetterBiConsumers.put(
 			"companyId",
 			(BiConsumer<SharingEntry, Long>)SharingEntry::setCompanyId);
+		attributeGetterFunctions.put("userId", SharingEntry::getUserId);
+		attributeSetterBiConsumers.put(
+			"userId", (BiConsumer<SharingEntry, Long>)SharingEntry::setUserId);
+		attributeGetterFunctions.put("userName", SharingEntry::getUserName);
+		attributeSetterBiConsumers.put(
+			"userName",
+			(BiConsumer<SharingEntry, String>)SharingEntry::setUserName);
 		attributeGetterFunctions.put("createDate", SharingEntry::getCreateDate);
 		attributeSetterBiConsumers.put(
 			"createDate",
@@ -428,6 +434,29 @@ public class SharingEntryModelImpl
 
 	@JSON
 	@Override
+	public long getCompanyId() {
+		return _companyId;
+	}
+
+	@Override
+	public void setCompanyId(long companyId) {
+		_columnBitmask |= COMPANYID_COLUMN_BITMASK;
+
+		if (!_setOriginalCompanyId) {
+			_setOriginalCompanyId = true;
+
+			_originalCompanyId = _companyId;
+		}
+
+		_companyId = companyId;
+	}
+
+	public long getOriginalCompanyId() {
+		return _originalCompanyId;
+	}
+
+	@JSON
+	@Override
 	public long getUserId() {
 		return _userId;
 	}
@@ -455,25 +484,18 @@ public class SharingEntryModelImpl
 
 	@JSON
 	@Override
-	public long getCompanyId() {
-		return _companyId;
+	public String getUserName() {
+		if (_userName == null) {
+			return "";
+		}
+		else {
+			return _userName;
+		}
 	}
 
 	@Override
-	public void setCompanyId(long companyId) {
-		_columnBitmask |= COMPANYID_COLUMN_BITMASK;
-
-		if (!_setOriginalCompanyId) {
-			_setOriginalCompanyId = true;
-
-			_originalCompanyId = _companyId;
-		}
-
-		_companyId = companyId;
-	}
-
-	public long getOriginalCompanyId() {
-		return _originalCompanyId;
+	public void setUserName(String userName) {
+		_userName = userName;
 	}
 
 	@JSON
@@ -700,8 +722,9 @@ public class SharingEntryModelImpl
 		sharingEntryImpl.setUuid(getUuid());
 		sharingEntryImpl.setSharingEntryId(getSharingEntryId());
 		sharingEntryImpl.setGroupId(getGroupId());
-		sharingEntryImpl.setUserId(getUserId());
 		sharingEntryImpl.setCompanyId(getCompanyId());
+		sharingEntryImpl.setUserId(getUserId());
+		sharingEntryImpl.setUserName(getUserName());
 		sharingEntryImpl.setCreateDate(getCreateDate());
 		sharingEntryImpl.setModifiedDate(getModifiedDate());
 		sharingEntryImpl.setToUserId(getToUserId());
@@ -822,9 +845,17 @@ public class SharingEntryModelImpl
 
 		sharingEntryCacheModel.groupId = getGroupId();
 
+		sharingEntryCacheModel.companyId = getCompanyId();
+
 		sharingEntryCacheModel.userId = getUserId();
 
-		sharingEntryCacheModel.companyId = getCompanyId();
+		sharingEntryCacheModel.userName = getUserName();
+
+		String userName = sharingEntryCacheModel.userName;
+
+		if ((userName != null) && (userName.length() == 0)) {
+			sharingEntryCacheModel.userName = null;
+		}
 
 		Date createDate = getCreateDate();
 
@@ -941,10 +972,11 @@ public class SharingEntryModelImpl
 	private long _groupId;
 	private long _originalGroupId;
 	private boolean _setOriginalGroupId;
-	private long _userId;
 	private long _companyId;
 	private long _originalCompanyId;
 	private boolean _setOriginalCompanyId;
+	private long _userId;
+	private String _userName;
 	private Date _createDate;
 	private Date _modifiedDate;
 	private boolean _setModifiedDate;

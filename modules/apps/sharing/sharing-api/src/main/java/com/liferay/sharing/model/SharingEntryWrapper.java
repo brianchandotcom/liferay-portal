@@ -49,8 +49,9 @@ public class SharingEntryWrapper
 		attributes.put("uuid", getUuid());
 		attributes.put("sharingEntryId", getSharingEntryId());
 		attributes.put("groupId", getGroupId());
-		attributes.put("userId", getUserId());
 		attributes.put("companyId", getCompanyId());
+		attributes.put("userId", getUserId());
+		attributes.put("userName", getUserName());
 		attributes.put("createDate", getCreateDate());
 		attributes.put("modifiedDate", getModifiedDate());
 		attributes.put("toUserId", getToUserId());
@@ -83,16 +84,22 @@ public class SharingEntryWrapper
 			setGroupId(groupId);
 		}
 
+		Long companyId = (Long)attributes.get("companyId");
+
+		if (companyId != null) {
+			setCompanyId(companyId);
+		}
+
 		Long userId = (Long)attributes.get("userId");
 
 		if (userId != null) {
 			setUserId(userId);
 		}
 
-		Long companyId = (Long)attributes.get("companyId");
+		String userName = (String)attributes.get("userName");
 
-		if (companyId != null) {
-			setCompanyId(companyId);
+		if (userName != null) {
+			setUserName(userName);
 		}
 
 		Date createDate = (Date)attributes.get("createDate");
@@ -295,6 +302,16 @@ public class SharingEntryWrapper
 	}
 
 	/**
+	 * Returns the user name of this sharing entry.
+	 *
+	 * @return the user name of this sharing entry
+	 */
+	@Override
+	public String getUserName() {
+		return model.getUserName();
+	}
+
+	/**
 	 * Returns the user uuid of this sharing entry.
 	 *
 	 * @return the user uuid of this sharing entry
@@ -488,6 +505,16 @@ public class SharingEntryWrapper
 	@Override
 	public void setUserId(long userId) {
 		model.setUserId(userId);
+	}
+
+	/**
+	 * Sets the user name of this sharing entry.
+	 *
+	 * @param userName the user name of this sharing entry
+	 */
+	@Override
+	public void setUserName(String userName) {
+		model.setUserName(userName);
 	}
 
 	/**

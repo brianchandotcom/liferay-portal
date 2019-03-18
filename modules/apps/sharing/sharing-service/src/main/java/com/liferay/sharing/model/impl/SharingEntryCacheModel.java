@@ -65,7 +65,7 @@ public class SharingEntryCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(27);
+		StringBundler sb = new StringBundler(29);
 
 		sb.append("{uuid=");
 		sb.append(uuid);
@@ -73,10 +73,12 @@ public class SharingEntryCacheModel
 		sb.append(sharingEntryId);
 		sb.append(", groupId=");
 		sb.append(groupId);
-		sb.append(", userId=");
-		sb.append(userId);
 		sb.append(", companyId=");
 		sb.append(companyId);
+		sb.append(", userId=");
+		sb.append(userId);
+		sb.append(", userName=");
+		sb.append(userName);
 		sb.append(", createDate=");
 		sb.append(createDate);
 		sb.append(", modifiedDate=");
@@ -111,8 +113,15 @@ public class SharingEntryCacheModel
 
 		sharingEntryImpl.setSharingEntryId(sharingEntryId);
 		sharingEntryImpl.setGroupId(groupId);
-		sharingEntryImpl.setUserId(userId);
 		sharingEntryImpl.setCompanyId(companyId);
+		sharingEntryImpl.setUserId(userId);
+
+		if (userName == null) {
+			sharingEntryImpl.setUserName("");
+		}
+		else {
+			sharingEntryImpl.setUserName(userName);
+		}
 
 		if (createDate == Long.MIN_VALUE) {
 			sharingEntryImpl.setCreateDate(null);
@@ -154,9 +163,10 @@ public class SharingEntryCacheModel
 
 		groupId = objectInput.readLong();
 
-		userId = objectInput.readLong();
-
 		companyId = objectInput.readLong();
+
+		userId = objectInput.readLong();
+		userName = objectInput.readUTF();
 		createDate = objectInput.readLong();
 		modifiedDate = objectInput.readLong();
 
@@ -185,9 +195,17 @@ public class SharingEntryCacheModel
 
 		objectOutput.writeLong(groupId);
 
+		objectOutput.writeLong(companyId);
+
 		objectOutput.writeLong(userId);
 
-		objectOutput.writeLong(companyId);
+		if (userName == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(userName);
+		}
+
 		objectOutput.writeLong(createDate);
 		objectOutput.writeLong(modifiedDate);
 
@@ -206,8 +224,9 @@ public class SharingEntryCacheModel
 	public String uuid;
 	public long sharingEntryId;
 	public long groupId;
-	public long userId;
 	public long companyId;
+	public long userId;
+	public String userName;
 	public long createDate;
 	public long modifiedDate;
 	public long toUserId;

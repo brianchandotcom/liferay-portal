@@ -19,8 +19,9 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.portal.kernel.bean.AutoEscape;
 import com.liferay.portal.kernel.model.AttachedModel;
 import com.liferay.portal.kernel.model.BaseModel;
+import com.liferay.portal.kernel.model.GroupedModel;
 import com.liferay.portal.kernel.model.ShardedModel;
-import com.liferay.portal.kernel.model.StagedModel;
+import com.liferay.portal.kernel.model.StagedAuditedModel;
 
 import java.util.Date;
 
@@ -37,7 +38,8 @@ import java.util.Date;
  */
 @ProviderType
 public interface SharingEntryModel
-	extends AttachedModel, BaseModel<SharingEntry>, ShardedModel, StagedModel {
+	extends AttachedModel, BaseModel<SharingEntry>, GroupedModel, ShardedModel,
+			StagedAuditedModel {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -95,6 +97,7 @@ public interface SharingEntryModel
 	 *
 	 * @return the group ID of this sharing entry
 	 */
+	@Override
 	public long getGroupId();
 
 	/**
@@ -102,35 +105,8 @@ public interface SharingEntryModel
 	 *
 	 * @param groupId the group ID of this sharing entry
 	 */
+	@Override
 	public void setGroupId(long groupId);
-
-	/**
-	 * Returns the user ID of this sharing entry.
-	 *
-	 * @return the user ID of this sharing entry
-	 */
-	public long getUserId();
-
-	/**
-	 * Sets the user ID of this sharing entry.
-	 *
-	 * @param userId the user ID of this sharing entry
-	 */
-	public void setUserId(long userId);
-
-	/**
-	 * Returns the user uuid of this sharing entry.
-	 *
-	 * @return the user uuid of this sharing entry
-	 */
-	public String getUserUuid();
-
-	/**
-	 * Sets the user uuid of this sharing entry.
-	 *
-	 * @param userUuid the user uuid of this sharing entry
-	 */
-	public void setUserUuid(String userUuid);
 
 	/**
 	 * Returns the company ID of this sharing entry.
@@ -147,6 +123,55 @@ public interface SharingEntryModel
 	 */
 	@Override
 	public void setCompanyId(long companyId);
+
+	/**
+	 * Returns the user ID of this sharing entry.
+	 *
+	 * @return the user ID of this sharing entry
+	 */
+	@Override
+	public long getUserId();
+
+	/**
+	 * Sets the user ID of this sharing entry.
+	 *
+	 * @param userId the user ID of this sharing entry
+	 */
+	@Override
+	public void setUserId(long userId);
+
+	/**
+	 * Returns the user uuid of this sharing entry.
+	 *
+	 * @return the user uuid of this sharing entry
+	 */
+	@Override
+	public String getUserUuid();
+
+	/**
+	 * Sets the user uuid of this sharing entry.
+	 *
+	 * @param userUuid the user uuid of this sharing entry
+	 */
+	@Override
+	public void setUserUuid(String userUuid);
+
+	/**
+	 * Returns the user name of this sharing entry.
+	 *
+	 * @return the user name of this sharing entry
+	 */
+	@AutoEscape
+	@Override
+	public String getUserName();
+
+	/**
+	 * Sets the user name of this sharing entry.
+	 *
+	 * @param userName the user name of this sharing entry
+	 */
+	@Override
+	public void setUserName(String userName);
 
 	/**
 	 * Returns the create date of this sharing entry.

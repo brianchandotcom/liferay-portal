@@ -128,9 +128,11 @@ public class SharingEntryPersistenceTest {
 
 		newSharingEntry.setGroupId(RandomTestUtil.nextLong());
 
+		newSharingEntry.setCompanyId(RandomTestUtil.nextLong());
+
 		newSharingEntry.setUserId(RandomTestUtil.nextLong());
 
-		newSharingEntry.setCompanyId(RandomTestUtil.nextLong());
+		newSharingEntry.setUserName(RandomTestUtil.randomString());
 
 		newSharingEntry.setCreateDate(RandomTestUtil.nextDate());
 
@@ -161,10 +163,12 @@ public class SharingEntryPersistenceTest {
 		Assert.assertEquals(
 			existingSharingEntry.getGroupId(), newSharingEntry.getGroupId());
 		Assert.assertEquals(
-			existingSharingEntry.getUserId(), newSharingEntry.getUserId());
-		Assert.assertEquals(
 			existingSharingEntry.getCompanyId(),
 			newSharingEntry.getCompanyId());
+		Assert.assertEquals(
+			existingSharingEntry.getUserId(), newSharingEntry.getUserId());
+		Assert.assertEquals(
+			existingSharingEntry.getUserName(), newSharingEntry.getUserName());
 		Assert.assertEquals(
 			Time.getShortTimestamp(existingSharingEntry.getCreateDate()),
 			Time.getShortTimestamp(newSharingEntry.getCreateDate()));
@@ -287,10 +291,10 @@ public class SharingEntryPersistenceTest {
 	protected OrderByComparator<SharingEntry> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create(
 			"SharingEntry", "uuid", true, "sharingEntryId", true, "groupId",
-			true, "userId", true, "companyId", true, "createDate", true,
-			"modifiedDate", true, "toUserId", true, "classNameId", true,
-			"classPK", true, "shareable", true, "actionIds", true,
-			"expirationDate", true);
+			true, "companyId", true, "userId", true, "userName", true,
+			"createDate", true, "modifiedDate", true, "toUserId", true,
+			"classNameId", true, "classPK", true, "shareable", true,
+			"actionIds", true, "expirationDate", true);
 	}
 
 	@Test
@@ -549,9 +553,11 @@ public class SharingEntryPersistenceTest {
 
 		sharingEntry.setGroupId(RandomTestUtil.nextLong());
 
+		sharingEntry.setCompanyId(RandomTestUtil.nextLong());
+
 		sharingEntry.setUserId(RandomTestUtil.nextLong());
 
-		sharingEntry.setCompanyId(RandomTestUtil.nextLong());
+		sharingEntry.setUserName(RandomTestUtil.randomString());
 
 		sharingEntry.setCreateDate(RandomTestUtil.nextDate());
 

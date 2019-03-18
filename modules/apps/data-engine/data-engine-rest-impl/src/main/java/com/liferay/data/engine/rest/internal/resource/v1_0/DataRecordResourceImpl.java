@@ -15,14 +15,19 @@
 package com.liferay.data.engine.rest.internal.resource.v1_0;
 
 import com.liferay.data.engine.rest.dto.v1_0.DataRecord;
-import com.liferay.data.engine.rest.dto.v1_0.DataRecordValue;
+import com.liferay.data.engine.rest.internal.storage.DataStorage;
+import com.liferay.data.engine.rest.resource.v1_0.DataDefinitionResource;
+import com.liferay.data.engine.rest.resource.v1_0.DataRecordCollectionResource;
 import com.liferay.data.engine.rest.resource.v1_0.DataRecordResource;
 import com.liferay.dynamic.data.lists.model.DDLRecord;
 import com.liferay.dynamic.data.lists.model.DDLRecordSet;
 import com.liferay.dynamic.data.lists.model.DDLRecordSetVersion;
 import com.liferay.dynamic.data.lists.service.DDLRecordLocalService;
+import com.liferay.dynamic.data.lists.service.DDLRecordService;
 import com.liferay.dynamic.data.lists.service.DDLRecordSetLocalService;
+import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.DDMStructureVersion;
+import com.liferay.dynamic.data.mapping.service.DDMContentLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMStorageLinkLocalService;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -30,6 +35,7 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ServiceScope;
@@ -43,8 +49,16 @@ import org.osgi.service.component.annotations.ServiceScope;
 )
 public class DataRecordResourceImpl extends BaseDataRecordResourceImpl {
 
+	@Activate
+	public void activate() {
+		_dataStorage = new DataStorage(
+			_dataRecordCollectionResource, _dataDefinitionResource,
+			_ddmContentLocalService);
+	}
+
 	@Override
 	public boolean deleteDataRecord(Long dataRecordId) throws Exception {
+		_dataStorage.delete(dataRecordId);
 		_ddlRecordLocalService.deleteDDLRecord(dataRecordId);
 
 		return true;
@@ -82,17 +96,19 @@ public class DataRecordResourceImpl extends BaseDataRecordResourceImpl {
 		return _toDataRecord(
 			_ddlRecordLocalService.addRecord(
 				PrincipalThreadLocal.getUserId(), ddlRecordSet.getGroupId(),
-				_store(), dataRecord.getDataRecordCollectionId(),
-				new ServiceContext()));
+				_store(ddlRecordSet.getGroupId(), dataRecord),
+				dataRecord.getDataRecordCollectionId(), new ServiceContext()));
 	}
 
 	@Override
 	public DataRecord putDataRecord(Long dataRecordId, DataRecord dataRecord)
 		throws Exception {
 
-		long ddmStorageId = _store();
+		DDLRecord ddlRecord = _ddlRecordService.getRecord(dataRecordId);
 
-		DDLRecord ddlRecord = _ddlRecordLocalService.updateRecord(
+		long ddmStorageId = _store(ddlRecord.getGroupId(), dataRecord);
+
+		_ddlRecordLocalService.updateRecord(
 			PrincipalThreadLocal.getUserId(), dataRecordId, ddmStorageId,
 			new ServiceContext());
 
@@ -111,36 +127,51 @@ public class DataRecordResourceImpl extends BaseDataRecordResourceImpl {
 		return dataRecord;
 	}
 
-	private long _store() {
+	private long _store(long contentSpaceId, DataRecord dataRecord)
+		throws Exception {
 
-		// TODO
-
-		return 0;
+		return _dataStorage.save(contentSpaceId, dataRecord);
 	}
 
 	private DataRecord _toDataRecord(DDLRecord ddlRecord) throws Exception {
 		DDLRecordSet ddlRecordSet = ddlRecord.getRecordSet();
 
-		// TODO
+		DDMStructure ddmStructure = ddlRecordSet.getDDMStructure();
 
 		return new DataRecord() {
 			{
 				dataRecordCollectionId = ddlRecordSet.getRecordSetId();
-				dataRecordValues = new DataRecordValue[0];
+				dataRecordValues = _dataStorage.get(
+					ddmStructure.getStructureId(), ddlRecord.getDDMStorageId());
 				id = ddlRecord.getRecordId();
 			}
 		};
 	}
 
 	@Reference
+	private DataDefinitionResource _dataDefinitionResource;
+
+	@Reference
+	private DataRecordCollectionResource _dataRecordCollectionResource;
+
+	private DataStorage _dataStorage;
+
+	@Reference
 	private DDLRecordLocalService _ddlRecordLocalService;
+
+	@Reference
+	private DDLRecordService _ddlRecordService;
 
 	@Reference
 	private DDLRecordSetLocalService _ddlRecordSetLocalService;
 
 	@Reference
+	private DDMContentLocalService _ddmContentLocalService;
+
+	@Reference
 	private DDMStorageLinkLocalService _ddmStorageLinkLocalService;
 
+	@Reference
 	private Portal _portal;
 
 }

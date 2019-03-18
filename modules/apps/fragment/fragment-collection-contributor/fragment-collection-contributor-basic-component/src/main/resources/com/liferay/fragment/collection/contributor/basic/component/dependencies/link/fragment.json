@@ -1,0 +1,9 @@
+{
+	"cssPath": "index.css",
+	"fragmentEntryKey": "link",
+	"htmlPath": "index.html",
+	"jsPath": "index.js",
+	"name": "Link",
+	"thumbnail": "link.png",
+	"type": "component"
+}

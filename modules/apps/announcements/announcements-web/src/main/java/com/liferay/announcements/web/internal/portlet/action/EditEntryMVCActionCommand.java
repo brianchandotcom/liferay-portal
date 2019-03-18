@@ -100,13 +100,6 @@ public class EditEntryMVCActionCommand extends BaseMVCActionCommand {
 		}
 	}
 
-	@Reference(unbind = "-")
-	protected void setAnnouncementsEntryService(
-		AnnouncementsEntryService announcementsEntryService) {
-
-		_announcementsEntryService = announcementsEntryService;
-	}
-
 	protected void updateEntry(ActionRequest actionRequest) throws Exception {
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
@@ -199,6 +192,7 @@ public class EditEntryMVCActionCommand extends BaseMVCActionCommand {
 		}
 	}
 
+	@Reference
 	private AnnouncementsEntryService _announcementsEntryService;
 
 	@Reference

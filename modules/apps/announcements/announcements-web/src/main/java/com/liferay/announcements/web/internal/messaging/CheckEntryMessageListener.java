@@ -97,30 +97,18 @@ public class CheckEntryMessageListener
 		_announcementsEntryLocalService.checkEntries(startDate, endDate);
 	}
 
-	@Reference(unbind = "-")
-	protected void setAnnouncementsEntryLocalService(
-		AnnouncementsEntryLocalService announcementsEntryLocalService) {
-
-		_announcementsEntryLocalService = announcementsEntryLocalService;
-	}
-
-	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED, unbind = "-")
-	protected void setModuleServiceLifecycle(
-		ModuleServiceLifecycle moduleServiceLifecycle) {
-	}
-
-	@Reference(unbind = "-")
-	protected void setSchedulerEngineHelper(
-		SchedulerEngineHelper schedulerEngineHelper) {
-
-		_schedulerEngineHelper = schedulerEngineHelper;
-	}
-
 	private static final long _ANNOUNCEMENTS_ENTRY_CHECK_INTERVAL =
 		PropsValues.ANNOUNCEMENTS_ENTRY_CHECK_INTERVAL * Time.MINUTE;
 
+	@Reference
 	private AnnouncementsEntryLocalService _announcementsEntryLocalService;
+
+	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED)
+	private ModuleServiceLifecycle _moduleServiceLifecycle;
+
 	private Date _previousEndDate;
+
+	@Reference
 	private SchedulerEngineHelper _schedulerEngineHelper;
 
 	@Reference

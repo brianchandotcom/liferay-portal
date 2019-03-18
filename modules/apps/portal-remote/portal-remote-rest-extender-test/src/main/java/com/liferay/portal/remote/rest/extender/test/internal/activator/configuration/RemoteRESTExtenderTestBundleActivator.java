@@ -44,7 +44,7 @@ import org.osgi.util.tracker.ServiceTracker;
 /**
  * @author Carlos Sierra Andrés
  */
-public class RemoteRestExtenderTestBundleActivator implements BundleActivator {
+public class RemoteRESTExtenderTestBundleActivator implements BundleActivator {
 
 	@Override
 	public void start(BundleContext bundleContext) throws Exception {

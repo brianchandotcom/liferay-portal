@@ -156,7 +156,7 @@ definition {
 
 	@priority = "4"
 	test NavigateToSearchResultsViaURL {
-		property portal.acceptance = "false";
+		property portal.acceptance = "true";
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",

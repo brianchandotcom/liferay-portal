@@ -347,6 +347,21 @@ public class JSONUtil {
 		return values;
 	}
 
+	public static Object[] toObjectArray(JSONArray jsonArray){
+
+		if (jsonArray == null) {
+			return new Object[0];
+		}
+
+		Object[] values = new Object[jsonArray.length()];
+
+		for (int i = 0; i < jsonArray.length(); i++) {
+			values[i] = jsonArray.get(i);
+		}
+
+		return values;
+	}
+
 	public static String[] toStringArray(JSONArray jsonArray) {
 		if (jsonArray == null) {
 			return new String[0];

@@ -1793,8 +1793,9 @@ public class JenkinsResultsParserUtil {
 			throw new RuntimeException("Unable to regenerate id_rsa file", ioe);
 		}
 
-		_sshIdRsaFile.setExecutable(false, false);
 		_sshIdRsaFile.setReadable(false, false);
+
+		_sshIdRsaFile.setExecutable(false, false);
 		_sshIdRsaFile.setReadable(true, true);
 		_sshIdRsaFile.setWritable(false, false);
 	}

@@ -212,6 +212,101 @@ definition {
 		);
 	}
 
+	test OAuth2TesterSmokeTest {
+		property custom.properties = "virtual.hosts.default.site.name=Guest";
+		property prepare.oauth2.global.scopes = "true";
+		var clientId = "abc123";
+		var clientSecret = "abc123";
+		var portalURL = PropsUtil.get("portal.url");
+
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "System Settings"
+		);
+
+		SystemSettings.gotoConfiguration(
+			configurationCategory = "OAuth 2",
+			configurationName = "Bundle PrefixHandlerFactory",
+			configurationScope = "System Scope"
+		);
+
+		SystemSettings.gotoConfigurationEntry(
+			configurationEntry = "Default"
+		);
+
+		SystemSettings.deleteConfiguration();
+
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "OAuth 2 Administration"
+		);
+
+		OAuth2.addApplication(
+			applicationName = "OAuth Application",
+			callbackURI = '''http://martamedio.com/oauth2-tester/?url=${portalURL}&client_id=${clientId}''',
+			clientProfile = "Web Application"
+		);
+
+		OAuth2.inputApplicationValues(
+			clientId = "${clientId}",
+			clientSecret = "${clientSecret}"
+		);
+
+		Navigator.gotoBack();
+
+		OAuth2.editScopes(
+			applicationName = "OAuth Application",
+			resourceCheckList = "everything.read.userprofile",
+			resourcePanels = "Portal Services"
+		);
+
+		OAuth2.viewApplication(
+			applicationName = "OAuth Application",
+			callbackURI = '''http://martamedio.com/oauth2-tester/?url=${portalURL}&client_id=${clientId}''',
+			checkboxCheckList = "Authorization Code,Client Credentials,Refresh Token,Resource Owner Password Credentials",
+			clientId = "${clientId}",
+			clientProfile = "Web Application",
+			clientSecret = "${clientSecret}"
+		);
+
+		Navigator.openSpecificURL(
+			url = "http://martamedio.com/oauth2-tester/"
+		);
+
+		Type(
+			locator1 = "OAuth2#ADMIN_INPUT_FORM_CLIENT_ID",
+			value1 = "${clientId}"
+		);
+
+		Button.click(
+			button = "Authorize My Application"
+		);
+
+		Button.click(
+			button = "Authorize"
+		);
+
+		Type(
+			locator1 = "OAuth2#ADMIN_INPUT_FORM_CLIENT_SECRET",
+			value1 = "${clientSecret}"
+		);
+
+		Button.click(
+			button = "Obtain OAuth2 Access"
+		);
+
+		Button.click(
+			button = "Launch Request"
+		);
+
+		AssertTextEquals.assertPartialText(
+			locator1 = "OAuth2#REQUEST_RESULTS", 
+			value1 = "test@liferay.com"
+		);
+	}
+
 	test ViewAndRevokeGrantedAuthorizations {
 		property app.server.types = "jboss,resin,tcserver,tomcat,weblogic,websphere,wildfly";
 		property database.types = "db2,hypersonic,mariadb,mysql,oracle,postgresql,sqlserver,sybase";

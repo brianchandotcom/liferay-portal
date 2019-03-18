@@ -181,6 +181,14 @@ public class ContentPageEditorDisplayContext {
 		soyContext.put(
 			"fragmentEntryLinks", _getSoyContextFragmentEntryLinks());
 
+		ResourceURL getAssetFieldValueURL = _renderResponse.createResourceURL();
+
+		getAssetFieldValueURL.setResourceID(
+			"/content_layout/get_asset_field_value");
+
+		soyContext.put(
+			"getAssetFieldValueURL", getAssetFieldValueURL.toString());
+
 		ResourceURL getAssetMappingFieldsURL =
 			_renderResponse.createResourceURL();
 

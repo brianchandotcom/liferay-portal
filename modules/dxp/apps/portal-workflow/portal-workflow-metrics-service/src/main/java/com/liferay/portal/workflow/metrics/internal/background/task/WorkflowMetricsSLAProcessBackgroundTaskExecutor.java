@@ -77,11 +77,11 @@ public class WorkflowMetricsSLAProcessBackgroundTaskExecutor
 				fetchWorkflowMetricsSLADefinition(
 					workflowMetricsSLADefinitionId);
 
-		Stream<Long> instanceIdStream = getInstanceIdsStream(
+		Stream<Long> stream = _getInstanceIdsStream(
 			workflowMetricsSLADefinition.getCompanyId(),
 			workflowMetricsSLADefinition.getProcessId());
 
-		instanceIdStream.forEach(
+		stream.forEach(
 			instanceId -> {
 				WorkflowMetricsSLAProcessResult
 					workflowMetricsSLAProcessResult =
@@ -104,13 +104,12 @@ public class WorkflowMetricsSLAProcessBackgroundTaskExecutor
 		return null;
 	}
 
-	protected Stream<Long> getInstanceIdsStream(
+	private Stream<Long> _getInstanceIdsStream(
 		long companyId, long processId) {
 
 		SearchSearchRequest searchSearchRequest = new SearchSearchRequest();
 
 		searchSearchRequest.setIndexNames("workflow-metrics-instances");
-
 		searchSearchRequest.setQuery(
 			new BooleanQueryImpl() {
 				{

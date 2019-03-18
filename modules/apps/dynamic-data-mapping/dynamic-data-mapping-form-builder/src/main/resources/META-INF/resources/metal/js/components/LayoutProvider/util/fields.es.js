@@ -94,7 +94,7 @@ export const getField = (pages, fieldName) => {
 	visitor.mapFields(
 		currentField => {
 			if (currentField.fieldName === fieldName) {
-				currentField = field;
+				field = currentField;
 			}
 		}
 	);

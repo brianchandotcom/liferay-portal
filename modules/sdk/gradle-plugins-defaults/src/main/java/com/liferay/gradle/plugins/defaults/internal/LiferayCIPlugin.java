@@ -203,17 +203,21 @@ public class LiferayCIPlugin implements Plugin<Project> {
 			executeNpmTask.setRegistry(registry);
 		}
 
-		executeNpmTask.dependsOn(updateHotfixVersionTask);
-
 		Project project = executeNpmTask.getProject();
 
 		TaskContainer taskContainer = project.getTasks();
 
-		if (taskContainer.findByName(JavaPlugin.JAR_TASK_NAME) != null) {
-			Jar jar = (Jar)GradleUtil.getTask(
-				executeNpmTask.getProject(), JavaPlugin.JAR_TASK_NAME);
+		Jar jar = (Jar)taskContainer.findByName(JavaPlugin.JAR_TASK_NAME);
 
-			jar.finalizedBy(restoreHotfixVersionTask);
+		if (jar != null) {
+			String hotfixVersion = CIUtil.getBNDHotfixVersion(
+				jar.getProject(), _BND_HOTFIX_VERSION_FILE_NAME);
+
+			if (hotfixVersion != null) {
+				executeNpmTask.dependsOn(updateHotfixVersionTask);
+
+				jar.finalizedBy(restoreHotfixVersionTask);
+			}
 		}
 	}
 

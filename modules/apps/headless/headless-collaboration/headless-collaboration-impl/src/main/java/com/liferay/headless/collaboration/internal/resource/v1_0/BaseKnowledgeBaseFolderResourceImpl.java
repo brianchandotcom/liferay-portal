@@ -70,7 +70,7 @@ public abstract class BaseKnowledgeBaseFolderResourceImpl
 			@Parameter(in = ParameterIn.QUERY, name = "pageSize")
 		}
 	)
-	@Path("/content-space/{content-space-id}/knowledge-base-folders")
+	@Path("/content-spaces/{content-space-id}/knowledge-base-folders")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "KnowledgeBaseFolder")})
 	public Page<KnowledgeBaseFolder> getContentSpaceKnowledgeBaseFoldersPage(
@@ -84,7 +84,7 @@ public abstract class BaseKnowledgeBaseFolderResourceImpl
 	@Override
 	@Consumes("application/json")
 	@POST
-	@Path("/content-space/{content-space-id}/knowledge-base-folders")
+	@Path("/content-spaces/{content-space-id}/knowledge-base-folders")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "KnowledgeBaseFolder")})
 	public KnowledgeBaseFolder postContentSpaceKnowledgeBaseFolder(

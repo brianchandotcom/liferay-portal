@@ -70,7 +70,7 @@ public abstract class BaseKnowledgeBaseArticleResourceImpl
 			@Parameter(in = ParameterIn.QUERY, name = "pageSize")
 		}
 	)
-	@Path("/content-space/{content-space-id}/knowledge-base-articles")
+	@Path("/content-spaces/{content-space-id}/knowledge-base-articles")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "KnowledgeBaseArticle")})
 	public Page<KnowledgeBaseArticle> getContentSpaceKnowledgeBaseArticlesPage(
@@ -84,7 +84,7 @@ public abstract class BaseKnowledgeBaseArticleResourceImpl
 	@Override
 	@Consumes("application/json")
 	@POST
-	@Path("/content-space/{content-space-id}/knowledge-base-articles")
+	@Path("/content-spaces/{content-space-id}/knowledge-base-articles")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "KnowledgeBaseArticle")})
 	public KnowledgeBaseArticle postContentSpaceKnowledgeBaseArticle(
@@ -176,6 +176,13 @@ public abstract class BaseKnowledgeBaseArticleResourceImpl
 		if (Validator.isNotNull(knowledgeBaseArticle.getHasAttachments())) {
 			existingKnowledgeBaseArticle.setHasAttachments(
 				knowledgeBaseArticle.getHasAttachments());
+		}
+
+		if (Validator.isNotNull(
+				knowledgeBaseArticle.getHasKnowledgeBaseArticles())) {
+
+			existingKnowledgeBaseArticle.setHasKnowledgeBaseArticles(
+				knowledgeBaseArticle.getHasKnowledgeBaseArticles());
 		}
 
 		if (Validator.isNotNull(knowledgeBaseArticle.getKeywords())) {

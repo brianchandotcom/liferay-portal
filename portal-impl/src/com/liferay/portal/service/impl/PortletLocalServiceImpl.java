@@ -393,6 +393,10 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 
 			_portletApps.remove(servletContextName);
 
+			ServletContext servletContext = portletApp.getServletContext();
+
+			_propertiesConfigurations.remove(servletContext.getClassLoader());
+
 			ExtraPortletAppConfigRegistry.unregisterExtraPortletAppConfig(
 				servletContextName);
 		}

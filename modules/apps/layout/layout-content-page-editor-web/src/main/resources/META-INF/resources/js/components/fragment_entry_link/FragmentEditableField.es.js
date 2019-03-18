@@ -33,6 +33,24 @@ const SAVE_CHANGES_DELAY = 1500;
 class FragmentEditableField extends Component {
 
 	/**
+	 * Checks if the given editable is mapped
+	 * @param {object} editableValues
+	 * @private
+	 * @return {boolean}
+	 * @review
+	 */
+	static _isMapped(editableValues) {
+		return Boolean(
+			editableValues.mappedField ||
+			(
+				editableValues.classNameId &&
+				editableValues.classPK &&
+				editableValues.fieldId
+			)
+		);
+	}
+
+	/**
 	 * @inheritDoc
 	 * @review
 	 */
@@ -82,13 +100,8 @@ class FragmentEditableField extends Component {
 		const translatedValue = segmentedValue[this.languageId] ||
 			segmentedValue[this.defaultLanguageId];
 
-		const mapped = Boolean(
-			this.editableValues.mappedField ||
-			(
-				this.editableValues.classNameId &&
-				this.editableValues.classPK &&
-				this.editableValues.fieldId
-			)
+		const mapped = FragmentEditableField._isMapped(
+			this.editableValues
 		);
 
 		const value = mapped ?

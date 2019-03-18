@@ -93,11 +93,10 @@ public class WorkflowMetricsSLAProcessMessageListener
 				Map<String, Serializable> taskContextMap = new HashMap<>();
 
 				taskContextMap.put(
+					BackgroundTaskContextMapConstants.DELETE_ON_SUCCESS, true);
+				taskContextMap.put(
 					"workflowMetricsSLADefinitionId",
 					workflowMetricsSLADefinition.getPrimaryKey());
-
-				taskContextMap.put(
-					BackgroundTaskContextMapConstants.DELETE_ON_SUCCESS, true);
 
 				_backgroundTaskLocalService.addBackgroundTask(
 					workflowMetricsSLADefinition.getUserId(),

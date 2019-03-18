@@ -142,19 +142,6 @@ public class KaleoDesignerWorkflowPortletTab extends BaseWorkflowPortletTab {
 
 		String name = ParamUtil.getString(renderRequest, "name");
 
-		if (_kaleoDesignerDisplayContext == null) {
-			_kaleoDesignerDisplayContext = new KaleoDesignerDisplayContext(
-				renderRequest, _kaleoDefinitionVersionLocalService,
-				ResourceBundleLoaderUtil.
-					getResourceBundleLoaderByBundleSymbolicName(
-						"com.liferay.portal.workflow.kaleo.designer.web"),
-				_userLocalService);
-		}
-
-		renderRequest.setAttribute(
-			KaleoDesignerWebKeys.KALEO_DESIGNER_DISPLAY_CONTEXT,
-			_kaleoDesignerDisplayContext);
-
 		if (Validator.isNull(name)) {
 			return;
 		}

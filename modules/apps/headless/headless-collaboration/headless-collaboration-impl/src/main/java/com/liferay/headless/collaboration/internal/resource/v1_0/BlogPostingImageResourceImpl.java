@@ -20,6 +20,7 @@ import com.liferay.document.library.kernel.model.DLVersionNumberIncrease;
 import com.liferay.document.library.kernel.service.DLAppService;
 import com.liferay.document.library.util.DLURLHelper;
 import com.liferay.headless.collaboration.dto.v1_0.BlogPostingImage;
+import com.liferay.headless.collaboration.internal.odata.entity.v1_0.BlogPostingImageEntityModel;
 import com.liferay.headless.collaboration.resource.v1_0.BlogPostingImageResource;
 import com.liferay.headless.common.spi.service.context.ServiceContextUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
@@ -30,15 +31,18 @@ import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.vulcan.multipart.BinaryFile;
 import com.liferay.portal.vulcan.multipart.MultipartBody;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
+import com.liferay.portal.vulcan.resource.EntityModelResource;
 import com.liferay.portal.vulcan.util.SearchUtil;
 
 import java.util.Optional;
 
 import javax.ws.rs.BadRequestException;
+import javax.ws.rs.core.MultivaluedMap;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -52,7 +56,7 @@ import org.osgi.service.component.annotations.ServiceScope;
 	scope = ServiceScope.PROTOTYPE, service = BlogPostingImageResource.class
 )
 public class BlogPostingImageResourceImpl
-	extends BaseBlogPostingImageResourceImpl {
+	extends BaseBlogPostingImageResourceImpl implements EntityModelResource {
 
 	@Override
 	public boolean deleteBlogPostingImage(Long blogPostingImageId)
@@ -96,6 +100,11 @@ public class BlogPostingImageResourceImpl
 				_dlAppService.getFileEntry(
 					GetterUtil.getLong(document.get(Field.ENTRY_CLASS_PK)))),
 			sorts);
+	}
+
+	@Override
+	public EntityModel getEntityModel(MultivaluedMap multivaluedMap) {
+		return _entityModel;
 	}
 
 	@Override
@@ -220,6 +229,9 @@ public class BlogPostingImageResourceImpl
 			}
 		};
 	}
+
+	private static final EntityModel _entityModel =
+		new BlogPostingImageEntityModel();
 
 	@Reference
 	private BlogsEntryService _blogsEntryService;

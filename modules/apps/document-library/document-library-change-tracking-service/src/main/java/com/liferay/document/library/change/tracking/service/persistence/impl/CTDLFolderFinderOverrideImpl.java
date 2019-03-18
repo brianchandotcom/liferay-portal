@@ -15,6 +15,7 @@
 package com.liferay.document.library.change.tracking.service.persistence.impl;
 
 import com.liferay.change.tracking.CTEngineManager;
+import com.liferay.change.tracking.CTManager;
 import com.liferay.change.tracking.model.CTCollection;
 import com.liferay.document.library.change.tracking.service.persistence.CTDLFolderFinderOverride;
 import com.liferay.portal.dao.orm.custom.sql.CustomSQL;
@@ -87,13 +88,21 @@ public class CTDLFolderFinderOverrideImpl
 		Group group = _groupLocalService.fetchGroup(groupId);
 
 		Optional<CTCollection> ctCollectionOptional =
-			_ctEngineManager.getActiveCTCollectionOptional(userId);
+			_ctManager.getActiveCTCollectionOptional(userId);
+
+		if (!ctCollectionOptional.isPresent()) {
+			return;
+		}
 
 		CTCollection ctCollection = ctCollectionOptional.get();
 
 		Optional<CTCollection> productionCTCollectionOptional =
 			_ctEngineManager.getProductionCTCollectionOptional(
 				group.getCompanyId());
+
+		if (!productionCTCollectionOptional.isPresent()) {
+			return;
+		}
 
 		CTCollection productionCollection =
 			productionCTCollectionOptional.get();
@@ -105,6 +114,9 @@ public class CTDLFolderFinderOverrideImpl
 
 	@ServiceReference(type = CTEngineManager.class)
 	private CTEngineManager _ctEngineManager;
+
+	@ServiceReference(type = CTManager.class)
+	private CTManager _ctManager;
 
 	@ServiceReference(type = CustomSQL.class)
 	private CustomSQL _customSQL;

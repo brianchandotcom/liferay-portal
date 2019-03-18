@@ -1628,8 +1628,7 @@ public abstract class BaseBuild implements Build {
 			StopwatchRecord parentStopwatchRecord = getParentStopwatchRecord();
 
 			if (parentStopwatchRecord != null) {
-				name.replace(
-					Pattern.quote(parentStopwatchRecord.getName()), "");
+				name = name.replace(parentStopwatchRecord.getName(), "");
 			}
 
 			sb.append(name);

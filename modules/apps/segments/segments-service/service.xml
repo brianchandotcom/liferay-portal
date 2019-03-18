@@ -180,6 +180,7 @@
 		<!-- References -->
 
 		<reference entity="Group" package-path="com.liferay.portal" />
+		<reference entity="Layout" package-path="com.liferay.portal" />
 	</entity>
 	<exceptions>
 		<exception>DefaultSegmentsEntry</exception>

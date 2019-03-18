@@ -554,7 +554,8 @@ public class UIItemsBuilder {
 		}
 
 		_addJavaScriptUIItem(
-			new JavaScriptMenuItem(), menuItems, DLUIItemKeys.MOVE, "move",
+			new JavaScriptMenuItem(), menuItems, DLUIItemKeys.MOVE,
+			LanguageUtil.get(_resourceBundle, "move"),
 			_getMoveEntryOnClickJavascript());
 	}
 

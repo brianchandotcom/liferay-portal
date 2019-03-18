@@ -192,10 +192,9 @@ public class BlogPostingImageResourceImpl
 		throws Exception {
 
 		FileEntry existingFileEntry = _getFileEntry(blogPostingImageId);
-		BinaryFile binaryFile = multipartBody.getBinaryFile("file");
 
 		BinaryFile mergedBinaryFile = Optional.ofNullable(
-			binaryFile
+			multipartBody.getBinaryFile("file")
 		).orElse(
 			new BinaryFile(
 				existingFileEntry.getMimeType(), existingFileEntry.getTitle(),

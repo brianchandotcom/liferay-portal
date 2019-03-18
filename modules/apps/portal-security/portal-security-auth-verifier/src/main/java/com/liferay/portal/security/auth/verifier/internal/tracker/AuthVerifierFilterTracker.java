@@ -59,7 +59,7 @@ import org.osgi.util.tracker.ServiceTrackerCustomizer;
 	immediate = true,
 	property = {
 		"default.registration.property=filter.init.auth.verifier.BasicAuthHeaderAuthVerifier.urls.includes=/*",
-		"default.registration.property=filter.init.auth.verifier.OAuth2RestAuthVerifier.urls.includes=*",
+		"default.registration.property=filter.init.auth.verifier.OAuth2RESTAuthVerifier.urls.includes=*",
 		"default.registration.property=filter.init.auth.verifier.PortalSessionAuthVerifier.urls.includes=/*",
 		"default.registration.property=filter.init.guest.allowed=true",
 		"default.remote.access.filter.service.ranking:Integer=-10",

@@ -109,6 +109,17 @@
 	<td></td>
 	<td></td>
 </tr>
+<!--OAUTH2 TESTER-->
+<tr>
+	<td>REQUEST_RESULTS</td>
+	<td>//div[contains(@id,'result')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
 <!--USER-->
 <tr>
 	<td>USER_CONNECTED_APP_REMOVE_ACCESS_BUTTON</td>

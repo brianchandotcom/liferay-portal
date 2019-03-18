@@ -203,7 +203,7 @@ public class BlogPostingImageResourceImpl
 		FileEntry fileEntry = _dlAppService.getFileEntry(fileEntryId);
 
 		Folder folder = _blogsEntryService.addAttachmentsFolder(
-			fileEntry.getFolderId());
+			fileEntry.getGroupId());
 
 		if (fileEntry.getFolderId() != folder.getFolderId()) {
 			throw new BadRequestException(

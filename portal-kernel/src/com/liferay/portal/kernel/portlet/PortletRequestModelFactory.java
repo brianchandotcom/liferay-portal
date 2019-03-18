@@ -29,6 +29,12 @@ public class PortletRequestModelFactory {
 		_portletResponse = portletResponse;
 	}
 
+	public PortletRequestModelFactory(PortletRequestModel portletRequestModel) {
+		_portletRequestModel = portletRequestModel;
+		_portletRequest = null;
+		_portletResponse = null;
+	}
+
 	public PortletRequestModel getPortletRequestModel() {
 		if (_portletRequestModel == null) {
 			_portletRequestModel = new PortletRequestModel(

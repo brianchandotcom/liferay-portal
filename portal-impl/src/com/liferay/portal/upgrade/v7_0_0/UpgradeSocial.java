@@ -126,7 +126,8 @@ public class UpgradeSocial extends UpgradeProcess {
 
 	protected void updateSocialActivities(long delta) throws Exception {
 		try (PreparedStatement ps = connection.prepareStatement(
-				"update SocialActivity set activitySetId = (activityId + ?)")) {
+				"update SocialActivity set activitySetId = (activityId + ?) " +
+					"where mirrorActivityId = 0")) {
 
 			ps.setLong(1, delta);
 

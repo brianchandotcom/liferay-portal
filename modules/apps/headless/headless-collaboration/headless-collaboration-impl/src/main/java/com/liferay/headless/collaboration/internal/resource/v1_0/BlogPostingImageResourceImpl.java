@@ -155,21 +155,33 @@ public class BlogPostingImageResourceImpl
 		throws Exception {
 
 		Folder folder = _blogsEntryService.addAttachmentsFolder(contentSpaceId);
+
 		BinaryFile binaryFile = multipartBody.getBinaryFile("file");
-		BlogPostingImage blogPostingImage = multipartBody.getValueAsInstance(
-			"blogPostingImage", BlogPostingImage.class);
+
+		if (binaryFile == null) {
+			throw new BadRequestException("No file found in body");
+		}
+
+		Optional<BlogPostingImage> blogPostingImageOptional =
+			multipartBody.getValueAsInstanceOptional(
+				"blogPostingImage", BlogPostingImage.class);
 
 		FileEntry fileEntry = _dlAppService.addFileEntry(
 			contentSpaceId, folder.getFolderId(), binaryFile.getFileName(),
 			binaryFile.getContentType(),
-			Optional.ofNullable(
-				blogPostingImage.getTitle()
+			blogPostingImageOptional.map(
+				BlogPostingImage::getTitle
 			).orElse(
 				binaryFile.getFileName()
 			),
 			null, null, binaryFile.getInputStream(), binaryFile.getSize(),
 			ServiceContextUtil.createServiceContext(
-				contentSpaceId, blogPostingImage.getViewableByAsString()));
+				contentSpaceId,
+				blogPostingImageOptional.map(
+					BlogPostingImage::getViewableByAsString
+				).orElse(
+					BlogPostingImage.ViewableBy.ANYONE.getValue()
+				)));
 
 		return _toBlogPostingImage(fileEntry);
 	}
@@ -181,19 +193,30 @@ public class BlogPostingImageResourceImpl
 
 		FileEntry existingFileEntry = _getFileEntry(blogPostingImageId);
 		BinaryFile binaryFile = multipartBody.getBinaryFile("file");
-		BlogPostingImage blogPostingImage = multipartBody.getValueAsInstance(
-			"blogPostingImage", BlogPostingImage.class);
+
+		BinaryFile mergedBinaryFile = Optional.ofNullable(
+			binaryFile
+		).orElse(
+			new BinaryFile(
+				existingFileEntry.getMimeType(), existingFileEntry.getTitle(),
+				existingFileEntry.getContentStream(),
+				existingFileEntry.getSize())
+		);
+
+		Optional<BlogPostingImage> blogPostingImage =
+			multipartBody.getValueAsInstanceOptional(
+				"blogPostingImage", BlogPostingImage.class);
 
 		FileEntry fileEntry = _dlAppService.updateFileEntry(
-			existingFileEntry.getFileEntryId(), binaryFile.getFileName(),
-			binaryFile.getContentType(),
-			Optional.ofNullable(
-				blogPostingImage.getTitle()
+			existingFileEntry.getFileEntryId(), mergedBinaryFile.getFileName(),
+			mergedBinaryFile.getContentType(),
+			blogPostingImage.map(
+				BlogPostingImage::getTitle
 			).orElse(
-				binaryFile.getFileName()
+				existingFileEntry.getTitle()
 			),
 			null, null, DLVersionNumberIncrease.AUTOMATIC,
-			binaryFile.getInputStream(), binaryFile.getSize(),
+			mergedBinaryFile.getInputStream(), mergedBinaryFile.getSize(),
 			new ServiceContext());
 
 		return _toBlogPostingImage(fileEntry);

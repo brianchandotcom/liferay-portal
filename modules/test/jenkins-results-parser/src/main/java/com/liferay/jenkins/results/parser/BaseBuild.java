@@ -1703,62 +1703,51 @@ public abstract class BaseBuild implements Build {
 		implements Iterable<StopwatchRecord> {
 
 		public void add(StopwatchRecord newStopwatchRecord) {
-			List<String> cleanupStopwatchRecordNames = new ArrayList<>();
-
 			_stopwatchRecordsMap.put(
 				newStopwatchRecord.getName(), newStopwatchRecord);
-
-			for (StopwatchRecord stopwatchRecord :
-					_stopwatchRecordsMap.values()) {
-
-				if (stopwatchRecord.isParentOf(newStopwatchRecord)) {
-					stopwatchRecord.addChildStopwatchRecord(newStopwatchRecord);
-
-					continue;
-				}
-
-				if (newStopwatchRecord.isParentOf(stopwatchRecord)) {
-					cleanupStopwatchRecordNames.add(stopwatchRecord.getName());
-
-					newStopwatchRecord.addChildStopwatchRecord(stopwatchRecord);
-				}
-
-				_stopwatchRecordsMap.put(
-					newStopwatchRecord.getName(), newStopwatchRecord);
-			}
-
-			for (String cleanupStopwatchRecordName :
-					cleanupStopwatchRecordNames) {
-
-				_stopwatchRecordsMap.remove(cleanupStopwatchRecordName);
-			}
 		}
 
 		public StopwatchRecord get(String name) {
 			return _stopwatchRecordsMap.get(name);
 		}
 
-		@Override
-		public Iterator<StopwatchRecord> iterator() {
-			List<StopwatchRecord> list = toList();
+		public List<StopwatchRecord> getStopwatchRecords() {
+			List<StopwatchRecord> allStopwatchRecords = new ArrayList<>(
+				_stopwatchRecordsMap.values());
 
-			return list.iterator();
-		}
+			Collections.sort(allStopwatchRecords);
 
-		public List<StopwatchRecord> toList() {
-			List<StopwatchRecord> list = new ArrayList<>();
+			List<StopwatchRecord> parentStopwatchRecords = new ArrayList<>();
 
-			for (StopwatchRecord stopwatchRecord :
-					_stopwatchRecordsMap.values()) {
+			for (StopwatchRecord stopwatchRecord : allStopwatchRecords) {
+				boolean addedAsChild = false;
 
-				if (stopwatchRecord.getParentStopwatchRecord() == null) {
-					list.add(stopwatchRecord);
+				for (StopwatchRecord parentStopwatchRecord :
+						parentStopwatchRecords) {
+
+					if (parentStopwatchRecord.isParentOf(stopwatchRecord)) {
+						parentStopwatchRecord.addChildStopwatchRecord(
+							stopwatchRecord);
+
+						addedAsChild = true;
+
+						break;
+					}
+				}
+
+				if (!addedAsChild) {
+					parentStopwatchRecords.add(stopwatchRecord);
 				}
 			}
 
-			Collections.sort(list);
+			return parentStopwatchRecords;
+		}
 
-			return list;
+		@Override
+		public Iterator<StopwatchRecord> iterator() {
+			List<StopwatchRecord> list = getStopwatchRecords();
+
+			return list.iterator();
 		}
 
 		private final Map<String, StopwatchRecord> _stopwatchRecordsMap =

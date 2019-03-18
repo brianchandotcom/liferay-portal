@@ -122,6 +122,8 @@ definition {
 
 		GoogleDoc.discardChanges();
 
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
 		AssertTextEquals(
 			locator1 = "DocumentsAndMedia#DESCRIPTIVE_LIST_DOCUMENT_TITLE",
 			value1 = "Untitled"
@@ -174,6 +176,8 @@ definition {
 		);
 
 		GoogleDoc.discardChanges();
+
+		Navigator.gotoPage(pageName = "Documents and Media Page");
 
 		AssertTextEquals(
 			locator1 = "DocumentsAndMedia#DESCRIPTIVE_LIST_DOCUMENT_TITLE",
@@ -228,6 +232,8 @@ definition {
 
 		GoogleDoc.discardChanges();
 
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
 		AssertTextEquals(
 			locator1 = "DocumentsAndMedia#DESCRIPTIVE_LIST_DOCUMENT_TITLE",
 			value1 = "Untitled"
@@ -258,6 +264,8 @@ definition {
 		GoogleDoc.editTitleInGoogleDoc(dmDocumentTitle = "Edited Google Document");
 
 		GoogleDoc.saveAndExit();
+
+		Navigator.gotoPage(pageName = "Documents and Media Page");
 
 		AssertTextEquals(
 			locator1 = "DocumentsAndMedia#DESCRIPTIVE_LIST_DOCUMENT_TITLE",
@@ -290,6 +298,8 @@ definition {
 
 		GoogleDoc.saveAndExit();
 
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
 		AssertTextEquals(
 			locator1 = "DocumentsAndMedia#DESCRIPTIVE_LIST_DOCUMENT_TITLE",
 			value1 = "${dmDocumentTitle}"
@@ -321,6 +331,8 @@ definition {
 
 		GoogleDoc.saveAndExit();
 
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
 		AssertTextEquals(
 			locator1 = "DocumentsAndMedia#DESCRIPTIVE_LIST_DOCUMENT_TITLE",
 			value1 = "Edited Google Sheet"
@@ -351,6 +363,8 @@ definition {
 		GoogleDoc.editTitleInGoogleDoc(dmDocumentTitle = "Edited Google Slide");
 
 		GoogleDoc.saveAndExit();
+
+		Navigator.gotoPage(pageName = "Documents and Media Page");
 
 		AssertTextEquals(
 			locator1 = "DocumentsAndMedia#DESCRIPTIVE_LIST_DOCUMENT_TITLE",

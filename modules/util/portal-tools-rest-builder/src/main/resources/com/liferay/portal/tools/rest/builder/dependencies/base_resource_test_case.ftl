@@ -129,12 +129,7 @@ public abstract class Base${schemaName}ResourceTestCase {
 				@Test
 				public void test${javaMethodSignature.methodName?cap_first}() throws Exception {
 					<#list javaMethodSignature.javaMethodParameters as javaMethodParameter>
-						<#if stringUtil.equals(javaMethodParameter.parameterName, schemaVarName) ||
-							 stringUtil.equals(javaMethodParameter.parameterName, "filter") ||
-							 stringUtil.equals(javaMethodParameter.parameterName, "multipartBody") ||
-							 stringUtil.equals(javaMethodParameter.parameterName, "pagination") ||
-							 stringUtil.equals(javaMethodParameter.parameterName, "sorts")>
-						<#else>
+						<#if !stringUtil.equals(javaMethodParameter.parameterName, schemaVarName) && freeMarkerTool.isPathParameter(javaMethodParameter, javaMethodSignature.operation)>
 							${javaMethodParameter.parameterType} ${javaMethodParameter.parameterName} = test${javaMethodSignature.methodName?cap_first}_get${javaMethodParameter.parameterName?cap_first}();
 						</#if>
 					</#list>
@@ -142,12 +137,7 @@ public abstract class Base${schemaName}ResourceTestCase {
 					${schemaName} ${schemaVarName}1 = test${javaMethodSignature.methodName?cap_first}_add${schemaName}(
 
 					<#list javaMethodSignature.javaMethodParameters as javaMethodParameter>
-						<#if stringUtil.equals(javaMethodParameter.parameterName, schemaVarName) ||
-							 stringUtil.equals(javaMethodParameter.parameterName, "filter") ||
-							 stringUtil.equals(javaMethodParameter.parameterName, "multipartBody") ||
-							 stringUtil.equals(javaMethodParameter.parameterName, "pagination") ||
-							 stringUtil.equals(javaMethodParameter.parameterName, "sorts")>
-						<#else>
+						<#if !stringUtil.equals(javaMethodParameter.parameterName, schemaVarName) && freeMarkerTool.isPathParameter(javaMethodParameter, javaMethodSignature.operation)>
 							${javaMethodParameter.parameterName},
 						</#if>
 					</#list>
@@ -157,12 +147,7 @@ public abstract class Base${schemaName}ResourceTestCase {
 					${schemaName} ${schemaVarName}2 = test${javaMethodSignature.methodName?cap_first}_add${schemaName}(
 
 					<#list javaMethodSignature.javaMethodParameters as javaMethodParameter>
-						<#if stringUtil.equals(javaMethodParameter.parameterName, schemaVarName) ||
-							 stringUtil.equals(javaMethodParameter.parameterName, "filter") ||
-							 stringUtil.equals(javaMethodParameter.parameterName, "multipartBody") ||
-							 stringUtil.equals(javaMethodParameter.parameterName, "pagination") ||
-							 stringUtil.equals(javaMethodParameter.parameterName, "sorts")>
-						<#else>
+						<#if !stringUtil.equals(javaMethodParameter.parameterName, schemaVarName) && freeMarkerTool.isPathParameter(javaMethodParameter, javaMethodSignature.operation)>
 							${javaMethodParameter.parameterName},
 						</#if>
 					</#list>
@@ -199,12 +184,7 @@ public abstract class Base${schemaName}ResourceTestCase {
 						}
 
 						<#list javaMethodSignature.javaMethodParameters as javaMethodParameter>
-							<#if stringUtil.equals(javaMethodParameter.parameterName, schemaVarName) ||
-								 stringUtil.equals(javaMethodParameter.parameterName, "filter") ||
-								 stringUtil.equals(javaMethodParameter.parameterName, "multipartBody") ||
-								 stringUtil.equals(javaMethodParameter.parameterName, "pagination") ||
-								 stringUtil.equals(javaMethodParameter.parameterName, "sorts")>
-							<#else>
+							<#if !stringUtil.equals(javaMethodParameter.parameterName, schemaVarName) && freeMarkerTool.isPathParameter(javaMethodParameter, javaMethodSignature.operation)>
 								${javaMethodParameter.parameterType} ${javaMethodParameter.parameterName} = test${javaMethodSignature.methodName?cap_first}_get${javaMethodParameter.parameterName?cap_first}();
 							</#if>
 						</#list>
@@ -252,12 +232,7 @@ public abstract class Base${schemaName}ResourceTestCase {
 						}
 
 						<#list javaMethodSignature.javaMethodParameters as javaMethodParameter>
-							<#if stringUtil.equals(javaMethodParameter.parameterName, schemaVarName) ||
-								 stringUtil.equals(javaMethodParameter.parameterName, "filter") ||
-								 stringUtil.equals(javaMethodParameter.parameterName, "multipartBody") ||
-								 stringUtil.equals(javaMethodParameter.parameterName, "pagination") ||
-								 stringUtil.equals(javaMethodParameter.parameterName, "sorts")>
-							<#else>
+							<#if !stringUtil.equals(javaMethodParameter.parameterName, schemaVarName) && freeMarkerTool.isPathParameter(javaMethodParameter, javaMethodSignature.operation)>
 								${javaMethodParameter.parameterType} ${javaMethodParameter.parameterName} = test${javaMethodSignature.methodName?cap_first}_get${javaMethodParameter.parameterName?cap_first}();
 							</#if>
 						</#list>
@@ -293,12 +268,7 @@ public abstract class Base${schemaName}ResourceTestCase {
 					@Test
 					public void test${javaMethodSignature.methodName?cap_first}WithPagination() throws Exception {
 						<#list javaMethodSignature.javaMethodParameters as javaMethodParameter>
-							<#if stringUtil.equals(javaMethodParameter.parameterName, schemaVarName) ||
-								 stringUtil.equals(javaMethodParameter.parameterName, "filter") ||
-								 stringUtil.equals(javaMethodParameter.parameterName, "multipartBody") ||
-								 stringUtil.equals(javaMethodParameter.parameterName, "pagination") ||
-								 stringUtil.equals(javaMethodParameter.parameterName, "sorts")>
-							<#else>
+							<#if !stringUtil.equals(javaMethodParameter.parameterName, schemaVarName) && freeMarkerTool.isPathParameter(javaMethodParameter, javaMethodSignature.operation)>
 								${javaMethodParameter.parameterType} ${javaMethodParameter.parameterName} = test${javaMethodSignature.methodName?cap_first}_get${javaMethodParameter.parameterName?cap_first}();
 							</#if>
 						</#list>
@@ -306,12 +276,7 @@ public abstract class Base${schemaName}ResourceTestCase {
 						${schemaName} ${schemaVarName}1 = test${javaMethodSignature.methodName?cap_first}_add${schemaName}(
 
 						<#list javaMethodSignature.javaMethodParameters as javaMethodParameter>
-							<#if stringUtil.equals(javaMethodParameter.parameterName, schemaVarName) ||
-								 stringUtil.equals(javaMethodParameter.parameterName, "filter") ||
-								 stringUtil.equals(javaMethodParameter.parameterName, "multipartBody") ||
-								 stringUtil.equals(javaMethodParameter.parameterName, "pagination") ||
-								 stringUtil.equals(javaMethodParameter.parameterName, "sorts")>
-							<#else>
+							<#if !stringUtil.equals(javaMethodParameter.parameterName, schemaVarName) && freeMarkerTool.isPathParameter(javaMethodParameter, javaMethodSignature.operation)>
 								${javaMethodParameter.parameterName},
 							</#if>
 						</#list>
@@ -321,12 +286,7 @@ public abstract class Base${schemaName}ResourceTestCase {
 						${schemaName} ${schemaVarName}2 = test${javaMethodSignature.methodName?cap_first}_add${schemaName}(
 
 						<#list javaMethodSignature.javaMethodParameters as javaMethodParameter>
-							<#if stringUtil.equals(javaMethodParameter.parameterName, schemaVarName) ||
-								 stringUtil.equals(javaMethodParameter.parameterName, "filter") ||
-								 stringUtil.equals(javaMethodParameter.parameterName, "multipartBody") ||
-								 stringUtil.equals(javaMethodParameter.parameterName, "pagination") ||
-								 stringUtil.equals(javaMethodParameter.parameterName, "sorts")>
-							<#else>
+							<#if !stringUtil.equals(javaMethodParameter.parameterName, schemaVarName) && freeMarkerTool.isPathParameter(javaMethodParameter, javaMethodSignature.operation)>
 								${javaMethodParameter.parameterName},
 							</#if>
 						</#list>
@@ -336,12 +296,7 @@ public abstract class Base${schemaName}ResourceTestCase {
 						${schemaName} ${schemaVarName}3 = test${javaMethodSignature.methodName?cap_first}_add${schemaName}(
 
 						<#list javaMethodSignature.javaMethodParameters as javaMethodParameter>
-							<#if stringUtil.equals(javaMethodParameter.parameterName, schemaVarName) ||
-								 stringUtil.equals(javaMethodParameter.parameterName, "filter") ||
-								 stringUtil.equals(javaMethodParameter.parameterName, "multipartBody") ||
-								 stringUtil.equals(javaMethodParameter.parameterName, "pagination") ||
-								 stringUtil.equals(javaMethodParameter.parameterName, "sorts")>
-							<#else>
+							<#if !stringUtil.equals(javaMethodParameter.parameterName, schemaVarName) && freeMarkerTool.isPathParameter(javaMethodParameter, javaMethodSignature.operation)>
 								${javaMethodParameter.parameterName},
 							</#if>
 						</#list>
@@ -407,12 +362,7 @@ public abstract class Base${schemaName}ResourceTestCase {
 						}
 
 						<#list javaMethodSignature.javaMethodParameters as javaMethodParameter>
-							<#if stringUtil.equals(javaMethodParameter.parameterName, schemaVarName) ||
-								 stringUtil.equals(javaMethodParameter.parameterName, "filter") ||
-								 stringUtil.equals(javaMethodParameter.parameterName, "multipartBody") ||
-								 stringUtil.equals(javaMethodParameter.parameterName, "pagination") ||
-								 stringUtil.equals(javaMethodParameter.parameterName, "sorts")>
-							<#else>
+							<#if !stringUtil.equals(javaMethodParameter.parameterName, schemaVarName) && freeMarkerTool.isPathParameter(javaMethodParameter, javaMethodSignature.operation)>
 								${javaMethodParameter.parameterType} ${javaMethodParameter.parameterName} = test${javaMethodSignature.methodName?cap_first}_get${javaMethodParameter.parameterName?cap_first}();
 							</#if>
 						</#list>
@@ -427,12 +377,7 @@ public abstract class Base${schemaName}ResourceTestCase {
 						${schemaVarName}1 = test${javaMethodSignature.methodName?cap_first}_add${schemaName}(
 
 						<#list javaMethodSignature.javaMethodParameters as javaMethodParameter>
-							<#if stringUtil.equals(javaMethodParameter.parameterName, schemaVarName) ||
-								 stringUtil.equals(javaMethodParameter.parameterName, "filter") ||
-								 stringUtil.equals(javaMethodParameter.parameterName, "multipartBody") ||
-								 stringUtil.equals(javaMethodParameter.parameterName, "pagination") ||
-								 stringUtil.equals(javaMethodParameter.parameterName, "sorts")>
-							<#else>
+							<#if !stringUtil.equals(javaMethodParameter.parameterName, schemaVarName) && freeMarkerTool.isPathParameter(javaMethodParameter, javaMethodSignature.operation)>
 								${javaMethodParameter.parameterName},
 							</#if>
 						</#list>
@@ -444,12 +389,7 @@ public abstract class Base${schemaName}ResourceTestCase {
 						${schemaVarName}2 = test${javaMethodSignature.methodName?cap_first}_add${schemaName}(
 
 						<#list javaMethodSignature.javaMethodParameters as javaMethodParameter>
-							<#if stringUtil.equals(javaMethodParameter.parameterName, schemaVarName) ||
-								 stringUtil.equals(javaMethodParameter.parameterName, "filter") ||
-								 stringUtil.equals(javaMethodParameter.parameterName, "multipartBody") ||
-								 stringUtil.equals(javaMethodParameter.parameterName, "pagination") ||
-								 stringUtil.equals(javaMethodParameter.parameterName, "sorts")>
-							<#else>
+							<#if !stringUtil.equals(javaMethodParameter.parameterName, schemaVarName) && freeMarkerTool.isPathParameter(javaMethodParameter, javaMethodSignature.operation)>
 								${javaMethodParameter.parameterName},
 							</#if>
 						</#list>
@@ -504,12 +444,7 @@ public abstract class Base${schemaName}ResourceTestCase {
 						}
 
 						<#list javaMethodSignature.javaMethodParameters as javaMethodParameter>
-							<#if stringUtil.equals(javaMethodParameter.parameterName, schemaVarName) ||
-								 stringUtil.equals(javaMethodParameter.parameterName, "filter") ||
-								 stringUtil.equals(javaMethodParameter.parameterName, "multipartBody") ||
-								 stringUtil.equals(javaMethodParameter.parameterName, "pagination") ||
-								 stringUtil.equals(javaMethodParameter.parameterName, "sorts")>
-							<#else>
+							<#if !stringUtil.equals(javaMethodParameter.parameterName, schemaVarName) && freeMarkerTool.isPathParameter(javaMethodParameter, javaMethodSignature.operation)>
 								${javaMethodParameter.parameterType} ${javaMethodParameter.parameterName} = test${javaMethodSignature.methodName?cap_first}_get${javaMethodParameter.parameterName?cap_first}();
 							</#if>
 						</#list>
@@ -525,12 +460,7 @@ public abstract class Base${schemaName}ResourceTestCase {
 						${schemaVarName}1 = test${javaMethodSignature.methodName?cap_first}_add${schemaName}(
 
 						<#list javaMethodSignature.javaMethodParameters as javaMethodParameter>
-							<#if stringUtil.equals(javaMethodParameter.parameterName, schemaVarName) ||
-								 stringUtil.equals(javaMethodParameter.parameterName, "filter") ||
-								 stringUtil.equals(javaMethodParameter.parameterName, "multipartBody") ||
-								 stringUtil.equals(javaMethodParameter.parameterName, "pagination") ||
-								 stringUtil.equals(javaMethodParameter.parameterName, "sorts")>
-							<#else>
+							<#if !stringUtil.equals(javaMethodParameter.parameterName, schemaVarName) && freeMarkerTool.isPathParameter(javaMethodParameter, javaMethodSignature.operation)>
 								${javaMethodParameter.parameterName},
 							</#if>
 						</#list>
@@ -540,12 +470,7 @@ public abstract class Base${schemaName}ResourceTestCase {
 						${schemaVarName}2 = test${javaMethodSignature.methodName?cap_first}_add${schemaName}(
 
 						<#list javaMethodSignature.javaMethodParameters as javaMethodParameter>
-							<#if stringUtil.equals(javaMethodParameter.parameterName, schemaVarName) ||
-								 stringUtil.equals(javaMethodParameter.parameterName, "filter") ||
-								 stringUtil.equals(javaMethodParameter.parameterName, "multipartBody") ||
-								 stringUtil.equals(javaMethodParameter.parameterName, "pagination") ||
-								 stringUtil.equals(javaMethodParameter.parameterName, "sorts")>
-							<#else>
+							<#if !stringUtil.equals(javaMethodParameter.parameterName, schemaVarName) && freeMarkerTool.isPathParameter(javaMethodParameter, javaMethodSignature.operation)>
 								${javaMethodParameter.parameterName},
 							</#if>
 						</#list>
@@ -594,12 +519,7 @@ public abstract class Base${schemaName}ResourceTestCase {
 
 				protected ${schemaName} test${javaMethodSignature.methodName?cap_first}_add${schemaName}(
 						<#list javaMethodSignature.javaMethodParameters as javaMethodParameter>
-							<#if stringUtil.equals(javaMethodParameter.parameterName, schemaVarName) ||
-								 stringUtil.equals(javaMethodParameter.parameterName, "filter") ||
-								 stringUtil.equals(javaMethodParameter.parameterName, "multipartBody") ||
-								 stringUtil.equals(javaMethodParameter.parameterName, "pagination") ||
-								 stringUtil.equals(javaMethodParameter.parameterName, "sorts")>
-							<#else>
+							<#if !stringUtil.equals(javaMethodParameter.parameterName, schemaVarName) && freeMarkerTool.isPathParameter(javaMethodParameter, javaMethodSignature.operation)>
 								${javaMethodParameter.parameterType} ${javaMethodParameter.parameterName},
 							</#if>
 						</#list>
@@ -611,12 +531,7 @@ public abstract class Base${schemaName}ResourceTestCase {
 				}
 
 				<#list javaMethodSignature.javaMethodParameters as javaMethodParameter>
-					<#if stringUtil.equals(javaMethodParameter.parameterName, schemaVarName) ||
-						 stringUtil.equals(javaMethodParameter.parameterName, "filter") ||
-						 stringUtil.equals(javaMethodParameter.parameterName, "multipartBody") ||
-						 stringUtil.equals(javaMethodParameter.parameterName, "pagination") ||
-						 stringUtil.equals(javaMethodParameter.parameterName, "sorts")>
-					<#else>
+					<#if !stringUtil.equals(javaMethodParameter.parameterName, schemaVarName) && freeMarkerTool.isPathParameter(javaMethodParameter, javaMethodSignature.operation)>
 						protected ${javaMethodParameter.parameterType} test${javaMethodSignature.methodName?cap_first}_get${javaMethodParameter.parameterName?cap_first}() throws Exception {
 							<#if stringUtil.equals(javaMethodParameter.parameterName, "contentSpaceId")>
 								return testGroup.getGroupId();

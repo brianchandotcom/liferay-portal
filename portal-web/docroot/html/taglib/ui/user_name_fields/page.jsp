@@ -35,7 +35,7 @@
 		'<portlet:namespace />UserNameFields',
 		new UserNameFields.default(
 			{
-				baseURL: '<%= themeDisplay.getURLCurrent() %>',
+				baseURL: '<%= HtmlUtil.escapeJS(themeDisplay.getURLCurrent()) %>',
 				formNode: <portlet:namespace />fm,
 				languageIdSelectNode: <portlet:namespace />languageId,
 				portletNamespace: '<portlet:namespace />',

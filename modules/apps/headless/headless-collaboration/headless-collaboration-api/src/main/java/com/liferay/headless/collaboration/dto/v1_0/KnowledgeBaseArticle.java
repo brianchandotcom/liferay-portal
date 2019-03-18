@@ -125,54 +125,6 @@ public class KnowledgeBaseArticle {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String articleBody;
 
-	public Categories[] getCategories() {
-		return categories;
-	}
-
-	public void setCategories(Categories[] categories) {
-		this.categories = categories;
-	}
-
-	@JsonIgnore
-	public void setCategories(
-		UnsafeSupplier<Categories[], Exception> categoriesUnsafeSupplier) {
-
-		try {
-			categories = categoriesUnsafeSupplier.get();
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Categories[] categories;
-
-	public Long[] getCategoryIds() {
-		return categoryIds;
-	}
-
-	public void setCategoryIds(Long[] categoryIds) {
-		this.categoryIds = categoryIds;
-	}
-
-	@JsonIgnore
-	public void setCategoryIds(
-		UnsafeSupplier<Long[], Exception> categoryIdsUnsafeSupplier) {
-
-		try {
-			categoryIds = categoryIdsUnsafeSupplier.get();
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-	protected Long[] categoryIds;
-
 	public Long getContentSpaceId() {
 		return contentSpaceId;
 	}
@@ -469,6 +421,55 @@ public class KnowledgeBaseArticle {
 	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
 	protected Long parentKnowledgeBaseFolderId;
 
+	public TaxonomyCategories[] getTaxonomyCategories() {
+		return taxonomyCategories;
+	}
+
+	public void setTaxonomyCategories(TaxonomyCategories[] taxonomyCategories) {
+		this.taxonomyCategories = taxonomyCategories;
+	}
+
+	@JsonIgnore
+	public void setTaxonomyCategories(
+		UnsafeSupplier<TaxonomyCategories[], Exception>
+			taxonomyCategoriesUnsafeSupplier) {
+
+		try {
+			taxonomyCategories = taxonomyCategoriesUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected TaxonomyCategories[] taxonomyCategories;
+
+	public Long[] getTaxonomyCategoryIds() {
+		return taxonomyCategoryIds;
+	}
+
+	public void setTaxonomyCategoryIds(Long[] taxonomyCategoryIds) {
+		this.taxonomyCategoryIds = taxonomyCategoryIds;
+	}
+
+	@JsonIgnore
+	public void setTaxonomyCategoryIds(
+		UnsafeSupplier<Long[], Exception> taxonomyCategoryIdsUnsafeSupplier) {
+
+		try {
+			taxonomyCategoryIds = taxonomyCategoryIdsUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+	protected Long[] taxonomyCategoryIds;
+
 	public String getTitle() {
 		return title;
 	}
@@ -541,48 +542,6 @@ public class KnowledgeBaseArticle {
 		sb.append("\"");
 		sb.append(articleBody);
 		sb.append("\"");
-		sb.append(", ");
-
-		sb.append("\"categories\": ");
-
-		if (categories == null) {
-			sb.append("null");
-		}
-		else {
-			sb.append("[");
-
-			for (int i = 0; i < categories.length; i++) {
-				sb.append(categories[i]);
-
-				if ((i + 1) < categories.length) {
-					sb.append(", ");
-				}
-			}
-
-			sb.append("]");
-		}
-
-		sb.append(", ");
-
-		sb.append("\"categoryIds\": ");
-
-		if (categoryIds == null) {
-			sb.append("null");
-		}
-		else {
-			sb.append("[");
-
-			for (int i = 0; i < categoryIds.length; i++) {
-				sb.append(categoryIds[i]);
-
-				if ((i + 1) < categoryIds.length) {
-					sb.append(", ");
-				}
-			}
-
-			sb.append("]");
-		}
-
 		sb.append(", ");
 
 		sb.append("\"contentSpaceId\": ");
@@ -669,6 +628,48 @@ public class KnowledgeBaseArticle {
 		sb.append("\"parentKnowledgeBaseFolderId\": ");
 
 		sb.append(parentKnowledgeBaseFolderId);
+		sb.append(", ");
+
+		sb.append("\"taxonomyCategories\": ");
+
+		if (taxonomyCategories == null) {
+			sb.append("null");
+		}
+		else {
+			sb.append("[");
+
+			for (int i = 0; i < taxonomyCategories.length; i++) {
+				sb.append(taxonomyCategories[i]);
+
+				if ((i + 1) < taxonomyCategories.length) {
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
+		}
+
+		sb.append(", ");
+
+		sb.append("\"taxonomyCategoryIds\": ");
+
+		if (taxonomyCategoryIds == null) {
+			sb.append("null");
+		}
+		else {
+			sb.append("[");
+
+			for (int i = 0; i < taxonomyCategoryIds.length; i++) {
+				sb.append(taxonomyCategoryIds[i]);
+
+				if ((i + 1) < taxonomyCategoryIds.length) {
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
+		}
+
 		sb.append(", ");
 
 		sb.append("\"title\": ");

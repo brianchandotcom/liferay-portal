@@ -113,7 +113,6 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 		KnowledgeBaseArticle knowledgeBaseArticle1 =
 			testGetContentSpaceKnowledgeBaseArticlesPage_addKnowledgeBaseArticle(
 				contentSpaceId, randomKnowledgeBaseArticle());
-
 		KnowledgeBaseArticle knowledgeBaseArticle2 =
 			testGetContentSpaceKnowledgeBaseArticlesPage_addKnowledgeBaseArticle(
 				contentSpaceId, randomKnowledgeBaseArticle());
@@ -140,11 +139,9 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 		KnowledgeBaseArticle knowledgeBaseArticle1 =
 			testGetContentSpaceKnowledgeBaseArticlesPage_addKnowledgeBaseArticle(
 				contentSpaceId, randomKnowledgeBaseArticle());
-
 		KnowledgeBaseArticle knowledgeBaseArticle2 =
 			testGetContentSpaceKnowledgeBaseArticlesPage_addKnowledgeBaseArticle(
 				contentSpaceId, randomKnowledgeBaseArticle());
-
 		KnowledgeBaseArticle knowledgeBaseArticle3 =
 			testGetContentSpaceKnowledgeBaseArticlesPage_addKnowledgeBaseArticle(
 				contentSpaceId, randomKnowledgeBaseArticle());
@@ -623,7 +620,6 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 		KnowledgeBaseArticle knowledgeBaseArticle1 =
 			testGetKnowledgeBaseArticleKnowledgeBaseArticlesPage_addKnowledgeBaseArticle(
 				knowledgeBaseArticleId, randomKnowledgeBaseArticle());
-
 		KnowledgeBaseArticle knowledgeBaseArticle2 =
 			testGetKnowledgeBaseArticleKnowledgeBaseArticlesPage_addKnowledgeBaseArticle(
 				knowledgeBaseArticleId, randomKnowledgeBaseArticle());
@@ -650,11 +646,9 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 		KnowledgeBaseArticle knowledgeBaseArticle1 =
 			testGetKnowledgeBaseArticleKnowledgeBaseArticlesPage_addKnowledgeBaseArticle(
 				knowledgeBaseArticleId, randomKnowledgeBaseArticle());
-
 		KnowledgeBaseArticle knowledgeBaseArticle2 =
 			testGetKnowledgeBaseArticleKnowledgeBaseArticlesPage_addKnowledgeBaseArticle(
 				knowledgeBaseArticleId, randomKnowledgeBaseArticle());
-
 		KnowledgeBaseArticle knowledgeBaseArticle3 =
 			testGetKnowledgeBaseArticleKnowledgeBaseArticlesPage_addKnowledgeBaseArticle(
 				knowledgeBaseArticleId, randomKnowledgeBaseArticle());
@@ -851,7 +845,6 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 		KnowledgeBaseArticle knowledgeBaseArticle1 =
 			testGetKnowledgeBaseFolderKnowledgeBaseArticlesPage_addKnowledgeBaseArticle(
 				knowledgeBaseFolderId, randomKnowledgeBaseArticle());
-
 		KnowledgeBaseArticle knowledgeBaseArticle2 =
 			testGetKnowledgeBaseFolderKnowledgeBaseArticlesPage_addKnowledgeBaseArticle(
 				knowledgeBaseFolderId, randomKnowledgeBaseArticle());
@@ -878,11 +871,9 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 		KnowledgeBaseArticle knowledgeBaseArticle1 =
 			testGetKnowledgeBaseFolderKnowledgeBaseArticlesPage_addKnowledgeBaseArticle(
 				knowledgeBaseFolderId, randomKnowledgeBaseArticle());
-
 		KnowledgeBaseArticle knowledgeBaseArticle2 =
 			testGetKnowledgeBaseFolderKnowledgeBaseArticlesPage_addKnowledgeBaseArticle(
 				knowledgeBaseFolderId, randomKnowledgeBaseArticle());
-
 		KnowledgeBaseArticle knowledgeBaseArticle3 =
 			testGetKnowledgeBaseFolderKnowledgeBaseArticlesPage_addKnowledgeBaseArticle(
 				knowledgeBaseFolderId, randomKnowledgeBaseArticle());
@@ -1224,16 +1215,6 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 			return sb.toString();
 		}
 
-		if (entityFieldName.equals("categories")) {
-			throw new IllegalArgumentException(
-				"Invalid entity field " + entityFieldName);
-		}
-
-		if (entityFieldName.equals("categoryIds")) {
-			throw new IllegalArgumentException(
-				"Invalid entity field " + entityFieldName);
-		}
-
 		if (entityFieldName.equals("contentSpaceId")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
@@ -1301,6 +1282,16 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 		}
 
 		if (entityFieldName.equals("parentKnowledgeBaseFolderId")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
+		if (entityFieldName.equals("taxonomyCategories")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
+		if (entityFieldName.equals("taxonomyCategoryIds")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
 		}
@@ -1403,13 +1394,8 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 		return options;
 	}
 
-	private String _toPath(String template, Object... values) {
-		for (int i = 0; i < values.length; i++) {
-			template = template.replaceFirst(
-				"\\{.*\\}", String.valueOf(values[i]));
-		}
-
-		return template;
+	private String _toPath(String template, Object value) {
+		return template.replaceFirst("\\{.*\\}", String.valueOf(value));
 	}
 
 	private static BeanUtilsBean _beanUtilsBean = new BeanUtilsBean() {

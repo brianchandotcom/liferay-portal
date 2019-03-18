@@ -113,7 +113,6 @@ public abstract class BaseFolderResourceTestCase {
 
 		Folder folder1 = testGetContentSpaceFoldersPage_addFolder(
 			contentSpaceId, randomFolder());
-
 		Folder folder2 = testGetContentSpaceFoldersPage_addFolder(
 			contentSpaceId, randomFolder());
 
@@ -210,10 +209,8 @@ public abstract class BaseFolderResourceTestCase {
 
 		Folder folder1 = testGetContentSpaceFoldersPage_addFolder(
 			contentSpaceId, randomFolder());
-
 		Folder folder2 = testGetContentSpaceFoldersPage_addFolder(
 			contentSpaceId, randomFolder());
-
 		Folder folder3 = testGetContentSpaceFoldersPage_addFolder(
 			contentSpaceId, randomFolder());
 
@@ -317,7 +314,6 @@ public abstract class BaseFolderResourceTestCase {
 
 		folder1 = testGetContentSpaceFoldersPage_addFolder(
 			contentSpaceId, folder1);
-
 		folder2 = testGetContentSpaceFoldersPage_addFolder(
 			contentSpaceId, folder2);
 
@@ -701,7 +697,6 @@ public abstract class BaseFolderResourceTestCase {
 
 		Folder folder1 = testGetFolderFoldersPage_addFolder(
 			folderId, randomFolder());
-
 		Folder folder2 = testGetFolderFoldersPage_addFolder(
 			folderId, randomFolder());
 
@@ -791,10 +786,8 @@ public abstract class BaseFolderResourceTestCase {
 
 		Folder folder1 = testGetFolderFoldersPage_addFolder(
 			folderId, randomFolder());
-
 		Folder folder2 = testGetFolderFoldersPage_addFolder(
 			folderId, randomFolder());
-
 		Folder folder3 = testGetFolderFoldersPage_addFolder(
 			folderId, randomFolder());
 
@@ -889,7 +882,6 @@ public abstract class BaseFolderResourceTestCase {
 		}
 
 		folder1 = testGetFolderFoldersPage_addFolder(folderId, folder1);
-
 		folder2 = testGetFolderFoldersPage_addFolder(folderId, folder2);
 
 		for (EntityField entityField : entityFields) {
@@ -1295,13 +1287,8 @@ public abstract class BaseFolderResourceTestCase {
 		return options;
 	}
 
-	private String _toPath(String template, Object... values) {
-		for (int i = 0; i < values.length; i++) {
-			template = template.replaceFirst(
-				"\\{.*\\}", String.valueOf(values[i]));
-		}
-
-		return template;
+	private String _toPath(String template, Object value) {
+		return template.replaceFirst("\\{.*\\}", String.valueOf(value));
 	}
 
 	private static BeanUtilsBean _beanUtilsBean = new BeanUtilsBean() {

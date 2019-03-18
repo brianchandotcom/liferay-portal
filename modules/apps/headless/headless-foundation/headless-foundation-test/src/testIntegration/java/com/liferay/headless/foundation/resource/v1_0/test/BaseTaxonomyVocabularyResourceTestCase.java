@@ -21,8 +21,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
 import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
 
-import com.liferay.headless.foundation.dto.v1_0.Vocabulary;
-import com.liferay.headless.foundation.resource.v1_0.VocabularyResource;
+import com.liferay.headless.foundation.dto.v1_0.TaxonomyVocabulary;
+import com.liferay.headless.foundation.resource.v1_0.TaxonomyVocabularyResource;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Group;
@@ -80,7 +80,7 @@ import org.junit.Test;
  * @generated
  */
 @Generated("")
-public abstract class BaseVocabularyResourceTestCase {
+public abstract class BaseTaxonomyVocabularyResourceTestCase {
 
 	@ClassRule
 	@Rule
@@ -107,31 +107,31 @@ public abstract class BaseVocabularyResourceTestCase {
 	}
 
 	@Test
-	public void testGetContentSpaceVocabulariesPage() throws Exception {
+	public void testGetContentSpaceTaxonomyVocabulariesPage() throws Exception {
 		Long contentSpaceId =
-			testGetContentSpaceVocabulariesPage_getContentSpaceId();
+			testGetContentSpaceTaxonomyVocabulariesPage_getContentSpaceId();
 
-		Vocabulary vocabulary1 =
-			testGetContentSpaceVocabulariesPage_addVocabulary(
-				contentSpaceId, randomVocabulary());
+		TaxonomyVocabulary taxonomyVocabulary1 =
+			testGetContentSpaceTaxonomyVocabulariesPage_addTaxonomyVocabulary(
+				contentSpaceId, randomTaxonomyVocabulary());
+		TaxonomyVocabulary taxonomyVocabulary2 =
+			testGetContentSpaceTaxonomyVocabulariesPage_addTaxonomyVocabulary(
+				contentSpaceId, randomTaxonomyVocabulary());
 
-		Vocabulary vocabulary2 =
-			testGetContentSpaceVocabulariesPage_addVocabulary(
-				contentSpaceId, randomVocabulary());
-
-		Page<Vocabulary> page = invokeGetContentSpaceVocabulariesPage(
-			contentSpaceId, null, Pagination.of(1, 2), null);
+		Page<TaxonomyVocabulary> page =
+			invokeGetContentSpaceTaxonomyVocabulariesPage(
+				contentSpaceId, null, Pagination.of(1, 2), null);
 
 		Assert.assertEquals(2, page.getTotalCount());
 
 		assertEqualsIgnoringOrder(
-			Arrays.asList(vocabulary1, vocabulary2),
-			(List<Vocabulary>)page.getItems());
+			Arrays.asList(taxonomyVocabulary1, taxonomyVocabulary2),
+			(List<TaxonomyVocabulary>)page.getItems());
 		assertValid(page);
 	}
 
 	@Test
-	public void testGetContentSpaceVocabulariesPageWithFilterDateTimeEquals()
+	public void testGetContentSpaceTaxonomyVocabulariesPageWithFilterDateTimeEquals()
 		throws Exception {
 
 		List<EntityField> entityFields = getEntityFields(
@@ -142,38 +142,42 @@ public abstract class BaseVocabularyResourceTestCase {
 		}
 
 		Long contentSpaceId =
-			testGetContentSpaceVocabulariesPage_getContentSpaceId();
+			testGetContentSpaceTaxonomyVocabulariesPage_getContentSpaceId();
 
-		Vocabulary vocabulary1 = randomVocabulary();
-		Vocabulary vocabulary2 = randomVocabulary();
+		TaxonomyVocabulary taxonomyVocabulary1 = randomTaxonomyVocabulary();
+		TaxonomyVocabulary taxonomyVocabulary2 = randomTaxonomyVocabulary();
 
 		for (EntityField entityField : entityFields) {
 			BeanUtils.setProperty(
-				vocabulary1, entityField.getName(),
+				taxonomyVocabulary1, entityField.getName(),
 				DateUtils.addMinutes(new Date(), -2));
 		}
 
-		vocabulary1 = testGetContentSpaceVocabulariesPage_addVocabulary(
-			contentSpaceId, vocabulary1);
+		taxonomyVocabulary1 =
+			testGetContentSpaceTaxonomyVocabulariesPage_addTaxonomyVocabulary(
+				contentSpaceId, taxonomyVocabulary1);
 
 		Thread.sleep(1000);
 
-		vocabulary2 = testGetContentSpaceVocabulariesPage_addVocabulary(
-			contentSpaceId, vocabulary2);
+		taxonomyVocabulary2 =
+			testGetContentSpaceTaxonomyVocabulariesPage_addTaxonomyVocabulary(
+				contentSpaceId, taxonomyVocabulary2);
 
 		for (EntityField entityField : entityFields) {
-			Page<Vocabulary> page = invokeGetContentSpaceVocabulariesPage(
-				contentSpaceId, getFilterString(entityField, "eq", vocabulary1),
-				Pagination.of(1, 2), null);
+			Page<TaxonomyVocabulary> page =
+				invokeGetContentSpaceTaxonomyVocabulariesPage(
+					contentSpaceId,
+					getFilterString(entityField, "eq", taxonomyVocabulary1),
+					Pagination.of(1, 2), null);
 
 			assertEquals(
-				Collections.singletonList(vocabulary1),
-				(List<Vocabulary>)page.getItems());
+				Collections.singletonList(taxonomyVocabulary1),
+				(List<TaxonomyVocabulary>)page.getItems());
 		}
 	}
 
 	@Test
-	public void testGetContentSpaceVocabulariesPageWithFilterStringEquals()
+	public void testGetContentSpaceTaxonomyVocabulariesPageWithFilterStringEquals()
 		throws Exception {
 
 		List<EntityField> entityFields = getEntityFields(
@@ -184,75 +188,82 @@ public abstract class BaseVocabularyResourceTestCase {
 		}
 
 		Long contentSpaceId =
-			testGetContentSpaceVocabulariesPage_getContentSpaceId();
+			testGetContentSpaceTaxonomyVocabulariesPage_getContentSpaceId();
 
-		Vocabulary vocabulary1 =
-			testGetContentSpaceVocabulariesPage_addVocabulary(
-				contentSpaceId, randomVocabulary());
+		TaxonomyVocabulary taxonomyVocabulary1 =
+			testGetContentSpaceTaxonomyVocabulariesPage_addTaxonomyVocabulary(
+				contentSpaceId, randomTaxonomyVocabulary());
 
 		@SuppressWarnings("PMD.UnusedLocalVariable")
-		Vocabulary vocabulary2 =
-			testGetContentSpaceVocabulariesPage_addVocabulary(
-				contentSpaceId, randomVocabulary());
+		TaxonomyVocabulary taxonomyVocabulary2 =
+			testGetContentSpaceTaxonomyVocabulariesPage_addTaxonomyVocabulary(
+				contentSpaceId, randomTaxonomyVocabulary());
 
 		for (EntityField entityField : entityFields) {
-			Page<Vocabulary> page = invokeGetContentSpaceVocabulariesPage(
-				contentSpaceId, getFilterString(entityField, "eq", vocabulary1),
-				Pagination.of(1, 2), null);
+			Page<TaxonomyVocabulary> page =
+				invokeGetContentSpaceTaxonomyVocabulariesPage(
+					contentSpaceId,
+					getFilterString(entityField, "eq", taxonomyVocabulary1),
+					Pagination.of(1, 2), null);
 
 			assertEquals(
-				Collections.singletonList(vocabulary1),
-				(List<Vocabulary>)page.getItems());
+				Collections.singletonList(taxonomyVocabulary1),
+				(List<TaxonomyVocabulary>)page.getItems());
 		}
 	}
 
 	@Test
-	public void testGetContentSpaceVocabulariesPageWithPagination()
+	public void testGetContentSpaceTaxonomyVocabulariesPageWithPagination()
 		throws Exception {
 
 		Long contentSpaceId =
-			testGetContentSpaceVocabulariesPage_getContentSpaceId();
+			testGetContentSpaceTaxonomyVocabulariesPage_getContentSpaceId();
 
-		Vocabulary vocabulary1 =
-			testGetContentSpaceVocabulariesPage_addVocabulary(
-				contentSpaceId, randomVocabulary());
+		TaxonomyVocabulary taxonomyVocabulary1 =
+			testGetContentSpaceTaxonomyVocabulariesPage_addTaxonomyVocabulary(
+				contentSpaceId, randomTaxonomyVocabulary());
+		TaxonomyVocabulary taxonomyVocabulary2 =
+			testGetContentSpaceTaxonomyVocabulariesPage_addTaxonomyVocabulary(
+				contentSpaceId, randomTaxonomyVocabulary());
+		TaxonomyVocabulary taxonomyVocabulary3 =
+			testGetContentSpaceTaxonomyVocabulariesPage_addTaxonomyVocabulary(
+				contentSpaceId, randomTaxonomyVocabulary());
 
-		Vocabulary vocabulary2 =
-			testGetContentSpaceVocabulariesPage_addVocabulary(
-				contentSpaceId, randomVocabulary());
+		Page<TaxonomyVocabulary> page1 =
+			invokeGetContentSpaceTaxonomyVocabulariesPage(
+				contentSpaceId, null, Pagination.of(1, 2), null);
 
-		Vocabulary vocabulary3 =
-			testGetContentSpaceVocabulariesPage_addVocabulary(
-				contentSpaceId, randomVocabulary());
+		List<TaxonomyVocabulary> taxonomyVocabularies1 =
+			(List<TaxonomyVocabulary>)page1.getItems();
 
-		Page<Vocabulary> page1 = invokeGetContentSpaceVocabulariesPage(
-			contentSpaceId, null, Pagination.of(1, 2), null);
+		Assert.assertEquals(
+			taxonomyVocabularies1.toString(), 2, taxonomyVocabularies1.size());
 
-		List<Vocabulary> vocabularies1 = (List<Vocabulary>)page1.getItems();
-
-		Assert.assertEquals(vocabularies1.toString(), 2, vocabularies1.size());
-
-		Page<Vocabulary> page2 = invokeGetContentSpaceVocabulariesPage(
-			contentSpaceId, null, Pagination.of(2, 2), null);
+		Page<TaxonomyVocabulary> page2 =
+			invokeGetContentSpaceTaxonomyVocabulariesPage(
+				contentSpaceId, null, Pagination.of(2, 2), null);
 
 		Assert.assertEquals(3, page2.getTotalCount());
 
-		List<Vocabulary> vocabularies2 = (List<Vocabulary>)page2.getItems();
+		List<TaxonomyVocabulary> taxonomyVocabularies2 =
+			(List<TaxonomyVocabulary>)page2.getItems();
 
-		Assert.assertEquals(vocabularies2.toString(), 1, vocabularies2.size());
+		Assert.assertEquals(
+			taxonomyVocabularies2.toString(), 1, taxonomyVocabularies2.size());
 
 		assertEqualsIgnoringOrder(
-			Arrays.asList(vocabulary1, vocabulary2, vocabulary3),
-			new ArrayList<Vocabulary>() {
+			Arrays.asList(
+				taxonomyVocabulary1, taxonomyVocabulary2, taxonomyVocabulary3),
+			new ArrayList<TaxonomyVocabulary>() {
 				{
-					addAll(vocabularies1);
-					addAll(vocabularies2);
+					addAll(taxonomyVocabularies1);
+					addAll(taxonomyVocabularies2);
 				}
 			});
 	}
 
 	@Test
-	public void testGetContentSpaceVocabulariesPageWithSortDateTime()
+	public void testGetContentSpaceTaxonomyVocabulariesPageWithSortDateTime()
 		throws Exception {
 
 		List<EntityField> entityFields = getEntityFields(
@@ -263,46 +274,50 @@ public abstract class BaseVocabularyResourceTestCase {
 		}
 
 		Long contentSpaceId =
-			testGetContentSpaceVocabulariesPage_getContentSpaceId();
+			testGetContentSpaceTaxonomyVocabulariesPage_getContentSpaceId();
 
-		Vocabulary vocabulary1 = randomVocabulary();
-		Vocabulary vocabulary2 = randomVocabulary();
+		TaxonomyVocabulary taxonomyVocabulary1 = randomTaxonomyVocabulary();
+		TaxonomyVocabulary taxonomyVocabulary2 = randomTaxonomyVocabulary();
 
 		for (EntityField entityField : entityFields) {
 			BeanUtils.setProperty(
-				vocabulary1, entityField.getName(),
+				taxonomyVocabulary1, entityField.getName(),
 				DateUtils.addMinutes(new Date(), -2));
 		}
 
-		vocabulary1 = testGetContentSpaceVocabulariesPage_addVocabulary(
-			contentSpaceId, vocabulary1);
+		taxonomyVocabulary1 =
+			testGetContentSpaceTaxonomyVocabulariesPage_addTaxonomyVocabulary(
+				contentSpaceId, taxonomyVocabulary1);
 
 		Thread.sleep(1000);
 
-		vocabulary2 = testGetContentSpaceVocabulariesPage_addVocabulary(
-			contentSpaceId, vocabulary2);
+		taxonomyVocabulary2 =
+			testGetContentSpaceTaxonomyVocabulariesPage_addTaxonomyVocabulary(
+				contentSpaceId, taxonomyVocabulary2);
 
 		for (EntityField entityField : entityFields) {
-			Page<Vocabulary> ascPage = invokeGetContentSpaceVocabulariesPage(
-				contentSpaceId, null, Pagination.of(1, 2),
-				entityField.getName() + ":asc");
+			Page<TaxonomyVocabulary> ascPage =
+				invokeGetContentSpaceTaxonomyVocabulariesPage(
+					contentSpaceId, null, Pagination.of(1, 2),
+					entityField.getName() + ":asc");
 
 			assertEquals(
-				Arrays.asList(vocabulary1, vocabulary2),
-				(List<Vocabulary>)ascPage.getItems());
+				Arrays.asList(taxonomyVocabulary1, taxonomyVocabulary2),
+				(List<TaxonomyVocabulary>)ascPage.getItems());
 
-			Page<Vocabulary> descPage = invokeGetContentSpaceVocabulariesPage(
-				contentSpaceId, null, Pagination.of(1, 2),
-				entityField.getName() + ":desc");
+			Page<TaxonomyVocabulary> descPage =
+				invokeGetContentSpaceTaxonomyVocabulariesPage(
+					contentSpaceId, null, Pagination.of(1, 2),
+					entityField.getName() + ":desc");
 
 			assertEquals(
-				Arrays.asList(vocabulary2, vocabulary1),
-				(List<Vocabulary>)descPage.getItems());
+				Arrays.asList(taxonomyVocabulary2, taxonomyVocabulary1),
+				(List<TaxonomyVocabulary>)descPage.getItems());
 		}
 	}
 
 	@Test
-	public void testGetContentSpaceVocabulariesPageWithSortString()
+	public void testGetContentSpaceTaxonomyVocabulariesPageWithSortString()
 		throws Exception {
 
 		List<EntityField> entityFields = getEntityFields(
@@ -313,58 +328,66 @@ public abstract class BaseVocabularyResourceTestCase {
 		}
 
 		Long contentSpaceId =
-			testGetContentSpaceVocabulariesPage_getContentSpaceId();
+			testGetContentSpaceTaxonomyVocabulariesPage_getContentSpaceId();
 
-		Vocabulary vocabulary1 = randomVocabulary();
-		Vocabulary vocabulary2 = randomVocabulary();
+		TaxonomyVocabulary taxonomyVocabulary1 = randomTaxonomyVocabulary();
+		TaxonomyVocabulary taxonomyVocabulary2 = randomTaxonomyVocabulary();
 
 		for (EntityField entityField : entityFields) {
-			BeanUtils.setProperty(vocabulary1, entityField.getName(), "Aaa");
-			BeanUtils.setProperty(vocabulary2, entityField.getName(), "Bbb");
+			BeanUtils.setProperty(
+				taxonomyVocabulary1, entityField.getName(), "Aaa");
+			BeanUtils.setProperty(
+				taxonomyVocabulary2, entityField.getName(), "Bbb");
 		}
 
-		vocabulary1 = testGetContentSpaceVocabulariesPage_addVocabulary(
-			contentSpaceId, vocabulary1);
-
-		vocabulary2 = testGetContentSpaceVocabulariesPage_addVocabulary(
-			contentSpaceId, vocabulary2);
+		taxonomyVocabulary1 =
+			testGetContentSpaceTaxonomyVocabulariesPage_addTaxonomyVocabulary(
+				contentSpaceId, taxonomyVocabulary1);
+		taxonomyVocabulary2 =
+			testGetContentSpaceTaxonomyVocabulariesPage_addTaxonomyVocabulary(
+				contentSpaceId, taxonomyVocabulary2);
 
 		for (EntityField entityField : entityFields) {
-			Page<Vocabulary> ascPage = invokeGetContentSpaceVocabulariesPage(
-				contentSpaceId, null, Pagination.of(1, 2),
-				entityField.getName() + ":asc");
+			Page<TaxonomyVocabulary> ascPage =
+				invokeGetContentSpaceTaxonomyVocabulariesPage(
+					contentSpaceId, null, Pagination.of(1, 2),
+					entityField.getName() + ":asc");
 
 			assertEquals(
-				Arrays.asList(vocabulary1, vocabulary2),
-				(List<Vocabulary>)ascPage.getItems());
+				Arrays.asList(taxonomyVocabulary1, taxonomyVocabulary2),
+				(List<TaxonomyVocabulary>)ascPage.getItems());
 
-			Page<Vocabulary> descPage = invokeGetContentSpaceVocabulariesPage(
-				contentSpaceId, null, Pagination.of(1, 2),
-				entityField.getName() + ":desc");
+			Page<TaxonomyVocabulary> descPage =
+				invokeGetContentSpaceTaxonomyVocabulariesPage(
+					contentSpaceId, null, Pagination.of(1, 2),
+					entityField.getName() + ":desc");
 
 			assertEquals(
-				Arrays.asList(vocabulary2, vocabulary1),
-				(List<Vocabulary>)descPage.getItems());
+				Arrays.asList(taxonomyVocabulary2, taxonomyVocabulary1),
+				(List<TaxonomyVocabulary>)descPage.getItems());
 		}
 	}
 
-	protected Vocabulary testGetContentSpaceVocabulariesPage_addVocabulary(
-			Long contentSpaceId, Vocabulary vocabulary)
+	protected TaxonomyVocabulary
+			testGetContentSpaceTaxonomyVocabulariesPage_addTaxonomyVocabulary(
+				Long contentSpaceId, TaxonomyVocabulary taxonomyVocabulary)
 		throws Exception {
 
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
 	}
 
-	protected Long testGetContentSpaceVocabulariesPage_getContentSpaceId()
+	protected Long
+			testGetContentSpaceTaxonomyVocabulariesPage_getContentSpaceId()
 		throws Exception {
 
 		return testGroup.getGroupId();
 	}
 
-	protected Page<Vocabulary> invokeGetContentSpaceVocabulariesPage(
-			Long contentSpaceId, String filterString, Pagination pagination,
-			String sortString)
+	protected Page<TaxonomyVocabulary>
+			invokeGetContentSpaceTaxonomyVocabulariesPage(
+				Long contentSpaceId, String filterString, Pagination pagination,
+				String sortString)
 		throws Exception {
 
 		Http.Options options = _createHttpOptions();
@@ -372,7 +395,7 @@ public abstract class BaseVocabularyResourceTestCase {
 		String location =
 			_resourceURL +
 				_toPath(
-					"/content-spaces/{content-space-id}/vocabularies",
+					"/content-spaces/{content-space-id}/taxonomy-vocabularies",
 					contentSpaceId);
 
 		location = HttpUtil.addParameter(location, "filter", filterString);
@@ -388,13 +411,14 @@ public abstract class BaseVocabularyResourceTestCase {
 
 		return _outputObjectMapper.readValue(
 			HttpUtil.URLtoString(options),
-			new TypeReference<Page<Vocabulary>>() {
+			new TypeReference<Page<TaxonomyVocabulary>>() {
 			});
 	}
 
-	protected Http.Response invokeGetContentSpaceVocabulariesPageResponse(
-			Long contentSpaceId, String filterString, Pagination pagination,
-			String sortString)
+	protected Http.Response
+			invokeGetContentSpaceTaxonomyVocabulariesPageResponse(
+				Long contentSpaceId, String filterString, Pagination pagination,
+				String sortString)
 		throws Exception {
 
 		Http.Options options = _createHttpOptions();
@@ -402,7 +426,7 @@ public abstract class BaseVocabularyResourceTestCase {
 		String location =
 			_resourceURL +
 				_toPath(
-					"/content-spaces/{content-space-id}/vocabularies",
+					"/content-spaces/{content-space-id}/taxonomy-vocabularies",
 					contentSpaceId);
 
 		location = HttpUtil.addParameter(location, "filter", filterString);
@@ -422,38 +446,41 @@ public abstract class BaseVocabularyResourceTestCase {
 	}
 
 	@Test
-	public void testPostContentSpaceVocabulary() throws Exception {
-		Vocabulary randomVocabulary = randomVocabulary();
+	public void testPostContentSpaceTaxonomyVocabulary() throws Exception {
+		TaxonomyVocabulary randomTaxonomyVocabulary =
+			randomTaxonomyVocabulary();
 
-		Vocabulary postVocabulary =
-			testPostContentSpaceVocabulary_addVocabulary(randomVocabulary);
+		TaxonomyVocabulary postTaxonomyVocabulary =
+			testPostContentSpaceTaxonomyVocabulary_addTaxonomyVocabulary(
+				randomTaxonomyVocabulary);
 
-		assertEquals(randomVocabulary, postVocabulary);
-		assertValid(postVocabulary);
+		assertEquals(randomTaxonomyVocabulary, postTaxonomyVocabulary);
+		assertValid(postTaxonomyVocabulary);
 	}
 
-	protected Vocabulary testPostContentSpaceVocabulary_addVocabulary(
-			Vocabulary vocabulary)
+	protected TaxonomyVocabulary
+			testPostContentSpaceTaxonomyVocabulary_addTaxonomyVocabulary(
+				TaxonomyVocabulary taxonomyVocabulary)
 		throws Exception {
 
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
 	}
 
-	protected Vocabulary invokePostContentSpaceVocabulary(
-			Long contentSpaceId, Vocabulary vocabulary)
+	protected TaxonomyVocabulary invokePostContentSpaceTaxonomyVocabulary(
+			Long contentSpaceId, TaxonomyVocabulary taxonomyVocabulary)
 		throws Exception {
 
 		Http.Options options = _createHttpOptions();
 
 		options.setBody(
-			_inputObjectMapper.writeValueAsString(vocabulary),
+			_inputObjectMapper.writeValueAsString(taxonomyVocabulary),
 			ContentTypes.APPLICATION_JSON, StringPool.UTF8);
 
 		String location =
 			_resourceURL +
 				_toPath(
-					"/content-spaces/{content-space-id}/vocabularies",
+					"/content-spaces/{content-space-id}/taxonomy-vocabularies",
 					contentSpaceId);
 
 		options.setLocation(location);
@@ -461,23 +488,23 @@ public abstract class BaseVocabularyResourceTestCase {
 		options.setPost(true);
 
 		return _outputObjectMapper.readValue(
-			HttpUtil.URLtoString(options), Vocabulary.class);
+			HttpUtil.URLtoString(options), TaxonomyVocabulary.class);
 	}
 
-	protected Http.Response invokePostContentSpaceVocabularyResponse(
-			Long contentSpaceId, Vocabulary vocabulary)
+	protected Http.Response invokePostContentSpaceTaxonomyVocabularyResponse(
+			Long contentSpaceId, TaxonomyVocabulary taxonomyVocabulary)
 		throws Exception {
 
 		Http.Options options = _createHttpOptions();
 
 		options.setBody(
-			_inputObjectMapper.writeValueAsString(vocabulary),
+			_inputObjectMapper.writeValueAsString(taxonomyVocabulary),
 			ContentTypes.APPLICATION_JSON, StringPool.UTF8);
 
 		String location =
 			_resourceURL +
 				_toPath(
-					"/content-spaces/{content-space-id}/vocabularies",
+					"/content-spaces/{content-space-id}/taxonomy-vocabularies",
 					contentSpaceId);
 
 		options.setLocation(location);
@@ -490,22 +517,28 @@ public abstract class BaseVocabularyResourceTestCase {
 	}
 
 	@Test
-	public void testDeleteVocabulary() throws Exception {
-		Vocabulary vocabulary = testDeleteVocabulary_addVocabulary();
+	public void testDeleteTaxonomyVocabulary() throws Exception {
+		TaxonomyVocabulary taxonomyVocabulary =
+			testDeleteTaxonomyVocabulary_addTaxonomyVocabulary();
 
 		assertResponseCode(
-			200, invokeDeleteVocabularyResponse(vocabulary.getId()));
+			200,
+			invokeDeleteTaxonomyVocabularyResponse(taxonomyVocabulary.getId()));
 
 		assertResponseCode(
-			404, invokeGetVocabularyResponse(vocabulary.getId()));
+			404,
+			invokeGetTaxonomyVocabularyResponse(taxonomyVocabulary.getId()));
 	}
 
-	protected Vocabulary testDeleteVocabulary_addVocabulary() throws Exception {
+	protected TaxonomyVocabulary
+			testDeleteTaxonomyVocabulary_addTaxonomyVocabulary()
+		throws Exception {
+
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
 	}
 
-	protected boolean invokeDeleteVocabulary(Long vocabularyId)
+	protected boolean invokeDeleteTaxonomyVocabulary(Long taxonomyVocabularyId)
 		throws Exception {
 
 		Http.Options options = _createHttpOptions();
@@ -514,7 +547,9 @@ public abstract class BaseVocabularyResourceTestCase {
 
 		String location =
 			_resourceURL +
-				_toPath("/vocabularies/{vocabulary-id}", vocabularyId);
+				_toPath(
+					"/taxonomy-vocabularies/{taxonomy-vocabulary-id}",
+					taxonomyVocabularyId);
 
 		options.setLocation(location);
 
@@ -522,7 +557,8 @@ public abstract class BaseVocabularyResourceTestCase {
 			HttpUtil.URLtoString(options), Boolean.class);
 	}
 
-	protected Http.Response invokeDeleteVocabularyResponse(Long vocabularyId)
+	protected Http.Response invokeDeleteTaxonomyVocabularyResponse(
+			Long taxonomyVocabularyId)
 		throws Exception {
 
 		Http.Options options = _createHttpOptions();
@@ -531,7 +567,9 @@ public abstract class BaseVocabularyResourceTestCase {
 
 		String location =
 			_resourceURL +
-				_toPath("/vocabularies/{vocabulary-id}", vocabularyId);
+				_toPath(
+					"/taxonomy-vocabularies/{taxonomy-vocabulary-id}",
+					taxonomyVocabularyId);
 
 		options.setLocation(location);
 
@@ -541,43 +579,54 @@ public abstract class BaseVocabularyResourceTestCase {
 	}
 
 	@Test
-	public void testGetVocabulary() throws Exception {
-		Vocabulary postVocabulary = testGetVocabulary_addVocabulary();
+	public void testGetTaxonomyVocabulary() throws Exception {
+		TaxonomyVocabulary postTaxonomyVocabulary =
+			testGetTaxonomyVocabulary_addTaxonomyVocabulary();
 
-		Vocabulary getVocabulary = invokeGetVocabulary(postVocabulary.getId());
+		TaxonomyVocabulary getTaxonomyVocabulary = invokeGetTaxonomyVocabulary(
+			postTaxonomyVocabulary.getId());
 
-		assertEquals(postVocabulary, getVocabulary);
-		assertValid(getVocabulary);
+		assertEquals(postTaxonomyVocabulary, getTaxonomyVocabulary);
+		assertValid(getTaxonomyVocabulary);
 	}
 
-	protected Vocabulary testGetVocabulary_addVocabulary() throws Exception {
+	protected TaxonomyVocabulary
+			testGetTaxonomyVocabulary_addTaxonomyVocabulary()
+		throws Exception {
+
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
 	}
 
-	protected Vocabulary invokeGetVocabulary(Long vocabularyId)
+	protected TaxonomyVocabulary invokeGetTaxonomyVocabulary(
+			Long taxonomyVocabularyId)
 		throws Exception {
 
 		Http.Options options = _createHttpOptions();
 
 		String location =
 			_resourceURL +
-				_toPath("/vocabularies/{vocabulary-id}", vocabularyId);
+				_toPath(
+					"/taxonomy-vocabularies/{taxonomy-vocabulary-id}",
+					taxonomyVocabularyId);
 
 		options.setLocation(location);
 
 		return _outputObjectMapper.readValue(
-			HttpUtil.URLtoString(options), Vocabulary.class);
+			HttpUtil.URLtoString(options), TaxonomyVocabulary.class);
 	}
 
-	protected Http.Response invokeGetVocabularyResponse(Long vocabularyId)
+	protected Http.Response invokeGetTaxonomyVocabularyResponse(
+			Long taxonomyVocabularyId)
 		throws Exception {
 
 		Http.Options options = _createHttpOptions();
 
 		String location =
 			_resourceURL +
-				_toPath("/vocabularies/{vocabulary-id}", vocabularyId);
+				_toPath(
+					"/taxonomy-vocabularies/{taxonomy-vocabulary-id}",
+					taxonomyVocabularyId);
 
 		options.setLocation(location);
 
@@ -587,63 +636,73 @@ public abstract class BaseVocabularyResourceTestCase {
 	}
 
 	@Test
-	public void testPutVocabulary() throws Exception {
-		Vocabulary postVocabulary = testPutVocabulary_addVocabulary();
+	public void testPutTaxonomyVocabulary() throws Exception {
+		TaxonomyVocabulary postTaxonomyVocabulary =
+			testPutTaxonomyVocabulary_addTaxonomyVocabulary();
 
-		Vocabulary randomVocabulary = randomVocabulary();
+		TaxonomyVocabulary randomTaxonomyVocabulary =
+			randomTaxonomyVocabulary();
 
-		Vocabulary putVocabulary = invokePutVocabulary(
-			postVocabulary.getId(), randomVocabulary);
+		TaxonomyVocabulary putTaxonomyVocabulary = invokePutTaxonomyVocabulary(
+			postTaxonomyVocabulary.getId(), randomTaxonomyVocabulary);
 
-		assertEquals(randomVocabulary, putVocabulary);
-		assertValid(putVocabulary);
+		assertEquals(randomTaxonomyVocabulary, putTaxonomyVocabulary);
+		assertValid(putTaxonomyVocabulary);
 
-		Vocabulary getVocabulary = invokeGetVocabulary(putVocabulary.getId());
+		TaxonomyVocabulary getTaxonomyVocabulary = invokeGetTaxonomyVocabulary(
+			putTaxonomyVocabulary.getId());
 
-		assertEquals(randomVocabulary, getVocabulary);
-		assertValid(getVocabulary);
+		assertEquals(randomTaxonomyVocabulary, getTaxonomyVocabulary);
+		assertValid(getTaxonomyVocabulary);
 	}
 
-	protected Vocabulary testPutVocabulary_addVocabulary() throws Exception {
+	protected TaxonomyVocabulary
+			testPutTaxonomyVocabulary_addTaxonomyVocabulary()
+		throws Exception {
+
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
 	}
 
-	protected Vocabulary invokePutVocabulary(
-			Long vocabularyId, Vocabulary vocabulary)
+	protected TaxonomyVocabulary invokePutTaxonomyVocabulary(
+			Long taxonomyVocabularyId, TaxonomyVocabulary taxonomyVocabulary)
 		throws Exception {
 
 		Http.Options options = _createHttpOptions();
 
 		options.setBody(
-			_inputObjectMapper.writeValueAsString(vocabulary),
+			_inputObjectMapper.writeValueAsString(taxonomyVocabulary),
 			ContentTypes.APPLICATION_JSON, StringPool.UTF8);
 
 		String location =
 			_resourceURL +
-				_toPath("/vocabularies/{vocabulary-id}", vocabularyId);
+				_toPath(
+					"/taxonomy-vocabularies/{taxonomy-vocabulary-id}",
+					taxonomyVocabularyId);
 
 		options.setLocation(location);
 
 		options.setPut(true);
 
 		return _outputObjectMapper.readValue(
-			HttpUtil.URLtoString(options), Vocabulary.class);
+			HttpUtil.URLtoString(options), TaxonomyVocabulary.class);
 	}
 
-	protected Http.Response invokePutVocabularyResponse(
-			Long vocabularyId, Vocabulary vocabulary)
+	protected Http.Response invokePutTaxonomyVocabularyResponse(
+			Long taxonomyVocabularyId, TaxonomyVocabulary taxonomyVocabulary)
 		throws Exception {
 
 		Http.Options options = _createHttpOptions();
 
 		options.setBody(
-			_inputObjectMapper.writeValueAsString(vocabulary),
+			_inputObjectMapper.writeValueAsString(taxonomyVocabulary),
 			ContentTypes.APPLICATION_JSON, StringPool.UTF8);
 
 		String location =
 			_resourceURL +
-				_toPath("/vocabularies/{vocabulary-id}", vocabularyId);
+				_toPath(
+					"/taxonomy-vocabularies/{taxonomy-vocabulary-id}",
+					taxonomyVocabularyId);
 
 		options.setLocation(location);
 
@@ -662,36 +721,45 @@ public abstract class BaseVocabularyResourceTestCase {
 	}
 
 	protected void assertEquals(
-		Vocabulary vocabulary1, Vocabulary vocabulary2) {
+		TaxonomyVocabulary taxonomyVocabulary1,
+		TaxonomyVocabulary taxonomyVocabulary2) {
 
 		Assert.assertTrue(
-			vocabulary1 + " does not equal " + vocabulary2,
-			equals(vocabulary1, vocabulary2));
+			taxonomyVocabulary1 + " does not equal " + taxonomyVocabulary2,
+			equals(taxonomyVocabulary1, taxonomyVocabulary2));
 	}
 
 	protected void assertEquals(
-		List<Vocabulary> vocabularies1, List<Vocabulary> vocabularies2) {
+		List<TaxonomyVocabulary> taxonomyVocabularies1,
+		List<TaxonomyVocabulary> taxonomyVocabularies2) {
 
-		Assert.assertEquals(vocabularies1.size(), vocabularies2.size());
+		Assert.assertEquals(
+			taxonomyVocabularies1.size(), taxonomyVocabularies2.size());
 
-		for (int i = 0; i < vocabularies1.size(); i++) {
-			Vocabulary vocabulary1 = vocabularies1.get(i);
-			Vocabulary vocabulary2 = vocabularies2.get(i);
+		for (int i = 0; i < taxonomyVocabularies1.size(); i++) {
+			TaxonomyVocabulary taxonomyVocabulary1 = taxonomyVocabularies1.get(
+				i);
+			TaxonomyVocabulary taxonomyVocabulary2 = taxonomyVocabularies2.get(
+				i);
 
-			assertEquals(vocabulary1, vocabulary2);
+			assertEquals(taxonomyVocabulary1, taxonomyVocabulary2);
 		}
 	}
 
 	protected void assertEqualsIgnoringOrder(
-		List<Vocabulary> vocabularies1, List<Vocabulary> vocabularies2) {
+		List<TaxonomyVocabulary> taxonomyVocabularies1,
+		List<TaxonomyVocabulary> taxonomyVocabularies2) {
 
-		Assert.assertEquals(vocabularies1.size(), vocabularies2.size());
+		Assert.assertEquals(
+			taxonomyVocabularies1.size(), taxonomyVocabularies2.size());
 
-		for (Vocabulary vocabulary1 : vocabularies1) {
+		for (TaxonomyVocabulary taxonomyVocabulary1 : taxonomyVocabularies1) {
 			boolean contains = false;
 
-			for (Vocabulary vocabulary2 : vocabularies2) {
-				if (equals(vocabulary1, vocabulary2)) {
+			for (TaxonomyVocabulary taxonomyVocabulary2 :
+					taxonomyVocabularies2) {
+
+				if (equals(taxonomyVocabulary1, taxonomyVocabulary2)) {
 					contains = true;
 
 					break;
@@ -699,21 +767,23 @@ public abstract class BaseVocabularyResourceTestCase {
 			}
 
 			Assert.assertTrue(
-				vocabularies2 + " does not contain " + vocabulary1, contains);
+				taxonomyVocabularies2 + " does not contain " +
+					taxonomyVocabulary1,
+				contains);
 		}
 	}
 
-	protected void assertValid(Vocabulary vocabulary) {
+	protected void assertValid(TaxonomyVocabulary taxonomyVocabulary) {
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
 	}
 
-	protected void assertValid(Page<Vocabulary> page) {
+	protected void assertValid(Page<TaxonomyVocabulary> page) {
 		boolean valid = false;
 
-		Collection<Vocabulary> vocabularies = page.getItems();
+		Collection<TaxonomyVocabulary> taxonomyVocabularies = page.getItems();
 
-		int size = vocabularies.size();
+		int size = taxonomyVocabularies.size();
 
 		if ((page.getLastPage() > 0) && (page.getPage() > 0) &&
 			(page.getPageSize() > 0) && (page.getTotalCount() > 0) &&
@@ -725,8 +795,11 @@ public abstract class BaseVocabularyResourceTestCase {
 		Assert.assertTrue(valid);
 	}
 
-	protected boolean equals(Vocabulary vocabulary1, Vocabulary vocabulary2) {
-		if (vocabulary1 == vocabulary2) {
+	protected boolean equals(
+		TaxonomyVocabulary taxonomyVocabulary1,
+		TaxonomyVocabulary taxonomyVocabulary2) {
+
+		if (taxonomyVocabulary1 == taxonomyVocabulary2) {
 			return true;
 		}
 
@@ -734,13 +807,13 @@ public abstract class BaseVocabularyResourceTestCase {
 	}
 
 	protected Collection<EntityField> getEntityFields() throws Exception {
-		if (!(_vocabularyResource instanceof EntityModelResource)) {
+		if (!(_taxonomyVocabularyResource instanceof EntityModelResource)) {
 			throw new UnsupportedOperationException(
 				"Resource is not an instance of EntityModelResource");
 		}
 
 		EntityModelResource entityModelResource =
-			(EntityModelResource)_vocabularyResource;
+			(EntityModelResource)_taxonomyVocabularyResource;
 
 		EntityModel entityModel = entityModelResource.getEntityModel(
 			new MultivaluedHashMap());
@@ -766,7 +839,8 @@ public abstract class BaseVocabularyResourceTestCase {
 	}
 
 	protected String getFilterString(
-		EntityField entityField, String operator, Vocabulary vocabulary) {
+		EntityField entityField, String operator,
+		TaxonomyVocabulary taxonomyVocabulary) {
 
 		StringBundler sb = new StringBundler();
 
@@ -799,26 +873,26 @@ public abstract class BaseVocabularyResourceTestCase {
 		}
 
 		if (entityFieldName.equals("dateCreated")) {
-			sb.append(_dateFormat.format(vocabulary.getDateCreated()));
+			sb.append(_dateFormat.format(taxonomyVocabulary.getDateCreated()));
 
 			return sb.toString();
 		}
 
 		if (entityFieldName.equals("dateModified")) {
-			sb.append(_dateFormat.format(vocabulary.getDateModified()));
+			sb.append(_dateFormat.format(taxonomyVocabulary.getDateModified()));
 
 			return sb.toString();
 		}
 
 		if (entityFieldName.equals("description")) {
 			sb.append("'");
-			sb.append(String.valueOf(vocabulary.getDescription()));
+			sb.append(String.valueOf(taxonomyVocabulary.getDescription()));
 			sb.append("'");
 
 			return sb.toString();
 		}
 
-		if (entityFieldName.equals("hasCategories")) {
+		if (entityFieldName.equals("hasTaxonomyCategories")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
 		}
@@ -830,7 +904,7 @@ public abstract class BaseVocabularyResourceTestCase {
 
 		if (entityFieldName.equals("name")) {
 			sb.append("'");
-			sb.append(String.valueOf(vocabulary.getName()));
+			sb.append(String.valueOf(taxonomyVocabulary.getName()));
 			sb.append("'");
 
 			return sb.toString();
@@ -845,22 +919,22 @@ public abstract class BaseVocabularyResourceTestCase {
 			"Invalid entity field " + entityFieldName);
 	}
 
-	protected Vocabulary randomVocabulary() {
-		return new Vocabulary() {
+	protected TaxonomyVocabulary randomTaxonomyVocabulary() {
+		return new TaxonomyVocabulary() {
 			{
 				contentSpaceId = RandomTestUtil.randomLong();
 				dateCreated = RandomTestUtil.nextDate();
 				dateModified = RandomTestUtil.nextDate();
 				description = RandomTestUtil.randomString();
-				hasCategories = RandomTestUtil.randomBoolean();
+				hasTaxonomyCategories = RandomTestUtil.randomBoolean();
 				id = RandomTestUtil.randomLong();
 				name = RandomTestUtil.randomString();
 			}
 		};
 	}
 
-	protected Vocabulary randomPatchVocabulary() {
-		return randomVocabulary();
+	protected TaxonomyVocabulary randomPatchTaxonomyVocabulary() {
+		return randomTaxonomyVocabulary();
 	}
 
 	protected Group testGroup;
@@ -922,13 +996,8 @@ public abstract class BaseVocabularyResourceTestCase {
 		return options;
 	}
 
-	private String _toPath(String template, Object... values) {
-		for (int i = 0; i < values.length; i++) {
-			template = template.replaceFirst(
-				"\\{.*\\}", String.valueOf(values[i]));
-		}
-
-		return template;
+	private String _toPath(String template, Object value) {
+		return template.replaceFirst("\\{.*\\}", String.valueOf(value));
 	}
 
 	private static BeanUtilsBean _beanUtilsBean = new BeanUtilsBean() {
@@ -971,7 +1040,7 @@ public abstract class BaseVocabularyResourceTestCase {
 	};
 
 	@Inject
-	private VocabularyResource _vocabularyResource;
+	private TaxonomyVocabularyResource _taxonomyVocabularyResource;
 
 	private URL _resourceURL;
 

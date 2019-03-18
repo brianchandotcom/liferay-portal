@@ -76,8 +76,6 @@ public class OpenAPIResourceImpl {
 
 	private final Set<Class<?>> _resourceClasses = new HashSet<Class<?>>() {
 		{
-			add(CategoryResourceImpl.class);
-
 			add(EmailResourceImpl.class);
 
 			add(KeywordResourceImpl.class);
@@ -94,9 +92,11 @@ public class OpenAPIResourceImpl {
 
 			add(SegmentUserResourceImpl.class);
 
-			add(UserAccountResourceImpl.class);
+			add(TaxonomyCategoryResourceImpl.class);
 
-			add(VocabularyResourceImpl.class);
+			add(TaxonomyVocabularyResourceImpl.class);
+
+			add(UserAccountResourceImpl.class);
 
 			add(WebUrlResourceImpl.class);
 

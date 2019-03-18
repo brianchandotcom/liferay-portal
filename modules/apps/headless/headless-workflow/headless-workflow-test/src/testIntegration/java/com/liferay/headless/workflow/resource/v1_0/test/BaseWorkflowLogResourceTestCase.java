@@ -155,7 +155,6 @@ public abstract class BaseWorkflowLogResourceTestCase {
 		WorkflowLog workflowLog1 =
 			testGetWorkflowTaskWorkflowLogsPage_addWorkflowLog(
 				workflowTaskId, randomWorkflowLog());
-
 		WorkflowLog workflowLog2 =
 			testGetWorkflowTaskWorkflowLogsPage_addWorkflowLog(
 				workflowTaskId, randomWorkflowLog());
@@ -181,11 +180,9 @@ public abstract class BaseWorkflowLogResourceTestCase {
 		WorkflowLog workflowLog1 =
 			testGetWorkflowTaskWorkflowLogsPage_addWorkflowLog(
 				workflowTaskId, randomWorkflowLog());
-
 		WorkflowLog workflowLog2 =
 			testGetWorkflowTaskWorkflowLogsPage_addWorkflowLog(
 				workflowTaskId, randomWorkflowLog());
-
 		WorkflowLog workflowLog3 =
 			testGetWorkflowTaskWorkflowLogsPage_addWorkflowLog(
 				workflowTaskId, randomWorkflowLog());
@@ -550,13 +547,8 @@ public abstract class BaseWorkflowLogResourceTestCase {
 		return options;
 	}
 
-	private String _toPath(String template, Object... values) {
-		for (int i = 0; i < values.length; i++) {
-			template = template.replaceFirst(
-				"\\{.*\\}", String.valueOf(values[i]));
-		}
-
-		return template;
+	private String _toPath(String template, Object value) {
+		return template.replaceFirst("\\{.*\\}", String.valueOf(value));
 	}
 
 	private static BeanUtilsBean _beanUtilsBean = new BeanUtilsBean() {

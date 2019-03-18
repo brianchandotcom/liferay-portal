@@ -38,10 +38,10 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
-@GraphQLName("Vocabulary")
+@GraphQLName("TaxonomyVocabulary")
 @JsonFilter("Liferay.Vulcan")
-@XmlRootElement(name = "Vocabulary")
-public class Vocabulary {
+@XmlRootElement(name = "TaxonomyVocabulary")
+public class TaxonomyVocabulary {
 
 	public static enum ViewableBy {
 
@@ -244,20 +244,21 @@ public class Vocabulary {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String description;
 
-	public Boolean getHasCategories() {
-		return hasCategories;
+	public Boolean getHasTaxonomyCategories() {
+		return hasTaxonomyCategories;
 	}
 
-	public void setHasCategories(Boolean hasCategories) {
-		this.hasCategories = hasCategories;
+	public void setHasTaxonomyCategories(Boolean hasTaxonomyCategories) {
+		this.hasTaxonomyCategories = hasTaxonomyCategories;
 	}
 
 	@JsonIgnore
-	public void setHasCategories(
-		UnsafeSupplier<Boolean, Exception> hasCategoriesUnsafeSupplier) {
+	public void setHasTaxonomyCategories(
+		UnsafeSupplier<Boolean, Exception>
+			hasTaxonomyCategoriesUnsafeSupplier) {
 
 		try {
-			hasCategories = hasCategoriesUnsafeSupplier.get();
+			hasTaxonomyCategories = hasTaxonomyCategoriesUnsafeSupplier.get();
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
@@ -266,7 +267,7 @@ public class Vocabulary {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Boolean hasCategories;
+	protected Boolean hasTaxonomyCategories;
 
 	public Long getId() {
 		return id;
@@ -425,9 +426,9 @@ public class Vocabulary {
 		sb.append("\"");
 		sb.append(", ");
 
-		sb.append("\"hasCategories\": ");
+		sb.append("\"hasTaxonomyCategories\": ");
 
-		sb.append(hasCategories);
+		sb.append(hasTaxonomyCategories);
 		sb.append(", ");
 
 		sb.append("\"id\": ");

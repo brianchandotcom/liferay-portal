@@ -162,7 +162,6 @@ public abstract class BaseUserAccountResourceTestCase {
 		UserAccount userAccount1 =
 			testGetOrganizationUserAccountsPage_addUserAccount(
 				organizationId, randomUserAccount());
-
 		UserAccount userAccount2 =
 			testGetOrganizationUserAccountsPage_addUserAccount(
 				organizationId, randomUserAccount());
@@ -188,11 +187,9 @@ public abstract class BaseUserAccountResourceTestCase {
 		UserAccount userAccount1 =
 			testGetOrganizationUserAccountsPage_addUserAccount(
 				organizationId, randomUserAccount());
-
 		UserAccount userAccount2 =
 			testGetOrganizationUserAccountsPage_addUserAccount(
 				organizationId, randomUserAccount());
-
 		UserAccount userAccount3 =
 			testGetOrganizationUserAccountsPage_addUserAccount(
 				organizationId, randomUserAccount());
@@ -614,7 +611,6 @@ public abstract class BaseUserAccountResourceTestCase {
 		UserAccount userAccount1 =
 			testGetWebSiteUserAccountsPage_addUserAccount(
 				webSiteId, randomUserAccount());
-
 		UserAccount userAccount2 =
 			testGetWebSiteUserAccountsPage_addUserAccount(
 				webSiteId, randomUserAccount());
@@ -639,11 +635,9 @@ public abstract class BaseUserAccountResourceTestCase {
 		UserAccount userAccount1 =
 			testGetWebSiteUserAccountsPage_addUserAccount(
 				webSiteId, randomUserAccount());
-
 		UserAccount userAccount2 =
 			testGetWebSiteUserAccountsPage_addUserAccount(
 				webSiteId, randomUserAccount());
-
 		UserAccount userAccount3 =
 			testGetWebSiteUserAccountsPage_addUserAccount(
 				webSiteId, randomUserAccount());
@@ -1090,13 +1084,8 @@ public abstract class BaseUserAccountResourceTestCase {
 		return options;
 	}
 
-	private String _toPath(String template, Object... values) {
-		for (int i = 0; i < values.length; i++) {
-			template = template.replaceFirst(
-				"\\{.*\\}", String.valueOf(values[i]));
-		}
-
-		return template;
+	private String _toPath(String template, Object value) {
+		return template.replaceFirst("\\{.*\\}", String.valueOf(value));
 	}
 
 	private static BeanUtilsBean _beanUtilsBean = new BeanUtilsBean() {

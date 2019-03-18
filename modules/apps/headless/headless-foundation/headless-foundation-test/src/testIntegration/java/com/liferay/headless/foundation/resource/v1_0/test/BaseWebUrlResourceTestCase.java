@@ -107,7 +107,6 @@ public abstract class BaseWebUrlResourceTestCase {
 
 		WebUrl webUrl1 = testGetOrganizationWebUrlsPage_addWebUrl(
 			organizationId, randomWebUrl());
-
 		WebUrl webUrl2 = testGetOrganizationWebUrlsPage_addWebUrl(
 			organizationId, randomWebUrl());
 
@@ -130,10 +129,8 @@ public abstract class BaseWebUrlResourceTestCase {
 
 		WebUrl webUrl1 = testGetOrganizationWebUrlsPage_addWebUrl(
 			organizationId, randomWebUrl());
-
 		WebUrl webUrl2 = testGetOrganizationWebUrlsPage_addWebUrl(
 			organizationId, randomWebUrl());
-
 		WebUrl webUrl3 = testGetOrganizationWebUrlsPage_addWebUrl(
 			organizationId, randomWebUrl());
 
@@ -233,7 +230,6 @@ public abstract class BaseWebUrlResourceTestCase {
 
 		WebUrl webUrl1 = testGetUserAccountWebUrlsPage_addWebUrl(
 			userAccountId, randomWebUrl());
-
 		WebUrl webUrl2 = testGetUserAccountWebUrlsPage_addWebUrl(
 			userAccountId, randomWebUrl());
 
@@ -253,10 +249,8 @@ public abstract class BaseWebUrlResourceTestCase {
 
 		WebUrl webUrl1 = testGetUserAccountWebUrlsPage_addWebUrl(
 			userAccountId, randomWebUrl());
-
 		WebUrl webUrl2 = testGetUserAccountWebUrlsPage_addWebUrl(
 			userAccountId, randomWebUrl());
-
 		WebUrl webUrl3 = testGetUserAccountWebUrlsPage_addWebUrl(
 			userAccountId, randomWebUrl());
 
@@ -607,13 +601,8 @@ public abstract class BaseWebUrlResourceTestCase {
 		return options;
 	}
 
-	private String _toPath(String template, Object... values) {
-		for (int i = 0; i < values.length; i++) {
-			template = template.replaceFirst(
-				"\\{.*\\}", String.valueOf(values[i]));
-		}
-
-		return template;
+	private String _toPath(String template, Object value) {
+		return template.replaceFirst("\\{.*\\}", String.valueOf(value));
 	}
 
 	private static BeanUtilsBean _beanUtilsBean = new BeanUtilsBean() {

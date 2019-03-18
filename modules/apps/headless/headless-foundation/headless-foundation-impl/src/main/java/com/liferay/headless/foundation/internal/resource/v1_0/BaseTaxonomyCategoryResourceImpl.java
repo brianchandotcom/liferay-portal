@@ -14,8 +14,8 @@
 
 package com.liferay.headless.foundation.internal.resource.v1_0;
 
-import com.liferay.headless.foundation.dto.v1_0.Category;
-import com.liferay.headless.foundation.resource.v1_0.CategoryResource;
+import com.liferay.headless.foundation.dto.v1_0.TaxonomyCategory;
+import com.liferay.headless.foundation.resource.v1_0.TaxonomyCategoryResource;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Company;
@@ -59,15 +59,16 @@ import javax.ws.rs.core.UriInfo;
  */
 @Generated("")
 @Path("/v1.0")
-public abstract class BaseCategoryResourceImpl implements CategoryResource {
+public abstract class BaseTaxonomyCategoryResourceImpl
+	implements TaxonomyCategoryResource {
 
 	@Override
 	@DELETE
-	@Path("/categories/{category-id}")
+	@Path("/taxonomy-categories/{taxonomy-category-id}")
 	@Produces("application/json")
-	@Tags(value = {@Tag(name = "Category")})
-	public boolean deleteCategory(
-			@NotNull @PathParam("category-id") Long categoryId)
+	@Tags(value = {@Tag(name = "TaxonomyCategory")})
+	public boolean deleteTaxonomyCategory(
+			@NotNull @PathParam("taxonomy-category-id") Long taxonomyCategoryId)
 		throws Exception {
 
 		return false;
@@ -75,28 +76,28 @@ public abstract class BaseCategoryResourceImpl implements CategoryResource {
 
 	@Override
 	@GET
-	@Path("/categories/{category-id}")
+	@Path("/taxonomy-categories/{taxonomy-category-id}")
 	@Produces("application/json")
-	@Tags(value = {@Tag(name = "Category")})
-	public Category getCategory(
-			@NotNull @PathParam("category-id") Long categoryId)
+	@Tags(value = {@Tag(name = "TaxonomyCategory")})
+	public TaxonomyCategory getTaxonomyCategory(
+			@NotNull @PathParam("taxonomy-category-id") Long taxonomyCategoryId)
 		throws Exception {
 
-		return new Category();
+		return new TaxonomyCategory();
 	}
 
 	@Override
 	@Consumes("application/json")
 	@PUT
-	@Path("/categories/{category-id}")
+	@Path("/taxonomy-categories/{taxonomy-category-id}")
 	@Produces("application/json")
-	@Tags(value = {@Tag(name = "Category")})
-	public Category putCategory(
-			@NotNull @PathParam("category-id") Long categoryId,
-			Category category)
+	@Tags(value = {@Tag(name = "TaxonomyCategory")})
+	public TaxonomyCategory putTaxonomyCategory(
+			@NotNull @PathParam("taxonomy-category-id") Long taxonomyCategoryId,
+			TaxonomyCategory taxonomyCategory)
 		throws Exception {
 
-		return new Category();
+		return new TaxonomyCategory();
 	}
 
 	@Override
@@ -109,11 +110,11 @@ public abstract class BaseCategoryResourceImpl implements CategoryResource {
 			@Parameter(in = ParameterIn.QUERY, name = "sorts")
 		}
 	)
-	@Path("/categories/{category-id}/categories")
+	@Path("/taxonomy-categories/{taxonomy-category-id}/taxonomy-categories")
 	@Produces("application/json")
-	@Tags(value = {@Tag(name = "Category")})
-	public Page<Category> getCategoryCategoriesPage(
-			@NotNull @PathParam("category-id") Long categoryId,
+	@Tags(value = {@Tag(name = "TaxonomyCategory")})
+	public Page<TaxonomyCategory> getTaxonomyCategoryTaxonomyCategoriesPage(
+			@NotNull @PathParam("taxonomy-category-id") Long taxonomyCategoryId,
 			@Context Filter filter, @Context Pagination pagination,
 			@Context Sort[] sorts)
 		throws Exception {
@@ -124,15 +125,15 @@ public abstract class BaseCategoryResourceImpl implements CategoryResource {
 	@Override
 	@Consumes("application/json")
 	@POST
-	@Path("/categories/{category-id}/categories")
+	@Path("/taxonomy-categories/{taxonomy-category-id}/taxonomy-categories")
 	@Produces("application/json")
-	@Tags(value = {@Tag(name = "Category")})
-	public Category postCategoryCategory(
-			@NotNull @PathParam("category-id") Long categoryId,
-			Category category)
+	@Tags(value = {@Tag(name = "TaxonomyCategory")})
+	public TaxonomyCategory postTaxonomyCategoryTaxonomyCategory(
+			@NotNull @PathParam("taxonomy-category-id") Long taxonomyCategoryId,
+			TaxonomyCategory taxonomyCategory)
 		throws Exception {
 
-		return new Category();
+		return new TaxonomyCategory();
 	}
 
 	@Override
@@ -145,11 +146,12 @@ public abstract class BaseCategoryResourceImpl implements CategoryResource {
 			@Parameter(in = ParameterIn.QUERY, name = "sorts")
 		}
 	)
-	@Path("/vocabularies/{vocabulary-id}/categories")
+	@Path("/taxonomy-vocabularies/{taxonomy-vocabulary-id}/taxonomy-categories")
 	@Produces("application/json")
-	@Tags(value = {@Tag(name = "Category")})
-	public Page<Category> getVocabularyCategoriesPage(
-			@NotNull @PathParam("vocabulary-id") Long vocabularyId,
+	@Tags(value = {@Tag(name = "TaxonomyCategory")})
+	public Page<TaxonomyCategory> getTaxonomyVocabularyTaxonomyCategoriesPage(
+			@NotNull @PathParam("taxonomy-vocabulary-id") Long
+				taxonomyVocabularyId,
 			@Context Filter filter, @Context Pagination pagination,
 			@Context Sort[] sorts)
 		throws Exception {
@@ -160,15 +162,16 @@ public abstract class BaseCategoryResourceImpl implements CategoryResource {
 	@Override
 	@Consumes("application/json")
 	@POST
-	@Path("/vocabularies/{vocabulary-id}/categories")
+	@Path("/taxonomy-vocabularies/{taxonomy-vocabulary-id}/taxonomy-categories")
 	@Produces("application/json")
-	@Tags(value = {@Tag(name = "Category")})
-	public Category postVocabularyCategory(
-			@NotNull @PathParam("vocabulary-id") Long vocabularyId,
-			Category category)
+	@Tags(value = {@Tag(name = "TaxonomyCategory")})
+	public TaxonomyCategory postTaxonomyVocabularyTaxonomyCategory(
+			@NotNull @PathParam("taxonomy-vocabulary-id") Long
+				taxonomyVocabularyId,
+			TaxonomyCategory taxonomyCategory)
 		throws Exception {
 
-		return new Category();
+		return new TaxonomyCategory();
 	}
 
 	public void setContextCompany(Company contextCompany) {
@@ -184,11 +187,11 @@ public abstract class BaseCategoryResourceImpl implements CategoryResource {
 		}
 
 		URI resourceURI = UriBuilder.fromResource(
-			BaseCategoryResourceImpl.class
+			BaseTaxonomyCategoryResourceImpl.class
 		).build();
 
 		URI methodURI = UriBuilder.fromMethod(
-			BaseCategoryResourceImpl.class, methodName
+			BaseTaxonomyCategoryResourceImpl.class, methodName
 		).build(
 			values
 		);
@@ -196,7 +199,7 @@ public abstract class BaseCategoryResourceImpl implements CategoryResource {
 		return baseURIString + resourceURI.toString() + methodURI.toString();
 	}
 
-	protected void preparePatch(Category category) {
+	protected void preparePatch(TaxonomyCategory taxonomyCategory) {
 	}
 
 	protected <T, R> List<R> transform(

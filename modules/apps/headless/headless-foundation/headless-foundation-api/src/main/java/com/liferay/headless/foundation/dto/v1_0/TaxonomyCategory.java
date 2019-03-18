@@ -40,10 +40,10 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
-@GraphQLName("Category")
+@GraphQLName("TaxonomyCategory")
 @JsonFilter("Liferay.Vulcan")
-@XmlRootElement(name = "Category")
-public class Category {
+@XmlRootElement(name = "TaxonomyCategory")
+public class TaxonomyCategory {
 
 	public static enum ViewableBy {
 
@@ -198,20 +198,21 @@ public class Category {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String description;
 
-	public Boolean getHasCategories() {
-		return hasCategories;
+	public Boolean getHasTaxonomyCategories() {
+		return hasTaxonomyCategories;
 	}
 
-	public void setHasCategories(Boolean hasCategories) {
-		this.hasCategories = hasCategories;
+	public void setHasTaxonomyCategories(Boolean hasTaxonomyCategories) {
+		this.hasTaxonomyCategories = hasTaxonomyCategories;
 	}
 
 	@JsonIgnore
-	public void setHasCategories(
-		UnsafeSupplier<Boolean, Exception> hasCategoriesUnsafeSupplier) {
+	public void setHasTaxonomyCategories(
+		UnsafeSupplier<Boolean, Exception>
+			hasTaxonomyCategoriesUnsafeSupplier) {
 
 		try {
-			hasCategories = hasCategoriesUnsafeSupplier.get();
+			hasTaxonomyCategories = hasTaxonomyCategoriesUnsafeSupplier.get();
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
@@ -220,7 +221,7 @@ public class Category {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Boolean hasCategories;
+	protected Boolean hasTaxonomyCategories;
 
 	public Long getId() {
 		return id;
@@ -267,21 +268,23 @@ public class Category {
 	@NotNull
 	protected String name;
 
-	public ParentCategory getParentCategory() {
-		return parentCategory;
+	public ParentTaxonomyCategory getParentTaxonomyCategory() {
+		return parentTaxonomyCategory;
 	}
 
-	public void setParentCategory(ParentCategory parentCategory) {
-		this.parentCategory = parentCategory;
+	public void setParentTaxonomyCategory(
+		ParentTaxonomyCategory parentTaxonomyCategory) {
+
+		this.parentTaxonomyCategory = parentTaxonomyCategory;
 	}
 
 	@JsonIgnore
-	public void setParentCategory(
-		UnsafeSupplier<ParentCategory, Exception>
-			parentCategoryUnsafeSupplier) {
+	public void setParentTaxonomyCategory(
+		UnsafeSupplier<ParentTaxonomyCategory, Exception>
+			parentTaxonomyCategoryUnsafeSupplier) {
 
 		try {
-			parentCategory = parentCategoryUnsafeSupplier.get();
+			parentTaxonomyCategory = parentTaxonomyCategoryUnsafeSupplier.get();
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
@@ -290,23 +293,26 @@ public class Category {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected ParentCategory parentCategory;
+	protected ParentTaxonomyCategory parentTaxonomyCategory;
 
-	public ParentVocabulary getParentVocabulary() {
-		return parentVocabulary;
+	public ParentTaxonomyVocabulary getParentTaxonomyVocabulary() {
+		return parentTaxonomyVocabulary;
 	}
 
-	public void setParentVocabulary(ParentVocabulary parentVocabulary) {
-		this.parentVocabulary = parentVocabulary;
+	public void setParentTaxonomyVocabulary(
+		ParentTaxonomyVocabulary parentTaxonomyVocabulary) {
+
+		this.parentTaxonomyVocabulary = parentTaxonomyVocabulary;
 	}
 
 	@JsonIgnore
-	public void setParentVocabulary(
-		UnsafeSupplier<ParentVocabulary, Exception>
-			parentVocabularyUnsafeSupplier) {
+	public void setParentTaxonomyVocabulary(
+		UnsafeSupplier<ParentTaxonomyVocabulary, Exception>
+			parentTaxonomyVocabularyUnsafeSupplier) {
 
 		try {
-			parentVocabulary = parentVocabularyUnsafeSupplier.get();
+			parentTaxonomyVocabulary =
+				parentTaxonomyVocabularyUnsafeSupplier.get();
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
@@ -315,7 +321,7 @@ public class Category {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
-	protected ParentVocabulary parentVocabulary;
+	protected ParentTaxonomyVocabulary parentTaxonomyVocabulary;
 
 	public Long getParentVocabularyId() {
 		return parentVocabularyId;
@@ -428,9 +434,9 @@ public class Category {
 		sb.append("\"");
 		sb.append(", ");
 
-		sb.append("\"hasCategories\": ");
+		sb.append("\"hasTaxonomyCategories\": ");
 
-		sb.append(hasCategories);
+		sb.append(hasTaxonomyCategories);
 		sb.append(", ");
 
 		sb.append("\"id\": ");
@@ -445,14 +451,14 @@ public class Category {
 		sb.append("\"");
 		sb.append(", ");
 
-		sb.append("\"parentCategory\": ");
+		sb.append("\"parentTaxonomyCategory\": ");
 
-		sb.append(parentCategory);
+		sb.append(parentTaxonomyCategory);
 		sb.append(", ");
 
-		sb.append("\"parentVocabulary\": ");
+		sb.append("\"parentTaxonomyVocabulary\": ");
 
-		sb.append(parentVocabulary);
+		sb.append(parentTaxonomyVocabulary);
 		sb.append(", ");
 
 		sb.append("\"parentVocabularyId\": ");

@@ -14,14 +14,14 @@
 
 package com.liferay.headless.foundation.internal.graphql.mutation.v1_0;
 
-import com.liferay.headless.foundation.dto.v1_0.Category;
 import com.liferay.headless.foundation.dto.v1_0.Keyword;
+import com.liferay.headless.foundation.dto.v1_0.TaxonomyCategory;
+import com.liferay.headless.foundation.dto.v1_0.TaxonomyVocabulary;
 import com.liferay.headless.foundation.dto.v1_0.UserAccount;
-import com.liferay.headless.foundation.dto.v1_0.Vocabulary;
-import com.liferay.headless.foundation.resource.v1_0.CategoryResource;
 import com.liferay.headless.foundation.resource.v1_0.KeywordResource;
+import com.liferay.headless.foundation.resource.v1_0.TaxonomyCategoryResource;
+import com.liferay.headless.foundation.resource.v1_0.TaxonomyVocabularyResource;
 import com.liferay.headless.foundation.resource.v1_0.UserAccountResource;
-import com.liferay.headless.foundation.resource.v1_0.VocabularyResource;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
@@ -43,14 +43,6 @@ import org.osgi.service.component.ComponentServiceObjects;
 @Generated("")
 public class Mutation {
 
-	public static void setCategoryResourceComponentServiceObjects(
-		ComponentServiceObjects<CategoryResource>
-			categoryResourceComponentServiceObjects) {
-
-		_categoryResourceComponentServiceObjects =
-			categoryResourceComponentServiceObjects;
-	}
-
 	public static void setKeywordResourceComponentServiceObjects(
 		ComponentServiceObjects<KeywordResource>
 			keywordResourceComponentServiceObjects) {
@@ -59,71 +51,28 @@ public class Mutation {
 			keywordResourceComponentServiceObjects;
 	}
 
+	public static void setTaxonomyCategoryResourceComponentServiceObjects(
+		ComponentServiceObjects<TaxonomyCategoryResource>
+			taxonomyCategoryResourceComponentServiceObjects) {
+
+		_taxonomyCategoryResourceComponentServiceObjects =
+			taxonomyCategoryResourceComponentServiceObjects;
+	}
+
+	public static void setTaxonomyVocabularyResourceComponentServiceObjects(
+		ComponentServiceObjects<TaxonomyVocabularyResource>
+			taxonomyVocabularyResourceComponentServiceObjects) {
+
+		_taxonomyVocabularyResourceComponentServiceObjects =
+			taxonomyVocabularyResourceComponentServiceObjects;
+	}
+
 	public static void setUserAccountResourceComponentServiceObjects(
 		ComponentServiceObjects<UserAccountResource>
 			userAccountResourceComponentServiceObjects) {
 
 		_userAccountResourceComponentServiceObjects =
 			userAccountResourceComponentServiceObjects;
-	}
-
-	public static void setVocabularyResourceComponentServiceObjects(
-		ComponentServiceObjects<VocabularyResource>
-			vocabularyResourceComponentServiceObjects) {
-
-		_vocabularyResourceComponentServiceObjects =
-			vocabularyResourceComponentServiceObjects;
-	}
-
-	@GraphQLInvokeDetached
-	public boolean deleteCategory(@GraphQLName("category-id") Long categoryId)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_categoryResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			categoryResource -> categoryResource.deleteCategory(categoryId));
-	}
-
-	@GraphQLInvokeDetached
-	public Category putCategory(
-			@GraphQLName("category-id") Long categoryId,
-			@GraphQLName("Category") Category category)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_categoryResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			categoryResource -> categoryResource.putCategory(
-				categoryId, category));
-	}
-
-	@GraphQLField
-	@GraphQLInvokeDetached
-	public Category postCategoryCategory(
-			@GraphQLName("category-id") Long categoryId,
-			@GraphQLName("Category") Category category)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_categoryResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			categoryResource -> categoryResource.postCategoryCategory(
-				categoryId, category));
-	}
-
-	@GraphQLField
-	@GraphQLInvokeDetached
-	public Category postVocabularyCategory(
-			@GraphQLName("vocabulary-id") Long vocabularyId,
-			@GraphQLName("Category") Category category)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_categoryResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			categoryResource -> categoryResource.postVocabularyCategory(
-				vocabularyId, category));
 	}
 
 	@GraphQLField
@@ -160,6 +109,107 @@ public class Mutation {
 			_keywordResourceComponentServiceObjects,
 			this::_populateResourceContext,
 			keywordResource -> keywordResource.putKeyword(keywordId, keyword));
+	}
+
+	@GraphQLInvokeDetached
+	public boolean deleteTaxonomyCategory(
+			@GraphQLName("taxonomy-category-id") Long taxonomyCategoryId)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_taxonomyCategoryResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			taxonomyCategoryResource ->
+				taxonomyCategoryResource.deleteTaxonomyCategory(
+					taxonomyCategoryId));
+	}
+
+	@GraphQLInvokeDetached
+	public TaxonomyCategory putTaxonomyCategory(
+			@GraphQLName("taxonomy-category-id") Long taxonomyCategoryId,
+			@GraphQLName("TaxonomyCategory") TaxonomyCategory taxonomyCategory)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_taxonomyCategoryResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			taxonomyCategoryResource ->
+				taxonomyCategoryResource.putTaxonomyCategory(
+					taxonomyCategoryId, taxonomyCategory));
+	}
+
+	@GraphQLField
+	@GraphQLInvokeDetached
+	public TaxonomyCategory postTaxonomyCategoryTaxonomyCategory(
+			@GraphQLName("taxonomy-category-id") Long taxonomyCategoryId,
+			@GraphQLName("TaxonomyCategory") TaxonomyCategory taxonomyCategory)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_taxonomyCategoryResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			taxonomyCategoryResource ->
+				taxonomyCategoryResource.postTaxonomyCategoryTaxonomyCategory(
+					taxonomyCategoryId, taxonomyCategory));
+	}
+
+	@GraphQLField
+	@GraphQLInvokeDetached
+	public TaxonomyCategory postTaxonomyVocabularyTaxonomyCategory(
+			@GraphQLName("taxonomy-vocabulary-id") Long taxonomyVocabularyId,
+			@GraphQLName("TaxonomyCategory") TaxonomyCategory taxonomyCategory)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_taxonomyCategoryResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			taxonomyCategoryResource ->
+				taxonomyCategoryResource.postTaxonomyVocabularyTaxonomyCategory(
+					taxonomyVocabularyId, taxonomyCategory));
+	}
+
+	@GraphQLField
+	@GraphQLInvokeDetached
+	public TaxonomyVocabulary postContentSpaceTaxonomyVocabulary(
+			@GraphQLName("content-space-id") Long contentSpaceId,
+			@GraphQLName("TaxonomyVocabulary") TaxonomyVocabulary
+				taxonomyVocabulary)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_taxonomyVocabularyResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			taxonomyVocabularyResource ->
+				taxonomyVocabularyResource.postContentSpaceTaxonomyVocabulary(
+					contentSpaceId, taxonomyVocabulary));
+	}
+
+	@GraphQLInvokeDetached
+	public boolean deleteTaxonomyVocabulary(
+			@GraphQLName("taxonomy-vocabulary-id") Long taxonomyVocabularyId)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_taxonomyVocabularyResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			taxonomyVocabularyResource ->
+				taxonomyVocabularyResource.deleteTaxonomyVocabulary(
+					taxonomyVocabularyId));
+	}
+
+	@GraphQLInvokeDetached
+	public TaxonomyVocabulary putTaxonomyVocabulary(
+			@GraphQLName("taxonomy-vocabulary-id") Long taxonomyVocabularyId,
+			@GraphQLName("TaxonomyVocabulary") TaxonomyVocabulary
+				taxonomyVocabulary)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_taxonomyVocabularyResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			taxonomyVocabularyResource ->
+				taxonomyVocabularyResource.putTaxonomyVocabulary(
+					taxonomyVocabularyId, taxonomyVocabulary));
 	}
 
 	@GraphQLField
@@ -213,45 +263,6 @@ public class Mutation {
 				userAccountId, userAccount));
 	}
 
-	@GraphQLField
-	@GraphQLInvokeDetached
-	public Vocabulary postContentSpaceVocabulary(
-			@GraphQLName("content-space-id") Long contentSpaceId,
-			@GraphQLName("Vocabulary") Vocabulary vocabulary)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_vocabularyResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			vocabularyResource -> vocabularyResource.postContentSpaceVocabulary(
-				contentSpaceId, vocabulary));
-	}
-
-	@GraphQLInvokeDetached
-	public boolean deleteVocabulary(
-			@GraphQLName("vocabulary-id") Long vocabularyId)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_vocabularyResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			vocabularyResource -> vocabularyResource.deleteVocabulary(
-				vocabularyId));
-	}
-
-	@GraphQLInvokeDetached
-	public Vocabulary putVocabulary(
-			@GraphQLName("vocabulary-id") Long vocabularyId,
-			@GraphQLName("Vocabulary") Vocabulary vocabulary)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_vocabularyResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			vocabularyResource -> vocabularyResource.putVocabulary(
-				vocabularyId, vocabulary));
-	}
-
 	private <T, R, E1 extends Throwable, E2 extends Throwable> R
 			_applyComponentServiceObjects(
 				ComponentServiceObjects<T> componentServiceObjects,
@@ -271,18 +282,28 @@ public class Mutation {
 		}
 	}
 
-	private void _populateResourceContext(CategoryResource categoryResource)
-		throws Exception {
-
-		categoryResource.setContextCompany(
-			CompanyLocalServiceUtil.getCompany(
-				CompanyThreadLocal.getCompanyId()));
-	}
-
 	private void _populateResourceContext(KeywordResource keywordResource)
 		throws Exception {
 
 		keywordResource.setContextCompany(
+			CompanyLocalServiceUtil.getCompany(
+				CompanyThreadLocal.getCompanyId()));
+	}
+
+	private void _populateResourceContext(
+			TaxonomyCategoryResource taxonomyCategoryResource)
+		throws Exception {
+
+		taxonomyCategoryResource.setContextCompany(
+			CompanyLocalServiceUtil.getCompany(
+				CompanyThreadLocal.getCompanyId()));
+	}
+
+	private void _populateResourceContext(
+			TaxonomyVocabularyResource taxonomyVocabularyResource)
+		throws Exception {
+
+		taxonomyVocabularyResource.setContextCompany(
 			CompanyLocalServiceUtil.getCompany(
 				CompanyThreadLocal.getCompanyId()));
 	}
@@ -296,21 +317,13 @@ public class Mutation {
 				CompanyThreadLocal.getCompanyId()));
 	}
 
-	private void _populateResourceContext(VocabularyResource vocabularyResource)
-		throws Exception {
-
-		vocabularyResource.setContextCompany(
-			CompanyLocalServiceUtil.getCompany(
-				CompanyThreadLocal.getCompanyId()));
-	}
-
-	private static ComponentServiceObjects<CategoryResource>
-		_categoryResourceComponentServiceObjects;
 	private static ComponentServiceObjects<KeywordResource>
 		_keywordResourceComponentServiceObjects;
+	private static ComponentServiceObjects<TaxonomyCategoryResource>
+		_taxonomyCategoryResourceComponentServiceObjects;
+	private static ComponentServiceObjects<TaxonomyVocabularyResource>
+		_taxonomyVocabularyResourceComponentServiceObjects;
 	private static ComponentServiceObjects<UserAccountResource>
 		_userAccountResourceComponentServiceObjects;
-	private static ComponentServiceObjects<VocabularyResource>
-		_vocabularyResourceComponentServiceObjects;
 
 }

@@ -170,11 +170,6 @@ public abstract class BaseStructuredContentResourceImpl
 				structuredContent.getAvailableLanguages());
 		}
 
-		if (Validator.isNotNull(structuredContent.getCategoryIds())) {
-			existingStructuredContent.setCategoryIds(
-				structuredContent.getCategoryIds());
-		}
-
 		if (Validator.isNotNull(structuredContent.getContentSpaceId())) {
 			existingStructuredContent.setContentSpaceId(
 				structuredContent.getContentSpaceId());
@@ -218,6 +213,11 @@ public abstract class BaseStructuredContentResourceImpl
 		if (Validator.isNotNull(structuredContent.getLastReviewed())) {
 			existingStructuredContent.setLastReviewed(
 				structuredContent.getLastReviewed());
+		}
+
+		if (Validator.isNotNull(structuredContent.getTaxonomyCategoryIds())) {
+			existingStructuredContent.setTaxonomyCategoryIds(
+				structuredContent.getTaxonomyCategoryIds());
 		}
 
 		if (Validator.isNotNull(structuredContent.getTitle())) {

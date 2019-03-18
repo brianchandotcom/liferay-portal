@@ -359,7 +359,6 @@ public abstract class BaseBlogPostingResourceTestCase {
 		BlogPosting blogPosting1 =
 			testGetContentSpaceBlogPostingsPage_addBlogPosting(
 				contentSpaceId, randomBlogPosting());
-
 		BlogPosting blogPosting2 =
 			testGetContentSpaceBlogPostingsPage_addBlogPosting(
 				contentSpaceId, randomBlogPosting());
@@ -463,11 +462,9 @@ public abstract class BaseBlogPostingResourceTestCase {
 		BlogPosting blogPosting1 =
 			testGetContentSpaceBlogPostingsPage_addBlogPosting(
 				contentSpaceId, randomBlogPosting());
-
 		BlogPosting blogPosting2 =
 			testGetContentSpaceBlogPostingsPage_addBlogPosting(
 				contentSpaceId, randomBlogPosting());
-
 		BlogPosting blogPosting3 =
 			testGetContentSpaceBlogPostingsPage_addBlogPosting(
 				contentSpaceId, randomBlogPosting());
@@ -572,7 +569,6 @@ public abstract class BaseBlogPostingResourceTestCase {
 
 		blogPosting1 = testGetContentSpaceBlogPostingsPage_addBlogPosting(
 			contentSpaceId, blogPosting1);
-
 		blogPosting2 = testGetContentSpaceBlogPostingsPage_addBlogPosting(
 			contentSpaceId, blogPosting2);
 
@@ -891,16 +887,6 @@ public abstract class BaseBlogPostingResourceTestCase {
 			return sb.toString();
 		}
 
-		if (entityFieldName.equals("categories")) {
-			throw new IllegalArgumentException(
-				"Invalid entity field " + entityFieldName);
-		}
-
-		if (entityFieldName.equals("categoryIds")) {
-			throw new IllegalArgumentException(
-				"Invalid entity field " + entityFieldName);
-		}
-
 		if (entityFieldName.equals("contentSpaceId")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
@@ -982,6 +968,16 @@ public abstract class BaseBlogPostingResourceTestCase {
 		}
 
 		if (entityFieldName.equals("keywords")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
+		if (entityFieldName.equals("taxonomyCategories")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
+		if (entityFieldName.equals("taxonomyCategoryIds")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
 		}
@@ -1079,13 +1075,8 @@ public abstract class BaseBlogPostingResourceTestCase {
 		return options;
 	}
 
-	private String _toPath(String template, Object... values) {
-		for (int i = 0; i < values.length; i++) {
-			template = template.replaceFirst(
-				"\\{.*\\}", String.valueOf(values[i]));
-		}
-
-		return template;
+	private String _toPath(String template, Object value) {
+		return template.replaceFirst("\\{.*\\}", String.valueOf(value));
 	}
 
 	private static BeanUtilsBean _beanUtilsBean = new BeanUtilsBean() {

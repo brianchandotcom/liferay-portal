@@ -108,7 +108,6 @@ public abstract class BaseFormStructureResourceTestCase {
 		FormStructure formStructure1 =
 			testGetContentSpaceFormStructuresPage_addFormStructure(
 				contentSpaceId, randomFormStructure());
-
 		FormStructure formStructure2 =
 			testGetContentSpaceFormStructuresPage_addFormStructure(
 				contentSpaceId, randomFormStructure());
@@ -134,11 +133,9 @@ public abstract class BaseFormStructureResourceTestCase {
 		FormStructure formStructure1 =
 			testGetContentSpaceFormStructuresPage_addFormStructure(
 				contentSpaceId, randomFormStructure());
-
 		FormStructure formStructure2 =
 			testGetContentSpaceFormStructuresPage_addFormStructure(
 				contentSpaceId, randomFormStructure());
-
 		FormStructure formStructure3 =
 			testGetContentSpaceFormStructuresPage_addFormStructure(
 				contentSpaceId, randomFormStructure());
@@ -556,13 +553,8 @@ public abstract class BaseFormStructureResourceTestCase {
 		return options;
 	}
 
-	private String _toPath(String template, Object... values) {
-		for (int i = 0; i < values.length; i++) {
-			template = template.replaceFirst(
-				"\\{.*\\}", String.valueOf(values[i]));
-		}
-
-		return template;
+	private String _toPath(String template, Object value) {
+		return template.replaceFirst("\\{.*\\}", String.valueOf(value));
 	}
 
 	private static BeanUtilsBean _beanUtilsBean = new BeanUtilsBean() {

@@ -14,7 +14,7 @@
 
 package com.liferay.headless.foundation.resource.v1_0;
 
-import com.liferay.headless.foundation.dto.v1_0.Category;
+import com.liferay.headless.foundation.dto.v1_0.TaxonomyVocabulary;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
@@ -32,28 +32,25 @@ import javax.annotation.Generated;
  * @generated
  */
 @Generated("")
-public interface CategoryResource {
+public interface TaxonomyVocabularyResource {
 
-	public boolean deleteCategory(Long categoryId) throws Exception;
-
-	public Category getCategory(Long categoryId) throws Exception;
-
-	public Category putCategory(Long categoryId, Category category)
-		throws Exception;
-
-	public Page<Category> getCategoryCategoriesPage(
-			Long categoryId, Filter filter, Pagination pagination, Sort[] sorts)
-		throws Exception;
-
-	public Category postCategoryCategory(Long categoryId, Category category)
-		throws Exception;
-
-	public Page<Category> getVocabularyCategoriesPage(
-			Long vocabularyId, Filter filter, Pagination pagination,
+	public Page<TaxonomyVocabulary> getContentSpaceTaxonomyVocabulariesPage(
+			Long contentSpaceId, Filter filter, Pagination pagination,
 			Sort[] sorts)
 		throws Exception;
 
-	public Category postVocabularyCategory(Long vocabularyId, Category category)
+	public TaxonomyVocabulary postContentSpaceTaxonomyVocabulary(
+			Long contentSpaceId, TaxonomyVocabulary taxonomyVocabulary)
+		throws Exception;
+
+	public boolean deleteTaxonomyVocabulary(Long taxonomyVocabularyId)
+		throws Exception;
+
+	public TaxonomyVocabulary getTaxonomyVocabulary(Long taxonomyVocabularyId)
+		throws Exception;
+
+	public TaxonomyVocabulary putTaxonomyVocabulary(
+			Long taxonomyVocabularyId, TaxonomyVocabulary taxonomyVocabulary)
 		throws Exception;
 
 	public void setContextCompany(Company contextCompany);

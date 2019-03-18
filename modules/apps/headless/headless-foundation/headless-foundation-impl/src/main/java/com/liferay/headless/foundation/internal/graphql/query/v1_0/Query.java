@@ -14,7 +14,6 @@
 
 package com.liferay.headless.foundation.internal.graphql.query.v1_0;
 
-import com.liferay.headless.foundation.dto.v1_0.Category;
 import com.liferay.headless.foundation.dto.v1_0.Email;
 import com.liferay.headless.foundation.dto.v1_0.Keyword;
 import com.liferay.headless.foundation.dto.v1_0.Organization;
@@ -23,10 +22,10 @@ import com.liferay.headless.foundation.dto.v1_0.PostalAddress;
 import com.liferay.headless.foundation.dto.v1_0.Role;
 import com.liferay.headless.foundation.dto.v1_0.Segment;
 import com.liferay.headless.foundation.dto.v1_0.SegmentUser;
+import com.liferay.headless.foundation.dto.v1_0.TaxonomyCategory;
+import com.liferay.headless.foundation.dto.v1_0.TaxonomyVocabulary;
 import com.liferay.headless.foundation.dto.v1_0.UserAccount;
-import com.liferay.headless.foundation.dto.v1_0.Vocabulary;
 import com.liferay.headless.foundation.dto.v1_0.WebUrl;
-import com.liferay.headless.foundation.resource.v1_0.CategoryResource;
 import com.liferay.headless.foundation.resource.v1_0.EmailResource;
 import com.liferay.headless.foundation.resource.v1_0.KeywordResource;
 import com.liferay.headless.foundation.resource.v1_0.OrganizationResource;
@@ -35,8 +34,9 @@ import com.liferay.headless.foundation.resource.v1_0.PostalAddressResource;
 import com.liferay.headless.foundation.resource.v1_0.RoleResource;
 import com.liferay.headless.foundation.resource.v1_0.SegmentResource;
 import com.liferay.headless.foundation.resource.v1_0.SegmentUserResource;
+import com.liferay.headless.foundation.resource.v1_0.TaxonomyCategoryResource;
+import com.liferay.headless.foundation.resource.v1_0.TaxonomyVocabularyResource;
 import com.liferay.headless.foundation.resource.v1_0.UserAccountResource;
-import com.liferay.headless.foundation.resource.v1_0.VocabularyResource;
 import com.liferay.headless.foundation.resource.v1_0.WebUrlResource;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.function.UnsafeFunction;
@@ -63,14 +63,6 @@ import org.osgi.service.component.ComponentServiceObjects;
  */
 @Generated("")
 public class Query {
-
-	public static void setCategoryResourceComponentServiceObjects(
-		ComponentServiceObjects<CategoryResource>
-			categoryResourceComponentServiceObjects) {
-
-		_categoryResourceComponentServiceObjects =
-			categoryResourceComponentServiceObjects;
-	}
 
 	public static void setEmailResourceComponentServiceObjects(
 		ComponentServiceObjects<EmailResource>
@@ -136,6 +128,22 @@ public class Query {
 			segmentUserResourceComponentServiceObjects;
 	}
 
+	public static void setTaxonomyCategoryResourceComponentServiceObjects(
+		ComponentServiceObjects<TaxonomyCategoryResource>
+			taxonomyCategoryResourceComponentServiceObjects) {
+
+		_taxonomyCategoryResourceComponentServiceObjects =
+			taxonomyCategoryResourceComponentServiceObjects;
+	}
+
+	public static void setTaxonomyVocabularyResourceComponentServiceObjects(
+		ComponentServiceObjects<TaxonomyVocabularyResource>
+			taxonomyVocabularyResourceComponentServiceObjects) {
+
+		_taxonomyVocabularyResourceComponentServiceObjects =
+			taxonomyVocabularyResourceComponentServiceObjects;
+	}
+
 	public static void setUserAccountResourceComponentServiceObjects(
 		ComponentServiceObjects<UserAccountResource>
 			userAccountResourceComponentServiceObjects) {
@@ -144,75 +152,12 @@ public class Query {
 			userAccountResourceComponentServiceObjects;
 	}
 
-	public static void setVocabularyResourceComponentServiceObjects(
-		ComponentServiceObjects<VocabularyResource>
-			vocabularyResourceComponentServiceObjects) {
-
-		_vocabularyResourceComponentServiceObjects =
-			vocabularyResourceComponentServiceObjects;
-	}
-
 	public static void setWebUrlResourceComponentServiceObjects(
 		ComponentServiceObjects<WebUrlResource>
 			webUrlResourceComponentServiceObjects) {
 
 		_webUrlResourceComponentServiceObjects =
 			webUrlResourceComponentServiceObjects;
-	}
-
-	@GraphQLField
-	@GraphQLInvokeDetached
-	public Category getCategory(@GraphQLName("category-id") Long categoryId)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_categoryResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			categoryResource -> categoryResource.getCategory(categoryId));
-	}
-
-	@GraphQLField
-	@GraphQLInvokeDetached
-	public Collection<Category> getCategoryCategoriesPage(
-			@GraphQLName("category-id") Long categoryId,
-			@GraphQLName("filter") Filter filter,
-			@GraphQLName("pageSize") int pageSize,
-			@GraphQLName("page") int page, @GraphQLName("Sort[]") Sort[] sorts)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_categoryResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			categoryResource -> {
-				Page paginationPage =
-					categoryResource.getCategoryCategoriesPage(
-						categoryId, filter, Pagination.of(pageSize, page),
-						sorts);
-
-				return paginationPage.getItems();
-			});
-	}
-
-	@GraphQLField
-	@GraphQLInvokeDetached
-	public Collection<Category> getVocabularyCategoriesPage(
-			@GraphQLName("vocabulary-id") Long vocabularyId,
-			@GraphQLName("filter") Filter filter,
-			@GraphQLName("pageSize") int pageSize,
-			@GraphQLName("page") int page, @GraphQLName("Sort[]") Sort[] sorts)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_categoryResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			categoryResource -> {
-				Page paginationPage =
-					categoryResource.getVocabularyCategoriesPage(
-						vocabularyId, filter, Pagination.of(pageSize, page),
-						sorts);
-
-				return paginationPage.getItems();
-			});
 	}
 
 	@GraphQLField
@@ -619,6 +564,110 @@ public class Query {
 
 	@GraphQLField
 	@GraphQLInvokeDetached
+	public TaxonomyCategory getTaxonomyCategory(
+			@GraphQLName("taxonomy-category-id") Long taxonomyCategoryId)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_taxonomyCategoryResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			taxonomyCategoryResource ->
+				taxonomyCategoryResource.getTaxonomyCategory(
+					taxonomyCategoryId));
+	}
+
+	@GraphQLField
+	@GraphQLInvokeDetached
+	public Collection<TaxonomyCategory>
+			getTaxonomyCategoryTaxonomyCategoriesPage(
+				@GraphQLName("taxonomy-category-id") Long taxonomyCategoryId,
+				@GraphQLName("filter") Filter filter,
+				@GraphQLName("pageSize") int pageSize,
+				@GraphQLName("page") int page,
+				@GraphQLName("Sort[]") Sort[] sorts)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_taxonomyCategoryResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			taxonomyCategoryResource -> {
+				Page paginationPage =
+					taxonomyCategoryResource.
+						getTaxonomyCategoryTaxonomyCategoriesPage(
+							taxonomyCategoryId, filter,
+							Pagination.of(pageSize, page), sorts);
+
+				return paginationPage.getItems();
+			});
+	}
+
+	@GraphQLField
+	@GraphQLInvokeDetached
+	public Collection<TaxonomyCategory>
+			getTaxonomyVocabularyTaxonomyCategoriesPage(
+				@GraphQLName("taxonomy-vocabulary-id") Long
+					taxonomyVocabularyId,
+				@GraphQLName("filter") Filter filter,
+				@GraphQLName("pageSize") int pageSize,
+				@GraphQLName("page") int page,
+				@GraphQLName("Sort[]") Sort[] sorts)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_taxonomyCategoryResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			taxonomyCategoryResource -> {
+				Page paginationPage =
+					taxonomyCategoryResource.
+						getTaxonomyVocabularyTaxonomyCategoriesPage(
+							taxonomyVocabularyId, filter,
+							Pagination.of(pageSize, page), sorts);
+
+				return paginationPage.getItems();
+			});
+	}
+
+	@GraphQLField
+	@GraphQLInvokeDetached
+	public Collection<TaxonomyVocabulary>
+			getContentSpaceTaxonomyVocabulariesPage(
+				@GraphQLName("content-space-id") Long contentSpaceId,
+				@GraphQLName("filter") Filter filter,
+				@GraphQLName("pageSize") int pageSize,
+				@GraphQLName("page") int page,
+				@GraphQLName("Sort[]") Sort[] sorts)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_taxonomyVocabularyResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			taxonomyVocabularyResource -> {
+				Page paginationPage =
+					taxonomyVocabularyResource.
+						getContentSpaceTaxonomyVocabulariesPage(
+							contentSpaceId, filter,
+							Pagination.of(pageSize, page), sorts);
+
+				return paginationPage.getItems();
+			});
+	}
+
+	@GraphQLField
+	@GraphQLInvokeDetached
+	public TaxonomyVocabulary getTaxonomyVocabulary(
+			@GraphQLName("taxonomy-vocabulary-id") Long taxonomyVocabularyId)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_taxonomyVocabularyResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			taxonomyVocabularyResource ->
+				taxonomyVocabularyResource.getTaxonomyVocabulary(
+					taxonomyVocabularyId));
+	}
+
+	@GraphQLField
+	@GraphQLInvokeDetached
 	public UserAccount getMyUserAccount(
 			@GraphQLName("my-user-account-id") Long myUserAccountId)
 		throws Exception {
@@ -703,41 +752,6 @@ public class Query {
 
 	@GraphQLField
 	@GraphQLInvokeDetached
-	public Collection<Vocabulary> getContentSpaceVocabulariesPage(
-			@GraphQLName("content-space-id") Long contentSpaceId,
-			@GraphQLName("filter") Filter filter,
-			@GraphQLName("pageSize") int pageSize,
-			@GraphQLName("page") int page, @GraphQLName("Sort[]") Sort[] sorts)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_vocabularyResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			vocabularyResource -> {
-				Page paginationPage =
-					vocabularyResource.getContentSpaceVocabulariesPage(
-						contentSpaceId, filter, Pagination.of(pageSize, page),
-						sorts);
-
-				return paginationPage.getItems();
-			});
-	}
-
-	@GraphQLField
-	@GraphQLInvokeDetached
-	public Vocabulary getVocabulary(
-			@GraphQLName("vocabulary-id") Long vocabularyId)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_vocabularyResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			vocabularyResource -> vocabularyResource.getVocabulary(
-				vocabularyId));
-	}
-
-	@GraphQLField
-	@GraphQLInvokeDetached
 	public Collection<WebUrl> getOrganizationWebUrlsPage(
 			@GraphQLName("organization-id") Long organizationId,
 			@GraphQLName("pageSize") int pageSize,
@@ -802,14 +816,6 @@ public class Query {
 		finally {
 			componentServiceObjects.ungetService(resource);
 		}
-	}
-
-	private void _populateResourceContext(CategoryResource categoryResource)
-		throws Exception {
-
-		categoryResource.setContextCompany(
-			CompanyLocalServiceUtil.getCompany(
-				CompanyThreadLocal.getCompanyId()));
 	}
 
 	private void _populateResourceContext(EmailResource emailResource)
@@ -880,18 +886,28 @@ public class Query {
 	}
 
 	private void _populateResourceContext(
-			UserAccountResource userAccountResource)
+			TaxonomyCategoryResource taxonomyCategoryResource)
 		throws Exception {
 
-		userAccountResource.setContextCompany(
+		taxonomyCategoryResource.setContextCompany(
 			CompanyLocalServiceUtil.getCompany(
 				CompanyThreadLocal.getCompanyId()));
 	}
 
-	private void _populateResourceContext(VocabularyResource vocabularyResource)
+	private void _populateResourceContext(
+			TaxonomyVocabularyResource taxonomyVocabularyResource)
 		throws Exception {
 
-		vocabularyResource.setContextCompany(
+		taxonomyVocabularyResource.setContextCompany(
+			CompanyLocalServiceUtil.getCompany(
+				CompanyThreadLocal.getCompanyId()));
+	}
+
+	private void _populateResourceContext(
+			UserAccountResource userAccountResource)
+		throws Exception {
+
+		userAccountResource.setContextCompany(
 			CompanyLocalServiceUtil.getCompany(
 				CompanyThreadLocal.getCompanyId()));
 	}
@@ -904,8 +920,6 @@ public class Query {
 				CompanyThreadLocal.getCompanyId()));
 	}
 
-	private static ComponentServiceObjects<CategoryResource>
-		_categoryResourceComponentServiceObjects;
 	private static ComponentServiceObjects<EmailResource>
 		_emailResourceComponentServiceObjects;
 	private static ComponentServiceObjects<KeywordResource>
@@ -922,10 +936,12 @@ public class Query {
 		_segmentResourceComponentServiceObjects;
 	private static ComponentServiceObjects<SegmentUserResource>
 		_segmentUserResourceComponentServiceObjects;
+	private static ComponentServiceObjects<TaxonomyCategoryResource>
+		_taxonomyCategoryResourceComponentServiceObjects;
+	private static ComponentServiceObjects<TaxonomyVocabularyResource>
+		_taxonomyVocabularyResourceComponentServiceObjects;
 	private static ComponentServiceObjects<UserAccountResource>
 		_userAccountResourceComponentServiceObjects;
-	private static ComponentServiceObjects<VocabularyResource>
-		_vocabularyResourceComponentServiceObjects;
 	private static ComponentServiceObjects<WebUrlResource>
 		_webUrlResourceComponentServiceObjects;
 

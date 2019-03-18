@@ -116,10 +116,6 @@ public abstract class BaseBlogPostingResourceImpl
 			existingBlogPosting.setCaption(blogPosting.getCaption());
 		}
 
-		if (Validator.isNotNull(blogPosting.getCategoryIds())) {
-			existingBlogPosting.setCategoryIds(blogPosting.getCategoryIds());
-		}
-
 		if (Validator.isNotNull(blogPosting.getContentSpaceId())) {
 			existingBlogPosting.setContentSpaceId(
 				blogPosting.getContentSpaceId());
@@ -166,6 +162,11 @@ public abstract class BaseBlogPostingResourceImpl
 
 		if (Validator.isNotNull(blogPosting.getKeywords())) {
 			existingBlogPosting.setKeywords(blogPosting.getKeywords());
+		}
+
+		if (Validator.isNotNull(blogPosting.getTaxonomyCategoryIds())) {
+			existingBlogPosting.setTaxonomyCategoryIds(
+				blogPosting.getTaxonomyCategoryIds());
 		}
 
 		if (Validator.isNotNull(blogPosting.getViewableBy())) {

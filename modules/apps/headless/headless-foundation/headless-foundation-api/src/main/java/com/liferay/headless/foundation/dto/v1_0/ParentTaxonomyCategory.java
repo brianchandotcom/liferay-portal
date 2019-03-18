@@ -33,10 +33,10 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
-@GraphQLName("ParentVocabulary")
+@GraphQLName("ParentTaxonomyCategory")
 @JsonFilter("Liferay.Vulcan")
-@XmlRootElement(name = "ParentVocabulary")
-public class ParentVocabulary {
+@XmlRootElement(name = "ParentTaxonomyCategory")
+public class ParentTaxonomyCategory {
 
 	public Long getId() {
 		return id;

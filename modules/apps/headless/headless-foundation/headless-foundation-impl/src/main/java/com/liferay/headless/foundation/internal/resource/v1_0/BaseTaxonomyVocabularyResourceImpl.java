@@ -14,8 +14,8 @@
 
 package com.liferay.headless.foundation.internal.resource.v1_0;
 
-import com.liferay.headless.foundation.dto.v1_0.Vocabulary;
-import com.liferay.headless.foundation.resource.v1_0.VocabularyResource;
+import com.liferay.headless.foundation.dto.v1_0.TaxonomyVocabulary;
+import com.liferay.headless.foundation.resource.v1_0.TaxonomyVocabularyResource;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Company;
@@ -59,7 +59,8 @@ import javax.ws.rs.core.UriInfo;
  */
 @Generated("")
 @Path("/v1.0")
-public abstract class BaseVocabularyResourceImpl implements VocabularyResource {
+public abstract class BaseTaxonomyVocabularyResourceImpl
+	implements TaxonomyVocabularyResource {
 
 	@Override
 	@GET
@@ -71,10 +72,10 @@ public abstract class BaseVocabularyResourceImpl implements VocabularyResource {
 			@Parameter(in = ParameterIn.QUERY, name = "sorts")
 		}
 	)
-	@Path("/content-spaces/{content-space-id}/vocabularies")
+	@Path("/content-spaces/{content-space-id}/taxonomy-vocabularies")
 	@Produces("application/json")
-	@Tags(value = {@Tag(name = "Vocabulary")})
-	public Page<Vocabulary> getContentSpaceVocabulariesPage(
+	@Tags(value = {@Tag(name = "TaxonomyVocabulary")})
+	public Page<TaxonomyVocabulary> getContentSpaceTaxonomyVocabulariesPage(
 			@NotNull @PathParam("content-space-id") Long contentSpaceId,
 			@Context Filter filter, @Context Pagination pagination,
 			@Context Sort[] sorts)
@@ -86,24 +87,25 @@ public abstract class BaseVocabularyResourceImpl implements VocabularyResource {
 	@Override
 	@Consumes("application/json")
 	@POST
-	@Path("/content-spaces/{content-space-id}/vocabularies")
+	@Path("/content-spaces/{content-space-id}/taxonomy-vocabularies")
 	@Produces("application/json")
-	@Tags(value = {@Tag(name = "Vocabulary")})
-	public Vocabulary postContentSpaceVocabulary(
+	@Tags(value = {@Tag(name = "TaxonomyVocabulary")})
+	public TaxonomyVocabulary postContentSpaceTaxonomyVocabulary(
 			@NotNull @PathParam("content-space-id") Long contentSpaceId,
-			Vocabulary vocabulary)
+			TaxonomyVocabulary taxonomyVocabulary)
 		throws Exception {
 
-		return new Vocabulary();
+		return new TaxonomyVocabulary();
 	}
 
 	@Override
 	@DELETE
-	@Path("/vocabularies/{vocabulary-id}")
+	@Path("/taxonomy-vocabularies/{taxonomy-vocabulary-id}")
 	@Produces("application/json")
-	@Tags(value = {@Tag(name = "Vocabulary")})
-	public boolean deleteVocabulary(
-			@NotNull @PathParam("vocabulary-id") Long vocabularyId)
+	@Tags(value = {@Tag(name = "TaxonomyVocabulary")})
+	public boolean deleteTaxonomyVocabulary(
+			@NotNull @PathParam("taxonomy-vocabulary-id") Long
+				taxonomyVocabularyId)
 		throws Exception {
 
 		return false;
@@ -111,28 +113,30 @@ public abstract class BaseVocabularyResourceImpl implements VocabularyResource {
 
 	@Override
 	@GET
-	@Path("/vocabularies/{vocabulary-id}")
+	@Path("/taxonomy-vocabularies/{taxonomy-vocabulary-id}")
 	@Produces("application/json")
-	@Tags(value = {@Tag(name = "Vocabulary")})
-	public Vocabulary getVocabulary(
-			@NotNull @PathParam("vocabulary-id") Long vocabularyId)
+	@Tags(value = {@Tag(name = "TaxonomyVocabulary")})
+	public TaxonomyVocabulary getTaxonomyVocabulary(
+			@NotNull @PathParam("taxonomy-vocabulary-id") Long
+				taxonomyVocabularyId)
 		throws Exception {
 
-		return new Vocabulary();
+		return new TaxonomyVocabulary();
 	}
 
 	@Override
 	@Consumes("application/json")
 	@PUT
-	@Path("/vocabularies/{vocabulary-id}")
+	@Path("/taxonomy-vocabularies/{taxonomy-vocabulary-id}")
 	@Produces("application/json")
-	@Tags(value = {@Tag(name = "Vocabulary")})
-	public Vocabulary putVocabulary(
-			@NotNull @PathParam("vocabulary-id") Long vocabularyId,
-			Vocabulary vocabulary)
+	@Tags(value = {@Tag(name = "TaxonomyVocabulary")})
+	public TaxonomyVocabulary putTaxonomyVocabulary(
+			@NotNull @PathParam("taxonomy-vocabulary-id") Long
+				taxonomyVocabularyId,
+			TaxonomyVocabulary taxonomyVocabulary)
 		throws Exception {
 
-		return new Vocabulary();
+		return new TaxonomyVocabulary();
 	}
 
 	public void setContextCompany(Company contextCompany) {
@@ -148,11 +152,11 @@ public abstract class BaseVocabularyResourceImpl implements VocabularyResource {
 		}
 
 		URI resourceURI = UriBuilder.fromResource(
-			BaseVocabularyResourceImpl.class
+			BaseTaxonomyVocabularyResourceImpl.class
 		).build();
 
 		URI methodURI = UriBuilder.fromMethod(
-			BaseVocabularyResourceImpl.class, methodName
+			BaseTaxonomyVocabularyResourceImpl.class, methodName
 		).build(
 			values
 		);
@@ -160,7 +164,7 @@ public abstract class BaseVocabularyResourceImpl implements VocabularyResource {
 		return baseURIString + resourceURI.toString() + methodURI.toString();
 	}
 
-	protected void preparePatch(Vocabulary vocabulary) {
+	protected void preparePatch(TaxonomyVocabulary taxonomyVocabulary) {
 	}
 
 	protected <T, R> List<R> transform(

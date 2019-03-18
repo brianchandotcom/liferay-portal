@@ -107,7 +107,6 @@ public abstract class BaseSegmentUserResourceTestCase {
 		SegmentUser segmentUser1 =
 			testGetSegmentUserAccountsPage_addSegmentUser(
 				segmentId, randomSegmentUser());
-
 		SegmentUser segmentUser2 =
 			testGetSegmentUserAccountsPage_addSegmentUser(
 				segmentId, randomSegmentUser());
@@ -132,11 +131,9 @@ public abstract class BaseSegmentUserResourceTestCase {
 		SegmentUser segmentUser1 =
 			testGetSegmentUserAccountsPage_addSegmentUser(
 				segmentId, randomSegmentUser());
-
 		SegmentUser segmentUser2 =
 			testGetSegmentUserAccountsPage_addSegmentUser(
 				segmentId, randomSegmentUser());
-
 		SegmentUser segmentUser3 =
 			testGetSegmentUserAccountsPage_addSegmentUser(
 				segmentId, randomSegmentUser());
@@ -451,13 +448,8 @@ public abstract class BaseSegmentUserResourceTestCase {
 		return options;
 	}
 
-	private String _toPath(String template, Object... values) {
-		for (int i = 0; i < values.length; i++) {
-			template = template.replaceFirst(
-				"\\{.*\\}", String.valueOf(values[i]));
-		}
-
-		return template;
+	private String _toPath(String template, Object value) {
+		return template.replaceFirst("\\{.*\\}", String.valueOf(value));
 	}
 
 	private static BeanUtilsBean _beanUtilsBean = new BeanUtilsBean() {

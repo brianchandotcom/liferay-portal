@@ -111,7 +111,6 @@ public abstract class BaseKnowledgeBaseFolderResourceTestCase {
 		KnowledgeBaseFolder knowledgeBaseFolder1 =
 			testGetContentSpaceKnowledgeBaseFoldersPage_addKnowledgeBaseFolder(
 				contentSpaceId, randomKnowledgeBaseFolder());
-
 		KnowledgeBaseFolder knowledgeBaseFolder2 =
 			testGetContentSpaceKnowledgeBaseFoldersPage_addKnowledgeBaseFolder(
 				contentSpaceId, randomKnowledgeBaseFolder());
@@ -138,11 +137,9 @@ public abstract class BaseKnowledgeBaseFolderResourceTestCase {
 		KnowledgeBaseFolder knowledgeBaseFolder1 =
 			testGetContentSpaceKnowledgeBaseFoldersPage_addKnowledgeBaseFolder(
 				contentSpaceId, randomKnowledgeBaseFolder());
-
 		KnowledgeBaseFolder knowledgeBaseFolder2 =
 			testGetContentSpaceKnowledgeBaseFoldersPage_addKnowledgeBaseFolder(
 				contentSpaceId, randomKnowledgeBaseFolder());
-
 		KnowledgeBaseFolder knowledgeBaseFolder3 =
 			testGetContentSpaceKnowledgeBaseFoldersPage_addKnowledgeBaseFolder(
 				contentSpaceId, randomKnowledgeBaseFolder());
@@ -613,7 +610,6 @@ public abstract class BaseKnowledgeBaseFolderResourceTestCase {
 		KnowledgeBaseFolder knowledgeBaseFolder1 =
 			testGetKnowledgeBaseFolderKnowledgeBaseFoldersPage_addKnowledgeBaseFolder(
 				knowledgeBaseFolderId, randomKnowledgeBaseFolder());
-
 		KnowledgeBaseFolder knowledgeBaseFolder2 =
 			testGetKnowledgeBaseFolderKnowledgeBaseFoldersPage_addKnowledgeBaseFolder(
 				knowledgeBaseFolderId, randomKnowledgeBaseFolder());
@@ -640,11 +636,9 @@ public abstract class BaseKnowledgeBaseFolderResourceTestCase {
 		KnowledgeBaseFolder knowledgeBaseFolder1 =
 			testGetKnowledgeBaseFolderKnowledgeBaseFoldersPage_addKnowledgeBaseFolder(
 				knowledgeBaseFolderId, randomKnowledgeBaseFolder());
-
 		KnowledgeBaseFolder knowledgeBaseFolder2 =
 			testGetKnowledgeBaseFolderKnowledgeBaseFoldersPage_addKnowledgeBaseFolder(
 				knowledgeBaseFolderId, randomKnowledgeBaseFolder());
-
 		KnowledgeBaseFolder knowledgeBaseFolder3 =
 			testGetKnowledgeBaseFolderKnowledgeBaseFoldersPage_addKnowledgeBaseFolder(
 				knowledgeBaseFolderId, randomKnowledgeBaseFolder());
@@ -1104,13 +1098,8 @@ public abstract class BaseKnowledgeBaseFolderResourceTestCase {
 		return options;
 	}
 
-	private String _toPath(String template, Object... values) {
-		for (int i = 0; i < values.length; i++) {
-			template = template.replaceFirst(
-				"\\{.*\\}", String.valueOf(values[i]));
-		}
-
-		return template;
+	private String _toPath(String template, Object value) {
+		return template.replaceFirst("\\{.*\\}", String.valueOf(value));
 	}
 
 	private static BeanUtilsBean _beanUtilsBean = new BeanUtilsBean() {

@@ -59,7 +59,8 @@ public class AddDefaultKaleoProcessStructuresPortalInstanceLifecycleListener
 			AddDefaultKaleoProcessStructuresPortalInstanceLifecycleListener.
 				class.getClassLoader(),
 			"com/liferay/portal/workflow/kaleo/forms/internal/instance" +
-				"/lifecycle/dependencies/default-kaleo-process-structures.xml",
+				"/lifecycle/dependencies" +
+					"/default-kaleo-process-ddm-structures.xml",
 			serviceContext);
 	}
 

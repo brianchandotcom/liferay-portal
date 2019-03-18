@@ -15,6 +15,7 @@
 package com.liferay.segments.service.impl;
 
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionFactory;
@@ -84,7 +85,7 @@ public class SegmentsExperienceServiceImpl
 		long groupId, long classNameId, long classPK, boolean active) {
 
 		return segmentsExperiencePersistence.filterFindByG_C_C_A(
-			groupId, classNameId, classPK, active);
+			groupId, classNameId, _getPublishedClassPK(classPK), active);
 	}
 
 	@Override
@@ -93,8 +94,8 @@ public class SegmentsExperienceServiceImpl
 		int end, OrderByComparator<SegmentsExperience> orderByComparator) {
 
 		return segmentsExperiencePersistence.filterFindByG_C_C_A(
-			groupId, classNameId, classPK, active, start, end,
-			orderByComparator);
+			groupId, classNameId, _getPublishedClassPK(classPK), active, start,
+			end, orderByComparator);
 	}
 
 	@Override
@@ -102,7 +103,7 @@ public class SegmentsExperienceServiceImpl
 		long groupId, long classNameId, long classPK, boolean active) {
 
 		return segmentsExperiencePersistence.filterCountByG_C_C_A(
-			groupId, classNameId, classPK, active);
+			groupId, classNameId, _getPublishedClassPK(classPK), active);
 	}
 
 	@Override
@@ -116,6 +117,22 @@ public class SegmentsExperienceServiceImpl
 
 		return segmentsExperienceLocalService.updateSegmentsExperience(
 			segmentsExperienceId, segmentsEntryId, nameMap, priority, active);
+	}
+
+	private long _getPublishedClassPK(long classPK) {
+		long publishedClassPK = classPK;
+
+		Layout layout = layoutLocalService.fetchLayout(classPK);
+
+		if ((layout != null) &&
+			(layout.getClassNameId() == classNameLocalService.getClassNameId(
+				Layout.class)) &&
+			(layout.getClassPK() != 0)) {
+
+			publishedClassPK = layout.getClassPK();
+		}
+
+		return publishedClassPK;
 	}
 
 	private static volatile PortletResourcePermission

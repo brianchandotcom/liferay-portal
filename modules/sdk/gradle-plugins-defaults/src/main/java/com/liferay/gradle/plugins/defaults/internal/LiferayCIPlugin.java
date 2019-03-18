@@ -121,7 +121,7 @@ public class LiferayCIPlugin implements Plugin<Project> {
 			}
 		}
 
-		replaceRegexTask.setDescription("Updates the project hotfix version.");
+		replaceRegexTask.setDescription("Restores the project hotfix version.");
 		replaceRegexTask.setReplacement(
 			new Closure<String>(project) {
 
@@ -161,7 +161,7 @@ public class LiferayCIPlugin implements Plugin<Project> {
 			}
 		}
 
-		replaceRegexTask.setDescription("Restores the project hotfix version.");
+		replaceRegexTask.setDescription("Updates the project hotfix version.");
 		replaceRegexTask.setReplacement(
 			new Closure<String>(project) {
 

@@ -141,17 +141,20 @@ public class SegmentsEntryProviderImpl implements SegmentsEntryProvider {
 	}
 
 	@Override
-	public long[] getSegmentsEntryIds(String className, long classPK) {
-		return getSegmentsEntryIds(className, classPK, null);
+	public long[] getSegmentsEntryIds(
+		long groupId, String className, long classPK) {
+
+		return getSegmentsEntryIds(groupId, className, classPK, null);
 	}
 
 	@Override
 	public long[] getSegmentsEntryIds(
-		String className, long classPK, Context context) {
+		long groupId, String className, long classPK, Context context) {
 
 		List<SegmentsEntry> segmentsEntries =
 			_segmentsEntryLocalService.getSegmentsEntries(
-				true, className, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+				groupId, true, className, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+				null);
 
 		if (segmentsEntries.isEmpty()) {
 			return new long[0];

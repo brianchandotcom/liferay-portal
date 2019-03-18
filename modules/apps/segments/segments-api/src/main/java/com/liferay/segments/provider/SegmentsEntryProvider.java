@@ -55,9 +55,10 @@ public interface SegmentsEntryProvider {
 		throws PortalException;
 
 	/**
-	 * Returns ids of the active {@link SegmentsEntry} objects related with the
-	 * entity.
+	 * Returns ids of the active {@link SegmentsEntry} objects of a group
+	 * related with the entity
 	 *
+	 * @param  groupId the primary key of the group
 	 * @param  className the class name of the entity
 	 * @param  classPK the primary key of the entity
 	 * @return the ids the of active {@link SegmentsEntry} objects related to
@@ -65,13 +66,15 @@ public interface SegmentsEntryProvider {
 	 * @throws PortalException
 	 * @review
 	 */
-	public long[] getSegmentsEntryIds(String className, long classPK)
+	public long[] getSegmentsEntryIds(
+			long groupId, String className, long classPK)
 		throws PortalException;
 
 	/**
-	 * Returns ids of the active {@link SegmentsEntry} objects related with the
-	 * entity under the given context.
+	 * Returns ids of the active {@link SegmentsEntry} objects of a group
+	 * related with the entity under the given context.
 	 *
+	 * @param  groupId the primary key of the group
 	 * @param  className the class name of the entity
 	 * @param  classPK the primary key of the entity
 	 * @param  context the context
@@ -81,7 +84,7 @@ public interface SegmentsEntryProvider {
 	 * @review
 	 */
 	public long[] getSegmentsEntryIds(
-			String className, long classPK, Context context)
+			long groupId, String className, long classPK, Context context)
 		throws PortalException;
 
 }

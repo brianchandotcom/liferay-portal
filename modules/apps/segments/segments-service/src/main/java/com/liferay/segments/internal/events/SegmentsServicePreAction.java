@@ -99,7 +99,8 @@ public class SegmentsServicePreAction extends Action {
 				Context context = _requestContextMapper.map(request);
 
 				segmentsEntryIds = _segmentsEntryProvider.getSegmentsEntryIds(
-					User.class.getName(), themeDisplay.getUserId(), context);
+					themeDisplay.getScopeGroupId(), User.class.getName(),
+					themeDisplay.getUserId(), context);
 			}
 			catch (PortalException pe) {
 				if (_log.isWarnEnabled()) {

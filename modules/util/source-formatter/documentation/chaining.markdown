@@ -28,10 +28,10 @@ following types:
 `*Builder`, `Column`, `CompletableFuture`, `*Consumer`, `ContactsEngineClient`,
 `Dataset`, `Description`, `DoubleStream`, `ExecuteActionRequest`,
 `FormsEventDatasetFilter`, `Filter`, `FormsEventDatasetFilter`, `*Function`,
-`HttpSecurity`, `InOrder`, `IntSTream`, `JSONObject`, `JsonPath`, `LongStream`,
-`*Mapper`, `Optional`, `PowerMockitoStubber`, `RequestSpecification`,
-`Response`, `Stream`, `Try`, `UpdateFieldPropertyRequest`, `ValidatableResponse`
-or `WebTarget`
+`HttpSecurity`, `InOrder`, `IntSTream`, `JSONArray`, `JSONObject`, `JsonPath`,
+`LongStream`, `*Mapper`, `Optional`, `PowerMockitoStubber`, `Predicate`,
+`RequestSpecification`, `Response`, `Stream`, `Try`,
+`UpdateFieldPropertyRequest`, `ValidatableResponse` or `WebTarget`
 
 #### Example
 
@@ -57,7 +57,7 @@ Chaining on classes directly is allowed for the following classes:
 `DoubleStream`, `EasyMock`, `Either`, `Filter`,
 `FormNavigatorEntryConfigurationRetriever`, `GenericUtil`, `IntStream`,
 `JSONUtil`, `List`, `LongStream`, `MemberMatcher`, `Mockito`, `Optional`,
-`PowerMockito`, `Response`, `RestAssured`, `Stream` or `Try`
+`PowerMockito`, `Response`, `RestAssured`, `Stream`, `Try` or `Validation`
 
 #### Examples
 

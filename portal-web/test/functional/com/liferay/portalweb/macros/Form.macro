@@ -107,7 +107,7 @@ definition {
 	}
 
 	macro disableAutocompleteConfiguration {
-		FormFields.disableSwitcher(fieldName = "autocomplete");
+		FormFields.disableSwitcher(fieldName = "Autocomplete");
 	}
 
 	macro duplicate {
@@ -128,6 +128,8 @@ definition {
 			fieldName = "dataSourceType",
 			radioOption = "From Data Provider"
 		);
+
+		Pause(locator1 = "1000");
 
 		FormFields.selectSelectOption(
 			fieldName = "Data Provider",
@@ -254,10 +256,12 @@ definition {
 
 	macro gotoBasicTab {
 		AssertClick(locator1 = "Form#SIDEBAR_BASIC_TAB", value1 = "Basic");
+		Pause(locator1 = "1000");
 	}
 
 	macro gotoAdvancedTab {
 		AssertClick(locator1 = "Form#SIDEBAR_PROPERTIES_TAB", value1 = "Properties");
+		Pause(locator1 = "1000");
 	}
 
 	macro gotoElementSetsTab {

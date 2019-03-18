@@ -99,7 +99,7 @@ definition {
 			rowEntry = "Created Form Name"
 		);
 
-		FormsAdminNavigator.gotoEditField(fieldName = "TextFieldWithAutocomplete");
+		FormsAdminNavigator.gotoEditField(fieldName = "Text Field With Autocomplete");
 
 		Form.gotoAdvancedTab();
 
@@ -163,7 +163,7 @@ definition {
 
 		FormsAdminNavigator.gotoEditFormByName();
 
-		FormsAdminNavigator.gotoEditField(fieldName = "TextFieldWithAutocomplete");
+		FormsAdminNavigator.gotoEditField(fieldName = "Text Field With Autocomplete");
 
 		Form.gotoAdvancedTab();
 
@@ -278,7 +278,7 @@ definition {
 		);
 
 		FormFields.selectSelectOption(
-			fieldName = "SelectField",
+			fieldName = "Select Field",
 			selectOption = "United States"
 		);
 

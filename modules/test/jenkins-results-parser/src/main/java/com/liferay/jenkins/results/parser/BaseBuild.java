@@ -1736,8 +1736,15 @@ public abstract class BaseBuild implements Build {
 		}
 
 		public List<StopwatchRecord> toList() {
-			ArrayList<StopwatchRecord> list = new ArrayList<>(
-				_stopwatchRecordsMap.values());
+			List<StopwatchRecord> list = new ArrayList<>();
+
+			for (StopwatchRecord stopwatchRecord :
+					_stopwatchRecordsMap.values()) {
+
+				if (stopwatchRecord.getParentStopwatchRecord() == null) {
+					list.add(stopwatchRecord);
+				}
+			}
 
 			Collections.sort(list);
 

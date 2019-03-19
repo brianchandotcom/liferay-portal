@@ -22,11 +22,14 @@ import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.DDMStructureLayout;
 import com.liferay.dynamic.data.mapping.model.DDMStructureVersion;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLayoutLocalService;
+import com.liferay.dynamic.data.mapping.service.DDMStructureLayoutService;
 import com.liferay.dynamic.data.mapping.service.DDMStructureService;
 import com.liferay.dynamic.data.mapping.service.DDMStructureVersionLocalService;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.vulcan.pagination.Page;
+import com.liferay.portal.vulcan.pagination.Pagination;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -46,6 +49,24 @@ public class DataLayoutResourceImpl extends BaseDataLayoutResourceImpl {
 		_ddmStructureLayoutLocalService.deleteDDMStructureLayout(dataLayoutId);
 
 		return true;
+	}
+
+	@Override
+	public Page<DataLayout> getContentSpaceDataLayoutPage(
+			Long contentSpaceId, Pagination pagination)
+		throws Exception {
+
+		Page.of(
+			transform(
+				_ddmStructureLayoutService.getStructureLayouts(
+					contentSpaceId, pagination.getStartPosition(),
+					pagination.getEndPosition()),
+				this::_toDataLayout),
+			pagination,
+			_ddmStructureLayoutService.getStructureLayoutsCount(
+				contentSpaceId));
+
+		return super.getContentSpaceDataLayoutPage(contentSpaceId, pagination);
 	}
 
 	@Override
@@ -144,6 +165,9 @@ public class DataLayoutResourceImpl extends BaseDataLayoutResourceImpl {
 
 	@Reference
 	private DDMStructureLayoutLocalService _ddmStructureLayoutLocalService;
+
+	@Reference
+	private DDMStructureLayoutService _ddmStructureLayoutService;
 
 	@Reference
 	private DDMStructureService _ddmStructureService;

@@ -1546,6 +1546,26 @@ public abstract class BaseBuild implements Build {
 				return compareToValue;
 			}
 
+			Long duration = getDuration();
+			Long stopWatchRecordDuration = stopWatchRecord.getDuration();
+
+			if ((duration == null) && (stopWatchRecordDuration != null)) {
+				return -1;
+			}
+
+			if ((duration != null) && (stopWatchRecordDuration == null)) {
+				return 1;
+			}
+
+			if ((duration != null) && (stopWatchRecordDuration != null)) {
+				compareToValue =
+					-1 * duration.compareTo(stopWatchRecordDuration);
+			}
+
+			if (compareToValue != 0) {
+				return compareToValue;
+			}
+
 			return _name.compareTo(stopWatchRecord.getName());
 		}
 

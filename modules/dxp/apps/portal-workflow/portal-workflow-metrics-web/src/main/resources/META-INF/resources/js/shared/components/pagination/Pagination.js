@@ -219,16 +219,13 @@ export default class Pagination extends React.Component {
 					);
 				}
 				const remainingPages =
-					pages - (activePage + 2) < maxDelta
-						? pages - (activePage + 2)
-						: maxDelta;
-				const x = activePage + 2 + remainingPages;
+					pages - activePage + 2 < maxDelta ? pages : activePage + 2 + maxDelta;
 
 				if (activePage + 3 < pages) {
-					rows.push(this.buildDropMenu(activePage + 2, x));
+					rows.push(this.buildDropMenu(activePage + 2, remainingPages));
 				}
 				else {
-					for (let i = activePage + 2; i < x; i++) {
+					for (let i = activePage + 2; i < remainingPages; i++) {
 						rows.push(
 							<PageItem
 								highlighted={i === activePage ? true : false}

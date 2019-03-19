@@ -503,6 +503,33 @@ class FragmentEditableField extends PortletBase {
 			);
 	}
 
+	/**
+	 * Updates mapped field value
+	 * @private
+	 * @review
+	 */
+	_updateMappedFieldValue() {
+		if (this.getAssetFieldValueURL &&
+			FragmentEditableField._isMappedToAsset(this.editableValues)) {
+			this.fetch(
+				this.getAssetFieldValueURL,
+				{
+					classNameId: this.editableValues.classNameId,
+					classPK: this.editableValues.classPK,
+					fieldId: this.editableValues.fieldId
+				}
+			)
+				.then(
+					response => response.json()
+				)
+				.then(
+					response => {
+						this._mappedFieldValue = response.fieldValue;
+					}
+				);
+		}
+	}
+
 }
 
 /**

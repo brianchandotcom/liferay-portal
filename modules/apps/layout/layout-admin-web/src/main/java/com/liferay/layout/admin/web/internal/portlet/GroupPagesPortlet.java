@@ -27,6 +27,7 @@ import com.liferay.layout.page.template.exception.LayoutPageTemplateCollectionNa
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateCollectionService;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
+import com.liferay.layout.util.LayoutCopyHelper;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.GroupInheritContentException;
@@ -185,6 +186,8 @@ public class GroupPagesPortlet extends MVCPortlet {
 				LayoutAdminWebConfiguration.class.getName(),
 				_layoutAdminWebConfiguration);
 			renderRequest.setAttribute(
+				LayoutAdminWebKeys.LAYOUT_COPY_HELPER, _layoutCopyHelper);
+			renderRequest.setAttribute(
 				LayoutAdminWebKeys.ASSET_DISPLAY_CONTRIBUTOR_TRACKER,
 				_assetDisplayContributorTracker);
 			renderRequest.setAttribute(
@@ -242,6 +245,9 @@ public class GroupPagesPortlet extends MVCPortlet {
 	private ItemSelector _itemSelector;
 
 	private volatile LayoutAdminWebConfiguration _layoutAdminWebConfiguration;
+
+	@Reference
+	private LayoutCopyHelper _layoutCopyHelper;
 
 	@Reference
 	private LayoutPageTemplateCollectionService

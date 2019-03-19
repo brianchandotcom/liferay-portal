@@ -21,10 +21,12 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItemList;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.SafeConsumer;
+import com.liferay.layout.admin.web.internal.constants.LayoutAdminWebKeys;
 import com.liferay.layout.page.template.model.LayoutPageTemplateCollection;
 import com.liferay.layout.page.template.service.LayoutPageTemplateCollectionLocalServiceUtil;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryServiceUtil;
 import com.liferay.layout.page.template.util.comparator.LayoutPageTemplateCollectionNameComparator;
+import com.liferay.layout.util.LayoutCopyHelper;
 import com.liferay.layout.util.comparator.LayoutCreateDateComparator;
 import com.liferay.layout.util.comparator.LayoutLeftPlidComparator;
 import com.liferay.petra.string.StringBundler;
@@ -52,6 +54,8 @@ import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.service.LayoutSetBranchLocalServiceUtil;
 import com.liferay.portal.kernel.service.LayoutSetLocalServiceUtil;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.service.permission.GroupPermissionUtil;
 import com.liferay.portal.kernel.service.permission.LayoutPermissionUtil;
 import com.liferay.portal.kernel.servlet.taglib.ui.BreadcrumbEntry;
@@ -109,6 +113,10 @@ public class LayoutsAdminDisplayContext {
 		_request = PortalUtil.getHttpServletRequest(_liferayPortletRequest);
 
 		_groupDisplayContextHelper = new GroupDisplayContextHelper(_request);
+
+		_layoutCopyHelper =
+			(LayoutCopyHelper)_liferayPortletRequest.getAttribute(
+				LayoutAdminWebKeys.LAYOUT_COPY_HELPER);
 
 		_liferayPortletRequest.setAttribute(
 			WebKeys.LAYOUT_DESCRIPTIONS, getLayoutDescriptions());
@@ -346,13 +354,33 @@ public class LayoutsAdminDisplayContext {
 		return _displayStyle;
 	}
 
-	public String getEditLayoutURL(Layout layout) throws PortalException {
+	public String getEditLayoutURL(Layout layout) throws Exception {
 		if (!Objects.equals(layout.getType(), LayoutConstants.TYPE_CONTENT)) {
 			return StringPool.BLANK;
 		}
 
+		Layout draftLayout = LayoutLocalServiceUtil.fetchLayout(
+			PortalUtil.getClassNameId(Layout.class), layout.getPlid());
+
+		if (draftLayout == null) {
+			ServiceContext serviceContext = ServiceContextFactory.getInstance(
+				_request);
+
+			draftLayout = LayoutLocalServiceUtil.addLayout(
+				layout.getUserId(), layout.getGroupId(),
+				layout.isPrivateLayout(), layout.getParentLayoutId(),
+				PortalUtil.getClassNameId(Layout.class), layout.getPlid(),
+				layout.getNameMap(), layout.getTitleMap(),
+				layout.getDescriptionMap(), layout.getKeywordsMap(),
+				layout.getRobotsMap(), layout.getType(),
+				layout.getTypeSettings(), true, true, Collections.emptyMap(),
+				serviceContext);
+
+			_layoutCopyHelper.copyLayout(layout, draftLayout);
+		}
+
 		String layoutFullURL = PortalUtil.getLayoutFullURL(
-			layout, _themeDisplay);
+			draftLayout, _themeDisplay);
 
 		return HttpUtil.setParameter(layoutFullURL, "p_l_mode", Constants.EDIT);
 	}
@@ -1661,6 +1689,7 @@ public class LayoutsAdminDisplayContext {
 	private Long _homePagePlid;
 	private String _homePageTitle;
 	private String _keywords;
+	private final LayoutCopyHelper _layoutCopyHelper;
 	private List<LayoutDescription> _layoutDescriptions;
 	private Long _layoutId;
 	private SearchContainer _layoutsSearchContainer;

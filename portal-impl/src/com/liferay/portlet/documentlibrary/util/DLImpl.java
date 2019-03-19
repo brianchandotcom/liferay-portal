@@ -14,7 +14,6 @@
 
 package com.liferay.portlet.documentlibrary.util;
 
-import com.liferay.asset.kernel.model.AssetRenderer;
 import com.liferay.document.library.kernel.model.DLFileEntryConstants;
 import com.liferay.document.library.kernel.model.DLFileEntryType;
 import com.liferay.document.library.kernel.model.DLFileEntryTypeConstants;
@@ -44,7 +43,6 @@ import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.Subscription;
-import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.PortletLayoutFinder;
 import com.liferay.portal.kernel.portlet.PortletProvider;
 import com.liferay.portal.kernel.portlet.PortletProviderUtil;
@@ -700,18 +698,6 @@ public class DLImpl implements DL {
 	}
 
 	@Override
-	public boolean hasViewInContextGroupLayout(ThemeDisplay themeDisplay) {
-		PortletLayoutFinder.Result result = _getPortletLayoutFinderResult(
-			themeDisplay, themeDisplay.getSiteGroupId());
-
-		if (result == null) {
-			return false;
-		}
-
-		return true;
-	}
-
-	@Override
 	public String getSanitizedFileName(String title, String extension) {
 		String fileName = StringUtil.replace(
 			title, CharPool.SLASH, CharPool.UNDERLINE);
@@ -1027,6 +1013,18 @@ public class DLImpl implements DL {
 		webDavURLSB.append(sb.toString());
 
 		return webDavURLSB.toString();
+	}
+
+	@Override
+	public boolean hasViewInContextGroupLayout(ThemeDisplay themeDisplay) {
+		PortletLayoutFinder.Result result = _getPortletLayoutFinderResult(
+			themeDisplay, themeDisplay.getSiteGroupId());
+
+		if (result == null) {
+			return false;
+		}
+
+		return true;
 	}
 
 	@Override

@@ -14,13 +14,10 @@
 
 package com.liferay.document.library.kernel.util;
 
-import com.liferay.asset.kernel.model.AssetRenderer;
 import com.liferay.document.library.kernel.model.DLFileEntryType;
 import com.liferay.document.library.kernel.model.DLFileShortcut;
 import com.liferay.document.library.kernel.model.DLFileVersion;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
-import com.liferay.portal.kernel.portlet.PortletLayoutFinder;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.repository.model.Folder;
@@ -252,10 +249,6 @@ public class DLUtil {
 			orderByCol, orderByType, orderByModel);
 	}
 
-	public static boolean hasViewInContextGroupLayout(ThemeDisplay themeDisplay) {
-		return getDL().hasViewInContextGroupLayout(themeDisplay);
-	}
-
 	public static String getSanitizedFileName(String title, String extension) {
 		return getDL().getSanitizedFileName(title, extension);
 	}
@@ -384,6 +377,12 @@ public class DLUtil {
 		return getDL().getWebDavURL(
 			themeDisplay, folder, fileEntry, manualCheckInRequired,
 			officeExtensionRequired);
+	}
+
+	public static boolean hasViewInContextGroupLayout(
+		ThemeDisplay themeDisplay) {
+
+		return getDL().hasViewInContextGroupLayout(themeDisplay);
 	}
 
 	public static boolean hasWorkflowDefinitionLink(

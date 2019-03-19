@@ -147,6 +147,167 @@ components:
                     format: uri
                     type: string
             type: object
+        DiscussionAttachment:
+            description: https://www.schema.org/DiscussionAttachment
+            properties:
+                contentUrl:
+                    type: string
+                encodingFormat:
+                    type: string
+                fileExtension:
+                    type: string
+                id:
+                    format: int64
+                    type: integer
+                sizeInBytes:
+                    type: number
+                title:
+                    type: string
+            type: object
+        DiscussionForumPosting:
+            description: https://www.schema.org/DiscussionForumPosting
+            properties:
+                articleBody:
+                    type: string
+                contentSpaceId:
+                    format: int64
+                    type: integer
+                creator:
+                    $ref: "#/components/schemas/Creator"
+                dateCreated:
+                    format: date-time
+                    type: string
+                dateModified:
+                    format: date-time
+                    type: string
+                headline:
+                    type: string
+                id:
+                    format: int64
+                    type: integer
+                keywords:
+                    items:
+                        type: string
+                    type: array
+                numberOfDiscussionAttachments:
+                    readOnly: true
+                    type: integer
+                numberOfDiscussionForumPostings:
+                    readOnly: true
+                    type: integer
+                showAsAnswer:
+                    type: boolean
+                taxonomyCategories:
+                    items:
+                        properties:
+                            taxonomyCategoryId:
+                                format: int64
+                                type: integer
+                            taxonomyCategoryName:
+                                type: string
+                        type: object
+                    readOnly: true
+                    type: array
+                taxonomyCategoryIds:
+                    items:
+                        format: int64
+                        type: integer
+                    type: array
+                    writeOnly: true
+                viewableBy:
+                    enum: [Anyone, Members, Owner]
+                    type: string
+                    writeOnly: true
+            type: object
+        DiscussionSection:
+            description: https://www.schema.org/DiscussionSection
+            properties:
+                contentSpaceId:
+                    format: int64
+                    type: integer
+                creator:
+                    $ref: "#/components/schemas/Creator"
+                dateCreated:
+                    format: date-time
+                    type: string
+                dateModified:
+                    format: date-time
+                    type: string
+                description:
+                    type: string
+                id:
+                    format: int64
+                    type: integer
+                numberOfDiscussionSections:
+                    readOnly: true
+                    type: integer
+                numberOfDiscussionThreads:
+                    readOnly: true
+                    type: integer
+                title:
+                    type: string
+                viewableBy:
+                    enum: [Anyone, Members, Owner]
+                    type: string
+                    writeOnly: true
+            type: object
+        DiscussionThread:
+            description: https://www.schema.org/DiscussionThread
+            properties:
+                articleBody:
+                    type: string
+                contentSpaceId:
+                    format: int64
+                    type: integer
+                creator:
+                    $ref: "#/components/schemas/Creator"
+                dateCreated:
+                    format: date-time
+                    type: string
+                dateModified:
+                    format: date-time
+                    type: string
+                headline:
+                    type: string
+                id:
+                    format: int64
+                    type: integer
+                keywords:
+                    items:
+                        type: string
+                    type: array
+                numberOfDiscussionAttachments:
+                    readOnly: true
+                    type: integer
+                numberOfDiscussionForumPostings:
+                    readOnly: true
+                    type: integer
+                showAsQuestion:
+                    type: boolean
+                taxonomyCategories:
+                    items:
+                        properties:
+                            taxonomyCategoryId:
+                                format: int64
+                                type: integer
+                            taxonomyCategoryName:
+                                type: string
+                        type: object
+                    readOnly: true
+                    type: array
+                taxonomyCategoryIds:
+                    items:
+                        format: int64
+                        type: integer
+                    type: array
+                    writeOnly: true
+                threadType:
+                    type: string
+                viewableBy:
+                    enum: [Anyone, Members, Owner]
+                    type: string
+                    writeOnly: true
+            type: object
         KnowledgeBaseArticle:
             description: https://www.schema.org/KnowledgeBaseArticle
             properties:
@@ -211,10 +372,7 @@ components:
                 title:
                     type: string
                 viewableBy:
-                    enum:
-                        - anyone
-                        - members
-                        - owner
+                    enum: [Anyone, Members, Owner]
                     type: string
                     writeOnly: true
             type: object
@@ -687,6 +845,118 @@ paths:
                                 $ref: "#/components/schemas/BlogPosting"
                     description: ""
             tags: ["BlogPosting"]
+    "/content-spaces/{content-space-id}/discussion-sections":
+        get:
+            parameters:
+                - in: path
+                  name: content-space-id
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+                - in: query
+                  name: filter
+                  schema:
+                      type: string
+                - in: query
+                  name: page
+                  schema:
+                      type: integer
+                - in: query
+                  name: pageSize
+                  schema:
+                      type: integer
+                - in: query
+                  name: sort
+                  schema:
+                      type: string
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/DiscussionSection"
+                                type: array
+                    description: ""
+            tags: ["DiscussionSection"]
+        post:
+            parameters:
+                - in: path
+                  name: content-space-id
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/DiscussionSection"
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/DiscussionSection"
+                    description: ""
+            tags: ["DiscussionSection"]
+    "/content-spaces/{content-space-id}/discussion-threads":
+        get:
+            parameters:
+                - in: path
+                  name: content-space-id
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+                - in: query
+                  name: filter
+                  schema:
+                      type: string
+                - in: query
+                  name: page
+                  schema:
+                      type: integer
+                - in: query
+                  name: pageSize
+                  schema:
+                      type: integer
+                - in: query
+                  name: sort
+                  schema:
+                      type: string
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/DiscussionThread"
+                                type: array
+                    description: ""
+            tags: ["DiscussionThread"]
+        post:
+            parameters:
+                - in: path
+                  name: content-space-id
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/DiscussionThread"
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/DiscussionThread"
+                    description: ""
+            tags: ["DiscussionThread"]
     "/content-spaces/{content-space-id}/knowledge-base-articles":
         get:
             parameters:
@@ -783,6 +1053,603 @@ paths:
                                 $ref: "#/components/schemas/KnowledgeBaseFolder"
                     description: ""
             tags: ["KnowledgeBaseFolder"]
+    "/discussion-attachments/{discussion-attachment-id}":
+        delete:
+            parameters:
+                - in: path
+                  name: discussion-attachment-id
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            responses:
+                204:
+                    content:
+                        application/json: {}
+                    description: ""
+            tags: ["DiscussionAttachment"]
+        get:
+            parameters:
+                - in: path
+                  name: discussion-attachment-id
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/DiscussionAttachment"
+                    description: ""
+            tags: ["DiscussionAttachment"]
+    "/discussion-forum-postings-attachments/{discussion-forum-postings-attachment-id}":
+        delete:
+            parameters:
+                - in: path
+                  name: discussion-forum-postings-attachment-id
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            responses:
+                204:
+                    content:
+                        application/json: {}
+                    description: ""
+            tags: ["DiscussionAttachment"]
+        get:
+            parameters:
+                - in: path
+                  name: discussion-forum-postings-attachment-id
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/DiscussionAttachment"
+                    description: ""
+            tags: ["DiscussionAttachment"]
+    "/discussion-forum-postings/{discussion-forum-posting-id}":
+        delete:
+            parameters:
+                - in: path
+                  name: discussion-forum-posting-id
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            responses:
+                204:
+                    content:
+                        application/json: {}
+                    description: ""
+            tags: ["DiscussionForumPosting"]
+        get:
+            parameters:
+                - in: path
+                  name: discussion-forum-posting-id
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/DiscussionForumPosting"
+                    description: ""
+            tags: ["DiscussionForumPosting"]
+        patch:
+            parameters:
+                - in: path
+                  name: discussion-forum-posting-id
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/DiscussionForumPosting"
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/DiscussionForumPosting"
+                    description: ""
+            tags: ["DiscussionForumPosting"]
+        put:
+            parameters:
+                - in: path
+                  name: discussion-forum-posting-id
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/DiscussionForumPosting"
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/DiscussionForumPosting"
+                    description: ""
+            tags: ["DiscussionForumPosting"]
+    "/discussion-forum-postings/{discussion-forum-posting-id}/discussion-forum-postings":
+        get:
+            parameters:
+                - in: path
+                  name: discussion-forum-posting-id
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+                - in: query
+                  name: filter
+                  schema:
+                      type: string
+                - in: query
+                  name: page
+                  schema:
+                      type: integer
+                - in: query
+                  name: pageSize
+                  schema:
+                      type: integer
+                - in: query
+                  name: sort
+                  schema:
+                      type: string
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/DiscussionForumPosting"
+                                type: array
+                    description: ""
+            tags: ["DiscussionForumPosting"]
+        post:
+            parameters:
+                - in: path
+                  name: discussion-forum-posting-id
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/DiscussionForumPosting"
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/DiscussionForumPosting"
+                    description: ""
+            tags: ["DiscussionForumPosting"]
+    "/discussion-forum-postings/{discussion-forum-posting-id}/discussion-forum-postings-attachments":
+        get:
+            parameters:
+                - in: path
+                  name: discussion-forum-posting-id
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/DiscussionAttachment"
+                                type: array
+                    description: ""
+            tags: ["DiscussionAttachment"]
+        post:
+            parameters:
+                - in: path
+                  name: discussion-forum-posting-id
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            requestBody:
+                content:
+                    multipart/form-data:
+                        schema:
+                            properties:
+                                discussionAttachment:
+                                    $ref: "#/components/schemas/DiscussionAttachment"
+                                file:
+                                    format: binary
+                                    type: string
+                            type: object
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/DiscussionAttachment"
+                    description: ""
+            tags: ["DiscussionAttachment"]
+    "/discussion-sections/{discussion-section-id}":
+        delete:
+            parameters:
+                - in: path
+                  name: discussion-section-id
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            responses:
+                204:
+                    content:
+                        application/json: {}
+                    description: ""
+            tags: ["DiscussionSection"]
+        get:
+            parameters:
+                - in: path
+                  name: discussion-section-id
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/DiscussionSection"
+                    description: ""
+            tags: ["DiscussionSection"]
+        patch:
+            parameters:
+                - in: path
+                  name: discussion-section-id
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/DiscussionSection"
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/DiscussionSection"
+                    description: ""
+            tags: ["DiscussionSection"]
+        put:
+            parameters:
+                - in: path
+                  name: discussion-section-id
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/DiscussionSection"
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/DiscussionSection"
+                    description: ""
+            tags: ["DiscussionSection"]
+    "/discussion-sections/{discussion-section-id}/discussion-sections":
+        get:
+            parameters:
+                - in: path
+                  name: discussion-section-id
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+                - in: query
+                  name: filter
+                  schema:
+                      type: string
+                - in: query
+                  name: page
+                  schema:
+                      type: integer
+                - in: query
+                  name: pageSize
+                  schema:
+                      type: integer
+                - in: query
+                  name: sort
+                  schema:
+                      type: string
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/DiscussionSection"
+                                type: array
+                    description: ""
+            tags: ["DiscussionSection"]
+        post:
+            parameters:
+                - in: path
+                  name: discussion-section-id
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/DiscussionSection"
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/DiscussionSection"
+                    description: ""
+            tags: ["DiscussionSection"]
+    "/discussion-sections/{discussion-section-id}/discussion-threads":
+        get:
+            parameters:
+                - in: path
+                  name: discussion-section-id
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+                - in: query
+                  name: filter
+                  schema:
+                      type: string
+                - in: query
+                  name: page
+                  schema:
+                      type: integer
+                - in: query
+                  name: pageSize
+                  schema:
+                      type: integer
+                - in: query
+                  name: sort
+                  schema:
+                      type: string
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/DiscussionThread"
+                                type: array
+                    description: ""
+            tags: ["DiscussionThread"]
+        post:
+            parameters:
+                - in: path
+                  name: discussion-section-id
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/DiscussionThread"
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/DiscussionThread"
+                    description: ""
+            tags: ["DiscussionThread"]
+    "/discussion-threads/{discussion-thread-id}":
+        delete:
+            parameters:
+                - in: path
+                  name: discussion-thread-id
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            responses:
+                204:
+                    content:
+                        application/json: {}
+                    description: ""
+            tags: ["DiscussionThread"]
+        get:
+            parameters:
+                - in: path
+                  name: discussion-thread-id
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/DiscussionThread"
+                    description: ""
+            tags: ["DiscussionThread"]
+        patch:
+            parameters:
+                - in: path
+                  name: discussion-thread-id
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/DiscussionThread"
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/DiscussionThread"
+                    description: ""
+            tags: ["DiscussionThread"]
+        put:
+            parameters:
+                - in: path
+                  name: discussion-thread-id
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/DiscussionThread"
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/DiscussionThread"
+                    description: ""
+            tags: ["DiscussionThread"]
+    "/discussion-threads/{discussion-thread-id}/discussion-attachments":
+        get:
+            parameters:
+                - in: path
+                  name: discussion-thread-id
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/DiscussionAttachment"
+                                type: array
+                    description: ""
+            tags: ["DiscussionAttachment"]
+        post:
+            parameters:
+                - in: path
+                  name: discussion-thread-id
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            requestBody:
+                content:
+                    multipart/form-data:
+                        schema:
+                            properties:
+                                file:
+                                    format: binary
+                                    type: string
+                                knowledgeBaseAttachment:
+                                    $ref: "#/components/schemas/DiscussionAttachment"
+                            type: object
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/DiscussionAttachment"
+                    description: ""
+            tags: ["DiscussionAttachment"]
+    "/discussion-threads/{discussion-thread-id}/discussion-forum-postings":
+        get:
+            parameters:
+                - in: path
+                  name: discussion-thread-id
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+                - in: query
+                  name: filter
+                  schema:
+                      type: string
+                - in: query
+                  name: page
+                  schema:
+                      type: integer
+                - in: query
+                  name: pageSize
+                  schema:
+                      type: integer
+                - in: query
+                  name: sort
+                  schema:
+                      type: string
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/DiscussionForumPosting"
+                                type: array
+                    description: ""
+            tags: ["DiscussionForumPosting"]
+        post:
+            parameters:
+                - in: path
+                  name: discussion-thread-id
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/DiscussionForumPosting"
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/DiscussionForumPosting"
+                    description: ""
+            tags: ["DiscussionForumPosting"]
     "/knowledge-base-articles/{knowledge-base-article-id}":
         delete:
             parameters:

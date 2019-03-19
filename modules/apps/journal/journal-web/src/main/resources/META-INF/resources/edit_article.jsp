@@ -61,6 +61,7 @@ long classNameId = ParamUtil.getLong(request, "classNameId");
 			<ul class="tbar-nav">
 				<li class="col-4 col-sm-6 tbar-item">
 					<aui:input autoFocus="<%= true %>" label="" localized="<%= true %>" name="titleMapAsXML" placeholder="title" type="text" wrapperCssClass="article-content-title mb-0">
+					<aui:input autoFocus="<%= true %>" cssClass="form-control-inline" label="" localized="<%= true %>" name="titleMapAsXML" placeholder="title" type="text" wrapperCssClass="article-content-title mb-0">
 						<c:if test="<%= classNameId == JournalArticleConstants.CLASSNAME_ID_DEFAULT %>">
 							<aui:validator name="required" />
 						</c:if>

@@ -68,7 +68,6 @@ dependencies {
 	testCompile group: "org.jodd", name: "jodd-json", version: "3.6.4"
 	testCompile group: "org.slf4j", name: "slf4j-api", version: "1.7.2"
 	testCompile group: "org.springframework", name: "spring-context", version: "4.1.9.RELEASE"
-	testCompile group: "xerces", name: "xercesImpl", version: "2.11.0"
 	testCompile project(":apps:petra:petra-log4j")
 	testCompile project(":core:osgi-service-tracker-collections")
 	testCompile project(":core:petra:petra-concurrent")

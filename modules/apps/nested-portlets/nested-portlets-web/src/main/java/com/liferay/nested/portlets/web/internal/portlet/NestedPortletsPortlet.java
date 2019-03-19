@@ -147,7 +147,8 @@ public class NestedPortletsPortlet extends MVCPortlet {
 
 			templateId = sb.toString();
 
-			content = processColumnMatcher.replaceAll("$1\\${$2}$3");
+			content = processColumnMatcher.replaceAll(
+				"$1" + renderResponse.getNamespace() + "$2$3");
 
 			Matcher columnIdMatcher = _columnIdPattern.matcher(content);
 

@@ -1,5 +1,5 @@
-import Component from 'metal-component';
 import {Config} from 'metal-state';
+import PortletBase from 'frontend-js-web/liferay/PortletBase.es';
 import Soy from 'metal-soy';
 
 import '../floating_toolbar/image_properties/FloatingToolbarImagePropertiesPanel.es';
@@ -30,7 +30,7 @@ const SAVE_CHANGES_DELAY = 1500;
 /**
  * FragmentEditableField
  */
-class FragmentEditableField extends Component {
+class FragmentEditableField extends PortletBase {
 
 	/**
 	 * Checks if the given editable is mapped
@@ -627,6 +627,7 @@ const ConnectedFragmentEditableField = getConnectedComponent(
 		'defaultSegmentsExperienceId',
 		'fragmentEditorClear',
 		'fragmentEditorEnabled',
+		'getAssetFieldValueURL',
 		'hoveredItemId',
 		'hoveredItemType',
 		'languageId',

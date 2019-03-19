@@ -176,6 +176,15 @@ class FragmentEditableField extends PortletBase {
 	}
 
 	/**
+	 * Handle editableValues changed
+	 * @inheritDoc
+	 * @review
+	 */
+	syncEditableValues() {
+		this._updateMappedFieldValue();
+	}
+
+	/**
 	 * @inheritDoc
 	 * @param {!Object} newVal
 	 * @review
@@ -204,6 +213,15 @@ class FragmentEditableField extends PortletBase {
 
 			this._disposeFloatingToolbar();
 		}
+	}
+
+	/**
+	 * Handle getAssetFieldValueURL changed
+	 * @inheritDoc
+	 * @review
+	 */
+	syncGetAssetFieldValueURL() {
+		this._updateMappedFieldValue();
 	}
 
 	/**

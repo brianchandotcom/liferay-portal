@@ -231,6 +231,31 @@ definition {
 
 		UsersAndOrganizationsNavigator.gotoOrganizations();
 
+		Organization.viewSubOrganizationCP(
+			orgName = "Organization1",
+			orgType = "Organization",
+			suborgName = "Sub-organization-Pre",
+			suborgType = "Organization"
+		);
+
+		Organization.gotoCP(
+			orgName = "Sub-organization-Pre",
+			searchToken = "Sub-organization-Pre"
+		);
+
+		Organization.viewAssignMemberCP(
+			userName = "userfn userln",
+			userScreenName = "usersn"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations"
+		);
+
+		UsersAndOrganizationsNavigator.gotoOrganizations();
+
 		Organization.editSiteCP(
 			orgName = "Organization1",
 			orgNameEdit = "Organization1 Edit"

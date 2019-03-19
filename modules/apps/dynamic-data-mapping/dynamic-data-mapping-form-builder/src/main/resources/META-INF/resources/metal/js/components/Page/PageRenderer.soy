@@ -74,7 +74,7 @@
 	}
 	{@param? titlePlaceholder: string}
 
-	<div class="ddm-page-container-layout">
+	<div class="ddm-layout-builder ddm-page-container-layout">
 		{if $activePage == $pageIndex}
 			<div class="ddm-form-page pl-4 pr-4">
 				{call .form}
@@ -281,7 +281,11 @@
 	{@param? row: ?}
 	{@param? rowIndex: number}
 
-	<div class="row">
+	<div class="position-relative row">
+		{for $i in range(12)}
+			<div class="ddm-resize-drop" data-col="{$i + 1}"></div>
+		{/for}
+
 		{for $column in $row.columns}
 			{delcall PageRenderer.column variant="$contentRenderer"}
 				{param _handleDeleteButtonClicked: $_handleDeleteButtonClicked /}
@@ -349,9 +353,7 @@
 	{@param? rowIndex: number}
 
 	{if length($column.fields) != 0}
-		{let $attributes kind="attributes"}
-			class="col-md-{$column.size} col-ddm"
-
+		{let $indexes kind="attributes"}
 			{if $rowIndex != 'undefined'}
 				data-ddm-field-row="{$rowIndex}"
 			{/if}
@@ -363,6 +365,12 @@
 			{if $columnIndex != 'undefined'}
 				data-ddm-field-column="{$columnIndex}"
 			{/if}
+		{/let}
+
+		{let $attributes kind="attributes"}
+			class="col-md-{$column.size} col-ddm"
+
+			{$indexes}
 		{/let}
 
 		<div {$attributes}>
@@ -384,7 +392,7 @@
 
 			{if $editable}
 				<div class="ddm-field-container">
-					<div class="ddm-resize-handle-left" data-onclick="{$_handleOnClickResize}"></div>
+					<div class="ddm-resize-handle ddm-resize-handle-left" data-onclick="{$_handleOnClickResize}" {$indexes}></div>
 
 					{let $attributesDrag kind="attributes"}
 						class="ddm-drag"
@@ -402,7 +410,7 @@
 						{param spritemap: $spritemap /}
 					{/call}
 
-					<div class="ddm-resize-handle-right" data-onclick="{$_handleOnClickResize}"></div>
+					<div class="ddm-resize-handle ddm-resize-handle-right" data-onclick="{$_handleOnClickResize}" {$indexes}></div>
 				</div>
 			{else}
 				{$content}

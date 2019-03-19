@@ -19,6 +19,10 @@ import com.liferay.headless.collaboration.internal.graphql.query.v1_0.Query;
 import com.liferay.headless.collaboration.resource.v1_0.BlogPostingImageResource;
 import com.liferay.headless.collaboration.resource.v1_0.BlogPostingResource;
 import com.liferay.headless.collaboration.resource.v1_0.CommentResource;
+import com.liferay.headless.collaboration.resource.v1_0.DiscussionAttachmentResource;
+import com.liferay.headless.collaboration.resource.v1_0.DiscussionForumPostingResource;
+import com.liferay.headless.collaboration.resource.v1_0.DiscussionSectionResource;
+import com.liferay.headless.collaboration.resource.v1_0.DiscussionThreadResource;
 import com.liferay.headless.collaboration.resource.v1_0.KnowledgeBaseArticleResource;
 import com.liferay.headless.collaboration.resource.v1_0.KnowledgeBaseAttachmentResource;
 import com.liferay.headless.collaboration.resource.v1_0.KnowledgeBaseFolderResource;
@@ -49,6 +53,14 @@ public class ServletDataImpl implements ServletData {
 			_blogPostingImageResourceComponentServiceObjects);
 		Mutation.setCommentResourceComponentServiceObjects(
 			_commentResourceComponentServiceObjects);
+		Mutation.setDiscussionAttachmentResourceComponentServiceObjects(
+			_discussionAttachmentResourceComponentServiceObjects);
+		Mutation.setDiscussionForumPostingResourceComponentServiceObjects(
+			_discussionForumPostingResourceComponentServiceObjects);
+		Mutation.setDiscussionSectionResourceComponentServiceObjects(
+			_discussionSectionResourceComponentServiceObjects);
+		Mutation.setDiscussionThreadResourceComponentServiceObjects(
+			_discussionThreadResourceComponentServiceObjects);
 		Mutation.setKnowledgeBaseArticleResourceComponentServiceObjects(
 			_knowledgeBaseArticleResourceComponentServiceObjects);
 		Mutation.setKnowledgeBaseAttachmentResourceComponentServiceObjects(
@@ -62,6 +74,14 @@ public class ServletDataImpl implements ServletData {
 			_blogPostingImageResourceComponentServiceObjects);
 		Query.setCommentResourceComponentServiceObjects(
 			_commentResourceComponentServiceObjects);
+		Query.setDiscussionAttachmentResourceComponentServiceObjects(
+			_discussionAttachmentResourceComponentServiceObjects);
+		Query.setDiscussionForumPostingResourceComponentServiceObjects(
+			_discussionForumPostingResourceComponentServiceObjects);
+		Query.setDiscussionSectionResourceComponentServiceObjects(
+			_discussionSectionResourceComponentServiceObjects);
+		Query.setDiscussionThreadResourceComponentServiceObjects(
+			_discussionThreadResourceComponentServiceObjects);
 		Query.setKnowledgeBaseArticleResourceComponentServiceObjects(
 			_knowledgeBaseArticleResourceComponentServiceObjects);
 		Query.setKnowledgeBaseAttachmentResourceComponentServiceObjects(
@@ -96,6 +116,22 @@ public class ServletDataImpl implements ServletData {
 	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
 	private ComponentServiceObjects<CommentResource>
 		_commentResourceComponentServiceObjects;
+
+	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
+	private ComponentServiceObjects<DiscussionAttachmentResource>
+		_discussionAttachmentResourceComponentServiceObjects;
+
+	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
+	private ComponentServiceObjects<DiscussionForumPostingResource>
+		_discussionForumPostingResourceComponentServiceObjects;
+
+	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
+	private ComponentServiceObjects<DiscussionSectionResource>
+		_discussionSectionResourceComponentServiceObjects;
+
+	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
+	private ComponentServiceObjects<DiscussionThreadResource>
+		_discussionThreadResourceComponentServiceObjects;
 
 	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
 	private ComponentServiceObjects<KnowledgeBaseArticleResource>

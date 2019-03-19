@@ -38,10 +38,10 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
-@GraphQLName("KnowledgeBaseArticle")
+@GraphQLName("DiscussionThread")
 @JsonFilter("Liferay.Vulcan")
-@XmlRootElement(name = "KnowledgeBaseArticle")
-public class KnowledgeBaseArticle {
+@XmlRootElement(name = "DiscussionThread")
+public class DiscussionThread {
 
 	public static enum ViewableBy {
 
@@ -75,31 +75,6 @@ public class KnowledgeBaseArticle {
 		private final String _value;
 
 	}
-
-	public AggregateRating getAggregateRating() {
-		return aggregateRating;
-	}
-
-	public void setAggregateRating(AggregateRating aggregateRating) {
-		this.aggregateRating = aggregateRating;
-	}
-
-	@JsonIgnore
-	public void setAggregateRating(
-		UnsafeSupplier<AggregateRating, Exception>
-			aggregateRatingUnsafeSupplier) {
-
-		try {
-			aggregateRating = aggregateRatingUnsafeSupplier.get();
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected AggregateRating aggregateRating;
 
 	public String getArticleBody() {
 		return articleBody;
@@ -221,20 +196,20 @@ public class KnowledgeBaseArticle {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Date dateModified;
 
-	public String getDescription() {
-		return description;
+	public String getHeadline() {
+		return headline;
 	}
 
-	public void setDescription(String description) {
-		this.description = description;
+	public void setHeadline(String headline) {
+		this.headline = headline;
 	}
 
 	@JsonIgnore
-	public void setDescription(
-		UnsafeSupplier<String, Exception> descriptionUnsafeSupplier) {
+	public void setHeadline(
+		UnsafeSupplier<String, Exception> headlineUnsafeSupplier) {
 
 		try {
-			description = descriptionUnsafeSupplier.get();
+			headline = headlineUnsafeSupplier.get();
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
@@ -243,31 +218,7 @@ public class KnowledgeBaseArticle {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected String description;
-
-	public String getFriendlyUrlPath() {
-		return friendlyUrlPath;
-	}
-
-	public void setFriendlyUrlPath(String friendlyUrlPath) {
-		this.friendlyUrlPath = friendlyUrlPath;
-	}
-
-	@JsonIgnore
-	public void setFriendlyUrlPath(
-		UnsafeSupplier<String, Exception> friendlyUrlPathUnsafeSupplier) {
-
-		try {
-			friendlyUrlPath = friendlyUrlPathUnsafeSupplier.get();
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected String friendlyUrlPath;
+	protected String headline;
 
 	public Long getId() {
 		return id;
@@ -315,20 +266,76 @@ public class KnowledgeBaseArticle {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String[] keywords;
 
-	public Number getNumberOfAttachments() {
-		return numberOfAttachments;
+	public Integer getNumberOfDiscussionAttachments() {
+		return numberOfDiscussionAttachments;
 	}
 
-	public void setNumberOfAttachments(Number numberOfAttachments) {
-		this.numberOfAttachments = numberOfAttachments;
+	public void setNumberOfDiscussionAttachments(
+		Integer numberOfDiscussionAttachments) {
+
+		this.numberOfDiscussionAttachments = numberOfDiscussionAttachments;
 	}
 
 	@JsonIgnore
-	public void setNumberOfAttachments(
-		UnsafeSupplier<Number, Exception> numberOfAttachmentsUnsafeSupplier) {
+	public void setNumberOfDiscussionAttachments(
+		UnsafeSupplier<Integer, Exception>
+			numberOfDiscussionAttachmentsUnsafeSupplier) {
 
 		try {
-			numberOfAttachments = numberOfAttachmentsUnsafeSupplier.get();
+			numberOfDiscussionAttachments =
+				numberOfDiscussionAttachmentsUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
+	protected Integer numberOfDiscussionAttachments;
+
+	public Integer getNumberOfDiscussionForumPostings() {
+		return numberOfDiscussionForumPostings;
+	}
+
+	public void setNumberOfDiscussionForumPostings(
+		Integer numberOfDiscussionForumPostings) {
+
+		this.numberOfDiscussionForumPostings = numberOfDiscussionForumPostings;
+	}
+
+	@JsonIgnore
+	public void setNumberOfDiscussionForumPostings(
+		UnsafeSupplier<Integer, Exception>
+			numberOfDiscussionForumPostingsUnsafeSupplier) {
+
+		try {
+			numberOfDiscussionForumPostings =
+				numberOfDiscussionForumPostingsUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
+	protected Integer numberOfDiscussionForumPostings;
+
+	public Boolean getShowAsQuestion() {
+		return showAsQuestion;
+	}
+
+	public void setShowAsQuestion(Boolean showAsQuestion) {
+		this.showAsQuestion = showAsQuestion;
+	}
+
+	@JsonIgnore
+	public void setShowAsQuestion(
+		UnsafeSupplier<Boolean, Exception> showAsQuestionUnsafeSupplier) {
+
+		try {
+			showAsQuestion = showAsQuestionUnsafeSupplier.get();
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
@@ -337,91 +344,7 @@ public class KnowledgeBaseArticle {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Number numberOfAttachments;
-
-	public Number getNumberOfKnowledgeBaseArticles() {
-		return numberOfKnowledgeBaseArticles;
-	}
-
-	public void setNumberOfKnowledgeBaseArticles(
-		Number numberOfKnowledgeBaseArticles) {
-
-		this.numberOfKnowledgeBaseArticles = numberOfKnowledgeBaseArticles;
-	}
-
-	@JsonIgnore
-	public void setNumberOfKnowledgeBaseArticles(
-		UnsafeSupplier<Number, Exception>
-			numberOfKnowledgeBaseArticlesUnsafeSupplier) {
-
-		try {
-			numberOfKnowledgeBaseArticles =
-				numberOfKnowledgeBaseArticlesUnsafeSupplier.get();
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Number numberOfKnowledgeBaseArticles;
-
-	public ParentKnowledgeBaseFolder getParentKnowledgeBaseFolder() {
-		return parentKnowledgeBaseFolder;
-	}
-
-	public void setParentKnowledgeBaseFolder(
-		ParentKnowledgeBaseFolder parentKnowledgeBaseFolder) {
-
-		this.parentKnowledgeBaseFolder = parentKnowledgeBaseFolder;
-	}
-
-	@JsonIgnore
-	public void setParentKnowledgeBaseFolder(
-		UnsafeSupplier<ParentKnowledgeBaseFolder, Exception>
-			parentKnowledgeBaseFolderUnsafeSupplier) {
-
-		try {
-			parentKnowledgeBaseFolder =
-				parentKnowledgeBaseFolderUnsafeSupplier.get();
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected ParentKnowledgeBaseFolder parentKnowledgeBaseFolder;
-
-	public Long getParentKnowledgeBaseFolderId() {
-		return parentKnowledgeBaseFolderId;
-	}
-
-	public void setParentKnowledgeBaseFolderId(
-		Long parentKnowledgeBaseFolderId) {
-
-		this.parentKnowledgeBaseFolderId = parentKnowledgeBaseFolderId;
-	}
-
-	@JsonIgnore
-	public void setParentKnowledgeBaseFolderId(
-		UnsafeSupplier<Long, Exception>
-			parentKnowledgeBaseFolderIdUnsafeSupplier) {
-
-		try {
-			parentKnowledgeBaseFolderId =
-				parentKnowledgeBaseFolderIdUnsafeSupplier.get();
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-	protected Long parentKnowledgeBaseFolderId;
+	protected Boolean showAsQuestion;
 
 	public TaxonomyCategory[] getTaxonomyCategories() {
 		return taxonomyCategories;
@@ -445,7 +368,7 @@ public class KnowledgeBaseArticle {
 	}
 
 	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected TaxonomyCategory[] taxonomyCategories;
 
 	public Long[] getTaxonomyCategoryIds() {
@@ -472,20 +395,20 @@ public class KnowledgeBaseArticle {
 	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
 	protected Long[] taxonomyCategoryIds;
 
-	public String getTitle() {
-		return title;
+	public String getThreadType() {
+		return threadType;
 	}
 
-	public void setTitle(String title) {
-		this.title = title;
+	public void setThreadType(String threadType) {
+		this.threadType = threadType;
 	}
 
 	@JsonIgnore
-	public void setTitle(
-		UnsafeSupplier<String, Exception> titleUnsafeSupplier) {
+	public void setThreadType(
+		UnsafeSupplier<String, Exception> threadTypeUnsafeSupplier) {
 
 		try {
-			title = titleUnsafeSupplier.get();
+			threadType = threadTypeUnsafeSupplier.get();
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
@@ -494,7 +417,7 @@ public class KnowledgeBaseArticle {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected String title;
+	protected String threadType;
 
 	public ViewableBy getViewableBy() {
 		return viewableBy;
@@ -534,11 +457,6 @@ public class KnowledgeBaseArticle {
 
 		sb.append("{");
 
-		sb.append("\"aggregateRating\": ");
-
-		sb.append(aggregateRating);
-		sb.append(", ");
-
 		sb.append("\"articleBody\": ");
 
 		sb.append("\"");
@@ -570,17 +488,10 @@ public class KnowledgeBaseArticle {
 		sb.append("\"");
 		sb.append(", ");
 
-		sb.append("\"description\": ");
+		sb.append("\"headline\": ");
 
 		sb.append("\"");
-		sb.append(description);
-		sb.append("\"");
-		sb.append(", ");
-
-		sb.append("\"friendlyUrlPath\": ");
-
-		sb.append("\"");
-		sb.append(friendlyUrlPath);
+		sb.append(headline);
 		sb.append("\"");
 		sb.append(", ");
 
@@ -612,24 +523,19 @@ public class KnowledgeBaseArticle {
 
 		sb.append(", ");
 
-		sb.append("\"numberOfAttachments\": ");
+		sb.append("\"numberOfDiscussionAttachments\": ");
 
-		sb.append(numberOfAttachments);
+		sb.append(numberOfDiscussionAttachments);
 		sb.append(", ");
 
-		sb.append("\"numberOfKnowledgeBaseArticles\": ");
+		sb.append("\"numberOfDiscussionForumPostings\": ");
 
-		sb.append(numberOfKnowledgeBaseArticles);
+		sb.append(numberOfDiscussionForumPostings);
 		sb.append(", ");
 
-		sb.append("\"parentKnowledgeBaseFolder\": ");
+		sb.append("\"showAsQuestion\": ");
 
-		sb.append(parentKnowledgeBaseFolder);
-		sb.append(", ");
-
-		sb.append("\"parentKnowledgeBaseFolderId\": ");
-
-		sb.append(parentKnowledgeBaseFolderId);
+		sb.append(showAsQuestion);
 		sb.append(", ");
 
 		sb.append("\"taxonomyCategories\": ");
@@ -674,10 +580,10 @@ public class KnowledgeBaseArticle {
 
 		sb.append(", ");
 
-		sb.append("\"title\": ");
+		sb.append("\"threadType\": ");
 
 		sb.append("\"");
-		sb.append(title);
+		sb.append(threadType);
 		sb.append("\"");
 		sb.append(", ");
 

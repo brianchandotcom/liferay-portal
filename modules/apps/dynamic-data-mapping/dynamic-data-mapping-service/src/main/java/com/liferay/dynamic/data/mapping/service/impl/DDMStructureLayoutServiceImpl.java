@@ -14,7 +14,11 @@
 
 package com.liferay.dynamic.data.mapping.service.impl;
 
+import com.liferay.dynamic.data.mapping.model.DDMStructureLayout;
 import com.liferay.dynamic.data.mapping.service.base.DDMStructureLayoutServiceBaseImpl;
+import com.liferay.portal.kernel.exception.PortalException;
+
+import java.util.List;
 
 /**
  * The implementation of the ddm structure layout remote service.
@@ -37,5 +41,18 @@ public class DDMStructureLayoutServiceImpl
 	 *
 	 * Never reference this class directly. Always use <code>com.liferay.dynamic.data.mapping.service.DDMStructureLayoutServiceUtil</code> to access the ddm structure layout remote service.
 	 */
+	@Override
+	public List<DDMStructureLayout> getStructureLayouts(
+			long groupId, int start, int end)
+		throws PortalException {
+
+		return ddmStructureLayoutLocalService.getStructureLayouts(
+			groupId, start, end);
+	}
+
+	@Override
+	public int getStructureLayoutsCount(long groupId) {
+		return ddmStructureLayoutLocalService.getStructureLayoutsCount(groupId);
+	}
 
 }

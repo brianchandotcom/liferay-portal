@@ -1,0 +1,29 @@
+<html>
+<head>
+<title>PagesFinder</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">PagesFinder</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>INPUT_FIELD</td>
+	<td>//div[contains(@id,'layoutFinder')]//input</td>
+	<td></td>
+</tr>
+<tr>
+	<td>OUTLINE_ICON</td>
+	<td>//button[contains(@data-title,"Find a Page")]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>VIEW_IN_PAGE_ADMINISTRATION</td>
+	<td>//div[contains(@id,'layoutFinder')]//a[contains(.,"View in Page Administration")]</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

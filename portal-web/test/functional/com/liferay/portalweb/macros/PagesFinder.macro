@@ -1,0 +1,18 @@
+definition {
+	macro goToFindAPage {
+		if (IsElementNotPresent(locator1 = "PagesFinder#INPUT_FIELD")) {
+			Click(locator1 = "PagesFinder#OUTLINE_ICON");
+		}
+	}
+
+	macro inputPageSearch {
+		Type(
+			locator1 = "PagesFinder#INPUT_FIELD",
+			value1 = "${keyword}"
+		);
+	}
+
+	macro viewInPagesAdministration {
+		Click(locator1 = "PagesFinder#VIEW_IN_PAGE_ADMINISTRATION");
+	}
+}

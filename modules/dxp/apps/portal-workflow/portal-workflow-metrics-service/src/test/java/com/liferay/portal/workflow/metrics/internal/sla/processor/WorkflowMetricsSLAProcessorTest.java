@@ -202,10 +202,10 @@ public class WorkflowMetricsSLAProcessorTest extends PowerMockito {
 			-5000, workflowMetricsSLAProcessResult.getRemainingTime());
 	}
 
-	protected Field _createField(String fieldName, LocalDateTime value) {
+	protected Field _createField(String fieldName, LocalDateTime localDateTime) {
 		Field field = new Field(fieldName);
 
-		field.addValue(value.format(_dateTimeFormatter));
+		field.addValue(localDateTime.format(_dateTimeFormatter));
 
 		return field;
 	}

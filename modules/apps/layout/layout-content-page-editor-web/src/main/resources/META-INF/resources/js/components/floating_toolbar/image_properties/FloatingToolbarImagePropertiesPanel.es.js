@@ -5,7 +5,7 @@ import './FloatingToolbarImagePropertiesPanelDelegateTemplate.soy';
 import {EDITABLE_FIELD_CONFIG_KEYS, TARGET_TYPES} from '../../../utils/constants';
 import getConnectedComponent from '../../../store/ConnectedComponent.es';
 import templates from './FloatingToolbarImagePropertiesPanel.soy';
-import {UPDATE_CONFIG_ATTRIBUTES, UPDATE_LAST_SAVE_DATE, UPDATE_SAVING_CHANGES_STATUS, UPDATE_TRANSLATION_STATUS} from '../../../actions/actions.es';
+import {ENABLE_FRAGMENT_EDITOR, UPDATE_CONFIG_ATTRIBUTES, UPDATE_LAST_SAVE_DATE, UPDATE_SAVING_CHANGES_STATUS, UPDATE_TRANSLATION_STATUS} from '../../../actions/actions.es';
 
 /**
  * FloatingToolbarImagePropertiesPanel
@@ -75,6 +75,20 @@ class FloatingToolbarImagePropertiesPanel extends Component {
 		this._updateFragmentConfig(
 			{
 				[EDITABLE_FIELD_CONFIG_KEYS.imageTarget]: event.delegateTarget.value
+			}
+		);
+	}
+
+	/**
+	 * Handle select image button change
+	 * @private
+	 * @review
+	 */
+	_handleSelectImageButtonClick() {
+		this.store.dispatchAction(
+			ENABLE_FRAGMENT_EDITOR,
+			{
+				itemId: this.itemId
 			}
 		);
 	}

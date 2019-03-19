@@ -110,6 +110,7 @@ export const CONTAINER_TYPES = [
  */
 export const EDITABLE_FIELD_CONFIG_KEYS = {
 	imageLink: 'imageLink',
+	imageSource: 'imageSource',
 	imageTarget: 'imageTarget',
 	textAlignment: 'textAlignment',
 	textColor: 'textColor',

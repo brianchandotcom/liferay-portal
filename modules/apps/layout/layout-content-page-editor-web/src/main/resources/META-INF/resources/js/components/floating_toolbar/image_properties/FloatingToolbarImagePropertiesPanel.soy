@@ -11,8 +11,41 @@
 	]>}
 	{@param? _handleImageLinkInputChange: any}
 	{@param? _handleImageTargetOptionChange: any}
+	{@param? _handleSelectImageButtonClick: any}
 
 	<div class="floating-toolbar-spacing-panel">
+		{let $isMapped: isNonnull($item.editableValues.mappedField) and $item.editableValues.mappedField != '' /}
+
+		{if not $isMapped}
+			<div class="form-group">
+				<label for="floatingToolbarImagePropertiesPanelSelectImage">
+					{msg desc=""}image{/msg}
+				</label>
+
+				<input
+					class="form-control form-control-sm"
+					id="floatingToolbarImagePropertiesPanelSelectImage"
+					readonly="readonly"
+					type="text"
+					value="{$item.editableValues.config ? $item.editableValues.config.imageSource ?: '' : ''}"
+				/>
+			</div>
+
+			<div class="form-group">
+				<div class="btn-group">
+					<div class="btn-group-item">
+						<button
+							class="btn btn-secondary btn-sm"
+							data-onclick="{$_handleSelectImageButtonClick}"
+							type="button"
+						>
+							{msg desc=""}select{/msg}
+						</button>
+					</div>
+				</div>
+			</div>
+		{/if}
+
 		{call .imageLink}
 			{param _handleImageLinkInputChange: $_handleImageLinkInputChange /}
 			{param item: $item /}

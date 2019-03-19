@@ -53,7 +53,6 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.vulcan.multipart.BinaryFile;
 import com.liferay.portal.vulcan.multipart.MultipartBody;
@@ -159,12 +158,8 @@ public class DocumentResourceImpl
 				existingFileEntry.getSize())
 		);
 
-		Optional<Document> optional = Optional.empty();
-
-		if (Validator.isNotNull(multipartBody.getValueAsString("document"))) {
-			optional = Optional.of(
-				multipartBody.getValueAsInstance("document", Document.class));
-		}
+		Optional<Document> optional = multipartBody.getValueAsInstanceOptional(
+			"document", Document.class);
 
 		String[] keywords = optional.map(
 			Document::getKeywords

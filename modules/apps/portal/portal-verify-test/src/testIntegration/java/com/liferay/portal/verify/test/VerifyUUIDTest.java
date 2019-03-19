@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.concurrent.ThrowableAwareRunnable;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.db.DBType;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.verify.model.VerifiableUUIDModel;
 import com.liferay.portal.test.rule.ExpectedDBType;
@@ -58,7 +59,12 @@ public class VerifyUUIDTest extends BaseVerifyProcessTestCase {
 
 	@Test
 	public void testVerifyModel() throws Exception {
-		_verifyUUID.doVerify(new AssetTagVerifiableModel());
+		ReflectionTestUtil.invoke(
+			_verifyUUID, "doVerify",
+			new Class<?>[] {VerifiableUUIDModel[].class},
+			new Object[] {
+				new VerifiableUUIDModel[] {new AssetTagVerifiableModel()}
+			});
 	}
 
 	@ExpectedLogs(
@@ -104,7 +110,9 @@ public class VerifyUUIDTest extends BaseVerifyProcessTestCase {
 	@Test
 	public void testVerifyModelWithUnknownPKColumnName() {
 		try {
-			_verifyUUID.verifyUUID(
+			ReflectionTestUtil.invoke(
+				_verifyUUID, "verifyUUID",
+				new Class<?>[] {VerifiableUUIDModel.class},
 				new VerifiableUUIDModel() {
 
 					@Override
@@ -186,7 +194,10 @@ public class VerifyUUIDTest extends BaseVerifyProcessTestCase {
 		}
 
 		try {
-			_verifyUUID.doVerify(verifiableUUIDModels);
+			ReflectionTestUtil.invoke(
+				_verifyUUID, "doVerify",
+				new Class<?>[] {VerifiableUUIDModel[].class},
+				new Object[] {verifiableUUIDModels});
 		}
 		catch (Exception e) {
 			_verifyException(
@@ -235,19 +246,25 @@ public class VerifyUUIDTest extends BaseVerifyProcessTestCase {
 	@Test
 	public void testVerifyUnknownModelWithUnknownPKColumnName() {
 		try {
-			_verifyUUID.doVerify(
-				new VerifiableUUIDModel() {
+			ReflectionTestUtil.invoke(
+				_verifyUUID, "doVerify",
+				new Class<?>[] {VerifiableUUIDModel[].class},
+				new Object[] {
+					new VerifiableUUIDModel[] {
+						new VerifiableUUIDModel() {
 
-					@Override
-					public String getPrimaryKeyColumnName() {
-						return _UNKNOWN;
+							@Override
+							public String getPrimaryKeyColumnName() {
+								return _UNKNOWN;
+							}
+
+							@Override
+							public String getTableName() {
+								return _UNKNOWN;
+							}
+
+						}
 					}
-
-					@Override
-					public String getTableName() {
-						return _UNKNOWN;
-					}
-
 				});
 		}
 		catch (Exception e) {

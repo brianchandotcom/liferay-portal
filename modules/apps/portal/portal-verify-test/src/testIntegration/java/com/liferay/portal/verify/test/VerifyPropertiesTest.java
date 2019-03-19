@@ -340,10 +340,11 @@ public class VerifyPropertiesTest extends BaseVerifyProcessTestCase {
 		}
 	}
 
-	protected String getFirstPortalPropertyKey() {
+	protected String getFirstPortalPropertyKey() throws Exception {
 		VerifyProperties verifyProperties = getVerifyProcess();
 
-		Properties portalProperties = verifyProperties.loadPortalProperties();
+		Properties portalProperties = ReflectionTestUtil.invoke(
+			verifyProperties, "loadPortalProperties", null, null);
 
 		Set<String> propertyNames = portalProperties.stringPropertyNames();
 

@@ -102,22 +102,30 @@ public class CopyLayoutMVCActionCommand extends BaseMVCActionCommand {
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
 		try {
-			Layout copyLayout = _layoutLocalService.fetchLayout(
+			Layout sourceLayout = _layoutLocalService.fetchLayout(
 				groupId, privateLayout, layoutId);
 
-			UnicodeProperties copyTypeSettingsProperties =
-				copyLayout.getTypeSettingsProperties();
+			UnicodeProperties sourceTypeSettingsProperties =
+				sourceLayout.getTypeSettingsProperties();
 
-			copyTypeSettingsProperties.putAll(typeSettingsProperties);
+			sourceTypeSettingsProperties.putAll(typeSettingsProperties);
 
-			Layout layout = _layoutService.addLayout(
-				groupId, privateLayout, copyLayout.getParentLayoutId(), nameMap,
-				new HashMap<>(), new HashMap<>(), copyLayout.getKeywordsMap(),
-				copyLayout.getRobotsMap(), copyLayout.getType(),
-				copyTypeSettingsProperties.toString(), false, new HashMap<>(),
-				serviceContext);
+			Layout targetLayout = _layoutService.addLayout(
+				groupId, privateLayout, sourceLayout.getParentLayoutId(), 0, 0,
+				nameMap, new HashMap<>(), new HashMap<>(),
+				sourceLayout.getKeywordsMap(), sourceLayout.getRobotsMap(),
+				sourceLayout.getType(), sourceTypeSettingsProperties.toString(),
+				false, false, new HashMap<>(), serviceContext);
 
-			_layoutCopyHelper.copyLayout(copyLayout, layout);
+			Layout draftLayout = _layoutLocalService.fetchLayout(
+				_portal.getClassNameId(Layout.class), targetLayout.getPlid());
+
+			if (draftLayout != null) {
+				_layoutCopyHelper.copyLayout(sourceLayout, draftLayout);
+			}
+			else {
+				_layoutCopyHelper.copyLayout(sourceLayout, targetLayout);
+			}
 
 			LiferayPortletResponse liferayPortletResponse =
 				_portal.getLiferayPortletResponse(actionResponse);
@@ -127,7 +135,7 @@ public class CopyLayoutMVCActionCommand extends BaseMVCActionCommand {
 			redirectURL.setParameter(
 				"navigation", privateLayout ? "private-pages" : "public-pages");
 			redirectURL.setParameter(
-				"selPlid", String.valueOf(copyLayout.getParentPlid()));
+				"selPlid", String.valueOf(sourceLayout.getParentPlid()));
 			redirectURL.setParameter(
 				"privateLayout", String.valueOf(privateLayout));
 

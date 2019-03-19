@@ -19,16 +19,6 @@ import {selectText} from '../../util/dom.es';
 const EVALUATOR_URL = '/o/dynamic-data-mapping-form-context-provider/';
 const FormWithEvaluator = WithEvaluator(FormRenderer);
 
-const getImplementedFieldTypes = fieldTypes => {
-	return fieldTypes.filter(
-		({name}) => {
-			return ![
-				'date'
-			].some(fieldType => fieldType === name);
-		}
-	);
-};
-
 /**
  * Sidebar is a tooling to mount forms.
  */
@@ -307,7 +297,7 @@ class Sidebar extends Component {
 	_dropdownFieldTypesValueFn() {
 		const {fieldTypes} = this.props;
 
-		return getImplementedFieldTypes(fieldTypes).filter(
+		return fieldTypes.filter(
 			({system}) => {
 				return !system;
 			}
@@ -341,7 +331,7 @@ class Sidebar extends Component {
 			}
 		};
 
-		return getImplementedFieldTypes(fieldTypes).reduce(
+		return fieldTypes.reduce(
 			(prev, next) => {
 				if (next.group && !next.system) {
 					prev[next.group].fields.push(next);

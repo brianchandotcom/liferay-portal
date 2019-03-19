@@ -24,7 +24,7 @@ import com.liferay.portal.security.sso.openid.constants.LegacyOpenIdPropsKeys;
 import com.liferay.portal.security.sso.openid.constants.OpenIdConfigurationKeys;
 import com.liferay.portal.security.sso.openid.constants.OpenIdConstants;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-import com.liferay.portal.verify.test.BaseCompanySettingsVerifyProcessTestCase;
+import com.liferay.portal.verify.test.util.BaseCompanySettingsVerifyProcessTestCase;
 
 import javax.portlet.PortletPreferences;
 

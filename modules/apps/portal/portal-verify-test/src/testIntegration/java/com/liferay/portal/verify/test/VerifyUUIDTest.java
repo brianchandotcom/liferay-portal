@@ -32,6 +32,7 @@ import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.verify.VerifyProcess;
 import com.liferay.portal.verify.VerifyUUID;
 import com.liferay.portal.verify.model.AssetTagVerifiableModel;
+import com.liferay.portal.verify.test.util.BaseVerifyProcessTestCase;
 
 import java.lang.reflect.Method;
 

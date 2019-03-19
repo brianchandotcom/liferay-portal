@@ -25,7 +25,7 @@ import com.liferay.portal.security.sso.opensso.constants.LegacyOpenSSOPropsKeys;
 import com.liferay.portal.security.sso.opensso.constants.OpenSSOConfigurationKeys;
 import com.liferay.portal.security.sso.opensso.constants.OpenSSOConstants;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-import com.liferay.portal.verify.test.BaseCompanySettingsVerifyProcessTestCase;
+import com.liferay.portal.verify.test.util.BaseCompanySettingsVerifyProcessTestCase;
 
 import javax.portlet.PortletPreferences;
 

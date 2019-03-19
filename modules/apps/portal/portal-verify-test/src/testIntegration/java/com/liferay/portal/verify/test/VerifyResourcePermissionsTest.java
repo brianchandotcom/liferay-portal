@@ -35,6 +35,7 @@ import com.liferay.portal.verify.VerifyProcess;
 import com.liferay.portal.verify.VerifyResourcePermissions;
 import com.liferay.portal.verify.model.GroupVerifiableResourcedModel;
 import com.liferay.portal.verify.model.RoleVerifiableModel;
+import com.liferay.portal.verify.test.util.BaseVerifyProcessTestCase;
 
 import org.junit.Assert;
 import org.junit.ClassRule;

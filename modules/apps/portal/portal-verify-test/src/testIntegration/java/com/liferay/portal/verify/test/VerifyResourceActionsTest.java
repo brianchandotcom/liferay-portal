@@ -26,6 +26,7 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.TransactionalTestRule;
 import com.liferay.portal.verify.VerifyProcess;
 import com.liferay.portal.verify.VerifyResourceActions;
+import com.liferay.portal.verify.test.util.BaseVerifyProcessTestCase;
 
 import java.util.ArrayList;
 import java.util.List;

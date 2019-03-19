@@ -24,7 +24,7 @@ import com.liferay.portal.security.sso.google.constants.GoogleAuthorizationConfi
 import com.liferay.portal.security.sso.google.constants.GoogleConstants;
 import com.liferay.portal.security.sso.google.constants.LegacyGoogleLoginPropsKeys;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-import com.liferay.portal.verify.test.BaseCompanySettingsVerifyProcessTestCase;
+import com.liferay.portal.verify.test.util.BaseCompanySettingsVerifyProcessTestCase;
 
 import javax.portlet.PortletPreferences;
 

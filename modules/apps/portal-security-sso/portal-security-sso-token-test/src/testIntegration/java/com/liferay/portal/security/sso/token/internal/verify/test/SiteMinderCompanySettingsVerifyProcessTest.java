@@ -22,7 +22,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-import com.liferay.portal.verify.test.BaseCompanySettingsVerifyProcessTestCase;
+import com.liferay.portal.verify.test.util.BaseCompanySettingsVerifyProcessTestCase;
 
 import javax.portlet.PortletPreferences;
 

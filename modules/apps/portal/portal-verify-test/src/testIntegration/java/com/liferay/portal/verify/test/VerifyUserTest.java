@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.verify.VerifyProcess;
 import com.liferay.portal.verify.VerifyUser;
+import com.liferay.portal.verify.test.util.BaseVerifyProcessTestCase;
 
 import org.junit.Assert;
 import org.junit.ClassRule;

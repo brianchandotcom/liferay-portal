@@ -19,7 +19,7 @@ import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.verify.VerifyGroup;
 import com.liferay.portal.verify.VerifyProcess;
-import com.liferay.portal.verify.test.BaseVerifyProcessTestCase;
+import com.liferay.portal.verify.test.util.BaseVerifyProcessTestCase;
 
 import org.junit.ClassRule;
 import org.junit.Rule;

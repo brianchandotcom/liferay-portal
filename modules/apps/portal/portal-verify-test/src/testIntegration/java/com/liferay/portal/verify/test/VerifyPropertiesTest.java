@@ -23,6 +23,7 @@ import com.liferay.portal.test.log.CaptureAppender;
 import com.liferay.portal.test.log.Log4JLoggerTestUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.verify.VerifyProperties;
+import com.liferay.portal.verify.test.util.BaseVerifyProcessTestCase;
 
 import java.util.Iterator;
 import java.util.List;

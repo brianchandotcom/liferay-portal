@@ -25,7 +25,7 @@ import com.liferay.portal.security.sso.ntlm.constants.LegacyNtlmPropsKeys;
 import com.liferay.portal.security.sso.ntlm.constants.NtlmConfigurationKeys;
 import com.liferay.portal.security.sso.ntlm.constants.NtlmConstants;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-import com.liferay.portal.verify.test.BaseCompanySettingsVerifyProcessTestCase;
+import com.liferay.portal.verify.test.util.BaseCompanySettingsVerifyProcessTestCase;
 
 import javax.portlet.PortletPreferences;
 

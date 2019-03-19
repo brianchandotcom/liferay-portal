@@ -62,7 +62,7 @@ import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerTestRule;
 import com.liferay.portal.verify.VerifyProcess;
-import com.liferay.portal.verify.test.BaseVerifyProcessTestCase;
+import com.liferay.portal.verify.test.util.BaseVerifyProcessTestCase;
 import com.liferay.portlet.documentlibrary.util.test.DLTestUtil;
 
 import java.io.ByteArrayInputStream;

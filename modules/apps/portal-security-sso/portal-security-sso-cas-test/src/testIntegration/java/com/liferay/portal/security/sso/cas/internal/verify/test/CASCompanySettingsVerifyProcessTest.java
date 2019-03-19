@@ -25,7 +25,7 @@ import com.liferay.portal.security.sso.cas.constants.CASConfigurationKeys;
 import com.liferay.portal.security.sso.cas.constants.CASConstants;
 import com.liferay.portal.security.sso.cas.constants.LegacyCASPropsKeys;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-import com.liferay.portal.verify.test.BaseCompanySettingsVerifyProcessTestCase;
+import com.liferay.portal.verify.test.util.BaseCompanySettingsVerifyProcessTestCase;
 
 import javax.portlet.PortletPreferences;
 

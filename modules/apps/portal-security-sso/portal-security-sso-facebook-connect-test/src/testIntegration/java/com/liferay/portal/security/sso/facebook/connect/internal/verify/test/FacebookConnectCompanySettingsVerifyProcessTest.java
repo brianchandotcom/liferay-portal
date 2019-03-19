@@ -24,7 +24,7 @@ import com.liferay.portal.security.sso.facebook.connect.constants.FacebookConnec
 import com.liferay.portal.security.sso.facebook.connect.constants.FacebookConnectConstants;
 import com.liferay.portal.security.sso.facebook.connect.constants.LegacyFacebookConnectPropsKeys;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-import com.liferay.portal.verify.test.BaseCompanySettingsVerifyProcessTestCase;
+import com.liferay.portal.verify.test.util.BaseCompanySettingsVerifyProcessTestCase;
 
 import javax.portlet.PortletPreferences;
 

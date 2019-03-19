@@ -37,7 +37,7 @@ import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.verify.VerifyException;
 import com.liferay.portal.verify.VerifyProcess;
-import com.liferay.portal.verify.test.BaseVerifyProcessTestCase;
+import com.liferay.portal.verify.test.util.BaseVerifyProcessTestCase;
 
 import java.io.IOException;
 

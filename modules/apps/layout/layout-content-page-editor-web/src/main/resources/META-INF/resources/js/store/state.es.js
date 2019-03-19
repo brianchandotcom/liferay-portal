@@ -277,6 +277,14 @@ const INITIAL_STATE = {
 		),
 
 	/**
+	 * Fragment id to indicate if that fragment editor has to be cleared.
+	 * @default ''
+	 * @review
+	 * @type {object}
+	 */
+	fragmentEditorClear: Config.string().value(''),
+
+	/**
 	 * Fragment id to indicate if that fragment editor is enabled or not.
 	 * @default ''
 	 * @review

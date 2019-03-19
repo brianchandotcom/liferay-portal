@@ -1,4 +1,4 @@
-import {addFragmentEntryLinkReducer, disableFragmentEditorReducer, enableFragmentEditorReducer, moveFragmentEntryLinkReducer, removeFragmentEntryLinkReducer, updateEditableValueReducer, updateFragmentEntryLinkConfigReducer} from './fragments.es';
+import {addFragmentEntryLinkReducer, clearFragmentEditorReducer, disableFragmentEditorReducer, enableFragmentEditorReducer, moveFragmentEntryLinkReducer, removeFragmentEntryLinkReducer, updateEditableValueReducer, updateFragmentEntryLinkConfigReducer} from './fragments.es';
 import {addMappingAssetEntry} from './mapping.es';
 import {addPortletReducer} from './portlets.es';
 import {addSectionReducer, moveSectionReducer, removeSectionReducer, updateSectionColumnsReducer, updateSectionConfigReducer} from './sections.es';
@@ -18,6 +18,7 @@ const reducers = [
 	addMappingAssetEntry,
 	addPortletReducer,
 	addSectionReducer,
+	clearFragmentEditorReducer,
 	createSegmentsExperienceReducer,
 	deleteSegmentsExperienceReducer,
 	disableFragmentEditorReducer,

@@ -30,7 +30,6 @@ import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.vulcan.multipart.BinaryFile;
 import com.liferay.portal.vulcan.multipart.MultipartBody;
@@ -124,15 +123,9 @@ public class BlogPostingImageResourceImpl
 				existingFileEntry.getSize())
 		);
 
-		Optional<BlogPostingImage> optional = Optional.empty();
-
-		if (Validator.isNotNull(
-				multipartBody.getValueAsString("blogPostingImage"))) {
-
-			optional = Optional.of(
-				multipartBody.getValueAsInstance(
-					"blogPostingImage", BlogPostingImage.class));
-		}
+		Optional<BlogPostingImage> optional =
+			multipartBody.getValueAsInstanceOptional(
+				"blogPostingImage", BlogPostingImage.class);
 
 		FileEntry fileEntry = _dlAppService.updateFileEntry(
 			blogPostingImageId, binaryFile.getFileName(),
@@ -197,7 +190,8 @@ public class BlogPostingImageResourceImpl
 			multipartBody.getBinaryFile("file")
 		).orElse(
 			new BinaryFile(
-				existingFileEntry.getMimeType(), existingFileEntry.getTitle(),
+				existingFileEntry.getMimeType(),
+				existingFileEntry.getFileName(),
 				existingFileEntry.getContentStream(),
 				existingFileEntry.getSize())
 		);

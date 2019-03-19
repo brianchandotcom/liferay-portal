@@ -249,6 +249,44 @@
 		<reference entity="LayoutPageTemplateEntry" package-path="com.liferay.layout.page.template" />
 		<reference entity="User" package-path="com.liferay.portal" />
 	</entity>
+	<entity local-service="true" name="LayoutPageTemplateStructureRel" remote-service="false" uuid="true">
+
+		<!-- PK fields -->
+
+		<column db-name="lPageTemplateStructureRelId" name="layoutPageTemplateStructureRelId" primary="true" type="long" />
+
+		<!-- Group instance -->
+
+		<column name="groupId" type="long" />
+
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long" />
+		<column name="userId" type="long" />
+		<column name="userName" type="String" />
+		<column name="createDate" type="Date" />
+		<column name="modifiedDate" type="Date" />
+
+		<!-- Other fields -->
+
+		<column name="layoutPageTemplateStructureId" type="long" />
+		<column name="segmentsExperienceId" type="long" />
+		<column name="data" type="String" />
+
+		<!-- Finder methods -->
+
+		<finder name="LayoutPageTemplateStructureId" return-type="Collection">
+			<finder-column name="layoutPageTemplateStructureId" />
+		</finder>
+		<finder name="L_S" return-type="LayoutPageTemplateStructureRel" unique="true">
+			<finder-column name="layoutPageTemplateStructureId" />
+			<finder-column name="segmentsExperienceId" />
+		</finder>
+
+		<!-- References -->
+
+		<reference entity="User" package-path="com.liferay.portal" />
+	</entity>
 	<exceptions>
 		<exception>DuplicateLayoutPageTemplateCollection</exception>
 		<exception>DuplicateLayoutPageTemplateCollectionType</exception>

@@ -19,10 +19,17 @@ const handleFieldAdded = (props, state, event) => {
 		type: name
 	};
 
+	const emptyRow = !event.data.target.parentElement.parentElement.classList.contains('position-relative');
+
 	if (FormSupport.rowHasFields(pages, pageIndex, rowIndex)) {
-		pages = FormSupport.addRow(pages, rowIndex, pageIndex);
+		if (emptyRow) {
+			pages = FormSupport.addRow(pages, rowIndex, pageIndex);
+		}
+
 		columnIndex = 0;
 	}
+
+	pages = FormSupport.addFieldToColumn(pages, target.pageIndex, target.rowIndex, target.columnIndex, fieldProperties);
 
 	return {
 		focusedField: {
@@ -32,13 +39,7 @@ const handleFieldAdded = (props, state, event) => {
 			pageIndex,
 			rowIndex
 		},
-		pages: FormSupport.addFieldToColumn(
-			pages,
-			pageIndex,
-			rowIndex,
-			columnIndex,
-			fieldProperties
-		)
+		pages
 	};
 };
 

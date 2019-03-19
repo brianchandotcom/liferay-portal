@@ -46,20 +46,8 @@ public class TarGzUtil {
 	public static boolean debug = false;
 
 	public static void archive(File source, File archiveFile) {
-		if (source == null) {
-			throw new RuntimeException("No file specified to archive");
-		}
-
 		if (!source.exists()) {
 			throw new RuntimeException("Could not find " + source);
-		}
-
-		if (source.isDirectory()) {
-			File[] filesToArchive = source.listFiles();
-
-			if (filesToArchive == null) {
-				throw new RuntimeException("No files to archive in " + source);
-			}
 		}
 
 		File parent = archiveFile.getParentFile();
@@ -162,10 +150,6 @@ public class TarGzUtil {
 			ArchiveOutputStream archiveOutputStream)
 		throws IOException {
 
-		if (!dir.isDirectory()) {
-			throw new RuntimeException(dir + " is not a dir");
-		}
-
 		File[] files = dir.listFiles();
 
 		if (files == null) {
@@ -186,10 +170,6 @@ public class TarGzUtil {
 			File sourceRootDir, File file,
 			ArchiveOutputStream archiveOutputStream)
 		throws IOException {
-
-		if (!file.isFile()) {
-			throw new RuntimeException(file + " is not a file");
-		}
 
 		if (debug) {
 			System.out.println(file);

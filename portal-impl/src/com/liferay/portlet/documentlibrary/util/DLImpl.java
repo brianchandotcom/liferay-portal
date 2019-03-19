@@ -699,6 +699,7 @@ public class DLImpl implements DL {
 		return orderByComparator;
 	}
 
+	@Override
 	public PortletLayoutFinder.Result getResultURLViewInContext(
 		AssetRenderer assetRenderer,
 		LiferayPortletRequest liferayPortletRequest) {

@@ -149,30 +149,6 @@ public class BlogPosting {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String articleBody;
 
-	public String getCaption() {
-		return caption;
-	}
-
-	public void setCaption(String caption) {
-		this.caption = caption;
-	}
-
-	@JsonIgnore
-	public void setCaption(
-		UnsafeSupplier<String, Exception> captionUnsafeSupplier) {
-
-		try {
-			caption = captionUnsafeSupplier.get();
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected String caption;
-
 	public Long getContentSpaceId() {
 		return contentSpaceId;
 	}
@@ -454,32 +430,8 @@ public class BlogPosting {
 	}
 
 	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Image image;
-
-	public Long getImageId() {
-		return imageId;
-	}
-
-	public void setImageId(Long imageId) {
-		this.imageId = imageId;
-	}
-
-	@JsonIgnore
-	public void setImageId(
-		UnsafeSupplier<Long, Exception> imageIdUnsafeSupplier) {
-
-		try {
-			imageId = imageIdUnsafeSupplier.get();
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-	protected Long imageId;
 
 	public String[] getKeywords() {
 		return keywords;
@@ -611,13 +563,6 @@ public class BlogPosting {
 		sb.append("\"");
 		sb.append(", ");
 
-		sb.append("\"caption\": ");
-
-		sb.append("\"");
-		sb.append(caption);
-		sb.append("\"");
-		sb.append(", ");
-
 		sb.append("\"contentSpaceId\": ");
 
 		sb.append(contentSpaceId);
@@ -690,11 +635,6 @@ public class BlogPosting {
 		sb.append("\"image\": ");
 
 		sb.append(image);
-		sb.append(", ");
-
-		sb.append("\"imageId\": ");
-
-		sb.append(imageId);
 		sb.append(", ");
 
 		sb.append("\"keywords\": ");

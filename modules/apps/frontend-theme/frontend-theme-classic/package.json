@@ -22,7 +22,7 @@
 	"name": "liferay-classic-theme",
 	"repository": "liferay/liferay-portal",
 	"scripts": {
-		"build": "gulp build"
+		"build": "gulp build --css-common-path ./build_gradle/frontend-css-common --styled-path ../frontend-theme-styled/src/main/resources/META-INF/resources/_styled --unstyled-path ../frontend-theme-unstyled/src/main/resources/META-INF/resources/_unstyled"
 	},
 	"version": "3.0.0"
 }

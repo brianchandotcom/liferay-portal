@@ -1,7 +1,7 @@
 import DefaultEventHandler from 'frontend-js-web/liferay/DefaultEventHandler.es';
 
 class EntriesDefaultEventHandler extends DefaultEventHandler {
-	restoreEntry(itemData) {
+	restoreEn tryitemData) {
 		const instance = this;
 
 		if (itemData.move && itemData.move !== 'false') {
@@ -56,7 +56,7 @@ class EntriesDefaultEventHandler extends DefaultEventHandler {
 		}
 	}
 
-	deleteEntry(itemData) {
+	deleteEn tryitemData) {
 		if (confirm(Liferay.Language.get('are-you-sure-you-want-to-delete-this'))) {
 			submitForm(document.hrefFm, itemData.deleteURL);
 		}

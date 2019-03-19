@@ -1531,9 +1531,6 @@ public class PortletPreferencesLocalServiceTest {
 		_serviceBag.replace();
 	}
 
-	private static final PortletApp _portletApp = new PortletAppImpl(
-		StringPool.CONTENT);
-
 	private static final String[] _MULTIPLE_VALUES = {"value1", "value2"};
 
 	private static final String _NAME = "name";
@@ -1541,6 +1538,9 @@ public class PortletPreferencesLocalServiceTest {
 	private static final int _PORTLET_ID = 1000;
 
 	private static final String[] _SINGLE_VALUE = {"value"};
+
+	private static final PortletApp _portletApp = new PortletAppImpl(
+		StringPool.CONTENT);
 
 	private Group _group;
 

@@ -45,6 +45,7 @@
 			label=escape(label)
 			name="${namespacedFieldName}Title"
 			readonly="readonly"
+			required=required
 			type="text"
 			value=(name?has_content)?string(name, languageUtil.get(locale, "drag-file-here"))
 		/>

@@ -21,6 +21,17 @@ String mode = ParamUtil.getString(request, "p_l_mode", Constants.VIEW);
 
 String redirect = themeDisplay.getURLCurrent();
 
+if ((layout.getClassPK() > 0) && (PortalUtil.getClassNameId(Layout.class) == layout.getClassNameId())) {
+	redirect = PortalUtil.getLayoutFullURL(LayoutLocalServiceUtil.getLayout(layout.getClassPK()), themeDisplay);
+}
+else {
+	Layout draftLayout = LayoutLocalServiceUtil.fetchLayout(PortalUtil.getClassNameId(Layout.class), layout.getPlid());
+
+	if (draftLayout != null) {
+		redirect = PortalUtil.getLayoutFullURL(draftLayout, themeDisplay);
+	}
+}
+
 String title = StringPool.BLANK;
 
 if (Objects.equals(mode, Constants.EDIT)) {

@@ -1,0 +1,10 @@
+@import "variables";
+
+.column-overlay-grid {
+	top: 0;
+	z-index: 1;
+
+	&__column-content {
+		background-color: fade_out($columnOverlayGridColor, 0.96);
+	}
+}

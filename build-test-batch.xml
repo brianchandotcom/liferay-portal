@@ -2482,6 +2482,86 @@ log.sanitizer.enabled=false</echo>
 		</sequential>
 	</macrodef>
 
+	<macrodef name="run-release-osgi-state-lpkg-change-directory-test">
+		<sequential>
+			<run-batch-test tomcat.gc.log="true">
+				<test-action>
+					<database-test-run-test database.type="mysql" stop.app.server="true">
+						<test-action>
+							<setup-lpkg-test database.type="@{database.type}" />
+
+							<antcall inheritall="false" target="start-app-server" />
+
+							<antcall inheritall="false" target="stop-app-server" />
+
+							<delete dir="${liferay.home}/logs" />
+
+							<delete>
+								<fileset
+									dir="${liferay.home}/osgi/state"
+									includes="**/bundleFile"
+								/>
+							</delete>
+
+                            <antcall inheritAll="false" target="prepare-portal-ext-properties">
+                                <param name="database.type" value="@{database.type}" />
+                                <param name="liferay.home" value="${project.dir}/bun dles" />
+                            </antcall>
+
+                            <antcall inheritAll="false" target="prepare-system-ext-properties" />
+
+                            <move
+                                file="bundles"
+                                tofile="bun dles"
+                            />
+
+                            <propertyfile file="app.server.${env.HOSTNAME}.properties">
+                                <entry key="app.server.parent.dir" value="${project.dir}/bun dles" />
+                            </propertyfile>
+
+                            <propertyfile file="build.${env.HOSTNAME}.properties">
+                                <entry key="liferay.home" value="${project.dir}/bun dles" />
+                            </propertyfile>
+
+							<trycatch>
+								<try>
+									<antcall inheritall="false" target="start-app-server-preserve-liferay-home" />
+
+									<antcall inheritall="false" target="run-selenium-test">
+										<param name="test.batch.run.type" value="single" />
+										<param name="test.class" value="PortalSmoke#Smoke" />
+										<param name="test.skip.tear.down" value="false" />
+									</antcall>
+								</try>
+
+								<finally>
+									<ant dir="portal-kernel" inheritAll="false" target="test-class">
+										<property name="test.class" value="PortalLogAssertorTest" />
+									</ant>
+								</finally>
+							</trycatch>
+						</test-action>
+					</database-test-run-test>
+				</test-action>
+
+				<test-set-up>
+					<if>
+						<and>
+							<available file="liferay-portal-bundle-${app.server.type}.tar.gz" />
+							<available file="liferay-portal-source.tar.gz" />
+						</and>
+						<then>
+							<prepare-test-environment />
+						</then>
+						<else>
+							<prepare-test-build />
+						</else>
+					</if>
+				</test-set-up>
+			</run-batch-test>
+		</sequential>
+	</macrodef>
+
 	<macrodef name="run-release-osgi-state-lpkg-test">
 		<sequential>
 			<run-batch-test tomcat.gc.log="true">
@@ -5663,6 +5743,10 @@ ${output.content}</echo>
 
 	<target name="release-osgi-state-exploded-test-jdk8">
 		<run-release-osgi-state-exploded-test />
+	</target>
+
+	<target name="release-osgi-state-lpkg-change-directory-test-jdk8">
+		<run-release-osgi-state-lpkg-change-directory-test />
 	</target>
 
 	<target name="release-osgi-state-lpkg-test-jdk8">

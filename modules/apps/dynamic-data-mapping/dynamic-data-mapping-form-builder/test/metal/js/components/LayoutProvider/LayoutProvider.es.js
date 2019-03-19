@@ -58,7 +58,7 @@ class Parent extends JSXComponent {
 	}
 }
 
-describe.only(
+describe(
 	'LayoutProvider',
 	() => {
 		beforeEach(
@@ -580,7 +580,7 @@ describe.only(
 					}
 				);
 
-				xdescribe(
+				describe(
 					'fieldEdited',
 					() => {
 						it(

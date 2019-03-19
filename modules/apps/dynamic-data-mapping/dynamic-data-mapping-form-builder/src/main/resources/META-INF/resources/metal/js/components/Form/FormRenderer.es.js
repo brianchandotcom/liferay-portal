@@ -340,7 +340,7 @@ class FormRenderer extends Component {
 	}
 
 	_handleColumnResized(event) {
-		this.emit('columnResized', event)
+		this.emit('columnResized', event);
 	}
 
 	_handleChangePage({delegateTarget: {dataset}}) {

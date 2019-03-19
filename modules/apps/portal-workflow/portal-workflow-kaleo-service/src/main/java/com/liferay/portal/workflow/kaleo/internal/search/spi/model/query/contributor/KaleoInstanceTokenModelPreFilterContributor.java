@@ -15,6 +15,7 @@
 package com.liferay.portal.workflow.kaleo.internal.search.spi.model.query.contributor;
 
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
+import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.filter.BooleanFilter;
 import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
@@ -64,6 +65,7 @@ public class KaleoInstanceTokenModelPreFilterContributor
 		appendKaleoInstanceTokenIdTerm(booleanFilter, kaleoInstanceTokenQuery);
 		appendParentKaleoInstanceTokenIdTerm(
 			booleanFilter, kaleoInstanceTokenQuery);
+		appendUserIdTerm(booleanFilter, kaleoInstanceTokenQuery);
 	}
 
 	protected void appendCompletedTerm(
@@ -157,6 +159,19 @@ public class KaleoInstanceTokenModelPreFilterContributor
 		booleanFilter.addRequiredTerm(
 			KaleoInstanceTokenField.PARENT_KALEO_INSTANCE_TOKEN_ID,
 			parentKaleoInstanceTokenId);
+	}
+
+	protected void appendUserIdTerm(
+		BooleanFilter booleanFilter,
+		KaleoInstanceTokenQuery kaleoInstanceTokenQuery) {
+
+		Long userId = kaleoInstanceTokenQuery.getUserId();
+
+		if (userId == null) {
+			return;
+		}
+
+		booleanFilter.addRequiredTerm(Field.USER_ID, userId);
 	}
 
 	@Reference

@@ -50,19 +50,15 @@ import java.util.Map;
  */
 public class AopCacheManager {
 
-	public static AopInvocationHandler create(
+	public static synchronized AopInvocationHandler create(
 		Object target, TransactionExecutor transactionExecutor) {
 
-		synchronized (AopCacheManager.class) {
-			AopInvocationHandler aopInvocationHandler =
-				new AopInvocationHandler(
-					target, _createChainableMethodAdvices(transactionExecutor));
+		AopInvocationHandler aopInvocationHandler = new AopInvocationHandler(
+			target, _createChainableMethodAdvices(transactionExecutor));
 
-			_aopInvocationHandlers.put(
-				aopInvocationHandler, transactionExecutor);
+		_aopInvocationHandlers.put(aopInvocationHandler, transactionExecutor);
 
-			return aopInvocationHandler;
-		}
+		return aopInvocationHandler;
 	}
 
 	public static synchronized void destroy(

@@ -59,8 +59,9 @@ $productMenuWidth: 320px;
 
 	.edit-article-form {
 		.component-tbar {
-			height: $controlMenuHeight;
+			height: auto;
 			left: 0;
+			min-height: 3.5rem;
 			position: fixed;
 			top: $controlMenuHeight;
 			transition: left ease $productMenuTransitionDuration, width ease $productMenuTransitionDuration;
@@ -73,8 +74,27 @@ $productMenuWidth: 320px;
 			}
 
 			@media (min-width: 768px) {
-				height: $controlMenuDesktopHeight;
+				min-height: $controlMenuDesktopHeight;
 				top: $controlMenuDesktopHeight;
+			}
+
+			.input-localized {
+				.form-validator-stack {
+					display: none;
+				}
+
+				.input-group-item {
+					order: 2;
+				}
+
+				.input-localized-content {
+					order: 1;
+					padding-right: 0.5rem;
+				}
+			}
+
+			.form-text {
+				display: none;
 			}
 		}
 

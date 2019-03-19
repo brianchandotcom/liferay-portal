@@ -16,6 +16,7 @@ package com.liferay.asset.service.impl;
 
 import com.liferay.asset.model.AssetEntryUsage;
 import com.liferay.asset.service.base.AssetEntryUsageLocalServiceBaseImpl;
+import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -24,9 +25,15 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import java.util.Date;
 import java.util.List;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Pavel Savinov
  */
+@Component(
+	property = "model.class.name=com.liferay.asset.model.AssetEntryUsage",
+	service = AopService.class
+)
 public class AssetEntryUsageLocalServiceImpl
 	extends AssetEntryUsageLocalServiceBaseImpl {
 

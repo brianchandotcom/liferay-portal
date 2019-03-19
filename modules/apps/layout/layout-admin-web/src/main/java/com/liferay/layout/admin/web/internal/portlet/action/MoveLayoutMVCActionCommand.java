@@ -17,7 +17,6 @@ package com.liferay.layout.admin.web.internal.portlet.action;
 import com.liferay.layout.admin.constants.LayoutAdminPortletKeys;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
-import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.LayoutService;
 import com.liferay.portal.kernel.util.ParamUtil;
 
@@ -50,7 +49,7 @@ public class MoveLayoutMVCActionCommand extends BaseAddLayoutMVCActionCommand {
 		long parentPlid = ParamUtil.getLong(actionRequest, "parentPlid");
 		int priority = ParamUtil.getInteger(actionRequest, "priority");
 
-		Layout layout = _layoutLocalService.fetchLayout(plid);
+		Layout layout = layoutLocalService.fetchLayout(plid);
 
 		if (layout.getParentPlid() == parentPlid) {
 			_layoutService.updatePriority(plid, priority);
@@ -62,9 +61,6 @@ public class MoveLayoutMVCActionCommand extends BaseAddLayoutMVCActionCommand {
 				plid, parentPlid, priority);
 		}
 	}
-
-	@Reference
-	private LayoutLocalService _layoutLocalService;
 
 	@Reference
 	private LayoutService _layoutService;

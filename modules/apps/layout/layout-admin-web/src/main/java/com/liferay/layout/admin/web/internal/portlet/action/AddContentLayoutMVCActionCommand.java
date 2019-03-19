@@ -37,7 +37,6 @@ import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.sites.kernel.util.SitesUtil;
 
@@ -122,7 +121,7 @@ public class AddContentLayoutMVCActionCommand
 			else {
 				layout = _layoutService.addLayout(
 					groupId, privateLayout, parentLayoutId,
-					_portal.getClassNameId(LayoutPageTemplateEntry.class),
+					portal.getClassNameId(LayoutPageTemplateEntry.class),
 					layoutPageTemplateEntryId, nameMap, new HashMap<>(),
 					new HashMap<>(), new HashMap<>(), new HashMap<>(),
 					LayoutConstants.TYPE_CONTENT, null, false, false,
@@ -173,8 +172,5 @@ public class AddContentLayoutMVCActionCommand
 
 	@Reference
 	private LayoutService _layoutService;
-
-	@Reference
-	private Portal _portal;
 
 }

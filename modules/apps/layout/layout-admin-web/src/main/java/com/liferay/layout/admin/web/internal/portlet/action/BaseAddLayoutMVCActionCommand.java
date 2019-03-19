@@ -43,13 +43,13 @@ public abstract class BaseAddLayoutMVCActionCommand
 			ThemeDisplay themeDisplay, Layout layout)
 		throws PortalException {
 
-		Layout draftLayout = _layoutLocalService.fetchLayout(
-			_portal.getClassNameId(Layout.class), layout.getPlid());
+		Layout draftLayout = layoutLocalService.fetchLayout(
+			portal.getClassNameId(Layout.class), layout.getPlid());
 
-		String layoutFullURL = _portal.getLayoutFullURL(layout, themeDisplay);
+		String layoutFullURL = portal.getLayoutFullURL(layout, themeDisplay);
 
 		if (draftLayout != null) {
-			layoutFullURL = _portal.getLayoutFullURL(draftLayout, themeDisplay);
+			layoutFullURL = portal.getLayoutFullURL(draftLayout, themeDisplay);
 		}
 
 		return HttpUtil.setParameter(layoutFullURL, "p_l_mode", Constants.EDIT);
@@ -60,7 +60,7 @@ public abstract class BaseAddLayoutMVCActionCommand
 		Layout layout) {
 
 		LiferayPortletResponse liferayPortletResponse =
-			_portal.getLiferayPortletResponse(actionResponse);
+			portal.getLiferayPortletResponse(actionResponse);
 
 		PortletURL configureLayoutURL =
 			liferayPortletResponse.createRenderURL();
@@ -96,9 +96,9 @@ public abstract class BaseAddLayoutMVCActionCommand
 	}
 
 	@Reference
-	private LayoutLocalService _layoutLocalService;
+	protected LayoutLocalService layoutLocalService;
 
 	@Reference
-	private Portal _portal;
+	protected Portal portal;
 
 }

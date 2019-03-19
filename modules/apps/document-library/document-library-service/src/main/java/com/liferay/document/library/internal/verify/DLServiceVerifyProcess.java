@@ -62,12 +62,12 @@ import org.springframework.context.ApplicationContext;
  *
  * @deprecated As of Mueller (7.2.x), with no direct replacement
  */
-@Deprecated
 @Component(
 	immediate = true,
 	property = "verify.process.name=com.liferay.document.library.service",
 	service = VerifyProcess.class
 )
+@Deprecated
 public class DLServiceVerifyProcess extends VerifyProcess {
 
 	protected void checkDLFileEntryMetadata() throws Exception {

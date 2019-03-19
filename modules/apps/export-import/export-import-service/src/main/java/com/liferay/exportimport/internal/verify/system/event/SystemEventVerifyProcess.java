@@ -32,12 +32,12 @@ import org.osgi.service.component.annotations.Reference;
  *
  * @deprecated As of Mueller (7.2.x), with no direct replacement
  */
-@Deprecated
 @Component(
 	immediate = true,
 	property = "verify.process.name=com.liferay.systemevent.internal.verify",
 	service = VerifyProcess.class
 )
+@Deprecated
 public class SystemEventVerifyProcess extends VerifyProcess {
 
 	protected void deleteInvalidSystemEvents() throws PortalException {

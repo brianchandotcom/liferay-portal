@@ -50,90 +50,56 @@ public class WorkflowMetricsSLAProcessorTest extends PowerMockito {
 	public void testProcessOntimeInstance() {
 		LocalDateTime localDateTime = _createLocalDateTime();
 
-		WorkflowMetricsSLAProcessResult workflowMetricsSLAProcessResult =
-			_process(
-				5000, localDateTime,
-				_createDocument(
-					_createField(
-						"createDate",
-						localDateTime.minus(5, ChronoUnit.SECONDS))));
-
-		Assert.assertEquals(
-			5000, workflowMetricsSLAProcessResult.getElapsedTime());
-		Assert.assertEquals(
-			0, workflowMetricsSLAProcessResult.getRemainingTime());
-		Assert.assertTrue(workflowMetricsSLAProcessResult.isOnTime());
+		_test(
+			5000, 5000, localDateTime, true, 0,
+			_createDocument(
+				_createField(
+					"createDate", localDateTime.minus(5, ChronoUnit.SECONDS))));
 	}
 
 	@Test
 	public void testProcessOntimeInstanceWithParallelTasks() {
 		LocalDateTime localDateTime = _createLocalDateTime();
 
-		WorkflowMetricsSLAProcessResult workflowMetricsSLAProcessResult =
-			_process(
-				10000, localDateTime,
-				_createDocument(
-					_createField(
-						"createDate",
-						localDateTime.minus(10, ChronoUnit.SECONDS)),
-					_createField(
-						"completionDate",
-						localDateTime.minus(4, ChronoUnit.SECONDS))),
-				_createDocument(
-					_createField(
-						"createDate",
-						localDateTime.minus(5, ChronoUnit.SECONDS))));
-
-		Assert.assertEquals(
-			10000, workflowMetricsSLAProcessResult.getElapsedTime());
-		Assert.assertEquals(
-			0, workflowMetricsSLAProcessResult.getRemainingTime());
-		Assert.assertTrue(workflowMetricsSLAProcessResult.isOnTime());
+		_test(
+			10000, 10000, localDateTime, true, 0,
+			_createDocument(
+				_createField(
+					"createDate", localDateTime.minus(10, ChronoUnit.SECONDS)),
+				_createField(
+					"completionDate",
+					localDateTime.minus(4, ChronoUnit.SECONDS))),
+			_createDocument(
+				_createField(
+					"createDate", localDateTime.minus(5, ChronoUnit.SECONDS))));
 	}
 
 	@Test
 	public void testProcessOverdueInstance() {
 		LocalDateTime localDateTime = _createLocalDateTime();
 
-		WorkflowMetricsSLAProcessResult workflowMetricsSLAProcessResult =
-			_process(
-				5000, localDateTime,
-				_createDocument(
-					_createField(
-						"createDate",
-						localDateTime.minus(6, ChronoUnit.SECONDS))));
-
-		Assert.assertEquals(
-			6000, workflowMetricsSLAProcessResult.getElapsedTime());
-		Assert.assertEquals(
-			-1000, workflowMetricsSLAProcessResult.getRemainingTime());
-		Assert.assertFalse(workflowMetricsSLAProcessResult.isOnTime());
+		_test(
+			5000, 6000, localDateTime, false, -1000,
+			_createDocument(
+				_createField(
+					"createDate", localDateTime.minus(6, ChronoUnit.SECONDS))));
 	}
 
 	@Test
 	public void testProcessOverdueInstanceWithParallelTasks() {
 		LocalDateTime localDateTime = _createLocalDateTime();
 
-		WorkflowMetricsSLAProcessResult workflowMetricsSLAProcessResult =
-			_process(
-				5000, localDateTime,
-				_createDocument(
-					_createField(
-						"createDate",
-						localDateTime.minus(10, ChronoUnit.SECONDS)),
-					_createField(
-						"completionDate",
-						localDateTime.minus(4, ChronoUnit.SECONDS))),
-				_createDocument(
-					_createField(
-						"createDate",
-						localDateTime.minus(5, ChronoUnit.SECONDS))));
-
-		Assert.assertEquals(
-			10000, workflowMetricsSLAProcessResult.getElapsedTime());
-		Assert.assertEquals(
-			-5000, workflowMetricsSLAProcessResult.getRemainingTime());
-		Assert.assertFalse(workflowMetricsSLAProcessResult.isOnTime());
+		_test(
+			5000, 10000, localDateTime, false, -5000,
+			_createDocument(
+				_createField(
+					"createDate", localDateTime.minus(10, ChronoUnit.SECONDS)),
+				_createField(
+					"completionDate",
+					localDateTime.minus(4, ChronoUnit.SECONDS))),
+			_createDocument(
+				_createField(
+					"createDate", localDateTime.minus(5, ChronoUnit.SECONDS))));
 	}
 
 	private Document _createDocument(Field... fields) {
@@ -160,9 +126,9 @@ public class WorkflowMetricsSLAProcessorTest extends PowerMockito {
 		return localDateTime.withNano(0);
 	}
 
-	private WorkflowMetricsSLAProcessResult _process(
-		long duration, LocalDateTime localDateTime,
-		Document... tokenDocuments) {
+	private void _test(
+		long duration, long elapsedTime, LocalDateTime localDateTime,
+		boolean onTime, long remainingTime, Document... tokenDocuments) {
 
 		WorkflowMetricsSLAProcessor workflowMetricsSLAProcessor =
 			new WorkflowMetricsSLAProcessor() {
@@ -185,8 +151,15 @@ public class WorkflowMetricsSLAProcessorTest extends PowerMockito {
 			duration
 		);
 
-		return workflowMetricsSLAProcessor.process(
-			0, 0, localDateTime, workflowMetricsSLADefinition);
+		WorkflowMetricsSLAProcessResult workflowMetricsSLAProcessResult =
+			workflowMetricsSLAProcessor.process(
+				0, 0, localDateTime, workflowMetricsSLADefinition);
+
+		Assert.assertEquals(
+			elapsedTime, workflowMetricsSLAProcessResult.getElapsedTime());
+		Assert.assertEquals(
+			remainingTime, workflowMetricsSLAProcessResult.getRemainingTime());
+		Assert.assertEquals(workflowMetricsSLAProcessResult.isOnTime(), onTime);
 	}
 
 	private final DateTimeFormatter _dateTimeFormatter =

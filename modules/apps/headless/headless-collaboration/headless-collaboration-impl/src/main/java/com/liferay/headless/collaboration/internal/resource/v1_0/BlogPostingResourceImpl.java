@@ -53,6 +53,7 @@ import com.liferay.ratings.kernel.service.RatingsStatsLocalService;
 import java.time.LocalDateTime;
 
 import java.util.Date;
+import java.util.Optional;
 
 import javax.ws.rs.BadRequestException;
 import javax.ws.rs.core.MultivaluedMap;
@@ -122,6 +123,9 @@ public class BlogPostingResourceImpl
 		LocalDateTime localDateTime = toLocalDateTime(
 			blogPosting.getDatePublished());
 
+		Optional<Image> imageOptional = Optional.ofNullable(
+			blogPosting.getImage());
+
 		return _toBlogPosting(
 			_blogsEntryService.addEntry(
 				blogPosting.getHeadline(), blogPosting.getAlternativeHeadline(),
@@ -129,8 +133,19 @@ public class BlogPostingResourceImpl
 				blogPosting.getArticleBody(), localDateTime.getMonthValue() - 1,
 				localDateTime.getDayOfMonth(), localDateTime.getYear(),
 				localDateTime.getHour(), localDateTime.getMinute(), true, true,
-				new String[0], blogPosting.getCaption(),
-				_getImageSelector(blogPosting), null,
+				new String[0],
+				imageOptional.map(
+					Image::getCaption
+				).orElse(
+					null
+				),
+				_getImageSelector(
+					imageOptional.map(
+						Image::getImageId
+					).orElse(
+						null
+					)),
+				null,
 				ServiceContextUtil.createServiceContext(
 					blogPosting.getKeywords(),
 					blogPosting.getTaxonomyCategoryIds(), contentSpaceId,
@@ -145,6 +160,9 @@ public class BlogPostingResourceImpl
 		LocalDateTime localDateTime = toLocalDateTime(
 			blogPosting.getDatePublished());
 
+		Optional<Image> imageOptional = Optional.ofNullable(
+			blogPosting.getImage());
+
 		return _toBlogPosting(
 			_blogsEntryService.updateEntry(
 				blogPostingId, blogPosting.getHeadline(),
@@ -153,8 +171,19 @@ public class BlogPostingResourceImpl
 				blogPosting.getArticleBody(), localDateTime.getMonthValue() - 1,
 				localDateTime.getDayOfMonth(), localDateTime.getYear(),
 				localDateTime.getHour(), localDateTime.getMinute(), true, true,
-				new String[0], blogPosting.getCaption(),
-				_getImageSelector(blogPosting), null,
+				new String[0],
+				imageOptional.map(
+					Image::getCaption
+				).orElse(
+					null
+				),
+				_getImageSelector(
+					imageOptional.map(
+						Image::getImageId
+					).orElse(
+						null
+					)),
+				null,
 				ServiceContextUtil.createServiceContext(
 					blogPosting.getKeywords(),
 					blogPosting.getTaxonomyCategoryIds(),
@@ -182,18 +211,16 @@ public class BlogPostingResourceImpl
 
 		return new Image() {
 			{
+				caption = blogsEntry.getCoverImageCaption();
 				contentUrl = _dlURLHelper.getPreviewURL(
 					fileEntry, fileEntry.getFileVersion(), null, "", false,
 					false);
 				imageId = coverImageFileEntryId;
-				name = blogsEntry.getCoverImageCaption();
 			}
 		};
 	}
 
-	private ImageSelector _getImageSelector(BlogPosting blogPosting) {
-		Long imageId = blogPosting.getImageId();
-
+	private ImageSelector _getImageSelector(Long imageId) {
 		if ((imageId == null) || (imageId == 0)) {
 			return null;
 		}
@@ -231,7 +258,6 @@ public class BlogPostingResourceImpl
 					_ratingsStatsLocalService.fetchStats(
 						BlogsEntry.class.getName(), blogsEntry.getEntryId()));
 				articleBody = blogsEntry.getContent();
-				caption = blogsEntry.getCoverImageCaption();
 				contentSpaceId = blogsEntry.getGroupId();
 				creator = CreatorUtil.toCreator(
 					_portal, _userLocalService.getUser(blogsEntry.getUserId()));

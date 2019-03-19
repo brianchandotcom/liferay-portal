@@ -107,42 +107,6 @@ public class BlogPostingImageResourceImpl
 	}
 
 	@Override
-	public BlogPostingImage patchBlogPostingImage(
-			Long blogPostingImageId, MultipartBody multipartBody)
-		throws Exception {
-
-		FileEntry existingFileEntry = _getFileEntry(blogPostingImageId);
-
-		BinaryFile binaryFile = Optional.ofNullable(
-			multipartBody.getBinaryFile("file")
-		).orElse(
-			new BinaryFile(
-				existingFileEntry.getMimeType(),
-				existingFileEntry.getFileName(),
-				existingFileEntry.getContentStream(),
-				existingFileEntry.getSize())
-		);
-
-		Optional<BlogPostingImage> optional =
-			multipartBody.getValueAsInstanceOptional(
-				"blogPostingImage", BlogPostingImage.class);
-
-		FileEntry fileEntry = _dlAppService.updateFileEntry(
-			blogPostingImageId, binaryFile.getFileName(),
-			binaryFile.getContentType(),
-			optional.map(
-				BlogPostingImage::getTitle
-			).orElseGet(
-				existingFileEntry::getTitle
-			),
-			null, null, DLVersionNumberIncrease.AUTOMATIC,
-			binaryFile.getInputStream(), binaryFile.getSize(),
-			new ServiceContext());
-
-		return _toBlogPostingImage(fileEntry);
-	}
-
-	@Override
 	public BlogPostingImage postContentSpaceBlogPostingImage(
 			Long contentSpaceId, MultipartBody multipartBody)
 		throws Exception {

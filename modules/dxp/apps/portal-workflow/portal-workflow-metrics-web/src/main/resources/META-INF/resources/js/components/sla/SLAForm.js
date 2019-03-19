@@ -14,7 +14,6 @@ import FieldLabel from './form/fieldLabel';
 import Icon from '../../shared/components/Icon';
 import Link from '../../shared/components/router/Link';
 import MaskedInput from 'react-text-mask';
-import post from '../../shared/rest/post';
 import React from 'react';
 import redirect from '../../shared/components/router/redirect';
 
@@ -68,12 +67,13 @@ export default class SLAForm extends React.Component {
 
 			errors[ALERT_MESSAGE] = '';
 
-			return post(client)(`/processes/${processId}/slas`, {
-				description,
-				duration,
-				name,
-				processId
-			})
+			return client
+				.post(`/processes/${processId}/slas`, {
+					description,
+					duration,
+					name,
+					processId
+				})
 				.then(() => {
 					redirect('sla-list', {processId});
 				})

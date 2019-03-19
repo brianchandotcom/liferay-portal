@@ -8,31 +8,28 @@ import React from 'react';
  */
 export default class ListView extends React.Component {
 	render() {
-		const {children, emptyMessageText, emptyTitleText, isFetching, isLoading, isSearching} = this.props;
+		const {
+			children,
+			emptyMessageText,
+			emptyTitleText,
+			isFetching,
+			isLoading,
+			isSearching
+		} = this.props;
 
 		const emptyContentRender = secondaryRender =>
 			isFetching ? (
-				<EmptyContent
-					message={emptyMessageText}
-					title={emptyTitleText}
-				/>
+				<EmptyContent message={emptyMessageText} title={emptyTitleText} />
 			) : (
 				secondaryRender
 			);
 
 		const emptyLoadingState = secondaryRender =>
-			isLoading ? (
-				<LoadingState />
-			) : (
-				secondaryRender
-			);
+			isLoading ? <LoadingState /> : secondaryRender;
 
 		const emptySearchRender = secondaryRender =>
 			isSearching ? (
-				<EmptyContent
-					message={emptyMessageText}
-					type="not-found"
-				/>
+				<EmptyContent message={emptyMessageText} type="not-found" />
 			) : (
 				secondaryRender
 			);

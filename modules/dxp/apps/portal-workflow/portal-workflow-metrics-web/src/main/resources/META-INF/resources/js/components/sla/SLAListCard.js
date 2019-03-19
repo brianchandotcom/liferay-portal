@@ -70,9 +70,9 @@ export default class SLAListCard extends React.Component {
 				? REQUEST_ORIGIN_TYPE_SEARCH
 				: REQUEST_ORIGIN_TYPE_FETCH;
 
-		return client(
-			`/processes/${processId}/slas?page=${page}&pageSize=${pageSize}`
-		);
+		return client
+			.get(`/processes/${processId}/slas?page=${page}&pageSize=${pageSize}`)
+			.then(({data}) => data);
 	}
 
 	@autobind

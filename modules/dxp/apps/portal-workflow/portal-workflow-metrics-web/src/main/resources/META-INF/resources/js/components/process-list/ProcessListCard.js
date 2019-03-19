@@ -59,7 +59,7 @@ export default class ProcessListCard extends React.Component {
 			? REQUEST_ORIGIN_TYPE_SEARCH
 			: REQUEST_ORIGIN_TYPE_FETCH;
 
-		return client(urlRequest);
+		return client.get(urlRequest).then(({data}) => data);
 	}
 
 	@autobind
@@ -95,13 +95,17 @@ export default class ProcessListCard extends React.Component {
 		const {items, page, pageSize, totalCount} = this.state;
 
 		const emptyTitleText = Liferay.Language.get('no-current-metrics');
-		const isFetching = requestOriginType === REQUEST_ORIGIN_TYPE_FETCH && totalCount === 0;
+		const isFetching =
+			requestOriginType === REQUEST_ORIGIN_TYPE_FETCH && totalCount === 0;
 		const isLoading = !requestOriginType && totalCount === 0;
-		const isSearching = requestOriginType === REQUEST_ORIGIN_TYPE_SEARCH && totalCount === 0;
+		const isSearching =
+			requestOriginType === REQUEST_ORIGIN_TYPE_SEARCH && totalCount === 0;
 
-		const emptyMessageText = isSearching ? Liferay.Language.get('no-results-were-found') : Liferay.Language.get(
-			'once-there-are-active-processes-metrics-will-appear-here'
-		);
+		const emptyMessageText = isSearching
+			? Liferay.Language.get('no-results-were-found')
+			: Liferay.Language.get(
+				'once-there-are-active-processes-metrics-will-appear-here'
+			  );
 
 		const pageSizes = [5, 10, 20, 30, 50, 75];
 
@@ -110,10 +114,7 @@ export default class ProcessListCard extends React.Component {
 				<nav className="management-bar management-bar-light navbar navbar-expand-md">
 					<div className="container-fluid container-fluid-max-xl">
 						<div className="navbar-form navbar-form-autofit">
-							<Search
-								disabled={isFetching}
-								onSearch={this.onSearch}
-							/>
+							<Search disabled={isFetching} onSearch={this.onSearch} />
 						</div>
 					</div>
 				</nav>
@@ -124,7 +125,8 @@ export default class ProcessListCard extends React.Component {
 						emptyTitleText={emptyTitleText}
 						isFetching={isFetching}
 						isLoading={isLoading}
-						isSearching={isSearching}>
+						isSearching={isSearching}
+					>
 						<ProcessListTable items={items} />
 
 						{totalCount > pageSizes[0] && (

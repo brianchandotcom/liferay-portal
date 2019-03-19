@@ -1,7 +1,6 @@
 import Icon from '../../shared/components/Icon';
 import Link from '../../shared/components/router/Link';
 import React from 'react';
-import {sub} from '../../shared/util/lang';
 
 /**
  * @class

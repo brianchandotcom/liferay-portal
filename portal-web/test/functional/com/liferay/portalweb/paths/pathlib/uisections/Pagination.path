@@ -45,7 +45,7 @@
 </tr>
 <tr>
 	<td>CURRENT_PAGE_SELECT</td>
-	<td>//div[contains(@class,'pagination-results')]</td>
+	<td>//p[contains(@class,'pagination-results')]</td>
 	<td></td>
 </tr>
 <tr>

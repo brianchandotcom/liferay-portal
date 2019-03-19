@@ -24,19 +24,15 @@ import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 public class UpgradeExpando extends UpgradeProcess {
 
 	protected void deleteOrphanExpandoRow() throws Exception {
-		StringBuilder sb = new StringBuilder(2);
+		String sql =
+			"delete from ExpandoRow where rowId_ not in (select rowId_ from " +
+				"ExpandoValue)";
 
-		sb.append("delete from ExpandoRow where rowId_ not in (select ");
-		sb.append("rowId_ from ExpandoValue)");
+		DBTypeToSQLMap dbTypeToSQLMap = new DBTypeToSQLMap(sql);
 
-		DBTypeToSQLMap dbTypeToSQLMap = new DBTypeToSQLMap(sb.toString());
-
-		sb = new StringBuilder(2);
-
-		sb.append("delete from ExpandoRow er where not exists (select null ");
-		sb.append("from ExpandoValue ev where ev.rowId_ = er.rowId_)");
-
-		String sql = sb.toString();
+		sql =
+			"delete from ExpandoRow er where not exists (select null from " +
+				"ExpandoValue ev where ev.rowId_ = er.rowId_)";
 
 		dbTypeToSQLMap.add(DBType.POSTGRESQL, sql);
 

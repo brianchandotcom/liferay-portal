@@ -59,7 +59,10 @@ import org.springframework.context.ApplicationContext;
  * @author Raymond Augé
  * @author Douglas Wong
  * @author Alexander Chow
+ *
+ * @deprecated As of Mueller (7.2.x), with no direct replacement
  */
+@Deprecated
 @Component(
 	immediate = true,
 	property = "verify.process.name=com.liferay.document.library.service",

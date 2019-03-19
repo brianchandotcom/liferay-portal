@@ -41,7 +41,10 @@ import java.util.concurrent.Callable;
 /**
  * @author Michael C. Han
  * @author Shinn Lok
+ *
+ * @deprecated As of Mueller (7.2.x), with no direct replacement
  */
+@Deprecated
 public class VerifyAuditedModel extends VerifyProcess {
 
 	public void verify(VerifiableAuditedModel... verifiableAuditedModels)

@@ -24,7 +24,10 @@ import java.util.List;
  * @author Douglas Wong
  * @author Matthew Kong
  * @author Raymond Augé
+ *
+ * @deprecated As of Mueller (7.2.x), with no direct replacement
  */
+@Deprecated
 public class VerifyPermission extends VerifyProcess {
 
 	@Override

@@ -51,7 +51,10 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Marcellus Tavares
  * @author Rafael Praxedes
+ *
+ * @deprecated As of Mueller (7.2.x), with no direct replacement
  */
+@Deprecated
 @Component(
 	immediate = true,
 	property = "verify.process.name=com.liferay.dynamic.data.mapping.service",

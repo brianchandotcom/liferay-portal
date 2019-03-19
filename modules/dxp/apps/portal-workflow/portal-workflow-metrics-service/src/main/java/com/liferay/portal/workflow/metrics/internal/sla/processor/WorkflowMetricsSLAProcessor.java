@@ -56,7 +56,7 @@ public class WorkflowMetricsSLAProcessor {
 		long companyId, long instanceId, LocalDateTime nowLocalDateTime,
 		WorkflowMetricsSLADefinition workflowMetricsSLADefinition) {
 
-		List<TaskInterval> taskIntervals = getWorkflowMetricsTaskIntervals(
+		List<TaskInterval> taskIntervals = _getWorkflowMetricsTaskIntervals(
 			companyId, nowLocalDateTime, instanceId);
 
 		long elapsedTime = 0;
@@ -75,24 +75,24 @@ public class WorkflowMetricsSLAProcessor {
 		return new WorkflowMetricsSLAProcessResult(
 			companyId, elapsedTime, instanceId, nowLocalDateTime,
 			elapsedTime <= workflowMetricsSLADefinition.getDuration(),
-			computeOverdueLocalDateTime(nowLocalDateTime, remainingTime),
+			_computeOverdueLocalDateTime(nowLocalDateTime, remainingTime),
 			workflowMetricsSLADefinition.getProcessId(), remainingTime,
 			workflowMetricsSLADefinition.getWorkflowMetricsSLADefinitionId());
 	}
 
-	protected LocalDateTime computeOverdueLocalDateTime(
+	private LocalDateTime _computeOverdueLocalDateTime(
 		LocalDateTime nowLocalDateTime, long remainingTime) {
 
 		return nowLocalDateTime.plus(remainingTime, ChronoUnit.MILLIS);
 	}
 
-	protected List<Document> getTokenDocuments(
+	private List<Document> _getTokenDocuments(
 		long companyId, long instanceId) {
 
 		SearchSearchRequest searchSearchRequest = new SearchSearchRequest();
 
 		searchSearchRequest.addSorts(
-			sorts.field(
+			_sorts.field(
 				Field.getSortableFieldName(
 					StringBundler.concat(
 						"createDate", StringPool.UNDERLINE, "Number")),
@@ -116,7 +116,7 @@ public class WorkflowMetricsSLAProcessor {
 			});
 
 		SearchSearchResponse searchSearchResponse =
-			searchRequestExecutor.executeSearchRequest(searchSearchRequest);
+			_searchRequestExecutor.executeSearchRequest(searchSearchRequest);
 
 		SearchHits searchHits = searchSearchResponse.getSearchHits();
 
@@ -131,19 +131,19 @@ public class WorkflowMetricsSLAProcessor {
 		);
 	}
 
-	protected List<TaskInterval> getWorkflowMetricsTaskIntervals(
+	private List<TaskInterval> _getWorkflowMetricsTaskIntervals(
 		long companyId, LocalDateTime nowLocalDateTime, long instanceId) {
 
-		List<Document> documents = getTokenDocuments(companyId, instanceId);
+		List<Document> documents = _getTokenDocuments(companyId, instanceId);
 
 		if (documents.isEmpty()) {
 			return Collections.emptyList();
 		}
 
-		return toNonoverlapingTaskIntervals(nowLocalDateTime, documents);
+		return _toNonoverlapingTaskIntervals(nowLocalDateTime, documents);
 	}
 
-	protected Stack<TaskInterval> toNonoverlapingTaskIntervals(
+	private Stack<TaskInterval> _toNonoverlapingTaskIntervals(
 		LocalDateTime nowLocalDateTime, List<Document> documents) {
 
 		Stack<TaskInterval> taskIntervals = new Stack<>();
@@ -176,10 +176,10 @@ public class WorkflowMetricsSLAProcessor {
 	}
 
 	@Reference
-	protected SearchRequestExecutor searchRequestExecutor;
+	protected SearchRequestExecutor _searchRequestExecutor;
 
 	@Reference
-	protected Sorts sorts;
+	private Sorts _sorts;
 
 	private LocalDateTime _toLocalDateTime(
 		Document document, String fieldName) {

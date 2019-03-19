@@ -62,6 +62,8 @@ definition {
 	}
 
 	macro addExistingRelatedAssetCP {
+		var key_assetType = "${assetType}";
+		var key_siteName = "${siteName}";
 		var key_webContentTitle = "${webContentTitle}";
 
 		RelatedAssets.selectAsset(
@@ -90,7 +92,7 @@ definition {
 		);
 
 		AssertElementPresent(
-			locator1 = "AssetRelatedAssets#RELATED_ASSETS_TABLE_REMOVE_LINK"
+			locator1 = "Icon#DELETE"
 		);
 
 		PortletEntry.publish();

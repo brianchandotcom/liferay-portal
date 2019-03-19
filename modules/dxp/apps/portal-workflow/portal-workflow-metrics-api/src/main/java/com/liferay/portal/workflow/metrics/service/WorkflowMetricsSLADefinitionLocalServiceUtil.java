@@ -338,6 +338,18 @@ public class WorkflowMetricsSLADefinitionLocalServiceUtil {
 			companyId, processId);
 	}
 
+	public static java.util.List
+		<com.liferay.portal.workflow.metrics.model.WorkflowMetricsSLADefinition>
+			getWorkflowMetricsSLADefinitions(
+				long companyId, long processId, int start, int end,
+				com.liferay.portal.kernel.util.OrderByComparator
+					<com.liferay.portal.workflow.metrics.model.
+						WorkflowMetricsSLADefinition> orderByComparator) {
+
+		return getService().getWorkflowMetricsSLADefinitions(
+			companyId, processId, start, end, orderByComparator);
+	}
+
 	/**
 	 * Returns all the workflow metrics sla definitions matching the UUID and company.
 	 *

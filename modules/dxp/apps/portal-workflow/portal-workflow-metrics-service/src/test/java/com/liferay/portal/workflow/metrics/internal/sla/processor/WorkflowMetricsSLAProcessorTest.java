@@ -47,7 +47,7 @@ public class WorkflowMetricsSLAProcessorTest extends PowerMockito {
 	}
 
 	@Test
-	public void testProcessOntimeInstance() {
+	public void testProcessOnTimeInstance() {
 		LocalDateTime localDateTime = _createLocalDateTime();
 
 		_test(
@@ -58,7 +58,7 @@ public class WorkflowMetricsSLAProcessorTest extends PowerMockito {
 	}
 
 	@Test
-	public void testProcessOntimeInstanceWithParallelTasks() {
+	public void testProcessOnTimeInstanceWithParallelTasks() {
 		LocalDateTime localDateTime = _createLocalDateTime();
 
 		_test(

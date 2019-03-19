@@ -4,6 +4,25 @@
 	top: 0;
 	z-index: 1;
 
+	&__column {
+		position: relative;
+
+		&:after {
+			border-right: dashed transparent thin;
+			content: '';
+			height: 100%;
+			position: absolute;
+			right: 0;
+			top: 0;
+			transition: border-right-color ease 0.3s;
+			width: 0;
+		}
+
+		&--highlighted:after {
+			border-right-color: $columnOverlayGridColor;
+		}
+	}
+
 	&__column-content {
 		background-color: fade_out($columnOverlayGridColor, 0.96);
 	}

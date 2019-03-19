@@ -14,8 +14,9 @@
 
 package com.liferay.bulk.rest.internal.resource.v1_0;
 
-import com.liferay.bulk.rest.dto.v1_0.DocumentSelection;
+import com.liferay.bulk.rest.dto.v1_0.DocumentBulkSelection;
 import com.liferay.bulk.rest.dto.v1_0.Keyword;
+import com.liferay.bulk.rest.dto.v1_0.KeywordBulkSelection;
 import com.liferay.bulk.rest.resource.v1_0.KeywordResource;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.petra.string.StringPool;
@@ -57,7 +58,7 @@ public abstract class BaseKeywordResourceImpl implements KeywordResource {
 	@PATCH
 	@Path("/keywords/batch")
 	@Tags(value = {@Tag(name = "Keyword")})
-	public boolean patchKeywordBatch(DocumentSelection documentSelection)
+	public boolean patchKeywordBatch(KeywordBulkSelection keywordBulkSelection)
 		throws Exception {
 
 		return false;
@@ -68,7 +69,7 @@ public abstract class BaseKeywordResourceImpl implements KeywordResource {
 	@PUT
 	@Path("/keywords/batch")
 	@Tags(value = {@Tag(name = "Keyword")})
-	public boolean putKeywordBatch(DocumentSelection documentSelection)
+	public boolean putKeywordBatch(KeywordBulkSelection keywordBulkSelection)
 		throws Exception {
 
 		return false;
@@ -81,7 +82,7 @@ public abstract class BaseKeywordResourceImpl implements KeywordResource {
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "Keyword")})
 	public Page<Keyword> postKeywordCommonPage(
-			DocumentSelection documentSelection)
+			DocumentBulkSelection documentBulkSelection)
 		throws Exception {
 
 		return Page.of(Collections.emptyList());

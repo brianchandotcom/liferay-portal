@@ -14,8 +14,7 @@
 
 package com.liferay.bulk.rest.resource.v1_0;
 
-import com.liferay.bulk.rest.dto.v1_0.DocumentBulkSelection;
-import com.liferay.bulk.rest.dto.v1_0.MessageSelection;
+import com.liferay.bulk.rest.dto.v1_0.TaxonomyCategoryBulkSelection;
 import com.liferay.portal.kernel.model.Company;
 
 import javax.annotation.Generated;
@@ -29,14 +28,14 @@ import javax.annotation.Generated;
  * @generated
  */
 @Generated("")
-public interface MessageSelectionResource {
+public interface TaxonomyCategoryResource {
 
-	public MessageSelection postKeywordMessageSelection(
-			DocumentBulkSelection documentBulkSelection)
+	public boolean patchTaxonomyCategoryBatch(
+			TaxonomyCategoryBulkSelection taxonomyCategoryBulkSelection)
 		throws Exception;
 
-	public MessageSelection postTaxonomyVocabularyMessageSelection(
-			DocumentBulkSelection documentBulkSelection)
+	public boolean putTaxonomyCategoryBatch(
+			TaxonomyCategoryBulkSelection taxonomyCategoryBulkSelection)
 		throws Exception;
 
 	public void setContextCompany(Company contextCompany);

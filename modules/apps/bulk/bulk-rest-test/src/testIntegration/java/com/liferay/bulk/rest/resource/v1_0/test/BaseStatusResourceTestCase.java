@@ -26,6 +26,7 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Base64;
 import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.Http;
@@ -335,8 +336,17 @@ public abstract class BaseStatusResourceTestCase {
 		return options;
 	}
 
-	private String _toPath(String template, Object value) {
-		return template.replaceFirst("\\{.*\\}", String.valueOf(value));
+	private String _toPath(String template, Object... values) {
+		if (ArrayUtil.isEmpty(values)) {
+			return template;
+		}
+
+		for (int i = 0; i < values.length; i++) {
+			template = template.replaceFirst(
+				"\\{.*\\}", String.valueOf(values[i]));
+		}
+
+		return template;
 	}
 
 	private static BeanUtilsBean _beanUtilsBean = new BeanUtilsBean() {

@@ -33,25 +33,25 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
-@GraphQLName("Category")
+@GraphQLName("DocumentBulkSelection")
 @JsonFilter("Liferay.Vulcan")
-@XmlRootElement(name = "Category")
-public class Category {
+@XmlRootElement(name = "DocumentBulkSelection")
+public class DocumentBulkSelection {
 
-	public Long getCategoryId() {
-		return categoryId;
+	public String[] getDocumentIds() {
+		return documentIds;
 	}
 
-	public void setCategoryId(Long categoryId) {
-		this.categoryId = categoryId;
+	public void setDocumentIds(String[] documentIds) {
+		this.documentIds = documentIds;
 	}
 
 	@JsonIgnore
-	public void setCategoryId(
-		UnsafeSupplier<Long, Exception> categoryIdUnsafeSupplier) {
+	public void setDocumentIds(
+		UnsafeSupplier<String[], Exception> documentIdsUnsafeSupplier) {
 
 		try {
-			categoryId = categoryIdUnsafeSupplier.get();
+			documentIds = documentIdsUnsafeSupplier.get();
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
@@ -60,20 +60,23 @@ public class Category {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Long categoryId;
+	protected String[] documentIds;
 
-	public String getName() {
-		return name;
+	public SelectionScope getSelectionScope() {
+		return selectionScope;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	public void setSelectionScope(SelectionScope selectionScope) {
+		this.selectionScope = selectionScope;
 	}
 
 	@JsonIgnore
-	public void setName(UnsafeSupplier<String, Exception> nameUnsafeSupplier) {
+	public void setSelectionScope(
+		UnsafeSupplier<SelectionScope, Exception>
+			selectionScopeUnsafeSupplier) {
+
 		try {
-			name = nameUnsafeSupplier.get();
+			selectionScope = selectionScopeUnsafeSupplier.get();
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
@@ -82,23 +85,39 @@ public class Category {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected String name;
+	protected SelectionScope selectionScope;
 
 	public String toString() {
 		StringBundler sb = new StringBundler();
 
 		sb.append("{");
 
-		sb.append("\"categoryId\": ");
+		sb.append("\"documentIds\": ");
 
-		sb.append(categoryId);
+		if (documentIds == null) {
+			sb.append("null");
+		}
+		else {
+			sb.append("[");
+
+			for (int i = 0; i < documentIds.length; i++) {
+				sb.append("\"");
+				sb.append(documentIds[i]);
+				sb.append("\"");
+
+				if ((i + 1) < documentIds.length) {
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
+		}
+
 		sb.append(", ");
 
-		sb.append("\"name\": ");
+		sb.append("\"selectionScope\": ");
 
-		sb.append("\"");
-		sb.append(name);
-		sb.append("\"");
+		sb.append(selectionScope);
 
 		sb.append("}");
 

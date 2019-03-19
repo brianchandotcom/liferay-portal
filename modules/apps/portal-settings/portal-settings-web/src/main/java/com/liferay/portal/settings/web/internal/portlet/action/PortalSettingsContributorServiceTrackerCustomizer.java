@@ -19,7 +19,6 @@ import com.liferay.osgi.util.ServiceTrackerFactory;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.service.PortletPreferencesLocalService;
 import com.liferay.portal.kernel.util.HashMapDictionary;
-import com.liferay.portal.settings.constants.PortalSettingsPortletKeys;
 import com.liferay.portal.settings.portlet.action.PortalSettingsFormContributor;
 
 import java.util.Dictionary;
@@ -140,8 +139,6 @@ public class PortalSettingsContributorServiceTrackerCustomizer
 
 		Dictionary<String, Object> properties = new HashMapDictionary<>();
 
-		properties.put(
-			"javax.portlet.name", PortalSettingsPortletKeys.PORTAL_SETTINGS);
 		properties.put(
 			"javax.portlet.name",
 			ConfigurationAdminPortletKeys.INSTANCE_SETTINGS);

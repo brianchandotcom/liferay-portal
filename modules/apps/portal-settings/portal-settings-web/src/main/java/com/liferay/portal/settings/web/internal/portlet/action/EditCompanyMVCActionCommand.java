@@ -60,7 +60,6 @@ import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.settings.constants.PortalSettingsPortletKeys;
 import com.liferay.portal.settings.web.internal.exception.RequiredLocaleException;
 import com.liferay.users.admin.kernel.util.UsersAdminUtil;
 
@@ -80,7 +79,6 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	property = {
 		"javax.portlet.name=" + ConfigurationAdminPortletKeys.INSTANCE_SETTINGS,
-		"javax.portlet.name=" + PortalSettingsPortletKeys.PORTAL_SETTINGS,
 		"mvc.command.name=/portal_settings/edit_company"
 	},
 	service = MVCActionCommand.class

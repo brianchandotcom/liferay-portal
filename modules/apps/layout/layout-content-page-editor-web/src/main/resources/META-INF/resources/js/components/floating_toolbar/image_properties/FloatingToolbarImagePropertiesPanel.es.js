@@ -5,7 +5,7 @@ import './FloatingToolbarImagePropertiesPanelDelegateTemplate.soy';
 import {EDITABLE_FIELD_CONFIG_KEYS, TARGET_TYPES} from '../../../utils/constants';
 import getConnectedComponent from '../../../store/ConnectedComponent.es';
 import templates from './FloatingToolbarImagePropertiesPanel.soy';
-import {ENABLE_FRAGMENT_EDITOR, UPDATE_CONFIG_ATTRIBUTES, UPDATE_LAST_SAVE_DATE, UPDATE_SAVING_CHANGES_STATUS, UPDATE_TRANSLATION_STATUS} from '../../../actions/actions.es';
+import {CLEAR_FRAGMENT_EDITOR, ENABLE_FRAGMENT_EDITOR, UPDATE_CONFIG_ATTRIBUTES, UPDATE_LAST_SAVE_DATE, UPDATE_SAVING_CHANGES_STATUS, UPDATE_TRANSLATION_STATUS} from '../../../actions/actions.es';
 
 /**
  * FloatingToolbarImagePropertiesPanel
@@ -52,6 +52,20 @@ class FloatingToolbarImagePropertiesPanel extends Component {
 	}
 
 	/**
+	 * Handle select image button change
+	 * @private
+	 * @review
+	 */
+	_handleClearImageButtonClick() {
+		this.store.dispatchAction(
+			CLEAR_FRAGMENT_EDITOR,
+			{
+				itemId: this.itemId
+			}
+		);
+	}
+
+	/**
 	 * Handle image link change
 	 * @param {Event} event
 	 * @private
@@ -92,7 +106,6 @@ class FloatingToolbarImagePropertiesPanel extends Component {
 			}
 		);
 	}
-
 }
 
 /**

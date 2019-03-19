@@ -16,6 +16,8 @@ package com.liferay.data.engine.rest.resource.v1_0;
 
 import com.liferay.data.engine.rest.dto.v1_0.DataLayout;
 import com.liferay.portal.kernel.model.Company;
+import com.liferay.portal.vulcan.pagination.Page;
+import com.liferay.portal.vulcan.pagination.Pagination;
 
 import javax.annotation.Generated;
 
@@ -29,6 +31,10 @@ import javax.annotation.Generated;
  */
 @Generated("")
 public interface DataLayoutResource {
+
+	public Page<DataLayout> getContentSpaceDataLayoutPage(
+			Long contentSpaceId, Pagination pagination)
+		throws Exception;
 
 	public DataLayout postDataDefinitionDataLayout(
 			Long dataDefinitionId, DataLayout dataLayout)

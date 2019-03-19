@@ -16,6 +16,7 @@ package com.liferay.data.engine.rest.resource.v1_0.test;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
 import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
@@ -38,6 +39,7 @@ import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.vulcan.pagination.Page;
+import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
 
 import java.lang.reflect.InvocationTargetException;
@@ -47,6 +49,7 @@ import java.net.URL;
 import java.text.DateFormat;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
@@ -99,6 +102,165 @@ public abstract class BaseDataLayoutResourceTestCase {
 	public void tearDown() throws Exception {
 		GroupTestUtil.deleteGroup(irrelevantGroup);
 		GroupTestUtil.deleteGroup(testGroup);
+	}
+
+	@Test
+	public void testGetContentSpaceDataLayoutPage() throws Exception {
+		Long contentSpaceId =
+			testGetContentSpaceDataLayoutPage_getContentSpaceId();
+		Long irrelevantContentSpaceId =
+			testGetContentSpaceDataLayoutPage_getIrrelevantContentSpaceId();
+
+		if ((irrelevantContentSpaceId != null)) {
+			DataLayout irrelevantDataLayout =
+				testGetContentSpaceDataLayoutPage_addDataLayout(
+					irrelevantContentSpaceId, randomIrrelevantDataLayout());
+
+			Page<DataLayout> page = invokeGetContentSpaceDataLayoutPage(
+				irrelevantContentSpaceId, Pagination.of(1, 2));
+
+			Assert.assertEquals(1, page.getTotalCount());
+
+			assertEquals(
+				Arrays.asList(irrelevantDataLayout),
+				(List<DataLayout>)page.getItems());
+			assertValid(page);
+		}
+
+		DataLayout dataLayout1 =
+			testGetContentSpaceDataLayoutPage_addDataLayout(
+				contentSpaceId, randomDataLayout());
+
+		DataLayout dataLayout2 =
+			testGetContentSpaceDataLayoutPage_addDataLayout(
+				contentSpaceId, randomDataLayout());
+
+		Page<DataLayout> page = invokeGetContentSpaceDataLayoutPage(
+			contentSpaceId, Pagination.of(1, 2));
+
+		Assert.assertEquals(2, page.getTotalCount());
+
+		assertEqualsIgnoringOrder(
+			Arrays.asList(dataLayout1, dataLayout2),
+			(List<DataLayout>)page.getItems());
+		assertValid(page);
+	}
+
+	@Test
+	public void testGetContentSpaceDataLayoutPageWithPagination()
+		throws Exception {
+
+		Long contentSpaceId =
+			testGetContentSpaceDataLayoutPage_getContentSpaceId();
+
+		DataLayout dataLayout1 =
+			testGetContentSpaceDataLayoutPage_addDataLayout(
+				contentSpaceId, randomDataLayout());
+
+		DataLayout dataLayout2 =
+			testGetContentSpaceDataLayoutPage_addDataLayout(
+				contentSpaceId, randomDataLayout());
+
+		DataLayout dataLayout3 =
+			testGetContentSpaceDataLayoutPage_addDataLayout(
+				contentSpaceId, randomDataLayout());
+
+		Page<DataLayout> page1 = invokeGetContentSpaceDataLayoutPage(
+			contentSpaceId, Pagination.of(1, 2));
+
+		List<DataLayout> dataLayouts1 = (List<DataLayout>)page1.getItems();
+
+		Assert.assertEquals(dataLayouts1.toString(), 2, dataLayouts1.size());
+
+		Page<DataLayout> page2 = invokeGetContentSpaceDataLayoutPage(
+			contentSpaceId, Pagination.of(2, 2));
+
+		Assert.assertEquals(3, page2.getTotalCount());
+
+		List<DataLayout> dataLayouts2 = (List<DataLayout>)page2.getItems();
+
+		Assert.assertEquals(dataLayouts2.toString(), 1, dataLayouts2.size());
+
+		assertEqualsIgnoringOrder(
+			Arrays.asList(dataLayout1, dataLayout2, dataLayout3),
+			new ArrayList<DataLayout>() {
+				{
+					addAll(dataLayouts1);
+					addAll(dataLayouts2);
+				}
+			});
+	}
+
+	protected DataLayout testGetContentSpaceDataLayoutPage_addDataLayout(
+			Long contentSpaceId, DataLayout dataLayout)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected Long testGetContentSpaceDataLayoutPage_getContentSpaceId()
+		throws Exception {
+
+		return testGroup.getGroupId();
+	}
+
+	protected Long
+			testGetContentSpaceDataLayoutPage_getIrrelevantContentSpaceId()
+		throws Exception {
+
+		return irrelevantGroup.getGroupId();
+	}
+
+	protected Page<DataLayout> invokeGetContentSpaceDataLayoutPage(
+			Long contentSpaceId, Pagination pagination)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		String location =
+			_resourceURL +
+				_toPath(
+					"/content-spaces/{content-space-id}/data-layout",
+					contentSpaceId);
+
+		location = HttpUtil.addParameter(
+			location, "page", pagination.getPage());
+		location = HttpUtil.addParameter(
+			location, "pageSize", pagination.getPageSize());
+
+		options.setLocation(location);
+
+		String string = HttpUtil.URLtoString(options);
+
+		return _outputObjectMapper.readValue(
+			string,
+			new TypeReference<Page<DataLayout>>() {
+			});
+	}
+
+	protected Http.Response invokeGetContentSpaceDataLayoutPageResponse(
+			Long contentSpaceId, Pagination pagination)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		String location =
+			_resourceURL +
+				_toPath(
+					"/content-spaces/{content-space-id}/data-layout",
+					contentSpaceId);
+
+		location = HttpUtil.addParameter(
+			location, "page", pagination.getPage());
+		location = HttpUtil.addParameter(
+			location, "pageSize", pagination.getPageSize());
+
+		options.setLocation(location);
+
+		HttpUtil.URLtoString(options);
+
+		return options.getResponse();
 	}
 
 	@Test

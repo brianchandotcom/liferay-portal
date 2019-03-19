@@ -115,6 +115,26 @@ public class Query {
 
 	@GraphQLField
 	@GraphQLInvokeDetached
+	public Collection<DataLayout> getContentSpaceDataLayoutPage(
+			@GraphQLName("content-space-id") Long contentSpaceId,
+			@GraphQLName("pageSize") int pageSize,
+			@GraphQLName("page") int page)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_dataLayoutResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			dataLayoutResource -> {
+				Page paginationPage =
+					dataLayoutResource.getContentSpaceDataLayoutPage(
+						contentSpaceId, Pagination.of(pageSize, page));
+
+				return paginationPage.getItems();
+			});
+	}
+
+	@GraphQLField
+	@GraphQLInvokeDetached
 	public DataLayout getDataLayout(
 			@GraphQLName("data-layout-id") Long dataLayoutId)
 		throws Exception {

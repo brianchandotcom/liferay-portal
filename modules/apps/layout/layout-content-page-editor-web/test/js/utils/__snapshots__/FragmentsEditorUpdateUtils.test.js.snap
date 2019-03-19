@@ -2,9 +2,9 @@
 
 exports[`FragmentsEditorIdUtils #encodeAssetId should add an encoded id to a given asset object 1`] = `
 Object {
-  "assetEntryClassNameId": 11111,
-  "assetEntryClassPK": 22222,
   "assetEntryTitle": "My asset",
-  "encodedId": "eyJhc3NldEVudHJ5Q2xhc3NOYW1lSWQiOjExMTExLCJhc3NldEVudHJ5Q2xhc3NQSyI6MjIyMjJ9",
+  "classNameId": 11111,
+  "classPK": 22222,
+  "encodedId": "eyJjbGFzc05hbWVJZCI6MTExMTEsImNsYXNzUEsiOjIyMjIyfQ==",
 }
 `;

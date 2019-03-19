@@ -95,8 +95,7 @@ public class ElasticsearchIndexingFixture implements IndexingFixture {
 				localization);
 
 		IndexWriter indexWriter = createIndexWriter(
-			_elasticsearchFixture, searchEngineAdapter, indexNameBuilder,
-			localization);
+			searchEngineAdapter, indexNameBuilder, localization);
 
 		_indexSearcher = elasticsearchIndexSearcher;
 		_indexWriter = indexWriter;
@@ -195,7 +194,6 @@ public class ElasticsearchIndexingFixture implements IndexingFixture {
 	}
 
 	protected static IndexWriter createIndexWriter(
-		final ElasticsearchFixture elasticsearchFixture,
 		final SearchEngineAdapter searchEngineAdapter,
 		final IndexNameBuilder indexNameBuilder, Localization localization) {
 
@@ -207,10 +205,6 @@ public class ElasticsearchIndexingFixture implements IndexingFixture {
 				setSpellCheckIndexWriter(
 					createElasticsearchSpellCheckIndexWriter(
 						searchEngineAdapter, indexNameBuilder, localization));
-
-				activate(
-					elasticsearchFixture.
-						getElasticsearchConfigurationProperties());
 			}
 		};
 	}

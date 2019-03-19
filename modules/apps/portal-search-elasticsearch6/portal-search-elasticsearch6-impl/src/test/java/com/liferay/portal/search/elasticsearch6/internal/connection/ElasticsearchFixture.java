@@ -236,13 +236,12 @@ public class ElasticsearchFixture implements ElasticsearchClientResolver {
 	protected Map<String, Object> createElasticsearchConfigurationProperties(
 		Map<String, Object> elasticsearchConfigurationProperties) {
 
-		Map<String, Object> map = new HashMap<>();
+		Map<String, Object> map = new HashMap<>(
+			elasticsearchConfigurationProperties);
 
 		map.put("configurationPid", ElasticsearchConfiguration.class.getName());
 		map.put("httpCORSAllowOrigin", "*");
 		map.put("logExceptionsOnly", false);
-
-		map.putAll(elasticsearchConfigurationProperties);
 
 		return map;
 	}

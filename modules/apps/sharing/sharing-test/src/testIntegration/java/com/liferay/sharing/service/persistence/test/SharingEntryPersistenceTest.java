@@ -241,6 +241,14 @@ public class SharingEntryPersistenceTest {
 	}
 
 	@Test
+	public void testCountByU_C() throws Exception {
+		_persistence.countByU_C(
+			RandomTestUtil.nextLong(), RandomTestUtil.nextLong());
+
+		_persistence.countByU_C(0L, 0L);
+	}
+
+	@Test
 	public void testCountByTU_C() throws Exception {
 		_persistence.countByTU_C(
 			RandomTestUtil.nextLong(), RandomTestUtil.nextLong());

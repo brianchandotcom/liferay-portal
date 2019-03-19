@@ -25,6 +25,7 @@ import com.liferay.asset.kernel.model.AssetTag;
 import com.liferay.asset.kernel.service.AssetCategoryLocalService;
 import com.liferay.asset.kernel.service.AssetTagLocalService;
 import com.liferay.document.library.kernel.model.DLFileEntry;
+import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.model.DLVersionNumberIncrease;
 import com.liferay.document.library.kernel.service.DLAppService;
 import com.liferay.document.library.util.DLURLHelper;
@@ -106,6 +107,16 @@ public class DocumentResourceImpl
 							Field.GROUP_ID, String.valueOf(contentSpaceId)),
 						BooleanClauseOccur.MUST);
 				}
+
+				BooleanFilter booleanFilter =
+					booleanQuery.getPreBooleanFilter();
+
+				booleanFilter.add(
+					new TermFilter(
+						Field.FOLDER_ID,
+						String.valueOf(
+							DLFolderConstants.DEFAULT_PARENT_FOLDER_ID)),
+					BooleanClauseOccur.MUST);
 			},
 			filter, pagination, sorts);
 	}

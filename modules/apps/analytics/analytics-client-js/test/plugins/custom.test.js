@@ -75,7 +75,7 @@ describe('Custom Asset Plugin', () => {
 			document.body.removeChild(customAssetElement);
 		});
 
-		it('should be fired with formEnable if there is form element every custom asset on the page', () => {
+		it('should be fired with formEnabled if there is form element every custom asset on the page', () => {
 			const customAssetElement = createCustomAssetElementWithForm();
 
 			const domContentLoaded = new Event('DOMContentLoaded');
@@ -93,7 +93,7 @@ describe('Custom Asset Plugin', () => {
 			});
 
 			expect(events[0].properties.assetId).to.equal('assetId');
-			expect(events[0].properties.formEnable).to.equal(true);
+			expect(events[0].properties.formEnabled).to.equal(true);
 
 			document.body.removeChild(customAssetElement);
 		});

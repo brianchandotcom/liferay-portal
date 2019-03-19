@@ -131,11 +131,11 @@ function trackCustomAssetViewed(analytics) {
 			)
 			.filter(element => isTrackableCustomAsset(element))
 			.forEach(element => {
-				const formEnable =
+				const formEnabled =
 					element.getElementsByTagName('form').length > 0;
 				const payload = {
 					...getCustomAssetPayload(element),
-					formEnable,
+					formEnabled,
 				};
 
 				customAssetElements.push(element);

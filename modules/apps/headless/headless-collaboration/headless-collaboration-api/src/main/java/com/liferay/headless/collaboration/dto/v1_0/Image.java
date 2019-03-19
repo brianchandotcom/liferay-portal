@@ -38,6 +38,30 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement(name = "Image")
 public class Image {
 
+	public String getCaption() {
+		return caption;
+	}
+
+	public void setCaption(String caption) {
+		this.caption = caption;
+	}
+
+	@JsonIgnore
+	public void setCaption(
+		UnsafeSupplier<String, Exception> captionUnsafeSupplier) {
+
+		try {
+			caption = captionUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected String caption;
+
 	public String getContentUrl() {
 		return contentUrl;
 	}
@@ -59,7 +83,7 @@ public class Image {
 	}
 
 	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String contentUrl;
 
 	public Long getImageId() {
@@ -86,32 +110,17 @@ public class Image {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long imageId;
 
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	@JsonIgnore
-	public void setName(UnsafeSupplier<String, Exception> nameUnsafeSupplier) {
-		try {
-			name = nameUnsafeSupplier.get();
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected String name;
-
 	public String toString() {
 		StringBundler sb = new StringBundler();
 
 		sb.append("{");
+
+		sb.append("\"caption\": ");
+
+		sb.append("\"");
+		sb.append(caption);
+		sb.append("\"");
+		sb.append(", ");
 
 		sb.append("\"contentUrl\": ");
 
@@ -123,13 +132,6 @@ public class Image {
 		sb.append("\"imageId\": ");
 
 		sb.append(imageId);
-		sb.append(", ");
-
-		sb.append("\"name\": ");
-
-		sb.append("\"");
-		sb.append(name);
-		sb.append("\"");
 
 		sb.append("}");
 

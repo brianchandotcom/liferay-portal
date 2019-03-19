@@ -223,60 +223,6 @@ public abstract class BaseBlogPostingImageResourceTestCase {
 	}
 
 	@Test
-	public void testPatchBlogPostingImage() throws Exception {
-		Assert.assertTrue(true);
-	}
-
-	protected BlogPostingImage testPatchBlogPostingImage_addBlogPostingImage(
-			BlogPostingImage blogPostingImage)
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	protected BlogPostingImage invokePatchBlogPostingImage(
-			Long blogPostingImageId, MultipartBody multipartBody)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		String location =
-			_resourceURL +
-				_toPath(
-					"/blog-posting-images/{blog-posting-image-id}",
-					blogPostingImageId);
-
-		options.setLocation(location);
-
-		options.setPatch(true);
-
-		return _outputObjectMapper.readValue(
-			HttpUtil.URLtoString(options), BlogPostingImage.class);
-	}
-
-	protected Http.Response invokePatchBlogPostingImageResponse(
-			Long blogPostingImageId, MultipartBody multipartBody)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		String location =
-			_resourceURL +
-				_toPath(
-					"/blog-posting-images/{blog-posting-image-id}",
-					blogPostingImageId);
-
-		options.setLocation(location);
-
-		options.setPatch(true);
-
-		HttpUtil.URLtoString(options);
-
-		return options.getResponse();
-	}
-
-	@Test
 	public void testPutBlogPostingImage() throws Exception {
 		Assert.assertTrue(true);
 	}

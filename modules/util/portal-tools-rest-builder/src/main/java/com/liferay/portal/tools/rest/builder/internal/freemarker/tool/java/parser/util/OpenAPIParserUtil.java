@@ -59,7 +59,7 @@ public class OpenAPIParserUtil {
 						getReferenceName(reference)),
 					schema);
 			}
-			else {
+			else if (allOfSchema.getPropertySchemas() != null) {
 				propertySchemas.putAll(allOfSchema.getPropertySchemas());
 			}
 		}

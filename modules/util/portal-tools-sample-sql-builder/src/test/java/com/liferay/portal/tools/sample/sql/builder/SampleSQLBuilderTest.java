@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.db.DBType;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
+import com.liferay.portal.kernel.io.unsync.UnsyncCharArrayWriter;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.SortedProperties;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -27,6 +28,8 @@ import com.liferay.portal.tools.HypersonicLoader;
 import com.liferay.portal.tools.ToolDependencies;
 
 import java.io.File;
+import java.io.InputStreamReader;
+import java.io.Reader;
 
 import java.net.URL;
 
@@ -37,6 +40,7 @@ import java.sql.Statement;
 import java.util.Enumeration;
 import java.util.Properties;
 
+import org.junit.Assert;
 import org.junit.ClassRule;
 import org.junit.Test;
 
@@ -48,6 +52,34 @@ public class SampleSQLBuilderTest {
 	@ClassRule
 	public static final LogAssertionTestRule logAssertionTestRule =
 		LogAssertionTestRule.INSTANCE;
+
+	@Test
+	public void testFreemarkerTemplateContent() throws Exception {
+		Class<?> clazz = getClass();
+
+		try (Reader reader = new InputStreamReader(
+				clazz.getResourceAsStream(
+					"/com/liferay/portal/tools/sample/sql/builder" +
+						"/dependencies/sample.ftl"))) {
+
+			char[] buffer = new char[1024];
+
+			int result = -1;
+
+			UnsyncCharArrayWriter unsyncCharArrayWriter =
+				new UnsyncCharArrayWriter();
+
+			while ((result = reader.read(buffer)) != -1) {
+				unsyncCharArrayWriter.write(buffer, 0, result);
+			}
+
+			String fileContent = unsyncCharArrayWriter.toString();
+
+			Assert.assertTrue(
+				"sample.ftl must end with " + _SAMPLE_FTL_END,
+				fileContent.endsWith(_SAMPLE_FTL_END));
+		}
+	}
 
 	@Test
 	public void testGenerateAndInsertSampleSQL() throws Exception {
@@ -195,5 +227,8 @@ public class SampleSQLBuilderTest {
 
 		db.runSQLTemplateString(connection, sql, false, true);
 	}
+
+	private static final String _SAMPLE_FTL_END =
+		"<#include \"counters.ftl\">\n\nCOMMIT_TRANSACTION";
 
 }

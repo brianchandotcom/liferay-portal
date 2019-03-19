@@ -294,9 +294,10 @@ public class OpenIdConnectServiceHandlerImpl
 
 	protected URI getLoginRedirectURI(HttpServletRequest httpServletRequest) {
 		try {
-			StringBundler sb = new StringBundler(2);
+			StringBundler sb = new StringBundler(3);
 
 			sb.append(_portal.getPortalURL(httpServletRequest));
+			sb.append(_portal.getPathContext());
 			sb.append(OpenIdConnectConstants.REDIRECT_URL_PATTERN);
 
 			return new URI(sb.toString());

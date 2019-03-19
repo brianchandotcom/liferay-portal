@@ -2229,7 +2229,7 @@ closeTemplate()
 							@echo off
 
 							set "MW_HOME=${app.server.weblogic.dir.windows}"
-							set "USER_MEM_ARGS=-Xmx2048mm -XX:MetaspaceSize=512m"
+							set "USER_MEM_ARGS=-Xmx2048m -XX:MetaspaceSize=512m"
 							set "WL_HOME=${app.server.weblogic.wlserver.dir.windows}"
 
 							call %MW_HOME%/oracle_common/common/bin/commEnv.cmd

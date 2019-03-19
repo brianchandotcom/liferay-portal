@@ -17,6 +17,7 @@ package com.liferay.document.library.google.docs.internal.upgrade.v1_0_0;
 import com.liferay.document.library.google.docs.internal.util.GoogleDocsConstants;
 import com.liferay.document.library.kernel.model.DLFileEntryType;
 import com.liferay.document.library.kernel.service.DLFileEntryTypeLocalService;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -75,8 +76,7 @@ public class UpgradeFileEntryTypeName extends UpgradeProcess {
 				dlFileEntryType.getDescription(locale));
 
 			if (hasDefaultDescription) {
-				dlFileEntryType.setDescription(
-					GoogleDocsConstants.DL_FILE_ENTRY_TYPE_NAME, locale);
+				dlFileEntryType.setDescription(StringPool.BLANK, locale);
 			}
 
 			boolean hasDefaultName = "Google Docs".equals(

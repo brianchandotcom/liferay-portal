@@ -80,9 +80,7 @@ public class WorkflowMetricsSLAProcessor {
 			workflowMetricsSLADefinition.getWorkflowMetricsSLADefinitionId());
 	}
 
-	private List<Document> _getTokenDocuments(
-		long companyId, long instanceId) {
-
+	protected List<Document> getDocuments(long companyId, long instanceId) {
 		SearchSearchRequest searchSearchRequest = new SearchSearchRequest();
 
 		searchSearchRequest.addSorts(
@@ -128,7 +126,7 @@ public class WorkflowMetricsSLAProcessor {
 	private List<TaskInterval> _getTaskIntervals(
 		long companyId, LocalDateTime nowLocalDateTime, long instanceId) {
 
-		List<Document> documents = _getTokenDocuments(companyId, instanceId);
+		List<Document> documents = getDocuments(companyId, instanceId);
 
 		if (documents.isEmpty()) {
 			return Collections.emptyList();

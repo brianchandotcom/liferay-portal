@@ -128,16 +128,16 @@ public class WorkflowMetricsSLAProcessorTest extends PowerMockito {
 
 	private void _test(
 		long duration, long elapsedTime, LocalDateTime localDateTime,
-		boolean onTime, long remainingTime, Document... tokenDocuments) {
+		boolean onTime, long remainingTime, Document... documents) {
 
 		WorkflowMetricsSLAProcessor workflowMetricsSLAProcessor =
 			new WorkflowMetricsSLAProcessor() {
 
 				@Override
-				protected List<Document> getTokenDocuments(
+				protected List<Document> getDocuments(
 					long companyId, long instanceId) {
 
-					return Arrays.asList(tokenDocuments);
+					return Arrays.asList(documents);
 				}
 
 			};

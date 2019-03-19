@@ -20,13 +20,14 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
 import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
 
-import com.liferay.bulk.rest.dto.v1_0.DocumentSelection;
+import com.liferay.bulk.rest.dto.v1_0.DocumentBulkSelection;
 import com.liferay.bulk.rest.dto.v1_0.MessageSelection;
 import com.liferay.bulk.rest.resource.v1_0.MessageSelectionResource;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Base64;
 import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.Http;
@@ -119,14 +120,12 @@ public abstract class BaseMessageSelectionResourceTestCase {
 	}
 
 	protected MessageSelection invokePostKeywordMessageSelection(
-			DocumentSelection documentSelection)
+			DocumentBulkSelection documentBulkSelection)
 		throws Exception {
 
 		Http.Options options = _createHttpOptions();
 
-		String location =
-			_resourceURL +
-				_toPath("/keywords/message-selection", documentSelection);
+		String location = _resourceURL + _toPath("/keywords/message-selection");
 
 		options.setLocation(location);
 
@@ -137,14 +136,12 @@ public abstract class BaseMessageSelectionResourceTestCase {
 	}
 
 	protected Http.Response invokePostKeywordMessageSelectionResponse(
-			DocumentSelection documentSelection)
+			DocumentBulkSelection documentBulkSelection)
 		throws Exception {
 
 		Http.Options options = _createHttpOptions();
 
-		String location =
-			_resourceURL +
-				_toPath("/keywords/message-selection", documentSelection);
+		String location = _resourceURL + _toPath("/keywords/message-selection");
 
 		options.setLocation(location);
 
@@ -156,11 +153,11 @@ public abstract class BaseMessageSelectionResourceTestCase {
 	}
 
 	@Test
-	public void testPostVocabularyMessageSelection() throws Exception {
+	public void testPostTaxonomyVocabularyMessageSelection() throws Exception {
 		MessageSelection randomMessageSelection = randomMessageSelection();
 
 		MessageSelection postMessageSelection =
-			testPostVocabularyMessageSelection_addMessageSelection(
+			testPostTaxonomyVocabularyMessageSelection_addMessageSelection(
 				randomMessageSelection);
 
 		assertEquals(randomMessageSelection, postMessageSelection);
@@ -168,7 +165,7 @@ public abstract class BaseMessageSelectionResourceTestCase {
 	}
 
 	protected MessageSelection
-			testPostVocabularyMessageSelection_addMessageSelection(
+			testPostTaxonomyVocabularyMessageSelection_addMessageSelection(
 				MessageSelection messageSelection)
 		throws Exception {
 
@@ -176,15 +173,14 @@ public abstract class BaseMessageSelectionResourceTestCase {
 			"This method needs to be implemented");
 	}
 
-	protected MessageSelection invokePostVocabularyMessageSelection(
-			DocumentSelection documentSelection)
+	protected MessageSelection invokePostTaxonomyVocabularyMessageSelection(
+			DocumentBulkSelection documentBulkSelection)
 		throws Exception {
 
 		Http.Options options = _createHttpOptions();
 
 		String location =
-			_resourceURL +
-				_toPath("/vocabularies/message-selection", documentSelection);
+			_resourceURL + _toPath("/taxonomy-vocabularies/message-selection");
 
 		options.setLocation(location);
 
@@ -194,15 +190,15 @@ public abstract class BaseMessageSelectionResourceTestCase {
 			HttpUtil.URLtoString(options), MessageSelection.class);
 	}
 
-	protected Http.Response invokePostVocabularyMessageSelectionResponse(
-			DocumentSelection documentSelection)
+	protected Http.Response
+			invokePostTaxonomyVocabularyMessageSelectionResponse(
+				DocumentBulkSelection documentBulkSelection)
 		throws Exception {
 
 		Http.Options options = _createHttpOptions();
 
 		String location =
-			_resourceURL +
-				_toPath("/vocabularies/message-selection", documentSelection);
+			_resourceURL + _toPath("/taxonomy-vocabularies/message-selection");
 
 		options.setLocation(location);
 
@@ -430,8 +426,17 @@ public abstract class BaseMessageSelectionResourceTestCase {
 		return options;
 	}
 
-	private String _toPath(String template, Object value) {
-		return template.replaceFirst("\\{.*\\}", String.valueOf(value));
+	private String _toPath(String template, Object... values) {
+		if (ArrayUtil.isEmpty(values)) {
+			return template;
+		}
+
+		for (int i = 0; i < values.length; i++) {
+			template = template.replaceFirst(
+				"\\{.*\\}", String.valueOf(values[i]));
+		}
+
+		return template;
 	}
 
 	private static BeanUtilsBean _beanUtilsBean = new BeanUtilsBean() {

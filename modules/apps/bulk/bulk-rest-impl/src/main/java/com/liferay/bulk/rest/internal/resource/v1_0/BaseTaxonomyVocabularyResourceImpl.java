@@ -14,9 +14,9 @@
 
 package com.liferay.bulk.rest.internal.resource.v1_0;
 
-import com.liferay.bulk.rest.dto.v1_0.DocumentSelection;
-import com.liferay.bulk.rest.dto.v1_0.Vocabulary;
-import com.liferay.bulk.rest.resource.v1_0.VocabularyResource;
+import com.liferay.bulk.rest.dto.v1_0.DocumentBulkSelection;
+import com.liferay.bulk.rest.dto.v1_0.TaxonomyVocabulary;
+import com.liferay.bulk.rest.resource.v1_0.TaxonomyVocabularyResource;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Company;
@@ -51,17 +51,19 @@ import javax.ws.rs.core.UriInfo;
  */
 @Generated("")
 @Path("/v1.0")
-public abstract class BaseVocabularyResourceImpl implements VocabularyResource {
+public abstract class BaseTaxonomyVocabularyResourceImpl
+	implements TaxonomyVocabularyResource {
 
 	@Override
 	@Consumes("application/json")
 	@POST
-	@Path("/content-spaces/{content-space-id}/vocabularies/common")
+	@Path("/content-spaces/{content-space-id}/taxonomy-vocabularies/common")
 	@Produces("application/json")
-	@Tags(value = {@Tag(name = "Vocabulary")})
-	public Page<Vocabulary> postContentSpaceVocabularyCommonPage(
-			@NotNull @PathParam("content-space-id") Long contentSpaceId,
-			DocumentSelection documentSelection)
+	@Tags(value = {@Tag(name = "TaxonomyVocabulary")})
+	public Page<TaxonomyVocabulary>
+			postContentSpaceTaxonomyVocabularyCommonPage(
+				@NotNull @PathParam("content-space-id") Long contentSpaceId,
+				DocumentBulkSelection documentBulkSelection)
 		throws Exception {
 
 		return Page.of(Collections.emptyList());
@@ -80,11 +82,11 @@ public abstract class BaseVocabularyResourceImpl implements VocabularyResource {
 		}
 
 		URI resourceURI = UriBuilder.fromResource(
-			BaseVocabularyResourceImpl.class
+			BaseTaxonomyVocabularyResourceImpl.class
 		).build();
 
 		URI methodURI = UriBuilder.fromMethod(
-			BaseVocabularyResourceImpl.class, methodName
+			BaseTaxonomyVocabularyResourceImpl.class, methodName
 		).build(
 			values
 		);
@@ -92,7 +94,7 @@ public abstract class BaseVocabularyResourceImpl implements VocabularyResource {
 		return baseURIString + resourceURI.toString() + methodURI.toString();
 	}
 
-	protected void preparePatch(Vocabulary vocabulary) {
+	protected void preparePatch(TaxonomyVocabulary taxonomyVocabulary) {
 	}
 
 	protected <T, R> List<R> transform(

@@ -14,14 +14,16 @@
 
 package com.liferay.bulk.rest.internal.graphql.mutation.v1_0;
 
-import com.liferay.bulk.rest.dto.v1_0.DocumentSelection;
+import com.liferay.bulk.rest.dto.v1_0.DocumentBulkSelection;
 import com.liferay.bulk.rest.dto.v1_0.Keyword;
+import com.liferay.bulk.rest.dto.v1_0.KeywordBulkSelection;
 import com.liferay.bulk.rest.dto.v1_0.MessageSelection;
-import com.liferay.bulk.rest.dto.v1_0.Vocabulary;
-import com.liferay.bulk.rest.resource.v1_0.CategoryResource;
+import com.liferay.bulk.rest.dto.v1_0.TaxonomyCategoryBulkSelection;
+import com.liferay.bulk.rest.dto.v1_0.TaxonomyVocabulary;
 import com.liferay.bulk.rest.resource.v1_0.KeywordResource;
 import com.liferay.bulk.rest.resource.v1_0.MessageSelectionResource;
-import com.liferay.bulk.rest.resource.v1_0.VocabularyResource;
+import com.liferay.bulk.rest.resource.v1_0.TaxonomyCategoryResource;
+import com.liferay.bulk.rest.resource.v1_0.TaxonomyVocabularyResource;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
@@ -45,14 +47,6 @@ import org.osgi.service.component.ComponentServiceObjects;
 @Generated("")
 public class Mutation {
 
-	public static void setCategoryResourceComponentServiceObjects(
-		ComponentServiceObjects<CategoryResource>
-			categoryResourceComponentServiceObjects) {
-
-		_categoryResourceComponentServiceObjects =
-			categoryResourceComponentServiceObjects;
-	}
-
 	public static void setKeywordResourceComponentServiceObjects(
 		ComponentServiceObjects<KeywordResource>
 			keywordResourceComponentServiceObjects) {
@@ -69,71 +63,53 @@ public class Mutation {
 			messageSelectionResourceComponentServiceObjects;
 	}
 
-	public static void setVocabularyResourceComponentServiceObjects(
-		ComponentServiceObjects<VocabularyResource>
-			vocabularyResourceComponentServiceObjects) {
+	public static void setTaxonomyCategoryResourceComponentServiceObjects(
+		ComponentServiceObjects<TaxonomyCategoryResource>
+			taxonomyCategoryResourceComponentServiceObjects) {
 
-		_vocabularyResourceComponentServiceObjects =
-			vocabularyResourceComponentServiceObjects;
+		_taxonomyCategoryResourceComponentServiceObjects =
+			taxonomyCategoryResourceComponentServiceObjects;
 	}
 
-	@GraphQLInvokeDetached
-	public boolean patchCategoryBatch(
-			@GraphQLName("DocumentSelection") DocumentSelection
-				documentSelection)
-		throws Exception {
+	public static void setTaxonomyVocabularyResourceComponentServiceObjects(
+		ComponentServiceObjects<TaxonomyVocabularyResource>
+			taxonomyVocabularyResourceComponentServiceObjects) {
 
-		return _applyComponentServiceObjects(
-			_categoryResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			categoryResource -> categoryResource.patchCategoryBatch(
-				documentSelection));
-	}
-
-	@GraphQLInvokeDetached
-	public boolean putCategoryBatch(
-			@GraphQLName("DocumentSelection") DocumentSelection
-				documentSelection)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_categoryResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			categoryResource -> categoryResource.putCategoryBatch(
-				documentSelection));
+		_taxonomyVocabularyResourceComponentServiceObjects =
+			taxonomyVocabularyResourceComponentServiceObjects;
 	}
 
 	@GraphQLInvokeDetached
 	public boolean patchKeywordBatch(
-			@GraphQLName("DocumentSelection") DocumentSelection
-				documentSelection)
+			@GraphQLName("KeywordBulkSelection") KeywordBulkSelection
+				keywordBulkSelection)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
 			_keywordResourceComponentServiceObjects,
 			this::_populateResourceContext,
 			keywordResource -> keywordResource.patchKeywordBatch(
-				documentSelection));
+				keywordBulkSelection));
 	}
 
 	@GraphQLInvokeDetached
 	public boolean putKeywordBatch(
-			@GraphQLName("DocumentSelection") DocumentSelection
-				documentSelection)
+			@GraphQLName("KeywordBulkSelection") KeywordBulkSelection
+				keywordBulkSelection)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
 			_keywordResourceComponentServiceObjects,
 			this::_populateResourceContext,
 			keywordResource -> keywordResource.putKeywordBatch(
-				documentSelection));
+				keywordBulkSelection));
 	}
 
 	@GraphQLField
 	@GraphQLInvokeDetached
 	public Collection<Keyword> postKeywordCommonPage(
-			@GraphQLName("DocumentSelection") DocumentSelection
-				documentSelection)
+			@GraphQLName("DocumentBulkSelection") DocumentBulkSelection
+				documentBulkSelection)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
@@ -141,7 +117,7 @@ public class Mutation {
 			this::_populateResourceContext,
 			keywordResource -> {
 				Page paginationPage = keywordResource.postKeywordCommonPage(
-					documentSelection);
+					documentBulkSelection);
 
 				return paginationPage.getItems();
 			});
@@ -150,8 +126,8 @@ public class Mutation {
 	@GraphQLField
 	@GraphQLInvokeDetached
 	public MessageSelection postKeywordMessageSelection(
-			@GraphQLName("DocumentSelection") DocumentSelection
-				documentSelection)
+			@GraphQLName("DocumentBulkSelection") DocumentBulkSelection
+				documentBulkSelection)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
@@ -159,39 +135,69 @@ public class Mutation {
 			this::_populateResourceContext,
 			messageSelectionResource ->
 				messageSelectionResource.postKeywordMessageSelection(
-					documentSelection));
+					documentBulkSelection));
 	}
 
 	@GraphQLField
 	@GraphQLInvokeDetached
-	public MessageSelection postVocabularyMessageSelection(
-			@GraphQLName("DocumentSelection") DocumentSelection
-				documentSelection)
+	public MessageSelection postTaxonomyVocabularyMessageSelection(
+			@GraphQLName("DocumentBulkSelection") DocumentBulkSelection
+				documentBulkSelection)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
 			_messageSelectionResourceComponentServiceObjects,
 			this::_populateResourceContext,
 			messageSelectionResource ->
-				messageSelectionResource.postVocabularyMessageSelection(
-					documentSelection));
+				messageSelectionResource.postTaxonomyVocabularyMessageSelection(
+					documentBulkSelection));
+	}
+
+	@GraphQLInvokeDetached
+	public boolean patchTaxonomyCategoryBatch(
+			@GraphQLName("TaxonomyCategoryBulkSelection")
+				TaxonomyCategoryBulkSelection taxonomyCategoryBulkSelection)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_taxonomyCategoryResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			taxonomyCategoryResource ->
+				taxonomyCategoryResource.patchTaxonomyCategoryBatch(
+					taxonomyCategoryBulkSelection));
+	}
+
+	@GraphQLInvokeDetached
+	public boolean putTaxonomyCategoryBatch(
+			@GraphQLName("TaxonomyCategoryBulkSelection")
+				TaxonomyCategoryBulkSelection taxonomyCategoryBulkSelection)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_taxonomyCategoryResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			taxonomyCategoryResource ->
+				taxonomyCategoryResource.putTaxonomyCategoryBatch(
+					taxonomyCategoryBulkSelection));
 	}
 
 	@GraphQLField
 	@GraphQLInvokeDetached
-	public Collection<Vocabulary> postContentSpaceVocabularyCommonPage(
-			@GraphQLName("content-space-id") Long contentSpaceId,
-			@GraphQLName("DocumentSelection") DocumentSelection
-				documentSelection)
+	public Collection<TaxonomyVocabulary>
+			postContentSpaceTaxonomyVocabularyCommonPage(
+				@GraphQLName("content-space-id") Long contentSpaceId,
+				@GraphQLName("DocumentBulkSelection") DocumentBulkSelection
+					documentBulkSelection)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
-			_vocabularyResourceComponentServiceObjects,
+			_taxonomyVocabularyResourceComponentServiceObjects,
 			this::_populateResourceContext,
-			vocabularyResource -> {
+			taxonomyVocabularyResource -> {
 				Page paginationPage =
-					vocabularyResource.postContentSpaceVocabularyCommonPage(
-						contentSpaceId, documentSelection);
+					taxonomyVocabularyResource.
+						postContentSpaceTaxonomyVocabularyCommonPage(
+							contentSpaceId, documentBulkSelection);
 
 				return paginationPage.getItems();
 			});
@@ -216,14 +222,6 @@ public class Mutation {
 		}
 	}
 
-	private void _populateResourceContext(CategoryResource categoryResource)
-		throws Exception {
-
-		categoryResource.setContextCompany(
-			CompanyLocalServiceUtil.getCompany(
-				CompanyThreadLocal.getCompanyId()));
-	}
-
 	private void _populateResourceContext(KeywordResource keywordResource)
 		throws Exception {
 
@@ -241,21 +239,31 @@ public class Mutation {
 				CompanyThreadLocal.getCompanyId()));
 	}
 
-	private void _populateResourceContext(VocabularyResource vocabularyResource)
+	private void _populateResourceContext(
+			TaxonomyCategoryResource taxonomyCategoryResource)
 		throws Exception {
 
-		vocabularyResource.setContextCompany(
+		taxonomyCategoryResource.setContextCompany(
 			CompanyLocalServiceUtil.getCompany(
 				CompanyThreadLocal.getCompanyId()));
 	}
 
-	private static ComponentServiceObjects<CategoryResource>
-		_categoryResourceComponentServiceObjects;
+	private void _populateResourceContext(
+			TaxonomyVocabularyResource taxonomyVocabularyResource)
+		throws Exception {
+
+		taxonomyVocabularyResource.setContextCompany(
+			CompanyLocalServiceUtil.getCompany(
+				CompanyThreadLocal.getCompanyId()));
+	}
+
 	private static ComponentServiceObjects<KeywordResource>
 		_keywordResourceComponentServiceObjects;
 	private static ComponentServiceObjects<MessageSelectionResource>
 		_messageSelectionResourceComponentServiceObjects;
-	private static ComponentServiceObjects<VocabularyResource>
-		_vocabularyResourceComponentServiceObjects;
+	private static ComponentServiceObjects<TaxonomyCategoryResource>
+		_taxonomyCategoryResourceComponentServiceObjects;
+	private static ComponentServiceObjects<TaxonomyVocabularyResource>
+		_taxonomyVocabularyResourceComponentServiceObjects;
 
 }

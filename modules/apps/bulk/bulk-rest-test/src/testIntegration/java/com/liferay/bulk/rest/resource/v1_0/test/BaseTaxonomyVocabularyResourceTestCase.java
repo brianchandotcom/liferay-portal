@@ -16,17 +16,19 @@ package com.liferay.bulk.rest.resource.v1_0.test;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
 import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
 
-import com.liferay.bulk.rest.dto.v1_0.Category;
-import com.liferay.bulk.rest.dto.v1_0.DocumentSelection;
-import com.liferay.bulk.rest.resource.v1_0.CategoryResource;
+import com.liferay.bulk.rest.dto.v1_0.DocumentBulkSelection;
+import com.liferay.bulk.rest.dto.v1_0.TaxonomyVocabulary;
+import com.liferay.bulk.rest.resource.v1_0.TaxonomyVocabularyResource;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Base64;
 import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.Http;
@@ -57,7 +59,6 @@ import javax.annotation.Generated;
 import javax.ws.rs.core.MultivaluedHashMap;
 import javax.ws.rs.core.Response;
 
-import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.beanutils.BeanUtilsBean;
 
 import org.junit.After;
@@ -73,7 +74,7 @@ import org.junit.Test;
  * @generated
  */
 @Generated("")
-public abstract class BaseCategoryResourceTestCase {
+public abstract class BaseTaxonomyVocabularyResourceTestCase {
 
 	@ClassRule
 	@Rule
@@ -99,121 +100,70 @@ public abstract class BaseCategoryResourceTestCase {
 	}
 
 	@Test
-	public void testPatchCategoryBatch() throws Exception {
-		Category postCategory = testPatchCategoryBatch_addCategory(
-			randomCategory());
+	public void testPostContentSpaceTaxonomyVocabularyCommonPage()
+		throws Exception {
 
-		Category randomPatchCategory = randomCategory();
+		TaxonomyVocabulary randomTaxonomyVocabulary =
+			randomTaxonomyVocabulary();
 
-		Category patchCategory = testPatchCategoryBatch_addCategory(
-			randomPatchCategory);
+		TaxonomyVocabulary postTaxonomyVocabulary =
+			testPostContentSpaceTaxonomyVocabularyCommonPage_addTaxonomyVocabulary(
+				randomTaxonomyVocabulary);
 
-		Category expectedPatchCategory = (Category)BeanUtils.cloneBean(
-			postCategory);
-
-		_beanUtilsBean.copyProperties(
-			expectedPatchCategory, randomPatchCategory);
-
-		Category getCategory = invokeGetCategory(patchCategory.getId());
-
-		assertEquals(expectedPatchCategory, getCategory);
-		assertValid(getCategory);
+		assertEquals(randomTaxonomyVocabulary, postTaxonomyVocabulary);
+		assertValid(postTaxonomyVocabulary);
 	}
 
-	protected Category testPatchCategoryBatch_addCategory(Category category)
+	protected TaxonomyVocabulary
+			testPostContentSpaceTaxonomyVocabularyCommonPage_addTaxonomyVocabulary(
+				TaxonomyVocabulary taxonomyVocabulary)
 		throws Exception {
 
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
 	}
 
-	protected boolean invokePatchCategoryBatch(
-			DocumentSelection documentSelection)
+	protected Page<TaxonomyVocabulary>
+			invokePostContentSpaceTaxonomyVocabularyCommonPage(
+				Long contentSpaceId,
+				DocumentBulkSelection documentBulkSelection)
 		throws Exception {
 
 		Http.Options options = _createHttpOptions();
 
 		String location =
-			_resourceURL + _toPath("/categories/batch", documentSelection);
+			_resourceURL +
+				_toPath(
+					"/content-spaces/{content-space-id}/taxonomy-vocabularies/common",
+					contentSpaceId);
 
 		options.setLocation(location);
 
-		options.setPatch(true);
+		options.setPost(true);
 
 		return _outputObjectMapper.readValue(
-			HttpUtil.URLtoString(options), Boolean.class);
+			HttpUtil.URLtoString(options),
+			new TypeReference<Page<TaxonomyVocabulary>>() {
+			});
 	}
 
-	protected Http.Response invokePatchCategoryBatchResponse(
-			DocumentSelection documentSelection)
+	protected Http.Response
+			invokePostContentSpaceTaxonomyVocabularyCommonPageResponse(
+				Long contentSpaceId,
+				DocumentBulkSelection documentBulkSelection)
 		throws Exception {
 
 		Http.Options options = _createHttpOptions();
 
 		String location =
-			_resourceURL + _toPath("/categories/batch", documentSelection);
+			_resourceURL +
+				_toPath(
+					"/content-spaces/{content-space-id}/taxonomy-vocabularies/common",
+					contentSpaceId);
 
 		options.setLocation(location);
 
-		options.setPatch(true);
-
-		HttpUtil.URLtoString(options);
-
-		return options.getResponse();
-	}
-
-	@Test
-	public void testPutCategoryBatch() throws Exception {
-		Category postCategory = testPutCategoryBatch_addCategory();
-
-		Category randomCategory = randomCategory();
-
-		Category putCategory = invokePutCategory(
-			postCategory.getId(), randomCategory);
-
-		assertEquals(randomCategory, putCategory);
-		assertValid(putCategory);
-
-		Category getCategory = invokeGetCategory(putCategory.getId());
-
-		assertEquals(randomCategory, getCategory);
-		assertValid(getCategory);
-	}
-
-	protected Category testPutCategoryBatch_addCategory() throws Exception {
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	protected boolean invokePutCategoryBatch(
-			DocumentSelection documentSelection)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		String location =
-			_resourceURL + _toPath("/categories/batch", documentSelection);
-
-		options.setLocation(location);
-
-		options.setPut(true);
-
-		return _outputObjectMapper.readValue(
-			HttpUtil.URLtoString(options), Boolean.class);
-	}
-
-	protected Http.Response invokePutCategoryBatchResponse(
-			DocumentSelection documentSelection)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		String location =
-			_resourceURL + _toPath("/categories/batch", documentSelection);
-
-		options.setLocation(location);
-
-		options.setPut(true);
+		options.setPost(true);
 
 		HttpUtil.URLtoString(options);
 
@@ -227,35 +177,46 @@ public abstract class BaseCategoryResourceTestCase {
 			expectedResponseCode, actualResponse.getResponseCode());
 	}
 
-	protected void assertEquals(Category category1, Category category2) {
+	protected void assertEquals(
+		TaxonomyVocabulary taxonomyVocabulary1,
+		TaxonomyVocabulary taxonomyVocabulary2) {
+
 		Assert.assertTrue(
-			category1 + " does not equal " + category2,
-			equals(category1, category2));
+			taxonomyVocabulary1 + " does not equal " + taxonomyVocabulary2,
+			equals(taxonomyVocabulary1, taxonomyVocabulary2));
 	}
 
 	protected void assertEquals(
-		List<Category> categories1, List<Category> categories2) {
+		List<TaxonomyVocabulary> taxonomyVocabularies1,
+		List<TaxonomyVocabulary> taxonomyVocabularies2) {
 
-		Assert.assertEquals(categories1.size(), categories2.size());
+		Assert.assertEquals(
+			taxonomyVocabularies1.size(), taxonomyVocabularies2.size());
 
-		for (int i = 0; i < categories1.size(); i++) {
-			Category category1 = categories1.get(i);
-			Category category2 = categories2.get(i);
+		for (int i = 0; i < taxonomyVocabularies1.size(); i++) {
+			TaxonomyVocabulary taxonomyVocabulary1 = taxonomyVocabularies1.get(
+				i);
+			TaxonomyVocabulary taxonomyVocabulary2 = taxonomyVocabularies2.get(
+				i);
 
-			assertEquals(category1, category2);
+			assertEquals(taxonomyVocabulary1, taxonomyVocabulary2);
 		}
 	}
 
 	protected void assertEqualsIgnoringOrder(
-		List<Category> categories1, List<Category> categories2) {
+		List<TaxonomyVocabulary> taxonomyVocabularies1,
+		List<TaxonomyVocabulary> taxonomyVocabularies2) {
 
-		Assert.assertEquals(categories1.size(), categories2.size());
+		Assert.assertEquals(
+			taxonomyVocabularies1.size(), taxonomyVocabularies2.size());
 
-		for (Category category1 : categories1) {
+		for (TaxonomyVocabulary taxonomyVocabulary1 : taxonomyVocabularies1) {
 			boolean contains = false;
 
-			for (Category category2 : categories2) {
-				if (equals(category1, category2)) {
+			for (TaxonomyVocabulary taxonomyVocabulary2 :
+					taxonomyVocabularies2) {
+
+				if (equals(taxonomyVocabulary1, taxonomyVocabulary2)) {
 					contains = true;
 
 					break;
@@ -263,21 +224,23 @@ public abstract class BaseCategoryResourceTestCase {
 			}
 
 			Assert.assertTrue(
-				categories2 + " does not contain " + category1, contains);
+				taxonomyVocabularies2 + " does not contain " +
+					taxonomyVocabulary1,
+				contains);
 		}
 	}
 
-	protected void assertValid(Category category) {
+	protected void assertValid(TaxonomyVocabulary taxonomyVocabulary) {
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
 	}
 
-	protected void assertValid(Page<Category> page) {
+	protected void assertValid(Page<TaxonomyVocabulary> page) {
 		boolean valid = false;
 
-		Collection<Category> categories = page.getItems();
+		Collection<TaxonomyVocabulary> taxonomyVocabularies = page.getItems();
 
-		int size = categories.size();
+		int size = taxonomyVocabularies.size();
 
 		if ((page.getLastPage() > 0) && (page.getPage() > 0) &&
 			(page.getPageSize() > 0) && (page.getTotalCount() > 0) &&
@@ -289,8 +252,11 @@ public abstract class BaseCategoryResourceTestCase {
 		Assert.assertTrue(valid);
 	}
 
-	protected boolean equals(Category category1, Category category2) {
-		if (category1 == category2) {
+	protected boolean equals(
+		TaxonomyVocabulary taxonomyVocabulary1,
+		TaxonomyVocabulary taxonomyVocabulary2) {
+
+		if (taxonomyVocabulary1 == taxonomyVocabulary2) {
 			return true;
 		}
 
@@ -298,13 +264,13 @@ public abstract class BaseCategoryResourceTestCase {
 	}
 
 	protected Collection<EntityField> getEntityFields() throws Exception {
-		if (!(_categoryResource instanceof EntityModelResource)) {
+		if (!(_taxonomyVocabularyResource instanceof EntityModelResource)) {
 			throw new UnsupportedOperationException(
 				"Resource is not an instance of EntityModelResource");
 		}
 
 		EntityModelResource entityModelResource =
-			(EntityModelResource)_categoryResource;
+			(EntityModelResource)_taxonomyVocabularyResource;
 
 		EntityModel entityModel = entityModelResource.getEntityModel(
 			new MultivaluedHashMap());
@@ -330,7 +296,8 @@ public abstract class BaseCategoryResourceTestCase {
 	}
 
 	protected String getFilterString(
-		EntityField entityField, String operator, Category category) {
+		EntityField entityField, String operator,
+		TaxonomyVocabulary taxonomyVocabulary) {
 
 		StringBundler sb = new StringBundler();
 
@@ -342,34 +309,45 @@ public abstract class BaseCategoryResourceTestCase {
 		sb.append(operator);
 		sb.append(" ");
 
-		if (entityFieldName.equals("categoryId")) {
+		if (entityFieldName.equals("multiValued")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
 		}
 
 		if (entityFieldName.equals("name")) {
 			sb.append("'");
-			sb.append(String.valueOf(category.getName()));
+			sb.append(String.valueOf(taxonomyVocabulary.getName()));
 			sb.append("'");
 
 			return sb.toString();
+		}
+
+		if (entityFieldName.equals("taxonomyCategories")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
+		if (entityFieldName.equals("taxonomyVocabularyId")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
 		}
 
 		throw new IllegalArgumentException(
 			"Invalid entity field " + entityFieldName);
 	}
 
-	protected Category randomCategory() {
-		return new Category() {
+	protected TaxonomyVocabulary randomTaxonomyVocabulary() {
+		return new TaxonomyVocabulary() {
 			{
-				categoryId = RandomTestUtil.randomLong();
+				multiValued = RandomTestUtil.randomBoolean();
 				name = RandomTestUtil.randomString();
+				taxonomyVocabularyId = RandomTestUtil.randomLong();
 			}
 		};
 	}
 
-	protected Category randomPatchCategory() {
-		return randomCategory();
+	protected TaxonomyVocabulary randomPatchTaxonomyVocabulary() {
+		return randomTaxonomyVocabulary();
 	}
 
 	protected Group testGroup;
@@ -431,8 +409,17 @@ public abstract class BaseCategoryResourceTestCase {
 		return options;
 	}
 
-	private String _toPath(String template, Object value) {
-		return template.replaceFirst("\\{.*\\}", String.valueOf(value));
+	private String _toPath(String template, Object... values) {
+		if (ArrayUtil.isEmpty(values)) {
+			return template;
+		}
+
+		for (int i = 0; i < values.length; i++) {
+			template = template.replaceFirst(
+				"\\{.*\\}", String.valueOf(values[i]));
+		}
+
+		return template;
 	}
 
 	private static BeanUtilsBean _beanUtilsBean = new BeanUtilsBean() {
@@ -475,7 +462,7 @@ public abstract class BaseCategoryResourceTestCase {
 	};
 
 	@Inject
-	private CategoryResource _categoryResource;
+	private TaxonomyVocabularyResource _taxonomyVocabularyResource;
 
 	private URL _resourceURL;
 

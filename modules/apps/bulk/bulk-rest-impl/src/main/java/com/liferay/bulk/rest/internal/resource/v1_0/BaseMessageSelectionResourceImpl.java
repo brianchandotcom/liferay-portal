@@ -14,7 +14,7 @@
 
 package com.liferay.bulk.rest.internal.resource.v1_0;
 
-import com.liferay.bulk.rest.dto.v1_0.DocumentSelection;
+import com.liferay.bulk.rest.dto.v1_0.DocumentBulkSelection;
 import com.liferay.bulk.rest.dto.v1_0.MessageSelection;
 import com.liferay.bulk.rest.resource.v1_0.MessageSelectionResource;
 import com.liferay.petra.function.UnsafeFunction;
@@ -56,7 +56,7 @@ public abstract class BaseMessageSelectionResourceImpl
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "MessageSelection")})
 	public MessageSelection postKeywordMessageSelection(
-			DocumentSelection documentSelection)
+			DocumentBulkSelection documentBulkSelection)
 		throws Exception {
 
 		return new MessageSelection();
@@ -65,11 +65,11 @@ public abstract class BaseMessageSelectionResourceImpl
 	@Override
 	@Consumes("application/json")
 	@POST
-	@Path("/vocabularies/message-selection")
+	@Path("/taxonomy-vocabularies/message-selection")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "MessageSelection")})
-	public MessageSelection postVocabularyMessageSelection(
-			DocumentSelection documentSelection)
+	public MessageSelection postTaxonomyVocabularyMessageSelection(
+			DocumentBulkSelection documentBulkSelection)
 		throws Exception {
 
 		return new MessageSelection();

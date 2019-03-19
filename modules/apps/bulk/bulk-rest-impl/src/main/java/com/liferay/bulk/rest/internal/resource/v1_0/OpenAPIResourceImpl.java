@@ -74,15 +74,15 @@ public class OpenAPIResourceImpl {
 
 	private final Set<Class<?>> _resourceClasses = new HashSet<Class<?>>() {
 		{
-			add(CategoryResourceImpl.class);
-
 			add(KeywordResourceImpl.class);
 
 			add(MessageSelectionResourceImpl.class);
 
 			add(StatusResourceImpl.class);
 
-			add(VocabularyResourceImpl.class);
+			add(TaxonomyCategoryResourceImpl.class);
+
+			add(TaxonomyVocabularyResourceImpl.class);
 
 			add(OpenAPIResourceImpl.class);
 		}

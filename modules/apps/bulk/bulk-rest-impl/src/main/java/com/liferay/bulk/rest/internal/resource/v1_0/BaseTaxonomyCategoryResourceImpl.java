@@ -14,9 +14,9 @@
 
 package com.liferay.bulk.rest.internal.resource.v1_0;
 
-import com.liferay.bulk.rest.dto.v1_0.Category;
-import com.liferay.bulk.rest.dto.v1_0.DocumentSelection;
-import com.liferay.bulk.rest.resource.v1_0.CategoryResource;
+import com.liferay.bulk.rest.dto.v1_0.TaxonomyCategory;
+import com.liferay.bulk.rest.dto.v1_0.TaxonomyCategoryBulkSelection;
+import com.liferay.bulk.rest.resource.v1_0.TaxonomyCategoryResource;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Company;
@@ -46,14 +46,16 @@ import javax.ws.rs.core.UriInfo;
  */
 @Generated("")
 @Path("/v1.0")
-public abstract class BaseCategoryResourceImpl implements CategoryResource {
+public abstract class BaseTaxonomyCategoryResourceImpl
+	implements TaxonomyCategoryResource {
 
 	@Override
 	@Consumes("application/json")
 	@PATCH
-	@Path("/categories/batch")
-	@Tags(value = {@Tag(name = "Category")})
-	public boolean patchCategoryBatch(DocumentSelection documentSelection)
+	@Path("/taxonomy-categories/batch")
+	@Tags(value = {@Tag(name = "TaxonomyCategory")})
+	public boolean patchTaxonomyCategoryBatch(
+			TaxonomyCategoryBulkSelection taxonomyCategoryBulkSelection)
 		throws Exception {
 
 		return false;
@@ -62,9 +64,10 @@ public abstract class BaseCategoryResourceImpl implements CategoryResource {
 	@Override
 	@Consumes("application/json")
 	@PUT
-	@Path("/categories/batch")
-	@Tags(value = {@Tag(name = "Category")})
-	public boolean putCategoryBatch(DocumentSelection documentSelection)
+	@Path("/taxonomy-categories/batch")
+	@Tags(value = {@Tag(name = "TaxonomyCategory")})
+	public boolean putTaxonomyCategoryBatch(
+			TaxonomyCategoryBulkSelection taxonomyCategoryBulkSelection)
 		throws Exception {
 
 		return false;
@@ -83,11 +86,11 @@ public abstract class BaseCategoryResourceImpl implements CategoryResource {
 		}
 
 		URI resourceURI = UriBuilder.fromResource(
-			BaseCategoryResourceImpl.class
+			BaseTaxonomyCategoryResourceImpl.class
 		).build();
 
 		URI methodURI = UriBuilder.fromMethod(
-			BaseCategoryResourceImpl.class, methodName
+			BaseTaxonomyCategoryResourceImpl.class, methodName
 		).build(
 			values
 		);
@@ -95,7 +98,7 @@ public abstract class BaseCategoryResourceImpl implements CategoryResource {
 		return baseURIString + resourceURI.toString() + methodURI.toString();
 	}
 
-	protected void preparePatch(Category category) {
+	protected void preparePatch(TaxonomyCategory taxonomyCategory) {
 	}
 
 	protected <T, R> List<R> transform(

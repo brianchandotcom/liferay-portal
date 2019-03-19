@@ -16,11 +16,11 @@ package com.liferay.bulk.rest.internal.graphql.servlet.v1_0;
 
 import com.liferay.bulk.rest.internal.graphql.mutation.v1_0.Mutation;
 import com.liferay.bulk.rest.internal.graphql.query.v1_0.Query;
-import com.liferay.bulk.rest.resource.v1_0.CategoryResource;
 import com.liferay.bulk.rest.resource.v1_0.KeywordResource;
 import com.liferay.bulk.rest.resource.v1_0.MessageSelectionResource;
 import com.liferay.bulk.rest.resource.v1_0.StatusResource;
-import com.liferay.bulk.rest.resource.v1_0.VocabularyResource;
+import com.liferay.bulk.rest.resource.v1_0.TaxonomyCategoryResource;
+import com.liferay.bulk.rest.resource.v1_0.TaxonomyVocabularyResource;
 import com.liferay.portal.vulcan.graphql.servlet.ServletData;
 
 import javax.annotation.Generated;
@@ -42,14 +42,14 @@ public class ServletDataImpl implements ServletData {
 
 	@Activate
 	public void activate(BundleContext bundleContext) {
-		Mutation.setCategoryResourceComponentServiceObjects(
-			_categoryResourceComponentServiceObjects);
 		Mutation.setKeywordResourceComponentServiceObjects(
 			_keywordResourceComponentServiceObjects);
 		Mutation.setMessageSelectionResourceComponentServiceObjects(
 			_messageSelectionResourceComponentServiceObjects);
-		Mutation.setVocabularyResourceComponentServiceObjects(
-			_vocabularyResourceComponentServiceObjects);
+		Mutation.setTaxonomyCategoryResourceComponentServiceObjects(
+			_taxonomyCategoryResourceComponentServiceObjects);
+		Mutation.setTaxonomyVocabularyResourceComponentServiceObjects(
+			_taxonomyVocabularyResourceComponentServiceObjects);
 
 		Query.setStatusResourceComponentServiceObjects(
 			_statusResourceComponentServiceObjects);
@@ -71,10 +71,6 @@ public class ServletDataImpl implements ServletData {
 	}
 
 	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
-	private ComponentServiceObjects<CategoryResource>
-		_categoryResourceComponentServiceObjects;
-
-	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
 	private ComponentServiceObjects<KeywordResource>
 		_keywordResourceComponentServiceObjects;
 
@@ -83,8 +79,12 @@ public class ServletDataImpl implements ServletData {
 		_messageSelectionResourceComponentServiceObjects;
 
 	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
-	private ComponentServiceObjects<VocabularyResource>
-		_vocabularyResourceComponentServiceObjects;
+	private ComponentServiceObjects<TaxonomyCategoryResource>
+		_taxonomyCategoryResourceComponentServiceObjects;
+
+	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
+	private ComponentServiceObjects<TaxonomyVocabularyResource>
+		_taxonomyVocabularyResourceComponentServiceObjects;
 
 	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
 	private ComponentServiceObjects<StatusResource>

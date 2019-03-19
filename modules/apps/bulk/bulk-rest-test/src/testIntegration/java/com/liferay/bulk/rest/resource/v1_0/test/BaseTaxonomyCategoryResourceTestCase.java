@@ -16,18 +16,18 @@ package com.liferay.bulk.rest.resource.v1_0.test;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
 import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
 
-import com.liferay.bulk.rest.dto.v1_0.DocumentSelection;
-import com.liferay.bulk.rest.dto.v1_0.Vocabulary;
-import com.liferay.bulk.rest.resource.v1_0.VocabularyResource;
+import com.liferay.bulk.rest.dto.v1_0.TaxonomyCategory;
+import com.liferay.bulk.rest.dto.v1_0.TaxonomyCategoryBulkSelection;
+import com.liferay.bulk.rest.resource.v1_0.TaxonomyCategoryResource;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Base64;
 import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.Http;
@@ -58,6 +58,7 @@ import javax.annotation.Generated;
 import javax.ws.rs.core.MultivaluedHashMap;
 import javax.ws.rs.core.Response;
 
+import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.beanutils.BeanUtilsBean;
 
 import org.junit.After;
@@ -73,7 +74,7 @@ import org.junit.Test;
  * @generated
  */
 @Generated("")
-public abstract class BaseVocabularyResourceTestCase {
+public abstract class BaseTaxonomyCategoryResourceTestCase {
 
 	@ClassRule
 	@Rule
@@ -99,62 +100,127 @@ public abstract class BaseVocabularyResourceTestCase {
 	}
 
 	@Test
-	public void testPostContentSpaceVocabularyCommonPage() throws Exception {
-		Vocabulary randomVocabulary = randomVocabulary();
+	public void testPatchTaxonomyCategoryBatch() throws Exception {
+		TaxonomyCategory postTaxonomyCategory =
+			testPatchTaxonomyCategoryBatch_addTaxonomyCategory(
+				randomTaxonomyCategory());
 
-		Vocabulary postVocabulary =
-			testPostContentSpaceVocabularyCommonPage_addVocabulary(
-				randomVocabulary);
+		TaxonomyCategory randomPatchTaxonomyCategory = randomTaxonomyCategory();
 
-		assertEquals(randomVocabulary, postVocabulary);
-		assertValid(postVocabulary);
+		TaxonomyCategory patchTaxonomyCategory =
+			testPatchTaxonomyCategoryBatch_addTaxonomyCategory(
+				randomPatchTaxonomyCategory);
+
+		TaxonomyCategory expectedPatchTaxonomyCategory =
+			(TaxonomyCategory)BeanUtils.cloneBean(postTaxonomyCategory);
+
+		_beanUtilsBean.copyProperties(
+			expectedPatchTaxonomyCategory, randomPatchTaxonomyCategory);
+
+		TaxonomyCategory getTaxonomyCategory = invokeGetTaxonomyCategory(
+			patchTaxonomyCategory.getId());
+
+		assertEquals(expectedPatchTaxonomyCategory, getTaxonomyCategory);
+		assertValid(getTaxonomyCategory);
 	}
 
-	protected Vocabulary testPostContentSpaceVocabularyCommonPage_addVocabulary(
-			Vocabulary vocabulary)
+	protected TaxonomyCategory
+			testPatchTaxonomyCategoryBatch_addTaxonomyCategory(
+				TaxonomyCategory taxonomyCategory)
 		throws Exception {
 
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
 	}
 
-	protected Page<Vocabulary> invokePostContentSpaceVocabularyCommonPage(
-			Long contentSpaceId, DocumentSelection documentSelection)
+	protected boolean invokePatchTaxonomyCategoryBatch(
+			TaxonomyCategoryBulkSelection taxonomyCategoryBulkSelection)
 		throws Exception {
 
 		Http.Options options = _createHttpOptions();
 
-		String location =
-			_resourceURL +
-				_toPath(
-					"/content-spaces/{content-space-id}/vocabularies/common",
-					contentSpaceId);
+		String location = _resourceURL + _toPath("/taxonomy-categories/batch");
 
 		options.setLocation(location);
 
-		options.setPost(true);
+		options.setPatch(true);
 
 		return _outputObjectMapper.readValue(
-			HttpUtil.URLtoString(options),
-			new TypeReference<Page<Vocabulary>>() {
-			});
+			HttpUtil.URLtoString(options), Boolean.class);
 	}
 
-	protected Http.Response invokePostContentSpaceVocabularyCommonPageResponse(
-			Long contentSpaceId, DocumentSelection documentSelection)
+	protected Http.Response invokePatchTaxonomyCategoryBatchResponse(
+			TaxonomyCategoryBulkSelection taxonomyCategoryBulkSelection)
 		throws Exception {
 
 		Http.Options options = _createHttpOptions();
 
-		String location =
-			_resourceURL +
-				_toPath(
-					"/content-spaces/{content-space-id}/vocabularies/common",
-					contentSpaceId);
+		String location = _resourceURL + _toPath("/taxonomy-categories/batch");
 
 		options.setLocation(location);
 
-		options.setPost(true);
+		options.setPatch(true);
+
+		HttpUtil.URLtoString(options);
+
+		return options.getResponse();
+	}
+
+	@Test
+	public void testPutTaxonomyCategoryBatch() throws Exception {
+		TaxonomyCategory postTaxonomyCategory =
+			testPutTaxonomyCategoryBatch_addTaxonomyCategory();
+
+		TaxonomyCategory randomTaxonomyCategory = randomTaxonomyCategory();
+
+		TaxonomyCategory putTaxonomyCategory = invokePutTaxonomyCategory(
+			postTaxonomyCategory.getId(), randomTaxonomyCategory);
+
+		assertEquals(randomTaxonomyCategory, putTaxonomyCategory);
+		assertValid(putTaxonomyCategory);
+
+		TaxonomyCategory getTaxonomyCategory = invokeGetTaxonomyCategory(
+			putTaxonomyCategory.getId());
+
+		assertEquals(randomTaxonomyCategory, getTaxonomyCategory);
+		assertValid(getTaxonomyCategory);
+	}
+
+	protected TaxonomyCategory
+			testPutTaxonomyCategoryBatch_addTaxonomyCategory()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected boolean invokePutTaxonomyCategoryBatch(
+			TaxonomyCategoryBulkSelection taxonomyCategoryBulkSelection)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		String location = _resourceURL + _toPath("/taxonomy-categories/batch");
+
+		options.setLocation(location);
+
+		options.setPut(true);
+
+		return _outputObjectMapper.readValue(
+			HttpUtil.URLtoString(options), Boolean.class);
+	}
+
+	protected Http.Response invokePutTaxonomyCategoryBatchResponse(
+			TaxonomyCategoryBulkSelection taxonomyCategoryBulkSelection)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		String location = _resourceURL + _toPath("/taxonomy-categories/batch");
+
+		options.setLocation(location);
+
+		options.setPut(true);
 
 		HttpUtil.URLtoString(options);
 
@@ -169,36 +235,41 @@ public abstract class BaseVocabularyResourceTestCase {
 	}
 
 	protected void assertEquals(
-		Vocabulary vocabulary1, Vocabulary vocabulary2) {
+		TaxonomyCategory taxonomyCategory1,
+		TaxonomyCategory taxonomyCategory2) {
 
 		Assert.assertTrue(
-			vocabulary1 + " does not equal " + vocabulary2,
-			equals(vocabulary1, vocabulary2));
+			taxonomyCategory1 + " does not equal " + taxonomyCategory2,
+			equals(taxonomyCategory1, taxonomyCategory2));
 	}
 
 	protected void assertEquals(
-		List<Vocabulary> vocabularies1, List<Vocabulary> vocabularies2) {
+		List<TaxonomyCategory> taxonomyCategories1,
+		List<TaxonomyCategory> taxonomyCategories2) {
 
-		Assert.assertEquals(vocabularies1.size(), vocabularies2.size());
+		Assert.assertEquals(
+			taxonomyCategories1.size(), taxonomyCategories2.size());
 
-		for (int i = 0; i < vocabularies1.size(); i++) {
-			Vocabulary vocabulary1 = vocabularies1.get(i);
-			Vocabulary vocabulary2 = vocabularies2.get(i);
+		for (int i = 0; i < taxonomyCategories1.size(); i++) {
+			TaxonomyCategory taxonomyCategory1 = taxonomyCategories1.get(i);
+			TaxonomyCategory taxonomyCategory2 = taxonomyCategories2.get(i);
 
-			assertEquals(vocabulary1, vocabulary2);
+			assertEquals(taxonomyCategory1, taxonomyCategory2);
 		}
 	}
 
 	protected void assertEqualsIgnoringOrder(
-		List<Vocabulary> vocabularies1, List<Vocabulary> vocabularies2) {
+		List<TaxonomyCategory> taxonomyCategories1,
+		List<TaxonomyCategory> taxonomyCategories2) {
 
-		Assert.assertEquals(vocabularies1.size(), vocabularies2.size());
+		Assert.assertEquals(
+			taxonomyCategories1.size(), taxonomyCategories2.size());
 
-		for (Vocabulary vocabulary1 : vocabularies1) {
+		for (TaxonomyCategory taxonomyCategory1 : taxonomyCategories1) {
 			boolean contains = false;
 
-			for (Vocabulary vocabulary2 : vocabularies2) {
-				if (equals(vocabulary1, vocabulary2)) {
+			for (TaxonomyCategory taxonomyCategory2 : taxonomyCategories2) {
+				if (equals(taxonomyCategory1, taxonomyCategory2)) {
 					contains = true;
 
 					break;
@@ -206,21 +277,22 @@ public abstract class BaseVocabularyResourceTestCase {
 			}
 
 			Assert.assertTrue(
-				vocabularies2 + " does not contain " + vocabulary1, contains);
+				taxonomyCategories2 + " does not contain " + taxonomyCategory1,
+				contains);
 		}
 	}
 
-	protected void assertValid(Vocabulary vocabulary) {
+	protected void assertValid(TaxonomyCategory taxonomyCategory) {
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
 	}
 
-	protected void assertValid(Page<Vocabulary> page) {
+	protected void assertValid(Page<TaxonomyCategory> page) {
 		boolean valid = false;
 
-		Collection<Vocabulary> vocabularies = page.getItems();
+		Collection<TaxonomyCategory> taxonomyCategories = page.getItems();
 
-		int size = vocabularies.size();
+		int size = taxonomyCategories.size();
 
 		if ((page.getLastPage() > 0) && (page.getPage() > 0) &&
 			(page.getPageSize() > 0) && (page.getTotalCount() > 0) &&
@@ -232,8 +304,11 @@ public abstract class BaseVocabularyResourceTestCase {
 		Assert.assertTrue(valid);
 	}
 
-	protected boolean equals(Vocabulary vocabulary1, Vocabulary vocabulary2) {
-		if (vocabulary1 == vocabulary2) {
+	protected boolean equals(
+		TaxonomyCategory taxonomyCategory1,
+		TaxonomyCategory taxonomyCategory2) {
+
+		if (taxonomyCategory1 == taxonomyCategory2) {
 			return true;
 		}
 
@@ -241,13 +316,13 @@ public abstract class BaseVocabularyResourceTestCase {
 	}
 
 	protected Collection<EntityField> getEntityFields() throws Exception {
-		if (!(_vocabularyResource instanceof EntityModelResource)) {
+		if (!(_taxonomyCategoryResource instanceof EntityModelResource)) {
 			throw new UnsupportedOperationException(
 				"Resource is not an instance of EntityModelResource");
 		}
 
 		EntityModelResource entityModelResource =
-			(EntityModelResource)_vocabularyResource;
+			(EntityModelResource)_taxonomyCategoryResource;
 
 		EntityModel entityModel = entityModelResource.getEntityModel(
 			new MultivaluedHashMap());
@@ -273,7 +348,8 @@ public abstract class BaseVocabularyResourceTestCase {
 	}
 
 	protected String getFilterString(
-		EntityField entityField, String operator, Vocabulary vocabulary) {
+		EntityField entityField, String operator,
+		TaxonomyCategory taxonomyCategory) {
 
 		StringBundler sb = new StringBundler();
 
@@ -285,45 +361,35 @@ public abstract class BaseVocabularyResourceTestCase {
 		sb.append(operator);
 		sb.append(" ");
 
-		if (entityFieldName.equals("categories")) {
+		if (entityFieldName.equals("taxonomyCategoryId")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
 		}
 
-		if (entityFieldName.equals("multiValued")) {
-			throw new IllegalArgumentException(
-				"Invalid entity field " + entityFieldName);
-		}
-
-		if (entityFieldName.equals("name")) {
+		if (entityFieldName.equals("taxonomyCategoryName")) {
 			sb.append("'");
-			sb.append(String.valueOf(vocabulary.getName()));
+			sb.append(
+				String.valueOf(taxonomyCategory.getTaxonomyCategoryName()));
 			sb.append("'");
 
 			return sb.toString();
-		}
-
-		if (entityFieldName.equals("vocabularyId")) {
-			throw new IllegalArgumentException(
-				"Invalid entity field " + entityFieldName);
 		}
 
 		throw new IllegalArgumentException(
 			"Invalid entity field " + entityFieldName);
 	}
 
-	protected Vocabulary randomVocabulary() {
-		return new Vocabulary() {
+	protected TaxonomyCategory randomTaxonomyCategory() {
+		return new TaxonomyCategory() {
 			{
-				multiValued = RandomTestUtil.randomBoolean();
-				name = RandomTestUtil.randomString();
-				vocabularyId = RandomTestUtil.randomLong();
+				taxonomyCategoryId = RandomTestUtil.randomLong();
+				taxonomyCategoryName = RandomTestUtil.randomString();
 			}
 		};
 	}
 
-	protected Vocabulary randomPatchVocabulary() {
-		return randomVocabulary();
+	protected TaxonomyCategory randomPatchTaxonomyCategory() {
+		return randomTaxonomyCategory();
 	}
 
 	protected Group testGroup;
@@ -385,8 +451,17 @@ public abstract class BaseVocabularyResourceTestCase {
 		return options;
 	}
 
-	private String _toPath(String template, Object value) {
-		return template.replaceFirst("\\{.*\\}", String.valueOf(value));
+	private String _toPath(String template, Object... values) {
+		if (ArrayUtil.isEmpty(values)) {
+			return template;
+		}
+
+		for (int i = 0; i < values.length; i++) {
+			template = template.replaceFirst(
+				"\\{.*\\}", String.valueOf(values[i]));
+		}
+
+		return template;
 	}
 
 	private static BeanUtilsBean _beanUtilsBean = new BeanUtilsBean() {
@@ -429,7 +504,7 @@ public abstract class BaseVocabularyResourceTestCase {
 	};
 
 	@Inject
-	private VocabularyResource _vocabularyResource;
+	private TaxonomyCategoryResource _taxonomyCategoryResource;
 
 	private URL _resourceURL;
 

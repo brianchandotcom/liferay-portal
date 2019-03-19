@@ -58,11 +58,11 @@ public class WorkflowMetricsSLAProcessorTest extends PowerMockito {
 						"createDate",
 						localDateTime.minus(5, ChronoUnit.SECONDS))));
 
-		Assert.assertTrue(workflowMetricsSLAProcessResult.isOnTime());
 		Assert.assertEquals(
 			5000, workflowMetricsSLAProcessResult.getElapsedTime());
 		Assert.assertEquals(
 			0, workflowMetricsSLAProcessResult.getRemainingTime());
+		Assert.assertTrue(workflowMetricsSLAProcessResult.isOnTime());
 	}
 
 	@Test
@@ -84,11 +84,11 @@ public class WorkflowMetricsSLAProcessorTest extends PowerMockito {
 						"createDate",
 						localDateTime.minus(5, ChronoUnit.SECONDS))));
 
-		Assert.assertTrue(workflowMetricsSLAProcessResult.isOnTime());
 		Assert.assertEquals(
 			10000, workflowMetricsSLAProcessResult.getElapsedTime());
 		Assert.assertEquals(
 			0, workflowMetricsSLAProcessResult.getRemainingTime());
+		Assert.assertTrue(workflowMetricsSLAProcessResult.isOnTime());
 	}
 
 	@Test
@@ -103,11 +103,11 @@ public class WorkflowMetricsSLAProcessorTest extends PowerMockito {
 						"createDate",
 						localDateTime.minus(6, ChronoUnit.SECONDS))));
 
-		Assert.assertFalse(workflowMetricsSLAProcessResult.isOnTime());
 		Assert.assertEquals(
 			6000, workflowMetricsSLAProcessResult.getElapsedTime());
 		Assert.assertEquals(
 			-1000, workflowMetricsSLAProcessResult.getRemainingTime());
+		Assert.assertFalse(workflowMetricsSLAProcessResult.isOnTime());
 	}
 
 	@Test
@@ -129,11 +129,11 @@ public class WorkflowMetricsSLAProcessorTest extends PowerMockito {
 						"createDate",
 						localDateTime.minus(5, ChronoUnit.SECONDS))));
 
-		Assert.assertFalse(workflowMetricsSLAProcessResult.isOnTime());
 		Assert.assertEquals(
 			10000, workflowMetricsSLAProcessResult.getElapsedTime());
 		Assert.assertEquals(
 			-5000, workflowMetricsSLAProcessResult.getRemainingTime());
+		Assert.assertFalse(workflowMetricsSLAProcessResult.isOnTime());
 	}
 
 	private Document _createDocument(Field... fields) {

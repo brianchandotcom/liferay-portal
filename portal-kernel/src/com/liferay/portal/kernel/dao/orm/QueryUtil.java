@@ -42,9 +42,9 @@ public class QueryUtil {
 		Query query, Dialect dialect, int start, int end,
 		boolean unmodifiable) {
 
-		return list(
-			query, dialect, start, end
-		).iterator();
+		List<?> list = list(query, dialect, start, end);
+
+		return list.iterator();
 	}
 
 	public static List<?> list(

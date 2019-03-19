@@ -403,7 +403,7 @@ definition {
 			Button.click(button = "Save");
 		}
 
-		task ("Add as econd user with permission to edit web content articles") {
+		task ("Add a second user with permission to edit web content articles") {
 			JSONUser.addUser(
 				userEmailAddress = "userea@liferay.com",
 				userFirstName = "Userfn",

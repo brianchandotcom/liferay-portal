@@ -253,7 +253,7 @@ definition {
 			);
 		}
 
-		task ("Asser the Title fragment is present") {
+		task ("Assert the Title fragment is present") {
 			AssertVisible(
 				locator1 = "Fragment#FRAGMENT",
 				key_content = "Lorem ipsum dolor sit amet",

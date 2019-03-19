@@ -82,7 +82,7 @@ public class TarGzUtil {
 				TarArchiveOutputStream.LONGFILE_POSIX);
 
 			if (source.isFile()) {
-				_archiveFile(source, source, tarArchiveOutputStream);
+				_archiveFile(source.getParentFile(), source, tarArchiveOutputStream);
 			}
 			else {
 				_archiveDir(source, source, tarArchiveOutputStream);

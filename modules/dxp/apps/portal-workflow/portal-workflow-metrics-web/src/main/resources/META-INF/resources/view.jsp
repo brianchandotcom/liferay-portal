@@ -21,22 +21,22 @@
 </div>
 
 <aui:script require='<%= npmResolvedPackageName + " as bootstrapRequire" %>'>
-		var deltas = [];
+	var deltas = [];
 
-		<%
-		for (int curDelta : PropsValues.SEARCH_CONTAINER_PAGE_DELTA_VALUES) {
-		%>
+	<%
+	for (int curDelta : PropsValues.SEARCH_CONTAINER_PAGE_DELTA_VALUES) {
+	%>
 
-				deltas.push(<%= curDelta %>);
+		deltas.push(<%= curDelta %>);
 
-		<%
-		}
-		%>
+	<%
+	}
+	%>
 
 	bootstrapRequire.default(
-				'<portlet:namespace />-root',
-				<%= PropsValues.SEARCH_CONTAINER_PAGE_DEFAULT_DELTA %>,
-				deltas,
-				<%= PropsValues.SEARCH_CONTAINER_PAGE_ITERATOR_MAX_PAGES %>
-		);
+		'<portlet:namespace />-root',
+		<%= PropsValues.SEARCH_CONTAINER_PAGE_DEFAULT_DELTA %>,
+		deltas,
+		<%= PropsValues.SEARCH_CONTAINER_PAGE_ITERATOR_MAX_PAGES %>
+	);
 </aui:script>

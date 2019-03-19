@@ -21,8 +21,6 @@ components:
                     type: string
                 articleBody:
                     type: string
-                caption:
-                    type: string
                 contentSpaceId:
                     format: int64
                     type: integer
@@ -52,20 +50,16 @@ components:
                     type: integer
                 image:
                     properties:
+                        caption:
+                            type: string
                         contentUrl:
                             format: uri
+                            readOnly: true
                             type: string
                         imageId:
                             format: int64
                             type: integer
-                        name:
-                            type: string
-                    readOnly: true
                     type: object
-                imageId:
-                    format: int64
-                    type: integer
-                    writeOnly: true
                 keywords:
                     items:
                         type: string
@@ -303,33 +297,6 @@ paths:
                   schema:
                       format: int64
                       type: integer
-            responses:
-                200:
-                    content:
-                        application/json:
-                            schema:
-                                $ref: "#/components/schemas/BlogPostingImage"
-                    description: ""
-            tags: ["BlogPostingImage"]
-        patch:
-            parameters:
-                - in: path
-                  name: blog-posting-image-id
-                  required: true
-                  schema:
-                      format: int64
-                      type: integer
-            requestBody:
-                content:
-                    multipart/form-data:
-                        schema:
-                            properties:
-                                blogPostingImage:
-                                    $ref: "#/components/schemas/BlogPostingImage"
-                                file:
-                                    format: binary
-                                    type: string
-                            type: object
             responses:
                 200:
                     content:

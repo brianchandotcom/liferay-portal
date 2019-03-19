@@ -14,10 +14,7 @@
 
 package com.liferay.portal.search.elasticsearch6.internal;
 
-import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.BaseIndexWriter;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.BooleanQuery;
@@ -32,12 +29,10 @@ import com.liferay.portal.kernel.search.generic.BooleanQueryImpl;
 import com.liferay.portal.kernel.search.generic.MatchAllQuery;
 import com.liferay.portal.kernel.search.suggest.SpellCheckIndexWriter;
 import com.liferay.portal.kernel.util.PortalRunMode;
-import com.liferay.portal.search.elasticsearch6.configuration.ElasticsearchConfiguration;
 import com.liferay.portal.search.elasticsearch6.internal.index.IndexNameBuilder;
 import com.liferay.portal.search.elasticsearch6.internal.util.DocumentTypes;
 import com.liferay.portal.search.engine.adapter.SearchEngineAdapter;
 import com.liferay.portal.search.engine.adapter.document.BulkDocumentRequest;
-import com.liferay.portal.search.engine.adapter.document.BulkDocumentResponse;
 import com.liferay.portal.search.engine.adapter.document.DeleteByQueryDocumentRequest;
 import com.liferay.portal.search.engine.adapter.document.DeleteDocumentRequest;
 import com.liferay.portal.search.engine.adapter.document.IndexDocumentRequest;
@@ -45,11 +40,8 @@ import com.liferay.portal.search.engine.adapter.document.UpdateDocumentRequest;
 import com.liferay.portal.search.engine.adapter.index.RefreshIndexRequest;
 
 import java.util.Collection;
-import java.util.Map;
 
-import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
 
 /**
@@ -57,7 +49,6 @@ import org.osgi.service.component.annotations.Reference;
  * @author Milen Dyankov
  */
 @Component(
-	configurationPid = "com.liferay.portal.search.elasticsearch6.configuration.ElasticsearchConfiguration",
 	immediate = true, property = "search.engine.impl=Elasticsearch",
 	service = IndexWriter.class
 )
@@ -77,17 +68,7 @@ public class ElasticsearchIndexWriter extends BaseIndexWriter {
 			indexDocumentRequest.setRefresh(true);
 		}
 
-		try {
-			_searchEngineAdapter.execute(indexDocumentRequest);
-		}
-		catch (RuntimeException re) {
-			if (_logExceptionsOnly) {
-				_log.error(re, re);
-			}
-			else {
-				throw re;
-			}
-		}
+		_searchEngineAdapter.execute(indexDocumentRequest);
 	}
 
 	@Override
@@ -114,17 +95,7 @@ public class ElasticsearchIndexWriter extends BaseIndexWriter {
 					indexDocumentRequest);
 			});
 
-		BulkDocumentResponse bulkDocumentResponse =
-			_searchEngineAdapter.execute(bulkDocumentRequest);
-
-		if (bulkDocumentResponse.hasErrors()) {
-			if (_logExceptionsOnly) {
-				_log.error("Bulk add failed");
-			}
-			else {
-				throw new SystemException("Bulk add failed");
-			}
-		}
+		_searchEngineAdapter.execute(bulkDocumentRequest);
 	}
 
 	@Override
@@ -135,17 +106,7 @@ public class ElasticsearchIndexWriter extends BaseIndexWriter {
 		RefreshIndexRequest refreshIndexRequest = new RefreshIndexRequest(
 			indexName);
 
-		try {
-			_searchEngineAdapter.execute(refreshIndexRequest);
-		}
-		catch (RuntimeException re) {
-			if (_logExceptionsOnly) {
-				_log.error(re, re);
-			}
-			else {
-				throw re;
-			}
-		}
+		_searchEngineAdapter.execute(refreshIndexRequest);
 	}
 
 	@Override
@@ -162,17 +123,7 @@ public class ElasticsearchIndexWriter extends BaseIndexWriter {
 
 		deleteDocumentRequest.setType(DocumentTypes.LIFERAY);
 
-		try {
-			_searchEngineAdapter.execute(deleteDocumentRequest);
-		}
-		catch (RuntimeException re) {
-			if (_logExceptionsOnly) {
-				_log.error(re, re);
-			}
-			else {
-				throw re;
-			}
-		}
+		_searchEngineAdapter.execute(deleteDocumentRequest);
 	}
 
 	@Override
@@ -199,17 +150,7 @@ public class ElasticsearchIndexWriter extends BaseIndexWriter {
 					deleteDocumentRequest);
 			});
 
-		BulkDocumentResponse bulkDocumentResponse =
-			_searchEngineAdapter.execute(bulkDocumentRequest);
-
-		if (bulkDocumentResponse.hasErrors()) {
-			if (_logExceptionsOnly) {
-				_log.error("Bulk delete failed");
-			}
-			else {
-				throw new SystemException("Bulk delete failed");
-			}
-		}
+		_searchEngineAdapter.execute(bulkDocumentRequest);
 	}
 
 	@Override
@@ -246,14 +187,6 @@ public class ElasticsearchIndexWriter extends BaseIndexWriter {
 		catch (ParseException pe) {
 			throw new SystemException(pe);
 		}
-		catch (RuntimeException re) {
-			if (_logExceptionsOnly) {
-				_log.error(re, re);
-			}
-			else {
-				throw re;
-			}
-		}
 	}
 
 	@Override
@@ -272,17 +205,7 @@ public class ElasticsearchIndexWriter extends BaseIndexWriter {
 			updateDocumentRequest.setRefresh(true);
 		}
 
-		try {
-			_searchEngineAdapter.execute(updateDocumentRequest);
-		}
-		catch (RuntimeException re) {
-			if (_logExceptionsOnly) {
-				_log.error(re, re);
-			}
-			else {
-				throw re;
-			}
-		}
+		_searchEngineAdapter.execute(updateDocumentRequest);
 	}
 
 	@Override
@@ -310,17 +233,7 @@ public class ElasticsearchIndexWriter extends BaseIndexWriter {
 					updateDocumentRequest);
 			});
 
-		BulkDocumentResponse bulkDocumentResponse =
-			_searchEngineAdapter.execute(bulkDocumentRequest);
-
-		if (bulkDocumentResponse.hasErrors()) {
-			if (_logExceptionsOnly) {
-				_log.error("Bulk partial update failed");
-			}
-			else {
-				throw new SystemException("Bulk partial update failed");
-			}
-		}
+		_searchEngineAdapter.execute(bulkDocumentRequest);
 	}
 
 	@Override
@@ -356,17 +269,7 @@ public class ElasticsearchIndexWriter extends BaseIndexWriter {
 
 		bulkDocumentRequest.addBulkableDocumentRequest(indexDocumentRequest);
 
-		BulkDocumentResponse bulkDocumentResponse =
-			_searchEngineAdapter.execute(bulkDocumentRequest);
-
-		if (bulkDocumentResponse.hasErrors()) {
-			if (_logExceptionsOnly) {
-				_log.error("Update failed");
-			}
-			else {
-				throw new SystemException("Update failed");
-			}
-		}
+		_searchEngineAdapter.execute(bulkDocumentRequest);
 	}
 
 	@Override
@@ -401,26 +304,7 @@ public class ElasticsearchIndexWriter extends BaseIndexWriter {
 					indexDocumentRequest);
 			});
 
-		BulkDocumentResponse bulkDocumentResponse =
-			_searchEngineAdapter.execute(bulkDocumentRequest);
-
-		if (bulkDocumentResponse.hasErrors()) {
-			if (_logExceptionsOnly) {
-				_log.error("Bulk update failed");
-			}
-			else {
-				throw new SystemException("Bulk update failed");
-			}
-		}
-	}
-
-	@Activate
-	@Modified
-	protected void activate(Map<String, Object> properties) {
-		_elasticsearchConfiguration = ConfigurableUtil.createConfigurable(
-			ElasticsearchConfiguration.class, properties);
-
-		_logExceptionsOnly = _elasticsearchConfiguration.logExceptionsOnly();
+		_searchEngineAdapter.execute(bulkDocumentRequest);
 	}
 
 	@Reference(unbind = "-")
@@ -435,12 +319,7 @@ public class ElasticsearchIndexWriter extends BaseIndexWriter {
 		_searchEngineAdapter = searchEngineAdapter;
 	}
 
-	private static final Log _log = LogFactoryUtil.getLog(
-		ElasticsearchIndexWriter.class);
-
-	private volatile ElasticsearchConfiguration _elasticsearchConfiguration;
 	private IndexNameBuilder _indexNameBuilder;
-	private boolean _logExceptionsOnly;
 	private SearchEngineAdapter _searchEngineAdapter;
 
 }

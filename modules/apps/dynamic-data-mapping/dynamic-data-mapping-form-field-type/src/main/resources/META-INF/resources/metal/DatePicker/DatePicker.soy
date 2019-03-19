@@ -4,11 +4,13 @@
  * This renders the component's whole content.
  */
 {template .render}
+	{@param name: string}
+	{@param spritemap: string}
 	{@param years: list<?>}
 	{@param? _daySelected: any}
-	{@param? _handleContentClick: any}
 	{@param? _handleDayClicked: any}
 	{@param? _handleDotClicked: any}
+	{@param? _handleInputFocused: any}
 	{@param? _handleNavigateChange: any}
 	{@param? _handleNextMonth: any}
 	{@param? _handleOnInput: any}
@@ -18,28 +20,23 @@
 	{@param? _weeks: list<?>}
 	{@param? _year: int}
 	{@param? ariaLabel: string}
-	{@param? contentRenderer: string}
-	{@param? dataContent: ?}
+	{@param? displayStyle: string}
 	{@param? elementClasses: string}
 	{@param? expanded: bool}
 	{@param? firstDayOfWeek: int}
-	{@param? months: list<?>}
-	{@param? placeholder: string}
-	{@param? time: bool}
-	{@param? weekdaysShort: list<string>}
-	{@param name: string}
-	{@param? value: string}
-	{@param? displayStyle: string}
 	{@param? id: string}
 	{@param? label: string}
+	{@param? months: list<?>}
+	{@param? placeholder: string}
 	{@param? predefinedValue: string}
-	{@param? repeatable: bool}
 	{@param? readOnly: bool}
+	{@param? repeatable: bool}
 	{@param? required: bool}
 	{@param? showLabel: bool}
-	{@param spritemap: string}
 	{@param? tip: string}
 	{@param? tooltip: string}
+	{@param? value: string}
+	{@param? weekdaysShort: list<string>}
 
 	{call FieldBase.render}
 		{param contentRenderer kind="html"}
@@ -47,9 +44,9 @@
 				{param spritemap: $spritemap /}
 				{param years: $years /}
 				{param _daySelected: $_daySelected /}
-				{param _handleContentClick: $_handleContentClick /}
 				{param _handleDayClicked: $_handleDayClicked /}
 				{param _handleDotClicked: $_handleDotClicked /}
+				{param _handleInputFocused: $_handleInputFocused /}
 				{param _handleNavigateChange: $_handleNavigateChange /}
 				{param _handleNextMonth: $_handleNextMonth /}
 				{param _handleOnInput: $_handleOnInput /}
@@ -59,15 +56,12 @@
 				{param _weeks: $_weeks /}
 				{param _year: $_year /}
 				{param ariaLabel: $ariaLabel /}
-				{param contentRenderer: $contentRenderer /}
-				{param dataContent: $dataContent /}
 				{param elementClasses: $elementClasses /}
 				{param expanded: $expanded /}
 				{param firstDayOfWeek: $firstDayOfWeek /}
 				{param id: $id /}
 				{param months: $months /}
 				{param placeholder: $placeholder /}
-				{param time: $time /}
 				{param weekdaysShort: $weekdaysShort /}
 				{param value: $value /}
 				{param name: $name /}
@@ -79,6 +73,7 @@
 		{/param}
 		{param id: $id /}
 		{param label: $label /}
+		{param ref: 'base' /}
 		{param repeatable: $repeatable /}
 		{param required: $required /}
 		{param showLabel: $showLabel /}
@@ -92,9 +87,9 @@
 	{@param spritemap: string}
 	{@param years: list<?>}
 	{@param? _daySelected: any}
-	{@param? _handleContentClick: any}
 	{@param? _handleDayClicked: any}
 	{@param? _handleDotClicked: any}
+	{@param? _handleInputFocused: any}
 	{@param? _handleNavigateChange: any}
 	{@param? _handleNextMonth: any}
 	{@param? _handleOnInput: any}
@@ -104,15 +99,12 @@
 	{@param? _weeks: list<?>}
 	{@param? _year: int}
 	{@param? ariaLabel: string}
-	{@param? contentRenderer: string}
-	{@param? dataContent: ?}
 	{@param? elementClasses: string}
 	{@param? expanded: bool}
 	{@param? firstDayOfWeek: int}
 	{@param? id: string}
 	{@param? months: list<?>}
 	{@param? placeholder: string}
-	{@param? time: bool}
 	{@param? readOnly: bool}
 	{@param? weekdaysShort: list<string>}
 	{@param? predefinedValue: string}
@@ -143,6 +135,8 @@
 					placeholder="{$placeholder}"
 				{/if}
 
+				ref="inputElement"
+
 				{if $value}
 					value="{$value}"
 				{elseif $predefinedValue}
@@ -158,7 +152,8 @@
 				type="text"
 			{/let}
 
-			<input data-oninput="{$_handleOnInput}" {$inputAttributes}>
+			<input data-onclick="{$_handleInputFocused}" data-oninput="{$_handleOnInput}" {$inputAttributes} />
+
 			<div class="input-group-inset-item input-group-inset-item-after">
 				{call ClayButton.render}
 					{param disabled: $readOnly /}
@@ -217,14 +212,6 @@
 					{/call}
 				{/if}
 			</div>
-
-			{if $contentRenderer or $time}
-				{delcall DatePicker.ExtensionPoint variant="$contentRenderer"}
-					{param _handleContentClick: $_handleContentClick /}
-					{param dataContent: $dataContent /}
-					{param spritemap: $spritemap /}
-				{/delcall}
-			{/if}
 		</div>
 	</div>
 {/template}
@@ -251,7 +238,7 @@
 			</select>
 			<select class="form-control form-control-sm" name="year" onChange="{$_handleNavigateChange}" value="{$_year}">
 				{foreach $year in $years}
-					<option {if $year == $_year} selected {/if} value="{$year}">{$year}</option>
+					<option key="{$year}{index($year)}{$year == $_year ? 'selected' : 'unselected'}" {if $year == $_year} selected {/if} value="{$year}">{$year}</option>
 				{/foreach}
 			</select>
 		</form>
@@ -325,31 +312,3 @@
 		{/foreach}
 	</div>
 {/template}
-
-/**
- */
-{deltemplate DatePicker.ExtensionPoint}
-	{@param spritemap: string}
-	{@param? _handleContentClick: any}
-	{@param? dataContent: ?}
-
-	<div class="extension-time">
-		{call ClayIcon.render}
-			{param spritemap: $spritemap /}
-			{param symbol: 'time' /}
-		{/call}
-		<form class="extension-control">
-			<select class="form-control form-control-sm" name="hour" onChange="{$_handleContentClick}" value="{$dataContent ? $dataContent.hour : ''}">
-				{for $value in range(24)}
-					<option value="{$value}">{$value}</option>
-				{/for}
-			</select>
-			<span>:</span>
-			<select class="form-control form-control-sm" name="minute" onChange="{$_handleContentClick}" value="{$dataContent ? $dataContent.minute : ''}">
-				{for $value in range(60)}
-					<option value="{$value}">{$value}</option>
-				{/for}
-			</select>
-		</form>
-	</div>
-{/deltemplate}

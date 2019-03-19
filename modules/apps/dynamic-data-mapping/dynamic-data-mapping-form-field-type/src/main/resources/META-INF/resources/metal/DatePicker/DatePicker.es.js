@@ -1,15 +1,16 @@
-import 'clay-button';
-import 'clay-icon';
 import '../FieldBase/FieldBase.es';
 import './DatePickerRegister.soy.js';
-import {Config} from 'metal-state';
-import {EventHandler} from 'metal-events';
+import 'clay-button';
+import 'clay-icon';
 import * as Helpers from './Helpers.es';
 import Component from 'metal-component';
 import dom from 'metal-dom';
 import moment from 'moment';
 import Soy from 'metal-soy';
 import templates from './DatePicker.soy.js';
+import vanillaTextMask from 'vanilla-text-mask';
+import {Config} from 'metal-state';
+import {EventHandler} from 'metal-events';
 
 /**
  * Metal DatePicker component.
@@ -19,22 +20,31 @@ import templates from './DatePicker.soy.js';
 class DatePicker extends Component {
 
 	/**
-	 * Continues the propagation of the event clicked on the content.
-	 * @param {!Event} event
+	 * Returns the default value for the "dateFormat" state.
+	 * It converts the format from "%d/%m/%Y" to "DD/MM/YYYY".
 	 * @protected
 	 */
 
-	_handleContentClick(event) {
-		if (!this.contentRenderer) {
-			const {hour, minute} = event.target.form;
+	_dateFormatValueFn() {
+		const dateFormat = this.getDateFormat();
 
-			this.currentTime = moment(this.currentMonth)
-				.set('h', hour.value)
-				.set('m', minute.value)
-				.format(this.timeFormat);
-		}
+		return dateFormat.split(this._dateDelimiter).map(
+			item => {
+				let currentFormat;
 
-		this.emit('contentClicked');
+				if (item === '%Y') {
+					currentFormat = 'YYYY';
+				}
+				else if (item === '%m') {
+					currentFormat = 'MM';
+				}
+				else {
+					currentFormat = 'DD';
+				}
+
+				return currentFormat;
+			}
+		).join(this._dateDelimiter);
 	}
 
 	/**
@@ -46,17 +56,9 @@ class DatePicker extends Component {
 	_handleDayClicked(event) {
 		const ariaLabel = event.target.getAttribute('ariaLabel');
 
-		const monthSelected = this.currentMonth.getMonth();
-
-		const currentMonth = Helpers.formatDate(ariaLabel).getMonth();
-
-		console.log('monthSelected', monthSelected);
-
-		if (monthSelected === currentMonth) {
-			this._daySelected = ariaLabel;
-			this.value = Helpers.formatDate(this._daySelected);
-			this._handleFieldEdited();
-		}
+		this._daySelected = ariaLabel;
+		this.value = Helpers.formatDate(this._daySelected);
+		this._handleFieldEdited();
 	}
 
 	/**
@@ -95,6 +97,16 @@ class DatePicker extends Component {
 	}
 
 	/**
+	 * Handles the click on the input element.
+	 * @param {!Event} event
+	 * @protected
+	 */
+
+	_handleInputFocused() {
+		this.expanded = true;
+	}
+
+	/**
 	 * Handles the change of the year and month of the header
 	 * @param {!Event} event
 	 * @protected
@@ -112,15 +124,10 @@ class DatePicker extends Component {
 	 */
 
 	_handleNextMonth() {
-		const currentMonth = this.currentMonth;
-		const numberOfYearsInCalendar = this.years.length;
-
-		if (currentMonth.getMonth() != 11 || (currentMonth.getMonth() == 11 && currentMonth.getFullYear() < this.years[numberOfYearsInCalendar - 1])) {
-			this.currentMonth = moment(this.currentMonth)
-				.clone()
-				.add(1, 'M')
-				.toDate();
-		}
+		this.currentMonth = moment(this.currentMonth)
+			.clone()
+			.add(1, 'M')
+			.toDate();
 	}
 
 	/**
@@ -130,17 +137,13 @@ class DatePicker extends Component {
 
 	_handleOnInput(event) {
 		const {value} = event.target;
-		const format = `${this.dateFormat} ${this.time ? this.timeFormat : ''}`;
+		const format = `${this.dateFormat}`;
 
 		const date = moment(value, format);
 
-		if (date.isValid() && (this.years.indexOf(date._d.getFullYear().toString()) > -1) && date._i.length === 10) {
+		if (date.isValid() && date._i.length === 10) {
 			this.currentMonth = date.toDate();
 			this._daySelected = Helpers.setDateSelected(this.currentMonth);
-
-			if (this.time) {
-				this.currentTime = date.format(this.timeFormat);
-			}
 		}
 
 		this.value = value;
@@ -158,14 +161,10 @@ class DatePicker extends Component {
 	 */
 
 	_handlePreviousMonth() {
-		const currentMonth = this.currentMonth;
-
-		if (currentMonth.getMonth() != 0 || (currentMonth.getMonth() == 0 && currentMonth.getFullYear() > this.years[0])) {
-			this.currentMonth = moment(this.currentMonth)
-				.clone()
-				.add(-1, 'M')
-				.toDate();
-		}
+		this.currentMonth = moment(this.currentMonth)
+			.clone()
+			.add(-1, 'M')
+			.toDate();
 	}
 
 	/**
@@ -195,29 +194,6 @@ class DatePicker extends Component {
 	}
 
 	/**
-	 * Sets the formatted time.
-	 * @param {!Date} value
-	 * @protected
-	 * @return {!String}
-	 */
-
-	_setCurrentTime(value) {
-		let newValue;
-
-		if (value) {
-			newValue = value;
-		}
-		else {
-			newValue = moment()
-				.set('h', 0)
-				.set('m', 0)
-				.format(this.timeFormat);
-		}
-
-		return newValue;
-	}
-
-	/**
 	 * @inheritdoc
 	 */
 
@@ -232,7 +208,7 @@ class DatePicker extends Component {
 	}
 
 	/**
-	 * Sets the formatted date and time of the input.
+	 * Sets the formatted date of the input.
 	 * @param {!Date} value
 	 * @protected
 	 * @return {!String}
@@ -250,7 +226,7 @@ class DatePicker extends Component {
 					.clone()
 					.format(this.dateFormat);
 
-				newValue = this.time ? `${date} ${this.currentTime}` : date;
+				newValue = date;
 			}
 		}
 		else {
@@ -266,6 +242,26 @@ class DatePicker extends Component {
 
 	created() {
 		this._eventHandler = new EventHandler();
+
+		let newValue;
+
+		if (this.value) {
+			newValue = this.value;
+		}
+		else if (this.predefinedValue) {
+			newValue = this.predefinedValue;
+		}
+		else {
+			newValue = this.initialMonth;
+		}
+
+		const value = moment(
+			newValue,
+			this.dateFormat
+		).toDate();
+
+		this.currentMonth = this._setCurrentMonth(value);
+		this._daySelected = Helpers.setDateSelected(value);
 	}
 
 	/**
@@ -277,6 +273,89 @@ class DatePicker extends Component {
 	}
 
 	/**
+	 * Returns date format based on user locale from Liefray.AUI.
+	 * @return {!String}
+	 */
+
+	getDateFormat() {
+		const dateFormat = Liferay.AUI.getDateFormat();
+
+		this._dateDelimiter = '/';
+		this._endDelimiter = false;
+
+		if (dateFormat.indexOf('.') != -1) {
+			this._dateDelimiter = '.';
+
+			if (dateFormat.lastIndexOf('.') == dateFormat.length - 1) {
+				this._endDelimiter = true;
+			}
+		}
+
+		if (dateFormat.indexOf('-') != -1) {
+			this._dateDelimiter = '-';
+		}
+
+		return dateFormat;
+	}
+
+	/**
+	 * Returns the input mask for the vanillaTextMask plugin.
+	 * @return {!String}
+	 */
+
+	getInputMask() {
+		const dateFormat = this.getDateFormat();
+		const inputMaskArray = [];
+
+		dateFormat.split('').forEach(
+			item => {
+				if (item === this._dateDelimiter) {
+					inputMaskArray.push(this._dateDelimiter);
+				}
+				else if (item === 'Y') {
+					inputMaskArray.push(/\d/);
+					inputMaskArray.push(/\d/);
+					inputMaskArray.push(/\d/);
+					inputMaskArray.push(/\d/);
+				}
+				else if (item === 'd' || item === 'm') {
+					inputMaskArray.push(/\d/);
+					inputMaskArray.push(/\d/);
+				}
+			}
+		);
+
+		return inputMaskArray;
+	}
+
+	/**
+	 * Generates a range of +/- 5 years based on the current year.
+	 * @return {!Array}
+	 */
+
+	getYears() {
+		const currentYear = this._year;
+		const years = [];
+
+		for (let year = currentYear - 5; year < currentYear + 5; year++) {
+			years.push(year);
+		}
+
+		return years;
+	}
+
+	/**
+	 * @inheritDoc
+	 */
+
+	prepareStateForRender(state) {
+		return {
+			...state,
+			years: this.getYears()
+		};
+	}
+
+	/**
 	 * @inheritDoc
 	 */
 
@@ -285,22 +364,6 @@ class DatePicker extends Component {
 			this._weeks = Helpers.getWeekArray(value, this.firstDayOfWeek);
 			this._month = value.getMonth();
 			this._year = value.getFullYear();
-		}
-	}
-
-	/**
-	 * @inheritDoc
-	 */
-
-	syncCurrentTime(value) {
-		if (value && this._daySelected) {
-			const date = moment(value, this.timeFormat);
-
-			this.value = Helpers.formatDate(this._daySelected);
-			this.dataContent = {
-				hour: date.get('hour'),
-				minute: date.get('minute')
-			};
 		}
 	}
 
@@ -324,25 +387,17 @@ class DatePicker extends Component {
 	 */
 
 	attached() {
-		let newValue;
+		const {base} = this.refs;
+		const {inputElement} = base.refs;
 
-		if (this.value) {
-			newValue = this.value;
-		}
-		else if (this.predefinedValue) {
-			newValue = this.predefinedValue;
-		}
-		else {
-			newValue = this.initialMonth;
-		}
-
-		const value = moment(
-			newValue,
-			this.dateFormat
-		).toDate();
-
-		this.currentMonth = this._setCurrentMonth(value);
-		this._daySelected = Helpers.setDateSelected(value);
+		vanillaTextMask(
+			{
+				inputElement,
+				mask: this.getInputMask(),
+				placeholderChar: '_',
+				showMask: true
+			}
+		);
 	}
 }
 
@@ -405,16 +460,6 @@ DatePicker.STATE = {
 	ariaLabel: Config.string(),
 
 	/**
-	 * The name of the variant of the deltemplate.
-	 * @default undefined
-	 * @instance
-	 * @memberof DatePicker
-	 * @type {?(string|undefined)}
-	 */
-
-	contentRenderer: Config.any(),
-
-	/**
 	 * Indicates the current month rendered on the screen.
 	 * @default undefined
 	 * @instance
@@ -425,28 +470,6 @@ DatePicker.STATE = {
 	currentMonth: Config.instanceOf(Date).internal(),
 
 	/**
-	 * Indicates the time selected by the user.
-	 * @default undefined
-	 * @instance
-	 * @memberof DatePicker
-	 * @type {!String}
-	 */
-
-	currentTime: Config.string()
-		.setter('_setCurrentTime')
-		.internal(),
-
-	/**
-	 * Set the data to be accessed at the extension point.
-	 * @default undefined
-	 * @instance
-	 * @memberof DatePicker
-	 * @type {?(object|undefined)}
-	 */
-
-	dataContent: Config.object(),
-
-	/**
 	 * Set the format of how the date will appear in the input element.
 	 * See available: https://momentjs.com/docs/#/parsing/string-format/
 	 * @default YYYY-MM-DD
@@ -455,7 +478,7 @@ DatePicker.STATE = {
 	 * @type {?string}
 	 */
 
-	dateFormat: Config.string().value('YYYY-MM-DD'),
+	dateFormat: Config.string().valueFn('_dateFormatValueFn'),
 
 	/**
 	 * Set the initial value of the input.
@@ -569,27 +592,6 @@ DatePicker.STATE = {
 	 */
 
 	spritemap: Config.string().required(),
-
-	/**
-	 * Flag to enable datetime selection.
-	 * @default false
-	 * @instance
-	 * @memberof DatePicker
-	 * @type {?bool}
-	 */
-
-	time: Config.bool().value(false),
-
-	/**
-	 * Set the format of how the time will appear in the input element.
-	 * See available: https://momentjs.com/docs/#/parsing/string-format/
-	 * @default HH:mm
-	 * @instance
-	 * @memberof DatePicker
-	 * @type {?string}
-	 */
-
-	timeFormat: Config.string().value('HH:mm'),
 
 	/**
 	 * Short names of days of the week to use in the header

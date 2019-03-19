@@ -36,7 +36,6 @@ import org.apache.commons.compress.archivers.tar.TarArchiveInputStream;
 import org.apache.commons.compress.archivers.tar.TarArchiveOutputStream;
 import org.apache.commons.compress.compressors.gzip.GzipCompressorInputStream;
 import org.apache.commons.compress.compressors.gzip.GzipCompressorOutputStream;
-import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
 
 /**
@@ -82,10 +81,12 @@ public class TarGzUtil {
 				TarArchiveOutputStream.LONGFILE_POSIX);
 
 			if (source.isFile()) {
-				_archiveFile(source.getParentFile(), source, tarArchiveOutputStream);
+				_archiveFile(
+					source.getParentFile(), source, tarArchiveOutputStream);
 			}
 			else {
-				_archiveDir(source, source, tarArchiveOutputStream);
+				_archiveDir(
+					source.getParentFile(), source, tarArchiveOutputStream);
 			}
 
 			tarArchiveOutputStream.flush();
@@ -99,15 +100,6 @@ public class TarGzUtil {
 	}
 
 	public static void unarchive(File archiveFile, File destinationDir) {
-		if (destinationDir.exists()) {
-			try {
-				FileUtils.deleteDirectory(destinationDir);
-			}
-			catch (IOException ioe) {
-				throw new RuntimeException(ioe);
-			}
-		}
-
 		if (!destinationDir.exists()) {
 			destinationDir.mkdirs();
 		}

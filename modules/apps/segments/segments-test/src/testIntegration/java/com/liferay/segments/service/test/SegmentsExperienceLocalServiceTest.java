@@ -194,19 +194,17 @@ public class SegmentsExperienceLocalServiceTest {
 		SegmentsEntry segmentsEntry = SegmentsTestUtil.addSegmentsEntry(
 			_group.getGroupId());
 		Map<Locale, String> nameMap = RandomTestUtil.randomLocaleStringMap();
-		int priority = RandomTestUtil.randomInt();
 		boolean active = RandomTestUtil.randomBoolean();
 
 		SegmentsExperience updatedSegmentsExperience =
 			_segmentsExperienceLocalService.updateSegmentsExperience(
 				segmentsExperience.getSegmentsExperienceId(),
-				segmentsEntry.getSegmentsEntryId(), nameMap, priority, active);
+				segmentsEntry.getSegmentsEntryId(), nameMap, active);
 
 		Assert.assertEquals(
 			segmentsEntry.getSegmentsEntryId(),
 			updatedSegmentsExperience.getSegmentsEntryId());
 		Assert.assertEquals(nameMap, updatedSegmentsExperience.getNameMap());
-		Assert.assertEquals(priority, updatedSegmentsExperience.getPriority());
 		Assert.assertEquals(active, updatedSegmentsExperience.isActive());
 	}
 

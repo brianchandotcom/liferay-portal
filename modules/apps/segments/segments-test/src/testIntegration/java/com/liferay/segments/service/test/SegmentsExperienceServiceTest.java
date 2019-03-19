@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.RoleConstants;
@@ -29,6 +30,7 @@ import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
+import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalServiceUtil;
 import com.liferay.portal.kernel.service.RoleLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -91,7 +93,11 @@ public class SegmentsExperienceServiceTest {
 
 		_classNameId = _classNameLocalService.getClassNameId(Layout.class);
 
-		Layout layout = LayoutTestUtil.addLayout(_group.getGroupId());
+		Layout layout = LayoutTestUtil.addLayout(_group);
+
+		layout.setType(LayoutConstants.TYPE_CONTENT);
+
+		layout = _layoutLocalService.updateLayout(layout);
 
 		_classPK = layout.getPlid();
 
@@ -383,7 +389,7 @@ public class SegmentsExperienceServiceTest {
 				segmentsExperience.getSegmentsExperienceId(),
 				RandomTestUtil.randomLong(),
 				RandomTestUtil.randomLocaleStringMap(),
-				RandomTestUtil.randomInt(), RandomTestUtil.randomBoolean());
+				RandomTestUtil.randomBoolean());
 		}
 	}
 
@@ -411,7 +417,7 @@ public class SegmentsExperienceServiceTest {
 				segmentsExperience.getSegmentsExperienceId(),
 				RandomTestUtil.randomLong(),
 				RandomTestUtil.randomLocaleStringMap(),
-				RandomTestUtil.randomInt(), RandomTestUtil.randomBoolean());
+				RandomTestUtil.randomBoolean());
 		}
 	}
 
@@ -424,8 +430,9 @@ public class SegmentsExperienceServiceTest {
 
 		return _segmentsExperienceLocalService.addSegmentsExperience(
 			segmentsEntry.getSegmentsEntryId(), _classNameId, _classPK,
-			RandomTestUtil.randomLocaleStringMap(), RandomTestUtil.randomInt(),
-			true, serviceContext);
+			RandomTestUtil.randomLocaleStringMap(),
+			RandomTestUtil.randomInt(1, Integer.MAX_VALUE), true,
+			serviceContext);
 	}
 
 	private long _classNameId;
@@ -446,6 +453,9 @@ public class SegmentsExperienceServiceTest {
 
 	@DeleteAfterTestRun
 	private User _groupUser;
+
+	@Inject
+	private LayoutLocalService _layoutLocalService;
 
 	@Inject
 	private SegmentsExperienceLocalService _segmentsExperienceLocalService;

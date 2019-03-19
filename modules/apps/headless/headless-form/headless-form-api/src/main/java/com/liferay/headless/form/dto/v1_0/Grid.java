@@ -40,7 +40,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement(name = "Grid")
 public class Grid {
 
-	@Schema(description = "https://www.schema.org/FormFieldOptions")
+	@Schema(description = "https://www.schema.org/FormFieldOption")
 	public Column[] getColumns() {
 		return columns;
 	}
@@ -87,7 +87,7 @@ public class Grid {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long id;
 
-	@Schema(description = "https://www.schema.org/FormFieldOptions")
+	@Schema(description = "https://www.schema.org/FormFieldOption")
 	public Row[] getRows() {
 		return rows;
 	}

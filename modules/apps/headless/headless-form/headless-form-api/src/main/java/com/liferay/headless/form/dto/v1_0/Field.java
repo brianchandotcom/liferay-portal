@@ -371,7 +371,7 @@ public class Field {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String name;
 
-	@Schema(description = "https://www.schema.org/FormFieldOptions")
+	@Schema(description = "https://www.schema.org/FormFieldOption")
 	public Option getOptions() {
 		return options;
 	}

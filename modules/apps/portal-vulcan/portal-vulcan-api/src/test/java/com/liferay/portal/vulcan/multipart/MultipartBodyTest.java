@@ -21,6 +21,7 @@ import static org.hamcrest.Matchers.contains;
 import static org.hamcrest.core.Is.is;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.exc.UnrecognizedPropertyException;
 
 import com.liferay.portal.json.JSONFactoryImpl;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -157,6 +158,29 @@ public class MultipartBodyTest {
 			"null", TestClass.class);
 
 		assertThat(testClassOptional.isPresent(), is(false));
+
+		// Incorrect JSON
+
+		multipartBody = MultipartBody.of(
+			Collections.emptyMap(), __ -> _objectMapper,
+			Collections.singletonMap(
+				"key",
+				JSONUtil.put(
+					"string", "Hello"
+				).put(
+					"number", 42
+				).put(
+					"wrongKey", Arrays.asList(1, 2, 3)
+				).toString()));
+
+		try {
+			multipartBody.getValueAsInstance("key", TestClass.class);
+
+			throw new AssertionError();
+		}
+		catch (Exception e) {
+			assertThat(e, is(instanceOf(UnrecognizedPropertyException.class)));
+		}
 	}
 
 	@Test

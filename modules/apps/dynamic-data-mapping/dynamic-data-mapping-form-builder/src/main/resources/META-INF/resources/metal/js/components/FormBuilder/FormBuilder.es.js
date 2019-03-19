@@ -297,6 +297,10 @@ class Builder extends Component {
 		cancelChangesModal.show();
 	}
 
+	_handleColumnResized(event) {
+		this.emit('columnResized', event)
+	}
+
 	_handleDeleteFieldClicked(indexes) {
 		this.setState(
 			{
@@ -575,6 +579,7 @@ class Builder extends Component {
 
 		const FormRendererEvents = {
 			activePageUpdated: this._handleActivePageUpdated.bind(this),
+			columnResized: this._handleColumnResized.bind(this),
 			fieldClicked: this._handleFieldClicked.bind(this),
 			fieldDeleted: this._handleDeleteFieldClicked.bind(this),
 			fieldDuplicated: this._handleFieldDuplicated,
@@ -600,7 +605,7 @@ class Builder extends Component {
 
 		return (
 			<div>
-				<div class="container">
+				<div class="container ddm-form-builder">
 					<div class="sheet">
 						<FormRenderer
 							activePage={activePage}

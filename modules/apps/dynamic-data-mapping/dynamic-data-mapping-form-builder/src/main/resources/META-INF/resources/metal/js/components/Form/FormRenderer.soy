@@ -2,6 +2,7 @@
 
 {template .render}
 	{@param spritemap: string}
+	{@param? _handleColumnResized: any}
 	{@param? _handleChangePage: any}
 	{@param? _handleDeleteButtonClicked: any}
 	{@param? _handleDuplicateButtonClicked: any}
@@ -29,6 +30,7 @@
 	{let $total: length($pages) /}
 
 	{delcall FormRenderer.pages variant="$contentRenderer"}
+		{param _handleColumnResized: $_handleColumnResized /}
 		{param _handleChangePage: $_handleChangePage /}
 		{param _handleDeleteButtonClicked: $_handleDeleteButtonClicked /}
 		{param _handleDuplicateButtonClicked: $_handleDuplicateButtonClicked /}
@@ -58,6 +60,7 @@
 
 {deltemplate FormRenderer.pages variant="'grid'"}
 	{@param spritemap: string}
+	{@param? _handleColumnResized: any}
 	{@param? _handleChangePage: any}
 	{@param? _handleDeleteButtonClicked: any}
 	{@param? _handleDuplicateButtonClicked: any}
@@ -119,6 +122,8 @@
 					{param editable: $editable /}
 					{param events: [
 						'deleteButtonClicked': $_handleDeleteButtonClicked,
+						'columnResized': $_handleColumnResized,
+						'deleteFieldClicked': $_handleDeleteButtonClicked,
 						'duplicateButtonClicked': $_handleDuplicateButtonClicked,
 						'fieldBlurred': $_handleFieldBlurred,
 						'fieldClicked': $_handleFieldClicked,

@@ -339,6 +339,10 @@ class FormRenderer extends Component {
 		this.emit('pageReset');
 	}
 
+	_handleColumnResized(event) {
+		this.emit('columnResized', event)
+	}
+
 	_handleChangePage({delegateTarget: {dataset}}) {
 		const {pageIndex} = dataset;
 

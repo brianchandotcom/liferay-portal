@@ -208,6 +208,8 @@ const INITIAL_STATE = {
 		)
 		.value([]),
 
+	fragmentEditorEnabled: Config.string(),
+
 	/**
 	 * List of available segments
 	 * @default []

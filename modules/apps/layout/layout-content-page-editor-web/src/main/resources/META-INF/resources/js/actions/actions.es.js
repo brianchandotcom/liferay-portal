@@ -39,3 +39,6 @@ export const CLEAR_HOVERED_ITEM = 'clearHoveredItem';
 export const UPDATE_ACTIVE_ITEM = 'updateActiveItem';
 export const UPDATE_DROP_TARGET = 'updateDragTarget';
 export const UPDATE_HOVERED_ITEM = 'updateHoveredItem';
+
+export const DISABLE_FRAGMENT_EDITOR = 'disableFragmentEditor';
+export const ENABLE_FRAGMENT_EDITOR = 'enableFragmentEditor';

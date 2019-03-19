@@ -8,7 +8,7 @@ import '../floating_toolbar/mapping/FloatingToolbarMappingPanel.es';
 import '../floating_toolbar/text_properties/FloatingToolbarTextPropertiesPanel.es';
 import './FragmentEditableFieldTooltip.es';
 
-import {CLEAR_ACTIVE_ITEM, OPEN_ASSET_TYPE_DIALOG, UPDATE_ACTIVE_ITEM, UPDATE_EDITABLE_VALUE, UPDATE_HOVERED_ITEM, UPDATE_LAST_SAVE_DATE, UPDATE_SAVING_CHANGES_STATUS, UPDATE_TRANSLATION_STATUS} from '../../actions/actions.es';
+import {CLEAR_ACTIVE_ITEM, DISABLE_FRAGMENT_EDITOR, ENABLE_FRAGMENT_EDITOR, OPEN_ASSET_TYPE_DIALOG, UPDATE_ACTIVE_ITEM, UPDATE_EDITABLE_VALUE, UPDATE_HOVERED_ITEM, UPDATE_LAST_SAVE_DATE, UPDATE_SAVING_CHANGES_STATUS, UPDATE_TRANSLATION_STATUS} from '../../actions/actions.es';
 import {FLOATING_TOOLBAR_BUTTONS, FRAGMENTS_EDITOR_ITEM_TYPES} from '../../utils/constants';
 import {prefixSegmentsExperienceId} from '../../utils/prefixSegmentsExperienceId.es';
 import {getConnectedComponent} from '../../store/ConnectedComponent.es';
@@ -156,6 +156,19 @@ class FragmentEditableField extends Component {
 		return this._editing ?
 			shouldUpdateOnChangeProperties(changes, ['languageId', 'segmentsExperienceId']) :
 			shouldUpdatePureComponent(changes);
+	}
+
+	/**
+	 * @inheritDoc
+	 * @param {!Object} newVal
+	 * @review
+	 */
+	syncFragmentEditorEnabled(newVal) {
+		if (newVal === this.editableId) {
+			this._enableEditor();
+
+			this._disposeFloatingToolbar();
+		}
 	}
 
 	/**
@@ -329,6 +342,10 @@ class FragmentEditableField extends Component {
 	 */
 	_handleEditableDestroyed() {
 		this._editing = false;
+
+		this.store.dispatchAction(
+			DISABLE_FRAGMENT_EDITOR
+		);
 	}
 
 	/**
@@ -377,12 +394,13 @@ class FragmentEditableField extends Component {
 	_handleFloatingToolbarButtonClicked(event, data) {
 		const {panelId, type} = data;
 
-		if (type === 'editor') {
-			event.preventDefault();
-
-			this._enableEditor();
-
-			this._disposeFloatingToolbar();
+		if(type === 'editor') {
+			this.store.dispatchAction(
+				ENABLE_FRAGMENT_EDITOR,
+				{
+					itemId: this.editableId
+				}
+			);
 		}
 		else if (type === 'panel' &&
 			panelId === FLOATING_TOOLBAR_BUTTONS.map.panelId &&
@@ -579,6 +597,7 @@ const ConnectedFragmentEditableField = getConnectedComponent(
 		'activeItemType',
 		'defaultLanguageId',
 		'defaultSegmentsExperienceId',
+		'fragmentEditorEnabled',
 		'hoveredItemId',
 		'hoveredItemType',
 		'languageId',

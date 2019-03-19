@@ -484,6 +484,29 @@ public abstract class DDMStructureServiceBaseImpl
 	}
 
 	/**
+	 * Returns the ddm structure layout remote service.
+	 *
+	 * @return the ddm structure layout remote service
+	 */
+	public com.liferay.dynamic.data.mapping.service.DDMStructureLayoutService
+		getDDMStructureLayoutService() {
+
+		return ddmStructureLayoutService;
+	}
+
+	/**
+	 * Sets the ddm structure layout remote service.
+	 *
+	 * @param ddmStructureLayoutService the ddm structure layout remote service
+	 */
+	public void setDDMStructureLayoutService(
+		com.liferay.dynamic.data.mapping.service.DDMStructureLayoutService
+			ddmStructureLayoutService) {
+
+		this.ddmStructureLayoutService = ddmStructureLayoutService;
+	}
+
+	/**
 	 * Returns the ddm structure layout persistence.
 	 *
 	 * @return the ddm structure layout persistence
@@ -860,6 +883,12 @@ public abstract class DDMStructureServiceBaseImpl
 	protected
 		com.liferay.dynamic.data.mapping.service.DDMStructureLayoutLocalService
 			ddmStructureLayoutLocalService;
+
+	@BeanReference(
+		type = com.liferay.dynamic.data.mapping.service.DDMStructureLayoutService.class
+	)
+	protected com.liferay.dynamic.data.mapping.service.DDMStructureLayoutService
+		ddmStructureLayoutService;
 
 	@BeanReference(type = DDMStructureLayoutPersistence.class)
 	protected DDMStructureLayoutPersistence ddmStructureLayoutPersistence;

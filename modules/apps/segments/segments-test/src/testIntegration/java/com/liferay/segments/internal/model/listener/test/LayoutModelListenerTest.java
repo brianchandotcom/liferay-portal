@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
-import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
@@ -149,7 +148,7 @@ public class LayoutModelListenerTest {
 		Layout layout = null;
 
 		try {
-			layout = LayoutLocalServiceUtil.getFriendlyURLLayout(
+			layout = _layoutLocalService.getFriendlyURLLayout(
 				groupId, false, friendlyURL);
 
 			return layout;
@@ -162,7 +161,7 @@ public class LayoutModelListenerTest {
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext();
 
-		return LayoutLocalServiceUtil.addLayout(
+		return _layoutLocalService.addLayout(
 			TestPropsValues.getUserId(), groupId, false,
 			LayoutConstants.DEFAULT_PARENT_LAYOUT_ID, name, null, description,
 			type, false, friendlyURL, serviceContext);

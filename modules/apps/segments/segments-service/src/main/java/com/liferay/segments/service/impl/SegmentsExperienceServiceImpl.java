@@ -85,7 +85,7 @@ public class SegmentsExperienceServiceImpl
 		long groupId, long classNameId, long classPK, boolean active) {
 
 		return segmentsExperiencePersistence.filterFindByG_C_C_A(
-			groupId, classNameId, _getPublishedClassPK(classPK), active);
+			groupId, classNameId, _getPublishedLayoutClassPK(classPK), active);
 	}
 
 	@Override
@@ -94,8 +94,8 @@ public class SegmentsExperienceServiceImpl
 		int end, OrderByComparator<SegmentsExperience> orderByComparator) {
 
 		return segmentsExperiencePersistence.filterFindByG_C_C_A(
-			groupId, classNameId, _getPublishedClassPK(classPK), active, start,
-			end, orderByComparator);
+			groupId, classNameId, _getPublishedLayoutClassPK(classPK), active,
+			start, end, orderByComparator);
 	}
 
 	@Override
@@ -103,7 +103,7 @@ public class SegmentsExperienceServiceImpl
 		long groupId, long classNameId, long classPK, boolean active) {
 
 		return segmentsExperiencePersistence.filterCountByG_C_C_A(
-			groupId, classNameId, _getPublishedClassPK(classPK), active);
+			groupId, classNameId, _getPublishedLayoutClassPK(classPK), active);
 	}
 
 	@Override
@@ -119,9 +119,7 @@ public class SegmentsExperienceServiceImpl
 			segmentsExperienceId, segmentsEntryId, nameMap, priority, active);
 	}
 
-	private long _getPublishedClassPK(long classPK) {
-		long publishedClassPK = classPK;
-
+	private long _getPublishedLayoutClassPK(long classPK) {
 		Layout layout = layoutLocalService.fetchLayout(classPK);
 
 		if ((layout != null) &&
@@ -129,10 +127,10 @@ public class SegmentsExperienceServiceImpl
 				Layout.class)) &&
 			(layout.getClassPK() != 0)) {
 
-			publishedClassPK = layout.getClassPK();
+			return layout.getClassPK();
 		}
 
-		return publishedClassPK;
+		return classPK;
 	}
 
 	private static volatile PortletResourcePermission

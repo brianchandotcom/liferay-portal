@@ -54,7 +54,7 @@ public class SegmentsExperienceLocalServiceImpl
 		SegmentsExperience defaultSegmentsExperience =
 			segmentsExperiencePersistence.fetchByG_S_C_C_First(
 				groupId, defaultSegmentsEntry.getSegmentsEntryId(), classNameId,
-				_getPublishedClassPK(classPK), null);
+				_getPublishedLayoutClassPK(classPK), null);
 
 		if (defaultSegmentsExperience != null) {
 			return defaultSegmentsExperience;
@@ -78,7 +78,7 @@ public class SegmentsExperienceLocalServiceImpl
 
 		long groupId = serviceContext.getScopeGroupId();
 
-		long publishedClassPK = _getPublishedClassPK(classPK);
+		long publishedClassPK = _getPublishedLayoutClassPK(classPK);
 
 		_validate(segmentsEntryId, groupId, classNameId, publishedClassPK);
 
@@ -191,7 +191,7 @@ public class SegmentsExperienceLocalServiceImpl
 		SegmentsExperience defaultSegmentsExperience =
 			segmentsExperiencePersistence.fetchByG_S_C_C_First(
 				groupId, defaultSegmentsEntry.getSegmentsEntryId(), classNameId,
-				_getPublishedClassPK(classPK), null);
+				_getPublishedLayoutClassPK(classPK), null);
 
 		if (defaultSegmentsExperience != null) {
 			return defaultSegmentsExperience;
@@ -219,8 +219,8 @@ public class SegmentsExperienceLocalServiceImpl
 		throws PortalException {
 
 		return segmentsExperiencePersistence.findByG_C_C_A(
-			groupId, classNameId, _getPublishedClassPK(classPK), active, start,
-			end, orderByComparator);
+			groupId, classNameId, _getPublishedLayoutClassPK(classPK), active,
+			start, end, orderByComparator);
 	}
 
 	@Override
@@ -232,7 +232,7 @@ public class SegmentsExperienceLocalServiceImpl
 
 		return segmentsExperiencePersistence.findByG_S_C_C_A(
 			groupId, segmentsEntryIds, classNameId,
-			_getPublishedClassPK(classPK), active, start, end,
+			_getPublishedLayoutClassPK(classPK), active, start, end,
 			orderByComparator);
 	}
 
@@ -241,7 +241,7 @@ public class SegmentsExperienceLocalServiceImpl
 		long groupId, long classNameId, long classPK, boolean active) {
 
 		return segmentsExperiencePersistence.countByG_C_C_A(
-			groupId, classNameId, _getPublishedClassPK(classPK), active);
+			groupId, classNameId, _getPublishedLayoutClassPK(classPK), active);
 	}
 
 	@Override
@@ -287,9 +287,7 @@ public class SegmentsExperienceLocalServiceImpl
 			serviceContext);
 	}
 
-	private long _getPublishedClassPK(long classPK) {
-		long publishedClassPK = classPK;
-
+	private long _getPublishedLayoutClassPK(long classPK) {
 		Layout layout = layoutLocalService.fetchLayout(classPK);
 
 		if ((layout != null) &&
@@ -297,10 +295,10 @@ public class SegmentsExperienceLocalServiceImpl
 				Layout.class)) &&
 			(layout.getClassPK() != 0)) {
 
-			publishedClassPK = layout.getClassPK();
+			return layout.getClassPK();
 		}
 
-		return publishedClassPK;
+		return classPK;
 	}
 
 	private ResourceBundleLoader _getResourceBundleLoader() {

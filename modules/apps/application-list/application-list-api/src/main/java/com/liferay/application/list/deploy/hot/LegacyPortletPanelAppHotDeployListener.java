@@ -97,7 +97,7 @@ public class LegacyPortletPanelAppHotDeployListener
 					"panel.app.portlet.id");
 
 				ServiceRegistration<PanelApp> serviceRegistration =
-					_serviceRegistrations.get(portletId);
+					_serviceRegistrations.remove(portletId);
 
 				if (serviceRegistration != null) {
 					serviceRegistration.unregister();

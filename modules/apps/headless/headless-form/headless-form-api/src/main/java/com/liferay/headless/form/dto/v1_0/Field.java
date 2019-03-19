@@ -35,10 +35,10 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
-@GraphQLName("Fields")
+@GraphQLName("Field")
 @JsonFilter("Liferay.Vulcan")
-@XmlRootElement(name = "Fields")
-public class Fields {
+@XmlRootElement(name = "Field")
+public class Field {
 
 	public Boolean getAutocomplete() {
 		return autocomplete;
@@ -372,17 +372,17 @@ public class Fields {
 	protected String name;
 
 	@Schema(description = "https://www.schema.org/FormFieldOptions")
-	public Options getOptions() {
+	public Option getOptions() {
 		return options;
 	}
 
-	public void setOptions(Options options) {
+	public void setOptions(Option options) {
 		this.options = options;
 	}
 
 	@JsonIgnore
 	public void setOptions(
-		UnsafeSupplier<Options, Exception> optionsUnsafeSupplier) {
+		UnsafeSupplier<Option, Exception> optionsUnsafeSupplier) {
 
 		try {
 			options = optionsUnsafeSupplier.get();
@@ -394,7 +394,7 @@ public class Fields {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Options options;
+	protected Option options;
 
 	public String getPlaceholder() {
 		return placeholder;

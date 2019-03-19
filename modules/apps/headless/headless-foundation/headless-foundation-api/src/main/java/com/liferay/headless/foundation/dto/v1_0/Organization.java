@@ -231,17 +231,17 @@ public class Organization {
 	protected Long parentOrganizationId;
 
 	@Schema(description = "https://www.schema.org/Service")
-	public Services[] getServices() {
+	public Service[] getServices() {
 		return services;
 	}
 
-	public void setServices(Services[] services) {
+	public void setServices(Service[] services) {
 		this.services = services;
 	}
 
 	@JsonIgnore
 	public void setServices(
-		UnsafeSupplier<Services[], Exception> servicesUnsafeSupplier) {
+		UnsafeSupplier<Service[], Exception> servicesUnsafeSupplier) {
 
 		try {
 			services = servicesUnsafeSupplier.get();
@@ -253,7 +253,7 @@ public class Organization {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Services[] services;
+	protected Service[] services;
 
 	public String toString() {
 		StringBundler sb = new StringBundler();

@@ -21,7 +21,6 @@ import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
 import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
 
 import com.liferay.headless.form.dto.v1_0.FormDocument;
-import com.liferay.headless.form.dto.v1_0.Options;
 import com.liferay.headless.form.resource.v1_0.FormDocumentResource;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.model.Group;

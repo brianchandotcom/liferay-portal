@@ -414,17 +414,17 @@ public class StructuredContent {
 	protected Date lastReviewed;
 
 	@Schema(description = "https://www.schema.org/templates")
-	public RenderedContents[] getRenderedContents() {
+	public RenderedContent[] getRenderedContents() {
 		return renderedContents;
 	}
 
-	public void setRenderedContents(RenderedContents[] renderedContents) {
+	public void setRenderedContents(RenderedContent[] renderedContents) {
 		this.renderedContents = renderedContents;
 	}
 
 	@JsonIgnore
 	public void setRenderedContents(
-		UnsafeSupplier<RenderedContents[], Exception>
+		UnsafeSupplier<RenderedContent[], Exception>
 			renderedContentsUnsafeSupplier) {
 
 		try {
@@ -437,19 +437,19 @@ public class StructuredContent {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected RenderedContents[] renderedContents;
+	protected RenderedContent[] renderedContents;
 
-	public TaxonomyCategories[] getTaxonomyCategories() {
+	public TaxonomyCategory[] getTaxonomyCategories() {
 		return taxonomyCategories;
 	}
 
-	public void setTaxonomyCategories(TaxonomyCategories[] taxonomyCategories) {
+	public void setTaxonomyCategories(TaxonomyCategory[] taxonomyCategories) {
 		this.taxonomyCategories = taxonomyCategories;
 	}
 
 	@JsonIgnore
 	public void setTaxonomyCategories(
-		UnsafeSupplier<TaxonomyCategories[], Exception>
+		UnsafeSupplier<TaxonomyCategory[], Exception>
 			taxonomyCategoriesUnsafeSupplier) {
 
 		try {
@@ -462,7 +462,7 @@ public class StructuredContent {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected TaxonomyCategories[] taxonomyCategories;
+	protected TaxonomyCategory[] taxonomyCategories;
 
 	public Long[] getTaxonomyCategoryIds() {
 		return taxonomyCategoryIds;

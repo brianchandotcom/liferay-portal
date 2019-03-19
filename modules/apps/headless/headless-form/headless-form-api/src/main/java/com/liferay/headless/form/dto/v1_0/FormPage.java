@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.headless.foundation.dto.v1_0;
+package com.liferay.headless.form.dto.v1_0;
 
 import com.fasterxml.jackson.annotation.JsonFilter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -35,27 +35,26 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
-@GraphQLName("Services")
+@GraphQLName("FormPage")
 @JsonFilter("Liferay.Vulcan")
-@XmlRootElement(name = "Services")
-public class Services {
+@XmlRootElement(name = "FormPage")
+public class FormPage {
 
-	@Schema(description = "https://www.schema.org/OpeningHoursSpecification")
-	public HoursAvailable[] getHoursAvailable() {
-		return hoursAvailable;
+	@Schema(description = "https://www.schema.org/FormField")
+	public Field[] getFields() {
+		return fields;
 	}
 
-	public void setHoursAvailable(HoursAvailable[] hoursAvailable) {
-		this.hoursAvailable = hoursAvailable;
+	public void setFields(Field[] fields) {
+		this.fields = fields;
 	}
 
 	@JsonIgnore
-	public void setHoursAvailable(
-		UnsafeSupplier<HoursAvailable[], Exception>
-			hoursAvailableUnsafeSupplier) {
+	public void setFields(
+		UnsafeSupplier<Field[], Exception> fieldsUnsafeSupplier) {
 
 		try {
-			hoursAvailable = hoursAvailableUnsafeSupplier.get();
+			fields = fieldsUnsafeSupplier.get();
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
@@ -64,7 +63,31 @@ public class Services {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected HoursAvailable[] hoursAvailable;
+	protected Field[] fields;
+
+	public String getHeadline() {
+		return headline;
+	}
+
+	public void setHeadline(String headline) {
+		this.headline = headline;
+	}
+
+	@JsonIgnore
+	public void setHeadline(
+		UnsafeSupplier<String, Exception> headlineUnsafeSupplier) {
+
+		try {
+			headline = headlineUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected String headline;
 
 	public Long getId() {
 		return id;
@@ -88,20 +111,18 @@ public class Services {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long id;
 
-	public String getServiceType() {
-		return serviceType;
+	public String getText() {
+		return text;
 	}
 
-	public void setServiceType(String serviceType) {
-		this.serviceType = serviceType;
+	public void setText(String text) {
+		this.text = text;
 	}
 
 	@JsonIgnore
-	public void setServiceType(
-		UnsafeSupplier<String, Exception> serviceTypeUnsafeSupplier) {
-
+	public void setText(UnsafeSupplier<String, Exception> textUnsafeSupplier) {
 		try {
-			serviceType = serviceTypeUnsafeSupplier.get();
+			text = textUnsafeSupplier.get();
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
@@ -110,25 +131,25 @@ public class Services {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected String serviceType;
+	protected String text;
 
 	public String toString() {
 		StringBundler sb = new StringBundler();
 
 		sb.append("{");
 
-		sb.append("\"hoursAvailable\": ");
+		sb.append("\"fields\": ");
 
-		if (hoursAvailable == null) {
+		if (fields == null) {
 			sb.append("null");
 		}
 		else {
 			sb.append("[");
 
-			for (int i = 0; i < hoursAvailable.length; i++) {
-				sb.append(hoursAvailable[i]);
+			for (int i = 0; i < fields.length; i++) {
+				sb.append(fields[i]);
 
-				if ((i + 1) < hoursAvailable.length) {
+				if ((i + 1) < fields.length) {
 					sb.append(", ");
 				}
 			}
@@ -138,15 +159,22 @@ public class Services {
 
 		sb.append(", ");
 
+		sb.append("\"headline\": ");
+
+		sb.append("\"");
+		sb.append(headline);
+		sb.append("\"");
+		sb.append(", ");
+
 		sb.append("\"id\": ");
 
 		sb.append(id);
 		sb.append(", ");
 
-		sb.append("\"serviceType\": ");
+		sb.append("\"text\": ");
 
 		sb.append("\"");
-		sb.append(serviceType);
+		sb.append(text);
 		sb.append("\"");
 
 		sb.append("}");

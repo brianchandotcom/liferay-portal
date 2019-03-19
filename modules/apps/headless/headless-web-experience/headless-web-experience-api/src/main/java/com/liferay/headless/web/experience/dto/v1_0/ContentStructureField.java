@@ -208,17 +208,17 @@ public class ContentStructureField {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected ContentStructureField[] nestedContentStructureFields;
 
-	public Options[] getOptions() {
+	public Option[] getOptions() {
 		return options;
 	}
 
-	public void setOptions(Options[] options) {
+	public void setOptions(Option[] options) {
 		this.options = options;
 	}
 
 	@JsonIgnore
 	public void setOptions(
-		UnsafeSupplier<Options[], Exception> optionsUnsafeSupplier) {
+		UnsafeSupplier<Option[], Exception> optionsUnsafeSupplier) {
 
 		try {
 			options = optionsUnsafeSupplier.get();
@@ -230,7 +230,7 @@ public class ContentStructureField {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Options[] options;
+	protected Option[] options;
 
 	public String getPredefinedValue() {
 		return predefinedValue;

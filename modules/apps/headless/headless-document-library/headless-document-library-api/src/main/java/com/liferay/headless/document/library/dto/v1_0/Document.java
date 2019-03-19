@@ -79,18 +79,17 @@ public class Document {
 	}
 
 	@Schema(description = "https://www.schema.org/ImageObject")
-	public AdaptedImages[] getAdaptedImages() {
+	public AdaptedImage[] getAdaptedImages() {
 		return adaptedImages;
 	}
 
-	public void setAdaptedImages(AdaptedImages[] adaptedImages) {
+	public void setAdaptedImages(AdaptedImage[] adaptedImages) {
 		this.adaptedImages = adaptedImages;
 	}
 
 	@JsonIgnore
 	public void setAdaptedImages(
-		UnsafeSupplier<AdaptedImages[], Exception>
-			adaptedImagesUnsafeSupplier) {
+		UnsafeSupplier<AdaptedImage[], Exception> adaptedImagesUnsafeSupplier) {
 
 		try {
 			adaptedImages = adaptedImagesUnsafeSupplier.get();
@@ -102,7 +101,7 @@ public class Document {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected AdaptedImages[] adaptedImages;
+	protected AdaptedImage[] adaptedImages;
 
 	public AggregateRating getAggregateRating() {
 		return aggregateRating;
@@ -391,17 +390,17 @@ public class Document {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Number sizeInBytes;
 
-	public TaxonomyCategories[] getTaxonomyCategories() {
+	public TaxonomyCategory[] getTaxonomyCategories() {
 		return taxonomyCategories;
 	}
 
-	public void setTaxonomyCategories(TaxonomyCategories[] taxonomyCategories) {
+	public void setTaxonomyCategories(TaxonomyCategory[] taxonomyCategories) {
 		this.taxonomyCategories = taxonomyCategories;
 	}
 
 	@JsonIgnore
 	public void setTaxonomyCategories(
-		UnsafeSupplier<TaxonomyCategories[], Exception>
+		UnsafeSupplier<TaxonomyCategory[], Exception>
 			taxonomyCategoriesUnsafeSupplier) {
 
 		try {
@@ -414,7 +413,7 @@ public class Document {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
-	protected TaxonomyCategories[] taxonomyCategories;
+	protected TaxonomyCategory[] taxonomyCategories;
 
 	public Long[] getTaxonomyCategoryIds() {
 		return taxonomyCategoryIds;

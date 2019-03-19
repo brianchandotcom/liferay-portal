@@ -163,17 +163,17 @@ public class FormRecord {
 	protected Boolean draft;
 
 	@Schema(description = "https://www.schema.org/FormFieldValue")
-	public FieldValues[] getFieldValues() {
+	public FieldValue[] getFieldValues() {
 		return fieldValues;
 	}
 
-	public void setFieldValues(FieldValues[] fieldValues) {
+	public void setFieldValues(FieldValue[] fieldValues) {
 		this.fieldValues = fieldValues;
 	}
 
 	@JsonIgnore
 	public void setFieldValues(
-		UnsafeSupplier<FieldValues[], Exception> fieldValuesUnsafeSupplier) {
+		UnsafeSupplier<FieldValue[], Exception> fieldValuesUnsafeSupplier) {
 
 		try {
 			fieldValues = fieldValuesUnsafeSupplier.get();
@@ -185,7 +185,7 @@ public class FormRecord {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected FieldValues[] fieldValues;
+	protected FieldValue[] fieldValues;
 
 	public Form getForm() {
 		return form;

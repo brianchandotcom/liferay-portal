@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.headless.form.dto.v1_0;
+package com.liferay.headless.web.experience.dto.v1_0;
 
 import com.fasterxml.jackson.annotation.JsonFilter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -33,32 +33,10 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
-@GraphQLName("Rows")
+@GraphQLName("Option")
 @JsonFilter("Liferay.Vulcan")
-@XmlRootElement(name = "Rows")
-public class Rows {
-
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
-
-	@JsonIgnore
-	public void setId(UnsafeSupplier<Long, Exception> idUnsafeSupplier) {
-		try {
-			id = idUnsafeSupplier.get();
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Long id;
+@XmlRootElement(name = "Option")
+public class Option {
 
 	public String getLabel() {
 		return label;
@@ -112,11 +90,6 @@ public class Rows {
 		StringBundler sb = new StringBundler();
 
 		sb.append("{");
-
-		sb.append("\"id\": ");
-
-		sb.append(id);
-		sb.append(", ");
 
 		sb.append("\"label\": ");
 

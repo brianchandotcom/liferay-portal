@@ -421,17 +421,17 @@ public class KnowledgeBaseArticle {
 	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
 	protected Long parentKnowledgeBaseFolderId;
 
-	public TaxonomyCategories[] getTaxonomyCategories() {
+	public TaxonomyCategory[] getTaxonomyCategories() {
 		return taxonomyCategories;
 	}
 
-	public void setTaxonomyCategories(TaxonomyCategories[] taxonomyCategories) {
+	public void setTaxonomyCategories(TaxonomyCategory[] taxonomyCategories) {
 		this.taxonomyCategories = taxonomyCategories;
 	}
 
 	@JsonIgnore
 	public void setTaxonomyCategories(
-		UnsafeSupplier<TaxonomyCategories[], Exception>
+		UnsafeSupplier<TaxonomyCategory[], Exception>
 			taxonomyCategoriesUnsafeSupplier) {
 
 		try {
@@ -444,7 +444,7 @@ public class KnowledgeBaseArticle {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected TaxonomyCategories[] taxonomyCategories;
+	protected TaxonomyCategory[] taxonomyCategories;
 
 	public Long[] getTaxonomyCategoryIds() {
 		return taxonomyCategoryIds;

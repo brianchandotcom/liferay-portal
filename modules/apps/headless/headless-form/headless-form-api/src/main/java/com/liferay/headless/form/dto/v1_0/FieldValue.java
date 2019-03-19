@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.headless.document.library.dto.v1_0;
+package com.liferay.headless.form.dto.v1_0;
 
 import com.fasterxml.jackson.annotation.JsonFilter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -33,25 +33,71 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
-@GraphQLName("AdaptedImages")
+@GraphQLName("FieldValue")
 @JsonFilter("Liferay.Vulcan")
-@XmlRootElement(name = "AdaptedImages")
-public class AdaptedImages {
+@XmlRootElement(name = "FieldValue")
+public class FieldValue {
 
-	public String getContentUrl() {
-		return contentUrl;
+	public FormDocument getDocument() {
+		return document;
 	}
 
-	public void setContentUrl(String contentUrl) {
-		this.contentUrl = contentUrl;
+	public void setDocument(FormDocument document) {
+		this.document = document;
 	}
 
 	@JsonIgnore
-	public void setContentUrl(
-		UnsafeSupplier<String, Exception> contentUrlUnsafeSupplier) {
+	public void setDocument(
+		UnsafeSupplier<FormDocument, Exception> documentUnsafeSupplier) {
 
 		try {
-			contentUrl = contentUrlUnsafeSupplier.get();
+			document = documentUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
+	protected FormDocument document;
+
+	public Long getDocumentId() {
+		return documentId;
+	}
+
+	public void setDocumentId(Long documentId) {
+		this.documentId = documentId;
+	}
+
+	@JsonIgnore
+	public void setDocumentId(
+		UnsafeSupplier<Long, Exception> documentIdUnsafeSupplier) {
+
+		try {
+			documentId = documentIdUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+	protected Long documentId;
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	@JsonIgnore
+	public void setId(UnsafeSupplier<Long, Exception> idUnsafeSupplier) {
+		try {
+			id = idUnsafeSupplier.get();
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
@@ -60,22 +106,20 @@ public class AdaptedImages {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected String contentUrl;
+	protected Long id;
 
-	public Number getHeight() {
-		return height;
+	public String getName() {
+		return name;
 	}
 
-	public void setHeight(Number height) {
-		this.height = height;
+	public void setName(String name) {
+		this.name = name;
 	}
 
 	@JsonIgnore
-	public void setHeight(
-		UnsafeSupplier<Number, Exception> heightUnsafeSupplier) {
-
+	public void setName(UnsafeSupplier<String, Exception> nameUnsafeSupplier) {
 		try {
-			height = heightUnsafeSupplier.get();
+			name = nameUnsafeSupplier.get();
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
@@ -84,22 +128,22 @@ public class AdaptedImages {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Number height;
+	protected String name;
 
-	public String getResolutionName() {
-		return resolutionName;
+	public String getValue() {
+		return value;
 	}
 
-	public void setResolutionName(String resolutionName) {
-		this.resolutionName = resolutionName;
+	public void setValue(String value) {
+		this.value = value;
 	}
 
 	@JsonIgnore
-	public void setResolutionName(
-		UnsafeSupplier<String, Exception> resolutionNameUnsafeSupplier) {
+	public void setValue(
+		UnsafeSupplier<String, Exception> valueUnsafeSupplier) {
 
 		try {
-			resolutionName = resolutionNameUnsafeSupplier.get();
+			value = valueUnsafeSupplier.get();
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
@@ -108,88 +152,40 @@ public class AdaptedImages {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected String resolutionName;
-
-	public Number getSizeInBytes() {
-		return sizeInBytes;
-	}
-
-	public void setSizeInBytes(Number sizeInBytes) {
-		this.sizeInBytes = sizeInBytes;
-	}
-
-	@JsonIgnore
-	public void setSizeInBytes(
-		UnsafeSupplier<Number, Exception> sizeInBytesUnsafeSupplier) {
-
-		try {
-			sizeInBytes = sizeInBytesUnsafeSupplier.get();
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Number sizeInBytes;
-
-	public Number getWidth() {
-		return width;
-	}
-
-	public void setWidth(Number width) {
-		this.width = width;
-	}
-
-	@JsonIgnore
-	public void setWidth(
-		UnsafeSupplier<Number, Exception> widthUnsafeSupplier) {
-
-		try {
-			width = widthUnsafeSupplier.get();
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Number width;
+	protected String value;
 
 	public String toString() {
 		StringBundler sb = new StringBundler();
 
 		sb.append("{");
 
-		sb.append("\"contentUrl\": ");
+		sb.append("\"document\": ");
+
+		sb.append(document);
+		sb.append(", ");
+
+		sb.append("\"documentId\": ");
+
+		sb.append(documentId);
+		sb.append(", ");
+
+		sb.append("\"id\": ");
+
+		sb.append(id);
+		sb.append(", ");
+
+		sb.append("\"name\": ");
 
 		sb.append("\"");
-		sb.append(contentUrl);
+		sb.append(name);
 		sb.append("\"");
 		sb.append(", ");
 
-		sb.append("\"height\": ");
-
-		sb.append(height);
-		sb.append(", ");
-
-		sb.append("\"resolutionName\": ");
+		sb.append("\"value\": ");
 
 		sb.append("\"");
-		sb.append(resolutionName);
+		sb.append(value);
 		sb.append("\"");
-		sb.append(", ");
-
-		sb.append("\"sizeInBytes\": ");
-
-		sb.append(sizeInBytes);
-		sb.append(", ");
-
-		sb.append("\"width\": ");
-
-		sb.append(width);
 
 		sb.append("}");
 

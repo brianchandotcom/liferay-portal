@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.headless.web.experience.dto.v1_0;
+package com.liferay.headless.form.dto.v1_0;
 
 import com.fasterxml.jackson.annotation.JsonFilter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -33,25 +33,23 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
-@GraphQLName("TaxonomyCategories")
+@GraphQLName("Column")
 @JsonFilter("Liferay.Vulcan")
-@XmlRootElement(name = "TaxonomyCategories")
-public class TaxonomyCategories {
+@XmlRootElement(name = "Column")
+public class Column {
 
-	public Long getTaxonomyCategoryId() {
-		return taxonomyCategoryId;
+	public Long getId() {
+		return id;
 	}
 
-	public void setTaxonomyCategoryId(Long taxonomyCategoryId) {
-		this.taxonomyCategoryId = taxonomyCategoryId;
+	public void setId(Long id) {
+		this.id = id;
 	}
 
 	@JsonIgnore
-	public void setTaxonomyCategoryId(
-		UnsafeSupplier<Long, Exception> taxonomyCategoryIdUnsafeSupplier) {
-
+	public void setId(UnsafeSupplier<Long, Exception> idUnsafeSupplier) {
 		try {
-			taxonomyCategoryId = taxonomyCategoryIdUnsafeSupplier.get();
+			id = idUnsafeSupplier.get();
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
@@ -60,22 +58,22 @@ public class TaxonomyCategories {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Long taxonomyCategoryId;
+	protected Long id;
 
-	public String getTaxonomyCategoryName() {
-		return taxonomyCategoryName;
+	public String getLabel() {
+		return label;
 	}
 
-	public void setTaxonomyCategoryName(String taxonomyCategoryName) {
-		this.taxonomyCategoryName = taxonomyCategoryName;
+	public void setLabel(String label) {
+		this.label = label;
 	}
 
 	@JsonIgnore
-	public void setTaxonomyCategoryName(
-		UnsafeSupplier<String, Exception> taxonomyCategoryNameUnsafeSupplier) {
+	public void setLabel(
+		UnsafeSupplier<String, Exception> labelUnsafeSupplier) {
 
 		try {
-			taxonomyCategoryName = taxonomyCategoryNameUnsafeSupplier.get();
+			label = labelUnsafeSupplier.get();
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
@@ -84,22 +82,53 @@ public class TaxonomyCategories {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected String taxonomyCategoryName;
+	protected String label;
+
+	public String getValue() {
+		return value;
+	}
+
+	public void setValue(String value) {
+		this.value = value;
+	}
+
+	@JsonIgnore
+	public void setValue(
+		UnsafeSupplier<String, Exception> valueUnsafeSupplier) {
+
+		try {
+			value = valueUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected String value;
 
 	public String toString() {
 		StringBundler sb = new StringBundler();
 
 		sb.append("{");
 
-		sb.append("\"taxonomyCategoryId\": ");
+		sb.append("\"id\": ");
 
-		sb.append(taxonomyCategoryId);
+		sb.append(id);
 		sb.append(", ");
 
-		sb.append("\"taxonomyCategoryName\": ");
+		sb.append("\"label\": ");
 
 		sb.append("\"");
-		sb.append(taxonomyCategoryName);
+		sb.append(label);
+		sb.append("\"");
+		sb.append(", ");
+
+		sb.append("\"value\": ");
+
+		sb.append("\"");
+		sb.append(value);
 		sb.append("\"");
 
 		sb.append("}");

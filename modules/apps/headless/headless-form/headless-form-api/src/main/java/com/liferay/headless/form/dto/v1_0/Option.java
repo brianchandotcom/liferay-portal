@@ -33,58 +33,10 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
-@GraphQLName("FieldValues")
+@GraphQLName("Option")
 @JsonFilter("Liferay.Vulcan")
-@XmlRootElement(name = "FieldValues")
-public class FieldValues {
-
-	public FormDocument getDocument() {
-		return document;
-	}
-
-	public void setDocument(FormDocument document) {
-		this.document = document;
-	}
-
-	@JsonIgnore
-	public void setDocument(
-		UnsafeSupplier<FormDocument, Exception> documentUnsafeSupplier) {
-
-		try {
-			document = documentUnsafeSupplier.get();
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
-	protected FormDocument document;
-
-	public Long getDocumentId() {
-		return documentId;
-	}
-
-	public void setDocumentId(Long documentId) {
-		this.documentId = documentId;
-	}
-
-	@JsonIgnore
-	public void setDocumentId(
-		UnsafeSupplier<Long, Exception> documentIdUnsafeSupplier) {
-
-		try {
-			documentId = documentIdUnsafeSupplier.get();
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-	protected Long documentId;
+@XmlRootElement(name = "Option")
+public class Option {
 
 	public Long getId() {
 		return id;
@@ -108,18 +60,20 @@ public class FieldValues {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long id;
 
-	public String getName() {
-		return name;
+	public String getLabel() {
+		return label;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	public void setLabel(String label) {
+		this.label = label;
 	}
 
 	@JsonIgnore
-	public void setName(UnsafeSupplier<String, Exception> nameUnsafeSupplier) {
+	public void setLabel(
+		UnsafeSupplier<String, Exception> labelUnsafeSupplier) {
+
 		try {
-			name = nameUnsafeSupplier.get();
+			label = labelUnsafeSupplier.get();
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
@@ -128,7 +82,7 @@ public class FieldValues {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected String name;
+	protected String label;
 
 	public String getValue() {
 		return value;
@@ -159,25 +113,15 @@ public class FieldValues {
 
 		sb.append("{");
 
-		sb.append("\"document\": ");
-
-		sb.append(document);
-		sb.append(", ");
-
-		sb.append("\"documentId\": ");
-
-		sb.append(documentId);
-		sb.append(", ");
-
 		sb.append("\"id\": ");
 
 		sb.append(id);
 		sb.append(", ");
 
-		sb.append("\"name\": ");
+		sb.append("\"label\": ");
 
 		sb.append("\"");
-		sb.append(name);
+		sb.append(label);
 		sb.append("\"");
 		sb.append(", ");
 

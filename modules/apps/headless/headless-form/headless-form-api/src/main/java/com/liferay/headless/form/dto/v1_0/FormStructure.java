@@ -187,17 +187,17 @@ public class FormStructure {
 	protected String description;
 
 	@Schema(description = "https://www.schema.org/FormLayoutPage")
-	public FormPages[] getFormPages() {
+	public FormPage[] getFormPages() {
 		return formPages;
 	}
 
-	public void setFormPages(FormPages[] formPages) {
+	public void setFormPages(FormPage[] formPages) {
 		this.formPages = formPages;
 	}
 
 	@JsonIgnore
 	public void setFormPages(
-		UnsafeSupplier<FormPages[], Exception> formPagesUnsafeSupplier) {
+		UnsafeSupplier<FormPage[], Exception> formPagesUnsafeSupplier) {
 
 		try {
 			formPages = formPagesUnsafeSupplier.get();
@@ -209,7 +209,7 @@ public class FormStructure {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected FormPages[] formPages;
+	protected FormPage[] formPages;
 
 	public Long getId() {
 		return id;

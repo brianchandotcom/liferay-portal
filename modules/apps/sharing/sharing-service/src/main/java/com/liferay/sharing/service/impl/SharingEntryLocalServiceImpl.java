@@ -358,7 +358,7 @@ public class SharingEntryLocalServiceImpl
 		long fromUserId, long classNameId, int start, int end,
 		OrderByComparator<SharingEntry> orderByComparator) {
 
-		return sharingEntryFinder.findByToUserId(
+		return sharingEntryFinder.findByUserId(
 			fromUserId, classNameId, start, end, orderByComparator);
 	}
 
@@ -375,7 +375,7 @@ public class SharingEntryLocalServiceImpl
 	public int getFromUserSharingEntriesCount(
 		long fromUserId, long classNameId) {
 
-		return sharingEntryFinder.countByToUserId(fromUserId, classNameId);
+		return sharingEntryFinder.countByUserId(fromUserId, classNameId);
 	}
 
 	/**

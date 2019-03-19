@@ -118,4 +118,13 @@ definition {
 
 		Upgrade.addUserAndSuborganization();
 	}
+
+	@priority = "5"
+	test AddUserandSuborganizationAfterUpgrade7110 {
+		property data.archive.type = "data-archive-admin-org-with-user";
+		property database.types = "db2,mariadb,mysql,oracle,postgresql,sybase";
+		property portal.version = "7.1.10";
+
+		Upgrade.addUserAndSuborganization();
+	}
 }

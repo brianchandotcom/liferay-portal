@@ -11,7 +11,7 @@
 <!--NAVIGATION-->
 <tr>
 	<td>NAVIGATION_WIKIS</td>
-	<td>//ul[contains(@class,'nav') and contains(@class,'nav-tabs')]/li/a[contains(.,'Wikis')]</td>
+	<td>//*[contains(@class,'nav-link') and contains(.,'Wikis')]</td>
 	<td></td>
 </tr>
 <tr>

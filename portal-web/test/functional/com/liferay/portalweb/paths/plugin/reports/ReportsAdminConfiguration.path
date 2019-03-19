@@ -11,12 +11,12 @@
 <!--NAVIGATION-->
 <tr>
 	<td>NAVIGATION_DELIVERY_EMAIL</td>
-	<td>//ul[contains(@class,'nav') and contains(@class,'nav-tabs')]/li/a[contains(.,'Delivery Email')]</td>
+	<td>//*[contains(@class,'nav-link') and contains(.,'Delivery Email')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>NAVIGATION_NOTIFICATIONS_EMAIL</td>
-	<td>//ul[contains(@class,'nav') and contains(@class,'nav-tabs')]/li/a[contains(.,'Notifications Email')]</td>
+	<td>//*[contains(@class,'nav-link') and contains(.,'Notifications Email')]</td>
 	<td></td>
 </tr>
 <tr>

@@ -10,7 +10,7 @@
 <tbody>
 <tr>
 	<td>ACTIVE_TAB</td>
-	<td>//li[contains(@class,'tab active')]</td>
+	<td>//*[contains(@class,'nav-link active')]</td>
 	<td></td>
 </tr>
 <tr>

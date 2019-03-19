@@ -20,7 +20,7 @@
 </tr>
 <tr>
 	<td>DIAGRAM_TAB</td>
-	<td>//ul[contains(@class,'nav-tabs')]/li/a[contains(.,'Diagram')]</td>
+	<td>//*[contains(@class,'nav-link') and contains(.,'Diagram')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -35,7 +35,7 @@
 </tr>
 <tr>
 	<td>SOURCE_KALEO_XML_TAB</td>
-	<td>//ul[contains(@class,'nav-tabs')]/li/a[contains(.,'Source')]</td>
+	<td>//*[contains(@class,'nav-link') and contains(.,'Source')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -62,7 +62,7 @@
 <!--NODES-->
 <tr>
 	<td>NODES_TAB</td>
-	<td>//ul[contains(@class,'nav') and contains(@class,'nav-tabs')]/li/a[contains(.,'Nodes')]</td>
+	<td>//*[contains(@class,'nav-link') and contains(.,'Nodes')]</td>
 	<td></td>
 </tr>
 <tr>

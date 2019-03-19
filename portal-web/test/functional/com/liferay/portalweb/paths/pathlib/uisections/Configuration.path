@@ -11,37 +11,37 @@
 <!--NAVIGATION-->
 <tr>
 	<td>NAVIGATION_SETUP</td>
-	<td>//ul[contains(@class,'nav') and contains(@class,'nav-pills')]/li/a[contains(.,'Setup')]</td>
+	<td>//*[contains(@class,'nav-link') and contains(.,'Setup')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>NAVIGATION_PERMISSIONS</td>
-	<td>//ul[contains(@class,'nav') and contains(@class,'nav-pills')]/li/a[contains(.,'Permissions')]</td>
+	<td>//*[contains(@class,'nav-link') and contains(.,'Permissions')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>NAVIGATION_SHARING</td>
-	<td>//ul[contains(@class,'nav') and contains(@class,'nav-pills')]/li/a[contains(.,'Sharing')]</td>
+	<td>//*[contains(@class,'nav-link') and contains(.,'Sharing')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>NAVIGATION_EMAIL_FROM</td>
-	<td>//ul[contains(@class,'nav-tabs')]/li/a[contains(.,'Email From')]</td>
+	<td>//*[contains(@class,'nav-link') and contains(.,'Email From')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>NAVIGATION_PAGE_ADDED_EMAIL</td>
-	<td>//ul[contains(@class,'nav-tabs')]/li/a[contains(.,'Page Added Email')]</td>
+	<td>//*[contains(@class,'nav-link') and contains(.,'Page Added Email')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>NAVIGATION_PAGE_UPDATED_EMAIL</td>
-	<td>//ul[contains(@class,'nav-tabs')]/li/a[contains(.,'Page Updated Email')]</td>
+	<td>//*[contains(@class,'nav-link') and contains(.,'Page Updated Email')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>NAVIGATION_RSS</td>
-	<td>//ul[contains(@class,'nav-tabs')]/li/a[contains(.,'RSS')]</td>
+	<td>//*[contains(@class,'nav-link') and contains(.,'RSS')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -92,7 +92,7 @@
 </tr>
 <tr>
 	<td>SETUP_DISPLAY_SETTINGS</td>
-	<td>//ul[contains(@class,'nav-tabs')]/li/a[contains(.,'Display Settings')]</td>
+	<td>//*[contains(@class,'nav-link') and contains(.,'Display Settings')]</td>
 	<td></td>
 </tr>
 <tr>

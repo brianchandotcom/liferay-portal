@@ -26,7 +26,7 @@
 </tr>
 <tr>
 	<td>NAVIGATION_OPTIONAL_CONFIGURATION</td>
-	<td>//ul[contains(@class,'nav-tabs')]/li/a[contains(.,'Optional Configuration')]</td>
+	<td>//*[contains(@class,'nav-link') and contains(.,'Optional Configuration')]</td>
 	<td></td>
 </tr>
 <tr>

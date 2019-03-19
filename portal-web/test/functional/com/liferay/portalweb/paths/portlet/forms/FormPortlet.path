@@ -30,7 +30,7 @@
 </tr>
 <tr>
 	<td>FORM_PAGE</td>
-	<td>//ul[contains(@class,'nav-tabs')]/li/a[contains(.,'${key_formPageName}')]</td>
+	<td>//*[contains(@class,'nav-link') and contains(.,'${key_formPageName}')]</td>
 	<td></td>
 </tr>
 <tr>

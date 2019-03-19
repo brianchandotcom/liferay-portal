@@ -251,7 +251,7 @@ public class JenkinsResultsParserUtil {
 		file.delete();
 	}
 
-	public static void downloadFile(URL url, File file) {
+	public static void toFile(URL url, File file) {
 		try {
 			System.out.println(
 				combine(

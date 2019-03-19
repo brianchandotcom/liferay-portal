@@ -317,8 +317,7 @@ public class AopConfigurableApplicationContextConfigurator
 
 		@Override
 		protected AopInvocationHandler createAopInvocationHandler(Object bean) {
-			return new AopInvocationHandler(
-				bean, new ChainableMethodAdvice[] {_counterTransactionAdvice});
+			return new AopInvocationHandler(bean, _chainableMethodAdvices);
 		}
 
 		private CounterServiceBeanAutoProxyCreator(
@@ -327,10 +326,12 @@ public class AopConfigurableApplicationContextConfigurator
 
 			super(new ServiceBeanMatcher(true), classLoader);
 
-			_counterTransactionAdvice = counterTransactionAdvice;
+			_chainableMethodAdvices = new ChainableMethodAdvice[] {
+				counterTransactionAdvice
+			};
 		}
 
-		private final ChainableMethodAdvice _counterTransactionAdvice;
+		private final ChainableMethodAdvice[] _chainableMethodAdvices;
 
 	}
 

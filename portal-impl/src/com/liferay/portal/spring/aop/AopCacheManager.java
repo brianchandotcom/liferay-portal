@@ -92,6 +92,61 @@ public class AopCacheManager {
 		return chainableMethodAdvices;
 	}
 
+	private static List<ChainableMethodAdvice>
+		_createStaticChainableMethodAdvices() {
+
+		List<ChainableMethodAdvice> chainableMethodAdvices = new ArrayList<>();
+
+		chainableMethodAdvices.add(new AccessControlAdvice());
+
+		AsyncAdvice asyncAdvice = new AsyncAdvice();
+
+		asyncAdvice.setDefaultDestinationName("liferay/async_service");
+
+		chainableMethodAdvices.add(asyncAdvice);
+
+		chainableMethodAdvices.add(new BufferedIncrementAdvice());
+
+		if (PropsValues.CLUSTER_LINK_ENABLED) {
+			chainableMethodAdvices.add(new ClusterableAdvice());
+		}
+
+		DynamicDataSourceTargetSource dynamicDataSourceTargetSource =
+			InfrastructureUtil.getDynamicDataSourceTargetSource();
+
+		if (dynamicDataSourceTargetSource != null) {
+			DynamicDataSourceAdvice dynamicDataSourceAdvice =
+				new DynamicDataSourceAdvice();
+
+			dynamicDataSourceAdvice.setDynamicDataSourceTargetSource(
+				dynamicDataSourceTargetSource);
+
+			chainableMethodAdvices.add(dynamicDataSourceAdvice);
+		}
+
+		chainableMethodAdvices.add(new IndexableAdvice());
+
+		if (PropsValues.PORTAL_RESILIENCY_ENABLED) {
+			chainableMethodAdvices.add(new PortalResiliencyAdvice());
+		}
+
+		chainableMethodAdvices.add(new RetryAdvice());
+
+		chainableMethodAdvices.add(new ServiceContextAdvice());
+
+		if (SPIUtil.isSPI()) {
+			chainableMethodAdvices.add(new SPIClusterableAdvice());
+		}
+
+		chainableMethodAdvices.add(new SystemEventAdvice());
+
+		chainableMethodAdvices.add(new ThreadLocalCacheAdvice());
+
+		chainableMethodAdvices.sort(_CHAINABLE_METHOD_ADVICE_COMPARATOR);
+
+		return chainableMethodAdvices;
+	}
+
 	private AopCacheManager() {
 	}
 
@@ -106,58 +161,8 @@ public class AopCacheManager {
 
 	private static final Map<AopInvocationHandler, TransactionExecutor>
 		_aopInvocationHandlers = new HashMap<>();
-
 	private static final List<ChainableMethodAdvice> _chainableMethodAdvices =
-		new ArrayList<ChainableMethodAdvice>() {
-			{
-				add(new AccessControlAdvice());
-
-				AsyncAdvice asyncAdvice = new AsyncAdvice();
-
-				asyncAdvice.setDefaultDestinationName("liferay/async_service");
-
-				add(asyncAdvice);
-
-				add(new BufferedIncrementAdvice());
-
-				if (PropsValues.CLUSTER_LINK_ENABLED) {
-					add(new ClusterableAdvice());
-				}
-
-				DynamicDataSourceTargetSource dynamicDataSourceTargetSource =
-					InfrastructureUtil.getDynamicDataSourceTargetSource();
-
-				if (dynamicDataSourceTargetSource != null) {
-					DynamicDataSourceAdvice dynamicDataSourceAdvice =
-						new DynamicDataSourceAdvice();
-
-					dynamicDataSourceAdvice.setDynamicDataSourceTargetSource(
-						dynamicDataSourceTargetSource);
-
-					add(dynamicDataSourceAdvice);
-				}
-
-				add(new IndexableAdvice());
-
-				if (PropsValues.PORTAL_RESILIENCY_ENABLED) {
-					add(new PortalResiliencyAdvice());
-				}
-
-				add(new RetryAdvice());
-
-				add(new ServiceContextAdvice());
-
-				if (SPIUtil.isSPI()) {
-					add(new SPIClusterableAdvice());
-				}
-
-				add(new SystemEventAdvice());
-
-				add(new ThreadLocalCacheAdvice());
-
-				sort(_CHAINABLE_METHOD_ADVICE_COMPARATOR);
-			}
-		};
+		_createStaticChainableMethodAdvices();
 
 	private static class ChainableMethodAdviceServiceTrackerCustomizer
 		implements ServiceTrackerCustomizer

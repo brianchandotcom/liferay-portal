@@ -56,14 +56,12 @@ public class WorkflowMetricsSLAProcessorTest extends PowerMockito {
 		WorkflowMetricsSLAProcessResult workflowMetricsSLAProcessResult =
 			_process(
 				5000,
-				() -> {
-					return Arrays.asList(
-						_createDocument(
-							_createField(
-								"createDate",
-								localDateTime.minus(5, ChronoUnit.SECONDS))));
-				},
-				localDateTime);
+				localDateTime,
+				Arrays.asList(
+					_createDocument(
+						_createField(
+							"createDate",
+							localDateTime.minus(5, ChronoUnit.SECONDS)))));
 
 		Assert.assertTrue(workflowMetricsSLAProcessResult.isOnTime());
 		Assert.assertEquals(
@@ -79,21 +77,19 @@ public class WorkflowMetricsSLAProcessorTest extends PowerMockito {
 		WorkflowMetricsSLAProcessResult workflowMetricsSLAProcessResult =
 			_process(
 				10000,
-				() -> {
-					return Arrays.asList(
-						_createDocument(
-							_createField(
-								"createDate",
-								localDateTime.minus(10, ChronoUnit.SECONDS)),
-							_createField(
-								"completionDate",
-								localDateTime.minus(4, ChronoUnit.SECONDS))),
-						_createDocument(
-							_createField(
-								"createDate",
-								localDateTime.minus(5, ChronoUnit.SECONDS))));
-				},
-				localDateTime);
+				localDateTime,
+				Arrays.asList(
+					_createDocument(
+						_createField(
+							"createDate",
+							localDateTime.minus(10, ChronoUnit.SECONDS)),
+						_createField(
+							"completionDate",
+							localDateTime.minus(4, ChronoUnit.SECONDS))),
+					_createDocument(
+						_createField(
+							"createDate",
+							localDateTime.minus(5, ChronoUnit.SECONDS)))));
 
 		Assert.assertTrue(workflowMetricsSLAProcessResult.isOnTime());
 		Assert.assertEquals(
@@ -119,14 +115,12 @@ public class WorkflowMetricsSLAProcessorTest extends PowerMockito {
 		WorkflowMetricsSLAProcessResult workflowMetricsSLAProcessResult =
 			_process(
 				5000,
-				() -> {
-					return Arrays.asList(
-						_createDocument(
-							_createField(
-								"createDate",
-								localDateTime.minus(6, ChronoUnit.SECONDS))));
-				},
-				localDateTime);
+				localDateTime,
+				Arrays.asList(
+					_createDocument(
+						_createField(
+							"createDate",
+							localDateTime.minus(6, ChronoUnit.SECONDS)))));
 
 		Assert.assertFalse(workflowMetricsSLAProcessResult.isOnTime());
 		Assert.assertEquals(
@@ -142,21 +136,19 @@ public class WorkflowMetricsSLAProcessorTest extends PowerMockito {
 		WorkflowMetricsSLAProcessResult workflowMetricsSLAProcessResult =
 			_process(
 				5000,
-				() -> {
-					return Arrays.asList(
-						_createDocument(
-							_createField(
-								"createDate",
-								localDateTime.minus(10, ChronoUnit.SECONDS)),
-							_createField(
-								"completionDate",
-								localDateTime.minus(4, ChronoUnit.SECONDS))),
-						_createDocument(
-							_createField(
-								"createDate",
-								localDateTime.minus(5, ChronoUnit.SECONDS))));
-				},
-				localDateTime);
+				localDateTime,
+				Arrays.asList(
+					_createDocument(
+						_createField(
+							"createDate",
+							localDateTime.minus(10, ChronoUnit.SECONDS)),
+						_createField(
+							"completionDate",
+							localDateTime.minus(4, ChronoUnit.SECONDS))),
+					_createDocument(
+						_createField(
+							"createDate",
+							localDateTime.minus(5, ChronoUnit.SECONDS)))));
 
 		Assert.assertFalse(workflowMetricsSLAProcessResult.isOnTime());
 		Assert.assertEquals(
@@ -166,8 +158,8 @@ public class WorkflowMetricsSLAProcessorTest extends PowerMockito {
 	}
 
 	protected WorkflowMetricsSLAProcessResult _process(
-		long duration, Supplier<List<Document>> getTokenDocumentsSupplier,
-		LocalDateTime localDateTime) {
+		long duration, LocalDateTime localDateTime,
+		List<Document> tokenDocuments) {
 
 		WorkflowMetricsSLAProcessor workflowMetricsSLAProcessor =
 			new WorkflowMetricsSLAProcessor() {
@@ -176,7 +168,7 @@ public class WorkflowMetricsSLAProcessorTest extends PowerMockito {
 				protected List<Document> getTokenDocuments(
 					long companyId, long instanceId) {
 
-					return getTokenDocumentsSupplier.get();
+					return tokenDocuments;
 				}
 
 			};

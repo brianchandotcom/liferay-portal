@@ -6,5 +6,4 @@ dependencies {
 	testIntegrationCompile group: "junit", name: "junit", version: "4.12"
 	testIntegrationCompile group: "org.eclipse.jetty.websocket", name: "javax-websocket-client-impl", version: "9.3.10.v20160621"
 	testIntegrationCompile group: "org.jboss.arquillian.junit", name: "arquillian-junit-container", version: "1.1.10.Final"
-	testIntegrationCompile group: "org.slf4j", name: "slf4j-log4j12", version: "1.7.26"
 }

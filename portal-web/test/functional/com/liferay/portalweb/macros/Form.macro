@@ -129,7 +129,7 @@ definition {
 			radioOption = "From Data Provider"
 		);
 
-		Pause(locator1 = "1000");
+		Pause(locator1 = "2000");
 
 		FormFields.selectSelectOption(
 			fieldName = "Data Provider",

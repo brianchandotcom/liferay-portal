@@ -66,12 +66,12 @@
 </tr>
 <tr>
 	<td>RULE_BUILDER_CONDITION_VALUE_FIELD</td>
-	<td>//li[contains(@class,'rule-condition-container')][${key_conditionRowNumber}]//div[contains(@data-fieldname,'condition-second-operand-options')]//div[contains(@id,'condition-second-oper') and contains(@class,'select-field-trigger')]</td>
+	<td>//li[contains(@class,'rule-condition-container')][${key_conditionRowNumber}]//div[contains(@data-fieldname,'condition-second-operand-options')]//div[contains(@id,'condition-second-oper') and contains(@class,'select-field-trigger')] | //li[contains(@class,'rule-condition-container')][${key_conditionRowNumber}]//div[contains(@class,'condition-type-value')]//div[contains(@class,'option-selected')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>RULE_BUILDER_SELECT_CONDITION_VALUE_FIELD</td>
-	<td>//li[contains(@class,'form-builder-rule-condition')][${key_conditionRowNumber}]//div[contains(@id,'condition-second-operand-options')]/following-sibling::div[@class='drop-chosen']//li[contains(.,'${key_conditionValueField}')]</td>
+	<td>//li[contains(@class,'form-builder-rule-condition')][${key_conditionRowNumber}]//div[contains(@id,'condition-second-operand-options')]/following-sibling::div[@class='drop-chosen']//li[contains(.,'${key_conditionValueField}')] | //div[contains(@class,'dropdown-menu') and contains(@class, 'show')]//li[.='${key_conditionValueField}']</td>
 	<td></td>
 </tr>
 <tr>

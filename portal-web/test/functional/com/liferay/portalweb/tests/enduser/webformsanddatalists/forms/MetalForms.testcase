@@ -37,7 +37,7 @@ definition {
 
 	@priority = "4"
 	test Add20Forms {
-		property test.name.skip.portal.instance = "Forms#Add20Forms";
+		property test.name.skip.portal.instance = "MetalForms#Add20Forms";
 
 		Navigator.openURL();
 
@@ -76,7 +76,7 @@ definition {
 
 	@priority = "4"
 	test Add30Fields {
-		property test.name.skip.portal.instance = "Forms#Add30Fields";
+		property test.name.skip.portal.instance = "MetalForms#Add30Fields";
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
@@ -102,7 +102,7 @@ definition {
 
 	@priority = "5"
 	test AddFormInGlobal {
-		property test.name.skip.portal.instance = "Forms#AddFormInGlobal";
+		property test.name.skip.portal.instance = "MetalForms#AddFormInGlobal";
 		property portal.acceptance = "true";
 		property testray.component.names = "Training";
 
@@ -194,7 +194,7 @@ definition {
 	@description = "This is a use case for LPS-68377."
 	@priority = "3"
 	test AddFormToUserSiteAndViewNoDuplicates {
-		property test.name.skip.portal.instance = "Forms#AddFormToUserSiteAndViewNoDuplicates";
+		property test.name.skip.portal.instance = "MetalForms#AddFormToUserSiteAndViewNoDuplicates";
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
@@ -321,7 +321,7 @@ definition {
 	@description = "This is a use case for LPS-68418."
 	@priority = "3"
 	test ConfigureAutosave {
-		property test.name.skip.portal.instance = "Forms#ConfigureAutosave";
+		property test.name.skip.portal.instance = "MetalForms#ConfigureAutosave";
 
 		Navigator.openURL();
 
@@ -391,7 +391,7 @@ definition {
 	@description = "This is a use case for LPS-64379."
 	@priority = "3"
 	test CreateUntitledForm {
-		property test.name.skip.portal.instance = "Forms#CreateUntitledForm";
+		property test.name.skip.portal.instance = "MetalForms#CreateUntitledForm";
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
@@ -422,7 +422,7 @@ definition {
 
 	@priority = "5"
 	test DeletePages {
-		property test.name.skip.portal.instance = "Forms#DeletePages";
+		property test.name.skip.portal.instance = "MetalForms#DeletePages";
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
@@ -473,7 +473,7 @@ definition {
 	@description = "This is a use case for LPS-50757."
 	@priority = "4"
 	test EditAllFormFieldsTypesUsedBySystemSettings {
-		property test.name.skip.portal.instance = "Forms#EditAllFormFieldsTypesUsedBySystemSettings";
+		property test.name.skip.portal.instance = "MetalForms#EditAllFormFieldsTypesUsedBySystemSettings";
 
 		Navigator.openURL();
 
@@ -683,7 +683,7 @@ definition {
 	@description = "This is a use case for LPS-59749"
 	@priority = "3"
 	test EditFormsConfigurationViaSystemSettings {
-		property test.name.skip.portal.instance = "Forms#EditFormsConfigurationViaSystemSettings";
+		property test.name.skip.portal.instance = "MetalForms#EditFormsConfigurationViaSystemSettings";
 
 		Navigator.openURL();
 
@@ -747,7 +747,7 @@ definition {
 	@description = "This is a use case for LPS-69100 and LPS-69334."
 	@priority = "2"
 	test EditFormWithUpdatedSiteAndUserLocale {
-		property test.name.skip.portal.instance = "Forms#EditFormWithUpdatedSiteAndUserLocale";
+		property test.name.skip.portal.instance = "MetalForms#EditFormWithUpdatedSiteAndUserLocale";
 
 		Navigator.openURL();
 
@@ -932,7 +932,7 @@ definition {
 	@description = "This is a use case for LPS-59336."
 	@priority = "4"
 	test SearchFormRecordMultipleEntries {
-		property test.name.skip.portal.instance = "Forms#SearchFormRecordMultipleEntries";
+		property test.name.skip.portal.instance = "MetalForms#SearchFormRecordMultipleEntries";
 		var fieldValueList = "testEntry1,exampleText,sampleAnswer";
 
 		Navigator.openURL();
@@ -1031,7 +1031,7 @@ definition {
 	@description = "This is a use case for LPS-59997."
 	@priority = "3"
 	test SubmitFormWithRequiredMultiLineTextField {
-		property test.name.skip.portal.instance = "Forms#SubmitFormWithRequiredMultiLineTextField";
+		property test.name.skip.portal.instance = "MetalForms#SubmitFormWithRequiredMultiLineTextField";
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
@@ -1112,7 +1112,7 @@ definition {
 	@description = "This is a use case for LPS-59335."
 	@priority = "5"
 	test SubmitFormWithRequiredRepeatingTextField {
-		property test.name.skip.portal.instance = "Forms#SubmitFormWithRequiredRepeatingTextField";
+		property test.name.skip.portal.instance = "MetalForms#SubmitFormWithRequiredRepeatingTextField";
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
@@ -1193,7 +1193,7 @@ definition {
 	@description = "This is a use case for LPS-58829."
 	@priority = "5"
 	test SubmitFormWithRequiredTextField {
-		property test.name.skip.portal.instance = "Forms#SubmitFormWithRequiredTextField";
+		property test.name.skip.portal.instance = "MetalForms#SubmitFormWithRequiredTextField";
 		property portal.acceptance = "true";
 		property testray.component.names = "Training";
 
@@ -1269,7 +1269,7 @@ definition {
 
 	@priority = "4"
 	test SubmitFormWithUploadField {
-		property test.name.skip.portal.instance = "Forms#SubmitFormWithUploadField";
+		property test.name.skip.portal.instance = "MetalForms#SubmitFormWithUploadField";
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
@@ -1344,7 +1344,7 @@ definition {
 	@description = "This is a use case for LPS-71485 and LPS-71512."
 	@priority = "2"
 	test ViewAltSuccessPagePagination {
-		property test.name.skip.portal.instance = "Forms#ViewAltSuccessPagePagination";
+		property test.name.skip.portal.instance = "MetalForms#ViewAltSuccessPagePagination";
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
@@ -1408,7 +1408,7 @@ definition {
 	@description = "This is a use case for LPS-69214."
 	@priority = "3"
 	test ViewConfirmationWhenLeavingFormWithoutSaving {
-		property test.name.skip.portal.instance = "Forms#ViewConfirmationWhenLeavingFormWithoutSaving";
+		property test.name.skip.portal.instance = "MetalForms#ViewConfirmationWhenLeavingFormWithoutSaving";
 
 		Navigator.openURL();
 
@@ -1442,7 +1442,7 @@ definition {
 	@description = "This is a use case for LPS-70560."
 	@priority = "4"
 	test ViewFieldValidationIsNotBypassedWhenNextButtonIsHitTwice {
-		property test.name.skip.portal.instance = "Forms#ViewFieldValidationIsNotBypassedWhenNextButtonIsHitTwice";
+		property test.name.skip.portal.instance = "MetalForms#ViewFieldValidationIsNotBypassedWhenNextButtonIsHitTwice";
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
@@ -1512,7 +1512,7 @@ definition {
 
 	@priority = "4"
 	test ViewRepeatableTextFieldLabel {
-		property test.name.skip.portal.instance = "Forms#ViewRepeatableTextFieldLabel";
+		property test.name.skip.portal.instance = "MetalForms#ViewRepeatableTextFieldLabel";
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
@@ -1573,7 +1573,7 @@ definition {
 	@description = "This is a use case for LPS-68390."
 	@priority = "3"
 	test ViewSaveNotification {
-		property test.name.skip.portal.instance = "Forms#ViewSaveNotification";
+		property test.name.skip.portal.instance = "MetalForms#ViewSaveNotification";
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
@@ -1607,7 +1607,7 @@ definition {
 	@description = "This is a use case for LPS-71072."
 	@priority = "5"
 	test ViewSuccessPage {
-		property test.name.skip.portal.instance = "Forms#ViewSuccessPage";
+		property test.name.skip.portal.instance = "MetalForms#ViewSuccessPage";
 		property testray.component.names = "Training";
 
 		Navigator.openURL();
@@ -1675,7 +1675,7 @@ definition {
 
 	@priority = "5"
 	test AddElementSetsWithTranslation {
-		property test.name.skip.portal.instance = "Forms#AddElementSetsWithTranslation";
+		property test.name.skip.portal.instance = "MetalForms#AddElementSetsWithTranslation";
 		property testray.component.names = "Training";
 
 		Navigator.openURL();
@@ -1877,7 +1877,7 @@ definition {
 	@description = "This is a use case for LPS-73274."
 	@priority = "4"
 	test AddFormWithDuplicateTextFields {
-		property test.name.skip.portal.instance = "Forms#AddFormWithDuplicateTextFields";
+		property test.name.skip.portal.instance = "MetalForms#AddFormWithDuplicateTextFields";
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
@@ -1914,7 +1914,7 @@ definition {
 
 	@priority = "5"
 	test AddFormWithSpanishAsDefaultPortalLanguage {
-		property test.name.skip.portal.instance = "Forms#AddFormWithSpanishAsDefaultPortalLanguage";
+		property test.name.skip.portal.instance = "MetalForms#AddFormWithSpanishAsDefaultPortalLanguage";
 
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
@@ -2328,7 +2328,7 @@ definition {
 	@description = "This is a use case for LPS-60520."
 	@priority = "4"
 	test DeleteDateFieldAndViewEntries {
-		property test.name.skip.portal.instance = "Forms#DeleteDateFieldAndViewEntries";
+		property test.name.skip.portal.instance = "MetalForms#DeleteDateFieldAndViewEntries";
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
@@ -2733,7 +2733,7 @@ definition {
 	@description = "This is a use case for LPS-78697."
 	@priority = "4"
 	test EditTranslatedGridField {
-		property test.name.skip.portal.instance = "Forms#EditTranslatedGridField";
+		property test.name.skip.portal.instance = "MetalForms#EditTranslatedGridField";
 
 		Navigator.openURL();
 
@@ -2863,7 +2863,7 @@ definition {
 	@description = "This is a use case for LPS-59331"
 	@priority = "5"
 	test NavigateToCorrectForm {
-		property test.name.skip.portal.instance = "Forms#NavigateToCorrectForm";
+		property test.name.skip.portal.instance = "MetalForms#NavigateToCorrectForm";
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
@@ -2944,7 +2944,7 @@ definition {
 	@description = "This is a use case for LPS-68381."
 	@priority = "3"
 	test ReorderFieldOptions {
-		property test.name.skip.portal.instance = "Forms#ReorderFieldOptions";
+		property test.name.skip.portal.instance = "MetalForms#ReorderFieldOptions";
 
 		Navigator.openURL();
 
@@ -3082,7 +3082,7 @@ definition {
 
 	@priority = "5"
 	test SubmitFormAfterEditingFields {
-		property test.name.skip.portal.instance = "Forms#SubmitFormAfterEditingFields";
+		property test.name.skip.portal.instance = "MetalForms#SubmitFormAfterEditingFields";
 		property portal.acceptance = "false";
 		property testray.component.names = "Training";
 
@@ -3430,7 +3430,7 @@ definition {
 
 	@priority = "4"
 	test SubmitFormAndViewEmailNotification {
-		property test.name.skip.portal.instance = "Forms#SubmitFormAndViewEmailNotification";
+		property test.name.skip.portal.instance = "MetalForms#SubmitFormAndViewEmailNotification";
 		property test.smtp.server.enabled = "true";
 
 		Navigator.openURL();
@@ -3600,7 +3600,7 @@ definition {
 	@description = "This is a use case for LPS-64798."
 	@priority = "5"
 	test SubmitFormWithAllFieldTypesAndThreePages {
-		property test.name.skip.portal.instance = "Forms#SubmitFormWithAllFieldTypesAndThreePages";
+		property test.name.skip.portal.instance = "MetalForms#SubmitFormWithAllFieldTypesAndThreePages";
 		property portal.acceptance = "false";
 		property testray.component.names = "Training";
 
@@ -3881,7 +3881,7 @@ definition {
 
 	@priority = "5"
 	test SubmitFormWithCustomTextContainingValidation {
-		property test.name.skip.portal.instance = "Forms#SubmitFormWithCustomTextContainingValidation";
+		property test.name.skip.portal.instance = "MetalForms#SubmitFormWithCustomTextContainingValidation";
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
@@ -3963,7 +3963,7 @@ definition {
 
 	@priority = "4"
 	test SubmitFormWithMultipleFieldsAndViewEntriesViaDescriptiveDisplay {
-		property test.name.skip.portal.instance = "Forms#SubmitFormWithMultipleFieldsAndViewEntriesViaDescriptiveDisplay";
+		property test.name.skip.portal.instance = "MetalForms#SubmitFormWithMultipleFieldsAndViewEntriesViaDescriptiveDisplay";
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
@@ -4137,7 +4137,7 @@ definition {
 	@description = "This is a use case for LPS-59338."
 	@priority = "4"
 	test SubmitFormWithRequiredCheckboxField {
-		property test.name.skip.portal.instance = "Forms#SubmitFormWithRequiredCheckboxField";
+		property test.name.skip.portal.instance = "MetalForms#SubmitFormWithRequiredCheckboxField";
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
@@ -4222,7 +4222,7 @@ definition {
 
 	@priority = "4"
 	test SubmitFormWithRequiredRadioField {
-		property test.name.skip.portal.instance = "Forms#SubmitFormWithRequiredRadioField";
+		property test.name.skip.portal.instance = "MetalForms#SubmitFormWithRequiredRadioField";
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
@@ -4304,7 +4304,7 @@ definition {
 	@description = "This is a use case for LPS-59351."
 	@priority = "4"
 	test SubmitFormWithSwitcherCheckboxField {
-		property test.name.skip.portal.instance = "Forms#SubmitFormWithSwitcherCheckboxField";
+		property test.name.skip.portal.instance = "MetalForms#SubmitFormWithSwitcherCheckboxField";
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
@@ -4401,7 +4401,7 @@ definition {
 	@description = "This is a use case for LPS-73322."
 	@priority = "4"
 	test SubmitWithRequiredDateField {
-		property test.name.skip.portal.instance = "Forms#SubmitWithRequiredDateField";
+		property test.name.skip.portal.instance = "MetalForms#SubmitWithRequiredDateField";
 
 		Navigator.openURL();
 
@@ -4477,7 +4477,7 @@ definition {
 	@description = "This is a use case for LPS-68182."
 	@priority = "3"
 	test ViewBlankLabelWhenAddingNewField {
-		property test.name.skip.portal.instance = "Forms#ViewBlankLabelWhenAddingNewField";
+		property test.name.skip.portal.instance = "MetalForms#ViewBlankLabelWhenAddingNewField";
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
@@ -4512,7 +4512,7 @@ definition {
 	@description = "This is a use case for LPS-64305."
 	@priority = "4"
 	test ViewDefaultFieldNamesWithPunctuationCharacters {
-		property test.name.skip.portal.instance = "Forms#ViewDefaultFieldNamesWithPunctuationCharacters";
+		property test.name.skip.portal.instance = "MetalForms#ViewDefaultFieldNamesWithPunctuationCharacters";
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
@@ -4593,7 +4593,7 @@ definition {
 	@description = "This is a use case for LPS-66513."
 	@priority = "3"
 	test ViewFormWithMultipleSelectionFieldAsASwitcherAndHideLabel {
-		property test.name.skip.portal.instance = "Forms#ViewFormWithMultipleSelectionFieldAsASwitcherAndHideLabel";
+		property test.name.skip.portal.instance = "MetalForms#ViewFormWithMultipleSelectionFieldAsASwitcherAndHideLabel";
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(

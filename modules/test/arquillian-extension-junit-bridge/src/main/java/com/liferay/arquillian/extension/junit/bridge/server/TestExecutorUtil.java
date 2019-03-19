@@ -183,7 +183,7 @@ public class TestExecutorUtil {
 				"Unexpected exception, expected<" + expected.getName() +
 					"> but was<" + clazz.getName() + ">";
 
-			throw new Exception(message);
+			throw new Exception(message, throwable);
 		}
 	}
 

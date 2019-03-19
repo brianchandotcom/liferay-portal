@@ -16,9 +16,9 @@ package com.liferay.bulk.rest.internal.resource.v1_0;
 
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.service.AssetTagLocalService;
-import com.liferay.bulk.rest.dto.v1_0.DocumentSelection;
+import com.liferay.bulk.rest.dto.v1_0.DocumentBulkSelection;
 import com.liferay.bulk.rest.dto.v1_0.Keyword;
-import com.liferay.bulk.rest.dto.v1_0.SelectionToAddTagNames;
+import com.liferay.bulk.rest.dto.v1_0.KeywordBulkSelection;
 import com.liferay.bulk.rest.internal.helper.BulkSelectionHelper;
 import com.liferay.bulk.rest.resource.v1_0.KeywordResource;
 import com.liferay.bulk.selection.BulkSelection;
@@ -60,17 +60,17 @@ import org.osgi.service.component.annotations.ServiceScope;
 public class KeywordResourceImpl extends BaseKeywordResourceImpl {
 
 	@Override
-	public boolean patchKeywordBatch(DocumentSelection documentSelection)
+	public boolean patchKeywordBatch(KeywordBulkSelection keywordBulkSelection)
 		throws Exception {
 
-		_updateKeywords(documentSelection, false);
+		_updateKeywords(keywordBulkSelection, false);
 
 		return true;
 	}
 
 	@Override
 	public Page<Keyword> postKeywordCommonPage(
-			DocumentSelection documentSelection)
+			DocumentBulkSelection documentSelection)
 		throws Exception {
 
 		BulkSelection<?> bulkSelection = _bulkSelectionHelper.getBulkSelection(
@@ -96,10 +96,10 @@ public class KeywordResourceImpl extends BaseKeywordResourceImpl {
 	}
 
 	@Override
-	public boolean putKeywordBatch(DocumentSelection documentSelection)
+	public boolean putKeywordBatch(KeywordBulkSelection keywordBulkSelection)
 		throws Exception {
 
-		_updateKeywords(documentSelection, true);
+		_updateKeywords(keywordBulkSelection, true);
 
 		return true;
 	}
@@ -131,14 +131,11 @@ public class KeywordResourceImpl extends BaseKeywordResourceImpl {
 	}
 
 	private void _updateKeywords(
-			DocumentSelection documentSelection, boolean append)
+			KeywordBulkSelection keywordBulkSelection, boolean append)
 		throws PortalException {
 
 		BulkSelection<?> bulkSelection = _bulkSelectionHelper.getBulkSelection(
-			documentSelection);
-
-		SelectionToAddTagNames selectionToAddTagNames =
-			(SelectionToAddTagNames)documentSelection;
+			keywordBulkSelection.getDocumentBulkSelection());
 
 		_bulkSelectionRunner.run(
 			_user, bulkSelection.toAssetEntryBulkSelection(),
@@ -151,10 +148,10 @@ public class KeywordResourceImpl extends BaseKeywordResourceImpl {
 					put("append", append);
 					put(
 						"selectionToAddTagNames",
-						selectionToAddTagNames.getSelectionToAddTagNames());
+						keywordBulkSelection.getKeywordsToAdd());
 					put(
 						"toRemoveTagNames",
-						selectionToAddTagNames.getSelectionToRemoveTagNames());
+						keywordBulkSelection.getKeywordsToRemove());
 				}
 			});
 	}

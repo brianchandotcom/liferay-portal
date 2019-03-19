@@ -240,8 +240,9 @@ AUI.add(
 						var formNode = instance.formNode;
 
 						var field = formNode.one('.' + instance.formValidator.get('errorClass'));
+						var fieldWrapper = field.ancestor('form > div');
 
-						if (field && field.ancestor('.lfr-nav')) {
+						if (field && fieldWrapper) {
 							var formTabs = formNode.one('.lfr-nav');
 
 							if (formTabs) {
@@ -254,8 +255,6 @@ AUI.add(
 										return tab.getAttribute('data-tab-name');
 									}
 								)
-
-								var fieldWrapper = field.ancestor('form > div');
 
 								var fieldWrapperId = fieldWrapper.getAttribute('id').slice(0, -TABS_SECTION_STR.length);
 

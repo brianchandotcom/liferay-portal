@@ -46,31 +46,31 @@ public class TarGzUtil {
 
 	public static boolean debug = false;
 
-	public static void archive(File src, File destTarGz) {
-		if (src == null) {
+	public static void archive(File source, File archiveFile) {
+		if (source == null) {
 			throw new RuntimeException("No file specified to archive");
 		}
 
-		if (!src.exists()) {
-			throw new RuntimeException("Could not find " + src);
+		if (!source.exists()) {
+			throw new RuntimeException("Could not find " + source);
 		}
 
-		if (src.isDirectory()) {
-			File[] filesToArchive = src.listFiles();
+		if (source.isDirectory()) {
+			File[] filesToArchive = source.listFiles();
 
 			if (filesToArchive == null) {
-				throw new RuntimeException("No files to archive in " + src);
+				throw new RuntimeException("No files to archive in " + source);
 			}
 		}
 
-		File parent = destTarGz.getParentFile();
+		File parent = archiveFile.getParentFile();
 
 		if (!parent.exists()) {
 			parent.mkdirs();
 		}
 
 		try (FileOutputStream fileOutputStream = new FileOutputStream(
-				destTarGz);
+				archiveFile);
 			BufferedOutputStream bufferedOutputStream =
 				new BufferedOutputStream(fileOutputStream, _BUFFER_SIZE);
 			GzipCompressorOutputStream gzipCompressorOutputStream =
@@ -81,11 +81,11 @@ public class TarGzUtil {
 			tarArchiveOutputStream.setLongFileMode(
 				TarArchiveOutputStream.LONGFILE_POSIX);
 
-			if (src.isFile()) {
-				_archiveFile(src, src, tarArchiveOutputStream);
+			if (source.isFile()) {
+				_archiveFile(source, source, tarArchiveOutputStream);
 			}
 			else {
-				_archiveDir(src, src, tarArchiveOutputStream);
+				_archiveDir(source, source, tarArchiveOutputStream);
 			}
 
 			tarArchiveOutputStream.flush();
@@ -93,25 +93,26 @@ public class TarGzUtil {
 			tarArchiveOutputStream.finish();
 		}
 		catch (IOException ioe) {
-			throw new RuntimeException(ioe);
+			throw new RuntimeException(
+				"Unable to archive " + source.toString(), ioe);
 		}
 	}
 
-	public static void unarchive(File srcTarGz, File destDir) {
-		if (destDir.exists()) {
+	public static void unarchive(File archiveFile, File destinationDir) {
+		if (destinationDir.exists()) {
 			try {
-				FileUtils.deleteDirectory(destDir);
+				FileUtils.deleteDirectory(destinationDir);
 			}
 			catch (IOException ioe) {
 				throw new RuntimeException(ioe);
 			}
 		}
 
-		if (!destDir.exists()) {
-			destDir.mkdirs();
+		if (!destinationDir.exists()) {
+			destinationDir.mkdirs();
 		}
 
-		try (FileInputStream fileInputStream = new FileInputStream(srcTarGz);
+		try (FileInputStream fileInputStream = new FileInputStream(archiveFile);
 			BufferedInputStream bufferedInputStream = new BufferedInputStream(
 				fileInputStream, _BUFFER_SIZE);
 			GzipCompressorInputStream gzipCompressorInputStream =
@@ -132,16 +133,17 @@ public class TarGzUtil {
 				}
 
 				if (tarArchiveEntry.isDirectory()) {
-					_unarchiveDir(destDir, tarArchiveEntry);
+					_unarchiveDir(destinationDir, tarArchiveEntry);
 				}
 				else {
 					_unarchiveFile(
-						destDir, tarArchiveEntry, tarArchiveInputStream);
+						destinationDir, tarArchiveEntry, tarArchiveInputStream);
 				}
 			}
 		}
 		catch (IOException ioe) {
-			throw new RuntimeException(ioe);
+			throw new RuntimeException(
+				"Unable to unarchive " + archiveFile.toString(), ioe);
 		}
 	}
 
@@ -164,7 +166,8 @@ public class TarGzUtil {
 	}
 
 	private static void _archiveDir(
-			File src, File dir, ArchiveOutputStream archiveOutputStream)
+			File sourceRootDir, File dir,
+			ArchiveOutputStream archiveOutputStream)
 		throws IOException {
 
 		if (!dir.isDirectory()) {
@@ -179,16 +182,17 @@ public class TarGzUtil {
 
 		for (File file : files) {
 			if (file.isFile()) {
-				_archiveFile(src, file, archiveOutputStream);
+				_archiveFile(sourceRootDir, file, archiveOutputStream);
 			}
 			else {
-				_archiveDir(src, file, archiveOutputStream);
+				_archiveDir(sourceRootDir, file, archiveOutputStream);
 			}
 		}
 	}
 
 	private static void _archiveFile(
-			File src, File file, ArchiveOutputStream archiveOutputStream)
+			File sourceRootDir, File file,
+			ArchiveOutputStream archiveOutputStream)
 		throws IOException {
 
 		if (!file.isFile()) {
@@ -202,7 +206,7 @@ public class TarGzUtil {
 		String filePath = JenkinsResultsParserUtil.getCanonicalPath(file);
 
 		String archiveEntryName = filePath.replace(
-			JenkinsResultsParserUtil.getCanonicalPath(src) + "/", "");
+			JenkinsResultsParserUtil.getCanonicalPath(sourceRootDir) + "/", "");
 
 		ArchiveEntry archiveEntry = archiveOutputStream.createArchiveEntry(
 			file, archiveEntryName);
@@ -284,9 +288,9 @@ public class TarGzUtil {
 	}
 
 	private static void _unarchiveDir(
-		File destDir, TarArchiveEntry tarArchiveEntry) {
+		File destinationRootDir, TarArchiveEntry tarArchiveEntry) {
 
-		File dir = new File(destDir, tarArchiveEntry.getName());
+		File dir = new File(destinationRootDir, tarArchiveEntry.getName());
 
 		if (debug) {
 			System.out.println(dir);
@@ -298,10 +302,10 @@ public class TarGzUtil {
 	}
 
 	private static void _unarchiveFile(
-		File destDir, TarArchiveEntry tarArchiveEntry,
+		File destinationRootDir, TarArchiveEntry tarArchiveEntry,
 		TarArchiveInputStream tarArchiveInputStream) {
 
-		File file = new File(destDir, tarArchiveEntry.getName());
+		File file = new File(destinationRootDir, tarArchiveEntry.getName());
 
 		if (debug) {
 			System.out.println(file);

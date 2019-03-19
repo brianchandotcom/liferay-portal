@@ -19,6 +19,10 @@ package com.liferay.portal.settings.constants;
  */
 public class PortalSettingsPortletKeys {
 
+	/**
+	 * @deprecated As of Mueller (7.2.x)
+	 */
+	@Deprecated
 	public static final String PORTAL_SETTINGS =
 		"com_liferay_portal_settings_web_portlet_PortalSettingsPortlet";
 

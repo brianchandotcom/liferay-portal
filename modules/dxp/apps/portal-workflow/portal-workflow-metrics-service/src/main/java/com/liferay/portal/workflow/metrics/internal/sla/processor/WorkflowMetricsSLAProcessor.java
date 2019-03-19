@@ -135,6 +135,16 @@ public class WorkflowMetricsSLAProcessor {
 		return _toNonoverlapingTaskIntervals(nowLocalDateTime, documents);
 	}
 
+	private LocalDateTime _toLocalDateTime(
+		Document document, String fieldName) {
+
+		String dateString = (String)document.getFieldValue(fieldName);
+
+		return LocalDateTime.parse(
+			dateString,
+			DateTimeFormatter.ofPattern(_INDEX_DATE_FORMAT_PATTERN));
+	}
+
 	private Stack<TaskInterval> _toNonoverlapingTaskIntervals(
 		LocalDateTime nowLocalDateTime, List<Document> documents) {
 
@@ -167,22 +177,6 @@ public class WorkflowMetricsSLAProcessor {
 		return taskIntervals;
 	}
 
-	@Reference
-	protected SearchRequestExecutor _searchRequestExecutor;
-
-	@Reference
-	private Sorts _sorts;
-
-	private LocalDateTime _toLocalDateTime(
-		Document document, String fieldName) {
-
-		String dateString = (String)document.getFieldValue(fieldName);
-
-		return LocalDateTime.parse(
-			dateString,
-			DateTimeFormatter.ofPattern(_INDEX_DATE_FORMAT_PATTERN));
-	}
-
 	private TaskInterval _toTaskInterval(
 		Document document, LocalDateTime nowLocalDateTime) {
 
@@ -204,6 +198,12 @@ public class WorkflowMetricsSLAProcessor {
 
 	private static final String _INDEX_DATE_FORMAT_PATTERN = PropsUtil.get(
 		PropsKeys.INDEX_DATE_FORMAT_PATTERN);
+
+	@Reference
+	private SearchRequestExecutor _searchRequestExecutor;
+
+	@Reference
+	private Sorts _sorts;
 
 	private class TaskInterval {
 

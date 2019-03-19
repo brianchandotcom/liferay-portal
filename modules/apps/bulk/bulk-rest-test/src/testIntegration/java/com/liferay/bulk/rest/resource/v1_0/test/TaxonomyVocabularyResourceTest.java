@@ -12,30 +12,18 @@
  * details.
  */
 
-package com.liferay.bulk.rest.resource.v1_0;
+package com.liferay.bulk.rest.resource.v1_0.test;
 
-import com.liferay.bulk.rest.dto.v1_0.DocumentSelection;
-import com.liferay.portal.kernel.model.Company;
+import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 
-import javax.annotation.Generated;
+import org.junit.Ignore;
+import org.junit.runner.RunWith;
 
 /**
- * To access this resource, run:
- *
- *     curl -u your@email.com:yourpassword -D - http://localhost:8080/o/bulk/v1.0
- *
  * @author Alejandro Tardín
- * @generated
  */
-@Generated("")
-public interface CategoryResource {
-
-	public boolean patchCategoryBatch(DocumentSelection documentSelection)
-		throws Exception;
-
-	public boolean putCategoryBatch(DocumentSelection documentSelection)
-		throws Exception;
-
-	public void setContextCompany(Company contextCompany);
-
+@Ignore
+@RunWith(Arquillian.class)
+public class TaxonomyVocabularyResourceTest
+	extends BaseTaxonomyVocabularyResourceTestCase {
 }

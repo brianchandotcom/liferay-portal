@@ -33,34 +33,10 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
-@GraphQLName("Vocabulary")
+@GraphQLName("TaxonomyVocabulary")
 @JsonFilter("Liferay.Vulcan")
-@XmlRootElement(name = "Vocabulary")
-public class Vocabulary {
-
-	public Category[] getCategories() {
-		return categories;
-	}
-
-	public void setCategories(Category[] categories) {
-		this.categories = categories;
-	}
-
-	@JsonIgnore
-	public void setCategories(
-		UnsafeSupplier<Category[], Exception> categoriesUnsafeSupplier) {
-
-		try {
-			categories = categoriesUnsafeSupplier.get();
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Category[] categories;
+@XmlRootElement(name = "TaxonomyVocabulary")
+public class TaxonomyVocabulary {
 
 	public Boolean getMultiValued() {
 		return multiValued;
@@ -108,20 +84,21 @@ public class Vocabulary {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String name;
 
-	public Long getVocabularyId() {
-		return vocabularyId;
+	public TaxonomyCategory[] getTaxonomyCategories() {
+		return taxonomyCategories;
 	}
 
-	public void setVocabularyId(Long vocabularyId) {
-		this.vocabularyId = vocabularyId;
+	public void setTaxonomyCategories(TaxonomyCategory[] taxonomyCategories) {
+		this.taxonomyCategories = taxonomyCategories;
 	}
 
 	@JsonIgnore
-	public void setVocabularyId(
-		UnsafeSupplier<Long, Exception> vocabularyIdUnsafeSupplier) {
+	public void setTaxonomyCategories(
+		UnsafeSupplier<TaxonomyCategory[], Exception>
+			taxonomyCategoriesUnsafeSupplier) {
 
 		try {
-			vocabularyId = vocabularyIdUnsafeSupplier.get();
+			taxonomyCategories = taxonomyCategoriesUnsafeSupplier.get();
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
@@ -130,33 +107,36 @@ public class Vocabulary {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Long vocabularyId;
+	protected TaxonomyCategory[] taxonomyCategories;
+
+	public Long getTaxonomyVocabularyId() {
+		return taxonomyVocabularyId;
+	}
+
+	public void setTaxonomyVocabularyId(Long taxonomyVocabularyId) {
+		this.taxonomyVocabularyId = taxonomyVocabularyId;
+	}
+
+	@JsonIgnore
+	public void setTaxonomyVocabularyId(
+		UnsafeSupplier<Long, Exception> taxonomyVocabularyIdUnsafeSupplier) {
+
+		try {
+			taxonomyVocabularyId = taxonomyVocabularyIdUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Long taxonomyVocabularyId;
 
 	public String toString() {
 		StringBundler sb = new StringBundler();
 
 		sb.append("{");
-
-		sb.append("\"categories\": ");
-
-		if (categories == null) {
-			sb.append("null");
-		}
-		else {
-			sb.append("[");
-
-			for (int i = 0; i < categories.length; i++) {
-				sb.append(categories[i]);
-
-				if ((i + 1) < categories.length) {
-					sb.append(", ");
-				}
-			}
-
-			sb.append("]");
-		}
-
-		sb.append(", ");
 
 		sb.append("\"multiValued\": ");
 
@@ -170,9 +150,30 @@ public class Vocabulary {
 		sb.append("\"");
 		sb.append(", ");
 
-		sb.append("\"vocabularyId\": ");
+		sb.append("\"taxonomyCategories\": ");
 
-		sb.append(vocabularyId);
+		if (taxonomyCategories == null) {
+			sb.append("null");
+		}
+		else {
+			sb.append("[");
+
+			for (int i = 0; i < taxonomyCategories.length; i++) {
+				sb.append(taxonomyCategories[i]);
+
+				if ((i + 1) < taxonomyCategories.length) {
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
+		}
+
+		sb.append(", ");
+
+		sb.append("\"taxonomyVocabularyId\": ");
+
+		sb.append(taxonomyVocabularyId);
 
 		sb.append("}");
 

@@ -14,8 +14,9 @@
 
 package com.liferay.bulk.rest.resource.v1_0;
 
-import com.liferay.bulk.rest.dto.v1_0.DocumentSelection;
+import com.liferay.bulk.rest.dto.v1_0.DocumentBulkSelection;
 import com.liferay.bulk.rest.dto.v1_0.Keyword;
+import com.liferay.bulk.rest.dto.v1_0.KeywordBulkSelection;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.vulcan.pagination.Page;
 
@@ -32,14 +33,14 @@ import javax.annotation.Generated;
 @Generated("")
 public interface KeywordResource {
 
-	public boolean patchKeywordBatch(DocumentSelection documentSelection)
+	public boolean patchKeywordBatch(KeywordBulkSelection keywordBulkSelection)
 		throws Exception;
 
-	public boolean putKeywordBatch(DocumentSelection documentSelection)
+	public boolean putKeywordBatch(KeywordBulkSelection keywordBulkSelection)
 		throws Exception;
 
 	public Page<Keyword> postKeywordCommonPage(
-			DocumentSelection documentSelection)
+			DocumentBulkSelection documentBulkSelection)
 		throws Exception;
 
 	public void setContextCompany(Company contextCompany);

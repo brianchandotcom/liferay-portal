@@ -14,8 +14,8 @@
 
 package com.liferay.bulk.rest.resource.v1_0;
 
-import com.liferay.bulk.rest.dto.v1_0.DocumentSelection;
-import com.liferay.bulk.rest.dto.v1_0.Vocabulary;
+import com.liferay.bulk.rest.dto.v1_0.DocumentBulkSelection;
+import com.liferay.bulk.rest.dto.v1_0.TaxonomyVocabulary;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.vulcan.pagination.Page;
 
@@ -30,10 +30,12 @@ import javax.annotation.Generated;
  * @generated
  */
 @Generated("")
-public interface VocabularyResource {
+public interface TaxonomyVocabularyResource {
 
-	public Page<Vocabulary> postContentSpaceVocabularyCommonPage(
-			Long contentSpaceId, DocumentSelection documentSelection)
+	public Page<TaxonomyVocabulary>
+			postContentSpaceTaxonomyVocabularyCommonPage(
+				Long contentSpaceId,
+				DocumentBulkSelection documentBulkSelection)
 		throws Exception;
 
 	public void setContextCompany(Company contextCompany);

@@ -17,8 +17,6 @@ package com.liferay.bulk.rest.dto.v1_0;
 import com.fasterxml.jackson.annotation.JsonFilter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonSubTypes;
-import com.fasterxml.jackson.annotation.JsonTypeInfo;
 
 import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.petra.string.StringBundler;
@@ -34,42 +32,26 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @author Alejandro Tardín
  * @generated
  */
-@JsonSubTypes(
-	{
-		@JsonSubTypes.Type(
-			name = "selectionToAddCategoryIds",
-			value = SelectionToAddCategoryIds.class
-		),
-		@JsonSubTypes.Type(
-			name = "selectionToAddTagNames",
-			value = SelectionToAddTagNames.class
-		)
-	}
-)
-@JsonTypeInfo(
-	include = JsonTypeInfo.As.PROPERTY, property = "type",
-	use = JsonTypeInfo.Id.NAME
-)
 @Generated("")
-@GraphQLName("DocumentSelection")
+@GraphQLName("TaxonomyCategory")
 @JsonFilter("Liferay.Vulcan")
-@XmlRootElement(name = "DocumentSelection")
-public class DocumentSelection {
+@XmlRootElement(name = "TaxonomyCategory")
+public class TaxonomyCategory {
 
-	public String[] getDocumentIds() {
-		return documentIds;
+	public Long getTaxonomyCategoryId() {
+		return taxonomyCategoryId;
 	}
 
-	public void setDocumentIds(String[] documentIds) {
-		this.documentIds = documentIds;
+	public void setTaxonomyCategoryId(Long taxonomyCategoryId) {
+		this.taxonomyCategoryId = taxonomyCategoryId;
 	}
 
 	@JsonIgnore
-	public void setDocumentIds(
-		UnsafeSupplier<String[], Exception> documentIdsUnsafeSupplier) {
+	public void setTaxonomyCategoryId(
+		UnsafeSupplier<Long, Exception> taxonomyCategoryIdUnsafeSupplier) {
 
 		try {
-			documentIds = documentIdsUnsafeSupplier.get();
+			taxonomyCategoryId = taxonomyCategoryIdUnsafeSupplier.get();
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
@@ -78,23 +60,22 @@ public class DocumentSelection {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected String[] documentIds;
+	protected Long taxonomyCategoryId;
 
-	public SelectionScope getSelectionScope() {
-		return selectionScope;
+	public String getTaxonomyCategoryName() {
+		return taxonomyCategoryName;
 	}
 
-	public void setSelectionScope(SelectionScope selectionScope) {
-		this.selectionScope = selectionScope;
+	public void setTaxonomyCategoryName(String taxonomyCategoryName) {
+		this.taxonomyCategoryName = taxonomyCategoryName;
 	}
 
 	@JsonIgnore
-	public void setSelectionScope(
-		UnsafeSupplier<SelectionScope, Exception>
-			selectionScopeUnsafeSupplier) {
+	public void setTaxonomyCategoryName(
+		UnsafeSupplier<String, Exception> taxonomyCategoryNameUnsafeSupplier) {
 
 		try {
-			selectionScope = selectionScopeUnsafeSupplier.get();
+			taxonomyCategoryName = taxonomyCategoryNameUnsafeSupplier.get();
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
@@ -103,39 +84,23 @@ public class DocumentSelection {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected SelectionScope selectionScope;
+	protected String taxonomyCategoryName;
 
 	public String toString() {
 		StringBundler sb = new StringBundler();
 
 		sb.append("{");
 
-		sb.append("\"documentIds\": ");
+		sb.append("\"taxonomyCategoryId\": ");
 
-		if (documentIds == null) {
-			sb.append("null");
-		}
-		else {
-			sb.append("[");
-
-			for (int i = 0; i < documentIds.length; i++) {
-				sb.append("\"");
-				sb.append(documentIds[i]);
-				sb.append("\"");
-
-				if ((i + 1) < documentIds.length) {
-					sb.append(", ");
-				}
-			}
-
-			sb.append("]");
-		}
-
+		sb.append(taxonomyCategoryId);
 		sb.append(", ");
 
-		sb.append("\"selectionScope\": ");
+		sb.append("\"taxonomyCategoryName\": ");
 
-		sb.append(selectionScope);
+		sb.append("\"");
+		sb.append(taxonomyCategoryName);
+		sb.append("\"");
 
 		sb.append("}");
 

@@ -41,14 +41,8 @@ public class SharingEntryFinderImpl
 	public static final String COUNT_BY_USER_ID =
 		SharingEntryFinder.class.getName() + ".countByUserId";
 
-	public static final String COUNT_BY_TO_USER_ID =
-		SharingEntryFinder.class.getName() + ".countByToUserId";
-
 	public static final String FIND_BY_USER_ID =
 		SharingEntryFinder.class.getName() + ".findByUserId";
-
-	public static final String FIND_BY_TO_USER_ID =
-		SharingEntryFinder.class.getName() + ".findByToUserId";
 
 	@Override
 	public int countByUserId(long userId, long classNameId) {
@@ -68,49 +62,6 @@ public class SharingEntryFinderImpl
 			QueryPos qPos = QueryPos.getInstance(q);
 
 			qPos.add(userId);
-
-			if (classNameId > 0) {
-				qPos.add(classNameId);
-			}
-
-			Iterator<Long> itr = q.iterate();
-
-			if (itr.hasNext()) {
-				Long count = itr.next();
-
-				if (count != null) {
-					return count.intValue();
-				}
-			}
-
-			return 0;
-		}
-		catch (Exception e) {
-			throw new SystemException(e);
-		}
-		finally {
-			closeSession(session);
-		}
-	}
-
-	@Override
-	public int countByToUserId(long toUserId, long classNameId) {
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			String sql = _customSQL.get(getClass(), COUNT_BY_TO_USER_ID);
-
-			sql = _replaceClassNameIdWhere(sql, classNameId);
-
-			SQLQuery q = session.createSynchronizedSQLQuery(sql);
-
-			q.addScalar(COUNT_COLUMN_NAME, Type.LONG);
-
-			QueryPos qPos = QueryPos.getInstance(q);
-
-			qPos.add(toUserId);
 
 			if (classNameId > 0) {
 				qPos.add(classNameId);
@@ -161,47 +112,6 @@ public class SharingEntryFinderImpl
 			QueryPos qPos = QueryPos.getInstance(q);
 
 			qPos.add(userId);
-
-			if (classNameId > 0) {
-				qPos.add(classNameId);
-			}
-
-			return (List<SharingEntry>)QueryUtil.list(
-				q, getDialect(), begin, end);
-		}
-		catch (Exception e) {
-			throw new SystemException(e);
-		}
-		finally {
-			closeSession(session);
-		}
-	}
-
-	@Override
-	public List<SharingEntry> findByToUserId(
-		long toUserId, long classNameId, int begin, int end,
-		OrderByComparator<SharingEntry> orderByComparator) {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			String sql = _customSQL.get(getClass(), FIND_BY_TO_USER_ID);
-
-			if (orderByComparator != null) {
-				sql = _customSQL.replaceOrderBy(sql, orderByComparator);
-			}
-
-			sql = _replaceClassNameIdWhere(sql, classNameId);
-
-			SQLQuery q = session.createSynchronizedSQLQuery(sql);
-
-			q.addEntity("SharingEntry", SharingEntryImpl.class);
-
-			QueryPos qPos = QueryPos.getInstance(q);
-
-			qPos.add(toUserId);
 
 			if (classNameId > 0) {
 				qPos.add(classNameId);

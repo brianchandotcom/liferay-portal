@@ -221,7 +221,7 @@
 </tr>
 <tr>
 	<td>REMOVE_TAG</td>
-	<td>//span[contains(.,'${key_removeTag}')]//..//i[contains(@class,'icon-remove')]</td>
+	<td>//span[contains(.,'${key_removeTag}')]//..//button[contains(@class,'btn close')]</td>
 	<td></td>
 </tr>
 <tr>

@@ -47,8 +47,8 @@ public class DTOOpenAPIParser {
 			String propertySchemaName = entry.getKey();
 			Schema propertySchema = entry.getValue();
 
-			String parameterName = CamelCaseUtil.toCamelCase(
-				propertySchemaName);
+			String parameterName = _getParameterName(
+				propertySchema, propertySchemaName);
 			String parameterType = _getParameterType(
 				javaDataTypeMap, propertySchema, propertySchemaName);
 
@@ -76,12 +76,32 @@ public class DTOOpenAPIParser {
 		Map<String, Schema> propertySchemas = _getPropertySchemas(schema);
 
 		for (Map.Entry<String, Schema> entry : propertySchemas.entrySet()) {
-			if (StringUtil.equalsIgnoreCase(entry.getKey(), parameterName)) {
-				return entry.getValue();
+			String propertySchemaName = entry.getKey();
+			Schema propertySchema = entry.getValue();
+
+			String encodedKey = _getParameterName(
+				propertySchema, propertySchemaName);
+
+			if (StringUtil.equalsIgnoreCase(encodedKey, parameterName)) {
+				return propertySchema;
 			}
 		}
 
 		return null;
+	}
+
+	private static String _getParameterName(
+		Schema propertySchema, String propertySchemaName) {
+
+		String name = CamelCaseUtil.toCamelCase(propertySchemaName);
+
+		if (StringUtil.equalsIgnoreCase(propertySchema.getType(), "object")) {
+			if (propertySchema.getItems() != null) {
+				return OpenAPIUtil.formatSingular(name);
+			}
+		}
+
+		return name;
 	}
 
 	private static String _getParameterType(

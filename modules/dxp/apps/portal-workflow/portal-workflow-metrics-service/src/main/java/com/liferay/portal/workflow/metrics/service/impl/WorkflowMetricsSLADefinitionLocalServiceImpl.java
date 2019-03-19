@@ -17,6 +17,7 @@ package com.liferay.portal.workflow.metrics.service.impl;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.workflow.metrics.exception.WorkflowMetricsSLADefinitionDuplicateNameException;
@@ -81,6 +82,14 @@ public class WorkflowMetricsSLADefinitionLocalServiceImpl
 
 		return workflowMetricsSLADefinitionPersistence.findByC_P(
 			companyId, processId);
+	}
+
+	public List<WorkflowMetricsSLADefinition> getWorkflowMetricsSLADefinitions(
+		long companyId, long processId, int start, int end,
+		OrderByComparator<WorkflowMetricsSLADefinition> orderByComparator) {
+
+		return workflowMetricsSLADefinitionPersistence.findByC_P(
+			companyId, processId, start, end, orderByComparator);
 	}
 
 	public int getWorkflowMetricsSLADefinitionsCount(

@@ -12,6 +12,8 @@ definition {
 
 		Check(locator1 = "ContentRow#ENTRY_CONTENT_ROW_NUMBER_CHECKBOX");
 
+		Click(locator1 = "Icon#TOOLBAR_ELLIPSIS");
+
 		Click(locator1 = "Button#UNSUBSCRIBE");
 
 		Alert.viewSuccessMessage();

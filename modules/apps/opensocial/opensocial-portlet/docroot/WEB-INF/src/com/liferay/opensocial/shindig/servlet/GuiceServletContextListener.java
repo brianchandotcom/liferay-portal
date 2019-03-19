@@ -14,7 +14,11 @@
 
 package com.liferay.opensocial.shindig.servlet;
 
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.BasePortalLifecycle;
+
+import java.lang.reflect.Field;
 
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
@@ -24,6 +28,26 @@ import javax.servlet.ServletContextListener;
  */
 public class GuiceServletContextListener
 	extends BasePortalLifecycle implements ServletContextListener {
+
+	public GuiceServletContextListener() {
+		_guiceServletContextListener =
+			new org.apache.shindig.common.servlet.GuiceServletContextListener();
+
+		try {
+			Class<?> clazz = _guiceServletContextListener.getClass();
+
+			Field field = clazz.getDeclaredField("jmxInitialized");
+
+			field.setAccessible(true);
+
+			field.set(_guiceServletContextListener, true);
+		}
+		catch (ReflectiveOperationException roe) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(roe, roe);
+			}
+		}
+	}
 
 	@Override
 	public void contextDestroyed(ServletContextEvent servletContextEvent) {
@@ -51,10 +75,12 @@ public class GuiceServletContextListener
 			_initializedServletContextEvent);
 	}
 
+	private static final Log _log = LogFactoryUtil.getLog(
+		GuiceServletContextListener.class);
+
 	private static ServletContextEvent _initializedServletContextEvent;
 
 	private ServletContextEvent _destroyedServletContextEvent;
-	private final ServletContextListener _guiceServletContextListener =
-		new org.apache.shindig.common.servlet.GuiceServletContextListener();
+	private final ServletContextListener _guiceServletContextListener;
 
 }

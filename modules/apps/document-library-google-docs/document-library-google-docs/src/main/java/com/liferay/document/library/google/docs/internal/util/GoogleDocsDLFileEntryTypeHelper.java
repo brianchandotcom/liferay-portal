@@ -165,10 +165,6 @@ public class GoogleDocsDLFileEntryTypeHelper {
 
 		Map<Locale, String> descriptionMap = new HashMap<>();
 
-		descriptionMap.put(
-			LocaleUtil.getDefault(),
-			GoogleDocsConstants.DL_FILE_ENTRY_TYPE_NAME);
-
 		ServiceContext serviceContext = new ServiceContext();
 
 		serviceContext.setAddGuestPermissions(true);

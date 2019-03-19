@@ -73,11 +73,20 @@ public class UpgradeFileEntryTypeName extends UpgradeProcess {
 
 			String name = dlFileEntryType.getName(locale);
 
-			if (name.equals("Google Docs")) {
-				dlFileEntryType.setName(
-					GoogleDocsConstants.DL_FILE_ENTRY_TYPE_NAME, locale);
-				dlFileEntryType.setDescription(
-					GoogleDocsConstants.DL_FILE_ENTRY_TYPE_NAME, locale);
+			String description = dlFileEntryType.getDescription(locale);
+
+			if (name.equals("Google Docs") ||
+				description.equals("Google Docs")) {
+
+				if (name.equals("Google Docs")) {
+					dlFileEntryType.setName(
+						GoogleDocsConstants.DL_FILE_ENTRY_TYPE_NAME, locale);
+				}
+
+				if (description.equals("Google Docs")) {
+					dlFileEntryType.setDescription(
+						GoogleDocsConstants.DL_FILE_ENTRY_TYPE_NAME, locale);
+				}
 
 				_dlFileEntryTypeLocalService.updateDLFileEntryType(
 					dlFileEntryType);

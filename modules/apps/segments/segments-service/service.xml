@@ -163,6 +163,18 @@
 			<finder-column name="classNameId" />
 			<finder-column name="classPK" />
 		</finder>
+		<finder name="G_C_C_P" return-type="SegmentsExperience" unique="true">
+			<finder-column name="groupId" />
+			<finder-column name="classNameId" />
+			<finder-column name="classPK" />
+			<finder-column name="priority" />
+		</finder>
+		<finder name="G_C_C_GtP" return-type="Collection">
+			<finder-column name="groupId" />
+			<finder-column name="classNameId" />
+			<finder-column name="classPK" />
+			<finder-column comparator="&gt;" name="priority" />
+		</finder>
 		<finder name="G_C_C_A" return-type="Collection">
 			<finder-column name="groupId" />
 			<finder-column name="classNameId" />
@@ -188,6 +200,7 @@
 		<exception>RequiredSegmentsEntry</exception>
 		<exception>SegmentsEntryCriteria</exception>
 		<exception>SegmentsEntryKey</exception>
+		<exception>SegmentsExperiencePriority</exception>
 		<exception>SegmentsExperienceSegmentsEntry</exception>
 	</exceptions>
 </service-builder>

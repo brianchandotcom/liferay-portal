@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.tools.rest.builder.internal.freemarker.tool.java.JavaMethodSignature;
 import com.liferay.portal.tools.rest.builder.internal.freemarker.tool.java.parser.GraphQLOpenAPIParser;
+import com.liferay.portal.tools.rest.builder.internal.freemarker.tool.java.parser.util.OpenAPIParserUtil;
 import com.liferay.portal.vulcan.yaml.config.ConfigYAML;
 import com.liferay.portal.vulcan.yaml.openapi.Components;
 import com.liferay.portal.vulcan.yaml.openapi.Info;
@@ -95,6 +96,10 @@ public class OpenAPIUtil {
 
 				if (items != null) {
 					propertySchemas = items.getPropertySchemas();
+				}
+				else if (schema.getAllOfSchemas() != null) {
+					propertySchemas = OpenAPIParserUtil.getAllOfPropertySchemas(
+						schema.getAllOfSchemas());
 				}
 				else {
 					propertySchemas = schema.getPropertySchemas();

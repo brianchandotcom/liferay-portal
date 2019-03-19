@@ -282,16 +282,6 @@ public class TemplateContextHelper {
 
 				});
 		}
-		else {
-			PortletRequestModelFactory portletRequestModelFactory =
-				(PortletRequestModelFactory)request.getAttribute(
-					"portletRequestModelFactory");
-
-			if (portletRequestModelFactory != null) {
-				contextObjects.put(
-					"portletRequestModelFactory", portletRequestModelFactory);
-			}
-		}
 
 		// Theme display
 

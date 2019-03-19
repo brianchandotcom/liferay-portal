@@ -160,6 +160,14 @@ public class PortletRequestModel implements Serializable {
 		return _portletNamespace;
 	}
 
+	public PortletRequest getPortletRequest() {
+		return _portletRequest;
+	}
+
+	public PortletResponse getPortletResponse() {
+		return _portletResponse;
+	}
+
 	public Map<String, Object> getPortletScopeSessioAttributes() {
 		_initPortletSessionAttributes();
 

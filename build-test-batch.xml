@@ -892,6 +892,8 @@ app.server.type=@{app.server.type}]]></echo>
 
 			<setup-libs />
 
+			<setup-yarn />
+
 			<antcall inheritAll="false" target="install-portal-snapshots" />
 
 			<echo if:set="env.JENKINS_HOME">ANT_OPTS=${env.ANT_OPTS}</echo>

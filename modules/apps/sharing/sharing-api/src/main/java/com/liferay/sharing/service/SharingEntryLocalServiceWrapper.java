@@ -383,6 +383,46 @@ public class SharingEntryLocalServiceWrapper
 	}
 
 	/**
+	 * Returns the ordered range of sharing entries for the type of resource
+	 * shared by the user. The class name ID identifies the resource type.
+	 *
+	 * @param fromUserId the user's ID
+	 * @param classNameId the class name ID of the resources
+	 * @param start the ordered range's lower bound
+	 * @param end the ordered range's upper bound (not inclusive)
+	 * @param orderByComparator the comparator that orders the sharing entries
+	 * @return the ordered range of sharing entries
+	 * @review
+	 */
+	@Override
+	public java.util.List<com.liferay.sharing.model.SharingEntry>
+		getFromUserSharingEntries(
+			long fromUserId, long classNameId, int start, int end,
+			com.liferay.portal.kernel.util.OrderByComparator
+				<com.liferay.sharing.model.SharingEntry> orderByComparator) {
+
+		return _sharingEntryLocalService.getFromUserSharingEntries(
+			fromUserId, classNameId, start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns the number of sharing entries for the type of resource shared
+	 * by the user. The class name ID identifies the resource type.
+	 *
+	 * @param fromUserId the user's ID
+	 * @param classNameId the class name ID of the resources
+	 * @return the number of sharing entries
+	 * @review
+	 */
+	@Override
+	public int getFromUserSharingEntriesCount(
+		long fromUserId, long classNameId) {
+
+		return _sharingEntryLocalService.getFromUserSharingEntriesCount(
+			fromUserId, classNameId);
+	}
+
+	/**
 	 * Returns the the group's sharing entries.
 	 *
 	 * @param groupId the primary key of the group

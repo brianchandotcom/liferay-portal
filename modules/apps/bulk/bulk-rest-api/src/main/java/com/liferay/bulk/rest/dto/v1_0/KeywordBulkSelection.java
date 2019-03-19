@@ -38,30 +38,6 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement(name = "KeywordBulkSelection")
 public class KeywordBulkSelection {
 
-	public String[] getKeywordsToAdd() {
-		return keywordsToAdd;
-	}
-
-	public void setKeywordsToAdd(String[] keywordsToAdd) {
-		this.keywordsToAdd = keywordsToAdd;
-	}
-
-	@JsonIgnore
-	public void setKeywordsToAdd(
-		UnsafeSupplier<String[], Exception> keywordsToAddUnsafeSupplier) {
-
-		try {
-			keywordsToAdd = keywordsToAddUnsafeSupplier.get();
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected String[] keywordsToAdd;
-
 	public DocumentBulkSelection getDocumentBulkSelection() {
 		return documentBulkSelection;
 	}
@@ -89,83 +65,14 @@ public class KeywordBulkSelection {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected DocumentBulkSelection documentBulkSelection;
 
-	public String[] getKeywordsToRemove() {
-		return keywordsToRemove;
-	}
-
-	public void setKeywordsToRemove(String[] keywordsToRemove) {
-		this.keywordsToRemove = keywordsToRemove;
-	}
-
-	@JsonIgnore
-	public void setKeywordsToRemove(
-		UnsafeSupplier<String[], Exception> keywordsToRemoveUnsafeSupplier) {
-
-		try {
-			keywordsToRemove = keywordsToRemoveUnsafeSupplier.get();
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected String[] keywordsToRemove;
-
 	public String toString() {
 		StringBundler sb = new StringBundler();
 
 		sb.append("{");
 
-		sb.append("\"keywordsToAdd\": ");
-
-		if (keywordsToAdd == null) {
-			sb.append("null");
-		}
-		else {
-			sb.append("[");
-
-			for (int i = 0; i < keywordsToAdd.length; i++) {
-				sb.append("\"");
-				sb.append(keywordsToAdd[i]);
-				sb.append("\"");
-
-				if ((i + 1) < keywordsToAdd.length) {
-					sb.append(", ");
-				}
-			}
-
-			sb.append("]");
-		}
-
-		sb.append(", ");
-
 		sb.append("\"documentBulkSelection\": ");
 
 		sb.append(documentBulkSelection);
-		sb.append(", ");
-
-		sb.append("\"keywordsToRemove\": ");
-
-		if (keywordsToRemove == null) {
-			sb.append("null");
-		}
-		else {
-			sb.append("[");
-
-			for (int i = 0; i < keywordsToRemove.length; i++) {
-				sb.append("\"");
-				sb.append(keywordsToRemove[i]);
-				sb.append("\"");
-
-				if ((i + 1) < keywordsToRemove.length) {
-					sb.append(", ");
-				}
-			}
-
-			sb.append("]");
-		}
 
 		sb.append("}");
 

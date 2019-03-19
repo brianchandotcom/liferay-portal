@@ -91,6 +91,7 @@ public abstract class BaseKeywordResourceTestCase {
 
 	@Before
 	public void setUp() throws Exception {
+		irrelevantGroup = GroupTestUtil.addGroup();
 		testGroup = GroupTestUtil.addGroup();
 
 		_resourceURL = new URL("http://localhost:8080/o/bulk/v1.0");
@@ -98,6 +99,7 @@ public abstract class BaseKeywordResourceTestCase {
 
 	@After
 	public void tearDown() throws Exception {
+		GroupTestUtil.deleteGroup(irrelevantGroup);
 		GroupTestUtil.deleteGroup(testGroup);
 	}
 
@@ -140,8 +142,16 @@ public abstract class BaseKeywordResourceTestCase {
 
 		options.setPatch(true);
 
-		return _outputObjectMapper.readValue(
-			HttpUtil.URLtoString(options), Boolean.class);
+		String string = HttpUtil.URLtoString(options);
+
+		try {
+			return _outputObjectMapper.readValue(string, Boolean.class);
+		}
+		catch (Exception e) {
+			Assert.fail("HTTP response: " + string);
+
+			throw e;
+		}
 	}
 
 	protected Http.Response invokePatchKeywordBatchResponse(
@@ -196,8 +206,16 @@ public abstract class BaseKeywordResourceTestCase {
 
 		options.setPut(true);
 
-		return _outputObjectMapper.readValue(
-			HttpUtil.URLtoString(options), Boolean.class);
+		String string = HttpUtil.URLtoString(options);
+
+		try {
+			return _outputObjectMapper.readValue(string, Boolean.class);
+		}
+		catch (Exception e) {
+			Assert.fail("HTTP response: " + string);
+
+			throw e;
+		}
 	}
 
 	protected Http.Response invokePutKeywordBatchResponse(
@@ -247,8 +265,10 @@ public abstract class BaseKeywordResourceTestCase {
 
 		options.setPost(true);
 
+		String string = HttpUtil.URLtoString(options);
+
 		return _outputObjectMapper.readValue(
-			HttpUtil.URLtoString(options),
+			string,
 			new TypeReference<Page<Keyword>>() {
 			});
 	}
@@ -412,10 +432,15 @@ public abstract class BaseKeywordResourceTestCase {
 		};
 	}
 
+	protected Keyword randomIrrelevantKeyword() {
+		return randomKeyword();
+	}
+
 	protected Keyword randomPatchKeyword() {
 		return randomKeyword();
 	}
 
+	protected Group irrelevantGroup;
 	protected Group testGroup;
 
 	protected static class Page<T> {

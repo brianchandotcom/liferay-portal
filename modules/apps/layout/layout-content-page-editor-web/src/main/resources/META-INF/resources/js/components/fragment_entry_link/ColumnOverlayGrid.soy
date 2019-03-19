@@ -1,0 +1,38 @@
+{namespace com.liferay.layout.content.page.editor.web.ColumnOverlayGrid}
+
+/**
+ * ColumnOverlayGrid
+ */
+{template .render}
+	{let $containerClasses kind="text"}
+		column-overlay-grid
+		{sp}container-fluid
+		{sp}h-100
+		{sp}position-absolute
+		{sp}px-3
+		{sp}py-0
+		{sp}w-100
+	{/let}
+
+	<div class="{$containerClasses}">
+		{call com.liferay.layout.content.page.editor.web.FragmentsEditorShim.render}
+			{param portalElement: 'body' /}
+		{/call}
+
+		{let $rowContainerClasses kind="text"}
+			container-fluid
+			{sp}p-0
+			{sp}h-100
+		{/let}
+
+		<div class="{$rowContainerClasses}">
+			<div class="h-100 row">
+				{for $col in range(12)}
+					<div class="col">
+						<div class="column-overlay-grid__column-content h-100"></div>
+					</div>
+				{/for}
+			</div>
+		</div>
+	</div>
+{/template}

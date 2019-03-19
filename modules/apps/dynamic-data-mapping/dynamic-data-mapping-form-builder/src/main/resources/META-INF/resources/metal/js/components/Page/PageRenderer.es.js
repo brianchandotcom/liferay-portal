@@ -8,6 +8,7 @@ import Soy from 'metal-soy';
 import templates from './PageRenderer.soy.js';
 import {Config} from 'metal-state';
 import {dom} from 'metal-dom';
+import {DragDrop} from 'metal-drag-drop';
 import {pageStructure} from '../../util/config.es';
 import {sub} from '../../util/strings.es';
 
@@ -21,6 +22,13 @@ class PageRenderer extends Component {
 		 */
 
 		activePage: Config.number().value(0),
+
+		/**
+		 * @instance
+		 * @memberof FormPage
+		 * @type {?boolean}
+		 */
+		editable: Config.bool().value(false),
 
 		/**
 		 * @instance
@@ -103,6 +111,21 @@ class PageRenderer extends Component {
 		this.titlePlaceholder = this._getTitlePlaceholder();
 	}
 
+	/**
+	 * Remember to destroy the dragDrop instance when the component is disposed
+	 */
+	attached() {
+		if (this.editable) {
+			this._bindLayoutBuilder();
+		}
+	}
+
+	disposed() {
+		if (this._dragAndDrop) {
+			this._dragAndDrop.dispose();
+		}
+	}
+
 	prepareStateForRender(states) {
 		return {
 			...states,
@@ -110,8 +133,43 @@ class PageRenderer extends Component {
 		};
 	}
 
-	willReceiveState() {
+	willReceiveState(nextState) {
 		this.titlePlaceholder = this._getTitlePlaceholder();
+
+		if (nextState.page && this.editable) {
+			this._dragAndDrop.setState(
+				{
+					targets: '.ddm-resize-drop'
+				}
+			);
+		}
+
+		return nextState;
+
+	}
+
+	convertToPercentage(position, element) {
+		const {offsetLeft, offsetWidth} = element;
+		const calculatedPosition = offsetLeft - position;
+
+		return calculatedPosition / offsetWidth;
+	}
+
+	_bindLayoutBuilder() {
+		this._dragAndDrop = new DragDrop(
+			{
+				axis: 'x',
+				sources: '.ddm-resize-handle',
+				targets: '.ddm-resize-drop',
+				useShim: true
+			}
+		);
+
+		this._dragAndDrop.on(DragDrop.Events.TARGET_ENTER, this._handleDropOver.bind(this));
+	}
+
+	_handleDropOver(event) {
+		this.emit('columnResized', event);
 	}
 
 	/**
@@ -177,18 +235,6 @@ class PageRenderer extends Component {
 
 		this.emit('deleteButtonClicked', index);
 	}
-
-	/**
-	 * @param {!Event} event
-	 * @private
-	 */
-
-	_handleOnClickResize() {}
-
-	/**
-	 * @param {!Object} event
-	 * @private
-	 */
 
 	_handlePageDescriptionChanged(event) {
 		const {page} = this;

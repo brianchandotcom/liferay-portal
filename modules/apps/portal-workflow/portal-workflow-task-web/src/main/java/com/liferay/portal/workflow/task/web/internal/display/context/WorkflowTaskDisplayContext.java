@@ -1007,9 +1007,9 @@ public class WorkflowTaskDisplayContext {
 			WorkflowTask workflowTask)
 		throws PortalException {
 
-		return _getWorkflowInstance(
-			workflowTask
-		).getWorkflowContext();
+		WorkflowInstance workflowInstance = _getWorkflowInstance(workflowTask);
+
+		return workflowInstance.getWorkflowContext();
 	}
 
 	private String _getWorkflowContextEntryClassName(WorkflowTask workflowTask)

@@ -151,13 +151,10 @@ public class FacebookConnectImpl implements FacebookConnect {
 		long companyId, String path, String accessToken, String fields) {
 
 		try {
+			String graphURL = getGraphURL(companyId);
+
 			String url = _http.addParameter(
-				getGraphURL(
-					companyId
-				).concat(
-					path
-				),
-				"access_token", accessToken);
+				graphURL.concat(path), "access_token", accessToken);
 
 			if (Validator.isNotNull(fields)) {
 				url = _http.addParameter(url, "fields", fields);

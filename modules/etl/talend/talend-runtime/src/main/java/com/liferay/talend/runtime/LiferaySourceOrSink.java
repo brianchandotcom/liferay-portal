@@ -231,11 +231,9 @@ public class LiferaySourceOrSink
 
 	@Override
 	public String getActualWebSiteName(String webSiteURL) throws IOException {
-		JsonNode webSiteNameJsonNode = doApioGetRequest(
-			webSiteURL
-		).path(
-			"name"
-		);
+		JsonNode webSiteNameJsonNode = doApioGetRequest(webSiteURL);
+
+		webSiteNameJsonNode = webSiteNameJsonNode.path("name");
 
 		return webSiteNameJsonNode.asText();
 	}

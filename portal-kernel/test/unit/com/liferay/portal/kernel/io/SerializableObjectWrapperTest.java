@@ -314,11 +314,13 @@ public class SerializableObjectWrapperTest {
 			new SerializableObjectWrapper(
 				_TEST_SERIALIZABLE
 			).hashCode());
+
+		SerializableObjectWrapper deserializedObject = _getDeserializedObject(
+			_testSerializableObjectWrapper);
+
 		Assert.assertEquals(
 			_testSerializableObjectWrapper.hashCode(),
-			_getDeserializedObject(
-				_testSerializableObjectWrapper
-			).hashCode());
+			deserializedObject.hashCode());
 	}
 
 	private static final TestSerializable _ANOTHER_TEST_SERIALIZABLE =

@@ -111,7 +111,7 @@ public class ServiceMonitoringControlImpl implements ServiceMonitoringControl {
 	}
 
 	@Deactivate
-	protected void deactivate() {
+	protected synchronized void deactivate() {
 		if (_serviceRegistration != null) {
 			_serviceRegistration.unregister();
 		}
@@ -123,7 +123,7 @@ public class ServiceMonitoringControlImpl implements ServiceMonitoringControl {
 	private DataSampleFactory _dataSampleFactory;
 
 	private boolean _inclusiveMode = true;
-	private boolean _monitorServiceRequest;
+	private volatile boolean _monitorServiceRequest;
 	private final Set<String> _serviceClasses = new HashSet<>();
 	private final Set<MethodSignature> _serviceClassMethods = new HashSet<>();
 	private ServiceRegistration<ChainableMethodAdvice> _serviceRegistration;

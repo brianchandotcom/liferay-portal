@@ -39,20 +39,20 @@ import org.osgi.service.component.annotations.Component;
 @Component(
 	immediate = true,
 	property = {
-		"com.liferay.portlet.css-class-wrapper=portlet-company-settings",
+		"com.liferay.portlet.css-class-wrapper=portlet-instance-settings",
 		"com.liferay.portlet.display-category=category.hidden",
 		"com.liferay.portlet.instanceable=false",
-		"javax.portlet.display-name=Company Settings",
+		"javax.portlet.display-name=Instance Settings",
 		"javax.portlet.info.keywords=osgi,company,settings",
 		"javax.portlet.init-param.template-path=/META-INF/resources/",
 		"javax.portlet.init-param.view-template=/view.jsp",
-		"javax.portlet.name=" + ConfigurationAdminPortletKeys.COMPANY_SETTINGS,
+		"javax.portlet.name=" + ConfigurationAdminPortletKeys.INSTANCE_SETTINGS,
 		"javax.portlet.resource-bundle=content.Language",
 		"javax.portlet.security-role-ref=administrator"
 	},
 	service = Portlet.class
 )
-public class CompanySettingsPortlet extends MVCPortlet {
+public class InstanceSettingsPortlet extends MVCPortlet {
 
 	@Override
 	public void processAction(

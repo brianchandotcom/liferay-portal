@@ -34,16 +34,16 @@ import org.osgi.service.component.annotations.Reference;
 	},
 	service = PanelApp.class
 )
-public class CompanySettingsPanelApp extends BasePanelApp {
+public class InstanceSettingsPanelApp extends BasePanelApp {
 
 	@Override
 	public String getPortletId() {
-		return ConfigurationAdminPortletKeys.COMPANY_SETTINGS;
+		return ConfigurationAdminPortletKeys.INSTANCE_SETTINGS;
 	}
 
 	@Override
 	@Reference(
-		target = "(javax.portlet.name=" + ConfigurationAdminPortletKeys.COMPANY_SETTINGS + ")",
+		target = "(javax.portlet.name=" + ConfigurationAdminPortletKeys.INSTANCE_SETTINGS + ")",
 		unbind = "-"
 	)
 	public void setPortlet(Portlet portlet) {

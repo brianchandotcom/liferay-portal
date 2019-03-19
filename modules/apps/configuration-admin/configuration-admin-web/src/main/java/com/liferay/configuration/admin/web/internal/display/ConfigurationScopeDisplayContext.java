@@ -37,7 +37,7 @@ public class ConfigurationScopeDisplayContext {
 
 		String portletId = PortalUtil.getPortletId(portletRequest);
 
-		if (portletId.equals(ConfigurationAdminPortletKeys.COMPANY_SETTINGS)) {
+		if (portletId.equals(ConfigurationAdminPortletKeys.INSTANCE_SETTINGS)) {
 			scope = ExtendedObjectClassDefinition.Scope.COMPANY;
 
 			ThemeDisplay themeDisplay =

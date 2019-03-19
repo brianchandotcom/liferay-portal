@@ -24,7 +24,7 @@ import javax.portlet.EventRequest;
  */
 @ProviderType
 public interface LiferayEventRequest
-	extends LiferayPortletRequest, EventRequest {
+	extends EventRequest, LiferayPortletRequest {
 
 	public void setEvent(Event event);
 

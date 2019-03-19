@@ -23,5 +23,5 @@ import javax.portlet.HeaderRequest;
  */
 @ProviderType
 public interface LiferayHeaderRequest
-	extends LiferayRenderRequest, HeaderRequest {
+	extends HeaderRequest, LiferayRenderRequest {
 }

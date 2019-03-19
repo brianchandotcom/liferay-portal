@@ -24,5 +24,5 @@ import javax.portlet.ResourceRequest;
  */
 @ProviderType
 public interface LiferayResourceRequest
-	extends LiferayPortletRequest, ClientDataRequest, ResourceRequest {
+	extends ClientDataRequest, LiferayPortletRequest, ResourceRequest {
 }

@@ -15,6 +15,8 @@
 package com.liferay.user.associated.data.web.internal.portlet.action;
 
 import com.liferay.portal.kernel.exception.NoSuchModelException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.user.associated.data.anonymizer.UADAnonymizer;
@@ -116,6 +118,9 @@ public class DeleteUADEntitiesMVCActionCommand extends BaseUADMVCActionCommand {
 									containerItem);
 							}
 							catch (NoSuchModelException nsme) {
+								if (_log.isDebugEnabled()) {
+									_log.debug(nsme, nsme);
+								}
 							}
 						});
 				}
@@ -125,5 +130,8 @@ public class DeleteUADEntitiesMVCActionCommand extends BaseUADMVCActionCommand {
 			entityUADAnonymizer.delete(entity);
 		}
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		DeleteUADEntitiesMVCActionCommand.class);
 
 }

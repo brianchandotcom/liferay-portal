@@ -103,37 +103,17 @@ public class ConfigurationEntryRetrieverImpl
 		for (String curConfigurationCategoryKey :
 				categorizedConfigurationModels.keySet()) {
 
-			ConfigurationCategory curConfigurationCategory =
-				_configurationCategoryServiceTrackerMap.getService(
-					curConfigurationCategoryKey);
+			_populateConfigurationCategorySectionDisplay(
+				configurationCategorySectionDisplaysMap,
+				curConfigurationCategoryKey);
+		}
 
-			if (curConfigurationCategory == null) {
-				curConfigurationCategory = new AdhocConfigurationCategory(
-					curConfigurationCategoryKey);
+		for (ConfigurationScreen configurationScreen :
+				_configurationScreenServiceTrackerMap.values()) {
 
-				_registerConfigurationCategory(curConfigurationCategory);
-			}
-
-			ConfigurationCategorySectionDisplay
-				configurationCategorySectionDisplay =
-					configurationCategorySectionDisplaysMap.get(
-						curConfigurationCategory.getCategorySection());
-
-			if (configurationCategorySectionDisplay == null) {
-				configurationCategorySectionDisplay =
-					new ConfigurationCategorySectionDisplay(
-						curConfigurationCategory.getCategorySection());
-
-				configurationCategorySectionDisplaysMap.put(
-					curConfigurationCategory.getCategorySection(),
-					configurationCategorySectionDisplay);
-			}
-
-			ConfigurationCategoryDisplay configurationCategoryDisplay =
-				new ConfigurationCategoryDisplay(curConfigurationCategory);
-
-			configurationCategorySectionDisplay.add(
-				configurationCategoryDisplay);
+			_populateConfigurationCategorySectionDisplay(
+				configurationCategorySectionDisplaysMap,
+				configurationScreen.getCategoryKey());
 		}
 
 		Set<ConfigurationCategorySectionDisplay> configurationCategorySections =
@@ -266,6 +246,43 @@ public class ConfigurationEntryRetrieverImpl
 		}
 
 		return configurationCategoriesSet;
+	}
+
+	private void _populateConfigurationCategorySectionDisplay(
+		Map<String, ConfigurationCategorySectionDisplay>
+			configurationCategorySectionDisplaysMap,
+		String curConfigurationCategoryKey) {
+
+		ConfigurationCategory curConfigurationCategory =
+			_configurationCategoryServiceTrackerMap.getService(
+				curConfigurationCategoryKey);
+
+		if (curConfigurationCategory == null) {
+			curConfigurationCategory = new AdhocConfigurationCategory(
+				curConfigurationCategoryKey);
+
+			_registerConfigurationCategory(curConfigurationCategory);
+		}
+
+		ConfigurationCategorySectionDisplay
+			configurationCategorySectionDisplay =
+				configurationCategorySectionDisplaysMap.get(
+					curConfigurationCategory.getCategorySection());
+
+		if (configurationCategorySectionDisplay == null) {
+			configurationCategorySectionDisplay =
+				new ConfigurationCategorySectionDisplay(
+					curConfigurationCategory.getCategorySection());
+
+			configurationCategorySectionDisplaysMap.put(
+				curConfigurationCategory.getCategorySection(),
+				configurationCategorySectionDisplay);
+		}
+
+		ConfigurationCategoryDisplay configurationCategoryDisplay =
+			new ConfigurationCategoryDisplay(curConfigurationCategory);
+
+		configurationCategorySectionDisplay.add(configurationCategoryDisplay);
 	}
 
 	private void _registerConfigurationCategory(

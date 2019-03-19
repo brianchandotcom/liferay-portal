@@ -180,9 +180,7 @@ public interface DL {
 	public <T> OrderByComparator<T> getRepositoryModelOrderByComparator(
 		String orderByCol, String orderByType, boolean orderByModel);
 
-	public PortletLayoutFinder.Result getResultURLViewInContext(
-		AssetRenderer assetRenderer,
-		LiferayPortletRequest liferayPortletRequest);
+	public boolean hasViewInContextGroupLayout(ThemeDisplay themeDisplay);
 
 	public String getSanitizedFileName(String title, String extension);
 

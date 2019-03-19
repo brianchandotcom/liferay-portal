@@ -252,12 +252,8 @@ public class DLUtil {
 			orderByCol, orderByType, orderByModel);
 	}
 
-	public static PortletLayoutFinder.Result getResultURLViewInContext(
-		AssetRenderer assetRenderer,
-		LiferayPortletRequest liferayPortletRequest) {
-
-		return getDL().getResultURLViewInContext(
-			assetRenderer, liferayPortletRequest);
+	public static boolean hasViewInContextGroupLayout(ThemeDisplay themeDisplay) {
+		return getDL().hasViewInContextGroupLayout(themeDisplay);
 	}
 
 	public static String getSanitizedFileName(String title, String extension) {

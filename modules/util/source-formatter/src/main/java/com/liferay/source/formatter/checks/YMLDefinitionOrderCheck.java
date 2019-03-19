@@ -224,22 +224,23 @@ public class YMLDefinitionOrderCheck extends BaseFileCheck {
 			Pattern pattern = Pattern.compile(
 				"^ *" + key + ": *(\\w*)(\n|\\Z)", Pattern.MULTILINE);
 
-			String compareKey1 = "";
-			String compareKey2 = "";
+			String value1 = StringPool.BLANK;
 
 			Matcher matcher = pattern.matcher(definition1);
 
 			if (matcher.find()) {
-				compareKey1 = matcher.group(1);
+				value1 = matcher.group(1);
 			}
+
+			String value2 = StringPool.BLANK;
 
 			matcher = pattern.matcher(definition2);
 
 			if (matcher.find()) {
-				compareKey2 = matcher.group(1);
+				value2 = matcher.group(1);
 			}
 
-			return compareKey1.compareTo(compareKey2);
+			return value1.compareTo(value2);
 		}
 
 		private final Pattern _definitionKeyPattern = Pattern.compile(".*?:.*");

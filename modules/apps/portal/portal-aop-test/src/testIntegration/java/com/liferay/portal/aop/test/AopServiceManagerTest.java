@@ -225,13 +225,13 @@ public class AopServiceManagerTest {
 
 		_logReaderService.addLogListener(logListener);
 
-		Class<?> aopInterface = TestServiceImpl._aopInterfaces[0];
+		Class<?>[] aopInterfaces = TestServiceImpl._aopInterfaces;
 
 		try (CaptureAppender captureAppender =
 				Log4JLoggerTestUtil.configureLog4JLogger(
 					"osgi.logging.com_liferay_portal_aop_test", Level.ERROR)) {
 
-			TestServiceImpl._aopInterfaces[0] = AopService.class;
+			TestServiceImpl._aopInterfaces = new Class<?>[] {AopService.class};
 
 			Assert.assertNull(serviceObjects.getService());
 
@@ -266,7 +266,7 @@ public class AopServiceManagerTest {
 		finally {
 			_logReaderService.removeLogListener(logListener);
 
-			TestServiceImpl._aopInterfaces[0] = aopInterface;
+			TestServiceImpl._aopInterfaces = aopInterfaces;
 
 			aopServiceServiceRegistration.unregister();
 		}
@@ -313,7 +313,7 @@ public class AopServiceManagerTest {
 			_testService = (TestService)aopProxy;
 		}
 
-		private static final Class<?>[] _aopInterfaces = new Class<?>[] {
+		private static Class<?>[] _aopInterfaces = new Class<?>[] {
 			TestService.class
 		};
 

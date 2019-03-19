@@ -21,7 +21,7 @@ import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 import com.liferay.headless.web.experience.dto.v1_0.ContentStructure;
 import com.liferay.headless.web.experience.dto.v1_0.ContentStructureField;
-import com.liferay.headless.web.experience.dto.v1_0.Options;
+import com.liferay.headless.web.experience.dto.v1_0.Option;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -141,14 +141,14 @@ public class ContentStructureUtil {
 					).orElseGet(
 						Stream::empty
 					).map(
-						entry -> new Options() {
+						entry -> new Option() {
 							{
 								setLabel(_toString(entry.getValue(), locale));
 								setValue(entry.getKey());
 							}
 						}
 					).toArray(
-						Options[]::new
+						Option[]::new
 					));
 			}
 		};

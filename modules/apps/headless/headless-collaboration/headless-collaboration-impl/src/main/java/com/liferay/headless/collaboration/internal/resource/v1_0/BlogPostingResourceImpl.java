@@ -25,7 +25,7 @@ import com.liferay.document.library.kernel.service.DLAppService;
 import com.liferay.document.library.util.DLURLHelper;
 import com.liferay.headless.collaboration.dto.v1_0.BlogPosting;
 import com.liferay.headless.collaboration.dto.v1_0.Image;
-import com.liferay.headless.collaboration.dto.v1_0.TaxonomyCategories;
+import com.liferay.headless.collaboration.dto.v1_0.TaxonomyCategory;
 import com.liferay.headless.collaboration.internal.dto.v1_0.util.AggregateRatingUtil;
 import com.liferay.headless.collaboration.internal.dto.v1_0.util.CreatorUtil;
 import com.liferay.headless.collaboration.internal.odata.entity.v1_0.BlogPostingEntityModel;
@@ -276,13 +276,13 @@ public class BlogPostingResourceImpl
 				taxonomyCategories = transformToArray(
 					_assetCategoryLocalService.getCategories(
 						BlogsEntry.class.getName(), blogsEntry.getEntryId()),
-					assetCategory -> new TaxonomyCategories() {
+					assetCategory -> new TaxonomyCategory() {
 						{
 							taxonomyCategoryId = assetCategory.getCategoryId();
 							taxonomyCategoryName = assetCategory.getName();
 						}
 					},
-					TaxonomyCategories.class);
+					TaxonomyCategory.class);
 			}
 		};
 	}

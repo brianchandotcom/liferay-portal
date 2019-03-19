@@ -18,7 +18,7 @@ import com.liferay.asset.kernel.model.AssetTag;
 import com.liferay.asset.kernel.service.AssetCategoryLocalService;
 import com.liferay.asset.kernel.service.AssetTagLocalService;
 import com.liferay.headless.collaboration.dto.v1_0.KnowledgeBaseArticle;
-import com.liferay.headless.collaboration.dto.v1_0.TaxonomyCategories;
+import com.liferay.headless.collaboration.dto.v1_0.TaxonomyCategory;
 import com.liferay.headless.collaboration.internal.dto.v1_0.util.AggregateRatingUtil;
 import com.liferay.headless.collaboration.internal.dto.v1_0.util.CreatorUtil;
 import com.liferay.headless.collaboration.internal.dto.v1_0.util.ParentKnowledgeBaseFolderUtil;
@@ -245,13 +245,13 @@ public class KnowledgeBaseArticleResourceImpl
 				taxonomyCategories = transformToArray(
 					_assetCategoryLocalService.getCategories(
 						KBArticle.class.getName(), kbArticle.getClassPK()),
-					assetCategory -> new TaxonomyCategories() {
+					assetCategory -> new TaxonomyCategory() {
 						{
 							taxonomyCategoryId = assetCategory.getCategoryId();
 							taxonomyCategoryName = assetCategory.getName();
 						}
 					},
-					TaxonomyCategories.class);
+					TaxonomyCategory.class);
 				title = kbArticle.getTitle();
 
 				setHasKnowledgeBaseArticles(

@@ -30,9 +30,9 @@ import com.liferay.document.library.kernel.model.DLVersionNumberIncrease;
 import com.liferay.document.library.kernel.service.DLAppService;
 import com.liferay.document.library.util.DLURLHelper;
 import com.liferay.headless.common.spi.service.context.ServiceContextUtil;
-import com.liferay.headless.document.library.dto.v1_0.AdaptedImages;
+import com.liferay.headless.document.library.dto.v1_0.AdaptedImage;
 import com.liferay.headless.document.library.dto.v1_0.Document;
-import com.liferay.headless.document.library.dto.v1_0.TaxonomyCategories;
+import com.liferay.headless.document.library.dto.v1_0.TaxonomyCategory;
 import com.liferay.headless.document.library.internal.dto.v1_0.util.AggregateRatingUtil;
 import com.liferay.headless.document.library.internal.dto.v1_0.util.CreatorUtil;
 import com.liferay.headless.document.library.internal.odata.entity.v1_0.DocumentEntityModel;
@@ -343,13 +343,13 @@ public class DocumentResourceImpl
 			_userService.getUserById(fileEntry.getUserId()));
 	}
 
-	private AdaptedImages[] _getAdaptiveMedias(FileEntry fileEntry)
+	private AdaptedImage[] _getAdaptiveMedias(FileEntry fileEntry)
 		throws Exception {
 
 		if (!_amImageMimeTypeProvider.isMimeTypeSupported(
 				fileEntry.getMimeType())) {
 
-			return new AdaptedImages[0];
+			return new AdaptedImage[0];
 		}
 
 		Stream<AdaptiveMedia<AMImageProcessor>> stream =
@@ -361,9 +361,9 @@ public class DocumentResourceImpl
 				).done());
 
 		return stream.map(
-			this::_toAdaptedImages
+			this::_toAdaptedImage
 		).toArray(
-			AdaptedImages[]::new
+			AdaptedImage[]::new
 		);
 	}
 
@@ -392,10 +392,10 @@ public class DocumentResourceImpl
 		return valueOptional.orElse(null);
 	}
 
-	private AdaptedImages _toAdaptedImages(
+	private AdaptedImage _toAdaptedImage(
 		AdaptiveMedia<AMImageProcessor> adaptiveMedia) {
 
-		return new AdaptedImages() {
+		return new AdaptedImage() {
 			{
 				contentUrl = String.valueOf(adaptiveMedia.getURI());
 				height = _getValue(
@@ -448,13 +448,13 @@ public class DocumentResourceImpl
 					_assetCategoryLocalService.getCategories(
 						DLFileEntry.class.getName(),
 						fileEntry.getFileEntryId()),
-					assetCategory -> new TaxonomyCategories() {
+					assetCategory -> new TaxonomyCategory() {
 						{
 							taxonomyCategoryId = assetCategory.getCategoryId();
 							taxonomyCategoryName = assetCategory.getName();
 						}
 					},
-					TaxonomyCategories.class);
+					TaxonomyCategory.class);
 				title = fileEntry.getTitle();
 			}
 		};

@@ -295,7 +295,7 @@ public class ResourceOpenAPIParser {
 					javaMethodParameters.add(
 						new JavaMethodParameter("referenceId", parameterType));
 				}
-				else {
+				else if (parameterType != null) {
 					String simpleClassName = parameterType.substring(
 						parameterType.lastIndexOf(".") + 1);
 

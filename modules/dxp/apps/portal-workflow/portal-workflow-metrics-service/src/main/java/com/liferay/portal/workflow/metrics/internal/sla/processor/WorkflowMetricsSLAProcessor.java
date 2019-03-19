@@ -56,7 +56,7 @@ public class WorkflowMetricsSLAProcessor {
 		long companyId, long instanceId, LocalDateTime nowLocalDateTime,
 		WorkflowMetricsSLADefinition workflowMetricsSLADefinition) {
 
-		List<TaskInterval> taskIntervals = _getWorkflowMetricsTaskIntervals(
+		List<TaskInterval> taskIntervals = _getTaskIntervals(
 			companyId, nowLocalDateTime, instanceId);
 
 		long elapsedTime = 0;
@@ -131,7 +131,7 @@ public class WorkflowMetricsSLAProcessor {
 		);
 	}
 
-	private List<TaskInterval> _getWorkflowMetricsTaskIntervals(
+	private List<TaskInterval> _getTaskIntervals(
 		long companyId, LocalDateTime nowLocalDateTime, long instanceId) {
 
 		List<Document> documents = _getTokenDocuments(companyId, instanceId);

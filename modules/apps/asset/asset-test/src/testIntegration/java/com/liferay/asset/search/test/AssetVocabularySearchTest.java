@@ -87,6 +87,12 @@ public class AssetVocabularySearchTest extends BaseSearchTestCase {
 	@Ignore
 	@Override
 	@Test
+	public void testSearchCommentsByKeywords() throws Exception {
+	}
+
+	@Ignore
+	@Override
+	@Test
 	public void testSearchExpireAllVersions() throws Exception {
 	}
 

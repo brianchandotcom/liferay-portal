@@ -131,7 +131,6 @@ public class AopInvocationHandler implements InvocationHandler {
 
 	private final Map<Method, AopMethodInvocation> _aopMethodInvocations =
 		new ConcurrentHashMap<>();
-
 	private ChainableMethodAdvice[] _chainableMethodAdvices;
 	private volatile Object _target;
 

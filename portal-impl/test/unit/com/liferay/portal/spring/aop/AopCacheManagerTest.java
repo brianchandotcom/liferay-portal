@@ -123,10 +123,6 @@ public class AopCacheManagerTest {
 		}
 	}
 
-	private AopInvocationHandler _aopInvocationHandler;
-	private ExecutorService _executorService;
-	private TestInterface _testInterfaceProxy;
-
 	public static class TestChainableMethodAdvice
 		extends ChainableMethodAdvice {
 
@@ -202,12 +198,14 @@ public class AopCacheManagerTest {
 		extends TestChainableMethodAdvice {
 	}
 
+	private AopInvocationHandler _aopInvocationHandler;
+	private ExecutorService _executorService;
+	private TestInterface _testInterfaceProxy;
+
 	private static class TestInterfaceImpl implements TestInterface {
 
 		@Override
-		public void assertAop(
-			List<Object> advices, Object targetPlaceholder) {
-
+		public void assertAop(List<Object> advices, Object targetPlaceholder) {
 			if (advices.isEmpty()) {
 				Assert.assertNull(targetPlaceholder);
 			}
@@ -235,8 +233,7 @@ public class AopCacheManagerTest {
 
 	private interface TestInterface {
 
-		public void assertAop(
-			List<Object> advices, Object targetPlaceholder);
+		public void assertAop(List<Object> advices, Object targetPlaceholder);
 
 	}
 

@@ -38,60 +38,6 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement(name = "TaxonomyCategoryBulkSelection")
 public class TaxonomyCategoryBulkSelection {
 
-	public Long[] getTaxonomyCategoryIdsToAdd() {
-		return taxonomyCategoryIdsToAdd;
-	}
-
-	public void setTaxonomyCategoryIdsToAdd(Long[] taxonomyCategoryIdsToAdd) {
-		this.taxonomyCategoryIdsToAdd = taxonomyCategoryIdsToAdd;
-	}
-
-	@JsonIgnore
-	public void setTaxonomyCategoryIdsToAdd(
-		UnsafeSupplier<Long[], Exception>
-			taxonomyCategoryIdsToAddUnsafeSupplier) {
-
-		try {
-			taxonomyCategoryIdsToAdd =
-				taxonomyCategoryIdsToAddUnsafeSupplier.get();
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Long[] taxonomyCategoryIdsToAdd;
-
-	public Long[] getTaxonomyCategoryIdsToRemove() {
-		return taxonomyCategoryIdsToRemove;
-	}
-
-	public void setTaxonomyCategoryIdsToRemove(
-		Long[] taxonomyCategoryIdsToRemove) {
-
-		this.taxonomyCategoryIdsToRemove = taxonomyCategoryIdsToRemove;
-	}
-
-	@JsonIgnore
-	public void setTaxonomyCategoryIdsToRemove(
-		UnsafeSupplier<Long[], Exception>
-			taxonomyCategoryIdsToRemoveUnsafeSupplier) {
-
-		try {
-			taxonomyCategoryIdsToRemove =
-				taxonomyCategoryIdsToRemoveUnsafeSupplier.get();
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Long[] taxonomyCategoryIdsToRemove;
-
 	public DocumentBulkSelection getDocumentBulkSelection() {
 		return documentBulkSelection;
 	}
@@ -123,48 +69,6 @@ public class TaxonomyCategoryBulkSelection {
 		StringBundler sb = new StringBundler();
 
 		sb.append("{");
-
-		sb.append("\"taxonomyCategoryIdsToAdd\": ");
-
-		if (taxonomyCategoryIdsToAdd == null) {
-			sb.append("null");
-		}
-		else {
-			sb.append("[");
-
-			for (int i = 0; i < taxonomyCategoryIdsToAdd.length; i++) {
-				sb.append(taxonomyCategoryIdsToAdd[i]);
-
-				if ((i + 1) < taxonomyCategoryIdsToAdd.length) {
-					sb.append(", ");
-				}
-			}
-
-			sb.append("]");
-		}
-
-		sb.append(", ");
-
-		sb.append("\"taxonomyCategoryIdsToRemove\": ");
-
-		if (taxonomyCategoryIdsToRemove == null) {
-			sb.append("null");
-		}
-		else {
-			sb.append("[");
-
-			for (int i = 0; i < taxonomyCategoryIdsToRemove.length; i++) {
-				sb.append(taxonomyCategoryIdsToRemove[i]);
-
-				if ((i + 1) < taxonomyCategoryIdsToRemove.length) {
-					sb.append(", ");
-				}
-			}
-
-			sb.append("]");
-		}
-
-		sb.append(", ");
 
 		sb.append("\"documentBulkSelection\": ");
 

@@ -89,6 +89,7 @@ public abstract class BaseTaxonomyCategoryResourceTestCase {
 
 	@Before
 	public void setUp() throws Exception {
+		irrelevantGroup = GroupTestUtil.addGroup();
 		testGroup = GroupTestUtil.addGroup();
 
 		_resourceURL = new URL("http://localhost:8080/o/bulk/v1.0");
@@ -96,6 +97,7 @@ public abstract class BaseTaxonomyCategoryResourceTestCase {
 
 	@After
 	public void tearDown() throws Exception {
+		GroupTestUtil.deleteGroup(irrelevantGroup);
 		GroupTestUtil.deleteGroup(testGroup);
 	}
 
@@ -145,8 +147,16 @@ public abstract class BaseTaxonomyCategoryResourceTestCase {
 
 		options.setPatch(true);
 
-		return _outputObjectMapper.readValue(
-			HttpUtil.URLtoString(options), Boolean.class);
+		String string = HttpUtil.URLtoString(options);
+
+		try {
+			return _outputObjectMapper.readValue(string, Boolean.class);
+		}
+		catch (Exception e) {
+			Assert.fail("HTTP response: " + string);
+
+			throw e;
+		}
 	}
 
 	protected Http.Response invokePatchTaxonomyCategoryBatchResponse(
@@ -206,8 +216,16 @@ public abstract class BaseTaxonomyCategoryResourceTestCase {
 
 		options.setPut(true);
 
-		return _outputObjectMapper.readValue(
-			HttpUtil.URLtoString(options), Boolean.class);
+		String string = HttpUtil.URLtoString(options);
+
+		try {
+			return _outputObjectMapper.readValue(string, Boolean.class);
+		}
+		catch (Exception e) {
+			Assert.fail("HTTP response: " + string);
+
+			throw e;
+		}
 	}
 
 	protected Http.Response invokePutTaxonomyCategoryBatchResponse(
@@ -388,10 +406,15 @@ public abstract class BaseTaxonomyCategoryResourceTestCase {
 		};
 	}
 
+	protected TaxonomyCategory randomIrrelevantTaxonomyCategory() {
+		return randomTaxonomyCategory();
+	}
+
 	protected TaxonomyCategory randomPatchTaxonomyCategory() {
 		return randomTaxonomyCategory();
 	}
 
+	protected Group irrelevantGroup;
 	protected Group testGroup;
 
 	protected static class Page<T> {

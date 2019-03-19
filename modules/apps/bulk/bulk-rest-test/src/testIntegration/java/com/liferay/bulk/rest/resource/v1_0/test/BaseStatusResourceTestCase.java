@@ -87,6 +87,7 @@ public abstract class BaseStatusResourceTestCase {
 
 	@Before
 	public void setUp() throws Exception {
+		irrelevantGroup = GroupTestUtil.addGroup();
 		testGroup = GroupTestUtil.addGroup();
 
 		_resourceURL = new URL("http://localhost:8080/o/bulk/v1.0");
@@ -94,6 +95,7 @@ public abstract class BaseStatusResourceTestCase {
 
 	@After
 	public void tearDown() throws Exception {
+		GroupTestUtil.deleteGroup(irrelevantGroup);
 		GroupTestUtil.deleteGroup(testGroup);
 	}
 
@@ -119,8 +121,16 @@ public abstract class BaseStatusResourceTestCase {
 
 		options.setLocation(location);
 
-		return _outputObjectMapper.readValue(
-			HttpUtil.URLtoString(options), Status.class);
+		String string = HttpUtil.URLtoString(options);
+
+		try {
+			return _outputObjectMapper.readValue(string, Status.class);
+		}
+		catch (Exception e) {
+			Assert.fail("HTTP response: " + string);
+
+			throw e;
+		}
 	}
 
 	protected Http.Response invokeGetStatusResponse() throws Exception {
@@ -273,10 +283,15 @@ public abstract class BaseStatusResourceTestCase {
 		};
 	}
 
+	protected Status randomIrrelevantStatus() {
+		return randomStatus();
+	}
+
 	protected Status randomPatchStatus() {
 		return randomStatus();
 	}
 
+	protected Group irrelevantGroup;
 	protected Group testGroup;
 
 	protected static class Page<T> {

@@ -89,6 +89,7 @@ public abstract class BaseTaxonomyVocabularyResourceTestCase {
 
 	@Before
 	public void setUp() throws Exception {
+		irrelevantGroup = GroupTestUtil.addGroup();
 		testGroup = GroupTestUtil.addGroup();
 
 		_resourceURL = new URL("http://localhost:8080/o/bulk/v1.0");
@@ -96,6 +97,7 @@ public abstract class BaseTaxonomyVocabularyResourceTestCase {
 
 	@After
 	public void tearDown() throws Exception {
+		GroupTestUtil.deleteGroup(irrelevantGroup);
 		GroupTestUtil.deleteGroup(testGroup);
 	}
 
@@ -141,8 +143,10 @@ public abstract class BaseTaxonomyVocabularyResourceTestCase {
 
 		options.setPost(true);
 
+		String string = HttpUtil.URLtoString(options);
+
 		return _outputObjectMapper.readValue(
-			HttpUtil.URLtoString(options),
+			string,
 			new TypeReference<Page<TaxonomyVocabulary>>() {
 			});
 	}
@@ -346,10 +350,15 @@ public abstract class BaseTaxonomyVocabularyResourceTestCase {
 		};
 	}
 
+	protected TaxonomyVocabulary randomIrrelevantTaxonomyVocabulary() {
+		return randomTaxonomyVocabulary();
+	}
+
 	protected TaxonomyVocabulary randomPatchTaxonomyVocabulary() {
 		return randomTaxonomyVocabulary();
 	}
 
+	protected Group irrelevantGroup;
 	protected Group testGroup;
 
 	protected static class Page<T> {

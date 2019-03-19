@@ -88,6 +88,7 @@ public abstract class BaseMessageSelectionResourceTestCase {
 
 	@Before
 	public void setUp() throws Exception {
+		irrelevantGroup = GroupTestUtil.addGroup();
 		testGroup = GroupTestUtil.addGroup();
 
 		_resourceURL = new URL("http://localhost:8080/o/bulk/v1.0");
@@ -95,6 +96,7 @@ public abstract class BaseMessageSelectionResourceTestCase {
 
 	@After
 	public void tearDown() throws Exception {
+		GroupTestUtil.deleteGroup(irrelevantGroup);
 		GroupTestUtil.deleteGroup(testGroup);
 	}
 
@@ -131,8 +133,17 @@ public abstract class BaseMessageSelectionResourceTestCase {
 
 		options.setPost(true);
 
-		return _outputObjectMapper.readValue(
-			HttpUtil.URLtoString(options), MessageSelection.class);
+		String string = HttpUtil.URLtoString(options);
+
+		try {
+			return _outputObjectMapper.readValue(
+				string, MessageSelection.class);
+		}
+		catch (Exception e) {
+			Assert.fail("HTTP response: " + string);
+
+			throw e;
+		}
 	}
 
 	protected Http.Response invokePostKeywordMessageSelectionResponse(
@@ -186,8 +197,17 @@ public abstract class BaseMessageSelectionResourceTestCase {
 
 		options.setPost(true);
 
-		return _outputObjectMapper.readValue(
-			HttpUtil.URLtoString(options), MessageSelection.class);
+		String string = HttpUtil.URLtoString(options);
+
+		try {
+			return _outputObjectMapper.readValue(
+				string, MessageSelection.class);
+		}
+		catch (Exception e) {
+			Assert.fail("HTTP response: " + string);
+
+			throw e;
+		}
 	}
 
 	protected Http.Response
@@ -363,10 +383,15 @@ public abstract class BaseMessageSelectionResourceTestCase {
 		};
 	}
 
+	protected MessageSelection randomIrrelevantMessageSelection() {
+		return randomMessageSelection();
+	}
+
 	protected MessageSelection randomPatchMessageSelection() {
 		return randomMessageSelection();
 	}
 
+	protected Group irrelevantGroup;
 	protected Group testGroup;
 
 	protected static class Page<T> {

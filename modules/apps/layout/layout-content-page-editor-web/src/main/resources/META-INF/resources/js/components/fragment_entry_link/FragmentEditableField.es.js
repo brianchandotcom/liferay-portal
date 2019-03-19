@@ -379,9 +379,8 @@ class FragmentEditableField extends Component {
 			this._disposeFloatingToolbar();
 		}
 		else if (panelId === FLOATING_TOOLBAR_PANELS.map.panelId &&
-				 this.mappingFieldsURL &&
-				 !this.selectedMappingTypes.type) {
-
+			this.mappingFieldsURL &&
+			!this.selectedMappingTypes.type) {
 			event.preventDefault();
 
 			this.store.dispatchAction(OPEN_ASSET_TYPE_DIALOG);

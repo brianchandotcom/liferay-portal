@@ -41,17 +41,13 @@ public class ItemSelectorUtil {
 		_instance = null;
 	}
 
-	@Reference(unbind = "-")
-	protected void setItemSelector(ItemSelector itemSelector) {
-		_itemSelector = itemSelector;
-	}
-
 	private ItemSelector _getItemSelector() {
 		return _itemSelector;
 	}
 
 	private static ItemSelectorUtil _instance;
 
+	@Reference
 	private ItemSelector _itemSelector;
 
 }

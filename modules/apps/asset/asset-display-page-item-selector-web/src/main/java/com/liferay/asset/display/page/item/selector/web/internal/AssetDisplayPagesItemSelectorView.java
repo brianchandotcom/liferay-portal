@@ -109,14 +109,6 @@ public class AssetDisplayPagesItemSelectorView
 		requestDispatcher.include(request, response);
 	}
 
-	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.asset.display.page.item.selector.web)",
-		unbind = "-"
-	)
-	public void setServletContext(ServletContext servletContext) {
-		_servletContext = servletContext;
-	}
-
 	private static final List<ItemSelectorReturnType>
 		_supportedItemSelectorReturnTypes = Collections.unmodifiableList(
 			ListUtil.fromArray(
@@ -127,6 +119,9 @@ public class AssetDisplayPagesItemSelectorView
 	@Reference
 	private AssetDisplayContributorTracker _assetDisplayContributorTracker;
 
+	@Reference(
+		target = "(osgi.web.symbolicname=com.liferay.asset.display.page.item.selector.web)"
+	)
 	private ServletContext _servletContext;
 
 }

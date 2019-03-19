@@ -177,27 +177,6 @@ public class AssetCategoriesNavigationPortletPreferencesProcessor
 		return null;
 	}
 
-	@Reference(unbind = "-")
-	protected void setAssetVocabularyLocalService(
-		AssetVocabularyLocalService assetVocabularyLocalService) {
-
-		_assetVocabularyLocalService = assetVocabularyLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setCompanyLocalService(
-		CompanyLocalService companyLocalService) {
-
-		_companyLocalService = companyLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setPortletLocalService(
-		PortletLocalService portletLocalService) {
-
-		_portletLocalService = portletLocalService;
-	}
-
 	protected PortletPreferences updateExportPortletPreferences(
 			PortletDataContext portletDataContext,
 			PortletPreferences portletPreferences, String portletId)
@@ -246,7 +225,10 @@ public class AssetCategoriesNavigationPortletPreferencesProcessor
 		return portletPreferences;
 	}
 
+	@Reference
 	private AssetVocabularyLocalService _assetVocabularyLocalService;
+
+	@Reference
 	private CompanyLocalService _companyLocalService;
 
 	@Reference(target = "(name=PortletDisplayTemplateExporter)")
@@ -255,6 +237,7 @@ public class AssetCategoriesNavigationPortletPreferencesProcessor
 	@Reference(target = "(name=PortletDisplayTemplateImporter)")
 	private Capability _importCapability;
 
+	@Reference
 	private PortletLocalService _portletLocalService;
 
 }

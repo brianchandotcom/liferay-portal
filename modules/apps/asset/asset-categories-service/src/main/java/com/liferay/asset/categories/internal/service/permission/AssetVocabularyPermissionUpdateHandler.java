@@ -49,13 +49,7 @@ public class AssetVocabularyPermissionUpdateHandler
 		_assetVocabularyLocalService.updateAssetVocabulary(assetVocabulary);
 	}
 
-	@Reference(unbind = "-")
-	protected void setAssetVocabularyLocalService(
-		AssetVocabularyLocalService assetVocabularyLocalService) {
-
-		_assetVocabularyLocalService = assetVocabularyLocalService;
-	}
-
+	@Reference
 	private AssetVocabularyLocalService _assetVocabularyLocalService;
 
 }

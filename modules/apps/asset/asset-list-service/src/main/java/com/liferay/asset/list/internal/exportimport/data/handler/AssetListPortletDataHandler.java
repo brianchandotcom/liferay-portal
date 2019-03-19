@@ -183,17 +183,14 @@ public class AssetListPortletDataHandler extends BasePortletDataHandler {
 		assetListEntryExportActionableDynamicQuery.performCount();
 	}
 
-	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED, unbind = "-")
-	protected void setModuleServiceLifecycle(
-		ModuleServiceLifecycle moduleServiceLifecycle) {
-	}
-
 	@Reference(
-		target = "(model.class.name=com.liferay.asset.list.model.AssetListEntry)",
-		unbind = "-"
+		target = "(model.class.name=com.liferay.asset.list.model.AssetListEntry)"
 	)
 	private StagedModelRepository<AssetListEntry>
 		_assetListEntryStagedModelRepository;
+
+	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED)
+	private ModuleServiceLifecycle _moduleServiceLifecycle;
 
 	@Reference
 	private PortletDataHandlerHelper _portletDataHandlerHelper;

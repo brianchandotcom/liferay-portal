@@ -180,19 +180,10 @@ public class AssetTagsAdminPortlet extends MVCPortlet {
 		return false;
 	}
 
-	@Reference(unbind = "-")
-	protected void setAssetTagLocalService(
-		AssetTagLocalService assetTagLocalService) {
-
-		_assetTagLocalService = assetTagLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setAssetTagService(AssetTagService assetTagService) {
-		_assetTagService = assetTagService;
-	}
-
+	@Reference
 	private AssetTagLocalService _assetTagLocalService;
+
+	@Reference
 	private AssetTagService _assetTagService;
 
 }

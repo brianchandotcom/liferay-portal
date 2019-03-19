@@ -195,16 +195,10 @@ public class AssetTagStagedModelDataHandler
 		portletDataContext.importClassedModel(assetTag, importedAssetTag);
 	}
 
-	@Reference(unbind = "-")
-	protected void setAssetTagLocalService(
-		AssetTagLocalService assetTagLocalService) {
-
-		_assetTagLocalService = assetTagLocalService;
-	}
-
 	private static final Log _log = LogFactoryUtil.getLog(
 		AssetTagStagedModelDataHandler.class);
 
+	@Reference
 	private AssetTagLocalService _assetTagLocalService;
 
 }

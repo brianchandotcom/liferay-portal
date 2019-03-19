@@ -423,20 +423,6 @@ public class AssetCategoryAdminPortlet extends MVCPortlet {
 		return false;
 	}
 
-	@Reference(unbind = "-")
-	protected void setAssetCategoryService(
-		AssetCategoryService assetCategoryService) {
-
-		_assetCategoryService = assetCategoryService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setAssetVocabularyService(
-		AssetVocabularyService assetVocabularyService) {
-
-		_assetVocabularyService = assetVocabularyService;
-	}
-
 	private AssetCategoriesAdminWebConfiguration
 		_assetCategoriesAdminWebConfiguration;
 
@@ -444,7 +430,10 @@ public class AssetCategoryAdminPortlet extends MVCPortlet {
 	private AssetCategoryPropertyLocalService
 		_assetCategoryPropertyLocalService;
 
+	@Reference
 	private AssetCategoryService _assetCategoryService;
+
+	@Reference
 	private AssetVocabularyService _assetVocabularyService;
 
 }

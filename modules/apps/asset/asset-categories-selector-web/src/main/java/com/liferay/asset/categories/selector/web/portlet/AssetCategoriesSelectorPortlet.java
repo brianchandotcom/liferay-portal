@@ -140,13 +140,7 @@ public class AssetCategoriesSelectorPortlet extends MVCPortlet {
 			parentCategoryId, vocabularyId, start, end, null);
 	}
 
-	@Reference(unbind = "-")
-	protected void setAssetCategoryService(
-		AssetCategoryService assetCategoryService) {
-
-		_assetCategoryService = assetCategoryService;
-	}
-
+	@Reference
 	private AssetCategoryService _assetCategoryService;
 
 }

@@ -84,13 +84,13 @@ public class AssetEntrySAPEntryActivator {
 	private static final Log _log = LogFactoryUtil.getLog(
 		AssetEntrySAPEntryActivator.class);
 
-	@Reference(unbind = "-")
+	@Reference
 	private SAPEntryLocalService _sapEntryLocalService;
 
 	private ServiceRegistration<PortalInstanceLifecycleListener>
 		_serviceRegistration;
 
-	@Reference(unbind = "-")
+	@Reference
 	private UserLocalService _userLocalService;
 
 	private class AssetEntryPortalInstanceLifecycleListener

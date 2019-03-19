@@ -105,26 +105,12 @@ public class StagedAssetLinkStagedModelDataHandler
 		return _stagedAssetLinkStagedModelRepository;
 	}
 
-	@Reference(unbind = "-")
-	protected void setAssetEntryLocalService(
-		AssetEntryLocalService assetEntryLocalService) {
-
-		_assetEntryLocalService = assetEntryLocalService;
-	}
+	@Reference
+	private AssetEntryLocalService _assetEntryLocalService;
 
 	@Reference(
-		target = "(model.class.name=com.liferay.asset.kernel.model.adapter.StagedAssetLink)",
-		unbind = "-"
+		target = "(model.class.name=com.liferay.asset.kernel.model.adapter.StagedAssetLink)"
 	)
-	protected void setStagedAssetLinkStagedModelRepository(
-		StagedAssetLinkStagedModelRepository
-			stagedAssetLinkStagedModelRepository) {
-
-		_stagedAssetLinkStagedModelRepository =
-			stagedAssetLinkStagedModelRepository;
-	}
-
-	private AssetEntryLocalService _assetEntryLocalService;
 	private StagedAssetLinkStagedModelRepository
 		_stagedAssetLinkStagedModelRepository;
 

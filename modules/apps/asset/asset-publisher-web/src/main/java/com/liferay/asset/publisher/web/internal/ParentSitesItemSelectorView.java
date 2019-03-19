@@ -117,14 +117,6 @@ public class ParentSitesItemSelectorView
 		requestDispatcher.include(request, response);
 	}
 
-	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.asset.publisher.web)",
-		unbind = "-"
-	)
-	public void setServletContext(ServletContext servletContext) {
-		_servletContext = servletContext;
-	}
-
 	private static final List<ItemSelectorReturnType>
 		_supportedItemSelectorReturnTypes = Collections.unmodifiableList(
 			ListUtil.fromArray(
@@ -141,6 +133,9 @@ public class ParentSitesItemSelectorView
 	@Reference
 	private Portal _portal;
 
+	@Reference(
+		target = "(osgi.web.symbolicname=com.liferay.asset.publisher.web)"
+	)
 	private ServletContext _servletContext;
 
 }

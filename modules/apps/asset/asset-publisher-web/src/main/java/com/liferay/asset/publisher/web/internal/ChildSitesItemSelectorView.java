@@ -120,14 +120,6 @@ public class ChildSitesItemSelectorView
 		requestDispatcher.include(request, response);
 	}
 
-	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.asset.publisher.web)",
-		unbind = "-"
-	)
-	public void setServletContext(ServletContext servletContext) {
-		_servletContext = servletContext;
-	}
-
 	private static final List<ItemSelectorReturnType>
 		_supportedItemSelectorReturnTypes = Collections.unmodifiableList(
 			ListUtil.fromArray(
@@ -138,12 +130,15 @@ public class ChildSitesItemSelectorView
 	@Reference
 	private AssetPublisherHelper _assetPublisherHelper;
 
-	@Reference(unbind = "-")
+	@Reference
 	private GroupLocalService _groupLocalService;
 
 	@Reference
 	private Portal _portal;
 
+	@Reference(
+		target = "(osgi.web.symbolicname=com.liferay.asset.publisher.web)"
+	)
 	private ServletContext _servletContext;
 
 }

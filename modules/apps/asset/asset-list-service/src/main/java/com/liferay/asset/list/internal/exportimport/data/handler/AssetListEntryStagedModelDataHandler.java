@@ -347,8 +347,7 @@ public class AssetListEntryStagedModelDataHandler
 		_assetListEntrySegmentsEntryRelLocalService;
 
 	@Reference(
-		target = "(model.class.name=com.liferay.asset.list.model.AssetListEntry)",
-		unbind = "-"
+		target = "(model.class.name=com.liferay.asset.list.model.AssetListEntry)"
 	)
 	private StagedModelRepository<AssetListEntry> _stagedModelRepository;
 

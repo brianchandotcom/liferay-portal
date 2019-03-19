@@ -116,20 +116,6 @@ public class CardinalityAssetEntryValidator implements AssetEntryValidator {
 		return true;
 	}
 
-	@Reference(unbind = "-")
-	protected void setAssetVocabularyLocalService(
-		AssetVocabularyLocalService assetVocabularyLocalService) {
-
-		_assetVocabularyLocalService = assetVocabularyLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setClassNameLocalService(
-		ClassNameLocalService classNameLocalService) {
-
-		_classNameLocalService = classNameLocalService;
-	}
-
 	protected void validate(
 			long classNameId, long classTypePK, final long[] categoryIds,
 			AssetVocabulary assetVocabulary)
@@ -159,7 +145,10 @@ public class CardinalityAssetEntryValidator implements AssetEntryValidator {
 	private static final Log _log = LogFactoryUtil.getLog(
 		CardinalityAssetEntryValidator.class.getName());
 
+	@Reference
 	private AssetVocabularyLocalService _assetVocabularyLocalService;
+
+	@Reference
 	private ClassNameLocalService _classNameLocalService;
 
 	@Reference

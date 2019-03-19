@@ -48,13 +48,7 @@ public class AssetTagPermissionUpdateHandler
 		_assetTagLocalService.updateAssetTag(assetTag);
 	}
 
-	@Reference(unbind = "-")
-	protected void setAssetTagLocalService(
-		AssetTagLocalService assetTagLocalService) {
-
-		_assetTagLocalService = assetTagLocalService;
-	}
-
+	@Reference
 	private AssetTagLocalService _assetTagLocalService;
 
 }

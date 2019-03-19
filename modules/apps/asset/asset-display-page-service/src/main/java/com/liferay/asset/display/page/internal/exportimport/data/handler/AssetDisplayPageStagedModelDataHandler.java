@@ -105,8 +105,7 @@ public class AssetDisplayPageStagedModelDataHandler
 	}
 
 	@Reference(
-		target = "(model.class.name=com.liferay.asset.display.page.model.AssetDisplayPageEntry)",
-		unbind = "-"
+		target = "(model.class.name=com.liferay.asset.display.page.model.AssetDisplayPageEntry)"
 	)
 	private StagedModelRepository<AssetDisplayPageEntry> _stagedModelRepository;
 

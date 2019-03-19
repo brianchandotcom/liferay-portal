@@ -51,6 +51,23 @@ class FragmentEditableField extends PortletBase {
 	}
 
 	/**
+	 * Checks if the given editable is mapped to an asset
+	 * @param {object} editableValues
+	 * @private
+	 * @return {boolean}
+	 * @review
+	 */
+	static _isMappedToAsset(editableValues) {
+		return Boolean(
+			(
+				editableValues.classNameId &&
+				editableValues.classPK &&
+				editableValues.fieldId
+			)
+		);
+	}
+
+	/**
 	 * @inheritDoc
 	 * @review
 	 */

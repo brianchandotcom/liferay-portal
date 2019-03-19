@@ -1,4 +1,4 @@
-import {ADD_FRAGMENT_ENTRY_LINK, MOVE_FRAGMENT_ENTRY_LINK, REMOVE_FRAGMENT_ENTRY_LINK, UPDATE_CONFIG_ATTRIBUTES, UPDATE_EDITABLE_VALUE} from '../actions/actions.es';
+import {ADD_FRAGMENT_ENTRY_LINK, DISABLE_FRAGMENT_EDITOR, ENABLE_FRAGMENT_EDITOR, MOVE_FRAGMENT_ENTRY_LINK, REMOVE_FRAGMENT_ENTRY_LINK, UPDATE_CONFIG_ATTRIBUTES, UPDATE_EDITABLE_VALUE} from '../actions/actions.es';
 import {add, remove, setIn, updateIn, updateLayoutData, updateWidgets} from '../utils/FragmentsEditorUpdateUtils.es';
 import {EDITABLE_FRAGMENT_ENTRY_PROCESSOR} from '../components/fragment_entry_link/FragmentEntryLinkContent.es';
 import {FRAGMENTS_EDITOR_ITEM_BORDERS, FRAGMENTS_EDITOR_ITEM_TYPES} from '../utils/constants';
@@ -354,6 +354,26 @@ function updateFragmentEntryLinkConfigReducer(state, actionType, payload) {
 			}
 		}
 	);
+}
+
+function disableFragmentEditorReducer(state, actionType) {
+	let nextState = state;
+
+	if (actionType === DISABLE_FRAGMENT_EDITOR) {
+		nextState = setIn(nextState, ['fragmentEditorEnabled'], null);
+	}
+
+	return nextState;
+}
+
+function enableFragmentEditorReducer(state, actionType, payload) {
+	let nextState = state;
+
+	if (actionType === ENABLE_FRAGMENT_EDITOR) {
+		nextState = setIn(nextState, ['fragmentEditorEnabled'], payload.itemId);
+	}
+
+	return nextState;
 }
 
 /**
@@ -801,6 +821,8 @@ function _removeFragmentEntryLink(
 export {
 	addFragment,
 	addFragmentEntryLinkReducer,
+	disableFragmentEditorReducer,
+	enableFragmentEditorReducer,
 	getFragmentEntryLinkContent,
 	moveFragmentEntryLinkReducer,
 	removeFragmentEntryLinkReducer,

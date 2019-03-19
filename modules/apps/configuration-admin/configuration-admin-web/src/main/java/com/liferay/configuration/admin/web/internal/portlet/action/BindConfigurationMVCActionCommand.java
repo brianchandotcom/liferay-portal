@@ -91,9 +91,6 @@ public class BindConfigurationMVCActionCommand implements MVCActionCommand {
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws PortletException {
 
-		ConfigurationScopeDisplayContext configurationScopeDisplayContext =
-			new ConfigurationScopeDisplayContext(actionRequest);
-
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
@@ -106,6 +103,9 @@ public class BindConfigurationMVCActionCommand implements MVCActionCommand {
 		}
 
 		ConfigurationModel configurationModel = null;
+
+		ConfigurationScopeDisplayContext configurationScopeDisplayContext =
+			new ConfigurationScopeDisplayContext(actionRequest);
 
 		Map<String, ConfigurationModel> configurationModels =
 			_configurationModelRetriever.getConfigurationModels(

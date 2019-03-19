@@ -1288,15 +1288,13 @@ public class DLImpl implements DL {
 	private PortletLayoutFinder.Result _getPortletLayoutFinderResult(
 		ThemeDisplay themeDisplay) {
 
-		PortletLayoutFinder.Result result = null;
-
 		for (PortletLayoutFinder portletLayoutFinder : _serviceTrackerList) {
 			try {
-				result = portletLayoutFinder.find(
+				PortletLayoutFinder.Result result = portletLayoutFinder.find(
 					themeDisplay, themeDisplay.getSiteGroupId());
 
 				if (result != null) {
-					break;
+					return result;
 				}
 			}
 			catch (PortalException pe) {
@@ -1306,7 +1304,7 @@ public class DLImpl implements DL {
 			}
 		}
 
-		return result;
+		return null;
 	}
 
 	private static final String _DEFAULT_FILE_ICON = "page";

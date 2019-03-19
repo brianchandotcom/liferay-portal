@@ -89,9 +89,7 @@ public class WorkflowMetricsSLAProcessor {
 					StringBundler.concat(
 						"createDate", StringPool.UNDERLINE, "Number")),
 				SortOrder.ASC));
-
 		searchSearchRequest.setIndexNames("workflow-metrics-tokens");
-
 		searchSearchRequest.setQuery(
 			new BooleanQueryImpl() {
 				{

@@ -41,6 +41,32 @@ import java.util.TreeSet;
  */
 public class OpenAPIParserUtil {
 
+	public static Map<String, Schema> getAllOfPropertySchemas(
+		List<Schema> allOfSchemas) {
+
+		Map<String, Schema> propertySchemas = new HashMap<>();
+
+		for (Schema allOfSchema : allOfSchemas) {
+			if (allOfSchema.getReference() != null) {
+				Schema schema = new Schema();
+
+				String reference = allOfSchema.getReference();
+
+				schema.setReference(reference);
+
+				propertySchemas.put(
+					StringUtil.lowerCaseFirstLetter(
+						getReferenceName(reference)),
+					schema);
+			}
+			else {
+				propertySchemas.putAll(allOfSchema.getPropertySchemas());
+			}
+		}
+
+		return propertySchemas;
+	}
+
 	public static String getArguments(
 		List<JavaMethodParameter> javaMethodParameters) {
 
@@ -309,9 +335,6 @@ public class OpenAPIParserUtil {
 	private static final Map<Map.Entry<String, String>, String>
 		_openAPIDataTypeMap = new HashMap<Map.Entry<String, String>, String>() {
 			{
-
-				// https://github.com/OAI/OpenAPI-Specification/blob/master/versions/3.0.1.md#dataTypes
-
 				put(
 					new AbstractMap.SimpleImmutableEntry<>("boolean", null),
 					Boolean.class.getName());

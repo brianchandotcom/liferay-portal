@@ -251,20 +251,6 @@ public class JenkinsResultsParserUtil {
 		file.delete();
 	}
 
-	public static void toFile(URL url, File file) {
-		try {
-			System.out.println(
-				combine(
-					"Downloading ", url.toString(), " to ",
-					getCanonicalPath(file)));
-
-			FileUtils.copyURLToFile(url, file);
-		}
-		catch (IOException ioe) {
-			throw new RuntimeException(ioe);
-		}
-	}
-
 	public static String encode(String url)
 		throws MalformedURLException, URISyntaxException {
 
@@ -1985,6 +1971,20 @@ public class JenkinsResultsParserUtil {
 		}
 
 		return durationString;
+	}
+
+	public static void toFile(URL url, File file) {
+		try {
+			System.out.println(
+				combine(
+					"Downloading ", url.toString(), " to ",
+					getCanonicalPath(file)));
+
+			FileUtils.copyURLToFile(url, file);
+		}
+		catch (IOException ioe) {
+			throw new RuntimeException(ioe);
+		}
 	}
 
 	public static JSONArray toJSONArray(String url) throws IOException {

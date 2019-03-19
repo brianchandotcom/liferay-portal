@@ -705,6 +705,171 @@ public class SharingEntryUtil {
 	}
 
 	/**
+	 * Returns all the sharing entries where userId = &#63;.
+	 *
+	 * @param userId the user ID
+	 * @return the matching sharing entries
+	 */
+	public static List<SharingEntry> findByUserId(long userId) {
+		return getPersistence().findByUserId(userId);
+	}
+
+	/**
+	 * Returns a range of all the sharing entries where userId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>SharingEntryModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param userId the user ID
+	 * @param start the lower bound of the range of sharing entries
+	 * @param end the upper bound of the range of sharing entries (not inclusive)
+	 * @return the range of matching sharing entries
+	 */
+	public static List<SharingEntry> findByUserId(
+		long userId, int start, int end) {
+
+		return getPersistence().findByUserId(userId, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the sharing entries where userId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>SharingEntryModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param userId the user ID
+	 * @param start the lower bound of the range of sharing entries
+	 * @param end the upper bound of the range of sharing entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching sharing entries
+	 */
+	public static List<SharingEntry> findByUserId(
+		long userId, int start, int end,
+		OrderByComparator<SharingEntry> orderByComparator) {
+
+		return getPersistence().findByUserId(
+			userId, start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns an ordered range of all the sharing entries where userId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>SharingEntryModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param userId the user ID
+	 * @param start the lower bound of the range of sharing entries
+	 * @param end the upper bound of the range of sharing entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @return the ordered range of matching sharing entries
+	 */
+	public static List<SharingEntry> findByUserId(
+		long userId, int start, int end,
+		OrderByComparator<SharingEntry> orderByComparator,
+		boolean retrieveFromCache) {
+
+		return getPersistence().findByUserId(
+			userId, start, end, orderByComparator, retrieveFromCache);
+	}
+
+	/**
+	 * Returns the first sharing entry in the ordered set where userId = &#63;.
+	 *
+	 * @param userId the user ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching sharing entry
+	 * @throws NoSuchEntryException if a matching sharing entry could not be found
+	 */
+	public static SharingEntry findByUserId_First(
+			long userId, OrderByComparator<SharingEntry> orderByComparator)
+		throws com.liferay.sharing.exception.NoSuchEntryException {
+
+		return getPersistence().findByUserId_First(userId, orderByComparator);
+	}
+
+	/**
+	 * Returns the first sharing entry in the ordered set where userId = &#63;.
+	 *
+	 * @param userId the user ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching sharing entry, or <code>null</code> if a matching sharing entry could not be found
+	 */
+	public static SharingEntry fetchByUserId_First(
+		long userId, OrderByComparator<SharingEntry> orderByComparator) {
+
+		return getPersistence().fetchByUserId_First(userId, orderByComparator);
+	}
+
+	/**
+	 * Returns the last sharing entry in the ordered set where userId = &#63;.
+	 *
+	 * @param userId the user ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching sharing entry
+	 * @throws NoSuchEntryException if a matching sharing entry could not be found
+	 */
+	public static SharingEntry findByUserId_Last(
+			long userId, OrderByComparator<SharingEntry> orderByComparator)
+		throws com.liferay.sharing.exception.NoSuchEntryException {
+
+		return getPersistence().findByUserId_Last(userId, orderByComparator);
+	}
+
+	/**
+	 * Returns the last sharing entry in the ordered set where userId = &#63;.
+	 *
+	 * @param userId the user ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching sharing entry, or <code>null</code> if a matching sharing entry could not be found
+	 */
+	public static SharingEntry fetchByUserId_Last(
+		long userId, OrderByComparator<SharingEntry> orderByComparator) {
+
+		return getPersistence().fetchByUserId_Last(userId, orderByComparator);
+	}
+
+	/**
+	 * Returns the sharing entries before and after the current sharing entry in the ordered set where userId = &#63;.
+	 *
+	 * @param sharingEntryId the primary key of the current sharing entry
+	 * @param userId the user ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next sharing entry
+	 * @throws NoSuchEntryException if a sharing entry with the primary key could not be found
+	 */
+	public static SharingEntry[] findByUserId_PrevAndNext(
+			long sharingEntryId, long userId,
+			OrderByComparator<SharingEntry> orderByComparator)
+		throws com.liferay.sharing.exception.NoSuchEntryException {
+
+		return getPersistence().findByUserId_PrevAndNext(
+			sharingEntryId, userId, orderByComparator);
+	}
+
+	/**
+	 * Removes all the sharing entries where userId = &#63; from the database.
+	 *
+	 * @param userId the user ID
+	 */
+	public static void removeByUserId(long userId) {
+		getPersistence().removeByUserId(userId);
+	}
+
+	/**
+	 * Returns the number of sharing entries where userId = &#63;.
+	 *
+	 * @param userId the user ID
+	 * @return the number of matching sharing entries
+	 */
+	public static int countByUserId(long userId) {
+		return getPersistence().countByUserId(userId);
+	}
+
+	/**
 	 * Returns all the sharing entries where toUserId = &#63;.
 	 *
 	 * @param toUserId the to user ID

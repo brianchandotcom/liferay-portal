@@ -25,6 +25,7 @@ import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.function.Supplier;
 
@@ -56,17 +57,11 @@ public class WorkflowMetricsSLAProcessorTest extends PowerMockito {
 			_process(
 				5000,
 				() -> {
-					List<Document> tokenDocuments = new ArrayList<>();
-
-					Document document = new Document();
-
-					document.addField(
-						_createField(
-							"createDate", localDateTime.minus(5, ChronoUnit.SECONDS)));
-
-					tokenDocuments.add(document);
-
-					return tokenDocuments;
+					return Arrays.asList(
+						_createDocument(
+							_createField(
+								"createDate",
+								localDateTime.minus(5, ChronoUnit.SECONDS))));
 				},
 				localDateTime);
 
@@ -85,29 +80,18 @@ public class WorkflowMetricsSLAProcessorTest extends PowerMockito {
 			_process(
 				10000,
 				() -> {
-					List<Document> tokenDocuments = new ArrayList<>();
-
-					Document document = new Document();
-
-					document.addField(
-						_createField(
-							"createDate", localDateTime.minus(10, ChronoUnit.SECONDS)));
-
-					document.addField(
-						_createField(
-							"completionDate", localDateTime.minus(4, ChronoUnit.SECONDS)));
-
-					tokenDocuments.add(document);
-
-					document = new Document();
-
-					document.addField(
-						_createField(
-							"createDate", localDateTime.minus(5, ChronoUnit.SECONDS)));
-
-					tokenDocuments.add(document);
-
-					return tokenDocuments;
+					return Arrays.asList(
+						_createDocument(
+							_createField(
+								"createDate",
+								localDateTime.minus(10, ChronoUnit.SECONDS)),
+							_createField(
+								"completionDate",
+								localDateTime.minus(4, ChronoUnit.SECONDS))),
+						_createDocument(
+							_createField(
+								"createDate",
+								localDateTime.minus(5, ChronoUnit.SECONDS))));
 				},
 				localDateTime);
 
@@ -118,6 +102,16 @@ public class WorkflowMetricsSLAProcessorTest extends PowerMockito {
 			0, workflowMetricsSLAProcessResult.getRemainingTime());
 	}
 
+	public Document _createDocument(Field... fields) {
+		return new Document() {
+			{
+				for (Field field : fields) {
+					addField(field);
+				}
+			}
+		};
+	}
+
 	@Test
 	public void testProcessOverdueInstance() {
 		LocalDateTime localDateTime = _createLocalDateTime();
@@ -126,18 +120,11 @@ public class WorkflowMetricsSLAProcessorTest extends PowerMockito {
 			_process(
 				5000,
 				() -> {
-					List<Document> tokenDocuments = new ArrayList<>();
-
-					Document document = new Document();
-
-					document.addField(
-						_createField(
-							"createDate",
-							localDateTime.minus(6, ChronoUnit.SECONDS)));
-
-					tokenDocuments.add(document);
-
-					return tokenDocuments;
+					return Arrays.asList(
+						_createDocument(
+							_createField(
+								"createDate",
+								localDateTime.minus(6, ChronoUnit.SECONDS))));
 				},
 				localDateTime);
 
@@ -156,32 +143,18 @@ public class WorkflowMetricsSLAProcessorTest extends PowerMockito {
 			_process(
 				5000,
 				() -> {
-					List<Document> tokenDocuments = new ArrayList<>();
-
-					Document document = new Document();
-
-					document.addField(
-						_createField(
-							"createDate",
-							localDateTime.minus(10, ChronoUnit.SECONDS)));
-
-					document.addField(
-						_createField(
-							"completionDate",
-							localDateTime.minus(4, ChronoUnit.SECONDS)));
-
-					tokenDocuments.add(document);
-
-					document = new Document();
-
-					document.addField(
-						_createField(
-							"createDate",
-							localDateTime.minus(5, ChronoUnit.SECONDS)));
-
-					tokenDocuments.add(document);
-
-					return tokenDocuments;
+					return Arrays.asList(
+						_createDocument(
+							_createField(
+								"createDate",
+								localDateTime.minus(10, ChronoUnit.SECONDS)),
+							_createField(
+								"completionDate",
+								localDateTime.minus(4, ChronoUnit.SECONDS))),
+						_createDocument(
+							_createField(
+								"createDate",
+								localDateTime.minus(5, ChronoUnit.SECONDS))));
 				},
 				localDateTime);
 

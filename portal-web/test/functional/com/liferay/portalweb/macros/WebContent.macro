@@ -875,10 +875,18 @@ definition {
 
 		SelectFrame(value1 = "relative=top");
 
-		AssertTextEquals(
-			locator1 = "WCEditWebContent#DISPLAY_PAGE_SPECIFIC_SELECTION",
-			value1 = "${pageName}"
-		);
+		if ("${pageType}" == "Public Pages") {
+			AssertTextEquals(
+				locator1 = "WCEditWebContent#DISPLAY_PAGE_SPECIFIC_SELECTION",
+				value1 = "Public Pages > ${pageName}"
+			);
+		}
+		else {
+			AssertTextEquals(
+				locator1 = "WCEditWebContent#DISPLAY_PAGE_SPECIFIC_SELECTION",
+				value1 = "${pageName}"
+			);
+		}
 	}
 
 	macro editDisplayPagePGViaAP {

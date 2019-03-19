@@ -372,20 +372,20 @@ public class Field {
 	protected String name;
 
 	@Schema(description = "https://www.schema.org/FormFieldOption")
-	public Option getOptions() {
-		return options;
+	public Option getOption() {
+		return option;
 	}
 
-	public void setOptions(Option options) {
-		this.options = options;
+	public void setOption(Option option) {
+		this.option = option;
 	}
 
 	@JsonIgnore
-	public void setOptions(
-		UnsafeSupplier<Option, Exception> optionsUnsafeSupplier) {
+	public void setOption(
+		UnsafeSupplier<Option, Exception> optionUnsafeSupplier) {
 
 		try {
-			options = optionsUnsafeSupplier.get();
+			option = optionUnsafeSupplier.get();
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
@@ -394,7 +394,7 @@ public class Field {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Option options;
+	protected Option option;
 
 	public String getPlaceholder() {
 		return placeholder;
@@ -746,9 +746,9 @@ public class Field {
 		sb.append("\"");
 		sb.append(", ");
 
-		sb.append("\"options\": ");
+		sb.append("\"option\": ");
 
-		sb.append(options);
+		sb.append(option);
 		sb.append(", ");
 
 		sb.append("\"placeholder\": ");

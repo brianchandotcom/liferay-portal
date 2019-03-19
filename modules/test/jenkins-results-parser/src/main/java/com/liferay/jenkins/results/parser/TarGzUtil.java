@@ -47,7 +47,7 @@ public class TarGzUtil {
 
 	public static void archive(File source, File archiveFile) {
 		if (!source.exists()) {
-			throw new RuntimeException("Could not find " + source);
+			throw new RuntimeException("Unable to find " + source);
 		}
 
 		File parent = archiveFile.getParentFile();
@@ -114,7 +114,7 @@ public class TarGzUtil {
 				}
 				else {
 					System.out.println(
-						"Could not read " + tarArchiveEntry.getName());
+						"Unable to read " + tarArchiveEntry.getName());
 				}
 
 				tarArchiveEntry = tarArchiveInputStream.getNextTarEntry();
@@ -149,6 +149,10 @@ public class TarGzUtil {
 			ArchiveOutputStream archiveOutputStream)
 		throws IOException {
 
+		if (debug) {
+			System.out.println("Archiving " + dir);
+		}
+
 		File[] files = dir.listFiles();
 
 		if (files == null) {
@@ -171,7 +175,7 @@ public class TarGzUtil {
 		throws IOException {
 
 		if (debug) {
-			System.out.println(file);
+			System.out.println("Archiving " + file);
 		}
 
 		String filePath = JenkinsResultsParserUtil.getCanonicalPath(file);
@@ -264,7 +268,7 @@ public class TarGzUtil {
 		File dir = new File(destinationRootDir, tarArchiveEntry.getName());
 
 		if (debug) {
-			System.out.println(dir);
+			System.out.println("Unarchiving " + dir);
 		}
 
 		if (!dir.exists()) {
@@ -279,7 +283,7 @@ public class TarGzUtil {
 		File file = new File(destinationRootDir, tarArchiveEntry.getName());
 
 		if (debug) {
-			System.out.println(file);
+			System.out.println("Unarchiving " + file);
 		}
 
 		File parent = file.getParentFile();

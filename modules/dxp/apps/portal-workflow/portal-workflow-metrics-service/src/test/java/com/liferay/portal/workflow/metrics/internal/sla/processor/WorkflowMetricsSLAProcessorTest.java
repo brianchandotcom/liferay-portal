@@ -56,7 +56,7 @@ public class WorkflowMetricsSLAProcessorTest extends PowerMockito {
 			protected List<Document> getTokenDocuments(
 				long companyId, long instanceId) {
 
-				return _documentsSupplier.get();
+				return _getTokenDocumentsSupplier.get();
 			}
 
 		};
@@ -66,7 +66,7 @@ public class WorkflowMetricsSLAProcessorTest extends PowerMockito {
 	public void testProcessOntimeInstance() {
 		LocalDateTime localDateTime = _createLocalDateTime();
 
-		_documentsSupplier = () -> {
+		_getTokenDocumentsSupplier = () -> {
 			List<Document> tokenDocuments = new ArrayList<>();
 
 			Document document = new Document();
@@ -95,7 +95,7 @@ public class WorkflowMetricsSLAProcessorTest extends PowerMockito {
 	public void testProcessOntimeInstanceWithParallelTasks() {
 		LocalDateTime localDateTime = _createLocalDateTime();
 
-		_documentsSupplier = () -> {
+		_getTokenDocumentsSupplier = () -> {
 			List<Document> tokenDocuments = new ArrayList<>();
 
 			Document document = new Document();
@@ -136,7 +136,7 @@ public class WorkflowMetricsSLAProcessorTest extends PowerMockito {
 	public void testProcessOverdueInstance() {
 		LocalDateTime localDateTime = _createLocalDateTime();
 
-		_documentsSupplier = () -> {
+		_getTokenDocumentsSupplier = () -> {
 			List<Document> tokenDocuments = new ArrayList<>();
 
 			Document document = new Document();
@@ -165,7 +165,7 @@ public class WorkflowMetricsSLAProcessorTest extends PowerMockito {
 	public void testProcessOverdueInstanceWithParallelTasks() {
 		LocalDateTime localDateTime = _createLocalDateTime();
 
-		_documentsSupplier = () -> {
+		_getTokenDocumentsSupplier = () -> {
 			List<Document> tokenDocuments = new ArrayList<>();
 
 			Document document = new Document();
@@ -233,7 +233,7 @@ public class WorkflowMetricsSLAProcessorTest extends PowerMockito {
 
 	private final DateTimeFormatter _dateTimeFormatter =
 		DateTimeFormatter.ofPattern("yyyyMMddHHmmss");
-	private Supplier<List<Document>> _documentsSupplier;
+	private Supplier<List<Document>> _getTokenDocumentsSupplier;
 	private WorkflowMetricsSLAProcessor _workflowMetricsSLAProcessor;
 
 }

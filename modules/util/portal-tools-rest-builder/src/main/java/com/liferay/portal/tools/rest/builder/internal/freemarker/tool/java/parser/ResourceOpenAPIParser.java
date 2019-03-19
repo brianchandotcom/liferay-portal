@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.tools.rest.builder.internal.freemarker.tool.java.JavaMethodParameter;
 import com.liferay.portal.tools.rest.builder.internal.freemarker.tool.java.JavaMethodSignature;
 import com.liferay.portal.tools.rest.builder.internal.freemarker.tool.java.parser.util.OpenAPIParserUtil;
+import com.liferay.portal.tools.rest.builder.internal.freemarker.util.OpenAPIUtil;
 import com.liferay.portal.vulcan.multipart.MultipartBody;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
@@ -470,19 +471,7 @@ public class ResourceOpenAPIParser {
 				methodNameSegments.add(pathName);
 			}
 			else {
-				String name = pathName;
-
-				if (name.endsWith("ses")) {
-					name = name.substring(0, name.length() - 3) + "s";
-				}
-				else if (name.endsWith("ies")) {
-					name = name.substring(0, name.length() - 3) + "y";
-				}
-				else if (name.endsWith("s")) {
-					name = name.substring(0, name.length() - 1);
-				}
-
-				methodNameSegments.add(name);
+				methodNameSegments.add(OpenAPIUtil.formatSingular(pathName));
 			}
 		}
 

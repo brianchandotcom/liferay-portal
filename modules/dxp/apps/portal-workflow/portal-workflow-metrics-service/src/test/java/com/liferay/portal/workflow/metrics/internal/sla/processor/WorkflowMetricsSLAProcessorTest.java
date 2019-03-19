@@ -24,13 +24,10 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.function.Supplier;
 
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -55,8 +52,7 @@ public class WorkflowMetricsSLAProcessorTest extends PowerMockito {
 
 		WorkflowMetricsSLAProcessResult workflowMetricsSLAProcessResult =
 			_process(
-				5000,
-				localDateTime,
+				5000, localDateTime,
 				_createDocument(
 					_createField(
 						"createDate",
@@ -75,8 +71,7 @@ public class WorkflowMetricsSLAProcessorTest extends PowerMockito {
 
 		WorkflowMetricsSLAProcessResult workflowMetricsSLAProcessResult =
 			_process(
-				10000,
-				localDateTime,
+				10000, localDateTime,
 				_createDocument(
 					_createField(
 						"createDate",
@@ -96,24 +91,13 @@ public class WorkflowMetricsSLAProcessorTest extends PowerMockito {
 			0, workflowMetricsSLAProcessResult.getRemainingTime());
 	}
 
-	public Document _createDocument(Field... fields) {
-		return new Document() {
-			{
-				for (Field field : fields) {
-					addField(field);
-				}
-			}
-		};
-	}
-
 	@Test
 	public void testProcessOverdueInstance() {
 		LocalDateTime localDateTime = _createLocalDateTime();
 
 		WorkflowMetricsSLAProcessResult workflowMetricsSLAProcessResult =
 			_process(
-				5000,
-				localDateTime,
+				5000, localDateTime,
 				_createDocument(
 					_createField(
 						"createDate",
@@ -132,8 +116,7 @@ public class WorkflowMetricsSLAProcessorTest extends PowerMockito {
 
 		WorkflowMetricsSLAProcessResult workflowMetricsSLAProcessResult =
 			_process(
-				5000,
-				localDateTime,
+				5000, localDateTime,
 				_createDocument(
 					_createField(
 						"createDate",
@@ -153,7 +136,31 @@ public class WorkflowMetricsSLAProcessorTest extends PowerMockito {
 			-5000, workflowMetricsSLAProcessResult.getRemainingTime());
 	}
 
-	protected WorkflowMetricsSLAProcessResult _process(
+	private Document _createDocument(Field... fields) {
+		return new Document() {
+			{
+				for (Field field : fields) {
+					addField(field);
+				}
+			}
+		};
+	}
+
+	private Field _createField(String fieldName, LocalDateTime localDateTime) {
+		Field field = new Field(fieldName);
+
+		field.addValue(localDateTime.format(_dateTimeFormatter));
+
+		return field;
+	}
+
+	private LocalDateTime _createLocalDateTime() {
+		LocalDateTime localDateTime = LocalDateTime.now();
+
+		return localDateTime.withNano(0);
+	}
+
+	private WorkflowMetricsSLAProcessResult _process(
 		long duration, LocalDateTime localDateTime,
 		Document... tokenDocuments) {
 
@@ -180,20 +187,6 @@ public class WorkflowMetricsSLAProcessorTest extends PowerMockito {
 
 		return workflowMetricsSLAProcessor.process(
 			0, 0, localDateTime, workflowMetricsSLADefinition);
-	}
-
-	protected Field _createField(String fieldName, LocalDateTime localDateTime) {
-		Field field = new Field(fieldName);
-
-		field.addValue(localDateTime.format(_dateTimeFormatter));
-
-		return field;
-	}
-
-	private LocalDateTime _createLocalDateTime() {
-		LocalDateTime localDateTime = LocalDateTime.now();
-
-		return localDateTime.withNano(0);
 	}
 
 	private final DateTimeFormatter _dateTimeFormatter =

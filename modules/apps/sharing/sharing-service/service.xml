@@ -56,7 +56,7 @@
 			<finder-column name="classNameId" />
 			<finder-column name="classPK" />
 		</finder>
-		<finder name="TU_C_C" return-type="SharingEntry">
+		<finder name="TU_C_C" return-type="SharingEntry" unique="true">
 			<finder-column name="toUserId" />
 			<finder-column name="classNameId" />
 			<finder-column name="classPK" />

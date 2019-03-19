@@ -4,6 +4,7 @@
  * ColumnOverlayGrid
  */
 {template .render}
+	{@param? containerType: string}
 	{@param? padding: number}
 
 	{let $containerClasses kind="text"}
@@ -22,9 +23,14 @@
 		{/call}
 
 		{let $rowContainerClasses kind="text"}
-			container-fluid
+			h-100
 			{sp}p-0
-			{sp}h-100
+
+			{if $containerType == 'fixed'}
+				{sp}container
+			{else}
+				{sp}container-fluid
+			{/if}
 		{/let}
 
 		<div class="{$rowContainerClasses}">

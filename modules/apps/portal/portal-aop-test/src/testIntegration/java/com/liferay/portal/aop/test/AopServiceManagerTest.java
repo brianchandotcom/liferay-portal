@@ -15,7 +15,6 @@
 package com.liferay.portal.aop.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.petra.concurrent.DefaultNoticeableFuture;
 import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
@@ -28,13 +27,19 @@ import com.liferay.portal.spring.aop.AopCacheManager;
 import com.liferay.portal.spring.aop.AopInvocationHandler;
 import com.liferay.portal.spring.transaction.TransactionAttributeAdapter;
 import com.liferay.portal.spring.transaction.TransactionExecutor;
+import com.liferay.portal.test.log.CaptureAppender;
+import com.liferay.portal.test.log.Log4JLoggerTestUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
-import java.lang.reflect.Constructor;
-
 import java.util.Dictionary;
+import java.util.List;
 import java.util.Set;
+import java.util.concurrent.CountDownLatch;
+
+import org.apache.log4j.Level;
+import org.apache.log4j.spi.LoggingEvent;
+import org.apache.log4j.spi.ThrowableInformation;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -210,41 +215,40 @@ public class AopServiceManagerTest {
 		ServiceObjects<TestService> serviceObjects =
 			_bundleContext.getServiceObjects(serviceReference);
 
-		DefaultNoticeableFuture<Throwable> defaultNoticeableFuture =
-			new DefaultNoticeableFuture<>();
+		CountDownLatch countDownLatch = new CountDownLatch(1);
 
 		LogListener logListener = logEntry -> {
 			if (logEntry.getLogLevel() == LogLevel.ERROR) {
-				defaultNoticeableFuture.set(logEntry.getException());
+				countDownLatch.countDown();
 			}
 		};
-
-		Object factory = ReflectionTestUtil.getFieldValue(
-			_logReaderService, "factory");
-
-		Object listeners = ReflectionTestUtil.getFieldValue(
-			factory, "listeners");
-
-		Class<?> listenersClass = listeners.getClass();
-
-		Constructor<?> constructor = listenersClass.getConstructor(int.class);
-
-		Object newListeners = constructor.newInstance(0);
-
-		ReflectionTestUtil.setFieldValue(factory, "listeners", newListeners);
 
 		_logReaderService.addLogListener(logListener);
 
 		Class<?> aopInterface = TestServiceImpl._AOP_INTERFACES[0];
 
-		try {
+		try (CaptureAppender captureAppender =
+				Log4JLoggerTestUtil.configureLog4JLogger(
+					"osgi.logging.com_liferay_portal_aop_test", Level.ERROR)) {
+
 			TestServiceImpl._AOP_INTERFACES[0] = AopService.class;
 
 			Assert.assertNull(serviceObjects.getService());
 
-			Throwable throwable = defaultNoticeableFuture.get();
+			countDownLatch.await();
 
-			Assert.assertNotNull(throwable);
+			List<LoggingEvent> loggingEvents =
+				captureAppender.getLoggingEvents();
+
+			Assert.assertEquals(
+				loggingEvents.toString(), 1, loggingEvents.size());
+
+			LoggingEvent loggingEvent = loggingEvents.get(0);
+
+			ThrowableInformation throwableInformation =
+				loggingEvent.getThrowableInformation();
+
+			Throwable throwable = throwableInformation.getThrowable();
 
 			Assert.assertTrue(
 				throwable.toString(), throwable instanceof ServiceException);
@@ -265,8 +269,6 @@ public class AopServiceManagerTest {
 			TestServiceImpl._AOP_INTERFACES[0] = aopInterface;
 
 			aopServiceServiceRegistration.unregister();
-
-			ReflectionTestUtil.setFieldValue(factory, "listeners", listeners);
 		}
 	}
 

@@ -17,42 +17,14 @@
 <%@ include file="/entries/init.jsp" %>
 
 <%
-String mode = ParamUtil.getString(request, "p_l_mode", Constants.VIEW);
-
-String redirect = themeDisplay.getURLCurrent();
-
-if ((layout.getClassPK() > 0) && (PortalUtil.getClassNameId(Layout.class) == layout.getClassNameId())) {
-	redirect = PortalUtil.getLayoutFullURL(LayoutLocalServiceUtil.getLayout(layout.getClassPK()), themeDisplay);
-}
-else {
-	Layout draftLayout = LayoutLocalServiceUtil.fetchLayout(PortalUtil.getClassNameId(Layout.class), layout.getPlid());
-
-	if (draftLayout != null) {
-		redirect = PortalUtil.getLayoutFullURL(draftLayout, themeDisplay);
-	}
-}
-
-String title = StringPool.BLANK;
-
-if (Objects.equals(mode, Constants.EDIT)) {
-	redirect = HttpUtil.setParameter(redirect, "p_l_mode", Constants.VIEW);
-
-	title = LanguageUtil.get(resourceBundle, "edit-mode");
-}
-else {
-	redirect = HttpUtil.setParameter(redirect, "p_l_mode", Constants.EDIT);
-
-	title = LanguageUtil.get(resourceBundle, "view-mode");
-}
-
 String portletNamespace = PortalUtil.getPortletNamespace(ContentPageEditorPortletKeys.CONTENT_PAGE_EDITOR_PORTLET);
 %>
 
 <label class="align-text-top toggle-switch">
-	<input <%= Objects.equals(mode, Constants.EDIT) ? "checked=\"checked\"" : StringPool.BLANK %> class="toggle-switch-check" id="<%= portletNamespace %>mode" type="checkbox" />
+	<input <%= Objects.equals(toggleEditLayoutModeDisplayContext.getMode(), Constants.EDIT) ? "checked=\"checked\"" : StringPool.BLANK %> class="toggle-switch-check" id="<%= portletNamespace %>mode" type="checkbox" />
 
 	<span aria-hidden="true" class="toggle-switch-bar">
-		<span class="toggle-switch-handle" data-label-off="" data-label-on="" title="<%= title %>">
+		<span class="toggle-switch-handle" data-label-off="" data-label-on="" title="<%= toggleEditLayoutModeDisplayContext.getTitle() %>">
 			<span class="button-icon button-icon-on toggle-switch-icon">
 				<svg aria-hidden="true" class="lexicon-icon lexicon-icon-pencil">
 					<use xlink:href="<%= themeDisplay.getPathThemeImages() + "/lexicon/icons.svg#pencil" %>"></use>
@@ -71,7 +43,7 @@ String portletNamespace = PortalUtil.getPortletNamespace(ContentPageEditorPortle
 	$('#<%= portletNamespace %>mode').on(
 		'change',
 		function(event) {
-			Liferay.Util.navigate('<%= HtmlUtil.escapeJS(redirect) %>');
+			Liferay.Util.navigate('<%= toggleEditLayoutModeDisplayContext.getRedirect() %>');
 		}
 	);
 </aui:script>

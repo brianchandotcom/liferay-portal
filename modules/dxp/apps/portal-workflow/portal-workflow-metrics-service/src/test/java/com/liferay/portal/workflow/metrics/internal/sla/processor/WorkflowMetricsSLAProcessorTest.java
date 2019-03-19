@@ -65,10 +65,10 @@ public class WorkflowMetricsSLAProcessorTest extends PowerMockito {
 			10000, 10000, localDateTime, true, 0,
 			_createDocument(
 				_createField(
-					"createDate", localDateTime.minus(10, ChronoUnit.SECONDS)),
-				_createField(
 					"completionDate",
-					localDateTime.minus(4, ChronoUnit.SECONDS))),
+					localDateTime.minus(4, ChronoUnit.SECONDS)),
+				_createField(
+					"createDate", localDateTime.minus(10, ChronoUnit.SECONDS))),
 			_createDocument(
 				_createField(
 					"createDate", localDateTime.minus(5, ChronoUnit.SECONDS))));
@@ -93,10 +93,10 @@ public class WorkflowMetricsSLAProcessorTest extends PowerMockito {
 			5000, 10000, localDateTime, false, -5000,
 			_createDocument(
 				_createField(
-					"createDate", localDateTime.minus(10, ChronoUnit.SECONDS)),
-				_createField(
 					"completionDate",
-					localDateTime.minus(4, ChronoUnit.SECONDS))),
+					localDateTime.minus(4, ChronoUnit.SECONDS)),
+				_createField(
+					"createDate", localDateTime.minus(10, ChronoUnit.SECONDS))),
 			_createDocument(
 				_createField(
 					"createDate", localDateTime.minus(5, ChronoUnit.SECONDS))));

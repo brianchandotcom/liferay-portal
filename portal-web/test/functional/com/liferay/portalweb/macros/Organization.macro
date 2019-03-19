@@ -478,7 +478,7 @@ definition {
 	}
 
 	macro gotoIdentificationCP {
-		AssertClick(locator1 = "NavTab#IDENTIFICATION", value1 = "Identification");
+		Navigator.gotoNavTab(navTab = "Identification");
 
 		if (isSet(panel)) {
 			Panel.expandPanel(panel = "${panel}");

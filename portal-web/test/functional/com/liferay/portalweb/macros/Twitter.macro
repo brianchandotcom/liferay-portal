@@ -7,7 +7,7 @@ definition {
 
 		SelectFrame(locator1 = "IFrame#DIALOG");
 
-		AssertClick(locator1 = "NavTab#IDENTIFICATION", value1 = "Identification");
+		Navigator.gotoNavTab(navTab = "Identification");
 
 		Panel.expandPanel(panel = "Social Network");
 

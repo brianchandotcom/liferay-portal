@@ -1594,7 +1594,7 @@ definition {
 	macro viewEmailConfigurationCP {
 		SiteAdmin.gotoPortletConfiguration();
 
-		AssertTextEquals(locator1 = "NavTab#EMAIL_FROM", value1 = "Email From");
+		Navigator.gotoNavTab(navTab = "Email From");
 
 		AssertTextEquals(
 			locator1 = "WCConfiguration#NAVIGATION_WEB_CONTENT_ADDED_EMAIL",

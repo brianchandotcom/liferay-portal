@@ -6,48 +6,48 @@ definition {
 	macro gotoCAS {
 		PortalSettingsNavigator.expandAuthenticationPanel();
 
-		AssertClick(locator1 = "NavTab#CAS", value1 = "CAS");
+		Navigator.gotoNavTab(navTab = "CAS");
 	}
 
 	macro gotoFacebook {
 		PortalSettingsNavigator.expandAuthenticationPanel();
 
-		AssertClick(locator1 = "NavTab#FACEBOOK", value1 = "Facebook");
+		Navigator.gotoNavTab(navTab = "Facebook");
 	}
 
 	macro gotoGoogle {
 		PortalSettingsNavigator.expandAuthenticationPanel();
 
-		AssertClick(locator1 = "NavTab#GOOGLE", value1 = "Google");
+		Navigator.gotoNavTab(navTab = "Google");
 	}
 
 	macro gotoLDAP {
 		PortalSettingsNavigator.expandAuthenticationPanel();
 
-		AssertClick(locator1 = "NavTab#LDAP", value1 = "LDAP");
+		Navigator.gotoNavTab(navTab = "LDAP");
 	}
 
 	macro gotoNTLM {
 		PortalSettingsNavigator.expandAuthenticationPanel();
 
-		AssertClick(locator1 = "NavTab#NTLM", value1 = "NTLM");
+		Navigator.gotoNavTab(navTab = "NTLM");
 	}
 
 	macro gotoOpenID {
 		PortalSettingsNavigator.expandAuthenticationPanel();
 
-		AssertClick(locator1 = "NavTab#OPENID", value1 = "OpenID");
+		Navigator.gotoNavTab(navTab = "OpenID");
 	}
 
 	macro gotoOpenIDConnect {
 		PortalSettingsNavigator.expandAuthenticationPanel();
 
-		AssertClick(locator1 = "NavTab#OPENID_CONNECT", value1 = "OpenId Connect");
+		Navigator.gotoNavTab(navTab = "OpenID Connect");
 	}
 
 	macro gotoOpenSSO {
 		PortalSettingsNavigator.expandAuthenticationPanel();
 
-		AssertClick(locator1 = "NavTab#OPENSSO", value1 = "OpenSSO");
+		Navigator.gotoNavTab(navTab = "OpenSSO");
 	}
 }

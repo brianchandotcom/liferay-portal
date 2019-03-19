@@ -165,7 +165,7 @@ definition {
 	}
 
 	macro configureEmailFrom {
-		AssertClick(locator1 = "NavTab#EMAIL_FROM", value1 = "Email From");
+		Navigator.gotoNavTab(navTab = "Email From");
 
 		Type(locator1 = "TextInput#EMAIL_FROM_NAME", value1 = "${emailFromName}");
 
@@ -306,7 +306,7 @@ definition {
 	macro tearDownConfiguration {
 		ReportsAdmin.gotoConfiguration();
 
-		AssertClick(locator1 = "NavTab#EMAIL_FROM", value1 = "Email From");
+		Navigator.gotoNavTab(navTab = "Email From");
 
 		Type(locator1 = "TextInput#EMAIL_FROM_NAME", value1 = "Joe Bloggs");
 

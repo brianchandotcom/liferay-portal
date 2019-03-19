@@ -32,12 +32,7 @@ definition {
 	}
 
 	macro gotoTimelineTab {
-		AssertElementPresent.assertVisible(
-			locator1 = "NavTab#TIMELINE",
-			value1 = "Timeline"
-		);
-
-		AssertClick(locator1 = "NavTab#TIMELINE", value1 = "Timeline");
+		Navigator.gotoNavTab(navTab = "Timeline");
 
 		AssertTextEquals(locator1 = "Microblogs#ACTIVE_TAB", value1 = "Timeline");
 	}

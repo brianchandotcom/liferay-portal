@@ -219,11 +219,17 @@ definition {
 
 		Click(locator1 = "ItemSelector#FILE_INFO_ICON");
 
-		AssertElementPresent(locator1 = "NavTab#FILE_INFO");
+		AssertElementPresent(
+			locator1 = "NavTab#TAB_LINK",
+			key_tab = "File Info"
+		);
 
-		AssertElementPresent(locator1 = "NavTab#VERSION");
+		AssertElementPresent(
+			locator1 = "NavTab#TAB_LINK",
+			key_tab = "Version"
+		);
 
-		AssertClick(locator1 = "NavTab#FILE_INFO", value1 = "File Info");
+		Navigator.gotoNavTab(navTab = "File Info");
 
 		AssertTextEquals(
 			locator1 = "ItemSelector#SIDEBAR_FILE_INFO_FORMAT",
@@ -245,7 +251,11 @@ definition {
 			value1 = "${lastModifiedBy}"
 		);
 
-		AssertClick(locator1 = "NavTab#VERSION", value1 = "Version");
+		var key_tab = "Version";
+
+		AssertClick(
+			locator1 = "NavTab#TAB_LINK",
+			value1 = "Version");
 
 		AssertTextEquals(
 			locator1 = "ItemSelector#SIDEBAR_VERSION_VERSION",

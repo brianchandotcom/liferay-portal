@@ -165,7 +165,7 @@ definition {
 	}
 
 	macro addFieldViaJSON {
-		Click(locator1 = "NavTab#SOURCE", value1 = "Source");
+		Navigator.gotoNavTab(navTab = "Source");
 
 		var sourceJSON = JSONUtil.formatJSONString("${sourceJSON}");
 

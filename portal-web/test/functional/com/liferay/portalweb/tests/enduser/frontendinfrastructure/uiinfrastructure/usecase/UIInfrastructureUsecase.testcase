@@ -115,7 +115,12 @@ definition {
 
 			IFrame.selectConfigurationFrame();
 
-			AssertTextEquals(locator1 = "NavTab#GENERAL", value1 = "General");
+			var key_tab = "General";
+
+			AssertTextEquals(
+				locator1 = "NavTab#TAB_LINK",
+				value1 = "General"
+			);
 
 			IFrame.closeFrame();
 		}

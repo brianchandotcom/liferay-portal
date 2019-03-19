@@ -340,10 +340,7 @@ definition {
 	macro editConfigurationUsersDefaultUserAssociationsOrganizationSitesCP {
 		Panel.expandPanel(panel = "Users");
 
-		AssertClick(
-			locator1 = "NavTab#DEFAULT_USER_ASSOCIATIONS",
-			value1 = "Default User Associations"
-		);
+		Navigator.gotoNavTab(navTab = "Default User Associations");
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "PortalSettingsUsers#DEFAULT_USER_ASSOCIATIONS_ORGANIZATION_SITES_HEADER",
@@ -359,10 +356,7 @@ definition {
 
 		Panel.expandPanel(panel = "Users");
 
-		AssertClick(
-			locator1 = "NavTab#DEFAULT_USER_ASSOCIATIONS",
-			value1 = "Default User Associations"
-		);
+		Navigator.gotoNavTab(navTab = "Default User Associations");
 
 		AssertTextEquals(
 			locator1 = "PortalSettingsUsers#DEFAULT_USER_ASSOCIATIONS_ORGANIZATION_SITES_FIELD",
@@ -373,10 +367,7 @@ definition {
 	macro editConfigurationUsersDefaultUserAssociationsRolesCP {
 		Panel.expandPanel(panel = "Users");
 
-		AssertClick(
-			locator1 = "NavTab#DEFAULT_USER_ASSOCIATIONS",
-			value1 = "Default User Associations"
-		);
+		Navigator.gotoNavTab(navTab = "Default User Associations");
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "PortalSettingsUsers#DEFAULT_USER_ASSOCIATIONS_ROLES_HEADER",
@@ -392,10 +383,7 @@ definition {
 
 		Panel.expandPanel(panel = "Users");
 
-		AssertClick(
-			locator1 = "NavTab#DEFAULT_USER_ASSOCIATIONS",
-			value1 = "Default User Associations"
-		);
+		Navigator.gotoNavTab(navTab = "Default User Associations");
 
 		Type.clickAtType(
 			locator1 = "PortalSettingsUsers#DEFAULT_USER_ASSOCIATIONS_ROLES_FIELD",
@@ -406,10 +394,7 @@ definition {
 	macro editConfigurationUsersDefaultUserAssociationsSitesCP {
 		Panel.expandPanel(panel = "Users");
 
-		AssertClick(
-			locator1 = "NavTab#DEFAULT_USER_ASSOCIATIONS",
-			value1 = "Default User Associations"
-		);
+		Navigator.gotoNavTab(navTab = "Default User Associations");
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "PortalSettingsUsers#DEFAULT_USER_ASSOCIATIONS_SITES_HEADER",
@@ -425,10 +410,7 @@ definition {
 
 		Panel.expandPanel(panel = "Users");
 
-		AssertClick(
-			locator1 = "NavTab#DEFAULT_USER_ASSOCIATIONS",
-			value1 = "Default User Associations"
-		);
+		Navigator.gotoNavTab(navTab = "Default User Associations");
 
 		AssertTextEquals(
 			locator1 = "PortalSettingsUsers#DEFAULT_USER_ASSOCIATIONS_SITES_FIELD",
@@ -439,10 +421,7 @@ definition {
 	macro editConfigurationUsersDefaultUserAssociationsUserGroupsCP {
 		Panel.expandPanel(panel = "Users");
 
-		AssertClick(
-			locator1 = "NavTab#DEFAULT_USER_ASSOCIATIONS",
-			value1 = "Default User Associations"
-		);
+		Navigator.gotoNavTab(navTab = "Default User Associations");
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "PortalSettingsUsers#DEFAULT_USER_ASSOCIATIONS_USER_GROUPS_HEADER",
@@ -458,10 +437,7 @@ definition {
 
 		Panel.expandPanel(panel = "Users");
 
-		AssertClick(
-			locator1 = "NavTab#DEFAULT_USER_ASSOCIATIONS",
-			value1 = "Default User Associations"
-		);
+		Navigator.gotoNavTab(navTab = "Default User Associations");
 
 		AssertTextEquals(
 			locator1 = "PortalSettingsUsers#DEFAULT_USER_ASSOCIATIONS_USER_GROUPS_FIELD",
@@ -472,10 +448,7 @@ definition {
 	macro editConfigurationUsersEmailNotificationsCP {
 		Panel.expandPanel(panel = "Email Notifications");
 
-		AssertClick(
-			locator1 = "NavTab#ACCOUNT_CREATED_NOTIFICATION",
-			value1 = "Account Created Notification"
-		);
+		Navigator.gotoNavTab(navTab = "Account Created Notification");
 
 		Type.typeCKEditor(
 			locator1 = "CKEditor#BODY_FIELD",
@@ -488,10 +461,7 @@ definition {
 	macro editConfigurationUsersEmailVerificationNotificationsCP {
 		Panel.expandPanel(panel = "Email Notifications");
 
-		AssertClick(
-			locator1 = "NavTab#EMAIL_VERIFICATION_NOTIFICATION",
-			value1 = "Email Verification Notification"
-		);
+		Navigator.gotoNavTab(navTab = "Email Verification Notification");
 
 		if ("${emailVerificationURL}" == "true") {
 			Type.typeEditor(
@@ -589,10 +559,7 @@ definition {
 	macro enterReservedEmailAddressCP {
 		Panel.expandPanel(panel = "Users");
 
-		AssertClick(
-			locator1 = "NavTab#RESERVED_CREDENTIALS",
-			value1 = "Reserved Credentials"
-		);
+		Navigator.gotoNavTab(navTab = "Reserved Credentials");
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "PortalSettingsUsers#RESERVED_CREDENTIALS_EMAIL_ADDRESSES_HEADER",
@@ -608,10 +575,7 @@ definition {
 
 		Panel.expandPanel(panel = "Users");
 
-		AssertClick(
-			locator1 = "NavTab#RESERVED_CREDENTIALS",
-			value1 = "Reserved Credentials"
-		);
+		Navigator.gotoNavTab(navTab = "Reserved Credentials");
 
 		AssertTextEquals(
 			locator1 = "PortalSettingsUsers#RESERVED_CREDENTIALS_EMAIL_ADDRESSES_FIELD",
@@ -622,10 +586,7 @@ definition {
 	macro enterReservedScreenNameCP {
 		Panel.expandPanel(panel = "Users");
 
-		AssertClick(
-			locator1 = "NavTab#RESERVED_CREDENTIALS",
-			value1 = "Reserved Credentials"
-		);
+		Navigator.gotoNavTab(navTab = "Reserved Credentials");
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "PortalSettingsUsers#RESERVED_CREDENTIALS_SCREEN_NAMES_HEADER",
@@ -641,10 +602,7 @@ definition {
 
 		Panel.expandPanel(panel = "Users");
 
-		AssertClick(
-			locator1 = "NavTab#RESERVED_CREDENTIALS",
-			value1 = "Reserved Credentials"
-		);
+		Navigator.gotoNavTab(navTab = "Reserved Credentials");
 
 		AssertTextEquals(
 			locator1 = "PortalSettingsUsers#RESERVED_CREDENTIALS_SCREEN_NAMES_FIELD",
@@ -707,10 +665,7 @@ definition {
 
 		Panel.expandPanel(panel = "Users");
 
-		AssertClick(
-			locator1 = "NavTab#DEFAULT_USER_ASSOCIATIONS",
-			value1 = "Default User Associations"
-		);
+		Navigator.gotoNavTab(navTab = "Default User Associations");
 
 		Type(
 			locator1 = "PortalSettingsUsers#DEFAULT_USER_ASSOCIATIONS_ORGANIZATION_SITES_FIELD",
@@ -732,10 +687,7 @@ definition {
 			value1 = ""
 		);
 
-		AssertClick(
-			locator1 = "NavTab#RESERVED_CREDENTIALS",
-			value1 = "Reserved Credentials"
-		);
+		Navigator.gotoNavTab(navTab = "Reserved Credentials");
 
 		Type(
 			locator1 = "PortalSettingsUsers#RESERVED_CREDENTIALS_EMAIL_ADDRESSES_FIELD",
@@ -1143,10 +1095,7 @@ definition {
 	macro viewConfigurationUsersDefaultUserAssociationsOrganizationSitesCP {
 		Panel.expandPanel(panel = "Users");
 
-		AssertClick(
-			locator1 = "NavTab#DEFAULT_USER_ASSOCIATIONS",
-			value1 = "Default User Associations"
-		);
+		Navigator.gotoNavTab(navTab = "Default User Associations");
 
 		AssertTextEquals(
 			locator1 = "PortalSettingsUsers#DEFAULT_USER_ASSOCIATIONS_ORGANIZATION_SITES_FIELD",
@@ -1157,10 +1106,7 @@ definition {
 	macro viewConfigurationUsersDefaultUserAssociationsRolesCP {
 		Panel.expandPanel(panel = "Users");
 
-		AssertClick(
-			locator1 = "NavTab#DEFAULT_USER_ASSOCIATIONS",
-			value1 = "Default User Associations"
-		);
+		Navigator.gotoNavTab(navTab = "Default User Associations");
 
 		Type.clickAtType(
 			locator1 = "PortalSettingsUsers#DEFAULT_USER_ASSOCIATIONS_ROLES_FIELD",
@@ -1171,10 +1117,7 @@ definition {
 	macro viewConfigurationUsersDefaultUserAssociationsSitesCP {
 		Panel.expandPanel(panel = "Users");
 
-		AssertClick(
-			locator1 = "NavTab#DEFAULT_USER_ASSOCIATIONS",
-			value1 = "Default User Associations"
-		);
+		Navigator.gotoNavTab(navTab = "Default User Associations");
 
 		AssertTextEquals(
 			locator1 = "PortalSettingsUsers#DEFAULT_USER_ASSOCIATIONS_SITES_FIELD",
@@ -1185,10 +1128,7 @@ definition {
 	macro viewConfigurationUsersDefaultUserAssociationsUserGroupsCP {
 		Panel.expandPanel(panel = "Users");
 
-		AssertClick(
-			locator1 = "NavTab#DEFAULT_USER_ASSOCIATIONS",
-			value1 = "Default User Associations"
-		);
+		Navigator.gotoNavTab(navTab = "Default User Associations");
 
 		AssertTextEquals(
 			locator1 = "PortalSettingsUsers#DEFAULT_USER_ASSOCIATIONS_USER_GROUPS_FIELD",
@@ -1223,10 +1163,7 @@ definition {
 	macro viewDefaultUserAssociationsCP {
 		Panel.expandPanel(panel = "Users");
 
-		AssertClick(
-			locator1 = "NavTab#DEFAULT_USER_ASSOCIATIONS",
-			value1 = "Default User Associations"
-		);
+		Navigator.gotoNavTab(navTab = "Default User Associations");
 
 		AssertElementPresent(
 			locator1 = "PortalSettingsUsers#APPLY_TO_EXISTING_USERS_CHECKBOX"
@@ -1276,10 +1213,7 @@ definition {
 	macro viewEmailNotificationsAccountCreatedNotificationCP {
 		Panel.expandPanel(panel = "Email Notifications");
 
-		AssertClick(
-			locator1 = "NavTab#ACCOUNT_CREATED_NOTIFICATION",
-			value1 = "Account Created Notification"
-		);
+		Navigator.gotoNavTab(navTab = "Account Created Notification");
 
 		AssertElementPresent(
 			locator1 = "PortalSettingsEmailNotifications#EMAIL_NOTIFICATIONS_ACCOUNT_CREATED_NOTIFICATION_ENABLED_CHECKBOX"
@@ -1317,10 +1251,7 @@ definition {
 	macro viewEmailNotificationsPasswordChangedNotificationCP {
 		Panel.expandPanel(panel = "Email Notifications");
 
-		AssertClick(
-			locator1 = "NavTab#PASSWORD_CHANGED_NOTIFICATION",
-			value1 = "Password Changed Notification"
-		);
+		Navigator.gotoNavTab(navTab = "Password Changed Notification");
 
 		AssertElementPresent(
 			locator1 = "PortalSettingsEmailNotifications#EMAIL_NOTIFICATIONS_PASSWORD_CHANGED_NOTIFICATION_SUBJECT_HEADER"
@@ -1344,7 +1275,7 @@ definition {
 	macro viewEmailNotificationsSenderCP {
 		Panel.expandPanel(panel = "Email Notifications");
 
-		AssertClick(locator1 = "NavTab#SENDER", value1 = "Sender");
+		Navigator.gotoNavTab(navTab = "Sender");
 
 		AssertTextEquals(
 			locator1 = "PortalSettingsEmailNotifications#EMAIL_NOTIFICATIONS_SENDER_NAME_HEADER",
@@ -1380,10 +1311,7 @@ definition {
 	macro viewReservedCredentialsScreenNamesCP {
 		Panel.expandPanel(panel = "Users");
 
-		AssertClick(
-			locator1 = "NavTab#RESERVED_CREDENTIALS",
-			value1 = "Reserved Credentials"
-		);
+		Navigator.gotoNavTab(navTab = "Reserved Credentials");
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "PortalSettingsUsers#RESERVED_CREDENTIALS_SCREEN_NAMES_HEADER",

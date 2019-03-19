@@ -1,17 +1,14 @@
 definition {
 	macro gotoGeneral {
-		AssertClick(locator1 = "NavTab#GENERAL", value1 = "General");
+		Navigator.gotoNavTab(navTab = "General");
 	}
 
 	macro gotoIdentityProvider {
-		AssertClick(locator1 = "NavTab#IDENTITY_PROVIDER", value1 = "Identity Provider");
+		Navigator.gotoNavTab(navTab = "Identity Provider");
 	}
 
 	macro gotoIdentityProviderConnections {
-		AssertClick(
-			locator1 = "NavTab#IDENTITY_PROVIDER_CONNECTIONS",
-			value1 = "Identity Provider Connections"
-		);
+		Navigator.gotoNavTab(navTab = "Identity Provider Connections");
 	}
 
 	macro gotoServiceProvider {
@@ -19,9 +16,6 @@ definition {
 	}
 
 	macro gotoServiceProviderConnection {
-		AssertClick(
-			locator1 = "NavTab#SERVICE_PROVIDER_CONNECTIONS",
-			value1 = "Service Provider Connections"
-		);
+		Navigator.gotoNavTab(navTab = "Service Provider Connections");
 	}
 }

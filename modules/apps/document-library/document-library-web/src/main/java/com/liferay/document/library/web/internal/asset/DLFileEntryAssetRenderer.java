@@ -353,10 +353,11 @@ public class DLFileEntryAssetRenderer
 		LiferayPortletResponse liferayPortletResponse,
 		String noSuchEntryRedirect) {
 
-		PortletLayoutFinder.Result result = DLUtil.getResultURLViewInContext(
-			this, liferayPortletRequest);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)liferayPortletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
-		if (result == null) {
+		if (!DLUtil.hasViewInContextGroupLayout(themeDisplay)) {
 			return null;
 		}
 

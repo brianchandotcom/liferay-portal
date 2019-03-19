@@ -700,16 +700,15 @@ public class DLImpl implements DL {
 	}
 
 	@Override
-	public PortletLayoutFinder.Result getResultURLViewInContext(
-		AssetRenderer assetRenderer,
-		LiferayPortletRequest liferayPortletRequest) {
+	public boolean hasViewInContextGroupLayout(ThemeDisplay themeDisplay) {
+		PortletLayoutFinder.Result result = _getPortletLayoutFinderResult(
+			themeDisplay, themeDisplay.getSiteGroupId());
 
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)liferayPortletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
+		if (result == null) {
+			return false;
+		}
 
-		return _getPortletLayoutFinderResult(
-			themeDisplay, assetRenderer.getGroupId());
+		return true;
 	}
 
 	@Override

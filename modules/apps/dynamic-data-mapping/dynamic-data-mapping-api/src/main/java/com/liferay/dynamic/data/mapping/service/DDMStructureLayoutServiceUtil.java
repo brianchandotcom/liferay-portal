@@ -50,6 +50,23 @@ public class DDMStructureLayoutServiceUtil {
 		return getService().getOSGiServiceIdentifier();
 	}
 
+	/**
+	 * NOTE FOR DEVELOPERS:
+	 *
+	 * Never reference this class directly. Always use <code>DDMStructureLayoutServiceUtil</code> to access the ddm structure layout remote service.
+	 */
+	public static java.util.List
+		<com.liferay.dynamic.data.mapping.model.DDMStructureLayout>
+				getStructureLayouts(long groupId, int start, int end)
+			throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().getStructureLayouts(groupId, start, end);
+	}
+
+	public static int getStructureLayoutsCount(long groupId) {
+		return getService().getStructureLayoutsCount(groupId);
+	}
+
 	public static DDMStructureLayoutService getService() {
 		return _serviceTracker.getService();
 	}

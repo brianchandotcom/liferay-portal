@@ -16,9 +16,15 @@ package com.liferay.dynamic.data.mapping.service.http;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.dynamic.data.mapping.service.DDMStructureLayoutServiceUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+
+import java.rmi.RemoteException;
+
 /**
  * Provides the SOAP utility for the
- * <code>com.liferay.dynamic.data.mapping.service.DDMStructureLayoutServiceUtil</code> service
+ * <code>DDMStructureLayoutServiceUtil</code> service
  * utility. The static methods of this class call the same methods of the
  * service utility. However, the signatures are different because it is
  * difficult for SOAP to support certain types.
@@ -57,4 +63,51 @@ import aQute.bnd.annotation.ProviderType;
  */
 @ProviderType
 public class DDMStructureLayoutServiceSoap {
+
+	/**
+	 * NOTE FOR DEVELOPERS:
+	 *
+	 * Never reference this class directly. Always use <code>DDMStructureLayoutServiceUtil</code> to access the ddm structure layout remote service.
+	 */
+	public static
+		com.liferay.dynamic.data.mapping.model.DDMStructureLayoutSoap[]
+				getStructureLayouts(long groupId, int start, int end)
+			throws RemoteException {
+
+		try {
+			java.util.List
+				<com.liferay.dynamic.data.mapping.model.DDMStructureLayout>
+					returnValue =
+						DDMStructureLayoutServiceUtil.getStructureLayouts(
+							groupId, start, end);
+
+			return com.liferay.dynamic.data.mapping.model.
+				DDMStructureLayoutSoap.toSoapModels(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static int getStructureLayoutsCount(long groupId)
+		throws RemoteException {
+
+		try {
+			int returnValue =
+				DDMStructureLayoutServiceUtil.getStructureLayoutsCount(groupId);
+
+			return returnValue;
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	private static Log _log = LogFactoryUtil.getLog(
+		DDMStructureLayoutServiceSoap.class);
+
 }

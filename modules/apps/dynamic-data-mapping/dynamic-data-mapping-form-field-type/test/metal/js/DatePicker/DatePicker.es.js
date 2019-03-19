@@ -4,7 +4,7 @@ import dom from 'metal-dom';
 let component;
 const spritemap = 'icons.svg';
 
-const defaultTextConfig = {
+const defaultDatePickerConfig = {
 	name: 'dateField',
 	spritemap
 };
@@ -29,7 +29,7 @@ describe(
 			() => {
 				component = new DatePicker(
 					{
-						...defaultTextConfig,
+						...defaultDatePickerConfig,
 						tip: 'Type something'
 					}
 				);
@@ -43,7 +43,7 @@ describe(
 			() => {
 				component = new DatePicker(
 					{
-						...defaultTextConfig,
+						...defaultDatePickerConfig,
 						id: 'ID'
 					}
 				);
@@ -57,7 +57,7 @@ describe(
 			() => {
 				component = new DatePicker(
 					{
-						...defaultTextConfig,
+						...defaultDatePickerConfig,
 						label: 'label'
 					}
 				);
@@ -71,8 +71,8 @@ describe(
 			() => {
 				component = new DatePicker(
 					{
-						...defaultTextConfig,
-						predefinedValue: '2019-05-05'
+						...defaultDatePickerConfig,
+						predefinedValue: '05/05/2019'
 					}
 				);
 
@@ -85,7 +85,7 @@ describe(
 			() => {
 				component = new DatePicker(
 					{
-						...defaultTextConfig
+						...defaultDatePickerConfig
 					}
 				);
 
@@ -110,7 +110,7 @@ describe(
 			() => {
 				component = new DatePicker(
 					{
-						...defaultTextConfig
+						...defaultDatePickerConfig
 					}
 				);
 
@@ -140,7 +140,7 @@ describe(
 			() => {
 				component = new DatePicker(
 					{
-						...defaultTextConfig
+						...defaultDatePickerConfig
 					}
 				);
 
@@ -182,7 +182,7 @@ describe(
 			() => {
 				component = new DatePicker(
 					{
-						...defaultTextConfig
+						...defaultDatePickerConfig
 					}
 				);
 

@@ -1,4 +1,7 @@
 window.Liferay = {
+	AUI: {
+		getDateFormat: () => '%d/%m/%Y'
+	},
 	Language: {
 		get: key => key
 	},

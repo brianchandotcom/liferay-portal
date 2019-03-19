@@ -57,7 +57,7 @@
 <!--DETAILS-->
 <tr>
 	<td>DETAILS_FRIENDLY_BASE_URL</td>
-	<td>//span[contains(@id,'friendlyURL')]</td>
+	<td>//div[contains(@class,'form-text') and contains(@id,'friendlyURL')]</td>
 	<td></td>
 </tr>
 <tr>

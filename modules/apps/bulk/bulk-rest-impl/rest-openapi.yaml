@@ -31,14 +31,14 @@ components:
             allOf:
                 - $ref: "#/components/schemas/DocumentBulkSelection"
                 - properties:
-                      keywordsToAdd:
-                          items:
-                              type: string
-                          type: array
-                      keywordsToRemove:
-                          items:
-                              type: string
-                          type: array
+                  keywordsToAdd:
+                      items:
+                          type: string
+                      type: array
+                  keywordsToRemove:
+                      items:
+                          type: string
+                      type: array
         MessageSelection:
             properties:
                 description:
@@ -59,16 +59,16 @@ components:
             allOf:
                 - $ref: "#/components/schemas/DocumentBulkSelection"
                 - properties:
-                      taxonomyCategoryIdsToAdd:
-                          items:
-                              format: int64
-                              type: integer
-                          type: array
-                      taxonomyCategoryIdsToRemove:
-                          items:
-                              format: int64
-                              type: integer
-                          type: array
+                  taxonomyCategoryIdsToAdd:
+                      items:
+                          format: int64
+                          type: integer
+                      type: array
+                  taxonomyCategoryIdsToRemove:
+                      items:
+                          format: int64
+                          type: integer
+                      type: array
         TaxonomyVocabulary:
             properties:
                 multiValued:

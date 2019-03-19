@@ -50,7 +50,16 @@ public class WorkflowMetricsSLAProcessorTest extends PowerMockito {
 
 	@Before
 	public void setUp() {
-		_setUpWorkflowMetricsSLAProcessor();
+		_workflowMetricsSLAProcessor = new WorkflowMetricsSLAProcessor() {
+
+			@Override
+			protected List<Document> getTokenDocuments(
+				long companyId, long instanceId) {
+
+				return _documentsSupplier.get();
+			}
+
+		};
 	}
 
 	@Test
@@ -230,19 +239,6 @@ public class WorkflowMetricsSLAProcessorTest extends PowerMockito {
 		LocalDateTime localDateTime = LocalDateTime.now();
 
 		return localDateTime.withNano(0);
-	}
-
-	private void _setUpWorkflowMetricsSLAProcessor() {
-		_workflowMetricsSLAProcessor = new WorkflowMetricsSLAProcessor() {
-
-			@Override
-			protected List<Document> getTokenDocuments(
-				long companyId, long instanceId) {
-
-				return _documentsSupplier.get();
-			}
-
-		};
 	}
 
 	private final DateTimeFormatter _dateTimeFormatter =

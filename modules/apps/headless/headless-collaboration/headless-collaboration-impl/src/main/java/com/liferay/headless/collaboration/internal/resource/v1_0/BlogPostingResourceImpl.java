@@ -222,7 +222,7 @@ public class BlogPostingResourceImpl
 
 	private ImageSelector _getImageSelector(Long imageId) {
 		if ((imageId == null) || (imageId == 0)) {
-			return null;
+			return new ImageSelector();
 		}
 
 		try {

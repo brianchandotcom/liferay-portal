@@ -16,7 +16,7 @@ exports[`Should render component 1`] = `
         className="modal-body"
       >
         <p>
-          Deleting SLAs will reflect on report data. This action can't be undone. Are you sure you want to permanently delete it?
+          Deleting SLAs will reflect on report data. This action cannot be undone. Are you sure you want to permanently delete it?
         </p>
       </div>
       <div

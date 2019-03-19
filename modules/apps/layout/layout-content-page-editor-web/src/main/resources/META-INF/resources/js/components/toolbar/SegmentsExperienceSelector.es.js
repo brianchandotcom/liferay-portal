@@ -476,13 +476,13 @@ class SegmentsExperienceSelector extends Component {
 
 		this._updatePriority(
 			{
-				priorityButton: buttonPriorityDown.element,
 				focusFallbackElement: selectExperienceBtnRef,
 				payload: {
 					direction: 'down',
 					priority,
 					segmentsExperienceId
-				}
+				},
+				priorityButton: buttonPriorityDown.element
 			}
 		);
 	}

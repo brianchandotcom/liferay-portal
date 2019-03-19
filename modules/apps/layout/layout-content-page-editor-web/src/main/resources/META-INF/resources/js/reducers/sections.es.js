@@ -195,8 +195,9 @@ function updateSectionColumnsReducer(state, actionType, payload) {
 				let fragmentEntryLinkIdsToRemove = [];
 				let nextData;
 
-				const columnsSize = Math.floor(MAX_SECTION_COLUMNS / numberOfColumns);
 				const numberOfColumns = payload.numberOfColumns;
+
+				const columnsSize = (MAX_SECTION_COLUMNS / numberOfColumns).toString();
 				const sectionIndex = getSectionIndex(nextState.layoutData.structure, payload.sectionId);
 
 				let columns = nextState.layoutData.structure[sectionIndex].columns;
@@ -343,8 +344,8 @@ function _addColumns(layoutData, sectionIndex, numberOfColumns, columnsSize) {
 				}
 			);
 
-			const numberOfOldColumns = columns.length;
 			const numberOfNewColumns = numberOfColumns - columns.length;
+			const numberOfOldColumns = columns.length;
 
 			for (let i = 0; i < numberOfNewColumns; i++) {
 				columns.push(

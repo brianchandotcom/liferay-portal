@@ -1018,7 +1018,7 @@ public class DLImpl implements DL {
 	@Override
 	public boolean hasViewInContextGroupLayout(ThemeDisplay themeDisplay) {
 		PortletLayoutFinder.Result result = _getPortletLayoutFinderResult(
-			themeDisplay, themeDisplay.getSiteGroupId());
+			themeDisplay);
 
 		if (result == null) {
 			return false;
@@ -1227,7 +1227,7 @@ public class DLImpl implements DL {
 			FileEntry.class.getName(), PortletProvider.Action.VIEW);
 
 		PortletLayoutFinder.Result result = _getPortletLayoutFinderResult(
-			themeDisplay, themeDisplay.getSiteGroupId());
+			themeDisplay);
 
 		if (result != null) {
 			portletId = result.getPortletId();
@@ -1286,13 +1286,14 @@ public class DLImpl implements DL {
 	}
 
 	private PortletLayoutFinder.Result _getPortletLayoutFinderResult(
-		ThemeDisplay themeDisplay, long groupId) {
+		ThemeDisplay themeDisplay) {
 
 		PortletLayoutFinder.Result result = null;
 
 		for (PortletLayoutFinder portletLayoutFinder : _serviceTrackerList) {
 			try {
-				result = portletLayoutFinder.find(themeDisplay, groupId);
+				result = portletLayoutFinder.find(
+					themeDisplay, themeDisplay.getSiteGroupId());
 
 				if (result != null) {
 					break;

@@ -66,6 +66,7 @@ import com.liferay.ratings.kernel.service.RatingsStatsLocalService;
 import java.util.Optional;
 import java.util.stream.Stream;
 
+import javax.ws.rs.BadRequestException;
 import javax.ws.rs.core.MultivaluedMap;
 
 import org.osgi.service.component.annotations.Component;
@@ -233,24 +234,53 @@ public class DocumentResourceImpl
 	public Document putDocument(Long documentId, MultipartBody multipartBody)
 		throws Exception {
 
-		BinaryFile binaryFile = multipartBody.getBinaryFile("file");
-		Document document = multipartBody.getValueAsInstance(
-			"document", Document.class);
+		Optional<Document> documentOptional =
+			multipartBody.getValueAsInstanceOptional(
+				"document", Document.class);
+
 		FileEntry existingFileEntry = _dlAppService.getFileEntry(documentId);
+
+		BinaryFile binaryFile = Optional.ofNullable(
+			multipartBody.getBinaryFile("file")
+		).orElse(
+			new BinaryFile(
+				existingFileEntry.getMimeType(),
+				existingFileEntry.getFileName(),
+				existingFileEntry.getContentStream(),
+				existingFileEntry.getSize())
+		);
 
 		FileEntry fileEntry = _dlAppService.updateFileEntry(
 			documentId, binaryFile.getFileName(), binaryFile.getContentType(),
-			Optional.ofNullable(
-				document.getTitle()
+			documentOptional.map(
+				Document::getTitle
 			).orElse(
-				binaryFile.getFileName()
+				existingFileEntry.getTitle()
 			),
-			document.getDescription(), null, DLVersionNumberIncrease.AUTOMATIC,
+			documentOptional.map(
+				Document::getDescription
+			).orElse(
+				null
+			),
+			null, DLVersionNumberIncrease.AUTOMATIC,
 			binaryFile.getInputStream(), binaryFile.getSize(),
 			ServiceContextUtil.createServiceContext(
-				document.getKeywords(), document.getTaxonomyCategoryIds(),
+				documentOptional.map(
+					Document::getKeywords
+				).orElse(
+					new String[0]
+				),
+				documentOptional.map(
+					Document::getTaxonomyCategoryIds
+				).orElse(
+					new Long[0]
+				),
 				existingFileEntry.getGroupId(),
-				document.getViewableByAsString()));
+				documentOptional.map(
+					Document::getViewableByAsString
+				).orElse(
+					Document.ViewableBy.OWNER.getValue()
+				)));
 
 		return _toDocument(
 			fileEntry, fileEntry.getFileVersion(),
@@ -263,6 +293,11 @@ public class DocumentResourceImpl
 		throws Exception {
 
 		BinaryFile binaryFile = multipartBody.getBinaryFile("file");
+
+		if (binaryFile == null) {
+			throw new BadRequestException("No file found in body");
+		}
+
 		Optional<Document> documentOptional =
 			multipartBody.getValueAsInstanceOptional(
 				"document", Document.class);

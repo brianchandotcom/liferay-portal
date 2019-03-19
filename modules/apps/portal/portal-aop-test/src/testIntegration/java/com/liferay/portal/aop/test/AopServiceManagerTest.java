@@ -218,7 +218,7 @@ public class AopServiceManagerTest {
 		CountDownLatch countDownLatch = new CountDownLatch(1);
 
 		LogListener logListener = logEntry -> {
-			if (logEntry.getLogLevel() == LogLevel.ERROR) {
+			if (logEntry.getLevel() == LogLevel.ERROR.ordinal()) {
 				countDownLatch.countDown();
 			}
 		};

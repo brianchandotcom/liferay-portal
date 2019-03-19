@@ -22,6 +22,7 @@ import com.liferay.asset.kernel.service.AssetTagLocalService;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.document.library.kernel.service.DLAppService;
 import com.liferay.document.library.util.DLURLHelper;
+import com.liferay.dynamic.data.mapping.exception.StructureFieldException;
 import com.liferay.dynamic.data.mapping.io.DDMFormValuesSerializer;
 import com.liferay.dynamic.data.mapping.io.DDMFormValuesSerializerSerializeRequest;
 import com.liferay.dynamic.data.mapping.io.DDMFormValuesSerializerSerializeResponse;
@@ -492,6 +493,23 @@ public class StructuredContentResourceImpl
 		}
 	}
 
+	private DDMFormField _getDDMFormField(
+			ContentField contentFieldValue, DDMStructure ddmStructure)
+		throws PortalException {
+
+		try {
+			return ddmStructure.getDDMFormField(contentFieldValue.getName());
+		}
+		catch (StructureFieldException sfe) {
+			throw new BadRequestException(
+				StringBundler.concat(
+					"Unable to find field with name ",
+					contentFieldValue.getName(), " in structure with id ",
+					ddmStructure.getStructureId()),
+				sfe);
+		}
+	}
+
 	private String _getDDMTemplateKey(DDMStructure ddmStructure) {
 		List<DDMTemplate> ddmTemplates = ddmStructure.getTemplates();
 
@@ -629,8 +647,8 @@ public class StructuredContentResourceImpl
 			Locale locale)
 		throws Exception {
 
-		DDMFormField ddmFormField = ddmStructure.getDDMFormField(
-			contentFieldValue.getName());
+		DDMFormField ddmFormField = _getDDMFormField(
+			contentFieldValue, ddmStructure);
 
 		final Value value = contentFieldValue.getValue();
 

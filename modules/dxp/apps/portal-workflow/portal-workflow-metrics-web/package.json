@@ -1,13 +1,14 @@
 {
 	"dependencies": {
 		"autobind-decorator": "2.4.0",
+		"axios": "0.18.0",
 		"clay-charts-react": "2.4.1",
 		"custom-event-polyfill": "1.0.6",
-		"moment": "^2.24.0",
+		"moment": "2.24.0",
 		"react": "16.6.3",
 		"react-dom": "16.6.3",
-		"react-text-mask": "^5.4.3",
-		"text-mask-addons": "^3.8.0"
+		"react-text-mask": "5.4.3",
+		"text-mask-addons": "3.8.0"
 	},
 	"devDependencies": {
 		"babel-cli": "6.26.0",
@@ -35,8 +36,7 @@
 		"liferay-npm-bundler-preset-react": "1.8.0",
 		"prettier-eslint-cli": "4.7.1",
 		"properties": "1.2.1",
-		"react-test-renderer": "16.6.3",
-		"whatwg-fetch": "3.0.0"
+		"react-test-renderer": "16.6.3"
 	},
 	"jest": {
 		"collectCoverageFrom": [

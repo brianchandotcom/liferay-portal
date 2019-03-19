@@ -88,6 +88,8 @@ public class TarGzUtil {
 				_archiveDir(src, src, tarArchiveOutputStream);
 			}
 
+			tarArchiveOutputStream.flush();
+
 			tarArchiveOutputStream.finish();
 		}
 		catch (IOException ioe) {

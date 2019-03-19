@@ -1,4 +1,4 @@
-import {ADD_SECTION, MOVE_SECTION, REMOVE_SECTION, UPDATE_SECTION_CONFIG, UPDATE_SECTION_COLUMNS} from '../actions/actions.es';
+import {ADD_SECTION, MOVE_SECTION, REMOVE_SECTION, UPDATE_SECTION_COLUMNS, UPDATE_SECTION_CONFIG} from '../actions/actions.es';
 import {MAX_SECTION_COLUMNS} from '../utils/constants';
 import {add, remove, setIn, updateIn, updateLayoutData, updateWidgets} from '../utils/FragmentsEditorUpdateUtils.es';
 import {getDropSectionPosition, getSectionFragmentEntryLinkIds, getSectionIndex} from '../utils/FragmentsEditorGetUtils.es';
@@ -192,11 +192,11 @@ function updateSectionColumnsReducer(state, actionType, payload) {
 		resolve => {
 			if (actionType === UPDATE_SECTION_COLUMNS) {
 
-				let fragmentEntryLinkIdsToRemove = [],
-					nextData;
+				let fragmentEntryLinkIdsToRemove = [];
+				let nextData;
 
-				const numberOfColumns = payload.numberOfColumns;
 				const columnsSize = Math.floor(MAX_SECTION_COLUMNS / numberOfColumns);
+				const numberOfColumns = payload.numberOfColumns;
 				const sectionIndex = getSectionIndex(nextState.layoutData.structure, payload.sectionId);
 
 				let columns = nextState.layoutData.structure[sectionIndex].columns;

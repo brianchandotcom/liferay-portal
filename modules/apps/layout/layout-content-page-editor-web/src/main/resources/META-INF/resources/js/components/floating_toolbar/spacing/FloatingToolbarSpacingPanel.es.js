@@ -3,10 +3,10 @@ import Component from 'metal-component';
 import Soy, {Config} from 'metal-soy';
 
 import './FloatingToolbarSpacingPanelDelegateTemplate.soy';
-import {NUMBER_OF_COLUMNS_OPTIONS, CONTAINER_TYPES, ITEM_CONFIG_KEYS} from '../../../utils/constants';
+import {CONTAINER_TYPES, ITEM_CONFIG_KEYS, NUMBER_OF_COLUMNS_OPTIONS} from '../../../utils/constants';
 import {setIn} from '../../../utils/FragmentsEditorUpdateUtils.es';
 import templates from './FloatingToolbarSpacingPanel.soy';
-import {UPDATE_SECTION_COLUMNS, UPDATE_LAST_SAVE_DATE, UPDATE_SAVING_CHANGES_STATUS, UPDATE_SECTION_CONFIG, UPDATE_TRANSLATION_STATUS} from '../../../actions/actions.es';
+import {UPDATE_LAST_SAVE_DATE, UPDATE_SAVING_CHANGES_STATUS, UPDATE_SECTION_COLUMNS, UPDATE_SECTION_CONFIG, UPDATE_TRANSLATION_STATUS} from '../../../actions/actions.es';
 import getConnectedComponent from '../../../store/ConnectedComponent.es';
 
 /**
@@ -123,6 +123,8 @@ class FloatingToolbarSpacingPanel extends Component {
 		const newValue = event.delegateTarget.value;
 		const prevValue = this.item.columns.length;
 
+		let updateSectionColumns = true;
+
 		if (newValue < prevValue) {
 			let columnsToRemove = this.item.columns.slice(newValue - prevValue);
 			let showConfirmation;
@@ -137,14 +139,19 @@ class FloatingToolbarSpacingPanel extends Component {
 			if (showConfirmation && !confirm(Liferay.Language.get('reducing-the-number-of-columns-will-lose-the-content-added-to-the-deleted-columns-are-you-sure-you-want-to-proceed'))) {
 				event.preventDefault();
 				event.delegateTarget.querySelector(`option[value="${prevValue}"]`).selected = true;
-				return false;
+				updateSectionColumns = false;
 			}
 		}
 
-		this._updateSection(UPDATE_SECTION_COLUMNS, {
-			numberOfColumns: event.delegateTarget.value,
-			sectionId: this.itemId
-		});
+		if (updateSectionColumns) {
+			this._updateSection(
+				UPDATE_SECTION_COLUMNS,
+				{
+					numberOfColumns: event.delegateTarget.value,
+					sectionId: this.itemId
+				}
+			);
+		}
 	}
 
 	/**
@@ -190,10 +197,13 @@ class FloatingToolbarSpacingPanel extends Component {
 	 * @review
 	 */
 	_updateSectionConfig(config) {
-		this._updateSection(UPDATE_SECTION_CONFIG, {
-			config,
-			sectionId: this.itemId
-		});
+		this._updateSection(
+			UPDATE_SECTION_CONFIG,
+			{
+				config,
+				sectionId: this.itemId
+			}
+		);
 	}
 }
 

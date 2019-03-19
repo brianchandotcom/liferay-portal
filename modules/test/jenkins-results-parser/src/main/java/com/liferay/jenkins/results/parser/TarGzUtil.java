@@ -100,7 +100,8 @@ public class TarGzUtil {
 			TarArchiveInputStream tarArchiveInputStream =
 				new TarArchiveInputStream(gzipCompressorInputStream)) {
 
-			TarArchiveEntry tarArchiveEntry = tarArchiveInputStream.getNextTarEntry();
+			TarArchiveEntry tarArchiveEntry =
+				tarArchiveInputStream.getNextTarEntry();
 
 			while (tarArchiveEntry != null) {
 				if (tarArchiveInputStream.canReadEntryData(tarArchiveEntry)) {
@@ -109,7 +110,8 @@ public class TarGzUtil {
 					}
 					else {
 						_unarchiveFile(
-							destinationDir, tarArchiveEntry, tarArchiveInputStream);
+							destinationDir, tarArchiveEntry,
+							tarArchiveInputStream);
 					}
 				}
 				else {

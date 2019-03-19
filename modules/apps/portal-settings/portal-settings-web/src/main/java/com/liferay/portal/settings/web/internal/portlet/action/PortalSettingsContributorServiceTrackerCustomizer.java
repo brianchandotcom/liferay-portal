@@ -14,6 +14,7 @@
 
 package com.liferay.portal.settings.web.internal.portlet.action;
 
+import com.liferay.configuration.admin.constants.ConfigurationAdminPortletKeys;
 import com.liferay.osgi.util.ServiceTrackerFactory;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.service.PortletPreferencesLocalService;
@@ -141,6 +142,9 @@ public class PortalSettingsContributorServiceTrackerCustomizer
 
 		properties.put(
 			"javax.portlet.name", PortalSettingsPortletKeys.PORTAL_SETTINGS);
+		properties.put(
+			"javax.portlet.name",
+			ConfigurationAdminPortletKeys.INSTANCE_SETTINGS);
 		properties.put("mvc.command.name", mvcActionCommandName);
 
 		return _bundleContext.registerService(

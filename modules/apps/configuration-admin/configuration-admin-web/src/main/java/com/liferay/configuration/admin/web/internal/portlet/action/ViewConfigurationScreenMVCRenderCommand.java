@@ -57,9 +57,6 @@ public class ViewConfigurationScreenMVCRenderCommand
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws PortletException {
 
-		ConfigurationScopeDisplayContext configurationScopeDisplayContext =
-			new ConfigurationScopeDisplayContext(renderRequest);
-
 		String configurationScreenKey = ParamUtil.getString(
 			renderRequest, "configurationScreenKey");
 
@@ -69,6 +66,9 @@ public class ViewConfigurationScreenMVCRenderCommand
 		ConfigurationScreen configurationScreen =
 			_configurationEntryRetriever.getConfigurationScreen(
 				configurationScreenKey);
+
+		ConfigurationScopeDisplayContext configurationScopeDisplayContext =
+			new ConfigurationScopeDisplayContext(renderRequest);
 
 		ConfigurationCategoryMenuDisplay configurationCategoryMenuDisplay =
 			_configurationEntryRetriever.getConfigurationCategoryMenuDisplay(

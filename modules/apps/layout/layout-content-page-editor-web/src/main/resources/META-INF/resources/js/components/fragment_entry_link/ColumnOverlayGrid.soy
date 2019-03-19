@@ -5,6 +5,7 @@
  */
 {template .render}
 	{@param? containerType: string}
+	{@param? highlightedColumn: number}
 	{@param? padding: number}
 
 	{let $containerClasses kind="text"}
@@ -36,7 +37,16 @@
 		<div class="{$rowContainerClasses}">
 			<div class="h-100 row">
 				{for $col in range(12)}
-					<div class="col">
+					{let $columnClasses kind="text"}
+						col
+						{sp}column-overlay-grid__column
+
+						{if $col == $highlightedColumn}
+							{sp}column-overlay-grid__column--highlighted
+						{/if}
+					{/let}
+
+					<div class="{$columnClasses}">
 						<div class="column-overlay-grid__column-content h-100"></div>
 					</div>
 				{/for}

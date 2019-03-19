@@ -110,7 +110,7 @@ public class SocialHotDeployListener extends BaseHotDeployListener {
 			_log.debug("Invoking undeploy for " + servletContextName);
 		}
 
-		List<Object> objects = (List<Object>)_objects.get(servletContextName);
+		List<Object> objects = _objects.remove(servletContextName);
 
 		if (objects == null) {
 			return;
@@ -157,6 +157,6 @@ public class SocialHotDeployListener extends BaseHotDeployListener {
 	private static final Log _log = LogFactoryUtil.getLog(
 		SocialHotDeployListener.class);
 
-	private static final Map<String, Object> _objects = new HashMap<>();
+	private static final Map<String, List<Object>> _objects = new HashMap<>();
 
 }

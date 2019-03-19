@@ -45,7 +45,10 @@ $transition-timing-function: ease;
 		will-change: padding-right;
 	}
 
-	body.contextual-sidebar-visible .contextual-sidebar-content {
-		padding-right: $contextual-sidebar-width;
+	.contextual-sidebar-visible {
+		.contextual-sidebar-content,
+		+ .contextual-sidebar-content {
+			padding-right: $contextual-sidebar-width;
+		}
 	}
 }

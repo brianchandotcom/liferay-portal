@@ -1,18 +1,40 @@
 import {PagesVisitor} from '../../util/visitors.es';
 
+const implAddColumn = (size, fields = []) => {
+	return {
+		fields,
+		size
+	};
+};
+
 const implAddRow = (size, fields) => {
 	return {
 		columns: [
-			{
-				fields,
-				size
-			}
+			implAddColumn(size, fields)
 		]
 	};
 };
 
+const addColumnToLastPosition = (pages, pageIndex, rowIndex) => {
+	pages[Number(pageIndex)].rows[Number(rowIndex)].columns = [
+		...pages[Number(pageIndex)].rows[Number(rowIndex)].columns,
+		{
+			fields: [],
+			size: 1
+		}
+	];
+
+	return pages;
+};
+
 const addRow = (pages, indexToAddRow, pageIndex, newRow = implAddRow(12, [])) => {
 	pages[Number(pageIndex)].rows.splice(Number(indexToAddRow), 0, newRow);
+
+	return pages;
+};
+
+const addColumn = (pages, indexToAddColumn, pageIndex, rowIndex, newColumn = implAddColumn(11, [])) => {
+	pages[Number(pageIndex)].rows[rowIndex].columns.splice(Number(indexToAddColumn), 0, newColumn);
 
 	return pages;
 };
@@ -30,14 +52,17 @@ const addFieldToColumn = (pages, pageIndex, rowIndex, columnIndex, field) => {
 			pages = addRow(pages, numberOfRows, pageIndex);
 		}
 
+		const numberOfColumns = pages[Number(pageIndex)].rows[Number(rowIndex)].columns.length;
+
+		if (numberOfColumns - 1 < columnIndex) {
+			columnIndex = 0;
+		}
+
 		const col = pages[Number(pageIndex)].rows[Number(rowIndex)].columns[
 			Number(columnIndex)
 		];
 
-		col.fields = [
-			...col.fields,
-			{...field}
-		];
+		col.fields = col.fields.concat(field);
 	}
 
 	return pages;
@@ -56,6 +81,19 @@ const emptyPages = pages => {
 	return empty;
 };
 
+const changeColumn = (pages, pageIndex, rowIndex, columnIndex, properties) => {
+	const currentColumn = {
+		...pages[Number(pageIndex)].rows[Number(rowIndex)].columns[Number(columnIndex)]
+	};
+
+	pages[Number(pageIndex)].rows[Number(rowIndex)].columns[columnIndex] = {
+		...currentColumn,
+		...properties
+	};
+
+	return pages;
+};
+
 const setColumnFields = (pages, pageIndex, rowIndex, columnIndex, fields = []) => {
 	if (!fields.length) {
 		throw new Error(
@@ -63,7 +101,15 @@ const setColumnFields = (pages, pageIndex, rowIndex, columnIndex, fields = []) =
 		);
 	}
 	else {
-		pages[Number(pageIndex)].rows[Number(rowIndex)].columns[Number(columnIndex)].fields = fields;
+		const numberOfRows = pages[Number(pageIndex)].rows.length;
+
+		if (numberOfRows - 1 < rowIndex) {
+			pages = addRow(pages, rowIndex, pageIndex);
+			pages = addFieldToColumn(pages, pageIndex, rowIndex, columnIndex, fields);
+		}
+		else {
+			pages[Number(pageIndex)].rows[Number(rowIndex)].columns[Number(columnIndex)].fields = fields;
+		}
 	}
 
 	return pages;
@@ -137,6 +183,21 @@ const getColumn = (pages, pageIndex, rowIndex, columnIndex) => {
 	const row = getRow(pages, pageIndex, rowIndex);
 
 	return row.columns[Number(columnIndex)];
+};
+
+const getColumnPosition = (pages, pageIndex, rowIndex, columnIndex) => {
+	return columnIndex != -1 ? pages[pageIndex].rows[rowIndex].columns.reduce(
+		(result, next, index) => {
+			if (index <= columnIndex) {
+				const column = getColumn(pages, pageIndex, rowIndex, index);
+
+				result += column.size;
+			}
+
+			return result;
+		},
+		0
+	) : 0;
 };
 
 const getField = (pages, pageIndex, rowIndex, columnIndex) => {
@@ -220,11 +281,15 @@ const updateField = (
 };
 
 export default {
+	addColumn,
+	addColumnToLastPosition,
 	addFieldToColumn,
 	addRow,
+	changeColumn,
 	emptyPages,
 	findFieldByName,
 	getColumn,
+	getColumnPosition,
 	getField,
 	getFieldProperties,
 	getIndexes,

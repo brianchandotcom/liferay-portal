@@ -52,7 +52,9 @@ public class SLAResourceImpl extends BaseSLAResourceImpl {
 			transform(
 				_workflowMetricsSLADefinitionLocalService.
 					getWorkflowMetricsSLADefinitions(
-						contextCompany.getCompanyId(), processId),
+						contextCompany.getCompanyId(), processId,
+						pagination.getStartPosition(),
+						pagination.getEndPosition(), null),
 				this::_toSLA),
 			pagination,
 			_workflowMetricsSLADefinitionLocalService.

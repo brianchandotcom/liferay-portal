@@ -60,6 +60,20 @@ public class OpenAPIUtil {
 		return "v" + matcher.replaceFirst("");
 	}
 
+	public static String formatSingular(String s) {
+		if (s.endsWith("ses")) {
+			s = s.substring(0, s.length() - 3) + "s";
+		}
+		else if (s.endsWith("ies")) {
+			s = s.substring(0, s.length() - 3) + "y";
+		}
+		else if (s.endsWith("s")) {
+			s = s.substring(0, s.length() - 1);
+		}
+
+		return s;
+	}
+
 	public static Map<String, Schema> getAllSchemas(OpenAPIYAML openAPIYAML) {
 		Map<String, Schema> allSchemas = new TreeMap<>();
 
@@ -92,6 +106,10 @@ public class OpenAPIUtil {
 
 				String schemaName = StringUtil.upperCaseFirstLetter(
 					entry.getKey());
+
+				if (items != null) {
+					schemaName = formatSingular(schemaName);
+				}
 
 				allSchemas.put(schemaName, schema);
 

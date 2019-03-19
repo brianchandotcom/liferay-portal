@@ -2503,25 +2503,25 @@ log.sanitizer.enabled=false</echo>
 								/>
 							</delete>
 
-                            <antcall inheritAll="false" target="prepare-portal-ext-properties">
-                                <param name="database.type" value="@{database.type}" />
-                                <param name="liferay.home" value="${project.dir}/bun dles" />
-                            </antcall>
+							<antcall inheritAll="false" target="prepare-portal-ext-properties">
+								<param name="database.type" value="@{database.type}" />
+								<param name="liferay.home" value="${project.dir}/bun dles" />
+							</antcall>
 
-                            <antcall inheritAll="false" target="prepare-system-ext-properties" />
+							<antcall inheritAll="false" target="prepare-system-ext-properties" />
 
-                            <move
-                                file="bundles"
-                                tofile="bun dles"
-                            />
+							<move
+								file="bundles"
+								tofile="bun dles"
+							/>
 
-                            <propertyfile file="app.server.${env.HOSTNAME}.properties">
-                                <entry key="app.server.parent.dir" value="${project.dir}/bun dles" />
-                            </propertyfile>
+							<propertyfile file="app.server.${env.HOSTNAME}.properties">
+								<entry key="app.server.parent.dir" value="${project.dir}/bun dles" />
+							</propertyfile>
 
-                            <propertyfile file="build.${env.HOSTNAME}.properties">
-                                <entry key="liferay.home" value="${project.dir}/bun dles" />
-                            </propertyfile>
+							<propertyfile file="build.${env.HOSTNAME}.properties">
+								<entry key="liferay.home" value="${project.dir}/bun dles" />
+							</propertyfile>
 
 							<trycatch>
 								<try>

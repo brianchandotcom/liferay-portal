@@ -77,9 +77,7 @@ public class AopCacheManager {
 		ChainableMethodAdvice[] chainableMethodAdvices =
 			new ChainableMethodAdvice[_chainableMethodAdvices.size() + 1];
 
-		for (int i = 0; i < _chainableMethodAdvices.size(); i++) {
-			chainableMethodAdvices[i] = _chainableMethodAdvices.get(i);
-		}
+		_chainableMethodAdvices.toArray(chainableMethodAdvices);
 
 		TransactionInterceptor transactionInterceptor =
 			new TransactionInterceptor();

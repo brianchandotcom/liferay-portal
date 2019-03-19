@@ -35,14 +35,9 @@ public class GitUtil {
 
 	public static final long TIMEOUT = 30 * 1000;
 
-	public static void clone(
-		String repositoryName, String username, File workingDirectory) {
-
-		String gitHubSshUrl = JenkinsResultsParserUtil.combine(
-			"git@github.com:", username, "/", repositoryName, ".git");
-
+	public static void clone(String remoteURL, File workingDirectory) {
 		String command = JenkinsResultsParserUtil.combine(
-			"git clone ", gitHubSshUrl, " ",
+			"git clone ", remoteURL, " ",
 			JenkinsResultsParserUtil.getCanonicalPath(workingDirectory));
 
 		Process process = null;
@@ -51,7 +46,7 @@ public class GitUtil {
 			process = JenkinsResultsParserUtil.executeBashCommands(command);
 		}
 		catch (IOException | TimeoutException e) {
-			throw new RuntimeException("Unable to clone " + gitHubSshUrl, e);
+			throw new RuntimeException("Unable to clone " + remoteURL, e);
 		}
 
 		if ((process != null) && (process.exitValue() != 0)) {
@@ -67,7 +62,7 @@ public class GitUtil {
 
 			throw new RuntimeException(
 				JenkinsResultsParserUtil.combine(
-					"Unable to clone ", gitHubSshUrl, "\n", errorString));
+					"Unable to clone ", remoteURL, "\n", errorString));
 		}
 	}
 

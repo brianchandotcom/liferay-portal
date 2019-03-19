@@ -1,36 +1,6 @@
 components:
     schemas:
-        Category:
-            properties:
-                categoryId:
-                    format: int64
-                    type: integer
-                name:
-                    type: string
-        DocumentSelection:
-            oneOf:
-                - type: object
-                  properties:
-                      selectionToAddCategoryIds:
-                          items:
-                              format: int64
-                              type: integer
-                          type: array
-                      selectionToRemoveCategoryIds:
-                          items:
-                              format: int64
-                              type: integer
-                          type: array
-                - type: object
-                  properties:
-                      selectionToAddTagNames:
-                          items:
-                              type: string
-                          type: array
-                      selectionToRemoveTagNames:
-                          items:
-                              type: string
-                          type: array
+        DocumentBulkSelection:
             properties:
                 documentIds:
                     items:
@@ -57,6 +27,18 @@ components:
             properties:
                 name:
                     type: string
+        KeywordBulkSelection:
+            allOf:
+                - $ref: "#/components/schemas/DocumentBulkSelection"
+                - properties:
+                      keywordsToAdd:
+                          items:
+                              type: string
+                          type: array
+                      keywordsToRemove:
+                          items:
+                              type: string
+                          type: array
         MessageSelection:
             properties:
                 description:
@@ -66,17 +48,38 @@ components:
                 actionInProgress:
                     type: boolean
             type: object
-        Vocabulary:
+        TaxonomyCategory:
             properties:
-                categories:
-                    items:
-                        $ref: "#/components/schemas/Category"
-                    type: array
+                taxonomyCategoryId:
+                    format: int64
+                    type: integer
+                taxonomyCategoryName:
+                    type: string
+        TaxonomyCategoryBulkSelection:
+            allOf:
+                - $ref: "#/components/schemas/DocumentBulkSelection"
+                - properties:
+                      taxonomyCategoryIdsToAdd:
+                          items:
+                              format: int64
+                              type: integer
+                          type: array
+                      taxonomyCategoryIdsToRemove:
+                          items:
+                              format: int64
+                              type: integer
+                          type: array
+        TaxonomyVocabulary:
+            properties:
                 multiValued:
                     type: boolean
                 name:
                     type: string
-                vocabularyId:
+                taxonomyCategories:
+                    items:
+                        $ref: "#/components/schemas/TaxonomyCategory"
+                    type: array
+                taxonomyVocabularyId:
                     format: int64
                     type: integer
 info:
@@ -85,32 +88,7 @@ info:
     version: v1.0
 openapi: "3.0.1"
 paths:
-    "/categories/batch":
-        patch:
-            requestBody:
-                content:
-                    application/json:
-                        schema:
-                            $ref: "#/components/schemas/DocumentSelection"
-            responses:
-                200:
-                    content:
-                        {}
-                    description: ""
-            tags: ["Category"]
-        put:
-            requestBody:
-                content:
-                    application/json:
-                        schema:
-                            $ref: "#/components/schemas/DocumentSelection"
-            responses:
-                200:
-                    content:
-                        {}
-                    description: ""
-            tags: ["Category"]
-    "/content-spaces/{content-space-id}/vocabularies/common":
+    "/content-spaces/{content-space-id}/taxonomy-vocabularies/common":
         post:
             parameters:
                 - in: path
@@ -123,24 +101,24 @@ paths:
                 content:
                     application/json:
                         schema:
-                            $ref: "#/components/schemas/DocumentSelection"
+                            $ref: "#/components/schemas/DocumentBulkSelection"
             responses:
                 200:
                     content:
                         application/json:
                             schema:
                                 items:
-                                    $ref: "#/components/schemas/Vocabulary"
+                                    $ref: "#/components/schemas/TaxonomyVocabulary"
                                 type: array
                     description: ""
-            tags: ["Vocabulary"]
+            tags: ["TaxonomyVocabulary"]
     "/keywords/batch":
         patch:
             requestBody:
                 content:
                     application/json:
                         schema:
-                            $ref: "#/components/schemas/DocumentSelection"
+                            $ref: "#/components/schemas/KeywordBulkSelection"
             responses:
                 200:
                     content:
@@ -152,7 +130,7 @@ paths:
                 content:
                     application/json:
                         schema:
-                            $ref: "#/components/schemas/DocumentSelection"
+                            $ref: "#/components/schemas/KeywordBulkSelection"
             responses:
                 200:
                     content:
@@ -165,7 +143,7 @@ paths:
                 content:
                     application/json:
                         schema:
-                            $ref: "#/components/schemas/DocumentSelection"
+                            $ref: "#/components/schemas/DocumentBulkSelection"
             responses:
                 200:
                     content:
@@ -182,7 +160,7 @@ paths:
                 content:
                     application/json:
                         schema:
-                            $ref: "#/components/schemas/DocumentSelection"
+                            $ref: "#/components/schemas/DocumentBulkSelection"
             responses:
                 200:
                     content:
@@ -201,13 +179,38 @@ paths:
                                 $ref: "#/components/schemas/Status"
                     description: ""
             tags: ["Status"]
-    "/vocabularies/message-selection":
+    "/taxonomy-categories/batch":
+        patch:
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/TaxonomyCategoryBulkSelection"
+            responses:
+                200:
+                    content:
+                        {}
+                    description: ""
+            tags: ["TaxonomyCategory"]
+        put:
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/TaxonomyCategoryBulkSelection"
+            responses:
+                200:
+                    content:
+                        {}
+                    description: ""
+            tags: ["TaxonomyCategory"]
+    "/taxonomy-vocabularies/message-selection":
         post:
             requestBody:
                 content:
                     application/json:
                         schema:
-                            $ref: "#/components/schemas/DocumentSelection"
+                            $ref: "#/components/schemas/DocumentBulkSelection"
             responses:
                 200:
                     content:

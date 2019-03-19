@@ -66,6 +66,7 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.events.EventsProcessorUtil;
 import com.liferay.portal.kernel.comment.CommentManager;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -76,6 +77,7 @@ import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.BooleanFilter;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.search.filter.TermFilter;
+import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
@@ -120,6 +122,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import javax.ws.rs.BadRequestException;
+import javax.ws.rs.ForbiddenException;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MultivaluedMap;
 
@@ -307,8 +310,9 @@ public class StructuredContentResourceImpl
 			Long contentSpaceId, StructuredContent structuredContent)
 		throws Exception {
 
-		DDMStructure ddmStructure = _ddmStructureService.getStructure(
-			structuredContent.getContentStructureId());
+		DDMStructure ddmStructure = _checkDDMStructurePermission(
+			structuredContent);
+
 		LocalDateTime localDateTime = toLocalDateTime(
 			structuredContent.getDatePublished());
 
@@ -407,6 +411,23 @@ public class StructuredContentResourceImpl
 					structuredContent.getTaxonomyCategoryIds(),
 					journalArticle.getGroupId(),
 					structuredContent.getViewableByAsString())));
+	}
+
+	private DDMStructure _checkDDMStructurePermission(
+			StructuredContent structuredContent)
+		throws PortalException {
+
+		try {
+			return _ddmStructureService.getStructure(
+				structuredContent.getContentStructureId());
+		}
+		catch (PrincipalException.MustHavePermission mhp) {
+			throw new ForbiddenException(
+				"You do not have permission to create a structured content " +
+					"using the structure id " +
+						structuredContent.getContentStructureId(),
+				mhp);
+		}
 	}
 
 	private void _createFieldsDisplayValue(

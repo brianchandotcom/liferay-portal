@@ -220,19 +220,37 @@ public class SharedWithMeViewDisplayContext {
 			classNameId = ClassNameLocalServiceUtil.getClassNameId(className);
 		}
 
-		int total = _sharingEntryLocalService.getToUserSharingEntriesCount(
-			_themeDisplay.getUserId(), classNameId);
+		if (_isIncoming()) {
+			int total = _sharingEntryLocalService.getToUserSharingEntriesCount(
+				_themeDisplay.getUserId(), classNameId);
 
-		searchContainer.setTotal(total);
+			searchContainer.setTotal(total);
 
-		List<SharingEntry> sharingEntries =
-			_sharingEntryLocalService.getToUserSharingEntries(
-				_themeDisplay.getUserId(), classNameId,
-				searchContainer.getStart(), searchContainer.getEnd(),
-				new SharingEntryModifiedDateComparator(
-					Objects.equals(getSortingOrder(), "asc")));
+			List<SharingEntry> sharingEntries =
+				_sharingEntryLocalService.getToUserSharingEntries(
+					_themeDisplay.getUserId(), classNameId,
+					searchContainer.getStart(), searchContainer.getEnd(),
+					new SharingEntryModifiedDateComparator(
+						Objects.equals(getSortingOrder(), "asc")));
 
-		searchContainer.setResults(sharingEntries);
+			searchContainer.setResults(sharingEntries);
+		}
+		else {
+			int total =
+				_sharingEntryLocalService.getFromUserSharingEntriesCount(
+					_themeDisplay.getUserId(), classNameId);
+
+			searchContainer.setTotal(total);
+
+			List<SharingEntry> sharingEntries =
+				_sharingEntryLocalService.getFromUserSharingEntries(
+					_themeDisplay.getUserId(), classNameId,
+					searchContainer.getStart(), searchContainer.getEnd(),
+					new SharingEntryModifiedDateComparator(
+						Objects.equals(getSortingOrder(), "asc")));
+
+			searchContainer.setResults(sharingEntries);
+		}
 	}
 
 	private MenuItem _createEditMenuItem(SharingEntry sharingEntry)
@@ -356,20 +374,18 @@ public class SharedWithMeViewDisplayContext {
 	}
 
 	private List<DropdownItem> _getFilterStateDropdownItems() {
-		boolean incoming = ParamUtil.getBoolean(_request, "incoming");
-
 		return new DropdownItemList() {
 			{
 				add(
 					SafeConsumer.ignore(
 						dropdownItem -> {
-							dropdownItem.setActive(!incoming);
+							dropdownItem.setActive(_isIncoming());
 
 							PortletURL sharedWithMeURL = PortletURLUtil.clone(
 								_currentURLObj, _liferayPortletResponse);
 
 							sharedWithMeURL.setParameter(
-								"incoming", (String)null);
+								"incoming", Boolean.TRUE.toString());
 
 							dropdownItem.setHref(sharedWithMeURL);
 
@@ -379,13 +395,13 @@ public class SharedWithMeViewDisplayContext {
 				add(
 					SafeConsumer.ignore(
 						dropdownItem -> {
-							dropdownItem.setActive(incoming);
+							dropdownItem.setActive(!_isIncoming());
 
 							PortletURL sharedWithMeURL = PortletURLUtil.clone(
 								_currentURLObj, _liferayPortletResponse);
 
 							sharedWithMeURL.setParameter(
-								"incoming", Boolean.TRUE.toString());
+								"incoming", Boolean.FALSE.toString());
 
 							dropdownItem.setHref(sharedWithMeURL);
 
@@ -435,6 +451,10 @@ public class SharedWithMeViewDisplayContext {
 
 		return sharingEntryEditRenderer.getURLEdit(
 			sharingEntry, liferayPortletRequest, liferayPortletResponse);
+	}
+
+	private boolean _isIncoming() {
+		return ParamUtil.getBoolean(_request, "incoming", true);
 	}
 
 	private final PortletURL _currentURLObj;

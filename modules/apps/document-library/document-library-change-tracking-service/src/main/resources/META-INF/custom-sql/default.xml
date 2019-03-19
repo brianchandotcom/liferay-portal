@@ -9,7 +9,7 @@
 				DLFileVersion
 			JOIN
 				CTEntry ON
-					CTEntry.classPK = DLFileVersion.fileVersionId
+					CTEntry.modelClassPK = DLFileVersion.fileVersionId
 			JOIN
 				CTCollections_CTEntries ON
 					CTEntry.ctEntryId = CTCollections_CTEntries.ctEntryId
@@ -38,7 +38,7 @@
 			[$JOIN$]
 			JOIN
 				CTEntry ON
-					CTEntry.classPK = DLFileVersion.fileVersionId
+					CTEntry.modelClassPK = DLFileVersion.fileVersionId
 			JOIN
 				CTCollections_CTEntries ON
 					CTEntry.ctEntryId = CTCollections_CTEntries.ctEntryId

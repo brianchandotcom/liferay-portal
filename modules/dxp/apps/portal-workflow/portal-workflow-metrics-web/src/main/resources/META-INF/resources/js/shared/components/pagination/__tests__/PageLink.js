@@ -1,9 +1,9 @@
-import PageItem from '../PageItem';
+import PageLink from '../PageLink';
 import React from 'react';
 import renderer from 'react-test-renderer';
 
 test('Should render component as type default', () => {
-	const component = renderer.create(<PageItem page={1} />);
+	const component = renderer.create(<PageLink page={1} />);
 
 	const tree = component.toJSON();
 
@@ -11,23 +11,7 @@ test('Should render component as type default', () => {
 });
 
 test('Should render component as active', () => {
-	const component = renderer.create(<PageItem active page={1} />);
-
-	const tree = component.toJSON();
-
-	expect(tree).toMatchSnapshot();
-});
-
-test('Should render component as type Next', () => {
-	const component = renderer.create(<PageItem page={1} type="next" />);
-
-	const tree = component.toJSON();
-
-	expect(tree).toMatchSnapshot();
-});
-
-test('Should render component as type Previous', () => {
-	const component = renderer.create(<PageItem page={1} type="prev" />);
+	const component = renderer.create(<PageLink disabled page={1} />);
 
 	const tree = component.toJSON();
 
@@ -38,7 +22,7 @@ test('Should change page', () => {
 	const onChangePage = () => () => 'test';
 
 	const component = shallow(
-		<PageItem onChangePage={onChangePage()} page={2} />
+		<PageLink onChangePage={onChangePage()} page={2} />
 	);
 
 	const instance = component.instance();
@@ -52,7 +36,7 @@ test('Should test change page when disabled', () => {
 	const onChangePage = () => () => 'test';
 
 	const component = shallow(
-		<PageItem disabled onChangePage={onChangePage()} page={2} />
+		<PageLink disabled onChangePage={onChangePage()} page={2} />
 	);
 
 	const instance = component.instance();

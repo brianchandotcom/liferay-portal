@@ -110,15 +110,6 @@ class Paragraph extends Component {
 		/**
 		 * @default undefined
 		 * @instance
-		 * @memberof Paragraph
-		 * @type {?(string|undefined)}
-		 */
-
-		tip: Config.string(),
-
-		/**
-		 * @default undefined
-		 * @instance
 		 * @memberof Text
 		 * @type {?(string|undefined)}
 		 */

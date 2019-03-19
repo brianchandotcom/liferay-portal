@@ -49,19 +49,7 @@ JournalArticle article = journalContentDisplayContext.getArticle();
 		</c:if>
 
 		<c:if test="<%= journalContentDisplayContext.isShowEditTemplateIcon() %>">
-
-			<%
-			DDMTemplate ddmTemplate = journalContentDisplayContext.getDDMTemplate();
-
-			Map<String, Object> data = new HashMap<String, Object>();
-
-			data.put("destroyOnHide", true);
-			data.put("id", HtmlUtil.escape(portletDisplay.getNamespace()) + "editAsset");
-			data.put("title", HtmlUtil.escape(ddmTemplate.getName(locale)));
-			%>
-
 			<liferay-ui:icon
-				data="<%= data %>"
 				id="editTemplateIcon"
 				message="edit-template"
 				url="<%= journalContentDisplayContext.getURLEditTemplate() %>"

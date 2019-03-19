@@ -178,7 +178,7 @@ components:
                                             description: https://www.schema.org/FormFieldProperties
                                             properties:
                                                 columns:
-                                                    description: https://www.schema.org/FormFieldOptions
+                                                    description: https://www.schema.org/FormFieldOption
                                                     items:
                                                         properties:
                                                             id:
@@ -194,7 +194,7 @@ components:
                                                     format: int64
                                                     type: integer
                                                 rows:
-                                                    description: https://www.schema.org/FormFieldOptions
+                                                    description: https://www.schema.org/FormFieldOption
                                                     items:
                                                         properties:
                                                             id:
@@ -227,7 +227,7 @@ components:
                                         name:
                                             type: string
                                         options:
-                                            description: https://www.schema.org/FormFieldOptions
+                                            description: https://www.schema.org/FormFieldOption
                                             items:
                                                 properties:
                                                     id:

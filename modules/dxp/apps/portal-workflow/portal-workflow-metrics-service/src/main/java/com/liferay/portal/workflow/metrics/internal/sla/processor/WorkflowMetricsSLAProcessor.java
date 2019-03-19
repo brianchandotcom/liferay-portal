@@ -75,15 +75,9 @@ public class WorkflowMetricsSLAProcessor {
 		return new WorkflowMetricsSLAProcessResult(
 			companyId, elapsedTime, instanceId, nowLocalDateTime,
 			elapsedTime <= workflowMetricsSLADefinition.getDuration(),
-			_computeOverdueLocalDateTime(nowLocalDateTime, remainingTime),
+			nowLocalDateTime.plus(remainingTime, ChronoUnit.MILLIS),
 			workflowMetricsSLADefinition.getProcessId(), remainingTime,
 			workflowMetricsSLADefinition.getWorkflowMetricsSLADefinitionId());
-	}
-
-	private LocalDateTime _computeOverdueLocalDateTime(
-		LocalDateTime nowLocalDateTime, long remainingTime) {
-
-		return nowLocalDateTime.plus(remainingTime, ChronoUnit.MILLIS);
 	}
 
 	private List<Document> _getTokenDocuments(

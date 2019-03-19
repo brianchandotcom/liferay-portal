@@ -14,74 +14,29 @@
 
 package com.liferay.portal.kernel.util;
 
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
-
 import java.lang.reflect.Field;
-
-import java.util.Collections;
-import java.util.Set;
-import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * @author Shuyang Zhou
+ * @deprecated As of Mueller (7.2.x), with no direct replacement
  */
+@Deprecated
 public class ReferenceRegistry {
 
 	public static void registerReference(
 		Class<?> clazz, Object object, String fieldName) {
-
-		try {
-			Field field = clazz.getDeclaredField(fieldName);
-
-			ReferenceEntry referenceEntry = new ReferenceEntry(object, field);
-
-			_referenceEntries.add(referenceEntry);
-		}
-		catch (SecurityException se) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(
-					StringBundler.concat(
-						"Not allowed to get field ", fieldName, " for ",
-						String.valueOf(clazz)));
-			}
-		}
-		catch (Exception e) {
-			_log.error(
-				StringBundler.concat(
-					"Unable to get field ", fieldName, " for ",
-					String.valueOf(clazz)));
-		}
 	}
 
 	public static void registerReference(Class<?> clazz, String fieldName) {
-		registerReference(clazz, null, fieldName);
 	}
 
 	public static void registerReference(Field field) {
-		ReferenceEntry referenceEntry = new ReferenceEntry(field);
-
-		_referenceEntries.add(referenceEntry);
 	}
 
 	public static void registerReference(Object object, Field field) {
-		ReferenceEntry referenceEntry = new ReferenceEntry(object, field);
-
-		_referenceEntries.add(referenceEntry);
 	}
 
 	public static void releaseReferences() {
-		for (ReferenceEntry referenceEntry : _referenceEntries) {
-			try {
-				referenceEntry.setValue(null);
-			}
-			catch (Exception e) {
-				_log.error(
-					"Failed to release reference for " + referenceEntry, e);
-			}
-		}
-
-		_referenceEntries.clear();
 	}
 
 	/**
@@ -95,11 +50,5 @@ public class ReferenceRegistry {
 			throws NoSuchFieldException, SecurityException;
 
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		ReferenceRegistry.class);
-
-	private static final Set<ReferenceEntry> _referenceEntries =
-		Collections.newSetFromMap(new ConcurrentHashMap<>());
 
 }

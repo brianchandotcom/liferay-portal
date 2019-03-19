@@ -25,7 +25,6 @@ import com.liferay.source.formatter.checkstyle.util.DetailASTUtil;
 
 import com.puppycrawl.tools.checkstyle.api.DetailAST;
 import com.puppycrawl.tools.checkstyle.api.FileContents;
-import com.puppycrawl.tools.checkstyle.api.FileText;
 import com.puppycrawl.tools.checkstyle.api.FullIdent;
 import com.puppycrawl.tools.checkstyle.api.TokenTypes;
 
@@ -54,6 +53,12 @@ public class ChainingCheck extends BaseCheck {
 	public void setAllowedMethodNames(String allowedMethodNames) {
 		_allowedMethodNames = ArrayUtil.append(
 			_allowedMethodNames, StringUtil.split(allowedMethodNames));
+	}
+
+	public void setAllowedMockitoMethodNames(String allowedMockitoMethodNames) {
+		_allowedMockitoMethodNames = ArrayUtil.append(
+			_allowedMockitoMethodNames,
+			StringUtil.split(allowedMockitoMethodNames));
 	}
 
 	public void setAllowedVariableTypeNames(String allowedVariableTypeNames) {
@@ -431,30 +436,31 @@ public class ChainingCheck extends BaseCheck {
 			}
 		}
 
+		FileContents fileContents = getFileContents();
+
+		String fileName = StringUtil.replace(
+			fileContents.getFileName(), CharPool.BACK_SLASH, CharPool.SLASH);
+
+		if (fileName.contains("/test/") ||
+			fileName.contains("/testIntegration/")) {
+
+			for (String allowedMockitoMethodName : _allowedMockitoMethodNames) {
+				if (chainedMethodNames.contains(allowedMockitoMethodName)) {
+					return true;
+				}
+			}
+		}
+
 		DetailAST dotDetailAST = methodCallDetailAST.findFirstToken(
 			TokenTypes.DOT);
 
 		if (dotDetailAST == null) {
-			FileContents fileContents = getFileContents();
-
-			String fileName = StringUtil.replace(
-				fileContents.getFileName(), CharPool.BACK_SLASH,
-				CharPool.SLASH);
-
 			String className = JavaSourceUtil.getClassName(fileName);
 
 			for (String allowedClassName : _allowedClassNames) {
 				if (className.matches(allowedClassName)) {
 					return true;
 				}
-			}
-
-			FileText fileText = fileContents.getText();
-
-			String content = (String)fileText.getFullText();
-
-			if (content.contains("extends PowerMockito")) {
-				return true;
 			}
 
 			return false;
@@ -576,6 +582,7 @@ public class ChainingCheck extends BaseCheck {
 
 	private String[] _allowedClassNames = new String[0];
 	private String[] _allowedMethodNames = new String[0];
+	private String[] _allowedMockitoMethodNames = new String[0];
 	private String[] _allowedVariableTypeNames = new String[0];
 
 }

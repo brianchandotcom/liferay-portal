@@ -68,9 +68,6 @@ public class ViewFactoryInstancesMVCRenderCommand implements MVCRenderCommand {
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws PortletException {
 
-		ConfigurationScopeDisplayContext configurationScopeDisplayContext =
-			new ConfigurationScopeDisplayContext(renderRequest);
-
 		String factoryPid = ParamUtil.getString(renderRequest, "factoryPid");
 
 		MVCRenderCommand customRenderCommand = _renderCommands.get(factoryPid);
@@ -90,6 +87,9 @@ public class ViewFactoryInstancesMVCRenderCommand implements MVCRenderCommand {
 		try {
 			ConfigurationModel factoryConfigurationModel =
 				configurationModels.get(factoryPid);
+
+			ConfigurationScopeDisplayContext configurationScopeDisplayContext =
+				new ConfigurationScopeDisplayContext(renderRequest);
 
 			ConfigurationCategoryMenuDisplay configurationCategoryMenuDisplay =
 				_configurationEntryRetriever.

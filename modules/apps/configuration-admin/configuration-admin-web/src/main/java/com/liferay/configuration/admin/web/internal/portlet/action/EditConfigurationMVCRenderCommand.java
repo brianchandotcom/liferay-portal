@@ -66,15 +66,15 @@ public class EditConfigurationMVCRenderCommand implements MVCRenderCommand {
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws PortletException {
 
-		ConfigurationScopeDisplayContext configurationScopeDisplayContext =
-			new ConfigurationScopeDisplayContext(renderRequest);
-
 		String factoryPid = ParamUtil.getString(renderRequest, "factoryPid");
 
 		String pid = ParamUtil.getString(renderRequest, "pid", factoryPid);
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
+
+		ConfigurationScopeDisplayContext configurationScopeDisplayContext =
+			new ConfigurationScopeDisplayContext(renderRequest);
 
 		Map<String, ConfigurationModel> configurationModels =
 			_configurationModelRetriever.getConfigurationModels(

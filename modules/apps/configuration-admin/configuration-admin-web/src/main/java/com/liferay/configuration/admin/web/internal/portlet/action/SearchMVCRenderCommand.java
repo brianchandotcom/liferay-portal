@@ -63,9 +63,6 @@ public class SearchMVCRenderCommand implements MVCRenderCommand {
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws PortletException {
 
-		ConfigurationScopeDisplayContext configurationScopeDisplayContext =
-			new ConfigurationScopeDisplayContext(renderRequest);
-
 		Indexer indexer = _indexerRegistry.nullSafeGetIndexer(
 			ConfigurationModel.class);
 
@@ -91,6 +88,9 @@ public class SearchMVCRenderCommand implements MVCRenderCommand {
 			Hits hits = indexer.search(searchContext);
 
 			Document[] documents = hits.getDocs();
+
+			ConfigurationScopeDisplayContext configurationScopeDisplayContext =
+				new ConfigurationScopeDisplayContext(renderRequest);
 
 			Map<String, ConfigurationModel> configurationModels =
 				_configurationModelRetriever.getConfigurationModels(

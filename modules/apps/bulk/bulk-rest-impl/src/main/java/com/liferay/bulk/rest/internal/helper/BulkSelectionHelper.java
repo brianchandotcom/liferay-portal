@@ -14,7 +14,7 @@
 
 package com.liferay.bulk.rest.internal.helper;
 
-import com.liferay.bulk.rest.dto.v1_0.DocumentSelection;
+import com.liferay.bulk.rest.dto.v1_0.DocumentBulkSelection;
 import com.liferay.bulk.rest.internal.util.ParameterMapUtil;
 import com.liferay.bulk.selection.BulkSelection;
 import com.liferay.bulk.selection.BulkSelectionFactory;
@@ -34,7 +34,7 @@ import org.osgi.service.component.annotations.Reference;
 public class BulkSelectionHelper {
 
 	public BulkSelection<?> getBulkSelection(
-			DocumentSelection documentSelection)
+			DocumentBulkSelection documentBulkSelection)
 		throws PortalException {
 
 		ClassName className = _classNameLocalService.getClassName(
@@ -46,8 +46,8 @@ public class BulkSelectionHelper {
 
 		return bulkSelectionFactory.create(
 			ParameterMapUtil.getParameterMap(
-				documentSelection.getDocumentIds(),
-				documentSelection.getSelectionScope()));
+				documentBulkSelection.getDocumentIds(),
+				documentBulkSelection.getSelectionScope()));
 	}
 
 	@Reference

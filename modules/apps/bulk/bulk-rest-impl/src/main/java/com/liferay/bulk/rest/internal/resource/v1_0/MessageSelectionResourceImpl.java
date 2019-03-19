@@ -14,13 +14,12 @@
 
 package com.liferay.bulk.rest.internal.resource.v1_0;
 
-import com.liferay.bulk.rest.dto.v1_0.DocumentSelection;
+import com.liferay.bulk.rest.dto.v1_0.DocumentBulkSelection;
 import com.liferay.bulk.rest.dto.v1_0.MessageSelection;
 import com.liferay.bulk.rest.internal.helper.BulkSelectionHelper;
 import com.liferay.bulk.rest.resource.v1_0.MessageSelectionResource;
 import com.liferay.bulk.selection.BulkSelection;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.service.ClassNameLocalService;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -38,20 +37,20 @@ public class MessageSelectionResourceImpl
 
 	@Override
 	public MessageSelection postKeywordMessageSelection(
-			DocumentSelection documentSelection)
+			DocumentBulkSelection documentBulkSelection)
 		throws Exception {
 
 		return _toMessageSelection(
-			_bulkSelectionHelper.getBulkSelection(documentSelection));
+			_bulkSelectionHelper.getBulkSelection(documentBulkSelection));
 	}
 
 	@Override
-	public MessageSelection postVocabularyMessageSelection(
-			DocumentSelection documentSelection)
+	public MessageSelection postTaxonomyVocabularyMessageSelection(
+			DocumentBulkSelection documentBulkSelection)
 		throws Exception {
 
 		BulkSelection<?> bulkSelection = _bulkSelectionHelper.getBulkSelection(
-			documentSelection);
+			documentBulkSelection);
 
 		return _toMessageSelection(bulkSelection.toAssetEntryBulkSelection());
 	}
@@ -69,8 +68,5 @@ public class MessageSelectionResourceImpl
 
 	@Reference
 	private BulkSelectionHelper _bulkSelectionHelper;
-
-	@Reference
-	private ClassNameLocalService _classNameLocalService;
 
 }

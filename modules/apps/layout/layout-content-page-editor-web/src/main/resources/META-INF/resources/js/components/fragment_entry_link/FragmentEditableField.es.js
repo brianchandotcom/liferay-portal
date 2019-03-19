@@ -412,7 +412,7 @@ class FragmentEditableField extends Component {
 	_handleFloatingToolbarButtonClicked(event, data) {
 		const {panelId, type} = data;
 
-		if(type === 'editor') {
+		if (type === 'editor') {
 			this.store.dispatchAction(
 				ENABLE_FRAGMENT_EDITOR,
 				{

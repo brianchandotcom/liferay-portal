@@ -130,22 +130,6 @@ public class WorkflowMetricsSLAProcessor {
 			return Collections.emptyList();
 		}
 
-		return _toNonoverlapingTaskIntervals(nowLocalDateTime, documents);
-	}
-
-	private LocalDateTime _toLocalDateTime(
-		Document document, String fieldName) {
-
-		String dateString = (String)document.getFieldValue(fieldName);
-
-		return LocalDateTime.parse(
-			dateString,
-			DateTimeFormatter.ofPattern(_INDEX_DATE_FORMAT_PATTERN));
-	}
-
-	private Stack<TaskInterval> _toNonoverlapingTaskIntervals(
-		LocalDateTime nowLocalDateTime, List<Document> documents) {
-
 		Stack<TaskInterval> taskIntervals = new Stack<>();
 
 		taskIntervals.push(_toTaskInterval(documents.get(0), nowLocalDateTime));
@@ -173,6 +157,16 @@ public class WorkflowMetricsSLAProcessor {
 		}
 
 		return taskIntervals;
+	}
+
+	private LocalDateTime _toLocalDateTime(
+		Document document, String fieldName) {
+
+		String dateString = (String)document.getFieldValue(fieldName);
+
+		return LocalDateTime.parse(
+			dateString,
+			DateTimeFormatter.ofPattern(_INDEX_DATE_FORMAT_PATTERN));
 	}
 
 	private TaskInterval _toTaskInterval(

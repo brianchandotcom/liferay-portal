@@ -100,25 +100,24 @@ public class TarGzUtil {
 			TarArchiveInputStream tarArchiveInputStream =
 				new TarArchiveInputStream(gzipCompressorInputStream)) {
 
-			TarArchiveEntry tarArchiveEntry = null;
+			TarArchiveEntry tarArchiveEntry = tarArchiveInputStream.getNextTarEntry();
 
-			while ((tarArchiveEntry =
-						tarArchiveInputStream.getNextTarEntry()) != null) {
-
-				if (!tarArchiveInputStream.canReadEntryData(tarArchiveEntry)) {
-					System.out.println(
-						"Could not read " + tarArchiveEntry.getName());
-
-					continue;
-				}
-
-				if (tarArchiveEntry.isDirectory()) {
-					_unarchiveDir(destinationDir, tarArchiveEntry);
+			while (tarArchiveEntry != null) {
+				if (tarArchiveInputStream.canReadEntryData(tarArchiveEntry)) {
+					if (tarArchiveEntry.isDirectory()) {
+						_unarchiveDir(destinationDir, tarArchiveEntry);
+					}
+					else {
+						_unarchiveFile(
+							destinationDir, tarArchiveEntry, tarArchiveInputStream);
+					}
 				}
 				else {
-					_unarchiveFile(
-						destinationDir, tarArchiveEntry, tarArchiveInputStream);
+					System.out.println(
+						"Could not read " + tarArchiveEntry.getName());
 				}
+
+				tarArchiveEntry = tarArchiveInputStream.getNextTarEntry();
 			}
 		}
 		catch (IOException ioe) {

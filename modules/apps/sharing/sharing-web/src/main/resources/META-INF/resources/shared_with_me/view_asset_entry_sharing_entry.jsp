@@ -22,7 +22,7 @@ AssetRenderer assetRenderer = (AssetRenderer)renderRequest.getAttribute(AssetRen
 AssetRendererFactory assetRendererFactory = assetRenderer.getAssetRendererFactory();
 
 AssetEntry assetEntry = assetRendererFactory.getAssetEntry(assetRendererFactory.getClassName(), assetRenderer.getClassPK());
-String documentTitle = assetRenderer.getTitle(locale);
+String assetTitle = assetRenderer.getTitle(locale);
 %>
 
 <div class="upper-tbar-container-fixed">
@@ -31,8 +31,8 @@ String documentTitle = assetRenderer.getTitle(locale);
 			<ul class="tbar-nav">
 				<li class="tbar-item tbar-item-expand">
 					<div class="tbar-section text-left">
-						<h2 class="text-truncate-inline upper-tbar-title" title="<%= HtmlUtil.escapeAttribute(documentTitle) %>">
-							<span class="text-truncate"><%= HtmlUtil.escape(documentTitle) %></span>
+						<h2 class="text-truncate-inline upper-tbar-title" title="<%= HtmlUtil.escapeAttribute(assetTitle) %>">
+							<span class="text-truncate"><%= HtmlUtil.escape(assetTitle) %></span>
 						</h2>
 					</div>
 				</li>

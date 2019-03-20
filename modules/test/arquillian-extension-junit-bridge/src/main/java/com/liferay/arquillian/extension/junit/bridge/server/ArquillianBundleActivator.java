@@ -129,12 +129,12 @@ public class ArquillianBundleActivator implements BundleActivator {
 					ObjectOutputStream objectOutputStream =
 						new ObjectOutputStream(socket.getOutputStream())) {
 
-					ClientBridge clientBridge = new ClientBridge(
-						objectOutputStream);
-
-					_runTestClass(clientBridge, testClass);
-
-					clientBridge.close();
+					try {
+						_runTestClass(objectOutputStream, testClass);
+					}
+					finally {
+						_sentToClient(objectOutputStream, "kill", null);
+					}
 				}
 				catch (IOException ioe) {
 					throw new RuntimeException(ioe);
@@ -146,8 +146,26 @@ public class ArquillianBundleActivator implements BundleActivator {
 	public void stop(BundleContext bundleContext) {
 	}
 
+	private static void _sentToClient(
+		ObjectOutputStream objectOutputStream, String methodName,
+		Serializable serializable) {
+
+		try {
+			objectOutputStream.writeUTF(methodName);
+
+			if (serializable != null) {
+				objectOutputStream.writeObject(serializable);
+			}
+
+			objectOutputStream.flush();
+		}
+		catch (IOException ioe) {
+			throw new RuntimeException(ioe);
+		}
+	}
+
 	private void _processThrowable(
-		Throwable throwable, ClientBridge clientBridge,
+		Throwable throwable, ObjectOutputStream objectOutputStream,
 		Description description) {
 
 		if (throwable instanceof AssumptionViolatedException) {
@@ -160,24 +178,29 @@ public class ArquillianBundleActivator implements BundleActivator {
 
 			ave.setStackTrace(throwable.getStackTrace());
 
-			clientBridge.bridge(
-				"fireTestAssumptionFailed", new Failure(description, ave));
+			_sentToClient(
+				objectOutputStream, "fireTestAssumptionFailed",
+				new Failure(description, ave));
 		}
 		else if (throwable instanceof MultipleFailureException) {
 			MultipleFailureException mfe = (MultipleFailureException)throwable;
 
 			for (Throwable t : mfe.getFailures()) {
-				clientBridge.bridge(
-					"fireTestFailure", new Failure(description, t));
+				_sentToClient(
+					objectOutputStream, "fireTestFailure",
+					new Failure(description, t));
 			}
 		}
 		else {
-			clientBridge.bridge(
-				"fireTestFailure", new Failure(description, throwable));
+			_sentToClient(
+				objectOutputStream, "fireTestFailure",
+				new Failure(description, throwable));
 		}
 	}
 
-	private void _runTestClass(ClientBridge clientBridge, TestClass testClass) {
+	private void _runTestClass(
+		ObjectOutputStream objectOutputStream, TestClass testClass) {
+
 		for (FrameworkMethod frameworkMethod :
 				testClass.getAnnotatedMethods(Test.class)) {
 
@@ -185,47 +208,20 @@ public class ArquillianBundleActivator implements BundleActivator {
 				testClass.getName(), frameworkMethod.getName());
 
 			try {
-				clientBridge.bridge("fireTestStarted", description);
+				_sentToClient(
+					objectOutputStream, "fireTestStarted", description);
 
 				TestExecutorUtil.execute(
 					testClass, frameworkMethod.getMethod());
 			}
 			catch (Throwable t) {
-				_processThrowable(t, clientBridge, description);
+				_processThrowable(t, objectOutputStream, description);
 			}
 			finally {
-				clientBridge.bridge("fireTestFinished", description);
+				_sentToClient(
+					objectOutputStream, "fireTestFinished", description);
 			}
 		}
-	}
-
-	private class ClientBridge {
-
-		public ClientBridge(ObjectOutputStream objectOutputStream) {
-			_objectOutputStream = objectOutputStream;
-		}
-
-		public void bridge(String methodName, Serializable serializable) {
-			try {
-				_objectOutputStream.writeUTF(methodName);
-
-				if (serializable != null) {
-					_objectOutputStream.writeObject(serializable);
-				}
-
-				_objectOutputStream.flush();
-			}
-			catch (IOException ioe) {
-				throw new RuntimeException(ioe);
-			}
-		}
-
-		public void close() {
-			bridge("kill", null);
-		}
-
-		private final ObjectOutputStream _objectOutputStream;
-
 	}
 
 }

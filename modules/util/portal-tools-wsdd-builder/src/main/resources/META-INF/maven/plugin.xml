@@ -86,7 +86,7 @@
 			<groupId>com.liferay</groupId>
 			<artifactId>org.apache.axis</artifactId>
 			<type>jar</type>
-			<version>1.4.LIFERAY-PATCHED-2</version>
+			<version>1.4.LIFERAY-PATCHED-3</version>
 		</dependency>
 		<dependency>
 			<groupId>commons-discovery</groupId>

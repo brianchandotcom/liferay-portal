@@ -14,10 +14,7 @@
 
 package com.liferay.portal.workflow.kaleo.service.persistence;
 
-import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.workflow.kaleo.model.KaleoInstance;
 
 import java.io.Serializable;
 
@@ -29,10 +26,7 @@ import java.util.Date;
 public class KaleoInstanceTokenQuery implements Serializable {
 
 	public KaleoInstanceTokenQuery(ServiceContext serviceContext) {
-		_serviceContext = serviceContext;
-
 		_companyId = serviceContext.getCompanyId();
-		_userId = serviceContext.getUserId();
 	}
 
 	public String getAssetDescription() {
@@ -63,10 +57,6 @@ public class KaleoInstanceTokenQuery implements Serializable {
 		return _currentKaleoNodeName;
 	}
 
-	public int getEnd() {
-		return _end;
-	}
-
 	public String getKaleoDefinitionName() {
 		return _kaleoDefinitionName;
 	}
@@ -79,36 +69,16 @@ public class KaleoInstanceTokenQuery implements Serializable {
 		return _kaleoInstanceTokenId;
 	}
 
-	public OrderByComparator<KaleoInstance> getOrderByComparator() {
-		return _orderByComparator;
-	}
-
-	public long getParentKaleoInstanceTokenId() {
+	public Long getParentKaleoInstanceTokenId() {
 		return _parentKaleoInstanceTokenId;
 	}
 
-	public ServiceContext getServiceContext() {
-		return _serviceContext;
-	}
-
-	public int getStart() {
-		return _start;
-	}
-
-	public long getUserId() {
+	public Long getUserId() {
 		return _userId;
-	}
-
-	public boolean isAndOperator() {
-		return _andOperator;
 	}
 
 	public Boolean isCompleted() {
 		return _completed;
-	}
-
-	public void setAndOperator(boolean andOperator) {
-		_andOperator = andOperator;
 	}
 
 	public void setAssetDescription(String assetDescription) {
@@ -121,10 +91,6 @@ public class KaleoInstanceTokenQuery implements Serializable {
 
 	public void setClassName(String className) {
 		_className = className;
-	}
-
-	public void setCompanyId(long companyId) {
-		_companyId = companyId;
 	}
 
 	public void setCompleted(Boolean completed) {
@@ -143,10 +109,6 @@ public class KaleoInstanceTokenQuery implements Serializable {
 		_currentKaleoNodeName = currentKaleoNodeName;
 	}
 
-	public void setEnd(int end) {
-		_end = end;
-	}
-
 	public void setKaleoDefinitionName(String kaleoDefinitionName) {
 		_kaleoDefinitionName = kaleoDefinitionName;
 	}
@@ -159,45 +121,26 @@ public class KaleoInstanceTokenQuery implements Serializable {
 		_kaleoInstanceTokenId = kaleoInstanceTokenId;
 	}
 
-	public void setOrderByComparator(
-		OrderByComparator<KaleoInstance> orderByComparator) {
-
-		_orderByComparator = orderByComparator;
-	}
-
-	public void setParentKaleoInstanceTokenId(long parentKaleoInstanceTokenId) {
+	public void setParentKaleoInstanceTokenId(Long parentKaleoInstanceTokenId) {
 		_parentKaleoInstanceTokenId = parentKaleoInstanceTokenId;
 	}
 
-	public void setServiceContext(ServiceContext serviceContext) {
-		_serviceContext = serviceContext;
-	}
-
-	public void setStart(int start) {
-		_start = start;
-	}
-
-	public void setUserId(long userId) {
+	public void setUserId(Long userId) {
 		_userId = userId;
 	}
 
-	private boolean _andOperator = true;
 	private String _assetDescription;
 	private String _assetTitle;
 	private String _className;
-	private long _companyId;
+	private final long _companyId;
 	private Boolean _completed;
 	private Date _completionDateGT;
 	private Date _completionDateLT;
 	private String _currentKaleoNodeName;
-	private int _end = QueryUtil.ALL_POS;
 	private String _kaleoDefinitionName;
 	private Long _kaleoInstanceId;
 	private Long _kaleoInstanceTokenId;
-	private OrderByComparator<KaleoInstance> _orderByComparator;
-	private long _parentKaleoInstanceTokenId;
-	private ServiceContext _serviceContext;
-	private int _start = QueryUtil.ALL_POS;
-	private long _userId;
+	private Long _parentKaleoInstanceTokenId;
+	private Long _userId;
 
 }

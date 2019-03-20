@@ -309,3 +309,22 @@
 		{param styleModifier: $styleModifier /}
 	{/call}
 {/template}
+
+/**
+ * Resizer
+ */
+{template .resizer}
+	{@param? visible: bool}
+
+	{let $resizerClasses kind="text"}
+		btn
+		{sp}btn-primary
+		{sp}fragment-entry-link-list__col-resizer
+
+		{if not $visible}
+			{sp}hide
+		{/if}
+	{/let}
+
+	<button class="{$resizerClasses}" type="button"></button>
+{/template}

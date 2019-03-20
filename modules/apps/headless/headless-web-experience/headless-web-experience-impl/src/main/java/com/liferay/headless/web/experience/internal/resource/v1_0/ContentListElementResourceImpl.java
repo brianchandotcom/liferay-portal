@@ -572,6 +572,7 @@ public class ContentListElementResourceImpl
 					ddmTemplate -> new RenderedContent() {
 						{
 							renderedContentURL = getJAXRSLink(
+								BaseStructuredContentResourceImpl.class,
 								"getStructuredContentRenderedContentTemplate",
 								journalArticle.getResourcePrimKey(),
 								ddmTemplate.getTemplateId());

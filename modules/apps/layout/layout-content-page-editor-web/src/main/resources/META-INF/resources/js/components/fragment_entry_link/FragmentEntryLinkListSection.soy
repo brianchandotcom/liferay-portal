@@ -14,6 +14,7 @@
 	{@param key: string}
 	{@param row: ?}
 	{@param rowId: string}
+	{@param? _columnResizerVisible: bool}
 	{@param? _handleFragmentMove: any}
 	{@param? _handleSectionFocusOut: any}
 	{@param? _handleSectionClick: any}
@@ -154,6 +155,7 @@
 			<div class="{$rowClasses}">
 				{foreach $column in $columns}
 					{call .column}
+						{param _columnResizerVisible: $_columnResizerVisible /}
 						{param _handleFragmentMove: $_handleFragmentMove /}
 						{param columnId: $column.columnId /}
 						{param defaultEditorConfigurations: $defaultEditorConfigurations /}
@@ -167,6 +169,7 @@
 						{param hoveredItemId: $hoveredItemId /}
 						{param hoveredItemType: $hoveredItemType /}
 						{param key: $column.columnId /}
+						{param lastColumn: isLast($column) /}
 						{param mappingFieldsURL: $mappingFieldsURL /}
 						{param selectedMappingTypes: $selectedMappingTypes /}
 						{param size: $column.size /}
@@ -187,6 +190,7 @@
 	{@param fragmentEntryLinkIds: list<string>}
 	{@param fragmentEntryLinks: ?}
 	{@param key: string}
+	{@param? _columnResizerVisible: bool}
 	{@param? _handleFragmentMove: any}
 	{@param? defaultSegmentsExperienceId: string}
 	{@param? dropTargetItemTypes: ?}
@@ -195,6 +199,7 @@
 	{@param? dropTargetItemType: string}
 	{@param? hoveredItemId: string}
 	{@param? hoveredItemType: string}
+	{@param? lastColumn: bool}
 	{@param? mappingFieldsURL: string}
 	{@param? selectedMappingTypes: [
 		subtype: [
@@ -256,6 +261,12 @@
 				{/call}
 			{/if}
 		{/foreach}
+
+		{if not $lastColumn}
+			{call .resizer}
+				{param visible: $_columnResizerVisible /}
+			{/call}
+		{/if}
 	</div>
 {/template}
 

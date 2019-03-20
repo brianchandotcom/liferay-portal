@@ -1,3 +1,4 @@
+import 'clay-badge';
 import 'clay-dropdown';
 import Component from 'metal-component';
 import {Config} from 'metal-state';

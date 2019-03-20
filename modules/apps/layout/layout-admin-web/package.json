@@ -15,6 +15,7 @@
 		}
 	},
 	"dependencies": {
+		"clay-badge": "^2.10.0",
 		"clay-checkbox": "^2.6.0",
 		"clay-dropdown": "^2.5.1",
 		"metal": "^2.16.5",

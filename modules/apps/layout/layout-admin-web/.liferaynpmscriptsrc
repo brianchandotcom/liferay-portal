@@ -1,6 +1,7 @@
 {
 	"build": {
 		"dependencies": [
+			"clay-badge",
 			"clay-button",
 			"clay-checkbox",
 			"clay-dropdown",

@@ -257,7 +257,8 @@ describe(
 										columnIndex: 0,
 										pageIndex: 0,
 										rowIndex: 0
-									}
+									},
+									targetIsEmptyRow: true
 								};
 
 								child.emit('fieldMoved', mockEvent);
@@ -301,7 +302,8 @@ describe(
 										columnIndex: 1,
 										pageIndex: 0,
 										rowIndex: 0
-									}
+									},
+									targetIsEmptyRow: false
 								};
 
 								child.emit('fieldMoved', mockEvent);
@@ -329,7 +331,8 @@ describe(
 										columnIndex: 1,
 										pageIndex: 0,
 										rowIndex: 0
-									}
+									},
+									targetIsEmptyRow: false
 								};
 
 								child.emit('fieldMoved', mockEvent);
@@ -357,7 +360,8 @@ describe(
 										columnIndex: 0,
 										pageIndex: 0,
 										rowIndex: 0
-									}
+									},
+									targetIsEmptyRow: true
 								};
 
 								child.emit('fieldMoved', mockEvent);

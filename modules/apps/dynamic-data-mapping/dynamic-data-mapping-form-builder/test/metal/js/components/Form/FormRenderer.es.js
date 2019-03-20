@@ -621,7 +621,8 @@ describe(
 							columnIndex: 0,
 							pageIndex: 0,
 							rowIndex: 0
-						}
+						},
+						targetIsEmptyRow: true
 					}
 				);
 			}

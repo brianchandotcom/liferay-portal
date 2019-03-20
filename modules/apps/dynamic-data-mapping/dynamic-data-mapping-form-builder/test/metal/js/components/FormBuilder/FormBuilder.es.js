@@ -162,6 +162,20 @@ describe(
 				sidebar.emit(
 					'fieldAdded',
 					{
+						data: {
+							target: {
+								parentElement: {
+									parentElement: {
+										classList: [
+											'row',
+											{
+												value: 'row'
+											}
+										]
+									}
+								}
+							}
+						},
 						fieldType: mockFieldType
 					}
 				);

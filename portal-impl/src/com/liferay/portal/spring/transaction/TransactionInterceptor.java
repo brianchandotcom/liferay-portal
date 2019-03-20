@@ -31,7 +31,7 @@ import org.springframework.transaction.interceptor.TransactionAttribute;
 public class TransactionInterceptor extends ChainableMethodAdvice {
 
 	@Override
-	public Object createMethodContext(
+	public TransactionAttributeAdapter createMethodContext(
 		Class<?> targetClass, Method method,
 		Map<Class<? extends Annotation>, Annotation> annotations) {
 
@@ -56,17 +56,12 @@ public class TransactionInterceptor extends ChainableMethodAdvice {
 		TransactionAttributeAdapter transactionAttributeAdapter =
 			aopMethodInvocation.getAdviceMethodContext();
 
+		TransactionExecutor transactionExecutor =
+			transactionAttributeAdapter.getTransactionExecutor();
+
 		return transactionExecutor.execute(
 			transactionAttributeAdapter,
 			() -> aopMethodInvocation.proceed(arguments));
 	}
-
-	public void setTransactionExecutor(
-		TransactionExecutor transactionExecutor) {
-
-		this.transactionExecutor = transactionExecutor;
-	}
-
-	protected TransactionExecutor transactionExecutor;
 
 }

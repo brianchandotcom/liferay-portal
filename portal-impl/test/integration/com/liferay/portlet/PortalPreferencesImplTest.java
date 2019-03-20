@@ -15,7 +15,6 @@
 package com.liferay.portlet;
 
 import com.liferay.petra.reflect.ReflectionUtil;
-import com.liferay.portal.kernel.aop.AopMethodInvocation;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
 import com.liferay.portal.kernel.exception.NoSuchPreferencesException;
@@ -34,7 +33,6 @@ import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.spring.aop.AopInvocationHandler;
 import com.liferay.portal.spring.transaction.DefaultTransactionExecutor;
 import com.liferay.portal.spring.transaction.TransactionAttributeAdapter;
-import com.liferay.portal.spring.transaction.TransactionInterceptor;
 import com.liferay.portal.spring.transaction.TransactionStatusAdapter;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
@@ -77,23 +75,11 @@ public class PortalPreferencesImplTest {
 		_originalPortalPreferencesLocalService =
 			PortalPreferencesLocalServiceUtil.getService();
 
-		AopInvocationHandler aopInvocationHandler =
-			ProxyUtil.fetchInvocationHandler(
-				_originalPortalPreferencesLocalService,
-				AopInvocationHandler.class);
-
-		AopMethodInvocation aopMethodInvocation = ReflectionTestUtil.invoke(
-			aopInvocationHandler, "_getAopMethodInvocation",
-			new Class<?>[] {Method.class}, _updatePreferencesMethod);
-
-		aopMethodInvocation = ReflectionTestUtil.getFieldValue(
-			aopMethodInvocation, "_nextAopMethodInvocation");
-
-		_transactionInterceptor = ReflectionTestUtil.getFieldValue(
-			aopMethodInvocation, "_nextChainableMethodAdvice");
+		_aopInvocationHandler = ProxyUtil.fetchInvocationHandler(
+			_originalPortalPreferencesLocalService, AopInvocationHandler.class);
 
 		_originalTransactionExecutor = ReflectionTestUtil.getFieldValue(
-			_transactionInterceptor, "transactionExecutor");
+			_aopInvocationHandler, "_transactionExecutor");
 
 		_platformTransactionManager = ReflectionTestUtil.getFieldValue(
 			_originalTransactionExecutor, "_platformTransactionManager");
@@ -470,8 +456,12 @@ public class PortalPreferencesImplTest {
 
 				@Override
 				public void run() {
-					_transactionInterceptor.setTransactionExecutor(
+					ReflectionTestUtil.setFieldValue(
+						_aopInvocationHandler, "_transactionExecutor",
 						_originalTransactionExecutor);
+
+					_aopInvocationHandler.setTarget(
+						_aopInvocationHandler.getTarget());
 				}
 
 			});
@@ -503,8 +493,12 @@ public class PortalPreferencesImplTest {
 
 					@Override
 					public void run() {
-						_transactionInterceptor.setTransactionExecutor(
+						ReflectionTestUtil.setFieldValue(
+							_aopInvocationHandler, "_transactionExecutor",
 							new SynchronizedTransactionExecutor(testOwnerId));
+
+						_aopInvocationHandler.setTarget(
+							_aopInvocationHandler.getTarget());
 
 						ReflectionTestUtil.setFieldValue(
 							PortalPreferencesLocalServiceUtil.class, "_service",
@@ -532,13 +526,13 @@ public class PortalPreferencesImplTest {
 
 	private static final String[] _VALUES_2 = {"values2"};
 
+	private static AopInvocationHandler _aopInvocationHandler;
 	private static PortalPreferencesLocalService
 		_originalPortalPreferencesLocalService;
 	private static DefaultTransactionExecutor _originalTransactionExecutor;
 	private static PlatformTransactionManager _platformTransactionManager;
 	private static final ThreadLocal<Boolean> _synchronizeThreadLocal =
 		new InheritableThreadLocal<>();
-	private static TransactionInterceptor _transactionInterceptor;
 	private static Method _updatePreferencesMethod;
 
 	private long _testOwnerId;

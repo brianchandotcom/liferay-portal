@@ -17,6 +17,7 @@ package com.liferay.portal.spring.aop;
 import com.liferay.petra.reflect.AnnotationLocator;
 import com.liferay.portal.kernel.aop.AopMethodInvocation;
 import com.liferay.portal.kernel.aop.ChainableMethodAdvice;
+import com.liferay.portal.spring.transaction.TransactionAttributeAdapter;
 import com.liferay.portal.spring.transaction.TransactionExecutor;
 import com.liferay.portal.spring.transaction.TransactionInterceptor;
 import com.liferay.portal.transaction.TransactionsUtil;
@@ -85,27 +86,26 @@ public class AopInvocationHandler implements InvocationHandler {
 		Map<Class<? extends Annotation>, Annotation> annotations =
 			AnnotationLocator.index(method, targetClass);
 
-		TransactionInterceptor transactionInterceptor =
-			new TransactionInterceptor();
+		TransactionAttributeAdapter transactionAttributeAdapter =
+			_transactionInterceptor.createMethodContext(
+				targetClass, method, annotations);
 
-		transactionInterceptor.setTransactionExecutor(transactionExecutor);
+		if (transactionAttributeAdapter != null) {
+			transactionAttributeAdapter.setTransactionExecutor(
+				transactionExecutor);
 
-		Object methodContext = transactionInterceptor.createMethodContext(
-			targetClass, method, annotations);
-
-		if (methodContext != null) {
 			aopMethodInvocation = new AopMethodInvocationImpl(
-				target, method, methodContext, nextChainableMethodAdvice,
-				aopMethodInvocation);
+				target, method, transactionAttributeAdapter,
+				nextChainableMethodAdvice, aopMethodInvocation);
 
-			nextChainableMethodAdvice = transactionInterceptor;
+			nextChainableMethodAdvice = _transactionInterceptor;
 		}
 
 		for (int i = chainableMethodAdvices.length - 1; i >= 0; i--) {
 			ChainableMethodAdvice chainableMethodAdvice =
 				chainableMethodAdvices[i];
 
-			methodContext = chainableMethodAdvice.createMethodContext(
+			Object methodContext = chainableMethodAdvice.createMethodContext(
 				targetClass, method, annotations);
 
 			if (methodContext != null) {
@@ -150,6 +150,9 @@ public class AopInvocationHandler implements InvocationHandler {
 
 		return new AopMethodInvocationImpl(_target, method, null, null, null);
 	}
+
+	private static final TransactionInterceptor _transactionInterceptor =
+		new TransactionInterceptor();
 
 	private final Map<Method, AopMethodInvocation> _aopMethodInvocations =
 		new ConcurrentHashMap<>();

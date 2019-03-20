@@ -51,13 +51,13 @@ class FragmentEditableField extends PortletBase {
 	}
 
 	/**
-	 * Checks if the given editable is mapped to an asset
+	 * Checks if the given editable is mapped to an asset entry
 	 * @param {object} editableValues
 	 * @private
 	 * @return {boolean}
 	 * @review
 	 */
-	static _isMappedToAsset(editableValues) {
+	static _isMappedToAssetEntry(editableValues) {
 		return Boolean(
 			(
 				editableValues.classNameId &&
@@ -528,7 +528,8 @@ class FragmentEditableField extends PortletBase {
 	 */
 	_updateMappedFieldValue() {
 		if (this.getAssetFieldValueURL &&
-			FragmentEditableField._isMappedToAsset(this.editableValues)) {
+			FragmentEditableField._isMappedToAssetEntry(this.editableValues)) {
+
 			this.fetch(
 				this.getAssetFieldValueURL,
 				{

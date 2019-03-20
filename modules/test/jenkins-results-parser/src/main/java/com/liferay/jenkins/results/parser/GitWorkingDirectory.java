@@ -303,38 +303,6 @@ public class GitWorkingDirectory {
 		configure(configMap, options);
 	}
 
-	public void configureLocalCoreSettings() {
-		List<String> commands = new ArrayList<>();
-
-		commands.add("git config --local core.autocrlf false");
-		commands.add("git config --local core.bare false");
-		commands.add("git config --local core.hideDotFiles dotGitOnly");
-		commands.add("git config --local core.logallrefupdates true");
-		commands.add("git config --local core.repositoryformatversion 0");
-
-		GitUtil.ExecutionResult executionResult = null;
-
-		boolean exceptionThrown = false;
-
-		try {
-			executionResult = executeBashCommands(
-				GitUtil.MAX_RETRIES, GitUtil.RETRY_DELAY, GitUtil.TIMEOUT,
-				commands.toArray(new String[commands.size()]));
-		}
-		catch (RuntimeException re) {
-			exceptionThrown = true;
-		}
-
-		System.out.println(executionResult.getStandardOut());
-
-		if (exceptionThrown || (executionResult.getExitValue() != 0)) {
-			throw new RuntimeException(
-				JenkinsResultsParserUtil.combine(
-					"Unable to configure local settings\n",
-					executionResult.getStandardError()));
-		}
-	}
-
 	public void configureLocalRemotes() {
 		String[] gitRemoteNames = {"origin", "upstream"};
 		String gitRemoteURL = JenkinsResultsParserUtil.combine(

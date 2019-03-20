@@ -8,7 +8,7 @@
 	"devDependencies": {
 		"babel-cli": "^6.26.0",
 		"babel-preset-env": "^1.7.0",
-		"check-source-formatting": "^2.0.14",
+		"check-source-formatting": "^2.0.4",
 		"cross-env": "^5.2.0",
 		"liferay-npm-bundler": "^2.6.1",
 		"liferay-npm-bundler-preset-liferay-dev": "^1.1.1",

@@ -35,6 +35,7 @@ definition {
 		property portal.release = "false";
 		property portal.smoke = "false";
 		property portal.upstream = "false";
+		property test.run.environment = "EE";
 
 		ProductMenu.gotoPortlet(
 			category = "Configuration",

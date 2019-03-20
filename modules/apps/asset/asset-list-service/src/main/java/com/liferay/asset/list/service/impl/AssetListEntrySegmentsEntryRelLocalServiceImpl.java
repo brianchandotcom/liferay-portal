@@ -34,11 +34,12 @@ public class AssetListEntrySegmentsEntryRelLocalServiceImpl
 
 	@Override
 	public AssetListEntrySegmentsEntryRel addAssetListEntrySegmentsEntryRel(
-			long assetListEntryId, long segmentsEntryId, String typeSettings,
+			long userId, long groupId, long assetListEntryId,
+			long segmentsEntryId, String typeSettings,
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		User user = userLocalService.getUser(serviceContext.getUserId());
+		User user = userLocalService.getUser(userId);
 
 		long assetListEntrySegmentsEntryRelId = counterLocalService.increment();
 
@@ -47,16 +48,12 @@ public class AssetListEntrySegmentsEntryRelLocalServiceImpl
 				assetListEntrySegmentsEntryRelId);
 
 		assetListEntrySegmentsEntryRel.setUuid(serviceContext.getUuid());
-		assetListEntrySegmentsEntryRel.setGroupId(
-			serviceContext.getScopeGroupId());
-		assetListEntrySegmentsEntryRel.setCompanyId(
-			serviceContext.getCompanyId());
-		assetListEntrySegmentsEntryRel.setUserId(serviceContext.getUserId());
+		assetListEntrySegmentsEntryRel.setGroupId(groupId);
+		assetListEntrySegmentsEntryRel.setCompanyId(user.getCompanyId());
+		assetListEntrySegmentsEntryRel.setUserId(userId);
 		assetListEntrySegmentsEntryRel.setUserName(user.getFullName());
-		assetListEntrySegmentsEntryRel.setCreateDate(
-			serviceContext.getCreateDate(new Date()));
-		assetListEntrySegmentsEntryRel.setModifiedDate(
-			serviceContext.getModifiedDate(new Date()));
+		assetListEntrySegmentsEntryRel.setCreateDate(new Date());
+		assetListEntrySegmentsEntryRel.setModifiedDate(new Date());
 		assetListEntrySegmentsEntryRel.setAssetListEntryId(assetListEntryId);
 		assetListEntrySegmentsEntryRel.setSegmentsEntryId(segmentsEntryId);
 		assetListEntrySegmentsEntryRel.setTypeSettings(typeSettings);

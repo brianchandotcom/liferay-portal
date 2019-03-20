@@ -17,9 +17,6 @@ package com.liferay.jenkins.results.parser;
 import java.io.File;
 import java.io.IOException;
 
-import java.net.MalformedURLException;
-import java.net.URL;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -66,86 +63,6 @@ public class GitUtil {
 			throw new RuntimeException(
 				JenkinsResultsParserUtil.combine(
 					"Unable to clone ", remoteURL, "\n", errorString));
-		}
-	}
-
-	public static void createGitArtifacts(
-		File gitArtifactsDir, List<String> gitRepositoryNames) {
-
-		Boolean mirrorsAvailable =
-			JenkinsResultsParserUtil.isServerPortReachable(
-				_MIRRORS_HOST_NAME, 80);
-
-		if (!gitArtifactsDir.exists()) {
-			gitArtifactsDir.mkdir();
-		}
-
-		for (String gitRepositoryName : gitRepositoryNames) {
-			System.out.println();
-			System.out.println("##");
-			System.out.println("## " + gitRepositoryName);
-			System.out.println("##");
-			System.out.println();
-
-			File gitRepositoryArtifact = new File(
-				gitArtifactsDir, gitRepositoryName + ".tar.gz");
-			File gitRepositoryDir = new File(
-				gitArtifactsDir, gitRepositoryName);
-
-			if (!gitRepositoryDir.exists()) {
-				if (gitRepositoryArtifact.exists()) {
-					TGZUtil.unarchive(gitRepositoryArtifact, gitArtifactsDir);
-				}
-				else if (mirrorsAvailable) {
-					try {
-						URL gitArtifactURL = new URL(
-							JenkinsResultsParserUtil.combine(
-								"http://", _MIRRORS_HOST_NAME,
-								"/github.com/liferay/", gitRepositoryName,
-								".tar.gz"));
-
-						JenkinsResultsParserUtil.toFile(
-							gitArtifactURL, gitRepositoryArtifact);
-
-						TGZUtil.unarchive(
-							gitRepositoryArtifact, gitArtifactsDir);
-					}
-					catch (MalformedURLException murle) {
-						throw new RuntimeException(murle);
-					}
-				}
-				else {
-					String remoteURL =
-						"git@github.com:liferay/" + gitRepositoryName + ".git";
-
-					clone(remoteURL, gitRepositoryDir);
-				}
-			}
-
-			GitWorkingDirectory gitWorkingDirectory =
-				GitWorkingDirectoryFactory.newGitWorkingDirectory(
-					getDefaultBranchName(gitRepositoryDir), gitRepositoryDir,
-					gitRepositoryName);
-
-			gitWorkingDirectory.configureLocalCoreSettings();
-
-			gitWorkingDirectory.configureLocalRemotes();
-
-			gitWorkingDirectory.cleanTempBranches();
-
-			gitWorkingDirectory.fetchUpstreamTags();
-
-			gitWorkingDirectory.clean();
-
-			gitWorkingDirectory.gc();
-
-			File gitRepositoryArtifactNew = new File(
-				gitArtifactsDir, gitRepositoryName + ".new.tar.gz");
-
-			TGZUtil.archive(gitRepositoryDir, gitRepositoryArtifactNew);
-
-			JenkinsResultsParserUtil.move(
-				gitRepositoryArtifactNew, gitRepositoryArtifact);
 		}
 	}
 
@@ -454,8 +371,6 @@ public class GitUtil {
 
 	private static final String _GITHUB_CACHE_PROXY_HOSTNAME =
 		"github-dev.liferay.com";
-
-	private static final String _MIRRORS_HOST_NAME = "mirrors.lax.liferay.com";
 
 	private static final Pattern _gitHubRefURLPattern = Pattern.compile(
 		JenkinsResultsParserUtil.combine(

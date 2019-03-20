@@ -11,6 +11,12 @@ components:
         Process:
             description: https://www.schema.org/Process
             properties:
+                dueAfterInstanceCount:
+                    format: int64
+                    type: integer
+                dueInInstanceCount:
+                    format: int64
+                    type: integer
                 id:
                     format: int64
                     type: integer
@@ -75,11 +81,11 @@ paths:
                   schema:
                       type: integer
                 - in: query
-                  name: title
+                  name: sort
                   schema:
                       type: string
                 - in: query
-                  name: sort
+                  name: title
                   schema:
                       type: string
             responses:
@@ -92,9 +98,32 @@ paths:
                                 type: array
                     description: ""
             tags: ["Process"]
+    "/processes/{process-id}":
+        get:
+            parameters:
+                - in: path
+                  name: process-id
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Process"
+                    description: ""
+            tags: ["Process"]
     "/processes/{process-id}/slas":
         get:
             parameters:
+                - in: path
+                  name: process-id
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
                 - in: query
                   name: page
                   required: true
@@ -104,12 +133,6 @@ paths:
                   name: pageSize
                   required: true
                   schema:
-                      type: integer
-                - in: path
-                  name: process-id
-                  required: true
-                  schema:
-                      format: int64
                       type: integer
             responses:
                 200:

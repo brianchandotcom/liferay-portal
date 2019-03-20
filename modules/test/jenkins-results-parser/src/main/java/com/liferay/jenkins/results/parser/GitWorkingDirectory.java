@@ -649,6 +649,10 @@ public class GitWorkingDirectory {
 		return fetch(null, true, remoteGitBranch);
 	}
 
+	public void fetch(RemoteGitRepository remoteGitRepository, boolean noTags) {
+		fetch(remoteGitRepository.getRemoteURL(), noTags);
+	}
+
 	public void fetch(RemoteGitRepository remoteGitRepository) {
 		fetch(remoteGitRepository.getRemoteURL());
 	}
@@ -753,30 +757,6 @@ public class GitWorkingDirectory {
 
 		return createLocalGitBranch(
 			localGitBranch.getName(), true, localGitBranch.getSHA());
-	}
-
-	public void fetchUpstreamTags() {
-		GitUtil.ExecutionResult executionResult = null;
-
-		boolean exceptionThrown = false;
-
-		try {
-			executionResult = executeBashCommands(
-				GitUtil.MAX_RETRIES, GitUtil.RETRY_DELAY, 60 * 60 * 1000,
-				"git fetch upstream --force --tags");
-		}
-		catch (RuntimeException re) {
-			exceptionThrown = true;
-		}
-
-		System.out.println(executionResult.getStandardOut());
-
-		if (exceptionThrown || (executionResult.getExitValue() != 0)) {
-			throw new RuntimeException(
-				JenkinsResultsParserUtil.combine(
-					"Unable to fetch upstream tags\n",
-					executionResult.getStandardError()));
-		}
 	}
 
 	public void gc() {

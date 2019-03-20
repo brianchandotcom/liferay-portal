@@ -1,5 +1,7 @@
 @import "mixins";
 
+@import "upper_tbar";
+
 .preview-file {
 	@import "floating_bar";
 
@@ -66,4 +68,12 @@
 			}
 		}
 	}
+}
+
+.file-entry-preview-error-container {
+	margin: auto;
+	max-width: 340px;
+	padding-bottom: 5em;
+	padding-top: 10em;
+	text-align: center;
 }

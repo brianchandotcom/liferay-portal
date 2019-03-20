@@ -131,4 +131,14 @@ definition {
 
 		PortletEntry.save();
 	}
+
+	macro configureServiceProvider {
+		if ("${signAuthnRequests}" == "disable") {
+			Uncheck(
+				locator1 = "CPSAMLAdminServiceProvider#SERVICE_PROVIDER_SIGN_AUTHN_REQUESTS_CHECKBOX"
+			);
+		}
+
+		PortletEntry.save();
+	}
 }

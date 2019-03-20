@@ -1,0 +1,20 @@
+<html>
+<head>
+<title>CPSAMLAdminServiceProvider</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">CPSAMLAdminServiceProvider</td></tr>
+</thead>
+<tbody>
+<!--SERVICE_PROVIDER-->
+<tr>
+	<td>SERVICE_PROVIDER_SIGN_AUTHN_REQUESTS_CHECKBOX</td>
+	<td>//input[contains(@id,'SamlAdminPortlet_saml-sp-sign-authn-request')]</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

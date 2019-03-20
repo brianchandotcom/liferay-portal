@@ -153,8 +153,12 @@ public class KaleoInstanceTokenModelPreFilterContributor
 		BooleanFilter booleanFilter,
 		KaleoInstanceTokenQuery kaleoInstanceTokenQuery) {
 
-		long parentKaleoInstanceTokenId =
+		Long parentKaleoInstanceTokenId =
 			kaleoInstanceTokenQuery.getParentKaleoInstanceTokenId();
+
+		if (parentKaleoInstanceTokenId == null) {
+			return;
+		}
 
 		booleanFilter.addRequiredTerm(
 			KaleoInstanceTokenField.PARENT_KALEO_INSTANCE_TOKEN_ID,

@@ -23,7 +23,7 @@ FileVersion fileVersion = (FileVersion)request.getAttribute(WebKeys.DOCUMENT_LIB
 
 <c:choose>
 	<c:when test="<%= exception instanceof DLPreviewSizeException %>">
-		<div class="file-entry-preview-error-container">
+		<div class="preview-file-error-container">
 			<h3><liferay-ui:message key="file-too-big-to-preview" /></h3>
 
 			<p class="text-secondary">
@@ -45,7 +45,7 @@ FileVersion fileVersion = (FileVersion)request.getAttribute(WebKeys.DOCUMENT_LIB
 		/>
 	</c:when>
 	<c:otherwise>
-		<div class="file-entry-preview-error-container">
+		<div class="preview-file-error-container">
 			<h3><liferay-ui:message key="no-preview-available" /></h3>
 
 			<p class="text-secondary">

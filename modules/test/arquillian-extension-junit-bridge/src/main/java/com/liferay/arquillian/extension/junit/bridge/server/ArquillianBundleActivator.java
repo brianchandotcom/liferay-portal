@@ -61,10 +61,6 @@ public class ArquillianBundleActivator implements BundleActivator {
 	public void start(BundleContext bundleContext) throws Exception {
 		Bundle testBundle = bundleContext.getBundle();
 
-		BundleWiring bundleWiring = testBundle.adapt(BundleWiring.class);
-
-		_classLoader = bundleWiring.getClassLoader();
-
 		Manifest manifest = new Manifest();
 
 		URL url = testBundle.getResource("/META-INF/MANIFEST.MF");
@@ -103,6 +99,42 @@ public class ArquillianBundleActivator implements BundleActivator {
 			attributes.getValue(Headers.TEST_BRIDGE_FILTERED_METHOD_NAMES),
 			CharPool.COMMA);
 
+		BundleWiring bundleWiring = testBundle.adapt(BundleWiring.class);
+
+		ClassLoader classLoader = bundleWiring.getClassLoader();
+
+		TestClass testClass = new TestClass(classLoader.loadClass(className)) {
+
+			@Override
+			protected void scanAnnotatedMembers(
+				Map<Class<? extends Annotation>, List<FrameworkMethod>>
+					frameworkMethodsMap,
+				Map<Class<? extends Annotation>, List<FrameworkField>>
+					frameworkFieldsMap) {
+
+				super.scanAnnotatedMembers(
+					frameworkMethodsMap, frameworkFieldsMap);
+
+				List<FrameworkMethod> testFrameworkMethods =
+					frameworkMethodsMap.get(Test.class);
+
+				List<FrameworkMethod> ignoreFrameworkMethods =
+					frameworkMethodsMap.get(Ignore.class);
+
+				if (ignoreFrameworkMethods != null) {
+					testFrameworkMethods.removeAll(ignoreFrameworkMethods);
+				}
+
+				testFrameworkMethods.removeIf(
+					frameworkMethod -> filterMethodNames.contains(
+						frameworkMethod.getName()));
+
+				testFrameworkMethods.sort(
+					Comparator.comparing(FrameworkMethod::getName));
+			}
+
+		};
+
 		_bundleListener = new BundleListener() {
 
 			@Override
@@ -116,11 +148,7 @@ public class ArquillianBundleActivator implements BundleActivator {
 				}
 
 				try {
-					_runTestClass(clientBridge, className, filterMethodNames);
-				}
-				catch (ClassNotFoundException cnfe) {
-					throw new RuntimeException(
-						"Unable to load test class " + className, cnfe);
+					_runTestClass(clientBridge, testClass);
 				}
 				finally {
 					clientBridge.close();
@@ -168,48 +196,12 @@ public class ArquillianBundleActivator implements BundleActivator {
 		}
 	}
 
-	private void _runTestClass(
-			ClientBridge clientBridge, String className,
-			List<String> filterMethodNames)
-		throws ClassNotFoundException {
-
-		TestClass testClass = new TestClass(_classLoader.loadClass(className)) {
-
-			@Override
-			protected void scanAnnotatedMembers(
-				Map<Class<? extends Annotation>, List<FrameworkMethod>>
-					frameworkMethodsMap,
-				Map<Class<? extends Annotation>, List<FrameworkField>>
-					frameworkFieldsMap) {
-
-				super.scanAnnotatedMembers(
-					frameworkMethodsMap, frameworkFieldsMap);
-
-				List<FrameworkMethod> testFrameworkMethods =
-					frameworkMethodsMap.get(Test.class);
-
-				List<FrameworkMethod> ignoreFrameworkMethods =
-					frameworkMethodsMap.get(Ignore.class);
-
-				if (ignoreFrameworkMethods != null) {
-					testFrameworkMethods.removeAll(ignoreFrameworkMethods);
-				}
-
-				testFrameworkMethods.removeIf(
-					frameworkMethod -> filterMethodNames.contains(
-						frameworkMethod.getName()));
-
-				testFrameworkMethods.sort(
-					Comparator.comparing(FrameworkMethod::getName));
-			}
-
-		};
-
+	private void _runTestClass(ClientBridge clientBridge, TestClass testClass) {
 		for (FrameworkMethod frameworkMethod :
 				testClass.getAnnotatedMethods(Test.class)) {
 
 			Description description = Description.createTestDescription(
-				className, frameworkMethod.getName());
+				testClass.getName(), frameworkMethod.getName());
 
 			try {
 				clientBridge.bridge("fireTestStarted", description);
@@ -227,7 +219,6 @@ public class ArquillianBundleActivator implements BundleActivator {
 	}
 
 	private BundleListener _bundleListener;
-	private ClassLoader _classLoader;
 
 	private class ClientBridge {
 

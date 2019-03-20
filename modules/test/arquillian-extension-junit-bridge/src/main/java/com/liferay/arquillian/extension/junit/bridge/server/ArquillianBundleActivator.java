@@ -24,7 +24,6 @@ import java.io.ObjectOutputStream;
 
 import java.lang.annotation.Annotation;
 
-import java.net.InetSocketAddress;
 import java.net.Socket;
 import java.net.URL;
 
@@ -71,10 +70,10 @@ public class ArquillianBundleActivator implements BundleActivator {
 
 		Attributes attributes = manifest.getMainAttributes();
 
-		InetSocketAddress inetSocketAddress = new InetSocketAddress(
-			attributes.getValue(Headers.TEST_BRIDGE_REPORT_SERVER_HOST_NAME),
-			Integer.valueOf(
-				attributes.getValue(Headers.TEST_BRIDGE_REPORT_SERVER_PORT)));
+		String reportServerHostName = attributes.getValue(
+			Headers.TEST_BRIDGE_REPORT_SERVER_HOST_NAME);
+		int reportServerPort = Integer.valueOf(
+			attributes.getValue(Headers.TEST_BRIDGE_REPORT_SERVER_PORT));
 
 		List<String> filterMethodNames = StringUtil.split(
 			attributes.getValue(Headers.TEST_BRIDGE_FILTERED_METHOD_NAMES),
@@ -124,13 +123,20 @@ public class ArquillianBundleActivator implements BundleActivator {
 					return;
 				}
 
-				ClientBridge clientBridge = new ClientBridge(inetSocketAddress);
+				try (Socket socket = new Socket(
+						reportServerHostName, reportServerPort);
+					ObjectOutputStream objectOutputStream =
+						new ObjectOutputStream(socket.getOutputStream())) {
 
-				try {
+					ClientBridge clientBridge = new ClientBridge(
+						objectOutputStream);
+
 					_runTestClass(clientBridge, testClass);
-				}
-				finally {
+
 					clientBridge.close();
+				}
+				catch (IOException ioe) {
+					throw new RuntimeException(ioe);
 				}
 			});
 	}
@@ -194,18 +200,8 @@ public class ArquillianBundleActivator implements BundleActivator {
 
 	private class ClientBridge {
 
-		public ClientBridge(InetSocketAddress inetSocketAddress) {
-			try {
-				_socket = new Socket();
-
-				_socket.connect(inetSocketAddress);
-
-				_objectOutputStream = new ObjectOutputStream(
-					_socket.getOutputStream());
-			}
-			catch (IOException ioe) {
-				throw new RuntimeException(ioe);
-			}
+		public ClientBridge(ObjectOutputStream objectOutputStream) {
+			_objectOutputStream = objectOutputStream;
 		}
 
 		public void bridge(String methodName, Object object) {
@@ -229,17 +225,9 @@ public class ArquillianBundleActivator implements BundleActivator {
 
 		public void close() {
 			bridge("kill", null);
-
-			try {
-				_socket.close();
-			}
-			catch (IOException ioe) {
-				throw new RuntimeException(ioe);
-			}
 		}
 
 		private final ObjectOutputStream _objectOutputStream;
-		private final Socket _socket;
 
 	}
 

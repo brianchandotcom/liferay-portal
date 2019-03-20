@@ -16,7 +16,6 @@ package com.liferay.arquillian.extension.junit.bridge.junit;
 
 import com.liferay.arquillian.extension.junit.bridge.client.BndBundleUtil;
 import com.liferay.arquillian.extension.junit.bridge.client.MBeans;
-import com.liferay.petra.io.unsync.UnsyncBufferedInputStream;
 
 import java.io.Closeable;
 import java.io.IOException;
@@ -246,7 +245,7 @@ public class Arquillian extends Runner implements Filterable {
 
 			try (InputStream inputStream = _socket.getInputStream();
 				ObjectInputStream objectInputStream = new ObjectInputStream(
-					new UnsyncBufferedInputStream(inputStream))) {
+					inputStream)) {
 
 				while (true) {
 					try {

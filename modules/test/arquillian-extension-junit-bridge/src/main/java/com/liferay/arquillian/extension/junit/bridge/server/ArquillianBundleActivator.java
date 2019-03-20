@@ -14,7 +14,6 @@
 
 package com.liferay.arquillian.extension.junit.bridge.server;
 
-import com.liferay.petra.io.unsync.UnsyncBufferedOutputStream;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringUtil;
 
@@ -235,7 +234,7 @@ public class ArquillianBundleActivator implements BundleActivator {
 				_socket = new Socket(_inetAddress, _port);
 
 				_objectOutputStream = new ObjectOutputStream(
-					new UnsyncBufferedOutputStream(_socket.getOutputStream()));
+					_socket.getOutputStream());
 			}
 			catch (IOException ioe) {
 				throw new RuntimeException(ioe);

@@ -53,7 +53,7 @@ String assetTitle = assetRenderer.getTitle(locale);
 	<div class="container-fluid-1280">
 		<liferay-ui:panel
 			collapsible="<%= true %>"
-			cssClass="lfr-document-library-comments panel-group"
+			cssClass="panel-group"
 			extended="<%= true %>"
 			markupView="lexicon"
 			persistState="<%= true %>"

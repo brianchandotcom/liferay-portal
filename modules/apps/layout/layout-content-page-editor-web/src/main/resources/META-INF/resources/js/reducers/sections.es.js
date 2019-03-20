@@ -196,7 +196,7 @@ function updateSectionColumnsReducer(state, actionType, payload) {
 					nextData;
 
 				const numberOfColumns = payload.numberOfColumns;
-				const columnsSize = (MAX_SECTION_COLUMNS / numberOfColumns).toString();
+				const columnsSize = Math.floor(MAX_SECTION_COLUMNS / numberOfColumns);
 				const sectionIndex = getSectionIndex(nextState.layoutData.structure, payload.sectionId);
 
 				let columns = nextState.layoutData.structure[sectionIndex].columns;
@@ -338,11 +338,12 @@ function _addColumns(layoutData, sectionIndex, numberOfColumns, columnsSize) {
 		['structure', sectionIndex, 'columns'],
 		columns => {
 			columns.forEach(
-				column => {
-					column.size = columnsSize;
+				(column, index) => {
+					column.size = _getColumnSize(numberOfColumns, columnsSize, index);
 				}
 			);
 
+			const numberOfOldColumns = columns.length;
 			const numberOfNewColumns = numberOfColumns - columns.length;
 
 			for (let i = 0; i < numberOfNewColumns; i++) {
@@ -350,7 +351,7 @@ function _addColumns(layoutData, sectionIndex, numberOfColumns, columnsSize) {
 					{
 						columnId: `${nextColumnId}`,
 						fragmentEntryLinkIds: [],
-						size: columnsSize
+						size: _getColumnSize(numberOfColumns, columnsSize, (i + numberOfOldColumns))
 					}
 				);
 
@@ -364,6 +365,27 @@ function _addColumns(layoutData, sectionIndex, numberOfColumns, columnsSize) {
 	nextData = setIn(layoutData, ['nextColumnId'], nextColumnId);
 
 	return nextData;
+}
+
+/**
+ * Returns the new size of a column based on the total number of columns of a
+ * grid, the general size and its position in the grid.
+ *
+ * @param {number} numberOfColumns
+ * @param {number} columnsSize
+ * @param {number} columnIndex
+ * @return {string}
+ */
+function _getColumnSize(numberOfColumns, columnsSize, columnIndex) {
+	let newColumnSize = columnsSize;
+
+	const middleColumnPosition = Math.ceil(numberOfColumns / 2) - 1;
+
+	if (middleColumnPosition === columnIndex) {
+		newColumnSize = MAX_SECTION_COLUMNS - ((numberOfColumns - 1) * columnsSize);
+	}
+
+	return newColumnSize.toString();
 }
 
 /**
@@ -384,8 +406,8 @@ function _removeColumns(layoutData, sectionIndex, numberOfColumns, columnsSize) 
 			columns = columns.slice(0, numberOfColumns);
 
 			columns.forEach(
-				column => {
-					column.size = columnsSize;
+				(column, index) => {
+					column.size = _getColumnSize(numberOfColumns, columnsSize, index);
 				}
 			);
 

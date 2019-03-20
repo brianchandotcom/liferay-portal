@@ -242,7 +242,7 @@ public class Arquillian extends Runner implements Filterable {
 		public void run() {
 			Class<?> clazz = _runNotifier.getClass();
 
-			List<Throwable> throwables = new ArrayList<>();
+			Throwable throwable = null;
 
 			try (InputStream inputStream = _socket.getInputStream();
 				ObjectInputStream objectInputStream = new ObjectInputStream(
@@ -264,15 +264,29 @@ public class Arquillian extends Runner implements Filterable {
 						method.invoke(_runNotifier, object);
 					}
 					catch (Exception e) {
-						throwables.add(e);
+						if (throwable == null) {
+							throwable = e;
+						}
+						else {
+							e.addSuppressed(throwable);
+
+							throwable = e;
+						}
 					}
 				}
 			}
 			catch (Throwable t) {
-				throwables.add(t);
+				if (throwable == null) {
+					throwable = t;
+				}
+				else {
+					t.addSuppressed(throwable);
+
+					throwable = t;
+				}
 			}
 
-			for (Throwable throwable : throwables) {
+			if (throwable != null) {
 				_runNotifier.fireTestFailure(
 					new Failure(getDescription(), throwable));
 			}

@@ -21,6 +21,7 @@ import com.liferay.petra.string.StringUtil;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.ObjectOutputStream;
+import java.io.Serializable;
 
 import java.lang.annotation.Annotation;
 
@@ -204,12 +205,12 @@ public class ArquillianBundleActivator implements BundleActivator {
 			_objectOutputStream = objectOutputStream;
 		}
 
-		public void bridge(String methodName, Object object) {
+		public void bridge(String methodName, Serializable serializable) {
 			try {
 				_objectOutputStream.writeUTF(methodName);
 
-				if (object != null) {
-					_objectOutputStream.writeObject(object);
+				if (serializable != null) {
+					_objectOutputStream.writeObject(serializable);
 				}
 
 				_objectOutputStream.flush();

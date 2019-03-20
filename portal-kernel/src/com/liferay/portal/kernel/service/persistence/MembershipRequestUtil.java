@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.model.MembershipRequest;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.ReferenceRegistry;
 
 import java.io.Serializable;
 
@@ -1017,9 +1016,6 @@ public class MembershipRequestUtil {
 			_persistence =
 				(MembershipRequestPersistence)PortalBeanLocatorUtil.locate(
 					MembershipRequestPersistence.class.getName());
-
-			ReferenceRegistry.registerReference(
-				MembershipRequestUtil.class, "_persistence");
 		}
 
 		return _persistence;

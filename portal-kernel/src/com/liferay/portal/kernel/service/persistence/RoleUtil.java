@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.ReferenceRegistry;
 
 import java.io.Serializable;
 
@@ -3088,8 +3087,6 @@ public class RoleUtil {
 		if (_persistence == null) {
 			_persistence = (RolePersistence)PortalBeanLocatorUtil.locate(
 				RolePersistence.class.getName());
-
-			ReferenceRegistry.registerReference(RoleUtil.class, "_persistence");
 		}
 
 		return _persistence;

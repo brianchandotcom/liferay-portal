@@ -17,7 +17,6 @@ package com.liferay.portal.kernel.service;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
-import com.liferay.portal.kernel.util.ReferenceRegistry;
 
 /**
  * Provides the remote service utility for UserGroupRole. This utility wraps
@@ -89,9 +88,6 @@ public class UserGroupRoleServiceUtil {
 		if (_service == null) {
 			_service = (UserGroupRoleService)PortalBeanLocatorUtil.locate(
 				UserGroupRoleService.class.getName());
-
-			ReferenceRegistry.registerReference(
-				UserGroupRoleServiceUtil.class, "_service");
 		}
 
 		return _service;

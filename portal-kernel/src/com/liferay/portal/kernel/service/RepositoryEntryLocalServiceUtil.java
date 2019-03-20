@@ -17,7 +17,6 @@ package com.liferay.portal.kernel.service;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
-import com.liferay.portal.kernel.util.ReferenceRegistry;
 
 /**
  * Provides the local service utility for RepositoryEntry. This utility wraps
@@ -408,9 +407,6 @@ public class RepositoryEntryLocalServiceUtil {
 			_service =
 				(RepositoryEntryLocalService)PortalBeanLocatorUtil.locate(
 					RepositoryEntryLocalService.class.getName());
-
-			ReferenceRegistry.registerReference(
-				RepositoryEntryLocalServiceUtil.class, "_service");
 		}
 
 		return _service;

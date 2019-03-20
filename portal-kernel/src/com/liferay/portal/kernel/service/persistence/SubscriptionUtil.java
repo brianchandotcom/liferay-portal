@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.model.Subscription;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.ReferenceRegistry;
 
 import java.io.Serializable;
 
@@ -1211,9 +1210,6 @@ public class SubscriptionUtil {
 			_persistence =
 				(SubscriptionPersistence)PortalBeanLocatorUtil.locate(
 					SubscriptionPersistence.class.getName());
-
-			ReferenceRegistry.registerReference(
-				SubscriptionUtil.class, "_persistence");
 		}
 
 		return _persistence;

@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.model.LayoutFriendlyURL;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.ReferenceRegistry;
 
 import java.io.Serializable;
 
@@ -1872,9 +1871,6 @@ public class LayoutFriendlyURLUtil {
 			_persistence =
 				(LayoutFriendlyURLPersistence)PortalBeanLocatorUtil.locate(
 					LayoutFriendlyURLPersistence.class.getName());
-
-			ReferenceRegistry.registerReference(
-				LayoutFriendlyURLUtil.class, "_persistence");
 		}
 
 		return _persistence;

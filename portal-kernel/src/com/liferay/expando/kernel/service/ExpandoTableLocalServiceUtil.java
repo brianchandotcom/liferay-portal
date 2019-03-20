@@ -17,7 +17,6 @@ package com.liferay.expando.kernel.service;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
-import com.liferay.portal.kernel.util.ReferenceRegistry;
 
 /**
  * Provides the local service utility for ExpandoTable. This utility wraps
@@ -412,9 +411,6 @@ public class ExpandoTableLocalServiceUtil {
 		if (_service == null) {
 			_service = (ExpandoTableLocalService)PortalBeanLocatorUtil.locate(
 				ExpandoTableLocalService.class.getName());
-
-			ReferenceRegistry.registerReference(
-				ExpandoTableLocalServiceUtil.class, "_service");
 		}
 
 		return _service;

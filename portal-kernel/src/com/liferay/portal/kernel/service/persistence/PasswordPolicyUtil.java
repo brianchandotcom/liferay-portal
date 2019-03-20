@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.model.PasswordPolicy;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.ReferenceRegistry;
 
 import java.io.Serializable;
 
@@ -1183,9 +1182,6 @@ public class PasswordPolicyUtil {
 			_persistence =
 				(PasswordPolicyPersistence)PortalBeanLocatorUtil.locate(
 					PasswordPolicyPersistence.class.getName());
-
-			ReferenceRegistry.registerReference(
-				PasswordPolicyUtil.class, "_persistence");
 		}
 
 		return _persistence;

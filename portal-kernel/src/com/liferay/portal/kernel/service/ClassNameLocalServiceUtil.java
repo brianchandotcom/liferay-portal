@@ -17,7 +17,6 @@ package com.liferay.portal.kernel.service;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
-import com.liferay.portal.kernel.util.ReferenceRegistry;
 
 /**
  * Provides the local service utility for ClassName. This utility wraps
@@ -321,9 +320,6 @@ public class ClassNameLocalServiceUtil {
 		if (_service == null) {
 			_service = (ClassNameLocalService)PortalBeanLocatorUtil.locate(
 				ClassNameLocalService.class.getName());
-
-			ReferenceRegistry.registerReference(
-				ClassNameLocalServiceUtil.class, "_service");
 		}
 
 		return _service;

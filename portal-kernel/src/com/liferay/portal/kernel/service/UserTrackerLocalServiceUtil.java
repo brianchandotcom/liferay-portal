@@ -17,7 +17,6 @@ package com.liferay.portal.kernel.service;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
-import com.liferay.portal.kernel.util.ReferenceRegistry;
 
 /**
  * Provides the local service utility for UserTracker. This utility wraps
@@ -294,9 +293,6 @@ public class UserTrackerLocalServiceUtil {
 		if (_service == null) {
 			_service = (UserTrackerLocalService)PortalBeanLocatorUtil.locate(
 				UserTrackerLocalService.class.getName());
-
-			ReferenceRegistry.registerReference(
-				UserTrackerLocalServiceUtil.class, "_service");
 		}
 
 		return _service;

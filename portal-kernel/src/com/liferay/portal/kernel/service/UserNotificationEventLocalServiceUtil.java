@@ -17,7 +17,6 @@ package com.liferay.portal.kernel.service;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
-import com.liferay.portal.kernel.util.ReferenceRegistry;
 
 /**
  * Provides the local service utility for UserNotificationEvent. This utility wraps
@@ -747,9 +746,6 @@ public class UserNotificationEventLocalServiceUtil {
 			_service =
 				(UserNotificationEventLocalService)PortalBeanLocatorUtil.locate(
 					UserNotificationEventLocalService.class.getName());
-
-			ReferenceRegistry.registerReference(
-				UserNotificationEventLocalServiceUtil.class, "_service");
 		}
 
 		return _service;

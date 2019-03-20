@@ -17,7 +17,6 @@ package com.liferay.asset.kernel.service;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
-import com.liferay.portal.kernel.util.ReferenceRegistry;
 
 /**
  * Provides the remote service utility for AssetCategory. This utility wraps
@@ -412,9 +411,6 @@ public class AssetCategoryServiceUtil {
 		if (_service == null) {
 			_service = (AssetCategoryService)PortalBeanLocatorUtil.locate(
 				AssetCategoryService.class.getName());
-
-			ReferenceRegistry.registerReference(
-				AssetCategoryServiceUtil.class, "_service");
 		}
 
 		return _service;

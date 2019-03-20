@@ -17,7 +17,6 @@ package com.liferay.portal.kernel.service;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
-import com.liferay.portal.kernel.util.ReferenceRegistry;
 
 /**
  * Provides the remote service utility for MembershipRequest. This utility wraps
@@ -83,9 +82,6 @@ public class MembershipRequestServiceUtil {
 		if (_service == null) {
 			_service = (MembershipRequestService)PortalBeanLocatorUtil.locate(
 				MembershipRequestService.class.getName());
-
-			ReferenceRegistry.registerReference(
-				MembershipRequestServiceUtil.class, "_service");
 		}
 
 		return _service;

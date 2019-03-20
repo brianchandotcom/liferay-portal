@@ -17,7 +17,6 @@ package com.liferay.portal.kernel.service;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
-import com.liferay.portal.kernel.util.ReferenceRegistry;
 
 /**
  * Provides the local service utility for PasswordTracker. This utility wraps
@@ -305,9 +304,6 @@ public class PasswordTrackerLocalServiceUtil {
 			_service =
 				(PasswordTrackerLocalService)PortalBeanLocatorUtil.locate(
 					PasswordTrackerLocalService.class.getName());
-
-			ReferenceRegistry.registerReference(
-				PasswordTrackerLocalServiceUtil.class, "_service");
 		}
 
 		return _service;

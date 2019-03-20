@@ -17,7 +17,6 @@ package com.liferay.portal.kernel.service;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
-import com.liferay.portal.kernel.util.ReferenceRegistry;
 
 /**
  * Provides the local service utility for ResourceBlock. This utility wraps
@@ -726,9 +725,6 @@ public class ResourceBlockLocalServiceUtil {
 		if (_service == null) {
 			_service = (ResourceBlockLocalService)PortalBeanLocatorUtil.locate(
 				ResourceBlockLocalService.class.getName());
-
-			ReferenceRegistry.registerReference(
-				ResourceBlockLocalServiceUtil.class, "_service");
 		}
 
 		return _service;

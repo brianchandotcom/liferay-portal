@@ -17,7 +17,6 @@ package com.liferay.portal.kernel.service;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
-import com.liferay.portal.kernel.util.ReferenceRegistry;
 
 /**
  * Provides the local service utility for LayoutFriendlyURL. This utility wraps
@@ -491,9 +490,6 @@ public class LayoutFriendlyURLLocalServiceUtil {
 			_service =
 				(LayoutFriendlyURLLocalService)PortalBeanLocatorUtil.locate(
 					LayoutFriendlyURLLocalService.class.getName());
-
-			ReferenceRegistry.registerReference(
-				LayoutFriendlyURLLocalServiceUtil.class, "_service");
 		}
 
 		return _service;

@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.model.UserGroupRole;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.ReferenceRegistry;
 
 import java.io.Serializable;
 
@@ -1165,9 +1164,6 @@ public class UserGroupRoleUtil {
 			_persistence =
 				(UserGroupRolePersistence)PortalBeanLocatorUtil.locate(
 					UserGroupRolePersistence.class.getName());
-
-			ReferenceRegistry.registerReference(
-				UserGroupRoleUtil.class, "_persistence");
 		}
 
 		return _persistence;

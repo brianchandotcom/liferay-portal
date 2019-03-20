@@ -17,7 +17,6 @@ package com.liferay.asset.kernel.service;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
-import com.liferay.portal.kernel.util.ReferenceRegistry;
 
 /**
  * Provides the local service utility for AssetCategory. This utility wraps
@@ -797,9 +796,6 @@ public class AssetCategoryLocalServiceUtil {
 		if (_service == null) {
 			_service = (AssetCategoryLocalService)PortalBeanLocatorUtil.locate(
 				AssetCategoryLocalService.class.getName());
-
-			ReferenceRegistry.registerReference(
-				AssetCategoryLocalServiceUtil.class, "_service");
 		}
 
 		return _service;

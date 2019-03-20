@@ -17,7 +17,6 @@ package com.liferay.portal.kernel.service.persistence;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
-import com.liferay.portal.kernel.util.ReferenceRegistry;
 
 /**
  * @author Brian Wing Shun Chan
@@ -42,9 +41,6 @@ public class UserGroupRoleFinderUtil {
 		if (_finder == null) {
 			_finder = (UserGroupRoleFinder)PortalBeanLocatorUtil.locate(
 				UserGroupRoleFinder.class.getName());
-
-			ReferenceRegistry.registerReference(
-				UserGroupRoleFinderUtil.class, "_finder");
 		}
 
 		return _finder;
@@ -52,9 +48,6 @@ public class UserGroupRoleFinderUtil {
 
 	public void setFinder(UserGroupRoleFinder finder) {
 		_finder = finder;
-
-		ReferenceRegistry.registerReference(
-			UserGroupRoleFinderUtil.class, "_finder");
 	}
 
 	private static UserGroupRoleFinder _finder;

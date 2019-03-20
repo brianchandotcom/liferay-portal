@@ -17,7 +17,6 @@ package com.liferay.document.library.kernel.service;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
-import com.liferay.portal.kernel.util.ReferenceRegistry;
 
 /**
  * Provides the local service utility for DLFileVersion. This utility wraps
@@ -422,9 +421,6 @@ public class DLFileVersionLocalServiceUtil {
 		if (_service == null) {
 			_service = (DLFileVersionLocalService)PortalBeanLocatorUtil.locate(
 				DLFileVersionLocalService.class.getName());
-
-			ReferenceRegistry.registerReference(
-				DLFileVersionLocalServiceUtil.class, "_service");
 		}
 
 		return _service;

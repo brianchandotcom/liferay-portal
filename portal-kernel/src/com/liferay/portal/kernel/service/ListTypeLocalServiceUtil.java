@@ -17,7 +17,6 @@ package com.liferay.portal.kernel.service;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
-import com.liferay.portal.kernel.util.ReferenceRegistry;
 
 /**
  * Provides the local service utility for ListType. This utility wraps
@@ -307,9 +306,6 @@ public class ListTypeLocalServiceUtil {
 		if (_service == null) {
 			_service = (ListTypeLocalService)PortalBeanLocatorUtil.locate(
 				ListTypeLocalService.class.getName());
-
-			ReferenceRegistry.registerReference(
-				ListTypeLocalServiceUtil.class, "_service");
 		}
 
 		return _service;

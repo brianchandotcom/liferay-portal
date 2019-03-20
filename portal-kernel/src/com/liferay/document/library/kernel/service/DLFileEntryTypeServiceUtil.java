@@ -17,7 +17,6 @@ package com.liferay.document.library.kernel.service;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
-import com.liferay.portal.kernel.util.ReferenceRegistry;
 
 /**
  * Provides the remote service utility for DLFileEntryType. This utility wraps
@@ -184,9 +183,6 @@ public class DLFileEntryTypeServiceUtil {
 		if (_service == null) {
 			_service = (DLFileEntryTypeService)PortalBeanLocatorUtil.locate(
 				DLFileEntryTypeService.class.getName());
-
-			ReferenceRegistry.registerReference(
-				DLFileEntryTypeServiceUtil.class, "_service");
 		}
 
 		return _service;

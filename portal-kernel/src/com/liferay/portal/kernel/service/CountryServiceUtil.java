@@ -17,7 +17,6 @@ package com.liferay.portal.kernel.service;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
-import com.liferay.portal.kernel.util.ReferenceRegistry;
 
 /**
  * Provides the remote service utility for Country. This utility wraps
@@ -118,9 +117,6 @@ public class CountryServiceUtil {
 		if (_service == null) {
 			_service = (CountryService)PortalBeanLocatorUtil.locate(
 				CountryService.class.getName());
-
-			ReferenceRegistry.registerReference(
-				CountryServiceUtil.class, "_service");
 		}
 
 		return _service;

@@ -17,7 +17,6 @@ package com.liferay.ratings.kernel.service;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
-import com.liferay.portal.kernel.util.ReferenceRegistry;
 
 /**
  * Provides the local service utility for RatingsStats. This utility wraps
@@ -326,9 +325,6 @@ public class RatingsStatsLocalServiceUtil {
 		if (_service == null) {
 			_service = (RatingsStatsLocalService)PortalBeanLocatorUtil.locate(
 				RatingsStatsLocalService.class.getName());
-
-			ReferenceRegistry.registerReference(
-				RatingsStatsLocalServiceUtil.class, "_service");
 		}
 
 		return _service;

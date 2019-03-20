@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.ReferenceRegistry;
 
 import java.io.Serializable;
 
@@ -680,9 +679,6 @@ public class AssetTagStatsUtil {
 			_persistence =
 				(AssetTagStatsPersistence)PortalBeanLocatorUtil.locate(
 					AssetTagStatsPersistence.class.getName());
-
-			ReferenceRegistry.registerReference(
-				AssetTagStatsUtil.class, "_persistence");
 		}
 
 		return _persistence;

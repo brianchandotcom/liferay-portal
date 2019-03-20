@@ -17,7 +17,6 @@ package com.liferay.portal.kernel.service;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
-import com.liferay.portal.kernel.util.ReferenceRegistry;
 
 /**
  * Provides the local service utility for RecentLayoutBranch. This utility wraps
@@ -310,9 +309,6 @@ public class RecentLayoutBranchLocalServiceUtil {
 			_service =
 				(RecentLayoutBranchLocalService)PortalBeanLocatorUtil.locate(
 					RecentLayoutBranchLocalService.class.getName());
-
-			ReferenceRegistry.registerReference(
-				RecentLayoutBranchLocalServiceUtil.class, "_service");
 		}
 
 		return _service;

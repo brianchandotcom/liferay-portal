@@ -17,7 +17,6 @@ package com.liferay.portal.kernel.service;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
-import com.liferay.portal.kernel.util.ReferenceRegistry;
 
 /**
  * Provides the remote service utility for ResourceBlock. This utility wraps
@@ -153,9 +152,6 @@ public class ResourceBlockServiceUtil {
 		if (_service == null) {
 			_service = (ResourceBlockService)PortalBeanLocatorUtil.locate(
 				ResourceBlockService.class.getName());
-
-			ReferenceRegistry.registerReference(
-				ResourceBlockServiceUtil.class, "_service");
 		}
 
 		return _service;

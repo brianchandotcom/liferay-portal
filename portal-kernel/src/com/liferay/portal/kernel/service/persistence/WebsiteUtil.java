@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.model.Website;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.ReferenceRegistry;
 
 import java.io.Serializable;
 
@@ -1561,9 +1560,6 @@ public class WebsiteUtil {
 		if (_persistence == null) {
 			_persistence = (WebsitePersistence)PortalBeanLocatorUtil.locate(
 				WebsitePersistence.class.getName());
-
-			ReferenceRegistry.registerReference(
-				WebsiteUtil.class, "_persistence");
 		}
 
 		return _persistence;

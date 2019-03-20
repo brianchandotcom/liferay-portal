@@ -17,7 +17,6 @@ package com.liferay.portal.kernel.service;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
-import com.liferay.portal.kernel.util.ReferenceRegistry;
 
 /**
  * Provides the remote service utility for Role. This utility wraps
@@ -342,9 +341,6 @@ public class RoleServiceUtil {
 		if (_service == null) {
 			_service = (RoleService)PortalBeanLocatorUtil.locate(
 				RoleService.class.getName());
-
-			ReferenceRegistry.registerReference(
-				RoleServiceUtil.class, "_service");
 		}
 
 		return _service;

@@ -17,7 +17,6 @@ package com.liferay.portal.kernel.service;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
-import com.liferay.portal.kernel.util.ReferenceRegistry;
 
 /**
  * Provides the local service utility for Release. This utility wraps
@@ -345,9 +344,6 @@ public class ReleaseLocalServiceUtil {
 		if (_service == null) {
 			_service = (ReleaseLocalService)PortalBeanLocatorUtil.locate(
 				ReleaseLocalService.class.getName());
-
-			ReferenceRegistry.registerReference(
-				ReleaseLocalServiceUtil.class, "_service");
 		}
 
 		return _service;

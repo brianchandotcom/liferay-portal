@@ -17,7 +17,6 @@ package com.liferay.exportimport.kernel.service;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
-import com.liferay.portal.kernel.util.ReferenceRegistry;
 
 /**
  * Provides the local service utility for Staging. This utility wraps
@@ -165,9 +164,6 @@ public class StagingLocalServiceUtil {
 		if (_service == null) {
 			_service = (StagingLocalService)PortalBeanLocatorUtil.locate(
 				StagingLocalService.class.getName());
-
-			ReferenceRegistry.registerReference(
-				StagingLocalServiceUtil.class, "_service");
 		}
 
 		return _service;

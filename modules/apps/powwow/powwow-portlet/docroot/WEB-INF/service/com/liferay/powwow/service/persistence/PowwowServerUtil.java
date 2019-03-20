@@ -20,7 +20,6 @@ import com.liferay.portal.kernel.bean.PortletBeanLocatorUtil;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.ReferenceRegistry;
 import com.liferay.powwow.model.PowwowServer;
 
 import java.io.Serializable;
@@ -465,9 +464,6 @@ public class PowwowServerUtil {
 					com.liferay.powwow.service.ServletContextUtil.
 						getServletContextName(),
 					PowwowServerPersistence.class.getName());
-
-			ReferenceRegistry.registerReference(
-				PowwowServerUtil.class, "_persistence");
 		}
 
 		return _persistence;

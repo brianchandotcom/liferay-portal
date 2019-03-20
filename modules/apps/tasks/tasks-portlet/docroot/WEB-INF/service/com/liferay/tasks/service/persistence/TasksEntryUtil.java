@@ -20,7 +20,6 @@ import com.liferay.portal.kernel.bean.PortletBeanLocatorUtil;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.ReferenceRegistry;
 import com.liferay.tasks.model.TasksEntry;
 
 import java.io.Serializable;
@@ -3329,9 +3328,6 @@ public class TasksEntryUtil {
 				com.liferay.tasks.service.ServletContextUtil.
 					getServletContextName(),
 				TasksEntryPersistence.class.getName());
-
-			ReferenceRegistry.registerReference(
-				TasksEntryUtil.class, "_persistence");
 		}
 
 		return _persistence;

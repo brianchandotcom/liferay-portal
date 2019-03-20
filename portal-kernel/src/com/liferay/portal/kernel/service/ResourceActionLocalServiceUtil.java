@@ -17,7 +17,6 @@ package com.liferay.portal.kernel.service;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
-import com.liferay.portal.kernel.util.ReferenceRegistry;
 
 /**
  * Provides the local service utility for ResourceAction. This utility wraps
@@ -326,9 +325,6 @@ public class ResourceActionLocalServiceUtil {
 		if (_service == null) {
 			_service = (ResourceActionLocalService)PortalBeanLocatorUtil.locate(
 				ResourceActionLocalService.class.getName());
-
-			ReferenceRegistry.registerReference(
-				ResourceActionLocalServiceUtil.class, "_service");
 		}
 
 		return _service;

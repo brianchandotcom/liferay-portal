@@ -17,7 +17,6 @@ package com.liferay.document.library.kernel.service;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
-import com.liferay.portal.kernel.util.ReferenceRegistry;
 
 /**
  * Provides the local service utility for DLFileEntryType. This utility wraps
@@ -685,9 +684,6 @@ public class DLFileEntryTypeLocalServiceUtil {
 			_service =
 				(DLFileEntryTypeLocalService)PortalBeanLocatorUtil.locate(
 					DLFileEntryTypeLocalService.class.getName());
-
-			ReferenceRegistry.registerReference(
-				DLFileEntryTypeLocalServiceUtil.class, "_service");
 		}
 
 		return _service;

@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.model.SystemEvent;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.ReferenceRegistry;
 
 import java.io.Serializable;
 
@@ -1050,9 +1049,6 @@ public class SystemEventUtil {
 		if (_persistence == null) {
 			_persistence = (SystemEventPersistence)PortalBeanLocatorUtil.locate(
 				SystemEventPersistence.class.getName());
-
-			ReferenceRegistry.registerReference(
-				SystemEventUtil.class, "_persistence");
 		}
 
 		return _persistence;

@@ -17,7 +17,6 @@ package com.liferay.portal.kernel.service;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
-import com.liferay.portal.kernel.util.ReferenceRegistry;
 
 /**
  * Provides the remote service utility for Group. This utility wraps
@@ -766,9 +765,6 @@ public class GroupServiceUtil {
 		if (_service == null) {
 			_service = (GroupService)PortalBeanLocatorUtil.locate(
 				GroupService.class.getName());
-
-			ReferenceRegistry.registerReference(
-				GroupServiceUtil.class, "_service");
 		}
 
 		return _service;

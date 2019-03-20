@@ -17,7 +17,6 @@ package com.liferay.asset.kernel.service.persistence;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
-import com.liferay.portal.kernel.util.ReferenceRegistry;
 
 /**
  * @author Brian Wing Shun Chan
@@ -50,9 +49,6 @@ public class AssetCategoryPropertyFinderUtil {
 		if (_finder == null) {
 			_finder = (AssetCategoryPropertyFinder)PortalBeanLocatorUtil.locate(
 				AssetCategoryPropertyFinder.class.getName());
-
-			ReferenceRegistry.registerReference(
-				AssetCategoryPropertyFinderUtil.class, "_finder");
 		}
 
 		return _finder;
@@ -60,9 +56,6 @@ public class AssetCategoryPropertyFinderUtil {
 
 	public void setFinder(AssetCategoryPropertyFinder finder) {
 		_finder = finder;
-
-		ReferenceRegistry.registerReference(
-			AssetCategoryPropertyFinderUtil.class, "_finder");
 	}
 
 	private static AssetCategoryPropertyFinder _finder;

@@ -17,7 +17,6 @@ package com.liferay.document.library.kernel.service.persistence;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
-import com.liferay.portal.kernel.util.ReferenceRegistry;
 
 /**
  * @author Brian Wing Shun Chan
@@ -44,9 +43,6 @@ public class DLFileEntryMetadataFinderUtil {
 		if (_finder == null) {
 			_finder = (DLFileEntryMetadataFinder)PortalBeanLocatorUtil.locate(
 				DLFileEntryMetadataFinder.class.getName());
-
-			ReferenceRegistry.registerReference(
-				DLFileEntryMetadataFinderUtil.class, "_finder");
 		}
 
 		return _finder;
@@ -54,9 +50,6 @@ public class DLFileEntryMetadataFinderUtil {
 
 	public void setFinder(DLFileEntryMetadataFinder finder) {
 		_finder = finder;
-
-		ReferenceRegistry.registerReference(
-			DLFileEntryMetadataFinderUtil.class, "_finder");
 	}
 
 	private static DLFileEntryMetadataFinder _finder;

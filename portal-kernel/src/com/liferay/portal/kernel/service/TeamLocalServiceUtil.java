@@ -17,7 +17,6 @@ package com.liferay.portal.kernel.service;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
-import com.liferay.portal.kernel.util.ReferenceRegistry;
 
 /**
  * Provides the local service utility for Team. This utility wraps
@@ -615,9 +614,6 @@ public class TeamLocalServiceUtil {
 		if (_service == null) {
 			_service = (TeamLocalService)PortalBeanLocatorUtil.locate(
 				TeamLocalService.class.getName());
-
-			ReferenceRegistry.registerReference(
-				TeamLocalServiceUtil.class, "_service");
 		}
 
 		return _service;

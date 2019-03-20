@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.model.UserTracker;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.ReferenceRegistry;
 
 import java.io.Serializable;
 
@@ -778,9 +777,6 @@ public class UserTrackerUtil {
 		if (_persistence == null) {
 			_persistence = (UserTrackerPersistence)PortalBeanLocatorUtil.locate(
 				UserTrackerPersistence.class.getName());
-
-			ReferenceRegistry.registerReference(
-				UserTrackerUtil.class, "_persistence");
 		}
 
 		return _persistence;

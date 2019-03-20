@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.model.PluginSetting;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.ReferenceRegistry;
 
 import java.io.Serializable;
 
@@ -529,9 +528,6 @@ public class PluginSettingUtil {
 			_persistence =
 				(PluginSettingPersistence)PortalBeanLocatorUtil.locate(
 					PluginSettingPersistence.class.getName());
-
-			ReferenceRegistry.registerReference(
-				PluginSettingUtil.class, "_persistence");
 		}
 
 		return _persistence;

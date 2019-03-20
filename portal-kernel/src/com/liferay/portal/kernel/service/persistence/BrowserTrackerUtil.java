@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.model.BrowserTracker;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.ReferenceRegistry;
 
 import java.io.Serializable;
 
@@ -339,9 +338,6 @@ public class BrowserTrackerUtil {
 			_persistence =
 				(BrowserTrackerPersistence)PortalBeanLocatorUtil.locate(
 					BrowserTrackerPersistence.class.getName());
-
-			ReferenceRegistry.registerReference(
-				BrowserTrackerUtil.class, "_persistence");
 		}
 
 		return _persistence;

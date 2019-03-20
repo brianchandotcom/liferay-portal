@@ -17,7 +17,6 @@ package com.liferay.portal.kernel.service;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
-import com.liferay.portal.kernel.util.ReferenceRegistry;
 
 /**
  * Provides the remote service utility for LayoutRevision. This utility wraps
@@ -70,9 +69,6 @@ public class LayoutRevisionServiceUtil {
 		if (_service == null) {
 			_service = (LayoutRevisionService)PortalBeanLocatorUtil.locate(
 				LayoutRevisionService.class.getName());
-
-			ReferenceRegistry.registerReference(
-				LayoutRevisionServiceUtil.class, "_service");
 		}
 
 		return _service;

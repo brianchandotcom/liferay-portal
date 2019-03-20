@@ -17,7 +17,6 @@ package com.liferay.portal.kernel.service;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
-import com.liferay.portal.kernel.util.ReferenceRegistry;
 
 /**
  * Provides the local service utility for MembershipRequest. This utility wraps
@@ -350,9 +349,6 @@ public class MembershipRequestLocalServiceUtil {
 			_service =
 				(MembershipRequestLocalService)PortalBeanLocatorUtil.locate(
 					MembershipRequestLocalService.class.getName());
-
-			ReferenceRegistry.registerReference(
-				MembershipRequestLocalServiceUtil.class, "_service");
 		}
 
 		return _service;

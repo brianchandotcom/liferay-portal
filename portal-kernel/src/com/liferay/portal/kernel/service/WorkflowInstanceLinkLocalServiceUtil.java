@@ -17,7 +17,6 @@ package com.liferay.portal.kernel.service;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
-import com.liferay.portal.kernel.util.ReferenceRegistry;
 
 /**
  * Provides the local service utility for WorkflowInstanceLink. This utility wraps
@@ -379,9 +378,6 @@ public class WorkflowInstanceLinkLocalServiceUtil {
 			_service =
 				(WorkflowInstanceLinkLocalService)PortalBeanLocatorUtil.locate(
 					WorkflowInstanceLinkLocalService.class.getName());
-
-			ReferenceRegistry.registerReference(
-				WorkflowInstanceLinkLocalServiceUtil.class, "_service");
 		}
 
 		return _service;

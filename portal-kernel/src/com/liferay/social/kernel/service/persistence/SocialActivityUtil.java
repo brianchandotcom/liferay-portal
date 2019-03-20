@@ -20,7 +20,6 @@ import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.ReferenceRegistry;
 import com.liferay.social.kernel.model.SocialActivity;
 
 import java.io.Serializable;
@@ -2319,9 +2318,6 @@ public class SocialActivityUtil {
 			_persistence =
 				(SocialActivityPersistence)PortalBeanLocatorUtil.locate(
 					SocialActivityPersistence.class.getName());
-
-			ReferenceRegistry.registerReference(
-				SocialActivityUtil.class, "_persistence");
 		}
 
 		return _persistence;

@@ -17,7 +17,6 @@ package com.liferay.social.kernel.service;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
-import com.liferay.portal.kernel.util.ReferenceRegistry;
 
 /**
  * Provides the remote service utility for SocialRequest. This utility wraps
@@ -61,9 +60,6 @@ public class SocialRequestServiceUtil {
 		if (_service == null) {
 			_service = (SocialRequestService)PortalBeanLocatorUtil.locate(
 				SocialRequestService.class.getName());
-
-			ReferenceRegistry.registerReference(
-				SocialRequestServiceUtil.class, "_service");
 		}
 
 		return _service;

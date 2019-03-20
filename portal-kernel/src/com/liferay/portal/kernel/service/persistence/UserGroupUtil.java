@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.model.UserGroup;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.ReferenceRegistry;
 
 import java.io.Serializable;
 
@@ -2597,9 +2596,6 @@ public class UserGroupUtil {
 		if (_persistence == null) {
 			_persistence = (UserGroupPersistence)PortalBeanLocatorUtil.locate(
 				UserGroupPersistence.class.getName());
-
-			ReferenceRegistry.registerReference(
-				UserGroupUtil.class, "_persistence");
 		}
 
 		return _persistence;

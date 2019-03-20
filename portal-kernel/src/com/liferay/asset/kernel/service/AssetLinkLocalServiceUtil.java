@@ -17,7 +17,6 @@ package com.liferay.asset.kernel.service;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
-import com.liferay.portal.kernel.util.ReferenceRegistry;
 
 /**
  * Provides the local service utility for AssetLink. This utility wraps
@@ -511,9 +510,6 @@ public class AssetLinkLocalServiceUtil {
 		if (_service == null) {
 			_service = (AssetLinkLocalService)PortalBeanLocatorUtil.locate(
 				AssetLinkLocalService.class.getName());
-
-			ReferenceRegistry.registerReference(
-				AssetLinkLocalServiceUtil.class, "_service");
 		}
 
 		return _service;

@@ -17,7 +17,6 @@ package com.liferay.portal.kernel.service;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
-import com.liferay.portal.kernel.util.ReferenceRegistry;
 
 /**
  * Provides the local service utility for LayoutSetBranch. This utility wraps
@@ -378,9 +377,6 @@ public class LayoutSetBranchLocalServiceUtil {
 			_service =
 				(LayoutSetBranchLocalService)PortalBeanLocatorUtil.locate(
 					LayoutSetBranchLocalService.class.getName());
-
-			ReferenceRegistry.registerReference(
-				LayoutSetBranchLocalServiceUtil.class, "_service");
 		}
 
 		return _service;

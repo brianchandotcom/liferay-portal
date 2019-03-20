@@ -17,7 +17,6 @@ package com.liferay.powwow.service.persistence;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.bean.PortletBeanLocatorUtil;
-import com.liferay.portal.kernel.util.ReferenceRegistry;
 
 /**
  * @author Shinn Lok
@@ -46,9 +45,6 @@ public class PowwowMeetingFinderUtil {
 				com.liferay.powwow.service.ServletContextUtil.
 					getServletContextName(),
 				PowwowMeetingFinder.class.getName());
-
-			ReferenceRegistry.registerReference(
-				PowwowMeetingFinderUtil.class, "_finder");
 		}
 
 		return _finder;
@@ -56,9 +52,6 @@ public class PowwowMeetingFinderUtil {
 
 	public void setFinder(PowwowMeetingFinder finder) {
 		_finder = finder;
-
-		ReferenceRegistry.registerReference(
-			PowwowMeetingFinderUtil.class, "_finder");
 	}
 
 	private static PowwowMeetingFinder _finder;

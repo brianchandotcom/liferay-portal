@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.model.Image;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.ReferenceRegistry;
 
 import java.io.Serializable;
 
@@ -432,9 +431,6 @@ public class ImageUtil {
 		if (_persistence == null) {
 			_persistence = (ImagePersistence)PortalBeanLocatorUtil.locate(
 				ImagePersistence.class.getName());
-
-			ReferenceRegistry.registerReference(
-				ImageUtil.class, "_persistence");
 		}
 
 		return _persistence;

@@ -17,7 +17,6 @@ package com.liferay.opensocial.service;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.bean.PortletBeanLocatorUtil;
-import com.liferay.portal.kernel.util.ReferenceRegistry;
 
 /**
  * Provides the local service utility for Gadget. This utility wraps
@@ -394,9 +393,6 @@ public class GadgetLocalServiceUtil {
 			_service = (GadgetLocalService)PortletBeanLocatorUtil.locate(
 				ServletContextUtil.getServletContextName(),
 				GadgetLocalService.class.getName());
-
-			ReferenceRegistry.registerReference(
-				GadgetLocalServiceUtil.class, "_service");
 		}
 
 		return _service;

@@ -17,7 +17,6 @@ package com.liferay.portal.kernel.service;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
-import com.liferay.portal.kernel.util.ReferenceRegistry;
 
 /**
  * Provides the local service utility for LayoutSetPrototype. This utility wraps
@@ -431,9 +430,6 @@ public class LayoutSetPrototypeLocalServiceUtil {
 			_service =
 				(LayoutSetPrototypeLocalService)PortalBeanLocatorUtil.locate(
 					LayoutSetPrototypeLocalService.class.getName());
-
-			ReferenceRegistry.registerReference(
-				LayoutSetPrototypeLocalServiceUtil.class, "_service");
 		}
 
 		return _service;

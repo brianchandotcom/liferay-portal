@@ -17,7 +17,6 @@ package com.liferay.announcements.kernel.service;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
-import com.liferay.portal.kernel.util.ReferenceRegistry;
 
 /**
  * Provides the remote service utility for AnnouncementsDelivery. This utility wraps
@@ -75,9 +74,6 @@ public class AnnouncementsDeliveryServiceUtil {
 			_service =
 				(AnnouncementsDeliveryService)PortalBeanLocatorUtil.locate(
 					AnnouncementsDeliveryService.class.getName());
-
-			ReferenceRegistry.registerReference(
-				AnnouncementsDeliveryServiceUtil.class, "_service");
 		}
 
 		return _service;

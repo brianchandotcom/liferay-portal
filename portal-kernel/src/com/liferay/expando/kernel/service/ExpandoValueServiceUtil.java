@@ -17,7 +17,6 @@ package com.liferay.expando.kernel.service;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
-import com.liferay.portal.kernel.util.ReferenceRegistry;
 
 /**
  * Provides the remote service utility for ExpandoValue. This utility wraps
@@ -106,9 +105,6 @@ public class ExpandoValueServiceUtil {
 		if (_service == null) {
 			_service = (ExpandoValueService)PortalBeanLocatorUtil.locate(
 				ExpandoValueService.class.getName());
-
-			ReferenceRegistry.registerReference(
-				ExpandoValueServiceUtil.class, "_service");
 		}
 
 		return _service;

@@ -17,7 +17,6 @@ package com.liferay.portal.kernel.service;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
-import com.liferay.portal.kernel.util.ReferenceRegistry;
 
 /**
  * Provides the local service utility for Phone. This utility wraps
@@ -349,9 +348,6 @@ public class PhoneLocalServiceUtil {
 		if (_service == null) {
 			_service = (PhoneLocalService)PortalBeanLocatorUtil.locate(
 				PhoneLocalService.class.getName());
-
-			ReferenceRegistry.registerReference(
-				PhoneLocalServiceUtil.class, "_service");
 		}
 
 		return _service;

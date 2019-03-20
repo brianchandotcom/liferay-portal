@@ -17,7 +17,6 @@ package com.liferay.social.kernel.service;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
-import com.liferay.portal.kernel.util.ReferenceRegistry;
 
 /**
  * Provides the local service utility for SocialActivitySet. This utility wraps
@@ -417,9 +416,6 @@ public class SocialActivitySetLocalServiceUtil {
 			_service =
 				(SocialActivitySetLocalService)PortalBeanLocatorUtil.locate(
 					SocialActivitySetLocalService.class.getName());
-
-			ReferenceRegistry.registerReference(
-				SocialActivitySetLocalServiceUtil.class, "_service");
 		}
 
 		return _service;

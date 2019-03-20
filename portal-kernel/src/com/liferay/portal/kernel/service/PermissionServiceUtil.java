@@ -17,7 +17,6 @@ package com.liferay.portal.kernel.service;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
-import com.liferay.portal.kernel.util.ReferenceRegistry;
 
 /**
  * Provides the remote service utility for Permission. This utility wraps
@@ -80,9 +79,6 @@ public class PermissionServiceUtil {
 		if (_service == null) {
 			_service = (PermissionService)PortalBeanLocatorUtil.locate(
 				PermissionService.class.getName());
-
-			ReferenceRegistry.registerReference(
-				PermissionServiceUtil.class, "_service");
 		}
 
 		return _service;

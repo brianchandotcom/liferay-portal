@@ -17,7 +17,6 @@ package com.liferay.asset.kernel.service;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
-import com.liferay.portal.kernel.util.ReferenceRegistry;
 
 /**
  * Provides the local service utility for AssetTagStats. This utility wraps
@@ -391,9 +390,6 @@ public class AssetTagStatsLocalServiceUtil {
 		if (_service == null) {
 			_service = (AssetTagStatsLocalService)PortalBeanLocatorUtil.locate(
 				AssetTagStatsLocalService.class.getName());
-
-			ReferenceRegistry.registerReference(
-				AssetTagStatsLocalServiceUtil.class, "_service");
 		}
 
 		return _service;

@@ -17,7 +17,6 @@ package com.liferay.social.kernel.service;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
-import com.liferay.portal.kernel.util.ReferenceRegistry;
 
 /**
  * Provides the local service utility for SocialActivityLimit. This utility wraps
@@ -305,9 +304,6 @@ public class SocialActivityLimitLocalServiceUtil {
 			_service =
 				(SocialActivityLimitLocalService)PortalBeanLocatorUtil.locate(
 					SocialActivityLimitLocalService.class.getName());
-
-			ReferenceRegistry.registerReference(
-				SocialActivityLimitLocalServiceUtil.class, "_service");
 		}
 
 		return _service;

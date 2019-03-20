@@ -17,7 +17,6 @@ package com.liferay.portal.kernel.service;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
-import com.liferay.portal.kernel.util.ReferenceRegistry;
 
 /**
  * Provides the local service utility for Subscription. This utility wraps
@@ -523,9 +522,6 @@ public class SubscriptionLocalServiceUtil {
 		if (_service == null) {
 			_service = (SubscriptionLocalService)PortalBeanLocatorUtil.locate(
 				SubscriptionLocalService.class.getName());
-
-			ReferenceRegistry.registerReference(
-				SubscriptionLocalServiceUtil.class, "_service");
 		}
 
 		return _service;

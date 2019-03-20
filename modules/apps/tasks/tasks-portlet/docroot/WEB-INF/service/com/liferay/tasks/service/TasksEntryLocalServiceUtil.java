@@ -17,7 +17,6 @@ package com.liferay.tasks.service;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.bean.PortletBeanLocatorUtil;
-import com.liferay.portal.kernel.util.ReferenceRegistry;
 
 /**
  * Provides the local service utility for TasksEntry. This utility wraps
@@ -430,9 +429,6 @@ public class TasksEntryLocalServiceUtil {
 			_service = (TasksEntryLocalService)PortletBeanLocatorUtil.locate(
 				ServletContextUtil.getServletContextName(),
 				TasksEntryLocalService.class.getName());
-
-			ReferenceRegistry.registerReference(
-				TasksEntryLocalServiceUtil.class, "_service");
 		}
 
 		return _service;

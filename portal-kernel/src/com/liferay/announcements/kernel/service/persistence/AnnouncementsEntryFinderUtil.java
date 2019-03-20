@@ -17,7 +17,6 @@ package com.liferay.announcements.kernel.service.persistence;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
-import com.liferay.portal.kernel.util.ReferenceRegistry;
 
 /**
  * @author Brian Wing Shun Chan
@@ -167,9 +166,6 @@ public class AnnouncementsEntryFinderUtil {
 		if (_finder == null) {
 			_finder = (AnnouncementsEntryFinder)PortalBeanLocatorUtil.locate(
 				AnnouncementsEntryFinder.class.getName());
-
-			ReferenceRegistry.registerReference(
-				AnnouncementsEntryFinderUtil.class, "_finder");
 		}
 
 		return _finder;
@@ -177,9 +173,6 @@ public class AnnouncementsEntryFinderUtil {
 
 	public void setFinder(AnnouncementsEntryFinder finder) {
 		_finder = finder;
-
-		ReferenceRegistry.registerReference(
-			AnnouncementsEntryFinderUtil.class, "_finder");
 	}
 
 	private static AnnouncementsEntryFinder _finder;

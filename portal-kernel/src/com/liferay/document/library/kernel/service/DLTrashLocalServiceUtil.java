@@ -17,7 +17,6 @@ package com.liferay.document.library.kernel.service;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
-import com.liferay.portal.kernel.util.ReferenceRegistry;
 
 /**
  * Provides the local service utility for DLTrash. This utility wraps
@@ -81,9 +80,6 @@ public class DLTrashLocalServiceUtil {
 		if (_service == null) {
 			_service = (DLTrashLocalService)PortalBeanLocatorUtil.locate(
 				DLTrashLocalService.class.getName());
-
-			ReferenceRegistry.registerReference(
-				DLTrashLocalServiceUtil.class, "_service");
 		}
 
 		return _service;

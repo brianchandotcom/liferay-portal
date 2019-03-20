@@ -17,7 +17,6 @@ package com.liferay.portal.kernel.service;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
-import com.liferay.portal.kernel.util.ReferenceRegistry;
 
 /**
  * Provides the remote service utility for Company. This utility wraps
@@ -487,9 +486,6 @@ public class CompanyServiceUtil {
 		if (_service == null) {
 			_service = (CompanyService)PortalBeanLocatorUtil.locate(
 				CompanyService.class.getName());
-
-			ReferenceRegistry.registerReference(
-				CompanyServiceUtil.class, "_service");
 		}
 
 		return _service;

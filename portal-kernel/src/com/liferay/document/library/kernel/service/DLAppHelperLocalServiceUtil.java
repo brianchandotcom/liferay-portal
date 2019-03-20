@@ -17,7 +17,6 @@ package com.liferay.document.library.kernel.service;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
-import com.liferay.portal.kernel.util.ReferenceRegistry;
 
 /**
  * Provides the local service utility for DLAppHelper. This utility wraps
@@ -408,9 +407,6 @@ public class DLAppHelperLocalServiceUtil {
 		if (_service == null) {
 			_service = (DLAppHelperLocalService)PortalBeanLocatorUtil.locate(
 				DLAppHelperLocalService.class.getName());
-
-			ReferenceRegistry.registerReference(
-				DLAppHelperLocalServiceUtil.class, "_service");
 		}
 
 		return _service;

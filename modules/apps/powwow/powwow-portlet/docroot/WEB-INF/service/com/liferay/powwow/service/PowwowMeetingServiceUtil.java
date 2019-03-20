@@ -17,7 +17,6 @@ package com.liferay.powwow.service;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.bean.PortletBeanLocatorUtil;
-import com.liferay.portal.kernel.util.ReferenceRegistry;
 
 /**
  * Provides the remote service utility for PowwowMeeting. This utility wraps
@@ -115,9 +114,6 @@ public class PowwowMeetingServiceUtil {
 			_service = (PowwowMeetingService)PortletBeanLocatorUtil.locate(
 				ServletContextUtil.getServletContextName(),
 				PowwowMeetingService.class.getName());
-
-			ReferenceRegistry.registerReference(
-				PowwowMeetingServiceUtil.class, "_service");
 		}
 
 		return _service;

@@ -17,7 +17,6 @@ package com.liferay.portal.kernel.service;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
-import com.liferay.portal.kernel.util.ReferenceRegistry;
 
 /**
  * Provides the local service utility for PortalPreferences. This utility wraps
@@ -327,9 +326,6 @@ public class PortalPreferencesLocalServiceUtil {
 			_service =
 				(PortalPreferencesLocalService)PortalBeanLocatorUtil.locate(
 					PortalPreferencesLocalService.class.getName());
-
-			ReferenceRegistry.registerReference(
-				PortalPreferencesLocalServiceUtil.class, "_service");
 		}
 
 		return _service;

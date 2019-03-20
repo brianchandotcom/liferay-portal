@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.model.LayoutSetBranch;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.ReferenceRegistry;
 
 import java.io.Serializable;
 
@@ -1188,9 +1187,6 @@ public class LayoutSetBranchUtil {
 			_persistence =
 				(LayoutSetBranchPersistence)PortalBeanLocatorUtil.locate(
 					LayoutSetBranchPersistence.class.getName());
-
-			ReferenceRegistry.registerReference(
-				LayoutSetBranchUtil.class, "_persistence");
 		}
 
 		return _persistence;

@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.model.WebDAVProps;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.ReferenceRegistry;
 
 import java.io.Serializable;
 
@@ -339,9 +338,6 @@ public class WebDAVPropsUtil {
 		if (_persistence == null) {
 			_persistence = (WebDAVPropsPersistence)PortalBeanLocatorUtil.locate(
 				WebDAVPropsPersistence.class.getName());
-
-			ReferenceRegistry.registerReference(
-				WebDAVPropsUtil.class, "_persistence");
 		}
 
 		return _persistence;

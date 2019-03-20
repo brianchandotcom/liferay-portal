@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.model.VirtualHost;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.ReferenceRegistry;
 
 import java.io.Serializable;
 
@@ -397,9 +396,6 @@ public class VirtualHostUtil {
 		if (_persistence == null) {
 			_persistence = (VirtualHostPersistence)PortalBeanLocatorUtil.locate(
 				VirtualHostPersistence.class.getName());
-
-			ReferenceRegistry.registerReference(
-				VirtualHostUtil.class, "_persistence");
 		}
 
 		return _persistence;

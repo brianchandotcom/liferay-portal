@@ -17,7 +17,6 @@ package com.liferay.tasks.service.persistence;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.bean.PortletBeanLocatorUtil;
-import com.liferay.portal.kernel.util.ReferenceRegistry;
 
 /**
  * @author Ryan Park
@@ -52,9 +51,6 @@ public class TasksEntryFinderUtil {
 				com.liferay.tasks.service.ServletContextUtil.
 					getServletContextName(),
 				TasksEntryFinder.class.getName());
-
-			ReferenceRegistry.registerReference(
-				TasksEntryFinderUtil.class, "_finder");
 		}
 
 		return _finder;
@@ -62,9 +58,6 @@ public class TasksEntryFinderUtil {
 
 	public void setFinder(TasksEntryFinder finder) {
 		_finder = finder;
-
-		ReferenceRegistry.registerReference(
-			TasksEntryFinderUtil.class, "_finder");
 	}
 
 	private static TasksEntryFinder _finder;

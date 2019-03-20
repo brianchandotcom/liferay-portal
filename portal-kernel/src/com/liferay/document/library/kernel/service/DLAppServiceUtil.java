@@ -17,7 +17,6 @@ package com.liferay.document.library.kernel.service;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
-import com.liferay.portal.kernel.util.ReferenceRegistry;
 
 /**
  * Provides the remote service utility for DLApp. This utility wraps
@@ -2412,9 +2411,6 @@ public class DLAppServiceUtil {
 		if (_service == null) {
 			_service = (DLAppService)PortalBeanLocatorUtil.locate(
 				DLAppService.class.getName());
-
-			ReferenceRegistry.registerReference(
-				DLAppServiceUtil.class, "_service");
 		}
 
 		return _service;

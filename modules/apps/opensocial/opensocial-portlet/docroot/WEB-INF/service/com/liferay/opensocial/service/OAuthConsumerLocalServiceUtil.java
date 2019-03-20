@@ -17,7 +17,6 @@ package com.liferay.opensocial.service;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.bean.PortletBeanLocatorUtil;
-import com.liferay.portal.kernel.util.ReferenceRegistry;
 
 /**
  * Provides the local service utility for OAuthConsumer. This utility wraps
@@ -336,9 +335,6 @@ public class OAuthConsumerLocalServiceUtil {
 			_service = (OAuthConsumerLocalService)PortletBeanLocatorUtil.locate(
 				ServletContextUtil.getServletContextName(),
 				OAuthConsumerLocalService.class.getName());
-
-			ReferenceRegistry.registerReference(
-				OAuthConsumerLocalServiceUtil.class, "_service");
 		}
 
 		return _service;

@@ -20,7 +20,6 @@ import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.ReferenceRegistry;
 import com.liferay.ratings.kernel.model.RatingsEntry;
 
 import java.io.Serializable;
@@ -1190,9 +1189,6 @@ public class RatingsEntryUtil {
 			_persistence =
 				(RatingsEntryPersistence)PortalBeanLocatorUtil.locate(
 					RatingsEntryPersistence.class.getName());
-
-			ReferenceRegistry.registerReference(
-				RatingsEntryUtil.class, "_persistence");
 		}
 
 		return _persistence;

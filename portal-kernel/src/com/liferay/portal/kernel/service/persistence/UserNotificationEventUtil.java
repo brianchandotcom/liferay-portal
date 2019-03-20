@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.model.UserNotificationEvent;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.ReferenceRegistry;
 
 import java.io.Serializable;
 
@@ -3088,9 +3087,6 @@ public class UserNotificationEventUtil {
 			_persistence =
 				(UserNotificationEventPersistence)PortalBeanLocatorUtil.locate(
 					UserNotificationEventPersistence.class.getName());
-
-			ReferenceRegistry.registerReference(
-				UserNotificationEventUtil.class, "_persistence");
 		}
 
 		return _persistence;

@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.ReferenceRegistry;
 
 import java.io.Serializable;
 
@@ -2133,9 +2132,6 @@ public class DLFileShortcutUtil {
 			_persistence =
 				(DLFileShortcutPersistence)PortalBeanLocatorUtil.locate(
 					DLFileShortcutPersistence.class.getName());
-
-			ReferenceRegistry.registerReference(
-				DLFileShortcutUtil.class, "_persistence");
 		}
 
 		return _persistence;

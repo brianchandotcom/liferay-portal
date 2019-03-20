@@ -17,7 +17,6 @@ package com.liferay.portal.kernel.service;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
-import com.liferay.portal.kernel.util.ReferenceRegistry;
 
 /**
  * Provides the remote service utility for Website. This utility wraps
@@ -88,9 +87,6 @@ public class WebsiteServiceUtil {
 		if (_service == null) {
 			_service = (WebsiteService)PortalBeanLocatorUtil.locate(
 				WebsiteService.class.getName());
-
-			ReferenceRegistry.registerReference(
-				WebsiteServiceUtil.class, "_service");
 		}
 
 		return _service;

@@ -17,7 +17,6 @@ package com.liferay.asset.kernel.service;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
-import com.liferay.portal.kernel.util.ReferenceRegistry;
 
 /**
  * Provides the remote service utility for AssetEntry. This utility wraps
@@ -177,9 +176,6 @@ public class AssetEntryServiceUtil {
 		if (_service == null) {
 			_service = (AssetEntryService)PortalBeanLocatorUtil.locate(
 				AssetEntryService.class.getName());
-
-			ReferenceRegistry.registerReference(
-				AssetEntryServiceUtil.class, "_service");
 		}
 
 		return _service;

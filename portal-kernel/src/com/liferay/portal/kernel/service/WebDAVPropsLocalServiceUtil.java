@@ -17,7 +17,6 @@ package com.liferay.portal.kernel.service;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
-import com.liferay.portal.kernel.util.ReferenceRegistry;
 
 /**
  * Provides the local service utility for WebDAVProps. This utility wraps
@@ -294,9 +293,6 @@ public class WebDAVPropsLocalServiceUtil {
 		if (_service == null) {
 			_service = (WebDAVPropsLocalService)PortalBeanLocatorUtil.locate(
 				WebDAVPropsLocalService.class.getName());
-
-			ReferenceRegistry.registerReference(
-				WebDAVPropsLocalServiceUtil.class, "_service");
 		}
 
 		return _service;

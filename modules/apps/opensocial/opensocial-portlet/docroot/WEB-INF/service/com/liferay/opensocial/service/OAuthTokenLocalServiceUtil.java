@@ -17,7 +17,6 @@ package com.liferay.opensocial.service;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.bean.PortletBeanLocatorUtil;
-import com.liferay.portal.kernel.util.ReferenceRegistry;
 
 /**
  * Provides the local service utility for OAuthToken. This utility wraps
@@ -328,9 +327,6 @@ public class OAuthTokenLocalServiceUtil {
 			_service = (OAuthTokenLocalService)PortletBeanLocatorUtil.locate(
 				ServletContextUtil.getServletContextName(),
 				OAuthTokenLocalService.class.getName());
-
-			ReferenceRegistry.registerReference(
-				OAuthTokenLocalServiceUtil.class, "_service");
 		}
 
 		return _service;

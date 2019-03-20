@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.model.Phone;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.ReferenceRegistry;
 
 import java.io.Serializable;
 
@@ -1551,9 +1550,6 @@ public class PhoneUtil {
 		if (_persistence == null) {
 			_persistence = (PhonePersistence)PortalBeanLocatorUtil.locate(
 				PhonePersistence.class.getName());
-
-			ReferenceRegistry.registerReference(
-				PhoneUtil.class, "_persistence");
 		}
 
 		return _persistence;

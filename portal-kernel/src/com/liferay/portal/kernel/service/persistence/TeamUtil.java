@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.model.Team;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.ReferenceRegistry;
 
 import java.io.Serializable;
 
@@ -1401,8 +1400,6 @@ public class TeamUtil {
 		if (_persistence == null) {
 			_persistence = (TeamPersistence)PortalBeanLocatorUtil.locate(
 				TeamPersistence.class.getName());
-
-			ReferenceRegistry.registerReference(TeamUtil.class, "_persistence");
 		}
 
 		return _persistence;

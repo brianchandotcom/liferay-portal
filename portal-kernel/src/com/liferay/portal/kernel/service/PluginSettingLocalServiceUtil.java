@@ -17,7 +17,6 @@ package com.liferay.portal.kernel.service;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
-import com.liferay.portal.kernel.util.ReferenceRegistry;
 
 /**
  * Provides the local service utility for PluginSetting. This utility wraps
@@ -314,9 +313,6 @@ public class PluginSettingLocalServiceUtil {
 		if (_service == null) {
 			_service = (PluginSettingLocalService)PortalBeanLocatorUtil.locate(
 				PluginSettingLocalService.class.getName());
-
-			ReferenceRegistry.registerReference(
-				PluginSettingLocalServiceUtil.class, "_service");
 		}
 
 		return _service;

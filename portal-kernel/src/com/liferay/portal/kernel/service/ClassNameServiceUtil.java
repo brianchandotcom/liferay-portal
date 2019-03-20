@@ -17,7 +17,6 @@ package com.liferay.portal.kernel.service;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
-import com.liferay.portal.kernel.util.ReferenceRegistry;
 
 /**
  * Provides the remote service utility for ClassName. This utility wraps
@@ -64,9 +63,6 @@ public class ClassNameServiceUtil {
 		if (_service == null) {
 			_service = (ClassNameService)PortalBeanLocatorUtil.locate(
 				ClassNameService.class.getName());
-
-			ReferenceRegistry.registerReference(
-				ClassNameServiceUtil.class, "_service");
 		}
 
 		return _service;

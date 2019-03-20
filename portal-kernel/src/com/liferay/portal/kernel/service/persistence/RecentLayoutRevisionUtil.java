@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.model.RecentLayoutRevision;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.ReferenceRegistry;
 
 import java.io.Serializable;
 
@@ -892,9 +891,6 @@ public class RecentLayoutRevisionUtil {
 			_persistence =
 				(RecentLayoutRevisionPersistence)PortalBeanLocatorUtil.locate(
 					RecentLayoutRevisionPersistence.class.getName());
-
-			ReferenceRegistry.registerReference(
-				RecentLayoutRevisionUtil.class, "_persistence");
 		}
 
 		return _persistence;

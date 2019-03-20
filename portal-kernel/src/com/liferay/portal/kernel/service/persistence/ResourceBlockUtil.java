@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.model.ResourceBlock;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.ReferenceRegistry;
 
 import java.io.Serializable;
 
@@ -759,9 +758,6 @@ public class ResourceBlockUtil {
 			_persistence =
 				(ResourceBlockPersistence)PortalBeanLocatorUtil.locate(
 					ResourceBlockPersistence.class.getName());
-
-			ReferenceRegistry.registerReference(
-				ResourceBlockUtil.class, "_persistence");
 		}
 
 		return _persistence;

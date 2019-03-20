@@ -17,7 +17,6 @@ package com.liferay.portal.kernel.service;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
-import com.liferay.portal.kernel.util.ReferenceRegistry;
 
 /**
  * Provides the local service utility for UserIdMapper. This utility wraps
@@ -313,9 +312,6 @@ public class UserIdMapperLocalServiceUtil {
 		if (_service == null) {
 			_service = (UserIdMapperLocalService)PortalBeanLocatorUtil.locate(
 				UserIdMapperLocalService.class.getName());
-
-			ReferenceRegistry.registerReference(
-				UserIdMapperLocalServiceUtil.class, "_service");
 		}
 
 		return _service;

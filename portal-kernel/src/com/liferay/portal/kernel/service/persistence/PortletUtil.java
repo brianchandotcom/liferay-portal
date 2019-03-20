@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.ReferenceRegistry;
 
 import java.io.Serializable;
 
@@ -508,9 +507,6 @@ public class PortletUtil {
 		if (_persistence == null) {
 			_persistence = (PortletPersistence)PortalBeanLocatorUtil.locate(
 				PortletPersistence.class.getName());
-
-			ReferenceRegistry.registerReference(
-				PortletUtil.class, "_persistence");
 		}
 
 		return _persistence;

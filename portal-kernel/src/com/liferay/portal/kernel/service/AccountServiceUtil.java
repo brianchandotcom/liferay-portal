@@ -17,7 +17,6 @@ package com.liferay.portal.kernel.service;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
-import com.liferay.portal.kernel.util.ReferenceRegistry;
 
 /**
  * Provides the remote service utility for Account. This utility wraps
@@ -53,9 +52,6 @@ public class AccountServiceUtil {
 		if (_service == null) {
 			_service = (AccountService)PortalBeanLocatorUtil.locate(
 				AccountService.class.getName());
-
-			ReferenceRegistry.registerReference(
-				AccountServiceUtil.class, "_service");
 		}
 
 		return _service;

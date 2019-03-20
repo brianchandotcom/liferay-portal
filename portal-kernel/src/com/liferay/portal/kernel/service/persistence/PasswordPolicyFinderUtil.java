@@ -17,7 +17,6 @@ package com.liferay.portal.kernel.service.persistence;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
-import com.liferay.portal.kernel.util.ReferenceRegistry;
 
 /**
  * @author Brian Wing Shun Chan
@@ -56,9 +55,6 @@ public class PasswordPolicyFinderUtil {
 		if (_finder == null) {
 			_finder = (PasswordPolicyFinder)PortalBeanLocatorUtil.locate(
 				PasswordPolicyFinder.class.getName());
-
-			ReferenceRegistry.registerReference(
-				PasswordPolicyFinderUtil.class, "_finder");
 		}
 
 		return _finder;
@@ -66,9 +62,6 @@ public class PasswordPolicyFinderUtil {
 
 	public void setFinder(PasswordPolicyFinder finder) {
 		_finder = finder;
-
-		ReferenceRegistry.registerReference(
-			PasswordPolicyFinderUtil.class, "_finder");
 	}
 
 	private static PasswordPolicyFinder _finder;

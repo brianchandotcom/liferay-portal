@@ -17,7 +17,6 @@ package com.liferay.exportimport.kernel.service;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
-import com.liferay.portal.kernel.util.ReferenceRegistry;
 
 /**
  * Provides the local service utility for ExportImport. This utility wraps
@@ -308,9 +307,6 @@ public class ExportImportLocalServiceUtil {
 		if (_service == null) {
 			_service = (ExportImportLocalService)PortalBeanLocatorUtil.locate(
 				ExportImportLocalService.class.getName());
-
-			ReferenceRegistry.registerReference(
-				ExportImportLocalServiceUtil.class, "_service");
 		}
 
 		return _service;

@@ -17,7 +17,6 @@ package com.liferay.portal.kernel.service.persistence;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
-import com.liferay.portal.kernel.util.ReferenceRegistry;
 
 /**
  * @author Brian Wing Shun Chan
@@ -47,9 +46,6 @@ public class ResourceTypePermissionFinderUtil {
 			_finder =
 				(ResourceTypePermissionFinder)PortalBeanLocatorUtil.locate(
 					ResourceTypePermissionFinder.class.getName());
-
-			ReferenceRegistry.registerReference(
-				ResourceTypePermissionFinderUtil.class, "_finder");
 		}
 
 		return _finder;
@@ -57,9 +53,6 @@ public class ResourceTypePermissionFinderUtil {
 
 	public void setFinder(ResourceTypePermissionFinder finder) {
 		_finder = finder;
-
-		ReferenceRegistry.registerReference(
-			ResourceTypePermissionFinderUtil.class, "_finder");
 	}
 
 	private static ResourceTypePermissionFinder _finder;

@@ -17,7 +17,6 @@ package com.liferay.social.kernel.service;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
-import com.liferay.portal.kernel.util.ReferenceRegistry;
 
 /**
  * Provides the local service utility for SocialRelation. This utility wraps
@@ -563,9 +562,6 @@ public class SocialRelationLocalServiceUtil {
 		if (_service == null) {
 			_service = (SocialRelationLocalService)PortalBeanLocatorUtil.locate(
 				SocialRelationLocalService.class.getName());
-
-			ReferenceRegistry.registerReference(
-				SocialRelationLocalServiceUtil.class, "_service");
 		}
 
 		return _service;

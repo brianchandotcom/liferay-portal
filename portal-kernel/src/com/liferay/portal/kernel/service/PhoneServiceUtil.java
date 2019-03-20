@@ -17,7 +17,6 @@ package com.liferay.portal.kernel.service;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
-import com.liferay.portal.kernel.util.ReferenceRegistry;
 
 /**
  * Provides the remote service utility for Phone. This utility wraps
@@ -90,9 +89,6 @@ public class PhoneServiceUtil {
 		if (_service == null) {
 			_service = (PhoneService)PortalBeanLocatorUtil.locate(
 				PhoneService.class.getName());
-
-			ReferenceRegistry.registerReference(
-				PhoneServiceUtil.class, "_service");
 		}
 
 		return _service;

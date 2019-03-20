@@ -17,7 +17,6 @@ package com.liferay.exportimport.kernel.service.persistence;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
-import com.liferay.portal.kernel.util.ReferenceRegistry;
 
 /**
  * @author Brian Wing Shun Chan
@@ -155,9 +154,6 @@ public class ExportImportConfigurationFinderUtil {
 			_finder =
 				(ExportImportConfigurationFinder)PortalBeanLocatorUtil.locate(
 					ExportImportConfigurationFinder.class.getName());
-
-			ReferenceRegistry.registerReference(
-				ExportImportConfigurationFinderUtil.class, "_finder");
 		}
 
 		return _finder;
@@ -165,9 +161,6 @@ public class ExportImportConfigurationFinderUtil {
 
 	public void setFinder(ExportImportConfigurationFinder finder) {
 		_finder = finder;
-
-		ReferenceRegistry.registerReference(
-			ExportImportConfigurationFinderUtil.class, "_finder");
 	}
 
 	private static ExportImportConfigurationFinder _finder;

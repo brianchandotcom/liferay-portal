@@ -17,7 +17,6 @@ package com.liferay.portal.kernel.service;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
-import com.liferay.portal.kernel.util.ReferenceRegistry;
 
 /**
  * Provides the local service utility for PasswordPolicyRel. This utility wraps
@@ -350,9 +349,6 @@ public class PasswordPolicyRelLocalServiceUtil {
 			_service =
 				(PasswordPolicyRelLocalService)PortalBeanLocatorUtil.locate(
 					PasswordPolicyRelLocalService.class.getName());
-
-			ReferenceRegistry.registerReference(
-				PasswordPolicyRelLocalServiceUtil.class, "_service");
 		}
 
 		return _service;

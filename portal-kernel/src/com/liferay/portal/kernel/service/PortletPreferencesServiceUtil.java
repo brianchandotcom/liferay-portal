@@ -17,7 +17,6 @@ package com.liferay.portal.kernel.service;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
-import com.liferay.portal.kernel.util.ReferenceRegistry;
 
 /**
  * Provides the remote service utility for PortletPreferences. This utility wraps
@@ -98,9 +97,6 @@ public class PortletPreferencesServiceUtil {
 		if (_service == null) {
 			_service = (PortletPreferencesService)PortalBeanLocatorUtil.locate(
 				PortletPreferencesService.class.getName());
-
-			ReferenceRegistry.registerReference(
-				PortletPreferencesServiceUtil.class, "_service");
 		}
 
 		return _service;

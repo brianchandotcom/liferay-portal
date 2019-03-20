@@ -17,7 +17,6 @@ package com.liferay.portal.kernel.service;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
-import com.liferay.portal.kernel.util.ReferenceRegistry;
 
 /**
  * Provides the local service utility for OrgLabor. This utility wraps
@@ -308,9 +307,6 @@ public class OrgLaborLocalServiceUtil {
 		if (_service == null) {
 			_service = (OrgLaborLocalService)PortalBeanLocatorUtil.locate(
 				OrgLaborLocalService.class.getName());
-
-			ReferenceRegistry.registerReference(
-				OrgLaborLocalServiceUtil.class, "_service");
 		}
 
 		return _service;

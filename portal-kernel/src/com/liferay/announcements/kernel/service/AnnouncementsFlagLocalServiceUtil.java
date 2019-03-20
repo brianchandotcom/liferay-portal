@@ -17,7 +17,6 @@ package com.liferay.announcements.kernel.service;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
-import com.liferay.portal.kernel.util.ReferenceRegistry;
 
 /**
  * Provides the local service utility for AnnouncementsFlag. This utility wraps
@@ -314,9 +313,6 @@ public class AnnouncementsFlagLocalServiceUtil {
 			_service =
 				(AnnouncementsFlagLocalService)PortalBeanLocatorUtil.locate(
 					AnnouncementsFlagLocalService.class.getName());
-
-			ReferenceRegistry.registerReference(
-				AnnouncementsFlagLocalServiceUtil.class, "_service");
 		}
 
 		return _service;

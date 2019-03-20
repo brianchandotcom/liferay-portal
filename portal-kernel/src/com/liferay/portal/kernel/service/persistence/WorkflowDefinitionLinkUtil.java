@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.model.WorkflowDefinitionLink;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.ReferenceRegistry;
 
 import java.io.Serializable;
 
@@ -1226,9 +1225,6 @@ public class WorkflowDefinitionLinkUtil {
 			_persistence =
 				(WorkflowDefinitionLinkPersistence)PortalBeanLocatorUtil.locate(
 					WorkflowDefinitionLinkPersistence.class.getName());
-
-			ReferenceRegistry.registerReference(
-				WorkflowDefinitionLinkUtil.class, "_persistence");
 		}
 
 		return _persistence;

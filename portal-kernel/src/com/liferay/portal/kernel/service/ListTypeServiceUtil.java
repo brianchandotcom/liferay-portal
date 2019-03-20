@@ -17,7 +17,6 @@ package com.liferay.portal.kernel.service;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
-import com.liferay.portal.kernel.util.ReferenceRegistry;
 
 /**
  * Provides the remote service utility for ListType. This utility wraps
@@ -83,9 +82,6 @@ public class ListTypeServiceUtil {
 		if (_service == null) {
 			_service = (ListTypeService)PortalBeanLocatorUtil.locate(
 				ListTypeService.class.getName());
-
-			ReferenceRegistry.registerReference(
-				ListTypeServiceUtil.class, "_service");
 		}
 
 		return _service;

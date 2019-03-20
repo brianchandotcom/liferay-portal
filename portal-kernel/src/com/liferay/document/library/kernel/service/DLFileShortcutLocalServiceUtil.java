@@ -17,7 +17,6 @@ package com.liferay.document.library.kernel.service;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
-import com.liferay.portal.kernel.util.ReferenceRegistry;
 
 /**
  * Provides the local service utility for DLFileShortcut. This utility wraps
@@ -543,9 +542,6 @@ public class DLFileShortcutLocalServiceUtil {
 		if (_service == null) {
 			_service = (DLFileShortcutLocalService)PortalBeanLocatorUtil.locate(
 				DLFileShortcutLocalService.class.getName());
-
-			ReferenceRegistry.registerReference(
-				DLFileShortcutLocalServiceUtil.class, "_service");
 		}
 
 		return _service;

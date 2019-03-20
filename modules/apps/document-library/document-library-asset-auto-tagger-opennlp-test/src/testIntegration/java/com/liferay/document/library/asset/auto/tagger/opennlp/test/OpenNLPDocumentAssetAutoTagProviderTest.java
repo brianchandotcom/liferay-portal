@@ -19,6 +19,7 @@ import com.liferay.asset.auto.tagger.AssetAutoTagProvider;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.service.DLAppService;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -29,9 +30,12 @@ import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.FileUtil;
+import com.liferay.portal.kernel.util.TempFileEntryUtil;
 import com.liferay.portal.service.test.ServiceTestUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+
+import java.io.InputStream;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -75,7 +79,7 @@ public class OpenNLPDocumentAssetAutoTagProviderTest {
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, fileName,
 			"application/epub+zip", RandomTestUtil.randomString(),
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
-			FileUtil.getBytes(getClass(), fileName), _serviceContext);
+			FileUtil.getBytes(getInputStream(fileName)), _serviceContext);
 
 		Collection<String> expectedTagNames = Arrays.asList("tag");
 
@@ -98,7 +102,7 @@ public class OpenNLPDocumentAssetAutoTagProviderTest {
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, fileName,
 			ContentTypes.TEXT_HTML, RandomTestUtil.randomString(),
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
-			FileUtil.getBytes(getClass(), fileName), _serviceContext);
+			FileUtil.getBytes(getInputStream(fileName)), _serviceContext);
 
 		Collection<String> expectedTagNames = Collections.singleton("tag");
 
@@ -120,7 +124,7 @@ public class OpenNLPDocumentAssetAutoTagProviderTest {
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, "test.jpg",
 			ContentTypes.IMAGE_JPEG, RandomTestUtil.randomString(),
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
-			FileUtil.getBytes(getClass(), "test.jpg"), _serviceContext);
+			FileUtil.getBytes(getInputStream("test.jpg")), _serviceContext);
 
 		Collection<String> tagNames = _assetAutoTagProvider.getTagNames(
 			fileEntry);
@@ -138,7 +142,7 @@ public class OpenNLPDocumentAssetAutoTagProviderTest {
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, fileName,
 			ContentTypes.APPLICATION_PDF, RandomTestUtil.randomString(),
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
-			FileUtil.getBytes(getClass(), fileName), _serviceContext);
+			FileUtil.getBytes(getInputStream(fileName)), _serviceContext);
 
 		Collection<String> expectedTagNames = Collections.singleton("tag");
 
@@ -154,6 +158,24 @@ public class OpenNLPDocumentAssetAutoTagProviderTest {
 	}
 
 	@Test
+	public void testGetTagNamesWithTemporaryTextFile() throws Exception {
+		User user = TestPropsValues.getUser();
+
+		String fileName =
+			"Alice's Adventures in Wonderland, by Lewis Carroll.txt";
+
+		FileEntry fileEntry = TempFileEntryUtil.addTempFileEntry(
+			_group.getGroupId(), user.getUserId(),
+			RandomTestUtil.randomString(), fileName, getInputStream(fileName),
+			ContentTypes.TEXT_PLAIN);
+
+		Collection<String> tagNames = _assetAutoTagProvider.getTagNames(
+			fileEntry);
+
+		Assert.assertEquals(tagNames.toString(), 0, tagNames.size());
+	}
+
+	@Test
 	public void testGetTagNamesWithTextFile() throws Exception {
 		String fileName =
 			"Alice's Adventures in Wonderland, by Lewis Carroll.txt";
@@ -163,7 +185,7 @@ public class OpenNLPDocumentAssetAutoTagProviderTest {
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, fileName,
 			ContentTypes.TEXT, RandomTestUtil.randomString(),
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
-			FileUtil.getBytes(getClass(), fileName), _serviceContext);
+			FileUtil.getBytes(getInputStream(fileName)), _serviceContext);
 
 		Collection<String> expectedTagNames = Collections.singleton("tag");
 
@@ -176,6 +198,12 @@ public class OpenNLPDocumentAssetAutoTagProviderTest {
 		Assert.assertTrue(
 			actualTagNames.toString(),
 			actualTagNames.containsAll(expectedTagNames));
+	}
+
+	protected InputStream getInputStream(String fileName) throws Exception {
+		Class<?> clazz = getClass();
+
+		return clazz.getResourceAsStream("dependencies/" + fileName);
 	}
 
 	@Inject(

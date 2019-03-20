@@ -3941,6 +3941,16 @@ org.apache.catalina.startup.ClassLoaderFactory.level=INFO]]>
 						testable.portal.started.marker.file="@{testable.portal.started.marker.file}"
 					/>
 				</then>
+				<elseif>
+					<istrue value="${use.docker}" />
+					<then>
+						<start-app-server-docker-cmd
+							app.server.bundle.index="@{app.server.bundle.index}"
+							delete.liferay.home="@{delete.liferay.home}"
+							testable.portal.started.marker.file="@{testable.portal.started.marker.file}"
+						/>
+					</then>
+				</elseif>
 				<else>
 					<start-app-server-cmd
 						app.server.bundle.index="@{app.server.bundle.index}"
@@ -4078,6 +4088,103 @@ org.apache.catalina.startup.ClassLoaderFactory.level=INFO]]>
 		</sequential>
 	</macrodef>
 
+	<macrodef name="start-app-server-docker-cmd">
+		<attribute default="${app.server.bin.dir}" name="app.server.bin.dir" />
+		<attribute default="0" name="app.server.bundle.index" />
+		<attribute default="true" name="delete.liferay.home" />
+		<attribute default="" name="testable.portal.started.marker.file" />
+		<attribute default="host" name="docker.network.name" />
+
+		<sequential>
+			<set-app-server-properties
+				app.server.bin.dir="@{app.server.bin.dir}"
+				app.server.bundle.index="@{app.server.bundle.index}"
+			/>
+
+			<local name="portal.not.started" />
+
+			<if>
+				<equals arg1="@{app.server.bin.dir}" arg2="${app.server.tcat.admin.bin.dir}" />
+				<then>
+					<waitfor maxwait="1" maxwaitunit="second" timeoutproperty="portal.not.started">
+						<socket port="${test.app.server.leading.port.number}180" server="localhost" />
+					</waitfor>
+				</then>
+				<elseif>
+					<equals arg1="@{app.server.bin.dir}" arg2="${app.server.tcat.agent.bin.dir}" />
+					<then>
+						<waitfor maxwait="1" maxwaitunit="second" timeoutproperty="portal.not.started">
+							<socket port="${test.app.server.leading.port.number}080" server="localhost" />
+						</waitfor>
+					</then>
+				</elseif>
+				<else>
+					<waitfor maxwait="1" maxwaitunit="second" timeoutproperty="portal.not.started">
+						<socket port="${test.app.server.leading.port.number}080" server="localhost" />
+					</waitfor>
+				</else>
+			</if>
+
+			<if>
+				<isset property="portal.not.started" />
+				<then>
+					<echo
+						file="@{testable.portal.started.marker.file}"
+						message="1"
+						unless:blank="@{testable.portal.started.marker.file}"
+					/>
+
+					<if>
+						<or>
+							<equals arg1="${app.server.type}" arg2="jboss" />
+							<equals arg1="${app.server.type}" arg2="wildfly" />
+						</or>
+						<then>
+							<echo file="${test.app.server.deploy.dir}/ROOT.war.dodeploy"></echo>
+						</then>
+					</if>
+
+					<get-testcase-property property.name="portal.version" />
+
+					<if>
+						<and>
+							<not>
+								<isset property="portal.version" />
+							</not>
+							<equals arg1="@{delete.liferay.home}" arg2="true" />
+						</and>
+						<then>
+							<antcall target="delete-liferay-home">
+								<param name="keep.hypersonicdb" value="true" />
+							</antcall>
+						</then>
+					</if>
+
+					<delete failonerror="false" includeemptydirs="true">
+						<fileset
+							dir="${test.app.server.dir}/logs"
+							excludes="catalina.*.log"
+						/>
+					</delete>
+
+					<echo>docker run -d -p 8080:8080 -v ${app.server.parent.dir}:${app.server.parent.dir} --cidfile=docker.process.pid --network=@{docker.network.name} openjdk:8-alpine ${app.server.bin.dir}/${app.server.start.executable} run</echo>
+
+					<exec executable="docker">
+						<arg line="run -d" />
+						<arg line="-p 8080:8080" />
+						<arg value="-v" />
+						<arg value="${app.server.parent.dir}:${app.server.parent.dir}" />
+						<arg value="--cidfile=docker.process.pid" />
+						<arg value="--network=@{docker.network.name}" />
+						<arg value="openjdk:8-alpine" />
+						<arg value="${app.server.bin.dir}/${app.server.start.executable}" />
+						<arg value="run" />
+					</exec>
+				</then>
+			</if>
+		</sequential>
+	</macrodef>
+
 	<macrodef name="start-appium">
 		<sequential>
 			<if>
@@ -4202,6 +4309,15 @@ org.apache.catalina.startup.ClassLoaderFactory.level=INFO]]>
 						app.server.explicit.stop.count="@{app.server.explicit.stop.count}"
 					/>
 				</then>
+				<elseif>
+					<istrue value="${use.docker}" />
+					<then>
+						<stop-app-server-docker-cmd
+							app.server.bundle.index="@{app.server.bundle.index}"
+							app.server.explicit.stop.count="@{app.server.explicit.stop.count}"
+						/>
+					</then>
+				</elseif>
 				<else>
 					<stop-app-server-cmd
 						app.server.bundle.index="@{app.server.bundle.index}"
@@ -4384,6 +4500,31 @@ org.apache.catalina.startup.ClassLoaderFactory.level=INFO]]>
 					</if>
 				</sequential>
 			</parallel>
+		</sequential>
+	</macrodef>
+
+	<macrodef name="stop-app-server-docker-cmd">
+		<attribute default="${app.server.bin.dir}" name="app.server.bin.dir" />
+		<attribute default="0" name="app.server.bundle.index" />
+		<attribute default="0" name="app.server.explicit.stop.count" />
+
+		<sequential>
+			<set-app-server-properties
+				app.server.bin.dir="@{app.server.bin.dir}"
+				app.server.bundle.index="@{app.server.bundle.index}"
+			/>
+
+			<loadfile property="docker.process.pid" srcfile="docker.process.pid" />
+
+			<exec executable="docker">
+				<arg line="container stop ${docker.process.pid}" />
+			</exec>
+
+			<exec executable="docker">
+				<arg line="container rm ${docker.process.pid}" />
+			</exec>
+
+			<delete file="docker.process.pid" />
 		</sequential>
 	</macrodef>
 
@@ -9750,35 +9891,24 @@ cluster.link.bind.addr["cluster-link-udp"]=127.0.0.1</echo>
 							<equals arg1="${database.type}" arg2="mysql" />
 						</or>
 						<then>
-							<var name="arg.line" unset="true" />
+							<var name="arg.line" value="" />
 
+							<get-database-property property.name="database.host" />
 							<get-database-property property.name="database.password" />
 							<get-database-property property.name="database.username" />
 
-							<if>
+							<local name="mysql.host" />
+
+							<condition property="mysql.host" value="127.0.0.1" else="${database.host}">
 								<and>
-									<equals arg1="${database.password}" arg2="" />
-									<equals arg1="${database.username}" arg2="" />
+									<equals arg1="${database.host}" arg2="localhost" />
+									<istrue value="${use.docker}" />
 								</and>
-								<then>
-									<var name="arg.line" value="" />
-								</then>
-								<elseif>
-									<equals arg1="${database.password}" arg2="" />
-									<then>
-										<var name="arg.line" value="-u ${database.username}" />
-									</then>
-								</elseif>
-								<elseif>
-									<equals arg1="${database.username}" arg2="" />
-									<then>
-										<var name="arg.line" value="-p${database.password}" />
-									</then>
-								</elseif>
-								<else>
-									<var name="arg.line" value="-p${database.password} -u ${database.username}" />
-								</else>
-							</if>
+							</condition>
+
+							<var name="arg.line" value="${arg.line} -h ${mysql.host}" unless:blank="${mysql.host}" />
+							<var name="arg.line" value="${arg.line} -u ${database.username}" unless:blank="${database.username}" />
+							<var name="arg.line" value="${arg.line} -p${database.password}" unless:blank="${database.password}" />
 
 							<propertycopy from="${database.type}.executable" name="database.executable" override="true" />
 

@@ -695,6 +695,11 @@ public abstract class BaseDataDefinitionResourceTestCase {
 				"Invalid entity field " + entityFieldName);
 		}
 
+		if (entityFieldName.equals("dataDefinitionRules")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
 		if (entityFieldName.equals("dateCreated")) {
 			sb.append(_dateFormat.format(dataDefinition.getDateCreated()));
 

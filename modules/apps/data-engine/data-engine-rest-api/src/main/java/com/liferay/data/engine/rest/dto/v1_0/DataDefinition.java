@@ -91,6 +91,33 @@ public class DataDefinition {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected DataDefinitionField[] dataDefinitionFields;
 
+	public DataDefinitionRule[] getDataDefinitionRules() {
+		return dataDefinitionRules;
+	}
+
+	public void setDataDefinitionRules(
+		DataDefinitionRule[] dataDefinitionRules) {
+
+		this.dataDefinitionRules = dataDefinitionRules;
+	}
+
+	@JsonIgnore
+	public void setDataDefinitionRules(
+		UnsafeSupplier<DataDefinitionRule[], Exception>
+			dataDefinitionRulesUnsafeSupplier) {
+
+		try {
+			dataDefinitionRules = dataDefinitionRulesUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected DataDefinitionRule[] dataDefinitionRules;
+
 	public Date getDateCreated() {
 		return dateCreated;
 	}
@@ -279,6 +306,27 @@ public class DataDefinition {
 				sb.append(dataDefinitionFields[i]);
 
 				if ((i + 1) < dataDefinitionFields.length) {
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
+		}
+
+		sb.append(", ");
+
+		sb.append("\"dataDefinitionRules\": ");
+
+		if (dataDefinitionRules == null) {
+			sb.append("null");
+		}
+		else {
+			sb.append("[");
+
+			for (int i = 0; i < dataDefinitionRules.length; i++) {
+				sb.append(dataDefinitionRules[i]);
+
+				if ((i + 1) < dataDefinitionRules.length) {
 					sb.append(", ");
 				}
 			}

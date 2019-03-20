@@ -39,22 +39,13 @@ public interface DiscussionAttachmentResource {
 			Long discussionAttachmentId)
 		throws Exception;
 
-	public boolean deleteDiscussionForumPostingsAttachment(
-			Long discussionForumPostingsAttachmentId)
-		throws Exception;
-
-	public DiscussionAttachment getDiscussionForumPostingsAttachment(
-			Long discussionForumPostingsAttachmentId)
-		throws Exception;
-
 	public Page<DiscussionAttachment>
-			getDiscussionForumPostingDiscussionForumPostingsAttachmentsPage(
+			getDiscussionForumPostingDiscussionAttachmentsPage(
 				Long discussionForumPostingId)
 		throws Exception;
 
-	public DiscussionAttachment
-			postDiscussionForumPostingDiscussionForumPostingsAttachment(
-				Long discussionForumPostingId, MultipartBody multipartBody)
+	public DiscussionAttachment postDiscussionForumPostingDiscussionAttachment(
+			Long discussionForumPostingId, MultipartBody multipartBody)
 		throws Exception;
 
 	public Page<DiscussionAttachment>

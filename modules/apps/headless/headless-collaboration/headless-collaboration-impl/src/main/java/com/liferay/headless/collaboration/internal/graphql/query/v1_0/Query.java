@@ -283,24 +283,8 @@ public class Query {
 
 	@GraphQLField
 	@GraphQLInvokeDetached
-	public DiscussionAttachment getDiscussionForumPostingsAttachment(
-			@GraphQLName("discussion-forum-postings-attachment-id") Long
-				discussionForumPostingsAttachmentId)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_discussionAttachmentResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			discussionAttachmentResource ->
-				discussionAttachmentResource.
-					getDiscussionForumPostingsAttachment(
-						discussionForumPostingsAttachmentId));
-	}
-
-	@GraphQLField
-	@GraphQLInvokeDetached
 	public Collection<DiscussionAttachment>
-			getDiscussionForumPostingDiscussionForumPostingsAttachmentsPage(
+			getDiscussionForumPostingDiscussionAttachmentsPage(
 				@GraphQLName("discussion-forum-posting-id") Long
 					discussionForumPostingId)
 		throws Exception {
@@ -311,7 +295,7 @@ public class Query {
 			discussionAttachmentResource -> {
 				Page paginationPage =
 					discussionAttachmentResource.
-						getDiscussionForumPostingDiscussionForumPostingsAttachmentsPage(
+						getDiscussionForumPostingDiscussionAttachmentsPage(
 							discussionForumPostingId);
 
 				return paginationPage.getItems();

@@ -295,28 +295,12 @@ public class Mutation {
 					discussionAttachmentId));
 	}
 
-	@GraphQLInvokeDetached
-	public boolean deleteDiscussionForumPostingsAttachment(
-			@GraphQLName("discussion-forum-postings-attachment-id") Long
-				discussionForumPostingsAttachmentId)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_discussionAttachmentResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			discussionAttachmentResource ->
-				discussionAttachmentResource.
-					deleteDiscussionForumPostingsAttachment(
-						discussionForumPostingsAttachmentId));
-	}
-
 	@GraphQLField
 	@GraphQLInvokeDetached
-	public DiscussionAttachment
-			postDiscussionForumPostingDiscussionForumPostingsAttachment(
-				@GraphQLName("discussion-forum-posting-id") Long
-					discussionForumPostingId,
-				@GraphQLName("MultipartBody") MultipartBody multipartBody)
+	public DiscussionAttachment postDiscussionForumPostingDiscussionAttachment(
+			@GraphQLName("discussion-forum-posting-id") Long
+				discussionForumPostingId,
+			@GraphQLName("MultipartBody") MultipartBody multipartBody)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
@@ -324,7 +308,7 @@ public class Mutation {
 			this::_populateResourceContext,
 			discussionAttachmentResource ->
 				discussionAttachmentResource.
-					postDiscussionForumPostingDiscussionForumPostingsAttachment(
+					postDiscussionForumPostingDiscussionAttachment(
 						discussionForumPostingId, multipartBody));
 	}
 

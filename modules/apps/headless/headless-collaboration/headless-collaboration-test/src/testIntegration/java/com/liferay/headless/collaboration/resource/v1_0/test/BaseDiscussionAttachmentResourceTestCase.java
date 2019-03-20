@@ -243,163 +243,22 @@ public abstract class BaseDiscussionAttachmentResourceTestCase {
 	}
 
 	@Test
-	public void testDeleteDiscussionForumPostingsAttachment() throws Exception {
-		DiscussionAttachment discussionAttachment =
-			testDeleteDiscussionForumPostingsAttachment_addDiscussionAttachment();
-
-		assertResponseCode(
-			200,
-			invokeDeleteDiscussionForumPostingsAttachmentResponse(
-				discussionAttachment.getId()));
-
-		assertResponseCode(
-			404,
-			invokeGetDiscussionForumPostingsAttachmentResponse(
-				discussionAttachment.getId()));
-	}
-
-	protected DiscussionAttachment
-			testDeleteDiscussionForumPostingsAttachment_addDiscussionAttachment()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	protected boolean invokeDeleteDiscussionForumPostingsAttachment(
-			Long discussionForumPostingsAttachmentId)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		options.setDelete(true);
-
-		String location =
-			_resourceURL +
-				_toPath(
-					"/discussion-forum-postings-attachments/{discussion-forum-postings-attachment-id}",
-					discussionForumPostingsAttachmentId);
-
-		options.setLocation(location);
-
-		String string = HttpUtil.URLtoString(options);
-
-		try {
-			return _outputObjectMapper.readValue(string, Boolean.class);
-		}
-		catch (Exception e) {
-			Assert.fail("HTTP response: " + string);
-
-			throw e;
-		}
-	}
-
-	protected Http.Response
-			invokeDeleteDiscussionForumPostingsAttachmentResponse(
-				Long discussionForumPostingsAttachmentId)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		options.setDelete(true);
-
-		String location =
-			_resourceURL +
-				_toPath(
-					"/discussion-forum-postings-attachments/{discussion-forum-postings-attachment-id}",
-					discussionForumPostingsAttachmentId);
-
-		options.setLocation(location);
-
-		HttpUtil.URLtoString(options);
-
-		return options.getResponse();
-	}
-
-	@Test
-	public void testGetDiscussionForumPostingsAttachment() throws Exception {
-		DiscussionAttachment postDiscussionAttachment =
-			testGetDiscussionForumPostingsAttachment_addDiscussionAttachment();
-
-		DiscussionAttachment getDiscussionAttachment =
-			invokeGetDiscussionForumPostingsAttachment(
-				postDiscussionAttachment.getId());
-
-		assertEquals(postDiscussionAttachment, getDiscussionAttachment);
-		assertValid(getDiscussionAttachment);
-	}
-
-	protected DiscussionAttachment
-			testGetDiscussionForumPostingsAttachment_addDiscussionAttachment()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	protected DiscussionAttachment invokeGetDiscussionForumPostingsAttachment(
-			Long discussionForumPostingsAttachmentId)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		String location =
-			_resourceURL +
-				_toPath(
-					"/discussion-forum-postings-attachments/{discussion-forum-postings-attachment-id}",
-					discussionForumPostingsAttachmentId);
-
-		options.setLocation(location);
-
-		String string = HttpUtil.URLtoString(options);
-
-		try {
-			return _outputObjectMapper.readValue(
-				string, DiscussionAttachment.class);
-		}
-		catch (Exception e) {
-			Assert.fail("HTTP response: " + string);
-
-			throw e;
-		}
-	}
-
-	protected Http.Response invokeGetDiscussionForumPostingsAttachmentResponse(
-			Long discussionForumPostingsAttachmentId)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		String location =
-			_resourceURL +
-				_toPath(
-					"/discussion-forum-postings-attachments/{discussion-forum-postings-attachment-id}",
-					discussionForumPostingsAttachmentId);
-
-		options.setLocation(location);
-
-		HttpUtil.URLtoString(options);
-
-		return options.getResponse();
-	}
-
-	@Test
-	public void testGetDiscussionForumPostingDiscussionForumPostingsAttachmentsPage()
+	public void testGetDiscussionForumPostingDiscussionAttachmentsPage()
 		throws Exception {
 
 		Long discussionForumPostingId =
-			testGetDiscussionForumPostingDiscussionForumPostingsAttachmentsPage_getDiscussionForumPostingId();
+			testGetDiscussionForumPostingDiscussionAttachmentsPage_getDiscussionForumPostingId();
 		Long irrelevantDiscussionForumPostingId =
-			testGetDiscussionForumPostingDiscussionForumPostingsAttachmentsPage_getIrrelevantDiscussionForumPostingId();
+			testGetDiscussionForumPostingDiscussionAttachmentsPage_getIrrelevantDiscussionForumPostingId();
 
 		if ((irrelevantDiscussionForumPostingId != null)) {
 			DiscussionAttachment irrelevantDiscussionAttachment =
-				testGetDiscussionForumPostingDiscussionForumPostingsAttachmentsPage_addDiscussionAttachment(
+				testGetDiscussionForumPostingDiscussionAttachmentsPage_addDiscussionAttachment(
 					irrelevantDiscussionForumPostingId,
 					randomIrrelevantDiscussionAttachment());
 
 			Page<DiscussionAttachment> page =
-				invokeGetDiscussionForumPostingDiscussionForumPostingsAttachmentsPage(
+				invokeGetDiscussionForumPostingDiscussionAttachmentsPage(
 					irrelevantDiscussionForumPostingId);
 
 			Assert.assertEquals(1, page.getTotalCount());
@@ -411,15 +270,15 @@ public abstract class BaseDiscussionAttachmentResourceTestCase {
 		}
 
 		DiscussionAttachment discussionAttachment1 =
-			testGetDiscussionForumPostingDiscussionForumPostingsAttachmentsPage_addDiscussionAttachment(
+			testGetDiscussionForumPostingDiscussionAttachmentsPage_addDiscussionAttachment(
 				discussionForumPostingId, randomDiscussionAttachment());
 
 		DiscussionAttachment discussionAttachment2 =
-			testGetDiscussionForumPostingDiscussionForumPostingsAttachmentsPage_addDiscussionAttachment(
+			testGetDiscussionForumPostingDiscussionAttachmentsPage_addDiscussionAttachment(
 				discussionForumPostingId, randomDiscussionAttachment());
 
 		Page<DiscussionAttachment> page =
-			invokeGetDiscussionForumPostingDiscussionForumPostingsAttachmentsPage(
+			invokeGetDiscussionForumPostingDiscussionAttachmentsPage(
 				discussionForumPostingId);
 
 		Assert.assertEquals(2, page.getTotalCount());
@@ -431,7 +290,7 @@ public abstract class BaseDiscussionAttachmentResourceTestCase {
 	}
 
 	protected DiscussionAttachment
-			testGetDiscussionForumPostingDiscussionForumPostingsAttachmentsPage_addDiscussionAttachment(
+			testGetDiscussionForumPostingDiscussionAttachmentsPage_addDiscussionAttachment(
 				Long discussionForumPostingId,
 				DiscussionAttachment discussionAttachment)
 		throws Exception {
@@ -441,7 +300,7 @@ public abstract class BaseDiscussionAttachmentResourceTestCase {
 	}
 
 	protected Long
-			testGetDiscussionForumPostingDiscussionForumPostingsAttachmentsPage_getDiscussionForumPostingId()
+			testGetDiscussionForumPostingDiscussionAttachmentsPage_getDiscussionForumPostingId()
 		throws Exception {
 
 		throw new UnsupportedOperationException(
@@ -449,14 +308,14 @@ public abstract class BaseDiscussionAttachmentResourceTestCase {
 	}
 
 	protected Long
-			testGetDiscussionForumPostingDiscussionForumPostingsAttachmentsPage_getIrrelevantDiscussionForumPostingId()
+			testGetDiscussionForumPostingDiscussionAttachmentsPage_getIrrelevantDiscussionForumPostingId()
 		throws Exception {
 
 		return null;
 	}
 
 	protected Page<DiscussionAttachment>
-			invokeGetDiscussionForumPostingDiscussionForumPostingsAttachmentsPage(
+			invokeGetDiscussionForumPostingDiscussionAttachmentsPage(
 				Long discussionForumPostingId)
 		throws Exception {
 
@@ -465,7 +324,7 @@ public abstract class BaseDiscussionAttachmentResourceTestCase {
 		String location =
 			_resourceURL +
 				_toPath(
-					"/discussion-forum-postings/{discussion-forum-posting-id}/discussion-forum-postings-attachments",
+					"/discussion-forum-postings/{discussion-forum-posting-id}/discussion-attachments",
 					discussionForumPostingId);
 
 		options.setLocation(location);
@@ -479,7 +338,7 @@ public abstract class BaseDiscussionAttachmentResourceTestCase {
 	}
 
 	protected Http.Response
-			invokeGetDiscussionForumPostingDiscussionForumPostingsAttachmentsPageResponse(
+			invokeGetDiscussionForumPostingDiscussionAttachmentsPageResponse(
 				Long discussionForumPostingId)
 		throws Exception {
 
@@ -488,7 +347,7 @@ public abstract class BaseDiscussionAttachmentResourceTestCase {
 		String location =
 			_resourceURL +
 				_toPath(
-					"/discussion-forum-postings/{discussion-forum-posting-id}/discussion-forum-postings-attachments",
+					"/discussion-forum-postings/{discussion-forum-posting-id}/discussion-attachments",
 					discussionForumPostingId);
 
 		options.setLocation(location);
@@ -499,14 +358,14 @@ public abstract class BaseDiscussionAttachmentResourceTestCase {
 	}
 
 	@Test
-	public void testPostDiscussionForumPostingDiscussionForumPostingsAttachment()
+	public void testPostDiscussionForumPostingDiscussionAttachment()
 		throws Exception {
 
 		Assert.assertTrue(true);
 	}
 
 	protected DiscussionAttachment
-			testPostDiscussionForumPostingDiscussionForumPostingsAttachment_addDiscussionAttachment(
+			testPostDiscussionForumPostingDiscussionAttachment_addDiscussionAttachment(
 				DiscussionAttachment discussionAttachment)
 		throws Exception {
 
@@ -515,7 +374,7 @@ public abstract class BaseDiscussionAttachmentResourceTestCase {
 	}
 
 	protected DiscussionAttachment
-			invokePostDiscussionForumPostingDiscussionForumPostingsAttachment(
+			invokePostDiscussionForumPostingDiscussionAttachment(
 				Long discussionForumPostingId, MultipartBody multipartBody)
 		throws Exception {
 
@@ -524,7 +383,7 @@ public abstract class BaseDiscussionAttachmentResourceTestCase {
 		String location =
 			_resourceURL +
 				_toPath(
-					"/discussion-forum-postings/{discussion-forum-posting-id}/discussion-forum-postings-attachments",
+					"/discussion-forum-postings/{discussion-forum-posting-id}/discussion-attachments",
 					discussionForumPostingId);
 
 		options.setLocation(location);
@@ -545,7 +404,7 @@ public abstract class BaseDiscussionAttachmentResourceTestCase {
 	}
 
 	protected Http.Response
-			invokePostDiscussionForumPostingDiscussionForumPostingsAttachmentResponse(
+			invokePostDiscussionForumPostingDiscussionAttachmentResponse(
 				Long discussionForumPostingId, MultipartBody multipartBody)
 		throws Exception {
 
@@ -554,7 +413,7 @@ public abstract class BaseDiscussionAttachmentResourceTestCase {
 		String location =
 			_resourceURL +
 				_toPath(
-					"/discussion-forum-postings/{discussion-forum-posting-id}/discussion-forum-postings-attachments",
+					"/discussion-forum-postings/{discussion-forum-posting-id}/discussion-attachments",
 					discussionForumPostingId);
 
 		options.setLocation(location);

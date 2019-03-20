@@ -84,44 +84,14 @@ public abstract class BaseDiscussionAttachmentResourceImpl
 	}
 
 	@Override
-	@DELETE
-	@Path(
-		"/discussion-forum-postings-attachments/{discussion-forum-postings-attachment-id}"
-	)
-	@Produces("application/json")
-	@Tags(value = {@Tag(name = "DiscussionAttachment")})
-	public boolean deleteDiscussionForumPostingsAttachment(
-			@NotNull @PathParam("discussion-forum-postings-attachment-id") Long
-				discussionForumPostingsAttachmentId)
-		throws Exception {
-
-		return false;
-	}
-
-	@Override
 	@GET
 	@Path(
-		"/discussion-forum-postings-attachments/{discussion-forum-postings-attachment-id}"
-	)
-	@Produces("application/json")
-	@Tags(value = {@Tag(name = "DiscussionAttachment")})
-	public DiscussionAttachment getDiscussionForumPostingsAttachment(
-			@NotNull @PathParam("discussion-forum-postings-attachment-id") Long
-				discussionForumPostingsAttachmentId)
-		throws Exception {
-
-		return new DiscussionAttachment();
-	}
-
-	@Override
-	@GET
-	@Path(
-		"/discussion-forum-postings/{discussion-forum-posting-id}/discussion-forum-postings-attachments"
+		"/discussion-forum-postings/{discussion-forum-posting-id}/discussion-attachments"
 	)
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "DiscussionAttachment")})
 	public Page<DiscussionAttachment>
-			getDiscussionForumPostingDiscussionForumPostingsAttachmentsPage(
+			getDiscussionForumPostingDiscussionAttachmentsPage(
 				@NotNull @PathParam("discussion-forum-posting-id") Long
 					discussionForumPostingId)
 		throws Exception {
@@ -133,15 +103,14 @@ public abstract class BaseDiscussionAttachmentResourceImpl
 	@Consumes("multipart/form-data")
 	@POST
 	@Path(
-		"/discussion-forum-postings/{discussion-forum-posting-id}/discussion-forum-postings-attachments"
+		"/discussion-forum-postings/{discussion-forum-posting-id}/discussion-attachments"
 	)
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "DiscussionAttachment")})
-	public DiscussionAttachment
-			postDiscussionForumPostingDiscussionForumPostingsAttachment(
-				@NotNull @PathParam("discussion-forum-posting-id") Long
-					discussionForumPostingId,
-				MultipartBody multipartBody)
+	public DiscussionAttachment postDiscussionForumPostingDiscussionAttachment(
+			@NotNull @PathParam("discussion-forum-posting-id") Long
+				discussionForumPostingId,
+			MultipartBody multipartBody)
 		throws Exception {
 
 		return new DiscussionAttachment();

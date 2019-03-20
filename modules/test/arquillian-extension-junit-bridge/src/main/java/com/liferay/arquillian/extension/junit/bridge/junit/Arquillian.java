@@ -110,9 +110,8 @@ public class Arquillian extends Runner implements Filterable {
 			return;
 		}
 
-		Thread thread = _startServerThread(runNotifier);
-
 		try {
+			Thread thread = _startServerThread(runNotifier);
 
 			// Enforce client side test class initialization
 
@@ -127,12 +126,11 @@ public class Arquillian extends Runner implements Filterable {
 		}
 	}
 
-	private ServerSocket _getServerSocket() {
+	private ServerSocket _getServerSocket() throws IOException {
+		ServerSocketChannel serverSocketChannel = ServerSocketChannel.open();
+
 		while (true) {
 			try {
-				ServerSocketChannel serverSocketChannel =
-					ServerSocketChannel.open();
-
 				ServerSocket serverSocket = serverSocketChannel.socket();
 
 				_port = new Random().nextInt(65535);
@@ -172,7 +170,9 @@ public class Arquillian extends Runner implements Filterable {
 		return () -> frameworkMBean.uninstallBundle(bundleId);
 	}
 
-	private Thread _startServerThread(RunNotifier runNotifier) {
+	private Thread _startServerThread(RunNotifier runNotifier)
+		throws IOException {
+
 		Thread thread = new Thread(
 			new ServerRunnable(runNotifier, _getServerSocket()),
 			_clazz.getName() + "-Test-Thread");

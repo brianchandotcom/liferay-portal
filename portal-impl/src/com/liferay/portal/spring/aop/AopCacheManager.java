@@ -40,9 +40,9 @@ import com.liferay.registry.ServiceTrackerCustomizer;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
+import java.util.Set;
 
 /**
  * @author Preston Crary
@@ -58,7 +58,7 @@ public class AopCacheManager {
 				new ChainableMethodAdvice[_chainableMethodAdvices.size()]),
 			transactionExecutor);
 
-		_aopInvocationHandlers.put(aopInvocationHandler, transactionExecutor);
+		_aopInvocationHandlers.add(aopInvocationHandler);
 
 		return aopInvocationHandler;
 	}
@@ -127,8 +127,8 @@ public class AopCacheManager {
 				return clazz.getName();
 			});
 
-	private static final Map<AopInvocationHandler, TransactionExecutor>
-		_aopInvocationHandlers = new HashMap<>();
+	private static final Set<AopInvocationHandler> _aopInvocationHandlers =
+		new HashSet<>();
 	private static final List<ChainableMethodAdvice> _chainableMethodAdvices =
 		_createStaticChainableMethodAdvices();
 
@@ -185,15 +185,15 @@ public class AopCacheManager {
 		}
 
 		private static void _reset() {
-			for (Map.Entry<AopInvocationHandler, TransactionExecutor> entry :
-					_aopInvocationHandlers.entrySet()) {
+			ChainableMethodAdvice[] chainableMethodAdvices =
+				_chainableMethodAdvices.toArray(
+					new ChainableMethodAdvice[_chainableMethodAdvices.size()]);
 
-				AopInvocationHandler aopInvocationHandler = entry.getKey();
+			for (AopInvocationHandler aopInvocationHandler :
+					_aopInvocationHandlers) {
 
 				aopInvocationHandler.setChainableMethodAdvices(
-					_chainableMethodAdvices.toArray(
-						new ChainableMethodAdvice
-							[_chainableMethodAdvices.size()]));
+					chainableMethodAdvices);
 			}
 		}
 

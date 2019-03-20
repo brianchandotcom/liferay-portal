@@ -16,6 +16,7 @@ package com.liferay.data.engine.rest.internal.dto.v1_0.util;
 
 import com.liferay.data.engine.rest.dto.v1_0.DataDefinition;
 import com.liferay.data.engine.rest.dto.v1_0.DataDefinitionField;
+import com.liferay.data.engine.rest.dto.v1_0.DataDefinitionRule;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -39,6 +40,10 @@ public class DataDefinitionUtil {
 					jsonObject.getJSONArray("fields"),
 					fieldJSONObject -> _toDataDefinitionField(fieldJSONObject),
 					DataDefinitionField.class);
+				dataDefinitionRules = JSONUtil.toArray(
+					jsonObject.getJSONArray("rules"),
+					ruleJSONObject -> _toDataDefinitionRule(ruleJSONObject),
+					DataDefinitionField.class);
 				dateCreated = ddmStructure.getCreateDate();
 				dateModified = ddmStructure.getModifiedDate();
 				description = LocalizedValueUtil.toLocalizedValues(
@@ -60,6 +65,11 @@ public class DataDefinitionUtil {
 			JSONUtil.toJSONArray(
 				dataDefinition.getDataDefinitionFields(),
 				dataDefinitionField -> _toJSONObject(dataDefinitionField))
+		).put(
+			"rules",
+			JSONUtil.toJSONArray(
+				dataDefinition.getDataDefinitionRules(),
+				dataDefinitionRule -> _toJSONObject(dataDefinitionRule))
 		).toString();
 	}
 
@@ -106,6 +116,23 @@ public class DataDefinitionUtil {
 		};
 	}
 
+	private static DataDefinitionRule _toDataDefinitionRule(
+		JSONObject jsonObject) {
+
+		return new DataDefinitionRule() {
+			{
+				dataDefinitionFieldNames = JSONUtil.toStringArray(
+					jsonObject.getJSONArray("fields"));
+				dataDefinitionRuleParameters =
+					DataDefinitionRuleParameterUtil.
+						toDataDefinitionRuleParameters(
+							jsonObject.getJSONObject("parameters"));
+				name = jsonObject.getString("name");
+				ruleType = jsonObject.getString("ruleType");
+			}
+		};
+	}
+
 	private static JSONObject _toJSONObject(
 			DataDefinitionField dataDefinitionField)
 		throws Exception {
@@ -146,6 +173,25 @@ public class DataDefinitionUtil {
 		jsonObject.put("type", type);
 
 		return jsonObject;
+	}
+
+	private static JSONObject _toJSONObject(
+			DataDefinitionRule dataDefinitionRule)
+		throws Exception {
+
+		return JSONUtil.put(
+			"fields",
+			JSONUtil.toJSONArray(
+				dataDefinitionRule.getDataDefinitionFieldNames(), name -> name)
+		).put(
+			"name", dataDefinitionRule.getName()
+		).put(
+			"ruleType", dataDefinitionRule.getRuleType()
+		).put(
+			"parameters",
+			DataDefinitionRuleParameterUtil.toJSONObject(
+				dataDefinitionRule.getDataDefinitionRuleParameters())
+		);
 	}
 
 }

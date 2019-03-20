@@ -652,6 +652,20 @@ definition {
 		);
 	}
 
+	macro gotoPortalSettings {
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "Instance Settings"
+		);
+
+		SystemSettings.gotoConfiguration(
+			configurationCategory = "Portal Settings",
+			configurationName = "Portal Settings",
+			configurationScope = "Virtual Instance Scope"
+		);
+	}
+
 	macro openInstanceSettingsAdmin {
 		Navigator.openWithAppendToBaseURL(
 			urlAppend = "group/control_panel/manage?p_p_id=com_liferay_portal_settings_web_portlet_PortalSettingsPortlet"

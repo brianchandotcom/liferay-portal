@@ -27,14 +27,10 @@ import com.liferay.petra.string.StringBundler;
 import graphql.annotations.annotationTypes.GraphQLField;
 import graphql.annotations.annotationTypes.GraphQLName;
 
-import io.swagger.v3.oas.annotations.media.Schema;
-
 import java.util.Date;
 import java.util.Objects;
 
 import javax.annotation.Generated;
-
-import javax.validation.constraints.NotNull;
 
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -43,14 +39,15 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @JsonTypeInfo(
-	defaultImpl = StructuredContent.class, include = JsonTypeInfo.As.PROPERTY,
-	property = "childType", use = JsonTypeInfo.Id.NAME
+	defaultImpl = KnowledgeBaseArticle.class,
+	include = JsonTypeInfo.As.PROPERTY, property = "childType",
+	use = JsonTypeInfo.Id.NAME
 )
 @Generated("")
-@GraphQLName("StructuredContent")
+@GraphQLName("KnowledgeBaseArticle")
 @JsonFilter("Liferay.Vulcan")
-@XmlRootElement(name = "StructuredContent")
-public class StructuredContent extends ContentListElement {
+@XmlRootElement(name = "KnowledgeBaseArticle")
+public class KnowledgeBaseArticle extends ContentListElement {
 
 	public static enum ViewableBy {
 
@@ -110,20 +107,20 @@ public class StructuredContent extends ContentListElement {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected AggregateRating aggregateRating;
 
-	public String[] getAvailableLanguages() {
-		return availableLanguages;
+	public String getArticleBody() {
+		return articleBody;
 	}
 
-	public void setAvailableLanguages(String[] availableLanguages) {
-		this.availableLanguages = availableLanguages;
+	public void setArticleBody(String articleBody) {
+		this.articleBody = articleBody;
 	}
 
 	@JsonIgnore
-	public void setAvailableLanguages(
-		UnsafeSupplier<String[], Exception> availableLanguagesUnsafeSupplier) {
+	public void setArticleBody(
+		UnsafeSupplier<String, Exception> articleBodyUnsafeSupplier) {
 
 		try {
-			availableLanguages = availableLanguagesUnsafeSupplier.get();
+			articleBody = articleBodyUnsafeSupplier.get();
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
@@ -132,31 +129,7 @@ public class StructuredContent extends ContentListElement {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected String[] availableLanguages;
-
-	public ContentField[] getContentFields() {
-		return contentFields;
-	}
-
-	public void setContentFields(ContentField[] contentFields) {
-		this.contentFields = contentFields;
-	}
-
-	@JsonIgnore
-	public void setContentFields(
-		UnsafeSupplier<ContentField[], Exception> contentFieldsUnsafeSupplier) {
-
-		try {
-			contentFields = contentFieldsUnsafeSupplier.get();
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected ContentField[] contentFields;
+	protected String articleBody;
 
 	public Long getContentSpaceId() {
 		return contentSpaceId;
@@ -181,31 +154,6 @@ public class StructuredContent extends ContentListElement {
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long contentSpaceId;
-
-	public Long getContentStructureId() {
-		return contentStructureId;
-	}
-
-	public void setContentStructureId(Long contentStructureId) {
-		this.contentStructureId = contentStructureId;
-	}
-
-	@JsonIgnore
-	public void setContentStructureId(
-		UnsafeSupplier<Long, Exception> contentStructureIdUnsafeSupplier) {
-
-		try {
-			contentStructureId = contentStructureIdUnsafeSupplier.get();
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	@NotNull
-	protected Long contentStructureId;
 
 	public Creator getCreator() {
 		return creator;
@@ -279,30 +227,6 @@ public class StructuredContent extends ContentListElement {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Date dateModified;
 
-	public Date getDatePublished() {
-		return datePublished;
-	}
-
-	public void setDatePublished(Date datePublished) {
-		this.datePublished = datePublished;
-	}
-
-	@JsonIgnore
-	public void setDatePublished(
-		UnsafeSupplier<Date, Exception> datePublishedUnsafeSupplier) {
-
-		try {
-			datePublished = datePublishedUnsafeSupplier.get();
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Date datePublished;
-
 	public String getDescription() {
 		return description;
 	}
@@ -326,6 +250,30 @@ public class StructuredContent extends ContentListElement {
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String description;
+
+	public String getFriendlyUrlPath() {
+		return friendlyUrlPath;
+	}
+
+	public void setFriendlyUrlPath(String friendlyUrlPath) {
+		this.friendlyUrlPath = friendlyUrlPath;
+	}
+
+	@JsonIgnore
+	public void setFriendlyUrlPath(
+		UnsafeSupplier<String, Exception> friendlyUrlPathUnsafeSupplier) {
+
+		try {
+			friendlyUrlPath = friendlyUrlPathUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected String friendlyUrlPath;
 
 	public Long getId() {
 		return id;
@@ -373,20 +321,20 @@ public class StructuredContent extends ContentListElement {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String[] keywords;
 
-	public Date getLastReviewed() {
-		return lastReviewed;
+	public Number getNumberOfAttachments() {
+		return numberOfAttachments;
 	}
 
-	public void setLastReviewed(Date lastReviewed) {
-		this.lastReviewed = lastReviewed;
+	public void setNumberOfAttachments(Number numberOfAttachments) {
+		this.numberOfAttachments = numberOfAttachments;
 	}
 
 	@JsonIgnore
-	public void setLastReviewed(
-		UnsafeSupplier<Date, Exception> lastReviewedUnsafeSupplier) {
+	public void setNumberOfAttachments(
+		UnsafeSupplier<Number, Exception> numberOfAttachmentsUnsafeSupplier) {
 
 		try {
-			lastReviewed = lastReviewedUnsafeSupplier.get();
+			numberOfAttachments = numberOfAttachmentsUnsafeSupplier.get();
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
@@ -395,22 +343,26 @@ public class StructuredContent extends ContentListElement {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Date lastReviewed;
+	protected Number numberOfAttachments;
 
-	public Number getNumberOfComments() {
-		return numberOfComments;
+	public Number getNumberOfKnowledgeBaseArticles() {
+		return numberOfKnowledgeBaseArticles;
 	}
 
-	public void setNumberOfComments(Number numberOfComments) {
-		this.numberOfComments = numberOfComments;
+	public void setNumberOfKnowledgeBaseArticles(
+		Number numberOfKnowledgeBaseArticles) {
+
+		this.numberOfKnowledgeBaseArticles = numberOfKnowledgeBaseArticles;
 	}
 
 	@JsonIgnore
-	public void setNumberOfComments(
-		UnsafeSupplier<Number, Exception> numberOfCommentsUnsafeSupplier) {
+	public void setNumberOfKnowledgeBaseArticles(
+		UnsafeSupplier<Number, Exception>
+			numberOfKnowledgeBaseArticlesUnsafeSupplier) {
 
 		try {
-			numberOfComments = numberOfCommentsUnsafeSupplier.get();
+			numberOfKnowledgeBaseArticles =
+				numberOfKnowledgeBaseArticlesUnsafeSupplier.get();
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
@@ -419,24 +371,26 @@ public class StructuredContent extends ContentListElement {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Number numberOfComments;
+	protected Number numberOfKnowledgeBaseArticles;
 
-	@Schema(description = "https://www.schema.org/templates")
-	public RenderedContent[] getRenderedContents() {
-		return renderedContents;
+	public ParentKnowledgeBaseFolder getParentKnowledgeBaseFolder() {
+		return parentKnowledgeBaseFolder;
 	}
 
-	public void setRenderedContents(RenderedContent[] renderedContents) {
-		this.renderedContents = renderedContents;
+	public void setParentKnowledgeBaseFolder(
+		ParentKnowledgeBaseFolder parentKnowledgeBaseFolder) {
+
+		this.parentKnowledgeBaseFolder = parentKnowledgeBaseFolder;
 	}
 
 	@JsonIgnore
-	public void setRenderedContents(
-		UnsafeSupplier<RenderedContent[], Exception>
-			renderedContentsUnsafeSupplier) {
+	public void setParentKnowledgeBaseFolder(
+		UnsafeSupplier<ParentKnowledgeBaseFolder, Exception>
+			parentKnowledgeBaseFolderUnsafeSupplier) {
 
 		try {
-			renderedContents = renderedContentsUnsafeSupplier.get();
+			parentKnowledgeBaseFolder =
+				parentKnowledgeBaseFolderUnsafeSupplier.get();
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
@@ -445,7 +399,35 @@ public class StructuredContent extends ContentListElement {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected RenderedContent[] renderedContents;
+	protected ParentKnowledgeBaseFolder parentKnowledgeBaseFolder;
+
+	public Long getParentKnowledgeBaseFolderId() {
+		return parentKnowledgeBaseFolderId;
+	}
+
+	public void setParentKnowledgeBaseFolderId(
+		Long parentKnowledgeBaseFolderId) {
+
+		this.parentKnowledgeBaseFolderId = parentKnowledgeBaseFolderId;
+	}
+
+	@JsonIgnore
+	public void setParentKnowledgeBaseFolderId(
+		UnsafeSupplier<Long, Exception>
+			parentKnowledgeBaseFolderIdUnsafeSupplier) {
+
+		try {
+			parentKnowledgeBaseFolderId =
+				parentKnowledgeBaseFolderIdUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+	protected Long parentKnowledgeBaseFolderId;
 
 	public TaxonomyCategory[] getTaxonomyCategories() {
 		return taxonomyCategories;
@@ -563,58 +545,16 @@ public class StructuredContent extends ContentListElement {
 		sb.append(aggregateRating);
 		sb.append(", ");
 
-		sb.append("\"availableLanguages\": ");
+		sb.append("\"articleBody\": ");
 
-		if (availableLanguages == null) {
-			sb.append("null");
-		}
-		else {
-			sb.append("[");
-
-			for (int i = 0; i < availableLanguages.length; i++) {
-				sb.append("\"");
-				sb.append(availableLanguages[i]);
-				sb.append("\"");
-
-				if ((i + 1) < availableLanguages.length) {
-					sb.append(", ");
-				}
-			}
-
-			sb.append("]");
-		}
-
-		sb.append(", ");
-
-		sb.append("\"contentFields\": ");
-
-		if (contentFields == null) {
-			sb.append("null");
-		}
-		else {
-			sb.append("[");
-
-			for (int i = 0; i < contentFields.length; i++) {
-				sb.append(contentFields[i]);
-
-				if ((i + 1) < contentFields.length) {
-					sb.append(", ");
-				}
-			}
-
-			sb.append("]");
-		}
-
+		sb.append("\"");
+		sb.append(articleBody);
+		sb.append("\"");
 		sb.append(", ");
 
 		sb.append("\"contentSpaceId\": ");
 
 		sb.append(contentSpaceId);
-		sb.append(", ");
-
-		sb.append("\"contentStructureId\": ");
-
-		sb.append(contentStructureId);
 		sb.append(", ");
 
 		sb.append("\"creator\": ");
@@ -636,17 +576,17 @@ public class StructuredContent extends ContentListElement {
 		sb.append("\"");
 		sb.append(", ");
 
-		sb.append("\"datePublished\": ");
-
-		sb.append("\"");
-		sb.append(datePublished);
-		sb.append("\"");
-		sb.append(", ");
-
 		sb.append("\"description\": ");
 
 		sb.append("\"");
 		sb.append(description);
+		sb.append("\"");
+		sb.append(", ");
+
+		sb.append("\"friendlyUrlPath\": ");
+
+		sb.append("\"");
+		sb.append(friendlyUrlPath);
 		sb.append("\"");
 		sb.append(", ");
 
@@ -678,37 +618,24 @@ public class StructuredContent extends ContentListElement {
 
 		sb.append(", ");
 
-		sb.append("\"lastReviewed\": ");
+		sb.append("\"numberOfAttachments\": ");
 
-		sb.append("\"");
-		sb.append(lastReviewed);
-		sb.append("\"");
+		sb.append(numberOfAttachments);
 		sb.append(", ");
 
-		sb.append("\"numberOfComments\": ");
+		sb.append("\"numberOfKnowledgeBaseArticles\": ");
 
-		sb.append(numberOfComments);
+		sb.append(numberOfKnowledgeBaseArticles);
 		sb.append(", ");
 
-		sb.append("\"renderedContents\": ");
+		sb.append("\"parentKnowledgeBaseFolder\": ");
 
-		if (renderedContents == null) {
-			sb.append("null");
-		}
-		else {
-			sb.append("[");
+		sb.append(parentKnowledgeBaseFolder);
+		sb.append(", ");
 
-			for (int i = 0; i < renderedContents.length; i++) {
-				sb.append(renderedContents[i]);
+		sb.append("\"parentKnowledgeBaseFolderId\": ");
 
-				if ((i + 1) < renderedContents.length) {
-					sb.append(", ");
-				}
-			}
-
-			sb.append("]");
-		}
-
+		sb.append(parentKnowledgeBaseFolderId);
 		sb.append(", ");
 
 		sb.append("\"taxonomyCategories\": ");

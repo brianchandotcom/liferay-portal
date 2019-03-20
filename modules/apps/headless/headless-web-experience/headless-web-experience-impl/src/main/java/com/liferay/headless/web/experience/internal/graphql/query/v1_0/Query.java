@@ -15,9 +15,11 @@
 package com.liferay.headless.web.experience.internal.graphql.query.v1_0;
 
 import com.liferay.headless.web.experience.dto.v1_0.Comment;
+import com.liferay.headless.web.experience.dto.v1_0.ContentListElement;
 import com.liferay.headless.web.experience.dto.v1_0.ContentStructure;
 import com.liferay.headless.web.experience.dto.v1_0.StructuredContent;
 import com.liferay.headless.web.experience.resource.v1_0.CommentResource;
+import com.liferay.headless.web.experience.resource.v1_0.ContentListElementResource;
 import com.liferay.headless.web.experience.resource.v1_0.ContentStructureResource;
 import com.liferay.headless.web.experience.resource.v1_0.StructuredContentResource;
 import com.liferay.petra.function.UnsafeConsumer;
@@ -52,6 +54,14 @@ public class Query {
 
 		_commentResourceComponentServiceObjects =
 			commentResourceComponentServiceObjects;
+	}
+
+	public static void setContentListElementResourceComponentServiceObjects(
+		ComponentServiceObjects<ContentListElementResource>
+			contentListElementResourceComponentServiceObjects) {
+
+		_contentListElementResourceComponentServiceObjects =
+			contentListElementResourceComponentServiceObjects;
 	}
 
 	public static void setContentStructureResourceComponentServiceObjects(
@@ -118,6 +128,26 @@ public class Query {
 					commentResource.getStructuredContentCommentsPage(
 						structuredContentId, filter,
 						Pagination.of(pageSize, page), sorts);
+
+				return paginationPage.getItems();
+			});
+	}
+
+	@GraphQLField
+	@GraphQLInvokeDetached
+	public Collection<ContentListElement> getContentListContentsPage(
+			@GraphQLName("content-list-id") Long contentListId,
+			@GraphQLName("pageSize") int pageSize,
+			@GraphQLName("page") int page)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_contentListElementResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			contentListElementResource -> {
+				Page paginationPage =
+					contentListElementResource.getContentListContentsPage(
+						contentListId, Pagination.of(pageSize, page));
 
 				return paginationPage.getItems();
 			});
@@ -266,6 +296,15 @@ public class Query {
 	}
 
 	private void _populateResourceContext(
+			ContentListElementResource contentListElementResource)
+		throws Exception {
+
+		contentListElementResource.setContextCompany(
+			CompanyLocalServiceUtil.getCompany(
+				CompanyThreadLocal.getCompanyId()));
+	}
+
+	private void _populateResourceContext(
 			ContentStructureResource contentStructureResource)
 		throws Exception {
 
@@ -285,6 +324,8 @@ public class Query {
 
 	private static ComponentServiceObjects<CommentResource>
 		_commentResourceComponentServiceObjects;
+	private static ComponentServiceObjects<ContentListElementResource>
+		_contentListElementResourceComponentServiceObjects;
 	private static ComponentServiceObjects<ContentStructureResource>
 		_contentStructureResourceComponentServiceObjects;
 	private static ComponentServiceObjects<StructuredContentResource>

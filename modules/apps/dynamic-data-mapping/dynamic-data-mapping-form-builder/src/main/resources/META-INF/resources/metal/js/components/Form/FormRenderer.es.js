@@ -379,11 +379,14 @@ class FormRenderer extends Component {
 
 			data.source.innerHTML = '';
 
+			const targetIsEmptyRow = !data.target.parentElement.parentElement.classList.contains('position-relative');
+
 			this._handleFieldMoved(
 				{
 					data,
 					source: sourceIndex,
-					target: targetIndex
+					target: targetIndex,
+					targetIsEmptyRow
 				}
 			);
 		}

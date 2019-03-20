@@ -337,7 +337,7 @@ class LayoutProvider extends Component {
 	 * @private
 	 */
 
-	_handleFieldMoved({data, target, source}) {
+	_handleFieldMoved({targetIsEmptyRow, target, source}) {
 		let {pages} = this.state;
 		const {columnIndex, pageIndex, rowIndex} = source;
 		const targetColumnIndex = target.columnIndex;
@@ -362,19 +362,11 @@ class LayoutProvider extends Component {
 		if (targetRowIndex > pages[Number(pageIndex)].rows.length - 1) {
 			pages = FormSupport.addRow(pages, target.rowIndex, target.pageIndex, newRow);
 		}
+		else if (targetIsEmptyRow) {
+			pages = FormSupport.addRow(pages, target.rowIndex, target.pageIndex, newRow);
+		}
 		else {
-			const targetColumn = pages[Number(pageIndex)].rows[Number(targetRowIndex)].columns[Number(targetColumnIndex)];
-
-			const targetField = targetColumn.fields;
-
-			const emptyRow = !data.target.parentElement.parentElement.classList.contains('position-relative');
-
-			if (targetField.length && emptyRow) {
-				pages = FormSupport.addRow(pages, target.rowIndex, target.pageIndex, newRow);
-			}
-			else {
-				pages = FormSupport.addFieldToColumn(pages, target.pageIndex, targetRowIndex, targetColumnIndex, fields);
-			}
+			pages = FormSupport.addFieldToColumn(pages, target.pageIndex, targetRowIndex, targetColumnIndex, fields);
 		}
 
 		pages[pageIndex].rows = FormSupport.removeEmptyRows(pages, pageIndex);

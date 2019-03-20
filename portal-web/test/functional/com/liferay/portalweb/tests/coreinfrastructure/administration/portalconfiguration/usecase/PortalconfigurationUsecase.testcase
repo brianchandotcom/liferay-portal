@@ -46,11 +46,7 @@ definition {
 	test DefaultPortalLandingPage {
 		property test.name.skip.portal.instance = "PortalconfigurationUsecase#DefaultPortalLandingPage";
 
-		ProductMenu.gotoPortlet(
-			category = "Configuration",
-			panel = "Control Panel",
-			portlet = "Instance Settings"
-		);
+		PortalSettings.gotoPortalSettings();
 
 		PortalSettings.editDefaultLandingPageCP(
 			defaultLandingPage = "/web/guest/landing"
@@ -320,11 +316,7 @@ definition {
 		property custom.properties = "virtual.hosts.valid.hosts=localhost,127.0.0.1,www.able.com,www.baker.com,www.charlie.com";
 		property test.name.skip.portal.instance = "PortalconfigurationUsecase#ViewVirtualHostPrivateSitePage";
 
-		ProductMenu.gotoPortlet(
-			category = "Configuration",
-			panel = "Control Panel",
-			portlet = "Instance Settings"
-		);
+		PortalSettings.gotoPortalSettings();
 
 		PortalSettings.editVirtualHostCP(virtualHostName = "www.able.com");
 
@@ -425,11 +417,7 @@ definition {
 			virtualHostsURL = "http://www.able.com:8080"
 		);
 
-		ProductMenu.gotoPortlet(
-			category = "Configuration",
-			panel = "Control Panel",
-			portlet = "Instance Settings"
-		);
+		PortalSettings.gotoPortalSettings();
 
 		PortalSettingsNavigator.gotoLDAP();
 

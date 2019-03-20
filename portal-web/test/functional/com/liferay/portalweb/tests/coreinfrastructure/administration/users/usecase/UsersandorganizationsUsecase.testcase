@@ -1465,11 +1465,7 @@ definition {
 			orgName = "Organization Site Bravo"
 		);
 
-		ProductMenu.gotoPortlet(
-			category = "Configuration",
-			panel = "Control Panel",
-			portlet = "Instance Settings"
-		);
+		PortalSettings.gotoPortalSettings();
 
 		PortalSettings.editConfigurationUsersDefaultUserAssociationsSitesCP(
 			siteName = "Site Name Alpha"

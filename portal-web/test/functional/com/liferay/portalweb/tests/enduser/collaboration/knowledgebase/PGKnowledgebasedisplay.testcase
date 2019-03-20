@@ -864,11 +864,7 @@ definition {
 			kbArticleTitle = "Knowledge Base Article Title"
 		);
 
-		ProductMenu.gotoPortlet(
-			category = "Configuration",
-			panel = "Control Panel",
-			portlet = "Instance Settings"
-		);
+		PortalSettings.gotoPortalSettings();
 
 		Navigator.gotoNavTab(navTab = "Social");
 
@@ -1031,11 +1027,7 @@ definition {
 			rateUp = "true"
 		);
 
-		ProductMenu.gotoPortlet(
-			category = "Configuration",
-			panel = "Control Panel",
-			portlet = "Instance Settings"
-		);
+		PortalSettings.gotoPortalSettings();
 
 		Navigator.gotoNavTab(navTab = "Social");
 
@@ -1051,11 +1043,7 @@ definition {
 
 		KBArticle.viewArticle5StarRatingPG();
 
-		ProductMenu.gotoPortlet(
-			category = "Configuration",
-			panel = "Control Panel",
-			portlet = "Instance Settings"
-		);
+		PortalSettings.gotoPortalSettings();
 
 		Navigator.gotoNavTab(navTab = "Social");
 

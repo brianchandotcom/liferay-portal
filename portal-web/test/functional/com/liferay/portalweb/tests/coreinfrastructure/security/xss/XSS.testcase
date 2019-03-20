@@ -244,11 +244,7 @@ definition {
 	@description = "This is a use case for LPS-59198."
 	@priority = "3"
 	test ViewLDAP {
-		ProductMenu.gotoPortlet(
-			category = "Configuration",
-			panel = "Control Panel",
-			portlet = "Instance Settings"
-		);
+		PortalSettings.gotoPortalSettings();
 
 		PortalSettingsNavigator.gotoLDAP();
 
@@ -657,7 +653,7 @@ definition {
 
 		AssertAlertNotPresent();
 	}
-	
+
 	@priority = "5"
 	test ViewWiki {
 		Navigator.openURL();

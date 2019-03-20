@@ -121,11 +121,7 @@ definition {
 
 		Portlet.addPG(portletName = "Language Selector");
 
-		ProductMenu.gotoPortlet(
-			category = "Configuration",
-			panel = "Control Panel",
-			portlet = "Instance Settings"
-		);
+		PortalSettings.gotoPortalSettings();
 
 		PortalSettings.configureCurrentLanguagesCP(
 			currentPortalLanguages = "Chinese (China),English (United States),French (France)"

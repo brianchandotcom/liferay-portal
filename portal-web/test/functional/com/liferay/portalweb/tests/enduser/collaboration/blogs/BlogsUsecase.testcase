@@ -326,11 +326,7 @@ definition {
 			entryTitle = "Blogs Entry Title"
 		);
 
-		ProductMenu.gotoPortlet(
-			category = "Configuration",
-			panel = "Control Panel",
-			portlet = "Instance Settings"
-		);
+		PortalSettings.gotoPortalSettings();
 
 		Navigator.gotoNavTab(navTab = "Social");
 

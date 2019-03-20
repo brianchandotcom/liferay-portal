@@ -271,11 +271,7 @@ definition {
 			displaySettingsGreeting = "Welcome Test Test!"
 		);
 
-		ProductMenu.gotoPortlet(
-			category = "Configuration",
-			panel = "Control Panel",
-			portlet = "Instance Settings"
-		);
+		PortalSettings.gotoPortalSettings();
 
 		PortalSettings.configureTimeZone(timeZone = "(UTC +08:00) China Standard Time");
 

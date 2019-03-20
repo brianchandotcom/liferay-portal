@@ -15,10 +15,15 @@
 package com.liferay.document.library.asset.auto.tagger.opennlp.internal;
 
 import com.liferay.asset.auto.tagger.AssetAutoTagProvider;
+import com.liferay.document.library.asset.auto.tagger.opennlp.internal.configuration.OpenNPLDocumentAssetAutoTagProviderCompanyConfiguration;
+import com.liferay.document.library.asset.auto.tagger.opennlp.internal.constants.OpenNLPDocumentAssetAutoTagProviderConstants;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.module.configuration.ConfigurationException;
+import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.repository.capabilities.TemporaryFileEntriesCapability;
 import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.settings.CompanyServiceSettingsLocator;
 import com.liferay.portal.kernel.util.ContentTypes;
 
 import java.util.Arrays;
@@ -28,6 +33,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Cristina González
@@ -51,10 +57,33 @@ public class OpenNLPDocumentAssetAutoTagProvider
 		}
 	}
 
-	private Collection<String> _getTagNames(FileEntry fileEntry) {
+	private OpenNPLDocumentAssetAutoTagProviderCompanyConfiguration
+			_getConfiguration(long companyId)
+		throws ConfigurationException {
+
+		return _configurationProvider.getConfiguration(
+			OpenNPLDocumentAssetAutoTagProviderCompanyConfiguration.class,
+			new CompanyServiceSettingsLocator(
+				companyId,
+				OpenNLPDocumentAssetAutoTagProviderConstants.SERVICE_NAME));
+	}
+
+	private Collection<String> _getTagNames(FileEntry fileEntry)
+		throws Exception {
+
 		if (fileEntry.isRepositoryCapabilityProvided(
 				TemporaryFileEntriesCapability.class) ||
 			!_supportedContentTypes.contains(fileEntry.getMimeType())) {
+
+			return Collections.emptyList();
+		}
+
+		OpenNPLDocumentAssetAutoTagProviderCompanyConfiguration
+			openNPLDocumentAssetAutoTagProviderCompanyConfiguration =
+				_getConfiguration(fileEntry.getCompanyId());
+
+		if (!openNPLDocumentAssetAutoTagProviderCompanyConfiguration.
+				enabled()) {
 
 			return Collections.emptyList();
 		}
@@ -75,5 +104,8 @@ public class OpenNLPDocumentAssetAutoTagProvider
 			ContentTypes.APPLICATION_TEXT, ContentTypes.TEXT,
 			ContentTypes.TEXT_PLAIN, ContentTypes.TEXT_HTML,
 			ContentTypes.TEXT_HTML_UTF8));
+
+	@Reference
+	private ConfigurationProvider _configurationProvider;
 
 }

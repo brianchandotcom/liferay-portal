@@ -110,8 +110,10 @@ public class Arquillian extends Runner implements Filterable {
 		}
 
 		try {
+			ServerSocket serverSocket = _getServerSocket();
+
 			Thread thread = new Thread(
-				new ServerRunnable(runNotifier, _getServerSocket()),
+				new ServerRunnable(runNotifier, serverSocket),
 				_clazz.getName() + "-Test-Thread");
 
 			thread.setDaemon(true);
@@ -122,7 +124,9 @@ public class Arquillian extends Runner implements Filterable {
 
 			Class.forName(_clazz.getName(), true, _clazz.getClassLoader());
 
-			try (Closeable closeable = _installBundle()) {
+			try (Closeable closeable = _installBundle(
+					serverSocket.getLocalPort())) {
+
 				thread.join();
 			}
 		}
@@ -134,24 +138,26 @@ public class Arquillian extends Runner implements Filterable {
 	private ServerSocket _getServerSocket() throws IOException {
 		ServerSocketChannel serverSocketChannel = ServerSocketChannel.open();
 
+		int port = _START_PORT;
+
 		while (true) {
 			try {
 				ServerSocket serverSocket = serverSocketChannel.socket();
 
-				serverSocket.bind(new InetSocketAddress(_inetAddress, _port));
+				serverSocket.bind(new InetSocketAddress(_inetAddress, port));
 
 				return serverSocket;
 			}
 			catch (IOException ioe) {
-				_port++;
+				port++;
 			}
 		}
 	}
 
-	private Closeable _installBundle() throws Exception {
+	private Closeable _installBundle(int port) throws Exception {
 		Path path = BndBundleUtil.createBundle(
 			_clazz.getName(), _filteredSortedTestClass._filteredMethodNames,
-			_inetAddress.getHostAddress(), _port);
+			_inetAddress.getHostAddress(), port);
 
 		URI uri = path.toUri();
 
@@ -174,9 +180,10 @@ public class Arquillian extends Runner implements Filterable {
 		return () -> frameworkMBean.uninstallBundle(bundleId);
 	}
 
+	private static final int _START_PORT = 32764;
+
 	private static final InetAddress _inetAddress =
 		InetAddress.getLoopbackAddress();
-	private static int _port = 32764;
 
 	private final Class<?> _clazz;
 	private FilteredSortedTestClass _filteredSortedTestClass;

@@ -233,22 +233,33 @@ public class JenkinsResultsParserUtil {
 		return URLDecoder.decode(url, "UTF-8");
 	}
 
-	public static void delete(File file) {
+	public static boolean delete(File file) {
 		if (!file.exists()) {
 			System.out.println(
 				"Unable to delete because file does not exist " +
 					file.getPath());
 
-			return;
+			return false;
 		}
+
+		boolean successful = true;
 
 		if (file.isDirectory()) {
 			for (File subfile : file.listFiles()) {
-				delete(subfile);
+				if (successful) {
+					successful = delete(subfile);
+				}
+				else {
+					delete(subfile);
+				}
 			}
 		}
 
-		file.delete();
+		if (successful) {
+			return file.delete();
+		}
+
+		return successful;
 	}
 
 	public static String encode(String url)

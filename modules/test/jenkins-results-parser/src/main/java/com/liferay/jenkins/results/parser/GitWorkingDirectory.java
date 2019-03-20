@@ -258,6 +258,82 @@ public class GitWorkingDirectory {
 		}
 	}
 
+	public void configureLocalCoreSettings() {
+		List<String> commands = new ArrayList<>();
+
+		commands.add("git config --local core.autocrlf false");
+		commands.add("git config --local core.bare false");
+		commands.add("git config --local core.hideDotFiles dotGitOnly");
+		commands.add("git config --local core.logallrefupdates true");
+		commands.add("git config --local core.repositoryformatversion 0");
+
+		GitUtil.ExecutionResult executionResult = null;
+
+		boolean exceptionThrown = false;
+
+		try {
+			executionResult = executeBashCommands(
+				GitUtil.MAX_RETRIES, GitUtil.RETRY_DELAY, GitUtil.TIMEOUT,
+				commands.toArray(new String[commands.size()]));
+		}
+		catch (RuntimeException re) {
+			exceptionThrown = true;
+		}
+
+		System.out.println(executionResult.getStandardOut());
+
+		if (exceptionThrown || (executionResult.getExitValue() != 0)) {
+			throw new RuntimeException(
+				JenkinsResultsParserUtil.combine(
+					"Unable to configure local settings\n",
+					executionResult.getStandardError()));
+		}
+	}
+
+	public void configureLocalRemotes() {
+		List<String> commands = new ArrayList<>();
+
+		String[] gitRemoteNames = {"origin", "upstream"};
+		String gitRemoteURL = JenkinsResultsParserUtil.combine(
+			"git@github.com:liferay/", getGitRepositoryName(), ".git");
+
+		for (String remoteName : gitRemoteNames) {
+			addGitRemote(true, remoteName, gitRemoteURL);
+
+			commands.add(
+				JenkinsResultsParserUtil.combine(
+					"if [ \"$(git remote | grep ", remoteName,
+					")\" != \"\" ] ; then git remote remove ", remoteName,
+					" ; fi"));
+
+			commands.add(
+				JenkinsResultsParserUtil.combine(
+					"git remote add ", remoteName, " ", gitRemoteURL));
+		}
+
+		GitUtil.ExecutionResult executionResult = null;
+
+		boolean exceptionThrown = false;
+
+		try {
+			executionResult = executeBashCommands(
+				GitUtil.MAX_RETRIES, GitUtil.RETRY_DELAY, GitUtil.TIMEOUT,
+				commands.toArray(new String[commands.size()]));
+		}
+		catch (RuntimeException re) {
+			exceptionThrown = true;
+		}
+
+		System.out.println(executionResult.getStandardOut());
+
+		if (exceptionThrown || (executionResult.getExitValue() != 0)) {
+			throw new RuntimeException(
+				JenkinsResultsParserUtil.combine(
+					"Unable to configure the local remotes\n",
+					executionResult.getStandardError()));
+		}
+	}
+
 	public LocalGitBranch createLocalGitBranch(LocalGitBranch localGitBranch) {
 		return createLocalGitBranch(
 			localGitBranch.getName(), false, localGitBranch.getSHA());

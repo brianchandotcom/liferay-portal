@@ -34,7 +34,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Javier Gamarra
  */
-@Component(service = {})
+@Component(service = DocumentBulkSelectionFactory.class)
 public class DocumentBulkSelectionFactory {
 
 	public BulkSelection<?> create(DocumentBulkSelection documentBulkSelection)

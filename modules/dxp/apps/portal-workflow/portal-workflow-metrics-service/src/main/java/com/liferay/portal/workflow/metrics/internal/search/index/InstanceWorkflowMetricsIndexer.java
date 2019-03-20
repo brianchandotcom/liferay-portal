@@ -39,13 +39,11 @@ public class InstanceWorkflowMetricsIndexer
 	protected Document createDocument(KaleoInstance kaleoInstance) {
 		Document document = new DocumentImpl();
 
-		long kaleoDefinitionId = getKaleoDefinitionId(
-			kaleoInstance.getKaleoDefinitionVersionId());
-
 		document.addUID(
 			"WorkflowMetricsInstance",
 			digest(
-				kaleoInstance.getCompanyId(), kaleoDefinitionId,
+				kaleoInstance.getCompanyId(),
+				kaleoInstance.getKaleoDefinitionVersionId(),
 				kaleoInstance.getKaleoInstanceId()));
 
 		document.addKeyword("className", kaleoInstance.getClassName());
@@ -61,7 +59,14 @@ public class InstanceWorkflowMetricsIndexer
 		document.addKeyword("instanceId", kaleoInstance.getKaleoInstanceId());
 		document.addDateSortable(
 			"modifiedDate", kaleoInstance.getModifiedDate());
-		document.addKeyword("processId", kaleoDefinitionId);
+
+		Long kaleoDefinitionId = getKaleoDefinitionId(
+			kaleoInstance.getKaleoDefinitionVersionId());
+
+		if (kaleoDefinitionId != null) {
+			document.addKeyword("processId", kaleoDefinitionId);
+		}
+
 		document.addKeyword("userId", kaleoInstance.getUserId());
 
 		if (kaleoInstance.isCompleted()) {

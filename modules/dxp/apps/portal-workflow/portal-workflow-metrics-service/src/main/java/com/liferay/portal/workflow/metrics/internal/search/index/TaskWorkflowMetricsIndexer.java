@@ -35,20 +35,25 @@ public class TaskWorkflowMetricsIndexer
 	protected Document createDocument(KaleoTask kaleoTask) {
 		Document document = new DocumentImpl();
 
-		long kaleoDefinitionId = getKaleoDefinitionId(
-			kaleoTask.getKaleoDefinitionVersionId());
-
 		document.addUID(
 			"WorkflowMetricsTask",
 			digest(
-				kaleoTask.getCompanyId(), kaleoDefinitionId,
+				kaleoTask.getCompanyId(),
+				kaleoTask.getKaleoDefinitionVersionId(),
 				kaleoTask.getKaleoTaskId()));
 
 		document.addKeyword("companyId", kaleoTask.getCompanyId());
 		document.addDateSortable("createDate", kaleoTask.getCreateDate());
 		document.addDateSortable("modifiedDate", kaleoTask.getModifiedDate());
 		document.addKeyword("name", kaleoTask.getName());
-		document.addKeyword("processId", kaleoDefinitionId);
+
+		Long kaleoDefinitionId = getKaleoDefinitionId(
+			kaleoTask.getKaleoDefinitionVersionId());
+
+		if (kaleoDefinitionId != null) {
+			document.addKeyword("processId", kaleoDefinitionId);
+		}
+
 		document.addKeyword("taskId", kaleoTask.getKaleoTaskId());
 
 		return document;

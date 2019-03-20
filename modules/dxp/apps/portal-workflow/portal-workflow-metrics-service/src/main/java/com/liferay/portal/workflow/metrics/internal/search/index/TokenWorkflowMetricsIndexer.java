@@ -41,13 +41,11 @@ public class TokenWorkflowMetricsIndexer
 
 		Document document = new DocumentImpl();
 
-		long kaleoDefinitionId = getKaleoDefinitionId(
-			kaleoTaskInstanceToken.getKaleoDefinitionVersionId());
-
 		document.addUID(
 			"WorkflowMetricsToken",
 			digest(
-				kaleoTaskInstanceToken.getCompanyId(), kaleoDefinitionId,
+				kaleoTaskInstanceToken.getCompanyId(),
+				kaleoTaskInstanceToken.getKaleoDefinitionVersionId(),
 				kaleoTaskInstanceToken.getKaleoInstanceId(),
 				kaleoTaskInstanceToken.getKaleoTaskId(),
 				kaleoTaskInstanceToken.getKaleoTaskInstanceTokenId()));
@@ -63,7 +61,14 @@ public class TokenWorkflowMetricsIndexer
 			"instanceId", kaleoTaskInstanceToken.getKaleoInstanceId());
 		document.addDateSortable(
 			"modifiedDate", kaleoTaskInstanceToken.getModifiedDate());
-		document.addKeyword("processId", kaleoDefinitionId);
+
+		Long kaleoDefinitionId = getKaleoDefinitionId(
+			kaleoTaskInstanceToken.getKaleoDefinitionVersionId());
+
+		if (kaleoDefinitionId != null) {
+			document.addKeyword("processId", kaleoDefinitionId);
+		}
+
 		document.addKeyword("taskId", kaleoTaskInstanceToken.getKaleoTaskId());
 		document.addKeyword(
 			"tokenId", kaleoTaskInstanceToken.getKaleoTaskInstanceTokenId());

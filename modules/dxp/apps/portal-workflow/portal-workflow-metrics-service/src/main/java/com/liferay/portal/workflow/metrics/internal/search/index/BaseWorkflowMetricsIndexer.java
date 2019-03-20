@@ -120,7 +120,7 @@ public abstract class BaseWorkflowMetricsIndexer<T> {
 
 	protected abstract String getIndexType();
 
-	protected long getKaleoDefinitionId(long kaleoDefinitionVersionId) {
+	protected Long getKaleoDefinitionId(long kaleoDefinitionVersionId) {
 		KaleoDefinitionVersion kaleoDefinitionVersion =
 			kaleoDefinitionVersionLocalService.fetchKaleoDefinitionVersion(
 				kaleoDefinitionVersionId);
@@ -134,7 +134,7 @@ public abstract class BaseWorkflowMetricsIndexer<T> {
 			}
 		}
 
-		return 0;
+		return null;
 	}
 
 	protected abstract void populateIndex() throws PortalException;

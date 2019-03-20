@@ -135,7 +135,7 @@ public class Arquillian extends Runner implements Filterable {
 		}
 	}
 
-	private ServerSocket _getServerSocket() throws IOException {
+	private static ServerSocket _getServerSocket() throws IOException {
 		ServerSocketChannel serverSocketChannel = ServerSocketChannel.open();
 
 		int port = _START_PORT;

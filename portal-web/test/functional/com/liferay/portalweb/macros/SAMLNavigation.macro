@@ -14,6 +14,10 @@ definition {
 		);
 	}
 
+	macro gotoServiceProvider {
+		AssertClick(locator1 = "NavTab#SERVICE_PROVIDER", value1 = "Service Provider");
+	}
+
 	macro gotoServiceProviderConnection {
 		AssertClick(
 			locator1 = "NavTab#SERVICE_PROVIDER_CONNECTIONS",

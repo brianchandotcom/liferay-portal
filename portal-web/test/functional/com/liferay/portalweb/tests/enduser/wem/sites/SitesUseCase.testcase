@@ -616,11 +616,7 @@ definition {
 
 		var siteName = TestCase.getSiteName(siteName = "${siteName}");
 
-		ProductMenu.gotoPortlet(
-			category = "Configuration",
-			panel = "Control Panel",
-			portlet = "Instance Settings"
-		);
+		PortalSettings.gotoPortalSettings();
 
 		PortalSettings.editVirtualHostCP(virtualHostName = "www.able.com");
 
@@ -718,11 +714,7 @@ definition {
 
 		User.firstLoginPG(password = "test", userEmailAddress = "test@liferay.com");
 
-		ProductMenu.gotoPortlet(
-			category = "Configuration",
-			panel = "Control Panel",
-			portlet = "Instance Settings"
-		);
+		PortalSettings.gotoPortalSettings();
 
 		PortalSettings.editConfigurationUsersEmailVerificationNotificationsCP(
 			emailVerificationURL = "true"

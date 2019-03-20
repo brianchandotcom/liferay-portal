@@ -249,19 +249,29 @@ public class AssetListEntryAssetEntryRelPersistenceTest {
 	}
 
 	@Test
-	public void testCountByA_P() throws Exception {
-		_persistence.countByA_P(
-			RandomTestUtil.nextLong(), RandomTestUtil.nextInt());
+	public void testCountByA_S() throws Exception {
+		_persistence.countByA_S(
+			RandomTestUtil.nextLong(), RandomTestUtil.nextLong());
 
-		_persistence.countByA_P(0L, 0);
+		_persistence.countByA_S(0L, 0L);
 	}
 
 	@Test
-	public void testCountByA_GtP() throws Exception {
-		_persistence.countByA_GtP(
-			RandomTestUtil.nextLong(), RandomTestUtil.nextInt());
+	public void testCountByA_S_P() throws Exception {
+		_persistence.countByA_S_P(
+			RandomTestUtil.nextLong(), RandomTestUtil.nextLong(),
+			RandomTestUtil.nextInt());
 
-		_persistence.countByA_GtP(0L, 0);
+		_persistence.countByA_S_P(0L, 0L, 0);
+	}
+
+	@Test
+	public void testCountByA_S_GtP() throws Exception {
+		_persistence.countByA_S_GtP(
+			RandomTestUtil.nextLong(), RandomTestUtil.nextLong(),
+			RandomTestUtil.nextInt());
+
+		_persistence.countByA_S_GtP(0L, 0L, 0);
 	}
 
 	@Test
@@ -579,6 +589,12 @@ public class AssetListEntryAssetEntryRelPersistenceTest {
 			ReflectionTestUtil.<Long>invoke(
 				existingAssetListEntryAssetEntryRel,
 				"getOriginalAssetListEntryId", new Class<?>[0]));
+		Assert.assertEquals(
+			Long.valueOf(
+				existingAssetListEntryAssetEntryRel.getSegmentsEntryId()),
+			ReflectionTestUtil.<Long>invoke(
+				existingAssetListEntryAssetEntryRel,
+				"getOriginalSegmentsEntryId", new Class<?>[0]));
 		Assert.assertEquals(
 			Integer.valueOf(existingAssetListEntryAssetEntryRel.getPosition()),
 			ReflectionTestUtil.<Integer>invoke(

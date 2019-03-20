@@ -58,22 +58,24 @@ public class AssetListEntryAssetEntryRelLocalServiceUtil {
 
 	public static com.liferay.asset.list.model.AssetListEntryAssetEntryRel
 			addAssetListEntryAssetEntryRel(
-				long assetListEntryId, long assetEntryId, int position,
+				long assetListEntryId, long segmentsEntryId, long assetEntryId,
+				int position,
 				com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return getService().addAssetListEntryAssetEntryRel(
-			assetListEntryId, assetEntryId, position, serviceContext);
+			assetListEntryId, segmentsEntryId, assetEntryId, position,
+			serviceContext);
 	}
 
 	public static com.liferay.asset.list.model.AssetListEntryAssetEntryRel
 			addAssetListEntryAssetEntryRel(
-				long assetListEntryId, long assetEntryId,
+				long assetListEntryId, long segmentsEntryId, long assetEntryId,
 				com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return getService().addAssetListEntryAssetEntryRel(
-			assetListEntryId, assetEntryId, serviceContext);
+			assetListEntryId, segmentsEntryId, assetEntryId, serviceContext);
 	}
 
 	/**
@@ -122,11 +124,11 @@ public class AssetListEntryAssetEntryRelLocalServiceUtil {
 
 	public static com.liferay.asset.list.model.AssetListEntryAssetEntryRel
 			deleteAssetListEntryAssetEntryRel(
-				long assetListEntryId, int position)
+				long assetListEntryId, long segmentsEntryId, int position)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return getService().deleteAssetListEntryAssetEntryRel(
-			assetListEntryId, position);
+			assetListEntryId, segmentsEntryId, position);
 	}
 
 	public static void deleteAssetListEntryAssetEntryRelByAssetListEntryId(
@@ -319,6 +321,16 @@ public class AssetListEntryAssetEntryRelLocalServiceUtil {
 			assetListEntryId, start, end);
 	}
 
+	public static java.util.List
+		<com.liferay.asset.list.model.AssetListEntryAssetEntryRel>
+			getAssetListEntryAssetEntryRels(
+				long assetListEntryId, long segmentsEntryId, int start,
+				int end) {
+
+		return getService().getAssetListEntryAssetEntryRels(
+			assetListEntryId, segmentsEntryId, start, end);
+	}
+
 	/**
 	 * Returns all the asset list entry asset entry rels matching the UUID and company.
 	 *
@@ -373,6 +385,13 @@ public class AssetListEntryAssetEntryRelLocalServiceUtil {
 			assetListEntryId);
 	}
 
+	public static int getAssetListEntryAssetEntryRelsCount(
+		long assetListEntryId, long segmentsEntryId) {
+
+		return getService().getAssetListEntryAssetEntryRelsCount(
+			assetListEntryId, segmentsEntryId);
+	}
+
 	public static com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery
 		getExportActionableDynamicQuery(
 			com.liferay.exportimport.kernel.lar.PortletDataContext
@@ -406,11 +425,12 @@ public class AssetListEntryAssetEntryRelLocalServiceUtil {
 
 	public static com.liferay.asset.list.model.AssetListEntryAssetEntryRel
 			moveAssetListEntryAssetEntryRel(
-				long assetListEntryId, int position, int newPosition)
+				long assetListEntryId, long segmentsEntryId, int position,
+				int newPosition)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return getService().moveAssetListEntryAssetEntryRel(
-			assetListEntryId, position, newPosition);
+			assetListEntryId, segmentsEntryId, position, newPosition);
 	}
 
 	/**
@@ -431,12 +451,12 @@ public class AssetListEntryAssetEntryRelLocalServiceUtil {
 	public static com.liferay.asset.list.model.AssetListEntryAssetEntryRel
 			updateAssetListEntryAssetEntryRel(
 				long assetListEntryAssetEntryRelId, long assetListEntryId,
-				long assetEntryId, int position)
+				long segmentsEntryId, long assetEntryId, int position)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return getService().updateAssetListEntryAssetEntryRel(
-			assetListEntryAssetEntryRelId, assetListEntryId, assetEntryId,
-			position);
+			assetListEntryAssetEntryRelId, assetListEntryId, segmentsEntryId,
+			assetEntryId, position);
 	}
 
 	public static AssetListEntryAssetEntryRelLocalService getService() {

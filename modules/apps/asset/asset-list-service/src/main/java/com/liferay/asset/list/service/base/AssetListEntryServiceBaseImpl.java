@@ -18,6 +18,7 @@ import com.liferay.asset.list.model.AssetListEntry;
 import com.liferay.asset.list.service.AssetListEntryService;
 import com.liferay.asset.list.service.persistence.AssetListEntryAssetEntryRelPersistence;
 import com.liferay.asset.list.service.persistence.AssetListEntryPersistence;
+import com.liferay.asset.list.service.persistence.AssetListEntrySegmentsEntryRelPersistence;
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
@@ -271,6 +272,57 @@ public abstract class AssetListEntryServiceBaseImpl
 			assetListEntryAssetEntryRelPersistence;
 	}
 
+	/**
+	 * Returns the asset list entry segments entry rel local service.
+	 *
+	 * @return the asset list entry segments entry rel local service
+	 */
+	public
+		com.liferay.asset.list.service.
+			AssetListEntrySegmentsEntryRelLocalService
+				getAssetListEntrySegmentsEntryRelLocalService() {
+
+		return assetListEntrySegmentsEntryRelLocalService;
+	}
+
+	/**
+	 * Sets the asset list entry segments entry rel local service.
+	 *
+	 * @param assetListEntrySegmentsEntryRelLocalService the asset list entry segments entry rel local service
+	 */
+	public void setAssetListEntrySegmentsEntryRelLocalService(
+		com.liferay.asset.list.service.
+			AssetListEntrySegmentsEntryRelLocalService
+				assetListEntrySegmentsEntryRelLocalService) {
+
+		this.assetListEntrySegmentsEntryRelLocalService =
+			assetListEntrySegmentsEntryRelLocalService;
+	}
+
+	/**
+	 * Returns the asset list entry segments entry rel persistence.
+	 *
+	 * @return the asset list entry segments entry rel persistence
+	 */
+	public AssetListEntrySegmentsEntryRelPersistence
+		getAssetListEntrySegmentsEntryRelPersistence() {
+
+		return assetListEntrySegmentsEntryRelPersistence;
+	}
+
+	/**
+	 * Sets the asset list entry segments entry rel persistence.
+	 *
+	 * @param assetListEntrySegmentsEntryRelPersistence the asset list entry segments entry rel persistence
+	 */
+	public void setAssetListEntrySegmentsEntryRelPersistence(
+		AssetListEntrySegmentsEntryRelPersistence
+			assetListEntrySegmentsEntryRelPersistence) {
+
+		this.assetListEntrySegmentsEntryRelPersistence =
+			assetListEntrySegmentsEntryRelPersistence;
+	}
+
 	public void afterPropertiesSet() {
 	}
 
@@ -367,5 +419,17 @@ public abstract class AssetListEntryServiceBaseImpl
 	@BeanReference(type = AssetListEntryAssetEntryRelPersistence.class)
 	protected AssetListEntryAssetEntryRelPersistence
 		assetListEntryAssetEntryRelPersistence;
+
+	@BeanReference(
+		type = com.liferay.asset.list.service.AssetListEntrySegmentsEntryRelLocalService.class
+	)
+	protected
+		com.liferay.asset.list.service.
+			AssetListEntrySegmentsEntryRelLocalService
+				assetListEntrySegmentsEntryRelLocalService;
+
+	@BeanReference(type = AssetListEntrySegmentsEntryRelPersistence.class)
+	protected AssetListEntrySegmentsEntryRelPersistence
+		assetListEntrySegmentsEntryRelPersistence;
 
 }

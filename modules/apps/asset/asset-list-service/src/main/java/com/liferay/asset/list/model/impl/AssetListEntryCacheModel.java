@@ -65,7 +65,7 @@ public class AssetListEntryCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(25);
+		StringBundler sb = new StringBundler(23);
 
 		sb.append("{uuid=");
 		sb.append(uuid);
@@ -87,8 +87,6 @@ public class AssetListEntryCacheModel
 		sb.append(title);
 		sb.append(", type=");
 		sb.append(type);
-		sb.append(", typeSettings=");
-		sb.append(typeSettings);
 		sb.append(", lastPublishDate=");
 		sb.append(lastPublishDate);
 		sb.append("}");
@@ -142,13 +140,6 @@ public class AssetListEntryCacheModel
 
 		assetListEntryImpl.setType(type);
 
-		if (typeSettings == null) {
-			assetListEntryImpl.setTypeSettings("");
-		}
-		else {
-			assetListEntryImpl.setTypeSettings(typeSettings);
-		}
-
 		if (lastPublishDate == Long.MIN_VALUE) {
 			assetListEntryImpl.setLastPublishDate(null);
 		}
@@ -178,7 +169,6 @@ public class AssetListEntryCacheModel
 		title = objectInput.readUTF();
 
 		type = objectInput.readInt();
-		typeSettings = objectInput.readUTF();
 		lastPublishDate = objectInput.readLong();
 	}
 
@@ -217,14 +207,6 @@ public class AssetListEntryCacheModel
 		}
 
 		objectOutput.writeInt(type);
-
-		if (typeSettings == null) {
-			objectOutput.writeUTF("");
-		}
-		else {
-			objectOutput.writeUTF(typeSettings);
-		}
-
 		objectOutput.writeLong(lastPublishDate);
 	}
 
@@ -238,7 +220,6 @@ public class AssetListEntryCacheModel
 	public long modifiedDate;
 	public String title;
 	public int type;
-	public String typeSettings;
 	public long lastPublishDate;
 
 }

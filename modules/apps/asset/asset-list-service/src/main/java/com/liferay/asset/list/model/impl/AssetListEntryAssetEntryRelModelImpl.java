@@ -140,7 +140,9 @@ public class AssetListEntryAssetEntryRelModelImpl
 
 	public static final long POSITION_COLUMN_BITMASK = 8L;
 
-	public static final long UUID_COLUMN_BITMASK = 16L;
+	public static final long SEGMENTSENTRYID_COLUMN_BITMASK = 16L;
+
+	public static final long UUID_COLUMN_BITMASK = 32L;
 
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(
 		com.liferay.asset.list.service.util.ServiceProps.get(
@@ -517,7 +519,19 @@ public class AssetListEntryAssetEntryRelModelImpl
 
 	@Override
 	public void setSegmentsEntryId(long segmentsEntryId) {
+		_columnBitmask |= SEGMENTSENTRYID_COLUMN_BITMASK;
+
+		if (!_setOriginalSegmentsEntryId) {
+			_setOriginalSegmentsEntryId = true;
+
+			_originalSegmentsEntryId = _segmentsEntryId;
+		}
+
 		_segmentsEntryId = segmentsEntryId;
+	}
+
+	public long getOriginalSegmentsEntryId() {
+		return _originalSegmentsEntryId;
 	}
 
 	@Override
@@ -714,6 +728,12 @@ public class AssetListEntryAssetEntryRelModelImpl
 		assetListEntryAssetEntryRelModelImpl._setOriginalAssetListEntryId =
 			false;
 
+		assetListEntryAssetEntryRelModelImpl._originalSegmentsEntryId =
+			assetListEntryAssetEntryRelModelImpl._segmentsEntryId;
+
+		assetListEntryAssetEntryRelModelImpl._setOriginalSegmentsEntryId =
+			false;
+
 		assetListEntryAssetEntryRelModelImpl._originalPosition =
 			assetListEntryAssetEntryRelModelImpl._position;
 
@@ -888,6 +908,8 @@ public class AssetListEntryAssetEntryRelModelImpl
 	private long _originalAssetListEntryId;
 	private boolean _setOriginalAssetListEntryId;
 	private long _segmentsEntryId;
+	private long _originalSegmentsEntryId;
+	private boolean _setOriginalSegmentsEntryId;
 	private long _assetEntryId;
 	private int _position;
 	private int _originalPosition;

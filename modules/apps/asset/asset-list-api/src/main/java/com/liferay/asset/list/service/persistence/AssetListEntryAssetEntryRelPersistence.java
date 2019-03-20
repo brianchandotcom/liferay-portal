@@ -534,213 +534,392 @@ public interface AssetListEntryAssetEntryRelPersistence
 	public int countByAssetListEntryId(long assetListEntryId);
 
 	/**
-	 * Returns the asset list entry asset entry rel where assetListEntryId = &#63; and position = &#63; or throws a <code>NoSuchEntryAssetEntryRelException</code> if it could not be found.
+	 * Returns all the asset list entry asset entry rels where assetListEntryId = &#63; and segmentsEntryId = &#63;.
 	 *
 	 * @param assetListEntryId the asset list entry ID
-	 * @param position the position
-	 * @return the matching asset list entry asset entry rel
-	 * @throws NoSuchEntryAssetEntryRelException if a matching asset list entry asset entry rel could not be found
-	 */
-	public AssetListEntryAssetEntryRel findByA_P(
-			long assetListEntryId, int position)
-		throws NoSuchEntryAssetEntryRelException;
-
-	/**
-	 * Returns the asset list entry asset entry rel where assetListEntryId = &#63; and position = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param assetListEntryId the asset list entry ID
-	 * @param position the position
-	 * @return the matching asset list entry asset entry rel, or <code>null</code> if a matching asset list entry asset entry rel could not be found
-	 */
-	public AssetListEntryAssetEntryRel fetchByA_P(
-		long assetListEntryId, int position);
-
-	/**
-	 * Returns the asset list entry asset entry rel where assetListEntryId = &#63; and position = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
-	 *
-	 * @param assetListEntryId the asset list entry ID
-	 * @param position the position
-	 * @param retrieveFromCache whether to retrieve from the finder cache
-	 * @return the matching asset list entry asset entry rel, or <code>null</code> if a matching asset list entry asset entry rel could not be found
-	 */
-	public AssetListEntryAssetEntryRel fetchByA_P(
-		long assetListEntryId, int position, boolean retrieveFromCache);
-
-	/**
-	 * Removes the asset list entry asset entry rel where assetListEntryId = &#63; and position = &#63; from the database.
-	 *
-	 * @param assetListEntryId the asset list entry ID
-	 * @param position the position
-	 * @return the asset list entry asset entry rel that was removed
-	 */
-	public AssetListEntryAssetEntryRel removeByA_P(
-			long assetListEntryId, int position)
-		throws NoSuchEntryAssetEntryRelException;
-
-	/**
-	 * Returns the number of asset list entry asset entry rels where assetListEntryId = &#63; and position = &#63;.
-	 *
-	 * @param assetListEntryId the asset list entry ID
-	 * @param position the position
-	 * @return the number of matching asset list entry asset entry rels
-	 */
-	public int countByA_P(long assetListEntryId, int position);
-
-	/**
-	 * Returns all the asset list entry asset entry rels where assetListEntryId = &#63; and position &gt; &#63;.
-	 *
-	 * @param assetListEntryId the asset list entry ID
-	 * @param position the position
+	 * @param segmentsEntryId the segments entry ID
 	 * @return the matching asset list entry asset entry rels
 	 */
-	public java.util.List<AssetListEntryAssetEntryRel> findByA_GtP(
-		long assetListEntryId, int position);
+	public java.util.List<AssetListEntryAssetEntryRel> findByA_S(
+		long assetListEntryId, long segmentsEntryId);
 
 	/**
-	 * Returns a range of all the asset list entry asset entry rels where assetListEntryId = &#63; and position &gt; &#63;.
+	 * Returns a range of all the asset list entry asset entry rels where assetListEntryId = &#63; and segmentsEntryId = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>AssetListEntryAssetEntryRelModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
 	 * @param assetListEntryId the asset list entry ID
-	 * @param position the position
+	 * @param segmentsEntryId the segments entry ID
 	 * @param start the lower bound of the range of asset list entry asset entry rels
 	 * @param end the upper bound of the range of asset list entry asset entry rels (not inclusive)
 	 * @return the range of matching asset list entry asset entry rels
 	 */
-	public java.util.List<AssetListEntryAssetEntryRel> findByA_GtP(
-		long assetListEntryId, int position, int start, int end);
+	public java.util.List<AssetListEntryAssetEntryRel> findByA_S(
+		long assetListEntryId, long segmentsEntryId, int start, int end);
 
 	/**
-	 * Returns an ordered range of all the asset list entry asset entry rels where assetListEntryId = &#63; and position &gt; &#63;.
+	 * Returns an ordered range of all the asset list entry asset entry rels where assetListEntryId = &#63; and segmentsEntryId = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>AssetListEntryAssetEntryRelModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
 	 * @param assetListEntryId the asset list entry ID
-	 * @param position the position
+	 * @param segmentsEntryId the segments entry ID
 	 * @param start the lower bound of the range of asset list entry asset entry rels
 	 * @param end the upper bound of the range of asset list entry asset entry rels (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching asset list entry asset entry rels
 	 */
-	public java.util.List<AssetListEntryAssetEntryRel> findByA_GtP(
-		long assetListEntryId, int position, int start, int end,
+	public java.util.List<AssetListEntryAssetEntryRel> findByA_S(
+		long assetListEntryId, long segmentsEntryId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator
 			<AssetListEntryAssetEntryRel> orderByComparator);
 
 	/**
-	 * Returns an ordered range of all the asset list entry asset entry rels where assetListEntryId = &#63; and position &gt; &#63;.
+	 * Returns an ordered range of all the asset list entry asset entry rels where assetListEntryId = &#63; and segmentsEntryId = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>AssetListEntryAssetEntryRelModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
 	 * @param assetListEntryId the asset list entry ID
-	 * @param position the position
+	 * @param segmentsEntryId the segments entry ID
 	 * @param start the lower bound of the range of asset list entry asset entry rels
 	 * @param end the upper bound of the range of asset list entry asset entry rels (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @param retrieveFromCache whether to retrieve from the finder cache
 	 * @return the ordered range of matching asset list entry asset entry rels
 	 */
-	public java.util.List<AssetListEntryAssetEntryRel> findByA_GtP(
-		long assetListEntryId, int position, int start, int end,
+	public java.util.List<AssetListEntryAssetEntryRel> findByA_S(
+		long assetListEntryId, long segmentsEntryId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator
 			<AssetListEntryAssetEntryRel> orderByComparator,
 		boolean retrieveFromCache);
 
 	/**
-	 * Returns the first asset list entry asset entry rel in the ordered set where assetListEntryId = &#63; and position &gt; &#63;.
+	 * Returns the first asset list entry asset entry rel in the ordered set where assetListEntryId = &#63; and segmentsEntryId = &#63;.
 	 *
 	 * @param assetListEntryId the asset list entry ID
+	 * @param segmentsEntryId the segments entry ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching asset list entry asset entry rel
+	 * @throws NoSuchEntryAssetEntryRelException if a matching asset list entry asset entry rel could not be found
+	 */
+	public AssetListEntryAssetEntryRel findByA_S_First(
+			long assetListEntryId, long segmentsEntryId,
+			com.liferay.portal.kernel.util.OrderByComparator
+				<AssetListEntryAssetEntryRel> orderByComparator)
+		throws NoSuchEntryAssetEntryRelException;
+
+	/**
+	 * Returns the first asset list entry asset entry rel in the ordered set where assetListEntryId = &#63; and segmentsEntryId = &#63;.
+	 *
+	 * @param assetListEntryId the asset list entry ID
+	 * @param segmentsEntryId the segments entry ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching asset list entry asset entry rel, or <code>null</code> if a matching asset list entry asset entry rel could not be found
+	 */
+	public AssetListEntryAssetEntryRel fetchByA_S_First(
+		long assetListEntryId, long segmentsEntryId,
+		com.liferay.portal.kernel.util.OrderByComparator
+			<AssetListEntryAssetEntryRel> orderByComparator);
+
+	/**
+	 * Returns the last asset list entry asset entry rel in the ordered set where assetListEntryId = &#63; and segmentsEntryId = &#63;.
+	 *
+	 * @param assetListEntryId the asset list entry ID
+	 * @param segmentsEntryId the segments entry ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching asset list entry asset entry rel
+	 * @throws NoSuchEntryAssetEntryRelException if a matching asset list entry asset entry rel could not be found
+	 */
+	public AssetListEntryAssetEntryRel findByA_S_Last(
+			long assetListEntryId, long segmentsEntryId,
+			com.liferay.portal.kernel.util.OrderByComparator
+				<AssetListEntryAssetEntryRel> orderByComparator)
+		throws NoSuchEntryAssetEntryRelException;
+
+	/**
+	 * Returns the last asset list entry asset entry rel in the ordered set where assetListEntryId = &#63; and segmentsEntryId = &#63;.
+	 *
+	 * @param assetListEntryId the asset list entry ID
+	 * @param segmentsEntryId the segments entry ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching asset list entry asset entry rel, or <code>null</code> if a matching asset list entry asset entry rel could not be found
+	 */
+	public AssetListEntryAssetEntryRel fetchByA_S_Last(
+		long assetListEntryId, long segmentsEntryId,
+		com.liferay.portal.kernel.util.OrderByComparator
+			<AssetListEntryAssetEntryRel> orderByComparator);
+
+	/**
+	 * Returns the asset list entry asset entry rels before and after the current asset list entry asset entry rel in the ordered set where assetListEntryId = &#63; and segmentsEntryId = &#63;.
+	 *
+	 * @param assetListEntryAssetEntryRelId the primary key of the current asset list entry asset entry rel
+	 * @param assetListEntryId the asset list entry ID
+	 * @param segmentsEntryId the segments entry ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next asset list entry asset entry rel
+	 * @throws NoSuchEntryAssetEntryRelException if a asset list entry asset entry rel with the primary key could not be found
+	 */
+	public AssetListEntryAssetEntryRel[] findByA_S_PrevAndNext(
+			long assetListEntryAssetEntryRelId, long assetListEntryId,
+			long segmentsEntryId,
+			com.liferay.portal.kernel.util.OrderByComparator
+				<AssetListEntryAssetEntryRel> orderByComparator)
+		throws NoSuchEntryAssetEntryRelException;
+
+	/**
+	 * Removes all the asset list entry asset entry rels where assetListEntryId = &#63; and segmentsEntryId = &#63; from the database.
+	 *
+	 * @param assetListEntryId the asset list entry ID
+	 * @param segmentsEntryId the segments entry ID
+	 */
+	public void removeByA_S(long assetListEntryId, long segmentsEntryId);
+
+	/**
+	 * Returns the number of asset list entry asset entry rels where assetListEntryId = &#63; and segmentsEntryId = &#63;.
+	 *
+	 * @param assetListEntryId the asset list entry ID
+	 * @param segmentsEntryId the segments entry ID
+	 * @return the number of matching asset list entry asset entry rels
+	 */
+	public int countByA_S(long assetListEntryId, long segmentsEntryId);
+
+	/**
+	 * Returns the asset list entry asset entry rel where assetListEntryId = &#63; and segmentsEntryId = &#63; and position = &#63; or throws a <code>NoSuchEntryAssetEntryRelException</code> if it could not be found.
+	 *
+	 * @param assetListEntryId the asset list entry ID
+	 * @param segmentsEntryId the segments entry ID
+	 * @param position the position
+	 * @return the matching asset list entry asset entry rel
+	 * @throws NoSuchEntryAssetEntryRelException if a matching asset list entry asset entry rel could not be found
+	 */
+	public AssetListEntryAssetEntryRel findByA_S_P(
+			long assetListEntryId, long segmentsEntryId, int position)
+		throws NoSuchEntryAssetEntryRelException;
+
+	/**
+	 * Returns the asset list entry asset entry rel where assetListEntryId = &#63; and segmentsEntryId = &#63; and position = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param assetListEntryId the asset list entry ID
+	 * @param segmentsEntryId the segments entry ID
+	 * @param position the position
+	 * @return the matching asset list entry asset entry rel, or <code>null</code> if a matching asset list entry asset entry rel could not be found
+	 */
+	public AssetListEntryAssetEntryRel fetchByA_S_P(
+		long assetListEntryId, long segmentsEntryId, int position);
+
+	/**
+	 * Returns the asset list entry asset entry rel where assetListEntryId = &#63; and segmentsEntryId = &#63; and position = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 *
+	 * @param assetListEntryId the asset list entry ID
+	 * @param segmentsEntryId the segments entry ID
+	 * @param position the position
+	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @return the matching asset list entry asset entry rel, or <code>null</code> if a matching asset list entry asset entry rel could not be found
+	 */
+	public AssetListEntryAssetEntryRel fetchByA_S_P(
+		long assetListEntryId, long segmentsEntryId, int position,
+		boolean retrieveFromCache);
+
+	/**
+	 * Removes the asset list entry asset entry rel where assetListEntryId = &#63; and segmentsEntryId = &#63; and position = &#63; from the database.
+	 *
+	 * @param assetListEntryId the asset list entry ID
+	 * @param segmentsEntryId the segments entry ID
+	 * @param position the position
+	 * @return the asset list entry asset entry rel that was removed
+	 */
+	public AssetListEntryAssetEntryRel removeByA_S_P(
+			long assetListEntryId, long segmentsEntryId, int position)
+		throws NoSuchEntryAssetEntryRelException;
+
+	/**
+	 * Returns the number of asset list entry asset entry rels where assetListEntryId = &#63; and segmentsEntryId = &#63; and position = &#63;.
+	 *
+	 * @param assetListEntryId the asset list entry ID
+	 * @param segmentsEntryId the segments entry ID
+	 * @param position the position
+	 * @return the number of matching asset list entry asset entry rels
+	 */
+	public int countByA_S_P(
+		long assetListEntryId, long segmentsEntryId, int position);
+
+	/**
+	 * Returns all the asset list entry asset entry rels where assetListEntryId = &#63; and segmentsEntryId = &#63; and position &gt; &#63;.
+	 *
+	 * @param assetListEntryId the asset list entry ID
+	 * @param segmentsEntryId the segments entry ID
+	 * @param position the position
+	 * @return the matching asset list entry asset entry rels
+	 */
+	public java.util.List<AssetListEntryAssetEntryRel> findByA_S_GtP(
+		long assetListEntryId, long segmentsEntryId, int position);
+
+	/**
+	 * Returns a range of all the asset list entry asset entry rels where assetListEntryId = &#63; and segmentsEntryId = &#63; and position &gt; &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>AssetListEntryAssetEntryRelModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param assetListEntryId the asset list entry ID
+	 * @param segmentsEntryId the segments entry ID
+	 * @param position the position
+	 * @param start the lower bound of the range of asset list entry asset entry rels
+	 * @param end the upper bound of the range of asset list entry asset entry rels (not inclusive)
+	 * @return the range of matching asset list entry asset entry rels
+	 */
+	public java.util.List<AssetListEntryAssetEntryRel> findByA_S_GtP(
+		long assetListEntryId, long segmentsEntryId, int position, int start,
+		int end);
+
+	/**
+	 * Returns an ordered range of all the asset list entry asset entry rels where assetListEntryId = &#63; and segmentsEntryId = &#63; and position &gt; &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>AssetListEntryAssetEntryRelModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param assetListEntryId the asset list entry ID
+	 * @param segmentsEntryId the segments entry ID
+	 * @param position the position
+	 * @param start the lower bound of the range of asset list entry asset entry rels
+	 * @param end the upper bound of the range of asset list entry asset entry rels (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching asset list entry asset entry rels
+	 */
+	public java.util.List<AssetListEntryAssetEntryRel> findByA_S_GtP(
+		long assetListEntryId, long segmentsEntryId, int position, int start,
+		int end,
+		com.liferay.portal.kernel.util.OrderByComparator
+			<AssetListEntryAssetEntryRel> orderByComparator);
+
+	/**
+	 * Returns an ordered range of all the asset list entry asset entry rels where assetListEntryId = &#63; and segmentsEntryId = &#63; and position &gt; &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>AssetListEntryAssetEntryRelModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param assetListEntryId the asset list entry ID
+	 * @param segmentsEntryId the segments entry ID
+	 * @param position the position
+	 * @param start the lower bound of the range of asset list entry asset entry rels
+	 * @param end the upper bound of the range of asset list entry asset entry rels (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @return the ordered range of matching asset list entry asset entry rels
+	 */
+	public java.util.List<AssetListEntryAssetEntryRel> findByA_S_GtP(
+		long assetListEntryId, long segmentsEntryId, int position, int start,
+		int end,
+		com.liferay.portal.kernel.util.OrderByComparator
+			<AssetListEntryAssetEntryRel> orderByComparator,
+		boolean retrieveFromCache);
+
+	/**
+	 * Returns the first asset list entry asset entry rel in the ordered set where assetListEntryId = &#63; and segmentsEntryId = &#63; and position &gt; &#63;.
+	 *
+	 * @param assetListEntryId the asset list entry ID
+	 * @param segmentsEntryId the segments entry ID
 	 * @param position the position
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching asset list entry asset entry rel
 	 * @throws NoSuchEntryAssetEntryRelException if a matching asset list entry asset entry rel could not be found
 	 */
-	public AssetListEntryAssetEntryRel findByA_GtP_First(
-			long assetListEntryId, int position,
+	public AssetListEntryAssetEntryRel findByA_S_GtP_First(
+			long assetListEntryId, long segmentsEntryId, int position,
 			com.liferay.portal.kernel.util.OrderByComparator
 				<AssetListEntryAssetEntryRel> orderByComparator)
 		throws NoSuchEntryAssetEntryRelException;
 
 	/**
-	 * Returns the first asset list entry asset entry rel in the ordered set where assetListEntryId = &#63; and position &gt; &#63;.
+	 * Returns the first asset list entry asset entry rel in the ordered set where assetListEntryId = &#63; and segmentsEntryId = &#63; and position &gt; &#63;.
 	 *
 	 * @param assetListEntryId the asset list entry ID
+	 * @param segmentsEntryId the segments entry ID
 	 * @param position the position
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching asset list entry asset entry rel, or <code>null</code> if a matching asset list entry asset entry rel could not be found
 	 */
-	public AssetListEntryAssetEntryRel fetchByA_GtP_First(
-		long assetListEntryId, int position,
+	public AssetListEntryAssetEntryRel fetchByA_S_GtP_First(
+		long assetListEntryId, long segmentsEntryId, int position,
 		com.liferay.portal.kernel.util.OrderByComparator
 			<AssetListEntryAssetEntryRel> orderByComparator);
 
 	/**
-	 * Returns the last asset list entry asset entry rel in the ordered set where assetListEntryId = &#63; and position &gt; &#63;.
+	 * Returns the last asset list entry asset entry rel in the ordered set where assetListEntryId = &#63; and segmentsEntryId = &#63; and position &gt; &#63;.
 	 *
 	 * @param assetListEntryId the asset list entry ID
+	 * @param segmentsEntryId the segments entry ID
 	 * @param position the position
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching asset list entry asset entry rel
 	 * @throws NoSuchEntryAssetEntryRelException if a matching asset list entry asset entry rel could not be found
 	 */
-	public AssetListEntryAssetEntryRel findByA_GtP_Last(
-			long assetListEntryId, int position,
+	public AssetListEntryAssetEntryRel findByA_S_GtP_Last(
+			long assetListEntryId, long segmentsEntryId, int position,
 			com.liferay.portal.kernel.util.OrderByComparator
 				<AssetListEntryAssetEntryRel> orderByComparator)
 		throws NoSuchEntryAssetEntryRelException;
 
 	/**
-	 * Returns the last asset list entry asset entry rel in the ordered set where assetListEntryId = &#63; and position &gt; &#63;.
+	 * Returns the last asset list entry asset entry rel in the ordered set where assetListEntryId = &#63; and segmentsEntryId = &#63; and position &gt; &#63;.
 	 *
 	 * @param assetListEntryId the asset list entry ID
+	 * @param segmentsEntryId the segments entry ID
 	 * @param position the position
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching asset list entry asset entry rel, or <code>null</code> if a matching asset list entry asset entry rel could not be found
 	 */
-	public AssetListEntryAssetEntryRel fetchByA_GtP_Last(
-		long assetListEntryId, int position,
+	public AssetListEntryAssetEntryRel fetchByA_S_GtP_Last(
+		long assetListEntryId, long segmentsEntryId, int position,
 		com.liferay.portal.kernel.util.OrderByComparator
 			<AssetListEntryAssetEntryRel> orderByComparator);
 
 	/**
-	 * Returns the asset list entry asset entry rels before and after the current asset list entry asset entry rel in the ordered set where assetListEntryId = &#63; and position &gt; &#63;.
+	 * Returns the asset list entry asset entry rels before and after the current asset list entry asset entry rel in the ordered set where assetListEntryId = &#63; and segmentsEntryId = &#63; and position &gt; &#63;.
 	 *
 	 * @param assetListEntryAssetEntryRelId the primary key of the current asset list entry asset entry rel
 	 * @param assetListEntryId the asset list entry ID
+	 * @param segmentsEntryId the segments entry ID
 	 * @param position the position
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next asset list entry asset entry rel
 	 * @throws NoSuchEntryAssetEntryRelException if a asset list entry asset entry rel with the primary key could not be found
 	 */
-	public AssetListEntryAssetEntryRel[] findByA_GtP_PrevAndNext(
+	public AssetListEntryAssetEntryRel[] findByA_S_GtP_PrevAndNext(
 			long assetListEntryAssetEntryRelId, long assetListEntryId,
-			int position,
+			long segmentsEntryId, int position,
 			com.liferay.portal.kernel.util.OrderByComparator
 				<AssetListEntryAssetEntryRel> orderByComparator)
 		throws NoSuchEntryAssetEntryRelException;
 
 	/**
-	 * Removes all the asset list entry asset entry rels where assetListEntryId = &#63; and position &gt; &#63; from the database.
+	 * Removes all the asset list entry asset entry rels where assetListEntryId = &#63; and segmentsEntryId = &#63; and position &gt; &#63; from the database.
 	 *
 	 * @param assetListEntryId the asset list entry ID
+	 * @param segmentsEntryId the segments entry ID
 	 * @param position the position
 	 */
-	public void removeByA_GtP(long assetListEntryId, int position);
+	public void removeByA_S_GtP(
+		long assetListEntryId, long segmentsEntryId, int position);
 
 	/**
-	 * Returns the number of asset list entry asset entry rels where assetListEntryId = &#63; and position &gt; &#63;.
+	 * Returns the number of asset list entry asset entry rels where assetListEntryId = &#63; and segmentsEntryId = &#63; and position &gt; &#63;.
 	 *
 	 * @param assetListEntryId the asset list entry ID
+	 * @param segmentsEntryId the segments entry ID
 	 * @param position the position
 	 * @return the number of matching asset list entry asset entry rels
 	 */
-	public int countByA_GtP(long assetListEntryId, int position);
+	public int countByA_S_GtP(
+		long assetListEntryId, long segmentsEntryId, int position);
 
 	/**
 	 * Caches the asset list entry asset entry rel in the entity cache if it is enabled.

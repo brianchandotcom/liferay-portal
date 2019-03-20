@@ -56,7 +56,6 @@ public class AssetListEntryWrapper
 		attributes.put("modifiedDate", getModifiedDate());
 		attributes.put("title", getTitle());
 		attributes.put("type", getType());
-		attributes.put("typeSettings", getTypeSettings());
 		attributes.put("lastPublishDate", getLastPublishDate());
 
 		return attributes;
@@ -124,12 +123,6 @@ public class AssetListEntryWrapper
 			setType(type);
 		}
 
-		String typeSettings = (String)attributes.get("typeSettings");
-
-		if (typeSettings != null) {
-			setTypeSettings(typeSettings);
-		}
-
 		Date lastPublishDate = (Date)attributes.get("lastPublishDate");
 
 		if (lastPublishDate != null) {
@@ -139,28 +132,44 @@ public class AssetListEntryWrapper
 
 	@Override
 	public java.util.List<com.liferay.asset.kernel.model.AssetEntry>
-		getAssetEntries() {
+		getAssetEntries(long segmentsEntryId) {
 
-		return model.getAssetEntries();
+		return model.getAssetEntries(segmentsEntryId);
 	}
 
 	@Override
 	public java.util.List<com.liferay.asset.kernel.model.AssetEntry>
-		getAssetEntries(int start, int end) {
+		getAssetEntries(long segmentsEntryId, int start, int end) {
 
-		return model.getAssetEntries(start, end);
+		return model.getAssetEntries(segmentsEntryId, start, end);
 	}
 
 	@Override
-	public int getAssetEntriesCount() {
-		return model.getAssetEntriesCount();
+	public java.util.List<com.liferay.asset.kernel.model.AssetEntry>
+			getAssetEntries(long[] segmentsEntryIds)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return model.getAssetEntries(segmentsEntryIds);
+	}
+
+	@Override
+	public int getAssetEntriesCount(long segmentsEntryId) {
+		return model.getAssetEntriesCount(segmentsEntryId);
 	}
 
 	@Override
 	public com.liferay.asset.kernel.service.persistence.AssetEntryQuery
-		getAssetEntryQuery() {
+		getAssetEntryQuery(long segmentsEntryId) {
 
-		return model.getAssetEntryQuery();
+		return model.getAssetEntryQuery(segmentsEntryId);
+	}
+
+	@Override
+	public com.liferay.asset.kernel.service.persistence.AssetEntryQuery
+			getAssetEntryQuery(long[] segmentsEntryIds)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return model.getAssetEntryQuery(segmentsEntryIds);
 	}
 
 	/**
@@ -258,14 +267,9 @@ public class AssetListEntryWrapper
 		return model.getTypeLabel();
 	}
 
-	/**
-	 * Returns the type settings of this asset list entry.
-	 *
-	 * @return the type settings of this asset list entry
-	 */
 	@Override
-	public String getTypeSettings() {
-		return model.getTypeSettings();
+	public String getTypeSettings(long segmentsEntryId) {
+		return model.getTypeSettings(segmentsEntryId);
 	}
 
 	/**
@@ -401,16 +405,6 @@ public class AssetListEntryWrapper
 	@Override
 	public void setType(int type) {
 		model.setType(type);
-	}
-
-	/**
-	 * Sets the type settings of this asset list entry.
-	 *
-	 * @param typeSettings the type settings of this asset list entry
-	 */
-	@Override
-	public void setTypeSettings(String typeSettings) {
-		model.setTypeSettings(typeSettings);
 	}
 
 	/**

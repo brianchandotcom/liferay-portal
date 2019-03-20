@@ -12,9 +12,6 @@
 		<field name="modifiedDate" type="Date" />
 		<field name="title" type="String" />
 		<field name="type" type="int" />
-		<field name="typeSettings" type="String">
-			<hint-collection name="CLOB" />
-		</field>
 		<field name="lastPublishDate" type="Date" />
 	</model>
 	<model name="com.liferay.asset.list.model.AssetListEntryAssetEntryRel">

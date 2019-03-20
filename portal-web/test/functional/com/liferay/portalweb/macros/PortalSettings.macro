@@ -673,11 +673,7 @@ definition {
 	}
 
 	macro tearDownAuthenticationCP {
-		ProductMenu.gotoPortlet(
-			category = "Configuration",
-			panel = "Control Panel",
-			portlet = "Instance Settings"
-		);
+		PortalSettings.gotoPortalSettings();
 
 		PortalSettingsNavigator.expandAuthenticationPanel();
 
@@ -713,11 +709,7 @@ definition {
 	}
 
 	macro tearDownCP {
-		ProductMenu.gotoPortlet(
-			category = "Configuration",
-			panel = "Control Panel",
-			portlet = "Instance Settings"
-		);
+		PortalSettings.gotoPortalSettings();
 
 		Panel.expandPanel(panel = "Users");
 

@@ -157,6 +157,8 @@ public class TGZUtil {
 			System.out.println("Archiving " + dir);
 		}
 
+		_archiveFile(sourceRootDir, dir, archiveOutputStream);
+
 		File[] files = dir.listFiles();
 
 		if (files == null) {
@@ -202,8 +204,10 @@ public class TGZUtil {
 
 		archiveOutputStream.putArchiveEntry(tarArchiveEntry);
 
-		try (FileInputStream fileInputStream = new FileInputStream(file)) {
-			IOUtils.copy(fileInputStream, archiveOutputStream);
+		if (file.isFile()) {
+			try (FileInputStream fileInputStream = new FileInputStream(file)) {
+				IOUtils.copy(fileInputStream, archiveOutputStream);
+			}
 		}
 
 		archiveOutputStream.closeArchiveEntry();

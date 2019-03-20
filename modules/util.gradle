@@ -25,9 +25,10 @@ task formatSourceLocalChanges(type: FormatSourceTask)
 task printDependencyPath
 task setUpLibs
 task setUpPortalTools
-task setUpYarn(type: ExecuteNodeScriptTask)
+task setUpYarn
 task wrapper(type: Wrapper)
 task wrapperSubrepo(type: Wrapper)
+task yarnInstall(type: ExecuteNodeScriptTask)
 
 FileTree libDependenciesFileTree = fileTree(dir: "../lib", include: "*/dependencies.properties")
 
@@ -83,10 +84,7 @@ repositories {
 }
 
 setUpYarn {
-	args "install"
-	args "--frozen-lockfile"
-
-	scriptFile = new File(projectDir, "yarn-1.13.0.js")
+	finalizedBy yarnInstall
 }
 
 wrapper {
@@ -166,6 +164,13 @@ set DEFAULT_JVM_OPTS=%DEFAULT_JVM_OPTS% "-Dgradle.user.home=%APP_HOME%\\.gradle"
 
 	jarFile = new File(wrapperDir, "gradle/wrapper/gradle-wrapper.jar")
 	scriptFile = new File(wrapperDir, "gradlew")
+}
+
+yarnInstall {
+	args "install"
+	args "--frozen-lockfile"
+
+	scriptFile = new File(projectDir, "yarn-1.13.0.js")
 }
 
 tasks.withType(FormatSourceTask) {

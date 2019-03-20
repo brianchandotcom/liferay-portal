@@ -21,7 +21,9 @@ import com.liferay.asset.tag.stats.model.AssetTagStats;
 import com.liferay.asset.tag.stats.model.impl.AssetTagStatsImpl;
 import com.liferay.asset.tag.stats.model.impl.AssetTagStatsModelImpl;
 import com.liferay.asset.tag.stats.service.persistence.AssetTagStatsPersistence;
+import com.liferay.asset.tag.stats.service.persistence.impl.constants.AssetPersistenceConstants;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
@@ -29,14 +31,15 @@ import com.liferay.portal.kernel.dao.orm.Query;
 import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
+import com.liferay.portal.kernel.dao.orm.SessionFactory;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.service.persistence.CompanyProvider;
 import com.liferay.portal.kernel.service.persistence.CompanyProviderWrapper;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ProxyUtil;
-import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.io.Serializable;
 
@@ -45,6 +48,13 @@ import java.lang.reflect.InvocationHandler;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+
+import javax.sql.DataSource;
+
+import org.osgi.service.component.annotations.Activate;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Deactivate;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * The persistence implementation for the asset tag stats service.
@@ -56,6 +66,7 @@ import java.util.Map;
  * @author Brian Wing Shun Chan
  * @generated
  */
+@Component(service = AssetTagStatsPersistence.class)
 @ProviderType
 public class AssetTagStatsPersistenceImpl
 	extends BasePersistenceImpl<AssetTagStats>
@@ -1315,7 +1326,6 @@ public class AssetTagStatsPersistenceImpl
 
 		setModelImplClass(AssetTagStatsImpl.class);
 		setModelPKClass(long.class);
-		setEntityCacheEnabled(AssetTagStatsModelImpl.ENTITY_CACHE_ENABLED);
 	}
 
 	/**
@@ -1326,9 +1336,8 @@ public class AssetTagStatsPersistenceImpl
 	@Override
 	public void cacheResult(AssetTagStats assetTagStats) {
 		entityCache.putResult(
-			AssetTagStatsModelImpl.ENTITY_CACHE_ENABLED,
-			AssetTagStatsImpl.class, assetTagStats.getPrimaryKey(),
-			assetTagStats);
+			entityCacheEnabled, AssetTagStatsImpl.class,
+			assetTagStats.getPrimaryKey(), assetTagStats);
 
 		finderCache.putResult(
 			_finderPathFetchByT_C,
@@ -1349,9 +1358,8 @@ public class AssetTagStatsPersistenceImpl
 	public void cacheResult(List<AssetTagStats> assetTagStatses) {
 		for (AssetTagStats assetTagStats : assetTagStatses) {
 			if (entityCache.getResult(
-					AssetTagStatsModelImpl.ENTITY_CACHE_ENABLED,
-					AssetTagStatsImpl.class, assetTagStats.getPrimaryKey()) ==
-						null) {
+					entityCacheEnabled, AssetTagStatsImpl.class,
+					assetTagStats.getPrimaryKey()) == null) {
 
 				cacheResult(assetTagStats);
 			}
@@ -1387,8 +1395,8 @@ public class AssetTagStatsPersistenceImpl
 	@Override
 	public void clearCache(AssetTagStats assetTagStats) {
 		entityCache.removeResult(
-			AssetTagStatsModelImpl.ENTITY_CACHE_ENABLED,
-			AssetTagStatsImpl.class, assetTagStats.getPrimaryKey());
+			entityCacheEnabled, AssetTagStatsImpl.class,
+			assetTagStats.getPrimaryKey());
 
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
@@ -1403,8 +1411,8 @@ public class AssetTagStatsPersistenceImpl
 
 		for (AssetTagStats assetTagStats : assetTagStatses) {
 			entityCache.removeResult(
-				AssetTagStatsModelImpl.ENTITY_CACHE_ENABLED,
-				AssetTagStatsImpl.class, assetTagStats.getPrimaryKey());
+				entityCacheEnabled, AssetTagStatsImpl.class,
+				assetTagStats.getPrimaryKey());
 
 			clearUniqueFindersCache(
 				(AssetTagStatsModelImpl)assetTagStats, true);
@@ -1601,7 +1609,7 @@ public class AssetTagStatsPersistenceImpl
 
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 
-		if (!AssetTagStatsModelImpl.COLUMN_BITMASK_ENABLED) {
+		if (!_columnBitmaskEnabled) {
 			finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 		}
 		else if (isNew) {
@@ -1662,9 +1670,8 @@ public class AssetTagStatsPersistenceImpl
 		}
 
 		entityCache.putResult(
-			AssetTagStatsModelImpl.ENTITY_CACHE_ENABLED,
-			AssetTagStatsImpl.class, assetTagStats.getPrimaryKey(),
-			assetTagStats, false);
+			entityCacheEnabled, AssetTagStatsImpl.class,
+			assetTagStats.getPrimaryKey(), assetTagStats, false);
 
 		clearUniqueFindersCache(assetTagStatsModelImpl, false);
 		cacheUniqueFindersCache(assetTagStatsModelImpl);
@@ -1942,102 +1949,127 @@ public class AssetTagStatsPersistenceImpl
 	/**
 	 * Initializes the asset tag stats persistence.
 	 */
-	public void afterPropertiesSet() {
+	@Activate
+	public void activate() {
+		AssetTagStatsModelImpl.setEntityCacheEnabled(entityCacheEnabled);
+		AssetTagStatsModelImpl.setFinderCacheEnabled(finderCacheEnabled);
+
 		_finderPathWithPaginationFindAll = new FinderPath(
-			AssetTagStatsModelImpl.ENTITY_CACHE_ENABLED,
-			AssetTagStatsModelImpl.FINDER_CACHE_ENABLED,
-			AssetTagStatsImpl.class, FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
-			"findAll", new String[0]);
+			entityCacheEnabled, finderCacheEnabled, AssetTagStatsImpl.class,
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findAll", new String[0]);
 
 		_finderPathWithoutPaginationFindAll = new FinderPath(
-			AssetTagStatsModelImpl.ENTITY_CACHE_ENABLED,
-			AssetTagStatsModelImpl.FINDER_CACHE_ENABLED,
-			AssetTagStatsImpl.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"findAll", new String[0]);
+			entityCacheEnabled, finderCacheEnabled, AssetTagStatsImpl.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findAll",
+			new String[0]);
 
 		_finderPathCountAll = new FinderPath(
-			AssetTagStatsModelImpl.ENTITY_CACHE_ENABLED,
-			AssetTagStatsModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			entityCacheEnabled, finderCacheEnabled, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
 			new String[0]);
 
 		_finderPathWithPaginationFindByTagId = new FinderPath(
-			AssetTagStatsModelImpl.ENTITY_CACHE_ENABLED,
-			AssetTagStatsModelImpl.FINDER_CACHE_ENABLED,
-			AssetTagStatsImpl.class, FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
-			"findByTagId",
+			entityCacheEnabled, finderCacheEnabled, AssetTagStatsImpl.class,
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByTagId",
 			new String[] {
 				Long.class.getName(), Integer.class.getName(),
 				Integer.class.getName(), OrderByComparator.class.getName()
 			});
 
 		_finderPathWithoutPaginationFindByTagId = new FinderPath(
-			AssetTagStatsModelImpl.ENTITY_CACHE_ENABLED,
-			AssetTagStatsModelImpl.FINDER_CACHE_ENABLED,
-			AssetTagStatsImpl.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"findByTagId", new String[] {Long.class.getName()},
+			entityCacheEnabled, finderCacheEnabled, AssetTagStatsImpl.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByTagId",
+			new String[] {Long.class.getName()},
 			AssetTagStatsModelImpl.TAGID_COLUMN_BITMASK |
 			AssetTagStatsModelImpl.ASSETCOUNT_COLUMN_BITMASK);
 
 		_finderPathCountByTagId = new FinderPath(
-			AssetTagStatsModelImpl.ENTITY_CACHE_ENABLED,
-			AssetTagStatsModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			entityCacheEnabled, finderCacheEnabled, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByTagId",
 			new String[] {Long.class.getName()});
 
 		_finderPathWithPaginationFindByClassNameId = new FinderPath(
-			AssetTagStatsModelImpl.ENTITY_CACHE_ENABLED,
-			AssetTagStatsModelImpl.FINDER_CACHE_ENABLED,
-			AssetTagStatsImpl.class, FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
-			"findByClassNameId",
+			entityCacheEnabled, finderCacheEnabled, AssetTagStatsImpl.class,
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByClassNameId",
 			new String[] {
 				Long.class.getName(), Integer.class.getName(),
 				Integer.class.getName(), OrderByComparator.class.getName()
 			});
 
 		_finderPathWithoutPaginationFindByClassNameId = new FinderPath(
-			AssetTagStatsModelImpl.ENTITY_CACHE_ENABLED,
-			AssetTagStatsModelImpl.FINDER_CACHE_ENABLED,
-			AssetTagStatsImpl.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"findByClassNameId", new String[] {Long.class.getName()},
+			entityCacheEnabled, finderCacheEnabled, AssetTagStatsImpl.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByClassNameId",
+			new String[] {Long.class.getName()},
 			AssetTagStatsModelImpl.CLASSNAMEID_COLUMN_BITMASK |
 			AssetTagStatsModelImpl.ASSETCOUNT_COLUMN_BITMASK);
 
 		_finderPathCountByClassNameId = new FinderPath(
-			AssetTagStatsModelImpl.ENTITY_CACHE_ENABLED,
-			AssetTagStatsModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			entityCacheEnabled, finderCacheEnabled, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByClassNameId",
 			new String[] {Long.class.getName()});
 
 		_finderPathFetchByT_C = new FinderPath(
-			AssetTagStatsModelImpl.ENTITY_CACHE_ENABLED,
-			AssetTagStatsModelImpl.FINDER_CACHE_ENABLED,
-			AssetTagStatsImpl.class, FINDER_CLASS_NAME_ENTITY, "fetchByT_C",
+			entityCacheEnabled, finderCacheEnabled, AssetTagStatsImpl.class,
+			FINDER_CLASS_NAME_ENTITY, "fetchByT_C",
 			new String[] {Long.class.getName(), Long.class.getName()},
 			AssetTagStatsModelImpl.TAGID_COLUMN_BITMASK |
 			AssetTagStatsModelImpl.CLASSNAMEID_COLUMN_BITMASK);
 
 		_finderPathCountByT_C = new FinderPath(
-			AssetTagStatsModelImpl.ENTITY_CACHE_ENABLED,
-			AssetTagStatsModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			entityCacheEnabled, finderCacheEnabled, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByT_C",
 			new String[] {Long.class.getName(), Long.class.getName()});
 	}
 
-	public void destroy() {
+	@Deactivate
+	public void deactivate() {
 		entityCache.removeCache(AssetTagStatsImpl.class.getName());
 		finderCache.removeCache(FINDER_CLASS_NAME_ENTITY);
 		finderCache.removeCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		finderCache.removeCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 	}
 
-	@ServiceReference(type = CompanyProviderWrapper.class)
+	@Override
+	@Reference(
+		target = AssetPersistenceConstants.ORIGIN_BUNDLE_SYMBOLIC_NAME_FILTER,
+		unbind = "-"
+	)
+	public void setConfiguration(Configuration configuration) {
+		super.setConfiguration(configuration);
+
+		_columnBitmaskEnabled = GetterUtil.getBoolean(
+			configuration.get(
+				"value.object.column.bitmask.enabled.com.liferay.asset.tag.stats.model.AssetTagStats"),
+			true);
+	}
+
+	@Override
+	@Reference(
+		target = AssetPersistenceConstants.ORIGIN_BUNDLE_SYMBOLIC_NAME_FILTER,
+		unbind = "-"
+	)
+	public void setDataSource(DataSource dataSource) {
+		super.setDataSource(dataSource);
+	}
+
+	@Override
+	@Reference(
+		target = AssetPersistenceConstants.ORIGIN_BUNDLE_SYMBOLIC_NAME_FILTER,
+		unbind = "-"
+	)
+	public void setSessionFactory(SessionFactory sessionFactory) {
+		super.setSessionFactory(sessionFactory);
+	}
+
+	private boolean _columnBitmaskEnabled;
+
+	@Reference(service = CompanyProviderWrapper.class)
 	protected CompanyProvider companyProvider;
 
-	@ServiceReference(type = EntityCache.class)
+	@Reference
 	protected EntityCache entityCache;
 
-	@ServiceReference(type = FinderCache.class)
+	@Reference
 	protected FinderCache finderCache;
 
 	private static final String _SQL_SELECT_ASSETTAGSTATS =

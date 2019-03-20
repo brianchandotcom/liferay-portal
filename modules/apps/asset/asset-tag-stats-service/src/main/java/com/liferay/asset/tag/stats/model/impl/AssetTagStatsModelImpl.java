@@ -26,7 +26,6 @@ import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.model.ModelWrapper;
 import com.liferay.portal.kernel.model.impl.BaseModelImpl;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -98,30 +97,19 @@ public class AssetTagStatsModelImpl
 
 	public static final String TX_MANAGER = "liferayTransactionManager";
 
-	public static final boolean ENTITY_CACHE_ENABLED = GetterUtil.getBoolean(
-		com.liferay.asset.tag.stats.service.util.ServiceProps.get(
-			"value.object.entity.cache.enabled.com.liferay.asset.tag.stats.model.AssetTagStats"),
-		true);
-
-	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(
-		com.liferay.asset.tag.stats.service.util.ServiceProps.get(
-			"value.object.finder.cache.enabled.com.liferay.asset.tag.stats.model.AssetTagStats"),
-		true);
-
-	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(
-		com.liferay.asset.tag.stats.service.util.ServiceProps.get(
-			"value.object.column.bitmask.enabled.com.liferay.asset.tag.stats.model.AssetTagStats"),
-		true);
-
 	public static final long CLASSNAMEID_COLUMN_BITMASK = 1L;
 
 	public static final long TAGID_COLUMN_BITMASK = 2L;
 
 	public static final long ASSETCOUNT_COLUMN_BITMASK = 4L;
 
-	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(
-		com.liferay.asset.tag.stats.service.util.ServiceProps.get(
-			"lock.expiration.time.com.liferay.asset.tag.stats.model.AssetTagStats"));
+	public static void setEntityCacheEnabled(boolean entityCacheEnabled) {
+		_entityCacheEnabled = entityCacheEnabled;
+	}
+
+	public static void setFinderCacheEnabled(boolean finderCacheEnabled) {
+		_finderCacheEnabled = finderCacheEnabled;
+	}
 
 	public AssetTagStatsModelImpl() {
 	}
@@ -442,12 +430,12 @@ public class AssetTagStatsModelImpl
 
 	@Override
 	public boolean isEntityCacheEnabled() {
-		return ENTITY_CACHE_ENABLED;
+		return _entityCacheEnabled;
 	}
 
 	@Override
 	public boolean isFinderCacheEnabled() {
-		return FINDER_CACHE_ENABLED;
+		return _finderCacheEnabled;
 	}
 
 	@Override
@@ -552,6 +540,8 @@ public class AssetTagStatsModelImpl
 	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
 		AssetTagStats.class, ModelWrapper.class
 	};
+	private static boolean _entityCacheEnabled;
+	private static boolean _finderCacheEnabled;
 
 	private long _tagStatsId;
 	private long _companyId;

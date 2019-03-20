@@ -162,16 +162,18 @@ ConfigurationScopeDisplayContext configurationScopeDisplayContext = new Configur
 									</c:otherwise>
 								</c:choose>
 
-								<portlet:resourceURL id="export" var="exportURL">
-									<portlet:param name="factoryPid" value="<%= configurationModel.getFactoryPid() %>" />
-									<portlet:param name="pid" value="<%= configurationModel.getID() %>" />
-								</portlet:resourceURL>
+								<c:if test="<%= ExtendedObjectClassDefinition.Scope.SYSTEM.equals(configurationScopeDisplayContext.getScope()) %>">
+									<portlet:resourceURL id="export" var="exportURL">
+										<portlet:param name="factoryPid" value="<%= configurationModel.getFactoryPid() %>" />
+										<portlet:param name="pid" value="<%= configurationModel.getID() %>" />
+									</portlet:resourceURL>
 
-								<liferay-ui:icon
-									message="export"
-									method="get"
-									url="<%= exportURL %>"
-								/>
+									<liferay-ui:icon
+										message="export"
+										method="get"
+										url="<%= exportURL %>"
+									/>
+								</c:if>
 							</liferay-ui:icon-menu>
 						</c:if>
 					</h2>

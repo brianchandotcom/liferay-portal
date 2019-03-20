@@ -952,16 +952,18 @@ public class DataFactory {
 	public void initContext(Properties properties)
 		throws FileNotFoundException {
 
+		TimeZone timeZone = TimeZone.getDefault();
+
 		String timeZoneId = properties.getProperty("sample.sql.db.time.zone");
 
 		if (Validator.isNotNull(timeZoneId)) {
-			TimeZone timeZone = TimeZone.getTimeZone(ZoneId.of(timeZoneId));
+			timeZone = TimeZone.getTimeZone(ZoneId.of(timeZoneId));
 
 			TimeZone.setDefault(timeZone);
-
-			_simpleDateFormat = FastDateFormatFactoryUtil.getSimpleDateFormat(
-				"yyyy-MM-dd HH:mm:ss", timeZone);
 		}
+
+		_simpleDateFormat = FastDateFormatFactoryUtil.getSimpleDateFormat(
+			"yyyy-MM-dd HH:mm:ss", timeZone);
 
 		_maxAssetCategoryCount = GetterUtil.getInteger(
 			properties.getProperty("sample.sql.max.asset.category.count"));

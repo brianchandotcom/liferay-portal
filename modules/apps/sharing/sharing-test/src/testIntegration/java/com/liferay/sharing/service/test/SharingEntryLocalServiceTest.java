@@ -369,11 +369,11 @@ public class SharingEntryLocalServiceTest {
 		long classNameId = _classNameLocalService.getClassNameId(
 			Group.class.getName());
 		long classPK = _group.getGroupId();
-		SharingEntryAction[] sharingEntryActions = {null};
 
 		_sharingEntryLocalService.addSharingEntry(
 			_fromUser.getUserId(), _toUser.getUserId(), classNameId, classPK,
-			_group.getGroupId(), true, Arrays.asList(sharingEntryActions), null,
+			_group.getGroupId(), true,
+			Arrays.asList(new SharingEntryAction[] {null}), null,
 			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 	}
 

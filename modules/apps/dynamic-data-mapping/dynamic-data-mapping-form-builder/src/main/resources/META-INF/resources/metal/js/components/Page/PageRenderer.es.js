@@ -145,7 +145,7 @@ class PageRenderer extends Component {
 		}
 
 		return nextState;
-}
+	}
 
 	convertToPercentage(position, element) {
 		const {offsetLeft, offsetWidth} = element;

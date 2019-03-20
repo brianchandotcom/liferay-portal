@@ -10,6 +10,7 @@ targetCompatibility = "1.6"
 
 dependencies {
 	compile group: "axis", name: "axis", optional, version: "1.4"
+	compile group: "javax.servlet", name: "javax.servlet-api", version: "3.0.1"
 }
 
 patch {
@@ -23,6 +24,7 @@ patch {
 	fileNames "org/apache/axis/EngineConfiguration.java"
 	fileNames "org/apache/axis/components/net/JSSESocketFactory.java"
 	fileNames "org/apache/axis/session/Session.java"
+	fileNames "org/apache/axis/transport/http/AxisServlet.java"
 	fileNames "org/apache/axis/wsdl/fromJava/Types.java"
 	fileNames "org/apache/xml/xml_soap/MapItem.java"
 

@@ -1,0 +1,25 @@
+diff --git a/org/apache/axis/transport/http/AxisServlet.java b/org/apache/axis/transport/http/AxisServlet.java
+index f743089..eca4afd 100644
+--- a/org/apache/axis/transport/http/AxisServlet.java
++++ b/org/apache/axis/transport/http/AxisServlet.java
+@@ -198,14 +198,6 @@ public class AxisServlet extends AxisServletBase {
+         }
+ 
+         initQueryStringHandlers();
+-
+-        // Setup the service admin
+-        try {
+-            ServiceAdmin.setEngine(this.getEngine(), context.getServerInfo());
+-        } catch (AxisFault af) {
+-            exceptionLog.info("Exception setting AxisEngine on ServiceAdmin " +
+-                              af);
+-        }
+     }
+ 
+ 
+@@ -1260,3 +1252,4 @@ public class AxisServlet extends AxisServletBase {
+                                            request.getPathInfo() : "");
+     }
+ }
++/* @generated */
+\ No newline at end of file

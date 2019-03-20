@@ -8,14 +8,6 @@ exports[`Field Paragraph should be readOnly 1`] = `
 </div>
 `;
 
-exports[`Field Paragraph should have a helptext 1`] = `
-<div class="form-group">
-  <div class="form-group liferay-ddm-form-field-paragraph" data-fieldname="textField">
-    <div class="liferay-ddm-form-field-paragraph-text"></div>
-  </div><span class="form-text">Type something</span>
-</div>
-`;
-
 exports[`Field Paragraph should have a key 1`] = `
 <div class="form-group">
   <div class="form-group liferay-ddm-form-field-paragraph" data-fieldname="textField">

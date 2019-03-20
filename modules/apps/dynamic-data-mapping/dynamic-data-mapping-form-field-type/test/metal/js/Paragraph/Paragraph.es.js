@@ -34,20 +34,6 @@ describe(
 		);
 
 		it(
-			'should have a helptext',
-			() => {
-				component = new Paragraph(
-					{
-						...defaultParagraphConfig,
-						tip: 'Type something'
-					}
-				);
-
-				expect(component).toMatchSnapshot();
-			}
-		);
-
-		it(
 			'should have an id',
 			() => {
 				component = new Paragraph(

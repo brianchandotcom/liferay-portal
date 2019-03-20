@@ -2,7 +2,7 @@
 
 exports[`Builder should render the default markup 1`] = `
 <div>
-  <div class="container">
+  <div class="container ddm-form-builder">
     <div class="sheet">
       <div class="position-relative">
         <div class="ddm-form-pagination position-absolute">
@@ -12,7 +12,7 @@ exports[`Builder should render the default markup 1`] = `
                 </svg></button></div>
           </div>
         </div>
-        <div class="ddm-page-container-layout">
+        <div class="ddm-layout-builder ddm-page-container-layout">
           <div class="ddm-form-page pl-4 pr-4"><textarea class="form-builder-page-header-title form-control p-0" data-page-index="0" maxlength="120" value="Untitled name"></textarea><textarea class="form-builder-page-header-description form-control p-0" data-page-index="0" maxlength="120" placeholder="add-a-short-description-for-this-page"></textarea>
             <div class="form-builder-layout">
               <div class="layout-page">
@@ -21,17 +21,29 @@ exports[`Builder should render the default markup 1`] = `
                     <div class="ddm-target"></div>
                   </div>
                 </div>
-                <div class="row">
+                <div class="position-relative row">
+                  <div class="ddm-resize-drop" data-col="1"></div>
+                  <div class="ddm-resize-drop" data-col="2"></div>
+                  <div class="ddm-resize-drop" data-col="3"></div>
+                  <div class="ddm-resize-drop" data-col="4"></div>
+                  <div class="ddm-resize-drop" data-col="5"></div>
+                  <div class="ddm-resize-drop" data-col="6"></div>
+                  <div class="ddm-resize-drop" data-col="7"></div>
+                  <div class="ddm-resize-drop" data-col="8"></div>
+                  <div class="ddm-resize-drop" data-col="9"></div>
+                  <div class="ddm-resize-drop" data-col="10"></div>
+                  <div class="ddm-resize-drop" data-col="11"></div>
+                  <div class="ddm-resize-drop" data-col="12"></div>
                   <div class="col-md-3 col-ddm" data-ddm-field-row="0" data-ddm-field-page="0" data-ddm-field-column="0">
                     <div class="ddm-field-container">
-                      <div class="ddm-resize-handle-left"></div>
+                      <div class="ddm-resize-handle ddm-resize-handle-left" data-ddm-field-row="0" data-ddm-field-page="0" data-ddm-field-column="0"></div>
                       <div class="ddm-drag"></div>
                       <div class="ddm-field-actions-container"><a href="javascript:;"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button"><svg class="lexicon-icon lexicon-icon-paste" focusable="false" role="presentation">
                               <use xlink:href="icons.svg#paste"></use>
                             </svg></button></a><a href="javascript:;"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="trash" type="button"><svg class="lexicon-icon lexicon-icon-trash" focusable="false" role="presentation">
                               <use xlink:href="icons.svg#trash"></use>
                             </svg></button></a></div>
-                      <div class="ddm-resize-handle-right"></div>
+                      <div class="ddm-resize-handle ddm-resize-handle-right" data-ddm-field-row="0" data-ddm-field-page="0" data-ddm-field-column="0"></div>
                     </div>
                   </div>
                   <div class="col col-empty col-md-9" data-ddm-field-row="0" data-ddm-field-page="0" data-ddm-field-column="1">
@@ -43,29 +55,41 @@ exports[`Builder should render the default markup 1`] = `
                     <div class="ddm-target"></div>
                   </div>
                 </div>
-                <div class="row">
+                <div class="position-relative row">
+                  <div class="ddm-resize-drop" data-col="1"></div>
+                  <div class="ddm-resize-drop" data-col="2"></div>
+                  <div class="ddm-resize-drop" data-col="3"></div>
+                  <div class="ddm-resize-drop" data-col="4"></div>
+                  <div class="ddm-resize-drop" data-col="5"></div>
+                  <div class="ddm-resize-drop" data-col="6"></div>
+                  <div class="ddm-resize-drop" data-col="7"></div>
+                  <div class="ddm-resize-drop" data-col="8"></div>
+                  <div class="ddm-resize-drop" data-col="9"></div>
+                  <div class="ddm-resize-drop" data-col="10"></div>
+                  <div class="ddm-resize-drop" data-col="11"></div>
+                  <div class="ddm-resize-drop" data-col="12"></div>
                   <div class="col-md-4 col-ddm" data-ddm-field-row="1" data-ddm-field-page="0" data-ddm-field-column="0">
                     <div class="ddm-field-container">
-                      <div class="ddm-resize-handle-left"></div>
+                      <div class="ddm-resize-handle ddm-resize-handle-left" data-ddm-field-row="1" data-ddm-field-page="0" data-ddm-field-column="0"></div>
                       <div class="ddm-drag"></div>
                       <div class="ddm-field-actions-container"><a href="javascript:;"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button"><svg class="lexicon-icon lexicon-icon-paste" focusable="false" role="presentation">
                               <use xlink:href="icons.svg#paste"></use>
                             </svg></button></a><a href="javascript:;"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="trash" type="button"><svg class="lexicon-icon lexicon-icon-trash" focusable="false" role="presentation">
                               <use xlink:href="icons.svg#trash"></use>
                             </svg></button></a></div>
-                      <div class="ddm-resize-handle-right"></div>
+                      <div class="ddm-resize-handle ddm-resize-handle-right" data-ddm-field-row="1" data-ddm-field-page="0" data-ddm-field-column="0"></div>
                     </div>
                   </div>
                   <div class="col-md-6 col-ddm" data-ddm-field-row="1" data-ddm-field-page="0" data-ddm-field-column="1">
                     <div class="ddm-field-container">
-                      <div class="ddm-resize-handle-left"></div>
+                      <div class="ddm-resize-handle ddm-resize-handle-left" data-ddm-field-row="1" data-ddm-field-page="0" data-ddm-field-column="1"></div>
                       <div class="ddm-drag"></div>
                       <div class="ddm-field-actions-container"><a href="javascript:;"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button"><svg class="lexicon-icon lexicon-icon-paste" focusable="false" role="presentation">
                               <use xlink:href="icons.svg#paste"></use>
                             </svg></button></a><a href="javascript:;"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="trash" type="button"><svg class="lexicon-icon lexicon-icon-trash" focusable="false" role="presentation">
                               <use xlink:href="icons.svg#trash"></use>
                             </svg></button></a></div>
-                      <div class="ddm-resize-handle-right"></div>
+                      <div class="ddm-resize-handle ddm-resize-handle-right" data-ddm-field-row="1" data-ddm-field-page="0" data-ddm-field-column="1"></div>
                     </div>
                   </div>
                   <div class="col col-empty col-md-2" data-ddm-field-row="1" data-ddm-field-page="0" data-ddm-field-column="2">
@@ -77,17 +101,29 @@ exports[`Builder should render the default markup 1`] = `
                     <div class="ddm-target"></div>
                   </div>
                 </div>
-                <div class="row">
+                <div class="position-relative row">
+                  <div class="ddm-resize-drop" data-col="1"></div>
+                  <div class="ddm-resize-drop" data-col="2"></div>
+                  <div class="ddm-resize-drop" data-col="3"></div>
+                  <div class="ddm-resize-drop" data-col="4"></div>
+                  <div class="ddm-resize-drop" data-col="5"></div>
+                  <div class="ddm-resize-drop" data-col="6"></div>
+                  <div class="ddm-resize-drop" data-col="7"></div>
+                  <div class="ddm-resize-drop" data-col="8"></div>
+                  <div class="ddm-resize-drop" data-col="9"></div>
+                  <div class="ddm-resize-drop" data-col="10"></div>
+                  <div class="ddm-resize-drop" data-col="11"></div>
+                  <div class="ddm-resize-drop" data-col="12"></div>
                   <div class="col-md-12 col-ddm" data-ddm-field-row="2" data-ddm-field-page="0" data-ddm-field-column="0">
                     <div class="ddm-field-container">
-                      <div class="ddm-resize-handle-left"></div>
+                      <div class="ddm-resize-handle ddm-resize-handle-left" data-ddm-field-row="2" data-ddm-field-page="0" data-ddm-field-column="0"></div>
                       <div class="ddm-drag"></div>
                       <div class="ddm-field-actions-container"><a href="javascript:;"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button"><svg class="lexicon-icon lexicon-icon-paste" focusable="false" role="presentation">
                               <use xlink:href="icons.svg#paste"></use>
                             </svg></button></a><a href="javascript:;"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="trash" type="button"><svg class="lexicon-icon lexicon-icon-trash" focusable="false" role="presentation">
                               <use xlink:href="icons.svg#trash"></use>
                             </svg></button></a></div>
-                      <div class="ddm-resize-handle-right"></div>
+                      <div class="ddm-resize-handle ddm-resize-handle-right" data-ddm-field-row="2" data-ddm-field-page="0" data-ddm-field-column="0"></div>
                     </div>
                   </div>
                 </div>
@@ -96,17 +132,29 @@ exports[`Builder should render the default markup 1`] = `
                     <div class="ddm-target"></div>
                   </div>
                 </div>
-                <div class="row">
+                <div class="position-relative row">
+                  <div class="ddm-resize-drop" data-col="1"></div>
+                  <div class="ddm-resize-drop" data-col="2"></div>
+                  <div class="ddm-resize-drop" data-col="3"></div>
+                  <div class="ddm-resize-drop" data-col="4"></div>
+                  <div class="ddm-resize-drop" data-col="5"></div>
+                  <div class="ddm-resize-drop" data-col="6"></div>
+                  <div class="ddm-resize-drop" data-col="7"></div>
+                  <div class="ddm-resize-drop" data-col="8"></div>
+                  <div class="ddm-resize-drop" data-col="9"></div>
+                  <div class="ddm-resize-drop" data-col="10"></div>
+                  <div class="ddm-resize-drop" data-col="11"></div>
+                  <div class="ddm-resize-drop" data-col="12"></div>
                   <div class="col-md-12 col-ddm" data-ddm-field-row="3" data-ddm-field-page="0" data-ddm-field-column="0">
                     <div class="ddm-field-container">
-                      <div class="ddm-resize-handle-left"></div>
+                      <div class="ddm-resize-handle ddm-resize-handle-left" data-ddm-field-row="3" data-ddm-field-page="0" data-ddm-field-column="0"></div>
                       <div class="ddm-drag"></div>
                       <div class="ddm-field-actions-container"><a href="javascript:;"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button"><svg class="lexicon-icon lexicon-icon-paste" focusable="false" role="presentation">
                               <use xlink:href="icons.svg#paste"></use>
                             </svg></button></a><a href="javascript:;"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="trash" type="button"><svg class="lexicon-icon lexicon-icon-trash" focusable="false" role="presentation">
                               <use xlink:href="icons.svg#trash"></use>
                             </svg></button></a></div>
-                      <div class="ddm-resize-handle-right"></div>
+                      <div class="ddm-resize-handle ddm-resize-handle-right" data-ddm-field-row="3" data-ddm-field-page="0" data-ddm-field-column="0"></div>
                     </div>
                   </div>
                 </div>
@@ -227,7 +275,7 @@ exports[`Builder should render the default markup 1`] = `
 
 exports[`Builder should show modal when fieldChangesCanceled event is trigered from sidebar 1`] = `
 <div>
-  <div class="container">
+  <div class="container ddm-form-builder">
     <div class="sheet">
       <div class="position-relative">
         <div class="ddm-form-pagination position-absolute">
@@ -237,7 +285,7 @@ exports[`Builder should show modal when fieldChangesCanceled event is trigered f
                 </svg></button></div>
           </div>
         </div>
-        <div class="ddm-page-container-layout">
+        <div class="ddm-layout-builder ddm-page-container-layout">
           <div class="ddm-form-page pl-4 pr-4"><textarea class="form-builder-page-header-title form-control p-0" data-page-index="0" maxlength="120" value="Untitled name" placeholder="untitled-page-x-of-x"></textarea><textarea class="form-builder-page-header-description form-control p-0" data-page-index="0" maxlength="120" placeholder="add-a-short-description-for-this-page"></textarea>
             <div class="form-builder-layout">
               <div class="layout-page">
@@ -246,17 +294,29 @@ exports[`Builder should show modal when fieldChangesCanceled event is trigered f
                     <div class="ddm-target"></div>
                   </div>
                 </div>
-                <div class="row">
+                <div class="position-relative row">
+                  <div class="ddm-resize-drop" data-col="1"></div>
+                  <div class="ddm-resize-drop" data-col="2"></div>
+                  <div class="ddm-resize-drop" data-col="3"></div>
+                  <div class="ddm-resize-drop" data-col="4"></div>
+                  <div class="ddm-resize-drop" data-col="5"></div>
+                  <div class="ddm-resize-drop" data-col="6"></div>
+                  <div class="ddm-resize-drop" data-col="7"></div>
+                  <div class="ddm-resize-drop" data-col="8"></div>
+                  <div class="ddm-resize-drop" data-col="9"></div>
+                  <div class="ddm-resize-drop" data-col="10"></div>
+                  <div class="ddm-resize-drop" data-col="11"></div>
+                  <div class="ddm-resize-drop" data-col="12"></div>
                   <div class="col-md-3 col-ddm" data-ddm-field-row="0" data-ddm-field-page="0" data-ddm-field-column="0">
                     <div class="ddm-field-container">
-                      <div class="ddm-resize-handle-left"></div>
+                      <div class="ddm-resize-handle ddm-resize-handle-left" data-ddm-field-row="0" data-ddm-field-page="0" data-ddm-field-column="0"></div>
                       <div class="ddm-drag"></div>
                       <div class="ddm-field-actions-container"><a href="javascript:;"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button"><svg class="lexicon-icon lexicon-icon-paste" focusable="false" role="presentation">
                               <use xlink:href="icons.svg#paste"></use>
                             </svg></button></a><a href="javascript:;"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="trash" type="button"><svg class="lexicon-icon lexicon-icon-trash" focusable="false" role="presentation">
                               <use xlink:href="icons.svg#trash"></use>
                             </svg></button></a></div>
-                      <div class="ddm-resize-handle-right"></div>
+                      <div class="ddm-resize-handle ddm-resize-handle-right" data-ddm-field-row="0" data-ddm-field-page="0" data-ddm-field-column="0"></div>
                     </div>
                   </div>
                   <div class="col col-empty col-md-9" data-ddm-field-row="0" data-ddm-field-page="0" data-ddm-field-column="1">
@@ -268,29 +328,41 @@ exports[`Builder should show modal when fieldChangesCanceled event is trigered f
                     <div class="ddm-target"></div>
                   </div>
                 </div>
-                <div class="row">
+                <div class="position-relative row">
+                  <div class="ddm-resize-drop" data-col="1"></div>
+                  <div class="ddm-resize-drop" data-col="2"></div>
+                  <div class="ddm-resize-drop" data-col="3"></div>
+                  <div class="ddm-resize-drop" data-col="4"></div>
+                  <div class="ddm-resize-drop" data-col="5"></div>
+                  <div class="ddm-resize-drop" data-col="6"></div>
+                  <div class="ddm-resize-drop" data-col="7"></div>
+                  <div class="ddm-resize-drop" data-col="8"></div>
+                  <div class="ddm-resize-drop" data-col="9"></div>
+                  <div class="ddm-resize-drop" data-col="10"></div>
+                  <div class="ddm-resize-drop" data-col="11"></div>
+                  <div class="ddm-resize-drop" data-col="12"></div>
                   <div class="col-md-4 col-ddm" data-ddm-field-row="1" data-ddm-field-page="0" data-ddm-field-column="0">
                     <div class="ddm-field-container">
-                      <div class="ddm-resize-handle-left"></div>
+                      <div class="ddm-resize-handle ddm-resize-handle-left" data-ddm-field-row="1" data-ddm-field-page="0" data-ddm-field-column="0"></div>
                       <div class="ddm-drag"></div>
                       <div class="ddm-field-actions-container"><a href="javascript:;"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button"><svg class="lexicon-icon lexicon-icon-paste" focusable="false" role="presentation">
                               <use xlink:href="icons.svg#paste"></use>
                             </svg></button></a><a href="javascript:;"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="trash" type="button"><svg class="lexicon-icon lexicon-icon-trash" focusable="false" role="presentation">
                               <use xlink:href="icons.svg#trash"></use>
                             </svg></button></a></div>
-                      <div class="ddm-resize-handle-right"></div>
+                      <div class="ddm-resize-handle ddm-resize-handle-right" data-ddm-field-row="1" data-ddm-field-page="0" data-ddm-field-column="0"></div>
                     </div>
                   </div>
                   <div class="col-md-6 col-ddm" data-ddm-field-row="1" data-ddm-field-page="0" data-ddm-field-column="1">
                     <div class="ddm-field-container">
-                      <div class="ddm-resize-handle-left"></div>
+                      <div class="ddm-resize-handle ddm-resize-handle-left" data-ddm-field-row="1" data-ddm-field-page="0" data-ddm-field-column="1"></div>
                       <div class="ddm-drag"></div>
                       <div class="ddm-field-actions-container"><a href="javascript:;"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button"><svg class="lexicon-icon lexicon-icon-paste" focusable="false" role="presentation">
                               <use xlink:href="icons.svg#paste"></use>
                             </svg></button></a><a href="javascript:;"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="trash" type="button"><svg class="lexicon-icon lexicon-icon-trash" focusable="false" role="presentation">
                               <use xlink:href="icons.svg#trash"></use>
                             </svg></button></a></div>
-                      <div class="ddm-resize-handle-right"></div>
+                      <div class="ddm-resize-handle ddm-resize-handle-right" data-ddm-field-row="1" data-ddm-field-page="0" data-ddm-field-column="1"></div>
                     </div>
                   </div>
                   <div class="col col-empty col-md-2" data-ddm-field-row="1" data-ddm-field-page="0" data-ddm-field-column="2">
@@ -302,17 +374,29 @@ exports[`Builder should show modal when fieldChangesCanceled event is trigered f
                     <div class="ddm-target"></div>
                   </div>
                 </div>
-                <div class="row">
+                <div class="position-relative row">
+                  <div class="ddm-resize-drop" data-col="1"></div>
+                  <div class="ddm-resize-drop" data-col="2"></div>
+                  <div class="ddm-resize-drop" data-col="3"></div>
+                  <div class="ddm-resize-drop" data-col="4"></div>
+                  <div class="ddm-resize-drop" data-col="5"></div>
+                  <div class="ddm-resize-drop" data-col="6"></div>
+                  <div class="ddm-resize-drop" data-col="7"></div>
+                  <div class="ddm-resize-drop" data-col="8"></div>
+                  <div class="ddm-resize-drop" data-col="9"></div>
+                  <div class="ddm-resize-drop" data-col="10"></div>
+                  <div class="ddm-resize-drop" data-col="11"></div>
+                  <div class="ddm-resize-drop" data-col="12"></div>
                   <div class="col-md-12 col-ddm" data-ddm-field-row="2" data-ddm-field-page="0" data-ddm-field-column="0">
                     <div class="ddm-field-container">
-                      <div class="ddm-resize-handle-left"></div>
+                      <div class="ddm-resize-handle ddm-resize-handle-left" data-ddm-field-row="2" data-ddm-field-page="0" data-ddm-field-column="0"></div>
                       <div class="ddm-drag"></div>
                       <div class="ddm-field-actions-container"><a href="javascript:;"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button"><svg class="lexicon-icon lexicon-icon-paste" focusable="false" role="presentation">
                               <use xlink:href="icons.svg#paste"></use>
                             </svg></button></a><a href="javascript:;"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="trash" type="button"><svg class="lexicon-icon lexicon-icon-trash" focusable="false" role="presentation">
                               <use xlink:href="icons.svg#trash"></use>
                             </svg></button></a></div>
-                      <div class="ddm-resize-handle-right"></div>
+                      <div class="ddm-resize-handle ddm-resize-handle-right" data-ddm-field-row="2" data-ddm-field-page="0" data-ddm-field-column="0"></div>
                     </div>
                   </div>
                 </div>
@@ -321,17 +405,29 @@ exports[`Builder should show modal when fieldChangesCanceled event is trigered f
                     <div class="ddm-target"></div>
                   </div>
                 </div>
-                <div class="row">
+                <div class="position-relative row">
+                  <div class="ddm-resize-drop" data-col="1"></div>
+                  <div class="ddm-resize-drop" data-col="2"></div>
+                  <div class="ddm-resize-drop" data-col="3"></div>
+                  <div class="ddm-resize-drop" data-col="4"></div>
+                  <div class="ddm-resize-drop" data-col="5"></div>
+                  <div class="ddm-resize-drop" data-col="6"></div>
+                  <div class="ddm-resize-drop" data-col="7"></div>
+                  <div class="ddm-resize-drop" data-col="8"></div>
+                  <div class="ddm-resize-drop" data-col="9"></div>
+                  <div class="ddm-resize-drop" data-col="10"></div>
+                  <div class="ddm-resize-drop" data-col="11"></div>
+                  <div class="ddm-resize-drop" data-col="12"></div>
                   <div class="col-md-12 col-ddm" data-ddm-field-row="3" data-ddm-field-page="0" data-ddm-field-column="0">
                     <div class="ddm-field-container">
-                      <div class="ddm-resize-handle-left"></div>
+                      <div class="ddm-resize-handle ddm-resize-handle-left" data-ddm-field-row="3" data-ddm-field-page="0" data-ddm-field-column="0"></div>
                       <div class="ddm-drag"></div>
                       <div class="ddm-field-actions-container"><a href="javascript:;"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button"><svg class="lexicon-icon lexicon-icon-paste" focusable="false" role="presentation">
                               <use xlink:href="icons.svg#paste"></use>
                             </svg></button></a><a href="javascript:;"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="trash" type="button"><svg class="lexicon-icon lexicon-icon-trash" focusable="false" role="presentation">
                               <use xlink:href="icons.svg#trash"></use>
                             </svg></button></a></div>
-                      <div class="ddm-resize-handle-right"></div>
+                      <div class="ddm-resize-handle ddm-resize-handle-right" data-ddm-field-row="3" data-ddm-field-page="0" data-ddm-field-column="0"></div>
                     </div>
                   </div>
                 </div>
@@ -452,7 +548,7 @@ exports[`Builder should show modal when fieldChangesCanceled event is trigered f
 
 exports[`Builder should show modal when trash button gets clicked 1`] = `
 <div>
-  <div class="container">
+  <div class="container ddm-form-builder">
     <div class="sheet">
       <div class="position-relative">
         <div class="ddm-form-pagination position-absolute">
@@ -462,7 +558,7 @@ exports[`Builder should show modal when trash button gets clicked 1`] = `
                 </svg></button></div>
           </div>
         </div>
-        <div class="ddm-page-container-layout">
+        <div class="ddm-layout-builder ddm-page-container-layout">
           <div class="ddm-form-page pl-4 pr-4"><textarea class="form-builder-page-header-title form-control p-0" data-page-index="0" maxlength="120" value="Untitled name" placeholder="untitled-page-x-of-x"></textarea><textarea class="form-builder-page-header-description form-control p-0" data-page-index="0" maxlength="120" placeholder="add-a-short-description-for-this-page"></textarea>
             <div class="form-builder-layout">
               <div class="layout-page">
@@ -471,17 +567,29 @@ exports[`Builder should show modal when trash button gets clicked 1`] = `
                     <div class="ddm-target"></div>
                   </div>
                 </div>
-                <div class="row">
+                <div class="position-relative row">
+                  <div class="ddm-resize-drop" data-col="1"></div>
+                  <div class="ddm-resize-drop" data-col="2"></div>
+                  <div class="ddm-resize-drop" data-col="3"></div>
+                  <div class="ddm-resize-drop" data-col="4"></div>
+                  <div class="ddm-resize-drop" data-col="5"></div>
+                  <div class="ddm-resize-drop" data-col="6"></div>
+                  <div class="ddm-resize-drop" data-col="7"></div>
+                  <div class="ddm-resize-drop" data-col="8"></div>
+                  <div class="ddm-resize-drop" data-col="9"></div>
+                  <div class="ddm-resize-drop" data-col="10"></div>
+                  <div class="ddm-resize-drop" data-col="11"></div>
+                  <div class="ddm-resize-drop" data-col="12"></div>
                   <div class="col-md-3 col-ddm" data-ddm-field-row="0" data-ddm-field-page="0" data-ddm-field-column="0">
                     <div class="ddm-field-container">
-                      <div class="ddm-resize-handle-left"></div>
+                      <div class="ddm-resize-handle ddm-resize-handle-left" data-ddm-field-row="0" data-ddm-field-page="0" data-ddm-field-column="0"></div>
                       <div class="ddm-drag"></div>
                       <div class="ddm-field-actions-container"><a href="javascript:;"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button"><svg class="lexicon-icon lexicon-icon-paste" focusable="false" role="presentation">
                               <use xlink:href="icons.svg#paste"></use>
                             </svg></button></a><a href="javascript:;"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="trash" type="button"><svg class="lexicon-icon lexicon-icon-trash" focusable="false" role="presentation">
                               <use xlink:href="icons.svg#trash"></use>
                             </svg></button></a></div>
-                      <div class="ddm-resize-handle-right"></div>
+                      <div class="ddm-resize-handle ddm-resize-handle-right" data-ddm-field-row="0" data-ddm-field-page="0" data-ddm-field-column="0"></div>
                     </div>
                   </div>
                   <div class="col col-empty col-md-9" data-ddm-field-row="0" data-ddm-field-page="0" data-ddm-field-column="1">
@@ -493,29 +601,41 @@ exports[`Builder should show modal when trash button gets clicked 1`] = `
                     <div class="ddm-target"></div>
                   </div>
                 </div>
-                <div class="row">
+                <div class="position-relative row">
+                  <div class="ddm-resize-drop" data-col="1"></div>
+                  <div class="ddm-resize-drop" data-col="2"></div>
+                  <div class="ddm-resize-drop" data-col="3"></div>
+                  <div class="ddm-resize-drop" data-col="4"></div>
+                  <div class="ddm-resize-drop" data-col="5"></div>
+                  <div class="ddm-resize-drop" data-col="6"></div>
+                  <div class="ddm-resize-drop" data-col="7"></div>
+                  <div class="ddm-resize-drop" data-col="8"></div>
+                  <div class="ddm-resize-drop" data-col="9"></div>
+                  <div class="ddm-resize-drop" data-col="10"></div>
+                  <div class="ddm-resize-drop" data-col="11"></div>
+                  <div class="ddm-resize-drop" data-col="12"></div>
                   <div class="col-md-4 col-ddm" data-ddm-field-row="1" data-ddm-field-page="0" data-ddm-field-column="0">
                     <div class="ddm-field-container">
-                      <div class="ddm-resize-handle-left"></div>
+                      <div class="ddm-resize-handle ddm-resize-handle-left" data-ddm-field-row="1" data-ddm-field-page="0" data-ddm-field-column="0"></div>
                       <div class="ddm-drag"></div>
                       <div class="ddm-field-actions-container"><a href="javascript:;"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button"><svg class="lexicon-icon lexicon-icon-paste" focusable="false" role="presentation">
                               <use xlink:href="icons.svg#paste"></use>
                             </svg></button></a><a href="javascript:;"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="trash" type="button"><svg class="lexicon-icon lexicon-icon-trash" focusable="false" role="presentation">
                               <use xlink:href="icons.svg#trash"></use>
                             </svg></button></a></div>
-                      <div class="ddm-resize-handle-right"></div>
+                      <div class="ddm-resize-handle ddm-resize-handle-right" data-ddm-field-row="1" data-ddm-field-page="0" data-ddm-field-column="0"></div>
                     </div>
                   </div>
                   <div class="col-md-6 col-ddm" data-ddm-field-row="1" data-ddm-field-page="0" data-ddm-field-column="1">
                     <div class="ddm-field-container">
-                      <div class="ddm-resize-handle-left"></div>
+                      <div class="ddm-resize-handle ddm-resize-handle-left" data-ddm-field-row="1" data-ddm-field-page="0" data-ddm-field-column="1"></div>
                       <div class="ddm-drag"></div>
                       <div class="ddm-field-actions-container"><a href="javascript:;"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button"><svg class="lexicon-icon lexicon-icon-paste" focusable="false" role="presentation">
                               <use xlink:href="icons.svg#paste"></use>
                             </svg></button></a><a href="javascript:;"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="trash" type="button"><svg class="lexicon-icon lexicon-icon-trash" focusable="false" role="presentation">
                               <use xlink:href="icons.svg#trash"></use>
                             </svg></button></a></div>
-                      <div class="ddm-resize-handle-right"></div>
+                      <div class="ddm-resize-handle ddm-resize-handle-right" data-ddm-field-row="1" data-ddm-field-page="0" data-ddm-field-column="1"></div>
                     </div>
                   </div>
                   <div class="col col-empty col-md-2" data-ddm-field-row="1" data-ddm-field-page="0" data-ddm-field-column="2">
@@ -527,17 +647,29 @@ exports[`Builder should show modal when trash button gets clicked 1`] = `
                     <div class="ddm-target"></div>
                   </div>
                 </div>
-                <div class="row">
+                <div class="position-relative row">
+                  <div class="ddm-resize-drop" data-col="1"></div>
+                  <div class="ddm-resize-drop" data-col="2"></div>
+                  <div class="ddm-resize-drop" data-col="3"></div>
+                  <div class="ddm-resize-drop" data-col="4"></div>
+                  <div class="ddm-resize-drop" data-col="5"></div>
+                  <div class="ddm-resize-drop" data-col="6"></div>
+                  <div class="ddm-resize-drop" data-col="7"></div>
+                  <div class="ddm-resize-drop" data-col="8"></div>
+                  <div class="ddm-resize-drop" data-col="9"></div>
+                  <div class="ddm-resize-drop" data-col="10"></div>
+                  <div class="ddm-resize-drop" data-col="11"></div>
+                  <div class="ddm-resize-drop" data-col="12"></div>
                   <div class="col-md-12 col-ddm" data-ddm-field-row="2" data-ddm-field-page="0" data-ddm-field-column="0">
                     <div class="ddm-field-container">
-                      <div class="ddm-resize-handle-left"></div>
+                      <div class="ddm-resize-handle ddm-resize-handle-left" data-ddm-field-row="2" data-ddm-field-page="0" data-ddm-field-column="0"></div>
                       <div class="ddm-drag"></div>
                       <div class="ddm-field-actions-container"><a href="javascript:;"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button"><svg class="lexicon-icon lexicon-icon-paste" focusable="false" role="presentation">
                               <use xlink:href="icons.svg#paste"></use>
                             </svg></button></a><a href="javascript:;"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="trash" type="button"><svg class="lexicon-icon lexicon-icon-trash" focusable="false" role="presentation">
                               <use xlink:href="icons.svg#trash"></use>
                             </svg></button></a></div>
-                      <div class="ddm-resize-handle-right"></div>
+                      <div class="ddm-resize-handle ddm-resize-handle-right" data-ddm-field-row="2" data-ddm-field-page="0" data-ddm-field-column="0"></div>
                     </div>
                   </div>
                 </div>
@@ -546,17 +678,29 @@ exports[`Builder should show modal when trash button gets clicked 1`] = `
                     <div class="ddm-target"></div>
                   </div>
                 </div>
-                <div class="row">
+                <div class="position-relative row">
+                  <div class="ddm-resize-drop" data-col="1"></div>
+                  <div class="ddm-resize-drop" data-col="2"></div>
+                  <div class="ddm-resize-drop" data-col="3"></div>
+                  <div class="ddm-resize-drop" data-col="4"></div>
+                  <div class="ddm-resize-drop" data-col="5"></div>
+                  <div class="ddm-resize-drop" data-col="6"></div>
+                  <div class="ddm-resize-drop" data-col="7"></div>
+                  <div class="ddm-resize-drop" data-col="8"></div>
+                  <div class="ddm-resize-drop" data-col="9"></div>
+                  <div class="ddm-resize-drop" data-col="10"></div>
+                  <div class="ddm-resize-drop" data-col="11"></div>
+                  <div class="ddm-resize-drop" data-col="12"></div>
                   <div class="col-md-12 col-ddm" data-ddm-field-row="3" data-ddm-field-page="0" data-ddm-field-column="0">
                     <div class="ddm-field-container">
-                      <div class="ddm-resize-handle-left"></div>
+                      <div class="ddm-resize-handle ddm-resize-handle-left" data-ddm-field-row="3" data-ddm-field-page="0" data-ddm-field-column="0"></div>
                       <div class="ddm-drag"></div>
                       <div class="ddm-field-actions-container"><a href="javascript:;"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button"><svg class="lexicon-icon lexicon-icon-paste" focusable="false" role="presentation">
                               <use xlink:href="icons.svg#paste"></use>
                             </svg></button></a><a href="javascript:;"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="trash" type="button"><svg class="lexicon-icon lexicon-icon-trash" focusable="false" role="presentation">
                               <use xlink:href="icons.svg#trash"></use>
                             </svg></button></a></div>
-                      <div class="ddm-resize-handle-right"></div>
+                      <div class="ddm-resize-handle ddm-resize-handle-right" data-ddm-field-row="3" data-ddm-field-page="0" data-ddm-field-column="0"></div>
                     </div>
                   </div>
                 </div>

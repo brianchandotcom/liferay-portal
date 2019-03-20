@@ -6,6 +6,8 @@ import {CREATE_SEGMENTS_EXPERIENCE, DELETE_SEGMENTS_EXPERIENCE, EDIT_SEGMENTS_EX
 import 'frontend-js-web/liferay/compat/modal/Modal.es';
 import {setIn} from '../../utils/FragmentsEditorUpdateUtils.es';
 
+const DISMISS_ALERT_ANIMATION_WAIT = 500;
+
 /**
  * Tells if a priority an `obj2`
  * has higher, equal or lower priority
@@ -107,6 +109,11 @@ class SegmentsExperienceSelector extends Component {
 	 * @review
 	 */
 	_closeDropdown() {
+		this._experiencesErrorHandler(
+			{
+				creation: false
+			}
+		);
 		this.openDropdown = false;
 	}
 
@@ -136,8 +143,24 @@ class SegmentsExperienceSelector extends Component {
 				name,
 				segmentsEntryId
 			}
-		).dispatchAction(
-			END_CREATE_SEGMENTS_EXPERIENCE
+		).done(
+			() => {
+				this.store.dispatchAction(END_CREATE_SEGMENTS_EXPERIENCE);
+				Liferay.Util.openToast(
+					{
+						title: Liferay.Language.get('success-message-create-experience'),
+						type: 'success'
+					}
+				);
+			}
+		).failed(
+			() => {
+				this._experiencesErrorHandler(
+					{
+						creation: true
+					}
+				);
+			}
 		);
 	}
 
@@ -153,6 +176,107 @@ class SegmentsExperienceSelector extends Component {
 			DELETE_SEGMENTS_EXPERIENCE,
 			{
 				segmentsExperienceId
+			}
+		).done(
+			() => {
+				Liferay.Util.openToast(
+					{
+						title: Liferay.Language.get('success-message-delete-experience'),
+						type: 'success'
+					}
+				);
+			}
+		).failed(
+			() => {
+				this._openDropdown();
+				
+				this._experiencesErrorHandler(
+					{
+						deletion: true
+					}
+				);
+			}
+		);
+	}
+
+	/**
+	 * Clears the creation error with a `DISMISS_ALERT_ANIMATION_WAIT` miliseconds wait,
+	 * so the dismissable alert can complete its animation
+	 * @memberof SegmentsExperienceSelector
+	 * @private
+	 * @review
+	 */
+	_dismissCreationError() {
+		setTimeout(
+			() => {
+				this._experiencesErrorHandler(
+					{
+						creation: false
+					}
+				);
+			},
+			DISMISS_ALERT_ANIMATION_WAIT
+		);
+	}
+
+	/**
+	 * Clears the edition with a `DISMISS_ALERT_ANIMATION_WAIT` miliseconds wait,
+	 * so the dismissable alert can complete its animation
+	 * @memberof SegmentsExperienceSelector
+	 * @private
+	 * @review
+	 */
+	_dismissEditionError() {
+		setTimeout(
+			() => {
+				this._experiencesErrorHandler(
+					{
+						edition: false
+					}
+				);
+			},
+			DISMISS_ALERT_ANIMATION_WAIT
+		);
+	}
+
+	/**
+	 * Moves the focus to the create experience button
+	 * Clears the error with a 500 miliseconds wait,
+	 * so the dismissable alert can complete its animation
+	 * @memberof SegmentsExperienceSelector
+	 * @private
+	 * @review
+	 */
+	_dismissDeletionError() {
+		this.refs.newExperienceBtn.focus();
+		setTimeout(
+			() => {
+				this._experiencesErrorHandler(
+					{
+						deletion: false
+					}
+				);
+			},
+			500
+		);
+	}
+
+	/**
+	 * Updates the error status for the experiences
+	 *
+	 * @param {object} objError
+	 * @param {boolean} [objError.deletion] - True if experience deletion error has ocurred
+	 * @param {boolean} [objError.creation] - True if experience creation error has ocurred
+	 * @param {boolean} [objError.edition] - True if experience edition error has ocurred
+	 * @memberof SegmentsExperienceSelector
+	 */
+	_experiencesErrorHandler(objError = {}) {
+		requestAnimationFrame(
+			() => {
+				this._segmentsExperienceErrors = Object.assign(
+					this._segmentsExperienceErrors || {},
+					objError
+				);
 			}
 		);
 	}
@@ -170,8 +294,24 @@ class SegmentsExperienceSelector extends Component {
 				segmentsEntryId,
 				segmentsExperienceId
 			}
-		).dispatchAction(
-			END_EDIT_SEGMENTS_EXPERIENCE
+		).done(
+			() => {
+				this.store.dispatchAction(END_EDIT_SEGMENTS_EXPERIENCE);
+				Liferay.Util.openToast(
+					{
+						title: Liferay.Language.get('success-message-edit-experience'),
+						type: 'success'
+					}
+				);
+			}
+		).failed(
+			() => {
+				this._experiencesErrorHandler(
+					{
+						edition: true
+					}
+				);
+			}
 		);
 	}
 
@@ -183,15 +323,18 @@ class SegmentsExperienceSelector extends Component {
 	 * @private
 	 */
 	_handleDeleteButtonClick(event) {
+		this._experiencesErrorHandler(
+			{
+				deletion: false
+			}
+		);
 		const confirmed = confirm(
 			Liferay.Language.get('do-you-want-to-delete-this-experience')
 		);
 
 		if (confirmed) {
 			const segmentsExperienceId = event.currentTarget.getAttribute('data-segmentsExperienceId');
-			this._deleteSegmentsExperience(
-				segmentsExperienceId
-			);
+			this._deleteSegmentsExperience(segmentsExperienceId);
 		}
 	}
 
@@ -362,6 +505,11 @@ class SegmentsExperienceSelector extends Component {
 	 * @review
 	 */
 	_closeEditModal() {
+		this._experiencesErrorHandler(
+			{
+				edition: false
+			}
+		);
 		this.store.dispatchAction(
 			END_EDIT_SEGMENTS_EXPERIENCE
 		);

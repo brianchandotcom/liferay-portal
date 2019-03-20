@@ -1,10 +1,9 @@
 {
 	"build": {
 		"dependencies": [
-			"clay-button",
+			"clay-alert",
 			"clay-checkbox",
 			"clay-dropdown",
-			"clay-icon",
 			"clay-link",
 			"clay-portal",
 			"clay-radio",

@@ -14,6 +14,9 @@
 	{@param? defaultSegmentsExperienceId: string }
 	{@param? _closeModal: any }
 	{@param? _closeEditModal: any }
+	{@param? _dismissCreationError: any }
+	{@param? _dismissDeletionError: any }
+	{@param? _dismissEditionError: any }
 	{@param? _handleDeleteButtonClick: any }
 	{@param? _handleEditButtonClick: any }
 	{@param? _handleSegmentsExperienceClick: any}
@@ -22,6 +25,7 @@
 	{@param? _handleDropdownButtonClick: any}
 	{@param? _handleEditFormSubmit: any }
 	{@param? _handleFormSubmit: any }
+	{@param? _segmentsExperienceErrors: ? }
 	{@param? _openModal: any }
 	{@param? _toggleEditModal: any }
 	{@param? _toggleModal: any }
@@ -65,11 +69,28 @@
 					<h2>{msg desc=""}select-experience{/msg}</h2>
 
 					{if $availableSegmentsEntries and length($availableSegmentsEntries) > 0}
-						<button class="btn btn-secondary btn-sm text-dark" data-onclick="{$_openModal}">
+						<button class="btn btn-secondary btn-sm text-dark" data-onclick="{$_openModal}" ref="newExperienceBtn">
 							{msg desc=""}new-experience{/msg}
 						</button>
 					{/if}
 				</div>
+
+				{if $_segmentsExperienceErrors and $_segmentsExperienceErrors.deletion }
+					{let $errorMessage kind="text"}
+						{msg desc=""}error-message-delete-experience{/msg}
+					{/let}
+					{call ClayAlert.render}
+						{param elementClasses: 'p-3 pr-5' /}
+						{param closeable: true /}
+						{param message: '' /}
+						{param events: [
+							'hide': $_dismissDeletionError
+						]/}
+						{param spritemap: $spritemap /}
+						{param style: 'danger' /}
+						{param title: $errorMessage /}
+					{/call}
+				{/if}
 
 				<ul class="list-unstyled mt-3">
 					{foreach $experience in $availableSegmentsExperiences}
@@ -145,6 +166,23 @@
 		{if $experienceSegmentsCreation and $experienceSegmentsCreation.creatingSegmentsExperience }
 			{call liferay.frontend.Modal.render}
 				{param body kind="html"}
+					{if $_segmentsExperienceErrors and $_segmentsExperienceErrors.creation }
+						{let $errorMessage kind="text"}
+							{msg desc=""}error-message-create-experience{/msg}
+						{/let}
+
+						{call ClayAlert.render}
+							{param closeable: true /}
+							{param message: '' /}
+							{param events: [
+								'hide': $_dismissCreationError
+							]/}
+							{param spritemap: $spritemap /}
+							{param style: 'danger' /}
+							{param title: $errorMessage /}
+						{/call}
+					{/if}
+
 					<form autocomplete="off" class="mb-3" data-onsubmit="{$_handleFormSubmit}" id="{$portletNamespace}CreateForm">
 						<div class="form-group my-2">
 							<label for="{$portletNamespace}CreateExperience">
@@ -152,6 +190,7 @@
 							</label>
 
 							<input
+								autofocus
 								class="form-control"
 								id="{$portletNamespace}CreateExperience"
 								name="experienceName"
@@ -225,18 +264,36 @@
 			{call liferay.frontend.Modal.render}
 				{param body kind="html"}
 					<form autocomplete="off" class="mb-3" data-onsubmit="{$_handleEditFormSubmit}" id="{$portletNamespace}EditForm">
+					{if $_segmentsExperienceErrors and $_segmentsExperienceErrors.edition }
+						{let $errorMessage kind="text"}
+							{msg desc=""}error-message-edit-experience{/msg}
+						{/let}
+
+						{call ClayAlert.render}
+							{param closeable: true /}
+							{param message: '' /}
+							{param events: [
+								'hide': $_dismissEditionError
+							]/}
+							{param spritemap: $spritemap /}
+							{param style: 'danger' /}
+							{param title: $errorMessage /}
+						{/call}
+					{/if}
 						<div class="form-group my-2">
 							<label for="{$portletNamespace}EditExperience">
 								{msg desc=""}name{/msg}
 							</label>
 
 							<input
+								autofocus
 								class="form-control"
 								id="{$portletNamespace}EditExperience"
 								name="experienceName"
 								value="{$segmentsExperienceEdition.name}"
 								placeholder="{msg desc=""}experience-name{/msg}"
 								ref="experienceName"
+								required
 								type="text"
 							/>
 						</div>

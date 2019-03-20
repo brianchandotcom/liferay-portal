@@ -18,7 +18,7 @@ const EDIT_SEGMENTS_EXPERIENCE_URL = '/segments.segmentsexperience/update-segmen
  */
 function createSegmentsExperienceReducer(state, actionType, payload) {
 	return new Promise(
-		resolve => {
+		(resolve, reject) => {
 			let nextState = state;
 			if (actionType === CREATE_SEGMENTS_EXPERIENCE) {
 				const {name, segmentsEntryId} = payload;
@@ -79,7 +79,7 @@ function createSegmentsExperienceReducer(state, actionType, payload) {
 						resolve(nextState);
 					},
 					error => {
-						resolve(nextState);
+						reject(error);
 					}
 				);
 			}
@@ -99,7 +99,7 @@ function createSegmentsExperienceReducer(state, actionType, payload) {
  */
 function deleteSegmentsExperienceReducer(state, actionType, payload) {
 	return new Promise(
-		resolve => {
+		(resolve, reject) => {
 			let nextState = state;
 			if (actionType === DELETE_SEGMENTS_EXPERIENCE) {
 				const {segmentsExperienceId} = payload;
@@ -125,8 +125,9 @@ function deleteSegmentsExperienceReducer(state, actionType, payload) {
 						);
 						resolve(nextState);
 					},
-					error => {
-						resolve(nextState);
+					(error, {exception}) => {
+
+						reject(exception);
 					}
 				);
 
@@ -261,7 +262,7 @@ function selectSegmentsExperienceReducer(state, actionType, payload) {
  */
 function editSegmentsExperienceReducer(state, actionType, payload) {
 	return new Promise(
-		resolve => {
+		(resolve, reject) => {
 			let nextState = state;
 			if (actionType === EDIT_SEGMENTS_EXPERIENCE) {
 				const {
@@ -315,7 +316,7 @@ function editSegmentsExperienceReducer(state, actionType, payload) {
 						resolve(nextState);
 					},
 					error => {
-						resolve(nextState);
+						reject(error);
 					}
 				);
 			}

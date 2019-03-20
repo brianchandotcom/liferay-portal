@@ -149,7 +149,7 @@ class Store extends State {
 
 	failed(callback) {
 		this._dispatchPromise = this._dispatchPromise
-			.catch(() => callback(this));
+			.catch(error => callback(error));
 
 		return this;
 	}

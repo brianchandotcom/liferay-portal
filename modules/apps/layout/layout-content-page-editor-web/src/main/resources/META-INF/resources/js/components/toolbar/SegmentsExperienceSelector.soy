@@ -82,7 +82,7 @@
 
 				{if $_segmentsExperienceErrors and $_segmentsExperienceErrors.deletion }
 					{let $errorMessage kind="text"}
-						{msg desc=""}error-message-delete-experience{/msg}
+						{msg desc=""}an-unexpected-error-occurred-while-deleting-the-experience{/msg}
 					{/let}
 					{call ClayAlert.render}
 						{param elementClasses: 'p-3 pr-5' /}
@@ -181,7 +181,7 @@
 		{/let}
 
 		{let $errorCreatingMessage kind="text"}
-			{msg desc=""}error-message-create-experience{/msg}
+			{msg desc=""}an-unexpected-error-occurred-while-creating-the-experience{/msg}
 		{/let}
 
 		{let $segmentLabel kind="text"}
@@ -227,7 +227,7 @@
 		{/let}
 
 		{let $errorEditionMessage kind="text"}
-			{msg desc=""}error-message-edit-experience{/msg}
+			{msg desc=""}an-unexpected-error-occurred-while-updating-the-experience{/msg}
 		{/let}
 
 		{let $editionModalCondition: ($modalStates and $modalStates.edition) ? true : false /}

@@ -152,7 +152,7 @@ class SegmentsExperienceSelector extends Component {
 
 				Liferay.Util.openToast(
 					{
-						title: Liferay.Language.get('success-message-create-experience'),
+						title: Liferay.Language.get('the-experience-was-created-successfully'),
 						type: 'success'
 					}
 				);
@@ -185,7 +185,7 @@ class SegmentsExperienceSelector extends Component {
 			() => {
 				Liferay.Util.openToast(
 					{
-						title: Liferay.Language.get('success-message-delete-experience'),
+						title: Liferay.Language.get('the-experience-was-deleted-successfully'),
 						type: 'success'
 					}
 				);
@@ -306,7 +306,7 @@ class SegmentsExperienceSelector extends Component {
 
 				Liferay.Util.openToast(
 					{
-						title: Liferay.Language.get('success-message-edit-experience'),
+						title: Liferay.Language.get('the-experience-was-updated-successfully'),
 						type: 'success'
 					}
 				);

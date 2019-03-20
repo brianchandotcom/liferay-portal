@@ -55,9 +55,19 @@ class DatePicker extends Component {
 
 	_handleDayClicked(event) {
 		const ariaLabel = event.target.getAttribute('ariaLabel');
+		const selectedDate = Helpers.formatDate(ariaLabel);
+
+		if (selectedDate.getMonth() > this.currentMonth.getMonth()) {
+			this._handleNextMonth();
+		}
+		else if (selectedDate.getMonth() < this.currentMonth.getMonth()) {
+			this._handlePreviousMonth();
+		}
 
 		this._daySelected = ariaLabel;
-		this.value = Helpers.formatDate(this._daySelected);
+		this.expanded = false;
+		this.value = selectedDate;
+
 		this._handleFieldEdited();
 	}
 

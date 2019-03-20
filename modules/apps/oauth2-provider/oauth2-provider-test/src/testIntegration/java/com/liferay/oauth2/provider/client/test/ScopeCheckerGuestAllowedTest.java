@@ -59,13 +59,13 @@ public class ScopeCheckerGuestAllowedTest extends BaseClientTestCase {
 
 	@Test
 	public void test() throws Exception {
-		testApplication("/annotated-guest-allowed/", "everything.read", 403);
+		testApplication("/annotated-guest-allowed/", "everything.read", 200);
 
 		testApplication("/annotated-guest-allowed/no-scope", "no-scope", 200);
 
-		testApplication("/annotated-guest-default/", "everything.read", 403);
+		testApplication("/annotated-guest-default/", "everything.read", 200);
 
-		testApplication("/annotated-guest-default/no-scope", "no-scope", 403);
+		testApplication("/annotated-guest-default/no-scope", "no-scope", 200);
 
 		testApplication(
 			"/annotated-guest-not-allowed/", "everything.read", 403);
@@ -73,15 +73,15 @@ public class ScopeCheckerGuestAllowedTest extends BaseClientTestCase {
 		testApplication(
 			"/annotated-guest-not-allowed/no-scope", "no-scope", 403);
 
-		testApplication("/default-jaxrs-app-guest-allowed/", "get", 403);
+		testApplication("/default-jaxrs-app-guest-allowed/", "get", 200);
 
-		testApplication("/default-jaxrs-app-guest-default/", "get", 403);
+		testApplication("/default-jaxrs-app-guest-default/", "get", 200);
 
 		testApplication("/default-jaxrs-app-guest-not-allowed/", "get", 403);
 
-		testApplication("/methods-guest-allowed/", "get", 403);
+		testApplication("/methods-guest-allowed/", "get", 200);
 
-		testApplication("/methods-guest-default/", "get", 403);
+		testApplication("/methods-guest-default/", "get", 200);
 
 		testApplication("/methods-guest-not-allowed/", "get", 403);
 	}

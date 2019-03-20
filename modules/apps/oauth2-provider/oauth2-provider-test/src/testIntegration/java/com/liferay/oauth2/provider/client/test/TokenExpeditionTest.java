@@ -155,6 +155,7 @@ public class TokenExpeditionTest extends BaseClientTestCase {
 
 			Dictionary<String, Object> properties = new HashMapDictionary<>();
 
+			properties.put("auth.verifier.guest.allowed", false);
 			properties.put("oauth2.scope.checker.type", "annotations");
 
 			registerJaxRsApplication(

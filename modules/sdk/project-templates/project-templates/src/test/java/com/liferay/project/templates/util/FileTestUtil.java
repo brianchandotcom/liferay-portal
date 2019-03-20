@@ -41,6 +41,9 @@ import java.util.concurrent.atomic.AtomicReference;
  */
 public class FileTestUtil {
 
+	public static final String PROJECT_TEMPLATE_BUNDLE_NAME_PREFIX =
+		"Liferay Project Templates";
+
 	public static final String PROJECT_TEMPLATE_DIR_PREFIX =
 		"project-templates-";
 

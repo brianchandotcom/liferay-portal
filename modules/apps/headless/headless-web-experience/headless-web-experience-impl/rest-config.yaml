@@ -5,4 +5,5 @@ application:
     className: "HeadlessWebExperienceApplication"
     name: "Liferay.Headless.Web.Experience"
 author: "Javier Gamarra"
+clientDir: "../headless-web-experience-client/src/main/java"
 testDir: "../headless-web-experience-test/src/testIntegration/java"

@@ -81,12 +81,10 @@ public class ExpectedFormSchemaInferrer {
 			properties.add(_ID_PROPERTY);
 		}
 
-		Predicate<Property> optionalPredicate = property -> {
-			return property.isWriteable() && !property.isRequired();
-		};
-		Predicate<Property> requiredPredicate = property -> {
-			return property.isWriteable() && property.isRequired();
-		};
+		Predicate<Property> optionalPredicate =
+			property -> property.isWriteable() && !property.isRequired();
+		Predicate<Property> requiredPredicate =
+			property -> property.isWriteable() && property.isRequired();
 
 		Schema optionalSchema = _getSchemaFromProperties(
 			properties, optionalPredicate, true);

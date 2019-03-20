@@ -41,16 +41,13 @@ public class AddressUtil {
 				return false;
 			}
 		).map(
-			country -> {
-				return Optional.ofNullable(
-					ServiceContextThreadLocal.getServiceContext()
-				).map(
-					serviceContext -> country.getName(
-						serviceContext.getLocale())
-				).orElseGet(
-					country::getName
-				);
-			}
+			country -> Optional.ofNullable(
+				ServiceContextThreadLocal.getServiceContext()
+			).map(
+				serviceContext -> country.getName(serviceContext.getLocale())
+			).orElseGet(
+				country::getName
+			)
 		).filter(
 			Validator::isNotNull
 		);

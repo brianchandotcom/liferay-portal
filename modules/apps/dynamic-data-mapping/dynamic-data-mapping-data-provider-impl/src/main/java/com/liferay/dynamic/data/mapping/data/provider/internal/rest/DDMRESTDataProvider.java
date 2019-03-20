@@ -322,10 +322,8 @@ public class DDMRESTDataProvider implements DDMDataProvider {
 			ddmRESTDataProviderSettings.inputParameters());
 
 		return stream.filter(
-			inputParameter -> {
-				return parameters.containsKey(
-					inputParameter.inputParameterName());
-			}
+			inputParameter -> parameters.containsKey(
+				inputParameter.inputParameterName())
 		).collect(
 			Collectors.toMap(
 				DDMDataProviderInputParametersSettings::inputParameterName,

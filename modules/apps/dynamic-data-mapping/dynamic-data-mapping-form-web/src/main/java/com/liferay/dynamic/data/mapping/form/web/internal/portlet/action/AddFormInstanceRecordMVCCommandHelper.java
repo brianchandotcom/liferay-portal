@@ -178,9 +178,7 @@ public class AddFormInstanceRecordMVCCommandHelper {
 			stream = entrySet.stream();
 
 		return stream.filter(
-			result -> {
-				return !MapUtil.getBoolean(result.getValue(), "visible", true);
-			}
+			result -> !MapUtil.getBoolean(result.getValue(), "visible", true)
 		).map(
 			result -> {
 				DDMFormEvaluatorFieldContextKey ddmFormFieldContextKey =

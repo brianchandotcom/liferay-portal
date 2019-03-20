@@ -1317,10 +1317,8 @@ public class BeanPortletExtension implements Extension {
 
 		String defaultPreferencesValidator = wildcardPreferencesValidator;
 
-		return portletName -> {
-			return preferencesValidators.getOrDefault(
-				portletName, defaultPreferencesValidator);
-		};
+		return portletName -> preferencesValidators.getOrDefault(
+			portletName, defaultPreferencesValidator);
 	}
 
 	private LiferayPortletConfiguration _getAnnotatedLiferayConfiguration(

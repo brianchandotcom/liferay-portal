@@ -58,6 +58,10 @@
 
 .layout-column-item-subtitle {
 	font-weight: normal;
+
+	.label {
+		vertical-align: text-top;
+	}
 }
 
 .layout-drag-handler {
@@ -89,6 +93,10 @@
 
 	.layout-column-item-title {
 		pointer-events: none;
+
+		.badge {
+			vertical-align: bottom;
+		}
 	}
 
 	.layout-column-item-click-mask {

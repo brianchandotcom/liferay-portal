@@ -216,19 +216,19 @@
 				<h4 class="list-group-title">
 					<span class="text-truncate">
 						{$layoutColumnItem.title}
+
+						{if $layoutColumnItem.homePage}
+							&nbsp;
+							{call ClayBadge.render}
+								{param label: 'H' /}
+							{/call}
+						{/if}
 					</span>
 				</h4>
 
 				{if $layoutColumnItem.description}
 					<h6 class="layout-column-item-subtitle list-group-subtitle text-truncate">
 						{$layoutColumnItem.description}
-
-						{if $layoutColumnItem.homePage}
-							&nbsp;
-							<span class="label label-info">
-								<span class="label-item label-item-expand">{msg desc=""}home{/msg}</span>
-							</span>
-						{/if}
 
 						{if $layoutColumnItem.draft}
 							&nbsp;

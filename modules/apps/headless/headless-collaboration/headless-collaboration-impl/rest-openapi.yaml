@@ -1084,37 +1084,6 @@ paths:
                                 $ref: "#/components/schemas/DiscussionAttachment"
                     description: ""
             tags: ["DiscussionAttachment"]
-    "/discussion-forum-postings-attachments/{discussion-forum-postings-attachment-id}":
-        delete:
-            parameters:
-                - in: path
-                  name: discussion-forum-postings-attachment-id
-                  required: true
-                  schema:
-                      format: int64
-                      type: integer
-            responses:
-                204:
-                    content:
-                        application/json: {}
-                    description: ""
-            tags: ["DiscussionAttachment"]
-        get:
-            parameters:
-                - in: path
-                  name: discussion-forum-postings-attachment-id
-                  required: true
-                  schema:
-                      format: int64
-                      type: integer
-            responses:
-                200:
-                    content:
-                        application/json:
-                            schema:
-                                $ref: "#/components/schemas/DiscussionAttachment"
-                    description: ""
-            tags: ["DiscussionAttachment"]
     "/discussion-forum-postings/{discussion-forum-posting-id}":
         delete:
             parameters:
@@ -1188,6 +1157,52 @@ paths:
                                 $ref: "#/components/schemas/DiscussionForumPosting"
                     description: ""
             tags: ["DiscussionForumPosting"]
+    "/discussion-forum-postings/{discussion-forum-posting-id}/discussion-attachments":
+        get:
+            parameters:
+                - in: path
+                  name: discussion-forum-posting-id
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/DiscussionAttachment"
+                                type: array
+                    description: ""
+            tags: ["DiscussionAttachment"]
+        post:
+            parameters:
+                - in: path
+                  name: discussion-forum-posting-id
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            requestBody:
+                content:
+                    multipart/form-data:
+                        schema:
+                            properties:
+                                discussionAttachment:
+                                    $ref: "#/components/schemas/DiscussionAttachment"
+                                file:
+                                    format: binary
+                                    type: string
+                            type: object
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/DiscussionAttachment"
+                    description: ""
+            tags: ["DiscussionAttachment"]
     "/discussion-forum-postings/{discussion-forum-posting-id}/discussion-forum-postings":
         get:
             parameters:
@@ -1244,52 +1259,6 @@ paths:
                                 $ref: "#/components/schemas/DiscussionForumPosting"
                     description: ""
             tags: ["DiscussionForumPosting"]
-    "/discussion-forum-postings/{discussion-forum-posting-id}/discussion-forum-postings-attachments":
-        get:
-            parameters:
-                - in: path
-                  name: discussion-forum-posting-id
-                  required: true
-                  schema:
-                      format: int64
-                      type: integer
-            responses:
-                200:
-                    content:
-                        application/json:
-                            schema:
-                                items:
-                                    $ref: "#/components/schemas/DiscussionAttachment"
-                                type: array
-                    description: ""
-            tags: ["DiscussionAttachment"]
-        post:
-            parameters:
-                - in: path
-                  name: discussion-forum-posting-id
-                  required: true
-                  schema:
-                      format: int64
-                      type: integer
-            requestBody:
-                content:
-                    multipart/form-data:
-                        schema:
-                            properties:
-                                discussionAttachment:
-                                    $ref: "#/components/schemas/DiscussionAttachment"
-                                file:
-                                    format: binary
-                                    type: string
-                            type: object
-            responses:
-                200:
-                    content:
-                        application/json:
-                            schema:
-                                $ref: "#/components/schemas/DiscussionAttachment"
-                    description: ""
-            tags: ["DiscussionAttachment"]
     "/discussion-sections/{discussion-section-id}":
         delete:
             parameters:

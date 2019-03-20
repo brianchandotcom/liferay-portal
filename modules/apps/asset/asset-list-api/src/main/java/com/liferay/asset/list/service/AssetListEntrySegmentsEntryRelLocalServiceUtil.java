@@ -56,6 +56,18 @@ public class AssetListEntrySegmentsEntryRelLocalServiceUtil {
 			assetListEntrySegmentsEntryRel);
 	}
 
+	public static com.liferay.asset.list.model.AssetListEntrySegmentsEntryRel
+			addAssetListEntrySegmentsEntryRel(
+				long userId, long groupId, long assetListEntryId,
+				long segmentsEntryId, String typeSettings,
+				com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().addAssetListEntrySegmentsEntryRel(
+			userId, groupId, assetListEntryId, segmentsEntryId, typeSettings,
+			serviceContext);
+	}
+
 	/**
 	 * Creates a new asset list entry segments entry rel with the primary key. Does not add the asset list entry segments entry rel to the database.
 	 *
@@ -68,6 +80,15 @@ public class AssetListEntrySegmentsEntryRelLocalServiceUtil {
 
 		return getService().createAssetListEntrySegmentsEntryRel(
 			assetListEntrySegmentsEntryRelId);
+	}
+
+	public static com.liferay.asset.list.model.AssetListEntrySegmentsEntryRel
+			deleteAssetListEntrySegmentsEntryRel(
+				com.liferay.asset.list.model.AssetListEntry assetListEntry)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().deleteAssetListEntrySegmentsEntryRel(
+			assetListEntry);
 	}
 
 	/**
@@ -99,6 +120,21 @@ public class AssetListEntrySegmentsEntryRelLocalServiceUtil {
 
 		return getService().deleteAssetListEntrySegmentsEntryRel(
 			assetListEntrySegmentsEntryRelId);
+	}
+
+	public static void deleteAssetListEntrySegmentsEntryRel(
+			long assetListEntryId, long segmentsEntryId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		getService().deleteAssetListEntrySegmentsEntryRel(
+			assetListEntryId, segmentsEntryId);
+	}
+
+	public static void deleteAssetListEntrySegmentsEntryRelByAssetListEntryId(
+		long assetListEntryId) {
+
+		getService().deleteAssetListEntrySegmentsEntryRelByAssetListEntryId(
+			assetListEntryId);
 	}
 
 	/**
@@ -205,6 +241,14 @@ public class AssetListEntrySegmentsEntryRelLocalServiceUtil {
 			assetListEntrySegmentsEntryRelId);
 	}
 
+	public static com.liferay.asset.list.model.AssetListEntrySegmentsEntryRel
+		fetchAssetListEntrySegmentsEntryRel(
+			long assetListEntryId, long segmentsEntryId) {
+
+		return getService().fetchAssetListEntrySegmentsEntryRel(
+			assetListEntryId, segmentsEntryId);
+	}
+
 	/**
 	 * Returns the asset list entry segments entry rel matching the UUID and group.
 	 *
@@ -242,6 +286,15 @@ public class AssetListEntrySegmentsEntryRelLocalServiceUtil {
 			assetListEntrySegmentsEntryRelId);
 	}
 
+	public static com.liferay.asset.list.model.AssetListEntrySegmentsEntryRel
+			getAssetListEntrySegmentsEntryRel(
+				long assetListEntryId, long segmentsEntryId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().getAssetListEntrySegmentsEntryRel(
+			assetListEntryId, segmentsEntryId);
+	}
+
 	/**
 	 * Returns the asset list entry segments entry rel matching the UUID and group.
 	 *
@@ -275,6 +328,15 @@ public class AssetListEntrySegmentsEntryRelLocalServiceUtil {
 			getAssetListEntrySegmentsEntryRels(int start, int end) {
 
 		return getService().getAssetListEntrySegmentsEntryRels(start, end);
+	}
+
+	public static java.util.List
+		<com.liferay.asset.list.model.AssetListEntrySegmentsEntryRel>
+			getAssetListEntrySegmentsEntryRels(
+				long assetListEntryId, int start, int end) {
+
+		return getService().getAssetListEntrySegmentsEntryRels(
+			assetListEntryId, start, end);
 	}
 
 	/**
@@ -326,6 +388,13 @@ public class AssetListEntrySegmentsEntryRelLocalServiceUtil {
 		return getService().getAssetListEntrySegmentsEntryRelsCount();
 	}
 
+	public static int getAssetListEntrySegmentsEntryRelsCount(
+		long assetListEntryId) {
+
+		return getService().getAssetListEntrySegmentsEntryRelsCount(
+			assetListEntryId);
+	}
+
 	public static com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery
 		getExportActionableDynamicQuery(
 			com.liferay.exportimport.kernel.lar.PortletDataContext
@@ -370,6 +439,14 @@ public class AssetListEntrySegmentsEntryRelLocalServiceUtil {
 
 		return getService().updateAssetListEntrySegmentsEntryRel(
 			assetListEntrySegmentsEntryRel);
+	}
+
+	public static com.liferay.asset.list.model.AssetListEntrySegmentsEntryRel
+		updateAssetListEntrySegmentsEntryRelTypeSettings(
+			long assetListEntryId, long segmentsEntryId, String typeSettings) {
+
+		return getService().updateAssetListEntrySegmentsEntryRelTypeSettings(
+			assetListEntryId, segmentsEntryId, typeSettings);
 	}
 
 	public static AssetListEntrySegmentsEntryRelLocalService getService() {

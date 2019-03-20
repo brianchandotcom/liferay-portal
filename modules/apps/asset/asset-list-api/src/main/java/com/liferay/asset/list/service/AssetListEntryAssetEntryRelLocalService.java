@@ -77,12 +77,12 @@ public interface AssetListEntryAssetEntryRelLocalService
 		AssetListEntryAssetEntryRel assetListEntryAssetEntryRel);
 
 	public AssetListEntryAssetEntryRel addAssetListEntryAssetEntryRel(
-			long assetListEntryId, long assetEntryId, int position,
-			ServiceContext serviceContext)
+			long assetListEntryId, long segmentsEntryId, long assetEntryId,
+			int position, ServiceContext serviceContext)
 		throws PortalException;
 
 	public AssetListEntryAssetEntryRel addAssetListEntryAssetEntryRel(
-			long assetListEntryId, long assetEntryId,
+			long assetListEntryId, long segmentsEntryId, long assetEntryId,
 			ServiceContext serviceContext)
 		throws PortalException;
 
@@ -120,7 +120,7 @@ public interface AssetListEntryAssetEntryRelLocalService
 
 	@SystemEvent(type = SystemEventConstants.TYPE_DELETE)
 	public AssetListEntryAssetEntryRel deleteAssetListEntryAssetEntryRel(
-			long assetListEntryId, int position)
+			long assetListEntryId, long segmentsEntryId, int position)
 		throws PortalException;
 
 	public void deleteAssetListEntryAssetEntryRelByAssetListEntryId(
@@ -263,6 +263,10 @@ public interface AssetListEntryAssetEntryRelLocalService
 	public List<AssetListEntryAssetEntryRel> getAssetListEntryAssetEntryRels(
 		long assetListEntryId, int start, int end);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<AssetListEntryAssetEntryRel> getAssetListEntryAssetEntryRels(
+		long assetListEntryId, long segmentsEntryId, int start, int end);
+
 	/**
 	 * Returns all the asset list entry asset entry rels matching the UUID and company.
 	 *
@@ -303,6 +307,10 @@ public interface AssetListEntryAssetEntryRelLocalService
 	public int getAssetListEntryAssetEntryRelsCount(long assetListEntryId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getAssetListEntryAssetEntryRelsCount(
+		long assetListEntryId, long segmentsEntryId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ExportActionableDynamicQuery getExportActionableDynamicQuery(
 		PortletDataContext portletDataContext);
 
@@ -322,7 +330,8 @@ public interface AssetListEntryAssetEntryRelLocalService
 		throws PortalException;
 
 	public AssetListEntryAssetEntryRel moveAssetListEntryAssetEntryRel(
-			long assetListEntryId, int position, int newPosition)
+			long assetListEntryId, long segmentsEntryId, int position,
+			int newPosition)
 		throws PortalException;
 
 	/**
@@ -337,7 +346,7 @@ public interface AssetListEntryAssetEntryRelLocalService
 
 	public AssetListEntryAssetEntryRel updateAssetListEntryAssetEntryRel(
 			long assetListEntryAssetEntryRelId, long assetListEntryId,
-			long assetEntryId, int position)
+			long segmentsEntryId, long assetEntryId, int position)
 		throws PortalException;
 
 }

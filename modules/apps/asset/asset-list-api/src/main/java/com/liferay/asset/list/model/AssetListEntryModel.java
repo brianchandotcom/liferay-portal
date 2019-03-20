@@ -232,21 +232,6 @@ public interface AssetListEntryModel
 	public void setType(int type);
 
 	/**
-	 * Returns the type settings of this asset list entry.
-	 *
-	 * @return the type settings of this asset list entry
-	 */
-	@AutoEscape
-	public String getTypeSettings();
-
-	/**
-	 * Sets the type settings of this asset list entry.
-	 *
-	 * @param typeSettings the type settings of this asset list entry
-	 */
-	public void setTypeSettings(String typeSettings);
-
-	/**
 	 * Returns the last publish date of this asset list entry.
 	 *
 	 * @return the last publish date of this asset list entry

@@ -16,6 +16,7 @@ package com.liferay.asset.list.service;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.asset.list.model.AssetListEntry;
 import com.liferay.asset.list.model.AssetListEntrySegmentsEntryRel;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
@@ -26,10 +27,13 @@ import com.liferay.portal.kernel.dao.orm.Projection;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.model.PersistedModel;
+import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.BaseLocalService;
 import com.liferay.portal.kernel.service.PersistedModelLocalService;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
@@ -73,6 +77,12 @@ public interface AssetListEntrySegmentsEntryRelLocalService
 	public AssetListEntrySegmentsEntryRel addAssetListEntrySegmentsEntryRel(
 		AssetListEntrySegmentsEntryRel assetListEntrySegmentsEntryRel);
 
+	public AssetListEntrySegmentsEntryRel addAssetListEntrySegmentsEntryRel(
+			long userId, long groupId, long assetListEntryId,
+			long segmentsEntryId, String typeSettings,
+			ServiceContext serviceContext)
+		throws PortalException;
+
 	/**
 	 * Creates a new asset list entry segments entry rel with the primary key. Does not add the asset list entry segments entry rel to the database.
 	 *
@@ -82,6 +92,11 @@ public interface AssetListEntrySegmentsEntryRelLocalService
 	@Transactional(enabled = false)
 	public AssetListEntrySegmentsEntryRel createAssetListEntrySegmentsEntryRel(
 		long assetListEntrySegmentsEntryRelId);
+
+	@SystemEvent(type = SystemEventConstants.TYPE_DELETE)
+	public AssetListEntrySegmentsEntryRel deleteAssetListEntrySegmentsEntryRel(
+			AssetListEntry assetListEntry)
+		throws PortalException;
 
 	/**
 	 * Deletes the asset list entry segments entry rel from the database. Also notifies the appropriate model listeners.
@@ -104,6 +119,13 @@ public interface AssetListEntrySegmentsEntryRelLocalService
 	public AssetListEntrySegmentsEntryRel deleteAssetListEntrySegmentsEntryRel(
 			long assetListEntrySegmentsEntryRelId)
 		throws PortalException;
+
+	public void deleteAssetListEntrySegmentsEntryRel(
+			long assetListEntryId, long segmentsEntryId)
+		throws PortalException;
+
+	public void deleteAssetListEntrySegmentsEntryRelByAssetListEntryId(
+		long assetListEntryId);
 
 	/**
 	 * @throws PortalException
@@ -182,6 +204,10 @@ public interface AssetListEntrySegmentsEntryRelLocalService
 	public AssetListEntrySegmentsEntryRel fetchAssetListEntrySegmentsEntryRel(
 		long assetListEntrySegmentsEntryRelId);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public AssetListEntrySegmentsEntryRel fetchAssetListEntrySegmentsEntryRel(
+		long assetListEntryId, long segmentsEntryId);
+
 	/**
 	 * Returns the asset list entry segments entry rel matching the UUID and group.
 	 *
@@ -207,6 +233,11 @@ public interface AssetListEntrySegmentsEntryRelLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public AssetListEntrySegmentsEntryRel getAssetListEntrySegmentsEntryRel(
 			long assetListEntrySegmentsEntryRelId)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public AssetListEntrySegmentsEntryRel getAssetListEntrySegmentsEntryRel(
+			long assetListEntryId, long segmentsEntryId)
 		throws PortalException;
 
 	/**
@@ -237,6 +268,11 @@ public interface AssetListEntrySegmentsEntryRelLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<AssetListEntrySegmentsEntryRel>
 		getAssetListEntrySegmentsEntryRels(int start, int end);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<AssetListEntrySegmentsEntryRel>
+		getAssetListEntrySegmentsEntryRels(
+			long assetListEntryId, int start, int end);
 
 	/**
 	 * Returns all the asset list entry segments entry rels matching the UUID and company.
@@ -276,6 +312,9 @@ public interface AssetListEntrySegmentsEntryRelLocalService
 	public int getAssetListEntrySegmentsEntryRelsCount();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getAssetListEntrySegmentsEntryRelsCount(long assetListEntryId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ExportActionableDynamicQuery getExportActionableDynamicQuery(
 		PortletDataContext portletDataContext);
 
@@ -303,5 +342,9 @@ public interface AssetListEntrySegmentsEntryRelLocalService
 	@Indexable(type = IndexableType.REINDEX)
 	public AssetListEntrySegmentsEntryRel updateAssetListEntrySegmentsEntryRel(
 		AssetListEntrySegmentsEntryRel assetListEntrySegmentsEntryRel);
+
+	public AssetListEntrySegmentsEntryRel
+		updateAssetListEntrySegmentsEntryRelTypeSettings(
+			long assetListEntryId, long segmentsEntryId, String typeSettings);
 
 }

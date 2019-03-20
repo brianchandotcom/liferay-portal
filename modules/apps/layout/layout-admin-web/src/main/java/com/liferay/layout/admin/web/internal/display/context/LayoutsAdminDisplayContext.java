@@ -85,6 +85,7 @@ import com.liferay.taglib.security.PermissionsURLTag;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
@@ -568,6 +569,18 @@ public class LayoutsAdminDisplayContext {
 				LanguageUtil.get(
 					_request, layoutTypeResourceBundle,
 					"layout.types." + layout.getType()));
+
+			Date modifiedDate = layout.getModifiedDate();
+
+			if (Objects.equals(
+					layout.getType(), LayoutConstants.TYPE_CONTENT)) {
+
+				layoutJSONObject.put(
+					"draft", modifiedDate.after(layout.getPublishDate()));
+			}
+			else {
+				layoutJSONObject.put("draft", false);
+			}
 
 			layoutJSONObject.put(
 				"homePage",

@@ -9,6 +9,7 @@
 		active: bool,
 		checked: bool,
 		description: string,
+		draft: bool,
 		dropdownItems: list<?>,
 		hasChild: bool,
 		homePage: bool,
@@ -111,6 +112,7 @@
 		active: bool,
 		checked: bool,
 		description: string,
+		draft: bool,
 		dropdownItems: list<?>,
 		hasChild: bool,
 		homePage: bool,
@@ -225,6 +227,13 @@
 							&nbsp;
 							<span class="label label-info">
 								<span class="label-item label-item-expand">{msg desc=""}home{/msg}</span>
+							</span>
+						{/if}
+
+						{if $layoutColumnItem.draft}
+							&nbsp;
+							<span class="label label-secondary">
+								<span class="label-item label-item-expand">{msg desc=""}draft{/msg}</span>
 							</span>
 						{/if}
 					</h6>

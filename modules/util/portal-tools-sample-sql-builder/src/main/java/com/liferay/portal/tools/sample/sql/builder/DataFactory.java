@@ -247,6 +247,8 @@ import java.sql.Types;
 
 import java.text.Format;
 
+import java.time.ZoneId;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -953,15 +955,12 @@ public class DataFactory {
 		String timeZoneId = properties.getProperty("sample.sql.db.time.zone");
 
 		if (Validator.isNotNull(timeZoneId)) {
-			TimeZone timeZone = TimeZone.getTimeZone(timeZoneId);
+			TimeZone timeZone = TimeZone.getTimeZone(ZoneId.of(timeZoneId));
 
-			if (timeZone != null) {
-				TimeZone.setDefault(timeZone);
+			TimeZone.setDefault(timeZone);
 
-				_simpleDateFormat =
-					FastDateFormatFactoryUtil.getSimpleDateFormat(
-						"yyyy-MM-dd HH:mm:ss", timeZone);
-			}
+			_simpleDateFormat = FastDateFormatFactoryUtil.getSimpleDateFormat(
+				"yyyy-MM-dd HH:mm:ss", timeZone);
 		}
 
 		_maxAssetCategoryCount = GetterUtil.getInteger(

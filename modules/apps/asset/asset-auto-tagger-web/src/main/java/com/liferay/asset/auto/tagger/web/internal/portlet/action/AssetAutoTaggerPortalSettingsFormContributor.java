@@ -19,9 +19,7 @@ import com.liferay.asset.auto.tagger.configuration.AssetAutoTaggerConfigurationF
 import com.liferay.asset.auto.tagger.constants.AssetAutoTaggerConstants;
 import com.liferay.asset.auto.tagger.web.internal.constants.PortalSettingsAssetAutoTaggerConstants;
 import com.liferay.portal.kernel.servlet.SessionErrors;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.settings.portlet.action.PortalSettingsFormContributor;
 import com.liferay.portal.settings.portlet.action.PortalSettingsParameterUtil;
 
@@ -64,20 +62,16 @@ public class AssetAutoTaggerPortalSettingsFormContributor
 	public void validateForm(
 		ActionRequest actionRequest, ActionResponse actionResponse) {
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
 		String maximumNumberOfTagsPerAsset =
 			PortalSettingsParameterUtil.getString(
 				actionRequest, this, "maximumNumberOfTagsPerAsset");
 
-		AssetAutoTaggerConfiguration assetAutoTaggerConfiguration =
+		AssetAutoTaggerConfiguration systemAssetAutoTaggerConfiguration =
 			_assetAutoTaggerConfigurationFactory.
-				getCompanyAssetAutoTaggerConfiguration(
-					themeDisplay.getCompany());
+				getSystemAssetAutoTaggerConfiguration();
 
 		int systemMaximumNumberOfTagsPerAsset =
-			assetAutoTaggerConfiguration.getSystemNumberOfTagsPerAsset();
+			systemAssetAutoTaggerConfiguration.getMaximumNumberOfTagsPerAsset();
 
 		if ((systemMaximumNumberOfTagsPerAsset != 0) &&
 			(systemMaximumNumberOfTagsPerAsset < GetterUtil.getInteger(

@@ -24,10 +24,9 @@ import java.io.ObjectOutputStream;
 
 import java.lang.annotation.Annotation;
 
-import java.net.InetAddress;
+import java.net.InetSocketAddress;
 import java.net.Socket;
 import java.net.URL;
-import java.net.UnknownHostException;
 
 import java.util.Comparator;
 import java.util.List;
@@ -73,23 +72,12 @@ public class ArquillianBundleActivator implements BundleActivator {
 
 		Attributes attributes = manifest.getMainAttributes();
 
-		String hostName = attributes.getValue(
-			Headers.TEST_BRIDGE_REPORT_SERVER_HOST_NAME);
-
-		InetAddress inetAddress = null;
-
-		try {
-			inetAddress = InetAddress.getByName(hostName);
-		}
-		catch (UnknownHostException uhe) {
-			throw new IllegalArgumentException(
-				"Invalid host name " + hostName, uhe);
-		}
-
-		ClientBridge clientBridge = new ClientBridge(
-			inetAddress,
+		InetSocketAddress inetSocketAddress = new InetSocketAddress(
+			attributes.getValue(Headers.TEST_BRIDGE_REPORT_SERVER_HOST_NAME),
 			Integer.valueOf(
 				attributes.getValue(Headers.TEST_BRIDGE_REPORT_SERVER_PORT)));
+
+		ClientBridge clientBridge = new ClientBridge(inetSocketAddress);
 
 		String className = attributes.getValue(Headers.TEST_BRIDGE_CLASS_NAME);
 
@@ -211,12 +199,11 @@ public class ArquillianBundleActivator implements BundleActivator {
 
 	private class ClientBridge {
 
-		public ClientBridge(InetAddress inetAddress, int port) {
-			_inetAddress = inetAddress;
-			_port = port;
-
+		public ClientBridge(InetSocketAddress inetSocketAddress) {
 			try {
-				_socket = new Socket(_inetAddress, _port);
+				_socket = new Socket();
+
+				_socket.connect(inetSocketAddress);
 
 				_objectOutputStream = new ObjectOutputStream(
 					_socket.getOutputStream());
@@ -256,9 +243,7 @@ public class ArquillianBundleActivator implements BundleActivator {
 			}
 		}
 
-		private final InetAddress _inetAddress;
 		private final ObjectOutputStream _objectOutputStream;
-		private final int _port;
 		private final Socket _socket;
 
 	}

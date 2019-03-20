@@ -105,13 +105,8 @@ public class AopCacheManager {
 			InfrastructureUtil.getDynamicDataSourceTargetSource();
 
 		if (dynamicDataSourceTargetSource != null) {
-			DynamicDataSourceAdvice dynamicDataSourceAdvice =
-				new DynamicDataSourceAdvice();
-
-			dynamicDataSourceAdvice.setDynamicDataSourceTargetSource(
-				dynamicDataSourceTargetSource);
-
-			chainableMethodAdvices.add(dynamicDataSourceAdvice);
+			chainableMethodAdvices.add(
+				new DynamicDataSourceAdvice(dynamicDataSourceTargetSource));
 		}
 
 		chainableMethodAdvices.add(new IndexableAdvice());

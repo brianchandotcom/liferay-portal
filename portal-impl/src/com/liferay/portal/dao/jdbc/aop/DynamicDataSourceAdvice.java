@@ -35,6 +35,12 @@ import org.springframework.transaction.interceptor.TransactionAttribute;
  */
 public class DynamicDataSourceAdvice extends ChainableMethodAdvice {
 
+	public DynamicDataSourceAdvice(
+		DynamicDataSourceTargetSource dynamicDataSourceTargetSource) {
+
+		_dynamicDataSourceTargetSource = dynamicDataSourceTargetSource;
+	}
+
 	@Override
 	public Object createMethodContext(
 		Class<?> targetClass, Method method,
@@ -62,12 +68,6 @@ public class DynamicDataSourceAdvice extends ChainableMethodAdvice {
 		return operation;
 	}
 
-	public void setDynamicDataSourceTargetSource(
-		DynamicDataSourceTargetSource dynamicDataSourceTargetSource) {
-
-		_dynamicDataSourceTargetSource = dynamicDataSourceTargetSource;
-	}
-
 	@Override
 	protected Object before(
 		AopMethodInvocation aopMethodInvocation, Object[] arguments) {
@@ -86,6 +86,6 @@ public class DynamicDataSourceAdvice extends ChainableMethodAdvice {
 		_dynamicDataSourceTargetSource.popOperation();
 	}
 
-	private DynamicDataSourceTargetSource _dynamicDataSourceTargetSource;
+	private final DynamicDataSourceTargetSource _dynamicDataSourceTargetSource;
 
 }

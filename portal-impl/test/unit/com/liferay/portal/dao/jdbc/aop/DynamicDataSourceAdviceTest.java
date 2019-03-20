@@ -47,9 +47,6 @@ public class DynamicDataSourceAdviceTest {
 
 	@Before
 	public void setUp() throws Exception {
-		DynamicDataSourceAdvice dynamicDataSourceAdvice =
-			new DynamicDataSourceAdvice();
-
 		_dynamicDataSourceTargetSource =
 			new DefaultDynamicDataSourceTargetSource();
 
@@ -77,8 +74,8 @@ public class DynamicDataSourceAdviceTest {
 
 		_dynamicDataSourceTargetSource.setWriteDataSource(_writeDataSource);
 
-		dynamicDataSourceAdvice.setDynamicDataSourceTargetSource(
-			_dynamicDataSourceTargetSource);
+		DynamicDataSourceAdvice dynamicDataSourceAdvice =
+			new DynamicDataSourceAdvice(_dynamicDataSourceTargetSource);
 
 		Constructor<AopInvocationHandler> constructor =
 			AopInvocationHandler.class.getDeclaredConstructor(

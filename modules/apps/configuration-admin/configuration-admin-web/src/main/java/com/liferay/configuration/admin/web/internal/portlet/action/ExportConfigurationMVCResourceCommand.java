@@ -57,7 +57,6 @@ import org.osgi.service.metatype.AttributeDefinition;
 @Component(
 	immediate = true,
 	property = {
-		"javax.portlet.name=" + ConfigurationAdminPortletKeys.INSTANCE_SETTINGS,
 		"javax.portlet.name=" + ConfigurationAdminPortletKeys.SYSTEM_SETTINGS,
 		"mvc.command.name=export"
 	},

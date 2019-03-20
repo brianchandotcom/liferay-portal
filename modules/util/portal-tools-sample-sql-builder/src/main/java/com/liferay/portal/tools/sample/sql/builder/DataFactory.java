@@ -961,6 +961,9 @@ public class DataFactory {
 
 			TimeZone.setDefault(timeZone);
 		}
+		else {
+			properties.setProperty("sample.sql.db.time.zone", timeZone.getID());
+		}
 
 		_simpleDateFormat = FastDateFormatFactoryUtil.getSimpleDateFormat(
 			"yyyy-MM-dd HH:mm:ss", timeZone);

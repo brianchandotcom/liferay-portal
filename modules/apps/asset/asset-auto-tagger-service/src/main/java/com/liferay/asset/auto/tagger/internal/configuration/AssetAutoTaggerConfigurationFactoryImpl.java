@@ -88,6 +88,12 @@ public class AssetAutoTaggerConfigurationFactoryImpl
 			}
 
 			@Override
+			public int getSystemNumberOfTagsPerAsset() {
+				return _assetAutoTaggerSystemConfiguration.
+					maximumNumberOfTagsPerAsset();
+			}
+
+			@Override
 			public boolean isAvailable() {
 				return true;
 			}
@@ -156,6 +162,15 @@ public class AssetAutoTaggerConfigurationFactoryImpl
 		}
 
 		@Override
+		public int getSystemNumberOfTagsPerAsset() {
+			int systemMaximumNumberOfTagsPerAsset =
+				_assetAutoTaggerSystemConfiguration.
+					maximumNumberOfTagsPerAsset();
+
+			return systemMaximumNumberOfTagsPerAsset;
+		}
+
+		@Override
 		public boolean isAvailable() {
 			return _assetAutoTaggerSystemConfiguration.enabled();
 		}
@@ -191,6 +206,12 @@ public class AssetAutoTaggerConfigurationFactoryImpl
 		public int getMaximumNumberOfTagsPerAsset() {
 			return _assetAutoTaggerCompanyConfiguration.
 				getMaximumNumberOfTagsPerAsset();
+		}
+
+		@Override
+		public int getSystemNumberOfTagsPerAsset() {
+			return _assetAutoTaggerCompanyConfiguration.
+				getSystemNumberOfTagsPerAsset();
 		}
 
 		@Override

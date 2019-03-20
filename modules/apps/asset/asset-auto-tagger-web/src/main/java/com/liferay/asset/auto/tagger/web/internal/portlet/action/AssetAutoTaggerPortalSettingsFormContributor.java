@@ -14,17 +14,24 @@
 
 package com.liferay.asset.auto.tagger.web.internal.portlet.action;
 
+import com.liferay.asset.auto.tagger.configuration.AssetAutoTaggerConfiguration;
+import com.liferay.asset.auto.tagger.configuration.AssetAutoTaggerConfigurationFactory;
 import com.liferay.asset.auto.tagger.constants.AssetAutoTaggerConstants;
 import com.liferay.asset.auto.tagger.web.internal.constants.PortalSettingsAssetAutoTaggerConstants;
+import com.liferay.portal.kernel.servlet.SessionErrors;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.settings.portlet.action.PortalSettingsFormContributor;
+import com.liferay.portal.settings.portlet.action.PortalSettingsParameterUtil;
 
 import java.util.Optional;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
-import javax.portlet.PortletException;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Alejandro Tardín
@@ -55,8 +62,34 @@ public class AssetAutoTaggerPortalSettingsFormContributor
 
 	@Override
 	public void validateForm(
-			ActionRequest actionRequest, ActionResponse actionResponse)
-		throws PortletException {
+		ActionRequest actionRequest, ActionResponse actionResponse) {
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		String maximumNumberOfTagsPerAsset =
+			PortalSettingsParameterUtil.getString(
+				actionRequest, this, "maximumNumberOfTagsPerAsset");
+
+		AssetAutoTaggerConfiguration assetAutoTaggerConfiguration =
+			_assetAutoTaggerConfigurationFactory.
+				getCompanyAssetAutoTaggerConfiguration(
+					themeDisplay.getCompany());
+
+		int systemMaximumNumberOfTagsPerAsset =
+			assetAutoTaggerConfiguration.getSystemNumberOfTagsPerAsset();
+
+		if ((systemMaximumNumberOfTagsPerAsset != 0) &&
+			(systemMaximumNumberOfTagsPerAsset < GetterUtil.getInteger(
+				maximumNumberOfTagsPerAsset))) {
+
+			SessionErrors.add(
+				actionRequest, "maximumNumberOfTagsPerAssetInvalid");
+		}
 	}
+
+	@Reference
+	private AssetAutoTaggerConfigurationFactory
+		_assetAutoTaggerConfigurationFactory;
 
 }

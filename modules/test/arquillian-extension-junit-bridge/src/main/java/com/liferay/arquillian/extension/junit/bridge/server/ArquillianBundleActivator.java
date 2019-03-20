@@ -59,9 +59,9 @@ public class ArquillianBundleActivator implements BundleActivator {
 	public void start(BundleContext bundleContext) throws Exception {
 		Bundle testBundle = bundleContext.getBundle();
 
-		Manifest manifest = new Manifest();
-
 		URL url = testBundle.getResource("/META-INF/MANIFEST.MF");
+
+		Manifest manifest = new Manifest();
 
 		try (InputStream inputStream = url.openStream()) {
 			manifest.read(inputStream);
@@ -71,7 +71,7 @@ public class ArquillianBundleActivator implements BundleActivator {
 				"Unable to read test manifest", ioe);
 		}
 
-		final Attributes attributes = manifest.getMainAttributes();
+		Attributes attributes = manifest.getMainAttributes();
 
 		String hostName = attributes.getValue(
 			Headers.TEST_BRIDGE_REPORT_SERVER_HOST_NAME);

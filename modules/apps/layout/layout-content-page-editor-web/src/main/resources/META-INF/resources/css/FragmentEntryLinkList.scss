@@ -40,6 +40,22 @@
 			top: 0;
 			width: calc(100% - #{$fragmentsEditorSpacing * 3});
 		}
+
+		&-resizer {
+			border-radius: 50%;
+			height: 16px;
+			left: 100%;
+			padding: 0;
+			position: absolute;
+			top: 50%;
+			transform: translate(-50%, -50%);
+			width: 16px;
+			z-index: 1;
+		}
+
+		&-resizer:not(:disabled):not(.disabled) {
+			cursor: col-resize;
+		}
 	}
 
 	&__row.no-gutters &__col:before {

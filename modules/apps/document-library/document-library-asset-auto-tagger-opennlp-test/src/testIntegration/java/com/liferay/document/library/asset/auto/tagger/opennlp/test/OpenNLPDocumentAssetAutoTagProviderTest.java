@@ -18,6 +18,8 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.asset.auto.tagger.AssetAutoTagProvider;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.service.DLAppService;
+import com.liferay.petra.function.UnsafeRunnable;
+import com.liferay.portal.configuration.test.util.ConfigurationTemporarySwapper;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.repository.model.FileEntry;
@@ -30,6 +32,7 @@ import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.FileUtil;
+import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.TempFileEntryUtil;
 import com.liferay.portal.service.test.ServiceTestUtil;
 import com.liferay.portal.test.rule.Inject;
@@ -81,15 +84,18 @@ public class OpenNLPDocumentAssetAutoTagProviderTest {
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 			FileUtil.getBytes(getInputStream(fileName)), _serviceContext);
 
-		Collection<String> expectedTagNames = Arrays.asList("tag");
+		_withOpenNLPAutoTagProviderEnabled(
+			() -> {
+				Collection<String> expectedTagNames = Arrays.asList("tag");
 
-		Collection<String> actualTagNames = _assetAutoTagProvider.getTagNames(
-			fileEntry);
+				Collection<String> actualTagNames =
+					_assetAutoTagProvider.getTagNames(fileEntry);
 
-		Assert.assertEquals(
-			actualTagNames.toString(), expectedTagNames.size(),
-			actualTagNames.size());
-		Assert.assertTrue(actualTagNames.containsAll(expectedTagNames));
+				Assert.assertEquals(
+					actualTagNames.toString(), expectedTagNames.size(),
+					actualTagNames.size());
+				Assert.assertTrue(actualTagNames.containsAll(expectedTagNames));
+			});
 	}
 
 	@Test
@@ -104,17 +110,21 @@ public class OpenNLPDocumentAssetAutoTagProviderTest {
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 			FileUtil.getBytes(getInputStream(fileName)), _serviceContext);
 
-		Collection<String> expectedTagNames = Collections.singleton("tag");
+		_withOpenNLPAutoTagProviderEnabled(
+			() -> {
+				Collection<String> expectedTagNames = Collections.singleton(
+					"tag");
 
-		Collection<String> actualTagNames = _assetAutoTagProvider.getTagNames(
-			fileEntry);
+				Collection<String> actualTagNames =
+					_assetAutoTagProvider.getTagNames(fileEntry);
 
-		Assert.assertEquals(
-			actualTagNames.toString(), expectedTagNames.size(),
-			actualTagNames.size());
-		Assert.assertTrue(
-			actualTagNames.toString(),
-			actualTagNames.containsAll(expectedTagNames));
+				Assert.assertEquals(
+					actualTagNames.toString(), expectedTagNames.size(),
+					actualTagNames.size());
+				Assert.assertTrue(
+					actualTagNames.toString(),
+					actualTagNames.containsAll(expectedTagNames));
+			});
 	}
 
 	@Test
@@ -126,10 +136,13 @@ public class OpenNLPDocumentAssetAutoTagProviderTest {
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 			FileUtil.getBytes(getInputStream("test.jpg")), _serviceContext);
 
-		Collection<String> tagNames = _assetAutoTagProvider.getTagNames(
-			fileEntry);
+		_withOpenNLPAutoTagProviderEnabled(
+			() -> {
+				Collection<String> tagNames = _assetAutoTagProvider.getTagNames(
+					fileEntry);
 
-		Assert.assertEquals(tagNames.toString(), 0, tagNames.size());
+				Assert.assertEquals(tagNames.toString(), 0, tagNames.size());
+			});
 	}
 
 	@Test
@@ -144,17 +157,21 @@ public class OpenNLPDocumentAssetAutoTagProviderTest {
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 			FileUtil.getBytes(getInputStream(fileName)), _serviceContext);
 
-		Collection<String> expectedTagNames = Collections.singleton("tag");
+		_withOpenNLPAutoTagProviderEnabled(
+			() -> {
+				Collection<String> expectedTagNames = Collections.singleton(
+					"tag");
 
-		Collection<String> actualTagNames = _assetAutoTagProvider.getTagNames(
-			fileEntry);
+				Collection<String> actualTagNames =
+					_assetAutoTagProvider.getTagNames(fileEntry);
 
-		Assert.assertEquals(
-			actualTagNames.toString(), expectedTagNames.size(),
-			actualTagNames.size());
-		Assert.assertTrue(
-			actualTagNames.toString(),
-			actualTagNames.containsAll(expectedTagNames));
+				Assert.assertEquals(
+					actualTagNames.toString(), expectedTagNames.size(),
+					actualTagNames.size());
+				Assert.assertTrue(
+					actualTagNames.toString(),
+					actualTagNames.containsAll(expectedTagNames));
+			});
 	}
 
 	@Test
@@ -169,10 +186,13 @@ public class OpenNLPDocumentAssetAutoTagProviderTest {
 			RandomTestUtil.randomString(), fileName, getInputStream(fileName),
 			ContentTypes.TEXT_PLAIN);
 
-		Collection<String> tagNames = _assetAutoTagProvider.getTagNames(
-			fileEntry);
+		_withOpenNLPAutoTagProviderEnabled(
+			() -> {
+				Collection<String> tagNames = _assetAutoTagProvider.getTagNames(
+					fileEntry);
 
-		Assert.assertEquals(tagNames.toString(), 0, tagNames.size());
+				Assert.assertEquals(tagNames.toString(), 0, tagNames.size());
+			});
 	}
 
 	@Test
@@ -187,17 +207,41 @@ public class OpenNLPDocumentAssetAutoTagProviderTest {
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 			FileUtil.getBytes(getInputStream(fileName)), _serviceContext);
 
-		Collection<String> expectedTagNames = Collections.singleton("tag");
+		_withOpenNLPAutoTagProviderEnabled(
+			() -> {
+				Collection<String> expectedTagNames = Collections.singleton(
+					"tag");
 
-		Collection<String> actualTagNames = _assetAutoTagProvider.getTagNames(
-			fileEntry);
+				Collection<String> actualTagNames =
+					_assetAutoTagProvider.getTagNames(fileEntry);
 
-		Assert.assertEquals(
-			actualTagNames.toString(), expectedTagNames.size(),
-			actualTagNames.size());
-		Assert.assertTrue(
-			actualTagNames.toString(),
-			actualTagNames.containsAll(expectedTagNames));
+				Assert.assertEquals(
+					actualTagNames.toString(), expectedTagNames.size(),
+					actualTagNames.size());
+				Assert.assertTrue(
+					actualTagNames.toString(),
+					actualTagNames.containsAll(expectedTagNames));
+			});
+	}
+
+	@Test
+	public void testGetTagNamesWithTextFileAndDisabledConfiguration()
+		throws Exception {
+
+		FileEntry fileEntry = _dlAppService.addFileEntry(
+			_serviceContext.getScopeGroupId(),
+			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, "test.txt",
+			ContentTypes.TEXT_PLAIN, "test", RandomTestUtil.randomString(),
+			RandomTestUtil.randomString(),
+			FileUtil.getBytes(getInputStream("test.txt")), _serviceContext);
+
+		_withOpenNLPAutoTagProviderDisabled(
+			() -> {
+				Collection<String> tagNames = _assetAutoTagProvider.getTagNames(
+					fileEntry);
+
+				Assert.assertEquals(tagNames.toString(), 0, tagNames.size());
+			});
 	}
 
 	protected InputStream getInputStream(String fileName) throws Exception {
@@ -205,6 +249,46 @@ public class OpenNLPDocumentAssetAutoTagProviderTest {
 
 		return clazz.getResourceAsStream("dependencies/" + fileName);
 	}
+
+	private void _withOpenNLPAutoTagProviderDisabled(
+			UnsafeRunnable<Exception> unsafeRunnable)
+		throws Exception {
+
+		try (ConfigurationTemporarySwapper configurationTemporarySwapper =
+				new ConfigurationTemporarySwapper(
+					_OPENNLP_AUTO_TAG_CONFIGURATION_CLASS_NAME,
+					new HashMapDictionary<String, Object>() {
+						{
+							put("enabled", false);
+						}
+					})) {
+
+			unsafeRunnable.run();
+		}
+	}
+
+	private void _withOpenNLPAutoTagProviderEnabled(
+			UnsafeRunnable<Exception> unsafeRunnable)
+		throws Exception {
+
+		try (ConfigurationTemporarySwapper configurationTemporarySwapper =
+				new ConfigurationTemporarySwapper(
+					_OPENNLP_AUTO_TAG_CONFIGURATION_CLASS_NAME,
+					new HashMapDictionary<String, Object>() {
+						{
+							put("enabled", true);
+							put("confidenceThreshold", 0.8);
+						}
+					})) {
+
+			unsafeRunnable.run();
+		}
+	}
+
+	private static final String _OPENNLP_AUTO_TAG_CONFIGURATION_CLASS_NAME =
+		"com.liferay.document.library.asset.auto.tagger.opennlp.internal." +
+			"configuration." +
+				"OpenNPLDocumentAssetAutoTagProviderCompanyConfiguration";
 
 	@Inject(
 		filter = "component.name=com.liferay.document.library.asset.auto.tagger.opennlp.internal.OpenNLPDocumentAssetAutoTagProvider"

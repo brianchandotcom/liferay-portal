@@ -232,11 +232,6 @@ public class Arquillian extends Runner implements Filterable {
 
 	private class ServerRunnable implements Runnable {
 
-		public ServerRunnable(RunNotifier runNotifier, Socket socket) {
-			_runNotifier = runNotifier;
-			_socket = socket;
-		}
-
 		@Override
 		public void run() {
 			Class<?> clazz = _runNotifier.getClass();
@@ -289,6 +284,11 @@ public class Arquillian extends Runner implements Filterable {
 				_runNotifier.fireTestFailure(
 					new Failure(getDescription(), throwable));
 			}
+		}
+
+		private ServerRunnable(RunNotifier runNotifier, Socket socket) {
+			_runNotifier = runNotifier;
+			_socket = socket;
 		}
 
 		private final RunNotifier _runNotifier;

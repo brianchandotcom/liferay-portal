@@ -106,6 +106,8 @@ public class WorkflowMetricsSLAProcessMessageListener
 						getName(),
 					taskContextMap, new ServiceContext());
 			});
+
+		actionableDynamicQuery.performActions();
 	}
 
 	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED, unbind = "-")

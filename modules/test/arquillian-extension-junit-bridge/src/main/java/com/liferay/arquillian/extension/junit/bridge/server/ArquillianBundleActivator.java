@@ -47,7 +47,6 @@ import org.junit.runners.model.TestClass;
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleActivator;
 import org.osgi.framework.BundleContext;
-import org.osgi.framework.wiring.BundleWiring;
 
 /**
  * @author Cristina González Castellano
@@ -85,11 +84,7 @@ public class ArquillianBundleActivator implements BundleActivator {
 			attributes.getValue(Headers.TEST_BRIDGE_FILTERED_METHOD_NAMES),
 			CharPool.COMMA);
 
-		BundleWiring bundleWiring = testBundle.adapt(BundleWiring.class);
-
-		ClassLoader classLoader = bundleWiring.getClassLoader();
-
-		TestClass testClass = new TestClass(classLoader.loadClass(className)) {
+		TestClass testClass = new TestClass(testBundle.loadClass(className)) {
 
 			@Override
 			protected void scanAnnotatedMembers(

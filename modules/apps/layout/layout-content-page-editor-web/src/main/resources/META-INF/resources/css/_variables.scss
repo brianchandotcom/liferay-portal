@@ -1,18 +1,38 @@
-$fragmentsEditorSpacing: 8px;
-
 $controlMenuHeight: 49px;
 $desktopControlMenuHeight: 56px;
-
-$managementBarHeight: 50px;
 $desktopManagementBarHeight: 50px;
-
+$fragmentsEditorSpacing: 8px;
+$managementBarHeight: 50px;
 $productMenuTransitionDuration: 0.5s;
 
-$columnOverlayGridColor: #FF5F5F;
-
-$dragSourceZIndex: 977;
-$draggableItemZIndex: 977;
+$dropTargetWidth: 5px;
 $floatingToolbarPanelMinWidth: 264px;
+$fragmentEditableFieldGridSize: $fragmentsEditorSpacing;
+$fragmentEntryLinkListPadding: 28px;
+$sectionMinimumHeight: $fragmentsEditorSpacing * 20;
+$sidebarButtonsHeight: 40px;
+$sidebarButtonsWidth: 40px;
+$sidebarCardImageMaxHeight: 200px;
+$sidebarCardMarginBottom: $fragmentsEditorSpacing * 2;
+$sidebarCardMarginBottom: 16px;
+$sidebarCardPadding: 8px;
+$sidebarElementCardWidth: calc(50% - #{$fragmentsEditorSpacing});
+$sidebarWidth: 320px;
+
+$portletBorderRadius: 3px;
+$portletBorderWidth: 1px;
+$sidebarLeftBorderWidth: 1px;
+$topperBorderRadius: 2px;
+$topperBorderWidth: 1px;
+$topperFocusedBorderWidth: 2px;
+
+$sidebarTransitionDuration: 0.5s;
+$sidebarTransitionTimingFunction: ease;
+$topperShowDelay: 0.3s;
+$topperShowDuration: 0.3s;
+
+$draggableItemZIndex: 977;
+$dragSourceZIndex: 977;
 $floatingToolbarZIndex: 976;
 $fragmentEditableFieldTooltipZIndex: 975;
 $fragmentEntryLinkContentHoverZIndex: auto;
@@ -30,63 +50,34 @@ $topperHoverZIndex: 2;
 $topperZIndex: 1;
 $translationStatusListZIndex: 977;
 
-$fragmentEditableFieldActiveBorderColor: #0B5FFF;
-$fragmentEditableFieldGridAccentColor: #80ACFF;
-$fragmentEditableFieldGridMappedColor: #AF78FF;
-$fragmentEditableFieldGridMappedColorFaded: fade_out(#AF78FF, 0.9);
-$fragmentEditableFieldGridDefaultColor: #A7A9BC;
-$fragmentEditableFieldGridSize: $fragmentsEditorSpacing;
-$fragmentEditableFieldGridTranslatedColor: #3DC513;
-$fragmentEditableFieldHoverBorderColor: #0B5FFF;
-
-$fragmentEntryLinkListPadding: 28px;
-$sectionMinimumHeight: $fragmentsEditorSpacing * 20;
-
-$fragmentEntryLinkSectionBorderColor: fade_out(#0B5FFF, 0.8);
-$fragmentEntryLinkColumnBorderColor: fade_out(#0B5FFF, 0.8);
-$fragmentEntryLinkEditableFieldBorderColor: fade_out(#0B5FFF, 0.8);
-
+$columnOverlayGridColor: #FF5F5F;
 $dragSourceBackgroundColor: #E1EBFF;
 $dragSourceColor: #0B5FFF;
 $dropTargetColor:#0B5FFF;
-$dropTargetWidth: 5px;
-
-$topperBorderColor: #0B5FFF;
-$topperBorderRadius: 2px;
-$topperBorderWidth: 1px;
-$topperFocusedBorderWidth: 2px;
-$topperBackgroundColor: #0B5FFF;
-$topperColor: #FFF;
-$topperShowDelay: 0.3s;
-$topperShowDuration: 0.3s;
-
-$portletColor: #0B5FFF;
+$fragmentEditableFieldActiveBorderColor: #0B5FFF;
+$fragmentEditableFieldGridAccentColor: #80ACFF;
+$fragmentEditableFieldGridDefaultColor: #A7A9BC;
+$fragmentEditableFieldGridMappedColor: #AF78FF;
+$fragmentEditableFieldGridMappedColorFaded: fade_out(#AF78FF, 0.9);
+$fragmentEditableFieldGridTranslatedColor: #3DC513;
+$fragmentEditableFieldHoverBorderColor: #0B5FFF;
+$fragmentEntryLinkColumnBorderColor: fade_out(#0B5FFF, 0.8);
+$fragmentEntryLinkEditableFieldBorderColor: fade_out(#0B5FFF, 0.8);
+$fragmentEntryLinkSectionBorderColor: fade_out(#0B5FFF, 0.8);
 $portletBorderColor: #89A7E0;
-$portletBorderRadius: 3px;
-$portletBorderWidth: 1px;
-
+$portletColor: #0B5FFF;
 $sidebarButtonsBackgroundColor: #393A4A;
 $sidebarButtonsColor: #A7A9BC;
-$sidebarButtonsHeight: 40px;
 $sidebarButtonsHoverColor: #FFF;
-$sidebarButtonsWidth: 40px;
-
 $sidebarCardImageBorderColor: #E7E7ED;
-$sidebarCardImageMaxHeight: 200px;
-$sidebarCardMarginBottom: $fragmentsEditorSpacing * 2;
-$sidebarCardMarginBottom: 16px;
 $sidebarCardNoPreviewBackgroundColor: #E7E7ED;
 $sidebarCardNoPreviewIconColor: #A7A9BC;
 $sidebarCardPadding: $fragmentsEditorSpacing;
-$sidebarCardPadding: 8px;
 $sidebarCardTitleColor: #6B6C7E;
-
 $sidebarCollapsiblePanelLineColor: #DFDFE9;
 $sidebarContentBackgroundColor: #F4F5F8;
-$sidebarElementCardWidth: calc(50% - #{$fragmentsEditorSpacing});
 $sidebarLeftBorderColor: #E7E7ED;
-$sidebarLeftBorderWidth: 1px;
-$sidebarTransitionDuration: 0.5s;
-$sidebarTransitionTimingFunction: ease;
-$sidebarTreeElementBackgroundColor: rgba(39, 40, 51, 0.03);
-$sidebarWidth: 320px;
+$sidebarTreeElementBackgroundColor: fade_out(#272833, 0.97);
+$topperBackgroundColor: #0B5FFF;
+$topperBorderColor: #0B5FFF;
+$topperColor: #FFF;

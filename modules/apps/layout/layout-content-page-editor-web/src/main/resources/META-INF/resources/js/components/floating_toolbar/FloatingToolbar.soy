@@ -74,6 +74,7 @@
 		{sp}btn-outline-borderless
 		{sp}btn-outline-secondary
 		{sp}btn-sm
+		{sp}lfr-portal-tooltip
 
 		{if $panel.panelId == $selectedPanelId}
 			{sp}active
@@ -84,7 +85,7 @@
 		class="{$panelButtonClasses}"
 		data-onclick="{$handleButtonClick}"
 		data-panel-id="{$panel.panelId}"
-		title="{$panel.title}"
+		data-title="{$panel.title}"
 		type="button"
 	>
 		<svg class="lexicon-icon">

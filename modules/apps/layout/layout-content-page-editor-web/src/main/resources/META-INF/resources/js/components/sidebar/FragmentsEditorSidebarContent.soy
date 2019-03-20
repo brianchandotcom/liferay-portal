@@ -47,6 +47,7 @@
 					{let $sectionButtonClasses kind="text"}
 						btn
 						{sp}btn-unstyled
+						{sp}lfr-portal-tooltip
 						{sp}text-center
 						{sp}fragments-editor-sidebar-sections-buttons__btn
 
@@ -60,7 +61,7 @@
 						data-onclick="{$_handlePanelButtonClick}"
 						data-sidebar-panel-id="{$sidebarPanel.sidebarPanelId}"
 						data-sidebar-title="{$sidebarPanel.label}"
-						title="{$sidebarPanel.label}"
+						data-title="{$sidebarPanel.label}"
 						type="button"
 					>
 						<svg class="lexicon-icon">

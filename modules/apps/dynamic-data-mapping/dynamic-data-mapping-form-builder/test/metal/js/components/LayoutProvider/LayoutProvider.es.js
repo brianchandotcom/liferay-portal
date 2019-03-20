@@ -585,35 +585,47 @@ describe(
 				);
 
 				describe(
-					'fieldEdited',
+					'fieldResized',
 					() => {
 						it(
-							'should listen the fieldEdited event and change the state of the focusedField and pages for the data wich was received',
+							'should listen to the columnResized event and resize the field when the left arrow is pulled',
 							() => {
 								component = new Parent();
 
-								component.refs.provider.state.focusedField = {
-									settingsContext: {
-										pages: []
-									}
+								const {child, provider} = component.refs;
+								const mockEvent = {
+									leftResize: true,
+									sourceIndexes: {columnIndex: 1, pageIndex: 0, rowIndex: 0},
+									targetDatasetCol: '7'
 								};
+
+								child.emit('columnResized', mockEvent);
+
+								jest.runAllTimers();
+
+								expect(provider.state.pages).toMatchSnapshot();
+								expect(child.props.pages).toEqual(provider.state.pages);
+							}
+						);
+
+						it(
+							'should listen to the columnResized event and resize the field when the right arrow is pulled',
+							() => {
+								component = new Parent();
 
 								const {child, provider} = component.refs;
 								const mockEvent = {
-									columnIndex: 0,
-									pageIndex: 0,
-									rowIndex: 0
+									leftResize: false,
+									sourceIndexes: {columnIndex: 1, pageIndex: 0, rowIndex: 0},
+									targetDatasetCol: '3'
 								};
 
-								child.emit('fieldEdited', mockEvent);
+								child.emit('columnResized', mockEvent);
 
-								expect(provider.props.children[0].props.events).toMatchObject(
-									{
-										fieldEdited: expect.any(Function)
-									}
-								);
-								expect(provider.state.focusedField).toEqual(mockEvent);
+								jest.runAllTimers();
+
 								expect(provider.state.pages).toMatchSnapshot();
+								expect(child.props.pages).toEqual(provider.state.pages);
 							}
 						);
 					}

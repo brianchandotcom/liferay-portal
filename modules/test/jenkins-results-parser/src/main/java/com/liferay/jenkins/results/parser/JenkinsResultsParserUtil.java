@@ -148,10 +148,6 @@ public class JenkinsResultsParserUtil {
 					source.getPath() + " does not exist");
 			}
 
-			if (target.exists()) {
-				delete(target);
-			}
-
 			if (source.isDirectory()) {
 				target.mkdir();
 

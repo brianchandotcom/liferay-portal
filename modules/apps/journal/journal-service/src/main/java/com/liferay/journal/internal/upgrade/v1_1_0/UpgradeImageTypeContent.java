@@ -18,6 +18,7 @@ import com.liferay.journal.constants.JournalConstants;
 import com.liferay.journal.internal.upgrade.util.JournalArticleImageUpgradeUtil;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Image;
@@ -159,7 +160,7 @@ public class UpgradeImageTypeContent extends UpgradeProcess {
 				}
 
 				String mimeType = MimeTypesUtil.getContentType(
-					fileName + "." + image.getType());
+					fileName + StringPool.PERIOD + image.getType());
 
 				PortletFileRepositoryUtil.addPortletFileEntry(
 					_groupId, _userId, JournalArticle.class.getName(),

@@ -76,15 +76,13 @@ public class ArquillianBundleActivator implements BundleActivator {
 			Integer.valueOf(
 				attributes.getValue(Headers.TEST_BRIDGE_REPORT_SERVER_PORT)));
 
-		ClientBridge clientBridge = new ClientBridge(inetSocketAddress);
-
-		String className = attributes.getValue(Headers.TEST_BRIDGE_CLASS_NAME);
-
 		List<String> filterMethodNames = StringUtil.split(
 			attributes.getValue(Headers.TEST_BRIDGE_FILTERED_METHOD_NAMES),
 			CharPool.COMMA);
 
-		TestClass testClass = new TestClass(testBundle.loadClass(className)) {
+		TestClass testClass = new TestClass(
+			testBundle.loadClass(
+				attributes.getValue(Headers.TEST_BRIDGE_CLASS_NAME))) {
 
 			@Override
 			protected void scanAnnotatedMembers(
@@ -125,6 +123,8 @@ public class ArquillianBundleActivator implements BundleActivator {
 
 					return;
 				}
+
+				ClientBridge clientBridge = new ClientBridge(inetSocketAddress);
 
 				try {
 					_runTestClass(clientBridge, testClass);

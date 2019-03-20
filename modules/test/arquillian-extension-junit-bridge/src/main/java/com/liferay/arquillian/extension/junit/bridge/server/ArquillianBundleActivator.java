@@ -205,21 +205,17 @@ public class ArquillianBundleActivator implements BundleActivator {
 		}
 
 		public void bridge(String methodName, Object object) {
-			while (true) {
-				try {
-					_objectOutputStream.writeUTF(methodName);
+			try {
+				_objectOutputStream.writeUTF(methodName);
 
-					if (object != null) {
-						_objectOutputStream.writeObject(object);
-					}
-
-					_objectOutputStream.flush();
-
-					return;
+				if (object != null) {
+					_objectOutputStream.writeObject(object);
 				}
-				catch (IOException ioe) {
-					throw new RuntimeException(ioe);
-				}
+
+				_objectOutputStream.flush();
+			}
+			catch (IOException ioe) {
+				throw new RuntimeException(ioe);
 			}
 		}
 

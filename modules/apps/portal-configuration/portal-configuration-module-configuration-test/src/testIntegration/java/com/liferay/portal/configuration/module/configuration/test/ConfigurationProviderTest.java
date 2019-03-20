@@ -241,7 +241,8 @@ public class ConfigurationProviderTest {
 	private int _getExistingFactoryConfigurationsCount(String pid)
 		throws Exception {
 
-		return _getExistingConfigurationCount(pid, "service.factoryPid");
+		return _getExistingConfigurationCount(
+			pid + ".scoped", "service.factoryPid");
 	}
 
 	protected void assertPropertyValues(
@@ -266,7 +267,7 @@ public class ConfigurationProviderTest {
 		throws Exception {
 
 		Configuration[] configurations = _getConfigurations(
-			factoryPid, "service.factoryPid");
+			factoryPid + ".scoped", "service.factoryPid");
 
 		if (configurations != null) {
 			return configurations[0];
@@ -284,7 +285,7 @@ public class ConfigurationProviderTest {
 
 		Configuration configuration =
 			_configurationAdmin.createFactoryConfiguration(
-				factoryPid, StringPool.QUESTION);
+				factoryPid + ".scoped", StringPool.QUESTION);
 
 		ConfigurationTestUtil.saveConfiguration(configuration, _properties);
 	}

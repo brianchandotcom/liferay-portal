@@ -109,13 +109,14 @@ public class Arquillian extends Runner implements Filterable {
 			return;
 		}
 
-		try (ServerSocket serverSocket = _getServerSocket()) {
+		try {
 
 			// Enforce client side test class initialization
 
 			Class.forName(_clazz.getName(), true, _clazz.getClassLoader());
 
-			try (Closeable closeable = _installBundle(
+			try (ServerSocket serverSocket = _getServerSocket();
+				Closeable closeable = _installBundle(
 					serverSocket.getLocalPort());
 				Socket socket = serverSocket.accept()) {
 

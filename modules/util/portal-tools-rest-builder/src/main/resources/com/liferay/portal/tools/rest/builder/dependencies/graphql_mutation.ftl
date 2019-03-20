@@ -1,11 +1,9 @@
 package ${configYAML.apiPackagePath}.internal.graphql.mutation.${escapedVersion};
 
-<#compress>
-	<#list openAPIYAML.components.schemas?keys as schemaName>
-		import ${configYAML.apiPackagePath}.dto.${escapedVersion}.${schemaName};
-		import ${configYAML.apiPackagePath}.resource.${escapedVersion}.${schemaName}Resource;
-	</#list>
-</#compress>
+<#list openAPIYAML.components.schemas?keys as schemaName>
+	import ${configYAML.apiPackagePath}.dto.${escapedVersion}.${schemaName};
+	import ${configYAML.apiPackagePath}.resource.${escapedVersion}.${schemaName}Resource;
+</#list>
 
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.function.UnsafeFunction;

@@ -1,11 +1,9 @@
 package ${configYAML.apiPackagePath}.resource.${escapedVersion}.test;
 
-<#compress>
-	<#list allSchemas?keys as schemaName>
-		import ${configYAML.apiPackagePath}.dto.${escapedVersion}.${schemaName};
-		import ${configYAML.apiPackagePath}.resource.${escapedVersion}.${schemaName}Resource;
-	</#list>
-</#compress>
+<#list allSchemas?keys as schemaName>
+	import ${configYAML.apiPackagePath}.dto.${escapedVersion}.${schemaName};
+	import ${configYAML.apiPackagePath}.resource.${escapedVersion}.${schemaName}Resource;
+</#list>
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;

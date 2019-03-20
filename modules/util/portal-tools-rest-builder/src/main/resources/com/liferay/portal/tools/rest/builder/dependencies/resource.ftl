@@ -1,10 +1,8 @@
 package ${configYAML.apiPackagePath}.resource.${escapedVersion};
 
-<#compress>
-	<#list openAPIYAML.components.schemas?keys as schemaName>
-		import ${configYAML.apiPackagePath}.dto.${escapedVersion}.${schemaName};
-	</#list>
-</#compress>
+<#list openAPIYAML.components.schemas?keys as schemaName>
+	import ${configYAML.apiPackagePath}.dto.${escapedVersion}.${schemaName};
+</#list>
 
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.search.Sort;

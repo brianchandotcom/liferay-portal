@@ -1,10 +1,8 @@
 package ${configYAML.apiPackagePath}.internal.graphql.servlet.${escapedVersion};
 
-<#compress>
-	<#list openAPIYAML.components.schemas?keys as schemaName>
-		import ${configYAML.apiPackagePath}.resource.${escapedVersion}.${schemaName}Resource;
-	</#list>
-</#compress>
+<#list openAPIYAML.components.schemas?keys as schemaName>
+	import ${configYAML.apiPackagePath}.resource.${escapedVersion}.${schemaName}Resource;
+</#list>
 
 import ${configYAML.apiPackagePath}.internal.graphql.mutation.${escapedVersion}.Mutation;
 import ${configYAML.apiPackagePath}.internal.graphql.query.${escapedVersion}.Query;

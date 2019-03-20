@@ -1,10 +1,8 @@
 package ${configYAML.apiPackagePath}.internal.resource.${escapedVersion};
 
-<#compress>
-	<#list openAPIYAML.components.schemas?keys as schemaName>
-		import ${configYAML.apiPackagePath}.dto.${escapedVersion}.${schemaName};
-	</#list>
-</#compress>
+<#list openAPIYAML.components.schemas?keys as schemaName>
+	import ${configYAML.apiPackagePath}.dto.${escapedVersion}.${schemaName};
+</#list>
 
 import ${configYAML.apiPackagePath}.resource.${escapedVersion}.${schemaName}Resource;
 

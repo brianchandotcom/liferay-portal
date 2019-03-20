@@ -1681,6 +1681,10 @@ public class JenkinsResultsParserUtil {
 		return sb.toString();
 	}
 
+	public static void move(File sourceFile, File destFile) {
+		sourceFile.renameTo(destFile);
+	}
+
 	public static <T> List<List<T>> partitionByCount(List<T> list, int count) {
 		int listSize = list.size();
 

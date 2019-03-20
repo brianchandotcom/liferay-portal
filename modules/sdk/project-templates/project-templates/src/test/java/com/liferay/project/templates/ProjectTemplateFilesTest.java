@@ -811,6 +811,11 @@ public class ProjectTemplateFilesTest {
 		sb.append(projectTemplateDirName.replace('-', '.'));
 		sb.append(".internal.");
 
+		Path bndBndPath = projectTemplateDirPath.resolve("bnd.bnd");
+
+		Properties properties = FileUtil.readProperties(bndBndPath);
+
+		String bundleName = properties.getProperty(Constants.BUNDLE_NAME);
 		Matcher matcher = _projectTemplateDirNameSeparatorPattern.matcher(
 			projectTemplateDirName.substring(
 				FileTestUtil.PROJECT_TEMPLATE_DIR_PREFIX.length()));

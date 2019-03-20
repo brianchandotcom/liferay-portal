@@ -129,12 +129,7 @@ public class ArquillianBundleActivator implements BundleActivator {
 					ObjectOutputStream objectOutputStream =
 						new ObjectOutputStream(socket.getOutputStream())) {
 
-					try {
-						_runTestClass(objectOutputStream, testClass);
-					}
-					finally {
-						_sentToClient(objectOutputStream, "kill", null);
-					}
+					_runTestClass(objectOutputStream, testClass);
 				}
 				catch (IOException ioe) {
 					throw new RuntimeException(ioe);
@@ -153,9 +148,7 @@ public class ArquillianBundleActivator implements BundleActivator {
 		try {
 			objectOutputStream.writeUTF(methodName);
 
-			if (serializable != null) {
-				objectOutputStream.writeObject(serializable);
-			}
+			objectOutputStream.writeObject(serializable);
 
 			objectOutputStream.flush();
 		}

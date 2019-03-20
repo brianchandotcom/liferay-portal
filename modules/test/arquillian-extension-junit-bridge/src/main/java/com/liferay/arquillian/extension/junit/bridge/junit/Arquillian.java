@@ -18,6 +18,7 @@ import com.liferay.arquillian.extension.junit.bridge.client.BndBundleUtil;
 import com.liferay.arquillian.extension.junit.bridge.client.MBeans;
 
 import java.io.Closeable;
+import java.io.EOFException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.ObjectInputStream;
@@ -243,15 +244,11 @@ public class Arquillian extends Runner implements Filterable {
 					inputStream)) {
 
 				while (true) {
+					String methodName = objectInputStream.readUTF();
+
+					Object object = objectInputStream.readObject();
+
 					try {
-						String methodName = objectInputStream.readUTF();
-
-						if (methodName.equals("kill")) {
-							break;
-						}
-
-						Object object = objectInputStream.readObject();
-
 						Method method = clazz.getMethod(
 							methodName, object.getClass());
 
@@ -268,6 +265,8 @@ public class Arquillian extends Runner implements Filterable {
 						}
 					}
 				}
+			}
+			catch (EOFException eofe) {
 			}
 			catch (Throwable t) {
 				if (throwable == null) {

@@ -1417,22 +1417,22 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 			return sb.toString();
 		}
 
-		if (entityFieldName.equals("hasAttachments")) {
-			throw new IllegalArgumentException(
-				"Invalid entity field " + entityFieldName);
-		}
-
-		if (entityFieldName.equals("hasKnowledgeBaseArticles")) {
-			throw new IllegalArgumentException(
-				"Invalid entity field " + entityFieldName);
-		}
-
 		if (entityFieldName.equals("id")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
 		}
 
 		if (entityFieldName.equals("keywords")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
+		if (entityFieldName.equals("numberOfAttachments")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
+		if (entityFieldName.equals("numberOfKnowledgeBaseArticles")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
 		}
@@ -1483,8 +1483,6 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 				dateModified = RandomTestUtil.nextDate();
 				description = RandomTestUtil.randomString();
 				friendlyUrlPath = RandomTestUtil.randomString();
-				hasAttachments = RandomTestUtil.randomBoolean();
-				hasKnowledgeBaseArticles = RandomTestUtil.randomBoolean();
 				id = RandomTestUtil.randomLong();
 				parentKnowledgeBaseFolderId = RandomTestUtil.randomLong();
 				title = RandomTestUtil.randomString();

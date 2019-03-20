@@ -198,31 +198,6 @@ public class TaxonomyCategory {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String description;
 
-	public Boolean getHasTaxonomyCategories() {
-		return hasTaxonomyCategories;
-	}
-
-	public void setHasTaxonomyCategories(Boolean hasTaxonomyCategories) {
-		this.hasTaxonomyCategories = hasTaxonomyCategories;
-	}
-
-	@JsonIgnore
-	public void setHasTaxonomyCategories(
-		UnsafeSupplier<Boolean, Exception>
-			hasTaxonomyCategoriesUnsafeSupplier) {
-
-		try {
-			hasTaxonomyCategories = hasTaxonomyCategoriesUnsafeSupplier.get();
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Boolean hasTaxonomyCategories;
-
 	public Long getId() {
 		return id;
 	}
@@ -267,6 +242,34 @@ public class TaxonomyCategory {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	@NotNull
 	protected String name;
+
+	public Number getNumberOfTaxonomyCategories() {
+		return numberOfTaxonomyCategories;
+	}
+
+	public void setNumberOfTaxonomyCategories(
+		Number numberOfTaxonomyCategories) {
+
+		this.numberOfTaxonomyCategories = numberOfTaxonomyCategories;
+	}
+
+	@JsonIgnore
+	public void setNumberOfTaxonomyCategories(
+		UnsafeSupplier<Number, Exception>
+			numberOfTaxonomyCategoriesUnsafeSupplier) {
+
+		try {
+			numberOfTaxonomyCategories =
+				numberOfTaxonomyCategoriesUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Number numberOfTaxonomyCategories;
 
 	public ParentTaxonomyCategory getParentTaxonomyCategory() {
 		return parentTaxonomyCategory;
@@ -434,11 +437,6 @@ public class TaxonomyCategory {
 		sb.append("\"");
 		sb.append(", ");
 
-		sb.append("\"hasTaxonomyCategories\": ");
-
-		sb.append(hasTaxonomyCategories);
-		sb.append(", ");
-
 		sb.append("\"id\": ");
 
 		sb.append(id);
@@ -449,6 +447,11 @@ public class TaxonomyCategory {
 		sb.append("\"");
 		sb.append(name);
 		sb.append("\"");
+		sb.append(", ");
+
+		sb.append("\"numberOfTaxonomyCategories\": ");
+
+		sb.append(numberOfTaxonomyCategories);
 		sb.append(", ");
 
 		sb.append("\"parentTaxonomyCategory\": ");

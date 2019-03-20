@@ -269,56 +269,6 @@ public class KnowledgeBaseArticle {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String friendlyUrlPath;
 
-	public Boolean getHasAttachments() {
-		return hasAttachments;
-	}
-
-	public void setHasAttachments(Boolean hasAttachments) {
-		this.hasAttachments = hasAttachments;
-	}
-
-	@JsonIgnore
-	public void setHasAttachments(
-		UnsafeSupplier<Boolean, Exception> hasAttachmentsUnsafeSupplier) {
-
-		try {
-			hasAttachments = hasAttachmentsUnsafeSupplier.get();
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Boolean hasAttachments;
-
-	public Boolean getHasKnowledgeBaseArticles() {
-		return hasKnowledgeBaseArticles;
-	}
-
-	public void setHasKnowledgeBaseArticles(Boolean hasKnowledgeBaseArticles) {
-		this.hasKnowledgeBaseArticles = hasKnowledgeBaseArticles;
-	}
-
-	@JsonIgnore
-	public void setHasKnowledgeBaseArticles(
-		UnsafeSupplier<Boolean, Exception>
-			hasKnowledgeBaseArticlesUnsafeSupplier) {
-
-		try {
-			hasKnowledgeBaseArticles =
-				hasKnowledgeBaseArticlesUnsafeSupplier.get();
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Boolean hasKnowledgeBaseArticles;
-
 	public Long getId() {
 		return id;
 	}
@@ -364,6 +314,58 @@ public class KnowledgeBaseArticle {
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String[] keywords;
+
+	public Number getNumberOfAttachments() {
+		return numberOfAttachments;
+	}
+
+	public void setNumberOfAttachments(Number numberOfAttachments) {
+		this.numberOfAttachments = numberOfAttachments;
+	}
+
+	@JsonIgnore
+	public void setNumberOfAttachments(
+		UnsafeSupplier<Number, Exception> numberOfAttachmentsUnsafeSupplier) {
+
+		try {
+			numberOfAttachments = numberOfAttachmentsUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Number numberOfAttachments;
+
+	public Number getNumberOfKnowledgeBaseArticles() {
+		return numberOfKnowledgeBaseArticles;
+	}
+
+	public void setNumberOfKnowledgeBaseArticles(
+		Number numberOfKnowledgeBaseArticles) {
+
+		this.numberOfKnowledgeBaseArticles = numberOfKnowledgeBaseArticles;
+	}
+
+	@JsonIgnore
+	public void setNumberOfKnowledgeBaseArticles(
+		UnsafeSupplier<Number, Exception>
+			numberOfKnowledgeBaseArticlesUnsafeSupplier) {
+
+		try {
+			numberOfKnowledgeBaseArticles =
+				numberOfKnowledgeBaseArticlesUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Number numberOfKnowledgeBaseArticles;
 
 	public ParentKnowledgeBaseFolder getParentKnowledgeBaseFolder() {
 		return parentKnowledgeBaseFolder;
@@ -582,16 +584,6 @@ public class KnowledgeBaseArticle {
 		sb.append("\"");
 		sb.append(", ");
 
-		sb.append("\"hasAttachments\": ");
-
-		sb.append(hasAttachments);
-		sb.append(", ");
-
-		sb.append("\"hasKnowledgeBaseArticles\": ");
-
-		sb.append(hasKnowledgeBaseArticles);
-		sb.append(", ");
-
 		sb.append("\"id\": ");
 
 		sb.append(id);
@@ -618,6 +610,16 @@ public class KnowledgeBaseArticle {
 			sb.append("]");
 		}
 
+		sb.append(", ");
+
+		sb.append("\"numberOfAttachments\": ");
+
+		sb.append(numberOfAttachments);
+		sb.append(", ");
+
+		sb.append("\"numberOfKnowledgeBaseArticles\": ");
+
+		sb.append(numberOfKnowledgeBaseArticles);
 		sb.append(", ");
 
 		sb.append("\"parentKnowledgeBaseFolder\": ");

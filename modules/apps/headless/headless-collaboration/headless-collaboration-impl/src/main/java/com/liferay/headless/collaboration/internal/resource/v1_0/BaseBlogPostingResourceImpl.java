@@ -145,16 +145,17 @@ public abstract class BaseBlogPostingResourceImpl
 				blogPosting.getFriendlyUrlPath());
 		}
 
-		if (Validator.isNotNull(blogPosting.getHasComments())) {
-			existingBlogPosting.setHasComments(blogPosting.getHasComments());
-		}
-
 		if (Validator.isNotNull(blogPosting.getHeadline())) {
 			existingBlogPosting.setHeadline(blogPosting.getHeadline());
 		}
 
 		if (Validator.isNotNull(blogPosting.getKeywords())) {
 			existingBlogPosting.setKeywords(blogPosting.getKeywords());
+		}
+
+		if (Validator.isNotNull(blogPosting.getNumberOfComments())) {
+			existingBlogPosting.setNumberOfComments(
+				blogPosting.getNumberOfComments());
 		}
 
 		if (Validator.isNotNull(blogPosting.getTaxonomyCategoryIds())) {

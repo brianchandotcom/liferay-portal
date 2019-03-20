@@ -152,16 +152,16 @@ public abstract class BaseFolderResourceImpl implements FolderResource {
 			existingFolder.setDescription(folder.getDescription());
 		}
 
-		if (Validator.isNotNull(folder.getHasDocuments())) {
-			existingFolder.setHasDocuments(folder.getHasDocuments());
-		}
-
-		if (Validator.isNotNull(folder.getHasFolders())) {
-			existingFolder.setHasFolders(folder.getHasFolders());
-		}
-
 		if (Validator.isNotNull(folder.getName())) {
 			existingFolder.setName(folder.getName());
+		}
+
+		if (Validator.isNotNull(folder.getNumberOfDocuments())) {
+			existingFolder.setNumberOfDocuments(folder.getNumberOfDocuments());
+		}
+
+		if (Validator.isNotNull(folder.getNumberOfFolders())) {
+			existingFolder.setNumberOfFolders(folder.getNumberOfFolders());
 		}
 
 		if (Validator.isNotNull(folder.getViewableBy())) {

@@ -112,58 +112,6 @@ public class KnowledgeBaseFolder {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String description;
 
-	public Boolean getHasKnowledgeBaseArticles() {
-		return hasKnowledgeBaseArticles;
-	}
-
-	public void setHasKnowledgeBaseArticles(Boolean hasKnowledgeBaseArticles) {
-		this.hasKnowledgeBaseArticles = hasKnowledgeBaseArticles;
-	}
-
-	@JsonIgnore
-	public void setHasKnowledgeBaseArticles(
-		UnsafeSupplier<Boolean, Exception>
-			hasKnowledgeBaseArticlesUnsafeSupplier) {
-
-		try {
-			hasKnowledgeBaseArticles =
-				hasKnowledgeBaseArticlesUnsafeSupplier.get();
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Boolean hasKnowledgeBaseArticles;
-
-	public Boolean getHasKnowledgeBaseFolders() {
-		return hasKnowledgeBaseFolders;
-	}
-
-	public void setHasKnowledgeBaseFolders(Boolean hasKnowledgeBaseFolders) {
-		this.hasKnowledgeBaseFolders = hasKnowledgeBaseFolders;
-	}
-
-	@JsonIgnore
-	public void setHasKnowledgeBaseFolders(
-		UnsafeSupplier<Boolean, Exception>
-			hasKnowledgeBaseFoldersUnsafeSupplier) {
-
-		try {
-			hasKnowledgeBaseFolders =
-				hasKnowledgeBaseFoldersUnsafeSupplier.get();
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Boolean hasKnowledgeBaseFolders;
-
 	public Long getId() {
 		return id;
 	}
@@ -207,6 +155,62 @@ public class KnowledgeBaseFolder {
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String name;
+
+	public Number getNumberOfKnowledgeBaseArticles() {
+		return numberOfKnowledgeBaseArticles;
+	}
+
+	public void setNumberOfKnowledgeBaseArticles(
+		Number numberOfKnowledgeBaseArticles) {
+
+		this.numberOfKnowledgeBaseArticles = numberOfKnowledgeBaseArticles;
+	}
+
+	@JsonIgnore
+	public void setNumberOfKnowledgeBaseArticles(
+		UnsafeSupplier<Number, Exception>
+			numberOfKnowledgeBaseArticlesUnsafeSupplier) {
+
+		try {
+			numberOfKnowledgeBaseArticles =
+				numberOfKnowledgeBaseArticlesUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Number numberOfKnowledgeBaseArticles;
+
+	public Number getNumberOfKnowledgeBaseFolders() {
+		return numberOfKnowledgeBaseFolders;
+	}
+
+	public void setNumberOfKnowledgeBaseFolders(
+		Number numberOfKnowledgeBaseFolders) {
+
+		this.numberOfKnowledgeBaseFolders = numberOfKnowledgeBaseFolders;
+	}
+
+	@JsonIgnore
+	public void setNumberOfKnowledgeBaseFolders(
+		UnsafeSupplier<Number, Exception>
+			numberOfKnowledgeBaseFoldersUnsafeSupplier) {
+
+		try {
+			numberOfKnowledgeBaseFolders =
+				numberOfKnowledgeBaseFoldersUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Number numberOfKnowledgeBaseFolders;
 
 	public ParentKnowledgeBaseFolder getParentKnowledgeBaseFolder() {
 		return parentKnowledgeBaseFolder;
@@ -290,16 +294,6 @@ public class KnowledgeBaseFolder {
 		sb.append("\"");
 		sb.append(", ");
 
-		sb.append("\"hasKnowledgeBaseArticles\": ");
-
-		sb.append(hasKnowledgeBaseArticles);
-		sb.append(", ");
-
-		sb.append("\"hasKnowledgeBaseFolders\": ");
-
-		sb.append(hasKnowledgeBaseFolders);
-		sb.append(", ");
-
 		sb.append("\"id\": ");
 
 		sb.append(id);
@@ -310,6 +304,16 @@ public class KnowledgeBaseFolder {
 		sb.append("\"");
 		sb.append(name);
 		sb.append("\"");
+		sb.append(", ");
+
+		sb.append("\"numberOfKnowledgeBaseArticles\": ");
+
+		sb.append(numberOfKnowledgeBaseArticles);
+		sb.append(", ");
+
+		sb.append("\"numberOfKnowledgeBaseFolders\": ");
+
+		sb.append(numberOfKnowledgeBaseFolders);
 		sb.append(", ");
 
 		sb.append("\"parentKnowledgeBaseFolder\": ");

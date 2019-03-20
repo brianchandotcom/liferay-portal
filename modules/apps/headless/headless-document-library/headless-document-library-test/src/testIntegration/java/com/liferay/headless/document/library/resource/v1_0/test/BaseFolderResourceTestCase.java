@@ -1284,16 +1284,6 @@ public abstract class BaseFolderResourceTestCase {
 			return sb.toString();
 		}
 
-		if (entityFieldName.equals("hasDocuments")) {
-			throw new IllegalArgumentException(
-				"Invalid entity field " + entityFieldName);
-		}
-
-		if (entityFieldName.equals("hasFolders")) {
-			throw new IllegalArgumentException(
-				"Invalid entity field " + entityFieldName);
-		}
-
 		if (entityFieldName.equals("id")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
@@ -1305,6 +1295,16 @@ public abstract class BaseFolderResourceTestCase {
 			sb.append("'");
 
 			return sb.toString();
+		}
+
+		if (entityFieldName.equals("numberOfDocuments")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
+		if (entityFieldName.equals("numberOfFolders")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
 		}
 
 		if (entityFieldName.equals("viewableBy")) {
@@ -1323,8 +1323,6 @@ public abstract class BaseFolderResourceTestCase {
 				dateCreated = RandomTestUtil.nextDate();
 				dateModified = RandomTestUtil.nextDate();
 				description = RandomTestUtil.randomString();
-				hasDocuments = RandomTestUtil.randomBoolean();
-				hasFolders = RandomTestUtil.randomBoolean();
 				id = RandomTestUtil.randomLong();
 				name = RandomTestUtil.randomString();
 			}

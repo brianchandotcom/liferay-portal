@@ -1402,11 +1402,6 @@ public abstract class BaseTaxonomyCategoryResourceTestCase {
 			return sb.toString();
 		}
 
-		if (entityFieldName.equals("hasTaxonomyCategories")) {
-			throw new IllegalArgumentException(
-				"Invalid entity field " + entityFieldName);
-		}
-
 		if (entityFieldName.equals("id")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
@@ -1418,6 +1413,11 @@ public abstract class BaseTaxonomyCategoryResourceTestCase {
 			sb.append("'");
 
 			return sb.toString();
+		}
+
+		if (entityFieldName.equals("numberOfTaxonomyCategories")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
 		}
 
 		if (entityFieldName.equals("parentTaxonomyCategory")) {
@@ -1450,7 +1450,6 @@ public abstract class BaseTaxonomyCategoryResourceTestCase {
 				dateCreated = RandomTestUtil.nextDate();
 				dateModified = RandomTestUtil.nextDate();
 				description = RandomTestUtil.randomString();
-				hasTaxonomyCategories = RandomTestUtil.randomBoolean();
 				id = RandomTestUtil.randomLong();
 				name = RandomTestUtil.randomString();
 				parentVocabularyId = RandomTestUtil.randomLong();

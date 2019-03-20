@@ -1276,6 +1276,11 @@ public abstract class BaseDocumentResourceTestCase {
 				"Invalid entity field " + entityFieldName);
 		}
 
+		if (entityFieldName.equals("numberOfComments")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
 		if (entityFieldName.equals("sizeInBytes")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);

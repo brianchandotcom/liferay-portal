@@ -1005,11 +1005,6 @@ public abstract class BaseBlogPostingResourceTestCase {
 			return sb.toString();
 		}
 
-		if (entityFieldName.equals("hasComments")) {
-			throw new IllegalArgumentException(
-				"Invalid entity field " + entityFieldName);
-		}
-
 		if (entityFieldName.equals("headline")) {
 			sb.append("'");
 			sb.append(String.valueOf(blogPosting.getHeadline()));
@@ -1029,6 +1024,11 @@ public abstract class BaseBlogPostingResourceTestCase {
 		}
 
 		if (entityFieldName.equals("keywords")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
+		if (entityFieldName.equals("numberOfComments")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
 		}
@@ -1064,7 +1064,6 @@ public abstract class BaseBlogPostingResourceTestCase {
 				description = RandomTestUtil.randomString();
 				encodingFormat = RandomTestUtil.randomString();
 				friendlyUrlPath = RandomTestUtil.randomString();
-				hasComments = RandomTestUtil.randomBoolean();
 				headline = RandomTestUtil.randomString();
 				id = RandomTestUtil.randomLong();
 			}

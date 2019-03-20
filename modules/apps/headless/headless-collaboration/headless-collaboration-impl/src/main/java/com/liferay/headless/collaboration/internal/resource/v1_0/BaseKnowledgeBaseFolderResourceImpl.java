@@ -154,22 +154,22 @@ public abstract class BaseKnowledgeBaseFolderResourceImpl
 				knowledgeBaseFolder.getDescription());
 		}
 
-		if (Validator.isNotNull(
-				knowledgeBaseFolder.getHasKnowledgeBaseArticles())) {
-
-			existingKnowledgeBaseFolder.setHasKnowledgeBaseArticles(
-				knowledgeBaseFolder.getHasKnowledgeBaseArticles());
-		}
-
-		if (Validator.isNotNull(
-				knowledgeBaseFolder.getHasKnowledgeBaseFolders())) {
-
-			existingKnowledgeBaseFolder.setHasKnowledgeBaseFolders(
-				knowledgeBaseFolder.getHasKnowledgeBaseFolders());
-		}
-
 		if (Validator.isNotNull(knowledgeBaseFolder.getName())) {
 			existingKnowledgeBaseFolder.setName(knowledgeBaseFolder.getName());
+		}
+
+		if (Validator.isNotNull(
+				knowledgeBaseFolder.getNumberOfKnowledgeBaseArticles())) {
+
+			existingKnowledgeBaseFolder.setNumberOfKnowledgeBaseArticles(
+				knowledgeBaseFolder.getNumberOfKnowledgeBaseArticles());
+		}
+
+		if (Validator.isNotNull(
+				knowledgeBaseFolder.getNumberOfKnowledgeBaseFolders())) {
+
+			existingKnowledgeBaseFolder.setNumberOfKnowledgeBaseFolders(
+				knowledgeBaseFolder.getNumberOfKnowledgeBaseFolders());
 		}
 
 		if (Validator.isNotNull(

@@ -1215,12 +1215,12 @@ public abstract class BaseCommentResourceTestCase {
 			return sb.toString();
 		}
 
-		if (entityFieldName.equals("hasComments")) {
+		if (entityFieldName.equals("id")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
 		}
 
-		if (entityFieldName.equals("id")) {
+		if (entityFieldName.equals("numberOfComments")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
 		}
@@ -1242,7 +1242,6 @@ public abstract class BaseCommentResourceTestCase {
 			{
 				dateCreated = RandomTestUtil.nextDate();
 				dateModified = RandomTestUtil.nextDate();
-				hasComments = RandomTestUtil.randomBoolean();
 				id = RandomTestUtil.randomLong();
 				text = RandomTestUtil.randomString();
 			}

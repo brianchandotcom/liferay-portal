@@ -963,11 +963,6 @@ public abstract class BaseTaxonomyVocabularyResourceTestCase {
 			return sb.toString();
 		}
 
-		if (entityFieldName.equals("hasTaxonomyCategories")) {
-			throw new IllegalArgumentException(
-				"Invalid entity field " + entityFieldName);
-		}
-
 		if (entityFieldName.equals("id")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
@@ -979,6 +974,11 @@ public abstract class BaseTaxonomyVocabularyResourceTestCase {
 			sb.append("'");
 
 			return sb.toString();
+		}
+
+		if (entityFieldName.equals("numberOfTaxonomyCategories")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
 		}
 
 		if (entityFieldName.equals("viewableBy")) {
@@ -997,7 +997,6 @@ public abstract class BaseTaxonomyVocabularyResourceTestCase {
 				dateCreated = RandomTestUtil.nextDate();
 				dateModified = RandomTestUtil.nextDate();
 				description = RandomTestUtil.randomString();
-				hasTaxonomyCategories = RandomTestUtil.randomBoolean();
 				id = RandomTestUtil.randomLong();
 				name = RandomTestUtil.randomString();
 			}

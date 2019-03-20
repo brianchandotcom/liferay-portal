@@ -159,30 +159,6 @@ public class Field {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Grid grid;
 
-	public Boolean getHasFormRules() {
-		return hasFormRules;
-	}
-
-	public void setHasFormRules(Boolean hasFormRules) {
-		this.hasFormRules = hasFormRules;
-	}
-
-	@JsonIgnore
-	public void setHasFormRules(
-		UnsafeSupplier<Boolean, Exception> hasFormRulesUnsafeSupplier) {
-
-		try {
-			hasFormRules = hasFormRulesUnsafeSupplier.get();
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Boolean hasFormRules;
-
 	public Long getId() {
 		return id;
 	}
@@ -370,6 +346,30 @@ public class Field {
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String name;
+
+	public Boolean getNumberOfFormRules() {
+		return numberOfFormRules;
+	}
+
+	public void setNumberOfFormRules(Boolean numberOfFormRules) {
+		this.numberOfFormRules = numberOfFormRules;
+	}
+
+	@JsonIgnore
+	public void setNumberOfFormRules(
+		UnsafeSupplier<Boolean, Exception> numberOfFormRulesUnsafeSupplier) {
+
+		try {
+			numberOfFormRules = numberOfFormRulesUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Boolean numberOfFormRules;
 
 	@Schema(description = "https://www.schema.org/FormFieldOption")
 	public Option getOption() {
@@ -695,11 +695,6 @@ public class Field {
 		sb.append(grid);
 		sb.append(", ");
 
-		sb.append("\"hasFormRules\": ");
-
-		sb.append(hasFormRules);
-		sb.append(", ");
-
 		sb.append("\"id\": ");
 
 		sb.append(id);
@@ -744,6 +739,11 @@ public class Field {
 		sb.append("\"");
 		sb.append(name);
 		sb.append("\"");
+		sb.append(", ");
+
+		sb.append("\"numberOfFormRules\": ");
+
+		sb.append(numberOfFormRules);
 		sb.append(", ");
 
 		sb.append("\"option\": ");

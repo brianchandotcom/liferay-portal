@@ -1103,16 +1103,6 @@ public abstract class BaseKnowledgeBaseFolderResourceTestCase {
 			return sb.toString();
 		}
 
-		if (entityFieldName.equals("hasKnowledgeBaseArticles")) {
-			throw new IllegalArgumentException(
-				"Invalid entity field " + entityFieldName);
-		}
-
-		if (entityFieldName.equals("hasKnowledgeBaseFolders")) {
-			throw new IllegalArgumentException(
-				"Invalid entity field " + entityFieldName);
-		}
-
 		if (entityFieldName.equals("id")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
@@ -1124,6 +1114,16 @@ public abstract class BaseKnowledgeBaseFolderResourceTestCase {
 			sb.append("'");
 
 			return sb.toString();
+		}
+
+		if (entityFieldName.equals("numberOfKnowledgeBaseArticles")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
+		if (entityFieldName.equals("numberOfKnowledgeBaseFolders")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
 		}
 
 		if (entityFieldName.equals("parentKnowledgeBaseFolder")) {
@@ -1146,8 +1146,6 @@ public abstract class BaseKnowledgeBaseFolderResourceTestCase {
 				dateCreated = RandomTestUtil.nextDate();
 				dateModified = RandomTestUtil.nextDate();
 				description = RandomTestUtil.randomString();
-				hasKnowledgeBaseArticles = RandomTestUtil.randomBoolean();
-				hasKnowledgeBaseFolders = RandomTestUtil.randomBoolean();
 				id = RandomTestUtil.randomLong();
 				name = RandomTestUtil.randomString();
 				parentKnowledgeBaseFolderId = RandomTestUtil.randomLong();

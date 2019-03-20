@@ -836,11 +836,6 @@ public abstract class BaseOrganizationResourceTestCase {
 			return sb.toString();
 		}
 
-		if (entityFieldName.equals("hasOrganizations")) {
-			throw new IllegalArgumentException(
-				"Invalid entity field " + entityFieldName);
-		}
-
 		if (entityFieldName.equals("id")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
@@ -867,6 +862,11 @@ public abstract class BaseOrganizationResourceTestCase {
 			return sb.toString();
 		}
 
+		if (entityFieldName.equals("numberOfOrganizations")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
 		if (entityFieldName.equals("parentOrganization")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
@@ -890,7 +890,6 @@ public abstract class BaseOrganizationResourceTestCase {
 		return new Organization() {
 			{
 				comment = RandomTestUtil.randomString();
-				hasOrganizations = RandomTestUtil.randomBoolean();
 				id = RandomTestUtil.randomLong();
 				image = RandomTestUtil.randomString();
 				name = RandomTestUtil.randomString();

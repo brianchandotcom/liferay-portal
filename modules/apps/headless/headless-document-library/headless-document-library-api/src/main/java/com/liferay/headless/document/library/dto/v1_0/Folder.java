@@ -196,54 +196,6 @@ public class Folder {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String description;
 
-	public Boolean getHasDocuments() {
-		return hasDocuments;
-	}
-
-	public void setHasDocuments(Boolean hasDocuments) {
-		this.hasDocuments = hasDocuments;
-	}
-
-	@JsonIgnore
-	public void setHasDocuments(
-		UnsafeSupplier<Boolean, Exception> hasDocumentsUnsafeSupplier) {
-
-		try {
-			hasDocuments = hasDocumentsUnsafeSupplier.get();
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Boolean hasDocuments;
-
-	public Boolean getHasFolders() {
-		return hasFolders;
-	}
-
-	public void setHasFolders(Boolean hasFolders) {
-		this.hasFolders = hasFolders;
-	}
-
-	@JsonIgnore
-	public void setHasFolders(
-		UnsafeSupplier<Boolean, Exception> hasFoldersUnsafeSupplier) {
-
-		try {
-			hasFolders = hasFoldersUnsafeSupplier.get();
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Boolean hasFolders;
-
 	public Long getId() {
 		return id;
 	}
@@ -287,6 +239,54 @@ public class Folder {
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String name;
+
+	public Number getNumberOfDocuments() {
+		return numberOfDocuments;
+	}
+
+	public void setNumberOfDocuments(Number numberOfDocuments) {
+		this.numberOfDocuments = numberOfDocuments;
+	}
+
+	@JsonIgnore
+	public void setNumberOfDocuments(
+		UnsafeSupplier<Number, Exception> numberOfDocumentsUnsafeSupplier) {
+
+		try {
+			numberOfDocuments = numberOfDocumentsUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Number numberOfDocuments;
+
+	public Number getNumberOfFolders() {
+		return numberOfFolders;
+	}
+
+	public void setNumberOfFolders(Number numberOfFolders) {
+		this.numberOfFolders = numberOfFolders;
+	}
+
+	@JsonIgnore
+	public void setNumberOfFolders(
+		UnsafeSupplier<Number, Exception> numberOfFoldersUnsafeSupplier) {
+
+		try {
+			numberOfFolders = numberOfFoldersUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Number numberOfFolders;
 
 	public ViewableBy getViewableBy() {
 		return viewableBy;
@@ -357,16 +357,6 @@ public class Folder {
 		sb.append("\"");
 		sb.append(", ");
 
-		sb.append("\"hasDocuments\": ");
-
-		sb.append(hasDocuments);
-		sb.append(", ");
-
-		sb.append("\"hasFolders\": ");
-
-		sb.append(hasFolders);
-		sb.append(", ");
-
 		sb.append("\"id\": ");
 
 		sb.append(id);
@@ -377,6 +367,16 @@ public class Folder {
 		sb.append("\"");
 		sb.append(name);
 		sb.append("\"");
+		sb.append(", ");
+
+		sb.append("\"numberOfDocuments\": ");
+
+		sb.append(numberOfDocuments);
+		sb.append(", ");
+
+		sb.append("\"numberOfFolders\": ");
+
+		sb.append(numberOfFolders);
 		sb.append(", ");
 
 		sb.append("\"viewableBy\": ");

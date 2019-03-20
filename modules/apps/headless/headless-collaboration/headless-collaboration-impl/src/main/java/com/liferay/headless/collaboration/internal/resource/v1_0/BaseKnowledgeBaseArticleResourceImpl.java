@@ -169,21 +169,23 @@ public abstract class BaseKnowledgeBaseArticleResourceImpl
 				knowledgeBaseArticle.getFriendlyUrlPath());
 		}
 
-		if (Validator.isNotNull(knowledgeBaseArticle.getHasAttachments())) {
-			existingKnowledgeBaseArticle.setHasAttachments(
-				knowledgeBaseArticle.getHasAttachments());
-		}
-
-		if (Validator.isNotNull(
-				knowledgeBaseArticle.getHasKnowledgeBaseArticles())) {
-
-			existingKnowledgeBaseArticle.setHasKnowledgeBaseArticles(
-				knowledgeBaseArticle.getHasKnowledgeBaseArticles());
-		}
-
 		if (Validator.isNotNull(knowledgeBaseArticle.getKeywords())) {
 			existingKnowledgeBaseArticle.setKeywords(
 				knowledgeBaseArticle.getKeywords());
+		}
+
+		if (Validator.isNotNull(
+				knowledgeBaseArticle.getNumberOfAttachments())) {
+
+			existingKnowledgeBaseArticle.setNumberOfAttachments(
+				knowledgeBaseArticle.getNumberOfAttachments());
+		}
+
+		if (Validator.isNotNull(
+				knowledgeBaseArticle.getNumberOfKnowledgeBaseArticles())) {
+
+			existingKnowledgeBaseArticle.setNumberOfKnowledgeBaseArticles(
+				knowledgeBaseArticle.getNumberOfKnowledgeBaseArticles());
 		}
 
 		if (Validator.isNotNull(

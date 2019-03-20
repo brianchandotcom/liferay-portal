@@ -366,6 +366,30 @@ public class Document {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String[] keywords;
 
+	public Number getNumberOfComments() {
+		return numberOfComments;
+	}
+
+	public void setNumberOfComments(Number numberOfComments) {
+		this.numberOfComments = numberOfComments;
+	}
+
+	@JsonIgnore
+	public void setNumberOfComments(
+		UnsafeSupplier<Number, Exception> numberOfCommentsUnsafeSupplier) {
+
+		try {
+			numberOfComments = numberOfCommentsUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Number numberOfComments;
+
 	public Number getSizeInBytes() {
 		return sizeInBytes;
 	}
@@ -605,6 +629,11 @@ public class Document {
 			sb.append("]");
 		}
 
+		sb.append(", ");
+
+		sb.append("\"numberOfComments\": ");
+
+		sb.append(numberOfComments);
 		sb.append(", ");
 
 		sb.append("\"sizeInBytes\": ");

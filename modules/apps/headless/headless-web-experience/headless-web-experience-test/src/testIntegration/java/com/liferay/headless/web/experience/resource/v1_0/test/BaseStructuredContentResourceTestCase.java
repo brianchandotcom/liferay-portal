@@ -1481,11 +1481,6 @@ public abstract class BaseStructuredContentResourceTestCase {
 			return sb.toString();
 		}
 
-		if (entityFieldName.equals("hasComments")) {
-			throw new IllegalArgumentException(
-				"Invalid entity field " + entityFieldName);
-		}
-
 		if (entityFieldName.equals("id")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
@@ -1500,6 +1495,11 @@ public abstract class BaseStructuredContentResourceTestCase {
 			sb.append(_dateFormat.format(structuredContent.getLastReviewed()));
 
 			return sb.toString();
+		}
+
+		if (entityFieldName.equals("numberOfComments")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
 		}
 
 		if (entityFieldName.equals("renderedContents")) {
@@ -1543,7 +1543,6 @@ public abstract class BaseStructuredContentResourceTestCase {
 				dateModified = RandomTestUtil.nextDate();
 				datePublished = RandomTestUtil.nextDate();
 				description = RandomTestUtil.randomString();
-				hasComments = RandomTestUtil.randomBoolean();
 				id = RandomTestUtil.randomLong();
 				lastReviewed = RandomTestUtil.nextDate();
 				title = RandomTestUtil.randomString();

@@ -112,20 +112,20 @@ public class Arquillian extends Runner implements Filterable {
 		try {
 			ServerSocket serverSocket = _getServerSocket();
 
-			Thread thread = new Thread(
-				new ServerRunnable(runNotifier, serverSocket),
-				_clazz.getName() + "-Test-Thread");
-
-			thread.setDaemon(true);
-
-			thread.start();
-
 			// Enforce client side test class initialization
 
 			Class.forName(_clazz.getName(), true, _clazz.getClassLoader());
 
 			try (Closeable closeable = _installBundle(
 					serverSocket.getLocalPort())) {
+
+				Thread thread = new Thread(
+					new ServerRunnable(runNotifier, serverSocket),
+					_clazz.getName() + "-Test-Thread");
+
+				thread.setDaemon(true);
+
+				thread.start();
 
 				thread.join();
 			}

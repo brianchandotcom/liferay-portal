@@ -30,20 +30,6 @@ definition {
 		);
 	}
 
-	macro clickShowFullContent {
-		Click(
-			locator1 = "AP#ASSET_ABSTRACT_SHOW_FULL_CONTENT",
-			key_assetTitle = "${assetTitle}"
-		);
-	}
-
-	macro clickViewInContext {
-		Click(
-			locator1 = "AP#ASSET_ABSTRACT_VIEW_IN_CONTEXT",
-			key_assetTitle = "${assetTitle}"
-		);
-	}
-
 	macro configureAddSiteScopes {
 		AssetPublisherPortlet.gotoConfigurationPG();
 

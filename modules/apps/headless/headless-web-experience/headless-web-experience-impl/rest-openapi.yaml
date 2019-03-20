@@ -12,6 +12,80 @@ components:
                 worstRating:
                     type: number
             type: object
+        BlogPosting:
+            description: https://www.schema.org/BlogPosting
+            properties:
+                aggregateRating:
+                    $ref: "#/components/schemas/AggregateRating"
+                alternativeHeadline:
+                    type: string
+                articleBody:
+                    type: string
+                contentSpaceId:
+                    format: int64
+                    type: integer
+                creator:
+                    $ref: "#/components/schemas/Creator"
+                dateCreated:
+                    format: date-time
+                    type: string
+                dateModified:
+                    format: date-time
+                    type: string
+                datePublished:
+                    format: date-time
+                    type: string
+                description:
+                    type: string
+                encodingFormat:
+                    type: string
+                friendlyUrlPath:
+                    type: string
+                headline:
+                    type: string
+                id:
+                    format: int64
+                    type: integer
+                image:
+                    properties:
+                        caption:
+                            type: string
+                        contentUrl:
+                            format: uri
+                            readOnly: true
+                            type: string
+                        imageId:
+                            format: int64
+                            type: integer
+                    type: object
+                keywords:
+                    items:
+                        type: string
+                    type: array
+                numberOfComments:
+                    type: number
+                taxonomyCategories:
+                    items:
+                        properties:
+                            taxonomyCategoryId:
+                                format: int64
+                                type: integer
+                            taxonomyCategoryName:
+                                type: string
+                        type: object
+                    readOnly: true
+                    type: array
+                taxonomyCategoryIds:
+                    items:
+                        format: int64
+                        type: integer
+                    type: array
+                    writeOnly: true
+                viewableBy:
+                    enum: [Anyone, Members, Owner]
+                    type: string
+                    writeOnly: true
+            type: object
         Comment:
             description: https://www.schema.org/Comment
             properties:
@@ -118,6 +192,29 @@ components:
                                     type: string
                             type: object
                     type: object
+        ContentListElement:
+            description: https://www.schema.org/ContentListElement
+            oneOf:
+                - properties:
+                      blogPosting:
+                          $ref: "#/components/schemas/BlogPosting"
+                - properties:
+                      document:
+                          $ref: "#/components/schemas/Document"
+                - properties:
+                      folder:
+                          $ref: "#/components/schemas/Folder"
+                - properties:
+                      genericContentListElement:
+                          $ref: "#/components/schemas/GenericContentListElement"
+                - properties:
+                      structuredContent:
+                          $ref: "#/components/schemas/StructuredContent"
+            properties:
+                contentType:
+                    type: string
+                order:
+                    type: number
         ContentStructure:
             description: https://www.schema.org/ContentStructure
             properties:
@@ -205,6 +302,201 @@ components:
                 profileURL:
                     format: uri
                     type: string
+            type: object
+        Document:
+            description: https://www.schema.org/Document
+            properties:
+                adaptedImages:
+                    description: https://www.schema.org/ImageObject
+                    items:
+                        properties:
+                            contentUrl:
+                                format: uri
+                                type: string
+                            height:
+                                type: number
+                            resolutionName:
+                                type: string
+                            sizeInBytes:
+                                type: number
+                            width:
+                                type: number
+                        type: object
+                    type: array
+                aggregateRating:
+                    $ref: "#/components/schemas/AggregateRating"
+                contentUrl:
+                    format: binary
+                    type: string
+                creator:
+                    $ref: "#/components/schemas/Creator"
+                dateCreated:
+                    format: date-time
+                    type: string
+                dateModified:
+                    format: date-time
+                    type: string
+                description:
+                    type: string
+                encodingFormat:
+                    type: string
+                fileExtension:
+                    type: string
+                folderId:
+                    format: int64
+                    type: integer
+                id:
+                    format: int64
+                    type: integer
+                keywords:
+                    items:
+                        type: string
+                    type: array
+                numberOfComments:
+                    type: number
+                sizeInBytes:
+                    type: number
+                taxonomyCategories:
+                    items:
+                        properties:
+                            taxonomyCategoryId:
+                                format: int64
+                                type: integer
+                            taxonomyCategoryName:
+                                type: string
+                        type: object
+                    readOnly: true
+                    type: array
+                taxonomyCategoryIds:
+                    items:
+                        format: int64
+                        type: integer
+                    type: array
+                    writeOnly: true
+                title:
+                    type: string
+                viewableBy:
+                    enum: [Anyone, Members, Owner]
+                    type: string
+                    writeOnly: true
+            type: object
+        Folder:
+            description: https://www.schema.org/Folder
+            properties:
+                contentSpaceId:
+                    format: int64
+                    type: integer
+                creator:
+                    $ref: "#/components/schemas/Creator"
+                dateCreated:
+                    format: date-time
+                    type: string
+                dateModified:
+                    format: date-time
+                    type: string
+                description:
+                    type: string
+                id:
+                    format: int64
+                    type: integer
+                name:
+                    type: string
+                numberOfDocuments:
+                    type: number
+                numberOfFolders:
+                    type: number
+                viewableBy:
+                    enum: [Anyone, Members, Owner]
+                    type: string
+                    writeOnly: true
+            type: object
+        GenericContentListElement:
+            description: https://www.schema.org/GenericContentListElement
+            properties:
+                contentSpaceId:
+                    format: int64
+                    type: integer
+                dateCreated:
+                    format: date-time
+                    type: string
+                dateModified:
+                    format: date-time
+                    type: string
+                description:
+                    type: string
+                id:
+                    format: int64
+                    type: integer
+                title:
+                    type: string
+            type: object
+        KnowledgeBaseArticle:
+            description: https://www.schema.org/KnowledgeBaseArticle
+            properties:
+                aggregateRating:
+                    $ref: "#/components/schemas/AggregateRating"
+                articleBody:
+                    type: string
+                contentSpaceId:
+                    format: int64
+                    type: integer
+                creator:
+                    $ref: "#/components/schemas/Creator"
+                dateCreated:
+                    format: date-time
+                    type: string
+                dateModified:
+                    format: date-time
+                    type: string
+                description:
+                    type: string
+                friendlyUrlPath:
+                    type: string
+                id:
+                    format: int64
+                    type: integer
+                keywords:
+                    items:
+                        type: string
+                    type: array
+                numberOfAttachments:
+                    type: number
+                numberOfKnowledgeBaseArticles:
+                    type: number
+                parentKnowledgeBaseFolder:
+                    properties:
+                        folderId:
+                            format: int64
+                            type: integer
+                        folderName:
+                            type: string
+                    type: object
+                parentKnowledgeBaseFolderId:
+                    format: int64
+                    type: integer
+                    writeOnly: true
+                taxonomyCategories:
+                    items:
+                        properties:
+                            taxonomyCategoryId:
+                                format: int64
+                                type: integer
+                            taxonomyCategoryName:
+                                type: string
+                        type: object
+                    type: array
+                taxonomyCategoryIds:
+                    items:
+                        format: int64
+                        type: integer
+                    type: array
+                    writeOnly: true
+                title:
+                    type: string
+                viewableBy:
+                    enum: [Anyone, Members, Owner]
+                    type: string
+                    writeOnly: true
             type: object
         StructuredContent:
             description: https://www.schema.org/StructuredContent
@@ -404,6 +696,33 @@ paths:
                                 $ref: "#/components/schemas/Comment"
                     description: ""
             tags: ["Comment"]
+    "/content-lists/{content-list-id}/contents":
+        get:
+            parameters:
+                - in: path
+                  name: content-list-id
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+                - in: query
+                  name: page
+                  schema:
+                      type: integer
+                - in: query
+                  name: pageSize
+                  schema:
+                      type: integer
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/ContentListElement"
+                                type: array
+                    description: ""
+            tags: ["ContentListElement"]
     "/content-spaces/{content-space-id}/content-structures":
         get:
             parameters:

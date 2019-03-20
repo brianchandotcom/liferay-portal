@@ -24,7 +24,7 @@
 					<%= rowChecker.getRowCheckBox(request, rowChecker.isChecked(resultRow.getObject()), rowChecker.isDisabled(resultRow.getObject()), resultRow.getPrimaryKey()) %>
 				</liferay-util:buffer>
 
-				<div class="custom-control custom-checkbox">
+				<div class="custom-checkbox custom-control">
 					<label>
 						<%= checkboxInput %>
 						<span class="custom-control-label"></span>

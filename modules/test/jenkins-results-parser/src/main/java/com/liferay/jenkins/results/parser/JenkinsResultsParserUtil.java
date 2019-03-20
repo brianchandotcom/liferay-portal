@@ -1691,7 +1691,9 @@ public class JenkinsResultsParserUtil {
 	public static void move(File sourceFile, File destFile) throws IOException {
 		copy(sourceFile, destFile);
 
-		delete(sourceFile);
+		if (!delete(sourceFile)) {
+			throw new IOException("Unable to delete " + sourceFile);
+		}
 	}
 
 	public static <T> List<List<T>> partitionByCount(List<T> list, int count) {

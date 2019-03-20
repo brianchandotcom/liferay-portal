@@ -258,9 +258,11 @@ public class ConfigurationProviderImpl implements ConfigurationProvider {
 			Serializable scopePK)
 		throws ConfigurationException {
 
+		String scopedFactoryPid = factoryPid + ".scoped";
+
 		try {
 			Configuration configuration = _getFactoryConfiguration(
-				factoryPid, scope, scopePK);
+				scopedFactoryPid, scope, scopePK);
 
 			if (configuration != null) {
 				configuration.delete();
@@ -268,7 +270,8 @@ public class ConfigurationProviderImpl implements ConfigurationProvider {
 		}
 		catch (IOException ioe) {
 			throw new ConfigurationException(
-				"Unable to delete factory configuration " + factoryPid, ioe);
+				"Unable to delete factory configuration " + scopedFactoryPid,
+				ioe);
 		}
 	}
 
@@ -345,13 +348,15 @@ public class ConfigurationProviderImpl implements ConfigurationProvider {
 			Serializable scopePK, Dictionary<String, Object> properties)
 		throws ConfigurationException {
 
+		String scopedFactoryPid = factoryPid + ".scoped";
+
 		try {
 			Configuration configuration = _getFactoryConfiguration(
-				factoryPid, scope, scopePK);
+				scopedFactoryPid, scope, scopePK);
 
 			if (configuration == null) {
 				configuration = _configurationAdmin.createFactoryConfiguration(
-					factoryPid, StringPool.QUESTION);
+					scopedFactoryPid, StringPool.QUESTION);
 			}
 
 			properties.put(scope.getPropertyKey(), scopePK);
@@ -360,7 +365,8 @@ public class ConfigurationProviderImpl implements ConfigurationProvider {
 		}
 		catch (IOException ioe) {
 			throw new ConfigurationException(
-				"Unable to save factory configuration " + factoryPid, ioe);
+				"Unable to save factory configuration " + scopedFactoryPid,
+				ioe);
 		}
 	}
 

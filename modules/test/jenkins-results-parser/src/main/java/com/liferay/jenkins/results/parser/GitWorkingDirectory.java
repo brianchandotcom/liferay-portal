@@ -1918,6 +1918,13 @@ public class GitWorkingDirectory {
 
 		GitRemote gitRemote = gitRemotes.get("upstream");
 
+		if (gitRemote == null) {
+			gitRemote = addGitRemote(
+				true, "upstream",
+				JenkinsResultsParserUtil.combine(
+					"git@github.com:liferay/", getGitRepositoryName(), ".git"));
+		}
+
 		return gitRemote;
 	}
 

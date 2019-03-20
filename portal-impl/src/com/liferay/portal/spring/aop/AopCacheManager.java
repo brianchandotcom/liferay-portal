@@ -93,11 +93,7 @@ public class AopCacheManager {
 
 		chainableMethodAdvices.add(new AccessControlAdvice());
 
-		AsyncAdvice asyncAdvice = new AsyncAdvice();
-
-		asyncAdvice.setDefaultDestinationName("liferay/async_service");
-
-		chainableMethodAdvices.add(asyncAdvice);
+		chainableMethodAdvices.add(new AsyncAdvice("liferay/async_service"));
 
 		chainableMethodAdvices.add(new BufferedIncrementAdvice());
 

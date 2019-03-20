@@ -35,6 +35,10 @@ import java.util.Map;
  */
 public class AsyncAdvice extends ChainableMethodAdvice {
 
+	public AsyncAdvice(String destinationName) {
+		_destinationName = destinationName;
+	}
+
 	@Override
 	public Object createMethodContext(
 		Class<?> targetClass, Method method,
@@ -56,29 +60,7 @@ public class AsyncAdvice extends ChainableMethodAdvice {
 			return null;
 		}
 
-		String destinationName = null;
-
-		if ((_destinationNames != null) && !_destinationNames.isEmpty()) {
-			destinationName = _destinationNames.get(targetClass);
-		}
-
-		if (destinationName == null) {
-			destinationName = _defaultDestinationName;
-		}
-
-		return destinationName;
-	}
-
-	public String getDefaultDestinationName() {
-		return _defaultDestinationName;
-	}
-
-	public void setDefaultDestinationName(String defaultDestinationName) {
-		_defaultDestinationName = defaultDestinationName;
-	}
-
-	public void setDestinationNames(Map<Class<?>, String> destinationNames) {
-		_destinationNames = destinationNames;
+		return nullResult;
 	}
 
 	@Override
@@ -89,13 +71,10 @@ public class AsyncAdvice extends ChainableMethodAdvice {
 			return null;
 		}
 
-		String callbackDestinationName =
-			aopMethodInvocation.getAdviceMethodContext();
-
 		TransactionCommitCallbackUtil.registerCallback(
 			() -> {
 				MessageBusUtil.sendMessage(
-					callbackDestinationName,
+					_destinationName,
 					new AsyncProcessCallable(aopMethodInvocation, arguments));
 
 				return null;
@@ -106,7 +85,6 @@ public class AsyncAdvice extends ChainableMethodAdvice {
 
 	private static final Log _log = LogFactoryUtil.getLog(AsyncAdvice.class);
 
-	private String _defaultDestinationName;
-	private Map<Class<?>, String> _destinationNames;
+	private final String _destinationName;
 
 }

@@ -5,6 +5,7 @@
  */
 {template .render}
 	{@param? availableSegmentsEntries: ?}
+	{@param? _handleDiscardDraft: any}
 	{@param? _handleToggleContextualSidebarButtonClick: any}
 	{@param? classPK: ?}
 	{@param? defaultSegmentsExperienceId: string }
@@ -73,7 +74,7 @@
 
 				{if $discardDraftURL}
 					<li class="nav-item">
-						<form action="{$discardDraftURL}" method="POST">
+						<form action="{$discardDraftURL}" data-onsubmit="{$_handleDiscardDraft}" method="POST">
 							<input
 								name="{$portletNamespace ?: ''}classPK"
 								type="hidden"

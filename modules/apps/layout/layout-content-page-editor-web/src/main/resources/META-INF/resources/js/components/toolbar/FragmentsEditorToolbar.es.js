@@ -28,6 +28,19 @@ class FragmentsEditorToolbar extends Component {
 	}
 
 	/**
+	 * Handles discard draft form submit action.
+	 * @private
+	 * @review
+	 */
+	_handleDiscardDraft(event) {
+		if (!confirm(Liferay.Language.get(
+			'are-you-sure-you-want-to-discard-current-draft-and-apply-latest-published-changes'))) {
+
+			event.preventDefault();
+		}
+	}
+
+	/**
 	 * @private
 	 * @review
 	 */

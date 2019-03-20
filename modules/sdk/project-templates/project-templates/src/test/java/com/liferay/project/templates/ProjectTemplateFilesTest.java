@@ -816,9 +816,10 @@ public class ProjectTemplateFilesTest {
 		Properties properties = FileUtil.readProperties(bndBndPath);
 
 		String bundleName = properties.getProperty(Constants.BUNDLE_NAME);
-		Matcher matcher = _projectTemplateDirNameSeparatorPattern.matcher(
-			projectTemplateDirName.substring(
-				FileTestUtil.PROJECT_TEMPLATE_DIR_PREFIX.length()));
+
+		Matcher matcher = _bundleNameSeparatorPattern.matcher(
+			bundleName.substring(
+				FileTestUtil.PROJECT_TEMPLATE_BUNDLE_NAME_PREFIX.length()));
 
 		while (matcher.find()) {
 			String initial = matcher.group(1);

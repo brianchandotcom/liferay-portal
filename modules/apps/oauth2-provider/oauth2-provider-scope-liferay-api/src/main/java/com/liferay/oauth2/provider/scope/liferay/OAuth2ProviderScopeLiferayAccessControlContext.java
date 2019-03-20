@@ -43,15 +43,15 @@ public class OAuth2ProviderScopeLiferayAccessControlContext {
 			String authType = MapUtil.getString(settings, "auth.type");
 
 			if (Validator.isNotNull(authType) &&
-				!authType.equals(
+				authType.equals(
 					OAuth2ProviderScopeLiferayConstants.
 						AUTH_VERIFIER_OAUTH2_TYPE)) {
 
-				return false;
+				return true;
 			}
 		}
 
-		return true;
+		return false;
 	}
 
 }

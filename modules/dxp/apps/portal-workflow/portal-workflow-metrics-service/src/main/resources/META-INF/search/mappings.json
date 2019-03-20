@@ -539,7 +539,7 @@
 			}
 		}
 	},
-	"WorkflowMetricsSLACheckerResultType": {
+	"WorkflowMetricsSLAProcessResultType": {
 		"date_detection": false,
 		"dynamic_templates": [
 			{
@@ -587,6 +587,10 @@
 			"remainingTime": {
 				"store": true,
 				"type": "long"
+			},
+			"slaDefinitionId": {
+				"store": true,
+				"type": "keyword"
 			}
 		}
 	},

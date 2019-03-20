@@ -1,5 +1,6 @@
 import AnalyticsClient from '../../src/analytics';
 import {expect} from 'chai';
+import fetchMock from 'fetch-mock';
 
 const applicationId = 'Form';
 

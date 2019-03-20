@@ -1,6 +1,7 @@
 import AnalyticsClient from '../../src/analytics';
 import dom from 'metal-dom';
 import {expect} from 'chai';
+import fetchMock from 'fetch-mock';
 
 const applicationId = 'Custom';
 

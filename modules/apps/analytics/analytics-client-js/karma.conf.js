@@ -5,13 +5,20 @@ module.exports = function(config) {
 	config.set({
 		browsers: ['ChromeHeadless'],
 
+		coverageIstanbulReporter: {
+			dir: path.join(__dirname, 'test-coverage'),
+			reports: ['html', 'lcovonly', 'text-summary']
+		},
+
 		coverageReporter: {
-			reporters: [{
-				type: 'lcov',
-				subdir: 'lcov',
-			}, {
-				type: 'text-summary',
-			}, ],
+			reporters: [
+				{
+					subdir: 'lcov',
+					type: 'lcov',
+				}, {
+					type: 'text-summary',
+				},
+			],
 		},
 
 		customLaunchers: {
@@ -29,11 +36,20 @@ module.exports = function(config) {
 		},
 
 		files: [
-			'node_modules/fetch-mock/es5/client-browserified.js',
-			'test.webpack.js'
+			'test.webpack.js',
 		],
 
 		frameworks: ['chai', 'mocha', 'sinon'],
+
+		plugins: [
+			'karma-chai',
+			'karma-chrome-launcher',
+			'karma-coverage-istanbul-reporter',
+			'karma-mocha',
+			'karma-sinon',
+			'karma-sourcemap-loader',
+			'karma-webpack',
+		],
 
 		preprocessors: {
 			'test.webpack.js': ['webpack', 'sourcemap'],
@@ -41,13 +57,8 @@ module.exports = function(config) {
 
 		reporters: ['progress', 'coverage-istanbul'],
 
-		coverageIstanbulReporter: {
-			dir: path.join(__dirname, 'test-coverage'),
-			reports: ['html', 'lcovonly', 'text-summary']
-		},
+		singleRun: true,
 
 		webpack,
-
-		singleRun: true
 	});
 };

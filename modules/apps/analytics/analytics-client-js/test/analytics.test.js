@@ -1,5 +1,6 @@
 import AnalyticsClient from '../src/analytics';
 import {expect} from 'chai';
+import fetchMock from 'fetch-mock';
 
 let Analytics;
 let EVENT_ID = 0;
@@ -17,8 +18,6 @@ const MOCKED_REQUEST_DURATION = 5000;
 const STORAGE_KEY_EVENTS = 'ac_client_batch';
 const STORAGE_KEY_USER_ID = 'ac_client_user_id';
 const STORAGE_KEY_IDENTITY = 'ac_client_identity';
-
-const fetchMock = window.fetchMock;
 
 /**
  * Sends dummy events to test the Analytics API

@@ -1,6 +1,7 @@
 import AnalyticsClient from '../../src/analytics';
 import dom from 'metal-dom';
 import {expect} from 'chai';
+import fetchMock from 'fetch-mock';
 
 const applicationId = 'Blog';
 
@@ -16,7 +17,7 @@ const createBlogElement = () => {
 	blogElement.innerText = 'Lorem ipsum dolor, sit amet consectetur adipisicing elit.';
 	document.body.appendChild(blogElement);
 	return blogElement;
-}
+};
 
 describe('Blogs Plugin', () => {
 	afterEach(() => {

@@ -1,5 +1,6 @@
 import AnalyticsClient from '../src/analytics';
 import {assert, expect} from 'chai';
+import fetchMock from 'fetch-mock';
 
 let Analytics;
 

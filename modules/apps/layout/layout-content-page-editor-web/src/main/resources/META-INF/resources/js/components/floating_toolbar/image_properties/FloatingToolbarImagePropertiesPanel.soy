@@ -15,7 +15,10 @@
 	{@param? _handleSelectImageButtonClick: any}
 
 	<div class="floating-toolbar-spacing-panel">
-		{let $isMapped: isNonnull($item.editableValues.mappedField) and $item.editableValues.mappedField != '' /}
+		{let $isMapped: (
+			(isNonnull($item.editableValues.classNameId)) and ($item.editableValues.classNameId != '') or
+			(isNonnull($item.editableValues.mappedField)) and ($item.editableValues.mappedField != '')
+		) /}
 
 		{if not $isMapped}
 			<div class="form-group">

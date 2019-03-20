@@ -147,7 +147,7 @@ public class KeywordResourceImpl extends BaseKeywordResourceImpl {
 						true);
 					put("append", append);
 					put(
-						"selectionToAddTagNames",
+						"toAddTagNames",
 						keywordBulkSelection.getKeywordsToAdd());
 					put(
 						"toRemoveTagNames",

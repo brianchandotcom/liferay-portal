@@ -369,11 +369,14 @@ class Builder extends Component {
 			}
 		};
 
+		const targetIsEmptyRow = ![...event.data.target.parentElement.parentElement.classList].includes('position-relative');
+
 		this.emit(
 			'fieldAdded',
 			{
 				...event,
-				focusedField
+				focusedField,
+				targetIsEmptyRow
 			}
 		);
 

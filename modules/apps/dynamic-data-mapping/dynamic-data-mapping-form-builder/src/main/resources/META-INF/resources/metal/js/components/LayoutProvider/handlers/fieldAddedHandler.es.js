@@ -2,7 +2,7 @@ import {FormSupport} from '../../Form/index.es';
 import {generateInstanceId} from '../../../util/fieldSupport.es';
 
 const handleFieldAdded = (props, state, event) => {
-	const {focusedField, target} = event;
+	const {focusedField, target, targetIsEmptyRow} = event;
 	const {fieldName, name, settingsContext} = focusedField;
 	const {pageIndex, rowIndex} = target;
 	const {editingLanguageId, spritemap} = props;
@@ -19,10 +19,8 @@ const handleFieldAdded = (props, state, event) => {
 		type: name
 	};
 
-	const emptyRow = !event.data.target.parentElement.parentElement.classList.contains('position-relative');
-
 	if (FormSupport.rowHasFields(pages, pageIndex, rowIndex)) {
-		if (emptyRow) {
+		if (targetIsEmptyRow) {
 			pages = FormSupport.addRow(pages, rowIndex, pageIndex);
 		}
 

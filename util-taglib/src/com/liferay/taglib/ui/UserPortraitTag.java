@@ -61,6 +61,14 @@ public class UserPortraitTag extends IncludeTag {
 		return _cssClass;
 	}
 
+	public long getUserId() {
+		if (_user != null) {
+			return _user.getUserId();
+		}
+
+		return 0;
+	}
+
 	@Override
 	public int processEndTag() throws Exception {
 		JspWriter jspWriter = pageContext.getOut();

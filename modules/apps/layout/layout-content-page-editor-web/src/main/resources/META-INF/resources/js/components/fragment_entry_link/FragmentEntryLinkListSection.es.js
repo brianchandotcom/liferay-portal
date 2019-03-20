@@ -9,7 +9,7 @@ import './FragmentEntryLink.es';
 import {CLEAR_ACTIVE_ITEM, MOVE_SECTION, REMOVE_SECTION, UPDATE_ACTIVE_ITEM, UPDATE_HOVERED_ITEM} from '../../actions/actions.es';
 import {FLOATING_TOOLBAR_BUTTONS, FRAGMENTS_EDITOR_ITEM_TYPES} from '../../utils/constants';
 import {getItemMoveDirection, getSectionIndex, getTargetBorder} from '../../utils/FragmentsEditorGetUtils.es';
-import {moveItem, removeItem, shouldClearFocus} from '../../utils/FragmentsEditorUpdateUtils.es';
+import {moveItem, removeItem, setIn, shouldClearFocus} from '../../utils/FragmentsEditorUpdateUtils.es';
 import {shouldUpdatePureComponent} from '../../utils/FragmentsEditorComponentUtils.es';
 import FloatingToolbar from '../floating_toolbar/FloatingToolbar.es';
 import getConnectedComponent from '../../store/ConnectedComponent.es';
@@ -37,6 +37,24 @@ class FragmentEntryLinkListSection extends Component {
 	 */
 	disposed() {
 		this._disposeFloatingToolbar();
+	}
+
+	/**
+	 * @inheritdoc
+	 * @param {object} state
+	 * @return {object}
+	 * @review
+	 */
+	prepareStateForRender(state) {
+		let columnResizerVisible;
+
+		if (this.rowId === this.activeItemId &&
+			this.activeItemType === FRAGMENTS_EDITOR_ITEM_TYPES.section) {
+
+			columnResizerVisible = false;
+		}
+
+		return setIn(state, ['_columnResizerVisible'], columnResizerVisible);
 	}
 
 	/**

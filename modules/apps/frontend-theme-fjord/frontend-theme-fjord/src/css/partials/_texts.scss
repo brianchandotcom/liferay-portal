@@ -1,0 +1,43 @@
+.fjord-blockquote {
+	&:before {
+		content: open-quote;
+	}
+
+	&:after {
+		content: close-quote;
+	}
+}
+
+.fjord-text-primary {
+	color: $fjord-primary !important;
+}
+
+.fjord-text-success {
+	color: $fjord-success !important;
+}
+
+.fjord-text-info {
+	color: $fjord-info !important;
+}
+
+// Bootstrap 4.1
+
+.display-4 {
+	@include media-breakpoint-down(sm) {
+		font-size: 3rem;
+	}
+}
+
+// Bootstrap 4.3.1
+
+.text-reset {
+	color: inherit !important;
+}
+
+.text-decoration-none {
+	text-decoration: none !important;
+}
+
+.align-middle {
+	vertical-align: middle !important;
+}

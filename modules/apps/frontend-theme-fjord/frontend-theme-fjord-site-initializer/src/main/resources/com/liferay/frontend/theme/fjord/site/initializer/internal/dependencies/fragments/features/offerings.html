@@ -1,138 +1,180 @@
-<div class="fjord-offerings">
-	<div class="jumbotron list-packages-template main-background-color">
-		<section class="container-fluid container-fluid-max-xl">
+<div class="fjord-offerings fjord-section">
+	<section class="bg-primary fjord-bg-primary jumbotron jumbotron-fluid mb-0 text-white">
+		<div class="container text-center">
 			<div class="row">
-				<div class="col-md-8 mx-auto text-center">
-					<h1 class="display-4">
-						<lfr-editable id="title" type="text">Choose Your Plan</lfr-editable>
-					</h1>
+				<div class="col-12">
+					<lfr-editable id="fjord-offerings-title" type="rich-text">
+						<h2 class="display-4">Choose Your Plan</h2>
+					</lfr-editable>
 
-					<p class="lead">
-						<lfr-editable id="lead" type="rich-text">Use this pricing table template to make purchasing easy and compelling for your customers.</lfr-editable>
-					</p>
+					<div class="lead">
+						<lfr-editable id="fjord-offerings-text" type="rich-text">
+							<p>Use this pricing table template to make purchasing easy and compelling for your customers.</p>
+						</lfr-editable>
+					</div>
 				</div>
 			</div>
-		</section>
 
-		<section class="container-fluid container-fluid-max-xl">
 			<div class="row">
-				<div class="text-center col-md-4">
-					<div class="card card-body">
-						<h3 class="h2">
-							<lfr-editable id="lead1" type="text">Beginner</lfr-editable>
-						</h3>
-
-						<p>
-							<lfr-editable id="title1" type="rich-text">
-								<sup class="currency">$</sup>
-								<span class="h1">30</span>
-								<span class="period">mo <sup>*</sup></span>
+				<div class="col-12 col-lg-4 col-md-6 col-sm-8 d-flex flex-column mt-5 mx-auto">
+					<div class="bg-white-10 d-flex flex-column p-4 rounded shadow-sm">
+						<div class="fjord-text-success text-success">
+							<lfr-editable id="fjord-offerings-card-title" type="rich-text">
+								<h3>Beginner</h3>
 							</lfr-editable>
-						</p>
+						</div>
 
-						<p>
-							<lfr-editable id="description1" type="text">Our standard suite of products.</lfr-editable>
-						</p>
+						<div class="mb-3">
+							<span class="align-top d-inline-block ml-4 small">
+								<lfr-editable id="fjord-offerings-card-currency" type="text">$</lfr-editable>
+							</span>
 
-						<p class="small">
-							<lfr-editable id="periodicity1" type="text">
-								$35 month-to-month (USD)
+							<span class="d-inline-block display-4 mx-1">
+								<lfr-editable id="fjord-offerings-card-value" type="text">30</lfr-editable>
+							</span>
+
+							<span class="d-inline-block">
+								<lfr-editable id="fjord-offerings-card-period" type="text">mo*</lfr-editable>
+							</span>
+						</div>
+
+						<div class="fjord-offerings-paragraph">
+							<lfr-editable id="fjord-offerings-card-text" type="rich-text">
+								<p>Out standard suite of products</p>
 							</lfr-editable>
-						</p>
+						</div>
 
-						<lfr-editable id="link1" type="rich-text">
-							<a class="btn btn-block btn-primary btn-fjord-primary btn-xl-fjord-default" href="#">Try it for free</a>
+						<div class="small text-white-50">
+							<lfr-editable id="fjord-offerings-card-subtext" type="rich-text">
+								<p>$35 month-to-month (USD)</p>
+							</lfr-editable>
+						</div>
+
+						<lfr-editable id="fjord-offerings-card-button" type="rich-text">
+							<a class="btn btn-block btn-outline-light px-4 px-sm-5 py-2 py-sm-3 text-uppercase" href="#">Try for free</a>
 						</lfr-editable>
 					</div>
 
-					<lfr-editable id="list1" type="rich-text">
-						<ul class="list-unstyled small">
-							<li>Workout Tracker</li>
-							<li>Group Scheduler</li>
-							<li>Calendar Sync</li>
-						</ul>
-					</lfr-editable>
+					<div class="mt-3 small text-white-50">
+						<lfr-editable id="fjord-offerings-list" type="rich-text">
+							<ul class="list-unstyled">
+								<li>Workout Tracker</li>
+
+								<li>Group Scheduler</li>
+
+								<li>Calendar Sync</li>
+							</ul>
+						</lfr-editable>
+					</div>
 				</div>
-
-				<div class="text-center col-md-4">
-					<div class="card card-body">
-						<h3 class="h2">
-							<lfr-editable id="lead2" type="text">Standard</lfr-editable>
-						</h3>
-
-						<p>
-							<lfr-editable id="title2" type="rich-text">
-								<sup class="currency">$</sup>
-								<span class="h1">60</span>
-								<span class="period">mo <sup>*</sup></span>
+				<div class="col-12 col-lg-4 col-md-6 col-sm-8 d-flex flex-column mt-5 mx-auto">
+					<div class="bg-white-10 d-flex flex-column p-4 rounded shadow-sm">
+						<div class="fjord-text-success text-success">
+							<lfr-editable id="fjord-offerings-card-title2" type="rich-text">
+								<h3>Standard</h3>
 							</lfr-editable>
-						</p>
+						</div>
 
-						<p>
-							<lfr-editable id="description2" type="text">Standard suite plus two expansions of your choice.</lfr-editable>
-						</p>
+						<div class="mb-3">
+							<span class="align-top d-inline-block ml-4 small">
+								<lfr-editable id="fjord-offerings-card-currency2" type="text">$</lfr-editable>
+							</span>
 
-						<p class="small">
-							<lfr-editable id="periodicity2" type="text">
-								$35 month-to-month (USD)
+							<span class="d-inline-block display-4 mx-1">
+								<lfr-editable id="fjord-offerings-card-value2" type="text">60</lfr-editable>
+							</span>
+
+							<span class="d-inline-block">
+								<lfr-editable id="fjord-offerings-card-period2" type="text">mo*</lfr-editable>
+							</span>
+						</div>
+
+						<div class="fjord-offerings-paragraph">
+							<lfr-editable id="fjord-offerings-card-text2" type="rich-text">
+								<p>Standard suite plus two expansions of your choice</p>
 							</lfr-editable>
-						</p>
+						</div>
 
-						<lfr-editable id="link2" type="rich-text">
-							<a class="btn btn-block btn-primary btn-fjord-primary btn-xl-fjord-default" href="#">Try it for free</a>
+						<div class="small text-white-50">
+							<lfr-editable id="fjord-offerings-card-subtext2" type="rich-text">
+								<p>$65 month-to-month (USD)</p>
+							</lfr-editable>
+						</div>
+
+						<lfr-editable id="fjord-offerings-card-button2" type="rich-text">
+							<a class="btn btn-block btn-outline-light px-4 px-sm-5 py-2 py-sm-3 text-uppercase" href="#">Try for free</a>
 						</lfr-editable>
 					</div>
 
-					<lfr-editable id="list2" type="rich-text">
-						<ul class="list-unstyled small">
-							<li>Workout Tracker</li>
-							<li>Group Scheduler</li>
-							<li>Calendar Sync + 2 Expansions</li>
-						</ul>
-					</lfr-editable>
+					<div class="mt-3 small text-white-50">
+						<lfr-editable id="fjord-offerings-list2" type="rich-text">
+							<ul class="list-unstyled">
+								<li>Workout Tracker</li>
+
+								<li>Group Scheduler</li>
+
+								<li>Calendar Sync + 2 Expansions</li>
+							</ul>
+						</lfr-editable>
+					</div>
 				</div>
-
-				<div class="text-center col-md-4">
-					<div class="card card-body">
-						<h3 class="h2">
-							<lfr-editable id="lead3" type="text">Hardcore</lfr-editable>
-						</h3>
-
-						<p>
-							<lfr-editable id="title3" type="rich-text">
-								<sup class="currency">$</sup>
-								<span class="h1">135</span>
-								<span class="period">mo <sup>*</sup></span>
+				<div class="col-12 col-lg-4 col-md-6 col-sm-8 d-flex flex-column mt-5 mx-auto">
+					<div class="bg-white-10 d-flex flex-column p-4 rounded shadow-sm">
+						<div class="fjord-text-success text-success">
+							<lfr-editable id="fjord-offerings-card-title3" type="rich-text">
+								<h3>Hardcore</h3>
 							</lfr-editable>
-						</p>
+						</div>
 
-						<p>
-							<lfr-editable id="description3" type="text">Includes full suite of product expansions and VIP customer support.</lfr-editable>
-						</p>
+						<div class="mb-3">
+							<span class="align-top d-inline-block ml-4 small">
+								<lfr-editable id="fjord-offerings-card-currency3" type="text">$</lfr-editable>
+							</span>
 
-						<p class="small">
-							<lfr-editable id="periodicity3" type="text">
-								Annual only
+							<span class="d-inline-block display-4 mx-1">
+								<lfr-editable id="fjord-offerings-card-value3" type="text">135</lfr-editable>
+							</span>
+
+							<span class="d-inline-block">
+								<lfr-editable id="fjord-offerings-card-period3" type="text">mo*</lfr-editable>
+							</span>
+						</div>
+
+						<div class="fjord-offerings-paragraph">
+							<lfr-editable id="fjord-offerings-card-text3" type="rich-text">
+								<p>Includes full suite of product expansions and VIP customer support.</p>
 							</lfr-editable>
-						</p>
+						</div>
 
-						<lfr-editable id="link3" type="rich-text">
-							<a class="btn btn-block btn-primary btn-fjord-primary btn-xl-fjord-default" href="#">Try it for free</a>
+						<div class="small text-white-50">
+							<lfr-editable id="fjord-offerings-card-subtext3" type="rich-text">
+								<p>Annual only</p>
+							</lfr-editable>
+						</div>
+
+						<lfr-editable id="fjord-offerings-card-button3" type="rich-text">
+							<a class="btn btn-block btn-outline-light px-4 px-sm-5 py-2 py-sm-3 text-uppercase" href="#">Try for free</a>
 						</lfr-editable>
 					</div>
+					<div class="mt-3 small text-white-50">
+						<lfr-editable id="fjord-offerings-list3" type="rich-text">
+							<ul class="list-unstyled">
+								<li>Workout Tracker</li>
 
-					<lfr-editable id="list3" type="rich-text">
-						<ul class="list-unstyled small">
-							<li>Workout Tracker</li>
-							<li>Group Scheduler</li>
-							<li>Calendar Sync</li>
-							<li>Fitness Target Manager</li>
-							<li>Calorie Tracker</li>
-							<li>Sleep Tracker</li>
-						</ul>
-					</lfr-editable>
+								<li>Group Scheduler</li>
+
+								<li>Calendar Sync</li>
+
+								<li>Fitness Target Manager</li>
+
+								<li>Calorie Tracker</li>
+
+								<li>Sleep Tracker</li>
+							</ul>
+						</lfr-editable>
+					</div>
 				</div>
 			</div>
-		</section>
-	</div>
+		</div>
+	</section>
 </div>

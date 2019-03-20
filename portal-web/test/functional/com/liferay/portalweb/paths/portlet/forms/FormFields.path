@@ -223,7 +223,7 @@
 </tr>
 <tr>
 	<td>PARAGRAPH_BODY_TEXT_FIELD</td>
-	<td>//div[contains(@id,'text') and contains(@aria-label,'Rich Text Editor')]//p</td>
+	<td>//div[contains(@id,'text') and contains(@aria-label,'Rich Text Editor')]//p | //div[contains(@id,'text') and contains(@aria-label,'Rich Text Editor')]</td>
 	<td></td>
 </tr>
 <tr>

@@ -230,11 +230,7 @@ definition {
 	}
 
 	macro setUpRegRoleLoginUserCP {
-		ProductMenu.gotoPortlet(
-			category = "Configuration",
-			panel = "Control Panel",
-			portlet = "Instance Settings"
-		);
+		PortalSettings.gotoPortalSettings();
 
 		PortalSettings.editConfigurationUsersDefaultUserAssociationsRolesCP(
 			roleTitle = ""
@@ -409,11 +405,7 @@ definition {
 	}
 
 	macro setUpSiteRoleCP {
-		ProductMenu.gotoPortlet(
-			category = "Configuration",
-			panel = "Control Panel",
-			portlet = "Instance Settings"
-		);
+		PortalSettings.gotoPortalSettings();
 
 		Portlet.waitForForm();
 

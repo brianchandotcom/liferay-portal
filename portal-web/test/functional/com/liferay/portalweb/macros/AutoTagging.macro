@@ -30,11 +30,7 @@ definition {
 		}
 
 		else if ("${disableAutoTaggingFor}" == "Instance Settings") {
-			ProductMenu.gotoPortlet(
-				category = "Configuration",
-				panel = "Control Panel",
-				portlet = "Instance Settings"
-			);
+			PortalSettings.gotoPortalSettings();
 
 			Navigator.gotoNavTab(navTab = "Asset Auto Tagging");
 
@@ -80,11 +76,7 @@ definition {
 		}
 
 		else if ("${enableAutoTaggingFor}" == "Instance Settings") {
-			ProductMenu.gotoPortlet(
-				category = "Configuration",
-				panel = "Control Panel",
-				portlet = "Instance Settings"
-			);
+			PortalSettings.gotoPortalSettings();
 
 			Navigator.gotoNavTab(navTab = "Asset Auto Tagging");
 

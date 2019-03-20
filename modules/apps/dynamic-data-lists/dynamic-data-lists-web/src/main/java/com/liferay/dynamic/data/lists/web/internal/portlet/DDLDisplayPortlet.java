@@ -37,6 +37,8 @@ import com.liferay.portal.kernel.model.Release;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.servlet.SessionErrors;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PrefsParamUtil;
@@ -46,6 +48,7 @@ import java.io.IOException;
 
 import javax.portlet.Portlet;
 import javax.portlet.PortletException;
+import javax.portlet.PortletRequest;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
@@ -96,6 +99,8 @@ public class DDLDisplayPortlet extends MVCPortlet {
 		throws IOException, PortletException {
 
 		try {
+			setBackURLRequestAttribute(renderRequest);
+
 			setDDLRecordRequestAttribute(renderRequest);
 
 			setDDLRecordSetRequestAttribute(renderRequest);
@@ -198,6 +203,19 @@ public class DDLDisplayPortlet extends MVCPortlet {
 		}
 
 		return false;
+	}
+
+	protected void setBackURLRequestAttribute(RenderRequest renderRequest) {
+		PortletRequest portletRequest =
+			(PortletRequest)renderRequest.getAttribute(
+				JavaConstants.JAVAX_PORTLET_REQUEST);
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		renderRequest.setAttribute(
+			"backURL",
+			themeDisplay.getURLPortal() + themeDisplay.getURLCurrent());
 	}
 
 	protected void setDDLRecordRequestAttribute(RenderRequest renderRequest)

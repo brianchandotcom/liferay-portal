@@ -17,6 +17,8 @@
 <%@ include file="/init.jsp" %>
 
 <%
+String backURL = (String)request.getAttribute("backURL");
+
 SearchContainer searchContainer = (SearchContainer)request.getAttribute("liferay-ui:search:searchContainer");
 
 String redirect = searchContainer.getIteratorURL().toString();
@@ -33,6 +35,10 @@ boolean hasUpdatePermission = GetterUtil.getBoolean((String)row.getParameter("ha
 
 DDLRecordVersion recordVersion = record.getRecordVersion();
 
+if (backURL == null) {
+	backURL = currentURL;
+}
+
 if (hasUpdatePermission) {
 	recordVersion = record.getLatestRecordVersion();
 }
@@ -48,7 +54,7 @@ if (hasUpdatePermission) {
 	<c:if test="<%= DDLRecordSetPermission.contains(permissionChecker, record.getRecordSet(), ActionKeys.VIEW) %>">
 		<portlet:renderURL copyCurrentRenderParameters="<%= false %>" var="viewRecordURL" windowState="<%= WindowState.MAXIMIZED.toString() %>">
 			<portlet:param name="mvcPath" value="/view_record.jsp" />
-			<portlet:param name="redirect" value="<%= currentURL %>" />
+			<portlet:param name="redirect" value="<%= backURL %>" />
 			<portlet:param name="recordId" value="<%= String.valueOf(record.getRecordId()) %>" />
 			<portlet:param name="version" value="<%= recordVersion.getVersion() %>" />
 			<portlet:param name="editable" value="<%= String.valueOf(editable) %>" />
@@ -64,7 +70,7 @@ if (hasUpdatePermission) {
 	<c:if test="<%= hasUpdatePermission %>">
 		<portlet:renderURL copyCurrentRenderParameters="<%= false %>" var="editRecordURL" windowState="<%= WindowState.MAXIMIZED.toString() %>">
 			<portlet:param name="mvcPath" value="/edit_record.jsp" />
-			<portlet:param name="redirect" value="<%= currentURL %>" />
+			<portlet:param name="redirect" value="<%= backURL %>" />
 			<portlet:param name="recordId" value="<%= String.valueOf(record.getRecordId()) %>" />
 			<portlet:param name="formDDMTemplateId" value="<%= String.valueOf(formDDMTemplateId) %>" />
 		</portlet:renderURL>
@@ -77,7 +83,7 @@ if (hasUpdatePermission) {
 
 	<c:if test="<%= hasDeletePermission %>">
 		<portlet:actionURL copyCurrentRenderParameters="<%= false %>" name="deleteRecord" var="deleteRecordURL">
-			<portlet:param name="redirect" value="<%= currentURL %>" />
+			<portlet:param name="redirect" value="<%= backURL %>" />
 			<portlet:param name="recordIds" value="<%= String.valueOf(record.getRecordId()) %>" />
 		</portlet:actionURL>
 

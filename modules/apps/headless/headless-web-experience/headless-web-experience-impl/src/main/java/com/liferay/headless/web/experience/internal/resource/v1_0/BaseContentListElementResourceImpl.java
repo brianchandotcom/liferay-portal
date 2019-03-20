@@ -80,7 +80,8 @@ public abstract class BaseContentListElementResourceImpl
 		this.contextCompany = contextCompany;
 	}
 
-	protected String getJAXRSLink(String methodName, Object... values) {
+	protected String getJAXRSLink(
+		Class clazz, String methodName, Object... values) {
 		String baseURIString = String.valueOf(contextUriInfo.getBaseUri());
 
 		if (baseURIString.endsWith(StringPool.FORWARD_SLASH)) {
@@ -89,11 +90,11 @@ public abstract class BaseContentListElementResourceImpl
 		}
 
 		URI resourceURI = UriBuilder.fromResource(
-			BaseContentListElementResourceImpl.class
+			clazz
 		).build();
 
 		URI methodURI = UriBuilder.fromMethod(
-			BaseContentListElementResourceImpl.class, methodName
+			clazz, methodName
 		).build(
 			values
 		);

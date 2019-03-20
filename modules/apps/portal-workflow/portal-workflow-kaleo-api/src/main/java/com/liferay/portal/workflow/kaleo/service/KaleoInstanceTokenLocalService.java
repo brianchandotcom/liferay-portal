@@ -288,16 +288,17 @@ public interface KaleoInstanceTokenLocalService
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public Hits search(
-		String assetClassName, String assetTitle, String assetDescription,
-		String currentKaleoNodeName, String kaleoDefinitionName,
-		Boolean completed, int start, int end, Sort[] sorts,
-		ServiceContext serviceContext);
+		Long userId, String assetClassName, String assetTitle,
+		String assetDescription, String currentKaleoNodeName,
+		String kaleoDefinitionName, Boolean completed, int start, int end,
+		Sort[] sorts, ServiceContext serviceContext);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int searchCount(
-		String assetClassName, String assetTitle, String assetDescription,
-		String currentKaleoNodeName, String kaleoDefinitionName,
-		Boolean completed, ServiceContext serviceContext);
+		Long userId, String assetClassName, String assetTitle,
+		String assetDescription, String currentKaleoNodeName,
+		String kaleoDefinitionName, Boolean completed,
+		ServiceContext serviceContext);
 
 	/**
 	 * Updates the kaleo instance token in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.

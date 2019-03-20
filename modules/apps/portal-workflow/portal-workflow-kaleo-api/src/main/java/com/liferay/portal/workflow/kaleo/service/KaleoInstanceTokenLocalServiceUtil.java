@@ -365,26 +365,28 @@ public class KaleoInstanceTokenLocalServiceUtil {
 	}
 
 	public static com.liferay.portal.kernel.search.Hits search(
-		String assetClassName, String assetTitle, String assetDescription,
-		String currentKaleoNodeName, String kaleoDefinitionName,
-		Boolean completed, int start, int end,
+		Long userId, String assetClassName, String assetTitle,
+		String assetDescription, String currentKaleoNodeName,
+		String kaleoDefinitionName, Boolean completed, int start, int end,
 		com.liferay.portal.kernel.search.Sort[] sorts,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext) {
 
 		return getService().search(
-			assetClassName, assetTitle, assetDescription, currentKaleoNodeName,
-			kaleoDefinitionName, completed, start, end, sorts, serviceContext);
+			userId, assetClassName, assetTitle, assetDescription,
+			currentKaleoNodeName, kaleoDefinitionName, completed, start, end,
+			sorts, serviceContext);
 	}
 
 	public static int searchCount(
-		String assetClassName, String assetTitle, String assetDescription,
-		String currentKaleoNodeName, String kaleoDefinitionName,
-		Boolean completed,
+		Long userId, String assetClassName, String assetTitle,
+		String assetDescription, String currentKaleoNodeName,
+		String kaleoDefinitionName, Boolean completed,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext) {
 
 		return getService().searchCount(
-			assetClassName, assetTitle, assetDescription, currentKaleoNodeName,
-			kaleoDefinitionName, completed, serviceContext);
+			userId, assetClassName, assetTitle, assetDescription,
+			currentKaleoNodeName, kaleoDefinitionName, completed,
+			serviceContext);
 	}
 
 	/**

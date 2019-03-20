@@ -23,4 +23,5 @@ EditAssetDisplayMenuDisplayContext editAssetDisplayMenuDisplayContext = new Edit
 <clay:dropdown-menu
 	dropdownItems="<%= editAssetDisplayMenuDisplayContext.getDropdownItems() %>"
 	icon="pencil"
+	triggerCssClasses="icon-monospaced"
 />

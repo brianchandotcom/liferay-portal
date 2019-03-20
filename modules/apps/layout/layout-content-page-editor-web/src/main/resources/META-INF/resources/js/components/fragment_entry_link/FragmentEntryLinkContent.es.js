@@ -94,35 +94,38 @@ class FragmentEntryLinkContent extends Component {
 	 * Handle editableValues changed
 	 * @inheritDoc
 	 * @param {object} newEditableValues
+	 * @param {object} oldEditableValues
 	 * @review
 	 */
-	syncEditableValues(newEditableValues) {
-		if (this._editables) {
-			this._editables.forEach(
-				editable => {
-					const editableValues = (
-						newEditableValues[EDITABLE_FRAGMENT_ENTRY_PROCESSOR] &&
-						newEditableValues[EDITABLE_FRAGMENT_ENTRY_PROCESSOR][editable.editableId]
-					) ?
-						newEditableValues[EDITABLE_FRAGMENT_ENTRY_PROCESSOR][editable.editableId] :
-						{
-							defaultValue: editable.content
-						};
+	syncEditableValues(newEditableValues, oldEditableValues) {
+		if (newEditableValues !== oldEditableValues) {
+			if (this._editables) {
+				this._editables.forEach(
+					editable => {
+						const editableValues = (
+							newEditableValues[EDITABLE_FRAGMENT_ENTRY_PROCESSOR] &&
+							newEditableValues[EDITABLE_FRAGMENT_ENTRY_PROCESSOR][editable.editableId]
+						) ?
+							newEditableValues[EDITABLE_FRAGMENT_ENTRY_PROCESSOR][editable.editableId] :
+							{
+								defaultValue: editable.content
+							};
 
-					editable.editableValues = editableValues;
+						editable.editableValues = editableValues;
+					}
+				);
+			}
+
+			this._update(
+				{
+					defaultLanguageId: this.defaultLanguageId,
+					defaultSegmentsExperienceId: this.defaultSegmentsExperienceId,
+					languageId: this.languageId,
+					segmentsExperienceId: this.segmentsExperienceId,
+					updateFunctions: []
 				}
 			);
 		}
-
-		this._update(
-			{
-				defaultLanguageId: this.defaultLanguageId,
-				defaultSegmentsExperienceId: this.defaultSegmentsExperienceId,
-				languageId: this.languageId,
-				segmentsExperienceId: this.segmentsExperienceId,
-				updateFunctions: []
-			}
-		);
 	}
 
 	/**

@@ -15,17 +15,30 @@
 package com.liferay.portal.tools.java.parser;
 
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.util.NaturalOrderStringComparator;
 
 import java.util.List;
 
 /**
  * @author Hugo Huijser
  */
-public class JavaType extends BaseJavaTerm {
+public class JavaType extends BaseJavaTerm implements Comparable<JavaType> {
 
 	public JavaType(String name, int arrayDimension) {
 		_name = new JavaSimpleValue(name);
 		_arrayDimension = arrayDimension;
+	}
+
+	@Override
+	public int compareTo(JavaType javaType) {
+		NaturalOrderStringComparator comparator =
+			new NaturalOrderStringComparator();
+
+		return comparator.compare(getName(), javaType.getName());
+	}
+
+	public String getName() {
+		return _name.getName();
 	}
 
 	public void setGenericJavaTypes(List<JavaType> genericJavaTypes) {

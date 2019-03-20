@@ -901,9 +901,18 @@ public class JavaParserUtil {
 			TokenTypes.EXTENDS_CLAUSE);
 
 		if (extendsClauseDetailAST != null) {
-			javaClassDefinition.setExtendedClassJavaTypes(
+			List<JavaType> extendedClassJavaTypes =
 				_parseExtendedOrImplementedClassJavaTypes(
-					extendsClauseDetailAST));
+					extendsClauseDetailAST);
+
+			if ((extendedClassJavaTypes.size() > 1) &&
+				(definitionDetailAST.getParent() == null)) {
+
+				Collections.sort(extendedClassJavaTypes);
+			}
+
+			javaClassDefinition.setExtendedClassJavaTypes(
+				extendedClassJavaTypes);
 		}
 
 		DetailAST implementsClauseDetailAST =

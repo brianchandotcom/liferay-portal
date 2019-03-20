@@ -206,7 +206,6 @@ definition {
 
 	@priority = "4"
 	test ScheduleJobOnClusterNode1 {
-		property custom.properties = "cluster.link.enabled=true";
 		property test.name.skip.portal.instance = "ClusteringScheduleJob#ScheduleJobOnClusterNode1";
 
 		Clustering.viewClusterStatusInConsole();

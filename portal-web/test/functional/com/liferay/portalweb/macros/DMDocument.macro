@@ -1407,7 +1407,7 @@ definition {
 	macro viewDMMarketingBannerPG {
 		var key_assetTitle = "${assetTitle}";
 
-		AssetPublisherPortlet.clickShowFullContent(
+		AssetPublisherPortlet.clickAssetTitle(
 			assetTitle = "${assetTitle}"
 		);
 

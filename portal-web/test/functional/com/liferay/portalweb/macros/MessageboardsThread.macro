@@ -1208,7 +1208,7 @@ definition {
 			value1 = "${threadBody}"
 		);
 
-		AssetPublisherPortlet.clickShowFullContent(
+		AssetPublisherPortlet.clickAssetTitle(
 			assetTitle = "${threadSubject}"
 		);
 

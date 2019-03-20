@@ -23,6 +23,13 @@ definition {
 		SiteSelector.viewSite(site = "${siteName}");
 	}
 
+	macro clickAssetTitle {
+		Click(
+			locator1 = "AP#ASSET_ABSTRACT_TITLE",
+			key_assetTitle = "${assetTitle}"
+		);
+	}
+
 	macro clickShowFullContent {
 		Click(
 			locator1 = "AP#ASSET_ABSTRACT_SHOW_FULL_CONTENT",
@@ -920,7 +927,7 @@ definition {
 
 		AssertTextEquals(locator1 = "AP#ASSET_ABSTRACT_TITLE", value1 = "${assetTitle}");
 
-		AssetPublisherPortlet.clickShowFullContent(
+		AssetPublisherPortlet.clickAssetTitle(
 			assetTitle = "${assetTitle}"
 		);
 

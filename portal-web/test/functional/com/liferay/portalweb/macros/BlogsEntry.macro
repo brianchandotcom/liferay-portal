@@ -803,7 +803,7 @@ definition {
 		var key_assetContent = "${entryContent}";
 		var key_assetTitle = "${assetTitle}";
 
-		AssetPublisherPortlet.clickShowFullContent(
+		AssetPublisherPortlet.clickAssetTitle(
 			assetTitle = "${entryTitle}"
 		);
 
@@ -946,7 +946,7 @@ definition {
 			value1 = "${entryContent}"
 		);
 
-		AssetPublisherPortlet.clickShowFullContent(
+		AssetPublisherPortlet.clickAssetTitle(
 			assetTitle = "${entryTitle}"
 		);
 

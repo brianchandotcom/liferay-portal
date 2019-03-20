@@ -612,7 +612,7 @@ definition {
 				key_assetTitle = "Webcontent Title"
 			);
 
-			AssetPublisherPortlet.clickViewInContext(
+			AssetPublisherPortlet.clickAssetTitle(
 				assetTitle = "Webcontent Title"
 			);
 

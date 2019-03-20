@@ -533,7 +533,7 @@ definition {
 		var key_assetTitle = "${bookmarkName}";
 		var key_bookmarkName = "${bookmarkName}";
 
-		AssetPublisherPortlet.clickShowFullContent(
+		AssetPublisherPortlet.clickAssetTitle(
 			assetTitle = "${bookmarkName}"
 		);
 

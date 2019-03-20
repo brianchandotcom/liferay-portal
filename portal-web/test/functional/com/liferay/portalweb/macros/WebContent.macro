@@ -1830,7 +1830,7 @@ definition {
 			);
 		}
 
-		AssetPublisherPortlet.clickShowFullContent(
+		AssetPublisherPortlet.clickAssetTitle(
 			assetTitle = "${webContentTitle}"
 		);
 

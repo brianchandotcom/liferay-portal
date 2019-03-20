@@ -315,9 +315,9 @@ definition {
 
 		Navigator.gotoNavItem(navItem = "User Groups");
 
-		Site.assignSiteRoleCP(
-			resourceName = "UG UserGroup Name",
-			roleTitle = "Site Owner"
+		Site.assignSiteRoleToUserGroup(
+			roleName = "Site Owner",
+			userGroupName = "UG UserGroup Name"
 		);
 
 		User.logoutPG();

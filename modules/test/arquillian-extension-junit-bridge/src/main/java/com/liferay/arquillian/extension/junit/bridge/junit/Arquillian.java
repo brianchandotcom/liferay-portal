@@ -124,8 +124,6 @@ public class Arquillian extends Runner implements Filterable {
 					new ServerRunnable(runNotifier, socket),
 					_clazz.getName() + "-Test-Thread");
 
-				thread.setDaemon(true);
-
 				thread.start();
 
 				thread.join();

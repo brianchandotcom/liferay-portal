@@ -171,6 +171,9 @@
 			<message key="variable.name.reserved" value="{0} name ending with ''{1}'' is reserved for object ''{2}''" />
 			<message key="variable.rename" value="Rename {0} ''{1}'' to ''{2}''" />
 		</module>
+		<module name="com.liferay.source.formatter.checkstyle.checks.LambdaCheck">
+			<message key="lambda.simplify" value="Simplify lambda statement with single return statement" />
+		</module>
 		<module name="com.liferay.source.formatter.checkstyle.checks.LineBreakAfterCommaCheck">
 			<message key="line.break.incorrect" value="There should be a line break after ''{0}''" />
 		</module>

@@ -62,9 +62,9 @@ public class AssetAutoTaggerPortalSettingsFormContributor
 	public void validateForm(
 		ActionRequest actionRequest, ActionResponse actionResponse) {
 
-		String maximumNumberOfTagsPerAsset =
+		int maximumNumberOfTagsPerAsset = GetterUtil.getInteger(
 			PortalSettingsParameterUtil.getString(
-				actionRequest, this, "maximumNumberOfTagsPerAsset");
+				actionRequest, this, "maximumNumberOfTagsPerAsset"));
 
 		AssetAutoTaggerConfiguration systemAssetAutoTaggerConfiguration =
 			_assetAutoTaggerConfigurationFactory.
@@ -74,8 +74,7 @@ public class AssetAutoTaggerPortalSettingsFormContributor
 			systemAssetAutoTaggerConfiguration.getMaximumNumberOfTagsPerAsset();
 
 		if ((systemMaximumNumberOfTagsPerAsset != 0) &&
-			(systemMaximumNumberOfTagsPerAsset < GetterUtil.getInteger(
-				maximumNumberOfTagsPerAsset))) {
+			(systemMaximumNumberOfTagsPerAsset < maximumNumberOfTagsPerAsset)) {
 
 			SessionErrors.add(
 				actionRequest, "maximumNumberOfTagsPerAssetInvalid");

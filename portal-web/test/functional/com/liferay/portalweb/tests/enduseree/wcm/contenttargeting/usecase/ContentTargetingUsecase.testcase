@@ -3576,11 +3576,7 @@ definition {
 
 	@priority = "4"
 	test UserSegmentDisableAnonymousUserAnalytics {
-		ProductMenu.gotoPortlet(
-			category = "Configuration",
-			panel = "Control Panel",
-			portlet = "Instance Settings"
-		);
+		PortalSettings.gotoPortalSettings();
 
 		PortalSettings.configureAudienceTargetingAnalytics(
 			disableAnalyticsList = "Anonymous Users"

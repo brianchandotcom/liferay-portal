@@ -47,21 +47,13 @@ definition {
 
 		Organization.addSiteCP(orgName = "Organization Name");
 
-		ProductMenu.gotoPortlet(
-			category = "Configuration",
-			panel = "Control Panel",
-			portlet = "Instance Settings"
-		);
+		PortalSettings.gotoPortalSettings();
 
 		PortalSettings.editConfigurationUsersDefaultUserAssociationsOrganizationSitesCP(
 			orgName = "Organization Name"
 		);
 
-		ProductMenu.gotoPortlet(
-			category = "Configuration",
-			panel = "Control Panel",
-			portlet = "Instance Settings"
-		);
+		PortalSettings.gotoPortalSettings();
 
 		PortalSettings.viewConfigurationUsersDefaultUserAssociationsOrganizationSitesCP(
 			orgName = "Organization Name"
@@ -104,21 +96,13 @@ definition {
 
 		Role.add(roleTitle = "Roles Regrole Name");
 
-		ProductMenu.gotoPortlet(
-			category = "Configuration",
-			panel = "Control Panel",
-			portlet = "Instance Settings"
-		);
+		PortalSettings.gotoPortalSettings();
 
 		PortalSettings.editConfigurationUsersDefaultUserAssociationsRolesCP(
 			roleTitle = "Roles Regrole Name"
 		);
 
-		ProductMenu.gotoPortlet(
-			category = "Configuration",
-			panel = "Control Panel",
-			portlet = "Instance Settings"
-		);
+		PortalSettings.gotoPortalSettings();
 
 		PortalSettings.viewConfigurationUsersDefaultUserAssociationsRolesCP(
 			roleTitle = "Roles Regrole Name"
@@ -158,21 +142,13 @@ definition {
 
 		Site.addBlankCP(siteName = "Site Name");
 
-		ProductMenu.gotoPortlet(
-			category = "Configuration",
-			panel = "Control Panel",
-			portlet = "Instance Settings"
-		);
+		PortalSettings.gotoPortalSettings();
 
 		PortalSettings.editConfigurationUsersDefaultUserAssociationsSitesCP(
 			siteName = "Site Name"
 		);
 
-		ProductMenu.gotoPortlet(
-			category = "Configuration",
-			panel = "Control Panel",
-			portlet = "Instance Settings"
-		);
+		PortalSettings.gotoPortalSettings();
 
 		PortalSettings.viewConfigurationUsersDefaultUserAssociationsSitesCP(
 			siteName = "Site Name"
@@ -212,21 +188,13 @@ definition {
 
 		UserGroup.addCP(userGroupName = "UG UserGroup Name");
 
-		ProductMenu.gotoPortlet(
-			category = "Configuration",
-			panel = "Control Panel",
-			portlet = "Instance Settings"
-		);
+		PortalSettings.gotoPortalSettings();
 
 		PortalSettings.editConfigurationUsersDefaultUserAssociationsUserGroupsCP(
 			userGroupName = "UG UserGroup Name"
 		);
 
-		ProductMenu.gotoPortlet(
-			category = "Configuration",
-			panel = "Control Panel",
-			portlet = "Instance Settings"
-		);
+		PortalSettings.gotoPortalSettings();
 
 		PortalSettings.viewConfigurationUsersDefaultUserAssociationsUserGroupsCP(
 			userGroupName = "UG UserGroup Name"
@@ -260,11 +228,7 @@ definition {
 	test EnterReservedEmailAddress {
 		property portal.acceptance = "true";
 
-		ProductMenu.gotoPortlet(
-			category = "Configuration",
-			panel = "Control Panel",
-			portlet = "Instance Settings"
-		);
+		PortalSettings.gotoPortalSettings();
 
 		PortalSettings.enterReservedEmailAddressCP(
 			userEmailAddress = "userea@liferay.com"
@@ -288,11 +252,7 @@ definition {
 	test EnterReservedScreenName {
 		property portal.acceptance = "true";
 
-		ProductMenu.gotoPortlet(
-			category = "Configuration",
-			panel = "Control Panel",
-			portlet = "Instance Settings"
-		);
+		PortalSettings.gotoPortalSettings();
 
 		PortalSettings.enterReservedScreenNameCP(userScreenName = "usersn");
 
@@ -312,11 +272,7 @@ definition {
 
 	@priority = "4"
 	test ViewContentSharingDisabledAcrossSitesViaAP {
-		ProductMenu.gotoPortlet(
-			category = "Configuration",
-			panel = "Control Panel",
-			portlet = "Instance Settings"
-		);
+		PortalSettings.gotoPortalSettings();
 
 		PortalSettings.configureContentSharingAcrossSitesCP(enableAcrossSite = "false");
 
@@ -440,11 +396,7 @@ definition {
 
 		var siteName = TestCase.getSiteName(siteName = "${siteName}");
 
-		ProductMenu.gotoPortlet(
-			category = "Configuration",
-			panel = "Control Panel",
-			portlet = "Instance Settings"
-		);
+		PortalSettings.gotoPortalSettings();
 
 		PortalSettings.configureContentSharingAcrossSitesCP(enableAcrossSite = "true");
 
@@ -528,55 +480,35 @@ definition {
 
 	@priority = "3"
 	test ViewDefaultUserAssociations {
-		ProductMenu.gotoPortlet(
-			category = "Configuration",
-			panel = "Control Panel",
-			portlet = "Instance Settings"
-		);
+		PortalSettings.gotoPortalSettings();
 
 		PortalSettings.viewDefaultUserAssociationsCP();
 	}
 
 	@priority = "3"
 	test ViewEmailNotificationsAccountCreatedNotification {
-		ProductMenu.gotoPortlet(
-			category = "Configuration",
-			panel = "Control Panel",
-			portlet = "Instance Settings"
-		);
+		PortalSettings.gotoPortalSettings();
 
 		PortalSettings.viewEmailNotificationsAccountCreatedNotificationCP();
 	}
 
 	@priority = "3"
 	test ViewEmailNotificationsPasswordChangedNotification {
-		ProductMenu.gotoPortlet(
-			category = "Configuration",
-			panel = "Control Panel",
-			portlet = "Instance Settings"
-		);
+		PortalSettings.gotoPortalSettings();
 
 		PortalSettings.viewEmailNotificationsPasswordChangedNotificationCP();
 	}
 
 	@priority = "3"
 	test ViewEmailNotificationsSender {
-		ProductMenu.gotoPortlet(
-			category = "Configuration",
-			panel = "Control Panel",
-			portlet = "Instance Settings"
-		);
+		PortalSettings.gotoPortalSettings();
 
 		PortalSettings.viewEmailNotificationsSenderCP();
 	}
 
 	@priority = "3"
 	test ViewReservedCredentialsScreenNames {
-		ProductMenu.gotoPortlet(
-			category = "Configuration",
-			panel = "Control Panel",
-			portlet = "Instance Settings"
-		);
+		PortalSettings.gotoPortalSettings();
 
 		PortalSettings.viewReservedCredentialsScreenNamesCP();
 	}

@@ -828,11 +828,7 @@ definition {
 		property portal.release = "false";
 		property test.name.skip.portal.instance = "PGDocumentsandmedia#EditAndDeleteGoogleDoc";
 
-		ProductMenu.gotoPortlet(
-			category = "Configuration",
-			panel = "Control Panel",
-			portlet = "Instance Settings"
-		);
+		PortalSettings.gotoPortalSettings();
 
 		Navigator.gotoNavTab(navTab = "Miscellaneous");
 
@@ -1182,11 +1178,7 @@ definition {
 	test MoveGoogleDocToFolder {
 		property test.name.skip.portal.instance = "PGDocumentsandmedia#MoveGoogleDocToFolder";
 
-		ProductMenu.gotoPortlet(
-			category = "Configuration",
-			panel = "Control Panel",
-			portlet = "Instance Settings"
-		);
+		PortalSettings.gotoPortalSettings();
 
 		Navigator.gotoNavTab(navTab = "Miscellaneous");
 

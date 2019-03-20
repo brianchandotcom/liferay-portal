@@ -107,11 +107,7 @@ definition {
 			displaySettings = "Display Settings"
 		);
 
-		ProductMenu.gotoPortlet(
-			category = "Configuration",
-			panel = "Control Panel",
-			portlet = "Instance Settings"
-		);
+		PortalSettings.gotoPortalSettings();
 
 		PortalSettings.configureCurrentLanguagesCP(
 			currentPortalLanguages = "Arabic (Saudi Arabia),Czech (Czech Republic),French (France)",
@@ -915,11 +911,7 @@ definition {
 		property test.name.skip.portal.instance = "LocalizationWithSites#ViewSiteLocalizationAfterDeletingOriginalLocale";
 		property testray.component.names = "Site Localization";
 
-		ProductMenu.gotoPortlet(
-			category = "Configuration",
-			panel = "Control Panel",
-			portlet = "Instance Settings"
-		);
+		PortalSettings.gotoPortalSettings();
 
 		PortalSettings.viewDefaultLanguageCP(
 			defaultPortalLanguage = "English (United States)"

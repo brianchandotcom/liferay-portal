@@ -547,11 +547,7 @@ definition {
 	test AddFormWithSpanishAsDefaultPortalLanguage {
 		property test.name.skip.portal.instance = "Forms#AddFormWithSpanishAsDefaultPortalLanguage";
 
-		ProductMenu.gotoPortlet(
-			category = "Configuration",
-			panel = "Control Panel",
-			portlet = "Instance Settings"
-		);
+		PortalSettings.gotoPortalSettings();
 
 		PortalSettings.configureCurrentLanguagesCP(
 			defaultPortalLanguage = "Spanish (Spain)"

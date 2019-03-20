@@ -17,6 +17,8 @@ package com.liferay.portal.spring.aop;
 import com.liferay.petra.reflect.AnnotationLocator;
 import com.liferay.portal.kernel.aop.AopMethodInvocation;
 import com.liferay.portal.kernel.aop.ChainableMethodAdvice;
+import com.liferay.portal.spring.transaction.TransactionExecutor;
+import com.liferay.portal.spring.transaction.TransactionInterceptor;
 import com.liferay.portal.transaction.TransactionsUtil;
 
 import java.lang.annotation.Annotation;
@@ -53,10 +55,12 @@ public class AopInvocationHandler implements InvocationHandler {
 	}
 
 	protected AopInvocationHandler(
-		Object target, ChainableMethodAdvice[] chainableMethodAdvices) {
+		Object target, ChainableMethodAdvice[] chainableMethodAdvices,
+		TransactionExecutor transactionExecutor) {
 
 		_target = target;
 		_chainableMethodAdvices = chainableMethodAdvices;
+		_transactionExecutor = transactionExecutor;
 	}
 
 	protected synchronized void setChainableMethodAdvices(
@@ -69,7 +73,8 @@ public class AopInvocationHandler implements InvocationHandler {
 
 	private static AopMethodInvocation _createAopMethodInvocation(
 		Object target, Method method,
-		ChainableMethodAdvice[] chainableMethodAdvices) {
+		ChainableMethodAdvice[] chainableMethodAdvices,
+		TransactionExecutor transactionExecutor) {
 
 		AopMethodInvocation aopMethodInvocation = null;
 
@@ -80,11 +85,27 @@ public class AopInvocationHandler implements InvocationHandler {
 		Map<Class<? extends Annotation>, Annotation> annotations =
 			AnnotationLocator.index(method, targetClass);
 
+		TransactionInterceptor transactionInterceptor =
+			new TransactionInterceptor();
+
+		transactionInterceptor.setTransactionExecutor(transactionExecutor);
+
+		Object methodContext = transactionInterceptor.createMethodContext(
+			targetClass, method, annotations);
+
+		if (methodContext != null) {
+			aopMethodInvocation = new AopMethodInvocationImpl(
+				target, method, methodContext, nextChainableMethodAdvice,
+				aopMethodInvocation);
+
+			nextChainableMethodAdvice = transactionInterceptor;
+		}
+
 		for (int i = chainableMethodAdvices.length - 1; i >= 0; i--) {
 			ChainableMethodAdvice chainableMethodAdvice =
 				chainableMethodAdvices[i];
 
-			Object methodContext = chainableMethodAdvice.createMethodContext(
+			methodContext = chainableMethodAdvice.createMethodContext(
 				targetClass, method, annotations);
 
 			if (methodContext != null) {
@@ -111,7 +132,8 @@ public class AopInvocationHandler implements InvocationHandler {
 
 				synchronized (this) {
 					aopMethodInvocation = _createAopMethodInvocation(
-						_target, method, _chainableMethodAdvices);
+						_target, method, _chainableMethodAdvices,
+						_transactionExecutor);
 
 					previousAopMethodInvocation =
 						_aopMethodInvocations.putIfAbsent(
@@ -133,5 +155,6 @@ public class AopInvocationHandler implements InvocationHandler {
 		new ConcurrentHashMap<>();
 	private ChainableMethodAdvice[] _chainableMethodAdvices;
 	private volatile Object _target;
+	private final TransactionExecutor _transactionExecutor;
 
 }

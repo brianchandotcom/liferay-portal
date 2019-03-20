@@ -146,8 +146,8 @@ public class AopConfigurableApplicationContextConfigurator
 						new CounterServiceBeanAutoProxyCreator(
 							_classLoader,
 							configurableListableBeanFactory.getBean(
-								"counterTransactionAdvice",
-								ChainableMethodAdvice.class));
+								"counterTransactionExecutor",
+								TransactionExecutor.class));
 
 				configurableListableBeanFactory.addBeanPostProcessor(
 					counterServiceBeanAutoProxyCreator);
@@ -303,19 +303,23 @@ public class AopConfigurableApplicationContextConfigurator
 		@Override
 		protected AopInvocationHandler createAopInvocationHandler(Object bean) {
 			return new AopInvocationHandler(
-				bean, new ChainableMethodAdvice[] {_counterTransactionAdvice});
+				bean, _emptyChainableMethodAdvices,
+				_counterTransactionExecutor);
 		}
 
 		private CounterServiceBeanAutoProxyCreator(
 			ClassLoader classLoader,
-			ChainableMethodAdvice counterTransactionAdvice) {
+			TransactionExecutor counterTransactionExecutor) {
 
 			super(new ServiceBeanMatcher(true), classLoader);
 
-			_counterTransactionAdvice = counterTransactionAdvice;
+			_counterTransactionExecutor = counterTransactionExecutor;
 		}
 
-		private final ChainableMethodAdvice _counterTransactionAdvice;
+		private static final ChainableMethodAdvice[]
+			_emptyChainableMethodAdvices = new ChainableMethodAdvice[0];
+
+		private final TransactionExecutor _counterTransactionExecutor;
 
 	}
 

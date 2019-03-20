@@ -29,7 +29,6 @@ import com.liferay.portal.search.IndexableAdvice;
 import com.liferay.portal.security.access.control.AccessControlAdvice;
 import com.liferay.portal.service.ServiceContextAdvice;
 import com.liferay.portal.spring.transaction.TransactionExecutor;
-import com.liferay.portal.spring.transaction.TransactionInterceptor;
 import com.liferay.portal.systemevent.SystemEventAdvice;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.registry.Registry;
@@ -54,7 +53,10 @@ public class AopCacheManager {
 		Object target, TransactionExecutor transactionExecutor) {
 
 		AopInvocationHandler aopInvocationHandler = new AopInvocationHandler(
-			target, _createChainableMethodAdvices(transactionExecutor));
+			target,
+			_chainableMethodAdvices.toArray(
+				new ChainableMethodAdvice[_chainableMethodAdvices.size()]),
+			transactionExecutor);
 
 		_aopInvocationHandlers.put(aopInvocationHandler, transactionExecutor);
 
@@ -65,25 +67,6 @@ public class AopCacheManager {
 		AopInvocationHandler aopInvocationHandler) {
 
 		_aopInvocationHandlers.remove(aopInvocationHandler);
-	}
-
-	private static ChainableMethodAdvice[] _createChainableMethodAdvices(
-		TransactionExecutor transactionExecutor) {
-
-		ChainableMethodAdvice[] chainableMethodAdvices =
-			new ChainableMethodAdvice[_chainableMethodAdvices.size() + 1];
-
-		_chainableMethodAdvices.toArray(chainableMethodAdvices);
-
-		TransactionInterceptor transactionInterceptor =
-			new TransactionInterceptor();
-
-		transactionInterceptor.setTransactionExecutor(transactionExecutor);
-
-		chainableMethodAdvices[_chainableMethodAdvices.size()] =
-			transactionInterceptor;
-
-		return chainableMethodAdvices;
 	}
 
 	private static List<ChainableMethodAdvice>
@@ -206,10 +189,11 @@ public class AopCacheManager {
 					_aopInvocationHandlers.entrySet()) {
 
 				AopInvocationHandler aopInvocationHandler = entry.getKey();
-				TransactionExecutor transactionExecutor = entry.getValue();
 
 				aopInvocationHandler.setChainableMethodAdvices(
-					_createChainableMethodAdvices(transactionExecutor));
+					_chainableMethodAdvices.toArray(
+						new ChainableMethodAdvice
+							[_chainableMethodAdvices.size()]));
 			}
 		}
 

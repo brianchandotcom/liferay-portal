@@ -488,10 +488,6 @@ public abstract class BaseTestPreparatorBundleActivator
 			properties = new HashMapDictionary<>();
 		}
 
-		if (properties.get("auth.verifier.guest.allowed") == null) {
-			properties.put("auth.verifier.guest.allowed", "false");
-		}
-
 		properties.put("oauth2.test.application", "true");
 		properties.put("osgi.jaxrs.application.base", "/oauth2-test/" + path);
 		properties.put(

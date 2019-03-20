@@ -19,10 +19,7 @@ import com.liferay.bulk.rest.dto.v1_0.SelectionScope;
 import com.liferay.bulk.selection.BulkSelection;
 import com.liferay.bulk.selection.BulkSelectionFactory;
 import com.liferay.bulk.selection.BulkSelectionFactoryRegistry;
-import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.model.ClassName;
-import com.liferay.portal.kernel.repository.model.FileEntry;
-import com.liferay.portal.kernel.service.ClassNameLocalService;
+import com.liferay.document.library.kernel.model.DLFileEntry;
 
 import java.util.Collections;
 import java.util.HashMap;
@@ -37,15 +34,12 @@ import org.osgi.service.component.annotations.Reference;
 @Component(service = DocumentBulkSelectionFactory.class)
 public class DocumentBulkSelectionFactory {
 
-	public BulkSelection<?> create(DocumentBulkSelection documentBulkSelection)
-		throws PortalException {
-
-		ClassName className = _classNameLocalService.getClassName(
-			FileEntry.class.getName());
+	public BulkSelection<?> create(
+		DocumentBulkSelection documentBulkSelection) {
 
 		BulkSelectionFactory<Object> bulkSelectionFactory =
 			_bulkSelectionFactoryRegistry.getBulkSelectionFactory(
-				className.getClassNameId());
+				DLFileEntry.class.getName());
 
 		return bulkSelectionFactory.create(
 			_getParameterMap(
@@ -84,8 +78,5 @@ public class DocumentBulkSelectionFactory {
 
 	@Reference
 	private BulkSelectionFactoryRegistry _bulkSelectionFactoryRegistry;
-
-	@Reference
-	private ClassNameLocalService _classNameLocalService;
 
 }

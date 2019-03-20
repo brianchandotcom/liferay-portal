@@ -14,6 +14,8 @@
 
 package com.liferay.portal.workflow.metrics.rest.internal.graphql.query.v1_0;
 
+import com.liferay.petra.function.UnsafeConsumer;
+import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
@@ -32,9 +34,7 @@ import java.util.Collection;
 
 import javax.annotation.Generated;
 
-import org.osgi.framework.Bundle;
-import org.osgi.framework.FrameworkUtil;
-import org.osgi.util.tracker.ServiceTracker;
+import org.osgi.service.component.ComponentServiceObjects;
 
 /**
  * @author Rafael Praxedes
@@ -42,6 +42,22 @@ import org.osgi.util.tracker.ServiceTracker;
  */
 @Generated("")
 public class Query {
+
+	public static void setProcessResourceComponentServiceObjects(
+		ComponentServiceObjects<ProcessResource>
+			processResourceComponentServiceObjects) {
+
+		_processResourceComponentServiceObjects =
+			processResourceComponentServiceObjects;
+	}
+
+	public static void setSLAResourceComponentServiceObjects(
+		ComponentServiceObjects<SLAResource>
+			sLAResourceComponentServiceObjects) {
+
+		_sLAResourceComponentServiceObjects =
+			sLAResourceComponentServiceObjects;
+	}
 
 	@GraphQLField
 	@GraphQLInvokeDetached
@@ -51,12 +67,26 @@ public class Query {
 			@GraphQLName("page") int page, @GraphQLName("Sort[]") Sort[] sorts)
 		throws Exception {
 
-		ProcessResource processResource = _createProcessResource();
+		return _applyComponentServiceObjects(
+			_processResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			processResource -> {
+				Page paginationPage = processResource.getProcessesPage(
+					title, Pagination.of(pageSize, page), sorts);
 
-		Page paginationPage = processResource.getProcessesPage(
-			title, Pagination.of(pageSize, page), sorts);
+				return paginationPage.getItems();
+			});
+	}
 
-		return paginationPage.getItems();
+	@GraphQLField
+	@GraphQLInvokeDetached
+	public Process getProcess(@GraphQLName("process-id") Long processId)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_processResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			processResource -> processResource.getProcess(processId));
 	}
 
 	@GraphQLField
@@ -67,12 +97,14 @@ public class Query {
 			@GraphQLName("page") int page)
 		throws Exception {
 
-		SLAResource sLAResource = _createSLAResource();
+		return _applyComponentServiceObjects(
+			_sLAResourceComponentServiceObjects, this::_populateResourceContext,
+			sLAResource -> {
+				Page paginationPage = sLAResource.getProcessSLAsPage(
+					processId, Pagination.of(pageSize, page));
 
-		Page paginationPage = sLAResource.getProcessSLAsPage(
-			processId, Pagination.of(pageSize, page));
-
-		return paginationPage.getItems();
+				return paginationPage.getItems();
+			});
 	}
 
 	@GraphQLField
@@ -82,55 +114,49 @@ public class Query {
 			@GraphQLName("sla-id") Long slaId)
 		throws Exception {
 
-		SLAResource sLAResource = _createSLAResource();
-
-		return sLAResource.getProcessSLA(processId, slaId);
+		return _applyComponentServiceObjects(
+			_sLAResourceComponentServiceObjects, this::_populateResourceContext,
+			sLAResource -> sLAResource.getProcessSLA(processId, slaId));
 	}
 
-	private static ProcessResource _createProcessResource() throws Exception {
-		ProcessResource processResource =
-			_processResourceServiceTracker.getService();
+	private <T, R, E1 extends Throwable, E2 extends Throwable> R
+			_applyComponentServiceObjects(
+				ComponentServiceObjects<T> componentServiceObjects,
+				UnsafeConsumer<T, E1> unsafeConsumer,
+				UnsafeFunction<T, R, E2> unsafeFunction)
+		throws E1, E2 {
+
+		T resource = componentServiceObjects.getService();
+
+		try {
+			unsafeConsumer.accept(resource);
+
+			return unsafeFunction.apply(resource);
+		}
+		finally {
+			componentServiceObjects.ungetService(resource);
+		}
+	}
+
+	private void _populateResourceContext(ProcessResource processResource)
+		throws Exception {
 
 		processResource.setContextCompany(
 			CompanyLocalServiceUtil.getCompany(
 				CompanyThreadLocal.getCompanyId()));
-
-		return processResource;
 	}
 
-	private static final ServiceTracker<ProcessResource, ProcessResource>
-		_processResourceServiceTracker;
-
-	private static SLAResource _createSLAResource() throws Exception {
-		SLAResource sLAResource = _sLAResourceServiceTracker.getService();
+	private void _populateResourceContext(SLAResource sLAResource)
+		throws Exception {
 
 		sLAResource.setContextCompany(
 			CompanyLocalServiceUtil.getCompany(
 				CompanyThreadLocal.getCompanyId()));
-
-		return sLAResource;
 	}
 
-	private static final ServiceTracker<SLAResource, SLAResource>
-		_sLAResourceServiceTracker;
-
-	static {
-		Bundle bundle = FrameworkUtil.getBundle(Query.class);
-
-		ServiceTracker<ProcessResource, ProcessResource>
-			processResourceServiceTracker = new ServiceTracker<>(
-				bundle.getBundleContext(), ProcessResource.class, null);
-
-		processResourceServiceTracker.open();
-
-		_processResourceServiceTracker = processResourceServiceTracker;
-		ServiceTracker<SLAResource, SLAResource> sLAResourceServiceTracker =
-			new ServiceTracker<>(
-				bundle.getBundleContext(), SLAResource.class, null);
-
-		sLAResourceServiceTracker.open();
-
-		_sLAResourceServiceTracker = sLAResourceServiceTracker;
-	}
+	private static ComponentServiceObjects<ProcessResource>
+		_processResourceComponentServiceObjects;
+	private static ComponentServiceObjects<SLAResource>
+		_sLAResourceComponentServiceObjects;
 
 }

@@ -17,10 +17,17 @@ package com.liferay.portal.workflow.metrics.rest.internal.graphql.servlet.v1_0;
 import com.liferay.portal.vulcan.graphql.servlet.ServletData;
 import com.liferay.portal.workflow.metrics.rest.internal.graphql.mutation.v1_0.Mutation;
 import com.liferay.portal.workflow.metrics.rest.internal.graphql.query.v1_0.Query;
+import com.liferay.portal.workflow.metrics.rest.resource.v1_0.ProcessResource;
+import com.liferay.portal.workflow.metrics.rest.resource.v1_0.SLAResource;
 
 import javax.annotation.Generated;
 
+import org.osgi.framework.BundleContext;
+import org.osgi.service.component.ComponentServiceObjects;
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.component.annotations.ReferenceScope;
 
 /**
  * @author Rafael Praxedes
@@ -29,6 +36,17 @@ import org.osgi.service.component.annotations.Component;
 @Component(immediate = true, service = ServletData.class)
 @Generated("")
 public class ServletDataImpl implements ServletData {
+
+	@Activate
+	public void activate(BundleContext bundleContext) {
+		Mutation.setSLAResourceComponentServiceObjects(
+			_sLAResourceComponentServiceObjects);
+
+		Query.setProcessResourceComponentServiceObjects(
+			_processResourceComponentServiceObjects);
+		Query.setSLAResourceComponentServiceObjects(
+			_sLAResourceComponentServiceObjects);
+	}
 
 	@Override
 	public Mutation getMutation() {
@@ -44,5 +62,13 @@ public class ServletDataImpl implements ServletData {
 	public Query getQuery() {
 		return new Query();
 	}
+
+	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
+	private ComponentServiceObjects<SLAResource>
+		_sLAResourceComponentServiceObjects;
+
+	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
+	private ComponentServiceObjects<ProcessResource>
+		_processResourceComponentServiceObjects;
 
 }

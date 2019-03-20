@@ -37,6 +37,8 @@ public interface ProcessResource {
 			String title, Pagination pagination, Sort[] sorts)
 		throws Exception;
 
+	public Process getProcess(Long processId) throws Exception;
+
 	public void setContextCompany(Company contextCompany);
 
 }

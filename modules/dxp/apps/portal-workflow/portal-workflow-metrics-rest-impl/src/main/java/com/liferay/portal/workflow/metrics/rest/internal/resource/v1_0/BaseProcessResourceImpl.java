@@ -38,8 +38,11 @@ import java.util.List;
 
 import javax.annotation.Generated;
 
+import javax.validation.constraints.NotNull;
+
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Context;
@@ -72,6 +75,17 @@ public abstract class BaseProcessResourceImpl implements ProcessResource {
 		throws Exception {
 
 		return Page.of(Collections.emptyList());
+	}
+
+	@Override
+	@GET
+	@Path("/processes/{process-id}")
+	@Produces("application/json")
+	@Tags(value = {@Tag(name = "Process")})
+	public Process getProcess(@NotNull @PathParam("process-id") Long processId)
+		throws Exception {
+
+		return new Process();
 	}
 
 	public void setContextCompany(Company contextCompany) {

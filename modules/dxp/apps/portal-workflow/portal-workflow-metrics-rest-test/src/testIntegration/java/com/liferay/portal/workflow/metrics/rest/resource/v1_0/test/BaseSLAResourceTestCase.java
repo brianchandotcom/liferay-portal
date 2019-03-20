@@ -59,6 +59,7 @@ import java.util.stream.Stream;
 import javax.annotation.Generated;
 
 import javax.ws.rs.core.MultivaluedHashMap;
+import javax.ws.rs.core.Response;
 
 import org.apache.commons.beanutils.BeanUtilsBean;
 
@@ -102,13 +103,13 @@ public abstract class BaseSLAResourceTestCase {
 	}
 
 	@Test
-	public void testGetProcessSlasPage() throws Exception {
-		Long processId = testGetProcessSlasPage_getProcessId();
+	public void testGetProcessSLAsPage() throws Exception {
+		Long processId = testGetProcessSLAsPage_getProcessId();
 
-		SLA sLA1 = testGetProcessSlasPage_addSLA(processId, randomSLA());
-		SLA sLA2 = testGetProcessSlasPage_addSLA(processId, randomSLA());
+		SLA sLA1 = testGetProcessSLAsPage_addSLA(processId, randomSLA());
+		SLA sLA2 = testGetProcessSLAsPage_addSLA(processId, randomSLA());
 
-		Page<SLA> page = invokeGetProcessSlasPage(
+		Page<SLA> page = invokeGetProcessSLAsPage(
 			processId, Pagination.of(1, 2));
 
 		Assert.assertEquals(2, page.getTotalCount());
@@ -119,21 +120,21 @@ public abstract class BaseSLAResourceTestCase {
 	}
 
 	@Test
-	public void testGetProcessSlasPageWithPagination() throws Exception {
-		Long processId = testGetProcessSlasPage_getProcessId();
+	public void testGetProcessSLAsPageWithPagination() throws Exception {
+		Long processId = testGetProcessSLAsPage_getProcessId();
 
-		SLA sLA1 = testGetProcessSlasPage_addSLA(processId, randomSLA());
-		SLA sLA2 = testGetProcessSlasPage_addSLA(processId, randomSLA());
-		SLA sLA3 = testGetProcessSlasPage_addSLA(processId, randomSLA());
+		SLA sLA1 = testGetProcessSLAsPage_addSLA(processId, randomSLA());
+		SLA sLA2 = testGetProcessSLAsPage_addSLA(processId, randomSLA());
+		SLA sLA3 = testGetProcessSLAsPage_addSLA(processId, randomSLA());
 
-		Page<SLA> page1 = invokeGetProcessSlasPage(
+		Page<SLA> page1 = invokeGetProcessSLAsPage(
 			processId, Pagination.of(1, 2));
 
 		List<SLA> sLAs1 = (List<SLA>)page1.getItems();
 
 		Assert.assertEquals(sLAs1.toString(), 2, sLAs1.size());
 
-		Page<SLA> page2 = invokeGetProcessSlasPage(
+		Page<SLA> page2 = invokeGetProcessSLAsPage(
 			processId, Pagination.of(2, 2));
 
 		Assert.assertEquals(3, page2.getTotalCount());
@@ -152,19 +153,19 @@ public abstract class BaseSLAResourceTestCase {
 			});
 	}
 
-	protected SLA testGetProcessSlasPage_addSLA(Long processId, SLA sLA)
+	protected SLA testGetProcessSLAsPage_addSLA(Long processId, SLA sLA)
 		throws Exception {
 
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
 	}
 
-	protected Long testGetProcessSlasPage_getProcessId() throws Exception {
+	protected Long testGetProcessSLAsPage_getProcessId() throws Exception {
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
 	}
 
-	protected Page<SLA> invokeGetProcessSlasPage(
+	protected Page<SLA> invokeGetProcessSLAsPage(
 			Long processId, Pagination pagination)
 		throws Exception {
 
@@ -186,7 +187,7 @@ public abstract class BaseSLAResourceTestCase {
 			});
 	}
 
-	protected Http.Response invokeGetProcessSlasPageResponse(
+	protected Http.Response invokeGetProcessSLAsPageResponse(
 			Long processId, Pagination pagination)
 		throws Exception {
 
@@ -208,21 +209,21 @@ public abstract class BaseSLAResourceTestCase {
 	}
 
 	@Test
-	public void testPostProcessSla() throws Exception {
+	public void testPostProcessSLA() throws Exception {
 		SLA randomSLA = randomSLA();
 
-		SLA postSLA = testPostProcessSla_addSLA(randomSLA);
+		SLA postSLA = testPostProcessSLA_addSLA(randomSLA);
 
 		assertEquals(randomSLA, postSLA);
 		assertValid(postSLA);
 	}
 
-	protected SLA testPostProcessSla_addSLA(SLA sLA) throws Exception {
+	protected SLA testPostProcessSLA_addSLA(SLA sLA) throws Exception {
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
 	}
 
-	protected SLA invokePostProcessSla(Long processId, SLA sLA)
+	protected Response invokePostProcessSLA(Long processId, SLA sLA)
 		throws Exception {
 
 		Http.Options options = _createHttpOptions();
@@ -239,10 +240,10 @@ public abstract class BaseSLAResourceTestCase {
 		options.setPost(true);
 
 		return _outputObjectMapper.readValue(
-			HttpUtil.URLtoString(options), SLA.class);
+			HttpUtil.URLtoString(options), Response.class);
 	}
 
-	protected Http.Response invokePostProcessSlaResponse(
+	protected Http.Response invokePostProcessSLAResponse(
 			Long processId, SLA sLA)
 		throws Exception {
 
@@ -265,22 +266,22 @@ public abstract class BaseSLAResourceTestCase {
 	}
 
 	@Test
-	public void testDeleteProcessSla() throws Exception {
-		SLA sLA = testDeleteProcessSla_addSLA();
+	public void testDeleteProcessSLA() throws Exception {
+		SLA sLA = testDeleteProcessSLA_addSLA();
 
-		assertResponseCode(200, invokeDeleteProcessSlaResponse(
+		assertResponseCode(200, invokeDeleteProcessSLAResponse(
 			sLA.getProcessId(), sLA.getId()));
 
-		assertResponseCode(404, invokeGetProcessSlaResponse(
+		assertResponseCode(404, invokeGetProcessSLAResponse(
 			sLA.getProcessId(), sLA.getId()));
 	}
 
-	protected SLA testDeleteProcessSla_addSLA() throws Exception {
+	protected SLA testDeleteProcessSLA_addSLA() throws Exception {
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
 	}
 
-	protected boolean invokeDeleteProcessSla(Long processId, Long slaId)
+	protected boolean invokeDeleteProcessSLA(Long processId, Long slaId)
 		throws Exception {
 
 		Http.Options options = _createHttpOptions();
@@ -297,7 +298,7 @@ public abstract class BaseSLAResourceTestCase {
 			HttpUtil.URLtoString(options), Boolean.class);
 	}
 
-	protected Http.Response invokeDeleteProcessSlaResponse(
+	protected Http.Response invokeDeleteProcessSLAResponse(
 			Long processId, Long slaId)
 		throws Exception {
 
@@ -317,22 +318,22 @@ public abstract class BaseSLAResourceTestCase {
 	}
 
 	@Test
-	public void testGetProcessSla() throws Exception {
-		SLA postSLA = testGetProcessSla_addSLA();
+	public void testGetProcessSLA() throws Exception {
+		SLA postSLA = testGetProcessSLA_addSLA();
 
-		SLA getSLA = invokeGetProcessSla(
+		SLA getSLA = invokeGetProcessSLA(
 			postSLA.getProcessId(), postSLA.getId());
 
 		assertEquals(postSLA, getSLA);
 		assertValid(getSLA);
 	}
 
-	protected SLA testGetProcessSla_addSLA() throws Exception {
+	protected SLA testGetProcessSLA_addSLA() throws Exception {
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
 	}
 
-	protected SLA invokeGetProcessSla(Long processId, Long slaId)
+	protected SLA invokeGetProcessSLA(Long processId, Long slaId)
 		throws Exception {
 
 		Http.Options options = _createHttpOptions();
@@ -347,7 +348,7 @@ public abstract class BaseSLAResourceTestCase {
 			HttpUtil.URLtoString(options), SLA.class);
 	}
 
-	protected Http.Response invokeGetProcessSlaResponse(
+	protected Http.Response invokeGetProcessSLAResponse(
 			Long processId, Long slaId)
 		throws Exception {
 
@@ -365,30 +366,16 @@ public abstract class BaseSLAResourceTestCase {
 	}
 
 	@Test
-	public void testPutProcessSla() throws Exception {
-		SLA postSLA = testPutProcessSla_addSLA();
-
-		SLA randomSLA = randomSLA();
-
-		SLA putSLA = invokePutProcessSla(
-			postSLA.getProcessId(), postSLA.getId(), randomSLA);
-
-		assertEquals(randomSLA, putSLA);
-		assertValid(putSLA);
-
-		SLA getSLA = invokeGetProcessSla(
-			postSLA.getProcessId(), putSLA.getId());
-
-		assertEquals(randomSLA, getSLA);
-		assertValid(getSLA);
+	public void testPutProcessSLA() throws Exception {
+		Assert.assertTrue(true);
 	}
 
-	protected SLA testPutProcessSla_addSLA() throws Exception {
+	protected SLA testPutProcessSLA_addSLA() throws Exception {
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
 	}
 
-	protected SLA invokePutProcessSla(Long processId, Long slaId, SLA sLA)
+	protected Response invokePutProcessSLA(Long processId, Long slaId, SLA sLA)
 		throws Exception {
 
 		Http.Options options = _createHttpOptions();
@@ -406,10 +393,10 @@ public abstract class BaseSLAResourceTestCase {
 		options.setPut(true);
 
 		return _outputObjectMapper.readValue(
-			HttpUtil.URLtoString(options), SLA.class);
+			HttpUtil.URLtoString(options), Response.class);
 	}
 
-	protected Http.Response invokePutProcessSlaResponse(
+	protected Http.Response invokePutProcessSLAResponse(
 			Long processId, Long slaId, SLA sLA)
 		throws Exception {
 

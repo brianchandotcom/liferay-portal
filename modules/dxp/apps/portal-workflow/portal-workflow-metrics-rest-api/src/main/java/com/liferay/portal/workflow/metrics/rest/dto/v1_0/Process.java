@@ -38,6 +38,54 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement(name = "Process")
 public class Process {
 
+	public Long getDueAfterInstanceCount() {
+		return dueAfterInstanceCount;
+	}
+
+	public void setDueAfterInstanceCount(Long dueAfterInstanceCount) {
+		this.dueAfterInstanceCount = dueAfterInstanceCount;
+	}
+
+	@JsonIgnore
+	public void setDueAfterInstanceCount(
+		UnsafeSupplier<Long, Exception> dueAfterInstanceCountUnsafeSupplier) {
+
+		try {
+			dueAfterInstanceCount = dueAfterInstanceCountUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Long dueAfterInstanceCount;
+
+	public Long getDueInInstanceCount() {
+		return dueInInstanceCount;
+	}
+
+	public void setDueInInstanceCount(Long dueInInstanceCount) {
+		this.dueInInstanceCount = dueInInstanceCount;
+	}
+
+	@JsonIgnore
+	public void setDueInInstanceCount(
+		UnsafeSupplier<Long, Exception> dueInInstanceCountUnsafeSupplier) {
+
+		try {
+			dueInInstanceCount = dueInInstanceCountUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Long dueInInstanceCount;
+
 	public Long getId() {
 		return id;
 	}
@@ -160,6 +208,16 @@ public class Process {
 		StringBundler sb = new StringBundler();
 
 		sb.append("{");
+
+		sb.append("\"dueAfterInstanceCount\": ");
+
+		sb.append(dueAfterInstanceCount);
+		sb.append(", ");
+
+		sb.append("\"dueInInstanceCount\": ");
+
+		sb.append(dueInInstanceCount);
+		sb.append(", ");
 
 		sb.append("\"id\": ");
 

@@ -37,6 +37,8 @@ import java.util.List;
 
 import javax.annotation.Generated;
 
+import javax.validation.constraints.NotNull;
+
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -46,6 +48,7 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
+import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriBuilder;
 import javax.ws.rs.core.UriInfo;
 
@@ -69,7 +72,7 @@ public abstract class BaseSLAResourceImpl implements SLAResource {
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "SLA")})
 	public Page<SLA> getProcessSLAsPage(
-			@PathParam("process-id") Long processId,
+			@NotNull @PathParam("process-id") Long processId,
 			@Context Pagination pagination)
 		throws Exception {
 
@@ -80,12 +83,15 @@ public abstract class BaseSLAResourceImpl implements SLAResource {
 	@Consumes("application/json")
 	@POST
 	@Path("/processes/{process-id}/slas")
-	@Produces({"application/json", "application/json"})
+	@Produces("application/json")
 	@Tags(value = {@Tag(name = "SLA")})
-	public SLA postProcessSLA(@PathParam("process-id") Long processId, SLA sLA)
+	public Response postProcessSLA(
+			@NotNull @PathParam("process-id") Long processId, SLA sLA)
 		throws Exception {
 
-		return new SLA();
+		Response.ResponseBuilder responseBuilder = Response.ok();
+
+		return responseBuilder.build();
 	}
 
 	@Override
@@ -94,8 +100,8 @@ public abstract class BaseSLAResourceImpl implements SLAResource {
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "SLA")})
 	public boolean deleteProcessSLA(
-			@PathParam("process-id") Long processId,
-			@PathParam("sla-id") Long slaId)
+			@NotNull @PathParam("process-id") Long processId,
+			@NotNull @PathParam("sla-id") Long slaId)
 		throws Exception {
 
 		return false;
@@ -107,8 +113,8 @@ public abstract class BaseSLAResourceImpl implements SLAResource {
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "SLA")})
 	public SLA getProcessSLA(
-			@PathParam("process-id") Long processId,
-			@PathParam("sla-id") Long slaId)
+			@NotNull @PathParam("process-id") Long processId,
+			@NotNull @PathParam("sla-id") Long slaId)
 		throws Exception {
 
 		return new SLA();
@@ -118,14 +124,16 @@ public abstract class BaseSLAResourceImpl implements SLAResource {
 	@Consumes("application/json")
 	@PUT
 	@Path("/processes/{process-id}/slas/{sla-id}")
-	@Produces({"application/json", "application/json"})
+	@Produces("application/json")
 	@Tags(value = {@Tag(name = "SLA")})
-	public SLA putProcessSLA(
-			@PathParam("process-id") Long processId,
-			@PathParam("sla-id") Long slaId, SLA sLA)
+	public Response putProcessSLA(
+			@NotNull @PathParam("process-id") Long processId,
+			@NotNull @PathParam("sla-id") Long slaId, SLA sLA)
 		throws Exception {
 
-		return new SLA();
+		Response.ResponseBuilder responseBuilder = Response.ok();
+
+		return responseBuilder.build();
 	}
 
 	public void setContextCompany(Company contextCompany) {

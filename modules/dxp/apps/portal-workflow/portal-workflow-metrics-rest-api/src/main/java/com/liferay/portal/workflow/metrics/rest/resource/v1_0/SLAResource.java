@@ -21,6 +21,8 @@ import com.liferay.portal.workflow.metrics.rest.dto.v1_0.SLA;
 
 import javax.annotation.Generated;
 
+import javax.ws.rs.core.Response;
+
 /**
  * To access this resource, run:
  *
@@ -35,14 +37,14 @@ public interface SLAResource {
 	public Page<SLA> getProcessSLAsPage(Long processId, Pagination pagination)
 		throws Exception;
 
-	public SLA postProcessSLA(Long processId, SLA sLA) throws Exception;
+	public Response postProcessSLA(Long processId, SLA sLA) throws Exception;
 
 	public boolean deleteProcessSLA(Long processId, Long slaId)
 		throws Exception;
 
 	public SLA getProcessSLA(Long processId, Long slaId) throws Exception;
 
-	public SLA putProcessSLA(Long processId, Long slaId, SLA sLA)
+	public Response putProcessSLA(Long processId, Long slaId, SLA sLA)
 		throws Exception;
 
 	public void setContextCompany(Company contextCompany);

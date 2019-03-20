@@ -58,6 +58,7 @@ import java.util.stream.Stream;
 import javax.annotation.Generated;
 
 import javax.ws.rs.core.MultivaluedHashMap;
+import javax.ws.rs.core.Response;
 
 import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.beanutils.BeanUtilsBean;
@@ -298,6 +299,48 @@ public abstract class BaseProcessResourceTestCase {
 		return options.getResponse();
 	}
 
+	@Test
+	public void testGetProcess() throws Exception {
+		Process postProcess = testGetProcess_addProcess();
+
+		Process getProcess = invokeGetProcess(postProcess.getId());
+
+		assertEquals(postProcess, getProcess);
+		assertValid(getProcess);
+	}
+
+	protected Process testGetProcess_addProcess() throws Exception {
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected Process invokeGetProcess(Long processId) throws Exception {
+		Http.Options options = _createHttpOptions();
+
+		String location =
+			_resourceURL + _toPath("/processes/{process-id}", processId);
+
+		options.setLocation(location);
+
+		return _outputObjectMapper.readValue(
+			HttpUtil.URLtoString(options), Process.class);
+	}
+
+	protected Http.Response invokeGetProcessResponse(Long processId)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		String location =
+			_resourceURL + _toPath("/processes/{process-id}", processId);
+
+		options.setLocation(location);
+
+		HttpUtil.URLtoString(options);
+
+		return options.getResponse();
+	}
+
 	protected void assertResponseCode(
 		int expectedResponseCode, Http.Response actualResponse) {
 
@@ -420,6 +463,16 @@ public abstract class BaseProcessResourceTestCase {
 		sb.append(operator);
 		sb.append(" ");
 
+		if (entityFieldName.equals("dueAfterInstanceCount")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
+		if (entityFieldName.equals("dueInInstanceCount")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
 		if (entityFieldName.equals("id")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
@@ -455,6 +508,8 @@ public abstract class BaseProcessResourceTestCase {
 	protected Process randomProcess() {
 		return new Process() {
 			{
+				dueAfterInstanceCount = RandomTestUtil.randomLong();
+				dueInInstanceCount = RandomTestUtil.randomLong();
 				id = RandomTestUtil.randomLong();
 				instanceCount = RandomTestUtil.randomLong();
 				ontimeInstanceCount = RandomTestUtil.randomLong();

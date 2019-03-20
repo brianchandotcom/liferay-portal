@@ -30,20 +30,6 @@ describe(
 		);
 
 		it(
-			'should resize a specific column on the drag and drop layout',
-			() => {
-				component = new PageRenderer(
-					{
-						...componentProps
-					}
-				);
-
-				component._handleOnClickResize();
-				expect(component).toMatchSnapshot();
-			}
-		);
-
-		it(
 			'should display empty drag message when there are rows with no columns specified',
 			() => {
 				component = new PageRenderer(

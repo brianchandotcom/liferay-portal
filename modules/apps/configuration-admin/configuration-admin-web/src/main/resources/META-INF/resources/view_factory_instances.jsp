@@ -48,6 +48,8 @@ portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(redirect);
 
 renderResponse.setTitle(categoryDisplayName);
+
+ConfigurationScopeDisplayContext configurationScopeDisplayContext = new ConfigurationScopeDisplayContext(renderRequest);
 %>
 
 <div class="container-fluid container-fluid-max-xl">
@@ -74,7 +76,7 @@ renderResponse.setTitle(categoryDisplayName);
 						<h2><%= factoryConfigurationModelName %></h2>
 					</div>
 
-					<c:if test="<%= configurationModelIterator.getTotal() > 0 %>">
+					<c:if test="<%= (configurationModelIterator.getTotal() > 0) && ExtendedObjectClassDefinition.Scope.SYSTEM.equals(configurationScopeDisplayContext.getScope()) %>">
 						<div class="autofit-col">
 							<liferay-ui:icon-menu
 								cssClass="float-right"
@@ -193,16 +195,18 @@ renderResponse.setTitle(categoryDisplayName);
 										url="<%= deleteConfigActionURL %>"
 									/>
 
-									<portlet:resourceURL id="export" var="exportURL">
-										<portlet:param name="factoryPid" value="<%= curConfigurationModel.getFactoryPid() %>" />
-										<portlet:param name="pid" value="<%= curConfigurationModel.getID() %>" />
-									</portlet:resourceURL>
+									<c:if test="<%= ExtendedObjectClassDefinition.Scope.SYSTEM.equals(configurationScopeDisplayContext.getScope()) %>">
+										<portlet:resourceURL id="export" var="exportURL">
+											<portlet:param name="factoryPid" value="<%= curConfigurationModel.getFactoryPid() %>" />
+											<portlet:param name="pid" value="<%= curConfigurationModel.getID() %>" />
+										</portlet:resourceURL>
 
-									<liferay-ui:icon
-										message="export"
-										method="get"
-										url="<%= exportURL %>"
-									/>
+										<liferay-ui:icon
+											message="export"
+											method="get"
+											url="<%= exportURL %>"
+										/>
+									</c:if>
 								</c:if>
 							</liferay-ui:icon-menu>
 						</liferay-ui:search-container-column-text>

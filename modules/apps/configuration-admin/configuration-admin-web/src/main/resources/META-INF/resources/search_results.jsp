@@ -33,6 +33,8 @@ portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(redirect);
 
 renderResponse.setTitle(LanguageUtil.get(request, "search-results"));
+
+ConfigurationScopeDisplayContext configurationScopeDisplayContext = new ConfigurationScopeDisplayContext(renderRequest);
 %>
 
 <portlet:renderURL var="searchURL">
@@ -111,9 +113,6 @@ renderResponse.setTitle(LanguageUtil.get(request, "search-results"));
 				String category = null;
 
 				if (configurationCategory != null) {
-					ConfigurationScopeDisplayContext
-						configurationScopeDisplayContext = new ConfigurationScopeDisplayContext(renderRequest);
-
 					ConfigurationCategoryMenuDisplay configurationCategoryMenuDisplay = configurationEntryRetriever.getConfigurationCategoryMenuDisplay(configurationCategory.getCategoryKey(), themeDisplay.getLanguageId(), configurationScopeDisplayContext.getScope(), configurationScopeDisplayContext.getScopePK());
 
 					ConfigurationCategoryDisplay configurationCategoryDisplay = configurationCategoryMenuDisplay.getConfigurationCategoryDisplay();
@@ -190,16 +189,18 @@ renderResponse.setTitle(LanguageUtil.get(request, "search-results"));
 									url="<%= deleteConfigActionURL %>"
 								/>
 
-								<portlet:resourceURL id="export" var="exportURL">
-									<portlet:param name="factoryPid" value="<%= configurationModel.getFactoryPid() %>" />
-									<portlet:param name="pid" value="<%= configurationModel.getID() %>" />
-								</portlet:resourceURL>
+								<c:if test="<%= ExtendedObjectClassDefinition.Scope.SYSTEM.equals(configurationScopeDisplayContext.getScope()) %>">
+									<portlet:resourceURL id="export" var="exportURL">
+										<portlet:param name="factoryPid" value="<%= configurationModel.getFactoryPid() %>" />
+										<portlet:param name="pid" value="<%= configurationModel.getID() %>" />
+									</portlet:resourceURL>
 
-								<liferay-ui:icon
-									message="export"
-									method="get"
-									url="<%= exportURL %>"
-								/>
+									<liferay-ui:icon
+										message="export"
+										method="get"
+										url="<%= exportURL %>"
+									/>
+								</c:if>
 							</c:if>
 						</c:otherwise>
 					</c:choose>

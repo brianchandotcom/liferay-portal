@@ -12,7 +12,10 @@
 	{@param? _handleContainerTypeOptionChange: any}
 	{@param? _handleNumberOfColumnsOptionChange: any}
 	{@param? _numberOfColumnsOptions: ?}
-	{@param? _paddingSizes: list<string>}
+	{@param? _paddingOptions: list<[
+		label: string,
+		paddingSize: string
+	]>}
 	{@param? _sectionColumnsCount: number}
 	{@param? _selectedPaddingSizes: [
 		horizontal: string,
@@ -36,7 +39,7 @@
 			{/call}
 		</div>
 
-		{if $_paddingSizes and $_selectedPaddingSizes}
+		{if $_paddingOptions and $_selectedPaddingSizes}
 			<div class="form-group-autofit">
 				{let $verticalContainerPaddingLabel kind="text"}
 					{msg desc=""}padding-vertical{/msg}
@@ -46,7 +49,7 @@
 					{param label: $verticalContainerPaddingLabel /}
 					{param paddingDirectionId: 'Vertical' /}
 					{param handleContainerPaddingOptionChange: $_handleContainerPaddingOptionChange /}
-					{param paddingSizes: $_paddingSizes /}
+					{param paddingOptions: $_paddingOptions /}
 					{param selectedPaddingSize: $_selectedPaddingSizes.vertical ?: '1' /}
 				{/call}
 
@@ -58,7 +61,7 @@
 					{param label: $horizontalContainerPaddingLabel /}
 					{param paddingDirectionId: 'Horizontal' /}
 					{param handleContainerPaddingOptionChange: $_handleContainerPaddingOptionChange /}
-					{param paddingSizes: $_paddingSizes /}
+					{param paddingOptions: $_paddingOptions /}
 					{param selectedPaddingSize: $_selectedPaddingSizes.horizontal ?: '1' /}
 				{/call}
 			</div>
@@ -167,7 +170,10 @@
 {template .containerPaddingOptions}
 	{@param label: string}
 	{@param paddingDirectionId: string}
-	{@param paddingSizes: list<string>}
+	{@param paddingOptions: list<[
+		label: string,
+		paddingSize: string
+	]>}
 	{@param selectedPaddingSize: string}
 	{@param? handleContainerPaddingOptionChange: any}
 
@@ -182,10 +188,10 @@
 			data-padding-direction-id="{$paddingDirectionId}"
 			id="floatingToolbarSpacingPanelPadding{$paddingDirectionId}Option"
 		>
-			{foreach $paddingSize in $paddingSizes}
+			{foreach $paddingOption in $paddingOptions}
 				{call .containerPaddingOption}
-					{param key: $paddingSize /}
-					{param paddingSize: $paddingSize /}
+					{param key: $paddingOption.paddingSize /}
+					{param paddingOption: $paddingOption /}
 					{param selectedPaddingSize: $selectedPaddingSize /}
 				{/call}
 			{/foreach}
@@ -197,19 +203,22 @@
  * Container padding option
  */
 {template .containerPaddingOption}
-	{@param paddingSize: string}
+	{@param paddingOption: [
+		label: string,
+		paddingSize: string
+	]}
 	{@param selectedPaddingSize: string}
 
 	{let $optionAttributes kind="attributes"}
-		value="{$paddingSize}"
+		value="{$paddingOption.paddingSize}"
 
-		{if $paddingSize == $selectedPaddingSize}
+		{if $paddingOption.paddingSize == $selectedPaddingSize}
 			selected
 		{/if}
 	{/let}
 
 	<option {$optionAttributes}>
-		x{$paddingSize}
+		{$paddingOption.label}
 	</option>
 {/template}
 

@@ -17,6 +17,40 @@ export const BUTTON_TYPES = [
 ];
 
 /**
+ * Available values for padding (horizontal and vertical) config key
+ */
+export const PADDING_OPTIONS = [
+	{
+		label: 'x0',
+		paddingSize: '0'
+	},
+	{
+		label: 'x1',
+		paddingSize: '3'
+	},
+	{
+		label: 'x2',
+		paddingSize: '4'
+	},
+	{
+		label: 'x4',
+		paddingSize: '5'
+	},
+	{
+		label: 'x6',
+		paddingSize: '6'
+	},
+	{
+		label: 'x8',
+		paddingSize: '7'
+	},
+	{
+		label: 'x10',
+		paddingSize: '8'
+	}
+];
+
+/**
  * Available values for containerType config key
  */
 export const NUMBER_OF_COLUMNS_OPTIONS = [

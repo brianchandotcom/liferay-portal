@@ -3,7 +3,7 @@ import Component from 'metal-component';
 import Soy, {Config} from 'metal-soy';
 
 import './FloatingToolbarSpacingPanelDelegateTemplate.soy';
-import {CONTAINER_TYPES, ITEM_CONFIG_KEYS, NUMBER_OF_COLUMNS_OPTIONS} from '../../../utils/constants';
+import {CONTAINER_TYPES, ITEM_CONFIG_KEYS, NUMBER_OF_COLUMNS_OPTIONS, PADDING_OPTIONS} from '../../../utils/constants';
 import {setIn} from '../../../utils/FragmentsEditorUpdateUtils.es';
 import templates from './FloatingToolbarSpacingPanel.soy';
 import {UPDATE_LAST_SAVE_DATE, UPDATE_SAVING_CHANGES_STATUS, UPDATE_SECTION_COLUMNS, UPDATE_SECTION_CONFIG, UPDATE_TRANSLATION_STATUS} from '../../../actions/actions.es';
@@ -13,11 +13,6 @@ import getConnectedComponent from '../../../store/ConnectedComponent.es';
  * @type {string}
  */
 const DEFAULT_PADDING_SIZE = '3';
-
-/**
- * @type {number}
- */
-const PADDING_SIZES = 6;
 
 /**
  * FloatingToolbarSpacingPanel
@@ -45,11 +40,8 @@ class FloatingToolbarSpacingPanel extends Component {
 
 		nextState = setIn(
 			nextState,
-			['_paddingSizes'],
-			Array
-				.from({length: PADDING_SIZES})
-				.fill(0)
-				.map((_, i) => i.toString())
+			['_paddingOptions'],
+			PADDING_OPTIONS
 		);
 
 		nextState = setIn(

@@ -808,7 +808,7 @@ definition {
 
 		Click(locator1 = "AlloyEditor#CONTENT_ADD_BUTTON");
 
-		Click(locator1 = "AlloyEditor#CONTENT_ADD_MENUBAR_IMAGE");
+		Click.clickNoMouseOver(locator1 = "AlloyEditor#CONTENT_ADD_MENUBAR_IMAGE");
 
 		ItemSelector.selectDMImage(
 			imageFileName = "DM Document Title",

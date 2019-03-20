@@ -57,7 +57,7 @@ definition {
 
 		Click(locator1 = "AlloyEditor#CONTENT_ADD_BUTTON");
 
-		Click(locator1 = "AlloyEditor#CONTENT_ADD_MENUBAR_IMAGE");
+		Click.clickNoMouseOver(locator1 = "AlloyEditor#CONTENT_ADD_MENUBAR_IMAGE");
 
 		ItemSelector.selectBlogImage(
 			imageFileName = "Document_1.jpg",
@@ -92,7 +92,7 @@ definition {
 
 		Click(locator1 = "AlloyEditor#CONTENT_ADD_BUTTON");
 
-		Click(locator1 = "AlloyEditor#CONTENT_ADD_MENUBAR_IMAGE");
+		Click.clickNoMouseOver(locator1 = "AlloyEditor#CONTENT_ADD_MENUBAR_IMAGE");
 
 		ItemSelector.addFromURL(
 			imageSourceURL = "https://raw.githubusercontent.com/liferay/liferay-portal/master/portal-web/test/functional/com/liferay/portalweb/dependencies/Document_1.jpg",

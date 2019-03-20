@@ -15,10 +15,16 @@
 package com.liferay.document.library.asset.auto.tagger.opennlp.internal;
 
 import com.liferay.asset.auto.tagger.AssetAutoTagProvider;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.util.ContentTypes;
 
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.HashSet;
+import java.util.Set;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -34,7 +40,36 @@ public class OpenNLPDocumentAssetAutoTagProvider
 
 	@Override
 	public Collection<String> getTagNames(FileEntry fileEntry) {
+		try {
+			return _getTagNames(fileEntry);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			return Collections.emptySet();
+		}
+	}
+
+	private Collection<String> _getTagNames(FileEntry fileEntry) {
+		if (!_supportedContentTypes.contains(fileEntry.getMimeType())) {
+			return Collections.emptyList();
+		}
+
 		return Collections.singleton("tag");
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		OpenNLPDocumentAssetAutoTagProvider.class);
+
+	private static final Set<String> _supportedContentTypes = new HashSet<>(
+		Arrays.asList(
+			"application/epub+zip", "application/vnd.apple.pages.13",
+			"application/vnd.google-apps.document",
+			"application/vnd.openxmlformats-officedocument.wordprocessingml." +
+				"document",
+			ContentTypes.APPLICATION_MSWORD, ContentTypes.APPLICATION_PDF,
+			ContentTypes.APPLICATION_TEXT, ContentTypes.TEXT,
+			ContentTypes.TEXT_PLAIN, ContentTypes.TEXT_HTML,
+			ContentTypes.TEXT_HTML_UTF8));
 
 }

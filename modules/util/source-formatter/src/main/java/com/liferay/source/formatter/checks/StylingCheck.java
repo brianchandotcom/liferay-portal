@@ -132,11 +132,15 @@ public abstract class StylingCheck extends BaseFileCheck {
 		Pattern pattern = Pattern.compile(
 			StringBundler.concat(
 				"\\W", className, "\\.", methodName,
-				"\\(\\s*(new \\w+\\[\\] \\{)"));
+				"\\(\\s*(new \\w+\\[\\] \\{)(\\w+)?"));
 
 		Matcher matcher = pattern.matcher(content);
 
 		while (matcher.find()) {
+			if (Objects.equals(matcher.group(2), StringPool.NULL)) {
+				continue;
+			}
+
 			List<String> parameterList = JavaSourceUtil.getParameterList(
 				content.substring(matcher.start()));
 
@@ -145,7 +149,7 @@ public abstract class StylingCheck extends BaseFileCheck {
 			}
 
 			int x = _getMatchingClosingCurlyBracePos(
-				content, matcher.end() - 1);
+				content, matcher.end(1) - 1);
 
 			content = StringUtil.replaceFirst(
 				content, StringPool.CLOSE_CURLY_BRACE, StringPool.BLANK, x);

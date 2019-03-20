@@ -182,17 +182,9 @@ public class Arquillian extends Runner implements Filterable {
 		return thread;
 	}
 
-	private static final InetAddress _inetAddress;
+	private static final InetAddress _inetAddress =
+		InetAddress.getLoopbackAddress();
 	private static int _port = 32764;
-
-	static {
-		try {
-			_inetAddress = InetAddress.getByName("127.0.0.1");
-		}
-		catch (Exception e) {
-			throw new ExceptionInInitializerError(e);
-		}
-	}
 
 	private final Class<?> _clazz;
 	private FilteredSortedTestClass _filteredSortedTestClass;

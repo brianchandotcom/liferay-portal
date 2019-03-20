@@ -786,6 +786,54 @@ public class GitWorkingDirectory {
 			localGitBranch.getName(), true, localGitBranch.getSHA());
 	}
 
+	public void fetchUpstreamTags() {
+		GitUtil.ExecutionResult executionResult = null;
+
+		boolean exceptionThrown = false;
+
+		try {
+			executionResult = executeBashCommands(
+				GitUtil.MAX_RETRIES, GitUtil.RETRY_DELAY, 60 * 60 * 1000,
+				"git fetch upstream --force --tags");
+		}
+		catch (RuntimeException re) {
+			exceptionThrown = true;
+		}
+
+		System.out.println(executionResult.getStandardOut());
+
+		if (exceptionThrown || (executionResult.getExitValue() != 0)) {
+			throw new RuntimeException(
+				JenkinsResultsParserUtil.combine(
+					"Unable to fetch upstream tags\n",
+					executionResult.getStandardError()));
+		}
+	}
+
+	public void gc() {
+		GitUtil.ExecutionResult executionResult = null;
+
+		boolean exceptionThrown = false;
+
+		try {
+			executionResult = executeBashCommands(
+				GitUtil.MAX_RETRIES, GitUtil.RETRY_DELAY, 60 * 60 * 1000,
+				"git gc");
+		}
+		catch (RuntimeException re) {
+			exceptionThrown = true;
+		}
+
+		System.out.println(executionResult.getStandardOut());
+
+		if (exceptionThrown || (executionResult.getExitValue() != 0)) {
+			throw new RuntimeException(
+				JenkinsResultsParserUtil.combine(
+					"Unable to run git gc\n",
+					executionResult.getStandardError()));
+		}
+	}
+
 	public List<String> getBranchNamesContainingSHA(String sha) {
 		GitUtil.ExecutionResult executionResult = executeBashCommands(
 			GitUtil.MAX_RETRIES, GitUtil.RETRY_DELAY, 1000 * 60 * 2,

@@ -29,6 +29,8 @@ import com.liferay.dynamic.data.mapping.service.DDMStructureLayoutLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMStructureVersionLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.service.ResourceLocalService;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 
 import java.util.Locale;
@@ -43,12 +45,14 @@ public class DEDataLayoutSaveRequestExecutor {
 		DDMStructureLayoutLocalService ddmStructureLayoutLocalService,
 		DDMStructureVersionLocalService ddmStructureVersionLocalService,
 		DDMStructureLocalService ddmStructureLocalService,
-		DEDataLayoutSerializerTracker deDataLayoutSerializerTracker) {
+		DEDataLayoutSerializerTracker deDataLayoutSerializerTracker,
+		ResourceLocalService resourceLocalService) {
 
 		_ddmStructureLayoutLocalService = ddmStructureLayoutLocalService;
 		_ddmStructureVersionLocalService = ddmStructureVersionLocalService;
 		_ddmStructureLocalService = ddmStructureLocalService;
 		_deDataLayoutSerializerTracker = deDataLayoutSerializerTracker;
+		_resourceLocalService = resourceLocalService;
 	}
 
 	public DEDataLayoutSaveResponse execute(
@@ -61,13 +65,18 @@ public class DEDataLayoutSaveRequestExecutor {
 			DEDataLayout deDataLayout =
 				deDataLayoutSaveRequest.getDEDataLayout();
 
+			long deDataLayoutId = deDataLayout.getDEDataLayoutId();
+
 			Map<Locale, String> name = deDataLayout.getName();
 
 			if (name.isEmpty()) {
 				throw new DEDataLayoutException.InvalidName();
 			}
 
-			if (deDataLayout.getDEDataLayoutId() == null) {
+			ServiceContext serviceContext =
+				ServiceContextThreadLocal.getServiceContext();
+
+			if (deDataLayoutId == 0) {
 				ddmStructureLayout =
 					_ddmStructureLayoutLocalService.addStructureLayout(
 						deDataLayoutSaveRequest.getUserId(),
@@ -77,6 +86,15 @@ public class DEDataLayoutSaveRequestExecutor {
 						name, deDataLayout.getDescription(),
 						_serializeDEDataLayout(deDataLayout),
 						ServiceContextThreadLocal.getServiceContext());
+
+				deDataLayoutId = ddmStructureLayout.getStructureLayoutId();
+
+				_resourceLocalService.addModelResources(
+					ddmStructureLayout.getCompanyId(),
+					deDataLayoutSaveRequest.getGroupId(),
+					deDataLayoutSaveRequest.getUserId(),
+					DEDataLayout.class.getName(), deDataLayoutId,
+					serviceContext.getModelPermissions());
 			}
 			else {
 				ddmStructureLayout =
@@ -129,5 +147,6 @@ public class DEDataLayoutSaveRequestExecutor {
 	private final DDMStructureVersionLocalService
 		_ddmStructureVersionLocalService;
 	private final DEDataLayoutSerializerTracker _deDataLayoutSerializerTracker;
+	private final ResourceLocalService _resourceLocalService;
 
 }

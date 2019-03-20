@@ -23,11 +23,11 @@ components:
                 dateModified:
                     format: date-time
                     type: string
-                hasComments:
-                    type: boolean
                 id:
                     format: int64
                     type: integer
+                numberOfComments:
+                    type: number
                 text:
                     type: string
             type: object
@@ -101,6 +101,8 @@ components:
                     items:
                         type: string
                     type: array
+                numberOfComments:
+                    type: number
                 sizeInBytes:
                     type: number
                 taxonomyCategories:
@@ -143,15 +145,15 @@ components:
                     type: string
                 description:
                     type: string
-                hasDocuments:
-                    type: boolean
-                hasFolders:
-                    type: boolean
                 id:
                     format: int64
                     type: integer
                 name:
                     type: string
+                numberOfDocuments:
+                    type: number
+                numberOfFolders:
+                    type: number
                 viewableBy:
                     enum: [Anyone, Members, Owner]
                     type: string

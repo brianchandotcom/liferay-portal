@@ -23,11 +23,11 @@ components:
                 dateModified:
                     format: date-time
                     type: string
-                hasComments:
-                    type: boolean
                 id:
                     format: int64
                     type: integer
+                numberOfComments:
+                    type: number
                 text:
                     type: string
             type: object
@@ -229,8 +229,6 @@ components:
                     type: string
                 description:
                     type: string
-                hasComments:
-                    type: boolean
                 id:
                     format: int64
                     type: integer
@@ -241,6 +239,8 @@ components:
                 lastReviewed:
                     format: date-time
                     type: string
+                numberOfComments:
+                    type: number
                 renderedContents:
                     description: https://www.schema.org/templates
                     items:

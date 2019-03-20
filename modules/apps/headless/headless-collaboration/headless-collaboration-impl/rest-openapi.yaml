@@ -41,8 +41,6 @@ components:
                     type: string
                 friendlyUrlPath:
                     type: string
-                hasComments:
-                    type: boolean
                 headline:
                     type: string
                 id:
@@ -64,6 +62,8 @@ components:
                     items:
                         type: string
                     type: array
+                numberOfComments:
+                    type: number
                 taxonomyCategories:
                     items:
                         properties:
@@ -118,11 +118,11 @@ components:
                 dateModified:
                     format: date-time
                     type: string
-                hasComments:
-                    type: boolean
                 id:
                     format: int64
                     type: integer
+                numberOfComments:
+                    type: number
                 text:
                     type: string
             type: object
@@ -169,10 +169,6 @@ components:
                     type: string
                 friendlyUrlPath:
                     type: string
-                hasAttachments:
-                    type: boolean
-                hasKnowledgeBaseArticles:
-                    type: boolean
                 id:
                     format: int64
                     type: integer
@@ -180,6 +176,10 @@ components:
                     items:
                         type: string
                     type: array
+                numberOfAttachments:
+                    type: number
+                numberOfKnowledgeBaseArticles:
+                    type: number
                 parentKnowledgeBaseFolder:
                     properties:
                         folderId:
@@ -246,15 +246,15 @@ components:
                     type: string
                 description:
                     type: string
-                hasKnowledgeBaseArticles:
-                    type: boolean
-                hasKnowledgeBaseFolders:
-                    type: boolean
                 id:
                     format: int64
                     type: integer
                 name:
                     type: string
+                numberOfKnowledgeBaseArticles:
+                    type: number
+                numberOfKnowledgeBaseFolders:
+                    type: number
                 parentKnowledgeBaseFolder:
                     properties:
                         folderId:

@@ -70,8 +70,6 @@ components:
             properties:
                 comment:
                     type: string
-                hasOrganizations:
-                    type: boolean
                 id:
                     format: int64
                     type: integer
@@ -91,6 +89,8 @@ components:
                     type: object
                 name:
                     type: string
+                numberOfOrganizations:
+                    type: number
                 parentOrganization:
                     allOf:
                         - $ref: "#/components/schemas/Organization"
@@ -241,13 +241,13 @@ components:
                     type: string
                 description:
                     type: string
-                hasTaxonomyCategories:
-                    type: boolean
                 id:
                     format: int64
                     type: integer
                 name:
                     type: string
+                numberOfTaxonomyCategories:
+                    type: number
                 parentTaxonomyCategory:
                     properties:
                         id:
@@ -300,13 +300,13 @@ components:
                     type: string
                 description:
                     type: string
-                hasTaxonomyCategories:
-                    type: boolean
                 id:
                     format: int64
                     type: integer
                 name:
                     type: string
+                numberOfTaxonomyCategories:
+                    type: number
                 viewableBy:
                     enum: [Anyone, Members, Owner]
                     type: string

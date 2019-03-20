@@ -6,11 +6,12 @@
 	.row {
 		margin-bottom: 20px;
 	}
+
 	.header {
 		display: flex;
-		width: 100%;
-		padding: 3px;
 		justify-content: space-between;
+		padding: 3px;
+		width: 100%;
 
 		.form-caption {
 			width: 75%;
@@ -24,83 +25,96 @@
 			width: 25%;
 		}
 	}
+
 	.grid {
 		display: flex;
 		flex-wrap: wrap;
-		width: 100%;
 		margin-top: 16px;
+		width: 100%;
 	}
+
 	.rowgroup {
 		display: flex;
-		width: 100%;
 		margin: 4px 0;
+		width: 100%;
 	}
+
 	.day {
-		display: flex;
 		align-items: center;
-		height: 31px;
-		cursor: pointer;
-		justify-content: center;
-		width: 32px;
-		margin: 0 1px;
-		color: #6B6C7E;
 		border-radius: 100%;
+		color: #6B6C7E;
+		cursor: pointer;
+		display: flex;
+		height: 31px;
+		justify-content: center;
+		margin: 0 1px;
+		width: 32px;
 
 		&:focus {
 			outline: none;
 		}
 	}
+
 	.day.active {
-		color: #ffffff !important;
 		background-color: #0B5FFF;
+		color: #FFFFFF !important;
 	}
+
 	.day.outside {
 		color: #A7A9BC;
-		cursor: not-allowed;
 	}
+
 	.form-caption,
 	.navigation {
 		display: flex;
 	}
+
 	.datepicker {
 		padding: 16px 16px;
 	}
+
 	.dropdown-menu {
 		max-width: 384px;
 		padding: 0;
 	}
+
 	.weekdays {
-		margin-top: 16px;
-		display: flex;
-		width: 100%;
-		height: 21px;
 		align-items: center;
-		padding: 0 8px;
+		display: flex;
+		height: 21px;
 		justify-content: space-between;
+		margin-top: 16px;
+		padding: 0 8px;
+		width: 100%;
 	}
+
 	.week {
 		color: #272833;
 		font-weight: 600;
-		width: 32px;
 		text-align: center;
+		width: 32px;
 	}
+
 	.extension-time {
-		color: #6B6C7E;
+		align-items: center;
 		background-color: rgba(241, 242, 245, 0.50);
+		color: #6B6C7E;
+		display: flex;
 		padding: 16px 32px;
-		display: flex;
-		align-items: center;
 	}
+
 	.extension-control {
-		display: flex;
 		align-items: center;
+		display: flex;
 	}
+
 	.extension-time > svg {
-		width: 16px;
 		height: 16px;
 		margin-right: 16px;
 		margin-top: 1px;
+		width: 16px;
 	}
+
 	.datepicker .form-control,
 	.extension-time .form-control {
 		background-color: transparent;

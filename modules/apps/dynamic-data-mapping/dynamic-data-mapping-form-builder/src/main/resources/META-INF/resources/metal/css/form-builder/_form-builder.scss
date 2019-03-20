@@ -16,3 +16,7 @@
 .ddm-select-dropdown .dropdown-item:focus {
 	background-color: transparent;
 }
+
+.ddm-form-builder .ddm-field-container .btn:disabled {
+	cursor: inherit;
+}

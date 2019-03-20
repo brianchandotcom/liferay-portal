@@ -63,7 +63,7 @@ public class GetAssetFieldValueMVCResourceCommand
 		if (assetDisplayContributor == null) {
 			JSONPortletResponseUtil.writeJSON(
 				resourceRequest, resourceResponse,
-				JSONFactoryUtil.createJSONArray());
+				JSONFactoryUtil.createJSONObject());
 
 			return;
 		}
@@ -76,7 +76,7 @@ public class GetAssetFieldValueMVCResourceCommand
 		if (assetEntry == null) {
 			JSONPortletResponseUtil.writeJSON(
 				resourceRequest, resourceResponse,
-				JSONFactoryUtil.createJSONArray());
+				JSONFactoryUtil.createJSONObject());
 
 			return;
 		}

@@ -1,0 +1,161 @@
+{namespace com.liferay.layout.content.page.editor.web.SegmentsExperienceSeletorModal}
+
+{template .render}
+	{@param? _handleFormSubmit: any}
+	{@param? _requiredNameError: bool | null}
+	{@param? porletPrefix: string }
+	{@param visibile: bool }
+	{@param error: [
+		visibile: bool,
+		message: string,
+		onDismiss: any
+	] }
+	{@param experienceForm: [
+		onExperienceSubmit: any | null,
+		formId: string,
+		experienceName: [
+			inputId: string,
+			value: string | null,
+			placeholder: string,
+			label: string
+		],
+		segmentSelector: [
+			inputId: string,
+			segments: list<[
+				name: string,
+				segmentsEntryId: string
+			]> | null,
+			value: string | null,
+			label: string
+		]
+	]}
+	{@param onClose: any}
+	{@param onDismiss: any}
+	{@param spritemap: string }
+	{@param title: string }
+
+	{if $visibile }
+		{call liferay.frontend.Modal.render}
+			{param body kind="html"}
+				<form
+					autocomplete="off"
+					class="mb-3"
+					data-onsubmit="{$_handleFormSubmit}"
+					id="{$porletPrefix}{$experienceForm.formId}"
+					novalidate
+				>
+					{if $error and $error.visibile }
+						{call ClayAlert.render}
+							{param closeable: true /}
+							{param events: [
+								'hide': $error.onDismiss
+							]/}
+							{param message: '' /}
+							{param spritemap: $spritemap /}
+							{param style: 'danger' /}
+							{param title: $error.message /}
+						{/call}
+					{/if}
+					<div class="form-group {$_requiredNameError ? 'has-error ' : ''}my-2">
+						<label for="{$porletPrefix}{$experienceForm.experienceName.inputId}">
+							{$experienceForm.experienceName.label}
+							<svg class="lexicon-icon lexicon-icon-asterisk reference-mark" focusable="false" role="presentation">
+								<use href="{$spritemap}#asterisk" />
+							</svg>
+						</label>
+
+						<input
+							autofocus
+							class="form-control"
+							id="{$porletPrefix}{$experienceForm.experienceName.inputId}"
+							name="experienceName"
+							value="{$experienceForm.experienceName.value}"
+							placeholder="{$experienceForm.experienceName.placeholder}"
+							ref="experienceName"
+							required
+							type="text"
+						/>
+						{if $_requiredNameError }
+							<div class="form-feedback-group">
+								<div class="form-feedback-item">
+									<span class="form-feedback-indicator">
+										<svg class="lexicon-icon lexicon-icon-exclamation-full" focusable="false" role="presentation">
+											<use href="{$spritemap}#exclamation-full" />
+										</svg>
+									</span>
+									{msg desc=""}
+										error-required-experience-name
+									{/msg}
+								</div>
+							</div>
+						{/if}
+					</div>
+
+					<div class="form-group my-2">
+						{if $experienceForm.segmentSelector.segments and length($experienceForm.segmentSelector.segments) > 0}
+								<label for="{$porletPrefix}{$experienceForm.segmentSelector.inputId}">
+									{$experienceForm.segmentSelector.label}
+								</label>
+
+								<select
+									class="form-control"
+									id="{$porletPrefix}{$experienceForm.experienceName.inputId}"
+									name="experienceSegmentId"
+									ref="experienceSegmentId"
+								>
+									{foreach $segment in $experienceForm.segmentSelector.segments}
+										{let $optionAttributes kind="attributes"}
+											value="{$segment.segmentsEntryId}"
+
+											{if $segment.segmentsEntryId == $experienceForm.segmentSelector.value    }
+												selected
+											{/if}
+										{/let}
+
+										<option {$optionAttributes}>
+											{$segment.name}
+										</option>
+									{/foreach}
+								</select>
+						{/if}
+					</div>
+				</form>
+			{/param}
+
+			{param footer kind="html"}
+				<div class="btn-group">
+					<div class="btn-group-item">
+						<button
+							class="btn btn-secondary"
+							data-dismiss="modal"
+							data-onclick="{$onDismiss}"
+							type="button"
+						>
+							{msg desc=""}cancel{/msg}
+						</button>
+
+						<button
+							class="btn btn-primary ml-3"
+							data-onclick="{$_handleFormSubmit}"
+							form="{$porletPrefix}{$experienceForm.formId}"
+							type="button"
+						>
+							{msg desc=""}save{/msg}
+						</button>
+					</div>
+				</div>
+			{/param}
+
+			{param dialogClasses: 'modal-dialog-sm' /}
+			{param events: ['visibleChanged': $onClose] /}
+
+			{param header kind="html"}
+				{$title}
+			{/param}
+
+			{param portalElement: 'body' /}
+			{param ref: 'experienceModal' /}
+			{param spritemap: $spritemap /}
+		{/call}
+	{/if}
+{/template}

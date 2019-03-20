@@ -1,4 +1,4 @@
-import {CREATE_SEGMENTS_EXPERIENCE, DELETE_SEGMENTS_EXPERIENCE, EDIT_SEGMENTS_EXPERIENCE, END_CREATE_SEGMENTS_EXPERIENCE, END_EDIT_SEGMENTS_EXPERIENCE, SELECT_SEGMENTS_EXPERIENCE, START_CREATE_SEGMENTS_EXPERIENCE, START_EDIT_SEGMENTS_EXPERIENCE} from '../actions/actions.es';
+import {CREATE_SEGMENTS_EXPERIENCE, DELETE_SEGMENTS_EXPERIENCE, EDIT_SEGMENTS_EXPERIENCE, SELECT_SEGMENTS_EXPERIENCE} from '../actions/actions.es';
 import {setIn} from '../utils/utils.es';
 
 const CREATE_SEGMENTS_EXPERIENCE_URL = '/segments.segmentsexperience/add-segments-experience';
@@ -139,93 +139,6 @@ function deleteSegmentsExperienceReducer(state, actionType, payload) {
 	);
 }
 
-function startEditExperienceReducer(state, actionType, payload) {
-	let nextState = state;
-	if (actionType === START_EDIT_SEGMENTS_EXPERIENCE) {
-		const {name, segmentsEntryId, segmentsExperienceId} = payload;
-		nextState = setIn(
-			nextState,
-			['segmentsExperienceEdition'],
-			{
-				error: null,
-				name,
-				segmentsEntryId,
-				segmentsExperienceId
-			}
-		);
-	}
-
-	return nextState;
-}
-
-/**
- * @param {!object} state
- * @param {!string} actionType
- * @return {object}
- * @review
- */
-function startCreateSegmentsExperience(state, actionType) {
-	let nextState = state;
-
-	if (actionType === START_CREATE_SEGMENTS_EXPERIENCE) {
-		nextState = setIn(
-			nextState,
-			['experienceSegmentsCreation'],
-			{
-				creatingSegmentsExperience: true,
-				error: null
-			}
-		);
-	}
-	return nextState;
-}
-
-/**
- * @param {!object} state
- * @param {!string} actionType
- * @return {object}
- * @review
- */
-function endCreateSegmentsExperience(state, actionType) {
-	let nextState = state;
-
-	if (actionType === END_CREATE_SEGMENTS_EXPERIENCE) {
-		nextState = setIn(
-			nextState,
-			['experienceSegmentsCreation'],
-			{
-				creatingSegmentsExperience: false,
-				error: null
-			}
-		);
-	}
-	return nextState;
-}
-
-/**
- * @param {!object} state
- * @param {!string} actionType
- * @return {object}
- * @review
- */
-function endEditExperienceReducer(state, actionType) {
-	let nextState = state;
-
-	if (actionType === END_EDIT_SEGMENTS_EXPERIENCE) {
-		nextState = setIn(
-			nextState,
-			['segmentsExperienceEdition'],
-			{
-				error: null,
-				name: null,
-				segmentsEntryId: null,
-				segmentsExperienceId: null
-			}
-		);
-	}
-	return nextState;
-}
-
 /**
  *
  *
@@ -330,10 +243,6 @@ function editSegmentsExperienceReducer(state, actionType, payload) {
 export {
 	createSegmentsExperienceReducer,
 	deleteSegmentsExperienceReducer,
-	startCreateSegmentsExperience,
-	startEditExperienceReducer,
-	endEditExperienceReducer,
 	editSegmentsExperienceReducer,
-	endCreateSegmentsExperience,
 	selectSegmentsExperienceReducer
 };

@@ -1,8 +1,9 @@
 import Component from 'metal-component';
 import Soy, {Config} from 'metal-soy';
 import getConnectedComponent from '../../store/ConnectedComponent.es';
+import './segmentsExperiences/modal.es';
 import templates from './SegmentsExperienceSelector.soy';
-import {CREATE_SEGMENTS_EXPERIENCE, DELETE_SEGMENTS_EXPERIENCE, EDIT_SEGMENTS_EXPERIENCE, END_CREATE_SEGMENTS_EXPERIENCE, END_EDIT_SEGMENTS_EXPERIENCE, SELECT_SEGMENTS_EXPERIENCE, START_CREATE_SEGMENTS_EXPERIENCE, START_EDIT_SEGMENTS_EXPERIENCE} from '../../actions/actions.es';
+import {CREATE_SEGMENTS_EXPERIENCE, DELETE_SEGMENTS_EXPERIENCE, EDIT_SEGMENTS_EXPERIENCE, SELECT_SEGMENTS_EXPERIENCE} from '../../actions/actions.es';
 import 'frontend-js-web/liferay/compat/modal/Modal.es';
 import {setIn} from '../../utils/FragmentsEditorUpdateUtils.es';
 
@@ -122,9 +123,11 @@ class SegmentsExperienceSelector extends Component {
 	 * @private
 	 * @review
 	 */
-	_closeModal() {
-		this.store.dispatchAction(
-			END_CREATE_SEGMENTS_EXPERIENCE
+	_closeCreateModal() {
+		this._experiencesModalStateHandler(
+			{
+				creation: false
+			}
 		);
 	}
 
@@ -145,7 +148,8 @@ class SegmentsExperienceSelector extends Component {
 			}
 		).done(
 			() => {
-				this.store.dispatchAction(END_CREATE_SEGMENTS_EXPERIENCE);
+				this._closeCreateModal();
+
 				Liferay.Util.openToast(
 					{
 						title: Liferay.Language.get('success-message-create-experience'),
@@ -189,7 +193,7 @@ class SegmentsExperienceSelector extends Component {
 		).failed(
 			() => {
 				this._openDropdown();
-				
+
 				this._experiencesErrorHandler(
 					{
 						deletion: true
@@ -296,7 +300,10 @@ class SegmentsExperienceSelector extends Component {
 			}
 		).done(
 			() => {
-				this.store.dispatchAction(END_EDIT_SEGMENTS_EXPERIENCE);
+				this._experiencesModalStateHandler({
+					edition: false
+				});
+
 				Liferay.Util.openToast(
 					{
 						title: Liferay.Language.get('success-message-edit-experience'),
@@ -410,31 +417,19 @@ class SegmentsExperienceSelector extends Component {
 	/**
 	 * @memberof SegmentsExperienceSelector
 	 * @review
-	 * @param {Event} event
+	 * @param {!string} name
+	 * @param {!string} segmentsEntryId
 	 */
-	_handleEditFormSubmit(event) {
-		event.preventDefault();
-
+	_handleEditFormSubmit(
+		name,
+		segmentsEntryId
+	) {
 		this._editSegmentsExperience(
 			{
-				name: this.refs.editModal.refs.experienceName.value,
-				segmentsEntryId: this.refs.editModal.refs.experienceSegmentId.value,
-				segmentsExperienceId: this.segmentsExperienceEdition.segmentsExperienceId
+				name,
+				segmentsEntryId,
+				segmentsExperienceId: this.modalStates.edition.segmentsExperienceId
 			}
-		);
-	}
-
-	/**
-	 * @memberof SegmentsExperienceSelector
-	 * @review
-	 * @param {Event} event
-	 */
-	_handleFormSubmit(event) {
-		event.preventDefault();
-
-		this._createSegmentsExperience(
-			this.refs.modal.refs.experienceName.value,
-			this.refs.modal.refs.experienceSegmentId.value
 		);
 	}
 
@@ -449,14 +444,16 @@ class SegmentsExperienceSelector extends Component {
 	}
 
 	/**
-	 * Opens modal
+	 * Opens experience creation modal
 	 * @memberof SegmentsExperienceSelector
 	 * @private
 	 * @review
 	 */
-	_openModal() {
-		this.store.dispatchAction(
-			START_CREATE_SEGMENTS_EXPERIENCE
+	_openCreateModal() {
+		this._experiencesModalStateHandler(
+			{
+				creation: true
+			}
 		);
 	}
 
@@ -468,19 +465,28 @@ class SegmentsExperienceSelector extends Component {
 	 */
 	_openEditModal(
 		{
-			name,
-			segmentsEntryId,
-			segmentsExperienceId
+			name = '',
+			segmentsEntryId = null,
+			segmentsExperienceId = null
 		}
 	) {
-		this.store.dispatchAction(
-			START_EDIT_SEGMENTS_EXPERIENCE,
-			{
+		this._experiencesModalStateHandler({
+			edition: {
 				name,
 				segmentsEntryId,
 				segmentsExperienceId
 			}
-		);
+		});
+	}
+
+	/**
+	 * @param {object} [newState]
+	 * @param {boolean} [newState.creation] - The status of the experience creation modal
+	 * @param {boolean} [newState.editon] - The status of the experience edition modal
+	 * @memberof SegmentsExperienceSelector
+	 */
+	_experiencesModalStateHandler(newState = {}) {
+		this.modalStates = newState;
 	}
 
 	/**
@@ -510,8 +516,10 @@ class SegmentsExperienceSelector extends Component {
 				edition: false
 			}
 		);
-		this.store.dispatchAction(
-			END_EDIT_SEGMENTS_EXPERIENCE
+		this._experiencesModalStateHandler(
+			{
+				edition: false
+			}
 		);
 	}
 
@@ -522,7 +530,7 @@ class SegmentsExperienceSelector extends Component {
 	 * @review
 	 */
 	_toggleEditModal() {
-		const modalEditAction = this.segmentsExperienceEdition.segmentsExperienceId ?
+		const modalEditAction = this.modalStates.edition ?
 			this._closeEditModal :
 			this._openEditModal;
 
@@ -535,10 +543,10 @@ class SegmentsExperienceSelector extends Component {
 	 * @private
 	 * @review
 	 */
-	_toggleModal() {
-		const modalAction = this.experienceSegmentsCreation.creatingSegmentsExperience ?
-			this._closeModal :
-			this._openModal;
+	_toggleCreateModal() {
+		const modalAction = this.modalStates.creation ?
+			this._closeCreateModal :
+			this._openCreateModal;
 
 		modalAction.call(this);
 	}
@@ -561,7 +569,8 @@ class SegmentsExperienceSelector extends Component {
 
 SegmentsExperienceSelector.STATE = {
 	openDropdown: Config.bool().internal().value(false),
-	segmentsEntryId: Config.string().internal()
+	segmentsEntryId: Config.string().internal(),
+	modalStates: Config.object().value(null)
 };
 
 const ConnectedSegmentsExperienceSelector = getConnectedComponent(

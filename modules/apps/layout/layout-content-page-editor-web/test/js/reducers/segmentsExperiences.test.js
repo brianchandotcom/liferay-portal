@@ -1,7 +1,7 @@
 /* globals describe, test, jest, expect, beforeAll, afterAll */
 
-import {createSegmentsExperienceReducer, deleteSegmentsExperienceReducer, editSegmentsExperienceReducer, endCreateSegmentsExperience, startCreateSegmentsExperience} from '../../../src/main/resources/META-INF/resources/js/reducers/segmentsExperiences.es';
-import {CREATE_SEGMENTS_EXPERIENCE, DELETE_SEGMENTS_EXPERIENCE, EDIT_SEGMENTS_EXPERIENCE, END_CREATE_SEGMENTS_EXPERIENCE, START_CREATE_SEGMENTS_EXPERIENCE} from '../../../src/main/resources/META-INF/resources/js/actions/actions.es';
+import {createSegmentsExperienceReducer, deleteSegmentsExperienceReducer, editSegmentsExperienceReducer} from '../../../src/main/resources/META-INF/resources/js/reducers/segmentsExperiences.es';
+import {CREATE_SEGMENTS_EXPERIENCE, DELETE_SEGMENTS_EXPERIENCE, EDIT_SEGMENTS_EXPERIENCE} from '../../../src/main/resources/META-INF/resources/js/actions/actions.es';
 
 const SEGMENTS_EXPERIENCE_ID = 'SEGMENTS_EXPERIENCE_ID';
 
@@ -149,33 +149,6 @@ describe(
 				);
 
 				global.Liferay = prevLiferayGlobal;
-			}
-		);
-
-		test(
-			'startCreateSegmentsExperience and endCreateSegmentsExperience switch states',
-			() => {
-				const prevState = {};
-
-				const creatingSegmentsExperienceState = startCreateSegmentsExperience(prevState, START_CREATE_SEGMENTS_EXPERIENCE);
-				expect(creatingSegmentsExperienceState).toMatchObject(
-					{
-						experienceSegmentsCreation: {
-							creatingSegmentsExperience: true,
-							error: null
-						}
-					}
-				);
-				const notEdtingState = endCreateSegmentsExperience(creatingSegmentsExperienceState, END_CREATE_SEGMENTS_EXPERIENCE);
-
-				expect(notEdtingState).toMatchObject(
-					{
-						experienceSegmentsCreation: {
-							creatingSegmentsExperience: false,
-							error: null
-						}
-					}
-				);
 			}
 		);
 

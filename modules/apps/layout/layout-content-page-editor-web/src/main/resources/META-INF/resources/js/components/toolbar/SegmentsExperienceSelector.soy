@@ -12,8 +12,8 @@
 		segmentsEntryId: string
 	]>}
 	{@param? defaultSegmentsExperienceId: string }
-	{@param? _closeModal: any }
 	{@param? _closeEditModal: any }
+	{@param? _closeCreateModal: any }
 	{@param? _dismissCreationError: any }
 	{@param? _dismissDeletionError: any }
 	{@param? _dismissEditionError: any }
@@ -24,11 +24,11 @@
 	{@param? _handleDropdownFocus: any}
 	{@param? _handleDropdownButtonClick: any}
 	{@param? _handleEditFormSubmit: any }
-	{@param? _handleFormSubmit: any }
+	{@param? _createSegmentsExperience: any }
 	{@param? _segmentsExperienceErrors: ? }
-	{@param? _openModal: any }
+	{@param? _openCreateModal: any }
 	{@param? _toggleEditModal: any }
-	{@param? _toggleModal: any }
+	{@param? _toggleCreateModal: any }
 	{@param? availableSegmentsEntries: list<[
 		segmentsEntryId: string,
 		name: string
@@ -36,9 +36,14 @@
 	{@param? segmentsExperienceId: string}
 	{@param? openDropdown: bool}
 	{@param? portletNamespace: string}
+	{@param? modalStates: [
+		creation: bool,
+		edition: [
+			name: string | null,
+			segmentsExperienceId: string | null
+		]
+	]}
 	{@param spritemap: string}
-	{@param? experienceSegmentsCreation: ?}
-	{@param? segmentsExperienceEdition: ?}
 
 	{if $availableSegmentsExperiences and length($availableSegmentsExperiences) > 0}
 		<div
@@ -69,7 +74,7 @@
 					<h5>{msg desc=""}select-experience{/msg}</h5>
 
 					{if $availableSegmentsEntries and length($availableSegmentsEntries) > 0}
-						<button class="btn btn-secondary btn-sm text-dark" data-onclick="{$_openModal}" ref="newExperienceBtn">
+						<button class="btn btn-secondary btn-sm text-dark" data-onclick="{$_openCreateModal}" ref="newExperienceBtn">
 							{msg desc=""}new-experience{/msg}
 						</button>
 					{/if}
@@ -163,205 +168,100 @@
 			</div>
 		</div>
 
-		{if $experienceSegmentsCreation and $experienceSegmentsCreation.creatingSegmentsExperience }
-			{call liferay.frontend.Modal.render}
-				{param body kind="html"}
-					{if $_segmentsExperienceErrors and $_segmentsExperienceErrors.creation }
-						{let $errorMessage kind="text"}
-							{msg desc=""}error-message-create-experience{/msg}
-						{/let}
+		{let $creationModalTitle kind="text"}
+			{msg desc=""}new-experience{/msg}
+		{/let}
 
-						{call ClayAlert.render}
-							{param closeable: true /}
-							{param message: '' /}
-							{param events: [
-								'hide': $_dismissCreationError
-							]/}
-							{param spritemap: $spritemap /}
-							{param style: 'danger' /}
-							{param title: $errorMessage /}
-						{/call}
-					{/if}
+		{let $experienceNamePlaceHolder kind="text"}
+			{msg desc=""}experience-name{/msg}
+		{/let}
 
-					<form autocomplete="off" class="mb-3" data-onsubmit="{$_handleFormSubmit}" id="{$portletNamespace}CreateForm">
-						<div class="form-group my-2">
-							<label for="{$portletNamespace}CreateExperience">
-								{msg desc=""}name{/msg}
-							</label>
+		{let $experienceNameLabel kind="text"}
+			{msg desc=""}name{/msg}
+		{/let}
 
-							<input
-								autofocus
-								class="form-control"
-								id="{$portletNamespace}CreateExperience"
-								name="experienceName"
-								placeholder="{msg desc=""}experience-name{/msg}"
-								ref="experienceName"
-								type="text"
-							/>
-						</div>
+		{let $errorCreatingMessage kind="text"}
+			{msg desc=""}error-message-create-experience{/msg}
+		{/let}
 
-						<div class="form-group my-2">
-							{if $availableSegmentsEntries and length($availableSegmentsEntries) > 0}
-									<label for="{$portletNamespace}SegmentSelector">
-										{msg desc=""}audience{/msg}
-									</label>
+		{let $segmentLabel kind="text"}
+			{msg desc=""}audience{/msg}
+		{/let}
 
-									<select
-										class="form-control"
-										id="{$portletNamespace}SegmentSelector"
-										name="experienceSegmentId"
-										ref="experienceSegmentId"
-									>
-										{foreach $segment in $availableSegmentsEntries}
-											<option value="{$segment.segmentsEntryId}">
-												{$segment.name}
-											</option>
-										{/foreach}
-									</select>
-							{/if}
-						</div>
-					</form>
-				{/param}
+		{let $creationModalCondition: ($modalStates and $modalStates.creation) ? true : false /}
+		{let $errorCreationCondition: ($_segmentsExperienceErrors and $_segmentsExperienceErrors.edition) ? true : false /}
 
-				{param footer kind="html"}
-					<div class="btn-group">
-						<div class="btn-group-item">
-							<button
-								class="btn btn-secondary"
-								data-dismiss="modal"
-								data-onclick="{$_closeModal}"
-								type="button"
-							>
-								{msg desc=""}cancel{/msg}
-							</button>
+		{call com.liferay.layout.content.page.editor.web.SegmentsExperienceSeletorModal.render }
+			{param visibile:  $creationModalCondition /}
+			{param error: [
+				'visibile': $errorCreationCondition,
+				'message': $errorCreatingMessage,
+				'onDismiss': $_dismissCreationError
+			] /}
+			{param title: $creationModalTitle /}
+			{param porletPrefix: $portletNamespace /}
+			{param experienceForm: [
+				'onExperienceSubmit': $_createSegmentsExperience,
+				'formId': 'CreateForm',
+				'experienceName': [
+					'inputId': 'CreateExperience',
+					'placeholder': $experienceNamePlaceHolder,
+					'label': $experienceNameLabel,
+					'value': null
+				],
+				'segmentSelector': [
+					'inputId': 'SegmentSelector',
+					'segments':  $availableSegmentsEntries,
+					'label': $segmentLabel,
+					'value': null
+				]
+			] /}
 
-							<button
-								class="btn btn-primary ml-3"
-								data-onclick="{$_handleFormSubmit}"
-								form="{$portletNamespace}CreateForm"
-								type="button"
-							>
-								{msg desc=""}save{/msg}
-							</button>
-						</div>
-					</div>
-				{/param}
+			{param onClose: $_toggleCreateModal /}
+			{param spritemap: $spritemap /}
+			{param onDismiss: $_closeCreateModal /}
+		{/call}
 
-				{param dialogClasses: 'modal-dialog-sm' /}
-				{param portalElement: 'body' /}
-				{param events: ['visibleChanged': $_toggleModal] /}
+		{let $editionModalTitle kind="text"}
+			{msg desc=""}edit-experience{/msg}
+		{/let}
 
-				{param header kind="html"}
-					{msg desc=""}new-experience{/msg}
-				{/param}
+		{let $errorEditionMessage kind="text"}
+			{msg desc=""}error-message-edit-experience{/msg}
+		{/let}
 
-				{param ref: 'modal' /}
-				{param spritemap: $spritemap /}
-			{/call}
-		{/if}
+		{let $editionModalCondition: ($modalStates and $modalStates.edition) ? true : false /}
+		{let $errorEditionCondition: ($_segmentsExperienceErrors and $_segmentsExperienceErrors.edition) ? true : false /}
 
-		{if $segmentsExperienceEdition and $segmentsExperienceEdition.segmentsExperienceId }
-			{call liferay.frontend.Modal.render}
-				{param body kind="html"}
-					<form autocomplete="off" class="mb-3" data-onsubmit="{$_handleEditFormSubmit}" id="{$portletNamespace}EditForm">
-					{if $_segmentsExperienceErrors and $_segmentsExperienceErrors.edition }
-						{let $errorMessage kind="text"}
-							{msg desc=""}error-message-edit-experience{/msg}
-						{/let}
+		{call com.liferay.layout.content.page.editor.web.SegmentsExperienceSeletorModal.render }
+			{param visibile:  $editionModalCondition /}
+			{param error: [
+				'visibile': $errorEditionCondition,
+				'message': $errorEditionMessage,
+				'onDismiss': $_dismissEditionError
+			] /}
+			{param title: $editionModalTitle /}
+			{param porletPrefix: $portletNamespace /}
+			{param experienceForm: [
+				'onExperienceSubmit': $_handleEditFormSubmit,
+				'formId': 'EditForm',
+				'experienceName': [
+					'inputId': 'EditExperience',
+					'placeholder': $experienceNamePlaceHolder,
+					'label': $experienceNameLabel,
+					'value': ($modalStates and $modalStates.edition) ? $modalStates.edition.name : null
+				],
+				'segmentSelector': [
+					'inputId': 'SegmentSelector',
+					'segments': $availableSegmentsEntries,
+					'label': $segmentLabel,
+					'value': ($modalStates and $modalStates.edition) ? $modalStates.edition.segmentsExperienceId : null
+				]
+			] /}
 
-						{call ClayAlert.render}
-							{param closeable: true /}
-							{param message: '' /}
-							{param events: [
-								'hide': $_dismissEditionError
-							]/}
-							{param spritemap: $spritemap /}
-							{param style: 'danger' /}
-							{param title: $errorMessage /}
-						{/call}
-					{/if}
-						<div class="form-group my-2">
-							<label for="{$portletNamespace}EditExperience">
-								{msg desc=""}name{/msg}
-							</label>
-
-							<input
-								autofocus
-								class="form-control"
-								id="{$portletNamespace}EditExperience"
-								name="experienceName"
-								value="{$segmentsExperienceEdition.name}"
-								placeholder="{msg desc=""}experience-name{/msg}"
-								ref="experienceName"
-								required
-								type="text"
-							/>
-						</div>
-
-						<div class="form-group my-2">
-							{if $availableSegmentsEntries and length($availableSegmentsEntries) > 0}
-									<label for="{$portletNamespace}SegmentSelector">
-										{msg desc=""}audience{/msg}
-									</label>
-
-									<select
-										class="form-control"
-										id="{$portletNamespace}SegmentSelector"
-										name="experienceSegmentId"
-										ref="experienceSegmentId"
-									>
-										{foreach $segment in $availableSegmentsEntries}
-											{if $segment.segmentsEntryId == $segmentsExperienceEdition.segmentsExperienceId }
-												<option selected value="{$segment.segmentsEntryId}">
-													{$segment.name}
-												</option>
-											{else}
-												<option value="{$segment.segmentsEntryId}">
-													{$segment.name}
-												</option>
-											{/if}
-										{/foreach}
-									</select>
-							{/if}
-						</div>
-					</form>
-				{/param}
-
-				{param footer kind="html"}
-					<div class="btn-group">
-						<div class="btn-group-item">
-							<button
-								class="btn btn-secondary"
-								data-dismiss="modal"
-								data-onclick="{$_closeEditModal}"
-								type="button"
-							>
-								{msg desc=""}cancel{/msg}
-							</button>
-
-							<button
-								class="btn btn-primary ml-3"
-								data-onclick="{$_handleEditFormSubmit}"
-								form="{$portletNamespace}EditForm"
-								type="button"
-							>
-								{msg desc=""}save{/msg}
-							</button>
-						</div>
-					</div>
-				{/param}
-
-				{param dialogClasses: 'modal-dialog-sm' /}
-				{param portalElement: 'body' /}
-				{param events: ['visibleChanged': $_toggleEditModal] /}
-
-				{param header kind="html"}
-					{msg desc=""}new-experience{/msg}
-				{/param}
-
-				{param ref: 'editModal' /}
-				{param spritemap: $spritemap /}
-			{/call}
-		{/if}
+			{param onClose: $_toggleEditModal /}
+			{param spritemap: $spritemap /}
+			{param onDismiss: $_closeEditModal /}
+		{/call}
 	{/if}
 {/template}

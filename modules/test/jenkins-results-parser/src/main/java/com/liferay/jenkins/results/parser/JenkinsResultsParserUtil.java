@@ -141,44 +141,46 @@ public class JenkinsResultsParserUtil {
 		return sb.toString();
 	}
 
-	public static void copy(File source, File target) throws IOException {
+	public static void copy(File sourceFile, File targetFile)
+		throws IOException {
+
 		try {
-			if (!source.exists()) {
+			if (!sourceFile.exists()) {
 				throw new FileNotFoundException(
-					source.getPath() + " does not exist");
+					sourceFile.getPath() + " does not exist");
 			}
 
-			if (source.isDirectory()) {
-				target.mkdir();
+			if (sourceFile.isDirectory()) {
+				targetFile.mkdir();
 
-				for (File file : source.listFiles()) {
-					copy(file, new File(target, file.getName()));
+				for (File file : sourceFile.listFiles()) {
+					copy(file, new File(targetFile, file.getName()));
 				}
 
 				return;
 			}
 
-			File parentFile = target.getParentFile();
+			File parentFile = targetFile.getParentFile();
 
 			if ((parentFile != null) && !parentFile.exists()) {
 				parentFile.mkdirs();
 			}
 
 			try (FileInputStream fileInputStream = new FileInputStream(
-					source)) {
+					sourceFile)) {
 
 				try (FileOutputStream fileOutputStream = new FileOutputStream(
-						target)) {
+						targetFile)) {
 
-					Files.copy(Paths.get(source.toURI()), fileOutputStream);
+					Files.copy(Paths.get(sourceFile.toURI()), fileOutputStream);
 
 					fileOutputStream.flush();
 				}
 			}
 		}
 		catch (IOException ioe) {
-			if (target.exists()) {
-				delete(target);
+			if (targetFile.exists()) {
+				delete(targetFile);
 			}
 
 			throw ioe;
@@ -1688,8 +1690,10 @@ public class JenkinsResultsParserUtil {
 		return sb.toString();
 	}
 
-	public static void move(File sourceFile, File destFile) throws IOException {
-		copy(sourceFile, destFile);
+	public static void move(File sourceFile, File targetFile)
+		throws IOException {
+
+		copy(sourceFile, targetFile);
 
 		if (!delete(sourceFile)) {
 			throw new IOException("Unable to delete " + sourceFile);

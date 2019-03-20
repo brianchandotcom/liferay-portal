@@ -17,21 +17,40 @@ package com.liferay.document.library.asset.auto.tagger.opennlp.internal;
 import com.liferay.asset.auto.tagger.AssetAutoTagProvider;
 import com.liferay.document.library.asset.auto.tagger.opennlp.internal.configuration.OpenNPLDocumentAssetAutoTagProviderCompanyConfiguration;
 import com.liferay.document.library.asset.auto.tagger.opennlp.internal.constants.OpenNLPDocumentAssetAutoTagProviderConstants;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.repository.capabilities.TemporaryFileEntriesCapability;
 import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.settings.CompanyServiceSettingsLocator;
 import com.liferay.portal.kernel.util.ContentTypes;
+import com.liferay.portal.kernel.util.FileUtil;
+
+import java.io.IOException;
+import java.io.InputStream;
 
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
+import opennlp.tools.namefind.NameFinderME;
+import opennlp.tools.namefind.TokenNameFinderModel;
+import opennlp.tools.sentdetect.SentenceDetectorME;
+import opennlp.tools.sentdetect.SentenceModel;
+import opennlp.tools.tokenize.TokenizerME;
+import opennlp.tools.tokenize.TokenizerModel;
+import opennlp.tools.util.Span;
+
+import org.osgi.framework.Bundle;
+import org.osgi.framework.BundleContext;
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -57,6 +76,20 @@ public class OpenNLPDocumentAssetAutoTagProvider
 		}
 	}
 
+	@Activate
+	protected void activate(BundleContext bundleContext) throws IOException {
+		Bundle bundle = bundleContext.getBundle();
+
+		_sentenceModel = new SentenceModel(
+			bundle.getResource("META-INF/opennlp/en-sent.bin"));
+
+		_tokenizerModel = new TokenizerModel(
+			bundle.getResource("META-INF/opennlp/en-token.bin"));
+
+		_tokenNameFinderModel = new TokenNameFinderModel(
+			bundle.getResource("META-INF/opennlp/en-ner-person.bin"));
+	}
+
 	private OpenNPLDocumentAssetAutoTagProviderCompanyConfiguration
 			_getConfiguration(long companyId)
 		throws ConfigurationException {
@@ -66,6 +99,16 @@ public class OpenNLPDocumentAssetAutoTagProvider
 			new CompanyServiceSettingsLocator(
 				companyId,
 				OpenNLPDocumentAssetAutoTagProviderConstants.SERVICE_NAME));
+	}
+
+	private String _getFileEntryContent(FileEntry fileEntry)
+		throws IOException, PortalException {
+
+		FileVersion fileVersion = fileEntry.getFileVersion();
+
+		try (InputStream inputStream = fileVersion.getContentStream(false)) {
+			return FileUtil.extractText(inputStream, fileVersion.getFileName());
+		}
 	}
 
 	private Collection<String> _getTagNames(FileEntry fileEntry)
@@ -88,7 +131,45 @@ public class OpenNLPDocumentAssetAutoTagProvider
 			return Collections.emptyList();
 		}
 
-		return Collections.singleton("tag");
+		SentenceDetectorME sentenceDetectorME = new SentenceDetectorME(
+			_sentenceModel);
+
+		TokenizerME tokenizerME = new TokenizerME(_tokenizerModel);
+
+		NameFinderME nameFinderME = new NameFinderME(_tokenNameFinderModel);
+
+		float confidenceThreshold =
+			openNPLDocumentAssetAutoTagProviderCompanyConfiguration.
+				confidenceThreshold();
+
+		return Stream.of(
+			sentenceDetectorME.sentDetect(_getFileEntryContent(fileEntry))
+		).map(
+			tokenizerME::tokenize
+		).map(
+			tokens -> _getTagNames(nameFinderME, tokens, confidenceThreshold)
+		).flatMap(
+			Arrays::stream
+		).collect(
+			Collectors.toSet()
+		);
+	}
+
+	private String[] _getTagNames(
+		NameFinderME nameFinderME, String[] tokens,
+		double confidenceThreshold) {
+
+		return Span.spansToStrings(
+			Stream.of(
+				nameFinderME.find(tokens)
+			).filter(
+				span -> span.getProb() > confidenceThreshold
+			).collect(
+				Collectors.toList()
+			).toArray(
+				new Span[0]
+			),
+			tokens);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
@@ -107,5 +188,9 @@ public class OpenNLPDocumentAssetAutoTagProvider
 
 	@Reference
 	private ConfigurationProvider _configurationProvider;
+
+	private SentenceModel _sentenceModel;
+	private TokenizerModel _tokenizerModel;
+	private TokenNameFinderModel _tokenNameFinderModel;
 
 }

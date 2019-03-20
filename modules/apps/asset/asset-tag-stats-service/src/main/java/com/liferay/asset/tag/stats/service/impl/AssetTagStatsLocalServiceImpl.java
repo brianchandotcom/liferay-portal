@@ -18,6 +18,7 @@ import com.liferay.asset.kernel.model.AssetTag;
 import com.liferay.asset.tag.stats.model.AssetTagStats;
 import com.liferay.asset.tag.stats.service.base.AssetTagStatsLocalServiceBaseImpl;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
@@ -25,12 +26,18 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 
 import java.util.List;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * Provides the local service for accessing, adding, deleting, and updating
  * asset tag statistics.
  *
  * @author Jorge Ferrer
  */
+@Component(
+	property = "model.class.name=com.liferay.asset.kernel.model.AssetTagStats",
+	service = AopService.class
+)
 public class AssetTagStatsLocalServiceImpl
 	extends AssetTagStatsLocalServiceBaseImpl {
 

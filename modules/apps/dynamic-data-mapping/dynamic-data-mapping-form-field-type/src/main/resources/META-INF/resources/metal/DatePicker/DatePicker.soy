@@ -10,6 +10,7 @@
 	{@param? _daySelected: any}
 	{@param? _handleDayClicked: any}
 	{@param? _handleDotClicked: any}
+	{@param? _handleInputBlurred: any}
 	{@param? _handleInputFocused: any}
 	{@param? _handleNavigateChange: any}
 	{@param? _handleNextMonth: any}
@@ -46,6 +47,7 @@
 				{param _daySelected: $_daySelected /}
 				{param _handleDayClicked: $_handleDayClicked /}
 				{param _handleDotClicked: $_handleDotClicked /}
+				{param _handleInputBlurred: $_handleInputBlurred /}
 				{param _handleInputFocused: $_handleInputFocused /}
 				{param _handleNavigateChange: $_handleNavigateChange /}
 				{param _handleNextMonth: $_handleNextMonth /}
@@ -89,6 +91,7 @@
 	{@param? _daySelected: any}
 	{@param? _handleDayClicked: any}
 	{@param? _handleDotClicked: any}
+	{@param? _handleInputBlurred: any}
 	{@param? _handleInputFocused: any}
 	{@param? _handleNavigateChange: any}
 	{@param? _handleNextMonth: any}
@@ -130,12 +133,20 @@
 				{/if}
 
 				class="form-control input-group-inset input-group-inset-after"
+				data-onblur="{$_handleInputBlurred}"
+				data-onclick="{$_handleInputFocused}"
+				data-oninput="{$_handleOnInput}"
+
+				{if $readOnly}
+					disabled="disabled"
+				{/if}
 
 				{if $placeholder}
 					placeholder="{$placeholder}"
 				{/if}
 
 				ref="inputElement"
+				type="text"
 
 				{if $value}
 					value="{$value}"
@@ -144,15 +155,9 @@
 				{else}
 					value=""
 				{/if}
-
-				{if $readOnly}
-					disabled="disabled"
-				{/if}
-
-				type="text"
 			{/let}
 
-			<input data-onclick="{$_handleInputFocused}" data-oninput="{$_handleOnInput}" {$inputAttributes} />
+			<input {$inputAttributes} />
 
 			<div class="input-group-inset-item input-group-inset-item-after">
 				{call ClayButton.render}

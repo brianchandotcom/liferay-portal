@@ -97,6 +97,18 @@ class DatePicker extends Component {
 	}
 
 	/**
+	 * Handles the blur on the input element.
+	 * @param {!Event} event
+	 * @protected
+	 */
+
+	_handleInputBlurred({target}) {
+		if (!this.isEmptyValue(target.value)) {
+			this.value = Helpers.formatDate(this._daySelected);
+		}
+	}
+
+	/**
 	 * Handles the click on the input element.
 	 * @param {!Event} event
 	 * @protected
@@ -198,11 +210,17 @@ class DatePicker extends Component {
 	 */
 
 	_handleFieldEdited() {
+		let value = Helpers.formatDate(this._daySelected);
+
+		if (this.isEmptyValue(this.value)) {
+			value = '';
+		}
+
 		this.emit(
 			'fieldEdited',
 			{
 				fieldInstance: this,
-				value: this.value
+				value: this._setValue(value)
 			}
 		);
 	}
@@ -270,6 +288,14 @@ class DatePicker extends Component {
 
 	detached() {
 		this._eventHandler.removeAllListeners();
+	}
+
+	disposeInternal() {
+		super.disposeInternal();
+
+		if (this._vanillaTextMask) {
+			this._vanillaTextMask.destroy();
+		}
 	}
 
 	/**
@@ -345,6 +371,27 @@ class DatePicker extends Component {
 	}
 
 	/**
+	 * Checks if a given string is empty according to the input mask
+	 * @return {!Boolean}
+	 */
+
+	isEmptyValue(string) {
+		const inputMask = this.getInputMask();
+
+		return !inputMask.some(
+			(validator, index) => {
+				let hasValue = false;
+
+				if (typeof validator !== 'string') {
+					hasValue = string[index] !== '_';
+				}
+
+				return hasValue;
+			}
+		);
+	}
+
+	/**
 	 * @inheritDoc
 	 */
 
@@ -390,7 +437,7 @@ class DatePicker extends Component {
 		const {base} = this.refs;
 		const {inputElement} = base.refs;
 
-		vanillaTextMask(
+		this._vanillaTextMask = vanillaTextMask(
 			{
 				inputElement,
 				mask: this.getInputMask(),
@@ -398,6 +445,18 @@ class DatePicker extends Component {
 				showMask: true
 			}
 		);
+	}
+
+	/**
+	 * @inheritDoc
+	 */
+
+	rendered() {
+		if (this._vanillaTextMask) {
+			const {textMaskInputElement} = this._vanillaTextMask;
+
+			textMaskInputElement.update();
+		}
 	}
 }
 

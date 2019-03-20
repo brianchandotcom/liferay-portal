@@ -250,10 +250,10 @@ public class KaleoInstanceTokenLocalServiceImpl
 
 	@Override
 	public Hits search(
-		String assetClassName, String assetTitle, String assetDescription,
-		String currentKaleoNodeName, String kaleoDefinitionName,
-		Boolean completed, int start, int end, Sort[] sorts,
-		ServiceContext serviceContext) {
+		Long userId, String assetClassName, String assetTitle,
+		String assetDescription, String currentKaleoNodeName,
+		String kaleoDefinitionName, Boolean completed, int start, int end,
+		Sort[] sorts, ServiceContext serviceContext) {
 
 		try {
 			KaleoInstanceTokenQuery kaleoInstanceTokenQuery =
@@ -265,16 +265,15 @@ public class KaleoInstanceTokenLocalServiceImpl
 			kaleoInstanceTokenQuery.setCompleted(completed);
 			kaleoInstanceTokenQuery.setCurrentKaleoNodeName(
 				currentKaleoNodeName);
-			kaleoInstanceTokenQuery.setEnd(end);
 			kaleoInstanceTokenQuery.setKaleoDefinitionName(kaleoDefinitionName);
-			kaleoInstanceTokenQuery.setStart(start);
+			kaleoInstanceTokenQuery.setUserId(userId);
 
 			Indexer<KaleoInstanceToken> indexer =
 				IndexerRegistryUtil.nullSafeGetIndexer(
 					KaleoInstanceToken.class);
 
 			SearchContext searchContext = buildSearchContext(
-				kaleoInstanceTokenQuery, start, end, sorts);
+				kaleoInstanceTokenQuery, start, end, sorts, serviceContext);
 
 			return indexer.search(searchContext);
 		}
@@ -285,9 +284,10 @@ public class KaleoInstanceTokenLocalServiceImpl
 
 	@Override
 	public int searchCount(
-		String assetClassName, String assetTitle, String assetDescription,
-		String currentKaleoNodeName, String kaleoDefinitionName,
-		Boolean completed, ServiceContext serviceContext) {
+		Long userId, String assetClassName, String assetTitle,
+		String assetDescription, String currentKaleoNodeName,
+		String kaleoDefinitionName, Boolean completed,
+		ServiceContext serviceContext) {
 
 		KaleoInstanceTokenQuery kaleoInstanceTokenQuery =
 			new KaleoInstanceTokenQuery(serviceContext);
@@ -298,6 +298,7 @@ public class KaleoInstanceTokenLocalServiceImpl
 		kaleoInstanceTokenQuery.setCurrentKaleoNodeName(currentKaleoNodeName);
 		kaleoInstanceTokenQuery.setCompleted(completed);
 		kaleoInstanceTokenQuery.setKaleoDefinitionName(kaleoDefinitionName);
+		kaleoInstanceTokenQuery.setUserId(userId);
 
 		try {
 			Indexer<KaleoInstanceToken> indexer =
@@ -306,7 +307,7 @@ public class KaleoInstanceTokenLocalServiceImpl
 
 			SearchContext searchContext = buildSearchContext(
 				kaleoInstanceTokenQuery, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-				null);
+				null, serviceContext);
 
 			return (int)indexer.searchCount(searchContext);
 		}
@@ -332,7 +333,7 @@ public class KaleoInstanceTokenLocalServiceImpl
 
 	protected SearchContext buildSearchContext(
 		KaleoInstanceTokenQuery kaleoInstanceTokenQuery, int start, int end,
-		Sort[] sorts) {
+		Sort[] sorts, ServiceContext serviceContext) {
 
 		SearchContext searchContext = new SearchContext();
 
@@ -346,7 +347,7 @@ public class KaleoInstanceTokenLocalServiceImpl
 			searchContext.setSorts(sorts);
 		}
 
-		searchContext.setUserId(kaleoInstanceTokenQuery.getUserId());
+		searchContext.setUserId(serviceContext.getUserId());
 
 		return searchContext;
 	}

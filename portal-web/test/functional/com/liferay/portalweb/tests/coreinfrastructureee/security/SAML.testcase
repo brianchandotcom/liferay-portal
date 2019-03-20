@@ -346,6 +346,155 @@ definition {
 	}
 
 	@priority = "4"
+	test AssertSSOWithSignAuthnRequests {
+		property test.name.skip.portal.instance = "SAML#AssertSSOWithSignAuthnRequests";
+
+		SAML.configureLiferaySAMLAsIdP(
+			samlEntityID = "samlidp"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "SAML Admin"
+		);
+
+		SAMLNavigation.gotoIdentityProvider();
+
+		SAMLPortlet.configureIdentityProvider(authnRequestSignatureRequired = "disable");
+
+		SAML.configureLiferaySAMLAsSP(
+			samlEntityID = "samlsp",
+			spURL = "http://www.able.com:9080/"
+		);
+
+		User.logoutPG();
+
+		User.viewLoggedOutPG();
+
+		var portalURL = PropsUtil.get("portal.url");
+
+		SAML.executeIdPInitiatedSSO(
+			idpInitiatedSSOURL = "${portalURL}/c/portal/saml/sso?entityId=samlsp&amp;RelayState=http://www.able.com:9080",
+			password = "test",
+			spURL = "http://www.able.com:9080/",
+			userEmailAddress = "test@liferay.com"
+		);
+
+		User.viewLoggedInPG(userFirstName = "Test");
+
+		Navigator.openURL();
+
+		User.viewLoggedInPG(userFirstName = "Test");
+
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "SAML Admin"
+		);
+
+		SAMLNavigation.gotoIdentityProvider();
+
+		SAMLPortlet.configureIdentityProvider();
+
+		User.logoutPG();
+
+		User.viewLoggedOutPG();
+
+		SAML.executeSPInitiatedSSO(
+			password = "test",
+			specificURL = "http://www.able.com:9080",
+			spURL = "http://www.able.com:9080/",
+			userEmailAddress = "test@liferay.com"
+		);
+
+		User.viewLoggedInPG(userFirstName = "Test");
+
+		Navigator.openURL();
+
+		User.viewLoggedInPG(userFirstName = "Test");
+
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "SAML Admin"
+		);
+
+		SAMLNavigation.gotoIdentityProvider();
+
+		SAMLPortlet.configureIdentityProvider(authnRequestSignatureRequired = "disable");
+
+		Navigator.openSpecificURL(url = "http://www.able.com:9080");
+
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "SAML Admin"
+		);
+
+		SAMLNavigation.gotoServiceProvider();
+
+		SAMLPortlet.configureServiceProvider(signAuthnRequests = "disable");
+
+		User.logoutPG(specificURL = "http://www.able.com:9080");
+
+		User.viewLoggedOutPG();
+
+		SAML.executeSPInitiatedSSO(
+			password = "test",
+			specificURL = "http://www.able.com:9080",
+			spURL = "http://www.able.com:9080/",
+			userEmailAddress = "test@liferay.com"
+		);
+
+		User.viewLoggedInPG(userFirstName = "Test");
+
+		Navigator.openURL();
+
+		User.viewLoggedInPG(userFirstName = "Test");
+
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "SAML Admin"
+		);
+
+		SAMLNavigation.gotoIdentityProvider();
+
+		SAMLPortlet.configureIdentityProvider();
+
+		Navigator.openSpecificURL(url = "http://www.able.com:9080");
+
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "System Settings"
+		);
+
+		SystemSettings.gotoConfiguration(
+			configurationCategory = "SSO",
+			configurationName = "SAML Configuration",
+			configurationScope = "System Scope"
+		);
+
+		SystemSettings.editTextSetting(
+			settingName = "Runtime Metadata Refresh Interval",
+			settingValue = "9999"
+		);
+
+		SystemSettings.saveConfiguration();
+
+		User.logoutPG(specificURL = "http://www.able.com:9080");
+
+		User.viewLoggedOutPG();
+		Navigator.openSpecificURL(url = "http://www.able.com:9080");
+
+		Navigator.gotoLoginPage();
+
+		AssertConsoleTextPresent(value1 = "Validation failure: Failed to resolve both a data and a key encryption credential");
+	}
+
+	@priority = "4"
 	test SPInitiatedSSOWithScreenNameIdentifier {
 		property test.name.skip.portal.instance = "SAML#SPInitiatedSSOWithScreenNameIdentifier";
 

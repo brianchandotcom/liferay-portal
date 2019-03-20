@@ -38,6 +38,7 @@ import com.liferay.headless.document.library.internal.dto.v1_0.util.CreatorUtil;
 import com.liferay.headless.document.library.internal.odata.entity.v1_0.DocumentEntityModel;
 import com.liferay.headless.document.library.resource.v1_0.DocumentResource;
 import com.liferay.petra.function.UnsafeConsumer;
+import com.liferay.portal.kernel.comment.CommentManager;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
@@ -443,6 +444,8 @@ public class DocumentResourceImpl
 						DLFileEntry.class.getName(),
 						fileEntry.getFileEntryId()),
 					AssetTag.NAME_ACCESSOR);
+				numberOfComments = _commentManager.getCommentsCount(
+					DLFileEntry.class.getName(), fileEntry.getFileEntryId());
 				sizeInBytes = fileEntry.getSize();
 				taxonomyCategories = transformToArray(
 					_assetCategoryLocalService.getCategories(
@@ -473,6 +476,9 @@ public class DocumentResourceImpl
 
 	@Reference
 	private AssetTagLocalService _assetTagLocalService;
+
+	@Reference
+	private CommentManager _commentManager;
 
 	@Reference
 	private DLAppService _dlAppService;

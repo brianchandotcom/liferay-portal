@@ -195,7 +195,7 @@ public class BlogPostingResourceImpl
 		blogPosting.setDateCreated((Date)null);
 		blogPosting.setDateModified((Date)null);
 		blogPosting.setEncodingFormat((String)null);
-		blogPosting.setHasComments((Boolean)null);
+		blogPosting.setNumberOfComments((Number)null);
 	}
 
 	private Image _getImage(BlogsEntry blogsEntry) throws Exception {
@@ -237,17 +237,6 @@ public class BlogPostingResourceImpl
 		}
 	}
 
-	private boolean _hasComments(BlogsEntry blogsEntry) {
-		int count = _commentManager.getCommentsCount(
-			BlogsEntry.class.getName(), blogsEntry.getEntryId());
-
-		if (count > 0) {
-			return true;
-		}
-
-		return false;
-	}
-
 	private BlogPosting _toBlogPosting(BlogsEntry blogsEntry) throws Exception {
 		return new BlogPosting() {
 			{
@@ -265,7 +254,6 @@ public class BlogPostingResourceImpl
 				description = blogsEntry.getDescription();
 				encodingFormat = "text/html";
 				friendlyUrlPath = blogsEntry.getUrlTitle();
-				hasComments = _hasComments(blogsEntry);
 				headline = blogsEntry.getTitle();
 				id = blogsEntry.getEntryId();
 				image = _getImage(blogsEntry);
@@ -273,6 +261,8 @@ public class BlogPostingResourceImpl
 					_assetTagLocalService.getTags(
 						BlogsEntry.class.getName(), blogsEntry.getEntryId()),
 					AssetTag.NAME_ACCESSOR);
+				numberOfComments = _commentManager.getCommentsCount(
+					BlogsEntry.class.getName(), blogsEntry.getEntryId());
 				taxonomyCategories = transformToArray(
 					_assetCategoryLocalService.getCategories(
 						BlogsEntry.class.getName(), blogsEntry.getEntryId()),

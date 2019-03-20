@@ -40,6 +40,9 @@ import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.ratings.kernel.service.RatingsStatsLocalService;
 
+import java.util.List;
+import java.util.Optional;
+
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ServiceScope;
@@ -234,13 +237,22 @@ public class KnowledgeBaseArticleResourceImpl
 				dateModified = kbArticle.getModifiedDate();
 				description = kbArticle.getDescription();
 				friendlyUrlPath = kbArticle.getUrlTitle();
-				hasAttachments = ListUtil.isNotEmpty(
-					kbArticle.getAttachmentsFileEntries());
 				id = kbArticle.getResourcePrimKey();
 				keywords = ListUtil.toArray(
 					_assetTagLocalService.getTags(
 						KBArticle.class.getName(), kbArticle.getClassPK()),
 					AssetTag.NAME_ACCESSOR);
+				numberOfAttachments = Optional.ofNullable(
+					kbArticle.getAttachmentsFileEntries()
+				).map(
+					List::size
+				).orElse(
+					0
+				);
+				numberOfKnowledgeBaseArticles =
+					_kbArticleService.getKBArticlesCount(
+						kbArticle.getGroupId(), kbArticle.getResourcePrimKey(),
+						WorkflowConstants.STATUS_APPROVED);
 				parentKnowledgeBaseFolderId = kbArticle.getKbFolderId();
 				taxonomyCategories = transformToArray(
 					_assetCategoryLocalService.getCategories(
@@ -254,15 +266,6 @@ public class KnowledgeBaseArticleResourceImpl
 					TaxonomyCategory.class);
 				title = kbArticle.getTitle();
 
-				setHasKnowledgeBaseArticles(
-					() -> {
-						int count = _kbArticleService.getKBArticlesCount(
-							kbArticle.getGroupId(),
-							kbArticle.getResourcePrimKey(),
-							WorkflowConstants.STATUS_APPROVED);
-
-						return count > 0;
-					});
 				setParentKnowledgeBaseFolder(
 					() -> {
 						if (kbArticle.getKbFolderId() <= 0) {

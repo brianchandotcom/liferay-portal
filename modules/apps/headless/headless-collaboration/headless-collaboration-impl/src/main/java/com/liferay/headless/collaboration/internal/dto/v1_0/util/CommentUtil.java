@@ -39,21 +39,9 @@ public class CommentUtil {
 				dateCreated = comment.getCreateDate();
 				dateModified = comment.getModifiedDate();
 				id = comment.getCommentId();
+				numberOfComments = commentManager.getChildCommentsCount(
+					comment.getCommentId(), WorkflowConstants.STATUS_APPROVED);
 				text = comment.getBody();
-
-				setHasComments(
-					() -> {
-						int childCommentsCount =
-							commentManager.getChildCommentsCount(
-								comment.getCommentId(),
-								WorkflowConstants.STATUS_APPROVED);
-
-						if (childCommentsCount > 0) {
-							return true;
-						}
-
-						return false;
-					});
 			}
 		};
 	}

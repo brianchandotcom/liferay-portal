@@ -194,21 +194,10 @@ public class FolderResourceImpl
 				description = folder.getDescription();
 				id = folder.getFolderId();
 				name = folder.getName();
-
-				setHasDocuments(
-					() -> {
-						int count = _dlAppService.getFileEntriesCount(
-							folder.getRepositoryId(), folder.getFolderId());
-
-						return count > 0;
-					});
-				setHasFolders(
-					() -> {
-						int count = _dlAppService.getFoldersCount(
-							folder.getRepositoryId(), folder.getFolderId());
-
-						return count > 0;
-					});
+				numberOfDocuments = _dlAppService.getFileEntriesCount(
+					folder.getRepositoryId(), folder.getFolderId());
+				numberOfFolders = _dlAppService.getFoldersCount(
+					folder.getRepositoryId(), folder.getFolderId());
 			}
 		};
 	}

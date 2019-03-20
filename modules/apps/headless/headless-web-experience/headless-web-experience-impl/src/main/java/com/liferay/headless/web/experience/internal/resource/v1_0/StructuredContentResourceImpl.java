@@ -568,18 +568,6 @@ public class StructuredContentResourceImpl
 			sorts);
 	}
 
-	private boolean _hasComments(JournalArticle journalArticle) {
-		int count = _commentManager.getCommentsCount(
-			JournalArticle.class.getName(),
-			journalArticle.getResourcePrimKey());
-
-		if (count > 0) {
-			return true;
-		}
-
-		return false;
-	}
-
 	private ContentField _toContentField(DDMFormFieldValue ddmFormFieldValue)
 		throws Exception {
 
@@ -871,7 +859,6 @@ public class StructuredContentResourceImpl
 				datePublished = journalArticle.getDisplayDate();
 				description = journalArticle.getDescription(
 					contextAcceptLanguage.getPreferredLocale());
-				hasComments = _hasComments(journalArticle);
 				id = journalArticle.getResourcePrimKey();
 				keywords = ListUtil.toArray(
 					_assetTagLocalService.getTags(
@@ -879,6 +866,9 @@ public class StructuredContentResourceImpl
 						journalArticle.getResourcePrimKey()),
 					AssetTag.NAME_ACCESSOR);
 				lastReviewed = journalArticle.getReviewDate();
+				numberOfComments = _commentManager.getCommentsCount(
+					JournalArticle.class.getName(),
+					journalArticle.getResourcePrimKey());
 				renderedContents = transformToArray(
 					ddmStructure.getTemplates(),
 					ddmTemplate -> new RenderedContent() {

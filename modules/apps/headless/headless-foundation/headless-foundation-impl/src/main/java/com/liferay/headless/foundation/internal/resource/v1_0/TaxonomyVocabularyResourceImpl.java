@@ -58,6 +58,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Optional;
 
 import javax.servlet.http.HttpServletResponse;
 
@@ -379,11 +380,16 @@ public class TaxonomyVocabularyResourceImpl
 				dateModified = assetVocabulary.getModifiedDate();
 				description = assetVocabulary.getDescription(
 					contextAcceptLanguage.getPreferredLocale());
-				hasTaxonomyCategories = ListUtil.isNotEmpty(
-					assetVocabulary.getCategories());
 				id = assetVocabulary.getVocabularyId();
 				name = assetVocabulary.getTitle(
 					contextAcceptLanguage.getPreferredLocale());
+				numberOfTaxonomyCategories = Optional.ofNullable(
+					assetVocabulary.getCategories()
+				).map(
+					List::size
+				).orElse(
+					0
+				);
 			}
 		};
 	}

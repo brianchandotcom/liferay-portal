@@ -158,24 +158,15 @@ public class KnowledgeBaseFolderResourceImpl
 				description = kbFolder.getDescription();
 				id = kbFolder.getKbFolderId();
 				name = kbFolder.getName();
+				numberOfKnowledgeBaseArticles =
+					_kbArticleService.getKBArticlesCount(
+						kbFolder.getGroupId(), kbFolder.getKbFolderId(), 0);
+				numberOfKnowledgeBaseFolders =
+					_kbFolderService.getKBFoldersCount(
+						kbFolder.getGroupId(), kbFolder.getKbFolderId());
 				parentKnowledgeBaseFolder =
 					ParentKnowledgeBaseFolderUtil.toParentKnowledgeBaseFolder(
 						kbFolder.getParentKBFolder());
-
-				setHasKnowledgeBaseArticles(
-					() -> {
-						int count = _kbArticleService.getKBArticlesCount(
-							kbFolder.getGroupId(), kbFolder.getKbFolderId(), 0);
-
-						return count > 0;
-					});
-				setHasKnowledgeBaseFolders(
-					() -> {
-						int count = _kbFolderService.getKBFoldersCount(
-							kbFolder.getGroupId(), kbFolder.getKbFolderId());
-
-						return count > 0;
-					});
 			}
 		};
 	}

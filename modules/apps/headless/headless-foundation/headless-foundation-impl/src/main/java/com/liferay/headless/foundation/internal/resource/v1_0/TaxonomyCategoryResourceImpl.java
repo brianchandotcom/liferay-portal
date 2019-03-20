@@ -265,6 +265,9 @@ public class TaxonomyCategoryResourceImpl
 				id = assetCategory.getCategoryId();
 				name = assetCategory.getTitle(
 					contextAcceptLanguage.getPreferredLocale());
+				numberOfTaxonomyCategories =
+					_assetCategoryService.getChildCategoriesCount(
+						assetCategory.getCategoryId());
 				parentTaxonomyVocabulary = new ParentTaxonomyVocabulary() {
 					{
 						id = assetCategory.getVocabularyId();
@@ -280,14 +283,6 @@ public class TaxonomyCategoryResourceImpl
 					}
 				};
 
-				setHasTaxonomyCategories(
-					() -> {
-						int count =
-							_assetCategoryService.getChildCategoriesCount(
-								assetCategory.getCategoryId());
-
-						return count > 0;
-					});
 				setParentTaxonomyCategory(
 					() -> {
 						if (assetCategory.getParentCategory() == null) {

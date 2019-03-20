@@ -186,6 +186,10 @@ public class OrganizationResourceImpl extends BaseOrganizationResourceImpl {
 					}
 				};
 				name = organization.getName();
+				numberOfOrganizations =
+					_organizationService.getOrganizationsCount(
+						organization.getCompanyId(),
+						organization.getOrganizationId());
 				parentOrganization = _toOrganization(
 					organization.getParentOrganization());
 				services = transformToArray(
@@ -193,15 +197,6 @@ public class OrganizationResourceImpl extends BaseOrganizationResourceImpl {
 						organization.getOrganizationId()),
 					OrganizationResourceImpl.this::_toService, Service.class);
 
-				setHasOrganizations(
-					() -> {
-						int organizationsCount =
-							_organizationService.getOrganizationsCount(
-								organization.getCompanyId(),
-								organization.getOrganizationId());
-
-						return organizationsCount > 0;
-					});
 				setImage(
 					() -> {
 						if (organization.getLogoId() <= 0) {

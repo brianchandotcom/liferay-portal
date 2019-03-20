@@ -53,12 +53,12 @@ public class UserPortraitTag extends IncludeTag {
 		return sb.toString();
 	}
 
-	public User getUser() {
-		return _user;
-	}
-
 	public String getCssClass() {
 		return _cssClass;
+	}
+
+	public User getUser() {
+		return _user;
 	}
 
 	public long getUserId() {

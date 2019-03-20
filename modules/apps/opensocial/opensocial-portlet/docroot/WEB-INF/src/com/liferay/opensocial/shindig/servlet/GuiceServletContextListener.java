@@ -14,6 +14,8 @@
 
 package com.liferay.opensocial.shindig.servlet;
 
+import com.liferay.exportimport.kernel.xstream.XStreamAliasRegistryUtil;
+import com.liferay.opensocial.model.impl.GadgetImpl;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.BasePortalLifecycle;
@@ -53,12 +55,16 @@ public class GuiceServletContextListener
 	public void contextDestroyed(ServletContextEvent servletContextEvent) {
 		_destroyedServletContextEvent = servletContextEvent;
 
+		XStreamAliasRegistryUtil.unregister(GadgetImpl.class, "Gadget");
+
 		portalDestroy();
 	}
 
 	@Override
 	public void contextInitialized(ServletContextEvent servletContextEvent) {
 		_initializedServletContextEvent = servletContextEvent;
+
+		XStreamAliasRegistryUtil.register(GadgetImpl.class, "Gadget");
 
 		registerPortalLifecycle();
 	}

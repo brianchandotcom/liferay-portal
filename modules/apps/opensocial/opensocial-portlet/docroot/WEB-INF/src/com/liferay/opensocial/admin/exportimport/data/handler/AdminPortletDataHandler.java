@@ -19,9 +19,7 @@ import com.liferay.exportimport.kernel.lar.DataLevel;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.exportimport.kernel.lar.StagedModelType;
-import com.liferay.exportimport.kernel.xstream.XStreamAliasRegistryUtil;
 import com.liferay.opensocial.model.Gadget;
-import com.liferay.opensocial.model.impl.GadgetImpl;
 import com.liferay.opensocial.service.GadgetLocalServiceUtil;
 import com.liferay.opensocial.service.permission.GadgetPermission;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
@@ -41,8 +39,6 @@ public class AdminPortletDataHandler extends BasePortletDataHandler {
 		setDeletionSystemEventStagedModelTypes(
 			new StagedModelType(Gadget.class));
 		setPublishToLiveByDefault(true);
-
-		XStreamAliasRegistryUtil.register(GadgetImpl.class, "Gadget");
 	}
 
 	@Override

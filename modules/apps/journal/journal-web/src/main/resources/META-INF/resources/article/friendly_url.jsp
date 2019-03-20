@@ -22,7 +22,7 @@ JournalArticle article = journalDisplayContext.getArticle();
 JournalEditArticleDisplayContext journalEditArticleDisplayContext = new JournalEditArticleDisplayContext(request, liferayPortletResponse, article);
 %>
 
-<p class="text-secondary">
+<p class="mb-2 text-secondary">
 	<%= journalEditArticleDisplayContext.getFriendlyURLBase() %>
 </p>
 

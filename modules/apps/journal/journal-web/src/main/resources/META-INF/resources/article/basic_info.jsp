@@ -46,13 +46,13 @@ DDMStructure ddmStructure = journalEditArticleDisplayContext.getDDMStructure();
 		<div class="article-id">
 			<label for="<portlet:namespace />newArticleId"><liferay-ui:message key="id" /></label>
 
-			<aui:input disabled="<%= true %>" label="" name="newArticleId" type="text" value="<%= (article != null) ? article.getArticleId() : StringPool.BLANK %>" />
+			<aui:input disabled="<%= true %>" label="" name="newArticleId" type="text" value="<%= (article != null) ? article.getArticleId() : StringPool.BLANK %>" wrapperCssClass="mb-1" />
 
 			<%
 			String taglibOnChange = "Liferay.Util.toggleDisabled('#" + renderResponse.getNamespace() + "newArticleId', event.target.checked);";
 			%>
 
-			<aui:input checked="<%= true %>" label="autogenerate-id" name="autoArticleId" onChange="<%= taglibOnChange %>" type="checkbox" value="<%= true %>" />
+			<aui:input checked="<%= true %>" label="autogenerate-id" name="autoArticleId" onChange="<%= taglibOnChange %>" type="checkbox" value="<%= true %>" wrapperCssClass="mb-3" />
 		</div>
 
 		<aui:script>
@@ -69,6 +69,7 @@ DDMStructure ddmStructure = journalEditArticleDisplayContext.getDDMStructure();
 	<label for="<portlet:namespace />descriptionMapAsXML"><liferay-ui:message key="summary" /></label>
 
 	<liferay-ui:input-localized
+		cssClass="form-control"
 		defaultLanguageId="<%= journalEditArticleDisplayContext.getDefaultLanguageId() %>"
 		editorName="alloyeditor"
 		formName="fm"

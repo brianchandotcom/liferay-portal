@@ -133,6 +133,18 @@ $productMenuWidth: 320px;
 		}
 	}
 
+	.schedule {
+		.form-group-autofit {
+			margin-bottom: 16px;
+		}
+
+		.expiration-date, .review-date {
+			.form-group-autofit {
+				margin-bottom: 8px;
+			}
+		}
+	}
+
 	.journal-article-preview {
 		padding: 0 20px;
 	}

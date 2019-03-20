@@ -96,8 +96,8 @@ long classNameId = ParamUtil.getLong(request, "classNameId");
 						<clay:button
 							icon="cog"
 							id='<%= renderResponse.getNamespace() + "contextualSidebarButton" %>'
-							style="borderless"
 							size="sm"
+							style="borderless"
 						/>
 					</div>
 				</li>

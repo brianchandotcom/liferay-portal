@@ -109,6 +109,8 @@ public class ElasticsearchEngineAdapterFixture {
 				setSnapshotRequestExecutor(
 					snapshotRequestExecutorFixture.
 						getSnapshotRequestExecutor());
+
+				setThrowOriginalExceptions(true);
 			}
 		};
 	}

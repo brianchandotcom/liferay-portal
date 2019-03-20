@@ -15,9 +15,12 @@
 package com.liferay.info.provider;
 
 import com.liferay.asset.kernel.model.AssetEntry;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
 
 import java.util.Optional;
 
@@ -26,8 +29,21 @@ import java.util.Optional;
  */
 public class DefaultInfoListProviderContext implements InfoListProviderContext {
 
+	public DefaultInfoListProviderContext(Company company, User user) {
+		_company = company;
+		_user = user;
+	}
+
 	public DefaultInfoListProviderContext(Group group, User user) {
 		_group = group;
+
+		try {
+			_company = CompanyLocalServiceUtil.getCompany(group.getCompanyId());
+		}
+		catch (PortalException pe) {
+			throw new RuntimeException(pe);
+		}
+
 		_user = user;
 	}
 
@@ -37,8 +53,13 @@ public class DefaultInfoListProviderContext implements InfoListProviderContext {
 	}
 
 	@Override
-	public Group getGroup() {
-		return _group;
+	public Company getCompany() {
+		return _company;
+	}
+
+	@Override
+	public Optional<Group> getGroupOptional() {
+		return Optional.of(_group);
 	}
 
 	@Override
@@ -60,7 +81,8 @@ public class DefaultInfoListProviderContext implements InfoListProviderContext {
 	}
 
 	private AssetEntry _assetEntry;
-	private final Group _group;
+	private final Company _company;
+	private Group _group;
 	private Layout _layout;
 	private final User _user;
 

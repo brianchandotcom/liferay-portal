@@ -17,6 +17,7 @@ package com.liferay.info.provider;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.asset.kernel.model.AssetEntry;
+import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.User;
@@ -31,7 +32,9 @@ public interface InfoListProviderContext {
 
 	public Optional<AssetEntry> getAssetEntryOptional();
 
-	public Group getGroup();
+	public Company getCompany();
+
+	public Optional<Group> getGroupOptional();
 
 	public Optional<Layout> getLayoutOptional();
 

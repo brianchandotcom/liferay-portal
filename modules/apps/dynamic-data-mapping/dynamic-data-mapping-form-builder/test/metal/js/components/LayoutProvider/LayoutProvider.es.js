@@ -645,7 +645,7 @@ describe(
 
 								const {child, provider} = component.refs;
 								const mockedData = {
-									fieldName: 'text1',
+									fieldName: 'original',
 									name: 'text1',
 									settingsContext: {
 										pages: []
@@ -656,6 +656,7 @@ describe(
 								provider.setState(
 									{
 										focusedField: {
+											fieldName: 'changed',
 											icon: 'text',
 											name: 'text1',
 											originalContext: mockedData,
@@ -670,12 +671,7 @@ describe(
 
 								jest.runAllTimers();
 
-								expect(provider.state.focusedField).toEqual(
-									{
-										...provider.state.focusedField,
-										...mockedData
-									}
-								);
+								expect(provider.state.focusedField.fieldName).toEqual('original');
 								expect(provider.state.pages).toMatchSnapshot();
 							}
 						);

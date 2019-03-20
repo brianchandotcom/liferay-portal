@@ -14,9 +14,25 @@
 
 package com.liferay.headless.collaboration.internal.resource.v1_0;
 
+import com.liferay.document.library.util.DLURLHelper;
+import com.liferay.headless.collaboration.dto.v1_0.DiscussionAttachment;
 import com.liferay.headless.collaboration.resource.v1_0.DiscussionAttachmentResource;
+import com.liferay.knowledge.base.constants.KBConstants;
+import com.liferay.knowledge.base.model.KBArticle;
+import com.liferay.message.boards.model.MBMessage;
+import com.liferay.message.boards.service.MBMessageService;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.portletfilerepository.PortletFileRepository;
+import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.vulcan.multipart.BinaryFile;
+import com.liferay.portal.vulcan.multipart.MultipartBody;
+import com.liferay.portal.vulcan.pagination.Page;
+
+import javax.ws.rs.core.Context;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ServiceScope;
 
 /**
@@ -28,4 +44,148 @@ import org.osgi.service.component.annotations.ServiceScope;
 )
 public class DiscussionAttachmentResourceImpl
 	extends BaseDiscussionAttachmentResourceImpl {
+
+	@Override
+	public boolean deleteDiscussionAttachment(Long discussionAttachmentId)
+		throws Exception {
+
+		_deleteDiscussionAttachment(discussionAttachmentId);
+
+		return true;
+	}
+
+	@Override
+	public boolean deleteDiscussionForumPostingsAttachment(
+			Long discussionForumPostingsAttachmentId)
+		throws Exception {
+
+		_deleteDiscussionAttachment(discussionForumPostingsAttachmentId);
+
+		return true;
+	}
+
+	@Override
+	public DiscussionAttachment getDiscussionAttachment(
+			Long discussionAttachmentId)
+		throws Exception {
+
+		return _getDiscussionAttachment(discussionAttachmentId);
+	}
+
+	@Override
+	public Page<DiscussionAttachment>
+			getDiscussionForumPostingDiscussionForumPostingsAttachmentsPage(
+				Long discussionForumPostingId)
+		throws Exception {
+
+		return _getDiscussionAttachmentPage(discussionForumPostingId);
+	}
+
+	@Override
+	public DiscussionAttachment getDiscussionForumPostingsAttachment(
+			Long discussionForumPostingsAttachmentId)
+		throws Exception {
+
+		return _getDiscussionAttachment(discussionForumPostingsAttachmentId);
+	}
+
+	@Override
+	public Page<DiscussionAttachment>
+			getDiscussionThreadDiscussionAttachmentsPage(
+				Long discussionThreadId)
+		throws Exception {
+
+		return _getDiscussionAttachmentPage(discussionThreadId);
+	}
+
+	@Override
+	public DiscussionAttachment
+			postDiscussionForumPostingDiscussionForumPostingsAttachment(
+				Long discussionForumPostingId, MultipartBody multipartBody)
+		throws Exception {
+
+		return _addDiscussionAttachment(
+			discussionForumPostingId, multipartBody);
+	}
+
+	@Override
+	public DiscussionAttachment postDiscussionThreadDiscussionAttachment(
+			Long discussionThreadId, MultipartBody multipartBody)
+		throws Exception {
+
+		return _addDiscussionAttachment(discussionThreadId, multipartBody);
+	}
+
+	private DiscussionAttachment _addDiscussionAttachment(
+			Long discussionForumPostingId, MultipartBody multipartBody)
+		throws PortalException {
+
+		MBMessage mbMessage = _mbMessageService.getMessage(
+			discussionForumPostingId);
+		BinaryFile binaryFile = multipartBody.getBinaryFile("file");
+
+		return _toDiscussionAttachment(
+			_portletFileRepository.addPortletFileEntry(
+				mbMessage.getGroupId(), _user.getUserId(),
+				KBArticle.class.getName(), mbMessage.getClassPK(),
+				KBConstants.SERVICE_NAME, mbMessage.getAttachmentsFolderId(),
+				binaryFile.getInputStream(), binaryFile.getFileName(),
+				binaryFile.getFileName(), false));
+	}
+
+	private void _deleteDiscussionAttachment(Long discussionAttachmentId)
+		throws PortalException {
+
+		_portletFileRepository.deletePortletFileEntry(discussionAttachmentId);
+	}
+
+	private DiscussionAttachment _getDiscussionAttachment(
+			Long discussionAttachmentId)
+		throws PortalException {
+
+		return _toDiscussionAttachment(
+			_portletFileRepository.getPortletFileEntry(discussionAttachmentId));
+	}
+
+	private Page<DiscussionAttachment> _getDiscussionAttachmentPage(
+			Long messageId)
+		throws PortalException {
+
+		MBMessage mbMessage = _mbMessageService.getMessage(messageId);
+
+		return Page.of(
+			transform(
+				mbMessage.getAttachmentsFileEntries(),
+				this::_toDiscussionAttachment));
+	}
+
+	private DiscussionAttachment _toDiscussionAttachment(FileEntry fileEntry)
+		throws PortalException {
+
+		return new DiscussionAttachment() {
+			{
+				contentUrl = _dlurlHelper.getPreviewURL(
+					fileEntry, fileEntry.getFileVersion(), null, "", false,
+					false);
+				encodingFormat = fileEntry.getMimeType();
+				fileExtension = fileEntry.getExtension();
+				id = fileEntry.getFileEntryId();
+				sizeInBytes = fileEntry.getSize();
+				title = fileEntry.getTitle();
+			}
+		};
+	}
+
+	@Reference
+	private DLURLHelper _dlurlHelper;
+
+	@Reference
+	private MBMessageService _mbMessageService;
+
+	@Reference
+	private PortletFileRepository _portletFileRepository;
+
+	@Context
+	private User _user;
+
 }

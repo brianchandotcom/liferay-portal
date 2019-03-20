@@ -22,6 +22,7 @@ import com.liferay.headless.collaboration.dto.v1_0.TaxonomyCategory;
 import com.liferay.headless.collaboration.internal.dto.v1_0.util.AggregateRatingUtil;
 import com.liferay.headless.collaboration.internal.dto.v1_0.util.CreatorUtil;
 import com.liferay.headless.collaboration.internal.dto.v1_0.util.ParentKnowledgeBaseFolderUtil;
+import com.liferay.headless.collaboration.internal.dto.v1_0.util.TaxonomyCategoryUtil;
 import com.liferay.headless.collaboration.resource.v1_0.KnowledgeBaseArticleResource;
 import com.liferay.headless.common.spi.service.context.ServiceContextUtil;
 import com.liferay.knowledge.base.constants.KBPortletKeys;
@@ -257,12 +258,7 @@ public class KnowledgeBaseArticleResourceImpl
 				taxonomyCategories = transformToArray(
 					_assetCategoryLocalService.getCategories(
 						KBArticle.class.getName(), kbArticle.getClassPK()),
-					assetCategory -> new TaxonomyCategory() {
-						{
-							taxonomyCategoryId = assetCategory.getCategoryId();
-							taxonomyCategoryName = assetCategory.getName();
-						}
-					},
+					TaxonomyCategoryUtil::toTaxonomyCategory,
 					TaxonomyCategory.class);
 				title = kbArticle.getTitle();
 

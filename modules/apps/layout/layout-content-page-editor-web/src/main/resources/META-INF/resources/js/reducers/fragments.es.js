@@ -169,6 +169,14 @@ function addFragmentEntryLinkReducer(state, actionType, payload) {
 	);
 }
 
+/**
+ * @param {object} state
+ * @param {string} actionType
+ * @param {object} payload
+ * @param {string} payload.itemId
+ * @return {object}
+ * @review
+ */
 function clearFragmentEditorReducer(state, actionType, payload) {
 	let nextState = state;
 
@@ -179,6 +187,12 @@ function clearFragmentEditorReducer(state, actionType, payload) {
 	return nextState;
 }
 
+/**
+ * @param {object} state
+ * @param {string} actionType
+ * @return {object}
+ * @review
+ */
 function disableFragmentEditorReducer(state, actionType) {
 	let nextState = state;
 
@@ -189,6 +203,14 @@ function disableFragmentEditorReducer(state, actionType) {
 	return nextState;
 }
 
+/**
+ * @param {object} state
+ * @param {string} actionType
+ * @param {object} payload
+ * @param {string} payload.itemId
+ * @return {object}
+ * @review
+ */
 function enableFragmentEditorReducer(state, actionType, payload) {
 	let nextState = state;
 

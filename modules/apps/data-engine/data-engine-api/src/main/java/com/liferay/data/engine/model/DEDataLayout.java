@@ -85,7 +85,7 @@ public class DEDataLayout implements ClassedModel, Serializable {
 	 * Gets the id of the data definition associated with this layout
 	 * @return the data definition id
 	 */
-	public Long getDEDataDefinitionId() {
+	public long getDEDataDefinitionId() {
 		return _deDataDefinitionId;
 	}
 
@@ -94,7 +94,7 @@ public class DEDataLayout implements ClassedModel, Serializable {
 	 * @return the id of the DEDataLayout object
 	 * @review
 	 */
-	public Long getDEDataLayoutId() {
+	public long getDEDataLayoutId() {
 		return _deDataLayoutId;
 	}
 
@@ -199,7 +199,7 @@ public class DEDataLayout implements ClassedModel, Serializable {
 	 * @return the user id of the author of the layout
 	 * @review
 	 */
-	public Long getUserId() {
+	public long getUserId() {
 		return _userId;
 	}
 
@@ -235,7 +235,7 @@ public class DEDataLayout implements ClassedModel, Serializable {
 	 * @param deDataDefinitionId the data definition id
 	 * @review
 	 */
-	public void setDEDataDefinitionId(Long deDataDefinitionId) {
+	public void setDEDataDefinitionId(long deDataDefinitionId) {
 		_deDataDefinitionId = deDataDefinitionId;
 	}
 
@@ -246,7 +246,7 @@ public class DEDataLayout implements ClassedModel, Serializable {
 	 * @param deDataLayoutId the Id of the DEDataLayout
 	 * @review
 	 */
-	public void setDEDataLayoutId(Long deDataLayoutId) {
+	public void setDEDataLayoutId(long deDataLayoutId) {
 		_deDataLayoutId = deDataLayoutId;
 	}
 
@@ -327,7 +327,7 @@ public class DEDataLayout implements ClassedModel, Serializable {
 	 */
 	@Override
 	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
-		_deDataLayoutId = (Long)primaryKeyObj;
+		_deDataLayoutId = ((Long)primaryKeyObj).longValue();
 	}
 
 	/**
@@ -335,19 +335,19 @@ public class DEDataLayout implements ClassedModel, Serializable {
 	 * @param userId a Long parameter containing the user id
 	 * @review
 	 */
-	public void setUserId(Long userId) {
+	public void setUserId(long userId) {
 		_userId = userId;
 	}
 
 	private Date _createDate;
-	private Long _deDataDefinitionId;
-	private Long _deDataLayoutId;
+	private long _deDataDefinitionId;
+	private long _deDataLayoutId;
 	private Queue<DEDataLayoutPage> _deDataLayoutPages = new ArrayDeque<>();
 	private String _defaultLanguageId;
 	private Map<Locale, String> _description = new HashMap<>();
 	private Date _modifiedDate;
 	private Map<Locale, String> _name = new HashMap<>();
 	private String _paginationMode;
-	private Long _userId;
+	private long _userId;
 
 }

@@ -26,7 +26,7 @@ public final class DEDataLayoutDeleteResponse {
 	 * @return The {@link DEDataLayout} object
 	 * @review
 	 */
-	public Long getDEDataLayoutId() {
+	public long getDEDataLayoutId() {
 		return _deDataLayoutId;
 	}
 
@@ -42,7 +42,7 @@ public final class DEDataLayoutDeleteResponse {
 		 * @return The builder Object
 		 * @review
 		 */
-		public static Builder newBuilder(Long deDataLayoutId) {
+		public static Builder newBuilder(long deDataLayoutId) {
 			return new Builder(deDataLayoutId);
 		}
 
@@ -53,7 +53,7 @@ public final class DEDataLayoutDeleteResponse {
 		 * @return The response object.
 		 * @review
 		 */
-		public static DEDataLayoutDeleteResponse of(Long deDataLayoutId) {
+		public static DEDataLayoutDeleteResponse of(long deDataLayoutId) {
 			return newBuilder(
 				deDataLayoutId
 			).build();
@@ -68,7 +68,7 @@ public final class DEDataLayoutDeleteResponse {
 			return _deDataLayoutDeleteResponse;
 		}
 
-		private Builder(Long deDataLayoutId) {
+		private Builder(long deDataLayoutId) {
 			_deDataLayoutDeleteResponse._deDataLayoutId = deDataLayoutId;
 		}
 
@@ -80,6 +80,6 @@ public final class DEDataLayoutDeleteResponse {
 	private DEDataLayoutDeleteResponse() {
 	}
 
-	private Long _deDataLayoutId;
+	private long _deDataLayoutId;
 
 }

@@ -26,7 +26,7 @@ public class DEDataLayoutSaveResponse {
 	 * @review
 	 * @return the id of the DEDataLayout
 	 */
-	public Long getDEDataLayoutId() {
+	public long getDEDataLayoutId() {
 		return _deDataLayoutId;
 	}
 
@@ -81,6 +81,6 @@ public class DEDataLayoutSaveResponse {
 	private DEDataLayoutSaveResponse() {
 	}
 
-	private Long _deDataLayoutId;
+	private long _deDataLayoutId;
 
 }

@@ -27,7 +27,7 @@ public class DEDataLayoutGetRequest {
 	 * @return The Long layout id
 	 * @review
 	 */
-	public Long getDEDataLayoutId() {
+	public long getDEDataLayoutId() {
 		return _deDataLayoutId;
 	}
 
@@ -62,6 +62,6 @@ public class DEDataLayoutGetRequest {
 	private DEDataLayoutGetRequest() {
 	}
 
-	private Long _deDataLayoutId;
+	private long _deDataLayoutId;
 
 }

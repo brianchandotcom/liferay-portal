@@ -37,7 +37,7 @@ public class DEDataLayoutSaveRequest {
 	 * @review
 	 * @return The group id Long
 	 */
-	public Long getGroupId() {
+	public long getGroupId() {
 		return _groupId;
 	}
 
@@ -46,7 +46,7 @@ public class DEDataLayoutSaveRequest {
 	 * @review
 	 * @return The user id Long
 	 */
-	public Long getUserId() {
+	public long getUserId() {
 		return _userId;
 	}
 
@@ -80,7 +80,7 @@ public class DEDataLayoutSaveRequest {
 		 * @param groupId
 		 * @return the builder
 		 */
-		public Builder inGroup(Long groupId) {
+		public Builder inGroup(long groupId) {
 			_deDataLayoutSaveRequest._groupId = groupId;
 
 			return this;
@@ -91,7 +91,7 @@ public class DEDataLayoutSaveRequest {
 		 * @param userId
 		 * @return the builder
 		 */
-		public Builder onBehalfOf(Long userId) {
+		public Builder onBehalfOf(long userId) {
 			_deDataLayoutSaveRequest._userId = userId;
 
 			return this;
@@ -103,7 +103,7 @@ public class DEDataLayoutSaveRequest {
 	}
 
 	private DEDataLayout _deDataLayout;
-	private Long _groupId;
-	private Long _userId;
+	private long _groupId;
+	private long _userId;
 
 }

@@ -291,46 +291,12 @@ public class GitWorkingDirectory {
 	}
 
 	public void configureLocalRemotes() {
-		List<String> commands = new ArrayList<>();
-
 		String[] gitRemoteNames = {"origin", "upstream"};
 		String gitRemoteURL = JenkinsResultsParserUtil.combine(
 			"git@github.com:liferay/", getGitRepositoryName(), ".git");
 
 		for (String remoteName : gitRemoteNames) {
 			addGitRemote(true, remoteName, gitRemoteURL);
-
-			commands.add(
-				JenkinsResultsParserUtil.combine(
-					"if [ \"$(git remote | grep ", remoteName,
-					")\" != \"\" ] ; then git remote remove ", remoteName,
-					" ; fi"));
-
-			commands.add(
-				JenkinsResultsParserUtil.combine(
-					"git remote add ", remoteName, " ", gitRemoteURL));
-		}
-
-		GitUtil.ExecutionResult executionResult = null;
-
-		boolean exceptionThrown = false;
-
-		try {
-			executionResult = executeBashCommands(
-				GitUtil.MAX_RETRIES, GitUtil.RETRY_DELAY, GitUtil.TIMEOUT,
-				commands.toArray(new String[commands.size()]));
-		}
-		catch (RuntimeException re) {
-			exceptionThrown = true;
-		}
-
-		System.out.println(executionResult.getStandardOut());
-
-		if (exceptionThrown || (executionResult.getExitValue() != 0)) {
-			throw new RuntimeException(
-				JenkinsResultsParserUtil.combine(
-					"Unable to configure the local remotes\n",
-					executionResult.getStandardError()));
 		}
 	}
 

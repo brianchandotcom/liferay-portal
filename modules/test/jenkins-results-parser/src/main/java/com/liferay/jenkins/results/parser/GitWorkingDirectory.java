@@ -649,12 +649,12 @@ public class GitWorkingDirectory {
 		return fetch(null, true, remoteGitBranch);
 	}
 
-	public void fetch(RemoteGitRepository remoteGitRepository, boolean noTags) {
-		fetch(remoteGitRepository.getRemoteURL(), noTags);
-	}
-
 	public void fetch(RemoteGitRepository remoteGitRepository) {
 		fetch(remoteGitRepository.getRemoteURL());
+	}
+
+	public void fetch(RemoteGitRepository remoteGitRepository, boolean noTags) {
+		fetch(remoteGitRepository.getRemoteURL(), noTags);
 	}
 
 	public void fetch(String remoteURL) {

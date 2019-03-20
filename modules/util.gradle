@@ -1,8 +1,13 @@
 import com.liferay.gradle.plugins.defaults.tasks.CopyIvyDependenciesTask
+import com.liferay.gradle.plugins.node.internal.util.FileUtil
 import com.liferay.gradle.plugins.node.tasks.ExecuteNodeScriptTask
 import com.liferay.gradle.plugins.source.formatter.FormatSourceTask
 import com.liferay.gradle.plugins.util.PortalTools
+import com.liferay.gradle.util.OSDetector
 import com.liferay.gradle.util.StringUtil
+
+import java.nio.charset.StandardCharsets
+import java.nio.file.Files
 
 import java.util.regex.Matcher
 
@@ -31,6 +36,8 @@ task wrapperSubrepo(type: Wrapper)
 task yarnInstall(type: ExecuteNodeScriptTask)
 
 FileTree libDependenciesFileTree = fileTree(dir: "../lib", include: "*/dependencies.properties")
+File nodeModulesCacheDir = new File(System.getProperty("user.home"), ".liferay/node-modules-cache/" + _getDigest(new File(rootDir, "yarn.lock")))
+File nodeModulesDir = new File(rootDir, "node_modules")
 
 Map<File, Properties> libDependenciesMap = libDependenciesFileTree.collectEntries {
 	Properties properties = GUtil.loadProperties(it)
@@ -85,6 +92,16 @@ repositories {
 
 setUpYarn {
 	finalizedBy yarnInstall
+
+	doLast {
+		if (nodeModulesCacheDir.exists()) {
+			logger.lifecycle "Restoring node_modules from {}", nodeModulesCacheDir
+
+			FileUtil.syncDir(project, nodeModulesCacheDir, nodeModulesDir, true)
+
+			FileUtil.removeBinDirLinks(logger, nodeModulesDir)
+		}
+	}
 }
 
 wrapper {
@@ -171,6 +188,22 @@ yarnInstall {
 	args "--frozen-lockfile"
 
 	scriptFile = new File(projectDir, "yarn-1.13.0.js")
+
+	doLast {
+		FileUtil.removeBinDirLinks(logger, nodeModulesDir)
+
+		logger.lifecycle "Caching node_modules in {}", nodeModulesCacheDir
+
+		FileUtil.syncDir(project, nodeModulesDir, nodeModulesCacheDir, true)
+
+		if (!OSDetector.isWindows()) {
+			FileUtil.createBinDirLinks(logger, nodeModulesDir)
+		}
+	}
+
+	onlyIf {
+		return !nodeModulesCacheDir.exists()
+	}
 }
 
 tasks.withType(FormatSourceTask) {
@@ -259,6 +292,12 @@ private void _createSetUpPortalToolTasks() {
 
 		setUpPortalTools.dependsOn copyIvyDependenciesTask
 	}
+}
+
+private String _getDigest(File file) {
+	List<String> lines = Files.readAllLines(file.toPath(), StandardCharsets.UTF_8)
+
+	return Integer.toHexString(lines.hashCode())
 }
 
 private String _getPortalToolSuffix(String name) {

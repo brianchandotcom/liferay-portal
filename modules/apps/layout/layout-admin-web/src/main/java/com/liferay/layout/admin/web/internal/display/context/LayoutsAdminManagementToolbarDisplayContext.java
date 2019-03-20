@@ -139,6 +139,10 @@ public class LayoutsAdminManagementToolbarDisplayContext
 	public String getSearchActionURL() {
 		PortletURL portletURL = liferayPortletResponse.createRenderURL();
 
+		portletURL.setParameter(
+			"privateLayout",
+			String.valueOf(_layoutsAdminDisplayContext.isPrivateLayout()));
+
 		return portletURL.toString();
 	}
 

@@ -298,7 +298,20 @@ class Builder extends Component {
 	}
 
 	_handleColumnResized(event) {
-		this.emit('columnResized', event);
+		const {source, target} = event;
+		const leftResize = source.classList.contains('ddm-resize-handle-left');
+		const sourceIndexes = FormSupport.getIndexes(source);
+		const targetDatasetCol = target.dataset.col;
+
+		this.emit(
+			'columnResized',
+			{
+				...event,
+				leftResize,
+				sourceIndexes,
+				targetDatasetCol
+			}
+		);
 	}
 
 	_handleDeleteFieldClicked(indexes) {

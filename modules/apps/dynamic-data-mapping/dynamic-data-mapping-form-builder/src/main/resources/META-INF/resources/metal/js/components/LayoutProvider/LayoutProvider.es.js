@@ -135,7 +135,7 @@ class LayoutProvider extends Component {
 		lastResizedPosition: Config.number()
 	};
 
-	_formatCurrentColumn(target, source, {pageIndex, rowIndex, columnIndex}, size) {
+	_formatCurrentColumn({pageIndex, rowIndex, columnIndex}, size) {
 		const {pages} = this.state;
 
 		let newPages = [
@@ -170,7 +170,7 @@ class LayoutProvider extends Component {
 		return newPages;
 	}
 
-	_formatPreviousColumn(target, source, {pageIndex, rowIndex, columnIndex}, size) {
+	_formatPreviousColumn(source, {pageIndex, rowIndex, columnIndex}, size) {
 		const {pages} = this.state;
 
 		let newPages = [
@@ -234,20 +234,17 @@ class LayoutProvider extends Component {
 		);
 	}
 
-	_handleColumnResized({target, source}) {
-		const indexes = FormSupport.getIndexes(source);
-		const leftResize = source.classList.contains('ddm-resize-handle-left');
-		const {pageIndex, rowIndex} = indexes;
-		const {dataset: {col}} = target;
-		const size = Number(col);
+	_handleColumnResized({source, sourceIndexes, leftResize, targetDatasetCol}) {
+		const {pageIndex, rowIndex} = sourceIndexes;
+		const size = Number(targetDatasetCol);
 
 		let newPages;
 
 		if (leftResize) {
-			newPages = this._formatPreviousColumn(target, source, indexes, size);
+			newPages = this._formatPreviousColumn(source, sourceIndexes, size);
 		}
 		else {
-			newPages = this._formatCurrentColumn(target, source, indexes, size);
+			newPages = this._formatCurrentColumn(sourceIndexes, size);
 			if (newPages[pageIndex].rows[rowIndex].columns.length > 1) {
 				newPages = this._removeColumnWithSizeZero(newPages, pageIndex, rowIndex);
 			}

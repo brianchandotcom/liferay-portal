@@ -93,7 +93,7 @@ public class ScopedConfigurationManager implements ManagedServiceFactory {
 	public void register() {
 		Dictionary<String, Object> properties = new HashMapDictionary<>();
 
-		properties.put(Constants.SERVICE_PID, _factoryPid);
+		properties.put(Constants.SERVICE_PID, _factoryPid + ".scoped");
 
 		_managedServiceFactoryServiceRegistration =
 			_bundleContext.registerService(

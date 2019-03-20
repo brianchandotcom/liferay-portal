@@ -17,6 +17,7 @@ package com.liferay.document.library.asset.auto.tagger.opennlp.internal;
 import com.liferay.asset.auto.tagger.AssetAutoTagProvider;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.repository.capabilities.TemporaryFileEntriesCapability;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.util.ContentTypes;
 
@@ -51,7 +52,10 @@ public class OpenNLPDocumentAssetAutoTagProvider
 	}
 
 	private Collection<String> _getTagNames(FileEntry fileEntry) {
-		if (!_supportedContentTypes.contains(fileEntry.getMimeType())) {
+		if (fileEntry.isRepositoryCapabilityProvided(
+				TemporaryFileEntriesCapability.class) ||
+			!_supportedContentTypes.contains(fileEntry.getMimeType())) {
+
 			return Collections.emptyList();
 		}
 

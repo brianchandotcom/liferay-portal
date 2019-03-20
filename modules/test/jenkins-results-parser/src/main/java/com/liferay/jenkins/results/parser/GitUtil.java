@@ -66,6 +66,30 @@ public class GitUtil {
 		}
 	}
 
+	public static String getDefaultBranchName(File workingDirectory) {
+		ExecutionResult executionResult = executeBashCommands(
+			MAX_RETRIES, RETRY_DELAY, TIMEOUT, workingDirectory,
+			JenkinsResultsParserUtil.combine(
+				"git remote show origin | grep \"HEAD branch\" | ",
+				"cut -d \":\" -f 2"));
+
+		if (executionResult.getExitValue() != 0) {
+			System.out.println(executionResult.getStandardError());
+
+			return null;
+		}
+
+		String defaultBranchName = executionResult.getStandardOut();
+
+		defaultBranchName = defaultBranchName.trim();
+
+		if (defaultBranchName.isEmpty()) {
+			return null;
+		}
+
+		return defaultBranchName;
+	}
+
 	public static RemoteGitBranch getRemoteGitBranch(
 		String remoteGitBranchName, File workingDirectory, String remoteURL) {
 

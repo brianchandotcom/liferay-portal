@@ -237,8 +237,6 @@ public class Arquillian extends Runner implements Filterable {
 		public void run() {
 			Class<?> clazz = _runNotifier.getClass();
 
-			Throwable throwable = null;
-
 			try (InputStream inputStream = _socket.getInputStream();
 				ObjectInputStream objectInputStream = new ObjectInputStream(
 					inputStream)) {
@@ -248,40 +246,16 @@ public class Arquillian extends Runner implements Filterable {
 
 					Object object = objectInputStream.readObject();
 
-					try {
-						Method method = clazz.getMethod(
-							methodName, object.getClass());
+					Method method = clazz.getMethod(
+						methodName, object.getClass());
 
-						method.invoke(_runNotifier, object);
-					}
-					catch (Exception e) {
-						if (throwable == null) {
-							throwable = e;
-						}
-						else {
-							e.addSuppressed(throwable);
-
-							throwable = e;
-						}
-					}
+					method.invoke(_runNotifier, object);
 				}
 			}
 			catch (EOFException eofe) {
 			}
 			catch (Throwable t) {
-				if (throwable == null) {
-					throwable = t;
-				}
-				else {
-					t.addSuppressed(throwable);
-
-					throwable = t;
-				}
-			}
-
-			if (throwable != null) {
-				_runNotifier.fireTestFailure(
-					new Failure(getDescription(), throwable));
+				_runNotifier.fireTestFailure(new Failure(getDescription(), t));
 			}
 		}
 

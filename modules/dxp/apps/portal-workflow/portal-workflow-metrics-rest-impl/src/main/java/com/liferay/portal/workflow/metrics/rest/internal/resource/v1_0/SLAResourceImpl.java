@@ -25,6 +25,8 @@ import com.liferay.portal.workflow.metrics.rest.dto.v1_0.SLA;
 import com.liferay.portal.workflow.metrics.rest.resource.v1_0.SLAResource;
 import com.liferay.portal.workflow.metrics.service.WorkflowMetricsSLADefinitionLocalService;
 
+import javax.ws.rs.core.Response;
+
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ServiceScope;
@@ -72,26 +74,33 @@ public class SLAResourceImpl extends BaseSLAResourceImpl {
 	}
 
 	@Override
-	public SLA postProcessSLA(Long processId, SLA sla) throws Exception {
-		return _toSLA(
-			_workflowMetricsSLADefinitionLocalService.
-				addWorkflowMetricsSLADefinition(
-					sla.getName(), sla.getDescription(), sla.getDuration(),
-					processId, sla.getStartNodeNames(), sla.getPauseNodeNames(),
-					sla.getStopNodeNames(), _createServiceContext()));
+	public Response postProcessSLA(Long processId, SLA sla) throws Exception {
+		Response.ResponseBuilder responseBuilder = Response.ok(
+			_toSLA(
+				_workflowMetricsSLADefinitionLocalService.
+					addWorkflowMetricsSLADefinition(
+						sla.getName(), sla.getDescription(), sla.getDuration(),
+						processId, sla.getStartNodeNames(),
+						sla.getPauseNodeNames(), sla.getStopNodeNames(),
+						_createServiceContext())));
+
+		return responseBuilder.build();
 	}
 
 	@Override
-	public SLA putProcessSLA(Long processId, Long slaId, SLA sla)
+	public Response putProcessSLA(Long processId, Long slaId, SLA sla)
 		throws Exception {
 
-		return _toSLA(
-			_workflowMetricsSLADefinitionLocalService.
-				updateWorkflowMetricsSLADefinition(
-					slaId, sla.getName(), sla.getDescription(),
-					sla.getDuration(), sla.getStartNodeNames(),
-					sla.getPauseNodeNames(), sla.getStopNodeNames(),
-					_createServiceContext()));
+		Response.ResponseBuilder responseBuilder = Response.ok(
+			_toSLA(
+				_workflowMetricsSLADefinitionLocalService.
+					updateWorkflowMetricsSLADefinition(
+						slaId, sla.getName(), sla.getDescription(),
+						sla.getDuration(), sla.getStartNodeNames(),
+						sla.getPauseNodeNames(), sla.getStopNodeNames(),
+						_createServiceContext())));
+
+		return responseBuilder.build();
 	}
 
 	private ServiceContext _createServiceContext() {

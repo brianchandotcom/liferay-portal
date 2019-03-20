@@ -278,7 +278,16 @@ class LayoutProvider extends Component {
 	_handleFieldChangesCanceled() {
 		const {focusedField: {originalContext}} = this.state;
 
-		this._handleFieldEdited(originalContext);
+		Object.keys(originalContext).forEach(
+			propertyName => {
+				this._handleFieldEdited(
+					{
+						propertyName,
+						propertyValue: originalContext[propertyName]
+					}
+				);
+			}
+		);
 	}
 
 	/**

@@ -21,6 +21,7 @@ import aQute.bnd.build.Workspace;
 import aQute.bnd.osgi.Analyzer;
 import aQute.bnd.osgi.Jar;
 
+import com.liferay.arquillian.extension.junit.bridge.constants.Headers;
 import com.liferay.arquillian.extension.junit.bridge.server.ArquillianBundleActivator;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
@@ -122,12 +123,14 @@ public class BndBundleUtil {
 			"Import-Package",
 			StringUtil.merge(importPackages, StringPool.COMMA));
 
-		project.setProperty("Class-Name", className);
+		project.setProperty(Headers.TEST_BRIDGE_CLASS_NAME, className);
 		project.setProperty(
-			"Filtered-Methods",
+			Headers.TEST_BRIDGE_FILTERED_METHOD_NAMES,
 			StringUtil.merge(filteredMethods, StringPool.COMMA));
-		project.setProperty("Host-Address", hostAddress);
-		project.setProperty("Port", String.valueOf(port));
+		project.setProperty(
+			Headers.TEST_BRIDGE_REPORT_SERVER_HOST_NAME, hostAddress);
+		project.setProperty(
+			Headers.TEST_BRIDGE_REPORT_SERVER_PORT, String.valueOf(port));
 
 		Set<String> includeResources = new LinkedHashSet<>();
 

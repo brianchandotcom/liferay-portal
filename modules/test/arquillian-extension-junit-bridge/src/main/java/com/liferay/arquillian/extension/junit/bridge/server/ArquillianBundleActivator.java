@@ -14,6 +14,7 @@
 
 package com.liferay.arquillian.extension.junit.bridge.server;
 
+import com.liferay.arquillian.extension.junit.bridge.constants.Headers;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringUtil;
 
@@ -78,7 +79,8 @@ public class ArquillianBundleActivator implements BundleActivator {
 
 		final Attributes attributes = manifest.getMainAttributes();
 
-		String hostName = attributes.getValue("Host-Name");
+		String hostName = attributes.getValue(
+			Headers.TEST_BRIDGE_REPORT_SERVER_HOST_NAME);
 
 		InetAddress inetAddress = null;
 
@@ -91,12 +93,15 @@ public class ArquillianBundleActivator implements BundleActivator {
 		}
 
 		ClientBridge clientBridge = new ClientBridge(
-			inetAddress, Integer.valueOf(attributes.getValue("Port")));
+			inetAddress,
+			Integer.valueOf(
+				attributes.getValue(Headers.TEST_BRIDGE_REPORT_SERVER_PORT)));
 
-		String className = attributes.getValue("Class-Name");
+		String className = attributes.getValue(Headers.TEST_BRIDGE_CLASS_NAME);
 
 		List<String> filterMethodNames = StringUtil.split(
-			attributes.getValue("Filtered-Methods"), CharPool.COMMA);
+			attributes.getValue(Headers.TEST_BRIDGE_FILTERED_METHOD_NAMES),
+			CharPool.COMMA);
 
 		_bundleListener = new BundleListener() {
 

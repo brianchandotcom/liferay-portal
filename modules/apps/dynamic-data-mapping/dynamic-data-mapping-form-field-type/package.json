@@ -124,7 +124,7 @@
 		"bundler": "liferay-npm-bundler",
 		"checkFormat": "npm run csf",
 		"clean": "rimraf \"src/**/*.soy.js\" \"test/**/*.soy.js\"",
-		"csf": "csf src/**/*.es.js src/**/*.soy test/**/*.es.js --fail-on-errors",
+		"csf": "csf src/**/*.es.js src/**/*.soy test/**/*.es.js",
 		"format": "npm run csf -- -i",
 		"lint": "eslint src/main/resources/META-INF/resources/metal/",
 		"start": "node watch.js",

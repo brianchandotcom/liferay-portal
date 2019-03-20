@@ -167,7 +167,7 @@
 		"checkFormat": "npm run csf",
 		"clean": "npm run clean-soy",
 		"clean-soy": "rimraf \"src/**/*.soy.js\" \"test/**/*.soy.js\"",
-		"csf": "csf src/**/*.es.js src/**/*.jsp test/**/*.es.js --fail-on-errors",
+		"csf": "csf src/**/*.es.js src/**/*.jsp test/**/*.es.js",
 		"format": "npm run csf -- -i",
 		"start": "node watch.js",
 		"test": "npm run build-soy-tests && cross-env NODE_ENV=test jest --coverage && npm run clean",

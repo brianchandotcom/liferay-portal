@@ -303,16 +303,6 @@ public class GitWorkingDirectory {
 		configure(configMap, options);
 	}
 
-	public void configureLocalRemotes() {
-		String[] gitRemoteNames = {"origin", "upstream"};
-		String gitRemoteURL = JenkinsResultsParserUtil.combine(
-			"git@github.com:liferay/", getGitRepositoryName(), ".git");
-
-		for (String remoteName : gitRemoteNames) {
-			addGitRemote(true, remoteName, gitRemoteURL);
-		}
-	}
-
 	public LocalGitBranch createLocalGitBranch(LocalGitBranch localGitBranch) {
 		return createLocalGitBranch(
 			localGitBranch.getName(), false, localGitBranch.getSHA());

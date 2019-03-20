@@ -109,18 +109,18 @@ public class Arquillian extends Runner implements Filterable {
 			return;
 		}
 
-		try {
-			ServerSocket serverSocket = _getServerSocket();
+		try (ServerSocket serverSocket = _getServerSocket()) {
 
 			// Enforce client side test class initialization
 
 			Class.forName(_clazz.getName(), true, _clazz.getClassLoader());
 
 			try (Closeable closeable = _installBundle(
-					serverSocket.getLocalPort())) {
+					serverSocket.getLocalPort());
+				Socket socket = serverSocket.accept()) {
 
 				Thread thread = new Thread(
-					new ServerRunnable(runNotifier, serverSocket),
+					new ServerRunnable(runNotifier, socket),
 					_clazz.getName() + "-Test-Thread");
 
 				thread.setDaemon(true);
@@ -234,11 +234,9 @@ public class Arquillian extends Runner implements Filterable {
 
 	private class ServerRunnable implements Runnable {
 
-		public ServerRunnable(
-			RunNotifier runNotifier, ServerSocket serverSocket) {
-
+		public ServerRunnable(RunNotifier runNotifier, Socket socket) {
 			_runNotifier = runNotifier;
-			_serverSocket = serverSocket;
+			_socket = socket;
 		}
 
 		@Override
@@ -247,8 +245,7 @@ public class Arquillian extends Runner implements Filterable {
 
 			List<Throwable> throwables = new ArrayList<>();
 
-			try (Socket socket = _serverSocket.accept();
-				InputStream inputStream = socket.getInputStream();
+			try (InputStream inputStream = _socket.getInputStream();
 				ObjectInputStream objectInputStream = new ObjectInputStream(
 					new UnsyncBufferedInputStream(inputStream))) {
 
@@ -257,8 +254,6 @@ public class Arquillian extends Runner implements Filterable {
 						String methodName = objectInputStream.readUTF();
 
 						if (methodName.equals("kill")) {
-							_serverSocket.close();
-
 							break;
 						}
 
@@ -285,7 +280,7 @@ public class Arquillian extends Runner implements Filterable {
 		}
 
 		private final RunNotifier _runNotifier;
-		private final ServerSocket _serverSocket;
+		private final Socket _socket;
 
 	}
 

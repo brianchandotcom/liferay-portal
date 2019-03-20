@@ -187,20 +187,20 @@ components:
             description: https://www.schema.org/ContentListElement
             oneOf:
                 - properties:
-                      blogPosting:
-                          $ref: "#/components/schemas/BlogPosting"
+                  blogPosting:
+                      $ref: "#/components/schemas/BlogPosting"
                 - properties:
-                      document:
-                          $ref: "#/components/schemas/Document"
+                  document:
+                      $ref: "#/components/schemas/Document"
                 - properties:
-                      folder:
-                          $ref: "#/components/schemas/Folder"
+                  folder:
+                      $ref: "#/components/schemas/Folder"
                 - properties:
-                      genericContentListElement:
-                          $ref: "#/components/schemas/GenericContentListElement"
+                  genericContentListElement:
+                      $ref: "#/components/schemas/GenericContentListElement"
                 - properties:
-                      structuredContent:
-                          $ref: "#/components/schemas/StructuredContent"
+                  structuredContent:
+                      $ref: "#/components/schemas/StructuredContent"
             properties:
                 contentType:
                     type: string

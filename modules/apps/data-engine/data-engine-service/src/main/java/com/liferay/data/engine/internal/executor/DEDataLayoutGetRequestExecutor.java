@@ -52,7 +52,7 @@ public class DEDataLayoutGetRequestExecutor {
 
 		try {
 			ddmStructureLayout =
-				_ddmStructureLayoutLocalService.getDDMStructureLayout(
+				_ddmStructureLayoutLocalService.getStructureLayout(
 					deDataLayoutGetRequest.getDEDataLayoutId());
 		}
 		catch (PortalException pe) {
@@ -66,7 +66,7 @@ public class DEDataLayoutGetRequestExecutor {
 		throws PortalException {
 
 		DDMStructureVersion ddmStructureVersion =
-			_ddmStructureVersionLocalService.getDDMStructureVersion(
+			_ddmStructureVersionLocalService.getStructureVersion(
 				ddmStructureLayout.getStructureVersionId());
 
 		DDMStructure ddmStructure = ddmStructureVersion.getStructure();

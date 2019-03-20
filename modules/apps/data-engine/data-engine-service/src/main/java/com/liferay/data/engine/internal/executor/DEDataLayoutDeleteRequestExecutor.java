@@ -38,7 +38,7 @@ public class DEDataLayoutDeleteRequestExecutor {
 		Long deDataLayoutId = deDataLayoutDeleteRequest.getDEDataLayoutId();
 
 		try {
-			_ddmStructureLayoutLocalService.deleteDDMStructureLayout(
+			_ddmStructureLayoutLocalService.deleteStructureLayout(
 				deDataLayoutId);
 		}
 		catch (PortalException pe) {

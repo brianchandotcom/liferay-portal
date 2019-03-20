@@ -48,8 +48,6 @@ import org.junit.runners.model.TestClass;
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleActivator;
 import org.osgi.framework.BundleContext;
-import org.osgi.framework.BundleEvent;
-import org.osgi.framework.BundleListener;
 import org.osgi.framework.wiring.BundleWiring;
 
 /**
@@ -135,10 +133,8 @@ public class ArquillianBundleActivator implements BundleActivator {
 
 		};
 
-		_bundleListener = new BundleListener() {
-
-			@Override
-			public void bundleChanged(BundleEvent bundleEvent) {
+		bundleContext.addBundleListener(
+			bundleEvent -> {
 				Bundle bundle = bundleEvent.getBundle();
 
 				if (!testBundle.equals(bundle) ||
@@ -153,16 +149,11 @@ public class ArquillianBundleActivator implements BundleActivator {
 				finally {
 					clientBridge.close();
 				}
-			}
-
-		};
-
-		bundleContext.addBundleListener(_bundleListener);
+			});
 	}
 
 	@Override
 	public void stop(BundleContext bundleContext) {
-		bundleContext.removeBundleListener(_bundleListener);
 	}
 
 	private void _processThrowable(
@@ -217,8 +208,6 @@ public class ArquillianBundleActivator implements BundleActivator {
 			}
 		}
 	}
-
-	private BundleListener _bundleListener;
 
 	private class ClientBridge {
 

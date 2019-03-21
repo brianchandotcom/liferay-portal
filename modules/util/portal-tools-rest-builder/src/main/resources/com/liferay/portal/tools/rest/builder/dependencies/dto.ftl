@@ -51,56 +51,48 @@ import javax.xml.bind.annotation.XmlRootElement;
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "${schemaName}")
 public class ${schemaName} <#if freeMarkerTool.getDTOParentClassName(openAPIYAML, schemaName)??>extends ${freeMarkerTool.getDTOParentClassName(openAPIYAML, schemaName)}</#if> {
-	<#assign enumSimpleClassNames = [] />
+	<#assign enumSchemas = freeMarkerTool.getDTOEnumSchemas(schema) />
 
-	<#if schema.propertySchemas??>
-		<#list schema.propertySchemas?keys as propertySchemaName>
-			<#assign propertySchema = schema.propertySchemas[propertySchemaName] />
+	<#list enumSchemas?keys as enumName>
+		public static enum ${enumName} {
 
-			<#if propertySchema.enumValues?? && (propertySchema.enumValues?size > 0)>
-				<#assign enumSimpleClassNames = enumSimpleClassNames + [propertySchemaName?cap_first] />
+			<#list enumSchemas[enumName].enumValues as enumValue>
+				${freeMarkerTool.getEnumFieldName(enumValue)}("${enumValue}")
 
-				public static enum ${propertySchemaName?cap_first} {
+				<#if enumValue_has_next>
+					,
+				</#if>
+			</#list>;
 
-					<#list propertySchema.enumValues as enumValue>
-						${freeMarkerTool.getEnumFieldName(enumValue)}("${enumValue}")
-
-						<#if enumValue_has_next>
-							,
-						</#if>
-					</#list>;
-
-					@JsonCreator
-					public static ${propertySchemaName?cap_first} create(String value) {
-						for (${propertySchemaName?cap_first} ${propertySchemaName} : values()) {
-							if (Objects.equals(${propertySchemaName}.getValue(), value)) {
-								return ${propertySchemaName};
-							}
-						}
-
-						return null;
+			@JsonCreator
+			public static ${enumName} create(String value) {
+				for (${enumName} ${enumName?uncap_first} : values()) {
+					if (Objects.equals(${enumName?uncap_first}.getValue(), value)) {
+						return ${enumName?uncap_first};
 					}
-
-					@JsonValue
-					public String getValue() {
-						return _value;
-					}
-
-					@Override
-					public String toString() {
-						return _value;
-					}
-
-					private ${propertySchemaName?cap_first}(String value) {
-						_value = value;
-					}
-
-					private final String _value;
-
 				}
-			</#if>
-		</#list>
-	</#if>
+
+				return null;
+			}
+
+			@JsonValue
+			public String getValue() {
+				return _value;
+			}
+
+			@Override
+			public String toString() {
+				return _value;
+			}
+
+			private ${enumName}(String value) {
+				_value = value;
+			}
+
+			private final String _value;
+
+		}
+	</#list>
 
 	<#assign properties = freeMarkerTool.getDTOProperties(configYAML, openAPIYAML, schema) />
 
@@ -117,7 +109,7 @@ public class ${schemaName} <#if freeMarkerTool.getDTOParentClassName(openAPIYAML
 			return ${propertyName};
 		}
 
-		<#if enumSimpleClassNames?seq_contains(propertyType)>
+		<#if enumSchemas?keys?seq_contains(propertyType)>
 			@JsonIgnore
 			public String get${propertyName?cap_first}AsString() {
 				if (${propertyName} == null) {
@@ -178,7 +170,7 @@ public class ${schemaName} <#if freeMarkerTool.getDTOParentClassName(openAPIYAML
 					sb.append("[");
 
 					for (int i = 0; i < ${propertyName}.length; i++) {
-						<#if stringUtil.equals(properties[propertyName], "Date[]") || stringUtil.equals(properties[propertyName], "String[]") || enumSimpleClassNames?seq_contains(properties[propertyName])>
+						<#if stringUtil.equals(properties[propertyName], "Date[]") || stringUtil.equals(properties[propertyName], "String[]") || enumSchemas?keys?seq_contains(properties[propertyName])>
 							sb.append("\"");
 							sb.append(${propertyName}[i]);
 							sb.append("\"");
@@ -194,7 +186,7 @@ public class ${schemaName} <#if freeMarkerTool.getDTOParentClassName(openAPIYAML
 					sb.append("]");
 				}
 			<#else>
-				<#if properties[propertyName]?ends_with("Date") || properties[propertyName]?ends_with("String") || enumSimpleClassNames?seq_contains(properties[propertyName])>
+				<#if properties[propertyName]?ends_with("Date") || properties[propertyName]?ends_with("String") || enumSchemas?keys?seq_contains(properties[propertyName])>
 					sb.append("\"");
 					sb.append(${propertyName});
 					sb.append("\"");

@@ -44,7 +44,7 @@ public class AssetEntryAssetListEntryRelLocalServiceImpl
 
 	@Override
 	public AssetEntryAssetListEntryRel addAssetEntryAssetListEntryRel(
-			long assetListEntryId, long assetEntryId, int position,
+			long assetEntryId, long assetListEntryId, int position,
 			ServiceContext serviceContext)
 		throws PortalException {
 
@@ -74,8 +74,8 @@ public class AssetEntryAssetListEntryRelLocalServiceImpl
 			serviceContext.getCreateDate(new Date()));
 		assetEntryAssetListEntryRel.setModifiedDate(
 			serviceContext.getModifiedDate(new Date()));
-		assetEntryAssetListEntryRel.setAssetListEntryId(assetListEntryId);
 		assetEntryAssetListEntryRel.setAssetEntryId(assetEntryId);
+		assetEntryAssetListEntryRel.setAssetListEntryId(assetListEntryId);
 		assetEntryAssetListEntryRel.setPosition(position);
 
 		return assetEntryAssetListEntryRelPersistence.update(
@@ -84,7 +84,7 @@ public class AssetEntryAssetListEntryRelLocalServiceImpl
 
 	@Override
 	public AssetEntryAssetListEntryRel addAssetEntryAssetListEntryRel(
-			long assetListEntryId, long assetEntryId,
+			long assetEntryId, long assetListEntryId,
 			ServiceContext serviceContext)
 		throws PortalException {
 
@@ -99,7 +99,7 @@ public class AssetEntryAssetListEntryRelLocalServiceImpl
 		}
 
 		return addAssetEntryAssetListEntryRel(
-			assetListEntryId, assetEntryId, position, serviceContext);
+			assetEntryId, assetListEntryId, position, serviceContext);
 	}
 
 	@Override
@@ -249,16 +249,16 @@ public class AssetEntryAssetListEntryRelLocalServiceImpl
 
 	@Override
 	public AssetEntryAssetListEntryRel updateAssetEntryAssetListEntryRel(
-			long assetEntryAssetListEntryRelId, long assetListEntryId,
-			long assetEntryId, int position)
+			long assetEntryAssetListEntryRelId, long assetEntryId,
+			long assetListEntryId, int position)
 		throws PortalException {
 
 		AssetEntryAssetListEntryRel assetEntryAssetListEntryRel =
 			assetEntryAssetListEntryRelPersistence.findByPrimaryKey(
 				assetEntryAssetListEntryRelId);
 
-		assetEntryAssetListEntryRel.setAssetListEntryId(assetListEntryId);
 		assetEntryAssetListEntryRel.setAssetEntryId(assetEntryId);
+		assetEntryAssetListEntryRel.setAssetListEntryId(assetListEntryId);
 		assetEntryAssetListEntryRel.setPosition(position);
 
 		assetEntryAssetListEntryRelPersistence.update(

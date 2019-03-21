@@ -70,9 +70,9 @@ public class AssetListEntryServiceTest {
 	public void testAddAssetEntryAssetListEntryRelWrongPosition()
 		throws Exception {
 
-		AssetListEntry assetListEntry = _addAssetListEntry("Asset List Title");
 		AssetEntry assetEntry = AssetTestUtil.addAssetEntry(
 			_group.getGroupId());
+		AssetListEntry assetListEntry = _addAssetListEntry("Asset List Title");
 
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(
@@ -80,12 +80,12 @@ public class AssetListEntryServiceTest {
 
 		AssetEntryAssetListEntryRelLocalServiceUtil.
 			addAssetEntryAssetListEntryRel(
-				assetListEntry.getAssetListEntryId(), assetEntry.getEntryId(),
+				assetEntry.getEntryId(), assetListEntry.getAssetListEntryId(),
 				1, serviceContext);
 
 		AssetEntryAssetListEntryRelLocalServiceUtil.
 			addAssetEntryAssetListEntryRel(
-				assetListEntry.getAssetListEntryId(), assetEntry.getEntryId(),
+				assetEntry.getEntryId(), assetListEntry.getAssetListEntryId(),
 				serviceContext);
 	}
 

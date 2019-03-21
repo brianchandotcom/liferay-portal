@@ -40,7 +40,7 @@ public class AssetListEntryLocalServiceImpl
 
 	@Override
 	public void addAssetEntrySelection(
-			long assetListEntryId, long assetEntryId,
+			long assetEntryId, long assetListEntryId,
 			ServiceContext serviceContext)
 		throws PortalException {
 
@@ -59,7 +59,7 @@ public class AssetListEntryLocalServiceImpl
 		assetListEntryPersistence.update(assetListEntry);
 
 		assetEntryAssetListEntryRelLocalService.addAssetEntryAssetListEntryRel(
-			assetListEntryId, assetEntryId, serviceContext);
+			assetEntryId, assetListEntryId, serviceContext);
 	}
 
 	@Override
@@ -140,7 +140,7 @@ public class AssetListEntryLocalServiceImpl
 
 		for (long assetEntryId : assetEntryIds) {
 			addAssetEntrySelection(
-				assetListEntry.getAssetListEntryId(), assetEntryId,
+				assetEntryId, assetListEntry.getAssetListEntryId(),
 				serviceContext);
 		}
 

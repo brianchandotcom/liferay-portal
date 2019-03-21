@@ -40,7 +40,7 @@ public class AssetListTestUtil {
 
 		return AssetEntryAssetListEntryRelLocalServiceUtil.
 			addAssetEntryAssetListEntryRel(
-				assetListEntry.getAssetListEntryId(), assetEntry.getEntryId(),
+				assetEntry.getEntryId(), assetListEntry.getAssetListEntryId(),
 				serviceContext);
 	}
 
@@ -54,7 +54,7 @@ public class AssetListTestUtil {
 
 		return AssetEntryAssetListEntryRelLocalServiceUtil.
 			addAssetEntryAssetListEntryRel(
-				assetListEntry.getAssetListEntryId(), assetEntry.getEntryId(),
+				assetEntry.getEntryId(), assetListEntry.getAssetListEntryId(),
 				position, serviceContext);
 	}
 

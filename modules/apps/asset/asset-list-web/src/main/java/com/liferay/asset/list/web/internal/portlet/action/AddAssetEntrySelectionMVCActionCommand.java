@@ -58,7 +58,7 @@ public class AddAssetEntrySelectionMVCActionCommand
 
 		for (long assetEntryId : assetEntryIds) {
 			_assetListEntryService.addAssetEntrySelection(
-				assetListEntryId, assetEntryId, serviceContext);
+				assetEntryId, assetListEntryId, serviceContext);
 		}
 	}
 

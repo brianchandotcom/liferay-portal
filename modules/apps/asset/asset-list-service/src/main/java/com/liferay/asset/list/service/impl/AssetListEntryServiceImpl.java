@@ -39,7 +39,7 @@ public class AssetListEntryServiceImpl extends AssetListEntryServiceBaseImpl {
 
 	@Override
 	public void addAssetEntrySelection(
-			long assetListEntryId, long assetEntryId,
+			long assetEntryId, long assetListEntryId,
 			ServiceContext serviceContext)
 		throws PortalException {
 
@@ -50,7 +50,7 @@ public class AssetListEntryServiceImpl extends AssetListEntryServiceBaseImpl {
 			getPermissionChecker(), assetListEntry, ActionKeys.UPDATE);
 
 		assetListEntryLocalService.addAssetEntrySelection(
-			assetListEntryId, assetEntryId, serviceContext);
+			assetEntryId, assetListEntryId, serviceContext);
 	}
 
 	@Override

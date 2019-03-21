@@ -66,9 +66,7 @@ public class DiscussionThreadResourceImpl
 	public boolean deleteDiscussionThread(Long discussionThreadId)
 		throws Exception {
 
-		MBMessage mbMessage = _mbMessageService.getMessage(discussionThreadId);
-
-		_mbThreadService.deleteThread(mbMessage.getThreadId());
+		_mbThreadService.deleteThread(discussionThreadId);
 
 		return true;
 	}

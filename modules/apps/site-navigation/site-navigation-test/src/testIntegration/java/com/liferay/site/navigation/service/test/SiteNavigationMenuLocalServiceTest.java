@@ -282,10 +282,10 @@ public class SiteNavigationMenuLocalServiceTest {
 				_group.getGroupId(), TestPropsValues.getUserId());
 
 		List<SiteNavigationMenu> siteNavigationMenusOriginal =
-			SiteNavigationMenuLocalServiceUtil.getSiteNavigationMenus(
+			SiteNavigationMenuLocalServiceUtil.getAutoSiteNavigationMenus(
 				_group.getGroupId());
 
-		int siteNavigationMenusOriginalSize =
+		int siteNavigationMenusOriginalSize = 
 			siteNavigationMenusOriginal.size();
 
 		SiteNavigationMenuLocalServiceUtil.addSiteNavigationMenu(

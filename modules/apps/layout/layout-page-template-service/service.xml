@@ -83,6 +83,7 @@
 		<column name="layoutPrototypeId" type="long" />
 		<column name="lastPublishDate" type="Date" />
 		<column name="plid" type="long" />
+		<column name="draftLayoutPageTemplateEntryId" type="long" />
 		<column name="status" type="int" />
 		<column name="statusByUserId" type="long" />
 		<column name="statusByUserName" type="String" />

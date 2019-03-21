@@ -77,7 +77,7 @@ public class ManageCollaboratorsViewMVCRenderCommand
 			"collaborators", _getCollaboratorsJSONArray(renderRequest));
 		template.put(
 			"dialogId",
-			ParamUtil.getString(renderRequest, "manageCollaboratorDialogId"));
+			ParamUtil.getString(renderRequest, "manageCollaboratorsDialogId"));
 		template.put("portletNamespace", renderResponse.getNamespace());
 		template.put("spritemap", _getSpritemap(renderRequest));
 

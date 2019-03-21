@@ -43,6 +43,7 @@ import com.liferay.sharing.interpreter.SharingEntryInterpreter;
 import com.liferay.sharing.model.SharingEntry;
 import com.liferay.sharing.renderer.SharingEntryEditRenderer;
 import com.liferay.sharing.security.permission.SharingEntryAction;
+import com.liferay.sharing.security.permission.SharingPermission;
 import com.liferay.sharing.service.SharingEntryLocalService;
 import com.liferay.sharing.util.comparator.SharingEntryModifiedDateComparator;
 
@@ -74,7 +75,8 @@ public class SharedAssetsViewDisplayContext {
 		Function<SharingEntry, SharingEntryInterpreter>
 			sharingEntryInterpreterFunction,
 		List<SharedAssetsFilterItem> sharedAssetsFilterItems,
-		SharingMenuItemFactory sharingMenuItemFactory) {
+		SharingMenuItemFactory sharingMenuItemFactory,
+		SharingPermission sharingPermission) {
 
 		_liferayPortletRequest = liferayPortletRequest;
 		_liferayPortletResponse = liferayPortletResponse;
@@ -83,6 +85,7 @@ public class SharedAssetsViewDisplayContext {
 		_sharingEntryInterpreterFunction = sharingEntryInterpreterFunction;
 		_sharedAssetsFilterItems = sharedAssetsFilterItems;
 		_sharingMenuItemFactory = sharingMenuItemFactory;
+		_sharingPermission = sharingPermission;
 
 		_currentURLObj = PortletURLUtil.getCurrent(
 			liferayPortletRequest, liferayPortletResponse);
@@ -193,6 +196,19 @@ public class SharedAssetsViewDisplayContext {
 		if (sharingEntry.isShareable()) {
 			menuItems.add(
 				_sharingMenuItemFactory.createShareMenuItem(
+					sharingEntry.getClassName(), sharingEntry.getClassPK(),
+					_request));
+		}
+
+		boolean containsManageCollaboratorsPermission =
+			_sharingPermission.containsManageCollaboratorsPermission(
+				_themeDisplay.getPermissionChecker(),
+				sharingEntry.getClassNameId(), sharingEntry.getClassPK(),
+				_themeDisplay.getScopeGroupId());
+
+		if (containsManageCollaboratorsPermission) {
+			menuItems.add(
+				_sharingMenuItemFactory.createManageCollaboratorsMenuItem(
 					sharingEntry.getClassName(), sharingEntry.getClassPK(),
 					_request));
 		}
@@ -459,6 +475,7 @@ public class SharedAssetsViewDisplayContext {
 		_sharingEntryInterpreterFunction;
 	private final SharingEntryLocalService _sharingEntryLocalService;
 	private final SharingMenuItemFactory _sharingMenuItemFactory;
+	private final SharingPermission _sharingPermission;
 	private final ThemeDisplay _themeDisplay;
 
 }

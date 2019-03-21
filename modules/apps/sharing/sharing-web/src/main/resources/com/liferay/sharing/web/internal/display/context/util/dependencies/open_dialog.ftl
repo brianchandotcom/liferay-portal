@@ -1,4 +1,4 @@
-function ${namespace}sharing(sharingURL, title, refreshOnClose) {
+function ${namespace}open_${dialogId}(uri, title, refreshOnClose) {
 	Liferay.Util.openWindow(
 		{
 			dialog: {
@@ -17,9 +17,9 @@ function ${namespace}sharing(sharingURL, title, refreshOnClose) {
 					}
 				}
 			},
-			id: '${sharingDialogId}',
+			id: '${namespace}${dialogId}',
 			title: title,
-			uri: sharingURL
+			uri: uri
 		}
 	);
 }

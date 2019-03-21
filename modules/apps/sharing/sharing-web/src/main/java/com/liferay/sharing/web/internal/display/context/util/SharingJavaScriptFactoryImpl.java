@@ -24,7 +24,6 @@ import com.liferay.portal.kernel.io.unsync.UnsyncStringWriter;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.PortletProvider;
 import com.liferay.portal.kernel.portlet.PortletProviderUtil;
@@ -32,14 +31,15 @@ import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.template.Template;
 import com.liferay.portal.kernel.template.TemplateConstants;
+import com.liferay.portal.kernel.template.TemplateException;
 import com.liferay.portal.kernel.template.TemplateManagerUtil;
 import com.liferay.portal.kernel.template.URLTemplateResource;
 import com.liferay.portal.kernel.util.JavaConstants;
-import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.sharing.display.context.util.SharingJavaScriptFactory;
 import com.liferay.sharing.model.SharingEntry;
+import com.liferay.sharing.web.internal.constants.SharingWebKeys;
 
 import java.util.Locale;
 import java.util.ResourceBundle;
@@ -66,163 +66,40 @@ public class SharingJavaScriptFactoryImpl implements SharingJavaScriptFactory {
 			HttpServletRequest request)
 		throws PortalException {
 
-		UnsyncStringWriter unsyncStringWriter = new UnsyncStringWriter();
-
-		String javaScript =
-			"/com/liferay/sharing/web/internal/display/context/util" +
-				"/dependencies/sharing_js.ftl";
-		Class<?> clazz = getClass();
-
-		URLTemplateResource urlTemplateResource = new URLTemplateResource(
-			javaScript, clazz.getResource(javaScript));
-
-		LiferayPortletResponse liferayPortletResponse =
-			_getLiferayPortletResponse(request);
-
-		Template template = TemplateManagerUtil.getTemplate(
-			TemplateConstants.LANG_TYPE_FTL, urlTemplateResource, false);
-
-		template.put("namespace", liferayPortletResponse.getNamespace());
-		template.put(
-			"sharingDialogId",
-			liferayPortletResponse.getNamespace() +
-				"manageCollaboratorsDialogId");
-
-		template.processTemplate(unsyncStringWriter);
-
-		return unsyncStringWriter.toString();
+		return _getOpenDialogJavaScript(
+			request, SharingWebKeys.MANAGE_COLLABORATORS_DIALOG_ID);
 	}
 
 	@Override
 	public String createManageCollaboratorsOnClickMethod(
 		String className, long classPK, HttpServletRequest request) {
 
-		String manageCollaboratorsPortletId = PortletProviderUtil.getPortletId(
-			SharingEntry.class.getName(), PortletProvider.Action.MANAGE);
-
-		PortletURL manageCollaboratorsURL = PortletURLFactoryUtil.create(
-			request, manageCollaboratorsPortletId, PortletRequest.RENDER_PHASE);
-
-		manageCollaboratorsURL.setParameter(
-			"mvcRenderCommandName", "/sharing/manage_collaborators");
-
-		long classNameId = _classNameLocalService.getClassNameId(className);
-
-		manageCollaboratorsURL.setParameter(
-			"classNameId", String.valueOf(classNameId));
-
-		manageCollaboratorsURL.setParameter("classPK", String.valueOf(classPK));
-
-		LiferayPortletResponse liferayPortletResponse =
-			_getLiferayPortletResponse(request);
-
-		manageCollaboratorsURL.setParameter(
-			"refererPortletNamespace", liferayPortletResponse.getNamespace());
-		manageCollaboratorsURL.setParameter(
-			"manageCollaboratorsDialogId",
-			liferayPortletResponse.getNamespace() +
-				"manageCollaboratorsDialogId");
-
-		try {
-			manageCollaboratorsURL.setWindowState(LiferayWindowState.POP_UP);
-		}
-		catch (WindowStateException wse) {
-			throw new SystemException("Unable to set window state", wse);
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(liferayPortletResponse.getNamespace());
-		sb.append("sharing('");
-		sb.append(manageCollaboratorsURL.toString());
-		sb.append("', '");
-
 		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
 			request.getLocale(), SharingJavaScriptFactoryImpl.class);
 
-		sb.append(LanguageUtil.get(resourceBundle, "collaborators"));
-
-		sb.append("', true);");
-
-		return sb.toString();
+		return _getOpenDialogOnClickMethod(
+			_getManageCollaboratorsPortletURL(className, classPK, request),
+			LanguageUtil.get(resourceBundle, "collaborators"), true,
+			SharingWebKeys.MANAGE_COLLABORATORS_DIALOG_ID,
+			_getNamespace(request));
 	}
 
 	@Override
 	public String createSharingJavaScript(HttpServletRequest request)
 		throws PortalException {
 
-		UnsyncStringWriter unsyncStringWriter = new UnsyncStringWriter();
-
-		String javaScript =
-			"/com/liferay/sharing/web/internal/display/context/util" +
-				"/dependencies/sharing_js.ftl";
-		Class<?> clazz = getClass();
-
-		URLTemplateResource urlTemplateResource = new URLTemplateResource(
-			javaScript, clazz.getResource(javaScript));
-
-		LiferayPortletResponse liferayPortletResponse =
-			_getLiferayPortletResponse(request);
-
-		Template template = TemplateManagerUtil.getTemplate(
-			TemplateConstants.LANG_TYPE_FTL, urlTemplateResource, false);
-
-		template.put("namespace", liferayPortletResponse.getNamespace());
-		template.put(
-			"sharingDialogId",
-			liferayPortletResponse.getNamespace() + "sharingDialogId");
-
-		template.processTemplate(unsyncStringWriter);
-
-		return unsyncStringWriter.toString();
+		return _getOpenDialogJavaScript(
+			request, SharingWebKeys.SHARING_DIALOG_ID);
 	}
 
 	@Override
 	public String createSharingOnClickMethod(
 		String className, long classPK, HttpServletRequest request) {
 
-		String sharingPortletId = PortletProviderUtil.getPortletId(
-			SharingEntry.class.getName(), PortletProvider.Action.EDIT);
-
-		PortletURL sharingURL = PortletURLFactoryUtil.create(
-			request, sharingPortletId, PortletRequest.RENDER_PHASE);
-
-		sharingURL.setParameter("mvcRenderCommandName", "/sharing/share");
-
-		long classNameId = _classNameLocalService.getClassNameId(className);
-
-		sharingURL.setParameter("classNameId", String.valueOf(classNameId));
-
-		sharingURL.setParameter("classPK", String.valueOf(classPK));
-
-		LiferayPortletResponse liferayPortletResponse =
-			_getLiferayPortletResponse(request);
-
-		sharingURL.setParameter(
-			"refererPortletNamespace", liferayPortletResponse.getNamespace());
-		sharingURL.setParameter(
-			"sharingDialogId",
-			liferayPortletResponse.getNamespace() + "sharingDialogId");
-
-		try {
-			sharingURL.setWindowState(LiferayWindowState.POP_UP);
-		}
-		catch (WindowStateException wse) {
-			throw new SystemException("Unable to set window state", wse);
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(liferayPortletResponse.getNamespace());
-		sb.append("sharing('");
-		sb.append(sharingURL.toString());
-		sb.append("', '");
-		sb.append(
-			_getSharingDialogTitle(className, classPK, request.getLocale()));
-
-		sb.append("');");
-
-		return sb.toString();
+		return _getOpenDialogOnClickMethod(
+			_getSharingPortletURL(className, classPK, request),
+			_getSharingDialogTitle(className, classPK, request.getLocale()),
+			false, SharingWebKeys.SHARING_DIALOG_ID, _getNamespace(request));
 	}
 
 	private String _getAssetTitle(
@@ -258,13 +135,89 @@ public class SharingJavaScriptFactoryImpl implements SharingJavaScriptFactory {
 		}
 	}
 
-	private LiferayPortletResponse _getLiferayPortletResponse(
-		HttpServletRequest request) {
+	private PortletURL _getManageCollaboratorsPortletURL(
+		String className, long classPK, HttpServletRequest request) {
 
+		String manageCollaboratorsPortletId = PortletProviderUtil.getPortletId(
+			SharingEntry.class.getName(), PortletProvider.Action.MANAGE);
+
+		PortletURL manageCollaboratorsURL = PortletURLFactoryUtil.create(
+			request, manageCollaboratorsPortletId, PortletRequest.RENDER_PHASE);
+
+		manageCollaboratorsURL.setParameter(
+			"mvcRenderCommandName", "/sharing/manage_collaborators");
+
+		manageCollaboratorsURL.setParameter(
+			"classNameId",
+			String.valueOf(_classNameLocalService.getClassNameId(className)));
+
+		manageCollaboratorsURL.setParameter("classPK", String.valueOf(classPK));
+
+		return manageCollaboratorsURL;
+	}
+
+	private String _getNamespace(HttpServletRequest request) {
 		PortletResponse portletResponse = (PortletResponse)request.getAttribute(
 			JavaConstants.JAVAX_PORTLET_RESPONSE);
 
-		return _portal.getLiferayPortletResponse(portletResponse);
+		return portletResponse.getNamespace();
+	}
+
+	private String _getOpenDialogJavaScript(
+			HttpServletRequest request, String dialogId)
+		throws TemplateException {
+
+		UnsyncStringWriter unsyncStringWriter = new UnsyncStringWriter();
+
+		String javaScript =
+			"/com/liferay/sharing/web/internal/display/context/util" +
+				"/dependencies/open_dialog.ftl";
+
+		Class<?> clazz = getClass();
+
+		URLTemplateResource urlTemplateResource = new URLTemplateResource(
+			javaScript, clazz.getResource(javaScript));
+
+		Template template = TemplateManagerUtil.getTemplate(
+			TemplateConstants.LANG_TYPE_FTL, urlTemplateResource, false);
+
+		template.put("dialogId", dialogId);
+		template.put("namespace", _getNamespace(request));
+
+		template.processTemplate(unsyncStringWriter);
+
+		return unsyncStringWriter.toString();
+	}
+
+	private String _getOpenDialogOnClickMethod(
+		PortletURL portletURL, String title, boolean refreshOnClose,
+		String dialogId, String namespace) {
+
+		portletURL.setParameter("dialogId", namespace + dialogId);
+
+		portletURL.setParameter("refererPortletNamespace", namespace);
+
+		try {
+			portletURL.setWindowState(LiferayWindowState.POP_UP);
+		}
+		catch (WindowStateException wse) {
+			throw new SystemException("Unable to set window state", wse);
+		}
+
+		StringBundler sb = new StringBundler(10);
+
+		sb.append(namespace);
+		sb.append("open_");
+		sb.append(dialogId);
+		sb.append("('");
+		sb.append(portletURL.toString());
+		sb.append("', '");
+		sb.append(title);
+		sb.append("', ");
+		sb.append(refreshOnClose);
+		sb.append(");");
+
+		return sb.toString();
 	}
 
 	private String _getSharingDialogTitle(
@@ -282,13 +235,30 @@ public class SharingJavaScriptFactoryImpl implements SharingJavaScriptFactory {
 		return LanguageUtil.get(resourceBundle, "share");
 	}
 
+	private PortletURL _getSharingPortletURL(
+		String className, long classPK, HttpServletRequest request) {
+
+		String sharingPortletId = PortletProviderUtil.getPortletId(
+			SharingEntry.class.getName(), PortletProvider.Action.EDIT);
+
+		PortletURL sharingURL = PortletURLFactoryUtil.create(
+			request, sharingPortletId, PortletRequest.RENDER_PHASE);
+
+		sharingURL.setParameter("mvcRenderCommandName", "/sharing/share");
+
+		sharingURL.setParameter(
+			"classNameId",
+			String.valueOf(_classNameLocalService.getClassNameId(className)));
+
+		sharingURL.setParameter("classPK", String.valueOf(classPK));
+
+		return sharingURL;
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		SharingJavaScriptFactoryImpl.class);
 
 	@Reference
 	private ClassNameLocalService _classNameLocalService;
-
-	@Reference
-	private Portal _portal;
 
 }

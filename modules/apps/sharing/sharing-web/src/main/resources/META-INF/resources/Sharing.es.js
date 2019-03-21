@@ -13,7 +13,7 @@ class Sharing extends PortletBase {
 		this._classNameId = config.classNameId;
 		this._classPK = config.classPK;
 		this._refererPortletNamespace = config.refererPortletNamespace;
-		this._sharingDialogId = config.sharingDialogId;
+		this._dialogId = config.dialogId;
 		this._userEmailAddresses = [];
 	}
 
@@ -73,7 +73,7 @@ class Sharing extends PortletBase {
 	 * @review
 	 */
 	_closeDialog() {
-		const sharingDialog = Liferay.Util.getWindow(this._sharingDialogId);
+		const sharingDialog = Liferay.Util.getWindow(this._dialogId);
 
 		if (sharingDialog && sharingDialog.hide) {
 			sharingDialog.hide();

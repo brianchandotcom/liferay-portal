@@ -31,6 +31,7 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.sharing.model.SharingEntry;
 import com.liferay.sharing.service.SharingEntryLocalService;
 import com.liferay.sharing.web.internal.constants.SharingPortletKeys;
+import com.liferay.sharing.web.internal.constants.SharingWebKeys;
 import com.liferay.sharing.web.internal.display.SharingEntryPermissionDisplay;
 import com.liferay.sharing.web.internal.display.SharingEntryPermissionDisplayAction;
 import com.liferay.sharing.web.internal.util.SharingUtil;
@@ -77,7 +78,8 @@ public class ManageCollaboratorsViewMVCRenderCommand
 			"collaborators", _getCollaboratorsJSONArray(renderRequest));
 		template.put(
 			"dialogId",
-			ParamUtil.getString(renderRequest, "manageCollaboratorsDialogId"));
+			ParamUtil.getString(
+				renderRequest, SharingWebKeys.MANAGE_COLLABORATORS_DIALOG_ID));
 		template.put("portletNamespace", renderResponse.getNamespace());
 		template.put("spritemap", _getSpritemap(renderRequest));
 

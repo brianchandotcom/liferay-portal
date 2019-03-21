@@ -102,7 +102,7 @@ boolean showManageCollaborators = GetterUtil.getBoolean(request.getAttribute("in
 
 	manageCollaboratorsRenderURL.setParameter("classNameId", String.valueOf(ClassNameLocalServiceUtil.getClassNameId(DLFileEntry.class.getName())));
 	manageCollaboratorsRenderURL.setParameter("classPK", String.valueOf(fileEntry.getFileEntryId()));
-	manageCollaboratorsRenderURL.setParameter("manageCollaboratorsDialogId", liferayPortletResponse.getNamespace() + "manageCollaboratorsDialog");
+	manageCollaboratorsRenderURL.setParameter("dialogId", liferayPortletResponse.getNamespace() + "manageCollaboratorsDialog");
 	manageCollaboratorsRenderURL.setWindowState(LiferayWindowState.POP_UP);
 	%>
 

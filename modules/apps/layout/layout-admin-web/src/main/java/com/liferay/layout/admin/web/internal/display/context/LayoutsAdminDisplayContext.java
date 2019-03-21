@@ -570,10 +570,10 @@ public class LayoutsAdminDisplayContext {
 					_request, layoutTypeResourceBundle,
 					"layout.types." + layout.getType()));
 
-			Date modifiedDate = layout.getModifiedDate();
-
 			if (Objects.equals(
 					layout.getType(), LayoutConstants.TYPE_CONTENT)) {
+
+				Date modifiedDate = layout.getModifiedDate();
 
 				layoutJSONObject.put(
 					"draft", modifiedDate.after(layout.getPublishDate()));

@@ -182,12 +182,15 @@ public class ModulesStructureTest {
 							"Forbidden " + settingsGradlePath,
 							Files.deleteIfExists(settingsGradlePath));
 
+						Path lfrbuildRelengIgnorePath = dirPath.resolve(
+							".lfrbuild-releng-ignore");
+
 						if (Files.exists(dirPath.resolve("app.bnd"))) {
 							_testEquals(buildGradlePath, _APP_BUILD_GRADLE);
 
 							_testRelengAppProprties(dirPath);
 						}
-						else {
+						else if (!Files.exists(lfrbuildRelengIgnorePath)) {
 							Assert.assertFalse(
 								"Forbidden " + buildGradlePath,
 								Files.exists(buildGradlePath) &&

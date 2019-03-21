@@ -33,6 +33,9 @@ class EditCategories extends Component {
 	created() {
 		this.append = true;
 		this.dataSource = [];
+
+		this._feedbackErrorClass = 'form-feedback-item';
+		this._requiredVocabularyErrorMarkupText = '<div class="' + this._feedbackErrorClass + '">' + Liferay.Language.get('this-field-is-required') + '</div>';
 	}
 
 	/**
@@ -63,6 +66,16 @@ class EditCategories extends Component {
 		}
 		else {
 			inputNode.parentElement.classList.add('has-error');
+
+			let feedbackErrorNode = inputNode.parentElement.querySelector('.' + this._feedbackErrorClass);
+
+			if (!feedbackErrorNode) {
+				inputNode.parentElement.insertAdjacentHTML(
+					'beforeend',
+					this._requiredVocabularyErrorMarkupText
+				);
+			}
+
 			valid = false;
 		}
 

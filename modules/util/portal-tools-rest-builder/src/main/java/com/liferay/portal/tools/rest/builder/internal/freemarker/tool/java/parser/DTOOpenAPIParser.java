@@ -33,6 +33,31 @@ import java.util.TreeMap;
  */
 public class DTOOpenAPIParser {
 
+	public static Map<String, Schema> getEnumSchemas(Schema schema) {
+		Map<String, Schema> propertySchemas = schema.getPropertySchemas();
+
+		if (propertySchemas == null) {
+			return Collections.emptyMap();
+		}
+
+		Map<String, Schema> enumSchemas = new TreeMap<>();
+
+		for (Map.Entry<String, Schema> entry : propertySchemas.entrySet()) {
+			Schema propertySchema = entry.getValue();
+			String propertySchemaName = entry.getKey();
+
+			List<String> enumValues = propertySchema.getEnumValues();
+
+			if ((enumValues != null) && !enumValues.isEmpty()) {
+				enumSchemas.put(
+					StringUtil.upperCaseFirstLetter(propertySchemaName),
+					propertySchema);
+			}
+		}
+
+		return enumSchemas;
+	}
+
 	public static Map<String, String> getProperties(
 		ConfigYAML configYAML, OpenAPIYAML openAPIYAML, Schema schema) {
 

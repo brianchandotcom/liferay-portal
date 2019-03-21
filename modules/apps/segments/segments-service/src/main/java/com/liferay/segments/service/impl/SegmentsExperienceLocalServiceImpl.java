@@ -76,9 +76,9 @@ public class SegmentsExperienceLocalServiceImpl
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		return segmentsExperienceLocalService.addSegmentsExperience(
+		return addSegmentsExperience(
 			segmentsEntryId, classNameId, classPK, nameMap,
-			getSegmentsExperienceCount(
+			getSegmentsExperiencesCount(
 				serviceContext.getScopeGroupId(), classNameId, classPK),
 			active, serviceContext);
 	}
@@ -254,14 +254,6 @@ public class SegmentsExperienceLocalServiceImpl
 	}
 
 	@Override
-	public int getSegmentsExperienceCount(
-		long groupId, long classNameId, long classPK) {
-
-		return segmentsExperiencePersistence.countByG_C_C(
-			groupId, classNameId, _getPublishedLayoutClassPK(classPK));
-	}
-
-	@Override
 	public List<SegmentsExperience> getSegmentsExperiences(
 		long groupId, long classNameId, long classPK, boolean active, int start,
 		int end, OrderByComparator<SegmentsExperience> orderByComparator) {
@@ -281,6 +273,14 @@ public class SegmentsExperienceLocalServiceImpl
 			groupId, segmentsEntryIds, classNameId,
 			_getPublishedLayoutClassPK(classPK), active, start, end,
 			orderByComparator);
+	}
+
+	@Override
+	public int getSegmentsExperiencesCount(
+		long groupId, long classNameId, long classPK) {
+
+		return segmentsExperiencePersistence.countByG_C_C(
+			groupId, classNameId, _getPublishedLayoutClassPK(classPK));
 	}
 
 	@Override

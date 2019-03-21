@@ -118,7 +118,7 @@ public class SiteNavigationMenuLocalServiceTest {
 	}
 
 	@Test(expected = SiteNavigationMenuNameException.class)
-	public void testAddSiteNavigationMenuWithNullName() throws Exception {
+	public void testAddSiteNavigationMenuWithEmptyName() throws Exception {
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(
 				_group.getGroupId(), TestPropsValues.getUserId());

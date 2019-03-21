@@ -97,16 +97,16 @@
 
 		<!-- Finder methods -->
 
-		<finder name="GroupId" return-type="Collection">
+		<finder name="GroupId" return-type="Collection" where="draftLayoutPageTemplateEntryId > 0">
 			<finder-column name="groupId" />
 		</finder>
-		<finder name="LayoutPrototypeId" return-type="Collection">
+		<finder name="LayoutPrototypeId" return-type="Collection" where="draftLayoutPageTemplateEntryId > 0">
 			<finder-column name="layoutPrototypeId" />
 		</finder>
 		<finder name="Plid" return-type="LayoutPageTemplateEntry" unique="true">
 			<finder-column name="plid" />
 		</finder>
-		<finder name="G_L" return-type="Collection">
+		<finder name="G_L" return-type="Collection" where="draftLayoutPageTemplateEntryId > 0">
 			<finder-column name="groupId" />
 			<finder-column name="layoutPageTemplateCollectionId" />
 		</finder>
@@ -114,87 +114,87 @@
 			<finder-column name="groupId" />
 			<finder-column name="name" />
 		</finder>
-		<finder name="G_T" return-type="Collection">
+		<finder name="G_T" return-type="Collection" where="draftLayoutPageTemplateEntryId > 0">
 			<finder-column name="groupId" />
 			<finder-column name="type" />
 		</finder>
-		<finder name="G_L_LikeN" return-type="Collection">
+		<finder name="G_L_LikeN" return-type="Collection" where="draftLayoutPageTemplateEntryId > 0">
 			<finder-column name="groupId" />
 			<finder-column name="layoutPageTemplateCollectionId" />
 			<finder-column comparator="LIKE" name="name" />
 		</finder>
-		<finder name="G_L_T" return-type="Collection">
+		<finder name="G_L_T" return-type="Collection" where="draftLayoutPageTemplateEntryId > 0">
 			<finder-column name="groupId" />
 			<finder-column name="layoutPageTemplateCollectionId" />
 			<finder-column name="type" />
 		</finder>
-		<finder name="G_L_S" return-type="Collection">
+		<finder name="G_L_S" return-type="Collection" where="draftLayoutPageTemplateEntryId > 0">
 			<finder-column name="groupId" />
 			<finder-column name="layoutPageTemplateCollectionId" />
 			<finder-column name="status" />
 		</finder>
-		<finder name="G_T_LikeN" return-type="Collection">
+		<finder name="G_T_LikeN" return-type="Collection" where="draftLayoutPageTemplateEntryId > 0">
 			<finder-column name="groupId" />
 			<finder-column comparator="LIKE" name="name" />
 			<finder-column name="type" />
 		</finder>
-		<finder name="G_T_S" return-type="Collection">
+		<finder name="G_T_S" return-type="Collection" where="draftLayoutPageTemplateEntryId > 0">
 			<finder-column name="groupId" />
 			<finder-column name="type" />
 			<finder-column name="status" />
 		</finder>
-		<finder name="G_L_LikeN_S" return-type="Collection">
+		<finder name="G_L_LikeN_S" return-type="Collection" where="draftLayoutPageTemplateEntryId > 0">
 			<finder-column name="groupId" />
 			<finder-column name="layoutPageTemplateCollectionId" />
 			<finder-column comparator="LIKE" name="name" />
 			<finder-column name="status" />
 		</finder>
-		<finder name="G_C_C_T" return-type="Collection">
+		<finder name="G_C_C_T" return-type="Collection" where="draftLayoutPageTemplateEntryId > 0">
 			<finder-column name="groupId" />
 			<finder-column name="classNameId" />
 			<finder-column name="classTypeId" />
 			<finder-column name="type" />
 		</finder>
-		<finder name="G_C_C_D" return-type="Collection">
+		<finder name="G_C_C_D" return-type="Collection" where="draftLayoutPageTemplateEntryId > 0">
 			<finder-column name="groupId" />
 			<finder-column name="classNameId" />
 			<finder-column name="classTypeId" />
 			<finder-column name="defaultTemplate" />
 		</finder>
-		<finder name="G_C_T_D" return-type="Collection">
+		<finder name="G_C_T_D" return-type="Collection" where="draftLayoutPageTemplateEntryId > 0">
 			<finder-column name="groupId" />
 			<finder-column name="classNameId" />
 			<finder-column name="type" />
 			<finder-column name="defaultTemplate" />
 		</finder>
-		<finder name="G_T_LikeN_S" return-type="Collection">
+		<finder name="G_T_LikeN_S" return-type="Collection" where="draftLayoutPageTemplateEntryId > 0">
 			<finder-column name="groupId" />
 			<finder-column comparator="LIKE" name="name" />
 			<finder-column name="type" />
 			<finder-column name="status" />
 		</finder>
-		<finder name="G_C_C_LikeN_T" return-type="Collection">
+		<finder name="G_C_C_LikeN_T" return-type="Collection" where="draftLayoutPageTemplateEntryId > 0">
 			<finder-column name="groupId" />
 			<finder-column name="classNameId" />
 			<finder-column name="classTypeId" />
 			<finder-column comparator="LIKE" name="name" />
 			<finder-column name="type" />
 		</finder>
-		<finder name="G_C_C_T_S" return-type="Collection">
+		<finder name="G_C_C_T_S" return-type="Collection" where="draftLayoutPageTemplateEntryId > 0">
 			<finder-column name="groupId" />
 			<finder-column name="classNameId" />
 			<finder-column name="classTypeId" />
 			<finder-column name="type" />
 			<finder-column name="status" />
 		</finder>
-		<finder name="G_C_C_D_S" return-type="Collection">
+		<finder name="G_C_C_D_S" return-type="Collection" where="draftLayoutPageTemplateEntryId > 0">
 			<finder-column name="groupId" />
 			<finder-column name="classNameId" />
 			<finder-column name="classTypeId" />
 			<finder-column name="defaultTemplate" />
 			<finder-column name="status" />
 		</finder>
-		<finder name="G_C_C_LikeN_T_S" return-type="Collection">
+		<finder name="G_C_C_LikeN_T_S" return-type="Collection" where="draftLayoutPageTemplateEntryId > 0">
 			<finder-column name="groupId" />
 			<finder-column name="classNameId" />
 			<finder-column name="classTypeId" />

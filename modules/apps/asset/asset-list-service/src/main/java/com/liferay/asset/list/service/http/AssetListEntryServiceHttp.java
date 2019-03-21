@@ -55,8 +55,8 @@ import com.liferay.portal.kernel.util.MethodKey;
 public class AssetListEntryServiceHttp {
 
 	public static void addAssetEntrySelection(
-			HttpPrincipal httpPrincipal, long assetListEntryId,
-			long assetEntryId,
+			HttpPrincipal httpPrincipal, long assetEntryId,
+			long assetListEntryId,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
@@ -66,7 +66,7 @@ public class AssetListEntryServiceHttp {
 				_addAssetEntrySelectionParameterTypes0);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, assetListEntryId, assetEntryId, serviceContext);
+				methodKey, assetEntryId, assetListEntryId, serviceContext);
 
 			try {
 				TunnelUtil.invoke(httpPrincipal, methodHandler);

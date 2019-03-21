@@ -375,7 +375,7 @@ public class JournalArticleStagedModelDataHandler
 		if (layout != null) {
 			portletDataContext.addReferenceElement(
 				article, articleElement, layout,
-				PortletDataContext.REFERENCE_TYPE_DEPENDENCY, true);
+				PortletDataContext.REFERENCE_TYPE_DEPENDENCY_DISPOSABLE, true);
 		}
 
 		if (article.isSmallImage()) {

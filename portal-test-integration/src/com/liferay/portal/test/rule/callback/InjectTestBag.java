@@ -212,7 +212,7 @@ public class InjectTestBag {
 						filterString, " for field ", testClass.getName(), ".",
 						field.getName(), " due to interruption"));
 
-				break;
+				throw ie;
 			}
 
 			serviceReference = _getServiceReference(

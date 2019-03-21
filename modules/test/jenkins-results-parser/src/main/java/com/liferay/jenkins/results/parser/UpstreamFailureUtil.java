@@ -233,7 +233,7 @@ public class UpstreamFailureUtil {
 					"/builds/latest/test.results.json"));
 
 			_upstreamFailuresJobJSONObject =
-				JenkinsResultsParserUtil.toJSONObject(url);
+				JenkinsResultsParserUtil.toJSONObject(url, false, 5000);
 
 			System.out.println(
 				"Using upstream failures at: " +

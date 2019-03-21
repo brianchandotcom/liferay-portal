@@ -76,17 +76,17 @@
 		<liferay-ui:search-container-column-text
 			name="title"
 		>
-			<h5>
+			<h4 class="list-group-title">
 				<%= HtmlUtil.escape(assetLinkEntry.getTitle(locale)) %>
-			</h5>
+			</h4>
 
-			<h6 class="text-secondary">
+			<p class="list-group-subtitle">
 				<%= inputAssetLinksDisplayContext.getAssetType(assetLinkEntry) %>
-			</h6>
+			</p>
 
-			<h6 class="text-secondary">
+			<p class="list-group-subtitle">
 				<liferay-ui:message key="scope" />: <%= HtmlUtil.escape(inputAssetLinksDisplayContext.getGroupDescriptiveName(assetLinkEntry)) %>
-			</h6>
+			</p>
 		</liferay-ui:search-container-column-text>
 
 		<liferay-ui:search-container-column-text
@@ -146,7 +146,7 @@
 										if (searchContainerData.indexOf(entityId) == -1) {
 											var entryLink = '<div class="text-right"><a class="modify-link" data-rowId="' + entityId + '" href="javascript:;"><%= UnicodeFormatter.toString(removeLinkIcon) %></a></div>';
 
-											var entryHtml = '<h5>' + A.Escape.html(assetEntry.assettitle) + '</h5><h6 class="text-secondary">' + A.Escape.html(assetEntry.assettype) + '</h6><h6 class="text-secondary">' + A.Escape.html(assetEntry.groupdescriptivename) + '</h6>';
+											var entryHtml = '<h4 class="list-group-title">' + A.Escape.html(assetEntry.assettitle) + '</h4><p class="list-group-subtitle">' + A.Escape.html(assetEntry.assettype) + '</p><p class="list-group-subtitle">' + A.Escape.html(assetEntry.groupdescriptivename) + '</p>';
 
 											searchContainer.addRow([entryHtml, entryLink], entityId);
 

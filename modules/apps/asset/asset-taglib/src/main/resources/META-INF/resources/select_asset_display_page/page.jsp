@@ -32,16 +32,19 @@
 	String defaultAssetDisplayPageName = selectAssetDisplayPageDisplayContext.getDefaultAssetDisplayPageName();
 	%>
 
-	<input class="field form-control lfr-input-text" id="<portlet:namespace />defaultDisplayPageNameInput" readonly="readonly" title="<%= LanguageUtil.get(resourceBundle, "default-display-page") %>" type="text" value="<%= Validator.isNotNull(defaultAssetDisplayPageName) ? defaultAssetDisplayPageName : LanguageUtil.get(resourceBundle, "no-default-display-page") %>" />
+	<div class="input-group-item">
+		<input class="field form-control lfr-input-text" id="<portlet:namespace />defaultDisplayPageNameInput" readonly="readonly" title="<%= LanguageUtil.get(resourceBundle, "default-display-page") %>" type="text" value="<%= Validator.isNotNull(defaultAssetDisplayPageName) ? defaultAssetDisplayPageName : LanguageUtil.get(resourceBundle, "no-default-display-page") %>" />
+	</div>
 
 	<c:if test="<%= selectAssetDisplayPageDisplayContext.isAssetDisplayPageTypeDefault() && selectAssetDisplayPageDisplayContext.isShowViewInContextLink() && selectAssetDisplayPageDisplayContext.isURLViewInContext() %>">
-		<clay:button
-			elementClasses="ml-2"
-			icon="view"
-			id='<%= liferayPortletResponse.getNamespace() + "previewDefaultDisplayPageButton" %>'
-			monospaced="<%= true %>"
-			style="secondary"
-		/>
+		<div class="input-group-item input-group-item-shrink">
+			<clay:button
+				icon="view"
+				id='<%= liferayPortletResponse.getNamespace() + "previewDefaultDisplayPageButton" %>'
+				monospaced="<%= true %>"
+				style="secondary"
+			/>
+		</div>
 	</c:if>
 </div>
 

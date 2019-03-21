@@ -32,27 +32,31 @@ DDMTemplate ddmTemplate = journalEditArticleDisplayContext.getDDMTemplate();
 	<c:when test="<%= ListUtil.isNotEmpty(ddmStructure.getTemplates()) %>">
 		<p class="text-secondary"><liferay-ui:message key="this-template-will-be-used-when-showing-the-content-within-a-widget" /></p>
 
-		<div class="input-group">
-			<aui:input disabled="<%= true %>" label="" name="ddmTemplateName" value='<%= (ddmTemplate != null) ? HtmlUtil.escape(ddmTemplate.getName(locale)) : LanguageUtil.get(request, "none") %>' />
+		<div class="form-group input-group">
+			<div class="input-group-item">
+				<input class="field form-control lfr-input-text" id="<portlet:namespace />ddmTemplateName" readonly="readonly" title="<%= LanguageUtil.get(request, "template-name") %>" type="text" value="<%= (ddmTemplate != null) ? HtmlUtil.escape(ddmTemplate.getName(locale)) : StringPool.BLANK %>" />
+			</div>
 
 			<c:if test="<%= (ddmTemplate != null) && DDMTemplatePermission.contains(permissionChecker, ddmTemplate, ActionKeys.UPDATE) %>">
-				<clay:button
-					elementClasses="ml-2"
-					icon="pencil"
-					id='<%= liferayPortletResponse.getNamespace() + "editDDMTemplate" %>'
-					monospaced="<%= true %>"
-					style="secondary"
-				/>
+				<div class="input-group-item input-group-item-shrink">
+					<clay:button
+						icon="pencil"
+						id='<%= liferayPortletResponse.getNamespace() + "editDDMTemplate" %>'
+						monospaced="<%= true %>"
+						style="secondary"
+					/>
+				</div>
 			</c:if>
 
 			<c:if test="<%= (article != null) && (ddmTemplate != null) %>">
-				<clay:button
-					elementClasses="ml-2"
-					icon="view"
-					id='<%= liferayPortletResponse.getNamespace() + "previewWithTemplate" %>'
-					monospaced="<%= true %>"
-					style="secondary"
-				/>
+				<div class="input-group-item input-group-item-shrink">
+					<clay:button
+						icon="view"
+						id='<%= liferayPortletResponse.getNamespace() + "previewWithTemplate" %>'
+						monospaced="<%= true %>"
+						style="secondary"
+					/>
+				</div>
 			</c:if>
 		</div>
 

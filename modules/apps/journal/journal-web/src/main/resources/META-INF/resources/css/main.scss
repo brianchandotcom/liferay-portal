@@ -107,6 +107,7 @@ $productMenuWidth: 320px;
 		}
 
 		.edit-article-sidebar {
+			border-left: 1px #E7E7ED solid;
 			box-shadow: none;
 			height: calc(100vh - #{$controlMenuHeight * 2}) !important;
 			overflow-y: scroll;

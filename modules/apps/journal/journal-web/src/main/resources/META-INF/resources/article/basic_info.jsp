@@ -33,9 +33,9 @@ DDMStructure ddmStructure = journalEditArticleDisplayContext.getDDMStructure();
 
 <c:if test="<%= article != null %>">
 	<p class="article-version-status">
-		<b><liferay-ui:message key="version" />: <%= article.getVersion() %></b>
+		<b><liferay-ui:message key="version" /></b>: <%= article.getVersion() %>
 
-		<span class="label label-<%= LabelItem.getStyleFromWorkflowStatus(article.getStatus()) %> text-uppercase">
+		<span class="label label-<%= LabelItem.getStyleFromWorkflowStatus(article.getStatus()) %> ml-2 text-uppercase">
 			<liferay-ui:message key="<%= WorkflowConstants.getStatusLabel(article.getStatus()) %>" />
 		</span>
 	</p>

@@ -23,21 +23,6 @@
 <entry key="V2PortletTagLibraryTests3_SPEC2_26_IncludeJSPResource_renderURL3"></entry>
 <entry key="V2PortletTagLibraryTests3_SPEC2_26_IncludeJSPResource_renderURL5"></entry>
 
-<!-- https://issues.liferay.com/browse/LPS-TODO -->
-<entry key="V3AnnotationPortletArtifactValidityTests_SPEC3_20_ParameterArtifacts_actionParameters"></entry>
-<entry key="V3AnnotationPortletArtifactValidityTests_SPEC3_20_ParameterArtifacts_mutableRenderParameters"></entry>
-<entry key="V3AnnotationPortletArtifactValidityTests_SPEC3_20_ParameterArtifacts_renderParameters"></entry>
-<entry key="V3AnnotationPortletArtifactValidityTests_SPEC3_20_RequestArtifacts_actionRequest"></entry>
-<entry key="V3AnnotationPortletArtifactValidityTests_SPEC3_20_RequestArtifacts_clientDataRequest"></entry>
-<entry key="V3AnnotationPortletArtifactValidityTests_SPEC3_20_RequestArtifacts_eventRequest"></entry>
-<entry key="V3AnnotationPortletArtifactValidityTests_SPEC3_20_RequestArtifacts_headerRequest"></entry>
-<entry key="V3AnnotationPortletArtifactValidityTests_SPEC3_20_RequestArtifacts_portletRequest"></entry>
-<entry key="V3AnnotationPortletArtifactValidityTests_SPEC3_20_ResponseArtifacts_actionResponse"></entry>
-<entry key="V3AnnotationPortletArtifactValidityTests_SPEC3_20_ResponseArtifacts_eventResponse"></entry>
-<entry key="V3AnnotationPortletArtifactValidityTests_SPEC3_20_ResponseArtifacts_headerResponse"></entry>
-<entry key="V3AnnotationPortletArtifactValidityTests_SPEC3_20_ResponseArtifacts_mimeResponse"></entry>
-<entry key="V3AnnotationPortletArtifactValidityTests_SPEC3_20_ResponseArtifacts_stateAwareReponse"></entry>
-
 <!-- https://issues.liferay.com/browse/LPS-77746 -->
 <entry key="V3HeaderPortletTests_SPEC14_PortletRequest_ApiHeader_getPortletSessionA2"></entry>
 <entry key="V3HeaderPortletTests_SPEC14_PortletRequest_ApiHeader_getPortletSessionB2"></entry>
@@ -80,6 +65,4 @@
 <entry key="V3PortletHubTests_SPEC_23_JSURL_createResourceUrlC"></entry>
 <entry key="V3PortletHubTests_SPEC_23_JSURL_createResourceUrlD"></entry>
 
-<!-- https://issues.liferay.com/browse/LPS-TODO -->
-<entry key="V3RenderStateTests_SPEC2_12_MutableRenderState_getRenderParameters"></entry>
 </properties>

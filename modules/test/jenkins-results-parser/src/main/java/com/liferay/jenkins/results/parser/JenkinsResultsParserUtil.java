@@ -2198,6 +2198,10 @@ public class JenkinsResultsParserUtil {
 			int timeout, HTTPAuthorization httpAuthorizationHeader)
 		throws IOException {
 
+		if (url.contains("/userContent/") && (timeout == 0)) {
+			timeout = 5000;
+		}
+
 		if (method == null) {
 			if (postContent != null) {
 				method = HttpRequestMethod.POST;

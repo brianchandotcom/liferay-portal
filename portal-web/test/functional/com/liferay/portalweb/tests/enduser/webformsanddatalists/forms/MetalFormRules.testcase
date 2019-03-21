@@ -396,7 +396,7 @@ definition {
 		property portal.acceptance = "false";
 		property test.name.skip.portal.instance = "MetalFormRules#ConfigureAutofillRule";
 		var portalURL = PropsUtil.get("portal.url");
-/*
+
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
@@ -421,7 +421,7 @@ definition {
 		);
 
 		FormsAdmin.saveDataProvider();
-*/
+
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(

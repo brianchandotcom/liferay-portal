@@ -1,3 +1,4 @@
+
 @component-name = "portal-web-forms-and-data-lists"
 definition {
 	property custom.properties = "minifier.enabled=true";

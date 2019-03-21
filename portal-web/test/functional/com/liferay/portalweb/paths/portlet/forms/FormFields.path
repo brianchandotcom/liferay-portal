@@ -89,12 +89,12 @@
 </tr>
 <tr>
 	<td>OPTIONS_DRAG_ICON_1</td>
-	<td>//div[@class='options']//div[contains(@class,'form-field-container')][${key_rowNumber1}]//div[contains(@class,'drag-handle')]</td>
+	<td>//div[contains(@class,'ddm-field-options')][${key_rowNumber1}]//svg[contains(@class,'lexicon-icon-drag')] | //div[@class='options']//div[contains(@class,'form-field-container')][${key_rowNumber1}]//div[contains(@class,'drag-handle')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>OPTIONS_DRAG_ICON_2</td>
-	<td>//div[@class='options']//div[contains(@class,'form-field-container')][${key_rowNumber2}]//div[contains(@class,'drag-handle')]</td>
+	<td>//div[contains(@class,'ddm-field-options')][${key_rowNumber2}]//svg[contains(@class,'lexicon-icon-drag')] | //div[@class='options']//div[contains(@class,'form-field-container')][${key_rowNumber2}]//div[contains(@class,'drag-handle')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -250,7 +250,7 @@
 <!--SELECT-->
 <tr>
 	<td>SELECT_FIELD</td>
-	<td>//div[contains(@class,'ddm-page-list-container') or contains(@class,'lfr-ddm-form-field-container')]//label[contains(text(),'${key_fieldName}')]/following-sibling::div[contains(@class,'ddm-select-dropdown') or contains(@class,'input-group-container')]//div[contains(@class,'select-field-trigger')]</td>
+	<td>//div[contains(@class,'ddm-page-list-container') or contains(@class,'lfr-ddm-form-field-container')]//label[contains(text(),'${key_fieldName}') or contains(@for,'${key_fieldName}')]/following-sibling::div[contains(@class,'ddm-select-dropdown') or contains(@class,'input-group-container')]//div[contains(@class,'select-field-trigger')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -307,7 +307,7 @@
 </tr>
 <tr>
 	<td>VALIDATION_ARGUMENT_OPTION</td>
-	<td>//div[contains(@data-fieldname,'validation')]//ul[contains(@class,'results-chosen')]//li[contains(.,'${key_validationArgument}')] | //div[contains(@class,'validation')]//ul[contains(@class,'list-unstyled')]//li[contains(text(),'${key_validationArgument}')]</td>
+	<td>//div[contains(@data-fieldname,'validation')]//ul[contains(@class,'results-chosen')]//li[contains(.,'${key_validationArgument}')] | //div[contains(@class,'dropdown-menu') and contains(@class,'show')]//ul[contains(@class,'list-unstyled')]//button[contains(text(),'${key_validationArgument}')]</td>
 	<td></td>
 </tr>
 <tr>

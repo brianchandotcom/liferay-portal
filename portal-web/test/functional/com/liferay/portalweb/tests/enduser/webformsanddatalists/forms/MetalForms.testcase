@@ -4323,7 +4323,7 @@ definition {
 
 		Form.editFieldLabelMetal(fieldValue = "Checkbox Field");
 
-		FormFields.enableSwitcher(fieldName = "showAsSwitcher");
+		FormFields.enableSwitcher(fieldName = "Show as a Switcher");
 
 		FormFields.editOptionsRow(
 			optionName = "Switcher1",
@@ -4612,7 +4612,7 @@ definition {
 
 		Form.editFieldLabelMetal(fieldValue = "Multiple Selection");
 
-		FormFields.enableSwitcher(fieldName = "showAsSwitcher");
+		FormFields.enableSwitcher(fieldName = "Show as a Switcher");
 
 		FormFields.editOptionsRow(
 			optionName = "Switcher1",
@@ -4622,11 +4622,11 @@ definition {
 
 		Form.gotoAdvancedTab();
 
-		FormFields.disableSwitcher(fieldName = "showLabel");
+		FormFields.disableSwitcher(fieldName = "Show Label");
 
 		Form.closeSidebar();
 
-		FormFields.viewSwitcher(fieldName = "MultipleSelection");
+		FormFields.viewSwitcher(fieldName = "Multiple Selection");
 
 		FormFields.viewSwitcherLabelNotPresent(
 			fieldLabel = "Multiple Selection",

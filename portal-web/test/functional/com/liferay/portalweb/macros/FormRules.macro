@@ -146,9 +146,8 @@ definition {
 
 		var key_calculateFieldOption = "${calculateFieldOption}";
 
-		AssertClick(
-			locator1 = "FormRules#RULE_BUILDER_CALCULATE_ADD_FIELD_LIST",
-			value1 = "${calculateFieldOption}"
+		Click(
+			locator1 = "FormRules#RULE_BUILDER_CALCULATE_ADD_FIELD_LIST"
 		);
 	}
 

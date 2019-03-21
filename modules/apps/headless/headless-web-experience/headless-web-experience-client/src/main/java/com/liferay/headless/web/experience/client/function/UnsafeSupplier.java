@@ -14,6 +14,8 @@
 
 package com.liferay.headless.web.experience.client.function;
 
+import javax.annotation.Generated;
+
 /**
  * @author Javier Gamarra
  * @generated

@@ -107,23 +107,16 @@ public class ContentField {
 
 	protected String name;
 
-	public com.liferay.headless.web.experience.dto.v1_0.ContentField[]
-		getNestedFields() {
-
+	public ContentField[] getNestedFields() {
 		return nestedFields;
 	}
 
-	public void setNestedFields(
-		com.liferay.headless.web.experience.dto.v1_0.ContentField[]
-			nestedFields) {
-
+	public void setNestedFields(ContentField[] nestedFields) {
 		this.nestedFields = nestedFields;
 	}
 
 	public void setNestedFields(
-		UnsafeSupplier
-			<com.liferay.headless.web.experience.dto.v1_0.ContentField[],
-			 Exception> nestedFieldsUnsafeSupplier) {
+		UnsafeSupplier<ContentField[], Exception> nestedFieldsUnsafeSupplier) {
 
 		try {
 			nestedFields = nestedFieldsUnsafeSupplier.get();
@@ -133,8 +126,7 @@ public class ContentField {
 		}
 	}
 
-	protected com.liferay.headless.web.experience.dto.v1_0.ContentField[]
-		nestedFields;
+	protected ContentField[] nestedFields;
 
 	public Boolean getRepeatable() {
 		return repeatable;

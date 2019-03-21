@@ -16,6 +16,8 @@ package com.liferay.headless.web.experience.client.dto.v1_0;
 
 import com.liferay.headless.web.experience.client.function.UnsafeSupplier;
 
+import java.util.Date;
+
 import javax.annotation.Generated;
 
 /**
@@ -46,20 +48,16 @@ public class StructuredContentImage {
 
 	protected String contentUrl;
 
-	public com.liferay.headless.web.experience.dto.v1_0.Creator getCreator() {
+	public Creator getCreator() {
 		return creator;
 	}
 
-	public void setCreator(
-		com.liferay.headless.web.experience.dto.v1_0.Creator creator) {
-
+	public void setCreator(Creator creator) {
 		this.creator = creator;
 	}
 
 	public void setCreator(
-		UnsafeSupplier
-			<com.liferay.headless.web.experience.dto.v1_0.Creator, Exception>
-				creatorUnsafeSupplier) {
+		UnsafeSupplier<Creator, Exception> creatorUnsafeSupplier) {
 
 		try {
 			creator = creatorUnsafeSupplier.get();
@@ -69,18 +67,18 @@ public class StructuredContentImage {
 		}
 	}
 
-	protected com.liferay.headless.web.experience.dto.v1_0.Creator creator;
+	protected Creator creator;
 
-	public java.util.Date getDateCreated() {
+	public Date getDateCreated() {
 		return dateCreated;
 	}
 
-	public void setDateCreated(java.util.Date dateCreated) {
+	public void setDateCreated(Date dateCreated) {
 		this.dateCreated = dateCreated;
 	}
 
 	public void setDateCreated(
-		UnsafeSupplier<java.util.Date, Exception> dateCreatedUnsafeSupplier) {
+		UnsafeSupplier<Date, Exception> dateCreatedUnsafeSupplier) {
 
 		try {
 			dateCreated = dateCreatedUnsafeSupplier.get();
@@ -90,18 +88,18 @@ public class StructuredContentImage {
 		}
 	}
 
-	protected java.util.Date dateCreated;
+	protected Date dateCreated;
 
-	public java.util.Date getDateModified() {
+	public Date getDateModified() {
 		return dateModified;
 	}
 
-	public void setDateModified(java.util.Date dateModified) {
+	public void setDateModified(Date dateModified) {
 		this.dateModified = dateModified;
 	}
 
 	public void setDateModified(
-		UnsafeSupplier<java.util.Date, Exception> dateModifiedUnsafeSupplier) {
+		UnsafeSupplier<Date, Exception> dateModifiedUnsafeSupplier) {
 
 		try {
 			dateModified = dateModifiedUnsafeSupplier.get();
@@ -111,7 +109,7 @@ public class StructuredContentImage {
 		}
 	}
 
-	protected java.util.Date dateModified;
+	protected Date dateModified;
 
 	public String getDescription() {
 		return description;

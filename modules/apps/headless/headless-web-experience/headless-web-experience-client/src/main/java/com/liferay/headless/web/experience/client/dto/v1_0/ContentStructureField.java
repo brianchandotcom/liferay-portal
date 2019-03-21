@@ -149,24 +149,19 @@ public class ContentStructureField {
 
 	protected String name;
 
-	public com.liferay.headless.web.experience.dto.v1_0.ContentStructureField[]
-		getNestedContentStructureFields() {
-
+	public ContentStructureField[] getNestedContentStructureFields() {
 		return nestedContentStructureFields;
 	}
 
 	public void setNestedContentStructureFields(
-		com.liferay.headless.web.experience.dto.v1_0.ContentStructureField[]
-			nestedContentStructureFields) {
+		ContentStructureField[] nestedContentStructureFields) {
 
 		this.nestedContentStructureFields = nestedContentStructureFields;
 	}
 
 	public void setNestedContentStructureFields(
-		UnsafeSupplier
-			<com.liferay.headless.web.experience.dto.v1_0.
-				ContentStructureField[],
-			 Exception> nestedContentStructureFieldsUnsafeSupplier) {
+		UnsafeSupplier<ContentStructureField[], Exception>
+			nestedContentStructureFieldsUnsafeSupplier) {
 
 		try {
 			nestedContentStructureFields =
@@ -177,9 +172,7 @@ public class ContentStructureField {
 		}
 	}
 
-	protected
-		com.liferay.headless.web.experience.dto.v1_0.ContentStructureField[]
-			nestedContentStructureFields;
+	protected ContentStructureField[] nestedContentStructureFields;
 
 	public Option[] getOptions() {
 		return options;

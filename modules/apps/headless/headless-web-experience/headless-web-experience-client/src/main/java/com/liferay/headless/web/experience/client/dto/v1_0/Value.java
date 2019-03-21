@@ -44,22 +44,16 @@ public class Value {
 
 	protected String data;
 
-	public com.liferay.headless.web.experience.dto.v1_0.ContentDocument
-		getDocument() {
-
+	public ContentDocument getDocument() {
 		return document;
 	}
 
-	public void setDocument(
-		com.liferay.headless.web.experience.dto.v1_0.ContentDocument document) {
-
+	public void setDocument(ContentDocument document) {
 		this.document = document;
 	}
 
 	public void setDocument(
-		UnsafeSupplier
-			<com.liferay.headless.web.experience.dto.v1_0.ContentDocument,
-			 Exception> documentUnsafeSupplier) {
+		UnsafeSupplier<ContentDocument, Exception> documentUnsafeSupplier) {
 
 		try {
 			document = documentUnsafeSupplier.get();
@@ -69,8 +63,7 @@ public class Value {
 		}
 	}
 
-	protected com.liferay.headless.web.experience.dto.v1_0.ContentDocument
-		document;
+	protected ContentDocument document;
 
 	public Long getDocumentId() {
 		return documentId;
@@ -112,24 +105,16 @@ public class Value {
 
 	protected Geo geo;
 
-	public com.liferay.headless.web.experience.dto.v1_0.StructuredContentImage
-		getImage() {
-
+	public StructuredContentImage getImage() {
 		return image;
 	}
 
-	public void setImage(
-		com.liferay.headless.web.experience.dto.v1_0.StructuredContentImage
-			image) {
-
+	public void setImage(StructuredContentImage image) {
 		this.image = image;
 	}
 
 	public void setImage(
-		UnsafeSupplier
-			<com.liferay.headless.web.experience.dto.v1_0.
-				StructuredContentImage,
-			 Exception> imageUnsafeSupplier) {
+		UnsafeSupplier<StructuredContentImage, Exception> imageUnsafeSupplier) {
 
 		try {
 			image = imageUnsafeSupplier.get();
@@ -139,9 +124,7 @@ public class Value {
 		}
 	}
 
-	protected
-		com.liferay.headless.web.experience.dto.v1_0.StructuredContentImage
-			image;
+	protected StructuredContentImage image;
 
 	public String getLink() {
 		return link;

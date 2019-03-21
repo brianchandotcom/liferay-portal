@@ -16,6 +16,9 @@ package com.liferay.headless.web.experience.client.dto.v1_0;
 
 import com.liferay.headless.web.experience.client.function.UnsafeSupplier;
 
+import java.util.Date;
+import java.util.Objects;
+
 import javax.annotation.Generated;
 
 /**
@@ -25,23 +28,48 @@ import javax.annotation.Generated;
 @Generated("")
 public class StructuredContent {
 
-	public com.liferay.headless.web.experience.dto.v1_0.AggregateRating
-		getAggregateRating() {
+	public static enum ViewableBy {
 
+		ANYONE("Anyone"), MEMBERS("Members"), OWNER("Owner");
+
+		public static ViewableBy create(String value) {
+			for (ViewableBy viewableBy : values()) {
+				if (Objects.equals(viewableBy.getValue(), value)) {
+					return viewableBy;
+				}
+			}
+
+			return null;
+		}
+
+		public String getValue() {
+			return _value;
+		}
+
+		@Override
+		public String toString() {
+			return _value;
+		}
+
+		private ViewableBy(String value) {
+			_value = value;
+		}
+
+		private final String _value;
+
+	}
+
+	public AggregateRating getAggregateRating() {
 		return aggregateRating;
 	}
 
-	public void setAggregateRating(
-		com.liferay.headless.web.experience.dto.v1_0.AggregateRating
-			aggregateRating) {
-
+	public void setAggregateRating(AggregateRating aggregateRating) {
 		this.aggregateRating = aggregateRating;
 	}
 
 	public void setAggregateRating(
-		UnsafeSupplier
-			<com.liferay.headless.web.experience.dto.v1_0.AggregateRating,
-			 Exception> aggregateRatingUnsafeSupplier) {
+		UnsafeSupplier<AggregateRating, Exception>
+			aggregateRatingUnsafeSupplier) {
 
 		try {
 			aggregateRating = aggregateRatingUnsafeSupplier.get();
@@ -51,8 +79,7 @@ public class StructuredContent {
 		}
 	}
 
-	protected com.liferay.headless.web.experience.dto.v1_0.AggregateRating
-		aggregateRating;
+	protected AggregateRating aggregateRating;
 
 	public String[] getAvailableLanguages() {
 		return availableLanguages;
@@ -75,23 +102,16 @@ public class StructuredContent {
 
 	protected String[] availableLanguages;
 
-	public com.liferay.headless.web.experience.dto.v1_0.ContentField[]
-		getContentFields() {
-
+	public ContentField[] getContentFields() {
 		return contentFields;
 	}
 
-	public void setContentFields(
-		com.liferay.headless.web.experience.dto.v1_0.ContentField[]
-			contentFields) {
-
+	public void setContentFields(ContentField[] contentFields) {
 		this.contentFields = contentFields;
 	}
 
 	public void setContentFields(
-		UnsafeSupplier
-			<com.liferay.headless.web.experience.dto.v1_0.ContentField[],
-			 Exception> contentFieldsUnsafeSupplier) {
+		UnsafeSupplier<ContentField[], Exception> contentFieldsUnsafeSupplier) {
 
 		try {
 			contentFields = contentFieldsUnsafeSupplier.get();
@@ -101,8 +121,7 @@ public class StructuredContent {
 		}
 	}
 
-	protected com.liferay.headless.web.experience.dto.v1_0.ContentField[]
-		contentFields;
+	protected ContentField[] contentFields;
 
 	public Long getContentSpaceId() {
 		return contentSpaceId;
@@ -146,20 +165,16 @@ public class StructuredContent {
 
 	protected Long contentStructureId;
 
-	public com.liferay.headless.web.experience.dto.v1_0.Creator getCreator() {
+	public Creator getCreator() {
 		return creator;
 	}
 
-	public void setCreator(
-		com.liferay.headless.web.experience.dto.v1_0.Creator creator) {
-
+	public void setCreator(Creator creator) {
 		this.creator = creator;
 	}
 
 	public void setCreator(
-		UnsafeSupplier
-			<com.liferay.headless.web.experience.dto.v1_0.Creator, Exception>
-				creatorUnsafeSupplier) {
+		UnsafeSupplier<Creator, Exception> creatorUnsafeSupplier) {
 
 		try {
 			creator = creatorUnsafeSupplier.get();
@@ -169,18 +184,18 @@ public class StructuredContent {
 		}
 	}
 
-	protected com.liferay.headless.web.experience.dto.v1_0.Creator creator;
+	protected Creator creator;
 
-	public java.util.Date getDateCreated() {
+	public Date getDateCreated() {
 		return dateCreated;
 	}
 
-	public void setDateCreated(java.util.Date dateCreated) {
+	public void setDateCreated(Date dateCreated) {
 		this.dateCreated = dateCreated;
 	}
 
 	public void setDateCreated(
-		UnsafeSupplier<java.util.Date, Exception> dateCreatedUnsafeSupplier) {
+		UnsafeSupplier<Date, Exception> dateCreatedUnsafeSupplier) {
 
 		try {
 			dateCreated = dateCreatedUnsafeSupplier.get();
@@ -190,18 +205,18 @@ public class StructuredContent {
 		}
 	}
 
-	protected java.util.Date dateCreated;
+	protected Date dateCreated;
 
-	public java.util.Date getDateModified() {
+	public Date getDateModified() {
 		return dateModified;
 	}
 
-	public void setDateModified(java.util.Date dateModified) {
+	public void setDateModified(Date dateModified) {
 		this.dateModified = dateModified;
 	}
 
 	public void setDateModified(
-		UnsafeSupplier<java.util.Date, Exception> dateModifiedUnsafeSupplier) {
+		UnsafeSupplier<Date, Exception> dateModifiedUnsafeSupplier) {
 
 		try {
 			dateModified = dateModifiedUnsafeSupplier.get();
@@ -211,18 +226,18 @@ public class StructuredContent {
 		}
 	}
 
-	protected java.util.Date dateModified;
+	protected Date dateModified;
 
-	public java.util.Date getDatePublished() {
+	public Date getDatePublished() {
 		return datePublished;
 	}
 
-	public void setDatePublished(java.util.Date datePublished) {
+	public void setDatePublished(Date datePublished) {
 		this.datePublished = datePublished;
 	}
 
 	public void setDatePublished(
-		UnsafeSupplier<java.util.Date, Exception> datePublishedUnsafeSupplier) {
+		UnsafeSupplier<Date, Exception> datePublishedUnsafeSupplier) {
 
 		try {
 			datePublished = datePublishedUnsafeSupplier.get();
@@ -232,7 +247,7 @@ public class StructuredContent {
 		}
 	}
 
-	protected java.util.Date datePublished;
+	protected Date datePublished;
 
 	public String getDescription() {
 		return description;
@@ -295,16 +310,16 @@ public class StructuredContent {
 
 	protected String[] keywords;
 
-	public java.util.Date getLastReviewed() {
+	public Date getLastReviewed() {
 		return lastReviewed;
 	}
 
-	public void setLastReviewed(java.util.Date lastReviewed) {
+	public void setLastReviewed(Date lastReviewed) {
 		this.lastReviewed = lastReviewed;
 	}
 
 	public void setLastReviewed(
-		UnsafeSupplier<java.util.Date, Exception> lastReviewedUnsafeSupplier) {
+		UnsafeSupplier<Date, Exception> lastReviewedUnsafeSupplier) {
 
 		try {
 			lastReviewed = lastReviewedUnsafeSupplier.get();
@@ -314,7 +329,7 @@ public class StructuredContent {
 		}
 	}
 
-	protected java.util.Date lastReviewed;
+	protected Date lastReviewed;
 
 	public Number getNumberOfComments() {
 		return numberOfComments;
@@ -425,6 +440,14 @@ public class StructuredContent {
 
 	public ViewableBy getViewableBy() {
 		return viewableBy;
+	}
+
+	public String getViewableByAsString() {
+		if (viewableBy == null) {
+			return null;
+		}
+
+		return viewableBy.toString();
 	}
 
 	public void setViewableBy(ViewableBy viewableBy) {

@@ -54,10 +54,10 @@ public class SearchEngineAdapterTest {
 
 			Assert.fail("Exception was not thrown");
 		}
-		catch (RuntimeException runtimeException) {
-			assertClientSideSafeToLoad(runtimeException);
+		catch (RuntimeException re) {
+			assertClientSideSafeToLoad(re);
 
-			String message = runtimeException.getMessage();
+			String message = re.getMessage();
 
 			Assert.assertTrue(
 				message,

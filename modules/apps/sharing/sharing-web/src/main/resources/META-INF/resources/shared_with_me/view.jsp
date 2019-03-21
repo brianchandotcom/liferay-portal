@@ -20,6 +20,11 @@
 SharedWithMeViewDisplayContext sharedWithMeViewDisplayContext = (SharedWithMeViewDisplayContext)renderRequest.getAttribute(SharedWithMeViewDisplayContext.class.getName());
 %>
 
+<clay:navigation-bar
+	inverted="<%= true %>"
+	navigationItems="<%= sharedWithMeViewDisplayContext.getNavigationItems() %>"
+/>
+
 <clay:management-toolbar
 	defaultEventHandler='<%= renderResponse.getNamespace() + "SharedWithMe" %>'
 	filterDropdownItems="<%= sharedWithMeViewDisplayContext.getFilterDropdownItems() %>"

@@ -139,8 +139,8 @@ public class SharedWithMeViewDisplayContext {
 						navigationItem -> {
 							navigationItem.setActive(_isIncoming());
 
-							PortletURL sharedWithMeURL = PortletURLUtil.clone(
-								_currentURLObj, _liferayPortletResponse);
+							PortletURL sharedWithMeURL =
+								_liferayPortletResponse.createRenderURL();
 
 							sharedWithMeURL.setParameter(
 								"incoming", Boolean.TRUE.toString());
@@ -155,8 +155,8 @@ public class SharedWithMeViewDisplayContext {
 						navigationItem -> {
 							navigationItem.setActive(!_isIncoming());
 
-							PortletURL sharedWithMeURL = PortletURLUtil.clone(
-								_currentURLObj, _liferayPortletResponse);
+							PortletURL sharedWithMeURL =
+								_liferayPortletResponse.createRenderURL();
 
 							sharedWithMeURL.setParameter(
 								"incoming", Boolean.FALSE.toString());

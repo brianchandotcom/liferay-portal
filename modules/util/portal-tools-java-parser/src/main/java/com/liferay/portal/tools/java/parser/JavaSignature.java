@@ -27,15 +27,14 @@ public class JavaSignature extends BaseJavaTerm {
 	public JavaSignature(
 		String objectName, List<JavaSimpleValue> modifiers,
 		JavaType returnJavaType, List<JavaType> genericJavaTypes,
-		List<JavaParameter> javaParameters,
-		List<JavaExpression> exceptionJavaExpressions) {
+		List<JavaParameter> javaParameters, List<JavaType> exceptionJavaTypes) {
 
 		_objectName = new JavaSimpleValue(objectName);
 		_modifiers = modifiers;
 		_returnJavaType = returnJavaType;
 		_genericJavaTypes = genericJavaTypes;
 		_javaParameters = javaParameters;
-		_exceptionJavaExpressions = exceptionJavaExpressions;
+		_exceptionJavaTypes = exceptionJavaTypes;
 	}
 
 	public String getIndent() {
@@ -77,7 +76,7 @@ public class JavaSignature extends BaseJavaTerm {
 		}
 
 		if (_javaParameters.isEmpty()) {
-			if (_exceptionJavaExpressions.isEmpty()) {
+			if (_exceptionJavaTypes.isEmpty()) {
 				if ((_genericJavaTypes == null) &&
 					((_returnJavaType == null) ||
 					 Objects.equals(_returnJavaType.toString(), "void"))) {
@@ -107,20 +106,20 @@ public class JavaSignature extends BaseJavaTerm {
 				}
 
 				appendNewLine(
-					sb, _exceptionJavaExpressions, indent, "throws ", suffix,
+					sb, _exceptionJavaTypes, indent, "throws ", suffix,
 					maxLineLength);
 
 				return sb.toString();
 			}
 
 			append(
-				sb, _exceptionJavaExpressions, indent, "throws ", suffix,
+				sb, _exceptionJavaTypes, indent, "throws ", suffix,
 				maxLineLength);
 
 			return sb.toString();
 		}
 
-		if (_exceptionJavaExpressions.isEmpty()) {
+		if (_exceptionJavaTypes.isEmpty()) {
 			if (appendSingleLine(sb, _objectName, "", "(", maxLineLength)) {
 				append(
 					sb, _javaParameters, indent, "", ")" + suffix,
@@ -148,14 +147,14 @@ public class JavaSignature extends BaseJavaTerm {
 		if (appendSingleLine(sb, _objectName, "", "(", maxLineLength)) {
 			if (appendSingleLine(sb, _javaParameters, "", ")", maxLineLength)) {
 				if (appendSingleLine(
-						sb, _exceptionJavaExpressions, " throws ", suffix,
+						sb, _exceptionJavaTypes, " throws ", suffix,
 						maxLineLength)) {
 
 					return sb.toString();
 				}
 
 				appendNewLine(
-					sb, _exceptionJavaExpressions, indent, "throws ", suffix,
+					sb, _exceptionJavaTypes, indent, "throws ", suffix,
 					maxLineLength);
 
 				return sb.toString();
@@ -164,7 +163,7 @@ public class JavaSignature extends BaseJavaTerm {
 			appendNewLine(
 				sb, _javaParameters, indent + "\t", "", ")", maxLineLength);
 			appendNewLine(
-				sb, _exceptionJavaExpressions, indent, "throws ", suffix,
+				sb, _exceptionJavaTypes, indent, "throws ", suffix,
 				maxLineLength);
 
 			return sb.toString();
@@ -181,14 +180,14 @@ public class JavaSignature extends BaseJavaTerm {
 				sb, _javaParameters, indent + "\t\t", "", ")", maxLineLength);
 
 			appendNewLine(
-				sb, _exceptionJavaExpressions, indent, "throws ", suffix,
+				sb, _exceptionJavaTypes, indent, "throws ", suffix,
 				maxLineLength);
 		}
 
 		return sb.toString();
 	}
 
-	private final List<JavaExpression> _exceptionJavaExpressions;
+	private final List<JavaType> _exceptionJavaTypes;
 	private final List<JavaType> _genericJavaTypes;
 	private String _indent;
 	private final List<JavaParameter> _javaParameters;

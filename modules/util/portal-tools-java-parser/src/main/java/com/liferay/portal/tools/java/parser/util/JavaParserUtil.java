@@ -399,25 +399,25 @@ public class JavaParserUtil {
 		}
 	}
 
-	private static List<JavaExpression> _parseExceptionJavaExpressions(
+	private static List<JavaType> _parseExceptionJavaTypes(
 		DetailAST throwsDetailAST) {
 
-		List<JavaExpression> exceptionJavaExpressions = new ArrayList<>();
+		List<JavaType> exceptionJavaTypes = new ArrayList<>();
 
 		if (throwsDetailAST == null) {
-			return exceptionJavaExpressions;
+			return exceptionJavaTypes;
 		}
 
 		DetailAST childDetailAST = throwsDetailAST.getFirstChild();
 
 		while (true) {
 			if (childDetailAST == null) {
-				return exceptionJavaExpressions;
+				return exceptionJavaTypes;
 			}
 
 			if (childDetailAST.getType() != TokenTypes.COMMA) {
-				exceptionJavaExpressions.add(
-					_parseJavaExpression(childDetailAST));
+				exceptionJavaTypes.add(
+					new JavaType(childDetailAST.getText(), 0));
 			}
 
 			childDetailAST = childDetailAST.getNextSibling();
@@ -1586,7 +1586,7 @@ public class JavaParserUtil {
 				TokenTypes.TYPE_PARAMETER),
 			_parseJavaParameters(
 				detailAST.findFirstToken(TokenTypes.PARAMETERS)),
-			_parseExceptionJavaExpressions(
+			_parseExceptionJavaTypes(
 				detailAST.findFirstToken(TokenTypes.LITERAL_THROWS)));
 	}
 

@@ -48,15 +48,15 @@
 
 		<!-- References -->
 
-		<reference entity="AssetListEntryAssetEntryRel" package-path="com.liferay.asset.list" />
+		<reference entity="AssetEntryAssetListEntryRel" package-path="com.liferay.asset.list" />
 		<reference entity="Resource" package-path="com.liferay.portal" />
 		<reference entity="User" package-path="com.liferay.portal" />
 	</entity>
-	<entity local-service="true" name="AssetListEntryAssetEntryRel" remote-service="false" uuid="true">
+	<entity local-service="true" name="AssetEntryAssetListEntryRel" remote-service="false" uuid="true">
 
 		<!-- PK fields -->
 
-		<column name="assetListEntryAssetEntryRelId" primary="true" type="long" />
+		<column name="assetEntryAssetListEntryRelId" primary="true" type="long" />
 
 		<!-- Group instance -->
 
@@ -89,7 +89,7 @@
 		<finder name="AssetListEntryId" return-type="Collection">
 			<finder-column name="assetListEntryId" />
 		</finder>
-		<finder name="A_P" return-type="AssetListEntryAssetEntryRel" unique="true">
+		<finder name="A_P" return-type="AssetEntryAssetListEntryRel" unique="true">
 			<finder-column name="assetListEntryId" />
 			<finder-column name="position" />
 		</finder>
@@ -186,7 +186,7 @@
 		<reference entity="User" package-path="com.liferay.portal" />
 	</entity>
 	<exceptions>
-		<exception>AssetListEntryAssetEntryRelPostion</exception>
+		<exception>AssetEntryAssetListEntryRelPostion</exception>
 		<exception>AssetListEntryTitle</exception>
 		<exception>DuplicateAssetListEntryTitle</exception>
 	</exceptions>

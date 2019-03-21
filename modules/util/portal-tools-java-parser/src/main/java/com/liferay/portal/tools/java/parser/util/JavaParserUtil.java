@@ -416,8 +416,9 @@ public class JavaParserUtil {
 			}
 
 			if (childDetailAST.getType() != TokenTypes.COMMA) {
-				exceptionJavaTypes.add(
-					new JavaType(childDetailAST.getText(), 0));
+				FullIdent fullIdent = FullIdent.createFullIdent(childDetailAST);
+
+				exceptionJavaTypes.add(new JavaType(fullIdent.getText(), 0));
 			}
 
 			childDetailAST = childDetailAST.getNextSibling();

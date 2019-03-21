@@ -16,12 +16,20 @@ package com.liferay.headless.web.experience.resource.v1_0.test;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonSubTypes;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
 import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
 
+import com.liferay.headless.web.experience.dto.v1_0.BlogPosting;
 import com.liferay.headless.web.experience.dto.v1_0.ContentListElement;
+import com.liferay.headless.web.experience.dto.v1_0.Document;
+import com.liferay.headless.web.experience.dto.v1_0.Folder;
+import com.liferay.headless.web.experience.dto.v1_0.GenericContentListElement;
+import com.liferay.headless.web.experience.dto.v1_0.KnowledgeBaseArticle;
+import com.liferay.headless.web.experience.dto.v1_0.StructuredContent;
 import com.liferay.headless.web.experience.resource.v1_0.ContentListElementResource;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.log.Log;
@@ -240,6 +248,8 @@ public abstract class BaseContentListElementResourceTestCase {
 		options.setLocation(location);
 
 		String string = HttpUtil.URLtoString(options);
+
+		_outputObjectMapper.addMixIn(ContentListElement.class, MixIn.class);
 
 		return _outputObjectMapper.readValue(
 			string,
@@ -556,6 +566,27 @@ public abstract class BaseContentListElementResourceTestCase {
 				});
 		}
 	};
+
+	@JsonSubTypes(
+		{
+			@JsonSubTypes.Type(
+				name = "StructuredContent", value = StructuredContent.class
+			),
+			@JsonSubTypes.Type(
+				name = "KnowledgeBaseArticle",
+					value = KnowledgeBaseArticle.class),
+			@JsonSubTypes.Type(name = "Document", value = Document.class),
+			@JsonSubTypes.Type(name = "BlogPosting", value = BlogPosting.class),
+			@JsonSubTypes.Type(name = "Folder", value = Folder.class),
+		}
+	)
+	@JsonTypeInfo(
+		defaultImpl = GenericContentListElement.class,
+		include = JsonTypeInfo.As.PROPERTY, property = "contentType",
+		use = JsonTypeInfo.Id.NAME, visible = true
+	)
+	private abstract class MixIn {
+	}
 
 	@Inject
 	private ContentListElementResource _contentListElementResource;

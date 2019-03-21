@@ -25,6 +25,10 @@ import javax.servlet.jsp.PageContext;
  */
 public class ProductNavigationPersonalMenuTag extends IncludeTag {
 
+	public void setExpanded(boolean expanded) {
+		_expanded = expanded;
+	}
+
 	public void setLabel(String label) {
 		_label = label;
 	}
@@ -40,6 +44,7 @@ public class ProductNavigationPersonalMenuTag extends IncludeTag {
 	protected void cleanUp() {
 		super.cleanUp();
 
+		_expanded = false;
 		_label = null;
 	}
 
@@ -51,11 +56,14 @@ public class ProductNavigationPersonalMenuTag extends IncludeTag {
 	@Override
 	protected void setAttributes(HttpServletRequest request) {
 		request.setAttribute(
+			"liferay-product-navigation:personal-menu:expanded", _expanded);
+		request.setAttribute(
 			"liferay-product-navigation:personal-menu:label", _label);
 	}
 
 	private static final String _PAGE = "/personal_menu/page.jsp";
 
+	private boolean _expanded;
 	private String _label;
 
 }

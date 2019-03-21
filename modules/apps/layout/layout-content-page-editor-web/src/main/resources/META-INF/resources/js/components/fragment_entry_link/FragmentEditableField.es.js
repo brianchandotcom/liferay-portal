@@ -656,6 +656,18 @@ FragmentEditableField.STATE = {
 		.value(false),
 
 	/**
+	 * Translated label of the mapped field
+	 * @instance
+	 * @memberOf FragmentEditableField
+	 * @private
+	 * @review
+	 * @type {string}
+	 */
+	_mappedFieldLabel: Config
+		.internal()
+		.string(),
+
+	/**
 	 * Mapped asset field value
 	 * @instance
 	 * @memberOf FragmentEditableField

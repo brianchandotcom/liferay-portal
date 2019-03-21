@@ -10,6 +10,7 @@
 	{@param? _handleEditableClick: any}
 	{@param? _handleEditableHoverStart: any}
 	{@param? _mapped: bool}
+	{@param? _mappedFieldLabel: string}
 	{@param? _translated: bool}
 	{@param? activeItemId: string}
 	{@param? activeItemType: string}
@@ -73,7 +74,7 @@
 		id="{$fragmentEntryLinkEditableId}"
 		ref="editable"
 		tabindex="0"
-		title="{$editableValues.mappedField}"
+		title="{$_mappedFieldLabel ?: ''}"
 		type="{$type}"
 	>
 		{if ($type == 'image') and $editableValues.mappedField and $editableValues.config and $editableValues.config.imageLink}

@@ -549,6 +549,10 @@ public class GitWorkingDirectory {
 		fetch(gitRemote.getRemoteURL());
 	}
 
+	public void fetch(GitRemote gitRemote, boolean noTags) {
+		fetch(gitRemote.getRemoteURL(), noTags);
+	}
+
 	public LocalGitBranch fetch(LocalGitBranch localGitBranch) {
 		return fetch(null, localGitBranch);
 	}
@@ -615,12 +619,16 @@ public class GitWorkingDirectory {
 
 		StringBuilder sb = new StringBuilder();
 
-		sb.append("git fetch --progress -v -f ");
+		sb.append("git fetch --progress -v -f");
 
 		if (noTags) {
-			sb.append(" --no-tags ");
+			sb.append(" --no-tags");
+		}
+		else {
+			sb.append(" --tags");
 		}
 
+		sb.append(" ");
 		sb.append(remoteURL);
 
 		String remoteGitRefName = remoteGitRef.getName();
@@ -712,14 +720,18 @@ public class GitWorkingDirectory {
 
 		StringBuilder sb = new StringBuilder();
 
-		sb.append("git fetch --progress -v -f ");
+		sb.append("git fetch --progress -v -f");
 
 		if (noTags) {
-			sb.append(" --no-tags ");
+			sb.append(" --no-tags");
+		}
+		else {
+			sb.append(" --tags");
 		}
 
+		sb.append(" ");
 		sb.append(remoteURL);
-		sb.append("refs/heads/*:refs/remotes/origin/*");
+		sb.append(" refs/heads/*:refs/remotes/origin/*");
 
 		long start = System.currentTimeMillis();
 

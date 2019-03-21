@@ -61,6 +61,7 @@ import com.liferay.journal.exception.NoSuchArticleException;
 import com.liferay.journal.exception.NoSuchFeedException;
 import com.liferay.journal.exception.NoSuchFolderException;
 import com.liferay.journal.model.JournalArticle;
+import com.liferay.journal.model.JournalArticleConstants;
 import com.liferay.journal.model.JournalFeed;
 import com.liferay.journal.model.JournalFolder;
 import com.liferay.journal.model.JournalFolderConstants;
@@ -85,6 +86,7 @@ import com.liferay.portal.kernel.diff.CompareVersionsException;
 import com.liferay.portal.kernel.exception.LocaleException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Layout;
@@ -110,6 +112,7 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.Http;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -691,6 +694,9 @@ public class JournalPortlet extends MVCPortlet {
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
 		UploadException uploadException =
 			(UploadException)actionRequest.getAttribute(
 				WebKeys.UPLOAD_EXCEPTION);
@@ -738,11 +744,6 @@ public class JournalPortlet extends MVCPortlet {
 
 		Map<Locale, String> titleMap = LocalizationUtil.getLocalizationMap(
 			actionRequest, "titleMapAsXML");
-		Map<Locale, String> descriptionMap =
-			LocalizationUtil.getLocalizationMap(
-				actionRequest, "descriptionMapAsXML");
-		Map<Locale, String> friendlyURLMap =
-			LocalizationUtil.getLocalizationMap(actionRequest, "friendlyURL");
 
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			JournalArticle.class.getName(), uploadPortletRequest);
@@ -759,6 +760,26 @@ public class JournalPortlet extends MVCPortlet {
 			ddmStructure.getStructureId(), serviceContext);
 
 		String content = _journalConverter.getContent(ddmStructure, fields);
+
+		if ((classNameId == JournalArticleConstants.CLASSNAME_ID_DEFAULT) &&
+			_isEmpty(titleMap)) {
+
+			Locale articleDefaultLocale = LocaleUtil.fromLanguageId(
+				LocalizationUtil.getDefaultLanguageId(content));
+
+			titleMap.put(
+				articleDefaultLocale,
+				LanguageUtil.format(
+					_portal.getHttpServletRequest(actionRequest), "untitled-x",
+					HtmlUtil.escape(
+						ddmStructure.getName(themeDisplay.getLocale()))));
+		}
+
+		Map<Locale, String> descriptionMap =
+			LocalizationUtil.getLocalizationMap(
+				actionRequest, "descriptionMapAsXML");
+		Map<Locale, String> friendlyURLMap =
+			LocalizationUtil.getLocalizationMap(actionRequest, "friendlyURL");
 
 		String ddmTemplateKey = ParamUtil.getString(
 			uploadPortletRequest, "ddmTemplateKey");
@@ -963,9 +984,6 @@ public class JournalPortlet extends MVCPortlet {
 		}
 
 		// Asset display page
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
 
 		_updateAssetDisplayPage(
 			themeDisplay.getUserId(), groupId, article, assetDisplayPageId,
@@ -1517,6 +1535,20 @@ public class JournalPortlet extends MVCPortlet {
 		_journalContentSearchLocalService.updateContentSearch(
 			layout.getGroupId(), layout.isPrivateLayout(), layout.getLayoutId(),
 			portletResource, articleId, true);
+	}
+
+	private boolean _isEmpty(Map<Locale, String> map) {
+		if (MapUtil.isEmpty(map)) {
+			return true;
+		}
+
+		for (String value : map.values()) {
+			if (Validator.isNotNull(value)) {
+				return false;
+			}
+		}
+
+		return true;
 	}
 
 	private void _updateAssetDisplayPage(

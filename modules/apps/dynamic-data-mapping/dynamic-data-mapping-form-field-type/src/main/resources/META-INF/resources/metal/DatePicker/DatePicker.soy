@@ -241,12 +241,14 @@
 					<option {if $month == $months[$_month]} selected {/if} value="{index($month)}">{$month}</option>
 				{/foreach}
 			</select>
+
 			<select class="form-control form-control-sm" name="year" onChange="{$_handleNavigateChange}" value="{$_year}">
 				{foreach $year in $years}
 					<option key="{$year}{index($year)}{$year == $_year ? 'selected' : 'unselected'}" {if $year == $_year} selected {/if} value="{$year}">{$year}</option>
 				{/foreach}
 			</select>
 		</form>
+
 		<div class="navigation">
 			{call ClayButton.render}
 				{param events: ['click': $_handlePreviousMonth] /}

@@ -84,8 +84,8 @@
 		"rimraf": "^2.6.2"
 	},
 	"jest": {
-		"browser": true,
 		"automock": false,
+		"browser": true,
 		"coverageDirectory": "build/coverage",
 		"coverageThreshold": {
 			"global": {

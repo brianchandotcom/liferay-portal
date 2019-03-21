@@ -155,13 +155,13 @@ public class SharedWithMeViewDisplayContext {
 						navigationItem -> {
 							navigationItem.setActive(!_isIncoming());
 
-							PortletURL sharedWithMeURL =
+							PortletURL sharedByMeURL =
 								_liferayPortletResponse.createRenderURL();
 
-							sharedWithMeURL.setParameter(
+							sharedByMeURL.setParameter(
 								"incoming", Boolean.FALSE.toString());
 
-							navigationItem.setHref(sharedWithMeURL);
+							navigationItem.setHref(sharedByMeURL);
 
 							navigationItem.setLabel(
 								LanguageUtil.get(_request, "shared-by-me"));

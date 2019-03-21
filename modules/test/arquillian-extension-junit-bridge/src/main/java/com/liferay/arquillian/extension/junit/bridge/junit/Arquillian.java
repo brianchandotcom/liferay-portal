@@ -18,7 +18,6 @@ import com.liferay.arquillian.extension.junit.bridge.client.BndBundleUtil;
 import com.liferay.arquillian.extension.junit.bridge.client.MBeans;
 import com.liferay.arquillian.extension.junit.bridge.command.RunNotifierCommand;
 
-import java.io.Closeable;
 import java.io.EOFException;
 import java.io.IOException;
 import java.io.InputStream;
@@ -115,18 +114,28 @@ public class Arquillian extends Runner implements Filterable {
 
 			Class.forName(_clazz.getName(), true, _clazz.getClassLoader());
 
-			try (ServerSocket serverSocket = _getServerSocket();
-				Closeable closeable = _installBundle(
-					serverSocket.getLocalPort());
-				Socket socket = serverSocket.accept()) {
+			FrameworkMBean frameworkMBean = MBeans.getFrameworkMBean();
 
-				Thread thread = new Thread(
-					new ServerRunnable(runNotifier, socket),
-					_clazz.getName() + "-Test-Thread");
+			try (ServerSocket serverSocket = _getServerSocket()) {
+				long bundleId = _installBundle(
+					frameworkMBean, serverSocket.getLocalPort());
 
-				thread.start();
+				try {
+					frameworkMBean.startBundle(bundleId);
 
-				thread.join();
+					try (Socket socket = serverSocket.accept()) {
+						Thread thread = new Thread(
+							new ServerRunnable(runNotifier, socket),
+							_clazz.getName() + "-Test-Thread");
+
+						thread.start();
+
+						thread.join();
+					}
+				}
+				finally {
+					frameworkMBean.uninstallBundle(bundleId);
+				}
 			}
 		}
 		catch (Throwable t) {
@@ -153,7 +162,9 @@ public class Arquillian extends Runner implements Filterable {
 		}
 	}
 
-	private Closeable _installBundle(int port) throws Exception {
+	private long _installBundle(FrameworkMBean frameworkMBean, int port)
+		throws Exception {
+
 		Path path = BndBundleUtil.createBundle(
 			_clazz.getName(), _filteredSortedTestClass._filteredMethodNames,
 			_inetAddress.getHostAddress(), port);
@@ -162,21 +173,13 @@ public class Arquillian extends Runner implements Filterable {
 
 		URL url = uri.toURL();
 
-		FrameworkMBean frameworkMBean = MBeans.getFrameworkMBean();
-
-		long bundleId;
-
 		try {
-			bundleId = frameworkMBean.installBundleFromURL(
+			return frameworkMBean.installBundleFromURL(
 				url.getPath(), url.toExternalForm());
 		}
 		finally {
 			Files.delete(path);
 		}
-
-		frameworkMBean.startBundle(bundleId);
-
-		return () -> frameworkMBean.uninstallBundle(bundleId);
 	}
 
 	private static final int _START_PORT = 32764;

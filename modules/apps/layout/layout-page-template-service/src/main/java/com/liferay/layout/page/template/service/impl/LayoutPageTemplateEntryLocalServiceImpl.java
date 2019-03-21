@@ -41,6 +41,7 @@ import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.spring.extender.service.ServiceReference;
@@ -124,6 +125,8 @@ public class LayoutPageTemplateEntryLocalServiceImpl
 
 		validate(groupId, name);
 
+		Date now = new Date();
+
 		long layoutPageTemplateEntryId = counterLocalService.increment();
 
 		LayoutPageTemplateEntry layoutPageTemplateEntry =
@@ -136,9 +139,9 @@ public class LayoutPageTemplateEntryLocalServiceImpl
 		layoutPageTemplateEntry.setUserId(user.getUserId());
 		layoutPageTemplateEntry.setUserName(user.getFullName());
 		layoutPageTemplateEntry.setCreateDate(
-			serviceContext.getCreateDate(new Date()));
+			serviceContext.getCreateDate(now));
 		layoutPageTemplateEntry.setModifiedDate(
-			serviceContext.getModifiedDate(new Date()));
+			serviceContext.getModifiedDate(now));
 		layoutPageTemplateEntry.setLayoutPageTemplateCollectionId(
 			layoutPageTemplateCollectionId);
 		layoutPageTemplateEntry.setClassNameId(classNameId);
@@ -160,6 +163,33 @@ public class LayoutPageTemplateEntryLocalServiceImpl
 		}
 
 		layoutPageTemplateEntry.setPlid(plid);
+
+		// Draft layout page template
+
+		if (status == WorkflowConstants.STATUS_APPROVED) {
+			serviceContext.setModifiedDate(now);
+
+			String draftName = StringUtil.randomString(64);
+
+			LayoutPageTemplateEntry draftLayoutPageTemplateEntry =
+				fetchLayoutPageTemplateEntry(groupId, draftName);
+
+			while (draftLayoutPageTemplateEntry != null) {
+				draftName = StringUtil.randomString(64);
+
+				draftLayoutPageTemplateEntry = fetchLayoutPageTemplateEntry(
+					groupId, draftName);
+			}
+
+			draftLayoutPageTemplateEntry = addLayoutPageTemplateEntry(
+				userId, groupId, layoutPageTemplateCollectionId, classNameId,
+				classTypeId, draftName, type, defaultTemplate,
+				layoutPrototypeId, previewFileEntryId, 0,
+				WorkflowConstants.STATUS_DRAFT, serviceContext);
+
+			layoutPageTemplateEntry.setDraftLayoutPageTemplateEntryId(
+				draftLayoutPageTemplateEntry.getLayoutPageTemplateEntryId());
+		}
 
 		layoutPageTemplateEntry.setStatus(status);
 		layoutPageTemplateEntry.setStatusByUserId(userId);
@@ -220,7 +250,7 @@ public class LayoutPageTemplateEntryLocalServiceImpl
 
 		return addLayoutPageTemplateEntry(
 			userId, groupId, layoutPageTemplateCollectionId, name, type,
-			WorkflowConstants.STATUS_DRAFT, serviceContext);
+			WorkflowConstants.STATUS_APPROVED, serviceContext);
 	}
 
 	@Override
@@ -232,7 +262,7 @@ public class LayoutPageTemplateEntryLocalServiceImpl
 		return addLayoutPageTemplateEntry(
 			userId, groupId, layoutPageTemplateCollectionId, name,
 			LayoutPageTemplateEntryTypeConstants.TYPE_BASIC,
-			WorkflowConstants.STATUS_DRAFT, serviceContext);
+			WorkflowConstants.STATUS_APPROVED, serviceContext);
 	}
 
 	@Override

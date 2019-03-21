@@ -91,7 +91,6 @@ public class AssetListEntrySegmentsEntryRelServiceTest {
 
 		AssetListTestUtil.addAssetListEntrySegmentsEntryRel(
 			_group.getGroupId(), assetListEntry);
-
 		AssetListTestUtil.addAssetListEntrySegmentsEntryRel(
 			_group.getGroupId(), assetListEntry);
 

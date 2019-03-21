@@ -85,7 +85,6 @@ public class AssetListEntryServiceTest {
 			addAssetEntryAssetListEntryRel(
 				assetEntry.getEntryId(), assetListEntry.getAssetListEntryId(),
 				segmentsEntryId, 1, serviceContext);
-
 		AssetEntryAssetListEntryRelLocalServiceUtil.
 			addAssetEntryAssetListEntryRel(
 				assetEntry.getEntryId(), assetListEntry.getAssetListEntryId(),

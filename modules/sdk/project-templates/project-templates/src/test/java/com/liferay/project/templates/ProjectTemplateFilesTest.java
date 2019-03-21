@@ -817,6 +817,8 @@ public class ProjectTemplateFilesTest {
 
 		String bundleName = properties.getProperty(Constants.BUNDLE_NAME);
 
+		bundleName = bundleName.replaceAll("[^\\w\\s]", "");
+
 		Matcher matcher = _bundleNameSeparatorPattern.matcher(
 			bundleName.substring(
 				FileTestUtil.PROJECT_TEMPLATE_BUNDLE_NAME_PREFIX.length()));

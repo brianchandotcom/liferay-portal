@@ -50,16 +50,16 @@ public class AddAssetEntrySelectionMVCActionCommand
 		long assetListEntryId = ParamUtil.getLong(
 			actionRequest, "assetListEntryId");
 
-		long segmentsEntryId = ParamUtil.getLong(
-			actionRequest, "segmentsEntryId");
 		long[] assetEntryIds = ParamUtil.getLongValues(
 			actionRequest, "assetEntryIds");
+		long segmentsEntryId = ParamUtil.getLong(
+			actionRequest, "segmentsEntryId");
 
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			actionRequest);
 
 		_assetListEntryService.addAssetEntrySelections(
-			assetListEntryId, segmentsEntryId, assetEntryIds, serviceContext);
+			assetListEntryId, assetEntryIds, segmentsEntryId, serviceContext);
 	}
 
 	@Reference

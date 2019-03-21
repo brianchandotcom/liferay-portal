@@ -343,8 +343,9 @@ public class AssetListEntryAssetEntryRelServiceTest {
 		AssetListEntryAssetEntryRelLocalServiceUtil.
 			updateAssetListEntryAssetEntryRel(
 				assetListEntryRel.getAssetListEntryAssetEntryRelId(),
-				assetListEntryUpdated.getAssetListEntryId(), segmentsEntryId,
-				assetEntryUpdated.getEntryId(), positionOriginal + 1);
+				assetListEntryUpdated.getAssetListEntryId(),
+				assetEntryUpdated.getEntryId(), segmentsEntryId,
+				positionOriginal + 1);
 
 		AssetListEntryAssetEntryRel assetListEntryRelUpdated =
 			AssetListEntryAssetEntryRelUtil.findByPrimaryKey(

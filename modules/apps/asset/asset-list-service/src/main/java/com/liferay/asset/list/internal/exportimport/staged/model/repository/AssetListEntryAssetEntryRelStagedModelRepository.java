@@ -67,8 +67,8 @@ public class AssetListEntryAssetEntryRelStagedModelRepository
 		return _assetListEntryAssetEntryRelLocalService.
 			addAssetListEntryAssetEntryRel(
 				assetListEntryAssetEntryRel.getAssetListEntryId(),
-				assetListEntryAssetEntryRel.getSegmentsEntryId(),
 				assetEntry.getEntryId(),
+				assetListEntryAssetEntryRel.getSegmentsEntryId(),
 				assetListEntryAssetEntryRel.getPosition(), serviceContext);
 	}
 
@@ -160,8 +160,8 @@ public class AssetListEntryAssetEntryRelStagedModelRepository
 			updateAssetListEntryAssetEntryRel(
 				assetListEntryAssetEntryRel.getAssetListEntryAssetEntryRelId(),
 				assetListEntryAssetEntryRel.getAssetListEntryId(),
-				assetListEntryAssetEntryRel.getSegmentsEntryId(),
 				assetListEntryAssetEntryRel.getAssetEntryId(),
+				assetListEntryAssetEntryRel.getSegmentsEntryId(),
 				assetListEntryAssetEntryRel.getPosition());
 	}
 

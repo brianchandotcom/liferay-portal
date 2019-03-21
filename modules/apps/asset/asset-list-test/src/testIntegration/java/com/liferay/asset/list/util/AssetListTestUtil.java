@@ -65,8 +65,8 @@ public class AssetListTestUtil {
 
 		return AssetListEntryAssetEntryRelLocalServiceUtil.
 			addAssetListEntryAssetEntryRel(
-				assetListEntry.getAssetListEntryId(), segmentsEntryId,
-				assetEntry.getEntryId(), serviceContext);
+				assetListEntry.getAssetListEntryId(), assetEntry.getEntryId(),
+				segmentsEntryId, serviceContext);
 	}
 
 	public static AssetListEntryAssetEntryRel addAssetListEntryAssetEntryRel(
@@ -79,8 +79,8 @@ public class AssetListTestUtil {
 
 		return AssetListEntryAssetEntryRelLocalServiceUtil.
 			addAssetListEntryAssetEntryRel(
-				assetListEntry.getAssetListEntryId(), segmentsEntryId,
-				assetEntry.getEntryId(), position, serviceContext);
+				assetListEntry.getAssetListEntryId(), assetEntry.getEntryId(),
+				segmentsEntryId, position, serviceContext);
 	}
 
 	public static AssetListEntrySegmentsEntryRel

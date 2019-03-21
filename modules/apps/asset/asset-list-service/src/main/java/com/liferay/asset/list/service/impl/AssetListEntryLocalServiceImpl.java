@@ -46,18 +46,18 @@ public class AssetListEntryLocalServiceImpl
 
 	@Override
 	public void addAssetEntrySelection(
-			long assetListEntryId, long segmentsEntryId, long assetEntryId,
+			long assetListEntryId, long assetEntryId, long segmentsEntryId,
 			ServiceContext serviceContext)
 		throws PortalException {
 
 		addAssetEntrySelections(
-			assetListEntryId, segmentsEntryId, new long[] {assetEntryId},
+			assetListEntryId, new long[] {assetEntryId}, segmentsEntryId,
 			serviceContext);
 	}
 
 	@Override
 	public void addAssetEntrySelections(
-			long assetListEntryId, long segmentsEntryId, long[] assetEntryIds,
+			long assetListEntryId, long[] assetEntryIds, long segmentsEntryId,
 			ServiceContext serviceContext)
 		throws PortalException {
 
@@ -93,7 +93,7 @@ public class AssetListEntryLocalServiceImpl
 		for (long assetEntryId : assetEntryIds) {
 			assetListEntryAssetEntryRelLocalService.
 				addAssetListEntryAssetEntryRel(
-					assetListEntryId, segmentsEntryId, assetEntryId,
+					assetListEntryId, assetEntryId, segmentsEntryId,
 					serviceContext);
 		}
 	}
@@ -187,9 +187,8 @@ public class AssetListEntryLocalServiceImpl
 			_segmentsEntryLocalService.getDefaultSegmentsEntry(groupId);
 
 		addAssetEntrySelections(
-			assetListEntry.getAssetListEntryId(),
-			defaultSegmentsEntry.getSegmentsEntryId(), assetEntryIds,
-			serviceContext);
+			assetListEntry.getAssetListEntryId(), assetEntryIds,
+			defaultSegmentsEntry.getSegmentsEntryId(), serviceContext);
 
 		return assetListEntry;
 	}

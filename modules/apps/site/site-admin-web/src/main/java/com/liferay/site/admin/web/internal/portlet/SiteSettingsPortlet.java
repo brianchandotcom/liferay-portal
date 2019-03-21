@@ -14,15 +14,25 @@
 
 package com.liferay.site.admin.web.internal.portlet;
 
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.service.permission.GroupPermissionUtil;
+import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.site.admin.web.internal.constants.SiteAdminPortletKeys;
 
+import java.io.IOException;
+
 import javax.portlet.ActionRequest;
 import javax.portlet.Portlet;
+import javax.portlet.PortletException;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
+import javax.portlet.RenderRequest;
+import javax.portlet.RenderResponse;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -52,6 +62,31 @@ import org.osgi.service.component.annotations.Component;
 	service = Portlet.class
 )
 public class SiteSettingsPortlet extends SiteAdminPortlet {
+
+	@Override
+	protected void doDispatch(
+			RenderRequest renderRequest, RenderResponse renderResponse)
+		throws IOException, PortletException {
+
+		long groupId = ParamUtil.getLong(renderRequest, "groupId");
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		if (groupId == 0) {
+			groupId = themeDisplay.getScopeGroupId();
+		}
+
+		try {
+			GroupPermissionUtil.check(
+				themeDisplay.getPermissionChecker(), groupId, ActionKeys.VIEW);
+		}
+		catch (PortalException pe) {
+			SessionErrors.add(renderRequest, pe.getClass());
+		}
+
+		super.doDispatch(renderRequest, renderResponse);
+	}
 
 	@Override
 	protected PortletURL getSiteAdministrationURL(

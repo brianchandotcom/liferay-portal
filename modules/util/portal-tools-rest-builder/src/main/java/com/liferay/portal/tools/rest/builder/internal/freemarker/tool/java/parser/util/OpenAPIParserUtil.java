@@ -311,31 +311,6 @@ public class OpenAPIParserUtil {
 		return false;
 	}
 
-	public static boolean isSchemaParameter(
-		String javaDataType, OpenAPIYAML openAPIYAML) {
-
-		if (javaDataType.startsWith("[")) {
-			javaDataType = getElementClassName(javaDataType);
-		}
-
-		if (javaDataType.endsWith(">")) {
-			javaDataType = javaDataType.substring(0, javaDataType.indexOf("<"));
-		}
-
-		if (javaDataType.indexOf('.') != -1) {
-			javaDataType = javaDataType.substring(
-				javaDataType.lastIndexOf(".") + 1);
-		}
-
-		Map<String, Schema> schemas = OpenAPIUtil.getAllSchemas(openAPIYAML);
-
-		if (schemas.containsKey(javaDataType)) {
-			return true;
-		}
-
-		return false;
-	}
-
 	private static final Map<Map.Entry<String, String>, String>
 		_openAPIDataTypeMap = new HashMap<Map.Entry<String, String>, String>() {
 			{

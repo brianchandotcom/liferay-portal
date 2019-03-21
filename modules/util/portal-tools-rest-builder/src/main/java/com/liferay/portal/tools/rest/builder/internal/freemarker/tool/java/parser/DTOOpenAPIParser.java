@@ -83,6 +83,39 @@ public class DTOOpenAPIParser {
 		return null;
 	}
 
+	public static boolean isSchemaProperty(
+		OpenAPIYAML openAPIYAML, String propertyName, Schema schema) {
+
+		Map<String, Schema> schemas = OpenAPIUtil.getAllSchemas(openAPIYAML);
+
+		Map<String, Schema> propertySchemas = _getPropertySchemas(schema);
+
+		for (Map.Entry<String, Schema> entry : propertySchemas.entrySet()) {
+			String propertySchemaName = entry.getKey();
+			Schema propertySchema = entry.getValue();
+
+			String curPropertyName = _getPropertyName(
+				propertySchema, propertySchemaName);
+
+			if (StringUtil.equalsIgnoreCase(curPropertyName, propertyName)) {
+				String schemaName = StringUtil.upperCaseFirstLetter(
+					propertySchemaName);
+
+				if (propertySchema.getItems() != null) {
+					schemaName = OpenAPIUtil.formatSingular(schemaName);
+				}
+
+				if (schemas.containsKey(schemaName)) {
+					return true;
+				}
+
+				return false;
+			}
+		}
+
+		return false;
+	}
+
 	private static String _getPropertyName(
 		Schema propertySchema, String propertySchemaName) {
 

@@ -193,6 +193,13 @@ public class FreeMarkerTool {
 			javaMethodSignature, httpMethods);
 	}
 
+	public boolean isDTOSchemaProperty(
+		OpenAPIYAML openAPIYAML, String propertyName, Schema schema) {
+
+		return DTOOpenAPIParser.isSchemaProperty(
+			openAPIYAML, propertyName, schema);
+	}
+
 	public boolean isPathParameter(
 		JavaMethodParameter javaMethodParameter, Operation operation) {
 
@@ -208,12 +215,6 @@ public class FreeMarkerTool {
 		}
 
 		return false;
-	}
-
-	public boolean isSchemaParameter(
-		String javaDataType, OpenAPIYAML openAPIYAML) {
-
-		return OpenAPIParserUtil.isSchemaParameter(javaDataType, openAPIYAML);
 	}
 
 	private FreeMarkerTool() {

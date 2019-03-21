@@ -1,6 +1,6 @@
 import PortletBase from 'frontend-js-web/liferay/PortletBase.es';
 
-class SharedWithMe extends PortletBase {
+class SharedAssets extends PortletBase {
 	constructor(config, ...args) {
 		super(config, ...args);
 
@@ -47,4 +47,4 @@ class SharedWithMe extends PortletBase {
 	}
 }
 
-export default SharedWithMe;
+export default SharedAssets;

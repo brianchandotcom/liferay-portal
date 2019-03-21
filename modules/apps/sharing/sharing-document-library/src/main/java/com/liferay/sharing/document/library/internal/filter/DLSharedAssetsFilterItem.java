@@ -16,7 +16,7 @@ package com.liferay.sharing.document.library.internal.filter;
 
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.sharing.filter.SharedWithMeFilterItem;
+import com.liferay.sharing.filter.SharedAssetsFilterItem;
 
 import java.util.Locale;
 
@@ -27,9 +27,9 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(
 	immediate = true, property = "navigation.item.order:Integer=1000",
-	service = SharedWithMeFilterItem.class
+	service = SharedAssetsFilterItem.class
 )
-public class DLSharedWithMeFilterItem implements SharedWithMeFilterItem {
+public class DLSharedAssetsFilterItem implements SharedAssetsFilterItem {
 
 	@Override
 	public String getClassName() {

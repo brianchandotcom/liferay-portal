@@ -14,24 +14,25 @@
  */
 --%>
 
-<%@ include file="/shared_with_me/init.jsp" %>
+<%@ include file="/shared_assets/init.jsp" %>
 
 <%
-SharedWithMeViewDisplayContext sharedWithMeViewDisplayContext = (SharedWithMeViewDisplayContext)renderRequest.getAttribute(SharedWithMeViewDisplayContext.class.getName());
+SharedAssetsViewDisplayContext
+	sharedAssetsViewDisplayContext = (SharedAssetsViewDisplayContext)renderRequest.getAttribute(SharedAssetsViewDisplayContext.class.getName());
 %>
 
 <clay:navigation-bar
 	inverted="<%= true %>"
-	navigationItems="<%= sharedWithMeViewDisplayContext.getNavigationItems() %>"
+	navigationItems="<%= sharedAssetsViewDisplayContext.getNavigationItems() %>"
 />
 
 <clay:management-toolbar
-	defaultEventHandler='<%= renderResponse.getNamespace() + "SharedWithMe" %>'
-	filterDropdownItems="<%= sharedWithMeViewDisplayContext.getFilterDropdownItems() %>"
+	defaultEventHandler='<%= renderResponse.getNamespace() + "SharedAssets" %>'
+	filterDropdownItems="<%= sharedAssetsViewDisplayContext.getFilterDropdownItems() %>"
 	selectable="<%= false %>"
 	showSearch="<%= false %>"
-	sortingOrder="<%= sharedWithMeViewDisplayContext.getSortingOrder() %>"
-	sortingURL="<%= String.valueOf(sharedWithMeViewDisplayContext.getSortingURL()) %>"
+	sortingOrder="<%= sharedAssetsViewDisplayContext.getSortingOrder() %>"
+	sortingURL="<%= String.valueOf(sharedAssetsViewDisplayContext.getSortingURL()) %>"
 />
 
 <%
@@ -41,7 +42,7 @@ portletURL.setParameter("mvcRenderCommandName", "/blogs/view");
 
 SearchContainer sharingEntriesSearchContainer = new SearchContainer(renderRequest, PortletURLUtil.clone(portletURL, liferayPortletResponse), null, "no-entries-were-found");
 
-sharedWithMeViewDisplayContext.populateResults(sharingEntriesSearchContainer);
+sharedAssetsViewDisplayContext.populateResults(sharingEntriesSearchContainer);
 %>
 
 <div class="container-fluid-1280 main-content-body">
@@ -56,7 +57,7 @@ sharedWithMeViewDisplayContext.populateResults(sharingEntriesSearchContainer);
 			modelVar="sharingEntry"
 		>
 			<liferay-portlet:renderURL varImpl="rowURL">
-				<portlet:param name="mvcRenderCommandName" value="/shared_with_me/view_sharing_entry" />
+				<portlet:param name="mvcRenderCommandName" value="/shared_assets/view_sharing_entry" />
 				<portlet:param name="redirect" value="<%= sharingEntriesSearchContainer.getIteratorURL().toString() %>" />
 				<portlet:param name="sharingEntryId" value="<%= String.valueOf(sharingEntry.getSharingEntryId()) %>" />
 			</liferay-portlet:renderURL>
@@ -66,13 +67,13 @@ sharedWithMeViewDisplayContext.populateResults(sharingEntriesSearchContainer);
 				href="<%= rowURL %>"
 				name="title"
 				orderable="<%= false %>"
-				value="<%= sharedWithMeViewDisplayContext.getTitle(sharingEntry) %>"
+				value="<%= sharedAssetsViewDisplayContext.getTitle(sharingEntry) %>"
 			/>
 
 			<liferay-ui:search-container-column-text
 				name="asset-type"
 				orderable="<%= false %>"
-				value="<%= sharedWithMeViewDisplayContext.getAssetTypeTitle(sharingEntry) %>"
+				value="<%= sharedAssetsViewDisplayContext.getAssetTypeTitle(sharingEntry) %>"
 			/>
 
 			<liferay-ui:search-container-column-date
@@ -82,7 +83,7 @@ sharedWithMeViewDisplayContext.populateResults(sharingEntriesSearchContainer);
 			/>
 
 			<liferay-ui:search-container-column-jsp
-				path="/shared_with_me/sharing_entry_action.jsp"
+				path="/shared_assets/sharing_entry_action.jsp"
 			/>
 		</liferay-ui:search-container-row>
 
@@ -94,8 +95,8 @@ sharedWithMeViewDisplayContext.populateResults(sharingEntriesSearchContainer);
 </div>
 
 <portlet:renderURL var="selectAssetTypeURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
-	<portlet:param name="mvcRenderCommandName" value="/shared_with_me/select_asset_type" />
-	<portlet:param name="className" value="<%= sharedWithMeViewDisplayContext.getClassName() %>" />
+	<portlet:param name="mvcRenderCommandName" value="/shared_assets/select_asset_type" />
+	<portlet:param name="className" value="<%= sharedAssetsViewDisplayContext.getClassName() %>" />
 </portlet:renderURL>
 
 <%
@@ -110,7 +111,7 @@ context.put("viewAssetTypeURL", viewAssetTypeURL.toString());
 %>
 
 <liferay-frontend:component
-	componentId='<%= renderResponse.getNamespace() + "SharedWithMe" %>'
+	componentId='<%= renderResponse.getNamespace() + "SharedAssets" %>'
 	context="<%= context %>"
-	module="SharedWithMe.es"
+	module="SharedAssets.es"
 />

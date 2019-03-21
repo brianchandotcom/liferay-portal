@@ -42,7 +42,7 @@ page import="com.liferay.portal.kernel.util.ParamUtil" %><%@
 page import="com.liferay.portal.kernel.util.WebKeys" %><%@
 page import="com.liferay.sharing.exception.NoSuchEntryException" %><%@
 page import="com.liferay.sharing.model.SharingEntry" %><%@
-page import="com.liferay.sharing.web.internal.display.context.SharedWithMeViewDisplayContext" %>
+page import="com.liferay.sharing.web.internal.display.context.SharedAssetsViewDisplayContext" %>
 
 <%@ page import="java.util.HashMap" %><%@
 page import="java.util.Map" %>

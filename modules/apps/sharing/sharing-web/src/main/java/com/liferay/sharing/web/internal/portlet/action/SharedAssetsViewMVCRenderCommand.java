@@ -31,14 +31,14 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.ResourceBundleLoader;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.sharing.display.context.util.SharingMenuItemFactory;
-import com.liferay.sharing.filter.SharedWithMeFilterItem;
+import com.liferay.sharing.filter.SharedAssetsFilterItem;
 import com.liferay.sharing.interpreter.SharingEntryInterpreter;
 import com.liferay.sharing.interpreter.SharingEntryInterpreterProvider;
 import com.liferay.sharing.model.SharingEntry;
 import com.liferay.sharing.renderer.SharingEntryViewRenderer;
 import com.liferay.sharing.service.SharingEntryLocalService;
 import com.liferay.sharing.web.internal.constants.SharingPortletKeys;
-import com.liferay.sharing.web.internal.display.context.SharedWithMeViewDisplayContext;
+import com.liferay.sharing.web.internal.display.context.SharedAssetsViewDisplayContext;
 
 import java.io.IOException;
 
@@ -66,15 +66,15 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	immediate = true,
 	property = {
-		"javax.portlet.name=" + SharingPortletKeys.SHARED_WITH_ME,
+		"javax.portlet.name=" + SharingPortletKeys.SHARED_ASSETS,
 		"mvc.command.name=/",
-		"mvc.command.name=/shared_with_me/select_asset_type",
-		"mvc.command.name=/shared_with_me/view",
-		"mvc.command.name=/shared_with_me/view_sharing_entry"
+		"mvc.command.name=/shared_assets/select_asset_type",
+		"mvc.command.name=/shared_assets/view",
+		"mvc.command.name=/shared_assets/view_sharing_entry"
 	},
 	service = MVCRenderCommand.class
 )
-public class SharedWithMeViewMVCRenderCommand implements MVCRenderCommand {
+public class SharedAssetsViewMVCRenderCommand implements MVCRenderCommand {
 
 	@Override
 	public String render(
@@ -85,7 +85,7 @@ public class SharedWithMeViewMVCRenderCommand implements MVCRenderCommand {
 			renderRequest, "mvcRenderCommandName");
 
 		if (Objects.equals(
-				mvcRenderCommandName, "/shared_with_me/view_sharing_entry")) {
+				mvcRenderCommandName, "/shared_assets/view_sharing_entry")) {
 
 			ThemeDisplay themeDisplay =
 				(ThemeDisplay)renderRequest.getAttribute(WebKeys.THEME_DISPLAY);
@@ -126,17 +126,17 @@ public class SharedWithMeViewMVCRenderCommand implements MVCRenderCommand {
 			catch (PortalException pe) {
 				SessionErrors.add(renderRequest, pe.getClass());
 
-				return "/shared_with_me/error.jsp";
+				return "/shared_assets/error.jsp";
 			}
 			catch (IOException ioe) {
 				throw new PortletException(ioe);
 			}
 		}
 
-		List<SharedWithMeFilterItem> sharedWithMeFilterItems =
+		List<SharedAssetsFilterItem> sharedAssetsFilterItems =
 			new ArrayList<>();
 
-		_serviceTrackerList.forEach(sharedWithMeFilterItems::add);
+		_serviceTrackerList.forEach(sharedAssetsFilterItems::add);
 
 		LiferayPortletRequest liferayPortletRequest =
 			_portal.getLiferayPortletRequest(renderRequest);
@@ -150,30 +150,30 @@ public class SharedWithMeViewMVCRenderCommand implements MVCRenderCommand {
 			_resourceBundleLoader.loadResourceBundle(
 				_portal.getLocale(request));
 
-		SharedWithMeViewDisplayContext sharedWithMeViewDisplayContext =
-			new SharedWithMeViewDisplayContext(
+		SharedAssetsViewDisplayContext sharedAssetsViewDisplayContext =
+			new SharedAssetsViewDisplayContext(
 				liferayPortletRequest, liferayPortletResponse, request,
 				resourceBundle, _sharingEntryLocalService,
 				_sharingEntryInterpreterProvider::getSharingEntryInterpreter,
-				sharedWithMeFilterItems, _sharingMenuItemFactory);
+				sharedAssetsFilterItems, _sharingMenuItemFactory);
 
 		renderRequest.setAttribute(
-			SharedWithMeViewDisplayContext.class.getName(),
-			sharedWithMeViewDisplayContext);
+			SharedAssetsViewDisplayContext.class.getName(),
+			sharedAssetsViewDisplayContext);
 
 		if (Objects.equals(
-				mvcRenderCommandName, "/shared_with_me/select_asset_type")) {
+				mvcRenderCommandName, "/shared_assets/select_asset_type")) {
 
-			return "/shared_with_me/select_asset_type.jsp";
+			return "/shared_assets/select_asset_type.jsp";
 		}
 
-		return "/shared_with_me/view.jsp";
+		return "/shared_assets/view.jsp";
 	}
 
 	@Activate
 	protected void activate(final BundleContext bundleContext) {
 		_serviceTrackerList = ServiceTrackerListFactory.open(
-			bundleContext, SharedWithMeFilterItem.class,
+			bundleContext, SharedAssetsFilterItem.class,
 			Collections.reverseOrder(
 				new PropertyServiceReferenceComparator<>(
 					"navigation.item.order")));
@@ -211,7 +211,7 @@ public class SharedWithMeViewMVCRenderCommand implements MVCRenderCommand {
 	@Reference(target = "(bundle.symbolic.name=com.liferay.sharing.web)")
 	private ResourceBundleLoader _resourceBundleLoader;
 
-	private ServiceTrackerList<SharedWithMeFilterItem, SharedWithMeFilterItem>
+	private ServiceTrackerList<SharedAssetsFilterItem, SharedAssetsFilterItem>
 		_serviceTrackerList;
 
 	@Reference

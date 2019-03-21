@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/shared_with_me/init.jsp" %>
+<%@ include file="/shared_assets/init.jsp" %>
 
 <%
 AssetRenderer assetRenderer = (AssetRenderer)renderRequest.getAttribute(AssetRenderer.class.getName());

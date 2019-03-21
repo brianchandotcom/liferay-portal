@@ -14,17 +14,18 @@
  */
 --%>
 
-<%@ include file="/shared_with_me/init.jsp" %>
+<%@ include file="/shared_assets/init.jsp" %>
 
 <%
 String eventName = ParamUtil.getString(request, "eventName", renderResponse.getNamespace() + "selectAssetType");
 
 PortletURL portletURL = renderResponse.createRenderURL();
 
-portletURL.setParameter("mvcRenderCommandName", "/shared_with_me/select_asset_type");
+portletURL.setParameter("mvcRenderCommandName", "/shared_assets/select_asset_type");
 portletURL.setParameter("eventName", eventName);
 
-SharedWithMeViewDisplayContext sharedWithMeViewDisplayContext = (SharedWithMeViewDisplayContext)renderRequest.getAttribute(SharedWithMeViewDisplayContext.class.getName());
+SharedAssetsViewDisplayContext
+	sharedAssetsViewDisplayContext = (SharedAssetsViewDisplayContext)renderRequest.getAttribute(SharedAssetsViewDisplayContext.class.getName());
 %>
 
 <aui:form action="<%= portletURL.toString() %>" cssClass="container-fluid-1280" method="post" name="selectAssetTypeFm">
@@ -32,25 +33,25 @@ SharedWithMeViewDisplayContext sharedWithMeViewDisplayContext = (SharedWithMeVie
 		iteratorURL="<%= portletURL %>"
 	>
 		<liferay-ui:search-container-results
-			results="<%= sharedWithMeViewDisplayContext.getSharedWithMeFilterItems() %>"
+			results="<%= sharedAssetsViewDisplayContext.getSharedAssetsFilterItems() %>"
 		/>
 
 		<liferay-ui:search-container-row
-			className="com.liferay.sharing.filter.SharedWithMeFilterItem"
+			className="com.liferay.sharing.filter.SharedAssetsFilterItem"
 			cssClass="select-action"
-			modelVar="sharedWithMeFilterItem"
+			modelVar="sharedAssetsFilterItem"
 		>
 
 			<%
 			String className = ParamUtil.getString(request, "className");
 
-			if (className.equals(sharedWithMeFilterItem.getClassName())) {
+			if (className.equals(sharedAssetsFilterItem.getClassName())) {
 				row.setCssClass("select-action active");
 			}
 
 			Map<String, Object> rowData = new HashMap<String, Object>();
 
-			rowData.put("className", sharedWithMeFilterItem.getClassName());
+			rowData.put("className", sharedAssetsFilterItem.getClassName());
 
 			row.setData(rowData);
 			%>
@@ -62,7 +63,7 @@ SharedWithMeViewDisplayContext sharedWithMeViewDisplayContext = (SharedWithMeVie
 			<liferay-ui:search-container-column-text
 				colspan="<%= 2 %>"
 			>
-				<h5><%= HtmlUtil.escape(sharedWithMeFilterItem.getLabel(locale)) %></h5>
+				<h5><%= HtmlUtil.escape(sharedAssetsFilterItem.getLabel(locale)) %></h5>
 			</liferay-ui:search-container-column-text>
 		</liferay-ui:search-container-row>
 

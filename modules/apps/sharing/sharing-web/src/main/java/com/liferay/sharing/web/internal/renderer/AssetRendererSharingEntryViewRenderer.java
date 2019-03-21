@@ -67,7 +67,7 @@ public class AssetRendererSharingEntryViewRenderer
 	}
 
 	private static final String _JSP_PATH =
-		"/shared_with_me/view_asset_entry_sharing_entry.jsp";
+		"/shared_assets/view_asset_entry_sharing_entry.jsp";
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		AssetRendererSharingEntryViewRenderer.class);

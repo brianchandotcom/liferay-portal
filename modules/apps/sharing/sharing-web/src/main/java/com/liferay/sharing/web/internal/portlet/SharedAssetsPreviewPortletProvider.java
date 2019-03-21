@@ -34,12 +34,12 @@ import org.osgi.service.component.annotations.Component;
 	property = "model.class.name=com.liferay.sharing.model.SharingEntry",
 	service = PreviewPortletProvider.class
 )
-public class SharedWithMePreviewPortletProvider
+public class SharedAssetsPreviewPortletProvider
 	extends BasePortletProvider implements PreviewPortletProvider {
 
 	@Override
 	public String getPortletName() {
-		return SharingPortletKeys.SHARED_WITH_ME;
+		return SharingPortletKeys.SHARED_ASSETS;
 	}
 
 	@Override
@@ -49,7 +49,7 @@ public class SharedWithMePreviewPortletProvider
 		PortletURL portletURL = super.getPortletURL(request, group);
 
 		portletURL.setParameter(
-			"mvcRenderCommandName", "/shared_with_me/view_sharing_entry");
+			"mvcRenderCommandName", "/shared_assets/view_sharing_entry");
 
 		return portletURL;
 	}

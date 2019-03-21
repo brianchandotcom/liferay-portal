@@ -142,7 +142,7 @@ public class SharingJavaScriptFactoryImpl implements SharingJavaScriptFactory {
 
 		sb.append(LanguageUtil.get(resourceBundle, "collaborators"));
 
-		sb.append("');");
+		sb.append("', true);");
 
 		return sb.toString();
 	}

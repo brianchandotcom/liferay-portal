@@ -1,4 +1,4 @@
-function ${namespace}sharing(sharingURL, title) {
+function ${namespace}sharing(sharingURL, title, refreshOnClose) {
 	Liferay.Util.openWindow(
 		{
 			dialog: {
@@ -8,7 +8,14 @@ function ${namespace}sharing(sharingURL, title) {
 				destroyOnHide: true,
 				modal: true,
 				height: 540,
-				width: 600
+				width: 600,
+				on: {
+					visibleChange: function(event) {
+						if (refreshOnClose && !event.newVal) {
+							Liferay.Portlet.refresh(`#p_p_id${namespace}`);
+						}
+					}
+				}
 			},
 			id: '${sharingDialogId}',
 			title: title,

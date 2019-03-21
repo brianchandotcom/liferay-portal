@@ -715,6 +715,7 @@ const ConnectedFragmentEditableField = getConnectedComponent(
 		'fragmentEditorClear',
 		'fragmentEditorEnabled',
 		'getAssetFieldValueURL',
+		'getAssetMappingFieldsURL',
 		'hoveredItemId',
 		'hoveredItemType',
 		'languageId',

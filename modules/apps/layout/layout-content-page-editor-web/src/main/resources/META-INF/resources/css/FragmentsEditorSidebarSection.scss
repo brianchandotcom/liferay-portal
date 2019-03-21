@@ -88,12 +88,14 @@
 			}
 
 			&.active,
-			&.active:hover {
+			&.active:hover,
+			&.active.hovered {
 				background-color: $topperBackgroundColor;
 				color: $topperColor;
 			}
 
-			&:hover {
+			&:hover,
+			&.hovered {
 				background-color: $sidebarTreeElementBackgroundColor;
 			}
 		}

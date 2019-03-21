@@ -97,6 +97,8 @@ const ConnectedSidebarStructurePanel = getConnectedComponent(
 		'activeItemId',
 		'activeItemType',
 		'fragmentEntryLinks',
+		'hoveredItemId',
+		'hoveredItemType',
 		'layoutData',
 		'spritemap'
 	]

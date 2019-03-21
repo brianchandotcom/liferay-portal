@@ -108,44 +108,47 @@ public class Arquillian extends Runner implements Filterable {
 			return;
 		}
 
+		// Enforce client side test class initialization
+
 		try {
-
-			// Enforce client side test class initialization
-
 			Class.forName(_clazz.getName(), true, _clazz.getClassLoader());
+		}
+		catch (ClassNotFoundException cnfe) {
+			runNotifier.fireTestFailure(new Failure(getDescription(), cnfe));
 
-			FrameworkMBean frameworkMBean = MBeans.getFrameworkMBean();
+			return;
+		}
 
-			try (ServerSocket serverSocket = _getServerSocket()) {
-				long bundleId = _installBundle(
-					frameworkMBean, serverSocket.getLocalPort());
+		FrameworkMBean frameworkMBean = MBeans.getFrameworkMBean();
 
-				try {
-					frameworkMBean.startBundle(bundleId);
+		try (ServerSocket serverSocket = _getServerSocket()) {
+			long bundleId = _installBundle(
+				frameworkMBean, serverSocket.getLocalPort());
 
-					try (Socket socket = serverSocket.accept();
-						InputStream inputStream = socket.getInputStream();
-						ObjectInputStream objectInputStream =
-							new ObjectInputStream(inputStream)) {
+			try {
+				frameworkMBean.startBundle(bundleId);
 
-						while (true) {
-							RunNotifierCommand runNotifierCommand =
-								(RunNotifierCommand)
-									objectInputStream.readObject();
+				try (Socket socket = serverSocket.accept();
+					InputStream inputStream = socket.getInputStream();
+					ObjectInputStream objectInputStream = new ObjectInputStream(
+						inputStream)) {
 
-							runNotifierCommand.execute(runNotifier);
-						}
-					}
-					catch (EOFException eofe) {
-					}
-					catch (Throwable t) {
-						runNotifier.fireTestFailure(
-							new Failure(getDescription(), t));
+					while (true) {
+						RunNotifierCommand runNotifierCommand =
+							(RunNotifierCommand)objectInputStream.readObject();
+
+						runNotifierCommand.execute(runNotifier);
 					}
 				}
-				finally {
-					frameworkMBean.uninstallBundle(bundleId);
+				catch (EOFException eofe) {
 				}
+				catch (Throwable t) {
+					runNotifier.fireTestFailure(
+						new Failure(getDescription(), t));
+				}
+			}
+			finally {
+				frameworkMBean.uninstallBundle(bundleId);
 			}
 		}
 		catch (Throwable t) {

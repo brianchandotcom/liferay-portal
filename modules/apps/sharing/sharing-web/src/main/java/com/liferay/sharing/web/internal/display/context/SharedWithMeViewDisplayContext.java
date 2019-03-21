@@ -16,6 +16,7 @@ package com.liferay.sharing.web.internal.display.context;
 
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItemList;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.SafeConsumer;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
@@ -114,14 +115,6 @@ public class SharedWithMeViewDisplayContext {
 					SafeConsumer.ignore(
 						dropdownGroupItem -> {
 							dropdownGroupItem.setDropdownItems(
-								_getFilterStateDropdownItems());
-							dropdownGroupItem.setLabel(
-								LanguageUtil.get(_request, "filter-by-state"));
-						}));
-				addGroup(
-					SafeConsumer.ignore(
-						dropdownGroupItem -> {
-							dropdownGroupItem.setDropdownItems(
 								_getFilterNavigationDropdownItems());
 							dropdownGroupItem.setLabel(
 								LanguageUtil.get(
@@ -134,6 +127,45 @@ public class SharedWithMeViewDisplayContext {
 						dropdownGroupItem.setLabel(
 							LanguageUtil.get(_request, "order-by"));
 					});
+			}
+		};
+	}
+
+	public NavigationItemList getNavigationItems() {
+		return new NavigationItemList() {
+			{
+				add(
+					SafeConsumer.ignore(
+						navigationItem -> {
+							navigationItem.setActive(_isIncoming());
+
+							PortletURL sharedWithMeURL = PortletURLUtil.clone(
+								_currentURLObj, _liferayPortletResponse);
+
+							sharedWithMeURL.setParameter(
+								"incoming", Boolean.TRUE.toString());
+
+							navigationItem.setHref(sharedWithMeURL);
+
+							navigationItem.setLabel(
+								LanguageUtil.get(_request, "shared-with-me"));
+						}));
+				add(
+					SafeConsumer.ignore(
+						navigationItem -> {
+							navigationItem.setActive(!_isIncoming());
+
+							PortletURL sharedWithMeURL = PortletURLUtil.clone(
+								_currentURLObj, _liferayPortletResponse);
+
+							sharedWithMeURL.setParameter(
+								"incoming", Boolean.FALSE.toString());
+
+							navigationItem.setHref(sharedWithMeURL);
+
+							navigationItem.setLabel(
+								LanguageUtil.get(_request, "shared-by-me"));
+						}));
 			}
 		};
 	}
@@ -370,45 +402,6 @@ public class SharedWithMeViewDisplayContext {
 				return label;
 			}
 
-		};
-	}
-
-	private List<DropdownItem> _getFilterStateDropdownItems() {
-		return new DropdownItemList() {
-			{
-				add(
-					SafeConsumer.ignore(
-						dropdownItem -> {
-							dropdownItem.setActive(_isIncoming());
-
-							PortletURL sharedWithMeURL = PortletURLUtil.clone(
-								_currentURLObj, _liferayPortletResponse);
-
-							sharedWithMeURL.setParameter(
-								"incoming", Boolean.TRUE.toString());
-
-							dropdownItem.setHref(sharedWithMeURL);
-
-							dropdownItem.setLabel(
-								LanguageUtil.get(_request, "shared-with-me"));
-						}));
-				add(
-					SafeConsumer.ignore(
-						dropdownItem -> {
-							dropdownItem.setActive(!_isIncoming());
-
-							PortletURL sharedWithMeURL = PortletURLUtil.clone(
-								_currentURLObj, _liferayPortletResponse);
-
-							sharedWithMeURL.setParameter(
-								"incoming", Boolean.FALSE.toString());
-
-							dropdownItem.setHref(sharedWithMeURL);
-
-							dropdownItem.setLabel(
-								LanguageUtil.get(_request, "shared-by-me"));
-						}));
-			}
 		};
 	}
 

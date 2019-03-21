@@ -1008,11 +1008,11 @@ public abstract class Base${schemaName}ResourceTestCase {
 
 		<#list properties?keys as propertyName>
 			if (entityFieldName.equals("${propertyName}")) {
-				<#if stringUtil.equals(properties[propertyName], "java.util.Date")>
+				<#if stringUtil.equals(properties[propertyName], "Date")>
 					sb.append(_dateFormat.format(${schemaVarName}.get${propertyName?cap_first}()));
 
 					return sb.toString();
-				<#elseif stringUtil.equals(properties[propertyName], "java.lang.String")>
+				<#elseif stringUtil.equals(properties[propertyName], "String")>
 					sb.append("'");
 					sb.append(String.valueOf(${schemaVarName}.get${propertyName?cap_first}()));
 					sb.append("'");
@@ -1030,12 +1030,12 @@ public abstract class Base${schemaName}ResourceTestCase {
 	protected ${schemaName} random${schemaName}() {
 		return new ${schemaName}() {
 			{
-				<#assign randomDataTypes = ["java.lang.Boolean", "java.lang.Double", "java.lang.Long", "java.lang.String"] />
+				<#assign randomDataTypes = ["Boolean", "Double", "Long", "String"] />
 
 				<#list properties?keys as propertyName>
 					<#if randomDataTypes?seq_contains(properties[propertyName])>
 						${propertyName} = RandomTestUtil.random${properties[propertyName]}();
-					<#elseif stringUtil.equals(properties[propertyName], "java.util.Date")>
+					<#elseif stringUtil.equals(properties[propertyName], "Date")>
 						${propertyName} = RandomTestUtil.nextDate();
 					</#if>
 				</#list>

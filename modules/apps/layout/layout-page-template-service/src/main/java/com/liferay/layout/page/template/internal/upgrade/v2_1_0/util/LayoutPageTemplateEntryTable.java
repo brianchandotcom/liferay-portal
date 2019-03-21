@@ -15,6 +15,7 @@
 package com.liferay.layout.page.template.internal.upgrade.v2_1_0.util;
 
 import java.sql.Types;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -27,31 +28,23 @@ public class LayoutPageTemplateEntryTable {
 	public static final String TABLE_NAME = "LayoutPageTemplateEntry";
 
 	public static final Object[][] TABLE_COLUMNS = {
-		{"uuid_", Types.VARCHAR},
-		{"layoutPageTemplateEntryId", Types.BIGINT},
-		{"groupId", Types.BIGINT},
-		{"companyId", Types.BIGINT},
-		{"userId", Types.BIGINT},
-		{"userName", Types.VARCHAR},
-		{"createDate", Types.TIMESTAMP},
-		{"modifiedDate", Types.TIMESTAMP},
+		{"uuid_", Types.VARCHAR}, {"layoutPageTemplateEntryId", Types.BIGINT},
+		{"groupId", Types.BIGINT}, {"companyId", Types.BIGINT},
+		{"userId", Types.BIGINT}, {"userName", Types.VARCHAR},
+		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
 		{"layoutPageTemplateCollectionId", Types.BIGINT},
-		{"classNameId", Types.BIGINT},
-		{"classTypeId", Types.BIGINT},
-		{"name", Types.VARCHAR},
-		{"type_", Types.INTEGER},
+		{"classNameId", Types.BIGINT}, {"classTypeId", Types.BIGINT},
+		{"name", Types.VARCHAR}, {"type_", Types.INTEGER},
 		{"previewFileEntryId", Types.BIGINT},
-		{"defaultTemplate", Types.BOOLEAN},
-		{"layoutPrototypeId", Types.BIGINT},
-		{"lastPublishDate", Types.TIMESTAMP},
-		{"status", Types.INTEGER},
-		{"statusByUserId", Types.BIGINT},
-		{"statusByUserName", Types.VARCHAR},
-		{"statusDate", Types.TIMESTAMP},
-		{"plid", Types.BIGINT}
+		{"defaultTemplate", Types.BOOLEAN}, {"layoutPrototypeId", Types.BIGINT},
+		{"lastPublishDate", Types.TIMESTAMP}, {"plid", Types.BIGINT},
+		{"draftLayoutPageTemplateEntryId", Types.BIGINT},
+		{"status", Types.INTEGER}, {"statusByUserId", Types.BIGINT},
+		{"statusByUserName", Types.VARCHAR}, {"statusDate", Types.TIMESTAMP}
 	};
 
-	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
+	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
+new HashMap<String, Integer>();
 
 static {
 TABLE_COLUMNS_MAP.put("uuid_", Types.VARCHAR);
@@ -88,6 +81,10 @@ TABLE_COLUMNS_MAP.put("layoutPrototypeId", Types.BIGINT);
 
 TABLE_COLUMNS_MAP.put("lastPublishDate", Types.TIMESTAMP);
 
+TABLE_COLUMNS_MAP.put("plid", Types.BIGINT);
+
+TABLE_COLUMNS_MAP.put("draftLayoutPageTemplateEntryId", Types.BIGINT);
+
 TABLE_COLUMNS_MAP.put("status", Types.INTEGER);
 
 TABLE_COLUMNS_MAP.put("statusByUserId", Types.BIGINT);
@@ -96,12 +93,12 @@ TABLE_COLUMNS_MAP.put("statusByUserName", Types.VARCHAR);
 
 TABLE_COLUMNS_MAP.put("statusDate", Types.TIMESTAMP);
 
-TABLE_COLUMNS_MAP.put("plid", Types.BIGINT);
-
 }
-	public static final String TABLE_SQL_CREATE = "create table LayoutPageTemplateEntry (uuid_ VARCHAR(75) null,layoutPageTemplateEntryId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,layoutPageTemplateCollectionId LONG,classNameId LONG,classTypeId LONG,name VARCHAR(75) null,type_ INTEGER,previewFileEntryId LONG,defaultTemplate BOOLEAN,layoutPrototypeId LONG,lastPublishDate DATE null,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null,plid LONG)";
+	public static final String TABLE_SQL_CREATE =
+"create table LayoutPageTemplateEntry (uuid_ VARCHAR(75) null,layoutPageTemplateEntryId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,layoutPageTemplateCollectionId LONG,classNameId LONG,classTypeId LONG,name VARCHAR(75) null,type_ INTEGER,previewFileEntryId LONG,defaultTemplate BOOLEAN,layoutPrototypeId LONG,lastPublishDate DATE null,plid LONG,draftLayoutPageTemplateEntryId LONG,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null)";
 
-	public static final String TABLE_SQL_DROP = "drop table LayoutPageTemplateEntry";
+	public static final String TABLE_SQL_DROP =
+"drop table LayoutPageTemplateEntry";
 
 	public static final String[] TABLE_SQL_ADD_INDEXES = {
 		"create index IX_957F6C5D on LayoutPageTemplateEntry (groupId, classNameId, classTypeId, defaultTemplate, status)",
@@ -116,6 +113,7 @@ TABLE_COLUMNS_MAP.put("plid", Types.BIGINT);
 		"create unique index IX_A075DAA4 on LayoutPageTemplateEntry (groupId, name[$COLUMN_LENGTH:75$])",
 		"create index IX_1F1BEA76 on LayoutPageTemplateEntry (groupId, type_, status)",
 		"create index IX_A185457E on LayoutPageTemplateEntry (layoutPrototypeId)",
+		"create unique index IX_84D30230 on LayoutPageTemplateEntry (plid)",
 		"create index IX_CEC0A659 on LayoutPageTemplateEntry (uuid_[$COLUMN_LENGTH:75$], companyId)",
 		"create unique index IX_34C0EF1B on LayoutPageTemplateEntry (uuid_[$COLUMN_LENGTH:75$], groupId)"
 	};

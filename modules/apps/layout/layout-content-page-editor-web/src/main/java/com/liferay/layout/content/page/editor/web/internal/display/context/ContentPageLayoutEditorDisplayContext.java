@@ -128,9 +128,7 @@ public class ContentPageLayoutEditorDisplayContext
 		return availableSegmentsEntriesSoyContext;
 	}
 
-	private SoyContext _getAvailableSegmentsExperiencesSoyContext()
-		throws PortalException {
-
+	private SoyContext _getAvailableSegmentsExperiencesSoyContext() {
 		SoyContext availableSegmentsEntriesSoyContext =
 			SoyContextFactoryUtil.createSoyContext();
 
@@ -144,6 +142,8 @@ public class ContentPageLayoutEditorDisplayContext
 
 			segmentsExperienceSoyContext.put(
 				"name", segmentsExperience.getName(themeDisplay.getLocale()));
+			segmentsExperienceSoyContext.put(
+				"priority", segmentsExperience.getPriority());
 			segmentsExperienceSoyContext.put(
 				"segmentsEntryId",
 				String.valueOf(segmentsExperience.getSegmentsEntryId()));

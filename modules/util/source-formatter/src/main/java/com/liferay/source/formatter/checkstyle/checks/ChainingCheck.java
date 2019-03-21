@@ -106,7 +106,12 @@ public class ChainingCheck extends BaseCheck {
 			}
 
 			if (chainSize == 2) {
-				if (dotDetailAST == null) {
+				DetailAST elistDetailAST = methodCallDetailAST.findFirstToken(
+					TokenTypes.ELIST);
+
+				if ((elistDetailAST.getChildCount() == 0) &&
+					(dotDetailAST == null)) {
+
 					continue;
 				}
 
@@ -408,6 +413,28 @@ public class ChainingCheck extends BaseCheck {
 		}
 	}
 
+	private String _getReturnType(
+		String methodName, DetailAST classDefinitionDetailAST) {
+
+		List<DetailAST> methodDefinitionDetailASTList =
+			DetailASTUtil.getAllChildTokens(
+				classDefinitionDetailAST, true, TokenTypes.METHOD_DEF);
+
+		for (DetailAST methodDefinitionDetailAST :
+				methodDefinitionDetailASTList) {
+
+			DetailAST nameDetailAST = methodDefinitionDetailAST.findFirstToken(
+				TokenTypes.IDENT);
+
+			if (methodName.equals(nameDetailAST.getText())) {
+				return DetailASTUtil.getTypeName(
+					methodDefinitionDetailAST, false);
+			}
+		}
+
+		return null;
+	}
+
 	private boolean _isAllowedChainingMethodCall(
 		DetailAST methodCallDetailAST, List<String> chainedMethodNames,
 		DetailAST detailAST) {
@@ -460,6 +487,19 @@ public class ChainingCheck extends BaseCheck {
 			for (String allowedClassName : _allowedClassNames) {
 				if (className.matches(allowedClassName)) {
 					return true;
+				}
+			}
+
+			String returnType = _getReturnType(
+				chainedMethodNames.get(0), detailAST);
+
+			if (returnType != null) {
+				for (String allowedVariableTypeName :
+						_allowedVariableTypeNames) {
+
+					if (returnType.matches(allowedVariableTypeName)) {
+						return true;
+					}
 				}
 			}
 

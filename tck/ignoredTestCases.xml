@@ -1,15 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
 <properties>
-
-<!-- https://issues.liferay.com/browse/LPS-TODO -->
+<!-- https://issues.liferay.com/browse/LPS-92490 -->
 <entry key="V2AddlPortletTests_SPEC2_13_ResourceServing_resourceURLs7"></entry>
+
+<!-- https://issues.liferay.com/browse/LPS-92492 -->
 <entry key="V2AddlRequestTests_SPEC2_11_Action_publicRenderParameters4"></entry>
 
-<!-- https://issues.liferay.com/browse/LPS-TODO -->
+<!-- https://issues.liferay.com/browse/LPS-78581 -->
 <entry key="V2EnvironmentTests_PortletSession_ApiRender_isNew1"></entry>
 
-<!-- https://issues.liferay.com/browse/LPS-TODO -->
+<!-- https://issues.liferay.com/browse/LPS-92497 -->
 <entry key="V2PortletTagLibraryTests2_SPEC2_26_IncludeJSPRender_actionURL3"></entry>
 <entry key="V2PortletTagLibraryTests2_SPEC2_26_IncludeJSPRender_actionURL5"></entry>
 <entry key="V2PortletTagLibraryTests2_SPEC2_26_IncludeJSPRender_renderURL18"></entry>
@@ -28,7 +29,7 @@
 <entry key="V3HeaderPortletTests_SPEC14_PortletRequest_ApiHeader_getPortletSessionB2"></entry>
 <entry key="V3HeaderPortletTests_SPEC14_PortletRequest_ApiHeader_isRequestedSessionIdValid1"></entry>
 
-<!-- https://issues.liferay.com/browse/LPS-TODO -->
+<!-- https://issues.liferay.com/browse/LPS-92500 -->
 <entry key="V3PortletHubTests_SPEC_23_JSListener_onError1"></entry>
 <entry key="V3PortletHubTests_SPEC_23_JSListener_onError2"></entry>
 <entry key="V3PortletHubTests_SPEC_23_JSListener_onError3"></entry>
@@ -64,5 +65,4 @@
 <entry key="V3PortletHubTests_SPEC_23_JSURL_createResourceUrlB"></entry>
 <entry key="V3PortletHubTests_SPEC_23_JSURL_createResourceUrlC"></entry>
 <entry key="V3PortletHubTests_SPEC_23_JSURL_createResourceUrlD"></entry>
-
 </properties>

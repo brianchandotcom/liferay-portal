@@ -32,6 +32,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
+import com.liferay.portal.kernel.repository.capabilities.CommentCapability;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
@@ -437,6 +438,16 @@ public class DLFileEntryAssetRenderer
 		}
 
 		return super.isCategorizable(groupId);
+	}
+
+	@Override
+	public boolean isCommentable() {
+		if (super.isCommentable()) {
+			return _fileEntry.isRepositoryCapabilityProvided(
+				CommentCapability.class);
+		}
+
+		return false;
 	}
 
 	@Override

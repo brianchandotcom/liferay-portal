@@ -268,7 +268,7 @@ renderResponse.setTitle(title);
 											cssClass="table-cell-expand table-cell-minw-200"
 											name="workflow"
 										>
-											<aui:select label="" name='<%= "workflowDefinition" + ddmStructure.getStructureId() %>'>
+											<aui:select label="" name='<%= "workflowDefinition" + ddmStructure.getStructureId() %>' wrapperCssClass="mb-0">
 												<aui:option label="no-workflow" value="" />
 
 												<%

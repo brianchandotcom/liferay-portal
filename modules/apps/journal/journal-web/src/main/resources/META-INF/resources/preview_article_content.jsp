@@ -20,7 +20,7 @@
 JournalArticleDisplay articleDisplay = journalDisplayContext.getArticleDisplay();
 %>
 
-<div class="journal-article-preview">
+<div class="container-fluid-1280 mt-2">
 	<%= articleDisplay.getContent() %>
 </div>
 

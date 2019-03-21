@@ -27,13 +27,6 @@ $productMenuWidth: 320px;
 			}
 		}
 
-		.form-builder-field {
-			box-shadow: none;
-			margin: 0;
-			padding-bottom: 0;
-			padding-right: 0;
-		}
-
 		.alloy-editor-container .alloy-editor-wrapper {
 			padding-top: 0;
 		}
@@ -42,18 +35,31 @@ $productMenuWidth: 320px;
 			margin-top: -40px;
 		}
 
+		.form-builder-field {
+			box-shadow: none;
+			margin: 0;
+			padding-bottom: 0;
+			padding-right: 0;
+		}
+
 		.input-localized.input-localized-editor .form-control {
 			border-width: 1px;
 			min-height: 2.5rem;
 			padding: 0.5rem 1rem;
 		}
-	}
 
-	.article-content-description {
-		@extend .article-content-content;
+		.input-localized-content .input-localized-content {
+			margin-bottom: 24px;
+		}
 
-		.alloy-editor-switch {
-			display: none;
+		.lfr-ddm-field-group {
+			margin-bottom: 10px;
+			margin-top: 10px;
+			padding: 28px 24px;
+		}
+
+		.lfr-ddm-container > .lfr-ddm-field-group {
+			padding: 0;
 		}
 	}
 
@@ -78,6 +84,10 @@ $productMenuWidth: 320px;
 				top: $controlMenuDesktopHeight;
 			}
 
+			.form-text {
+				display: none;
+			}
+
 			.input-localized {
 				.form-validator-stack {
 					display: none;
@@ -91,10 +101,6 @@ $productMenuWidth: 320px;
 					order: 1;
 					padding-right: 0.5rem;
 				}
-			}
-
-			.form-text {
-				display: none;
 			}
 		}
 
@@ -117,54 +123,30 @@ $productMenuWidth: 320px;
 				height: calc(100vh - #{$controlMenuDesktopHeight * 2}) !important;
 				top: $controlMenuDesktopHeight * 2 !important;
 			}
+
+			.article-content-description {
+				@extend .article-content-content;
+
+				.alloy-editor-switch {
+					display: none;
+				}
+			}
+
+			.schedule {
+				.form-group-autofit {
+					margin-bottom: 16px;
+				}
+
+				.expiration-date, .review-date {
+					.form-group-autofit {
+						margin-bottom: 8px;
+					}
+				}
+			}
 		}
 
 		.sidebar-body .panel-body {
 			padding: 0;
 		}
-	}
-
-	.form-builder {
-		.nav-tabs + .tab-content .tab-pane {
-			padding: 2rem 1rem;
-		}
-
-		.property-builder-fields-container .property-builder-field {
-			width: 33%;
-		}
-	}
-
-	.schedule {
-		.form-group-autofit {
-			margin-bottom: 16px;
-		}
-
-		.expiration-date, .review-date {
-			.form-group-autofit {
-				margin-bottom: 8px;
-			}
-		}
-	}
-
-	.journal-article-preview {
-		padding: 0 20px;
-	}
-
-	.lfr-ddm-field-group {
-		margin-bottom: 10px;
-		margin-top: 10px;
-		padding: 28px 24px;
-	}
-
-	.lfr-ddm-container > .lfr-ddm-field-group {
-		padding: 0;
-	}
-
-	.structure-restrictions .lfr-workflow-column .form-group {
-		margin-bottom: 0;
-	}
-
-	td.change-list-title {
-		font-weight: 600;
 	}
 }

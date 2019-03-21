@@ -508,6 +508,10 @@ public class SiteNavigationMenuLocalServiceTest {
 				RandomTestUtil.randomString(),
 				SiteNavigationConstants.TYPE_DEFAULT, serviceContext);
 
+		siteNavigationMenu =
+			_getSiteNavigationMenu(
+				siteNavigationMenu.getSiteNavigationMenuId());
+
 		Assert.assertEquals(siteNavigationMenu.isAuto(), false);
 	}
 
@@ -521,6 +525,10 @@ public class SiteNavigationMenuLocalServiceTest {
 			SiteNavigationMenuLocalServiceUtil.addSiteNavigationMenu(
 				TestPropsValues.getUserId(), _group.getGroupId(),
 				RandomTestUtil.randomString(), serviceContext);
+
+		siteNavigationMenu =
+			_getSiteNavigationMenu(
+				siteNavigationMenu.getSiteNavigationMenuId());
 
 		Assert.assertEquals(
 			siteNavigationMenu.getType(), SiteNavigationConstants.TYPE_DEFAULT);

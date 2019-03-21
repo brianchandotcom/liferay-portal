@@ -25,6 +25,8 @@ import com.liferay.headless.foundation.dto.v1_0.UserAccount;
 import com.liferay.headless.foundation.resource.v1_0.UserAccountResource;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -142,7 +144,7 @@ public abstract class BaseUserAccountResourceTestCase {
 			return _outputObjectMapper.readValue(string, UserAccount.class);
 		}
 		catch (Exception e) {
-			Assert.fail("HTTP response: " + string);
+			_log.error("Unable to process HTTP response: " + string, e);
 
 			throw e;
 		}
@@ -409,7 +411,7 @@ public abstract class BaseUserAccountResourceTestCase {
 			return _outputObjectMapper.readValue(string, UserAccount.class);
 		}
 		catch (Exception e) {
-			Assert.fail("HTTP response: " + string);
+			_log.error("Unable to process HTTP response: " + string, e);
 
 			throw e;
 		}
@@ -469,7 +471,7 @@ public abstract class BaseUserAccountResourceTestCase {
 			return _outputObjectMapper.readValue(string, UserAccount.class);
 		}
 		catch (Exception e) {
-			Assert.fail("HTTP response: " + string);
+			_log.error("Unable to process HTTP response: " + string, e);
 
 			throw e;
 		}
@@ -529,7 +531,7 @@ public abstract class BaseUserAccountResourceTestCase {
 			return _outputObjectMapper.readValue(string, Boolean.class);
 		}
 		catch (Exception e) {
-			Assert.fail("HTTP response: " + string);
+			_log.error("Unable to process HTTP response: " + string, e);
 
 			throw e;
 		}
@@ -586,7 +588,7 @@ public abstract class BaseUserAccountResourceTestCase {
 			return _outputObjectMapper.readValue(string, UserAccount.class);
 		}
 		catch (Exception e) {
-			Assert.fail("HTTP response: " + string);
+			_log.error("Unable to process HTTP response: " + string, e);
 
 			throw e;
 		}
@@ -656,7 +658,7 @@ public abstract class BaseUserAccountResourceTestCase {
 			return _outputObjectMapper.readValue(string, UserAccount.class);
 		}
 		catch (Exception e) {
-			Assert.fail("HTTP response: " + string);
+			_log.error("Unable to process HTTP response: " + string, e);
 
 			throw e;
 		}
@@ -1211,6 +1213,9 @@ public abstract class BaseUserAccountResourceTestCase {
 
 		return template;
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		BaseUserAccountResourceTestCase.class);
 
 	private static BeanUtilsBean _beanUtilsBean = new BeanUtilsBean() {
 

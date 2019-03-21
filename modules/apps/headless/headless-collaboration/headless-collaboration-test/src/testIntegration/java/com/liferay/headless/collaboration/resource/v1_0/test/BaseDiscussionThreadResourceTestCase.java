@@ -25,6 +25,8 @@ import com.liferay.headless.collaboration.dto.v1_0.DiscussionThread;
 import com.liferay.headless.collaboration.resource.v1_0.DiscussionThreadResource;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -526,7 +528,7 @@ public abstract class BaseDiscussionThreadResourceTestCase {
 				string, DiscussionThread.class);
 		}
 		catch (Exception e) {
-			Assert.fail("HTTP response: " + string);
+			_log.error("Unable to process HTTP response: " + string, e);
 
 			throw e;
 		}
@@ -981,7 +983,7 @@ public abstract class BaseDiscussionThreadResourceTestCase {
 				string, DiscussionThread.class);
 		}
 		catch (Exception e) {
-			Assert.fail("HTTP response: " + string);
+			_log.error("Unable to process HTTP response: " + string, e);
 
 			throw e;
 		}
@@ -1053,7 +1055,7 @@ public abstract class BaseDiscussionThreadResourceTestCase {
 			return _outputObjectMapper.readValue(string, Boolean.class);
 		}
 		catch (Exception e) {
-			Assert.fail("HTTP response: " + string);
+			_log.error("Unable to process HTTP response: " + string, e);
 
 			throw e;
 		}
@@ -1120,7 +1122,7 @@ public abstract class BaseDiscussionThreadResourceTestCase {
 				string, DiscussionThread.class);
 		}
 		catch (Exception e) {
-			Assert.fail("HTTP response: " + string);
+			_log.error("Unable to process HTTP response: " + string, e);
 
 			throw e;
 		}
@@ -1205,7 +1207,7 @@ public abstract class BaseDiscussionThreadResourceTestCase {
 				string, DiscussionThread.class);
 		}
 		catch (Exception e) {
-			Assert.fail("HTTP response: " + string);
+			_log.error("Unable to process HTTP response: " + string, e);
 
 			throw e;
 		}
@@ -1290,7 +1292,7 @@ public abstract class BaseDiscussionThreadResourceTestCase {
 				string, DiscussionThread.class);
 		}
 		catch (Exception e) {
-			Assert.fail("HTTP response: " + string);
+			_log.error("Unable to process HTTP response: " + string, e);
 
 			throw e;
 		}
@@ -1640,6 +1642,9 @@ public abstract class BaseDiscussionThreadResourceTestCase {
 
 		return template;
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		BaseDiscussionThreadResourceTestCase.class);
 
 	private static BeanUtilsBean _beanUtilsBean = new BeanUtilsBean() {
 

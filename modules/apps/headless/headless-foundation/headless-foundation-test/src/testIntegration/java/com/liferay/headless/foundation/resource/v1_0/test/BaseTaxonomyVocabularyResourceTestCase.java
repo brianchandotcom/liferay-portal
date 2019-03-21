@@ -25,6 +25,8 @@ import com.liferay.headless.foundation.dto.v1_0.TaxonomyVocabulary;
 import com.liferay.headless.foundation.resource.v1_0.TaxonomyVocabularyResource;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -530,7 +532,7 @@ public abstract class BaseTaxonomyVocabularyResourceTestCase {
 				string, TaxonomyVocabulary.class);
 		}
 		catch (Exception e) {
-			Assert.fail("HTTP response: " + string);
+			_log.error("Unable to process HTTP response: " + string, e);
 
 			throw e;
 		}
@@ -604,7 +606,7 @@ public abstract class BaseTaxonomyVocabularyResourceTestCase {
 			return _outputObjectMapper.readValue(string, Boolean.class);
 		}
 		catch (Exception e) {
-			Assert.fail("HTTP response: " + string);
+			_log.error("Unable to process HTTP response: " + string, e);
 
 			throw e;
 		}
@@ -672,7 +674,7 @@ public abstract class BaseTaxonomyVocabularyResourceTestCase {
 				string, TaxonomyVocabulary.class);
 		}
 		catch (Exception e) {
-			Assert.fail("HTTP response: " + string);
+			_log.error("Unable to process HTTP response: " + string, e);
 
 			throw e;
 		}
@@ -753,7 +755,7 @@ public abstract class BaseTaxonomyVocabularyResourceTestCase {
 				string, TaxonomyVocabulary.class);
 		}
 		catch (Exception e) {
-			Assert.fail("HTTP response: " + string);
+			_log.error("Unable to process HTTP response: " + string, e);
 
 			throw e;
 		}
@@ -1083,6 +1085,9 @@ public abstract class BaseTaxonomyVocabularyResourceTestCase {
 
 		return template;
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		BaseTaxonomyVocabularyResourceTestCase.class);
 
 	private static BeanUtilsBean _beanUtilsBean = new BeanUtilsBean() {
 

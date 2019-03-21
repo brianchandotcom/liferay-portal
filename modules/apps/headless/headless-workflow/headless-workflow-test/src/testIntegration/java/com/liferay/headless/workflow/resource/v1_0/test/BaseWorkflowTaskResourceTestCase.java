@@ -27,6 +27,8 @@ import com.liferay.headless.workflow.dto.v1_0.WorkflowTaskAssignToMe;
 import com.liferay.headless.workflow.dto.v1_0.WorkflowTaskAssignToUser;
 import com.liferay.headless.workflow.resource.v1_0.WorkflowTaskResource;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -392,7 +394,7 @@ public abstract class BaseWorkflowTaskResourceTestCase {
 			return _outputObjectMapper.readValue(string, WorkflowTask.class);
 		}
 		catch (Exception e) {
-			Assert.fail("HTTP response: " + string);
+			_log.error("Unable to process HTTP response: " + string, e);
 
 			throw e;
 		}
@@ -455,7 +457,7 @@ public abstract class BaseWorkflowTaskResourceTestCase {
 			return _outputObjectMapper.readValue(string, WorkflowTask.class);
 		}
 		catch (Exception e) {
-			Assert.fail("HTTP response: " + string);
+			_log.error("Unable to process HTTP response: " + string, e);
 
 			throw e;
 		}
@@ -525,7 +527,7 @@ public abstract class BaseWorkflowTaskResourceTestCase {
 			return _outputObjectMapper.readValue(string, WorkflowTask.class);
 		}
 		catch (Exception e) {
-			Assert.fail("HTTP response: " + string);
+			_log.error("Unable to process HTTP response: " + string, e);
 
 			throw e;
 		}
@@ -595,7 +597,7 @@ public abstract class BaseWorkflowTaskResourceTestCase {
 			return _outputObjectMapper.readValue(string, WorkflowTask.class);
 		}
 		catch (Exception e) {
-			Assert.fail("HTTP response: " + string);
+			_log.error("Unable to process HTTP response: " + string, e);
 
 			throw e;
 		}
@@ -664,7 +666,7 @@ public abstract class BaseWorkflowTaskResourceTestCase {
 			return _outputObjectMapper.readValue(string, WorkflowTask.class);
 		}
 		catch (Exception e) {
-			Assert.fail("HTTP response: " + string);
+			_log.error("Unable to process HTTP response: " + string, e);
 
 			throw e;
 		}
@@ -979,6 +981,9 @@ public abstract class BaseWorkflowTaskResourceTestCase {
 
 		return template;
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		BaseWorkflowTaskResourceTestCase.class);
 
 	private static BeanUtilsBean _beanUtilsBean = new BeanUtilsBean() {
 

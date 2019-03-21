@@ -24,6 +24,8 @@ import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
 import com.liferay.headless.foundation.dto.v1_0.Email;
 import com.liferay.headless.foundation.resource.v1_0.EmailResource;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -131,7 +133,7 @@ public abstract class BaseEmailResourceTestCase {
 			return _outputObjectMapper.readValue(string, Email.class);
 		}
 		catch (Exception e) {
-			Assert.fail("HTTP response: " + string);
+			_log.error("Unable to process HTTP response: " + string, e);
 
 			throw e;
 		}
@@ -675,6 +677,9 @@ public abstract class BaseEmailResourceTestCase {
 
 		return template;
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		BaseEmailResourceTestCase.class);
 
 	private static BeanUtilsBean _beanUtilsBean = new BeanUtilsBean() {
 

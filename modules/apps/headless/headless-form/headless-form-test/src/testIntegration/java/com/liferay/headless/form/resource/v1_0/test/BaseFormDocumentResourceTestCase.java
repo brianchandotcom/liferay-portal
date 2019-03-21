@@ -23,6 +23,8 @@ import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
 import com.liferay.headless.form.dto.v1_0.FormDocument;
 import com.liferay.headless.form.resource.v1_0.FormDocumentResource;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -136,7 +138,7 @@ public abstract class BaseFormDocumentResourceTestCase {
 			return _outputObjectMapper.readValue(string, Boolean.class);
 		}
 		catch (Exception e) {
-			Assert.fail("HTTP response: " + string);
+			_log.error("Unable to process HTTP response: " + string, e);
 
 			throw e;
 		}
@@ -196,7 +198,7 @@ public abstract class BaseFormDocumentResourceTestCase {
 			return _outputObjectMapper.readValue(string, FormDocument.class);
 		}
 		catch (Exception e) {
-			Assert.fail("HTTP response: " + string);
+			_log.error("Unable to process HTTP response: " + string, e);
 
 			throw e;
 		}
@@ -483,6 +485,9 @@ public abstract class BaseFormDocumentResourceTestCase {
 
 		return template;
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		BaseFormDocumentResourceTestCase.class);
 
 	private static BeanUtilsBean _beanUtilsBean = new BeanUtilsBean() {
 

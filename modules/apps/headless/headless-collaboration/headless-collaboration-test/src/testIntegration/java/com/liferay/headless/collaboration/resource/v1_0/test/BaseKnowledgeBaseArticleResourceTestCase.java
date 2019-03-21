@@ -25,6 +25,8 @@ import com.liferay.headless.collaboration.dto.v1_0.KnowledgeBaseArticle;
 import com.liferay.headless.collaboration.resource.v1_0.KnowledgeBaseArticleResource;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -333,7 +335,7 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 				string, KnowledgeBaseArticle.class);
 		}
 		catch (Exception e) {
-			Assert.fail("HTTP response: " + string);
+			_log.error("Unable to process HTTP response: " + string, e);
 
 			throw e;
 		}
@@ -410,7 +412,7 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 			return _outputObjectMapper.readValue(string, Boolean.class);
 		}
 		catch (Exception e) {
-			Assert.fail("HTTP response: " + string);
+			_log.error("Unable to process HTTP response: " + string, e);
 
 			throw e;
 		}
@@ -478,7 +480,7 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 				string, KnowledgeBaseArticle.class);
 		}
 		catch (Exception e) {
-			Assert.fail("HTTP response: " + string);
+			_log.error("Unable to process HTTP response: " + string, e);
 
 			throw e;
 		}
@@ -567,7 +569,7 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 				string, KnowledgeBaseArticle.class);
 		}
 		catch (Exception e) {
-			Assert.fail("HTTP response: " + string);
+			_log.error("Unable to process HTTP response: " + string, e);
 
 			throw e;
 		}
@@ -657,7 +659,7 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 				string, KnowledgeBaseArticle.class);
 		}
 		catch (Exception e) {
-			Assert.fail("HTTP response: " + string);
+			_log.error("Unable to process HTTP response: " + string, e);
 
 			throw e;
 		}
@@ -922,7 +924,7 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 				string, KnowledgeBaseArticle.class);
 		}
 		catch (Exception e) {
-			Assert.fail("HTTP response: " + string);
+			_log.error("Unable to process HTTP response: " + string, e);
 
 			throw e;
 		}
@@ -1188,7 +1190,7 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 				string, KnowledgeBaseArticle.class);
 		}
 		catch (Exception e) {
-			Assert.fail("HTTP response: " + string);
+			_log.error("Unable to process HTTP response: " + string, e);
 
 			throw e;
 		}
@@ -1570,6 +1572,9 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 
 		return template;
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		BaseKnowledgeBaseArticleResourceTestCase.class);
 
 	private static BeanUtilsBean _beanUtilsBean = new BeanUtilsBean() {
 

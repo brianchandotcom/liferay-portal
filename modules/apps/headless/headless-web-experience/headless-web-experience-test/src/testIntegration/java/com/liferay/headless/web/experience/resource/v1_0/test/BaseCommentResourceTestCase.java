@@ -25,6 +25,8 @@ import com.liferay.headless.web.experience.dto.v1_0.Comment;
 import com.liferay.headless.web.experience.resource.v1_0.CommentResource;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -139,7 +141,7 @@ public abstract class BaseCommentResourceTestCase {
 			return _outputObjectMapper.readValue(string, Boolean.class);
 		}
 		catch (Exception e) {
-			Assert.fail("HTTP response: " + string);
+			_log.error("Unable to process HTTP response: " + string, e);
 
 			throw e;
 		}
@@ -191,7 +193,7 @@ public abstract class BaseCommentResourceTestCase {
 			return _outputObjectMapper.readValue(string, Comment.class);
 		}
 		catch (Exception e) {
-			Assert.fail("HTTP response: " + string);
+			_log.error("Unable to process HTTP response: " + string, e);
 
 			throw e;
 		}
@@ -257,7 +259,7 @@ public abstract class BaseCommentResourceTestCase {
 			return _outputObjectMapper.readValue(string, Comment.class);
 		}
 		catch (Exception e) {
-			Assert.fail("HTTP response: " + string);
+			_log.error("Unable to process HTTP response: " + string, e);
 
 			throw e;
 		}
@@ -634,7 +636,7 @@ public abstract class BaseCommentResourceTestCase {
 			return _outputObjectMapper.readValue(string, Comment.class);
 		}
 		catch (Exception e) {
-			Assert.fail("HTTP response: " + string);
+			_log.error("Unable to process HTTP response: " + string, e);
 
 			throw e;
 		}
@@ -1045,7 +1047,7 @@ public abstract class BaseCommentResourceTestCase {
 			return _outputObjectMapper.readValue(string, Comment.class);
 		}
 		catch (Exception e) {
-			Assert.fail("HTTP response: " + string);
+			_log.error("Unable to process HTTP response: " + string, e);
 
 			throw e;
 		}
@@ -1328,6 +1330,9 @@ public abstract class BaseCommentResourceTestCase {
 
 		return template;
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		BaseCommentResourceTestCase.class);
 
 	private static BeanUtilsBean _beanUtilsBean = new BeanUtilsBean() {
 

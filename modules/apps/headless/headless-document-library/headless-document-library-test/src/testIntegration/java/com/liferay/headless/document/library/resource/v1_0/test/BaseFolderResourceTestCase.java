@@ -25,6 +25,8 @@ import com.liferay.headless.document.library.dto.v1_0.Folder;
 import com.liferay.headless.document.library.resource.v1_0.FolderResource;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -483,7 +485,7 @@ public abstract class BaseFolderResourceTestCase {
 			return _outputObjectMapper.readValue(string, Folder.class);
 		}
 		catch (Exception e) {
-			Assert.fail("HTTP response: " + string);
+			_log.error("Unable to process HTTP response: " + string, e);
 
 			throw e;
 		}
@@ -544,7 +546,7 @@ public abstract class BaseFolderResourceTestCase {
 			return _outputObjectMapper.readValue(string, Boolean.class);
 		}
 		catch (Exception e) {
-			Assert.fail("HTTP response: " + string);
+			_log.error("Unable to process HTTP response: " + string, e);
 
 			throw e;
 		}
@@ -596,7 +598,7 @@ public abstract class BaseFolderResourceTestCase {
 			return _outputObjectMapper.readValue(string, Folder.class);
 		}
 		catch (Exception e) {
-			Assert.fail("HTTP response: " + string);
+			_log.error("Unable to process HTTP response: " + string, e);
 
 			throw e;
 		}
@@ -662,7 +664,7 @@ public abstract class BaseFolderResourceTestCase {
 			return _outputObjectMapper.readValue(string, Folder.class);
 		}
 		catch (Exception e) {
-			Assert.fail("HTTP response: " + string);
+			_log.error("Unable to process HTTP response: " + string, e);
 
 			throw e;
 		}
@@ -734,7 +736,7 @@ public abstract class BaseFolderResourceTestCase {
 			return _outputObjectMapper.readValue(string, Folder.class);
 		}
 		catch (Exception e) {
-			Assert.fail("HTTP response: " + string);
+			_log.error("Unable to process HTTP response: " + string, e);
 
 			throw e;
 		}
@@ -1107,7 +1109,7 @@ public abstract class BaseFolderResourceTestCase {
 			return _outputObjectMapper.readValue(string, Folder.class);
 		}
 		catch (Exception e) {
-			Assert.fail("HTTP response: " + string);
+			_log.error("Unable to process HTTP response: " + string, e);
 
 			throw e;
 		}
@@ -1409,6 +1411,9 @@ public abstract class BaseFolderResourceTestCase {
 
 		return template;
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		BaseFolderResourceTestCase.class);
 
 	private static BeanUtilsBean _beanUtilsBean = new BeanUtilsBean() {
 

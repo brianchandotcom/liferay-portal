@@ -25,6 +25,8 @@ import com.liferay.headless.foundation.dto.v1_0.Keyword;
 import com.liferay.headless.foundation.resource.v1_0.KeywordResource;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -486,7 +488,7 @@ public abstract class BaseKeywordResourceTestCase {
 			return _outputObjectMapper.readValue(string, Keyword.class);
 		}
 		catch (Exception e) {
-			Assert.fail("HTTP response: " + string);
+			_log.error("Unable to process HTTP response: " + string, e);
 
 			throw e;
 		}
@@ -547,7 +549,7 @@ public abstract class BaseKeywordResourceTestCase {
 			return _outputObjectMapper.readValue(string, Boolean.class);
 		}
 		catch (Exception e) {
-			Assert.fail("HTTP response: " + string);
+			_log.error("Unable to process HTTP response: " + string, e);
 
 			throw e;
 		}
@@ -599,7 +601,7 @@ public abstract class BaseKeywordResourceTestCase {
 			return _outputObjectMapper.readValue(string, Keyword.class);
 		}
 		catch (Exception e) {
-			Assert.fail("HTTP response: " + string);
+			_log.error("Unable to process HTTP response: " + string, e);
 
 			throw e;
 		}
@@ -665,7 +667,7 @@ public abstract class BaseKeywordResourceTestCase {
 			return _outputObjectMapper.readValue(string, Keyword.class);
 		}
 		catch (Exception e) {
-			Assert.fail("HTTP response: " + string);
+			_log.error("Unable to process HTTP response: " + string, e);
 
 			throw e;
 		}
@@ -951,6 +953,9 @@ public abstract class BaseKeywordResourceTestCase {
 
 		return template;
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		BaseKeywordResourceTestCase.class);
 
 	private static BeanUtilsBean _beanUtilsBean = new BeanUtilsBean() {
 

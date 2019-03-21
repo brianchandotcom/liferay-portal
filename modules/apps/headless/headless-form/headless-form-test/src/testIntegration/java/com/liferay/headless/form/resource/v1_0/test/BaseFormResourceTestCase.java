@@ -25,6 +25,8 @@ import com.liferay.headless.form.dto.v1_0.Form;
 import com.liferay.headless.form.resource.v1_0.FormResource;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -276,7 +278,7 @@ public abstract class BaseFormResourceTestCase {
 			return _outputObjectMapper.readValue(string, Form.class);
 		}
 		catch (Exception e) {
-			Assert.fail("HTTP response: " + string);
+			_log.error("Unable to process HTTP response: " + string, e);
 
 			throw e;
 		}
@@ -335,7 +337,7 @@ public abstract class BaseFormResourceTestCase {
 			return _outputObjectMapper.readValue(string, Form.class);
 		}
 		catch (Exception e) {
-			Assert.fail("HTTP response: " + string);
+			_log.error("Unable to process HTTP response: " + string, e);
 
 			throw e;
 		}
@@ -393,7 +395,7 @@ public abstract class BaseFormResourceTestCase {
 			return _outputObjectMapper.readValue(string, Form.class);
 		}
 		catch (Exception e) {
-			Assert.fail("HTTP response: " + string);
+			_log.error("Unable to process HTTP response: " + string, e);
 
 			throw e;
 		}
@@ -452,7 +454,7 @@ public abstract class BaseFormResourceTestCase {
 			return _outputObjectMapper.readValue(string, Form.class);
 		}
 		catch (Exception e) {
-			Assert.fail("HTTP response: " + string);
+			_log.error("Unable to process HTTP response: " + string, e);
 
 			throw e;
 		}
@@ -780,6 +782,9 @@ public abstract class BaseFormResourceTestCase {
 
 		return template;
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		BaseFormResourceTestCase.class);
 
 	private static BeanUtilsBean _beanUtilsBean = new BeanUtilsBean() {
 

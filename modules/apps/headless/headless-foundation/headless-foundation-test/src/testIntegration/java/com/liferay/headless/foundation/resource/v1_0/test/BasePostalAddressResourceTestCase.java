@@ -24,6 +24,8 @@ import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
 import com.liferay.headless.foundation.dto.v1_0.PostalAddress;
 import com.liferay.headless.foundation.resource.v1_0.PostalAddressResource;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -305,7 +307,7 @@ public abstract class BasePostalAddressResourceTestCase {
 			return _outputObjectMapper.readValue(string, PostalAddress.class);
 		}
 		catch (Exception e) {
-			Assert.fail("HTTP response: " + string);
+			_log.error("Unable to process HTTP response: " + string, e);
 
 			throw e;
 		}
@@ -791,6 +793,9 @@ public abstract class BasePostalAddressResourceTestCase {
 
 		return template;
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		BasePostalAddressResourceTestCase.class);
 
 	private static BeanUtilsBean _beanUtilsBean = new BeanUtilsBean() {
 

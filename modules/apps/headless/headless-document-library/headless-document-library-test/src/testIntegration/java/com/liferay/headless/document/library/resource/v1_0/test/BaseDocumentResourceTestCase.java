@@ -24,6 +24,8 @@ import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
 import com.liferay.headless.document.library.dto.v1_0.Document;
 import com.liferay.headless.document.library.resource.v1_0.DocumentResource;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -478,7 +480,7 @@ public abstract class BaseDocumentResourceTestCase {
 			return _outputObjectMapper.readValue(string, Document.class);
 		}
 		catch (Exception e) {
-			Assert.fail("HTTP response: " + string);
+			_log.error("Unable to process HTTP response: " + string, e);
 
 			throw e;
 		}
@@ -535,7 +537,7 @@ public abstract class BaseDocumentResourceTestCase {
 			return _outputObjectMapper.readValue(string, Boolean.class);
 		}
 		catch (Exception e) {
-			Assert.fail("HTTP response: " + string);
+			_log.error("Unable to process HTTP response: " + string, e);
 
 			throw e;
 		}
@@ -587,7 +589,7 @@ public abstract class BaseDocumentResourceTestCase {
 			return _outputObjectMapper.readValue(string, Document.class);
 		}
 		catch (Exception e) {
-			Assert.fail("HTTP response: " + string);
+			_log.error("Unable to process HTTP response: " + string, e);
 
 			throw e;
 		}
@@ -639,7 +641,7 @@ public abstract class BaseDocumentResourceTestCase {
 			return _outputObjectMapper.readValue(string, Document.class);
 		}
 		catch (Exception e) {
-			Assert.fail("HTTP response: " + string);
+			_log.error("Unable to process HTTP response: " + string, e);
 
 			throw e;
 		}
@@ -692,7 +694,7 @@ public abstract class BaseDocumentResourceTestCase {
 			return _outputObjectMapper.readValue(string, Document.class);
 		}
 		catch (Exception e) {
-			Assert.fail("HTTP response: " + string);
+			_log.error("Unable to process HTTP response: " + string, e);
 
 			throw e;
 		}
@@ -1056,7 +1058,7 @@ public abstract class BaseDocumentResourceTestCase {
 			return _outputObjectMapper.readValue(string, Document.class);
 		}
 		catch (Exception e) {
-			Assert.fail("HTTP response: " + string);
+			_log.error("Unable to process HTTP response: " + string, e);
 
 			throw e;
 		}
@@ -1409,6 +1411,9 @@ public abstract class BaseDocumentResourceTestCase {
 
 		return template;
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		BaseDocumentResourceTestCase.class);
 
 	private static BeanUtilsBean _beanUtilsBean = new BeanUtilsBean() {
 

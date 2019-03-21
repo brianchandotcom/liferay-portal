@@ -3,55 +3,6 @@
 
 <service-builder auto-import-default-references="false" auto-namespace-tables="false" package-path="com.liferay.asset.list">
 	<namespace>AssetList</namespace>
-	<entity local-service="true" name="AssetListEntry" remote-service="true" uuid="true">
-
-		<!-- PK fields -->
-
-		<column name="assetListEntryId" primary="true" type="long" />
-
-		<!-- Group instance -->
-
-		<column name="groupId" type="long" />
-
-		<!-- Audit fields -->
-
-		<column name="companyId" type="long" />
-		<column name="userId" type="long" />
-		<column name="userName" type="String" />
-		<column name="createDate" type="Date" />
-		<column name="modifiedDate" type="Date" />
-
-		<!-- Other fields -->
-
-		<column name="title" type="String" />
-		<column name="type" type="int" />
-		<column name="typeSettings" type="String" />
-		<column name="lastPublishDate" type="Date" />
-
-		<!-- Finder methods -->
-
-		<finder name="GroupId" return-type="Collection">
-			<finder-column name="groupId" />
-		</finder>
-		<finder name="G_T" return-type="AssetListEntry" unique="true">
-			<finder-column name="groupId" />
-			<finder-column name="title" />
-		</finder>
-		<finder name="G_LikeT" return-type="Collection">
-			<finder-column name="groupId" />
-			<finder-column comparator="LIKE" name="title" />
-		</finder>
-		<finder name="G_TY" return-type="Collection">
-			<finder-column name="groupId" />
-			<finder-column name="type" />
-		</finder>
-
-		<!-- References -->
-
-		<reference entity="AssetEntryAssetListEntryRel" package-path="com.liferay.asset.list" />
-		<reference entity="Resource" package-path="com.liferay.portal" />
-		<reference entity="User" package-path="com.liferay.portal" />
-	</entity>
 	<entity local-service="true" name="AssetEntryAssetListEntryRel" remote-service="false" uuid="true">
 
 		<!-- PK fields -->
@@ -100,6 +51,55 @@
 
 		<!-- References -->
 
+		<reference entity="User" package-path="com.liferay.portal" />
+	</entity>
+	<entity local-service="true" name="AssetListEntry" remote-service="true" uuid="true">
+
+		<!-- PK fields -->
+
+		<column name="assetListEntryId" primary="true" type="long" />
+
+		<!-- Group instance -->
+
+		<column name="groupId" type="long" />
+
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long" />
+		<column name="userId" type="long" />
+		<column name="userName" type="String" />
+		<column name="createDate" type="Date" />
+		<column name="modifiedDate" type="Date" />
+
+		<!-- Other fields -->
+
+		<column name="title" type="String" />
+		<column name="type" type="int" />
+		<column name="typeSettings" type="String" />
+		<column name="lastPublishDate" type="Date" />
+
+		<!-- Finder methods -->
+
+		<finder name="GroupId" return-type="Collection">
+			<finder-column name="groupId" />
+		</finder>
+		<finder name="G_T" return-type="AssetListEntry" unique="true">
+			<finder-column name="groupId" />
+			<finder-column name="title" />
+		</finder>
+		<finder name="G_LikeT" return-type="Collection">
+			<finder-column name="groupId" />
+			<finder-column comparator="LIKE" name="title" />
+		</finder>
+		<finder name="G_TY" return-type="Collection">
+			<finder-column name="groupId" />
+			<finder-column name="type" />
+		</finder>
+
+		<!-- References -->
+
+		<reference entity="AssetEntryAssetListEntryRel" package-path="com.liferay.asset.list" />
+		<reference entity="Resource" package-path="com.liferay.portal" />
 		<reference entity="User" package-path="com.liferay.portal" />
 	</entity>
 	<entity local-service="true" name="AssetListEntrySegmentsEntryRel" remote-service="true" uuid="true">

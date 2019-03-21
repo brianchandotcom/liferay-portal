@@ -37,10 +37,11 @@ import java.util.stream.StreamSupport;
 public class DataRecordValueUtil {
 
 	public static Object getDataDefinitionFieldValue(
-			DataDefinitionField dataDefinitionField, DataRecordValue[] values)
+			DataDefinitionField dataDefinitionField,
+			DataRecordValue[] dataRecordValues)
 		throws Exception {
 
-		Map<String, Object> valuesMap = toDataRecordValuesMap(values);
+		Map<String, Object> valuesMap = toDataRecordValuesMap(dataRecordValues);
 
 		if (dataDefinitionField.getLocalizable()) {
 			return (Map<String, Object>)valuesMap.get(

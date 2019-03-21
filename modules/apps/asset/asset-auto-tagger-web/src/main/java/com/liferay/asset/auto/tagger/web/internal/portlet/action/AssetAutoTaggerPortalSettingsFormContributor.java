@@ -74,7 +74,9 @@ public class AssetAutoTaggerPortalSettingsFormContributor
 			systemAssetAutoTaggerConfiguration.getMaximumNumberOfTagsPerAsset();
 
 		if ((systemMaximumNumberOfTagsPerAsset != 0) &&
-			(systemMaximumNumberOfTagsPerAsset < maximumNumberOfTagsPerAsset)) {
+			((maximumNumberOfTagsPerAsset == 0) ||
+			 (systemMaximumNumberOfTagsPerAsset <
+				 maximumNumberOfTagsPerAsset))) {
 
 			SessionErrors.add(
 				actionRequest, "maximumNumberOfTagsPerAssetInvalid");

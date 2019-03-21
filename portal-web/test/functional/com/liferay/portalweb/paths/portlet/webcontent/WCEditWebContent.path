@@ -10,7 +10,7 @@
 <tbody>
 <tr>
 	<td>ARTICLE_ID</td>
-	<td>//span[@class='workflow-id']/span[@class='workflow-value']</td>
+	<td>//table[contains(@data-searchcontainerid,'articleVersions')]//td[contains(@class,'lfr-id-column')]</td>
 	<td></td>
 </tr>
 <tr>

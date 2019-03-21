@@ -72,6 +72,10 @@ class FragmentEntryLinkListSection extends Component {
 		else {
 			this._disposeFloatingToolbar();
 		}
+
+		if (this._resizing) {
+			this.element.focus();
+		}
 	}
 
 	/**

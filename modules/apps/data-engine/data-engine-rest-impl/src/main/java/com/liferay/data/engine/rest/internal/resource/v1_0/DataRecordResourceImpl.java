@@ -14,7 +14,17 @@
 
 package com.liferay.data.engine.rest.internal.resource.v1_0;
 
+import com.liferay.data.engine.constants.DataDefinitionRuleConstants;
+import com.liferay.data.engine.exception.DEDataRecordCollectionException;
+import com.liferay.data.engine.rest.dto.v1_0.DataDefinition;
+import com.liferay.data.engine.rest.dto.v1_0.DataDefinitionField;
+import com.liferay.data.engine.rest.dto.v1_0.DataDefinitionRule;
 import com.liferay.data.engine.rest.dto.v1_0.DataRecord;
+import com.liferay.data.engine.rest.internal.dto.v1_0.util.DataDefinitionUtil;
+import com.liferay.data.engine.rest.internal.dto.v1_0.util.DataRecordValueUtil;
+import com.liferay.data.engine.rest.internal.rule.DataRuleFunction;
+import com.liferay.data.engine.rest.internal.rule.DataRuleFunctionFactory;
+import com.liferay.data.engine.rest.internal.rule.DataRuleFunctionResult;
 import com.liferay.data.engine.rest.internal.storage.DataStorage;
 import com.liferay.data.engine.rest.resource.v1_0.DataRecordResource;
 import com.liferay.dynamic.data.lists.model.DDLRecord;
@@ -30,9 +40,19 @@ import com.liferay.dynamic.data.mapping.service.DDMStorageLinkLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMStructureService;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
+
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.function.Function;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -93,6 +113,11 @@ public class DataRecordResourceImpl extends BaseDataRecordResourceImpl {
 		DDLRecordSet ddlRecordSet = _ddlRecordSetLocalService.getRecordSet(
 			dataRecordCollectionId);
 
+		validate(
+			dataRecord,
+			DataDefinitionUtil.toDataDefinition(
+				ddlRecordSet.getDDMStructure()));
+
 		return _toDataRecord(
 			_ddlRecordLocalService.addRecord(
 				PrincipalThreadLocal.getUserId(), ddlRecordSet.getGroupId(),
@@ -106,14 +131,18 @@ public class DataRecordResourceImpl extends BaseDataRecordResourceImpl {
 
 		DDLRecord ddlRecord = _ddlRecordService.getRecord(dataRecordId);
 
+		DDLRecordSet ddlRecordSet = ddlRecord.getRecordSet();
+
+		DDMStructure ddmStructure = ddlRecordSet.getDDMStructure();
+
+		validate(dataRecord, DataDefinitionUtil.toDataDefinition(ddmStructure));
+
 		long ddmStorageId = _dataStorage.save(
 			ddlRecord.getGroupId(), dataRecord);
 
 		_ddlRecordLocalService.updateRecord(
 			PrincipalThreadLocal.getUserId(), dataRecordId, ddmStorageId,
 			new ServiceContext());
-
-		DDLRecordSet ddlRecordSet = ddlRecord.getRecordSet();
 
 		DDLRecordSetVersion ddlRecordSetVersion =
 			ddlRecordSet.getRecordSetVersion();
@@ -126,6 +155,127 @@ public class DataRecordResourceImpl extends BaseDataRecordResourceImpl {
 			ddmStructureVersion.getStructureVersionId(), new ServiceContext());
 
 		return dataRecord;
+	}
+
+	protected void doValidation(
+			Map<String, DataDefinitionField> dataDefinitionFields,
+			DataDefinitionRule dataDefinitionRule, DataRecord dataRecord,
+			Map<String, Set<String>> validationErrors)
+		throws Exception {
+
+		DataRuleFunction dataRuleFunction =
+			DataRuleFunctionFactory.getDataRuleFunction(
+				dataDefinitionRule.getName());
+
+		if (dataRuleFunction == null) {
+			return;
+		}
+
+		for (String dataDefinitionFieldName :
+				dataDefinitionRule.getDataDefinitionFieldNames()) {
+
+			DataDefinitionField dataDefinitionField = dataDefinitionFields.get(
+				dataDefinitionFieldName);
+
+			DataRuleFunctionResult dataRuleFunctionResult =
+				dataRuleFunction.validate(
+					dataDefinitionField,
+					dataDefinitionRule.getDataDefinitionRuleParameters(),
+					DataRecordValueUtil.getDataDefinitionFieldValue(
+						dataDefinitionField, dataRecord.getDataRecordValues()));
+
+			if (!dataRuleFunctionResult.isValid()) {
+				Set<String> errorCodes = validationErrors.getOrDefault(
+					dataDefinitionFieldName, new HashSet<>());
+
+				errorCodes.add(dataRuleFunctionResult.getErrorCode());
+
+				validationErrors.put(dataDefinitionFieldName, errorCodes);
+			}
+		}
+	}
+
+	protected boolean isValidationRule(DataDefinitionRule dataDefinitionRule) {
+		String ruleType = dataDefinitionRule.getRuleType();
+
+		return ruleType.equals(
+			DataDefinitionRuleConstants.VALIDATION_RULE_TYPE);
+	}
+
+	protected void validate(
+			DataRecord dataRecord, DataDefinition dataDefinition)
+		throws Exception {
+
+		validateDEDataDefinitionFields(dataRecord, dataDefinition);
+		validateDEDataDefinitionFieldValues(dataRecord, dataDefinition);
+	}
+
+	protected void validateDEDataDefinitionFields(
+			DataRecord dataRecord, DataDefinition dataDefinition)
+		throws Exception {
+
+		Set<String> dataDefinitionFields = Stream.of(
+			dataDefinition.getDataDefinitionFields()
+		).map(
+			dataDefinitionField -> dataDefinitionField.getName()
+		).collect(
+			Collectors.toSet()
+		);
+
+		Map<String, Object> values = DataRecordValueUtil.toDataRecordValuesMap(
+			dataRecord.getDataRecordValues());
+
+		Set<String> keySet = values.keySet();
+
+		List<String> orphanFieldNames = keySet.stream(
+		).filter(
+			fieldName -> !dataDefinitionFields.contains(fieldName)
+		).collect(
+			Collectors.toList()
+		);
+
+		if (!orphanFieldNames.isEmpty()) {
+			throw new Exception(
+				"No such fields: " + ArrayUtil.toStringArray(orphanFieldNames));
+		}
+	}
+
+	protected void validateDEDataDefinitionFieldValues(
+			DataRecord dataRecord, DataDefinition dataDefinition)
+		throws Exception {
+
+		List<DataDefinitionRule> dataDefinitionValidationRules = Stream.of(
+			dataDefinition.getDataDefinitionRules()
+		).filter(
+			this::isValidationRule
+		).collect(
+			Collectors.toList()
+		);
+
+		if (dataDefinitionValidationRules.isEmpty()) {
+			return;
+		}
+
+		Map<String, DataDefinitionField> dataDefinitionFields = Stream.of(
+			dataDefinition.getDataDefinitionFields()
+		).collect(
+			Collectors.toMap(DataDefinitionField::getName, Function.identity())
+		);
+
+		Map<String, Set<String>> validationErrors = new HashMap<>();
+
+		for (DataDefinitionRule dataDefinitionRule :
+				dataDefinitionValidationRules) {
+
+			doValidation(
+				dataDefinitionFields, dataDefinitionRule, dataRecord,
+				validationErrors);
+		}
+
+		if (!validationErrors.isEmpty()) {
+			throw new DEDataRecordCollectionException.InvalidDataRecord(
+				validationErrors);
+		}
 	}
 
 	private DataRecord _toDataRecord(DDLRecord ddlRecord) throws Exception {

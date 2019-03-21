@@ -20,8 +20,10 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.util.ArrayUtil;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author Jeyvison Nascimento
@@ -53,6 +55,22 @@ public class DataDefinitionRuleParameterUtil {
 		return dataDefinitionRuleParameters.toArray(
 			new DataDefinitionRuleParameter
 				[dataDefinitionRuleParameters.size()]);
+	}
+
+	public static Map<String, Object> toDataDefinitionRuleParametersMap(
+		DataDefinitionRuleParameter[] dataDefinitionRuleParameters) {
+
+		Map<String, Object> dataDefinitionRuleParameterMap = new HashMap<>();
+
+		for (DataDefinitionRuleParameter dataDefinitionRuleParameter :
+				dataDefinitionRuleParameters) {
+
+			dataDefinitionRuleParameterMap.put(
+				dataDefinitionRuleParameter.getKey(),
+				dataDefinitionRuleParameter.getValue());
+		}
+
+		return dataDefinitionRuleParameterMap;
 	}
 
 	public static JSONObject toJSONObject(

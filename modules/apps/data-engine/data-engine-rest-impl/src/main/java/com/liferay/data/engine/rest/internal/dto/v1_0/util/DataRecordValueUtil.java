@@ -36,6 +36,23 @@ import java.util.stream.StreamSupport;
  */
 public class DataRecordValueUtil {
 
+	public static Object getDataDefinitionFieldValue(
+			DataDefinitionField dataDefinitionField, DataRecordValue[] values)
+		throws Exception {
+
+		Map<String, Object> valuesMap = toDataRecordValuesMap(values);
+
+		if (dataDefinitionField.getLocalizable()) {
+			return (Map<String, Object>)valuesMap.get(
+				dataDefinitionField.getName());
+		}
+		else if (dataDefinitionField.getRepeatable()) {
+			return (Object[])valuesMap.get(dataDefinitionField.getName());
+		}
+
+		return valuesMap.get(dataDefinitionField.getName());
+	}
+
 	public static DataRecordValue[] toDataRecordValues(
 			DataDefinition dataDefinition, String json)
 		throws Exception {
@@ -60,13 +77,27 @@ public class DataRecordValueUtil {
 			DataRecordValue.class);
 	}
 
+	public static Map<String, Object> toDataRecordValuesMap(
+			DataRecordValue[] dataRecordValues)
+		throws Exception {
+
+		Map<String, Object> dataRecordValuesValues = new HashMap<>();
+
+		for (DataRecordValue dataRecordValue : dataRecordValues) {
+			dataRecordValuesValues.put(
+				dataRecordValue.getKey(), dataRecordValue.getValue());
+		}
+
+		return dataRecordValuesValues;
+	}
+
 	public static String toJSON(
 			DataDefinition dataDefinition, DataRecordValue[] dataRecordValues)
 		throws Exception {
 
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
-		Map<String, Object> dataRecordValuesValues = _toDataRecordValuesValues(
+		Map<String, Object> dataRecordValuesValues = toDataRecordValuesMap(
 			dataRecordValues);
 
 		Map<String, DataDefinitionField> dataDefinitionFields = Stream.of(
@@ -107,20 +138,6 @@ public class DataRecordValueUtil {
 		}
 
 		return jsonObject.toString();
-	}
-
-	private static Map<String, Object> _toDataRecordValuesValues(
-			DataRecordValue[] dataRecordValues)
-		throws Exception {
-
-		Map<String, Object> dataRecordValuesValues = new HashMap<>();
-
-		for (DataRecordValue dataRecordValue : dataRecordValues) {
-			dataRecordValuesValues.put(
-				dataRecordValue.getKey(), dataRecordValue.getValue());
-		}
-
-		return dataRecordValuesValues;
 	}
 
 	private static Object _toDataRecordValueValue(

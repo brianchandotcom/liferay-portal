@@ -36,6 +36,7 @@ import com.liferay.sharing.interpreter.SharingEntryInterpreter;
 import com.liferay.sharing.interpreter.SharingEntryInterpreterProvider;
 import com.liferay.sharing.model.SharingEntry;
 import com.liferay.sharing.renderer.SharingEntryViewRenderer;
+import com.liferay.sharing.security.permission.SharingPermission;
 import com.liferay.sharing.service.SharingEntryLocalService;
 import com.liferay.sharing.web.internal.constants.SharingPortletKeys;
 import com.liferay.sharing.web.internal.display.context.SharedAssetsViewDisplayContext;
@@ -155,7 +156,8 @@ public class SharedAssetsViewMVCRenderCommand implements MVCRenderCommand {
 				liferayPortletRequest, liferayPortletResponse, request,
 				resourceBundle, _sharingEntryLocalService,
 				_sharingEntryInterpreterProvider::getSharingEntryInterpreter,
-				sharedAssetsFilterItems, _sharingMenuItemFactory);
+				sharedAssetsFilterItems, _sharingMenuItemFactory,
+				_sharingPermission);
 
 		renderRequest.setAttribute(
 			SharedAssetsViewDisplayContext.class.getName(),
@@ -222,5 +224,8 @@ public class SharedAssetsViewMVCRenderCommand implements MVCRenderCommand {
 
 	@Reference
 	private SharingMenuItemFactory _sharingMenuItemFactory;
+
+	@Reference
+	private SharingPermission _sharingPermission;
 
 }

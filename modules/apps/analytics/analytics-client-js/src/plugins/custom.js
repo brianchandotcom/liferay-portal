@@ -93,13 +93,16 @@ function trackCustomAssetScroll(analytics, customAssetElements) {
  * @param {object} analytics The Analytics client instance
  */
 function trackCustomAssetSubmitted(analytics) {
-	const onSubmit = ({target}) => {
+	const onSubmit = event => {
+		const {target} = event;
+
 		const customAssetElement = getClosestAssetElement(target, 'custom');
 
 		if (
 			!isTrackableCustomAsset(customAssetElement) ||
 			(isTrackableCustomAsset(customAssetElement) &&
-				target.tagName !== 'FORM')
+				target.tagName !== 'FORM' &&
+				event.defaultPrevented)
 		) {
 			return;
 		}

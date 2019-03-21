@@ -124,8 +124,10 @@ function trackFieldFocused(analytics) {
  * @param {object} The Analytics client instance
  */
 function trackFormSubmitted(analytics) {
-	const onSubmit = ({target}) => {
-		if (!isTrackableForm(target)) return;
+	const onSubmit = event => {
+		const {target} = event;
+
+		if (event.defaultPrevented && !isTrackableForm(target)) return;
 
 		analytics.send('formSubmitted', applicationId, getFormPayload(target));
 	};

@@ -244,10 +244,6 @@ public interface SegmentsExperienceLocalService
 	public SegmentsExperience getSegmentsExperience(long segmentsExperienceId)
 		throws PortalException;
 
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getSegmentsExperienceCount(
-		long groupId, long classNameId, long classPK);
-
 	/**
 	 * Returns a range of all the segments experiences.
 	 *
@@ -280,6 +276,10 @@ public interface SegmentsExperienceLocalService
 	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getSegmentsExperiencesCount();
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getSegmentsExperiencesCount(
+		long groupId, long classNameId, long classPK);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getSegmentsExperiencesCount(

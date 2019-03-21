@@ -320,14 +320,6 @@ public class SegmentsExperienceLocalServiceWrapper
 			segmentsExperienceId);
 	}
 
-	@Override
-	public int getSegmentsExperienceCount(
-		long groupId, long classNameId, long classPK) {
-
-		return _segmentsExperienceLocalService.getSegmentsExperienceCount(
-			groupId, classNameId, classPK);
-	}
-
 	/**
 	 * Returns a range of all the segments experiences.
 	 *
@@ -383,6 +375,14 @@ public class SegmentsExperienceLocalServiceWrapper
 	@Override
 	public int getSegmentsExperiencesCount() {
 		return _segmentsExperienceLocalService.getSegmentsExperiencesCount();
+	}
+
+	@Override
+	public int getSegmentsExperiencesCount(
+		long groupId, long classNameId, long classPK) {
+
+		return _segmentsExperienceLocalService.getSegmentsExperiencesCount(
+			groupId, classNameId, classPK);
 	}
 
 	@Override

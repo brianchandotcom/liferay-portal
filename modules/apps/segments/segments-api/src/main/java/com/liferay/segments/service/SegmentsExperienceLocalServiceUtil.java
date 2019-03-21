@@ -297,13 +297,6 @@ public class SegmentsExperienceLocalServiceUtil {
 		return getService().getSegmentsExperience(segmentsExperienceId);
 	}
 
-	public static int getSegmentsExperienceCount(
-		long groupId, long classNameId, long classPK) {
-
-		return getService().getSegmentsExperienceCount(
-			groupId, classNameId, classPK);
-	}
-
 	/**
 	 * Returns a range of all the segments experiences.
 	 *
@@ -354,6 +347,13 @@ public class SegmentsExperienceLocalServiceUtil {
 	 */
 	public static int getSegmentsExperiencesCount() {
 		return getService().getSegmentsExperiencesCount();
+	}
+
+	public static int getSegmentsExperiencesCount(
+		long groupId, long classNameId, long classPK) {
+
+		return getService().getSegmentsExperiencesCount(
+			groupId, classNameId, classPK);
 	}
 
 	public static int getSegmentsExperiencesCount(

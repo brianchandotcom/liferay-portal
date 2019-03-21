@@ -20,8 +20,6 @@
 JournalArticle article = journalDisplayContext.getArticle();
 
 JournalEditArticleDisplayContext journalEditArticleDisplayContext = new JournalEditArticleDisplayContext(request, liferayPortletResponse, article);
-
-long classNameId = ParamUtil.getLong(request, "classNameId");
 %>
 
 <aui:model-context bean="<%= article %>" model="<%= JournalArticle.class %>" />
@@ -60,11 +58,7 @@ long classNameId = ParamUtil.getLong(request, "classNameId");
 		<div class="container-fluid container-fluid-max-xl">
 			<ul class="tbar-nav">
 				<li class="tbar-item tbar-item-expand">
-					<aui:input autoFocus="<%= true %>" cssClass="form-control-inline" label="" localized="<%= true %>" name="titleMapAsXML" placeholder="title" type="text" wrapperCssClass="article-content-title mb-0">
-						<c:if test="<%= classNameId == JournalArticleConstants.CLASSNAME_ID_DEFAULT %>">
-							<aui:validator name="required" />
-						</c:if>
-					</aui:input>
+					<aui:input autoFocus="<%= true %>" cssClass="form-control-inline" label="" localized="<%= true %>" name="titleMapAsXML" placeholder="title" type="text" wrapperCssClass="article-content-title mb-0" />
 				</li>
 
 				<c:if test="<%= journalWebConfiguration.changeableDefaultLanguage() %>">

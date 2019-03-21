@@ -16,6 +16,7 @@ package com.liferay.portal.search.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.kernel.search.SearchEngine;
+import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.util.Collection;
@@ -39,7 +40,7 @@ public class ElasticsearchRegistrationTest {
 
 	@ClassRule
 	@Rule
-	public static final LiferayIntegrationTestRule liferayIntegrationTestRule =
+	public static final AggregateTestRule aggregateTestRule =
 		new LiferayIntegrationTestRule();
 
 	@Test

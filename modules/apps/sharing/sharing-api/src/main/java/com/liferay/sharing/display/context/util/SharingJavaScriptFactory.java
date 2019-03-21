@@ -28,7 +28,8 @@ public interface SharingJavaScriptFactory {
 		throws PortalException;
 
 	public String createManageCollaboratorsOnClickMethod(
-		String className, long classPK, HttpServletRequest request);
+			String className, long classPK, HttpServletRequest request)
+		throws PortalException;
 
 	public String createSharingJavaScript(HttpServletRequest request)
 		throws PortalException;

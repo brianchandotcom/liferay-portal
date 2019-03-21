@@ -27,7 +27,6 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.PortletProvider;
 import com.liferay.portal.kernel.portlet.PortletProviderUtil;
-import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.template.Template;
 import com.liferay.portal.kernel.template.TemplateConstants;
@@ -44,7 +43,6 @@ import com.liferay.sharing.web.internal.constants.SharingWebKeys;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
-import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
 import javax.portlet.PortletURL;
 import javax.portlet.WindowStateException;
@@ -72,7 +70,8 @@ public class SharingJavaScriptFactoryImpl implements SharingJavaScriptFactory {
 
 	@Override
 	public String createManageCollaboratorsOnClickMethod(
-		String className, long classPK, HttpServletRequest request) {
+			String className, long classPK, HttpServletRequest request)
+		throws PortalException {
 
 		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
 			request.getLocale(), SharingJavaScriptFactoryImpl.class);
@@ -94,7 +93,8 @@ public class SharingJavaScriptFactoryImpl implements SharingJavaScriptFactory {
 
 	@Override
 	public String createSharingOnClickMethod(
-		String className, long classPK, HttpServletRequest request) {
+			String className, long classPK, HttpServletRequest request)
+		throws PortalException {
 
 		return _getOpenDialogOnClickMethod(
 			_getSharingPortletURL(className, classPK, request),
@@ -136,16 +136,12 @@ public class SharingJavaScriptFactoryImpl implements SharingJavaScriptFactory {
 	}
 
 	private PortletURL _getManageCollaboratorsPortletURL(
-		String className, long classPK, HttpServletRequest request) {
+			String className, long classPK, HttpServletRequest request)
+		throws PortalException {
 
-		String manageCollaboratorsPortletId = PortletProviderUtil.getPortletId(
-			SharingEntry.class.getName(), PortletProvider.Action.MANAGE);
-
-		PortletURL manageCollaboratorsURL = PortletURLFactoryUtil.create(
-			request, manageCollaboratorsPortletId, PortletRequest.RENDER_PHASE);
-
-		manageCollaboratorsURL.setParameter(
-			"mvcRenderCommandName", "/sharing/manage_collaborators");
+		PortletURL manageCollaboratorsURL = PortletProviderUtil.getPortletURL(
+			request, SharingEntry.class.getName(),
+			PortletProvider.Action.MANAGE);
 
 		manageCollaboratorsURL.setParameter(
 			"classNameId",
@@ -236,15 +232,11 @@ public class SharingJavaScriptFactoryImpl implements SharingJavaScriptFactory {
 	}
 
 	private PortletURL _getSharingPortletURL(
-		String className, long classPK, HttpServletRequest request) {
+			String className, long classPK, HttpServletRequest request)
+		throws PortalException {
 
-		String sharingPortletId = PortletProviderUtil.getPortletId(
-			SharingEntry.class.getName(), PortletProvider.Action.EDIT);
-
-		PortletURL sharingURL = PortletURLFactoryUtil.create(
-			request, sharingPortletId, PortletRequest.RENDER_PHASE);
-
-		sharingURL.setParameter("mvcRenderCommandName", "/sharing/share");
+		PortletURL sharingURL = PortletProviderUtil.getPortletURL(
+			request, SharingEntry.class.getName(), PortletProvider.Action.EDIT);
 
 		sharingURL.setParameter(
 			"classNameId",

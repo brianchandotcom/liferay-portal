@@ -14,6 +14,7 @@
 
 package com.liferay.portal.workflow.metrics.rest.internal.resource.v1_0;
 
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Sort;
@@ -33,6 +34,7 @@ import com.liferay.portal.search.aggregation.bucket.FilterAggregationResult;
 import com.liferay.portal.search.aggregation.bucket.RangeAggregationResult;
 import com.liferay.portal.search.aggregation.bucket.TermsAggregation;
 import com.liferay.portal.search.aggregation.bucket.TermsAggregationResult;
+import com.liferay.portal.search.aggregation.metrics.CardinalityAggregation;
 import com.liferay.portal.search.aggregation.metrics.CardinalityAggregationResult;
 import com.liferay.portal.search.aggregation.pipeline.BucketSortPipelineAggregation;
 import com.liferay.portal.search.document.Document;
@@ -94,11 +96,11 @@ public class ProcessResourceImpl
 		for (SearchHit searchHit : searchHits.getSearchHits()) {
 			Process process = _createProcess(searchHit);
 
-			TermsAggregationResult termsAggregationResult =
+			TermsAggregationResult instanceTermsAggregationResult =
 				_getInstanceTermsAggregationResult(
 					null, null, Collections.singleton(processId));
 
-			for (Bucket bucket : termsAggregationResult.getBuckets()) {
+			for (Bucket bucket : instanceTermsAggregationResult.getBuckets()) {
 				_setInstanceCount(bucket, process);
 			}
 
@@ -107,10 +109,7 @@ public class ProcessResourceImpl
 					null, null, Collections.singleton(processId));
 
 			for (Bucket bucket : slaTermsAggregationResult.getBuckets()) {
-				_setDueAfterInstanceCount(bucket, process);
-				_setDueInInstanceCount(bucket, process);
-				_setOntimeInstanceCount(bucket, process);
-				_setOverdueInstanceCount(bucket, process);
+				_populateProcessWithSLAMetrics(bucket, process);
 			}
 
 			return process;
@@ -261,34 +260,57 @@ public class ProcessResourceImpl
 			processesMap.put(process.getId(), process);
 		}
 
-		return _getProcesses(
+		TermsAggregationResult instanceTermsAggregationResult =
 			_getInstanceTermsAggregationResult(
-				fieldSort, pagination, processesMap.keySet()),
-			fieldSort, processesMap);
-	}
+				fieldSort, pagination, processesMap.keySet());
 
-	private List<Process> _getProcesses(
-			TermsAggregationResult termsAggregationResult, FieldSort fieldSort,
-			Map<Long, Process> processesMap)
-		throws Exception {
+		TermsAggregationResult slaTermsAggregationResult =
+			_getSLATermsAggregationResult(
+				fieldSort, pagination, processesMap.keySet());
 
 		List<Process> processes = new LinkedList<>();
 
 		if (_isOrderByTitle(fieldSort.getField())) {
 			for (Process process : processesMap.values()) {
-				processes.add(
-					_setInstanceCount(
-						termsAggregationResult.getBucket(
-							String.valueOf(process.getId())),
-						process));
+				_setInstanceCount(
+					instanceTermsAggregationResult.getBucket(
+						String.valueOf(process.getId())),
+					process);
+
+				_populateProcessWithSLAMetrics(
+					slaTermsAggregationResult.getBucket(
+						String.valueOf(process.getId())),
+					process);
+
+				processes.add(process);
+			}
+		}
+		else if (_isOrderByInstanceCount(fieldSort.getField())) {
+			for (Bucket bucket : instanceTermsAggregationResult.getBuckets()) {
+				Process process = processesMap.remove(
+					Long.valueOf(bucket.getKey()));
+
+				_setInstanceCount(bucket, process);
+
+				_populateProcessWithSLAMetrics(
+					slaTermsAggregationResult.getBucket(bucket.getKey()),
+					process);
+
+				processes.add(process);
 			}
 		}
 		else {
-			for (Bucket bucket : termsAggregationResult.getBuckets()) {
-				processes.add(
-					_setInstanceCount(
-						bucket,
-						processesMap.remove(Long.valueOf(bucket.getKey()))));
+			for (Bucket bucket : slaTermsAggregationResult.getBuckets()) {
+				Process process = processesMap.remove(
+					Long.valueOf(bucket.getKey()));
+
+				_setInstanceCount(
+					instanceTermsAggregationResult.getBucket(bucket.getKey()),
+					process);
+
+				_populateProcessWithSLAMetrics(bucket, process);
+
+				processes.add(process);
 			}
 		}
 
@@ -346,20 +368,20 @@ public class ProcessResourceImpl
 		dateRangeAggregation.addRange("dueAfter", "now+7d", null);
 		dateRangeAggregation.addRange("dueIn", null, "now+7d");
 
-		dateRangeAggregation.addChildAggregation(
-			_aggregations.cardinality("instanceCount", "instanceId"));
+		CardinalityAggregation cardinalityAggregation =
+			_aggregations.cardinality("instanceCount", "instanceId");
+
+		dateRangeAggregation.addChildAggregation(cardinalityAggregation);
 
 		FilterAggregation onTimeFilterAggregation = _aggregations.filter(
 			"onTime", _queries.term("onTime", true));
 
-		onTimeFilterAggregation.addChildAggregation(
-			_aggregations.cardinality("onTime", "instanceId"));
+		onTimeFilterAggregation.addChildAggregation(cardinalityAggregation);
 
 		FilterAggregation overdueFilterAggregation = _aggregations.filter(
 			"overdue", _queries.term("onTime", false));
 
-		overdueFilterAggregation.addChildAggregation(
-			_aggregations.cardinality("overdue", "instanceId"));
+		overdueFilterAggregation.addChildAggregation(cardinalityAggregation);
 
 		termsAggregation.addChildrenAggregations(
 			dateRangeAggregation, onTimeFilterAggregation,
@@ -416,6 +438,15 @@ public class ProcessResourceImpl
 		return StringUtil.startsWith(fieldName, "title");
 	}
 
+	private void _populateProcessWithSLAMetrics(
+		Bucket bucket, Process process) {
+
+		_setDueAfterInstanceCount(bucket, process);
+		_setDueInInstanceCount(bucket, process);
+		_setOnTimeInstanceCount(bucket, process);
+		_setOverdueInstanceCount(bucket, process);
+	}
+
 	private Process _setDueAfterInstanceCount(Bucket bucket, Process process) {
 		if (bucket != null) {
 			RangeAggregationResult rangeAggregationResult =
@@ -425,12 +456,15 @@ public class ProcessResourceImpl
 			Bucket dueAfterBucket = rangeAggregationResult.getBucket(
 				"dueAfter");
 
-			CardinalityAggregationResult cardinalityAggregationResult =
-				(CardinalityAggregationResult)
-					dueAfterBucket.getChildAggregationResult("instanceCount");
+			if (dueAfterBucket != null) {
+				CardinalityAggregationResult cardinalityAggregationResult =
+					(CardinalityAggregationResult)
+						dueAfterBucket.getChildAggregationResult(
+							"instanceCount");
 
-			process.setDueAfterInstanceCount(
-				cardinalityAggregationResult.getValue());
+				process.setDueAfterInstanceCount(
+					cardinalityAggregationResult.getValue());
+			}
 		}
 
 		return process;
@@ -444,12 +478,14 @@ public class ProcessResourceImpl
 
 			Bucket dueInBucket = rangeAggregationResult.getBucket("dueIn");
 
-			CardinalityAggregationResult cardinalityAggregationResult =
-				(CardinalityAggregationResult)
-					dueInBucket.getChildAggregationResult("instanceCount");
+			if (dueInBucket != null) {
+				CardinalityAggregationResult cardinalityAggregationResult =
+					(CardinalityAggregationResult)
+						dueInBucket.getChildAggregationResult("instanceCount");
 
-			process.setDueInInstanceCount(
-				cardinalityAggregationResult.getValue());
+				process.setDueInInstanceCount(
+					cardinalityAggregationResult.getValue());
+			}
 		}
 
 		return process;
@@ -468,7 +504,7 @@ public class ProcessResourceImpl
 		return process;
 	}
 
-	private Process _setOntimeInstanceCount(Bucket bucket, Process process) {
+	private Process _setOnTimeInstanceCount(Bucket bucket, Process process) {
 		if (bucket != null) {
 			FilterAggregationResult filterAggregationResult =
 				(FilterAggregationResult)bucket.getChildAggregationResult(
@@ -476,9 +512,10 @@ public class ProcessResourceImpl
 
 			CardinalityAggregationResult cardinalityAggregationResult =
 				(CardinalityAggregationResult)
-					filterAggregationResult.getChildAggregationResult("onTime");
+					filterAggregationResult.getChildAggregationResult(
+						"instanceCount");
 
-			process.setOntimeInstanceCount(
+			process.setOnTimeInstanceCount(
 				cardinalityAggregationResult.getValue());
 		}
 
@@ -494,7 +531,7 @@ public class ProcessResourceImpl
 			CardinalityAggregationResult cardinalityAggregationResult =
 				(CardinalityAggregationResult)
 					filterAggregationResult.getChildAggregationResult(
-						"overdue");
+						"instanceCount");
 
 			process.setOverdueInstanceCount(
 				cardinalityAggregationResult.getValue());
@@ -517,6 +554,15 @@ public class ProcessResourceImpl
 
 		if (_isOrderByTitle(fieldName)) {
 			fieldName = titleFieldName;
+		}
+		else if (!_isOrderByInstanceCount(fieldName)) {
+			fieldName = StringUtil.extractFirst(fieldName, "InstanceCount");
+
+			fieldName = fieldName.concat(
+				StringPool.PERIOD
+			).concat(
+				"instanceCount"
+			);
 		}
 
 		FieldSort fieldSort = _sorts.field(fieldName);

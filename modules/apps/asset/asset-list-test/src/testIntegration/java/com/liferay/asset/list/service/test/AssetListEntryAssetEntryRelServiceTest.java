@@ -77,7 +77,6 @@ public class AssetListEntryAssetEntryRelServiceTest {
 			AssetListTestUtil.addAssetListEntryAssetEntryRel(
 				_group.getGroupId(), assetEntry, assetListEntry,
 				RandomTestUtil.nextLong());
-
 		AssetListEntryAssetEntryRel assetListEntryRelDatabase =
 			AssetListEntryAssetEntryRelUtil.findByUUID_G(
 				assetListEntryRelLocal.getUuid(),
@@ -89,7 +88,6 @@ public class AssetListEntryAssetEntryRelServiceTest {
 		Assert.assertEquals(
 			assetListEntry.getAssetListEntryId(),
 			assetListEntryRelLocal.getAssetListEntryId());
-
 		Assert.assertEquals(
 			assetEntry.getEntryId(), assetListEntryRelLocal.getAssetEntryId());
 	}
@@ -113,7 +111,6 @@ public class AssetListEntryAssetEntryRelServiceTest {
 			AssetListTestUtil.addAssetListEntryAssetEntryRel(
 				_group.getGroupId(), assetEntry, assetListEntry,
 				segmentsEntryId, 1);
-
 		AssetListEntryAssetEntryRel assetListEntryRelDatabase =
 			AssetListEntryAssetEntryRelUtil.findByA_S_P(
 				assetListEntryRelLocal.getAssetListEntryId(), segmentsEntryId,
@@ -125,7 +122,6 @@ public class AssetListEntryAssetEntryRelServiceTest {
 		Assert.assertEquals(
 			assetListEntry.getAssetListEntryId(),
 			assetListEntryRelLocal.getAssetListEntryId());
-
 		Assert.assertEquals(
 			assetEntry.getEntryId(), assetListEntryRelLocal.getAssetEntryId());
 	}
@@ -206,7 +202,6 @@ public class AssetListEntryAssetEntryRelServiceTest {
 		AssetEntry assetEntryAlive = AssetTestUtil.addAssetEntry(
 			_group.getGroupId(), null,
 			TestAssetRendererFactory.class.getName());
-
 		AssetEntry assetEntryDeleted = AssetTestUtil.addAssetEntry(
 			_group.getGroupId(), null,
 			TestAssetRendererFactory.class.getName());
@@ -217,7 +212,6 @@ public class AssetListEntryAssetEntryRelServiceTest {
 			AssetListTestUtil.addAssetListEntryAssetEntryRel(
 				_group.getGroupId(), assetEntryAlive, assetListEntry,
 				segmentsEntryId, 1);
-
 		AssetListEntryAssetEntryRel assetListEntryRelDeleted =
 			AssetListTestUtil.addAssetListEntryAssetEntryRel(
 				_group.getGroupId(), assetEntryDeleted, assetListEntry,
@@ -232,7 +226,6 @@ public class AssetListEntryAssetEntryRelServiceTest {
 			AssetListEntryAssetEntryRelUtil.fetchByUUID_G(
 				assetListEntryRelAlive.getUuid(),
 				assetListEntryRelAlive.getGroupId()));
-
 		Assert.assertNull(
 			AssetListEntryAssetEntryRelUtil.fetchByUUID_G(
 				assetListEntryRelDeleted.getUuid(),
@@ -247,7 +240,6 @@ public class AssetListEntryAssetEntryRelServiceTest {
 		AssetEntry assetEntry1 = AssetTestUtil.addAssetEntry(
 			_group.getGroupId(), null,
 			TestAssetRendererFactory.class.getName());
-
 		AssetEntry assetEntry2 = AssetTestUtil.addAssetEntry(
 			_group.getGroupId(), null,
 			TestAssetRendererFactory.class.getName());
@@ -256,7 +248,6 @@ public class AssetListEntryAssetEntryRelServiceTest {
 
 		AssetListTestUtil.addAssetListEntryAssetEntryRel(
 			_group.getGroupId(), assetEntry1, assetListEntry, segmentsEntryId);
-
 		AssetListTestUtil.addAssetListEntryAssetEntryRel(
 			_group.getGroupId(), assetEntry2, assetListEntry, segmentsEntryId);
 
@@ -362,11 +353,9 @@ public class AssetListEntryAssetEntryRelServiceTest {
 		Assert.assertEquals(
 			assetListEntryUpdated.getAssetListEntryId(),
 			assetListEntryRelUpdated.getAssetListEntryId());
-
 		Assert.assertEquals(
 			assetEntryUpdated.getEntryId(),
 			assetListEntryRelUpdated.getAssetEntryId());
-
 		Assert.assertEquals(
 			assetListEntryRelUpdated.getPosition(), positionOriginal + 1);
 	}
@@ -378,21 +367,16 @@ public class AssetListEntryAssetEntryRelServiceTest {
 		Assert.assertEquals(
 			assetListEntryRel1.getAssetEntryId(),
 			assetListEntryRel2.getAssetEntryId());
-
 		Assert.assertEquals(
 			assetListEntryRel1.getAssetListEntryId(),
 			assetListEntryRel2.getAssetListEntryId());
-
 		Assert.assertEquals(
 			assetListEntryRel1.getAssetListEntryAssetEntryRelId(),
 			assetListEntryRel2.getAssetListEntryAssetEntryRelId());
-
 		Assert.assertEquals(
 			assetListEntryRel1.getUuid(), assetListEntryRel2.getUuid());
-
 		Assert.assertEquals(
 			assetListEntryRel1.getPosition(), assetListEntryRel2.getPosition());
-
 		Assert.assertEquals(
 			assetListEntryRel1.getSegmentsEntryId(),
 			assetListEntryRel2.getSegmentsEntryId());

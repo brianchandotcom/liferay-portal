@@ -91,7 +91,6 @@ public class AssetListEntrySegmentsEntryRelServiceTest {
 
 		AssetListTestUtil.addAssetListEntrySegmentsEntryRel(
 			_group.getGroupId(), assetListEntry);
-
 		AssetListTestUtil.addAssetListEntrySegmentsEntryRel(
 			_group.getGroupId(), assetListEntry);
 
@@ -130,7 +129,6 @@ public class AssetListEntrySegmentsEntryRelServiceTest {
 		AssetListEntrySegmentsEntryRel assetListEntrySegmentsEntryRel1 =
 			AssetListTestUtil.addAssetListEntrySegmentsEntryRel(
 				_group.getGroupId(), assetListEntry);
-
 		AssetListEntrySegmentsEntryRel assetListEntrySegmentsEntryRel2 =
 			AssetListTestUtil.addAssetListEntrySegmentsEntryRel(
 				_group.getGroupId(), assetListEntry);
@@ -186,21 +184,17 @@ public class AssetListEntrySegmentsEntryRelServiceTest {
 		Assert.assertEquals(
 			assetListEntrySegmentsEntryRel1.getAssetListEntryId(),
 			assetListEntrySegmentsEntryRel2.getAssetListEntryId());
-
 		Assert.assertEquals(
 			assetListEntrySegmentsEntryRel1.
 				getAssetListEntrySegmentsEntryRelId(),
 			assetListEntrySegmentsEntryRel2.
 				getAssetListEntrySegmentsEntryRelId());
-
 		Assert.assertEquals(
 			assetListEntrySegmentsEntryRel1.getSegmentsEntryId(),
 			assetListEntrySegmentsEntryRel2.getSegmentsEntryId());
-
 		Assert.assertEquals(
 			assetListEntrySegmentsEntryRel1.getTypeSettings(),
 			assetListEntrySegmentsEntryRel2.getTypeSettings());
-
 		Assert.assertEquals(
 			assetListEntrySegmentsEntryRel1.getUuid(),
 			assetListEntrySegmentsEntryRel2.getUuid());

@@ -47,9 +47,9 @@ public class DeleteAssetEntrySelectionMVCActionCommand
 
 		long assetListEntryId = ParamUtil.getLong(
 			actionRequest, "assetListEntryId");
+
 		long segmentsEntryId = ParamUtil.getLong(
 			actionRequest, "segmentsEntryId");
-
 		int position = ParamUtil.getInteger(actionRequest, "position");
 
 		_assetListEntryService.deleteAssetEntrySelection(

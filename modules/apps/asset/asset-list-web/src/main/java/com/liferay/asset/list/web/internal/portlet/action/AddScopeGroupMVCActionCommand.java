@@ -51,36 +51,39 @@ public class AddScopeGroupMVCActionCommand extends BaseMVCActionCommand {
 
 		long assetListEntryId = ParamUtil.getLong(
 			actionRequest, "assetListEntryId");
-		long segmentsEntryId = ParamUtil.getLong(
-			actionRequest, "segmentsEntryId");
 
 		AssetListEntry assetListEntry =
 			_assetListEntryService.fetchAssetListEntry(assetListEntryId);
 
-		if (assetListEntry != null) {
-			UnicodeProperties properties = new UnicodeProperties(true);
-
-			properties.fastLoad(
-				assetListEntry.getTypeSettings(segmentsEntryId));
-
-			long[] groupIds = GetterUtil.getLongValues(
-				StringUtil.split(properties.getProperty("groupIds")));
-
-			if (ArrayUtil.isEmpty(groupIds)) {
-				ArrayUtil.append(groupIds, assetListEntry.getGroupId());
-			}
-
-			long groupId = ParamUtil.getLong(actionRequest, "groupId");
-
-			if (!ArrayUtil.contains(groupIds, groupId)) {
-				groupIds = ArrayUtil.append(groupIds, groupId);
-			}
-
-			properties.setProperty("groupIds", StringUtil.merge(groupIds));
-
-			_assetListEntryService.updateAssetListEntryTypeSettings(
-				assetListEntryId, segmentsEntryId, properties.toString());
+		if (assetListEntry == null) {
+			return;
 		}
+
+		long segmentsEntryId = ParamUtil.getLong(
+			actionRequest, "segmentsEntryId");
+
+		UnicodeProperties properties = new UnicodeProperties(true);
+
+		properties.fastLoad(
+			assetListEntry.getTypeSettings(segmentsEntryId));
+
+		long[] groupIds = GetterUtil.getLongValues(
+			StringUtil.split(properties.getProperty("groupIds")));
+
+		if (ArrayUtil.isEmpty(groupIds)) {
+			ArrayUtil.append(groupIds, assetListEntry.getGroupId());
+		}
+
+		long groupId = ParamUtil.getLong(actionRequest, "groupId");
+
+		if (!ArrayUtil.contains(groupIds, groupId)) {
+			groupIds = ArrayUtil.append(groupIds, groupId);
+		}
+
+		properties.setProperty("groupIds", StringUtil.merge(groupIds));
+
+		_assetListEntryService.updateAssetListEntryTypeSettings(
+			assetListEntryId, segmentsEntryId, properties.toString());
 	}
 
 	@Reference

@@ -83,6 +83,42 @@ public class DTOOpenAPIParser {
 		return null;
 	}
 
+	private static String _getPropertyName(
+		Schema propertySchema, String propertySchemaName) {
+
+		String name = CamelCaseUtil.toCamelCase(propertySchemaName);
+
+		if (StringUtil.equalsIgnoreCase(propertySchema.getType(), "object")) {
+			if (propertySchema.getItems() != null) {
+				return OpenAPIUtil.formatSingular(name);
+			}
+		}
+
+		return name;
+	}
+
+	private static Map<String, Schema> _getPropertySchemas(Schema schema) {
+		Map<String, Schema> propertySchemas = null;
+
+		Items items = schema.getItems();
+
+		if (items != null) {
+			propertySchemas = items.getPropertySchemas();
+		}
+		else if (schema.getAllOfSchemas() != null) {
+			propertySchemas = OpenAPIParserUtil.getAllOfPropertySchemas(schema);
+		}
+		else {
+			propertySchemas = schema.getPropertySchemas();
+		}
+
+		if (propertySchemas == null) {
+			return Collections.emptyMap();
+		}
+
+		return propertySchemas;
+	}
+
 	private static String _getPropertyType(
 		Map<String, String> javaDataTypeMap, Schema propertySchema,
 		String propertySchemaName) {
@@ -154,42 +190,6 @@ public class DTOOpenAPIParser {
 		}
 
 		return propertyType;
-	}
-
-	private static String _getPropertyName(
-		Schema propertySchema, String propertySchemaName) {
-
-		String name = CamelCaseUtil.toCamelCase(propertySchemaName);
-
-		if (StringUtil.equalsIgnoreCase(propertySchema.getType(), "object")) {
-			if (propertySchema.getItems() != null) {
-				return OpenAPIUtil.formatSingular(name);
-			}
-		}
-
-		return name;
-	}
-
-	private static Map<String, Schema> _getPropertySchemas(Schema schema) {
-		Map<String, Schema> propertySchemas = null;
-
-		Items items = schema.getItems();
-
-		if (items != null) {
-			propertySchemas = items.getPropertySchemas();
-		}
-		else if (schema.getAllOfSchemas() != null) {
-			propertySchemas = OpenAPIParserUtil.getAllOfPropertySchemas(schema);
-		}
-		else {
-			propertySchemas = schema.getPropertySchemas();
-		}
-
-		if (propertySchemas == null) {
-			return Collections.emptyMap();
-		}
-
-		return propertySchemas;
 	}
 
 }

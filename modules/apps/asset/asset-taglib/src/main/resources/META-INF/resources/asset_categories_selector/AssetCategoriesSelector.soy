@@ -23,7 +23,11 @@
 
 					{if $vocabulary.required}
 						{sp}
-						<span class="icon-asterisk text-warning">
+						<span class="reference-mark">
+							{call ClayIcon.render}
+								{param spritemap: $spritemap /}
+								{param symbol: 'asterisk' /}
+							{/call}
 							<span class="hide-accessible">{msg desc=""}required{/msg}</span>
 						</span>
 					{/if}

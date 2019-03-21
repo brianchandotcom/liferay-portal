@@ -2398,7 +2398,7 @@ public class LayoutPageTemplateEntryPersistenceImpl
 	}
 
 	private static final String _FINDER_COLUMN_GROUPID_GROUPID_2 =
-		"layoutPageTemplateEntry.groupId = ?";
+		"layoutPageTemplateEntry.groupId = ? AND layoutPageTemplateEntry.draftLayoutPageTemplateEntryId > 0";
 
 	private FinderPath _finderPathWithPaginationFindByLayoutPrototypeId;
 	private FinderPath _finderPathWithoutPaginationFindByLayoutPrototypeId;
@@ -2925,7 +2925,7 @@ public class LayoutPageTemplateEntryPersistenceImpl
 
 	private static final String
 		_FINDER_COLUMN_LAYOUTPROTOTYPEID_LAYOUTPROTOTYPEID_2 =
-			"layoutPageTemplateEntry.layoutPrototypeId = ?";
+			"layoutPageTemplateEntry.layoutPrototypeId = ? AND layoutPageTemplateEntry.draftLayoutPageTemplateEntryId > 0";
 
 	private FinderPath _finderPathFetchByPlid;
 	private FinderPath _finderPathCountByPlid;
@@ -4105,7 +4105,7 @@ public class LayoutPageTemplateEntryPersistenceImpl
 
 	private static final String
 		_FINDER_COLUMN_G_L_LAYOUTPAGETEMPLATECOLLECTIONID_2 =
-			"layoutPageTemplateEntry.layoutPageTemplateCollectionId = ?";
+			"layoutPageTemplateEntry.layoutPageTemplateCollectionId = ? AND layoutPageTemplateEntry.draftLayoutPageTemplateEntryId > 0";
 
 	private FinderPath _finderPathFetchByG_N;
 	private FinderPath _finderPathCountByG_N;
@@ -5315,10 +5315,10 @@ public class LayoutPageTemplateEntryPersistenceImpl
 		"layoutPageTemplateEntry.groupId = ? AND ";
 
 	private static final String _FINDER_COLUMN_G_T_TYPE_2 =
-		"layoutPageTemplateEntry.type = ?";
+		"layoutPageTemplateEntry.type = ? AND layoutPageTemplateEntry.draftLayoutPageTemplateEntryId > 0";
 
 	private static final String _FINDER_COLUMN_G_T_TYPE_2_SQL =
-		"layoutPageTemplateEntry.type_ = ?";
+		"layoutPageTemplateEntry.type_ = ? AND layoutPageTemplateEntry.draftLayoutPageTemplateEntryId > 0";
 
 	private FinderPath _finderPathWithPaginationFindByG_L_LikeN;
 	private FinderPath _finderPathWithPaginationCountByG_L_LikeN;
@@ -6436,10 +6436,10 @@ public class LayoutPageTemplateEntryPersistenceImpl
 			"layoutPageTemplateEntry.layoutPageTemplateCollectionId = ? AND ";
 
 	private static final String _FINDER_COLUMN_G_L_LIKEN_NAME_2 =
-		"layoutPageTemplateEntry.name LIKE ?";
+		"layoutPageTemplateEntry.name LIKE ? AND layoutPageTemplateEntry.draftLayoutPageTemplateEntryId > 0";
 
 	private static final String _FINDER_COLUMN_G_L_LIKEN_NAME_3 =
-		"(layoutPageTemplateEntry.name IS NULL OR layoutPageTemplateEntry.name LIKE '')";
+		"(layoutPageTemplateEntry.name IS NULL OR layoutPageTemplateEntry.name LIKE '') AND layoutPageTemplateEntry.draftLayoutPageTemplateEntryId > 0";
 
 	private FinderPath _finderPathWithPaginationFindByG_L_T;
 	private FinderPath _finderPathWithoutPaginationFindByG_L_T;
@@ -7480,10 +7480,10 @@ public class LayoutPageTemplateEntryPersistenceImpl
 			"layoutPageTemplateEntry.layoutPageTemplateCollectionId = ? AND ";
 
 	private static final String _FINDER_COLUMN_G_L_T_TYPE_2 =
-		"layoutPageTemplateEntry.type = ?";
+		"layoutPageTemplateEntry.type = ? AND layoutPageTemplateEntry.draftLayoutPageTemplateEntryId > 0";
 
 	private static final String _FINDER_COLUMN_G_L_T_TYPE_2_SQL =
-		"layoutPageTemplateEntry.type_ = ?";
+		"layoutPageTemplateEntry.type_ = ? AND layoutPageTemplateEntry.draftLayoutPageTemplateEntryId > 0";
 
 	private FinderPath _finderPathWithPaginationFindByG_L_S;
 	private FinderPath _finderPathWithoutPaginationFindByG_L_S;
@@ -8533,7 +8533,7 @@ public class LayoutPageTemplateEntryPersistenceImpl
 			"layoutPageTemplateEntry.layoutPageTemplateCollectionId = ? AND ";
 
 	private static final String _FINDER_COLUMN_G_L_S_STATUS_2 =
-		"layoutPageTemplateEntry.status = ?";
+		"layoutPageTemplateEntry.status = ? AND layoutPageTemplateEntry.draftLayoutPageTemplateEntryId > 0";
 
 	private FinderPath _finderPathWithPaginationFindByG_T_LikeN;
 	private FinderPath _finderPathWithPaginationCountByG_T_LikeN;
@@ -9621,10 +9621,10 @@ public class LayoutPageTemplateEntryPersistenceImpl
 		"(layoutPageTemplateEntry.name IS NULL OR layoutPageTemplateEntry.name LIKE '') AND ";
 
 	private static final String _FINDER_COLUMN_G_T_LIKEN_TYPE_2 =
-		"layoutPageTemplateEntry.type = ?";
+		"layoutPageTemplateEntry.type = ? AND layoutPageTemplateEntry.draftLayoutPageTemplateEntryId > 0";
 
 	private static final String _FINDER_COLUMN_G_T_LIKEN_TYPE_2_SQL =
-		"layoutPageTemplateEntry.type_ = ?";
+		"layoutPageTemplateEntry.type_ = ? AND layoutPageTemplateEntry.draftLayoutPageTemplateEntryId > 0";
 
 	private FinderPath _finderPathWithPaginationFindByG_T_S;
 	private FinderPath _finderPathWithoutPaginationFindByG_T_S;
@@ -10642,7 +10642,7 @@ public class LayoutPageTemplateEntryPersistenceImpl
 		"layoutPageTemplateEntry.type_ = ? AND ";
 
 	private static final String _FINDER_COLUMN_G_T_S_STATUS_2 =
-		"layoutPageTemplateEntry.status = ?";
+		"layoutPageTemplateEntry.status = ? AND layoutPageTemplateEntry.draftLayoutPageTemplateEntryId > 0";
 
 	private FinderPath _finderPathWithPaginationFindByG_L_LikeN_S;
 	private FinderPath _finderPathWithPaginationCountByG_L_LikeN_S;
@@ -11837,7 +11837,7 @@ public class LayoutPageTemplateEntryPersistenceImpl
 		"(layoutPageTemplateEntry.name IS NULL OR layoutPageTemplateEntry.name LIKE '') AND ";
 
 	private static final String _FINDER_COLUMN_G_L_LIKEN_S_STATUS_2 =
-		"layoutPageTemplateEntry.status = ?";
+		"layoutPageTemplateEntry.status = ? AND layoutPageTemplateEntry.draftLayoutPageTemplateEntryId > 0";
 
 	private FinderPath _finderPathWithPaginationFindByG_C_C_T;
 	private FinderPath _finderPathWithoutPaginationFindByG_C_C_T;
@@ -12924,10 +12924,10 @@ public class LayoutPageTemplateEntryPersistenceImpl
 		"layoutPageTemplateEntry.classTypeId = ? AND ";
 
 	private static final String _FINDER_COLUMN_G_C_C_T_TYPE_2 =
-		"layoutPageTemplateEntry.type = ?";
+		"layoutPageTemplateEntry.type = ? AND layoutPageTemplateEntry.draftLayoutPageTemplateEntryId > 0";
 
 	private static final String _FINDER_COLUMN_G_C_C_T_TYPE_2_SQL =
-		"layoutPageTemplateEntry.type_ = ?";
+		"layoutPageTemplateEntry.type_ = ? AND layoutPageTemplateEntry.draftLayoutPageTemplateEntryId > 0";
 
 	private FinderPath _finderPathWithPaginationFindByG_C_C_D;
 	private FinderPath _finderPathWithoutPaginationFindByG_C_C_D;
@@ -14038,7 +14038,7 @@ public class LayoutPageTemplateEntryPersistenceImpl
 		"layoutPageTemplateEntry.classTypeId = ? AND ";
 
 	private static final String _FINDER_COLUMN_G_C_C_D_DEFAULTTEMPLATE_2 =
-		"layoutPageTemplateEntry.defaultTemplate = ?";
+		"layoutPageTemplateEntry.defaultTemplate = ? AND layoutPageTemplateEntry.draftLayoutPageTemplateEntryId > 0";
 
 	private FinderPath _finderPathWithPaginationFindByG_C_T_D;
 	private FinderPath _finderPathWithoutPaginationFindByG_C_T_D;
@@ -15134,7 +15134,7 @@ public class LayoutPageTemplateEntryPersistenceImpl
 		"layoutPageTemplateEntry.type_ = ? AND ";
 
 	private static final String _FINDER_COLUMN_G_C_T_D_DEFAULTTEMPLATE_2 =
-		"layoutPageTemplateEntry.defaultTemplate = ?";
+		"layoutPageTemplateEntry.defaultTemplate = ? AND layoutPageTemplateEntry.draftLayoutPageTemplateEntryId > 0";
 
 	private FinderPath _finderPathWithPaginationFindByG_T_LikeN_S;
 	private FinderPath _finderPathWithPaginationCountByG_T_LikeN_S;
@@ -16288,7 +16288,7 @@ public class LayoutPageTemplateEntryPersistenceImpl
 		"layoutPageTemplateEntry.type_ = ? AND ";
 
 	private static final String _FINDER_COLUMN_G_T_LIKEN_S_STATUS_2 =
-		"layoutPageTemplateEntry.status = ?";
+		"layoutPageTemplateEntry.status = ? AND layoutPageTemplateEntry.draftLayoutPageTemplateEntryId > 0";
 
 	private FinderPath _finderPathWithPaginationFindByG_C_C_LikeN_T;
 	private FinderPath _finderPathWithPaginationCountByG_C_C_LikeN_T;
@@ -17515,10 +17515,10 @@ public class LayoutPageTemplateEntryPersistenceImpl
 		"(layoutPageTemplateEntry.name IS NULL OR layoutPageTemplateEntry.name LIKE '') AND ";
 
 	private static final String _FINDER_COLUMN_G_C_C_LIKEN_T_TYPE_2 =
-		"layoutPageTemplateEntry.type = ?";
+		"layoutPageTemplateEntry.type = ? AND layoutPageTemplateEntry.draftLayoutPageTemplateEntryId > 0";
 
 	private static final String _FINDER_COLUMN_G_C_C_LIKEN_T_TYPE_2_SQL =
-		"layoutPageTemplateEntry.type_ = ?";
+		"layoutPageTemplateEntry.type_ = ? AND layoutPageTemplateEntry.draftLayoutPageTemplateEntryId > 0";
 
 	private FinderPath _finderPathWithPaginationFindByG_C_C_T_S;
 	private FinderPath _finderPathWithoutPaginationFindByG_C_C_T_S;
@@ -18675,7 +18675,7 @@ public class LayoutPageTemplateEntryPersistenceImpl
 		"layoutPageTemplateEntry.type_ = ? AND ";
 
 	private static final String _FINDER_COLUMN_G_C_C_T_S_STATUS_2 =
-		"layoutPageTemplateEntry.status = ?";
+		"layoutPageTemplateEntry.status = ? AND layoutPageTemplateEntry.draftLayoutPageTemplateEntryId > 0";
 
 	private FinderPath _finderPathWithPaginationFindByG_C_C_D_S;
 	private FinderPath _finderPathWithoutPaginationFindByG_C_C_D_S;
@@ -19837,7 +19837,7 @@ public class LayoutPageTemplateEntryPersistenceImpl
 		"layoutPageTemplateEntry.defaultTemplate = ? AND ";
 
 	private static final String _FINDER_COLUMN_G_C_C_D_S_STATUS_2 =
-		"layoutPageTemplateEntry.status = ?";
+		"layoutPageTemplateEntry.status = ? AND layoutPageTemplateEntry.draftLayoutPageTemplateEntryId > 0";
 
 	private FinderPath _finderPathWithPaginationFindByG_C_C_LikeN_T_S;
 	private FinderPath _finderPathWithPaginationCountByG_C_C_LikeN_T_S;
@@ -21124,7 +21124,7 @@ public class LayoutPageTemplateEntryPersistenceImpl
 		"layoutPageTemplateEntry.type_ = ? AND ";
 
 	private static final String _FINDER_COLUMN_G_C_C_LIKEN_T_S_STATUS_2 =
-		"layoutPageTemplateEntry.status = ?";
+		"layoutPageTemplateEntry.status = ? AND layoutPageTemplateEntry.draftLayoutPageTemplateEntryId > 0";
 
 	public LayoutPageTemplateEntryPersistenceImpl() {
 		setModelClass(LayoutPageTemplateEntry.class);

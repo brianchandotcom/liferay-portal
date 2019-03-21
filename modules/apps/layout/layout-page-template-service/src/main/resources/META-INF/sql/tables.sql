@@ -31,6 +31,7 @@ create table LayoutPageTemplateEntry (
 	layoutPrototypeId LONG,
 	lastPublishDate DATE null,
 	plid LONG,
+	draftLayoutPageTemplateEntryId LONG,
 	status INTEGER,
 	statusByUserId LONG,
 	statusByUserName VARCHAR(75) null,

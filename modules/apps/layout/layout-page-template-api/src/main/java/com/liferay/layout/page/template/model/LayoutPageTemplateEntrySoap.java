@@ -57,6 +57,8 @@ public class LayoutPageTemplateEntrySoap implements Serializable {
 		soapModel.setLayoutPrototypeId(model.getLayoutPrototypeId());
 		soapModel.setLastPublishDate(model.getLastPublishDate());
 		soapModel.setPlid(model.getPlid());
+		soapModel.setDraftLayoutPageTemplateEntryId(
+			model.getDraftLayoutPageTemplateEntryId());
 		soapModel.setStatus(model.getStatus());
 		soapModel.setStatusByUserId(model.getStatusByUserId());
 		soapModel.setStatusByUserName(model.getStatusByUserName());
@@ -274,6 +276,16 @@ public class LayoutPageTemplateEntrySoap implements Serializable {
 		_plid = plid;
 	}
 
+	public long getDraftLayoutPageTemplateEntryId() {
+		return _draftLayoutPageTemplateEntryId;
+	}
+
+	public void setDraftLayoutPageTemplateEntryId(
+		long draftLayoutPageTemplateEntryId) {
+
+		_draftLayoutPageTemplateEntryId = draftLayoutPageTemplateEntryId;
+	}
+
 	public int getStatus() {
 		return _status;
 	}
@@ -324,6 +336,7 @@ public class LayoutPageTemplateEntrySoap implements Serializable {
 	private long _layoutPrototypeId;
 	private Date _lastPublishDate;
 	private long _plid;
+	private long _draftLayoutPageTemplateEntryId;
 	private int _status;
 	private long _statusByUserId;
 	private String _statusByUserName;

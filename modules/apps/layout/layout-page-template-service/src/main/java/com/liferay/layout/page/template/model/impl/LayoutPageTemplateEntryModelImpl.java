@@ -87,6 +87,7 @@ public class LayoutPageTemplateEntryModelImpl
 		{"previewFileEntryId", Types.BIGINT},
 		{"defaultTemplate", Types.BOOLEAN}, {"layoutPrototypeId", Types.BIGINT},
 		{"lastPublishDate", Types.TIMESTAMP}, {"plid", Types.BIGINT},
+		{"draftLayoutPageTemplateEntryId", Types.BIGINT},
 		{"status", Types.INTEGER}, {"statusByUserId", Types.BIGINT},
 		{"statusByUserName", Types.VARCHAR}, {"statusDate", Types.TIMESTAMP}
 	};
@@ -113,6 +114,7 @@ public class LayoutPageTemplateEntryModelImpl
 		TABLE_COLUMNS_MAP.put("layoutPrototypeId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("lastPublishDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("plid", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("draftLayoutPageTemplateEntryId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("status", Types.INTEGER);
 		TABLE_COLUMNS_MAP.put("statusByUserId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("statusByUserName", Types.VARCHAR);
@@ -120,7 +122,7 @@ public class LayoutPageTemplateEntryModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table LayoutPageTemplateEntry (uuid_ VARCHAR(75) null,layoutPageTemplateEntryId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,layoutPageTemplateCollectionId LONG,classNameId LONG,classTypeId LONG,name VARCHAR(75) null,type_ INTEGER,previewFileEntryId LONG,defaultTemplate BOOLEAN,layoutPrototypeId LONG,lastPublishDate DATE null,plid LONG,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null)";
+		"create table LayoutPageTemplateEntry (uuid_ VARCHAR(75) null,layoutPageTemplateEntryId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,layoutPageTemplateCollectionId LONG,classNameId LONG,classTypeId LONG,name VARCHAR(75) null,type_ INTEGER,previewFileEntryId LONG,defaultTemplate BOOLEAN,layoutPrototypeId LONG,lastPublishDate DATE null,plid LONG,draftLayoutPageTemplateEntryId LONG,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null)";
 
 	public static final String TABLE_SQL_DROP =
 		"drop table LayoutPageTemplateEntry";
@@ -212,6 +214,8 @@ public class LayoutPageTemplateEntryModelImpl
 		model.setLayoutPrototypeId(soapModel.getLayoutPrototypeId());
 		model.setLastPublishDate(soapModel.getLastPublishDate());
 		model.setPlid(soapModel.getPlid());
+		model.setDraftLayoutPageTemplateEntryId(
+			soapModel.getDraftLayoutPageTemplateEntryId());
 		model.setStatus(soapModel.getStatus());
 		model.setStatusByUserId(soapModel.getStatusByUserId());
 		model.setStatusByUserName(soapModel.getStatusByUserName());
@@ -459,6 +463,13 @@ public class LayoutPageTemplateEntryModelImpl
 			"plid",
 			(BiConsumer<LayoutPageTemplateEntry, Long>)
 				LayoutPageTemplateEntry::setPlid);
+		attributeGetterFunctions.put(
+			"draftLayoutPageTemplateEntryId",
+			LayoutPageTemplateEntry::getDraftLayoutPageTemplateEntryId);
+		attributeSetterBiConsumers.put(
+			"draftLayoutPageTemplateEntryId",
+			(BiConsumer<LayoutPageTemplateEntry, Long>)
+				LayoutPageTemplateEntry::setDraftLayoutPageTemplateEntryId);
 		attributeGetterFunctions.put(
 			"status", LayoutPageTemplateEntry::getStatus);
 		attributeSetterBiConsumers.put(
@@ -884,6 +895,19 @@ public class LayoutPageTemplateEntryModelImpl
 
 	@JSON
 	@Override
+	public long getDraftLayoutPageTemplateEntryId() {
+		return _draftLayoutPageTemplateEntryId;
+	}
+
+	@Override
+	public void setDraftLayoutPageTemplateEntryId(
+		long draftLayoutPageTemplateEntryId) {
+
+		_draftLayoutPageTemplateEntryId = draftLayoutPageTemplateEntryId;
+	}
+
+	@JSON
+	@Override
 	public int getStatus() {
 		return _status;
 	}
@@ -1102,6 +1126,8 @@ public class LayoutPageTemplateEntryModelImpl
 			getLayoutPrototypeId());
 		layoutPageTemplateEntryImpl.setLastPublishDate(getLastPublishDate());
 		layoutPageTemplateEntryImpl.setPlid(getPlid());
+		layoutPageTemplateEntryImpl.setDraftLayoutPageTemplateEntryId(
+			getDraftLayoutPageTemplateEntryId());
 		layoutPageTemplateEntryImpl.setStatus(getStatus());
 		layoutPageTemplateEntryImpl.setStatusByUserId(getStatusByUserId());
 		layoutPageTemplateEntryImpl.setStatusByUserName(getStatusByUserName());
@@ -1318,6 +1344,9 @@ public class LayoutPageTemplateEntryModelImpl
 
 		layoutPageTemplateEntryCacheModel.plid = getPlid();
 
+		layoutPageTemplateEntryCacheModel.draftLayoutPageTemplateEntryId =
+			getDraftLayoutPageTemplateEntryId();
+
 		layoutPageTemplateEntryCacheModel.status = getStatus();
 
 		layoutPageTemplateEntryCacheModel.statusByUserId = getStatusByUserId();
@@ -1454,6 +1483,7 @@ public class LayoutPageTemplateEntryModelImpl
 	private long _plid;
 	private long _originalPlid;
 	private boolean _setOriginalPlid;
+	private long _draftLayoutPageTemplateEntryId;
 	private int _status;
 	private int _originalStatus;
 	private boolean _setOriginalStatus;

@@ -369,6 +369,21 @@ public interface LayoutPageTemplateEntryModel
 	public void setPlid(long plid);
 
 	/**
+	 * Returns the draft layout page template entry ID of this layout page template entry.
+	 *
+	 * @return the draft layout page template entry ID of this layout page template entry
+	 */
+	public long getDraftLayoutPageTemplateEntryId();
+
+	/**
+	 * Sets the draft layout page template entry ID of this layout page template entry.
+	 *
+	 * @param draftLayoutPageTemplateEntryId the draft layout page template entry ID of this layout page template entry
+	 */
+	public void setDraftLayoutPageTemplateEntryId(
+		long draftLayoutPageTemplateEntryId);
+
+	/**
 	 * Returns the status of this layout page template entry.
 	 *
 	 * @return the status of this layout page template entry

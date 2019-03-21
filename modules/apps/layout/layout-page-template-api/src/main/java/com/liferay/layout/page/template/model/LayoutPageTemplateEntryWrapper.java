@@ -69,6 +69,9 @@ public class LayoutPageTemplateEntryWrapper
 		attributes.put("layoutPrototypeId", getLayoutPrototypeId());
 		attributes.put("lastPublishDate", getLastPublishDate());
 		attributes.put("plid", getPlid());
+		attributes.put(
+			"draftLayoutPageTemplateEntryId",
+			getDraftLayoutPageTemplateEntryId());
 		attributes.put("status", getStatus());
 		attributes.put("statusByUserId", getStatusByUserId());
 		attributes.put("statusByUserName", getStatusByUserName());
@@ -189,6 +192,13 @@ public class LayoutPageTemplateEntryWrapper
 			setPlid(plid);
 		}
 
+		Long draftLayoutPageTemplateEntryId = (Long)attributes.get(
+			"draftLayoutPageTemplateEntryId");
+
+		if (draftLayoutPageTemplateEntryId != null) {
+			setDraftLayoutPageTemplateEntryId(draftLayoutPageTemplateEntryId);
+		}
+
 		Integer status = (Integer)attributes.get("status");
 
 		if (status != null) {
@@ -279,6 +289,16 @@ public class LayoutPageTemplateEntryWrapper
 	@Override
 	public boolean getDefaultTemplate() {
 		return model.getDefaultTemplate();
+	}
+
+	/**
+	 * Returns the draft layout page template entry ID of this layout page template entry.
+	 *
+	 * @return the draft layout page template entry ID of this layout page template entry
+	 */
+	@Override
+	public long getDraftLayoutPageTemplateEntryId() {
+		return model.getDraftLayoutPageTemplateEntryId();
 	}
 
 	/**
@@ -636,6 +656,18 @@ public class LayoutPageTemplateEntryWrapper
 	@Override
 	public void setDefaultTemplate(boolean defaultTemplate) {
 		model.setDefaultTemplate(defaultTemplate);
+	}
+
+	/**
+	 * Sets the draft layout page template entry ID of this layout page template entry.
+	 *
+	 * @param draftLayoutPageTemplateEntryId the draft layout page template entry ID of this layout page template entry
+	 */
+	@Override
+	public void setDraftLayoutPageTemplateEntryId(
+		long draftLayoutPageTemplateEntryId) {
+
+		model.setDraftLayoutPageTemplateEntryId(draftLayoutPageTemplateEntryId);
 	}
 
 	/**

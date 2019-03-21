@@ -67,7 +67,7 @@ public class LayoutPageTemplateEntryCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(45);
+		StringBundler sb = new StringBundler(47);
 
 		sb.append("{uuid=");
 		sb.append(uuid);
@@ -105,6 +105,8 @@ public class LayoutPageTemplateEntryCacheModel
 		sb.append(lastPublishDate);
 		sb.append(", plid=");
 		sb.append(plid);
+		sb.append(", draftLayoutPageTemplateEntryId=");
+		sb.append(draftLayoutPageTemplateEntryId);
 		sb.append(", status=");
 		sb.append(status);
 		sb.append(", statusByUserId=");
@@ -183,6 +185,8 @@ public class LayoutPageTemplateEntryCacheModel
 		}
 
 		layoutPageTemplateEntryImpl.setPlid(plid);
+		layoutPageTemplateEntryImpl.setDraftLayoutPageTemplateEntryId(
+			draftLayoutPageTemplateEntryId);
 		layoutPageTemplateEntryImpl.setStatus(status);
 		layoutPageTemplateEntryImpl.setStatusByUserId(statusByUserId);
 
@@ -237,6 +241,8 @@ public class LayoutPageTemplateEntryCacheModel
 		lastPublishDate = objectInput.readLong();
 
 		plid = objectInput.readLong();
+
+		draftLayoutPageTemplateEntryId = objectInput.readLong();
 
 		status = objectInput.readInt();
 
@@ -296,6 +302,8 @@ public class LayoutPageTemplateEntryCacheModel
 
 		objectOutput.writeLong(plid);
 
+		objectOutput.writeLong(draftLayoutPageTemplateEntryId);
+
 		objectOutput.writeInt(status);
 
 		objectOutput.writeLong(statusByUserId);
@@ -328,6 +336,7 @@ public class LayoutPageTemplateEntryCacheModel
 	public long layoutPrototypeId;
 	public long lastPublishDate;
 	public long plid;
+	public long draftLayoutPageTemplateEntryId;
 	public int status;
 	public long statusByUserId;
 	public String statusByUserName;

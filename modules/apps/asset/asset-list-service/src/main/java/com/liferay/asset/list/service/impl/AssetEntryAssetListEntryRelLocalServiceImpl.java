@@ -44,13 +44,13 @@ public class AssetEntryAssetListEntryRelLocalServiceImpl
 
 	@Override
 	public AssetEntryAssetListEntryRel addAssetEntryAssetListEntryRel(
-			long assetEntryId, long assetListEntryId, int position,
-			ServiceContext serviceContext)
+			long assetEntryId, long assetListEntryId, long segmentsEntryId,
+			int position, ServiceContext serviceContext)
 		throws PortalException {
 
 		AssetEntryAssetListEntryRel assetEntryAssetListEntryRel =
-			assetEntryAssetListEntryRelPersistence.fetchByA_P(
-				assetListEntryId, position);
+			assetEntryAssetListEntryRelPersistence.fetchByA_S_P(
+				assetListEntryId, segmentsEntryId, position);
 
 		if (assetEntryAssetListEntryRel != null) {
 			throw new AssetEntryAssetListEntryRelPostionException();
@@ -76,6 +76,7 @@ public class AssetEntryAssetListEntryRelLocalServiceImpl
 			serviceContext.getModifiedDate(new Date()));
 		assetEntryAssetListEntryRel.setAssetEntryId(assetEntryId);
 		assetEntryAssetListEntryRel.setAssetListEntryId(assetListEntryId);
+		assetEntryAssetListEntryRel.setSegmentsEntryId(segmentsEntryId);
 		assetEntryAssetListEntryRel.setPosition(position);
 
 		return assetEntryAssetListEntryRelPersistence.update(
@@ -84,37 +85,39 @@ public class AssetEntryAssetListEntryRelLocalServiceImpl
 
 	@Override
 	public AssetEntryAssetListEntryRel addAssetEntryAssetListEntryRel(
-			long assetEntryId, long assetListEntryId,
+			long assetEntryId, long assetListEntryId, long segmentsEntryId,
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		int position = getAssetEntryAssetListEntryRelsCount(assetListEntryId);
+		int position = getAssetEntryAssetListEntryRelsCount(
+			assetListEntryId, segmentsEntryId);
 
 		AssetEntryAssetListEntryRel assetEntryAssetListEntryRel =
-			assetEntryAssetListEntryRelPersistence.fetchByA_P(
-				assetListEntryId, position);
+			assetEntryAssetListEntryRelPersistence.fetchByA_S_P(
+				assetListEntryId, segmentsEntryId, position);
 
 		if (assetEntryAssetListEntryRel != null) {
 			throw new AssetEntryAssetListEntryRelPostionException();
 		}
 
 		return addAssetEntryAssetListEntryRel(
-			assetEntryId, assetListEntryId, position, serviceContext);
+			assetEntryId, assetListEntryId, segmentsEntryId, position,
+			serviceContext);
 	}
 
 	@Override
 	@SystemEvent(type = SystemEventConstants.TYPE_DELETE)
 	public AssetEntryAssetListEntryRel deleteAssetEntryAssetListEntryRel(
-			long assetListEntryId, int position)
+			long assetListEntryId, long segmentsEntryId, int position)
 		throws PortalException {
 
 		AssetEntryAssetListEntryRel assetEntryAssetListEntryRel =
-			assetEntryAssetListEntryRelPersistence.removeByA_P(
-				assetListEntryId, position);
+			assetEntryAssetListEntryRelPersistence.removeByA_S_P(
+				assetListEntryId, segmentsEntryId, position);
 
 		List<AssetEntryAssetListEntryRel> assetEntryAssetListEntryRels =
-			assetEntryAssetListEntryRelPersistence.findByA_GtP(
-				assetListEntryId, position);
+			assetEntryAssetListEntryRelPersistence.findByA_S_GtP(
+				assetListEntryId, segmentsEntryId, position);
 
 		for (AssetEntryAssetListEntryRel curAssetEntryAssetListEntryRel :
 				assetEntryAssetListEntryRels) {
@@ -145,42 +148,18 @@ public class AssetEntryAssetListEntryRelLocalServiceImpl
 			assetEntryAssetListEntryRelPersistence.findByAssetListEntryId(
 				assetListEntryId, start, end);
 
-		Stream<AssetEntryAssetListEntryRel> stream =
-			assetEntryAssetListEntryRels.stream();
+		return _getAssetEntryAssetListEntryRels(assetEntryAssetListEntryRels);
+	}
 
-		return stream.filter(
-			assetEntryAssetListEntryRel -> {
-				AssetEntry assetEntry = _assetEntryLocalService.fetchEntry(
-					assetEntryAssetListEntryRel.getAssetEntryId());
+	@Override
+	public List<AssetEntryAssetListEntryRel> getAssetEntryAssetListEntryRels(
+		long assetListEntryId, long segmentsEntryId, int start, int end) {
 
-				if (assetEntry == null) {
-					return false;
-				}
+		List<AssetEntryAssetListEntryRel> assetEntryAssetListEntryRels =
+			assetEntryAssetListEntryRelPersistence.findByA_S(
+				assetListEntryId, segmentsEntryId, start, end);
 
-				if (!assetEntry.isVisible()) {
-					return false;
-				}
-
-				AssetRendererFactory assetRendererFactory =
-					AssetRendererFactoryRegistryUtil.
-						getAssetRendererFactoryByClassName(
-							assetEntry.getClassName());
-
-				if (assetRendererFactory == null) {
-					if (_log.isWarnEnabled()) {
-						_log.warn(
-							"No asset renderer factory associated with " +
-								assetEntry.getClassName());
-					}
-
-					return false;
-				}
-
-				return true;
-			}
-		).collect(
-			Collectors.toList()
-		);
+		return _getAssetEntryAssetListEntryRels(assetEntryAssetListEntryRels);
 	}
 
 	@Override
@@ -190,13 +169,22 @@ public class AssetEntryAssetListEntryRelLocalServiceImpl
 	}
 
 	@Override
+	public int getAssetEntryAssetListEntryRelsCount(
+		long assetListEntryId, long segmentsEntryId) {
+
+		return assetEntryAssetListEntryRelPersistence.countByA_S(
+			assetListEntryId, segmentsEntryId);
+	}
+
+	@Override
 	public AssetEntryAssetListEntryRel moveAssetEntryAssetListEntryRel(
-			long assetListEntryId, int position, int newPosition)
+			long assetListEntryId, long segmentsEntryId, int position,
+			int newPosition)
 		throws PortalException {
 
 		AssetEntryAssetListEntryRel assetEntryAssetListEntryRel =
-			assetEntryAssetListEntryRelPersistence.findByA_P(
-				assetListEntryId, position);
+			assetEntryAssetListEntryRelPersistence.findByA_S_P(
+				assetListEntryId, segmentsEntryId, position);
 
 		int count =
 			assetEntryAssetListEntryRelPersistence.countByAssetListEntryId(
@@ -207,8 +195,8 @@ public class AssetEntryAssetListEntryRelLocalServiceImpl
 		}
 
 		AssetEntryAssetListEntryRel swapAssetEntryAssetListEntryRel =
-			assetEntryAssetListEntryRelPersistence.fetchByA_P(
-				assetListEntryId, newPosition);
+			assetEntryAssetListEntryRelPersistence.fetchByA_S_P(
+				assetListEntryId, segmentsEntryId, newPosition);
 
 		if (swapAssetEntryAssetListEntryRel == null) {
 			assetEntryAssetListEntryRel.setPosition(newPosition);
@@ -250,7 +238,7 @@ public class AssetEntryAssetListEntryRelLocalServiceImpl
 	@Override
 	public AssetEntryAssetListEntryRel updateAssetEntryAssetListEntryRel(
 			long assetEntryAssetListEntryRelId, long assetEntryId,
-			long assetListEntryId, int position)
+			long assetListEntryId, long segmentsEntryId, int position)
 		throws PortalException {
 
 		AssetEntryAssetListEntryRel assetEntryAssetListEntryRel =
@@ -259,12 +247,54 @@ public class AssetEntryAssetListEntryRelLocalServiceImpl
 
 		assetEntryAssetListEntryRel.setAssetEntryId(assetEntryId);
 		assetEntryAssetListEntryRel.setAssetListEntryId(assetListEntryId);
+		assetEntryAssetListEntryRel.setSegmentsEntryId(segmentsEntryId);
 		assetEntryAssetListEntryRel.setPosition(position);
 
 		assetEntryAssetListEntryRelPersistence.update(
 			assetEntryAssetListEntryRel);
 
 		return assetEntryAssetListEntryRel;
+	}
+
+	private List<AssetEntryAssetListEntryRel> _getAssetEntryAssetListEntryRels(
+		List<AssetEntryAssetListEntryRel> assetEntryAssetListEntryRels) {
+
+		Stream<AssetEntryAssetListEntryRel> stream =
+			assetEntryAssetListEntryRels.stream();
+
+		return stream.filter(
+			assetEntryAssetListEntryRel -> {
+				AssetEntry assetEntry = _assetEntryLocalService.fetchEntry(
+					assetEntryAssetListEntryRel.getAssetEntryId());
+
+				if (assetEntry == null) {
+					return false;
+				}
+
+				if (!assetEntry.isVisible()) {
+					return false;
+				}
+
+				AssetRendererFactory assetRendererFactory =
+					AssetRendererFactoryRegistryUtil.
+						getAssetRendererFactoryByClassName(
+							assetEntry.getClassName());
+
+				if (assetRendererFactory == null) {
+					if (_log.isWarnEnabled()) {
+						_log.warn(
+							"No asset renderer factory associated with " +
+								assetEntry.getClassName());
+					}
+
+					return false;
+				}
+
+				return true;
+			}
+		).collect(
+			Collectors.toList()
+		);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

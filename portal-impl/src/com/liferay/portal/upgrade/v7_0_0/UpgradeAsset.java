@@ -57,13 +57,14 @@ public class UpgradeAsset extends UpgradeProcess {
 
 			DBTypeToSQLMap dbTypeToSQLMap = new DBTypeToSQLMap(sb.toString());
 
-			sb = new StringBundler(5);
+			sb = new StringBundler(6);
 
 			sb.append("delete from AssetEntry where classNameId = ");
 			sb.append(classNameId);
 			sb.append(" and not exists (select null from DLFileVersion where ");
-			sb.append("fileVersionId = classPK) and not exists (select null ");
-			sb.append("from DLFileEntry where fileEntryId = classPK)");
+			sb.append("fileVersionId = AssetEntry.classPK) and not exists ");
+			sb.append("(select null from DLFileEntry where fileEntryId = ");
+			sb.append("AssetEntry.classPK)");
 
 			String sql = sb.toString();
 

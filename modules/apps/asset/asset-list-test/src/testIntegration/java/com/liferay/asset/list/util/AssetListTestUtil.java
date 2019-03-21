@@ -34,7 +34,8 @@ import com.liferay.portal.kernel.test.util.TestPropsValues;
 public class AssetListTestUtil {
 
 	public static AssetEntryAssetListEntryRel addAssetEntryAssetListEntryRel(
-			long groupId, AssetEntry assetEntry, AssetListEntry assetListEntry)
+			long groupId, AssetEntry assetEntry, AssetListEntry assetListEntry,
+			long segmentsEntryId)
 		throws PortalException {
 
 		ServiceContext serviceContext =
@@ -43,12 +44,12 @@ public class AssetListTestUtil {
 		return AssetEntryAssetListEntryRelLocalServiceUtil.
 			addAssetEntryAssetListEntryRel(
 				assetEntry.getEntryId(), assetListEntry.getAssetListEntryId(),
-				serviceContext);
+				segmentsEntryId, serviceContext);
 	}
 
 	public static AssetEntryAssetListEntryRel addAssetEntryAssetListEntryRel(
 			long groupId, AssetEntry assetEntry, AssetListEntry assetListEntry,
-			int position)
+			long segmentsEntryId, int position)
 		throws PortalException {
 
 		ServiceContext serviceContext =
@@ -57,7 +58,7 @@ public class AssetListTestUtil {
 		return AssetEntryAssetListEntryRelLocalServiceUtil.
 			addAssetEntryAssetListEntryRel(
 				assetEntry.getEntryId(), assetListEntry.getAssetListEntryId(),
-				position, serviceContext);
+				segmentsEntryId, position, serviceContext);
 	}
 
 	public static AssetListEntry addAssetListEntry(long groupId)
@@ -82,8 +83,9 @@ public class AssetListTestUtil {
 			AssetListEntryTypeConstants.TYPE_MANUAL, serviceContext);
 	}
 
-	public static AssetListEntrySegmentsEntryRel addAssetListEntrySegmentsEntryRel(
-			long groupId, AssetListEntry assetListEntry)
+	public static AssetListEntrySegmentsEntryRel
+			addAssetListEntrySegmentsEntryRel(
+				long groupId, AssetListEntry assetListEntry)
 		throws Exception {
 
 		ServiceContext serviceContext =

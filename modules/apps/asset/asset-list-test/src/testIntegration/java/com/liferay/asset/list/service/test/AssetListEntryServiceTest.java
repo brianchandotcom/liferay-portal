@@ -32,6 +32,7 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -78,15 +79,17 @@ public class AssetListEntryServiceTest {
 			ServiceContextTestUtil.getServiceContext(
 				_group.getGroupId(), TestPropsValues.getUserId());
 
-		AssetEntryAssetListEntryRelLocalServiceUtil.
-			addAssetEntryAssetListEntryRel(
-				assetEntry.getEntryId(), assetListEntry.getAssetListEntryId(),
-				1, serviceContext);
+		long segmentsEntryId = RandomTestUtil.nextLong();
 
 		AssetEntryAssetListEntryRelLocalServiceUtil.
 			addAssetEntryAssetListEntryRel(
 				assetEntry.getEntryId(), assetListEntry.getAssetListEntryId(),
-				serviceContext);
+				segmentsEntryId, 1, serviceContext);
+
+		AssetEntryAssetListEntryRelLocalServiceUtil.
+			addAssetEntryAssetListEntryRel(
+				assetEntry.getEntryId(), assetListEntry.getAssetListEntryId(),
+				segmentsEntryId, serviceContext);
 	}
 
 	@Test

@@ -185,7 +185,7 @@ AUI.add(
 						}
 					},
 
-					showFolderDialog(selectedItems, parameterName, parameterValue) {
+					showFolderDialog: function(selectedItems, parameterName, parameterValue) {
 						var instance = this;
 
 						var namespace = instance.NS;
@@ -231,7 +231,7 @@ AUI.add(
 						}
 					},
 
-					_moveCurrectSelection(newFolderId) {
+					_moveCurrectSelection: function(newFolderId) {
 						var instance = this;
 
 						var form = instance.get('form').node;

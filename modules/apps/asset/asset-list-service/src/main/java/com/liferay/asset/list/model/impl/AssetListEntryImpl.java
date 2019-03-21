@@ -24,8 +24,8 @@ import com.liferay.asset.kernel.service.AssetEntryLocalServiceUtil;
 import com.liferay.asset.kernel.service.AssetTagLocalServiceUtil;
 import com.liferay.asset.kernel.service.persistence.AssetEntryQuery;
 import com.liferay.asset.list.constants.AssetListEntryTypeConstants;
-import com.liferay.asset.list.model.AssetListEntryAssetEntryRel;
-import com.liferay.asset.list.service.AssetListEntryAssetEntryRelLocalServiceUtil;
+import com.liferay.asset.list.model.AssetEntryAssetListEntryRel;
+import com.liferay.asset.list.service.AssetEntryAssetListEntryRelLocalServiceUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -70,8 +70,8 @@ public class AssetListEntryImpl extends AssetListEntryBaseImpl {
 		if (Objects.equals(
 				getType(), AssetListEntryTypeConstants.TYPE_MANUAL)) {
 
-			return AssetListEntryAssetEntryRelLocalServiceUtil.
-				getAssetListEntryAssetEntryRelsCount(getAssetListEntryId());
+			return AssetEntryAssetListEntryRelLocalServiceUtil.
+				getAssetEntryAssetListEntryRelsCount(getAssetListEntryId());
 		}
 
 		return AssetEntryLocalServiceUtil.getEntriesCount(getAssetEntryQuery());
@@ -265,18 +265,18 @@ public class AssetListEntryImpl extends AssetListEntryBaseImpl {
 	}
 
 	private List<AssetEntry> _getManualAssetEntries(int start, int end) {
-		List<AssetListEntryAssetEntryRel> assetListEntryAssetEntryRels =
-			AssetListEntryAssetEntryRelLocalServiceUtil.
-				getAssetListEntryAssetEntryRels(
+		List<AssetEntryAssetListEntryRel> assetEntryAssetListEntryRels =
+			AssetEntryAssetListEntryRelLocalServiceUtil.
+				getAssetEntryAssetListEntryRels(
 					getAssetListEntryId(), start, end);
 
-		Stream<AssetListEntryAssetEntryRel> stream =
-			assetListEntryAssetEntryRels.stream();
+		Stream<AssetEntryAssetListEntryRel> stream =
+			assetEntryAssetListEntryRels.stream();
 
 		return stream.map(
-			assetListEntryAssetEntryRel ->
+			assetEntryAssetListEntryRel ->
 				AssetEntryLocalServiceUtil.fetchEntry(
-					assetListEntryAssetEntryRel.getAssetEntryId())
+					assetEntryAssetListEntryRel.getAssetEntryId())
 		).collect(
 			Collectors.toList()
 		);

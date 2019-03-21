@@ -12,40 +12,34 @@
  * details.
  */
 
-package com.liferay.asset.list.model.impl;
+package com.liferay.asset.list.exception;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.asset.kernel.model.AssetEntry;
-import com.liferay.asset.kernel.service.AssetEntryLocalServiceUtil;
-import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.exception.PortalException;
 
 /**
  * @author Brian Wing Shun Chan
  */
 @ProviderType
-public class AssetListEntryAssetEntryRelImpl
-	extends AssetListEntryAssetEntryRelBaseImpl {
+public class AssetEntryAssetListEntryRelPostionException
+	extends PortalException {
 
-	public AssetListEntryAssetEntryRelImpl() {
+	public AssetEntryAssetListEntryRelPostionException() {
 	}
 
-	@Override
-	public String getAssetEntryUuid() {
-		if (Validator.isNotNull(_assetEntryUuid)) {
-			return _assetEntryUuid;
-		}
-
-		AssetEntry assetEntry = AssetEntryLocalServiceUtil.fetchAssetEntry(
-			getAssetEntryId());
-
-		if (assetEntry != null) {
-			_assetEntryUuid = assetEntry.getClassUuid();
-		}
-
-		return _assetEntryUuid;
+	public AssetEntryAssetListEntryRelPostionException(String msg) {
+		super(msg);
 	}
 
-	private String _assetEntryUuid;
+	public AssetEntryAssetListEntryRelPostionException(
+		String msg, Throwable cause) {
+
+		super(msg, cause);
+	}
+
+	public AssetEntryAssetListEntryRelPostionException(Throwable cause) {
+		super(cause);
+	}
 
 }

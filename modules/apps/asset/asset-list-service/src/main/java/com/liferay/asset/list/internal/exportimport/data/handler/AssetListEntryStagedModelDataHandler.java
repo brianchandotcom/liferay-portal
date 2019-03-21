@@ -18,9 +18,9 @@ import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.model.AssetRenderer;
 import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.asset.list.constants.AssetListEntryTypeConstants;
+import com.liferay.asset.list.model.AssetEntryAssetListEntryRel;
 import com.liferay.asset.list.model.AssetListEntry;
-import com.liferay.asset.list.model.AssetListEntryAssetEntryRel;
-import com.liferay.asset.list.service.AssetListEntryAssetEntryRelLocalService;
+import com.liferay.asset.list.service.AssetEntryAssetListEntryRelLocalService;
 import com.liferay.exportimport.data.handler.base.BaseStagedModelDataHandler;
 import com.liferay.exportimport.kernel.lar.ExportImportPathUtil;
 import com.liferay.exportimport.kernel.lar.ExportImportThreadLocal;
@@ -90,7 +90,7 @@ public class AssetListEntryStagedModelDataHandler
 			entryElement, ExportImportPathUtil.getModelPath(assetListEntry),
 			assetListEntry);
 
-		_exportAssetListEntryAssetEntryRels(portletDataContext, assetListEntry);
+		_exportAssetEntryAssetListEntryRels(portletDataContext, assetListEntry);
 
 		_exportAssetObjects(portletDataContext, assetListEntry);
 	}
@@ -149,8 +149,8 @@ public class AssetListEntryStagedModelDataHandler
 			assetListEntry, importedAssetListEntry);
 
 		if (existingAssetListEntry != null) {
-			_assetListEntryAssetEntryRelLocalService.
-				deleteAssetListEntryAssetEntryRelByAssetListEntryId(
+			_assetEntryAssetListEntryRelLocalService.
+				deleteAssetEntryAssetListEntryRelByAssetListEntryId(
 					existingAssetListEntry.getAssetListEntryId());
 		}
 
@@ -170,22 +170,22 @@ public class AssetListEntryStagedModelDataHandler
 		return true;
 	}
 
-	private void _exportAssetListEntryAssetEntryRels(
+	private void _exportAssetEntryAssetListEntryRels(
 			PortletDataContext portletDataContext,
 			AssetListEntry assetListEntry)
 		throws PortletDataException {
 
-		List<AssetListEntryAssetEntryRel> assetListEntryAssetEntryRels =
-			_assetListEntryAssetEntryRelLocalService.
-				getAssetListEntryAssetEntryRels(
+		List<AssetEntryAssetListEntryRel> assetEntryAssetListEntryRels =
+			_assetEntryAssetListEntryRelLocalService.
+				getAssetEntryAssetListEntryRels(
 					assetListEntry.getAssetListEntryId(), QueryUtil.ALL_POS,
 					QueryUtil.ALL_POS);
 
-		for (AssetListEntryAssetEntryRel assetListEntryAssetEntryRel :
-				assetListEntryAssetEntryRels) {
+		for (AssetEntryAssetListEntryRel assetEntryAssetListEntryRel :
+				assetEntryAssetListEntryRels) {
 
 			StagedModelDataHandlerUtil.exportReferenceStagedModel(
-				portletDataContext, assetListEntry, assetListEntryAssetEntryRel,
+				portletDataContext, assetListEntry, assetEntryAssetListEntryRel,
 				PortletDataContext.REFERENCE_TYPE_CHILD);
 		}
 	}
@@ -235,7 +235,7 @@ public class AssetListEntryStagedModelDataHandler
 
 		List<Element> assetEntryListAssetEntryRelElements =
 			portletDataContext.getReferenceDataElements(
-				assetListEntry, AssetListEntryAssetEntryRel.class,
+				assetListEntry, AssetEntryAssetListEntryRel.class,
 				PortletDataContext.REFERENCE_TYPE_CHILD);
 
 		for (Element assetEntryListAssetEntryRelElement :
@@ -271,8 +271,8 @@ public class AssetListEntryStagedModelDataHandler
 	}
 
 	@Reference
-	private AssetListEntryAssetEntryRelLocalService
-		_assetListEntryAssetEntryRelLocalService;
+	private AssetEntryAssetListEntryRelLocalService
+		_assetEntryAssetListEntryRelLocalService;
 
 	@Reference(
 		target = "(model.class.name=com.liferay.asset.list.model.AssetListEntry)",

@@ -16,10 +16,10 @@ package com.liferay.asset.list.service.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.asset.kernel.model.AssetEntry;
+import com.liferay.asset.list.model.AssetEntryAssetListEntryRel;
 import com.liferay.asset.list.model.AssetListEntry;
-import com.liferay.asset.list.model.AssetListEntryAssetEntryRel;
-import com.liferay.asset.list.service.AssetListEntryAssetEntryRelLocalServiceUtil;
-import com.liferay.asset.list.service.persistence.AssetListEntryAssetEntryRelUtil;
+import com.liferay.asset.list.service.AssetEntryAssetListEntryRelLocalServiceUtil;
+import com.liferay.asset.list.service.persistence.AssetEntryAssetListEntryRelUtil;
 import com.liferay.asset.list.util.AssetListTestUtil;
 import com.liferay.asset.test.util.AssetTestUtil;
 import com.liferay.asset.test.util.asset.renderer.factory.TestAssetRendererFactory;
@@ -48,7 +48,7 @@ import org.junit.runner.RunWith;
  * @author Kyle Miho
  */
 @RunWith(Arquillian.class)
-public class AssetListEntryAssetEntryRelServiceTest {
+public class AssetEntryAssetListEntryRelServiceTest {
 
 	@ClassRule
 	@Rule
@@ -65,7 +65,7 @@ public class AssetListEntryAssetEntryRelServiceTest {
 	}
 
 	@Test
-	public void testAddAssetListEntryAssetEntryRel() throws PortalException {
+	public void testAddAssetEntryAssetListEntryRel() throws PortalException {
 		AssetListEntry assetListEntry = AssetListTestUtil.addAssetListEntry(
 			_group.getGroupId());
 
@@ -73,28 +73,29 @@ public class AssetListEntryAssetEntryRelServiceTest {
 			_group.getGroupId(), null,
 			TestAssetRendererFactory.class.getName());
 
-		AssetListEntryAssetEntryRel assetListEntryRelLocal =
-			AssetListTestUtil.addAssetListEntryAssetEntryRel(
+		AssetEntryAssetListEntryRel assetEntryAssetListEntryRelLocal =
+			AssetListTestUtil.addAssetEntryAssetListEntryRel(
 				_group.getGroupId(), assetEntry, assetListEntry);
 
-		AssetListEntryAssetEntryRel assetListEntryRelDatabase =
-			AssetListEntryAssetEntryRelUtil.findByUUID_G(
-				assetListEntryRelLocal.getUuid(),
-				assetListEntryRelLocal.getGroupId());
+		AssetEntryAssetListEntryRel assetListEntryRelDatabase =
+			AssetEntryAssetListEntryRelUtil.findByUUID_G(
+				assetEntryAssetListEntryRelLocal.getUuid(),
+				assetEntryAssetListEntryRelLocal.getGroupId());
 
-		_assertSameAssetListEntryAssetEntryRel(
-			assetListEntryRelLocal, assetListEntryRelDatabase);
+		_assertSameAssetEntryAssetListEntryRel(
+			assetEntryAssetListEntryRelLocal, assetListEntryRelDatabase);
 
 		Assert.assertEquals(
 			assetListEntry.getAssetListEntryId(),
-			assetListEntryRelLocal.getAssetListEntryId());
+			assetEntryAssetListEntryRelLocal.getAssetListEntryId());
 
 		Assert.assertEquals(
-			assetEntry.getEntryId(), assetListEntryRelLocal.getAssetEntryId());
+			assetEntry.getEntryId(),
+			assetEntryAssetListEntryRelLocal.getAssetEntryId());
 	}
 
 	@Test
-	public void testAddAssetListEntryAssetEntryRelToPosition()
+	public void testAddAssetEntryAssetListEntryRelToPosition()
 		throws PortalException {
 
 		AssetListEntry assetListEntry = AssetListTestUtil.addAssetListEntry(
@@ -106,27 +107,29 @@ public class AssetListEntryAssetEntryRelServiceTest {
 
 		int defaultPosition = 1;
 
-		AssetListEntryAssetEntryRel assetListEntryRelLocal =
-			AssetListTestUtil.addAssetListEntryAssetEntryRel(
+		AssetEntryAssetListEntryRel assetEntryAssetListEntryRelLocal =
+			AssetListTestUtil.addAssetEntryAssetListEntryRel(
 				_group.getGroupId(), assetEntry, assetListEntry, 1);
 
-		AssetListEntryAssetEntryRel assetListEntryRelDatabase =
-			AssetListEntryAssetEntryRelUtil.findByA_P(
-				assetListEntryRelLocal.getAssetListEntryId(), defaultPosition);
+		AssetEntryAssetListEntryRel assetListEntryRelDatabase =
+			AssetEntryAssetListEntryRelUtil.findByA_P(
+				assetEntryAssetListEntryRelLocal.getAssetListEntryId(),
+				defaultPosition);
 
-		_assertSameAssetListEntryAssetEntryRel(
-			assetListEntryRelLocal, assetListEntryRelDatabase);
+		_assertSameAssetEntryAssetListEntryRel(
+			assetEntryAssetListEntryRelLocal, assetListEntryRelDatabase);
 
 		Assert.assertEquals(
 			assetListEntry.getAssetListEntryId(),
-			assetListEntryRelLocal.getAssetListEntryId());
+			assetEntryAssetListEntryRelLocal.getAssetListEntryId());
 
 		Assert.assertEquals(
-			assetEntry.getEntryId(), assetListEntryRelLocal.getAssetEntryId());
+			assetEntry.getEntryId(),
+			assetEntryAssetListEntryRelLocal.getAssetEntryId());
 	}
 
 	@Test
-	public void testCountAssetListEntryAssetEntryRel() throws PortalException {
+	public void testCountAssetEntryAssetListEntryRel() throws PortalException {
 		AssetListEntry assetListEntryCount =
 			AssetListTestUtil.addAssetListEntry(_group.getGroupId());
 
@@ -138,35 +141,35 @@ public class AssetListEntryAssetEntryRelServiceTest {
 			TestAssetRendererFactory.class.getName());
 
 		int currentCount =
-			AssetListEntryAssetEntryRelLocalServiceUtil.
-				getAssetListEntryAssetEntryRelsCount(
+			AssetEntryAssetListEntryRelLocalServiceUtil.
+				getAssetEntryAssetListEntryRelsCount(
 					assetListEntryCount.getAssetListEntryId());
 
 		Assert.assertEquals(0, currentCount);
 
-		AssetListTestUtil.addAssetListEntryAssetEntryRel(
+		AssetListTestUtil.addAssetEntryAssetListEntryRel(
 			_group.getGroupId(), assetEntry, assetListEntryOther);
 
 		currentCount =
-			AssetListEntryAssetEntryRelLocalServiceUtil.
-				getAssetListEntryAssetEntryRelsCount(
+			AssetEntryAssetListEntryRelLocalServiceUtil.
+				getAssetEntryAssetListEntryRelsCount(
 					assetListEntryCount.getAssetListEntryId());
 
 		Assert.assertEquals(0, currentCount);
 
-		AssetListTestUtil.addAssetListEntryAssetEntryRel(
+		AssetListTestUtil.addAssetEntryAssetListEntryRel(
 			_group.getGroupId(), assetEntry, assetListEntryCount);
 
 		currentCount =
-			AssetListEntryAssetEntryRelLocalServiceUtil.
-				getAssetListEntryAssetEntryRelsCount(
+			AssetEntryAssetListEntryRelLocalServiceUtil.
+				getAssetEntryAssetListEntryRelsCount(
 					assetListEntryCount.getAssetListEntryId());
 
 		Assert.assertEquals(1, currentCount);
 	}
 
 	@Test
-	public void testDeleteAssetListEntryAssetEntryRelByAssetListEntryId()
+	public void testDeleteAssetEntryAssetListEntryRelByAssetListEntryId()
 		throws PortalException {
 
 		AssetListEntry assetListEntry = AssetListTestUtil.addAssetListEntry(
@@ -176,20 +179,20 @@ public class AssetListEntryAssetEntryRelServiceTest {
 			_group.getGroupId(), null,
 			TestAssetRendererFactory.class.getName());
 
-		AssetListTestUtil.addAssetListEntryAssetEntryRel(
+		AssetListTestUtil.addAssetEntryAssetListEntryRel(
 			_group.getGroupId(), assetEntry, assetListEntry);
 
-		AssetListEntryAssetEntryRelLocalServiceUtil.
-			deleteAssetListEntryAssetEntryRelByAssetListEntryId(
+		AssetEntryAssetListEntryRelLocalServiceUtil.
+			deleteAssetEntryAssetListEntryRelByAssetListEntryId(
 				assetListEntry.getAssetListEntryId());
 
 		Assert.assertNull(
-			AssetListEntryAssetEntryRelUtil.fetchByAssetListEntryId_First(
+			AssetEntryAssetListEntryRelUtil.fetchByAssetListEntryId_First(
 				assetListEntry.getAssetListEntryId(), null));
 	}
 
 	@Test
-	public void testDeleteAssetListEntryAssetEntryRelByPosition()
+	public void testDeleteAssetEntryAssetListEntryRelByPosition()
 		throws PortalException {
 
 		AssetListEntry assetListEntry = AssetListTestUtil.addAssetListEntry(
@@ -203,32 +206,32 @@ public class AssetListEntryAssetEntryRelServiceTest {
 			_group.getGroupId(), null,
 			TestAssetRendererFactory.class.getName());
 
-		AssetListEntryAssetEntryRel assetListEntryRelAlive =
-			AssetListTestUtil.addAssetListEntryAssetEntryRel(
+		AssetEntryAssetListEntryRel assetListEntryRelAlive =
+			AssetListTestUtil.addAssetEntryAssetListEntryRel(
 				_group.getGroupId(), assetEntryAlive, assetListEntry, 1);
 
-		AssetListEntryAssetEntryRel assetListEntryRelDeleted =
-			AssetListTestUtil.addAssetListEntryAssetEntryRel(
+		AssetEntryAssetListEntryRel assetListEntryRelDeleted =
+			AssetListTestUtil.addAssetEntryAssetListEntryRel(
 				_group.getGroupId(), assetEntryDeleted, assetListEntry, 0);
 
-		AssetListEntryAssetEntryRelLocalServiceUtil.
-			deleteAssetListEntryAssetEntryRel(
+		AssetEntryAssetListEntryRelLocalServiceUtil.
+			deleteAssetEntryAssetListEntryRel(
 				assetListEntry.getAssetListEntryId(), 0);
 
 		Assert.assertEquals(
 			assetListEntryRelAlive,
-			AssetListEntryAssetEntryRelUtil.fetchByUUID_G(
+			AssetEntryAssetListEntryRelUtil.fetchByUUID_G(
 				assetListEntryRelAlive.getUuid(),
 				assetListEntryRelAlive.getGroupId()));
 
 		Assert.assertNull(
-			AssetListEntryAssetEntryRelUtil.fetchByUUID_G(
+			AssetEntryAssetListEntryRelUtil.fetchByUUID_G(
 				assetListEntryRelDeleted.getUuid(),
 				assetListEntryRelDeleted.getGroupId()));
 	}
 
 	@Test
-	public void testGetAssetListEntryAssetEntryRels() throws PortalException {
+	public void testGetAssetEntryAssetListEntryRels() throws PortalException {
 		AssetListEntry assetListEntry = AssetListTestUtil.addAssetListEntry(
 			_group.getGroupId());
 
@@ -240,34 +243,34 @@ public class AssetListEntryAssetEntryRelServiceTest {
 			_group.getGroupId(), null,
 			TestAssetRendererFactory.class.getName());
 
-		AssetListTestUtil.addAssetListEntryAssetEntryRel(
+		AssetListTestUtil.addAssetEntryAssetListEntryRel(
 			_group.getGroupId(), assetEntry1, assetListEntry);
 
-		AssetListTestUtil.addAssetListEntryAssetEntryRel(
+		AssetListTestUtil.addAssetEntryAssetListEntryRel(
 			_group.getGroupId(), assetEntry2, assetListEntry);
 
-		List<AssetListEntryAssetEntryRel> assetListEntryRelList =
-			AssetListEntryAssetEntryRelLocalServiceUtil.
-				getAssetListEntryAssetEntryRels(
+		List<AssetEntryAssetListEntryRel> assetListEntryRelList =
+			AssetEntryAssetListEntryRelLocalServiceUtil.
+				getAssetEntryAssetListEntryRels(
 					assetListEntry.getAssetListEntryId(), QueryUtil.ALL_POS,
 					QueryUtil.ALL_POS);
 
-		AssetListEntryAssetEntryRel assetListEntryAssetEntryRel =
+		AssetEntryAssetListEntryRel assetEntryAssetListEntryRel =
 			assetListEntryRelList.get(0);
 
 		Assert.assertEquals(
-			assetListEntryAssetEntryRel.getAssetEntryId(),
+			assetEntryAssetListEntryRel.getAssetEntryId(),
 			assetEntry1.getEntryId());
 
-		assetListEntryAssetEntryRel = assetListEntryRelList.get(1);
+		assetEntryAssetListEntryRel = assetListEntryRelList.get(1);
 
 		Assert.assertEquals(
-			assetListEntryAssetEntryRel.getAssetEntryId(),
+			assetEntryAssetListEntryRel.getAssetEntryId(),
 			assetEntry2.getEntryId());
 	}
 
 	@Test
-	public void testMoveAssetListEntryAssetEntryRelToInvalidPosition()
+	public void testMoveAssetEntryAssetListEntryRelToInvalidPosition()
 		throws PortalException {
 
 		AssetListEntry assetListEntry = AssetListTestUtil.addAssetListEntry(
@@ -277,27 +280,27 @@ public class AssetListEntryAssetEntryRelServiceTest {
 			_group.getGroupId(), null,
 			TestAssetRendererFactory.class.getName());
 
-		AssetListEntryAssetEntryRel assetListEntryRel =
-			AssetListTestUtil.addAssetListEntryAssetEntryRel(
+		AssetEntryAssetListEntryRel assetListEntryRel =
+			AssetListTestUtil.addAssetEntryAssetListEntryRel(
 				_group.getGroupId(), assetEntry, assetListEntry);
 
 		int currentPosition = assetListEntryRel.getPosition();
 
-		AssetListEntryAssetEntryRel assetListEntryRelNegativePosition =
-			AssetListEntryAssetEntryRelLocalServiceUtil.
-				moveAssetListEntryAssetEntryRel(
+		AssetEntryAssetListEntryRel assetListEntryRelNegativePosition =
+			AssetEntryAssetListEntryRelLocalServiceUtil.
+				moveAssetEntryAssetListEntryRel(
 					assetListEntry.getAssetListEntryId(), currentPosition, -1);
 
 		Assert.assertEquals(
 			assetListEntryRel.getPosition(),
 			assetListEntryRelNegativePosition.getPosition());
 
-		int highIndex = AssetListEntryAssetEntryRelUtil.countByAssetListEntryId(
+		int highIndex = AssetEntryAssetListEntryRelUtil.countByAssetListEntryId(
 			assetListEntry.getAssetListEntryId());
 
-		AssetListEntryAssetEntryRel assetListEntryRelHighIndexPosition =
-			AssetListEntryAssetEntryRelLocalServiceUtil.
-				moveAssetListEntryAssetEntryRel(
+		AssetEntryAssetListEntryRel assetListEntryRelHighIndexPosition =
+			AssetEntryAssetListEntryRelLocalServiceUtil.
+				moveAssetEntryAssetListEntryRel(
 					assetListEntry.getAssetListEntryId(), currentPosition,
 					highIndex);
 
@@ -307,7 +310,7 @@ public class AssetListEntryAssetEntryRelServiceTest {
 	}
 
 	@Test
-	public void testUpdateAssetListEntryAssetEntryRel() throws PortalException {
+	public void testUpdateAssetEntryAssetListEntryRel() throws PortalException {
 		AssetListEntry assetListEntryOriginal =
 			AssetListTestUtil.addAssetListEntry(_group.getGroupId());
 
@@ -315,8 +318,8 @@ public class AssetListEntryAssetEntryRelServiceTest {
 			_group.getGroupId(), null,
 			TestAssetRendererFactory.class.getName());
 
-		AssetListEntryAssetEntryRel assetListEntryRel =
-			AssetListTestUtil.addAssetListEntryAssetEntryRel(
+		AssetEntryAssetListEntryRel assetListEntryRel =
+			AssetListTestUtil.addAssetEntryAssetListEntryRel(
 				_group.getGroupId(), assetEntryOriginal,
 				assetListEntryOriginal);
 
@@ -329,15 +332,15 @@ public class AssetListEntryAssetEntryRelServiceTest {
 			_group.getGroupId(), null,
 			TestAssetRendererFactory.class.getName());
 
-		AssetListEntryAssetEntryRelLocalServiceUtil.
-			updateAssetListEntryAssetEntryRel(
-				assetListEntryRel.getAssetListEntryAssetEntryRelId(),
+		AssetEntryAssetListEntryRelLocalServiceUtil.
+			updateAssetEntryAssetListEntryRel(
+				assetListEntryRel.getAssetEntryAssetListEntryRelId(),
 				assetListEntryUpdated.getAssetListEntryId(),
 				assetEntryUpdated.getEntryId(), positionOriginal + 1);
 
-		AssetListEntryAssetEntryRel assetListEntryRelUpdated =
-			AssetListEntryAssetEntryRelUtil.findByPrimaryKey(
-				assetListEntryRel.getAssetListEntryAssetEntryRelId());
+		AssetEntryAssetListEntryRel assetListEntryRelUpdated =
+			AssetEntryAssetListEntryRelUtil.findByPrimaryKey(
+				assetListEntryRel.getAssetEntryAssetListEntryRelId());
 
 		Assert.assertEquals(
 			assetListEntryUpdated.getAssetListEntryId(),
@@ -351,9 +354,9 @@ public class AssetListEntryAssetEntryRelServiceTest {
 			assetListEntryRelUpdated.getPosition(), positionOriginal + 1);
 	}
 
-	private void _assertSameAssetListEntryAssetEntryRel(
-		AssetListEntryAssetEntryRel assetListEntryRel1,
-		AssetListEntryAssetEntryRel assetListEntryRel2) {
+	private void _assertSameAssetEntryAssetListEntryRel(
+		AssetEntryAssetListEntryRel assetListEntryRel1,
+		AssetEntryAssetListEntryRel assetListEntryRel2) {
 
 		Assert.assertEquals(
 			assetListEntryRel1.getAssetEntryId(),
@@ -364,8 +367,8 @@ public class AssetListEntryAssetEntryRelServiceTest {
 			assetListEntryRel2.getAssetListEntryId());
 
 		Assert.assertEquals(
-			assetListEntryRel1.getAssetListEntryAssetEntryRelId(),
-			assetListEntryRel2.getAssetListEntryAssetEntryRelId());
+			assetListEntryRel1.getAssetEntryAssetListEntryRelId(),
+			assetListEntryRel2.getAssetEntryAssetListEntryRelId());
 
 		Assert.assertEquals(
 			assetListEntryRel1.getUuid(), assetListEntryRel2.getUuid());

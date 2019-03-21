@@ -73,14 +73,14 @@
 			searchContainer="<%= editAssetListDisplayContext.getSearchContainer() %>"
 		>
 			<liferay-ui:search-container-row
-				className="com.liferay.asset.list.model.AssetListEntryAssetEntryRel"
+				className="com.liferay.asset.list.model.AssetEntryAssetListEntryRel"
 				escapedModel="<%= true %>"
 				keyProperty="entryId"
-				modelVar="assetListEntryAssetEntryRel"
+				modelVar="assetEntryAssetListEntryRel"
 			>
 
 				<%
-				AssetEntry assetEntry = AssetEntryServiceUtil.getEntry(assetListEntryAssetEntryRel.getAssetEntryId());
+				AssetEntry assetEntry = AssetEntryServiceUtil.getEntry(assetEntryAssetListEntryRel.getAssetEntryId());
 
 				AssetRendererFactory<?> assetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(assetEntry.getClassName());
 

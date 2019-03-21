@@ -21,34 +21,34 @@ import com.liferay.portal.kernel.model.PersistedModel;
 import com.liferay.portal.kernel.util.Accessor;
 
 /**
- * The extended model interface for the AssetListEntryAssetEntryRel service. Represents a row in the &quot;AssetListEntryAssetEntryRel&quot; database table, with each column mapped to a property of this class.
+ * The extended model interface for the AssetEntryAssetListEntryRel service. Represents a row in the &quot;AssetEntryAssetListEntryRel&quot; database table, with each column mapped to a property of this class.
  *
  * @author Brian Wing Shun Chan
- * @see AssetListEntryAssetEntryRelModel
+ * @see AssetEntryAssetListEntryRelModel
  * @generated
  */
 @ImplementationClassName(
-	"com.liferay.asset.list.model.impl.AssetListEntryAssetEntryRelImpl"
+	"com.liferay.asset.list.model.impl.AssetEntryAssetListEntryRelImpl"
 )
 @ProviderType
-public interface AssetListEntryAssetEntryRel
-	extends AssetListEntryAssetEntryRelModel, PersistedModel {
+public interface AssetEntryAssetListEntryRel
+	extends AssetEntryAssetListEntryRelModel, PersistedModel {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify this interface directly. Add methods to <code>com.liferay.asset.list.model.impl.AssetListEntryAssetEntryRelImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
+	 * Never modify this interface directly. Add methods to <code>com.liferay.asset.list.model.impl.AssetEntryAssetListEntryRelImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public static final Accessor<AssetListEntryAssetEntryRel, Long>
-		ASSET_LIST_ENTRY_ASSET_ENTRY_REL_ID_ACCESSOR =
-			new Accessor<AssetListEntryAssetEntryRel, Long>() {
+	public static final Accessor<AssetEntryAssetListEntryRel, Long>
+		ASSET_ENTRY_ASSET_LIST_ENTRY_REL_ID_ACCESSOR =
+			new Accessor<AssetEntryAssetListEntryRel, Long>() {
 
 				@Override
 				public Long get(
-					AssetListEntryAssetEntryRel assetListEntryAssetEntryRel) {
+					AssetEntryAssetListEntryRel assetEntryAssetListEntryRel) {
 
-					return assetListEntryAssetEntryRel.
-						getAssetListEntryAssetEntryRelId();
+					return assetEntryAssetListEntryRel.
+						getAssetEntryAssetListEntryRelId();
 				}
 
 				@Override
@@ -57,8 +57,8 @@ public interface AssetListEntryAssetEntryRel
 				}
 
 				@Override
-				public Class<AssetListEntryAssetEntryRel> getTypeClass() {
-					return AssetListEntryAssetEntryRel.class;
+				public Class<AssetEntryAssetListEntryRel> getTypeClass() {
+					return AssetEntryAssetListEntryRel.class;
 				}
 
 			};

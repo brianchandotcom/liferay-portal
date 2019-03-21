@@ -28,7 +28,7 @@ import com.liferay.asset.kernel.service.AssetVocabularyServiceUtil;
 import com.liferay.asset.list.constants.AssetListFormConstants;
 import com.liferay.asset.list.constants.AssetListPortletKeys;
 import com.liferay.asset.list.constants.AssetListWebKeys;
-import com.liferay.asset.list.service.AssetListEntryAssetEntryRelLocalServiceUtil;
+import com.liferay.asset.list.service.AssetEntryAssetListEntryRelLocalServiceUtil;
 import com.liferay.asset.util.comparator.AssetRendererFactoryTypeNameComparator;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.item.selector.ItemSelectorReturnType;
@@ -645,12 +645,12 @@ public class EditAssetListDisplayContext {
 			"there-are-no-asset-entries");
 
 		searchContainer.setTotal(
-			AssetListEntryAssetEntryRelLocalServiceUtil.
-				getAssetListEntryAssetEntryRelsCount(getAssetListEntryId()));
+			AssetEntryAssetListEntryRelLocalServiceUtil.
+				getAssetEntryAssetListEntryRelsCount(getAssetListEntryId()));
 
 		searchContainer.setResults(
-			AssetListEntryAssetEntryRelLocalServiceUtil.
-				getAssetListEntryAssetEntryRels(
+			AssetEntryAssetListEntryRelLocalServiceUtil.
+				getAssetEntryAssetListEntryRels(
 					getAssetListEntryId(), searchContainer.getStart(),
 					searchContainer.getEnd()));
 

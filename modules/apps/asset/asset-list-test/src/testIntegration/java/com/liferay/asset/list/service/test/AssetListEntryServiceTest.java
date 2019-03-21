@@ -16,11 +16,11 @@ package com.liferay.asset.list.service.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.asset.kernel.model.AssetEntry;
-import com.liferay.asset.list.exception.AssetListEntryAssetEntryRelPostionException;
+import com.liferay.asset.list.exception.AssetEntryAssetListEntryRelPostionException;
 import com.liferay.asset.list.exception.AssetListEntryTitleException;
 import com.liferay.asset.list.exception.DuplicateAssetListEntryTitleException;
 import com.liferay.asset.list.model.AssetListEntry;
-import com.liferay.asset.list.service.AssetListEntryAssetEntryRelLocalServiceUtil;
+import com.liferay.asset.list.service.AssetEntryAssetListEntryRelLocalServiceUtil;
 import com.liferay.asset.list.service.AssetListEntryServiceUtil;
 import com.liferay.asset.list.util.comparator.AssetListEntryCreateDateComparator;
 import com.liferay.asset.list.util.comparator.AssetListEntryTitleComparator;
@@ -66,19 +66,8 @@ public class AssetListEntryServiceTest {
 		_group = GroupTestUtil.addGroup();
 	}
 
-	@Test
-	public void testAddAssetListEntry() throws PortalException {
-		AssetListEntry assetListEntry = _addAssetListEntry("Asset List Title");
-
-		Assert.assertNotNull(
-			AssetListEntryServiceUtil.fetchAssetListEntry(
-				assetListEntry.getAssetListEntryId()));
-
-		Assert.assertEquals("Asset List Title", assetListEntry.getTitle());
-	}
-
-	@Test(expected = AssetListEntryAssetEntryRelPostionException.class)
-	public void testAddAssetListEntryAssetEntryRelWrongPosition()
+	@Test(expected = AssetEntryAssetListEntryRelPostionException.class)
+	public void testAddAssetEntryAssetListEntryRelWrongPosition()
 		throws Exception {
 
 		AssetListEntry assetListEntry = _addAssetListEntry("Asset List Title");
@@ -89,15 +78,26 @@ public class AssetListEntryServiceTest {
 			ServiceContextTestUtil.getServiceContext(
 				_group.getGroupId(), TestPropsValues.getUserId());
 
-		AssetListEntryAssetEntryRelLocalServiceUtil.
-			addAssetListEntryAssetEntryRel(
+		AssetEntryAssetListEntryRelLocalServiceUtil.
+			addAssetEntryAssetListEntryRel(
 				assetListEntry.getAssetListEntryId(), assetEntry.getEntryId(),
 				1, serviceContext);
 
-		AssetListEntryAssetEntryRelLocalServiceUtil.
-			addAssetListEntryAssetEntryRel(
+		AssetEntryAssetListEntryRelLocalServiceUtil.
+			addAssetEntryAssetListEntryRel(
 				assetListEntry.getAssetListEntryId(), assetEntry.getEntryId(),
 				serviceContext);
+	}
+
+	@Test
+	public void testAddAssetListEntry() throws PortalException {
+		AssetListEntry assetListEntry = _addAssetListEntry("Asset List Title");
+
+		Assert.assertNotNull(
+			AssetListEntryServiceUtil.fetchAssetListEntry(
+				assetListEntry.getAssetListEntryId()));
+
+		Assert.assertEquals("Asset List Title", assetListEntry.getTitle());
 	}
 
 	@Test(expected = AssetListEntryTitleException.class)

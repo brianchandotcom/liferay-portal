@@ -16,9 +16,9 @@ package com.liferay.asset.list.util;
 
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.list.constants.AssetListEntryTypeConstants;
+import com.liferay.asset.list.model.AssetEntryAssetListEntryRel;
 import com.liferay.asset.list.model.AssetListEntry;
-import com.liferay.asset.list.model.AssetListEntryAssetEntryRel;
-import com.liferay.asset.list.service.AssetListEntryAssetEntryRelLocalServiceUtil;
+import com.liferay.asset.list.service.AssetEntryAssetListEntryRelLocalServiceUtil;
 import com.liferay.asset.list.service.AssetListEntryLocalServiceUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -30,6 +30,33 @@ import com.liferay.portal.kernel.test.util.TestPropsValues;
  * @author Kyle Miho
  */
 public class AssetListTestUtil {
+
+	public static AssetEntryAssetListEntryRel addAssetEntryAssetListEntryRel(
+			long groupId, AssetEntry assetEntry, AssetListEntry assetListEntry)
+		throws PortalException {
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(groupId);
+
+		return AssetEntryAssetListEntryRelLocalServiceUtil.
+			addAssetEntryAssetListEntryRel(
+				assetListEntry.getAssetListEntryId(), assetEntry.getEntryId(),
+				serviceContext);
+	}
+
+	public static AssetEntryAssetListEntryRel addAssetEntryAssetListEntryRel(
+			long groupId, AssetEntry assetEntry, AssetListEntry assetListEntry,
+			int position)
+		throws PortalException {
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(groupId);
+
+		return AssetEntryAssetListEntryRelLocalServiceUtil.
+			addAssetEntryAssetListEntryRel(
+				assetListEntry.getAssetListEntryId(), assetEntry.getEntryId(),
+				position, serviceContext);
+	}
 
 	public static AssetListEntry addAssetListEntry(long groupId)
 		throws PortalException {
@@ -51,33 +78,6 @@ public class AssetListTestUtil {
 		return AssetListEntryLocalServiceUtil.addAssetListEntry(
 			TestPropsValues.getUserId(), groupId, title,
 			AssetListEntryTypeConstants.TYPE_MANUAL, serviceContext);
-	}
-
-	public static AssetListEntryAssetEntryRel addAssetListEntryAssetEntryRel(
-			long groupId, AssetEntry assetEntry, AssetListEntry assetListEntry)
-		throws PortalException {
-
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(groupId);
-
-		return AssetListEntryAssetEntryRelLocalServiceUtil.
-			addAssetListEntryAssetEntryRel(
-				assetListEntry.getAssetListEntryId(), assetEntry.getEntryId(),
-				serviceContext);
-	}
-
-	public static AssetListEntryAssetEntryRel addAssetListEntryAssetEntryRel(
-			long groupId, AssetEntry assetEntry, AssetListEntry assetListEntry,
-			int position)
-		throws PortalException {
-
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(groupId);
-
-		return AssetListEntryAssetEntryRelLocalServiceUtil.
-			addAssetListEntryAssetEntryRel(
-				assetListEntry.getAssetListEntryId(), assetEntry.getEntryId(),
-				position, serviceContext);
 	}
 
 }

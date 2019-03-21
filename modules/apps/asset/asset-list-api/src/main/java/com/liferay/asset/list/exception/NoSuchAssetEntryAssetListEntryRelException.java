@@ -22,20 +22,23 @@ import com.liferay.portal.kernel.exception.NoSuchModelException;
  * @author Brian Wing Shun Chan
  */
 @ProviderType
-public class NoSuchEntryAssetEntryRelException extends NoSuchModelException {
+public class NoSuchAssetEntryAssetListEntryRelException
+	extends NoSuchModelException {
 
-	public NoSuchEntryAssetEntryRelException() {
+	public NoSuchAssetEntryAssetListEntryRelException() {
 	}
 
-	public NoSuchEntryAssetEntryRelException(String msg) {
+	public NoSuchAssetEntryAssetListEntryRelException(String msg) {
 		super(msg);
 	}
 
-	public NoSuchEntryAssetEntryRelException(String msg, Throwable cause) {
+	public NoSuchAssetEntryAssetListEntryRelException(
+		String msg, Throwable cause) {
+
 		super(msg, cause);
 	}
 
-	public NoSuchEntryAssetEntryRelException(Throwable cause) {
+	public NoSuchAssetEntryAssetListEntryRelException(Throwable cause) {
 		super(cause);
 	}
 

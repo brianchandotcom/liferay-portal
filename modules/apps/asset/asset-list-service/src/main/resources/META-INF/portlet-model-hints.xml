@@ -1,6 +1,21 @@
 <?xml version="1.0"?>
 
 <model-hints>
+	<model name="com.liferay.asset.list.model.AssetEntryAssetListEntryRel">
+		<field name="uuid" type="String" />
+		<field name="assetEntryAssetListEntryRelId" type="long" />
+		<field name="groupId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="assetEntryId" type="long" />
+		<field name="assetListEntryId" type="long" />
+		<field name="segmentsEntryId" type="long" />
+		<field name="position" type="int" />
+		<field name="lastPublishDate" type="Date" />
+	</model>
 	<model name="com.liferay.asset.list.model.AssetListEntry">
 		<field name="uuid" type="String" />
 		<field name="assetListEntryId" type="long" />
@@ -15,21 +30,6 @@
 		<field name="typeSettings" type="String">
 			<hint-collection name="CLOB" />
 		</field>
-		<field name="lastPublishDate" type="Date" />
-	</model>
-	<model name="com.liferay.asset.list.model.AssetListEntryAssetEntryRel">
-		<field name="uuid" type="String" />
-		<field name="assetListEntryAssetEntryRelId" type="long" />
-		<field name="groupId" type="long" />
-		<field name="companyId" type="long" />
-		<field name="userId" type="long" />
-		<field name="userName" type="String" />
-		<field name="createDate" type="Date" />
-		<field name="modifiedDate" type="Date" />
-		<field name="assetListEntryId" type="long" />
-		<field name="segmentsEntryId" type="long" />
-		<field name="assetEntryId" type="long" />
-		<field name="position" type="int" />
 		<field name="lastPublishDate" type="Date" />
 	</model>
 	<model name="com.liferay.asset.list.model.AssetListEntrySegmentsEntryRel">

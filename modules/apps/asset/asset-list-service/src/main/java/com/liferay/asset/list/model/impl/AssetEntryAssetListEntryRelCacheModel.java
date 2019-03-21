@@ -16,7 +16,7 @@ package com.liferay.asset.list.model.impl;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.asset.list.model.AssetListEntryAssetEntryRel;
+import com.liferay.asset.list.model.AssetEntryAssetListEntryRel;
 import com.liferay.petra.lang.HashUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.model.CacheModel;
@@ -29,14 +29,14 @@ import java.io.ObjectOutput;
 import java.util.Date;
 
 /**
- * The cache model class for representing AssetListEntryAssetEntryRel in entity cache.
+ * The cache model class for representing AssetEntryAssetListEntryRel in entity cache.
  *
  * @author Brian Wing Shun Chan
  * @generated
  */
 @ProviderType
-public class AssetListEntryAssetEntryRelCacheModel
-	implements CacheModel<AssetListEntryAssetEntryRel>, Externalizable {
+public class AssetEntryAssetListEntryRelCacheModel
+	implements CacheModel<AssetEntryAssetListEntryRel>, Externalizable {
 
 	@Override
 	public boolean equals(Object obj) {
@@ -44,17 +44,17 @@ public class AssetListEntryAssetEntryRelCacheModel
 			return true;
 		}
 
-		if (!(obj instanceof AssetListEntryAssetEntryRelCacheModel)) {
+		if (!(obj instanceof AssetEntryAssetListEntryRelCacheModel)) {
 			return false;
 		}
 
-		AssetListEntryAssetEntryRelCacheModel
-			assetListEntryAssetEntryRelCacheModel =
-				(AssetListEntryAssetEntryRelCacheModel)obj;
+		AssetEntryAssetListEntryRelCacheModel
+			assetEntryAssetListEntryRelCacheModel =
+				(AssetEntryAssetListEntryRelCacheModel)obj;
 
-		if (assetListEntryAssetEntryRelId ==
-				assetListEntryAssetEntryRelCacheModel.
-					assetListEntryAssetEntryRelId) {
+		if (assetEntryAssetListEntryRelId ==
+				assetEntryAssetListEntryRelCacheModel.
+					assetEntryAssetListEntryRelId) {
 
 			return true;
 		}
@@ -64,7 +64,7 @@ public class AssetListEntryAssetEntryRelCacheModel
 
 	@Override
 	public int hashCode() {
-		return HashUtil.hash(0, assetListEntryAssetEntryRelId);
+		return HashUtil.hash(0, assetEntryAssetListEntryRelId);
 	}
 
 	@Override
@@ -73,8 +73,8 @@ public class AssetListEntryAssetEntryRelCacheModel
 
 		sb.append("{uuid=");
 		sb.append(uuid);
-		sb.append(", assetListEntryAssetEntryRelId=");
-		sb.append(assetListEntryAssetEntryRelId);
+		sb.append(", assetEntryAssetListEntryRelId=");
+		sb.append(assetEntryAssetListEntryRelId);
 		sb.append(", groupId=");
 		sb.append(groupId);
 		sb.append(", companyId=");
@@ -87,12 +87,12 @@ public class AssetListEntryAssetEntryRelCacheModel
 		sb.append(createDate);
 		sb.append(", modifiedDate=");
 		sb.append(modifiedDate);
+		sb.append(", assetEntryId=");
+		sb.append(assetEntryId);
 		sb.append(", assetListEntryId=");
 		sb.append(assetListEntryId);
 		sb.append(", segmentsEntryId=");
 		sb.append(segmentsEntryId);
-		sb.append(", assetEntryId=");
-		sb.append(assetEntryId);
 		sb.append(", position=");
 		sb.append(position);
 		sb.append(", lastPublishDate=");
@@ -103,68 +103,68 @@ public class AssetListEntryAssetEntryRelCacheModel
 	}
 
 	@Override
-	public AssetListEntryAssetEntryRel toEntityModel() {
-		AssetListEntryAssetEntryRelImpl assetListEntryAssetEntryRelImpl =
-			new AssetListEntryAssetEntryRelImpl();
+	public AssetEntryAssetListEntryRel toEntityModel() {
+		AssetEntryAssetListEntryRelImpl assetEntryAssetListEntryRelImpl =
+			new AssetEntryAssetListEntryRelImpl();
 
 		if (uuid == null) {
-			assetListEntryAssetEntryRelImpl.setUuid("");
+			assetEntryAssetListEntryRelImpl.setUuid("");
 		}
 		else {
-			assetListEntryAssetEntryRelImpl.setUuid(uuid);
+			assetEntryAssetListEntryRelImpl.setUuid(uuid);
 		}
 
-		assetListEntryAssetEntryRelImpl.setAssetListEntryAssetEntryRelId(
-			assetListEntryAssetEntryRelId);
-		assetListEntryAssetEntryRelImpl.setGroupId(groupId);
-		assetListEntryAssetEntryRelImpl.setCompanyId(companyId);
-		assetListEntryAssetEntryRelImpl.setUserId(userId);
+		assetEntryAssetListEntryRelImpl.setAssetEntryAssetListEntryRelId(
+			assetEntryAssetListEntryRelId);
+		assetEntryAssetListEntryRelImpl.setGroupId(groupId);
+		assetEntryAssetListEntryRelImpl.setCompanyId(companyId);
+		assetEntryAssetListEntryRelImpl.setUserId(userId);
 
 		if (userName == null) {
-			assetListEntryAssetEntryRelImpl.setUserName("");
+			assetEntryAssetListEntryRelImpl.setUserName("");
 		}
 		else {
-			assetListEntryAssetEntryRelImpl.setUserName(userName);
+			assetEntryAssetListEntryRelImpl.setUserName(userName);
 		}
 
 		if (createDate == Long.MIN_VALUE) {
-			assetListEntryAssetEntryRelImpl.setCreateDate(null);
+			assetEntryAssetListEntryRelImpl.setCreateDate(null);
 		}
 		else {
-			assetListEntryAssetEntryRelImpl.setCreateDate(new Date(createDate));
+			assetEntryAssetListEntryRelImpl.setCreateDate(new Date(createDate));
 		}
 
 		if (modifiedDate == Long.MIN_VALUE) {
-			assetListEntryAssetEntryRelImpl.setModifiedDate(null);
+			assetEntryAssetListEntryRelImpl.setModifiedDate(null);
 		}
 		else {
-			assetListEntryAssetEntryRelImpl.setModifiedDate(
+			assetEntryAssetListEntryRelImpl.setModifiedDate(
 				new Date(modifiedDate));
 		}
 
-		assetListEntryAssetEntryRelImpl.setAssetListEntryId(assetListEntryId);
-		assetListEntryAssetEntryRelImpl.setSegmentsEntryId(segmentsEntryId);
-		assetListEntryAssetEntryRelImpl.setAssetEntryId(assetEntryId);
-		assetListEntryAssetEntryRelImpl.setPosition(position);
+		assetEntryAssetListEntryRelImpl.setAssetEntryId(assetEntryId);
+		assetEntryAssetListEntryRelImpl.setAssetListEntryId(assetListEntryId);
+		assetEntryAssetListEntryRelImpl.setSegmentsEntryId(segmentsEntryId);
+		assetEntryAssetListEntryRelImpl.setPosition(position);
 
 		if (lastPublishDate == Long.MIN_VALUE) {
-			assetListEntryAssetEntryRelImpl.setLastPublishDate(null);
+			assetEntryAssetListEntryRelImpl.setLastPublishDate(null);
 		}
 		else {
-			assetListEntryAssetEntryRelImpl.setLastPublishDate(
+			assetEntryAssetListEntryRelImpl.setLastPublishDate(
 				new Date(lastPublishDate));
 		}
 
-		assetListEntryAssetEntryRelImpl.resetOriginalValues();
+		assetEntryAssetListEntryRelImpl.resetOriginalValues();
 
-		return assetListEntryAssetEntryRelImpl;
+		return assetEntryAssetListEntryRelImpl;
 	}
 
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
 		uuid = objectInput.readUTF();
 
-		assetListEntryAssetEntryRelId = objectInput.readLong();
+		assetEntryAssetListEntryRelId = objectInput.readLong();
 
 		groupId = objectInput.readLong();
 
@@ -175,11 +175,11 @@ public class AssetListEntryAssetEntryRelCacheModel
 		createDate = objectInput.readLong();
 		modifiedDate = objectInput.readLong();
 
+		assetEntryId = objectInput.readLong();
+
 		assetListEntryId = objectInput.readLong();
 
 		segmentsEntryId = objectInput.readLong();
-
-		assetEntryId = objectInput.readLong();
 
 		position = objectInput.readInt();
 		lastPublishDate = objectInput.readLong();
@@ -194,7 +194,7 @@ public class AssetListEntryAssetEntryRelCacheModel
 			objectOutput.writeUTF(uuid);
 		}
 
-		objectOutput.writeLong(assetListEntryAssetEntryRelId);
+		objectOutput.writeLong(assetEntryAssetListEntryRelId);
 
 		objectOutput.writeLong(groupId);
 
@@ -212,27 +212,27 @@ public class AssetListEntryAssetEntryRelCacheModel
 		objectOutput.writeLong(createDate);
 		objectOutput.writeLong(modifiedDate);
 
+		objectOutput.writeLong(assetEntryId);
+
 		objectOutput.writeLong(assetListEntryId);
 
 		objectOutput.writeLong(segmentsEntryId);
-
-		objectOutput.writeLong(assetEntryId);
 
 		objectOutput.writeInt(position);
 		objectOutput.writeLong(lastPublishDate);
 	}
 
 	public String uuid;
-	public long assetListEntryAssetEntryRelId;
+	public long assetEntryAssetListEntryRelId;
 	public long groupId;
 	public long companyId;
 	public long userId;
 	public String userName;
 	public long createDate;
 	public long modifiedDate;
+	public long assetEntryId;
 	public long assetListEntryId;
 	public long segmentsEntryId;
-	public long assetEntryId;
 	public int position;
 	public long lastPublishDate;
 

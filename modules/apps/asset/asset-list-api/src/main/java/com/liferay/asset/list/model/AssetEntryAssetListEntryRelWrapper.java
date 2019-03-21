@@ -26,23 +26,23 @@ import java.util.Map;
 
 /**
  * <p>
- * This class is a wrapper for {@link AssetListEntryAssetEntryRel}.
+ * This class is a wrapper for {@link AssetEntryAssetListEntryRel}.
  * </p>
  *
  * @author Brian Wing Shun Chan
- * @see AssetListEntryAssetEntryRel
+ * @see AssetEntryAssetListEntryRel
  * @generated
  */
 @ProviderType
-public class AssetListEntryAssetEntryRelWrapper
-	extends BaseModelWrapper<AssetListEntryAssetEntryRel>
-	implements AssetListEntryAssetEntryRel,
-			   ModelWrapper<AssetListEntryAssetEntryRel> {
+public class AssetEntryAssetListEntryRelWrapper
+	extends BaseModelWrapper<AssetEntryAssetListEntryRel>
+	implements AssetEntryAssetListEntryRel,
+			   ModelWrapper<AssetEntryAssetListEntryRel> {
 
-	public AssetListEntryAssetEntryRelWrapper(
-		AssetListEntryAssetEntryRel assetListEntryAssetEntryRel) {
+	public AssetEntryAssetListEntryRelWrapper(
+		AssetEntryAssetListEntryRel assetEntryAssetListEntryRel) {
 
-		super(assetListEntryAssetEntryRel);
+		super(assetEntryAssetListEntryRel);
 	}
 
 	@Override
@@ -51,17 +51,17 @@ public class AssetListEntryAssetEntryRelWrapper
 
 		attributes.put("uuid", getUuid());
 		attributes.put(
-			"assetListEntryAssetEntryRelId",
-			getAssetListEntryAssetEntryRelId());
+			"assetEntryAssetListEntryRelId",
+			getAssetEntryAssetListEntryRelId());
 		attributes.put("groupId", getGroupId());
 		attributes.put("companyId", getCompanyId());
 		attributes.put("userId", getUserId());
 		attributes.put("userName", getUserName());
 		attributes.put("createDate", getCreateDate());
 		attributes.put("modifiedDate", getModifiedDate());
+		attributes.put("assetEntryId", getAssetEntryId());
 		attributes.put("assetListEntryId", getAssetListEntryId());
 		attributes.put("segmentsEntryId", getSegmentsEntryId());
-		attributes.put("assetEntryId", getAssetEntryId());
 		attributes.put("position", getPosition());
 		attributes.put("lastPublishDate", getLastPublishDate());
 
@@ -76,11 +76,11 @@ public class AssetListEntryAssetEntryRelWrapper
 			setUuid(uuid);
 		}
 
-		Long assetListEntryAssetEntryRelId = (Long)attributes.get(
-			"assetListEntryAssetEntryRelId");
+		Long assetEntryAssetListEntryRelId = (Long)attributes.get(
+			"assetEntryAssetListEntryRelId");
 
-		if (assetListEntryAssetEntryRelId != null) {
-			setAssetListEntryAssetEntryRelId(assetListEntryAssetEntryRelId);
+		if (assetEntryAssetListEntryRelId != null) {
+			setAssetEntryAssetListEntryRelId(assetEntryAssetListEntryRelId);
 		}
 
 		Long groupId = (Long)attributes.get("groupId");
@@ -119,6 +119,12 @@ public class AssetListEntryAssetEntryRelWrapper
 			setModifiedDate(modifiedDate);
 		}
 
+		Long assetEntryId = (Long)attributes.get("assetEntryId");
+
+		if (assetEntryId != null) {
+			setAssetEntryId(assetEntryId);
+		}
+
 		Long assetListEntryId = (Long)attributes.get("assetListEntryId");
 
 		if (assetListEntryId != null) {
@@ -129,12 +135,6 @@ public class AssetListEntryAssetEntryRelWrapper
 
 		if (segmentsEntryId != null) {
 			setSegmentsEntryId(segmentsEntryId);
-		}
-
-		Long assetEntryId = (Long)attributes.get("assetEntryId");
-
-		if (assetEntryId != null) {
-			setAssetEntryId(assetEntryId);
 		}
 
 		Integer position = (Integer)attributes.get("position");
@@ -151,9 +151,19 @@ public class AssetListEntryAssetEntryRelWrapper
 	}
 
 	/**
-	 * Returns the asset entry ID of this asset list entry asset entry rel.
+	 * Returns the asset entry asset list entry rel ID of this asset entry asset list entry rel.
 	 *
-	 * @return the asset entry ID of this asset list entry asset entry rel
+	 * @return the asset entry asset list entry rel ID of this asset entry asset list entry rel
+	 */
+	@Override
+	public long getAssetEntryAssetListEntryRelId() {
+		return model.getAssetEntryAssetListEntryRelId();
+	}
+
+	/**
+	 * Returns the asset entry ID of this asset entry asset list entry rel.
+	 *
+	 * @return the asset entry ID of this asset entry asset list entry rel
 	 */
 	@Override
 	public long getAssetEntryId() {
@@ -166,19 +176,9 @@ public class AssetListEntryAssetEntryRelWrapper
 	}
 
 	/**
-	 * Returns the asset list entry asset entry rel ID of this asset list entry asset entry rel.
+	 * Returns the asset list entry ID of this asset entry asset list entry rel.
 	 *
-	 * @return the asset list entry asset entry rel ID of this asset list entry asset entry rel
-	 */
-	@Override
-	public long getAssetListEntryAssetEntryRelId() {
-		return model.getAssetListEntryAssetEntryRelId();
-	}
-
-	/**
-	 * Returns the asset list entry ID of this asset list entry asset entry rel.
-	 *
-	 * @return the asset list entry ID of this asset list entry asset entry rel
+	 * @return the asset list entry ID of this asset entry asset list entry rel
 	 */
 	@Override
 	public long getAssetListEntryId() {
@@ -186,9 +186,9 @@ public class AssetListEntryAssetEntryRelWrapper
 	}
 
 	/**
-	 * Returns the company ID of this asset list entry asset entry rel.
+	 * Returns the company ID of this asset entry asset list entry rel.
 	 *
-	 * @return the company ID of this asset list entry asset entry rel
+	 * @return the company ID of this asset entry asset list entry rel
 	 */
 	@Override
 	public long getCompanyId() {
@@ -196,9 +196,9 @@ public class AssetListEntryAssetEntryRelWrapper
 	}
 
 	/**
-	 * Returns the create date of this asset list entry asset entry rel.
+	 * Returns the create date of this asset entry asset list entry rel.
 	 *
-	 * @return the create date of this asset list entry asset entry rel
+	 * @return the create date of this asset entry asset list entry rel
 	 */
 	@Override
 	public Date getCreateDate() {
@@ -206,9 +206,9 @@ public class AssetListEntryAssetEntryRelWrapper
 	}
 
 	/**
-	 * Returns the group ID of this asset list entry asset entry rel.
+	 * Returns the group ID of this asset entry asset list entry rel.
 	 *
-	 * @return the group ID of this asset list entry asset entry rel
+	 * @return the group ID of this asset entry asset list entry rel
 	 */
 	@Override
 	public long getGroupId() {
@@ -216,9 +216,9 @@ public class AssetListEntryAssetEntryRelWrapper
 	}
 
 	/**
-	 * Returns the last publish date of this asset list entry asset entry rel.
+	 * Returns the last publish date of this asset entry asset list entry rel.
 	 *
-	 * @return the last publish date of this asset list entry asset entry rel
+	 * @return the last publish date of this asset entry asset list entry rel
 	 */
 	@Override
 	public Date getLastPublishDate() {
@@ -226,9 +226,9 @@ public class AssetListEntryAssetEntryRelWrapper
 	}
 
 	/**
-	 * Returns the modified date of this asset list entry asset entry rel.
+	 * Returns the modified date of this asset entry asset list entry rel.
 	 *
-	 * @return the modified date of this asset list entry asset entry rel
+	 * @return the modified date of this asset entry asset list entry rel
 	 */
 	@Override
 	public Date getModifiedDate() {
@@ -236,9 +236,9 @@ public class AssetListEntryAssetEntryRelWrapper
 	}
 
 	/**
-	 * Returns the position of this asset list entry asset entry rel.
+	 * Returns the position of this asset entry asset list entry rel.
 	 *
-	 * @return the position of this asset list entry asset entry rel
+	 * @return the position of this asset entry asset list entry rel
 	 */
 	@Override
 	public int getPosition() {
@@ -246,9 +246,9 @@ public class AssetListEntryAssetEntryRelWrapper
 	}
 
 	/**
-	 * Returns the primary key of this asset list entry asset entry rel.
+	 * Returns the primary key of this asset entry asset list entry rel.
 	 *
-	 * @return the primary key of this asset list entry asset entry rel
+	 * @return the primary key of this asset entry asset list entry rel
 	 */
 	@Override
 	public long getPrimaryKey() {
@@ -256,9 +256,9 @@ public class AssetListEntryAssetEntryRelWrapper
 	}
 
 	/**
-	 * Returns the segments entry ID of this asset list entry asset entry rel.
+	 * Returns the segments entry ID of this asset entry asset list entry rel.
 	 *
-	 * @return the segments entry ID of this asset list entry asset entry rel
+	 * @return the segments entry ID of this asset entry asset list entry rel
 	 */
 	@Override
 	public long getSegmentsEntryId() {
@@ -266,9 +266,9 @@ public class AssetListEntryAssetEntryRelWrapper
 	}
 
 	/**
-	 * Returns the user ID of this asset list entry asset entry rel.
+	 * Returns the user ID of this asset entry asset list entry rel.
 	 *
-	 * @return the user ID of this asset list entry asset entry rel
+	 * @return the user ID of this asset entry asset list entry rel
 	 */
 	@Override
 	public long getUserId() {
@@ -276,9 +276,9 @@ public class AssetListEntryAssetEntryRelWrapper
 	}
 
 	/**
-	 * Returns the user name of this asset list entry asset entry rel.
+	 * Returns the user name of this asset entry asset list entry rel.
 	 *
-	 * @return the user name of this asset list entry asset entry rel
+	 * @return the user name of this asset entry asset list entry rel
 	 */
 	@Override
 	public String getUserName() {
@@ -286,9 +286,9 @@ public class AssetListEntryAssetEntryRelWrapper
 	}
 
 	/**
-	 * Returns the user uuid of this asset list entry asset entry rel.
+	 * Returns the user uuid of this asset entry asset list entry rel.
 	 *
-	 * @return the user uuid of this asset list entry asset entry rel
+	 * @return the user uuid of this asset entry asset list entry rel
 	 */
 	@Override
 	public String getUserUuid() {
@@ -296,9 +296,9 @@ public class AssetListEntryAssetEntryRelWrapper
 	}
 
 	/**
-	 * Returns the uuid of this asset list entry asset entry rel.
+	 * Returns the uuid of this asset entry asset list entry rel.
 	 *
-	 * @return the uuid of this asset list entry asset entry rel
+	 * @return the uuid of this asset entry asset list entry rel
 	 */
 	@Override
 	public String getUuid() {
@@ -311,9 +311,21 @@ public class AssetListEntryAssetEntryRelWrapper
 	}
 
 	/**
-	 * Sets the asset entry ID of this asset list entry asset entry rel.
+	 * Sets the asset entry asset list entry rel ID of this asset entry asset list entry rel.
 	 *
-	 * @param assetEntryId the asset entry ID of this asset list entry asset entry rel
+	 * @param assetEntryAssetListEntryRelId the asset entry asset list entry rel ID of this asset entry asset list entry rel
+	 */
+	@Override
+	public void setAssetEntryAssetListEntryRelId(
+		long assetEntryAssetListEntryRelId) {
+
+		model.setAssetEntryAssetListEntryRelId(assetEntryAssetListEntryRelId);
+	}
+
+	/**
+	 * Sets the asset entry ID of this asset entry asset list entry rel.
+	 *
+	 * @param assetEntryId the asset entry ID of this asset entry asset list entry rel
 	 */
 	@Override
 	public void setAssetEntryId(long assetEntryId) {
@@ -321,21 +333,9 @@ public class AssetListEntryAssetEntryRelWrapper
 	}
 
 	/**
-	 * Sets the asset list entry asset entry rel ID of this asset list entry asset entry rel.
+	 * Sets the asset list entry ID of this asset entry asset list entry rel.
 	 *
-	 * @param assetListEntryAssetEntryRelId the asset list entry asset entry rel ID of this asset list entry asset entry rel
-	 */
-	@Override
-	public void setAssetListEntryAssetEntryRelId(
-		long assetListEntryAssetEntryRelId) {
-
-		model.setAssetListEntryAssetEntryRelId(assetListEntryAssetEntryRelId);
-	}
-
-	/**
-	 * Sets the asset list entry ID of this asset list entry asset entry rel.
-	 *
-	 * @param assetListEntryId the asset list entry ID of this asset list entry asset entry rel
+	 * @param assetListEntryId the asset list entry ID of this asset entry asset list entry rel
 	 */
 	@Override
 	public void setAssetListEntryId(long assetListEntryId) {
@@ -343,9 +343,9 @@ public class AssetListEntryAssetEntryRelWrapper
 	}
 
 	/**
-	 * Sets the company ID of this asset list entry asset entry rel.
+	 * Sets the company ID of this asset entry asset list entry rel.
 	 *
-	 * @param companyId the company ID of this asset list entry asset entry rel
+	 * @param companyId the company ID of this asset entry asset list entry rel
 	 */
 	@Override
 	public void setCompanyId(long companyId) {
@@ -353,9 +353,9 @@ public class AssetListEntryAssetEntryRelWrapper
 	}
 
 	/**
-	 * Sets the create date of this asset list entry asset entry rel.
+	 * Sets the create date of this asset entry asset list entry rel.
 	 *
-	 * @param createDate the create date of this asset list entry asset entry rel
+	 * @param createDate the create date of this asset entry asset list entry rel
 	 */
 	@Override
 	public void setCreateDate(Date createDate) {
@@ -363,9 +363,9 @@ public class AssetListEntryAssetEntryRelWrapper
 	}
 
 	/**
-	 * Sets the group ID of this asset list entry asset entry rel.
+	 * Sets the group ID of this asset entry asset list entry rel.
 	 *
-	 * @param groupId the group ID of this asset list entry asset entry rel
+	 * @param groupId the group ID of this asset entry asset list entry rel
 	 */
 	@Override
 	public void setGroupId(long groupId) {
@@ -373,9 +373,9 @@ public class AssetListEntryAssetEntryRelWrapper
 	}
 
 	/**
-	 * Sets the last publish date of this asset list entry asset entry rel.
+	 * Sets the last publish date of this asset entry asset list entry rel.
 	 *
-	 * @param lastPublishDate the last publish date of this asset list entry asset entry rel
+	 * @param lastPublishDate the last publish date of this asset entry asset list entry rel
 	 */
 	@Override
 	public void setLastPublishDate(Date lastPublishDate) {
@@ -383,9 +383,9 @@ public class AssetListEntryAssetEntryRelWrapper
 	}
 
 	/**
-	 * Sets the modified date of this asset list entry asset entry rel.
+	 * Sets the modified date of this asset entry asset list entry rel.
 	 *
-	 * @param modifiedDate the modified date of this asset list entry asset entry rel
+	 * @param modifiedDate the modified date of this asset entry asset list entry rel
 	 */
 	@Override
 	public void setModifiedDate(Date modifiedDate) {
@@ -393,9 +393,9 @@ public class AssetListEntryAssetEntryRelWrapper
 	}
 
 	/**
-	 * Sets the position of this asset list entry asset entry rel.
+	 * Sets the position of this asset entry asset list entry rel.
 	 *
-	 * @param position the position of this asset list entry asset entry rel
+	 * @param position the position of this asset entry asset list entry rel
 	 */
 	@Override
 	public void setPosition(int position) {
@@ -403,9 +403,9 @@ public class AssetListEntryAssetEntryRelWrapper
 	}
 
 	/**
-	 * Sets the primary key of this asset list entry asset entry rel.
+	 * Sets the primary key of this asset entry asset list entry rel.
 	 *
-	 * @param primaryKey the primary key of this asset list entry asset entry rel
+	 * @param primaryKey the primary key of this asset entry asset list entry rel
 	 */
 	@Override
 	public void setPrimaryKey(long primaryKey) {
@@ -413,9 +413,9 @@ public class AssetListEntryAssetEntryRelWrapper
 	}
 
 	/**
-	 * Sets the segments entry ID of this asset list entry asset entry rel.
+	 * Sets the segments entry ID of this asset entry asset list entry rel.
 	 *
-	 * @param segmentsEntryId the segments entry ID of this asset list entry asset entry rel
+	 * @param segmentsEntryId the segments entry ID of this asset entry asset list entry rel
 	 */
 	@Override
 	public void setSegmentsEntryId(long segmentsEntryId) {
@@ -423,9 +423,9 @@ public class AssetListEntryAssetEntryRelWrapper
 	}
 
 	/**
-	 * Sets the user ID of this asset list entry asset entry rel.
+	 * Sets the user ID of this asset entry asset list entry rel.
 	 *
-	 * @param userId the user ID of this asset list entry asset entry rel
+	 * @param userId the user ID of this asset entry asset list entry rel
 	 */
 	@Override
 	public void setUserId(long userId) {
@@ -433,9 +433,9 @@ public class AssetListEntryAssetEntryRelWrapper
 	}
 
 	/**
-	 * Sets the user name of this asset list entry asset entry rel.
+	 * Sets the user name of this asset entry asset list entry rel.
 	 *
-	 * @param userName the user name of this asset list entry asset entry rel
+	 * @param userName the user name of this asset entry asset list entry rel
 	 */
 	@Override
 	public void setUserName(String userName) {
@@ -443,9 +443,9 @@ public class AssetListEntryAssetEntryRelWrapper
 	}
 
 	/**
-	 * Sets the user uuid of this asset list entry asset entry rel.
+	 * Sets the user uuid of this asset entry asset list entry rel.
 	 *
-	 * @param userUuid the user uuid of this asset list entry asset entry rel
+	 * @param userUuid the user uuid of this asset entry asset list entry rel
 	 */
 	@Override
 	public void setUserUuid(String userUuid) {
@@ -453,9 +453,9 @@ public class AssetListEntryAssetEntryRelWrapper
 	}
 
 	/**
-	 * Sets the uuid of this asset list entry asset entry rel.
+	 * Sets the uuid of this asset entry asset list entry rel.
 	 *
-	 * @param uuid the uuid of this asset list entry asset entry rel
+	 * @param uuid the uuid of this asset entry asset list entry rel
 	 */
 	@Override
 	public void setUuid(String uuid) {
@@ -468,11 +468,11 @@ public class AssetListEntryAssetEntryRelWrapper
 	}
 
 	@Override
-	protected AssetListEntryAssetEntryRelWrapper wrap(
-		AssetListEntryAssetEntryRel assetListEntryAssetEntryRel) {
+	protected AssetEntryAssetListEntryRelWrapper wrap(
+		AssetEntryAssetListEntryRel assetEntryAssetListEntryRel) {
 
-		return new AssetListEntryAssetEntryRelWrapper(
-			assetListEntryAssetEntryRel);
+		return new AssetEntryAssetListEntryRelWrapper(
+			assetEntryAssetListEntryRel);
 	}
 
 }

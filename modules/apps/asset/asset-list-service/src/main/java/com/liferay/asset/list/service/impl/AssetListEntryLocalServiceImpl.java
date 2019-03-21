@@ -58,7 +58,7 @@ public class AssetListEntryLocalServiceImpl
 
 		assetListEntryPersistence.update(assetListEntry);
 
-		assetListEntryAssetEntryRelLocalService.addAssetListEntryAssetEntryRel(
+		assetEntryAssetListEntryRelLocalService.addAssetEntryAssetListEntryRel(
 			assetListEntryId, assetEntryId, serviceContext);
 	}
 
@@ -165,8 +165,8 @@ public class AssetListEntryLocalServiceImpl
 
 		assetListEntryPersistence.update(assetListEntry);
 
-		assetListEntryAssetEntryRelLocalService.
-			deleteAssetListEntryAssetEntryRel(assetListEntryId, position);
+		assetEntryAssetListEntryRelLocalService.
+			deleteAssetEntryAssetListEntryRel(assetListEntryId, position);
 	}
 
 	@Override
@@ -190,7 +190,7 @@ public class AssetListEntryLocalServiceImpl
 
 		// Asset list entry rels
 
-		assetListEntryAssetEntryRelPersistence.removeByAssetListEntryId(
+		assetEntryAssetListEntryRelPersistence.removeByAssetListEntryId(
 			assetListEntryId);
 
 		return assetListEntryLocalService.deleteAssetListEntry(assetListEntry);
@@ -220,7 +220,7 @@ public class AssetListEntryLocalServiceImpl
 
 		assetListEntryPersistence.update(assetListEntry);
 
-		assetListEntryAssetEntryRelLocalService.moveAssetListEntryAssetEntryRel(
+		assetEntryAssetListEntryRelLocalService.moveAssetEntryAssetListEntryRel(
 			assetListEntryId, position, newPosition);
 	}
 

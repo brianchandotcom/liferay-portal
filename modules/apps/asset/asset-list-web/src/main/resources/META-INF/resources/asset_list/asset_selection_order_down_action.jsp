@@ -21,9 +21,9 @@ SearchContainer searchContainer = (SearchContainer)request.getAttribute("liferay
 
 ResultRow row = (ResultRow)request.getAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);
 
-AssetListEntryAssetEntryRel assetListEntryAssetEntryRel = (AssetListEntryAssetEntryRel)row.getObject();
+AssetEntryAssetListEntryRel assetEntryAssetListEntryRel = (AssetEntryAssetListEntryRel)row.getObject();
 
-int position = assetListEntryAssetEntryRel.getPosition();
+int position = assetEntryAssetListEntryRel.getPosition();
 
 boolean last = (position == (searchContainer.getTotal() - 1));
 %>
@@ -32,7 +32,7 @@ boolean last = (position == (searchContainer.getTotal() - 1));
 	<c:when test="<%= (position > 0) && !last %>">
 		<portlet:actionURL name="/asset_list/move_asset_entry_selection" var="moveAssetEntrySelectionDownURL">
 			<portlet:param name="redirect" value="<%= currentURL %>" />
-			<portlet:param name="assetListEntryId" value="<%= String.valueOf(assetListEntryAssetEntryRel.getAssetListEntryId()) %>" />
+			<portlet:param name="assetListEntryId" value="<%= String.valueOf(assetEntryAssetListEntryRel.getAssetListEntryId()) %>" />
 			<portlet:param name="position" value="<%= String.valueOf(position) %>" />
 			<portlet:param name="newPosition" value="<%= String.valueOf(position + 1) %>" />
 		</portlet:actionURL>
@@ -47,7 +47,7 @@ boolean last = (position == (searchContainer.getTotal() - 1));
 	<c:when test="<%= (position == 0) && (searchContainer.getTotal() > 1) %>">
 		<portlet:actionURL name="/asset_list/move_asset_entry_selection" var="moveAssetEntrySelectionDownURL">
 			<portlet:param name="redirect" value="<%= currentURL %>" />
-			<portlet:param name="assetListEntryId" value="<%= String.valueOf(assetListEntryAssetEntryRel.getAssetListEntryId()) %>" />
+			<portlet:param name="assetListEntryId" value="<%= String.valueOf(assetEntryAssetListEntryRel.getAssetListEntryId()) %>" />
 			<portlet:param name="position" value="<%= String.valueOf(position) %>" />
 			<portlet:param name="newPosition" value="<%= String.valueOf(position + 1) %>" />
 		</portlet:actionURL>
@@ -62,7 +62,7 @@ boolean last = (position == (searchContainer.getTotal() - 1));
 	<c:when test="<%= last && (searchContainer.getTotal() > 1) %>">
 		<portlet:actionURL name="/asset_list/move_asset_entry_selection" var="moveAssetEntrySelectionUpURL">
 			<portlet:param name="redirect" value="<%= currentURL %>" />
-			<portlet:param name="assetListEntryId" value="<%= String.valueOf(assetListEntryAssetEntryRel.getAssetListEntryId()) %>" />
+			<portlet:param name="assetListEntryId" value="<%= String.valueOf(assetEntryAssetListEntryRel.getAssetListEntryId()) %>" />
 			<portlet:param name="position" value="<%= String.valueOf(position) %>" />
 			<portlet:param name="newPosition" value="<%= String.valueOf(position - 1) %>" />
 		</portlet:actionURL>

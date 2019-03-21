@@ -16,7 +16,7 @@ package com.liferay.asset.list.service.base;
 
 import com.liferay.asset.list.model.AssetListEntry;
 import com.liferay.asset.list.service.AssetListEntryService;
-import com.liferay.asset.list.service.persistence.AssetListEntryAssetEntryRelPersistence;
+import com.liferay.asset.list.service.persistence.AssetEntryAssetListEntryRelPersistence;
 import com.liferay.asset.list.service.persistence.AssetListEntryPersistence;
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.dao.db.DB;
@@ -114,6 +114,55 @@ public abstract class AssetListEntryServiceBaseImpl
 		AssetListEntryPersistence assetListEntryPersistence) {
 
 		this.assetListEntryPersistence = assetListEntryPersistence;
+	}
+
+	/**
+	 * Returns the asset entry asset list entry rel local service.
+	 *
+	 * @return the asset entry asset list entry rel local service
+	 */
+	public
+		com.liferay.asset.list.service.AssetEntryAssetListEntryRelLocalService
+			getAssetEntryAssetListEntryRelLocalService() {
+
+		return assetEntryAssetListEntryRelLocalService;
+	}
+
+	/**
+	 * Sets the asset entry asset list entry rel local service.
+	 *
+	 * @param assetEntryAssetListEntryRelLocalService the asset entry asset list entry rel local service
+	 */
+	public void setAssetEntryAssetListEntryRelLocalService(
+		com.liferay.asset.list.service.AssetEntryAssetListEntryRelLocalService
+			assetEntryAssetListEntryRelLocalService) {
+
+		this.assetEntryAssetListEntryRelLocalService =
+			assetEntryAssetListEntryRelLocalService;
+	}
+
+	/**
+	 * Returns the asset entry asset list entry rel persistence.
+	 *
+	 * @return the asset entry asset list entry rel persistence
+	 */
+	public AssetEntryAssetListEntryRelPersistence
+		getAssetEntryAssetListEntryRelPersistence() {
+
+		return assetEntryAssetListEntryRelPersistence;
+	}
+
+	/**
+	 * Sets the asset entry asset list entry rel persistence.
+	 *
+	 * @param assetEntryAssetListEntryRelPersistence the asset entry asset list entry rel persistence
+	 */
+	public void setAssetEntryAssetListEntryRelPersistence(
+		AssetEntryAssetListEntryRelPersistence
+			assetEntryAssetListEntryRelPersistence) {
+
+		this.assetEntryAssetListEntryRelPersistence =
+			assetEntryAssetListEntryRelPersistence;
 	}
 
 	/**
@@ -222,55 +271,6 @@ public abstract class AssetListEntryServiceBaseImpl
 		this.userPersistence = userPersistence;
 	}
 
-	/**
-	 * Returns the asset list entry asset entry rel local service.
-	 *
-	 * @return the asset list entry asset entry rel local service
-	 */
-	public
-		com.liferay.asset.list.service.AssetListEntryAssetEntryRelLocalService
-			getAssetListEntryAssetEntryRelLocalService() {
-
-		return assetListEntryAssetEntryRelLocalService;
-	}
-
-	/**
-	 * Sets the asset list entry asset entry rel local service.
-	 *
-	 * @param assetListEntryAssetEntryRelLocalService the asset list entry asset entry rel local service
-	 */
-	public void setAssetListEntryAssetEntryRelLocalService(
-		com.liferay.asset.list.service.AssetListEntryAssetEntryRelLocalService
-			assetListEntryAssetEntryRelLocalService) {
-
-		this.assetListEntryAssetEntryRelLocalService =
-			assetListEntryAssetEntryRelLocalService;
-	}
-
-	/**
-	 * Returns the asset list entry asset entry rel persistence.
-	 *
-	 * @return the asset list entry asset entry rel persistence
-	 */
-	public AssetListEntryAssetEntryRelPersistence
-		getAssetListEntryAssetEntryRelPersistence() {
-
-		return assetListEntryAssetEntryRelPersistence;
-	}
-
-	/**
-	 * Sets the asset list entry asset entry rel persistence.
-	 *
-	 * @param assetListEntryAssetEntryRelPersistence the asset list entry asset entry rel persistence
-	 */
-	public void setAssetListEntryAssetEntryRelPersistence(
-		AssetListEntryAssetEntryRelPersistence
-			assetListEntryAssetEntryRelPersistence) {
-
-		this.assetListEntryAssetEntryRelPersistence =
-			assetListEntryAssetEntryRelPersistence;
-	}
-
 	public void afterPropertiesSet() {
 	}
 
@@ -331,6 +331,17 @@ public abstract class AssetListEntryServiceBaseImpl
 	@BeanReference(type = AssetListEntryPersistence.class)
 	protected AssetListEntryPersistence assetListEntryPersistence;
 
+	@BeanReference(
+		type = com.liferay.asset.list.service.AssetEntryAssetListEntryRelLocalService.class
+	)
+	protected
+		com.liferay.asset.list.service.AssetEntryAssetListEntryRelLocalService
+			assetEntryAssetListEntryRelLocalService;
+
+	@BeanReference(type = AssetEntryAssetListEntryRelPersistence.class)
+	protected AssetEntryAssetListEntryRelPersistence
+		assetEntryAssetListEntryRelPersistence;
+
 	@ServiceReference(
 		type = com.liferay.counter.kernel.service.CounterLocalService.class
 	)
@@ -356,16 +367,5 @@ public abstract class AssetListEntryServiceBaseImpl
 
 	@ServiceReference(type = UserPersistence.class)
 	protected UserPersistence userPersistence;
-
-	@BeanReference(
-		type = com.liferay.asset.list.service.AssetListEntryAssetEntryRelLocalService.class
-	)
-	protected
-		com.liferay.asset.list.service.AssetListEntryAssetEntryRelLocalService
-			assetListEntryAssetEntryRelLocalService;
-
-	@BeanReference(type = AssetListEntryAssetEntryRelPersistence.class)
-	protected AssetListEntryAssetEntryRelPersistence
-		assetListEntryAssetEntryRelPersistence;
 
 }

@@ -21,8 +21,6 @@ public class DropdownItem extends NavigationItem {
 
 	public DropdownItem() {
 		put("type", "item");
-
-		setHref(null);
 	}
 
 	public void setIcon(String icon) {

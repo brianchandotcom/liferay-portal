@@ -42,7 +42,11 @@ public class AssetVersioningPolicyTest {
 
 	@Before
 	public void setUp() {
-		Mockito.when(_newVersion.getFileEntryId()).thenReturn(_FILE_ENTRY_ID);
+		Mockito.when(
+			_newVersion.getFileEntryId()
+		).thenReturn(
+			_FILE_ENTRY_ID
+		);
 
 		_mockGetEntryTags();
 	}
@@ -124,7 +128,11 @@ public class AssetVersioningPolicyTest {
 		for (String tag : tags) {
 			AssetTag assetTag = Mockito.mock(AssetTag.class);
 
-			Mockito.when(assetTag.getName()).thenReturn(tag);
+			Mockito.when(
+				assetTag.getName()
+			).thenReturn(
+				tag
+			);
 			assetTags.add(assetTag);
 		}
 

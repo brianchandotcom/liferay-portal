@@ -72,6 +72,13 @@ public class KeyStoreCredentialResolver
 
 		keyStore.deleteEntry(
 			getAlias(getLocalEntityId(), getUsageType(certificateUsage)));
+
+		try {
+			_keyStoreManager.saveKeyStore(keyStore);
+		}
+		catch (Exception e) {
+			throw new KeyStoreException(e);
+		}
 	}
 
 	@Override

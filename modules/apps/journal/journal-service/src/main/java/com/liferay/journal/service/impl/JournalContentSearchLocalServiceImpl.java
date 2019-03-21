@@ -18,6 +18,7 @@ import com.liferay.journal.model.JournalContentSearch;
 import com.liferay.journal.service.base.JournalContentSearchLocalServiceBaseImpl;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
+import com.liferay.petra.lang.HashUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -27,12 +28,14 @@ import com.liferay.portal.kernel.model.PortletPreferences;
 import com.liferay.portal.kernel.portlet.DisplayInformationProvider;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.util.PortletKeys;
-import com.liferay.portal.kernel.util.Tuple;
+
+import java.io.Serializable;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 
 import org.osgi.framework.Bundle;
@@ -69,20 +72,17 @@ public class JournalContentSearchLocalServiceImpl
 		List<JournalContentSearch> journalContentSearches =
 			journalContentSearchPersistence.findByCompanyId(companyId);
 
-		Map<Tuple, JournalContentSearch> orphanedContentSearches =
-			new HashMap<>();
+		Map<JournalContentSearchKey, JournalContentSearch>
+			orphanedContentSearches = new HashMap<>();
 
 		for (JournalContentSearch journalContentSearch :
 				journalContentSearches) {
 
-			Tuple tuple = new Tuple(
-				journalContentSearch.getGroupId(),
-				journalContentSearch.isPrivateLayout(),
-				journalContentSearch.getLayoutId(),
-				journalContentSearch.getPortletId(),
-				journalContentSearch.getArticleId());
+			JournalContentSearchKey journalContentSearchKey =
+				new JournalContentSearchKey(journalContentSearch);
 
-			orphanedContentSearches.put(tuple, journalContentSearch);
+			orphanedContentSearches.put(
+				journalContentSearchKey, journalContentSearch);
 		}
 
 		Set<String> rootPortletIds = _serviceTrackerMap.keySet();
@@ -129,11 +129,12 @@ public class JournalContentSearchLocalServiceImpl
 				String articleId = displayInformationProvider.getClassPK(
 					preferences);
 
-				Tuple tuple = new Tuple(
-					groupId, privateLayout, layoutId, portletId, articleId);
+				JournalContentSearchKey journalContentSearchKey =
+					new JournalContentSearchKey(
+						groupId, articleId, layoutId, privateLayout, portletId);
 
 				JournalContentSearch existingJournalContentSearch =
-					orphanedContentSearches.remove(tuple);
+					orphanedContentSearches.remove(journalContentSearchKey);
 
 				if (existingJournalContentSearch == null) {
 					updateContentSearch(
@@ -342,5 +343,68 @@ public class JournalContentSearchLocalServiceImpl
 
 	private ServiceTrackerMap<String, DisplayInformationProvider>
 		_serviceTrackerMap;
+
+	private static class JournalContentSearchKey implements Serializable {
+
+		@Override
+		public boolean equals(Object obj) {
+			JournalContentSearchKey journalContentSearchKey =
+				(JournalContentSearchKey)obj;
+
+			if ((journalContentSearchKey._groupId == _groupId) &&
+				Objects.equals(
+					journalContentSearchKey._articleId, _articleId) &&
+				Objects.equals(journalContentSearchKey._layoutId, _layoutId) &&
+				(journalContentSearchKey._privateLayout == _privateLayout) &&
+				Objects.equals(
+					journalContentSearchKey._portletId, _portletId)) {
+
+				return true;
+			}
+
+			return false;
+		}
+
+		@Override
+		public int hashCode() {
+			int hashCode = HashUtil.hash(0, _groupId);
+
+			hashCode = HashUtil.hash(hashCode, _articleId);
+			hashCode = HashUtil.hash(hashCode, _layoutId);
+			hashCode = HashUtil.hash(hashCode, _privateLayout);
+
+			return HashUtil.hash(hashCode, _portletId);
+		}
+
+		private JournalContentSearchKey(
+			JournalContentSearch journalContentSearch) {
+
+			_groupId = journalContentSearch.getGroupId();
+			_articleId = journalContentSearch.getArticleId();
+			_layoutId = journalContentSearch.getLayoutId();
+			_privateLayout = journalContentSearch.getPrivateLayout();
+			_portletId = journalContentSearch.getPortletId();
+		}
+
+		private JournalContentSearchKey(
+			long groupId, String articleId, long layoutId,
+			boolean privateLayout, String portletId) {
+
+			_groupId = groupId;
+			_articleId = articleId;
+			_layoutId = layoutId;
+			_privateLayout = privateLayout;
+			_portletId = portletId;
+		}
+
+		private static final long serialVersionUID = 1L;
+
+		private final String _articleId;
+		private final long _groupId;
+		private final long _layoutId;
+		private final String _portletId;
+		private final boolean _privateLayout;
+
+	}
 
 }

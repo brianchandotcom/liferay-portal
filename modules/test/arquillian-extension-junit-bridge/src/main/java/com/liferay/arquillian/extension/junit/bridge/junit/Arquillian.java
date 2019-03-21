@@ -142,10 +142,6 @@ public class Arquillian extends Runner implements Filterable {
 				}
 				catch (EOFException eofe) {
 				}
-				catch (Throwable t) {
-					runNotifier.fireTestFailure(
-						new Failure(getDescription(), t));
-				}
 			}
 			finally {
 				frameworkMBean.uninstallBundle(bundleId);

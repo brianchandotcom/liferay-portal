@@ -14,8 +14,10 @@
 
 package com.liferay.frontend.taglib.clay.servlet.taglib.soy;
 
+import com.liferay.frontend.taglib.clay.internal.ClayTableTagSchemaContributorsProvider;
 import com.liferay.frontend.taglib.clay.internal.ClayTagDataSourceProvider;
 import com.liferay.frontend.taglib.clay.internal.servlet.taglib.display.context.TableDefaults;
+import com.liferay.frontend.taglib.clay.servlet.taglib.contributor.ClayTableTagSchemaContributor;
 import com.liferay.frontend.taglib.clay.servlet.taglib.data.ClayTagDataSource;
 import com.liferay.frontend.taglib.clay.servlet.taglib.model.table.Schema;
 import com.liferay.frontend.taglib.clay.servlet.taglib.model.table.Size;
@@ -24,6 +26,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.Collection;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -44,6 +47,15 @@ public class TableTag<T> extends BaseClayTag {
 		if (clayTagDataSource != null) {
 			_populateContext(clayTagDataSource);
 		}
+
+		List<ClayTableTagSchemaContributor> clayTableTagSchemaContributors =
+			getTableTagSchemaContributors();
+
+		if (clayTableTagSchemaContributors != null) {
+			_populateSchema(clayTableTagSchemaContributors);
+		}
+
+		putValue("schema", _schema.toMap());
 
 		Map<String, Object> context = getContext();
 
@@ -71,13 +83,7 @@ public class TableTag<T> extends BaseClayTag {
 	}
 
 	public void setSchema(Schema schema) {
-		Map<String, ?> schemaMap = null;
-
-		if (schema != null) {
-			schemaMap = schema.toMap();
-		}
-
-		putValue("schema", schemaMap);
+		_schema = schema;
 	}
 
 	public void setSelectable(Boolean selectable) {
@@ -106,6 +112,10 @@ public class TableTag<T> extends BaseClayTag {
 		putValue("tableClasses", tableClasses);
 	}
 
+	public void setTableSchemaContributorKey(String tableSchemaContributorKey) {
+		putValue("tableSchemaContributorKey", tableSchemaContributorKey);
+	}
+
 	public void setUseDefaultClasses(Boolean useDefaultClasses) {
 		putValue("useDefaultClasses", useDefaultClasses);
 	}
@@ -127,6 +137,22 @@ public class TableTag<T> extends BaseClayTag {
 			ClayTagDataSourceProvider.getClayTagDataSource(dataSourceKey);
 	}
 
+	protected List<ClayTableTagSchemaContributor>
+		getTableTagSchemaContributors() {
+
+		Map<String, Object> context = getContext();
+
+		String tableSchemaContributorKey = GetterUtil.getString(
+			context.get("tableSchemaContributorKey"));
+
+		if (Validator.isNull(tableSchemaContributorKey)) {
+			return null;
+		}
+
+		return ClayTableTagSchemaContributorsProvider.
+			getClayTableTagSchemaContributors(tableSchemaContributorKey);
+	}
+
 	private void _populateContext(ClayTagDataSource<T> clayTagDataSource) {
 		Map<String, Object> context = getContext();
 
@@ -134,5 +160,17 @@ public class TableTag<T> extends BaseClayTag {
 			setItems(clayTagDataSource.getItems(request));
 		}
 	}
+
+	private void _populateSchema(
+		List<ClayTableTagSchemaContributor> clayTableTagSchemaContributors) {
+
+		for (ClayTableTagSchemaContributor clayTableTagSchemaContributor :
+				clayTableTagSchemaContributors) {
+
+			clayTableTagSchemaContributor.populate(_schema);
+		}
+	}
+
+	private Schema _schema = new Schema();
 
 }

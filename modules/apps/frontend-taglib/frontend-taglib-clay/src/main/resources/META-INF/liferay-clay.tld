@@ -2244,6 +2244,12 @@
 		</attribute>
 		<attribute>
 			<description></description>
+			<name>tableSchemaContributorKey</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description></description>
 			<name>useDefaultClasses</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>

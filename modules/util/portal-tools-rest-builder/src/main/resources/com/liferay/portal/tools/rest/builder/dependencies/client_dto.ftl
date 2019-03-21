@@ -2,6 +2,9 @@ package ${configYAML.apiPackagePath}.client.dto.${escapedVersion};
 
 import ${configYAML.apiPackagePath}.client.function.UnsafeSupplier;
 
+import java.util.Date;
+import java.util.Map;
+
 import javax.annotation.Generated;
 
 /**
@@ -14,35 +17,19 @@ public class ${schemaName} {
 
 	<#list properties?keys as propertyName>
 		<#assign
-			javaDataType = properties[propertyName]
 			propertySchema = freeMarkerTool.getDTOPropertySchema(propertyName, schema)
+			propertyType = properties[propertyName]
 		/>
 
-		<#if stringUtil.equals(javaDataType, "[Z")>
-			<#assign javaDataType = "boolean[]" />
-		<#elseif stringUtil.equals(javaDataType, "[D")>
-			<#assign javaDataType = "double[]" />
-		<#elseif stringUtil.equals(javaDataType, "[F")>
-			<#assign javaDataType = "float[]" />
-		<#elseif stringUtil.equals(javaDataType, "[I")>
-			<#assign javaDataType = "int[]" />
-		<#elseif stringUtil.equals(javaDataType, "[J")>
-			<#assign javaDataType = "long[]" />
-		<#elseif javaDataType?starts_with("[L")>
-			<#assign javaDataType = javaDataType[2..(javaDataType?length - 2)] + "[]" />
-		<#elseif stringUtil.equals(javaDataType, "java.util.Map")>
-			<#assign javaDataType = "Map<String, " + freeMarkerTool.getJavaDataType(configYAML, openAPIYAML, propertySchema.additionalPropertySchema) + ">" />
-		</#if>
-
-		public ${javaDataType} get${propertyName?cap_first}() {
+		public ${propertyType} get${propertyName?cap_first}() {
 			return ${propertyName};
 		}
 
-		public void set${propertyName?cap_first}(${javaDataType} ${propertyName}) {
+		public void set${propertyName?cap_first}(${propertyType} ${propertyName}) {
 			this.${propertyName} = ${propertyName};
 		}
 
-		public void set${propertyName?cap_first}(UnsafeSupplier<${javaDataType}, Exception> ${propertyName}UnsafeSupplier) {
+		public void set${propertyName?cap_first}(UnsafeSupplier<${propertyType}, Exception> ${propertyName}UnsafeSupplier) {
 			try {
 				${propertyName} = ${propertyName}UnsafeSupplier.get();
 			}
@@ -51,7 +38,7 @@ public class ${schemaName} {
 			}
 		}
 
-		protected ${javaDataType} ${propertyName};
+		protected ${propertyType} ${propertyName};
 	</#list>
 
 }

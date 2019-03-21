@@ -106,34 +106,18 @@ public class ${schemaName} <#if freeMarkerTool.getDTOParentClassName(openAPIYAML
 
 	<#list properties?keys as propertyName>
 		<#assign
-			javaDataType = properties[propertyName]
 			propertySchema = freeMarkerTool.getDTOPropertySchema(propertyName, schema)
+			propertyType = properties[propertyName]
 		/>
-
-		<#if stringUtil.equals(javaDataType, "[Z")>
-			<#assign javaDataType = "boolean[]" />
-		<#elseif stringUtil.equals(javaDataType, "[D")>
-			<#assign javaDataType = "double[]" />
-		<#elseif stringUtil.equals(javaDataType, "[F")>
-			<#assign javaDataType = "float[]" />
-		<#elseif stringUtil.equals(javaDataType, "[I")>
-			<#assign javaDataType = "int[]" />
-		<#elseif stringUtil.equals(javaDataType, "[J")>
-			<#assign javaDataType = "long[]" />
-		<#elseif javaDataType?starts_with("[L")>
-			<#assign javaDataType = javaDataType[2..(javaDataType?length - 2)] + "[]" />
-		<#elseif stringUtil.equals(javaDataType, "java.util.Map")>
-			<#assign javaDataType = "Map<String, " + freeMarkerTool.getJavaDataType(configYAML, openAPIYAML, propertySchema.additionalPropertySchema) + ">" />
-		</#if>
 
 		<#if propertySchema.description??>
 			@Schema(description = "${propertySchema.description}")
 		</#if>
-		public ${javaDataType} get${propertyName?cap_first}() {
+		public ${propertyType} get${propertyName?cap_first}() {
 			return ${propertyName};
 		}
 
-		<#if enumSimpleClassNames?seq_contains(javaDataType)>
+		<#if enumSimpleClassNames?seq_contains(propertyType)>
 			@JsonIgnore
 			public String get${propertyName?cap_first}AsString() {
 				if (${propertyName} == null) {
@@ -144,12 +128,12 @@ public class ${schemaName} <#if freeMarkerTool.getDTOParentClassName(openAPIYAML
 			}
 		</#if>
 
-		public void set${propertyName?cap_first}(${javaDataType} ${propertyName}) {
+		public void set${propertyName?cap_first}(${propertyType} ${propertyName}) {
 			this.${propertyName} = ${propertyName};
 		}
 
 		@JsonIgnore
-		public void set${propertyName?cap_first}(UnsafeSupplier<${javaDataType}, Exception> ${propertyName}UnsafeSupplier) {
+		public void set${propertyName?cap_first}(UnsafeSupplier<${propertyType}, Exception> ${propertyName}UnsafeSupplier) {
 			try {
 				${propertyName} = ${propertyName}UnsafeSupplier.get();
 			}
@@ -171,7 +155,7 @@ public class ${schemaName} <#if freeMarkerTool.getDTOParentClassName(openAPIYAML
 		<#if schema.requiredPropertySchemaNames?? && schema.requiredPropertySchemaNames?seq_contains(propertyName)>
 			@NotNull
 		</#if>
-		protected ${javaDataType} ${propertyName};
+		protected ${propertyType} ${propertyName};
 	</#list>
 
 	public String toString() {
@@ -186,7 +170,7 @@ public class ${schemaName} <#if freeMarkerTool.getDTOParentClassName(openAPIYAML
 
 			sb.append("\"${propertyName}\": ");
 
-			<#if properties[propertyName]?starts_with("[")>
+			<#if properties[propertyName]?contains("[]")>
 				if (${propertyName} == null) {
 					sb.append("null");
 				}
@@ -194,7 +178,7 @@ public class ${schemaName} <#if freeMarkerTool.getDTOParentClassName(openAPIYAML
 					sb.append("[");
 
 					for (int i = 0; i < ${propertyName}.length; i++) {
-						<#if properties[propertyName]?ends_with("Date;") || properties[propertyName]?ends_with("String;") || enumSimpleClassNames?seq_contains(properties[propertyName])>
+						<#if stringUtil.equals(properties[propertyName], "Date[]") || stringUtil.equals(properties[propertyName], "String[]") || enumSimpleClassNames?seq_contains(properties[propertyName])>
 							sb.append("\"");
 							sb.append(${propertyName}[i]);
 							sb.append("\"");

@@ -26,35 +26,39 @@
 	<aui:button name="selectLayoutButton" value="select" />
 
 	<aui:script use="liferay-item-selector-dialog">
-		$('#<portlet:namespace />selectLayoutButton').on(
-			'click',
-			function(event) {
-				event.preventDefault();
+		var selectLayoutButton = document.getElementById('<portlet:namespace />selectLayoutButton');
 
-				var itemSelectorDialog = new A.LiferayItemSelectorDialog(
-					{
-						eventName: '<%= linkToPageLayoutTypeControllerDisplayContext.getEventName() %>',
-						on: {
-							selectedItemChange: function(event) {
-								var selectedItem = event.newVal;
+		if (selectLayoutButton) {
+			selectLayoutButton.addEventListener(
+				'click',
+				function(event) {
+					event.preventDefault();
 
-								var linkToLayoutName = A.one('#<portlet:namespace />linkToLayoutName');
-								var linkToLayoutUuid = A.one('#<portlet:namespace />linkToLayoutUuid');
+					var itemSelectorDialog = new A.LiferayItemSelectorDialog(
+						{
+							eventName: '<%= linkToPageLayoutTypeControllerDisplayContext.getEventName() %>',
+							on: {
+								selectedItemChange: function(event) {
+									var selectedItem = event.newVal;
 
-								if (selectedItem) {
-									linkToLayoutName.val(selectedItem.name);
-									linkToLayoutUuid.val(selectedItem.id);
+									var linkToLayoutName = document.getElementById('<portlet:namespace />linkToLayoutName');
+									var linkToLayoutUuid = document.getElementById('<portlet:namespace />linkToLayoutUuid');
+
+									if (selectedItem && linkToLayoutName && linkToLayoutUuid) {
+										linkToLayoutName.value = selectedItem.name;
+										linkToLayoutUuid.value = selectedItem.id;
+									}
 								}
-							}
-						},
-						'strings.add': '<liferay-ui:message key="done" />',
-						title: '<liferay-ui:message key="select-layout" />',
-						url: '<%= linkToPageLayoutTypeControllerDisplayContext.getItemSelectorURL() %>'
-					}
-				);
+							},
+							'strings.add': '<liferay-ui:message key="done" />',
+							title: '<liferay-ui:message key="select-layout" />',
+							url: '<%= linkToPageLayoutTypeControllerDisplayContext.getItemSelectorURL() %>'
+						}
+					);
 
-				itemSelectorDialog.open();
-			}
-		);
+					itemSelectorDialog.open();
+				}
+			);
+		}
 	</aui:script>
 </div>

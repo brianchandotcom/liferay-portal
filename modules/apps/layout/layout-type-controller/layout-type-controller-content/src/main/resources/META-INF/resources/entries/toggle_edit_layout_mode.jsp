@@ -39,11 +39,17 @@ String portletNamespace = PortalUtil.getPortletNamespace(ContentPageEditorPortle
 	</span>
 </label>
 
-<aui:script>
-	$('#<%= portletNamespace %>mode').on(
-		'change',
-		function(event) {
-			Liferay.Util.navigate('<%= toggleEditLayoutModeDisplayContext.getRedirect() %>');
+<script>
+	(function() {
+		var modeInput = document.getElementById('<%= portletNamespace %>mode');
+
+		if (modeInput) {
+			modeInput.addEventListener(
+				'change',
+				function(event) {
+					Liferay.Util.navigate('<%= toggleEditLayoutModeDisplayContext.getRedirect() %>');
+				}
+			);
 		}
-	);
-</aui:script>
+	})();
+</script>

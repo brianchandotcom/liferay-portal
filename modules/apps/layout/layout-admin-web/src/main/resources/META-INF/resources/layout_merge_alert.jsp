@@ -30,12 +30,6 @@ int mergeFailCount = SitesUtil.getMergeFailCount(layoutPrototype);
 	String randomNamespace = PortalUtil.generateRandomKey(request, "portlet_layout_prototypes_merge_alert") + StringPool.UNDERLINE;
 	%>
 
-	<portlet:actionURL name="/layout/reset_merge_fail_count_and_merge" var="portletURL">
-		<portlet:param name="redirect" value="<%= redirect %>" />
-		<portlet:param name="layoutPrototypeId" value="<%= String.valueOf(layoutPrototype.getLayoutPrototypeId()) %>" />
-		<portlet:param name="selPlid" value="<%= String.valueOf(selPlid) %>" />
-	</portlet:actionURL>
-
 	<span class="alert alert-warning">
 		<liferay-ui:message arguments='<%= new Object[] {mergeFailCount, LanguageUtil.get(request, "page-template")} %>' key="the-propagation-of-changes-from-the-x-has-been-disabled-temporarily-after-x-errors" translateArguments="<%= false %>" />
 
@@ -44,12 +38,24 @@ int mergeFailCount = SitesUtil.getMergeFailCount(layoutPrototype);
 		<aui:button id='<%= randomNamespace + "resetButton" %>' useNamespace="<%= false %>" value="reset-and-propagate" />
 	</span>
 
-	<aui:script>
-		AUI.$('#<%= randomNamespace %>resetButton').on(
-			'click',
-			function(event) {
-				submitForm(document.hrefFm, '<%= portletURL.toString() %>');
+	<script>
+		(function() {
+			var resetButton = document.getElementById('<%= randomNamespace %>resetButton');
+
+			if (resetButton) {
+				resetButton.addEventListener(
+					'click',
+					function(event) {
+						<portlet:actionURL name="/layout/reset_merge_fail_count_and_merge" var="resetMergeFailCountURL">
+							<portlet:param name="redirect" value="<%= redirect %>" />
+							<portlet:param name="layoutPrototypeId" value="<%= String.valueOf(layoutPrototype.getLayoutPrototypeId()) %>" />
+							<portlet:param name="selPlid" value="<%= String.valueOf(selPlid) %>" />
+						</portlet:actionURL>
+
+						submitForm(document.hrefFm, '<%= resetMergeFailCountURL %>');
+					}
+				);
 			}
-		);
-	</aui:script>
+		})();
+	</script>
 </c:if>

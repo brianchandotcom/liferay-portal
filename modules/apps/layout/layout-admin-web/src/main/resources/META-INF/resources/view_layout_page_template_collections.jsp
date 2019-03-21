@@ -148,54 +148,70 @@ List<LayoutPageTemplateCollection> layoutPageTemplateCollections = layoutPageTem
 <aui:form cssClass="hide" name="layoutPageTemplateCollectionsFm">
 </aui:form>
 
-<aui:script use="liferay-item-selector-dialog">
-	var deleteCollections = function() {
-		var layoutPageTemplateCollectionsFm = $(document.<portlet:namespace />layoutPageTemplateCollectionsFm);
+<aui:script require="metal-dom/src/dom as dom">
+	AUI().use(
+		'liferay-item-selector-dialog',
+		function(A) {
+			var deleteCollections = function() {
+				var layoutPageTemplateCollectionsFm = document.<portlet:namespace />layoutPageTemplateCollectionsFm;
 
-		var itemSelectorDialog = new A.LiferayItemSelectorDialog(
-			{
-				eventName: '<portlet:namespace />selectCollections',
-				on: {
-					selectedItemChange: function(event) {
-						var selectedItem = event.newVal;
+				if (layoutPageTemplateCollectionsFm) {
+					var itemSelectorDialog = new A.LiferayItemSelectorDialog(
+						{
+							eventName: '<portlet:namespace />selectCollections',
+							on: {
+								selectedItemChange: function(event) {
+									var selectedItems = event.newVal;
 
-						if (selectedItem) {
-							layoutPageTemplateCollectionsFm.append(selectedItem);
+									if (selectedItems) {
+										Array.prototype.forEach.call(
+											selectedItems,
+											function(item, index) {
+												dom.append(layoutPageTemplateCollectionsFm, item);
+											}
+										);
 
-							submitForm(layoutPageTemplateCollectionsFm, '<liferay-portlet:actionURL copyCurrentRenderParameters="<%= false %>" name="/layout/delete_layout_page_template_collection"><portlet:param name="redirect" value="<%= currentURL %>" /></liferay-portlet:actionURL>');
+										<liferay-portlet:actionURL copyCurrentRenderParameters="<%= false %>" name="/layout/delete_layout_page_template_collection" var="deleteLayoutPageTemplateCollectionURL">
+											<portlet:param name="redirect" value="<%= currentURL %>" />
+										</liferay-portlet:actionURL>
+
+										submitForm(layoutPageTemplateCollectionsFm, '<%= deleteLayoutPageTemplateCollectionURL %>');
+									}
+								}
+							},
+							'strings.add': '<liferay-ui:message key="delete" />',
+							title: '<liferay-ui:message key="delete-collection" />',
+							url: '<portlet:renderURL windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="mvcRenderCommandName" value="/layout/select_layout_page_template_collections" /></portlet:renderURL>'
 						}
-					}
-				},
-				'strings.add': '<liferay-ui:message key="delete" />',
-				title: '<liferay-ui:message key="delete-collection" />',
-				url: '<portlet:renderURL windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="mvcRenderCommandName" value="/layout/select_layout_page_template_collections" /></portlet:renderURL>'
-			}
-		);
+					);
 
-		itemSelectorDialog.open();
-	};
+					itemSelectorDialog.open();
+				}
+			};
 
-	var ACTIONS = {
-		'deleteCollections': deleteCollections
-	};
+			var ACTIONS = {
+				'deleteCollections': deleteCollections
+			};
 
-	Liferay.componentReady('actionsComponent').then(
-		function(actionsComponent) {
-			actionsComponent.on(
-				['click', 'itemClicked'],
-				function(event, facade) {
-					var itemData;
+			Liferay.componentReady('actionsComponent').then(
+				function(actionsComponent) {
+					actionsComponent.on(
+						['click', 'itemClicked'],
+						function(event, facade) {
+							var itemData;
 
-					if (event.data && event.data.item) {
-						itemData = event.data.item.data;
-					}
-					else if (!event.data && facade && facade.target) {
-						itemData = facade.target.data;
-					}
+							if (event.data && event.data.item) {
+								itemData = event.data.item.data;
+							}
+							else if (!event.data && facade && facade.target) {
+								itemData = facade.target.data;
+							}
 
-					if (itemData && itemData.action && ACTIONS[itemData.action]) {
-						ACTIONS[itemData.action]();
-					}
+							if (itemData && itemData.action && ACTIONS[itemData.action]) {
+								ACTIONS[itemData.action]();
+							}
+						}
+					);
 				}
 			);
 		}

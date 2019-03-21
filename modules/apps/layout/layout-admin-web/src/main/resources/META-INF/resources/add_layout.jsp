@@ -76,11 +76,11 @@ List<SiteNavigationMenu> autoSiteNavigationMenus = layoutsAdminDisplayContext.ge
 </div>
 
 <aui:script require="metal-uri/src/Uri">
-	var form = document.getElementById('<portlet:namespace />fm');
+	var form = document.<portlet:namespace />fm;
 
 	var Uri = metalUriSrcUri.default;
 
-	$(form).on(
+	form.addEventListener(
 		'submit',
 		function(event) {
 			var formData = new FormData();

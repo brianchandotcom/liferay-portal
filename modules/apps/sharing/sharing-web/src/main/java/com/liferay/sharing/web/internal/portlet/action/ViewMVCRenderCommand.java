@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.sharing.constants.SharingPortletKeys;
+import com.liferay.sharing.web.internal.constants.SharingWebKeys;
 import com.liferay.sharing.web.internal.display.SharingEntryPermissionDisplay;
 import com.liferay.sharing.web.internal.display.SharingEntryPermissionDisplayAction;
 import com.liferay.sharing.web.internal.util.SharingUtil;
@@ -77,7 +78,8 @@ public class ViewMVCRenderCommand implements MVCRenderCommand {
 
 		template.put("shareActionURL", shareActionURL.toString());
 		template.put(
-			"sharingDialogId", refererPortletNamespace + "sharingDialogId");
+			"dialogId",
+			refererPortletNamespace + SharingWebKeys.SHARING_DIALOG_ID);
 
 		List<SharingEntryPermissionDisplay> sharingEntryPermissionDisplays =
 			_sharingUtil.getSharingEntryPermissionDisplays(

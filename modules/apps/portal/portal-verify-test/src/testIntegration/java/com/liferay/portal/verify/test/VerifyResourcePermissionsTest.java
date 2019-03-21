@@ -15,21 +15,22 @@
 package com.liferay.portal.verify.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
-import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
+import com.liferay.portal.kernel.dao.orm.EntityCache;
+import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.ResourcePermission;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.RoleConstants;
-import com.liferay.portal.kernel.service.ResourcePermissionLocalServiceUtil;
-import com.liferay.portal.kernel.service.RoleLocalServiceUtil;
+import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
+import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RoleTestUtil;
 import com.liferay.portal.kernel.verify.model.VerifiableResourcedModel;
 import com.liferay.portal.model.impl.ResourcePermissionImpl;
+import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.verify.VerifyProcess;
 import com.liferay.portal.verify.VerifyResourcePermissions;
@@ -83,18 +84,18 @@ public class VerifyResourcePermissionsTest extends BaseVerifyProcessTestCase {
 			VerifiableResourcedModel verifiableResourcedModel)
 		throws Exception {
 
-		Role ownerRole = RoleLocalServiceUtil.getRole(
+		Role ownerRole = _roleLocalService.getRole(
 			companyId, RoleConstants.OWNER);
 
 		ResourcePermission resourcePermission =
-			ResourcePermissionLocalServiceUtil.fetchResourcePermission(
+			_resourcePermissionLocalService.fetchResourcePermission(
 				companyId, verifiableResourcedModel.getModelName(),
 				ResourceConstants.SCOPE_INDIVIDUAL, String.valueOf(pk),
 				ownerRole.getRoleId());
 
 		Assert.assertNotNull(resourcePermission);
 
-		ResourcePermissionLocalServiceUtil.deleteResourcePermission(
+		_resourcePermissionLocalService.deleteResourcePermission(
 			resourcePermission);
 
 		VerifyResourcePermissions verifyResourcePermissions =
@@ -102,11 +103,11 @@ public class VerifyResourcePermissionsTest extends BaseVerifyProcessTestCase {
 
 		verifyResourcePermissions.verify(verifiableResourcedModel);
 
-		EntityCacheUtil.clearCache(ResourcePermissionImpl.class);
-		FinderCacheUtil.clearCache(ResourcePermissionImpl.class.getName());
+		_entityCache.clearCache(ResourcePermissionImpl.class);
+		_finderCache.clearCache(ResourcePermissionImpl.class.getName());
 
 		resourcePermission =
-			ResourcePermissionLocalServiceUtil.fetchResourcePermission(
+			_resourcePermissionLocalService.fetchResourcePermission(
 				companyId, verifiableResourcedModel.getModelName(),
 				ResourceConstants.SCOPE_INDIVIDUAL, String.valueOf(pk),
 				ownerRole.getRoleId());
@@ -119,10 +120,22 @@ public class VerifyResourcePermissionsTest extends BaseVerifyProcessTestCase {
 		Assert.assertEquals(userId, resourcePermission.getOwnerId());
 	}
 
+	@Inject
+	private EntityCache _entityCache;
+
+	@Inject
+	private FinderCache _finderCache;
+
 	@DeleteAfterTestRun
 	private Group _group;
 
+	@Inject
+	private ResourcePermissionLocalService _resourcePermissionLocalService;
+
 	@DeleteAfterTestRun
 	private Role _role;
+
+	@Inject
+	private RoleLocalService _roleLocalService;
 
 }

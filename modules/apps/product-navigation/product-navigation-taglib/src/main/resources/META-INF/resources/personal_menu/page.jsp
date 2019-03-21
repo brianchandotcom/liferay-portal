@@ -21,8 +21,14 @@ boolean expanded = (boolean)request.getAttribute("liferay-product-navigation:per
 String label = (String)request.getAttribute("liferay-product-navigation:personal-menu:label");
 %>
 
+<style type="text/css">
+	#personal_menu_dropdown .btn:focus {
+		box-shadow: none;
+	}
+</style>
+
 <div id="personal_menu_dropdown">
-	<div id="personal_menu_dropdown_toggle">
+	<div id="personal_menu_dropdown_toggle" style="cursor: pointer;">
 		<%= label %>
 	</div>
 
@@ -53,6 +59,10 @@ String label = (String)request.getAttribute("liferay-product-navigation:personal
 										if (<%= expanded %>) {
 											this.expanded = true;
 										}
+
+										var menu = this.refs.dropdown.refs.portal.refs.menu;
+
+										menu.style.maxHeight = 'fit-content';
 									}
 								},
 								items: personalMenuItems,

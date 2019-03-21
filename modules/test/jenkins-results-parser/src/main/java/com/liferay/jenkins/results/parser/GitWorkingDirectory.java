@@ -67,6 +67,12 @@ public class GitWorkingDirectory {
 	public GitRemote addGitRemote(
 		boolean force, String gitRemoteName, String remoteURL) {
 
+		return addGitRemote(force, gitRemoteName, remoteURL, false);
+	}
+
+	public GitRemote addGitRemote(
+		boolean force, String gitRemoteName, String remoteURL, boolean write) {
+
 		if (gitRemoteExists(gitRemoteName)) {
 			if (force) {
 				removeGitRemote(getGitRemote(gitRemoteName));
@@ -81,6 +87,28 @@ public class GitWorkingDirectory {
 		GitRemote newGitRemote = new GitRemote(this, gitRemoteName, remoteURL);
 
 		_gitRemotes.put(gitRemoteName, newGitRemote);
+
+		if (write) {
+			String[] commands = {
+				JenkinsResultsParserUtil.combine(
+					"if [ \"$(git remote | grep ", gitRemoteName,
+					")\" != \"\" ] ; then git remote remove ", gitRemoteName,
+					" ; fi"),
+				JenkinsResultsParserUtil.combine(
+					"git remote add ", gitRemoteName, " ", remoteURL)
+			};
+
+			GitUtil.ExecutionResult executionResult = executeBashCommands(
+				GitUtil.MAX_RETRIES, GitUtil.RETRY_DELAY, GitUtil.TIMEOUT,
+				commands);
+
+			if (executionResult.getExitValue() != 0) {
+				throw new RuntimeException(
+					JenkinsResultsParserUtil.combine(
+						"Unable to write Git Remote ", gitRemoteName, "\n",
+						executionResult.getStandardError()));
+			}
+		}
 
 		return newGitRemote;
 	}

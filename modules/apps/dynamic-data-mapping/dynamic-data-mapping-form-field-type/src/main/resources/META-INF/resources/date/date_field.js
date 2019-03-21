@@ -58,14 +58,17 @@ AUI.add(
 						instance.invalidValue = false;
 					},
 
-					formatDate: function(isoDate) {
+					formatDate: function(dateString) {
 						var instance = this;
 
 						var formattedDate;
 
-						if (isoDate) {
+						if (instance.isValueFormatted(dateString)) {
+							formattedDate = dateString;
+						}
+						else if (dateString) {
 							formattedDate = A.Date.format(
-								A.Date.parse('%Y-%m-%d', isoDate),
+								A.Date.parse('%Y-%m-%d', dateString),
 								{
 									format: instance.get('mask')
 								}
@@ -152,6 +155,25 @@ AUI.add(
 						}
 
 						return hasFocus;
+					},
+
+					isValueFormatted: function(string) {
+						var dateMask = this.getDateMask();
+
+						return !dateMask.some(
+							function(validator, index) {
+								var invalid = false;
+
+								if (typeof validator === 'string') {
+									invalid = string[index] !== validator;
+								}
+								else {
+									invalid = !validator.test(string[index]);
+								}
+
+								return invalid;
+							}
+						);
 					},
 
 					render: function() {

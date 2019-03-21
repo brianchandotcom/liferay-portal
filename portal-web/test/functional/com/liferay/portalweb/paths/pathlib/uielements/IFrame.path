@@ -35,7 +35,7 @@
 </tr>
 <tr>
 	<td>EDIT_ASSET</td>
-	<td>//iframe[contains(@id,'editAsset_iframe_')] | //iframe[contains(@class,'dialog-iframe-node')]</td>
+	<td>//iframe[contains(@id,'editAsset_iframe_')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -134,9 +134,9 @@
 	<td></td>
 </tr>
 <tr>
- 	<td>SELECT_USER_SITES</td>
- 	<td>//iframe[contains(@id,'selectSite_iframe_')]</td>
- 	<td></td>
+	<td>SELECT_USER_SITES</td>
+	<td>//iframe[contains(@id,'selectSite_iframe_')]</td>
+	<td></td>
 </tr>
 <tr>
 	<td>SELECT_STRUCTURE_FIELD</td>

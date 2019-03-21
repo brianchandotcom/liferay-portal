@@ -22,6 +22,7 @@
 	{@param? _handleSectionHoverStart: any}
 	{@param? _handleSectionKeyUp: any}
 	{@param? _handleSectionRemoveButtonClick: any}
+	{@param? _resizing: bool}
 	{@param? activeItemId: string}
 	{@param? activeItemType: string}
 	{@param? defaultSegmentsExperienceId: string}
@@ -151,6 +152,14 @@
 				{sp}no-gutters
 			{/if}
 		{/let}
+
+		{if $_resizing}
+			{call com.liferay.layout.content.page.editor.web.ColumnOverlayGrid.render}
+				{param containerType: ($row and $row.config and $row.config.containerType) ?: 'fluid' /}
+				{param padding: ($row and $row.config and $row.config.paddingHorizontal) ?: '3' /}
+				{param ref: 'columnOverlayGrid' /}
+			{/call}
+		{/if}
 
 		<div class="{$rowWrapperClasses}">
 			<div class="{$rowClasses}">

@@ -61,6 +61,7 @@
 
 .fragment-entry-link-list-wrapper {
 	margin-right: $sidebarButtonsWidth;
+	overflow: hidden;
 	transition: margin-right ease $productMenuTransitionDuration;
 	will-change: margin-right;
 

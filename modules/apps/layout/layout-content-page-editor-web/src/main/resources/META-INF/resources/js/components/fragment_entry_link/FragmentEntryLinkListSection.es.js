@@ -5,6 +5,7 @@ import {Config} from 'metal-state';
 import '../floating_toolbar/background_color/FloatingToolbarBackgroundColorPanel.es';
 import '../floating_toolbar/background_image/FloatingToolbarBackgroundImagePanel.es';
 import '../floating_toolbar/spacing/FloatingToolbarSpacingPanel.es';
+import './ColumnOverlayGrid.es';
 import './FragmentEntryLink.es';
 import {CLEAR_ACTIVE_ITEM, MOVE_SECTION, REMOVE_SECTION, UPDATE_ACTIVE_ITEM, UPDATE_HOVERED_ITEM} from '../../actions/actions.es';
 import {FLOATING_TOOLBAR_BUTTONS, FRAGMENTS_EDITOR_ITEM_TYPES} from '../../utils/constants';

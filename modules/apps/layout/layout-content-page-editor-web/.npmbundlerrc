@@ -1,4 +1,1 @@
-{
-	"output": "classes/META-INF/resources",
-    "preset": "liferay-npm-bundler-preset-liferay-dev"
-}
+{"output":"classes/META-INF/resources","preset":"liferay-npm-bundler-preset-liferay-dev"}

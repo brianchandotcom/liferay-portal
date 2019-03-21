@@ -1,5 +1,6 @@
 @import "variables";
 
 .fragments-editor-shim {
+	cursor: col-resize;
 	z-index: $shimZIndex;
 }

@@ -1,7 +1,9 @@
 @import "variables";
 
 .column-overlay-grid {
-	top: 0;
+    height: 200vh;
+	left: 0;
+    top: -100vh;
 	z-index: 1;
 
 	&__column {

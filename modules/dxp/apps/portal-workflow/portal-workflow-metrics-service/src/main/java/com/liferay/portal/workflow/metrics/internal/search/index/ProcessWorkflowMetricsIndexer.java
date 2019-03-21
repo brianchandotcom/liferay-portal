@@ -49,6 +49,17 @@ public class ProcessWorkflowMetricsIndexer
 			});
 		bulkDocumentRequest.addBulkableDocumentRequest(
 			new IndexDocumentRequest(
+				_slaProcessResultWorkflowMetricsIndexer.getIndexName(),
+				_creatWorkflowMetricsSLAProcessResultDocument(
+					kaleoDefinition)) {
+
+				{
+					setType(
+						_slaProcessResultWorkflowMetricsIndexer.getIndexType());
+				}
+			});
+		bulkDocumentRequest.addBulkableDocumentRequest(
+			new IndexDocumentRequest(
 				getIndexName(), createDocument(kaleoDefinition)) {
 
 				{
@@ -140,10 +151,34 @@ public class ProcessWorkflowMetricsIndexer
 		return document;
 	}
 
+	private Document _creatWorkflowMetricsSLAProcessResultDocument(
+		KaleoDefinition kaleoDefinition) {
+
+		Document document = new DocumentImpl();
+
+		document.addUID(
+			"WorkflowMetricsSLAProcessResult",
+			digest(
+				kaleoDefinition.getCompanyId(), 0,
+				kaleoDefinition.getKaleoDefinitionId(), 0));
+
+		document.addKeyword("companyId", kaleoDefinition.getCompanyId());
+		document.addKeyword("instanceId", 0);
+		document.addKeyword(
+			"processId", kaleoDefinition.getKaleoDefinitionId());
+		document.addKeyword("slaDefinitionId", 0);
+
+		return document;
+	}
+
 	@Reference
 	private InstanceWorkflowMetricsIndexer _instanceWorkflowMetricsIndexer;
 
 	@Reference
 	private KaleoDefinitionLocalService _kaleoDefinitionLocalService;
+
+	@Reference
+	private SLAProcessResultWorkflowMetricsIndexer
+		_slaProcessResultWorkflowMetricsIndexer;
 
 }

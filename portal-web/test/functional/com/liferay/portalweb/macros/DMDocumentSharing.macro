@@ -98,10 +98,10 @@ definition {
 		}
 	}
 
-	macro viewDocumentViaSharedWithMe {
+	macro viewDocumentViaSharedAssets {
 		AssertTextEquals(
 			locator1 = "Portlet#HEADER",
-			value1 = "Shared With Me"
+			value1 = "Shared Assets"
 		);
 
 		if ("${assetSharingPermission}" == "View") {

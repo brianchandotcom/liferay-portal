@@ -56,7 +56,7 @@ public class AssetListEntryServiceHttp {
 
 	public static void addAssetEntrySelection(
 			HttpPrincipal httpPrincipal, long assetListEntryId,
-			long segmentsEntryId, long assetEntryId,
+			long assetEntryId, long segmentsEntryId,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
@@ -66,7 +66,7 @@ public class AssetListEntryServiceHttp {
 				_addAssetEntrySelectionParameterTypes0);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, assetListEntryId, segmentsEntryId, assetEntryId,
+				methodKey, assetListEntryId, assetEntryId, segmentsEntryId,
 				serviceContext);
 
 			try {
@@ -93,7 +93,7 @@ public class AssetListEntryServiceHttp {
 
 	public static void addAssetEntrySelections(
 			HttpPrincipal httpPrincipal, long assetListEntryId,
-			long segmentsEntryId, long[] assetEntryIds,
+			long[] assetEntryIds, long segmentsEntryId,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
@@ -103,7 +103,7 @@ public class AssetListEntryServiceHttp {
 				_addAssetEntrySelectionsParameterTypes1);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, assetListEntryId, segmentsEntryId, assetEntryIds,
+				methodKey, assetListEntryId, assetEntryIds, segmentsEntryId,
 				serviceContext);
 
 			try {
@@ -759,7 +759,7 @@ public class AssetListEntryServiceHttp {
 		};
 	private static final Class<?>[] _addAssetEntrySelectionsParameterTypes1 =
 		new Class[] {
-			long.class, long.class, long[].class,
+			long.class, long[].class, long.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[] _addAssetListEntryParameterTypes2 =

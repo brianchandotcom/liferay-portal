@@ -58,24 +58,24 @@ public class AssetListEntryAssetEntryRelLocalServiceUtil {
 
 	public static com.liferay.asset.list.model.AssetListEntryAssetEntryRel
 			addAssetListEntryAssetEntryRel(
-				long assetListEntryId, long segmentsEntryId, long assetEntryId,
+				long assetListEntryId, long assetEntryId, long segmentsEntryId,
 				int position,
 				com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return getService().addAssetListEntryAssetEntryRel(
-			assetListEntryId, segmentsEntryId, assetEntryId, position,
+			assetListEntryId, assetEntryId, segmentsEntryId, position,
 			serviceContext);
 	}
 
 	public static com.liferay.asset.list.model.AssetListEntryAssetEntryRel
 			addAssetListEntryAssetEntryRel(
-				long assetListEntryId, long segmentsEntryId, long assetEntryId,
+				long assetListEntryId, long assetEntryId, long segmentsEntryId,
 				com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return getService().addAssetListEntryAssetEntryRel(
-			assetListEntryId, segmentsEntryId, assetEntryId, serviceContext);
+			assetListEntryId, assetEntryId, segmentsEntryId, serviceContext);
 	}
 
 	/**

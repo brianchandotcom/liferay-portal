@@ -57,27 +57,27 @@ public class AssetListEntryAssetEntryRelLocalServiceWrapper
 	@Override
 	public com.liferay.asset.list.model.AssetListEntryAssetEntryRel
 			addAssetListEntryAssetEntryRel(
-				long assetListEntryId, long segmentsEntryId, long assetEntryId,
+				long assetListEntryId, long assetEntryId, long segmentsEntryId,
 				int position,
 				com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _assetListEntryAssetEntryRelLocalService.
 			addAssetListEntryAssetEntryRel(
-				assetListEntryId, segmentsEntryId, assetEntryId, position,
+				assetListEntryId, assetEntryId, segmentsEntryId, position,
 				serviceContext);
 	}
 
 	@Override
 	public com.liferay.asset.list.model.AssetListEntryAssetEntryRel
 			addAssetListEntryAssetEntryRel(
-				long assetListEntryId, long segmentsEntryId, long assetEntryId,
+				long assetListEntryId, long assetEntryId, long segmentsEntryId,
 				com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _assetListEntryAssetEntryRelLocalService.
 			addAssetListEntryAssetEntryRel(
-				assetListEntryId, segmentsEntryId, assetEntryId,
+				assetListEntryId, assetEntryId, segmentsEntryId,
 				serviceContext);
 	}
 

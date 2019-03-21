@@ -77,12 +77,12 @@ public interface AssetListEntryAssetEntryRelLocalService
 		AssetListEntryAssetEntryRel assetListEntryAssetEntryRel);
 
 	public AssetListEntryAssetEntryRel addAssetListEntryAssetEntryRel(
-			long assetListEntryId, long segmentsEntryId, long assetEntryId,
+			long assetListEntryId, long assetEntryId, long segmentsEntryId,
 			int position, ServiceContext serviceContext)
 		throws PortalException;
 
 	public AssetListEntryAssetEntryRel addAssetListEntryAssetEntryRel(
-			long assetListEntryId, long segmentsEntryId, long assetEntryId,
+			long assetListEntryId, long assetEntryId, long segmentsEntryId,
 			ServiceContext serviceContext)
 		throws PortalException;
 

@@ -219,20 +219,6 @@ public interface AssetListEntryAssetEntryRelModel
 	public void setAssetListEntryId(long assetListEntryId);
 
 	/**
-	 * Returns the segments entry ID of this asset list entry asset entry rel.
-	 *
-	 * @return the segments entry ID of this asset list entry asset entry rel
-	 */
-	public long getSegmentsEntryId();
-
-	/**
-	 * Sets the segments entry ID of this asset list entry asset entry rel.
-	 *
-	 * @param segmentsEntryId the segments entry ID of this asset list entry asset entry rel
-	 */
-	public void setSegmentsEntryId(long segmentsEntryId);
-
-	/**
 	 * Returns the asset entry ID of this asset list entry asset entry rel.
 	 *
 	 * @return the asset entry ID of this asset list entry asset entry rel
@@ -245,6 +231,20 @@ public interface AssetListEntryAssetEntryRelModel
 	 * @param assetEntryId the asset entry ID of this asset list entry asset entry rel
 	 */
 	public void setAssetEntryId(long assetEntryId);
+
+	/**
+	 * Returns the segments entry ID of this asset list entry asset entry rel.
+	 *
+	 * @return the segments entry ID of this asset list entry asset entry rel
+	 */
+	public long getSegmentsEntryId();
+
+	/**
+	 * Sets the segments entry ID of this asset list entry asset entry rel.
+	 *
+	 * @param segmentsEntryId the segments entry ID of this asset list entry asset entry rel
+	 */
+	public void setSegmentsEntryId(long segmentsEntryId);
 
 	/**
 	 * Returns the position of this asset list entry asset entry rel.

@@ -47,8 +47,8 @@ public class AssetListEntryAssetEntryRelSoap implements Serializable {
 		soapModel.setCreateDate(model.getCreateDate());
 		soapModel.setModifiedDate(model.getModifiedDate());
 		soapModel.setAssetListEntryId(model.getAssetListEntryId());
-		soapModel.setSegmentsEntryId(model.getSegmentsEntryId());
 		soapModel.setAssetEntryId(model.getAssetEntryId());
+		soapModel.setSegmentsEntryId(model.getSegmentsEntryId());
 		soapModel.setPosition(model.getPosition());
 		soapModel.setLastPublishDate(model.getLastPublishDate());
 
@@ -187,20 +187,20 @@ public class AssetListEntryAssetEntryRelSoap implements Serializable {
 		_assetListEntryId = assetListEntryId;
 	}
 
-	public long getSegmentsEntryId() {
-		return _segmentsEntryId;
-	}
-
-	public void setSegmentsEntryId(long segmentsEntryId) {
-		_segmentsEntryId = segmentsEntryId;
-	}
-
 	public long getAssetEntryId() {
 		return _assetEntryId;
 	}
 
 	public void setAssetEntryId(long assetEntryId) {
 		_assetEntryId = assetEntryId;
+	}
+
+	public long getSegmentsEntryId() {
+		return _segmentsEntryId;
+	}
+
+	public void setSegmentsEntryId(long segmentsEntryId) {
+		_segmentsEntryId = segmentsEntryId;
 	}
 
 	public int getPosition() {
@@ -228,8 +228,8 @@ public class AssetListEntryAssetEntryRelSoap implements Serializable {
 	private Date _createDate;
 	private Date _modifiedDate;
 	private long _assetListEntryId;
-	private long _segmentsEntryId;
 	private long _assetEntryId;
+	private long _segmentsEntryId;
 	private int _position;
 	private Date _lastPublishDate;
 

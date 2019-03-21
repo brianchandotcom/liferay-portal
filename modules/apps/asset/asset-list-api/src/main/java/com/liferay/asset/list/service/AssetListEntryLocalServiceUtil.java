@@ -41,21 +41,21 @@ public class AssetListEntryLocalServiceUtil {
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.asset.list.service.impl.AssetListEntryLocalServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
 	public static void addAssetEntrySelection(
-			long assetListEntryId, long segmentsEntryId, long assetEntryId,
+			long assetListEntryId, long assetEntryId, long segmentsEntryId,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		getService().addAssetEntrySelection(
-			assetListEntryId, segmentsEntryId, assetEntryId, serviceContext);
+			assetListEntryId, assetEntryId, segmentsEntryId, serviceContext);
 	}
 
 	public static void addAssetEntrySelections(
-			long assetListEntryId, long segmentsEntryId, long[] assetEntryIds,
+			long assetListEntryId, long[] assetEntryIds, long segmentsEntryId,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		getService().addAssetEntrySelections(
-			assetListEntryId, segmentsEntryId, assetEntryIds, serviceContext);
+			assetListEntryId, assetEntryIds, segmentsEntryId, serviceContext);
 	}
 
 	/**

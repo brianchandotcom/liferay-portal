@@ -24,8 +24,8 @@
 		<field name="createDate" type="Date" />
 		<field name="modifiedDate" type="Date" />
 		<field name="assetListEntryId" type="long" />
-		<field name="segmentsEntryId" type="long" />
 		<field name="assetEntryId" type="long" />
+		<field name="segmentsEntryId" type="long" />
 		<field name="position" type="int" />
 		<field name="lastPublishDate" type="Date" />
 	</model>

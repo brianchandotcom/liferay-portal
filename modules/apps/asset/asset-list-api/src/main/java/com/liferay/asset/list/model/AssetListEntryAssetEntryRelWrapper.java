@@ -60,8 +60,8 @@ public class AssetListEntryAssetEntryRelWrapper
 		attributes.put("createDate", getCreateDate());
 		attributes.put("modifiedDate", getModifiedDate());
 		attributes.put("assetListEntryId", getAssetListEntryId());
-		attributes.put("segmentsEntryId", getSegmentsEntryId());
 		attributes.put("assetEntryId", getAssetEntryId());
+		attributes.put("segmentsEntryId", getSegmentsEntryId());
 		attributes.put("position", getPosition());
 		attributes.put("lastPublishDate", getLastPublishDate());
 
@@ -125,16 +125,16 @@ public class AssetListEntryAssetEntryRelWrapper
 			setAssetListEntryId(assetListEntryId);
 		}
 
-		Long segmentsEntryId = (Long)attributes.get("segmentsEntryId");
-
-		if (segmentsEntryId != null) {
-			setSegmentsEntryId(segmentsEntryId);
-		}
-
 		Long assetEntryId = (Long)attributes.get("assetEntryId");
 
 		if (assetEntryId != null) {
 			setAssetEntryId(assetEntryId);
+		}
+
+		Long segmentsEntryId = (Long)attributes.get("segmentsEntryId");
+
+		if (segmentsEntryId != null) {
+			setSegmentsEntryId(segmentsEntryId);
 		}
 
 		Integer position = (Integer)attributes.get("position");

@@ -89,10 +89,10 @@ public class AssetListEntryAssetEntryRelCacheModel
 		sb.append(modifiedDate);
 		sb.append(", assetListEntryId=");
 		sb.append(assetListEntryId);
-		sb.append(", segmentsEntryId=");
-		sb.append(segmentsEntryId);
 		sb.append(", assetEntryId=");
 		sb.append(assetEntryId);
+		sb.append(", segmentsEntryId=");
+		sb.append(segmentsEntryId);
 		sb.append(", position=");
 		sb.append(position);
 		sb.append(", lastPublishDate=");
@@ -143,8 +143,8 @@ public class AssetListEntryAssetEntryRelCacheModel
 		}
 
 		assetListEntryAssetEntryRelImpl.setAssetListEntryId(assetListEntryId);
-		assetListEntryAssetEntryRelImpl.setSegmentsEntryId(segmentsEntryId);
 		assetListEntryAssetEntryRelImpl.setAssetEntryId(assetEntryId);
+		assetListEntryAssetEntryRelImpl.setSegmentsEntryId(segmentsEntryId);
 		assetListEntryAssetEntryRelImpl.setPosition(position);
 
 		if (lastPublishDate == Long.MIN_VALUE) {
@@ -177,9 +177,9 @@ public class AssetListEntryAssetEntryRelCacheModel
 
 		assetListEntryId = objectInput.readLong();
 
-		segmentsEntryId = objectInput.readLong();
-
 		assetEntryId = objectInput.readLong();
+
+		segmentsEntryId = objectInput.readLong();
 
 		position = objectInput.readInt();
 		lastPublishDate = objectInput.readLong();
@@ -214,9 +214,9 @@ public class AssetListEntryAssetEntryRelCacheModel
 
 		objectOutput.writeLong(assetListEntryId);
 
-		objectOutput.writeLong(segmentsEntryId);
-
 		objectOutput.writeLong(assetEntryId);
+
+		objectOutput.writeLong(segmentsEntryId);
 
 		objectOutput.writeInt(position);
 		objectOutput.writeLong(lastPublishDate);
@@ -231,8 +231,8 @@ public class AssetListEntryAssetEntryRelCacheModel
 	public long createDate;
 	public long modifiedDate;
 	public long assetListEntryId;
-	public long segmentsEntryId;
 	public long assetEntryId;
+	public long segmentsEntryId;
 	public int position;
 	public long lastPublishDate;
 

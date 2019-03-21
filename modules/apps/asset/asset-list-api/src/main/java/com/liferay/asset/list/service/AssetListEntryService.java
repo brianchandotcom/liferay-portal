@@ -62,12 +62,12 @@ public interface AssetListEntryService extends BaseService {
 	 * Never modify or reference this interface directly. Always use {@link AssetListEntryServiceUtil} to access the asset list entry remote service. Add custom service methods to <code>com.liferay.asset.list.service.impl.AssetListEntryServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
 	public void addAssetEntrySelection(
-			long assetListEntryId, long segmentsEntryId, long assetEntryId,
+			long assetListEntryId, long assetEntryId, long segmentsEntryId,
 			ServiceContext serviceContext)
 		throws PortalException;
 
 	public void addAssetEntrySelections(
-			long assetListEntryId, long segmentsEntryId, long[] assetEntryIds,
+			long assetListEntryId, long[] assetEntryIds, long segmentsEntryId,
 			ServiceContext serviceContext)
 		throws PortalException;
 

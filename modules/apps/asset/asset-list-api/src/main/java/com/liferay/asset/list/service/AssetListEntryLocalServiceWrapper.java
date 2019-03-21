@@ -38,22 +38,22 @@ public class AssetListEntryLocalServiceWrapper
 
 	@Override
 	public void addAssetEntrySelection(
-			long assetListEntryId, long segmentsEntryId, long assetEntryId,
+			long assetListEntryId, long assetEntryId, long segmentsEntryId,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		_assetListEntryLocalService.addAssetEntrySelection(
-			assetListEntryId, segmentsEntryId, assetEntryId, serviceContext);
+			assetListEntryId, assetEntryId, segmentsEntryId, serviceContext);
 	}
 
 	@Override
 	public void addAssetEntrySelections(
-			long assetListEntryId, long segmentsEntryId, long[] assetEntryIds,
+			long assetListEntryId, long[] assetEntryIds, long segmentsEntryId,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		_assetListEntryLocalService.addAssetEntrySelections(
-			assetListEntryId, segmentsEntryId, assetEntryIds, serviceContext);
+			assetListEntryId, assetEntryIds, segmentsEntryId, serviceContext);
 	}
 
 	/**

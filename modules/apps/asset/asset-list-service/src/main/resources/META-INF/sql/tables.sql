@@ -22,8 +22,8 @@ create table AssetListEntryAssetEntryRel (
 	createDate DATE null,
 	modifiedDate DATE null,
 	assetListEntryId LONG,
-	segmentsEntryId LONG,
 	assetEntryId LONG,
+	segmentsEntryId LONG,
 	position INTEGER,
 	lastPublishDate DATE null
 );

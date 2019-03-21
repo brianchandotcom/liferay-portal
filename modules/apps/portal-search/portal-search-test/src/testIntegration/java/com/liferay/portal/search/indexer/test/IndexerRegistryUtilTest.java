@@ -15,22 +15,33 @@
 package com.liferay.portal.search.indexer.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.portal.kernel.model.Contact;
-import com.liferay.portal.kernel.model.Organization;
-import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.model.UserGroup;
+import com.liferay.portal.kernel.search.BaseIndexer;
+import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
+import com.liferay.portal.kernel.search.Summary;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-import com.liferay.portlet.usersadmin.util.ContactIndexer;
-import com.liferay.portlet.usersadmin.util.OrganizationIndexer;
 
+import java.util.Locale;
+
+import javax.portlet.PortletRequest;
+import javax.portlet.PortletResponse;
+
+import org.junit.AfterClass;
 import org.junit.Assert;
+import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TestRule;
 import org.junit.runner.RunWith;
+
+import org.osgi.framework.Bundle;
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.FrameworkUtil;
+import org.osgi.framework.ServiceRegistration;
 
 /**
  * @author Gregory Amerson
@@ -42,30 +53,83 @@ public class IndexerRegistryUtilTest {
 	@Rule
 	public static final TestRule testRule = new LiferayIntegrationTestRule();
 
+	@BeforeClass
+	public static void setUpClass() {
+		Bundle bundle = FrameworkUtil.getBundle(IndexerRegistryUtilTest.class);
+
+		BundleContext bundleContext = bundle.getBundleContext();
+
+		_serviceRegistration = bundleContext.registerService(
+			Indexer.class, new TestIndexer(), new HashMapDictionary<>());
+	}
+
+	@AfterClass
+	public static void tearDownClass() {
+		if (_serviceRegistration != null) {
+			_serviceRegistration.unregister();
+		}
+	}
+
 	@Test
 	public void testGetIndexerByIndexerClassName() throws Exception {
-		Indexer<Contact> contactIndexer = IndexerRegistryUtil.getIndexer(
-			ContactIndexer.class.getName());
+		Indexer<Object> testIndexer = IndexerRegistryUtil.getIndexer(
+			TestIndexer.class.getName());
 
-		Assert.assertNotNull(contactIndexer);
-
-		Indexer<Organization> organizationIndexer =
-			IndexerRegistryUtil.getIndexer(OrganizationIndexer.class.getName());
-
-		Assert.assertNotNull(organizationIndexer);
+		Assert.assertNotNull(testIndexer);
+		Assert.assertEquals(TestIndexer.class, testIndexer.getClass());
 	}
 
 	@Test
 	public void testGetIndexerByModelClassName() throws Exception {
-		Indexer<User> userIndexer = IndexerRegistryUtil.getIndexer(
-			User.class.getName());
+		Indexer<Object> testIndexer = IndexerRegistryUtil.getIndexer(
+			_CLASS_NAME);
 
-		Assert.assertNotNull(userIndexer);
+		Assert.assertNotNull(testIndexer);
+		Assert.assertEquals(_CLASS_NAME, testIndexer.getClassName());
+	}
 
-		Indexer<UserGroup> userGroupIndexer = IndexerRegistryUtil.getIndexer(
-			UserGroup.class.getName());
+	private static final String _CLASS_NAME = RandomTestUtil.randomString();
 
-		Assert.assertNotNull(userGroupIndexer);
+	private static ServiceRegistration<Indexer> _serviceRegistration;
+
+	private static class TestIndexer extends BaseIndexer<Object> {
+
+		@Override
+		public String getClassName() {
+			return _CLASS_NAME;
+		}
+
+		@Override
+		protected void doDelete(Object object) throws Exception {
+		}
+
+		@Override
+		protected Document doGetDocument(Object object) throws Exception {
+			return null;
+		}
+
+		@Override
+		protected Summary doGetSummary(
+				Document document, Locale locale, String snippet,
+				PortletRequest portletRequest, PortletResponse portletResponse)
+			throws Exception {
+
+			return null;
+		}
+
+		@Override
+		protected void doReindex(Object object) throws Exception {
+		}
+
+		@Override
+		protected void doReindex(String className, long classPK)
+			throws Exception {
+		}
+
+		@Override
+		protected void doReindex(String[] ids) throws Exception {
+		}
+
 	}
 
 }

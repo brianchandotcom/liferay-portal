@@ -46,12 +46,12 @@ public class DTOOpenAPIParser {
 			String propertySchemaName = entry.getKey();
 			Schema propertySchema = entry.getValue();
 
-			String javaDataType = _getJavaDataType(
-				javaDataTypeMap, propertySchema, propertySchemaName);
 			String propertyName = _getPropertyName(
 				propertySchema, propertySchemaName);
+			String propertyType = _getPropertyType(
+				javaDataTypeMap, propertySchema, propertySchemaName);
 
-			properties.put(propertyName, javaDataType);
+			properties.put(propertyName, propertyType);
 		}
 
 		return properties;
@@ -83,7 +83,7 @@ public class DTOOpenAPIParser {
 		return null;
 	}
 
-	private static String _getJavaDataType(
+	private static String _getPropertyType(
 		Map<String, String> javaDataTypeMap, Schema propertySchema,
 		String propertySchemaName) {
 
@@ -106,7 +106,7 @@ public class DTOOpenAPIParser {
 			}
 
 			if (javaDataTypeMap.containsKey(name)) {
-				return OpenAPIParserUtil.getArrayClassName(name);
+				return name + "[]";
 			}
 		}
 
@@ -122,8 +122,38 @@ public class DTOOpenAPIParser {
 			}
 		}
 
-		return OpenAPIParserUtil.getJavaDataType(
+		String javaDataType = OpenAPIParserUtil.getJavaDataType(
 			javaDataTypeMap, propertySchema);
+
+		if (StringUtil.equals(javaDataType, "java.util.Map")) {
+			String name = OpenAPIParserUtil.getJavaDataType(
+				javaDataTypeMap, propertySchema.getAdditionalPropertySchema());
+
+			if (name.lastIndexOf('.') != -1) {
+				name = name.substring(name.lastIndexOf(".") + 1);
+			}
+
+			return "Map<String, " + name + ">";
+		}
+
+		if (javaDataType.startsWith("[")) {
+			String name = OpenAPIParserUtil.getElementClassName(javaDataType);
+
+			if (name.lastIndexOf('.') != -1) {
+				name = name.substring(name.lastIndexOf(".") + 1);
+			}
+
+			return name + "[]";
+		}
+
+		String propertyType = javaDataType;
+
+		if (propertyType.lastIndexOf('.') != -1) {
+			propertyType = propertyType.substring(
+				propertyType.lastIndexOf(".") + 1);
+		}
+
+		return propertyType;
 	}
 
 	private static String _getPropertyName(

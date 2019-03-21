@@ -133,6 +133,14 @@ class FragmentEntryLinkListSection extends Component {
 	}
 
 	/**
+	 * @private
+	 * @review
+	 */
+	_handleResizerMouseDown() {
+		this._resizing = true;
+	}
+
+	/**
 	 * Callback executed when a section is clicked.
 	 * @param {Event} event
 	 * @private
@@ -237,6 +245,16 @@ FragmentEntryLinkListSection.STATE = {
 	 */
 	_floatingToolbar: Config.internal()
 		.value(null),
+
+	/**
+	 * True when user is resizing a column.
+	 * @default false
+	 * @instance
+	 * @memberOf FragmentEntryLinkListSection
+	 * @review
+	 * @type {boolean}
+	 */
+	_resizing: Config.internal().bool().value(false),
 
 	/**
 	 * Section row

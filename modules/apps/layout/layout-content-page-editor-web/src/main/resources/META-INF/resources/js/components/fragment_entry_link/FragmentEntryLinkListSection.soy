@@ -16,6 +16,7 @@
 	{@param rowId: string}
 	{@param? _columnResizerVisible: bool}
 	{@param? _handleFragmentMove: any}
+	{@param? _handleResizerMouseDown: any}
 	{@param? _handleSectionFocusOut: any}
 	{@param? _handleSectionClick: any}
 	{@param? _handleSectionHoverStart: any}
@@ -157,6 +158,7 @@
 					{call .column}
 						{param _columnResizerVisible: $_columnResizerVisible /}
 						{param _handleFragmentMove: $_handleFragmentMove /}
+						{param _handleResizerMouseDown: $_handleResizerMouseDown /}
 						{param columnId: $column.columnId /}
 						{param defaultEditorConfigurations: $defaultEditorConfigurations /}
 						{param defaultSegmentsExperienceId: $defaultSegmentsExperienceId /}
@@ -192,6 +194,7 @@
 	{@param key: string}
 	{@param? _columnResizerVisible: bool}
 	{@param? _handleFragmentMove: any}
+	{@param? _handleResizerMouseDown: any}
 	{@param? defaultSegmentsExperienceId: string}
 	{@param? dropTargetItemTypes: ?}
 	{@param? dropTargetBorder: string}
@@ -264,6 +267,8 @@
 
 		{if not $lastColumn}
 			{call .resizer}
+				{param columnId: $columnId /}
+				{param _handleResizerMouseDown: $_handleResizerMouseDown /}
 				{param visible: $_columnResizerVisible /}
 			{/call}
 		{/if}
@@ -325,6 +330,8 @@
  * Resizer
  */
 {template .resizer}
+	{@param columnId: string}
+	{@param? _handleResizerMouseDown: any}
 	{@param? visible: bool}
 
 	{let $resizerClasses kind="text"}
@@ -337,5 +344,10 @@
 		{/if}
 	{/let}
 
-	<button class="{$resizerClasses}" type="button"></button>
+	<button
+		class="{$resizerClasses}"
+		data-column-id="{$columnId}"
+		data-onmousedown="{$_handleResizerMouseDown}"
+		type="button"
+	></button>
 {/template}

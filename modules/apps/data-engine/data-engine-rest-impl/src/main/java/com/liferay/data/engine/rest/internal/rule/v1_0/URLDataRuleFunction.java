@@ -12,18 +12,17 @@
  * details.
  */
 
-package com.liferay.data.engine.rest.internal.rule;
+package com.liferay.data.engine.rest.internal.rule.v1_0;
 
 import com.liferay.data.engine.constants.DataDefinitionRuleConstants;
 import com.liferay.data.engine.rest.dto.v1_0.DataDefinitionField;
 import com.liferay.data.engine.rest.dto.v1_0.DataDefinitionRuleParameter;
-
-import org.apache.commons.lang.math.NumberUtils;
+import com.liferay.portal.kernel.util.Validator;
 
 /**
  * @author Jeyvison Nascimento
  */
-public class IntegerLiteralDataRuleFunction implements DataRuleFunction {
+public class URLDataRuleFunction implements DataRuleFunction {
 
 	@Override
 	public DataRuleFunctionResult validate(
@@ -36,21 +35,14 @@ public class IntegerLiteralDataRuleFunction implements DataRuleFunction {
 
 		dataRuleFunctionResult.setDataDefinitionField(dataDefinitionField);
 		dataRuleFunctionResult.setErrorCode(
-			DataDefinitionRuleConstants.VALUE_MUST_BE_INTEGER_ERROR);
+			DataDefinitionRuleConstants.INVALID_URL_ERROR);
 		dataRuleFunctionResult.setValid(false);
 
 		if (value == null) {
 			return dataRuleFunctionResult;
 		}
 
-		Integer valueInteger = NumberUtils.toInt(
-			value.toString(), Integer.MIN_VALUE);
-
-		boolean result = false;
-
-		if (valueInteger != Integer.MIN_VALUE) {
-			result = true;
-		}
+		boolean result = Validator.isUrl(value.toString());
 
 		dataRuleFunctionResult.setValid(result);
 

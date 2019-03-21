@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.data.engine.rest.internal.rule;
+package com.liferay.data.engine.rest.internal.rule.v1_0;
 
 import com.liferay.data.engine.rest.dto.v1_0.DataDefinitionField;
 import com.liferay.data.engine.rest.dto.v1_0.DataDefinitionRuleParameter;

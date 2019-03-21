@@ -12,18 +12,19 @@
  * details.
  */
 
-package com.liferay.data.engine.rest.internal.rule;
+package com.liferay.data.engine.rest.internal.rule.v1_0;
 
 import com.liferay.data.engine.constants.DataDefinitionRuleConstants;
 import com.liferay.data.engine.rest.dto.v1_0.DataDefinitionField;
 import com.liferay.data.engine.rest.dto.v1_0.DataDefinitionRuleParameter;
+import com.liferay.portal.kernel.util.Validator;
 
-import java.math.BigDecimal;
+import java.util.stream.Stream;
 
 /**
  * @author Jeyvison Nascimento
  */
-public class DecimalLiteralDataRuleFunction implements DataRuleFunction {
+public class EmptyDataRuleFunction implements DataRuleFunction {
 
 	@Override
 	public DataRuleFunctionResult validate(
@@ -36,7 +37,7 @@ public class DecimalLiteralDataRuleFunction implements DataRuleFunction {
 
 		dataRuleFunctionResult.setDataDefinitionField(dataDefinitionField);
 		dataRuleFunctionResult.setErrorCode(
-			DataDefinitionRuleConstants.VALUE_MUST_BE_DECIMAL_ERROR);
+			DataDefinitionRuleConstants.VALUE_MUST_NOT_BE_EMPTY_ERROR);
 		dataRuleFunctionResult.setValid(false);
 
 		if (value == null) {
@@ -45,22 +46,32 @@ public class DecimalLiteralDataRuleFunction implements DataRuleFunction {
 
 		boolean result;
 
-		try {
-			new BigDecimal(value.toString());
+		if (isArray(value)) {
+			Object[] values = (Object[])value;
 
-			result = true;
+			result = Stream.of(
+				values
+			).allMatch(
+				Validator::isNotNull
+			);
 		}
-		catch (NumberFormatException nfe) {
-			result = false;
+		else {
+			result = Validator.isNotNull(value.toString());
 		}
 
-		dataRuleFunctionResult.setValid(true);
+		dataRuleFunctionResult.setValid(result);
 
 		if (result) {
 			dataRuleFunctionResult.setErrorCode(null);
 		}
 
 		return dataRuleFunctionResult;
+	}
+
+	protected boolean isArray(Object parameter) {
+		Class<?> clazz = parameter.getClass();
+
+		return clazz.isArray();
 	}
 
 }

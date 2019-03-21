@@ -17,6 +17,7 @@
 <%@ include file="/personal_menu/init.jsp" %>
 
 <%
+boolean expanded = (boolean)request.getAttribute("liferay-product-navigation:personal-menu:expanded");
 String label = (String)request.getAttribute("liferay-product-navigation:personal-menu:label");
 %>
 
@@ -47,6 +48,13 @@ String label = (String)request.getAttribute("liferay-product-navigation:personal
 						new ClayDropdown.default(
 							{
 								element: '#personal_menu_dropdown_toggle',
+								events: {
+									'willAttach': function(event) {
+										if (<%= expanded %>) {
+											this.expanded = true;
+										}
+									}
+								},
 								items: personalMenuItems,
 								label: toggle.innerHTML,
 								showToggleIcon: false,
@@ -56,7 +64,6 @@ String label = (String)request.getAttribute("liferay-product-navigation:personal
 						);
 					}
 				);
-
 			}
 		);
 	}

@@ -8,6 +8,21 @@ components:
                 message:
                     type: string
             type: object
+        Node:
+            description: https://www.schema.org/Node
+            properties:
+                id:
+                    format: int64
+                    type: integer
+                initial:
+                    type: boolean
+                name:
+                    type: string
+                terminal:
+                    type: boolean
+                type:
+                    type: string
+            type: object
         Process:
             description: https://www.schema.org/Process
             properties:
@@ -115,6 +130,25 @@ paths:
                                 $ref: "#/components/schemas/Process"
                     description: ""
             tags: ["Process"]
+    "/processes/{process-id}/nodes":
+        get:
+            parameters:
+                - in: path
+                  name: process-id
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/Node"
+                                type: array
+                    description: ""
+            tags: ["Node"]
     "/processes/{process-id}/slas":
         get:
             parameters:

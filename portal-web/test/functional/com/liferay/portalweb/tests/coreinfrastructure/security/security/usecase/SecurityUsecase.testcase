@@ -74,10 +74,18 @@ out.println(PortalUtil.escapeRedirect("/"));
 
 		WebContent.viewPGViaWCD(webContentContent = "WC WebContent Content");
 
-		WebContentNavigator.gotoEditPGViaWCD(
-			menuItem = "Edit Web Content",
-			webContentTitle = "WC WebContent Title"
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			panel = "Site Administration",
+			portlet = "Web Content"
 		);
+
+		WebContentNavigator.gotoEntryMenuItem(
+			entry = "WC WebContent Title",
+			menuItem = "View History"
+		);
+
+		Pause(locator1 = "3000");
 
 		var articleID = selenium.getText("WCEditWebContent#ARTICLE_ID");
 

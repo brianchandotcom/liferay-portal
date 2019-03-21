@@ -16,7 +16,6 @@ package com.liferay.headless.web.experience.internal.resource.v1_0;
 
 import static com.liferay.portal.vulcan.util.LocalDateTimeUtil.toLocalDateTime;
 
-import com.liferay.asset.kernel.model.AssetTag;
 import com.liferay.asset.kernel.service.AssetCategoryLocalService;
 import com.liferay.asset.kernel.service.AssetTagLocalService;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
@@ -43,18 +42,11 @@ import com.liferay.dynamic.data.mapping.storage.Fields;
 import com.liferay.dynamic.data.mapping.util.DDM;
 import com.liferay.dynamic.data.mapping.util.FieldsToDDMFormValuesConverter;
 import com.liferay.headless.common.spi.service.context.ServiceContextUtil;
-import com.liferay.headless.web.experience.dto.v1_0.ContentDocument;
 import com.liferay.headless.web.experience.dto.v1_0.ContentField;
 import com.liferay.headless.web.experience.dto.v1_0.Geo;
-import com.liferay.headless.web.experience.dto.v1_0.RenderedContent;
 import com.liferay.headless.web.experience.dto.v1_0.StructuredContent;
-import com.liferay.headless.web.experience.dto.v1_0.StructuredContentImage;
-import com.liferay.headless.web.experience.dto.v1_0.StructuredContentLink;
-import com.liferay.headless.web.experience.dto.v1_0.TaxonomyCategory;
 import com.liferay.headless.web.experience.dto.v1_0.Value;
-import com.liferay.headless.web.experience.internal.dto.v1_0.util.AggregateRatingUtil;
-import com.liferay.headless.web.experience.internal.dto.v1_0.util.ContentStructureUtil;
-import com.liferay.headless.web.experience.internal.dto.v1_0.util.CreatorUtil;
+import com.liferay.headless.web.experience.internal.dto.v1_0.util.StructuredContentUtil;
 import com.liferay.headless.web.experience.internal.odata.entity.v1_0.EntityFieldsProvider;
 import com.liferay.headless.web.experience.internal.odata.entity.v1_0.StructuredContentEntityModel;
 import com.liferay.headless.web.experience.resource.v1_0.StructuredContentResource;
@@ -68,10 +60,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.events.EventsProcessorUtil;
 import com.liferay.portal.kernel.comment.CommentManager;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
-import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
-import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.Sort;
@@ -86,7 +75,6 @@ import com.liferay.portal.kernel.servlet.DummyHttpServletResponse;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleThreadLocal;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -568,45 +556,6 @@ public class StructuredContentResourceImpl
 			sorts);
 	}
 
-	private ContentField _toContentField(DDMFormFieldValue ddmFormFieldValue)
-		throws Exception {
-
-		DDMFormField ddmFormField = ddmFormFieldValue.getDDMFormField();
-
-		return new ContentField() {
-			{
-				dataType = ContentStructureUtil.toDataType(ddmFormField);
-				inputControl = ContentStructureUtil.toInputControl(
-					ddmFormField);
-				name = ddmFormField.getName();
-				repeatable = ddmFormField.isRepeatable();
-				value = _toValue(
-					ddmFormFieldValue,
-					contextAcceptLanguage.getPreferredLocale());
-
-				nestedFields = transformToArray(
-					ddmFormFieldValue.getNestedDDMFormFieldValues(),
-					value -> _toContentField(value), ContentField.class);
-			}
-		};
-	}
-
-	private ContentField[] _toContentFields(JournalArticle journalArticle)
-		throws Exception {
-
-		DDMStructure ddmStructure = journalArticle.getDDMStructure();
-
-		Fields fields = _journalConverter.getDDMFields(
-			ddmStructure, journalArticle.getContent());
-
-		DDMFormValues ddmFormValues = _fieldsToDDMFormValuesConverter.convert(
-			ddmStructure, fields);
-
-		return transformToArray(
-			ddmFormValues.getDDMFormFieldValues(), this::_toContentField,
-			ContentField.class);
-	}
-
 	private List<DDMFormFieldValue> _toDDMFormFieldValues(
 		ContentField[] contentFields, DDMStructure ddmStructure,
 		Locale locale) {
@@ -838,219 +787,12 @@ public class StructuredContentResourceImpl
 			JournalArticle journalArticle)
 		throws Exception {
 
-		DDMStructure ddmStructure = journalArticle.getDDMStructure();
-
-		return new StructuredContent() {
-			{
-				availableLanguages = LocaleUtil.toW3cLanguageIds(
-					journalArticle.getAvailableLanguageIds());
-				aggregateRating = AggregateRatingUtil.toAggregateRating(
-					_ratingsStatsLocalService.fetchStats(
-						JournalArticle.class.getName(),
-						journalArticle.getResourcePrimKey()));
-				contentFields = _toContentFields(journalArticle);
-				contentSpaceId = journalArticle.getGroupId();
-				contentStructureId = ddmStructure.getStructureId();
-				creator = CreatorUtil.toCreator(
-					_portal,
-					_userLocalService.getUserById(journalArticle.getUserId()));
-				dateCreated = journalArticle.getCreateDate();
-				dateModified = journalArticle.getModifiedDate();
-				datePublished = journalArticle.getDisplayDate();
-				description = journalArticle.getDescription(
-					contextAcceptLanguage.getPreferredLocale());
-				id = journalArticle.getResourcePrimKey();
-				keywords = ListUtil.toArray(
-					_assetTagLocalService.getTags(
-						JournalArticle.class.getName(),
-						journalArticle.getResourcePrimKey()),
-					AssetTag.NAME_ACCESSOR);
-				lastReviewed = journalArticle.getReviewDate();
-				numberOfComments = _commentManager.getCommentsCount(
-					JournalArticle.class.getName(),
-					journalArticle.getResourcePrimKey());
-				renderedContents = transformToArray(
-					ddmStructure.getTemplates(),
-					ddmTemplate -> new RenderedContent() {
-						{
-							renderedContentURL = getJAXRSLink(
-								"getStructuredContentRenderedContentTemplate",
-								journalArticle.getResourcePrimKey(),
-								ddmTemplate.getTemplateId());
-							templateName = ddmTemplate.getName(
-								contextAcceptLanguage.getPreferredLocale());
-						}
-					},
-					RenderedContent.class);
-				taxonomyCategories = transformToArray(
-					_assetCategoryLocalService.getCategories(
-						JournalArticle.class.getName(),
-						journalArticle.getResourcePrimKey()),
-					assetCategory -> new TaxonomyCategory() {
-						{
-							taxonomyCategoryId = assetCategory.getCategoryId();
-							taxonomyCategoryName = assetCategory.getName();
-						}
-					},
-					TaxonomyCategory.class);
-				title = journalArticle.getTitle(
-					contextAcceptLanguage.getPreferredLocale());
-			}
-		};
-	}
-
-	private Value _toValue(DDMFormFieldValue ddmFormFieldValue, Locale locale)
-		throws Exception {
-
-		com.liferay.dynamic.data.mapping.model.Value value =
-			ddmFormFieldValue.getValue();
-
-		if (value == null) {
-			return null;
-		}
-
-		DDMFormField ddmFormField = ddmFormFieldValue.getDDMFormField();
-
-		String valueString = String.valueOf(value.getString(locale));
-
-		if (Objects.equals(
-				DDMFormFieldType.DOCUMENT_LIBRARY, ddmFormField.getType())) {
-
-			JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
-				valueString);
-
-			long classPK = jsonObject.getLong("classPK");
-
-			if (classPK == 0) {
-				return null;
-			}
-
-			FileEntry fileEntry = _dlAppService.getFileEntry(classPK);
-
-			return new Value() {
-				{
-					document = new ContentDocument() {
-						{
-							contentUrl = _dlurlHelper.getPreviewURL(
-								fileEntry, fileEntry.getFileVersion(), null, "",
-								false, false);
-							encodingFormat = fileEntry.getMimeType();
-							fileExtension = fileEntry.getExtension();
-							id = fileEntry.getFileEntryId();
-							sizeInBytes = fileEntry.getSize();
-							title = fileEntry.getTitle();
-						}
-					};
-				}
-			};
-		}
-
-		if (Objects.equals(
-				DDMFormFieldType.GEOLOCATION, ddmFormField.getType())) {
-
-			JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
-				valueString);
-
-			return new Value() {
-				{
-					geo = new Geo() {
-						{
-							latitude = jsonObject.getDouble("latitude");
-							longitude = jsonObject.getDouble("longitude");
-						}
-					};
-				}
-			};
-		}
-
-		if (Objects.equals(DDMFormFieldType.IMAGE, ddmFormField.getType())) {
-			JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
-				valueString);
-
-			long fileEntryId = jsonObject.getLong("fileEntryId");
-
-			if (fileEntryId == 0) {
-				return null;
-			}
-
-			FileEntry fileEntry = _dlAppService.getFileEntry(fileEntryId);
-
-			return new Value() {
-				{
-					image = new StructuredContentImage() {
-						{
-							contentUrl = _dlurlHelper.getPreviewURL(
-								fileEntry, fileEntry.getFileVersion(), null, "",
-								false, false);
-							description = jsonObject.getString("alt");
-							encodingFormat = fileEntry.getMimeType();
-							fileExtension = fileEntry.getExtension();
-							id = fileEntry.getFileEntryId();
-							sizeInBytes = fileEntry.getSize();
-							title = fileEntry.getTitle();
-						}
-					};
-				}
-			};
-		}
-
-		if (Objects.equals(
-				DDMFormFieldType.JOURNAL_ARTICLE, ddmFormField.getType())) {
-
-			JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
-				valueString);
-
-			long classPK = jsonObject.getLong("classPK");
-
-			if (classPK == 0) {
-				return null;
-			}
-
-			JournalArticle journalArticle =
-				_journalArticleService.getLatestArticle(classPK);
-
-			return new Value() {
-				{
-					structuredContentLink = new StructuredContentLink() {
-						{
-							id = journalArticle.getId();
-							title = journalArticle.getTitle();
-						}
-					};
-				}
-			};
-		}
-
-		if (Objects.equals(
-				DDMFormFieldType.LINK_TO_PAGE, ddmFormField.getType())) {
-
-			JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
-				valueString);
-
-			long layoutId = jsonObject.getLong("layoutId");
-
-			if (layoutId == 0) {
-				return null;
-			}
-
-			long groupId = jsonObject.getLong("groupId");
-			boolean privateLayout = jsonObject.getBoolean("privateLayout");
-
-			Layout layoutByUuidAndGroupId = _layoutLocalService.getLayout(
-				groupId, privateLayout, layoutId);
-
-			return new Value() {
-				{
-					link = layoutByUuidAndGroupId.getFriendlyURL();
-				}
-			};
-		}
-
-		return new Value() {
-			{
-				data = valueString;
-			}
-		};
+		return StructuredContentUtil.toStructuredContent(
+			journalArticle, contextAcceptLanguage, _assetCategoryLocalService,
+			_assetTagLocalService, _commentManager, _dlAppService, _dlurlHelper,
+			_fieldsToDDMFormValuesConverter, _journalArticleService,
+			_journalConverter, _layoutLocalService, _portal,
+			_ratingsStatsLocalService, contextUriInfo, _userLocalService);
 	}
 
 	@Reference

@@ -66,9 +66,7 @@ public class UpgradeAsset extends UpgradeProcess {
 			sb.append("(select null from DLFileEntry where fileEntryId = ");
 			sb.append("AssetEntry.classPK)");
 
-			String sql = sb.toString();
-
-			dbTypeToSQLMap.add(DBType.POSTGRESQL, sql);
+			dbTypeToSQLMap.add(DBType.POSTGRESQL, sb.toString());
 
 			runSQL(dbTypeToSQLMap);
 		}

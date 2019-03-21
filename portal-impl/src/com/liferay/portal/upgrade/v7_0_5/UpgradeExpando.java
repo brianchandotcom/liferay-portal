@@ -31,8 +31,8 @@ public class UpgradeExpando extends UpgradeProcess {
 		DBTypeToSQLMap dbTypeToSQLMap = new DBTypeToSQLMap(sql);
 
 		sql =
-			"delete from ExpandoRow er where not exists (select null from " +
-				"ExpandoValue ev where ev.rowId_ = er.rowId_)";
+			"delete from ExpandoRow where not exists (select null from " +
+				"ExpandoValue where ExpandoValue.rowId_ = ExpandoRow.rowId_)";
 
 		dbTypeToSQLMap.add(DBType.POSTGRESQL, sql);
 

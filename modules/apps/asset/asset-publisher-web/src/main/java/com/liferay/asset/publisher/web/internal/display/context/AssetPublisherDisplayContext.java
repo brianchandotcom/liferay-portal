@@ -781,7 +781,7 @@ public class AssetPublisherDisplayContext {
 			"metadataFields", null);
 
 		if (metadataFields == null) {
-			_metadataFields = new String[] {"modified-date"};
+			_metadataFields = new String[] {"author", "modified-date"};
 		}
 		else {
 			_metadataFields = StringUtil.split(metadataFields);

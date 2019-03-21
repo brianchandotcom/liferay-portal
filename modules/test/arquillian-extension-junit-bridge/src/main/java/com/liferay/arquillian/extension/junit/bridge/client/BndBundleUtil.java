@@ -22,7 +22,7 @@ import aQute.bnd.osgi.Analyzer;
 import aQute.bnd.osgi.Jar;
 
 import com.liferay.arquillian.extension.junit.bridge.constants.Headers;
-import com.liferay.arquillian.extension.junit.bridge.server.ArquillianBundleActivator;
+import com.liferay.arquillian.extension.junit.bridge.server.TestBundleActivator;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
 import com.liferay.petra.string.StringUtil;
@@ -104,8 +104,7 @@ public class BndBundleUtil {
 		throws Exception {
 
 		project.setProperty(
-			"Bundle-Activator",
-			ArquillianBundleActivator.class.getCanonicalName());
+			"Bundle-Activator", TestBundleActivator.class.getCanonicalName());
 
 		Set<String> importPackages = new LinkedHashSet<>();
 

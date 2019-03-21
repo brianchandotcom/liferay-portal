@@ -14,19 +14,15 @@
 
 package com.liferay.arquillian.extension.junit.bridge.server;
 
-import com.liferay.arquillian.extension.junit.bridge.command.RunNotifierCommand;
 import com.liferay.arquillian.extension.junit.bridge.constants.Headers;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringUtil;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.ObjectOutputStream;
-import java.io.Serializable;
 
 import java.lang.annotation.Annotation;
 
-import java.net.Socket;
 import java.net.URL;
 
 import java.util.Comparator;
@@ -35,13 +31,10 @@ import java.util.Map;
 import java.util.jar.Attributes;
 import java.util.jar.Manifest;
 
-import org.junit.AssumptionViolatedException;
 import org.junit.Ignore;
 import org.junit.Test;
-import org.junit.runner.Description;
 import org.junit.runners.model.FrameworkField;
 import org.junit.runners.model.FrameworkMethod;
-import org.junit.runners.model.MultipleFailureException;
 import org.junit.runners.model.TestClass;
 
 import org.osgi.framework.Bundle;
@@ -49,9 +42,9 @@ import org.osgi.framework.BundleActivator;
 import org.osgi.framework.BundleContext;
 
 /**
- * @author Cristina González Castellano
+ * @author Shuyang Zhou
  */
-public class ArquillianBundleActivator implements BundleActivator {
+public class TestBundleActivator implements BundleActivator {
 
 	@Override
 	public void start(BundleContext bundleContext) throws Exception {
@@ -114,106 +107,18 @@ public class ArquillianBundleActivator implements BundleActivator {
 
 		};
 
-		bundleContext.addBundleListener(
-			bundleEvent -> {
-				Bundle bundle = bundleEvent.getBundle();
+		Bundle systemBundle = bundleContext.getBundle(0);
 
-				if (!testBundle.equals(bundle) ||
-					(bundle.getState() != Bundle.ACTIVE)) {
+		BundleContext systemBundleContext = systemBundle.getBundleContext();
 
-					return;
-				}
-
-				try (Socket socket = new Socket(
-						reportServerHostName, reportServerPort);
-					ObjectOutputStream objectOutputStream =
-						new ObjectOutputStream(socket.getOutputStream())) {
-
-					_runTestClass(objectOutputStream, testClass);
-				}
-				catch (IOException ioe) {
-					throw new RuntimeException(ioe);
-				}
-			});
+		systemBundleContext.addBundleListener(
+			new TestBundleListener(
+				systemBundleContext, testBundle, testClass,
+				reportServerHostName, reportServerPort));
 	}
 
 	@Override
 	public void stop(BundleContext bundleContext) {
-	}
-
-	private static void _sentToClient(
-		ObjectOutputStream objectOutputStream, Serializable serializable) {
-
-		try {
-			objectOutputStream.writeObject(serializable);
-
-			objectOutputStream.flush();
-		}
-		catch (IOException ioe) {
-			throw new RuntimeException(ioe);
-		}
-	}
-
-	private void _processThrowable(
-		Throwable throwable, ObjectOutputStream objectOutputStream,
-		Description description) {
-
-		if (throwable instanceof AssumptionViolatedException) {
-
-			// To neutralize the nonserializable Matcher field inside
-			// AssumptionViolatedException
-
-			AssumptionViolatedException ave = new AssumptionViolatedException(
-				throwable.getMessage());
-
-			ave.setStackTrace(throwable.getStackTrace());
-
-			_sentToClient(
-				objectOutputStream,
-				RunNotifierCommand.assumptionFailed(description, ave));
-		}
-		else if (throwable instanceof MultipleFailureException) {
-			MultipleFailureException mfe = (MultipleFailureException)throwable;
-
-			for (Throwable t : mfe.getFailures()) {
-				_sentToClient(
-					objectOutputStream,
-					RunNotifierCommand.testFailure(description, t));
-			}
-		}
-		else {
-			_sentToClient(
-				objectOutputStream,
-				RunNotifierCommand.testFailure(description, throwable));
-		}
-	}
-
-	private void _runTestClass(
-		ObjectOutputStream objectOutputStream, TestClass testClass) {
-
-		for (FrameworkMethod frameworkMethod :
-				testClass.getAnnotatedMethods(Test.class)) {
-
-			Description description = Description.createTestDescription(
-				testClass.getName(), frameworkMethod.getName());
-
-			try {
-				_sentToClient(
-					objectOutputStream,
-					RunNotifierCommand.testStarted(description));
-
-				TestExecutorUtil.execute(
-					testClass, frameworkMethod.getMethod());
-			}
-			catch (Throwable t) {
-				_processThrowable(t, objectOutputStream, description);
-			}
-			finally {
-				_sentToClient(
-					objectOutputStream,
-					RunNotifierCommand.testFinished(description));
-			}
-		}
 	}
 
 }

@@ -61,6 +61,8 @@ public class AssetListEntryLocalServiceImpl
 			ServiceContext serviceContext)
 		throws PortalException {
 
+		// Asset list entry
+
 		AssetListEntry assetListEntry =
 			assetListEntryPersistence.findByPrimaryKey(assetListEntryId);
 
@@ -114,9 +116,9 @@ public class AssetListEntryLocalServiceImpl
 			String typeSettings, ServiceContext serviceContext)
 		throws PortalException {
 
-		_validateTitle(groupId, title);
+		// Asset list entry
 
-		// Asset List entry
+		_validateTitle(groupId, title);
 
 		User user = userLocalService.getUser(userId);
 
@@ -198,6 +200,8 @@ public class AssetListEntryLocalServiceImpl
 			long assetListEntryId, long segmentsEntryId, int position)
 		throws PortalException {
 
+		// Asset list entry
+
 		AssetListEntry assetListEntry =
 			assetListEntryPersistence.findByPrimaryKey(assetListEntryId);
 
@@ -256,6 +260,8 @@ public class AssetListEntryLocalServiceImpl
 			long assetListEntryId, long segmentsEntryId)
 		throws PortalException {
 
+		// Asset list entry
+
 		AssetListEntry assetListEntry =
 			assetListEntryPersistence.findByPrimaryKey(assetListEntryId);
 
@@ -283,6 +289,8 @@ public class AssetListEntryLocalServiceImpl
 			int newPosition)
 		throws PortalException {
 
+		// Asset list entry
+
 		AssetListEntry assetListEntry =
 			assetListEntryPersistence.findByPrimaryKey(assetListEntryId);
 
@@ -308,6 +316,8 @@ public class AssetListEntryLocalServiceImpl
 			long assetListEntryId, long segmentsEntryId, String typeSettings,
 			ServiceContext serviceContext)
 		throws PortalException {
+
+		// Asset list entry
 
 		AssetListEntry assetListEntry =
 			assetListEntryPersistence.findByPrimaryKey(assetListEntryId);

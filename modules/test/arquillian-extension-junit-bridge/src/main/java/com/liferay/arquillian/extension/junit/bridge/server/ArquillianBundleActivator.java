@@ -14,6 +14,7 @@
 
 package com.liferay.arquillian.extension.junit.bridge.server;
 
+import com.liferay.arquillian.extension.junit.bridge.command.RunNotifierCommand;
 import com.liferay.arquillian.extension.junit.bridge.constants.Headers;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringUtil;
@@ -38,7 +39,6 @@ import org.junit.AssumptionViolatedException;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.Description;
-import org.junit.runner.notification.Failure;
 import org.junit.runners.model.FrameworkField;
 import org.junit.runners.model.FrameworkMethod;
 import org.junit.runners.model.MultipleFailureException;
@@ -142,12 +142,9 @@ public class ArquillianBundleActivator implements BundleActivator {
 	}
 
 	private static void _sentToClient(
-		ObjectOutputStream objectOutputStream, String methodName,
-		Serializable serializable) {
+		ObjectOutputStream objectOutputStream, Serializable serializable) {
 
 		try {
-			objectOutputStream.writeUTF(methodName);
-
 			objectOutputStream.writeObject(serializable);
 
 			objectOutputStream.flush();
@@ -172,22 +169,22 @@ public class ArquillianBundleActivator implements BundleActivator {
 			ave.setStackTrace(throwable.getStackTrace());
 
 			_sentToClient(
-				objectOutputStream, "fireTestAssumptionFailed",
-				new Failure(description, ave));
+				objectOutputStream,
+				RunNotifierCommand.assumptionFailed(description, ave));
 		}
 		else if (throwable instanceof MultipleFailureException) {
 			MultipleFailureException mfe = (MultipleFailureException)throwable;
 
 			for (Throwable t : mfe.getFailures()) {
 				_sentToClient(
-					objectOutputStream, "fireTestFailure",
-					new Failure(description, t));
+					objectOutputStream,
+					RunNotifierCommand.testFailure(description, t));
 			}
 		}
 		else {
 			_sentToClient(
-				objectOutputStream, "fireTestFailure",
-				new Failure(description, throwable));
+				objectOutputStream,
+				RunNotifierCommand.testFailure(description, throwable));
 		}
 	}
 
@@ -202,7 +199,8 @@ public class ArquillianBundleActivator implements BundleActivator {
 
 			try {
 				_sentToClient(
-					objectOutputStream, "fireTestStarted", description);
+					objectOutputStream,
+					RunNotifierCommand.testStarted(description));
 
 				TestExecutorUtil.execute(
 					testClass, frameworkMethod.getMethod());
@@ -212,7 +210,8 @@ public class ArquillianBundleActivator implements BundleActivator {
 			}
 			finally {
 				_sentToClient(
-					objectOutputStream, "fireTestFinished", description);
+					objectOutputStream,
+					RunNotifierCommand.testFinished(description));
 			}
 		}
 	}

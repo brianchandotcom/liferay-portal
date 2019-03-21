@@ -16,6 +16,7 @@ package com.liferay.arquillian.extension.junit.bridge.junit;
 
 import com.liferay.arquillian.extension.junit.bridge.client.BndBundleUtil;
 import com.liferay.arquillian.extension.junit.bridge.client.MBeans;
+import com.liferay.arquillian.extension.junit.bridge.command.RunNotifierCommand;
 
 import java.io.Closeable;
 import java.io.EOFException;
@@ -24,7 +25,6 @@ import java.io.InputStream;
 import java.io.ObjectInputStream;
 
 import java.lang.annotation.Annotation;
-import java.lang.reflect.Method;
 
 import java.net.InetAddress;
 import java.net.InetSocketAddress;
@@ -235,21 +235,15 @@ public class Arquillian extends Runner implements Filterable {
 
 		@Override
 		public void run() {
-			Class<?> clazz = _runNotifier.getClass();
-
 			try (InputStream inputStream = _socket.getInputStream();
 				ObjectInputStream objectInputStream = new ObjectInputStream(
 					inputStream)) {
 
 				while (true) {
-					String methodName = objectInputStream.readUTF();
+					RunNotifierCommand runNotifierCommand =
+						(RunNotifierCommand)objectInputStream.readObject();
 
-					Object object = objectInputStream.readObject();
-
-					Method method = clazz.getMethod(
-						methodName, object.getClass());
-
-					method.invoke(_runNotifier, object);
+					runNotifierCommand.execute(_runNotifier);
 				}
 			}
 			catch (EOFException eofe) {

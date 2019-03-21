@@ -7,6 +7,7 @@
 	{@param? containerType: string}
 	{@param? highlightedColumn: number}
 	{@param? padding: string}
+	{@param? columnSpacing: bool}
 
 	{let $containerClasses kind="text"}
 		column-overlay-grid
@@ -34,7 +35,16 @@
 		{/let}
 
 		<div class="{$rowContainerClasses}">
-			<div class="h-100 row">
+			{let $rowClasses kind="text"}
+				h-100
+				{sp}row
+
+				{if $columnSpacing == false}
+					{sp}no-gutters
+				{/if}
+			{/let}
+
+			<div class="{$rowClasses}">
 				{for $col in range(12)}
 					{let $columnClasses kind="text"}
 						col

@@ -130,7 +130,7 @@ definition {
 		);
 	}
 
-	@description = "This test asserts only one entry displays in a user's Shared with Me app when multiple users share the same document to him."
+	@description = "This test asserts only one entry displays in a user's Shared Assets app when multiple users share the same document to him."
 	@priority = "4"
 	test AssertSingleEntry {
 		ProductMenu.gotoPortlet(
@@ -220,12 +220,12 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "My Account",
 			panel = "User",
-			portlet = "Shared With Me"
+			portlet = "Shared Assets"
 		);
 
 		var key_dmDocumentTitle = "DM Document Title";
 
-		AssertTextEquals(locator1 = "DocumentsAndMediaShare#SHARED_WITH_ME_DOCUMENT_TITLE", value1 = "DM Document Title");
+		AssertTextEquals(locator1 = "DocumentsAndMediaShare#SHARED_ASSETS_DOCUMENT_TITLE", value1 = "DM Document Title");
 		AssertElementNotPresent(locator1 = "//tbody/tr[2]/td[contains(@class,'table-cell-content')]/a[contains(.,'DM Document Title')]");
 	}
 
@@ -303,7 +303,7 @@ definition {
 		AssertElementNotPresent(locator1="Button#ANY", key_text="Share");
 	}
 
-	@description = "This test ensures that users can Order By Shared Date in the Shared with Me app."
+	@description = "This test ensures that users can Order By Shared Date in the Shared Assets app."
 	@priority = "3"
 	test FilterByAssetType {
 
@@ -328,7 +328,7 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "My Account",
 			panel = "User",
-			portlet = "Shared With Me"
+			portlet = "Shared Assets"
 		);
 
 		ManagementBar.setFilterAndOrder(filterBy = "Asset Types");
@@ -343,7 +343,7 @@ definition {
 		var key_assetType = "Documents";
 
 		AssertClick(
-			locator1="DocumentsAndMediaShare#SHARED_WITH_ME_ASSET_TYPE",
+			locator1="DocumentsAndMediaShare#SHARED_ASSETS_ASSET_TYPE",
 			value1="Documents"
 		);
 
@@ -352,12 +352,12 @@ definition {
 		AssertClick(locator1 = "Button#SELECT", value1 = "Select");
 	}
 
-	@description = "This test ensures that users receives an email when a document is shared with them. This email contains a link that navigates user to Shared With Me app."
+	@description = "This test ensures that users receives an email when a document is shared with them. This email contains a link that navigates user to Shared Assets app."
 	@priority = "4"
-	test GoToSharedWithMeViaEmail {
+	test GoToSharedAssetsViaEmail {
 		property custom.properties = "message.boards.message.formats.default=html${line.separator}pop.server.notifications.enabled=true${line.separator}pop.server.subdomain=${line.separator}mail.session.mail.smtp.auth=true${line.separator}mail.session.mail.store.protocol=pop3${line.separator}mail.session.mail.transport.protocol=smtp";
 		property dummy.socket.proxy.disabled = "true";
-		property test.name.skip.portal.instance = "DMSharing#GoToSharedWithMeViaEmail";
+		property test.name.skip.portal.instance = "DMSharing#GoToSharedAssetsViaEmail";
 		var portalURL = PropsUtil.get("portal.url");
 
 		var siteName = TestCase.getSiteName(siteName = "${siteName}");
@@ -447,15 +447,15 @@ definition {
 
 		SelectWindow(locator1 = "title=- Liferay");
 
-		DMDocumentSharing.viewDocumentViaSharedWithMe(
+		DMDocumentSharing.viewDocumentViaSharedAssets(
 			assetSharingPermission = "View",
 			dmDocumentTitle = "DM Document Title (Version 1.0)"
 		);
 	}
 
-	@description = "This test ensures that users receive a notification in portal when a document is shared to them, and that clicking on that notification navigates them to the Shared With Me app."
+	@description = "This test ensures that users receive a notification in portal when a document is shared to them, and that clicking on that notification navigates them to the Shared Assets app."
 	@priority = "4"
-	test GoToSharedWithMeViaNotifications {
+	test GoToSharedAssetsViaNotifications {
 		DMDocumentSharing.addDocumentWithOnlyOwnerPermissions(
 			dmDocumentDescription = "DM Document Description",
 			dmDocumentFile = "Document_1.doc",
@@ -484,7 +484,7 @@ definition {
 			ownerName = "Test Test"
 		);
 
-		DMDocumentSharing.viewDocumentViaSharedWithMe(
+		DMDocumentSharing.viewDocumentViaSharedAssets(
 			assetSharingPermission = "View",
 			dmDocumentTitle = "DM Document Title (Version 1.0)"
 		);
@@ -580,7 +580,7 @@ definition {
 		);
 	}
 
-	@description = "This test ensures that users can Order By Shared Date in the Shared with Me app."
+	@description = "This test ensures that users can Order By Shared Date in the Shared Assets app."
 	@priority = "3"
 	test OrderBySharedDate {
 		DMDocument.addMultiplePG(
@@ -613,7 +613,7 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "My Account",
 			panel = "User",
-			portlet = "Shared With Me"
+			portlet = "Shared Assets"
 		);
 
 		ManagementBar.setFilterAndOrder(orderBy = "Shared Date");
@@ -621,9 +621,9 @@ definition {
 		ManagementBar.toggleViewOrder(order = "Descending");
 	}
 
-	@description = "This test asserts that users can share via Shared With Me app."
+	@description = "This test asserts that users can share via Shared Assets app."
 	@priority = "5"
-	test ShareViaSharedWithMe {
+	test ShareViaSharedAssets {
 		JSONUser.addUser(
 			userEmailAddress = "userea2@liferay.com",
 			userFirstName = "userfn2",
@@ -667,10 +667,10 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "My Account",
 			panel = "User",
-			portlet = "Shared With Me"
+			portlet = "Shared Assets"
 		);
 
-		DMNavigator.gotoShareViaSharedWithMe(dmDocumentTitle = "DM Document Title");
+		DMNavigator.gotoShareViaSharedAssets(dmDocumentTitle = "DM Document Title");
 
 		DMDocument.sharePG(
 			shareable = "true",
@@ -734,12 +734,12 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "My Account",
 			panel = "User",
-			portlet = "Shared With Me"
+			portlet = "Shared Assets"
 		);
 
 		var key_dmDocumentTitle = "DM Document Title";
 
-		AssertElementNotPresent(locator1 = "DocumentsAndMediaShare#SHARED_WITH_ME_DOCUMENT_OPTIONS");
+		AssertElementNotPresent(locator1 = "DocumentsAndMediaShare#SHARED_ASSETS_DOCUMENT_OPTIONS");
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 

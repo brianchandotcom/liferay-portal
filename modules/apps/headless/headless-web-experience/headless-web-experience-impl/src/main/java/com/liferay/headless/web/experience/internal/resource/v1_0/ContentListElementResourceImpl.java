@@ -37,39 +37,25 @@ import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFolder;
 import com.liferay.document.library.kernel.service.DLAppService;
 import com.liferay.document.library.util.DLURLHelper;
-import com.liferay.dynamic.data.mapping.model.DDMFormField;
-import com.liferay.dynamic.data.mapping.model.DDMFormFieldType;
-import com.liferay.dynamic.data.mapping.model.DDMStructure;
-import com.liferay.dynamic.data.mapping.service.DDMTemplateService;
-import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
-import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
-import com.liferay.dynamic.data.mapping.storage.Fields;
 import com.liferay.dynamic.data.mapping.util.FieldsToDDMFormValuesConverter;
 import com.liferay.headless.web.experience.dto.v1_0.AdaptedImage;
 import com.liferay.headless.web.experience.dto.v1_0.BlogPosting;
-import com.liferay.headless.web.experience.dto.v1_0.ContentField;
 import com.liferay.headless.web.experience.dto.v1_0.ContentListElement;
 import com.liferay.headless.web.experience.dto.v1_0.Document;
 import com.liferay.headless.web.experience.dto.v1_0.Folder;
 import com.liferay.headless.web.experience.dto.v1_0.GenericContentListElement;
-import com.liferay.headless.web.experience.dto.v1_0.Geo;
 import com.liferay.headless.web.experience.dto.v1_0.Image;
 import com.liferay.headless.web.experience.dto.v1_0.KnowledgeBaseArticle;
 import com.liferay.headless.web.experience.dto.v1_0.ParentKnowledgeBaseFolder;
-import com.liferay.headless.web.experience.dto.v1_0.RenderedContent;
 import com.liferay.headless.web.experience.dto.v1_0.StructuredContent;
-import com.liferay.headless.web.experience.dto.v1_0.StructuredContentLink;
 import com.liferay.headless.web.experience.dto.v1_0.TaxonomyCategory;
-import com.liferay.headless.web.experience.dto.v1_0.Value;
 import com.liferay.headless.web.experience.internal.dto.v1_0.util.AggregateRatingUtil;
-import com.liferay.headless.web.experience.internal.dto.v1_0.util.ContentDocumentUtil;
-import com.liferay.headless.web.experience.internal.dto.v1_0.util.ContentStructureUtil;
 import com.liferay.headless.web.experience.internal.dto.v1_0.util.CreatorUtil;
+import com.liferay.headless.web.experience.internal.dto.v1_0.util.StructuredContentUtil;
 import com.liferay.headless.web.experience.resource.v1_0.ContentListElementResource;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.model.JournalFolder;
 import com.liferay.journal.service.JournalArticleService;
-import com.liferay.journal.util.JournalContent;
 import com.liferay.journal.util.JournalConverter;
 import com.liferay.knowledge.base.model.KBArticle;
 import com.liferay.knowledge.base.model.KBFolder;
@@ -78,16 +64,12 @@ import com.liferay.knowledge.base.service.KBFolderService;
 import com.liferay.message.boards.model.MBMessage;
 import com.liferay.portal.kernel.comment.CommentManager;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
-import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.ListUtil;
-import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.vulcan.pagination.Page;
@@ -98,8 +80,6 @@ import com.liferay.segments.service.SegmentsEntryLocalService;
 import com.liferay.wiki.model.WikiPage;
 
 import java.util.List;
-import java.util.Locale;
-import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Stream;
 
@@ -142,6 +122,17 @@ public class ContentListElementResourceImpl
 					pagination.getEndPosition()),
 				this::_toAssetListElement),
 			pagination, assetListEntry.getAssetEntriesCount(segmentsEntryId));
+	}
+
+	private static TaxonomyCategory _toTaxonomyCategory(
+		AssetCategory assetCategory) {
+
+		return new TaxonomyCategory() {
+			{
+				taxonomyCategoryId = assetCategory.getCategoryId();
+				taxonomyCategoryName = assetCategory.getName();
+			}
+		};
 	}
 
 	private AdaptedImage[] _getAdaptiveMedias(FileEntry fileEntry)
@@ -337,45 +328,6 @@ public class ContentListElementResourceImpl
 		};
 	}
 
-	private ContentField _toContentField(DDMFormFieldValue ddmFormFieldValue)
-		throws Exception {
-
-		DDMFormField ddmFormField = ddmFormFieldValue.getDDMFormField();
-
-		return new ContentField() {
-			{
-				dataType = ContentStructureUtil.toDataType(ddmFormField);
-				inputControl = ContentStructureUtil.toInputControl(
-					ddmFormField);
-				name = ddmFormField.getName();
-				repeatable = ddmFormField.isRepeatable();
-				value = _toValue(
-					ddmFormFieldValue,
-					contextAcceptLanguage.getPreferredLocale());
-
-				nestedFields = transformToArray(
-					ddmFormFieldValue.getNestedDDMFormFieldValues(),
-					value -> _toContentField(value), ContentField.class);
-			}
-		};
-	}
-
-	private ContentField[] _toContentFields(JournalArticle journalArticle)
-		throws Exception {
-
-		DDMStructure ddmStructure = journalArticle.getDDMStructure();
-
-		Fields fields = _journalConverter.getDDMFields(
-			ddmStructure, journalArticle.getContent());
-
-		DDMFormValues ddmFormValues = _fieldsToDDMFormValuesConverter.convert(
-			ddmStructure, fields);
-
-		return transformToArray(
-			ddmFormValues.getDDMFormFieldValues(), this::_toContentField,
-			ContentField.class);
-	}
-
 	private Document _toDocument(FileEntry fileEntry) throws Exception {
 		return _toDocument(
 			fileEntry, fileEntry.getFileVersion(),
@@ -544,210 +496,12 @@ public class ContentListElementResourceImpl
 			JournalArticle journalArticle)
 		throws Exception {
 
-		DDMStructure ddmStructure = journalArticle.getDDMStructure();
-
-		return new StructuredContent() {
-			{
-				availableLanguages = LocaleUtil.toW3cLanguageIds(
-					journalArticle.getAvailableLanguageIds());
-				aggregateRating = AggregateRatingUtil.toAggregateRating(
-					_ratingsStatsLocalService.fetchStats(
-						JournalArticle.class.getName(),
-						journalArticle.getResourcePrimKey()));
-				contentFields = _toContentFields(journalArticle);
-				contentSpaceId = journalArticle.getGroupId();
-				contentStructureId = ddmStructure.getStructureId();
-				creator = CreatorUtil.toCreator(
-					_portal,
-					_userLocalService.getUserById(journalArticle.getUserId()));
-				dateCreated = journalArticle.getCreateDate();
-				dateModified = journalArticle.getModifiedDate();
-				datePublished = journalArticle.getDisplayDate();
-				description = journalArticle.getDescription(
-					contextAcceptLanguage.getPreferredLocale());
-				id = journalArticle.getResourcePrimKey();
-				keywords = ListUtil.toArray(
-					_assetTagLocalService.getTags(
-						JournalArticle.class.getName(),
-						journalArticle.getResourcePrimKey()),
-					AssetTag.NAME_ACCESSOR);
-				lastReviewed = journalArticle.getReviewDate();
-				numberOfComments = _commentManager.getCommentsCount(
-					JournalArticle.class.getName(),
-					journalArticle.getResourcePrimKey());
-				renderedContents = transformToArray(
-					ddmStructure.getTemplates(),
-					ddmTemplate -> new RenderedContent() {
-						{
-							renderedContentURL = getJAXRSLink(
-								BaseStructuredContentResourceImpl.class,
-								"getStructuredContentRenderedContentTemplate",
-								journalArticle.getResourcePrimKey(),
-								ddmTemplate.getTemplateId());
-							templateName = ddmTemplate.getName(
-								contextAcceptLanguage.getPreferredLocale());
-						}
-					},
-					RenderedContent.class);
-				taxonomyCategories = transformToArray(
-					_assetCategoryLocalService.getCategories(
-						JournalArticle.class.getName(),
-						journalArticle.getResourcePrimKey()),
-					assetCategory -> new TaxonomyCategory() {
-						{
-							taxonomyCategoryId = assetCategory.getCategoryId();
-							taxonomyCategoryName = assetCategory.getName();
-						}
-					},
-					TaxonomyCategory.class);
-				title = journalArticle.getTitle(
-					contextAcceptLanguage.getPreferredLocale());
-			}
-		};
-	}
-
-	private TaxonomyCategory _toTaxonomyCategory(AssetCategory assetCategory) {
-		return new TaxonomyCategory() {
-			{
-				taxonomyCategoryId = assetCategory.getCategoryId();
-				taxonomyCategoryName = assetCategory.getName();
-			}
-		};
-	}
-
-	private Value _toValue(DDMFormFieldValue ddmFormFieldValue, Locale locale)
-		throws Exception {
-
-		com.liferay.dynamic.data.mapping.model.Value value =
-			ddmFormFieldValue.getValue();
-
-		if (value == null) {
-			return null;
-		}
-
-		DDMFormField ddmFormField = ddmFormFieldValue.getDDMFormField();
-
-		String valueString = String.valueOf(value.getString(locale));
-
-		if (Objects.equals(
-				DDMFormFieldType.DOCUMENT_LIBRARY, ddmFormField.getType())) {
-
-			JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
-				valueString);
-
-			long classPK = jsonObject.getLong("classPK");
-
-			if (classPK == 0) {
-				return null;
-			}
-
-			FileEntry fileEntry = _dlAppService.getFileEntry(classPK);
-
-			return new Value() {
-				{
-					document = ContentDocumentUtil.toContentDocument(
-						_dlURLHelper, fileEntry);
-				}
-			};
-		}
-
-		if (Objects.equals(
-				DDMFormFieldType.GEOLOCATION, ddmFormField.getType())) {
-
-			JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
-				valueString);
-
-			return new Value() {
-				{
-					geo = new Geo() {
-						{
-							latitude = jsonObject.getDouble("latitude");
-							longitude = jsonObject.getDouble("longitude");
-						}
-					};
-				}
-			};
-		}
-
-		if (Objects.equals(DDMFormFieldType.IMAGE, ddmFormField.getType())) {
-			JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
-				valueString);
-
-			long fileEntryId = jsonObject.getLong("fileEntryId");
-
-			if (fileEntryId == 0) {
-				return null;
-			}
-
-			FileEntry fileEntry = _dlAppService.getFileEntry(fileEntryId);
-
-			return new Value() {
-				{
-					image = ContentDocumentUtil.toContentDocument(
-						_dlURLHelper, fileEntry);
-					imageDescription = jsonObject.getString("alt");
-					imageId = fileEntryId;
-				}
-			};
-		}
-
-		if (Objects.equals(
-				DDMFormFieldType.JOURNAL_ARTICLE, ddmFormField.getType())) {
-
-			JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
-				valueString);
-
-			long classPK = jsonObject.getLong("classPK");
-
-			if (classPK == 0) {
-				return null;
-			}
-
-			JournalArticle journalArticle =
-				_journalArticleService.getLatestArticle(classPK);
-
-			return new Value() {
-				{
-					structuredContentLink = new StructuredContentLink() {
-						{
-							id = journalArticle.getId();
-							title = journalArticle.getTitle();
-						}
-					};
-				}
-			};
-		}
-
-		if (Objects.equals(
-				DDMFormFieldType.LINK_TO_PAGE, ddmFormField.getType())) {
-
-			JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
-				valueString);
-
-			long layoutId = jsonObject.getLong("layoutId");
-
-			if (layoutId == 0) {
-				return null;
-			}
-
-			long groupId = jsonObject.getLong("groupId");
-			boolean privateLayout = jsonObject.getBoolean("privateLayout");
-
-			Layout layoutByUuidAndGroupId = _layoutLocalService.getLayout(
-				groupId, privateLayout, layoutId);
-
-			return new Value() {
-				{
-					link = layoutByUuidAndGroupId.getFriendlyURL();
-				}
-			};
-		}
-
-		return new Value() {
-			{
-				data = valueString;
-			}
-		};
+		return StructuredContentUtil.toStructuredContent(
+			journalArticle, contextAcceptLanguage, _assetCategoryLocalService,
+			_assetTagLocalService, _commentManager, _dlAppService, _dlURLHelper,
+			_fieldsToDDMFormValuesConverter, _journalArticleService,
+			_journalConverter, _layoutLocalService, _portal,
+			_ratingsStatsLocalService, contextUriInfo, _userLocalService);
 	}
 
 	@Reference
@@ -775,9 +529,6 @@ public class ContentListElementResourceImpl
 	private HttpServletRequest _contextHttpServletRequest;
 
 	@Reference
-	private DDMTemplateService _ddmTemplateService;
-
-	@Reference
 	private DLAppService _dlAppService;
 
 	@Reference
@@ -788,9 +539,6 @@ public class ContentListElementResourceImpl
 
 	@Reference
 	private JournalArticleService _journalArticleService;
-
-	@Reference
-	private JournalContent _journalContent;
 
 	@Reference
 	private JournalConverter _journalConverter;

@@ -49,7 +49,7 @@ public class WorkflowMetricsConfigurationModelListener
 
 		try {
 			int checkSLAJobInterval = GetterUtil.getInteger(
-				properties.get("calculateSLAJobInterval"),
+				properties.get("checkSLAJobInterval"),
 				ddmFormWebConfiguration.checkSLAJobInterval());
 
 			_validateCheckSLAJobInterval(checkSLAJobInterval);

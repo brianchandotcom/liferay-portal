@@ -56,7 +56,7 @@
 </tr>
 <tr>
 	<td>FRAGMENT_SIDEBAR_TAB_BUTTON</td>
-	<td>//button[@title='${key_tabName}']</td>
+	<td>//button[@data-title='${key_tabName}']</td>
 	<td></td>
 </tr>
 <tr>
@@ -104,12 +104,12 @@
 <!--EDITABLE_FIELD_TOOLBAR-->
 <tr>
 	<td>EDITABLE_FIELD_TOOLBAR_EDIT_BUTTON</td>
-	<td>//button[@title='Edit']</td>
+	<td>//button[@data-title='Edit']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>EDITABLE_FIELD_TOOLBAR_MAP_BUTTON</td>
-	<td>//button[@title='Map']</td>
+	<td>//button[@data-title='Map']</td>
 	<td></td>
 </tr>
 </tbody>

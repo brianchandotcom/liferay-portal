@@ -43,33 +43,33 @@ public class JSONWebServiceClientImpl extends BaseJSONWebServiceClientImpl {
 	public void activate(Map<String, Object> properties)
 		throws IOReactorException {
 
-		_setHeaders(_getString("headers", properties));
+		_setHeaders(getString("headers", properties));
 
-		setHostName(_getString("hostName", properties));
-		setHostPort(Integer.parseInt(_getString("hostPort", properties)));
+		setHostName(getString("hostName", properties));
+		setHostPort(Integer.parseInt(getString("hostPort", properties)));
 		setKeyStore((KeyStore)properties.get("keyStore"));
-		setLogin(_getString("login", properties));
+		setLogin(getString("login", properties));
 
 		if (properties.containsKey("maxAttempts")) {
 			setMaxAttempts(
-				Integer.parseInt(_getString("maxAttempts", properties)));
+				Integer.parseInt(getString("maxAttempts", properties)));
 		}
 
-		setPassword(_getString("password", properties));
-		setProtocol(_getString("protocol", properties));
+		setPassword(getString("password", properties));
+		setProtocol(getString("protocol", properties));
 
 		if (properties.containsKey("proxyAuthType")) {
-			setProxyAuthType(_getString("proxyAuthType", properties));
-			setProxyDomain(_getString("proxyDomain", properties));
-			setProxyWorkstation(_getString("proxyWorkstation", properties));
+			setProxyAuthType(getString("proxyAuthType", properties));
+			setProxyDomain(getString("proxyDomain", properties));
+			setProxyWorkstation(getString("proxyWorkstation", properties));
 		}
 
 		if (properties.containsKey("proxyHostName")) {
-			setProxyHostName(_getString("proxyHostName", properties));
+			setProxyHostName(getString("proxyHostName", properties));
 			setProxyHostPort(
-				Integer.parseInt(_getString("proxyHostPort", properties)));
-			setProxyLogin(_getString("proxyLogin", properties));
-			setProxyPassword(_getString("proxyPassword", properties));
+				Integer.parseInt(getString("proxyHostPort", properties)));
+			setProxyLogin(getString("proxyLogin", properties));
+			setProxyPassword(getString("proxyPassword", properties));
 		}
 
 		afterPropertiesSet();
@@ -85,17 +85,17 @@ public class JSONWebServiceClientImpl extends BaseJSONWebServiceClientImpl {
 		super.destroy();
 	}
 
-	@Override
-	protected void signRequest(HttpRequestBase httpRequestBase)
-		throws JSONWebServiceTransportException.SigningFailure {
-	}
-
-	private String _getString(String key, Map<String, Object> properties) {
+	protected String getString(String key, Map<String, Object> properties) {
 		if (!properties.containsKey(key)) {
 			return null;
 		}
 
 		return String.valueOf(properties.get(key));
+	}
+
+	@Override
+	protected void signRequest(HttpRequestBase httpRequestBase)
+		throws JSONWebServiceTransportException.SigningFailure {
 	}
 
 	private void _setHeaders(String headersString) {

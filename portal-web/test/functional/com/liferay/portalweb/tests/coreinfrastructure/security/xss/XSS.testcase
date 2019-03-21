@@ -118,16 +118,24 @@ definition {
 
 		Navigator.openURL();
 
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			panel = "Site Administration",
+			portlet = "Bookmarks"
+		);
+
+		Bookmark.addCP(
+			bookmarkName = "Test Bookmark Name",
+			bookmarkURL = "https://www.liferay.com"
+		);
+
+		Navigator.openURL();
+
 		Portlet.addPG(portletName = "Bookmarks");
 
 		Navigator.openURL();
 
 		RelatedAssets.gotoBookmarksSelectionPG(assetType = "Bookmarks Entry");
-
-		Bookmark.addRelatedAssetBookmarksEntryPG(
-			bookmarkName = "Test Bookmark Name",
-			bookmarkURL = "http://www.liferay.com"
-		);
 
 		AssertElementNotPresent(locator1 = "//body[.='XSS']");
 

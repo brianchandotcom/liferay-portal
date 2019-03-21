@@ -30,7 +30,7 @@
 </tr>
 <tr>
 	<td>SELECT_FEATURED_IMAGE_TYPE</td>
-	<td>//div[contains(@class,'input-select-wrapper')]/select</td>
+	<td>//div[contains(@class,'input-select-wrapper')]/select[contains(@id,'smallImageSource')]</td>
 	<td></td>
 </tr>
 <tr>

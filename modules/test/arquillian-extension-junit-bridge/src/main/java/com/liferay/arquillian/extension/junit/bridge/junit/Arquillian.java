@@ -123,14 +123,24 @@ public class Arquillian extends Runner implements Filterable {
 				try {
 					frameworkMBean.startBundle(bundleId);
 
-					try (Socket socket = serverSocket.accept()) {
-						Thread thread = new Thread(
-							new ServerRunnable(runNotifier, socket),
-							_clazz.getName() + "-Test-Thread");
+					try (Socket socket = serverSocket.accept();
+						InputStream inputStream = socket.getInputStream();
+						ObjectInputStream objectInputStream =
+							new ObjectInputStream(inputStream)) {
 
-						thread.start();
+						while (true) {
+							RunNotifierCommand runNotifierCommand =
+								(RunNotifierCommand)
+									objectInputStream.readObject();
 
-						thread.join();
+							runNotifierCommand.execute(runNotifier);
+						}
+					}
+					catch (EOFException eofe) {
+					}
+					catch (Throwable t) {
+						runNotifier.fireTestFailure(
+							new Failure(getDescription(), t));
 					}
 				}
 				finally {
@@ -231,38 +241,6 @@ public class Arquillian extends Runner implements Filterable {
 
 		private final List<String> _filteredMethodNames = new ArrayList<>();
 		private List<FrameworkMethod> _testFrameworkMethods;
-
-	}
-
-	private class ServerRunnable implements Runnable {
-
-		@Override
-		public void run() {
-			try (InputStream inputStream = _socket.getInputStream();
-				ObjectInputStream objectInputStream = new ObjectInputStream(
-					inputStream)) {
-
-				while (true) {
-					RunNotifierCommand runNotifierCommand =
-						(RunNotifierCommand)objectInputStream.readObject();
-
-					runNotifierCommand.execute(_runNotifier);
-				}
-			}
-			catch (EOFException eofe) {
-			}
-			catch (Throwable t) {
-				_runNotifier.fireTestFailure(new Failure(getDescription(), t));
-			}
-		}
-
-		private ServerRunnable(RunNotifier runNotifier, Socket socket) {
-			_runNotifier = runNotifier;
-			_socket = socket;
-		}
-
-		private final RunNotifier _runNotifier;
-		private final Socket _socket;
 
 	}
 

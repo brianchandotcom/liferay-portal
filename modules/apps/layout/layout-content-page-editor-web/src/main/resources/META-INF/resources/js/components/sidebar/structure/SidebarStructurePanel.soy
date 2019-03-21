@@ -5,6 +5,8 @@
  */
 {template .render}
 	{@param? _handleElementClick: any}
+	{@param? _handleElementMouseEnter: any}
+	{@param? _handleElementMouseLeave: any}
 	{@param? _handleElementRemoveButtonClick: any}
 	{@param? activeItemId: ?}
 	{@param? activeItemType: ?}
@@ -26,6 +28,8 @@
 								{param activeItemType: $activeItemType /}
 								{param clickHandler: $_handleElementClick /}
 								{param fragmentEntryLinks: $fragmentEntryLinks /}
+								{param mouseEnterHandler: $_handleElementMouseEnter /}
+								{param mouseLeaveHandler: $_handleElementMouseLeave /}
 								{param hoveredItemId: $hoveredItemId /}
 								{param hoveredItemType: $hoveredItemType /}
 								{param itemTypes: $itemTypes /}
@@ -53,6 +57,8 @@
 	{@param? hoveredItemType: ?}
 	{@param? itemTypes: ?}
 	{@param? layoutData: ?}
+	{@param? mouseEnterHandler: ?}
+	{@param? mouseLeaveHandler: ?}
 	{@param? removeButtonClickHandler: ?}
 	{@param? spritemap: string}
 
@@ -69,6 +75,8 @@
 		{param hoveredItemId: $hoveredItemId /}
 		{param hoveredItemType: $hoveredItemType /}
 		{param itemTypes: $itemTypes /}
+		{param mouseEnterHandler: $mouseEnterHandler /}
+		{param mouseLeaveHandler: $mouseLeaveHandler /}
 		{param removeButtonClickHandler: $removeButtonClickHandler /}
 		{param spritemap: $spritemap /}
 		{param treeLevelId: 'sidebar-tree-root' /}
@@ -93,6 +101,8 @@
 						{param hoveredItemId: $hoveredItemId /}
 						{param hoveredItemType: $hoveredItemType /}
 						{param itemTypes: $itemTypes /}
+						{param mouseEnterHandler: $mouseEnterHandler /}
+						{param mouseLeaveHandler: $mouseLeaveHandler /}
 						{param row: $row /}
 						{param rowIndex: index($row) /}
 						{param removeButtonClickHandler: $removeButtonClickHandler /}
@@ -116,6 +126,8 @@
 	{@param? hoveredItemId: ?}
 	{@param? hoveredItemType: ?}
 	{@param? itemTypes: ?}
+	{@param? mouseEnterHandler: ?}
+	{@param? mouseLeaveHandler: ?}
 	{@param? row: ?}
 	{@param? rowIndex: ?}
 	{@param? removeButtonClickHandler: ?}
@@ -137,6 +149,8 @@
 		{param hoveredItemId: $hoveredItemId /}
 		{param hoveredItemType: $hoveredItemType /}
 		{param itemTypes: $itemTypes /}
+		{param mouseEnterHandler: $mouseEnterHandler /}
+		{param mouseLeaveHandler: $mouseLeaveHandler /}
 		{param removeButtonClickHandler: $removeButtonClickHandler /}
 		{param spritemap: $spritemap /}
 		{param treeLevelId: $treeRowLevelId /}
@@ -162,6 +176,8 @@
 						{param hoveredItemId: $hoveredItemId /}
 						{param hoveredItemType: $hoveredItemType /}
 						{param itemTypes: $itemTypes /}
+						{param mouseEnterHandler: $mouseEnterHandler /}
+						{param mouseLeaveHandler: $mouseLeaveHandler /}
 						{param removeButtonClickHandler: $removeButtonClickHandler /}
 						{param spritemap: $spritemap /}
 						{param treeColLevelId: $treeColLevelId /}
@@ -184,6 +200,8 @@
 	{@param? hoveredItemId: ?}
 	{@param? hoveredItemType: ?}
 	{@param? itemTypes: ?}
+	{@param? mouseEnterHandler: ?}
+	{@param? mouseLeaveHandler: ?}
 	{@param? removeButtonClickHandler: ?}
 	{@param? spritemap: string}
 	{@param? treeColLevelId: ?}
@@ -200,6 +218,8 @@
 		{param hoveredItemId: $hoveredItemId /}
 		{param hoveredItemType: $hoveredItemType /}
 		{param itemTypes: $itemTypes /}
+		{param mouseEnterHandler: $mouseEnterHandler /}
+		{param mouseLeaveHandler: $mouseLeaveHandler /}
 		{param removeButtonClickHandler: $removeButtonClickHandler /}
 		{param spritemap: $spritemap /}
 		{param treeLevelId: $treeColLevelId /}
@@ -226,6 +246,8 @@
 							{param hoveredItemId: $hoveredItemId /}
 							{param hoveredItemType: $hoveredItemType /}
 							{param itemTypes: $itemTypes /}
+							{param mouseEnterHandler: $mouseEnterHandler /}
+							{param mouseLeaveHandler: $mouseLeaveHandler /}
 							{param removeButtonClickHandler: $removeButtonClickHandler /}
 							{param spritemap: $spritemap /}
 						{/call}
@@ -251,6 +273,8 @@
 	{@param? hoveredItemId: ?}
 	{@param? hoveredItemType: ?}
 	{@param? itemTypes: ?}
+	{@param? mouseEnterHandler: ?}
+	{@param? mouseLeaveHandler: ?}
 	{@param? removeButtonClickHandler: ?}
 	{@param? spritemap: string}
 	{@param? treeLevelId: ?}
@@ -271,6 +295,8 @@
 		<div
 			class="fragments-editor-sidebar-section__structure-panel__item-name text-truncate"
 			data-onclick="{$clickHandler}"
+			data-onmouseenter="{$mouseEnterHandler}"
+			data-onmouseleave="{$mouseLeaveHandler}"
 			data-element-id="{$elementId}"
 			data-element-type="{$elementType}"
 		>

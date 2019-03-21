@@ -5,11 +5,7 @@ import '../fragments/FragmentsEditorSidebarCard.es';
 import {FRAGMENTS_EDITOR_ITEM_TYPES} from '../../../utils/constants';
 import {focusItem, removeItem, setIn} from '../../../utils/FragmentsEditorUpdateUtils.es';
 import {getConnectedComponent} from '../../../store/ConnectedComponent.es';
-import {
-	REMOVE_FRAGMENT_ENTRY_LINK,
-	REMOVE_SECTION,
-	UPDATE_ACTIVE_ITEM
-} from '../../../actions/actions.es';
+import {CLEAR_HOVERED_ITEM, REMOVE_FRAGMENT_ENTRY_LINK, REMOVE_SECTION, UPDATE_ACTIVE_ITEM, UPDATE_HOVERED_ITEM, CLEAR_ACTIVE_ITEM} from '../../../actions/actions.es';
 import templates from './SidebarStructurePanel.soy';
 
 /**
@@ -44,18 +40,44 @@ class SidebarStructurePanel extends Component {
 	 * @review
 	 */
 	_handleElementClick(event) {
-		const itemId = event.delegateTarget.dataset.elementId;
-		const itemType = event.delegateTarget.dataset.elementType;
+		const {elementId, elementType} = event.delegateTarget.dataset;
 
 		this.store.dispatchAction(
 			UPDATE_ACTIVE_ITEM,
 			{
-				activeItemId: itemId,
-				activeItemType: itemType
+				activeItemId: elementId,
+				activeItemType: elementType
 			}
 		);
 
-		focusItem(itemId, itemType);
+		focusItem(elementId, elementType);
+	}
+
+	/**
+	 * @param {MouseEvent} event
+	 * @private
+	 * @review
+	 */
+	_handleElementMouseEnter(event) {
+		const {elementId, elementType} = event.delegateTarget.dataset;
+
+		this.store.dispatchAction(
+			UPDATE_HOVERED_ITEM,
+			{
+				hoveredItemId: elementId,
+				hoveredItemType: elementType
+			}
+		);
+	}
+
+	/**
+	 * @private
+	 * @review
+	 */
+	_handleElementMouseLeave() {
+		this.store.dispatchAction(
+			CLEAR_ACTIVE_ITEM
+		);
 	}
 
 	/**

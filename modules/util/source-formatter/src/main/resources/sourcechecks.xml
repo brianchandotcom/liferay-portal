@@ -16,6 +16,7 @@
 		<check name="BNDBundleCheck" />
 		<check name="BNDCapabilityCheck" />
 		<check name="BNDDefinitionKeysCheck" />
+		<check name="BNDDeprecatedAppBNDsCheck" />
 		<check name="BNDImportsCheck">
 			<property name="enabled" value="false" />
 		</check>

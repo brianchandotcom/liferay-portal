@@ -32,6 +32,14 @@ const SECTION_FLOATING_TOOLBAR_BUTTONS = [
  */
 class FragmentEntryLinkListSection extends Component {
 
+	created() {
+		this._handleBodyMouseLeave = this._handleBodyMouseLeave.bind(this);
+		this._handleBodyMouseUp = this._handleBodyMouseUp.bind(this);
+
+		document.body.addEventListener('mouseleave', this._handleBodyMouseLeave);
+		document.body.addEventListener('mouseup', this._handleBodyMouseUp);
+	}
+
 	/**
 	 * @inheritdoc
 	 * @review
@@ -121,6 +129,26 @@ class FragmentEntryLinkListSection extends Component {
 			this._floatingToolbar.dispose();
 
 			this._floatingToolbar = null;
+		}
+	}
+
+	/**
+	 * @private
+	 * @review
+	 */
+	_handleBodyMouseLeave() {
+		if (this._resizing) {
+			this._resizing = false;
+		}
+	}
+
+	/**
+	 * @private
+	 * @review
+	 */
+	_handleBodyMouseUp() {
+		if (this._resizing) {
+			this._resizing = false;
 		}
 	}
 

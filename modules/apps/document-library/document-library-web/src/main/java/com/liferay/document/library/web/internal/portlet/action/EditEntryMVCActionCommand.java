@@ -29,6 +29,7 @@ import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLVersionNumberIncrease;
 import com.liferay.document.library.kernel.service.DLAppService;
 import com.liferay.document.library.kernel.service.DLTrashService;
+import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -57,6 +58,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Consumer;
 import java.util.stream.Stream;
 
 import javax.portlet.ActionRequest;
@@ -289,36 +291,39 @@ public class EditEntryMVCActionCommand extends BaseMVCActionCommand {
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			DLFileEntry.class.getName(), actionRequest);
 
-		long[] folderIds = ParamUtil.getLongValues(
-			actionRequest, "rowIdsFolder");
+		BulkSelection<Folder> folderBulkSelection =
+			_folderBulkSelectionFactory.create(actionRequest.getParameterMap());
 
-		for (long folderId : folderIds) {
-			_dlAppService.moveFolder(folderId, newFolderId, serviceContext);
-		}
+		Stream<Folder> folderStream = folderBulkSelection.stream();
 
-		long[] fileEntryIds = ParamUtil.getLongValues(
-			actionRequest, "rowIdsFileEntry");
+		folderStream.forEach(
+			_toSafeConsumer(
+				folder -> _dlAppService.moveFolder(
+					folder.getFolderId(), newFolderId, serviceContext)));
 
-		for (long fileEntryId : fileEntryIds) {
-			_dlAppService.moveFileEntry(
-				fileEntryId, newFolderId, serviceContext);
-		}
+		BulkSelection<FileEntry> fileEntryBulkSelection =
+			_fileEntryBulkSelectionFactory.create(
+				actionRequest.getParameterMap());
 
-		long[] fileShortcutIds = ParamUtil.getLongValues(
-			actionRequest, "rowIdsDLFileShortcut");
+		Stream<FileEntry> fileEntryStream = fileEntryBulkSelection.stream();
 
-		for (long fileShortcutId : fileShortcutIds) {
-			if (fileShortcutId == 0) {
-				continue;
-			}
+		fileEntryStream.forEach(
+			_toSafeConsumer(
+				fileEntry -> _dlAppService.moveFileEntry(
+					fileEntry.getFileEntryId(), newFolderId, serviceContext)));
 
-			FileShortcut fileShortcut = _dlAppService.getFileShortcut(
-				fileShortcutId);
+		BulkSelection<FileShortcut> fileShortcutBulkSelection =
+			_fileShortcutBulkSelectionFactory.create(
+				actionRequest.getParameterMap());
 
-			_dlAppService.updateFileShortcut(
-				fileShortcutId, newFolderId, fileShortcut.getToFileEntryId(),
-				serviceContext);
-		}
+		Stream<FileShortcut> fileShortcutStream =
+			fileShortcutBulkSelection.stream();
+
+		fileShortcutStream.forEach(
+			_toSafeConsumer(
+				fileShortcut -> _dlAppService.updateFileShortcut(
+					fileShortcut.getFileShortcutId(), newFolderId,
+					fileShortcut.getToFileEntryId(), serviceContext)));
 	}
 
 	protected void restoreTrashEntries(ActionRequest actionRequest)
@@ -345,6 +350,19 @@ public class EditEntryMVCActionCommand extends BaseMVCActionCommand {
 	@Reference(unbind = "-")
 	protected void setTrashEntryService(TrashEntryService trashEntryService) {
 		_trashEntryService = trashEntryService;
+	}
+
+	private static <E, T extends Throwable> Consumer<E> _toSafeConsumer(
+		UnsafeConsumer<E, T> unsafeConsumer) {
+
+		return (E e) -> {
+			try {
+				unsafeConsumer.accept(e);
+			}
+			catch (Throwable t) {
+				ReflectionUtil.throwException(t);
+			}
+		};
 	}
 
 	private void _deleteFileEntry(

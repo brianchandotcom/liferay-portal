@@ -38,7 +38,7 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.sharing.display.context.util.SharingMenuItemFactory;
-import com.liferay.sharing.filter.SharedWithMeFilterItem;
+import com.liferay.sharing.filter.SharedAssetsFilterItem;
 import com.liferay.sharing.interpreter.SharingEntryInterpreter;
 import com.liferay.sharing.model.SharingEntry;
 import com.liferay.sharing.renderer.SharingEntryEditRenderer;
@@ -64,16 +64,16 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * @author Sergio González
  */
-public class SharedWithMeViewDisplayContext {
+public class SharedAssetsViewDisplayContext {
 
-	public SharedWithMeViewDisplayContext(
+	public SharedAssetsViewDisplayContext(
 		LiferayPortletRequest liferayPortletRequest,
 		LiferayPortletResponse liferayPortletResponse,
 		HttpServletRequest request, ResourceBundle resourceBundle,
 		SharingEntryLocalService sharingEntryLocalService,
 		Function<SharingEntry, SharingEntryInterpreter>
 			sharingEntryInterpreterFunction,
-		List<SharedWithMeFilterItem> sharedWithMeFilterItems,
+		List<SharedAssetsFilterItem> sharedAssetsFilterItems,
 		SharingMenuItemFactory sharingMenuItemFactory) {
 
 		_liferayPortletRequest = liferayPortletRequest;
@@ -81,7 +81,7 @@ public class SharedWithMeViewDisplayContext {
 		_request = request;
 		_sharingEntryLocalService = sharingEntryLocalService;
 		_sharingEntryInterpreterFunction = sharingEntryInterpreterFunction;
-		_sharedWithMeFilterItems = sharedWithMeFilterItems;
+		_sharedAssetsFilterItems = sharedAssetsFilterItems;
 		_sharingMenuItemFactory = sharingMenuItemFactory;
 
 		_currentURLObj = PortletURLUtil.getCurrent(
@@ -170,8 +170,8 @@ public class SharedWithMeViewDisplayContext {
 		};
 	}
 
-	public List<SharedWithMeFilterItem> getSharedWithMeFilterItems() {
-		return _sharedWithMeFilterItems;
+	public List<SharedAssetsFilterItem> getSharedAssetsFilterItems() {
+		return _sharedAssetsFilterItems;
 	}
 
 	public Menu getSharingEntryMenu(SharingEntry sharingEntry)
@@ -360,7 +360,7 @@ public class SharedWithMeViewDisplayContext {
 									_currentURLObj, _liferayPortletResponse);
 
 							viewAllClassNamesURL.setParameter(
-								"mvcRenderCommandName", "/shared_with_me/view");
+								"mvcRenderCommandName", "/shared_assets/view");
 							viewAllClassNamesURL.setParameter(
 								"className", (String)null);
 
@@ -385,13 +385,13 @@ public class SharedWithMeViewDisplayContext {
 				String label = LanguageUtil.get(_request, "asset-types");
 
 				if (Validator.isNotNull(className)) {
-					for (SharedWithMeFilterItem sharedWithMeFilterItem :
-							_sharedWithMeFilterItems) {
+					for (SharedAssetsFilterItem sharedAssetsFilterItem :
+							_sharedAssetsFilterItems) {
 
 						if (className.equals(
-								sharedWithMeFilterItem.getClassName())) {
+								sharedAssetsFilterItem.getClassName())) {
 
-							label = sharedWithMeFilterItem.getLabel(
+							label = sharedAssetsFilterItem.getLabel(
 								_themeDisplay.getLocale());
 
 							break;
@@ -454,7 +454,7 @@ public class SharedWithMeViewDisplayContext {
 	private final LiferayPortletRequest _liferayPortletRequest;
 	private final LiferayPortletResponse _liferayPortletResponse;
 	private final HttpServletRequest _request;
-	private final List<SharedWithMeFilterItem> _sharedWithMeFilterItems;
+	private final List<SharedAssetsFilterItem> _sharedAssetsFilterItems;
 	private final Function<SharingEntry, SharingEntryInterpreter>
 		_sharingEntryInterpreterFunction;
 	private final SharingEntryLocalService _sharingEntryLocalService;

@@ -14,10 +14,19 @@
  */
 --%>
 
-<%@ include file="/shared_with_me/init.jsp" %>
+<%@ include file="/shared_assets/init.jsp" %>
 
-<liferay-ui:error-header />
+<%
+Portlet selPortlet = PortletLocalServiceUtil.getPortletById(company.getCompanyId(), portletDisplay.getId());
+%>
 
-<liferay-ui:error exception="<%= NoSuchEntryException.class %>" message="the-item-is-no-longer-shared-with-you" />
-
-<liferay-ui:error-principal />
+<aui:script>
+	Liferay.fire(
+		'closeWindow',
+		{
+			id: '<portlet:namespace />editAsset',
+			portletAjaxable: <%= selPortlet.isAjaxable() %>,
+			refresh: '<%= portletDisplay.getId() %>'
+		}
+	);
+</aui:script>

@@ -29,22 +29,22 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	immediate = true,
 	property = {
-		"javax.portlet.name=" + SharingPortletKeys.SHARED_WITH_ME,
+		"javax.portlet.name=" + SharingPortletKeys.SHARED_ASSETS,
 		"panel.app.order:Integer=400",
 		"panel.category.key=" + PanelCategoryKeys.USER_MY_ACCOUNT
 	},
 	service = PanelApp.class
 )
-public class SharedWithMePanelApp extends BasePanelApp {
+public class SharedAssetsPanelApp extends BasePanelApp {
 
 	@Override
 	public String getPortletId() {
-		return SharingPortletKeys.SHARED_WITH_ME;
+		return SharingPortletKeys.SHARED_ASSETS;
 	}
 
 	@Override
 	@Reference(
-		target = "(javax.portlet.name=" + SharingPortletKeys.SHARED_WITH_ME + ")",
+		target = "(javax.portlet.name=" + SharingPortletKeys.SHARED_ASSETS + ")",
 		unbind = "-"
 	)
 	public void setPortlet(Portlet portlet) {

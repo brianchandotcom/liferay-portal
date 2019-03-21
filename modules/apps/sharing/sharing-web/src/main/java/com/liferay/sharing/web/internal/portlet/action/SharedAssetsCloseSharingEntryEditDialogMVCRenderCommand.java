@@ -28,19 +28,19 @@ import org.osgi.service.component.annotations.Component;
 @Component(
 	immediate = true,
 	property = {
-		"javax.portlet.name=" + SharingPortletKeys.SHARED_WITH_ME,
-		"mvc.command.name=/shared_with_me/close_sharing_entry_edit_dialog"
+		"javax.portlet.name=" + SharingPortletKeys.SHARED_ASSETS,
+		"mvc.command.name=/shared_assets/close_sharing_entry_edit_dialog"
 	},
 	service = MVCRenderCommand.class
 )
-public class SharedWithMeCloseSharingEntryEditDialogMVCRenderCommand
+public class SharedAssetsCloseSharingEntryEditDialogMVCRenderCommand
 	implements MVCRenderCommand {
 
 	@Override
 	public String render(
 		RenderRequest renderRequest, RenderResponse renderResponse) {
 
-		return "/shared_with_me/close_sharing_entry_edit_dialog.jsp";
+		return "/shared_assets/close_sharing_entry_edit_dialog.jsp";
 	}
 
 }

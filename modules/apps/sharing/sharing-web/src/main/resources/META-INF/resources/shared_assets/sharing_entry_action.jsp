@@ -14,20 +14,21 @@
  */
 --%>
 
-<%@ include file="/shared_with_me/init.jsp" %>
+<%@ include file="/shared_assets/init.jsp" %>
 
 <%
 ResultRow row = (ResultRow)request.getAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);
 
 SharingEntry sharingEntry = (SharingEntry)row.getObject();
 
-SharedWithMeViewDisplayContext sharedWithMeViewDisplayContext = (SharedWithMeViewDisplayContext)renderRequest.getAttribute(SharedWithMeViewDisplayContext.class.getName());
+SharedAssetsViewDisplayContext
+	sharedAssetsViewDisplayContext = (SharedAssetsViewDisplayContext)renderRequest.getAttribute(SharedAssetsViewDisplayContext.class.getName());
 
-boolean hasEditPermission = sharedWithMeViewDisplayContext.hasEditPermission(sharingEntry.getClassNameId(), sharingEntry.getClassPK());
+boolean hasEditPermission = sharedAssetsViewDisplayContext.hasEditPermission(sharingEntry.getClassNameId(), sharingEntry.getClassPK());
 %>
 
 <c:if test="<%= hasEditPermission || sharingEntry.isShareable() %>">
 	<liferay-ui:menu
-		menu="<%= sharedWithMeViewDisplayContext.getSharingEntryMenu(sharingEntry) %>"
+		menu="<%= sharedAssetsViewDisplayContext.getSharingEntryMenu(sharingEntry) %>"
 	/>
 </c:if>

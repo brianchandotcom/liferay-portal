@@ -1447,22 +1447,6 @@ definition {
 			searchAssetTitle = "Wiki Page Title",
 			searchAssetType = "Wiki Page"
 		);
-
-		SearchPortlets.searchEmbedded(searchTerm = "Wiki1");
-
-		SearchResultPortlet.viewNoSearchResults(searchTerm = "Wiki1");
-
-		SearchPortlets.searchEmbedded(searchTerm = "Page1");
-
-		SearchResultPortlet.viewNoSearchResults(searchTerm = "Page1");
-
-		SearchPortlets.searchEmbedded(searchTerm = "Title1");
-
-		SearchResultPortlet.viewNoSearchResults(searchTerm = "Title1");
-
-		SearchPortlets.searchEmbedded(searchTerm = "Content1");
-
-		SearchResultPortlet.viewNoSearchResults(searchTerm = "Content1");
 	}
 
 	@priority = "4"

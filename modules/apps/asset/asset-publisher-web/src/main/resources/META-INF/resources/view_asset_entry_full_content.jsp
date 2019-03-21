@@ -122,12 +122,22 @@ String viewInContextURL = assetRenderer.getURLViewInContext(liferayPortletReques
 		%>
 
 		<div class="autofit-row mb-3 metadata-author">
-			<div class="asset-avatar autofit-col inline-item-before mr-3 pt-1">
-				<liferay-ui:user-portrait
-					cssClass="sticker-lg"
-					user="<%= assetRendererUser %>"
-				/>
-			</div>
+			<c:if test="<%= assetPublisherDisplayContext.isShowAuthor() %>">
+				<div class="asset-avatar autofit-col inline-item-before mr-3 pt-1">
+					<span class="user-avatar-image">
+						<div class="sticker sticker-circle sticker-light sticker-lg user-icon user-icon-default user-icon-lg <%= LexiconUtil.getUserColorCssClass(assetRendererUser) %> ">
+							<c:choose>
+								<c:when test="<%= assetRendererUser.getPortraitId() <= 0 %>">
+									<aui:icon image="user" markupView="lexicon" />
+								</c:when>
+								<c:otherwise>
+									<img class="sticker-img" src="<%= HtmlUtil.escape(UserConstants.getPortraitURL(themeDisplay.getPathImage(), assetRendererUser.isMale(), assetRendererUser.getPortraitId(), assetRendererUser.getUserUuid())) %>" />
+								</c:otherwise>
+							</c:choose>
+						</div>
+					</span>
+				</div>
+			</c:if>
 
 			<div class="autofit-col autofit-col-expand">
 				<div class="autofit-row">

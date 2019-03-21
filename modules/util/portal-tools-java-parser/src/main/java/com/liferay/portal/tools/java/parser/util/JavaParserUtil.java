@@ -786,7 +786,7 @@ public class JavaParserUtil {
 
 		String parameterName = identDetailAST.getText();
 
-		List<JavaSimpleValue> parameterTypeNames = new ArrayList<>();
+		List<JavaType> parameterJavaTypes = new ArrayList<>();
 
 		DetailAST typeDetailAST = parameterDefinitionDetailAST.findFirstToken(
 			TokenTypes.TYPE);
@@ -800,15 +800,13 @@ public class JavaParserUtil {
 				FullIdent fullIdent = FullIdent.createFullIdent(
 					nextSiblingDetailAST);
 
-				parameterTypeNames.add(
-					new JavaSimpleValue(fullIdent.getText()));
+				parameterJavaTypes.add(new JavaType(fullIdent.getText(), 0));
 			}
 
 			if (childDetailAST.getType() != TokenTypes.BOR) {
 				FullIdent fullIdent = FullIdent.createFullIdent(childDetailAST);
 
-				parameterTypeNames.add(
-					new JavaSimpleValue(fullIdent.getText()));
+				parameterJavaTypes.add(new JavaType(fullIdent.getText(), 0));
 
 				break;
 			}
@@ -816,12 +814,12 @@ public class JavaParserUtil {
 			childDetailAST = childDetailAST.getFirstChild();
 		}
 
-		if (parameterTypeNames.size() > 1) {
-			Collections.reverse(parameterTypeNames);
+		if (parameterJavaTypes.size() > 1) {
+			Collections.sort(parameterJavaTypes);
 		}
 
 		return new JavaCatchStatement(
-			modifiers, parameterName, parameterTypeNames);
+			modifiers, parameterName, parameterJavaTypes);
 	}
 
 	private static JavaClassCall _parseJavaClassCall(

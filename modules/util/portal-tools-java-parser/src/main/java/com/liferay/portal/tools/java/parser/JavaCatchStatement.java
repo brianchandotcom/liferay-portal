@@ -27,11 +27,11 @@ public class JavaCatchStatement extends BaseJavaTerm {
 
 	public JavaCatchStatement(
 		List<JavaSimpleValue> modifiers, String parameterName,
-		List<JavaSimpleValue> parameterTypeNames) {
+		List<JavaType> parameterJavaTypes) {
 
 		_modifiers = modifiers;
 		_parameterName = new JavaSimpleValue(parameterName);
-		_parameterTypeNames = parameterTypeNames;
+		_parameterJavaTypes = parameterJavaTypes;
 	}
 
 	@Override
@@ -53,7 +53,7 @@ public class JavaCatchStatement extends BaseJavaTerm {
 		}
 
 		indent = append(
-			sb, _parameterTypeNames, " | ", indent, prefix, " ", maxLineLength);
+			sb, _parameterJavaTypes, " | ", indent, prefix, " ", maxLineLength);
 
 		append(sb, _parameterName, indent, "", ")" + suffix, maxLineLength);
 
@@ -61,7 +61,7 @@ public class JavaCatchStatement extends BaseJavaTerm {
 	}
 
 	private final List<JavaSimpleValue> _modifiers;
+	private final List<JavaType> _parameterJavaTypes;
 	private final JavaSimpleValue _parameterName;
-	private final List<JavaSimpleValue> _parameterTypeNames;
 
 }

@@ -267,6 +267,7 @@ public class ContentPageEditorDisplayContext {
 		}
 
 		soyContext.put("draft", draft);
+
 		soyContext.put("lastSaveDate", StringPool.BLANK);
 		soyContext.put("portletNamespace", _renderResponse.getNamespace());
 		soyContext.put(

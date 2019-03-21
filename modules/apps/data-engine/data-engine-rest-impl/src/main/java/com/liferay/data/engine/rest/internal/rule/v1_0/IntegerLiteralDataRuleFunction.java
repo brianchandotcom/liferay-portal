@@ -14,7 +14,6 @@
 
 package com.liferay.data.engine.rest.internal.rule.v1_0;
 
-import com.liferay.data.engine.constants.DataDefinitionRuleConstants;
 import com.liferay.data.engine.rest.dto.v1_0.DataDefinitionField;
 import com.liferay.data.engine.rest.dto.v1_0.DataDefinitionRuleParameter;
 
@@ -35,8 +34,7 @@ public class IntegerLiteralDataRuleFunction implements DataRuleFunction {
 			new DataRuleFunctionResult();
 
 		dataRuleFunctionResult.setDataDefinitionField(dataDefinitionField);
-		dataRuleFunctionResult.setErrorCode(
-			DataDefinitionRuleConstants.VALUE_MUST_BE_INTEGER_ERROR);
+		dataRuleFunctionResult.setErrorCode("value-must-be-an-integer-value");
 		dataRuleFunctionResult.setValid(false);
 
 		if (value == null) {

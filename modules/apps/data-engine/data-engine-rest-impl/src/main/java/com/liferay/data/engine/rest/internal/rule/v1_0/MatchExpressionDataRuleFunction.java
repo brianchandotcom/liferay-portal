@@ -14,7 +14,6 @@
 
 package com.liferay.data.engine.rest.internal.rule.v1_0;
 
-import com.liferay.data.engine.constants.DataDefinitionRuleConstants;
 import com.liferay.data.engine.rest.dto.v1_0.DataDefinitionField;
 import com.liferay.data.engine.rest.dto.v1_0.DataDefinitionRuleParameter;
 import com.liferay.data.engine.rest.internal.dto.v1_0.util.DataDefinitionRuleParameterUtil;
@@ -40,8 +39,7 @@ public class MatchExpressionDataRuleFunction implements DataRuleFunction {
 			new DataRuleFunctionResult();
 
 		dataRuleFunctionResult.setDataDefinitionField(dataDefinitionField);
-		dataRuleFunctionResult.setErrorCode(
-			DataDefinitionRuleConstants.VALUE_MUST_MATCH_EXPRESSION_ERROR);
+		dataRuleFunctionResult.setErrorCode("value-must-match-expression");
 		dataRuleFunctionResult.setValid(false);
 
 		if (value == null) {

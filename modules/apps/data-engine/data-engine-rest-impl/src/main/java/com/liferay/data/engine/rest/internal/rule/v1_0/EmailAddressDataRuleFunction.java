@@ -14,7 +14,6 @@
 
 package com.liferay.data.engine.rest.internal.rule.v1_0;
 
-import com.liferay.data.engine.constants.DataDefinitionRuleConstants;
 import com.liferay.data.engine.rest.dto.v1_0.DataDefinitionField;
 import com.liferay.data.engine.rest.dto.v1_0.DataDefinitionRuleParameter;
 import com.liferay.petra.string.CharPool;
@@ -40,8 +39,7 @@ public class EmailAddressDataRuleFunction implements DataRuleFunction {
 			new DataRuleFunctionResult();
 
 		dataRuleFunctionResult.setDataDefinitionField(dataDefinitionField);
-		dataRuleFunctionResult.setErrorCode(
-			DataDefinitionRuleConstants.INVALID_EMAIL_ADDRESS_ERROR);
+		dataRuleFunctionResult.setErrorCode("invalid-email-address");
 		dataRuleFunctionResult.setValid(false);
 
 		if (value == null) {

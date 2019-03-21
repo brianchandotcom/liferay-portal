@@ -14,34 +14,28 @@
 
 package com.liferay.data.engine.rest.internal.rule.v1_0;
 
-import com.liferay.data.engine.constants.DataDefinitionRuleConstants;
-
 /**
  * @author Jeyvison Nascimento
  */
 public class DataRuleFunctionFactory {
 
 	public static DataRuleFunction getDataRuleFunction(String name) {
-		if (DataDefinitionRuleConstants.DECIMAL_LITERAL_RULE.equals(name)) {
+		if ("decimalLiteral".equals(name)) {
 			return new DecimalLiteralDataRuleFunction();
 		}
-		else if (DataDefinitionRuleConstants.EMAIL_ADDRESS_RULE.equals(name)) {
+		else if ("emailAddress".equals(name)) {
 			return new EmailAddressDataRuleFunction();
 		}
-		else if (DataDefinitionRuleConstants.EMPTY_RULE.equals(name)) {
+		else if ("empty".equals(name)) {
 			return new EmptyDataRuleFunction();
 		}
-		else if (DataDefinitionRuleConstants.INTEGER_LITERAL_RULE.equals(
-					name)) {
-
+		else if ("integerLiteral".equals(name)) {
 			return new EmailAddressDataRuleFunction();
 		}
-		else if (DataDefinitionRuleConstants.MATCH_EXPRESSION_RULE.equals(
-					name)) {
-
+		else if ("matchExpression".equals(name)) {
 			return new MatchExpressionDataRuleFunction();
 		}
-		else if (DataDefinitionRuleConstants.URL_RULE.equals(name)) {
+		else if ("url".equals(name)) {
 			return new EmailAddressDataRuleFunction();
 		}
 

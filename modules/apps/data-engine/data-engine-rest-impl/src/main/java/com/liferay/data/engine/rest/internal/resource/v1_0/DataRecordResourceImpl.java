@@ -14,8 +14,6 @@
 
 package com.liferay.data.engine.rest.internal.resource.v1_0;
 
-import com.liferay.data.engine.constants.DataDefinitionRuleConstants;
-import com.liferay.data.engine.exception.DEDataRecordCollectionException;
 import com.liferay.data.engine.rest.dto.v1_0.DataDefinition;
 import com.liferay.data.engine.rest.dto.v1_0.DataDefinitionField;
 import com.liferay.data.engine.rest.dto.v1_0.DataDefinitionRule;
@@ -198,8 +196,7 @@ public class DataRecordResourceImpl extends BaseDataRecordResourceImpl {
 	protected boolean isValidationRule(DataDefinitionRule dataDefinitionRule) {
 		String ruleType = dataDefinitionRule.getRuleType();
 
-		return ruleType.equals(
-			DataDefinitionRuleConstants.VALIDATION_RULE_TYPE);
+		return ruleType.equals("validation");
 	}
 
 	protected void validate(
@@ -273,8 +270,7 @@ public class DataRecordResourceImpl extends BaseDataRecordResourceImpl {
 		}
 
 		if (!validationErrors.isEmpty()) {
-			throw new DEDataRecordCollectionException.InvalidDataRecord(
-				validationErrors);
+			throw new Exception(validationErrors.toString());
 		}
 	}
 

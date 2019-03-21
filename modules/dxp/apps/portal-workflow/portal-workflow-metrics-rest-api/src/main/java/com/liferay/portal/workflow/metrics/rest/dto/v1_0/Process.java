@@ -132,20 +132,20 @@ public class Process {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long instanceCount;
 
-	public Long getOntimeInstanceCount() {
-		return ontimeInstanceCount;
+	public Long getOnTimeInstanceCount() {
+		return onTimeInstanceCount;
 	}
 
-	public void setOntimeInstanceCount(Long ontimeInstanceCount) {
-		this.ontimeInstanceCount = ontimeInstanceCount;
+	public void setOnTimeInstanceCount(Long onTimeInstanceCount) {
+		this.onTimeInstanceCount = onTimeInstanceCount;
 	}
 
 	@JsonIgnore
-	public void setOntimeInstanceCount(
-		UnsafeSupplier<Long, Exception> ontimeInstanceCountUnsafeSupplier) {
+	public void setOnTimeInstanceCount(
+		UnsafeSupplier<Long, Exception> onTimeInstanceCountUnsafeSupplier) {
 
 		try {
-			ontimeInstanceCount = ontimeInstanceCountUnsafeSupplier.get();
+			onTimeInstanceCount = onTimeInstanceCountUnsafeSupplier.get();
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
@@ -154,7 +154,7 @@ public class Process {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Long ontimeInstanceCount;
+	protected Long onTimeInstanceCount;
 
 	public Long getOverdueInstanceCount() {
 		return overdueInstanceCount;
@@ -229,9 +229,9 @@ public class Process {
 		sb.append(instanceCount);
 		sb.append(", ");
 
-		sb.append("\"ontimeInstanceCount\": ");
+		sb.append("\"onTimeInstanceCount\": ");
 
-		sb.append(ontimeInstanceCount);
+		sb.append(onTimeInstanceCount);
 		sb.append(", ");
 
 		sb.append("\"overdueInstanceCount\": ");

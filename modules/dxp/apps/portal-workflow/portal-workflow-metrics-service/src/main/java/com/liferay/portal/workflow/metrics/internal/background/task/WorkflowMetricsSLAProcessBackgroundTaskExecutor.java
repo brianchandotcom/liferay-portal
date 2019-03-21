@@ -90,8 +90,8 @@ public class WorkflowMetricsSLAProcessBackgroundTaskExecutor
 							instanceId, LocalDateTime.now(),
 							workflowMetricsSLADefinition);
 
-				_workflowMetricsSLAProcessResultWorkflowMetricsIndexer.
-					addDocument(workflowMetricsSLAProcessResult);
+				_slaProcessResultWorkflowMetricsIndexer.addDocument(
+					workflowMetricsSLAProcessResult);
 			});
 
 		return BackgroundTaskResult.SUCCESS;
@@ -146,14 +146,14 @@ public class WorkflowMetricsSLAProcessBackgroundTaskExecutor
 	private SearchRequestExecutor _searchRequestExecutor;
 
 	@Reference
+	private SLAProcessResultWorkflowMetricsIndexer
+		_slaProcessResultWorkflowMetricsIndexer;
+
+	@Reference
 	private WorkflowMetricsSLADefinitionLocalService
 		_workflowMetricsSLADefinitionLocalService;
 
 	@Reference
 	private WorkflowMetricsSLAProcessor _workflowMetricsSLAProcessor;
-
-	@Reference
-	private SLAProcessResultWorkflowMetricsIndexer
-		_workflowMetricsSLAProcessResultWorkflowMetricsIndexer;
 
 }

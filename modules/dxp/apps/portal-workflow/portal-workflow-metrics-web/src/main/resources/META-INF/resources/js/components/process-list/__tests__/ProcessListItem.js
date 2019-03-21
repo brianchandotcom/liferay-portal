@@ -7,7 +7,7 @@ test('Should render component with one list item', () => {
 		<ProcessListItem
 			id={36401}
 			instanceCount={10}
-			ontimeInstanceCount={5}
+			onTimeInstanceCount={5}
 			overdueInstanceCount={5}
 			title="Process test"
 		/>
@@ -23,7 +23,7 @@ test('Should render component with 1 instance count', () => {
 		<ProcessListItem
 			id={36401}
 			instanceCount={1}
-			ontimeInstanceCount={5}
+			onTimeInstanceCount={5}
 			overdueInstanceCount={5}
 			title="Process test"
 		/>

@@ -11,7 +11,7 @@ export default class ProcessListItem extends React.Component {
 		const {
 			id,
 			instanceCount,
-			ontimeInstanceCount,
+			onTimeInstanceCount,
 			overdueInstanceCount,
 			title
 		} = this.props;
@@ -28,7 +28,7 @@ export default class ProcessListItem extends React.Component {
 
 				<td>{overdueInstanceCount}</td>
 
-				<td>{ontimeInstanceCount}</td>
+				<td>{onTimeInstanceCount}</td>
 
 				<td>{instanceCount}</td>
 

@@ -23,7 +23,7 @@ components:
                 instanceCount:
                     format: int64
                     type: integer
-                ontimeInstanceCount:
+                onTimeInstanceCount:
                     format: int64
                     type: integer
                 overdueInstanceCount:

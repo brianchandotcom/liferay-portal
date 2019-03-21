@@ -36,7 +36,7 @@ public class ProcessEntityModel implements EntityModel {
 		_entityFieldsMap = Stream.of(
 			new IntegerEntityField("instanceCount", locale -> "instanceCount"),
 			new IntegerEntityField(
-				"ontimeInstanceCount", locale -> "ontimeInstanceCount"),
+				"onTimeInstanceCount", locale -> "onTimeInstanceCount"),
 			new IntegerEntityField(
 				"overdueInstanceCount", locale -> "overdueInstanceCount"),
 			new StringEntityField(

@@ -483,7 +483,7 @@ public abstract class BaseProcessResourceTestCase {
 				"Invalid entity field " + entityFieldName);
 		}
 
-		if (entityFieldName.equals("ontimeInstanceCount")) {
+		if (entityFieldName.equals("onTimeInstanceCount")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
 		}
@@ -512,7 +512,7 @@ public abstract class BaseProcessResourceTestCase {
 				dueInInstanceCount = RandomTestUtil.randomLong();
 				id = RandomTestUtil.randomLong();
 				instanceCount = RandomTestUtil.randomLong();
-				ontimeInstanceCount = RandomTestUtil.randomLong();
+				onTimeInstanceCount = RandomTestUtil.randomLong();
 				overdueInstanceCount = RandomTestUtil.randomLong();
 				title = RandomTestUtil.randomString();
 			}

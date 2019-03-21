@@ -127,7 +127,7 @@ function trackFormSubmitted(analytics) {
 	const onSubmit = event => {
 		const {target} = event;
 
-		if (event.defaultPrevented && !isTrackableForm(target)) return;
+		if (!isTrackableForm(target) || isTrackableForm(target) && event.defaultPrevented) return;
 
 		analytics.send('formSubmitted', applicationId, getFormPayload(target));
 	};

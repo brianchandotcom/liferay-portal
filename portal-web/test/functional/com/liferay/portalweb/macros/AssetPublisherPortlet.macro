@@ -795,6 +795,8 @@ definition {
 		);
 
 		MenuItem.click(menuItem = "Edit");
+
+		IFrame.selectEditAssetFrame();
 	}
 
 	macro gotoViewInContext {

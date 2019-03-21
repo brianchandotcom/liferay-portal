@@ -34,24 +34,6 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @author Javier Gamarra
  * @generated
  */
-@JsonSubTypes(
-	{
-		@JsonSubTypes.Type(name = "blogPosting", value = BlogPosting.class),
-		@JsonSubTypes.Type(name = "document", value = Document.class),
-		@JsonSubTypes.Type(name = "folder", value = Folder.class),
-		@JsonSubTypes.Type(
-			name = "genericContentListElement",
-			value = GenericContentListElement.class
-		),
-		@JsonSubTypes.Type(
-			name = "structuredContent", value = StructuredContent.class
-		)
-	}
-)
-@JsonTypeInfo(
-	include = JsonTypeInfo.As.PROPERTY, property = "type",
-	use = JsonTypeInfo.Id.NAME
-)
 @Generated("")
 @GraphQLName("ContentListElement")
 @JsonFilter("Liferay.Vulcan")

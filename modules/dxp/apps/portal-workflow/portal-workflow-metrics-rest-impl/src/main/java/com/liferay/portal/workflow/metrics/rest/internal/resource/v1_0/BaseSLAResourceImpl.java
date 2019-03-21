@@ -48,7 +48,6 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
-import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriBuilder;
 import javax.ws.rs.core.UriInfo;
 
@@ -85,13 +84,11 @@ public abstract class BaseSLAResourceImpl implements SLAResource {
 	@Path("/processes/{process-id}/slas")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "SLA")})
-	public Response postProcessSLA(
+	public SLA postProcessSLA(
 			@NotNull @PathParam("process-id") Long processId, SLA sLA)
 		throws Exception {
 
-		Response.ResponseBuilder responseBuilder = Response.ok();
-
-		return responseBuilder.build();
+		return new SLA();
 	}
 
 	@Override
@@ -126,14 +123,12 @@ public abstract class BaseSLAResourceImpl implements SLAResource {
 	@Path("/processes/{process-id}/slas/{sla-id}")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "SLA")})
-	public Response putProcessSLA(
+	public SLA putProcessSLA(
 			@NotNull @PathParam("process-id") Long processId,
 			@NotNull @PathParam("sla-id") Long slaId, SLA sLA)
 		throws Exception {
 
-		Response.ResponseBuilder responseBuilder = Response.ok();
-
-		return responseBuilder.build();
+		return new SLA();
 	}
 
 	public void setContextCompany(Company contextCompany) {

@@ -81,7 +81,7 @@ public class AddLayoutPageTemplateEntryMVCActionCommand
 				_layoutPageTemplateEntryService.addLayoutPageTemplateEntry(
 					serviceContext.getScopeGroupId(),
 					layoutPageTemplateCollectionId, name, type,
-					WorkflowConstants.STATUS_DRAFT, serviceContext);
+					WorkflowConstants.STATUS_APPROVED, serviceContext);
 
 			if (SessionErrors.contains(
 					actionRequest, "layoutPageTemplateEntryNameInvalid")) {

@@ -65,7 +65,8 @@ class FragmentEntryLinkListSection extends Component {
 	rendered() {
 		if (
 			(this.rowId === this.activeItemId) &&
-			(this.activeItemType === FRAGMENTS_EDITOR_ITEM_TYPES.section)
+			(this.activeItemType === FRAGMENTS_EDITOR_ITEM_TYPES.section) &&
+			!this._resizing
 		) {
 			this._createFloatingToolbar();
 		}

@@ -181,6 +181,7 @@ class FragmentEditableField extends PortletBase {
 	 * @review
 	 */
 	syncEditableValues() {
+		this._loadMappedFieldLabel();
 		this._updateMappedFieldValue();
 	}
 
@@ -463,6 +464,63 @@ class FragmentEditableField extends PortletBase {
 			event.preventDefault();
 
 			this.store.dispatchAction(OPEN_ASSET_TYPE_DIALOG);
+		}
+	}
+
+	/**
+	 * Load mapped field label
+	 * @private
+	 * @review
+	 */
+	_loadMappedFieldLabel() {
+		let promise;
+		let mappedFieldId;
+
+		if (this.editableValues.mappedField &&
+			this.selectedMappingTypes.type) {
+
+			const data = {
+				classNameId: this.selectedMappingTypes.type.id
+			};
+
+			if (this.selectedMappingTypes.subtype) {
+				data.classTypeId = this.selectedMappingTypes.subtype.id;
+			}
+
+			mappedFieldId = this.editableValues.mappedField;
+			promise = this.fetch(this.mappingFieldsURL, data);
+		}
+		else if (this.editableValues.classNameId &&
+			this.editableValues.classPK &&
+			this.editableValues.fieldId &&
+			this.getAssetMappingFieldsURL) {
+
+			mappedFieldId = this.editableValues.fieldId;
+			promise = this.fetch(
+				this.getAssetMappingFieldsURL,
+				{
+					classNameId: this.editableValues.classNameId,
+					classPK: this.editableValues.classPK
+				}
+			);
+		}
+
+		if (promise) {
+			promise
+				.then(
+					response => response.json()
+				)
+				.then(
+					response => {
+						const field = response.find(
+							field => field.key === mappedFieldId
+						);
+
+						if (field) {
+							this._mappedFieldLabel = field.label;
+						}
+					}
+				);
 		}
 	}
 

@@ -14,30 +14,28 @@
 
 package com.liferay.frontend.taglib.clay.sample.web.internal.contributor;
 
-import com.liferay.frontend.taglib.clay.servlet.taglib.contributor.ClayTagContextContributor;
-
-import java.util.Map;
+import com.liferay.frontend.taglib.clay.servlet.taglib.contributor.ClayTableTagSchemaContributor;
+import com.liferay.frontend.taglib.clay.servlet.taglib.model.table.Field;
+import com.liferay.frontend.taglib.clay.servlet.taglib.model.table.Schema;
 
 import org.osgi.service.component.annotations.Component;
 
 /**
- * @author Rodolfo Roza Miranda
+ * @author Iván Zaera Avellón
  */
 @Component(
 	immediate = true,
-	property = {
-		"clay.tag.context.contributor.key=SampleTable",
-		"service.ranking:Integer=2"
-	},
-	service = ClayTagContextContributor.class
+	property = "clay.table.tag.schema.contributor.key=SampleTable",
+	service = ClayTableTagSchemaContributor.class
 )
-public class SampleTableClayTagContextContributor
-	implements ClayTagContextContributor {
+public class SampleClayTableTagSchemaContributor
+	implements ClayTableTagSchemaContributor {
 
 	@Override
-	public void populate(Map<String, Object> context) {
-		context.put("selectable", true);
-		context.put("tableClasses", "sample-table");
+	public void populate(Schema schema) {
+		schema.addField(new Field("name", "Name"));
+		schema.addField(new Field("calories", "Calories", "number"));
+		schema.addField(new Field("portion", "Portion", "number"));
 	}
 
 }

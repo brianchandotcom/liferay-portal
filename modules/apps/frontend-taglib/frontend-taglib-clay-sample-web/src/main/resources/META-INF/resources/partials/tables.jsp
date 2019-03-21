@@ -21,4 +21,5 @@
 <clay:table
 	contributorKey="SampleTable"
 	dataSourceKey="SampleTable"
+	tableSchemaContributorKey="SampleTable"
 />

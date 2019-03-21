@@ -1578,6 +1578,13 @@ public class JavaParserUtil {
 		DetailAST modifiersDetailAST = detailAST.findFirstToken(
 			TokenTypes.MODIFIERS);
 
+		List<JavaType> exceptionJavaTypes = _parseExceptionJavaTypes(
+			detailAST.findFirstToken(TokenTypes.LITERAL_THROWS));
+
+		if (exceptionJavaTypes.size() > 1) {
+			Collections.sort(exceptionJavaTypes);
+		}
+
 		return new JavaSignature(
 			identDetailAST.getText(), _parseModifiers(modifiersDetailAST),
 			_parseJavaType(detailAST.findFirstToken(TokenTypes.TYPE)),
@@ -1586,8 +1593,7 @@ public class JavaParserUtil {
 				TokenTypes.TYPE_PARAMETER),
 			_parseJavaParameters(
 				detailAST.findFirstToken(TokenTypes.PARAMETERS)),
-			_parseExceptionJavaTypes(
-				detailAST.findFirstToken(TokenTypes.LITERAL_THROWS)));
+			exceptionJavaTypes);
 	}
 
 	private static JavaSwitchCaseStatement _parseJavaSwitchCaseStatement(

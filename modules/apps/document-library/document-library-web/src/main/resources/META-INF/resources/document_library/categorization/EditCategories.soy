@@ -7,6 +7,7 @@
 	{@param selectCategoriesUrl: string}
 	{@param showModal: bool}
 	{@param spritemap: string}
+	{@param? _handleCategoriesChange: any}
 	{@param? _handleRadioChange: any}
 	{@param? _handleSaveBtnClick: any}
 	{@param? description: string}
@@ -29,6 +30,7 @@
 						{param selectCategoriesUrl: $selectCategoriesUrl /}
 						{param spritemap: $spritemap /}
 						{param vocabularies: $vocabularies /}
+						{param _handleCategoriesChange: $_handleCategoriesChange /}
 						{param _handleRadioChange: $_handleRadioChange /}
 					{/call}
 				{/if}
@@ -65,6 +67,7 @@
 	{@param hiddenInput: string}
 	{@param selectCategoriesUrl: string}
 	{@param spritemap: string}
+	{@param? _handleCategoriesChange: any}
 	{@param? _handleRadioChange: any}
 	{@param? description: string}
 	{@param? multiple: bool}
@@ -106,6 +109,9 @@
 		{call com.liferay.asset.taglib.AssetCategoriesSelector.render}
 			{param elementClasses: 'clay-multi-select' /}
 			{param eventName: $namespace + 'selectCategories' /}
+			{param events: [
+				'categoryIdsChange': $_handleCategoriesChange,
+			] /}
 			{param groupIds: $groupIds /}
 			{param id: $namespace + 'assetTagsSelector' /}
 			{param inputName: $namespace + $hiddenInput /}

@@ -49,6 +49,27 @@ class EditCategories extends Component {
 	}
 
 	/**
+	 * Checks if the vocabulary is empty or not.
+	 *
+	 * @param  {String} vocabularyId
+	 * @return {Boolean} true if it has a category, false if is empty.
+	 */
+	_checkRequiredVocabulary(vocabularyId) {
+		let inputNode = this._getVocabularyInputNode(vocabularyId);
+		let valid = true;
+
+		if (inputNode.value) {
+			inputNode.parentElement.classList.remove('has-error');
+		}
+		else {
+			inputNode.parentElement.classList.add('has-error');
+			valid = false;
+		}
+
+		return valid;
+	}
+
+	/**
 	 * Creates the ajax request.
 	 *
 	 * @param {String} url Url of the request
@@ -141,6 +162,29 @@ class EditCategories extends Component {
 	}
 
 	/**
+	 * Gets the input where categories are saved for a vocabulary.
+	 *
+	 * @param  {String} vocabularyId [description]
+	 * @return {DOMElement} input node.
+	 */
+	_getVocabularyInputNode(vocabularyId) {
+		return document.getElementById(this.namespace + this.hiddenInput + vocabularyId);
+	}
+
+	/**
+	 * Checks if a required vocabulary has categories or not.
+	 *
+	 * @param  {Event} event
+	 */
+	_handleCategoriesChange(event) {
+		let vocabularyId = event.vocabularyId[0];
+
+		if (this._requiredVocabularies.includes(parseInt(vocabularyId, 10))) {
+			this._checkRequiredVocabulary(vocabularyId);
+		}
+	}
+
+	/**
 	 * Sync the input radio with the state
 	 * @param {!Event} event
 	 * @private
@@ -158,6 +202,10 @@ class EditCategories extends Component {
 	 * @review
 	 */
 	_handleSaveBtnClick() {
+		if (!this._validateRequiredVocabularies()) {
+			return;
+		}
+
 		let finalCategories = this._getFinalCategories();
 
 		let addedCategories = [];
@@ -202,6 +250,7 @@ class EditCategories extends Component {
 
 	_parseVocabularies(vocabularies) {
 		let initialCategories = [];
+		let requiredVocabularies = [];
 		let vocabulariesList = [];
 
 		vocabularies.forEach(
@@ -221,11 +270,16 @@ class EditCategories extends Component {
 
 				vocabulariesList.push(obj);
 
+				if (vocabulary.required) {
+					requiredVocabularies.push(vocabulary.vocabularyId);
+				}
+
 				initialCategories = initialCategories.concat(categoryIds);
 			}
 		);
 
 		this.initialCategories = initialCategories;
+		this._requiredVocabularies = requiredVocabularies;
 
 		return vocabulariesList;
 	}
@@ -254,6 +308,23 @@ class EditCategories extends Component {
 		}
 
 		return categoriesObjList;
+	}
+
+	_validateRequiredVocabularies() {
+		let requiredVocabularies = this._requiredVocabularies;
+		let valid = true;
+
+		if (requiredVocabularies) {
+			requiredVocabularies.forEach(
+				vocabularyId => {
+					if (!this._checkRequiredVocabulary(vocabularyId)) {
+						valid = false;
+					}
+				}
+			);
+		}
+
+		return valid;
 	}
 }
 

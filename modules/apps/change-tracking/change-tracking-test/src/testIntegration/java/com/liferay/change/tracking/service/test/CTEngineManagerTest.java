@@ -730,6 +730,7 @@ public class CTEngineManagerTest {
 		Assert.assertTrue(changeTrackingSupported);
 	}
 
+	@Ignore
 	@Test
 	public void testPublishCTCollection() throws Exception {
 		_ctEngineManager.enableChangeTracking(

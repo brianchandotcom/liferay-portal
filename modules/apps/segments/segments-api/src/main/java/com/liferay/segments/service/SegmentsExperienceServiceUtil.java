@@ -43,13 +43,12 @@ public class SegmentsExperienceServiceUtil {
 	public static com.liferay.segments.model.SegmentsExperience
 			addSegmentsExperience(
 				long segmentsEntryId, long classNameId, long classPK,
-				java.util.Map<java.util.Locale, String> nameMap, int priority,
-				boolean active,
+				java.util.Map<java.util.Locale, String> nameMap, boolean active,
 				com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return getService().addSegmentsExperience(
-			segmentsEntryId, classNameId, classPK, nameMap, priority, active,
+			segmentsEntryId, classNameId, classPK, nameMap, active,
 			serviceContext);
 	}
 
@@ -107,12 +106,19 @@ public class SegmentsExperienceServiceUtil {
 	public static com.liferay.segments.model.SegmentsExperience
 			updateSegmentsExperience(
 				long segmentsExperienceId, long segmentsEntryId,
-				java.util.Map<java.util.Locale, String> nameMap, int priority,
-				boolean active)
+				java.util.Map<java.util.Locale, String> nameMap, boolean active)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return getService().updateSegmentsExperience(
-			segmentsExperienceId, segmentsEntryId, nameMap, priority, active);
+			segmentsExperienceId, segmentsEntryId, nameMap, active);
+	}
+
+	public static void updateSegmentsExperiencePriority(
+			long segmentsExperienceId, int newPriority)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		getService().updateSegmentsExperiencePriority(
+			segmentsExperienceId, newPriority);
 	}
 
 	public static SegmentsExperienceService getService() {

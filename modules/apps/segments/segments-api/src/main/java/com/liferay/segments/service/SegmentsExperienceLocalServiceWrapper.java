@@ -49,6 +49,18 @@ public class SegmentsExperienceLocalServiceWrapper
 	@Override
 	public com.liferay.segments.model.SegmentsExperience addSegmentsExperience(
 			long segmentsEntryId, long classNameId, long classPK,
+			java.util.Map<java.util.Locale, String> nameMap, boolean active,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _segmentsExperienceLocalService.addSegmentsExperience(
+			segmentsEntryId, classNameId, classPK, nameMap, active,
+			serviceContext);
+	}
+
+	@Override
+	public com.liferay.segments.model.SegmentsExperience addSegmentsExperience(
+			long segmentsEntryId, long classNameId, long classPK,
 			java.util.Map<java.util.Locale, String> nameMap, int priority,
 			boolean active,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
@@ -308,6 +320,14 @@ public class SegmentsExperienceLocalServiceWrapper
 			segmentsExperienceId);
 	}
 
+	@Override
+	public int getSegmentsExperienceCount(
+		long groupId, long classNameId, long classPK) {
+
+		return _segmentsExperienceLocalService.getSegmentsExperienceCount(
+			groupId, classNameId, classPK);
+	}
+
 	/**
 	 * Returns a range of all the segments experiences.
 	 *
@@ -329,13 +349,12 @@ public class SegmentsExperienceLocalServiceWrapper
 
 	@Override
 	public java.util.List<com.liferay.segments.model.SegmentsExperience>
-			getSegmentsExperiences(
-				long groupId, long classNameId, long classPK, boolean active,
-				int start, int end,
-				com.liferay.portal.kernel.util.OrderByComparator
-					<com.liferay.segments.model.SegmentsExperience>
-						orderByComparator)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		getSegmentsExperiences(
+			long groupId, long classNameId, long classPK, boolean active,
+			int start, int end,
+			com.liferay.portal.kernel.util.OrderByComparator
+				<com.liferay.segments.model.SegmentsExperience>
+					orderByComparator) {
 
 		return _segmentsExperienceLocalService.getSegmentsExperiences(
 			groupId, classNameId, classPK, active, start, end,
@@ -344,13 +363,12 @@ public class SegmentsExperienceLocalServiceWrapper
 
 	@Override
 	public java.util.List<com.liferay.segments.model.SegmentsExperience>
-			getSegmentsExperiences(
-				long groupId, long[] segmentsEntryIds, long classNameId,
-				long classPK, boolean active, int start, int end,
-				com.liferay.portal.kernel.util.OrderByComparator
-					<com.liferay.segments.model.SegmentsExperience>
-						orderByComparator)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		getSegmentsExperiences(
+			long groupId, long[] segmentsEntryIds, long classNameId,
+			long classPK, boolean active, int start, int end,
+			com.liferay.portal.kernel.util.OrderByComparator
+				<com.liferay.segments.model.SegmentsExperience>
+					orderByComparator) {
 
 		return _segmentsExperienceLocalService.getSegmentsExperiences(
 			groupId, segmentsEntryIds, classNameId, classPK, active, start, end,
@@ -379,12 +397,11 @@ public class SegmentsExperienceLocalServiceWrapper
 	public com.liferay.segments.model.SegmentsExperience
 			updateSegmentsExperience(
 				long segmentsExperienceId, long segmentsEntryId,
-				java.util.Map<java.util.Locale, String> nameMap, int priority,
-				boolean active)
+				java.util.Map<java.util.Locale, String> nameMap, boolean active)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _segmentsExperienceLocalService.updateSegmentsExperience(
-			segmentsExperienceId, segmentsEntryId, nameMap, priority, active);
+			segmentsExperienceId, segmentsEntryId, nameMap, active);
 	}
 
 	/**
@@ -400,6 +417,16 @@ public class SegmentsExperienceLocalServiceWrapper
 
 		return _segmentsExperienceLocalService.updateSegmentsExperience(
 			segmentsExperience);
+	}
+
+	@Override
+	public com.liferay.segments.model.SegmentsExperience
+			updateSegmentsExperiencePriority(
+				long segmentsExperienceId, int newPriority)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _segmentsExperienceLocalService.updateSegmentsExperiencePriority(
+			segmentsExperienceId, newPriority);
 	}
 
 	@Override

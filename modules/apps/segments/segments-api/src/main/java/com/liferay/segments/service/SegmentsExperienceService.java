@@ -65,7 +65,7 @@ public interface SegmentsExperienceService extends BaseService {
 	 */
 	public SegmentsExperience addSegmentsExperience(
 			long segmentsEntryId, long classNameId, long classPK,
-			Map<Locale, String> nameMap, int priority, boolean active,
+			Map<Locale, String> nameMap, boolean active,
 			ServiceContext serviceContext)
 		throws PortalException;
 
@@ -99,7 +99,11 @@ public interface SegmentsExperienceService extends BaseService {
 
 	public SegmentsExperience updateSegmentsExperience(
 			long segmentsExperienceId, long segmentsEntryId,
-			Map<Locale, String> nameMap, int priority, boolean active)
+			Map<Locale, String> nameMap, boolean active)
+		throws PortalException;
+
+	public void updateSegmentsExperiencePriority(
+			long segmentsExperienceId, int newPriority)
 		throws PortalException;
 
 }

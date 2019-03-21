@@ -72,7 +72,7 @@ public class SegmentsExperienceServiceSoap {
 			addSegmentsExperience(
 				long segmentsEntryId, long classNameId, long classPK,
 				String[] nameMapLanguageIds, String[] nameMapValues,
-				int priority, boolean active,
+				boolean active,
 				com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 
@@ -82,8 +82,8 @@ public class SegmentsExperienceServiceSoap {
 
 			com.liferay.segments.model.SegmentsExperience returnValue =
 				SegmentsExperienceServiceUtil.addSegmentsExperience(
-					segmentsEntryId, classNameId, classPK, nameMap, priority,
-					active, serviceContext);
+					segmentsEntryId, classNameId, classPK, nameMap, active,
+					serviceContext);
 
 			return com.liferay.segments.model.SegmentsExperienceSoap.
 				toSoapModel(returnValue);
@@ -202,7 +202,7 @@ public class SegmentsExperienceServiceSoap {
 			updateSegmentsExperience(
 				long segmentsExperienceId, long segmentsEntryId,
 				String[] nameMapLanguageIds, String[] nameMapValues,
-				int priority, boolean active)
+				boolean active)
 		throws RemoteException {
 
 		try {
@@ -211,11 +211,25 @@ public class SegmentsExperienceServiceSoap {
 
 			com.liferay.segments.model.SegmentsExperience returnValue =
 				SegmentsExperienceServiceUtil.updateSegmentsExperience(
-					segmentsExperienceId, segmentsEntryId, nameMap, priority,
-					active);
+					segmentsExperienceId, segmentsEntryId, nameMap, active);
 
 			return com.liferay.segments.model.SegmentsExperienceSoap.
 				toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static void updateSegmentsExperiencePriority(
+			long segmentsExperienceId, int newPriority)
+		throws RemoteException {
+
+		try {
+			SegmentsExperienceServiceUtil.updateSegmentsExperiencePriority(
+				segmentsExperienceId, newPriority);
 		}
 		catch (Exception e) {
 			_log.error(e, e);

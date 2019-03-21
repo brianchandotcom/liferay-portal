@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.transaction.Propagation;
@@ -225,6 +226,24 @@ public class SegmentsExperiencePersistenceTest {
 			RandomTestUtil.nextLong(), RandomTestUtil.nextLong());
 
 		_persistence.countByG_S_C_C(0L, 0L, 0L, 0L);
+	}
+
+	@Test
+	public void testCountByG_C_C_P() throws Exception {
+		_persistence.countByG_C_C_P(
+			RandomTestUtil.nextLong(), RandomTestUtil.nextLong(),
+			RandomTestUtil.nextLong(), RandomTestUtil.nextInt());
+
+		_persistence.countByG_C_C_P(0L, 0L, 0L, 0);
+	}
+
+	@Test
+	public void testCountByG_C_C_GtP() throws Exception {
+		_persistence.countByG_C_C_GtP(
+			RandomTestUtil.nextLong(), RandomTestUtil.nextLong(),
+			RandomTestUtil.nextLong(), RandomTestUtil.nextInt());
+
+		_persistence.countByG_C_C_GtP(0L, 0L, 0L, 0);
 	}
 
 	@Test
@@ -516,6 +535,38 @@ public class SegmentsExperiencePersistenceTest {
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
 		Assert.assertEquals(0, result.size());
+	}
+
+	@Test
+	public void testResetOriginalValues() throws Exception {
+		SegmentsExperience newSegmentsExperience = addSegmentsExperience();
+
+		_persistence.clearCache();
+
+		SegmentsExperience existingSegmentsExperience =
+			_persistence.findByPrimaryKey(
+				newSegmentsExperience.getPrimaryKey());
+
+		Assert.assertEquals(
+			Long.valueOf(existingSegmentsExperience.getGroupId()),
+			ReflectionTestUtil.<Long>invoke(
+				existingSegmentsExperience, "getOriginalGroupId",
+				new Class<?>[0]));
+		Assert.assertEquals(
+			Long.valueOf(existingSegmentsExperience.getClassNameId()),
+			ReflectionTestUtil.<Long>invoke(
+				existingSegmentsExperience, "getOriginalClassNameId",
+				new Class<?>[0]));
+		Assert.assertEquals(
+			Long.valueOf(existingSegmentsExperience.getClassPK()),
+			ReflectionTestUtil.<Long>invoke(
+				existingSegmentsExperience, "getOriginalClassPK",
+				new Class<?>[0]));
+		Assert.assertEquals(
+			Integer.valueOf(existingSegmentsExperience.getPriority()),
+			ReflectionTestUtil.<Integer>invoke(
+				existingSegmentsExperience, "getOriginalPriority",
+				new Class<?>[0]));
 	}
 
 	protected SegmentsExperience addSegmentsExperience() throws Exception {

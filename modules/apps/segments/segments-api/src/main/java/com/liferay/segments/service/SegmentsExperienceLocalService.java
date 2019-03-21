@@ -71,6 +71,12 @@ public interface SegmentsExperienceLocalService
 
 	public SegmentsExperience addSegmentsExperience(
 			long segmentsEntryId, long classNameId, long classPK,
+			Map<Locale, String> nameMap, boolean active,
+			ServiceContext serviceContext)
+		throws PortalException;
+
+	public SegmentsExperience addSegmentsExperience(
+			long segmentsEntryId, long classNameId, long classPK,
 			Map<Locale, String> nameMap, int priority, boolean active,
 			ServiceContext serviceContext)
 		throws PortalException;
@@ -238,6 +244,10 @@ public interface SegmentsExperienceLocalService
 	public SegmentsExperience getSegmentsExperience(long segmentsExperienceId)
 		throws PortalException;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getSegmentsExperienceCount(
+		long groupId, long classNameId, long classPK);
+
 	/**
 	 * Returns a range of all the segments experiences.
 	 *
@@ -254,17 +264,14 @@ public interface SegmentsExperienceLocalService
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<SegmentsExperience> getSegmentsExperiences(
-			long groupId, long classNameId, long classPK, boolean active,
-			int start, int end,
-			OrderByComparator<SegmentsExperience> orderByComparator)
-		throws PortalException;
+		long groupId, long classNameId, long classPK, boolean active, int start,
+		int end, OrderByComparator<SegmentsExperience> orderByComparator);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<SegmentsExperience> getSegmentsExperiences(
-			long groupId, long[] segmentsEntryIds, long classNameId,
-			long classPK, boolean active, int start, int end,
-			OrderByComparator<SegmentsExperience> orderByComparator)
-		throws PortalException;
+		long groupId, long[] segmentsEntryIds, long classNameId, long classPK,
+		boolean active, int start, int end,
+		OrderByComparator<SegmentsExperience> orderByComparator);
 
 	/**
 	 * Returns the number of segments experiences.
@@ -280,7 +287,7 @@ public interface SegmentsExperienceLocalService
 
 	public SegmentsExperience updateSegmentsExperience(
 			long segmentsExperienceId, long segmentsEntryId,
-			Map<Locale, String> nameMap, int priority, boolean active)
+			Map<Locale, String> nameMap, boolean active)
 		throws PortalException;
 
 	/**
@@ -292,5 +299,9 @@ public interface SegmentsExperienceLocalService
 	@Indexable(type = IndexableType.REINDEX)
 	public SegmentsExperience updateSegmentsExperience(
 		SegmentsExperience segmentsExperience);
+
+	public SegmentsExperience updateSegmentsExperiencePriority(
+			long segmentsExperienceId, int newPriority)
+		throws PortalException;
 
 }

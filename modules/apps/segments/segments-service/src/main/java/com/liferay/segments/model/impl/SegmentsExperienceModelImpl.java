@@ -149,9 +149,9 @@ public class SegmentsExperienceModelImpl
 
 	public static final long GROUPID_COLUMN_BITMASK = 8L;
 
-	public static final long SEGMENTSENTRYID_COLUMN_BITMASK = 16L;
+	public static final long PRIORITY_COLUMN_BITMASK = 16L;
 
-	public static final long PRIORITY_COLUMN_BITMASK = 32L;
+	public static final long SEGMENTSENTRYID_COLUMN_BITMASK = 32L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -711,7 +711,17 @@ public class SegmentsExperienceModelImpl
 	public void setPriority(int priority) {
 		_columnBitmask = -1L;
 
+		if (!_setOriginalPriority) {
+			_setOriginalPriority = true;
+
+			_originalPriority = _priority;
+		}
+
 		_priority = priority;
+	}
+
+	public int getOriginalPriority() {
+		return _originalPriority;
 	}
 
 	@JSON
@@ -949,6 +959,11 @@ public class SegmentsExperienceModelImpl
 
 		segmentsExperienceModelImpl._setOriginalClassPK = false;
 
+		segmentsExperienceModelImpl._originalPriority =
+			segmentsExperienceModelImpl._priority;
+
+		segmentsExperienceModelImpl._setOriginalPriority = false;
+
 		segmentsExperienceModelImpl._originalActive =
 			segmentsExperienceModelImpl._active;
 
@@ -1109,6 +1124,8 @@ public class SegmentsExperienceModelImpl
 	private String _name;
 	private String _nameCurrentLanguageId;
 	private int _priority;
+	private int _originalPriority;
+	private boolean _setOriginalPriority;
 	private boolean _active;
 	private boolean _originalActive;
 	private boolean _setOriginalActive;

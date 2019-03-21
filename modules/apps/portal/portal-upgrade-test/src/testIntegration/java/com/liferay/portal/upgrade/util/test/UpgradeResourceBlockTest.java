@@ -12,8 +12,9 @@
  * details.
  */
 
-package com.liferay.portal.upgrade.util;
+package com.liferay.portal.upgrade.util.test;
 
+import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.Role;
@@ -24,6 +25,7 @@ import com.liferay.portal.kernel.test.util.DBAssertionUtil;
 import com.liferay.portal.kernel.test.util.RoleTestUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+import com.liferay.portal.upgrade.util.BaseUpgradeResourceBlock;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -35,10 +37,12 @@ import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 
 /**
  * @author Preston Crary
  */
+@RunWith(Arquillian.class)
 public class UpgradeResourceBlockTest extends BaseUpgradeResourceBlock {
 
 	@ClassRule

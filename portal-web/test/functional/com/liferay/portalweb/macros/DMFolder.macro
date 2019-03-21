@@ -591,7 +591,7 @@ definition {
 			var rowEntry = "${dmFolderName}";
 
 			AssertClick(
-				locator1 = "Card#SPECIFIC_LARGE_TEXT",
+				locator1 = "Card#SPECIFIC_TITLE_TEXT",
 				value1 = "${rowEntry}",
 				key_cardText = "${rowEntry}"
 			);

@@ -14,11 +14,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>SPECIFIC_CHECKBOX</td>
-	<td>//*[@data-qa-id='row'][div[contains(@class,'card')]//*[normalize-space()='${key_cardText}']]//input[@type='checkbox']</td>
-	<td></td>
-</tr>
-<tr>
 	<td>SPECIFIC_LARGE_TEXT</td>
 	<td>//*[@data-qa-id='row'][div[contains(@class,'card')]//*[normalize-space()='${key_cardText}']]</td>
 	<td></td>

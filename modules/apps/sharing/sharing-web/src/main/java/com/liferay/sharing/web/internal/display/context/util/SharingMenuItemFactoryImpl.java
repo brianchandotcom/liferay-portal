@@ -60,6 +60,27 @@ public class SharingMenuItemFactoryImpl
 	}
 
 	@Override
+	public ToolbarItem createManageCollaboratorsToolbarItem(
+			String className, long classPK, HttpServletRequest request)
+		throws PortalException {
+
+		JavaScriptToolbarItem javaScriptToolbarItem =
+			new JavaScriptToolbarItem();
+
+		javaScriptToolbarItem.setJavaScript(
+			_sharingJavaScriptFactory.createManageCollaboratorsJavaScript(
+				request));
+		javaScriptToolbarItem.setKey("#manage-collaborators");
+		javaScriptToolbarItem.setLabel(
+			LanguageUtil.get(request, "manage-collaborators"));
+		javaScriptToolbarItem.setOnClick(
+			_sharingJavaScriptFactory.createManageCollaboratorsOnClickMethod(
+				className, classPK, request));
+
+		return javaScriptToolbarItem;
+	}
+
+	@Override
 	public MenuItem createShareMenuItem(
 			String className, long classPK, HttpServletRequest request)
 		throws PortalException {

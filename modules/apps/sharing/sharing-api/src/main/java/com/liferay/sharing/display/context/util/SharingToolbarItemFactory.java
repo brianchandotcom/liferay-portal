@@ -24,6 +24,10 @@ import javax.servlet.http.HttpServletRequest;
  */
 public interface SharingToolbarItemFactory {
 
+	public ToolbarItem createManageCollaboratorsToolbarItem(
+			String className, long classPK, HttpServletRequest request)
+		throws PortalException;
+
 	public ToolbarItem createShareToolbarItem(
 			String className, long classPK, HttpServletRequest request)
 		throws PortalException;

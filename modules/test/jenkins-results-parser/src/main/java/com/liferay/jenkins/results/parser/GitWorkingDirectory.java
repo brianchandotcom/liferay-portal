@@ -619,16 +619,15 @@ public class GitWorkingDirectory {
 
 		StringBuilder sb = new StringBuilder();
 
-		sb.append("git fetch --progress -v -f");
+		sb.append("git fetch --progress -v -f ");
 
 		if (noTags) {
-			sb.append(" --no-tags");
+			sb.append("--no-tags ");
 		}
 		else {
-			sb.append(" --tags");
+			sb.append("--tags ");
 		}
 
-		sb.append(" ");
 		sb.append(remoteURL);
 
 		String remoteGitRefName = remoteGitRef.getName();

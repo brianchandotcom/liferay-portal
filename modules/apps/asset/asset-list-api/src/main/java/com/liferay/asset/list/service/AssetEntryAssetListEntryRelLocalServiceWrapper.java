@@ -57,25 +57,28 @@ public class AssetEntryAssetListEntryRelLocalServiceWrapper
 	@Override
 	public com.liferay.asset.list.model.AssetEntryAssetListEntryRel
 			addAssetEntryAssetListEntryRel(
-				long assetEntryId, long assetListEntryId, int position,
+				long assetEntryId, long assetListEntryId, long segmentsEntryId,
+				int position,
 				com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _assetEntryAssetListEntryRelLocalService.
 			addAssetEntryAssetListEntryRel(
-				assetEntryId, assetListEntryId, position, serviceContext);
+				assetEntryId, assetListEntryId, segmentsEntryId, position,
+				serviceContext);
 	}
 
 	@Override
 	public com.liferay.asset.list.model.AssetEntryAssetListEntryRel
 			addAssetEntryAssetListEntryRel(
-				long assetEntryId, long assetListEntryId,
+				long assetEntryId, long assetListEntryId, long segmentsEntryId,
 				com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _assetEntryAssetListEntryRelLocalService.
 			addAssetEntryAssetListEntryRel(
-				assetEntryId, assetListEntryId, serviceContext);
+				assetEntryId, assetListEntryId, segmentsEntryId,
+				serviceContext);
 	}
 
 	/**
@@ -128,11 +131,12 @@ public class AssetEntryAssetListEntryRelLocalServiceWrapper
 	@Override
 	public com.liferay.asset.list.model.AssetEntryAssetListEntryRel
 			deleteAssetEntryAssetListEntryRel(
-				long assetListEntryId, int position)
+				long assetListEntryId, long segmentsEntryId, int position)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _assetEntryAssetListEntryRelLocalService.
-			deleteAssetEntryAssetListEntryRel(assetListEntryId, position);
+			deleteAssetEntryAssetListEntryRel(
+				assetListEntryId, segmentsEntryId, position);
 	}
 
 	@Override
@@ -345,6 +349,18 @@ public class AssetEntryAssetListEntryRelLocalServiceWrapper
 			getAssetEntryAssetListEntryRels(assetListEntryId, start, end);
 	}
 
+	@Override
+	public java.util.List
+		<com.liferay.asset.list.model.AssetEntryAssetListEntryRel>
+			getAssetEntryAssetListEntryRels(
+				long assetListEntryId, long segmentsEntryId, int start,
+				int end) {
+
+		return _assetEntryAssetListEntryRelLocalService.
+			getAssetEntryAssetListEntryRels(
+				assetListEntryId, segmentsEntryId, start, end);
+	}
+
 	/**
 	 * Returns all the asset entry asset list entry rels matching the UUID and company.
 	 *
@@ -404,6 +420,15 @@ public class AssetEntryAssetListEntryRelLocalServiceWrapper
 	}
 
 	@Override
+	public int getAssetEntryAssetListEntryRelsCount(
+		long assetListEntryId, long segmentsEntryId) {
+
+		return _assetEntryAssetListEntryRelLocalService.
+			getAssetEntryAssetListEntryRelsCount(
+				assetListEntryId, segmentsEntryId);
+	}
+
+	@Override
 	public com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery
 		getExportActionableDynamicQuery(
 			com.liferay.exportimport.kernel.lar.PortletDataContext
@@ -444,12 +469,13 @@ public class AssetEntryAssetListEntryRelLocalServiceWrapper
 	@Override
 	public com.liferay.asset.list.model.AssetEntryAssetListEntryRel
 			moveAssetEntryAssetListEntryRel(
-				long assetListEntryId, int position, int newPosition)
+				long assetListEntryId, long segmentsEntryId, int position,
+				int newPosition)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _assetEntryAssetListEntryRelLocalService.
 			moveAssetEntryAssetListEntryRel(
-				assetListEntryId, position, newPosition);
+				assetListEntryId, segmentsEntryId, position, newPosition);
 	}
 
 	/**
@@ -472,13 +498,13 @@ public class AssetEntryAssetListEntryRelLocalServiceWrapper
 	public com.liferay.asset.list.model.AssetEntryAssetListEntryRel
 			updateAssetEntryAssetListEntryRel(
 				long assetEntryAssetListEntryRelId, long assetEntryId,
-				long assetListEntryId, int position)
+				long assetListEntryId, long segmentsEntryId, int position)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _assetEntryAssetListEntryRelLocalService.
 			updateAssetEntryAssetListEntryRel(
 				assetEntryAssetListEntryRelId, assetEntryId, assetListEntryId,
-				position);
+				segmentsEntryId, position);
 	}
 
 	@Override

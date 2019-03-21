@@ -79,7 +79,7 @@ public class AssetListEntryModelImpl
 		{"userId", Types.BIGINT}, {"userName", Types.VARCHAR},
 		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
 		{"title", Types.VARCHAR}, {"type_", Types.INTEGER},
-		{"typeSettings", Types.CLOB}, {"lastPublishDate", Types.TIMESTAMP}
+		{"lastPublishDate", Types.TIMESTAMP}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
@@ -96,12 +96,11 @@ public class AssetListEntryModelImpl
 		TABLE_COLUMNS_MAP.put("modifiedDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("title", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("type_", Types.INTEGER);
-		TABLE_COLUMNS_MAP.put("typeSettings", Types.CLOB);
 		TABLE_COLUMNS_MAP.put("lastPublishDate", Types.TIMESTAMP);
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table AssetListEntry (uuid_ VARCHAR(75) null,assetListEntryId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,title VARCHAR(75) null,type_ INTEGER,typeSettings TEXT null,lastPublishDate DATE null)";
+		"create table AssetListEntry (uuid_ VARCHAR(75) null,assetListEntryId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,title VARCHAR(75) null,type_ INTEGER,lastPublishDate DATE null)";
 
 	public static final String TABLE_SQL_DROP = "drop table AssetListEntry";
 
@@ -167,7 +166,6 @@ public class AssetListEntryModelImpl
 		model.setModifiedDate(soapModel.getModifiedDate());
 		model.setTitle(soapModel.getTitle());
 		model.setType(soapModel.getType());
-		model.setTypeSettings(soapModel.getTypeSettings());
 		model.setLastPublishDate(soapModel.getLastPublishDate());
 
 		return model;
@@ -343,12 +341,6 @@ public class AssetListEntryModelImpl
 		attributeSetterBiConsumers.put(
 			"type",
 			(BiConsumer<AssetListEntry, Integer>)AssetListEntry::setType);
-		attributeGetterFunctions.put(
-			"typeSettings", AssetListEntry::getTypeSettings);
-		attributeSetterBiConsumers.put(
-			"typeSettings",
-			(BiConsumer<AssetListEntry, String>)
-				AssetListEntry::setTypeSettings);
 		attributeGetterFunctions.put(
 			"lastPublishDate", AssetListEntry::getLastPublishDate);
 		attributeSetterBiConsumers.put(
@@ -567,22 +559,6 @@ public class AssetListEntryModelImpl
 
 	@JSON
 	@Override
-	public String getTypeSettings() {
-		if (_typeSettings == null) {
-			return "";
-		}
-		else {
-			return _typeSettings;
-		}
-	}
-
-	@Override
-	public void setTypeSettings(String typeSettings) {
-		_typeSettings = typeSettings;
-	}
-
-	@JSON
-	@Override
 	public Date getLastPublishDate() {
 		return _lastPublishDate;
 	}
@@ -640,7 +616,6 @@ public class AssetListEntryModelImpl
 		assetListEntryImpl.setModifiedDate(getModifiedDate());
 		assetListEntryImpl.setTitle(getTitle());
 		assetListEntryImpl.setType(getType());
-		assetListEntryImpl.setTypeSettings(getTypeSettings());
 		assetListEntryImpl.setLastPublishDate(getLastPublishDate());
 
 		assetListEntryImpl.resetOriginalValues();
@@ -784,14 +759,6 @@ public class AssetListEntryModelImpl
 
 		assetListEntryCacheModel.type = getType();
 
-		assetListEntryCacheModel.typeSettings = getTypeSettings();
-
-		String typeSettings = assetListEntryCacheModel.typeSettings;
-
-		if ((typeSettings != null) && (typeSettings.length() == 0)) {
-			assetListEntryCacheModel.typeSettings = null;
-		}
-
 		Date lastPublishDate = getLastPublishDate();
 
 		if (lastPublishDate != null) {
@@ -893,7 +860,6 @@ public class AssetListEntryModelImpl
 	private int _type;
 	private int _originalType;
 	private boolean _setOriginalType;
-	private String _typeSettings;
 	private Date _lastPublishDate;
 	private long _columnBitmask;
 	private AssetListEntry _escapedModel;

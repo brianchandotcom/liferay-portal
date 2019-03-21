@@ -142,8 +142,6 @@ public class AssetListEntryPersistenceTest {
 
 		newAssetListEntry.setType(RandomTestUtil.nextInt());
 
-		newAssetListEntry.setTypeSettings(RandomTestUtil.randomString());
-
 		newAssetListEntry.setLastPublishDate(RandomTestUtil.nextDate());
 
 		_assetListEntries.add(_persistence.update(newAssetListEntry));
@@ -177,9 +175,6 @@ public class AssetListEntryPersistenceTest {
 			existingAssetListEntry.getTitle(), newAssetListEntry.getTitle());
 		Assert.assertEquals(
 			existingAssetListEntry.getType(), newAssetListEntry.getType());
-		Assert.assertEquals(
-			existingAssetListEntry.getTypeSettings(),
-			newAssetListEntry.getTypeSettings());
 		Assert.assertEquals(
 			Time.getShortTimestamp(existingAssetListEntry.getLastPublishDate()),
 			Time.getShortTimestamp(newAssetListEntry.getLastPublishDate()));
@@ -550,8 +545,6 @@ public class AssetListEntryPersistenceTest {
 		assetListEntry.setTitle(RandomTestUtil.randomString());
 
 		assetListEntry.setType(RandomTestUtil.nextInt());
-
-		assetListEntry.setTypeSettings(RandomTestUtil.randomString());
 
 		assetListEntry.setLastPublishDate(RandomTestUtil.nextDate());
 

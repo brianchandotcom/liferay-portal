@@ -1,4 +1,4 @@
-create unique index IX_B95FDA9 on AssetEntryAssetListEntryRel (assetListEntryId, position);
+create unique index IX_3B1742AE on AssetEntryAssetListEntryRel (assetListEntryId, segmentsEntryId, position);
 create index IX_F1B655ED on AssetEntryAssetListEntryRel (uuid_[$COLUMN_LENGTH:75$], companyId);
 create unique index IX_C6C573AF on AssetEntryAssetListEntryRel (uuid_[$COLUMN_LENGTH:75$], groupId);
 

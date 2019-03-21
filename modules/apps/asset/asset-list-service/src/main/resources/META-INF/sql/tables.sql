@@ -25,7 +25,6 @@ create table AssetListEntry (
 	modifiedDate DATE null,
 	title VARCHAR(75) null,
 	type_ INTEGER,
-	typeSettings TEXT null,
 	lastPublishDate DATE null
 );
 

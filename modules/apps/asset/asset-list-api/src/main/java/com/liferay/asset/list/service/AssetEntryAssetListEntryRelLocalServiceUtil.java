@@ -58,22 +58,24 @@ public class AssetEntryAssetListEntryRelLocalServiceUtil {
 
 	public static com.liferay.asset.list.model.AssetEntryAssetListEntryRel
 			addAssetEntryAssetListEntryRel(
-				long assetEntryId, long assetListEntryId, int position,
+				long assetEntryId, long assetListEntryId, long segmentsEntryId,
+				int position,
 				com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return getService().addAssetEntryAssetListEntryRel(
-			assetEntryId, assetListEntryId, position, serviceContext);
+			assetEntryId, assetListEntryId, segmentsEntryId, position,
+			serviceContext);
 	}
 
 	public static com.liferay.asset.list.model.AssetEntryAssetListEntryRel
 			addAssetEntryAssetListEntryRel(
-				long assetEntryId, long assetListEntryId,
+				long assetEntryId, long assetListEntryId, long segmentsEntryId,
 				com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return getService().addAssetEntryAssetListEntryRel(
-			assetEntryId, assetListEntryId, serviceContext);
+			assetEntryId, assetListEntryId, segmentsEntryId, serviceContext);
 	}
 
 	/**
@@ -122,11 +124,11 @@ public class AssetEntryAssetListEntryRelLocalServiceUtil {
 
 	public static com.liferay.asset.list.model.AssetEntryAssetListEntryRel
 			deleteAssetEntryAssetListEntryRel(
-				long assetListEntryId, int position)
+				long assetListEntryId, long segmentsEntryId, int position)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return getService().deleteAssetEntryAssetListEntryRel(
-			assetListEntryId, position);
+			assetListEntryId, segmentsEntryId, position);
 	}
 
 	public static void deleteAssetEntryAssetListEntryRelByAssetListEntryId(
@@ -319,6 +321,16 @@ public class AssetEntryAssetListEntryRelLocalServiceUtil {
 			assetListEntryId, start, end);
 	}
 
+	public static java.util.List
+		<com.liferay.asset.list.model.AssetEntryAssetListEntryRel>
+			getAssetEntryAssetListEntryRels(
+				long assetListEntryId, long segmentsEntryId, int start,
+				int end) {
+
+		return getService().getAssetEntryAssetListEntryRels(
+			assetListEntryId, segmentsEntryId, start, end);
+	}
+
 	/**
 	 * Returns all the asset entry asset list entry rels matching the UUID and company.
 	 *
@@ -373,6 +385,13 @@ public class AssetEntryAssetListEntryRelLocalServiceUtil {
 			assetListEntryId);
 	}
 
+	public static int getAssetEntryAssetListEntryRelsCount(
+		long assetListEntryId, long segmentsEntryId) {
+
+		return getService().getAssetEntryAssetListEntryRelsCount(
+			assetListEntryId, segmentsEntryId);
+	}
+
 	public static com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery
 		getExportActionableDynamicQuery(
 			com.liferay.exportimport.kernel.lar.PortletDataContext
@@ -406,11 +425,12 @@ public class AssetEntryAssetListEntryRelLocalServiceUtil {
 
 	public static com.liferay.asset.list.model.AssetEntryAssetListEntryRel
 			moveAssetEntryAssetListEntryRel(
-				long assetListEntryId, int position, int newPosition)
+				long assetListEntryId, long segmentsEntryId, int position,
+				int newPosition)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return getService().moveAssetEntryAssetListEntryRel(
-			assetListEntryId, position, newPosition);
+			assetListEntryId, segmentsEntryId, position, newPosition);
 	}
 
 	/**
@@ -431,12 +451,12 @@ public class AssetEntryAssetListEntryRelLocalServiceUtil {
 	public static com.liferay.asset.list.model.AssetEntryAssetListEntryRel
 			updateAssetEntryAssetListEntryRel(
 				long assetEntryAssetListEntryRelId, long assetEntryId,
-				long assetListEntryId, int position)
+				long assetListEntryId, long segmentsEntryId, int position)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return getService().updateAssetEntryAssetListEntryRel(
 			assetEntryAssetListEntryRelId, assetEntryId, assetListEntryId,
-			position);
+			segmentsEntryId, position);
 	}
 
 	public static AssetEntryAssetListEntryRelLocalService getService() {

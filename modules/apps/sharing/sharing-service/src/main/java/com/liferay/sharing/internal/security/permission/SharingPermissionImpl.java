@@ -164,13 +164,13 @@ public class SharingPermissionImpl implements SharingPermission {
 		SharingEntry sharingEntry = _sharingEntryLocalService.fetchSharingEntry(
 			permissionChecker.getUserId(), classNameId, classPK);
 
-		if ((sharingEntry == null) || !sharingEntry.isShareable() ||
-			!contains(
+		if ((sharingEntry != null) && sharingEntry.isShareable() &&
+			contains(
 				permissionChecker, sharingEntry.getClassNameId(),
 				sharingEntry.getClassPK(), sharingEntry.getGroupId(),
 				Collections.singletonList(SharingEntryAction.UPDATE))) {
 
-			return false;
+			return true;
 		}
 
 		return false;

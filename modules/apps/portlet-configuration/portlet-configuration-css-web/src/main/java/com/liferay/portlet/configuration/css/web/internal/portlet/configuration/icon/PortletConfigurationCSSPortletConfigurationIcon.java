@@ -16,6 +16,7 @@ package com.liferay.portlet.configuration.css.web.internal.portlet.configuration
 
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigurationIcon;
@@ -24,6 +25,7 @@ import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.configuration.css.web.internal.constants.PortletConfigurationCSSPortletKeys;
 
 import java.util.ResourceBundle;
@@ -88,6 +90,17 @@ public class PortletConfigurationCSSPortletConfigurationIcon
 	public boolean isShow(PortletRequest portletRequest) {
 		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
+
+		Layout layout = themeDisplay.getLayout();
+
+		String layoutFriendlyURL = layout.getFriendlyURL();
+
+		if (layout.isSystem() &&
+			layoutFriendlyURL.equals(
+				PropsValues.CONTROL_PANEL_LAYOUT_FRIENDLY_URL)) {
+
+			return false;
+		}
 
 		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
 

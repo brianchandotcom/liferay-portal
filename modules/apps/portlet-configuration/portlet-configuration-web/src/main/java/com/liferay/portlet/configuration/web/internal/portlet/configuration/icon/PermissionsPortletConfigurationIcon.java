@@ -37,6 +37,7 @@ import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.configuration.kernel.util.PortletConfigurationApplicationType;
 
 import javax.portlet.PortletRequest;
@@ -151,6 +152,15 @@ public class PermissionsPortletConfigurationIcon
 
 		if (layout.isTypeControlPanel()) {
 			showPermissionsIcon = false;
+		}
+
+		String layoutFriendlyURL = layout.getFriendlyURL();
+
+		if (layout.isSystem() &&
+			layoutFriendlyURL.equals(
+				PropsValues.CONTROL_PANEL_LAYOUT_FRIENDLY_URL)) {
+
+			return false;
 		}
 
 		return showPermissionsIcon;

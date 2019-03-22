@@ -14,6 +14,8 @@
 
 package com.liferay.user.associated.data.display;
 
+import java.util.Locale;
+
 /**
  * Declares a hierarchical relationship between multiple UADDisplays.
  *
@@ -37,6 +39,8 @@ public interface UADHierarchyDeclaration {
 	 * @review
 	 */
 	public UADDisplay<?>[] getContainerUADDisplays();
+
+	public String getEntitiesTypeLabel(Locale locale);
 
 	/**
 	 * Returns an array of field names to be rendered as columns in the

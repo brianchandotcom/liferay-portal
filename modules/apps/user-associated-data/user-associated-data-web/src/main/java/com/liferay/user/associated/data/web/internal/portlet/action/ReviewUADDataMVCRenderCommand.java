@@ -146,6 +146,9 @@ public class ReviewUADDataMVCRenderCommand implements MVCRenderCommand {
 						renderRequest, liferayPortletResponse, applicationKey,
 						currentURL, groupIds, parentContainerClass, 0L,
 						selectedUser, uadHierarchyDisplay));
+
+				renderRequest.setAttribute(
+					UADWebKeys.UAD_HIERARCHY_DISPLAY, uadHierarchyDisplay);
 			}
 			else {
 				String uadRegistryKey = ParamUtil.getString(

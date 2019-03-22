@@ -1,3 +1,10 @@
 Bundle-Name: Liferay Multi Factor Authentication SPI
 Bundle-SymbolicName: com.liferay.multi.factor.authentication.spi
 Bundle-Version: 1.0.0
+Export-Package:\
+	com.liferay.multi.factor.authentication.spi.checker,\
+	com.liferay.multi.factor.authentication.spi.checker.browser,\
+	com.liferay.multi.factor.authentication.spi.checker.composite,\
+	com.liferay.multi.factor.authentication.spi.checker.headless,\
+	com.liferay.multi.factor.authentication.spi.checker.setup,\
+	com.liferay.multi.factor.authentication.spi.checker.visitor

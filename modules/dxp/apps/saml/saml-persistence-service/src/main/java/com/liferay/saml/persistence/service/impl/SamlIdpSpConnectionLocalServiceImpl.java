@@ -45,7 +45,7 @@ public class SamlIdpSpConnectionLocalServiceImpl
 	public SamlIdpSpConnection addSamlIdpSpConnection(
 			String samlSpEntityId, int assertionLifetime, String attributeNames,
 			boolean attributesEnabled, boolean attributesNamespaceEnabled,
-			boolean enabled, String metadataUrl,
+			boolean enabled, boolean encryptionForced, String metadataUrl,
 			InputStream metadataXmlInputStream, String name,
 			String nameIdAttribute, String nameIdFormat,
 			ServiceContext serviceContext)
@@ -84,6 +84,7 @@ public class SamlIdpSpConnectionLocalServiceImpl
 		samlIdpSpConnection.setAttributesNamespaceEnabled(
 			attributesNamespaceEnabled);
 		samlIdpSpConnection.setEnabled(enabled);
+		samlIdpSpConnection.setEncryptionForced(encryptionForced);
 		samlIdpSpConnection.setExpandoBridgeAttributes(serviceContext);
 		samlIdpSpConnection.setMetadataUpdatedDate(now);
 
@@ -206,7 +207,7 @@ public class SamlIdpSpConnectionLocalServiceImpl
 			long samlIdpSpConnectionId, String samlSpEntityId,
 			int assertionLifetime, String attributeNames,
 			boolean attributesEnabled, boolean attributesNamespaceEnabled,
-			boolean enabled, String metadataUrl,
+			boolean enabled, boolean encryptionForced, String metadataUrl,
 			InputStream metadataXmlInputStream, String name,
 			String nameIdAttribute, String nameIdFormat,
 			ServiceContext serviceContext)
@@ -240,6 +241,7 @@ public class SamlIdpSpConnectionLocalServiceImpl
 		samlIdpSpConnection.setAttributesNamespaceEnabled(
 			attributesNamespaceEnabled);
 		samlIdpSpConnection.setEnabled(enabled);
+		samlIdpSpConnection.setEncryptionForced(encryptionForced);
 		samlIdpSpConnection.setExpandoBridgeAttributes(serviceContext);
 
 		if ((metadataXmlInputStream == null) &&

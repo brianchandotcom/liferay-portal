@@ -161,6 +161,13 @@ public class LayoutPageTemplateEntryLocalServiceImpl
 
 		layoutPageTemplateEntry.setPlid(plid);
 
+		// Draft layout page template version
+
+		layoutPageTemplateEntryVersionLocalService.
+			addLayoutPageTemplateEntryVersion(
+				userId, groupId, layoutPageTemplateEntryId, 0.1, name,
+				classNameId, classTypeId, type, serviceContext);
+
 		layoutPageTemplateEntry.setStatus(status);
 		layoutPageTemplateEntry.setStatusByUserId(userId);
 		layoutPageTemplateEntry.setStatusByUserName(user.getScreenName());
@@ -220,7 +227,7 @@ public class LayoutPageTemplateEntryLocalServiceImpl
 
 		return addLayoutPageTemplateEntry(
 			userId, groupId, layoutPageTemplateCollectionId, name, type,
-			WorkflowConstants.STATUS_DRAFT, serviceContext);
+			WorkflowConstants.STATUS_APPROVED, serviceContext);
 	}
 
 	@Override
@@ -232,7 +239,7 @@ public class LayoutPageTemplateEntryLocalServiceImpl
 		return addLayoutPageTemplateEntry(
 			userId, groupId, layoutPageTemplateCollectionId, name,
 			LayoutPageTemplateEntryTypeConstants.TYPE_BASIC,
-			WorkflowConstants.STATUS_DRAFT, serviceContext);
+			WorkflowConstants.STATUS_APPROVED, serviceContext);
 	}
 
 	@Override

@@ -1570,10 +1570,6 @@ definition {
 		AssertElementPresent(
 			locator1 = "MessageBoardsStatistics#TOP_POSTERS_AUTHOR_LAST_POST_DATE"
 		);
-
-		AssertElementPresent(
-			locator1 = "MessageBoardsStatistics#TOP_POSTERS_AUTHOR_ICON"
-		);
 	}
 
 	macro viewWithWorkflowPG {

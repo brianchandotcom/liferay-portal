@@ -2,7 +2,7 @@ import Component from 'metal-component';
 import Soy from 'metal-soy';
 
 import '../fragments/FragmentsEditorSidebarCard.es';
-import {CLEAR_HOVERED_ITEM, REMOVE_FRAGMENT_ENTRY_LINK, REMOVE_SECTION, UPDATE_ACTIVE_ITEM, UPDATE_HOVERED_ITEM, CLEAR_ACTIVE_ITEM} from '../../../actions/actions.es';
+import {CLEAR_HOVERED_ITEM, REMOVE_FRAGMENT_ENTRY_LINK, REMOVE_SECTION, UPDATE_ACTIVE_ITEM, UPDATE_HOVERED_ITEM} from '../../../actions/actions.es';
 import {focusItem, removeItem, setIn} from '../../../utils/FragmentsEditorUpdateUtils.es';
 import {FRAGMENTS_EDITOR_ITEM_TYPES} from '../../../utils/constants';
 import {getConnectedComponent} from '../../../store/ConnectedComponent.es';
@@ -76,7 +76,7 @@ class SidebarStructurePanel extends Component {
 	 */
 	_handleElementMouseLeave() {
 		this.store.dispatchAction(
-			CLEAR_ACTIVE_ITEM
+			CLEAR_HOVERED_ITEM
 		);
 	}
 

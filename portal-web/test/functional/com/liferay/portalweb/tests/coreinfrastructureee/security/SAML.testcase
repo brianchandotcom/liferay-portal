@@ -41,7 +41,10 @@ definition {
 			categoryPriority = "DEBUG"
 		);
 
-		JSONRole.addSiteRole(roleKey = "TestSiteRole", roleTitle = "TestSiteRole");
+		JSONRole.addSiteRole(
+			roleKey = "TestSiteRole",
+			roleTitle = "TestSiteRole"
+		);
 
 		Navigator.openURL();
 

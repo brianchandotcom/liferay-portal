@@ -66,7 +66,7 @@ definition {
 		}
 
 		task ("Publish the content page") {
-			PageEditor.clickPublishPage();
+			PageEditor.clickPublish();
 		}
 
 		task ("Add a web content article with the same text as the Static Text fragment") {
@@ -123,7 +123,7 @@ definition {
 		}
 
 		task ("Publish the content page") {
-			PageEditor.clickPublishPage();
+			PageEditor.clickPublish();
 		}
 
 		task ("Navigate to the content page") {
@@ -155,7 +155,7 @@ definition {
 		}
 
 		task ("Publish the content page") {
-			PageEditor.clickPublishPage();
+			PageEditor.clickPublish();
 		}
 
 		task ("Navigate to the content page") {
@@ -194,7 +194,7 @@ definition {
 		}
 
 		task ("Publish the content page") {
-			PageEditor.clickPublishPage();
+			PageEditor.clickPublish();
 		}
 
 		task ("Navigate to the content page") {

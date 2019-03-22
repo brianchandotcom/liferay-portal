@@ -13,9 +13,9 @@ definition {
 		);
 	}
 
-	macro clickPublishPage {
+	macro clickPublish {
 		Button.click(
-			button = "Publish Page"
+			button = "Publish"
 		);
 	}
 

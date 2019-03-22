@@ -16,7 +16,7 @@ definition {
 	}
 
 	macro viewPG {
-		SelectFrame(locator1 = "IFrame#XPACK_MONITORING");
+		SelectFrame.selectFrameNoLoading(locator1 = "IFrame#XPACK_MONITORING");
 
 		AssertTextPresent(
 			locator1 = "XPackMonitoring#CLUSTER_NAME",

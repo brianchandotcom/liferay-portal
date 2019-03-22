@@ -1,6 +1,7 @@
-.fjord-download {
+.fjord-download-button img {
+	height: 40px;
 }
 
-.fjord-download .main-background-image {
+.fjord-download-image {
 	background-image: url("[resources:background_5.jpg]");
 }

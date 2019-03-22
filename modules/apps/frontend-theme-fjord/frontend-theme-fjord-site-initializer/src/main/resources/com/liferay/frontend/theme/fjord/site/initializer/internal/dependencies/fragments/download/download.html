@@ -1,33 +1,39 @@
-<div class="fjord-download">
-	<div class="jumbotron main-background-image">
-		<section class="container-fluid container-fluid-max-xl">
-			<div class="col-md-10 mx-auto text-center">
-				<h1 class="display-4">
-					<lfr-editable id="title" type="text">Start Building Today</lfr-editable>
-				</h1>
+<div class="fjord-download fjord-section">
+	<section class="bg-dark bg-image fjord-download-image jumbotron jumbotron-fluid mb-0 text-white">
+		<div class="container py-5">
+			<div class="py-5 row">
+				<div class="col-12 text-center">
+					<lfr-editable id="fjord-download-title" type="rich-text">
+						<h2 class="display-4">Start Building Today</h2>
+					</lfr-editable>
 
-				<p>
-					<lfr-editable id="description" type="rich-text">This theme is included with your Liferay product. Visit <a href="http://www.liferay.com">www.liferay.com</a> for more information.</lfr-editable>
-				</p>
-
-				<ul class="list-inline list-unstyled store-buttons">
-					<li class="list-inline-item">
-						<lfr-editable id="store1" type="rich-text">
-							<a href="#" title="Download on the App Store, in new window">
-								<img alt="Download on the App Store" src="[resources:badge_apple.png]">
-							</a>
+					<div class="lead">
+						<lfr-editable id="fjord-download-text" type="rich-text">
+							<p>This theme is included with your Liferay product. Visit <a class="text-reset" href="https://www.liferay.com">www.liferay.com</a> for more information.</p>
 						</lfr-editable>
-					</li>
+					</div>
 
-					<li class="list-inline-item">
-						<lfr-editable id="store2" type="rich-text">
-							<a href="#" title="Get it on Google Play, in new window">
-								<img alt="Get it on Google Play" src="[resources:badge_play.png]">
-							</a>
+					<div class="d-inline-block fjord-download-button">
+						<lfr-editable id="fjord-download-button1" type="rich-text">
+							<div class="d-inline-flex">
+								<a href="#" target="_blank" title="Download on the App Store, in new window">
+									<img alt="Download on the App Store" src="[resources:badge_apple.png]">
+								</a>
+							</div>
 						</lfr-editable>
-					</li>
-				</ul>
+					</div>
+
+					<div class="d-inline-block fjord-download-button ml-3">
+						<lfr-editable id="fjord-download-button2" type="rich-text">
+							<div class="d-inline-flex">
+								<a href="#" target="_blank" title="Download on the Google Play, in new window">
+									<img alt="Download on the Google Play" src="[resources:badge_play.png]">
+								</a>
+							</div>
+						</lfr-editable>
+					</div>
+				</div>
 			</div>
-		</section>
-	</div>
+		</div>
+	</section>
 </div>

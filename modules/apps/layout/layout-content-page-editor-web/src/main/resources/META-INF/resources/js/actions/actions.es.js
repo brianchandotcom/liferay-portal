@@ -24,6 +24,7 @@ export const UPDATE_SEGMENTS_EXPERIENCE_PRIORITY = 'UPDATE_SEGMENTS_EXPERIENCE_P
 export const ADD_SECTION = 'addSection';
 export const MOVE_SECTION = 'moveSection';
 export const REMOVE_SECTION = 'removeSection';
+export const UPDATE_SECTION_COLUMNS = 'updateSectionColumns';
 export const UPDATE_SECTION_COLUMNS_NUMBER = 'updateSectionColumnsNumber';
 export const UPDATE_SECTION_CONFIG = 'updateSectionConfig';
 

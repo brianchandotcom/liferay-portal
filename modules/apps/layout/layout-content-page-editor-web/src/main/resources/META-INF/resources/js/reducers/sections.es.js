@@ -1,4 +1,4 @@
-import {ADD_SECTION, MOVE_SECTION, REMOVE_SECTION, UPDATE_SECTION_COLUMNS_NUMBER, UPDATE_SECTION_CONFIG} from '../actions/actions.es';
+import {ADD_SECTION, MOVE_SECTION, REMOVE_SECTION, UPDATE_SECTION_COLUMNS, UPDATE_SECTION_COLUMNS_NUMBER, UPDATE_SECTION_CONFIG} from '../actions/actions.es';
 import {MAX_SECTION_COLUMNS} from '../utils/constants';
 import {add, remove, setIn, updateIn, updateLayoutData, updateWidgets} from '../utils/FragmentsEditorUpdateUtils.es';
 import {getDropSectionPosition, getSectionFragmentEntryLinkIds, getSectionIndex} from '../utils/FragmentsEditorGetUtils.es';
@@ -176,6 +176,65 @@ function removeSectionReducer(state, actionType, payload) {
 		}
 	);
 }
+
+/**
+ * @param {!object} state
+ * @param {!string} actionType
+ * @param {!object} payload
+ * @param {!Array} payload.columns
+ * @param {!string} payload.sectionId
+ * @return {object}
+ * @review
+ */
+const updateSectionColumnsReducer = (state, actionType, payload) => new Promise(
+	resolve => {
+		let nextState = state;
+
+		if (actionType === UPDATE_SECTION_COLUMNS) {
+			const sectionIndex = getSectionIndex(
+				nextState.layoutData.structure,
+				payload.sectionId
+			);
+
+			if (sectionIndex === -1) {
+				resolve(nextState);
+			}
+			else {
+				nextState = setIn(
+					nextState,
+					[
+						'layoutData',
+						'structure',
+						sectionIndex,
+						'columns'
+					],
+					payload.columns
+				);
+
+				updateLayoutData(
+					nextState.updateLayoutPageTemplateDataURL,
+					nextState.portletNamespace,
+					nextState.classNameId,
+					nextState.classPK,
+					nextState.layoutData
+				)
+					.then(
+						() => {
+							resolve(nextState);
+						}
+					)
+					.catch(
+						() => {
+							resolve(nextState);
+						}
+					);
+			}
+		}
+		else {
+			resolve(nextState);
+		}
+	}
+);
 
 /**
  * @param {!object} state
@@ -518,6 +577,7 @@ export {
 	addSectionReducer,
 	moveSectionReducer,
 	removeSectionReducer,
+	updateSectionColumnsReducer,
 	updateSectionColumnsNumberReducer,
 	updateSectionConfigReducer
 };

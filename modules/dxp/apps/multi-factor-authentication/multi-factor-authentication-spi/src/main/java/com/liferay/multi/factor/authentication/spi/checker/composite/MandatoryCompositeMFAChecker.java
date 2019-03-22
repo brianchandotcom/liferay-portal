@@ -32,8 +32,8 @@ public class MandatoryCompositeMFAChecker extends BaseCompositeMFAChecker {
 	}
 
 	@Override
-	public <T> T accept(MFACheckerVisitor<T> visitor) {
-		return visitor.visit(this);
+	public <T> T accept(MFACheckerVisitor<T> mfaCheckerVisitor) {
+		return mfaCheckerVisitor.visit(this);
 	}
 
 }

@@ -26,6 +26,7 @@
 		<column name="attributesEnabled" type="boolean" />
 		<column name="attributesNamespaceEnabled" type="boolean" />
 		<column name="enabled" type="boolean" />
+		<column name="encryptionForced" type="boolean" />
 		<column name="metadataUrl" type="String" />
 		<column name="metadataXml" type="String" />
 		<column name="metadataUpdatedDate" type="Date" />

@@ -45,6 +45,15 @@ class Builder extends Component {
 		editingLanguageId: Config.string(),
 
 		/**
+		 * @default []
+		 * @instance
+		 * @memberof FormBuilder
+		 * @type {?(array|undefined)}
+		 */
+
+		fieldTypes: Config.array().value([]),
+
+		/**
 		 * @default {}
 		 * @instance
 		 * @memberof FormBuilder
@@ -61,6 +70,16 @@ class Builder extends Component {
 		 */
 
 		locale: Config.string().value('en_US'),
+
+		/**
+		 * The namespace of the portlet.
+		 * @default undefined
+		 * @instance
+		 * @memberof Form
+		 * @type {!string}
+		 */
+
+		namespace: Config.string().required(),
 
 		/**
 		 * @default []
@@ -86,6 +105,16 @@ class Builder extends Component {
 		 */
 
 		rules: Config.arrayOf(ruleStructure).required(),
+
+		/**
+		 * The path to the SVG spritemap file containing the icons.
+		 * @default undefined
+		 * @instance
+		 * @memberof Form
+		 * @type {!string}
+		 */
+
+		spritemap: Config.string().required(),
 
 		/**
 		 * @instance

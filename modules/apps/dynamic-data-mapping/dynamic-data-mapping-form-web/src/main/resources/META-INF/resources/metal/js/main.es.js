@@ -81,6 +81,15 @@ class Form extends Component {
 		editingLanguageId: Config.string().value(themeDisplay.getDefaultLanguageId()),
 
 		/**
+		 * @default []
+		 * @instance
+		 * @memberof Form
+		 * @type {?(array|undefined)}
+		 */
+
+		fieldTypes: Config.array().value([]),
+
+		/**
 		 * A map with all translated values available as the form description.
 		 * @default 0
 		 * @instance
@@ -501,6 +510,7 @@ class Form extends Component {
 	render() {
 		const {
 			context,
+			fieldTypes,
 			formInstanceId,
 			namespace,
 			published,
@@ -528,7 +538,9 @@ class Form extends Component {
 			<div class={'ddm-form-builder'}>
 				<LayoutProvider {...layoutProviderProps}>
 					<RuleBuilder
+						dataProviderInstanceParameterSettingsURL={this.props.dataProviderInstanceParameterSettingsURL}
 						dataProviderInstancesURL={this.props.dataProviderInstancesURL}
+						fieldTypes={fieldTypes}
 						functionsMetadata={this.props.functionsMetadata}
 						functionsURL={this.props.functionsURL}
 						pages={context.pages}
@@ -539,9 +551,11 @@ class Form extends Component {
 					/>
 					{!showRuleBuilder && (
 						<FormBuilder
+							fieldTypes={fieldTypes}
 							namespace={this.props.namespace}
 							ref="builder"
 							rules={this.props.rules}
+							spritemap={spritemap}
 							visible={!showRuleBuilder}
 						/>
 					)}

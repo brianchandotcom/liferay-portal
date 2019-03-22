@@ -23,9 +23,7 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
-import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -135,21 +133,18 @@ public class AssetEntryActionDropdownItemsProvider {
 				return null;
 			}
 
+			String redirect = _themeDisplay.getURLCurrent();
+
+			if (Validator.isNotNull(_fullContentRedirect)) {
+				redirect = _fullContentRedirect;
+			}
+
 			PortletURL editAssetEntryURL = _assetRenderer.getURLEdit(
 				_liferayPortletRequest, _liferayPortletResponse,
-				LiferayWindowState.NORMAL, null);
+				LiferayWindowState.NORMAL, redirect);
 
 			if (editAssetEntryURL == null) {
 				return null;
-			}
-
-			if (Validator.isNotNull(_fullContentRedirect)) {
-				editAssetEntryURL.setParameter(
-					"redirect", _fullContentRedirect);
-			}
-			else {
-				editAssetEntryURL.setParameter(
-					"redirect", _themeDisplay.getURLCurrent());
 			}
 
 			editAssetEntryURL.setParameter(

@@ -82,12 +82,7 @@
 
 <#macro getEditIcon>
 	<#if assetRenderer.hasEditPermission(themeDisplay.getPermissionChecker())>
-		<#assign redirectURL = renderResponse.createRenderURL() />
-
-		${redirectURL.setParameter("mvcPath", "/add_asset_redirect.jsp")}
-		${redirectURL.setWindowState("pop_up")}
-
-		<#assign editPortletURL = assetRenderer.getURLEdit(renderRequest, renderResponse, windowStateFactory.getWindowState("pop_up"), redirectURL)!"" />
+		<#assign editPortletURL = assetRenderer.getURLEdit(renderRequest, renderResponse, windowStateFactory.getWindowState("pop_up"), themeDisplay.getURLCurrent())!"" />
 
 		<#if validator.isNotNull(editPortletURL)>
 			<#assign title = languageUtil.format(locale, "edit-x", entryTitle, false) />
@@ -97,7 +92,7 @@
 				icon="pencil"
 				markupView="lexicon"
 				message=title
-				url="javascript:Liferay.Util.openWindow({id:'" + renderResponse.getNamespace() + "editAsset', title: '" + title + "', uri:'" + htmlUtil.escapeURL(editPortletURL.toString()) + "'});"
+				url=editPortletURL.toString()
 			/>
 		</#if>
 	</#if>

@@ -45,7 +45,6 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
-import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.PortletRequestModel;
 import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
@@ -595,6 +594,9 @@ public class JournalContentDisplayContext {
 	}
 
 	public String getURLEdit() {
+		ThemeDisplay themeDisplay = (ThemeDisplay)_portletRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
 		try {
 			AssetRendererFactory<JournalArticle> assetRendererFactory =
 				AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClass(
@@ -606,13 +608,9 @@ public class JournalContentDisplayContext {
 				assetRendererFactory.getAssetRenderer(
 					article, AssetRendererFactory.TYPE_LATEST_APPROVED);
 
-			LiferayPortletResponse liferayPortletResponse =
-				PortalUtil.getLiferayPortletResponse(_portletResponse);
-
 			PortletURL portletURL = latestArticleAssetRenderer.getURLEdit(
 				PortalUtil.getLiferayPortletRequest(_portletRequest), null,
-				LiferayWindowState.MAXIMIZED,
-				liferayPortletResponse.createRenderURL());
+				LiferayWindowState.MAXIMIZED, themeDisplay.getURLCurrent());
 
 			portletURL.setParameter(
 				"hideDefaultSuccessMessage", Boolean.TRUE.toString());

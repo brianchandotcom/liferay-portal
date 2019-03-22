@@ -153,21 +153,15 @@
 		/>
 
 		<#if showEditURL && assetRenderer.hasEditPermission(permissionChecker)>
-			<#assign redirectURL = renderResponse.createLiferayPortletURL(themeDisplay.getPlid(), themeDisplay.getPortletDisplay().getId(), "RENDER_PHASE", false) />
-
-			${redirectURL.setParameter("mvcPath", "/add_asset_redirect.jsp")}
-
 			<#assign
-				editPortletURL = assetRenderer.getURLEdit(renderRequest, renderResponse, windowStateFactory.getWindowState("POP_UP"), redirectURL)
-
-				taglibEditURL = "javascript:Liferay.Util.openWindow({id: '" + renderResponse.getNamespace() + "editAsset', title: '" + htmlUtil.escapeJS(languageUtil.format(locale, "edit-x", htmlUtil.escape(assetRenderer.getTitle(locale)), false)) + "', uri:'" + htmlUtil.escapeJS(editPortletURL.toString()) + "'});"
+				editPortletURL = assetRenderer.getURLEdit(renderRequest, renderResponse, windowStateFactory.getWindowState("POP_UP"), themeDisplay.getURLCurrent())
 			/>
 
 			<@liferay_ui.icon
 				image="edit"
 				label=true
 				message="edit"
-				url=taglibEditURL
+				url=editPortletURL.toString()
 			/>
 		</#if>
 

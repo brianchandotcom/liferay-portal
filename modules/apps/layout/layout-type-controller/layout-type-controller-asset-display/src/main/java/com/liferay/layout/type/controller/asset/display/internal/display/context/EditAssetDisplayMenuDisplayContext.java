@@ -123,17 +123,15 @@ public class EditAssetDisplayMenuDisplayContext {
 		}
 
 		PortletURL editAssetEntryURL = assetRenderer.getURLEdit(
-			_request, LiferayWindowState.MAXIMIZED, null);
+			_request, LiferayWindowState.MAXIMIZED,
+			_themeDisplay.getURLCurrent());
 
 		if (editAssetEntryURL == null) {
 			return StringPool.BLANK;
 		}
 
 		editAssetEntryURL.setParameter(
-			"redirect", _themeDisplay.getURLCurrent());
-		editAssetEntryURL.setParameter(
 			"hideDefaultSuccessMessage", Boolean.TRUE.toString());
-		editAssetEntryURL.setParameter("showHeader", Boolean.TRUE.toString());
 
 		return editAssetEntryURL.toString();
 	}

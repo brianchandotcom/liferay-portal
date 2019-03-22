@@ -443,97 +443,97 @@ public class ProcessResourceImpl
 		_setOverdueInstanceCount(bucket, process);
 	}
 
-	private Process _setDueAfterInstanceCount(Bucket bucket, Process process) {
-		if (bucket != null) {
-			RangeAggregationResult rangeAggregationResult =
-				(RangeAggregationResult)bucket.getChildAggregationResult(
-					"overdueDate");
-
-			Bucket dueAfterBucket = rangeAggregationResult.getBucket(
-				"dueAfter");
-
-			if (dueAfterBucket != null) {
-				CardinalityAggregationResult cardinalityAggregationResult =
-					(CardinalityAggregationResult)
-						dueAfterBucket.getChildAggregationResult(
-							"instanceCount");
-
-				process.setDueAfterInstanceCount(
-					cardinalityAggregationResult.getValue());
-			}
+	private void _setDueAfterInstanceCount(Bucket bucket, Process process) {
+		if (bucket == null) {
+			return;
 		}
 
-		return process;
-	}
+		RangeAggregationResult rangeAggregationResult =
+			(RangeAggregationResult)bucket.getChildAggregationResult(
+				"overdueDate");
 
-	private Process _setDueInInstanceCount(Bucket bucket, Process process) {
-		if (bucket != null) {
-			RangeAggregationResult rangeAggregationResult =
-				(RangeAggregationResult)bucket.getChildAggregationResult(
-					"overdueDate");
+		Bucket dueAfterBucket = rangeAggregationResult.getBucket(
+			"dueAfter");
 
-			Bucket dueInBucket = rangeAggregationResult.getBucket("dueIn");
-
-			if (dueInBucket != null) {
-				CardinalityAggregationResult cardinalityAggregationResult =
-					(CardinalityAggregationResult)
-						dueInBucket.getChildAggregationResult("instanceCount");
-
-				process.setDueInInstanceCount(
-					cardinalityAggregationResult.getValue());
-			}
-		}
-
-		return process;
-	}
-
-	private Process _setInstanceCount(Bucket bucket, Process process) {
-		if (bucket != null) {
+		if (dueAfterBucket != null) {
 			CardinalityAggregationResult cardinalityAggregationResult =
-				(CardinalityAggregationResult)bucket.getChildAggregationResult(
+				(CardinalityAggregationResult)
+					dueAfterBucket.getChildAggregationResult(
+						"instanceCount");
+
+			process.setDueAfterInstanceCount(
+				cardinalityAggregationResult.getValue());
+		}
+	}
+
+	private void _setDueInInstanceCount(Bucket bucket, Process process) {
+		if (bucket == null) {
+			return;
+		}
+
+		RangeAggregationResult rangeAggregationResult =
+			(RangeAggregationResult)bucket.getChildAggregationResult(
+				"overdueDate");
+
+		Bucket dueInBucket = rangeAggregationResult.getBucket("dueIn");
+
+		if (dueInBucket != null) {
+			CardinalityAggregationResult cardinalityAggregationResult =
+				(CardinalityAggregationResult)
+					dueInBucket.getChildAggregationResult("instanceCount");
+
+			process.setDueInInstanceCount(
+				cardinalityAggregationResult.getValue());
+		}
+	}
+
+	private void _setInstanceCount(Bucket bucket, Process process) {
+		if (bucket == null) {
+			return;
+		}
+
+		CardinalityAggregationResult cardinalityAggregationResult =
+			(CardinalityAggregationResult)bucket.getChildAggregationResult(
+				"instanceCount");
+
+		process.setInstanceCount(
+			cardinalityAggregationResult.getValue() - 1);
+	}
+
+	private void _setOnTimeInstanceCount(Bucket bucket, Process process) {
+		if (bucket == null) {
+			return;
+		}
+
+		FilterAggregationResult filterAggregationResult =
+			(FilterAggregationResult)bucket.getChildAggregationResult(
+				"onTime");
+
+		CardinalityAggregationResult cardinalityAggregationResult =
+			(CardinalityAggregationResult)
+				filterAggregationResult.getChildAggregationResult(
 					"instanceCount");
 
-			process.setInstanceCount(
-				cardinalityAggregationResult.getValue() - 1);
-		}
-
-		return process;
+		process.setOnTimeInstanceCount(
+			cardinalityAggregationResult.getValue());
 	}
 
-	private Process _setOnTimeInstanceCount(Bucket bucket, Process process) {
-		if (bucket != null) {
-			FilterAggregationResult filterAggregationResult =
-				(FilterAggregationResult)bucket.getChildAggregationResult(
-					"onTime");
-
-			CardinalityAggregationResult cardinalityAggregationResult =
-				(CardinalityAggregationResult)
-					filterAggregationResult.getChildAggregationResult(
-						"instanceCount");
-
-			process.setOnTimeInstanceCount(
-				cardinalityAggregationResult.getValue());
+	private void _setOverdueInstanceCount(Bucket bucket, Process process) {
+		if (bucket == null) {
+			return;
 		}
 
-		return process;
-	}
+		FilterAggregationResult filterAggregationResult =
+			(FilterAggregationResult)bucket.getChildAggregationResult(
+				"overdue");
 
-	private Process _setOverdueInstanceCount(Bucket bucket, Process process) {
-		if (bucket != null) {
-			FilterAggregationResult filterAggregationResult =
-				(FilterAggregationResult)bucket.getChildAggregationResult(
-					"overdue");
+		CardinalityAggregationResult cardinalityAggregationResult =
+			(CardinalityAggregationResult)
+				filterAggregationResult.getChildAggregationResult(
+					"instanceCount");
 
-			CardinalityAggregationResult cardinalityAggregationResult =
-				(CardinalityAggregationResult)
-					filterAggregationResult.getChildAggregationResult(
-						"instanceCount");
-
-			process.setOverdueInstanceCount(
-				cardinalityAggregationResult.getValue());
-		}
-
-		return process;
+		process.setOverdueInstanceCount(
+			cardinalityAggregationResult.getValue());
 	}
 
 	private FieldSort _toFieldSort(Sort[] sorts) {

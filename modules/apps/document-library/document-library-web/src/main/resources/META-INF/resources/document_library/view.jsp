@@ -71,6 +71,7 @@ String navigation = ParamUtil.getString(request, "navigation");
 		Map<String, Object> context = new HashMap<>();
 
 		context.put("bulkInProgress", bulkSelectionRunner.isBusy(user));
+		context.put("pathModule", PortalUtil.getPathModule());
 		context.put("portletNamespace", liferayPortletResponse.getNamespace());
 		%>
 

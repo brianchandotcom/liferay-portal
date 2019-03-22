@@ -1,4 +1,5 @@
 import Component from 'metal-component';
+import {Config} from 'metal-state';
 import Soy from 'metal-soy';
 
 import '../fragments/FragmentsEditorSidebarCard.es';
@@ -121,7 +122,7 @@ class SidebarStructurePanel extends Component {
 			children: data.children || [],
 			elementId: data.elementId || '',
 			elementType: data.elementType || '',
-			expanded: data.expanded || false,
+			expanded: data.expanded || (state._expandedNodes.indexOf(data.key) !== -1),
 			hovered: (
 				state.hoveredItemId === data.elementId &&
 				state.hoveredItemType === data.elementType
@@ -188,6 +189,25 @@ class SidebarStructurePanel extends Component {
 	}
 
 	/**
+	 * @param {MouseEvent} event
+	 * @private
+	 * @review
+	 */
+	_handleElementCollapseButtonClick(event) {
+		const {nodeKey} = event.delegateTarget.dataset;
+		const nodeKeyIndex = this._expandedNodes.indexOf(nodeKey);
+
+		if (nodeKeyIndex === -1) {
+			this._expandedNodes = [...this._expandedNodes, nodeKey];
+		}
+		else {
+			this._expandedNodes.splice(nodeKeyIndex, 1);
+
+			this._expandedNodes = this._expandedNodes;
+		}
+	}
+
+	/**
 	 * Callback executed when the element remove button is clicked.
 	 * @param {object} event
 	 * @private
@@ -219,6 +239,28 @@ class SidebarStructurePanel extends Component {
 	}
 
 }
+
+/**
+ * State definition.
+ * @review
+ * @static
+ * @type {!Object}
+ */
+SidebarStructurePanel.STATE = {
+
+	/**
+	 * List of expanded nodes.
+	 * @default ['root']
+	 * @instance
+	 * @memberOf SidebarStructurePanel
+	 * @review
+	 * @type {string[]}
+	 */
+	_expandedNodes: Config
+		.arrayOf(Config.string())
+		.internal()
+		.value(['root'])
+};
 
 const ConnectedSidebarStructurePanel = getConnectedComponent(
 	SidebarStructurePanel,

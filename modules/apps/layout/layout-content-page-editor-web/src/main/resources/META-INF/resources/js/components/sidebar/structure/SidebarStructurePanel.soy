@@ -4,10 +4,12 @@
  * SidebarStructurePanel
  */
 {template .render}
+	{@param? _expandedNodes: ?}
 	{@param? _handleElementClick: any}
 	{@param? _handleElementMouseEnter: any}
 	{@param? _handleElementMouseLeave: any}
 	{@param? _handleElementRemoveButtonClick: any}
+	{@param? _handleElementCollapseButtonClick: any}
 	{@param? activeItemId: string}
 	{@param? hoveredItemId: string}
 	{@param? layoutData: ?}
@@ -26,6 +28,7 @@
 	<div
 		class="fragments-editor-sidebar-section__structure-panel"
 		data-active-item-id="{$activeItemId}"
+		data-expanded-nodes="{$_expandedNodes}"
 		data-hovered-item-id="{$hoveredItemId}"
 		data-layout-data="{$layoutData}"
 	>
@@ -37,6 +40,7 @@
 						{param handleElementMouseEnter: $_handleElementMouseEnter /}
 						{param handleElementMouseLeave: $_handleElementMouseLeave /}
 						{param handleElementRemoveButtonClick: $_handleElementRemoveButtonClick /}
+						{param handleElementCollapseButtonClick: $_handleElementCollapseButtonClick /}
 						{param node: $structure /}
 						{param spritemap: $spritemap /}
 					{/call}
@@ -53,6 +57,7 @@
 	{@param? handleElementClick: any}
 	{@param? handleElementMouseEnter: any}
 	{@param? handleElementMouseLeave: any}
+	{@param? handleElementCollapseButtonClick: any}
 	{@param? handleElementRemoveButtonClick: any}
 	{@param node: [
 		active: bool,
@@ -99,6 +104,7 @@
 
 				{if length($node.children) > 0}
 					{call .collapseIcon}
+						{param handleClick: $handleElementCollapseButtonClick /}
 						{param node: $node /}
 						{param spritemap: $spritemap /}
 					{/call}
@@ -122,13 +128,14 @@
 					{/if}
 				{/let}
 
-				<div class="{$childrenClasses}" id="{$node.key}">
+				<div class="{$childrenClasses}">
 					{foreach $nodeChild in $node.children}
 						{call .treeNode}
 							{param handleElementClick: $handleElementClick /}
 							{param handleElementMouseEnter: $handleElementMouseEnter /}
 							{param handleElementMouseLeave: $handleElementMouseLeave /}
 							{param handleElementRemoveButtonClick: $handleElementRemoveButtonClick /}
+							{param handleElementCollapseButtonClick: $handleElementCollapseButtonClick /}
 							{param key: $nodeChild.key /}
 							{param node: $nodeChild /}
 							{param spritemap: $spritemap /}
@@ -149,33 +156,24 @@
 		key: string
 	]}
 	{@param spritemap: string}
+	{@param? handleClick: any}
 
-	{let $collapseIconWrapperClasses kind="text"}
-		collapse-icon
-		{sp}fragments-editor-sidebar-section__structure-panel__item-icon
+	<span class="fragments-editor-sidebar-section__structure-panel__item-icon">
+		{let $collapseIconAttributes kind="attributes"}
+			aria-controls="{$node.key}"
+			class="btn btn-sm btn-unstyled"
+			data-node-key="{$node.key}"
+			data-onclick="{$handleClick}"
+			type="button"
 
-		{if not $node.expanded}
-			{sp}collapsed
-		{/if}
-	{/let}
+			{if $node.expanded}
+				aria-expanded="true"
+			{else}
+				aria-expanded="false"
+			{/if}
+		{/let}
 
-	{let $collapseIconAttributes kind="attributes"}
-		aria-controls="{$node.key}"
-		data-toggle="collapse"
-		href="#{$node.key}"
-		role="button"
-
-		{if $node.expanded}
-			aria-expanded="true"
-			class="collapse-icon-closed"
-		{else}
-			aria-expanded="false"
-			class="collapse-icon-open"
-		{/if}
-	{/let}
-
-	<span class="{$collapseIconWrapperClasses}">
-		<a {$collapseIconAttributes}>
+		<button {$collapseIconAttributes}>
 			{let $angleDirection kind="text"}
 				{if $node.expanded}
 					down
@@ -187,7 +185,7 @@
 			<svg class="lexicon-icon lexicon-icon-angle-{$angleDirection}">
 				<use xlink:href="{$spritemap}#angle-{$angleDirection}"></use>
 			</svg>
-		</a>
+		</button>
 	</span>
 {/template}
 

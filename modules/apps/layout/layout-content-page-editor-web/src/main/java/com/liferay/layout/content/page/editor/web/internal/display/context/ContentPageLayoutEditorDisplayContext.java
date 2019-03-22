@@ -56,15 +56,17 @@ public class ContentPageLayoutEditorDisplayContext
 		SoyContext soyContext = super.getEditorSoyContext();
 
 		soyContext.put(
-			"availableSegmentsEntries",
-			_getAvailableSegmentsEntriesSoyContext());
-		soyContext.put(
+			"availableSegmentsEntries", _getAvailableSegmentsEntriesSoyContext()
+		).put(
 			"availableSegmentsExperiences",
-			_getAvailableSegmentsExperiencesSoyContext());
-		soyContext.put("defaultSegmentsEntryId", _getDefaultSegmentsEntryId());
-		soyContext.put(
-			"defaultSegmentsExperienceId", _getDefaultSegmentsExperienceId());
-		soyContext.put("sidebarPanels", getSidebarPanelSoyContexts(false));
+			_getAvailableSegmentsExperiencesSoyContext()
+		).put(
+			"defaultSegmentsEntryId", _getDefaultSegmentsEntryId()
+		).put(
+			"defaultSegmentsExperienceId", _getDefaultSegmentsExperienceId()
+		).put(
+			"sidebarPanels", getSidebarPanelSoyContexts(false)
+		);
 
 		_editorSoyContext = soyContext;
 

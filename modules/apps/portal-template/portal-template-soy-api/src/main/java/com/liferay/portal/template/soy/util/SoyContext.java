@@ -21,7 +21,9 @@ import java.util.Map;
  */
 public interface SoyContext extends Map<String, Object> {
 
-	public void clearInjectedData();
+	public SoyContext clearInjectedData();
+
+	public SoyContext put(String key, Object value);
 
 	/**
 	 * Put an HTML parameter in the SoyContext container. This is the same as
@@ -32,10 +34,10 @@ public interface SoyContext extends Map<String, Object> {
 	 * @see com.liferay.portal.template.soy.data.SoyHTMLData
 	 * @review
 	 */
-	public void putHTML(String key, String value);
+	public SoyContext putHTML(String key, String value);
 
-	public void putInjectedData(String key, Object value);
+	public SoyContext putInjectedData(String key, Object value);
 
-	public void removeInjectedData(String key);
+	public SoyContext removeInjectedData(String key);
 
 }

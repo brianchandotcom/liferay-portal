@@ -73,8 +73,10 @@ public class SoyContextImpl implements SoyContext {
 	}
 
 	@Override
-	public void clearInjectedData() {
+	public SoyContext clearInjectedData() {
 		_map.remove(SoyTemplateConstants.INJECTED_DATA);
+
+		return this;
 	}
 
 	@Override
@@ -134,14 +136,16 @@ public class SoyContextImpl implements SoyContext {
 	}
 
 	@Override
-	public Object put(String key, Object value) {
+	public SoyContext put(String key, Object value) {
 		if (key.equals(SoyTemplateConstants.INJECTED_DATA) &&
 			!(value instanceof Map)) {
 
 			throw new IllegalArgumentException("Injected data must be a Map");
 		}
 
-		return _map.put(key, value);
+		_map.put(key, value);
+
+		return this;
 	}
 
 	@Override
@@ -152,15 +156,17 @@ public class SoyContextImpl implements SoyContext {
 	}
 
 	@Override
-	public void putHTML(String key, String value) {
+	public SoyContext putHTML(String key, String value) {
 		SoyDataFactory soyDataFactory =
 			SoyDataFactoryProvider.getSoyDataFactory();
 
 		_map.put(key, soyDataFactory.createSoyHTMLData(value));
+
+		return this;
 	}
 
 	@Override
-	public void putInjectedData(String key, Object value) {
+	public SoyContext putInjectedData(String key, Object value) {
 		Map<String, Object> injectedData = (Map<String, Object>)_map.get(
 			SoyTemplateConstants.INJECTED_DATA);
 
@@ -171,6 +177,8 @@ public class SoyContextImpl implements SoyContext {
 		}
 
 		injectedData.put(key, value);
+
+		return this;
 	}
 
 	@Override
@@ -179,13 +187,15 @@ public class SoyContextImpl implements SoyContext {
 	}
 
 	@Override
-	public void removeInjectedData(String key) {
+	public SoyContext removeInjectedData(String key) {
 		Map<String, Object> injectedData = (Map<String, Object>)_map.get(
 			SoyTemplateConstants.INJECTED_DATA);
 
 		if (injectedData != null) {
 			injectedData.remove(key);
 		}
+
+		return this;
 	}
 
 	@Override

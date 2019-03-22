@@ -227,7 +227,8 @@ public class CalendarBookingTestUtil {
 			int actionPublish)
 		throws PortalException {
 
-		User user = UserLocalServiceUtil.fetchUser(invitedCalendar.getUserId());
+		User user = UserLocalServiceUtil.fetchUser(
+			invitingCalendar.getUserId());
 		long startTime = System.currentTimeMillis();
 
 		ServiceContext serviceContext = createServiceContext(user);

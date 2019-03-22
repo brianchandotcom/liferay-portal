@@ -69,7 +69,7 @@ definition {
 		}
 
 		task ("Publish the content page") {
-			PageEditor.clickPublishPage();
+			PageEditor.clickPublish();
 		}
 
 		task ("Add a content page with a Title fragment to the first site") {
@@ -84,7 +84,7 @@ definition {
 		}
 
 		task ("Publish the content page") {
-			PageEditor.clickPublishPage();
+			PageEditor.clickPublish();
 		}
 
 		task ("Add a navigation menu to the first site") {

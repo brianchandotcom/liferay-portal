@@ -85,7 +85,7 @@ definition {
 		}
 
 		task ("Publish the content page") {
-			PageEditor.clickPublishPage();
+			PageEditor.clickPublish();
 		}
 
 		task ("Navigate to the content page in the staging site") {

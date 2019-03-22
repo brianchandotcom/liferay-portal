@@ -92,7 +92,7 @@ definition {
 		}
 
 		task ("Publish the content page") {
-			PageEditor.clickPublishPage();
+			PageEditor.clickPublish();
 		}
 
 		task ("Navigate to the content page") {

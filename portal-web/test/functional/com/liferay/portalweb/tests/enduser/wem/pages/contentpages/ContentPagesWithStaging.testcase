@@ -50,7 +50,7 @@ definition {
 		}
 
 		task ("Publish the content page") {
-			PageEditor.clickPublishPage();
+			PageEditor.clickPublish();
 		}
 	}
 
@@ -213,7 +213,7 @@ definition {
 		}
 
 		task ("Publish the content page") {
-			PageEditor.clickPublishPage();
+			PageEditor.clickPublish();
 		}
 
 		task ("Navigate to the content page's 'View Mode' using the mode toggle") {

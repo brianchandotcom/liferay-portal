@@ -487,6 +487,7 @@ definition {
 		User.logoutPG(specificURL = "http://www.able.com:9080");
 
 		User.viewLoggedOutPG();
+
 		Navigator.openSpecificURL(url = "http://www.able.com:9080");
 
 		Navigator.gotoLoginPage();

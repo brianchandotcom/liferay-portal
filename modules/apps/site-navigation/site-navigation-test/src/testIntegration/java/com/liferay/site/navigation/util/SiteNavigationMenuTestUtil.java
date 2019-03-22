@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.site.navigation.constants.SiteNavigationConstants;
 import com.liferay.site.navigation.menu.item.layout.constants.SiteNavigationMenuItemTypeConstants;
 import com.liferay.site.navigation.model.SiteNavigationMenu;
 import com.liferay.site.navigation.model.SiteNavigationMenuItem;
@@ -35,12 +36,58 @@ public class SiteNavigationMenuTestUtil {
 	public static SiteNavigationMenu addSiteNavigationMenu(Group group)
 		throws PortalException {
 
+		return addSiteNavigationMenu(group, RandomTestUtil.randomString());
+	}
+
+	public static SiteNavigationMenu addSiteNavigationMenu(
+			Group group, boolean auto)
+		throws PortalException {
+
+		return addSiteNavigationMenu(
+			group, SiteNavigationConstants.TYPE_DEFAULT, auto);
+	}
+
+	public static SiteNavigationMenu addSiteNavigationMenu(
+			Group group, int type)
+		throws PortalException {
+
+		return addSiteNavigationMenu(group, type, false);
+	}
+
+	public static SiteNavigationMenu addSiteNavigationMenu(
+			Group group, int type, boolean auto)
+		throws PortalException {
+
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(group.getGroupId());
 
 		return SiteNavigationMenuLocalServiceUtil.addSiteNavigationMenu(
 			TestPropsValues.getUserId(), group.getGroupId(),
-			RandomTestUtil.randomString(), serviceContext);
+			RandomTestUtil.randomString(), type, auto, serviceContext);
+	}
+
+	public static SiteNavigationMenu addSiteNavigationMenu(
+			Group group, String name)
+		throws PortalException {
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(group.getGroupId());
+
+		return SiteNavigationMenuLocalServiceUtil.addSiteNavigationMenu(
+			TestPropsValues.getUserId(), group.getGroupId(), name,
+			serviceContext);
+	}
+
+	public static SiteNavigationMenu addSiteNavigationMenu(
+			Group group, String name, int type, boolean auto)
+		throws PortalException {
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(group.getGroupId());
+
+		return SiteNavigationMenuLocalServiceUtil.addSiteNavigationMenu(
+			TestPropsValues.getUserId(), group.getGroupId(), name, type, auto,
+			serviceContext);
 	}
 
 	public static SiteNavigationMenuItem addSiteNavigationMenuItem(

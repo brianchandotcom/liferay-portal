@@ -45,7 +45,7 @@ public class LiferayEtcd {
 	}
 
 	public void delete(LiferayEtcd.Node node) {
-		if (node instanceof LiferayEtcd.Dir) {
+		if (node instanceof DirNode) {
 			delete(node.getKey(), true);
 		}
 		else {
@@ -96,31 +96,7 @@ public class LiferayEtcd {
 		}
 	}
 
-	public LiferayEtcd.Value put(String key, String value) {
-		try (EtcdClient etcdClient = getEtcdClient()) {
-			EtcdKeyPutRequest etcdKeyPutRequest = etcdClient.put(key, value);
-
-			EtcdResponsePromise<EtcdKeysResponse> etcdResponsePromise =
-				etcdKeyPutRequest.send();
-
-			EtcdKeysResponse etcdKeysResponse = etcdResponsePromise.get();
-
-			EtcdKeysResponse.EtcdNode etcdNode = etcdKeysResponse.getNode();
-
-			if (!etcdNode.isDir()) {
-				return new LiferayEtcd.Value(this, etcdNode);
-			}
-		}
-		catch (EtcdAuthenticationException | EtcdException | IOException |
-			   TimeoutException e) {
-
-			throw new RuntimeException(e);
-		}
-
-		throw new RuntimeException(key + " is not a value");
-	}
-
-	public LiferayEtcd.Dir putDir(String key) {
+	public LiferayEtcd.DirNode put(String key) {
 		try (EtcdClient etcdClient = getEtcdClient()) {
 			EtcdKeyPutRequest etcdKeyPutRequest = etcdClient.putDir(key);
 
@@ -132,7 +108,7 @@ public class LiferayEtcd {
 			EtcdKeysResponse.EtcdNode etcdNode = etcdKeysResponse.getNode();
 
 			if (etcdNode.isDir()) {
-				return new LiferayEtcd.Dir(this, etcdNode);
+				return new DirNode(this, etcdNode);
 			}
 		}
 		catch (EtcdAuthenticationException | EtcdException | IOException |
@@ -144,18 +120,38 @@ public class LiferayEtcd {
 		throw new RuntimeException(key + " is not a dir");
 	}
 
+	public LiferayEtcd.ValueNode put(String key, String value) {
+		try (EtcdClient etcdClient = getEtcdClient()) {
+			EtcdKeyPutRequest etcdKeyPutRequest = etcdClient.put(key, value);
+
+			EtcdResponsePromise<EtcdKeysResponse> etcdResponsePromise =
+				etcdKeyPutRequest.send();
+
+			EtcdKeysResponse etcdKeysResponse = etcdResponsePromise.get();
+
+			EtcdKeysResponse.EtcdNode etcdNode = etcdKeysResponse.getNode();
+
+			if (!etcdNode.isDir()) {
+				return new ValueNode(this, etcdNode);
+			}
+		}
+		catch (EtcdAuthenticationException | EtcdException | IOException |
+			   TimeoutException e) {
+
+			throw new RuntimeException(e);
+		}
+
+		throw new RuntimeException(key + " is not a value");
+	}
+
 	public void setURL(String url) {
 		_uri = URI.create(url);
 	}
 
-	public static class Dir extends Node {
+	public static class DirNode extends Node {
 
-		public Dir(LiferayEtcd liferayEtcd, String key) {
-			this(liferayEtcd, liferayEtcd.getEtcdNode(key));
-		}
-
-		public List<LiferayEtcd.Node> getLiferayEtcdNodes() {
-			List<Node> liferayEtcdNodes = new ArrayList<>();
+		public List<LiferayEtcd.Node> getNodes() {
+			List<Node> nodes = new ArrayList<>();
 
 			EtcdKeysResponse.EtcdNode etcdNode = liferayEtcd.getEtcdNode(key);
 
@@ -163,14 +159,14 @@ public class LiferayEtcd {
 					etcdNode.getNodes()) {
 
 				if (childEtcdNode.isDir()) {
-					liferayEtcdNodes.add(new Dir(liferayEtcd, childEtcdNode));
+					nodes.add(new DirNode(liferayEtcd, childEtcdNode));
 				}
 				else {
-					liferayEtcdNodes.add(new Value(liferayEtcd, childEtcdNode));
+					nodes.add(new ValueNode(liferayEtcd, childEtcdNode));
 				}
 			}
 
-			return liferayEtcdNodes;
+			return nodes;
 		}
 
 		@Override
@@ -178,7 +174,7 @@ public class LiferayEtcd {
 			return key + "={dir}";
 		}
 
-		protected Dir(
+		protected DirNode(
 			LiferayEtcd liferayEtcd, EtcdKeysResponse.EtcdNode etcdNode) {
 
 			super(liferayEtcd, etcdNode.getKey());
@@ -206,11 +202,7 @@ public class LiferayEtcd {
 
 	}
 
-	public static class Value extends Node {
-
-		public Value(LiferayEtcd liferayEtcd, String key) {
-			this(liferayEtcd, liferayEtcd.getEtcdNode(key));
-		}
+	public static class ValueNode extends Node {
 
 		public String getValue() {
 			EtcdKeysResponse.EtcdNode etcdNode = liferayEtcd.getEtcdNode(key);
@@ -223,7 +215,7 @@ public class LiferayEtcd {
 			return key + "=" + getValue();
 		}
 
-		protected Value(
+		protected ValueNode(
 			LiferayEtcd liferayEtcd, EtcdKeysResponse.EtcdNode etcdNode) {
 
 			super(liferayEtcd, etcdNode.getKey());
@@ -259,10 +251,10 @@ public class LiferayEtcd {
 
 	protected LiferayEtcd.Node getNode(EtcdKeysResponse.EtcdNode etcdNode) {
 		if (etcdNode.isDir()) {
-			return new Dir(this, etcdNode);
+			return new DirNode(this, etcdNode);
 		}
 
-		return new Value(this, etcdNode);
+		return new ValueNode(this, etcdNode);
 	}
 
 	private URI _uri;

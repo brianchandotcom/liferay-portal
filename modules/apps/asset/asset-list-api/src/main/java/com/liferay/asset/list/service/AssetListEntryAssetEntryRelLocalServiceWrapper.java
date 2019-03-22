@@ -498,13 +498,13 @@ public class AssetListEntryAssetEntryRelLocalServiceWrapper
 	public com.liferay.asset.list.model.AssetListEntryAssetEntryRel
 			updateAssetListEntryAssetEntryRel(
 				long assetListEntryAssetEntryRelId, long assetListEntryId,
-				long segmentsEntryId, long assetEntryId, int position)
+				long assetEntryId, long segmentsEntryId, int position)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _assetListEntryAssetEntryRelLocalService.
 			updateAssetListEntryAssetEntryRel(
-				assetListEntryAssetEntryRelId, assetListEntryId,
-				segmentsEntryId, assetEntryId, position);
+				assetListEntryAssetEntryRelId, assetListEntryId, assetEntryId,
+				segmentsEntryId, position);
 	}
 
 	@Override

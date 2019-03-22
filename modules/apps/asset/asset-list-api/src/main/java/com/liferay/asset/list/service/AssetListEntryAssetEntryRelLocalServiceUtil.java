@@ -451,12 +451,12 @@ public class AssetListEntryAssetEntryRelLocalServiceUtil {
 	public static com.liferay.asset.list.model.AssetListEntryAssetEntryRel
 			updateAssetListEntryAssetEntryRel(
 				long assetListEntryAssetEntryRelId, long assetListEntryId,
-				long segmentsEntryId, long assetEntryId, int position)
+				long assetEntryId, long segmentsEntryId, int position)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return getService().updateAssetListEntryAssetEntryRel(
-			assetListEntryAssetEntryRelId, assetListEntryId, segmentsEntryId,
-			assetEntryId, position);
+			assetListEntryAssetEntryRelId, assetListEntryId, assetEntryId,
+			segmentsEntryId, position);
 	}
 
 	public static AssetListEntryAssetEntryRelLocalService getService() {

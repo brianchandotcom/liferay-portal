@@ -346,7 +346,7 @@ public interface AssetListEntryAssetEntryRelLocalService
 
 	public AssetListEntryAssetEntryRel updateAssetListEntryAssetEntryRel(
 			long assetListEntryAssetEntryRelId, long assetListEntryId,
-			long segmentsEntryId, long assetEntryId, int position)
+			long assetEntryId, long segmentsEntryId, int position)
 		throws PortalException;
 
 }

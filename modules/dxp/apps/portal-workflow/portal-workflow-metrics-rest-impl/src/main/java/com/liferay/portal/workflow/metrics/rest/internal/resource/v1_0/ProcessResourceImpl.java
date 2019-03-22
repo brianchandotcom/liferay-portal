@@ -89,7 +89,7 @@ public class ProcessResourceImpl
 	@Override
 	public Process getProcess(Long processId) throws Exception {
 		SearchSearchResponse searchSearchResponse =
-			_getProcessesSearchSearchResponse(processId, null, null, null);
+			_getProcessesSearchSearchResponse(null, null, processId, null);
 
 		SearchHits searchHits = searchSearchResponse.getSearchHits();
 
@@ -127,7 +127,7 @@ public class ProcessResourceImpl
 
 		SearchSearchResponse searchSearchResponse =
 			_getProcessesSearchSearchResponse(
-				null, fieldSort, pagination, title);
+				fieldSort, pagination, null, title);
 
 		long count = searchSearchResponse.getCount();
 
@@ -314,7 +314,7 @@ public class ProcessResourceImpl
 	}
 
 	private SearchSearchResponse _getProcessesSearchSearchResponse(
-		Long processId, FieldSort fieldSort, Pagination pagination,
+		FieldSort fieldSort, Pagination pagination, Long processId,
 		String title) {
 
 		SearchSearchRequest searchSearchRequest = new SearchSearchRequest();

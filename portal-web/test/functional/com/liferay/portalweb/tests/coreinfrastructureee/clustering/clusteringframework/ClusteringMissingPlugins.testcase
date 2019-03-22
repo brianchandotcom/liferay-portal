@@ -205,74 +205,6 @@ definition {
 	}
 
 	@priority = "4"
-	test ScheduleJobOnClusterNode1 {
-		property test.name.skip.portal.instance = "ClusteringMissingPlugins#ScheduleJobOnClusterNode1";
-
-		Clustering.viewClusterStatusInConsole();
-
-		Clustering.enableDebugging(
-			categoryName = "com.liferay.cluster.test.module.internel",
-			nodePort = "9080"
-		);
-
-		Clustering.deployJarOnSpecificServer(
-			liferayDependencyJars = "com.liferay.cluster.test.module.7.2.jar",
-			nodePort = "8080"
-		);
-
-		Clustering.enableDebugging(
-			categoryName = "com.liferay.cluster.test.module.internel",
-			nodePort = "8080"
-		);
-
-		Pause(locator1 = "10000");
-
-		Clustering.viewTextPresentOnSpecificNode(
-			expectedText = "Memory clustered job from modules is triggered",
-			nodePort = "8080"
-		);
-
-		Clustering.shutdownSpecificServer(nodePort = "8080");
-
-		Clustering.runGroovyScript(
-			nodePort = "9080",
-			scriptFile = "groovy-script-master-slave.groovy"
-		);
-
-		AssertTextEquals(
-			locator1 = "ServerAdministrationScript#OUTPUT_FIELD",
-			value1 = "This node is master node"
-		);
-
-		Clustering.viewTextNotPresentOnSpecificNode(
-			exceptionText = "Memory clustered job from modules is triggered",
-			nodePort = "9080"
-		);
-
-		Clustering.deployJarOnSpecificServer(
-			liferayDependencyJars = "com.liferay.cluster.test.module.7.2.jar",
-			nodePort = "9080"
-		);
-
-		Clustering.enableDebugging(
-			categoryName = "com.liferay.cluster.test.module.internel",
-			nodePort = "9080"
-		);
-
-		Pause(locator1 = "10000");
-
-		Clustering.viewTextPresentOnSpecificNode(
-			expectedText = "Scheduler job com.liferay.cluster.test.module.internel.SchedulerTestMessageListener.com.liferay.cluster.test.module.internel.SchedulerTestMessageListener already exists",
-			nodePort = "9080"
-		);
-
-		Clustering.viewTextPresentOnSpecificNode(
-			expectedText = "Memory clustered job from modules is triggered",
-			nodePort = "9080"
-		);
-	}
-
-	@priority = "4"
 	test ScheduleJobOnAllClusterNode {
 		property test.name.skip.portal.instance = "ClusteringMissingPlugins#ScheduleJobOnAllClusterNode";
 
@@ -351,6 +283,74 @@ definition {
 		);
 
 		Pause(locator1 = "10000");
+
+		Clustering.viewTextPresentOnSpecificNode(
+			expectedText = "Memory clustered job from modules is triggered",
+			nodePort = "9080"
+		);
+	}
+
+	@priority = "4"
+	test ScheduleJobOnClusterNode1 {
+		property test.name.skip.portal.instance = "ClusteringMissingPlugins#ScheduleJobOnClusterNode1";
+
+		Clustering.viewClusterStatusInConsole();
+
+		Clustering.enableDebugging(
+			categoryName = "com.liferay.cluster.test.module.internel",
+			nodePort = "9080"
+		);
+
+		Clustering.deployJarOnSpecificServer(
+			liferayDependencyJars = "com.liferay.cluster.test.module.7.2.jar",
+			nodePort = "8080"
+		);
+
+		Clustering.enableDebugging(
+			categoryName = "com.liferay.cluster.test.module.internel",
+			nodePort = "8080"
+		);
+
+		Pause(locator1 = "10000");
+
+		Clustering.viewTextPresentOnSpecificNode(
+			expectedText = "Memory clustered job from modules is triggered",
+			nodePort = "8080"
+		);
+
+		Clustering.shutdownSpecificServer(nodePort = "8080");
+
+		Clustering.runGroovyScript(
+			nodePort = "9080",
+			scriptFile = "groovy-script-master-slave.groovy"
+		);
+
+		AssertTextEquals(
+			locator1 = "ServerAdministrationScript#OUTPUT_FIELD",
+			value1 = "This node is master node"
+		);
+
+		Clustering.viewTextNotPresentOnSpecificNode(
+			exceptionText = "Memory clustered job from modules is triggered",
+			nodePort = "9080"
+		);
+
+		Clustering.deployJarOnSpecificServer(
+			liferayDependencyJars = "com.liferay.cluster.test.module.7.2.jar",
+			nodePort = "9080"
+		);
+
+		Clustering.enableDebugging(
+			categoryName = "com.liferay.cluster.test.module.internel",
+			nodePort = "9080"
+		);
+
+		Pause(locator1 = "10000");
+
+		Clustering.viewTextPresentOnSpecificNode(
+			expectedText = "Scheduler job com.liferay.cluster.test.module.internel.SchedulerTestMessageListener.com.liferay.cluster.test.module.internel.SchedulerTestMessageListener already exists",
+			nodePort = "9080"
+		);
 
 		Clustering.viewTextPresentOnSpecificNode(
 			expectedText = "Memory clustered job from modules is triggered",

@@ -21,7 +21,7 @@
 </tr>
 <tr>
 	<td>RULE_BUILDER_ADD_ACTION</td>
-	<td>//a[contains(@class,'form-builder-rule-add-action')] | //div[contains(@class,'timeline-increment-icon')][2]//button[contains(@class,'btn-primary')]</td>
+	<td>//a[contains(@class,'form-builder-rule-add-action')] | //div[contains(@class,'addbutton-timeline-item')][2]//button[contains(@class,'btn-primary')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -86,7 +86,7 @@
 </tr>
 <tr>
 	<td>RULE_BUILDER_ACTION_FIELD</td>
-	<td>//li[contains(@class,'form-builder-rule-action')][${key_actionRowNumber}]//div[contains(@id,'target') and contains(@class,'select-field-trigger')] | //li[contains(@class,'form-builder-rule-action')][1]//div[contains(@class,'select-field-trigger')]</td>
+	<td>//li[contains(@class,'form-builder-rule-action')][${key_actionRowNumber}]//div[contains(@id,'target') and contains(@class,'select-field-trigger')] | //li[contains(@class,'form-builder-rule-action')][${key_actionRowNumber}]//div[contains(@class,'select-field-trigger')]</td>
 	<td></td>
 </tr>
 <tr>

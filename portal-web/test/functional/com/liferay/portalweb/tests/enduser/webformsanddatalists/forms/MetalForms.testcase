@@ -2753,13 +2753,13 @@ definition {
 
 		for (var optionNumber : list "1,2,3,4") {
 			FormFields.editGridOptions(
-				gridField = "row",
+				gridField = "Rows",
 				optionValue = "Row ${optionNumber}",
 				rowNumber = "${optionNumber}"
 			);
 
 			FormFields.editGridOptions(
-				gridField = "column",
+				gridField = "Columns",
 				optionValue = "Column ${optionNumber}",
 				rowNumber = "${optionNumber}"
 			);
@@ -2773,17 +2773,17 @@ definition {
 
 			Form.addTranslation(localizedLanguage = "${locale}");
 
-			FormsAdminNavigator.gotoEditField(fieldName = "GridFieldTranslated");
+			FormsAdminNavigator.gotoEditField(fieldName = "Grid Field Translated");
 
 			for (var optionNumber : list "1,2,3,4") {
 				FormFields.editGridOptions(
-					gridField = "row",
+					gridField = "Rows",
 					optionValue = "${translated} Row ${optionNumber}",
 					rowNumber = "${optionNumber}"
 				);
 
 				FormFields.editGridOptions(
-					gridField = "column",
+					gridField = "Columns",
 					optionValue = "${translated} Column ${optionNumber}",
 					rowNumber = "${optionNumber}"
 				);
@@ -2792,31 +2792,31 @@ definition {
 
 		Form.save();
 
-		FormsAdminNavigator.gotoEditField(fieldName = "GridFieldTranslated");
+		FormsAdminNavigator.gotoEditField(fieldName = "Grid Field Translated");
 
-		FormFields.deleteGridOptionsRow(gridField = "row", rowNumber = "2");
+		FormFields.deleteGridOptionsRow(gridField = "Rows", rowNumber = "2");
 
 		Form.save();
 
-		FormsAdminNavigator.gotoEditField(fieldName = "GridFieldTranslated");
+		FormsAdminNavigator.gotoEditField(fieldName = "Grid Field Translated");
 
 		FormFields.moveGridOptionsRow(
-			gridField = "row",
+			gridField = "Rows",
 			rowNumberEnd = "1",
 			rowNumberStart = "3"
 		);
 
 		FormFields.moveGridOptionsRow(
-			gridField = "column",
+			gridField = "Columns",
 			rowNumberEnd = "2",
 			rowNumberStart = "4"
 		);
 
 		Form.closeSidebar();
 
-		FormsAdminNavigator.gotoEditField(fieldName = "GridFieldTranslated");
+		FormsAdminNavigator.gotoEditField(fieldName = "Grid Field Translated");
 
-		FormFields.deleteGridOptionsRow(gridField = "column", rowNumber = "1");
+		FormFields.deleteGridOptionsRow(gridField = "Columns", rowNumber = "1");
 
 		Form.closeSidebar();
 
@@ -2828,7 +2828,7 @@ definition {
 
 			Form.selectTranslation(localizedLanguage = "${locale}");
 
-			FormsAdminNavigator.gotoEditField(fieldName = "GridFieldTranslated");
+			FormsAdminNavigator.gotoEditField(fieldName = "Grid Field Translated");
 
 			for (var optionNumber : list "1:4,2:1,3:3") {
 				var fieldOptionNumber = StringUtil.extractLast("${optionNumber}", ":");
@@ -2836,7 +2836,7 @@ definition {
 
 				FormFields.viewGridOptionsFieldValue(
 					fieldValue = "${translated} Row ${fieldOptionNumber}",
-					gridField = "row",
+					gridField = "Rows",
 					rowNumber = "${rowNumber}"
 				);
 			}
@@ -2847,14 +2847,14 @@ definition {
 
 				FormFields.viewGridOptionsFieldValue(
 					fieldValue = "${translated} Column ${fieldOptionNumber}",
-					gridField = "column",
+					gridField = "Columns",
 					rowNumber = "${rowNumber}"
 				);
 			}
 
-			FormFields.viewGridOptionNotPresent(gridField = "row", rowNumber = "4");
+			FormFields.viewGridOptionNotPresent(gridField = "Rows", rowNumber = "4");
 
-			FormFields.viewGridOptionNotPresent(gridField = "column", rowNumber = "4");
+			FormFields.viewGridOptionNotPresent(gridField = "Columns", rowNumber = "4");
 
 			Form.closeSidebar();
 		}

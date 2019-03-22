@@ -125,17 +125,17 @@
 <!--GRID-->
 <tr>
 	<td>GRID_OPTIONS_OPTION_DELETE_ROW_BUTTON</td>
-	<td>//div[contains(@data-fieldname,'${key_gridField}sOption')]/../../div[${key_rowNumber}]//button[contains(@class,'close-modal')]</td>
+	<td>//div[contains(@class,'form-group')]//label[contains(text(),'${key_gridField}')]/..//div[@class='ddm-field-options'][${key_rowNumber}]//button[contains(@class,'close')] | //div[contains(@data-fieldname,'${key_gridField}sOption')]/../../div[${key_rowNumber}]//button[contains(@class,'close-modal')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>GRID_OPTIONS_OPTION_VALUE_FIELD</td>
-	<td>//div[contains(@data-fieldname,'${key_gridField}sOption')]/../../div[${key_rowNumber}]//input</td>
+	<td>//div[contains(@class,'form-group')]//label[contains(text(),'${key_gridField}')]/..//div[@class='ddm-field-options'][${key_rowNumber}]//input[contains(@class,'ddm-field-text')] | //div[contains(@data-fieldname,'${key_gridField}sOption')]/../../div[${key_rowNumber}]//input</td>
 	<td></td>
 </tr>
 <tr>
 	<td>GRID_OPTIONS_OPTION_NAME_FIELD</td>
-	<td>//div[contains(@data-fieldname,'${key_gridField}sOption')]/../../div[${key_rowNumber}]//div[contains(@class, 'key-value-editor')]</td>
+	<td>//div[contains(@class,'form-group')]//label[contains(text(),'${key_gridField}')]/..//div[@class='ddm-field-options'][${key_rowNumber}]//input[contains(@class,'key-value-input')] | //div[contains(@data-fieldname,'${key_gridField}sOption')]/../../div[${key_rowNumber}]//div[contains(@class, 'key-value-editor')]</td>
 	<td></td>
 </tr>
 <tr>

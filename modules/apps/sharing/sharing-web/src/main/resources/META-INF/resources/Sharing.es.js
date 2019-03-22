@@ -32,11 +32,13 @@ class Sharing extends PortletBase {
 			res => res.json()
 		).then(
 			users => users.map(
-				({emailAddress, fullName, portraitURL}) => ({
+				({emailAddress, fullName, portraitURL, userId}) => ({
 					emailAddress,
 					fullName,
 					label: fullName,
 					portraitURL,
+					spritemap: this.spritemap,
+					userId: userId,
 					value: emailAddress
 				})
 			)

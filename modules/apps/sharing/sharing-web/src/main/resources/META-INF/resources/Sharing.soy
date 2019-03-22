@@ -140,11 +140,22 @@
 
 	<li>
 		<a data-onclick="{$_handleDropdownItemClick}" data-dropdown-item-index="{$index}" id="item" class="dropdown-item" href="javascript:;">
-			{call ClaySticker.render}
-				{param size: 'lg' /}
-				{param imageSrc: $data.data.portraitURL /}
-				{param shape: 'circle' /}
-			{/call}
+			{if $data.data.portraitURL}
+				{call ClaySticker.render}
+					{param size: 'lg' /}
+					{param imageSrc: $data.data.portraitURL /}
+					{param shape: 'circle' /}
+				{/call}
+			{else}
+				<span class="user-avatar-image">
+					<div class="sticker sticker-circle sticker-light sticker-lg user-icon user-icon-default user-icon-lg user-icon-color-{$data.data.userId % 10}">
+						{call ClayIcon.render}
+							{param spritemap: $data.data.spritemap /}
+							{param symbol: 'user' /}
+						{/call}
+					</div>
+				</span>
+			{/if}
 			<strong>{$data.data.fullName}</strong> {$data.data.emailAddress}
 		</a>
 	</li>

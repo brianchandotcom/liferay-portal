@@ -82,6 +82,8 @@ components:
                 taxonomyVocabularyId:
                     format: int64
                     type: integer
+                required:
+                    type: boolean
 info:
     description: ""
     title: ""

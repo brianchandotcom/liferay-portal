@@ -271,13 +271,12 @@ public class ProcessResourceImpl
 
 		if (_isOrderByTitle(fieldSort.getField())) {
 			for (Process process : processesMap.values()) {
-				_setInstanceCount(
-					instanceTermsAggregationResult.getBucket(
-						String.valueOf(process.getId())),
-					process);
-
 				_populateProcessWithSLAMetrics(
 					slaTermsAggregationResult.getBucket(
+						String.valueOf(process.getId())),
+					process);
+				_setInstanceCount(
+					instanceTermsAggregationResult.getBucket(
 						String.valueOf(process.getId())),
 					process);
 
@@ -289,11 +288,10 @@ public class ProcessResourceImpl
 				Process process = processesMap.remove(
 					Long.valueOf(bucket.getKey()));
 
-				_setInstanceCount(bucket, process);
-
 				_populateProcessWithSLAMetrics(
 					slaTermsAggregationResult.getBucket(bucket.getKey()),
 					process);
+				_setInstanceCount(bucket, process);
 
 				processes.add(process);
 			}
@@ -303,11 +301,10 @@ public class ProcessResourceImpl
 				Process process = processesMap.remove(
 					Long.valueOf(bucket.getKey()));
 
+				_populateProcessWithSLAMetrics(bucket, process);
 				_setInstanceCount(
 					instanceTermsAggregationResult.getBucket(bucket.getKey()),
 					process);
-
-				_populateProcessWithSLAMetrics(bucket, process);
 
 				processes.add(process);
 			}

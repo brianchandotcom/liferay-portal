@@ -172,6 +172,8 @@ class FragmentEntryLinkListSection extends Component {
 	 */
 	_handleResizerMouseDown() {
 		this._resizing = true;
+
+		this._resizeSectionColumns = this.row.columns;
 	}
 
 	/**
@@ -279,6 +281,16 @@ FragmentEntryLinkListSection.STATE = {
 	 */
 	_floatingToolbar: Config.internal()
 		.value(null),
+
+	/**
+	 * Copy of section columns for resizing
+	 * @default []
+	 * @instance
+	 * @memberOf FragmentEntryLinkListSection
+	 * @review
+	 * @type {array}
+	 */
+	_resizeSectionColumns: Config.internal().array().value([]),
 
 	/**
 	 * True when user is resizing a column.

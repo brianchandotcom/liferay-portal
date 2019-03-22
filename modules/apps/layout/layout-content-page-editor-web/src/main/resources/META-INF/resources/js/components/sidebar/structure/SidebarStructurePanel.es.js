@@ -14,14 +14,121 @@ import templates from './SidebarStructurePanel.soy';
 class SidebarStructurePanel extends Component {
 
 	/**
-	 * Adds item types to state
-	 * @param {Object} _state
+	 * @param {Object} state
 	 * @private
 	 * @return {Object}
+	 * @review
 	 * @static
 	 */
-	static _addItemTypesToState(state) {
-		return setIn(state, ['itemTypes'], FRAGMENTS_EDITOR_ITEM_TYPES);
+	static _addStructureToState(state) {
+		return setIn(
+			state,
+			['structure'],
+			SidebarStructurePanel._getTreeNode(
+				state,
+				{
+					children: state.layoutData.structure.map(
+						row => SidebarStructurePanel._getRowTree(
+							state,
+							row
+						)
+					),
+					expanded: true,
+					key: 'root',
+					label: Liferay.Language.get('page')
+				}
+			)
+		);
+	}
+
+	/**
+	 * @param {object} state
+	 * @param {object} column
+	 * @return {Object}
+	 * @review
+	 * @static
+	 */
+	static _getColumnTree(state, column) {
+		return SidebarStructurePanel._getTreeNode(
+			state,
+			{
+				children: column.fragmentEntryLinkIds.map(
+						fragmentEntryLinkId => state.fragmentEntryLinks[fragmentEntryLinkId]
+					).filter(
+						fragmentEntryLink => fragmentEntryLink
+					).map(
+						fragmentEntryLink => SidebarStructurePanel._getTreeNode(
+							state,
+							{
+								elementId: fragmentEntryLink.fragmentEntryLinkId,
+								elementType: FRAGMENTS_EDITOR_ITEM_TYPES.fragment,
+								key: `fragment-entry-link-${fragmentEntryLink.fragmentEntryLinkId}`,
+								label: fragmentEntryLink.name
+							}
+						)
+					),
+				key: `column-${column.columnId}`,
+				label: Liferay.Language.get('column')
+			}
+		);
+	}
+
+	/**
+	 * @param {object} state
+	 * @param {object} row
+	 * @return {Object}
+	 * @review
+	 * @static
+	 */
+	static _getRowTree(state, row) {
+		return SidebarStructurePanel._getTreeNode(
+			state,
+			{
+				children: row.columns.map(
+					column => SidebarStructurePanel._getColumnTree(
+						state,
+						column
+					)
+				),
+				elementId: row.rowId,
+				elementType: FRAGMENTS_EDITOR_ITEM_TYPES.section,
+				key: `row-${row.rowId}`,
+				label: Liferay.Language.get('section')
+			}
+		);
+	}
+
+	/**
+	 * @param {object} state
+	 * @param {object} data
+	 * @param {string} data.key
+	 * @param {string} data.label
+	 * @param {object[]} [data.children=[]]
+	 * @param {string} [data.elementId='']
+	 * @param {string} [data.elementType='']
+	 * @param {boolean} [data.expanded=false]
+	 * @private
+	 * @return {object}
+	 * @review
+	 * @static
+	 */
+	static _getTreeNode(state, data) {
+		return {
+			active: (
+				state.activeItemId === data.elementId &&
+				state.activeItemType === data.elementType
+			),
+			children: data.children || [],
+			elementId: data.elementId || '',
+			elementType: data.elementType || '',
+			expanded: data.expanded || false,
+			hovered: (
+				state.hoveredItemId === data.elementId &&
+				state.hoveredItemType === data.elementType
+			),
+			key: data.key,
+			label: data.label
+		};
 	}
 
 	/**
@@ -29,8 +136,8 @@ class SidebarStructurePanel extends Component {
 	 * @private
 	 * @review
 	 */
-	prepareStateForRender(nextState) {
-		return SidebarStructurePanel._addItemTypesToState(nextState);
+	prepareStateForRender(state) {
+		return SidebarStructurePanel._addStructureToState(state);
 	}
 
 	/**

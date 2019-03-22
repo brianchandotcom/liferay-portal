@@ -43,18 +43,19 @@ String currentTab = ParamUtil.getString(request, "currentTab", "forms");
 			var searchContainer = document.getElementById('<portlet:namespace /><%= ddmFormAdminDisplayContext.getSearchContainerId() %>');
 
 			if (searchContainer) {
-				<portlet:actionURL name="deleteFormInstance" var="deleteFormsURL">
-					<portlet:param name="mvcPath" value="/admin/view.jsp" />
-					<portlet:param name="redirect" value="<%= currentURL %>" />
-				</portlet:actionURL>
-
 				Liferay.Util.postForm(
 					document.<portlet:namespace />searchContainerForm,
 					{
 						data: {
 							deleteFormInstanceIds: Liferay.Util.listCheckedExcept(searchContainer, '<portlet:namespace />allRowIds')
 						},
-						url: '<%= deleteFormsURL %>'
+
+						<portlet:actionURL name="deleteFormInstance" var="deleteFormInstanceURL">
+							<portlet:param name="mvcPath" value="/admin/view.jsp" />
+							<portlet:param name="redirect" value="<%= currentURL %>" />
+						</portlet:actionURL>
+
+						url: '<%= deleteFormInstanceURL %>'
 					}
 				);
 			}
@@ -66,19 +67,20 @@ String currentTab = ParamUtil.getString(request, "currentTab", "forms");
 			var searchContainer = document.getElementById('<portlet:namespace /><%= ddmFormAdminDisplayContext.getSearchContainerId() %>');
 
 			if (searchContainer) {
-				<portlet:actionURL name="deleteStructure" var="deleteStructuresURL">
-					<portlet:param name="mvcPath" value="/admin/view.jsp" />
-					<portlet:param name="currentTab" value="element-set" />
-					<portlet:param name="redirect" value="<%= currentURL %>" />
-				</portlet:actionURL>
-
 				Liferay.Util.postForm(
 					document.<portlet:namespace />searchContainerForm,
 					{
 						data: {
 							deleteStructureIds: Liferay.Util.listCheckedExcept(searchContainer, '<portlet:namespace />allRowIds')
 						},
-						url: '<%= deleteStructuresURL %>'
+
+						<portlet:actionURL name="deleteStructure" var="deleteStructureURL">
+							<portlet:param name="mvcPath" value="/admin/view.jsp" />
+							<portlet:param name="currentTab" value="element-set" />
+							<portlet:param name="redirect" value="<%= currentURL %>" />
+						</portlet:actionURL>
+
+						url: '<%= deleteStructureURL %>'
 					}
 				);
 			}

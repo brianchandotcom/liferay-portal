@@ -43,18 +43,19 @@ PortletURL portletURL = ddmDataProviderDisplayContext.getPortletURL();
 			var searchContainer = document.getElementById('<portlet:namespace />dataProviderInstance');
 
 			if (searchContainer) {
-				<portlet:actionURL name="deleteDataProvider" var="deleteDataProvidersURL">
-					<portlet:param name="mvcPath" value="/view.jsp" />
-					<portlet:param name="redirect" value="<%= currentURL %>" />
-				</portlet:actionURL>
-
 				Liferay.Util.postForm(
 					document.<portlet:namespace />searchContainerForm,
 					{
 						data: {
 							deleteDataProviderInstanceIds: Liferay.Util.listCheckedExcept(searchContainer, '<portlet:namespace />allRowIds')
 						},
-						url: '<%= deleteDataProvidersURL %>'
+
+						<portlet:actionURL name="deleteDataProvider" var="deleteDataProviderURL">
+							<portlet:param name="mvcPath" value="/view.jsp" />
+							<portlet:param name="redirect" value="<%= currentURL %>" />
+						</portlet:actionURL>
+
+						url: '<%= deleteDataProviderURL %>'
 					}
 				);
 			}

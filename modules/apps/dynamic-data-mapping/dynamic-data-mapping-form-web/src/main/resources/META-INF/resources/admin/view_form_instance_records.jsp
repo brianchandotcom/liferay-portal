@@ -126,17 +126,18 @@ renderResponse.setTitle(LanguageUtil.get(request, "form-entries"));
 			var searchContainer = document.getElementById('<portlet:namespace />ddmFormInstanceRecord');
 
 			if (searchContainer) {
-				<portlet:actionURL name="deleteFormInstanceRecord" var="deleteFormInstanceRecordURL">
-					<portlet:param name="mvcPath" value="/admin/view_form_instance_records.jsp" />
-					<portlet:param name="redirect" value="<%= currentURL %>" />
-				</portlet:actionURL>
-
 				Liferay.Util.postForm(
 					document.<portlet:namespace />searchContainerForm,
 					{
 						data: {
 							deleteFormInstanceRecordIds: Liferay.Util.listCheckedExcept(searchContainer, '<portlet:namespace />allRowIds')
 						},
+
+						<portlet:actionURL name="deleteFormInstanceRecord" var="deleteFormInstanceRecordURL">
+							<portlet:param name="mvcPath" value="/admin/view_form_instance_records.jsp" />
+							<portlet:param name="redirect" value="<%= currentURL %>" />
+						</portlet:actionURL>
+
 						url: '<%= deleteFormInstanceRecordURL %>'
 					}
 				);

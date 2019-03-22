@@ -161,7 +161,6 @@ public class ProcessWorkflowMetricsIndexer
 			digest(
 				kaleoDefinition.getCompanyId(), 0,
 				kaleoDefinition.getKaleoDefinitionId(), 0));
-
 		document.addKeyword("companyId", kaleoDefinition.getCompanyId());
 		document.addKeyword("instanceId", 0);
 		document.addKeyword(

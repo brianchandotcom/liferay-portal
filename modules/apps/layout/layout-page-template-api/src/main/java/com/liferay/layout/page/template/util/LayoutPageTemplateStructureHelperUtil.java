@@ -66,9 +66,8 @@ public class LayoutPageTemplateStructureHelperUtil {
 		}
 
 		jsonObject.put("config", JSONFactoryUtil.createJSONObject());
-		jsonObject.put(
-			"nextColumnId", String.valueOf(fragmentEntryLinks.size()));
-		jsonObject.put("nextRowId", String.valueOf(fragmentEntryLinks.size()));
+		jsonObject.put("nextColumnId", 0);
+		jsonObject.put("nextRowId", 0);
 
 		if (!fragmentEntryLinks.isEmpty()) {
 			jsonObject.put(

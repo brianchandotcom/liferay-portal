@@ -44,6 +44,40 @@ public class LiferayEtcd {
 		setURL(url);
 	}
 
+	public void delete(LiferayEtcd.Node node) {
+		if (node instanceof LiferayEtcd.Dir) {
+			delete(node.getKey(), true);
+		}
+		else {
+			delete(node.getKey());
+		}
+	}
+
+	public void delete(String key) {
+		delete(key, false);
+	}
+
+	public void delete(String key, boolean recursive) {
+		try (EtcdClient etcdClient = getEtcdClient()) {
+			EtcdKeyDeleteRequest etcdKeyDeleteRequest = etcdClient.deleteDir(
+				key);
+
+			if (recursive) {
+				etcdKeyDeleteRequest.recursive();
+			}
+
+			EtcdResponsePromise<EtcdKeysResponse> etcdResponsePromise =
+				etcdKeyDeleteRequest.send();
+
+			etcdResponsePromise.get();
+		}
+		catch (EtcdAuthenticationException | EtcdException | IOException |
+			   TimeoutException e) {
+
+			throw new RuntimeException(e);
+		}
+	}
+
 	public LiferayEtcd.Node get(String key) {
 		try (EtcdClient etcdClient = getEtcdClient()) {
 			EtcdKeyGetRequest etcdKeyGetRequest = etcdClient.get(key);

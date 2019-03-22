@@ -134,7 +134,7 @@ definition {
 	macro viewAutoSaveMessage {
 		AssertTextEquals.assertPartialText(
 			locator1 = "PageEditor#AUTOSAVE_MESSAGE",
-			value1 = "Changes saved at"
+			value1 = "Draft saved at"
 		);
 	}
 

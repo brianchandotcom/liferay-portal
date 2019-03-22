@@ -71,7 +71,7 @@
 		{param activeItemType: $activeItemType /}
 		{param elementName: $rootName /}
 		{param expanded: true /}
-		{param hasChildren: true /}
+		{param hasChildren: length($layoutData.structure) > 0 /}
 		{param hoveredItemId: $hoveredItemId /}
 		{param hoveredItemType: $hoveredItemType /}
 		{param itemTypes: $itemTypes /}
@@ -145,7 +145,7 @@
 		{param elementId: $row.rowId /}
 		{param elementName: $rowName /}
 		{param elementType: $itemTypes.section /}
-		{param hasChildren: true /}
+		{param hasChildren: length($row.columns) > 0 /}
 		{param hoveredItemId: $hoveredItemId /}
 		{param hoveredItemType: $hoveredItemType /}
 		{param itemTypes: $itemTypes /}
@@ -214,7 +214,7 @@
 		{param activeItemId: $activeItemId /}
 		{param activeItemType: $activeItemType /}
 		{param elementName: $columnName /}
-		{param hasChildren: true /}
+		{param hasChildren: length($column.fragmentEntryLinkIds) > 0 /}
 		{param hoveredItemId: $hoveredItemId /}
 		{param hoveredItemType: $hoveredItemType /}
 		{param itemTypes: $itemTypes /}

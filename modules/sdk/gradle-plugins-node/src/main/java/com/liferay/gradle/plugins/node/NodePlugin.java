@@ -534,13 +534,12 @@ public class NodePlugin implements Plugin<Project> {
 
 				@Override
 				public Boolean call() throws Exception {
-					if ((_node8VersionNumber.compareTo(
-							VersionNumber.parse(
-								nodeExtension.getNodeVersion())) <= 0) ||
-						(_npm5VersionNumber.compareTo(
-							VersionNumber.parse(
-								nodeExtension.getNpmVersion())) <= 0)) {
+					int value1 = _node8VersionNumber.compareTo(
+						VersionNumber.parse(nodeExtension.getNodeVersion()));
+					int value2 = _npm5VersionNumber.compareTo(
+						VersionNumber.parse(nodeExtension.getNpmVersion()));
 
+					if ((value1 <= 0) || (value2 <= 0)) {
 						return true;
 					}
 

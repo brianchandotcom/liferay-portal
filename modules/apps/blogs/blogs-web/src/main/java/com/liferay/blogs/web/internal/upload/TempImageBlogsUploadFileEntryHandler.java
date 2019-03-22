@@ -50,10 +50,11 @@ public class TempImageBlogsUploadFileEntryHandler
 
 	private boolean _exists(ThemeDisplay themeDisplay, String curFileName) {
 		try {
-			if (TempFileEntryUtil.getTempFileEntry(
-					themeDisplay.getScopeGroupId(), themeDisplay.getUserId(),
-					_TEMP_FOLDER_NAME, curFileName) != null) {
+			FileEntry tempFileEntry = TempFileEntryUtil.getTempFileEntry(
+				themeDisplay.getScopeGroupId(), themeDisplay.getUserId(),
+				_TEMP_FOLDER_NAME, curFileName);
 
+			if (tempFileEntry != null) {
 				return true;
 			}
 

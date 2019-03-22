@@ -39,10 +39,11 @@ public class UserWorkflowControlPanelEntry extends WorkflowControlPanelEntry {
 			PermissionChecker permissionChecker, Group group, Portlet portlet)
 		throws Exception {
 
-		if (WorkflowInstanceManagerUtil.getWorkflowInstanceCount(
-				permissionChecker.getCompanyId(), permissionChecker.getUserId(),
-				null, null, null) > 0) {
+		int count = WorkflowInstanceManagerUtil.getWorkflowInstanceCount(
+			permissionChecker.getCompanyId(), permissionChecker.getUserId(),
+			null, null, null);
 
+		if (count > 0) {
 			return true;
 		}
 

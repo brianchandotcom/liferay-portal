@@ -474,10 +474,11 @@ public class DDMFormInstanceRecordLocalServiceImpl
 				formInstanceRecordVersion.getFormInstanceRecordId());
 
 		if (status == WorkflowConstants.STATUS_APPROVED) {
-			if (DLUtil.compareVersions(
-					formInstanceRecord.getVersion(),
-					formInstanceRecordVersion.getVersion()) <= 0) {
+			int value = DLUtil.compareVersions(
+				formInstanceRecord.getVersion(),
+				formInstanceRecordVersion.getVersion());
 
+			if (value <= 0) {
 				formInstanceRecord.setVersionUserId(
 					formInstanceRecordVersion.getUserId());
 				formInstanceRecord.setVersionUserName(

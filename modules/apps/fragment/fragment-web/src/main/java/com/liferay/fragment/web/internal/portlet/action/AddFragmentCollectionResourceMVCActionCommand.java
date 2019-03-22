@@ -106,11 +106,11 @@ public class AddFragmentCollectionResourceMVCActionCommand
 		String curFileName) {
 
 		try {
-			if (_dlAppLocalService.getFileEntry(
-					serviceContext.getScopeGroupId(),
-					fragmentCollection.getResourcesFolderId(), curFileName) !=
-						null) {
+			FileEntry fileEntry = _dlAppLocalService.getFileEntry(
+				serviceContext.getScopeGroupId(),
+				fragmentCollection.getResourcesFolderId(), curFileName);
 
+			if (fileEntry != null) {
 				return true;
 			}
 

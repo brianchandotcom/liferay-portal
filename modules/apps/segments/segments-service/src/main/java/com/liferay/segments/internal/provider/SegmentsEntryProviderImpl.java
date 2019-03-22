@@ -300,10 +300,11 @@ public class SegmentsEntryProviderImpl implements SegmentsEntryProvider {
 			boolean matchesModel = false;
 
 			try {
-				if (oDataRetriever.getResultsCount(
-						segmentsEntry.getCompanyId(), sb.toString(),
-						Locale.getDefault()) > 0) {
+				int count = oDataRetriever.getResultsCount(
+					segmentsEntry.getCompanyId(), sb.toString(),
+					Locale.getDefault());
 
+				if (count > 0) {
 					matchesModel = true;
 				}
 			}

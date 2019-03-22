@@ -1195,9 +1195,13 @@ public class LocalProcessExecutorTest {
 
 		long startTime = System.currentTimeMillis();
 
-		while (timeUnit.convert(
-					System.currentTimeMillis() - startTime,
-					TimeUnit.MILLISECONDS) < time) {
+		while (true) {
+			long value = timeUnit.convert(
+				System.currentTimeMillis() - startTime, TimeUnit.MILLISECONDS);
+
+			if (value >= time) {
+				break;
+			}
 
 			if (!supplier.get()) {
 				return;

@@ -167,10 +167,11 @@ public class UserPersonalSitePermissions {
 
 		String primaryKey = String.valueOf(userPersonalSiteGroupId);
 
-		if (_resourcePermissionLocalService.getResourcePermissionsCount(
-				companyId, rootPortletId, ResourceConstants.SCOPE_GROUP,
-				primaryKey) == 0) {
+		int count = _resourcePermissionLocalService.getResourcePermissionsCount(
+			companyId, rootPortletId, ResourceConstants.SCOPE_GROUP,
+			primaryKey);
 
+		if (count == 0) {
 			List<String> portletActionIds =
 				ResourceActionsUtil.getPortletResourceActions(rootPortletId);
 
@@ -187,10 +188,10 @@ public class UserPersonalSitePermissions {
 			return;
 		}
 
-		if (_resourcePermissionLocalService.getResourcePermissionsCount(
-				companyId, modelName, ResourceConstants.SCOPE_GROUP,
-				primaryKey) == 0) {
+		count = _resourcePermissionLocalService.getResourcePermissionsCount(
+			companyId, modelName, ResourceConstants.SCOPE_GROUP, primaryKey);
 
+		if (count == 0) {
 			List<String> modelActionIds =
 				ResourceActionsUtil.getModelResourceActions(modelName);
 

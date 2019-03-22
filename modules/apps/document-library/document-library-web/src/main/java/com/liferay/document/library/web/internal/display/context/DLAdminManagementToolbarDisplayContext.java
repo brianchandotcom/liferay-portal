@@ -595,10 +595,12 @@ public class DLAdminManagementToolbarDisplayContext {
 
 	public boolean isDisabled() {
 		try {
-			if (DLAppServiceUtil.getFoldersAndFileEntriesAndFileShortcutsCount(
+			int count =
+				DLAppServiceUtil.getFoldersAndFileEntriesAndFileShortcutsCount(
 					_getRepositoryId(), _getFolderId(),
-					WorkflowConstants.STATUS_ANY, true) <= 0) {
+					WorkflowConstants.STATUS_ANY, true);
 
+			if (count <= 0) {
 				return true;
 			}
 

@@ -18,6 +18,8 @@ import java.io.IOException;
 
 import java.net.URI;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.TimeoutException;
 
 import mousio.etcd4j.EtcdClient;
@@ -42,6 +44,93 @@ public class LiferayEtcd {
 
 	public void setURL(String url) {
 		_uri = URI.create(url);
+	}
+
+	public static class Dir extends Node {
+
+		public Dir(LiferayEtcd liferayEtcd, String key) {
+			this(liferayEtcd, liferayEtcd.getEtcdNode(key));
+		}
+
+		public List<LiferayEtcd.Node> getLiferayEtcdNodes() {
+			List<Node> liferayEtcdNodes = new ArrayList<>();
+
+			EtcdKeysResponse.EtcdNode etcdNode = liferayEtcd.getEtcdNode(key);
+
+			for (EtcdKeysResponse.EtcdNode childEtcdNode :
+					etcdNode.getNodes()) {
+
+				if (childEtcdNode.isDir()) {
+					liferayEtcdNodes.add(new Dir(liferayEtcd, childEtcdNode));
+				}
+				else {
+					liferayEtcdNodes.add(new Value(liferayEtcd, childEtcdNode));
+				}
+			}
+
+			return liferayEtcdNodes;
+		}
+
+		@Override
+		public String toString() {
+			return key + "={dir}";
+		}
+
+		protected Dir(
+			LiferayEtcd liferayEtcd, EtcdKeysResponse.EtcdNode etcdNode) {
+
+			super(liferayEtcd, etcdNode.getKey());
+
+			if (!etcdNode.isDir()) {
+				throw new RuntimeException(key + " is not a dir");
+			}
+		}
+
+	}
+
+	public abstract static class Node {
+
+		public String getKey() {
+			return key;
+		}
+
+		protected Node(LiferayEtcd liferayEtcd, String key) {
+			this.liferayEtcd = liferayEtcd;
+			this.key = key;
+		}
+
+		protected final String key;
+		protected final LiferayEtcd liferayEtcd;
+
+	}
+
+	public static class Value extends Node {
+
+		public Value(LiferayEtcd liferayEtcd, String key) {
+			this(liferayEtcd, liferayEtcd.getEtcdNode(key));
+		}
+
+		public String getValue() {
+			EtcdKeysResponse.EtcdNode etcdNode = liferayEtcd.getEtcdNode(key);
+
+			return etcdNode.getValue();
+		}
+
+		@Override
+		public String toString() {
+			return key + "=" + getValue();
+		}
+
+		protected Value(
+			LiferayEtcd liferayEtcd, EtcdKeysResponse.EtcdNode etcdNode) {
+
+			super(liferayEtcd, etcdNode.getKey());
+
+			if (etcdNode.isDir()) {
+				throw new RuntimeException(key + " is not a value");
+			}
+		}
+
 	}
 
 	protected EtcdClient getEtcdClient() {

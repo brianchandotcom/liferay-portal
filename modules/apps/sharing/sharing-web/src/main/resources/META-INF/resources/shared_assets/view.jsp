@@ -57,7 +57,7 @@ sharedAssetsViewDisplayContext.populateResults(sharingEntriesSearchContainer);
 		>
 			<liferay-portlet:renderURL varImpl="rowURL">
 				<portlet:param name="mvcRenderCommandName" value="/shared_assets/view_sharing_entry" />
-				<portlet:param name="redirect" value="<%= sharingEntriesSearchContainer.getIteratorURL().toString() %>" />
+				<portlet:param name="redirect" value="<%= currentURL %>" />
 				<portlet:param name="sharingEntryId" value="<%= String.valueOf(sharingEntry.getSharingEntryId()) %>" />
 			</liferay-portlet:renderURL>
 

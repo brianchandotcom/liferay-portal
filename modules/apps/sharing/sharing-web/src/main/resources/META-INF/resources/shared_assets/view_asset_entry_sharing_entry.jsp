@@ -26,6 +26,18 @@ AssetEntry assetEntry = assetRendererFactory.getAssetEntry(assetRendererFactory.
 SharedAssetsViewDisplayContext sharedAssetsViewDisplayContext = (SharedAssetsViewDisplayContext)renderRequest.getAttribute(SharedAssetsViewDisplayContext.class.getName());
 
 SharingEntry sharingEntry = (SharingEntry)renderRequest.getAttribute(SharingEntry.class.getName());
+
+portletDisplay.setShowBackIcon(true);
+
+String redirect = ParamUtil.getString(request, "redirect");
+
+if (Validator.isNull(redirect)) {
+	PortletURL portletURL = liferayPortletResponse.createRenderURL();
+
+	redirect = portletURL.toString();
+}
+
+portletDisplay.setURLBack(redirect);
 %>
 
 <div class="upper-tbar-container-fixed">

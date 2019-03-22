@@ -17,6 +17,7 @@ package com.liferay.data.engine.rest.internal.resource.v1_0;
 import com.liferay.data.engine.rest.dto.v1_0.DataDefinition;
 import com.liferay.data.engine.rest.internal.dto.v1_0.util.DataDefinitionUtil;
 import com.liferay.data.engine.rest.internal.dto.v1_0.util.LocalizedValueUtil;
+import com.liferay.data.engine.rest.internal.model.InternalDataDefinition;
 import com.liferay.data.engine.rest.resource.v1_0.DataDefinitionResource;
 import com.liferay.dynamic.data.mapping.model.DDMStructureConstants;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
@@ -61,28 +62,29 @@ public class DataDefinitionResourceImpl extends BaseDataDefinitionResourceImpl {
 					_ddmStructureService.getStructures(
 						contextCompany.getCompanyId(),
 						new long[] {contentSpaceId},
-						_portal.getClassNameId(DataDefinition.class),
+						_portal.getClassNameId(InternalDataDefinition.class),
 						pagination.getStartPosition(),
 						pagination.getEndPosition(), null),
 					DataDefinitionUtil::toDataDefinition),
 				pagination,
 				_ddmStructureService.getStructuresCount(
 					contextCompany.getCompanyId(), new long[] {contentSpaceId},
-					_portal.getClassNameId(DataDefinition.class)));
+					_portal.getClassNameId(InternalDataDefinition.class)));
 		}
 
 		return Page.of(
 			transform(
 				_ddmStructureService.search(
 					contextCompany.getCompanyId(), new long[] {contentSpaceId},
-					_portal.getClassNameId(DataDefinition.class), keywords,
-					WorkflowConstants.STATUS_ANY, pagination.getStartPosition(),
-					pagination.getEndPosition(), null),
+					_portal.getClassNameId(InternalDataDefinition.class),
+					keywords, WorkflowConstants.STATUS_ANY,
+					pagination.getStartPosition(), pagination.getEndPosition(),
+					null),
 				DataDefinitionUtil::toDataDefinition),
 			pagination,
 			_ddmStructureService.searchCount(
 				contextCompany.getCompanyId(), new long[] {contentSpaceId},
-				_portal.getClassNameId(DataDefinition.class), keywords,
+				_portal.getClassNameId(InternalDataDefinition.class), keywords,
 				WorkflowConstants.STATUS_ANY));
 	}
 
@@ -103,7 +105,7 @@ public class DataDefinitionResourceImpl extends BaseDataDefinitionResourceImpl {
 			_ddmStructureLocalService.addStructure(
 				PrincipalThreadLocal.getUserId(), contentSpaceId,
 				DDMStructureConstants.DEFAULT_PARENT_STRUCTURE_ID,
-				_portal.getClassNameId(DataDefinition.class), null,
+				_portal.getClassNameId(InternalDataDefinition.class), null,
 				LocalizedValueUtil.toLocalizationMap(dataDefinition.getName()),
 				LocalizedValueUtil.toLocalizationMap(
 					dataDefinition.getDescription()),

@@ -105,6 +105,4 @@ long classNameId = ParamUtil.getLong(request, "classNameId");
 			requestedLocale="<%= locale %>"
 		/>
 	</div>
-
-	<aui:input label="searchable" name="indexable" type="toggle-switch" value="<%= (article != null) ? article.isIndexable() : true %>" />
 </liferay-frontend:fieldset>

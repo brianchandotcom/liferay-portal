@@ -33,6 +33,10 @@
 		<finder name="GroupId" return-type="Collection">
 			<finder-column name="groupId" />
 		</finder>
+		<finder name="G_ALEK" return-type="AssetListEntry" unique="true">
+			<finder-column name="groupId" />
+			<finder-column name="assetListEntryKey" />
+		</finder>
 		<finder name="G_T" return-type="AssetListEntry" unique="true">
 			<finder-column name="groupId" />
 			<finder-column name="title" />

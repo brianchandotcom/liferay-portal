@@ -118,12 +118,16 @@ class AssetVocabularyCategoriesSelector extends Component {
 			selectedItems[selectedItems.length - 1].value = match.data.value;
 		}
 
-		if (!this.allowInputCreateItem && !match) {
-			selectedItems = selectedItems.splice(-1, 1);
+		if (!this.allowInputCreateItem) {
+			const itemAdded = selectedItems[selectedItems.length - 1];
 
-			multiSelect.inputValue = event.data.item.label;
+			if (itemAdded.label == itemAdded.value) {
+				selectedItems = selectedItems.splice(-1, 1);
 
-			//TODO show error
+				multiSelect.inputValue = event.data.item.label;
+
+				//TODO show error
+			}
 		}
 
 		this.categoryIds = this._getCategoryIds();

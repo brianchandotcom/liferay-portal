@@ -58,48 +58,6 @@ String curTarget = GetterUtil.getString(layoutTypeSettings.getProperty("target")
 		currentLogoURL='<%= (selLayout.getIconImageId() == 0) ? themeDisplay.getPathThemeImages() + "/spacer.png" : themeDisplay.getPathImage() + "/logo?img_id=" + selLayout.getIconImageId() + "&t=" + WebServerServletTokenUtil.getToken(selLayout.getIconImageId()) %>'
 		defaultLogo="<%= selLayout.getIconImageId() == 0 %>"
 		defaultLogoURL='<%= themeDisplay.getPathThemeImages() + "/spacer.png" %>'
-		editLogoFn='<%= liferayPortletResponse.getNamespace() + "editLayoutLogo" %>'
-		logoDisplaySelector='<%= ".layout-logo-" + selLayout.getPlid() %>'
 		tempImageFileName="<%= String.valueOf(selLayout.getPlid()) %>"
 	/>
 </aui:field-wrapper>
-
-<script>
-	function <portlet:namespace />editLayoutLogo(logoURL, deleteLogo) {
-		var layoutLogo = document.querySelectorAll('.layout-logo-<%= selLayout.getPlid() %>');
-
-		if (!layoutLogo.length) {
-			var logoImage = document.createElement('img');
-
-			logoImage.alt = '<liferay-ui:message escapeAttribute="<%= true %>" key="logo" />';
-			logoImage.classList.add('layout-logo-<%= selLayout.getPlid() %>');
-			logoImage.src = logoURL;
-
-			var layoutSpan = document.querySelector('#layout_<%= selLayout.getLayoutId() %> span');
-
-			if (layoutSpan) {
-				layoutSpan.insertBefore(logoImage, layoutSpan.firstChild);
-			}
-
-			layoutLogo = logoImage;
-
-		}
-
-
-			Array.prototype.forEach.call(
-				layoutLogo,
-				function(logo) {
-					logo.classList.add('hide');
-				}
-			);
-		}
-		else {
-			Array.prototype.forEach.call(
-				layoutLogo,
-				function(logo) {
-					logo.classList.remove('hide');
-				}
-			);
-		}
-	}
-</script>

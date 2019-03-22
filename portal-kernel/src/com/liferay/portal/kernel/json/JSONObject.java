@@ -21,6 +21,7 @@ import java.io.Writer;
 
 import java.util.Date;
 import java.util.Iterator;
+import java.util.Set;
 
 /**
  * @author Brian Wing Shun Chan
@@ -59,6 +60,8 @@ public interface JSONObject extends Externalizable, JSONSerializable {
 	public boolean isNull(String key);
 
 	public Iterator<String> keys();
+
+	public Set<String> keySet();
 
 	public int length();
 

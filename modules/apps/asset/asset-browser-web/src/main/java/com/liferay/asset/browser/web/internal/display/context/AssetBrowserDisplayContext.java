@@ -316,7 +316,7 @@ public class AssetBrowserDisplayContext {
 			return _showAddButton;
 		}
 
-		_showAddButton = ParamUtil.getBoolean(_request, "showAddButton", true);
+		_showAddButton = ParamUtil.getBoolean(_request, "showAddButton");
 
 		return _showAddButton;
 	}

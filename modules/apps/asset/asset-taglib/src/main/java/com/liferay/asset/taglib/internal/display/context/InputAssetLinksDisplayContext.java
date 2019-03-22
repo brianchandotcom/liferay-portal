@@ -345,7 +345,6 @@ public class InputAssetLinksDisplayContext {
 		portletURL.setParameter("eventName", getEventName());
 		portletURL.setParameter(
 			"multipleSelection", String.valueOf(Boolean.TRUE));
-		portletURL.setParameter("showAddButton", String.valueOf(Boolean.FALSE));
 		portletURL.setPortletMode(PortletMode.VIEW);
 		portletURL.setWindowState(LiferayWindowState.POP_UP);
 

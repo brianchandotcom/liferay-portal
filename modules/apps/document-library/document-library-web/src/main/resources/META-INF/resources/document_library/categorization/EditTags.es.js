@@ -99,7 +99,7 @@ class EditTags extends Component {
 			([responseTags, responseDescription]) => {
 				if (responseTags && responseDescription) {
 					this.loading = false;
-					this.commonTags = responseTags.items.map(item => item.name);
+					this.commonTags = (responseTags.items || []).map(item => item.name);
 					this.description = responseDescription.description;
 					this.multiple = (this.fileEntries.length > 1) || this.selectAll;
 				}

@@ -289,13 +289,13 @@ String navigation = ParamUtil.getString(request, "navigation");
 		String classNameId = String.valueOf(ClassNameLocalServiceUtil.getClassNameId(DLFileEntryConstants.getClassName()));
 		String pathModule = PortalUtil.getPathModule();
 
-		String urlTags = pathModule + "/bulk/asset/tags/" + scopeGroupId + "/" + classNameId + "/common";
 		String urlUpdateTags = pathModule + "/bulk/asset/tags/" + classNameId;
 
 		Map<String, Object> tagsContext = new HashMap<>();
 
+		tagsContext.put("groupIds", PortalUtil.getCurrentAndAncestorSiteGroupIds(scopeGroupId));
+		tagsContext.put("pathModule", pathModule);
 		tagsContext.put("repositoryId", String.valueOf(repositoryId));
-		tagsContext.put("urlTags", urlTags);
 		tagsContext.put("urlUpdateTags", urlUpdateTags);
 
 		String urlCategories = pathModule + "/bulk/asset/categories/" + scopeGroupId + "/" + classNameId + "/common";

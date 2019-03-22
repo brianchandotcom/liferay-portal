@@ -67,14 +67,12 @@ class EditTags extends Component {
 			method: 'POST'
 		};
 
-		fetch(url, request)
+		return fetch(url, request)
 			.then(
 				response => response.json()
 			)
 			.then(
-				response => {
-					callback(response);
-				}
+				response => callback ? callback(response) : response
 			)
 			.catch(
 				(xhr) => {
@@ -93,22 +91,26 @@ class EditTags extends Component {
 	_getCommonTags() {
 		this.loading = true;
 
-		let bodyData = {
-			folderId: this.folderId,
-			repositoryId: this.repositoryId,
-			selectAll: this.selectAll,
-			selection: this.fileEntries
+		let selection = {
+			documentIds: this.fileEntries,
+			selectionScope: {
+				folderId: this.folderId,
+				repositoryId: this.repositoryId,
+				selectAll: this.selectAll
+			}
 		};
 
-		this._fetchTagsRequest(
-			this.urlTags,
-			bodyData,
-			response => {
-				if (response) {
+		Promise.all(
+			[
+				this._fetchTagsRequest(this.pathModule + this.urlTags, selection),
+				this._fetchTagsRequest(this.pathModule + this.urlSelectionDescription, selection)
+			]
+		).then(
+			([responseTags, responseDescription]) => {
+				if (responseTags && responseDescription) {
 					this.loading = false;
-					this.commonTags = response.tagNames;
-					this.description = response.description;
-					this.groupIds = response.groupIds;
+					this.commonTags = responseTags.items.map(item => item.name);
+					this.description = responseDescription.description;
 					this.multiple = (this.fileEntries.length > 1) || this.selectAll;
 				}
 			}
@@ -256,7 +258,7 @@ EditTags.STATE = {
 	 * [groupIds description]
 	 * @type {[type]}
 	 */
-	groupIds: Config.array().value([]),
+	groupIds: Config.array().required(),
 
 	/**
 	 * Flag that indicate if loading icon must
@@ -301,6 +303,16 @@ EditTags.STATE = {
 	repositoryId: Config.string().required(),
 
 	/**
+	 * PathModule
+	 *
+	 * @instance
+	 * @memberof EditTags
+	 * @review
+	 * @type {String}
+	 */
+	pathModule: Config.string().required(),
+
+	/**
 	 * Flag that indicate if "select all" checkbox
 	 * is checked.
 	 *
@@ -341,7 +353,18 @@ EditTags.STATE = {
 	 * @review
 	 * @type {String}
 	 */
-	urlTags: Config.string().required(),
+	urlTags: Config.string().value('/bulk-rest/v1.0/keywords/common'),
+
+	/**
+	 * Url to backend service that provides
+	 * the selection description.
+	 *
+	 * @instance
+	 * @memberof EditTags
+	 * @review
+	 * @type {String}
+	 */
+	urlSelectionDescription: Config.string().value('/bulk-rest/v1.0/keywords/message-selection'),
 
 	/**
 	 * Url to backend service that updates

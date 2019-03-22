@@ -610,7 +610,7 @@ public class JournalContentDisplayContext {
 
 			PortletURL portletURL = latestArticleAssetRenderer.getURLEdit(
 				PortalUtil.getLiferayPortletRequest(_portletRequest), null,
-				LiferayWindowState.MAXIMIZED, themeDisplay.getURLCurrent());
+				LiferayWindowState.NORMAL, themeDisplay.getURLCurrent());
 
 			portletURL.setParameter(
 				"hideDefaultSuccessMessage", Boolean.TRUE.toString());

@@ -123,8 +123,7 @@ public class EditAssetDisplayMenuDisplayContext {
 		}
 
 		PortletURL editAssetEntryURL = assetRenderer.getURLEdit(
-			_request, LiferayWindowState.MAXIMIZED,
-			_themeDisplay.getURLCurrent());
+			_request, LiferayWindowState.NORMAL, _themeDisplay.getURLCurrent());
 
 		if (editAssetEntryURL == null) {
 			return StringPool.BLANK;

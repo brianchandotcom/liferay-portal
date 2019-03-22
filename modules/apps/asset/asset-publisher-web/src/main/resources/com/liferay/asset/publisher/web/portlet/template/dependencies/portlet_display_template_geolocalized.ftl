@@ -154,7 +154,7 @@
 
 		<#if showEditURL && assetRenderer.hasEditPermission(permissionChecker)>
 			<#assign
-				editPortletURL = assetRenderer.getURLEdit(renderRequest, renderResponse, windowStateFactory.getWindowState("POP_UP"), themeDisplay.getURLCurrent())
+				editPortletURL = assetRenderer.getURLEdit(renderRequest, renderResponse, windowStateFactory.getWindowState("NORMAL"), themeDisplay.getURLCurrent())
 			/>
 
 			<@liferay_ui.icon

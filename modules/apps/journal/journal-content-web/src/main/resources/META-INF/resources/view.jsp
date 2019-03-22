@@ -129,7 +129,7 @@ if (journalContentDisplayContext.isShowArticle()) {
 						<c:choose>
 							<c:when test="<%= assetRenderer.hasEditPermission(permissionChecker) %>">
 								<div class="alert alert-warning">
-									<a href="<%= assetRenderer.getURLEdit(liferayPortletRequest, liferayPortletResponse, WindowState.MAXIMIZED, currentURLObj) %>">
+									<a href="<%= assetRenderer.getURLEdit(liferayPortletRequest, liferayPortletResponse, WindowState.NORMAL, currentURLObj) %>">
 										<liferay-ui:message arguments="<%= HtmlUtil.escape(article.getTitle(locale)) %>" key="x-is-not-approved" />
 									</a>
 								</div>

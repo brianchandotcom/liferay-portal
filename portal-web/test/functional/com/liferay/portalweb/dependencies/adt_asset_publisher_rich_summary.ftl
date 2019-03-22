@@ -86,7 +86,7 @@
 
 <#macro getEditIcon>
 	<#if assetRenderer.hasEditPermission(themeDisplay.getPermissionChecker())>
-		<#assign editPortletURL = assetRenderer.getURLEdit(renderRequest, renderResponse, windowStateFactory.getWindowState("pop_up"), themeDisplay.getURLCurrent())!"" />
+		<#assign editPortletURL = assetRenderer.getURLEdit(renderRequest, renderResponse, windowStateFactory.getWindowState("NORMAL"), themeDisplay.getURLCurrent())!"" />
 
 		<#if validator.isNotNull(editPortletURL)>
 			<#assign title = languageUtil.format(locale, "edit-x", entryTitle, false) />

@@ -97,6 +97,16 @@ class FragmentEntryLinkListSection extends Component {
 	}
 
 	/**
+	 * Clear resizing properties
+	 * @private
+	 * @review
+	 */
+	_clearResizing() {
+		this._resizeSectionColumns = [];
+		this._resizing = false;
+	}
+
+	/**
 	 * Creates a new instance of FloatingToolbar
 	 * @private
 	 * @review
@@ -138,7 +148,7 @@ class FragmentEntryLinkListSection extends Component {
 	 */
 	_handleBodyMouseLeave() {
 		if (this._resizing) {
-			this._resizing = false;
+			this._clearResizing();
 		}
 	}
 
@@ -148,7 +158,7 @@ class FragmentEntryLinkListSection extends Component {
 	 */
 	_handleBodyMouseUp() {
 		if (this._resizing) {
-			this._resizing = false;
+			this._clearResizing();
 		}
 	}
 

@@ -17,6 +17,7 @@ package com.liferay.asset.list.service.impl;
 import com.liferay.asset.list.model.AssetListEntry;
 import com.liferay.asset.list.model.AssetListEntrySegmentsEntryRel;
 import com.liferay.asset.list.service.base.AssetListEntrySegmentsEntryRelLocalServiceBaseImpl;
+import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.model.User;
@@ -26,9 +27,15 @@ import com.liferay.portal.kernel.systemevent.SystemEvent;
 import java.util.Date;
 import java.util.List;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Eduardo García
  */
+@Component(
+	property = "model.class.name=com.liferay.asset.list.model.AssetListEntrySegmentsEntryRel",
+	service = AopService.class
+)
 public class AssetListEntrySegmentsEntryRelLocalServiceImpl
 	extends AssetListEntrySegmentsEntryRelLocalServiceBaseImpl {
 

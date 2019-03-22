@@ -48,7 +48,7 @@
 	<aui:field-wrapper>
 		<c:choose>
 			<c:when test="<%= propertyDisplayType.equals(ExpandoColumnConstants.PROPERTY_DISPLAY_TYPE_TEXT_BOX) || propertyDisplayType.equals(ExpandoColumnConstants.PROPERTY_DISPLAY_TYPE_TEXT_FIELD) %>">
-				<aui:input label="searchable" name="searchable" type="toggle-switch" value="<%= (column != null) ? (propertyIndexType != ExpandoColumnConstants.INDEX_TYPE_NONE) : true %>" />
+				<aui:input label="searchable" name="searchable" type="toggle-switch" value="<%= (expandoColumn != null) ? (propertyIndexType != ExpandoColumnConstants.INDEX_TYPE_NONE) : true %>" />
 
 				<div class="form-text">
 					<liferay-ui:message key="custom-field-index-type-help" />
@@ -71,7 +71,7 @@
 			<c:otherwise>
 				<aui:input name="Property--index-type--" type="hidden" value="<%= ExpandoColumnConstants.INDEX_TYPE_KEYWORD %>" />
 
-				<aui:input checked="<%= (column != null) ? (propertyIndexType == ExpandoColumnConstants.INDEX_TYPE_KEYWORD) : true %>" label="searchable-as-keyword" name="searchable" type="toggle-switch" />
+				<aui:input checked="<%= (expandoColumn != null) ? (propertyIndexType == ExpandoColumnConstants.INDEX_TYPE_KEYWORD) : true %>" label="searchable-as-keyword" name="searchable" type="toggle-switch" />
 
 				<div class="form-text">
 					<liferay-ui:message key="custom-field-index-type-help" />

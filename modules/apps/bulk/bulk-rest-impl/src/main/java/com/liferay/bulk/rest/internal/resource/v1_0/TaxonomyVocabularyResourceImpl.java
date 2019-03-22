@@ -15,6 +15,7 @@
 package com.liferay.bulk.rest.internal.resource.v1_0;
 
 import com.liferay.asset.kernel.model.AssetCategory;
+import com.liferay.asset.kernel.model.AssetCategoryConstants;
 import com.liferay.asset.kernel.model.AssetCategoryModel;
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.model.AssetVocabulary;
@@ -27,7 +28,6 @@ import com.liferay.bulk.rest.internal.selection.v1_0.DocumentBulkSelectionFactor
 import com.liferay.bulk.rest.resource.v1_0.TaxonomyVocabularyResource;
 import com.liferay.bulk.selection.BulkSelection;
 import com.liferay.document.library.kernel.model.DLFileEntry;
-import com.liferay.portal.kernel.model.ClassName;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.BaseModelPermissionCheckerUtil;
@@ -71,14 +71,18 @@ public class TaxonomyVocabularyResourceImpl
 				DocumentBulkSelection documentBulkSelection)
 		throws Exception {
 
+		long classNameId = _classNameLocalService.getClassNameId(
+			DLFileEntry.class.getName());
+
 		Map<AssetVocabulary, List<AssetCategory>> assetCategoriesMap =
-			_getAssetCategoriesMap(contentSpaceId, documentBulkSelection);
+			_getAssetCategoriesMap(
+				contentSpaceId, classNameId, documentBulkSelection);
 
 		return Page.of(
 			transform(
 				assetCategoriesMap.entrySet(),
 				entry -> _toTaxonomyVocabulary(
-					entry.getValue(), entry.getKey())));
+					entry.getValue(), entry.getKey(), classNameId)));
 	}
 
 	private Function<AssetEntry, Set<AssetCategory>>
@@ -100,11 +104,12 @@ public class TaxonomyVocabularyResourceImpl
 	}
 
 	private Map<AssetVocabulary, List<AssetCategory>> _getAssetCategoriesMap(
-			Long contentSpaceId, DocumentBulkSelection documentBulkSelection)
+			Long contentSpaceId, long classNameId,
+			DocumentBulkSelection documentBulkSelection)
 		throws Exception {
 
 		Stream<AssetVocabulary> assetVocabulariesStream =
-			_getAssetVocabulariesStream(contentSpaceId);
+			_getAssetVocabulariesStream(contentSpaceId, classNameId);
 
 		Stream<AssetCategory> assetCategoriesStream = _getAssetCategoriesStream(
 			documentBulkSelection);
@@ -146,11 +151,8 @@ public class TaxonomyVocabularyResourceImpl
 	}
 
 	private Stream<AssetVocabulary> _getAssetVocabulariesStream(
-			Long contentSpaceId)
+			Long contentSpaceId, long classNameId)
 		throws Exception {
-
-		ClassName className = _classNameLocalService.getClassName(
-			DLFileEntry.class.getName());
 
 		List<AssetVocabulary> assetVocabularies =
 			_assetVocabularyLocalService.getGroupVocabularies(
@@ -160,7 +162,7 @@ public class TaxonomyVocabularyResourceImpl
 
 		List<AssetVocabulary> filteredAssetVocabularies = stream.filter(
 			assetVocabulary -> assetVocabulary.isAssociatedToClassNameId(
-				className.getClassNameId())
+				classNameId)
 		).filter(
 			assetVocabulary -> {
 				int count =
@@ -177,7 +179,8 @@ public class TaxonomyVocabularyResourceImpl
 	}
 
 	private TaxonomyVocabulary _toTaxonomyVocabulary(
-		List<AssetCategory> assetCategories, AssetVocabulary assetVocabulary) {
+		List<AssetCategory> assetCategories, AssetVocabulary assetVocabulary,
+		long classNameId) {
 
 		return new TaxonomyVocabulary() {
 			{
@@ -193,6 +196,8 @@ public class TaxonomyVocabularyResourceImpl
 					},
 					TaxonomyCategory.class);
 				taxonomyVocabularyId = assetVocabulary.getVocabularyId();
+				required = assetVocabulary.isRequired(
+					classNameId, AssetCategoryConstants.ALL_CLASS_TYPE_PK);
 			}
 		};
 	}

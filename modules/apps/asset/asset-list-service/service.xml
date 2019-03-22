@@ -23,6 +23,7 @@
 
 		<!-- Other fields -->
 
+		<column name="assetListEntryKey" type="String" />
 		<column name="title" type="String" />
 		<column name="type" type="int" />
 		<column name="lastPublishDate" type="Date" />

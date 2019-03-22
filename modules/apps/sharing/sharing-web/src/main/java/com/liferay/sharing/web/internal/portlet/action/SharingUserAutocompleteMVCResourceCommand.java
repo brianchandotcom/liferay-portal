@@ -14,6 +14,7 @@
 
 package com.liferay.sharing.web.internal.portlet.action;
 
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -96,7 +97,16 @@ public class SharingUserAutocompleteMVCResourceCommand
 
 			jsonObject.put("emailAddress", user.getEmailAddress());
 			jsonObject.put("fullName", user.getFullName());
-			jsonObject.put("portraitURL", user.getPortraitURL(themeDisplay));
+
+			String portraitURL = StringPool.BLANK;
+
+			if (user.getPortraitId() > 0) {
+				portraitURL = user.getPortraitURL(themeDisplay);
+			}
+
+			jsonObject.put("portraitURL", portraitURL);
+
+			jsonObject.put("userId", Long.valueOf(user.getUserId()));
 
 			jsonArray.put(jsonObject);
 		}

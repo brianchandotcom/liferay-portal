@@ -22,6 +22,10 @@ AssetRenderer assetRenderer = (AssetRenderer)renderRequest.getAttribute(AssetRen
 AssetRendererFactory assetRendererFactory = assetRenderer.getAssetRendererFactory();
 
 AssetEntry assetEntry = assetRendererFactory.getAssetEntry(assetRendererFactory.getClassName(), assetRenderer.getClassPK());
+
+SharedAssetsViewDisplayContext sharedAssetsViewDisplayContext = (SharedAssetsViewDisplayContext)renderRequest.getAttribute(SharedAssetsViewDisplayContext.class.getName());
+
+SharingEntry sharingEntry = (SharingEntry)renderRequest.getAttribute(SharingEntry.class.getName());
 %>
 
 <div class="upper-tbar-container-fixed">
@@ -34,6 +38,11 @@ AssetEntry assetEntry = assetRendererFactory.getAssetEntry(assetRendererFactory.
 							<span class="text-truncate"><%= HtmlUtil.escape(assetRenderer.getTitle(locale)) %></span>
 						</h2>
 					</div>
+				</li>
+				<li class="tbar-item">
+					<liferay-ui:menu
+						menu="<%= sharedAssetsViewDisplayContext.getSharingEntryMenu(sharingEntry) %>"
+					/>
 				</li>
 			</ul>
 		</div>

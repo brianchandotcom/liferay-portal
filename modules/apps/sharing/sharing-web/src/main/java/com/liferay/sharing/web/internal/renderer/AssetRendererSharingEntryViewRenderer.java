@@ -57,6 +57,8 @@ public class AssetRendererSharingEntryViewRenderer
 
 			request.setAttribute(AssetRenderer.class.getName(), assetRenderer);
 
+			request.setAttribute(SharingEntry.class.getName(), sharingEntry);
+
 			requestDispatcher.include(request, response);
 		}
 		catch (IOException | ServletException e) {

@@ -85,6 +85,16 @@ public class SharedAssetsViewMVCRenderCommand implements MVCRenderCommand {
 		String mvcRenderCommandName = ParamUtil.getString(
 			renderRequest, "mvcRenderCommandName");
 
+		List<SharedAssetsFilterItem> sharedAssetsFilterItems =
+			new ArrayList<>();
+
+		_serviceTrackerList.forEach(sharedAssetsFilterItems::add);
+
+		renderRequest.setAttribute(
+			SharedAssetsViewDisplayContext.class.getName(),
+			_getSharedAssetsViewDisplayContext(
+				renderRequest, renderResponse, sharedAssetsFilterItems));
+
 		if (Objects.equals(
 				mvcRenderCommandName, "/shared_assets/view_sharing_entry")) {
 
@@ -134,35 +144,6 @@ public class SharedAssetsViewMVCRenderCommand implements MVCRenderCommand {
 			}
 		}
 
-		List<SharedAssetsFilterItem> sharedAssetsFilterItems =
-			new ArrayList<>();
-
-		_serviceTrackerList.forEach(sharedAssetsFilterItems::add);
-
-		LiferayPortletRequest liferayPortletRequest =
-			_portal.getLiferayPortletRequest(renderRequest);
-		LiferayPortletResponse liferayPortletResponse =
-			_portal.getLiferayPortletResponse(renderResponse);
-
-		HttpServletRequest request = _portal.getHttpServletRequest(
-			renderRequest);
-
-		ResourceBundle resourceBundle =
-			_resourceBundleLoader.loadResourceBundle(
-				_portal.getLocale(request));
-
-		SharedAssetsViewDisplayContext sharedAssetsViewDisplayContext =
-			new SharedAssetsViewDisplayContext(
-				liferayPortletRequest, liferayPortletResponse, request,
-				resourceBundle, sharedAssetsFilterItems,
-				_sharingEntryLocalService,
-				_sharingEntryInterpreterProvider::getSharingEntryInterpreter,
-				_sharingMenuItemFactory, _sharingPermission);
-
-		renderRequest.setAttribute(
-			SharedAssetsViewDisplayContext.class.getName(),
-			sharedAssetsViewDisplayContext);
-
 		if (Objects.equals(
 				mvcRenderCommandName, "/shared_assets/select_asset_type")) {
 
@@ -184,6 +165,29 @@ public class SharedAssetsViewMVCRenderCommand implements MVCRenderCommand {
 	@Deactivate
 	protected void deactivate() {
 		_serviceTrackerList.close();
+	}
+
+	private SharedAssetsViewDisplayContext _getSharedAssetsViewDisplayContext(
+		RenderRequest renderRequest, RenderResponse renderResponse,
+		List<SharedAssetsFilterItem> sharedAssetsFilterItems) {
+
+		LiferayPortletRequest liferayPortletRequest =
+			_portal.getLiferayPortletRequest(renderRequest);
+		LiferayPortletResponse liferayPortletResponse =
+			_portal.getLiferayPortletResponse(renderResponse);
+
+		HttpServletRequest request = _portal.getHttpServletRequest(
+			renderRequest);
+
+		ResourceBundle resourceBundle =
+			_resourceBundleLoader.loadResourceBundle(
+				_portal.getLocale(request));
+
+		return new SharedAssetsViewDisplayContext(
+			liferayPortletRequest, liferayPortletResponse, request,
+			resourceBundle, sharedAssetsFilterItems, _sharingEntryLocalService,
+			_sharingEntryInterpreterProvider::getSharingEntryInterpreter,
+			_sharingMenuItemFactory, _sharingPermission);
 	}
 
 	private SharingEntry _getSharingEntry(

@@ -22,12 +22,8 @@ ResultRow row = (ResultRow)request.getAttribute(WebKeys.SEARCH_CONTAINER_RESULT_
 SharingEntry sharingEntry = (SharingEntry)row.getObject();
 
 SharedAssetsViewDisplayContext sharedAssetsViewDisplayContext = (SharedAssetsViewDisplayContext)renderRequest.getAttribute(SharedAssetsViewDisplayContext.class.getName());
-
-boolean hasEditPermission = sharedAssetsViewDisplayContext.hasEditPermission(sharingEntry.getClassNameId(), sharingEntry.getClassPK());
 %>
 
-<c:if test="<%= hasEditPermission || sharingEntry.isShareable() %>">
-	<liferay-ui:menu
-		menu="<%= sharedAssetsViewDisplayContext.getSharingEntryMenu(sharingEntry) %>"
-	/>
-</c:if>
+<liferay-ui:menu
+	menu="<%= sharedAssetsViewDisplayContext.getSharingEntryMenu(sharingEntry) %>"
+/>

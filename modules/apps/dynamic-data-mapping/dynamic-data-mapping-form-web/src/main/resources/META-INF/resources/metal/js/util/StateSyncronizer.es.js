@@ -1,5 +1,5 @@
 import Component from 'metal-jsx';
-import FormSupport from 'dynamic-data-mapping-form-builder/metal/js/components/Form/FormSupport.es';
+import * as FormSupport from 'dynamic-data-mapping-form-builder/metal/js/components/Form/FormSupport.es';
 import {Config} from 'metal-state';
 import {EventHandler} from 'metal-events';
 import {PagesVisitor} from 'dynamic-data-mapping-form-builder/metal/js/util/visitors.es';

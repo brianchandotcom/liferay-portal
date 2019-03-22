@@ -1,3 +1,4 @@
+import * as FormSupport from '../../components/Form/FormSupport.es';
 import autobind from 'autobind-decorator';
 import ClayModal from 'clay-modal';
 import Component from 'metal-jsx';

@@ -1,6 +1,6 @@
+import * as FormSupport from 'source/components/Form/FormSupport.es';
 import dom from 'metal-dom';
 import FormRenderer from 'source/components/Form/FormRenderer.es';
-import FormSupport from 'source/components/Form/FormSupport.es';
 import mockPages from 'mock/mockPages.es';
 import mockSuccessPage from 'mock/mockSuccessPage.es';
 

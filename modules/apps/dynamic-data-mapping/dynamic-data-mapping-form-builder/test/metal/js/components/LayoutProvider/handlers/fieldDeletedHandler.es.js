@@ -1,5 +1,5 @@
 import * as fieldDeletedHandler from 'source/components/LayoutProvider/handlers/fieldDeletedHandler.es';
-import FormSupport from 'source/components/Form/FormSupport.es';
+import * as FormSupport from 'source/components/Form/FormSupport.es';
 import mockPages from 'mock/mockPages.es';
 import RulesSupport from 'source/components/RuleBuilder/RulesSupport.es';
 

@@ -1,8 +1,8 @@
 import '../Page/PageRenderer.es';
 import '../SuccessPage/SuccessPage.es';
 import 'clay-button';
+import * as FormSupport from './FormSupport.es';
 import Component from 'metal-component';
-import FormSupport from './FormSupport.es';
 import Soy from 'metal-soy';
 import templates from './FormRenderer.soy.js';
 import {Config} from 'metal-state';

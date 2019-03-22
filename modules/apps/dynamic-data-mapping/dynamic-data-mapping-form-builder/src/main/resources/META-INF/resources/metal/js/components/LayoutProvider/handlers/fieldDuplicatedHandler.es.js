@@ -1,4 +1,4 @@
-import {FormSupport} from '../../Form/index.es';
+import * as FormSupport from '../../Form/FormSupport.es';
 import {generateFieldName} from '../util/fields.es';
 import {PagesVisitor} from '../../../util/visitors.es';
 import {sub} from '../../../util/strings.es';

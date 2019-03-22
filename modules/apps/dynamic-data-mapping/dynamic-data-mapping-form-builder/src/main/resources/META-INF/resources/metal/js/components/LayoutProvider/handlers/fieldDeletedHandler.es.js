@@ -1,5 +1,5 @@
+import * as FormSupport from '../../Form/FormSupport.es';
 import RulesSupport from '../../RuleBuilder/RulesSupport.es';
-import {FormSupport} from '../../Form/index.es';
 import {PagesVisitor} from '../../../util/visitors.es';
 
 const formatRules = (state, pages) => {

@@ -1,5 +1,5 @@
+import * as FormSupport from 'source/components/Form/FormSupport.es';
 import createElement from 'mock/createElement.es';
-import FormSupport from 'source/components/Form/FormSupport.es';
 import mockPages from 'mock/mockPages.es';
 
 let pages = null;

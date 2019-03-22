@@ -1,4 +1,4 @@
-import {FormSupport} from '../../Form/index.es';
+import * as FormSupport from '../../Form/FormSupport.es';
 import {updateFocusedField} from '../util/focusedField.es';
 import {updateRulesFieldName} from '../util/rules.es';
 

@@ -1,3 +1,4 @@
+import * as FormSupport from '../Form/FormSupport.es';
 import autobind from 'autobind-decorator';
 import classnames from 'classnames';
 import ClayButton from 'clay-button';

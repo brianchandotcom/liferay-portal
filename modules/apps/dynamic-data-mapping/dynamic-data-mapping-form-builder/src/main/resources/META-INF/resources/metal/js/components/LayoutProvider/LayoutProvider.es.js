@@ -1,7 +1,7 @@
+import * as FormSupport from '../Form/FormSupport.es';
 import autobind from 'autobind-decorator';
 import Component from 'metal-jsx';
 import {Config} from 'metal-state';
-import {FormSupport} from '../Form/index.es';
 import {pageStructure, ruleStructure} from '../../util/config.es';
 import {PagesVisitor} from '../../util/visitors.es';
 import {setLocalizedValue} from '../../util/i18n.es';

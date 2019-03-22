@@ -1,9 +1,9 @@
 import 'clay-button';
 import 'clay-dropdown';
 import 'clay-modal';
+import * as FormSupport from '../Form/FormSupport.es';
 import Component from 'metal-component';
 import core from 'metal';
-import FormSupport from '../Form/FormSupport.es';
 import Soy from 'metal-soy';
 import templates from './PageRenderer.soy.js';
 import {Config} from 'metal-state';

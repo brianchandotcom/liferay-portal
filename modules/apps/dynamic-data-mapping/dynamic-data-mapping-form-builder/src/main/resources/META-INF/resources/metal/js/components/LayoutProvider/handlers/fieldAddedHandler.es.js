@@ -1,4 +1,4 @@
-import {FormSupport} from '../../Form/index.es';
+import * as FormSupport from '../../Form/FormSupport.es';
 import {generateInstanceId} from '../../../util/fieldSupport.es';
 
 const handleFieldAdded = (props, state, event) => {

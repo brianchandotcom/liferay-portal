@@ -205,8 +205,8 @@ definition {
 	}
 
 	@priority = "4"
-	test ScheduleJobOnAllClusterNode {
-		property test.name.skip.portal.instance = "ClusteringMissingPlugins#ScheduleJobOnAllClusterNode";
+	test ScheduleJobOnAllClusterNodes {
+		property test.name.skip.portal.instance = "ClusteringMissingPlugins#ScheduleJobOnAllClusterNodes";
 
 		Clustering.viewClusterStatusInConsole();
 

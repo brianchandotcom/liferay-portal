@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.upgrade.DummyUpgradeStep;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 import com.liferay.saml.persistence.upgrade.v1_0_0.UpgradeSamlSpAuthRequest;
 import com.liferay.saml.persistence.upgrade.v1_0_0.UpgradeSamlSpMessage;
+import com.liferay.saml.persistence.upgrade.v2_0_0.UpgradeSamlIdpSpConnection;
 
 import org.osgi.service.cm.ConfigurationAdmin;
 import org.osgi.service.component.annotations.Component;
@@ -66,6 +67,8 @@ public class SamlServiceUpgrade implements UpgradeStepRegistrator {
 				UpgradeSamlSpSession(),
 			new com.liferay.saml.persistence.upgrade.v1_1_4.
 				UpgradeSamlSpSessionData(_configurationAdmin));
+
+		registry.register("2.0.0", "2.1.0", new UpgradeSamlIdpSpConnection());
 	}
 
 	@Reference

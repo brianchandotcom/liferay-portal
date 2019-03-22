@@ -199,7 +199,7 @@ definition {
 		PortalSettingsNavigator.gotoLDAP();
 
 		for (var enableSetting : list "${enableSettingList}") {
-			var enableSetting = "PortalSettingsPortlet_${enableSetting}";
+			var enableSetting = "InstanceSettingsPortlet_${enableSetting}";
 
 			FormFields.enableCheckbox(fieldName = "${enableSetting}");
 		}
@@ -666,12 +666,6 @@ definition {
 		);
 	}
 
-	macro openInstanceSettingsAdmin {
-		Navigator.openWithAppendToBaseURL(
-			urlAppend = "group/control_panel/manage?p_p_id=com_liferay_portal_settings_web_portlet_PortalSettingsPortlet"
-		);
-	}
-
 	macro tearDownAuthenticationCP {
 		PortalSettings.gotoPortalSettings();
 
@@ -927,7 +921,7 @@ definition {
 		PortalSettingsNavigator.gotoLDAP();
 
 		for (var fieldName : list "enabled,required,ldapImportEnabled,ldapExportEnabled,passwordPolicyEnabled") {
-			var fieldName = "PortalSettingsPortlet_${fieldName}";
+			var fieldName = "InstanceSettingsPortlet_${fieldName}";
 
 			FormFields.viewCheckboxNotChecked(fieldName = "${fieldName}");
 		}
@@ -1377,7 +1371,7 @@ definition {
 		PortalSettingsNavigator.gotoLDAP();
 
 		for (var enableSetting : list "${enableSettingList}") {
-			var enableSetting = "PortalSettingsPortlet_${enableSetting}";
+			var enableSetting = "InstanceSettingsPortlet_${enableSetting}";
 
 			FormFields.viewCheckboxChecked(fieldName = "${enableSetting}");
 		}

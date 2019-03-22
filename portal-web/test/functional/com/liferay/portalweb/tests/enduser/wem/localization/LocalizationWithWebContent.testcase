@@ -125,7 +125,7 @@ definition {
 		property test.name.skip.portal.instance = "LocalizationWithWebContent#ViewChangedDefaultPortalLanguageViaWebContent";
 		property testray.component.names = "Localization";
 
-		PortalSettings.openInstanceSettingsAdmin();
+		PortalSettings.gotoPortalSettings();
 
 		PortalSettings.configureCurrentLanguagesCP(
 			defaultPortalLanguage = "Spanish (Spain)"

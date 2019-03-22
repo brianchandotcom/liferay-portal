@@ -421,6 +421,6 @@ definition {
 
 		PortalSettingsNavigator.gotoLDAP();
 
-		FormFields.viewCheckboxChecked(fieldName = "PortalSettingsPortlet_enabled");
+		FormFields.viewCheckboxChecked(fieldName = "InstanceSettingsPortlet_enabled");
 	}
 }

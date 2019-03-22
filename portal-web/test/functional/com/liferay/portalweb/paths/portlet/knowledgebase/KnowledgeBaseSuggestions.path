@@ -15,7 +15,7 @@
 </tr>
 <tr>
 	<td>CONTENT</td>
-	<td>//div/ul/li[contains(@class,'list-group-item')]/div[contains(@class,'autofit-col')]//h4[contains(.,'${kbSuggestionBody}')]</td>
+	<td>//div/ul/li[contains(@class,'list-group-item')]/div[contains(@class,'autofit-col')]//a[contains(.,'${kbSuggestionBody}')]</td>
 	<td></td>
 </tr>
 <tr>

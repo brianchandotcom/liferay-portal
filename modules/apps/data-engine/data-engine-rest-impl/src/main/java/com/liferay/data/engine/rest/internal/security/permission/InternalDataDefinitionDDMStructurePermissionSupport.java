@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.data.engine.rest.internal.dynamic.data.mapping.util.v1_0;
+package com.liferay.data.engine.rest.internal.security.permission;
 
 import com.liferay.dynamic.data.mapping.util.DDMStructurePermissionSupport;
 
@@ -23,13 +23,13 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(
 	immediate = true,
-	property = "model.class.name=com.liferay.data.engine.rest.dto.v1_0.DataDefinition",
+	property = "model.class.name=com.liferay.data.engine.rest.internal.model.InternalDataDefinition",
 	service = {
-		DataDefinitionDDMStructurePermissionSupport.class,
-		DDMStructurePermissionSupport.class
+		DDMStructurePermissionSupport.class,
+		InternalDataDefinitionDDMStructurePermissionSupport.class
 	}
 )
-public class DataDefinitionDDMStructurePermissionSupport
+public class InternalDataDefinitionDDMStructurePermissionSupport
 	implements DDMStructurePermissionSupport {
 
 	@Override

@@ -49,11 +49,13 @@ import com.liferay.saml.opensaml.integration.resolver.AttributeResolver;
 import com.liferay.saml.opensaml.integration.resolver.NameIdResolver;
 import com.liferay.saml.opensaml.integration.resolver.UserResolver;
 import com.liferay.saml.persistence.exception.NoSuchIdpSpSessionException;
+import com.liferay.saml.persistence.model.SamlIdpSpConnection;
 import com.liferay.saml.persistence.model.SamlIdpSsoSession;
 import com.liferay.saml.persistence.model.SamlSpAuthRequest;
 import com.liferay.saml.persistence.model.SamlSpIdpConnection;
 import com.liferay.saml.persistence.model.SamlSpMessage;
 import com.liferay.saml.persistence.model.SamlSpSession;
+import com.liferay.saml.persistence.service.SamlIdpSpConnectionLocalService;
 import com.liferay.saml.persistence.service.SamlIdpSpSessionLocalService;
 import com.liferay.saml.persistence.service.SamlIdpSsoSessionLocalService;
 import com.liferay.saml.persistence.service.SamlSpAuthRequestLocalService;
@@ -1422,6 +1424,11 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 			samlSsoRequestContext, assertionConsumerService,
 			assertion.getIssueInstant());
 
+		SamlIdpSpConnection samlIdpSpConnection =
+			_samlIdpSpConnectionLocalService.getSamlIdpSpConnection(
+				CompanyThreadLocal.getCompanyId(),
+				samlPeerEntityContext.getEntityId());
+
 		EncryptionParameters encryptionParameters =
 			_samlMetadataEncryptionParametersResolver.resolveSingle(
 				new CriteriaSet(
@@ -1443,6 +1450,14 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 				samlResponse.getEncryptedAssertions();
 
 			encryptedAssertions.add(encryptedAssertion);
+		}
+		else if (samlIdpSpConnection.isEncryptionForced()) {
+			throw new SamlException(
+				StringBundler.concat(
+					"Encryption is forced for ",
+					samlPeerEntityContext.getEntityId(),
+					" but no encryption parameters have been successfully ",
+					"negotiated"));
 		}
 		else {
 			List<Assertion> assertions = samlResponse.getAssertions();
@@ -1976,6 +1991,9 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 
 	private NameIdResolverRegistry _nameIdResolverRegistry;
 	private SamlConfiguration _samlConfiguration;
+
+	@Reference
+	private SamlIdpSpConnectionLocalService _samlIdpSpConnectionLocalService;
 
 	@Reference
 	private SamlIdpSpSessionLocalService _samlIdpSpSessionLocalService;

@@ -22,6 +22,7 @@ import com.liferay.blogs.constants.BlogsPortletKeys;
 import com.liferay.blogs.model.BlogsEntry;
 import com.liferay.blogs.web.internal.security.permission.resource.BlogsEntryPermission;
 import com.liferay.blogs.web.internal.util.BlogsEntryUtil;
+import com.liferay.blogs.web.internal.util.BlogsUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
@@ -250,6 +251,16 @@ public class BlogsEntryAssetRenderer
 			if (Validator.isNotNull(friendlyURL)) {
 				return friendlyURL;
 			}
+		}
+
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)liferayPortletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		long groupId = _entry.getGroupId();
+
+		if (!BlogsUtil.hasViewInContextGroupLayout(groupId, themeDisplay)) {
+			return null;
 		}
 
 		return getURLViewInContext(

@@ -20,13 +20,18 @@ import com.liferay.asset.kernel.service.persistence.AssetEntryQuery;
 import com.liferay.blogs.model.BlogsEntry;
 import com.liferay.blogs.util.comparator.EntryDisplayDateComparator;
 import com.liferay.blogs.util.comparator.EntryTitleComparator;
+import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerList;
+import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerListFactory;
 import com.liferay.portal.kernel.comment.CommentManagerUtil;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.dao.search.SearchContainerResults;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.ModelHintsUtil;
+import com.liferay.portal.kernel.portlet.PortletLayoutFinder;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil;
@@ -41,6 +46,10 @@ import java.util.List;
 import java.util.Map;
 
 import javax.portlet.PortletRequest;
+
+import org.osgi.framework.Bundle;
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.FrameworkUtil;
 
 /**
  * @author Brian Wing Shun Chan
@@ -282,5 +291,52 @@ public class BlogsUtil {
 		return ModelHintsUtil.trimString(
 			BlogsEntry.class.getName(), "urlTitle", title);
 	}
+
+	public static boolean hasViewInContextGroupLayout(
+		long groupId, ThemeDisplay themeDisplay) {
+
+		PortletLayoutFinder.Result result = _getPortletLayoutFinderResult(
+			groupId, themeDisplay);
+
+		if (result == null) {
+			return false;
+		}
+
+		return true;
+	}
+
+	private static PortletLayoutFinder.Result _getPortletLayoutFinderResult(
+		long groupId, ThemeDisplay themeDisplay) {
+
+		for (PortletLayoutFinder portletLayoutFinder : _serviceTrackerList) {
+			try {
+				PortletLayoutFinder.Result result = portletLayoutFinder.find(
+					themeDisplay, groupId);
+
+				if (result != null) {
+					return result;
+				}
+			}
+			catch (PortalException pe) {
+				if (_log.isDebugEnabled()) {
+					_log.debug(pe, pe);
+				}
+			}
+		}
+
+		return null;
+	}
+
+	private static final Log _log = LogFactoryUtil.getLog(BlogsUtil.class);
+
+	private static final Bundle _bundle = FrameworkUtil.getBundle(
+		BlogsUtil.class);
+	private static final BundleContext _bundleContext =
+		_bundle.getBundleContext();
+	private static final ServiceTrackerList
+		<PortletLayoutFinder, PortletLayoutFinder> _serviceTrackerList =
+			ServiceTrackerListFactory.open(
+				_bundleContext, PortletLayoutFinder.class,
+				"(model.class.name=" + BlogsEntry.class.getName() + ")");
 
 }

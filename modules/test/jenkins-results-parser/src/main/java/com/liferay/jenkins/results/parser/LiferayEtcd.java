@@ -24,6 +24,7 @@ import java.util.concurrent.TimeoutException;
 
 import mousio.etcd4j.EtcdClient;
 import mousio.etcd4j.promises.EtcdResponsePromise;
+import mousio.etcd4j.requests.EtcdKeyDeleteRequest;
 import mousio.etcd4j.requests.EtcdKeyGetRequest;
 import mousio.etcd4j.requests.EtcdKeyPutRequest;
 import mousio.etcd4j.responses.EtcdAuthenticationException;
@@ -41,6 +42,24 @@ public class LiferayEtcd {
 
 	public LiferayEtcd(String url) {
 		setURL(url);
+	}
+
+	public LiferayEtcd.Node get(String key) {
+		try (EtcdClient etcdClient = getEtcdClient()) {
+			EtcdKeyGetRequest etcdKeyGetRequest = etcdClient.get(key);
+
+			EtcdResponsePromise<EtcdKeysResponse> etcdResponsePromise =
+				etcdKeyGetRequest.send();
+
+			EtcdKeysResponse etcdKeysResponse = etcdResponsePromise.get();
+
+			return getNode(etcdKeysResponse.getNode());
+		}
+		catch (EtcdAuthenticationException | EtcdException | IOException |
+			   TimeoutException e) {
+
+			throw new RuntimeException(e);
+		}
 	}
 
 	public LiferayEtcd.Value put(String key, String value) {
@@ -202,6 +221,14 @@ public class LiferayEtcd {
 
 			throw new RuntimeException(e);
 		}
+	}
+
+	protected LiferayEtcd.Node getNode(EtcdKeysResponse.EtcdNode etcdNode) {
+		if (etcdNode.isDir()) {
+			return new Dir(this, etcdNode);
+		}
+
+		return new Value(this, etcdNode);
 	}
 
 	private URI _uri;

@@ -64,8 +64,7 @@ public class AddScopeGroupMVCActionCommand extends BaseMVCActionCommand {
 
 		UnicodeProperties properties = new UnicodeProperties(true);
 
-		properties.fastLoad(
-			assetListEntry.getTypeSettings(segmentsEntryId));
+		properties.fastLoad(assetListEntry.getTypeSettings(segmentsEntryId));
 
 		long[] groupIds = GetterUtil.getLongValues(
 			StringUtil.split(properties.getProperty("groupIds")));

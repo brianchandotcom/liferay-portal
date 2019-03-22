@@ -77,6 +77,7 @@ public class AssetListEntryAssetEntryRelServiceTest {
 			AssetListTestUtil.addAssetListEntryAssetEntryRel(
 				_group.getGroupId(), assetEntry, assetListEntry,
 				RandomTestUtil.nextLong());
+
 		AssetListEntryAssetEntryRel assetListEntryRelDatabase =
 			AssetListEntryAssetEntryRelUtil.findByUUID_G(
 				assetListEntryRelLocal.getUuid(),
@@ -111,6 +112,7 @@ public class AssetListEntryAssetEntryRelServiceTest {
 			AssetListTestUtil.addAssetListEntryAssetEntryRel(
 				_group.getGroupId(), assetEntry, assetListEntry,
 				segmentsEntryId, 1);
+
 		AssetListEntryAssetEntryRel assetListEntryRelDatabase =
 			AssetListEntryAssetEntryRelUtil.findByA_S_P(
 				assetListEntryRelLocal.getAssetListEntryId(), segmentsEntryId,

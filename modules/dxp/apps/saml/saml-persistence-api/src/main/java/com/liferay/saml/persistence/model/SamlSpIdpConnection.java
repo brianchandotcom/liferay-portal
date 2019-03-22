@@ -32,7 +32,7 @@ import com.liferay.portal.kernel.util.Accessor;
 )
 @ProviderType
 public interface SamlSpIdpConnection
-	extends SamlSpIdpConnectionModel, PersistedModel {
+	extends PersistedModel, SamlSpIdpConnectionModel {
 
 	/*
 	 * NOTE FOR DEVELOPERS:

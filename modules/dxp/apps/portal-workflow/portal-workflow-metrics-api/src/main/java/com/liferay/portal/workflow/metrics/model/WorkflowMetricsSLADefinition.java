@@ -32,7 +32,7 @@ import com.liferay.portal.kernel.util.Accessor;
 )
 @ProviderType
 public interface WorkflowMetricsSLADefinition
-	extends WorkflowMetricsSLADefinitionModel, PersistedModel {
+	extends PersistedModel, WorkflowMetricsSLADefinitionModel {
 
 	/*
 	 * NOTE FOR DEVELOPERS:

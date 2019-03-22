@@ -32,7 +32,7 @@ import com.liferay.portal.kernel.util.Accessor;
 )
 @ProviderType
 public interface SharepointOAuth2TokenEntry
-	extends SharepointOAuth2TokenEntryModel, PersistedModel {
+	extends PersistedModel, SharepointOAuth2TokenEntryModel {
 
 	/*
 	 * NOTE FOR DEVELOPERS:

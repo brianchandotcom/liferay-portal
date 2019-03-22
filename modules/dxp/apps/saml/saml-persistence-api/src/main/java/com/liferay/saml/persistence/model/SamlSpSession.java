@@ -31,7 +31,7 @@ import com.liferay.portal.kernel.util.Accessor;
 	"com.liferay.saml.persistence.model.impl.SamlSpSessionImpl"
 )
 @ProviderType
-public interface SamlSpSession extends SamlSpSessionModel, PersistedModel {
+public interface SamlSpSession extends PersistedModel, SamlSpSessionModel {
 
 	/*
 	 * NOTE FOR DEVELOPERS:

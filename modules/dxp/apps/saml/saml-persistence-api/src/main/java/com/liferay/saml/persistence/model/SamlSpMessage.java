@@ -31,7 +31,7 @@ import com.liferay.portal.kernel.util.Accessor;
 	"com.liferay.saml.persistence.model.impl.SamlSpMessageImpl"
 )
 @ProviderType
-public interface SamlSpMessage extends SamlSpMessageModel, PersistedModel {
+public interface SamlSpMessage extends PersistedModel, SamlSpMessageModel {
 
 	/*
 	 * NOTE FOR DEVELOPERS:

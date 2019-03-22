@@ -32,7 +32,7 @@ import com.liferay.portal.kernel.util.Accessor;
 )
 @ProviderType
 public interface SamlSpAuthRequest
-	extends SamlSpAuthRequestModel, PersistedModel {
+	extends PersistedModel, SamlSpAuthRequestModel {
 
 	/*
 	 * NOTE FOR DEVELOPERS:

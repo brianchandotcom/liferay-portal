@@ -31,7 +31,7 @@ import com.liferay.portal.kernel.util.Accessor;
 	"com.liferay.portal.resiliency.spi.model.impl.SPIDefinitionImpl"
 )
 @ProviderType
-public interface SPIDefinition extends SPIDefinitionModel, PersistedModel {
+public interface SPIDefinition extends PersistedModel, SPIDefinitionModel {
 
 	/*
 	 * NOTE FOR DEVELOPERS:

@@ -31,7 +31,7 @@ import com.liferay.portal.kernel.util.Accessor;
 	"com.liferay.portal.reports.engine.console.model.impl.SourceImpl"
 )
 @ProviderType
-public interface Source extends SourceModel, PersistedModel {
+public interface Source extends PersistedModel, SourceModel {
 
 	/*
 	 * NOTE FOR DEVELOPERS:

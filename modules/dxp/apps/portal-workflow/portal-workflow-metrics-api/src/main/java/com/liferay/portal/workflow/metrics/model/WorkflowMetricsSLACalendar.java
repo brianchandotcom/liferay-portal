@@ -32,7 +32,7 @@ import com.liferay.portal.kernel.util.Accessor;
 )
 @ProviderType
 public interface WorkflowMetricsSLACalendar
-	extends WorkflowMetricsSLACalendarModel, PersistedModel {
+	extends PersistedModel, WorkflowMetricsSLACalendarModel {
 
 	/*
 	 * NOTE FOR DEVELOPERS:

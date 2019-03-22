@@ -14,6 +14,7 @@
 
 package com.liferay.sharing.web.internal.portlet.action;
 
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -123,10 +124,16 @@ public class ManageCollaboratorsViewMVCRenderCommand
 					JSONFactoryUtil.createJSONObject();
 
 				collaboratorJSONObject.put(
-					"id", sharingEntryToUser.getUserId());
-				collaboratorJSONObject.put(
-					"imageSrc",
-					sharingEntryToUser.getPortraitURL(themeDisplay));
+					"id", Long.valueOf(sharingEntryToUser.getUserId()));
+
+				String imageSrc = StringPool.BLANK;
+
+				if (sharingEntryToUser.getPortraitId() > 0) {
+					imageSrc = sharingEntryToUser.getPortraitURL(themeDisplay);
+				}
+
+				collaboratorJSONObject.put("imageSrc", imageSrc);
+
 				collaboratorJSONObject.put(
 					"name", sharingEntryToUser.getFullName());
 				collaboratorJSONObject.put(

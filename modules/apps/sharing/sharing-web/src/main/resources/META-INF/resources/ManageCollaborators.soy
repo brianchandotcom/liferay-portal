@@ -102,11 +102,22 @@
 	{@param spritemap: string}
 
 	<div class="autofit-col">
-		{call ClaySticker.render}
-			{param size: 'xl' /}
-			{param imageSrc: $collaborator.imageSrc /}
-			{param shape: 'circle' /}
-		{/call}
+		{if $collaborator.imageSrc}
+			{call ClaySticker.render}
+				{param size: 'xl' /}
+				{param imageSrc: $collaborator.imageSrc /}
+				{param shape: 'circle' /}
+			{/call}
+		{else}
+			<span class="user-avatar-image">
+				<div class="sticker sticker-circle sticker-light sticker-lg user-icon user-icon-default user-icon-lg user-icon-color-{$collaborator.id % 10}">
+					{call ClayIcon.render}
+						{param spritemap: $spritemap /}
+						{param symbol: 'user' /}
+					{/call}
+				</div>
+			</span>
+		{/if}
 	</div>
 
 	<div class="autofit-col autofit-col-expand">

@@ -53,7 +53,7 @@
 <!--ARTICLE_TABLE-->
 <tr>
 	<td>ARTICLE_TABLE_ARTICLE_STATUS</td>
-	<td>//div[contains(.,'${key_kbArticleTitle}')]//h5//span</td>
+	<td>//div[contains(.,'${key_kbArticleTitle}')]//span[@class='workflow-status']/span</td>
 	<td></td>
 </tr>
 <tr>

@@ -162,7 +162,9 @@ public class PortletPreferencesServiceImpl
 			for (String key : sourceJxPortletPreferencesMap.keySet()) {
 				try {
 					targetJxPortletPreferences.setValues(
-						key, sourceJxPortletPreferences.getValues(key, new String[0]));
+						key,
+						sourceJxPortletPreferences.getValues(
+							key, new String[0]));
 				}
 				catch (ReadOnlyException roe) {
 				}

@@ -10,7 +10,10 @@ definition {
 	}
 
 	macro changeFieldType {
-		Click(locator1 = "FormFields#CHANGE_FIELD_TYPE_BUTTON");
+		
+		while (IsElementNotPresent(locator1 = "FormFields#CHANGE_FIELD_TYPE_BUTTON_DROPDOWN")) {
+			Click(locator1 = "FormFields#CHANGE_FIELD_TYPE_BUTTON");
+		}
 
 		MenuItem.click(menuItem = "${selectOption}");
 	}

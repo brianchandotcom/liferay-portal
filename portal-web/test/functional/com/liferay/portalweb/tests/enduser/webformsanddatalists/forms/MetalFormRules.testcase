@@ -515,6 +515,7 @@ definition {
 	@priority = "5"
 	test ConfigureCalculateRule {
 		property portal.acceptance = "true";
+		property test.name.skip.portal.instance = "MetalFormRules#ConfigureCalculateRule";
 		var portalURL = PropsUtil.get("portal.url");
 
 		Navigator.openURL();
@@ -606,7 +607,7 @@ definition {
 
 	@priority = "5"
 	test ConfigureRequireRule {
-		property test.name.skip.portal.instance = "FormRules#ConfigureRequireRule";
+		property test.name.skip.portal.instance = "MetalFormRules#ConfigureRequireRule";
 		property portal.acceptance = "true";
 		var portalURL = PropsUtil.get("portal.url");
 
@@ -690,7 +691,7 @@ definition {
 	@priority = "5"
 	test ConfigureShowRuleUsingAndCondition {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "Forms#ConfigureShowRuleUsingAndCondition";
+		property test.name.skip.portal.instance = "MetalFormRules#ConfigureShowRuleUsingAndCondition";
 		var portalURL = PropsUtil.get("portal.url");
 
 		Navigator.openURL();
@@ -799,6 +800,7 @@ definition {
 
 	@priority = "4"
 	test ConfigureUserBelongsToRule {
+		property test.name.skip.portal.instance = "MetalFormRules#ConfigureUserBelongsToRule";
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
@@ -945,7 +947,7 @@ definition {
 	@description = "This is a use case for LPS-71399."
 	@priority = "4"
 	test UseIsNotEmptyRuleToShowField {
-		property test.name.skip.portal.instance = "FormRules#UseIsNotEmptyRuleToShowField";
+		property test.name.skip.portal.instance = "MetalFormRules#UseIsNotEmptyRuleToShowField";
 
 		Navigator.openURL();
 		
@@ -1025,6 +1027,7 @@ definition {
 	@description = "This is a use case for LPS-75495."
 	@priority = "3"
 	test ViewShowRuleActivationAfterInputtingUnrelatedField {
+		property test.name.skip.portal.instance = "MetalFormRules#ViewShowRuleActivationAfterInputtingUnrelatedField";
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(

@@ -386,7 +386,12 @@
 <!--CHANGE FIELD TYPE-->
 <tr>
 	<td>CHANGE_FIELD_TYPE_BUTTON</td>
-	<td>//li[contains(@class,'ddm-fieldtypes-dropdown')]//button[contains(@class,'dropdown-toggle')] | //button[contains(@id,'field-type-menu-content')]</td>
+	<td>//li[contains(@class,'ddm-fieldtypes-dropdown')]//div[contains(@class,'dropdown')] | //button[contains(@id,'field-type-menu-content')] | //li[contains(@class,'ddm-fieldtypes-dropdown')]//button[contains(@class,'dropdown-toggle')]</td>
+	<td></td>
+</tr>
+<tr>	
+	<td>CHANGE_FIELD_TYPE_BUTTON_DROPDOWN</td>
+	<td>//li[contains(@class,'ddm-fieldtypes-dropdown')]//div[contains(@class,'dropdown show')]</td>
 	<td></td>
 </tr>
 <tr>

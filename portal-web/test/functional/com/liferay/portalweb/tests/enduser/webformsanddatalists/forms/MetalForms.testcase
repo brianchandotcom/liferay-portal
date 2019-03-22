@@ -3517,6 +3517,7 @@ definition {
 	test SubmitFormContainingCaptchaAndViewTextFieldValue {
 		property captcha.enabled = "true";
 		property portal.acceptance = "false";
+		property test.name.skip.portal.instance = "MetalForms#SubmitFormContainingCaptchaAndViewTextFieldValue";
 
 		Navigator.openURL();
 

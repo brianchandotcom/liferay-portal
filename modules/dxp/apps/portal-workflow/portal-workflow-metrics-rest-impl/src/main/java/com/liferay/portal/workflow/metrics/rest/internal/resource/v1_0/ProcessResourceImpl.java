@@ -552,10 +552,7 @@ public class ProcessResourceImpl
 
 		String fieldName = sort.getFieldName();
 
-		if (_isOrderByTitle(fieldName)) {
-			fieldName = titleFieldName;
-		}
-		else if (!_isOrderByInstanceCount(fieldName)) {
+		if (!_isOrderByInstanceCount(fieldName)) {
 			fieldName = StringUtil.extractFirst(fieldName, "InstanceCount");
 
 			fieldName = fieldName.concat(
@@ -563,6 +560,9 @@ public class ProcessResourceImpl
 			).concat(
 				"instanceCount"
 			);
+		}
+		else if (_isOrderByTitle(fieldName)) {
+			fieldName = titleFieldName;
 		}
 
 		FieldSort fieldSort = _sorts.field(fieldName);

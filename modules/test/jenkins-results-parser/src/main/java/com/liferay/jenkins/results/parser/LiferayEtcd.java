@@ -25,6 +25,7 @@ import java.util.concurrent.TimeoutException;
 import mousio.etcd4j.EtcdClient;
 import mousio.etcd4j.promises.EtcdResponsePromise;
 import mousio.etcd4j.requests.EtcdKeyGetRequest;
+import mousio.etcd4j.requests.EtcdKeyPutRequest;
 import mousio.etcd4j.responses.EtcdAuthenticationException;
 import mousio.etcd4j.responses.EtcdException;
 import mousio.etcd4j.responses.EtcdKeysResponse;
@@ -40,6 +41,54 @@ public class LiferayEtcd {
 
 	public LiferayEtcd(String url) {
 		setURL(url);
+	}
+
+	public LiferayEtcd.Value put(String key, String value) {
+		try (EtcdClient etcdClient = getEtcdClient()) {
+			EtcdKeyPutRequest etcdKeyPutRequest = etcdClient.put(key, value);
+
+			EtcdResponsePromise<EtcdKeysResponse> etcdResponsePromise =
+				etcdKeyPutRequest.send();
+
+			EtcdKeysResponse etcdKeysResponse = etcdResponsePromise.get();
+
+			EtcdKeysResponse.EtcdNode etcdNode = etcdKeysResponse.getNode();
+
+			if (!etcdNode.isDir()) {
+				return new LiferayEtcd.Value(this, etcdNode);
+			}
+		}
+		catch (EtcdAuthenticationException | EtcdException | IOException |
+			   TimeoutException e) {
+
+			throw new RuntimeException(e);
+		}
+
+		throw new RuntimeException(key + " is not a value");
+	}
+
+	public LiferayEtcd.Dir putDir(String key) {
+		try (EtcdClient etcdClient = getEtcdClient()) {
+			EtcdKeyPutRequest etcdKeyPutRequest = etcdClient.putDir(key);
+
+			EtcdResponsePromise<EtcdKeysResponse> etcdResponsePromise =
+				etcdKeyPutRequest.send();
+
+			EtcdKeysResponse etcdKeysResponse = etcdResponsePromise.get();
+
+			EtcdKeysResponse.EtcdNode etcdNode = etcdKeysResponse.getNode();
+
+			if (etcdNode.isDir()) {
+				return new LiferayEtcd.Dir(this, etcdNode);
+			}
+		}
+		catch (EtcdAuthenticationException | EtcdException | IOException |
+			   TimeoutException e) {
+
+			throw new RuntimeException(e);
+		}
+
+		throw new RuntimeException(key + " is not a dir");
 	}
 
 	public void setURL(String url) {

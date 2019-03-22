@@ -131,11 +131,6 @@
 					width: 10px;
 				}
 			}
-
-			> .collapse-icon-closed[aria-expanded="true"],
-			> .collapse-icon-open[aria-expanded="false"] {
-				display: none;
-			}
 		}
 
 		&__item-remove-btn.btn {

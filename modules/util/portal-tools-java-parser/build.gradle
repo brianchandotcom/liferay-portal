@@ -7,3 +7,15 @@ dependencies {
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
 }
+
+updateFileVersions {
+	replaceOnlyIf([{
+		String group, String replacement, String content, File contentFile ->
+
+		if (contentFile.parentFile.name == "source-formatter") {
+			return true
+		}
+
+		return false
+	}])
+}

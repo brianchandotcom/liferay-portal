@@ -22,7 +22,15 @@ import com.liferay.data.engine.rest.resource.v1_0.DataDefinitionResource;
 import com.liferay.dynamic.data.mapping.model.DDMStructureConstants;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMStructureService;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -46,7 +54,10 @@ public class DataDefinitionResourceImpl extends BaseDataDefinitionResourceImpl {
 	public boolean deleteDataDefinition(Long dataDefinitionId)
 		throws Exception {
 
-		_ddmStructureService.deleteStructure(dataDefinitionId);
+		_modelResourcePermission.check(
+			getPermissionChecker(), dataDefinitionId, ActionKeys.DELETE);
+
+		_ddmStructureLocalService.deleteStructure(dataDefinitionId);
 
 		return true;
 	}
@@ -92,14 +103,20 @@ public class DataDefinitionResourceImpl extends BaseDataDefinitionResourceImpl {
 	public DataDefinition getDataDefinition(Long dataDefinitionId)
 		throws Exception {
 
+		_modelResourcePermission.check(
+			getPermissionChecker(), dataDefinitionId, ActionKeys.VIEW);
+
 		return DataDefinitionUtil.toDataDefinition(
-			_ddmStructureService.getStructure(dataDefinitionId));
+			_ddmStructureLocalService.getStructure(dataDefinitionId));
 	}
 
 	@Override
 	public DataDefinition postContentSpaceDataDefinition(
 			Long contentSpaceId, DataDefinition dataDefinition)
 		throws Exception {
+
+		checkPermission(
+			contentSpaceId, "ADD_DATA_DEFINITION", getPermissionChecker());
 
 		return DataDefinitionUtil.toDataDefinition(
 			_ddmStructureLocalService.addStructure(
@@ -118,6 +135,9 @@ public class DataDefinitionResourceImpl extends BaseDataDefinitionResourceImpl {
 			Long contentSpaceId, DataDefinition dataDefinition)
 		throws Exception {
 
+		_modelResourcePermission.check(
+			getPermissionChecker(), dataDefinition.getId(), ActionKeys.UPDATE);
+
 		return DataDefinitionUtil.toDataDefinition(
 			_ddmStructureLocalService.updateStructure(
 				PrincipalThreadLocal.getUserId(), dataDefinition.getId(),
@@ -129,11 +149,62 @@ public class DataDefinitionResourceImpl extends BaseDataDefinitionResourceImpl {
 				new ServiceContext()));
 	}
 
+	protected void checkPermission(
+			long classPK, String actionId, PermissionChecker permissionChecker)
+		throws PortalException {
+
+		String resourceName = "com.liferay.data.engine";
+
+		Group group = _groupLocalService.fetchGroup(classPK);
+
+		if ((group != null) && group.isStagingGroup()) {
+			group = group.getLiveGroup();
+		}
+
+		if (!permissionChecker.hasPermission(
+				group, resourceName, classPK, actionId)) {
+
+			throw new PrincipalException.MustHavePermission(
+				permissionChecker, resourceName, classPK, actionId);
+		}
+	}
+
+	protected PermissionChecker getPermissionChecker()
+		throws PrincipalException {
+
+		PermissionChecker permissionChecker =
+			PermissionThreadLocal.getPermissionChecker();
+
+		if (permissionChecker == null) {
+			throw new PrincipalException(
+				"Permission checker is not initialized");
+		}
+
+		return permissionChecker;
+	}
+
+	@Reference(
+		target = "(model.class.name=com.liferay.data.engine.rest.internal.model.InternalDataDefinition)",
+		unbind = "-"
+	)
+	protected void setModelResourcePermission(
+		ModelResourcePermission<InternalDataDefinition>
+			modelResourcePermission) {
+
+		_modelResourcePermission = modelResourcePermission;
+	}
+
 	@Reference
 	private DDMStructureLocalService _ddmStructureLocalService;
 
 	@Reference
 	private DDMStructureService _ddmStructureService;
+
+	@Reference
+	private GroupLocalService _groupLocalService;
+
+	private ModelResourcePermission<InternalDataDefinition>
+		_modelResourcePermission;
 
 	@Reference
 	private Portal _portal;

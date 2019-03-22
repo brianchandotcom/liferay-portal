@@ -19,6 +19,8 @@ import com.liferay.asset.list.exception.AssetListEntryTitleException;
 import com.liferay.asset.list.exception.DuplicateAssetListEntryTitleException;
 import com.liferay.asset.list.model.AssetListEntry;
 import com.liferay.asset.list.model.AssetListEntrySegmentsEntryRel;
+import com.liferay.asset.list.service.AssetListEntryAssetEntryRelLocalService;
+import com.liferay.asset.list.service.AssetListEntrySegmentsEntryRelLocalService;
 import com.liferay.asset.list.service.base.AssetListEntryLocalServiceBaseImpl;
 import com.liferay.exportimport.kernel.lar.ExportImportThreadLocal;
 import com.liferay.petra.string.CharPool;
@@ -89,12 +91,12 @@ public class AssetListEntryLocalServiceImpl
 		// Asset list segments entry rel
 
 		AssetListEntrySegmentsEntryRel assetListEntrySegmentsEntryRel =
-			assetListEntrySegmentsEntryRelLocalService.
+			_assetListEntrySegmentsEntryRelLocalService.
 				fetchAssetListEntrySegmentsEntryRel(
 					assetListEntryId, segmentsEntryId);
 
 		if (assetListEntrySegmentsEntryRel == null) {
-			assetListEntrySegmentsEntryRelLocalService.
+			_assetListEntrySegmentsEntryRelLocalService.
 				addAssetListEntrySegmentsEntryRel(
 					serviceContext.getUserId(),
 					serviceContext.getScopeGroupId(), assetListEntryId,
@@ -102,7 +104,7 @@ public class AssetListEntryLocalServiceImpl
 		}
 
 		for (long assetEntryId : assetEntryIds) {
-			assetListEntryAssetEntryRelLocalService.
+			_assetListEntryAssetEntryRelLocalService.
 				addAssetListEntryAssetEntryRel(
 					assetListEntryId, assetEntryId, segmentsEntryId,
 					serviceContext);
@@ -164,7 +166,7 @@ public class AssetListEntryLocalServiceImpl
 			SegmentsEntry defaultSegmentsEntry =
 				_segmentsEntryLocalService.getDefaultSegmentsEntry(groupId);
 
-			assetListEntrySegmentsEntryRelLocalService.
+			_assetListEntrySegmentsEntryRelLocalService.
 				addAssetListEntrySegmentsEntryRel(
 					serviceContext.getUserId(),
 					serviceContext.getScopeGroupId(), assetListEntryId,
@@ -229,7 +231,7 @@ public class AssetListEntryLocalServiceImpl
 
 		// Asset list segments entry rel
 
-		assetListEntryAssetEntryRelLocalService.
+		_assetListEntryAssetEntryRelLocalService.
 			deleteAssetListEntryAssetEntryRel(
 				assetListEntryId, segmentsEntryId, position);
 	}
@@ -282,7 +284,7 @@ public class AssetListEntryLocalServiceImpl
 
 		// Asset list segments entry rel
 
-		assetListEntrySegmentsEntryRelLocalService.
+		_assetListEntrySegmentsEntryRelLocalService.
 			deleteAssetListEntrySegmentsEntryRel(
 				assetListEntryId, segmentsEntryId);
 
@@ -318,8 +320,9 @@ public class AssetListEntryLocalServiceImpl
 
 		// Asset list segments entry rel
 
-		assetListEntryAssetEntryRelLocalService.moveAssetListEntryAssetEntryRel(
-			assetListEntryId, segmentsEntryId, position, newPosition);
+		_assetListEntryAssetEntryRelLocalService.
+			moveAssetListEntryAssetEntryRel(
+				assetListEntryId, segmentsEntryId, position, newPosition);
 	}
 
 	@Override
@@ -340,19 +343,19 @@ public class AssetListEntryLocalServiceImpl
 		// Asset list segments entry rel
 
 		AssetListEntrySegmentsEntryRel assetListEntrySegmentsEntryRel =
-			assetListEntrySegmentsEntryRelLocalService.
+			_assetListEntrySegmentsEntryRelLocalService.
 				fetchAssetListEntrySegmentsEntryRel(
 					assetListEntryId, segmentsEntryId);
 
 		if (assetListEntrySegmentsEntryRel == null) {
-			assetListEntrySegmentsEntryRelLocalService.
+			_assetListEntrySegmentsEntryRelLocalService.
 				addAssetListEntrySegmentsEntryRel(
 					serviceContext.getUserId(),
 					serviceContext.getScopeGroupId(), assetListEntryId,
 					segmentsEntryId, typeSettings, serviceContext);
 		}
 		else {
-			assetListEntrySegmentsEntryRelLocalService.
+			_assetListEntrySegmentsEntryRelLocalService.
 				updateAssetListEntrySegmentsEntryRelTypeSettings(
 					assetListEntryId, segmentsEntryId, typeSettings);
 		}
@@ -392,7 +395,7 @@ public class AssetListEntryLocalServiceImpl
 
 		assetListEntryPersistence.update(assetListEntry);
 
-		assetListEntrySegmentsEntryRelLocalService.
+		_assetListEntrySegmentsEntryRelLocalService.
 			updateAssetListEntrySegmentsEntryRelTypeSettings(
 				assetListEntryId, segmentsEntryId, typeSettings);
 	}
@@ -409,7 +412,7 @@ public class AssetListEntryLocalServiceImpl
 		assetListEntry.setModifiedDate(new Date());
 
 		AssetListEntrySegmentsEntryRel assetListEntrySegmentsEntryRel =
-			assetListEntrySegmentsEntryRelLocalService.
+			_assetListEntrySegmentsEntryRelLocalService.
 				getAssetListEntrySegmentsEntryRel(
 					assetListEntryId, segmentsEntryId);
 
@@ -424,7 +427,7 @@ public class AssetListEntryLocalServiceImpl
 
 		existingProperties.putAll(newProperties);
 
-		assetListEntrySegmentsEntryRelLocalService.
+		_assetListEntrySegmentsEntryRelLocalService.
 			updateAssetListEntrySegmentsEntryRelTypeSettings(
 				assetListEntryId, segmentsEntryId,
 				existingProperties.toString());
@@ -469,6 +472,14 @@ public class AssetListEntryLocalServiceImpl
 			throw new DuplicateAssetListEntryTitleException();
 		}
 	}
+
+	@Reference
+	private AssetListEntryAssetEntryRelLocalService
+		_assetListEntryAssetEntryRelLocalService;
+
+	@Reference
+	private AssetListEntrySegmentsEntryRelLocalService
+		_assetListEntrySegmentsEntryRelLocalService;
 
 	@Reference
 	private SegmentsEntryLocalService _segmentsEntryLocalService;

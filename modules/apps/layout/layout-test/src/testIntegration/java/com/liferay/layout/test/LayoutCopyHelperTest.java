@@ -40,11 +40,13 @@ import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+import com.liferay.portlet.util.test.PortletKeys;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import javax.portlet.Portlet;
 import javax.portlet.PortletPreferences;
 
 import org.junit.Assert;
@@ -162,19 +164,21 @@ public class LayoutCopyHelperTest {
 
 	@Test
 	public void testCopyLayoutPortletPreferences() throws Exception {
+		String portletId = PortletKeys.TEST;
+
 		Layout sourceLayout = addLayout(
-			_group.getGroupId(), "column-1=portlet-id");
+			_group.getGroupId(), "column-1=" + portletId);
 
 		PortletPreferences sourcePortletPreferences =
 			PortletPreferencesFactoryUtil.getLayoutPortletSetup(
-				sourceLayout, "portlet-id",
+				sourceLayout, portletId,
 				"<portlet-preferences><layout1/></portlet-preferences>");
 
 		Layout targetLayout = addLayout(_group.getGroupId(), StringPool.BLANK);
 
 		PortletPreferences targetPortletPreferences =
 			PortletPreferencesFactoryUtil.getLayoutPortletSetup(
-				targetLayout, "portlet-id");
+				targetLayout, portletId);
 
 		Assert.assertNotEquals(
 			PortletPreferencesFactoryUtil.toXML(targetPortletPreferences),
@@ -189,7 +193,7 @@ public class LayoutCopyHelperTest {
 
 		targetPortletPreferences =
 			PortletPreferencesFactoryUtil.getLayoutPortletSetup(
-				targetLayout, "portlet-id");
+				targetLayout, portletId);
 
 		Assert.assertEquals(
 			PortletPreferencesFactoryUtil.toXML(sourcePortletPreferences),
@@ -232,5 +236,8 @@ public class LayoutCopyHelperTest {
 
 	@Inject
 	private Portal _portal;
+
+	@Inject(filter = "javax.portlet.name=" + PortletKeys.TEST)
+	private final Portlet _portlet = null;
 
 }

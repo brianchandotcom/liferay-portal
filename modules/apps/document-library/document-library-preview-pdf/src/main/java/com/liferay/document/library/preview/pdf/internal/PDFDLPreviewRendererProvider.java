@@ -42,8 +42,24 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	immediate = true,
 	property = {
+		"content.type=" + ContentTypes.APPLICATION_MSWORD,
 		"content.type=" + ContentTypes.APPLICATION_PDF,
-		"content.type=" + ContentTypes.APPLICATION_X_PDF
+		"content.type=" + ContentTypes.APPLICATION_TEXT,
+		"content.type=" + ContentTypes.APPLICATION_VND_MS_EXCEL,
+		"content.type=" + ContentTypes.APPLICATION_VND_MS_POWERPOINT,
+		"content.type=" + ContentTypes.APPLICATION_X_PDF,
+		"content.type=" + ContentTypes.TEXT_HTML,
+		"content.type=" + ContentTypes.TEXT_PLAIN,
+		"content.type=application/rtf",
+		"content.type=application/vnd.oasis.opendocument.graphics",
+		"content.type=application/vnd.oasis.opendocument.presentation",
+		"content.type=application/vnd.oasis.opendocument.spreadsheet",
+		"content.type=application/vnd.oasis.opendocument.text",
+		"content.type=application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+		"content.type=application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+		"content.type=application/vnd.sun.xml.calc",
+		"content.type=application/vnd.sun.xml.writer",
+		"content.type=application/wordperfect", "content.type=text/rtf"
 	},
 	service = DLPreviewRendererProvider.class
 )

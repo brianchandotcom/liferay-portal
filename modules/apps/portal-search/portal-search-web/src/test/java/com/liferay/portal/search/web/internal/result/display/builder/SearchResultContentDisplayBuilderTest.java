@@ -225,7 +225,7 @@ public class SearchResultContentDisplayBuilderTest {
 			_assetRenderer
 		).getURLEdit(
 			Mockito.anyObject(), Mockito.anyObject(), Mockito.anyObject(),
-			Mockito.anyObject()
+			Mockito.any(PortletURL.class)
 		);
 
 		Mockito.doReturn(

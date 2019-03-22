@@ -71,22 +71,7 @@ public class AssetEntryActionDropdownItemsProvider {
 							dropdownItem -> {
 								dropdownItem.setIcon("pencil");
 								dropdownItem.putData(
-									"destroyOnHide", Boolean.TRUE.toString());
-
-								PortletDisplay portletDisplay =
-									_themeDisplay.getPortletDisplay();
-
-								String id = HtmlUtil.escape(
-									portletDisplay.getNamespace());
-
-								dropdownItem.putData("id", id + "editAsset");
-
-								dropdownItem.putData(
-									"title",
-									LanguageUtil.format(
-										_request, "edit-x",
-										_assetRenderer.getTitle(
-											_themeDisplay.getLocale())));
+									"useDialog", Boolean.FALSE.toString());
 								dropdownItem.setHref(
 									editAssetEntryURL.toString());
 								dropdownItem.setLabel(
@@ -124,6 +109,8 @@ public class AssetEntryActionDropdownItemsProvider {
 									dropdownItem.putData(
 										"destroyOnHide",
 										Boolean.TRUE.toString());
+									dropdownItem.putData(
+										"useDialog", Boolean.TRUE.toString());
 									dropdownItem.putData("title", title);
 									dropdownItem.setLabel(title);
 								}));
@@ -150,7 +137,7 @@ public class AssetEntryActionDropdownItemsProvider {
 
 			PortletURL editAssetEntryURL = _assetRenderer.getURLEdit(
 				_liferayPortletRequest, _liferayPortletResponse,
-				LiferayWindowState.MAXIMIZED, null);
+				LiferayWindowState.NORMAL, null);
 
 			if (Validator.isNotNull(_fullContentRedirect)) {
 				editAssetEntryURL.setParameter(
@@ -167,8 +154,6 @@ public class AssetEntryActionDropdownItemsProvider {
 
 			editAssetEntryURL.setParameter(
 				"hideDefaultSuccessMessage", Boolean.TRUE.toString());
-			editAssetEntryURL.setParameter(
-				"showHeader", Boolean.FALSE.toString());
 
 			return editAssetEntryURL;
 		}

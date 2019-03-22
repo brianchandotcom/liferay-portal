@@ -89,43 +89,52 @@ Group ddmTemplateGroup = GroupLocalServiceUtil.getGroup(ddmTemplateGroupId);
 </liferay-portlet:renderURL>
 
 <aui:script sandbox="<%= true %>">
-	$('#<portlet:namespace />selectDDMTemplate').on(
-		'click',
-		function(event) {
-			Liferay.Util.openDDMPortlet(
-				{
-					basePortletURL: '<%= basePortletURL %>',
-					classNameId: '<%= classNameId %>',
-					dialog: {
-						width: 1024
+	var selectDDMTemplateLink = document.getElementById('<portlet:namespace />selectDDMTemplate');
+
+	if (selectDDMTemplateLink) {
+		selectDDMTemplateLink.addEventListener(
+			'click',
+			function(event) {
+				Liferay.Util.openDDMPortlet(
+					{
+						basePortletURL: '<%= basePortletURL %>',
+						classNameId: '<%= classNameId %>',
+						dialog: {
+							width: 1024
+						},
+						groupId: <%= ddmTemplateGroupId %>,
+						mvcPath: '/view_template.jsp',
+						navigationStartsOn: '<%= DDMNavigationHelper.VIEW_TEMPLATES %>',
+						refererPortletName: '<%= PortletKeys.PORTLET_DISPLAY_TEMPLATE %>',
+						title: '<%= UnicodeLanguageUtil.get(request, "widget-templates") %>'
 					},
-					groupId: <%= ddmTemplateGroupId %>,
-					mvcPath: '/view_template.jsp',
-					navigationStartsOn: '<%= DDMNavigationHelper.VIEW_TEMPLATES %>',
-					refererPortletName: '<%= PortletKeys.PORTLET_DISPLAY_TEMPLATE %>',
-					title: '<%= UnicodeLanguageUtil.get(request, "widget-templates") %>'
-				},
-				function(event) {
-					if (!event.newVal) {
-						submitForm(document.<portlet:namespace />fm, '<%= HtmlUtil.escapeJS(refreshURL) %>');
+					function(event) {
+						if (!event.newVal) {
+							submitForm(document.<portlet:namespace />fm, '<%= HtmlUtil.escapeJS(refreshURL) %>');
+						}
+					}
+				);
+			}
+		);
+	}
+
+	var displayStyle = document.getElementById('<portlet:namespace />displayStyle');
+	var displayStyleGroupIdInput = document.getElementById('<portlet:namespace />displayStyleGroupId');
+
+	if (displayStyle && displayStyleGroupIdInput) {
+		displayStyle.addEventListener(
+			'change',
+			function(event) {
+				var selectedDisplayStyle = displayStyle.querySelector('option:checked');
+
+				if (selectedDisplayStyle) {
+					var displayStyleGroupId = selectedDisplayStyle.dataset.displaystylegroupid;
+
+					if (displayStyleGroupId) {
+						displayStyleGroupIdInput.value = displayStyleGroupId;
 					}
 				}
-			);
-		}
-	);
-
-	var displayStyleGroupIdInput = $('#<portlet:namespace />displayStyleGroupId');
-
-	var displayStyle = $('#<portlet:namespace />displayStyle');
-
-	displayStyle.on(
-		'change',
-		function(event) {
-			var displayStyleGroupId = displayStyle.find(':selected').data('displaystylegroupid');
-
-			if (displayStyleGroupId) {
-				displayStyleGroupIdInput.val(displayStyleGroupId);
 			}
-		}
-	);
+		);
+	}
 </aui:script>

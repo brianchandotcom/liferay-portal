@@ -47,15 +47,23 @@
 <@liferay_aui.script>
 	function ${portletNamespace}${namespacedFieldName}ToggleImage() {
 		var toggleText = '${languageUtil.get(locale, "show")}';
+		var containerNode = document.getElementById('${portletNamespace}${namespacedFieldName}Container');
 
-		var containerNode = AUI.$('#${portletNamespace}${namespacedFieldName}Container');
+		if (containerNode) {
+			if (containerNode.classList.contains('hide')) {
+				toggleText = '${languageUtil.get(locale, "hide")}';
 
-		if (containerNode.hasClass('hide')) {
-			toggleText = '${languageUtil.get(locale, "hide")}';
+				containerNode.classList.remove('hide');
+			}
+			else {
+				containerNode.classList.add('hide');
+			}
 		}
 
-		AUI.$('#${portletNamespace}${namespacedFieldName}ToggleImage').html(toggleText);
+		var imageToggle = document.getElementById('${portletNamespace}${namespacedFieldName}ToggleImage');
 
-		containerNode.toggleClass('hide');
+		if (imageToggle) {
+			imageToggle.innerHTML = toggleText;
+		}
 	}
 </@>

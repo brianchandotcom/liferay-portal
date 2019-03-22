@@ -362,38 +362,52 @@ if (Validator.isNotNull(requestUpdateStructureURL)) {
 				title: '<%= HtmlUtil.escapeJS(scopeTitle) %>'
 			},
 			function(event) {
-				var form = AUI.$('#<portlet:namespace />fm');
+				var form = document.<portlet:namespace />fm;
 
-				form.fm('parentStructureId').val(event.ddmstructureid);
+				Liferay.Util.setFormValues(
+					form,
+					{
+						parentStructureId: event.ddmstructureid,
+						parentStructureName: Liferay.Util.unescape(event.name)
+					}
+				);
 
-				form.fm('parentStructureName').val(Liferay.Util.unescape(event.name));
+				var removeParentStructureButton = Liferay.Util.getFormElement(form, 'removeParentStructureButton');
 
-				form.fm('removeParentStructureButton').attr('disabled', false).removeClass('disabled');
+				if (removeParentStructureButton) {
+					Liferay.Util.toggleDisabled(removeParentStructureButton, false);
+				}
 			}
 		);
 	}
 
 	function <portlet:namespace />removeParentStructure() {
-		var form = AUI.$('#<portlet:namespace />fm');
+		var form = document.<portlet:namespace />fm;
 
-		form.fm('parentStructureId').val('');
-		form.fm('parentStructureName').val('');
+		Liferay.Util.setFormValues(
+			form,
+			{
+				parentStructureId: '',
+				parentStructureName: ''
+			}
+		);
 
-		form.fm('removeParentStructureButton').attr('disabled', true).addClass('disabled');
+		var removeParentStructureButton = Liferay.Util.getFormElement(form, 'removeParentStructureButton');
+
+		if (removeParentStructureButton) {
+			Liferay.Util.toggleDisabled(removeParentStructureButton, true);
+		}
 	}
 
 	function <portlet:namespace />saveStructure(draft) {
-		var form = AUI.$('#<portlet:namespace />fm');
-
-		form.fm('definition').val(<portlet:namespace />formBuilder.getContentValue());
-
-		if (draft) {
-			form.fm('status').val(<%= String.valueOf(WorkflowConstants.STATUS_DRAFT) %>);
-		}
-		else {
-			form.fm('status').val(<%= String.valueOf(WorkflowConstants.STATUS_APPROVED) %>);
-		}
-
-		submitForm(form);
+		Liferay.Util.postForm(
+			document.<portlet:namespace />fm,
+			{
+				data: {
+					definition: <portlet:namespace />formBuilder.getContentValue(),
+					status: draft ? <%= String.valueOf(WorkflowConstants.STATUS_DRAFT) %> : <%= String.valueOf(WorkflowConstants.STATUS_APPROVED) %>
+				}
+			}
+		);
 	}
 </aui:script>

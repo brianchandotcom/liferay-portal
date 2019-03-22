@@ -35,12 +35,16 @@ String fieldsJSONArrayString = fieldsJSONArray.toString();
 
 <aui:script>
 	function <portlet:namespace />attachValueChange(formBuilder) {
-		AUI.$('#<portlet:namespace />mode').on(
-			'change',
-			function(event) {
-				<portlet:namespace />toggleMode(formBuilder, AUI.$(event.currentTarget).val());
-			}
-		);
+		var modeInput = document.getElementById('<portlet:namespace />mode');
+
+		if (modeInput) {
+			modeInput.addEventListener(
+				'change',
+				function(event) {
+					<portlet:namespace />toggleMode(formBuilder, event.target.value);
+				}
+			);
+		}
 	}
 
 	Liferay.on(

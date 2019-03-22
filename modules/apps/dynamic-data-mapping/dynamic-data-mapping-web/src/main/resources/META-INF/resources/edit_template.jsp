@@ -444,9 +444,18 @@ DDMNavigationHelper ddmNavigationHelper = ddmDisplay.getDDMNavigationHelper();
 			);
 
 			function <portlet:namespace />saveDraftTemplate() {
-				var form = AUI.$('#<portlet:namespace />fm');
+				var form = document.<portlet:namespace />fm;
 
-				form.fm('status').val(<%= String.valueOf(WorkflowConstants.STATUS_DRAFT) %>);
+				var statusInput = Liferay.Util.getFormElement(form, 'status');
+
+				if (statusInput) {
+					Liferay.Util.setFormValues(
+						form,
+						{
+							statusInput: <%= String.valueOf(WorkflowConstants.STATUS_DRAFT) %>
+						}
+					);
+				}
 
 				Liferay.fire('<%= renderResponse.getNamespace() + "saveTemplate" %>');
 			}

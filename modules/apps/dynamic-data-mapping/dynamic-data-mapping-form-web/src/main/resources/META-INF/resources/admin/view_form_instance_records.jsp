@@ -120,17 +120,27 @@ renderResponse.setTitle(LanguageUtil.get(request, "form-entries"));
 
 <%@ include file="/admin/export_form_instance.jspf" %>
 
-<aui:script>
+<aui:script sandbox="<%= true %>">
 	var deleteRecords = function() {
 		if (confirm('<%= UnicodeLanguageUtil.get(request, "are-you-sure-you-want-to-delete-this") %>')) {
-			var form = AUI.$(document.<portlet:namespace />searchContainerForm);
+			var searchContainer = document.getElementById('<portlet:namespace />ddmFormInstanceRecord');
 
-			var searchContainer = AUI.$('#<portlet:namespace />ddmFormInstanceRecord', form);
+			if (searchContainer) {
+				<portlet:actionURL name="deleteFormInstanceRecord" var="deleteFormInstanceRecordURL">
+					<portlet:param name="mvcPath" value="/admin/view_form_instance_records.jsp" />
+					<portlet:param name="redirect" value="<%= currentURL %>" />
+				</portlet:actionURL>
 
-			form.attr('method', 'post');
-			form.fm('deleteFormInstanceRecordIds').val(Liferay.Util.listCheckedExcept(searchContainer, '<portlet:namespace />allRowIds'));
-
-			submitForm(form, '<portlet:actionURL name="deleteFormInstanceRecord"><portlet:param name="mvcPath" value="/admin/view_form_instance_records.jsp" /><portlet:param name="redirect" value="<%= currentURL %>" /></portlet:actionURL>');
+				Liferay.Util.postForm(
+					document.<portlet:namespace />searchContainerForm,
+					{
+						data: {
+							deleteFormInstanceRecordIds: Liferay.Util.listCheckedExcept(searchContainer, '<portlet:namespace />allRowIds')
+						},
+						url: '<%= deleteFormInstanceRecordURL %>'
+					}
+				);
+			}
 		}
 	};
 

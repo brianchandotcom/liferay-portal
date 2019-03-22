@@ -36,14 +36,23 @@
 <aui:script sandbox="<%= true %>">
 	var deleteStructures = function() {
 		if (confirm('<%= UnicodeLanguageUtil.get(request, "are-you-sure-you-want-to-delete-this") %>')) {
-			var form = AUI.$(document.<portlet:namespace />fm);
+			var searchContainer = document.getElementById('<portlet:namespace />entriesContainer');
 
-			var searchContainer = AUI.$('#<portlet:namespace />entriesContainer', form);
+			if (searchContainer) {
+				<portlet:actionURL name="deleteStructure" var="deleteStructuresURL">
+					<portlet:param name="mvcPath" value="/view.jsp" />
+				</portlet:actionURL>
 
-			form.attr('method', 'post');
-			form.fm('deleteStructureIds').val(Liferay.Util.listCheckedExcept(searchContainer, '<portlet:namespace />allRowIds'));
-
-			submitForm(form, '<portlet:actionURL name="deleteStructure"><portlet:param name="mvcPath" value="/view.jsp" /></portlet:actionURL>');
+				Liferay.Util.postForm(
+					document.<portlet:namespace />fm,
+					{
+						data: {
+							deleteStructureIds: Liferay.Util.listCheckedExcept(searchContainer, '<portlet:namespace />allRowIds')
+						},
+						url: '<%= deleteStructuresURL %>'
+					}
+				);
+			}
 		}
 	};
 

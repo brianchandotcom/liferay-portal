@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.util.WebKeys;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -40,8 +41,11 @@ public abstract class BaseAddLayoutMVCActionCommand
 	extends BaseMVCActionCommand {
 
 	protected String getContentRedirectURL(
-			ThemeDisplay themeDisplay, Layout layout)
+			ActionRequest actionRequest, Layout layout)
 		throws PortalException {
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
 
 		String layoutFullURL = portal.getLayoutFullURL(layout, themeDisplay);
 
@@ -52,7 +56,17 @@ public abstract class BaseAddLayoutMVCActionCommand
 			layoutFullURL = portal.getLayoutFullURL(draftLayout, themeDisplay);
 		}
 
-		return HttpUtil.setParameter(layoutFullURL, "p_l_mode", Constants.EDIT);
+		layoutFullURL = HttpUtil.setParameter(
+			layoutFullURL, "p_l_mode", Constants.EDIT);
+
+		String backURL = ParamUtil.getString(actionRequest, "backURL");
+
+		if (Validator.isNotNull(backURL)) {
+			layoutFullURL = HttpUtil.setParameter(
+				layoutFullURL, "p_l_back_url", backURL);
+		}
+
+		return layoutFullURL;
 	}
 
 	protected String getRedirectURL(

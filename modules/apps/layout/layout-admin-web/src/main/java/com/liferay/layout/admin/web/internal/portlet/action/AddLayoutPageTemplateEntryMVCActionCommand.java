@@ -36,6 +36,7 @@ import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
@@ -132,7 +133,17 @@ public class AddLayoutPageTemplateEntryMVCActionCommand
 
 		String layoutFullURL = _portal.getLayoutFullURL(layout, themeDisplay);
 
-		return _http.setParameter(layoutFullURL, "p_l_mode", Constants.EDIT);
+		layoutFullURL = _http.setParameter(
+			layoutFullURL, "p_l_mode", Constants.EDIT);
+
+		String backURL = ParamUtil.getString(actionRequest, "backURL");
+
+		if (Validator.isNotNull(backURL)) {
+			layoutFullURL = _http.setParameter(
+				layoutFullURL, "p_l_back_url", backURL);
+		}
+
+		return layoutFullURL;
 	}
 
 	@Reference

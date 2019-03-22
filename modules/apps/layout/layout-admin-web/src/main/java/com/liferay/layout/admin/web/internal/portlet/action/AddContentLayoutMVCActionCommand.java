@@ -34,10 +34,8 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.servlet.MultiSessionMessages;
 import com.liferay.portal.kernel.servlet.SessionErrors;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.sites.kernel.util.SitesUtil;
 
 import java.util.HashMap;
@@ -69,9 +67,6 @@ public class AddContentLayoutMVCActionCommand
 	protected void doProcessAction(
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
 
 		long groupId = ParamUtil.getLong(actionRequest, "groupId");
 		long layoutPageTemplateEntryId = ParamUtil.getLong(
@@ -134,7 +129,7 @@ public class AddContentLayoutMVCActionCommand
 			if (Objects.equals(
 					layout.getType(), LayoutConstants.TYPE_CONTENT)) {
 
-				redirectURL = getContentRedirectURL(themeDisplay, layout);
+				redirectURL = getContentRedirectURL(actionRequest, layout);
 			}
 
 			jsonObject.put("redirectURL", redirectURL);

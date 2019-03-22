@@ -38,9 +38,11 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.TransactionConfig;
 import com.liferay.portal.kernel.transaction.TransactionInvokerUtil;
+import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.HashMap;
@@ -133,9 +135,17 @@ public class AddLayoutPrototypeMVCActionCommand extends BaseMVCActionCommand {
 
 			Group layoutPrototypeGroup = layoutPrototype.getGroup();
 
-			jsonObject.put(
-				"redirectURL",
-				layoutPrototypeGroup.getDisplayURL(themeDisplay, true));
+			String redirectURL = layoutPrototypeGroup.getDisplayURL(
+				themeDisplay, true);
+
+			String backURL = ParamUtil.getString(actionRequest, "backURL");
+
+			if (Validator.isNotNull(backURL)) {
+				redirectURL = _http.setParameter(
+					redirectURL, "p_l_back_url", backURL);
+			}
+
+			jsonObject.put("redirectURL", redirectURL);
 		}
 		catch (Throwable t) {
 			if (_log.isDebugEnabled()) {
@@ -169,6 +179,9 @@ public class AddLayoutPrototypeMVCActionCommand extends BaseMVCActionCommand {
 	private static final TransactionConfig _transactionConfig =
 		TransactionConfig.Factory.create(
 			Propagation.REQUIRED, new Class<?>[] {Exception.class});
+
+	@Reference
+	private Http _http;
 
 	@Reference
 	private LayoutPageTemplateEntryLocalService

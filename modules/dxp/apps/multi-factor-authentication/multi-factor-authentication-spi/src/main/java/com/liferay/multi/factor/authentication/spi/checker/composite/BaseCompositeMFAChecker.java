@@ -58,7 +58,7 @@ public abstract class BaseCompositeMFAChecker implements MFAChecker {
 		return sb.toString();
 	}
 
-	public List<MFAChecker> getMfaCheckers() {
+	public List<MFAChecker> getMFACheckers() {
 		return mfaCheckers;
 	}
 

@@ -548,9 +548,14 @@ public class RegistryImpl implements Registry {
 
 		_serviceTrackerReferences.add(reference);
 
-		while ((reference =
-					(Reference<org.osgi.util.tracker.ServiceTracker<?, ?>>)
-						_referenceQueue.poll()) != null) {
+		while (true) {
+			reference =
+				(Reference<org.osgi.util.tracker.ServiceTracker<?, ?>>)
+					_referenceQueue.poll();
+
+			if (reference == null) {
+				return;
+			}
 
 			_serviceTrackerReferences.remove(reference);
 		}

@@ -123,10 +123,12 @@ public class PortletLogic extends RuntimeLogic {
 		// See LayoutTypePortletImpl#getStaticPortlets for why we only clone
 		// non-instanceable portlets
 
-		if (PortletPreferencesLocalServiceUtil.getPortletPreferencesCount(
+		long count =
+			PortletPreferencesLocalServiceUtil.getPortletPreferencesCount(
 				PortletKeys.PREFS_OWNER_TYPE_LAYOUT, themeDisplay.getPlid(),
-				portletId) < 1) {
+				portletId);
 
+		if (count < 1) {
 			PortletPreferencesFactoryUtil.getPortletSetup(_request, portletId);
 
 			PortletLayoutListener portletLayoutListener =

@@ -93,17 +93,20 @@ public class WorkflowPermissionImpl implements WorkflowPermission {
 			WorkflowInstance workflowInstance)
 		throws WorkflowException {
 
-		if (WorkflowTaskManagerUtil.getWorkflowTaskCountByWorkflowInstance(
+		int count =
+			WorkflowTaskManagerUtil.getWorkflowTaskCountByWorkflowInstance(
 				permissionChecker.getCompanyId(), permissionChecker.getUserId(),
-				workflowInstance.getWorkflowInstanceId(), Boolean.FALSE) > 0) {
+				workflowInstance.getWorkflowInstanceId(), Boolean.FALSE);
 
+		if (count > 0) {
 			return true;
 		}
 
-		if (WorkflowTaskManagerUtil.getWorkflowTaskCountByUserRoles(
-				permissionChecker.getCompanyId(), permissionChecker.getUserId(),
-				workflowInstance.getWorkflowInstanceId(), Boolean.FALSE) > 0) {
+		count = WorkflowTaskManagerUtil.getWorkflowTaskCountByUserRoles(
+			permissionChecker.getCompanyId(), permissionChecker.getUserId(),
+			workflowInstance.getWorkflowInstanceId(), Boolean.FALSE);
 
+		if (count > 0) {
 			return true;
 		}
 

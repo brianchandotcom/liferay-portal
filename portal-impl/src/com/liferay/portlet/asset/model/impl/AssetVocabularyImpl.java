@@ -155,11 +155,12 @@ public class AssetVocabularyImpl extends AssetVocabularyBaseImpl {
 
 	@Override
 	public boolean hasMoreThanOneCategorySelected(final long[] categoryIds) {
-		if (ListUtil.count(
-				getCategories(),
-				assetCategory -> ArrayUtil.contains(
-					categoryIds, assetCategory.getCategoryId())) > 1) {
+		int count = ListUtil.count(
+			getCategories(),
+			assetCategory -> ArrayUtil.contains(
+				categoryIds, assetCategory.getCategoryId()));
 
+		if (count > 1) {
 			return true;
 		}
 

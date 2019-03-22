@@ -634,14 +634,19 @@ public class LayoutTypePortletImpl
 			}
 		}
 
-		if (!strict &&
-			((PortletPreferencesLocalServiceUtil.getPortletPreferencesCount(
-				PortletKeys.PREFS_OWNER_TYPE_LAYOUT, layout.getPlid(),
-				portletId) > 0) ||
-			 (PortletPreferencesLocalServiceUtil.getPortletPreferencesCount(
-				 PortletKeys.PREFS_OWNER_TYPE_USER, layout.getPlid(),
-				 portletId) > 0))) {
+		if (strict) {
+			return false;
+		}
 
+		long count1 =
+			PortletPreferencesLocalServiceUtil.getPortletPreferencesCount(
+				PortletKeys.PREFS_OWNER_TYPE_LAYOUT, layout.getPlid(),
+				portletId);
+		long count2 =
+			PortletPreferencesLocalServiceUtil.getPortletPreferencesCount(
+				PortletKeys.PREFS_OWNER_TYPE_USER, layout.getPlid(), portletId);
+
+		if ((count1 > 0) || (count2 > 0)) {
 			return true;
 		}
 

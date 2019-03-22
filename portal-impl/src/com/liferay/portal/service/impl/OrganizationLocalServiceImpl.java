@@ -417,13 +417,13 @@ public class OrganizationLocalServiceImpl
 			params.put(
 				"usersOrgs", Long.valueOf(organization.getOrganizationId()));
 
-			if ((organizationPersistence.countByC_P(
-					organization.getCompanyId(),
-					organization.getOrganizationId()) > 0) ||
-				(userFinder.countByKeywords(
-					organization.getCompanyId(), null,
-					WorkflowConstants.STATUS_APPROVED, params) > 0)) {
+			int count1 = organizationPersistence.countByC_P(
+				organization.getCompanyId(), organization.getOrganizationId());
+			int count2 = userFinder.countByKeywords(
+				organization.getCompanyId(), null,
+				WorkflowConstants.STATUS_APPROVED, params);
 
+			if ((count1 > 0) || (count2 > 0)) {
 				throw new RequiredOrganizationException();
 			}
 		}

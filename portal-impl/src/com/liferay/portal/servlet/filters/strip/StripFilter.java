@@ -126,10 +126,11 @@ public class StripFilter extends BasePortalFilter {
 			return false;
 		}
 
-		if (KMPSearch.search(
-				charBuffer, startPos, length, _MARKER_LANGUAGE,
-				_MARKER_LANGUAGE_NEXTS) == -1) {
+		int searchValue = KMPSearch.search(
+			charBuffer, startPos, length, _MARKER_LANGUAGE,
+			_MARKER_LANGUAGE_NEXTS);
 
+		if (searchValue == -1) {
 			return false;
 		}
 
@@ -432,11 +433,12 @@ public class StripFilter extends BasePortalFilter {
 
 					int length = i - startPos;
 
+					int searchValue = KMPSearch.search(
+						charBuffer, startPos, length, _MARKER_TYPE_JAVASCRIPT,
+						_MARKER_TYPE_JAVASCRIPT_NEXTS);
+
 					if ((length < _MARKER_TYPE_JAVASCRIPT.length()) ||
-						(KMPSearch.search(
-							charBuffer, startPos, length,
-							_MARKER_TYPE_JAVASCRIPT,
-							_MARKER_TYPE_JAVASCRIPT_NEXTS) == -1)) {
+						(searchValue == -1)) {
 
 						// We have just determined that this is an open script
 						// tag that does not have the attribute

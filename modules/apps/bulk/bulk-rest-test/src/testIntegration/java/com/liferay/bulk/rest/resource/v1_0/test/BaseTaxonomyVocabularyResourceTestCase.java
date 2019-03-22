@@ -25,6 +25,8 @@ import com.liferay.bulk.rest.dto.v1_0.DocumentBulkSelection;
 import com.liferay.bulk.rest.dto.v1_0.TaxonomyVocabulary;
 import com.liferay.bulk.rest.resource.v1_0.TaxonomyVocabularyResource;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -326,6 +328,11 @@ public abstract class BaseTaxonomyVocabularyResourceTestCase {
 			return sb.toString();
 		}
 
+		if (entityFieldName.equals("required")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
 		if (entityFieldName.equals("taxonomyCategories")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
@@ -345,6 +352,7 @@ public abstract class BaseTaxonomyVocabularyResourceTestCase {
 			{
 				multiValued = RandomTestUtil.randomBoolean();
 				name = RandomTestUtil.randomString();
+				required = RandomTestUtil.randomBoolean();
 				taxonomyVocabularyId = RandomTestUtil.randomLong();
 			}
 		};
@@ -430,6 +438,9 @@ public abstract class BaseTaxonomyVocabularyResourceTestCase {
 
 		return template;
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		BaseTaxonomyVocabularyResourceTestCase.class);
 
 	private static BeanUtilsBean _beanUtilsBean = new BeanUtilsBean() {
 

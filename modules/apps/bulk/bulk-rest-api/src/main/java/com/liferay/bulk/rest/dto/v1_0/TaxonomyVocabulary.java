@@ -84,6 +84,30 @@ public class TaxonomyVocabulary {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String name;
 
+	public Boolean getRequired() {
+		return required;
+	}
+
+	public void setRequired(Boolean required) {
+		this.required = required;
+	}
+
+	@JsonIgnore
+	public void setRequired(
+		UnsafeSupplier<Boolean, Exception> requiredUnsafeSupplier) {
+
+		try {
+			required = requiredUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Boolean required;
+
 	public TaxonomyCategory[] getTaxonomyCategories() {
 		return taxonomyCategories;
 	}
@@ -148,6 +172,11 @@ public class TaxonomyVocabulary {
 		sb.append("\"");
 		sb.append(name);
 		sb.append("\"");
+		sb.append(", ");
+
+		sb.append("\"required\": ");
+
+		sb.append(required);
 		sb.append(", ");
 
 		sb.append("\"taxonomyCategories\": ");

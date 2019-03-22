@@ -452,14 +452,12 @@ public class ProcessResourceImpl
 			(RangeAggregationResult)bucket.getChildAggregationResult(
 				"overdueDate");
 
-		Bucket dueAfterBucket = rangeAggregationResult.getBucket(
-			"dueAfter");
+		Bucket dueAfterBucket = rangeAggregationResult.getBucket("dueAfter");
 
 		if (dueAfterBucket != null) {
 			CardinalityAggregationResult cardinalityAggregationResult =
 				(CardinalityAggregationResult)
-					dueAfterBucket.getChildAggregationResult(
-						"instanceCount");
+					dueAfterBucket.getChildAggregationResult("instanceCount");
 
 			process.setDueAfterInstanceCount(
 				cardinalityAggregationResult.getValue());
@@ -477,14 +475,15 @@ public class ProcessResourceImpl
 
 		Bucket dueInBucket = rangeAggregationResult.getBucket("dueIn");
 
-		if (dueInBucket != null) {
-			CardinalityAggregationResult cardinalityAggregationResult =
-				(CardinalityAggregationResult)
-					dueInBucket.getChildAggregationResult("instanceCount");
-
-			process.setDueInInstanceCount(
-				cardinalityAggregationResult.getValue());
+		if (dueInBucket == null) {
+			return;
 		}
+
+		CardinalityAggregationResult cardinalityAggregationResult =
+			(CardinalityAggregationResult)
+				dueInBucket.getChildAggregationResult("instanceCount");
+
+		process.setDueInInstanceCount(cardinalityAggregationResult.getValue());
 	}
 
 	private void _setInstanceCount(Bucket bucket, Process process) {
@@ -496,8 +495,7 @@ public class ProcessResourceImpl
 			(CardinalityAggregationResult)bucket.getChildAggregationResult(
 				"instanceCount");
 
-		process.setInstanceCount(
-			cardinalityAggregationResult.getValue() - 1);
+		process.setInstanceCount(cardinalityAggregationResult.getValue() - 1);
 	}
 
 	private void _setOnTimeInstanceCount(Bucket bucket, Process process) {
@@ -506,16 +504,14 @@ public class ProcessResourceImpl
 		}
 
 		FilterAggregationResult filterAggregationResult =
-			(FilterAggregationResult)bucket.getChildAggregationResult(
-				"onTime");
+			(FilterAggregationResult)bucket.getChildAggregationResult("onTime");
 
 		CardinalityAggregationResult cardinalityAggregationResult =
 			(CardinalityAggregationResult)
 				filterAggregationResult.getChildAggregationResult(
 					"instanceCount");
 
-		process.setOnTimeInstanceCount(
-			cardinalityAggregationResult.getValue());
+		process.setOnTimeInstanceCount(cardinalityAggregationResult.getValue());
 	}
 
 	private void _setOverdueInstanceCount(Bucket bucket, Process process) {

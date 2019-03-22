@@ -544,7 +544,9 @@ public class ProcessResourceImpl
 
 		String fieldName = sort.getFieldName();
 
-		if (!_isOrderByInstanceCount(fieldName)) {
+		if (!_isOrderByInstanceCount(fieldName) &&
+			!_isOrderByTitle(fieldName)) {
+
 			fieldName = StringUtil.extractFirst(fieldName, "InstanceCount");
 
 			fieldName = fieldName.concat(

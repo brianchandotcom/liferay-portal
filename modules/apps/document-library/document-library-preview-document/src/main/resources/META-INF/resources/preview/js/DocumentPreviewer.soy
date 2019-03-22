@@ -1,4 +1,4 @@
-{namespace com.liferay.document.library.preview.PdfPreviewer}
+{namespace com.liferay.document.library.preview.DocumentPreviewer}
 
 /**
  * ImagePreviewer Component
@@ -25,8 +25,8 @@
 			{else}
 				<img
 					class="
-						preview-file-pdf
-						{if not $expanded}{sp} preview-file-pdf-fit{/if}
+						preview-file-document
+						{if not $expanded}{sp} preview-file-document-fit{/if}
 					"
 					src="{$baseImageURL + $currentPage}"
 				/>

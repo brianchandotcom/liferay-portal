@@ -4,7 +4,7 @@ import Component from 'metal-component';
 import imagePromise from 'image-promise';
 import Soy from 'metal-soy';
 
-import templates from './PdfPreviewer.soy';
+import templates from './DocumentPreviewer.soy';
 
 const KEY_CODE_ENTER = 13;
 
@@ -27,7 +27,7 @@ const WAIT_BETWEEN_GO_TO_PAGE = 250;
  * Component that create an pdf preview
  * @review
  */
-class PdfPreviewer extends Component {
+class DocumentPreviewer extends Component {
 
 	/**
 	 * @inheritDoc
@@ -236,7 +236,7 @@ class PdfPreviewer extends Component {
  * @static
  * @type {!Object}
  */
-PdfPreviewer.STATE = {
+DocumentPreviewer.STATE = {
 
 	/**
 	 * Base path to page images.
@@ -295,6 +295,6 @@ PdfPreviewer.STATE = {
 	totalPages: Config.number().required()
 };
 
-Soy.register(PdfPreviewer, templates);
-export {PdfPreviewer};
-export default PdfPreviewer;
+Soy.register(DocumentPreviewer, templates);
+export {DocumentPreviewer};
+export default DocumentPreviewer;

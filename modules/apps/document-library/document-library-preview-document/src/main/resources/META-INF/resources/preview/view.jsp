@@ -46,14 +46,14 @@ context.put("totalPages", previewFileCount);
 %>
 
 <liferay-util:html-top
-	outputKey="document_library_preview_pdf_css"
+	outputKey="document_library_preview_document_css"
 >
 	<link href="<%= PortalUtil.getStaticResourceURL(request, application.getContextPath() + "/preview/css/main.css") %>" rel="stylesheet" type="text/css" />
 </liferay-util:html-top>
 
 <soy:component-renderer
-	componentId='<%= renderResponse.getNamespace() + randomNamespace + "previewPDF" %>'
+	componentId='<%= renderResponse.getNamespace() + randomNamespace + "previewDocument" %>'
 	context="<%= context %>"
-	module="preview/js/PdfPreviewer.es"
-	templateNamespace="com.liferay.document.library.preview.PdfPreviewer.render"
+	module="preview/js/DocumentPreviewer.es"
+	templateNamespace="com.liferay.document.library.preview.DocumentPreviewer.render"
 />

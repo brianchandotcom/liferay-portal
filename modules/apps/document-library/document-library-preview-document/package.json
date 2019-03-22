@@ -19,7 +19,7 @@
 		"metal-tools-soy": "^4.0.0",
 		"rimraf": "^2.6.2"
 	},
-	"name": "document-library-preview-pdf",
+	"name": "document-library-preview-document",
 	"scripts": {
 		"build": "metalsoy --soyDeps \"node_modules/+(clay-*|com.liferay.frontend.js.web)/**/*.soy\" && cross-env NODE_ENV=production babel --source-maps -d classes/META-INF/resources src/main/resources/META-INF/resources && liferay-npm-bundler && npm run cleanSoy",
 		"checkFormat": "npm run csf",

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.document.library.preview.pdf.internal;
+package com.liferay.document.library.preview.document.internal;
 
 import com.liferay.document.library.constants.DLFileVersionPreviewConstants;
 import com.liferay.document.library.kernel.util.DLProcessorRegistryUtil;
@@ -63,7 +63,8 @@ import org.osgi.service.component.annotations.Reference;
 	},
 	service = DLPreviewRendererProvider.class
 )
-public class PDFDLPreviewRendererProvider implements DLPreviewRendererProvider {
+public class DocumentPreviewRendererProvider
+	implements DLPreviewRendererProvider {
 
 	@Override
 	public Optional<DLPreviewRenderer> getPreviewDLPreviewRendererOptional(
@@ -117,7 +118,7 @@ public class PDFDLPreviewRendererProvider implements DLPreviewRendererProvider {
 	private DLFileVersionPreviewLocalService _dlFileVersionPreviewLocalService;
 
 	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.document.library.preview.pdf)"
+		target = "(osgi.web.symbolicname=com.liferay.document.library.preview.document)"
 	)
 	private ServletContext _servletContext;
 

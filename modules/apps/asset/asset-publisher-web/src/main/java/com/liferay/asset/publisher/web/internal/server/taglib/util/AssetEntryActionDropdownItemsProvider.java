@@ -139,6 +139,10 @@ public class AssetEntryActionDropdownItemsProvider {
 				_liferayPortletRequest, _liferayPortletResponse,
 				LiferayWindowState.NORMAL, null);
 
+			if (editAssetEntryURL == null) {
+				return null;
+			}
+
 			if (Validator.isNotNull(_fullContentRedirect)) {
 				editAssetEntryURL.setParameter(
 					"redirect", _fullContentRedirect);
@@ -146,10 +150,6 @@ public class AssetEntryActionDropdownItemsProvider {
 			else {
 				editAssetEntryURL.setParameter(
 					"redirect", _themeDisplay.getURLCurrent());
-			}
-
-			if (editAssetEntryURL == null) {
-				return null;
 			}
 
 			editAssetEntryURL.setParameter(

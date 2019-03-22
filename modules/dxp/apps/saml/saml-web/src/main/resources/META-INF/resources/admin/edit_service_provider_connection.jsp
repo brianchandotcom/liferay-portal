@@ -59,6 +59,10 @@ long assertionLifetime = GetterUtil.getLong(request.getAttribute(SamlWebKeys.SAM
 		<aui:input helpMessage="assertion-lifetime-help" name="assertionLifetime" required="<%= true %>" value="<%= String.valueOf(assertionLifetime) %>" />
 	</aui:fieldset>
 
+	<aui:fieldset label="encryption">
+		<aui:input name="encryptionForced" />
+	</aui:fieldset>
+
 	<aui:fieldset helpMessage="service-provider-metadata-help" label="metadata">
 		<aui:input name="metadataUrl" />
 

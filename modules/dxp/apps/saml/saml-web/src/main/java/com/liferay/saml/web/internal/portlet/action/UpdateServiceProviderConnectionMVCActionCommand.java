@@ -69,6 +69,8 @@ public class UpdateServiceProviderConnectionMVCActionCommand
 		boolean attributesNamespaceEnabled = ParamUtil.getBoolean(
 			uploadPortletRequest, "attributesNamespaceEnabled");
 		boolean enabled = ParamUtil.getBoolean(uploadPortletRequest, "enabled");
+		boolean encryptionForced = ParamUtil.getBoolean(
+			uploadPortletRequest, "encryptionForced");
 		String metadataUrl = ParamUtil.getString(
 			uploadPortletRequest, "metadataUrl");
 		InputStream metadataXmlInputStream =
@@ -86,15 +88,15 @@ public class UpdateServiceProviderConnectionMVCActionCommand
 			_samlIdpSpConnectionLocalService.addSamlIdpSpConnection(
 				samlSpEntityId, assertionLifetime, attributeNames,
 				attributesEnabled, attributesNamespaceEnabled, enabled,
-				metadataUrl, metadataXmlInputStream, name, nameIdAttribute,
-				nameIdFormat, serviceContext);
+				encryptionForced, metadataUrl, metadataXmlInputStream, name,
+				nameIdAttribute, nameIdFormat, serviceContext);
 		}
 		else {
 			_samlIdpSpConnectionLocalService.updateSamlIdpSpConnection(
 				samlIdpSpConnectionId, samlSpEntityId, assertionLifetime,
 				attributeNames, attributesEnabled, attributesNamespaceEnabled,
-				enabled, metadataUrl, metadataXmlInputStream, name,
-				nameIdAttribute, nameIdFormat, serviceContext);
+				enabled, encryptionForced, metadataUrl, metadataXmlInputStream,
+				name, nameIdAttribute, nameIdFormat, serviceContext);
 		}
 	}
 

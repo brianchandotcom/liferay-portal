@@ -1,6 +1,6 @@
 import {contains} from 'metal-dom';
 
-import {CLEAR_ACTIVE_ITEM, CLEAR_DROP_TARGET, CLEAR_HOVERED_ITEM, UPDATE_LAST_SAVE_DATE, UPDATE_SAVING_CHANGES_STATUS} from '../actions/actions.es';
+import {CLEAR_ACTIVE_ITEM, CLEAR_DROP_TARGET, CLEAR_HOVERED_ITEM, UPDATE_LAST_SAVE_DATE, UPDATE_SAVING_CHANGES_STATUS, UPDATE_TRANSLATION_STATUS} from '../actions/actions.es';
 import {FRAGMENTS_EDITOR_ITEM_TYPES} from '../utils/constants';
 import {getWidget, getWidgetPath} from './FragmentsEditorGetUtils.es';
 
@@ -273,6 +273,43 @@ function updateLayoutData(
 }
 
 /**
+ * Updates section
+ * @param {!Object} store Store instance that dispatches the actions
+ * @param {string} updateAction Update action name
+ * @param {object} payload Section payload
+ * @private
+ * @review
+ */
+function updateSection(store, updateAction, payload) {
+	store
+		.dispatchAction(
+			UPDATE_SAVING_CHANGES_STATUS,
+			{
+				savingChanges: true
+			}
+		)
+		.dispatchAction(
+			updateAction,
+			payload
+		)
+		.dispatchAction(
+			UPDATE_TRANSLATION_STATUS
+		)
+		.dispatchAction(
+			UPDATE_LAST_SAVE_DATE,
+			{
+				lastSaveDate: new Date()
+			}
+		)
+		.dispatchAction(
+			UPDATE_SAVING_CHANGES_STATUS,
+			{
+				savingChanges: false
+			}
+		);
+}
+
+/**
  * @param {Object} state
  * @param {Object[]} state.fragmentEntryLinks
  * @param {Object[]} state.widgets
@@ -313,5 +350,6 @@ export {
 	shouldClearFocus,
 	updateIn,
 	updateLayoutData,
+	updateSection,
 	updateWidgets
 };

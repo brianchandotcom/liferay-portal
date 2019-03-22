@@ -4,9 +4,9 @@ import Soy, {Config} from 'metal-soy';
 
 import './FloatingToolbarSpacingPanelDelegateTemplate.soy';
 import {CONTAINER_TYPES, ITEM_CONFIG_KEYS, NUMBER_OF_COLUMNS_OPTIONS, PADDING_OPTIONS} from '../../../utils/constants';
-import {setIn} from '../../../utils/FragmentsEditorUpdateUtils.es';
+import {setIn, updateSection} from '../../../utils/FragmentsEditorUpdateUtils.es';
 import templates from './FloatingToolbarSpacingPanel.soy';
-import {UPDATE_LAST_SAVE_DATE, UPDATE_SAVING_CHANGES_STATUS, UPDATE_SECTION_COLUMNS_NUMBER, UPDATE_SECTION_CONFIG, UPDATE_TRANSLATION_STATUS} from '../../../actions/actions.es';
+import {UPDATE_SECTION_COLUMNS_NUMBER, UPDATE_SECTION_CONFIG} from '../../../actions/actions.es';
 import getConnectedComponent from '../../../store/ConnectedComponent.es';
 
 /**
@@ -136,7 +136,8 @@ class FloatingToolbarSpacingPanel extends Component {
 		}
 
 		if (updateSectionColumns) {
-			this._updateSection(
+			updateSection(
+				this.store,
 				UPDATE_SECTION_COLUMNS_NUMBER,
 				{
 					numberOfColumns: event.delegateTarget.value,
@@ -147,49 +148,14 @@ class FloatingToolbarSpacingPanel extends Component {
 	}
 
 	/**
-	 * Updates section
-	 * @param {string} updateAction Update action name
-	 * @param {object} payload Section payload
-	 * @private
-	 * @review
-	 */
-	_updateSection(updateAction, payload) {
-		this.store
-			.dispatchAction(
-				UPDATE_SAVING_CHANGES_STATUS,
-				{
-					savingChanges: true
-				}
-			)
-			.dispatchAction(
-				updateAction,
-				payload
-			)
-			.dispatchAction(
-				UPDATE_TRANSLATION_STATUS
-			)
-			.dispatchAction(
-				UPDATE_LAST_SAVE_DATE,
-				{
-					lastSaveDate: new Date()
-				}
-			)
-			.dispatchAction(
-				UPDATE_SAVING_CHANGES_STATUS,
-				{
-					savingChanges: false
-				}
-			);
-	}
-
-	/**
 	 * Updates section configuration
 	 * @param {object} config Section configuration
 	 * @private
 	 * @review
 	 */
 	_updateSectionConfig(config) {
-		this._updateSection(
+		updateSection(
+			this.store,
 			UPDATE_SECTION_CONFIG,
 			{
 				config,

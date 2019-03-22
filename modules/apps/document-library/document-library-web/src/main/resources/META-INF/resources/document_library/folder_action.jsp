@@ -164,7 +164,7 @@ if ((row == null) && portletName.equals(DLPortletKeys.MEDIA_GALLERY_DISPLAY)) {
 				<c:if test="<%= hasUpdatePermission && !folder.isMountPoint() %>">
 					<liferay-ui:icon
 						message="move"
-						url='<%= "javascript:" + renderResponse.getNamespace() + "move(1, 'rowIdsFolder', " + folderId + ");" %>'
+						url='<%= "javascript:" + liferayPortletResponse.getNamespace() + "move(1, 'rowIdsFolder', " + folderId + ");" %>'
 					/>
 				</c:if>
 

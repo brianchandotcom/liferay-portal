@@ -65,7 +65,7 @@
 </tr>
 <tr>
 	<td>VERSION</td>
-	<td>//p[contains(@class,'article-version')]/b</td>
+	<td>//p[contains(@class,'article-version')]</td>
 	<td></td>
 </tr>
 <tr>

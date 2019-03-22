@@ -503,6 +503,7 @@ public class DDMDisplayContext {
 						"classNameId", String.valueOf(getClassNameId()));
 					addTemplateURL.setParameter(
 						"classPK", String.valueOf(getClassPK()));
+					addTemplateURL.setParameter("mode", getTemplateMode());
 					addTemplateURL.setParameter(
 						"resourceClassNameId",
 						String.valueOf(getResourceClassNameId()));

@@ -366,7 +366,7 @@ definition {
 
 		LexiconEntry.changeDisplayStyle(displayStyle = "cards");
 
-		Check(locator1 = "Card#SPECIFIC_CHECKBOX", key_cardText = "${roleName}");
+		LexiconCard.checkCardCheckbox(card = "${roleName}");
 
 		SelectFrameTop();
 

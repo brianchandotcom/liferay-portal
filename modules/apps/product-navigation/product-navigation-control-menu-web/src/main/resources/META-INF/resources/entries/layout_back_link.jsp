@@ -1,3 +1,4 @@
+<%--
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -11,20 +12,16 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
+--%>
 
-package com.liferay.product.navigation.control.menu.web.internal.constants;
+<%@ include file="/init.jsp" %>
 
-/**
- * @author Julio Camarero
- */
-public class ProductNavigationControlMenuWebKeys {
+<%
+String layoutBackURL = (String)request.getAttribute(ProductNavigationControlMenuWebKeys.LAYOUT_BACK_URL);
+%>
 
-	public static final String LAYOUT_BACK_URL = "LAYOUT_BACK_URL";
-
-	public static final String PORTLET_BACK_URL = "PORTLET_BACK_URL";
-
-	public static final String PORTLET_DESCRIPTION = "PORTLET_DESCRIPTION";
-
-	public static final String PORTLET_TITLE = "PORTLET_TITLE";
-
-}
+<li class="control-menu-nav-item">
+	<a class="back-url-link control-menu-icon" href="<%= HtmlUtil.escapeHREF(layoutBackURL) %>">
+		<aui:icon cssClass="icon-monospaced" image="angle-left" markupView="lexicon" />
+	</a>
+</li>

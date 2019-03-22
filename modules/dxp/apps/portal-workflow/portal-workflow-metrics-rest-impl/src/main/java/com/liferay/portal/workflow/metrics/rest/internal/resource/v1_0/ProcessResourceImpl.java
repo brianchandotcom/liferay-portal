@@ -269,7 +269,20 @@ public class ProcessResourceImpl
 			_getSLATermsAggregationResult(
 				fieldSort, pagination, processesMap.keySet());
 
-		if (_isOrderByTitle(fieldSort.getField())) {
+		if (_isOrderByInstanceCount(fieldSort.getField())) {
+			for (Bucket bucket : instanceTermsAggregationResult.getBuckets()) {
+				Process process = processesMap.remove(
+					Long.valueOf(bucket.getKey()));
+
+				_populateProcessWithSLAMetrics(
+					slaTermsAggregationResult.getBucket(bucket.getKey()),
+					process);
+				_setInstanceCount(bucket, process);
+
+				processes.add(process);
+			}
+		}
+		else if (_isOrderByTitle(fieldSort.getField())) {
 			for (Process process : processesMap.values()) {
 				_populateProcessWithSLAMetrics(
 					slaTermsAggregationResult.getBucket(
@@ -279,19 +292,6 @@ public class ProcessResourceImpl
 					instanceTermsAggregationResult.getBucket(
 						String.valueOf(process.getId())),
 					process);
-
-				processes.add(process);
-			}
-		}
-		else if (_isOrderByInstanceCount(fieldSort.getField())) {
-			for (Bucket bucket : instanceTermsAggregationResult.getBuckets()) {
-				Process process = processesMap.remove(
-					Long.valueOf(bucket.getKey()));
-
-				_populateProcessWithSLAMetrics(
-					slaTermsAggregationResult.getBucket(bucket.getKey()),
-					process);
-				_setInstanceCount(bucket, process);
 
 				processes.add(process);
 			}

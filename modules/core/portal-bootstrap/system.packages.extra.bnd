@@ -273,7 +273,7 @@ Export-Package:\
 	\
 	org.jdom.*;version='1.0',\
 	\
-	org.json.*;version='2012.6.16.c7d2d9161321e9',\
+	org.json.*;version='20180813',\
 	\
 	org.objectweb.asm;version='7.0',\
 	org.objectweb.asm.commons;version='7.0',\

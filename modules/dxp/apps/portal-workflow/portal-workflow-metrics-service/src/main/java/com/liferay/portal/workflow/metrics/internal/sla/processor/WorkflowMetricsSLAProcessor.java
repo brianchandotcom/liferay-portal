@@ -39,6 +39,7 @@ import java.time.temporal.ChronoUnit;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 import java.util.Stack;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -52,7 +53,7 @@ import org.osgi.service.component.annotations.Reference;
 @Component(immediate = true, service = WorkflowMetricsSLAProcessor.class)
 public class WorkflowMetricsSLAProcessor {
 
-	public WorkflowMetricsSLAProcessResult process(
+	public Optional<WorkflowMetricsSLAProcessResult> process(
 		long companyId, long instanceId, LocalDateTime nowLocalDateTime,
 		WorkflowMetricsSLADefinition workflowMetricsSLADefinition) {
 
@@ -69,15 +70,33 @@ public class WorkflowMetricsSLAProcessor {
 			elapsedTime += duration.toMillis();
 		}
 
+		WorkflowMetricsSLAProcessResult workflowMetricsSLAProcessResult =
+			new WorkflowMetricsSLAProcessResult();
+
+		workflowMetricsSLAProcessResult.setCompanyId(companyId);
+		workflowMetricsSLAProcessResult.setElapsedTime(elapsedTime);
+		workflowMetricsSLAProcessResult.setInstanceId(instanceId);
+		workflowMetricsSLAProcessResult.setLastCheckLocalDateTime(
+			nowLocalDateTime);
+		workflowMetricsSLAProcessResult.setOnTime(
+			elapsedTime <= workflowMetricsSLADefinition.getDuration());
+
 		long remainingTime =
 			workflowMetricsSLADefinition.getDuration() - elapsedTime;
 
-		return new WorkflowMetricsSLAProcessResult(
-			companyId, elapsedTime, instanceId, nowLocalDateTime,
-			elapsedTime <= workflowMetricsSLADefinition.getDuration(),
-			nowLocalDateTime.plus(remainingTime, ChronoUnit.MILLIS),
-			workflowMetricsSLADefinition.getProcessId(), remainingTime,
+		workflowMetricsSLAProcessResult.setOverdueLocalDateTime(
+			nowLocalDateTime.plus(remainingTime, ChronoUnit.MILLIS));
+
+		workflowMetricsSLAProcessResult.setProcessId(
+			workflowMetricsSLADefinition.getProcessId());
+		workflowMetricsSLAProcessResult.setRemainingTime(remainingTime);
+		workflowMetricsSLAProcessResult.setSLADefinitionId(
 			workflowMetricsSLADefinition.getWorkflowMetricsSLADefinitionId());
+		workflowMetricsSLAProcessResult.setWorkfowMetricsSLAStatus(
+			workfowMetricsSLAStatus);
+
+		return Optional.of(workflowMetricsSLAProcessResult);
+
 	}
 
 	protected List<Document> getDocuments(long companyId, long instanceId) {

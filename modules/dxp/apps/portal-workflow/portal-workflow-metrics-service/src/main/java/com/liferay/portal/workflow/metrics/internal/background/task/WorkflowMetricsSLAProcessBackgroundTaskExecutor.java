@@ -41,6 +41,7 @@ import java.time.LocalDateTime;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.stream.Stream;
 
 import org.osgi.service.component.annotations.Component;
@@ -83,15 +84,14 @@ public class WorkflowMetricsSLAProcessBackgroundTaskExecutor
 
 		stream.forEach(
 			instanceId -> {
-				WorkflowMetricsSLAProcessResult
-					workflowMetricsSLAProcessResult =
-						_workflowMetricsSLAProcessor.process(
-							workflowMetricsSLADefinition.getCompanyId(),
-							instanceId, LocalDateTime.now(),
-							workflowMetricsSLADefinition);
+				Optional<WorkflowMetricsSLAProcessResult> optional =
+					_workflowMetricsSLAProcessor.process(
+						workflowMetricsSLADefinition.getCompanyId(), instanceId,
+						LocalDateTime.now(), workflowMetricsSLADefinition);
 
-				_slaProcessResultWorkflowMetricsIndexer.addDocument(
-					workflowMetricsSLAProcessResult);
+				optional.ifPresent(
+					_slaProcessResultWorkflowMetricsIndexer::
+						addDocument);
 			});
 
 		return BackgroundTaskResult.SUCCESS;

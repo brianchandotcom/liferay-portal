@@ -248,6 +248,7 @@ describe(
 
 								const {child, provider} = component.refs;
 								const mockEvent = {
+									addedToPlaceholder: true,
 									source: {
 										columnIndex: 0,
 										pageIndex: 0,
@@ -257,15 +258,16 @@ describe(
 										columnIndex: 0,
 										pageIndex: 0,
 										rowIndex: 0
-									},
-									targetIsEmptyRow: true
+									}
 								};
+
+								const fields = provider.state.pages[0].rows[1].columns[0].fields;
 
 								child.emit('fieldMoved', mockEvent);
 
 								jest.runAllTimers();
 
-								expect(provider.state.pages).toMatchSnapshot();
+								expect(provider.state.pages[0].rows[0].columns[0].fields).toEqual(fields);
 								expect(child.props.pages).toEqual(provider.state.pages);
 							}
 						);
@@ -351,6 +353,7 @@ describe(
 
 								const {child, provider} = component.refs;
 								const mockEvent = {
+									addedToPlaceholder: true,
 									source: {
 										columnIndex: 0,
 										pageIndex: 0,
@@ -360,8 +363,7 @@ describe(
 										columnIndex: 0,
 										pageIndex: 0,
 										rowIndex: 0
-									},
-									targetIsEmptyRow: true
+									}
 								};
 
 								child.emit('fieldMoved', mockEvent);
@@ -594,30 +596,15 @@ describe(
 
 								const {child, provider} = component.refs;
 								const mockEvent = {
-									leftResize: true,
-									sourceIndexes: {columnIndex: 1, pageIndex: 0, rowIndex: 0},
-									targetDatasetCol: '7'
-								};
-
-								child.emit('columnResized', mockEvent);
-
-								jest.runAllTimers();
-
-								expect(provider.state.pages).toMatchSnapshot();
-								expect(child.props.pages).toEqual(provider.state.pages);
-							}
-						);
-
-						it(
-							'should listen to the columnResized event and resize the field when the right arrow is pulled',
-							() => {
-								component = new Parent();
-
-								const {child, provider} = component.refs;
-								const mockEvent = {
-									leftResize: false,
-									sourceIndexes: {columnIndex: 1, pageIndex: 0, rowIndex: 0},
-									targetDatasetCol: '3'
+									column: 7,
+									direction: 'left',
+									source: {
+										dataset: {
+											ddmFieldColumn: 1,
+											ddmFieldPage: 0,
+											ddmFieldRow: 0
+										}
+									}
 								};
 
 								child.emit('columnResized', mockEvent);

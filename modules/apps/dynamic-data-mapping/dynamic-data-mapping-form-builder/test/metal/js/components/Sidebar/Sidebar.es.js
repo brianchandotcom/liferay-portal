@@ -288,7 +288,11 @@ describe(
 					},
 					target: {
 						parentElement: {
-							getAttribute: jest.fn()
+							dataset: {
+								ddmFieldColumn: 0,
+								ddmFieldPage: 0,
+								ddmFieldRow: 0
+							}
 						}
 					}
 				};

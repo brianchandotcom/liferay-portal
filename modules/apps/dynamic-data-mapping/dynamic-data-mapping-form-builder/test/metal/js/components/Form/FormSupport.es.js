@@ -112,24 +112,6 @@ describe(
 		);
 
 		it(
-			'should not add an empty object to the column when the field is not passed',
-			() => {
-				const columnIndex = 1;
-				const pageIndex = 0;
-				const rowIndex = 0;
-
-				expect(
-					() => FormSupport.addFieldToColumn(
-						pages,
-						pageIndex,
-						rowIndex,
-						columnIndex
-					)
-				).toThrowError();
-			}
-		);
-
-		it(
 			'should add a new fields to column void',
 			() => {
 				const columnIndex = 2;
@@ -151,19 +133,6 @@ describe(
 						fields
 					)
 				).toMatchSnapshot();
-			}
-		);
-
-		it(
-			'should not add new fields to the column as a way to remove',
-			() => {
-				const columnIndex = 2;
-				const pageIndex = 0;
-				const rowIndex = 1;
-
-				expect(
-					() => FormSupport.setColumnFields(pages, pageIndex, rowIndex, columnIndex)
-				).toThrowError();
 			}
 		);
 
@@ -309,6 +278,10 @@ describe(
 				const element = createElement(
 					{
 						attributes: [
+							{
+								key: 'data-ddm-field-column',
+								value: 0
+							},
 							{
 								key: 'data-ddm-field-row',
 								value: 1

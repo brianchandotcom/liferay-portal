@@ -112,10 +112,18 @@ class AssetVocabularyCategoriesSelector extends Component {
 			}
 		);
 
-		if (match) {
-			const selectedItems = multiSelect.selectedItems;
+		let selectedItems = multiSelect.selectedItems;
 
+		if (match) {
 			selectedItems[selectedItems.length - 1].value = match.data.value;
+		}
+
+		if (!this.allowInputCreateItem && !match) {
+			selectedItems = selectedItems.splice(-1, 1);
+
+			multiSelect.inputValue = event.data.item.label;
+
+			//TODO show error
 		}
 
 		this.categoryIds = this._getCategoryIds();
@@ -173,6 +181,16 @@ class AssetVocabularyCategoriesSelector extends Component {
 }
 
 AssetVocabularyCategoriesSelector.STATE = {
+
+	/**
+	 * Flag to indicate whether input can create item.
+	 * @default false
+	 * @instance
+	 * @memberof AssetVocabularyCategoriesSelector
+	 * @review
+	 * @type {?bool}
+	 */
+	allowInputCreateItem: Config.bool().value(false),
 
 	/**
 	 * A comma separated version of the list of selected items

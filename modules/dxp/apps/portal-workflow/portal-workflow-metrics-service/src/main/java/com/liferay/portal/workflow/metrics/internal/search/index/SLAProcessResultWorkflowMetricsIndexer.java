@@ -45,7 +45,6 @@ public class SLAProcessResultWorkflowMetricsIndexer
 				workflowMetricsSLAProcessResult.getInstanceId(),
 				workflowMetricsSLAProcessResult.getProcessId(),
 				workflowMetricsSLAProcessResult.getSLADefinitionId()));
-
 		document.addKeyword(
 			"companyId", workflowMetricsSLAProcessResult.getCompanyId());
 		document.addKeyword(

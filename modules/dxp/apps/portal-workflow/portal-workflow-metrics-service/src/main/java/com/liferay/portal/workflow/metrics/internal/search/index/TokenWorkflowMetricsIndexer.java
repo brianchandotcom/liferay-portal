@@ -49,7 +49,6 @@ public class TokenWorkflowMetricsIndexer
 				kaleoTaskInstanceToken.getKaleoInstanceId(),
 				kaleoTaskInstanceToken.getKaleoTaskId(),
 				kaleoTaskInstanceToken.getKaleoTaskInstanceTokenId()));
-
 		document.addKeyword("className", kaleoTaskInstanceToken.getClassName());
 		document.addKeyword("classPK", kaleoTaskInstanceToken.getClassPK());
 		document.addKeyword("companyId", kaleoTaskInstanceToken.getCompanyId());

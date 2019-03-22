@@ -41,7 +41,6 @@ public class TaskWorkflowMetricsIndexer
 				kaleoTask.getCompanyId(),
 				kaleoTask.getKaleoDefinitionVersionId(),
 				kaleoTask.getKaleoTaskId()));
-
 		document.addKeyword("companyId", kaleoTask.getCompanyId());
 		document.addDateSortable("createDate", kaleoTask.getCreateDate());
 		document.addDateSortable("modifiedDate", kaleoTask.getModifiedDate());

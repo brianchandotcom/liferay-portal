@@ -45,7 +45,6 @@ public class InstanceWorkflowMetricsIndexer
 				kaleoInstance.getCompanyId(),
 				kaleoInstance.getKaleoDefinitionVersionId(),
 				kaleoInstance.getKaleoInstanceId()));
-
 		document.addKeyword("className", kaleoInstance.getClassName());
 		document.addKeyword("classPK", kaleoInstance.getClassPK());
 		document.addKeyword("companyId", kaleoInstance.getCompanyId());

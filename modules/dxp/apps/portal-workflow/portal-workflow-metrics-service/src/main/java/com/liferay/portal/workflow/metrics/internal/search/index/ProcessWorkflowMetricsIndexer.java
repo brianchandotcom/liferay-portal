@@ -87,7 +87,6 @@ public class ProcessWorkflowMetricsIndexer
 			digest(
 				kaleoDefinition.getCompanyId(),
 				kaleoDefinition.getKaleoDefinitionId()));
-
 		document.addKeyword("active", kaleoDefinition.isActive());
 		document.addKeyword("companyId", kaleoDefinition.getCompanyId());
 		document.addDateSortable("createDate", kaleoDefinition.getCreateDate());

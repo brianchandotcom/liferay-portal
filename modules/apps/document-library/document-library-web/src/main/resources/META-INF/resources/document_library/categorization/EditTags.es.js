@@ -54,7 +54,7 @@ class EditTags extends Component {
 	 * @param {Object} bodyData The body of the request
 	 * @param {Function} callback Callback function
 	 */
-	_fetchTagsRequest(url, bodyData, callback) {
+	_fetchTagsRequest(url, method, bodyData) {
 		let body = JSON.stringify(bodyData);
 
 		let headers = new Headers();
@@ -64,15 +64,12 @@ class EditTags extends Component {
 			body,
 			credentials: 'include',
 			headers,
-			method: 'POST'
+			method
 		};
 
-		return fetch(url, request)
+		return fetch(this.pathModule + url, request)
 			.then(
 				response => response.json()
-			)
-			.then(
-				response => callback ? callback(response) : response
 			)
 			.catch(
 				(xhr) => {
@@ -91,19 +88,12 @@ class EditTags extends Component {
 	_getCommonTags() {
 		this.loading = true;
 
-		let selection = {
-			documentIds: this.fileEntries,
-			selectionScope: {
-				folderId: this.folderId,
-				repositoryId: this.repositoryId,
-				selectAll: this.selectAll
-			}
-		};
+		let selection = this._getSelection();
 
 		Promise.all(
 			[
-				this._fetchTagsRequest(this.pathModule + this.urlTags, selection),
-				this._fetchTagsRequest(this.pathModule + this.urlSelectionDescription, selection)
+				this._fetchTagsRequest(this.urlTags, 'POST', selection),
+				this._fetchTagsRequest(this.urlSelectionDescription, 'POST', selection)
 			]
 		).then(
 			([responseTags, responseDescription]) => {
@@ -152,21 +142,17 @@ class EditTags extends Component {
 			tag => finalTags.indexOf(tag) == -1
 		);
 
-		let bodyData = {
-			append: this.append,
-			folderId: this.folderId,
-			repositoryId: this.repositoryId,
-			selectAll: this.selectAll,
-			selection: this.fileEntries,
-			toAddTagNames: addedTags,
-			toRemoveTagNames: removedTags
-		};
-
 		let instance = this;
 
 		this._fetchTagsRequest(
 			this.urlUpdateTags,
-			bodyData,
+			this.append ? 'PUT' : 'PATCH',
+			{
+				documentBulkSelection: this._getSelection(),
+				keywordsToAdd: addedTags,
+				keywordsToRemove: removedTags
+			}
+		).then(
 			response => {
 				instance.close();
 
@@ -203,6 +189,17 @@ class EditTags extends Component {
 		}
 
 		return commonTagsObjList;
+	}
+
+	_getSelection() {
+		return {
+			documentIds: this.fileEntries,
+			selectionScope: {
+				folderId: this.folderId,
+				repositoryId: this.repositoryId,
+				selectAll: this.selectAll
+			}
+		};
 	}
 }
 
@@ -375,7 +372,7 @@ EditTags.STATE = {
 	 * @review
 	 * @type {String}
 	 */
-	urlUpdateTags: Config.string().required()
+	urlUpdateTags: Config.string().value('/bulk-rest/v1.0/keywords/batch')
 };
 
 // Register component

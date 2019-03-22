@@ -100,6 +100,12 @@
 			}
 		}
 
+		&__item > .btn {
+			color: inherit;
+			padding: 0.75em;
+			font-size: 0.75em;
+		}
+
 		&__item + .collapse,
 		&__item + .collapsing {
 			overflow: hidden;

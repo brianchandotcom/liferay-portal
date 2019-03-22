@@ -26,7 +26,6 @@ describe(
 							classNameId,
 							classPK,
 							nameMap,
-							priority,
 							segmentsEntryId
 						},
 						callbackFunc,
@@ -36,7 +35,6 @@ describe(
 							{
 								active,
 								nameCurrentValue: JSON.parse(nameMap).en_US,
-								priority,
 								segmentsEntryId,
 								segmentsExperienceId: (experiencesCount++, SEGMENTS_EXPERIENCES_LIST[experiencesCount])
 							}
@@ -69,7 +67,6 @@ describe(
 						[SEGMENTS_EXPERIENCE_ID]: {
 							active: true,
 							name: payload.name,
-							priority: 0,
 							segmentsEntryId: payload.segmentsEntryId,
 							segmentsExperienceId: SEGMENTS_EXPERIENCE_ID
 						}
@@ -82,7 +79,6 @@ describe(
 					classNameId: prevState.classNameId,
 					classPK: prevState.classPK,
 					nameMap: JSON.stringify({en_US: payload.name}),
-					priority: 0,
 					segmentsEntryId: payload.segmentsEntryId
 				};
 
@@ -114,7 +110,6 @@ describe(
 						[SEGMENTS_EXPERIENCE_ID_SECOND]: {
 							active: true,
 							name: secondPayload.name,
-							priority: 1,
 							segmentsEntryId: secondPayload.segmentsEntryId,
 							segmentsExperienceId: SEGMENTS_EXPERIENCE_ID_SECOND
 						}
@@ -127,7 +122,6 @@ describe(
 					classNameId: prevState.classNameId,
 					classPK: prevState.classPK,
 					nameMap: JSON.stringify({en_US: secondPayload.name}),
-					priority: 1,
 					segmentsEntryId: secondPayload.segmentsEntryId
 				};
 
@@ -275,7 +269,6 @@ describe(
 						{
 							active,
 							nameMap,
-							priority,
 							segmentsEntryId,
 							segmentsExperienceId
 						},
@@ -286,7 +279,6 @@ describe(
 							{
 								active,
 								nameCurrentValue: JSON.parse(nameMap).en_US,
-								priority,
 								segmentsEntryId,
 								segmentsExperienceId
 							}
@@ -298,21 +290,18 @@ describe(
 					[SEGMENTS_EXPERIENCE_ID]: {
 						active: true,
 						name: 'A test experience',
-						priority: 3,
 						segmentsEntryId: 'notRelevantSegmentId',
 						segmentsExperienceId: SEGMENTS_EXPERIENCE_ID
 					},
 					[SEGMENTS_EXPERIENCE_ID_DEFAULT]: {
 						active: true,
 						name: 'A default test experience',
-						priority: 3,
 						segmentsEntryId: 'notRelevantSegmentId',
 						segmentsExperienceId: SEGMENTS_EXPERIENCE_ID
 					},
 					[SEGMENTS_EXPERIENCE_ID_SECOND]: {
 						active: true,
 						name: 'A second test experience',
-						priority: 3,
 						segmentsEntryId: 'notRelevantSegmentId',
 						segmentsExperienceId: SEGMENTS_EXPERIENCE_ID_SECOND
 					}

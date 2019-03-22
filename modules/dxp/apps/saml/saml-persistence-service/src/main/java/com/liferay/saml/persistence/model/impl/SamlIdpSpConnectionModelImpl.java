@@ -74,10 +74,10 @@ public class SamlIdpSpConnectionModelImpl
 		{"samlSpEntityId", Types.VARCHAR}, {"assertionLifetime", Types.INTEGER},
 		{"attributeNames", Types.VARCHAR}, {"attributesEnabled", Types.BOOLEAN},
 		{"attributesNamespaceEnabled", Types.BOOLEAN},
-		{"enabled", Types.BOOLEAN}, {"metadataUrl", Types.VARCHAR},
-		{"metadataXml", Types.CLOB}, {"metadataUpdatedDate", Types.TIMESTAMP},
-		{"name", Types.VARCHAR}, {"nameIdAttribute", Types.VARCHAR},
-		{"nameIdFormat", Types.VARCHAR}
+		{"enabled", Types.BOOLEAN}, {"encryptionForced", Types.BOOLEAN},
+		{"metadataUrl", Types.VARCHAR}, {"metadataXml", Types.CLOB},
+		{"metadataUpdatedDate", Types.TIMESTAMP}, {"name", Types.VARCHAR},
+		{"nameIdAttribute", Types.VARCHAR}, {"nameIdFormat", Types.VARCHAR}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
@@ -96,6 +96,7 @@ public class SamlIdpSpConnectionModelImpl
 		TABLE_COLUMNS_MAP.put("attributesEnabled", Types.BOOLEAN);
 		TABLE_COLUMNS_MAP.put("attributesNamespaceEnabled", Types.BOOLEAN);
 		TABLE_COLUMNS_MAP.put("enabled", Types.BOOLEAN);
+		TABLE_COLUMNS_MAP.put("encryptionForced", Types.BOOLEAN);
 		TABLE_COLUMNS_MAP.put("metadataUrl", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("metadataXml", Types.CLOB);
 		TABLE_COLUMNS_MAP.put("metadataUpdatedDate", Types.TIMESTAMP);
@@ -105,7 +106,7 @@ public class SamlIdpSpConnectionModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table SamlIdpSpConnection (samlIdpSpConnectionId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,samlSpEntityId VARCHAR(1024) null,assertionLifetime INTEGER,attributeNames STRING null,attributesEnabled BOOLEAN,attributesNamespaceEnabled BOOLEAN,enabled BOOLEAN,metadataUrl VARCHAR(1024) null,metadataXml TEXT null,metadataUpdatedDate DATE null,name VARCHAR(75) null,nameIdAttribute VARCHAR(1024) null,nameIdFormat VARCHAR(1024) null)";
+		"create table SamlIdpSpConnection (samlIdpSpConnectionId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,samlSpEntityId VARCHAR(1024) null,assertionLifetime INTEGER,attributeNames STRING null,attributesEnabled BOOLEAN,attributesNamespaceEnabled BOOLEAN,enabled BOOLEAN,encryptionForced BOOLEAN,metadataUrl VARCHAR(1024) null,metadataXml TEXT null,metadataUpdatedDate DATE null,name VARCHAR(75) null,nameIdAttribute VARCHAR(1024) null,nameIdFormat VARCHAR(1024) null)";
 
 	public static final String TABLE_SQL_DROP =
 		"drop table SamlIdpSpConnection";
@@ -322,6 +323,12 @@ public class SamlIdpSpConnectionModelImpl
 			"enabled",
 			(BiConsumer<SamlIdpSpConnection, Boolean>)
 				SamlIdpSpConnection::setEnabled);
+		attributeGetterFunctions.put(
+			"encryptionForced", SamlIdpSpConnection::getEncryptionForced);
+		attributeSetterBiConsumers.put(
+			"encryptionForced",
+			(BiConsumer<SamlIdpSpConnection, Boolean>)
+				SamlIdpSpConnection::setEncryptionForced);
 		attributeGetterFunctions.put(
 			"metadataUrl", SamlIdpSpConnection::getMetadataUrl);
 		attributeSetterBiConsumers.put(
@@ -561,6 +568,21 @@ public class SamlIdpSpConnectionModelImpl
 	}
 
 	@Override
+	public boolean getEncryptionForced() {
+		return _encryptionForced;
+	}
+
+	@Override
+	public boolean isEncryptionForced() {
+		return _encryptionForced;
+	}
+
+	@Override
+	public void setEncryptionForced(boolean encryptionForced) {
+		_encryptionForced = encryptionForced;
+	}
+
+	@Override
 	public String getMetadataUrl() {
 		if (_metadataUrl == null) {
 			return "";
@@ -693,6 +715,7 @@ public class SamlIdpSpConnectionModelImpl
 		samlIdpSpConnectionImpl.setAttributesNamespaceEnabled(
 			isAttributesNamespaceEnabled());
 		samlIdpSpConnectionImpl.setEnabled(isEnabled());
+		samlIdpSpConnectionImpl.setEncryptionForced(isEncryptionForced());
 		samlIdpSpConnectionImpl.setMetadataUrl(getMetadataUrl());
 		samlIdpSpConnectionImpl.setMetadataXml(getMetadataXml());
 		samlIdpSpConnectionImpl.setMetadataUpdatedDate(
@@ -839,6 +862,8 @@ public class SamlIdpSpConnectionModelImpl
 
 		samlIdpSpConnectionCacheModel.enabled = isEnabled();
 
+		samlIdpSpConnectionCacheModel.encryptionForced = isEncryptionForced();
+
 		samlIdpSpConnectionCacheModel.metadataUrl = getMetadataUrl();
 
 		String metadataUrl = samlIdpSpConnectionCacheModel.metadataUrl;
@@ -977,6 +1002,7 @@ public class SamlIdpSpConnectionModelImpl
 	private boolean _attributesEnabled;
 	private boolean _attributesNamespaceEnabled;
 	private boolean _enabled;
+	private boolean _encryptionForced;
 	private String _metadataUrl;
 	private String _metadataXml;
 	private Date _metadataUpdatedDate;

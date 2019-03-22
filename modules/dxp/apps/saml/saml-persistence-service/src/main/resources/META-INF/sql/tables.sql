@@ -11,6 +11,7 @@ create table SamlIdpSpConnection (
 	attributesEnabled BOOLEAN,
 	attributesNamespaceEnabled BOOLEAN,
 	enabled BOOLEAN,
+	encryptionForced BOOLEAN,
 	metadataUrl VARCHAR(1024) null,
 	metadataXml TEXT null,
 	metadataUpdatedDate DATE null,

@@ -21,6 +21,7 @@
 		<field name="attributesEnabled" type="boolean" />
 		<field name="attributesNamespaceEnabled" type="boolean" />
 		<field name="enabled" type="boolean" />
+		<field name="encryptionForced" type="boolean" />
 		<field name="metadataUrl" type="String">
 			<hint-collection name="ENTITY-ID" />
 		</field>

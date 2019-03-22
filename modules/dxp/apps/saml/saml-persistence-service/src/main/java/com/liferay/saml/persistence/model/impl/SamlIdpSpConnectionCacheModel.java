@@ -67,7 +67,7 @@ public class SamlIdpSpConnectionCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(37);
+		StringBundler sb = new StringBundler(39);
 
 		sb.append("{samlIdpSpConnectionId=");
 		sb.append(samlIdpSpConnectionId);
@@ -93,6 +93,8 @@ public class SamlIdpSpConnectionCacheModel
 		sb.append(attributesNamespaceEnabled);
 		sb.append(", enabled=");
 		sb.append(enabled);
+		sb.append(", encryptionForced=");
+		sb.append(encryptionForced);
 		sb.append(", metadataUrl=");
 		sb.append(metadataUrl);
 		sb.append(", metadataXml=");
@@ -160,6 +162,7 @@ public class SamlIdpSpConnectionCacheModel
 		samlIdpSpConnectionImpl.setAttributesNamespaceEnabled(
 			attributesNamespaceEnabled);
 		samlIdpSpConnectionImpl.setEnabled(enabled);
+		samlIdpSpConnectionImpl.setEncryptionForced(encryptionForced);
 
 		if (metadataUrl == null) {
 			samlIdpSpConnectionImpl.setMetadataUrl("");
@@ -229,6 +232,8 @@ public class SamlIdpSpConnectionCacheModel
 		attributesNamespaceEnabled = objectInput.readBoolean();
 
 		enabled = objectInput.readBoolean();
+
+		encryptionForced = objectInput.readBoolean();
 		metadataUrl = objectInput.readUTF();
 		metadataXml = objectInput.readUTF();
 		metadataUpdatedDate = objectInput.readLong();
@@ -276,6 +281,8 @@ public class SamlIdpSpConnectionCacheModel
 		objectOutput.writeBoolean(attributesNamespaceEnabled);
 
 		objectOutput.writeBoolean(enabled);
+
+		objectOutput.writeBoolean(encryptionForced);
 
 		if (metadataUrl == null) {
 			objectOutput.writeUTF("");
@@ -327,6 +334,7 @@ public class SamlIdpSpConnectionCacheModel
 	public boolean attributesEnabled;
 	public boolean attributesNamespaceEnabled;
 	public boolean enabled;
+	public boolean encryptionForced;
 	public String metadataUrl;
 	public String metadataXml;
 	public long metadataUpdatedDate;

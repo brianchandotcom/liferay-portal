@@ -58,6 +58,7 @@ public class SamlIdpSpConnectionWrapper
 		attributes.put(
 			"attributesNamespaceEnabled", isAttributesNamespaceEnabled());
 		attributes.put("enabled", isEnabled());
+		attributes.put("encryptionForced", isEncryptionForced());
 		attributes.put("metadataUrl", getMetadataUrl());
 		attributes.put("metadataXml", getMetadataXml());
 		attributes.put("metadataUpdatedDate", getMetadataUpdatedDate());
@@ -144,6 +145,12 @@ public class SamlIdpSpConnectionWrapper
 
 		if (enabled != null) {
 			setEnabled(enabled);
+		}
+
+		Boolean encryptionForced = (Boolean)attributes.get("encryptionForced");
+
+		if (encryptionForced != null) {
+			setEncryptionForced(encryptionForced);
 		}
 
 		String metadataUrl = (String)attributes.get("metadataUrl");
@@ -251,6 +258,16 @@ public class SamlIdpSpConnectionWrapper
 	@Override
 	public boolean getEnabled() {
 		return model.getEnabled();
+	}
+
+	/**
+	 * Returns the encryption forced of this saml idp sp connection.
+	 *
+	 * @return the encryption forced of this saml idp sp connection
+	 */
+	@Override
+	public boolean getEncryptionForced() {
+		return model.getEncryptionForced();
 	}
 
 	/**
@@ -413,6 +430,16 @@ public class SamlIdpSpConnectionWrapper
 		return model.isEnabled();
 	}
 
+	/**
+	 * Returns <code>true</code> if this saml idp sp connection is encryption forced.
+	 *
+	 * @return <code>true</code> if this saml idp sp connection is encryption forced; <code>false</code> otherwise
+	 */
+	@Override
+	public boolean isEncryptionForced() {
+		return model.isEncryptionForced();
+	}
+
 	@Override
 	public void persist() {
 		model.persist();
@@ -488,6 +515,16 @@ public class SamlIdpSpConnectionWrapper
 	@Override
 	public void setEnabled(boolean enabled) {
 		model.setEnabled(enabled);
+	}
+
+	/**
+	 * Sets whether this saml idp sp connection is encryption forced.
+	 *
+	 * @param encryptionForced the encryption forced of this saml idp sp connection
+	 */
+	@Override
+	public void setEncryptionForced(boolean encryptionForced) {
+		model.setEncryptionForced(encryptionForced);
 	}
 
 	/**

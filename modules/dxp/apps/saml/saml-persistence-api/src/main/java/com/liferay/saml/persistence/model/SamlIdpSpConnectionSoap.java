@@ -49,6 +49,7 @@ public class SamlIdpSpConnectionSoap implements Serializable {
 		soapModel.setAttributesNamespaceEnabled(
 			model.isAttributesNamespaceEnabled());
 		soapModel.setEnabled(model.isEnabled());
+		soapModel.setEncryptionForced(model.isEncryptionForced());
 		soapModel.setMetadataUrl(model.getMetadataUrl());
 		soapModel.setMetadataXml(model.getMetadataXml());
 		soapModel.setMetadataUpdatedDate(model.getMetadataUpdatedDate());
@@ -227,6 +228,18 @@ public class SamlIdpSpConnectionSoap implements Serializable {
 		_enabled = enabled;
 	}
 
+	public boolean getEncryptionForced() {
+		return _encryptionForced;
+	}
+
+	public boolean isEncryptionForced() {
+		return _encryptionForced;
+	}
+
+	public void setEncryptionForced(boolean encryptionForced) {
+		_encryptionForced = encryptionForced;
+	}
+
 	public String getMetadataUrl() {
 		return _metadataUrl;
 	}
@@ -287,6 +300,7 @@ public class SamlIdpSpConnectionSoap implements Serializable {
 	private boolean _attributesEnabled;
 	private boolean _attributesNamespaceEnabled;
 	private boolean _enabled;
+	private boolean _encryptionForced;
 	private String _metadataUrl;
 	private String _metadataXml;
 	private Date _metadataUpdatedDate;

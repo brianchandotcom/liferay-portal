@@ -58,16 +58,17 @@ public class SamlIdpSpConnectionLocalServiceWrapper
 				String samlSpEntityId, int assertionLifetime,
 				String attributeNames, boolean attributesEnabled,
 				boolean attributesNamespaceEnabled, boolean enabled,
-				String metadataUrl, java.io.InputStream metadataXmlInputStream,
-				String name, String nameIdAttribute, String nameIdFormat,
+				boolean encryptionForced, String metadataUrl,
+				java.io.InputStream metadataXmlInputStream, String name,
+				String nameIdAttribute, String nameIdFormat,
 				com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _samlIdpSpConnectionLocalService.addSamlIdpSpConnection(
 			samlSpEntityId, assertionLifetime, attributeNames,
-			attributesEnabled, attributesNamespaceEnabled, enabled, metadataUrl,
-			metadataXmlInputStream, name, nameIdAttribute, nameIdFormat,
-			serviceContext);
+			attributesEnabled, attributesNamespaceEnabled, enabled,
+			encryptionForced, metadataUrl, metadataXmlInputStream, name,
+			nameIdAttribute, nameIdFormat, serviceContext);
 	}
 
 	/**
@@ -365,7 +366,7 @@ public class SamlIdpSpConnectionLocalServiceWrapper
 				long samlIdpSpConnectionId, String samlSpEntityId,
 				int assertionLifetime, String attributeNames,
 				boolean attributesEnabled, boolean attributesNamespaceEnabled,
-				boolean enabled, String metadataUrl,
+				boolean enabled, boolean encryptionForced, String metadataUrl,
 				java.io.InputStream metadataXmlInputStream, String name,
 				String nameIdAttribute, String nameIdFormat,
 				com.liferay.portal.kernel.service.ServiceContext serviceContext)
@@ -374,8 +375,8 @@ public class SamlIdpSpConnectionLocalServiceWrapper
 		return _samlIdpSpConnectionLocalService.updateSamlIdpSpConnection(
 			samlIdpSpConnectionId, samlSpEntityId, assertionLifetime,
 			attributeNames, attributesEnabled, attributesNamespaceEnabled,
-			enabled, metadataUrl, metadataXmlInputStream, name, nameIdAttribute,
-			nameIdFormat, serviceContext);
+			enabled, encryptionForced, metadataUrl, metadataXmlInputStream,
+			name, nameIdAttribute, nameIdFormat, serviceContext);
 	}
 
 	/**

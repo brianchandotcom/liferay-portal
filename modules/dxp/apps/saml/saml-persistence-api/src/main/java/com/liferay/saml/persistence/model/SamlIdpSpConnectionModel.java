@@ -278,6 +278,27 @@ public interface SamlIdpSpConnectionModel
 	public void setEnabled(boolean enabled);
 
 	/**
+	 * Returns the encryption forced of this saml idp sp connection.
+	 *
+	 * @return the encryption forced of this saml idp sp connection
+	 */
+	public boolean getEncryptionForced();
+
+	/**
+	 * Returns <code>true</code> if this saml idp sp connection is encryption forced.
+	 *
+	 * @return <code>true</code> if this saml idp sp connection is encryption forced; <code>false</code> otherwise
+	 */
+	public boolean isEncryptionForced();
+
+	/**
+	 * Sets whether this saml idp sp connection is encryption forced.
+	 *
+	 * @param encryptionForced the encryption forced of this saml idp sp connection
+	 */
+	public void setEncryptionForced(boolean encryptionForced);
+
+	/**
 	 * Returns the metadata url of this saml idp sp connection.
 	 *
 	 * @return the metadata url of this saml idp sp connection

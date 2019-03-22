@@ -76,7 +76,7 @@ public interface SamlIdpSpConnectionLocalService
 	public SamlIdpSpConnection addSamlIdpSpConnection(
 			String samlSpEntityId, int assertionLifetime, String attributeNames,
 			boolean attributesEnabled, boolean attributesNamespaceEnabled,
-			boolean enabled, String metadataUrl,
+			boolean enabled, boolean encryptionForced, String metadataUrl,
 			InputStream metadataXmlInputStream, String name,
 			String nameIdAttribute, String nameIdFormat,
 			ServiceContext serviceContext)
@@ -271,7 +271,7 @@ public interface SamlIdpSpConnectionLocalService
 			long samlIdpSpConnectionId, String samlSpEntityId,
 			int assertionLifetime, String attributeNames,
 			boolean attributesEnabled, boolean attributesNamespaceEnabled,
-			boolean enabled, String metadataUrl,
+			boolean enabled, boolean encryptionForced, String metadataUrl,
 			InputStream metadataXmlInputStream, String name,
 			String nameIdAttribute, String nameIdFormat,
 			ServiceContext serviceContext)

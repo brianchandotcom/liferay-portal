@@ -161,18 +161,16 @@ public class ProcessResourceImpl
 	}
 
 	private Process _createProcess(SearchHit searchHit) {
-		Process process = new Process();
-
 		Document document = searchHit.getDocument();
 
-		process.setId(GetterUtil.getLong(document.getFieldValue("processId")));
-
-		process.setInstanceCount(0L);
-
-		process.setTitle(
-			GetterUtil.getString(document.getFieldValue(_getTitleFieldName())));
-
-		return process;
+		return new Process() {
+			{
+				id = GetterUtil.getLong(document.getFieldValue("processId"));
+				instanceCount = 0L;
+				title = GetterUtil.getString(
+					document.getFieldValue(_getTitleFieldName()));
+			}
+		};
 	}
 
 	private BooleanFilter _createProcessBooleanFilter() {

@@ -19,7 +19,7 @@ import com.liferay.asset.list.service.AssetListEntryService;
 import com.liferay.asset.list.service.persistence.AssetListEntryAssetEntryRelPersistence;
 import com.liferay.asset.list.service.persistence.AssetListEntryPersistence;
 import com.liferay.asset.list.service.persistence.AssetListEntrySegmentsEntryRelPersistence;
-import com.liferay.portal.kernel.bean.BeanReference;
+import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.jdbc.SqlUpdate;
@@ -27,11 +27,11 @@ import com.liferay.portal.kernel.dao.jdbc.SqlUpdateFactoryUtil;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.module.framework.service.IdentifiableOSGiService;
 import com.liferay.portal.kernel.service.BaseServiceImpl;
-import com.liferay.portal.kernel.service.persistence.UserPersistence;
 import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import javax.sql.DataSource;
+
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * Provides the base implementation for the asset list entry remote service.
@@ -46,287 +46,23 @@ import javax.sql.DataSource;
  */
 public abstract class AssetListEntryServiceBaseImpl
 	extends BaseServiceImpl
-	implements AssetListEntryService, IdentifiableOSGiService {
+	implements AssetListEntryService, AopService, IdentifiableOSGiService {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this class directly. Use <code>AssetListEntryService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.asset.list.service.AssetListEntryServiceUtil</code>.
 	 */
-
-	/**
-	 * Returns the asset list entry local service.
-	 *
-	 * @return the asset list entry local service
-	 */
-	public com.liferay.asset.list.service.AssetListEntryLocalService
-		getAssetListEntryLocalService() {
-
-		return assetListEntryLocalService;
+	@Override
+	public Class<?>[] getAopInterfaces() {
+		return new Class<?>[] {
+			AssetListEntryService.class, IdentifiableOSGiService.class
+		};
 	}
 
-	/**
-	 * Sets the asset list entry local service.
-	 *
-	 * @param assetListEntryLocalService the asset list entry local service
-	 */
-	public void setAssetListEntryLocalService(
-		com.liferay.asset.list.service.AssetListEntryLocalService
-			assetListEntryLocalService) {
-
-		this.assetListEntryLocalService = assetListEntryLocalService;
-	}
-
-	/**
-	 * Returns the asset list entry remote service.
-	 *
-	 * @return the asset list entry remote service
-	 */
-	public AssetListEntryService getAssetListEntryService() {
-		return assetListEntryService;
-	}
-
-	/**
-	 * Sets the asset list entry remote service.
-	 *
-	 * @param assetListEntryService the asset list entry remote service
-	 */
-	public void setAssetListEntryService(
-		AssetListEntryService assetListEntryService) {
-
-		this.assetListEntryService = assetListEntryService;
-	}
-
-	/**
-	 * Returns the asset list entry persistence.
-	 *
-	 * @return the asset list entry persistence
-	 */
-	public AssetListEntryPersistence getAssetListEntryPersistence() {
-		return assetListEntryPersistence;
-	}
-
-	/**
-	 * Sets the asset list entry persistence.
-	 *
-	 * @param assetListEntryPersistence the asset list entry persistence
-	 */
-	public void setAssetListEntryPersistence(
-		AssetListEntryPersistence assetListEntryPersistence) {
-
-		this.assetListEntryPersistence = assetListEntryPersistence;
-	}
-
-	/**
-	 * Returns the counter local service.
-	 *
-	 * @return the counter local service
-	 */
-	public com.liferay.counter.kernel.service.CounterLocalService
-		getCounterLocalService() {
-
-		return counterLocalService;
-	}
-
-	/**
-	 * Sets the counter local service.
-	 *
-	 * @param counterLocalService the counter local service
-	 */
-	public void setCounterLocalService(
-		com.liferay.counter.kernel.service.CounterLocalService
-			counterLocalService) {
-
-		this.counterLocalService = counterLocalService;
-	}
-
-	/**
-	 * Returns the resource local service.
-	 *
-	 * @return the resource local service
-	 */
-	public com.liferay.portal.kernel.service.ResourceLocalService
-		getResourceLocalService() {
-
-		return resourceLocalService;
-	}
-
-	/**
-	 * Sets the resource local service.
-	 *
-	 * @param resourceLocalService the resource local service
-	 */
-	public void setResourceLocalService(
-		com.liferay.portal.kernel.service.ResourceLocalService
-			resourceLocalService) {
-
-		this.resourceLocalService = resourceLocalService;
-	}
-
-	/**
-	 * Returns the user local service.
-	 *
-	 * @return the user local service
-	 */
-	public com.liferay.portal.kernel.service.UserLocalService
-		getUserLocalService() {
-
-		return userLocalService;
-	}
-
-	/**
-	 * Sets the user local service.
-	 *
-	 * @param userLocalService the user local service
-	 */
-	public void setUserLocalService(
-		com.liferay.portal.kernel.service.UserLocalService userLocalService) {
-
-		this.userLocalService = userLocalService;
-	}
-
-	/**
-	 * Returns the user remote service.
-	 *
-	 * @return the user remote service
-	 */
-	public com.liferay.portal.kernel.service.UserService getUserService() {
-		return userService;
-	}
-
-	/**
-	 * Sets the user remote service.
-	 *
-	 * @param userService the user remote service
-	 */
-	public void setUserService(
-		com.liferay.portal.kernel.service.UserService userService) {
-
-		this.userService = userService;
-	}
-
-	/**
-	 * Returns the user persistence.
-	 *
-	 * @return the user persistence
-	 */
-	public UserPersistence getUserPersistence() {
-		return userPersistence;
-	}
-
-	/**
-	 * Sets the user persistence.
-	 *
-	 * @param userPersistence the user persistence
-	 */
-	public void setUserPersistence(UserPersistence userPersistence) {
-		this.userPersistence = userPersistence;
-	}
-
-	/**
-	 * Returns the asset list entry asset entry rel local service.
-	 *
-	 * @return the asset list entry asset entry rel local service
-	 */
-	public
-		com.liferay.asset.list.service.AssetListEntryAssetEntryRelLocalService
-			getAssetListEntryAssetEntryRelLocalService() {
-
-		return assetListEntryAssetEntryRelLocalService;
-	}
-
-	/**
-	 * Sets the asset list entry asset entry rel local service.
-	 *
-	 * @param assetListEntryAssetEntryRelLocalService the asset list entry asset entry rel local service
-	 */
-	public void setAssetListEntryAssetEntryRelLocalService(
-		com.liferay.asset.list.service.AssetListEntryAssetEntryRelLocalService
-			assetListEntryAssetEntryRelLocalService) {
-
-		this.assetListEntryAssetEntryRelLocalService =
-			assetListEntryAssetEntryRelLocalService;
-	}
-
-	/**
-	 * Returns the asset list entry asset entry rel persistence.
-	 *
-	 * @return the asset list entry asset entry rel persistence
-	 */
-	public AssetListEntryAssetEntryRelPersistence
-		getAssetListEntryAssetEntryRelPersistence() {
-
-		return assetListEntryAssetEntryRelPersistence;
-	}
-
-	/**
-	 * Sets the asset list entry asset entry rel persistence.
-	 *
-	 * @param assetListEntryAssetEntryRelPersistence the asset list entry asset entry rel persistence
-	 */
-	public void setAssetListEntryAssetEntryRelPersistence(
-		AssetListEntryAssetEntryRelPersistence
-			assetListEntryAssetEntryRelPersistence) {
-
-		this.assetListEntryAssetEntryRelPersistence =
-			assetListEntryAssetEntryRelPersistence;
-	}
-
-	/**
-	 * Returns the asset list entry segments entry rel local service.
-	 *
-	 * @return the asset list entry segments entry rel local service
-	 */
-	public
-		com.liferay.asset.list.service.
-			AssetListEntrySegmentsEntryRelLocalService
-				getAssetListEntrySegmentsEntryRelLocalService() {
-
-		return assetListEntrySegmentsEntryRelLocalService;
-	}
-
-	/**
-	 * Sets the asset list entry segments entry rel local service.
-	 *
-	 * @param assetListEntrySegmentsEntryRelLocalService the asset list entry segments entry rel local service
-	 */
-	public void setAssetListEntrySegmentsEntryRelLocalService(
-		com.liferay.asset.list.service.
-			AssetListEntrySegmentsEntryRelLocalService
-				assetListEntrySegmentsEntryRelLocalService) {
-
-		this.assetListEntrySegmentsEntryRelLocalService =
-			assetListEntrySegmentsEntryRelLocalService;
-	}
-
-	/**
-	 * Returns the asset list entry segments entry rel persistence.
-	 *
-	 * @return the asset list entry segments entry rel persistence
-	 */
-	public AssetListEntrySegmentsEntryRelPersistence
-		getAssetListEntrySegmentsEntryRelPersistence() {
-
-		return assetListEntrySegmentsEntryRelPersistence;
-	}
-
-	/**
-	 * Sets the asset list entry segments entry rel persistence.
-	 *
-	 * @param assetListEntrySegmentsEntryRelPersistence the asset list entry segments entry rel persistence
-	 */
-	public void setAssetListEntrySegmentsEntryRelPersistence(
-		AssetListEntrySegmentsEntryRelPersistence
-			assetListEntrySegmentsEntryRelPersistence) {
-
-		this.assetListEntrySegmentsEntryRelPersistence =
-			assetListEntrySegmentsEntryRelPersistence;
-	}
-
-	public void afterPropertiesSet() {
-	}
-
-	public void destroy() {
+	@Override
+	public void setAopProxy(Object aopProxy) {
+		assetListEntryService = (AssetListEntryService)aopProxy;
 	}
 
 	/**
@@ -371,64 +107,35 @@ public abstract class AssetListEntryServiceBaseImpl
 		}
 	}
 
-	@BeanReference(
-		type = com.liferay.asset.list.service.AssetListEntryLocalService.class
-	)
+	@Reference
 	protected com.liferay.asset.list.service.AssetListEntryLocalService
 		assetListEntryLocalService;
 
-	@BeanReference(type = AssetListEntryService.class)
 	protected AssetListEntryService assetListEntryService;
 
-	@BeanReference(type = AssetListEntryPersistence.class)
+	@Reference
 	protected AssetListEntryPersistence assetListEntryPersistence;
 
-	@ServiceReference(
-		type = com.liferay.counter.kernel.service.CounterLocalService.class
-	)
+	@Reference
 	protected com.liferay.counter.kernel.service.CounterLocalService
 		counterLocalService;
 
-	@ServiceReference(
-		type = com.liferay.portal.kernel.service.ResourceLocalService.class
-	)
+	@Reference
 	protected com.liferay.portal.kernel.service.ResourceLocalService
 		resourceLocalService;
 
-	@ServiceReference(
-		type = com.liferay.portal.kernel.service.UserLocalService.class
-	)
+	@Reference
 	protected com.liferay.portal.kernel.service.UserLocalService
 		userLocalService;
 
-	@ServiceReference(
-		type = com.liferay.portal.kernel.service.UserService.class
-	)
+	@Reference
 	protected com.liferay.portal.kernel.service.UserService userService;
 
-	@ServiceReference(type = UserPersistence.class)
-	protected UserPersistence userPersistence;
-
-	@BeanReference(
-		type = com.liferay.asset.list.service.AssetListEntryAssetEntryRelLocalService.class
-	)
-	protected
-		com.liferay.asset.list.service.AssetListEntryAssetEntryRelLocalService
-			assetListEntryAssetEntryRelLocalService;
-
-	@BeanReference(type = AssetListEntryAssetEntryRelPersistence.class)
+	@Reference
 	protected AssetListEntryAssetEntryRelPersistence
 		assetListEntryAssetEntryRelPersistence;
 
-	@BeanReference(
-		type = com.liferay.asset.list.service.AssetListEntrySegmentsEntryRelLocalService.class
-	)
-	protected
-		com.liferay.asset.list.service.
-			AssetListEntrySegmentsEntryRelLocalService
-				assetListEntrySegmentsEntryRelLocalService;
-
-	@BeanReference(type = AssetListEntrySegmentsEntryRelPersistence.class)
+	@Reference
 	protected AssetListEntrySegmentsEntryRelPersistence
 		assetListEntrySegmentsEntryRelPersistence;
 

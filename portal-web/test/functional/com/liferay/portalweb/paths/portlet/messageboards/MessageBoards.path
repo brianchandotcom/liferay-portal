@@ -212,7 +212,7 @@
 </tr>
 <tr>
 	<td>THREAD_LIST_LAST_POST</td>
-	<td>//div[contains(.,'${key_threadSubject}')]/div/h5[contains(.,'${key_userName}')] | //li[contains(.,'${key_threadSubject}')]/div/h5[contains(.,'${key_userName}')]</td>
+	<td>//div[contains(.,'${key_threadSubject}')]/div/span[contains(.,'${key_userName}')] | //li[contains(.,'${key_threadSubject}')]/div/span[contains(.,'${key_userName}')]</td>
 	<td></td>
 </tr>
 <tr>

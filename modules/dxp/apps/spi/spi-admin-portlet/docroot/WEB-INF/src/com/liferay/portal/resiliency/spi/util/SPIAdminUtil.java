@@ -42,11 +42,12 @@ public class SPIAdminUtil {
 
 			PortletApp portletApp = portlet.getPortletApp();
 
+			int searchValue = Arrays.binarySearch(
+				PortletPropsValues.SPI_BLACKLIST_PORTLET_IDS,
+				portlet.getPortletId());
+
 			if (portletApp.isWARFile() || portlet.isSystem() ||
-				portlet.isUndeployedPortlet() ||
-				(Arrays.binarySearch(
-					PortletPropsValues.SPI_BLACKLIST_PORTLET_IDS,
-					portlet.getPortletId()) >= 0)) {
+				portlet.isUndeployedPortlet() || (searchValue >= 0)) {
 
 				iterator.remove();
 			}
@@ -73,11 +74,14 @@ public class SPIAdminUtil {
 
 				itr.remove();
 			}
-			else if (Arrays.binarySearch(
-						PortletPropsValues.SPI_BLACKLIST_SERVLET_CONTEXT_NAMES,
-						servletContextName) >= 0) {
+			else {
+				int searchValue = Arrays.binarySearch(
+					PortletPropsValues.SPI_BLACKLIST_SERVLET_CONTEXT_NAMES,
+					servletContextName);
 
-				itr.remove();
+				if (searchValue >= 0) {
+					itr.remove();
+				}
 			}
 		}
 

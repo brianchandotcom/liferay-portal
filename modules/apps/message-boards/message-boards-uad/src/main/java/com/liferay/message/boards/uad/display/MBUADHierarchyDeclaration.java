@@ -14,8 +14,12 @@
 
 package com.liferay.message.boards.uad.display;
 
+import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.user.associated.data.display.UADDisplay;
 import com.liferay.user.associated.data.display.UADHierarchyDeclaration;
+
+import java.util.Locale;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -29,6 +33,14 @@ public class MBUADHierarchyDeclaration implements UADHierarchyDeclaration {
 	@Override
 	public UADDisplay<?>[] getContainerUADDisplays() {
 		return new UADDisplay<?>[] {_mbCategoryUADDisplay, _mbThreadUADDisplay};
+	}
+
+	@Override
+	public String getEntitiesTypeLabel(Locale locale) {
+		return LanguageUtil.get(
+			ResourceBundleUtil.getBundle(
+				locale, MBUADHierarchyDeclaration.class),
+			"categories-and-threads");
 	}
 
 	@Override

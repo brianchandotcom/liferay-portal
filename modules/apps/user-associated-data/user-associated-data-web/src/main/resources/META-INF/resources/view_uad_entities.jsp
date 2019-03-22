@@ -17,7 +17,6 @@
 <%@ include file="/init.jsp" %>
 
 <%
-UADHierarchyDisplay uadHierarchyDisplay = (UADHierarchyDisplay)request.getAttribute(UADWebKeys.UAD_HIERARCHY_DISPLAY);
 ViewUADEntitiesDisplay viewUADEntitiesDisplay = (ViewUADEntitiesDisplay)request.getAttribute(UADWebKeys.VIEW_UAD_ENTITIES_DISPLAY);
 
 SearchContainer<UADEntity> uadEntitySearchContainer = viewUADEntitiesDisplay.getSearchContainer();
@@ -26,8 +25,12 @@ ViewUADEntitiesManagementToolbarDisplayContext viewUADEntitiesManagementToolbarD
 
 boolean topLevelView = true;
 
-if (uadHierarchyDisplay != null) {
+long parentContainerId = ParamUtil.getLong(request, "parentContainerId");
+
+if (parentContainerId > 0) {
 	topLevelView = false;
+
+	UADHierarchyDisplay uadHierarchyDisplay = (UADHierarchyDisplay)request.getAttribute(UADWebKeys.UAD_HIERARCHY_DISPLAY);
 
 	uadHierarchyDisplay.addPortletBreadcrumbEntries(request, renderResponse, locale);
 }

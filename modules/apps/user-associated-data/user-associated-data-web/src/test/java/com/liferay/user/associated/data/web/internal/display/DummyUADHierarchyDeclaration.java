@@ -17,6 +17,8 @@ package com.liferay.user.associated.data.web.internal.display;
 import com.liferay.user.associated.data.display.UADDisplay;
 import com.liferay.user.associated.data.display.UADHierarchyDeclaration;
 
+import java.util.Locale;
+
 /**
  * @author Drew Brokke
  */
@@ -33,6 +35,11 @@ public class DummyUADHierarchyDeclaration implements UADHierarchyDeclaration {
 	@Override
 	public UADDisplay<?>[] getContainerUADDisplays() {
 		return new UADDisplay[] {_dummyContainerUADDisplay};
+	}
+
+	@Override
+	public String getEntitiesTypeLabel(Locale locale) {
+		return null;
 	}
 
 	@Override

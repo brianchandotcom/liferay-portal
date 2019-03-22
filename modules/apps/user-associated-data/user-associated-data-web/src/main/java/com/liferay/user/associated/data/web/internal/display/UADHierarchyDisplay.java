@@ -224,6 +224,10 @@ public class UADHierarchyDisplay {
 			unwrappedObject, liferayPortletRequest, liferayPortletResponse);
 	}
 
+	public String getEntitiesTypeLabel(Locale locale) {
+		return _uadHierarchyDeclaration.getEntitiesTypeLabel(locale);
+	}
+
 	public <T> Map<String, Object> getFieldValues(T object, Locale locale) {
 		Map<String, Object> fieldValues = new LinkedHashMap<>();
 
@@ -380,6 +384,16 @@ public class UADHierarchyDisplay {
 		}
 
 		return ListUtil.subList(searchResults, start, end);
+	}
+
+	public long searchCount(long userId, long[] groupIds, String keywords) {
+		long count = 0;
+
+		for (UADDisplay uadDisplay : _uadDisplays) {
+			count += uadDisplay.searchCount(userId, groupIds, keywords);
+		}
+
+		return count;
 	}
 
 	public <T> T unwrap(Object object) {

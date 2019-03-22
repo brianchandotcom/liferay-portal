@@ -122,45 +122,60 @@ renderResponse.setTitle(StringBundler.concat(selectedUser.getFullName(), " - ", 
 			</div>
 
 			<div class="panel-group">
-				<c:if test="<%= !viewUADEntitiesDisplay.isHierarchy() %>">
-					<div class="panel panel-secondary">
-						<div class="collapse-icon collapse-icon-middle panel-header" data-target="#<portlet:namespace />entitiesTypePanelBody" data-toggle="collapse">
-							<span class="panel-title">
+				<div class="panel panel-secondary">
+					<div class="collapse-icon collapse-icon-middle panel-header" data-target="#<portlet:namespace />entitiesTypePanelBody" data-toggle="collapse">
+						<span class="panel-title">
 
-								<%
-								String applicationName = UADLanguageUtil.getApplicationName(viewUADEntitiesDisplay.getApplicationKey(), locale);
-								%>
+							<%
+							String applicationName = UADLanguageUtil.getApplicationName(viewUADEntitiesDisplay.getApplicationKey(), locale);
+							%>
 
-								<%= StringUtil.toUpperCase(applicationName, locale) %>
-							</span>
+							<%= StringUtil.toUpperCase(applicationName, locale) %>
+						</span>
 
-							<aui:icon cssClass="collapse-icon-closed" image="angle-right" markupView="lexicon" />
+						<aui:icon cssClass="collapse-icon-closed" image="angle-right" markupView="lexicon" />
 
-							<aui:icon cssClass="collapse-icon-open" image="angle-down" markupView="lexicon" />
-						</div>
+						<aui:icon cssClass="collapse-icon-open" image="angle-down" markupView="lexicon" />
+					</div>
 
-						<div class="collapse panel-collapse show" id="<portlet:namespace />entitiesTypePanelBody">
-							<div class="panel-body">
+					<div class="collapse panel-collapse show" id="<portlet:namespace />entitiesTypePanelBody">
+						<div class="panel-body">
+							<c:choose>
+								<c:when test="<%= viewUADEntitiesDisplay.isHierarchy() %>">
 
-								<%
-								for (UADDisplay uadDisplay : uadDisplays) {
-								%>
+									<%
+									UADHierarchyDisplay uadHierarchyDisplay = (UADHierarchyDisplay)request.getAttribute(UADWebKeys.UAD_HIERARCHY_DISPLAY);
+									%>
 
 									<clay:radio
-										checked="<%= Objects.equals(uadDisplay.getTypeName(locale), viewUADEntitiesDisplay.getTypeName()) %>"
-										label="<%= StringUtil.appendParentheticalSuffix(uadDisplay.getTypeName(locale), (int)uadDisplay.searchCount(selectedUser.getUserId(), groupIds, null)) %>"
+										checked="<%= true %>"
+										label="<%= StringUtil.appendParentheticalSuffix(uadHierarchyDisplay.getEntitiesTypeLabel(locale), (int)uadHierarchyDisplay.searchCount(selectedUser.getUserId(), groupIds, null)) %>"
 										name="uadRegistryKey"
-										value="<%= uadDisplay.getTypeClass().getName() %>"
+										value="<%= viewUADEntitiesDisplay.getApplicationKey() %>"
 									/>
+								</c:when>
+								<c:otherwise>
 
-								<%
-								}
-								%>
+									<%
+									for (UADDisplay uadDisplay : uadDisplays) {
+									%>
 
-							</div>
+										<clay:radio
+											checked="<%= Objects.equals(uadDisplay.getTypeName(locale), viewUADEntitiesDisplay.getTypeName()) %>"
+											label="<%= StringUtil.appendParentheticalSuffix(uadDisplay.getTypeName(locale), (int)uadDisplay.searchCount(selectedUser.getUserId(), groupIds, null)) %>"
+											name="uadRegistryKey"
+											value="<%= uadDisplay.getTypeClass().getName() %>"
+										/>
+
+									<%
+									}
+									%>
+
+								</c:otherwise>
+							</c:choose>
 						</div>
 					</div>
-				</c:if>
+				</div>
 			</div>
 		</div>
 

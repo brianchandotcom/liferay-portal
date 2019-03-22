@@ -7,10 +7,10 @@ import '../floating_toolbar/background_image/FloatingToolbarBackgroundImagePanel
 import '../floating_toolbar/spacing/FloatingToolbarSpacingPanel.es';
 import './ColumnOverlayGrid.es';
 import './FragmentEntryLink.es';
-import {CLEAR_ACTIVE_ITEM, MOVE_SECTION, REMOVE_SECTION, UPDATE_ACTIVE_ITEM, UPDATE_HOVERED_ITEM} from '../../actions/actions.es';
+import {CLEAR_ACTIVE_ITEM, MOVE_SECTION, REMOVE_SECTION, UPDATE_ACTIVE_ITEM, UPDATE_HOVERED_ITEM, UPDATE_SECTION_COLUMNS} from '../../actions/actions.es';
 import {FLOATING_TOOLBAR_BUTTONS, FRAGMENTS_EDITOR_ITEM_TYPES} from '../../utils/constants';
 import {getItemMoveDirection, getSectionIndex, getTargetBorder} from '../../utils/FragmentsEditorGetUtils.es';
-import {moveItem, removeItem, setIn, shouldClearFocus} from '../../utils/FragmentsEditorUpdateUtils.es';
+import {moveItem, removeItem, setIn, shouldClearFocus, updateSection} from '../../utils/FragmentsEditorUpdateUtils.es';
 import {shouldUpdatePureComponent} from '../../utils/FragmentsEditorComponentUtils.es';
 import FloatingToolbar from '../floating_toolbar/FloatingToolbar.es';
 import getConnectedComponent from '../../store/ConnectedComponent.es';
@@ -158,6 +158,8 @@ class FragmentEntryLinkListSection extends Component {
 	 */
 	_handleBodyMouseUp() {
 		if (this._resizing) {
+			this._updateSectionColumns(this._resizeSectionColumns);
+
 			this._clearResizing();
 		}
 	}
@@ -268,6 +270,23 @@ class FragmentEntryLinkListSection extends Component {
 			REMOVE_SECTION,
 			{
 				sectionId: this.hoveredItemId
+			}
+		);
+	}
+
+	/**
+	 * Updates section columns
+	 * @param {array} columns Section columns
+	 * @private
+	 * @review
+	 */
+	_updateSectionColumns(columns) {
+		updateSection(
+			this.store,
+			UPDATE_SECTION_COLUMNS,
+			{
+				columns,
+				sectionId: this.rowId
 			}
 		);
 	}

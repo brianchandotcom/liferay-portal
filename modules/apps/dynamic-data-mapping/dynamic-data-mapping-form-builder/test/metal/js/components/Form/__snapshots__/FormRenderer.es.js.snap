@@ -13,26 +13,26 @@ exports[`FormRenderer PagesSettings should add a new page on the layout render 1
     <div class="ddm-form-page pl-4 pr-4"><textarea class="form-builder-page-header-title form-control p-0" data-page-index="0" maxlength="120" value="Untitled name" placeholder="untitled-page-x-of-x"></textarea><textarea class="form-builder-page-header-description form-control p-0" data-page-index="0" maxlength="120" placeholder="add-a-short-description-for-this-page"></textarea>
       <div class="form-builder-layout">
         <div class="layout-page">
+          <div class="ddm-resize-column" data-resize-column="0" ref="resizeColumn0"></div>
+          <div class="ddm-resize-column" data-resize-column="1" ref="resizeColumn1"></div>
+          <div class="ddm-resize-column" data-resize-column="2" ref="resizeColumn2"></div>
+          <div class="ddm-resize-column" data-resize-column="3" ref="resizeColumn3"></div>
+          <div class="ddm-resize-column" data-resize-column="4" ref="resizeColumn4"></div>
+          <div class="ddm-resize-column" data-resize-column="5" ref="resizeColumn5"></div>
+          <div class="ddm-resize-column" data-resize-column="6" ref="resizeColumn6"></div>
+          <div class="ddm-resize-column" data-resize-column="7" ref="resizeColumn7"></div>
+          <div class="ddm-resize-column" data-resize-column="8" ref="resizeColumn8"></div>
+          <div class="ddm-resize-column" data-resize-column="9" ref="resizeColumn9"></div>
+          <div class="ddm-resize-column" data-resize-column="10" ref="resizeColumn10"></div>
+          <div class="ddm-resize-column" data-resize-column="11" ref="resizeColumn11"></div>
           <div class="row">
             <div class="col col-empty col-md-12" data-ddm-field-row="0" data-ddm-field-page="0">
               <div class="ddm-target"></div>
             </div>
           </div>
           <div class="position-relative row">
-            <div class="ddm-resize-drop" data-col="1"></div>
-            <div class="ddm-resize-drop" data-col="2"></div>
-            <div class="ddm-resize-drop" data-col="3"></div>
-            <div class="ddm-resize-drop" data-col="4"></div>
-            <div class="ddm-resize-drop" data-col="5"></div>
-            <div class="ddm-resize-drop" data-col="6"></div>
-            <div class="ddm-resize-drop" data-col="7"></div>
-            <div class="ddm-resize-drop" data-col="8"></div>
-            <div class="ddm-resize-drop" data-col="9"></div>
-            <div class="ddm-resize-drop" data-col="10"></div>
-            <div class="ddm-resize-drop" data-col="11"></div>
-            <div class="ddm-resize-drop" data-col="12"></div>
             <div class="col-md-3 col-ddm" data-ddm-field-row="0" data-ddm-field-page="0" data-ddm-field-column="0">
-              <div class="ddm-field-container">
+              <div class="ddm-field-container h-100">
                 <div class="ddm-resize-handle ddm-resize-handle-left" data-ddm-field-row="0" data-ddm-field-page="0" data-ddm-field-column="0"></div>
                 <div class="ddm-drag"></div>
                 <div class="ddm-field-actions-container"><a href="javascript:;"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button"><svg class="lexicon-icon lexicon-icon-paste" focusable="false" role="presentation">
@@ -53,20 +53,8 @@ exports[`FormRenderer PagesSettings should add a new page on the layout render 1
             </div>
           </div>
           <div class="position-relative row">
-            <div class="ddm-resize-drop" data-col="1"></div>
-            <div class="ddm-resize-drop" data-col="2"></div>
-            <div class="ddm-resize-drop" data-col="3"></div>
-            <div class="ddm-resize-drop" data-col="4"></div>
-            <div class="ddm-resize-drop" data-col="5"></div>
-            <div class="ddm-resize-drop" data-col="6"></div>
-            <div class="ddm-resize-drop" data-col="7"></div>
-            <div class="ddm-resize-drop" data-col="8"></div>
-            <div class="ddm-resize-drop" data-col="9"></div>
-            <div class="ddm-resize-drop" data-col="10"></div>
-            <div class="ddm-resize-drop" data-col="11"></div>
-            <div class="ddm-resize-drop" data-col="12"></div>
             <div class="col-md-4 col-ddm" data-ddm-field-row="1" data-ddm-field-page="0" data-ddm-field-column="0">
-              <div class="ddm-field-container">
+              <div class="ddm-field-container h-100">
                 <div class="ddm-resize-handle ddm-resize-handle-left" data-ddm-field-row="1" data-ddm-field-page="0" data-ddm-field-column="0"></div>
                 <div class="ddm-drag"></div>
                 <div class="ddm-field-actions-container"><a href="javascript:;"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button"><svg class="lexicon-icon lexicon-icon-paste" focusable="false" role="presentation">
@@ -78,7 +66,7 @@ exports[`FormRenderer PagesSettings should add a new page on the layout render 1
               </div>
             </div>
             <div class="col-md-6 col-ddm" data-ddm-field-row="1" data-ddm-field-page="0" data-ddm-field-column="1">
-              <div class="ddm-field-container">
+              <div class="ddm-field-container h-100">
                 <div class="ddm-resize-handle ddm-resize-handle-left" data-ddm-field-row="1" data-ddm-field-page="0" data-ddm-field-column="1"></div>
                 <div class="ddm-drag"></div>
                 <div class="ddm-field-actions-container"><a href="javascript:;"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button"><svg class="lexicon-icon lexicon-icon-paste" focusable="false" role="presentation">
@@ -99,20 +87,8 @@ exports[`FormRenderer PagesSettings should add a new page on the layout render 1
             </div>
           </div>
           <div class="position-relative row">
-            <div class="ddm-resize-drop" data-col="1"></div>
-            <div class="ddm-resize-drop" data-col="2"></div>
-            <div class="ddm-resize-drop" data-col="3"></div>
-            <div class="ddm-resize-drop" data-col="4"></div>
-            <div class="ddm-resize-drop" data-col="5"></div>
-            <div class="ddm-resize-drop" data-col="6"></div>
-            <div class="ddm-resize-drop" data-col="7"></div>
-            <div class="ddm-resize-drop" data-col="8"></div>
-            <div class="ddm-resize-drop" data-col="9"></div>
-            <div class="ddm-resize-drop" data-col="10"></div>
-            <div class="ddm-resize-drop" data-col="11"></div>
-            <div class="ddm-resize-drop" data-col="12"></div>
             <div class="col-md-12 col-ddm" data-ddm-field-row="2" data-ddm-field-page="0" data-ddm-field-column="0">
-              <div class="ddm-field-container">
+              <div class="ddm-field-container h-100">
                 <div class="ddm-resize-handle ddm-resize-handle-left" data-ddm-field-row="2" data-ddm-field-page="0" data-ddm-field-column="0"></div>
                 <div class="ddm-drag"></div>
                 <div class="ddm-field-actions-container"><a href="javascript:;"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button"><svg class="lexicon-icon lexicon-icon-paste" focusable="false" role="presentation">
@@ -130,20 +106,8 @@ exports[`FormRenderer PagesSettings should add a new page on the layout render 1
             </div>
           </div>
           <div class="position-relative row">
-            <div class="ddm-resize-drop" data-col="1"></div>
-            <div class="ddm-resize-drop" data-col="2"></div>
-            <div class="ddm-resize-drop" data-col="3"></div>
-            <div class="ddm-resize-drop" data-col="4"></div>
-            <div class="ddm-resize-drop" data-col="5"></div>
-            <div class="ddm-resize-drop" data-col="6"></div>
-            <div class="ddm-resize-drop" data-col="7"></div>
-            <div class="ddm-resize-drop" data-col="8"></div>
-            <div class="ddm-resize-drop" data-col="9"></div>
-            <div class="ddm-resize-drop" data-col="10"></div>
-            <div class="ddm-resize-drop" data-col="11"></div>
-            <div class="ddm-resize-drop" data-col="12"></div>
             <div class="col-md-12 col-ddm" data-ddm-field-row="3" data-ddm-field-page="0" data-ddm-field-column="0">
-              <div class="ddm-field-container">
+              <div class="ddm-field-container h-100">
                 <div class="ddm-resize-handle ddm-resize-handle-left" data-ddm-field-row="3" data-ddm-field-page="0" data-ddm-field-column="0"></div>
                 <div class="ddm-drag"></div>
                 <div class="ddm-field-actions-container"><a href="javascript:;"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button"><svg class="lexicon-icon lexicon-icon-paste" focusable="false" role="presentation">
@@ -223,26 +187,26 @@ exports[`FormRenderer PagesSettings should delete the current page on layout ren
     <div class="ddm-form-page pl-4 pr-4"><textarea class="form-builder-page-header-title form-control p-0" data-page-index="0" maxlength="120" value="Untitled name"></textarea><textarea class="form-builder-page-header-description form-control p-0" data-page-index="0" maxlength="120" placeholder="add-a-short-description-for-this-page"></textarea>
       <div class="form-builder-layout">
         <div class="layout-page">
+          <div class="ddm-resize-column" data-resize-column="0" ref="resizeColumn0"></div>
+          <div class="ddm-resize-column" data-resize-column="1" ref="resizeColumn1"></div>
+          <div class="ddm-resize-column" data-resize-column="2" ref="resizeColumn2"></div>
+          <div class="ddm-resize-column" data-resize-column="3" ref="resizeColumn3"></div>
+          <div class="ddm-resize-column" data-resize-column="4" ref="resizeColumn4"></div>
+          <div class="ddm-resize-column" data-resize-column="5" ref="resizeColumn5"></div>
+          <div class="ddm-resize-column" data-resize-column="6" ref="resizeColumn6"></div>
+          <div class="ddm-resize-column" data-resize-column="7" ref="resizeColumn7"></div>
+          <div class="ddm-resize-column" data-resize-column="8" ref="resizeColumn8"></div>
+          <div class="ddm-resize-column" data-resize-column="9" ref="resizeColumn9"></div>
+          <div class="ddm-resize-column" data-resize-column="10" ref="resizeColumn10"></div>
+          <div class="ddm-resize-column" data-resize-column="11" ref="resizeColumn11"></div>
           <div class="row">
             <div class="col col-empty col-md-12" data-ddm-field-row="0" data-ddm-field-page="0">
               <div class="ddm-target"></div>
             </div>
           </div>
           <div class="position-relative row">
-            <div class="ddm-resize-drop" data-col="1"></div>
-            <div class="ddm-resize-drop" data-col="2"></div>
-            <div class="ddm-resize-drop" data-col="3"></div>
-            <div class="ddm-resize-drop" data-col="4"></div>
-            <div class="ddm-resize-drop" data-col="5"></div>
-            <div class="ddm-resize-drop" data-col="6"></div>
-            <div class="ddm-resize-drop" data-col="7"></div>
-            <div class="ddm-resize-drop" data-col="8"></div>
-            <div class="ddm-resize-drop" data-col="9"></div>
-            <div class="ddm-resize-drop" data-col="10"></div>
-            <div class="ddm-resize-drop" data-col="11"></div>
-            <div class="ddm-resize-drop" data-col="12"></div>
             <div class="col-md-3 col-ddm" data-ddm-field-row="0" data-ddm-field-page="0" data-ddm-field-column="0">
-              <div class="ddm-field-container">
+              <div class="ddm-field-container h-100">
                 <div class="ddm-resize-handle ddm-resize-handle-left" data-ddm-field-row="0" data-ddm-field-page="0" data-ddm-field-column="0"></div>
                 <div class="ddm-drag"></div>
                 <div class="ddm-field-actions-container"><a href="javascript:;"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button"><svg class="lexicon-icon lexicon-icon-paste" focusable="false" role="presentation">
@@ -263,20 +227,8 @@ exports[`FormRenderer PagesSettings should delete the current page on layout ren
             </div>
           </div>
           <div class="position-relative row">
-            <div class="ddm-resize-drop" data-col="1"></div>
-            <div class="ddm-resize-drop" data-col="2"></div>
-            <div class="ddm-resize-drop" data-col="3"></div>
-            <div class="ddm-resize-drop" data-col="4"></div>
-            <div class="ddm-resize-drop" data-col="5"></div>
-            <div class="ddm-resize-drop" data-col="6"></div>
-            <div class="ddm-resize-drop" data-col="7"></div>
-            <div class="ddm-resize-drop" data-col="8"></div>
-            <div class="ddm-resize-drop" data-col="9"></div>
-            <div class="ddm-resize-drop" data-col="10"></div>
-            <div class="ddm-resize-drop" data-col="11"></div>
-            <div class="ddm-resize-drop" data-col="12"></div>
             <div class="col-md-4 col-ddm" data-ddm-field-row="1" data-ddm-field-page="0" data-ddm-field-column="0">
-              <div class="ddm-field-container">
+              <div class="ddm-field-container h-100">
                 <div class="ddm-resize-handle ddm-resize-handle-left" data-ddm-field-row="1" data-ddm-field-page="0" data-ddm-field-column="0"></div>
                 <div class="ddm-drag"></div>
                 <div class="ddm-field-actions-container"><a href="javascript:;"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button"><svg class="lexicon-icon lexicon-icon-paste" focusable="false" role="presentation">
@@ -288,7 +240,7 @@ exports[`FormRenderer PagesSettings should delete the current page on layout ren
               </div>
             </div>
             <div class="col-md-6 col-ddm" data-ddm-field-row="1" data-ddm-field-page="0" data-ddm-field-column="1">
-              <div class="ddm-field-container">
+              <div class="ddm-field-container h-100">
                 <div class="ddm-resize-handle ddm-resize-handle-left" data-ddm-field-row="1" data-ddm-field-page="0" data-ddm-field-column="1"></div>
                 <div class="ddm-drag"></div>
                 <div class="ddm-field-actions-container"><a href="javascript:;"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button"><svg class="lexicon-icon lexicon-icon-paste" focusable="false" role="presentation">
@@ -309,20 +261,8 @@ exports[`FormRenderer PagesSettings should delete the current page on layout ren
             </div>
           </div>
           <div class="position-relative row">
-            <div class="ddm-resize-drop" data-col="1"></div>
-            <div class="ddm-resize-drop" data-col="2"></div>
-            <div class="ddm-resize-drop" data-col="3"></div>
-            <div class="ddm-resize-drop" data-col="4"></div>
-            <div class="ddm-resize-drop" data-col="5"></div>
-            <div class="ddm-resize-drop" data-col="6"></div>
-            <div class="ddm-resize-drop" data-col="7"></div>
-            <div class="ddm-resize-drop" data-col="8"></div>
-            <div class="ddm-resize-drop" data-col="9"></div>
-            <div class="ddm-resize-drop" data-col="10"></div>
-            <div class="ddm-resize-drop" data-col="11"></div>
-            <div class="ddm-resize-drop" data-col="12"></div>
             <div class="col-md-12 col-ddm" data-ddm-field-row="2" data-ddm-field-page="0" data-ddm-field-column="0">
-              <div class="ddm-field-container">
+              <div class="ddm-field-container h-100">
                 <div class="ddm-resize-handle ddm-resize-handle-left" data-ddm-field-row="2" data-ddm-field-page="0" data-ddm-field-column="0"></div>
                 <div class="ddm-drag"></div>
                 <div class="ddm-field-actions-container"><a href="javascript:;"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button"><svg class="lexicon-icon lexicon-icon-paste" focusable="false" role="presentation">
@@ -340,20 +280,8 @@ exports[`FormRenderer PagesSettings should delete the current page on layout ren
             </div>
           </div>
           <div class="position-relative row">
-            <div class="ddm-resize-drop" data-col="1"></div>
-            <div class="ddm-resize-drop" data-col="2"></div>
-            <div class="ddm-resize-drop" data-col="3"></div>
-            <div class="ddm-resize-drop" data-col="4"></div>
-            <div class="ddm-resize-drop" data-col="5"></div>
-            <div class="ddm-resize-drop" data-col="6"></div>
-            <div class="ddm-resize-drop" data-col="7"></div>
-            <div class="ddm-resize-drop" data-col="8"></div>
-            <div class="ddm-resize-drop" data-col="9"></div>
-            <div class="ddm-resize-drop" data-col="10"></div>
-            <div class="ddm-resize-drop" data-col="11"></div>
-            <div class="ddm-resize-drop" data-col="12"></div>
             <div class="col-md-12 col-ddm" data-ddm-field-row="3" data-ddm-field-page="0" data-ddm-field-column="0">
-              <div class="ddm-field-container">
+              <div class="ddm-field-container h-100">
                 <div class="ddm-resize-handle ddm-resize-handle-left" data-ddm-field-row="3" data-ddm-field-page="0" data-ddm-field-column="0"></div>
                 <div class="ddm-drag"></div>
                 <div class="ddm-field-actions-container"><a href="javascript:;"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button"><svg class="lexicon-icon lexicon-icon-paste" focusable="false" role="presentation">
@@ -399,26 +327,26 @@ exports[`FormRenderer PagesSettings should delete the success page 1`] = `
     <div class="ddm-form-page pl-4 pr-4"><textarea class="form-builder-page-header-title form-control p-0" data-page-index="0" maxlength="120" value="Untitled name" placeholder="untitled-page-x-of-x"></textarea><textarea class="form-builder-page-header-description form-control p-0" data-page-index="0" maxlength="120" placeholder="add-a-short-description-for-this-page"></textarea>
       <div class="form-builder-layout">
         <div class="layout-page">
+          <div class="ddm-resize-column" data-resize-column="0" ref="resizeColumn0"></div>
+          <div class="ddm-resize-column" data-resize-column="1" ref="resizeColumn1"></div>
+          <div class="ddm-resize-column" data-resize-column="2" ref="resizeColumn2"></div>
+          <div class="ddm-resize-column" data-resize-column="3" ref="resizeColumn3"></div>
+          <div class="ddm-resize-column" data-resize-column="4" ref="resizeColumn4"></div>
+          <div class="ddm-resize-column" data-resize-column="5" ref="resizeColumn5"></div>
+          <div class="ddm-resize-column" data-resize-column="6" ref="resizeColumn6"></div>
+          <div class="ddm-resize-column" data-resize-column="7" ref="resizeColumn7"></div>
+          <div class="ddm-resize-column" data-resize-column="8" ref="resizeColumn8"></div>
+          <div class="ddm-resize-column" data-resize-column="9" ref="resizeColumn9"></div>
+          <div class="ddm-resize-column" data-resize-column="10" ref="resizeColumn10"></div>
+          <div class="ddm-resize-column" data-resize-column="11" ref="resizeColumn11"></div>
           <div class="row">
             <div class="col col-empty col-md-12" data-ddm-field-row="0" data-ddm-field-page="0">
               <div class="ddm-target"></div>
             </div>
           </div>
           <div class="position-relative row">
-            <div class="ddm-resize-drop" data-col="1"></div>
-            <div class="ddm-resize-drop" data-col="2"></div>
-            <div class="ddm-resize-drop" data-col="3"></div>
-            <div class="ddm-resize-drop" data-col="4"></div>
-            <div class="ddm-resize-drop" data-col="5"></div>
-            <div class="ddm-resize-drop" data-col="6"></div>
-            <div class="ddm-resize-drop" data-col="7"></div>
-            <div class="ddm-resize-drop" data-col="8"></div>
-            <div class="ddm-resize-drop" data-col="9"></div>
-            <div class="ddm-resize-drop" data-col="10"></div>
-            <div class="ddm-resize-drop" data-col="11"></div>
-            <div class="ddm-resize-drop" data-col="12"></div>
             <div class="col-md-3 col-ddm" data-ddm-field-row="0" data-ddm-field-page="0" data-ddm-field-column="0">
-              <div class="ddm-field-container">
+              <div class="ddm-field-container h-100">
                 <div class="ddm-resize-handle ddm-resize-handle-left" data-ddm-field-row="0" data-ddm-field-page="0" data-ddm-field-column="0"></div>
                 <div class="ddm-drag"></div>
                 <div class="ddm-field-actions-container"><a href="javascript:;"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button"><svg class="lexicon-icon lexicon-icon-paste" focusable="false" role="presentation">
@@ -439,20 +367,8 @@ exports[`FormRenderer PagesSettings should delete the success page 1`] = `
             </div>
           </div>
           <div class="position-relative row">
-            <div class="ddm-resize-drop" data-col="1"></div>
-            <div class="ddm-resize-drop" data-col="2"></div>
-            <div class="ddm-resize-drop" data-col="3"></div>
-            <div class="ddm-resize-drop" data-col="4"></div>
-            <div class="ddm-resize-drop" data-col="5"></div>
-            <div class="ddm-resize-drop" data-col="6"></div>
-            <div class="ddm-resize-drop" data-col="7"></div>
-            <div class="ddm-resize-drop" data-col="8"></div>
-            <div class="ddm-resize-drop" data-col="9"></div>
-            <div class="ddm-resize-drop" data-col="10"></div>
-            <div class="ddm-resize-drop" data-col="11"></div>
-            <div class="ddm-resize-drop" data-col="12"></div>
             <div class="col-md-4 col-ddm" data-ddm-field-row="1" data-ddm-field-page="0" data-ddm-field-column="0">
-              <div class="ddm-field-container">
+              <div class="ddm-field-container h-100">
                 <div class="ddm-resize-handle ddm-resize-handle-left" data-ddm-field-row="1" data-ddm-field-page="0" data-ddm-field-column="0"></div>
                 <div class="ddm-drag"></div>
                 <div class="ddm-field-actions-container"><a href="javascript:;"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button"><svg class="lexicon-icon lexicon-icon-paste" focusable="false" role="presentation">
@@ -464,7 +380,7 @@ exports[`FormRenderer PagesSettings should delete the success page 1`] = `
               </div>
             </div>
             <div class="col-md-6 col-ddm" data-ddm-field-row="1" data-ddm-field-page="0" data-ddm-field-column="1">
-              <div class="ddm-field-container">
+              <div class="ddm-field-container h-100">
                 <div class="ddm-resize-handle ddm-resize-handle-left" data-ddm-field-row="1" data-ddm-field-page="0" data-ddm-field-column="1"></div>
                 <div class="ddm-drag"></div>
                 <div class="ddm-field-actions-container"><a href="javascript:;"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button"><svg class="lexicon-icon lexicon-icon-paste" focusable="false" role="presentation">
@@ -485,20 +401,8 @@ exports[`FormRenderer PagesSettings should delete the success page 1`] = `
             </div>
           </div>
           <div class="position-relative row">
-            <div class="ddm-resize-drop" data-col="1"></div>
-            <div class="ddm-resize-drop" data-col="2"></div>
-            <div class="ddm-resize-drop" data-col="3"></div>
-            <div class="ddm-resize-drop" data-col="4"></div>
-            <div class="ddm-resize-drop" data-col="5"></div>
-            <div class="ddm-resize-drop" data-col="6"></div>
-            <div class="ddm-resize-drop" data-col="7"></div>
-            <div class="ddm-resize-drop" data-col="8"></div>
-            <div class="ddm-resize-drop" data-col="9"></div>
-            <div class="ddm-resize-drop" data-col="10"></div>
-            <div class="ddm-resize-drop" data-col="11"></div>
-            <div class="ddm-resize-drop" data-col="12"></div>
             <div class="col-md-12 col-ddm" data-ddm-field-row="2" data-ddm-field-page="0" data-ddm-field-column="0">
-              <div class="ddm-field-container">
+              <div class="ddm-field-container h-100">
                 <div class="ddm-resize-handle ddm-resize-handle-left" data-ddm-field-row="2" data-ddm-field-page="0" data-ddm-field-column="0"></div>
                 <div class="ddm-drag"></div>
                 <div class="ddm-field-actions-container"><a href="javascript:;"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button"><svg class="lexicon-icon lexicon-icon-paste" focusable="false" role="presentation">
@@ -516,20 +420,8 @@ exports[`FormRenderer PagesSettings should delete the success page 1`] = `
             </div>
           </div>
           <div class="position-relative row">
-            <div class="ddm-resize-drop" data-col="1"></div>
-            <div class="ddm-resize-drop" data-col="2"></div>
-            <div class="ddm-resize-drop" data-col="3"></div>
-            <div class="ddm-resize-drop" data-col="4"></div>
-            <div class="ddm-resize-drop" data-col="5"></div>
-            <div class="ddm-resize-drop" data-col="6"></div>
-            <div class="ddm-resize-drop" data-col="7"></div>
-            <div class="ddm-resize-drop" data-col="8"></div>
-            <div class="ddm-resize-drop" data-col="9"></div>
-            <div class="ddm-resize-drop" data-col="10"></div>
-            <div class="ddm-resize-drop" data-col="11"></div>
-            <div class="ddm-resize-drop" data-col="12"></div>
             <div class="col-md-12 col-ddm" data-ddm-field-row="3" data-ddm-field-page="0" data-ddm-field-column="0">
-              <div class="ddm-field-container">
+              <div class="ddm-field-container h-100">
                 <div class="ddm-resize-handle ddm-resize-handle-left" data-ddm-field-row="3" data-ddm-field-page="0" data-ddm-field-column="0"></div>
                 <div class="ddm-drag"></div>
                 <div class="ddm-field-actions-container"><a href="javascript:;"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button"><svg class="lexicon-icon lexicon-icon-paste" focusable="false" role="presentation">
@@ -573,26 +465,26 @@ exports[`FormRenderer PagesSettings should reset the current page on layout rend
     <div class="ddm-form-page pl-4 pr-4"><textarea class="form-builder-page-header-title form-control p-0" data-page-index="0" maxlength="120" value="Untitled name" placeholder="untitled-page-x-of-x"></textarea><textarea class="form-builder-page-header-description form-control p-0" data-page-index="0" maxlength="120" placeholder="add-a-short-description-for-this-page"></textarea>
       <div class="form-builder-layout">
         <div class="layout-page">
+          <div class="ddm-resize-column" data-resize-column="0" ref="resizeColumn0"></div>
+          <div class="ddm-resize-column" data-resize-column="1" ref="resizeColumn1"></div>
+          <div class="ddm-resize-column" data-resize-column="2" ref="resizeColumn2"></div>
+          <div class="ddm-resize-column" data-resize-column="3" ref="resizeColumn3"></div>
+          <div class="ddm-resize-column" data-resize-column="4" ref="resizeColumn4"></div>
+          <div class="ddm-resize-column" data-resize-column="5" ref="resizeColumn5"></div>
+          <div class="ddm-resize-column" data-resize-column="6" ref="resizeColumn6"></div>
+          <div class="ddm-resize-column" data-resize-column="7" ref="resizeColumn7"></div>
+          <div class="ddm-resize-column" data-resize-column="8" ref="resizeColumn8"></div>
+          <div class="ddm-resize-column" data-resize-column="9" ref="resizeColumn9"></div>
+          <div class="ddm-resize-column" data-resize-column="10" ref="resizeColumn10"></div>
+          <div class="ddm-resize-column" data-resize-column="11" ref="resizeColumn11"></div>
           <div class="row">
             <div class="col col-empty col-md-12" data-ddm-field-row="0" data-ddm-field-page="0">
               <div class="ddm-target"></div>
             </div>
           </div>
           <div class="position-relative row">
-            <div class="ddm-resize-drop" data-col="1"></div>
-            <div class="ddm-resize-drop" data-col="2"></div>
-            <div class="ddm-resize-drop" data-col="3"></div>
-            <div class="ddm-resize-drop" data-col="4"></div>
-            <div class="ddm-resize-drop" data-col="5"></div>
-            <div class="ddm-resize-drop" data-col="6"></div>
-            <div class="ddm-resize-drop" data-col="7"></div>
-            <div class="ddm-resize-drop" data-col="8"></div>
-            <div class="ddm-resize-drop" data-col="9"></div>
-            <div class="ddm-resize-drop" data-col="10"></div>
-            <div class="ddm-resize-drop" data-col="11"></div>
-            <div class="ddm-resize-drop" data-col="12"></div>
             <div class="col-md-3 col-ddm" data-ddm-field-row="0" data-ddm-field-page="0" data-ddm-field-column="0">
-              <div class="ddm-field-container">
+              <div class="ddm-field-container h-100">
                 <div class="ddm-resize-handle ddm-resize-handle-left" data-ddm-field-row="0" data-ddm-field-page="0" data-ddm-field-column="0"></div>
                 <div class="ddm-drag"></div>
                 <div class="ddm-field-actions-container"><a href="javascript:;"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button"><svg class="lexicon-icon lexicon-icon-paste" focusable="false" role="presentation">
@@ -613,20 +505,8 @@ exports[`FormRenderer PagesSettings should reset the current page on layout rend
             </div>
           </div>
           <div class="position-relative row">
-            <div class="ddm-resize-drop" data-col="1"></div>
-            <div class="ddm-resize-drop" data-col="2"></div>
-            <div class="ddm-resize-drop" data-col="3"></div>
-            <div class="ddm-resize-drop" data-col="4"></div>
-            <div class="ddm-resize-drop" data-col="5"></div>
-            <div class="ddm-resize-drop" data-col="6"></div>
-            <div class="ddm-resize-drop" data-col="7"></div>
-            <div class="ddm-resize-drop" data-col="8"></div>
-            <div class="ddm-resize-drop" data-col="9"></div>
-            <div class="ddm-resize-drop" data-col="10"></div>
-            <div class="ddm-resize-drop" data-col="11"></div>
-            <div class="ddm-resize-drop" data-col="12"></div>
             <div class="col-md-4 col-ddm" data-ddm-field-row="1" data-ddm-field-page="0" data-ddm-field-column="0">
-              <div class="ddm-field-container">
+              <div class="ddm-field-container h-100">
                 <div class="ddm-resize-handle ddm-resize-handle-left" data-ddm-field-row="1" data-ddm-field-page="0" data-ddm-field-column="0"></div>
                 <div class="ddm-drag"></div>
                 <div class="ddm-field-actions-container"><a href="javascript:;"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button"><svg class="lexicon-icon lexicon-icon-paste" focusable="false" role="presentation">
@@ -638,7 +518,7 @@ exports[`FormRenderer PagesSettings should reset the current page on layout rend
               </div>
             </div>
             <div class="col-md-6 col-ddm" data-ddm-field-row="1" data-ddm-field-page="0" data-ddm-field-column="1">
-              <div class="ddm-field-container">
+              <div class="ddm-field-container h-100">
                 <div class="ddm-resize-handle ddm-resize-handle-left" data-ddm-field-row="1" data-ddm-field-page="0" data-ddm-field-column="1"></div>
                 <div class="ddm-drag"></div>
                 <div class="ddm-field-actions-container"><a href="javascript:;"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button"><svg class="lexicon-icon lexicon-icon-paste" focusable="false" role="presentation">
@@ -659,20 +539,8 @@ exports[`FormRenderer PagesSettings should reset the current page on layout rend
             </div>
           </div>
           <div class="position-relative row">
-            <div class="ddm-resize-drop" data-col="1"></div>
-            <div class="ddm-resize-drop" data-col="2"></div>
-            <div class="ddm-resize-drop" data-col="3"></div>
-            <div class="ddm-resize-drop" data-col="4"></div>
-            <div class="ddm-resize-drop" data-col="5"></div>
-            <div class="ddm-resize-drop" data-col="6"></div>
-            <div class="ddm-resize-drop" data-col="7"></div>
-            <div class="ddm-resize-drop" data-col="8"></div>
-            <div class="ddm-resize-drop" data-col="9"></div>
-            <div class="ddm-resize-drop" data-col="10"></div>
-            <div class="ddm-resize-drop" data-col="11"></div>
-            <div class="ddm-resize-drop" data-col="12"></div>
             <div class="col-md-12 col-ddm" data-ddm-field-row="2" data-ddm-field-page="0" data-ddm-field-column="0">
-              <div class="ddm-field-container">
+              <div class="ddm-field-container h-100">
                 <div class="ddm-resize-handle ddm-resize-handle-left" data-ddm-field-row="2" data-ddm-field-page="0" data-ddm-field-column="0"></div>
                 <div class="ddm-drag"></div>
                 <div class="ddm-field-actions-container"><a href="javascript:;"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button"><svg class="lexicon-icon lexicon-icon-paste" focusable="false" role="presentation">
@@ -690,20 +558,8 @@ exports[`FormRenderer PagesSettings should reset the current page on layout rend
             </div>
           </div>
           <div class="position-relative row">
-            <div class="ddm-resize-drop" data-col="1"></div>
-            <div class="ddm-resize-drop" data-col="2"></div>
-            <div class="ddm-resize-drop" data-col="3"></div>
-            <div class="ddm-resize-drop" data-col="4"></div>
-            <div class="ddm-resize-drop" data-col="5"></div>
-            <div class="ddm-resize-drop" data-col="6"></div>
-            <div class="ddm-resize-drop" data-col="7"></div>
-            <div class="ddm-resize-drop" data-col="8"></div>
-            <div class="ddm-resize-drop" data-col="9"></div>
-            <div class="ddm-resize-drop" data-col="10"></div>
-            <div class="ddm-resize-drop" data-col="11"></div>
-            <div class="ddm-resize-drop" data-col="12"></div>
             <div class="col-md-12 col-ddm" data-ddm-field-row="3" data-ddm-field-page="0" data-ddm-field-column="0">
-              <div class="ddm-field-container">
+              <div class="ddm-field-container h-100">
                 <div class="ddm-resize-handle ddm-resize-handle-left" data-ddm-field-row="3" data-ddm-field-page="0" data-ddm-field-column="0"></div>
                 <div class="ddm-drag"></div>
                 <div class="ddm-field-actions-container"><a href="javascript:;"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button"><svg class="lexicon-icon lexicon-icon-paste" focusable="false" role="presentation">
@@ -761,26 +617,26 @@ exports[`FormRenderer PagesSettings should show delete-field option, when the fo
     <div class="ddm-form-page pl-4 pr-4"><textarea class="form-builder-page-header-title form-control p-0" data-page-index="0" maxlength="120" value="Untitled name"></textarea><textarea class="form-builder-page-header-description form-control p-0" data-page-index="0" maxlength="120" placeholder="add-a-short-description-for-this-page"></textarea>
       <div class="form-builder-layout">
         <div class="layout-page">
+          <div class="ddm-resize-column" data-resize-column="0" ref="resizeColumn0"></div>
+          <div class="ddm-resize-column" data-resize-column="1" ref="resizeColumn1"></div>
+          <div class="ddm-resize-column" data-resize-column="2" ref="resizeColumn2"></div>
+          <div class="ddm-resize-column" data-resize-column="3" ref="resizeColumn3"></div>
+          <div class="ddm-resize-column" data-resize-column="4" ref="resizeColumn4"></div>
+          <div class="ddm-resize-column" data-resize-column="5" ref="resizeColumn5"></div>
+          <div class="ddm-resize-column" data-resize-column="6" ref="resizeColumn6"></div>
+          <div class="ddm-resize-column" data-resize-column="7" ref="resizeColumn7"></div>
+          <div class="ddm-resize-column" data-resize-column="8" ref="resizeColumn8"></div>
+          <div class="ddm-resize-column" data-resize-column="9" ref="resizeColumn9"></div>
+          <div class="ddm-resize-column" data-resize-column="10" ref="resizeColumn10"></div>
+          <div class="ddm-resize-column" data-resize-column="11" ref="resizeColumn11"></div>
           <div class="row">
             <div class="col col-empty col-md-12" data-ddm-field-row="0" data-ddm-field-page="0">
               <div class="ddm-target"></div>
             </div>
           </div>
           <div class="position-relative row">
-            <div class="ddm-resize-drop" data-col="1"></div>
-            <div class="ddm-resize-drop" data-col="2"></div>
-            <div class="ddm-resize-drop" data-col="3"></div>
-            <div class="ddm-resize-drop" data-col="4"></div>
-            <div class="ddm-resize-drop" data-col="5"></div>
-            <div class="ddm-resize-drop" data-col="6"></div>
-            <div class="ddm-resize-drop" data-col="7"></div>
-            <div class="ddm-resize-drop" data-col="8"></div>
-            <div class="ddm-resize-drop" data-col="9"></div>
-            <div class="ddm-resize-drop" data-col="10"></div>
-            <div class="ddm-resize-drop" data-col="11"></div>
-            <div class="ddm-resize-drop" data-col="12"></div>
             <div class="col-md-3 col-ddm" data-ddm-field-row="0" data-ddm-field-page="0" data-ddm-field-column="0">
-              <div class="ddm-field-container">
+              <div class="ddm-field-container h-100">
                 <div class="ddm-resize-handle ddm-resize-handle-left" data-ddm-field-row="0" data-ddm-field-page="0" data-ddm-field-column="0"></div>
                 <div class="ddm-drag"></div>
                 <div class="ddm-field-actions-container"><a href="javascript:;"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button"><svg class="lexicon-icon lexicon-icon-paste" focusable="false" role="presentation">
@@ -801,20 +657,8 @@ exports[`FormRenderer PagesSettings should show delete-field option, when the fo
             </div>
           </div>
           <div class="position-relative row">
-            <div class="ddm-resize-drop" data-col="1"></div>
-            <div class="ddm-resize-drop" data-col="2"></div>
-            <div class="ddm-resize-drop" data-col="3"></div>
-            <div class="ddm-resize-drop" data-col="4"></div>
-            <div class="ddm-resize-drop" data-col="5"></div>
-            <div class="ddm-resize-drop" data-col="6"></div>
-            <div class="ddm-resize-drop" data-col="7"></div>
-            <div class="ddm-resize-drop" data-col="8"></div>
-            <div class="ddm-resize-drop" data-col="9"></div>
-            <div class="ddm-resize-drop" data-col="10"></div>
-            <div class="ddm-resize-drop" data-col="11"></div>
-            <div class="ddm-resize-drop" data-col="12"></div>
             <div class="col-md-4 col-ddm" data-ddm-field-row="1" data-ddm-field-page="0" data-ddm-field-column="0">
-              <div class="ddm-field-container">
+              <div class="ddm-field-container h-100">
                 <div class="ddm-resize-handle ddm-resize-handle-left" data-ddm-field-row="1" data-ddm-field-page="0" data-ddm-field-column="0"></div>
                 <div class="ddm-drag"></div>
                 <div class="ddm-field-actions-container"><a href="javascript:;"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button"><svg class="lexicon-icon lexicon-icon-paste" focusable="false" role="presentation">
@@ -826,7 +670,7 @@ exports[`FormRenderer PagesSettings should show delete-field option, when the fo
               </div>
             </div>
             <div class="col-md-6 col-ddm" data-ddm-field-row="1" data-ddm-field-page="0" data-ddm-field-column="1">
-              <div class="ddm-field-container">
+              <div class="ddm-field-container h-100">
                 <div class="ddm-resize-handle ddm-resize-handle-left" data-ddm-field-row="1" data-ddm-field-page="0" data-ddm-field-column="1"></div>
                 <div class="ddm-drag"></div>
                 <div class="ddm-field-actions-container"><a href="javascript:;"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button"><svg class="lexicon-icon lexicon-icon-paste" focusable="false" role="presentation">
@@ -847,20 +691,8 @@ exports[`FormRenderer PagesSettings should show delete-field option, when the fo
             </div>
           </div>
           <div class="position-relative row">
-            <div class="ddm-resize-drop" data-col="1"></div>
-            <div class="ddm-resize-drop" data-col="2"></div>
-            <div class="ddm-resize-drop" data-col="3"></div>
-            <div class="ddm-resize-drop" data-col="4"></div>
-            <div class="ddm-resize-drop" data-col="5"></div>
-            <div class="ddm-resize-drop" data-col="6"></div>
-            <div class="ddm-resize-drop" data-col="7"></div>
-            <div class="ddm-resize-drop" data-col="8"></div>
-            <div class="ddm-resize-drop" data-col="9"></div>
-            <div class="ddm-resize-drop" data-col="10"></div>
-            <div class="ddm-resize-drop" data-col="11"></div>
-            <div class="ddm-resize-drop" data-col="12"></div>
             <div class="col-md-12 col-ddm" data-ddm-field-row="2" data-ddm-field-page="0" data-ddm-field-column="0">
-              <div class="ddm-field-container">
+              <div class="ddm-field-container h-100">
                 <div class="ddm-resize-handle ddm-resize-handle-left" data-ddm-field-row="2" data-ddm-field-page="0" data-ddm-field-column="0"></div>
                 <div class="ddm-drag"></div>
                 <div class="ddm-field-actions-container"><a href="javascript:;"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button"><svg class="lexicon-icon lexicon-icon-paste" focusable="false" role="presentation">
@@ -878,20 +710,8 @@ exports[`FormRenderer PagesSettings should show delete-field option, when the fo
             </div>
           </div>
           <div class="position-relative row">
-            <div class="ddm-resize-drop" data-col="1"></div>
-            <div class="ddm-resize-drop" data-col="2"></div>
-            <div class="ddm-resize-drop" data-col="3"></div>
-            <div class="ddm-resize-drop" data-col="4"></div>
-            <div class="ddm-resize-drop" data-col="5"></div>
-            <div class="ddm-resize-drop" data-col="6"></div>
-            <div class="ddm-resize-drop" data-col="7"></div>
-            <div class="ddm-resize-drop" data-col="8"></div>
-            <div class="ddm-resize-drop" data-col="9"></div>
-            <div class="ddm-resize-drop" data-col="10"></div>
-            <div class="ddm-resize-drop" data-col="11"></div>
-            <div class="ddm-resize-drop" data-col="12"></div>
             <div class="col-md-12 col-ddm" data-ddm-field-row="3" data-ddm-field-page="0" data-ddm-field-column="0">
-              <div class="ddm-field-container">
+              <div class="ddm-field-container h-100">
                 <div class="ddm-resize-handle ddm-resize-handle-left" data-ddm-field-row="3" data-ddm-field-page="0" data-ddm-field-column="0"></div>
                 <div class="ddm-drag"></div>
                 <div class="ddm-field-actions-container"><a href="javascript:;"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button"><svg class="lexicon-icon lexicon-icon-paste" focusable="false" role="presentation">
@@ -937,26 +757,26 @@ exports[`FormRenderer PagesSettings should show reset-field option, when the for
     <div class="ddm-form-page pl-4 pr-4"><textarea class="form-builder-page-header-title form-control p-0" data-page-index="0" maxlength="120" value="Untitled name" placeholder="untitled-page-x-of-x"></textarea><textarea class="form-builder-page-header-description form-control p-0" data-page-index="0" maxlength="120" placeholder="add-a-short-description-for-this-page"></textarea>
       <div class="form-builder-layout">
         <div class="layout-page">
+          <div class="ddm-resize-column" data-resize-column="0" ref="resizeColumn0"></div>
+          <div class="ddm-resize-column" data-resize-column="1" ref="resizeColumn1"></div>
+          <div class="ddm-resize-column" data-resize-column="2" ref="resizeColumn2"></div>
+          <div class="ddm-resize-column" data-resize-column="3" ref="resizeColumn3"></div>
+          <div class="ddm-resize-column" data-resize-column="4" ref="resizeColumn4"></div>
+          <div class="ddm-resize-column" data-resize-column="5" ref="resizeColumn5"></div>
+          <div class="ddm-resize-column" data-resize-column="6" ref="resizeColumn6"></div>
+          <div class="ddm-resize-column" data-resize-column="7" ref="resizeColumn7"></div>
+          <div class="ddm-resize-column" data-resize-column="8" ref="resizeColumn8"></div>
+          <div class="ddm-resize-column" data-resize-column="9" ref="resizeColumn9"></div>
+          <div class="ddm-resize-column" data-resize-column="10" ref="resizeColumn10"></div>
+          <div class="ddm-resize-column" data-resize-column="11" ref="resizeColumn11"></div>
           <div class="row">
             <div class="col col-empty col-md-12" data-ddm-field-row="0" data-ddm-field-page="0">
               <div class="ddm-target"></div>
             </div>
           </div>
           <div class="position-relative row">
-            <div class="ddm-resize-drop" data-col="1"></div>
-            <div class="ddm-resize-drop" data-col="2"></div>
-            <div class="ddm-resize-drop" data-col="3"></div>
-            <div class="ddm-resize-drop" data-col="4"></div>
-            <div class="ddm-resize-drop" data-col="5"></div>
-            <div class="ddm-resize-drop" data-col="6"></div>
-            <div class="ddm-resize-drop" data-col="7"></div>
-            <div class="ddm-resize-drop" data-col="8"></div>
-            <div class="ddm-resize-drop" data-col="9"></div>
-            <div class="ddm-resize-drop" data-col="10"></div>
-            <div class="ddm-resize-drop" data-col="11"></div>
-            <div class="ddm-resize-drop" data-col="12"></div>
             <div class="col-md-3 col-ddm" data-ddm-field-row="0" data-ddm-field-page="0" data-ddm-field-column="0">
-              <div class="ddm-field-container">
+              <div class="ddm-field-container h-100">
                 <div class="ddm-resize-handle ddm-resize-handle-left" data-ddm-field-row="0" data-ddm-field-page="0" data-ddm-field-column="0"></div>
                 <div class="ddm-drag"></div>
                 <div class="ddm-field-actions-container"><a href="javascript:;"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button"><svg class="lexicon-icon lexicon-icon-paste" focusable="false" role="presentation">
@@ -977,20 +797,8 @@ exports[`FormRenderer PagesSettings should show reset-field option, when the for
             </div>
           </div>
           <div class="position-relative row">
-            <div class="ddm-resize-drop" data-col="1"></div>
-            <div class="ddm-resize-drop" data-col="2"></div>
-            <div class="ddm-resize-drop" data-col="3"></div>
-            <div class="ddm-resize-drop" data-col="4"></div>
-            <div class="ddm-resize-drop" data-col="5"></div>
-            <div class="ddm-resize-drop" data-col="6"></div>
-            <div class="ddm-resize-drop" data-col="7"></div>
-            <div class="ddm-resize-drop" data-col="8"></div>
-            <div class="ddm-resize-drop" data-col="9"></div>
-            <div class="ddm-resize-drop" data-col="10"></div>
-            <div class="ddm-resize-drop" data-col="11"></div>
-            <div class="ddm-resize-drop" data-col="12"></div>
             <div class="col-md-4 col-ddm" data-ddm-field-row="1" data-ddm-field-page="0" data-ddm-field-column="0">
-              <div class="ddm-field-container">
+              <div class="ddm-field-container h-100">
                 <div class="ddm-resize-handle ddm-resize-handle-left" data-ddm-field-row="1" data-ddm-field-page="0" data-ddm-field-column="0"></div>
                 <div class="ddm-drag"></div>
                 <div class="ddm-field-actions-container"><a href="javascript:;"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button"><svg class="lexicon-icon lexicon-icon-paste" focusable="false" role="presentation">
@@ -1002,7 +810,7 @@ exports[`FormRenderer PagesSettings should show reset-field option, when the for
               </div>
             </div>
             <div class="col-md-6 col-ddm" data-ddm-field-row="1" data-ddm-field-page="0" data-ddm-field-column="1">
-              <div class="ddm-field-container">
+              <div class="ddm-field-container h-100">
                 <div class="ddm-resize-handle ddm-resize-handle-left" data-ddm-field-row="1" data-ddm-field-page="0" data-ddm-field-column="1"></div>
                 <div class="ddm-drag"></div>
                 <div class="ddm-field-actions-container"><a href="javascript:;"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button"><svg class="lexicon-icon lexicon-icon-paste" focusable="false" role="presentation">
@@ -1023,20 +831,8 @@ exports[`FormRenderer PagesSettings should show reset-field option, when the for
             </div>
           </div>
           <div class="position-relative row">
-            <div class="ddm-resize-drop" data-col="1"></div>
-            <div class="ddm-resize-drop" data-col="2"></div>
-            <div class="ddm-resize-drop" data-col="3"></div>
-            <div class="ddm-resize-drop" data-col="4"></div>
-            <div class="ddm-resize-drop" data-col="5"></div>
-            <div class="ddm-resize-drop" data-col="6"></div>
-            <div class="ddm-resize-drop" data-col="7"></div>
-            <div class="ddm-resize-drop" data-col="8"></div>
-            <div class="ddm-resize-drop" data-col="9"></div>
-            <div class="ddm-resize-drop" data-col="10"></div>
-            <div class="ddm-resize-drop" data-col="11"></div>
-            <div class="ddm-resize-drop" data-col="12"></div>
             <div class="col-md-12 col-ddm" data-ddm-field-row="2" data-ddm-field-page="0" data-ddm-field-column="0">
-              <div class="ddm-field-container">
+              <div class="ddm-field-container h-100">
                 <div class="ddm-resize-handle ddm-resize-handle-left" data-ddm-field-row="2" data-ddm-field-page="0" data-ddm-field-column="0"></div>
                 <div class="ddm-drag"></div>
                 <div class="ddm-field-actions-container"><a href="javascript:;"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button"><svg class="lexicon-icon lexicon-icon-paste" focusable="false" role="presentation">
@@ -1054,20 +850,8 @@ exports[`FormRenderer PagesSettings should show reset-field option, when the for
             </div>
           </div>
           <div class="position-relative row">
-            <div class="ddm-resize-drop" data-col="1"></div>
-            <div class="ddm-resize-drop" data-col="2"></div>
-            <div class="ddm-resize-drop" data-col="3"></div>
-            <div class="ddm-resize-drop" data-col="4"></div>
-            <div class="ddm-resize-drop" data-col="5"></div>
-            <div class="ddm-resize-drop" data-col="6"></div>
-            <div class="ddm-resize-drop" data-col="7"></div>
-            <div class="ddm-resize-drop" data-col="8"></div>
-            <div class="ddm-resize-drop" data-col="9"></div>
-            <div class="ddm-resize-drop" data-col="10"></div>
-            <div class="ddm-resize-drop" data-col="11"></div>
-            <div class="ddm-resize-drop" data-col="12"></div>
             <div class="col-md-12 col-ddm" data-ddm-field-row="3" data-ddm-field-page="0" data-ddm-field-column="0">
-              <div class="ddm-field-container">
+              <div class="ddm-field-container h-100">
                 <div class="ddm-resize-handle ddm-resize-handle-left" data-ddm-field-row="3" data-ddm-field-page="0" data-ddm-field-column="0"></div>
                 <div class="ddm-drag"></div>
                 <div class="ddm-field-actions-container"><a href="javascript:;"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button"><svg class="lexicon-icon lexicon-icon-paste" focusable="false" role="presentation">
@@ -1125,26 +909,26 @@ exports[`FormRenderer should back the pagination mode to wizard mode when user c
     <div class="ddm-form-page pl-4 pr-4"><textarea class="form-builder-page-header-title form-control p-0" data-page-index="0" maxlength="120" value="Untitled name"></textarea><textarea class="form-builder-page-header-description form-control p-0" data-page-index="0" maxlength="120" placeholder="add-a-short-description-for-this-page"></textarea>
       <div class="form-builder-layout">
         <div class="layout-page">
+          <div class="ddm-resize-column" data-resize-column="0" ref="resizeColumn0"></div>
+          <div class="ddm-resize-column" data-resize-column="1" ref="resizeColumn1"></div>
+          <div class="ddm-resize-column" data-resize-column="2" ref="resizeColumn2"></div>
+          <div class="ddm-resize-column" data-resize-column="3" ref="resizeColumn3"></div>
+          <div class="ddm-resize-column" data-resize-column="4" ref="resizeColumn4"></div>
+          <div class="ddm-resize-column" data-resize-column="5" ref="resizeColumn5"></div>
+          <div class="ddm-resize-column" data-resize-column="6" ref="resizeColumn6"></div>
+          <div class="ddm-resize-column" data-resize-column="7" ref="resizeColumn7"></div>
+          <div class="ddm-resize-column" data-resize-column="8" ref="resizeColumn8"></div>
+          <div class="ddm-resize-column" data-resize-column="9" ref="resizeColumn9"></div>
+          <div class="ddm-resize-column" data-resize-column="10" ref="resizeColumn10"></div>
+          <div class="ddm-resize-column" data-resize-column="11" ref="resizeColumn11"></div>
           <div class="row">
             <div class="col col-empty col-md-12" data-ddm-field-row="0" data-ddm-field-page="0">
               <div class="ddm-target"></div>
             </div>
           </div>
           <div class="position-relative row">
-            <div class="ddm-resize-drop" data-col="1"></div>
-            <div class="ddm-resize-drop" data-col="2"></div>
-            <div class="ddm-resize-drop" data-col="3"></div>
-            <div class="ddm-resize-drop" data-col="4"></div>
-            <div class="ddm-resize-drop" data-col="5"></div>
-            <div class="ddm-resize-drop" data-col="6"></div>
-            <div class="ddm-resize-drop" data-col="7"></div>
-            <div class="ddm-resize-drop" data-col="8"></div>
-            <div class="ddm-resize-drop" data-col="9"></div>
-            <div class="ddm-resize-drop" data-col="10"></div>
-            <div class="ddm-resize-drop" data-col="11"></div>
-            <div class="ddm-resize-drop" data-col="12"></div>
             <div class="col-md-3 col-ddm" data-ddm-field-row="0" data-ddm-field-page="0" data-ddm-field-column="0">
-              <div class="ddm-field-container">
+              <div class="ddm-field-container h-100">
                 <div class="ddm-resize-handle ddm-resize-handle-left" data-ddm-field-row="0" data-ddm-field-page="0" data-ddm-field-column="0"></div>
                 <div class="ddm-drag"></div>
                 <div class="ddm-field-actions-container"><a href="javascript:;"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button"><svg class="lexicon-icon lexicon-icon-paste" focusable="false" role="presentation">
@@ -1165,20 +949,8 @@ exports[`FormRenderer should back the pagination mode to wizard mode when user c
             </div>
           </div>
           <div class="position-relative row">
-            <div class="ddm-resize-drop" data-col="1"></div>
-            <div class="ddm-resize-drop" data-col="2"></div>
-            <div class="ddm-resize-drop" data-col="3"></div>
-            <div class="ddm-resize-drop" data-col="4"></div>
-            <div class="ddm-resize-drop" data-col="5"></div>
-            <div class="ddm-resize-drop" data-col="6"></div>
-            <div class="ddm-resize-drop" data-col="7"></div>
-            <div class="ddm-resize-drop" data-col="8"></div>
-            <div class="ddm-resize-drop" data-col="9"></div>
-            <div class="ddm-resize-drop" data-col="10"></div>
-            <div class="ddm-resize-drop" data-col="11"></div>
-            <div class="ddm-resize-drop" data-col="12"></div>
             <div class="col-md-4 col-ddm" data-ddm-field-row="1" data-ddm-field-page="0" data-ddm-field-column="0">
-              <div class="ddm-field-container">
+              <div class="ddm-field-container h-100">
                 <div class="ddm-resize-handle ddm-resize-handle-left" data-ddm-field-row="1" data-ddm-field-page="0" data-ddm-field-column="0"></div>
                 <div class="ddm-drag"></div>
                 <div class="ddm-field-actions-container"><a href="javascript:;"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button"><svg class="lexicon-icon lexicon-icon-paste" focusable="false" role="presentation">
@@ -1190,7 +962,7 @@ exports[`FormRenderer should back the pagination mode to wizard mode when user c
               </div>
             </div>
             <div class="col-md-6 col-ddm" data-ddm-field-row="1" data-ddm-field-page="0" data-ddm-field-column="1">
-              <div class="ddm-field-container">
+              <div class="ddm-field-container h-100">
                 <div class="ddm-resize-handle ddm-resize-handle-left" data-ddm-field-row="1" data-ddm-field-page="0" data-ddm-field-column="1"></div>
                 <div class="ddm-drag"></div>
                 <div class="ddm-field-actions-container"><a href="javascript:;"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button"><svg class="lexicon-icon lexicon-icon-paste" focusable="false" role="presentation">
@@ -1211,20 +983,8 @@ exports[`FormRenderer should back the pagination mode to wizard mode when user c
             </div>
           </div>
           <div class="position-relative row">
-            <div class="ddm-resize-drop" data-col="1"></div>
-            <div class="ddm-resize-drop" data-col="2"></div>
-            <div class="ddm-resize-drop" data-col="3"></div>
-            <div class="ddm-resize-drop" data-col="4"></div>
-            <div class="ddm-resize-drop" data-col="5"></div>
-            <div class="ddm-resize-drop" data-col="6"></div>
-            <div class="ddm-resize-drop" data-col="7"></div>
-            <div class="ddm-resize-drop" data-col="8"></div>
-            <div class="ddm-resize-drop" data-col="9"></div>
-            <div class="ddm-resize-drop" data-col="10"></div>
-            <div class="ddm-resize-drop" data-col="11"></div>
-            <div class="ddm-resize-drop" data-col="12"></div>
             <div class="col-md-12 col-ddm" data-ddm-field-row="2" data-ddm-field-page="0" data-ddm-field-column="0">
-              <div class="ddm-field-container">
+              <div class="ddm-field-container h-100">
                 <div class="ddm-resize-handle ddm-resize-handle-left" data-ddm-field-row="2" data-ddm-field-page="0" data-ddm-field-column="0"></div>
                 <div class="ddm-drag"></div>
                 <div class="ddm-field-actions-container"><a href="javascript:;"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button"><svg class="lexicon-icon lexicon-icon-paste" focusable="false" role="presentation">
@@ -1242,20 +1002,8 @@ exports[`FormRenderer should back the pagination mode to wizard mode when user c
             </div>
           </div>
           <div class="position-relative row">
-            <div class="ddm-resize-drop" data-col="1"></div>
-            <div class="ddm-resize-drop" data-col="2"></div>
-            <div class="ddm-resize-drop" data-col="3"></div>
-            <div class="ddm-resize-drop" data-col="4"></div>
-            <div class="ddm-resize-drop" data-col="5"></div>
-            <div class="ddm-resize-drop" data-col="6"></div>
-            <div class="ddm-resize-drop" data-col="7"></div>
-            <div class="ddm-resize-drop" data-col="8"></div>
-            <div class="ddm-resize-drop" data-col="9"></div>
-            <div class="ddm-resize-drop" data-col="10"></div>
-            <div class="ddm-resize-drop" data-col="11"></div>
-            <div class="ddm-resize-drop" data-col="12"></div>
             <div class="col-md-12 col-ddm" data-ddm-field-row="3" data-ddm-field-page="0" data-ddm-field-column="0">
-              <div class="ddm-field-container">
+              <div class="ddm-field-container h-100">
                 <div class="ddm-resize-handle ddm-resize-handle-left" data-ddm-field-row="3" data-ddm-field-page="0" data-ddm-field-column="0"></div>
                 <div class="ddm-drag"></div>
                 <div class="ddm-field-actions-container"><a href="javascript:;"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button"><svg class="lexicon-icon lexicon-icon-paste" focusable="false" role="presentation">
@@ -1295,26 +1043,26 @@ exports[`FormRenderer should change the active by clicking on the pagination whe
     <div class="ddm-form-page pl-4 pr-4"><textarea class="form-builder-page-header-title form-control p-0" data-page-index="1" maxlength="120" value="Untitled name" placeholder="untitled-page-x-of-x"></textarea><textarea class="form-builder-page-header-description form-control p-0" data-page-index="1" maxlength="120" placeholder="add-a-short-description-for-this-page"></textarea>
       <div class="form-builder-layout">
         <div class="layout-page">
+          <div class="ddm-resize-column" data-resize-column="0" ref="resizeColumn0"></div>
+          <div class="ddm-resize-column" data-resize-column="1" ref="resizeColumn1"></div>
+          <div class="ddm-resize-column" data-resize-column="2" ref="resizeColumn2"></div>
+          <div class="ddm-resize-column" data-resize-column="3" ref="resizeColumn3"></div>
+          <div class="ddm-resize-column" data-resize-column="4" ref="resizeColumn4"></div>
+          <div class="ddm-resize-column" data-resize-column="5" ref="resizeColumn5"></div>
+          <div class="ddm-resize-column" data-resize-column="6" ref="resizeColumn6"></div>
+          <div class="ddm-resize-column" data-resize-column="7" ref="resizeColumn7"></div>
+          <div class="ddm-resize-column" data-resize-column="8" ref="resizeColumn8"></div>
+          <div class="ddm-resize-column" data-resize-column="9" ref="resizeColumn9"></div>
+          <div class="ddm-resize-column" data-resize-column="10" ref="resizeColumn10"></div>
+          <div class="ddm-resize-column" data-resize-column="11" ref="resizeColumn11"></div>
           <div class="row">
             <div class="col col-empty col-md-12" data-ddm-field-row="0" data-ddm-field-page="1">
               <div class="ddm-target"></div>
             </div>
           </div>
           <div class="position-relative row">
-            <div class="ddm-resize-drop" data-col="1"></div>
-            <div class="ddm-resize-drop" data-col="2"></div>
-            <div class="ddm-resize-drop" data-col="3"></div>
-            <div class="ddm-resize-drop" data-col="4"></div>
-            <div class="ddm-resize-drop" data-col="5"></div>
-            <div class="ddm-resize-drop" data-col="6"></div>
-            <div class="ddm-resize-drop" data-col="7"></div>
-            <div class="ddm-resize-drop" data-col="8"></div>
-            <div class="ddm-resize-drop" data-col="9"></div>
-            <div class="ddm-resize-drop" data-col="10"></div>
-            <div class="ddm-resize-drop" data-col="11"></div>
-            <div class="ddm-resize-drop" data-col="12"></div>
             <div class="col-md-3 col-ddm" data-ddm-field-row="0" data-ddm-field-page="1" data-ddm-field-column="0">
-              <div class="ddm-field-container">
+              <div class="ddm-field-container h-100">
                 <div class="ddm-resize-handle ddm-resize-handle-left" data-ddm-field-row="0" data-ddm-field-page="1" data-ddm-field-column="0"></div>
                 <div class="ddm-drag"></div>
                 <div class="ddm-field-actions-container"><a href="javascript:;"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button"><svg class="lexicon-icon lexicon-icon-paste" focusable="false" role="presentation">
@@ -1335,20 +1083,8 @@ exports[`FormRenderer should change the active by clicking on the pagination whe
             </div>
           </div>
           <div class="position-relative row">
-            <div class="ddm-resize-drop" data-col="1"></div>
-            <div class="ddm-resize-drop" data-col="2"></div>
-            <div class="ddm-resize-drop" data-col="3"></div>
-            <div class="ddm-resize-drop" data-col="4"></div>
-            <div class="ddm-resize-drop" data-col="5"></div>
-            <div class="ddm-resize-drop" data-col="6"></div>
-            <div class="ddm-resize-drop" data-col="7"></div>
-            <div class="ddm-resize-drop" data-col="8"></div>
-            <div class="ddm-resize-drop" data-col="9"></div>
-            <div class="ddm-resize-drop" data-col="10"></div>
-            <div class="ddm-resize-drop" data-col="11"></div>
-            <div class="ddm-resize-drop" data-col="12"></div>
             <div class="col-md-4 col-ddm" data-ddm-field-row="1" data-ddm-field-page="1" data-ddm-field-column="0">
-              <div class="ddm-field-container">
+              <div class="ddm-field-container h-100">
                 <div class="ddm-resize-handle ddm-resize-handle-left" data-ddm-field-row="1" data-ddm-field-page="1" data-ddm-field-column="0"></div>
                 <div class="ddm-drag"></div>
                 <div class="ddm-field-actions-container"><a href="javascript:;"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button"><svg class="lexicon-icon lexicon-icon-paste" focusable="false" role="presentation">
@@ -1360,7 +1096,7 @@ exports[`FormRenderer should change the active by clicking on the pagination whe
               </div>
             </div>
             <div class="col-md-6 col-ddm" data-ddm-field-row="1" data-ddm-field-page="1" data-ddm-field-column="1">
-              <div class="ddm-field-container">
+              <div class="ddm-field-container h-100">
                 <div class="ddm-resize-handle ddm-resize-handle-left" data-ddm-field-row="1" data-ddm-field-page="1" data-ddm-field-column="1"></div>
                 <div class="ddm-drag"></div>
                 <div class="ddm-field-actions-container"><a href="javascript:;"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button"><svg class="lexicon-icon lexicon-icon-paste" focusable="false" role="presentation">
@@ -1381,20 +1117,8 @@ exports[`FormRenderer should change the active by clicking on the pagination whe
             </div>
           </div>
           <div class="position-relative row">
-            <div class="ddm-resize-drop" data-col="1"></div>
-            <div class="ddm-resize-drop" data-col="2"></div>
-            <div class="ddm-resize-drop" data-col="3"></div>
-            <div class="ddm-resize-drop" data-col="4"></div>
-            <div class="ddm-resize-drop" data-col="5"></div>
-            <div class="ddm-resize-drop" data-col="6"></div>
-            <div class="ddm-resize-drop" data-col="7"></div>
-            <div class="ddm-resize-drop" data-col="8"></div>
-            <div class="ddm-resize-drop" data-col="9"></div>
-            <div class="ddm-resize-drop" data-col="10"></div>
-            <div class="ddm-resize-drop" data-col="11"></div>
-            <div class="ddm-resize-drop" data-col="12"></div>
             <div class="col-md-12 col-ddm" data-ddm-field-row="2" data-ddm-field-page="1" data-ddm-field-column="0">
-              <div class="ddm-field-container">
+              <div class="ddm-field-container h-100">
                 <div class="ddm-resize-handle ddm-resize-handle-left" data-ddm-field-row="2" data-ddm-field-page="1" data-ddm-field-column="0"></div>
                 <div class="ddm-drag"></div>
                 <div class="ddm-field-actions-container"><a href="javascript:;"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button"><svg class="lexicon-icon lexicon-icon-paste" focusable="false" role="presentation">
@@ -1412,20 +1136,8 @@ exports[`FormRenderer should change the active by clicking on the pagination whe
             </div>
           </div>
           <div class="position-relative row">
-            <div class="ddm-resize-drop" data-col="1"></div>
-            <div class="ddm-resize-drop" data-col="2"></div>
-            <div class="ddm-resize-drop" data-col="3"></div>
-            <div class="ddm-resize-drop" data-col="4"></div>
-            <div class="ddm-resize-drop" data-col="5"></div>
-            <div class="ddm-resize-drop" data-col="6"></div>
-            <div class="ddm-resize-drop" data-col="7"></div>
-            <div class="ddm-resize-drop" data-col="8"></div>
-            <div class="ddm-resize-drop" data-col="9"></div>
-            <div class="ddm-resize-drop" data-col="10"></div>
-            <div class="ddm-resize-drop" data-col="11"></div>
-            <div class="ddm-resize-drop" data-col="12"></div>
             <div class="col-md-12 col-ddm" data-ddm-field-row="3" data-ddm-field-page="1" data-ddm-field-column="0">
-              <div class="ddm-field-container">
+              <div class="ddm-field-container h-100">
                 <div class="ddm-resize-handle ddm-resize-handle-left" data-ddm-field-row="3" data-ddm-field-page="1" data-ddm-field-column="0"></div>
                 <div class="ddm-drag"></div>
                 <div class="ddm-field-actions-container"><a href="javascript:;"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button"><svg class="lexicon-icon lexicon-icon-paste" focusable="false" role="presentation">
@@ -1497,26 +1209,26 @@ exports[`FormRenderer should change the active page 1`] = `
     <div class="ddm-form-page pl-4 pr-4"><textarea class="form-builder-page-header-title form-control p-0" data-page-index="0" maxlength="120" value="Untitled name"></textarea><textarea class="form-builder-page-header-description form-control p-0" data-page-index="0" maxlength="120" placeholder="add-a-short-description-for-this-page"></textarea>
       <div class="form-builder-layout">
         <div class="layout-page">
+          <div class="ddm-resize-column" data-resize-column="0" ref="resizeColumn0"></div>
+          <div class="ddm-resize-column" data-resize-column="1" ref="resizeColumn1"></div>
+          <div class="ddm-resize-column" data-resize-column="2" ref="resizeColumn2"></div>
+          <div class="ddm-resize-column" data-resize-column="3" ref="resizeColumn3"></div>
+          <div class="ddm-resize-column" data-resize-column="4" ref="resizeColumn4"></div>
+          <div class="ddm-resize-column" data-resize-column="5" ref="resizeColumn5"></div>
+          <div class="ddm-resize-column" data-resize-column="6" ref="resizeColumn6"></div>
+          <div class="ddm-resize-column" data-resize-column="7" ref="resizeColumn7"></div>
+          <div class="ddm-resize-column" data-resize-column="8" ref="resizeColumn8"></div>
+          <div class="ddm-resize-column" data-resize-column="9" ref="resizeColumn9"></div>
+          <div class="ddm-resize-column" data-resize-column="10" ref="resizeColumn10"></div>
+          <div class="ddm-resize-column" data-resize-column="11" ref="resizeColumn11"></div>
           <div class="row">
             <div class="col col-empty col-md-12" data-ddm-field-row="0" data-ddm-field-page="0">
               <div class="ddm-target"></div>
             </div>
           </div>
           <div class="position-relative row">
-            <div class="ddm-resize-drop" data-col="1"></div>
-            <div class="ddm-resize-drop" data-col="2"></div>
-            <div class="ddm-resize-drop" data-col="3"></div>
-            <div class="ddm-resize-drop" data-col="4"></div>
-            <div class="ddm-resize-drop" data-col="5"></div>
-            <div class="ddm-resize-drop" data-col="6"></div>
-            <div class="ddm-resize-drop" data-col="7"></div>
-            <div class="ddm-resize-drop" data-col="8"></div>
-            <div class="ddm-resize-drop" data-col="9"></div>
-            <div class="ddm-resize-drop" data-col="10"></div>
-            <div class="ddm-resize-drop" data-col="11"></div>
-            <div class="ddm-resize-drop" data-col="12"></div>
             <div class="col-md-3 col-ddm" data-ddm-field-row="0" data-ddm-field-page="0" data-ddm-field-column="0">
-              <div class="ddm-field-container">
+              <div class="ddm-field-container h-100">
                 <div class="ddm-resize-handle ddm-resize-handle-left" data-ddm-field-row="0" data-ddm-field-page="0" data-ddm-field-column="0"></div>
                 <div class="ddm-drag"></div>
                 <div class="ddm-field-actions-container"><a href="javascript:;"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button"><svg class="lexicon-icon lexicon-icon-paste" focusable="false" role="presentation">
@@ -1537,20 +1249,8 @@ exports[`FormRenderer should change the active page 1`] = `
             </div>
           </div>
           <div class="position-relative row">
-            <div class="ddm-resize-drop" data-col="1"></div>
-            <div class="ddm-resize-drop" data-col="2"></div>
-            <div class="ddm-resize-drop" data-col="3"></div>
-            <div class="ddm-resize-drop" data-col="4"></div>
-            <div class="ddm-resize-drop" data-col="5"></div>
-            <div class="ddm-resize-drop" data-col="6"></div>
-            <div class="ddm-resize-drop" data-col="7"></div>
-            <div class="ddm-resize-drop" data-col="8"></div>
-            <div class="ddm-resize-drop" data-col="9"></div>
-            <div class="ddm-resize-drop" data-col="10"></div>
-            <div class="ddm-resize-drop" data-col="11"></div>
-            <div class="ddm-resize-drop" data-col="12"></div>
             <div class="col-md-4 col-ddm" data-ddm-field-row="1" data-ddm-field-page="0" data-ddm-field-column="0">
-              <div class="ddm-field-container">
+              <div class="ddm-field-container h-100">
                 <div class="ddm-resize-handle ddm-resize-handle-left" data-ddm-field-row="1" data-ddm-field-page="0" data-ddm-field-column="0"></div>
                 <div class="ddm-drag"></div>
                 <div class="ddm-field-actions-container"><a href="javascript:;"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button"><svg class="lexicon-icon lexicon-icon-paste" focusable="false" role="presentation">
@@ -1562,7 +1262,7 @@ exports[`FormRenderer should change the active page 1`] = `
               </div>
             </div>
             <div class="col-md-6 col-ddm" data-ddm-field-row="1" data-ddm-field-page="0" data-ddm-field-column="1">
-              <div class="ddm-field-container">
+              <div class="ddm-field-container h-100">
                 <div class="ddm-resize-handle ddm-resize-handle-left" data-ddm-field-row="1" data-ddm-field-page="0" data-ddm-field-column="1"></div>
                 <div class="ddm-drag"></div>
                 <div class="ddm-field-actions-container"><a href="javascript:;"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button"><svg class="lexicon-icon lexicon-icon-paste" focusable="false" role="presentation">
@@ -1583,20 +1283,8 @@ exports[`FormRenderer should change the active page 1`] = `
             </div>
           </div>
           <div class="position-relative row">
-            <div class="ddm-resize-drop" data-col="1"></div>
-            <div class="ddm-resize-drop" data-col="2"></div>
-            <div class="ddm-resize-drop" data-col="3"></div>
-            <div class="ddm-resize-drop" data-col="4"></div>
-            <div class="ddm-resize-drop" data-col="5"></div>
-            <div class="ddm-resize-drop" data-col="6"></div>
-            <div class="ddm-resize-drop" data-col="7"></div>
-            <div class="ddm-resize-drop" data-col="8"></div>
-            <div class="ddm-resize-drop" data-col="9"></div>
-            <div class="ddm-resize-drop" data-col="10"></div>
-            <div class="ddm-resize-drop" data-col="11"></div>
-            <div class="ddm-resize-drop" data-col="12"></div>
             <div class="col-md-12 col-ddm" data-ddm-field-row="2" data-ddm-field-page="0" data-ddm-field-column="0">
-              <div class="ddm-field-container">
+              <div class="ddm-field-container h-100">
                 <div class="ddm-resize-handle ddm-resize-handle-left" data-ddm-field-row="2" data-ddm-field-page="0" data-ddm-field-column="0"></div>
                 <div class="ddm-drag"></div>
                 <div class="ddm-field-actions-container"><a href="javascript:;"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button"><svg class="lexicon-icon lexicon-icon-paste" focusable="false" role="presentation">
@@ -1614,20 +1302,8 @@ exports[`FormRenderer should change the active page 1`] = `
             </div>
           </div>
           <div class="position-relative row">
-            <div class="ddm-resize-drop" data-col="1"></div>
-            <div class="ddm-resize-drop" data-col="2"></div>
-            <div class="ddm-resize-drop" data-col="3"></div>
-            <div class="ddm-resize-drop" data-col="4"></div>
-            <div class="ddm-resize-drop" data-col="5"></div>
-            <div class="ddm-resize-drop" data-col="6"></div>
-            <div class="ddm-resize-drop" data-col="7"></div>
-            <div class="ddm-resize-drop" data-col="8"></div>
-            <div class="ddm-resize-drop" data-col="9"></div>
-            <div class="ddm-resize-drop" data-col="10"></div>
-            <div class="ddm-resize-drop" data-col="11"></div>
-            <div class="ddm-resize-drop" data-col="12"></div>
             <div class="col-md-12 col-ddm" data-ddm-field-row="3" data-ddm-field-page="0" data-ddm-field-column="0">
-              <div class="ddm-field-container">
+              <div class="ddm-field-container h-100">
                 <div class="ddm-resize-handle ddm-resize-handle-left" data-ddm-field-row="3" data-ddm-field-page="0" data-ddm-field-column="0"></div>
                 <div class="ddm-drag"></div>
                 <div class="ddm-field-actions-container"><a href="javascript:;"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button"><svg class="lexicon-icon lexicon-icon-paste" focusable="false" role="presentation">
@@ -1687,6 +1363,18 @@ exports[`FormRenderer should change the active page for a empty page 1`] = `
     <div class="ddm-form-page pl-4 pr-4"><textarea class="form-builder-page-header-title form-control p-0" data-page-index="0" maxlength="120" value="Untitled name"></textarea><textarea class="form-builder-page-header-description form-control p-0" data-page-index="0" maxlength="120" placeholder="add-a-short-description-for-this-page"></textarea>
       <div class="form-builder-layout">
         <div class="layout-page">
+          <div class="ddm-resize-column" data-resize-column="0" ref="resizeColumn0"></div>
+          <div class="ddm-resize-column" data-resize-column="1" ref="resizeColumn1"></div>
+          <div class="ddm-resize-column" data-resize-column="2" ref="resizeColumn2"></div>
+          <div class="ddm-resize-column" data-resize-column="3" ref="resizeColumn3"></div>
+          <div class="ddm-resize-column" data-resize-column="4" ref="resizeColumn4"></div>
+          <div class="ddm-resize-column" data-resize-column="5" ref="resizeColumn5"></div>
+          <div class="ddm-resize-column" data-resize-column="6" ref="resizeColumn6"></div>
+          <div class="ddm-resize-column" data-resize-column="7" ref="resizeColumn7"></div>
+          <div class="ddm-resize-column" data-resize-column="8" ref="resizeColumn8"></div>
+          <div class="ddm-resize-column" data-resize-column="9" ref="resizeColumn9"></div>
+          <div class="ddm-resize-column" data-resize-column="10" ref="resizeColumn10"></div>
+          <div class="ddm-resize-column" data-resize-column="11" ref="resizeColumn11"></div>
           <div class="row">
             <div class="col col-empty col-md-12 last-col lfr-initial-col mt-5 mb-4" data-ddm-field-column="0" data-ddm-field-page="0" data-ddm-field-row="0">
               <div class="ddm-target" id="lfr-initial-col-message">drag-from-sidebar-and-drop-here</div>
@@ -1721,26 +1409,26 @@ exports[`FormRenderer should change the form page description 1`] = `
     <div class="ddm-form-page pl-4 pr-4"><textarea class="form-builder-page-header-title form-control p-0" data-page-index="0" maxlength="120" value="Untitled name" placeholder="untitled-page-x-of-x"></textarea><textarea class="form-builder-page-header-description form-control p-0" data-page-index="0" maxlength="120" placeholder="add-a-short-description-for-this-page"></textarea>
       <div class="form-builder-layout">
         <div class="layout-page">
+          <div class="ddm-resize-column" data-resize-column="0" ref="resizeColumn0"></div>
+          <div class="ddm-resize-column" data-resize-column="1" ref="resizeColumn1"></div>
+          <div class="ddm-resize-column" data-resize-column="2" ref="resizeColumn2"></div>
+          <div class="ddm-resize-column" data-resize-column="3" ref="resizeColumn3"></div>
+          <div class="ddm-resize-column" data-resize-column="4" ref="resizeColumn4"></div>
+          <div class="ddm-resize-column" data-resize-column="5" ref="resizeColumn5"></div>
+          <div class="ddm-resize-column" data-resize-column="6" ref="resizeColumn6"></div>
+          <div class="ddm-resize-column" data-resize-column="7" ref="resizeColumn7"></div>
+          <div class="ddm-resize-column" data-resize-column="8" ref="resizeColumn8"></div>
+          <div class="ddm-resize-column" data-resize-column="9" ref="resizeColumn9"></div>
+          <div class="ddm-resize-column" data-resize-column="10" ref="resizeColumn10"></div>
+          <div class="ddm-resize-column" data-resize-column="11" ref="resizeColumn11"></div>
           <div class="row">
             <div class="col col-empty col-md-12" data-ddm-field-row="0" data-ddm-field-page="0">
               <div class="ddm-target"></div>
             </div>
           </div>
           <div class="position-relative row">
-            <div class="ddm-resize-drop" data-col="1"></div>
-            <div class="ddm-resize-drop" data-col="2"></div>
-            <div class="ddm-resize-drop" data-col="3"></div>
-            <div class="ddm-resize-drop" data-col="4"></div>
-            <div class="ddm-resize-drop" data-col="5"></div>
-            <div class="ddm-resize-drop" data-col="6"></div>
-            <div class="ddm-resize-drop" data-col="7"></div>
-            <div class="ddm-resize-drop" data-col="8"></div>
-            <div class="ddm-resize-drop" data-col="9"></div>
-            <div class="ddm-resize-drop" data-col="10"></div>
-            <div class="ddm-resize-drop" data-col="11"></div>
-            <div class="ddm-resize-drop" data-col="12"></div>
             <div class="col-md-3 col-ddm" data-ddm-field-row="0" data-ddm-field-page="0" data-ddm-field-column="0">
-              <div class="ddm-field-container">
+              <div class="ddm-field-container h-100">
                 <div class="ddm-resize-handle ddm-resize-handle-left" data-ddm-field-row="0" data-ddm-field-page="0" data-ddm-field-column="0"></div>
                 <div class="ddm-drag"></div>
                 <div class="ddm-field-actions-container"><a href="javascript:;"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button"><svg class="lexicon-icon lexicon-icon-paste" focusable="false" role="presentation">
@@ -1761,20 +1449,8 @@ exports[`FormRenderer should change the form page description 1`] = `
             </div>
           </div>
           <div class="position-relative row">
-            <div class="ddm-resize-drop" data-col="1"></div>
-            <div class="ddm-resize-drop" data-col="2"></div>
-            <div class="ddm-resize-drop" data-col="3"></div>
-            <div class="ddm-resize-drop" data-col="4"></div>
-            <div class="ddm-resize-drop" data-col="5"></div>
-            <div class="ddm-resize-drop" data-col="6"></div>
-            <div class="ddm-resize-drop" data-col="7"></div>
-            <div class="ddm-resize-drop" data-col="8"></div>
-            <div class="ddm-resize-drop" data-col="9"></div>
-            <div class="ddm-resize-drop" data-col="10"></div>
-            <div class="ddm-resize-drop" data-col="11"></div>
-            <div class="ddm-resize-drop" data-col="12"></div>
             <div class="col-md-4 col-ddm" data-ddm-field-row="1" data-ddm-field-page="0" data-ddm-field-column="0">
-              <div class="ddm-field-container">
+              <div class="ddm-field-container h-100">
                 <div class="ddm-resize-handle ddm-resize-handle-left" data-ddm-field-row="1" data-ddm-field-page="0" data-ddm-field-column="0"></div>
                 <div class="ddm-drag"></div>
                 <div class="ddm-field-actions-container"><a href="javascript:;"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button"><svg class="lexicon-icon lexicon-icon-paste" focusable="false" role="presentation">
@@ -1786,7 +1462,7 @@ exports[`FormRenderer should change the form page description 1`] = `
               </div>
             </div>
             <div class="col-md-6 col-ddm" data-ddm-field-row="1" data-ddm-field-page="0" data-ddm-field-column="1">
-              <div class="ddm-field-container">
+              <div class="ddm-field-container h-100">
                 <div class="ddm-resize-handle ddm-resize-handle-left" data-ddm-field-row="1" data-ddm-field-page="0" data-ddm-field-column="1"></div>
                 <div class="ddm-drag"></div>
                 <div class="ddm-field-actions-container"><a href="javascript:;"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button"><svg class="lexicon-icon lexicon-icon-paste" focusable="false" role="presentation">
@@ -1807,20 +1483,8 @@ exports[`FormRenderer should change the form page description 1`] = `
             </div>
           </div>
           <div class="position-relative row">
-            <div class="ddm-resize-drop" data-col="1"></div>
-            <div class="ddm-resize-drop" data-col="2"></div>
-            <div class="ddm-resize-drop" data-col="3"></div>
-            <div class="ddm-resize-drop" data-col="4"></div>
-            <div class="ddm-resize-drop" data-col="5"></div>
-            <div class="ddm-resize-drop" data-col="6"></div>
-            <div class="ddm-resize-drop" data-col="7"></div>
-            <div class="ddm-resize-drop" data-col="8"></div>
-            <div class="ddm-resize-drop" data-col="9"></div>
-            <div class="ddm-resize-drop" data-col="10"></div>
-            <div class="ddm-resize-drop" data-col="11"></div>
-            <div class="ddm-resize-drop" data-col="12"></div>
             <div class="col-md-12 col-ddm" data-ddm-field-row="2" data-ddm-field-page="0" data-ddm-field-column="0">
-              <div class="ddm-field-container">
+              <div class="ddm-field-container h-100">
                 <div class="ddm-resize-handle ddm-resize-handle-left" data-ddm-field-row="2" data-ddm-field-page="0" data-ddm-field-column="0"></div>
                 <div class="ddm-drag"></div>
                 <div class="ddm-field-actions-container"><a href="javascript:;"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button"><svg class="lexicon-icon lexicon-icon-paste" focusable="false" role="presentation">
@@ -1838,20 +1502,8 @@ exports[`FormRenderer should change the form page description 1`] = `
             </div>
           </div>
           <div class="position-relative row">
-            <div class="ddm-resize-drop" data-col="1"></div>
-            <div class="ddm-resize-drop" data-col="2"></div>
-            <div class="ddm-resize-drop" data-col="3"></div>
-            <div class="ddm-resize-drop" data-col="4"></div>
-            <div class="ddm-resize-drop" data-col="5"></div>
-            <div class="ddm-resize-drop" data-col="6"></div>
-            <div class="ddm-resize-drop" data-col="7"></div>
-            <div class="ddm-resize-drop" data-col="8"></div>
-            <div class="ddm-resize-drop" data-col="9"></div>
-            <div class="ddm-resize-drop" data-col="10"></div>
-            <div class="ddm-resize-drop" data-col="11"></div>
-            <div class="ddm-resize-drop" data-col="12"></div>
             <div class="col-md-12 col-ddm" data-ddm-field-row="3" data-ddm-field-page="0" data-ddm-field-column="0">
-              <div class="ddm-field-container">
+              <div class="ddm-field-container h-100">
                 <div class="ddm-resize-handle ddm-resize-handle-left" data-ddm-field-row="3" data-ddm-field-page="0" data-ddm-field-column="0"></div>
                 <div class="ddm-drag"></div>
                 <div class="ddm-field-actions-container"><a href="javascript:;"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button"><svg class="lexicon-icon lexicon-icon-paste" focusable="false" role="presentation">
@@ -1895,26 +1547,26 @@ exports[`FormRenderer should change the form page title 1`] = `
     <div class="ddm-form-page pl-4 pr-4"><textarea class="form-builder-page-header-title form-control p-0" data-page-index="0" maxlength="120" value="Untitled name" placeholder="untitled-page-x-of-x"></textarea><textarea class="form-builder-page-header-description form-control p-0" data-page-index="0" maxlength="120" placeholder="add-a-short-description-for-this-page"></textarea>
       <div class="form-builder-layout">
         <div class="layout-page">
+          <div class="ddm-resize-column" data-resize-column="0" ref="resizeColumn0"></div>
+          <div class="ddm-resize-column" data-resize-column="1" ref="resizeColumn1"></div>
+          <div class="ddm-resize-column" data-resize-column="2" ref="resizeColumn2"></div>
+          <div class="ddm-resize-column" data-resize-column="3" ref="resizeColumn3"></div>
+          <div class="ddm-resize-column" data-resize-column="4" ref="resizeColumn4"></div>
+          <div class="ddm-resize-column" data-resize-column="5" ref="resizeColumn5"></div>
+          <div class="ddm-resize-column" data-resize-column="6" ref="resizeColumn6"></div>
+          <div class="ddm-resize-column" data-resize-column="7" ref="resizeColumn7"></div>
+          <div class="ddm-resize-column" data-resize-column="8" ref="resizeColumn8"></div>
+          <div class="ddm-resize-column" data-resize-column="9" ref="resizeColumn9"></div>
+          <div class="ddm-resize-column" data-resize-column="10" ref="resizeColumn10"></div>
+          <div class="ddm-resize-column" data-resize-column="11" ref="resizeColumn11"></div>
           <div class="row">
             <div class="col col-empty col-md-12" data-ddm-field-row="0" data-ddm-field-page="0">
               <div class="ddm-target"></div>
             </div>
           </div>
           <div class="position-relative row">
-            <div class="ddm-resize-drop" data-col="1"></div>
-            <div class="ddm-resize-drop" data-col="2"></div>
-            <div class="ddm-resize-drop" data-col="3"></div>
-            <div class="ddm-resize-drop" data-col="4"></div>
-            <div class="ddm-resize-drop" data-col="5"></div>
-            <div class="ddm-resize-drop" data-col="6"></div>
-            <div class="ddm-resize-drop" data-col="7"></div>
-            <div class="ddm-resize-drop" data-col="8"></div>
-            <div class="ddm-resize-drop" data-col="9"></div>
-            <div class="ddm-resize-drop" data-col="10"></div>
-            <div class="ddm-resize-drop" data-col="11"></div>
-            <div class="ddm-resize-drop" data-col="12"></div>
             <div class="col-md-3 col-ddm" data-ddm-field-row="0" data-ddm-field-page="0" data-ddm-field-column="0">
-              <div class="ddm-field-container">
+              <div class="ddm-field-container h-100">
                 <div class="ddm-resize-handle ddm-resize-handle-left" data-ddm-field-row="0" data-ddm-field-page="0" data-ddm-field-column="0"></div>
                 <div class="ddm-drag"></div>
                 <div class="ddm-field-actions-container"><a href="javascript:;"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button"><svg class="lexicon-icon lexicon-icon-paste" focusable="false" role="presentation">
@@ -1935,20 +1587,8 @@ exports[`FormRenderer should change the form page title 1`] = `
             </div>
           </div>
           <div class="position-relative row">
-            <div class="ddm-resize-drop" data-col="1"></div>
-            <div class="ddm-resize-drop" data-col="2"></div>
-            <div class="ddm-resize-drop" data-col="3"></div>
-            <div class="ddm-resize-drop" data-col="4"></div>
-            <div class="ddm-resize-drop" data-col="5"></div>
-            <div class="ddm-resize-drop" data-col="6"></div>
-            <div class="ddm-resize-drop" data-col="7"></div>
-            <div class="ddm-resize-drop" data-col="8"></div>
-            <div class="ddm-resize-drop" data-col="9"></div>
-            <div class="ddm-resize-drop" data-col="10"></div>
-            <div class="ddm-resize-drop" data-col="11"></div>
-            <div class="ddm-resize-drop" data-col="12"></div>
             <div class="col-md-4 col-ddm" data-ddm-field-row="1" data-ddm-field-page="0" data-ddm-field-column="0">
-              <div class="ddm-field-container">
+              <div class="ddm-field-container h-100">
                 <div class="ddm-resize-handle ddm-resize-handle-left" data-ddm-field-row="1" data-ddm-field-page="0" data-ddm-field-column="0"></div>
                 <div class="ddm-drag"></div>
                 <div class="ddm-field-actions-container"><a href="javascript:;"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button"><svg class="lexicon-icon lexicon-icon-paste" focusable="false" role="presentation">
@@ -1960,7 +1600,7 @@ exports[`FormRenderer should change the form page title 1`] = `
               </div>
             </div>
             <div class="col-md-6 col-ddm" data-ddm-field-row="1" data-ddm-field-page="0" data-ddm-field-column="1">
-              <div class="ddm-field-container">
+              <div class="ddm-field-container h-100">
                 <div class="ddm-resize-handle ddm-resize-handle-left" data-ddm-field-row="1" data-ddm-field-page="0" data-ddm-field-column="1"></div>
                 <div class="ddm-drag"></div>
                 <div class="ddm-field-actions-container"><a href="javascript:;"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button"><svg class="lexicon-icon lexicon-icon-paste" focusable="false" role="presentation">
@@ -1981,20 +1621,8 @@ exports[`FormRenderer should change the form page title 1`] = `
             </div>
           </div>
           <div class="position-relative row">
-            <div class="ddm-resize-drop" data-col="1"></div>
-            <div class="ddm-resize-drop" data-col="2"></div>
-            <div class="ddm-resize-drop" data-col="3"></div>
-            <div class="ddm-resize-drop" data-col="4"></div>
-            <div class="ddm-resize-drop" data-col="5"></div>
-            <div class="ddm-resize-drop" data-col="6"></div>
-            <div class="ddm-resize-drop" data-col="7"></div>
-            <div class="ddm-resize-drop" data-col="8"></div>
-            <div class="ddm-resize-drop" data-col="9"></div>
-            <div class="ddm-resize-drop" data-col="10"></div>
-            <div class="ddm-resize-drop" data-col="11"></div>
-            <div class="ddm-resize-drop" data-col="12"></div>
             <div class="col-md-12 col-ddm" data-ddm-field-row="2" data-ddm-field-page="0" data-ddm-field-column="0">
-              <div class="ddm-field-container">
+              <div class="ddm-field-container h-100">
                 <div class="ddm-resize-handle ddm-resize-handle-left" data-ddm-field-row="2" data-ddm-field-page="0" data-ddm-field-column="0"></div>
                 <div class="ddm-drag"></div>
                 <div class="ddm-field-actions-container"><a href="javascript:;"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button"><svg class="lexicon-icon lexicon-icon-paste" focusable="false" role="presentation">
@@ -2012,20 +1640,8 @@ exports[`FormRenderer should change the form page title 1`] = `
             </div>
           </div>
           <div class="position-relative row">
-            <div class="ddm-resize-drop" data-col="1"></div>
-            <div class="ddm-resize-drop" data-col="2"></div>
-            <div class="ddm-resize-drop" data-col="3"></div>
-            <div class="ddm-resize-drop" data-col="4"></div>
-            <div class="ddm-resize-drop" data-col="5"></div>
-            <div class="ddm-resize-drop" data-col="6"></div>
-            <div class="ddm-resize-drop" data-col="7"></div>
-            <div class="ddm-resize-drop" data-col="8"></div>
-            <div class="ddm-resize-drop" data-col="9"></div>
-            <div class="ddm-resize-drop" data-col="10"></div>
-            <div class="ddm-resize-drop" data-col="11"></div>
-            <div class="ddm-resize-drop" data-col="12"></div>
             <div class="col-md-12 col-ddm" data-ddm-field-row="3" data-ddm-field-page="0" data-ddm-field-column="0">
-              <div class="ddm-field-container">
+              <div class="ddm-field-container h-100">
                 <div class="ddm-resize-handle ddm-resize-handle-left" data-ddm-field-row="3" data-ddm-field-page="0" data-ddm-field-column="0"></div>
                 <div class="ddm-drag"></div>
                 <div class="ddm-field-actions-container"><a href="javascript:;"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button"><svg class="lexicon-icon lexicon-icon-paste" focusable="false" role="presentation">
@@ -2083,26 +1699,26 @@ exports[`FormRenderer should change the pagination mode when switch pagination m
     <div class="ddm-form-page pl-4 pr-4"><textarea class="form-builder-page-header-title form-control p-0" data-page-index="0" maxlength="120" value="Untitled name"></textarea><textarea class="form-builder-page-header-description form-control p-0" data-page-index="0" maxlength="120" placeholder="add-a-short-description-for-this-page"></textarea>
       <div class="form-builder-layout">
         <div class="layout-page">
+          <div class="ddm-resize-column" data-resize-column="0" ref="resizeColumn0"></div>
+          <div class="ddm-resize-column" data-resize-column="1" ref="resizeColumn1"></div>
+          <div class="ddm-resize-column" data-resize-column="2" ref="resizeColumn2"></div>
+          <div class="ddm-resize-column" data-resize-column="3" ref="resizeColumn3"></div>
+          <div class="ddm-resize-column" data-resize-column="4" ref="resizeColumn4"></div>
+          <div class="ddm-resize-column" data-resize-column="5" ref="resizeColumn5"></div>
+          <div class="ddm-resize-column" data-resize-column="6" ref="resizeColumn6"></div>
+          <div class="ddm-resize-column" data-resize-column="7" ref="resizeColumn7"></div>
+          <div class="ddm-resize-column" data-resize-column="8" ref="resizeColumn8"></div>
+          <div class="ddm-resize-column" data-resize-column="9" ref="resizeColumn9"></div>
+          <div class="ddm-resize-column" data-resize-column="10" ref="resizeColumn10"></div>
+          <div class="ddm-resize-column" data-resize-column="11" ref="resizeColumn11"></div>
           <div class="row">
             <div class="col col-empty col-md-12" data-ddm-field-row="0" data-ddm-field-page="0">
               <div class="ddm-target"></div>
             </div>
           </div>
           <div class="position-relative row">
-            <div class="ddm-resize-drop" data-col="1"></div>
-            <div class="ddm-resize-drop" data-col="2"></div>
-            <div class="ddm-resize-drop" data-col="3"></div>
-            <div class="ddm-resize-drop" data-col="4"></div>
-            <div class="ddm-resize-drop" data-col="5"></div>
-            <div class="ddm-resize-drop" data-col="6"></div>
-            <div class="ddm-resize-drop" data-col="7"></div>
-            <div class="ddm-resize-drop" data-col="8"></div>
-            <div class="ddm-resize-drop" data-col="9"></div>
-            <div class="ddm-resize-drop" data-col="10"></div>
-            <div class="ddm-resize-drop" data-col="11"></div>
-            <div class="ddm-resize-drop" data-col="12"></div>
             <div class="col-md-3 col-ddm" data-ddm-field-row="0" data-ddm-field-page="0" data-ddm-field-column="0">
-              <div class="ddm-field-container">
+              <div class="ddm-field-container h-100">
                 <div class="ddm-resize-handle ddm-resize-handle-left" data-ddm-field-row="0" data-ddm-field-page="0" data-ddm-field-column="0"></div>
                 <div class="ddm-drag"></div>
                 <div class="ddm-field-actions-container"><a href="javascript:;"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button"><svg class="lexicon-icon lexicon-icon-paste" focusable="false" role="presentation">
@@ -2123,20 +1739,8 @@ exports[`FormRenderer should change the pagination mode when switch pagination m
             </div>
           </div>
           <div class="position-relative row">
-            <div class="ddm-resize-drop" data-col="1"></div>
-            <div class="ddm-resize-drop" data-col="2"></div>
-            <div class="ddm-resize-drop" data-col="3"></div>
-            <div class="ddm-resize-drop" data-col="4"></div>
-            <div class="ddm-resize-drop" data-col="5"></div>
-            <div class="ddm-resize-drop" data-col="6"></div>
-            <div class="ddm-resize-drop" data-col="7"></div>
-            <div class="ddm-resize-drop" data-col="8"></div>
-            <div class="ddm-resize-drop" data-col="9"></div>
-            <div class="ddm-resize-drop" data-col="10"></div>
-            <div class="ddm-resize-drop" data-col="11"></div>
-            <div class="ddm-resize-drop" data-col="12"></div>
             <div class="col-md-4 col-ddm" data-ddm-field-row="1" data-ddm-field-page="0" data-ddm-field-column="0">
-              <div class="ddm-field-container">
+              <div class="ddm-field-container h-100">
                 <div class="ddm-resize-handle ddm-resize-handle-left" data-ddm-field-row="1" data-ddm-field-page="0" data-ddm-field-column="0"></div>
                 <div class="ddm-drag"></div>
                 <div class="ddm-field-actions-container"><a href="javascript:;"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button"><svg class="lexicon-icon lexicon-icon-paste" focusable="false" role="presentation">
@@ -2148,7 +1752,7 @@ exports[`FormRenderer should change the pagination mode when switch pagination m
               </div>
             </div>
             <div class="col-md-6 col-ddm" data-ddm-field-row="1" data-ddm-field-page="0" data-ddm-field-column="1">
-              <div class="ddm-field-container">
+              <div class="ddm-field-container h-100">
                 <div class="ddm-resize-handle ddm-resize-handle-left" data-ddm-field-row="1" data-ddm-field-page="0" data-ddm-field-column="1"></div>
                 <div class="ddm-drag"></div>
                 <div class="ddm-field-actions-container"><a href="javascript:;"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button"><svg class="lexicon-icon lexicon-icon-paste" focusable="false" role="presentation">
@@ -2169,20 +1773,8 @@ exports[`FormRenderer should change the pagination mode when switch pagination m
             </div>
           </div>
           <div class="position-relative row">
-            <div class="ddm-resize-drop" data-col="1"></div>
-            <div class="ddm-resize-drop" data-col="2"></div>
-            <div class="ddm-resize-drop" data-col="3"></div>
-            <div class="ddm-resize-drop" data-col="4"></div>
-            <div class="ddm-resize-drop" data-col="5"></div>
-            <div class="ddm-resize-drop" data-col="6"></div>
-            <div class="ddm-resize-drop" data-col="7"></div>
-            <div class="ddm-resize-drop" data-col="8"></div>
-            <div class="ddm-resize-drop" data-col="9"></div>
-            <div class="ddm-resize-drop" data-col="10"></div>
-            <div class="ddm-resize-drop" data-col="11"></div>
-            <div class="ddm-resize-drop" data-col="12"></div>
             <div class="col-md-12 col-ddm" data-ddm-field-row="2" data-ddm-field-page="0" data-ddm-field-column="0">
-              <div class="ddm-field-container">
+              <div class="ddm-field-container h-100">
                 <div class="ddm-resize-handle ddm-resize-handle-left" data-ddm-field-row="2" data-ddm-field-page="0" data-ddm-field-column="0"></div>
                 <div class="ddm-drag"></div>
                 <div class="ddm-field-actions-container"><a href="javascript:;"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button"><svg class="lexicon-icon lexicon-icon-paste" focusable="false" role="presentation">
@@ -2200,20 +1792,8 @@ exports[`FormRenderer should change the pagination mode when switch pagination m
             </div>
           </div>
           <div class="position-relative row">
-            <div class="ddm-resize-drop" data-col="1"></div>
-            <div class="ddm-resize-drop" data-col="2"></div>
-            <div class="ddm-resize-drop" data-col="3"></div>
-            <div class="ddm-resize-drop" data-col="4"></div>
-            <div class="ddm-resize-drop" data-col="5"></div>
-            <div class="ddm-resize-drop" data-col="6"></div>
-            <div class="ddm-resize-drop" data-col="7"></div>
-            <div class="ddm-resize-drop" data-col="8"></div>
-            <div class="ddm-resize-drop" data-col="9"></div>
-            <div class="ddm-resize-drop" data-col="10"></div>
-            <div class="ddm-resize-drop" data-col="11"></div>
-            <div class="ddm-resize-drop" data-col="12"></div>
             <div class="col-md-12 col-ddm" data-ddm-field-row="3" data-ddm-field-page="0" data-ddm-field-column="0">
-              <div class="ddm-field-container">
+              <div class="ddm-field-container h-100">
                 <div class="ddm-resize-handle ddm-resize-handle-left" data-ddm-field-row="3" data-ddm-field-page="0" data-ddm-field-column="0"></div>
                 <div class="ddm-drag"></div>
                 <div class="ddm-field-actions-container"><a href="javascript:;"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button"><svg class="lexicon-icon lexicon-icon-paste" focusable="false" role="presentation">
@@ -2259,66 +1839,30 @@ exports[`FormRenderer should not render the layout with the field empty in non-e
     <div class="ddm-form-page pl-4 pr-4"><textarea class="form-builder-page-header-title form-control p-0" data-page-index="0" maxlength="120" value="Untitled name"></textarea><textarea class="form-builder-page-header-description form-control p-0" data-page-index="0" maxlength="120" placeholder="add-a-short-description-for-this-page"></textarea>
       <div class="form-builder-layout">
         <div class="layout-page">
+          <div class="ddm-resize-column" data-resize-column="0" ref="resizeColumn0"></div>
+          <div class="ddm-resize-column" data-resize-column="1" ref="resizeColumn1"></div>
+          <div class="ddm-resize-column" data-resize-column="2" ref="resizeColumn2"></div>
+          <div class="ddm-resize-column" data-resize-column="3" ref="resizeColumn3"></div>
+          <div class="ddm-resize-column" data-resize-column="4" ref="resizeColumn4"></div>
+          <div class="ddm-resize-column" data-resize-column="5" ref="resizeColumn5"></div>
+          <div class="ddm-resize-column" data-resize-column="6" ref="resizeColumn6"></div>
+          <div class="ddm-resize-column" data-resize-column="7" ref="resizeColumn7"></div>
+          <div class="ddm-resize-column" data-resize-column="8" ref="resizeColumn8"></div>
+          <div class="ddm-resize-column" data-resize-column="9" ref="resizeColumn9"></div>
+          <div class="ddm-resize-column" data-resize-column="10" ref="resizeColumn10"></div>
+          <div class="ddm-resize-column" data-resize-column="11" ref="resizeColumn11"></div>
           <div class="position-relative row">
-            <div class="ddm-resize-drop" data-col="1"></div>
-            <div class="ddm-resize-drop" data-col="2"></div>
-            <div class="ddm-resize-drop" data-col="3"></div>
-            <div class="ddm-resize-drop" data-col="4"></div>
-            <div class="ddm-resize-drop" data-col="5"></div>
-            <div class="ddm-resize-drop" data-col="6"></div>
-            <div class="ddm-resize-drop" data-col="7"></div>
-            <div class="ddm-resize-drop" data-col="8"></div>
-            <div class="ddm-resize-drop" data-col="9"></div>
-            <div class="ddm-resize-drop" data-col="10"></div>
-            <div class="ddm-resize-drop" data-col="11"></div>
-            <div class="ddm-resize-drop" data-col="12"></div>
             <div class="col-md-3 col-ddm" data-ddm-field-row="0" data-ddm-field-page="0" data-ddm-field-column="0"></div>
           </div>
           <div class="position-relative row">
-            <div class="ddm-resize-drop" data-col="1"></div>
-            <div class="ddm-resize-drop" data-col="2"></div>
-            <div class="ddm-resize-drop" data-col="3"></div>
-            <div class="ddm-resize-drop" data-col="4"></div>
-            <div class="ddm-resize-drop" data-col="5"></div>
-            <div class="ddm-resize-drop" data-col="6"></div>
-            <div class="ddm-resize-drop" data-col="7"></div>
-            <div class="ddm-resize-drop" data-col="8"></div>
-            <div class="ddm-resize-drop" data-col="9"></div>
-            <div class="ddm-resize-drop" data-col="10"></div>
-            <div class="ddm-resize-drop" data-col="11"></div>
-            <div class="ddm-resize-drop" data-col="12"></div>
             <div class="col-md-4 col-ddm" data-ddm-field-row="1" data-ddm-field-page="0" data-ddm-field-column="0"></div>
             <div class="col-md-6 col-ddm" data-ddm-field-row="1" data-ddm-field-page="0" data-ddm-field-column="1"></div>
             <div class="col-md-2 col-ddm" data-ddm-field-row="1" data-ddm-field-page="0" data-ddm-field-column="2"></div>
           </div>
           <div class="position-relative row">
-            <div class="ddm-resize-drop" data-col="1"></div>
-            <div class="ddm-resize-drop" data-col="2"></div>
-            <div class="ddm-resize-drop" data-col="3"></div>
-            <div class="ddm-resize-drop" data-col="4"></div>
-            <div class="ddm-resize-drop" data-col="5"></div>
-            <div class="ddm-resize-drop" data-col="6"></div>
-            <div class="ddm-resize-drop" data-col="7"></div>
-            <div class="ddm-resize-drop" data-col="8"></div>
-            <div class="ddm-resize-drop" data-col="9"></div>
-            <div class="ddm-resize-drop" data-col="10"></div>
-            <div class="ddm-resize-drop" data-col="11"></div>
-            <div class="ddm-resize-drop" data-col="12"></div>
             <div class="col-md-12 col-ddm" data-ddm-field-row="2" data-ddm-field-page="0" data-ddm-field-column="0"></div>
           </div>
           <div class="position-relative row">
-            <div class="ddm-resize-drop" data-col="1"></div>
-            <div class="ddm-resize-drop" data-col="2"></div>
-            <div class="ddm-resize-drop" data-col="3"></div>
-            <div class="ddm-resize-drop" data-col="4"></div>
-            <div class="ddm-resize-drop" data-col="5"></div>
-            <div class="ddm-resize-drop" data-col="6"></div>
-            <div class="ddm-resize-drop" data-col="7"></div>
-            <div class="ddm-resize-drop" data-col="8"></div>
-            <div class="ddm-resize-drop" data-col="9"></div>
-            <div class="ddm-resize-drop" data-col="10"></div>
-            <div class="ddm-resize-drop" data-col="11"></div>
-            <div class="ddm-resize-drop" data-col="12"></div>
             <div class="col-md-12 col-ddm" data-ddm-field-row="3" data-ddm-field-page="0" data-ddm-field-column="0"></div>
           </div>
         </div>
@@ -2348,26 +1892,26 @@ exports[`FormRenderer should receive a delete button event and propage it 1`] = 
     <div class="ddm-form-page pl-4 pr-4"><textarea class="form-builder-page-header-title form-control p-0" data-page-index="0" maxlength="120" value="Untitled name" placeholder="untitled-page-x-of-x"></textarea><textarea class="form-builder-page-header-description form-control p-0" data-page-index="0" maxlength="120" placeholder="add-a-short-description-for-this-page"></textarea>
       <div class="form-builder-layout">
         <div class="layout-page">
+          <div class="ddm-resize-column" data-resize-column="0" ref="resizeColumn0"></div>
+          <div class="ddm-resize-column" data-resize-column="1" ref="resizeColumn1"></div>
+          <div class="ddm-resize-column" data-resize-column="2" ref="resizeColumn2"></div>
+          <div class="ddm-resize-column" data-resize-column="3" ref="resizeColumn3"></div>
+          <div class="ddm-resize-column" data-resize-column="4" ref="resizeColumn4"></div>
+          <div class="ddm-resize-column" data-resize-column="5" ref="resizeColumn5"></div>
+          <div class="ddm-resize-column" data-resize-column="6" ref="resizeColumn6"></div>
+          <div class="ddm-resize-column" data-resize-column="7" ref="resizeColumn7"></div>
+          <div class="ddm-resize-column" data-resize-column="8" ref="resizeColumn8"></div>
+          <div class="ddm-resize-column" data-resize-column="9" ref="resizeColumn9"></div>
+          <div class="ddm-resize-column" data-resize-column="10" ref="resizeColumn10"></div>
+          <div class="ddm-resize-column" data-resize-column="11" ref="resizeColumn11"></div>
           <div class="row">
             <div class="col col-empty col-md-12" data-ddm-field-row="0" data-ddm-field-page="0">
               <div class="ddm-target"></div>
             </div>
           </div>
           <div class="position-relative row">
-            <div class="ddm-resize-drop" data-col="1"></div>
-            <div class="ddm-resize-drop" data-col="2"></div>
-            <div class="ddm-resize-drop" data-col="3"></div>
-            <div class="ddm-resize-drop" data-col="4"></div>
-            <div class="ddm-resize-drop" data-col="5"></div>
-            <div class="ddm-resize-drop" data-col="6"></div>
-            <div class="ddm-resize-drop" data-col="7"></div>
-            <div class="ddm-resize-drop" data-col="8"></div>
-            <div class="ddm-resize-drop" data-col="9"></div>
-            <div class="ddm-resize-drop" data-col="10"></div>
-            <div class="ddm-resize-drop" data-col="11"></div>
-            <div class="ddm-resize-drop" data-col="12"></div>
             <div class="col-md-3 col-ddm" data-ddm-field-row="0" data-ddm-field-page="0" data-ddm-field-column="0">
-              <div class="ddm-field-container">
+              <div class="ddm-field-container h-100">
                 <div class="ddm-resize-handle ddm-resize-handle-left" data-ddm-field-row="0" data-ddm-field-page="0" data-ddm-field-column="0"></div>
                 <div class="ddm-drag"></div>
                 <div class="ddm-field-actions-container"><a href="javascript:;"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button"><svg class="lexicon-icon lexicon-icon-paste" focusable="false" role="presentation">
@@ -2388,20 +1932,8 @@ exports[`FormRenderer should receive a delete button event and propage it 1`] = 
             </div>
           </div>
           <div class="position-relative row">
-            <div class="ddm-resize-drop" data-col="1"></div>
-            <div class="ddm-resize-drop" data-col="2"></div>
-            <div class="ddm-resize-drop" data-col="3"></div>
-            <div class="ddm-resize-drop" data-col="4"></div>
-            <div class="ddm-resize-drop" data-col="5"></div>
-            <div class="ddm-resize-drop" data-col="6"></div>
-            <div class="ddm-resize-drop" data-col="7"></div>
-            <div class="ddm-resize-drop" data-col="8"></div>
-            <div class="ddm-resize-drop" data-col="9"></div>
-            <div class="ddm-resize-drop" data-col="10"></div>
-            <div class="ddm-resize-drop" data-col="11"></div>
-            <div class="ddm-resize-drop" data-col="12"></div>
             <div class="col-md-4 col-ddm" data-ddm-field-row="1" data-ddm-field-page="0" data-ddm-field-column="0">
-              <div class="ddm-field-container">
+              <div class="ddm-field-container h-100">
                 <div class="ddm-resize-handle ddm-resize-handle-left" data-ddm-field-row="1" data-ddm-field-page="0" data-ddm-field-column="0"></div>
                 <div class="ddm-drag"></div>
                 <div class="ddm-field-actions-container"><a href="javascript:;"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button"><svg class="lexicon-icon lexicon-icon-paste" focusable="false" role="presentation">
@@ -2413,7 +1945,7 @@ exports[`FormRenderer should receive a delete button event and propage it 1`] = 
               </div>
             </div>
             <div class="col-md-6 col-ddm" data-ddm-field-row="1" data-ddm-field-page="0" data-ddm-field-column="1">
-              <div class="ddm-field-container">
+              <div class="ddm-field-container h-100">
                 <div class="ddm-resize-handle ddm-resize-handle-left" data-ddm-field-row="1" data-ddm-field-page="0" data-ddm-field-column="1"></div>
                 <div class="ddm-drag"></div>
                 <div class="ddm-field-actions-container"><a href="javascript:;"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button"><svg class="lexicon-icon lexicon-icon-paste" focusable="false" role="presentation">
@@ -2434,20 +1966,8 @@ exports[`FormRenderer should receive a delete button event and propage it 1`] = 
             </div>
           </div>
           <div class="position-relative row">
-            <div class="ddm-resize-drop" data-col="1"></div>
-            <div class="ddm-resize-drop" data-col="2"></div>
-            <div class="ddm-resize-drop" data-col="3"></div>
-            <div class="ddm-resize-drop" data-col="4"></div>
-            <div class="ddm-resize-drop" data-col="5"></div>
-            <div class="ddm-resize-drop" data-col="6"></div>
-            <div class="ddm-resize-drop" data-col="7"></div>
-            <div class="ddm-resize-drop" data-col="8"></div>
-            <div class="ddm-resize-drop" data-col="9"></div>
-            <div class="ddm-resize-drop" data-col="10"></div>
-            <div class="ddm-resize-drop" data-col="11"></div>
-            <div class="ddm-resize-drop" data-col="12"></div>
             <div class="col-md-12 col-ddm" data-ddm-field-row="2" data-ddm-field-page="0" data-ddm-field-column="0">
-              <div class="ddm-field-container">
+              <div class="ddm-field-container h-100">
                 <div class="ddm-resize-handle ddm-resize-handle-left" data-ddm-field-row="2" data-ddm-field-page="0" data-ddm-field-column="0"></div>
                 <div class="ddm-drag"></div>
                 <div class="ddm-field-actions-container"><a href="javascript:;"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button"><svg class="lexicon-icon lexicon-icon-paste" focusable="false" role="presentation">
@@ -2465,20 +1985,8 @@ exports[`FormRenderer should receive a delete button event and propage it 1`] = 
             </div>
           </div>
           <div class="position-relative row">
-            <div class="ddm-resize-drop" data-col="1"></div>
-            <div class="ddm-resize-drop" data-col="2"></div>
-            <div class="ddm-resize-drop" data-col="3"></div>
-            <div class="ddm-resize-drop" data-col="4"></div>
-            <div class="ddm-resize-drop" data-col="5"></div>
-            <div class="ddm-resize-drop" data-col="6"></div>
-            <div class="ddm-resize-drop" data-col="7"></div>
-            <div class="ddm-resize-drop" data-col="8"></div>
-            <div class="ddm-resize-drop" data-col="9"></div>
-            <div class="ddm-resize-drop" data-col="10"></div>
-            <div class="ddm-resize-drop" data-col="11"></div>
-            <div class="ddm-resize-drop" data-col="12"></div>
             <div class="col-md-12 col-ddm" data-ddm-field-row="3" data-ddm-field-page="0" data-ddm-field-column="0">
-              <div class="ddm-field-container">
+              <div class="ddm-field-container h-100">
                 <div class="ddm-resize-handle ddm-resize-handle-left" data-ddm-field-row="3" data-ddm-field-page="0" data-ddm-field-column="0"></div>
                 <div class="ddm-drag"></div>
                 <div class="ddm-field-actions-container"><a href="javascript:;"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button"><svg class="lexicon-icon lexicon-icon-paste" focusable="false" role="presentation">
@@ -2522,26 +2030,26 @@ exports[`FormRenderer should receive a duplicate button event and propage it 1`]
     <div class="ddm-form-page pl-4 pr-4"><textarea class="form-builder-page-header-title form-control p-0" data-page-index="0" maxlength="120" value="Untitled name" placeholder="untitled-page-x-of-x"></textarea><textarea class="form-builder-page-header-description form-control p-0" data-page-index="0" maxlength="120" placeholder="add-a-short-description-for-this-page"></textarea>
       <div class="form-builder-layout">
         <div class="layout-page">
+          <div class="ddm-resize-column" data-resize-column="0" ref="resizeColumn0"></div>
+          <div class="ddm-resize-column" data-resize-column="1" ref="resizeColumn1"></div>
+          <div class="ddm-resize-column" data-resize-column="2" ref="resizeColumn2"></div>
+          <div class="ddm-resize-column" data-resize-column="3" ref="resizeColumn3"></div>
+          <div class="ddm-resize-column" data-resize-column="4" ref="resizeColumn4"></div>
+          <div class="ddm-resize-column" data-resize-column="5" ref="resizeColumn5"></div>
+          <div class="ddm-resize-column" data-resize-column="6" ref="resizeColumn6"></div>
+          <div class="ddm-resize-column" data-resize-column="7" ref="resizeColumn7"></div>
+          <div class="ddm-resize-column" data-resize-column="8" ref="resizeColumn8"></div>
+          <div class="ddm-resize-column" data-resize-column="9" ref="resizeColumn9"></div>
+          <div class="ddm-resize-column" data-resize-column="10" ref="resizeColumn10"></div>
+          <div class="ddm-resize-column" data-resize-column="11" ref="resizeColumn11"></div>
           <div class="row">
             <div class="col col-empty col-md-12" data-ddm-field-row="0" data-ddm-field-page="0">
               <div class="ddm-target"></div>
             </div>
           </div>
           <div class="position-relative row">
-            <div class="ddm-resize-drop" data-col="1"></div>
-            <div class="ddm-resize-drop" data-col="2"></div>
-            <div class="ddm-resize-drop" data-col="3"></div>
-            <div class="ddm-resize-drop" data-col="4"></div>
-            <div class="ddm-resize-drop" data-col="5"></div>
-            <div class="ddm-resize-drop" data-col="6"></div>
-            <div class="ddm-resize-drop" data-col="7"></div>
-            <div class="ddm-resize-drop" data-col="8"></div>
-            <div class="ddm-resize-drop" data-col="9"></div>
-            <div class="ddm-resize-drop" data-col="10"></div>
-            <div class="ddm-resize-drop" data-col="11"></div>
-            <div class="ddm-resize-drop" data-col="12"></div>
             <div class="col-md-3 col-ddm" data-ddm-field-row="0" data-ddm-field-page="0" data-ddm-field-column="0">
-              <div class="ddm-field-container">
+              <div class="ddm-field-container h-100">
                 <div class="ddm-resize-handle ddm-resize-handle-left" data-ddm-field-row="0" data-ddm-field-page="0" data-ddm-field-column="0"></div>
                 <div class="ddm-drag"></div>
                 <div class="ddm-field-actions-container"><a href="javascript:;"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button"><svg class="lexicon-icon lexicon-icon-paste" focusable="false" role="presentation">
@@ -2562,20 +2070,8 @@ exports[`FormRenderer should receive a duplicate button event and propage it 1`]
             </div>
           </div>
           <div class="position-relative row">
-            <div class="ddm-resize-drop" data-col="1"></div>
-            <div class="ddm-resize-drop" data-col="2"></div>
-            <div class="ddm-resize-drop" data-col="3"></div>
-            <div class="ddm-resize-drop" data-col="4"></div>
-            <div class="ddm-resize-drop" data-col="5"></div>
-            <div class="ddm-resize-drop" data-col="6"></div>
-            <div class="ddm-resize-drop" data-col="7"></div>
-            <div class="ddm-resize-drop" data-col="8"></div>
-            <div class="ddm-resize-drop" data-col="9"></div>
-            <div class="ddm-resize-drop" data-col="10"></div>
-            <div class="ddm-resize-drop" data-col="11"></div>
-            <div class="ddm-resize-drop" data-col="12"></div>
             <div class="col-md-4 col-ddm" data-ddm-field-row="1" data-ddm-field-page="0" data-ddm-field-column="0">
-              <div class="ddm-field-container">
+              <div class="ddm-field-container h-100">
                 <div class="ddm-resize-handle ddm-resize-handle-left" data-ddm-field-row="1" data-ddm-field-page="0" data-ddm-field-column="0"></div>
                 <div class="ddm-drag"></div>
                 <div class="ddm-field-actions-container"><a href="javascript:;"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button"><svg class="lexicon-icon lexicon-icon-paste" focusable="false" role="presentation">
@@ -2587,7 +2083,7 @@ exports[`FormRenderer should receive a duplicate button event and propage it 1`]
               </div>
             </div>
             <div class="col-md-6 col-ddm" data-ddm-field-row="1" data-ddm-field-page="0" data-ddm-field-column="1">
-              <div class="ddm-field-container">
+              <div class="ddm-field-container h-100">
                 <div class="ddm-resize-handle ddm-resize-handle-left" data-ddm-field-row="1" data-ddm-field-page="0" data-ddm-field-column="1"></div>
                 <div class="ddm-drag"></div>
                 <div class="ddm-field-actions-container"><a href="javascript:;"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button"><svg class="lexicon-icon lexicon-icon-paste" focusable="false" role="presentation">
@@ -2608,20 +2104,8 @@ exports[`FormRenderer should receive a duplicate button event and propage it 1`]
             </div>
           </div>
           <div class="position-relative row">
-            <div class="ddm-resize-drop" data-col="1"></div>
-            <div class="ddm-resize-drop" data-col="2"></div>
-            <div class="ddm-resize-drop" data-col="3"></div>
-            <div class="ddm-resize-drop" data-col="4"></div>
-            <div class="ddm-resize-drop" data-col="5"></div>
-            <div class="ddm-resize-drop" data-col="6"></div>
-            <div class="ddm-resize-drop" data-col="7"></div>
-            <div class="ddm-resize-drop" data-col="8"></div>
-            <div class="ddm-resize-drop" data-col="9"></div>
-            <div class="ddm-resize-drop" data-col="10"></div>
-            <div class="ddm-resize-drop" data-col="11"></div>
-            <div class="ddm-resize-drop" data-col="12"></div>
             <div class="col-md-12 col-ddm" data-ddm-field-row="2" data-ddm-field-page="0" data-ddm-field-column="0">
-              <div class="ddm-field-container">
+              <div class="ddm-field-container h-100">
                 <div class="ddm-resize-handle ddm-resize-handle-left" data-ddm-field-row="2" data-ddm-field-page="0" data-ddm-field-column="0"></div>
                 <div class="ddm-drag"></div>
                 <div class="ddm-field-actions-container"><a href="javascript:;"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button"><svg class="lexicon-icon lexicon-icon-paste" focusable="false" role="presentation">
@@ -2639,20 +2123,8 @@ exports[`FormRenderer should receive a duplicate button event and propage it 1`]
             </div>
           </div>
           <div class="position-relative row">
-            <div class="ddm-resize-drop" data-col="1"></div>
-            <div class="ddm-resize-drop" data-col="2"></div>
-            <div class="ddm-resize-drop" data-col="3"></div>
-            <div class="ddm-resize-drop" data-col="4"></div>
-            <div class="ddm-resize-drop" data-col="5"></div>
-            <div class="ddm-resize-drop" data-col="6"></div>
-            <div class="ddm-resize-drop" data-col="7"></div>
-            <div class="ddm-resize-drop" data-col="8"></div>
-            <div class="ddm-resize-drop" data-col="9"></div>
-            <div class="ddm-resize-drop" data-col="10"></div>
-            <div class="ddm-resize-drop" data-col="11"></div>
-            <div class="ddm-resize-drop" data-col="12"></div>
             <div class="col-md-12 col-ddm" data-ddm-field-row="3" data-ddm-field-page="0" data-ddm-field-column="0">
-              <div class="ddm-field-container">
+              <div class="ddm-field-container h-100">
                 <div class="ddm-resize-handle ddm-resize-handle-left" data-ddm-field-row="3" data-ddm-field-page="0" data-ddm-field-column="0"></div>
                 <div class="ddm-drag"></div>
                 <div class="ddm-field-actions-container"><a href="javascript:;"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button"><svg class="lexicon-icon lexicon-icon-paste" focusable="false" role="presentation">
@@ -2696,26 +2168,26 @@ exports[`FormRenderer should receive an update page event and propage it 1`] = `
     <div class="ddm-form-page pl-4 pr-4"><textarea class="form-builder-page-header-title form-control p-0" data-page-index="0" maxlength="120" value="Untitled name" placeholder="untitled-page-x-of-x"></textarea><textarea class="form-builder-page-header-description form-control p-0" data-page-index="0" maxlength="120" placeholder="add-a-short-description-for-this-page"></textarea>
       <div class="form-builder-layout">
         <div class="layout-page">
+          <div class="ddm-resize-column" data-resize-column="0" ref="resizeColumn0"></div>
+          <div class="ddm-resize-column" data-resize-column="1" ref="resizeColumn1"></div>
+          <div class="ddm-resize-column" data-resize-column="2" ref="resizeColumn2"></div>
+          <div class="ddm-resize-column" data-resize-column="3" ref="resizeColumn3"></div>
+          <div class="ddm-resize-column" data-resize-column="4" ref="resizeColumn4"></div>
+          <div class="ddm-resize-column" data-resize-column="5" ref="resizeColumn5"></div>
+          <div class="ddm-resize-column" data-resize-column="6" ref="resizeColumn6"></div>
+          <div class="ddm-resize-column" data-resize-column="7" ref="resizeColumn7"></div>
+          <div class="ddm-resize-column" data-resize-column="8" ref="resizeColumn8"></div>
+          <div class="ddm-resize-column" data-resize-column="9" ref="resizeColumn9"></div>
+          <div class="ddm-resize-column" data-resize-column="10" ref="resizeColumn10"></div>
+          <div class="ddm-resize-column" data-resize-column="11" ref="resizeColumn11"></div>
           <div class="row">
             <div class="col col-empty col-md-12" data-ddm-field-row="0" data-ddm-field-page="0">
               <div class="ddm-target"></div>
             </div>
           </div>
           <div class="position-relative row">
-            <div class="ddm-resize-drop" data-col="1"></div>
-            <div class="ddm-resize-drop" data-col="2"></div>
-            <div class="ddm-resize-drop" data-col="3"></div>
-            <div class="ddm-resize-drop" data-col="4"></div>
-            <div class="ddm-resize-drop" data-col="5"></div>
-            <div class="ddm-resize-drop" data-col="6"></div>
-            <div class="ddm-resize-drop" data-col="7"></div>
-            <div class="ddm-resize-drop" data-col="8"></div>
-            <div class="ddm-resize-drop" data-col="9"></div>
-            <div class="ddm-resize-drop" data-col="10"></div>
-            <div class="ddm-resize-drop" data-col="11"></div>
-            <div class="ddm-resize-drop" data-col="12"></div>
             <div class="col-md-3 col-ddm" data-ddm-field-row="0" data-ddm-field-page="0" data-ddm-field-column="0">
-              <div class="ddm-field-container">
+              <div class="ddm-field-container h-100">
                 <div class="ddm-resize-handle ddm-resize-handle-left" data-ddm-field-row="0" data-ddm-field-page="0" data-ddm-field-column="0"></div>
                 <div class="ddm-drag"></div>
                 <div class="ddm-field-actions-container"><a href="javascript:;"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button"><svg class="lexicon-icon lexicon-icon-paste" focusable="false" role="presentation">
@@ -2736,20 +2208,8 @@ exports[`FormRenderer should receive an update page event and propage it 1`] = `
             </div>
           </div>
           <div class="position-relative row">
-            <div class="ddm-resize-drop" data-col="1"></div>
-            <div class="ddm-resize-drop" data-col="2"></div>
-            <div class="ddm-resize-drop" data-col="3"></div>
-            <div class="ddm-resize-drop" data-col="4"></div>
-            <div class="ddm-resize-drop" data-col="5"></div>
-            <div class="ddm-resize-drop" data-col="6"></div>
-            <div class="ddm-resize-drop" data-col="7"></div>
-            <div class="ddm-resize-drop" data-col="8"></div>
-            <div class="ddm-resize-drop" data-col="9"></div>
-            <div class="ddm-resize-drop" data-col="10"></div>
-            <div class="ddm-resize-drop" data-col="11"></div>
-            <div class="ddm-resize-drop" data-col="12"></div>
             <div class="col-md-4 col-ddm" data-ddm-field-row="1" data-ddm-field-page="0" data-ddm-field-column="0">
-              <div class="ddm-field-container">
+              <div class="ddm-field-container h-100">
                 <div class="ddm-resize-handle ddm-resize-handle-left" data-ddm-field-row="1" data-ddm-field-page="0" data-ddm-field-column="0"></div>
                 <div class="ddm-drag"></div>
                 <div class="ddm-field-actions-container"><a href="javascript:;"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button"><svg class="lexicon-icon lexicon-icon-paste" focusable="false" role="presentation">
@@ -2761,7 +2221,7 @@ exports[`FormRenderer should receive an update page event and propage it 1`] = `
               </div>
             </div>
             <div class="col-md-6 col-ddm" data-ddm-field-row="1" data-ddm-field-page="0" data-ddm-field-column="1">
-              <div class="ddm-field-container">
+              <div class="ddm-field-container h-100">
                 <div class="ddm-resize-handle ddm-resize-handle-left" data-ddm-field-row="1" data-ddm-field-page="0" data-ddm-field-column="1"></div>
                 <div class="ddm-drag"></div>
                 <div class="ddm-field-actions-container"><a href="javascript:;"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button"><svg class="lexicon-icon lexicon-icon-paste" focusable="false" role="presentation">
@@ -2782,20 +2242,8 @@ exports[`FormRenderer should receive an update page event and propage it 1`] = `
             </div>
           </div>
           <div class="position-relative row">
-            <div class="ddm-resize-drop" data-col="1"></div>
-            <div class="ddm-resize-drop" data-col="2"></div>
-            <div class="ddm-resize-drop" data-col="3"></div>
-            <div class="ddm-resize-drop" data-col="4"></div>
-            <div class="ddm-resize-drop" data-col="5"></div>
-            <div class="ddm-resize-drop" data-col="6"></div>
-            <div class="ddm-resize-drop" data-col="7"></div>
-            <div class="ddm-resize-drop" data-col="8"></div>
-            <div class="ddm-resize-drop" data-col="9"></div>
-            <div class="ddm-resize-drop" data-col="10"></div>
-            <div class="ddm-resize-drop" data-col="11"></div>
-            <div class="ddm-resize-drop" data-col="12"></div>
             <div class="col-md-12 col-ddm" data-ddm-field-row="2" data-ddm-field-page="0" data-ddm-field-column="0">
-              <div class="ddm-field-container">
+              <div class="ddm-field-container h-100">
                 <div class="ddm-resize-handle ddm-resize-handle-left" data-ddm-field-row="2" data-ddm-field-page="0" data-ddm-field-column="0"></div>
                 <div class="ddm-drag"></div>
                 <div class="ddm-field-actions-container"><a href="javascript:;"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button"><svg class="lexicon-icon lexicon-icon-paste" focusable="false" role="presentation">
@@ -2813,20 +2261,8 @@ exports[`FormRenderer should receive an update page event and propage it 1`] = `
             </div>
           </div>
           <div class="position-relative row">
-            <div class="ddm-resize-drop" data-col="1"></div>
-            <div class="ddm-resize-drop" data-col="2"></div>
-            <div class="ddm-resize-drop" data-col="3"></div>
-            <div class="ddm-resize-drop" data-col="4"></div>
-            <div class="ddm-resize-drop" data-col="5"></div>
-            <div class="ddm-resize-drop" data-col="6"></div>
-            <div class="ddm-resize-drop" data-col="7"></div>
-            <div class="ddm-resize-drop" data-col="8"></div>
-            <div class="ddm-resize-drop" data-col="9"></div>
-            <div class="ddm-resize-drop" data-col="10"></div>
-            <div class="ddm-resize-drop" data-col="11"></div>
-            <div class="ddm-resize-drop" data-col="12"></div>
             <div class="col-md-12 col-ddm" data-ddm-field-row="3" data-ddm-field-page="0" data-ddm-field-column="0">
-              <div class="ddm-field-container">
+              <div class="ddm-field-container h-100">
                 <div class="ddm-resize-handle ddm-resize-handle-left" data-ddm-field-row="3" data-ddm-field-page="0" data-ddm-field-column="0"></div>
                 <div class="ddm-drag"></div>
                 <div class="ddm-field-actions-container"><a href="javascript:;"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button"><svg class="lexicon-icon lexicon-icon-paste" focusable="false" role="presentation">
@@ -2870,26 +2306,26 @@ exports[`FormRenderer should render a layout in editable mode 1`] = `
     <div class="ddm-form-page pl-4 pr-4"><textarea class="form-builder-page-header-title form-control p-0" data-page-index="0" maxlength="120" value="Untitled name"></textarea><textarea class="form-builder-page-header-description form-control p-0" data-page-index="0" maxlength="120" placeholder="add-a-short-description-for-this-page"></textarea>
       <div class="form-builder-layout">
         <div class="layout-page">
+          <div class="ddm-resize-column" data-resize-column="0" ref="resizeColumn0"></div>
+          <div class="ddm-resize-column" data-resize-column="1" ref="resizeColumn1"></div>
+          <div class="ddm-resize-column" data-resize-column="2" ref="resizeColumn2"></div>
+          <div class="ddm-resize-column" data-resize-column="3" ref="resizeColumn3"></div>
+          <div class="ddm-resize-column" data-resize-column="4" ref="resizeColumn4"></div>
+          <div class="ddm-resize-column" data-resize-column="5" ref="resizeColumn5"></div>
+          <div class="ddm-resize-column" data-resize-column="6" ref="resizeColumn6"></div>
+          <div class="ddm-resize-column" data-resize-column="7" ref="resizeColumn7"></div>
+          <div class="ddm-resize-column" data-resize-column="8" ref="resizeColumn8"></div>
+          <div class="ddm-resize-column" data-resize-column="9" ref="resizeColumn9"></div>
+          <div class="ddm-resize-column" data-resize-column="10" ref="resizeColumn10"></div>
+          <div class="ddm-resize-column" data-resize-column="11" ref="resizeColumn11"></div>
           <div class="row">
             <div class="col col-empty col-md-12" data-ddm-field-row="0" data-ddm-field-page="0">
               <div class="ddm-target"></div>
             </div>
           </div>
           <div class="position-relative row">
-            <div class="ddm-resize-drop" data-col="1"></div>
-            <div class="ddm-resize-drop" data-col="2"></div>
-            <div class="ddm-resize-drop" data-col="3"></div>
-            <div class="ddm-resize-drop" data-col="4"></div>
-            <div class="ddm-resize-drop" data-col="5"></div>
-            <div class="ddm-resize-drop" data-col="6"></div>
-            <div class="ddm-resize-drop" data-col="7"></div>
-            <div class="ddm-resize-drop" data-col="8"></div>
-            <div class="ddm-resize-drop" data-col="9"></div>
-            <div class="ddm-resize-drop" data-col="10"></div>
-            <div class="ddm-resize-drop" data-col="11"></div>
-            <div class="ddm-resize-drop" data-col="12"></div>
             <div class="col-md-3 col-ddm" data-ddm-field-row="0" data-ddm-field-page="0" data-ddm-field-column="0">
-              <div class="ddm-field-container">
+              <div class="ddm-field-container h-100">
                 <div class="ddm-resize-handle ddm-resize-handle-left" data-ddm-field-row="0" data-ddm-field-page="0" data-ddm-field-column="0"></div>
                 <div class="ddm-drag"></div>
                 <div class="ddm-field-actions-container"><a href="javascript:;"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button"><svg class="lexicon-icon lexicon-icon-paste" focusable="false" role="presentation">
@@ -2910,20 +2346,8 @@ exports[`FormRenderer should render a layout in editable mode 1`] = `
             </div>
           </div>
           <div class="position-relative row">
-            <div class="ddm-resize-drop" data-col="1"></div>
-            <div class="ddm-resize-drop" data-col="2"></div>
-            <div class="ddm-resize-drop" data-col="3"></div>
-            <div class="ddm-resize-drop" data-col="4"></div>
-            <div class="ddm-resize-drop" data-col="5"></div>
-            <div class="ddm-resize-drop" data-col="6"></div>
-            <div class="ddm-resize-drop" data-col="7"></div>
-            <div class="ddm-resize-drop" data-col="8"></div>
-            <div class="ddm-resize-drop" data-col="9"></div>
-            <div class="ddm-resize-drop" data-col="10"></div>
-            <div class="ddm-resize-drop" data-col="11"></div>
-            <div class="ddm-resize-drop" data-col="12"></div>
             <div class="col-md-4 col-ddm" data-ddm-field-row="1" data-ddm-field-page="0" data-ddm-field-column="0">
-              <div class="ddm-field-container">
+              <div class="ddm-field-container h-100">
                 <div class="ddm-resize-handle ddm-resize-handle-left" data-ddm-field-row="1" data-ddm-field-page="0" data-ddm-field-column="0"></div>
                 <div class="ddm-drag"></div>
                 <div class="ddm-field-actions-container"><a href="javascript:;"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button"><svg class="lexicon-icon lexicon-icon-paste" focusable="false" role="presentation">
@@ -2935,7 +2359,7 @@ exports[`FormRenderer should render a layout in editable mode 1`] = `
               </div>
             </div>
             <div class="col-md-6 col-ddm" data-ddm-field-row="1" data-ddm-field-page="0" data-ddm-field-column="1">
-              <div class="ddm-field-container">
+              <div class="ddm-field-container h-100">
                 <div class="ddm-resize-handle ddm-resize-handle-left" data-ddm-field-row="1" data-ddm-field-page="0" data-ddm-field-column="1"></div>
                 <div class="ddm-drag"></div>
                 <div class="ddm-field-actions-container"><a href="javascript:;"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button"><svg class="lexicon-icon lexicon-icon-paste" focusable="false" role="presentation">
@@ -2956,20 +2380,8 @@ exports[`FormRenderer should render a layout in editable mode 1`] = `
             </div>
           </div>
           <div class="position-relative row">
-            <div class="ddm-resize-drop" data-col="1"></div>
-            <div class="ddm-resize-drop" data-col="2"></div>
-            <div class="ddm-resize-drop" data-col="3"></div>
-            <div class="ddm-resize-drop" data-col="4"></div>
-            <div class="ddm-resize-drop" data-col="5"></div>
-            <div class="ddm-resize-drop" data-col="6"></div>
-            <div class="ddm-resize-drop" data-col="7"></div>
-            <div class="ddm-resize-drop" data-col="8"></div>
-            <div class="ddm-resize-drop" data-col="9"></div>
-            <div class="ddm-resize-drop" data-col="10"></div>
-            <div class="ddm-resize-drop" data-col="11"></div>
-            <div class="ddm-resize-drop" data-col="12"></div>
             <div class="col-md-12 col-ddm" data-ddm-field-row="2" data-ddm-field-page="0" data-ddm-field-column="0">
-              <div class="ddm-field-container">
+              <div class="ddm-field-container h-100">
                 <div class="ddm-resize-handle ddm-resize-handle-left" data-ddm-field-row="2" data-ddm-field-page="0" data-ddm-field-column="0"></div>
                 <div class="ddm-drag"></div>
                 <div class="ddm-field-actions-container"><a href="javascript:;"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button"><svg class="lexicon-icon lexicon-icon-paste" focusable="false" role="presentation">
@@ -2987,20 +2399,8 @@ exports[`FormRenderer should render a layout in editable mode 1`] = `
             </div>
           </div>
           <div class="position-relative row">
-            <div class="ddm-resize-drop" data-col="1"></div>
-            <div class="ddm-resize-drop" data-col="2"></div>
-            <div class="ddm-resize-drop" data-col="3"></div>
-            <div class="ddm-resize-drop" data-col="4"></div>
-            <div class="ddm-resize-drop" data-col="5"></div>
-            <div class="ddm-resize-drop" data-col="6"></div>
-            <div class="ddm-resize-drop" data-col="7"></div>
-            <div class="ddm-resize-drop" data-col="8"></div>
-            <div class="ddm-resize-drop" data-col="9"></div>
-            <div class="ddm-resize-drop" data-col="10"></div>
-            <div class="ddm-resize-drop" data-col="11"></div>
-            <div class="ddm-resize-drop" data-col="12"></div>
             <div class="col-md-12 col-ddm" data-ddm-field-row="3" data-ddm-field-page="0" data-ddm-field-column="0">
-              <div class="ddm-field-container">
+              <div class="ddm-field-container h-100">
                 <div class="ddm-resize-handle ddm-resize-handle-left" data-ddm-field-row="3" data-ddm-field-page="0" data-ddm-field-column="0"></div>
                 <div class="ddm-drag"></div>
                 <div class="ddm-field-actions-container"><a href="javascript:;"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button"><svg class="lexicon-icon lexicon-icon-paste" focusable="false" role="presentation">
@@ -3044,65 +2444,29 @@ exports[`FormRenderer should render a layout in pagination mode 1`] = `
     <div class="ddm-form-page pl-4 pr-4"><textarea class="form-builder-page-header-title form-control p-0" data-page-index="0" maxlength="120" value="Untitled name"></textarea><textarea class="form-builder-page-header-description form-control p-0" data-page-index="0" maxlength="120" placeholder="add-a-short-description-for-this-page"></textarea>
       <div class="form-builder-layout">
         <div class="layout-page">
+          <div class="ddm-resize-column" data-resize-column="0" ref="resizeColumn0"></div>
+          <div class="ddm-resize-column" data-resize-column="1" ref="resizeColumn1"></div>
+          <div class="ddm-resize-column" data-resize-column="2" ref="resizeColumn2"></div>
+          <div class="ddm-resize-column" data-resize-column="3" ref="resizeColumn3"></div>
+          <div class="ddm-resize-column" data-resize-column="4" ref="resizeColumn4"></div>
+          <div class="ddm-resize-column" data-resize-column="5" ref="resizeColumn5"></div>
+          <div class="ddm-resize-column" data-resize-column="6" ref="resizeColumn6"></div>
+          <div class="ddm-resize-column" data-resize-column="7" ref="resizeColumn7"></div>
+          <div class="ddm-resize-column" data-resize-column="8" ref="resizeColumn8"></div>
+          <div class="ddm-resize-column" data-resize-column="9" ref="resizeColumn9"></div>
+          <div class="ddm-resize-column" data-resize-column="10" ref="resizeColumn10"></div>
+          <div class="ddm-resize-column" data-resize-column="11" ref="resizeColumn11"></div>
           <div class="position-relative row">
-            <div class="ddm-resize-drop" data-col="1"></div>
-            <div class="ddm-resize-drop" data-col="2"></div>
-            <div class="ddm-resize-drop" data-col="3"></div>
-            <div class="ddm-resize-drop" data-col="4"></div>
-            <div class="ddm-resize-drop" data-col="5"></div>
-            <div class="ddm-resize-drop" data-col="6"></div>
-            <div class="ddm-resize-drop" data-col="7"></div>
-            <div class="ddm-resize-drop" data-col="8"></div>
-            <div class="ddm-resize-drop" data-col="9"></div>
-            <div class="ddm-resize-drop" data-col="10"></div>
-            <div class="ddm-resize-drop" data-col="11"></div>
-            <div class="ddm-resize-drop" data-col="12"></div>
             <div class="col-md-3 col-ddm" data-ddm-field-row="0" data-ddm-field-page="0" data-ddm-field-column="0"></div>
           </div>
           <div class="position-relative row">
-            <div class="ddm-resize-drop" data-col="1"></div>
-            <div class="ddm-resize-drop" data-col="2"></div>
-            <div class="ddm-resize-drop" data-col="3"></div>
-            <div class="ddm-resize-drop" data-col="4"></div>
-            <div class="ddm-resize-drop" data-col="5"></div>
-            <div class="ddm-resize-drop" data-col="6"></div>
-            <div class="ddm-resize-drop" data-col="7"></div>
-            <div class="ddm-resize-drop" data-col="8"></div>
-            <div class="ddm-resize-drop" data-col="9"></div>
-            <div class="ddm-resize-drop" data-col="10"></div>
-            <div class="ddm-resize-drop" data-col="11"></div>
-            <div class="ddm-resize-drop" data-col="12"></div>
             <div class="col-md-4 col-ddm" data-ddm-field-row="1" data-ddm-field-page="0" data-ddm-field-column="0"></div>
             <div class="col-md-6 col-ddm" data-ddm-field-row="1" data-ddm-field-page="0" data-ddm-field-column="1"></div>
           </div>
           <div class="position-relative row">
-            <div class="ddm-resize-drop" data-col="1"></div>
-            <div class="ddm-resize-drop" data-col="2"></div>
-            <div class="ddm-resize-drop" data-col="3"></div>
-            <div class="ddm-resize-drop" data-col="4"></div>
-            <div class="ddm-resize-drop" data-col="5"></div>
-            <div class="ddm-resize-drop" data-col="6"></div>
-            <div class="ddm-resize-drop" data-col="7"></div>
-            <div class="ddm-resize-drop" data-col="8"></div>
-            <div class="ddm-resize-drop" data-col="9"></div>
-            <div class="ddm-resize-drop" data-col="10"></div>
-            <div class="ddm-resize-drop" data-col="11"></div>
-            <div class="ddm-resize-drop" data-col="12"></div>
             <div class="col-md-12 col-ddm" data-ddm-field-row="2" data-ddm-field-page="0" data-ddm-field-column="0"></div>
           </div>
           <div class="position-relative row">
-            <div class="ddm-resize-drop" data-col="1"></div>
-            <div class="ddm-resize-drop" data-col="2"></div>
-            <div class="ddm-resize-drop" data-col="3"></div>
-            <div class="ddm-resize-drop" data-col="4"></div>
-            <div class="ddm-resize-drop" data-col="5"></div>
-            <div class="ddm-resize-drop" data-col="6"></div>
-            <div class="ddm-resize-drop" data-col="7"></div>
-            <div class="ddm-resize-drop" data-col="8"></div>
-            <div class="ddm-resize-drop" data-col="9"></div>
-            <div class="ddm-resize-drop" data-col="10"></div>
-            <div class="ddm-resize-drop" data-col="11"></div>
-            <div class="ddm-resize-drop" data-col="12"></div>
             <div class="col-md-12 col-ddm" data-ddm-field-row="3" data-ddm-field-page="0" data-ddm-field-column="0"></div>
           </div>
         </div>
@@ -3132,65 +2496,29 @@ exports[`FormRenderer should render a layout in wizard mode 1`] = `
     <div class="ddm-form-page pl-4 pr-4"><textarea class="form-builder-page-header-title form-control p-0" data-page-index="0" maxlength="120" value="Untitled name"></textarea><textarea class="form-builder-page-header-description form-control p-0" data-page-index="0" maxlength="120" placeholder="add-a-short-description-for-this-page"></textarea>
       <div class="form-builder-layout">
         <div class="layout-page">
+          <div class="ddm-resize-column" data-resize-column="0" ref="resizeColumn0"></div>
+          <div class="ddm-resize-column" data-resize-column="1" ref="resizeColumn1"></div>
+          <div class="ddm-resize-column" data-resize-column="2" ref="resizeColumn2"></div>
+          <div class="ddm-resize-column" data-resize-column="3" ref="resizeColumn3"></div>
+          <div class="ddm-resize-column" data-resize-column="4" ref="resizeColumn4"></div>
+          <div class="ddm-resize-column" data-resize-column="5" ref="resizeColumn5"></div>
+          <div class="ddm-resize-column" data-resize-column="6" ref="resizeColumn6"></div>
+          <div class="ddm-resize-column" data-resize-column="7" ref="resizeColumn7"></div>
+          <div class="ddm-resize-column" data-resize-column="8" ref="resizeColumn8"></div>
+          <div class="ddm-resize-column" data-resize-column="9" ref="resizeColumn9"></div>
+          <div class="ddm-resize-column" data-resize-column="10" ref="resizeColumn10"></div>
+          <div class="ddm-resize-column" data-resize-column="11" ref="resizeColumn11"></div>
           <div class="position-relative row">
-            <div class="ddm-resize-drop" data-col="1"></div>
-            <div class="ddm-resize-drop" data-col="2"></div>
-            <div class="ddm-resize-drop" data-col="3"></div>
-            <div class="ddm-resize-drop" data-col="4"></div>
-            <div class="ddm-resize-drop" data-col="5"></div>
-            <div class="ddm-resize-drop" data-col="6"></div>
-            <div class="ddm-resize-drop" data-col="7"></div>
-            <div class="ddm-resize-drop" data-col="8"></div>
-            <div class="ddm-resize-drop" data-col="9"></div>
-            <div class="ddm-resize-drop" data-col="10"></div>
-            <div class="ddm-resize-drop" data-col="11"></div>
-            <div class="ddm-resize-drop" data-col="12"></div>
             <div class="col-md-3 col-ddm" data-ddm-field-row="0" data-ddm-field-page="0" data-ddm-field-column="0"></div>
           </div>
           <div class="position-relative row">
-            <div class="ddm-resize-drop" data-col="1"></div>
-            <div class="ddm-resize-drop" data-col="2"></div>
-            <div class="ddm-resize-drop" data-col="3"></div>
-            <div class="ddm-resize-drop" data-col="4"></div>
-            <div class="ddm-resize-drop" data-col="5"></div>
-            <div class="ddm-resize-drop" data-col="6"></div>
-            <div class="ddm-resize-drop" data-col="7"></div>
-            <div class="ddm-resize-drop" data-col="8"></div>
-            <div class="ddm-resize-drop" data-col="9"></div>
-            <div class="ddm-resize-drop" data-col="10"></div>
-            <div class="ddm-resize-drop" data-col="11"></div>
-            <div class="ddm-resize-drop" data-col="12"></div>
             <div class="col-md-4 col-ddm" data-ddm-field-row="1" data-ddm-field-page="0" data-ddm-field-column="0"></div>
             <div class="col-md-6 col-ddm" data-ddm-field-row="1" data-ddm-field-page="0" data-ddm-field-column="1"></div>
           </div>
           <div class="position-relative row">
-            <div class="ddm-resize-drop" data-col="1"></div>
-            <div class="ddm-resize-drop" data-col="2"></div>
-            <div class="ddm-resize-drop" data-col="3"></div>
-            <div class="ddm-resize-drop" data-col="4"></div>
-            <div class="ddm-resize-drop" data-col="5"></div>
-            <div class="ddm-resize-drop" data-col="6"></div>
-            <div class="ddm-resize-drop" data-col="7"></div>
-            <div class="ddm-resize-drop" data-col="8"></div>
-            <div class="ddm-resize-drop" data-col="9"></div>
-            <div class="ddm-resize-drop" data-col="10"></div>
-            <div class="ddm-resize-drop" data-col="11"></div>
-            <div class="ddm-resize-drop" data-col="12"></div>
             <div class="col-md-12 col-ddm" data-ddm-field-row="2" data-ddm-field-page="0" data-ddm-field-column="0"></div>
           </div>
           <div class="position-relative row">
-            <div class="ddm-resize-drop" data-col="1"></div>
-            <div class="ddm-resize-drop" data-col="2"></div>
-            <div class="ddm-resize-drop" data-col="3"></div>
-            <div class="ddm-resize-drop" data-col="4"></div>
-            <div class="ddm-resize-drop" data-col="5"></div>
-            <div class="ddm-resize-drop" data-col="6"></div>
-            <div class="ddm-resize-drop" data-col="7"></div>
-            <div class="ddm-resize-drop" data-col="8"></div>
-            <div class="ddm-resize-drop" data-col="9"></div>
-            <div class="ddm-resize-drop" data-col="10"></div>
-            <div class="ddm-resize-drop" data-col="11"></div>
-            <div class="ddm-resize-drop" data-col="12"></div>
             <div class="col-md-12 col-ddm" data-ddm-field-row="3" data-ddm-field-page="0" data-ddm-field-column="0"></div>
           </div>
         </div>
@@ -3220,26 +2548,26 @@ exports[`FormRenderer should render a layout with an empty field only in editabl
     <div class="ddm-form-page pl-4 pr-4"><textarea class="form-builder-page-header-title form-control p-0" data-page-index="0" maxlength="120" value="Untitled name"></textarea><textarea class="form-builder-page-header-description form-control p-0" data-page-index="0" maxlength="120" placeholder="add-a-short-description-for-this-page"></textarea>
       <div class="form-builder-layout">
         <div class="layout-page">
+          <div class="ddm-resize-column" data-resize-column="0" ref="resizeColumn0"></div>
+          <div class="ddm-resize-column" data-resize-column="1" ref="resizeColumn1"></div>
+          <div class="ddm-resize-column" data-resize-column="2" ref="resizeColumn2"></div>
+          <div class="ddm-resize-column" data-resize-column="3" ref="resizeColumn3"></div>
+          <div class="ddm-resize-column" data-resize-column="4" ref="resizeColumn4"></div>
+          <div class="ddm-resize-column" data-resize-column="5" ref="resizeColumn5"></div>
+          <div class="ddm-resize-column" data-resize-column="6" ref="resizeColumn6"></div>
+          <div class="ddm-resize-column" data-resize-column="7" ref="resizeColumn7"></div>
+          <div class="ddm-resize-column" data-resize-column="8" ref="resizeColumn8"></div>
+          <div class="ddm-resize-column" data-resize-column="9" ref="resizeColumn9"></div>
+          <div class="ddm-resize-column" data-resize-column="10" ref="resizeColumn10"></div>
+          <div class="ddm-resize-column" data-resize-column="11" ref="resizeColumn11"></div>
           <div class="row">
             <div class="col col-empty col-md-12" data-ddm-field-row="0" data-ddm-field-page="0">
               <div class="ddm-target"></div>
             </div>
           </div>
           <div class="position-relative row">
-            <div class="ddm-resize-drop" data-col="1"></div>
-            <div class="ddm-resize-drop" data-col="2"></div>
-            <div class="ddm-resize-drop" data-col="3"></div>
-            <div class="ddm-resize-drop" data-col="4"></div>
-            <div class="ddm-resize-drop" data-col="5"></div>
-            <div class="ddm-resize-drop" data-col="6"></div>
-            <div class="ddm-resize-drop" data-col="7"></div>
-            <div class="ddm-resize-drop" data-col="8"></div>
-            <div class="ddm-resize-drop" data-col="9"></div>
-            <div class="ddm-resize-drop" data-col="10"></div>
-            <div class="ddm-resize-drop" data-col="11"></div>
-            <div class="ddm-resize-drop" data-col="12"></div>
             <div class="col-md-3 col-ddm" data-ddm-field-row="0" data-ddm-field-page="0" data-ddm-field-column="0">
-              <div class="ddm-field-container">
+              <div class="ddm-field-container h-100">
                 <div class="ddm-resize-handle ddm-resize-handle-left" data-ddm-field-row="0" data-ddm-field-page="0" data-ddm-field-column="0"></div>
                 <div class="ddm-drag"></div>
                 <div class="ddm-field-actions-container"><a href="javascript:;"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button"><svg class="lexicon-icon lexicon-icon-paste" focusable="false" role="presentation">
@@ -3260,20 +2588,8 @@ exports[`FormRenderer should render a layout with an empty field only in editabl
             </div>
           </div>
           <div class="position-relative row">
-            <div class="ddm-resize-drop" data-col="1"></div>
-            <div class="ddm-resize-drop" data-col="2"></div>
-            <div class="ddm-resize-drop" data-col="3"></div>
-            <div class="ddm-resize-drop" data-col="4"></div>
-            <div class="ddm-resize-drop" data-col="5"></div>
-            <div class="ddm-resize-drop" data-col="6"></div>
-            <div class="ddm-resize-drop" data-col="7"></div>
-            <div class="ddm-resize-drop" data-col="8"></div>
-            <div class="ddm-resize-drop" data-col="9"></div>
-            <div class="ddm-resize-drop" data-col="10"></div>
-            <div class="ddm-resize-drop" data-col="11"></div>
-            <div class="ddm-resize-drop" data-col="12"></div>
             <div class="col-md-4 col-ddm" data-ddm-field-row="1" data-ddm-field-page="0" data-ddm-field-column="0">
-              <div class="ddm-field-container">
+              <div class="ddm-field-container h-100">
                 <div class="ddm-resize-handle ddm-resize-handle-left" data-ddm-field-row="1" data-ddm-field-page="0" data-ddm-field-column="0"></div>
                 <div class="ddm-drag"></div>
                 <div class="ddm-field-actions-container"><a href="javascript:;"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button"><svg class="lexicon-icon lexicon-icon-paste" focusable="false" role="presentation">
@@ -3285,7 +2601,7 @@ exports[`FormRenderer should render a layout with an empty field only in editabl
               </div>
             </div>
             <div class="col-md-6 col-ddm" data-ddm-field-row="1" data-ddm-field-page="0" data-ddm-field-column="1">
-              <div class="ddm-field-container">
+              <div class="ddm-field-container h-100">
                 <div class="ddm-resize-handle ddm-resize-handle-left" data-ddm-field-row="1" data-ddm-field-page="0" data-ddm-field-column="1"></div>
                 <div class="ddm-drag"></div>
                 <div class="ddm-field-actions-container"><a href="javascript:;"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button"><svg class="lexicon-icon lexicon-icon-paste" focusable="false" role="presentation">
@@ -3297,7 +2613,7 @@ exports[`FormRenderer should render a layout with an empty field only in editabl
               </div>
             </div>
             <div class="col-md-2 col-ddm" data-ddm-field-row="1" data-ddm-field-page="0" data-ddm-field-column="2">
-              <div class="ddm-field-container">
+              <div class="ddm-field-container h-100">
                 <div class="ddm-resize-handle ddm-resize-handle-left" data-ddm-field-row="1" data-ddm-field-page="0" data-ddm-field-column="2"></div>
                 <div class="ddm-drag"></div>
                 <div class="ddm-field-actions-container"><a href="javascript:;"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button"><svg class="lexicon-icon lexicon-icon-paste" focusable="false" role="presentation">
@@ -3315,20 +2631,8 @@ exports[`FormRenderer should render a layout with an empty field only in editabl
             </div>
           </div>
           <div class="position-relative row">
-            <div class="ddm-resize-drop" data-col="1"></div>
-            <div class="ddm-resize-drop" data-col="2"></div>
-            <div class="ddm-resize-drop" data-col="3"></div>
-            <div class="ddm-resize-drop" data-col="4"></div>
-            <div class="ddm-resize-drop" data-col="5"></div>
-            <div class="ddm-resize-drop" data-col="6"></div>
-            <div class="ddm-resize-drop" data-col="7"></div>
-            <div class="ddm-resize-drop" data-col="8"></div>
-            <div class="ddm-resize-drop" data-col="9"></div>
-            <div class="ddm-resize-drop" data-col="10"></div>
-            <div class="ddm-resize-drop" data-col="11"></div>
-            <div class="ddm-resize-drop" data-col="12"></div>
             <div class="col-md-12 col-ddm" data-ddm-field-row="2" data-ddm-field-page="0" data-ddm-field-column="0">
-              <div class="ddm-field-container">
+              <div class="ddm-field-container h-100">
                 <div class="ddm-resize-handle ddm-resize-handle-left" data-ddm-field-row="2" data-ddm-field-page="0" data-ddm-field-column="0"></div>
                 <div class="ddm-drag"></div>
                 <div class="ddm-field-actions-container"><a href="javascript:;"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button"><svg class="lexicon-icon lexicon-icon-paste" focusable="false" role="presentation">
@@ -3346,20 +2650,8 @@ exports[`FormRenderer should render a layout with an empty field only in editabl
             </div>
           </div>
           <div class="position-relative row">
-            <div class="ddm-resize-drop" data-col="1"></div>
-            <div class="ddm-resize-drop" data-col="2"></div>
-            <div class="ddm-resize-drop" data-col="3"></div>
-            <div class="ddm-resize-drop" data-col="4"></div>
-            <div class="ddm-resize-drop" data-col="5"></div>
-            <div class="ddm-resize-drop" data-col="6"></div>
-            <div class="ddm-resize-drop" data-col="7"></div>
-            <div class="ddm-resize-drop" data-col="8"></div>
-            <div class="ddm-resize-drop" data-col="9"></div>
-            <div class="ddm-resize-drop" data-col="10"></div>
-            <div class="ddm-resize-drop" data-col="11"></div>
-            <div class="ddm-resize-drop" data-col="12"></div>
             <div class="col-md-12 col-ddm" data-ddm-field-row="3" data-ddm-field-page="0" data-ddm-field-column="0">
-              <div class="ddm-field-container">
+              <div class="ddm-field-container h-100">
                 <div class="ddm-resize-handle ddm-resize-handle-left" data-ddm-field-row="3" data-ddm-field-page="0" data-ddm-field-column="0"></div>
                 <div class="ddm-drag"></div>
                 <div class="ddm-field-actions-container"><a href="javascript:;"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button"><svg class="lexicon-icon lexicon-icon-paste" focusable="false" role="presentation">
@@ -3394,64 +2686,16 @@ exports[`FormRenderer should render a layout with pages in mode of list 1`] = `
 <div class="ddm-page-list-container">
   <div aria-labelledby="sidebarLightFormsFieldTab" class="fade tab-pane active show" id="sidebarLightDetails" role="tabpanel">
     <div class="position-relative row">
-      <div class="ddm-resize-drop" data-col="1"></div>
-      <div class="ddm-resize-drop" data-col="2"></div>
-      <div class="ddm-resize-drop" data-col="3"></div>
-      <div class="ddm-resize-drop" data-col="4"></div>
-      <div class="ddm-resize-drop" data-col="5"></div>
-      <div class="ddm-resize-drop" data-col="6"></div>
-      <div class="ddm-resize-drop" data-col="7"></div>
-      <div class="ddm-resize-drop" data-col="8"></div>
-      <div class="ddm-resize-drop" data-col="9"></div>
-      <div class="ddm-resize-drop" data-col="10"></div>
-      <div class="ddm-resize-drop" data-col="11"></div>
-      <div class="ddm-resize-drop" data-col="12"></div>
       <div class="col-md-3"></div>
     </div>
     <div class="position-relative row">
-      <div class="ddm-resize-drop" data-col="1"></div>
-      <div class="ddm-resize-drop" data-col="2"></div>
-      <div class="ddm-resize-drop" data-col="3"></div>
-      <div class="ddm-resize-drop" data-col="4"></div>
-      <div class="ddm-resize-drop" data-col="5"></div>
-      <div class="ddm-resize-drop" data-col="6"></div>
-      <div class="ddm-resize-drop" data-col="7"></div>
-      <div class="ddm-resize-drop" data-col="8"></div>
-      <div class="ddm-resize-drop" data-col="9"></div>
-      <div class="ddm-resize-drop" data-col="10"></div>
-      <div class="ddm-resize-drop" data-col="11"></div>
-      <div class="ddm-resize-drop" data-col="12"></div>
       <div class="col-md-4"></div>
       <div class="col-md-6"></div>
     </div>
     <div class="position-relative row">
-      <div class="ddm-resize-drop" data-col="1"></div>
-      <div class="ddm-resize-drop" data-col="2"></div>
-      <div class="ddm-resize-drop" data-col="3"></div>
-      <div class="ddm-resize-drop" data-col="4"></div>
-      <div class="ddm-resize-drop" data-col="5"></div>
-      <div class="ddm-resize-drop" data-col="6"></div>
-      <div class="ddm-resize-drop" data-col="7"></div>
-      <div class="ddm-resize-drop" data-col="8"></div>
-      <div class="ddm-resize-drop" data-col="9"></div>
-      <div class="ddm-resize-drop" data-col="10"></div>
-      <div class="ddm-resize-drop" data-col="11"></div>
-      <div class="ddm-resize-drop" data-col="12"></div>
       <div class="col-md-12"></div>
     </div>
     <div class="position-relative row">
-      <div class="ddm-resize-drop" data-col="1"></div>
-      <div class="ddm-resize-drop" data-col="2"></div>
-      <div class="ddm-resize-drop" data-col="3"></div>
-      <div class="ddm-resize-drop" data-col="4"></div>
-      <div class="ddm-resize-drop" data-col="5"></div>
-      <div class="ddm-resize-drop" data-col="6"></div>
-      <div class="ddm-resize-drop" data-col="7"></div>
-      <div class="ddm-resize-drop" data-col="8"></div>
-      <div class="ddm-resize-drop" data-col="9"></div>
-      <div class="ddm-resize-drop" data-col="10"></div>
-      <div class="ddm-resize-drop" data-col="11"></div>
-      <div class="ddm-resize-drop" data-col="12"></div>
       <div class="col-md-12"></div>
     </div>
   </div>
@@ -3471,65 +2715,29 @@ exports[`FormRenderer should render default markup 1`] = `
     <div class="ddm-form-page pl-4 pr-4"><textarea class="form-builder-page-header-title form-control p-0" data-page-index="0" maxlength="120" value="Untitled name"></textarea><textarea class="form-builder-page-header-description form-control p-0" data-page-index="0" maxlength="120" placeholder="add-a-short-description-for-this-page"></textarea>
       <div class="form-builder-layout">
         <div class="layout-page">
+          <div class="ddm-resize-column" data-resize-column="0" ref="resizeColumn0"></div>
+          <div class="ddm-resize-column" data-resize-column="1" ref="resizeColumn1"></div>
+          <div class="ddm-resize-column" data-resize-column="2" ref="resizeColumn2"></div>
+          <div class="ddm-resize-column" data-resize-column="3" ref="resizeColumn3"></div>
+          <div class="ddm-resize-column" data-resize-column="4" ref="resizeColumn4"></div>
+          <div class="ddm-resize-column" data-resize-column="5" ref="resizeColumn5"></div>
+          <div class="ddm-resize-column" data-resize-column="6" ref="resizeColumn6"></div>
+          <div class="ddm-resize-column" data-resize-column="7" ref="resizeColumn7"></div>
+          <div class="ddm-resize-column" data-resize-column="8" ref="resizeColumn8"></div>
+          <div class="ddm-resize-column" data-resize-column="9" ref="resizeColumn9"></div>
+          <div class="ddm-resize-column" data-resize-column="10" ref="resizeColumn10"></div>
+          <div class="ddm-resize-column" data-resize-column="11" ref="resizeColumn11"></div>
           <div class="position-relative row">
-            <div class="ddm-resize-drop" data-col="1"></div>
-            <div class="ddm-resize-drop" data-col="2"></div>
-            <div class="ddm-resize-drop" data-col="3"></div>
-            <div class="ddm-resize-drop" data-col="4"></div>
-            <div class="ddm-resize-drop" data-col="5"></div>
-            <div class="ddm-resize-drop" data-col="6"></div>
-            <div class="ddm-resize-drop" data-col="7"></div>
-            <div class="ddm-resize-drop" data-col="8"></div>
-            <div class="ddm-resize-drop" data-col="9"></div>
-            <div class="ddm-resize-drop" data-col="10"></div>
-            <div class="ddm-resize-drop" data-col="11"></div>
-            <div class="ddm-resize-drop" data-col="12"></div>
             <div class="col-md-3 col-ddm" data-ddm-field-row="0" data-ddm-field-page="0" data-ddm-field-column="0"></div>
           </div>
           <div class="position-relative row">
-            <div class="ddm-resize-drop" data-col="1"></div>
-            <div class="ddm-resize-drop" data-col="2"></div>
-            <div class="ddm-resize-drop" data-col="3"></div>
-            <div class="ddm-resize-drop" data-col="4"></div>
-            <div class="ddm-resize-drop" data-col="5"></div>
-            <div class="ddm-resize-drop" data-col="6"></div>
-            <div class="ddm-resize-drop" data-col="7"></div>
-            <div class="ddm-resize-drop" data-col="8"></div>
-            <div class="ddm-resize-drop" data-col="9"></div>
-            <div class="ddm-resize-drop" data-col="10"></div>
-            <div class="ddm-resize-drop" data-col="11"></div>
-            <div class="ddm-resize-drop" data-col="12"></div>
             <div class="col-md-4 col-ddm" data-ddm-field-row="1" data-ddm-field-page="0" data-ddm-field-column="0"></div>
             <div class="col-md-6 col-ddm" data-ddm-field-row="1" data-ddm-field-page="0" data-ddm-field-column="1"></div>
           </div>
           <div class="position-relative row">
-            <div class="ddm-resize-drop" data-col="1"></div>
-            <div class="ddm-resize-drop" data-col="2"></div>
-            <div class="ddm-resize-drop" data-col="3"></div>
-            <div class="ddm-resize-drop" data-col="4"></div>
-            <div class="ddm-resize-drop" data-col="5"></div>
-            <div class="ddm-resize-drop" data-col="6"></div>
-            <div class="ddm-resize-drop" data-col="7"></div>
-            <div class="ddm-resize-drop" data-col="8"></div>
-            <div class="ddm-resize-drop" data-col="9"></div>
-            <div class="ddm-resize-drop" data-col="10"></div>
-            <div class="ddm-resize-drop" data-col="11"></div>
-            <div class="ddm-resize-drop" data-col="12"></div>
             <div class="col-md-12 col-ddm" data-ddm-field-row="2" data-ddm-field-page="0" data-ddm-field-column="0"></div>
           </div>
           <div class="position-relative row">
-            <div class="ddm-resize-drop" data-col="1"></div>
-            <div class="ddm-resize-drop" data-col="2"></div>
-            <div class="ddm-resize-drop" data-col="3"></div>
-            <div class="ddm-resize-drop" data-col="4"></div>
-            <div class="ddm-resize-drop" data-col="5"></div>
-            <div class="ddm-resize-drop" data-col="6"></div>
-            <div class="ddm-resize-drop" data-col="7"></div>
-            <div class="ddm-resize-drop" data-col="8"></div>
-            <div class="ddm-resize-drop" data-col="9"></div>
-            <div class="ddm-resize-drop" data-col="10"></div>
-            <div class="ddm-resize-drop" data-col="11"></div>
-            <div class="ddm-resize-drop" data-col="12"></div>
             <div class="col-md-12 col-ddm" data-ddm-field-row="3" data-ddm-field-page="0" data-ddm-field-column="0"></div>
           </div>
         </div>

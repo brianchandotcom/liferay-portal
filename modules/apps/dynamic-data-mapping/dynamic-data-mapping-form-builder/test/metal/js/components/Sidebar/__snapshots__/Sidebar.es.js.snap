@@ -110,18 +110,6 @@ exports[`Sidebar should close the sidebar in edition mode 1`] = `
           <div class="ddm-page-list-container">
             <div aria-labelledby="sidebarLightFormsFieldTab" class="fade tab-pane active show" id="sidebarLightDetails" role="tabpanel">
               <div class="position-relative row">
-                <div class="ddm-resize-drop" data-col="1"></div>
-                <div class="ddm-resize-drop" data-col="2"></div>
-                <div class="ddm-resize-drop" data-col="3"></div>
-                <div class="ddm-resize-drop" data-col="4"></div>
-                <div class="ddm-resize-drop" data-col="5"></div>
-                <div class="ddm-resize-drop" data-col="6"></div>
-                <div class="ddm-resize-drop" data-col="7"></div>
-                <div class="ddm-resize-drop" data-col="8"></div>
-                <div class="ddm-resize-drop" data-col="9"></div>
-                <div class="ddm-resize-drop" data-col="10"></div>
-                <div class="ddm-resize-drop" data-col="11"></div>
-                <div class="ddm-resize-drop" data-col="12"></div>
                 <div class="col-md-undefined">
                   <div id="fields-rule">
                     <p>Text Field</p>
@@ -226,18 +214,6 @@ exports[`Sidebar should close the sidebar in edition mode 2`] = `
           <div class="ddm-page-list-container">
             <div aria-labelledby="sidebarLightFormsFieldTab" class="fade tab-pane active show" id="sidebarLightDetails" role="tabpanel">
               <div class="position-relative row">
-                <div class="ddm-resize-drop" data-col="1"></div>
-                <div class="ddm-resize-drop" data-col="2"></div>
-                <div class="ddm-resize-drop" data-col="3"></div>
-                <div class="ddm-resize-drop" data-col="4"></div>
-                <div class="ddm-resize-drop" data-col="5"></div>
-                <div class="ddm-resize-drop" data-col="6"></div>
-                <div class="ddm-resize-drop" data-col="7"></div>
-                <div class="ddm-resize-drop" data-col="8"></div>
-                <div class="ddm-resize-drop" data-col="9"></div>
-                <div class="ddm-resize-drop" data-col="10"></div>
-                <div class="ddm-resize-drop" data-col="11"></div>
-                <div class="ddm-resize-drop" data-col="12"></div>
                 <div class="col-md-undefined">
                   <div id="fields-rule">
                     <p>Text Field</p>

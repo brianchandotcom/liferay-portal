@@ -298,20 +298,7 @@ class Builder extends Component {
 	}
 
 	_handleColumnResized(event) {
-		const {source, target} = event;
-		const leftResize = source.classList.contains('ddm-resize-handle-left');
-		const sourceIndexes = FormSupport.getIndexes(source);
-		const targetDatasetCol = target.dataset.col;
-
-		this.emit(
-			'columnResized',
-			{
-				...event,
-				leftResize,
-				sourceIndexes,
-				targetDatasetCol
-			}
-		);
+		this.emit('columnResized', event);
 	}
 
 	_handleDeleteFieldClicked(indexes) {
@@ -382,14 +369,14 @@ class Builder extends Component {
 			}
 		};
 
-		const targetIsEmptyRow = ![...event.data.target.parentElement.parentElement.classList].includes('position-relative');
+		const addedToPlaceholder = ![...event.data.target.parentElement.parentElement.classList].includes('position-relative');
 
 		this.emit(
 			'fieldAdded',
 			{
 				...event,
-				focusedField,
-				targetIsEmptyRow
+				addedToPlaceholder,
+				focusedField
 			}
 		);
 

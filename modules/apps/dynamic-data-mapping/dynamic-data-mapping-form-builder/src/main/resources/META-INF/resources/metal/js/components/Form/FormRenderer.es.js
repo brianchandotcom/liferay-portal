@@ -354,7 +354,7 @@ class FormRenderer extends Component {
 		const {height} = source.getBoundingClientRect();
 		const {parentElement} = source;
 
-		parentElement.setAttribute('style', `height: ${height}px`);
+		parentElement.setAttribute('style', `height: ${height}px !important;`);
 		parentElement.classList.add('ddm-parent-dragging');
 	}
 
@@ -363,7 +363,7 @@ class FormRenderer extends Component {
 	 * @private
 	 */
 
-	_handleDragAndDropEnd(data) {
+	_handleDragAndDropEnd({source, target}) {
 		const lastParent = document.querySelector('.ddm-parent-dragging');
 
 		if (lastParent) {
@@ -371,22 +371,21 @@ class FormRenderer extends Component {
 			lastParent.removeAttribute('style');
 		}
 
-		if (data.target) {
+		if (target) {
 			const sourceIndex = FormSupport.getIndexes(
-				data.source.parentElement.parentElement
+				source.parentElement.parentElement
 			);
-			const targetIndex = FormSupport.getIndexes(data.target.parentElement);
+			const targetIndex = FormSupport.getIndexes(target.parentElement);
 
-			data.source.innerHTML = '';
+			source.innerHTML = '';
 
-			const targetIsEmptyRow = !data.target.parentElement.parentElement.classList.contains('position-relative');
+			const addedToPlaceholder = ![...target.parentElement.parentElement.classList].includes('position-relative');
 
 			this._handleFieldMoved(
 				{
-					data,
+					addedToPlaceholder,
 					source: sourceIndex,
-					target: targetIndex,
-					targetIsEmptyRow
+					target: targetIndex
 				}
 			);
 		}

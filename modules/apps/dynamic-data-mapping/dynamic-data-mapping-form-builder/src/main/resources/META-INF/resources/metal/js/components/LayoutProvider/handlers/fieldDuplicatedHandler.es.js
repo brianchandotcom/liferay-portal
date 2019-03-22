@@ -48,9 +48,7 @@ const handleFieldDuplicated = (state, event) => {
 	};
 	const newRowIndex = rowIndex + 1;
 
-	const newPages = FormSupport.addRow(pages, newRowIndex, pageIndex);
-
-	FormSupport.addFieldToColumn(newPages, pageIndex, newRowIndex, columnIndex, duplicatedField);
+	const newRow = FormSupport.implAddRow(12, [duplicatedField]);
 
 	return {
 		focusedField: {
@@ -59,7 +57,7 @@ const handleFieldDuplicated = (state, event) => {
 			pageIndex,
 			rowIndex: newRowIndex
 		},
-		pages: newPages
+		pages: FormSupport.addRow(pages, newRowIndex, pageIndex, newRow)
 	};
 };
 

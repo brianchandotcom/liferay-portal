@@ -215,6 +215,10 @@
 	{@param? pageIndex: number}
 
 	<div class="layout-page">
+		{for $i in range(12)}
+			<div class="ddm-resize-column" data-resize-column="{$i}" ref="resizeColumn{$i}"></div>
+		{/for}
+
 		{if $empty}
 			{let $attributes kind="attributes"}
 				class="col col-empty col-md-12 last-col lfr-initial-col mt-5 mb-4"
@@ -282,10 +286,6 @@
 	{@param? rowIndex: number}
 
 	<div class="position-relative row">
-		{for $i in range(12)}
-			<div class="ddm-resize-drop" data-col="{$i + 1}"></div>
-		{/for}
-
 		{for $column in $row.columns}
 			{delcall PageRenderer.column variant="$contentRenderer"}
 				{param _handleDeleteButtonClicked: $_handleDeleteButtonClicked /}
@@ -391,7 +391,7 @@
 			{/let}
 
 			{if $editable}
-				<div class="ddm-field-container">
+				<div class="ddm-field-container h-100">
 					<div class="ddm-resize-handle ddm-resize-handle-left" data-onclick="{$_handleOnClickResize}" {$indexes}></div>
 
 					{let $attributesDrag kind="attributes"}

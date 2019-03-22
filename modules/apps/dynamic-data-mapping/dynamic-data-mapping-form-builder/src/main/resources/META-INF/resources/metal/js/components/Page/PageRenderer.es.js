@@ -4,11 +4,12 @@ import 'clay-modal';
 import * as FormSupport from '../Form/FormSupport.es';
 import Component from 'metal-component';
 import core from 'metal';
+import Position from 'metal-position';
 import Soy from 'metal-soy';
 import templates from './PageRenderer.soy.js';
 import {Config} from 'metal-state';
 import {dom} from 'metal-dom';
-import {DragDrop} from 'metal-drag-drop';
+import {Drag} from 'metal-drag-drop';
 import {pageStructure} from '../../util/config.es';
 import {sub} from '../../util/strings.es';
 
@@ -147,28 +148,62 @@ class PageRenderer extends Component {
 		return nextState;
 	}
 
-	convertToPercentage(position, element) {
-		const {offsetLeft, offsetWidth} = element;
-		const calculatedPosition = offsetLeft - position;
-
-		return calculatedPosition / offsetWidth;
-	}
-
 	_bindLayoutBuilder() {
-		this._dragAndDrop = new DragDrop(
+		this._dragAndDrop = new Drag(
 			{
 				axis: 'x',
 				sources: '.ddm-resize-handle',
-				targets: '.ddm-resize-drop',
 				useShim: true
 			}
 		);
 
-		this._dragAndDrop.on(DragDrop.Events.TARGET_ENTER, this._handleDropOver.bind(this));
+		this._dragAndDrop.on(Drag.Events.START, this._handleDragStartEvent.bind(this));
+		this._dragAndDrop.on(Drag.Events.DRAG, this._handleDragEvent.bind(this));
 	}
 
-	_handleDropOver(event) {
-		this.emit('columnResized', event);
+	_handleDragStartEvent() {
+		this._lastResizeColumn = -1;
+	}
+
+	_handleDragEvent(event) {
+		const columnNodes = Object.keys(this.refs)
+			.filter(key => key.indexOf('resizeColumn') === 0)
+			.map(key => this.refs[key]);
+		const {source, x} = event;
+
+		let distance = Infinity;
+		let nearest;
+
+		columnNodes.forEach(
+			node => {
+				const region = Position.getRegion(node);
+
+				const currentDistance = Math.abs(x - region.left);
+
+				if (currentDistance < distance) {
+					distance = currentDistance;
+					nearest = node;
+				}
+			}
+		);
+
+		if (nearest) {
+			const column = Number(nearest.dataset.resizeColumn);
+			const direction = source.classList.contains('ddm-resize-handle-left') ? 'left' : 'right';
+
+			if (this._lastResizeColumn !== column) {
+				this._lastResizeColumn = column;
+
+				this.emit(
+					'columnResized',
+					{
+						column,
+						direction,
+						source
+					}
+				);
+			}
+		}
 	}
 
 	/**

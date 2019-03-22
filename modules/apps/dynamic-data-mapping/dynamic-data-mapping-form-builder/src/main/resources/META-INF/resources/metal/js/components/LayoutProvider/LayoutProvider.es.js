@@ -6,6 +6,7 @@ import {pageStructure, ruleStructure} from '../../util/config.es';
 import {PagesVisitor} from '../../util/visitors.es';
 import {setLocalizedValue} from '../../util/i18n.es';
 
+import handleColumnResized from './handlers/columnResizedHandler.es';
 import handleFieldAdded from './handlers/fieldAddedHandler.es';
 import handleFieldBlurred from './handlers/fieldBlurredHandler.es';
 import handleFieldDeleted from './handlers/fieldDeletedHandler.es';
@@ -130,101 +131,8 @@ class LayoutProvider extends Component {
 
 		rules: Config.arrayOf(ruleStructure).valueFn('_rulesValueFn'),
 
-		successPageSettings: Config.object().valueFn('_successPageSettingsValueFn'),
-
-		lastResizedPosition: Config.number()
+		successPageSettings: Config.object().valueFn('_successPageSettingsValueFn')
 	};
-
-	_formatCurrentColumn({pageIndex, rowIndex, columnIndex}, size) {
-		const {pages} = this.state;
-
-		let newPages = [
-			...pages
-		];
-
-		const currentColumn = FormSupport.getColumn(pages, pageIndex, rowIndex, columnIndex);
-		const currentPosition = FormSupport.getColumnPosition(pages, pageIndex, rowIndex, columnIndex);
-		const newSize = Math.abs(currentPosition - size);
-		const nextColumn = FormSupport.getColumn(newPages, pageIndex, rowIndex, columnIndex + 1);
-
-		if (nextColumn) {
-			if ((currentPosition >= size) && (currentColumn.size != 1)) {
-				currentColumn.size -= newSize;
-				nextColumn.size += newSize;
-			}
-			else if ((nextColumn.size == 1) && (nextColumn.fields.length == 0)) {
-				currentColumn.size += newSize;
-				newPages[pageIndex].rows[rowIndex].columns.splice(columnIndex + 1, 1);
-			}
-			else if (nextColumn.size != 1) {
-				currentColumn.size += newSize;
-				nextColumn.size -= newSize;
-			}
-		}
-
-		else if ((currentColumn.size != 1) && size < 12) {
-			currentColumn.size -= 1;
-			newPages = FormSupport.addColumnToLastPosition(newPages, pageIndex, rowIndex);
-		}
-
-		return newPages;
-	}
-
-	_formatPreviousColumn(source, {pageIndex, rowIndex, columnIndex}, size) {
-		const {pages} = this.state;
-
-		let newPages = [
-			...pages
-		];
-
-		const numberOfColumns = pages[Number(pageIndex)].rows[Number(rowIndex)].columns.length;
-
-		if (columnIndex > numberOfColumns - 1) {
-			columnIndex--;
-		}
-
-		const currentColumn = FormSupport.getColumn(pages, pageIndex, rowIndex, columnIndex);
-		const previousColumn = FormSupport.getColumn(newPages, pageIndex, rowIndex, columnIndex - 1);
-		const previousColumnPosition = FormSupport.getColumnPosition(pages, pageIndex, rowIndex, columnIndex - 1);
-
-		const newSize = Math.abs(previousColumnPosition - size);
-
-		if (previousColumn && previousColumn.size == 1 && previousColumn.fields.length == 0 && (previousColumnPosition >= size)) {
-			newPages[pageIndex].rows[rowIndex].columns.splice(columnIndex - 1, 1);
-			currentColumn.size += 1;
-		}
-
-		else {
-			if (previousColumnPosition >= size && previousColumn.size != 1) {
-				currentColumn.size += newSize;
-				previousColumn.size -= newSize;
-			}
-			else if (previousColumn && currentColumn.size != 1 && previousColumn.size != 1) {
-				currentColumn.size -= newSize;
-				previousColumn.size += newSize;
-			}
-			else if (previousColumn && previousColumnPosition < size && previousColumn.size == 1 && currentColumn.size != 1) {
-				currentColumn.size -= newSize;
-				previousColumn.size += newSize;
-			}
-			if (!previousColumn && columnIndex == 0 && currentColumn.size != 1 && size < 12) {
-				source.setAttribute('data-ddm-field-column', 1);
-				currentColumn.size -= 1;
-				newPages = FormSupport.addColumn(
-					newPages,
-					0,
-					pageIndex,
-					rowIndex,
-					{
-						fields: [],
-						size: 1
-					}
-				);
-			}
-		}
-
-		return newPages;
-	}
 
 	_handleActivePageUpdated(activePage) {
 		this.setState(
@@ -234,32 +142,10 @@ class LayoutProvider extends Component {
 		);
 	}
 
-	_handleColumnResized({source, sourceIndexes, leftResize, targetDatasetCol}) {
-		const {pageIndex, rowIndex} = sourceIndexes;
-		const size = Number(targetDatasetCol);
+	_handleColumnResized({column, direction, source}) {
+		const {state} = this;
 
-		let newPages;
-
-		if (leftResize) {
-			newPages = this._formatPreviousColumn(source, sourceIndexes, size);
-		}
-		else {
-			newPages = this._formatCurrentColumn(sourceIndexes, size);
-			if (newPages[pageIndex].rows[rowIndex].columns.length > 1) {
-				newPages = this._removeColumnWithSizeZero(newPages, pageIndex, rowIndex);
-			}
-		}
-
-		newPages[pageIndex].rows = FormSupport.removeEmptyRows(newPages, pageIndex);
-
-		this.setState(
-			{
-				lastResizedPosition: size,
-				pages: [
-					...newPages
-				]
-			}
-		);
+		this.setState(handleColumnResized(state, source, column, direction));
 	}
 
 	/**
@@ -343,11 +229,9 @@ class LayoutProvider extends Component {
 	 * @private
 	 */
 
-	_handleFieldMoved({targetIsEmptyRow, target, source}) {
+	_handleFieldMoved({addedToPlaceholder, target, source}) {
 		let {pages} = this.state;
 		const {columnIndex, pageIndex, rowIndex} = source;
-		const targetColumnIndex = target.columnIndex;
-		const targetRowIndex = target.rowIndex;
 
 		const column = FormSupport.getColumn(
 			pages,
@@ -365,14 +249,14 @@ class LayoutProvider extends Component {
 			columnIndex
 		);
 
-		if (targetRowIndex > pages[Number(pageIndex)].rows.length - 1) {
+		if (target.rowIndex > pages[pageIndex].rows.length - 1) {
 			pages = FormSupport.addRow(pages, target.rowIndex, target.pageIndex, newRow);
 		}
-		else if (targetIsEmptyRow) {
+		else if (addedToPlaceholder) {
 			pages = FormSupport.addRow(pages, target.rowIndex, target.pageIndex, newRow);
 		}
 		else {
-			pages = FormSupport.addFieldToColumn(pages, target.pageIndex, targetRowIndex, targetColumnIndex, fields);
+			pages = FormSupport.addFieldToColumn(pages, target.pageIndex, target.rowIndex, target.columnIndex, fields[0]);
 		}
 
 		pages[pageIndex].rows = FormSupport.removeEmptyRows(pages, pageIndex);
@@ -541,38 +425,6 @@ class LayoutProvider extends Component {
 
 	_paginationModeValueFn() {
 		return this.props.initialPaginationMode;
-	}
-
-	_resizeNextColumn(nextColumn, currentPosition, size, newSize) {
-		if (nextColumn && currentPosition >= size) {
-			nextColumn.size += newSize;
-		}
-		else if (nextColumn) {
-			nextColumn.size -= newSize;
-		}
-	}
-
-	_resizePreviousColumn(previousColumn, previousColumnPosition, size, newSize) {
-		if (previousColumn && previousColumnPosition >= size) {
-			previousColumn.size -= newSize;
-		}
-		else if (previousColumn) {
-			previousColumn.size += newSize;
-		}
-	}
-
-	/**
-	 * @param {!Object} data
-	 * @private
-	 */
-
-	_removeColumnWithSizeZero(newPages, pageIndex, rowIndex) {
-		const columnsArray = newPages[pageIndex].rows[rowIndex].columns;
-
-		if (columnsArray.some(e => e.size == 0)) {
-			delete columnsArray.pop();
-		}
-		return newPages;
 	}
 
 	_rulesValueFn() {

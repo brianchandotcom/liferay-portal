@@ -2,7 +2,7 @@ import * as FormSupport from '../../Form/FormSupport.es';
 import {generateInstanceId} from '../../../util/fieldSupport.es';
 
 const handleFieldAdded = (props, state, event) => {
-	const {focusedField, target, targetIsEmptyRow} = event;
+	const {addedToPlaceholder, focusedField, target} = event;
 	const {fieldName, name, settingsContext} = focusedField;
 	const {pageIndex, rowIndex} = target;
 	const {editingLanguageId, spritemap} = props;
@@ -19,10 +19,8 @@ const handleFieldAdded = (props, state, event) => {
 		type: name
 	};
 
-	if (FormSupport.rowHasFields(pages, pageIndex, rowIndex)) {
-		if (targetIsEmptyRow) {
-			pages = FormSupport.addRow(pages, rowIndex, pageIndex);
-		}
+	if (addedToPlaceholder) {
+		pages = FormSupport.addRow(pages, rowIndex, pageIndex);
 
 		columnIndex = 0;
 	}

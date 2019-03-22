@@ -611,7 +611,7 @@ describe(
 				expect(spy).toHaveBeenCalledWith(
 					'fieldMoved',
 					{
-						data: mockEvent,
+						addedToPlaceholder: true,
 						source: {
 							columnIndex: 1,
 							pageIndex: 0,
@@ -621,8 +621,7 @@ describe(
 							columnIndex: 0,
 							pageIndex: 0,
 							rowIndex: 0
-						},
-						targetIsEmptyRow: true
+						}
 					}
 				);
 			}

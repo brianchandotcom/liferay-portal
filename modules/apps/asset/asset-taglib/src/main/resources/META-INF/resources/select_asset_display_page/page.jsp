@@ -55,16 +55,20 @@
 		String specificAssetDisplayPageName = selectAssetDisplayPageDisplayContext.getSpecificAssetDisplayPageName();
 		%>
 
-		<input class="field form-control lfr-input-text" id="<portlet:namespace />specificDisplayPageNameInput" readonly="readonly" title="<%= LanguageUtil.get(resourceBundle, "specific-display-page") %>" type="text" value="<%= Validator.isNotNull(specificAssetDisplayPageName) ? specificAssetDisplayPageName : LanguageUtil.get(resourceBundle, "no-display-page-selected") %>" />
+		<div class="input-group-item">
+			<input class="field form-control lfr-input-text" id="<portlet:namespace />specificDisplayPageNameInput" readonly="readonly" title="<%= LanguageUtil.get(resourceBundle, "specific-display-page") %>" type="text" value="<%= Validator.isNotNull(specificAssetDisplayPageName) ? specificAssetDisplayPageName : LanguageUtil.get(resourceBundle, "no-display-page-selected") %>" />
+		</div>
 
 		<c:if test="<%= selectAssetDisplayPageDisplayContext.isAssetDisplayPageTypeSpecific() && selectAssetDisplayPageDisplayContext.isShowViewInContextLink() && selectAssetDisplayPageDisplayContext.isURLViewInContext() %>">
-			<clay:button
-				elementClasses="ml-2"
-				icon="view"
-				id='<%= liferayPortletResponse.getNamespace() + "previewSpecificDisplayPageButton" %>'
-				monospaced="<%= true %>"
-				style="secondary"
-			/>
+			<div class="input-group-item input-group-item-shrink">
+				<clay:button
+					elementClasses="ml-2"
+					icon="view"
+					id='<%= liferayPortletResponse.getNamespace() + "previewSpecificDisplayPageButton" %>'
+					monospaced="<%= true %>"
+					style="secondary"
+				/>
+			</div>
 		</c:if>
 	</div>
 

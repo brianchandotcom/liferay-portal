@@ -194,6 +194,21 @@ public abstract class BaseAssetRenderer<T> implements AssetRenderer<T> {
 			PortletURL redirectURL)
 		throws Exception {
 
+		String redirect = null;
+
+		if (redirectURL != null) {
+			redirect = redirectURL.toString();
+		}
+
+		return getURLEdit(request, windowState, redirect);
+	}
+
+	@Override
+	public PortletURL getURLEdit(
+			HttpServletRequest request, WindowState windowState,
+			String redirect)
+		throws Exception {
+
 		LiferayPortletURL editPortletURL = (LiferayPortletURL)getURLEdit(
 			request);
 
@@ -201,7 +216,7 @@ public abstract class BaseAssetRenderer<T> implements AssetRenderer<T> {
 			return null;
 		}
 
-		return _getURLEdit(editPortletURL, request, windowState, redirectURL);
+		return _getURLEdit(editPortletURL, request, windowState, redirect);
 	}
 
 	@Override
@@ -220,6 +235,24 @@ public abstract class BaseAssetRenderer<T> implements AssetRenderer<T> {
 			WindowState windowState, PortletURL redirectURL)
 		throws Exception {
 
+		String redirect = null;
+
+		if (redirectURL != null) {
+			redirect = redirectURL.toString();
+		}
+
+		return getURLEdit(
+			liferayPortletRequest, liferayPortletResponse, windowState,
+			redirect);
+	}
+
+	@Override
+	public PortletURL getURLEdit(
+			LiferayPortletRequest liferayPortletRequest,
+			LiferayPortletResponse liferayPortletResponse,
+			WindowState windowState, String redirect)
+		throws Exception {
+
 		LiferayPortletURL editPortletURL = (LiferayPortletURL)getURLEdit(
 			liferayPortletRequest, liferayPortletResponse);
 
@@ -230,7 +263,7 @@ public abstract class BaseAssetRenderer<T> implements AssetRenderer<T> {
 		HttpServletRequest request = PortalUtil.getHttpServletRequest(
 			liferayPortletRequest);
 
-		return _getURLEdit(editPortletURL, request, windowState, redirectURL);
+		return _getURLEdit(editPortletURL, request, windowState, redirect);
 	}
 
 	@Override
@@ -416,7 +449,7 @@ public abstract class BaseAssetRenderer<T> implements AssetRenderer<T> {
 
 	private PortletURL _getURLEdit(
 			LiferayPortletURL editPortletURL, HttpServletRequest request,
-			WindowState windowState, PortletURL redirectURL)
+			WindowState windowState, String redirect)
 		throws Exception {
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
@@ -434,8 +467,8 @@ public abstract class BaseAssetRenderer<T> implements AssetRenderer<T> {
 			return null;
 		}
 
-		if (redirectURL != null) {
-			editPortletURL.setParameter("redirect", redirectURL.toString());
+		if (Validator.isNotNull(redirect)) {
+			editPortletURL.setParameter("redirect", redirect);
 		}
 
 		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();

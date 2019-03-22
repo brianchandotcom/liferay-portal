@@ -138,6 +138,14 @@ public interface AssetRenderer<T> extends Renderer {
 		return null;
 	}
 
+	public default PortletURL getURLEdit(
+			HttpServletRequest request, WindowState windowState,
+			String redirect)
+		throws Exception {
+
+		return null;
+	}
+
 	public PortletURL getURLEdit(
 			LiferayPortletRequest liferayPortletRequest,
 			LiferayPortletResponse liferayPortletResponse)
@@ -148,6 +156,15 @@ public interface AssetRenderer<T> extends Renderer {
 			LiferayPortletResponse liferayPortletResponse,
 			WindowState windowState, PortletURL redirectURL)
 		throws Exception;
+
+	public default PortletURL getURLEdit(
+			LiferayPortletRequest liferayPortletRequest,
+			LiferayPortletResponse liferayPortletResponse,
+			WindowState windowState, String redirect)
+		throws Exception {
+
+		return null;
+	}
 
 	public PortletURL getURLExport(
 			LiferayPortletRequest liferayPortletRequest,

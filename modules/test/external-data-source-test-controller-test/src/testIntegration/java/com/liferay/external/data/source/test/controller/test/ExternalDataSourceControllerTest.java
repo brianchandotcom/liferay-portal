@@ -18,11 +18,14 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.db.DBType;
+import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayInputStream;
+import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayOutputStream;
 import com.liferay.portal.kernel.io.unsync.UnsyncPrintWriter;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringWriter;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.AssumeTestRule;
 import com.liferay.portal.kernel.util.FileUtil;
+import com.liferay.portal.kernel.util.StreamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.util.PropsUtil;
@@ -37,6 +40,12 @@ import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
+import java.util.jar.JarEntry;
+import java.util.jar.JarFile;
+import java.util.jar.JarInputStream;
+import java.util.jar.JarOutputStream;
+import java.util.jar.Manifest;
+import java.util.zip.ZipEntry;
 
 import org.hsqldb.jdbc.JDBCDriver;
 
@@ -88,8 +97,7 @@ public class ExternalDataSourceControllerTest {
 
 		_apiBundle = _installBundle(
 			"/com.liferay.external.data.source.test.api.jar");
-		_serviceBundle = _installBundle(
-			"/com.liferay.external.data.source.test.service.jar");
+		_serviceBundle = _installServiceBundle();
 
 		DB db = DBManagerUtil.getDB(DBType.HYPERSONIC, null);
 
@@ -146,6 +154,58 @@ public class ExternalDataSourceControllerTest {
 		}
 	}
 
+	protected String getExtSpringDestination() {
+		return "META-INF/spring/ext-spring.xml";
+	}
+
+	private byte[] _getServiceJarBytes(String path) throws Exception {
+		UnsyncByteArrayOutputStream unsyncByteArrayOutputStream =
+			new UnsyncByteArrayOutputStream();
+
+		try (InputStream is =
+				ExternalDataSourceControllerTest.class.getResourceAsStream(
+					path);
+			JarInputStream jarInputStream = new JarInputStream(is);
+			JarOutputStream jarOutputStream = new JarOutputStream(
+				unsyncByteArrayOutputStream)) {
+
+			Manifest manifest = jarInputStream.getManifest();
+
+			jarOutputStream.putNextEntry(new ZipEntry(JarFile.MANIFEST_NAME));
+
+			manifest.write(jarOutputStream);
+
+			jarOutputStream.closeEntry();
+
+			JarEntry jarEntry = null;
+
+			while ((jarEntry = jarInputStream.getNextJarEntry()) != null) {
+				jarOutputStream.putNextEntry(jarEntry);
+
+				StreamUtil.transfer(
+					jarInputStream, jarOutputStream, StreamUtil.BUFFER_SIZE,
+					false, jarEntry.getSize());
+
+				jarOutputStream.closeEntry();
+			}
+
+			try (InputStream extSpringInputSteam =
+					ExternalDataSourceControllerTest.class.getResourceAsStream(
+						"/META-INF/spring/ext-spring.xml")) {
+
+				jarOutputStream.putNextEntry(
+					new JarEntry(getExtSpringDestination()));
+
+				StreamUtil.transfer(
+					extSpringInputSteam, jarOutputStream, false);
+
+				jarOutputStream.closeEntry();
+			}
+		}
+
+		return unsyncByteArrayOutputStream.toByteArray();
+	}
+
 	private Bundle _installBundle(String path) throws Exception {
 		try (InputStream is =
 				ExternalDataSourceControllerTest.class.getResourceAsStream(
@@ -153,6 +213,13 @@ public class ExternalDataSourceControllerTest {
 
 			return _bundleContext.installBundle(path, is);
 		}
+	}
+
+	private Bundle _installServiceBundle() throws Exception {
+		String path = "/com.liferay.external.data.source.test.service.jar";
+
+		return _bundleContext.installBundle(
+			path, new UnsyncByteArrayInputStream(_getServiceJarBytes(path)));
 	}
 
 	private static final String _EXTERNAL_DATABASE_NAME = "external";

@@ -23,8 +23,8 @@ import java.util.Locale;
  */
 public interface MFAChecker {
 
-	public default <T> T accept(MFACheckerVisitor<T> visitor) {
-		return visitor.visit(this);
+	public default <T> T accept(MFACheckerVisitor<T> mfaCheckerVisitor) {
+		return mfaCheckerVisitor.visit(this);
 	}
 
 	public default String getLabel(Locale locale) {

@@ -23,10 +23,10 @@ import com.liferay.multi.factor.authentication.spi.checker.composite.OptionalCom
  */
 public interface MFACheckerVisitor<T> {
 
-	public T visit(MandatoryCompositeMFAChecker mandatoryMFAChecker);
+	public T visit(MandatoryCompositeMFAChecker mandatoryCompositeMFAChecker);
 
 	public T visit(MFAChecker mfaChecker);
 
-	public T visit(OptionalCompositeMFAChecker optionalMFAChecker);
+	public T visit(OptionalCompositeMFAChecker optionalCompositeMFAChecker);
 
 }

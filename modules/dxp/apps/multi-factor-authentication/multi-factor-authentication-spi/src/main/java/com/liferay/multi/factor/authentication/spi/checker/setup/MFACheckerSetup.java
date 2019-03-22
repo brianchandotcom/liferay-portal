@@ -25,8 +25,8 @@ import javax.servlet.http.HttpServletResponse;
 public interface MFACheckerSetup {
 
 	public void includeSetup(
-			HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse,
-			long userId)
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse, long userId)
 		throws IOException;
 
 	public boolean isForceUserSetup(long userId);

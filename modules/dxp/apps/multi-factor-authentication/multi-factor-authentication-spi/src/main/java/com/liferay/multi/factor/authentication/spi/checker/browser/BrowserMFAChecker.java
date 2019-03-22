@@ -25,13 +25,15 @@ import javax.servlet.http.HttpServletResponse;
 public interface BrowserMFAChecker {
 
 	public void includeBrowserVerification(
-			HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse,
-			long userId)
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse, long userId)
 		throws IOException;
 
-	public boolean isBrowserVerified(HttpServletRequest httpServletRequest, long userId);
+	public boolean isBrowserVerified(
+		HttpServletRequest httpServletRequest, long userId);
 
 	public boolean verifyBrowserRequest(
-		HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, long userId);
+		HttpServletRequest httpServletRequest,
+		HttpServletResponse httpServletResponse, long userId);
 
 }

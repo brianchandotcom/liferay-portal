@@ -63,7 +63,7 @@ JournalEditArticleDisplayContext journalEditArticleDisplayContext = new JournalE
 					DDMStructure ddmStructure = journalEditArticleDisplayContext.getDDMStructure();
 					%>
 
-					<aui:input autoFocus="<%= true %>" cssClass="form-control-inline" label="" localized="<%= true %>" name="titleMapAsXML" placeholder='<%= LanguageUtil.format(request, "untitled-x", HtmlUtil.escape(ddmStructure.getName(locale))) %>' type="text" wrapperCssClass="article-content-title mb-0" />
+					<aui:input cssClass="form-control-inline" label="" localized="<%= true %>" name="titleMapAsXML" placeholder='<%= LanguageUtil.format(request, "untitled-x", HtmlUtil.escape(ddmStructure.getName(locale))) %>' type="text" wrapperCssClass="article-content-title mb-0" />
 				</li>
 
 				<c:if test="<%= journalWebConfiguration.changeableDefaultLanguage() %>">

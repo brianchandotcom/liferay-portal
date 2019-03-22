@@ -34,6 +34,8 @@ import com.liferay.layout.page.template.model.LayoutPageTemplateCollection;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateCollectionLocalService;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
+import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalService;
+import com.liferay.layout.util.LayoutCopyHelper;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -61,6 +63,7 @@ import com.liferay.portal.kernel.service.PortletPreferencesLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ThemeLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.transaction.TransactionCommitCallbackUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -164,6 +167,13 @@ public class WesterosBankSiteInitializer implements SiteInitializer {
 				personalLayoutPageTemplate.getLayoutPageTemplateEntryId(),
 				serviceContext);
 
+			TransactionCommitCallbackUtil.registerCallback(
+				() -> {
+					_copyFromDraft(personalLayout);
+
+					return null;
+				});
+
 			FragmentEntry carouselFragmentEntry = fragmentEntriesMap.get(
 				"carousel");
 
@@ -211,6 +221,13 @@ public class WesterosBankSiteInitializer implements SiteInitializer {
 				"For Your Business",
 				businessLayoutPageTemplate.getLayoutPageTemplateEntryId(),
 				serviceContext);
+
+			TransactionCommitCallbackUtil.registerCallback(
+				() -> {
+					_copyFromDraft(businessLayout);
+
+					return null;
+				});
 
 			_addLayouts(
 				businessLayout, _LAYOUT_NAMES_CHILDREN_BUSINESS,
@@ -529,6 +546,15 @@ public class WesterosBankSiteInitializer implements SiteInitializer {
 		}
 	}
 
+	private void _copyFromDraft(Layout layout) throws Exception {
+		Layout draftLayout = _layoutLocalService.fetchLayout(
+			_portal.getClassNameId(Layout.class), layout.getPlid());
+
+		if (draftLayout != null) {
+			_layoutCopyHelper.copyLayout(draftLayout, layout);
+		}
+	}
+
 	private ServiceContext _createServiceContext(long groupId)
 		throws PortalException {
 
@@ -709,6 +735,9 @@ public class WesterosBankSiteInitializer implements SiteInitializer {
 	private JournalArticleLocalService _journalArticleLocalService;
 
 	@Reference
+	private LayoutCopyHelper _layoutCopyHelper;
+
+	@Reference
 	private LayoutLocalService _layoutLocalService;
 
 	@Reference
@@ -718,6 +747,10 @@ public class WesterosBankSiteInitializer implements SiteInitializer {
 	@Reference
 	private LayoutPageTemplateEntryLocalService
 		_layoutPageTemplateEntryLocalService;
+
+	@Reference
+	private LayoutPageTemplateStructureLocalService
+		_layoutPageTemplateStructureLocalService;
 
 	@Reference
 	private LayoutSetLocalService _layoutSetLocalService;

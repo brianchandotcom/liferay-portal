@@ -26,12 +26,14 @@ import com.liferay.layout.page.template.model.LayoutPageTemplateCollection;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateCollectionLocalService;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
+import com.liferay.layout.util.LayoutCopyHelper;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.Repository;
 import com.liferay.portal.kernel.model.Theme;
@@ -44,12 +46,13 @@ import com.liferay.portal.kernel.service.LayoutSetLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ThemeLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.transaction.TransactionCommitCallbackUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MimeTypesUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.site.exception.InitializationException;
 import com.liferay.site.initializer.SiteInitializer;
@@ -280,19 +283,20 @@ public class FjordSiteInitializer implements SiteInitializer {
 
 		nameMap.put(LocaleUtil.getSiteDefault(), name);
 
-		UnicodeProperties typeSettingsProperties = new UnicodeProperties();
-
-		typeSettingsProperties.put(
-			"layoutPageTemplateEntryId",
-			String.valueOf(
-				layoutPageTemplateEntry.getLayoutPageTemplateEntryId()));
-
-		_layoutLocalService.addLayout(
+		Layout layout = _layoutLocalService.addLayout(
 			serviceContext.getUserId(), serviceContext.getScopeGroupId(), false,
-			LayoutConstants.DEFAULT_PARENT_LAYOUT_ID, nameMap, new HashMap<>(),
-			new HashMap<>(), new HashMap<>(), new HashMap<>(), "content",
-			typeSettingsProperties.toString(), false, new HashMap<>(),
-			serviceContext);
+			LayoutConstants.DEFAULT_PARENT_LAYOUT_ID,
+			_portal.getClassNameId(LayoutPageTemplateEntry.class),
+			layoutPageTemplateEntry.getLayoutPageTemplateEntryId(), nameMap,
+			new HashMap<>(), new HashMap<>(), new HashMap<>(), new HashMap<>(),
+			"content", null, false, false, new HashMap<>(), serviceContext);
+
+		TransactionCommitCallbackUtil.registerCallback(
+			() -> {
+				_copyFromDraft(layout);
+
+				return null;
+			});
 	}
 
 	private LayoutPageTemplateCollection _addLayoutPageTemplateCollection(
@@ -327,6 +331,15 @@ public class FjordSiteInitializer implements SiteInitializer {
 			updateLayoutPageTemplateEntry(
 				layoutPageTemplateEntry.getLayoutPageTemplateEntryId(),
 				previewFileEntryId);
+	}
+
+	private void _copyFromDraft(Layout layout) throws Exception {
+		Layout draftLayout = _layoutLocalService.fetchLayout(
+			_portal.getClassNameId(Layout.class), layout.getPlid());
+
+		if (draftLayout != null) {
+			_layoutCopyHelper.copyLayout(draftLayout, layout);
+		}
 	}
 
 	private ServiceContext _createServiceContext(long groupId)
@@ -446,6 +459,9 @@ public class FjordSiteInitializer implements SiteInitializer {
 	private FragmentEntryLocalService _fragmentEntryLocalService;
 
 	@Reference
+	private LayoutCopyHelper _layoutCopyHelper;
+
+	@Reference
 	private LayoutLocalService _layoutLocalService;
 
 	@Reference
@@ -458,6 +474,9 @@ public class FjordSiteInitializer implements SiteInitializer {
 
 	@Reference
 	private LayoutSetLocalService _layoutSetLocalService;
+
+	@Reference
+	private Portal _portal;
 
 	@Reference(
 		target = "(osgi.web.symbolicname=com.liferay.frontend.theme.fjord.site.initializer)"

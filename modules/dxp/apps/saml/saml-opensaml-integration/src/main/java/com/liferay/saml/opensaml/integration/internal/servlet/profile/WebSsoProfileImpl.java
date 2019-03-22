@@ -1456,7 +1456,7 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 				StringBundler.concat(
 					"Encryption is forced for ",
 					samlPeerEntityContext.getEntityId(),
-					" but no encryption parameters have been successfully ",
+					", but no encryption parameters have been successfully ",
 					"negotiated"));
 		}
 		else {

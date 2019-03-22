@@ -184,6 +184,7 @@ public class SharedAssetsViewDisplayContext {
 
 		menu.setDirection("left-side");
 		menu.setMarkupView("lexicon");
+		menu.setTriggerCssClass("component-action");
 
 		List<MenuItem> menuItems = new ArrayList<>(2);
 

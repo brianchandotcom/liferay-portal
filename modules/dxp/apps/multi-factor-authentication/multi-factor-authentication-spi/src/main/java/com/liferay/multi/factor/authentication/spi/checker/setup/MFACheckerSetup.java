@@ -33,6 +33,6 @@ public interface MFACheckerSetup {
 
 	public boolean isUserSetupComplete(long userId);
 
-	public boolean setup(HttpServletRequest httpServletRequest, long userId);
+	public boolean setUp(HttpServletRequest httpServletRequest, long userId);
 
 }

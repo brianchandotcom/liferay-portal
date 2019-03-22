@@ -1,4 +1,4 @@
-import {ADD_SECTION, MOVE_SECTION, REMOVE_SECTION, UPDATE_SECTION_COLUMNS, UPDATE_SECTION_CONFIG} from '../actions/actions.es';
+import {ADD_SECTION, MOVE_SECTION, REMOVE_SECTION, UPDATE_SECTION_COLUMNS_NUMBER, UPDATE_SECTION_CONFIG} from '../actions/actions.es';
 import {MAX_SECTION_COLUMNS} from '../utils/constants';
 import {add, remove, setIn, updateIn, updateLayoutData, updateWidgets} from '../utils/FragmentsEditorUpdateUtils.es';
 import {getDropSectionPosition, getSectionFragmentEntryLinkIds, getSectionIndex} from '../utils/FragmentsEditorGetUtils.es';
@@ -185,12 +185,12 @@ function removeSectionReducer(state, actionType, payload) {
  * @return {object}
  * @review
  */
-function updateSectionColumnsReducer(state, actionType, payload) {
+function updateSectionColumnsNumberReducer(state, actionType, payload) {
 	let nextState = state;
 
 	return new Promise(
 		resolve => {
-			if (actionType === UPDATE_SECTION_COLUMNS) {
+			if (actionType === UPDATE_SECTION_COLUMNS_NUMBER) {
 
 				let fragmentEntryLinkIdsToRemove = [];
 				let nextData;
@@ -518,6 +518,6 @@ export {
 	addSectionReducer,
 	moveSectionReducer,
 	removeSectionReducer,
-	updateSectionColumnsReducer,
+	updateSectionColumnsNumberReducer,
 	updateSectionConfigReducer
 };

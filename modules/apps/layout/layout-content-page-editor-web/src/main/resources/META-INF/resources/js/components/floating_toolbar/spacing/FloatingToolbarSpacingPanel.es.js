@@ -6,7 +6,7 @@ import './FloatingToolbarSpacingPanelDelegateTemplate.soy';
 import {CONTAINER_TYPES, ITEM_CONFIG_KEYS, NUMBER_OF_COLUMNS_OPTIONS, PADDING_OPTIONS} from '../../../utils/constants';
 import {setIn} from '../../../utils/FragmentsEditorUpdateUtils.es';
 import templates from './FloatingToolbarSpacingPanel.soy';
-import {UPDATE_LAST_SAVE_DATE, UPDATE_SAVING_CHANGES_STATUS, UPDATE_SECTION_COLUMNS, UPDATE_SECTION_CONFIG, UPDATE_TRANSLATION_STATUS} from '../../../actions/actions.es';
+import {UPDATE_LAST_SAVE_DATE, UPDATE_SAVING_CHANGES_STATUS, UPDATE_SECTION_COLUMNS_NUMBER, UPDATE_SECTION_CONFIG, UPDATE_TRANSLATION_STATUS} from '../../../actions/actions.es';
 import getConnectedComponent from '../../../store/ConnectedComponent.es';
 
 /**
@@ -137,7 +137,7 @@ class FloatingToolbarSpacingPanel extends Component {
 
 		if (updateSectionColumns) {
 			this._updateSection(
-				UPDATE_SECTION_COLUMNS,
+				UPDATE_SECTION_COLUMNS_NUMBER,
 				{
 					numberOfColumns: event.delegateTarget.value,
 					sectionId: this.itemId

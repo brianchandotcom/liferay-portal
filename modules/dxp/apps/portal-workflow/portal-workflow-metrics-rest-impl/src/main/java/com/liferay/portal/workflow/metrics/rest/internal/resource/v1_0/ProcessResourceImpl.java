@@ -206,7 +206,7 @@ public class ProcessResourceImpl
 		SearchSearchRequest searchSearchRequest = new SearchSearchRequest();
 
 		TermsAggregation termsAggregation = _aggregations.terms(
-			"processIds", "processId");
+			"processId", "processIds");
 
 		termsAggregation.addChildAggregation(
 			_aggregations.cardinality("instanceCount", "instanceId"));

@@ -185,13 +185,15 @@ public class ProcessResourceImpl
 	private BooleanFilter _createSLABooleanFilter(Set<Long> processIds) {
 		return new BooleanFilter() {
 			{
-				TermsFilter termsFilter = new TermsFilter("processId");
-
-				for (long processId : processIds) {
-					termsFilter.addValue(String.valueOf(processId));
-				}
-
-				add(termsFilter, BooleanClauseOccur.MUST);
+				add(
+					new TermsFilter("processId") {
+						{
+							for (long processId : processIds) {
+								addValue(String.valueOf(processId));
+							}
+						}
+					},
+					BooleanClauseOccur.MUST);
 
 				addRequiredTerm("companyId", contextCompany.getCompanyId());
 			}

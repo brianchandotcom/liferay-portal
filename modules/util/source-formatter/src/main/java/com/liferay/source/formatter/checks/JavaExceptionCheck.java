@@ -30,12 +30,7 @@ public class JavaExceptionCheck extends BaseFileCheck {
 	protected String doProcess(
 		String fileName, String absolutePath, String content) {
 
-		content = _renameVariableNames(content);
-		content = _sortExceptions(
-			content, _throwsExceptionsPattern, StringPool.COMMA_AND_SPACE);
-		content = _sortExceptions(content, _catchExceptionsPattern, " |");
-
-		return content;
+		return _renameVariableNames(content);
 	}
 
 	private String _renameVariableNames(String content) {
@@ -98,56 +93,9 @@ public class JavaExceptionCheck extends BaseFileCheck {
 		return content;
 	}
 
-	private String _sortExceptions(
-		String content, Pattern pattern, String delimeter) {
-
-		Matcher matcher = pattern.matcher(content);
-
-		while (matcher.find()) {
-			String match = matcher.group();
-
-			String exceptions = matcher.group(1);
-
-			exceptions = StringUtil.replace(
-				exceptions, new String[] {StringPool.TAB, StringPool.NEW_LINE},
-				new String[] {StringPool.SPACE, StringPool.SPACE});
-
-			String previousException = StringPool.BLANK;
-
-			for (String exception : StringUtil.split(exceptions, delimeter)) {
-				exception = StringUtil.trim(exception);
-
-				if (Validator.isNotNull(previousException) &&
-					(previousException.compareToIgnoreCase(exception) > 0)) {
-
-					String replacement = match.replaceAll(
-						"(\\W)" + exception + "(\\W)",
-						"$1" + previousException + "$2");
-
-					replacement = replacement.replaceFirst(
-						"(\\W)" + previousException + "(\\W)",
-						"$1" + exception + "$2");
-
-					return _sortExceptions(
-						StringUtil.replace(content, match, replacement),
-						pattern, delimeter);
-				}
-
-				previousException = exception;
-			}
-		}
-
-		return content;
-	}
-
 	private static final Pattern _catchExceptionPattern = Pattern.compile(
 		"\n(\t+)catch \\((final )?(.+Exception) (.+)\\) \\{\n");
-	private static final Pattern _catchExceptionsPattern = Pattern.compile(
-		"\n\t+catch \\((?:final )?((\\w+Exception \\|\\s+)+" +
-			"(\\w+Exception\\s+))\\w+\\)");
 	private static final Pattern _lowerCaseNumberOrPeriodPattern =
 		Pattern.compile("[a-z0-9.]");
-	private static final Pattern _throwsExceptionsPattern = Pattern.compile(
-		"\\sthrows ([\\s\\w,]*)[;{]\n");
 
 }

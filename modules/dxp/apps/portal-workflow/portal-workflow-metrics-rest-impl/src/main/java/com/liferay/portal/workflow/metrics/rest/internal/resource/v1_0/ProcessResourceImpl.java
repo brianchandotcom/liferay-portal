@@ -252,6 +252,8 @@ public class ProcessResourceImpl
 			FieldSort fieldSort, Pagination pagination, SearchHits searchHits)
 		throws Exception {
 
+		List<Process> processes = new LinkedList<>();
+
 		Map<Long, Process> processesMap = new LinkedHashMap<>();
 
 		for (SearchHit searchHit : searchHits.getSearchHits()) {
@@ -263,12 +265,9 @@ public class ProcessResourceImpl
 		TermsAggregationResult instanceTermsAggregationResult =
 			_getInstanceTermsAggregationResult(
 				fieldSort, pagination, processesMap.keySet());
-
 		TermsAggregationResult slaTermsAggregationResult =
 			_getSLATermsAggregationResult(
 				fieldSort, pagination, processesMap.keySet());
-
-		List<Process> processes = new LinkedList<>();
 
 		if (_isOrderByTitle(fieldSort.getField())) {
 			for (Process process : processesMap.values()) {

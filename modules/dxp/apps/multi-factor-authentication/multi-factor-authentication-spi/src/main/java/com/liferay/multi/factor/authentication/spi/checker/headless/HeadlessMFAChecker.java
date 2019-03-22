@@ -21,9 +21,9 @@ import javax.servlet.http.HttpServletRequest;
  */
 public interface HeadlessMFAChecker {
 
-	public boolean isHeadlessVerified(HttpServletRequest request, long userId);
+	public boolean isHeadlessVerified(HttpServletRequest httpServletRequest, long userId);
 
 	public boolean verifyHeadlessRequest(
-		HttpServletRequest request, long userId);
+		HttpServletRequest httpServletRequest, long userId);
 
 }

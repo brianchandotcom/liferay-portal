@@ -25,7 +25,7 @@ import javax.servlet.http.HttpServletResponse;
 public interface MFACheckerSetup {
 
 	public void includeSetup(
-			HttpServletRequest request, HttpServletResponse response,
+			HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse,
 			long userId)
 		throws IOException;
 
@@ -33,6 +33,6 @@ public interface MFACheckerSetup {
 
 	public boolean isUserSetupComplete(long userId);
 
-	public boolean setup(HttpServletRequest request, long userId);
+	public boolean setup(HttpServletRequest httpServletRequest, long userId);
 
 }

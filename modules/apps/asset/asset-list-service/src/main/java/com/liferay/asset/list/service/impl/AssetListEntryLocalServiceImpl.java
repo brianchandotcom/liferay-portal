@@ -21,6 +21,7 @@ import com.liferay.asset.list.model.AssetListEntry;
 import com.liferay.asset.list.model.AssetListEntrySegmentsEntryRel;
 import com.liferay.asset.list.service.base.AssetListEntryLocalServiceBaseImpl;
 import com.liferay.exportimport.kernel.lar.ExportImportThreadLocal;
+import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.ResourceConstants;
@@ -28,6 +29,7 @@ import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.spring.extender.service.ServiceReference;
@@ -135,6 +137,8 @@ public class AssetListEntryLocalServiceImpl
 		assetListEntry.setCreateDate(serviceContext.getCreateDate(new Date()));
 		assetListEntry.setModifiedDate(
 			serviceContext.getModifiedDate(new Date()));
+		assetListEntry.setAssetListEntryKey(
+			_generateAssetListEntryKey(groupId, title));
 		assetListEntry.setTitle(title);
 		assetListEntry.setType(type);
 
@@ -419,6 +423,29 @@ public class AssetListEntryLocalServiceImpl
 				existingProperties.toString());
 
 		return assetListEntryPersistence.update(assetListEntry);
+	}
+
+	private String _generateAssetListEntryKey(long groupId, String title) {
+		String assetListEntryKey = StringUtil.toLowerCase(title.trim());
+
+		assetListEntryKey = StringUtil.replace(
+			assetListEntryKey, CharPool.SPACE, CharPool.DASH);
+
+		String curAssetListEntryKey = assetListEntryKey;
+
+		int count = 0;
+
+		while (true) {
+			AssetListEntry assetListEntry =
+				assetListEntryPersistence.fetchByG_ALEK(
+					groupId, curAssetListEntryKey);
+
+			if (assetListEntry == null) {
+				return curAssetListEntryKey;
+			}
+
+			curAssetListEntryKey = assetListEntryKey + CharPool.DASH + count++;
+		}
 	}
 
 	private void _validateTitle(long groupId, String title)

@@ -144,7 +144,7 @@
 </tr>
 <tr>
 	<td>CATEGORY_LIST_SUBCATEGORIES</td>
-	<td>//li[contains(.,'${key_categoryName}')]/div/span[1][contains(.,'${key_subcategoriesNumber}')]</td>
+	<td>//li[contains(.,'${key_categoryName}')]/div/span[2][contains(.,'${key_subcategoriesNumber}')]</td>
 	<td></td>
 </tr>
 <tr>

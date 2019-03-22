@@ -120,6 +120,14 @@ public class AssetListEntryServiceTest {
 	}
 
 	@Test
+	public void testAssetListEntryKey() throws PortalException {
+		AssetListEntry assetListEntry = _addAssetListEntry("Asset List Title");
+
+		Assert.assertEquals(
+			"asset-list-title", assetListEntry.getAssetListEntryKey());
+	}
+
+	@Test
 	public void testDeleteAssetListEntries() throws PortalException {
 		AssetListEntry assetListEntry1 = _addAssetListEntry(
 			"Asset List Title 1");

@@ -2279,19 +2279,21 @@ log.sanitizer.enabled=false</echo>
 
 							<antcall inheritAll="false" target="prepare-system-ext-properties" />
 
-							<get-test-batch-app-server-start-executable-arg-line />
-
 							<print-test-class-group test.class.group.index="${axis.variable}" />
 
 							<echo>Executing Gradle task in directory "modules": testIntegration.</echo>
 
+							<setup-test-batch-testable-tomcat />
+
+							<antcall target="start-app-server-preserve-liferay-home" />
+
 							<gradle-execute dir="modules" refreshdependencies="@{refreshdependencies}" task="testIntegration">
 								<arg value="--continue" />
-								<arg value="-Dapp.server.start.executable.arg.line=${test.batch.app.server.start.executable.arg.line}" />
-								<arg value="-Ddatabase.type=@{database.type}" />
 								<arg value="-Dbuild.exclude.ant.plugin=true" />
 								<arg value="-Dtest.class.group.index=${axis.variable}" />
 							</gradle-execute>
+
+							<antcall target="stop-app-server" />
 
 							<if>
 								<and>

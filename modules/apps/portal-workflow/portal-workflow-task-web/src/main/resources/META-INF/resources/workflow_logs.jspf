@@ -60,7 +60,7 @@
 									<liferay-ui:message arguments="<%= workflowTaskDisplayContext.getTaskInitiallyAssignedMessageArguments(workflowLog) %>" key="task-initially-assigned-to-the-x-role" translateArguments="<%= false %>" />
 								</c:otherwise>
 							</c:choose>
-							<%= HtmlUtil.escape(workflowLog.getComment()) %>
+							<%= HtmlUtil.escape(LanguageUtil.get(request, workflowLog.getComment())) %>
 						</div>
 					</td>
 					<td>

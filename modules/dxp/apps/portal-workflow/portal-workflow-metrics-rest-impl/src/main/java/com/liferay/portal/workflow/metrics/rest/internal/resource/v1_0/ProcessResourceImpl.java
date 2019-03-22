@@ -206,7 +206,7 @@ public class ProcessResourceImpl
 		SearchSearchRequest searchSearchRequest = new SearchSearchRequest();
 
 		TermsAggregation termsAggregation = _aggregations.terms(
-			"processId", "processIds");
+			"processId", "processId");
 
 		termsAggregation.addChildAggregation(
 			_aggregations.cardinality("instanceCount", "instanceId"));
@@ -245,7 +245,7 @@ public class ProcessResourceImpl
 		Map<String, AggregationResult> aggregationResultsMap =
 			searchSearchResponse.getAggregationResultsMap();
 
-		return (TermsAggregationResult)aggregationResultsMap.get("processIds");
+		return (TermsAggregationResult)aggregationResultsMap.get("processId");
 	}
 
 	private Collection<Process> _getProcesses(
@@ -356,7 +356,7 @@ public class ProcessResourceImpl
 		SearchSearchRequest searchSearchRequest = new SearchSearchRequest();
 
 		TermsAggregation termsAggregation = _aggregations.terms(
-			"processIds", "processId");
+			"processId", "processId");
 
 		DateRangeAggregation dateRangeAggregation = _aggregations.dateRange(
 			"overdueDate", "overdueDate");
@@ -418,7 +418,7 @@ public class ProcessResourceImpl
 		Map<String, AggregationResult> aggregationResultsMap =
 			searchSearchResponse.getAggregationResultsMap();
 
-		return (TermsAggregationResult)aggregationResultsMap.get("processIds");
+		return (TermsAggregationResult)aggregationResultsMap.get("processId");
 	}
 
 	private String _getTitleFieldName() {

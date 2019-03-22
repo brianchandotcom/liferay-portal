@@ -10,6 +10,7 @@
 		<field name="userName" type="String" />
 		<field name="createDate" type="Date" />
 		<field name="modifiedDate" type="Date" />
+		<field name="assetListEntryKey" type="String" />
 		<field name="title" type="String" />
 		<field name="type" type="int" />
 		<field name="lastPublishDate" type="Date" />

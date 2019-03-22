@@ -78,8 +78,8 @@ public class AssetListEntryModelImpl
 		{"groupId", Types.BIGINT}, {"companyId", Types.BIGINT},
 		{"userId", Types.BIGINT}, {"userName", Types.VARCHAR},
 		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
-		{"title", Types.VARCHAR}, {"type_", Types.INTEGER},
-		{"lastPublishDate", Types.TIMESTAMP}
+		{"assetListEntryKey", Types.VARCHAR}, {"title", Types.VARCHAR},
+		{"type_", Types.INTEGER}, {"lastPublishDate", Types.TIMESTAMP}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
@@ -94,13 +94,14 @@ public class AssetListEntryModelImpl
 		TABLE_COLUMNS_MAP.put("userName", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("createDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("modifiedDate", Types.TIMESTAMP);
+		TABLE_COLUMNS_MAP.put("assetListEntryKey", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("title", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("type_", Types.INTEGER);
 		TABLE_COLUMNS_MAP.put("lastPublishDate", Types.TIMESTAMP);
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table AssetListEntry (uuid_ VARCHAR(75) null,assetListEntryId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,title VARCHAR(75) null,type_ INTEGER,lastPublishDate DATE null)";
+		"create table AssetListEntry (uuid_ VARCHAR(75) null,assetListEntryId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,assetListEntryKey VARCHAR(75) null,title VARCHAR(75) null,type_ INTEGER,lastPublishDate DATE null)";
 
 	public static final String TABLE_SQL_DROP = "drop table AssetListEntry";
 
@@ -131,17 +132,19 @@ public class AssetListEntryModelImpl
 			"value.object.column.bitmask.enabled.com.liferay.asset.list.model.AssetListEntry"),
 		true);
 
-	public static final long COMPANYID_COLUMN_BITMASK = 1L;
+	public static final long ASSETLISTENTRYKEY_COLUMN_BITMASK = 1L;
 
-	public static final long GROUPID_COLUMN_BITMASK = 2L;
+	public static final long COMPANYID_COLUMN_BITMASK = 2L;
 
-	public static final long TITLE_COLUMN_BITMASK = 4L;
+	public static final long GROUPID_COLUMN_BITMASK = 4L;
 
-	public static final long TYPE_COLUMN_BITMASK = 8L;
+	public static final long TITLE_COLUMN_BITMASK = 8L;
 
-	public static final long UUID_COLUMN_BITMASK = 16L;
+	public static final long TYPE_COLUMN_BITMASK = 16L;
 
-	public static final long ASSETLISTENTRYID_COLUMN_BITMASK = 32L;
+	public static final long UUID_COLUMN_BITMASK = 32L;
+
+	public static final long ASSETLISTENTRYID_COLUMN_BITMASK = 64L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -164,6 +167,7 @@ public class AssetListEntryModelImpl
 		model.setUserName(soapModel.getUserName());
 		model.setCreateDate(soapModel.getCreateDate());
 		model.setModifiedDate(soapModel.getModifiedDate());
+		model.setAssetListEntryKey(soapModel.getAssetListEntryKey());
 		model.setTitle(soapModel.getTitle());
 		model.setType(soapModel.getType());
 		model.setLastPublishDate(soapModel.getLastPublishDate());
@@ -333,6 +337,12 @@ public class AssetListEntryModelImpl
 		attributeSetterBiConsumers.put(
 			"modifiedDate",
 			(BiConsumer<AssetListEntry, Date>)AssetListEntry::setModifiedDate);
+		attributeGetterFunctions.put(
+			"assetListEntryKey", AssetListEntry::getAssetListEntryKey);
+		attributeSetterBiConsumers.put(
+			"assetListEntryKey",
+			(BiConsumer<AssetListEntry, String>)
+				AssetListEntry::setAssetListEntryKey);
 		attributeGetterFunctions.put("title", AssetListEntry::getTitle);
 		attributeSetterBiConsumers.put(
 			"title",
@@ -510,6 +520,32 @@ public class AssetListEntryModelImpl
 
 	@JSON
 	@Override
+	public String getAssetListEntryKey() {
+		if (_assetListEntryKey == null) {
+			return "";
+		}
+		else {
+			return _assetListEntryKey;
+		}
+	}
+
+	@Override
+	public void setAssetListEntryKey(String assetListEntryKey) {
+		_columnBitmask |= ASSETLISTENTRYKEY_COLUMN_BITMASK;
+
+		if (_originalAssetListEntryKey == null) {
+			_originalAssetListEntryKey = _assetListEntryKey;
+		}
+
+		_assetListEntryKey = assetListEntryKey;
+	}
+
+	public String getOriginalAssetListEntryKey() {
+		return GetterUtil.getString(_originalAssetListEntryKey);
+	}
+
+	@JSON
+	@Override
 	public String getTitle() {
 		if (_title == null) {
 			return "";
@@ -614,6 +650,7 @@ public class AssetListEntryModelImpl
 		assetListEntryImpl.setUserName(getUserName());
 		assetListEntryImpl.setCreateDate(getCreateDate());
 		assetListEntryImpl.setModifiedDate(getModifiedDate());
+		assetListEntryImpl.setAssetListEntryKey(getAssetListEntryKey());
 		assetListEntryImpl.setTitle(getTitle());
 		assetListEntryImpl.setType(getType());
 		assetListEntryImpl.setLastPublishDate(getLastPublishDate());
@@ -693,6 +730,9 @@ public class AssetListEntryModelImpl
 
 		assetListEntryModelImpl._setModifiedDate = false;
 
+		assetListEntryModelImpl._originalAssetListEntryKey =
+			assetListEntryModelImpl._assetListEntryKey;
+
 		assetListEntryModelImpl._originalTitle = assetListEntryModelImpl._title;
 
 		assetListEntryModelImpl._originalType = assetListEntryModelImpl._type;
@@ -747,6 +787,14 @@ public class AssetListEntryModelImpl
 		}
 		else {
 			assetListEntryCacheModel.modifiedDate = Long.MIN_VALUE;
+		}
+
+		assetListEntryCacheModel.assetListEntryKey = getAssetListEntryKey();
+
+		String assetListEntryKey = assetListEntryCacheModel.assetListEntryKey;
+
+		if ((assetListEntryKey != null) && (assetListEntryKey.length() == 0)) {
+			assetListEntryCacheModel.assetListEntryKey = null;
 		}
 
 		assetListEntryCacheModel.title = getTitle();
@@ -855,6 +903,8 @@ public class AssetListEntryModelImpl
 	private Date _createDate;
 	private Date _modifiedDate;
 	private boolean _setModifiedDate;
+	private String _assetListEntryKey;
+	private String _originalAssetListEntryKey;
 	private String _title;
 	private String _originalTitle;
 	private int _type;

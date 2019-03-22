@@ -597,6 +597,56 @@ public interface AssetListEntryPersistence
 	public int filterCountByGroupId(long groupId);
 
 	/**
+	 * Returns the asset list entry where groupId = &#63; and assetListEntryKey = &#63; or throws a <code>NoSuchEntryException</code> if it could not be found.
+	 *
+	 * @param groupId the group ID
+	 * @param assetListEntryKey the asset list entry key
+	 * @return the matching asset list entry
+	 * @throws NoSuchEntryException if a matching asset list entry could not be found
+	 */
+	public AssetListEntry findByG_ALEK(long groupId, String assetListEntryKey)
+		throws NoSuchEntryException;
+
+	/**
+	 * Returns the asset list entry where groupId = &#63; and assetListEntryKey = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param groupId the group ID
+	 * @param assetListEntryKey the asset list entry key
+	 * @return the matching asset list entry, or <code>null</code> if a matching asset list entry could not be found
+	 */
+	public AssetListEntry fetchByG_ALEK(long groupId, String assetListEntryKey);
+
+	/**
+	 * Returns the asset list entry where groupId = &#63; and assetListEntryKey = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 *
+	 * @param groupId the group ID
+	 * @param assetListEntryKey the asset list entry key
+	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @return the matching asset list entry, or <code>null</code> if a matching asset list entry could not be found
+	 */
+	public AssetListEntry fetchByG_ALEK(
+		long groupId, String assetListEntryKey, boolean retrieveFromCache);
+
+	/**
+	 * Removes the asset list entry where groupId = &#63; and assetListEntryKey = &#63; from the database.
+	 *
+	 * @param groupId the group ID
+	 * @param assetListEntryKey the asset list entry key
+	 * @return the asset list entry that was removed
+	 */
+	public AssetListEntry removeByG_ALEK(long groupId, String assetListEntryKey)
+		throws NoSuchEntryException;
+
+	/**
+	 * Returns the number of asset list entries where groupId = &#63; and assetListEntryKey = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param assetListEntryKey the asset list entry key
+	 * @return the number of matching asset list entries
+	 */
+	public int countByG_ALEK(long groupId, String assetListEntryKey);
+
+	/**
 	 * Returns the asset list entry where groupId = &#63; and title = &#63; or throws a <code>NoSuchEntryException</code> if it could not be found.
 	 *
 	 * @param groupId the group ID

@@ -1,3 +1,4 @@
+create unique index IX_9E478DAB on AssetListEntry (groupId, assetListEntryKey[$COLUMN_LENGTH:75$]);
 create unique index IX_34CEA368 on AssetListEntry (groupId, title[$COLUMN_LENGTH:75$]);
 create index IX_4FE08A35 on AssetListEntry (groupId, type_);
 create index IX_DD7DDFBE on AssetListEntry (uuid_[$COLUMN_LENGTH:75$], companyId);

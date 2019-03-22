@@ -42,6 +42,7 @@ public class AssetListEntrySoap implements Serializable {
 		soapModel.setUserName(model.getUserName());
 		soapModel.setCreateDate(model.getCreateDate());
 		soapModel.setModifiedDate(model.getModifiedDate());
+		soapModel.setAssetListEntryKey(model.getAssetListEntryKey());
 		soapModel.setTitle(model.getTitle());
 		soapModel.setType(model.getType());
 		soapModel.setLastPublishDate(model.getLastPublishDate());
@@ -167,6 +168,14 @@ public class AssetListEntrySoap implements Serializable {
 		_modifiedDate = modifiedDate;
 	}
 
+	public String getAssetListEntryKey() {
+		return _assetListEntryKey;
+	}
+
+	public void setAssetListEntryKey(String assetListEntryKey) {
+		_assetListEntryKey = assetListEntryKey;
+	}
+
 	public String getTitle() {
 		return _title;
 	}
@@ -199,6 +208,7 @@ public class AssetListEntrySoap implements Serializable {
 	private String _userName;
 	private Date _createDate;
 	private Date _modifiedDate;
+	private String _assetListEntryKey;
 	private String _title;
 	private int _type;
 	private Date _lastPublishDate;

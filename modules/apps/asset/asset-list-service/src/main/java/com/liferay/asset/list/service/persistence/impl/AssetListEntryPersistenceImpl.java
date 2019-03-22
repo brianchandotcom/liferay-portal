@@ -2358,6 +2358,257 @@ public class AssetListEntryPersistenceImpl
 	private static final String _FINDER_COLUMN_GROUPID_GROUPID_2 =
 		"assetListEntry.groupId = ?";
 
+	private FinderPath _finderPathFetchByG_ALEK;
+	private FinderPath _finderPathCountByG_ALEK;
+
+	/**
+	 * Returns the asset list entry where groupId = &#63; and assetListEntryKey = &#63; or throws a <code>NoSuchEntryException</code> if it could not be found.
+	 *
+	 * @param groupId the group ID
+	 * @param assetListEntryKey the asset list entry key
+	 * @return the matching asset list entry
+	 * @throws NoSuchEntryException if a matching asset list entry could not be found
+	 */
+	@Override
+	public AssetListEntry findByG_ALEK(long groupId, String assetListEntryKey)
+		throws NoSuchEntryException {
+
+		AssetListEntry assetListEntry = fetchByG_ALEK(
+			groupId, assetListEntryKey);
+
+		if (assetListEntry == null) {
+			StringBundler msg = new StringBundler(6);
+
+			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+			msg.append("groupId=");
+			msg.append(groupId);
+
+			msg.append(", assetListEntryKey=");
+			msg.append(assetListEntryKey);
+
+			msg.append("}");
+
+			if (_log.isDebugEnabled()) {
+				_log.debug(msg.toString());
+			}
+
+			throw new NoSuchEntryException(msg.toString());
+		}
+
+		return assetListEntry;
+	}
+
+	/**
+	 * Returns the asset list entry where groupId = &#63; and assetListEntryKey = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param groupId the group ID
+	 * @param assetListEntryKey the asset list entry key
+	 * @return the matching asset list entry, or <code>null</code> if a matching asset list entry could not be found
+	 */
+	@Override
+	public AssetListEntry fetchByG_ALEK(
+		long groupId, String assetListEntryKey) {
+
+		return fetchByG_ALEK(groupId, assetListEntryKey, true);
+	}
+
+	/**
+	 * Returns the asset list entry where groupId = &#63; and assetListEntryKey = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 *
+	 * @param groupId the group ID
+	 * @param assetListEntryKey the asset list entry key
+	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @return the matching asset list entry, or <code>null</code> if a matching asset list entry could not be found
+	 */
+	@Override
+	public AssetListEntry fetchByG_ALEK(
+		long groupId, String assetListEntryKey, boolean retrieveFromCache) {
+
+		assetListEntryKey = Objects.toString(assetListEntryKey, "");
+
+		Object[] finderArgs = new Object[] {groupId, assetListEntryKey};
+
+		Object result = null;
+
+		if (retrieveFromCache) {
+			result = finderCache.getResult(
+				_finderPathFetchByG_ALEK, finderArgs, this);
+		}
+
+		if (result instanceof AssetListEntry) {
+			AssetListEntry assetListEntry = (AssetListEntry)result;
+
+			if ((groupId != assetListEntry.getGroupId()) ||
+				!Objects.equals(
+					assetListEntryKey, assetListEntry.getAssetListEntryKey())) {
+
+				result = null;
+			}
+		}
+
+		if (result == null) {
+			StringBundler query = new StringBundler(4);
+
+			query.append(_SQL_SELECT_ASSETLISTENTRY_WHERE);
+
+			query.append(_FINDER_COLUMN_G_ALEK_GROUPID_2);
+
+			boolean bindAssetListEntryKey = false;
+
+			if (assetListEntryKey.isEmpty()) {
+				query.append(_FINDER_COLUMN_G_ALEK_ASSETLISTENTRYKEY_3);
+			}
+			else {
+				bindAssetListEntryKey = true;
+
+				query.append(_FINDER_COLUMN_G_ALEK_ASSETLISTENTRYKEY_2);
+			}
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(groupId);
+
+				if (bindAssetListEntryKey) {
+					qPos.add(assetListEntryKey);
+				}
+
+				List<AssetListEntry> list = q.list();
+
+				if (list.isEmpty()) {
+					finderCache.putResult(
+						_finderPathFetchByG_ALEK, finderArgs, list);
+				}
+				else {
+					AssetListEntry assetListEntry = list.get(0);
+
+					result = assetListEntry;
+
+					cacheResult(assetListEntry);
+				}
+			}
+			catch (Exception e) {
+				finderCache.removeResult(_finderPathFetchByG_ALEK, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		if (result instanceof List<?>) {
+			return null;
+		}
+		else {
+			return (AssetListEntry)result;
+		}
+	}
+
+	/**
+	 * Removes the asset list entry where groupId = &#63; and assetListEntryKey = &#63; from the database.
+	 *
+	 * @param groupId the group ID
+	 * @param assetListEntryKey the asset list entry key
+	 * @return the asset list entry that was removed
+	 */
+	@Override
+	public AssetListEntry removeByG_ALEK(long groupId, String assetListEntryKey)
+		throws NoSuchEntryException {
+
+		AssetListEntry assetListEntry = findByG_ALEK(
+			groupId, assetListEntryKey);
+
+		return remove(assetListEntry);
+	}
+
+	/**
+	 * Returns the number of asset list entries where groupId = &#63; and assetListEntryKey = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param assetListEntryKey the asset list entry key
+	 * @return the number of matching asset list entries
+	 */
+	@Override
+	public int countByG_ALEK(long groupId, String assetListEntryKey) {
+		assetListEntryKey = Objects.toString(assetListEntryKey, "");
+
+		FinderPath finderPath = _finderPathCountByG_ALEK;
+
+		Object[] finderArgs = new Object[] {groupId, assetListEntryKey};
+
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+
+		if (count == null) {
+			StringBundler query = new StringBundler(3);
+
+			query.append(_SQL_COUNT_ASSETLISTENTRY_WHERE);
+
+			query.append(_FINDER_COLUMN_G_ALEK_GROUPID_2);
+
+			boolean bindAssetListEntryKey = false;
+
+			if (assetListEntryKey.isEmpty()) {
+				query.append(_FINDER_COLUMN_G_ALEK_ASSETLISTENTRYKEY_3);
+			}
+			else {
+				bindAssetListEntryKey = true;
+
+				query.append(_FINDER_COLUMN_G_ALEK_ASSETLISTENTRYKEY_2);
+			}
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(groupId);
+
+				if (bindAssetListEntryKey) {
+					qPos.add(assetListEntryKey);
+				}
+
+				count = (Long)q.uniqueResult();
+
+				finderCache.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception e) {
+				finderCache.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	private static final String _FINDER_COLUMN_G_ALEK_GROUPID_2 =
+		"assetListEntry.groupId = ? AND ";
+
+	private static final String _FINDER_COLUMN_G_ALEK_ASSETLISTENTRYKEY_2 =
+		"assetListEntry.assetListEntryKey = ?";
+
+	private static final String _FINDER_COLUMN_G_ALEK_ASSETLISTENTRYKEY_3 =
+		"(assetListEntry.assetListEntryKey IS NULL OR assetListEntry.assetListEntryKey = '')";
+
 	private FinderPath _finderPathFetchByG_T;
 	private FinderPath _finderPathCountByG_T;
 
@@ -4612,6 +4863,14 @@ public class AssetListEntryPersistenceImpl
 			assetListEntry);
 
 		finderCache.putResult(
+			_finderPathFetchByG_ALEK,
+			new Object[] {
+				assetListEntry.getGroupId(),
+				assetListEntry.getAssetListEntryKey()
+			},
+			assetListEntry);
+
+		finderCache.putResult(
 			_finderPathFetchByG_T,
 			new Object[] {
 				assetListEntry.getGroupId(), assetListEntry.getTitle()
@@ -4707,6 +4966,16 @@ public class AssetListEntryPersistenceImpl
 
 		args = new Object[] {
 			assetListEntryModelImpl.getGroupId(),
+			assetListEntryModelImpl.getAssetListEntryKey()
+		};
+
+		finderCache.putResult(
+			_finderPathCountByG_ALEK, args, Long.valueOf(1), false);
+		finderCache.putResult(
+			_finderPathFetchByG_ALEK, args, assetListEntryModelImpl, false);
+
+		args = new Object[] {
+			assetListEntryModelImpl.getGroupId(),
 			assetListEntryModelImpl.getTitle()
 		};
 
@@ -4739,6 +5008,28 @@ public class AssetListEntryPersistenceImpl
 
 			finderCache.removeResult(_finderPathCountByUUID_G, args);
 			finderCache.removeResult(_finderPathFetchByUUID_G, args);
+		}
+
+		if (clearCurrent) {
+			Object[] args = new Object[] {
+				assetListEntryModelImpl.getGroupId(),
+				assetListEntryModelImpl.getAssetListEntryKey()
+			};
+
+			finderCache.removeResult(_finderPathCountByG_ALEK, args);
+			finderCache.removeResult(_finderPathFetchByG_ALEK, args);
+		}
+
+		if ((assetListEntryModelImpl.getColumnBitmask() &
+			 _finderPathFetchByG_ALEK.getColumnBitmask()) != 0) {
+
+			Object[] args = new Object[] {
+				assetListEntryModelImpl.getOriginalGroupId(),
+				assetListEntryModelImpl.getOriginalAssetListEntryKey()
+			};
+
+			finderCache.removeResult(_finderPathCountByG_ALEK, args);
+			finderCache.removeResult(_finderPathFetchByG_ALEK, args);
 		}
 
 		if (clearCurrent) {
@@ -5463,6 +5754,20 @@ public class AssetListEntryPersistenceImpl
 			AssetListEntryModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByGroupId",
 			new String[] {Long.class.getName()});
+
+		_finderPathFetchByG_ALEK = new FinderPath(
+			AssetListEntryModelImpl.ENTITY_CACHE_ENABLED,
+			AssetListEntryModelImpl.FINDER_CACHE_ENABLED,
+			AssetListEntryImpl.class, FINDER_CLASS_NAME_ENTITY, "fetchByG_ALEK",
+			new String[] {Long.class.getName(), String.class.getName()},
+			AssetListEntryModelImpl.GROUPID_COLUMN_BITMASK |
+			AssetListEntryModelImpl.ASSETLISTENTRYKEY_COLUMN_BITMASK);
+
+		_finderPathCountByG_ALEK = new FinderPath(
+			AssetListEntryModelImpl.ENTITY_CACHE_ENABLED,
+			AssetListEntryModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_ALEK",
+			new String[] {Long.class.getName(), String.class.getName()});
 
 		_finderPathFetchByG_T = new FinderPath(
 			AssetListEntryModelImpl.ENTITY_CACHE_ENABLED,

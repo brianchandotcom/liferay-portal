@@ -54,6 +54,7 @@ public class AssetListEntryWrapper
 		attributes.put("userName", getUserName());
 		attributes.put("createDate", getCreateDate());
 		attributes.put("modifiedDate", getModifiedDate());
+		attributes.put("assetListEntryKey", getAssetListEntryKey());
 		attributes.put("title", getTitle());
 		attributes.put("type", getType());
 		attributes.put("lastPublishDate", getLastPublishDate());
@@ -109,6 +110,12 @@ public class AssetListEntryWrapper
 
 		if (modifiedDate != null) {
 			setModifiedDate(modifiedDate);
+		}
+
+		String assetListEntryKey = (String)attributes.get("assetListEntryKey");
+
+		if (assetListEntryKey != null) {
+			setAssetListEntryKey(assetListEntryKey);
 		}
 
 		String title = (String)attributes.get("title");
@@ -180,6 +187,16 @@ public class AssetListEntryWrapper
 	@Override
 	public long getAssetListEntryId() {
 		return model.getAssetListEntryId();
+	}
+
+	/**
+	 * Returns the asset list entry key of this asset list entry.
+	 *
+	 * @return the asset list entry key of this asset list entry
+	 */
+	@Override
+	public String getAssetListEntryKey() {
+		return model.getAssetListEntryKey();
 	}
 
 	/**
@@ -325,6 +342,16 @@ public class AssetListEntryWrapper
 	@Override
 	public void setAssetListEntryId(long assetListEntryId) {
 		model.setAssetListEntryId(assetListEntryId);
+	}
+
+	/**
+	 * Sets the asset list entry key of this asset list entry.
+	 *
+	 * @param assetListEntryKey the asset list entry key of this asset list entry
+	 */
+	@Override
+	public void setAssetListEntryKey(String assetListEntryKey) {
+		model.setAssetListEntryKey(assetListEntryKey);
 	}
 
 	/**

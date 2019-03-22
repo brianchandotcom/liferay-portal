@@ -85,15 +85,9 @@ public class SharedAssetsViewMVCRenderCommand implements MVCRenderCommand {
 		String mvcRenderCommandName = ParamUtil.getString(
 			renderRequest, "mvcRenderCommandName");
 
-		List<SharedAssetsFilterItem> sharedAssetsFilterItems =
-			new ArrayList<>();
-
-		_serviceTrackerList.forEach(sharedAssetsFilterItems::add);
-
 		renderRequest.setAttribute(
 			SharedAssetsViewDisplayContext.class.getName(),
-			_getSharedAssetsViewDisplayContext(
-				renderRequest, renderResponse, sharedAssetsFilterItems));
+			_getSharedAssetsViewDisplayContext(renderRequest, renderResponse));
 
 		if (Objects.equals(
 				mvcRenderCommandName, "/shared_assets/view_sharing_entry")) {
@@ -168,8 +162,7 @@ public class SharedAssetsViewMVCRenderCommand implements MVCRenderCommand {
 	}
 
 	private SharedAssetsViewDisplayContext _getSharedAssetsViewDisplayContext(
-		RenderRequest renderRequest, RenderResponse renderResponse,
-		List<SharedAssetsFilterItem> sharedAssetsFilterItems) {
+		RenderRequest renderRequest, RenderResponse renderResponse) {
 
 		LiferayPortletRequest liferayPortletRequest =
 			_portal.getLiferayPortletRequest(renderRequest);
@@ -182,6 +175,11 @@ public class SharedAssetsViewMVCRenderCommand implements MVCRenderCommand {
 		ResourceBundle resourceBundle =
 			_resourceBundleLoader.loadResourceBundle(
 				_portal.getLocale(request));
+
+		List<SharedAssetsFilterItem> sharedAssetsFilterItems =
+			new ArrayList<>();
+
+		_serviceTrackerList.forEach(sharedAssetsFilterItems::add);
 
 		return new SharedAssetsViewDisplayContext(
 			liferayPortletRequest, liferayPortletResponse, request,

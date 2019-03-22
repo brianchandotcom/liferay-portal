@@ -23,6 +23,7 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 
 /**
  * @author Brian Wing Shun Chan
@@ -34,6 +35,11 @@ public class UnmodifiableJSONObjectImpl extends JSONObjectImpl {
 		List<String> list = Collections.emptyList();
 
 		return list.iterator();
+	}
+
+	@Override
+	public Set<String> keySet() {
+		return Collections.emptySet();
 	}
 
 	@Override

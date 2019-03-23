@@ -15,13 +15,11 @@
 package com.liferay.headless.foundation.internal.resource.v1_0;
 
 import com.liferay.headless.foundation.dto.v1_0.WebUrl;
+import com.liferay.headless.foundation.internal.dto.v1_0.util.WebUrlUtil;
 import com.liferay.headless.foundation.resource.v1_0.WebUrlResource;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Contact;
-import com.liferay.portal.kernel.model.ListType;
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.model.Website;
 import com.liferay.portal.kernel.service.OrganizationService;
 import com.liferay.portal.kernel.service.UserService;
 import com.liferay.portal.kernel.service.WebsiteService;
@@ -54,7 +52,7 @@ public class WebUrlResourceImpl extends BaseWebUrlResourceImpl {
 				_websiteService.getWebsites(
 					organization.getModelClassName(),
 					organization.getOrganizationId()),
-				this::_toWebUrl));
+				WebUrlUtil::toWebUrl));
 	}
 
 	@Override
@@ -68,24 +66,12 @@ public class WebUrlResourceImpl extends BaseWebUrlResourceImpl {
 			transform(
 				_websiteService.getWebsites(
 					Contact.class.getName(), user.getContactId()),
-				this::_toWebUrl));
+				WebUrlUtil::toWebUrl));
 	}
 
 	@Override
 	public WebUrl getWebUrl(Long webUrlId) throws Exception {
-		return _toWebUrl(_websiteService.getWebsite(webUrlId));
-	}
-
-	private WebUrl _toWebUrl(Website website) throws PortalException {
-		ListType listType = website.getType();
-
-		return new WebUrl() {
-			{
-				id = website.getWebsiteId();
-				url = website.getUrl();
-				urlType = listType.getName();
-			}
-		};
+		return WebUrlUtil.toWebUrl(_websiteService.getWebsite(webUrlId));
 	}
 
 	@Reference

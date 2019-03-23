@@ -15,13 +15,10 @@
 package com.liferay.headless.foundation.internal.resource.v1_0;
 
 import com.liferay.headless.foundation.dto.v1_0.PostalAddress;
+import com.liferay.headless.foundation.internal.dto.v1_0.util.PostalAddressUtil;
 import com.liferay.headless.foundation.resource.v1_0.PostalAddressResource;
-import com.liferay.portal.kernel.model.Address;
 import com.liferay.portal.kernel.model.Contact;
-import com.liferay.portal.kernel.model.Country;
-import com.liferay.portal.kernel.model.ListType;
 import com.liferay.portal.kernel.model.Organization;
-import com.liferay.portal.kernel.model.Region;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
@@ -62,14 +59,17 @@ public class PostalAddressResourceImpl extends BasePostalAddressResourceImpl {
 					contextCompany.getCompanyId(),
 					organization.getModelClassName(),
 					organization.getOrganizationId()),
-				this::_toPostalAddress));
+				address -> PostalAddressUtil.toPostalAddress(
+					address, contextAcceptLanguage.getPreferredLocale())));
 	}
 
 	@Override
 	public PostalAddress getPostalAddress(Long postalAddressId)
 		throws Exception {
 
-		return _toPostalAddress(_addressService.getAddress(postalAddressId));
+		return PostalAddressUtil.toPostalAddress(
+			_addressService.getAddress(postalAddressId),
+			contextAcceptLanguage.getPreferredLocale());
 	}
 
 	@Override
@@ -88,45 +88,8 @@ public class PostalAddressResourceImpl extends BasePostalAddressResourceImpl {
 				_addressLocalService.getAddresses(
 					user.getCompanyId(), Contact.class.getName(),
 					user.getContactId()),
-				this::_toPostalAddress));
-	}
-
-	private PostalAddress _toPostalAddress(Address address) {
-		ListType listType = address.getType();
-
-		return new PostalAddress() {
-			{
-				addressLocality = address.getCity();
-				addressType = listType.getName();
-				id = address.getAddressId();
-				postalCode = address.getZip();
-				streetAddressLine1 = address.getStreet1();
-				streetAddressLine2 = address.getStreet2();
-				streetAddressLine3 = address.getStreet3();
-
-				setAddressCountry(
-					() -> {
-						if (address.getCountryId() <= 0) {
-							return null;
-						}
-
-						Country country = address.getCountry();
-
-						return country.getName(
-							contextAcceptLanguage.getPreferredLocale());
-					});
-				setAddressRegion(
-					() -> {
-						if (address.getRegionId() <= 0) {
-							return null;
-						}
-
-						Region region = address.getRegion();
-
-						return region.getName();
-					});
-			}
-		};
+				address -> PostalAddressUtil.toPostalAddress(
+					address, contextAcceptLanguage.getPreferredLocale())));
 	}
 
 	@Reference

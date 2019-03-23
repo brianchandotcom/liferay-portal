@@ -15,10 +15,9 @@
 package com.liferay.headless.foundation.internal.resource.v1_0;
 
 import com.liferay.headless.foundation.dto.v1_0.Phone;
+import com.liferay.headless.foundation.internal.dto.v1_0.util.PhoneUtil;
 import com.liferay.headless.foundation.resource.v1_0.PhoneResource;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Contact;
-import com.liferay.portal.kernel.model.ListType;
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.OrganizationService;
@@ -53,12 +52,12 @@ public class PhoneResourceImpl extends BasePhoneResourceImpl {
 				_phoneService.getPhones(
 					organization.getModelClassName(),
 					organization.getOrganizationId()),
-				this::_toPhone));
+				PhoneUtil::toPhone));
 	}
 
 	@Override
 	public Phone getPhone(Long phoneId) throws Exception {
-		return _toPhone(_phoneService.getPhone(phoneId));
+		return PhoneUtil.toPhone(_phoneService.getPhone(phoneId));
 	}
 
 	@Override
@@ -72,22 +71,7 @@ public class PhoneResourceImpl extends BasePhoneResourceImpl {
 			transform(
 				_phoneService.getPhones(
 					Contact.class.getName(), user.getContactId()),
-				this::_toPhone));
-	}
-
-	private Phone _toPhone(com.liferay.portal.kernel.model.Phone phone)
-		throws PortalException {
-
-		ListType listType = phone.getType();
-
-		return new Phone() {
-			{
-				extension = phone.getExtension();
-				id = phone.getPhoneId();
-				phoneNumber = phone.getNumber();
-				phoneType = listType.getName();
-			}
-		};
+				PhoneUtil::toPhone));
 	}
 
 	@Reference

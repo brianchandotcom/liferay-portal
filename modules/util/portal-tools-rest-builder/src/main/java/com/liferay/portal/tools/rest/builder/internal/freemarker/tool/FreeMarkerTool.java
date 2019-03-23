@@ -197,6 +197,20 @@ public class FreeMarkerTool {
 			javaMethodSignature, httpMethods);
 	}
 
+	public boolean hasPathParameter(JavaMethodSignature javaMethodSignature) {
+		List<JavaMethodParameter> javaMethodParameters =
+			javaMethodSignature.getJavaMethodParameters();
+		Operation operation = javaMethodSignature.getOperation();
+
+		for (JavaMethodParameter javaMethodParameter : javaMethodParameters) {
+			if (isPathParameter(javaMethodParameter, operation)) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
 	public boolean isDTOSchemaProperty(
 		OpenAPIYAML openAPIYAML, String propertyName, Schema schema) {
 

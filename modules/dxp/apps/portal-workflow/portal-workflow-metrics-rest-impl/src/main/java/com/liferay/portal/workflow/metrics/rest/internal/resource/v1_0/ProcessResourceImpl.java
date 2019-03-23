@@ -480,8 +480,8 @@ public class ProcessResourceImpl
 		}
 
 		CardinalityAggregationResult cardinalityAggregationResult =
-			(CardinalityAggregationResult)
-				dueInBucket.getChildAggregationResult("instanceCount");
+			(CardinalityAggregationResult)dueInBucket.getChildAggregationResult(
+				"instanceCount");
 
 		process.setDueInInstanceCount(cardinalityAggregationResult.getValue());
 	}

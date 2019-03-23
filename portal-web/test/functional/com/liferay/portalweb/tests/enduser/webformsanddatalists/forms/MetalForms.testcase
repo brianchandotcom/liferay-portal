@@ -1696,7 +1696,7 @@ definition {
 
 		Form.gotoAddField(fieldType = "Text Field");
 
-		Form.editFieldLabelMetal(fieldValue = "Text Field Required");
+		Form.editFieldLabel(fieldValue = "Text Field Required");
 
 		FormFields.enableSwitcher(fieldName = "required");
 
@@ -1704,7 +1704,7 @@ definition {
 
 		Form.gotoAddField(fieldType = "Select from List");
 
-		Form.editFieldLabelMetal(fieldValue = "Select Repeatable");
+		Form.editFieldLabel(fieldValue = "Select Repeatable");
 
 		for (var number : list "1,2,3") {
 			FormFields.editOptionsRow(
@@ -1728,13 +1728,13 @@ definition {
 
 		Form.addTranslation(localizedLanguage = "Chinese (China)");
 
-		FormsAdminNavigator.gotoEditField(fieldName = "TextFieldRequired");
+		FormsAdminNavigator.gotoEditField(fieldName = "Text Field Required");
 
 		FormFields.editText(fieldName = "label", fieldValue = "表格文本");
 
 		Form.closeSidebar();
 
-		FormsAdminNavigator.gotoEditField(fieldName = "SelectRepeatable");
+		FormsAdminNavigator.gotoEditField(fieldName = "Select Repeatable");
 
 		FormFields.editText(fieldName = "label", fieldValue = "表单选择");
 
@@ -1760,7 +1760,7 @@ definition {
 
 		Form.closeSidebar();
 
-		FormsAdminNavigator.gotoEditField(fieldName = "TextFieldRequired");
+		FormsAdminNavigator.gotoEditField(fieldName = "Text Field Required");
 
 		var fieldName1 = FormFields.getFieldName();
 

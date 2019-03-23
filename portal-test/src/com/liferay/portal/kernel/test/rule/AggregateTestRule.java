@@ -26,7 +26,7 @@ import org.junit.runners.model.Statement;
 /**
  * @author Shuyang Zhou
  */
-public class AggregateTestRule implements ArquillianClassRuleHandler, TestRule {
+public class AggregateTestRule implements TestRule {
 
 	public AggregateTestRule(boolean sort, TestRule... testRules) {
 		if (testRules == null) {
@@ -56,30 +56,6 @@ public class AggregateTestRule implements ArquillianClassRuleHandler, TestRule {
 		}
 
 		return statement;
-	}
-
-	@Override
-	public void handleAfterClass(boolean enable) {
-		for (TestRule testRule : _testRules) {
-			if (testRule instanceof ArquillianClassRuleHandler) {
-				ArquillianClassRuleHandler arquillianTestRuleHandler =
-					(ArquillianClassRuleHandler)testRule;
-
-				arquillianTestRuleHandler.handleAfterClass(enable);
-			}
-		}
-	}
-
-	@Override
-	public void handleBeforeClass(boolean enable) {
-		for (TestRule testRule : _testRules) {
-			if (testRule instanceof ArquillianClassRuleHandler) {
-				ArquillianClassRuleHandler arquillianTestRuleHandler =
-					(ArquillianClassRuleHandler)testRule;
-
-				arquillianTestRuleHandler.handleBeforeClass(enable);
-			}
-		}
 	}
 
 	private static final String[] _ORDERED_RULE_CLASS_NAMES = {

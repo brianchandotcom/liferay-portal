@@ -1,4 +1,6 @@
 Bundle-Name: Liferay Product Navigation Personal Menu API
 Bundle-SymbolicName: com.liferay.product.navigation.personal.menu.api
 Bundle-Version: 1.0.0
-Export-Package: com.liferay.product.navigation.personal.menu
+Export-Package:\
+	com.liferay.product.navigation.personal.menu,\
+	com.liferay.product.navigation.personal.menu.constants

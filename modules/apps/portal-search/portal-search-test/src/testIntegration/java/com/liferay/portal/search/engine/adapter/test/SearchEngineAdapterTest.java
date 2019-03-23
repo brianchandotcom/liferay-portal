@@ -15,11 +15,10 @@
 package com.liferay.portal.search.engine.adapter.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.portal.kernel.search.DocumentImpl;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.search.engine.adapter.SearchEngineAdapter;
-import com.liferay.portal.search.engine.adapter.document.UpdateDocumentRequest;
+import com.liferay.portal.search.engine.adapter.index.DeleteIndexRequest;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
@@ -44,13 +43,10 @@ public class SearchEngineAdapterTest {
 	public void testExceptionBoundaries() {
 		String index = RandomTestUtil.randomString();
 
-		UpdateDocumentRequest updateDocumentRequest = new UpdateDocumentRequest(
-			index, RandomTestUtil.randomString(), new DocumentImpl());
-
-		updateDocumentRequest.setType(RandomTestUtil.randomString());
+		DeleteIndexRequest deleteIndexRequest = new DeleteIndexRequest(index);
 
 		try {
-			_searchEngineAdapter.execute(updateDocumentRequest);
+			_searchEngineAdapter.execute(deleteIndexRequest);
 
 			Assert.fail("Exception was not thrown");
 		}

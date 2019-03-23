@@ -17,6 +17,7 @@ package com.liferay.portal.workflow.kaleo.designer.web.internal.portlet.display.
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.JSPCreationMenu;
+import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
@@ -66,7 +67,6 @@ import com.liferay.portal.workflow.kaleo.util.comparator.KaleoDefinitionVersionT
 import java.util.Date;
 import java.util.List;
 import java.util.ResourceBundle;
-import java.util.function.Consumer;
 
 import javax.portlet.PortletException;
 import javax.portlet.PortletRequest;
@@ -652,8 +652,8 @@ public class KaleoDesignerDisplayContext {
 			_kaleoDesignerRequestHelper.getRequest(), "navigation", "all");
 	}
 
-	protected Consumer<DropdownItem> getFilterNavigationDropdownItem(
-		String definitionsNavigation) {
+	protected UnsafeConsumer<DropdownItem, Exception>
+		getFilterNavigationDropdownItem(String definitionsNavigation) {
 
 		return dropdownItem -> {
 			dropdownItem.setActive(
@@ -691,7 +691,9 @@ public class KaleoDesignerDisplayContext {
 			_kaleoDesignerRequestHelper.getLocale(), className);
 	}
 
-	protected Consumer<DropdownItem> getOrderByDropdownItem(String orderByCol) {
+	protected UnsafeConsumer<DropdownItem, Exception> getOrderByDropdownItem(
+		String orderByCol) {
+
 		return dropdownItem -> {
 			dropdownItem.setActive(orderByCol.equals(getOrderByCol()));
 			dropdownItem.setHref(getPortletURL(), "orderByCol", orderByCol);

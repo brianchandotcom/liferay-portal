@@ -14,6 +14,8 @@
 
 package com.liferay.headless.foundation.internal.resource.v1_0;
 
+import com.liferay.asset.kernel.model.AssetTag;
+import com.liferay.asset.kernel.service.AssetTagLocalService;
 import com.liferay.headless.foundation.dto.v1_0.ContactInformation;
 import com.liferay.headless.foundation.dto.v1_0.Email;
 import com.liferay.headless.foundation.dto.v1_0.HoursAvailable;
@@ -196,6 +198,11 @@ public class OrganizationResourceImpl extends BaseOrganizationResourceImpl {
 					}
 				};
 				id = organization.getOrganizationId();
+				keywords = ListUtil.toArray(
+					_assetTagLocalService.getTags(
+						organization.getModelClassName(),
+						organization.getOrganizationId()),
+					AssetTag.NAME_ACCESSOR);
 				location = new Location() {
 					{
 						setAddressCountry(
@@ -292,6 +299,9 @@ public class OrganizationResourceImpl extends BaseOrganizationResourceImpl {
 			}
 		};
 	}
+
+	@Reference
+	private AssetTagLocalService _assetTagLocalService;
 
 	@Reference
 	private CountryService _countryService;

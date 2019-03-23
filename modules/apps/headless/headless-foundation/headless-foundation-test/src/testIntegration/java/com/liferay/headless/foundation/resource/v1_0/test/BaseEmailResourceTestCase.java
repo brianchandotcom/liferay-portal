@@ -575,6 +575,11 @@ public abstract class BaseEmailResourceTestCase {
 				"Invalid entity field " + entityFieldName);
 		}
 
+		if (entityFieldName.equals("primary")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
 		if (entityFieldName.equals("type")) {
 			sb.append("'");
 			sb.append(String.valueOf(email.getType()));
@@ -592,6 +597,7 @@ public abstract class BaseEmailResourceTestCase {
 			{
 				email = RandomTestUtil.randomString();
 				id = RandomTestUtil.randomLong();
+				primary = RandomTestUtil.randomBoolean();
 				type = RandomTestUtil.randomString();
 			}
 		};

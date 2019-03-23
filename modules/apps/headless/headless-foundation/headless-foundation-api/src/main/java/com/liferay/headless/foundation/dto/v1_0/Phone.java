@@ -132,6 +132,30 @@ public class Phone {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String phoneType;
 
+	public Boolean getPrimary() {
+		return primary;
+	}
+
+	public void setPrimary(Boolean primary) {
+		this.primary = primary;
+	}
+
+	@JsonIgnore
+	public void setPrimary(
+		UnsafeSupplier<Boolean, Exception> primaryUnsafeSupplier) {
+
+		try {
+			primary = primaryUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Boolean primary;
+
 	public String toString() {
 		StringBundler sb = new StringBundler();
 
@@ -161,6 +185,11 @@ public class Phone {
 		sb.append("\"");
 		sb.append(phoneType);
 		sb.append("\"");
+		sb.append(", ");
+
+		sb.append("\"primary\": ");
+
+		sb.append(primary);
 
 		sb.append("}");
 

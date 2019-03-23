@@ -591,6 +591,11 @@ public abstract class BasePhoneResourceTestCase {
 			return sb.toString();
 		}
 
+		if (entityFieldName.equals("primary")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
 		throw new IllegalArgumentException(
 			"Invalid entity field " + entityFieldName);
 	}
@@ -602,6 +607,7 @@ public abstract class BasePhoneResourceTestCase {
 				id = RandomTestUtil.randomLong();
 				phoneNumber = RandomTestUtil.randomString();
 				phoneType = RandomTestUtil.randomString();
+				primary = RandomTestUtil.randomBoolean();
 			}
 		};
 	}

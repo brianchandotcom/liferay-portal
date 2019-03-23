@@ -180,6 +180,30 @@ public class PostalAddress {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String postalCode;
 
+	public Boolean getPrimary() {
+		return primary;
+	}
+
+	public void setPrimary(Boolean primary) {
+		this.primary = primary;
+	}
+
+	@JsonIgnore
+	public void setPrimary(
+		UnsafeSupplier<Boolean, Exception> primaryUnsafeSupplier) {
+
+		try {
+			primary = primaryUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Boolean primary;
+
 	public String getStreetAddressLine1() {
 		return streetAddressLine1;
 	}
@@ -295,6 +319,11 @@ public class PostalAddress {
 		sb.append("\"");
 		sb.append(postalCode);
 		sb.append("\"");
+		sb.append(", ");
+
+		sb.append("\"primary\": ");
+
+		sb.append(primary);
 		sb.append(", ");
 
 		sb.append("\"streetAddressLine1\": ");

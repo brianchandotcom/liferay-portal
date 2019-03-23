@@ -1062,6 +1062,11 @@ public abstract class BaseUserAccountResourceTestCase {
 			return sb.toString();
 		}
 
+		if (entityFieldName.equals("keywords")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
 		if (entityFieldName.equals("myOrganizations")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);

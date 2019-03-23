@@ -38,20 +38,20 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement(name = "ContactInformation")
 public class ContactInformation {
 
-	public Email[] getEmail() {
-		return email;
+	public Email[] getEmails() {
+		return emails;
 	}
 
-	public void setEmail(Email[] email) {
-		this.email = email;
+	public void setEmails(Email[] emails) {
+		this.emails = emails;
 	}
 
 	@JsonIgnore
-	public void setEmail(
-		UnsafeSupplier<Email[], Exception> emailUnsafeSupplier) {
+	public void setEmails(
+		UnsafeSupplier<Email[], Exception> emailsUnsafeSupplier) {
 
 		try {
-			email = emailUnsafeSupplier.get();
+			emails = emailsUnsafeSupplier.get();
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
@@ -60,31 +60,7 @@ public class ContactInformation {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
-	protected Email[] email;
-
-	public Long[] getEmailIds() {
-		return emailIds;
-	}
-
-	public void setEmailIds(Long[] emailIds) {
-		this.emailIds = emailIds;
-	}
-
-	@JsonIgnore
-	public void setEmailIds(
-		UnsafeSupplier<Long[], Exception> emailIdsUnsafeSupplier) {
-
-		try {
-			emailIds = emailIdsUnsafeSupplier.get();
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-	protected Long[] emailIds;
+	protected Email[] emails;
 
 	public String getFacebook() {
 		return facebook;
@@ -156,21 +132,21 @@ public class ContactInformation {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String jabber;
 
-	public PostalAddress[] getPostalAddress() {
-		return postalAddress;
+	public PostalAddress[] getPostalAddresses() {
+		return postalAddresses;
 	}
 
-	public void setPostalAddress(PostalAddress[] postalAddress) {
-		this.postalAddress = postalAddress;
+	public void setPostalAddresses(PostalAddress[] postalAddresses) {
+		this.postalAddresses = postalAddresses;
 	}
 
 	@JsonIgnore
-	public void setPostalAddress(
+	public void setPostalAddresses(
 		UnsafeSupplier<PostalAddress[], Exception>
-			postalAddressUnsafeSupplier) {
+			postalAddressesUnsafeSupplier) {
 
 		try {
-			postalAddress = postalAddressUnsafeSupplier.get();
+			postalAddresses = postalAddressesUnsafeSupplier.get();
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
@@ -179,31 +155,7 @@ public class ContactInformation {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
-	protected PostalAddress[] postalAddress;
-
-	public Long[] getPostalAddressIds() {
-		return postalAddressIds;
-	}
-
-	public void setPostalAddressIds(Long[] postalAddressIds) {
-		this.postalAddressIds = postalAddressIds;
-	}
-
-	@JsonIgnore
-	public void setPostalAddressIds(
-		UnsafeSupplier<Long[], Exception> postalAddressIdsUnsafeSupplier) {
-
-		try {
-			postalAddressIds = postalAddressIdsUnsafeSupplier.get();
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-	protected Long[] postalAddressIds;
+	protected PostalAddress[] postalAddresses;
 
 	public String getSkype() {
 		return skype;
@@ -251,20 +203,20 @@ public class ContactInformation {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String sms;
 
-	public Phone[] getTelephone() {
-		return telephone;
+	public Phone[] getTelephones() {
+		return telephones;
 	}
 
-	public void setTelephone(Phone[] telephone) {
-		this.telephone = telephone;
+	public void setTelephones(Phone[] telephones) {
+		this.telephones = telephones;
 	}
 
 	@JsonIgnore
-	public void setTelephone(
-		UnsafeSupplier<Phone[], Exception> telephoneUnsafeSupplier) {
+	public void setTelephones(
+		UnsafeSupplier<Phone[], Exception> telephonesUnsafeSupplier) {
 
 		try {
-			telephone = telephoneUnsafeSupplier.get();
+			telephones = telephonesUnsafeSupplier.get();
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
@@ -273,31 +225,7 @@ public class ContactInformation {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
-	protected Phone[] telephone;
-
-	public Long[] getTelephoneIds() {
-		return telephoneIds;
-	}
-
-	public void setTelephoneIds(Long[] telephoneIds) {
-		this.telephoneIds = telephoneIds;
-	}
-
-	@JsonIgnore
-	public void setTelephoneIds(
-		UnsafeSupplier<Long[], Exception> telephoneIdsUnsafeSupplier) {
-
-		try {
-			telephoneIds = telephoneIdsUnsafeSupplier.get();
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-	protected Long[] telephoneIds;
+	protected Phone[] telephones;
 
 	public String getTwitter() {
 		return twitter;
@@ -323,20 +251,20 @@ public class ContactInformation {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String twitter;
 
-	public WebUrl[] getWebUrl() {
-		return webUrl;
+	public WebUrl[] getWebUrls() {
+		return webUrls;
 	}
 
-	public void setWebUrl(WebUrl[] webUrl) {
-		this.webUrl = webUrl;
+	public void setWebUrls(WebUrl[] webUrls) {
+		this.webUrls = webUrls;
 	}
 
 	@JsonIgnore
-	public void setWebUrl(
-		UnsafeSupplier<WebUrl[], Exception> webUrlUnsafeSupplier) {
+	public void setWebUrls(
+		UnsafeSupplier<WebUrl[], Exception> webUrlsUnsafeSupplier) {
 
 		try {
-			webUrl = webUrlUnsafeSupplier.get();
+			webUrls = webUrlsUnsafeSupplier.get();
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
@@ -345,70 +273,25 @@ public class ContactInformation {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
-	protected WebUrl[] webUrl;
-
-	public Long[] getWebUrlIds() {
-		return webUrlIds;
-	}
-
-	public void setWebUrlIds(Long[] webUrlIds) {
-		this.webUrlIds = webUrlIds;
-	}
-
-	@JsonIgnore
-	public void setWebUrlIds(
-		UnsafeSupplier<Long[], Exception> webUrlIdsUnsafeSupplier) {
-
-		try {
-			webUrlIds = webUrlIdsUnsafeSupplier.get();
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-	protected Long[] webUrlIds;
+	protected WebUrl[] webUrls;
 
 	public String toString() {
 		StringBundler sb = new StringBundler();
 
 		sb.append("{");
 
-		sb.append("\"email\": ");
+		sb.append("\"emails\": ");
 
-		if (email == null) {
+		if (emails == null) {
 			sb.append("null");
 		}
 		else {
 			sb.append("[");
 
-			for (int i = 0; i < email.length; i++) {
-				sb.append(email[i]);
+			for (int i = 0; i < emails.length; i++) {
+				sb.append(emails[i]);
 
-				if ((i + 1) < email.length) {
-					sb.append(", ");
-				}
-			}
-
-			sb.append("]");
-		}
-
-		sb.append(", ");
-
-		sb.append("\"emailIds\": ");
-
-		if (emailIds == null) {
-			sb.append("null");
-		}
-		else {
-			sb.append("[");
-
-			for (int i = 0; i < emailIds.length; i++) {
-				sb.append(emailIds[i]);
-
-				if ((i + 1) < emailIds.length) {
+				if ((i + 1) < emails.length) {
 					sb.append(", ");
 				}
 			}
@@ -437,39 +320,18 @@ public class ContactInformation {
 		sb.append("\"");
 		sb.append(", ");
 
-		sb.append("\"postalAddress\": ");
+		sb.append("\"postalAddresses\": ");
 
-		if (postalAddress == null) {
+		if (postalAddresses == null) {
 			sb.append("null");
 		}
 		else {
 			sb.append("[");
 
-			for (int i = 0; i < postalAddress.length; i++) {
-				sb.append(postalAddress[i]);
+			for (int i = 0; i < postalAddresses.length; i++) {
+				sb.append(postalAddresses[i]);
 
-				if ((i + 1) < postalAddress.length) {
-					sb.append(", ");
-				}
-			}
-
-			sb.append("]");
-		}
-
-		sb.append(", ");
-
-		sb.append("\"postalAddressIds\": ");
-
-		if (postalAddressIds == null) {
-			sb.append("null");
-		}
-		else {
-			sb.append("[");
-
-			for (int i = 0; i < postalAddressIds.length; i++) {
-				sb.append(postalAddressIds[i]);
-
-				if ((i + 1) < postalAddressIds.length) {
+				if ((i + 1) < postalAddresses.length) {
 					sb.append(", ");
 				}
 			}
@@ -493,39 +355,18 @@ public class ContactInformation {
 		sb.append("\"");
 		sb.append(", ");
 
-		sb.append("\"telephone\": ");
+		sb.append("\"telephones\": ");
 
-		if (telephone == null) {
+		if (telephones == null) {
 			sb.append("null");
 		}
 		else {
 			sb.append("[");
 
-			for (int i = 0; i < telephone.length; i++) {
-				sb.append(telephone[i]);
+			for (int i = 0; i < telephones.length; i++) {
+				sb.append(telephones[i]);
 
-				if ((i + 1) < telephone.length) {
-					sb.append(", ");
-				}
-			}
-
-			sb.append("]");
-		}
-
-		sb.append(", ");
-
-		sb.append("\"telephoneIds\": ");
-
-		if (telephoneIds == null) {
-			sb.append("null");
-		}
-		else {
-			sb.append("[");
-
-			for (int i = 0; i < telephoneIds.length; i++) {
-				sb.append(telephoneIds[i]);
-
-				if ((i + 1) < telephoneIds.length) {
+				if ((i + 1) < telephones.length) {
 					sb.append(", ");
 				}
 			}
@@ -542,39 +383,18 @@ public class ContactInformation {
 		sb.append("\"");
 		sb.append(", ");
 
-		sb.append("\"webUrl\": ");
+		sb.append("\"webUrls\": ");
 
-		if (webUrl == null) {
+		if (webUrls == null) {
 			sb.append("null");
 		}
 		else {
 			sb.append("[");
 
-			for (int i = 0; i < webUrl.length; i++) {
-				sb.append(webUrl[i]);
+			for (int i = 0; i < webUrls.length; i++) {
+				sb.append(webUrls[i]);
 
-				if ((i + 1) < webUrl.length) {
-					sb.append(", ");
-				}
-			}
-
-			sb.append("]");
-		}
-
-		sb.append(", ");
-
-		sb.append("\"webUrlIds\": ");
-
-		if (webUrlIds == null) {
-			sb.append("null");
-		}
-		else {
-			sb.append("[");
-
-			for (int i = 0; i < webUrlIds.length; i++) {
-				sb.append(webUrlIds[i]);
-
-				if ((i + 1) < webUrlIds.length) {
+				if ((i + 1) < webUrls.length) {
 					sb.append(", ");
 				}
 			}

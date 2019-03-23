@@ -84,6 +84,30 @@ public class Email {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long id;
 
+	public Boolean getPrimary() {
+		return primary;
+	}
+
+	public void setPrimary(Boolean primary) {
+		this.primary = primary;
+	}
+
+	@JsonIgnore
+	public void setPrimary(
+		UnsafeSupplier<Boolean, Exception> primaryUnsafeSupplier) {
+
+		try {
+			primary = primaryUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Boolean primary;
+
 	public String getType() {
 		return type;
 	}
@@ -121,6 +145,11 @@ public class Email {
 		sb.append("\"id\": ");
 
 		sb.append(id);
+		sb.append(", ");
+
+		sb.append("\"primary\": ");
+
+		sb.append(primary);
 		sb.append(", ");
 
 		sb.append("\"type\": ");

@@ -64,6 +64,32 @@ public class Organization {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String comment;
 
+	@Schema(description = "https://www.schema.org/ContactInformation")
+	public ContactInformation getContactInformation() {
+		return contactInformation;
+	}
+
+	public void setContactInformation(ContactInformation contactInformation) {
+		this.contactInformation = contactInformation;
+	}
+
+	@JsonIgnore
+	public void setContactInformation(
+		UnsafeSupplier<ContactInformation, Exception>
+			contactInformationUnsafeSupplier) {
+
+		try {
+			contactInformation = contactInformationUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected ContactInformation contactInformation;
+
 	public Long getId() {
 		return id;
 	}
@@ -109,6 +135,30 @@ public class Organization {
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String image;
+
+	public String[] getKeywords() {
+		return keywords;
+	}
+
+	public void setKeywords(String[] keywords) {
+		this.keywords = keywords;
+	}
+
+	@JsonIgnore
+	public void setKeywords(
+		UnsafeSupplier<String[], Exception> keywordsUnsafeSupplier) {
+
+		try {
+			keywords = keywordsUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected String[] keywords;
 
 	@Schema(description = "https://www.schema.org/PostalAddress")
 	public Location getLocation() {
@@ -267,6 +317,11 @@ public class Organization {
 		sb.append("\"");
 		sb.append(", ");
 
+		sb.append("\"contactInformation\": ");
+
+		sb.append(contactInformation);
+		sb.append(", ");
+
 		sb.append("\"id\": ");
 
 		sb.append(id);
@@ -277,6 +332,29 @@ public class Organization {
 		sb.append("\"");
 		sb.append(image);
 		sb.append("\"");
+		sb.append(", ");
+
+		sb.append("\"keywords\": ");
+
+		if (keywords == null) {
+			sb.append("null");
+		}
+		else {
+			sb.append("[");
+
+			for (int i = 0; i < keywords.length; i++) {
+				sb.append("\"");
+				sb.append(keywords[i]);
+				sb.append("\"");
+
+				if ((i + 1) < keywords.length) {
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
+		}
+
 		sb.append(", ");
 
 		sb.append("\"location\": ");

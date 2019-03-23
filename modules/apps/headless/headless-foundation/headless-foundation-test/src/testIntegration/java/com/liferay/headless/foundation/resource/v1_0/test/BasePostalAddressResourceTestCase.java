@@ -669,6 +669,11 @@ public abstract class BasePostalAddressResourceTestCase {
 			return sb.toString();
 		}
 
+		if (entityFieldName.equals("primary")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
 		if (entityFieldName.equals("streetAddressLine1")) {
 			sb.append("'");
 			sb.append(String.valueOf(postalAddress.getStreetAddressLine1()));
@@ -706,6 +711,7 @@ public abstract class BasePostalAddressResourceTestCase {
 				addressType = RandomTestUtil.randomString();
 				id = RandomTestUtil.randomLong();
 				postalCode = RandomTestUtil.randomString();
+				primary = RandomTestUtil.randomBoolean();
 				streetAddressLine1 = RandomTestUtil.randomString();
 				streetAddressLine2 = RandomTestUtil.randomString();
 				streetAddressLine3 = RandomTestUtil.randomString();

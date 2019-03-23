@@ -40,6 +40,8 @@ components:
                 id:
                     format: int64
                     type: integer
+                primary:
+                    type: boolean
                 type:
                     type: string
             type: object
@@ -70,12 +72,40 @@ components:
             properties:
                 comment:
                     type: string
+                contactInformation:
+                    description: https://www.schema.org/ContactInformation
+                    properties:
+                        emails:
+                            items:
+                                $ref: "#/components/schemas/Email"
+                            readOnly: true
+                            type: array
+                        postalAddresses:
+                            items:
+                                $ref: "#/components/schemas/PostalAddress"
+                            readOnly: true
+                            type: array
+                        telephones:
+                            items:
+                                $ref: "#/components/schemas/Phone"
+                            readOnly: true
+                            type: array
+                        webUrls:
+                            items:
+                                $ref: "#/components/schemas/WebUrl"
+                            readOnly: true
+                            type: array
+                    type: object
                 id:
                     format: int64
                     type: integer
                 image:
                     format: uri
                     type: string
+                keywords:
+                    items:
+                        type: string
+                    type: array
                 location:
                     description: https://www.schema.org/PostalAddress
                     properties:
@@ -138,6 +168,8 @@ components:
                     type: string
                 phoneType:
                     type: string
+                primary:
+                    type: boolean
             type: object
         PostalAddress:
             description: https://www.schema.org/PostalAddress
@@ -155,6 +187,8 @@ components:
                     type: integer
                 postalCode:
                     type: string
+                primary:
+                    type: boolean
                 streetAddressLine1:
                     type: string
                 streetAddressLine2:
@@ -325,17 +359,11 @@ components:
                 contactInformation:
                     description: https://www.schema.org/ContactInformation
                     properties:
-                        email:
+                        emails:
                             items:
                                 $ref: "#/components/schemas/Email"
                             readOnly: true
                             type: array
-                        emailIds:
-                            items:
-                                format: int64
-                                type: integer
-                            type: array
-                            writeOnly: true
                         facebook:
                             type: string
                         id:
@@ -343,45 +371,27 @@ components:
                             type: integer
                         jabber:
                             type: string
-                        postalAddress:
+                        postalAddresses:
                             items:
                                 $ref: "#/components/schemas/PostalAddress"
                             readOnly: true
                             type: array
-                        postalAddressIds:
-                            items:
-                                format: int64
-                                type: integer
-                            type: array
-                            writeOnly: true
                         skype:
                             type: string
                         sms:
                             type: string
-                        telephone:
+                        telephones:
                             items:
                                 $ref: "#/components/schemas/Phone"
                             readOnly: true
                             type: array
-                        telephoneIds:
-                            items:
-                                format: int64
-                                type: integer
-                            type: array
-                            writeOnly: true
                         twitter:
                             type: string
-                        webUrl:
+                        webUrls:
                             items:
                                 $ref: "#/components/schemas/WebUrl"
                             readOnly: true
                             type: array
-                        webUrlIds:
-                            items:
-                                format: int64
-                                type: integer
-                            type: array
-                            writeOnly: true
                     type: object
                 dashboardURL:
                     type: string
@@ -403,6 +413,10 @@ components:
                     type: string
                 jobTitle:
                     type: string
+                keywords:
+                    items:
+                        type: string
+                    type: array
                 myOrganizations:
                     items:
                         $ref: "#/components/schemas/Organization"

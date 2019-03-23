@@ -36,10 +36,15 @@ import java.nio.channels.ServerSocketChannel;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
+import java.security.SecureRandom;
+
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import org.junit.Ignore;
 import org.junit.Test;
@@ -65,6 +70,10 @@ public class Arquillian extends Runner implements Filterable {
 		_clazz = clazz;
 
 		_filteredSortedTestClass = new FilteredSortedTestClass(_clazz, null);
+
+		Random random = new SecureRandom();
+
+		_passCode = random.nextLong();
 	}
 
 	@Override
@@ -127,19 +136,32 @@ public class Arquillian extends Runner implements Filterable {
 			try {
 				frameworkMBean.startBundle(bundleId);
 
-				try (Socket socket = serverSocket.accept();
-					InputStream inputStream = socket.getInputStream();
-					ObjectInputStream objectInputStream = new ObjectInputStream(
-						inputStream)) {
+				while (true) {
+					try (Socket socket = serverSocket.accept();
+						InputStream inputStream = socket.getInputStream();
+						ObjectInputStream objectInputStream =
+							new ObjectInputStream(inputStream)) {
 
-					while (true) {
-						RunNotifierCommand runNotifierCommand =
-							(RunNotifierCommand)objectInputStream.readObject();
+						if (_passCode != objectInputStream.readLong()) {
+							_logger.log(
+								Level.WARNING,
+								"Pass code mismatch, dropped connection from " +
+									socket.getRemoteSocketAddress());
 
-						runNotifierCommand.execute(runNotifier);
+							continue;
+						}
+
+						while (true) {
+							RunNotifierCommand runNotifierCommand =
+								(RunNotifierCommand)
+									objectInputStream.readObject();
+
+							runNotifierCommand.execute(runNotifier);
+						}
 					}
-				}
-				catch (EOFException eofe) {
+					catch (EOFException eofe) {
+						break;
+					}
 				}
 			}
 			finally {
@@ -175,7 +197,7 @@ public class Arquillian extends Runner implements Filterable {
 
 		Path path = BndBundleUtil.createBundle(
 			_clazz.getName(), _filteredSortedTestClass._filteredMethodNames,
-			_inetAddress.getHostAddress(), port);
+			_inetAddress.getHostAddress(), port, _passCode);
 
 		URI uri = path.toUri();
 
@@ -192,11 +214,15 @@ public class Arquillian extends Runner implements Filterable {
 
 	private static final int _START_PORT = 32764;
 
+	private static final Logger _logger = Logger.getLogger(
+		Arquillian.class.getName());
+
 	private static final InetAddress _inetAddress =
 		InetAddress.getLoopbackAddress();
 
 	private final Class<?> _clazz;
 	private FilteredSortedTestClass _filteredSortedTestClass;
+	private final long _passCode;
 
 	private class FilteredSortedTestClass extends TestClass {
 

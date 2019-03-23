@@ -66,7 +66,7 @@ public class TestBundleActivator implements BundleActivator {
 
 		String reportServerHostName = attributes.getValue(
 			Headers.TEST_BRIDGE_REPORT_SERVER_HOST_NAME);
-		int reportServerPort = Integer.valueOf(
+		int reportServerPort = Integer.parseInt(
 			attributes.getValue(Headers.TEST_BRIDGE_REPORT_SERVER_PORT));
 
 		List<String> filterMethodNames = StringUtil.split(
@@ -107,6 +107,9 @@ public class TestBundleActivator implements BundleActivator {
 
 		};
 
+		long passCode = Long.parseLong(
+			attributes.getValue(Headers.TEST_BRIDGE_PASS_CODE));
+
 		Bundle systemBundle = bundleContext.getBundle(0);
 
 		BundleContext systemBundleContext = systemBundle.getBundleContext();
@@ -114,7 +117,7 @@ public class TestBundleActivator implements BundleActivator {
 		systemBundleContext.addBundleListener(
 			new TestBundleListener(
 				systemBundleContext, testBundle, testClass,
-				reportServerHostName, reportServerPort));
+				reportServerHostName, reportServerPort, passCode));
 	}
 
 	@Override

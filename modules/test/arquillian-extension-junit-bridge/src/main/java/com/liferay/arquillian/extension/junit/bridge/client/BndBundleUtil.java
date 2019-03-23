@@ -54,7 +54,7 @@ public class BndBundleUtil {
 
 	public static Path createBundle(
 			String className, List<String> filteredMethods, String hostAddress,
-			int port)
+			int port, long passCode)
 		throws Exception {
 
 		ClassLoader classLoader = new URLClassLoader(_getClassPathURLs(), null);
@@ -63,17 +63,17 @@ public class BndBundleUtil {
 
 		Method method = clazz.getDeclaredMethod(
 			"_createBundle", String.class, List.class, String.class,
-			Integer.TYPE);
+			Integer.TYPE, Long.TYPE);
 
 		method.setAccessible(true);
 
 		return (Path)method.invoke(
-			null, className, filteredMethods, hostAddress, port);
+			null, className, filteredMethods, hostAddress, port, passCode);
 	}
 
 	private static Path _createBundle(
 			String className, List<String> filteredMethods, String hostAddress,
-			int port)
+			int port, long passCode)
 		throws Exception {
 
 		File buildDir = new File(System.getProperty("user.dir"));
@@ -81,7 +81,8 @@ public class BndBundleUtil {
 		try (Workspace workspace = new Workspace(buildDir);
 			Project project = new Project(workspace, buildDir);
 			ProjectBuilder projectBuilder = _createProjectBuilder(
-				project, className, filteredMethods, hostAddress, port);
+				project, className, filteredMethods, hostAddress, port,
+				passCode);
 			Jar jar = projectBuilder.build();
 			Analyzer analyzer = new Analyzer()) {
 
@@ -100,7 +101,7 @@ public class BndBundleUtil {
 
 	private static ProjectBuilder _createProjectBuilder(
 			Project project, String className, List<String> filteredMethods,
-			String hostAddress, int port)
+			String hostAddress, int port, long passCode)
 		throws Exception {
 
 		project.setProperty(
@@ -130,6 +131,8 @@ public class BndBundleUtil {
 			Headers.TEST_BRIDGE_REPORT_SERVER_HOST_NAME, hostAddress);
 		project.setProperty(
 			Headers.TEST_BRIDGE_REPORT_SERVER_PORT, String.valueOf(port));
+		project.setProperty(
+			Headers.TEST_BRIDGE_PASS_CODE, String.valueOf(passCode));
 
 		Set<String> includeResources = new LinkedHashSet<>();
 

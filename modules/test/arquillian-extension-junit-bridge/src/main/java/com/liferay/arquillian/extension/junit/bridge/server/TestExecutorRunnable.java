@@ -27,9 +27,9 @@ import java.net.Socket;
 
 import java.util.List;
 import java.util.concurrent.TimeUnit;
-
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.AssumptionViolatedException;
@@ -59,17 +59,20 @@ import org.osgi.framework.BundleException;
 public class TestExecutorRunnable implements Runnable {
 
 	public TestExecutorRunnable(
-		Bundle bundle, TestClass testClass, Socket socket) {
+		Bundle bundle, TestClass testClass, Socket socket, long passCode) {
 
 		_bundle = bundle;
 		_testClass = testClass;
 		_socket = socket;
+		_passCode = passCode;
 	}
 
 	@Override
 	public void run() {
 		try (ObjectOutputStream objectOutputStream = new ObjectOutputStream(
 				_socket.getOutputStream())) {
+
+			objectOutputStream.writeLong(_passCode);
 
 			_execute(_testClass, objectOutputStream);
 		}
@@ -330,6 +333,7 @@ public class TestExecutorRunnable implements Runnable {
 		TestExecutorRunnable.class.getName());
 
 	private final Bundle _bundle;
+	private final long _passCode;
 	private final Socket _socket;
 	private final TestClass _testClass;
 

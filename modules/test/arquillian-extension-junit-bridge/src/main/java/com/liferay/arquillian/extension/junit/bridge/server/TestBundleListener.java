@@ -35,14 +35,15 @@ public class TestBundleListener implements BundleListener {
 
 	public TestBundleListener(
 		BundleContext systemBundleContext, Bundle testBundle,
-		TestClass testClass, String reportServerHostName,
-		int reportServerPort) {
+		TestClass testClass, String reportServerHostName, int reportServerPort,
+		long passCode) {
 
 		_systemBundleContext = systemBundleContext;
 		_testBundle = testBundle;
 		_testClass = testClass;
 		_reportServerHostName = reportServerHostName;
 		_reportServerPort = reportServerPort;
+		_passCode = passCode;
 	}
 
 	@Override
@@ -62,7 +63,8 @@ public class TestBundleListener implements BundleListener {
 				_socket = new Socket(_reportServerHostName, _reportServerPort);
 
 				_testExecutorThread = new Thread(
-					new TestExecutorRunnable(_testBundle, _testClass, _socket),
+					new TestExecutorRunnable(
+						_testBundle, _testClass, _socket, _passCode),
 					_testClass.getName() + "-executor-thread");
 
 				_testExecutorThread.setDaemon(true);
@@ -98,6 +100,7 @@ public class TestBundleListener implements BundleListener {
 	private static final Logger _logger = Logger.getLogger(
 		TestBundleListener.class.getName());
 
+	private final long _passCode;
 	private final String _reportServerHostName;
 	private final int _reportServerPort;
 	private Socket _socket;

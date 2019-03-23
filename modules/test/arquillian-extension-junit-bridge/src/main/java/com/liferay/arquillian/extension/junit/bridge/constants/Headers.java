@@ -25,6 +25,8 @@ public class Headers {
 	public static final String TEST_BRIDGE_FILTERED_METHOD_NAMES =
 		"Test-Bridge-Filtered-Method-Names";
 
+	public static final String TEST_BRIDGE_PASS_CODE = "Test-Bridge-Pass-Code";
+
 	public static final String TEST_BRIDGE_REPORT_SERVER_HOST_NAME =
 		"Test-Bridge-Report-Server-Host-Name";
 

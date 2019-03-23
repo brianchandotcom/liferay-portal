@@ -15,7 +15,15 @@
 package com.liferay.headless.foundation.internal.resource.v1_0;
 
 import com.liferay.headless.foundation.dto.v1_0.ContactInformation;
+import com.liferay.headless.foundation.dto.v1_0.Email;
+import com.liferay.headless.foundation.dto.v1_0.Phone;
+import com.liferay.headless.foundation.dto.v1_0.PostalAddress;
 import com.liferay.headless.foundation.dto.v1_0.UserAccount;
+import com.liferay.headless.foundation.dto.v1_0.WebUrl;
+import com.liferay.headless.foundation.internal.dto.v1_0.util.EmailUtil;
+import com.liferay.headless.foundation.internal.dto.v1_0.util.PhoneUtil;
+import com.liferay.headless.foundation.internal.dto.v1_0.util.PostalAddressUtil;
+import com.liferay.headless.foundation.internal.dto.v1_0.util.WebUrlUtil;
 import com.liferay.headless.foundation.resource.v1_0.UserAccountResource;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -35,6 +43,7 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.service.UserService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
@@ -288,11 +297,25 @@ public class UserAccountResourceImpl extends BaseUserAccountResourceImpl {
 				birthDate = user.getBirthday();
 				contactInformation = new ContactInformation() {
 					{
+						emails = transformToArray(
+							user.getEmailAddresses(), EmailUtil::toEmail,
+							Email.class);
 						facebook = contact.getFacebookSn();
 						jabber = contact.getJabberSn();
+						postalAddresses = transformToArray(
+							user.getAddresses(),
+							address -> PostalAddressUtil.toPostalAddress(
+								address,
+								contextAcceptLanguage.getPreferredLocale()),
+							PostalAddress.class);
 						skype = contact.getSkypeSn();
 						sms = contact.getSmsSn();
+						telephones = transformToArray(
+							user.getPhones(), PhoneUtil::toPhone, Phone.class);
 						twitter = contact.getTwitterSn();
+						webUrls = transformToArray(
+							user.getWebsites(), WebUrlUtil::toWebUrl,
+							WebUrl.class);
 					}
 				};
 				email = user.getEmailAddress();

@@ -937,6 +937,140 @@ public abstract class BaseStructuredContentResourceTestCase {
 	}
 
 	@Test
+	public void testGetContentSpaceStructuredContentKey() throws Exception {
+		StructuredContent postStructuredContent =
+			testGetContentSpaceStructuredContentKey_addStructuredContent();
+
+		StructuredContent getStructuredContent =
+			invokeGetContentSpaceStructuredContentKey(
+				postStructuredContent.getId());
+
+		assertEquals(postStructuredContent, getStructuredContent);
+		assertValid(getStructuredContent);
+	}
+
+	protected StructuredContent
+			testGetContentSpaceStructuredContentKey_addStructuredContent()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected StructuredContent invokeGetContentSpaceStructuredContentKey(
+			Long contentSpaceId, String key)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		String location =
+			_resourceURL +
+				_toPath(
+					"/content-spaces/{content-space-id}/structured-contents/key/{key}",
+					contentSpaceId, key);
+
+		options.setLocation(location);
+
+		String string = HttpUtil.URLtoString(options);
+
+		try {
+			return _outputObjectMapper.readValue(
+				string, StructuredContent.class);
+		}
+		catch (Exception e) {
+			_log.error("Unable to process HTTP response: " + string, e);
+
+			throw e;
+		}
+	}
+
+	protected Http.Response invokeGetContentSpaceStructuredContentKeyResponse(
+			Long contentSpaceId, String key)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		String location =
+			_resourceURL +
+				_toPath(
+					"/content-spaces/{content-space-id}/structured-contents/key/{key}",
+					contentSpaceId, key);
+
+		options.setLocation(location);
+
+		HttpUtil.URLtoString(options);
+
+		return options.getResponse();
+	}
+
+	@Test
+	public void testGetContentSpaceStructuredContentUuid() throws Exception {
+		StructuredContent postStructuredContent =
+			testGetContentSpaceStructuredContentUuid_addStructuredContent();
+
+		StructuredContent getStructuredContent =
+			invokeGetContentSpaceStructuredContentUuid(
+				postStructuredContent.getId());
+
+		assertEquals(postStructuredContent, getStructuredContent);
+		assertValid(getStructuredContent);
+	}
+
+	protected StructuredContent
+			testGetContentSpaceStructuredContentUuid_addStructuredContent()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected StructuredContent invokeGetContentSpaceStructuredContentUuid(
+			Long contentSpaceId, String uuid)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		String location =
+			_resourceURL +
+				_toPath(
+					"/content-spaces/{content-space-id}/structured-contents/uuid/{uuid}",
+					contentSpaceId, uuid);
+
+		options.setLocation(location);
+
+		String string = HttpUtil.URLtoString(options);
+
+		try {
+			return _outputObjectMapper.readValue(
+				string, StructuredContent.class);
+		}
+		catch (Exception e) {
+			_log.error("Unable to process HTTP response: " + string, e);
+
+			throw e;
+		}
+	}
+
+	protected Http.Response invokeGetContentSpaceStructuredContentUuidResponse(
+			Long contentSpaceId, String uuid)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		String location =
+			_resourceURL +
+				_toPath(
+					"/content-spaces/{content-space-id}/structured-contents/uuid/{uuid}",
+					contentSpaceId, uuid);
+
+		options.setLocation(location);
+
+		HttpUtil.URLtoString(options);
+
+		return options.getResponse();
+	}
+
+	@Test
 	public void testDeleteStructuredContent() throws Exception {
 		StructuredContent structuredContent =
 			testDeleteStructuredContent_addStructuredContent();
@@ -1488,6 +1622,14 @@ public abstract class BaseStructuredContentResourceTestCase {
 				"Invalid entity field " + entityFieldName);
 		}
 
+		if (entityFieldName.equals("key")) {
+			sb.append("'");
+			sb.append(String.valueOf(structuredContent.getKey()));
+			sb.append("'");
+
+			return sb.toString();
+		}
+
 		if (entityFieldName.equals("keywords")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
@@ -1527,6 +1669,14 @@ public abstract class BaseStructuredContentResourceTestCase {
 			return sb.toString();
 		}
 
+		if (entityFieldName.equals("uuid")) {
+			sb.append("'");
+			sb.append(String.valueOf(structuredContent.getUuid()));
+			sb.append("'");
+
+			return sb.toString();
+		}
+
 		if (entityFieldName.equals("viewableBy")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
@@ -1546,8 +1696,10 @@ public abstract class BaseStructuredContentResourceTestCase {
 				datePublished = RandomTestUtil.nextDate();
 				description = RandomTestUtil.randomString();
 				id = RandomTestUtil.randomLong();
+				key = RandomTestUtil.randomString();
 				lastReviewed = RandomTestUtil.nextDate();
 				title = RandomTestUtil.randomString();
+				uuid = RandomTestUtil.randomString();
 			}
 		};
 	}

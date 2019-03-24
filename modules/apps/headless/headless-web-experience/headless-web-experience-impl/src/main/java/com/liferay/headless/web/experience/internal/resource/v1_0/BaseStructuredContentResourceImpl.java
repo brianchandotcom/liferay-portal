@@ -124,6 +124,32 @@ public abstract class BaseStructuredContentResourceImpl
 	}
 
 	@Override
+	@GET
+	@Path("/content-spaces/{content-space-id}/structured-contents/key/{key}")
+	@Produces("application/json")
+	@Tags(value = {@Tag(name = "StructuredContent")})
+	public StructuredContent getContentSpaceStructuredContentKey(
+			@NotNull @PathParam("content-space-id") Long contentSpaceId,
+			@NotNull @PathParam("key") String key)
+		throws Exception {
+
+		return new StructuredContent();
+	}
+
+	@Override
+	@GET
+	@Path("/content-spaces/{content-space-id}/structured-contents/uuid/{uuid}")
+	@Produces("application/json")
+	@Tags(value = {@Tag(name = "StructuredContent")})
+	public StructuredContent getContentSpaceStructuredContentUuid(
+			@NotNull @PathParam("content-space-id") Long contentSpaceId,
+			@NotNull @PathParam("uuid") String uuid)
+		throws Exception {
+
+		return new StructuredContent();
+	}
+
+	@Override
 	@DELETE
 	@Path("/structured-contents/{structured-content-id}")
 	@Produces("application/json")
@@ -201,6 +227,10 @@ public abstract class BaseStructuredContentResourceImpl
 				structuredContent.getDescription());
 		}
 
+		if (Validator.isNotNull(structuredContent.getKey())) {
+			existingStructuredContent.setKey(structuredContent.getKey());
+		}
+
 		if (Validator.isNotNull(structuredContent.getKeywords())) {
 			existingStructuredContent.setKeywords(
 				structuredContent.getKeywords());
@@ -223,6 +253,10 @@ public abstract class BaseStructuredContentResourceImpl
 
 		if (Validator.isNotNull(structuredContent.getTitle())) {
 			existingStructuredContent.setTitle(structuredContent.getTitle());
+		}
+
+		if (Validator.isNotNull(structuredContent.getUuid())) {
+			existingStructuredContent.setUuid(structuredContent.getUuid());
 		}
 
 		if (Validator.isNotNull(structuredContent.getViewableBy())) {

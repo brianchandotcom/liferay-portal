@@ -341,6 +341,28 @@ public class StructuredContent {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long id;
 
+	public String getKey() {
+		return key;
+	}
+
+	public void setKey(String key) {
+		this.key = key;
+	}
+
+	@JsonIgnore
+	public void setKey(UnsafeSupplier<String, Exception> keyUnsafeSupplier) {
+		try {
+			key = keyUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected String key;
+
 	public String[] getKeywords() {
 		return keywords;
 	}
@@ -512,6 +534,28 @@ public class StructuredContent {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String title;
 
+	public String getUuid() {
+		return uuid;
+	}
+
+	public void setUuid(String uuid) {
+		this.uuid = uuid;
+	}
+
+	@JsonIgnore
+	public void setUuid(UnsafeSupplier<String, Exception> uuidUnsafeSupplier) {
+		try {
+			uuid = uuidUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected String uuid;
+
 	public ViewableBy getViewableBy() {
 		return viewableBy;
 	}
@@ -647,6 +691,13 @@ public class StructuredContent {
 		sb.append(id);
 		sb.append(", ");
 
+		sb.append("\"key\": ");
+
+		sb.append("\"");
+		sb.append(key);
+		sb.append("\"");
+		sb.append(", ");
+
 		sb.append("\"keywords\": ");
 
 		if (keywords == null) {
@@ -749,6 +800,13 @@ public class StructuredContent {
 
 		sb.append("\"");
 		sb.append(title);
+		sb.append("\"");
+		sb.append(", ");
+
+		sb.append("\"uuid\": ");
+
+		sb.append("\"");
+		sb.append(uuid);
 		sb.append("\"");
 		sb.append(", ");
 

@@ -244,68 +244,6 @@ public abstract class BaseBlogPostingImageResourceTestCase {
 	}
 
 	@Test
-	public void testPutBlogPostingImage() throws Exception {
-		Assert.assertTrue(true);
-	}
-
-	protected BlogPostingImage testPutBlogPostingImage_addBlogPostingImage()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	protected BlogPostingImage invokePutBlogPostingImage(
-			Long blogPostingImageId, MultipartBody multipartBody)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		String location =
-			_resourceURL +
-				_toPath(
-					"/blog-posting-images/{blog-posting-image-id}",
-					blogPostingImageId);
-
-		options.setLocation(location);
-
-		options.setPut(true);
-
-		String string = HttpUtil.URLtoString(options);
-
-		try {
-			return _outputObjectMapper.readValue(
-				string, BlogPostingImage.class);
-		}
-		catch (Exception e) {
-			_log.error("Unable to process HTTP response: " + string, e);
-
-			throw e;
-		}
-	}
-
-	protected Http.Response invokePutBlogPostingImageResponse(
-			Long blogPostingImageId, MultipartBody multipartBody)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		String location =
-			_resourceURL +
-				_toPath(
-					"/blog-posting-images/{blog-posting-image-id}",
-					blogPostingImageId);
-
-		options.setLocation(location);
-
-		options.setPut(true);
-
-		HttpUtil.URLtoString(options);
-
-		return options.getResponse();
-	}
-
-	@Test
 	public void testGetContentSpaceBlogPostingImagesPage() throws Exception {
 		Long contentSpaceId =
 			testGetContentSpaceBlogPostingImagesPage_getContentSpaceId();

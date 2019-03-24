@@ -47,7 +47,6 @@ import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
-import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
@@ -85,21 +84,6 @@ public abstract class BaseBlogPostingImageResourceImpl
 	public BlogPostingImage getBlogPostingImage(
 			@NotNull @PathParam("blog-posting-image-id") Long
 				blogPostingImageId)
-		throws Exception {
-
-		return new BlogPostingImage();
-	}
-
-	@Override
-	@Consumes("multipart/form-data")
-	@PUT
-	@Path("/blog-posting-images/{blog-posting-image-id}")
-	@Produces("application/json")
-	@Tags(value = {@Tag(name = "BlogPostingImage")})
-	public BlogPostingImage putBlogPostingImage(
-			@NotNull @PathParam("blog-posting-image-id") Long
-				blogPostingImageId,
-			MultipartBody multipartBody)
 		throws Exception {
 
 		return new BlogPostingImage();

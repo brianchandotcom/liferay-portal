@@ -41,10 +41,6 @@ public interface BlogPostingImageResource {
 	public BlogPostingImage getBlogPostingImage(Long blogPostingImageId)
 		throws Exception;
 
-	public BlogPostingImage putBlogPostingImage(
-			Long blogPostingImageId, MultipartBody multipartBody)
-		throws Exception;
-
 	public Page<BlogPostingImage> getContentSpaceBlogPostingImagesPage(
 			Long contentSpaceId, Filter filter, Pagination pagination,
 			Sort[] sorts)

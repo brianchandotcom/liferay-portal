@@ -202,20 +202,6 @@ public class Mutation {
 					blogPostingImageId));
 	}
 
-	@GraphQLInvokeDetached
-	public BlogPostingImage putBlogPostingImage(
-			@GraphQLName("blog-posting-image-id") Long blogPostingImageId,
-			@GraphQLName("MultipartBody") MultipartBody multipartBody)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_blogPostingImageResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			blogPostingImageResource ->
-				blogPostingImageResource.putBlogPostingImage(
-					blogPostingImageId, multipartBody));
-	}
-
 	@GraphQLField
 	@GraphQLInvokeDetached
 	public BlogPostingImage postContentSpaceBlogPostingImage(

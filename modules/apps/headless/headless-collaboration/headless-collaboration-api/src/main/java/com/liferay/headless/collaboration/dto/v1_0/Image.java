@@ -107,7 +107,7 @@ public class Image {
 	}
 
 	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
 	protected Long imageId;
 
 	public String toString() {

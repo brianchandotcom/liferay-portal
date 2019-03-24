@@ -117,7 +117,7 @@ public class Mutation {
 
 	@GraphQLField
 	@GraphQLInvokeDetached
-	public Document postContentSpaceDocument(
+	public Document postContentSpaceTreeDocument(
 			@GraphQLName("content-space-id") Long contentSpaceId,
 			@GraphQLName("MultipartBody") MultipartBody multipartBody)
 		throws Exception {
@@ -125,7 +125,7 @@ public class Mutation {
 		return _applyComponentServiceObjects(
 			_documentResourceComponentServiceObjects,
 			this::_populateResourceContext,
-			documentResource -> documentResource.postContentSpaceDocument(
+			documentResource -> documentResource.postContentSpaceTreeDocument(
 				contentSpaceId, multipartBody));
 	}
 
@@ -181,7 +181,7 @@ public class Mutation {
 
 	@GraphQLField
 	@GraphQLInvokeDetached
-	public Folder postContentSpaceFolder(
+	public Folder postContentSpaceTreeFolder(
 			@GraphQLName("content-space-id") Long contentSpaceId,
 			@GraphQLName("Folder") Folder folder)
 		throws Exception {
@@ -189,7 +189,7 @@ public class Mutation {
 		return _applyComponentServiceObjects(
 			_folderResourceComponentServiceObjects,
 			this::_populateResourceContext,
-			folderResource -> folderResource.postContentSpaceFolder(
+			folderResource -> folderResource.postContentSpaceTreeFolder(
 				contentSpaceId, folder));
 	}
 

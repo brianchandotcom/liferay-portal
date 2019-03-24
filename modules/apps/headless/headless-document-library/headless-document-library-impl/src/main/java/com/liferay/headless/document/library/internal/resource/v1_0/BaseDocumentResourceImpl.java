@@ -74,10 +74,10 @@ public abstract class BaseDocumentResourceImpl implements DocumentResource {
 			@Parameter(in = ParameterIn.QUERY, name = "sorts")
 		}
 	)
-	@Path("/content-spaces/{content-space-id}/documents")
+	@Path("/content-spaces/{content-space-id}/tree/documents")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "Document")})
-	public Page<Document> getContentSpaceDocumentsPage(
+	public Page<Document> getContentSpaceTreeDocumentsPage(
 			@NotNull @PathParam("content-space-id") Long contentSpaceId,
 			@Context Filter filter, @Context Pagination pagination,
 			@Context Sort[] sorts)
@@ -89,10 +89,10 @@ public abstract class BaseDocumentResourceImpl implements DocumentResource {
 	@Override
 	@Consumes("multipart/form-data")
 	@POST
-	@Path("/content-spaces/{content-space-id}/documents")
+	@Path("/content-spaces/{content-space-id}/tree/documents")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "Document")})
-	public Document postContentSpaceDocument(
+	public Document postContentSpaceTreeDocument(
 			@NotNull @PathParam("content-space-id") Long contentSpaceId,
 			MultipartBody multipartBody)
 		throws Exception {

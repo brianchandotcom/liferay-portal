@@ -97,6 +97,40 @@ public abstract class BaseKnowledgeBaseArticleResourceImpl
 	}
 
 	@Override
+	@GET
+	@Parameters(
+		value = {
+			@Parameter(in = ParameterIn.QUERY, name = "page"),
+			@Parameter(in = ParameterIn.QUERY, name = "pageSize")
+		}
+	)
+	@Path("/content-spaces/{content-space-id}/tree/knowledge-base-articles")
+	@Produces("application/json")
+	@Tags(value = {@Tag(name = "KnowledgeBaseArticle")})
+	public Page<KnowledgeBaseArticle>
+			getContentSpaceTreeKnowledgeBaseArticlesPage(
+				@NotNull @PathParam("content-space-id") Long contentSpaceId,
+				@Context Pagination pagination)
+		throws Exception {
+
+		return Page.of(Collections.emptyList());
+	}
+
+	@Override
+	@Consumes("application/json")
+	@POST
+	@Path("/content-spaces/{content-space-id}/tree/knowledge-base-articles")
+	@Produces("application/json")
+	@Tags(value = {@Tag(name = "KnowledgeBaseArticle")})
+	public KnowledgeBaseArticle postContentSpaceTreeKnowledgeBaseArticle(
+			@NotNull @PathParam("content-space-id") Long contentSpaceId,
+			KnowledgeBaseArticle knowledgeBaseArticle)
+		throws Exception {
+
+		return new KnowledgeBaseArticle();
+	}
+
+	@Override
 	@DELETE
 	@Path("/knowledge-base-articles/{knowledge-base-article-id}")
 	@Produces("application/json")

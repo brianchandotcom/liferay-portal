@@ -536,6 +536,28 @@ public class Query {
 
 	@GraphQLField
 	@GraphQLInvokeDetached
+	public Collection<KnowledgeBaseArticle>
+			getContentSpaceTreeKnowledgeBaseArticlesPage(
+				@GraphQLName("content-space-id") Long contentSpaceId,
+				@GraphQLName("pageSize") int pageSize,
+				@GraphQLName("page") int page)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_knowledgeBaseArticleResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			knowledgeBaseArticleResource -> {
+				Page paginationPage =
+					knowledgeBaseArticleResource.
+						getContentSpaceTreeKnowledgeBaseArticlesPage(
+							contentSpaceId, Pagination.of(pageSize, page));
+
+				return paginationPage.getItems();
+			});
+	}
+
+	@GraphQLField
+	@GraphQLInvokeDetached
 	public KnowledgeBaseArticle getKnowledgeBaseArticle(
 			@GraphQLName("knowledge-base-article-id") Long
 				knowledgeBaseArticleId)
@@ -636,7 +658,7 @@ public class Query {
 	@GraphQLField
 	@GraphQLInvokeDetached
 	public Collection<KnowledgeBaseFolder>
-			getContentSpaceKnowledgeBaseFoldersPage(
+			getContentSpaceTreeKnowledgeBaseFoldersPage(
 				@GraphQLName("content-space-id") Long contentSpaceId,
 				@GraphQLName("pageSize") int pageSize,
 				@GraphQLName("page") int page)
@@ -648,7 +670,7 @@ public class Query {
 			knowledgeBaseFolderResource -> {
 				Page paginationPage =
 					knowledgeBaseFolderResource.
-						getContentSpaceKnowledgeBaseFoldersPage(
+						getContentSpaceTreeKnowledgeBaseFoldersPage(
 							contentSpaceId, Pagination.of(pageSize, page));
 
 				return paginationPage.getItems();

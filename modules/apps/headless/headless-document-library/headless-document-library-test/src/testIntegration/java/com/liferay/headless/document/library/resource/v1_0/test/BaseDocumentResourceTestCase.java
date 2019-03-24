@@ -111,18 +111,18 @@ public abstract class BaseDocumentResourceTestCase {
 	}
 
 	@Test
-	public void testGetContentSpaceDocumentsPage() throws Exception {
+	public void testGetContentSpaceTreeDocumentsPage() throws Exception {
 		Long contentSpaceId =
-			testGetContentSpaceDocumentsPage_getContentSpaceId();
+			testGetContentSpaceTreeDocumentsPage_getContentSpaceId();
 		Long irrelevantContentSpaceId =
-			testGetContentSpaceDocumentsPage_getIrrelevantContentSpaceId();
+			testGetContentSpaceTreeDocumentsPage_getIrrelevantContentSpaceId();
 
 		if ((irrelevantContentSpaceId != null)) {
 			Document irrelevantDocument =
-				testGetContentSpaceDocumentsPage_addDocument(
+				testGetContentSpaceTreeDocumentsPage_addDocument(
 					irrelevantContentSpaceId, randomIrrelevantDocument());
 
-			Page<Document> page = invokeGetContentSpaceDocumentsPage(
+			Page<Document> page = invokeGetContentSpaceTreeDocumentsPage(
 				irrelevantContentSpaceId, null, Pagination.of(1, 2), null);
 
 			Assert.assertEquals(1, page.getTotalCount());
@@ -133,13 +133,13 @@ public abstract class BaseDocumentResourceTestCase {
 			assertValid(page);
 		}
 
-		Document document1 = testGetContentSpaceDocumentsPage_addDocument(
+		Document document1 = testGetContentSpaceTreeDocumentsPage_addDocument(
 			contentSpaceId, randomDocument());
 
-		Document document2 = testGetContentSpaceDocumentsPage_addDocument(
+		Document document2 = testGetContentSpaceTreeDocumentsPage_addDocument(
 			contentSpaceId, randomDocument());
 
-		Page<Document> page = invokeGetContentSpaceDocumentsPage(
+		Page<Document> page = invokeGetContentSpaceTreeDocumentsPage(
 			contentSpaceId, null, Pagination.of(1, 2), null);
 
 		Assert.assertEquals(2, page.getTotalCount());
@@ -151,7 +151,7 @@ public abstract class BaseDocumentResourceTestCase {
 	}
 
 	@Test
-	public void testGetContentSpaceDocumentsPageWithFilterDateTimeEquals()
+	public void testGetContentSpaceTreeDocumentsPageWithFilterDateTimeEquals()
 		throws Exception {
 
 		List<EntityField> entityFields = getEntityFields(
@@ -162,7 +162,7 @@ public abstract class BaseDocumentResourceTestCase {
 		}
 
 		Long contentSpaceId =
-			testGetContentSpaceDocumentsPage_getContentSpaceId();
+			testGetContentSpaceTreeDocumentsPage_getContentSpaceId();
 
 		Document document1 = randomDocument();
 		Document document2 = randomDocument();
@@ -173,16 +173,16 @@ public abstract class BaseDocumentResourceTestCase {
 				DateUtils.addMinutes(new Date(), -2));
 		}
 
-		document1 = testGetContentSpaceDocumentsPage_addDocument(
+		document1 = testGetContentSpaceTreeDocumentsPage_addDocument(
 			contentSpaceId, document1);
 
 		Thread.sleep(1000);
 
-		document2 = testGetContentSpaceDocumentsPage_addDocument(
+		document2 = testGetContentSpaceTreeDocumentsPage_addDocument(
 			contentSpaceId, document2);
 
 		for (EntityField entityField : entityFields) {
-			Page<Document> page = invokeGetContentSpaceDocumentsPage(
+			Page<Document> page = invokeGetContentSpaceTreeDocumentsPage(
 				contentSpaceId, getFilterString(entityField, "eq", document1),
 				Pagination.of(1, 2), null);
 
@@ -193,7 +193,7 @@ public abstract class BaseDocumentResourceTestCase {
 	}
 
 	@Test
-	public void testGetContentSpaceDocumentsPageWithFilterStringEquals()
+	public void testGetContentSpaceTreeDocumentsPageWithFilterStringEquals()
 		throws Exception {
 
 		List<EntityField> entityFields = getEntityFields(
@@ -204,17 +204,17 @@ public abstract class BaseDocumentResourceTestCase {
 		}
 
 		Long contentSpaceId =
-			testGetContentSpaceDocumentsPage_getContentSpaceId();
+			testGetContentSpaceTreeDocumentsPage_getContentSpaceId();
 
-		Document document1 = testGetContentSpaceDocumentsPage_addDocument(
+		Document document1 = testGetContentSpaceTreeDocumentsPage_addDocument(
 			contentSpaceId, randomDocument());
 
 		@SuppressWarnings("PMD.UnusedLocalVariable")
-		Document document2 = testGetContentSpaceDocumentsPage_addDocument(
+		Document document2 = testGetContentSpaceTreeDocumentsPage_addDocument(
 			contentSpaceId, randomDocument());
 
 		for (EntityField entityField : entityFields) {
-			Page<Document> page = invokeGetContentSpaceDocumentsPage(
+			Page<Document> page = invokeGetContentSpaceTreeDocumentsPage(
 				contentSpaceId, getFilterString(entityField, "eq", document1),
 				Pagination.of(1, 2), null);
 
@@ -225,29 +225,29 @@ public abstract class BaseDocumentResourceTestCase {
 	}
 
 	@Test
-	public void testGetContentSpaceDocumentsPageWithPagination()
+	public void testGetContentSpaceTreeDocumentsPageWithPagination()
 		throws Exception {
 
 		Long contentSpaceId =
-			testGetContentSpaceDocumentsPage_getContentSpaceId();
+			testGetContentSpaceTreeDocumentsPage_getContentSpaceId();
 
-		Document document1 = testGetContentSpaceDocumentsPage_addDocument(
+		Document document1 = testGetContentSpaceTreeDocumentsPage_addDocument(
 			contentSpaceId, randomDocument());
 
-		Document document2 = testGetContentSpaceDocumentsPage_addDocument(
+		Document document2 = testGetContentSpaceTreeDocumentsPage_addDocument(
 			contentSpaceId, randomDocument());
 
-		Document document3 = testGetContentSpaceDocumentsPage_addDocument(
+		Document document3 = testGetContentSpaceTreeDocumentsPage_addDocument(
 			contentSpaceId, randomDocument());
 
-		Page<Document> page1 = invokeGetContentSpaceDocumentsPage(
+		Page<Document> page1 = invokeGetContentSpaceTreeDocumentsPage(
 			contentSpaceId, null, Pagination.of(1, 2), null);
 
 		List<Document> documents1 = (List<Document>)page1.getItems();
 
 		Assert.assertEquals(documents1.toString(), 2, documents1.size());
 
-		Page<Document> page2 = invokeGetContentSpaceDocumentsPage(
+		Page<Document> page2 = invokeGetContentSpaceTreeDocumentsPage(
 			contentSpaceId, null, Pagination.of(2, 2), null);
 
 		Assert.assertEquals(3, page2.getTotalCount());
@@ -267,7 +267,7 @@ public abstract class BaseDocumentResourceTestCase {
 	}
 
 	@Test
-	public void testGetContentSpaceDocumentsPageWithSortDateTime()
+	public void testGetContentSpaceTreeDocumentsPageWithSortDateTime()
 		throws Exception {
 
 		List<EntityField> entityFields = getEntityFields(
@@ -278,7 +278,7 @@ public abstract class BaseDocumentResourceTestCase {
 		}
 
 		Long contentSpaceId =
-			testGetContentSpaceDocumentsPage_getContentSpaceId();
+			testGetContentSpaceTreeDocumentsPage_getContentSpaceId();
 
 		Document document1 = randomDocument();
 		Document document2 = randomDocument();
@@ -289,16 +289,16 @@ public abstract class BaseDocumentResourceTestCase {
 				DateUtils.addMinutes(new Date(), -2));
 		}
 
-		document1 = testGetContentSpaceDocumentsPage_addDocument(
+		document1 = testGetContentSpaceTreeDocumentsPage_addDocument(
 			contentSpaceId, document1);
 
 		Thread.sleep(1000);
 
-		document2 = testGetContentSpaceDocumentsPage_addDocument(
+		document2 = testGetContentSpaceTreeDocumentsPage_addDocument(
 			contentSpaceId, document2);
 
 		for (EntityField entityField : entityFields) {
-			Page<Document> ascPage = invokeGetContentSpaceDocumentsPage(
+			Page<Document> ascPage = invokeGetContentSpaceTreeDocumentsPage(
 				contentSpaceId, null, Pagination.of(1, 2),
 				entityField.getName() + ":asc");
 
@@ -306,7 +306,7 @@ public abstract class BaseDocumentResourceTestCase {
 				Arrays.asList(document1, document2),
 				(List<Document>)ascPage.getItems());
 
-			Page<Document> descPage = invokeGetContentSpaceDocumentsPage(
+			Page<Document> descPage = invokeGetContentSpaceTreeDocumentsPage(
 				contentSpaceId, null, Pagination.of(1, 2),
 				entityField.getName() + ":desc");
 
@@ -317,7 +317,7 @@ public abstract class BaseDocumentResourceTestCase {
 	}
 
 	@Test
-	public void testGetContentSpaceDocumentsPageWithSortString()
+	public void testGetContentSpaceTreeDocumentsPageWithSortString()
 		throws Exception {
 
 		List<EntityField> entityFields = getEntityFields(
@@ -328,7 +328,7 @@ public abstract class BaseDocumentResourceTestCase {
 		}
 
 		Long contentSpaceId =
-			testGetContentSpaceDocumentsPage_getContentSpaceId();
+			testGetContentSpaceTreeDocumentsPage_getContentSpaceId();
 
 		Document document1 = randomDocument();
 		Document document2 = randomDocument();
@@ -338,14 +338,14 @@ public abstract class BaseDocumentResourceTestCase {
 			BeanUtils.setProperty(document2, entityField.getName(), "Bbb");
 		}
 
-		document1 = testGetContentSpaceDocumentsPage_addDocument(
+		document1 = testGetContentSpaceTreeDocumentsPage_addDocument(
 			contentSpaceId, document1);
 
-		document2 = testGetContentSpaceDocumentsPage_addDocument(
+		document2 = testGetContentSpaceTreeDocumentsPage_addDocument(
 			contentSpaceId, document2);
 
 		for (EntityField entityField : entityFields) {
-			Page<Document> ascPage = invokeGetContentSpaceDocumentsPage(
+			Page<Document> ascPage = invokeGetContentSpaceTreeDocumentsPage(
 				contentSpaceId, null, Pagination.of(1, 2),
 				entityField.getName() + ":asc");
 
@@ -353,7 +353,7 @@ public abstract class BaseDocumentResourceTestCase {
 				Arrays.asList(document1, document2),
 				(List<Document>)ascPage.getItems());
 
-			Page<Document> descPage = invokeGetContentSpaceDocumentsPage(
+			Page<Document> descPage = invokeGetContentSpaceTreeDocumentsPage(
 				contentSpaceId, null, Pagination.of(1, 2),
 				entityField.getName() + ":desc");
 
@@ -363,7 +363,7 @@ public abstract class BaseDocumentResourceTestCase {
 		}
 	}
 
-	protected Document testGetContentSpaceDocumentsPage_addDocument(
+	protected Document testGetContentSpaceTreeDocumentsPage_addDocument(
 			Long contentSpaceId, Document document)
 		throws Exception {
 
@@ -371,20 +371,20 @@ public abstract class BaseDocumentResourceTestCase {
 			"This method needs to be implemented");
 	}
 
-	protected Long testGetContentSpaceDocumentsPage_getContentSpaceId()
+	protected Long testGetContentSpaceTreeDocumentsPage_getContentSpaceId()
 		throws Exception {
 
 		return testGroup.getGroupId();
 	}
 
 	protected Long
-			testGetContentSpaceDocumentsPage_getIrrelevantContentSpaceId()
+			testGetContentSpaceTreeDocumentsPage_getIrrelevantContentSpaceId()
 		throws Exception {
 
 		return irrelevantGroup.getGroupId();
 	}
 
-	protected Page<Document> invokeGetContentSpaceDocumentsPage(
+	protected Page<Document> invokeGetContentSpaceTreeDocumentsPage(
 			Long contentSpaceId, String filterString, Pagination pagination,
 			String sortString)
 		throws Exception {
@@ -394,7 +394,7 @@ public abstract class BaseDocumentResourceTestCase {
 		String location =
 			_resourceURL +
 				_toPath(
-					"/content-spaces/{content-space-id}/documents",
+					"/content-spaces/{content-space-id}/tree/documents",
 					contentSpaceId);
 
 		location = HttpUtil.addParameter(location, "filter", filterString);
@@ -416,7 +416,7 @@ public abstract class BaseDocumentResourceTestCase {
 			});
 	}
 
-	protected Http.Response invokeGetContentSpaceDocumentsPageResponse(
+	protected Http.Response invokeGetContentSpaceTreeDocumentsPageResponse(
 			Long contentSpaceId, String filterString, Pagination pagination,
 			String sortString)
 		throws Exception {
@@ -426,7 +426,7 @@ public abstract class BaseDocumentResourceTestCase {
 		String location =
 			_resourceURL +
 				_toPath(
-					"/content-spaces/{content-space-id}/documents",
+					"/content-spaces/{content-space-id}/tree/documents",
 					contentSpaceId);
 
 		location = HttpUtil.addParameter(location, "filter", filterString);
@@ -446,11 +446,11 @@ public abstract class BaseDocumentResourceTestCase {
 	}
 
 	@Test
-	public void testPostContentSpaceDocument() throws Exception {
+	public void testPostContentSpaceTreeDocument() throws Exception {
 		Assert.assertTrue(true);
 	}
 
-	protected Document testPostContentSpaceDocument_addDocument(
+	protected Document testPostContentSpaceTreeDocument_addDocument(
 			Document document)
 		throws Exception {
 
@@ -458,7 +458,7 @@ public abstract class BaseDocumentResourceTestCase {
 			"This method needs to be implemented");
 	}
 
-	protected Document invokePostContentSpaceDocument(
+	protected Document invokePostContentSpaceTreeDocument(
 			Long contentSpaceId, MultipartBody multipartBody)
 		throws Exception {
 
@@ -467,7 +467,7 @@ public abstract class BaseDocumentResourceTestCase {
 		String location =
 			_resourceURL +
 				_toPath(
-					"/content-spaces/{content-space-id}/documents",
+					"/content-spaces/{content-space-id}/tree/documents",
 					contentSpaceId);
 
 		options.setLocation(location);
@@ -486,7 +486,7 @@ public abstract class BaseDocumentResourceTestCase {
 		}
 	}
 
-	protected Http.Response invokePostContentSpaceDocumentResponse(
+	protected Http.Response invokePostContentSpaceTreeDocumentResponse(
 			Long contentSpaceId, MultipartBody multipartBody)
 		throws Exception {
 
@@ -495,7 +495,7 @@ public abstract class BaseDocumentResourceTestCase {
 		String location =
 			_resourceURL +
 				_toPath(
-					"/content-spaces/{content-space-id}/documents",
+					"/content-spaces/{content-space-id}/tree/documents",
 					contentSpaceId);
 
 		options.setLocation(location);

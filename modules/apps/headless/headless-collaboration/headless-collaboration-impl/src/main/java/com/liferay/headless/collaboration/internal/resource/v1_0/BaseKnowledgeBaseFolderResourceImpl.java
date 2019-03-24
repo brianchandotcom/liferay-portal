@@ -71,12 +71,13 @@ public abstract class BaseKnowledgeBaseFolderResourceImpl
 			@Parameter(in = ParameterIn.QUERY, name = "pageSize")
 		}
 	)
-	@Path("/content-spaces/{content-space-id}/knowledge-base-folders")
+	@Path("/content-spaces/{content-space-id}/tree/knowledge-base-folders")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "KnowledgeBaseFolder")})
-	public Page<KnowledgeBaseFolder> getContentSpaceKnowledgeBaseFoldersPage(
-			@NotNull @PathParam("content-space-id") Long contentSpaceId,
-			@Context Pagination pagination)
+	public Page<KnowledgeBaseFolder>
+			getContentSpaceTreeKnowledgeBaseFoldersPage(
+				@NotNull @PathParam("content-space-id") Long contentSpaceId,
+				@Context Pagination pagination)
 		throws Exception {
 
 		return Page.of(Collections.emptyList());
@@ -85,10 +86,10 @@ public abstract class BaseKnowledgeBaseFolderResourceImpl
 	@Override
 	@Consumes("application/json")
 	@POST
-	@Path("/content-spaces/{content-space-id}/knowledge-base-folders")
+	@Path("/content-spaces/{content-space-id}/tree/knowledge-base-folders")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "KnowledgeBaseFolder")})
-	public KnowledgeBaseFolder postContentSpaceKnowledgeBaseFolder(
+	public KnowledgeBaseFolder postContentSpaceTreeKnowledgeBaseFolder(
 			@NotNull @PathParam("content-space-id") Long contentSpaceId,
 			KnowledgeBaseFolder knowledgeBaseFolder)
 		throws Exception {

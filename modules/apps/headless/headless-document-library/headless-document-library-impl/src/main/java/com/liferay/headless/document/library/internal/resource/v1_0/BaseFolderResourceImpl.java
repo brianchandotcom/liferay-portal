@@ -74,10 +74,10 @@ public abstract class BaseFolderResourceImpl implements FolderResource {
 			@Parameter(in = ParameterIn.QUERY, name = "sorts")
 		}
 	)
-	@Path("/content-spaces/{content-space-id}/folders")
+	@Path("/content-spaces/{content-space-id}/tree/folders")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "Folder")})
-	public Page<Folder> getContentSpaceFoldersPage(
+	public Page<Folder> getContentSpaceTreeFoldersPage(
 			@NotNull @PathParam("content-space-id") Long contentSpaceId,
 			@Context Filter filter, @Context Pagination pagination,
 			@Context Sort[] sorts)
@@ -89,10 +89,10 @@ public abstract class BaseFolderResourceImpl implements FolderResource {
 	@Override
 	@Consumes("application/json")
 	@POST
-	@Path("/content-spaces/{content-space-id}/folders")
+	@Path("/content-spaces/{content-space-id}/tree/folders")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "Folder")})
-	public Folder postContentSpaceFolder(
+	public Folder postContentSpaceTreeFolder(
 			@NotNull @PathParam("content-space-id") Long contentSpaceId,
 			Folder folder)
 		throws Exception {

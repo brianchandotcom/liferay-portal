@@ -40,6 +40,15 @@ public interface KnowledgeBaseArticleResource {
 			Long contentSpaceId, KnowledgeBaseArticle knowledgeBaseArticle)
 		throws Exception;
 
+	public Page<KnowledgeBaseArticle>
+			getContentSpaceTreeKnowledgeBaseArticlesPage(
+				Long contentSpaceId, Pagination pagination)
+		throws Exception;
+
+	public KnowledgeBaseArticle postContentSpaceTreeKnowledgeBaseArticle(
+			Long contentSpaceId, KnowledgeBaseArticle knowledgeBaseArticle)
+		throws Exception;
+
 	public boolean deleteKnowledgeBaseArticle(Long knowledgeBaseArticleId)
 		throws Exception;
 

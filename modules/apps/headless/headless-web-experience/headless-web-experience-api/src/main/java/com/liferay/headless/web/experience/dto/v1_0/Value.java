@@ -133,17 +133,17 @@ public class Value {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Geo geo;
 
-	public StructuredContentImage getImage() {
+	public ContentDocument getImage() {
 		return image;
 	}
 
-	public void setImage(StructuredContentImage image) {
+	public void setImage(ContentDocument image) {
 		this.image = image;
 	}
 
 	@JsonIgnore
 	public void setImage(
-		UnsafeSupplier<StructuredContentImage, Exception> imageUnsafeSupplier) {
+		UnsafeSupplier<ContentDocument, Exception> imageUnsafeSupplier) {
 
 		try {
 			image = imageUnsafeSupplier.get();
@@ -155,7 +155,55 @@ public class Value {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
-	protected StructuredContentImage image;
+	protected ContentDocument image;
+
+	public String getImageDescription() {
+		return imageDescription;
+	}
+
+	public void setImageDescription(String imageDescription) {
+		this.imageDescription = imageDescription;
+	}
+
+	@JsonIgnore
+	public void setImageDescription(
+		UnsafeSupplier<String, Exception> imageDescriptionUnsafeSupplier) {
+
+		try {
+			imageDescription = imageDescriptionUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected String imageDescription;
+
+	public Long getImageId() {
+		return imageId;
+	}
+
+	public void setImageId(Long imageId) {
+		this.imageId = imageId;
+	}
+
+	@JsonIgnore
+	public void setImageId(
+		UnsafeSupplier<Long, Exception> imageIdUnsafeSupplier) {
+
+		try {
+			imageId = imageIdUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+	protected Long imageId;
 
 	public String getLink() {
 		return link;
@@ -260,6 +308,18 @@ public class Value {
 		sb.append("\"image\": ");
 
 		sb.append(image);
+		sb.append(", ");
+
+		sb.append("\"imageDescription\": ");
+
+		sb.append("\"");
+		sb.append(imageDescription);
+		sb.append("\"");
+		sb.append(", ");
+
+		sb.append("\"imageId\": ");
+
+		sb.append(imageId);
 		sb.append(", ");
 
 		sb.append("\"link\": ");

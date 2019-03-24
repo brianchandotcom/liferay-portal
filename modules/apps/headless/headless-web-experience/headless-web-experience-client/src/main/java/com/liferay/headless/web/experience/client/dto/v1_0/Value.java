@@ -105,16 +105,16 @@ public class Value {
 
 	protected Geo geo;
 
-	public StructuredContentImage getImage() {
+	public ContentDocument getImage() {
 		return image;
 	}
 
-	public void setImage(StructuredContentImage image) {
+	public void setImage(ContentDocument image) {
 		this.image = image;
 	}
 
 	public void setImage(
-		UnsafeSupplier<StructuredContentImage, Exception> imageUnsafeSupplier) {
+		UnsafeSupplier<ContentDocument, Exception> imageUnsafeSupplier) {
 
 		try {
 			image = imageUnsafeSupplier.get();
@@ -124,7 +124,49 @@ public class Value {
 		}
 	}
 
-	protected StructuredContentImage image;
+	protected ContentDocument image;
+
+	public String getImageDescription() {
+		return imageDescription;
+	}
+
+	public void setImageDescription(String imageDescription) {
+		this.imageDescription = imageDescription;
+	}
+
+	public void setImageDescription(
+		UnsafeSupplier<String, Exception> imageDescriptionUnsafeSupplier) {
+
+		try {
+			imageDescription = imageDescriptionUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected String imageDescription;
+
+	public Long getImageId() {
+		return imageId;
+	}
+
+	public void setImageId(Long imageId) {
+		this.imageId = imageId;
+	}
+
+	public void setImageId(
+		UnsafeSupplier<Long, Exception> imageIdUnsafeSupplier) {
+
+		try {
+			imageId = imageIdUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Long imageId;
 
 	public String getLink() {
 		return link;

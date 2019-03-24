@@ -60,6 +60,7 @@ import com.liferay.headless.web.experience.internal.odata.entity.v1_0.Structured
 import com.liferay.headless.web.experience.resource.v1_0.StructuredContentResource;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.model.JournalArticleDisplay;
+import com.liferay.journal.service.JournalArticleLocalService;
 import com.liferay.journal.service.JournalArticleService;
 import com.liferay.journal.util.JournalContent;
 import com.liferay.journal.util.JournalConverter;
@@ -79,6 +80,9 @@ import com.liferay.portal.kernel.search.filter.BooleanFilter;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.search.filter.TermFilter;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
@@ -156,6 +160,17 @@ public class StructuredContentResourceImpl
 	}
 
 	@Override
+	public StructuredContent getContentSpaceStructuredContentKey(
+			Long contentSpaceId, String key)
+		throws Exception {
+
+		JournalArticle journalArticle = _journalArticleService.getArticle(
+			contentSpaceId, key);
+
+		return _getStructuredContent(journalArticle);
+	}
+
+	@Override
 	public Page<StructuredContent> getContentSpaceStructuredContentsPage(
 			Long contentSpaceId, Filter filter, Pagination pagination,
 			Sort[] sorts)
@@ -163,6 +178,22 @@ public class StructuredContentResourceImpl
 
 		return _getStructuredContentsPage(
 			contentSpaceId, null, filter, pagination, sorts);
+	}
+
+	@Override
+	public StructuredContent getContentSpaceStructuredContentUuid(
+			Long contentSpaceId, String uuid)
+		throws Exception {
+
+		JournalArticle journalArticle =
+			_journalArticleLocalService.fetchJournalArticleByUuidAndGroupId(
+				uuid, contentSpaceId);
+
+		_journalArticleModelResourcePermission.check(
+			PermissionThreadLocal.getPermissionChecker(),
+			journalArticle.getResourcePrimKey(), ActionKeys.VIEW);
+
+		return _getStructuredContent(journalArticle);
 	}
 
 	@Override
@@ -204,12 +235,7 @@ public class StructuredContentResourceImpl
 		JournalArticle journalArticle = _journalArticleService.getLatestArticle(
 			structuredContentId);
 
-		ContentLanguageUtil.addContentLanguageHeader(
-			journalArticle.getAvailableLanguageIds(),
-			journalArticle.getDefaultLanguageId(), _contextHttpServletResponse,
-			contextAcceptLanguage.getPreferredLocale());
-
-		return _toStructuredContent(journalArticle);
+		return _getStructuredContent(journalArticle);
 	}
 
 	@Override
@@ -520,6 +546,18 @@ public class StructuredContentResourceImpl
 		DDMTemplate ddmTemplate = ddmTemplates.get(0);
 
 		return ddmTemplate.getTemplateKey();
+	}
+
+	private StructuredContent _getStructuredContent(
+			JournalArticle journalArticle)
+		throws Exception {
+
+		ContentLanguageUtil.addContentLanguageHeader(
+			journalArticle.getAvailableLanguageIds(),
+			journalArticle.getDefaultLanguageId(), _contextHttpServletResponse,
+			contextAcceptLanguage.getPreferredLocale());
+
+		return _toStructuredContent(journalArticle);
 	}
 
 	private Page<StructuredContent> _getStructuredContentsPage(
@@ -860,6 +898,7 @@ public class StructuredContentResourceImpl
 				description = journalArticle.getDescription(
 					contextAcceptLanguage.getPreferredLocale());
 				id = journalArticle.getResourcePrimKey();
+				key = journalArticle.getArticleId();
 				keywords = ListUtil.toArray(
 					_assetTagLocalService.getTags(
 						JournalArticle.class.getName(),
@@ -895,6 +934,7 @@ public class StructuredContentResourceImpl
 					TaxonomyCategory.class);
 				title = journalArticle.getTitle(
 					contextAcceptLanguage.getPreferredLocale());
+				uuid = journalArticle.getUuid();
 			}
 		};
 	}
@@ -1094,6 +1134,15 @@ public class StructuredContentResourceImpl
 
 	@Reference
 	private FieldsToDDMFormValuesConverter _fieldsToDDMFormValuesConverter;
+
+	@Reference
+	private JournalArticleLocalService _journalArticleLocalService;
+
+	@Reference(
+		target = "(model.class.name=com.liferay.journal.model.JournalArticle)"
+	)
+	private ModelResourcePermission<JournalArticle>
+		_journalArticleModelResourcePermission;
 
 	@Reference
 	private JournalArticleService _journalArticleService;

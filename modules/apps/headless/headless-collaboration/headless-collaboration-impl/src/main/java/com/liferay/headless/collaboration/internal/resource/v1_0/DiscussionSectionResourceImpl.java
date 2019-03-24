@@ -48,12 +48,10 @@ public class DiscussionSectionResourceImpl
 	extends BaseDiscussionSectionResourceImpl {
 
 	@Override
-	public boolean deleteDiscussionSection(Long discussionSectionId)
+	public void deleteDiscussionSection(Long discussionSectionId)
 		throws Exception {
 
 		_mbCategoryService.deleteCategory(discussionSectionId, true);
-
-		return true;
 	}
 
 	@Override

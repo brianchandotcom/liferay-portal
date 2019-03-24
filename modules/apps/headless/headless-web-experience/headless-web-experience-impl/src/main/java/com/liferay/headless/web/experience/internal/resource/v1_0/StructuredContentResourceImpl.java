@@ -141,7 +141,7 @@ public class StructuredContentResourceImpl
 	extends BaseStructuredContentResourceImpl implements EntityModelResource {
 
 	@Override
-	public boolean deleteStructuredContent(Long structuredContentId)
+	public void deleteStructuredContent(Long structuredContentId)
 		throws Exception {
 
 		JournalArticle journalArticle = _journalArticleService.getLatestArticle(
@@ -150,8 +150,6 @@ public class StructuredContentResourceImpl
 		_journalArticleService.deleteArticle(
 			journalArticle.getGroupId(), journalArticle.getArticleId(),
 			journalArticle.getArticleResourceUuid(), new ServiceContext());
-
-		return true;
 	}
 
 	@Override

@@ -57,10 +57,8 @@ public class FolderResourceImpl
 	extends BaseFolderResourceImpl implements EntityModelResource {
 
 	@Override
-	public boolean deleteFolder(Long folderId) throws Exception {
+	public void deleteFolder(Long folderId) throws Exception {
 		_dlAppService.deleteFolder(folderId);
-
-		return true;
 	}
 
 	@Override

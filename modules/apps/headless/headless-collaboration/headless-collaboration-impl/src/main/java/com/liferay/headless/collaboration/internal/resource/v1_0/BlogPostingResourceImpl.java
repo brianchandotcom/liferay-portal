@@ -73,10 +73,8 @@ public class BlogPostingResourceImpl
 	extends BaseBlogPostingResourceImpl implements EntityModelResource {
 
 	@Override
-	public boolean deleteBlogPosting(Long blogPostingId) throws Exception {
+	public void deleteBlogPosting(Long blogPostingId) throws Exception {
 		_blogsEntryService.deleteEntry(blogPostingId);
-
-		return true;
 	}
 
 	@Override

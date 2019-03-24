@@ -84,12 +84,10 @@ public class TaxonomyVocabularyResourceImpl
 	extends BaseTaxonomyVocabularyResourceImpl implements EntityModelResource {
 
 	@Override
-	public boolean deleteTaxonomyVocabulary(Long taxonomyVocabularyId)
+	public void deleteTaxonomyVocabulary(Long taxonomyVocabularyId)
 		throws Exception {
 
 		_assetVocabularyService.deleteVocabulary(taxonomyVocabularyId);
-
-		return true;
 	}
 
 	@Override

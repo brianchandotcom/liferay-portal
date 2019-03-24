@@ -53,10 +53,8 @@ public class KeywordResourceImpl
 	extends BaseKeywordResourceImpl implements EntityModelResource {
 
 	@Override
-	public boolean deleteKeyword(Long keywordId) throws Exception {
+	public void deleteKeyword(Long keywordId) throws Exception {
 		_assetTagService.deleteTag(keywordId);
-
-		return true;
 	}
 
 	@Override

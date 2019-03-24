@@ -46,11 +46,11 @@ public class CommentResourceImpl
 	extends BaseCommentResourceImpl implements EntityModelResource {
 
 	@Override
-	public boolean deleteComment(Long commentId) throws Exception {
+	public void deleteComment(Long commentId) throws Exception {
 		SPICommentResource<Comment> spiCommentResource =
 			_getSPICommentResource();
 
-		return spiCommentResource.deleteComment(commentId);
+		spiCommentResource.deleteComment(commentId);
 	}
 
 	@Override

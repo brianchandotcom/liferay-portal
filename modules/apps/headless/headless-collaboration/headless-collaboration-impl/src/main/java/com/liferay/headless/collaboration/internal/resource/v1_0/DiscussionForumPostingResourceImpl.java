@@ -58,12 +58,10 @@ public class DiscussionForumPostingResourceImpl
 	extends BaseDiscussionForumPostingResourceImpl {
 
 	@Override
-	public boolean deleteDiscussionForumPosting(Long discussionForumPostingId)
+	public void deleteDiscussionForumPosting(Long discussionForumPostingId)
 		throws Exception {
 
 		_mbMessageService.deleteMessage(discussionForumPostingId);
-
-		return true;
 	}
 
 	@Override

@@ -47,13 +47,11 @@ public class KnowledgeBaseAttachmentResourceImpl
 	extends BaseKnowledgeBaseAttachmentResourceImpl {
 
 	@Override
-	public boolean deleteKnowledgeBaseAttachment(Long knowledgeBaseAttachmentId)
+	public void deleteKnowledgeBaseAttachment(Long knowledgeBaseAttachmentId)
 		throws Exception {
 
 		_portletFileRepository.deletePortletFileEntry(
 			knowledgeBaseAttachmentId);
-
-		return true;
 	}
 
 	@Override

@@ -59,12 +59,10 @@ public class KnowledgeBaseArticleResourceImpl
 	extends BaseKnowledgeBaseArticleResourceImpl {
 
 	@Override
-	public boolean deleteKnowledgeBaseArticle(Long knowledgeBaseArticleId)
+	public void deleteKnowledgeBaseArticle(Long knowledgeBaseArticleId)
 		throws Exception {
 
 		_kbArticleService.deleteKBArticle(knowledgeBaseArticleId);
-
-		return true;
 	}
 
 	@Override

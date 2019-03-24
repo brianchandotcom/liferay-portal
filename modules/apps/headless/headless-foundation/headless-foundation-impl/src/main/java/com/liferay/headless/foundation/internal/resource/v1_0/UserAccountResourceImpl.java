@@ -76,10 +76,8 @@ import org.osgi.service.component.annotations.ServiceScope;
 public class UserAccountResourceImpl extends BaseUserAccountResourceImpl {
 
 	@Override
-	public boolean deleteUserAccount(Long userAccountId) throws Exception {
+	public void deleteUserAccount(Long userAccountId) throws Exception {
 		_userService.deleteUser(userAccountId);
-
-		return true;
 	}
 
 	@Override

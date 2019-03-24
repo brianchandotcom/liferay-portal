@@ -46,12 +46,10 @@ public class DiscussionAttachmentResourceImpl
 	extends BaseDiscussionAttachmentResourceImpl {
 
 	@Override
-	public boolean deleteDiscussionAttachment(Long discussionAttachmentId)
+	public void deleteDiscussionAttachment(Long discussionAttachmentId)
 		throws Exception {
 
 		_portletFileRepository.deletePortletFileEntry(discussionAttachmentId);
-
-		return true;
 	}
 
 	@Override

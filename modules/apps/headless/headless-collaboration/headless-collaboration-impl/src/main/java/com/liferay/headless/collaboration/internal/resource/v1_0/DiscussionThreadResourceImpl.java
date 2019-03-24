@@ -63,12 +63,10 @@ public class DiscussionThreadResourceImpl
 	extends BaseDiscussionThreadResourceImpl {
 
 	@Override
-	public boolean deleteDiscussionThread(Long discussionThreadId)
+	public void deleteDiscussionThread(Long discussionThreadId)
 		throws Exception {
 
 		_mbThreadService.deleteThread(discussionThreadId);
-
-		return true;
 	}
 
 	@Override

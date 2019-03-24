@@ -70,12 +70,10 @@ public class TaxonomyCategoryResourceImpl
 	extends BaseTaxonomyCategoryResourceImpl implements EntityModelResource {
 
 	@Override
-	public boolean deleteTaxonomyCategory(Long taxonomyCategoryId)
+	public void deleteTaxonomyCategory(Long taxonomyCategoryId)
 		throws Exception {
 
 		_assetCategoryService.deleteCategory(taxonomyCategoryId);
-
-		return true;
 	}
 
 	@Override

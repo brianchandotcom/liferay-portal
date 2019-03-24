@@ -56,14 +56,12 @@ public class BlogPostingImageResourceImpl
 	extends BaseBlogPostingImageResourceImpl implements EntityModelResource {
 
 	@Override
-	public boolean deleteBlogPostingImage(Long blogPostingImageId)
+	public void deleteBlogPostingImage(Long blogPostingImageId)
 		throws Exception {
 
 		FileEntry fileEntry = _getFileEntry(blogPostingImageId);
 
 		_dlAppService.deleteFileEntry(fileEntry.getFileEntryId());
-
-		return true;
 	}
 
 	@Override

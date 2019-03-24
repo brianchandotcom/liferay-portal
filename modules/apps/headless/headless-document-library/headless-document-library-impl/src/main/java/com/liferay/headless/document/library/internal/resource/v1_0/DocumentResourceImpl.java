@@ -85,10 +85,8 @@ public class DocumentResourceImpl
 	extends BaseDocumentResourceImpl implements EntityModelResource {
 
 	@Override
-	public boolean deleteDocument(Long documentId) throws Exception {
+	public void deleteDocument(Long documentId) throws Exception {
 		_dlAppService.deleteFileEntry(documentId);
-
-		return true;
 	}
 
 	@Override

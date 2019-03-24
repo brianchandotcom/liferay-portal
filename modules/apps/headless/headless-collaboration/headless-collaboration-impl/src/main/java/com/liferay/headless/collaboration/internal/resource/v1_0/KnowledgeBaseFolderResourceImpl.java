@@ -42,12 +42,10 @@ public class KnowledgeBaseFolderResourceImpl
 	extends BaseKnowledgeBaseFolderResourceImpl {
 
 	@Override
-	public boolean deleteKnowledgeBaseFolder(Long knowledgeBaseFolderId)
+	public void deleteKnowledgeBaseFolder(Long knowledgeBaseFolderId)
 		throws Exception {
 
 		_kbFolderService.deleteKBFolder(knowledgeBaseFolderId);
-
-		return true;
 	}
 
 	@Override

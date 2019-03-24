@@ -273,7 +273,7 @@ paths:
                                 $ref: "#/components/schemas/Comment"
                     description: ""
             tags: ["Comment"]
-    "/content-spaces/{content-space-id}/documents":
+    "/content-spaces/{content-space-id}/tree/documents":
         get:
             parameters:
                 - in: path
@@ -335,7 +335,7 @@ paths:
                                 $ref: "#/components/schemas/Document"
                     description: ""
             tags: ["Document"]
-    "/content-spaces/{content-space-id}/folders":
+    "/content-spaces/{content-space-id}/tree/folders":
         get:
             parameters:
                 - in: path

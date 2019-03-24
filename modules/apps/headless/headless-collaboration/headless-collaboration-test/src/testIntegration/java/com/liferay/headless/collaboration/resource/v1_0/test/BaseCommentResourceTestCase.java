@@ -524,7 +524,7 @@ public abstract class BaseCommentResourceTestCase {
 			"This method needs to be implemented");
 	}
 
-	protected boolean invokeDeleteComment(Long commentId) throws Exception {
+	protected void invokeDeleteComment(Long commentId) throws Exception {
 		Http.Options options = _createHttpOptions();
 
 		options.setDelete(true);
@@ -535,15 +535,6 @@ public abstract class BaseCommentResourceTestCase {
 		options.setLocation(location);
 
 		String string = HttpUtil.URLtoString(options);
-
-		try {
-			return _outputObjectMapper.readValue(string, Boolean.class);
-		}
-		catch (Exception e) {
-			_log.error("Unable to process HTTP response: " + string, e);
-
-			throw e;
-		}
 	}
 
 	protected Http.Response invokeDeleteCommentResponse(Long commentId)

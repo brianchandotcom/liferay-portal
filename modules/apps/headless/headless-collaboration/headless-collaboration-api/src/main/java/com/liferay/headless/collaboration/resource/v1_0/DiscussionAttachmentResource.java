@@ -32,7 +32,7 @@ import javax.annotation.Generated;
 @Generated("")
 public interface DiscussionAttachmentResource {
 
-	public boolean deleteDiscussionAttachment(Long discussionAttachmentId)
+	public void deleteDiscussionAttachment(Long discussionAttachmentId)
 		throws Exception;
 
 	public DiscussionAttachment getDiscussionAttachment(

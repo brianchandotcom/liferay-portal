@@ -66,14 +66,12 @@ public class SPICommentResource<T> {
 		_transformUnsafeFunction = transformUnsafeFunction;
 	}
 
-	public boolean deleteComment(Long commentId) throws Exception {
+	public void deleteComment(Long commentId) throws Exception {
 		DiscussionPermission discussionPermission = _getDiscussionPermission();
 
 		discussionPermission.checkDeletePermission(commentId);
 
 		_commentManager.deleteComment(commentId);
-
-		return true;
 	}
 
 	public T getComment(Long commentId) throws Exception {

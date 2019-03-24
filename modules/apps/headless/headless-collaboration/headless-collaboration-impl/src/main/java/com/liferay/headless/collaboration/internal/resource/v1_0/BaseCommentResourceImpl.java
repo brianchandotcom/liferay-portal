@@ -103,11 +103,8 @@ public abstract class BaseCommentResourceImpl implements CommentResource {
 	@Path("/comments/{comment-id}")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "Comment")})
-	public boolean deleteComment(
-			@NotNull @PathParam("comment-id") Long commentId)
+	public void deleteComment(@NotNull @PathParam("comment-id") Long commentId)
 		throws Exception {
-
-		return false;
 	}
 
 	@Override

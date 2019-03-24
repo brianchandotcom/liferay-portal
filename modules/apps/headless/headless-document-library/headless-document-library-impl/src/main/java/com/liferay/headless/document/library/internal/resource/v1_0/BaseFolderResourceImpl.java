@@ -105,10 +105,8 @@ public abstract class BaseFolderResourceImpl implements FolderResource {
 	@Path("/folders/{folder-id}")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "Folder")})
-	public boolean deleteFolder(@NotNull @PathParam("folder-id") Long folderId)
+	public void deleteFolder(@NotNull @PathParam("folder-id") Long folderId)
 		throws Exception {
-
-		return false;
 	}
 
 	@Override

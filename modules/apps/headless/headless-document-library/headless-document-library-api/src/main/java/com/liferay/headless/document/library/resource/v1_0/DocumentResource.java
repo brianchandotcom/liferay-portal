@@ -44,7 +44,7 @@ public interface DocumentResource {
 			Long contentSpaceId, MultipartBody multipartBody)
 		throws Exception;
 
-	public boolean deleteDocument(Long documentId) throws Exception;
+	public void deleteDocument(Long documentId) throws Exception;
 
 	public Document getDocument(Long documentId) throws Exception;
 

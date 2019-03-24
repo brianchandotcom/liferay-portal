@@ -119,7 +119,7 @@ public abstract class BaseFormDocumentResourceTestCase {
 			"This method needs to be implemented");
 	}
 
-	protected boolean invokeDeleteFormDocument(Long formDocumentId)
+	protected void invokeDeleteFormDocument(Long formDocumentId)
 		throws Exception {
 
 		Http.Options options = _createHttpOptions();
@@ -133,15 +133,6 @@ public abstract class BaseFormDocumentResourceTestCase {
 		options.setLocation(location);
 
 		String string = HttpUtil.URLtoString(options);
-
-		try {
-			return _outputObjectMapper.readValue(string, Boolean.class);
-		}
-		catch (Exception e) {
-			_log.error("Unable to process HTTP response: " + string, e);
-
-			throw e;
-		}
 	}
 
 	protected Http.Response invokeDeleteFormDocumentResponse(

@@ -96,12 +96,10 @@ public abstract class BaseKnowledgeBaseAttachmentResourceImpl
 	@Path("/knowledge-base-attachments/{knowledge-base-attachment-id}")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "KnowledgeBaseAttachment")})
-	public boolean deleteKnowledgeBaseAttachment(
+	public void deleteKnowledgeBaseAttachment(
 			@NotNull @PathParam("knowledge-base-attachment-id") Long
 				knowledgeBaseAttachmentId)
 		throws Exception {
-
-		return false;
 	}
 
 	@Override

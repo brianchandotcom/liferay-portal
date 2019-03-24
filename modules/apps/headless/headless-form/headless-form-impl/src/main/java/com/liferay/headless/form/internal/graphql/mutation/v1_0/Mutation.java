@@ -88,11 +88,11 @@ public class Mutation {
 	}
 
 	@GraphQLInvokeDetached
-	public boolean deleteFormDocument(
+	public void deleteFormDocument(
 			@GraphQLName("form-document-id") Long formDocumentId)
 		throws Exception {
 
-		return _applyComponentServiceObjects(
+		_applyVoidComponentServiceObjects(
 			_formDocumentResourceComponentServiceObjects,
 			this::_populateResourceContext,
 			formDocumentResource -> formDocumentResource.deleteFormDocument(
@@ -139,6 +139,25 @@ public class Mutation {
 			unsafeConsumer.accept(resource);
 
 			return unsafeFunction.apply(resource);
+		}
+		finally {
+			componentServiceObjects.ungetService(resource);
+		}
+	}
+
+	private <T, E1 extends Throwable, E2 extends Throwable> void
+			_applyVoidComponentServiceObjects(
+				ComponentServiceObjects<T> componentServiceObjects,
+				UnsafeConsumer<T, E1> unsafeConsumer,
+				UnsafeConsumer<T, E2> unsafeFunction)
+		throws E1, E2 {
+
+		T resource = componentServiceObjects.getService();
+
+		try {
+			unsafeConsumer.accept(resource);
+
+			unsafeFunction.accept(resource);
 		}
 		finally {
 			componentServiceObjects.ungetService(resource);

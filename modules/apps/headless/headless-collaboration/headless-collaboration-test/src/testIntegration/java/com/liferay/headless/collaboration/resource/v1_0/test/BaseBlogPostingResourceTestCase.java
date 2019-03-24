@@ -129,7 +129,7 @@ public abstract class BaseBlogPostingResourceTestCase {
 			"This method needs to be implemented");
 	}
 
-	protected boolean invokeDeleteBlogPosting(Long blogPostingId)
+	protected void invokeDeleteBlogPosting(Long blogPostingId)
 		throws Exception {
 
 		Http.Options options = _createHttpOptions();
@@ -143,15 +143,6 @@ public abstract class BaseBlogPostingResourceTestCase {
 		options.setLocation(location);
 
 		String string = HttpUtil.URLtoString(options);
-
-		try {
-			return _outputObjectMapper.readValue(string, Boolean.class);
-		}
-		catch (Exception e) {
-			_log.error("Unable to process HTTP response: " + string, e);
-
-			throw e;
-		}
 	}
 
 	protected Http.Response invokeDeleteBlogPostingResponse(Long blogPostingId)

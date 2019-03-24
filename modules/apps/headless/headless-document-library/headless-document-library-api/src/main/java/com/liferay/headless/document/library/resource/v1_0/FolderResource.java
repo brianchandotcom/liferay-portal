@@ -42,7 +42,7 @@ public interface FolderResource {
 	public Folder postContentSpaceFolder(Long contentSpaceId, Folder folder)
 		throws Exception;
 
-	public boolean deleteFolder(Long folderId) throws Exception;
+	public void deleteFolder(Long folderId) throws Exception;
 
 	public Folder getFolder(Long folderId) throws Exception;
 

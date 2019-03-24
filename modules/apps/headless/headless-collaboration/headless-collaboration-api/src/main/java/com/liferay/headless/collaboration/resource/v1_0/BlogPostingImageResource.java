@@ -35,7 +35,7 @@ import javax.annotation.Generated;
 @Generated("")
 public interface BlogPostingImageResource {
 
-	public boolean deleteBlogPostingImage(Long blogPostingImageId)
+	public void deleteBlogPostingImage(Long blogPostingImageId)
 		throws Exception;
 
 	public BlogPostingImage getBlogPostingImage(Long blogPostingImageId)

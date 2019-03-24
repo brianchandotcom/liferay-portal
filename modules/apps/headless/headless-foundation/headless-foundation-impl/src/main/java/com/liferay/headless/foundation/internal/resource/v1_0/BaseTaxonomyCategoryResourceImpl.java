@@ -68,11 +68,9 @@ public abstract class BaseTaxonomyCategoryResourceImpl
 	@Path("/taxonomy-categories/{taxonomy-category-id}")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "TaxonomyCategory")})
-	public boolean deleteTaxonomyCategory(
+	public void deleteTaxonomyCategory(
 			@NotNull @PathParam("taxonomy-category-id") Long taxonomyCategoryId)
 		throws Exception {
-
-		return false;
 	}
 
 	@Override

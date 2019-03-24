@@ -581,7 +581,7 @@ public abstract class BaseDiscussionSectionResourceTestCase {
 			"This method needs to be implemented");
 	}
 
-	protected boolean invokeDeleteDiscussionSection(Long discussionSectionId)
+	protected void invokeDeleteDiscussionSection(Long discussionSectionId)
 		throws Exception {
 
 		Http.Options options = _createHttpOptions();
@@ -597,15 +597,6 @@ public abstract class BaseDiscussionSectionResourceTestCase {
 		options.setLocation(location);
 
 		String string = HttpUtil.URLtoString(options);
-
-		try {
-			return _outputObjectMapper.readValue(string, Boolean.class);
-		}
-		catch (Exception e) {
-			_log.error("Unable to process HTTP response: " + string, e);
-
-			throw e;
-		}
 	}
 
 	protected Http.Response invokeDeleteDiscussionSectionResponse(

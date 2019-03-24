@@ -533,7 +533,7 @@ public abstract class BaseKeywordResourceTestCase {
 			"This method needs to be implemented");
 	}
 
-	protected boolean invokeDeleteKeyword(Long keywordId) throws Exception {
+	protected void invokeDeleteKeyword(Long keywordId) throws Exception {
 		Http.Options options = _createHttpOptions();
 
 		options.setDelete(true);
@@ -544,15 +544,6 @@ public abstract class BaseKeywordResourceTestCase {
 		options.setLocation(location);
 
 		String string = HttpUtil.URLtoString(options);
-
-		try {
-			return _outputObjectMapper.readValue(string, Boolean.class);
-		}
-		catch (Exception e) {
-			_log.error("Unable to process HTTP response: " + string, e);
-
-			throw e;
-		}
 	}
 
 	protected Http.Response invokeDeleteKeywordResponse(Long keywordId)

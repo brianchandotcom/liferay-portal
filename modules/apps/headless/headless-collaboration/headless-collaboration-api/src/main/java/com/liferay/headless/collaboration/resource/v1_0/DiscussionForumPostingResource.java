@@ -34,7 +34,7 @@ import javax.annotation.Generated;
 @Generated("")
 public interface DiscussionForumPostingResource {
 
-	public boolean deleteDiscussionForumPosting(Long discussionForumPostingId)
+	public void deleteDiscussionForumPosting(Long discussionForumPostingId)
 		throws Exception;
 
 	public DiscussionForumPosting getDiscussionForumPosting(

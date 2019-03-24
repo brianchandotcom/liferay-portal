@@ -42,7 +42,7 @@ public interface KnowledgeBaseAttachmentResource {
 				Long knowledgeBaseArticleId, MultipartBody multipartBody)
 		throws Exception;
 
-	public boolean deleteKnowledgeBaseAttachment(Long knowledgeBaseAttachmentId)
+	public void deleteKnowledgeBaseAttachment(Long knowledgeBaseAttachmentId)
 		throws Exception;
 
 	public KnowledgeBaseAttachment getKnowledgeBaseAttachment(

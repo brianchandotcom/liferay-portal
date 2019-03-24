@@ -312,7 +312,7 @@ public abstract class BaseKnowledgeBaseAttachmentResourceTestCase {
 			"This method needs to be implemented");
 	}
 
-	protected boolean invokeDeleteKnowledgeBaseAttachment(
+	protected void invokeDeleteKnowledgeBaseAttachment(
 			Long knowledgeBaseAttachmentId)
 		throws Exception {
 
@@ -329,15 +329,6 @@ public abstract class BaseKnowledgeBaseAttachmentResourceTestCase {
 		options.setLocation(location);
 
 		String string = HttpUtil.URLtoString(options);
-
-		try {
-			return _outputObjectMapper.readValue(string, Boolean.class);
-		}
-		catch (Exception e) {
-			_log.error("Unable to process HTTP response: " + string, e);
-
-			throw e;
-		}
 	}
 
 	protected Http.Response invokeDeleteKnowledgeBaseAttachmentResponse(

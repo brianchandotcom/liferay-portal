@@ -43,7 +43,7 @@ public interface TaxonomyVocabularyResource {
 			Long contentSpaceId, TaxonomyVocabulary taxonomyVocabulary)
 		throws Exception;
 
-	public boolean deleteTaxonomyVocabulary(Long taxonomyVocabularyId)
+	public void deleteTaxonomyVocabulary(Long taxonomyVocabularyId)
 		throws Exception;
 
 	public TaxonomyVocabulary getTaxonomyVocabulary(Long taxonomyVocabularyId)

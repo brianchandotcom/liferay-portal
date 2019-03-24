@@ -62,12 +62,10 @@ public abstract class BaseDiscussionAttachmentResourceImpl
 	@Path("/discussion-attachments/{discussion-attachment-id}")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "DiscussionAttachment")})
-	public boolean deleteDiscussionAttachment(
+	public void deleteDiscussionAttachment(
 			@NotNull @PathParam("discussion-attachment-id") Long
 				discussionAttachmentId)
 		throws Exception {
-
-		return false;
 	}
 
 	@Override

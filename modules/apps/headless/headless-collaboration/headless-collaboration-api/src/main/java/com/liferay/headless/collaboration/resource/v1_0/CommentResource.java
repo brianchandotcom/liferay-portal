@@ -42,7 +42,7 @@ public interface CommentResource {
 	public Comment postBlogPostingComment(Long blogPostingId, Comment comment)
 		throws Exception;
 
-	public boolean deleteComment(Long commentId) throws Exception;
+	public void deleteComment(Long commentId) throws Exception;
 
 	public Comment getComment(Long commentId) throws Exception;
 

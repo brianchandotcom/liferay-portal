@@ -135,7 +135,7 @@ public abstract class BaseDiscussionForumPostingResourceTestCase {
 			"This method needs to be implemented");
 	}
 
-	protected boolean invokeDeleteDiscussionForumPosting(
+	protected void invokeDeleteDiscussionForumPosting(
 			Long discussionForumPostingId)
 		throws Exception {
 
@@ -152,15 +152,6 @@ public abstract class BaseDiscussionForumPostingResourceTestCase {
 		options.setLocation(location);
 
 		String string = HttpUtil.URLtoString(options);
-
-		try {
-			return _outputObjectMapper.readValue(string, Boolean.class);
-		}
-		catch (Exception e) {
-			_log.error("Unable to process HTTP response: " + string, e);
-
-			throw e;
-		}
 	}
 
 	protected Http.Response invokeDeleteDiscussionForumPostingResponse(

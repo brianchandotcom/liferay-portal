@@ -70,12 +70,10 @@ public abstract class BaseDiscussionForumPostingResourceImpl
 	@Path("/discussion-forum-postings/{discussion-forum-posting-id}")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "DiscussionForumPosting")})
-	public boolean deleteDiscussionForumPosting(
+	public void deleteDiscussionForumPosting(
 			@NotNull @PathParam("discussion-forum-posting-id") Long
 				discussionForumPostingId)
 		throws Exception {
-
-		return false;
 	}
 
 	@Override

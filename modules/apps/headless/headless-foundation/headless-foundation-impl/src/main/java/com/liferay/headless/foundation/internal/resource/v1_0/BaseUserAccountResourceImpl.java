@@ -139,11 +139,9 @@ public abstract class BaseUserAccountResourceImpl
 	@Path("/user-accounts/{user-account-id}")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "UserAccount")})
-	public boolean deleteUserAccount(
+	public void deleteUserAccount(
 			@NotNull @PathParam("user-account-id") Long userAccountId)
 		throws Exception {
-
-		return false;
 	}
 
 	@Override

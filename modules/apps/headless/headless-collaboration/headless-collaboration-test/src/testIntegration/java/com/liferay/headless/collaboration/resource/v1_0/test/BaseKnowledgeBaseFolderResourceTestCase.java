@@ -385,8 +385,7 @@ public abstract class BaseKnowledgeBaseFolderResourceTestCase {
 			"This method needs to be implemented");
 	}
 
-	protected boolean invokeDeleteKnowledgeBaseFolder(
-			Long knowledgeBaseFolderId)
+	protected void invokeDeleteKnowledgeBaseFolder(Long knowledgeBaseFolderId)
 		throws Exception {
 
 		Http.Options options = _createHttpOptions();
@@ -402,15 +401,6 @@ public abstract class BaseKnowledgeBaseFolderResourceTestCase {
 		options.setLocation(location);
 
 		String string = HttpUtil.URLtoString(options);
-
-		try {
-			return _outputObjectMapper.readValue(string, Boolean.class);
-		}
-		catch (Exception e) {
-			_log.error("Unable to process HTTP response: " + string, e);
-
-			throw e;
-		}
 	}
 
 	protected Http.Response invokeDeleteKnowledgeBaseFolderResponse(

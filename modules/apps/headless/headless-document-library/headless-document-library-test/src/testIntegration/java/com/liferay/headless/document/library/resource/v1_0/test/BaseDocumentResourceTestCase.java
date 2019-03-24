@@ -521,7 +521,7 @@ public abstract class BaseDocumentResourceTestCase {
 			"This method needs to be implemented");
 	}
 
-	protected boolean invokeDeleteDocument(Long documentId) throws Exception {
+	protected void invokeDeleteDocument(Long documentId) throws Exception {
 		Http.Options options = _createHttpOptions();
 
 		options.setDelete(true);
@@ -532,15 +532,6 @@ public abstract class BaseDocumentResourceTestCase {
 		options.setLocation(location);
 
 		String string = HttpUtil.URLtoString(options);
-
-		try {
-			return _outputObjectMapper.readValue(string, Boolean.class);
-		}
-		catch (Exception e) {
-			_log.error("Unable to process HTTP response: " + string, e);
-
-			throw e;
-		}
 	}
 
 	protected Http.Response invokeDeleteDocumentResponse(Long documentId)

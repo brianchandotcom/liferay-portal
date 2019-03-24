@@ -57,11 +57,9 @@ public abstract class BaseFormDocumentResourceImpl
 	@Path("/form-documents/{form-document-id}")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "FormDocument")})
-	public boolean deleteFormDocument(
+	public void deleteFormDocument(
 			@NotNull @PathParam("form-document-id") Long formDocumentId)
 		throws Exception {
-
-		return false;
 	}
 
 	@Override

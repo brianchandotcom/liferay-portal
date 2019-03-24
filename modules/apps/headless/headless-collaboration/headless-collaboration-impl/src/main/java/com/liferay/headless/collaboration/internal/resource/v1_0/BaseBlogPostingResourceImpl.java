@@ -70,11 +70,9 @@ public abstract class BaseBlogPostingResourceImpl
 	@Path("/blog-postings/{blog-posting-id}")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "BlogPosting")})
-	public boolean deleteBlogPosting(
+	public void deleteBlogPosting(
 			@NotNull @PathParam("blog-posting-id") Long blogPostingId)
 		throws Exception {
-
-		return false;
 	}
 
 	@Override

@@ -43,7 +43,7 @@ public interface DiscussionSectionResource {
 			Long contentSpaceId, DiscussionSection discussionSection)
 		throws Exception;
 
-	public boolean deleteDiscussionSection(Long discussionSectionId)
+	public void deleteDiscussionSection(Long discussionSectionId)
 		throws Exception;
 
 	public DiscussionSection getDiscussionSection(Long discussionSectionId)

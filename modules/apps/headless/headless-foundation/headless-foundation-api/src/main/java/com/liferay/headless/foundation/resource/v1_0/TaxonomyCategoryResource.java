@@ -34,7 +34,7 @@ import javax.annotation.Generated;
 @Generated("")
 public interface TaxonomyCategoryResource {
 
-	public boolean deleteTaxonomyCategory(Long taxonomyCategoryId)
+	public void deleteTaxonomyCategory(Long taxonomyCategoryId)
 		throws Exception;
 
 	public TaxonomyCategory getTaxonomyCategory(Long taxonomyCategoryId)

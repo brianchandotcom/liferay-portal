@@ -131,7 +131,7 @@ public abstract class BaseTaxonomyCategoryResourceTestCase {
 			"This method needs to be implemented");
 	}
 
-	protected boolean invokeDeleteTaxonomyCategory(Long taxonomyCategoryId)
+	protected void invokeDeleteTaxonomyCategory(Long taxonomyCategoryId)
 		throws Exception {
 
 		Http.Options options = _createHttpOptions();
@@ -147,15 +147,6 @@ public abstract class BaseTaxonomyCategoryResourceTestCase {
 		options.setLocation(location);
 
 		String string = HttpUtil.URLtoString(options);
-
-		try {
-			return _outputObjectMapper.readValue(string, Boolean.class);
-		}
-		catch (Exception e) {
-			_log.error("Unable to process HTTP response: " + string, e);
-
-			throw e;
-		}
 	}
 
 	protected Http.Response invokeDeleteTaxonomyCategoryResponse(

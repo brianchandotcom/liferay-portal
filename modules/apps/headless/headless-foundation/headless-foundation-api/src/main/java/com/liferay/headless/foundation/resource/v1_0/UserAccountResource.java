@@ -48,7 +48,7 @@ public interface UserAccountResource {
 	public UserAccount postMediaType2UserAccount(MultipartBody multipartBody)
 		throws Exception;
 
-	public boolean deleteUserAccount(Long userAccountId) throws Exception;
+	public void deleteUserAccount(Long userAccountId) throws Exception;
 
 	public UserAccount getUserAccount(Long userAccountId) throws Exception;
 

@@ -103,11 +103,8 @@ public abstract class BaseKeywordResourceImpl implements KeywordResource {
 	@Path("/keywords/{keyword-id}")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "Keyword")})
-	public boolean deleteKeyword(
-			@NotNull @PathParam("keyword-id") Long keywordId)
+	public void deleteKeyword(@NotNull @PathParam("keyword-id") Long keywordId)
 		throws Exception {
-
-		return false;
 	}
 
 	@Override

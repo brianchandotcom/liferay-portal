@@ -129,6 +129,25 @@ public class Mutation {
 		}
 	}
 
+	private <T, E1 extends Throwable, E2 extends Throwable> void
+			_applyVoidComponentServiceObjects(
+				ComponentServiceObjects<T> componentServiceObjects,
+				UnsafeConsumer<T, E1> unsafeConsumer,
+				UnsafeConsumer<T, E2> unsafeFunction)
+		throws E1, E2 {
+
+		T resource = componentServiceObjects.getService();
+
+		try {
+			unsafeConsumer.accept(resource);
+
+			unsafeFunction.accept(resource);
+		}
+		finally {
+			componentServiceObjects.ungetService(resource);
+		}
+	}
+
 	private void _populateResourceContext(
 			WorkflowTaskResource workflowTaskResource)
 		throws Exception {

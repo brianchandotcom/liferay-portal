@@ -52,7 +52,7 @@ public interface DiscussionThreadResource {
 			Long discussionSectionId, DiscussionThread discussionThread)
 		throws Exception;
 
-	public boolean deleteDiscussionThread(Long discussionThreadId)
+	public void deleteDiscussionThread(Long discussionThreadId)
 		throws Exception;
 
 	public DiscussionThread getDiscussionThread(Long discussionThreadId)

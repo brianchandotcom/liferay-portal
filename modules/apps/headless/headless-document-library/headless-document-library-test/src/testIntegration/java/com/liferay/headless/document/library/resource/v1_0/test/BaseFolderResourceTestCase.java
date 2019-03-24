@@ -530,7 +530,7 @@ public abstract class BaseFolderResourceTestCase {
 			"This method needs to be implemented");
 	}
 
-	protected boolean invokeDeleteFolder(Long folderId) throws Exception {
+	protected void invokeDeleteFolder(Long folderId) throws Exception {
 		Http.Options options = _createHttpOptions();
 
 		options.setDelete(true);
@@ -541,15 +541,6 @@ public abstract class BaseFolderResourceTestCase {
 		options.setLocation(location);
 
 		String string = HttpUtil.URLtoString(options);
-
-		try {
-			return _outputObjectMapper.readValue(string, Boolean.class);
-		}
-		catch (Exception e) {
-			_log.error("Unable to process HTTP response: " + string, e);
-
-			throw e;
-		}
 	}
 
 	protected Http.Response invokeDeleteFolderResponse(Long folderId)

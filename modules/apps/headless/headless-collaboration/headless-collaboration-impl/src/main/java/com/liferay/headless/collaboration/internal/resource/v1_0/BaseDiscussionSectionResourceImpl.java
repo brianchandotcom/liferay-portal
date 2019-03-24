@@ -106,12 +106,10 @@ public abstract class BaseDiscussionSectionResourceImpl
 	@Path("/discussion-sections/{discussion-section-id}")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "DiscussionSection")})
-	public boolean deleteDiscussionSection(
+	public void deleteDiscussionSection(
 			@NotNull @PathParam("discussion-section-id") Long
 				discussionSectionId)
 		throws Exception {
-
-		return false;
 	}
 
 	@Override

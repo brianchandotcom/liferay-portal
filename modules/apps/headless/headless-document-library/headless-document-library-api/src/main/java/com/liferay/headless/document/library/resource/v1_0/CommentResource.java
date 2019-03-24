@@ -34,7 +34,7 @@ import javax.annotation.Generated;
 @Generated("")
 public interface CommentResource {
 
-	public boolean deleteComment(Long commentId) throws Exception;
+	public void deleteComment(Long commentId) throws Exception;
 
 	public Comment getComment(Long commentId) throws Exception;
 

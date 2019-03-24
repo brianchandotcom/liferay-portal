@@ -585,7 +585,7 @@ public abstract class BaseTaxonomyVocabularyResourceTestCase {
 			"This method needs to be implemented");
 	}
 
-	protected boolean invokeDeleteTaxonomyVocabulary(Long taxonomyVocabularyId)
+	protected void invokeDeleteTaxonomyVocabulary(Long taxonomyVocabularyId)
 		throws Exception {
 
 		Http.Options options = _createHttpOptions();
@@ -601,15 +601,6 @@ public abstract class BaseTaxonomyVocabularyResourceTestCase {
 		options.setLocation(location);
 
 		String string = HttpUtil.URLtoString(options);
-
-		try {
-			return _outputObjectMapper.readValue(string, Boolean.class);
-		}
-		catch (Exception e) {
-			_log.error("Unable to process HTTP response: " + string, e);
-
-			throw e;
-		}
 	}
 
 	protected Http.Response invokeDeleteTaxonomyVocabularyResponse(

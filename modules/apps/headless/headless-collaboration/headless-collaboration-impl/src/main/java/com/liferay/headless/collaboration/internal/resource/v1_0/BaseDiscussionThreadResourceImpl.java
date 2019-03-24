@@ -144,11 +144,9 @@ public abstract class BaseDiscussionThreadResourceImpl
 	@Path("/discussion-threads/{discussion-thread-id}")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "DiscussionThread")})
-	public boolean deleteDiscussionThread(
+	public void deleteDiscussionThread(
 			@NotNull @PathParam("discussion-thread-id") Long discussionThreadId)
 		throws Exception {
-
-		return false;
 	}
 
 	@Override

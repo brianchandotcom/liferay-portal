@@ -68,12 +68,10 @@ public abstract class BaseBlogPostingImageResourceImpl
 	@Path("/blog-posting-images/{blog-posting-image-id}")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "BlogPostingImage")})
-	public boolean deleteBlogPostingImage(
+	public void deleteBlogPostingImage(
 			@NotNull @PathParam("blog-posting-image-id") Long
 				blogPostingImageId)
 		throws Exception {
-
-		return false;
 	}
 
 	@Override

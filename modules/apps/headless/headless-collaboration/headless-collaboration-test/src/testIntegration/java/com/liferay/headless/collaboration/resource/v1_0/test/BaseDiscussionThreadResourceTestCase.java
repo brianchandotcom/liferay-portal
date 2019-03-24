@@ -1034,7 +1034,7 @@ public abstract class BaseDiscussionThreadResourceTestCase {
 			"This method needs to be implemented");
 	}
 
-	protected boolean invokeDeleteDiscussionThread(Long discussionThreadId)
+	protected void invokeDeleteDiscussionThread(Long discussionThreadId)
 		throws Exception {
 
 		Http.Options options = _createHttpOptions();
@@ -1050,15 +1050,6 @@ public abstract class BaseDiscussionThreadResourceTestCase {
 		options.setLocation(location);
 
 		String string = HttpUtil.URLtoString(options);
-
-		try {
-			return _outputObjectMapper.readValue(string, Boolean.class);
-		}
-		catch (Exception e) {
-			_log.error("Unable to process HTTP response: " + string, e);
-
-			throw e;
-		}
 	}
 
 	protected Http.Response invokeDeleteDiscussionThreadResponse(

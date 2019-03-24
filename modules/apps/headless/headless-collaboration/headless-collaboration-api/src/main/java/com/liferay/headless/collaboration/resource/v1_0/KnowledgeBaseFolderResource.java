@@ -40,7 +40,7 @@ public interface KnowledgeBaseFolderResource {
 			Long contentSpaceId, KnowledgeBaseFolder knowledgeBaseFolder)
 		throws Exception;
 
-	public boolean deleteKnowledgeBaseFolder(Long knowledgeBaseFolderId)
+	public void deleteKnowledgeBaseFolder(Long knowledgeBaseFolderId)
 		throws Exception;
 
 	public KnowledgeBaseFolder getKnowledgeBaseFolder(

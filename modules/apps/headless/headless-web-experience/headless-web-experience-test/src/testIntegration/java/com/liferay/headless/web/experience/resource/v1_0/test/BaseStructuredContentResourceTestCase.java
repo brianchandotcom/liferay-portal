@@ -957,7 +957,7 @@ public abstract class BaseStructuredContentResourceTestCase {
 			"This method needs to be implemented");
 	}
 
-	protected boolean invokeDeleteStructuredContent(Long structuredContentId)
+	protected void invokeDeleteStructuredContent(Long structuredContentId)
 		throws Exception {
 
 		Http.Options options = _createHttpOptions();
@@ -973,15 +973,6 @@ public abstract class BaseStructuredContentResourceTestCase {
 		options.setLocation(location);
 
 		String string = HttpUtil.URLtoString(options);
-
-		try {
-			return _outputObjectMapper.readValue(string, Boolean.class);
-		}
-		catch (Exception e) {
-			_log.error("Unable to process HTTP response: " + string, e);
-
-			throw e;
-		}
 	}
 
 	protected Http.Response invokeDeleteStructuredContentResponse(

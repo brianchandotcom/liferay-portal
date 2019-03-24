@@ -40,7 +40,7 @@ public interface KnowledgeBaseArticleResource {
 			Long contentSpaceId, KnowledgeBaseArticle knowledgeBaseArticle)
 		throws Exception;
 
-	public boolean deleteKnowledgeBaseArticle(Long knowledgeBaseArticleId)
+	public void deleteKnowledgeBaseArticle(Long knowledgeBaseArticleId)
 		throws Exception;
 
 	public KnowledgeBaseArticle getKnowledgeBaseArticle(

@@ -128,12 +128,10 @@ public abstract class BaseStructuredContentResourceImpl
 	@Path("/structured-contents/{structured-content-id}")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "StructuredContent")})
-	public boolean deleteStructuredContent(
+	public void deleteStructuredContent(
 			@NotNull @PathParam("structured-content-id") Long
 				structuredContentId)
 		throws Exception {
-
-		return false;
 	}
 
 	@Override

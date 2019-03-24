@@ -101,12 +101,10 @@ public abstract class BaseKnowledgeBaseArticleResourceImpl
 	@Path("/knowledge-base-articles/{knowledge-base-article-id}")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "KnowledgeBaseArticle")})
-	public boolean deleteKnowledgeBaseArticle(
+	public void deleteKnowledgeBaseArticle(
 			@NotNull @PathParam("knowledge-base-article-id") Long
 				knowledgeBaseArticleId)
 		throws Exception {
-
-		return false;
 	}
 
 	@Override

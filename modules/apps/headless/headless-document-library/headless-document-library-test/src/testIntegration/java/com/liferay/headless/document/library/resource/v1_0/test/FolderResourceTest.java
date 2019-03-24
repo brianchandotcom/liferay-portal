@@ -97,7 +97,7 @@ public class FolderResourceTest extends BaseFolderResourceTestCase {
 		Folder postFolder = invokePostContentSpaceFolder(
 			testGroup.getGroupId(), randomFolder());
 
-		Assert.assertEquals(false, postFolder.getHasDocuments());
+		Assert.assertEquals(0, postFolder.getNumberOfDocuments());
 
 		DLAppTestUtil.addFileEntryWithWorkflow(
 			UserLocalServiceUtil.getDefaultUserId(testGroup.getCompanyId()),
@@ -106,7 +106,7 @@ public class FolderResourceTest extends BaseFolderResourceTestCase {
 
 		Folder getFolder = invokeGetFolder(postFolder.getId());
 
-		Assert.assertEquals(true, getFolder.getHasDocuments());
+		Assert.assertEquals(1, getFolder.getNumberOfDocuments());
 
 		return postFolder;
 	}
@@ -139,7 +139,7 @@ public class FolderResourceTest extends BaseFolderResourceTestCase {
 		Folder postFolder = invokePostContentSpaceFolder(
 			testGroup.getGroupId(), folder);
 
-		Assert.assertFalse(postFolder.getHasFolders());
+		Assert.assertEquals(1, postFolder.getNumberOfDocuments());
 
 		return postFolder;
 	}

@@ -30,7 +30,7 @@ import javax.annotation.Generated;
 @Generated("")
 public interface FormDocumentResource {
 
-	public boolean deleteFormDocument(Long formDocumentId) throws Exception;
+	public void deleteFormDocument(Long formDocumentId) throws Exception;
 
 	public FormDocument getFormDocument(Long formDocumentId) throws Exception;
 

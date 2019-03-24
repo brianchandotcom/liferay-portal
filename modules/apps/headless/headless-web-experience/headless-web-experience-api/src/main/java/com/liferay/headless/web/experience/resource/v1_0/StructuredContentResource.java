@@ -48,7 +48,7 @@ public interface StructuredContentResource {
 			Sort[] sorts)
 		throws Exception;
 
-	public boolean deleteStructuredContent(Long structuredContentId)
+	public void deleteStructuredContent(Long structuredContentId)
 		throws Exception;
 
 	public StructuredContent getStructuredContent(Long structuredContentId)

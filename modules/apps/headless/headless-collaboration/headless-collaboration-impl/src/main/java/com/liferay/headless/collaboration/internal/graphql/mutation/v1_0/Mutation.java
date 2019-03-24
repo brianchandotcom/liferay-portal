@@ -137,11 +137,11 @@ public class Mutation {
 	}
 
 	@GraphQLInvokeDetached
-	public boolean deleteBlogPosting(
+	public void deleteBlogPosting(
 			@GraphQLName("blog-posting-id") Long blogPostingId)
 		throws Exception {
 
-		return _applyComponentServiceObjects(
+		_applyVoidComponentServiceObjects(
 			_blogPostingResourceComponentServiceObjects,
 			this::_populateResourceContext,
 			blogPostingResource -> blogPostingResource.deleteBlogPosting(
@@ -190,11 +190,11 @@ public class Mutation {
 	}
 
 	@GraphQLInvokeDetached
-	public boolean deleteBlogPostingImage(
+	public void deleteBlogPostingImage(
 			@GraphQLName("blog-posting-image-id") Long blogPostingImageId)
 		throws Exception {
 
-		return _applyComponentServiceObjects(
+		_applyVoidComponentServiceObjects(
 			_blogPostingImageResourceComponentServiceObjects,
 			this::_populateResourceContext,
 			blogPostingImageResource ->
@@ -232,10 +232,10 @@ public class Mutation {
 	}
 
 	@GraphQLInvokeDetached
-	public boolean deleteComment(@GraphQLName("comment-id") Long commentId)
+	public void deleteComment(@GraphQLName("comment-id") Long commentId)
 		throws Exception {
 
-		return _applyComponentServiceObjects(
+		_applyVoidComponentServiceObjects(
 			_commentResourceComponentServiceObjects,
 			this::_populateResourceContext,
 			commentResource -> commentResource.deleteComment(commentId));
@@ -268,12 +268,12 @@ public class Mutation {
 	}
 
 	@GraphQLInvokeDetached
-	public boolean deleteDiscussionAttachment(
+	public void deleteDiscussionAttachment(
 			@GraphQLName("discussion-attachment-id") Long
 				discussionAttachmentId)
 		throws Exception {
 
-		return _applyComponentServiceObjects(
+		_applyVoidComponentServiceObjects(
 			_discussionAttachmentResourceComponentServiceObjects,
 			this::_populateResourceContext,
 			discussionAttachmentResource ->
@@ -315,12 +315,12 @@ public class Mutation {
 	}
 
 	@GraphQLInvokeDetached
-	public boolean deleteDiscussionForumPosting(
+	public void deleteDiscussionForumPosting(
 			@GraphQLName("discussion-forum-posting-id") Long
 				discussionForumPostingId)
 		throws Exception {
 
-		return _applyComponentServiceObjects(
+		_applyVoidComponentServiceObjects(
 			_discussionForumPostingResourceComponentServiceObjects,
 			this::_populateResourceContext,
 			discussionForumPostingResource ->
@@ -413,11 +413,11 @@ public class Mutation {
 	}
 
 	@GraphQLInvokeDetached
-	public boolean deleteDiscussionSection(
+	public void deleteDiscussionSection(
 			@GraphQLName("discussion-section-id") Long discussionSectionId)
 		throws Exception {
 
-		return _applyComponentServiceObjects(
+		_applyVoidComponentServiceObjects(
 			_discussionSectionResourceComponentServiceObjects,
 			this::_populateResourceContext,
 			discussionSectionResource ->
@@ -503,11 +503,11 @@ public class Mutation {
 	}
 
 	@GraphQLInvokeDetached
-	public boolean deleteDiscussionThread(
+	public void deleteDiscussionThread(
 			@GraphQLName("discussion-thread-id") Long discussionThreadId)
 		throws Exception {
 
-		return _applyComponentServiceObjects(
+		_applyVoidComponentServiceObjects(
 			_discussionThreadResourceComponentServiceObjects,
 			this::_populateResourceContext,
 			discussionThreadResource ->
@@ -561,12 +561,12 @@ public class Mutation {
 	}
 
 	@GraphQLInvokeDetached
-	public boolean deleteKnowledgeBaseArticle(
+	public void deleteKnowledgeBaseArticle(
 			@GraphQLName("knowledge-base-article-id") Long
 				knowledgeBaseArticleId)
 		throws Exception {
 
-		return _applyComponentServiceObjects(
+		_applyVoidComponentServiceObjects(
 			_knowledgeBaseArticleResourceComponentServiceObjects,
 			this::_populateResourceContext,
 			knowledgeBaseArticleResource ->
@@ -660,12 +660,12 @@ public class Mutation {
 	}
 
 	@GraphQLInvokeDetached
-	public boolean deleteKnowledgeBaseAttachment(
+	public void deleteKnowledgeBaseAttachment(
 			@GraphQLName("knowledge-base-attachment-id") Long
 				knowledgeBaseAttachmentId)
 		throws Exception {
 
-		return _applyComponentServiceObjects(
+		_applyVoidComponentServiceObjects(
 			_knowledgeBaseAttachmentResourceComponentServiceObjects,
 			this::_populateResourceContext,
 			knowledgeBaseAttachmentResource ->
@@ -690,11 +690,11 @@ public class Mutation {
 	}
 
 	@GraphQLInvokeDetached
-	public boolean deleteKnowledgeBaseFolder(
+	public void deleteKnowledgeBaseFolder(
 			@GraphQLName("knowledge-base-folder-id") Long knowledgeBaseFolderId)
 		throws Exception {
 
-		return _applyComponentServiceObjects(
+		_applyVoidComponentServiceObjects(
 			_knowledgeBaseFolderResourceComponentServiceObjects,
 			this::_populateResourceContext,
 			knowledgeBaseFolderResource ->
@@ -762,6 +762,25 @@ public class Mutation {
 			unsafeConsumer.accept(resource);
 
 			return unsafeFunction.apply(resource);
+		}
+		finally {
+			componentServiceObjects.ungetService(resource);
+		}
+	}
+
+	private <T, E1 extends Throwable, E2 extends Throwable> void
+			_applyVoidComponentServiceObjects(
+				ComponentServiceObjects<T> componentServiceObjects,
+				UnsafeConsumer<T, E1> unsafeConsumer,
+				UnsafeConsumer<T, E2> unsafeFunction)
+		throws E1, E2 {
+
+		T resource = componentServiceObjects.getService();
+
+		try {
+			unsafeConsumer.accept(resource);
+
+			unsafeFunction.accept(resource);
 		}
 		finally {
 			componentServiceObjects.ungetService(resource);

@@ -66,10 +66,10 @@ public class Mutation {
 	}
 
 	@GraphQLInvokeDetached
-	public boolean deleteComment(@GraphQLName("comment-id") Long commentId)
+	public void deleteComment(@GraphQLName("comment-id") Long commentId)
 		throws Exception {
 
-		return _applyComponentServiceObjects(
+		_applyVoidComponentServiceObjects(
 			_commentResourceComponentServiceObjects,
 			this::_populateResourceContext,
 			commentResource -> commentResource.deleteComment(commentId));
@@ -130,10 +130,10 @@ public class Mutation {
 	}
 
 	@GraphQLInvokeDetached
-	public boolean deleteDocument(@GraphQLName("document-id") Long documentId)
+	public void deleteDocument(@GraphQLName("document-id") Long documentId)
 		throws Exception {
 
-		return _applyComponentServiceObjects(
+		_applyVoidComponentServiceObjects(
 			_documentResourceComponentServiceObjects,
 			this::_populateResourceContext,
 			documentResource -> documentResource.deleteDocument(documentId));
@@ -194,10 +194,10 @@ public class Mutation {
 	}
 
 	@GraphQLInvokeDetached
-	public boolean deleteFolder(@GraphQLName("folder-id") Long folderId)
+	public void deleteFolder(@GraphQLName("folder-id") Long folderId)
 		throws Exception {
 
-		return _applyComponentServiceObjects(
+		_applyVoidComponentServiceObjects(
 			_folderResourceComponentServiceObjects,
 			this::_populateResourceContext,
 			folderResource -> folderResource.deleteFolder(folderId));
@@ -254,6 +254,25 @@ public class Mutation {
 			unsafeConsumer.accept(resource);
 
 			return unsafeFunction.apply(resource);
+		}
+		finally {
+			componentServiceObjects.ungetService(resource);
+		}
+	}
+
+	private <T, E1 extends Throwable, E2 extends Throwable> void
+			_applyVoidComponentServiceObjects(
+				ComponentServiceObjects<T> componentServiceObjects,
+				UnsafeConsumer<T, E1> unsafeConsumer,
+				UnsafeConsumer<T, E2> unsafeFunction)
+		throws E1, E2 {
+
+		T resource = componentServiceObjects.getService();
+
+		try {
+			unsafeConsumer.accept(resource);
+
+			unsafeFunction.accept(resource);
 		}
 		finally {
 			componentServiceObjects.ungetService(resource);

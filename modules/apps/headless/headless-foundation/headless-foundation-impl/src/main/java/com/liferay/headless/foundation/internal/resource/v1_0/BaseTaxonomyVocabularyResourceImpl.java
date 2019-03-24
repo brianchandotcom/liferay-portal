@@ -104,12 +104,10 @@ public abstract class BaseTaxonomyVocabularyResourceImpl
 	@Path("/taxonomy-vocabularies/{taxonomy-vocabulary-id}")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "TaxonomyVocabulary")})
-	public boolean deleteTaxonomyVocabulary(
+	public void deleteTaxonomyVocabulary(
 			@NotNull @PathParam("taxonomy-vocabulary-id") Long
 				taxonomyVocabularyId)
 		throws Exception {
-
-		return false;
 	}
 
 	@Override

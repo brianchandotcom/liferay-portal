@@ -101,12 +101,10 @@ public abstract class BaseKnowledgeBaseFolderResourceImpl
 	@Path("/knowledge-base-folders/{knowledge-base-folder-id}")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "KnowledgeBaseFolder")})
-	public boolean deleteKnowledgeBaseFolder(
+	public void deleteKnowledgeBaseFolder(
 			@NotNull @PathParam("knowledge-base-folder-id") Long
 				knowledgeBaseFolderId)
 		throws Exception {
-
-		return false;
 	}
 
 	@Override

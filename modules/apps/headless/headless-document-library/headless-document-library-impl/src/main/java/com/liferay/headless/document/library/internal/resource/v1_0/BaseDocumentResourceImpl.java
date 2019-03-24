@@ -105,11 +105,9 @@ public abstract class BaseDocumentResourceImpl implements DocumentResource {
 	@Path("/documents/{document-id}")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "Document")})
-	public boolean deleteDocument(
+	public void deleteDocument(
 			@NotNull @PathParam("document-id") Long documentId)
 		throws Exception {
-
-		return false;
 	}
 
 	@Override

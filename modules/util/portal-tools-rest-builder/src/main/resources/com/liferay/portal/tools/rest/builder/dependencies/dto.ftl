@@ -44,13 +44,20 @@ import javax.xml.bind.annotation.XmlRootElement;
 			</#list>
 		}
 	)
-	@JsonTypeInfo(include = JsonTypeInfo.As.PROPERTY, property = "type", use = JsonTypeInfo.Id.NAME)
+	@JsonTypeInfo(include = JsonTypeInfo.As.PROPERTY, property = "childType", use = JsonTypeInfo.Id.NAME)
+</#if>
+<#assign dtoParentClassName = freeMarkerTool.getDTOParentClassName(openAPIYAML, schemaName)!/>
+<#if dtoParentClassName?has_content>
+	@JsonTypeInfo(
+		use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "childType",
+		defaultImpl = ${schemaName}.class
+	)
 </#if>
 @Generated("")
 @GraphQLName("${schemaName}")
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "${schemaName}")
-public class ${schemaName} <#if freeMarkerTool.getDTOParentClassName(openAPIYAML, schemaName)??>extends ${freeMarkerTool.getDTOParentClassName(openAPIYAML, schemaName)}</#if> {
+public class ${schemaName} <#if dtoParentClassName?has_content>extends ${dtoParentClassName}</#if> {
 	<#assign enumSchemas = freeMarkerTool.getDTOEnumSchemas(schema) />
 
 	<#list enumSchemas?keys as enumName>

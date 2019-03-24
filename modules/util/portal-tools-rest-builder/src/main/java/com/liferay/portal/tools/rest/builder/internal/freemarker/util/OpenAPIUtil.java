@@ -127,11 +127,14 @@ public class OpenAPIUtil {
 
 						Iterator<String> iterator = keys.iterator();
 
-						allSchemas.put(
-							StringUtil.upperCaseFirstLetter(iterator.next()),
-							oneOfSchema);
+						String schemaKey = StringUtil.upperCaseFirstLetter(
+							iterator.next());
 
-						queue.add(schemas);
+						if (!allSchemas.containsKey(schemaKey)) {
+							allSchemas.put(schemaKey, oneOfSchema);
+
+							queue.add(schemas);
+						}
 					}
 				}
 

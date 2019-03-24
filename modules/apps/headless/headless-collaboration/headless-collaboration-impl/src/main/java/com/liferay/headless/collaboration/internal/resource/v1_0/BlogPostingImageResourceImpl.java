@@ -16,7 +16,6 @@ package com.liferay.headless.collaboration.internal.resource.v1_0;
 
 import com.liferay.blogs.service.BlogsEntryService;
 import com.liferay.document.library.kernel.model.DLFileEntry;
-import com.liferay.document.library.kernel.model.DLVersionNumberIncrease;
 import com.liferay.document.library.kernel.service.DLAppService;
 import com.liferay.document.library.util.DLURLHelper;
 import com.liferay.headless.collaboration.dto.v1_0.BlogPostingImage;
@@ -28,7 +27,6 @@ import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
-import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.vulcan.multipart.BinaryFile;
@@ -139,42 +137,6 @@ public class BlogPostingImageResourceImpl
 				).orElse(
 					BlogPostingImage.ViewableBy.ANYONE.getValue()
 				)));
-
-		return _toBlogPostingImage(fileEntry);
-	}
-
-	@Override
-	public BlogPostingImage putBlogPostingImage(
-			Long blogPostingImageId, MultipartBody multipartBody)
-		throws Exception {
-
-		FileEntry existingFileEntry = _getFileEntry(blogPostingImageId);
-
-		BinaryFile binaryFile = Optional.ofNullable(
-			multipartBody.getBinaryFile("file")
-		).orElse(
-			new BinaryFile(
-				existingFileEntry.getMimeType(),
-				existingFileEntry.getFileName(),
-				existingFileEntry.getContentStream(),
-				existingFileEntry.getSize())
-		);
-
-		Optional<BlogPostingImage> blogPostingImageOptional =
-			multipartBody.getValueAsInstanceOptional(
-				"blogPostingImage", BlogPostingImage.class);
-
-		FileEntry fileEntry = _dlAppService.updateFileEntry(
-			existingFileEntry.getFileEntryId(), binaryFile.getFileName(),
-			binaryFile.getContentType(),
-			blogPostingImageOptional.map(
-				BlogPostingImage::getTitle
-			).orElse(
-				existingFileEntry.getTitle()
-			),
-			null, null, DLVersionNumberIncrease.AUTOMATIC,
-			binaryFile.getInputStream(), binaryFile.getSize(),
-			new ServiceContext());
 
 		return _toBlogPostingImage(fileEntry);
 	}

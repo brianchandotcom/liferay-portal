@@ -548,7 +548,7 @@ public class ResourceOpenAPIParser {
 		Map<String, Response> responses = operation.getResponses();
 
 		if (responses.isEmpty()) {
-			return boolean.class.getName();
+			return "void";
 		}
 
 		if (responses.size() > 1) {
@@ -566,7 +566,7 @@ public class ResourceOpenAPIParser {
 				Schema schema = content.getSchema();
 
 				if (schema == null) {
-					continue;
+					return "void";
 				}
 
 				String returnType = OpenAPIParserUtil.getJavaDataType(

@@ -57,6 +57,7 @@ components:
                         imageId:
                             format: int64
                             type: integer
+                            writeOnly: true
                     type: object
                 keywords:
                     items:
@@ -455,33 +456,6 @@ paths:
                   schema:
                       format: int64
                       type: integer
-            responses:
-                200:
-                    content:
-                        application/json:
-                            schema:
-                                $ref: "#/components/schemas/BlogPostingImage"
-                    description: ""
-            tags: ["BlogPostingImage"]
-        put:
-            parameters:
-                - in: path
-                  name: blog-posting-image-id
-                  required: true
-                  schema:
-                      format: int64
-                      type: integer
-            requestBody:
-                content:
-                    multipart/form-data:
-                        schema:
-                            properties:
-                                blogPostingImage:
-                                    $ref: "#/components/schemas/BlogPostingImage"
-                                file:
-                                    format: binary
-                                    type: string
-                            type: object
             responses:
                 200:
                     content:

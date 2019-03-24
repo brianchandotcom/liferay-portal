@@ -43,16 +43,15 @@ import com.liferay.dynamic.data.mapping.storage.Fields;
 import com.liferay.dynamic.data.mapping.util.DDM;
 import com.liferay.dynamic.data.mapping.util.FieldsToDDMFormValuesConverter;
 import com.liferay.headless.common.spi.service.context.ServiceContextUtil;
-import com.liferay.headless.web.experience.dto.v1_0.ContentDocument;
 import com.liferay.headless.web.experience.dto.v1_0.ContentField;
 import com.liferay.headless.web.experience.dto.v1_0.Geo;
 import com.liferay.headless.web.experience.dto.v1_0.RenderedContent;
 import com.liferay.headless.web.experience.dto.v1_0.StructuredContent;
-import com.liferay.headless.web.experience.dto.v1_0.StructuredContentImage;
 import com.liferay.headless.web.experience.dto.v1_0.StructuredContentLink;
 import com.liferay.headless.web.experience.dto.v1_0.TaxonomyCategory;
 import com.liferay.headless.web.experience.dto.v1_0.Value;
 import com.liferay.headless.web.experience.internal.dto.v1_0.util.AggregateRatingUtil;
+import com.liferay.headless.web.experience.internal.dto.v1_0.util.ContentDocumentUtil;
 import com.liferay.headless.web.experience.internal.dto.v1_0.util.ContentStructureUtil;
 import com.liferay.headless.web.experience.internal.dto.v1_0.util.CreatorUtil;
 import com.liferay.headless.web.experience.internal.odata.entity.v1_0.EntityFieldsProvider;
@@ -647,30 +646,13 @@ public class StructuredContentResourceImpl
 							DDMFormFieldType.DOCUMENT_LIBRARY,
 							ddmFormField.getType())) {
 
-						FileEntry fileEntry = _dlAppService.getFileEntry(
-							value.getDocumentId());
+						_addDocument(value.getDocumentId());
+					}
+					else if (Objects.equals(
+								DDMFormFieldType.IMAGE,
+								ddmFormField.getType())) {
 
-						addString(
-							locale,
-							JSONUtil.put(
-								"alt", value.getData()
-							).put(
-								"classPK", fileEntry.getFileEntryId()
-							).put(
-								"fileEntryId", fileEntry.getFileEntryId()
-							).put(
-								"groupId", fileEntry.getGroupId()
-							).put(
-								"name", fileEntry.getFileName()
-							).put(
-								"resourcePrimKey", fileEntry.getPrimaryKey()
-							).put(
-								"title", fileEntry.getFileName()
-							).put(
-								"type", "document"
-							).put(
-								"uuid", fileEntry.getUuid()
-							).toString());
+						_addDocument(value.getImageId());
 					}
 					else if (Objects.equals(
 								DDMFormFieldType.JOURNAL_ARTICLE,
@@ -694,6 +676,36 @@ public class StructuredContentResourceImpl
 						addString(locale, value.getData());
 					}
 				}
+
+				private void _addDocument(Long documentId)
+					throws PortalException {
+
+					FileEntry fileEntry = _dlAppService.getFileEntry(
+						documentId);
+
+					addString(
+						locale,
+						JSONUtil.put(
+							"alt", value.getImageDescription()
+						).put(
+							"classPK", fileEntry.getFileEntryId()
+						).put(
+							"fileEntryId", fileEntry.getFileEntryId()
+						).put(
+							"groupId", fileEntry.getGroupId()
+						).put(
+							"name", fileEntry.getFileName()
+						).put(
+							"resourcePrimKey", fileEntry.getPrimaryKey()
+						).put(
+							"title", fileEntry.getFileName()
+						).put(
+							"type", "document"
+						).put(
+							"uuid", fileEntry.getUuid()
+						).toString());
+				}
+
 			};
 		}
 
@@ -929,18 +941,8 @@ public class StructuredContentResourceImpl
 
 			return new Value() {
 				{
-					document = new ContentDocument() {
-						{
-							contentUrl = _dlurlHelper.getPreviewURL(
-								fileEntry, fileEntry.getFileVersion(), null, "",
-								false, false);
-							encodingFormat = fileEntry.getMimeType();
-							fileExtension = fileEntry.getExtension();
-							id = fileEntry.getFileEntryId();
-							sizeInBytes = fileEntry.getSize();
-							title = fileEntry.getTitle();
-						}
-					};
+					document = ContentDocumentUtil.toContentDocument(
+						fileEntry, _dlurlHelper);
 				}
 			};
 		}
@@ -977,19 +979,10 @@ public class StructuredContentResourceImpl
 
 			return new Value() {
 				{
-					image = new StructuredContentImage() {
-						{
-							contentUrl = _dlurlHelper.getPreviewURL(
-								fileEntry, fileEntry.getFileVersion(), null, "",
-								false, false);
-							description = jsonObject.getString("alt");
-							encodingFormat = fileEntry.getMimeType();
-							fileExtension = fileEntry.getExtension();
-							id = fileEntry.getFileEntryId();
-							sizeInBytes = fileEntry.getSize();
-							title = fileEntry.getTitle();
-						}
-					};
+					image = ContentDocumentUtil.toContentDocument(
+						fileEntry, _dlurlHelper);
+					imageId = fileEntryId;
+					imageDescription = jsonObject.getString("alt");
 				}
 			};
 		}

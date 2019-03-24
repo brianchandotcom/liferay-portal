@@ -37,6 +37,8 @@ components:
                 contentUrl:
                     format: uri
                     type: string
+                description:
+                    type: string
                 encodingFormat:
                     type: string
                 fileExtension:
@@ -91,8 +93,14 @@ components:
                             type: object
                         image:
                             allOf:
-                                - $ref: "#/components/schemas/StructuredContentImage"
+                                - $ref: "#/components/schemas/ContentDocument"
                             readOnly: true
+                        imageId:
+                            format: int64
+                            type: integer
+                            writeOnly: true
+                        imageDescription:
+                            type: string
                         link:
                             format: uri
                             type: string
@@ -274,37 +282,8 @@ components:
                     enum: [Anyone, Members, Owner]
                     type: string
                     writeOnly: true
-        StructuredContentImage:
-            description: https://www.schema.org/StructuredContentImage
-            properties:
-                contentUrl:
-                    format: uri
-                    type: string
-                creator:
-                    $ref: "#/components/schemas/Creator"
-                dateCreated:
-                    format: date-time
-                    type: string
-                dateModified:
-                    format: date-time
-                    type: string
-                description:
-                    type: string
-                encodingFormat:
-                    type: string
-                fileExtension:
-                    type: string
-                id:
-                    format: int64
-                    type: integer
-                sizeInBytes:
-                    type: number
-                structuredContentId:
-                    format: int64
-                    type: integer
-                title:
-                    type: string
-            type: object
+            required:
+                - contentStructureId
 info:
     description: ""
     title: "Headless Web Experience"

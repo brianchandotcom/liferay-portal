@@ -41,6 +41,9 @@ public class TransformUtil {
 					list.add(newItem);
 				}
 			}
+			catch (RuntimeException re) {
+				throw re;
+			}
 			catch (Exception e) {
 				throw new RuntimeException(e);
 			}
@@ -79,6 +82,9 @@ public class TransformUtil {
 				if (newItem != null) {
 					list.add(newItem);
 				}
+			}
+			catch (RuntimeException re) {
+				throw re;
 			}
 			catch (Exception e) {
 				throw new RuntimeException(e);

@@ -844,7 +844,7 @@ public abstract class Base${schemaName}ResourceTestCase {
 				return _outputObjectMapper.readValue(string, new TypeReference<Page<${schemaName}>>() {});
 			<#elseif javaMethodSignature.returnType?ends_with("String")>
 				return string;
-			<#else>
+			<#elseif !stringUtil.equals(javaMethodSignature.returnType, "void")>
 				try {
 					return _outputObjectMapper.readValue(string, ${javaMethodSignature.returnType}.class);
 				}

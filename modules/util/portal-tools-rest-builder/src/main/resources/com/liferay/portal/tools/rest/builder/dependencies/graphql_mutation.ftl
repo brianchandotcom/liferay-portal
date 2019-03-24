@@ -64,8 +64,10 @@ public class Mutation {
 
 						return paginationPage.getItems();
 					});
+			<#elseif javaMethodSignature.returnType?contains("void")>
+				_applyVoidComponentServiceObjects(_${javaMethodSignature.schemaName?uncap_first}ResourceComponentServiceObjects, this::_populateResourceContext,${javaMethodSignature.schemaName?uncap_first}Resource -> ${javaMethodSignature.schemaName?uncap_first}Resource.${javaMethodSignature.methodName}(${freeMarkerTool.getGraphQLArguments(javaMethodSignature.javaMethodParameters)}));
 			<#else>
-				return _applyComponentServiceObjects(_${javaMethodSignature.schemaName?uncap_first}ResourceComponentServiceObjects, this::_populateResourceContext, ${javaMethodSignature.schemaName?uncap_first}Resource -> ${javaMethodSignature.schemaName?uncap_first}Resource.${javaMethodSignature.methodName}(${freeMarkerTool.getGraphQLArguments(javaMethodSignature.javaMethodParameters)}));
+				return _applyComponentServiceObjects(_${javaMethodSignature.schemaName?uncap_first}ResourceComponentServiceObjects, this::_populateResourceContext,${javaMethodSignature.schemaName?uncap_first}Resource -> ${javaMethodSignature.schemaName?uncap_first}Resource.${javaMethodSignature.methodName}(${freeMarkerTool.getGraphQLArguments(javaMethodSignature.javaMethodParameters)}));
 			</#if>
 		}
 	</#list>
@@ -77,6 +79,19 @@ public class Mutation {
 			unsafeConsumer.accept(resource);
 
 			return unsafeFunction.apply(resource);
+		}
+		finally {
+			componentServiceObjects.ungetService(resource);
+		}
+	}
+
+	private <T, E1 extends Throwable, E2 extends Throwable> void _applyVoidComponentServiceObjects(ComponentServiceObjects<T> componentServiceObjects, UnsafeConsumer<T, E1> unsafeConsumer, UnsafeConsumer<T, E2> unsafeFunction) throws E1, E2 {
+		T resource = componentServiceObjects.getService();
+
+		try {
+			unsafeConsumer.accept(resource);
+
+			unsafeFunction.accept(resource);
 		}
 		finally {
 			componentServiceObjects.ungetService(resource);

@@ -94,7 +94,7 @@ public abstract class Base${schemaName}ResourceImpl implements ${schemaName}Reso
 				</#list>
 
 				return put${schemaName}(${firstJavaMethodParameter.parameterName}, existing${schemaName});
-			<#else>
+			<#elseif !stringUtil.equals(javaMethodSignature.returnType, "void")>
 				return new ${javaMethodSignature.returnType}();
 			</#if>
 		}

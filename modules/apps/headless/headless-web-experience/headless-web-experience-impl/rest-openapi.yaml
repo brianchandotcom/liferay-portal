@@ -232,6 +232,8 @@ components:
                 id:
                     format: int64
                     type: integer
+                key:
+                    type: string
                 keywords:
                     items:
                         type: string
@@ -269,6 +271,8 @@ components:
                     type: array
                     writeOnly: true
                 title:
+                    type: string
+                uuid:
                     type: string
                 viewableBy:
                     enum: [Anyone, Members, Owner]
@@ -573,6 +577,58 @@ paths:
                                 items:
                                     $ref: "#/components/schemas/StructuredContent"
                                 type: array
+                    description: ""
+            tags: ["StructuredContent"]
+    "/content-spaces/{content-space-id}/structured-contents/key/{key}":
+        get:
+            parameters:
+                - in: header
+                  name: Accept-Language
+                  schema:
+                      type: string
+                - in: path
+                  name: content-space-id
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+                - in: path
+                  name: key
+                  required: true
+                  schema:
+                      type: string
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/StructuredContent"
+                    description: ""
+            tags: ["StructuredContent"]
+    "/content-spaces/{content-space-id}/structured-contents/uuid/{uuid}":
+        get:
+            parameters:
+                - in: header
+                  name: Accept-Language
+                  schema:
+                      type: string
+                - in: path
+                  name: content-space-id
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+                - in: path
+                  name: uuid
+                  required: true
+                  schema:
+                      type: string
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/StructuredContent"
                     description: ""
             tags: ["StructuredContent"]
     "/structured-contents/{structured-content-id}":

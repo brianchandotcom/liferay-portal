@@ -90,6 +90,21 @@ info:
     version: v1.0
 openapi: "3.0.1"
 paths:
+    "/bulk-selection":
+        post:
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/DocumentBulkSelection"
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/MessageSelection"
+                    description: ""
+            tags: ["MessageSelection"]
     "/content-spaces/{content-space-id}/taxonomy-vocabularies/common":
         post:
             parameters:
@@ -156,21 +171,6 @@ paths:
                                 type: array
                     description: ""
             tags: ["Keyword"]
-    "/keywords/message-selection":
-        post:
-            requestBody:
-                content:
-                    application/json:
-                        schema:
-                            $ref: "#/components/schemas/DocumentBulkSelection"
-            responses:
-                200:
-                    content:
-                        application/json:
-                            schema:
-                                $ref: "#/components/schemas/MessageSelection"
-                    description: ""
-            tags: ["MessageSelection"]
     "/status":
         get:
             responses:
@@ -206,18 +206,3 @@ paths:
                         {}
                     description: ""
             tags: ["TaxonomyCategory"]
-    "/taxonomy-vocabularies/message-selection":
-        post:
-            requestBody:
-                content:
-                    application/json:
-                        schema:
-                            $ref: "#/components/schemas/DocumentBulkSelection"
-            responses:
-                200:
-                    content:
-                        application/json:
-                            schema:
-                                $ref: "#/components/schemas/MessageSelection"
-                    description: ""
-            tags: ["MessageSelection"]

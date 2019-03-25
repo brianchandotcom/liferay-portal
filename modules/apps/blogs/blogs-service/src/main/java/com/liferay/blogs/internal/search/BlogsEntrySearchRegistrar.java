@@ -44,6 +44,8 @@ public class BlogsEntrySearchRegistrar {
 					Field.ENTRY_CLASS_NAME, Field.ENTRY_CLASS_PK,
 					Field.GROUP_ID, Field.MODIFIED_DATE, Field.SCOPE_GROUP_ID,
 					Field.TITLE, Field.UID);
+				modelSearchDefinition.setDefaultSelectedLocalizedFieldNames(
+					Field.CONTENT, Field.TITLE);
 				modelSearchDefinition.setModelIndexWriteContributor(
 					modelIndexWriterContributor);
 				modelSearchDefinition.setModelSummaryContributor(

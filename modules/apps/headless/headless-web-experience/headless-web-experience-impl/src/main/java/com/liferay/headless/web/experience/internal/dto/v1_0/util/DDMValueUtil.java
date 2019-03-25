@@ -24,8 +24,14 @@ import com.liferay.headless.web.experience.dto.v1_0.ContentField;
 import com.liferay.headless.web.experience.dto.v1_0.Geo;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.service.JournalArticleService;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
+import com.liferay.portal.kernel.service.LayoutLocalService;
+import com.liferay.portal.kernel.service.permission.LayoutPermissionUtil;
 
 import java.util.Locale;
 import java.util.Objects;
@@ -39,8 +45,9 @@ public class DDMValueUtil {
 
 	public static Value toDDMValue(
 		ContentField contentFieldValue, DDMFormField ddmFormField,
-		DLAppService dlAppService, JournalArticleService journalArticleService,
-		Locale locale) {
+		DLAppService dlAppService, long groupId,
+		JournalArticleService journalArticleService,
+		LayoutLocalService layoutLocalService, Locale locale) {
 
 		com.liferay.headless.web.experience.dto.v1_0.Value value =
 			contentFieldValue.getValue();
@@ -117,6 +124,27 @@ public class DDMValueUtil {
 								"title", journalArticle.getTitle()
 							).toString());
 					}
+					else if (Objects.equals(
+								DDMFormFieldType.LINK_TO_PAGE,
+								ddmFormField.getType())) {
+
+						String link = value.getLink();
+
+						Layout layout = _getLayout(
+							link, layoutLocalService, groupId);
+
+						addString(
+							locale,
+							JSONUtil.put(
+								"groupId", layout.getGroupId()
+							).put(
+								"label", layout.getFriendlyURL()
+							).put(
+								"privateLayout", layout.isPrivateLayout()
+							).put(
+								"layoutId", layout.getLayoutId()
+							).toString());
+					}
 					else {
 						addString(locale, value.getData());
 					}
@@ -138,6 +166,35 @@ public class DDMValueUtil {
 		}
 
 		return new UnlocalizedValue(value.getData());
+	}
+
+	private static Layout _getLayout(
+		String link, LayoutLocalService layoutLocalService, long groupId) {
+
+		Layout layout = layoutLocalService.fetchLayoutByFriendlyURL(
+			groupId, false, link);
+
+		if (layout == null) {
+			layout = layoutLocalService.fetchLayoutByFriendlyURL(
+				groupId, true, link);
+		}
+
+		if (layout == null) {
+			throw new BadRequestException(
+				"No page found with friendly url " + link);
+		}
+
+		try {
+			LayoutPermissionUtil.check(
+				PermissionThreadLocal.getPermissionChecker(), layout,
+				ActionKeys.VIEW);
+		}
+		catch (PortalException pe) {
+			throw new BadRequestException(
+				"No page found with friendly url " + link, pe);
+		}
+
+		return layout;
 	}
 
 }

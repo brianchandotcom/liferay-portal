@@ -813,7 +813,19 @@ AUI.add(
 			},
 
 			validateFieldName: function(fieldName) {
-				return (/^[^-–—]+$/).test(fieldName);
+				var valid = true;
+
+				for (var i = 0; i < fieldName.length; i++) {
+					var item = fieldName[i];
+
+					if (!A.Text.Unicode.test(item, 'L') && !A.Text.Unicode.test(item, 'N') && !A.Text.Unicode.test(item, 'Pd') && item != STR_UNDERSCORE) {
+						valid = false;
+
+						break;
+					}
+				}
+
+				return valid;
 			}
 		};
 

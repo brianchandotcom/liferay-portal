@@ -15,19 +15,36 @@
 package com.liferay.portal.tools.java.parser;
 
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.util.NaturalOrderStringComparator;
 
 import java.util.Objects;
 
 /**
  * @author Hugo Huijser
  */
-public class JavaAnnotationMemberValuePair extends BaseJavaTerm {
+public class JavaAnnotationMemberValuePair
+	extends BaseJavaTerm implements Comparable<JavaAnnotationMemberValuePair> {
 
 	public JavaAnnotationMemberValuePair(
 		String name, JavaExpression valueJavaExpression) {
 
 		_name = new JavaSimpleValue(name);
 		_valueJavaExpression = valueJavaExpression;
+	}
+
+	@Override
+	public int compareTo(
+		JavaAnnotationMemberValuePair javaAnnotationMemberValuePair) {
+
+		NaturalOrderStringComparator comparator =
+			new NaturalOrderStringComparator();
+
+		return comparator.compare(
+			getName(), javaAnnotationMemberValuePair.getName());
+	}
+
+	public String getName() {
+		return _name.getName();
 	}
 
 	@Override

@@ -16,6 +16,7 @@ package com.liferay.portal.tools.java.parser;
 
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.util.NaturalOrderStringComparator;
 import com.liferay.portal.kernel.util.StringUtil;
 
 import java.util.List;
@@ -23,10 +24,23 @@ import java.util.List;
 /**
  * @author Hugo Huijser
  */
-public class JavaAnnotation extends JavaExpression {
+public class JavaAnnotation
+	extends JavaExpression implements Comparable<JavaAnnotation> {
 
 	public JavaAnnotation(String name) {
 		_name = new JavaSimpleValue(name);
+	}
+
+	@Override
+	public int compareTo(JavaAnnotation javaAnnotation) {
+		NaturalOrderStringComparator comparator =
+			new NaturalOrderStringComparator();
+
+		return comparator.compare(getName(), javaAnnotation.getName());
+	}
+
+	public String getName() {
+		return _name.getName();
 	}
 
 	public void setJavaAnnotationMemberValuePairs(

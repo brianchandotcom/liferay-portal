@@ -603,6 +603,8 @@ public class JavaParserUtil {
 			_parseJavaAnnotationMemberValuePairs(annotationDetailAST);
 
 		if (!javaAnnotationMemberValuePairs.isEmpty()) {
+			Collections.sort(javaAnnotationMemberValuePairs);
+
 			javaAnnotation.setJavaAnnotationMemberValuePairs(
 				javaAnnotationMemberValuePairs);
 		}
@@ -688,6 +690,8 @@ public class JavaParserUtil {
 		for (DetailAST annotationDetailAST : annotationDetailASTList) {
 			javaAnnotations.add(_parseJavaAnnotation(annotationDetailAST));
 		}
+
+		Collections.sort(javaAnnotations);
 
 		return javaAnnotations;
 	}

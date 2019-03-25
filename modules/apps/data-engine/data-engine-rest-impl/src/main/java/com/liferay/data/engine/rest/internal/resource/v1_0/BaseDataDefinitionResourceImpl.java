@@ -15,6 +15,7 @@
 package com.liferay.data.engine.rest.internal.resource.v1_0;
 
 import com.liferay.data.engine.rest.dto.v1_0.DataDefinition;
+import com.liferay.data.engine.rest.dto.v1_0.DataDefinitionPermission;
 import com.liferay.data.engine.rest.resource.v1_0.DataDefinitionResource;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.petra.string.StringPool;
@@ -94,6 +95,21 @@ public abstract class BaseDataDefinitionResourceImpl
 		throws Exception {
 
 		return new DataDefinition();
+	}
+
+	@Override
+	@Consumes("application/json")
+	@POST
+	@Path("/data-definitions/{data-definition-id}/permissions")
+	@Produces("application/json")
+	@Tags(value = {@Tag(name = "DataDefinition")})
+	public boolean postDataDefinitionPermission(
+			@NotNull @PathParam("data-definition-id") Long dataDefinitionId,
+			@NotNull @QueryParam("operation") String operation,
+			DataDefinitionPermission dataDefinitionPermission)
+		throws Exception {
+
+		return false;
 	}
 
 	@Override

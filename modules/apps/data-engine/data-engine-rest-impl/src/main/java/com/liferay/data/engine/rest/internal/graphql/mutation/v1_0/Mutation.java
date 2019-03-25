@@ -15,6 +15,7 @@
 package com.liferay.data.engine.rest.internal.graphql.mutation.v1_0;
 
 import com.liferay.data.engine.rest.dto.v1_0.DataDefinition;
+import com.liferay.data.engine.rest.dto.v1_0.DataDefinitionPermission;
 import com.liferay.data.engine.rest.dto.v1_0.DataLayout;
 import com.liferay.data.engine.rest.dto.v1_0.DataRecord;
 import com.liferay.data.engine.rest.dto.v1_0.DataRecordCollection;
@@ -87,6 +88,23 @@ public class Mutation {
 			dataDefinitionResource ->
 				dataDefinitionResource.postContentSpaceDataDefinition(
 					contentSpaceId, dataDefinition));
+	}
+
+	@GraphQLField
+	@GraphQLInvokeDetached
+	public boolean postDataDefinitionPermission(
+			@GraphQLName("data-definition-id") Long dataDefinitionId,
+			@GraphQLName("operation") String operation,
+			@GraphQLName("DataDefinitionPermission") DataDefinitionPermission
+				dataDefinitionPermission)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_dataDefinitionResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			dataDefinitionResource ->
+				dataDefinitionResource.postDataDefinitionPermission(
+					dataDefinitionId, operation, dataDefinitionPermission));
 	}
 
 	@GraphQLInvokeDetached

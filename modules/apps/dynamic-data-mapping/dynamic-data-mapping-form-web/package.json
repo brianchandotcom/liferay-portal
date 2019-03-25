@@ -135,6 +135,7 @@
 			"source/(.*)": "<rootDir>/src/main/resources/META-INF/resources/metal/js/$1.js"
 		},
 		"modulePathIgnorePatterns": [
+			"/build/",
 			"/classes/",
 			"/__mock__/",
 			"/__fixtures__/"

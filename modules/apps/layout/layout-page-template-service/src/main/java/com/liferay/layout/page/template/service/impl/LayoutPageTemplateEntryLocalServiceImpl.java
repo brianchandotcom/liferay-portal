@@ -19,6 +19,7 @@ import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.dynamic.data.mapping.model.DDMStructureLink;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLinkLocalService;
 import com.liferay.fragment.service.FragmentEntryLinkLocalService;
+import com.liferay.layout.page.template.constants.LayoutPageTemplateConstants;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
 import com.liferay.layout.page.template.exception.DuplicateLayoutPageTemplateEntryException;
 import com.liferay.layout.page.template.exception.LayoutPageTemplateEntryNameException;
@@ -165,8 +166,9 @@ public class LayoutPageTemplateEntryLocalServiceImpl
 
 		layoutPageTemplateEntryVersionLocalService.
 			addLayoutPageTemplateEntryVersion(
-				userId, groupId, layoutPageTemplateEntryId, 0.1, name,
-				classNameId, classTypeId, type, serviceContext);
+				userId, groupId, layoutPageTemplateEntryId,
+				LayoutPageTemplateConstants.VERSION_DEFAULT, name, classNameId,
+				classTypeId, type, serviceContext);
 
 		layoutPageTemplateEntry.setStatus(status);
 		layoutPageTemplateEntry.setStatusByUserId(userId);

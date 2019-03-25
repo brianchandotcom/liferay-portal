@@ -92,7 +92,7 @@ public abstract class BaseWorkflowTaskResourceImpl
 	@Path("/workflow-tasks/assigned-to-me")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "WorkflowTask")})
-	public Page<WorkflowTask> getWorkflowTaskAssignedToMePage(
+	public Page<WorkflowTask> getWorkflowTasksAssignedToMePage(
 			@Context Pagination pagination)
 		throws Exception {
 
@@ -110,7 +110,7 @@ public abstract class BaseWorkflowTaskResourceImpl
 	@Path("/workflow-tasks/assigned-to-my-roles")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "WorkflowTask")})
-	public Page<WorkflowTask> getWorkflowTaskAssignedToMyRolesPage(
+	public Page<WorkflowTask> getWorkflowTasksAssignedToMyRolesPage(
 			@Context Pagination pagination)
 		throws Exception {
 

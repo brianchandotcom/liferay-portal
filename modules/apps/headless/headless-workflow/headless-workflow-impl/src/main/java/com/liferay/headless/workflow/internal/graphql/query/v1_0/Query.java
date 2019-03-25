@@ -113,7 +113,7 @@ public class Query {
 
 	@GraphQLField
 	@GraphQLInvokeDetached
-	public Collection<WorkflowTask> getWorkflowTaskAssignedToMePage(
+	public Collection<WorkflowTask> getWorkflowTasksAssignedToMePage(
 			@GraphQLName("pageSize") int pageSize,
 			@GraphQLName("page") int page)
 		throws Exception {
@@ -123,7 +123,7 @@ public class Query {
 			this::_populateResourceContext,
 			workflowTaskResource -> {
 				Page paginationPage =
-					workflowTaskResource.getWorkflowTaskAssignedToMePage(
+					workflowTaskResource.getWorkflowTasksAssignedToMePage(
 						Pagination.of(pageSize, page));
 
 				return paginationPage.getItems();
@@ -132,7 +132,7 @@ public class Query {
 
 	@GraphQLField
 	@GraphQLInvokeDetached
-	public Collection<WorkflowTask> getWorkflowTaskAssignedToMyRolesPage(
+	public Collection<WorkflowTask> getWorkflowTasksAssignedToMyRolesPage(
 			@GraphQLName("pageSize") int pageSize,
 			@GraphQLName("page") int page)
 		throws Exception {
@@ -142,7 +142,7 @@ public class Query {
 			this::_populateResourceContext,
 			workflowTaskResource -> {
 				Page paginationPage =
-					workflowTaskResource.getWorkflowTaskAssignedToMyRolesPage(
+					workflowTaskResource.getWorkflowTasksAssignedToMyRolesPage(
 						Pagination.of(pageSize, page));
 
 				return paginationPage.getItems();

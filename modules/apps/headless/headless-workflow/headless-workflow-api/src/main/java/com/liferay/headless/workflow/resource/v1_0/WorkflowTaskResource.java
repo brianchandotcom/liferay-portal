@@ -39,11 +39,11 @@ public interface WorkflowTaskResource {
 			Long roleId, Pagination pagination)
 		throws Exception;
 
-	public Page<WorkflowTask> getWorkflowTaskAssignedToMePage(
+	public Page<WorkflowTask> getWorkflowTasksAssignedToMePage(
 			Pagination pagination)
 		throws Exception;
 
-	public Page<WorkflowTask> getWorkflowTaskAssignedToMyRolesPage(
+	public Page<WorkflowTask> getWorkflowTasksAssignedToMyRolesPage(
 			Pagination pagination)
 		throws Exception;
 

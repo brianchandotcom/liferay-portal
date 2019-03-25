@@ -264,11 +264,11 @@ public abstract class BaseWorkflowTaskResourceTestCase {
 	}
 
 	@Test
-	public void testGetWorkflowTaskAssignedToMePage() throws Exception {
+	public void testGetWorkflowTasksAssignedToMePage() throws Exception {
 		Assert.assertTrue(true);
 	}
 
-	protected Page<WorkflowTask> invokeGetWorkflowTaskAssignedToMePage(
+	protected Page<WorkflowTask> invokeGetWorkflowTasksAssignedToMePage(
 			Pagination pagination)
 		throws Exception {
 
@@ -296,7 +296,7 @@ public abstract class BaseWorkflowTaskResourceTestCase {
 			});
 	}
 
-	protected Http.Response invokeGetWorkflowTaskAssignedToMePageResponse(
+	protected Http.Response invokeGetWorkflowTasksAssignedToMePageResponse(
 			Pagination pagination)
 		throws Exception {
 
@@ -318,11 +318,11 @@ public abstract class BaseWorkflowTaskResourceTestCase {
 	}
 
 	@Test
-	public void testGetWorkflowTaskAssignedToMyRolesPage() throws Exception {
+	public void testGetWorkflowTasksAssignedToMyRolesPage() throws Exception {
 		Assert.assertTrue(true);
 	}
 
-	protected Page<WorkflowTask> invokeGetWorkflowTaskAssignedToMyRolesPage(
+	protected Page<WorkflowTask> invokeGetWorkflowTasksAssignedToMyRolesPage(
 			Pagination pagination)
 		throws Exception {
 
@@ -350,7 +350,7 @@ public abstract class BaseWorkflowTaskResourceTestCase {
 			});
 	}
 
-	protected Http.Response invokeGetWorkflowTaskAssignedToMyRolesPageResponse(
+	protected Http.Response invokeGetWorkflowTasksAssignedToMyRolesPageResponse(
 			Pagination pagination)
 		throws Exception {
 

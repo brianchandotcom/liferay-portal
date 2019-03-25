@@ -169,6 +169,36 @@ class FragmentEntryLinkListSection extends Component {
 	 * @review
 	 */
 	_handleBodyMouseMove(event) {
+		const nextColumnRect = this.refs.resizeNextColumn.getBoundingClientRect();
+
+		const maxPosition = nextColumnRect.x + nextColumnRect.width;
+		const minPosition = this.refs.resizeColumn.getBoundingClientRect().x;
+		const position = Math.max(Math.min(event.clientX, maxPosition), minPosition);
+
+		const column = this._resizeSectionColumns[this._resizeColumnIndex];
+		const nextColumn = this._resizeSectionColumns[this._resizeColumnIndex + 1];
+
+		const maxColumns = (parseInt(column.size, 10) || 1) + (parseInt(nextColumn.size, 10) || 1) - 1;
+
+		const columns = Math.max(
+			Math.round(
+				((position - minPosition) / (maxPosition - minPosition)) *
+				(maxColumns)
+			),
+			1
+		);
+
+		this._resizeSectionColumns = setIn(
+			this._resizeSectionColumns,
+			[this._resizeColumnIndex, 'size'],
+			columns.toString()
+		);
+
+		this._resizeSectionColumns = setIn(
+			this._resizeSectionColumns,
+			[this._resizeColumnIndex + 1, 'size'],
+			(maxColumns - columns + 1).toString()
+		);
 	}
 
 	/**

@@ -22,6 +22,7 @@
 	{@param? _handleSectionHoverStart: any}
 	{@param? _handleSectionKeyUp: any}
 	{@param? _handleSectionRemoveButtonClick: any}
+	{@param? _resizeColumnIndex: number}
 	{@param? _resizing: bool}
 	{@param? activeItemId: string}
 	{@param? activeItemType: string}
@@ -169,7 +170,9 @@
 						{param _columnResizerVisible: $_columnResizerVisible /}
 						{param _handleFragmentMove: $_handleFragmentMove /}
 						{param _handleResizerMouseDown: $_handleResizerMouseDown /}
+						{param _resizeColumnIndex: $_resizeColumnIndex /}
 						{param columnId: $column.columnId /}
+						{param columnIndex: index($column) /}
 						{param defaultEditorConfigurations: $defaultEditorConfigurations /}
 						{param defaultSegmentsExperienceId: $defaultSegmentsExperienceId /}
 						{param dropTargetItemTypes: $dropTargetItemTypes /}
@@ -198,6 +201,7 @@
  */
 {template .column}
 	{@param columnId: string}
+	{@param columnIndex: number}
 	{@param defaultEditorConfigurations: ?}
 	{@param fragmentEntryLinkIds: list<string>}
 	{@param fragmentEntryLinks: ?}
@@ -205,6 +209,7 @@
 	{@param? _columnResizerVisible: bool}
 	{@param? _handleFragmentMove: any}
 	{@param? _handleResizerMouseDown: any}
+	{@param? _resizeColumnIndex: number}
 	{@param? defaultSegmentsExperienceId: string}
 	{@param? dropTargetItemTypes: ?}
 	{@param? dropTargetBorder: string}
@@ -244,11 +249,19 @@
 		{/if}
 	{/let}
 
-	<div
+	{let $columnAttributes kind="attributes"}
 		class="{$columnClasses}"
 		data-column-id="{$columnId}"
 		key="{$key}"
-	>
+
+		{if $columnIndex == $_resizeColumnIndex}
+			ref="resizeColumn"
+		{elseif $columnIndex == ($_resizeColumnIndex + 1)}
+			ref="resizeNextColumn"
+		{/if}
+	{/let}
+
+	<div {$columnAttributes}>
 		{foreach $fragmentEntryLinkId in $fragmentEntryLinkIds}
 			{let $fragmentEntryLink: $fragmentEntryLinks[$fragmentEntryLinkId] /}
 

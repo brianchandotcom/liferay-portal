@@ -155,13 +155,6 @@ public class MentionsPortlet extends MVCPortlet {
 		return jsonArray;
 	}
 
-	@Reference(unbind = "-")
-	protected void setMentionsUserFinder(
-		MentionsUserFinder mentionsUserFinder) {
-
-		_mentionsUserFinder = mentionsUserFinder;
-	}
-
 	private String _getUserPortraitHTML(User user, ThemeDisplay themeDisplay)
 		throws PortalException {
 
@@ -172,6 +165,7 @@ public class MentionsPortlet extends MVCPortlet {
 	private static final Log _log = LogFactoryUtil.getLog(
 		MentionsPortlet.class);
 
+	@Reference
 	private MentionsUserFinder _mentionsUserFinder;
 
 	@Reference

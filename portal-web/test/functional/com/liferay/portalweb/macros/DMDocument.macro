@@ -941,8 +941,6 @@ definition {
 
 		MenuItem.click(menuItem = "Move");
 
-		AssertClick(locator1 = "Button#SELECT", value1 = "Select");
-
 		SelectFrame(locator1 = "DocumentsAndMediaSelectFolder#SELECT_FOLDER_IFRAME");
 
 		if ("${dmFolderName}" == "Home") {
@@ -962,13 +960,6 @@ definition {
 
 		SelectFrame(locator1 = "relative=top");
 
-		AssertTextEquals(
-			locator1 = "DocumentsAndMediaEditDocument#FOLDER",
-			value1 = "${dmFolderName}"
-		);
-
-		AssertClick(locator1 = "Button#MOVE", value1 = "Move");
-
 		Alert.viewSuccessMessage();
 	}
 
@@ -981,16 +972,9 @@ definition {
 
 		MenuItem.click(menuItem = "Move");
 
-		AssertClick(locator1 = "Button#SELECT", value1 = "Select");
-
 		SelectFrame(locator1 = "IFrame#SELECT_FOLDER");
 
 		var key_dmFolderName = "${dmFolderName}";
-
-		AssertTextEquals(
-			locator1 = "DocumentsAndMediaSelectFolder#FOLDER",
-			value1 = "${dmFolderName}"
-		);
 
 		AssertClick(
 			locator1 = "DocumentsAndMediaSelectFolder#CHOOSE_BUTTON",
@@ -998,8 +982,6 @@ definition {
 		);
 
 		SelectFrameTop();
-
-		AssertClick(locator1 = "Button#MOVE", value1 = "Move");
 
 		if (isSet(dmDuplicateDocument)) {
 			Alert.viewRequestFailedToComplete();

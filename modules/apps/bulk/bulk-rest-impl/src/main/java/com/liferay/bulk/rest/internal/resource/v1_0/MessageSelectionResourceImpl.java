@@ -28,7 +28,7 @@ import org.osgi.service.component.annotations.ServiceScope;
  * @author Alejandro Tardín
  */
 @Component(
-	properties = "OSGI-INF/liferay/rest/v1_0/bulk-selection.properties",
+	properties = "OSGI-INF/liferay/rest/v1_0/message-selection.properties",
 	scope = ServiceScope.PROTOTYPE, service = MessageSelectionResource.class
 )
 public class MessageSelectionResourceImpl

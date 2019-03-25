@@ -14,28 +14,130 @@
 
 package com.liferay.layout.page.template.service.impl;
 
+import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
+import com.liferay.asset.kernel.model.AssetRendererFactory;
+import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
+import com.liferay.layout.page.template.model.LayoutPageTemplateEntryVersion;
 import com.liferay.layout.page.template.service.base.LayoutPageTemplateEntryVersionLocalServiceBaseImpl;
+import com.liferay.layout.page.template.util.comparator.LayoutPageTemplateEntryVersionComparator;
+import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.model.LayoutConstants;
+import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.service.LayoutLocalService;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.spring.extender.service.ServiceReference;
+
+import java.util.Collections;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Locale;
+import java.util.Map;
 
 /**
- * The implementation of the layout page template entry version local service.
- *
- * <p>
- * All custom service methods should be put in this class. Whenever methods are added, rerun ServiceBuilder to copy their definitions into the <code>com.liferay.layout.page.template.service.LayoutPageTemplateEntryVersionLocalService</code> interface.
- *
- * <p>
- * This is a local service. Methods of this service will not have security checks based on the propagated JAAS credentials because this service can only be accessed from within the same VM.
- * </p>
- *
- * @author Brian Wing Shun Chan
+ * @author Pavel Savinov
  * @see LayoutPageTemplateEntryVersionLocalServiceBaseImpl
  */
 public class LayoutPageTemplateEntryVersionLocalServiceImpl
 	extends LayoutPageTemplateEntryVersionLocalServiceBaseImpl {
 
-	/**
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never reference this class directly. Use <code>com.liferay.layout.page.template.service.LayoutPageTemplateEntryVersionLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.layout.page.template.service.LayoutPageTemplateEntryVersionLocalServiceUtil</code>.
-	 */
+	public LayoutPageTemplateEntryVersion addLayoutPageTemplateEntryVersion(
+			long userId, long groupId, long layoutPageTemplateEntryId,
+			double version, String name, long classNameId, long classTypeId,
+			int type, ServiceContext serviceContext)
+		throws PortalException {
+
+		// Layout page template version
+
+		User user = userLocalService.getUser(userId);
+
+		long layoutPageTemplateEntryVersionId = counterLocalService.increment();
+
+		LayoutPageTemplateEntryVersion layoutPageTemplateEntryVersion =
+			layoutPageTemplateEntryVersionPersistence.create(
+				layoutPageTemplateEntryVersionId);
+
+		Date now = new Date();
+
+		layoutPageTemplateEntryVersion.setGroupId(groupId);
+		layoutPageTemplateEntryVersion.setCompanyId(user.getCompanyId());
+		layoutPageTemplateEntryVersion.setUserId(user.getUserId());
+		layoutPageTemplateEntryVersion.setUserName(user.getFullName());
+		layoutPageTemplateEntryVersion.setCreateDate(
+			serviceContext.getCreateDate(now));
+		layoutPageTemplateEntryVersion.setModifiedDate(
+			serviceContext.getModifiedDate(now));
+		layoutPageTemplateEntryVersion.setLayoutPageTemplateEntryId(
+			layoutPageTemplateEntryId);
+
+		// Layout
+
+		Layout layout = _addLayout(
+			userId, groupId, name, classNameId, classTypeId, type,
+			serviceContext);
+
+		layoutPageTemplateEntryVersion.setPlid(layout.getPlid());
+
+		layoutPageTemplateEntryVersion.setVersion(version);
+
+		return layoutPageTemplateEntryVersionPersistence.update(
+			layoutPageTemplateEntryVersion);
+	}
+
+	public void deleteLayoutPageTemplateEntryVersions(
+		long layoutPageTemplateEntryId) {
+
+		layoutPageTemplateEntryVersionPersistence.
+			removeBylayoutPageTemplateEntryId(layoutPageTemplateEntryId);
+	}
+
+	public LayoutPageTemplateEntryVersion
+		fetchLatestLayoutPageTemplateEntryVersion(
+			long layoutPageTemplateEntryId) {
+
+		return layoutPageTemplateEntryVersionPersistence.
+			fetchBylayoutPageTemplateEntryId_Last(
+				layoutPageTemplateEntryId,
+				new LayoutPageTemplateEntryVersionComparator());
+	}
+
+	private Layout _addLayout(
+			long userId, long groupId, String name, long classNameId,
+			long classTypeId, int type, ServiceContext serviceContext)
+		throws PortalException {
+
+		Map<Locale, String> titleMap = Collections.singletonMap(
+			LocaleUtil.getSiteDefault(), name);
+
+		if (classNameId > 0) {
+			AssetRendererFactory assetRendererFactory =
+				AssetRendererFactoryRegistryUtil.
+					getAssetRendererFactoryByClassNameId(classNameId);
+
+			titleMap = Collections.singletonMap(
+				LocaleUtil.getSiteDefault(),
+				assetRendererFactory.getTypeName(
+					LocaleUtil.getSiteDefault(), classTypeId));
+		}
+
+		String layoutType = LayoutConstants.TYPE_ASSET_DISPLAY;
+
+		if (type == LayoutPageTemplateEntryTypeConstants.TYPE_BASIC) {
+			layoutType = LayoutConstants.TYPE_CONTENT;
+		}
+
+		serviceContext.setAttribute(
+			"layout.instanceable.allowed", Boolean.TRUE);
+
+		return _layoutLocalService.addLayout(
+			userId, groupId, false, 0, titleMap, titleMap, null, null, null,
+			layoutType, StringPool.BLANK, true, true, new HashMap<>(),
+			serviceContext);
+	}
+
+	@ServiceReference(type = LayoutLocalService.class)
+	private LayoutLocalService _layoutLocalService;
 
 }

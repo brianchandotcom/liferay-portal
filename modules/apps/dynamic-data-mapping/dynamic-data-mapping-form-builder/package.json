@@ -153,7 +153,7 @@
 		"testMatch": [
 			"<rootDir>/test/metal/js/**/*.js"
 		],
-		"testResultsProcessor": "./node_modules/liferay-jest-junit-reporter",
+		"testResultsProcessor": "liferay-jest-junit-reporter",
 		"testURL": "http://localhost",
 		"transformIgnorePatterns": [
 			"<rootDir>.*(node_modules)(?!.*metal.*).*$"

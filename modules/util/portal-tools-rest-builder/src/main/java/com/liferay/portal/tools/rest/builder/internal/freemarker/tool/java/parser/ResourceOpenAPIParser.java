@@ -522,16 +522,30 @@ public class ResourceOpenAPIParser {
 			return void.class.getName();
 		}
 
-		if (responses.size() > 1) {
-			return javax.ws.rs.core.Response.class.getName();
-		}
+		Integer httpStatusCode = null;
+		Response response = null;
 
-		for (Response response : responses.values()) {
-			Map<String, Content> contents = response.getContent();
+		for (Map.Entry<Integer, Response> entry : responses.entrySet()) {
+			Integer curHttpStatusCode = entry.getKey();
 
-			if ((contents == null) || (contents.values() == null)) {
+			javax.ws.rs.core.Response.Status.Family family =
+				javax.ws.rs.core.Response.Status.Family.familyOf(
+					curHttpStatusCode);
+
+			if (family != _FAMILY_SUCCESSFUL) {
 				continue;
 			}
+
+			if ((httpStatusCode == null) ||
+				(httpStatusCode > curHttpStatusCode)) {
+
+				httpStatusCode = curHttpStatusCode;
+				response = entry.getValue();
+			}
+		}
+
+		if ((response != null) && (response.getContent() != null)) {
+			Map<String, Content> contents = response.getContent();
 
 			for (Content content : contents.values()) {
 				Schema schema = content.getSchema();
@@ -671,5 +685,8 @@ public class ResourceOpenAPIParser {
 			consumer.accept(Collections.emptySet());
 		}
 	}
+
+	private static final javax.ws.rs.core.Response.Status.Family
+		_FAMILY_SUCCESSFUL = javax.ws.rs.core.Response.Status.Family.SUCCESSFUL;
 
 }

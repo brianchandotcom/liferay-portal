@@ -15,10 +15,8 @@
 package com.liferay.jenkins.results.parser;
 
 import java.io.IOException;
-
 import java.net.URI;
-
-import java.util.ArrayList;
+import java.net.URISyntaxException;
 import java.util.List;
 import java.util.concurrent.TimeoutException;
 
@@ -36,34 +34,21 @@ import mousio.etcd4j.responses.EtcdKeysResponse;
  */
 public class EtcdUtil {
 
-	public EtcdUtil() {
-		this("http://127.0.0.1:2379");
-	}
+	public static void delete(
+		EtcdClient etcdClient, EtcdKeysResponse.EtcdNode node) {
 
-	public EtcdUtil(String url) {
-		setURL(url);
-	}
+		try {
+			EtcdKeyDeleteRequest etcdKeyDeleteRequest = null;
 
-	public void delete(EtcdUtil.Node node) {
-		if (node instanceof DirNode) {
-			delete(node.getKey(), true);
-		}
-		else {
-			delete(node.getKey());
-		}
-	}
+			List<EtcdKeysResponse.EtcdNode> nodes = node.getNodes();
 
-	public void delete(String key) {
-		delete(key, false);
-	}
+			if (nodes.size() > 0) {
+				etcdKeyDeleteRequest = etcdClient.deleteDir(node.getKey());
 
-	public void delete(String key, boolean recursive) {
-		try (EtcdClient etcdClient = getEtcdClient()) {
-			EtcdKeyDeleteRequest etcdKeyDeleteRequest = etcdClient.deleteDir(
-				key);
-
-			if (recursive) {
 				etcdKeyDeleteRequest.recursive();
+			}
+			else {
+				etcdKeyDeleteRequest = etcdClient.delete(node.getKey());
 			}
 
 			EtcdResponsePromise<EtcdKeysResponse> etcdResponsePromise =
@@ -78,161 +63,10 @@ public class EtcdUtil {
 		}
 	}
 
-	public EtcdUtil.Node get(String key) {
-		try (EtcdClient etcdClient = getEtcdClient()) {
-			EtcdKeyGetRequest etcdKeyGetRequest = etcdClient.get(key);
+	public static EtcdKeysResponse.EtcdNode get(
+		EtcdClient etcdClient, String key) {
 
-			EtcdResponsePromise<EtcdKeysResponse> etcdResponsePromise =
-				etcdKeyGetRequest.send();
-
-			EtcdKeysResponse etcdKeysResponse = etcdResponsePromise.get();
-
-			return getNode(etcdKeysResponse.getNode());
-		}
-		catch (EtcdAuthenticationException | EtcdException | IOException |
-			   TimeoutException e) {
-
-			throw new RuntimeException(e);
-		}
-	}
-
-	public EtcdUtil.DirNode put(String key) {
-		try (EtcdClient etcdClient = getEtcdClient()) {
-			EtcdKeyPutRequest etcdKeyPutRequest = etcdClient.putDir(key);
-
-			EtcdResponsePromise<EtcdKeysResponse> etcdResponsePromise =
-				etcdKeyPutRequest.send();
-
-			EtcdKeysResponse etcdKeysResponse = etcdResponsePromise.get();
-
-			EtcdKeysResponse.EtcdNode etcdNode = etcdKeysResponse.getNode();
-
-			if (etcdNode.isDir()) {
-				return new DirNode(this, etcdNode);
-			}
-		}
-		catch (EtcdAuthenticationException | EtcdException | IOException |
-			   TimeoutException e) {
-
-			throw new RuntimeException(e);
-		}
-
-		throw new RuntimeException(key + " is not a dir");
-	}
-
-	public EtcdUtil.ValueNode put(String key, String value) {
-		try (EtcdClient etcdClient = getEtcdClient()) {
-			EtcdKeyPutRequest etcdKeyPutRequest = etcdClient.put(key, value);
-
-			EtcdResponsePromise<EtcdKeysResponse> etcdResponsePromise =
-				etcdKeyPutRequest.send();
-
-			EtcdKeysResponse etcdKeysResponse = etcdResponsePromise.get();
-
-			EtcdKeysResponse.EtcdNode etcdNode = etcdKeysResponse.getNode();
-
-			if (!etcdNode.isDir()) {
-				return new ValueNode(this, etcdNode);
-			}
-		}
-		catch (EtcdAuthenticationException | EtcdException | IOException |
-			   TimeoutException e) {
-
-			throw new RuntimeException(e);
-		}
-
-		throw new RuntimeException(key + " is not a value");
-	}
-
-	public void setURL(String url) {
-		_uri = URI.create(url);
-	}
-
-	public static class DirNode extends Node {
-
-		public List<EtcdUtil.Node> getNodes() {
-			List<Node> nodes = new ArrayList<>();
-
-			EtcdKeysResponse.EtcdNode etcdNode = liferayEtcd.getEtcdNode(key);
-
-			for (EtcdKeysResponse.EtcdNode childEtcdNode :
-					etcdNode.getNodes()) {
-
-				if (childEtcdNode.isDir()) {
-					nodes.add(new DirNode(liferayEtcd, childEtcdNode));
-				}
-				else {
-					nodes.add(new ValueNode(liferayEtcd, childEtcdNode));
-				}
-			}
-
-			return nodes;
-		}
-
-		@Override
-		public String toString() {
-			return key + "={dir}";
-		}
-
-		protected DirNode(
-			EtcdUtil liferayEtcd, EtcdKeysResponse.EtcdNode etcdNode) {
-
-			super(liferayEtcd, etcdNode.getKey());
-
-			if (!etcdNode.isDir()) {
-				throw new RuntimeException(key + " is not a dir");
-			}
-		}
-
-	}
-
-	public abstract static class Node {
-
-		public String getKey() {
-			return key;
-		}
-
-		protected Node(EtcdUtil liferayEtcd, String key) {
-			this.liferayEtcd = liferayEtcd;
-			this.key = key;
-		}
-
-		protected final String key;
-		protected final EtcdUtil liferayEtcd;
-
-	}
-
-	public static class ValueNode extends Node {
-
-		public String getValue() {
-			EtcdKeysResponse.EtcdNode etcdNode = liferayEtcd.getEtcdNode(key);
-
-			return etcdNode.getValue();
-		}
-
-		@Override
-		public String toString() {
-			return key + "=" + getValue();
-		}
-
-		protected ValueNode(
-			EtcdUtil liferayEtcd, EtcdKeysResponse.EtcdNode etcdNode) {
-
-			super(liferayEtcd, etcdNode.getKey());
-
-			if (etcdNode.isDir()) {
-				throw new RuntimeException(key + " is not a value");
-			}
-		}
-
-	}
-
-	protected EtcdClient getEtcdClient() {
-		return new EtcdClient(_uri);
-	}
-
-	protected EtcdKeysResponse.EtcdNode getEtcdNode(String key) {
-		try (EtcdClient etcdClient = getEtcdClient()) {
+		try {
 			EtcdKeyGetRequest etcdKeyGetRequest = etcdClient.get(key);
 
 			EtcdResponsePromise<EtcdKeysResponse> etcdResponsePromise =
@@ -248,15 +82,50 @@ public class EtcdUtil {
 			throw new RuntimeException(e);
 		}
 	}
-
-	protected EtcdUtil.Node getNode(EtcdKeysResponse.EtcdNode etcdNode) {
-		if (etcdNode.isDir()) {
-			return new DirNode(this, etcdNode);
+	
+	public static EtcdClient getEtcdClient(String url) {
+		try {
+			return new EtcdClient(new URI(url));
 		}
-
-		return new ValueNode(this, etcdNode);
+		catch (URISyntaxException se) {
+			throw new RuntimeException(
+				JenkinsResultsParserUtil.combine(
+					"Unable to create an Etcd client using url " , url),
+				se);
+		}
 	}
 
-	private URI _uri;
+	public static EtcdKeysResponse.EtcdNode put(
+		EtcdClient etcdClient, String key) {
+
+		return put(etcdClient, key, null);
+	}
+
+	public static EtcdKeysResponse.EtcdNode put(
+		EtcdClient etcdClient, String key, String value) {
+
+		try {
+			EtcdKeyPutRequest etcdKeyPutRequest = null;
+
+			if (value == null) {
+				etcdKeyPutRequest = etcdClient.putDir(key);
+			}
+			else {
+				etcdKeyPutRequest = etcdClient.put(key, value);
+			}
+
+			EtcdResponsePromise<EtcdKeysResponse> etcdResponsePromise =
+				etcdKeyPutRequest.send();
+
+			EtcdKeysResponse etcdKeysResponse = etcdResponsePromise.get();
+
+			return etcdKeysResponse.getNode();
+		}
+		catch (EtcdAuthenticationException | EtcdException | IOException |
+			   TimeoutException e) {
+
+			throw new RuntimeException(e);
+		}
+	}
 
 }

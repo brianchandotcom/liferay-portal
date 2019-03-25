@@ -164,8 +164,8 @@ renderResponse.setTitle(StringBundler.concat(selectedUser.getFullName(), " - ", 
 			</div>
 		</div>
 
-		<div class="col-lg-8">
-			<div class="sheet sheet-lg">
+		<div class="col-lg-9">
+			<div class="sheet">
 				<div class="sheet-header">
 					<h2 class="sheet-title"><liferay-ui:message key="review-data" /></h2>
 				</div>

@@ -14,8 +14,10 @@
 	{@param? _handleButtonClicked: any}
 	{@param? _handleItemAdded: any}
 	{@param? _handleItemRemoved: any}
+	{@param? _typedCategory: string}
+	{@param? _unexistingCategoryError: bool}
 
-	<div class="lfr-tags-selector-content" id="{$id}">
+	<div class="lfr-tags-selector-content {if $_unexistingCategoryError}has-error{/if}" id="{$id}">
 		{if $useFallbackInput}
 			<input id="{$inputName}" name="{$inputName}" type="hidden" value="{$categoryIds}" />
 		{/if}
@@ -35,5 +37,11 @@
 			{param selectedItems: $selectedItems /}
 			{param spritemap: $spritemap /}
 		{/call}
+
+		{if $_unexistingCategoryError}
+			<div class="form-feedback-item">
+				{msg desc=""}{$_typedCategory}-category-does-not-exist{/msg}
+			</div>
+		{/if}
 	</div>
 {/template}

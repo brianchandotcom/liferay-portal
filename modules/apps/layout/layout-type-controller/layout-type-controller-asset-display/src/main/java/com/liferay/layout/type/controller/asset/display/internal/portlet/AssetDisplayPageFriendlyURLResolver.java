@@ -69,7 +69,7 @@ public class AssetDisplayPageFriendlyURLResolver
 			"request");
 
 		request.setAttribute(
-			AssetDisplayWebKeys.ASSET_DISPLAY_CONTRIBUTOR,
+			AssetDisplayWebKeys.INFO_DISPLAY_CONTRIBUTOR,
 			_getAssetDisplayContributor(groupId, friendlyURL));
 
 		AssetEntry assetEntry = _getAssetEntry(groupId, friendlyURL);

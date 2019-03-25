@@ -132,7 +132,7 @@ public class ContentPageEditorDisplayContext {
 
 		assetDisplayContributorTracker =
 			(AssetDisplayContributorTracker)request.getAttribute(
-				ContentPageEditorWebKeys.ASSET_DISPLAY_CONTRIBUTOR_TRACKER);
+				ContentPageEditorWebKeys.INFO_DISPLAY_CONTRIBUTOR_TRACKER);
 		classNameId = PortalUtil.getClassNameId(className);
 		themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);

@@ -85,7 +85,7 @@ public class AssetDisplayPagesItemSelectorView
 
 		request.setAttribute(
 			AssetDisplayPageItemSelectorWebKeys.
-				ASSET_DISPLAY_CONTRIBUTOR_TRACKER,
+				INFO_DISPLAY_CONTRIBUTOR_TRACKER,
 			_assetDisplayContributorTracker);
 
 		HttpServletRequest httpServletRequest = (HttpServletRequest)request;

@@ -90,7 +90,7 @@ class EditCategories extends Component {
 	 * @param {Object} bodyData The body of the request
 	 * @param {Function} callback Callback function
 	 */
-	_fetchCategoriesRequest(url, bodyData, callback) {
+	_fetchCategoriesRequest(url, method, bodyData) {
 		let body = JSON.stringify(bodyData);
 
 		let headers = new Headers();
@@ -100,18 +100,12 @@ class EditCategories extends Component {
 			body,
 			credentials: 'include',
 			headers,
-			method: 'POST'
+			method
 		};
 
-		return fetch(url, request)
+		return fetch(this.pathModule + url, request)
 			.then(
 				response => response.json()
-			)
-			.then(
-				response => {
-					callback && callback(response);
-					return response;
-				}
 			)
 			.catch(
 				(xhr) => {
@@ -134,8 +128,8 @@ class EditCategories extends Component {
 
 		Promise.all(
 			[
-				this._fetchCategoriesRequest(this.pathModule + this.urlCategories, selection),
-				this._fetchCategoriesRequest(this.pathModule + this.urlSelectionDescription, selection)
+				this._fetchCategoriesRequest(this.urlCategories, 'POST', selection),
+				this._fetchCategoriesRequest(this.urlSelectionDescription, 'POST', selection)
 			]
 		).then(
 			([responseCategories, responseDescription]) => {
@@ -246,21 +240,17 @@ class EditCategories extends Component {
 			category => finalCategories.indexOf(category) == -1
 		);
 
-		let bodyData = {
-			append: this.append,
-			folderId: this.folderId,
-			repositoryId: this.repositoryId,
-			selectAll: this.selectAll,
-			selection: this.fileEntries,
-			toAddCategoryIds: addedCategories,
-			toRemoveCategoryIds: removedCategories
-		};
-
 		let instance = this;
 
 		this._fetchCategoriesRequest(
 			this.urlUpdateCategories,
-			bodyData,
+			this.append ? 'PATCH' : 'PUT',
+			{
+				documentBulkSelection: this._getSelection(),
+				taxonomyCategoryIdsToAdd: addedCategories,
+				taxonomyCategoryIdsToRemove: removedCategories
+			}
+		).then(
 			response => {
 				instance.close();
 
@@ -531,7 +521,7 @@ EditCategories.STATE = {
 	 * @review
 	 * @type {String}
 	 */
-	urlUpdateCategories: Config.string().required(),
+	urlUpdateCategories: Config.string().value('/bulk-rest/v1.0/taxonomy-categories/batch'),
 
 	/**
 	 * List of vocabularies

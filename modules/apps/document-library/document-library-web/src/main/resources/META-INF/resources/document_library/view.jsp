@@ -287,7 +287,6 @@ String navigation = ParamUtil.getString(request, "navigation");
 		</aui:script>
 
 		<%
-		String classNameId = String.valueOf(ClassNameLocalServiceUtil.getClassNameId(DLFileEntryConstants.getClassName()));
 		String pathModule = PortalUtil.getPathModule();
 
 		Map<String, Object> tagsContext = new HashMap<>();
@@ -298,15 +297,12 @@ String navigation = ParamUtil.getString(request, "navigation");
 		tagsContext.put("pathModule", pathModule);
 		tagsContext.put("repositoryId", String.valueOf(repositoryId));
 
-		String urlUpdateCategories = pathModule + "/bulk/asset/categories/" + classNameId;
-
 		Map<String, Object> categoriesContext = new HashMap<>();
 
 		categoriesContext.put("groupIds", groupIds);
 		categoriesContext.put("pathModule", pathModule);
 		categoriesContext.put("repositoryId", String.valueOf(repositoryId));
 		categoriesContext.put("selectCategoriesUrl", selectCategoriesURL.toString());
-		categoriesContext.put("urlUpdateCategories", urlUpdateCategories);
 		%>
 
 		<liferay-frontend:component

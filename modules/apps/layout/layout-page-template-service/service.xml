@@ -250,7 +250,7 @@
 		<reference entity="LayoutPageTemplateEntry" package-path="com.liferay.layout.page.template" />
 		<reference entity="User" package-path="com.liferay.portal" />
 	</entity>
-	<entity local-service="true" name="LayoutPageTemplateEntryVersion" remote-service="true" uuid="true">
+	<entity local-service="true" name="LayoutPageTemplateEntryVersion" remote-service="false" uuid="false">
 
 		<!-- PK fields -->
 

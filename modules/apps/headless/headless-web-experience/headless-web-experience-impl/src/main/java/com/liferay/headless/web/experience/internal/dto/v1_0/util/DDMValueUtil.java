@@ -61,40 +61,20 @@ public class DDMValueUtil {
 							DDMFormFieldType.DOCUMENT_LIBRARY,
 							ddmFormField.getType())) {
 
-						FileEntry fileEntry = null;
-
-						try {
-							fileEntry = dlAppService.getFileEntry(
-								value.getDocumentId());
-						}
-						catch (Exception e) {
-							throw new BadRequestException(
-								"No document exists with id " +
-									value.getDocumentId(),
-								e);
-						}
+						addString(
+							locale,
+							_getMediaValue(
+								dlAppService, value.getDocumentId(), ""));
+					}
+					else if (Objects.equals(
+								DDMFormFieldType.IMAGE,
+								ddmFormField.getType())) {
 
 						addString(
 							locale,
-							JSONUtil.put(
-								"alt", value.getData()
-							).put(
-								"classPK", fileEntry.getFileEntryId()
-							).put(
-								"fileEntryId", fileEntry.getFileEntryId()
-							).put(
-								"groupId", fileEntry.getGroupId()
-							).put(
-								"name", fileEntry.getFileName()
-							).put(
-								"resourcePrimKey", fileEntry.getPrimaryKey()
-							).put(
-								"title", fileEntry.getFileName()
-							).put(
-								"type", "document"
-							).put(
-								"uuid", fileEntry.getUuid()
-							).toString());
+							_getMediaValue(
+								dlAppService, value.getImageId(),
+								value.getImageDescription()));
 					}
 					else if (Objects.equals(
 								DDMFormFieldType.JOURNAL_ARTICLE,
@@ -195,6 +175,40 @@ public class DDMValueUtil {
 		}
 
 		return layout;
+	}
+
+	private static String _getMediaValue(
+		DLAppService dlAppService, long fileEntryId, String description) {
+
+		FileEntry fileEntry = null;
+
+		try {
+			fileEntry = dlAppService.getFileEntry(fileEntryId);
+		}
+		catch (Exception e) {
+			throw new BadRequestException(
+				"No document exists with id " + fileEntryId, e);
+		}
+
+		return JSONUtil.put(
+			"alt", description
+		).put(
+			"classPK", fileEntry.getFileEntryId()
+		).put(
+			"fileEntryId", fileEntry.getFileEntryId()
+		).put(
+			"groupId", fileEntry.getGroupId()
+		).put(
+			"name", fileEntry.getFileName()
+		).put(
+			"resourcePrimKey", fileEntry.getPrimaryKey()
+		).put(
+			"title", fileEntry.getFileName()
+		).put(
+			"type", "document"
+		).put(
+			"uuid", fileEntry.getUuid()
+		).toString();
 	}
 
 }

@@ -695,6 +695,27 @@ paths:
                                 $ref: "#/components/schemas/Keyword"
                     description: ""
             tags: ["Keyword"]
+        patch:
+            parameters:
+                - in: path
+                  name: keyword-id
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/Keyword"
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Keyword"
+                    description: ""
+            tags: ["Keyword"]
         put:
             parameters:
                 - in: path
@@ -1117,6 +1138,27 @@ paths:
                                 $ref: "#/components/schemas/TaxonomyCategory"
                     description: ""
             tags: ["TaxonomyCategory"]
+        patch:
+            parameters:
+                - in: path
+                  name: taxonomy-category-id
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/TaxonomyCategory"
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/TaxonomyCategory"
+                    description: ""
+            tags: ["TaxonomyCategory"]
         put:
             parameters:
                 - in: path
@@ -1217,6 +1259,27 @@ paths:
                   schema:
                       format: int64
                       type: integer
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/TaxonomyVocabulary"
+                    description: ""
+            tags: ["TaxonomyVocabulary"]
+        patch:
+            parameters:
+                - in: path
+                  name: taxonomy-vocabulary-id
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/TaxonomyVocabulary"
             responses:
                 200:
                     content:

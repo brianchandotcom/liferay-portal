@@ -121,12 +121,14 @@ class AssetVocabularyCategoriesSelector extends Component {
 		if (!this.allowInputCreateItem) {
 			const itemAdded = selectedItems[selectedItems.length - 1];
 
-			if (itemAdded.label == itemAdded.value) {
+			this._unexistingCategoryError = itemAdded.label == itemAdded.value;
+
+			if (this._unexistingCategoryError) {
 				selectedItems = selectedItems.splice(-1, 1);
 
 				multiSelect.inputValue = event.data.item.label;
 
-				//TODO show error
+				this._typedCategory = event.data.item.label;
 			}
 		}
 

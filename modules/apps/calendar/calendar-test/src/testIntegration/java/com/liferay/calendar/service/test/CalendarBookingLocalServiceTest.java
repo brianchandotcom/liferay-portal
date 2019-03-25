@@ -1119,13 +1119,13 @@ public class CalendarBookingLocalServiceTest {
 
 		_invitingUser = UserTestUtil.addUser();
 
-		Calendar invitingcalendar = CalendarTestUtil.addCalendar(_invitingUser);
+		Calendar invitingCalendar = CalendarTestUtil.addCalendar(_invitingUser);
 
 		Calendar invitedCalendar = CalendarTestUtil.addCalendar(_user);
 
 		CalendarBooking calendarBooking =
 			CalendarBookingTestUtil.addMasterCalendarBookingWithWorkflow(
-				invitingcalendar, invitedCalendar,
+				invitingCalendar, invitedCalendar,
 				WorkflowConstants.ACTION_PUBLISH);
 
 		String mailMessageSubject =

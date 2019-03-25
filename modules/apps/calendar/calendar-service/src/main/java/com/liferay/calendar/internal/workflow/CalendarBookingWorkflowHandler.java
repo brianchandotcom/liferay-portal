@@ -61,7 +61,7 @@ public class CalendarBookingWorkflowHandler
 				WorkflowConstants.CONTEXT_ENTRY_CLASS_PK));
 
 		ServiceContext serviceContext = (ServiceContext)workflowContext.get(
-			"serviceContext");
+			WorkflowConstants.CONTEXT_SERVICE_CONTEXT);
 
 		return _calendarBookingLocalService.updateStatus(
 			userId, classPK, status, serviceContext);

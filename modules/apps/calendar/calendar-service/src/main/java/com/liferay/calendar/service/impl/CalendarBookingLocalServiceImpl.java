@@ -74,6 +74,7 @@ import com.liferay.portal.kernel.service.SystemEventLocalService;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
+import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -174,8 +175,17 @@ public class CalendarBookingLocalServiceImpl
 		calendarBooking.setCompanyId(user.getCompanyId());
 		calendarBooking.setUserId(user.getUserId());
 		calendarBooking.setUserName(user.getFullName());
-		calendarBooking.setCreateDate(serviceContext.getCreateDate(now));
-		calendarBooking.setModifiedDate(serviceContext.getModifiedDate(now));
+
+		Date createDate = serviceContext.getCreateDate(now);
+
+		calendarBooking.setCreateDate(createDate);
+		serviceContext.setCreateDate(createDate);
+
+		Date modifiedDate = serviceContext.getModifiedDate(now);
+
+		calendarBooking.setModifiedDate(modifiedDate);
+		serviceContext.setModifiedDate(modifiedDate);
+
 		calendarBooking.setCalendarId(calendarId);
 		calendarBooking.setCalendarResourceId(calendar.getCalendarResourceId());
 
@@ -274,11 +284,6 @@ public class CalendarBookingLocalServiceImpl
 				calendarBooking.getCalendarBookingId(), calendarBooking,
 				serviceContext);
 		}
-
-		calendarBooking.setCreateDate(serviceContext.getCreateDate(now));
-		calendarBooking.setModifiedDate(serviceContext.getModifiedDate(now));
-
-		calendarBookingPersistence.update(calendarBooking);
 
 		return calendarBooking;
 	}
@@ -1694,7 +1699,7 @@ public class CalendarBookingLocalServiceImpl
 			NotificationTemplateType notificationTemplateType =
 				NotificationTemplateType.INVITE;
 
-			if (createDate.getTime() != oldModifiedDate.getTime()) {
+			if (!DateUtil.equals(createDate, oldModifiedDate)) {
 				notificationTemplateType = NotificationTemplateType.UPDATE;
 			}
 

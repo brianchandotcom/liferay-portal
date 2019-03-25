@@ -34,6 +34,7 @@ class FragmentEntryLinkListSection extends Component {
 
 	created() {
 		this._handleBodyMouseLeave = this._handleBodyMouseLeave.bind(this);
+		this._handleBodyMouseMove = this._handleBodyMouseMove.bind(this);
 		this._handleBodyMouseUp = this._handleBodyMouseUp.bind(this);
 
 		document.body.addEventListener('mouseleave', this._handleBodyMouseLeave);
@@ -109,6 +110,10 @@ class FragmentEntryLinkListSection extends Component {
 	 * @review
 	 */
 	_clearResizing() {
+		document.body.removeEventListener('mousemove', this._handleBodyMouseMove);
+
+		this._resizeColumnIndex = 0;
+		this._resizeInitialPosition = 0;
 		this._resizeSectionColumns = null;
 		this._resizing = false;
 	}
@@ -163,6 +168,13 @@ class FragmentEntryLinkListSection extends Component {
 	 * @private
 	 * @review
 	 */
+	_handleBodyMouseMove(event) {
+	}
+
+	/**
+	 * @private
+	 * @review
+	 */
 	_handleBodyMouseUp() {
 		if (this._resizing) {
 			this._updateSectionColumns(this._resizeSectionColumns);
@@ -189,10 +201,16 @@ class FragmentEntryLinkListSection extends Component {
 	 * @private
 	 * @review
 	 */
-	_handleResizerMouseDown() {
+	_handleResizerMouseDown(event) {
+		this._resizeColumnIndex = this.row.columns.findIndex(
+			column => column.columnId === event.delegateTarget.dataset.columnId
+		);
+
+		this._resizeInitialPosition = event.clientX;
+		this._resizeSectionColumns = this.row.columns;
 		this._resizing = true;
 
-		this._resizeSectionColumns = this.row.columns;
+		document.body.addEventListener('mousemove', this._handleBodyMouseMove);
 	}
 
 	/**
@@ -315,8 +333,29 @@ FragmentEntryLinkListSection.STATE = {
 	 * @review
 	 * @type {object|null}
 	 */
-	_floatingToolbar: Config.internal()
-		.value(null),
+	_floatingToolbar: Config.internal().value(null),
+
+	/**
+	 * Index of the column being resized
+	 * @default 0
+	 * @instance
+	 * @memberOf FragmentEntryLinkListSection
+	 * @private
+	 * @review
+	 * @type {number}
+	 */
+	_resizeColumnIndex: Config.internal().number().value(0),
+
+	/**
+	 * Position of the mouse when the resize started
+	 * @default 0
+	 * @instance
+	 * @memberOf FragmentEntryLinkListSection
+	 * @private
+	 * @review
+	 * @type {number}
+	 */
+	_resizeInitialPosition: Config.internal().number().value(0),
 
 	/**
 	 * Copy of section columns for resizing

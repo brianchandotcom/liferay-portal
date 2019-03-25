@@ -4,12 +4,17 @@
 		"**/alloy/js/**/*.js"
     ],
     "plugins": [
-        "transform-class-properties",
-        "transform-decorators-legacy",
-        "transform-object-rest-spread"
+        ["@babel/plugin-proposal-decorators", {"legacy": true}],
+        "@babel/plugin-proposal-class-properties",
+        ["incremental-dom", {
+            components: true,
+            namespaceAttributes: true,
+            prefix: "IncrementalDOM",
+            runtime: "iDOMHelpers"
+        }],
+        "@babel/plugin-proposal-object-rest-spread"
     ],
     "presets": [
-        "env",
-        "metal-jsx"
+        "@babel/preset-env"
     ]
 }

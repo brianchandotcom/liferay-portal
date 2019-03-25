@@ -24,7 +24,7 @@ describe(
 
 						const removeRowSpy = jest.spyOn(FormSupport, 'removeRow');
 
-						removeRowSpy.mockImplementation(() => ({}));
+						removeRowSpy.mockImplementation(() => []);
 
 						fieldDeletedHandler.handleFieldDeleted(state, event);
 
@@ -62,7 +62,7 @@ describe(
 
 						const clearAllConditionFieldValuesSpy = jest.spyOn(RulesSupport, 'clearAllConditionFieldValues');
 
-						clearAllConditionFieldValuesSpy.mockImplementation(() => ({}));
+						clearAllConditionFieldValuesSpy.mockImplementation(() => []);
 
 						fieldDeletedHandler.handleFieldDeleted(state, event);
 

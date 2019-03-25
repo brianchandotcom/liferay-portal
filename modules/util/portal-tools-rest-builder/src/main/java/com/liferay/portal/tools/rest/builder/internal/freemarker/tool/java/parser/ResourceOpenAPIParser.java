@@ -428,7 +428,9 @@ public class ResourceOpenAPIParser {
 				String previousMethodNameSegment = methodNameSegments.get(
 					methodNameSegments.size() - 1);
 
-				if (!previousMethodNameSegment.equals(pathName)) {
+				if (!previousMethodNameSegment.endsWith(pathName) &&
+					!previousMethodNameSegment.endsWith(schemaName)) {
+
 					methodNameSegments.add(pathName);
 				}
 			}

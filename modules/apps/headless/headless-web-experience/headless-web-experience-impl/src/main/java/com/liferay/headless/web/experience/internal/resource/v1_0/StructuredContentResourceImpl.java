@@ -19,10 +19,8 @@ import static com.liferay.portal.vulcan.util.LocalDateTimeUtil.toLocalDateTime;
 import com.liferay.asset.kernel.model.AssetTag;
 import com.liferay.asset.kernel.service.AssetCategoryLocalService;
 import com.liferay.asset.kernel.service.AssetTagLocalService;
-import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.document.library.kernel.service.DLAppService;
 import com.liferay.document.library.util.DLURLHelper;
-import com.liferay.dynamic.data.mapping.exception.StructureFieldException;
 import com.liferay.dynamic.data.mapping.io.DDMFormValuesSerializer;
 import com.liferay.dynamic.data.mapping.io.DDMFormValuesSerializerSerializeRequest;
 import com.liferay.dynamic.data.mapping.io.DDMFormValuesSerializerSerializeResponse;
@@ -32,8 +30,6 @@ import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.model.DDMFormFieldType;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.DDMTemplate;
-import com.liferay.dynamic.data.mapping.model.LocalizedValue;
-import com.liferay.dynamic.data.mapping.model.UnlocalizedValue;
 import com.liferay.dynamic.data.mapping.service.DDMStructureService;
 import com.liferay.dynamic.data.mapping.service.DDMTemplateService;
 import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
@@ -42,6 +38,8 @@ import com.liferay.dynamic.data.mapping.storage.Field;
 import com.liferay.dynamic.data.mapping.storage.Fields;
 import com.liferay.dynamic.data.mapping.util.DDM;
 import com.liferay.dynamic.data.mapping.util.FieldsToDDMFormValuesConverter;
+import com.liferay.dynamic.data.mapping.validator.DDMFormValuesValidationException;
+import com.liferay.dynamic.data.mapping.validator.DDMFormValuesValidator;
 import com.liferay.headless.common.spi.service.context.ServiceContextUtil;
 import com.liferay.headless.web.experience.dto.v1_0.ContentField;
 import com.liferay.headless.web.experience.dto.v1_0.Geo;
@@ -54,6 +52,8 @@ import com.liferay.headless.web.experience.internal.dto.v1_0.util.AggregateRatin
 import com.liferay.headless.web.experience.internal.dto.v1_0.util.ContentDocumentUtil;
 import com.liferay.headless.web.experience.internal.dto.v1_0.util.ContentStructureUtil;
 import com.liferay.headless.web.experience.internal.dto.v1_0.util.CreatorUtil;
+import com.liferay.headless.web.experience.internal.dto.v1_0.util.DDMFormValuesCreator;
+import com.liferay.headless.web.experience.internal.dto.v1_0.util.DDMValueUtil;
 import com.liferay.headless.web.experience.internal.odata.entity.v1_0.EntityFieldsProvider;
 import com.liferay.headless.web.experience.internal.odata.entity.v1_0.StructuredContentEntityModel;
 import com.liferay.headless.web.experience.resource.v1_0.StructuredContentResource;
@@ -70,7 +70,6 @@ import com.liferay.portal.kernel.comment.CommentManager;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
@@ -94,7 +93,6 @@ import com.liferay.portal.kernel.util.LocaleThreadLocal;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.odata.entity.EntityField;
@@ -108,19 +106,17 @@ import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 import com.liferay.portal.vulcan.util.SearchUtil;
 import com.liferay.ratings.kernel.service.RatingsStatsLocalService;
 
-import java.io.Serializable;
-
 import java.time.LocalDateTime;
 
 import java.util.AbstractMap;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -352,6 +348,9 @@ public class StructuredContentResourceImpl
 					"language " + w3cLanguageId);
 		}
 
+		DDMFormValuesCreator ddmFormValuesCreator = new DDMFormValuesCreator(
+			_dlAppService, _journalArticleService);
+
 		return _toStructuredContent(
 			_journalArticleService.addArticle(
 				contentSpaceId, 0, 0, 0, null, true,
@@ -370,9 +369,11 @@ public class StructuredContentResourceImpl
 					}
 				},
 				_createJournalArticleContent(
-					_toDDMFormFieldValues(
-						structuredContent.getContentFields(), ddmStructure,
-						contextAcceptLanguage.getPreferredLocale()),
+					ddmFormValuesCreator.createDDMFormValues(
+						structuredContent.getContentFields(),
+						ddmStructure.getDDMForm(),
+						contextAcceptLanguage.getPreferredLocale(),
+						_getRootDDMFormFields(ddmStructure)),
 					ddmStructure),
 				ddmStructure.getStructureKey(),
 				_getDDMTemplateKey(ddmStructure), null,
@@ -454,36 +455,11 @@ public class StructuredContentResourceImpl
 		}
 	}
 
-	private void _createFieldsDisplayValue(
-		ContentField contentField, List<String> fieldsDisplayValue) {
-
-		fieldsDisplayValue.add(
-			contentField.getName() + DDM.INSTANCE_SEPARATOR +
-				StringUtil.randomId());
-
-		if (contentField.getNestedFields() == null) {
-			return;
-		}
-
-		for (ContentField nestedContentField : contentField.getNestedFields()) {
-			_createFieldsDisplayValue(nestedContentField, fieldsDisplayValue);
-		}
-	}
-
-	private String _createFieldsDisplayValue(ContentField[] contentFields) {
-		List<String> fieldsDisplayValues = new ArrayList<>();
-
-		for (ContentField contentField : contentFields) {
-			_createFieldsDisplayValue(contentField, fieldsDisplayValues);
-		}
-
-		return String.join(",", fieldsDisplayValues);
-	}
-
 	private String _createJournalArticleContent(
-			List<DDMFormFieldValue> ddmFormFieldValues,
-			DDMStructure ddmStructure)
+			DDMFormValues ddmFormValues, DDMStructure ddmStructure)
 		throws Exception {
+
+		_validateFomFieldValues(ddmFormValues);
 
 		Locale originalSiteDefaultLocale =
 			LocaleThreadLocal.getSiteDefaultLocale();
@@ -502,7 +478,8 @@ public class StructuredContentResourceImpl
 					new DDMFormValues(ddmForm) {
 						{
 							setAvailableLocales(ddmForm.getAvailableLocales());
-							setDDMFormFieldValues(ddmFormFieldValues);
+							setDDMFormFieldValues(
+								ddmFormValues.getDDMFormFieldValues());
 							setDefaultLocale(ddmForm.getDefaultLocale());
 						}
 					}));
@@ -517,18 +494,16 @@ public class StructuredContentResourceImpl
 	}
 
 	private DDMFormField _getDDMFormField(
-			ContentField contentFieldValue, DDMStructure ddmStructure)
-		throws PortalException {
+		DDMStructure ddmStructure, String name) {
 
 		try {
-			return ddmStructure.getDDMFormField(contentFieldValue.getName());
+			return ddmStructure.getDDMFormField(name);
 		}
-		catch (StructureFieldException sfe) {
+		catch (Exception sfe) {
 			throw new BadRequestException(
 				StringBundler.concat(
-					"Unable to get content field value for \"",
-					contentFieldValue.getName(), "\" for content structure ",
-					ddmStructure.getStructureId()),
+					"Unable to get content field value for \"", name,
+					"\" for content structure ", ddmStructure.getStructureId()),
 				sfe);
 		}
 	}
@@ -543,6 +518,20 @@ public class StructuredContentResourceImpl
 		DDMTemplate ddmTemplate = ddmTemplates.get(0);
 
 		return ddmTemplate.getTemplateKey();
+	}
+
+	private List<DDMFormField> _getRootDDMFormFields(
+		DDMStructure ddmStructure) {
+
+		List<String> rootFieldNames = ddmStructure.getRootFieldNames();
+
+		Stream<String> stream = rootFieldNames.stream();
+
+		return stream.map(
+			fieldName -> _getDDMFormField(ddmStructure, fieldName)
+		).collect(
+			Collectors.toList()
+		);
 	}
 
 	private StructuredContent _getStructuredContent(
@@ -642,183 +631,43 @@ public class StructuredContentResourceImpl
 			ContentField.class);
 	}
 
-	private List<DDMFormFieldValue> _toDDMFormFieldValues(
-		ContentField[] contentFields, DDMStructure ddmStructure,
-		Locale locale) {
-
-		if (contentFields == null) {
-			return Collections.emptyList();
-		}
-
-		return transform(
-			Arrays.asList(contentFields),
-			contentFieldValue -> new DDMFormFieldValue() {
-				{
-					setName(contentFieldValue.getName());
-					setNestedDDMFormFields(
-						_toDDMFormFieldValues(
-							contentFieldValue.getNestedFields(), ddmStructure,
-							locale));
-					setValue(
-						_toDDMValue(contentFieldValue, ddmStructure, locale));
-				}
-			});
-	}
-
-	private com.liferay.dynamic.data.mapping.model.Value _toDDMValue(
-			ContentField contentFieldValue, DDMStructure ddmStructure,
-			Locale locale)
-		throws Exception {
-
-		DDMFormField ddmFormField = _getDDMFormField(
-			contentFieldValue, ddmStructure);
-
-		Value value = contentFieldValue.getValue();
-
-		if (ddmFormField.isLocalizable()) {
-			return new LocalizedValue() {
-				{
-					if (Objects.equals(
-							DDMFormFieldType.DOCUMENT_LIBRARY,
-							ddmFormField.getType())) {
-
-						_addDocument(value.getDocumentId());
-					}
-					else if (Objects.equals(
-								DDMFormFieldType.IMAGE,
-								ddmFormField.getType())) {
-
-						_addDocument(value.getImageId());
-					}
-					else if (Objects.equals(
-								DDMFormFieldType.JOURNAL_ARTICLE,
-								ddmFormField.getType())) {
-
-						JournalArticle journalArticle =
-							_journalArticleService.getLatestArticle(
-								value.getStructuredContentId());
-
-						addString(
-							locale,
-							JSONUtil.put(
-								"className", JournalArticle.class.getName()
-							).put(
-								"classPK", journalArticle.getResourcePrimKey()
-							).put(
-								"title", journalArticle.getTitle()
-							).toString());
-					}
-					else {
-						addString(locale, value.getData());
-					}
-				}
-
-				private void _addDocument(Long documentId)
-					throws PortalException {
-
-					FileEntry fileEntry = _dlAppService.getFileEntry(
-						documentId);
-
-					addString(
-						locale,
-						JSONUtil.put(
-							"alt", value.getImageDescription()
-						).put(
-							"classPK", fileEntry.getFileEntryId()
-						).put(
-							"fileEntryId", fileEntry.getFileEntryId()
-						).put(
-							"groupId", fileEntry.getGroupId()
-						).put(
-							"name", fileEntry.getFileName()
-						).put(
-							"resourcePrimKey", fileEntry.getPrimaryKey()
-						).put(
-							"title", fileEntry.getFileName()
-						).put(
-							"type", "document"
-						).put(
-							"uuid", fileEntry.getUuid()
-						).toString());
-				}
-
-			};
-		}
-
-		if (Objects.equals(
-				DDMFormFieldType.GEOLOCATION, ddmFormField.getType())) {
-
-			Geo geo = value.getGeo();
-
-			return new UnlocalizedValue(
-				JSONUtil.put(
-					"latitude", geo.getLatitude()
-				).put(
-					"longitude", geo.getLongitude()
-				).toString());
-		}
-
-		return new UnlocalizedValue(value.getData());
-	}
-
 	private Fields _toFields(
 			ContentField[] contentFields, JournalArticle journalArticle)
 		throws Exception {
 
+		DDMFormValuesCreator ddmFormValuesCreator = new DDMFormValuesCreator(
+			_dlAppService, _journalArticleService);
+
 		DDMStructure ddmStructure = journalArticle.getDDMStructure();
+
+		DDMFormValues ddmFormValues = ddmFormValuesCreator.createDDMFormValues(
+			contentFields, ddmStructure.getDDMForm(),
+			contextAcceptLanguage.getPreferredLocale(),
+			_getRootDDMFormFields(ddmStructure));
+
+		Fields existingFields = _journalConverter.getDDMFields(
+			ddmStructure, journalArticle.getContent());
 
 		ServiceContext serviceContext = new ServiceContext();
 
-		serviceContext.setAttribute(
-			"ddmFormValues",
-			_toString(
-				new DDMFormValues(ddmStructure.getDDMForm()) {
-					{
-						DDMForm ddmForm = getDDMForm();
-
-						setAvailableLocales(ddmForm.getAvailableLocales());
-
-						setDDMFormFieldValues(
-							_toDDMFormFieldValues(
-								contentFields, journalArticle.getDDMStructure(),
-								contextAcceptLanguage.getPreferredLocale()));
-						setDefaultLocale(ddmForm.getDefaultLocale());
-					}
-				}));
+		serviceContext.setAttribute("ddmFormValues", _toString(ddmFormValues));
 
 		Fields newFields = _ddm.getFields(
 			ddmStructure.getStructureId(), serviceContext);
 
-		if (ArrayUtil.isEmpty(contentFields)) {
-			return newFields;
-		}
-
-		Fields fields = _journalConverter.getDDMFields(
-			journalArticle.getDDMStructure(), journalArticle.getContent());
-
-		Iterator<Field> iterator = fields.iterator();
+		Iterator<Field> iterator = existingFields.iterator();
 
 		while (iterator.hasNext()) {
 			Field field = iterator.next();
 
 			Field newField = newFields.get(field.getName());
 
-			if (newField != null) {
-				List<Serializable> values = newField.getValues(
-					contextAcceptLanguage.getPreferredLocale());
-
-				field.setValues(
-					contextAcceptLanguage.getPreferredLocale(), values);
-			}
+			field.setValues(
+				contextAcceptLanguage.getPreferredLocale(),
+				newField.getValues(contextAcceptLanguage.getPreferredLocale()));
 		}
 
-		Field field = fields.get(DDM.FIELDS_DISPLAY_NAME);
-
-		field.setValue(
-			contextAcceptLanguage.getPreferredLocale(),
-			_createFieldsDisplayValue(contentFields));
-
-		return fields;
+		return existingFields;
 	}
 
 	private Fields _toPatchedFields(
@@ -849,9 +698,12 @@ public class StructuredContentResourceImpl
 		for (ContentField contentField : contentFields) {
 			Field field = fields.get(contentField.getName());
 
-			com.liferay.dynamic.data.mapping.model.Value value = _toDDMValue(
-				contentField, ddmStructure,
-				contextAcceptLanguage.getPreferredLocale());
+			com.liferay.dynamic.data.mapping.model.Value value =
+				DDMValueUtil.toDDMValue(
+					contentField,
+					_getDDMFormField(ddmStructure, contentField.getName()),
+					_dlAppService, _journalArticleService,
+					contextAcceptLanguage.getPreferredLocale());
 
 			field.setValue(
 				contextAcceptLanguage.getPreferredLocale(),
@@ -863,6 +715,11 @@ public class StructuredContentResourceImpl
 				_toPatchedFields(nestedContentFields, journalArticle);
 			}
 		}
+
+		DDMFormValues ddmFormValues = _journalConverter.getDDMFormValues(
+			ddmStructure, fields);
+
+		_validateFomFieldValues(ddmFormValues);
 
 		return fields;
 	}
@@ -1084,6 +941,16 @@ public class StructuredContentResourceImpl
 		};
 	}
 
+	private void _validateFomFieldValues(DDMFormValues ddmFormValues) {
+		try {
+			_ddmFormValuesValidator.validate(ddmFormValues);
+		}
+		catch (DDMFormValuesValidationException ddmfvve) {
+			throw new BadRequestException(
+				"Validation error: " + ddmfvve.getMessage(), ddmfvve);
+		}
+	}
+
 	@Reference
 	private AssetCategoryLocalService _assetCategoryLocalService;
 
@@ -1106,13 +973,13 @@ public class StructuredContentResourceImpl
 	private DDMFormValuesSerializerTracker _ddmFormValuesSerializerTracker;
 
 	@Reference
+	private DDMFormValuesValidator _ddmFormValuesValidator;
+
+	@Reference
 	private DDMStructureService _ddmStructureService;
 
 	@Reference
 	private DDMTemplateService _ddmTemplateService;
-
-	@Reference
-	private DLAppLocalService _dlAppLocalService;
 
 	@Reference
 	private DLAppService _dlAppService;

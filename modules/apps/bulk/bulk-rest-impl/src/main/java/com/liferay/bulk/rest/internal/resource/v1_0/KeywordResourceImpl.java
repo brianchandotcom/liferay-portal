@@ -63,7 +63,7 @@ public class KeywordResourceImpl extends BaseKeywordResourceImpl {
 	public boolean patchKeywordBatch(KeywordBulkSelection keywordBulkSelection)
 		throws Exception {
 
-		_update(false, keywordBulkSelection);
+		_update(true, keywordBulkSelection);
 
 		return true;
 	}
@@ -99,7 +99,7 @@ public class KeywordResourceImpl extends BaseKeywordResourceImpl {
 	public boolean putKeywordBatch(KeywordBulkSelection keywordBulkSelection)
 		throws Exception {
 
-		_update(true, keywordBulkSelection);
+		_update(false, keywordBulkSelection);
 
 		return true;
 	}

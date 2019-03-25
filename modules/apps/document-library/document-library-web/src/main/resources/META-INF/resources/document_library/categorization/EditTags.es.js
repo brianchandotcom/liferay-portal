@@ -146,7 +146,7 @@ class EditTags extends Component {
 
 		this._fetchTagsRequest(
 			this.urlUpdateTags,
-			this.append ? 'PUT' : 'PATCH',
+			this.append ? 'PATCH' : 'PUT',
 			{
 				documentBulkSelection: this._getSelection(),
 				keywordsToAdd: addedTags,

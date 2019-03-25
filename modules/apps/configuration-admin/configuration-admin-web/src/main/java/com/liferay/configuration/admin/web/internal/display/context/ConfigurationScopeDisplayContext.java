@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.configuration.admin.web.internal.display;
+package com.liferay.configuration.admin.web.internal.display.context;
 
 import com.liferay.configuration.admin.constants.ConfigurationAdminPortletKeys;
 import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;

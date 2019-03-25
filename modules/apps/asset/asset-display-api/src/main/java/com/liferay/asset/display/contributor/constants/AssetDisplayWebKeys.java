@@ -19,9 +19,6 @@ package com.liferay.asset.display.contributor.constants;
  */
 public class AssetDisplayWebKeys {
 
-	public static final String ASSET_DISPLAY_CONTRIBUTOR =
-		"ASSET_DISPLAY_CONTRIBUTOR";
-
 	/**
 	 * @deprecated As of Judson (7.1.x), with no direct replacement
 	 */
@@ -30,6 +27,9 @@ public class AssetDisplayWebKeys {
 
 	public static final String CURRENT_I18N_LANGUAGE_ID =
 		"CURRENT_I18N_LANGUAGE_ID";
+
+	public static final String INFO_DISPLAY_CONTRIBUTOR =
+		"INFO_DISPLAY_CONTRIBUTOR";
 
 	public static final String VERSION_CLASS_PK = "VERSION_CLASS_PK";
 

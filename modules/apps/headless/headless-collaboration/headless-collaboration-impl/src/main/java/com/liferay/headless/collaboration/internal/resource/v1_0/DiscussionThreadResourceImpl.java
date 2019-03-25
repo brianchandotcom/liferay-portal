@@ -21,6 +21,7 @@ import com.liferay.headless.collaboration.dto.v1_0.DiscussionThread;
 import com.liferay.headless.collaboration.dto.v1_0.TaxonomyCategory;
 import com.liferay.headless.collaboration.internal.dto.v1_0.util.CreatorUtil;
 import com.liferay.headless.collaboration.internal.dto.v1_0.util.TaxonomyCategoryUtil;
+import com.liferay.headless.collaboration.internal.odata.entity.v1_0.DiscussionForumPostingEntityModel;
 import com.liferay.headless.collaboration.resource.v1_0.DiscussionThreadResource;
 import com.liferay.headless.common.spi.service.context.ServiceContextUtil;
 import com.liferay.knowledge.base.model.KBArticle;
@@ -35,18 +36,27 @@ import com.liferay.message.boards.service.MBThreadLocalService;
 import com.liferay.message.boards.service.MBThreadService;
 import com.liferay.message.boards.settings.MBGroupServiceSettings;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.search.BooleanClauseOccur;
+import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Sort;
+import com.liferay.portal.kernel.search.filter.BooleanFilter;
 import com.liferay.portal.kernel.search.filter.Filter;
+import com.liferay.portal.kernel.search.filter.TermFilter;
 import com.liferay.portal.kernel.service.UserService;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
+import com.liferay.portal.vulcan.resource.EntityModelResource;
+import com.liferay.portal.vulcan.util.SearchUtil;
 
 import java.util.Collections;
+
+import javax.ws.rs.core.MultivaluedMap;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -60,7 +70,7 @@ import org.osgi.service.component.annotations.ServiceScope;
 	scope = ServiceScope.PROTOTYPE, service = DiscussionThreadResource.class
 )
 public class DiscussionThreadResourceImpl
-	extends BaseDiscussionThreadResourceImpl {
+	extends BaseDiscussionThreadResourceImpl implements EntityModelResource {
 
 	@Override
 	public void deleteDiscussionThread(Long discussionThreadId)
@@ -75,15 +85,25 @@ public class DiscussionThreadResourceImpl
 			Sort[] sorts)
 		throws Exception {
 
-		return Page.of(
-			transform(
-				_mbThreadService.getThreads(
-					contentSpaceId, 0, WorkflowConstants.STATUS_APPROVED,
-					pagination.getStartPosition(), pagination.getEndPosition()),
-				this::_toDiscussionThread),
-			pagination,
-			_mbMessageLocalService.getGroupMessagesCount(
-				contentSpaceId, WorkflowConstants.STATUS_APPROVED));
+		return SearchUtil.search(
+			booleanQuery -> {
+				BooleanFilter booleanFilter =
+					booleanQuery.getPreBooleanFilter();
+
+				booleanFilter.add(
+					new TermFilter("parentMessageId", "0"),
+					BooleanClauseOccur.MUST);
+			},
+			filter, MBMessage.class, pagination,
+			queryConfig -> queryConfig.setSelectedFieldNames(
+				Field.ENTRY_CLASS_PK),
+			searchContext -> {
+				searchContext.setCompanyId(contextCompany.getCompanyId());
+			},
+			document -> _toDiscussionThread(
+				_mbMessageService.getMessage(
+					GetterUtil.getLong(document.get(Field.ENTRY_CLASS_PK)))),
+			sorts);
 	}
 
 	@Override
@@ -95,17 +115,30 @@ public class DiscussionThreadResourceImpl
 		MBCategory mbCategory = _mbCategoryService.getCategory(
 			discussionSectionId);
 
-		return Page.of(
-			transform(
-				_mbThreadService.getThreads(
-					mbCategory.getGroupId(), discussionSectionId,
-					WorkflowConstants.STATUS_APPROVED,
-					pagination.getStartPosition(), pagination.getEndPosition()),
-				this::_toDiscussionThread),
-			pagination,
-			_mbThreadService.getThreadsCount(
-				mbCategory.getGroupId(), discussionSectionId,
-				WorkflowConstants.STATUS_APPROVED));
+		return SearchUtil.search(
+			booleanQuery -> {
+				BooleanFilter booleanFilter =
+					booleanQuery.getPreBooleanFilter();
+
+				booleanFilter.add(
+					new TermFilter(
+						"categoryId",
+						String.valueOf(mbCategory.getCategoryId())),
+					BooleanClauseOccur.MUST);
+				booleanFilter.add(
+					new TermFilter("parentMessageId", "0"),
+					BooleanClauseOccur.MUST);
+			},
+			filter, MBMessage.class, pagination,
+			queryConfig -> queryConfig.setSelectedFieldNames(
+				Field.ENTRY_CLASS_PK),
+			searchContext -> {
+				searchContext.setCompanyId(contextCompany.getCompanyId());
+			},
+			document -> _toDiscussionThread(
+				_mbMessageService.getMessage(
+					GetterUtil.getLong(document.get(Field.ENTRY_CLASS_PK)))),
+			sorts);
 	}
 
 	@Override
@@ -114,6 +147,13 @@ public class DiscussionThreadResourceImpl
 
 		return _toDiscussionThread(
 			_mbThreadLocalService.getMBThread(discussionThreadId));
+	}
+
+	@Override
+	public EntityModel getEntityModel(MultivaluedMap multivaluedMap)
+		throws Exception {
+
+		return _entityModel;
 	}
 
 	@Override
@@ -147,17 +187,16 @@ public class DiscussionThreadResourceImpl
 		MBMessage mbMessage = _mbMessageService.getMessage(
 			mbThread.getRootMessageId());
 
-		MBMessage updatedMBMessage = _mbMessageService.updateDiscussionMessage(
-			mbMessage.getClassName(), mbMessage.getClassPK(),
-			mbMessage.getMessageId(), discussionThread.getHeadline(),
-			discussionThread.getArticleBody(),
-			ServiceContextUtil.createServiceContext(
-				discussionThread.getKeywords(),
-				discussionThread.getTaxonomyCategoryIds(),
-				mbThread.getGroupId(),
-				discussionThread.getViewableByAsString()));
-
-		return _toDiscussionThread(updatedMBMessage.getThread());
+		return _toDiscussionThread(
+			_mbMessageService.updateDiscussionMessage(
+				mbMessage.getClassName(), mbMessage.getClassPK(),
+				mbMessage.getMessageId(), discussionThread.getHeadline(),
+				discussionThread.getArticleBody(),
+				ServiceContextUtil.createServiceContext(
+					discussionThread.getKeywords(),
+					discussionThread.getTaxonomyCategoryIds(),
+					mbThread.getGroupId(),
+					discussionThread.getViewableByAsString())));
 	}
 
 	private DiscussionThread _addDiscussionThread(
@@ -165,15 +204,21 @@ public class DiscussionThreadResourceImpl
 			DiscussionThread discussionThread)
 		throws Exception {
 
-		MBMessage mbMessage = _mbMessageService.addMessage(
-			contentSpaceId, discussionSectionId, discussionThread.getHeadline(),
-			discussionThread.getArticleBody(),
-			MBMessageConstants.DEFAULT_FORMAT, Collections.emptyList(), false,
-			0.0, false,
-			ServiceContextUtil.createServiceContext(
-				discussionThread.getKeywords(),
-				discussionThread.getTaxonomyCategoryIds(), contentSpaceId,
-				discussionThread.getViewableByAsString()));
+		return _toDiscussionThread(
+			_mbMessageService.addMessage(
+				contentSpaceId, discussionSectionId,
+				discussionThread.getHeadline(),
+				discussionThread.getArticleBody(),
+				MBMessageConstants.DEFAULT_FORMAT, Collections.emptyList(),
+				false, 0.0, false,
+				ServiceContextUtil.createServiceContext(
+					discussionThread.getKeywords(),
+					discussionThread.getTaxonomyCategoryIds(), contentSpaceId,
+					discussionThread.getViewableByAsString())));
+	}
+
+	private DiscussionThread _toDiscussionThread(MBMessage mbMessage)
+		throws Exception {
 
 		return _toDiscussionThread(mbMessage.getThread());
 	}
@@ -235,6 +280,9 @@ public class DiscussionThreadResourceImpl
 
 		return null;
 	}
+
+	private static final EntityModel _entityModel =
+		new DiscussionForumPostingEntityModel();
 
 	@Reference
 	private AssetCategoryLocalService _assetCategoryLocalService;

@@ -21,6 +21,7 @@ import com.liferay.headless.collaboration.dto.v1_0.DiscussionForumPosting;
 import com.liferay.headless.collaboration.dto.v1_0.TaxonomyCategory;
 import com.liferay.headless.collaboration.internal.dto.v1_0.util.CreatorUtil;
 import com.liferay.headless.collaboration.internal.dto.v1_0.util.TaxonomyCategoryUtil;
+import com.liferay.headless.collaboration.internal.odata.entity.v1_0.DiscussionForumPostingEntityModel;
 import com.liferay.headless.collaboration.resource.v1_0.DiscussionForumPostingResource;
 import com.liferay.headless.common.spi.service.context.ServiceContextUtil;
 import com.liferay.knowledge.base.model.KBArticle;
@@ -31,16 +32,26 @@ import com.liferay.message.boards.service.MBMessageLocalService;
 import com.liferay.message.boards.service.MBMessageService;
 import com.liferay.message.boards.service.MBThreadLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.search.BooleanClauseOccur;
+import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Sort;
+import com.liferay.portal.kernel.search.filter.BooleanFilter;
 import com.liferay.portal.kernel.search.filter.Filter;
+import com.liferay.portal.kernel.search.filter.TermFilter;
 import com.liferay.portal.kernel.service.UserService;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
+import com.liferay.portal.vulcan.resource.EntityModelResource;
+import com.liferay.portal.vulcan.util.SearchUtil;
 
 import java.util.Collections;
+
+import javax.ws.rs.core.MultivaluedMap;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -55,7 +66,8 @@ import org.osgi.service.component.annotations.ServiceScope;
 	service = DiscussionForumPostingResource.class
 )
 public class DiscussionForumPostingResourceImpl
-	extends BaseDiscussionForumPostingResourceImpl {
+	extends BaseDiscussionForumPostingResourceImpl
+	implements EntityModelResource {
 
 	@Override
 	public void deleteDiscussionForumPosting(Long discussionForumPostingId)
@@ -80,15 +92,10 @@ public class DiscussionForumPostingResourceImpl
 				Pagination pagination, Sort[] sorts)
 		throws Exception {
 
-		return Page.of(
-			transform(
-				_mbMessageLocalService.getChildMessages(
-					discussionForumPostingId, WorkflowConstants.STATUS_APPROVED,
-					pagination.getStartPosition(), pagination.getEndPosition()),
-				this::_toDiscussionForumPosting),
-			pagination,
-			_mbMessageLocalService.getChildMessagesCount(
-				discussionForumPostingId, WorkflowConstants.STATUS_APPROVED));
+		String messageId = String.valueOf(discussionForumPostingId);
+
+		return _getDiscussionForumPostingPage(
+			filter, pagination, sorts, messageId);
 	}
 
 	@Override
@@ -98,15 +105,20 @@ public class DiscussionForumPostingResourceImpl
 				Sort[] sorts)
 		throws Exception {
 
-		return Page.of(
-			transform(
-				_mbMessageLocalService.getThreadMessages(
-					discussionThreadId, WorkflowConstants.STATUS_APPROVED,
-					pagination.getStartPosition(), pagination.getEndPosition()),
-				this::_toDiscussionForumPosting),
-			pagination,
-			_mbMessageLocalService.getThreadMessagesCount(
-				discussionThreadId, WorkflowConstants.STATUS_APPROVED));
+		MBThread mbThread = _mbThreadLocalService.getMBThread(
+			discussionThreadId);
+
+		String messageId = String.valueOf(mbThread.getRootMessageId());
+
+		return _getDiscussionForumPostingPage(
+			filter, pagination, sorts, messageId);
+	}
+
+	@Override
+	public EntityModel getEntityModel(MultivaluedMap multivaluedMap)
+		throws Exception {
+
+		return _entityModel;
 	}
 
 	@Override
@@ -177,6 +189,35 @@ public class DiscussionForumPostingResourceImpl
 					discussionForumPosting.getViewableByAsString())));
 	}
 
+	private Page<DiscussionForumPosting> _getDiscussionForumPostingPage(
+			Filter filter, Pagination pagination, Sort[] sorts,
+			String messageId)
+		throws Exception {
+
+		return SearchUtil.search(
+			booleanQuery -> {
+				BooleanFilter booleanFilter =
+					booleanQuery.getPreBooleanFilter();
+
+				booleanFilter.add(
+					new TermFilter(Field.ENTRY_CLASS_PK, messageId),
+					BooleanClauseOccur.MUST_NOT);
+				booleanFilter.add(
+					new TermFilter("parentMessageId", messageId),
+					BooleanClauseOccur.MUST);
+			},
+			filter, MBMessage.class, pagination,
+			queryConfig -> queryConfig.setSelectedFieldNames(
+				Field.ENTRY_CLASS_PK),
+			searchContext -> {
+				searchContext.setCompanyId(contextCompany.getCompanyId());
+			},
+			document -> _toDiscussionForumPosting(
+				_mbMessageService.getMessage(
+					GetterUtil.getLong(document.get(Field.ENTRY_CLASS_PK)))),
+			sorts);
+	}
+
 	private DiscussionForumPosting _toDiscussionForumPosting(
 			MBMessage mbMessage)
 		throws PortalException {
@@ -210,6 +251,9 @@ public class DiscussionForumPostingResourceImpl
 			}
 		};
 	}
+
+	private static final EntityModel _entityModel =
+		new DiscussionForumPostingEntityModel();
 
 	@Reference
 	private AssetCategoryLocalService _assetCategoryLocalService;

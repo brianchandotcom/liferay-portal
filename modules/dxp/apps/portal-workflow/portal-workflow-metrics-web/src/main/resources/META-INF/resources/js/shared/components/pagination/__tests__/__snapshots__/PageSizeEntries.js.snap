@@ -13,51 +13,33 @@ exports[`Should render component 1`] = `
     role="button"
   >
     10 Entries
-    <svg
-      className="lexicon-icon lexicon-icon-caret-double-l"
-      focusable="false"
-      role="presentation"
-    >
-      <use
-        href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#caret-double-l"
-      />
-    </svg>
+    <Icon
+      iconName="caret-double-l"
+    />
   </a>
   <div
     className="dropdown-menu dropdown-menu-top"
   >
-    <a
-      className="dropdown-item"
-      data-senna-off={true}
-      href="#10"
-      onClick={[Function]}
-    >
-      10
-    </a>
-    <a
-      className="dropdown-item"
-      data-senna-off={true}
-      href="#20"
-      onClick={[Function]}
-    >
-      20
-    </a>
-    <a
-      className="dropdown-item"
-      data-senna-off={true}
-      href="#30"
-      onClick={[Function]}
-    >
-      30
-    </a>
-    <a
-      className="dropdown-item"
-      data-senna-off={true}
-      href="#40"
-      onClick={[Function]}
-    >
-      40
-    </a>
+    <withRouter(PageSizeItem)
+      key="0_10"
+      onChangePageSize={[Function]}
+      pageSize={10}
+    />
+    <withRouter(PageSizeItem)
+      key="1_20"
+      onChangePageSize={[Function]}
+      pageSize={20}
+    />
+    <withRouter(PageSizeItem)
+      key="2_30"
+      onChangePageSize={[Function]}
+      pageSize={30}
+    />
+    <withRouter(PageSizeItem)
+      key="3_40"
+      onChangePageSize={[Function]}
+      pageSize={40}
+    />
   </div>
 </div>
 `;

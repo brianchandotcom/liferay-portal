@@ -1,94 +1,324 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Should remove a item 1`] = `
-<div>
-  <nav
-    className="management-bar management-bar-light navbar navbar-expand-md"
+<MockRouter
+  client={
+    Object {
+      "get": [Function],
+      "post": [Function],
+      "put": [Function],
+    }
+  }
+>
+  <MemoryRouter
+    initialEntries={
+      Array [
+        Object {
+          "pathname": "/",
+          "search": "?backPath=%2F",
+        },
+        Object {
+          "pathname": "/processes",
+          "search": "?backPath=%2F",
+        },
+        Object {
+          "pathname": "/slas/1234",
+          "search": "?backPath=%2Fprocesses",
+        },
+      ]
+    }
+    keyLength={0}
   >
-    <div
-      className="container-fluid container-fluid-max-xl"
+    <Router
+      history={
+        Object {
+          "action": "POP",
+          "block": [Function],
+          "canGo": [Function],
+          "createHref": [Function],
+          "entries": Array [
+            Object {
+              "hash": "",
+              "pathname": "/",
+              "search": "?backPath=%2F",
+            },
+            Object {
+              "hash": "",
+              "pathname": "/processes",
+              "search": "?backPath=%2F",
+            },
+            Object {
+              "hash": "",
+              "pathname": "/slas/1234",
+              "search": "?backPath=%2Fprocesses",
+            },
+          ],
+          "go": [Function],
+          "goBack": [Function],
+          "goForward": [Function],
+          "index": 0,
+          "length": 3,
+          "listen": [Function],
+          "location": Object {
+            "hash": "",
+            "pathname": "/",
+            "search": "?backPath=%2F",
+          },
+          "push": [Function],
+          "replace": [Function],
+        }
+      }
     >
-      <ul
-        className="navbar-nav"
-      >
-        <li
-          className="nav-item"
-        >
+      <SLAListCard>
+        <div>
+          <nav
+            className="management-bar management-bar-light navbar navbar-expand-md"
+          >
+            <div
+              className="container-fluid container-fluid-max-xl"
+            >
+              <ul
+                className="navbar-nav"
+              >
+                <li
+                  className="nav-item"
+                >
+                  <div
+                    className="custom-control custom-checkbox"
+                  >
+                    <label>
+                      <input
+                        className="custom-control-input"
+                        type="checkbox"
+                      />
+                      <span
+                        className="custom-control-label"
+                      />
+                    </label>
+                  </div>
+                </li>
+              </ul>
+              <div
+                className="navbar-form navbar-form-autofit"
+              >
+                <Search
+                  disabled={false}
+                  onSearch={[Function]}
+                >
+                  <form
+                    onSubmit={[Function]}
+                    role="search"
+                  >
+                    <div
+                      className="input-group"
+                    >
+                      <div
+                        className="input-group-item"
+                      >
+                        <input
+                          className="form-control input-group-inset input-group-inset-after"
+                          disabled={false}
+                          onChange={[Function]}
+                          placeholder="Search for..."
+                          type="text"
+                          value=""
+                        />
+                        <span
+                          className="input-group-inset-item input-group-inset-item-after"
+                        >
+                          <button
+                            className="btn btn-unstyled"
+                            disabled={false}
+                            type="submit"
+                          >
+                            <Icon
+                              iconName="search"
+                            >
+                              <svg
+                                className="lexicon-icon lexicon-icon-search"
+                                focusable="false"
+                                role="presentation"
+                              >
+                                <use
+                                  href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#search"
+                                />
+                              </svg>
+                            </Icon>
+                          </button>
+                        </span>
+                      </div>
+                    </div>
+                  </form>
+                </Search>
+              </div>
+              <ul
+                className="navbar-nav"
+              >
+                <li
+                  className="nav-item"
+                >
+                  <withRouter(ChildLinkWrapper)
+                    className="btn btn-primary nav-btn nav-btn-monospaced navbar-breakpoint-down-d-none"
+                    to="/sla/new/undefined"
+                  >
+                    <Route>
+                      <ChildLinkWrapper
+                        className="btn btn-primary nav-btn nav-btn-monospaced navbar-breakpoint-down-d-none"
+                        history={
+                          Object {
+                            "action": "POP",
+                            "block": [Function],
+                            "canGo": [Function],
+                            "createHref": [Function],
+                            "entries": Array [
+                              Object {
+                                "hash": "",
+                                "pathname": "/",
+                                "search": "?backPath=%2F",
+                              },
+                              Object {
+                                "hash": "",
+                                "pathname": "/processes",
+                                "search": "?backPath=%2F",
+                              },
+                              Object {
+                                "hash": "",
+                                "pathname": "/slas/1234",
+                                "search": "?backPath=%2Fprocesses",
+                              },
+                            ],
+                            "go": [Function],
+                            "goBack": [Function],
+                            "goForward": [Function],
+                            "index": 0,
+                            "length": 3,
+                            "listen": [Function],
+                            "location": Object {
+                              "hash": "",
+                              "pathname": "/",
+                              "search": "?backPath=%2F",
+                            },
+                            "push": [Function],
+                            "replace": [Function],
+                          }
+                        }
+                        location={
+                          Object {
+                            "hash": "",
+                            "pathname": "/",
+                            "search": "?backPath=%2F",
+                          }
+                        }
+                        match={
+                          Object {
+                            "isExact": true,
+                            "params": Object {},
+                            "path": "/",
+                            "url": "/",
+                          }
+                        }
+                        to="/sla/new/undefined"
+                      >
+                        <Link
+                          className="btn btn-primary nav-btn nav-btn-monospaced navbar-breakpoint-down-d-none"
+                          replace={false}
+                          to={
+                            Object {
+                              "pathname": "/sla/new/undefined",
+                              "search": "backPath=%2F%3FbackPath%3D%252F",
+                            }
+                          }
+                        >
+                          <a
+                            className="btn btn-primary nav-btn nav-btn-monospaced navbar-breakpoint-down-d-none"
+                            href="/sla/new/undefined?backPath=%2F%3FbackPath%3D%252F"
+                            onClick={[Function]}
+                          >
+                            <Icon
+                              iconName="plus"
+                            >
+                              <svg
+                                className="lexicon-icon lexicon-icon-plus"
+                                focusable="false"
+                                role="presentation"
+                              >
+                                <use
+                                  href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#plus"
+                                />
+                              </svg>
+                            </Icon>
+                          </a>
+                        </Link>
+                      </ChildLinkWrapper>
+                    </Route>
+                  </withRouter(ChildLinkWrapper)>
+                </li>
+              </ul>
+            </div>
+          </nav>
           <div
-            className="custom-control custom-checkbox"
+            className="container-fluid-1280"
           >
-            <label>
-              <input
-                className="custom-control-input"
-                type="checkbox"
-              />
+            <div
+              className="alert alert-dismissible alert-info"
+              role="alert"
+            >
               <span
-                className="custom-control-label"
-              />
-            </label>
-          </div>
-        </li>
-      </ul>
-      <div
-        className="navbar-form navbar-form-autofit"
-      >
-        <Search
-          disabled={false}
-          onSearch={[Function]}
-        />
-      </div>
-      <ul
-        className="navbar-nav"
-      >
-        <li
-          className="nav-item"
-        >
-          <Link
-            className="btn btn-primary nav-btn nav-btn-monospaced navbar-breakpoint-down-d-none"
-            query={
-              Object {
-                "processId": undefined,
-              }
-            }
-            to="sla-form"
-          >
-            <Icon
-              iconName="plus"
+                className="alert-indicator"
+              >
+                <Icon
+                  iconName="reload"
+                >
+                  <svg
+                    className="lexicon-icon lexicon-icon-reload"
+                    focusable="false"
+                    role="presentation"
+                  >
+                    <use
+                      href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#reload"
+                    />
+                  </svg>
+                </Icon>
+              </span>
+              <strong
+                className="lead"
+              >
+                Updating:
+              </strong>
+              <span>
+                Instances in this process are being updated according to SLA changes.
+              </span>
+              <button
+                aria-label="Close"
+                className="close"
+                data-dismiss="alert"
+                type="button"
+              >
+                <Icon
+                  iconName="times"
+                >
+                  <svg
+                    className="lexicon-icon lexicon-icon-times"
+                    focusable="false"
+                    role="presentation"
+                  >
+                    <use
+                      href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#times"
+                    />
+                  </svg>
+                </Icon>
+              </button>
+            </div>
+            <span
+              aria-hidden="true"
+              className="loading-animation"
             />
-          </Link>
-        </li>
-      </ul>
-    </div>
-  </nav>
-  <div
-    className="container-fluid-1280"
-  >
-    <div
-      className="alert alert-info"
-      role="alert"
-    >
-      <span
-        className="alert-indicator"
-      >
-        <Icon
-          iconName="reload"
-        />
-      </span>
-      <strong
-        className="lead"
-      >
-        Updating:
-      </strong>
-      <span>
-        Instances in this process are being updated according to SLA changes.
-      </span>
-    </div>
-    <span
-      aria-hidden="true"
-      className="loading-animation"
-    />
-  </div>
-</div>
+          </div>
+        </div>
+      </SLAListCard>
+    </Router>
+  </MemoryRouter>
+</MockRouter>
 `;
 
 exports[`Should render component 1`] = `
@@ -172,8 +402,8 @@ exports[`Should render component 1`] = `
         >
           <a
             className="btn btn-primary nav-btn nav-btn-monospaced navbar-breakpoint-down-d-none"
-            data-senna-off={true}
-            href="#processId=undefined&_path=sla-form"
+            href="/sla/new/undefined?backPath=%2F%3FbackPath%3D%252F"
+            onClick={[Function]}
           >
             <svg
               className="lexicon-icon lexicon-icon-plus"
@@ -193,7 +423,7 @@ exports[`Should render component 1`] = `
     className="container-fluid-1280"
   >
     <div
-      className="alert alert-info"
+      className="alert alert-dismissible alert-info"
       role="alert"
     >
       <span
@@ -217,6 +447,22 @@ exports[`Should render component 1`] = `
       <span>
         Instances in this process are being updated according to SLA changes.
       </span>
+      <button
+        aria-label="Close"
+        className="close"
+        data-dismiss="alert"
+        type="button"
+      >
+        <svg
+          className="lexicon-icon lexicon-icon-times"
+          focusable="false"
+          role="presentation"
+        >
+          <use
+            href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#times"
+          />
+        </svg>
+      </button>
     </div>
     <span
       aria-hidden="true"
@@ -307,8 +553,8 @@ exports[`Should render component after item was removed 1`] = `
         >
           <a
             className="btn btn-primary nav-btn nav-btn-monospaced navbar-breakpoint-down-d-none"
-            data-senna-off={true}
-            href="#processId=undefined&_path=sla-form"
+            href="/sla/new/undefined?backPath=%2F%3FbackPath%3D%252F"
+            onClick={[Function]}
           >
             <svg
               className="lexicon-icon lexicon-icon-plus"
@@ -328,7 +574,7 @@ exports[`Should render component after item was removed 1`] = `
     className="container-fluid-1280"
   >
     <div
-      className="alert alert-info"
+      className="alert alert-dismissible alert-info"
       role="alert"
     >
       <span
@@ -352,6 +598,22 @@ exports[`Should render component after item was removed 1`] = `
       <span>
         Instances in this process are being updated according to SLA changes.
       </span>
+      <button
+        aria-label="Close"
+        className="close"
+        data-dismiss="alert"
+        type="button"
+      >
+        <svg
+          className="lexicon-icon lexicon-icon-times"
+          focusable="false"
+          role="presentation"
+        >
+          <use
+            href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#times"
+          />
+        </svg>
+      </button>
     </div>
     <span
       aria-hidden="true"

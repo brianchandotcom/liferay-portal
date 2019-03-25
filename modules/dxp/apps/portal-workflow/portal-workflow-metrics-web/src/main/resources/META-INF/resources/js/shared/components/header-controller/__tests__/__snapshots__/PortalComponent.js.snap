@@ -1,0 +1,9 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Should render component on container 1`] = `
+<span>
+  Portal Component
+</span>
+`;
+
+exports[`Shouldnt render component without container 1`] = `null`;

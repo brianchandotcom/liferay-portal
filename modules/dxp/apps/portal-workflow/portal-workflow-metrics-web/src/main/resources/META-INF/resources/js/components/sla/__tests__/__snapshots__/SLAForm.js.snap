@@ -1,1080 +1,2721 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Should display error on alert when receive a server error after submit 1`] = `
-<div>
-  <div
-    className="alert-container"
+<MockRouter
+  client={
+    Object {
+      "get": [Function],
+      "post": [Function],
+      "put": [Function],
+    }
+  }
+>
+  <MemoryRouter
+    initialEntries={
+      Array [
+        Object {
+          "pathname": "/",
+          "search": "?backPath=%2F",
+        },
+        Object {
+          "pathname": "/processes",
+          "search": "?backPath=%2F",
+        },
+        Object {
+          "pathname": "/slas/1234",
+          "search": "?backPath=%2Fprocesses",
+        },
+      ]
+    }
+    keyLength={0}
   >
-    <div
-      className="alert alert-danger"
-      role="alert"
+    <Router
+      history={
+        Object {
+          "action": "POP",
+          "block": [Function],
+          "canGo": [Function],
+          "createHref": [Function],
+          "entries": Array [
+            Object {
+              "hash": "",
+              "pathname": "/",
+              "search": "?backPath=%2F",
+            },
+            Object {
+              "hash": "",
+              "pathname": "/processes",
+              "search": "?backPath=%2F",
+            },
+            Object {
+              "hash": "",
+              "pathname": "/slas/1234",
+              "search": "?backPath=%2Fprocesses",
+            },
+          ],
+          "go": [Function],
+          "goBack": [Function],
+          "goForward": [Function],
+          "index": 0,
+          "length": 3,
+          "listen": [Function],
+          "location": Object {
+            "hash": "",
+            "pathname": "/",
+            "search": "?backPath=%2F",
+          },
+          "push": [Function],
+          "replace": [Function],
+        }
+      }
     >
-      <span
-        className="alert-indicator"
-      >
-        <Icon
-          iconName="exclamation-full"
-        />
-      </span>
-      <strong
-        className="lead"
-      >
-        Error:
-      </strong>
-      <span>
-        Error during SLA creation.
-      </span>
-    </div>
-  </div>
-  <form
-    className="sheet sheet-lg"
-    role="form"
-  >
-    <div
-      className="sheet-header"
-    >
-      <h2
-        className="sheet-title"
-      >
-        SLA Definition
-      </h2>
-    </div>
-    <div
-      className="sheet-section"
-    >
-      <div
-        className="row"
-      >
-        <div
-          className="form-group col col-sm-5 "
-        >
-          <FieldLabel
-            fieldId="sla_name"
-            required={true}
-            text="Name"
-          />
-          <input
-            autoFocus={true}
-            className="form-control"
-            id="sla_name"
-            name="name"
-            onChange={[Function]}
-            type="text"
-            value="SLA 1"
-          />
-        </div>
-        <div
-          className="form-group col col-sm-7"
-        >
-          <FieldLabel
-            fieldId="sla_description"
-            text="Description"
-          />
-          <input
-            className="form-control"
-            id="sla_description"
-            name="description"
-            onChange={[Function]}
-            type="text"
-            value=""
-          />
-        </div>
-      </div>
-      <h3
-        className="sheet-subtitle"
-      >
-        <FieldLabel
-          fieldId="sla_description"
-          required={true}
-          text="DURATION TIME"
-        />
-      </h3>
-      <div
-        className="sheet-text"
-      >
-        Define a duration time to be met. Enter at least one of the following fields.
-      </div>
-      <div
-        className="row "
-      >
-        <div
-          className="form-group col col-sm-5 "
-        >
-          <FieldLabel
-            fieldId="sla_duration_days"
-            text="Days"
-          />
-          <reactTextMask
-            className="form-control"
-            id="sla_duration_days"
-            mask={[Function]}
-            name="days"
-            onBlur={[Function]}
-            onChange={[Function]}
-            value={3}
-          />
-          <div
-            className="form-text"
+      <SLAForm>
+        <div>
+          <form
+            className="sheet sheet-lg"
+            role="form"
           >
-            Enter a whole number.
-          </div>
+            <div
+              className="sheet-header"
+            >
+              <h2
+                className="sheet-title"
+              >
+                SLA Definition
+              </h2>
+            </div>
+            <div
+              className="sheet-section"
+            >
+              <div
+                className="row"
+              >
+                <div
+                  className="form-group col col-sm-5 "
+                >
+                  <FieldLabel
+                    fieldId="sla_name"
+                    required={true}
+                    text="Name"
+                  >
+                    <label
+                      htmlFor="sla_name"
+                    >
+                      Name 
+                      <span
+                        className="reference-mark"
+                      >
+                        <Icon
+                          iconName="asterisk"
+                        >
+                          <svg
+                            className="lexicon-icon lexicon-icon-asterisk"
+                            focusable="false"
+                            role="presentation"
+                          >
+                            <use
+                              href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#asterisk"
+                            />
+                          </svg>
+                        </Icon>
+                      </span>
+                    </label>
+                  </FieldLabel>
+                  <input
+                    autoFocus={true}
+                    className="form-control"
+                    id="sla_name"
+                    name="name"
+                    onChange={[Function]}
+                    type="text"
+                    value=""
+                  />
+                </div>
+                <div
+                  className="form-group col col-sm-7"
+                >
+                  <FieldLabel
+                    fieldId="sla_description"
+                    text="Description"
+                  >
+                    <label
+                      htmlFor="sla_description"
+                    >
+                      Description 
+                    </label>
+                  </FieldLabel>
+                  <input
+                    className="form-control"
+                    id="sla_description"
+                    name="description"
+                    onChange={[Function]}
+                    type="text"
+                    value=""
+                  />
+                </div>
+              </div>
+              <h3
+                className="sheet-subtitle"
+              >
+                <FieldLabel
+                  fieldId="sla_description"
+                  required={true}
+                  text="DURATION TIME"
+                >
+                  <label
+                    htmlFor="sla_description"
+                  >
+                    DURATION TIME 
+                    <span
+                      className="reference-mark"
+                    >
+                      <Icon
+                        iconName="asterisk"
+                      >
+                        <svg
+                          className="lexicon-icon lexicon-icon-asterisk"
+                          focusable="false"
+                          role="presentation"
+                        >
+                          <use
+                            href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#asterisk"
+                          />
+                        </svg>
+                      </Icon>
+                    </span>
+                  </label>
+                </FieldLabel>
+              </h3>
+              <div
+                className="sheet-text"
+              >
+                Define a duration time to be met. Enter at least one of the following fields.
+              </div>
+              <div
+                className="row "
+              >
+                <div
+                  className="form-group col col-sm-5 "
+                >
+                  <FieldLabel
+                    fieldId="sla_duration_days"
+                    text="Days"
+                  >
+                    <label
+                      htmlFor="sla_duration_days"
+                    >
+                      Days 
+                    </label>
+                  </FieldLabel>
+                  <reactTextMask
+                    className="form-control"
+                    id="sla_duration_days"
+                    mask={[Function]}
+                    name="days"
+                    onBlur={[Function]}
+                    onChange={[Function]}
+                    value={null}
+                  >
+                    <input
+                      className="form-control"
+                      id="sla_duration_days"
+                      mask={[Function]}
+                      name="days"
+                      onBlur={[Function]}
+                      onChange={[Function]}
+                      type="text"
+                      value={null}
+                    />
+                  </reactTextMask>
+                  <div
+                    className="form-text"
+                  >
+                    Enter a whole number.
+                  </div>
+                </div>
+                <div
+                  className="form-group col col-sm-3 "
+                >
+                  <FieldLabel
+                    fieldId="sla_duration_hours"
+                    text="Hours"
+                  >
+                    <label
+                      htmlFor="sla_duration_hours"
+                    >
+                      Hours 
+                    </label>
+                  </FieldLabel>
+                  <reactTextMask
+                    className="form-control"
+                    id="sla_duration_hours"
+                    mask={
+                      Array [
+                        /\\\\d/,
+                        /\\\\d/,
+                        ":",
+                        /\\\\d/,
+                        /\\\\d/,
+                      ]
+                    }
+                    name="hours"
+                    onBlur={[Function]}
+                    onChange={[Function]}
+                    placeholder="00:00"
+                    value=""
+                  >
+                    <input
+                      className="form-control"
+                      id="sla_duration_hours"
+                      mask={
+                        Array [
+                          /\\\\d/,
+                          /\\\\d/,
+                          ":",
+                          /\\\\d/,
+                          /\\\\d/,
+                        ]
+                      }
+                      name="hours"
+                      onBlur={[Function]}
+                      onChange={[Function]}
+                      placeholder="00:00"
+                      type="text"
+                      value=""
+                    />
+                  </reactTextMask>
+                </div>
+              </div>
+            </div>
+            <div
+              className="sheet-footer sheet-footer-btn-block-sm-down"
+            >
+              <div
+                className="btn-group"
+              >
+                <div
+                  className="btn-group-item"
+                >
+                  <button
+                    className="btn btn-primary"
+                    onClick={[Function]}
+                    type="button"
+                  >
+                    Save
+                  </button>
+                </div>
+                <div
+                  className="btn-group-item"
+                >
+                  <withRouter(BackLinkWrapper)
+                    className="btn btn-secondary"
+                  >
+                    <Route>
+                      <BackLinkWrapper
+                        className="btn btn-secondary"
+                        history={
+                          Object {
+                            "action": "POP",
+                            "block": [Function],
+                            "canGo": [Function],
+                            "createHref": [Function],
+                            "entries": Array [
+                              Object {
+                                "hash": "",
+                                "pathname": "/",
+                                "search": "?backPath=%2F",
+                              },
+                              Object {
+                                "hash": "",
+                                "pathname": "/processes",
+                                "search": "?backPath=%2F",
+                              },
+                              Object {
+                                "hash": "",
+                                "pathname": "/slas/1234",
+                                "search": "?backPath=%2Fprocesses",
+                              },
+                            ],
+                            "go": [Function],
+                            "goBack": [Function],
+                            "goForward": [Function],
+                            "index": 0,
+                            "length": 3,
+                            "listen": [Function],
+                            "location": Object {
+                              "hash": "",
+                              "pathname": "/",
+                              "search": "?backPath=%2F",
+                            },
+                            "push": [Function],
+                            "replace": [Function],
+                          }
+                        }
+                        location={
+                          Object {
+                            "hash": "",
+                            "pathname": "/",
+                            "search": "?backPath=%2F",
+                          }
+                        }
+                        match={
+                          Object {
+                            "isExact": true,
+                            "params": Object {},
+                            "path": "/",
+                            "url": "/",
+                          }
+                        }
+                      >
+                        <Link
+                          className="btn btn-secondary"
+                          replace={false}
+                          to="/"
+                        >
+                          <a
+                            className="btn btn-secondary"
+                            href="/"
+                            onClick={[Function]}
+                          >
+                            Cancel
+                          </a>
+                        </Link>
+                      </BackLinkWrapper>
+                    </Route>
+                  </withRouter(BackLinkWrapper)>
+                </div>
+              </div>
+            </div>
+          </form>
         </div>
-        <div
-          className="form-group col col-sm-3 "
-        >
-          <FieldLabel
-            fieldId="sla_duration_hours"
-            text="Hours"
-          />
-          <reactTextMask
-            className="form-control"
-            id="sla_duration_hours"
-            mask={
-              Array [
-                /\\\\d/,
-                /\\\\d/,
-                ":",
-                /\\\\d/,
-                /\\\\d/,
-              ]
-            }
-            name="hours"
-            onBlur={[Function]}
-            onChange={[Function]}
-            placeholder="00:00"
-            value=""
-          />
-        </div>
-      </div>
-    </div>
-    <div
-      className="sheet-footer sheet-footer-btn-block-sm-down"
-    >
-      <div
-        className="btn-group"
-      >
-        <div
-          className="btn-group-item"
-        >
-          <button
-            className="btn btn-primary"
-            onClick={[Function]}
-            type="button"
-          >
-            Save
-          </button>
-        </div>
-        <div
-          className="btn-group-item"
-        >
-          <Link
-            className="btn btn-secondary"
-            query={
-              Object {
-                "processId": undefined,
-              }
-            }
-            text="Cancel"
-            to="sla-list"
-          />
-        </div>
-      </div>
-    </div>
-  </form>
-</div>
+      </SLAForm>
+    </Router>
+  </MemoryRouter>
+</MockRouter>
 `;
 
 exports[`Should display error on field when receive a server error after submit 1`] = `
-<div>
-  <form
-    className="sheet sheet-lg"
-    role="form"
+<MockRouter
+  client={
+    Object {
+      "get": [Function],
+      "post": [Function],
+      "put": [Function],
+    }
+  }
+>
+  <MemoryRouter
+    initialEntries={
+      Array [
+        Object {
+          "pathname": "/",
+          "search": "?backPath=%2F",
+        },
+        Object {
+          "pathname": "/processes",
+          "search": "?backPath=%2F",
+        },
+        Object {
+          "pathname": "/slas/1234",
+          "search": "?backPath=%2Fprocesses",
+        },
+      ]
+    }
+    keyLength={0}
   >
-    <div
-      className="sheet-header"
+    <Router
+      history={
+        Object {
+          "action": "POP",
+          "block": [Function],
+          "canGo": [Function],
+          "createHref": [Function],
+          "entries": Array [
+            Object {
+              "hash": "",
+              "pathname": "/",
+              "search": "?backPath=%2F",
+            },
+            Object {
+              "hash": "",
+              "pathname": "/processes",
+              "search": "?backPath=%2F",
+            },
+            Object {
+              "hash": "",
+              "pathname": "/slas/1234",
+              "search": "?backPath=%2Fprocesses",
+            },
+          ],
+          "go": [Function],
+          "goBack": [Function],
+          "goForward": [Function],
+          "index": 0,
+          "length": 3,
+          "listen": [Function],
+          "location": Object {
+            "hash": "",
+            "pathname": "/",
+            "search": "?backPath=%2F",
+          },
+          "push": [Function],
+          "replace": [Function],
+        }
+      }
     >
-      <h2
-        className="sheet-title"
-      >
-        SLA Definition
-      </h2>
-    </div>
-    <div
-      className="sheet-section"
-    >
-      <div
-        className="row"
-      >
-        <div
-          className="form-group col col-sm-5 has-error"
-        >
-          <FieldLabel
-            fieldId="sla_name"
-            required={true}
-            text="Name"
-          />
-          <input
-            autoFocus={true}
-            className="form-control"
-            id="sla_name"
-            name="name"
-            onChange={[Function]}
-            type="text"
-            value="SLA 1"
-          />
-          <FieldError
-            error="An SLA with the same name already exists."
-          />
-        </div>
-        <div
-          className="form-group col col-sm-7"
-        >
-          <FieldLabel
-            fieldId="sla_description"
-            text="Description"
-          />
-          <input
-            className="form-control"
-            id="sla_description"
-            name="description"
-            onChange={[Function]}
-            type="text"
-            value=""
-          />
-        </div>
-      </div>
-      <h3
-        className="sheet-subtitle"
-      >
-        <FieldLabel
-          fieldId="sla_description"
-          required={true}
-          text="DURATION TIME"
-        />
-      </h3>
-      <div
-        className="sheet-text"
-      >
-        Define a duration time to be met. Enter at least one of the following fields.
-      </div>
-      <div
-        className="row "
-      >
-        <div
-          className="form-group col col-sm-5 "
-        >
-          <FieldLabel
-            fieldId="sla_duration_days"
-            text="Days"
-          />
-          <reactTextMask
-            className="form-control"
-            id="sla_duration_days"
-            mask={[Function]}
-            name="days"
-            onBlur={[Function]}
-            onChange={[Function]}
-            value={3}
-          />
-          <div
-            className="form-text"
+      <SLAForm>
+        <div>
+          <form
+            className="sheet sheet-lg"
+            role="form"
           >
-            Enter a whole number.
-          </div>
+            <div
+              className="sheet-header"
+            >
+              <h2
+                className="sheet-title"
+              >
+                SLA Definition
+              </h2>
+            </div>
+            <div
+              className="sheet-section"
+            >
+              <div
+                className="row"
+              >
+                <div
+                  className="form-group col col-sm-5 "
+                >
+                  <FieldLabel
+                    fieldId="sla_name"
+                    required={true}
+                    text="Name"
+                  >
+                    <label
+                      htmlFor="sla_name"
+                    >
+                      Name 
+                      <span
+                        className="reference-mark"
+                      >
+                        <Icon
+                          iconName="asterisk"
+                        >
+                          <svg
+                            className="lexicon-icon lexicon-icon-asterisk"
+                            focusable="false"
+                            role="presentation"
+                          >
+                            <use
+                              href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#asterisk"
+                            />
+                          </svg>
+                        </Icon>
+                      </span>
+                    </label>
+                  </FieldLabel>
+                  <input
+                    autoFocus={true}
+                    className="form-control"
+                    id="sla_name"
+                    name="name"
+                    onChange={[Function]}
+                    type="text"
+                    value=""
+                  />
+                </div>
+                <div
+                  className="form-group col col-sm-7"
+                >
+                  <FieldLabel
+                    fieldId="sla_description"
+                    text="Description"
+                  >
+                    <label
+                      htmlFor="sla_description"
+                    >
+                      Description 
+                    </label>
+                  </FieldLabel>
+                  <input
+                    className="form-control"
+                    id="sla_description"
+                    name="description"
+                    onChange={[Function]}
+                    type="text"
+                    value=""
+                  />
+                </div>
+              </div>
+              <h3
+                className="sheet-subtitle"
+              >
+                <FieldLabel
+                  fieldId="sla_description"
+                  required={true}
+                  text="DURATION TIME"
+                >
+                  <label
+                    htmlFor="sla_description"
+                  >
+                    DURATION TIME 
+                    <span
+                      className="reference-mark"
+                    >
+                      <Icon
+                        iconName="asterisk"
+                      >
+                        <svg
+                          className="lexicon-icon lexicon-icon-asterisk"
+                          focusable="false"
+                          role="presentation"
+                        >
+                          <use
+                            href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#asterisk"
+                          />
+                        </svg>
+                      </Icon>
+                    </span>
+                  </label>
+                </FieldLabel>
+              </h3>
+              <div
+                className="sheet-text"
+              >
+                Define a duration time to be met. Enter at least one of the following fields.
+              </div>
+              <div
+                className="row "
+              >
+                <div
+                  className="form-group col col-sm-5 "
+                >
+                  <FieldLabel
+                    fieldId="sla_duration_days"
+                    text="Days"
+                  >
+                    <label
+                      htmlFor="sla_duration_days"
+                    >
+                      Days 
+                    </label>
+                  </FieldLabel>
+                  <reactTextMask
+                    className="form-control"
+                    id="sla_duration_days"
+                    mask={[Function]}
+                    name="days"
+                    onBlur={[Function]}
+                    onChange={[Function]}
+                    value={null}
+                  >
+                    <input
+                      className="form-control"
+                      id="sla_duration_days"
+                      mask={[Function]}
+                      name="days"
+                      onBlur={[Function]}
+                      onChange={[Function]}
+                      type="text"
+                      value={null}
+                    />
+                  </reactTextMask>
+                  <div
+                    className="form-text"
+                  >
+                    Enter a whole number.
+                  </div>
+                </div>
+                <div
+                  className="form-group col col-sm-3 "
+                >
+                  <FieldLabel
+                    fieldId="sla_duration_hours"
+                    text="Hours"
+                  >
+                    <label
+                      htmlFor="sla_duration_hours"
+                    >
+                      Hours 
+                    </label>
+                  </FieldLabel>
+                  <reactTextMask
+                    className="form-control"
+                    id="sla_duration_hours"
+                    mask={
+                      Array [
+                        /\\\\d/,
+                        /\\\\d/,
+                        ":",
+                        /\\\\d/,
+                        /\\\\d/,
+                      ]
+                    }
+                    name="hours"
+                    onBlur={[Function]}
+                    onChange={[Function]}
+                    placeholder="00:00"
+                    value=""
+                  >
+                    <input
+                      className="form-control"
+                      id="sla_duration_hours"
+                      mask={
+                        Array [
+                          /\\\\d/,
+                          /\\\\d/,
+                          ":",
+                          /\\\\d/,
+                          /\\\\d/,
+                        ]
+                      }
+                      name="hours"
+                      onBlur={[Function]}
+                      onChange={[Function]}
+                      placeholder="00:00"
+                      type="text"
+                      value=""
+                    />
+                  </reactTextMask>
+                </div>
+              </div>
+            </div>
+            <div
+              className="sheet-footer sheet-footer-btn-block-sm-down"
+            >
+              <div
+                className="btn-group"
+              >
+                <div
+                  className="btn-group-item"
+                >
+                  <button
+                    className="btn btn-primary"
+                    onClick={[Function]}
+                    type="button"
+                  >
+                    Save
+                  </button>
+                </div>
+                <div
+                  className="btn-group-item"
+                >
+                  <withRouter(BackLinkWrapper)
+                    className="btn btn-secondary"
+                  >
+                    <Route>
+                      <BackLinkWrapper
+                        className="btn btn-secondary"
+                        history={
+                          Object {
+                            "action": "POP",
+                            "block": [Function],
+                            "canGo": [Function],
+                            "createHref": [Function],
+                            "entries": Array [
+                              Object {
+                                "hash": "",
+                                "pathname": "/",
+                                "search": "?backPath=%2F",
+                              },
+                              Object {
+                                "hash": "",
+                                "pathname": "/processes",
+                                "search": "?backPath=%2F",
+                              },
+                              Object {
+                                "hash": "",
+                                "pathname": "/slas/1234",
+                                "search": "?backPath=%2Fprocesses",
+                              },
+                            ],
+                            "go": [Function],
+                            "goBack": [Function],
+                            "goForward": [Function],
+                            "index": 0,
+                            "length": 3,
+                            "listen": [Function],
+                            "location": Object {
+                              "hash": "",
+                              "pathname": "/",
+                              "search": "?backPath=%2F",
+                            },
+                            "push": [Function],
+                            "replace": [Function],
+                          }
+                        }
+                        location={
+                          Object {
+                            "hash": "",
+                            "pathname": "/",
+                            "search": "?backPath=%2F",
+                          }
+                        }
+                        match={
+                          Object {
+                            "isExact": true,
+                            "params": Object {},
+                            "path": "/",
+                            "url": "/",
+                          }
+                        }
+                      >
+                        <Link
+                          className="btn btn-secondary"
+                          replace={false}
+                          to="/"
+                        >
+                          <a
+                            className="btn btn-secondary"
+                            href="/"
+                            onClick={[Function]}
+                          >
+                            Cancel
+                          </a>
+                        </Link>
+                      </BackLinkWrapper>
+                    </Route>
+                  </withRouter(BackLinkWrapper)>
+                </div>
+              </div>
+            </div>
+          </form>
         </div>
-        <div
-          className="form-group col col-sm-3 "
-        >
-          <FieldLabel
-            fieldId="sla_duration_hours"
-            text="Hours"
-          />
-          <reactTextMask
-            className="form-control"
-            id="sla_duration_hours"
-            mask={
-              Array [
-                /\\\\d/,
-                /\\\\d/,
-                ":",
-                /\\\\d/,
-                /\\\\d/,
-              ]
-            }
-            name="hours"
-            onBlur={[Function]}
-            onChange={[Function]}
-            placeholder="00:00"
-            value=""
-          />
-        </div>
-      </div>
-    </div>
-    <div
-      className="sheet-footer sheet-footer-btn-block-sm-down"
-    >
-      <div
-        className="btn-group"
-      >
-        <div
-          className="btn-group-item"
-        >
-          <button
-            className="btn btn-primary"
-            onClick={[Function]}
-            type="button"
-          >
-            Save
-          </button>
-        </div>
-        <div
-          className="btn-group-item"
-        >
-          <Link
-            className="btn btn-secondary"
-            query={
-              Object {
-                "processId": undefined,
-              }
-            }
-            text="Cancel"
-            to="sla-list"
-          />
-        </div>
-      </div>
-    </div>
-  </form>
-</div>
+      </SLAForm>
+    </Router>
+  </MemoryRouter>
+</MockRouter>
 `;
 
 exports[`Should display error when submitting the form with empty name 1`] = `
-<div>
-  <div
-    className="alert-container"
+<MockRouter>
+  <MemoryRouter
+    initialEntries={
+      Array [
+        Object {
+          "pathname": "/",
+          "search": "?backPath=%2F",
+        },
+        Object {
+          "pathname": "/processes",
+          "search": "?backPath=%2F",
+        },
+        Object {
+          "pathname": "/slas/1234",
+          "search": "?backPath=%2Fprocesses",
+        },
+      ]
+    }
+    keyLength={0}
   >
-    <div
-      className="alert alert-danger"
-      role="alert"
+    <Router
+      history={
+        Object {
+          "action": "POP",
+          "block": [Function],
+          "canGo": [Function],
+          "createHref": [Function],
+          "entries": Array [
+            Object {
+              "hash": "",
+              "pathname": "/",
+              "search": "?backPath=%2F",
+            },
+            Object {
+              "hash": "",
+              "pathname": "/processes",
+              "search": "?backPath=%2F",
+            },
+            Object {
+              "hash": "",
+              "pathname": "/slas/1234",
+              "search": "?backPath=%2Fprocesses",
+            },
+          ],
+          "go": [Function],
+          "goBack": [Function],
+          "goForward": [Function],
+          "index": 0,
+          "length": 3,
+          "listen": [Function],
+          "location": Object {
+            "hash": "",
+            "pathname": "/",
+            "search": "?backPath=%2F",
+          },
+          "push": [Function],
+          "replace": [Function],
+        }
+      }
     >
-      <span
-        className="alert-indicator"
-      >
-        <Icon
-          iconName="exclamation-full"
-        />
-      </span>
-      <strong
-        className="lead"
-      >
-        Error:
-      </strong>
-      <span>
-        Please fill in the required fields.
-      </span>
-    </div>
-  </div>
-  <form
-    className="sheet sheet-lg"
-    role="form"
-  >
-    <div
-      className="sheet-header"
-    >
-      <h2
-        className="sheet-title"
-      >
-        SLA Definition
-      </h2>
-    </div>
-    <div
-      className="sheet-section"
-    >
-      <div
-        className="row"
-      >
-        <div
-          className="form-group col col-sm-5 has-error"
-        >
-          <FieldLabel
-            fieldId="sla_name"
-            required={true}
-            text="Name"
-          />
-          <input
-            autoFocus={true}
-            className="form-control"
-            id="sla_name"
-            name="name"
-            onChange={[Function]}
-            type="text"
-            value=""
-          />
-          <FieldError
-            error="A name is required."
-          />
-        </div>
-        <div
-          className="form-group col col-sm-7"
-        >
-          <FieldLabel
-            fieldId="sla_description"
-            text="Description"
-          />
-          <input
-            className="form-control"
-            id="sla_description"
-            name="description"
-            onChange={[Function]}
-            type="text"
-            value=""
-          />
-        </div>
-      </div>
-      <h3
-        className="sheet-subtitle"
-      >
-        <FieldLabel
-          fieldId="sla_description"
-          required={true}
-          text="DURATION TIME"
-        />
-      </h3>
-      <div
-        className="sheet-text"
-      >
-        Define a duration time to be met. Enter at least one of the following fields.
-      </div>
-      <div
-        className="row "
-      >
-        <div
-          className="form-group col col-sm-5 "
-        >
-          <FieldLabel
-            fieldId="sla_duration_days"
-            text="Days"
-          />
-          <reactTextMask
-            className="form-control"
-            id="sla_duration_days"
-            mask={[Function]}
-            name="days"
-            onBlur={[Function]}
-            onChange={[Function]}
-            value={3}
-          />
-          <div
-            className="form-text"
+      <SLAForm>
+        <div>
+          <form
+            className="sheet sheet-lg"
+            role="form"
           >
-            Enter a whole number.
-          </div>
+            <div
+              className="sheet-header"
+            >
+              <h2
+                className="sheet-title"
+              >
+                SLA Definition
+              </h2>
+            </div>
+            <div
+              className="sheet-section"
+            >
+              <div
+                className="row"
+              >
+                <div
+                  className="form-group col col-sm-5 "
+                >
+                  <FieldLabel
+                    fieldId="sla_name"
+                    required={true}
+                    text="Name"
+                  >
+                    <label
+                      htmlFor="sla_name"
+                    >
+                      Name 
+                      <span
+                        className="reference-mark"
+                      >
+                        <Icon
+                          iconName="asterisk"
+                        >
+                          <svg
+                            className="lexicon-icon lexicon-icon-asterisk"
+                            focusable="false"
+                            role="presentation"
+                          >
+                            <use
+                              href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#asterisk"
+                            />
+                          </svg>
+                        </Icon>
+                      </span>
+                    </label>
+                  </FieldLabel>
+                  <input
+                    autoFocus={true}
+                    className="form-control"
+                    id="sla_name"
+                    name="name"
+                    onChange={[Function]}
+                    type="text"
+                    value=""
+                  />
+                </div>
+                <div
+                  className="form-group col col-sm-7"
+                >
+                  <FieldLabel
+                    fieldId="sla_description"
+                    text="Description"
+                  >
+                    <label
+                      htmlFor="sla_description"
+                    >
+                      Description 
+                    </label>
+                  </FieldLabel>
+                  <input
+                    className="form-control"
+                    id="sla_description"
+                    name="description"
+                    onChange={[Function]}
+                    type="text"
+                    value=""
+                  />
+                </div>
+              </div>
+              <h3
+                className="sheet-subtitle"
+              >
+                <FieldLabel
+                  fieldId="sla_description"
+                  required={true}
+                  text="DURATION TIME"
+                >
+                  <label
+                    htmlFor="sla_description"
+                  >
+                    DURATION TIME 
+                    <span
+                      className="reference-mark"
+                    >
+                      <Icon
+                        iconName="asterisk"
+                      >
+                        <svg
+                          className="lexicon-icon lexicon-icon-asterisk"
+                          focusable="false"
+                          role="presentation"
+                        >
+                          <use
+                            href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#asterisk"
+                          />
+                        </svg>
+                      </Icon>
+                    </span>
+                  </label>
+                </FieldLabel>
+              </h3>
+              <div
+                className="sheet-text"
+              >
+                Define a duration time to be met. Enter at least one of the following fields.
+              </div>
+              <div
+                className="row "
+              >
+                <div
+                  className="form-group col col-sm-5 "
+                >
+                  <FieldLabel
+                    fieldId="sla_duration_days"
+                    text="Days"
+                  >
+                    <label
+                      htmlFor="sla_duration_days"
+                    >
+                      Days 
+                    </label>
+                  </FieldLabel>
+                  <reactTextMask
+                    className="form-control"
+                    id="sla_duration_days"
+                    mask={[Function]}
+                    name="days"
+                    onBlur={[Function]}
+                    onChange={[Function]}
+                    value={null}
+                  >
+                    <input
+                      className="form-control"
+                      id="sla_duration_days"
+                      mask={[Function]}
+                      name="days"
+                      onBlur={[Function]}
+                      onChange={[Function]}
+                      type="text"
+                      value={null}
+                    />
+                  </reactTextMask>
+                  <div
+                    className="form-text"
+                  >
+                    Enter a whole number.
+                  </div>
+                </div>
+                <div
+                  className="form-group col col-sm-3 "
+                >
+                  <FieldLabel
+                    fieldId="sla_duration_hours"
+                    text="Hours"
+                  >
+                    <label
+                      htmlFor="sla_duration_hours"
+                    >
+                      Hours 
+                    </label>
+                  </FieldLabel>
+                  <reactTextMask
+                    className="form-control"
+                    id="sla_duration_hours"
+                    mask={
+                      Array [
+                        /\\\\d/,
+                        /\\\\d/,
+                        ":",
+                        /\\\\d/,
+                        /\\\\d/,
+                      ]
+                    }
+                    name="hours"
+                    onBlur={[Function]}
+                    onChange={[Function]}
+                    placeholder="00:00"
+                    value=""
+                  >
+                    <input
+                      className="form-control"
+                      id="sla_duration_hours"
+                      mask={
+                        Array [
+                          /\\\\d/,
+                          /\\\\d/,
+                          ":",
+                          /\\\\d/,
+                          /\\\\d/,
+                        ]
+                      }
+                      name="hours"
+                      onBlur={[Function]}
+                      onChange={[Function]}
+                      placeholder="00:00"
+                      type="text"
+                      value=""
+                    />
+                  </reactTextMask>
+                </div>
+              </div>
+            </div>
+            <div
+              className="sheet-footer sheet-footer-btn-block-sm-down"
+            >
+              <div
+                className="btn-group"
+              >
+                <div
+                  className="btn-group-item"
+                >
+                  <button
+                    className="btn btn-primary"
+                    onClick={[Function]}
+                    type="button"
+                  >
+                    Save
+                  </button>
+                </div>
+                <div
+                  className="btn-group-item"
+                >
+                  <withRouter(BackLinkWrapper)
+                    className="btn btn-secondary"
+                  >
+                    <Route>
+                      <BackLinkWrapper
+                        className="btn btn-secondary"
+                        history={
+                          Object {
+                            "action": "POP",
+                            "block": [Function],
+                            "canGo": [Function],
+                            "createHref": [Function],
+                            "entries": Array [
+                              Object {
+                                "hash": "",
+                                "pathname": "/",
+                                "search": "?backPath=%2F",
+                              },
+                              Object {
+                                "hash": "",
+                                "pathname": "/processes",
+                                "search": "?backPath=%2F",
+                              },
+                              Object {
+                                "hash": "",
+                                "pathname": "/slas/1234",
+                                "search": "?backPath=%2Fprocesses",
+                              },
+                            ],
+                            "go": [Function],
+                            "goBack": [Function],
+                            "goForward": [Function],
+                            "index": 0,
+                            "length": 3,
+                            "listen": [Function],
+                            "location": Object {
+                              "hash": "",
+                              "pathname": "/",
+                              "search": "?backPath=%2F",
+                            },
+                            "push": [Function],
+                            "replace": [Function],
+                          }
+                        }
+                        location={
+                          Object {
+                            "hash": "",
+                            "pathname": "/",
+                            "search": "?backPath=%2F",
+                          }
+                        }
+                        match={
+                          Object {
+                            "isExact": true,
+                            "params": Object {},
+                            "path": "/",
+                            "url": "/",
+                          }
+                        }
+                      >
+                        <Link
+                          className="btn btn-secondary"
+                          replace={false}
+                          to="/"
+                        >
+                          <a
+                            className="btn btn-secondary"
+                            href="/"
+                            onClick={[Function]}
+                          >
+                            Cancel
+                          </a>
+                        </Link>
+                      </BackLinkWrapper>
+                    </Route>
+                  </withRouter(BackLinkWrapper)>
+                </div>
+              </div>
+            </div>
+          </form>
         </div>
-        <div
-          className="form-group col col-sm-3 "
-        >
-          <FieldLabel
-            fieldId="sla_duration_hours"
-            text="Hours"
-          />
-          <reactTextMask
-            className="form-control"
-            id="sla_duration_hours"
-            mask={
-              Array [
-                /\\\\d/,
-                /\\\\d/,
-                ":",
-                /\\\\d/,
-                /\\\\d/,
-              ]
-            }
-            name="hours"
-            onBlur={[Function]}
-            onChange={[Function]}
-            placeholder="00:00"
-            value="10:50"
-          />
-        </div>
-      </div>
-    </div>
-    <div
-      className="sheet-footer sheet-footer-btn-block-sm-down"
-    >
-      <div
-        className="btn-group"
-      >
-        <div
-          className="btn-group-item"
-        >
-          <button
-            className="btn btn-primary"
-            onClick={[Function]}
-            type="button"
-          >
-            Save
-          </button>
-        </div>
-        <div
-          className="btn-group-item"
-        >
-          <Link
-            className="btn btn-secondary"
-            query={
-              Object {
-                "processId": undefined,
-              }
-            }
-            text="Cancel"
-            to="sla-list"
-          />
-        </div>
-      </div>
-    </div>
-  </form>
-</div>
+      </SLAForm>
+    </Router>
+  </MemoryRouter>
+</MockRouter>
 `;
 
 exports[`Should display error when submitting the form with invalid hours 1`] = `
-<div>
-  <div
-    className="alert-container"
+<MockRouter>
+  <MemoryRouter
+    initialEntries={
+      Array [
+        Object {
+          "pathname": "/",
+          "search": "?backPath=%2F",
+        },
+        Object {
+          "pathname": "/processes",
+          "search": "?backPath=%2F",
+        },
+        Object {
+          "pathname": "/slas/1234",
+          "search": "?backPath=%2Fprocesses",
+        },
+      ]
+    }
+    keyLength={0}
   >
-    <div
-      className="alert alert-danger"
-      role="alert"
+    <Router
+      history={
+        Object {
+          "action": "POP",
+          "block": [Function],
+          "canGo": [Function],
+          "createHref": [Function],
+          "entries": Array [
+            Object {
+              "hash": "",
+              "pathname": "/",
+              "search": "?backPath=%2F",
+            },
+            Object {
+              "hash": "",
+              "pathname": "/processes",
+              "search": "?backPath=%2F",
+            },
+            Object {
+              "hash": "",
+              "pathname": "/slas/1234",
+              "search": "?backPath=%2Fprocesses",
+            },
+          ],
+          "go": [Function],
+          "goBack": [Function],
+          "goForward": [Function],
+          "index": 0,
+          "length": 3,
+          "listen": [Function],
+          "location": Object {
+            "hash": "",
+            "pathname": "/",
+            "search": "?backPath=%2F",
+          },
+          "push": [Function],
+          "replace": [Function],
+        }
+      }
     >
-      <span
-        className="alert-indicator"
-      >
-        <Icon
-          iconName="exclamation-full"
-        />
-      </span>
-      <strong
-        className="lead"
-      >
-        Error:
-      </strong>
-      <span>
-        Please fill in the required fields.
-      </span>
-    </div>
-  </div>
-  <form
-    className="sheet sheet-lg"
-    role="form"
+      <SLAForm>
+        <div>
+          <form
+            className="sheet sheet-lg"
+            role="form"
+          >
+            <div
+              className="sheet-header"
+            >
+              <h2
+                className="sheet-title"
+              >
+                SLA Definition
+              </h2>
+            </div>
+            <div
+              className="sheet-section"
+            >
+              <div
+                className="row"
+              >
+                <div
+                  className="form-group col col-sm-5 "
+                >
+                  <FieldLabel
+                    fieldId="sla_name"
+                    required={true}
+                    text="Name"
+                  >
+                    <label
+                      htmlFor="sla_name"
+                    >
+                      Name 
+                      <span
+                        className="reference-mark"
+                      >
+                        <Icon
+                          iconName="asterisk"
+                        >
+                          <svg
+                            className="lexicon-icon lexicon-icon-asterisk"
+                            focusable="false"
+                            role="presentation"
+                          >
+                            <use
+                              href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#asterisk"
+                            />
+                          </svg>
+                        </Icon>
+                      </span>
+                    </label>
+                  </FieldLabel>
+                  <input
+                    autoFocus={true}
+                    className="form-control"
+                    id="sla_name"
+                    name="name"
+                    onChange={[Function]}
+                    type="text"
+                    value=""
+                  />
+                </div>
+                <div
+                  className="form-group col col-sm-7"
+                >
+                  <FieldLabel
+                    fieldId="sla_description"
+                    text="Description"
+                  >
+                    <label
+                      htmlFor="sla_description"
+                    >
+                      Description 
+                    </label>
+                  </FieldLabel>
+                  <input
+                    className="form-control"
+                    id="sla_description"
+                    name="description"
+                    onChange={[Function]}
+                    type="text"
+                    value=""
+                  />
+                </div>
+              </div>
+              <h3
+                className="sheet-subtitle"
+              >
+                <FieldLabel
+                  fieldId="sla_description"
+                  required={true}
+                  text="DURATION TIME"
+                >
+                  <label
+                    htmlFor="sla_description"
+                  >
+                    DURATION TIME 
+                    <span
+                      className="reference-mark"
+                    >
+                      <Icon
+                        iconName="asterisk"
+                      >
+                        <svg
+                          className="lexicon-icon lexicon-icon-asterisk"
+                          focusable="false"
+                          role="presentation"
+                        >
+                          <use
+                            href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#asterisk"
+                          />
+                        </svg>
+                      </Icon>
+                    </span>
+                  </label>
+                </FieldLabel>
+              </h3>
+              <div
+                className="sheet-text"
+              >
+                Define a duration time to be met. Enter at least one of the following fields.
+              </div>
+              <div
+                className="row "
+              >
+                <div
+                  className="form-group col col-sm-5 "
+                >
+                  <FieldLabel
+                    fieldId="sla_duration_days"
+                    text="Days"
+                  >
+                    <label
+                      htmlFor="sla_duration_days"
+                    >
+                      Days 
+                    </label>
+                  </FieldLabel>
+                  <reactTextMask
+                    className="form-control"
+                    id="sla_duration_days"
+                    mask={[Function]}
+                    name="days"
+                    onBlur={[Function]}
+                    onChange={[Function]}
+                    value={null}
+                  >
+                    <input
+                      className="form-control"
+                      id="sla_duration_days"
+                      mask={[Function]}
+                      name="days"
+                      onBlur={[Function]}
+                      onChange={[Function]}
+                      type="text"
+                      value={null}
+                    />
+                  </reactTextMask>
+                  <div
+                    className="form-text"
+                  >
+                    Enter a whole number.
+                  </div>
+                </div>
+                <div
+                  className="form-group col col-sm-3 "
+                >
+                  <FieldLabel
+                    fieldId="sla_duration_hours"
+                    text="Hours"
+                  >
+                    <label
+                      htmlFor="sla_duration_hours"
+                    >
+                      Hours 
+                    </label>
+                  </FieldLabel>
+                  <reactTextMask
+                    className="form-control"
+                    id="sla_duration_hours"
+                    mask={
+                      Array [
+                        /\\\\d/,
+                        /\\\\d/,
+                        ":",
+                        /\\\\d/,
+                        /\\\\d/,
+                      ]
+                    }
+                    name="hours"
+                    onBlur={[Function]}
+                    onChange={[Function]}
+                    placeholder="00:00"
+                    value=""
+                  >
+                    <input
+                      className="form-control"
+                      id="sla_duration_hours"
+                      mask={
+                        Array [
+                          /\\\\d/,
+                          /\\\\d/,
+                          ":",
+                          /\\\\d/,
+                          /\\\\d/,
+                        ]
+                      }
+                      name="hours"
+                      onBlur={[Function]}
+                      onChange={[Function]}
+                      placeholder="00:00"
+                      type="text"
+                      value=""
+                    />
+                  </reactTextMask>
+                </div>
+              </div>
+            </div>
+            <div
+              className="sheet-footer sheet-footer-btn-block-sm-down"
+            >
+              <div
+                className="btn-group"
+              >
+                <div
+                  className="btn-group-item"
+                >
+                  <button
+                    className="btn btn-primary"
+                    onClick={[Function]}
+                    type="button"
+                  >
+                    Save
+                  </button>
+                </div>
+                <div
+                  className="btn-group-item"
+                >
+                  <withRouter(BackLinkWrapper)
+                    className="btn btn-secondary"
+                  >
+                    <Route>
+                      <BackLinkWrapper
+                        className="btn btn-secondary"
+                        history={
+                          Object {
+                            "action": "POP",
+                            "block": [Function],
+                            "canGo": [Function],
+                            "createHref": [Function],
+                            "entries": Array [
+                              Object {
+                                "hash": "",
+                                "pathname": "/",
+                                "search": "?backPath=%2F",
+                              },
+                              Object {
+                                "hash": "",
+                                "pathname": "/processes",
+                                "search": "?backPath=%2F",
+                              },
+                              Object {
+                                "hash": "",
+                                "pathname": "/slas/1234",
+                                "search": "?backPath=%2Fprocesses",
+                              },
+                            ],
+                            "go": [Function],
+                            "goBack": [Function],
+                            "goForward": [Function],
+                            "index": 0,
+                            "length": 3,
+                            "listen": [Function],
+                            "location": Object {
+                              "hash": "",
+                              "pathname": "/",
+                              "search": "?backPath=%2F",
+                            },
+                            "push": [Function],
+                            "replace": [Function],
+                          }
+                        }
+                        location={
+                          Object {
+                            "hash": "",
+                            "pathname": "/",
+                            "search": "?backPath=%2F",
+                          }
+                        }
+                        match={
+                          Object {
+                            "isExact": true,
+                            "params": Object {},
+                            "path": "/",
+                            "url": "/",
+                          }
+                        }
+                      >
+                        <Link
+                          className="btn btn-secondary"
+                          replace={false}
+                          to="/"
+                        >
+                          <a
+                            className="btn btn-secondary"
+                            href="/"
+                            onClick={[Function]}
+                          >
+                            Cancel
+                          </a>
+                        </Link>
+                      </BackLinkWrapper>
+                    </Route>
+                  </withRouter(BackLinkWrapper)>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+      </SLAForm>
+    </Router>
+  </MemoryRouter>
+</MockRouter>
+`;
+
+exports[`Should display errors when duration was changed but keep empty 1`] = `
+<MockRouter>
+  <MemoryRouter
+    initialEntries={
+      Array [
+        Object {
+          "pathname": "/",
+          "search": "?backPath=%2F",
+        },
+        Object {
+          "pathname": "/processes",
+          "search": "?backPath=%2F",
+        },
+        Object {
+          "pathname": "/slas/1234",
+          "search": "?backPath=%2Fprocesses",
+        },
+      ]
+    }
+    keyLength={0}
   >
-    <div
-      className="sheet-header"
+    <Router
+      history={
+        Object {
+          "action": "POP",
+          "block": [Function],
+          "canGo": [Function],
+          "createHref": [Function],
+          "entries": Array [
+            Object {
+              "hash": "",
+              "pathname": "/",
+              "search": "?backPath=%2F",
+            },
+            Object {
+              "hash": "",
+              "pathname": "/processes",
+              "search": "?backPath=%2F",
+            },
+            Object {
+              "hash": "",
+              "pathname": "/slas/1234",
+              "search": "?backPath=%2Fprocesses",
+            },
+          ],
+          "go": [Function],
+          "goBack": [Function],
+          "goForward": [Function],
+          "index": 0,
+          "length": 3,
+          "listen": [Function],
+          "location": Object {
+            "hash": "",
+            "pathname": "/",
+            "search": "?backPath=%2F",
+          },
+          "push": [Function],
+          "replace": [Function],
+        }
+      }
     >
-      <h2
-        className="sheet-title"
-      >
-        SLA Definition
-      </h2>
-    </div>
-    <div
-      className="sheet-section"
-    >
-      <div
-        className="row"
-      >
-        <div
-          className="form-group col col-sm-5 "
-        >
-          <FieldLabel
-            fieldId="sla_name"
-            required={true}
-            text="Name"
-          />
-          <input
-            autoFocus={true}
-            className="form-control"
-            id="sla_name"
-            name="name"
-            onChange={[Function]}
-            type="text"
-            value="New SLA"
-          />
-        </div>
-        <div
-          className="form-group col col-sm-7"
-        >
-          <FieldLabel
-            fieldId="sla_description"
-            text="Description"
-          />
-          <input
-            className="form-control"
-            id="sla_description"
-            name="description"
-            onChange={[Function]}
-            type="text"
-            value=""
-          />
-        </div>
-      </div>
-      <h3
-        className="sheet-subtitle"
-      >
-        <FieldLabel
-          fieldId="sla_description"
-          required={true}
-          text="DURATION TIME"
-        />
-      </h3>
-      <div
-        className="sheet-text"
-      >
-        Define a duration time to be met. Enter at least one of the following fields.
-      </div>
-      <div
-        className="row "
-      >
-        <div
-          className="form-group col col-sm-5 "
-        >
-          <FieldLabel
-            fieldId="sla_duration_days"
-            text="Days"
-          />
-          <reactTextMask
-            className="form-control"
-            id="sla_duration_days"
-            mask={[Function]}
-            name="days"
-            onBlur={[Function]}
-            onChange={[Function]}
-            value={3}
-          />
-          <div
-            className="form-text"
+      <SLAForm>
+        <div>
+          <form
+            className="sheet sheet-lg"
+            role="form"
           >
-            Enter a whole number.
-          </div>
+            <div
+              className="sheet-header"
+            >
+              <h2
+                className="sheet-title"
+              >
+                SLA Definition
+              </h2>
+            </div>
+            <div
+              className="sheet-section"
+            >
+              <div
+                className="row"
+              >
+                <div
+                  className="form-group col col-sm-5 "
+                >
+                  <FieldLabel
+                    fieldId="sla_name"
+                    required={true}
+                    text="Name"
+                  >
+                    <label
+                      htmlFor="sla_name"
+                    >
+                      Name 
+                      <span
+                        className="reference-mark"
+                      >
+                        <Icon
+                          iconName="asterisk"
+                        >
+                          <svg
+                            className="lexicon-icon lexicon-icon-asterisk"
+                            focusable="false"
+                            role="presentation"
+                          >
+                            <use
+                              href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#asterisk"
+                            />
+                          </svg>
+                        </Icon>
+                      </span>
+                    </label>
+                  </FieldLabel>
+                  <input
+                    autoFocus={true}
+                    className="form-control"
+                    id="sla_name"
+                    name="name"
+                    onChange={[Function]}
+                    type="text"
+                    value=""
+                  />
+                </div>
+                <div
+                  className="form-group col col-sm-7"
+                >
+                  <FieldLabel
+                    fieldId="sla_description"
+                    text="Description"
+                  >
+                    <label
+                      htmlFor="sla_description"
+                    >
+                      Description 
+                    </label>
+                  </FieldLabel>
+                  <input
+                    className="form-control"
+                    id="sla_description"
+                    name="description"
+                    onChange={[Function]}
+                    type="text"
+                    value=""
+                  />
+                </div>
+              </div>
+              <h3
+                className="sheet-subtitle"
+              >
+                <FieldLabel
+                  fieldId="sla_description"
+                  required={true}
+                  text="DURATION TIME"
+                >
+                  <label
+                    htmlFor="sla_description"
+                  >
+                    DURATION TIME 
+                    <span
+                      className="reference-mark"
+                    >
+                      <Icon
+                        iconName="asterisk"
+                      >
+                        <svg
+                          className="lexicon-icon lexicon-icon-asterisk"
+                          focusable="false"
+                          role="presentation"
+                        >
+                          <use
+                            href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#asterisk"
+                          />
+                        </svg>
+                      </Icon>
+                    </span>
+                  </label>
+                </FieldLabel>
+              </h3>
+              <div
+                className="sheet-text"
+              >
+                Define a duration time to be met. Enter at least one of the following fields.
+              </div>
+              <div
+                className="row "
+              >
+                <div
+                  className="form-group col col-sm-5 "
+                >
+                  <FieldLabel
+                    fieldId="sla_duration_days"
+                    text="Days"
+                  >
+                    <label
+                      htmlFor="sla_duration_days"
+                    >
+                      Days 
+                    </label>
+                  </FieldLabel>
+                  <reactTextMask
+                    className="form-control"
+                    id="sla_duration_days"
+                    mask={[Function]}
+                    name="days"
+                    onBlur={[Function]}
+                    onChange={[Function]}
+                    value={null}
+                  >
+                    <input
+                      className="form-control"
+                      id="sla_duration_days"
+                      mask={[Function]}
+                      name="days"
+                      onBlur={[Function]}
+                      onChange={[Function]}
+                      type="text"
+                      value={null}
+                    />
+                  </reactTextMask>
+                  <div
+                    className="form-text"
+                  >
+                    Enter a whole number.
+                  </div>
+                </div>
+                <div
+                  className="form-group col col-sm-3 "
+                >
+                  <FieldLabel
+                    fieldId="sla_duration_hours"
+                    text="Hours"
+                  >
+                    <label
+                      htmlFor="sla_duration_hours"
+                    >
+                      Hours 
+                    </label>
+                  </FieldLabel>
+                  <reactTextMask
+                    className="form-control"
+                    id="sla_duration_hours"
+                    mask={
+                      Array [
+                        /\\\\d/,
+                        /\\\\d/,
+                        ":",
+                        /\\\\d/,
+                        /\\\\d/,
+                      ]
+                    }
+                    name="hours"
+                    onBlur={[Function]}
+                    onChange={[Function]}
+                    placeholder="00:00"
+                    value=""
+                  >
+                    <input
+                      className="form-control"
+                      id="sla_duration_hours"
+                      mask={
+                        Array [
+                          /\\\\d/,
+                          /\\\\d/,
+                          ":",
+                          /\\\\d/,
+                          /\\\\d/,
+                        ]
+                      }
+                      name="hours"
+                      onBlur={[Function]}
+                      onChange={[Function]}
+                      placeholder="00:00"
+                      type="text"
+                      value=""
+                    />
+                  </reactTextMask>
+                </div>
+              </div>
+            </div>
+            <div
+              className="sheet-footer sheet-footer-btn-block-sm-down"
+            >
+              <div
+                className="btn-group"
+              >
+                <div
+                  className="btn-group-item"
+                >
+                  <button
+                    className="btn btn-primary"
+                    onClick={[Function]}
+                    type="button"
+                  >
+                    Save
+                  </button>
+                </div>
+                <div
+                  className="btn-group-item"
+                >
+                  <withRouter(BackLinkWrapper)
+                    className="btn btn-secondary"
+                  >
+                    <Route>
+                      <BackLinkWrapper
+                        className="btn btn-secondary"
+                        history={
+                          Object {
+                            "action": "POP",
+                            "block": [Function],
+                            "canGo": [Function],
+                            "createHref": [Function],
+                            "entries": Array [
+                              Object {
+                                "hash": "",
+                                "pathname": "/",
+                                "search": "?backPath=%2F",
+                              },
+                              Object {
+                                "hash": "",
+                                "pathname": "/processes",
+                                "search": "?backPath=%2F",
+                              },
+                              Object {
+                                "hash": "",
+                                "pathname": "/slas/1234",
+                                "search": "?backPath=%2Fprocesses",
+                              },
+                            ],
+                            "go": [Function],
+                            "goBack": [Function],
+                            "goForward": [Function],
+                            "index": 0,
+                            "length": 3,
+                            "listen": [Function],
+                            "location": Object {
+                              "hash": "",
+                              "pathname": "/",
+                              "search": "?backPath=%2F",
+                            },
+                            "push": [Function],
+                            "replace": [Function],
+                          }
+                        }
+                        location={
+                          Object {
+                            "hash": "",
+                            "pathname": "/",
+                            "search": "?backPath=%2F",
+                          }
+                        }
+                        match={
+                          Object {
+                            "isExact": true,
+                            "params": Object {},
+                            "path": "/",
+                            "url": "/",
+                          }
+                        }
+                      >
+                        <Link
+                          className="btn btn-secondary"
+                          replace={false}
+                          to="/"
+                        >
+                          <a
+                            className="btn btn-secondary"
+                            href="/"
+                            onClick={[Function]}
+                          >
+                            Cancel
+                          </a>
+                        </Link>
+                      </BackLinkWrapper>
+                    </Route>
+                  </withRouter(BackLinkWrapper)>
+                </div>
+              </div>
+            </div>
+          </form>
         </div>
-        <div
-          className="form-group col col-sm-3 has-error"
-        >
-          <FieldLabel
-            fieldId="sla_duration_hours"
-            text="Hours"
-          />
-          <reactTextMask
-            className="form-control"
-            id="sla_duration_hours"
-            mask={
-              Array [
-                /\\\\d/,
-                /\\\\d/,
-                ":",
-                /\\\\d/,
-                /\\\\d/,
-              ]
-            }
-            name="hours"
-            onBlur={[Function]}
-            onChange={[Function]}
-            placeholder="00:00"
-            value="99:99"
-          />
-          <FieldError
-            error="Hours must be between 00:00 and 24:00."
-          />
-        </div>
-      </div>
-    </div>
-    <div
-      className="sheet-footer sheet-footer-btn-block-sm-down"
-    >
-      <div
-        className="btn-group"
-      >
-        <div
-          className="btn-group-item"
-        >
-          <button
-            className="btn btn-primary"
-            onClick={[Function]}
-            type="button"
-          >
-            Save
-          </button>
-        </div>
-        <div
-          className="btn-group-item"
-        >
-          <Link
-            className="btn btn-secondary"
-            query={
-              Object {
-                "processId": undefined,
-              }
-            }
-            text="Cancel"
-            to="sla-list"
-          />
-        </div>
-      </div>
-    </div>
-  </form>
-</div>
+      </SLAForm>
+    </Router>
+  </MemoryRouter>
+</MockRouter>
 `;
 
 exports[`Should display errors when input blur with invalid values 1`] = `
-<div>
-  <form
-    className="sheet sheet-lg"
-    role="form"
+<MockRouter>
+  <MemoryRouter
+    initialEntries={
+      Array [
+        Object {
+          "pathname": "/",
+          "search": "?backPath=%2F",
+        },
+        Object {
+          "pathname": "/processes",
+          "search": "?backPath=%2F",
+        },
+        Object {
+          "pathname": "/slas/1234",
+          "search": "?backPath=%2Fprocesses",
+        },
+      ]
+    }
+    keyLength={0}
   >
-    <div
-      className="sheet-header"
+    <Router
+      history={
+        Object {
+          "action": "POP",
+          "block": [Function],
+          "canGo": [Function],
+          "createHref": [Function],
+          "entries": Array [
+            Object {
+              "hash": "",
+              "pathname": "/",
+              "search": "?backPath=%2F",
+            },
+            Object {
+              "hash": "",
+              "pathname": "/processes",
+              "search": "?backPath=%2F",
+            },
+            Object {
+              "hash": "",
+              "pathname": "/slas/1234",
+              "search": "?backPath=%2Fprocesses",
+            },
+          ],
+          "go": [Function],
+          "goBack": [Function],
+          "goForward": [Function],
+          "index": 0,
+          "length": 3,
+          "listen": [Function],
+          "location": Object {
+            "hash": "",
+            "pathname": "/",
+            "search": "?backPath=%2F",
+          },
+          "push": [Function],
+          "replace": [Function],
+        }
+      }
     >
-      <h2
-        className="sheet-title"
-      >
-        SLA Definition
-      </h2>
-    </div>
-    <div
-      className="sheet-section"
-    >
-      <div
-        className="row"
-      >
-        <div
-          className="form-group col col-sm-5 "
-        >
-          <FieldLabel
-            fieldId="sla_name"
-            required={true}
-            text="Name"
-          />
-          <input
-            autoFocus={true}
-            className="form-control"
-            id="sla_name"
-            name="name"
-            onChange={[Function]}
-            type="text"
-            value=""
-          />
-        </div>
-        <div
-          className="form-group col col-sm-7"
-        >
-          <FieldLabel
-            fieldId="sla_description"
-            text="Description"
-          />
-          <input
-            className="form-control"
-            id="sla_description"
-            name="description"
-            onChange={[Function]}
-            type="text"
-            value=""
-          />
-        </div>
-      </div>
-      <h3
-        className="sheet-subtitle"
-      >
-        <FieldLabel
-          fieldId="sla_description"
-          required={true}
-          text="DURATION TIME"
-        />
-      </h3>
-      <div
-        className="sheet-text"
-      >
-        Define a duration time to be met. Enter at least one of the following fields.
-      </div>
-      <div
-        className="row "
-      >
-        <div
-          className="form-group col col-sm-5 has-error"
-        >
-          <FieldLabel
-            fieldId="sla_duration_days"
-            text="Days"
-          />
-          <reactTextMask
-            className="form-control"
-            id="sla_duration_days"
-            mask={[Function]}
-            name="days"
-            onBlur={[Function]}
-            onChange={[Function]}
-            value="0"
-          />
-          <div
-            className="form-text"
+      <SLAForm>
+        <div>
+          <form
+            className="sheet sheet-lg"
+            role="form"
           >
-            Enter a whole number.
-          </div>
-          <FieldError
-            error="Value must be an integer above 0."
-          />
+            <div
+              className="sheet-header"
+            >
+              <h2
+                className="sheet-title"
+              >
+                SLA Definition
+              </h2>
+            </div>
+            <div
+              className="sheet-section"
+            >
+              <div
+                className="row"
+              >
+                <div
+                  className="form-group col col-sm-5 "
+                >
+                  <FieldLabel
+                    fieldId="sla_name"
+                    required={true}
+                    text="Name"
+                  >
+                    <label
+                      htmlFor="sla_name"
+                    >
+                      Name 
+                      <span
+                        className="reference-mark"
+                      >
+                        <Icon
+                          iconName="asterisk"
+                        >
+                          <svg
+                            className="lexicon-icon lexicon-icon-asterisk"
+                            focusable="false"
+                            role="presentation"
+                          >
+                            <use
+                              href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#asterisk"
+                            />
+                          </svg>
+                        </Icon>
+                      </span>
+                    </label>
+                  </FieldLabel>
+                  <input
+                    autoFocus={true}
+                    className="form-control"
+                    id="sla_name"
+                    name="name"
+                    onChange={[Function]}
+                    type="text"
+                    value=""
+                  />
+                </div>
+                <div
+                  className="form-group col col-sm-7"
+                >
+                  <FieldLabel
+                    fieldId="sla_description"
+                    text="Description"
+                  >
+                    <label
+                      htmlFor="sla_description"
+                    >
+                      Description 
+                    </label>
+                  </FieldLabel>
+                  <input
+                    className="form-control"
+                    id="sla_description"
+                    name="description"
+                    onChange={[Function]}
+                    type="text"
+                    value=""
+                  />
+                </div>
+              </div>
+              <h3
+                className="sheet-subtitle"
+              >
+                <FieldLabel
+                  fieldId="sla_description"
+                  required={true}
+                  text="DURATION TIME"
+                >
+                  <label
+                    htmlFor="sla_description"
+                  >
+                    DURATION TIME 
+                    <span
+                      className="reference-mark"
+                    >
+                      <Icon
+                        iconName="asterisk"
+                      >
+                        <svg
+                          className="lexicon-icon lexicon-icon-asterisk"
+                          focusable="false"
+                          role="presentation"
+                        >
+                          <use
+                            href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#asterisk"
+                          />
+                        </svg>
+                      </Icon>
+                    </span>
+                  </label>
+                </FieldLabel>
+              </h3>
+              <div
+                className="sheet-text"
+              >
+                Define a duration time to be met. Enter at least one of the following fields.
+              </div>
+              <div
+                className="row "
+              >
+                <div
+                  className="form-group col col-sm-5 "
+                >
+                  <FieldLabel
+                    fieldId="sla_duration_days"
+                    text="Days"
+                  >
+                    <label
+                      htmlFor="sla_duration_days"
+                    >
+                      Days 
+                    </label>
+                  </FieldLabel>
+                  <reactTextMask
+                    className="form-control"
+                    id="sla_duration_days"
+                    mask={[Function]}
+                    name="days"
+                    onBlur={[Function]}
+                    onChange={[Function]}
+                    value={null}
+                  >
+                    <input
+                      className="form-control"
+                      id="sla_duration_days"
+                      mask={[Function]}
+                      name="days"
+                      onBlur={[Function]}
+                      onChange={[Function]}
+                      type="text"
+                      value={null}
+                    />
+                  </reactTextMask>
+                  <div
+                    className="form-text"
+                  >
+                    Enter a whole number.
+                  </div>
+                </div>
+                <div
+                  className="form-group col col-sm-3 "
+                >
+                  <FieldLabel
+                    fieldId="sla_duration_hours"
+                    text="Hours"
+                  >
+                    <label
+                      htmlFor="sla_duration_hours"
+                    >
+                      Hours 
+                    </label>
+                  </FieldLabel>
+                  <reactTextMask
+                    className="form-control"
+                    id="sla_duration_hours"
+                    mask={
+                      Array [
+                        /\\\\d/,
+                        /\\\\d/,
+                        ":",
+                        /\\\\d/,
+                        /\\\\d/,
+                      ]
+                    }
+                    name="hours"
+                    onBlur={[Function]}
+                    onChange={[Function]}
+                    placeholder="00:00"
+                    value=""
+                  >
+                    <input
+                      className="form-control"
+                      id="sla_duration_hours"
+                      mask={
+                        Array [
+                          /\\\\d/,
+                          /\\\\d/,
+                          ":",
+                          /\\\\d/,
+                          /\\\\d/,
+                        ]
+                      }
+                      name="hours"
+                      onBlur={[Function]}
+                      onChange={[Function]}
+                      placeholder="00:00"
+                      type="text"
+                      value=""
+                    />
+                  </reactTextMask>
+                </div>
+              </div>
+            </div>
+            <div
+              className="sheet-footer sheet-footer-btn-block-sm-down"
+            >
+              <div
+                className="btn-group"
+              >
+                <div
+                  className="btn-group-item"
+                >
+                  <button
+                    className="btn btn-primary"
+                    onClick={[Function]}
+                    type="button"
+                  >
+                    Save
+                  </button>
+                </div>
+                <div
+                  className="btn-group-item"
+                >
+                  <withRouter(BackLinkWrapper)
+                    className="btn btn-secondary"
+                  >
+                    <Route>
+                      <BackLinkWrapper
+                        className="btn btn-secondary"
+                        history={
+                          Object {
+                            "action": "POP",
+                            "block": [Function],
+                            "canGo": [Function],
+                            "createHref": [Function],
+                            "entries": Array [
+                              Object {
+                                "hash": "",
+                                "pathname": "/",
+                                "search": "?backPath=%2F",
+                              },
+                              Object {
+                                "hash": "",
+                                "pathname": "/processes",
+                                "search": "?backPath=%2F",
+                              },
+                              Object {
+                                "hash": "",
+                                "pathname": "/slas/1234",
+                                "search": "?backPath=%2Fprocesses",
+                              },
+                            ],
+                            "go": [Function],
+                            "goBack": [Function],
+                            "goForward": [Function],
+                            "index": 0,
+                            "length": 3,
+                            "listen": [Function],
+                            "location": Object {
+                              "hash": "",
+                              "pathname": "/",
+                              "search": "?backPath=%2F",
+                            },
+                            "push": [Function],
+                            "replace": [Function],
+                          }
+                        }
+                        location={
+                          Object {
+                            "hash": "",
+                            "pathname": "/",
+                            "search": "?backPath=%2F",
+                          }
+                        }
+                        match={
+                          Object {
+                            "isExact": true,
+                            "params": Object {},
+                            "path": "/",
+                            "url": "/",
+                          }
+                        }
+                      >
+                        <Link
+                          className="btn btn-secondary"
+                          replace={false}
+                          to="/"
+                        >
+                          <a
+                            className="btn btn-secondary"
+                            href="/"
+                            onClick={[Function]}
+                          >
+                            Cancel
+                          </a>
+                        </Link>
+                      </BackLinkWrapper>
+                    </Route>
+                  </withRouter(BackLinkWrapper)>
+                </div>
+              </div>
+            </div>
+          </form>
         </div>
-        <div
-          className="form-group col col-sm-3 has-error"
-        >
-          <FieldLabel
-            fieldId="sla_duration_hours"
-            text="Hours"
-          />
-          <reactTextMask
-            className="form-control"
-            id="sla_duration_hours"
-            mask={
-              Array [
-                /\\\\d/,
-                /\\\\d/,
-                ":",
-                /\\\\d/,
-                /\\\\d/,
-              ]
-            }
-            name="hours"
-            onBlur={[Function]}
-            onChange={[Function]}
-            placeholder="00:00"
-            value="99:99"
-          />
-          <FieldError
-            error="Hours must be between 00:00 and 24:00."
-          />
-        </div>
-      </div>
-    </div>
-    <div
-      className="sheet-footer sheet-footer-btn-block-sm-down"
-    >
-      <div
-        className="btn-group"
-      >
-        <div
-          className="btn-group-item"
-        >
-          <button
-            className="btn btn-primary"
-            onClick={[Function]}
-            type="button"
-          >
-            Save
-          </button>
-        </div>
-        <div
-          className="btn-group-item"
-        >
-          <Link
-            className="btn btn-secondary"
-            query={
-              Object {
-                "processId": undefined,
-              }
-            }
-            text="Cancel"
-            to="sla-list"
-          />
-        </div>
-      </div>
-    </div>
-  </form>
-</div>
+      </SLAForm>
+    </Router>
+  </MemoryRouter>
+</MockRouter>
 `;
 
 exports[`Should display errors when submitting the form with empty values 1`] = `
-<div>
-  <div
-    className="alert-container"
+<MockRouter>
+  <MemoryRouter
+    initialEntries={
+      Array [
+        Object {
+          "pathname": "/",
+          "search": "?backPath=%2F",
+        },
+        Object {
+          "pathname": "/processes",
+          "search": "?backPath=%2F",
+        },
+        Object {
+          "pathname": "/slas/1234",
+          "search": "?backPath=%2Fprocesses",
+        },
+      ]
+    }
+    keyLength={0}
   >
-    <div
-      className="alert alert-danger"
-      role="alert"
+    <Router
+      history={
+        Object {
+          "action": "POP",
+          "block": [Function],
+          "canGo": [Function],
+          "createHref": [Function],
+          "entries": Array [
+            Object {
+              "hash": "",
+              "pathname": "/",
+              "search": "?backPath=%2F",
+            },
+            Object {
+              "hash": "",
+              "pathname": "/processes",
+              "search": "?backPath=%2F",
+            },
+            Object {
+              "hash": "",
+              "pathname": "/slas/1234",
+              "search": "?backPath=%2Fprocesses",
+            },
+          ],
+          "go": [Function],
+          "goBack": [Function],
+          "goForward": [Function],
+          "index": 0,
+          "length": 3,
+          "listen": [Function],
+          "location": Object {
+            "hash": "",
+            "pathname": "/",
+            "search": "?backPath=%2F",
+          },
+          "push": [Function],
+          "replace": [Function],
+        }
+      }
     >
-      <span
-        className="alert-indicator"
-      >
-        <Icon
-          iconName="exclamation-full"
-        />
-      </span>
-      <strong
-        className="lead"
-      >
-        Error:
-      </strong>
-      <span>
-        Please fill in the required fields.
-      </span>
-    </div>
-  </div>
-  <form
-    className="sheet sheet-lg"
-    role="form"
-  >
-    <div
-      className="sheet-header"
-    >
-      <h2
-        className="sheet-title"
-      >
-        SLA Definition
-      </h2>
-    </div>
-    <div
-      className="sheet-section"
-    >
-      <div
-        className="row"
-      >
-        <div
-          className="form-group col col-sm-5 has-error"
-        >
-          <FieldLabel
-            fieldId="sla_name"
-            required={true}
-            text="Name"
-          />
-          <input
-            autoFocus={true}
-            className="form-control"
-            id="sla_name"
-            name="name"
-            onChange={[Function]}
-            type="text"
-            value=""
-          />
-          <FieldError
-            error="A name is required."
-          />
-        </div>
-        <div
-          className="form-group col col-sm-7"
-        >
-          <FieldLabel
-            fieldId="sla_description"
-            text="Description"
-          />
-          <input
-            className="form-control"
-            id="sla_description"
-            name="description"
-            onChange={[Function]}
-            type="text"
-            value=""
-          />
-        </div>
-      </div>
-      <h3
-        className="sheet-subtitle"
-      >
-        <FieldLabel
-          fieldId="sla_description"
-          required={true}
-          text="DURATION TIME"
-        />
-      </h3>
-      <div
-        className="sheet-text"
-      >
-        Define a duration time to be met. Enter at least one of the following fields.
-      </div>
-      <div
-        className="row has-error"
-      >
-        <div
-          className="form-group col col-sm-5 has-error"
-        >
-          <FieldLabel
-            fieldId="sla_duration_days"
-            text="Days"
-          />
-          <reactTextMask
-            className="form-control"
-            id="sla_duration_days"
-            mask={[Function]}
-            name="days"
-            onBlur={[Function]}
-            onChange={[Function]}
-            value={null}
-          />
-          <div
-            className="form-text"
+      <SLAForm>
+        <div>
+          <form
+            className="sheet sheet-lg"
+            role="form"
           >
-            Enter a whole number.
-          </div>
-          <FieldError
-            error="Value must be an integer above 0."
-          />
+            <div
+              className="sheet-header"
+            >
+              <h2
+                className="sheet-title"
+              >
+                SLA Definition
+              </h2>
+            </div>
+            <div
+              className="sheet-section"
+            >
+              <div
+                className="row"
+              >
+                <div
+                  className="form-group col col-sm-5 "
+                >
+                  <FieldLabel
+                    fieldId="sla_name"
+                    required={true}
+                    text="Name"
+                  >
+                    <label
+                      htmlFor="sla_name"
+                    >
+                      Name 
+                      <span
+                        className="reference-mark"
+                      >
+                        <Icon
+                          iconName="asterisk"
+                        >
+                          <svg
+                            className="lexicon-icon lexicon-icon-asterisk"
+                            focusable="false"
+                            role="presentation"
+                          >
+                            <use
+                              href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#asterisk"
+                            />
+                          </svg>
+                        </Icon>
+                      </span>
+                    </label>
+                  </FieldLabel>
+                  <input
+                    autoFocus={true}
+                    className="form-control"
+                    id="sla_name"
+                    name="name"
+                    onChange={[Function]}
+                    type="text"
+                    value=""
+                  />
+                </div>
+                <div
+                  className="form-group col col-sm-7"
+                >
+                  <FieldLabel
+                    fieldId="sla_description"
+                    text="Description"
+                  >
+                    <label
+                      htmlFor="sla_description"
+                    >
+                      Description 
+                    </label>
+                  </FieldLabel>
+                  <input
+                    className="form-control"
+                    id="sla_description"
+                    name="description"
+                    onChange={[Function]}
+                    type="text"
+                    value=""
+                  />
+                </div>
+              </div>
+              <h3
+                className="sheet-subtitle"
+              >
+                <FieldLabel
+                  fieldId="sla_description"
+                  required={true}
+                  text="DURATION TIME"
+                >
+                  <label
+                    htmlFor="sla_description"
+                  >
+                    DURATION TIME 
+                    <span
+                      className="reference-mark"
+                    >
+                      <Icon
+                        iconName="asterisk"
+                      >
+                        <svg
+                          className="lexicon-icon lexicon-icon-asterisk"
+                          focusable="false"
+                          role="presentation"
+                        >
+                          <use
+                            href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#asterisk"
+                          />
+                        </svg>
+                      </Icon>
+                    </span>
+                  </label>
+                </FieldLabel>
+              </h3>
+              <div
+                className="sheet-text"
+              >
+                Define a duration time to be met. Enter at least one of the following fields.
+              </div>
+              <div
+                className="row "
+              >
+                <div
+                  className="form-group col col-sm-5 "
+                >
+                  <FieldLabel
+                    fieldId="sla_duration_days"
+                    text="Days"
+                  >
+                    <label
+                      htmlFor="sla_duration_days"
+                    >
+                      Days 
+                    </label>
+                  </FieldLabel>
+                  <reactTextMask
+                    className="form-control"
+                    id="sla_duration_days"
+                    mask={[Function]}
+                    name="days"
+                    onBlur={[Function]}
+                    onChange={[Function]}
+                    value={null}
+                  >
+                    <input
+                      className="form-control"
+                      id="sla_duration_days"
+                      mask={[Function]}
+                      name="days"
+                      onBlur={[Function]}
+                      onChange={[Function]}
+                      type="text"
+                      value={null}
+                    />
+                  </reactTextMask>
+                  <div
+                    className="form-text"
+                  >
+                    Enter a whole number.
+                  </div>
+                </div>
+                <div
+                  className="form-group col col-sm-3 "
+                >
+                  <FieldLabel
+                    fieldId="sla_duration_hours"
+                    text="Hours"
+                  >
+                    <label
+                      htmlFor="sla_duration_hours"
+                    >
+                      Hours 
+                    </label>
+                  </FieldLabel>
+                  <reactTextMask
+                    className="form-control"
+                    id="sla_duration_hours"
+                    mask={
+                      Array [
+                        /\\\\d/,
+                        /\\\\d/,
+                        ":",
+                        /\\\\d/,
+                        /\\\\d/,
+                      ]
+                    }
+                    name="hours"
+                    onBlur={[Function]}
+                    onChange={[Function]}
+                    placeholder="00:00"
+                    value=""
+                  >
+                    <input
+                      className="form-control"
+                      id="sla_duration_hours"
+                      mask={
+                        Array [
+                          /\\\\d/,
+                          /\\\\d/,
+                          ":",
+                          /\\\\d/,
+                          /\\\\d/,
+                        ]
+                      }
+                      name="hours"
+                      onBlur={[Function]}
+                      onChange={[Function]}
+                      placeholder="00:00"
+                      type="text"
+                      value=""
+                    />
+                  </reactTextMask>
+                </div>
+              </div>
+            </div>
+            <div
+              className="sheet-footer sheet-footer-btn-block-sm-down"
+            >
+              <div
+                className="btn-group"
+              >
+                <div
+                  className="btn-group-item"
+                >
+                  <button
+                    className="btn btn-primary"
+                    onClick={[Function]}
+                    type="button"
+                  >
+                    Save
+                  </button>
+                </div>
+                <div
+                  className="btn-group-item"
+                >
+                  <withRouter(BackLinkWrapper)
+                    className="btn btn-secondary"
+                  >
+                    <Route>
+                      <BackLinkWrapper
+                        className="btn btn-secondary"
+                        history={
+                          Object {
+                            "action": "POP",
+                            "block": [Function],
+                            "canGo": [Function],
+                            "createHref": [Function],
+                            "entries": Array [
+                              Object {
+                                "hash": "",
+                                "pathname": "/",
+                                "search": "?backPath=%2F",
+                              },
+                              Object {
+                                "hash": "",
+                                "pathname": "/processes",
+                                "search": "?backPath=%2F",
+                              },
+                              Object {
+                                "hash": "",
+                                "pathname": "/slas/1234",
+                                "search": "?backPath=%2Fprocesses",
+                              },
+                            ],
+                            "go": [Function],
+                            "goBack": [Function],
+                            "goForward": [Function],
+                            "index": 0,
+                            "length": 3,
+                            "listen": [Function],
+                            "location": Object {
+                              "hash": "",
+                              "pathname": "/",
+                              "search": "?backPath=%2F",
+                            },
+                            "push": [Function],
+                            "replace": [Function],
+                          }
+                        }
+                        location={
+                          Object {
+                            "hash": "",
+                            "pathname": "/",
+                            "search": "?backPath=%2F",
+                          }
+                        }
+                        match={
+                          Object {
+                            "isExact": true,
+                            "params": Object {},
+                            "path": "/",
+                            "url": "/",
+                          }
+                        }
+                      >
+                        <Link
+                          className="btn btn-secondary"
+                          replace={false}
+                          to="/"
+                        >
+                          <a
+                            className="btn btn-secondary"
+                            href="/"
+                            onClick={[Function]}
+                          >
+                            Cancel
+                          </a>
+                        </Link>
+                      </BackLinkWrapper>
+                    </Route>
+                  </withRouter(BackLinkWrapper)>
+                </div>
+              </div>
+            </div>
+          </form>
         </div>
-        <div
-          className="form-group col col-sm-3 "
-        >
-          <FieldLabel
-            fieldId="sla_duration_hours"
-            text="Hours"
-          />
-          <reactTextMask
-            className="form-control"
-            id="sla_duration_hours"
-            mask={
-              Array [
-                /\\\\d/,
-                /\\\\d/,
-                ":",
-                /\\\\d/,
-                /\\\\d/,
-              ]
-            }
-            name="hours"
-            onBlur={[Function]}
-            onChange={[Function]}
-            placeholder="00:00"
-            value=""
-          />
-        </div>
-      </div>
-    </div>
-    <div
-      className="sheet-footer sheet-footer-btn-block-sm-down"
-    >
-      <div
-        className="btn-group"
-      >
-        <div
-          className="btn-group-item"
-        >
-          <button
-            className="btn btn-primary"
-            onClick={[Function]}
-            type="button"
-          >
-            Save
-          </button>
-        </div>
-        <div
-          className="btn-group-item"
-        >
-          <Link
-            className="btn btn-secondary"
-            query={
-              Object {
-                "processId": undefined,
-              }
-            }
-            text="Cancel"
-            to="sla-list"
-          />
-        </div>
-      </div>
-    </div>
-  </form>
-</div>
+      </SLAForm>
+    </Router>
+  </MemoryRouter>
+</MockRouter>
 `;
 
 exports[`Should render component 1`] = `
@@ -1253,8 +2894,8 @@ exports[`Should render component 1`] = `
         >
           <a
             className="btn btn-secondary"
-            data-senna-off={true}
-            href="#processId=undefined&_path=sla-list"
+            href="/"
+            onClick={[Function]}
           >
             Cancel
           </a>
@@ -1265,7 +2906,7 @@ exports[`Should render component 1`] = `
 </div>
 `;
 
-exports[`Should submit the form with valid values 1`] = `
+exports[`Should render component in edit mode 1`] = `
 <div>
   <form
     className="sheet sheet-lg"
@@ -1289,11 +2930,24 @@ exports[`Should submit the form with valid values 1`] = `
         <div
           className="form-group col col-sm-5 "
         >
-          <FieldLabel
-            fieldId="sla_name"
-            required={true}
-            text="Name"
-          />
+          <label
+            htmlFor="sla_name"
+          >
+            Name 
+            <span
+              className="reference-mark"
+            >
+              <svg
+                className="lexicon-icon lexicon-icon-asterisk"
+                focusable="false"
+                role="presentation"
+              >
+                <use
+                  href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#asterisk"
+                />
+              </svg>
+            </span>
+          </label>
           <input
             autoFocus={true}
             className="form-control"
@@ -1301,16 +2955,17 @@ exports[`Should submit the form with valid values 1`] = `
             name="name"
             onChange={[Function]}
             type="text"
-            value="New SLA"
+            value=""
           />
         </div>
         <div
           className="form-group col col-sm-7"
         >
-          <FieldLabel
-            fieldId="sla_description"
-            text="Description"
-          />
+          <label
+            htmlFor="sla_description"
+          >
+            Description 
+          </label>
           <input
             className="form-control"
             id="sla_description"
@@ -1324,11 +2979,24 @@ exports[`Should submit the form with valid values 1`] = `
       <h3
         className="sheet-subtitle"
       >
-        <FieldLabel
-          fieldId="sla_description"
-          required={true}
-          text="DURATION TIME"
-        />
+        <label
+          htmlFor="sla_description"
+        >
+          DURATION TIME 
+          <span
+            className="reference-mark"
+          >
+            <svg
+              className="lexicon-icon lexicon-icon-asterisk"
+              focusable="false"
+              role="presentation"
+            >
+              <use
+                href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#asterisk"
+              />
+            </svg>
+          </span>
+        </label>
       </h3>
       <div
         className="sheet-text"
@@ -1341,18 +3009,20 @@ exports[`Should submit the form with valid values 1`] = `
         <div
           className="form-group col col-sm-5 "
         >
-          <FieldLabel
-            fieldId="sla_duration_days"
-            text="Days"
-          />
-          <reactTextMask
+          <label
+            htmlFor="sla_duration_days"
+          >
+            Days 
+          </label>
+          <input
             className="form-control"
             id="sla_duration_days"
             mask={[Function]}
             name="days"
             onBlur={[Function]}
             onChange={[Function]}
-            value={3}
+            type="text"
+            value={null}
           />
           <div
             className="form-text"
@@ -1363,11 +3033,12 @@ exports[`Should submit the form with valid values 1`] = `
         <div
           className="form-group col col-sm-3 "
         >
-          <FieldLabel
-            fieldId="sla_duration_hours"
-            text="Hours"
-          />
-          <reactTextMask
+          <label
+            htmlFor="sla_duration_hours"
+          >
+            Hours 
+          </label>
+          <input
             className="form-control"
             id="sla_duration_hours"
             mask={
@@ -1383,7 +3054,8 @@ exports[`Should submit the form with valid values 1`] = `
             onBlur={[Function]}
             onChange={[Function]}
             placeholder="00:00"
-            value="10:50"
+            type="text"
+            value=""
           />
         </div>
       </div>
@@ -1408,16 +3080,13 @@ exports[`Should submit the form with valid values 1`] = `
         <div
           className="btn-group-item"
         >
-          <Link
+          <a
             className="btn btn-secondary"
-            query={
-              Object {
-                "processId": undefined,
-              }
-            }
-            text="Cancel"
-            to="sla-list"
-          />
+            href="/"
+            onClick={[Function]}
+          >
+            Cancel
+          </a>
         </div>
       </div>
     </div>
@@ -1425,298 +3094,816 @@ exports[`Should submit the form with valid values 1`] = `
 </div>
 `;
 
-exports[`Should update state after input changes 1`] = `
-<SLAForm>
-  <div>
-    <form
-      className="sheet sheet-lg"
-      role="form"
+exports[`Should submit the form with valid values 1`] = `
+<MockRouter
+  client={
+    Object {
+      "get": [Function],
+      "post": [Function],
+      "put": [Function],
+    }
+  }
+>
+  <MemoryRouter
+    initialEntries={
+      Array [
+        Object {
+          "pathname": "/",
+          "search": "?backPath=%2F",
+        },
+        Object {
+          "pathname": "/processes",
+          "search": "?backPath=%2F",
+        },
+        Object {
+          "pathname": "/slas/1234",
+          "search": "?backPath=%2Fprocesses",
+        },
+      ]
+    }
+    keyLength={0}
+  >
+    <Router
+      history={
+        Object {
+          "action": "REPLACE",
+          "block": [Function],
+          "canGo": [Function],
+          "createHref": [Function],
+          "entries": Array [
+            Object {
+              "hash": "",
+              "pathname": "/",
+              "search": "",
+              "state": undefined,
+            },
+            Object {
+              "hash": "",
+              "pathname": "/processes",
+              "search": "?backPath=%2F",
+            },
+            Object {
+              "hash": "",
+              "pathname": "/slas/1234",
+              "search": "?backPath=%2Fprocesses",
+            },
+          ],
+          "go": [Function],
+          "goBack": [Function],
+          "goForward": [Function],
+          "index": 0,
+          "length": 3,
+          "listen": [Function],
+          "location": Object {
+            "hash": "",
+            "pathname": "/",
+            "search": "",
+            "state": undefined,
+          },
+          "push": [Function],
+          "replace": [Function],
+        }
+      }
     >
-      <div
-        className="sheet-header"
-      >
-        <h2
-          className="sheet-title"
-        >
-          SLA Definition
-        </h2>
-      </div>
-      <div
-        className="sheet-section"
-      >
-        <div
-          className="row"
-        >
-          <div
-            className="form-group col col-sm-5 has-error"
+      <SLAForm>
+        <div>
+          <form
+            className="sheet sheet-lg"
+            role="form"
           >
-            <FieldLabel
-              fieldId="sla_name"
-              required={true}
-              text="Name"
+            <div
+              className="sheet-header"
             >
-              <label
-                htmlFor="sla_name"
+              <h2
+                className="sheet-title"
               >
-                Name 
-                <span
-                  className="reference-mark"
-                >
-                  <Icon
-                    iconName="asterisk"
-                  >
-                    <svg
-                      className="lexicon-icon lexicon-icon-asterisk"
-                      focusable="false"
-                      role="presentation"
-                    >
-                      <use
-                        href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#asterisk"
-                      />
-                    </svg>
-                  </Icon>
-                </span>
-              </label>
-            </FieldLabel>
-            <input
-              autoFocus={true}
-              className="form-control"
-              id="sla_name"
-              name="name"
-              onChange={[Function]}
-              type="text"
-              value=""
-            />
-            <FieldError
-              error="A name is required."
+                SLA Definition
+              </h2>
+            </div>
+            <div
+              className="sheet-section"
             >
               <div
-                className="form-feedback-group"
+                className="row"
               >
                 <div
-                  className="form-feedback-item"
+                  className="form-group col col-sm-5 "
                 >
-                  <span
-                    className="form-feedback-indicator"
+                  <FieldLabel
+                    fieldId="sla_name"
+                    required={true}
+                    text="Name"
                   >
-                    <Icon
-                      iconName="exclamation-full"
+                    <label
+                      htmlFor="sla_name"
                     >
-                      <svg
-                        className="lexicon-icon lexicon-icon-exclamation-full"
-                        focusable="false"
-                        role="presentation"
+                      Name 
+                      <span
+                        className="reference-mark"
                       >
-                        <use
-                          href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#exclamation-full"
-                        />
-                      </svg>
-                    </Icon>
-                  </span>
-                  A name is required.
+                        <Icon
+                          iconName="asterisk"
+                        >
+                          <svg
+                            className="lexicon-icon lexicon-icon-asterisk"
+                            focusable="false"
+                            role="presentation"
+                          >
+                            <use
+                              href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#asterisk"
+                            />
+                          </svg>
+                        </Icon>
+                      </span>
+                    </label>
+                  </FieldLabel>
+                  <input
+                    autoFocus={true}
+                    className="form-control"
+                    id="sla_name"
+                    name="name"
+                    onChange={[Function]}
+                    type="text"
+                    value=""
+                  />
+                </div>
+                <div
+                  className="form-group col col-sm-7"
+                >
+                  <FieldLabel
+                    fieldId="sla_description"
+                    text="Description"
+                  >
+                    <label
+                      htmlFor="sla_description"
+                    >
+                      Description 
+                    </label>
+                  </FieldLabel>
+                  <input
+                    className="form-control"
+                    id="sla_description"
+                    name="description"
+                    onChange={[Function]}
+                    type="text"
+                    value=""
+                  />
                 </div>
               </div>
-            </FieldError>
-          </div>
-          <div
-            className="form-group col col-sm-7"
-          >
-            <FieldLabel
-              fieldId="sla_description"
-              text="Description"
-            >
-              <label
-                htmlFor="sla_description"
+              <h3
+                className="sheet-subtitle"
               >
-                Description 
-              </label>
-            </FieldLabel>
-            <input
-              className="form-control"
-              id="sla_description"
-              name="description"
-              onChange={[Function]}
-              type="text"
-              value=""
-            />
-          </div>
-        </div>
-        <h3
-          className="sheet-subtitle"
-        >
-          <FieldLabel
-            fieldId="sla_description"
-            required={true}
-            text="DURATION TIME"
-          >
-            <label
-              htmlFor="sla_description"
-            >
-              DURATION TIME 
-              <span
-                className="reference-mark"
-              >
-                <Icon
-                  iconName="asterisk"
+                <FieldLabel
+                  fieldId="sla_description"
+                  required={true}
+                  text="DURATION TIME"
                 >
-                  <svg
-                    className="lexicon-icon lexicon-icon-asterisk"
-                    focusable="false"
-                    role="presentation"
+                  <label
+                    htmlFor="sla_description"
                   >
-                    <use
-                      href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#asterisk"
+                    DURATION TIME 
+                    <span
+                      className="reference-mark"
+                    >
+                      <Icon
+                        iconName="asterisk"
+                      >
+                        <svg
+                          className="lexicon-icon lexicon-icon-asterisk"
+                          focusable="false"
+                          role="presentation"
+                        >
+                          <use
+                            href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#asterisk"
+                          />
+                        </svg>
+                      </Icon>
+                    </span>
+                  </label>
+                </FieldLabel>
+              </h3>
+              <div
+                className="sheet-text"
+              >
+                Define a duration time to be met. Enter at least one of the following fields.
+              </div>
+              <div
+                className="row "
+              >
+                <div
+                  className="form-group col col-sm-5 "
+                >
+                  <FieldLabel
+                    fieldId="sla_duration_days"
+                    text="Days"
+                  >
+                    <label
+                      htmlFor="sla_duration_days"
+                    >
+                      Days 
+                    </label>
+                  </FieldLabel>
+                  <reactTextMask
+                    className="form-control"
+                    id="sla_duration_days"
+                    mask={[Function]}
+                    name="days"
+                    onBlur={[Function]}
+                    onChange={[Function]}
+                    value={null}
+                  >
+                    <input
+                      className="form-control"
+                      id="sla_duration_days"
+                      mask={[Function]}
+                      name="days"
+                      onBlur={[Function]}
+                      onChange={[Function]}
+                      type="text"
+                      value={null}
                     />
-                  </svg>
-                </Icon>
-              </span>
-            </label>
-          </FieldLabel>
-        </h3>
-        <div
-          className="sheet-text"
-        >
-          Define a duration time to be met. Enter at least one of the following fields.
-        </div>
-        <div
-          className="row "
-        >
-          <div
-            className="form-group col col-sm-5 "
-          >
-            <FieldLabel
-              fieldId="sla_duration_days"
-              text="Days"
-            >
-              <label
-                htmlFor="sla_duration_days"
-              >
-                Days 
-              </label>
-            </FieldLabel>
-            <reactTextMask
-              className="form-control"
-              id="sla_duration_days"
-              mask={[Function]}
-              name="days"
-              onBlur={[Function]}
-              onChange={[Function]}
-              value={null}
-            >
-              <input
-                className="form-control"
-                id="sla_duration_days"
-                mask={[Function]}
-                name="days"
-                onBlur={[Function]}
-                onChange={[Function]}
-                type="text"
-                value={null}
-              />
-            </reactTextMask>
-            <div
-              className="form-text"
-            >
-              Enter a whole number.
+                  </reactTextMask>
+                  <div
+                    className="form-text"
+                  >
+                    Enter a whole number.
+                  </div>
+                </div>
+                <div
+                  className="form-group col col-sm-3 "
+                >
+                  <FieldLabel
+                    fieldId="sla_duration_hours"
+                    text="Hours"
+                  >
+                    <label
+                      htmlFor="sla_duration_hours"
+                    >
+                      Hours 
+                    </label>
+                  </FieldLabel>
+                  <reactTextMask
+                    className="form-control"
+                    id="sla_duration_hours"
+                    mask={
+                      Array [
+                        /\\\\d/,
+                        /\\\\d/,
+                        ":",
+                        /\\\\d/,
+                        /\\\\d/,
+                      ]
+                    }
+                    name="hours"
+                    onBlur={[Function]}
+                    onChange={[Function]}
+                    placeholder="00:00"
+                    value=""
+                  >
+                    <input
+                      className="form-control"
+                      id="sla_duration_hours"
+                      mask={
+                        Array [
+                          /\\\\d/,
+                          /\\\\d/,
+                          ":",
+                          /\\\\d/,
+                          /\\\\d/,
+                        ]
+                      }
+                      name="hours"
+                      onBlur={[Function]}
+                      onChange={[Function]}
+                      placeholder="00:00"
+                      type="text"
+                      value=""
+                    />
+                  </reactTextMask>
+                </div>
+              </div>
             </div>
-          </div>
-          <div
-            className="form-group col col-sm-3 "
-          >
-            <FieldLabel
-              fieldId="sla_duration_hours"
-              text="Hours"
+            <div
+              className="sheet-footer sheet-footer-btn-block-sm-down"
             >
-              <label
-                htmlFor="sla_duration_hours"
+              <div
+                className="btn-group"
               >
-                Hours 
-              </label>
-            </FieldLabel>
-            <reactTextMask
-              className="form-control"
-              id="sla_duration_hours"
-              mask={
-                Array [
-                  /\\\\d/,
-                  /\\\\d/,
-                  ":",
-                  /\\\\d/,
-                  /\\\\d/,
-                ]
-              }
-              name="hours"
-              onBlur={[Function]}
-              onChange={[Function]}
-              placeholder="00:00"
-              value=""
-            >
-              <input
-                className="form-control"
-                id="sla_duration_hours"
-                mask={
-                  Array [
-                    /\\\\d/,
-                    /\\\\d/,
-                    ":",
-                    /\\\\d/,
-                    /\\\\d/,
-                  ]
-                }
-                name="hours"
-                onBlur={[Function]}
-                onChange={[Function]}
-                placeholder="00:00"
-                type="text"
-                value=""
-              />
-            </reactTextMask>
-          </div>
+                <div
+                  className="btn-group-item"
+                >
+                  <button
+                    className="btn btn-primary"
+                    onClick={[Function]}
+                    type="button"
+                  >
+                    Save
+                  </button>
+                </div>
+                <div
+                  className="btn-group-item"
+                >
+                  <withRouter(BackLinkWrapper)
+                    className="btn btn-secondary"
+                  >
+                    <Route>
+                      <BackLinkWrapper
+                        className="btn btn-secondary"
+                        history={
+                          Object {
+                            "action": "REPLACE",
+                            "block": [Function],
+                            "canGo": [Function],
+                            "createHref": [Function],
+                            "entries": Array [
+                              Object {
+                                "hash": "",
+                                "pathname": "/",
+                                "search": "",
+                                "state": undefined,
+                              },
+                              Object {
+                                "hash": "",
+                                "pathname": "/processes",
+                                "search": "?backPath=%2F",
+                              },
+                              Object {
+                                "hash": "",
+                                "pathname": "/slas/1234",
+                                "search": "?backPath=%2Fprocesses",
+                              },
+                            ],
+                            "go": [Function],
+                            "goBack": [Function],
+                            "goForward": [Function],
+                            "index": 0,
+                            "length": 3,
+                            "listen": [Function],
+                            "location": Object {
+                              "hash": "",
+                              "pathname": "/",
+                              "search": "",
+                              "state": undefined,
+                            },
+                            "push": [Function],
+                            "replace": [Function],
+                          }
+                        }
+                        location={
+                          Object {
+                            "hash": "",
+                            "pathname": "/",
+                            "search": "?backPath=%2F",
+                          }
+                        }
+                        match={
+                          Object {
+                            "isExact": true,
+                            "params": Object {},
+                            "path": "/",
+                            "url": "/",
+                          }
+                        }
+                      >
+                        <Link
+                          className="btn btn-secondary"
+                          replace={false}
+                          to="/"
+                        >
+                          <a
+                            className="btn btn-secondary"
+                            href="/"
+                            onClick={[Function]}
+                          >
+                            Cancel
+                          </a>
+                        </Link>
+                      </BackLinkWrapper>
+                    </Route>
+                  </withRouter(BackLinkWrapper)>
+                </div>
+              </div>
+            </div>
+          </form>
         </div>
-      </div>
-      <div
-        className="sheet-footer sheet-footer-btn-block-sm-down"
-      >
-        <div
-          className="btn-group"
-        >
-          <div
-            className="btn-group-item"
+      </SLAForm>
+    </Router>
+  </MemoryRouter>
+</MockRouter>
+`;
+
+exports[`Should update state after input changes 1`] = `
+<MockRouter>
+  <MemoryRouter
+    initialEntries={
+      Array [
+        Object {
+          "pathname": "/",
+          "search": "?backPath=%2F",
+        },
+        Object {
+          "pathname": "/processes",
+          "search": "?backPath=%2F",
+        },
+        Object {
+          "pathname": "/slas/1234",
+          "search": "?backPath=%2Fprocesses",
+        },
+      ]
+    }
+    keyLength={0}
+  >
+    <Router
+      history={
+        Object {
+          "action": "POP",
+          "block": [Function],
+          "canGo": [Function],
+          "createHref": [Function],
+          "entries": Array [
+            Object {
+              "hash": "",
+              "pathname": "/",
+              "search": "?backPath=%2F",
+            },
+            Object {
+              "hash": "",
+              "pathname": "/processes",
+              "search": "?backPath=%2F",
+            },
+            Object {
+              "hash": "",
+              "pathname": "/slas/1234",
+              "search": "?backPath=%2Fprocesses",
+            },
+          ],
+          "go": [Function],
+          "goBack": [Function],
+          "goForward": [Function],
+          "index": 0,
+          "length": 3,
+          "listen": [Function],
+          "location": Object {
+            "hash": "",
+            "pathname": "/",
+            "search": "?backPath=%2F",
+          },
+          "push": [Function],
+          "replace": [Function],
+        }
+      }
+    >
+      <SLAForm>
+        <div>
+          <form
+            className="sheet sheet-lg"
+            role="form"
           >
-            <button
-              className="btn btn-primary"
-              onClick={[Function]}
-              type="button"
+            <div
+              className="sheet-header"
             >
-              Save
-            </button>
-          </div>
-          <div
-            className="btn-group-item"
-          >
-            <Link
-              className="btn btn-secondary"
-              query={
-                Object {
-                  "_path": "sla-list",
-                  "processId": undefined,
-                }
-              }
-              text="Cancel"
-              to="sla-list"
-            >
-              <a
-                className="btn btn-secondary"
-                data-senna-off={true}
-                href="#processId=undefined&_path=sla-list"
+              <h2
+                className="sheet-title"
               >
-                Cancel
-              </a>
-            </Link>
-          </div>
+                SLA Definition
+              </h2>
+            </div>
+            <div
+              className="sheet-section"
+            >
+              <div
+                className="row"
+              >
+                <div
+                  className="form-group col col-sm-5 has-error"
+                >
+                  <FieldLabel
+                    fieldId="sla_name"
+                    required={true}
+                    text="Name"
+                  >
+                    <label
+                      htmlFor="sla_name"
+                    >
+                      Name 
+                      <span
+                        className="reference-mark"
+                      >
+                        <Icon
+                          iconName="asterisk"
+                        >
+                          <svg
+                            className="lexicon-icon lexicon-icon-asterisk"
+                            focusable="false"
+                            role="presentation"
+                          >
+                            <use
+                              href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#asterisk"
+                            />
+                          </svg>
+                        </Icon>
+                      </span>
+                    </label>
+                  </FieldLabel>
+                  <input
+                    autoFocus={true}
+                    className="form-control"
+                    id="sla_name"
+                    name="name"
+                    onChange={[Function]}
+                    type="text"
+                    value=""
+                  />
+                  <FieldError
+                    error="A name is required."
+                  >
+                    <div
+                      className="form-feedback-group"
+                    >
+                      <div
+                        className="form-feedback-item"
+                      >
+                        <span
+                          className="form-feedback-indicator"
+                        >
+                          <Icon
+                            iconName="exclamation-full"
+                          >
+                            <svg
+                              className="lexicon-icon lexicon-icon-exclamation-full"
+                              focusable="false"
+                              role="presentation"
+                            >
+                              <use
+                                href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#exclamation-full"
+                              />
+                            </svg>
+                          </Icon>
+                        </span>
+                        A name is required.
+                      </div>
+                    </div>
+                  </FieldError>
+                </div>
+                <div
+                  className="form-group col col-sm-7"
+                >
+                  <FieldLabel
+                    fieldId="sla_description"
+                    text="Description"
+                  >
+                    <label
+                      htmlFor="sla_description"
+                    >
+                      Description 
+                    </label>
+                  </FieldLabel>
+                  <input
+                    className="form-control"
+                    id="sla_description"
+                    name="description"
+                    onChange={[Function]}
+                    type="text"
+                    value=""
+                  />
+                </div>
+              </div>
+              <h3
+                className="sheet-subtitle"
+              >
+                <FieldLabel
+                  fieldId="sla_description"
+                  required={true}
+                  text="DURATION TIME"
+                >
+                  <label
+                    htmlFor="sla_description"
+                  >
+                    DURATION TIME 
+                    <span
+                      className="reference-mark"
+                    >
+                      <Icon
+                        iconName="asterisk"
+                      >
+                        <svg
+                          className="lexicon-icon lexicon-icon-asterisk"
+                          focusable="false"
+                          role="presentation"
+                        >
+                          <use
+                            href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#asterisk"
+                          />
+                        </svg>
+                      </Icon>
+                    </span>
+                  </label>
+                </FieldLabel>
+              </h3>
+              <div
+                className="sheet-text"
+              >
+                Define a duration time to be met. Enter at least one of the following fields.
+              </div>
+              <div
+                className="row "
+              >
+                <div
+                  className="form-group col col-sm-5 "
+                >
+                  <FieldLabel
+                    fieldId="sla_duration_days"
+                    text="Days"
+                  >
+                    <label
+                      htmlFor="sla_duration_days"
+                    >
+                      Days 
+                    </label>
+                  </FieldLabel>
+                  <reactTextMask
+                    className="form-control"
+                    id="sla_duration_days"
+                    mask={[Function]}
+                    name="days"
+                    onBlur={[Function]}
+                    onChange={[Function]}
+                    value={null}
+                  >
+                    <input
+                      className="form-control"
+                      id="sla_duration_days"
+                      mask={[Function]}
+                      name="days"
+                      onBlur={[Function]}
+                      onChange={[Function]}
+                      type="text"
+                      value={null}
+                    />
+                  </reactTextMask>
+                  <div
+                    className="form-text"
+                  >
+                    Enter a whole number.
+                  </div>
+                </div>
+                <div
+                  className="form-group col col-sm-3 "
+                >
+                  <FieldLabel
+                    fieldId="sla_duration_hours"
+                    text="Hours"
+                  >
+                    <label
+                      htmlFor="sla_duration_hours"
+                    >
+                      Hours 
+                    </label>
+                  </FieldLabel>
+                  <reactTextMask
+                    className="form-control"
+                    id="sla_duration_hours"
+                    mask={
+                      Array [
+                        /\\\\d/,
+                        /\\\\d/,
+                        ":",
+                        /\\\\d/,
+                        /\\\\d/,
+                      ]
+                    }
+                    name="hours"
+                    onBlur={[Function]}
+                    onChange={[Function]}
+                    placeholder="00:00"
+                    value=""
+                  >
+                    <input
+                      className="form-control"
+                      id="sla_duration_hours"
+                      mask={
+                        Array [
+                          /\\\\d/,
+                          /\\\\d/,
+                          ":",
+                          /\\\\d/,
+                          /\\\\d/,
+                        ]
+                      }
+                      name="hours"
+                      onBlur={[Function]}
+                      onChange={[Function]}
+                      placeholder="00:00"
+                      type="text"
+                      value=""
+                    />
+                  </reactTextMask>
+                </div>
+              </div>
+            </div>
+            <div
+              className="sheet-footer sheet-footer-btn-block-sm-down"
+            >
+              <div
+                className="btn-group"
+              >
+                <div
+                  className="btn-group-item"
+                >
+                  <button
+                    className="btn btn-primary"
+                    onClick={[Function]}
+                    type="button"
+                  >
+                    Save
+                  </button>
+                </div>
+                <div
+                  className="btn-group-item"
+                >
+                  <withRouter(BackLinkWrapper)
+                    className="btn btn-secondary"
+                  >
+                    <Route>
+                      <BackLinkWrapper
+                        className="btn btn-secondary"
+                        history={
+                          Object {
+                            "action": "POP",
+                            "block": [Function],
+                            "canGo": [Function],
+                            "createHref": [Function],
+                            "entries": Array [
+                              Object {
+                                "hash": "",
+                                "pathname": "/",
+                                "search": "?backPath=%2F",
+                              },
+                              Object {
+                                "hash": "",
+                                "pathname": "/processes",
+                                "search": "?backPath=%2F",
+                              },
+                              Object {
+                                "hash": "",
+                                "pathname": "/slas/1234",
+                                "search": "?backPath=%2Fprocesses",
+                              },
+                            ],
+                            "go": [Function],
+                            "goBack": [Function],
+                            "goForward": [Function],
+                            "index": 0,
+                            "length": 3,
+                            "listen": [Function],
+                            "location": Object {
+                              "hash": "",
+                              "pathname": "/",
+                              "search": "?backPath=%2F",
+                            },
+                            "push": [Function],
+                            "replace": [Function],
+                          }
+                        }
+                        location={
+                          Object {
+                            "hash": "",
+                            "pathname": "/",
+                            "search": "?backPath=%2F",
+                          }
+                        }
+                        match={
+                          Object {
+                            "isExact": true,
+                            "params": Object {},
+                            "path": "/",
+                            "url": "/",
+                          }
+                        }
+                      >
+                        <Link
+                          className="btn btn-secondary"
+                          replace={false}
+                          to="/"
+                        >
+                          <a
+                            className="btn btn-secondary"
+                            href="/"
+                            onClick={[Function]}
+                          >
+                            Cancel
+                          </a>
+                        </Link>
+                      </BackLinkWrapper>
+                    </Route>
+                  </withRouter(BackLinkWrapper)>
+                </div>
+              </div>
+            </div>
+          </form>
         </div>
-      </div>
-    </form>
-  </div>
-</SLAForm>
+      </SLAForm>
+    </Router>
+  </MemoryRouter>
+</MockRouter>
 `;

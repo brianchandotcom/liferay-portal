@@ -1,106 +1,850 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Should change page 1`] = `
-<ul
-  className="pagination pull-right"
->
-  <PageItem
-    disabled={false}
-    key="process_list_pag_prev_1"
-    onChangePage={[Function]}
-    page={1}
-    type="prev"
-  />
-  <PageItem
-    highlighted={false}
-    key="process_list_pag_1"
-    onChangePage={[Function]}
-    page={1}
-  />
-  <PageItem
-    highlighted={true}
-    key="process_list_pag_active_2"
-    onChangePage={[Function]}
-    page={2}
-  />
-  <PageItem
-    key="process_list_pag_plus_3"
-    onChangePage={[Function]}
-    page={3}
-  />
-  <li
-    className="dropdown page-item"
-    key="process_list_pag_4"
+<MockRouter>
+  <MemoryRouter
+    initialEntries={
+      Array [
+        Object {
+          "pathname": "/",
+          "search": "?backPath=%2F",
+        },
+        Object {
+          "pathname": "/processes",
+          "search": "?backPath=%2F",
+        },
+        Object {
+          "pathname": "/slas/1234",
+          "search": "?backPath=%2Fprocesses",
+        },
+      ]
+    }
+    keyLength={0}
   >
-    <a
-      className="dropdown-toggle page-link"
-      data-toggle="dropdown"
-      href="javascript:;"
+    <Router
+      history={
+        Object {
+          "action": "POP",
+          "block": [Function],
+          "canGo": [Function],
+          "createHref": [Function],
+          "entries": Array [
+            Object {
+              "hash": "",
+              "pathname": "/",
+              "search": "?backPath=%2F",
+            },
+            Object {
+              "hash": "",
+              "pathname": "/processes",
+              "search": "?backPath=%2F",
+            },
+            Object {
+              "hash": "",
+              "pathname": "/slas/1234",
+              "search": "?backPath=%2Fprocesses",
+            },
+          ],
+          "go": [Function],
+          "goBack": [Function],
+          "goForward": [Function],
+          "index": 0,
+          "length": 3,
+          "listen": [Function],
+          "location": Object {
+            "hash": "",
+            "pathname": "/",
+            "search": "?backPath=%2F",
+          },
+          "push": [Function],
+          "replace": [Function],
+        }
+      }
     >
-      <span
-        aria-hidden="true"
+      <Pagination
+        onSelectPage={[Function]}
+        pageSize={1}
+        totalCount={10}
       >
-        ...
-      </span>
-      <span
-        className="sr-only"
-      />
-    </a>
-    <div
-      className="dropdown-menu dropdown-menu-top-center"
-    >
-      <ul
-        className="inline-scroller link-list"
-        data-current-index="4"
-        key="process_list_pag_sublist_4"
-      >
-        <PageLink
-          key="process_list_pag_sublist_item_4"
-          onChangePage={[Function]}
-          page={4}
-        />
-        <PageLink
-          key="process_list_pag_sublist_item_5"
-          onChangePage={[Function]}
-          page={5}
-        />
-        <PageLink
-          key="process_list_pag_sublist_item_6"
-          onChangePage={[Function]}
-          page={6}
-        />
-        <PageLink
-          key="process_list_pag_sublist_item_7"
-          onChangePage={[Function]}
-          page={7}
-        />
-        <PageLink
-          key="process_list_pag_sublist_item_8"
-          onChangePage={[Function]}
-          page={8}
-        />
-        <PageLink
-          key="process_list_pag_sublist_item_9"
-          onChangePage={[Function]}
-          page={9}
-        />
-      </ul>
-    </div>
-  </li>
-  <PageItem
-    highlighted={false}
-    key="process_list_pag_last_10"
-    onChangePage={[Function]}
-    page={10}
-  />
-  <PageItem
-    disabled={false}
-    key="process_list_pag_next_3"
-    onChangePage={[Function]}
-    page={3}
-    type="next"
-  />
-</ul>
+        <ul
+          className="pagination pull-right"
+        >
+          <withRouter(PageItem)
+            disabled={true}
+            key="process_list_pag_prev_-1"
+            onChangePage={[Function]}
+            page={-1}
+            type="prev"
+          >
+            <Route>
+              <PageItem
+                disabled={true}
+                history={
+                  Object {
+                    "action": "POP",
+                    "block": [Function],
+                    "canGo": [Function],
+                    "createHref": [Function],
+                    "entries": Array [
+                      Object {
+                        "hash": "",
+                        "pathname": "/",
+                        "search": "?backPath=%2F",
+                      },
+                      Object {
+                        "hash": "",
+                        "pathname": "/processes",
+                        "search": "?backPath=%2F",
+                      },
+                      Object {
+                        "hash": "",
+                        "pathname": "/slas/1234",
+                        "search": "?backPath=%2Fprocesses",
+                      },
+                    ],
+                    "go": [Function],
+                    "goBack": [Function],
+                    "goForward": [Function],
+                    "index": 0,
+                    "length": 3,
+                    "listen": [Function],
+                    "location": Object {
+                      "hash": "",
+                      "pathname": "/",
+                      "search": "?backPath=%2F",
+                    },
+                    "push": [Function],
+                    "replace": [Function],
+                  }
+                }
+                location={
+                  Object {
+                    "hash": "",
+                    "pathname": "/",
+                    "search": "?backPath=%2F",
+                  }
+                }
+                match={
+                  Object {
+                    "isExact": true,
+                    "params": Object {},
+                    "path": "/",
+                    "url": "/",
+                  }
+                }
+                onChangePage={[Function]}
+                page={-1}
+                type="prev"
+              >
+                <li
+                  className="page-item disabled"
+                  onClick={[Function]}
+                >
+                  <Link
+                    className="page-link"
+                    replace={false}
+                    to={
+                      Object {
+                        "pathname": "/",
+                        "search": "?backPath=%2F",
+                      }
+                    }
+                  >
+                    <a
+                      className="page-link"
+                      href="/?backPath=%2F"
+                      onClick={[Function]}
+                    >
+                      <Icon
+                        iconName="angle-left"
+                      >
+                        <svg
+                          className="lexicon-icon lexicon-icon-angle-left"
+                          focusable="false"
+                          role="presentation"
+                        >
+                          <use
+                            href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#angle-left"
+                          />
+                        </svg>
+                      </Icon>
+                      <span
+                        className="sr-only"
+                      >
+                        Previous
+                      </span>
+                    </a>
+                  </Link>
+                </li>
+              </PageItem>
+            </Route>
+          </withRouter(PageItem)>
+          <withRouter(PageItem)
+            highlighted={false}
+            key="process_list_pag_1"
+            onChangePage={[Function]}
+            page={1}
+          >
+            <Route>
+              <PageItem
+                highlighted={false}
+                history={
+                  Object {
+                    "action": "POP",
+                    "block": [Function],
+                    "canGo": [Function],
+                    "createHref": [Function],
+                    "entries": Array [
+                      Object {
+                        "hash": "",
+                        "pathname": "/",
+                        "search": "?backPath=%2F",
+                      },
+                      Object {
+                        "hash": "",
+                        "pathname": "/processes",
+                        "search": "?backPath=%2F",
+                      },
+                      Object {
+                        "hash": "",
+                        "pathname": "/slas/1234",
+                        "search": "?backPath=%2Fprocesses",
+                      },
+                    ],
+                    "go": [Function],
+                    "goBack": [Function],
+                    "goForward": [Function],
+                    "index": 0,
+                    "length": 3,
+                    "listen": [Function],
+                    "location": Object {
+                      "hash": "",
+                      "pathname": "/",
+                      "search": "?backPath=%2F",
+                    },
+                    "push": [Function],
+                    "replace": [Function],
+                  }
+                }
+                location={
+                  Object {
+                    "hash": "",
+                    "pathname": "/",
+                    "search": "?backPath=%2F",
+                  }
+                }
+                match={
+                  Object {
+                    "isExact": true,
+                    "params": Object {},
+                    "path": "/",
+                    "url": "/",
+                  }
+                }
+                onChangePage={[Function]}
+                page={1}
+              >
+                <li
+                  className="page-item"
+                  onClick={[Function]}
+                >
+                  <Link
+                    className="page-link"
+                    replace={false}
+                    to={
+                      Object {
+                        "pathname": "/",
+                        "search": "?backPath=%2F",
+                      }
+                    }
+                  >
+                    <a
+                      className="page-link"
+                      href="/?backPath=%2F"
+                      onClick={[Function]}
+                    >
+                      1
+                    </a>
+                  </Link>
+                </li>
+              </PageItem>
+            </Route>
+          </withRouter(PageItem)>
+          <withRouter(PageItem)
+            highlighted={true}
+            key="process_list_pag_active_0"
+            onChangePage={[Function]}
+            page={0}
+          >
+            <Route>
+              <PageItem
+                highlighted={true}
+                history={
+                  Object {
+                    "action": "POP",
+                    "block": [Function],
+                    "canGo": [Function],
+                    "createHref": [Function],
+                    "entries": Array [
+                      Object {
+                        "hash": "",
+                        "pathname": "/",
+                        "search": "?backPath=%2F",
+                      },
+                      Object {
+                        "hash": "",
+                        "pathname": "/processes",
+                        "search": "?backPath=%2F",
+                      },
+                      Object {
+                        "hash": "",
+                        "pathname": "/slas/1234",
+                        "search": "?backPath=%2Fprocesses",
+                      },
+                    ],
+                    "go": [Function],
+                    "goBack": [Function],
+                    "goForward": [Function],
+                    "index": 0,
+                    "length": 3,
+                    "listen": [Function],
+                    "location": Object {
+                      "hash": "",
+                      "pathname": "/",
+                      "search": "?backPath=%2F",
+                    },
+                    "push": [Function],
+                    "replace": [Function],
+                  }
+                }
+                location={
+                  Object {
+                    "hash": "",
+                    "pathname": "/",
+                    "search": "?backPath=%2F",
+                  }
+                }
+                match={
+                  Object {
+                    "isExact": true,
+                    "params": Object {},
+                    "path": "/",
+                    "url": "/",
+                  }
+                }
+                onChangePage={[Function]}
+                page={0}
+              >
+                <li
+                  className="page-item active"
+                  onClick={[Function]}
+                >
+                  <Link
+                    className="page-link"
+                    replace={false}
+                    to={
+                      Object {
+                        "pathname": "/",
+                        "search": "?backPath=%2F",
+                      }
+                    }
+                  >
+                    <a
+                      className="page-link"
+                      href="/?backPath=%2F"
+                      onClick={[Function]}
+                    >
+                      0
+                    </a>
+                  </Link>
+                </li>
+              </PageItem>
+            </Route>
+          </withRouter(PageItem)>
+          <withRouter(PageItem)
+            key="process_list_pag_plus_1"
+            onChangePage={[Function]}
+            page={1}
+          >
+            <Route>
+              <PageItem
+                history={
+                  Object {
+                    "action": "POP",
+                    "block": [Function],
+                    "canGo": [Function],
+                    "createHref": [Function],
+                    "entries": Array [
+                      Object {
+                        "hash": "",
+                        "pathname": "/",
+                        "search": "?backPath=%2F",
+                      },
+                      Object {
+                        "hash": "",
+                        "pathname": "/processes",
+                        "search": "?backPath=%2F",
+                      },
+                      Object {
+                        "hash": "",
+                        "pathname": "/slas/1234",
+                        "search": "?backPath=%2Fprocesses",
+                      },
+                    ],
+                    "go": [Function],
+                    "goBack": [Function],
+                    "goForward": [Function],
+                    "index": 0,
+                    "length": 3,
+                    "listen": [Function],
+                    "location": Object {
+                      "hash": "",
+                      "pathname": "/",
+                      "search": "?backPath=%2F",
+                    },
+                    "push": [Function],
+                    "replace": [Function],
+                  }
+                }
+                location={
+                  Object {
+                    "hash": "",
+                    "pathname": "/",
+                    "search": "?backPath=%2F",
+                  }
+                }
+                match={
+                  Object {
+                    "isExact": true,
+                    "params": Object {},
+                    "path": "/",
+                    "url": "/",
+                  }
+                }
+                onChangePage={[Function]}
+                page={1}
+              >
+                <li
+                  className="page-item"
+                  onClick={[Function]}
+                >
+                  <Link
+                    className="page-link"
+                    replace={false}
+                    to={
+                      Object {
+                        "pathname": "/",
+                        "search": "?backPath=%2F",
+                      }
+                    }
+                  >
+                    <a
+                      className="page-link"
+                      href="/?backPath=%2F"
+                      onClick={[Function]}
+                    >
+                      1
+                    </a>
+                  </Link>
+                </li>
+              </PageItem>
+            </Route>
+          </withRouter(PageItem)>
+          <li
+            className="dropdown page-item"
+            key="process_list_pag_2"
+          >
+            <a
+              className="dropdown-toggle page-link"
+              data-toggle="dropdown"
+              href="javascript:;"
+            >
+              <span
+                aria-hidden="true"
+              >
+                ...
+              </span>
+              <span
+                className="sr-only"
+              />
+            </a>
+            <div
+              className="dropdown-menu dropdown-menu-top-center"
+            >
+              <ul
+                className="inline-scroller link-list"
+                data-current-index="2"
+                key="process_list_pag_sublist_2"
+              >
+                <PageLink
+                  key="process_list_pag_sublist_item_2"
+                  onChangePage={[Function]}
+                  page={2}
+                >
+                  <li
+                    className="page-item"
+                    onClick={[Function]}
+                  >
+                    <a
+                      className="page-link"
+                      href="#2"
+                    >
+                      <span
+                        className="sr-only"
+                      />
+                      2
+                    </a>
+                  </li>
+                </PageLink>
+                <PageLink
+                  key="process_list_pag_sublist_item_3"
+                  onChangePage={[Function]}
+                  page={3}
+                >
+                  <li
+                    className="page-item"
+                    onClick={[Function]}
+                  >
+                    <a
+                      className="page-link"
+                      href="#3"
+                    >
+                      <span
+                        className="sr-only"
+                      />
+                      3
+                    </a>
+                  </li>
+                </PageLink>
+                <PageLink
+                  key="process_list_pag_sublist_item_4"
+                  onChangePage={[Function]}
+                  page={4}
+                >
+                  <li
+                    className="page-item"
+                    onClick={[Function]}
+                  >
+                    <a
+                      className="page-link"
+                      href="#4"
+                    >
+                      <span
+                        className="sr-only"
+                      />
+                      4
+                    </a>
+                  </li>
+                </PageLink>
+                <PageLink
+                  key="process_list_pag_sublist_item_5"
+                  onChangePage={[Function]}
+                  page={5}
+                >
+                  <li
+                    className="page-item"
+                    onClick={[Function]}
+                  >
+                    <a
+                      className="page-link"
+                      href="#5"
+                    >
+                      <span
+                        className="sr-only"
+                      />
+                      5
+                    </a>
+                  </li>
+                </PageLink>
+                <PageLink
+                  key="process_list_pag_sublist_item_6"
+                  onChangePage={[Function]}
+                  page={6}
+                >
+                  <li
+                    className="page-item"
+                    onClick={[Function]}
+                  >
+                    <a
+                      className="page-link"
+                      href="#6"
+                    >
+                      <span
+                        className="sr-only"
+                      />
+                      6
+                    </a>
+                  </li>
+                </PageLink>
+                <PageLink
+                  key="process_list_pag_sublist_item_7"
+                  onChangePage={[Function]}
+                  page={7}
+                >
+                  <li
+                    className="page-item"
+                    onClick={[Function]}
+                  >
+                    <a
+                      className="page-link"
+                      href="#7"
+                    >
+                      <span
+                        className="sr-only"
+                      />
+                      7
+                    </a>
+                  </li>
+                </PageLink>
+                <PageLink
+                  key="process_list_pag_sublist_item_8"
+                  onChangePage={[Function]}
+                  page={8}
+                >
+                  <li
+                    className="page-item"
+                    onClick={[Function]}
+                  >
+                    <a
+                      className="page-link"
+                      href="#8"
+                    >
+                      <span
+                        className="sr-only"
+                      />
+                      8
+                    </a>
+                  </li>
+                </PageLink>
+                <PageLink
+                  key="process_list_pag_sublist_item_9"
+                  onChangePage={[Function]}
+                  page={9}
+                >
+                  <li
+                    className="page-item"
+                    onClick={[Function]}
+                  >
+                    <a
+                      className="page-link"
+                      href="#9"
+                    >
+                      <span
+                        className="sr-only"
+                      />
+                      9
+                    </a>
+                  </li>
+                </PageLink>
+              </ul>
+            </div>
+          </li>
+          <withRouter(PageItem)
+            highlighted={false}
+            key="process_list_pag_last_10"
+            onChangePage={[Function]}
+            page={10}
+          >
+            <Route>
+              <PageItem
+                highlighted={false}
+                history={
+                  Object {
+                    "action": "POP",
+                    "block": [Function],
+                    "canGo": [Function],
+                    "createHref": [Function],
+                    "entries": Array [
+                      Object {
+                        "hash": "",
+                        "pathname": "/",
+                        "search": "?backPath=%2F",
+                      },
+                      Object {
+                        "hash": "",
+                        "pathname": "/processes",
+                        "search": "?backPath=%2F",
+                      },
+                      Object {
+                        "hash": "",
+                        "pathname": "/slas/1234",
+                        "search": "?backPath=%2Fprocesses",
+                      },
+                    ],
+                    "go": [Function],
+                    "goBack": [Function],
+                    "goForward": [Function],
+                    "index": 0,
+                    "length": 3,
+                    "listen": [Function],
+                    "location": Object {
+                      "hash": "",
+                      "pathname": "/",
+                      "search": "?backPath=%2F",
+                    },
+                    "push": [Function],
+                    "replace": [Function],
+                  }
+                }
+                location={
+                  Object {
+                    "hash": "",
+                    "pathname": "/",
+                    "search": "?backPath=%2F",
+                  }
+                }
+                match={
+                  Object {
+                    "isExact": true,
+                    "params": Object {},
+                    "path": "/",
+                    "url": "/",
+                  }
+                }
+                onChangePage={[Function]}
+                page={10}
+              >
+                <li
+                  className="page-item"
+                  onClick={[Function]}
+                >
+                  <Link
+                    className="page-link"
+                    replace={false}
+                    to={
+                      Object {
+                        "pathname": "/",
+                        "search": "?backPath=%2F",
+                      }
+                    }
+                  >
+                    <a
+                      className="page-link"
+                      href="/?backPath=%2F"
+                      onClick={[Function]}
+                    >
+                      10
+                    </a>
+                  </Link>
+                </li>
+              </PageItem>
+            </Route>
+          </withRouter(PageItem)>
+          <withRouter(PageItem)
+            disabled={false}
+            key="process_list_pag_next_1"
+            onChangePage={[Function]}
+            page={1}
+            type="next"
+          >
+            <Route>
+              <PageItem
+                disabled={false}
+                history={
+                  Object {
+                    "action": "POP",
+                    "block": [Function],
+                    "canGo": [Function],
+                    "createHref": [Function],
+                    "entries": Array [
+                      Object {
+                        "hash": "",
+                        "pathname": "/",
+                        "search": "?backPath=%2F",
+                      },
+                      Object {
+                        "hash": "",
+                        "pathname": "/processes",
+                        "search": "?backPath=%2F",
+                      },
+                      Object {
+                        "hash": "",
+                        "pathname": "/slas/1234",
+                        "search": "?backPath=%2Fprocesses",
+                      },
+                    ],
+                    "go": [Function],
+                    "goBack": [Function],
+                    "goForward": [Function],
+                    "index": 0,
+                    "length": 3,
+                    "listen": [Function],
+                    "location": Object {
+                      "hash": "",
+                      "pathname": "/",
+                      "search": "?backPath=%2F",
+                    },
+                    "push": [Function],
+                    "replace": [Function],
+                  }
+                }
+                location={
+                  Object {
+                    "hash": "",
+                    "pathname": "/",
+                    "search": "?backPath=%2F",
+                  }
+                }
+                match={
+                  Object {
+                    "isExact": true,
+                    "params": Object {},
+                    "path": "/",
+                    "url": "/",
+                  }
+                }
+                onChangePage={[Function]}
+                page={1}
+                type="next"
+              >
+                <li
+                  className="page-item"
+                  onClick={[Function]}
+                >
+                  <Link
+                    className="page-link"
+                    replace={false}
+                    to={
+                      Object {
+                        "pathname": "/",
+                        "search": "?backPath=%2F",
+                      }
+                    }
+                  >
+                    <a
+                      className="page-link"
+                      href="/?backPath=%2F"
+                      onClick={[Function]}
+                    >
+                      <Icon
+                        iconName="angle-right"
+                      >
+                        <svg
+                          className="lexicon-icon lexicon-icon-angle-right"
+                          focusable="false"
+                          role="presentation"
+                        >
+                          <use
+                            href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#angle-right"
+                          />
+                        </svg>
+                      </Icon>
+                      <span
+                        className="sr-only"
+                      >
+                        Next
+                      </span>
+                    </a>
+                  </Link>
+                </li>
+              </PageItem>
+            </Route>
+          </withRouter(PageItem)>
+        </ul>
+      </Pagination>
+    </Router>
+  </MemoryRouter>
+</MockRouter>
 `;
 
 exports[`Should render component 1`] = `
@@ -113,9 +857,8 @@ exports[`Should render component 1`] = `
   >
     <a
       className="page-link"
-      data-senna-off={true}
-      href="#-1"
-      role="button"
+      href="/?backPath=%2F"
+      onClick={[Function]}
     >
       <svg
         className="lexicon-icon lexicon-icon-angle-left"
@@ -139,7 +882,8 @@ exports[`Should render component 1`] = `
   >
     <a
       className="page-link"
-      href="#1"
+      href="/?backPath=%2F"
+      onClick={[Function]}
     >
       1
     </a>
@@ -150,7 +894,8 @@ exports[`Should render component 1`] = `
   >
     <a
       className="page-link"
-      href="#0"
+      href="/?backPath=%2F"
+      onClick={[Function]}
     >
       0
     </a>
@@ -161,7 +906,8 @@ exports[`Should render component 1`] = `
   >
     <a
       className="page-link"
-      href="#1"
+      href="/?backPath=%2F"
+      onClick={[Function]}
     >
       1
     </a>
@@ -311,7 +1057,8 @@ exports[`Should render component 1`] = `
   >
     <a
       className="page-link"
-      href="#10"
+      href="/?backPath=%2F"
+      onClick={[Function]}
     >
       10
     </a>
@@ -322,9 +1069,8 @@ exports[`Should render component 1`] = `
   >
     <a
       className="page-link"
-      data-senna-off={true}
-      href="#1"
-      role="button"
+      href="/?backPath=%2F"
+      onClick={[Function]}
     >
       <svg
         className="lexicon-icon lexicon-icon-angle-right"
@@ -355,9 +1101,8 @@ exports[`Should render component at page 1 1`] = `
   >
     <a
       className="page-link"
-      data-senna-off={true}
-      href="#0"
-      role="button"
+      href="/?backPath=%2F"
+      onClick={[Function]}
     >
       <svg
         className="lexicon-icon lexicon-icon-angle-left"
@@ -381,7 +1126,8 @@ exports[`Should render component at page 1 1`] = `
   >
     <a
       className="page-link"
-      href="#1"
+      href="/?backPath=%2F"
+      onClick={[Function]}
     >
       1
     </a>
@@ -392,7 +1138,8 @@ exports[`Should render component at page 1 1`] = `
   >
     <a
       className="page-link"
-      href="#2"
+      href="/?backPath=%2F"
+      onClick={[Function]}
     >
       2
     </a>
@@ -403,7 +1150,8 @@ exports[`Should render component at page 1 1`] = `
   >
     <a
       className="page-link"
-      href="#3"
+      href="/?backPath=%2F"
+      onClick={[Function]}
     >
       3
     </a>
@@ -469,7 +1217,8 @@ exports[`Should render component at page 1 1`] = `
   >
     <a
       className="page-link"
-      href="#6"
+      href="/?backPath=%2F"
+      onClick={[Function]}
     >
       6
     </a>
@@ -480,9 +1229,8 @@ exports[`Should render component at page 1 1`] = `
   >
     <a
       className="page-link"
-      data-senna-off={true}
-      href="#2"
-      role="button"
+      href="/?backPath=%2F"
+      onClick={[Function]}
     >
       <svg
         className="lexicon-icon lexicon-icon-angle-right"
@@ -513,9 +1261,8 @@ exports[`Should render component at page 2 1`] = `
   >
     <a
       className="page-link"
-      data-senna-off={true}
-      href="#-1"
-      role="button"
+      href="/?backPath=%2F"
+      onClick={[Function]}
     >
       <svg
         className="lexicon-icon lexicon-icon-angle-left"
@@ -539,7 +1286,8 @@ exports[`Should render component at page 2 1`] = `
   >
     <a
       className="page-link"
-      href="#1"
+      href="/?backPath=%2F"
+      onClick={[Function]}
     >
       1
     </a>
@@ -550,7 +1298,8 @@ exports[`Should render component at page 2 1`] = `
   >
     <a
       className="page-link"
-      href="#0"
+      href="/?backPath=%2F"
+      onClick={[Function]}
     >
       0
     </a>
@@ -561,7 +1310,8 @@ exports[`Should render component at page 2 1`] = `
   >
     <a
       className="page-link"
-      href="#1"
+      href="/?backPath=%2F"
+      onClick={[Function]}
     >
       1
     </a>
@@ -655,7 +1405,8 @@ exports[`Should render component at page 2 1`] = `
   >
     <a
       className="page-link"
-      href="#6"
+      href="/?backPath=%2F"
+      onClick={[Function]}
     >
       6
     </a>
@@ -666,9 +1417,8 @@ exports[`Should render component at page 2 1`] = `
   >
     <a
       className="page-link"
-      data-senna-off={true}
-      href="#1"
-      role="button"
+      href="/?backPath=%2F"
+      onClick={[Function]}
     >
       <svg
         className="lexicon-icon lexicon-icon-angle-right"
@@ -699,9 +1449,8 @@ exports[`Should render component at page 3 1`] = `
   >
     <a
       className="page-link"
-      data-senna-off={true}
-      href="#-1"
-      role="button"
+      href="/?backPath=%2F"
+      onClick={[Function]}
     >
       <svg
         className="lexicon-icon lexicon-icon-angle-left"
@@ -725,7 +1474,8 @@ exports[`Should render component at page 3 1`] = `
   >
     <a
       className="page-link"
-      href="#1"
+      href="/?backPath=%2F"
+      onClick={[Function]}
     >
       1
     </a>
@@ -736,7 +1486,8 @@ exports[`Should render component at page 3 1`] = `
   >
     <a
       className="page-link"
-      href="#0"
+      href="/?backPath=%2F"
+      onClick={[Function]}
     >
       0
     </a>
@@ -747,7 +1498,8 @@ exports[`Should render component at page 3 1`] = `
   >
     <a
       className="page-link"
-      href="#1"
+      href="/?backPath=%2F"
+      onClick={[Function]}
     >
       1
     </a>
@@ -841,7 +1593,8 @@ exports[`Should render component at page 3 1`] = `
   >
     <a
       className="page-link"
-      href="#6"
+      href="/?backPath=%2F"
+      onClick={[Function]}
     >
       6
     </a>
@@ -852,9 +1605,8 @@ exports[`Should render component at page 3 1`] = `
   >
     <a
       className="page-link"
-      data-senna-off={true}
-      href="#1"
-      role="button"
+      href="/?backPath=%2F"
+      onClick={[Function]}
     >
       <svg
         className="lexicon-icon lexicon-icon-angle-right"
@@ -885,9 +1637,8 @@ exports[`Should render component at page 4 1`] = `
   >
     <a
       className="page-link"
-      data-senna-off={true}
-      href="#-1"
-      role="button"
+      href="/?backPath=%2F"
+      onClick={[Function]}
     >
       <svg
         className="lexicon-icon lexicon-icon-angle-left"
@@ -911,7 +1662,8 @@ exports[`Should render component at page 4 1`] = `
   >
     <a
       className="page-link"
-      href="#1"
+      href="/?backPath=%2F"
+      onClick={[Function]}
     >
       1
     </a>
@@ -922,7 +1674,8 @@ exports[`Should render component at page 4 1`] = `
   >
     <a
       className="page-link"
-      href="#0"
+      href="/?backPath=%2F"
+      onClick={[Function]}
     >
       0
     </a>
@@ -933,7 +1686,8 @@ exports[`Should render component at page 4 1`] = `
   >
     <a
       className="page-link"
-      href="#1"
+      href="/?backPath=%2F"
+      onClick={[Function]}
     >
       1
     </a>
@@ -1027,7 +1781,8 @@ exports[`Should render component at page 4 1`] = `
   >
     <a
       className="page-link"
-      href="#6"
+      href="/?backPath=%2F"
+      onClick={[Function]}
     >
       6
     </a>
@@ -1038,9 +1793,8 @@ exports[`Should render component at page 4 1`] = `
   >
     <a
       className="page-link"
-      data-senna-off={true}
-      href="#1"
-      role="button"
+      href="/?backPath=%2F"
+      onClick={[Function]}
     >
       <svg
         className="lexicon-icon lexicon-icon-angle-right"
@@ -1071,9 +1825,8 @@ exports[`Should render component at page 5 1`] = `
   >
     <a
       className="page-link"
-      data-senna-off={true}
-      href="#-1"
-      role="button"
+      href="/?backPath=%2F"
+      onClick={[Function]}
     >
       <svg
         className="lexicon-icon lexicon-icon-angle-left"
@@ -1097,7 +1850,8 @@ exports[`Should render component at page 5 1`] = `
   >
     <a
       className="page-link"
-      href="#1"
+      href="/?backPath=%2F"
+      onClick={[Function]}
     >
       1
     </a>
@@ -1108,7 +1862,8 @@ exports[`Should render component at page 5 1`] = `
   >
     <a
       className="page-link"
-      href="#0"
+      href="/?backPath=%2F"
+      onClick={[Function]}
     >
       0
     </a>
@@ -1119,7 +1874,8 @@ exports[`Should render component at page 5 1`] = `
   >
     <a
       className="page-link"
-      href="#1"
+      href="/?backPath=%2F"
+      onClick={[Function]}
     >
       1
     </a>
@@ -1213,7 +1969,8 @@ exports[`Should render component at page 5 1`] = `
   >
     <a
       className="page-link"
-      href="#6"
+      href="/?backPath=%2F"
+      onClick={[Function]}
     >
       6
     </a>
@@ -1224,9 +1981,8 @@ exports[`Should render component at page 5 1`] = `
   >
     <a
       className="page-link"
-      data-senna-off={true}
-      href="#1"
-      role="button"
+      href="/?backPath=%2F"
+      onClick={[Function]}
     >
       <svg
         className="lexicon-icon lexicon-icon-angle-right"

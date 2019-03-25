@@ -23,7 +23,7 @@ exports[`Should render component 1`] = `
             >
               <input
                 className="form-control input-group-inset input-group-inset-after"
-                disabled={true}
+                disabled={false}
                 onChange={[Function]}
                 placeholder="Search for..."
                 type="text"
@@ -34,7 +34,7 @@ exports[`Should render component 1`] = `
               >
                 <button
                   className="btn btn-unstyled"
-                  disabled={true}
+                  disabled={false}
                   type="submit"
                 >
                   <svg
@@ -58,25 +58,10 @@ exports[`Should render component 1`] = `
     className="lfr-search-container-wrapper container-fluid-1280"
   >
     <div>
-      <div
-        className="sheet taglib-empty-result-message"
-      >
-        <div
-          className="taglib-empty-result-message-header"
-        />
-        <h3
-          className="text-center"
-        >
-          No Current Metrics
-        </h3>
-        <div
-          className="sheet-text text-center"
-        >
-          <p>
-            Once there are active processes, metrics will appear here.
-          </p>
-        </div>
-      </div>
+      <span
+        aria-hidden="true"
+        className="loading-animation"
+      />
     </div>
   </div>
 </div>
@@ -105,7 +90,7 @@ exports[`Should render component with 4 records 1`] = `
             >
               <input
                 className="form-control input-group-inset input-group-inset-after"
-                disabled={true}
+                disabled={false}
                 onChange={[Function]}
                 placeholder="Search for..."
                 type="text"
@@ -116,7 +101,7 @@ exports[`Should render component with 4 records 1`] = `
               >
                 <button
                   className="btn btn-unstyled"
-                  disabled={true}
+                  disabled={false}
                   type="submit"
                 >
                   <svg
@@ -140,25 +125,10 @@ exports[`Should render component with 4 records 1`] = `
     className="lfr-search-container-wrapper container-fluid-1280"
   >
     <div>
-      <div
-        className="sheet taglib-empty-result-message"
-      >
-        <div
-          className="taglib-empty-result-message-header"
-        />
-        <h3
-          className="text-center"
-        >
-          No Current Metrics
-        </h3>
-        <div
-          className="sheet-text text-center"
-        >
-          <p>
-            Once there are active processes, metrics will appear here.
-          </p>
-        </div>
-      </div>
+      <span
+        aria-hidden="true"
+        className="loading-animation"
+      />
     </div>
   </div>
 </div>
@@ -187,7 +157,7 @@ exports[`Should render component with 10 records 1`] = `
             >
               <input
                 className="form-control input-group-inset input-group-inset-after"
-                disabled={true}
+                disabled={false}
                 onChange={[Function]}
                 placeholder="Search for..."
                 type="text"
@@ -198,7 +168,7 @@ exports[`Should render component with 10 records 1`] = `
               >
                 <button
                   className="btn btn-unstyled"
-                  disabled={true}
+                  disabled={false}
                   type="submit"
                 >
                   <svg
@@ -222,25 +192,10 @@ exports[`Should render component with 10 records 1`] = `
     className="lfr-search-container-wrapper container-fluid-1280"
   >
     <div>
-      <div
-        className="sheet taglib-empty-result-message"
-      >
-        <div
-          className="taglib-empty-result-message-header"
-        />
-        <h3
-          className="text-center"
-        >
-          No Current Metrics
-        </h3>
-        <div
-          className="sheet-text text-center"
-        >
-          <p>
-            Once there are active processes, metrics will appear here.
-          </p>
-        </div>
-      </div>
+      <span
+        aria-hidden="true"
+        className="loading-animation"
+      />
     </div>
   </div>
 </div>

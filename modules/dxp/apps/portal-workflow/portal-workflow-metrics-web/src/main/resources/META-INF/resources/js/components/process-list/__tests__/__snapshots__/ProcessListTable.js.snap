@@ -104,8 +104,8 @@ exports[`Should render component 1`] = `
               <li>
                 <a
                   className="dropdown-item"
-                  data-senna-off={true}
-                  href="#processId=36401&_path=sla-list"
+                  href="/slas/36401?backPath=%2F%3FbackPath%3D%252F"
+                  onClick={[Function]}
                 >
                   Set Up SLAs
                 </a>

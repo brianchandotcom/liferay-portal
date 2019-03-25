@@ -1,345 +1,13 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Should render SLA Form component 1`] = `
-<div
-  className="portal-workflow-metrics-app"
->
-  <div>
-    <div>
-      <form
-        className="sheet sheet-lg"
-        role="form"
-      >
-        <div
-          className="sheet-header"
-        >
-          <h2
-            className="sheet-title"
-          >
-            SLA Definition
-          </h2>
-        </div>
-        <div
-          className="sheet-section"
-        >
-          <div
-            className="row"
-          >
-            <div
-              className="form-group col col-sm-5 "
-            >
-              <label
-                htmlFor="sla_name"
-              >
-                Name 
-                <span
-                  className="reference-mark"
-                >
-                  <svg
-                    className="lexicon-icon lexicon-icon-asterisk"
-                    focusable="false"
-                    role="presentation"
-                  >
-                    <use
-                      href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#asterisk"
-                    />
-                  </svg>
-                </span>
-              </label>
-              <input
-                autoFocus={true}
-                className="form-control"
-                id="sla_name"
-                name="name"
-                onChange={[Function]}
-                type="text"
-                value=""
-              />
-            </div>
-            <div
-              className="form-group col col-sm-7"
-            >
-              <label
-                htmlFor="sla_description"
-              >
-                Description 
-              </label>
-              <input
-                className="form-control"
-                id="sla_description"
-                name="description"
-                onChange={[Function]}
-                type="text"
-                value=""
-              />
-            </div>
-          </div>
-          <h3
-            className="sheet-subtitle"
-          >
-            <label
-              htmlFor="sla_description"
-            >
-              DURATION TIME 
-              <span
-                className="reference-mark"
-              >
-                <svg
-                  className="lexicon-icon lexicon-icon-asterisk"
-                  focusable="false"
-                  role="presentation"
-                >
-                  <use
-                    href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#asterisk"
-                  />
-                </svg>
-              </span>
-            </label>
-          </h3>
-          <div
-            className="sheet-text"
-          >
-            Define a duration time to be met. Enter at least one of the following fields.
-          </div>
-          <div
-            className="row "
-          >
-            <div
-              className="form-group col col-sm-5 "
-            >
-              <label
-                htmlFor="sla_duration_days"
-              >
-                Days 
-              </label>
-              <input
-                className="form-control"
-                id="sla_duration_days"
-                mask={[Function]}
-                name="days"
-                onBlur={[Function]}
-                onChange={[Function]}
-                type="text"
-                value={null}
-              />
-              <div
-                className="form-text"
-              >
-                Enter a whole number.
-              </div>
-            </div>
-            <div
-              className="form-group col col-sm-3 "
-            >
-              <label
-                htmlFor="sla_duration_hours"
-              >
-                Hours 
-              </label>
-              <input
-                className="form-control"
-                id="sla_duration_hours"
-                mask={
-                  Array [
-                    /\\\\d/,
-                    /\\\\d/,
-                    ":",
-                    /\\\\d/,
-                    /\\\\d/,
-                  ]
-                }
-                name="hours"
-                onBlur={[Function]}
-                onChange={[Function]}
-                placeholder="00:00"
-                type="text"
-                value=""
-              />
-            </div>
-          </div>
-        </div>
-        <div
-          className="sheet-footer sheet-footer-btn-block-sm-down"
-        >
-          <div
-            className="btn-group"
-          >
-            <div
-              className="btn-group-item"
-            >
-              <button
-                className="btn btn-primary"
-                onClick={[Function]}
-                type="button"
-              >
-                Save
-              </button>
-            </div>
-            <div
-              className="btn-group-item"
-            >
-              <a
-                className="btn btn-secondary"
-                data-senna-off={true}
-                href="#processId=undefined&_path=sla-list"
-              >
-                Cancel
-              </a>
-            </div>
-          </div>
-        </div>
-      </form>
-    </div>
-  </div>
-</div>
-`;
-
-exports[`Should render SLA List component 1`] = `
-<div
-  className="portal-workflow-metrics-app"
->
-  <div>
-    <div>
-      <nav
-        className="management-bar management-bar-light navbar navbar-expand-md"
-      >
-        <div
-          className="container-fluid container-fluid-max-xl"
-        >
-          <ul
-            className="navbar-nav"
-          >
-            <li
-              className="nav-item"
-            >
-              <div
-                className="custom-control custom-checkbox"
-              >
-                <label>
-                  <input
-                    className="custom-control-input"
-                    type="checkbox"
-                  />
-                  <span
-                    className="custom-control-label"
-                  />
-                </label>
-              </div>
-            </li>
-          </ul>
-          <div
-            className="navbar-form navbar-form-autofit"
-          >
-            <form
-              onSubmit={[Function]}
-              role="search"
-            >
-              <div
-                className="input-group"
-              >
-                <div
-                  className="input-group-item"
-                >
-                  <input
-                    className="form-control input-group-inset input-group-inset-after"
-                    disabled={false}
-                    onChange={[Function]}
-                    placeholder="Search for..."
-                    type="text"
-                    value=""
-                  />
-                  <span
-                    className="input-group-inset-item input-group-inset-item-after"
-                  >
-                    <button
-                      className="btn btn-unstyled"
-                      disabled={false}
-                      type="submit"
-                    >
-                      <svg
-                        className="lexicon-icon lexicon-icon-search"
-                        focusable="false"
-                        role="presentation"
-                      >
-                        <use
-                          href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#search"
-                        />
-                      </svg>
-                    </button>
-                  </span>
-                </div>
-              </div>
-            </form>
-          </div>
-          <ul
-            className="navbar-nav"
-          >
-            <li
-              className="nav-item"
-            >
-              <a
-                className="btn btn-primary nav-btn nav-btn-monospaced navbar-breakpoint-down-d-none"
-                data-senna-off={true}
-                href="#processId=undefined&_path=sla-form"
-              >
-                <svg
-                  className="lexicon-icon lexicon-icon-plus"
-                  focusable="false"
-                  role="presentation"
-                >
-                  <use
-                    href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#plus"
-                  />
-                </svg>
-              </a>
-            </li>
-          </ul>
-        </div>
-      </nav>
-      <div
-        className="container-fluid-1280"
-      >
-        <div
-          className="alert alert-info"
-          role="alert"
-        >
-          <span
-            className="alert-indicator"
-          >
-            <svg
-              className="lexicon-icon lexicon-icon-reload"
-              focusable="false"
-              role="presentation"
-            >
-              <use
-                href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#reload"
-              />
-            </svg>
-          </span>
-          <strong
-            className="lead"
-          >
-            Updating:
-          </strong>
-          <span>
-            Instances in this process are being updated according to SLA changes.
-          </span>
-        </div>
-        <span
-          aria-hidden="true"
-          className="loading-animation"
-        />
-      </div>
-    </div>
-  </div>
-</div>
-`;
-
 exports[`Should render default component 1`] = `
-<div
-  className="portal-workflow-metrics-app"
->
-  <div>
+Array [
+  <template>
+    metrics
+  </template>,
+  <div
+    className="portal-workflow-metrics-app"
+  >
     <div>
       <nav
         className="management-bar management-bar-light navbar navbar-expand-md"
@@ -364,7 +32,7 @@ exports[`Should render default component 1`] = `
                     className="form-control input-group-inset input-group-inset-after"
                     disabled={true}
                     onChange={[Function]}
-                    placeholder="Search for..."
+                    placeholder="search-for"
                     type="text"
                     value=""
                   />
@@ -382,7 +50,7 @@ exports[`Should render default component 1`] = `
                         role="presentation"
                       >
                         <use
-                          href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#search"
+                          href="//lexicon/icons.svg#search"
                         />
                       </svg>
                     </button>
@@ -406,28 +74,29 @@ exports[`Should render default component 1`] = `
             <h3
               className="text-center"
             >
-              No Current Metrics
+              no-current-metrics
             </h3>
             <div
               className="sheet-text text-center"
             >
               <p>
-                Once there are active processes, metrics will appear here.
+                once-there-are-active-processes-metrics-will-appear-here
               </p>
             </div>
           </div>
         </div>
       </div>
     </div>
-  </div>
-</div>
+  </div>,
+]
 `;
 
-exports[`Should test component navigation 1`] = `
-<div
-  className="portal-workflow-metrics-app"
->
-  <div>
+exports[`Should render default component without custom header 1`] = `
+Array [
+  <template />,
+  <div
+    className="portal-workflow-metrics-app"
+  >
     <div>
       <nav
         className="management-bar management-bar-light navbar navbar-expand-md"
@@ -452,7 +121,7 @@ exports[`Should test component navigation 1`] = `
                     className="form-control input-group-inset input-group-inset-after"
                     disabled={true}
                     onChange={[Function]}
-                    placeholder="Search for..."
+                    placeholder="search-for"
                     type="text"
                     value=""
                   />
@@ -470,7 +139,7 @@ exports[`Should test component navigation 1`] = `
                         role="presentation"
                       >
                         <use
-                          href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#search"
+                          href="//lexicon/icons.svg#search"
                         />
                       </svg>
                     </button>
@@ -494,19 +163,19 @@ exports[`Should test component navigation 1`] = `
             <h3
               className="text-center"
             >
-              No Current Metrics
+              no-current-metrics
             </h3>
             <div
               className="sheet-text text-center"
             >
               <p>
-                Once there are active processes, metrics will appear here.
+                once-there-are-active-processes-metrics-will-appear-here
               </p>
             </div>
           </div>
         </div>
       </div>
     </div>
-  </div>
-</div>
+  </div>,
+]
 `;

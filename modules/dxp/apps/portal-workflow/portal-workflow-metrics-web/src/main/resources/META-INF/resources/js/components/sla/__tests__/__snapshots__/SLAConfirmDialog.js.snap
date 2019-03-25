@@ -31,24 +31,22 @@ exports[`Should render component 1`] = `
             <div
               className="btn-group-item"
             >
-              <a
+              <button
                 className="btn btn-secondary"
-                data-senna-off={true}
-                href="#_path=sla-list"
+                type="button"
               >
                 Cancel
-              </a>
+              </button>
             </div>
             <div
               className="btn-group-item"
             >
-              <a
+              <button
                 className="btn btn-secondary"
-                data-senna-off={true}
-                href="#itemRemoved=test&_path=sla-list"
+                type="button"
               >
                 ok
-              </a>
+              </button>
             </div>
           </div>
         </div>

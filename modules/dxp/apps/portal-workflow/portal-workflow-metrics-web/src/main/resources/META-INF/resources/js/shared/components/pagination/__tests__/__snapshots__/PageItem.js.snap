@@ -21,7 +21,8 @@ exports[`Should render component as active 1`] = `
 >
   <a
     className="page-link"
-    href="#1"
+    href="/?backPath=%2F"
+    onClick={[Function]}
   >
     1
   </a>
@@ -35,9 +36,8 @@ exports[`Should render component as type Next 1`] = `
 >
   <a
     className="page-link"
-    data-senna-off={true}
-    href="#1"
-    role="button"
+    href="/?backPath=%2F"
+    onClick={[Function]}
   >
     <svg
       className="lexicon-icon lexicon-icon-angle-right"
@@ -64,9 +64,8 @@ exports[`Should render component as type Previous 1`] = `
 >
   <a
     className="page-link"
-    data-senna-off={true}
-    href="#1"
-    role="button"
+    href="/?backPath=%2F"
+    onClick={[Function]}
   >
     <svg
       className="lexicon-icon lexicon-icon-angle-left"
@@ -93,7 +92,8 @@ exports[`Should render component as type default 1`] = `
 >
   <a
     className="page-link"
-    href="#1"
+    href="/?backPath=%2F"
+    onClick={[Function]}
   >
     1
   </a>

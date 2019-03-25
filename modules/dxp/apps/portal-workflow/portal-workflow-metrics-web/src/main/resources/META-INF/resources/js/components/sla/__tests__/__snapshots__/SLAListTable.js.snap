@@ -113,18 +113,14 @@ exports[`Should render component 1`] = `
               <li>
                 <a
                   className="dropdown-item"
-                  data-senna-off={true}
-                  href="#processId=undefined&_path=sla-form"
+                  href="/sla/edit/undefined/undefined?backPath=%2F%3FbackPath%3D%252F"
+                  onClick={[Function]}
                 >
                   Edit
                 </a>
               </li>
               <li>
-                <a
-                  className="dropdown-item"
-                  data-senna-off={true}
-                  href="#itemToRemove=test&_path=sla-list"
-                >
+                <a>
                   Delete
                 </a>
               </li>
@@ -201,18 +197,14 @@ exports[`Should render component 1`] = `
               <li>
                 <a
                   className="dropdown-item"
-                  data-senna-off={true}
-                  href="#processId=undefined&_path=sla-form"
+                  href="/sla/edit/undefined/undefined?backPath=%2F%3FbackPath%3D%252F"
+                  onClick={[Function]}
                 >
                   Edit
                 </a>
               </li>
               <li>
-                <a
-                  className="dropdown-item"
-                  data-senna-off={true}
-                  href="#itemToRemove=test&_path=sla-list"
-                >
+                <a>
                   Delete
                 </a>
               </li>
@@ -289,18 +281,14 @@ exports[`Should render component 1`] = `
               <li>
                 <a
                   className="dropdown-item"
-                  data-senna-off={true}
-                  href="#processId=undefined&_path=sla-form"
+                  href="/sla/edit/undefined/undefined?backPath=%2F%3FbackPath%3D%252F"
+                  onClick={[Function]}
                 >
                   Edit
                 </a>
               </li>
               <li>
-                <a
-                  className="dropdown-item"
-                  data-senna-off={true}
-                  href="#itemToRemove=test&_path=sla-list"
-                >
+                <a>
                   Delete
                 </a>
               </li>

@@ -24,8 +24,10 @@ import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.taglib.util.IncludeTag;
+import com.liferay.taglib.util.LexiconUtil;
 
 import java.util.function.Supplier;
 
@@ -123,25 +125,21 @@ public class UserPortraitTag extends IncludeTag {
 	}
 
 	protected String getPortraitURL(User user) {
-		String portraitURL = null;
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		if (user != null) {
-			try {
-				portraitURL = user.getPortraitURL(themeDisplay);
+		try {
+			if ((user == null) || (user.getPortraitId() == 0)) {
+				return null;
 			}
-			catch (PortalException pe) {
-				_log.error(pe, pe);
-			}
-		}
-		else {
-			portraitURL = UserConstants.getPortraitURL(
-				themeDisplay.getPathImage(), true, 0, StringPool.BLANK);
-		}
 
-		return portraitURL;
+			ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+			return user.getPortraitURL(themeDisplay);
+		}
+		catch (PortalException pe) {
+			_log.error(pe, pe);
+
+			return null;
+		}
 	}
 
 	@Override

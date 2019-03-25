@@ -166,17 +166,7 @@ public class MentionsPortlet extends MVCPortlet {
 		throws PortalException {
 
 		return UserPortraitTag.getUserPortraitHTML(
-			StringPool.BLANK,
-			() -> {
-				try {
-					return user.getPortraitURL(themeDisplay);
-				}
-				catch (PortalException pe) {
-					_log.error(pe, pe);
-				}
-
-				return StringPool.BLANK;
-			});
+			StringPool.BLANK, user, themeDisplay);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

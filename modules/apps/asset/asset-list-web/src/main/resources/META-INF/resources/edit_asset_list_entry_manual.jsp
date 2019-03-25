@@ -16,6 +16,23 @@
 
 <%@ include file="/init.jsp" %>
 
+<%
+String redirect = ParamUtil.getString(request, "redirect");
+
+if (Validator.isNull(redirect)) {
+	PortletURL portletURL = renderResponse.createRenderURL();
+
+	redirect = portletURL.toString();
+}
+
+AssetListEntry assetListEntry = assetListDisplayContext.getAssetListEntry();
+
+portletDisplay.setShowBackIcon(true);
+portletDisplay.setURLBack(redirect);
+
+renderResponse.setTitle(assetListDisplayContext.getAssetListEntryTitle());
+%>
+
 <portlet:actionURL name="/asset_list/add_asset_entry_selection" var="addAssetEntrySelectionURL" />
 
 <liferay-frontend:edit-form

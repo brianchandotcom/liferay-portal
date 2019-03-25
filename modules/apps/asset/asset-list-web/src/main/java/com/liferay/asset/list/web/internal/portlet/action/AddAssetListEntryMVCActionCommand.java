@@ -123,7 +123,17 @@ public class AddAssetListEntryMVCActionCommand extends BaseMVCActionCommand {
 
 		PortletURL portletURL = liferayPortletResponse.createRenderURL();
 
-		portletURL.setParameter("mvcPath", "/edit_asset_list_entry.jsp");
+		if (assetListEntry.getType() ==
+				AssetListEntryTypeConstants.TYPE_DYNAMIC) {
+
+			portletURL.setParameter(
+				"mvcPath", "/edit_asset_list_entry_dynamic.jsp");
+		}
+		else {
+			portletURL.setParameter(
+				"mvcPath", "/edit_asset_list_entry_manual.jsp");
+		}
+
 		portletURL.setParameter(
 			"assetListEntryId",
 			String.valueOf(assetListEntry.getAssetListEntryId()));

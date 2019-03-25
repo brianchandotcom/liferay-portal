@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.PropertiesParamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
@@ -51,11 +52,11 @@ import org.osgi.service.component.annotations.Reference;
 	immediate = true,
 	property = {
 		"javax.portlet.name=" + AssetListPortletKeys.ASSET_LIST,
-		"mvc.command.name=/asset_list/edit_asset_list_entry_filters"
+		"mvc.command.name=/asset_list/update_asset_list_entry_dynamic"
 	},
 	service = MVCActionCommand.class
 )
-public class EditAssetListEntryFiltersMVCActionCommand
+public class UpdateAssetListEntryDynamicMVCActionCommand
 	extends BaseMVCActionCommand {
 
 	@Override
@@ -103,7 +104,8 @@ public class EditAssetListEntryFiltersMVCActionCommand
 				renderParameters.setValues(entry.getKey(), entry.getValue());
 			}
 
-			renderParameters.setValue("mvcPath", "/edit_asset_list_entry.jsp");
+			renderParameters.setValue(
+				"mvcPath", "/edit_asset_list_entry_dynamic.jsp");
 			renderParameters.setValue(
 				"screenNavigationCategoryKey",
 				AssetListFormConstants.ENTRY_KEY_FILTER);
@@ -111,6 +113,14 @@ public class EditAssetListEntryFiltersMVCActionCommand
 				"screenNavigationEntryKey",
 				AssetListFormConstants.ENTRY_KEY_FILTER);
 		}
+
+		UnicodeProperties typeSettingsProperties =
+			PropertiesParamUtil.getProperties(
+				actionRequest, "TypeSettingsProperties--");
+
+		_assetListEntryService.updateAssetListEntryTypeSettingsProperties(
+			assetListEntryId, segmentsEntryId,
+			typeSettingsProperties.toString());
 	}
 
 	protected AssetQueryRule getQueryRule(
@@ -210,7 +220,7 @@ public class EditAssetListEntryFiltersMVCActionCommand
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		EditAssetListEntryFiltersMVCActionCommand.class);
+		UpdateAssetListEntryDynamicMVCActionCommand.class);
 
 	@Reference
 	private AssetListEntryService _assetListEntryService;

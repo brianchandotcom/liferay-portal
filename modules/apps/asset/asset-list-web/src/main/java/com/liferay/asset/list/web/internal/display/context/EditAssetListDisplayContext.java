@@ -25,10 +25,13 @@ import com.liferay.asset.kernel.model.ClassTypeReader;
 import com.liferay.asset.kernel.service.AssetCategoryLocalServiceUtil;
 import com.liferay.asset.kernel.service.AssetTagLocalServiceUtil;
 import com.liferay.asset.kernel.service.AssetVocabularyServiceUtil;
+import com.liferay.asset.list.constants.AssetListEntryTypeConstants;
 import com.liferay.asset.list.constants.AssetListFormConstants;
 import com.liferay.asset.list.constants.AssetListPortletKeys;
 import com.liferay.asset.list.constants.AssetListWebKeys;
+import com.liferay.asset.list.model.AssetListEntry;
 import com.liferay.asset.list.service.AssetListEntryAssetEntryRelLocalServiceUtil;
+import com.liferay.asset.list.service.AssetListEntryLocalServiceUtil;
 import com.liferay.asset.util.comparator.AssetRendererFactoryTypeNameComparator;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.item.selector.ItemSelectorReturnType;
@@ -69,6 +72,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
@@ -98,6 +102,17 @@ public class EditAssetListDisplayContext {
 			WebKeys.THEME_DISPLAY);
 	}
 
+	public AssetListEntry getAssetListEntry() {
+		if (_assetListEntry != null) {
+			return _assetListEntry;
+		}
+
+		_assetListEntry = AssetListEntryLocalServiceUtil.fetchAssetListEntry(
+			getAssetListEntryId());
+
+		return _assetListEntry;
+	}
+
 	public long getAssetListEntryId() {
 		if (_assetListEntryId != null) {
 			return _assetListEntryId;
@@ -106,6 +121,25 @@ public class EditAssetListDisplayContext {
 		_assetListEntryId = ParamUtil.getLong(_request, "assetListEntryId");
 
 		return _assetListEntryId;
+	}
+
+	public int getAssetListEntryType() {
+		if (_assetListEntryType != null) {
+			return _assetListEntryType;
+		}
+
+		AssetListEntry assetListEntry = getAssetListEntry();
+
+		int assetListEntryType = ParamUtil.getInteger(
+			_request, "assetListEntryType");
+
+		if (assetListEntry != null) {
+			assetListEntryType = assetListEntry.getType();
+		}
+
+		_assetListEntryType = assetListEntryType;
+
+		return _assetListEntryType;
 	}
 
 	public JSONArray getAutoFieldRulesJSONArray() {
@@ -577,7 +611,17 @@ public class EditAssetListDisplayContext {
 			_portletRequest, AssetListPortletKeys.ASSET_LIST,
 			PortletRequest.RENDER_PHASE);
 
-		portletURL.setParameter("mvcPath", "/edit_asset_list_entry.jsp");
+		if (getAssetListEntryType() ==
+				AssetListEntryTypeConstants.TYPE_DYNAMIC) {
+
+			portletURL.setParameter(
+				"mvcPath", "/edit_asset_list_entry_dynamic.jsp");
+		}
+		else {
+			portletURL.setParameter(
+				"mvcPath", "/edit_asset_list_entry_manual.jsp");
+		}
+
 		portletURL.setParameter(
 			"assetListEntryId", String.valueOf(getAssetListEntryId()));
 
@@ -867,7 +911,9 @@ public class EditAssetListDisplayContext {
 	}
 
 	private Boolean _anyAssetType;
+	private AssetListEntry _assetListEntry;
 	private Long _assetListEntryId;
+	private Integer _assetListEntryType;
 	private long[] _availableClassNameIds;
 	private long[] _classNameIds;
 	private long[] _classTypeIds;

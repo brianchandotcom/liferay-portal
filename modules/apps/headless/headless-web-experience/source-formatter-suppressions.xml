@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+
+<suppressions>
+	<source-check>
+		<suppress checks="YMLWhitespaceCheck" files="modules/apps/headless/headless-web-experience/headless-web-experience-impl/rest-openapi\.yaml" />
+	</source-check>
+</suppressions>

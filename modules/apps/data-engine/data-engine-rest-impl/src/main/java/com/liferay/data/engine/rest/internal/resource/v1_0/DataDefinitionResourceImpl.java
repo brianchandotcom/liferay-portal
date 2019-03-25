@@ -15,17 +15,25 @@
 package com.liferay.data.engine.rest.internal.resource.v1_0;
 
 import com.liferay.data.engine.rest.dto.v1_0.DataDefinition;
+import com.liferay.data.engine.rest.dto.v1_0.DataDefinitionPermission;
 import com.liferay.data.engine.rest.internal.constants.DataActionKeys;
+import com.liferay.data.engine.rest.internal.constants.DataDefinitionConstants;
 import com.liferay.data.engine.rest.internal.constants.PermissionConstants;
 import com.liferay.data.engine.rest.internal.dto.v1_0.util.DataDefinitionUtil;
 import com.liferay.data.engine.rest.internal.dto.v1_0.util.LocalizedValueUtil;
 import com.liferay.data.engine.rest.internal.model.InternalDataDefinition;
 import com.liferay.data.engine.rest.resource.v1_0.DataDefinitionResource;
+import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.DDMStructureConstants;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMStructureService;
+import com.liferay.portal.kernel.exception.NoSuchRoleException;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.ResourceConstants;
+import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
@@ -33,11 +41,24 @@ import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.service.GroupLocalService;
+import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
+import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.permission.ModelPermissions;
+import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.validation.constraints.NotNull;
+
+import javax.ws.rs.BadRequestException;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -53,14 +74,113 @@ import org.osgi.service.component.annotations.ServiceScope;
 public class DataDefinitionResourceImpl extends BaseDataDefinitionResourceImpl {
 
 	@Override
-	public void deleteDataDefinition(Long dataDefinitionId)
-		throws Exception {
-
+	public void deleteDataDefinition(Long dataDefinitionId) throws Exception {
 		_modelResourcePermission.check(
 			PermissionThreadLocal.getPermissionChecker(), dataDefinitionId,
 			ActionKeys.DELETE);
 
 		_ddmStructureLocalService.deleteStructure(dataDefinitionId);
+	}
+
+	@Override
+	public boolean postDataDefinitionPermission(
+			@NotNull Long dataDefinitionId, @NotNull String operation,
+			DataDefinitionPermission dataDefinitionPermission)
+		throws Exception {
+
+		if (Validator.isNull(operation) ||
+			ArrayUtil.contains(
+				new String[] {
+					PermissionConstants.SAVE_PERMISSION_OPERATION,
+				PermissionConstants.DELETE_PERMISSION_OPERATION
+					},
+				operation, true)) {
+
+			throw new BadRequestException(
+				"Operation parameter must be 'save' or 'delete'");
+		}
+
+		DDMStructure ddmStructure = _ddmStructureLocalService.getStructure(
+			dataDefinitionId);
+
+		_checkPermission(
+			ddmStructure.getGroupId(), ActionKeys.DEFINE_PERMISSIONS);
+
+		List<String> actionIds = new ArrayList<>();
+
+		if (dataDefinitionPermission.getDelete()) {
+			actionIds.add(ActionKeys.DELETE);
+		}
+
+		if (dataDefinitionPermission.getUpdate()) {
+			actionIds.add(ActionKeys.UPDATE);
+		}
+
+		if (dataDefinitionPermission.getView()) {
+			actionIds.add(ActionKeys.VIEW);
+		}
+
+		if (actionIds.isEmpty()) {
+			return false;
+		}
+
+		List<String> roleNames = ListUtil.fromArray(
+			dataDefinitionPermission.getRoleNames());
+
+		if (PermissionConstants.SAVE_PERMISSION_OPERATION.equalsIgnoreCase(
+				operation)) {
+
+			ModelPermissions modelPermissions = new ModelPermissions();
+
+			for (String roleName : roleNames) {
+				modelPermissions.addRolePermissions(
+					roleName, ArrayUtil.toStringArray(actionIds));
+			}
+
+			_resourcePermissionLocalService.addModelResourcePermissions(
+				contextCompany.getCompanyId(), ddmStructure.getGroupId(),
+				PrincipalThreadLocal.getUserId(),
+				DataDefinitionConstants.MODEL_RESOURCE_NAME,
+				String.valueOf(dataDefinitionId), modelPermissions);
+		}
+		else {
+			List<String> noSuchRoleNames = new ArrayList<>();
+			List<Role> roles = new ArrayList<>();
+
+			for (String roleName : roleNames) {
+				try {
+					roles.add(
+						_roleLocalService.getRole(
+							contextCompany.getCompanyId(), roleName));
+				}
+				catch (NoSuchRoleException nsre) {
+					if (_log.isDebugEnabled()) {
+						_log.debug(roleName, nsre);
+					}
+
+					noSuchRoleNames.add(roleName);
+				}
+			}
+
+			if (!noSuchRoleNames.isEmpty()) {
+				throw new BadRequestException(
+					"Invalid Roles: " +
+						ArrayUtil.toStringArray(noSuchRoleNames));
+			}
+
+			for (Role role : roles) {
+				for (String actionId : actionIds) {
+					_resourcePermissionLocalService.removeResourcePermission(
+						contextCompany.getCompanyId(),
+						DataDefinitionConstants.MODEL_RESOURCE_NAME,
+						ResourceConstants.SCOPE_INDIVIDUAL,
+						String.valueOf(dataDefinitionId), role.getRoleId(),
+						actionId);
+				}
+			}
+		}
+
+		return true;
 	}
 
 	@Override
@@ -181,6 +301,9 @@ public class DataDefinitionResourceImpl extends BaseDataDefinitionResourceImpl {
 		}
 	}
 
+	private static final Log _log = LogFactoryUtil.getLog(
+		DataDefinitionResourceImpl.class);
+
 	private long _getClassNameId() {
 		return _portal.getClassNameId(InternalDataDefinition.class);
 	}
@@ -199,5 +322,11 @@ public class DataDefinitionResourceImpl extends BaseDataDefinitionResourceImpl {
 
 	@Reference
 	private Portal _portal;
+
+	@Reference
+	private RoleLocalService _roleLocalService;
+
+	@Reference
+	private ResourcePermissionLocalService _resourcePermissionLocalService;
 
 }

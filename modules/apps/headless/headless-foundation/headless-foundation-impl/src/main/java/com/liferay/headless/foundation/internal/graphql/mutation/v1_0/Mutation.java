@@ -227,6 +227,7 @@ public class Mutation {
 
 	@GraphQLField
 	@GraphQLInvokeDetached
+	@GraphQLName("postUserAccountMultipartBody")
 	public UserAccount postUserAccount(
 			@GraphQLName("MultipartBody") MultipartBody multipartBody)
 		throws Exception {

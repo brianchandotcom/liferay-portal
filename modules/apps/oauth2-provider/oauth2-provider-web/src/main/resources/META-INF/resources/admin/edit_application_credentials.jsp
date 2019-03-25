@@ -309,8 +309,7 @@ String clientSecret = (oAuth2Application == null) ? "" : oAuth2Application.getCl
 				footerContent: footerContent,
 				headerContent: title,
 				modal: true,
-				visible: false,
-				zIndex: Liferay.zIndex.OVERLAY
+				plugins: [Liferay.WidgetZIndex]
 			}
 		).render();
 

@@ -4,7 +4,7 @@ import {
 	HashRouter as Router,
 	Switch
 } from 'react-router-dom';
-import {AppContext} from './AppContext';
+import { AppContext } from './AppContext';
 import fetch from '../shared/rest/fetch';
 import HeaderController from '../shared/components/header-controller/HeaderController';
 import ProcessListCard from './process-list/ProcessListCard';
@@ -35,12 +35,12 @@ export default class AppComponent extends React.Component {
 	}
 
 	setTitle(title) {
-		this.setState({title});
+		this.setState({ title });
 	}
 
 	render() {
-		const {title} = this.state;
-		const withParams = Component => ({match: {params}}) => (
+		const { title } = this.state;
+		const withParams = Component => ({ match: { params } }) => (
 			<Component {...params} />
 		);
 

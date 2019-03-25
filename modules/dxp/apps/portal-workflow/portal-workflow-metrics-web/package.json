@@ -27,7 +27,7 @@
 		"enzyme-adapter-react-16": "1.7.1",
 		"enzyme-to-json": "3.3.5",
 		"eslint": "5.14.1",
-		"eslint-config-liferay": "2.0.18",
+		"eslint-config-liferay": "3.0.0",
 		"eslint-plugin-react": "7.12.4",
 		"eslint-plugin-wyze": "3.4.0",
 		"jest": "23.6.0",

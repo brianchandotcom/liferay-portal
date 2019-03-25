@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 
 export default class PortalComponent extends React.Component {
 	componentWillMount() {
-		const {container, replace} = this.props;
+		const { container, replace } = this.props;
 
 		if (container && replace) {
 			container.innerHTML = '';
@@ -11,7 +11,7 @@ export default class PortalComponent extends React.Component {
 	}
 
 	render() {
-		const {children, container} = this.props;
+		const { children, container } = this.props;
 
 		if (!container) {
 			return null;

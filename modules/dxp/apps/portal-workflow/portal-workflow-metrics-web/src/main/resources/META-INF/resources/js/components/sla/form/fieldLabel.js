@@ -1,7 +1,7 @@
 import Icon from '../../../shared/components/Icon';
 import React from 'react';
 
-const FieldLabel = ({fieldId, required, text}) => (
+const FieldLabel = ({ fieldId, required, text }) => (
 	<label htmlFor={fieldId}>
 		{`${text} `}
 		{required && (

@@ -3,7 +3,7 @@ import SLAListItem from './SLAListItem';
 
 export default class SLAListTable extends React.Component {
 	render() {
-		const {sla} = this.props;
+		const { sla } = this.props;
 
 		return (
 			<div className="table-responsive">
@@ -14,21 +14,21 @@ export default class SLAListTable extends React.Component {
 
 							<th
 								className="table-cell-expand table-head-title"
-								style={{width: '40%'}}
+								style={{ width: '40%' }}
 							>
 								{Liferay.Language.get('sla-name')}
 							</th>
 
 							<th
 								className="table-cell-expand table-head-title"
-								style={{width: '35%'}}
+								style={{ width: '35%' }}
 							>
 								{Liferay.Language.get('description')}
 							</th>
 
 							<th
 								className="table-cell-expand table-head-title"
-								style={{width: '25%'}}
+								style={{ width: '25%' }}
 							>
 								{Liferay.Language.get('duration')}
 							</th>

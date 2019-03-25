@@ -8,6 +8,6 @@ test('Should render component', () => {
 
 	component
 		.find('input.form-control')
-		.simulate('change', {target: {value: 'testops'}});
-	component.find('form').simulate('submit', {preventDefault: () => {}});
+		.simulate('change', { target: { value: 'testops' } });
+	component.find('form').simulate('submit', { preventDefault: () => {} });
 });

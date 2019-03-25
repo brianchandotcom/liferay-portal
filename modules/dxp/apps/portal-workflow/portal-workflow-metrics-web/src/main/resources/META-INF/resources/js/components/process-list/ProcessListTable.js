@@ -7,7 +7,7 @@ import React from 'react';
  */
 export default class ProcessListTable extends React.Component {
 	render() {
-		const {items} = this.props;
+		const { items } = this.props;
 
 		return (
 			<div className="table-responsive">
@@ -16,28 +16,28 @@ export default class ProcessListTable extends React.Component {
 						<tr>
 							<th
 								className="table-cell-expand table-head-title"
-								style={{width: '70%'}}
+								style={{ width: '70%' }}
 							>
 								{Liferay.Language.get('process-name')}
 							</th>
 
 							<th
 								className="table-cell-expand table-head-title"
-								style={{width: '15%'}}
+								style={{ width: '15%' }}
 							>
 								{Liferay.Language.get('overdue')}
 							</th>
 
 							<th
 								className="table-cell-expand table-head-title"
-								style={{width: '15%'}}
+								style={{ width: '15%' }}
 							>
 								{Liferay.Language.get('on-time')}
 							</th>
 
 							<th
 								className="table-cell-expand table-head-title"
-								style={{width: '15%'}}
+								style={{ width: '15%' }}
 							>
 								{Liferay.Language.get('total-pending')}
 							</th>

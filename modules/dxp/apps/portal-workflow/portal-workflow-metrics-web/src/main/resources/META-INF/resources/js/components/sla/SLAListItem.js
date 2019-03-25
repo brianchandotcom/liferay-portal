@@ -1,11 +1,11 @@
-import {ChildLink} from '../../shared/components/router/routerWrapper';
-import {formatDuration} from '../../shared/util/duration';
+import { ChildLink } from '../../shared/components/router/routerWrapper';
+import { formatDuration } from '../../shared/util/duration';
 import Icon from '../../shared/components/Icon';
 import React from 'react';
 
 export default class SLAListItem extends React.Component {
 	render() {
-		const {description, duration, id, name, processId} = this.props;
+		const { description, duration, id, name, processId } = this.props;
 		const durationString = formatDuration(duration);
 
 		return (

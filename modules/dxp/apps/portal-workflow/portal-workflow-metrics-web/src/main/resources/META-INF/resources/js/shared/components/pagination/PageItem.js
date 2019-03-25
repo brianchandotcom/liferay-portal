@@ -1,4 +1,4 @@
-import {Link, withRouter} from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 import autobind from 'autobind-decorator';
 import Icon from '../Icon';
 import pathToRegexp from 'path-to-regexp';
@@ -11,7 +11,7 @@ import React from 'react';
 class PageItem extends React.Component {
 	@autobind
 	setPage() {
-		const {disabled, onChangePage, page} = this.props;
+		const { disabled, onChangePage, page } = this.props;
 
 		if (!disabled) {
 			onChangePage(page);
@@ -19,9 +19,16 @@ class PageItem extends React.Component {
 	}
 
 	render() {
-		const {disabled, highlighted, location: {search}, match, page, type} = this.props;
+		const {
+			disabled,
+			highlighted,
+			location: { search },
+			match,
+			page,
+			type
+		} = this.props;
 		const classNames = ['page-item'];
-		const params = Object.assign({}, match.params, {page});
+		const params = Object.assign({}, match.params, { page });
 		const path = pathToRegexp.compile(match.path);
 
 		if (disabled) {
@@ -40,10 +47,13 @@ class PageItem extends React.Component {
 					: Liferay.Language.get('previous');
 
 				return (
-					<Link className="page-link" to={{
-						pathname: path(params),
-						search
-					}}>
+					<Link
+						className="page-link"
+						to={{
+							pathname: path(params),
+							search
+						}}
+					>
 						<Icon iconName={iconType} />
 
 						<span className="sr-only">{displayType}</span>
@@ -52,10 +62,13 @@ class PageItem extends React.Component {
 			}
 
 			return (
-				<Link className="page-link" to={{
-					pathname: path(params),
-					search
-				}}>
+				<Link
+					className="page-link"
+					to={{
+						pathname: path(params),
+						search
+					}}
+				>
 					{page}
 				</Link>
 			);

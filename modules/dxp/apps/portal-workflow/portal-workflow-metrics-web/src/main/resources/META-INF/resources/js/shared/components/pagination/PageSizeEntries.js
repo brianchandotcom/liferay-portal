@@ -17,15 +17,15 @@ export default class PageSizeEntries extends React.Component {
 
 	@autobind
 	setPageSize(pageSize) {
-		const {onSelectPageSize} = this.props;
+		const { onSelectPageSize } = this.props;
 
-		this.setState({selectedPageSize: pageSize});
+		this.setState({ selectedPageSize: pageSize });
 		onSelectPageSize(pageSize);
 	}
 
 	render() {
-		const {pageSizeEntries} = this.props;
-		const {selectedPageSize} = this.state;
+		const { pageSizeEntries } = this.props;
+		const { selectedPageSize } = this.state;
 
 		return (
 			<div className="dropdown pagination-items-per-page">

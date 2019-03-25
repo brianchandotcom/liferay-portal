@@ -8,7 +8,7 @@ import React from 'react';
 export default class PageLink extends React.Component {
 	@autobind
 	setPage() {
-		const {disabled, onChangePage, page} = this.props;
+		const { disabled, onChangePage, page } = this.props;
 
 		if (!disabled) {
 			onChangePage(page);
@@ -16,7 +16,7 @@ export default class PageLink extends React.Component {
 	}
 
 	render() {
-		const {page} = this.props;
+		const { page } = this.props;
 
 		return (
 			<li className="page-item" onClick={this.setPage}>

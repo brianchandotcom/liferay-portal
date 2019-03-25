@@ -19,10 +19,10 @@ export default class Pagination extends React.Component {
 
 	@autobind
 	goToPage(activePage) {
-		const {onSelectPage} = this.props;
+		const { onSelectPage } = this.props;
 
 		onSelectPage(activePage);
-		this.setState({activePage});
+		this.setState({ activePage });
 	}
 
 	buildDropMenu(initCount, condition, functionIterator) {
@@ -68,7 +68,7 @@ export default class Pagination extends React.Component {
 	}
 
 	render() {
-		const {page, pageSize, totalCount} = this.props;
+		const { page, pageSize, totalCount } = this.props;
 
 		const activePage = page === 1 ? page : this.state.activePage;
 		const lastPage = Math.ceil(totalCount / pageSize);

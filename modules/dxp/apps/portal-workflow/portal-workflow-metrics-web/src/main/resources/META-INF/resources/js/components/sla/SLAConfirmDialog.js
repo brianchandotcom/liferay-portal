@@ -2,7 +2,7 @@ import React from 'react';
 
 export default class SLAConfirmDialog extends React.Component {
 	render() {
-		const {item: itemRemoved} = this.props;
+		const { item: itemRemoved } = this.props;
 
 		return (
 			<div className="modal" role="dialog" tabIndex="-1">

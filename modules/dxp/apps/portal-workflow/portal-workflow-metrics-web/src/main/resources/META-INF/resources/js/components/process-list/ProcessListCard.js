@@ -2,7 +2,7 @@ import {
 	REQUEST_ORIGIN_TYPE_FETCH,
 	REQUEST_ORIGIN_TYPE_SEARCH
 } from './Constants';
-import {AppContext} from '../AppContext';
+import { AppContext } from '../AppContext';
 import autobind from 'autobind-decorator';
 import DisplayResult from '../../shared/components/pagination/DisplayResult';
 import ListView from '../../shared/components/list/ListView';
@@ -20,7 +20,7 @@ class ProcessListCard extends React.Component {
 	constructor(props) {
 		super(props);
 
-		const {page = 1, pageSize = 20} = this.props;
+		const { page = 1, pageSize = 20 } = this.props;
 
 		this.requestOriginType = null;
 
@@ -33,9 +33,9 @@ class ProcessListCard extends React.Component {
 	}
 
 	componentDidMount() {
-		const {page, pageSize} = this.state;
+		const { page, pageSize } = this.state;
 
-		this.requestData({page, pageSize}).then(({items, totalCount}) =>
+		this.requestData({ page, pageSize }).then(({ items, totalCount }) =>
 			this.setState({
 				items,
 				totalCount
@@ -53,8 +53,8 @@ class ProcessListCard extends React.Component {
 	 * @param {number} configuration.pageSize
 	 * @param {string} configuration.title
 	 */
-	requestData({page, pageSize, title}) {
-		const {client} = this.context;
+	requestData({ page, pageSize, title }) {
+		const { client } = this.context;
 		const isSearch = typeof title === 'string';
 		let urlRequest = `/processes?page=${page}&pageSize=${pageSize}`;
 
@@ -66,25 +66,25 @@ class ProcessListCard extends React.Component {
 			? REQUEST_ORIGIN_TYPE_SEARCH
 			: REQUEST_ORIGIN_TYPE_FETCH;
 
-		return client.get(urlRequest).then(({data}) => data);
+		return client.get(urlRequest).then(({ data }) => data);
 	}
 
 	@autobind
 	onSearch(title) {
-		const {pageSize} = this.state;
+		const { pageSize } = this.state;
 		const page = 1;
 
-		return this.requestData({page, pageSize, title}).then(
-			({items, totalCount}) => this.setState({items, page, totalCount})
+		return this.requestData({ page, pageSize, title }).then(
+			({ items, totalCount }) => this.setState({ items, page, totalCount })
 		);
 	}
 
 	@autobind
 	setPage(page) {
-		const {pageSize} = this.state;
+		const { pageSize } = this.state;
 
-		return this.requestData({page, pageSize}).then(({items, totalCount}) =>
-			this.setState({items, page, totalCount})
+		return this.requestData({ page, pageSize }).then(({ items, totalCount }) =>
+			this.setState({ items, page, totalCount })
 		);
 	}
 
@@ -92,14 +92,14 @@ class ProcessListCard extends React.Component {
 	setPageSize(pageSize) {
 		const page = 1;
 
-		return this.requestData({page, pageSize}).then(({items, totalCount}) =>
-			this.setState({items, page, pageSize, totalCount})
+		return this.requestData({ page, pageSize }).then(({ items, totalCount }) =>
+			this.setState({ items, page, pageSize, totalCount })
 		);
 	}
 
 	render() {
-		const {requestOriginType} = this;
-		const {items, page, pageSize, totalCount} = this.state;
+		const { requestOriginType } = this;
+		const { items, page, pageSize, totalCount } = this.state;
 
 		const emptyTitleText = Liferay.Language.get('no-current-metrics');
 		const isFetching =

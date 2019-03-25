@@ -1,4 +1,4 @@
-import {Link, withRouter} from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 import Icon from '../Icon';
 import PortalComponent from './PortalComponent';
 import queryString from 'query-string';
@@ -9,7 +9,7 @@ class HeaderMenuBackItem extends React.Component {
 		const {
 			basePath,
 			container,
-			location: {pathname, search}
+			location: { pathname, search }
 		} = this.props;
 		const isFirstPage = pathname === basePath || pathname === '/';
 		const backPath = queryString.parse(search).backPath;

@@ -19,7 +19,7 @@ export default class HeaderController extends React.Component {
 	}
 
 	render() {
-		const {basePath, title} = this.props;
+		const { basePath, title } = this.props;
 
 		return (
 			<template>

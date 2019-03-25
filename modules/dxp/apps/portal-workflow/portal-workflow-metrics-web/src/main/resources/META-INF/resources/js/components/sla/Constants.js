@@ -4,4 +4,4 @@ const DURATION = 'duration';
 const HOURS = 'hours';
 const NAME = 'name';
 
-export {ALERT_MESSAGE, DAYS, DURATION, HOURS, NAME};
+export { ALERT_MESSAGE, DAYS, DURATION, HOURS, NAME };

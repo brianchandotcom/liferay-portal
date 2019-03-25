@@ -85,7 +85,7 @@ test('Should test keydown press', () => {
 
 	instance.onSearch({
 		keyCode: 38,
-		target: {value: ''}
+		target: { value: '' }
 	});
 	expect(component).toMatchSnapshot();
 });
@@ -99,7 +99,7 @@ test('Should test keyup press', () => {
 
 	instance.onSearch({
 		keyCode: 40,
-		target: {value: ''}
+		target: { value: '' }
 	});
 	expect(component).toMatchSnapshot();
 });
@@ -113,11 +113,11 @@ test('Should test keyenter press', () => {
 
 	instance.onSearch({
 		keyCode: 38,
-		target: {value: ''}
+		target: { value: '' }
 	});
 	instance.onSearch({
 		keyCode: 13,
-		target: {value: ''}
+		target: { value: '' }
 	});
 	expect(component).toMatchSnapshot();
 });
@@ -131,7 +131,7 @@ test('Should search', () => {
 
 	instance.onSearch({
 		keyCode: 84,
-		target: {value: 'test'}
+		target: { value: 'test' }
 	});
 	expect(component).toMatchSnapshot();
 });

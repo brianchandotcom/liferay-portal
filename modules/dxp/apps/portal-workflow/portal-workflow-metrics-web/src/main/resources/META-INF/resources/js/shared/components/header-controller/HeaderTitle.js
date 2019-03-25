@@ -11,7 +11,7 @@ export default class HeaderTitle extends React.Component {
 	}
 
 	render() {
-		const {container, title} = this.props;
+		const { container, title } = this.props;
 		const titleChanged = title !== this.prevTitle;
 
 		return (

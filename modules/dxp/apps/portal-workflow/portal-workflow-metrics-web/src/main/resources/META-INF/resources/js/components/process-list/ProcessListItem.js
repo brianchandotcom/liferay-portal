@@ -1,4 +1,4 @@
-import {ChildLink} from '../../shared/components/router/routerWrapper';
+import { ChildLink } from '../../shared/components/router/routerWrapper';
 import Icon from '../../shared/components/Icon';
 import React from 'react';
 

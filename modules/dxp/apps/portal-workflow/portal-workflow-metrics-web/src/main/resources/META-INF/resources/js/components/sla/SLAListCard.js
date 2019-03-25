@@ -1,6 +1,6 @@
-import {AppContext} from '../AppContext';
+import { AppContext } from '../AppContext';
 import autobind from 'autobind-decorator';
-import {ChildLink} from '../../shared/components/router/routerWrapper';
+import { ChildLink } from '../../shared/components/router/routerWrapper';
 import DisplayResult from '../../shared/components/pagination/DisplayResult';
 import EmptyContent from '../../shared/components/EmptyContent';
 import Icon from '../../shared/components/Icon';
@@ -19,7 +19,7 @@ class SLAListCard extends React.Component {
 	constructor(props) {
 		super(props);
 
-		const {page = 1, pageSize = 20, processId} = this.props;
+		const { page = 1, pageSize = 20, processId } = this.props;
 
 		this.state = {
 			items: [],
@@ -32,13 +32,13 @@ class SLAListCard extends React.Component {
 	}
 
 	componentDidMount() {
-		const {page, pageSize, processId} = this.state;
+		const { page, pageSize, processId } = this.state;
 
 		this.requestData({
 			page,
 			pageSize,
 			processId
-		}).then(({items, totalCount}) =>
+		}).then(({ items, totalCount }) =>
 			this.setState({
 				items,
 				totalCount
@@ -47,7 +47,7 @@ class SLAListCard extends React.Component {
 	}
 
 	componentDidUpdate() {
-		const {itemRemoved} = this.props;
+		const { itemRemoved } = this.props;
 
 		if (itemRemoved) {
 			this.removeItem();
@@ -59,7 +59,7 @@ class SLAListCard extends React.Component {
 	}
 
 	removeItem() {
-		openToast({message: Liferay.Language.get('sla-was-deleted')});
+		openToast({ message: Liferay.Language.get('sla-was-deleted') });
 	}
 
 	/**
@@ -69,8 +69,8 @@ class SLAListCard extends React.Component {
 	 * @param {number} configuration.processId
 	 * @param {string} configuration.title
 	 */
-	requestData({page, pageSize, processId, title}) {
-		const {client} = this.context;
+	requestData({ page, pageSize, processId, title }) {
+		const { client } = this.context;
 
 		this.state.requestOriginType =
 			typeof title === 'string'
@@ -79,44 +79,44 @@ class SLAListCard extends React.Component {
 
 		return client
 			.get(`/processes/${processId}/slas?page=${page}&pageSize=${pageSize}`)
-			.then(({data}) => data);
+			.then(({ data }) => data);
 	}
 
 	@autobind
 	onSearch(title) {
-		const {pageSize} = this.state;
-		const {processId} = this.props;
+		const { pageSize } = this.state;
+		const { processId } = this.props;
 		const page = 1;
 
-		return this.requestData({page, pageSize, processId, title}).then(
-			({items, totalCount}) => this.setState({items, page, totalCount})
+		return this.requestData({ page, pageSize, processId, title }).then(
+			({ items, totalCount }) => this.setState({ items, page, totalCount })
 		);
 	}
 
 	@autobind
-	setPage({page, pageSize}) {
-		const {processId} = this.props;
+	setPage({ page, pageSize }) {
+		const { processId } = this.props;
 
-		return this.requestData({page, pageSize, processId}).then(
-			({items, totalCount}) => this.setState({items, page, totalCount})
+		return this.requestData({ page, pageSize, processId }).then(
+			({ items, totalCount }) => this.setState({ items, page, totalCount })
 		);
 	}
 
 	@autobind
 	setPageSize(pageSize) {
-		const {processId} = this.props;
+		const { processId } = this.props;
 		const page = 1;
 
-		return this.requestData({page, pageSize, processId}).then(
-			({items, totalCount}) =>
-				this.setState({items, page, pageSize, totalCount})
+		return this.requestData({ page, pageSize, processId }).then(
+			({ items, totalCount }) =>
+				this.setState({ items, page, pageSize, totalCount })
 		);
 	}
 
 	render() {
-		const {items, page, pageSize, requestOriginType, totalCount} = this.state;
+		const { items, page, pageSize, requestOriginType, totalCount } = this.state;
 		const pageSizes = [5, 10, 20, 30, 50, 75];
-		const {itemToRemove, processId} = this.props;
+		const { itemToRemove, processId } = this.props;
 
 		const emptySearchRender = secondaryRender =>
 			requestOriginType === REQUEST_ORIGIN_TYPE_SEARCH && totalCount === 0 ? (

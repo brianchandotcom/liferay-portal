@@ -1,5 +1,5 @@
 import React from 'react';
-import {sub} from '../../util/lang';
+import { sub } from '../../util/lang';
 
 /**
  * @class
@@ -7,7 +7,7 @@ import {sub} from '../../util/lang';
  */
 export default class DisplayResult extends React.Component {
 	render() {
-		const {page, pageCount, pageSize, totalCount} = this.props;
+		const { page, pageCount, pageSize, totalCount } = this.props;
 		const firstItem = pageSize * (page - 1) + 1;
 		const lastItem = firstItem + pageCount - 1;
 

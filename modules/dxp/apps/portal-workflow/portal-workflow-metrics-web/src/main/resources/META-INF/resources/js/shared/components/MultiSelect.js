@@ -6,8 +6,8 @@ import React from 'react';
  * @memberof shared/components
  */
 export default class MultiSelect extends React.Component {
-	constructor({data, selectedTags}) {
-		super({data, selectedTags});
+	constructor({ data, selectedTags }) {
+		super({ data, selectedTags });
 
 		this.state = {
 			active: false,
@@ -25,7 +25,7 @@ export default class MultiSelect extends React.Component {
 	}
 
 	get dataFiltred() {
-		const {data, searchKey, selectedTags} = this.state;
+		const { data, searchKey, selectedTags } = this.state;
 		const term = searchKey.toLowerCase().trim();
 
 		return data
@@ -35,7 +35,7 @@ export default class MultiSelect extends React.Component {
 
 	addTag(event) {
 		const tag = event.currentTarget.getAttribute('data-tag');
-		const {selectedTags} = this.state;
+		const { selectedTags } = this.state;
 
 		this.setState({
 			selectedTags: [...selectedTags, tag]
@@ -43,16 +43,16 @@ export default class MultiSelect extends React.Component {
 	}
 
 	hideDropList() {
-		this.setState({active: false});
+		this.setState({ active: false });
 	}
 
 	onSearch(event) {
 		const dataFiltred = this.dataFiltred;
 		const {
 			keyCode,
-			target: {value: searchKey}
+			target: { value: searchKey }
 		} = event;
-		let {selectedTags, verticalIndex} = this.state;
+		let { selectedTags, verticalIndex } = this.state;
 
 		if ([38, 40].indexOf(keyCode) > -1) {
 			const dataCount = dataFiltred.length;
@@ -65,7 +65,7 @@ export default class MultiSelect extends React.Component {
 						? dataCount - 1
 						: verticalIndex;
 
-			this.setState({verticalIndex});
+			this.setState({ verticalIndex });
 		}
 		else if (keyCode === 13 && verticalIndex > -1) {
 			selectedTags = [...selectedTags, dataFiltred[verticalIndex]];
@@ -85,7 +85,7 @@ export default class MultiSelect extends React.Component {
 
 	removeTag(event) {
 		const tagIndex = Number(event.currentTarget.getAttribute('data-tag-index'));
-		const {selectedTags} = this.state;
+		const { selectedTags } = this.state;
 
 		selectedTags.splice(tagIndex, 1);
 		this.setState({
@@ -94,11 +94,11 @@ export default class MultiSelect extends React.Component {
 	}
 
 	showDropList() {
-		this.setState({active: true});
+		this.setState({ active: true });
 	}
 
 	render() {
-		const {active, selectedTags, verticalIndex} = this.state;
+		const { active, selectedTags, verticalIndex } = this.state;
 
 		const tagRender = (text, tagIndex) => (
 			<span

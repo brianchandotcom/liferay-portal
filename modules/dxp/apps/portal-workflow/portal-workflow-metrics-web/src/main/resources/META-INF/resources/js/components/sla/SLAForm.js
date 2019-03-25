@@ -1,4 +1,4 @@
-import {ALERT_MESSAGE, DAYS, DURATION, HOURS, NAME} from './Constants';
+import { ALERT_MESSAGE, DAYS, DURATION, HOURS, NAME } from './Constants';
 import {
 	BackLink,
 	BackRedirect
@@ -10,10 +10,10 @@ import {
 	validateHours,
 	validateName
 } from './util/slaFormUtil';
-import {AppContext} from '../AppContext';
+import { AppContext } from '../AppContext';
 import autobind from 'autobind-decorator';
 import createNumberMask from 'text-mask-addons/dist/createNumberMask';
-import {durationAsMilliseconds} from '../../shared/util/duration';
+import { durationAsMilliseconds } from '../../shared/util/duration';
 import FieldError from './form/fieldError';
 import FieldLabel from './form/fieldLabel';
 import Icon from '../../shared/components/Icon';
@@ -50,17 +50,17 @@ class SLAForm extends React.Component {
 	@autobind
 	handleChange(
 		{
-			target: {name, value = ''}
+			target: { name, value = '' }
 		},
 		callback
 	) {
-		this.setState({[name]: value}, callback);
+		this.setState({ [name]: value }, callback);
 	}
 
 	@autobind
 	handleSubmit() {
-		const {days, description, hours, name} = this.state;
-		const {errors} = this.state;
+		const { days, description, hours, name } = this.state;
+		const { errors } = this.state;
 
 		errors[DAYS] = validateDays(days);
 		errors[DURATION] = validateDuration(days, hours);
@@ -72,11 +72,11 @@ class SLAForm extends React.Component {
 				'please-fill-in-the-required-fields'
 			);
 
-			this.setState({errors});
+			this.setState({ errors });
 		}
 		else {
-			const {client} = this.context;
-			const {processId} = this.props;
+			const { client } = this.context;
+			const { processId } = this.props;
 			const duration = durationAsMilliseconds(days, hours);
 
 			errors[ALERT_MESSAGE] = '';
@@ -89,55 +89,55 @@ class SLAForm extends React.Component {
 					processId
 				})
 				.then(() => {
-					this.setState({redirectToSlaList: true});
+					this.setState({ redirectToSlaList: true });
 				})
 				.catch(errorResponse => {
 					const errorKey = errorResponse.fieldName || ALERT_MESSAGE;
 
 					errors[errorKey] = errorResponse.message;
-					this.setState({errors});
+					this.setState({ errors });
 				});
 		}
 	}
 
 	@autobind
 	onDaysBlurred() {
-		const {days, errors} = this.state;
+		const { days, errors } = this.state;
 
 		errors[ALERT_MESSAGE] = '';
 		errors[DAYS] = validateDays(days);
 
-		this.setState({errors});
+		this.setState({ errors });
 	}
 
 	@autobind
 	onDurationChanged() {
-		const {days, errors, hours} = this.state;
+		const { days, errors, hours } = this.state;
 
 		errors[ALERT_MESSAGE] = '';
 		errors[DURATION] = validateDuration(days, hours);
 
-		this.setState({errors});
+		this.setState({ errors });
 	}
 
 	@autobind
 	onHoursBlurred() {
-		const {errors, hours} = this.state;
+		const { errors, hours } = this.state;
 
 		errors[ALERT_MESSAGE] = '';
 		errors[HOURS] = validateHours(hours);
 
-		this.setState({errors});
+		this.setState({ errors });
 	}
 
 	@autobind
 	onNameChanged() {
-		const {errors, name} = this.state;
+		const { errors, name } = this.state;
 
 		errors[ALERT_MESSAGE] = '';
 		errors[NAME] = validateName(name);
 
-		this.setState({errors});
+		this.setState({ errors });
 	}
 
 	render() {
@@ -145,7 +145,7 @@ class SLAForm extends React.Component {
 			includeThousandsSeparator: false,
 			prefix: ''
 		});
-		const {errors, redirectToSlaList} = this.state;
+		const { errors, redirectToSlaList } = this.state;
 		const onChangeHandler = validationFunc => evt => {
 			this.handleChange(evt, validationFunc);
 		};

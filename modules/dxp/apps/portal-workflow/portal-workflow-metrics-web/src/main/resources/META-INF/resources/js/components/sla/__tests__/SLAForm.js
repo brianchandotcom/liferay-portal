@@ -2,7 +2,7 @@ import fetch from '../../../test/mock/fetch';
 import fetchFailure from '../../../test/mock/fetchFailure';
 import React from 'react';
 import renderer from 'react-test-renderer';
-import {MockRouter as Router} from '../../../test/mock/MockRouter';
+import { MockRouter as Router } from '../../../test/mock/MockRouter';
 import SLAForm from '../SLAForm';
 
 jest.mock('../../AppContext');
@@ -74,7 +74,7 @@ test('Should display errors when input blur with invalid values', () => {
 	instance.onDaysBlurred();
 	instance.onHoursBlurred();
 
-	const {errors} = instance.state;
+	const { errors } = instance.state;
 
 	expect(errors.days).toBe('Value must be an integer above 0.');
 	expect(errors.hours).toBe('Hours must be between 00:00 and 24:00.');
@@ -92,7 +92,7 @@ test('Should display errors when duration was changed but keep empty', () => {
 
 	instance.onDurationChanged();
 
-	const {errors} = instance.state;
+	const { errors } = instance.state;
 
 	expect(errors.duration).toBe(
 		'A duration time is required. Please enter at least one of the fields.'
@@ -130,7 +130,7 @@ test('Should display error when submitting the form with empty name', () => {
 
 	instance.handleSubmit();
 
-	const {errors} = instance.state;
+	const { errors } = instance.state;
 
 	expect(errors.name).toBe('A name is required.');
 	expect(component).toMatchSnapshot();
@@ -154,7 +154,7 @@ test('Should display error on alert when receive a server error after submit', (
 	});
 
 	instance.handleSubmit().then(() => {
-		const {errors} = instance.state;
+		const { errors } = instance.state;
 
 		expect(errors['alertMessage']).toBe('Error during SLA creation.');
 		expect(component).toMatchSnapshot();
@@ -180,7 +180,7 @@ test('Should display error on field when receive a server error after submit', (
 	});
 
 	instance.handleSubmit().then(() => {
-		const {errors} = instance.state;
+		const { errors } = instance.state;
 
 		expect(errors['name']).toBe('An SLA with the same name already exists.');
 		expect(component).toMatchSnapshot();
@@ -204,7 +204,7 @@ test('Should display error when submitting the form with invalid hours', () => {
 
 	instance.handleSubmit();
 
-	const {errors} = instance.state;
+	const { errors } = instance.state;
 
 	expect(errors.hours).toBe('Hours must be between 00:00 and 24:00.');
 	expect(component).toMatchSnapshot();
@@ -221,20 +221,20 @@ test('Should update state after input changes', () => {
 	component
 		.find('#sla_name')
 		.simulate('focus')
-		.simulate('change', {target: {name: 'name', value: 'New SLA'}})
+		.simulate('change', { target: { name: 'name', value: 'New SLA' } })
 		.simulate('blur');
 
-	const {name: filledName} = instance.state;
+	const { name: filledName } = instance.state;
 
 	expect(filledName).toBe('New SLA');
 
 	component
 		.find('#sla_name')
 		.simulate('focus')
-		.simulate('change', {target: {name: 'name'}})
+		.simulate('change', { target: { name: 'name' } })
 		.simulate('blur');
 
-	const {name: emptyName} = instance.state;
+	const { name: emptyName } = instance.state;
 
 	expect(emptyName).toBe('');
 	expect(component).toMatchSnapshot();

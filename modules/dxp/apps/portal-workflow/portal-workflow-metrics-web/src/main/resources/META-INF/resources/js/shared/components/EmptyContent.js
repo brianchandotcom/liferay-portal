@@ -6,7 +6,7 @@ import React from 'react';
  */
 export default class EmptyContent extends React.Component {
 	render() {
-		const {message, title, type = ''} = this.props;
+		const { message, title, type = '' } = this.props;
 		const classNameType =
 			type === 'not-found'
 				? 'taglib-empty-search-result-message-header'

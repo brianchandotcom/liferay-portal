@@ -1,11 +1,11 @@
 import fetch from '../../../test/mock/fetch';
 import React from 'react';
 import renderer from 'react-test-renderer';
-import {MockRouter as Router} from '../../../test/mock/MockRouter';
+import { MockRouter as Router } from '../../../test/mock/MockRouter';
 import SLAListCard from '../SLAListCard';
 
 test('Should change page', () => {
-	const data = {items: [], totalCount: 0};
+	const data = { items: [], totalCount: 0 };
 	const component = mount(
 		<Router client={fetch(data)}>
 			<SLAListCard />
@@ -17,7 +17,7 @@ test('Should change page', () => {
 });
 
 test('Should change page size', () => {
-	const data = {items: [], totalCount: 0};
+	const data = { items: [], totalCount: 0 };
 	const component = mount(
 		<Router client={fetch(data)}>
 			<SLAListCard />
@@ -31,7 +31,7 @@ test('Should change page size', () => {
 });
 
 test('Should render component', () => {
-	const data = {items: [], totalCount: 0};
+	const data = { items: [], totalCount: 0 };
 	const component = renderer.create(
 		<Router client={fetch(data)}>
 			<SLAListCard />
@@ -44,7 +44,7 @@ test('Should render component', () => {
 });
 
 test('Should render component after item was removed', () => {
-	const data = {items: [], totalCount: 0};
+	const data = { items: [], totalCount: 0 };
 	const component = renderer.create(
 		<Router client={fetch(data)}>
 			<SLAListCard itemRemoved={'test'} />
@@ -56,7 +56,7 @@ test('Should render component after item was removed', () => {
 });
 
 test('Should remove a item', () => {
-	const data = {items: [], totalCount: 0};
+	const data = { items: [], totalCount: 0 };
 	const component = mount(
 		<Router client={fetch(data)}>
 			<SLAListCard />
@@ -69,7 +69,7 @@ test('Should remove a item', () => {
 });
 
 test('Should search', () => {
-	const data = {items: [], totalCount: 0};
+	const data = { items: [], totalCount: 0 };
 	const component = mount(
 		<Router client={fetch(data)}>
 			<SLAListCard />

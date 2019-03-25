@@ -32,7 +32,7 @@ export default class OpenProcessesSummary extends React.Component {
 						<div className="card-body">
 							<div
 								className="row d-flex justify-content-start"
-								style={{marginTop: '8px'}}
+								style={{ marginTop: '8px' }}
 							>
 								<SummaryCard
 									description={Liferay.Language.get('total-open')}
@@ -48,7 +48,7 @@ export default class OpenProcessesSummary extends React.Component {
 								/>
 							</div>
 
-							<div className="col-12" style={{paddingTop: '30px'}}>
+							<div className="col-12" style={{ paddingTop: '30px' }}>
 								<ClayCharts data={CHART_DATA} />
 							</div>
 						</div>

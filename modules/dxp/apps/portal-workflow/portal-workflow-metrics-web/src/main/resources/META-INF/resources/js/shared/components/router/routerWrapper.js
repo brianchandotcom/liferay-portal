@@ -1,4 +1,4 @@
-import {Link, Redirect, withRouter} from 'react-router-dom';
+import { Link, Redirect, withRouter } from 'react-router-dom';
 import queryString from 'query-string';
 import React from 'react';
 
@@ -30,7 +30,7 @@ class ChildLinkWrapper extends React.Component {
 				className={this.props.className}
 				to={{
 					pathname: this.props.to,
-					search: queryString.stringify({backPath})
+					search: queryString.stringify({ backPath })
 				}}
 			/>
 		);
@@ -39,7 +39,7 @@ class ChildLinkWrapper extends React.Component {
 
 function getBackPathFromProps(props) {
 	const {
-		location: {search}
+		location: { search }
 	} = props;
 
 	return queryString.parse(search).backPath;
@@ -49,4 +49,4 @@ const BackLink = withRouter(BackLinkWrapper);
 const BackRedirect = withRouter(BackRedirectWrapper);
 const ChildLink = withRouter(ChildLinkWrapper);
 
-export {BackLink, BackRedirect, ChildLink};
+export { BackLink, BackRedirect, ChildLink };

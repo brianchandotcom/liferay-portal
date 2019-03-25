@@ -1,4 +1,4 @@
-import {sub} from '../../../shared/util/lang';
+import { sub } from '../../../shared/util/lang';
 
 const hasErrors = errors => {
 	return Object.keys(errors).some(key => errors[key]);

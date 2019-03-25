@@ -6,7 +6,7 @@ import React from 'react';
  */
 export default class Icon extends React.Component {
 	render() {
-		const {iconName} = this.props;
+		const { iconName } = this.props;
 
 		return (
 			<svg

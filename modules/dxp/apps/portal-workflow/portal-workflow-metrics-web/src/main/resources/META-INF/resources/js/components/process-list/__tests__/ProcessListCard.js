@@ -2,10 +2,10 @@ import fetch from '../../../test/mock/fetch';
 import ProcessListCard from '../ProcessListCard';
 import React from 'react';
 import renderer from 'react-test-renderer';
-import {MockRouter as Router} from '../../../test/mock/MockRouter';
+import { MockRouter as Router } from '../../../test/mock/MockRouter';
 
 test('Should render component', () => {
-	const data = {items: [], totalCount: 0};
+	const data = { items: [], totalCount: 0 };
 	const component = renderer.create(
 		<Router client={fetch(data)}>
 			<ProcessListCard />
@@ -105,7 +105,7 @@ test('Should render component with 4 records', () => {
 });
 
 test('Should change page size', () => {
-	const data = {items: [], totalCount: 0};
+	const data = { items: [], totalCount: 0 };
 	const component = mount(
 		<Router client={fetch(data)}>
 			<ProcessListCard />
@@ -119,7 +119,7 @@ test('Should change page size', () => {
 });
 
 test('Should change page', () => {
-	const data = {items: [], totalCount: 0};
+	const data = { items: [], totalCount: 0 };
 	const component = mount(
 		<Router client={fetch(data)}>
 			<ProcessListCard />
@@ -131,7 +131,7 @@ test('Should change page', () => {
 });
 
 test('Should search', () => {
-	const data = {items: [], totalCount: 0};
+	const data = { items: [], totalCount: 0 };
 	const component = mount(
 		<Router client={fetch(data)}>
 			<ProcessListCard />

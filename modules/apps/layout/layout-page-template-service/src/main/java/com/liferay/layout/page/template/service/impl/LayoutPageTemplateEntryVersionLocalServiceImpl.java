@@ -59,16 +59,12 @@ public class LayoutPageTemplateEntryVersionLocalServiceImpl
 			layoutPageTemplateEntryVersionPersistence.create(
 				layoutPageTemplateEntryVersionId);
 
-		Date now = new Date();
-
 		layoutPageTemplateEntryVersion.setGroupId(groupId);
 		layoutPageTemplateEntryVersion.setCompanyId(user.getCompanyId());
 		layoutPageTemplateEntryVersion.setUserId(user.getUserId());
 		layoutPageTemplateEntryVersion.setUserName(user.getFullName());
-		layoutPageTemplateEntryVersion.setCreateDate(
-			serviceContext.getCreateDate(now));
-		layoutPageTemplateEntryVersion.setModifiedDate(
-			serviceContext.getModifiedDate(now));
+		layoutPageTemplateEntryVersion.setCreateDate(new Date());
+		layoutPageTemplateEntryVersion.setModifiedDate(new Date());
 		layoutPageTemplateEntryVersion.setLayoutPageTemplateEntryId(
 			layoutPageTemplateEntryId);
 

@@ -126,19 +126,19 @@ AUI.add(
 					function(item, index, collection) {
 						buffer.push(xmlAction.open, XMLUtil.create('name', item));
 
-						if (_shouldAppend(description, index)) {
+						if (isValidValue(description, index)) {
 							buffer.push(XMLUtil.create('description', description[index]));
 						}
 
-						if (_shouldAppend(script, index)) {
+						if (isValidValue(script, index)) {
 							buffer.push(XMLUtil.create('script', cdata(script[index])));
 						}
 
-						if (_shouldAppend(language, index)) {
+						if (isValidValue(language, index)) {
 							buffer.push(XMLUtil.create('scriptLanguage', language[index]));
 						}
 
-						if (_shouldAppend(executionType, index)) {
+						if (isValidValue(executionType, index)) {
 							buffer.push(XMLUtil.create('executionType', executionType[index]));
 						}
 
@@ -299,19 +299,19 @@ AUI.add(
 					function(item, index, collection) {
 						buffer.push(xmlNotification.open, XMLUtil.create('name', item));
 
-						if (_shouldAppend(description, index)) {
+						if (isValidValue(description, index)) {
 							buffer.push(XMLUtil.create('description', cdata(description[index])));
 						}
 
-						if (_shouldAppend(template, index)) {
+						if (isValidValue(template, index)) {
 							buffer.push(XMLUtil.create('template', cdata(template[index])));
 						}
 
-						if (_shouldAppend(templateLanguage, index)) {
+						if (isValidValue(templateLanguage, index)) {
 							buffer.push(XMLUtil.create('templateLanguage', templateLanguage[index]));
 						}
 
-						if (_shouldAppend(notificationTypes, index)) {
+						if (isValidValue(notificationTypes, index)) {
 							notificationTypes[index].forEach(
 								function(item) {
 									buffer.push(XMLUtil.create('notificationType', item.notificationType));
@@ -361,7 +361,7 @@ AUI.add(
 					function(item, index, collection) {
 						buffer.push(xmlTaskTimer.open, XMLUtil.create('name', item));
 
-						if (_shouldAppend(description, index)) {
+						if (isValidValue(description, index)) {
 							buffer.push(XMLUtil.create('description', description[index]));
 						}
 
@@ -448,8 +448,8 @@ AUI.add(
 			}
 		};
 
-		var _shouldAppend = function(elements, index) {
-			return elements && elements[index] !== undefined;
+		var isValidValue = function(array, index) {
+			return array && array[index] !== undefined;
 		}
 
 		Liferay.KaleoDesignerXMLDefinitionSerializer = serializeDefinition;

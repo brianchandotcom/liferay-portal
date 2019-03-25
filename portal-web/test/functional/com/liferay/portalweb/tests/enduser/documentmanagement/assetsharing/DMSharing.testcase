@@ -232,6 +232,7 @@ definition {
 	@description = "This test ensures that Sharing can be disabled at the instance level."
 	@priority = "4"
 	test DisableSharingAtInstanceScope {
+		property test.name.skip.portal.instance = "DMSharing#DisableSharingAtInstanceScope";
 
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
@@ -269,6 +270,7 @@ definition {
 	@description = "This test ensures that Sharing can be disabled at the system level."
 	@priority = "4"
 	test DisableSharingAtSystemScope {
+		property test.name.skip.portal.instance = "DMSharing#DisableSharingAtSystemScope";
 
 		ProductMenu.gotoPortlet(
 			category = "Configuration",

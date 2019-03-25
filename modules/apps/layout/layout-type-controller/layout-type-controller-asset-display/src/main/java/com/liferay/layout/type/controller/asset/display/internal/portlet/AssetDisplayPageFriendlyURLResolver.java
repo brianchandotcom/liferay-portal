@@ -82,7 +82,7 @@ public class AssetDisplayPageFriendlyURLResolver
 			"request");
 
 		request.setAttribute(
-			AssetDisplayWebKeys.ASSET_DISPLAY_CONTRIBUTOR,
+			AssetDisplayWebKeys.INFO_DISPLAY_CONTRIBUTOR,
 			assetDisplayContributor);
 		request.setAttribute(WebKeys.LAYOUT_ASSET_ENTRY, assetEntry);
 		request.setAttribute(

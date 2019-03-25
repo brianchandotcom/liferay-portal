@@ -69,7 +69,7 @@ public class DisplayPageVerticalCard
 
 		_assetDisplayContributorTracker =
 			(AssetDisplayContributorTracker)renderRequest.getAttribute(
-				LayoutAdminWebKeys.ASSET_DISPLAY_CONTRIBUTOR_TRACKER);
+				LayoutAdminWebKeys.INFO_DISPLAY_CONTRIBUTOR_TRACKER);
 		_layoutPageTemplateEntry = (LayoutPageTemplateEntry)baseModel;
 		_themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);

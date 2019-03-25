@@ -140,7 +140,7 @@ public class AssetDisplayLayoutTypeController
 			}
 
 			request.setAttribute(
-				ContentPageEditorWebKeys.ASSET_DISPLAY_CONTRIBUTOR_TRACKER,
+				ContentPageEditorWebKeys.INFO_DISPLAY_CONTRIBUTOR_TRACKER,
 				_assetDisplayContributorTracker);
 
 			addAttributes(request);

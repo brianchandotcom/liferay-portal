@@ -2,12 +2,17 @@
     "env": {
         "test": {
             "presets": [
-                "env",
-                "metal-jsx"
+                "env"
             ],
             "plugins": [
-                "transform-class-properties",
-                "transform-decorators-legacy",
+                ["@babel/plugin-proposal-decorators", {"legacy": true}],
+                "@babel/plugin-proposal-class-properties",
+                ["incremental-dom", {
+                    components: true,
+                    namespaceAttributes: true,
+                    prefix: "IncrementalDOM",
+                    runtime: "iDOMHelpers"
+                }],
                 ["module-resolver", {
                     "alias": {
                         "dynamic-data-mapping-form-builder/*": "../dynamic-data-mapping-form-builder/src/main/resources/META-INF/resources",
@@ -24,12 +29,17 @@
         "**/admin/**/*.js"
     ],
     "plugins": [
-        "transform-class-properties",
-        "transform-decorators-legacy",
-        "transform-object-rest-spread"
+        ["@babel/plugin-proposal-decorators", {"legacy": true}],
+        "@babel/plugin-proposal-class-properties",
+        "@babel/plugin-proposal-object-rest-spread",
+        ["incremental-dom", {
+            components: true,
+            namespaceAttributes: true,
+            prefix: "IncrementalDOM",
+            runtime: "iDOMHelpers"
+        }]
     ],
     "presets": [
-        "env",
-        "metal-jsx"
+        "@babel/preset-env",
     ]
 }

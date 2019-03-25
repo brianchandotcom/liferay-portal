@@ -19,15 +19,12 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.model.UserConstants;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.taglib.util.IncludeTag;
-import com.liferay.taglib.util.LexiconUtil;
 
 import java.util.function.Supplier;
 
@@ -124,22 +121,15 @@ public class UserPortraitTag extends IncludeTag {
 		return _PAGE;
 	}
 
+	/**
+	 * @deprecated As of Mueller (7.2.x), with no direct replacement
+	 */
+	@Deprecated
 	protected String getPortraitURL(User user) {
-		try {
-			if ((user == null) || (user.getPortraitId() == 0)) {
-				return null;
-			}
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+			WebKeys.THEME_DISPLAY);
 
-			ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
-			return user.getPortraitURL(themeDisplay);
-		}
-		catch (PortalException pe) {
-			_log.error(pe, pe);
-
-			return null;
-		}
+		return _getPortraitURL(user, themeDisplay);
 	}
 
 	@Override
@@ -149,6 +139,23 @@ public class UserPortraitTag extends IncludeTag {
 
 	@Override
 	protected void setAttributes(HttpServletRequest request) {
+	}
+
+	private static String _getPortraitURL(
+		User user, ThemeDisplay themeDisplay) {
+
+		try {
+			if ((user == null) || (user.getPortraitId() == 0)) {
+				return null;
+			}
+
+			return user.getPortraitURL(themeDisplay);
+		}
+		catch (PortalException pe) {
+			_log.error(pe, pe);
+
+			return null;
+		}
 	}
 
 	private static final String _PAGE =

@@ -43,7 +43,7 @@ public class PredicateCollectorMFACheckerVisitor
 	public List<MFAChecker> visit(
 		MandatoryCompositeMFAChecker mandatoryCompositeMFAChecker) {
 
-		return flatMapMFACheckers(
+		return _flatMapMFACheckers(
 			mandatoryCompositeMFAChecker.getMFACheckers());
 	}
 
@@ -60,11 +60,11 @@ public class PredicateCollectorMFACheckerVisitor
 	public List<MFAChecker> visit(
 		OptionalCompositeMFAChecker optionalMFACheckerMFACheckers) {
 
-		return flatMapMFACheckers(
+		return _flatMapMFACheckers(
 			optionalMFACheckerMFACheckers.getMFACheckers());
 	}
 
-	protected List<MFAChecker> flatMapMFACheckers(
+	private List<MFAChecker> _flatMapMFACheckers(
 		List<MFAChecker> mfaCheckers) {
 
 		Stream<MFAChecker> stream = mfaCheckers.stream();

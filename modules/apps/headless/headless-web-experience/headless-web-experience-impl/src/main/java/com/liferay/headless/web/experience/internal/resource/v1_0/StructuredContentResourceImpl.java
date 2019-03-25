@@ -524,15 +524,9 @@ public class StructuredContentResourceImpl
 	private List<DDMFormField> _getRootDDMFormFields(
 		DDMStructure ddmStructure) {
 
-		List<String> rootFieldNames = ddmStructure.getRootFieldNames();
-
-		Stream<String> stream = rootFieldNames.stream();
-
-		return stream.map(
-			fieldName -> _getDDMFormField(ddmStructure, fieldName)
-		).collect(
-			Collectors.toList()
-		);
+		return transform(
+			ddmStructure.getRootFieldNames(),
+			fieldName -> _getDDMFormField(ddmStructure, fieldName));
 	}
 
 	private StructuredContent _getStructuredContent(

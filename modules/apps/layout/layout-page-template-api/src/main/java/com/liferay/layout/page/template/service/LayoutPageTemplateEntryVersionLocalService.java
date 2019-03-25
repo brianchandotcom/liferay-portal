@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.BaseLocalService;
 import com.liferay.portal.kernel.service.PersistedModelLocalService;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
@@ -71,6 +72,12 @@ public interface LayoutPageTemplateEntryVersionLocalService
 	public LayoutPageTemplateEntryVersion addLayoutPageTemplateEntryVersion(
 		LayoutPageTemplateEntryVersion layoutPageTemplateEntryVersion);
 
+	public LayoutPageTemplateEntryVersion addLayoutPageTemplateEntryVersion(
+			long userId, long groupId, long layoutPageTemplateEntryId,
+			double version, String name, long classNameId, long classTypeId,
+			int type, ServiceContext serviceContext)
+		throws PortalException;
+
 	/**
 	 * Creates a new layout page template entry version with the primary key. Does not add the layout page template entry version to the database.
 	 *
@@ -102,6 +109,9 @@ public interface LayoutPageTemplateEntryVersionLocalService
 	public LayoutPageTemplateEntryVersion deleteLayoutPageTemplateEntryVersion(
 			long layoutPageTemplateEntryVersionId)
 		throws PortalException;
+
+	public void deleteLayoutPageTemplateEntryVersions(
+		long layoutPageTemplateEntryId);
 
 	/**
 	 * @throws PortalException
@@ -175,6 +185,11 @@ public interface LayoutPageTemplateEntryVersionLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public long dynamicQueryCount(
 		DynamicQuery dynamicQuery, Projection projection);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public LayoutPageTemplateEntryVersion
+		fetchLatestLayoutPageTemplateEntryVersion(
+			long layoutPageTemplateEntryId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public LayoutPageTemplateEntryVersion fetchLayoutPageTemplateEntryVersion(

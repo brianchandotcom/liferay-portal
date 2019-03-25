@@ -54,6 +54,21 @@ public class LayoutPageTemplateEntryVersionLocalServiceWrapper
 			addLayoutPageTemplateEntryVersion(layoutPageTemplateEntryVersion);
 	}
 
+	@Override
+	public com.liferay.layout.page.template.model.LayoutPageTemplateEntryVersion
+			addLayoutPageTemplateEntryVersion(
+				long userId, long groupId, long layoutPageTemplateEntryId,
+				double version, String name, long classNameId, long classTypeId,
+				int type,
+				com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _layoutPageTemplateEntryVersionLocalService.
+			addLayoutPageTemplateEntryVersion(
+				userId, groupId, layoutPageTemplateEntryId, version, name,
+				classNameId, classTypeId, type, serviceContext);
+	}
+
 	/**
 	 * Creates a new layout page template entry version with the primary key. Does not add the layout page template entry version to the database.
 	 *
@@ -103,6 +118,14 @@ public class LayoutPageTemplateEntryVersionLocalServiceWrapper
 		return _layoutPageTemplateEntryVersionLocalService.
 			deleteLayoutPageTemplateEntryVersion(
 				layoutPageTemplateEntryVersionId);
+	}
+
+	@Override
+	public void deleteLayoutPageTemplateEntryVersions(
+		long layoutPageTemplateEntryId) {
+
+		_layoutPageTemplateEntryVersionLocalService.
+			deleteLayoutPageTemplateEntryVersions(layoutPageTemplateEntryId);
 	}
 
 	/**
@@ -208,6 +231,16 @@ public class LayoutPageTemplateEntryVersionLocalServiceWrapper
 
 		return _layoutPageTemplateEntryVersionLocalService.dynamicQueryCount(
 			dynamicQuery, projection);
+	}
+
+	@Override
+	public com.liferay.layout.page.template.model.LayoutPageTemplateEntryVersion
+		fetchLatestLayoutPageTemplateEntryVersion(
+			long layoutPageTemplateEntryId) {
+
+		return _layoutPageTemplateEntryVersionLocalService.
+			fetchLatestLayoutPageTemplateEntryVersion(
+				layoutPageTemplateEntryId);
 	}
 
 	@Override

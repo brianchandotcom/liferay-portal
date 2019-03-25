@@ -15,8 +15,14 @@
 package com.liferay.asset.list.web.internal.servlet.taglib.ui;
 
 import com.liferay.asset.publisher.constants.AssetPublisherConstants;
+import com.liferay.asset.publisher.constants.AssetPublisherPortletKeys;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.portlet.PortletIdCodec;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.servlet.taglib.ui.FormNavigatorEntry;
+import com.liferay.portal.kernel.theme.PortletDisplay;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -26,11 +32,11 @@ import javax.servlet.ServletContext;
  * @author Eudaldo Alonso
  */
 @Component(
-	property = "form.navigator.entry.order:Integer=500",
+	property = "form.navigator.entry.order:Integer=400",
 	service = FormNavigatorEntry.class
 )
-public class SourceFormNavigatorEntry
-	extends BaseConfigurationFormNavigatorEntry {
+public class AssetListScopeFormNavigatorEntry
+	extends BaseAssetListFormNavigatorEntry {
 
 	@Override
 	public String getCategoryKey() {
@@ -39,12 +45,34 @@ public class SourceFormNavigatorEntry
 
 	@Override
 	public String getKey() {
-		return "source";
+		return "scope";
 	}
 
 	@Override
 	public boolean isVisible(User user, Object object) {
-		return isDynamicAssetSelection();
+		if (!isManualSelection() && !isDynamicAssetSelection()) {
+			return false;
+		}
+
+		if (isManualSelection()) {
+			return true;
+		}
+
+		ServiceContext serviceContext =
+			ServiceContextThreadLocal.getServiceContext();
+
+		ThemeDisplay themeDisplay = serviceContext.getThemeDisplay();
+
+		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
+
+		String rootPortletId = PortletIdCodec.decodePortletName(
+			portletDisplay.getPortletName());
+
+		if (rootPortletId.equals(AssetPublisherPortletKeys.RELATED_ASSETS)) {
+			return false;
+		}
+
+		return true;
 	}
 
 	@Override
@@ -58,7 +86,7 @@ public class SourceFormNavigatorEntry
 
 	@Override
 	protected String getJspPath() {
-		return "/configuration/source.jsp";
+		return "/configuration/scope.jsp";
 	}
 
 }

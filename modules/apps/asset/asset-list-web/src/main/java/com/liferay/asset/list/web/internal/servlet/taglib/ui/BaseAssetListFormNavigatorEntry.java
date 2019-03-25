@@ -31,7 +31,7 @@ import java.util.Objects;
 /**
  * @author Eudaldo Alonso
  */
-public abstract class BaseConfigurationFormNavigatorEntry
+public abstract class BaseAssetListFormNavigatorEntry
 	extends BaseJSPFormNavigatorEntry {
 
 	@Override

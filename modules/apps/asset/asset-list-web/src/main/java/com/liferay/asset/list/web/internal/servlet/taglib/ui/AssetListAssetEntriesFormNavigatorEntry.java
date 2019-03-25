@@ -29,8 +29,8 @@ import javax.servlet.ServletContext;
 	property = "form.navigator.entry.order:Integer=300",
 	service = FormNavigatorEntry.class
 )
-public class AssetEntriesFormNavigatorEntry
-	extends BaseConfigurationFormNavigatorEntry {
+public class AssetListAssetEntriesFormNavigatorEntry
+	extends BaseAssetListFormNavigatorEntry {
 
 	@Override
 	public String getCategoryKey() {

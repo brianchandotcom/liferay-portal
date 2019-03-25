@@ -71,7 +71,7 @@
 		"build": "liferay-npm-scripts build --soy --bundler --bridge",
 		"csf": "liferay-npm-scripts lint",
 		"format": "liferay-npm-scripts format",
-		"test": "liferay-npm-scripts test --soy"
+		"test": "liferay-npm-scripts test"
 	},
 	"version": "2.0.0"
 }

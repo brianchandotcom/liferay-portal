@@ -282,13 +282,13 @@ public class GoogleCloudNaturalLanguageDocumentAssetAutoTagProvider
 
 	private static final Set<String> _supportedContentTypes = new HashSet<>(
 		Arrays.asList(
-			"application/epub+zip", ContentTypes.APPLICATION_MSWORD,
-			ContentTypes.APPLICATION_PDF, ContentTypes.APPLICATION_TEXT,
-			"application/vnd.apple.pages.13",
+			"application/epub+zip", "application/vnd.apple.pages.13",
 			"application/vnd.google-apps.document",
 			"application/vnd.openxmlformats-officedocument.wordprocessingml." +
 				"document",
-			ContentTypes.TEXT_HTML, ContentTypes.TEXT_PLAIN));
+			ContentTypes.APPLICATION_MSWORD, ContentTypes.APPLICATION_PDF,
+			ContentTypes.APPLICATION_TEXT, ContentTypes.TEXT_HTML,
+			ContentTypes.TEXT_PLAIN));
 
 	static {
 		String payload = GoogleCloudNaturalLanguageUtil.getDocumentPayload(

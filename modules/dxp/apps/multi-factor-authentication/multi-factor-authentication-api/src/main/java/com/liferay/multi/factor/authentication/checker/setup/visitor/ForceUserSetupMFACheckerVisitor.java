@@ -29,9 +29,8 @@ public class ForceUserSetupMFACheckerVisitor
 
 	public ForceUserSetupMFACheckerVisitor(long userId) {
 		super(
-			PredicateMFACheckerVisitor.adapt(
-				MFACheckerSetup.class,
-				mfaCheckerSetup -> mfaCheckerSetup.isForceUserSetup(userId)));
+			MFACheckerSetup.class,
+			mfaCheckerSetup -> mfaCheckerSetup.isForceUserSetup(userId));
 	}
 
 	@Override

@@ -32,10 +32,9 @@ public class IsHeadlessVerifiedMFACheckerVisitor
 		HttpServletRequest httpServletRequest, long userId) {
 
 		super(
-			PredicateMFACheckerVisitor.adapt(
-				HeadlessMFAChecker.class,
-				headlessMFAChecker -> headlessMFAChecker.isHeadlessVerified(
-					httpServletRequest, userId)));
+			HeadlessMFAChecker.class,
+			headlessMFAChecker -> headlessMFAChecker.isHeadlessVerified(
+				httpServletRequest, userId));
 	}
 
 }

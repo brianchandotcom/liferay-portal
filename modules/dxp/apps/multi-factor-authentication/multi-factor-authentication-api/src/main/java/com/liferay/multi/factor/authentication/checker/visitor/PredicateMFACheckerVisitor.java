@@ -28,17 +28,17 @@ import java.util.function.Predicate;
 @ProviderType
 public class PredicateMFACheckerVisitor implements MFACheckerVisitor<Boolean> {
 
-	@SuppressWarnings("unchecked")
-	public static <T> Predicate<MFAChecker> adapt(
+	public <T> PredicateMFACheckerVisitor(
 		Class<T> clazz, Predicate<T> predicate) {
 
-		return mfaChecker -> {
-			if (clazz.isInstance(mfaChecker)) {
-				return predicate.test((T)mfaChecker);
-			}
+		this(
+			mfaChecker -> {
+				if (clazz.isInstance(mfaChecker)) {
+					return predicate.test((T)mfaChecker);
+				}
 
-			return false;
-		};
+				return false;
+			});
 	}
 
 	public PredicateMFACheckerVisitor(Predicate<MFAChecker> predicate) {

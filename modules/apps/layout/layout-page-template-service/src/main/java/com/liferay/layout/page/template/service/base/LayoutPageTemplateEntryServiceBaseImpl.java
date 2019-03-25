@@ -17,6 +17,7 @@ package com.liferay.layout.page.template.service.base;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryService;
 import com.liferay.layout.page.template.service.persistence.LayoutPageTemplateEntryPersistence;
+import com.liferay.layout.page.template.service.persistence.LayoutPageTemplateEntryVersionPersistence;
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
@@ -356,6 +357,56 @@ public abstract class LayoutPageTemplateEntryServiceBaseImpl
 		this.userPersistence = userPersistence;
 	}
 
+	/**
+	 * Returns the layout page template entry version local service.
+	 *
+	 * @return the layout page template entry version local service
+	 */
+	public com.liferay.layout.page.template.service.
+		LayoutPageTemplateEntryVersionLocalService
+			getLayoutPageTemplateEntryVersionLocalService() {
+
+		return layoutPageTemplateEntryVersionLocalService;
+	}
+
+	/**
+	 * Sets the layout page template entry version local service.
+	 *
+	 * @param layoutPageTemplateEntryVersionLocalService the layout page template entry version local service
+	 */
+	public void setLayoutPageTemplateEntryVersionLocalService(
+		com.liferay.layout.page.template.service.
+			LayoutPageTemplateEntryVersionLocalService
+				layoutPageTemplateEntryVersionLocalService) {
+
+		this.layoutPageTemplateEntryVersionLocalService =
+			layoutPageTemplateEntryVersionLocalService;
+	}
+
+	/**
+	 * Returns the layout page template entry version persistence.
+	 *
+	 * @return the layout page template entry version persistence
+	 */
+	public LayoutPageTemplateEntryVersionPersistence
+		getLayoutPageTemplateEntryVersionPersistence() {
+
+		return layoutPageTemplateEntryVersionPersistence;
+	}
+
+	/**
+	 * Sets the layout page template entry version persistence.
+	 *
+	 * @param layoutPageTemplateEntryVersionPersistence the layout page template entry version persistence
+	 */
+	public void setLayoutPageTemplateEntryVersionPersistence(
+		LayoutPageTemplateEntryVersionPersistence
+			layoutPageTemplateEntryVersionPersistence) {
+
+		this.layoutPageTemplateEntryVersionPersistence =
+			layoutPageTemplateEntryVersionPersistence;
+	}
+
 	public void afterPropertiesSet() {
 	}
 
@@ -474,5 +525,16 @@ public abstract class LayoutPageTemplateEntryServiceBaseImpl
 
 	@ServiceReference(type = UserPersistence.class)
 	protected UserPersistence userPersistence;
+
+	@BeanReference(
+		type = com.liferay.layout.page.template.service.LayoutPageTemplateEntryVersionLocalService.class
+	)
+	protected com.liferay.layout.page.template.service.
+		LayoutPageTemplateEntryVersionLocalService
+			layoutPageTemplateEntryVersionLocalService;
+
+	@BeanReference(type = LayoutPageTemplateEntryVersionPersistence.class)
+	protected LayoutPageTemplateEntryVersionPersistence
+		layoutPageTemplateEntryVersionPersistence;
 
 }

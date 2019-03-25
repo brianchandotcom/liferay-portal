@@ -18,6 +18,8 @@ create unique index IX_84D30230 on LayoutPageTemplateEntry (plid);
 create index IX_CEC0A659 on LayoutPageTemplateEntry (uuid_[$COLUMN_LENGTH:75$], companyId);
 create unique index IX_34C0EF1B on LayoutPageTemplateEntry (uuid_[$COLUMN_LENGTH:75$], groupId);
 
+create index IX_4B532D4B on LayoutPageTemplateEntryVersion (layoutPageTemplateEntryId);
+
 create unique index IX_87B60D9 on LayoutPageTemplateStructure (groupId, classNameId, classPK);
 create index IX_6DB0225A on LayoutPageTemplateStructure (uuid_[$COLUMN_LENGTH:75$], companyId);
 create unique index IX_4DB1775C on LayoutPageTemplateStructure (uuid_[$COLUMN_LENGTH:75$], groupId);

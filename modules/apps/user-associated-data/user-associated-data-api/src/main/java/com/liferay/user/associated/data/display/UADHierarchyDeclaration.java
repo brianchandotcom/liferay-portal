@@ -40,6 +40,13 @@ public interface UADHierarchyDeclaration {
 	 */
 	public UADDisplay<?>[] getContainerUADDisplays();
 
+	/**
+	 * Returns the translated label describing the entity types of the
+	 * hierarchy.
+	 *
+	 * @param locale the current locale
+	 * @return the label describing the entity types of the hierarchy
+	 */
 	public String getEntitiesTypeLabel(Locale locale);
 
 	/**

@@ -2,9 +2,13 @@
 
 <suppressions>
 	<checkstyle>
+		<suppress checks="LanguageKeysCheck" files="modules/apps/document-library/document-library-uad/src/main/java/com/liferay/document/library/uad/display/DLUADHierarchyDeclaration\.java" />
 		<suppress checks="PersistenceCallCheck" files="modules/apps/document-library/document-library-test/src/testIntegration/java/com/liferay/document/library/service/test/DLFileEntryTypeFinderTest\.java" />
 		<suppress checks="PersistenceCallCheck" files="modules/apps/document-library/document-library-test/src/testIntegration/java/com/liferay/document/library/service/test/DLFolderFinderTest\.java" />
 		<suppress checks="SubnameCheck" files="modules/apps/document-library/document-library-repository-cmis-impl/src/main/java/com/liferay/document/library/repository/cmis/internal/CMISRepository\.java" />
 		<suppress checks="TestClassCheck" files="modules/apps/document-library/document-library-test/src/testIntegration/java/com/liferay/document/library/webdav/test/BaseWebDAVTestCase\.java" />
 	</checkstyle>
+	<source-check>
+		<suppress checks="LanguageKeysCheck" files="modules/apps/document-library/document-library-uad/src/main/java/com/liferay/document/library/uad/display/DLUADHierarchyDeclaration\.java" />
+	</source-check>
 </suppressions>

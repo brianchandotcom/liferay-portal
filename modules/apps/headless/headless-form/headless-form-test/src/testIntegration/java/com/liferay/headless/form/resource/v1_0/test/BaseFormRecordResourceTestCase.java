@@ -22,9 +22,9 @@ import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
 import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
 
 import com.liferay.headless.form.dto.v1_0.FormRecord;
+import com.liferay.headless.form.dto.v1_0.FormRecordForm;
 import com.liferay.headless.form.resource.v1_0.FormRecordResource;
 import com.liferay.petra.string.StringBundler;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
@@ -32,7 +32,6 @@ import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Base64;
-import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.HttpUtil;
@@ -188,14 +187,10 @@ public abstract class BaseFormRecordResourceTestCase {
 	}
 
 	protected FormRecord invokePutFormRecord(
-			Long formRecordId, FormRecord formRecord)
+			Long formRecordId, FormRecordForm formRecordForm)
 		throws Exception {
 
 		Http.Options options = _createHttpOptions();
-
-		options.setBody(
-			_inputObjectMapper.writeValueAsString(formRecord),
-			ContentTypes.APPLICATION_JSON, StringPool.UTF8);
 
 		String location =
 			_resourceURL +
@@ -222,14 +217,10 @@ public abstract class BaseFormRecordResourceTestCase {
 	}
 
 	protected Http.Response invokePutFormRecordResponse(
-			Long formRecordId, FormRecord formRecord)
+			Long formRecordId, FormRecordForm formRecordForm)
 		throws Exception {
 
 		Http.Options options = _createHttpOptions();
-
-		options.setBody(
-			_inputObjectMapper.writeValueAsString(formRecord),
-			ContentTypes.APPLICATION_JSON, StringPool.UTF8);
 
 		String location =
 			_resourceURL +
@@ -240,6 +231,63 @@ public abstract class BaseFormRecordResourceTestCase {
 		options.setPut(true);
 
 		HttpUtil.URLtoByteArray(options);
+
+		return options.getResponse();
+	}
+
+	@Test
+	public void testGetFormFetchLatestDraft() throws Exception {
+		FormRecord postFormRecord = testGetFormFetchLatestDraft_addFormRecord();
+
+		FormRecord getFormRecord = invokeGetFormFetchLatestDraft(
+			postFormRecord.getId());
+
+		assertEquals(postFormRecord, getFormRecord);
+		assertValid(getFormRecord);
+	}
+
+	protected FormRecord testGetFormFetchLatestDraft_addFormRecord()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected FormRecord invokeGetFormFetchLatestDraft(Long formId)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		String location =
+			_resourceURL +
+				_toPath("/forms/{form-id}/fetch-latest-draft", formId);
+
+		options.setLocation(location);
+
+		String string = HttpUtil.URLtoString(options);
+
+		try {
+			return _outputObjectMapper.readValue(string, FormRecord.class);
+		}
+		catch (Exception e) {
+			_log.error("Unable to process HTTP response: " + string, e);
+
+			throw e;
+		}
+	}
+
+	protected Http.Response invokeGetFormFetchLatestDraftResponse(Long formId)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		String location =
+			_resourceURL +
+				_toPath("/forms/{form-id}/fetch-latest-draft", formId);
+
+		options.setLocation(location);
+
+		HttpUtil.URLtoString(options);
 
 		return options.getResponse();
 	}
@@ -410,14 +458,10 @@ public abstract class BaseFormRecordResourceTestCase {
 	}
 
 	protected FormRecord invokePostFormFormRecord(
-			Long formId, FormRecord formRecord)
+			Long formId, FormRecordForm formRecordForm)
 		throws Exception {
 
 		Http.Options options = _createHttpOptions();
-
-		options.setBody(
-			_inputObjectMapper.writeValueAsString(formRecord),
-			ContentTypes.APPLICATION_JSON, StringPool.UTF8);
 
 		String location =
 			_resourceURL + _toPath("/forms/{form-id}/form-records", formId);
@@ -443,14 +487,10 @@ public abstract class BaseFormRecordResourceTestCase {
 	}
 
 	protected Http.Response invokePostFormFormRecordResponse(
-			Long formId, FormRecord formRecord)
+			Long formId, FormRecordForm formRecordForm)
 		throws Exception {
 
 		Http.Options options = _createHttpOptions();
-
-		options.setBody(
-			_inputObjectMapper.writeValueAsString(formRecord),
-			ContentTypes.APPLICATION_JSON, StringPool.UTF8);
 
 		String location =
 			_resourceURL + _toPath("/forms/{form-id}/form-records", formId);

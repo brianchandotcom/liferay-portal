@@ -15,7 +15,9 @@
 package com.liferay.headless.form.resource.v1_0;
 
 import com.liferay.headless.form.dto.v1_0.Form;
+import com.liferay.headless.form.dto.v1_0.FormDocument;
 import com.liferay.portal.kernel.model.Company;
+import com.liferay.portal.vulcan.multipart.MultipartBody;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 
@@ -41,9 +43,9 @@ public interface FormResource {
 	public Form postFormEvaluateContext(Long formId, Form form)
 		throws Exception;
 
-	public Form getFormFetchLatestDraft(Long formId) throws Exception;
-
-	public Form postFormUploadFile(Long formId, Form form) throws Exception;
+	public FormDocument postFormUploadFile(
+			Long formId, MultipartBody multipartBody)
+		throws Exception;
 
 	public void setContextCompany(Company contextCompany);
 

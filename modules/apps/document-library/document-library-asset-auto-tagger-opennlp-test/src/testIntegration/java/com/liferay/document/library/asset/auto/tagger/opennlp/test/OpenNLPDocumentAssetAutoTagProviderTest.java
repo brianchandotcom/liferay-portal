@@ -33,6 +33,7 @@ import com.liferay.portal.service.test.ServiceTestUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 
@@ -62,6 +63,94 @@ public class OpenNLPDocumentAssetAutoTagProviderTest {
 
 		_serviceContext = ServiceContextTestUtil.getServiceContext(
 			_group.getGroupId(), 0);
+	}
+
+	@Test
+	public void testGetTagNamesWithEpubFile() throws Exception {
+		String fileName =
+			"Alice's Adventures in Wonderland, by Lewis Carroll.epub";
+
+		FileEntry fileEntry = _dlAppService.addFileEntry(
+			_serviceContext.getScopeGroupId(),
+			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, fileName,
+			"application/epub+zip", RandomTestUtil.randomString(),
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+			FileUtil.getBytes(getClass(), fileName), _serviceContext);
+
+		Collection<String> expectedTagNames = Arrays.asList("tag");
+
+		Collection<String> actualTagNames = _assetAutoTagProvider.getTagNames(
+			fileEntry);
+
+		Assert.assertEquals(
+			actualTagNames.toString(), expectedTagNames.size(),
+			actualTagNames.size());
+		Assert.assertTrue(actualTagNames.containsAll(expectedTagNames));
+	}
+
+	@Test
+	public void testGetTagNamesWithHTMLFile() throws Exception {
+		String fileName =
+			"Alice's Adventures in Wonderland, by Lewis Carroll.html";
+
+		FileEntry fileEntry = _dlAppService.addFileEntry(
+			_serviceContext.getScopeGroupId(),
+			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, fileName,
+			ContentTypes.TEXT_HTML, RandomTestUtil.randomString(),
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+			FileUtil.getBytes(getClass(), fileName), _serviceContext);
+
+		Collection<String> expectedTagNames = Collections.singleton("tag");
+
+		Collection<String> actualTagNames = _assetAutoTagProvider.getTagNames(
+			fileEntry);
+
+		Assert.assertEquals(
+			actualTagNames.toString(), expectedTagNames.size(),
+			actualTagNames.size());
+		Assert.assertTrue(
+			actualTagNames.toString(),
+			actualTagNames.containsAll(expectedTagNames));
+	}
+
+	@Test
+	public void testGetTagNamesWithJPGFile() throws Exception {
+		FileEntry fileEntry = _dlAppService.addFileEntry(
+			_serviceContext.getScopeGroupId(),
+			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, "test.jpg",
+			ContentTypes.IMAGE_JPEG, RandomTestUtil.randomString(),
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+			FileUtil.getBytes(getClass(), "test.jpg"), _serviceContext);
+
+		Collection<String> tagNames = _assetAutoTagProvider.getTagNames(
+			fileEntry);
+
+		Assert.assertEquals(tagNames.toString(), 0, tagNames.size());
+	}
+
+	@Test
+	public void testGetTagNamesWithPDFFile() throws Exception {
+		String fileName =
+			"Alice's Adventures in Wonderland, by Lewis Carroll.pdf";
+
+		FileEntry fileEntry = _dlAppService.addFileEntry(
+			_serviceContext.getScopeGroupId(),
+			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, fileName,
+			ContentTypes.APPLICATION_PDF, RandomTestUtil.randomString(),
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+			FileUtil.getBytes(getClass(), fileName), _serviceContext);
+
+		Collection<String> expectedTagNames = Collections.singleton("tag");
+
+		Collection<String> actualTagNames = _assetAutoTagProvider.getTagNames(
+			fileEntry);
+
+		Assert.assertEquals(
+			actualTagNames.toString(), expectedTagNames.size(),
+			actualTagNames.size());
+		Assert.assertTrue(
+			actualTagNames.toString(),
+			actualTagNames.containsAll(expectedTagNames));
 	}
 
 	@Test

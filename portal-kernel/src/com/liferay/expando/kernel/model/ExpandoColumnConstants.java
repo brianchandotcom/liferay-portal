@@ -116,7 +116,8 @@ public class ExpandoColumnConstants {
 	public static final String PROPERTY_DISPLAY_TYPE_GEOLOCATION =
 		"geolocation";
 
-	public static final String PROPERTY_DISPLAY_TYPE_NUMBER = "number";
+	public static final String PROPERTY_DISPLAY_TYPE_INPUT_FIELD =
+		"input-field";
 
 	public static final String PROPERTY_DISPLAY_TYPE_RADIO = "radio";
 
@@ -124,8 +125,6 @@ public class ExpandoColumnConstants {
 		"selection-list";
 
 	public static final String PROPERTY_DISPLAY_TYPE_TEXT_BOX = "text-box";
-
-	public static final String PROPERTY_DISPLAY_TYPE_TEXT_FIELD = "text-field";
 
 	public static final String PROPERTY_HEIGHT = "height";
 
@@ -193,11 +192,6 @@ public class ExpandoColumnConstants {
 		else if (type == DATE) {
 			return PROPERTY_DISPLAY_TYPE_DATE;
 		}
-		else if ((type == DOUBLE) || (type == FLOAT) || (type == INTEGER) ||
-				 (type == LONG) || (type == NUMBER) || (type == SHORT)) {
-
-			return PROPERTY_DISPLAY_TYPE_NUMBER;
-		}
 		else if (type == GEOLOCATION) {
 			return PROPERTY_DISPLAY_TYPE_GEOLOCATION;
 		}
@@ -209,7 +203,7 @@ public class ExpandoColumnConstants {
 				return PROPERTY_DISPLAY_TYPE_TEXT_BOX;
 			}
 
-			return PROPERTY_DISPLAY_TYPE_TEXT_FIELD;
+			return PROPERTY_DISPLAY_TYPE_INPUT_FIELD;
 		}
 
 		return StringPool.BLANK;

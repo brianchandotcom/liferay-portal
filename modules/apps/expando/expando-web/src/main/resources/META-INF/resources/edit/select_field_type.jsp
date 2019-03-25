@@ -72,38 +72,18 @@ renderResponse.setTitle(modelResourceName + ": " + ((expandoColumn == null) ? La
 			</aui:col>
 
 			<aui:col span="<%= 4 %>">
-				<portlet:renderURL var="createTextFieldURL">
+				<portlet:renderURL var="createInputFieldURL">
 					<portlet:param name="mvcPath" value="/edit/expando.jsp" />
 					<portlet:param name="redirect" value="<%= redirect %>" />
 					<portlet:param name="modelResource" value="<%= modelResource %>" />
-					<portlet:param name="displayType" value="<%= ExpandoColumnConstants.PROPERTY_DISPLAY_TYPE_TEXT_FIELD %>" />
+					<portlet:param name="displayType" value="<%= ExpandoColumnConstants.PROPERTY_DISPLAY_TYPE_INPUT_FIELD %>" />
 					<portlet:param name="type" value="<%= String.valueOf(ExpandoColumnConstants.STRING) %>" />
 				</portlet:renderURL>
 
-				<a class="card card-interactive card-interactive-secondary" href="<%= createTextFieldURL %>">
+				<a class="card card-interactive card-interactive-secondary" href="<%= createInputFieldURL %>">
 					<div class="card-body">
 						<label>
-							<liferay-ui:message key="text-field" />
-						</label>
-
-						<span class="form-control"></span>
-					</div>
-				</a>
-			</aui:col>
-
-			<aui:col span="<%= 4 %>">
-				<portlet:renderURL var="createNumberURL">
-					<portlet:param name="mvcPath" value="/edit/expando.jsp" />
-					<portlet:param name="redirect" value="<%= redirect %>" />
-					<portlet:param name="modelResource" value="<%= modelResource %>" />
-					<portlet:param name="displayType" value="<%= ExpandoColumnConstants.PROPERTY_DISPLAY_TYPE_NUMBER %>" />
-					<portlet:param name="type" value="<%= String.valueOf(ExpandoColumnConstants.NUMBER) %>" />
-				</portlet:renderURL>
-
-				<a class="card card-interactive card-interactive-secondary" href="<%= createNumberURL %>">
-					<div class="card-body">
-						<label>
-							<liferay-ui:message key="number" />
+							<liferay-ui:message key="input-field" />
 						</label>
 
 						<span class="form-control"></span>

@@ -51,8 +51,7 @@ UserSearchFacetDisplayContext userSearchFacetDisplayContext = userSearchFacetDis
 						</li>
 
 						<%
-						java.util.List<UserSearchFacetTermDisplayContext> userSearchFacetTermDisplayContexts =
-							userSearchFacetDisplayContext.getTermDisplayContexts();
+						java.util.List<UserSearchFacetTermDisplayContext> userSearchFacetTermDisplayContexts = userSearchFacetDisplayContext.getTermDisplayContexts();
 
 						for (UserSearchFacetTermDisplayContext userSearchFacetTermDisplayContext : userSearchFacetTermDisplayContexts) {
 						%>

@@ -45,8 +45,7 @@
 
 		Map<String, LongWrapper> modelAdditionCounters = (Map<String, LongWrapper>)taskContextMap.get(ExportImportBackgroundTaskContextMapConstants.MODEL_ADDITION_COUNTERS);
 
-		Map<String, LongWrapper> modelDeletionCounters =
-			(Map<String, LongWrapper>)taskContextMap.get(ExportImportBackgroundTaskContextMapConstants.MODEL_DELETION_COUNTERS);
+		Map<String, LongWrapper> modelDeletionCounters = (Map<String, LongWrapper>)taskContextMap.get(ExportImportBackgroundTaskContextMapConstants.MODEL_DELETION_COUNTERS);
 
 		Map<String, Map<String, Long>> additions = new HashMap<>();
 

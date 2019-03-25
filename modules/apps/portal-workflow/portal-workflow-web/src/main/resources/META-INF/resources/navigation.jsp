@@ -17,8 +17,7 @@
 <%@ include file="/init.jsp" %>
 
 <%
-WorkflowNavigationDisplayContext workflowNavigationDisplayContext =
-	(WorkflowNavigationDisplayContext)request.getAttribute(WorkflowWebKeys.WORKFLOW_NAVIGATION_DISPLAY_CONTEXT);
+WorkflowNavigationDisplayContext workflowNavigationDisplayContext = (WorkflowNavigationDisplayContext)request.getAttribute(WorkflowWebKeys.WORKFLOW_NAVIGATION_DISPLAY_CONTEXT);
 %>
 
 <clay:navigation-bar

@@ -15,6 +15,8 @@
 package com.liferay.data.engine.rest.internal.resource.v1_0;
 
 import com.liferay.data.engine.rest.dto.v1_0.DataDefinition;
+import com.liferay.data.engine.rest.internal.constants.DataActionKeys;
+import com.liferay.data.engine.rest.internal.constants.PermissionConstants;
 import com.liferay.data.engine.rest.internal.dto.v1_0.util.DataDefinitionUtil;
 import com.liferay.data.engine.rest.internal.dto.v1_0.util.LocalizedValueUtil;
 import com.liferay.data.engine.rest.internal.model.InternalDataDefinition;
@@ -112,7 +114,7 @@ public class DataDefinitionResourceImpl extends BaseDataDefinitionResourceImpl {
 			Long contentSpaceId, DataDefinition dataDefinition)
 		throws Exception {
 
-		_checkPermission(contentSpaceId, "ADD_DATA_DEFINITION");
+		_checkPermission(contentSpaceId, DataActionKeys.ADD_DATA_DEFINITION);
 
 		return DataDefinitionUtil.toDataDefinition(
 			_ddmStructureLocalService.addStructure(
@@ -169,13 +171,13 @@ public class DataDefinitionResourceImpl extends BaseDataDefinitionResourceImpl {
 			group = group.getLiveGroup();
 		}
 
-		String resourceName = "com.liferay.data.engine";
-
 		if (!permissionChecker.hasPermission(
-				group, resourceName, contentSpaceId, actionId)) {
+				group, PermissionConstants.RESOURCE_NAME, contentSpaceId,
+				actionId)) {
 
 			throw new PrincipalException.MustHavePermission(
-				permissionChecker, resourceName, contentSpaceId, actionId);
+				permissionChecker, PermissionConstants.RESOURCE_NAME,
+				contentSpaceId, actionId);
 		}
 	}
 

@@ -61,11 +61,6 @@
 		"moduleNameMapper": {
 			"(.*)\\.soy": "$1.soy.js"
 		},
-		"testMatch": [
-			"**/test/**/*.js"
-		],
-		"testResultsProcessor": "./node_modules/liferay-jest-junit-reporter",
-		"testURL": "http://localhost",
 		"transformIgnorePatterns": [
 			"<rootDir>.*(node_modules)(?!.*metal.*).*$"
 		]

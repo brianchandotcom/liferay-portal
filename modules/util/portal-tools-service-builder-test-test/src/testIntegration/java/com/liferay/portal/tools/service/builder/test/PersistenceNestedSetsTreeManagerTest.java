@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.tools.service.builder.test.service.persistence.impl.test;
+package com.liferay.portal.tools.service.builder.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.kernel.dao.orm.Session;

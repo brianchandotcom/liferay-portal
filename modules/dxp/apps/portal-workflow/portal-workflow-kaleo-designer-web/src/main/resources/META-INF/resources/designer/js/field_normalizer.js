@@ -113,7 +113,7 @@ AUI.add(
 										A.each(
 											item2,
 											function(item3, index3, collection3) {
-												_put(assignments, index3, item3);
+												_put(assignments, index3, item3, index2);
 											}
 										);
 									}
@@ -164,7 +164,7 @@ AUI.add(
 							item1,
 							function(item2, index2, collection2) {
 								if (isValue(item2)) {
-									_put(delays, index2, item2);
+									_put(delays, index2, item2, index1);
 								}
 							}
 						);

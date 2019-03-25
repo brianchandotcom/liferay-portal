@@ -31,7 +31,7 @@ import org.osgi.service.component.annotations.Reference;
 	immediate = true, property = "service.ranking:Integer=100",
 	service = ItemSelectorReturnTypeResolver.class
 )
-public class DownloadURLItemSelectorReturnTypeResolver
+public class FileEntryDownloadURLItemSelectorReturnTypeResolver
 	implements ItemSelectorReturnTypeResolver
 		<DownloadURLItemSelectorReturnType, FileEntry> {
 

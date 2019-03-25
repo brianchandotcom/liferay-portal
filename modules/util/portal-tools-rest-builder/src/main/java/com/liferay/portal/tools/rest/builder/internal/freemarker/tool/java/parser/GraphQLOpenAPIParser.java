@@ -66,6 +66,33 @@ public class GraphQLOpenAPIParser {
 
 		Set<String> methodAnnotations = new TreeSet<>();
 
+		Set<String> requestBodyMediaTypes =
+			javaMethodSignature.getRequestBodyMediaTypes();
+
+		if ((requestBodyMediaTypes != null) &&
+			!requestBodyMediaTypes.isEmpty() &&
+			!requestBodyMediaTypes.contains("application/json")) {
+
+			List<JavaMethodParameter> javaMethodParameters =
+				javaMethodSignature.getJavaMethodParameters();
+
+			StringBuilder sb = new StringBuilder("@GraphQLName(\"");
+
+			sb.append(javaMethodSignature.getMethodName());
+
+			for (JavaMethodParameter javaMethodParameter :
+					javaMethodParameters) {
+
+				sb.append(
+					StringUtil.upperCaseFirstLetter(
+						javaMethodParameter.getParameterName()));
+			}
+
+			sb.append("\")");
+
+			methodAnnotations.add(sb.toString());
+		}
+
 		methodAnnotations.add("@GraphQLInvokeDetached");
 
 		String httpMethod = OpenAPIParserUtil.getHTTPMethod(

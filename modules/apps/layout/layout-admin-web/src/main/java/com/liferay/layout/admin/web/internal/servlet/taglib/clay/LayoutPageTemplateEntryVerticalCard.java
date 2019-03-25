@@ -107,7 +107,12 @@ public class LayoutPageTemplateEntryVerticalCard extends BaseVerticalCard {
 
 				Group layoutPrototypeGroup = layoutPrototype.getGroup();
 
-				return layoutPrototypeGroup.getDisplayURL(themeDisplay, true);
+				String layoutFullURL = layoutPrototypeGroup.getDisplayURL(
+					themeDisplay, true);
+
+				return HttpUtil.setParameter(
+					layoutFullURL, "p_l_back_url",
+					themeDisplay.getURLCurrent());
 			}
 
 			Layout layout = LayoutLocalServiceUtil.getLayout(
@@ -116,8 +121,11 @@ public class LayoutPageTemplateEntryVerticalCard extends BaseVerticalCard {
 			String layoutFullURL = PortalUtil.getLayoutFullURL(
 				layout, themeDisplay);
 
-			return HttpUtil.setParameter(
+			layoutFullURL = HttpUtil.setParameter(
 				layoutFullURL, "p_l_mode", Constants.EDIT);
+
+			return HttpUtil.setParameter(
+				layoutFullURL, "p_l_back_url", themeDisplay.getURLCurrent());
 		}
 		catch (Exception e) {
 		}

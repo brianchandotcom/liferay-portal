@@ -380,7 +380,11 @@ public class LayoutsAdminDisplayContext {
 		String layoutFullURL = PortalUtil.getLayoutFullURL(
 			draftLayout, _themeDisplay);
 
-		return HttpUtil.setParameter(layoutFullURL, "p_l_mode", Constants.EDIT);
+		layoutFullURL = HttpUtil.setParameter(
+			layoutFullURL, "p_l_mode", Constants.EDIT);
+
+		return HttpUtil.setParameter(
+			layoutFullURL, "p_l_back_url", _themeDisplay.getURLCurrent());
 	}
 
 	public String getFirstColumnConfigureLayoutURL(boolean privatePages) {
@@ -1131,7 +1135,13 @@ public class LayoutsAdminDisplayContext {
 	}
 
 	public String getViewLayoutURL(Layout layout) throws PortalException {
-		return PortalUtil.getLayoutFullURL(layout, _themeDisplay);
+		String layoutFullURL = PortalUtil.getLayoutFullURL(
+			layout, _themeDisplay);
+
+		layoutFullURL = HttpUtil.setParameter(
+			layoutFullURL, "p_l_back_url", _themeDisplay.getURLCurrent());
+
+		return layoutFullURL;
 	}
 
 	public boolean hasLayouts() {

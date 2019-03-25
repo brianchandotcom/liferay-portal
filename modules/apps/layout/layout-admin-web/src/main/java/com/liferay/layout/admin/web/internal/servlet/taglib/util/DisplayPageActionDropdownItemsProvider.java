@@ -164,8 +164,15 @@ public class DisplayPageActionDropdownItemsProvider {
 			Group layoutPrototypeGroup = layoutPrototype.getGroup();
 
 			return dropdownItem -> {
-				dropdownItem.setHref(
-					layoutPrototypeGroup.getDisplayURL(_themeDisplay, true));
+				String layoutFullURL = layoutPrototypeGroup.getDisplayURL(
+					_themeDisplay, true);
+
+				layoutFullURL = HttpUtil.setParameter(
+					layoutFullURL, "p_l_back_url",
+					_themeDisplay.getURLCurrent());
+
+				dropdownItem.setHref(layoutFullURL);
+
 				dropdownItem.setLabel(LanguageUtil.get(_request, "edit"));
 			};
 		}
@@ -173,13 +180,17 @@ public class DisplayPageActionDropdownItemsProvider {
 		Layout layout = LayoutLocalServiceUtil.fetchLayout(
 			_layoutPageTemplateEntry.getPlid());
 
-		String layoutFullURL = PortalUtil.getLayoutFullURL(
-			layout, _themeDisplay);
-
 		return dropdownItem -> {
-			dropdownItem.setHref(
-				HttpUtil.setParameter(
-					layoutFullURL, "p_l_mode", Constants.EDIT));
+			String layoutFullURL = PortalUtil.getLayoutFullURL(
+				layout, _themeDisplay);
+
+			layoutFullURL = HttpUtil.setParameter(
+				layoutFullURL, "p_l_mode", Constants.EDIT);
+			layoutFullURL = HttpUtil.setParameter(
+				layoutFullURL, "p_l_back_url", _themeDisplay.getURLCurrent());
+
+			dropdownItem.setHref(layoutFullURL);
+
 			dropdownItem.setLabel(LanguageUtil.get(_request, "edit"));
 		};
 	}

@@ -115,7 +115,12 @@ public class DisplayPageVerticalCard
 
 				Group layoutPrototypeGroup = layoutPrototype.getGroup();
 
-				return layoutPrototypeGroup.getDisplayURL(_themeDisplay, true);
+				String layoutFullURL = layoutPrototypeGroup.getDisplayURL(
+					_themeDisplay, true);
+
+				return HttpUtil.setParameter(
+					layoutFullURL, "p_l_back_url",
+					_themeDisplay.getURLCurrent());
 			}
 
 			Layout layout = LayoutLocalServiceUtil.fetchLayout(
@@ -124,8 +129,11 @@ public class DisplayPageVerticalCard
 			String layoutFullURL = PortalUtil.getLayoutFullURL(
 				layout, _themeDisplay);
 
-			return HttpUtil.setParameter(
+			layoutFullURL = HttpUtil.setParameter(
 				layoutFullURL, "p_l_mode", Constants.EDIT);
+
+			return HttpUtil.setParameter(
+				layoutFullURL, "p_l_back_url", _themeDisplay.getURLCurrent());
 		}
 		catch (Exception e) {
 		}

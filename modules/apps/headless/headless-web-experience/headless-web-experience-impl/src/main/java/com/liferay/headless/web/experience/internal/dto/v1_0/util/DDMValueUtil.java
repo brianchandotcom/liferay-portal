@@ -52,6 +52,12 @@ public class DDMValueUtil {
 		com.liferay.headless.web.experience.dto.v1_0.Value value =
 			contentFieldValue.getValue();
 
+		if (value == null) {
+			throw new BadRequestException(
+				"Value for field " + ddmFormField.getName() +
+					" can not be null");
+		}
+
 		if (ddmFormField.isLocalizable()) {
 			return new LocalizedValue() {
 				{

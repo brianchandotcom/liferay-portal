@@ -68,7 +68,7 @@ import org.osgi.service.component.annotations.ServiceScope;
 public class OrganizationResourceImpl extends BaseOrganizationResourceImpl {
 
 	@Override
-	public Page<Organization> getMyUserAccountUserAccountOrganizationsPage(
+	public Page<Organization> getMyUserAccountOrganizationsPage(
 			Long userAccountId, Pagination pagination)
 		throws Exception {
 

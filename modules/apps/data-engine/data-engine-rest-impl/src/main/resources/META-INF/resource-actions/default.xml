@@ -5,7 +5,7 @@
 	<model-resource>
 		<model-name>com.liferay.data.engine</model-name>
 		<portlet-ref>
-			<portlet-name>com_liferay_data_engine_web_portlet_DEDataDefinitionPortlet</portlet-name>
+			<portlet-name>com_liferay_data_engine_web_portlet_DataDefinitionPortlet</portlet-name>
 		</portlet-ref>
 		<root>true</root>
 		<weight>1</weight>
@@ -23,7 +23,7 @@
 	<model-resource>
 		<model-name>com.liferay.data.engine.rest.internal.model.InternalDataDefinition</model-name>
 		<portlet-ref>
-			<portlet-name>com_liferay_data_engine_web_portlet_DEDataDefinitionPortlet</portlet-name>
+			<portlet-name>com_liferay_data_engine_web_portlet_DataDefinitionPortlet</portlet-name>
 		</portlet-ref>
 		<weight>2</weight>
 		<permissions>

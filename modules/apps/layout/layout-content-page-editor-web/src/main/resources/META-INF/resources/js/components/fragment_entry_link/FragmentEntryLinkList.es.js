@@ -182,6 +182,15 @@ class FragmentEntryLinkList extends Component {
 	}
 
 	/**
+	 * Handle layoutData changed
+	 * @inheritDoc
+	 * @review
+	 */
+	syncLayoutData() {
+		this._initializeDragAndDrop();
+	}
+
+	/**
 	 * Callback that is executed when an item is being dragged.
 	 * @param {Object} eventData
 	 * @param {MouseEvent} eventData.originalEvent

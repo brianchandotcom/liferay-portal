@@ -19,6 +19,28 @@
 	collapsible="<%= true %>"
 	label="advanced-properties"
 >
+	<div class="<%= ((type == ExpandoColumnConstants.DOUBLE) || (type == ExpandoColumnConstants.FLOAT) || (type == ExpandoColumnConstants.LONG) || (type == ExpandoColumnConstants.INTEGER) || (type == ExpandoColumnConstants.SHORT)) ? "" : "hide" %>" id="<portlet:namespace />precisionTypeAdvanced">
+		<aui:field-wrapper cssClass="custom-precision-type-field-wrapper">
+			<c:choose>
+				<c:when test="<%= expandoColumn != null %>">
+					<aui:select disabled="<%= true %>" label="precision" name="precisionType">
+						<aui:option label="<%= ExpandoColumnConstants.getPrecisionType(type) %>" />
+					</aui:select>
+				</c:when>
+				<c:otherwise>
+					<aui:select label="precision" name="precisionType">
+						<aui:option label="<%= ExpandoColumnConstants.PRECISION_64_BIT %>" />
+						<aui:option label="<%= ExpandoColumnConstants.PRECISION_32_BIT %>" />
+					</aui:select>
+				</c:otherwise>
+			</c:choose>
+
+			<div class="form-text">
+				<liferay-ui:message key="custom-field-precision-help" />
+			</div>
+		</aui:field-wrapper>
+	</div>
+
 	<aui:field-wrapper>
 		<aui:input label="visible-with-update-permission" name="Property--visible-with-update-permission--" type="toggle-switch" value="<%= propertyVisibleWithUpdatePermission %>" />
 
@@ -35,7 +57,7 @@
 		</div>
 	</aui:field-wrapper>
 
-	<c:if test="<%= propertyDisplayType.equals(ExpandoColumnConstants.PROPERTY_DISPLAY_TYPE_TEXT_FIELD) %>">
+	<c:if test="<%= propertyDisplayType.equals(ExpandoColumnConstants.PROPERTY_DISPLAY_TYPE_INPUT_FIELD) %>">
 		<aui:field-wrapper>
 			<aui:input label="secret" name="Property--secret--" type="toggle-switch" value="<%= propertySecret %>" />
 
@@ -46,50 +68,51 @@
 	</c:if>
 
 	<aui:field-wrapper>
-		<c:choose>
-			<c:when test="<%= propertyDisplayType.equals(ExpandoColumnConstants.PROPERTY_DISPLAY_TYPE_TEXT_BOX) || propertyDisplayType.equals(ExpandoColumnConstants.PROPERTY_DISPLAY_TYPE_TEXT_FIELD) %>">
-				<aui:input label="searchable" name="searchable" type="toggle-switch" value="<%= (expandoColumn != null) ? (propertyIndexType != ExpandoColumnConstants.INDEX_TYPE_NONE) : true %>" />
-
-				<div class="form-text">
-					<liferay-ui:message key="custom-field-index-type-help" />
-				</div>
-
-				<div class="<%= (propertyIndexType != ExpandoColumnConstants.INDEX_TYPE_NONE) ? "" : "hide" %>" id="<portlet:namespace />propertyIndexType">
-					<div class="radio">
-						<aui:input checked="<%= true %>" label="as-keyword" name="Property--index-type--" type="radio" value="<%= ExpandoColumnConstants.INDEX_TYPE_KEYWORD %>" />
-					</div>
-
-					<div class="radio">
-						<aui:input checked="<%= propertyIndexType == ExpandoColumnConstants.INDEX_TYPE_TEXT %>" label="as-text" name="Property--index-type--" type="radio" value="<%= ExpandoColumnConstants.INDEX_TYPE_TEXT %>" />
-					</div>
-				</div>
-
-				<aui:script>
-					Liferay.Util.toggleBoxes('<portlet:namespace />searchable', '<portlet:namespace />propertyIndexType');
-				</aui:script>
-			</c:when>
-			<c:otherwise>
-				<aui:input name="Property--index-type--" type="hidden" value="<%= ExpandoColumnConstants.INDEX_TYPE_KEYWORD %>" />
-
-				<aui:input checked="<%= (expandoColumn != null) ? (propertyIndexType == ExpandoColumnConstants.INDEX_TYPE_KEYWORD) : true %>" label="searchable-as-keyword" name="searchable" type="toggle-switch" />
-
-				<div class="form-text">
-					<liferay-ui:message key="custom-field-index-type-help" />
-				</div>
-			</c:otherwise>
-		</c:choose>
-	</aui:field-wrapper>
-
-	<c:if test="<%= propertyDisplayType.equals(ExpandoColumnConstants.PROPERTY_DISPLAY_TYPE_TEXT_BOX) || propertyDisplayType.equals(ExpandoColumnConstants.PROPERTY_DISPLAY_TYPE_TEXT_FIELD) %>">
-		<aui:field-wrapper cssClass="form-group lfr-input-text-container">
-			<aui:input label="width" name="Property--width--" type="text" value="<%= propertyWidth %>">
-				<aui:validator name="digits" />
-			</aui:input>
+		<div class="<%= ((propertyDisplayType.equals(ExpandoColumnConstants.PROPERTY_DISPLAY_TYPE_TEXT_BOX) || propertyDisplayType.equals(ExpandoColumnConstants.PROPERTY_DISPLAY_TYPE_INPUT_FIELD)) && ((type == ExpandoColumnConstants.STRING) || (type == ExpandoColumnConstants.STRING_LOCALIZED))) ? "" : "hide" %>" id="<portlet:namespace />searchableAsKeywordOrText">
+			<aui:input disabled="<%= !((type == ExpandoColumnConstants.STRING) || (type == ExpandoColumnConstants.STRING_LOCALIZED)) ? true : false %>" id="searchableKeyWordOrText" label="searchable" name="searchable" type="toggle-switch" value="<%= (expandoColumn != null) ? (propertyIndexType != ExpandoColumnConstants.INDEX_TYPE_NONE) : true %>" />
 
 			<div class="form-text">
-				<liferay-ui:message key="custom-field-width-help" />
+				<liferay-ui:message key="custom-field-index-type-help" />
 			</div>
-		</aui:field-wrapper>
+
+			<div class="<%= (propertyIndexType != ExpandoColumnConstants.INDEX_TYPE_NONE) ? "" : "hide" %>" id="<portlet:namespace />propertyIndexType">
+				<div class="radio">
+					<aui:input checked="<%= true %>" disabled="<%= !((type == ExpandoColumnConstants.STRING) || (type == ExpandoColumnConstants.STRING_LOCALIZED)) ? true : false %>" id="indexTypeKeyword" label="as-keyword" name="Property--index-type--" type="radio" value="<%= ExpandoColumnConstants.INDEX_TYPE_KEYWORD %>" />
+				</div>
+
+				<div class="radio">
+					<aui:input checked="<%= propertyIndexType == ExpandoColumnConstants.INDEX_TYPE_TEXT %>" disabled="<%= !((type == ExpandoColumnConstants.STRING) || (type == ExpandoColumnConstants.STRING_LOCALIZED)) ? true : false %>" id="indexTypeText" label="as-text" name="Property--index-type--" type="radio" value="<%= ExpandoColumnConstants.INDEX_TYPE_TEXT %>" />
+				</div>
+			</div>
+
+			<aui:script>
+				Liferay.Util.toggleBoxes('<portlet:namespace />searchableKeyWordOrText', '<portlet:namespace />propertyIndexType');
+			</aui:script>
+		</div>
+
+		<div class="<%= !((propertyDisplayType.equals(ExpandoColumnConstants.PROPERTY_DISPLAY_TYPE_TEXT_BOX) || propertyDisplayType.equals(ExpandoColumnConstants.PROPERTY_DISPLAY_TYPE_INPUT_FIELD)) && ((type == ExpandoColumnConstants.STRING) || (type == ExpandoColumnConstants.STRING_LOCALIZED))) ? "" : "hide" %>" id="<portlet:namespace />searchableAsKeyword">
+			<aui:input disabled="<%= !((propertyDisplayType.equals(ExpandoColumnConstants.PROPERTY_DISPLAY_TYPE_TEXT_BOX) || propertyDisplayType.equals(ExpandoColumnConstants.PROPERTY_DISPLAY_TYPE_INPUT_FIELD)) && ((type == ExpandoColumnConstants.STRING) || (type == ExpandoColumnConstants.STRING_LOCALIZED))) ? false : true %>" id="indexTypeSearchableAsKeyword" name="Property--index-type--" type="hidden" value="<%= ExpandoColumnConstants.INDEX_TYPE_KEYWORD %>" />
+
+			<aui:input checked="<%= (expandoColumn != null) ? (propertyIndexType == ExpandoColumnConstants.INDEX_TYPE_KEYWORD) : true %>" disabled="<%= !((propertyDisplayType.equals(ExpandoColumnConstants.PROPERTY_DISPLAY_TYPE_TEXT_BOX) || propertyDisplayType.equals(ExpandoColumnConstants.PROPERTY_DISPLAY_TYPE_INPUT_FIELD)) && ((type == ExpandoColumnConstants.STRING) || (type == ExpandoColumnConstants.STRING_LOCALIZED))) ? false : true %>" id="indexTypeSearchableAsKeywordToggleSwitch" label="searchable-as-keyword" name="searchable" type="toggle-switch" />
+
+			<div class="form-text">
+				<liferay-ui:message key="custom-field-index-type-help" />
+			</div>
+		</div>
+	</aui:field-wrapper>
+
+	<c:if test="<%= (propertyDisplayType.equals(ExpandoColumnConstants.PROPERTY_DISPLAY_TYPE_TEXT_BOX) || propertyDisplayType.equals(ExpandoColumnConstants.PROPERTY_DISPLAY_TYPE_INPUT_FIELD)) && ((type == ExpandoColumnConstants.STRING) || (type == ExpandoColumnConstants.STRING_LOCALIZED)) %>">
+		<div id="<portlet:namespace />widthAdvancedSetting">
+			<aui:field-wrapper cssClass="form-group lfr-input-text-container">
+				<aui:input label="width" name="Property--width--" type="text" value="<%= propertyWidth %>">
+					<aui:validator name="digits" />
+				</aui:input>
+
+				<div class="form-text">
+					<liferay-ui:message key="custom-field-width-help" />
+				</div>
+			</aui:field-wrapper>
+		</div>
 	</c:if>
 
 	<c:if test="<%= propertyDisplayType.equals(ExpandoColumnConstants.PROPERTY_DISPLAY_TYPE_TEXT_BOX) %>">
@@ -106,3 +129,36 @@
 		</aui:field-wrapper>
 	</c:if>
 </liferay-frontend:fieldset>
+
+<script>
+	function populatePrecisionType(precisionTypeForm, integerBit) {
+		var integerBitOptions = "";
+
+		for (var bit of integerBit) {
+			integerBitOptions += "<option value=\"" + bit + "\">" + bit + "</option>";
+		}
+
+		precisionTypeForm.innerHTML = integerBitOptions;
+	}
+
+	function setPrecisionType(currentSelectedDataType) {
+		var precisionTypeElement = document.getElementById('<portlet:namespace />precisionType');
+
+		if (precisionTypeElement) {
+			precisionTypeElement.options.length = 0;
+		}
+
+		if (currentSelectedDataType && precisionTypeElement) {
+			if (currentSelectedDataType == '<%= ExpandoColumnConstants.TYPE_DECIMAL %>') {
+				var integerBit = ['<%= ExpandoColumnConstants.PRECISION_64_BIT %>', '<%= ExpandoColumnConstants.PRECISION_32_BIT %>'];
+
+				populatePrecisionType(precisionTypeElement, integerBit);
+			}
+			else if (currentSelectedDataType == '<%= ExpandoColumnConstants.TYPE_INTEGER %>') {
+				var integerBit = ['<%= ExpandoColumnConstants.PRECISION_64_BIT %>', '<%= ExpandoColumnConstants.PRECISION_32_BIT %>', '<%= ExpandoColumnConstants.PRECISION_16_BIT %>'];
+
+				populatePrecisionType(precisionTypeElement, integerBit);
+			}
+		}
+	}
+</script>

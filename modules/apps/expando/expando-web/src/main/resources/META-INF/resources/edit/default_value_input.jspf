@@ -93,6 +93,20 @@
 		<aui:input cssClass="lfr-textarea-container" helpMessage="enter-one-value-per-line" label="values" name="defaultValue" required="<%= true %>" type="textarea" value="<%= StringUtil.merge((String[])defaultValue, StringPool.NEW_LINE) %>" />
 	</c:when>
 	<c:otherwise>
+		<c:choose>
+			<c:when test="<%= expandoColumn != null %>">
+				<aui:select disabled="<%= true %>" label="data-type" name="dataType">
+					<aui:option label="<%= ExpandoColumnConstants.getDataType(type) %>" />
+				</aui:select>
+			</c:when>
+			<c:otherwise>
+				<aui:select label="data-type" name="dataType" onChange="setDataType()">
+					<aui:option label="<%= ExpandoColumnConstants.TYPE_TEXT %>" />
+					<aui:option label="<%= ExpandoColumnConstants.TYPE_DECIMAL %>" />
+					<aui:option label="<%= ExpandoColumnConstants.TYPE_INTEGER %>" />
+				</aui:select>
+			</c:otherwise>
+		</c:choose>
 
 		<%
 		String xml = StringPool.BLANK;
@@ -117,12 +131,14 @@
 		</div>
 
 		<c:if test="<%= ((type == ExpandoColumnConstants.STRING) || (type == ExpandoColumnConstants.STRING_LOCALIZED)) && (expandoColumn == null) %>">
-			<aui:input label="make-field-localizable" name="Property--localize-field--" onChange='<%= renderResponse.getNamespace() + "onLocalizeFieldChange(event);" %>' type="checkbox" value="<%= type == ExpandoColumnConstants.STRING_LOCALIZED %>" />
+			<div class="number-hide" id="<portlet:namespace />textFieldLocalizedCheckbox">
+				<aui:input label="make-field-localizable" name="Property--localize-field--" onChange='<%= renderResponse.getNamespace() + "onLocalizeFieldChange(event);" %>' type="checkbox" value="<%= type == ExpandoColumnConstants.STRING_LOCALIZED %>" />
 
-			<aui:script>
-				Liferay.Util.toggleBoxes('<portlet:namespace />localize-field', '<portlet:namespace />textField', true);
-				Liferay.Util.toggleBoxes('<portlet:namespace />localize-field', '<portlet:namespace />textLocalizedField');
-			</aui:script>
+				<aui:script>
+					Liferay.Util.toggleBoxes('<portlet:namespace />localize-field', '<portlet:namespace />textField', true);
+					Liferay.Util.toggleBoxes('<portlet:namespace />localize-field', '<portlet:namespace />textLocalizedField');
+				</aui:script>
+			</div>
 		</c:if>
 	</c:otherwise>
 </c:choose>
@@ -138,3 +154,60 @@
 		}
 	}
 </aui:script>
+
+<script>
+	function setDataType() {
+		var dataTypeElement = document.getElementById('<portlet:namespace />dataType');
+
+		var currentSelectedDataType = dataTypeElement.value;
+
+		if (currentSelectedDataType) {
+			if (currentSelectedDataType == '<%= ExpandoColumnConstants.TYPE_TEXT %>') {
+				updateElement(["indexTypeSearchableAsKeyword", "indexTypeSearchableAsKeywordToggleSwitch"], "disable")
+
+				updateElement(["indexTypeKeyword", "indexTypeText", "searchableKeyWordOrText"], "enable")
+
+				updateElement(["searchableAsKeywordOrText", "textFieldLocalizedCheckbox", "widthAdvancedSetting"], "unhide");
+
+				updateElement(["precisionTypeAdvanced", "searchableAsKeyword"], "hide");
+			}
+			else if ((currentSelectedDataType == '<%= ExpandoColumnConstants.TYPE_DECIMAL %>') || (currentSelectedDataType == '<%= ExpandoColumnConstants.TYPE_INTEGER %>')) {
+				updateElement(["indexTypeKeyword", "indexTypeText", "searchableKeyWordOrText"], "disable")
+
+				updateElement(["indexTypeSearchableAsKeyword", "indexTypeSearchableAsKeywordToggleSwitch"], "enable")
+
+				updateElement(["precisionTypeAdvanced", "searchableAsKeyword"], "unhide");
+
+				updateElement(["searchableAsKeywordOrText", "textFieldLocalizedCheckbox", "widthAdvancedSetting"], "hide");
+
+				setPrecisionType(currentSelectedDataType);
+			}
+		}
+	}
+
+	function updateElement(formElement, action) {
+		for (var element of formElement) {
+			var domElement = "<portlet:namespace />" + element;
+
+			var updateElement = document.getElementById(domElement);
+
+			if (updateElement) {
+				if (action == "enable") {
+					updateElement.removeAttribute("disabled");
+
+					updateElement.classList.remove("disabled");
+				}
+				else if (action == "disable") {
+					updateElement.setAttribute("disabled", "true");
+				}
+				else if (action == "hide") {
+					updateElement.classList.add("hide");
+				}
+				else if (action == "unhide") {
+					updateElement.classList.remove("hide");
+				}
+
+			}
+		}
+	}
+</script>

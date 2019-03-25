@@ -1215,7 +1215,8 @@ definition {
 
 		DMDocument.editPGViaAP(
 			assetTitle = "DM Document Title",
-			dmDocumentTitleEdit = "DM Document Title Edit"
+			dmDocumentTitleEdit = "DM Document Title Edit",
+			portletName = "Asset Publisher"
 		);
 
 		Navigator.gotoStagedSitePage(

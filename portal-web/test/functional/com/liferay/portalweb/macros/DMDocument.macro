@@ -790,12 +790,15 @@ definition {
 
 	macro editPGViaAP {
 		var key_assetTitle = "${assetTitle}";
+		var key_portletName = "${portletName}";
 
 		Click(locator1 = "AP#ASSET_ABSTRACT_EDIT");
 
-		Click(locator1 = "AP#ASSET_EDIT");
+		ScrollWebElementIntoView(locator1 = "Portlet#TITLE");
 
-		SelectFrame(locator1 = "IFrame#DIALOG");
+		MouseOver(locator1 = "AP#ASSET_ABSTRACT_EDIT");
+
+		Click.clickNoMouseOver(locator1 = "AP#ASSET_EDIT");
 
 		if (!(contains("${dmDocumentTitleEdit}", "{dmDocumentTitleEdit}"))) {
 			Type(locator1 = "TextInput#TITLE", value1 = "${dmDocumentTitleEdit}");

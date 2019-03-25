@@ -74,7 +74,7 @@ describe('GeoJSONBase', () => {
 			geoJSONChild._handleFeatureClicked();
 
 			expect(geoJSONChild.emit).toHaveBeenCalledTimes(1);
-			expect(geoJSONChild.emit.mock.calls[0][0], 'featureClick');
+			expect(geoJSONChild.emit.mock.calls[0][0]).toBe('featureClick');
 		});
 
 		it('should wrap the given feature with _wrapNativeFeature()', () => {

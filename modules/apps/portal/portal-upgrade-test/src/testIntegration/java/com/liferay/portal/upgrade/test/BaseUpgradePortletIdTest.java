@@ -83,6 +83,8 @@ public class BaseUpgradePortletIdTest extends BaseUpgradePortletId {
 
 			_portlets.add(portlet);
 
+			ResourceActionsUtil.check(portletId);
+
 			PortletLocalServiceUtil.destroyPortlet(portlet);
 		}
 	}

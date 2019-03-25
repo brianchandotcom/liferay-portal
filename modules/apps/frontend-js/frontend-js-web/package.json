@@ -16,6 +16,7 @@
 		}
 	},
 	"dependencies": {
+		"@babel/cli": "^7.2.3",
 		"clay": "2.10.0",
 		"clay-alert": "2.11.1",
 		"liferay-amd-loader": "4.0.0-alpha.5",
@@ -39,9 +40,8 @@
 		"uuid": "^3.3.2"
 	},
 	"devDependencies": {
-		"babel-cli": "6.26.0",
+		"@babel/preset-env": "^7.4.2",
 		"babel-loader": "^7.1.4",
-		"babel-preset-env": "^1.6.1",
 		"check-source-formatting": "^2.0.14",
 		"jest": "^24.5.0",
 		"liferay-jest-junit-reporter": "1.0.0",

@@ -17,14 +17,14 @@ package com.liferay.multi.factor.authentication.checker.browser.visitor;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.multi.factor.authentication.checker.browser.BrowserMFAChecker;
-import com.liferay.multi.factor.authentication.checker.visitor.PredicateMFACheckerVisitor;
+import com.liferay.multi.factor.authentication.checker.visitor.BaseMFACheckerVisitor;
 
 /**
  * @author Carlos Sierra Andrés
  */
 @ProviderType
 public class SupportsBrowserMFACheckerVisitor
-	extends PredicateMFACheckerVisitor {
+	extends BaseMFACheckerVisitor {
 
 	public SupportsBrowserMFACheckerVisitor() {
 		super(BrowserMFAChecker.class::isInstance);

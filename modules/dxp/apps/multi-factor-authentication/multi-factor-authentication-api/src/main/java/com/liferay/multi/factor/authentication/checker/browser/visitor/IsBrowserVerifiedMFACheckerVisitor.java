@@ -17,7 +17,7 @@ package com.liferay.multi.factor.authentication.checker.browser.visitor;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.multi.factor.authentication.checker.browser.BrowserMFAChecker;
-import com.liferay.multi.factor.authentication.checker.visitor.PredicateMFACheckerVisitor;
+import com.liferay.multi.factor.authentication.checker.visitor.BaseMFACheckerVisitor;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -26,7 +26,7 @@ import javax.servlet.http.HttpServletRequest;
  */
 @ProviderType
 public class IsBrowserVerifiedMFACheckerVisitor
-	extends PredicateMFACheckerVisitor {
+	extends BaseMFACheckerVisitor {
 
 	public IsBrowserVerifiedMFACheckerVisitor(
 		HttpServletRequest httpServletRequest, long userId) {

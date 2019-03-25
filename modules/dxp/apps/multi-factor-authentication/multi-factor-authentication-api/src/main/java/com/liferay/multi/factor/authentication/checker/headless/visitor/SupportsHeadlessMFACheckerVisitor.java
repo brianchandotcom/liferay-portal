@@ -17,14 +17,14 @@ package com.liferay.multi.factor.authentication.checker.headless.visitor;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.multi.factor.authentication.checker.headless.HeadlessMFAChecker;
-import com.liferay.multi.factor.authentication.checker.visitor.PredicateMFACheckerVisitor;
+import com.liferay.multi.factor.authentication.checker.visitor.BaseMFACheckerVisitor;
 
 /**
  * @author Carlos Sierra Andrés
  */
 @ProviderType
 public class SupportsHeadlessMFACheckerVisitor
-	extends PredicateMFACheckerVisitor {
+	extends BaseMFACheckerVisitor {
 
 	public SupportsHeadlessMFACheckerVisitor() {
 		super(HeadlessMFAChecker.class::isInstance);

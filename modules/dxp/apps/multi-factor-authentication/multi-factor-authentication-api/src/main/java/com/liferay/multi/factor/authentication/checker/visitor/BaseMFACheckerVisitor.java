@@ -26,9 +26,10 @@ import java.util.function.Predicate;
  * @author Carlos Sierra Andrés
  */
 @ProviderType
-public class PredicateMFACheckerVisitor implements MFACheckerVisitor<Boolean> {
+public abstract class BaseMFACheckerVisitor
+	implements MFACheckerVisitor<Boolean> {
 
-	public <T> PredicateMFACheckerVisitor(
+	public <T> BaseMFACheckerVisitor(
 		Class<T> clazz, Predicate<T> predicate) {
 
 		this(
@@ -41,7 +42,7 @@ public class PredicateMFACheckerVisitor implements MFACheckerVisitor<Boolean> {
 			});
 	}
 
-	public PredicateMFACheckerVisitor(Predicate<MFAChecker> predicate) {
+	public BaseMFACheckerVisitor(Predicate<MFAChecker> predicate) {
 		_predicate = predicate;
 	}
 

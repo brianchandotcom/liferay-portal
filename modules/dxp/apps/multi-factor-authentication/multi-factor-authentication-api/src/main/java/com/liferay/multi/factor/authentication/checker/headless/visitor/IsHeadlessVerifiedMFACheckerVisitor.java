@@ -17,7 +17,7 @@ package com.liferay.multi.factor.authentication.checker.headless.visitor;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.multi.factor.authentication.checker.headless.HeadlessMFAChecker;
-import com.liferay.multi.factor.authentication.checker.visitor.PredicateMFACheckerVisitor;
+import com.liferay.multi.factor.authentication.checker.visitor.BaseMFACheckerVisitor;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -26,7 +26,7 @@ import javax.servlet.http.HttpServletRequest;
  */
 @ProviderType
 public class IsHeadlessVerifiedMFACheckerVisitor
-	extends PredicateMFACheckerVisitor {
+	extends BaseMFACheckerVisitor {
 
 	public IsHeadlessVerifiedMFACheckerVisitor(
 		HttpServletRequest httpServletRequest, long userId) {

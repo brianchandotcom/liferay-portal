@@ -17,14 +17,14 @@ package com.liferay.multi.factor.authentication.checker.setup.visitor;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.multi.factor.authentication.checker.setup.MFACheckerSetup;
-import com.liferay.multi.factor.authentication.checker.visitor.PredicateMFACheckerVisitor;
+import com.liferay.multi.factor.authentication.checker.visitor.BaseMFACheckerVisitor;
 
 /**
  * @author Carlos Sierra Andrés
  */
 @ProviderType
 public class IsUserSetupCompleteMFACheckerVisitor
-	extends PredicateMFACheckerVisitor {
+	extends BaseMFACheckerVisitor {
 
 	public IsUserSetupCompleteMFACheckerVisitor(long userId) {
 		super(

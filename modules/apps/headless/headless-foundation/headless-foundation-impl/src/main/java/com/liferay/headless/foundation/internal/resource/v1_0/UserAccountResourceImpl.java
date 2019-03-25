@@ -150,13 +150,6 @@ public class UserAccountResourceImpl extends BaseUserAccountResourceImpl {
 	}
 
 	@Override
-	public UserAccount postUserAccount(UserAccount userAccount)
-		throws Exception {
-
-		return _toUserAccount(_addUser(userAccount));
-	}
-
-	@Override
 	public UserAccount postUserAccount(MultipartBody multipartBody)
 		throws Exception {
 
@@ -169,6 +162,13 @@ public class UserAccountResourceImpl extends BaseUserAccountResourceImpl {
 			user.getUserId(), multipartBody.getBinaryFileAsBytes("file"));
 
 		return _toUserAccount(user);
+	}
+
+	@Override
+	public UserAccount postUserAccount(UserAccount userAccount)
+		throws Exception {
+
+		return _toUserAccount(_addUser(userAccount));
 	}
 
 	@Override

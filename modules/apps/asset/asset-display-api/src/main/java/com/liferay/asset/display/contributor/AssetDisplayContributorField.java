@@ -14,19 +14,11 @@
 
 package com.liferay.asset.display.contributor;
 
-import java.util.Locale;
+import com.liferay.info.display.contributor.InfoDisplayContributorField;
 
 /**
  * @author Jürgen Kappler
  */
-public interface AssetDisplayContributorField<T> {
-
-	public String getKey();
-
-	public String getLabel(Locale locale);
-
-	public String getType();
-
-	public Object getValue(T model, Locale locale);
-
+public interface AssetDisplayContributorField<T>
+	extends InfoDisplayContributorField<T> {
 }

@@ -2097,7 +2097,16 @@ public class ServiceBuilder {
 
 	private void _addIndexMetadata(
 		Map<String, List<IndexMetadata>> indexMetadatasMap, String tableName,
-		IndexMetadata indexMetadata) {
+		IndexMetadata entityPKIndexMetadata, IndexMetadata indexMetadata) {
+
+		if (entityPKIndexMetadata != null) {
+			Boolean redundant = indexMetadata.redundantToPKIndex(
+				entityPKIndexMetadata);
+
+			if (redundant) {
+				return;
+			}
+		}
 
 		List<IndexMetadata> indexMetadatas = indexMetadatasMap.get(tableName);
 
@@ -3565,16 +3574,26 @@ public class ServiceBuilder {
 				Entity entity = _getEntityByTableName(
 					indexMetadata.getTableName());
 
+				IndexMetadata entityPKIndexMetadata = null;
+
 				if (entity != null) {
 					indexMetadata = new IndexMetadata(
 						indexMetadata.getIndexName(),
 						indexMetadata.getTableName(), indexMetadata.isUnique(),
 						indexMetadata.getColumnNames());
+
+					List<EntityColumn> pkEntityColumns =
+						entity.getPKEntityColumns();
+
+					if (pkEntityColumns.size() > 1) {
+						entityPKIndexMetadata = _getEntityPKIndexMetadata(
+							entity.getPKEntityColumns());
+					}
 				}
 
 				_addIndexMetadata(
 					indexMetadatasMap, indexMetadata.getTableName(),
-					indexMetadata);
+					entityPKIndexMetadata, indexMetadata);
 			}
 		}
 
@@ -3626,9 +3645,19 @@ public class ServiceBuilder {
 						entityFinder.isUnique(), entity.getTable(),
 						dbNames.toArray(new String[dbNames.size()]));
 
+				IndexMetadata entityPKIndexMetadata = null;
+
+				List<EntityColumn> pkEntityColumns =
+					entity.getPKEntityColumns();
+
+				if (pkEntityColumns.size() > 1) {
+					entityPKIndexMetadata = _getEntityPKIndexMetadata(
+						entity.getPKEntityColumns());
+				}
+
 				_addIndexMetadata(
 					indexMetadatasMap, indexMetadata.getTableName(),
-					indexMetadata);
+					entityPKIndexMetadata, indexMetadata);
 			}
 		}
 
@@ -4353,15 +4382,26 @@ public class ServiceBuilder {
 
 		String tableName = entityMapping.getTableName();
 
-		for (Entity entity : entities) {
+		for (int i = 0; i < entities.length; i++) {
+			Entity entity = entities[i];
+
 			List<EntityColumn> pkEntityColumns = entity.getPKEntityColumns();
 
-			for (EntityColumn entityColumn : pkEntityColumns) {
+			int j = 0;
+
+			if (i == 1) {
+				j = 1;
+			}
+
+			for (; j < pkEntityColumns.size(); j++) {
+				EntityColumn entityColumn = pkEntityColumns.get(j);
+
 				IndexMetadata indexMetadata =
 					IndexMetadataFactoryUtil.createIndexMetadata(
 						false, tableName, entityColumn.getDBName());
 
-				_addIndexMetadata(indexMetadatasMap, tableName, indexMetadata);
+				_addIndexMetadata(
+					indexMetadatasMap, tableName, null, indexMetadata);
 			}
 		}
 	}
@@ -4771,6 +4811,23 @@ public class ServiceBuilder {
 			StringBundler.concat(
 				"No entity column exist with column database name ",
 				columnDBName, " for entity ", entity.getName()));
+	}
+
+	private IndexMetadata _getEntityPKIndexMetadata(
+		List<EntityColumn> pkEntityColumns) {
+
+		String[] pkEntityColumnNames = new String[pkEntityColumns.size()];
+
+		for (int i = 0; i < pkEntityColumns.size(); i++) {
+			EntityColumn pkEntityColumn = pkEntityColumns.get(i);
+
+			pkEntityColumnNames[i] = pkEntityColumn.getName();
+		}
+
+		IndexMetadata entityPKIndexMetadata = new IndexMetadata(
+			null, null, false, pkEntityColumnNames);
+
+		return entityPKIndexMetadata;
 	}
 
 	private String _getFileContent(String fileName) throws IOException {

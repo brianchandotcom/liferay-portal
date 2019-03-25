@@ -185,6 +185,22 @@ public class IndexMetadata extends Index implements Comparable<IndexMetadata> {
 		return !redundant;
 	}
 
+	public Boolean redundantToPKIndex(IndexMetadata indexMetadata) {
+		String[] indexMetadataColumnNames = indexMetadata._columnNames;
+
+		if (_columnNames.length <= indexMetadataColumnNames.length) {
+			for (int i = 0; i < _columnNames.length; i++) {
+				if (!_columnNames[i].equals(indexMetadataColumnNames[i])) {
+					return Boolean.FALSE;
+				}
+			}
+
+			return Boolean.TRUE;
+		}
+
+		return Boolean.FALSE;
+	}
+
 	@Override
 	public String toString() {
 		return getCreateSQL(null);

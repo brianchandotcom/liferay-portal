@@ -245,6 +245,8 @@ definition {
 			nodePort = "9080"
 		);
 
+		Pause(locator1 = "10000");
+
 		Clustering.viewTextNotPresentOnSpecificNode(
 			exceptionText = "Memory clustered job from modules is triggered",
 			nodePort = "8080"
@@ -264,6 +266,8 @@ definition {
 			categoryName = "com.liferay.cluster.test.module.internel",
 			nodePort = "8080"
 		);
+
+		Pause(locator1 = "10000");
 
 		Clustering.viewTextPresentOnSpecificNode(
 			expectedText = "Memory clustered job from modules is triggered",

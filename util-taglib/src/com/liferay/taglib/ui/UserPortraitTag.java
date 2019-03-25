@@ -136,6 +136,7 @@ public class UserPortraitTag extends IncludeTag {
 	 * @deprecated As of Judson (7.1.x), with no direct replacement
 	 */
 	@Deprecated
+	@SuppressWarnings("unused")
 	public void setImageCssClass(String imageCssClass) {
 	}
 
@@ -151,6 +152,7 @@ public class UserPortraitTag extends IncludeTag {
 	 * @deprecated As of Mueller (7.2.x), with no direct replacement
 	 */
 	@Deprecated
+	@SuppressWarnings("unused")
 	public void setUserName(String userName) {
 	}
 

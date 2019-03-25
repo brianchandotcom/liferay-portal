@@ -1,7 +1,14 @@
+import {
+	Redirect,
+	Route,
+	HashRouter as Router,
+	Switch
+} from 'react-router-dom';
+import {AppContext} from './AppContext';
 import fetch from '../shared/rest/fetch';
+import HeaderController from '../shared/components/header-controller/HeaderController';
 import ProcessListCard from './process-list/ProcessListCard';
 import React from 'react';
-import Router from '../shared/components/router/Router';
 import SLAForm from './sla/SLAForm';
 import SLAListCard from './sla/SLAListCard';
 
@@ -10,42 +17,68 @@ import SLAListCard from './sla/SLAListCard';
  * @classdesc Application starter.
  */
 export default class AppComponent extends React.Component {
+	constructor(props) {
+		super(props);
+
+		this.contextState = {
+			client: fetch,
+			companyId: props.companyId,
+			defaultDelta: props.defaultDelta,
+			deltas: props.deltas,
+			maxPages: props.maxPages,
+			setTitle: this.setTitle.bind(this)
+		};
+
+		this.state = {
+			title: null
+		};
+	}
+
+	setTitle(title) {
+		this.setState({title});
+	}
+
 	render() {
-		const {companyId, defaultPath = 'process-list'} = this.props;
+		const {title} = this.state;
+		const withParams = Component => ({match: {params}}) => (
+			<Component {...params} />
+		);
 
 		return (
-			<div className="portal-workflow-metrics-app">
-				<Router
-					defaultPath={defaultPath}
-					paths={[
-						{
-							component: props => (
-								<SLAForm {...props} client={fetch} companyId={companyId} />
-							),
-							path: 'sla-form',
-							title: Liferay.Language.get('new-sla')
-						},
-						{
-							component: props => (
-								<SLAListCard {...props} client={fetch} companyId={companyId} />
-							),
-							path: 'sla-list',
-							title: Liferay.Language.get('slas')
-						},
-						{
-							component: props => (
-								<ProcessListCard
-									{...props}
-									client={fetch}
-									companyId={companyId}
-								/>
-							),
-							path: 'process-list',
-							title: Liferay.Language.get('metrics')
-						}
-					]}
-				/>
-			</div>
+			<Router>
+				<AppContext.Provider value={this.contextState}>
+					<HeaderController basePath="/processes" title={title} />
+
+					<div className="portal-workflow-metrics-app">
+						<Switch>
+							<Redirect exact from="/" to="/processes" />
+
+							<Route
+								path="/processes/:pageSize?/:page?"
+								render={withParams(ProcessListCard)}
+							/>
+
+							<Route
+								exact
+								path="/slas/:processId/:pageSize?/:page?"
+								render={withParams(SLAListCard)}
+							/>
+
+							<Route
+								exact
+								path="/sla/new/:processId"
+								render={withParams(SLAForm)}
+							/>
+
+							<Route
+								exact
+								path="/sla/edit/:processId/:id"
+								render={withParams(SLAForm)}
+							/>
+						</Switch>
+					</div>
+				</AppContext.Provider>
+			</Router>
 		);
 	}
 }

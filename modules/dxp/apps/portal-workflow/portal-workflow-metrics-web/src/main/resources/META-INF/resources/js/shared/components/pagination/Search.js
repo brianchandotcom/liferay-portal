@@ -4,7 +4,7 @@ import React from 'react';
 /**
  * @class
  * @memberof shared/components
- * */
+ */
 export default class Search extends React.Component {
 	constructor(props) {
 		super(props);

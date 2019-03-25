@@ -4,7 +4,7 @@ import {sub} from '../../util/lang';
 /**
  * @class
  * @memberof shared/components
- * */
+ */
 export default class DisplayResult extends React.Component {
 	render() {
 		const {page, pageCount, pageSize, totalCount} = this.props;

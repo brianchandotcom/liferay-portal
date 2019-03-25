@@ -5,7 +5,7 @@ import React from 'react';
 /**
  * @class
  * @memberof processes-list
- * */
+ */
 export default class ProcessListItem extends React.Component {
 	render() {
 		const {

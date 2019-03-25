@@ -3,7 +3,7 @@ import React from 'react';
 /**
  * @class
  * @memberof shared/components
- * */
+ */
 export default class Icon extends React.Component {
 	render() {
 		const {iconName} = this.props;

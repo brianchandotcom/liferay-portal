@@ -5,7 +5,7 @@ import SummaryCard from './SummaryCard';
 /**
  * @class
  * @memberof open-processes-summary
- * */
+ */
 export default class OpenProcessesSummary extends React.Component {
 	constructor(props) {
 		super(props);

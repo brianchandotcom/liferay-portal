@@ -1,6 +1,6 @@
 /**
  * @module sub
- * */
+ */
 export function sub(langKey, args) {
 	const SPLIT_REGEX = /({\d+})/g;
 

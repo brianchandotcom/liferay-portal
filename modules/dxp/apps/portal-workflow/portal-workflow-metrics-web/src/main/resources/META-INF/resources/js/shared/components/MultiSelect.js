@@ -4,7 +4,7 @@ import React from 'react';
 /**
  * @class
  * @memberof shared/components
- * */
+ */
 export default class MultiSelect extends React.Component {
 	constructor({data, selectedTags}) {
 		super({data, selectedTags});

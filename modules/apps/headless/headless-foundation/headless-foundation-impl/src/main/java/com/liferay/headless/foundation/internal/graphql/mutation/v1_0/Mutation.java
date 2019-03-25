@@ -214,28 +214,28 @@ public class Mutation {
 
 	@GraphQLField
 	@GraphQLInvokeDetached
-	public UserAccount postMediaType1UserAccount(
+	public UserAccount postUserAccount(
 			@GraphQLName("UserAccount") UserAccount userAccount)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
 			_userAccountResourceComponentServiceObjects,
 			this::_populateResourceContext,
-			userAccountResource ->
-				userAccountResource.postMediaType1UserAccount(userAccount));
+			userAccountResource -> userAccountResource.postUserAccount(
+				userAccount));
 	}
 
 	@GraphQLField
 	@GraphQLInvokeDetached
-	public UserAccount postMediaType2UserAccount(
+	public UserAccount postUserAccount(
 			@GraphQLName("MultipartBody") MultipartBody multipartBody)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
 			_userAccountResourceComponentServiceObjects,
 			this::_populateResourceContext,
-			userAccountResource ->
-				userAccountResource.postMediaType2UserAccount(multipartBody));
+			userAccountResource -> userAccountResource.postUserAccount(
+				multipartBody));
 	}
 
 	@GraphQLInvokeDetached

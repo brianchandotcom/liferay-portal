@@ -387,17 +387,17 @@ public abstract class BaseUserAccountResourceTestCase {
 	}
 
 	@Test
-	public void testPostMediaType1UserAccount() throws Exception {
+	public void testPostUserAccount() throws Exception {
 		UserAccount randomUserAccount = randomUserAccount();
 
-		UserAccount postUserAccount =
-			testPostMediaType1UserAccount_addUserAccount(randomUserAccount);
+		UserAccount postUserAccount = testPostUserAccount_addUserAccount(
+			randomUserAccount);
 
 		assertEquals(randomUserAccount, postUserAccount);
 		assertValid(postUserAccount);
 	}
 
-	protected UserAccount testPostMediaType1UserAccount_addUserAccount(
+	protected UserAccount testPostUserAccount_addUserAccount(
 			UserAccount userAccount)
 		throws Exception {
 
@@ -405,8 +405,7 @@ public abstract class BaseUserAccountResourceTestCase {
 			"This method needs to be implemented");
 	}
 
-	protected UserAccount invokePostMediaType1UserAccount(
-			UserAccount userAccount)
+	protected UserAccount invokePostUserAccount(UserAccount userAccount)
 		throws Exception {
 
 		Http.Options options = _createHttpOptions();
@@ -433,7 +432,7 @@ public abstract class BaseUserAccountResourceTestCase {
 		}
 	}
 
-	protected Http.Response invokePostMediaType1UserAccountResponse(
+	protected Http.Response invokePostUserAccountResponse(
 			UserAccount userAccount)
 		throws Exception {
 
@@ -451,17 +450,17 @@ public abstract class BaseUserAccountResourceTestCase {
 	}
 
 	@Test
-	public void testPostMediaType2UserAccount() throws Exception {
+	public void testPostFormDataUserAccount() throws Exception {
 		UserAccount randomUserAccount = randomUserAccount();
 
 		UserAccount postUserAccount =
-			testPostMediaType2UserAccount_addUserAccount(randomUserAccount);
+			testPostFormDataUserAccount_addUserAccount(randomUserAccount);
 
 		assertEquals(randomUserAccount, postUserAccount);
 		assertValid(postUserAccount);
 	}
 
-	protected UserAccount testPostMediaType2UserAccount_addUserAccount(
+	protected UserAccount testPostFormDataUserAccount_addUserAccount(
 			UserAccount userAccount)
 		throws Exception {
 
@@ -469,7 +468,7 @@ public abstract class BaseUserAccountResourceTestCase {
 			"This method needs to be implemented");
 	}
 
-	protected UserAccount invokePostMediaType2UserAccount(
+	protected UserAccount invokePostFormDataUserAccount(
 			MultipartBody multipartBody)
 		throws Exception {
 
@@ -497,7 +496,7 @@ public abstract class BaseUserAccountResourceTestCase {
 		}
 	}
 
-	protected Http.Response invokePostMediaType2UserAccountResponse(
+	protected Http.Response invokePostFormDataUserAccountResponse(
 			MultipartBody multipartBody)
 		throws Exception {
 

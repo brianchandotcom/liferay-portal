@@ -43,10 +43,10 @@ public interface UserAccountResource {
 	public Page<UserAccount> getUserAccountsPage(Pagination pagination)
 		throws Exception;
 
-	public UserAccount postMediaType1UserAccount(UserAccount userAccount)
+	public UserAccount postUserAccount(UserAccount userAccount)
 		throws Exception;
 
-	public UserAccount postMediaType2UserAccount(MultipartBody multipartBody)
+	public UserAccount postUserAccount(MultipartBody multipartBody)
 		throws Exception;
 
 	public void deleteUserAccount(Long userAccountId) throws Exception;

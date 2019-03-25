@@ -698,6 +698,10 @@ definition {
 
 		LAR.exportSiteCP(larFileName = "Export");
 
+		Pause(locator1 = "3000");
+
+		var larFileName = LAR.getLarFileName();
+
 		LAR.downloadLar();
 
 		ProductMenu.gotoPortlet(
@@ -705,8 +709,6 @@ definition {
 			panel = "Control Panel",
 			portlet = "Site Templates"
 		);
-
-		Refresh();
 
 		SiteTemplates.addCP(siteTemplateName = "Template Site");
 
@@ -719,11 +721,9 @@ definition {
 		Site.addCP(siteName = "New Site", siteType = "Template");
 
 		LAR.importSiteCP(
-			larFileName = "Export",
+			larFileName = "${larFileName}",
 			siteName = "New Site"
 		);
-
-		Refresh();
 
 		ProductMenu.gotoPortlet(
 			category = "Build",

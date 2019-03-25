@@ -20,7 +20,7 @@
 </tr>
 <tr>
 	<td>CHECKOUT_SUCCESS</td>
-	<td>//div[contains(@class,'sidenav-content')]/div[contains(@class,'alert-success')]</td>
+	<td>//div[contains(@class,'contextual-sidebar-content')]/div[contains(@class,'alert-success')]</td>
 	<td></td>
 </tr>
 <tr>

@@ -19,6 +19,7 @@ import com.fasterxml.jackson.databind.ObjectReader;
 
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.vulcan.internal.jaxrs.validation.ValidatorFactory;
 
 import java.io.IOException;
@@ -30,11 +31,14 @@ import java.lang.reflect.Type;
 import java.util.Optional;
 import java.util.Set;
 
+import javax.servlet.http.HttpServletRequest;
+
 import javax.validation.ConstraintViolation;
 import javax.validation.ValidationException;
 import javax.validation.Validator;
 
 import javax.ws.rs.Consumes;
+import javax.ws.rs.HttpMethod;
 import javax.ws.rs.InternalServerErrorException;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
@@ -72,7 +76,11 @@ public class JSONMessageBodyReader implements MessageBodyReader {
 
 		Object value = objectMapper.readValue(inputStream);
 
-		_validate(value);
+		if (!StringUtil.equals(
+				_httpServletRequest.getMethod(), HttpMethod.PATCH)) {
+
+			_validate(value);
+		}
 
 		return value;
 	}
@@ -113,6 +121,9 @@ public class JSONMessageBodyReader implements MessageBodyReader {
 
 		throw new ValidationException(sb.toString());
 	}
+
+	@Context
+	private HttpServletRequest _httpServletRequest;
 
 	@Context
 	private Providers _providers;

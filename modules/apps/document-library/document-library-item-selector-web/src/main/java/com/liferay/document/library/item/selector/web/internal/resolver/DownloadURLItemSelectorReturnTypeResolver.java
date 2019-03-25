@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.item.selector.internal;
+package com.liferay.document.library.item.selector.web.internal.resolver;
 
 import com.liferay.document.library.util.DLURLHelper;
 import com.liferay.item.selector.ItemSelectorReturnTypeResolver;

@@ -325,7 +325,8 @@ public class StructuredContentResourceImpl
 		}
 
 		DDMFormValuesCreator ddmFormValuesCreator = new DDMFormValuesCreator(
-			_dlAppService, _journalArticleService);
+			_dlAppService, contentSpaceId, _journalArticleService,
+			_layoutLocalService);
 
 		return _toStructuredContent(
 			_journalArticleService.addArticle(
@@ -600,7 +601,8 @@ public class StructuredContentResourceImpl
 		throws Exception {
 
 		DDMFormValuesCreator ddmFormValuesCreator = new DDMFormValuesCreator(
-			_dlAppService, _journalArticleService);
+			_dlAppService, journalArticle.getGroupId(), _journalArticleService,
+			_layoutLocalService);
 
 		DDMStructure ddmStructure = journalArticle.getDDMStructure();
 
@@ -666,7 +668,8 @@ public class StructuredContentResourceImpl
 				DDMValueUtil.toDDMValue(
 					contentField,
 					_getDDMFormField(ddmStructure, contentField.getName()),
-					_dlAppService, _journalArticleService,
+					_dlAppService, journalArticle.getGroupId(),
+					_journalArticleService, _layoutLocalService,
 					contextAcceptLanguage.getPreferredLocale());
 
 			field.setValue(

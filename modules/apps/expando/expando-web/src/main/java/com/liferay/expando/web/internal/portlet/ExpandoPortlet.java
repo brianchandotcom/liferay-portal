@@ -38,6 +38,7 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PropertiesParamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.io.IOException;
@@ -98,8 +99,47 @@ public class ExpandoPortlet extends MVCPortlet {
 		long resourcePrimKey = ParamUtil.getLong(
 			actionRequest, "resourcePrimKey");
 
-		String name = ParamUtil.getString(actionRequest, "name");
+		String dataType = ParamUtil.getString(actionRequest, "dataType");
+		String precisionType = ParamUtil.getString(
+			actionRequest, "precisionType");
+
 		int type = ParamUtil.getInteger(actionRequest, "type");
+
+		if (Validator.isNotNull(dataType) &&
+			Validator.isNotNull(precisionType)) {
+
+			if (dataType.equals(ExpandoColumnConstants.TYPE_DECIMAL) &&
+				precisionType.equals(ExpandoColumnConstants.PRECISION_64_BIT)) {
+
+				type = ExpandoColumnConstants.DOUBLE;
+			}
+			else if (dataType.equals(ExpandoColumnConstants.TYPE_DECIMAL) &&
+					 precisionType.equals(
+						 ExpandoColumnConstants.PRECISION_32_BIT)) {
+
+				type = ExpandoColumnConstants.FLOAT;
+			}
+			else if (dataType.equals(ExpandoColumnConstants.TYPE_INTEGER) &&
+					 precisionType.equals(
+						 ExpandoColumnConstants.PRECISION_64_BIT)) {
+
+				type = ExpandoColumnConstants.LONG;
+			}
+			else if (dataType.equals(ExpandoColumnConstants.TYPE_INTEGER) &&
+					 precisionType.equals(
+						 ExpandoColumnConstants.PRECISION_32_BIT)) {
+
+				type = ExpandoColumnConstants.INTEGER;
+			}
+			else if (dataType.equals(ExpandoColumnConstants.TYPE_INTEGER) &&
+					 precisionType.equals(
+						 ExpandoColumnConstants.PRECISION_16_BIT)) {
+
+				type = ExpandoColumnConstants.SHORT;
+			}
+		}
+
+		String name = ParamUtil.getString(actionRequest, "name");
 
 		ExpandoBridge expandoBridge = ExpandoBridgeFactoryUtil.getExpandoBridge(
 			themeDisplay.getCompanyId(), modelResource, resourcePrimKey);

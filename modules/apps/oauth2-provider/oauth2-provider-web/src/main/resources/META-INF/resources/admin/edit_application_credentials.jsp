@@ -210,7 +210,7 @@ String clientSecret = (oAuth2Application == null) ? "" : oAuth2Application.getCl
 	</div>
 </div>
 
-<aui:script use="aui-io-request,aui-modal,liferay-form,node">
+<aui:script use="aui-io-request,aui-modal,liferay-form,node,node-event-simulate">
 	<portlet:namespace />generateRandomSecret = function() {
 		var io = A.io.request(
 			'<liferay-portlet:resourceURL copyCurrentRenderParameters="<%= false %>" id="/admin/generate_random_secret" />',

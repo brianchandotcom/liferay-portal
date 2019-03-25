@@ -19,7 +19,7 @@
 		"testMatch": [
 			"**/test/**/*.js"
 		],
-		"testResultsProcessor": "./node_modules/liferay-jest-junit-reporter",
+		"testResultsProcessor": "liferay-jest-junit-reporter",
 		"transformIgnorePatterns": [
 			"<rootDir>.*(node_modules)(?!.*clay.*).*$"
 		]

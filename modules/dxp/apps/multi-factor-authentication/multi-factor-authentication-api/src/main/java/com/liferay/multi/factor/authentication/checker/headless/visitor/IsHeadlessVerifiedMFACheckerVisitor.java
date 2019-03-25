@@ -29,13 +29,13 @@ public class IsHeadlessVerifiedMFACheckerVisitor
 	extends PredicateMFACheckerVisitor {
 
 	public IsHeadlessVerifiedMFACheckerVisitor(
-		HttpServletRequest request, long userId) {
+		HttpServletRequest httpServletRequest, long userId) {
 
 		super(
 			PredicateMFACheckerVisitor.adapt(
 				HeadlessMFAChecker.class,
 				headlessMFAChecker -> headlessMFAChecker.isHeadlessVerified(
-					request, userId)));
+					httpServletRequest, userId)));
 	}
 
 }

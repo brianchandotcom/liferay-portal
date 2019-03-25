@@ -29,13 +29,13 @@ public class IsBrowserVerifiedMFACheckerVisitor
 	extends PredicateMFACheckerVisitor {
 
 	public IsBrowserVerifiedMFACheckerVisitor(
-		HttpServletRequest request, long userId) {
+		HttpServletRequest httpServletRequest, long userId) {
 
 		super(
 			PredicateMFACheckerVisitor.adapt(
 				BrowserMFAChecker.class,
 				browserMFAChecker -> browserMFAChecker.isBrowserVerified(
-					request, userId)));
+					httpServletRequest, userId)));
 	}
 
 }

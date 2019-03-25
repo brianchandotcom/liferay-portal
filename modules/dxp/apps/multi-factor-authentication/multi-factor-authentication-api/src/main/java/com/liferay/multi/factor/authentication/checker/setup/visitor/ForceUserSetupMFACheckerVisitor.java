@@ -35,8 +35,10 @@ public class ForceUserSetupMFACheckerVisitor
 	}
 
 	@Override
-	public Boolean visit(MandatoryCompositeMFAChecker mandatoryMFAChecker) {
-		return mandatoryMFAChecker.getMFACheckers(
+	public Boolean visit(
+		MandatoryCompositeMFAChecker mandatoryCompositeMFAChecker) {
+
+		return mandatoryCompositeMFAChecker.getMFACheckers(
 		).stream(
 		).anyMatch(
 			mfaChecker -> mfaChecker.accept(this)

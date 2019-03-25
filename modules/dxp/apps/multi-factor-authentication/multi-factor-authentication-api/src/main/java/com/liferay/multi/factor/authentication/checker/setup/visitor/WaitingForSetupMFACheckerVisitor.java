@@ -30,7 +30,7 @@ public class WaitingForSetupMFACheckerVisitor
 
 		super(
 			mfaChecker -> {
-				if (!mfaChecker.accept(_supportsSetupVisitor)) {
+				if (!mfaChecker.accept(_supportsSetupMFACheckerVisitor)) {
 					return false;
 				}
 
@@ -51,7 +51,7 @@ public class WaitingForSetupMFACheckerVisitor
 			});
 	}
 
-	private static final SupportsSetupMFACheckerVisitor _supportsSetupVisitor =
-		new SupportsSetupMFACheckerVisitor();
+	private static final SupportsSetupMFACheckerVisitor
+		_supportsSetupMFACheckerVisitor = new SupportsSetupMFACheckerVisitor();
 
 }

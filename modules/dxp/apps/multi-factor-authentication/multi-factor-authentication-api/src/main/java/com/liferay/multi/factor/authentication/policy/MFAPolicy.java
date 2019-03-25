@@ -26,10 +26,10 @@ import java.util.Set;
 @ProviderType
 public interface MFAPolicy {
 
+	public MFAChecker getMFAChecker();
+
 	public Set<String> getMFACheckerNames();
 
 	public String getName();
-
-	public MFAChecker getPolicyMFAChecker();
 
 }

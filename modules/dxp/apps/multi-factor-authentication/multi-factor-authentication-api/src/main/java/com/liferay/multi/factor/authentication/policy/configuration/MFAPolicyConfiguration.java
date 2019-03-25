@@ -38,12 +38,12 @@ public interface MFAPolicyConfiguration {
 		description = "mfa-policy-name-description", name = "mfa-policy-name",
 		required = false
 	)
-	public String mfaPolicyName();
+	public String name();
 
 	@Meta.AD(
 		description = "mfa-checker-names-description",
 		name = "mfa-checker-names", required = false
 	)
-	public String[] mfaCheckerNames();
+	public String[] checkerNames();
 
 }

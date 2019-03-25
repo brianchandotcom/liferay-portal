@@ -41,11 +41,11 @@ public class VerifyHeadlessMFACheckerVisitor
 		_httpServletRequest = httpServletRequest;
 		_userId = userId;
 
-		_isHeadlessVerifiedVisitor = new IsHeadlessVerifiedMFACheckerVisitor(
-			_httpServletRequest, _userId);
-
-		_isUserSetupCompleteVisitor = new IsUserSetupCompleteMFACheckerVisitor(
-			_userId);
+		_isHeadlessVerifiedMFACheckerVisitor =
+			new IsHeadlessVerifiedMFACheckerVisitor(
+				_httpServletRequest, _userId);
+		_isUserSetupCompleteMFACheckerVisitor =
+			new IsUserSetupCompleteMFACheckerVisitor(_userId);
 	}
 
 	@Override
@@ -60,17 +60,17 @@ public class VerifyHeadlessMFACheckerVisitor
 		}
 
 		for (MFAChecker mfaChecker : mfaCheckers) {
-			if (!mfaChecker.accept(_supportsHeadlessVisitor)) {
+			if (!mfaChecker.accept(_supportsHeadlessMFACheckerVisitor)) {
 				return false;
 			}
 
-			if (mfaChecker.accept(_supportsSetupVisitor)) {
-				if (!mfaChecker.accept(_isUserSetupCompleteVisitor)) {
+			if (mfaChecker.accept(_supportsSetupMFACHeckerVisitor)) {
+				if (!mfaChecker.accept(_isUserSetupCompleteMFACheckerVisitor)) {
 					return false;
 				}
 			}
 
-			if (mfaChecker.accept(_isHeadlessVerifiedVisitor)) {
+			if (mfaChecker.accept(_isHeadlessVerifiedMFACheckerVisitor)) {
 				continue;
 			}
 
@@ -106,17 +106,17 @@ public class VerifyHeadlessMFACheckerVisitor
 			optionalCompositeMFAChecker.getMFACheckers();
 
 		for (MFAChecker mfaChecker : mfaCheckers) {
-			if (!mfaChecker.accept(_supportsHeadlessVisitor)) {
+			if (!mfaChecker.accept(_supportsHeadlessMFACheckerVisitor)) {
 				continue;
 			}
 
-			if (mfaChecker.accept(_supportsSetupVisitor)) {
-				if (!mfaChecker.accept(_isUserSetupCompleteVisitor)) {
+			if (mfaChecker.accept(_supportsSetupMFACHeckerVisitor)) {
+				if (!mfaChecker.accept(_isUserSetupCompleteMFACheckerVisitor)) {
 					continue;
 				}
 			}
 
-			if (mfaChecker.accept(_isHeadlessVerifiedVisitor)) {
+			if (mfaChecker.accept(_isHeadlessVerifiedMFACheckerVisitor)) {
 				return true;
 			}
 
@@ -129,15 +129,16 @@ public class VerifyHeadlessMFACheckerVisitor
 	}
 
 	private static final SupportsHeadlessMFACheckerVisitor
-		_supportsHeadlessVisitor = new SupportsHeadlessMFACheckerVisitor();
-	private static final SupportsSetupMFACheckerVisitor _supportsSetupVisitor =
-		new SupportsSetupMFACheckerVisitor();
+		_supportsHeadlessMFACheckerVisitor =
+			new SupportsHeadlessMFACheckerVisitor();
+	private static final SupportsSetupMFACheckerVisitor
+		_supportsSetupMFACHeckerVisitor = new SupportsSetupMFACheckerVisitor();
 
 	private final HttpServletRequest _httpServletRequest;
 	private final IsHeadlessVerifiedMFACheckerVisitor
-		_isHeadlessVerifiedVisitor;
+		_isHeadlessVerifiedMFACheckerVisitor;
 	private final IsUserSetupCompleteMFACheckerVisitor
-		_isUserSetupCompleteVisitor;
+		_isUserSetupCompleteMFACheckerVisitor;
 	private final long _userId;
 
 }

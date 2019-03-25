@@ -347,7 +347,7 @@ public class ResourceOpenAPIParser {
 	}
 
 	private static String _getMethodAnnotationProduces(Operation operation) {
-		Map<String, Response> responses = operation.getResponses();
+		Map<Integer, Response> responses = operation.getResponses();
 
 		if ((responses == null) || responses.isEmpty()) {
 			return null;
@@ -516,7 +516,7 @@ public class ResourceOpenAPIParser {
 	private static String _getReturnType(
 		Map<String, String> javaDataTypeMap, Operation operation) {
 
-		Map<String, Response> responses = operation.getResponses();
+		Map<Integer, Response> responses = operation.getResponses();
 
 		if ((responses == null) || responses.isEmpty()) {
 			return void.class.getName();

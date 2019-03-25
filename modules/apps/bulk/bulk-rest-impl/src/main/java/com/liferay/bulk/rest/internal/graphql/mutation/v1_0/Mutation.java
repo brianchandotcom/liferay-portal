@@ -125,7 +125,7 @@ public class Mutation {
 
 	@GraphQLField
 	@GraphQLInvokeDetached
-	public MessageSelection postKeywordMessageSelection(
+	public MessageSelection postBulkSelection(
 			@GraphQLName("DocumentBulkSelection") DocumentBulkSelection
 				documentBulkSelection)
 		throws Exception {
@@ -134,22 +134,7 @@ public class Mutation {
 			_messageSelectionResourceComponentServiceObjects,
 			this::_populateResourceContext,
 			messageSelectionResource ->
-				messageSelectionResource.postKeywordMessageSelection(
-					documentBulkSelection));
-	}
-
-	@GraphQLField
-	@GraphQLInvokeDetached
-	public MessageSelection postTaxonomyVocabularyMessageSelection(
-			@GraphQLName("DocumentBulkSelection") DocumentBulkSelection
-				documentBulkSelection)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_messageSelectionResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			messageSelectionResource ->
-				messageSelectionResource.postTaxonomyVocabularyMessageSelection(
+				messageSelectionResource.postBulkSelection(
 					documentBulkSelection));
 	}
 

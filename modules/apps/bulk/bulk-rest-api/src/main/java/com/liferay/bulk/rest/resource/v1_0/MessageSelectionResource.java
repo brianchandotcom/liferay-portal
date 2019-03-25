@@ -31,11 +31,7 @@ import javax.annotation.Generated;
 @Generated("")
 public interface MessageSelectionResource {
 
-	public MessageSelection postKeywordMessageSelection(
-			DocumentBulkSelection documentBulkSelection)
-		throws Exception;
-
-	public MessageSelection postTaxonomyVocabularyMessageSelection(
+	public MessageSelection postBulkSelection(
 			DocumentBulkSelection documentBulkSelection)
 		throws Exception;
 

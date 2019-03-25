@@ -53,23 +53,10 @@ public abstract class BaseMessageSelectionResourceImpl
 	@Override
 	@Consumes("application/json")
 	@POST
-	@Path("/keywords/message-selection")
+	@Path("/bulk-selection")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "MessageSelection")})
-	public MessageSelection postKeywordMessageSelection(
-			DocumentBulkSelection documentBulkSelection)
-		throws Exception {
-
-		return new MessageSelection();
-	}
-
-	@Override
-	@Consumes("application/json")
-	@POST
-	@Path("/taxonomy-vocabularies/message-selection")
-	@Produces("application/json")
-	@Tags(value = {@Tag(name = "MessageSelection")})
-	public MessageSelection postTaxonomyVocabularyMessageSelection(
+	public MessageSelection postBulkSelection(
 			DocumentBulkSelection documentBulkSelection)
 		throws Exception {
 

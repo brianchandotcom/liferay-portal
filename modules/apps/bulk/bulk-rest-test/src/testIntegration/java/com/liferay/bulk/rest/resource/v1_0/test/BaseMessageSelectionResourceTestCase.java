@@ -103,33 +103,31 @@ public abstract class BaseMessageSelectionResourceTestCase {
 	}
 
 	@Test
-	public void testPostKeywordMessageSelection() throws Exception {
+	public void testPostBulkSelection() throws Exception {
 		MessageSelection randomMessageSelection = randomMessageSelection();
 
 		MessageSelection postMessageSelection =
-			testPostKeywordMessageSelection_addMessageSelection(
-				randomMessageSelection);
+			testPostBulkSelection_addMessageSelection(randomMessageSelection);
 
 		assertEquals(randomMessageSelection, postMessageSelection);
 		assertValid(postMessageSelection);
 	}
 
-	protected MessageSelection
-			testPostKeywordMessageSelection_addMessageSelection(
-				MessageSelection messageSelection)
+	protected MessageSelection testPostBulkSelection_addMessageSelection(
+			MessageSelection messageSelection)
 		throws Exception {
 
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
 	}
 
-	protected MessageSelection invokePostKeywordMessageSelection(
+	protected MessageSelection invokePostBulkSelection(
 			DocumentBulkSelection documentBulkSelection)
 		throws Exception {
 
 		Http.Options options = _createHttpOptions();
 
-		String location = _resourceURL + _toPath("/keywords/message-selection");
+		String location = _resourceURL + _toPath("/bulk-selection");
 
 		options.setLocation(location);
 
@@ -148,79 +146,13 @@ public abstract class BaseMessageSelectionResourceTestCase {
 		}
 	}
 
-	protected Http.Response invokePostKeywordMessageSelectionResponse(
+	protected Http.Response invokePostBulkSelectionResponse(
 			DocumentBulkSelection documentBulkSelection)
 		throws Exception {
 
 		Http.Options options = _createHttpOptions();
 
-		String location = _resourceURL + _toPath("/keywords/message-selection");
-
-		options.setLocation(location);
-
-		options.setPost(true);
-
-		HttpUtil.URLtoString(options);
-
-		return options.getResponse();
-	}
-
-	@Test
-	public void testPostTaxonomyVocabularyMessageSelection() throws Exception {
-		MessageSelection randomMessageSelection = randomMessageSelection();
-
-		MessageSelection postMessageSelection =
-			testPostTaxonomyVocabularyMessageSelection_addMessageSelection(
-				randomMessageSelection);
-
-		assertEquals(randomMessageSelection, postMessageSelection);
-		assertValid(postMessageSelection);
-	}
-
-	protected MessageSelection
-			testPostTaxonomyVocabularyMessageSelection_addMessageSelection(
-				MessageSelection messageSelection)
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	protected MessageSelection invokePostTaxonomyVocabularyMessageSelection(
-			DocumentBulkSelection documentBulkSelection)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		String location =
-			_resourceURL + _toPath("/taxonomy-vocabularies/message-selection");
-
-		options.setLocation(location);
-
-		options.setPost(true);
-
-		String string = HttpUtil.URLtoString(options);
-
-		try {
-			return _outputObjectMapper.readValue(
-				string, MessageSelection.class);
-		}
-		catch (Exception e) {
-			_log.error("Unable to process HTTP response: " + string, e);
-
-			throw e;
-		}
-	}
-
-	protected Http.Response
-			invokePostTaxonomyVocabularyMessageSelectionResponse(
-				DocumentBulkSelection documentBulkSelection)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		String location =
-			_resourceURL + _toPath("/taxonomy-vocabularies/message-selection");
+		String location = _resourceURL + _toPath("/bulk-selection");
 
 		options.setLocation(location);
 

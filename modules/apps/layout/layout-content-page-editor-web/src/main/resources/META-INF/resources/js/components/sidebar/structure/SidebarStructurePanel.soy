@@ -99,22 +99,12 @@
 					{/call}
 				{/if}
 
-				{let $itemNameAttributes kind="attributes"}
-					class="btn btn-unstyled flex-grow-1 text-truncate"
-					type="button"
-
-					{if $node.elementId and $node.elementType}
-						data-element-id="{$node.elementId}"
-						data-element-type="{$node.elementType}"
-						data-onclick="{$handleElementClick}"
-						data-onmouseenter="{$handleElementMouseEnter}"
-						data-onmouseleave="{$handleElementMouseLeave}"
-					{/if}
-				{/let}
-
-				<button {$itemNameAttributes}>
-					{$node.label}
-				</button>
+				{call .itemName}
+					{param handleClick: $handleElementClick /}
+					{param handleMouseEnter: $handleElementMouseEnter /}
+					{param handleMouseLeave: $handleElementMouseLeave /}
+					{param node: $node /}
+				{/call}
 
 				{if $node.elementId and $node.elementType}
 					{call .removeIcon}
@@ -192,6 +182,49 @@
 			<use xlink:href="{$spritemap}#angle-{$angleDirection}"></use>
 		</svg>
 	</button>
+{/template}
+
+{template .itemName}
+	{@param node: [
+		children: list<?>,
+		elementId: string,
+		elementType: string,
+		label: string
+	]}
+	{@param? handleClick: any}
+	{@param? handleMouseEnter: any}
+	{@param? handleMouseLeave: any}
+
+	{let $itemNameClasses kind="text"}
+		btn
+		{sp}btn-unstyled
+		{sp}flex-grow-1
+		{sp}text-truncate
+
+		{if (not $node.children) or (length($node.children) == 0)}
+			{sp}fragments-editor-sidebar-section__structure-panel__item-name--padded
+		{/if}
+	{/let}
+
+	{if $node.elementId and $node.elementType}
+		{let $itemNameButtonAttributes kind="attributes"}
+			class="{$itemNameClasses}"
+			data-element-id="{$node.elementId}"
+			data-element-type="{$node.elementType}"
+			data-onclick="{$handleClick}"
+			data-onmouseenter="{$handleMouseEnter}"
+			data-onmouseleave="{$handleMouseLeave}"
+			type="button"
+		{/let}
+
+		<button {$itemNameButtonAttributes}>
+			{$node.label}
+		</button>
+	{else}
+		<span class="{$itemNameClasses}">
+			{$node.label}
+		</span>
+	{/if}
 {/template}
 
 /**

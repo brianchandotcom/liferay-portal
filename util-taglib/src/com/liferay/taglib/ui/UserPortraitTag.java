@@ -14,6 +14,7 @@
 
 package com.liferay.taglib.ui;
 
+import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
@@ -23,6 +24,7 @@ import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.taglib.util.IncludeTag;
 
@@ -36,6 +38,11 @@ import javax.servlet.jsp.JspWriter;
  */
 public class UserPortraitTag extends IncludeTag {
 
+	/**
+	 * @deprecated As of Mueller (7.2.x), replace by {@link
+	 * #getUserPortraitHTML(String, User, ThemeDisplay)}
+	 */
+	@Deprecated
 	public static String getUserPortraitHTML(
 		String cssClass, Supplier<String> userPortraitURLSupplier) {
 
@@ -48,6 +55,42 @@ public class UserPortraitTag extends IncludeTag {
 		sb.append("<img alt=\"\" class=\"sticker-img\" src=\"");
 		sb.append(HtmlUtil.escape(userPortraitURLSupplier.get()));
 		sb.append("\"></span></span>");
+
+		return sb.toString();
+	}
+
+	public static String getUserPortraitHTML(
+		String cssClass, User user, ThemeDisplay themeDisplay) {
+
+		String portraitURL = _getPortraitURL(user, themeDisplay);
+
+		if (Validator.isNull(portraitURL)) {
+			StringBundler sb = new StringBundler(12);
+
+			sb.append("<span class=\"user-avatar-image\">");
+			sb.append("<div class=\"sticker sticker-circle sticker-light ");
+			sb.append("sticker-lg user-icon user-icon-default user-icon-lg ");
+			sb.append("user-icon-color-");
+			sb.append(user.getUserId() % 10);
+			sb.append(CharPool.SPACE);
+			sb.append(cssClass);
+			sb.append("\"><svg class=\"lexicon-icon\">");
+			sb.append("<use href=\"");
+			sb.append(themeDisplay.getPathThemeImages());
+			sb.append("/lexicon/icons.svg#user\" /></svg>");
+			sb.append("</div></span>");
+
+			return sb.toString();
+		}
+
+		StringBundler sb = new StringBundler(6);
+
+		sb.append("<span class=\"sticker sticker-primary rounded-circle ");
+		sb.append(cssClass);
+		sb.append("\"><span class=\"sticker-overlay\">");
+		sb.append("<img alt=\"thumbnail\" class=\"img-fluid\" src=\"");
+		sb.append(portraitURL);
+		sb.append("\" /></span></span>");
 
 		return sb.toString();
 	}
@@ -74,8 +117,11 @@ public class UserPortraitTag extends IncludeTag {
 
 		User user = getUser();
 
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
 		String userPortraitHTML = getUserPortraitHTML(
-			_cssClass, () -> getPortraitURL(user));
+			_cssClass, user, themeDisplay);
 
 		jspWriter.write(userPortraitHTML);
 

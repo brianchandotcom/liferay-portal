@@ -68,7 +68,7 @@ public class KeywordResourceImpl
 			},
 			filter, AssetTag.class, pagination,
 			queryConfig -> queryConfig.setSelectedFieldNames(
-				Field.ASSET_TAG_IDS),
+				Field.ENTRY_CLASS_PK),
 			searchContext -> {
 				searchContext.setCompanyId(contextCompany.getCompanyId());
 				searchContext.setGroupIds(new long[] {contentSpaceId});

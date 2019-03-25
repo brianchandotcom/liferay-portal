@@ -144,7 +144,9 @@
 		"setupFiles": [
 			"<rootDir>/test/metal/setup/setup.js"
 		],
-		"setupTestFrameworkScriptFile": "<rootDir>/test/metal/setup/setup_framework.js",
+		"setupFilesAfterEnv": [
+			"<rootDir>/test/metal/setup/setup_framework.js"
+		],
 		"snapshotSerializers": [
 			"metal-jest-serializer"
 		],

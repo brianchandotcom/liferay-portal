@@ -459,10 +459,12 @@ public class ScopeLocatorImplTest extends PowerMockito {
 			_scopeLocatorImpl.setScopeFinderByNameServiceTrackerMap(
 				scopeFinderByNameServiceTrackerMap);
 
-			ScopedServiceTrackerMap<ScopeFinder> scopeFindersScopedServiceTrackerMap =
-				Mockito.mock(ScopedServiceTrackerMap.class);
+			ScopedServiceTrackerMap<ScopeFinder>
+				scopeFindersScopedServiceTrackerMap = Mockito.mock(
+					ScopedServiceTrackerMap.class);
 
-			_scopeLocatorImpl.setScopeFindersScopedServiceTrackerMap(scopeFindersScopedServiceTrackerMap);
+			_scopeLocatorImpl.setScopeFindersScopedServiceTrackerMap(
+				scopeFindersScopedServiceTrackerMap);
 
 			configurator.configure(
 				(companyId, applicationName, service) -> {
@@ -478,7 +480,8 @@ public class ScopeLocatorImplTest extends PowerMockito {
 					);
 
 					when(
-						scopeFindersScopedServiceTrackerMap.getService(companyId, applicationName)
+						scopeFindersScopedServiceTrackerMap.getService(
+							companyId, applicationName)
 					).thenReturn(
 						service
 					);
@@ -505,8 +508,9 @@ public class ScopeLocatorImplTest extends PowerMockito {
 				_scopeLocatorImpl, "_defaultScopeLocatorConfigurationProvider",
 				defaultScopeLocatorConfigurationProvider);
 
-			_scopeLocatorImpl.setScopeLocatorConfigurationProvidersScopedServiceTrackerMap(
-				scopeLocatorConfigurationProvidersScopeServiceTrackerMap);
+			_scopeLocatorImpl.
+				setScopeLocatorConfigurationProvidersScopedServiceTrackerMap(
+					scopeLocatorConfigurationProvidersScopeServiceTrackerMap);
 
 			_scopeLocatorConfigurationProvidersInitialized = true;
 
@@ -518,13 +522,15 @@ public class ScopeLocatorImplTest extends PowerMockito {
 				CompanyAndKeyConfigurator<ScopeMapper> configurator)
 			throws IllegalAccessException {
 
-			ScopedServiceTrackerMap<ScopeMapper> scopeMappersScopedServiceTrackerMap =
-				_prepareScopedServiceTrackerMapMock(
-					defaultScopeMapper, configurator);
+			ScopedServiceTrackerMap<ScopeMapper>
+				scopeMappersScopedServiceTrackerMap =
+					_prepareScopedServiceTrackerMapMock(
+						defaultScopeMapper, configurator);
 
 			_set(_scopeLocatorImpl, "_defaultScopeMapper", defaultScopeMapper);
 
-			_scopeLocatorImpl.setScopeMappersScopedServiceTrackerMap(scopeMappersScopedServiceTrackerMap);
+			_scopeLocatorImpl.setScopeMappersScopedServiceTrackerMap(
+				scopeMappersScopedServiceTrackerMap);
 
 			_scopeMappersInitialized = true;
 

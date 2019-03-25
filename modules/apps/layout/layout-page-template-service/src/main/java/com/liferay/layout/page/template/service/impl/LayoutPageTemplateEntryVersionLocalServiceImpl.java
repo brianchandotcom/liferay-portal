@@ -32,9 +32,10 @@ import com.liferay.layout.page.template.service.base.LayoutPageTemplateEntryVers
 public class LayoutPageTemplateEntryVersionLocalServiceImpl
 	extends LayoutPageTemplateEntryVersionLocalServiceBaseImpl {
 
-	/*
+	/**
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never reference this class directly. Use <code>com.liferay.layout.page.template.service.LayoutPageTemplateEntryVersionLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.layout.page.template.service.LayoutPageTemplateEntryVersionLocalServiceUtil</code>.
 	 */
+
 }

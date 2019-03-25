@@ -29,7 +29,7 @@ import aQute.bnd.annotation.ProviderType;
 public class LayoutPageTemplateEntryVersionImpl
 	extends LayoutPageTemplateEntryVersionBaseImpl {
 
-	/*
+	/**
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never reference this class directly. All methods that expect a layout page template entry version model instance should use the {@link com.liferay.layout.page.template.model.LayoutPageTemplateEntryVersion} interface instead.

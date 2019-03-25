@@ -49,6 +49,7 @@
 	</source-processor>
 	<source-processor name="ConfigSourceProcessor">
 		<check name="ConfigDefinitionKeysCheck" />
+		<check name="WhitespaceCheck" />
 	</source-processor>
 	<source-processor name="CQLSourceProcessor">
 		<check name="CQLKeywordCheck" />

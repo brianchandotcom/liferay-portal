@@ -64,6 +64,7 @@ public class DDLRecordModelDocumentContributor
 			document.addKeyword(Field.STATUS, ddlRecordVersion.getStatus());
 			document.addKeyword(Field.VERSION, ddlRecordVersion.getVersion());
 			document.addKeyword("recordSetId", ddlRecordSet.getRecordSetId());
+			document.addKeyword("recordSetScope", ddlRecordSet.getScope());
 
 			DDMStructure ddmStructure = ddlRecordSet.getDDMStructure();
 

@@ -14,6 +14,7 @@
 
 package com.liferay.dynamic.data.lists.internal.search.spi.model.query.contributor;
 
+import com.liferay.dynamic.data.lists.model.DDLRecordSetConstants;
 import com.liferay.dynamic.data.mapping.util.DDMIndexer;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -60,12 +61,18 @@ public class DDLRecordModelPreFilterContributor
 			booleanFilter.addRequiredTerm(Field.STATUS, status);
 		}
 
-		long ddlRecordId = GetterUtil.getLong(
-			searchContext.getAttribute("recordId"));
+		long recordSetId = GetterUtil.getLong(
+			searchContext.getAttribute("recordSetId"));
 
-		if (ddlRecordId > 0) {
-			booleanFilter.addRequiredTerm("recordId", ddlRecordId);
+		if (recordSetId > 0) {
+			booleanFilter.addRequiredTerm("recordSetId", recordSetId);
 		}
+
+		long recordSetScope = GetterUtil.getLong(
+			searchContext.getAttribute("recordSetScope"),
+			DDLRecordSetConstants.SCOPE_DYNAMIC_DATA_LISTS);
+
+		booleanFilter.addRequiredTerm("recordSetScope", recordSetScope);
 
 		addSearchClassTypeIds(booleanFilter, searchContext);
 

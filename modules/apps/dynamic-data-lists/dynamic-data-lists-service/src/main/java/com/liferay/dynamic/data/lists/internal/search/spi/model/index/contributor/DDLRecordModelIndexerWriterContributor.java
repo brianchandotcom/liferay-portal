@@ -15,6 +15,7 @@
 package com.liferay.dynamic.data.lists.internal.search.spi.model.index.contributor;
 
 import com.liferay.dynamic.data.lists.model.DDLRecord;
+import com.liferay.dynamic.data.lists.model.DDLRecordSetConstants;
 import com.liferay.dynamic.data.lists.service.DDLRecordLocalService;
 import com.liferay.dynamic.data.lists.service.DDLRecordSetLocalService;
 import com.liferay.dynamic.data.lists.service.DDLRecordVersionLocalService;
@@ -69,6 +70,10 @@ public class DDLRecordModelIndexerWriterContributor
 				recordSetDynamicQuery.setProjection(
 					ProjectionFactoryUtil.property("recordSetId"));
 
+				Property scopeProperty = PropertyFactoryUtil.forName("scope");
+
+				recordSetDynamicQuery.add(scopeProperty.in(_REINDEX_SCOPES));
+
 				dynamicQuery.add(recordSetProperty.in(recordSetDynamicQuery));
 			});
 		batchIndexingActionable.setPerformActionMethod(
@@ -102,5 +107,12 @@ public class DDLRecordModelIndexerWriterContributor
 	@Reference
 	protected DynamicQueryBatchIndexingActionableFactory
 		dynamicQueryBatchIndexingActionableFactory;
+
+	private static final int[] _REINDEX_SCOPES = {
+		DDLRecordSetConstants.SCOPE_DATA_ENGINE,
+		DDLRecordSetConstants.SCOPE_DYNAMIC_DATA_LISTS,
+		DDLRecordSetConstants.SCOPE_FORMS,
+		DDLRecordSetConstants.SCOPE_KALEO_FORMS
+	};
 
 }

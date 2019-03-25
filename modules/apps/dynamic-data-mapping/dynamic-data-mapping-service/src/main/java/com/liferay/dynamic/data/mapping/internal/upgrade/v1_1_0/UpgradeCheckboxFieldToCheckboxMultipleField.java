@@ -125,6 +125,7 @@ public class UpgradeCheckboxFieldToCheckboxMultipleField
 						definition);
 
 					ps2.setString(1, newDefinition);
+
 					ps2.setLong(2, structureId);
 
 					ps2.addBatch();

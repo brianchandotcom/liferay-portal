@@ -41,6 +41,7 @@ import com.liferay.portal.vulcan.yaml.openapi.Schema;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -85,20 +86,20 @@ public class ResourceOpenAPIParser {
 
 					RequestBody requestBody = operation.getRequestBody();
 
-					_visitRequestBodyMediaType(
+					_visitRequestBodyMediaTypes(
 						requestBody,
-						requestBodyMediaType -> {
+						requestBodyMediaTypes -> {
 							List<JavaMethodParameter> javaMethodParameters =
 								_getJavaMethodParameters(
 									javaDataTypeMap, operation,
-									requestBodyMediaType);
+									requestBodyMediaTypes);
 							String methodName = _getMethodName(
 								operation, path, returnType, schemaName);
 
 							javaMethodSignatures.add(
 								new JavaMethodSignature(
 									path, pathItem, operation,
-									requestBodyMediaType, schemaName,
+									requestBodyMediaTypes, schemaName,
 									javaMethodParameters, methodName,
 									returnType));
 						});
@@ -168,7 +169,7 @@ public class ResourceOpenAPIParser {
 		methodAnnotations.add("@" + StringUtil.toUpperCase(httpMethod));
 
 		String methodAnnotation = _getMethodAnnotationConsumes(
-			javaMethodSignature.getRequestBodyMediaType());
+			javaMethodSignature.getRequestBodyMediaTypes());
 
 		if (Validator.isNotNull(methodAnnotation)) {
 			methodAnnotations.add(methodAnnotation);
@@ -214,7 +215,7 @@ public class ResourceOpenAPIParser {
 
 	private static List<JavaMethodParameter> _getJavaMethodParameters(
 		Map<String, String> javaDataTypeMap, Operation operation,
-		String requestBodyMediaType) {
+		Set<String> requestBodyMediaTypes) {
 
 		if ((operation == null) || (operation.getParameters() == null)) {
 			return Collections.emptyList();
@@ -280,13 +281,15 @@ public class ResourceOpenAPIParser {
 			javaMethodParameters.add(javaMethodParameter);
 		}
 
-		if (requestBodyMediaType != null) {
-			if (!Objects.equals(requestBodyMediaType, "multipart/form-data")) {
+		if (!requestBodyMediaTypes.isEmpty()) {
+			if (!requestBodyMediaTypes.contains("multipart/form-data")) {
 				RequestBody requestBody = operation.getRequestBody();
 
 				Map<String, Content> contents = requestBody.getContent();
 
-				Content content = contents.get(requestBodyMediaType);
+				Iterator<String> iterator = requestBodyMediaTypes.iterator();
+
+				Content content = contents.get(iterator.next());
 
 				String parameterType = OpenAPIParserUtil.getJavaDataType(
 					javaDataTypeMap, content.getSchema());
@@ -319,13 +322,28 @@ public class ResourceOpenAPIParser {
 	}
 
 	private static String _getMethodAnnotationConsumes(
-		String requestBodyMediaType) {
+		Set<String> requestBodyMediaTypes) {
 
-		if (requestBodyMediaType == null) {
+		if (requestBodyMediaTypes.isEmpty()) {
 			return null;
 		}
 
-		return "@Consumes(\"" + requestBodyMediaType + "\")";
+		StringBuilder sb = new StringBuilder();
+
+		for (String requestBodyMediaType : requestBodyMediaTypes) {
+			sb.append(StringUtil.quote(requestBodyMediaType, "\""));
+			sb.append(',');
+		}
+
+		if (sb.length() > 0) {
+			sb.setLength(sb.length() - 1);
+		}
+
+		if (requestBodyMediaTypes.size() > 1) {
+			return "@Consumes({" + sb.toString() + "})";
+		}
+
+		return "@Consumes(" + sb.toString() + ")";
 	}
 
 	private static String _getMethodAnnotationProduces(Operation operation) {
@@ -621,18 +639,36 @@ public class ResourceOpenAPIParser {
 		}
 	}
 
-	private static void _visitRequestBodyMediaType(
-		RequestBody requestBody, Consumer<String> consumer) {
+	private static void _visitRequestBodyMediaTypes(
+		RequestBody requestBody, Consumer<Set<String>> consumer) {
 
 		if (requestBody != null) {
+			boolean multipartFormData = false;
+			Set<String> requestBodyMediaTypes = new TreeSet<>();
+
 			Map<String, Content> contents = requestBody.getContent();
 
 			for (String requestBodyMediaType : contents.keySet()) {
-				consumer.accept(requestBodyMediaType);
+				if (Objects.equals(
+						requestBodyMediaType, "multipart/form-data")) {
+
+					multipartFormData = true;
+				}
+				else {
+					requestBodyMediaTypes.add(requestBodyMediaType);
+				}
+			}
+
+			if (!requestBodyMediaTypes.isEmpty()) {
+				consumer.accept(requestBodyMediaTypes);
+			}
+
+			if (multipartFormData) {
+				consumer.accept(Collections.singleton("multipart/form-data"));
 			}
 		}
 		else {
-			consumer.accept(null);
+			consumer.accept(Collections.emptySet());
 		}
 	}
 

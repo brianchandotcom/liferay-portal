@@ -56,14 +56,21 @@ class FragmentEntryLinkListSection extends Component {
 	 */
 	prepareStateForRender(state) {
 		let columnResizerVisible;
+		let nextState = state;
 
 		if (this.rowId === this.activeItemId &&
 			this.activeItemType === FRAGMENTS_EDITOR_ITEM_TYPES.section) {
 
-			columnResizerVisible = false;
+			columnResizerVisible = true;
 		}
 
-		return setIn(state, ['_columnResizerVisible'], columnResizerVisible);
+		nextState = setIn(nextState, ['_columnResizerVisible'], columnResizerVisible);
+
+		if (nextState._resizing && nextState._resizeSectionColumns) {
+			nextState = setIn(nextState, ['columns'], state._resizeSectionColumns);
+		}
+
+		return nextState;
 	}
 
 	/**
@@ -102,7 +109,7 @@ class FragmentEntryLinkListSection extends Component {
 	 * @review
 	 */
 	_clearResizing() {
-		this._resizeSectionColumns = [];
+		this._resizeSectionColumns = null;
 		this._resizing = false;
 	}
 
@@ -313,13 +320,13 @@ FragmentEntryLinkListSection.STATE = {
 
 	/**
 	 * Copy of section columns for resizing
-	 * @default []
+	 * @default null
 	 * @instance
 	 * @memberOf FragmentEntryLinkListSection
 	 * @review
 	 * @type {array}
 	 */
-	_resizeSectionColumns: Config.internal().array().value([]),
+	_resizeSectionColumns: Config.internal().array().value(null),
 
 	/**
 	 * True when user is resizing a column.

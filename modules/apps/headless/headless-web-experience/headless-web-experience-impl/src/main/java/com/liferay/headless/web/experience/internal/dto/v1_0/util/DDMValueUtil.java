@@ -143,6 +143,12 @@ public class DDMValueUtil {
 
 			Geo geo = value.getGeo();
 
+			if (Objects.isNull(geo) || Objects.isNull(geo.getLatitude()) ||
+				Objects.isNull(geo.getLongitude())) {
+
+				throw new BadRequestException("Incorrect geo object");
+			}
+
 			return new UnlocalizedValue(
 				JSONUtil.put(
 					"latitude", geo.getLatitude()

@@ -292,18 +292,20 @@ String navigation = ParamUtil.getString(request, "navigation");
 
 		Map<String, Object> tagsContext = new HashMap<>();
 
-		tagsContext.put("groupIds", PortalUtil.getCurrentAndAncestorSiteGroupIds(scopeGroupId));
+		long groupIds[] = PortalUtil.getCurrentAndAncestorSiteGroupIds(scopeGroupId);
+
+		tagsContext.put("groupIds", groupIds);
 		tagsContext.put("pathModule", pathModule);
 		tagsContext.put("repositoryId", String.valueOf(repositoryId));
 
-		String urlCategories = pathModule + "/bulk/asset/categories/" + scopeGroupId + "/" + classNameId + "/common";
 		String urlUpdateCategories = pathModule + "/bulk/asset/categories/" + classNameId;
 
 		Map<String, Object> categoriesContext = new HashMap<>();
 
+		categoriesContext.put("groupIds", groupIds);
+		categoriesContext.put("pathModule", pathModule);
 		categoriesContext.put("repositoryId", String.valueOf(repositoryId));
 		categoriesContext.put("selectCategoriesUrl", selectCategoriesURL.toString());
-		categoriesContext.put("urlCategories", urlCategories);
 		categoriesContext.put("urlUpdateCategories", urlUpdateCategories);
 		%>
 

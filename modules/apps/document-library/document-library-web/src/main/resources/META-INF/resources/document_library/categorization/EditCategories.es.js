@@ -33,6 +33,7 @@ class EditCategories extends Component {
 	created() {
 		this.append = true;
 		this.dataSource = [];
+		this.urlCategories = `/bulk-rest/v1.0/content-spaces/${this.groupIds[0]}/taxonomy-vocabularies/common`;
 
 		this._feedbackErrorClass = 'form-feedback-item';
 		this._requiredVocabularyErrorMarkupText = '<div class="' + this._feedbackErrorClass + '">' + Liferay.Language.get('this-field-is-required') + '</div>';
@@ -102,13 +103,14 @@ class EditCategories extends Component {
 			method: 'POST'
 		};
 
-		fetch(url, request)
+		return fetch(url, request)
 			.then(
 				response => response.json()
 			)
 			.then(
 				response => {
-					callback(response);
+					callback && callback(response);
+					return response;
 				}
 			)
 			.catch(
@@ -128,23 +130,20 @@ class EditCategories extends Component {
 	_getCommonCategories() {
 		this.loading = true;
 
-		let bodyData = {
-			folderId: this.folderId,
-			repositoryId: this.repositoryId,
-			selectAll: this.selectAll,
-			selection: this.fileEntries
-		};
+		let selection = this._getSelection();
 
-		this._fetchCategoriesRequest(
-			this.urlCategories,
-			bodyData,
-			response => {
-				if (response) {
-					this.description = response.description;
-					this.groupIds = response.groupIds;
+		Promise.all(
+			[
+				this._fetchCategoriesRequest(this.pathModule + this.urlCategories, selection),
+				this._fetchCategoriesRequest(this.pathModule + this.urlSelectionDescription, selection)
+			]
+		).then(
+			([responseCategories, responseDescription]) => {
+				if (responseCategories && responseDescription) {
 					this.loading = false;
+					this.description = responseDescription.description;
 					this.multiple = (this.fileEntries.length > 1) || this.selectAll;
-					this.vocabularies = this._parseVocabularies(response.vocabularies);
+					this.vocabularies = this._parseVocabularies(responseCategories.items || []);
 				}
 			}
 		);
@@ -172,6 +171,17 @@ class EditCategories extends Component {
 		);
 
 		return finalCategories;
+	}
+
+	_getSelection() {
+		return {
+			documentIds: this.fileEntries,
+			selectionScope: {
+				folderId: this.folderId,
+				repositoryId: this.repositoryId,
+				selectAll: this.selectAll
+			}
+		};
 	}
 
 	/**
@@ -268,12 +278,12 @@ class EditCategories extends Component {
 
 		vocabularies.forEach(
 			vocabulary => {
-				let categories = this._parseCategories(vocabulary.categories);
+				let categories = this._parseCategories(vocabulary.taxonomyCategories || []);
 
 				let categoryIds = categories.map(item => item.value);
 
 				let obj = {
-					id: vocabulary.vocabularyId.toString(),
+					id: vocabulary.taxonomyVocabularyId.toString(),
 					required: vocabulary.required,
 					selectedCategoryIds: categoryIds.join(','),
 					selectedItems: categories,
@@ -284,7 +294,7 @@ class EditCategories extends Component {
 				vocabulariesList.push(obj);
 
 				if (vocabulary.required) {
-					requiredVocabularies.push(vocabulary.vocabularyId);
+					requiredVocabularies.push(vocabulary.taxonomyVocabularyId);
 				}
 
 				initialCategories = initialCategories.concat(categoryIds);
@@ -311,8 +321,8 @@ class EditCategories extends Component {
 			categories.forEach(
 				item => {
 					let itemObj = {
-						'label': item.name,
-						'value': item.categoryId
+						'label': item.taxonomyCategoryName,
+						'value': item.taxonomyCategoryId
 					};
 
 					categoriesObjList.push(itemObj);
@@ -384,7 +394,7 @@ EditCategories.STATE = {
 	 *
 	 * @type {List<String>}
 	 */
-	groupIds: Config.array().value([]),
+	groupIds: Config.array().required(),
 
 	/**
 	* Hidden input name
@@ -431,6 +441,16 @@ EditCategories.STATE = {
 	 * @type {string}
 	 */
 	namespace: Config.string().required(),
+
+	/**
+	 * PathModule
+	 *
+	 * @instance
+	 * @memberof EditTags
+	 * @review
+	 * @type {String}
+	 */
+	pathModule: Config.string().required(),
 
 	/**
 	 * RepositoryId
@@ -489,7 +509,18 @@ EditCategories.STATE = {
 	 * @review
 	 * @type {String}
 	 */
-	urlCategories: Config.string().required(),
+	urlCategories: Config.string(),
+
+	/**
+	 * Url to backend service that provides
+	 * the selection description.
+	 *
+	 * @instance
+	 * @memberof EditTags
+	 * @review
+	 * @type {String}
+	 */
+	urlSelectionDescription: Config.string().value('/bulk-rest/v1.0/keywords/message-selection'),
 
 	/**
 	 * Url to backend service that updates

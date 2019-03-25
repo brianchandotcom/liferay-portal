@@ -4,6 +4,7 @@ import Soy from 'metal-soy';
 
 import '../fragments/FragmentsEditorSidebarCard.es';
 import {CLEAR_HOVERED_ITEM, REMOVE_FRAGMENT_ENTRY_LINK, REMOVE_SECTION, UPDATE_ACTIVE_ITEM, UPDATE_HOVERED_ITEM} from '../../../actions/actions.es';
+import {EDITABLE_FRAGMENT_ENTRY_PROCESSOR} from '../../fragment_entry_link/FragmentEntryLinkContent.es';
 import {focusItem, removeItem, setIn} from '../../../utils/FragmentsEditorUpdateUtils.es';
 import {FRAGMENTS_EDITOR_ITEM_TYPES} from '../../../utils/constants';
 import {getConnectedComponent} from '../../../store/ConnectedComponent.es';
@@ -58,18 +59,45 @@ class SidebarStructurePanel extends Component {
 				).filter(
 					fragmentEntryLink => fragmentEntryLink
 				).map(
-					fragmentEntryLink => SidebarStructurePanel._getTreeNode(
+					fragmentEntryLink => SidebarStructurePanel._getFragmentEntryLinkTree(
 						state,
-						{
-							elementId: fragmentEntryLink.fragmentEntryLinkId,
-							elementType: FRAGMENTS_EDITOR_ITEM_TYPES.fragment,
-							key: `fragment-entry-link-${fragmentEntryLink.fragmentEntryLinkId}`,
-							label: fragmentEntryLink.name
-						}
+						fragmentEntryLink
 					)
 				),
 				key: `column-${column.columnId}`,
 				label: Liferay.Language.get('column')
+			}
+		);
+	}
+
+	/**
+	 * @param {object} state
+	 * @param {object} fragmentEntryLink
+	 * @return {Object}
+	 * @review
+	 * @static
+	 */
+	static _getFragmentEntryLinkTree(state, fragmentEntryLink) {
+		return SidebarStructurePanel._getTreeNode(
+			state,
+			{
+				children: Object.keys(
+					fragmentEntryLink.editableValues[EDITABLE_FRAGMENT_ENTRY_PROCESSOR]
+				).map(
+					editableValueKey => SidebarStructurePanel._getTreeNode(
+						state,
+						{
+							elementId: `${fragmentEntryLink.fragmentEntryLinkId}-${editableValueKey}`,
+							elementType: FRAGMENTS_EDITOR_ITEM_TYPES.editable,
+							key: `editable-value-${fragmentEntryLink.fragmentEntryLinkId}-${editableValueKey}`,
+							label: editableValueKey
+						}
+					)
+				),
+				elementId: fragmentEntryLink.fragmentEntryLinkId,
+				elementType: FRAGMENTS_EDITOR_ITEM_TYPES.fragment,
+				key: `fragment-entry-link-${fragmentEntryLink.fragmentEntryLinkId}`,
+				label: fragmentEntryLink.name
 			}
 		);
 	}

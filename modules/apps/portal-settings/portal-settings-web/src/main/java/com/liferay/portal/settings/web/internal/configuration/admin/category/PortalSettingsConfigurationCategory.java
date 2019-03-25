@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.settings.web.internal.category;
+package com.liferay.portal.settings.web.internal.configuration.admin.category;
 
 import com.liferay.configuration.admin.category.ConfigurationCategory;
 

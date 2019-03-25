@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.settings.web.internal.display;
+package com.liferay.portal.settings.web.internal.configuration.admin.display;
 
 import com.liferay.configuration.admin.display.ConfigurationScreen;
 import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;

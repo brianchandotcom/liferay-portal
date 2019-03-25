@@ -431,16 +431,16 @@ public class ScopeLocatorImplTest extends PowerMockito {
 			throws IllegalAccessException {
 
 			ScopedServiceTrackerMap<PrefixHandlerFactory>
-				scopedPrefixHandlerFactories =
-					_prepareScopeServiceTrackerMapMock(
+				prefixHandlerFactoriesScopedServiceTrackerMap =
+					_prepareScopedServiceTrackerMapMock(
 						defaultPrefixHandlerFactory, configurator);
 
 			_set(
 				_scopeLocatorImpl, "_defaultPrefixHandlerFactory",
 				defaultPrefixHandlerFactory);
 
-			_scopeLocatorImpl.setScopedPrefixHandlerFactories(
-				scopedPrefixHandlerFactories);
+			_scopeLocatorImpl.setPrefixHandlerFactoriesScopedServiceTrackerMap(
+				prefixHandlerFactoriesScopedServiceTrackerMap);
 
 			_prefixHandlerFactoriesInitialized = true;
 
@@ -459,10 +459,10 @@ public class ScopeLocatorImplTest extends PowerMockito {
 			_scopeLocatorImpl.setScopeFinderByNameServiceTrackerMap(
 				scopeFinderByNameServiceTrackerMap);
 
-			ScopedServiceTrackerMap<ScopeFinder> scopedScopeFinder =
+			ScopedServiceTrackerMap<ScopeFinder> scopeFindersScopedServiceTrackerMap =
 				Mockito.mock(ScopedServiceTrackerMap.class);
 
-			_scopeLocatorImpl.setScopedScopeFinders(scopedScopeFinder);
+			_scopeLocatorImpl.setScopeFindersScopedServiceTrackerMap(scopeFindersScopedServiceTrackerMap);
 
 			configurator.configure(
 				(companyId, applicationName, service) -> {
@@ -478,7 +478,7 @@ public class ScopeLocatorImplTest extends PowerMockito {
 					);
 
 					when(
-						scopedScopeFinder.getService(companyId, applicationName)
+						scopeFindersScopedServiceTrackerMap.getService(companyId, applicationName)
 					).thenReturn(
 						service
 					);
@@ -497,16 +497,16 @@ public class ScopeLocatorImplTest extends PowerMockito {
 			throws IllegalAccessException {
 
 			ScopedServiceTrackerMap<ScopeLocatorConfigurationProvider>
-				scopedScopeLocatorConfigurationProviders =
-					_prepareScopeServiceTrackerMapMock(
+				scopeLocatorConfigurationProvidersScopeServiceTrackerMap =
+					_prepareScopedServiceTrackerMapMock(
 						defaultScopeLocatorConfigurationProvider, configurator);
 
 			_set(
 				_scopeLocatorImpl, "_defaultScopeLocatorConfigurationProvider",
 				defaultScopeLocatorConfigurationProvider);
 
-			_scopeLocatorImpl.setScopedScopeLocatorConfigurationProviders(
-				scopedScopeLocatorConfigurationProviders);
+			_scopeLocatorImpl.setScopeLocatorConfigurationProvidersScopedServiceTrackerMap(
+				scopeLocatorConfigurationProvidersScopeServiceTrackerMap);
 
 			_scopeLocatorConfigurationProvidersInitialized = true;
 
@@ -518,13 +518,13 @@ public class ScopeLocatorImplTest extends PowerMockito {
 				CompanyAndKeyConfigurator<ScopeMapper> configurator)
 			throws IllegalAccessException {
 
-			ScopedServiceTrackerMap<ScopeMapper> scopedScopeMapper =
-				_prepareScopeServiceTrackerMapMock(
+			ScopedServiceTrackerMap<ScopeMapper> scopeMappersScopedServiceTrackerMap =
+				_prepareScopedServiceTrackerMapMock(
 					defaultScopeMapper, configurator);
 
 			_set(_scopeLocatorImpl, "_defaultScopeMapper", defaultScopeMapper);
 
-			_scopeLocatorImpl.setScopedScopeMapper(scopedScopeMapper);
+			_scopeLocatorImpl.setScopeMappersScopedServiceTrackerMap(scopeMappersScopedServiceTrackerMap);
 
 			_scopeMappersInitialized = true;
 
@@ -543,7 +543,7 @@ public class ScopeLocatorImplTest extends PowerMockito {
 			_scopeLocatorImpl.setDefaultScopeMatcherFactory(
 				defaultScopeMatcherFactory);
 
-			_scopeLocatorImpl.setScopedScopeMatcherFactories(
+			_scopeLocatorImpl.setScopeMatcherFactoriesServiceTrackerMap(
 				scopeMatcherFactoriesServiceTrackerMap);
 
 			configurator.configure(
@@ -562,7 +562,7 @@ public class ScopeLocatorImplTest extends PowerMockito {
 		}
 
 		private <T> ScopedServiceTrackerMap<T>
-			_prepareScopeServiceTrackerMapMock(
+			_prepareScopedServiceTrackerMapMock(
 				T defaultService, CompanyAndKeyConfigurator<T> configurator) {
 
 			ScopedServiceTrackerMap<T> scopedServiceTrackerMap = Mockito.mock(

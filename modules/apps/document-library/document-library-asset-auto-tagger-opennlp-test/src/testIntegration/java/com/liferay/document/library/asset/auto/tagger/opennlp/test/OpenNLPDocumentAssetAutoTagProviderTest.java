@@ -42,7 +42,6 @@ import java.io.InputStream;
 
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.Collections;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -86,7 +85,11 @@ public class OpenNLPDocumentAssetAutoTagProviderTest {
 
 		_withOpenNLPAutoTagProviderEnabled(
 			() -> {
-				Collection<String> expectedTagNames = Arrays.asList("tag");
+				Collection<String> expectedTagNames = Arrays.asList(
+					"Ah", "Alice", "Arthur DiBianca", "Bill",
+					"David Widger ALICE’S", "Lewis Carroll", "Mary Ann",
+					"Michael Hart", "Michael S. Hart", "Pat", "Pepper", "Pray",
+					"William");
 
 				Collection<String> actualTagNames =
 					_assetAutoTagProvider.getTagNames(fileEntry);
@@ -112,8 +115,11 @@ public class OpenNLPDocumentAssetAutoTagProviderTest {
 
 		_withOpenNLPAutoTagProviderEnabled(
 			() -> {
-				Collection<String> expectedTagNames = Collections.singleton(
-					"tag");
+				Collection<String> expectedTagNames = Arrays.asList(
+					"Ah", "Alice", "Arthur DiBianca", "Bill",
+					"David Widger ALICE", "Lewis Carroll", "Mary Ann",
+					"Michael Hart", "Michael S. Hart", "Pat", "Pepper",
+					"Story CHAPTER X", "William");
 
 				Collection<String> actualTagNames =
 					_assetAutoTagProvider.getTagNames(fileEntry);
@@ -159,8 +165,11 @@ public class OpenNLPDocumentAssetAutoTagProviderTest {
 
 		_withOpenNLPAutoTagProviderEnabled(
 			() -> {
-				Collection<String> expectedTagNames = Collections.singleton(
-					"tag");
+				Collection<String> expectedTagNames = Arrays.asList(
+					"Alice", "Bill", "David Widger ALICE",
+					"David Widger Updated", "Lewis Carroll", "Mary Ann",
+					"Michael Hart", "Michael S. Hart", "Pat", "Pepper",
+					"Story CHAPTER X", "William");
 
 				Collection<String> actualTagNames =
 					_assetAutoTagProvider.getTagNames(fileEntry);
@@ -209,8 +218,10 @@ public class OpenNLPDocumentAssetAutoTagProviderTest {
 
 		_withOpenNLPAutoTagProviderEnabled(
 			() -> {
-				Collection<String> expectedTagNames = Collections.singleton(
-					"tag");
+				Collection<String> expectedTagNames = Arrays.asList(
+					"Alice", "Bill", "Lewis Carroll", "Mary Ann",
+					"Michael Hart", "Michael S. Hart", "Pat", "Pepper", "Pray",
+					"William");
 
 				Collection<String> actualTagNames =
 					_assetAutoTagProvider.getTagNames(fileEntry);
@@ -228,12 +239,15 @@ public class OpenNLPDocumentAssetAutoTagProviderTest {
 	public void testGetTagNamesWithTextFileAndDisabledConfiguration()
 		throws Exception {
 
+		String fileName =
+			"Alice's Adventures in Wonderland, by Lewis Carroll.txt";
+
 		FileEntry fileEntry = _dlAppService.addFileEntry(
 			_serviceContext.getScopeGroupId(),
-			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, "test.txt",
-			ContentTypes.TEXT_PLAIN, "test", RandomTestUtil.randomString(),
-			RandomTestUtil.randomString(),
-			FileUtil.getBytes(getInputStream("test.txt")), _serviceContext);
+			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, fileName,
+			ContentTypes.TEXT, RandomTestUtil.randomString(),
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+			FileUtil.getBytes(getInputStream(fileName)), _serviceContext);
 
 		_withOpenNLPAutoTagProviderDisabled(
 			() -> {
@@ -277,7 +291,7 @@ public class OpenNLPDocumentAssetAutoTagProviderTest {
 					new HashMapDictionary<String, Object>() {
 						{
 							put("enabled", true);
-							put("confidenceThreshold", 0.8);
+							put("confidenceThreshold", 0.9);
 						}
 					})) {
 

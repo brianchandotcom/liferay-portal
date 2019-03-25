@@ -29,8 +29,7 @@ public class IsUserSetupCompleteMFACheckerVisitor
 	public IsUserSetupCompleteMFACheckerVisitor(long userId) {
 		super(
 			MFACheckerSetup.class,
-			mfaCheckerSetup -> mfaCheckerSetup.isUserSetupComplete(
-				userId));
+			mfaCheckerSetup -> mfaCheckerSetup.isUserSetupComplete(userId));
 	}
 
 }

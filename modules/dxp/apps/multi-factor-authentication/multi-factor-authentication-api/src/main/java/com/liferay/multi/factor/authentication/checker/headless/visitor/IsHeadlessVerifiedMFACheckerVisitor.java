@@ -25,8 +25,7 @@ import javax.servlet.http.HttpServletRequest;
  * @author Carlos Sierra Andrés
  */
 @ProviderType
-public class IsHeadlessVerifiedMFACheckerVisitor
-	extends BaseMFACheckerVisitor {
+public class IsHeadlessVerifiedMFACheckerVisitor extends BaseMFACheckerVisitor {
 
 	public IsHeadlessVerifiedMFACheckerVisitor(
 		HttpServletRequest httpServletRequest, long userId) {

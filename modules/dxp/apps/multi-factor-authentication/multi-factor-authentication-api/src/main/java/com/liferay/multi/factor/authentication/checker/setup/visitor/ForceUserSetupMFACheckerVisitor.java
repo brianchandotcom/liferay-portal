@@ -24,8 +24,7 @@ import com.liferay.multi.factor.authentication.checker.visitor.BaseMFACheckerVis
  * @author Carlos Sierra Andrés
  */
 @ProviderType
-public class ForceUserSetupMFACheckerVisitor
-	extends BaseMFACheckerVisitor {
+public class ForceUserSetupMFACheckerVisitor extends BaseMFACheckerVisitor {
 
 	public ForceUserSetupMFACheckerVisitor(long userId) {
 		super(

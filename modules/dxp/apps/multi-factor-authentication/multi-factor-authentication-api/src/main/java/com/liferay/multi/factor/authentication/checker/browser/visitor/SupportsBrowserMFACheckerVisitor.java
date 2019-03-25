@@ -23,8 +23,7 @@ import com.liferay.multi.factor.authentication.checker.visitor.BaseMFACheckerVis
  * @author Carlos Sierra Andrés
  */
 @ProviderType
-public class SupportsBrowserMFACheckerVisitor
-	extends BaseMFACheckerVisitor {
+public class SupportsBrowserMFACheckerVisitor extends BaseMFACheckerVisitor {
 
 	public SupportsBrowserMFACheckerVisitor() {
 		super(BrowserMFAChecker.class::isInstance);

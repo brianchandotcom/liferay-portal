@@ -29,9 +29,11 @@ import java.util.function.Predicate;
 public abstract class BaseMFACheckerVisitor
 	implements MFACheckerVisitor<Boolean> {
 
-	public <T> BaseMFACheckerVisitor(
-		Class<T> clazz, Predicate<T> predicate) {
+	public BaseMFACheckerVisitor(Predicate<MFAChecker> predicate) {
+		_predicate = predicate;
+	}
 
+	public <T> BaseMFACheckerVisitor(Class<T> clazz, Predicate<T> predicate) {
 		this(
 			mfaChecker -> {
 				if (clazz.isInstance(mfaChecker)) {
@@ -40,10 +42,6 @@ public abstract class BaseMFACheckerVisitor
 
 				return false;
 			});
-	}
-
-	public BaseMFACheckerVisitor(Predicate<MFAChecker> predicate) {
-		_predicate = predicate;
 	}
 
 	@Override

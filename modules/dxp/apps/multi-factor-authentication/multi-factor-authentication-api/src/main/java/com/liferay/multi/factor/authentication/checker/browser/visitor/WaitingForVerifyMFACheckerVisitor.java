@@ -62,8 +62,7 @@ public class WaitingForVerifyMFACheckerVisitor
 			if (mfaChecker.accept(_supportsSetupVisitor) &&
 				!mfaChecker.accept(_isUserSetupCompleteVisitor)) {
 
-				throw new IllegalStateException(
-					"Setup was not completed");
+				throw new IllegalStateException("Setup was not completed");
 			}
 
 			mfaCheckers.addAll(mfaChecker.accept(this));

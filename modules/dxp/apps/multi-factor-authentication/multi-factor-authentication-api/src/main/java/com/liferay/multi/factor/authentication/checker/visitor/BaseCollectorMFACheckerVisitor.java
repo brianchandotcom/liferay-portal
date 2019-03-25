@@ -33,9 +33,7 @@ import java.util.stream.Stream;
 public abstract class BaseCollectorMFACheckerVisitor
 	implements MFACheckerVisitor<List<MFAChecker>> {
 
-	public BaseCollectorMFACheckerVisitor(
-		Predicate<MFAChecker> predicate) {
-
+	public BaseCollectorMFACheckerVisitor(Predicate<MFAChecker> predicate) {
 		_predicate = predicate;
 	}
 
@@ -64,9 +62,7 @@ public abstract class BaseCollectorMFACheckerVisitor
 			optionalMFACheckerMFACheckers.getMFACheckers());
 	}
 
-	private List<MFAChecker> _flatMapMFACheckers(
-		List<MFAChecker> mfaCheckers) {
-
+	private List<MFAChecker> _flatMapMFACheckers(List<MFAChecker> mfaCheckers) {
 		Stream<MFAChecker> stream = mfaCheckers.stream();
 
 		return stream.flatMap(

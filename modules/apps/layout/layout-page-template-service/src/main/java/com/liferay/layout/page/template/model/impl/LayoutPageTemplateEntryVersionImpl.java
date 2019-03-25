@@ -17,24 +17,9 @@ package com.liferay.layout.page.template.model.impl;
 import aQute.bnd.annotation.ProviderType;
 
 /**
- * The extended model implementation for the LayoutPageTemplateEntryVersion service. Represents a row in the &quot;LayoutPageTemplateEntryVersion&quot; database table, with each column mapped to a property of this class.
- *
- * <p>
- * Helper methods and all application logic should be put in this class. Whenever methods are added, rerun ServiceBuilder to copy their definitions into the <code>com.liferay.layout.page.template.model.LayoutPageTemplateEntryVersion<code> interface.
- * </p>
- *
  * @author Brian Wing Shun Chan
  */
 @ProviderType
 public class LayoutPageTemplateEntryVersionImpl
 	extends LayoutPageTemplateEntryVersionBaseImpl {
-
-	/**
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never reference this class directly. All methods that expect a layout page template entry version model instance should use the {@link com.liferay.layout.page.template.model.LayoutPageTemplateEntryVersion} interface instead.
-	 */
-	public LayoutPageTemplateEntryVersionImpl() {
-	}
-
 }

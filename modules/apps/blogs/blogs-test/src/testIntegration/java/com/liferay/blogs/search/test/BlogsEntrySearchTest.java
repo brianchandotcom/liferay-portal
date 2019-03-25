@@ -85,6 +85,12 @@ public class BlogsEntrySearchTest extends BaseSearchTestCase {
 	@Ignore
 	@Override
 	@Test
+	public void testSearchCommentsByKeywords() {
+	}
+
+	@Ignore
+	@Override
+	@Test
 	public void testSearchExpireAllVersions() {
 	}
 

@@ -17,7 +17,7 @@ package com.liferay.data.engine.rest.internal.constants;
 /**
  * @author Jeyvison Nascimento
  */
-public class PermissionConstants {
+public class DataEngineConstants {
 
 	public static final String DELETE_PERMISSION_OPERATION = "DELETE";
 

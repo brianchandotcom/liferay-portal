@@ -19,7 +19,7 @@ package com.liferay.data.engine.rest.internal.constants;
  */
 public class DataDefinitionConstants {
 
-	public static final String MODEL_RESOURCE_NAME =
+	public static final String RESOURCE_NAME =
 		"com.liferay.data.engine.rest.internal.model.InternalDataDefinition";
 
 }

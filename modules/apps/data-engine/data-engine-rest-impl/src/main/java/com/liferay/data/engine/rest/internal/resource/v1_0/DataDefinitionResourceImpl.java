@@ -18,7 +18,7 @@ import com.liferay.data.engine.rest.dto.v1_0.DataDefinition;
 import com.liferay.data.engine.rest.dto.v1_0.DataDefinitionPermission;
 import com.liferay.data.engine.rest.internal.constants.DataActionKeys;
 import com.liferay.data.engine.rest.internal.constants.DataDefinitionConstants;
-import com.liferay.data.engine.rest.internal.constants.PermissionConstants;
+import com.liferay.data.engine.rest.internal.constants.DataEngineConstants;
 import com.liferay.data.engine.rest.internal.dto.v1_0.util.DataDefinitionUtil;
 import com.liferay.data.engine.rest.internal.dto.v1_0.util.LocalizedValueUtil;
 import com.liferay.data.engine.rest.internal.model.InternalDataDefinition;
@@ -56,8 +56,6 @@ import com.liferay.portal.vulcan.pagination.Pagination;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.validation.constraints.NotNull;
-
 import javax.ws.rs.BadRequestException;
 
 import org.osgi.service.component.annotations.Component;
@@ -84,15 +82,15 @@ public class DataDefinitionResourceImpl extends BaseDataDefinitionResourceImpl {
 
 	@Override
 	public boolean postDataDefinitionPermission(
-			@NotNull Long dataDefinitionId, @NotNull String operation,
+			Long dataDefinitionId, String operation,
 			DataDefinitionPermission dataDefinitionPermission)
 		throws Exception {
 
 		if (Validator.isNull(operation) ||
 			ArrayUtil.contains(
 				new String[] {
-					PermissionConstants.SAVE_PERMISSION_OPERATION,
-				PermissionConstants.DELETE_PERMISSION_OPERATION
+					DataEngineConstants.SAVE_PERMISSION_OPERATION,
+				DataEngineConstants.DELETE_PERMISSION_OPERATION
 					},
 				operation, true)) {
 
@@ -127,7 +125,7 @@ public class DataDefinitionResourceImpl extends BaseDataDefinitionResourceImpl {
 		List<String> roleNames = ListUtil.fromArray(
 			dataDefinitionPermission.getRoleNames());
 
-		if (PermissionConstants.SAVE_PERMISSION_OPERATION.equalsIgnoreCase(
+		if (DataEngineConstants.SAVE_PERMISSION_OPERATION.equalsIgnoreCase(
 				operation)) {
 
 			ModelPermissions modelPermissions = new ModelPermissions();
@@ -140,7 +138,7 @@ public class DataDefinitionResourceImpl extends BaseDataDefinitionResourceImpl {
 			_resourcePermissionLocalService.addModelResourcePermissions(
 				contextCompany.getCompanyId(), ddmStructure.getGroupId(),
 				PrincipalThreadLocal.getUserId(),
-				DataDefinitionConstants.MODEL_RESOURCE_NAME,
+				DataDefinitionConstants.RESOURCE_NAME,
 				String.valueOf(dataDefinitionId), modelPermissions);
 		}
 		else {
@@ -172,7 +170,7 @@ public class DataDefinitionResourceImpl extends BaseDataDefinitionResourceImpl {
 				for (String actionId : actionIds) {
 					_resourcePermissionLocalService.removeResourcePermission(
 						contextCompany.getCompanyId(),
-						DataDefinitionConstants.MODEL_RESOURCE_NAME,
+						DataDefinitionConstants.RESOURCE_NAME,
 						ResourceConstants.SCOPE_INDIVIDUAL,
 						String.valueOf(dataDefinitionId), role.getRoleId(),
 						actionId);
@@ -292,11 +290,11 @@ public class DataDefinitionResourceImpl extends BaseDataDefinitionResourceImpl {
 		}
 
 		if (!permissionChecker.hasPermission(
-				group, PermissionConstants.RESOURCE_NAME, contentSpaceId,
+				group, DataEngineConstants.RESOURCE_NAME, contentSpaceId,
 				actionId)) {
 
 			throw new PrincipalException.MustHavePermission(
-				permissionChecker, PermissionConstants.RESOURCE_NAME,
+				permissionChecker, DataEngineConstants.RESOURCE_NAME,
 				contentSpaceId, actionId);
 		}
 	}

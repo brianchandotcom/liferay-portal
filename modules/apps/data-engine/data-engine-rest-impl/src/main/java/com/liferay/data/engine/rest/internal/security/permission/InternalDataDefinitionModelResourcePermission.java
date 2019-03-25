@@ -46,7 +46,7 @@ public class InternalDataDefinitionModelResourcePermission
 
 		if (!contains(permissionChecker, internalDataDefinition, actionId)) {
 			throw new PrincipalException.MustHavePermission(
-				permissionChecker, DataDefinitionConstants.MODEL_RESOURCE_NAME,
+				permissionChecker, DataDefinitionConstants.RESOURCE_NAME,
 				(long)internalDataDefinition.getPrimaryKeyObj(), actionId);
 		}
 	}

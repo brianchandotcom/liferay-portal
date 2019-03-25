@@ -43,6 +43,15 @@ class SidebarAvailableSections extends Component {
 	}
 
 	/**
+	 * Handle layoutData changed
+	 * @inheritDoc
+	 * @review
+	 */
+	syncLayoutData() {
+		this._initializeDragAndDrop();
+	}
+
+	/**
 	 * Callback that is executed when an item is being dragged.
 	 * @param {object} eventData
 	 * @param {MouseEvent} data.originalEvent
@@ -251,6 +260,7 @@ SidebarAvailableSections.STATE = {
 const ConnectedSidebarAvailableSections = getConnectedComponent(
 	SidebarAvailableSections,
 	[
+		'layoutData',
 		'sections',
 		'spritemap'
 	]

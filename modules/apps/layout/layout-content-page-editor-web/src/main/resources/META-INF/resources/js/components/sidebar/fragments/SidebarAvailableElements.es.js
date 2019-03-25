@@ -43,6 +43,15 @@ class SidebarAvailableElements extends Component {
 	}
 
 	/**
+	 * Handle layoutData changed
+	 * @inheritDoc
+	 * @review
+	 */
+	syncLayoutData() {
+		this._initializeDragAndDrop();
+	}
+
+	/**
 	 * Callback that is executed when an item is being dragged.
 	 * @param {object} eventData
 	 * @param {MouseEvent} data.originalEvent
@@ -254,6 +263,7 @@ SidebarAvailableElements.STATE = {
 const ConnectedSidebarAvailableElements = getConnectedComponent(
 	SidebarAvailableElements,
 	[
+		'layoutData',
 		'elements',
 		'spritemap'
 	]

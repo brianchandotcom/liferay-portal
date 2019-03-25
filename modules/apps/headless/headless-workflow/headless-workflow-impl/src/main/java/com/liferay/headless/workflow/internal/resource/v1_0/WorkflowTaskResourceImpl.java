@@ -78,7 +78,7 @@ public class WorkflowTaskResourceImpl extends BaseWorkflowTaskResourceImpl {
 	}
 
 	@Override
-	public Page<WorkflowTask> getWorkflowTaskAssignedToMePage(
+	public Page<WorkflowTask> getWorkflowTasksAssignedToMePage(
 			Pagination pagination)
 		throws Exception {
 
@@ -95,7 +95,7 @@ public class WorkflowTaskResourceImpl extends BaseWorkflowTaskResourceImpl {
 	}
 
 	@Override
-	public Page<WorkflowTask> getWorkflowTaskAssignedToMyRolesPage(
+	public Page<WorkflowTask> getWorkflowTasksAssignedToMyRolesPage(
 			Pagination pagination)
 		throws Exception {
 

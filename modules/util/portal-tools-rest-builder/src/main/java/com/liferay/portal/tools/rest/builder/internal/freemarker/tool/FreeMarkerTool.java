@@ -22,6 +22,7 @@ import com.liferay.portal.tools.rest.builder.internal.freemarker.tool.java.JavaM
 import com.liferay.portal.tools.rest.builder.internal.freemarker.tool.java.parser.DTOOpenAPIParser;
 import com.liferay.portal.tools.rest.builder.internal.freemarker.tool.java.parser.GraphQLOpenAPIParser;
 import com.liferay.portal.tools.rest.builder.internal.freemarker.tool.java.parser.ResourceOpenAPIParser;
+import com.liferay.portal.tools.rest.builder.internal.freemarker.tool.java.parser.ResourceTestCaseOpenAPIParser;
 import com.liferay.portal.tools.rest.builder.internal.freemarker.tool.java.parser.util.OpenAPIParserUtil;
 import com.liferay.portal.vulcan.yaml.config.ConfigYAML;
 import com.liferay.portal.vulcan.yaml.openapi.Components;
@@ -183,6 +184,27 @@ public class FreeMarkerTool {
 	}
 
 	public String getResourceParameters(
+		List<JavaMethodParameter> javaMethodParameters, Operation operation,
+		boolean annotation) {
+
+		return ResourceOpenAPIParser.getParameters(
+			javaMethodParameters, operation, annotation);
+	}
+
+	public String getResourceTestCaseArguments(
+		List<JavaMethodParameter> javaMethodParameters) {
+
+		return OpenAPIParserUtil.getArguments(javaMethodParameters);
+	}
+
+	public List<JavaMethodSignature> getResourceTestCaseJavaMethodSignatures(
+		ConfigYAML configYAML, OpenAPIYAML openAPIYAML, String schemaName) {
+
+		return ResourceTestCaseOpenAPIParser.getJavaMethodSignatures(
+			configYAML, openAPIYAML, schemaName);
+	}
+
+	public String getResourceTestCaseParameters(
 		List<JavaMethodParameter> javaMethodParameters, Operation operation,
 		boolean annotation) {
 

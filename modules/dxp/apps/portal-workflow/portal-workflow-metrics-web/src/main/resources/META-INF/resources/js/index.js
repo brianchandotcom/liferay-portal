@@ -3,6 +3,8 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 
 export default function(elementId, defaultDelta, deltas, maxPages) {
+	const container = document.getElementById(elementId);
+
 	ReactDOM.render(
 		<AppComponent
 			companyId={Liferay.ThemeDisplay.getCompanyId()}
@@ -10,6 +12,10 @@ export default function(elementId, defaultDelta, deltas, maxPages) {
 			deltas={deltas}
 			maxPages={maxPages}
 		/>,
-		document.getElementById(elementId)
+		container
 	);
+
+	Liferay.once('destroyPortlet', () => {
+		ReactDOM.unmountComponentAtNode(container);
+	});
 }

@@ -2,11 +2,14 @@ import fetch from '../../../test/mock/fetch';
 import ProcessListCard from '../ProcessListCard';
 import React from 'react';
 import renderer from 'react-test-renderer';
+import {MockRouter as Router} from '../../../test/mock/MockRouter';
 
 test('Should render component', () => {
 	const data = {items: [], totalCount: 0};
 	const component = renderer.create(
-		<ProcessListCard client={fetch(data)} companyId={1} />
+		<Router client={fetch(data)}>
+			<ProcessListCard />
+		</Router>
 	);
 	const tree = component.toJSON();
 
@@ -60,7 +63,9 @@ test('Should render component with 10 records', () => {
 		totalCount: 10
 	};
 	const component = renderer.create(
-		<ProcessListCard client={fetch(data)} companyId={1} />
+		<Router client={fetch(data)}>
+			<ProcessListCard />
+		</Router>
 	);
 	const tree = component.toJSON();
 
@@ -90,7 +95,9 @@ test('Should render component with 4 records', () => {
 		totalCount: 4
 	};
 	const component = renderer.create(
-		<ProcessListCard client={fetch(data)} companyId={1} />
+		<Router client={fetch(data)}>
+			<ProcessListCard />
+		</Router>
 	);
 	const tree = component.toJSON();
 
@@ -99,10 +106,12 @@ test('Should render component with 4 records', () => {
 
 test('Should change page size', () => {
 	const data = {items: [], totalCount: 0};
-	const component = shallow(
-		<ProcessListCard client={fetch(data)} companyId={1} />
+	const component = mount(
+		<Router client={fetch(data)}>
+			<ProcessListCard />
+		</Router>
 	);
-	const instance = component.instance();
+	const instance = component.find(ProcessListCard).instance();
 
 	instance
 		.setPageSize(20)
@@ -111,21 +120,26 @@ test('Should change page size', () => {
 
 test('Should change page', () => {
 	const data = {items: [], totalCount: 0};
-	const component = shallow(
-		<ProcessListCard client={fetch(data)} companyId={1} />
+	const component = mount(
+		<Router client={fetch(data)}>
+			<ProcessListCard />
+		</Router>
 	);
-	const instance = component.instance();
+	const instance = component.find(ProcessListCard).instance();
 
 	instance.setPage(10).then(() => expect(component.state('start')).toBe(2));
 });
 
 test('Should search', () => {
 	const data = {items: [], totalCount: 0};
-	const component = shallow(
-		<ProcessListCard client={fetch(data)} companyId={1} />
+	const component = mount(
+		<Router client={fetch(data)}>
+			<ProcessListCard />
+		</Router>
 	);
-	const instance = component.instance();
+	const instance = component.find(ProcessListCard).instance();
 
-	instance.onSearch('test');
-	expect(component.state('totalCount')).toBe(0);
+	instance.onSearch('test').then(() => {
+		expect(instance.state['totalCount']).toBe(0);
+	});
 });

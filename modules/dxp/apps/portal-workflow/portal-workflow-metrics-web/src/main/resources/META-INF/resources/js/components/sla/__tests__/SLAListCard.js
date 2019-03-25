@@ -1,20 +1,29 @@
 import fetch from '../../../test/mock/fetch';
 import React from 'react';
 import renderer from 'react-test-renderer';
+import {MockRouter as Router} from '../../../test/mock/MockRouter';
 import SLAListCard from '../SLAListCard';
 
 test('Should change page', () => {
 	const data = {items: [], totalCount: 0};
-	const component = shallow(<SLAListCard client={fetch(data)} companyId={1} />);
-	const instance = component.instance();
+	const component = mount(
+		<Router client={fetch(data)}>
+			<SLAListCard />
+		</Router>
+	);
+	const instance = component.find(SLAListCard).instance();
 
 	instance.setPage(2).then(() => expect(component.state('page')).toBe(2));
 });
 
 test('Should change page size', () => {
 	const data = {items: [], totalCount: 0};
-	const component = shallow(<SLAListCard client={fetch(data)} companyId={1} />);
-	const instance = component.instance();
+	const component = mount(
+		<Router client={fetch(data)}>
+			<SLAListCard />
+		</Router>
+	);
+	const instance = component.find(SLAListCard).instance();
 
 	instance
 		.setPageSize(20)
@@ -24,7 +33,9 @@ test('Should change page size', () => {
 test('Should render component', () => {
 	const data = {items: [], totalCount: 0};
 	const component = renderer.create(
-		<SLAListCard client={fetch(data)} companyId={1} />
+		<Router client={fetch(data)}>
+			<SLAListCard />
+		</Router>
 	);
 
 	const tree = component.toJSON();
@@ -35,7 +46,9 @@ test('Should render component', () => {
 test('Should render component after item was removed', () => {
 	const data = {items: [], totalCount: 0};
 	const component = renderer.create(
-		<SLAListCard client={fetch(data)} companyId={1} itemRemoved={'test'} />
+		<Router client={fetch(data)}>
+			<SLAListCard itemRemoved={'test'} />
+		</Router>
 	);
 	const tree = component.toJSON();
 
@@ -44,8 +57,12 @@ test('Should render component after item was removed', () => {
 
 test('Should remove a item', () => {
 	const data = {items: [], totalCount: 0};
-	const component = shallow(<SLAListCard client={fetch(data)} companyId={1} />);
-	const instance = component.instance();
+	const component = mount(
+		<Router client={fetch(data)}>
+			<SLAListCard />
+		</Router>
+	);
+	const instance = component.find(SLAListCard).instance();
 
 	instance.removeItem();
 	expect(component).toMatchSnapshot();
@@ -53,9 +70,14 @@ test('Should remove a item', () => {
 
 test('Should search', () => {
 	const data = {items: [], totalCount: 0};
-	const component = shallow(<SLAListCard client={fetch(data)} companyId={1} />);
-	const instance = component.instance();
+	const component = mount(
+		<Router client={fetch(data)}>
+			<SLAListCard />
+		</Router>
+	);
+	const instance = component.find(SLAListCard).instance();
 
-	instance.onSearch('test');
-	expect(component.state('totalCount')).toBe(0);
+	instance.onSearch('test').then(() => {
+		expect(instance.state['totalCount']).toBe(0);
+	});
 });

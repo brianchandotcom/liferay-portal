@@ -1,5 +1,6 @@
 import React from 'react';
 import renderer from 'react-test-renderer';
+import {MockRouter as Router} from '../../../test/mock/MockRouter';
 import SLAListTable from '../SLAListTable';
 
 test('Should render component', () => {
@@ -21,7 +22,11 @@ test('Should render component', () => {
 		}
 	];
 
-	const component = renderer.create(<SLAListTable sla={data} />);
+	const component = renderer.create(
+		<Router>
+			<SLAListTable sla={data} />
+		</Router>
+	);
 
 	const tree = component.toJSON();
 

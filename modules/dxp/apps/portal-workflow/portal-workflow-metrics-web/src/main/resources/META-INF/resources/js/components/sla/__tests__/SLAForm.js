@@ -2,10 +2,29 @@ import fetch from '../../../test/mock/fetch';
 import fetchFailure from '../../../test/mock/fetchFailure';
 import React from 'react';
 import renderer from 'react-test-renderer';
+import {MockRouter as Router} from '../../../test/mock/MockRouter';
 import SLAForm from '../SLAForm';
 
+jest.mock('../../AppContext');
+
 test('Should render component', () => {
-	const component = renderer.create(<SLAForm />);
+	const component = renderer.create(
+		<Router>
+			<SLAForm />
+		</Router>
+	);
+
+	const tree = component.toJSON();
+
+	expect(tree).toMatchSnapshot();
+});
+
+test('Should render component in edit mode', () => {
+	const component = renderer.create(
+		<Router>
+			<SLAForm id={1234} />
+		</Router>
+	);
 
 	const tree = component.toJSON();
 
@@ -19,9 +38,13 @@ test('Should submit the form with valid values', () => {
 		name: 'Total resolution time'
 	};
 
-	const component = shallow(<SLAForm client={fetch(data)} />);
+	const component = mount(
+		<Router client={fetch(data)}>
+			<SLAForm />
+		</Router>
+	);
 
-	const instance = component.instance();
+	const instance = component.find(SLAForm).instance();
 
 	instance.setState({
 		days: 3,
@@ -35,20 +58,21 @@ test('Should submit the form with valid values', () => {
 });
 
 test('Should display errors when input blur with invalid values', () => {
-	const component = shallow(<SLAForm />);
-	const instance = component.instance();
+	const component = mount(
+		<Router>
+			<SLAForm />
+		</Router>
+	);
 
-	component
-		.find('#sla_duration_days')
-		.simulate('focus')
-		.simulate('change', {target: {name: 'days', value: '0'}})
-		.simulate('blur');
+	const instance = component.find(SLAForm).instance();
 
-	component
-		.find('#sla_duration_hours')
-		.simulate('focus')
-		.simulate('change', {target: {name: 'hours', value: '99:99'}})
-		.simulate('blur');
+	instance.setState({
+		days: '0',
+		hours: '99:99'
+	});
+
+	instance.onDaysBlurred();
+	instance.onHoursBlurred();
 
 	const {errors} = instance.state;
 
@@ -57,10 +81,33 @@ test('Should display errors when input blur with invalid values', () => {
 	expect(component).toMatchSnapshot();
 });
 
-test('Should display errors when submitting the form with empty values', () => {
-	const component = shallow(<SLAForm />);
+test('Should display errors when duration was changed but keep empty', () => {
+	const component = mount(
+		<Router>
+			<SLAForm />
+		</Router>
+	);
 
-	const instance = component.instance();
+	const instance = component.find(SLAForm).instance();
+
+	instance.onDurationChanged();
+
+	const {errors} = instance.state;
+
+	expect(errors.duration).toBe(
+		'A duration time is required. Please enter at least one of the fields.'
+	);
+	expect(component).toMatchSnapshot();
+});
+
+test('Should display errors when submitting the form with empty values', () => {
+	const component = mount(
+		<Router>
+			<SLAForm />
+		</Router>
+	);
+
+	const instance = component.find(SLAForm).instance();
 
 	instance.handleSubmit();
 
@@ -68,9 +115,13 @@ test('Should display errors when submitting the form with empty values', () => {
 });
 
 test('Should display error when submitting the form with empty name', () => {
-	const component = shallow(<SLAForm />);
+	const component = mount(
+		<Router>
+			<SLAForm />
+		</Router>
+	);
 
-	const instance = component.instance();
+	const instance = component.find(SLAForm).instance();
 
 	instance.setState({
 		days: 3,
@@ -89,9 +140,13 @@ test('Should display error on alert when receive a server error after submit', (
 	const error = {
 		message: 'Error during SLA creation.'
 	};
-	const component = shallow(<SLAForm client={fetchFailure(error)} />);
+	const component = mount(
+		<Router client={fetchFailure(error)}>
+			<SLAForm />
+		</Router>
+	);
 
-	const instance = component.instance();
+	const instance = component.find(SLAForm).instance();
 
 	instance.setState({
 		days: 3,
@@ -111,9 +166,13 @@ test('Should display error on field when receive a server error after submit', (
 		fieldName: 'name',
 		message: 'An SLA with the same name already exists.'
 	};
-	const component = shallow(<SLAForm client={fetchFailure(error)} />);
+	const component = mount(
+		<Router client={fetchFailure(error)}>
+			<SLAForm />
+		</Router>
+	);
 
-	const instance = component.instance();
+	const instance = component.find(SLAForm).instance();
 
 	instance.setState({
 		days: 3,
@@ -129,9 +188,13 @@ test('Should display error on field when receive a server error after submit', (
 });
 
 test('Should display error when submitting the form with invalid hours', () => {
-	const component = shallow(<SLAForm />);
+	const component = mount(
+		<Router>
+			<SLAForm />
+		</Router>
+	);
 
-	const instance = component.instance();
+	const instance = component.find(SLAForm).instance();
 
 	instance.setState({
 		days: 3,
@@ -148,8 +211,12 @@ test('Should display error when submitting the form with invalid hours', () => {
 });
 
 test('Should update state after input changes', () => {
-	const component = mount(<SLAForm />);
-	const instance = component.instance();
+	const component = mount(
+		<Router>
+			<SLAForm />
+		</Router>
+	);
+	const instance = component.find(SLAForm).instance();
 
 	component
 		.find('#sla_name')

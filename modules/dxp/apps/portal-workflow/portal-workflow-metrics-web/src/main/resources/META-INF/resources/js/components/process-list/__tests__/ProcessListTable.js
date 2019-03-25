@@ -1,6 +1,7 @@
 import ProcessListTable from '../ProcessListTable';
 import React from 'react';
 import renderer from 'react-test-renderer';
+import {MockRouter as Router} from '../../../test/mock/MockRouter';
 
 test('Should render component', () => {
 	const data = [
@@ -11,7 +12,11 @@ test('Should render component', () => {
 		}
 	];
 
-	const component = renderer.create(<ProcessListTable items={data} />);
+	const component = renderer.create(
+		<Router>
+			<ProcessListTable items={data} />
+		</Router>
+	);
 
 	const tree = component.toJSON();
 

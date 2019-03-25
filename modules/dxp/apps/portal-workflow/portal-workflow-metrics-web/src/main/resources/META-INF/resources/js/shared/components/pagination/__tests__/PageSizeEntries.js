@@ -1,15 +1,12 @@
 import PageSizeEntries from '../PageSizeEntries';
 import React from 'react';
-import renderer from 'react-test-renderer';
 
 test('Should render component', () => {
-	const component = renderer.create(
+	const component = shallow(
 		<PageSizeEntries pageSizeEntries={[10, 20, 30, 40]} selectedPageSize={10} />
 	);
 
-	const tree = component.toJSON();
-
-	expect(tree).toMatchSnapshot();
+	expect(component).toMatchSnapshot();
 });
 
 test('Should change page size', () => {

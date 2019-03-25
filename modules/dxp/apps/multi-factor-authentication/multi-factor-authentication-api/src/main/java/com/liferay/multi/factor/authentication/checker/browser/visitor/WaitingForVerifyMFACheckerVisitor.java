@@ -90,22 +90,21 @@ public class WaitingForVerifyMFACheckerVisitor
 	public List<BrowserMFAChecker> visit(
 		OptionalCompositeMFAChecker optionalCompositeMFAChecker) {
 
-		List<MFAChecker> mfaCheckers =
-			optionalCompositeMFAChecker.getMFACheckers();
+		List<BrowserMFAChecker> mfaCheckers = new ArrayList<>();
 
-		ArrayList<BrowserMFAChecker> availableMFACheckers = new ArrayList<>();
+		for (MFAChecker mfaChecker :
+				optionalCompositeMFAChecker.getMFACheckers()) {
 
-		for (MFAChecker mfaChecker : mfaCheckers) {
 			if (mfaChecker.accept(_supportsSetupVisitor) &&
 				!mfaChecker.accept(_isUserSetupCompleteVisitor)) {
 
 				continue;
 			}
 
-			availableMFACheckers.addAll(mfaChecker.accept(this));
+			mfaCheckers.addAll(mfaChecker.accept(this));
 		}
 
-		return availableMFACheckers;
+		return mfaCheckers;
 	}
 
 	private static final SupportsBrowserMFACheckerVisitor

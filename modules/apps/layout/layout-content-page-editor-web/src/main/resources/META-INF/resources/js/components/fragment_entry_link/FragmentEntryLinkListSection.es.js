@@ -113,6 +113,7 @@ class FragmentEntryLinkListSection extends Component {
 		document.body.removeEventListener('mousemove', this._handleBodyMouseMove);
 
 		this._resizeColumnIndex = 0;
+		this._resizeHighlightedColumn = null;
 		this._resizeInitialPosition = 0;
 		this._resizeSectionColumns = null;
 		this._resizing = false;
@@ -199,6 +200,11 @@ class FragmentEntryLinkListSection extends Component {
 			[this._resizeColumnIndex + 1, 'size'],
 			(maxColumns - columns + 1).toString()
 		);
+
+		this._resizeHighlightedColumn = this._resizeSectionColumns
+			.slice(0, this._resizeColumnIndex + 1)
+			.map(column => parseInt(column.size, 10) || 1)
+			.reduce((size, columnSize) => size + columnSize, 0) - 1;
 	}
 
 	/**
@@ -375,6 +381,17 @@ FragmentEntryLinkListSection.STATE = {
 	 * @type {number}
 	 */
 	_resizeColumnIndex: Config.internal().number().value(0),
+
+	/**
+	 * Index of the column that should be highlighted on resize
+	 * @default null
+	 * @instance
+	 * @memberOf FragmentEntryLinkListSection
+	 * @private
+	 * @review
+	 * @type {number}
+	 */
+	_resizeHighlightedColumn: Config.internal().number().value(null),
 
 	/**
 	 * Position of the mouse when the resize started

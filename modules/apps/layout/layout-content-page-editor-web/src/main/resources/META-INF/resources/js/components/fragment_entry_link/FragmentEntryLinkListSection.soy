@@ -23,6 +23,7 @@
 	{@param? _handleSectionKeyUp: any}
 	{@param? _handleSectionRemoveButtonClick: any}
 	{@param? _resizeColumnIndex: number}
+	{@param? _resizeHighlightedColumn: number}
 	{@param? _resizing: bool}
 	{@param? activeItemId: string}
 	{@param? activeItemType: string}
@@ -159,6 +160,7 @@
 				{param columnSpacing: ($row and $row.config and $row.config.columnSpacing) ?: true /}
 				{param containerType: ($row and $row.config and $row.config.containerType) ?: 'fluid' /}
 				{param padding: ($row and $row.config and $row.config.paddingHorizontal) ?: '3' /}
+				{param highlightedColumn: $_resizeHighlightedColumn /}
 				{param ref: 'columnOverlayGrid' /}
 			{/call}
 		{/if}

@@ -254,7 +254,7 @@
 
 		<!-- PK fields -->
 
-		<column name="layoutPageTemplateEntryVersionId" primary="true" type="long" />
+		<column db-name="lPTEVersionId" name="layoutPageTemplateEntryVersionId" primary="true" type="long" />
 
 		<!-- Group instance -->
 

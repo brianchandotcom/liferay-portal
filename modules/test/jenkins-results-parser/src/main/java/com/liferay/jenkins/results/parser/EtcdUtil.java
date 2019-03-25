@@ -15,8 +15,10 @@
 package com.liferay.jenkins.results.parser;
 
 import java.io.IOException;
+
 import java.net.URI;
 import java.net.URISyntaxException;
+
 import java.util.List;
 import java.util.concurrent.TimeoutException;
 
@@ -42,13 +44,13 @@ public class EtcdUtil {
 
 			List<EtcdKeysResponse.EtcdNode> nodes = node.getNodes();
 
-			if (nodes.size() > 0) {
+			if (nodes.isEmpty()) {
+				etcdKeyDeleteRequest = etcdClient.delete(node.getKey());
+			}
+			else {
 				etcdKeyDeleteRequest = etcdClient.deleteDir(node.getKey());
 
 				etcdKeyDeleteRequest.recursive();
-			}
-			else {
-				etcdKeyDeleteRequest = etcdClient.delete(node.getKey());
 			}
 
 			EtcdResponsePromise<EtcdKeysResponse> etcdResponsePromise =
@@ -82,16 +84,16 @@ public class EtcdUtil {
 			throw new RuntimeException(e);
 		}
 	}
-	
+
 	public static EtcdClient getEtcdClient(String url) {
 		try {
 			return new EtcdClient(new URI(url));
 		}
-		catch (URISyntaxException se) {
+		catch (URISyntaxException urise) {
 			throw new RuntimeException(
 				JenkinsResultsParserUtil.combine(
-					"Unable to create an Etcd client using url " , url),
-				se);
+					"Unable to create an Etcd client using url ", url),
+				urise);
 		}
 	}
 

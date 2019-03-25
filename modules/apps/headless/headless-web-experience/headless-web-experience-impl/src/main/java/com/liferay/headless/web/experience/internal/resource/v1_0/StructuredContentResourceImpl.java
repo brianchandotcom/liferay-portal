@@ -52,7 +52,7 @@ import com.liferay.headless.web.experience.internal.dto.v1_0.util.AggregateRatin
 import com.liferay.headless.web.experience.internal.dto.v1_0.util.ContentDocumentUtil;
 import com.liferay.headless.web.experience.internal.dto.v1_0.util.ContentStructureUtil;
 import com.liferay.headless.web.experience.internal.dto.v1_0.util.CreatorUtil;
-import com.liferay.headless.web.experience.internal.dto.v1_0.util.DDMFormValuesCreator;
+import com.liferay.headless.web.experience.internal.dto.v1_0.util.DDMFormValuesUtil;
 import com.liferay.headless.web.experience.internal.dto.v1_0.util.DDMValueUtil;
 import com.liferay.headless.web.experience.internal.odata.entity.v1_0.EntityFieldsProvider;
 import com.liferay.headless.web.experience.internal.odata.entity.v1_0.StructuredContentEntityModel;
@@ -115,8 +115,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -348,10 +346,6 @@ public class StructuredContentResourceImpl
 					"language " + w3cLanguageId);
 		}
 
-		DDMFormValuesCreator ddmFormValuesCreator = new DDMFormValuesCreator(
-			_dlAppService, contentSpaceId, _journalArticleService,
-			_layoutLocalService);
-
 		return _toStructuredContent(
 			_journalArticleService.addArticle(
 				contentSpaceId, 0, 0, 0, null, true,
@@ -370,9 +364,11 @@ public class StructuredContentResourceImpl
 					}
 				},
 				_createJournalArticleContent(
-					ddmFormValuesCreator.createDDMFormValues(
+					DDMFormValuesUtil.toDDMFormValues(
 						structuredContent.getContentFields(),
-						ddmStructure.getDDMForm(),
+						ddmStructure.getDDMForm(), _dlAppService,
+						contentSpaceId, _journalArticleService,
+						_layoutLocalService,
 						contextAcceptLanguage.getPreferredLocale(),
 						_getRootDDMFormFields(ddmStructure)),
 					ddmStructure),
@@ -630,15 +626,12 @@ public class StructuredContentResourceImpl
 			ContentField[] contentFields, JournalArticle journalArticle)
 		throws Exception {
 
-		DDMFormValuesCreator ddmFormValuesCreator = new DDMFormValuesCreator(
-			_dlAppService, journalArticle.getGroupId(), _journalArticleService,
-			_layoutLocalService);
-
 		DDMStructure ddmStructure = journalArticle.getDDMStructure();
 
-		DDMFormValues ddmFormValues = ddmFormValuesCreator.createDDMFormValues(
-			contentFields, ddmStructure.getDDMForm(),
-			contextAcceptLanguage.getPreferredLocale(),
+		DDMFormValues ddmFormValues = DDMFormValuesUtil.toDDMFormValues(
+			contentFields, ddmStructure.getDDMForm(), _dlAppService,
+			journalArticle.getGroupId(), _journalArticleService,
+			_layoutLocalService, contextAcceptLanguage.getPreferredLocale(),
 			_getRootDDMFormFields(ddmStructure));
 
 		Fields existingFields = _journalConverter.getDDMFields(

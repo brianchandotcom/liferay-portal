@@ -46,6 +46,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.TreeMap;
 import java.util.TreeSet;
 import java.util.function.Consumer;
 
@@ -545,9 +546,11 @@ public class ResourceOpenAPIParser {
 		}
 
 		if ((response != null) && (response.getContent() != null)) {
-			Map<String, Content> contents = response.getContent();
+			Map<String, Content> sortedContents = new TreeMap<>();
 
-			for (Content content : contents.values()) {
+			sortedContents.putAll(response.getContent());
+
+			for (Content content : sortedContents.values()) {
 				Schema schema = content.getSchema();
 
 				if (schema == null) {

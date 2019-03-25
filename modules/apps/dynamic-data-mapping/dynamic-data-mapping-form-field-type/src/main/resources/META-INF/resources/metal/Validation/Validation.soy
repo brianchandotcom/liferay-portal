@@ -10,17 +10,6 @@
 	{@param? errorMessage: string}
 	{@param? label: string}
 	{@param? parameterMessage: string}
-	{@param? strings: [
-		chooseAnOption: string,
-		chooseOptions: string,
-		email: string,
-		errorMessage: string,
-		ifInput: string,
-		showErrorMessage: string,
-		theValue: string,
-		url: string,
-		validationMessage: string
-	]}
 	{@param? selectedValidation: [parameterMessage: string, value: string]}
 	{@param? validations: list<[
 		checked: bool,
@@ -44,7 +33,6 @@
 		{param parameterMessage: $parameterMessage /}
 		{param selectedValidation: $selectedValidation /}
 		{param spritemap: $spritemap /}
-		{param strings: $strings /}
 		{param validations: $validations /}
 	{/call}
 
@@ -60,17 +48,6 @@
 	{@param? parameterMessage: string}
 	{@param? selectedValidation: [parameterMessage: string, value: string]}
 	{@param spritemap: string}
-	{@param? strings: [
-		chooseAnOption: string,
-		chooseOptions: string,
-		email: string,
-		errorMessage: string,
-		ifInput: string,
-		showErrorMessage: string,
-		theValue: string,
-		url: string,
-		validationMessage: string
-	]}
 	{@param? validations: list<[
 		checked: bool,
 		disabled: bool,
@@ -99,15 +76,15 @@
 			{param events: [
 				'fieldEdited': $_updateValue
 			] /}
-			{param label: $strings.ifInput /}
+			{param label kind="text"}
+				{msg desc=""}if-input{/msg}
+			{/param}
 			{param options: $validations /}
-			{param placeholder: $strings?.chooseAnOption /}
+			{param placeholder kind="text"}
+				{msg desc=""}choose-an-option{/msg}
+			{/param}
 			{param ref: 'selectedValidation' /}
 			{param spritemap: $spritemap /}
-			{param strings: [
-				'chooseAnOption': $strings?.chooseAnOption,
-				'chooseOptions': $strings?.chooseOptions
-			] /}
 			{param value: [$selectedValidation?.value] /}
 			{param visible: $enableValidation /}
 		{/call}
@@ -118,7 +95,9 @@
 				{param events: [
 					'fieldEdited': $_updateValue
 				] /}
-				{param label: $strings?.theValue /}
+				{param label kind="text"}
+					{msg desc=""}the-value{/msg}
+				{/param}
 				{param name: $name + '_parameterMessage' /}
 				{param placeholder: $selectedValidation?.parameterMessage /}
 				{param ref: 'parameterMessage' /}
@@ -133,7 +112,9 @@
 				{param events: [
 					'fieldEdited': $_updateValue
 				] /}
-				{param label: $strings?.theValue /}
+				{param label kind="text"}
+					{msg desc=""}the-value{/msg}
+				{/param}
 				{param name: $name + '_parameterMessage' /}
 				{param placeholder: $selectedValidation?.parameterMessage /}
 				{param ref: 'parameterMessage' /}
@@ -149,9 +130,13 @@
 			{param events: [
 				'fieldEdited': $_updateValue
 			] /}
-			{param label: $strings?.showErrorMessage /}
+			{param label kind="text"}
+				{msg desc=""}show-error-message{/msg}
+			{/param}
 			{param name: $name + '_errorMessage' /}
-			{param placeholder: $strings?.showErrorMessage /}
+			{param placeholder kind="text"}
+				{msg desc=""}show-error-message{/msg}
+			{/param}
 			{param ref: 'errorMessage' /}
 			{param required: false /}
 			{param spritemap: $spritemap /}

@@ -126,7 +126,6 @@
 	{@param invalidRule: bool}
 	{@param logicalOperator: string}
 	{@param readOnly: bool}
-	{@param strings: ?}
 	{@param spritemap: string}
 	{@param? _handleActionSelection: any}
 	{@param? _handleActionAdded: any}
@@ -147,15 +146,16 @@
 	{@param? _handleTargetSelection: any}
 	{@param? _handleModalButtonClicked: any}
 	{@param? roles: list<[
-			label: string,
-			value: string
-		]>
-	}
+		label: string,
+		value: string
+	]>}
 
 	<div class="form-builder-rule-builder liferay-ddm-form-builder-rule-builder-content">
-		<h2 class="form-builder-section-title text-default">{$strings.title}</h2>
+		<h2 class="form-builder-section-title text-default">
+			{msg desc=""}rule{/msg}
+		</h2>
 
-		<h4 class="text-default">{$strings.description}</h4>
+		<h4 class="text-default">{msg desc=""}define-condition-and-action-to-change-fields-and-elements-on-the-form{/msg}</h4>
 
 		<ul class="liferay-ddm-form-builder-rule-condition-list liferay-ddm-form-rule-builder-timeline timeline {length($conditions) > 1 ? 'can-remove-item' : ''}">
 			{let $enableLogicalOperator: (length($conditions) > 1) ? true : false /}
@@ -165,12 +165,12 @@
 					{call .renderConditionLogicalOperatorDropdown}
 						{param _handleLogicalOperationChange: $_handleLogicalOperationChange /}
 						{param enableLogicalOperator: $enableLogicalOperator /}
-						{param logicalOperator: $strings[$logicalOperator] /}
-						{param strings: $strings /}
+						{param logicalOperator: $logicalOperator /}
 					{/call}
 				{/param}
-				{param logicalOperator: $strings[$logicalOperator] /}
-				{param title: $strings.condition /}
+				{param title kind="text"}
+					{msg desc=""}condition{/msg}
+				{/param}
 			{/call}
 
 			{foreach $condition in $conditions}
@@ -197,7 +197,6 @@
 					{param secondOperandValue: isNonnull($condition.operands[1]) ? $condition.operands[1].value : '' /}
 					{param selectedOperator: $condition.operator /}
 					{param spritemap: $spritemap /}
-					{param strings: $strings /}
 				{/call}
 			{/foreach}
 		</ul>
@@ -210,7 +209,9 @@
 
 		<ul class="action-list liferay-ddm-form-builder-rule-action-list liferay-ddm-form-rule-builder-timeline timeline {length($actions) > 1 ? 'can-remove-item' : ''}">
 			{call .renderHeader}
-				{param title: $strings.actions /}
+				{param title kind="text"}
+					{msg desc=""}actions{/msg}
+				{/param}
 			{/call}
 
 			{foreach $action in $actions}
@@ -233,7 +234,6 @@
 					{param fieldOptions: $fieldOptions /}
 					{param hasRequiredInputs: $action.hasRequiredInputs /}
 					{param index: index($action) /}
-					{param strings: $strings /}
 					{param spritemap: $spritemap /}
 					{param targetSelected: $action.target /}
 				{/call}
@@ -248,19 +248,25 @@
 
 		{call .renderModal}
 			{param _handleModalButtonClicked: $_handleModalButtonClicked /}
-			{param question: $strings.deleteConditionQuestion /}
+			{param question kind="text"}
+				{msg desc=""}are-you-sure-you-want-to-delete-this-condition{/msg}
+			{/param}
 			{param spritemap: $spritemap /}
-			{param strings: $strings /}
-			{param title: $strings.deleteCondition /}
+			{param title kind="text"}
+				{msg desc=""}delete-condition{/msg}
+			{/param}
 			{param type: 'Condition' /}
 		{/call}
 
 		{call .renderModal}
 			{param _handleModalButtonClicked: $_handleModalButtonClicked /}
-			{param question: $strings.deleteActionQuestion /}
+			{param question kind="text"}
+				{msg desc=""}are-you-sure-you-want-to-delete-this-action{/msg}
+			{/param}
 			{param spritemap: $spritemap /}
-			{param strings: $strings /}
-			{param title: $strings.deleteAction /}
+			{param title kind="text"}
+				{msg desc=""}delete-action{/msg}
+			{/param}
 			{param type: 'Action' /}
 		{/call}
 
@@ -270,7 +276,9 @@
 					'click': $_handleRuleAdded
 				] /}
 				{param disabled: $invalidRule /}
-				{param label: $strings.save /}
+				{param label kind="text"}
+					{msg desc=""}save{/msg}
+				{/param}
 				{param ref: 'save' /}
 				{param spritemap: $spritemap /}
 				{param style: 'primary' /}
@@ -280,7 +288,9 @@
 				{param events: [
 					'click': $_handleCancelRule
 				] /}
-				{param label: $strings.cancel /}
+				{param label kind="text"}
+					{msg desc=""}cancel{/msg}
+				{/param}
 				{param ref: 'cancel' /}
 				{param spritemap: $spritemap /}
 				{param style: 'secondary' /}
@@ -288,16 +298,20 @@
 		</div>
 	</div>
 {/template}
+
 {template .renderModal}
 	{@param question: string}
 	{@param title: string}
 	{@param type: string}
 	{@param spritemap: string}
-	{@param strings: [
-		delete: string,
-		dismiss: string
-	]}
 	{@param? _handleModalButtonClicked: any}
+
+	{let $deleteLabel kind="text"}
+		{msg desc=""}delete{/msg}
+	{/let}
+	{let $dismissLabel kind="text"}
+		{msg desc=""}dismiss{/msg}
+	{/let}
 
 	{call ClayModal.render}
 		{param body kind="html"}
@@ -306,16 +320,17 @@
 		{param events: [
 			'clickButton': $_handleModalButtonClicked
 		]/}
+
 		{param footerButtons: [
 			[
 				'alignment': 'right',
-				'label': $strings.dismiss,
+				'label': $dismissLabel,
 				'style': 'primary',
 				'type': 'close'
 			],
 			[
 				'alignment': 'right',
-				'label': $strings.delete,
+				'label': $deleteLabel,
 				'style': 'primary',
 				'type': 'button'
 			]
@@ -325,7 +340,6 @@
 		{param spritemap: $spritemap /}
 		{param title: $title /}
 	{/call}
-
 {/template}
 
 {template .renderAction}
@@ -374,20 +388,6 @@
 	}
 	{@param index: int}
 	{@param spritemap: string}
-	{@param strings: [
-		addField: string,
-		chooseAnOption: string,
-		dataProviderError: string,
-		dataProviderParameterInput: string,
-		dataProviderParameterInputDescription: string,
-		dataProviderParameterOutput: string,
-		dataProviderParameterOutputDescription: string,
-		do: string,
-		fromDataProvider: string,
-		requiredField: string,
-		showTheResult: string,
-		theExpressionWillBeDisplayedHere: string
-	]}
 	{@param? _handleActionSelection: any}
 	{@param? _handleEditExpression: any}
 	{@param? _handleDataProviderInputEdited: any}
@@ -445,7 +445,7 @@
 					<div class="form-group-item form-group-item-label form-group-item-shrink">
 						<h4>
 							<span class="text-truncate-inline">
-								<span class="text-truncate">{$strings.do}</span>
+								<span class="text-truncate">{msg desc=""}do{/msg}</span>
 							</span>
 						</h4>
 					</div>
@@ -456,7 +456,9 @@
 								'fieldEdited': $_handleActionSelection
 							] /}
 							{param options: $actionTypes /}
-							{param placeholder: $strings.chooseAnOption /}
+							{param placeholder kind="text"}
+								{msg desc=""}choose-an-option{/msg}
+							{/param}
 							{param ref: 'action' + $index /}
 							{param spritemap: $spritemap /}
 							{param value: [$actionSelected] /}
@@ -472,9 +474,9 @@
 						<h4>
 							<span class="text-truncate-inline">
 								{if $showTargetAutofill}
-									<span class="text-truncate">{$strings.fromDataProvider}</span>
+									<span class="text-truncate">{msg desc=""}from-data-provider{/msg}</span>
 								{elseif $showTargetCalculator}
-									<span class="text-truncate">{$strings.showTheResult}</span>
+									<span class="text-truncate">{msg desc=""}choose-a-field-to-show-the-result{/msg}</span>
 								{/if}
 							</span>
 						</h4>
@@ -486,7 +488,9 @@
 							{param _handleTargetSelection: $_handleTargetSelection /}
 							{param index: $index /}
 							{param options: $options /}
-							{param placeholder: $strings.chooseAnOption /}
+							{param placeholder kind="text"}
+								{msg desc=""}choose-an-option{/msg}
+							{/param}
 							{param ref: $ref + $index /}
 							{param spritemap: $spritemap /}
 							{param value: $targetSelected /}
@@ -500,12 +504,11 @@
 							'editExpression': $_handleEditExpression
 						]/}
 						{param expression: $actionExpression /}
-						{param index: $index /}
-						{param functions: $calculatorFunctions /}
 						{param fields: $calculatorFields /}
+						{param functions: $calculatorFunctions /}
+						{param index: $index /}
 						{param resultSelected: $targetSelected /}
 						{param spritemap: $spritemap /}
-						{param strings: $strings /}
 					{/call}
 				{/if}
 
@@ -517,14 +520,7 @@
 							{param actionIndex: $index /}
 							{param actionInputs: $actionInputs /}
 							{param actionOutputs: $actionOutputs /}
-							{param chooseAnOption: $strings.chooseAnOption /}
-							{param dataProviderError: $strings.dataProviderError /}
-							{param dataProviderParameterInput: $strings.dataProviderParameterInput /}
-							{param dataProviderParameterInputDescription: $strings.dataProviderParameterInputDescription /}
-							{param dataProviderParameterOutput: $strings.dataProviderParameterOutput /}
-							{param dataProviderParameterOutputDescription: $strings.dataProviderParameterOutputDescription /}
 							{param hasRequiredInputs: $hasRequiredInputs /}
-							{param requiredField: $strings.requiredField /}
 							{param spritemap: $spritemap /}
 						{/call}
 					</div>
@@ -591,12 +587,6 @@
 	{@param index: int}
 	{@param readOnly: bool}
 	{@param spritemap: string}
-	{@param strings: [
-		chooseAnOption: string,
-		if: string,
-		otherField: string,
-		value: string
-	]}
 	{@param? _handleDeleteCondition: any}
 	{@param? _handleFirstOperandFieldEdited: any}
 	{@param? _handleOperatorEdited: any}
@@ -634,7 +624,7 @@
 					<div class="form-group-item form-group-item-label form-group-item-shrink">
 						<h4>
 							<span class="text-truncate-inline">
-								<span class="text-truncate">{$strings.if}</span>
+								<span class="text-truncate">{msg desc=""}if{/msg}</span>
 							</span>
 						</h4>
 					</div>
@@ -646,7 +636,9 @@
 							] /}
 							{param fixedOptions: $fixedOptions /}
 							{param options: $fieldOptions /}
-							{param placeholder: $strings.chooseAnOption /}
+							{param placeholder kind="text"}
+								{msg desc=""}choose-an-option{/msg}
+							{/param}
 							{param ref: 'firstOperand' + $index /}
 							{param spritemap: $spritemap /}
 							{param value: [$firstOperandValueSelected]   /}
@@ -660,7 +652,6 @@
 						{param operators: $operators /}
 						{param selectedOperator: $selectedOperator /}
 						{param spritemap: $spritemap /}
-						{param strings: $strings /}
 					{/call}
 
 					{if $firstOperandType and $selectedOperator}
@@ -672,7 +663,6 @@
 									{param secondOperandType: $secondOperandType /}
 									{param selectedOperator: $selectedOperator /}
 									{param spritemap: $spritemap /}
-									{param strings: $strings /}
 								{/call}
 
 								{let $fieldHasOptions:
@@ -689,7 +679,9 @@
 											] /}
 											{param name: $secondOperandFieldName /}
 											{param options: $firstOperandOptions /}
-											{param placeholder: $strings.chooseAnOption /}
+											{param placeholder kind="text"}
+												{msg desc=""}choose-an-option{/msg}
+											{/param}
 											{param readOnly: $readOnly /}
 											{param ref: 'secondOperand' + $index /}
 											{param spritemap: $spritemap /}
@@ -701,7 +693,9 @@
 												'fieldEdited': $_handleSecondOperandValueEdited
 											] /}
 											{param options: $fieldOptions /}
-											{param placeholder: $strings.chooseAnOption /}
+											{param placeholder kind="text"}
+												{msg desc=""}choose-an-option{/msg}
+											{/param}
 											{param ref: 'secondOperand' + $index /}
 											{param spritemap: $spritemap /}
 											{param value: [$secondOperandValue] /}
@@ -731,7 +725,6 @@
 									{param roles: $roles  /}
 									{param secondOperandValue: $secondOperandValue /}
 									{param spritemap: $spritemap /}
-									{param strings: $strings /}
 								{/call}
 							</div>
 						{/if}
@@ -745,7 +738,13 @@
 		</div>
 
 		<div class="operator panel panel-default panel-inline">
-			<div class="panel-body text-uppercase">{$logicalOperator}</div>
+			<div class="panel-body text-uppercase">
+				{if $logicalOperator == 'and'}
+					{msg desc=""}and{/msg}
+				{else}
+					{msg desc=""}or{/msg}
+				{/if}
+			</div>
 		</div>
 
 		<div class="container-trash">
@@ -768,9 +767,6 @@
 {template .renderConditionOperators}
 	{@param index: int}
 	{@param spritemap: string}
-	{@param strings: [
-		chooseAnOption: string
-	]}
 	{@param? _handleOperatorEdited: any}
 	{@param? firstOperandType: string}
 	{@param? operators:  list<[
@@ -790,7 +786,9 @@
 				'fieldEdited': $_handleOperatorEdited
 			] /}
 			{param options: $operators /}
-			{param placeholder: $strings.chooseAnOption /}
+			{param placeholder kind="text"}
+				{msg desc=""}choose-an-option{/msg}
+			{/param}
 			{param readOnly: $readOnly /}
 			{param ref: 'conditionOperator' + $index /}
 			{param spritemap: $spritemap /}
@@ -802,22 +800,24 @@
 {template .renderConditionSecondOperandTypeSelector}
 	{@param index: int}
 	{@param spritemap: string}
-	{@param strings: [
-		chooseAnOption: string,
-		otherField: string,
-		value: string
-	]}
 	{@param? _handleSecondOperandTypeEdited: any}
 	{@param? secondOperandType: string}
 	{@param? selectedOperator: any}
 
+	{let $otherFieldLabel kind="text"}
+		{msg desc=""}other-field{/msg}
+	{/let}
+	{let $valueLabel kind="text"}
+		{msg desc=""}value{/msg}
+	{/let}
+
 	{let $options: [
 		[
-			'label': $strings.value,
+			'label': $valueLabel,
 			'value': 'value'
 		],
 		[
-			'label': $strings.otherField,
+			'label': $otherFieldLabel,
 			'value': 'field'
 		]
 	] /}
@@ -833,7 +833,9 @@
 					'fieldEdited': $_handleSecondOperandTypeEdited
 				] /}
 				{param options: $options /}
-				{param placeholder: $strings.chooseAnOption /}
+				{param placeholder kind="text"}
+					{msg desc=""}choose-an-option{/msg}
+				{/param}
 				{param ref: 'secondOperandTypeSelector' + $index /}
 				{param spritemap: $spritemap /}
 				{param value: [$value] /}
@@ -846,9 +848,6 @@
 {template .renderConditionUserRolesSelector}
 	{@param index: int}
 	{@param spritemap: string}
-	{@param strings: [
-		chooseAnOption: string
-	]}
 	{@param? _handleSecondOperandFieldEdited: any}
 	{@param? roles: list<[
 			label: string,
@@ -866,7 +865,9 @@
 				'fieldEdited': $_handleSecondOperandFieldEdited
 			] /}
 			{param options: $roles /}
-			{param placeholder: $strings.chooseAnOption /}
+			{param placeholder kind="text"}
+				{msg desc=""}choose-an-option{/msg}
+			{/param}
 			{param spritemap: $spritemap /}
 			{param value: [$secondOperandValue] /}
 		{/delcall}
@@ -877,7 +878,6 @@
  * Prints Logical Operator Dropdown
  */
 {template .renderConditionLogicalOperatorDropdown}
-	{@param strings: ?}
 	{@param _handleLogicalOperationChange: any}
 	{@param? enableLogicalOperator: bool}
 	{@param? logicalOperator: string}
@@ -895,13 +895,24 @@
 
 	<div class="btn-group dropdown" style="block">
 		<button {$attributes}>
-			<span class="dropdown-toggle-selected-value">{$logicalOperator}</span> <span class="caret"></span>
+			<span class="dropdown-toggle-selected-value">
+				{if $logicalOperator == 'and'}
+					{msg desc=""}and{/msg}
+				{else}
+					{msg desc=""}or{/msg}
+				{/if}
+			</span>
+			<span class="caret"></span>
 		</button>
 
 		<ul class="dropdown-menu" data-onclick="{$_handleLogicalOperationChange}">
-			<li class="logic-operator text-uppercase" data-logical-operator-value="or" ref="globalOrOperator"><a>{$strings['or']}</a></li>
+			<li class="logic-operator text-uppercase" ref="globalOrOperator">
+				<a data-value="or">{msg desc=""}or{/msg}</a>
+			</li>
 			<li class="divider"></li>
-			<li class="logic-operator text-uppercase" data-logical-operator-value="and" ref="globalAndOperator"><a>{$strings['and']}</a></li>
+			<li class="logic-operator text-uppercase" ref="globalAndOperator">
+				<a data-value="and">{msg desc=""}and{/msg}</a>
+			</li>
 		</ul>
 	</div>
 {/template}
@@ -957,13 +968,6 @@
 
 {template .renderAutofill}
 	{@param actionIndex: int}
-	{@param chooseAnOption: string}
-	{@param dataProviderError: string}
-	{@param dataProviderParameterInput: string}
-	{@param dataProviderParameterInputDescription: string}
-	{@param dataProviderParameterOutput: string}
-	{@param dataProviderParameterOutputDescription: string}
-	{@param requiredField: string}
 	{@param spritemap: string}
 	{@param? _handleDataProviderInputEdited: any}
 	{@param? _handleDataProviderOutputEdited: any}
@@ -983,8 +987,7 @@
 			type: string,
 			value: string
 		]>
-	]>
-	}
+	]>}
 	{@param? actionOutputs: list<[
 		name: string,
 		type: string,
@@ -999,16 +1002,20 @@
 			type: string,
 			value: string
 		]>
-	]>
-	}
+	]>}
 	{@param? hasRequiredInputs: bool}
+
 	<div class="col-md-12 ddm-data-provider-container no-padding">
 		{if not $actionOutputs or length($actionOutputs) == 0}
 			{call ClayAlert.render}
-				{param message: $dataProviderError /}
+				{param message kind="text"}
+					{msg desc=""}data-provider-error{/msg}
+				{/param}
 				{param spritemap: $spritemap /}
 				{param style: 'danger' /}
-				{param title: 'Error:' /}
+				{param title kind="text"}
+					{msg desc=""}error{/msg}
+				{/param}
 			{/call}
 		{/if}
 		{if $actionInputs and length($actionInputs) > 0 and $actionOutputs and length($actionOutputs) > 0}
@@ -1016,7 +1023,7 @@
 				{if $hasRequiredInputs}
 					<div class="data-provider-label-container">
 						<label>
-							<p class="data-provider-parameter-input-required-field">{$requiredField}</p>
+							<p class="data-provider-parameter-input-required-field">{msg desc=""}required-field{/msg}</p>
 							{sp}
 							<span class="reference-mark">
 								{call ClayIcon.render}
@@ -1029,8 +1036,8 @@
 				{/if}
 
 				<div class="data-provider-label-container">
-					<p class="data-provider-parameter-input"><b>{$dataProviderParameterInput}</b></p>
-					<p class="data-provider-parameter-input-description">{$dataProviderParameterInputDescription}</p>
+					<p class="data-provider-parameter-input"><b>{msg desc=""}data-provider-parameter-input{/msg}</b></p>
+					<p class="data-provider-parameter-input-description">{msg desc=""}data-provider-parameter-input-description{/msg}</p>
 				</div>
 
 				<div class="data-provider-parameter-input-list row">
@@ -1055,7 +1062,9 @@
 									'fieldEdited': $_handleDataProviderInputEdited
 								] /}
 								{param options: $input.fieldOptions /}
-								{param placeholder: $chooseAnOption /}
+								{param placeholder kind="text"}
+									{msg desc=""}choose-an-option{/msg}
+								{/param}
 								{param ref: 'action' + $actionIndex + 'dataProviderInput' + $index /}
 								{param spritemap: $spritemap /}
 								{param value: [$input.value] /}
@@ -1069,8 +1078,8 @@
 		{if $actionOutputs and length($actionOutputs) > 0}
 			<div class="data-provider-parameter-output-container">
 				<div class="data-provider-label-container">
-					<p class="data-provider-parameter-output"><b>{$dataProviderParameterOutput}</b></p>
-					<p class="data-provider-parameter-output-description">{$dataProviderParameterOutputDescription}</p>
+					<p class="data-provider-parameter-output"><b>{msg desc=""}data-provider-parameter-output{/msg}</b></p>
+					<p class="data-provider-parameter-output-description">{msg desc=""}data-provider-parameter-output-description{/msg}</p>
 				</div>
 
 				<div class="data-provider-parameter-output-list row">
@@ -1085,7 +1094,9 @@
 									'fieldEdited': $_handleDataProviderOutputEdited
 								] /}
 								{param options: $output.fieldOptions /}
-								{param placeholder: $chooseAnOption /}
+								{param placeholder kind="text"}
+									{msg desc=""}choose-an-option{/msg}
+								{/param}
 								{param ref: 'action' + $actionIndex + 'dataProviderOutput' + $index /}
 								{param spritemap: $spritemap /}
 								{param value: [$output.value] /}

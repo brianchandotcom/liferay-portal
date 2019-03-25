@@ -33,13 +33,7 @@ class Calculator extends Component {
 
 		repeatableFields: Config.array().valueFn('_repeatableFieldsValueFn'),
 
-		spritemap: Config.string().required(),
-
-		strings: {
-			value: {
-				addField: Liferay.Language.get('add-field')
-			}
-		}
+		spritemap: Config.string().required()
 	}
 
 	prepareStateForRender(state) {

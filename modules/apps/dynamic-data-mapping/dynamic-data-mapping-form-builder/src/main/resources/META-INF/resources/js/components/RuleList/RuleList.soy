@@ -27,23 +27,23 @@
 		]>
 	}
 	{@param? rulesCardOptions: ?}
-	{@param strings: ?}
 	{@param spritemap: string}
+	{@param strings: map<string, string>}
 	{@param _handleDropdownClicked: any}
 	{@param _handleRuleCardClicked: any}
 
 	<div class="form-builder-rule-builder-container">
-		<h1 class="form-builder-section-title text-default">{$strings.rules}</h1>
+		<h1 class="form-builder-section-title text-default">{msg desc=""}rule-builder{/msg}</h1>
 
 		<div class="liferay-ddm-form-rule-rules-list-container">
 			{call .rule_list}
+				{param _handleDropdownClicked: $_handleDropdownClicked /}
+				{param _handleRuleCardClicked: $_handleRuleCardClicked /}
 				{param dropdownExpandedIndex: $dropdownExpandedIndex /}
 				{param rules: $rules /}
 				{param rulesCardOptions: $rulesCardOptions /}
-				{param strings: $strings /}
 				{param spritemap: $spritemap /}
-				{param _handleDropdownClicked: $_handleDropdownClicked /}
-				{param _handleRuleCardClicked: $_handleRuleCardClicked /}
+				{param strings: $strings /}
 			{/call}
 		</div>
 	</div>
@@ -74,8 +74,8 @@
 			logicalOperator: string
 		]>
 	}
-	{@param strings: ?}
 	{@param spritemap: string}
+	{@param strings: map<string, string>}
 	{@param _handleDropdownClicked: any}
 	{@param _handleRuleCardClicked: any}
 	{@param? dropdownExpandedIndex: number}
@@ -84,89 +84,98 @@
 	<div class="ddm-rule-list-container form-builder-rule-list">
 		{if length($rules) > 0}
 			<ul class="ddm-form-body-content form-builder-rule-builder-rules-list tabular-list-group">
-			{foreach $rule in $rules}
-				<li class="list-group-item">
-					<div class="clamp-horizontal list-group-item-content">
-						<p class="form-builder-rule-builder-rule-description text-default">
-							<b>{$strings.if} </b>
-							{foreach $condition in $rule.conditions}
-								{call .condition}
-									{param operandType: $condition.operands[0].type /}
-									{param operandValue: $condition.operands[0].value /}
-									{param strings: $strings /}
-								{/call}
+				{foreach $rule in $rules}
+					<li class="list-group-item">
+						<div class="clamp-horizontal list-group-item-content">
+							<p class="form-builder-rule-builder-rule-description text-default">
+								<b>{msg desc=""}if{/msg} </b>
 
-								<b class="text-lowercase"><em> {$strings[$condition.operator]} </em></b>
-
-								{if $condition.operands[1]}
+								{foreach $condition in $rule.conditions}
 									{call .condition}
-										{param operandLabel: $condition.operands[1].label /}
-										{param operandType: $condition.operands[1].type /}
-										{param operandValue: $condition.operands[1].value /}
-										{param strings: $strings /}
-									{/call}
-								{/if}
-
-								{if not isLast($condition)}
-									<br />
-
-									<b> {$strings[$rule.logicalOperator]} </b>
-								{/if}
-							{/foreach}
-
-							<br />
-
-							{foreach $action in $rule.actions}
-								{call .action}
-									{param action: $action.action /}
-									{param dataProviderName: $action.dataProviderName /}
-									{param inputLabel: $action.inputLabel /}
-									{param expression: $action.expression /}
-									{param label: $action.label /}
-									{param logicalOperator: $rule.logicalOperator /}
-									{param outputLabel: $action.outputLabel /}
-									{param strings: $strings /}
-								{/call}
-								{if not isLast($action)}
-								, <br />
-								<b> {$strings['and']} </b>
-								{/if}
-							{/foreach}
-						</p>
-					</div>
-
-					<div class="list-group-item-field">
-						<div class="card-col-field">
-							<div class="dropdown dropdown-action">
-								{let $ruleIndex: index($rule) /}
-								{let $isExpanded: $dropdownExpandedIndex == $ruleIndex /}
-
-								<div class="ddm-rule-list-settings" data-card-id="{$ruleIndex}">
-									{call ClayActionsDropdown.render}
-										{param items: $rulesCardOptions /}
-										{param expanded: $isExpanded /}
-										{param events: [
-											'itemClicked': $_handleRuleCardClicked
-										] /}
-										{param spritemap: $spritemap /}
+										{param operandType: $condition.operands[0].type /}
+										{param operandValue: $condition.operands[0].value /}
 									{/call}
 
-									<button class="component-action cursor-pointer dropdown-toggle" data-onclick="{$_handleDropdownClicked}" data-rule-index="{$ruleIndex}">
-										{call ClayIcon.render}
-											{param spritemap: $spritemap /}
-											{param symbol: 'ellipsis-v' /}
+									<b class="text-lowercase"><em> {$strings[$condition.operator]} </em></b>
+
+									{if $condition.operands[1]}
+										{call .condition}
+											{param operandLabel: $condition.operands[1].label /}
+											{param operandType: $condition.operands[1].type /}
+											{param operandValue: $condition.operands[1].value /}
 										{/call}
-									</button>
+									{/if}
+
+									{if not isLast($condition)}
+										<br />
+
+										<b>
+											{' '}
+											{if $rule.logicalOperator == 'and'}
+												{msg desc=""}and{/msg}
+											{else}
+												{msg desc=""}or{/msg}
+											{/if}
+											{' '}
+										</b>
+									{/if}
+								{/foreach}
+
+								<br />
+
+								{foreach $action in $rule.actions}
+									{call .action}
+										{param action: $action.action /}
+										{param dataProviderName: $action.dataProviderName /}
+										{param inputLabel: $action.inputLabel /}
+										{param expression: $action.expression /}
+										{param label: $action.label /}
+										{param logicalOperator: $rule.logicalOperator /}
+										{param outputLabel: $action.outputLabel /}
+									{/call}
+
+									{if not isLast($action)}
+									, <br />
+									<b> {msg desc=""}and{/msg} </b>
+									{/if}
+								{/foreach}
+							</p>
+						</div>
+
+						<div class="list-group-item-field">
+							<div class="card-col-field">
+								<div class="dropdown dropdown-action">
+									{let $ruleIndex: index($rule) /}
+									{let $isExpanded: $dropdownExpandedIndex == $ruleIndex /}
+
+									<div class="ddm-rule-list-settings" data-card-id="{$ruleIndex}">
+										{call ClayActionsDropdown.render}
+											{param items: $rulesCardOptions /}
+											{param expanded: $isExpanded /}
+											{param events: [
+												'itemClicked': $_handleRuleCardClicked
+											] /}
+											{param spritemap: $spritemap /}
+										{/call}
+
+										<button class="component-action cursor-pointer dropdown-toggle" data-onclick="{$_handleDropdownClicked}" data-rule-index="{$ruleIndex}">
+											{call ClayIcon.render}
+												{param spritemap: $spritemap /}
+												{param symbol: 'ellipsis-v' /}
+											{/call}
+										</button>
+									</div>
 								</div>
 							</div>
 						</div>
-					</div>
-				</li>
-			{/foreach}
+					</li>
+				{/foreach}
 			</ul>
 		{else}
 			{call .empty_list}
-				{param message: $strings.emptyListText /}
+				{param message kind="text"}
+					{msg desc=""}there-are-no-rules-yet-click-on-plus-icon-below-to-add-the-first{/msg}
+				{/param}
 			{/call}
 		{/if}
 	</div>
@@ -208,18 +217,19 @@
  * Prints Rules Conditions.
  */
 {template .condition}
+	{@param operandType: string}
 	{@param? operandLabel: string}
-	{@param? operandType: string}
 	{@param? operandValue: ?}
-	{@param strings: ?}
 
 	<div class="ddm-condition-container">
 		{if $operandType == 'double' or $operandType == 'integer' or $operandType == 'string' or $operandType == 'text' or $operandType == 'numeric'}
-			<span>{$strings.value} </span>
-		{else}
-			{if $operandType != 'user' and $operandType != 'list'}
-				<span>{$strings[$operandType]} </span>
-			{/if}
+			<span>{msg desc=""}value{/msg} </span>
+		{elseif $operandType == 'user'}
+			<span>{msg desc=""}user{/msg} </span>
+		{elseif $operandType == 'field'}
+			<span>{msg desc=""}field{/msg} </span>
+		{elseif $operandType == 'list'}
+			<span>{msg desc=""}list{/msg} </span>
 		{/if}
 
 		{if $operandLabel}
@@ -256,15 +266,18 @@
 
 		<span><b>{msg desc=""}autofill-{$dataProviderOutputFields}-from-data-provider-{$dataProviderName}{/msg}</b></span>
 	{elseif $action == 'calculate'}
-		<span><b>{msg desc=""}calculate{/msg} </b></span>
+		{let $expressionLabel kind="html"}
+			{call .label}
+				{param content: $expression /}
+			{/call}
+		{/let}
+		{let $targetLabel kind="html"}
+			{call .label}
+				{param content: $label /}
+			{/call}
+		{/let}
 
-		{call .label}
-			{param content: $expression /}
-		{/call}
-			<b> into </b>
-		{call .label}
-			{param content: $label /}
-		{/call}
+		<span><b>{msg desc=""}calculate-field-{$expressionLabel}-as-{$targetLabel}{/msg}</b></span>
 	{elseif $action == 'enable'}
 		<span><b>{msg desc=""}enable{/msg} </b></span>
 

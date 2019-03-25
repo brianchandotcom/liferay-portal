@@ -107,12 +107,6 @@ class DocumentLibrary extends Component {
 
 		spritemap: Config.string(),
 
-		strings: {
-			value: {
-				select: Liferay.Language.get('select')
-			}
-		},
-
 		/**
 		 * @default undefined
 		 * @instance

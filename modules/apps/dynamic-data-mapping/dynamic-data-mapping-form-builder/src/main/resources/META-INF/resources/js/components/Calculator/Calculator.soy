@@ -5,11 +5,6 @@
 	{@param index: int}
 	{@param functions: list<?>}
 	{@param spritemap: string}
-	{@param strings: [
-			addField: string,
-			theExpressionWillBeDisplayedHere: string
-		]
-	}
 	{@param? _handleButtonClicked: any}
 	{@param? _handleFieldsDropdownItemClicked: any}
 	{@param? _handleFunctionsDropdownItemClicked: any}
@@ -28,6 +23,7 @@
 					<div class="liferay-ddm-form-builder-calculator">
 						{let $dropownItems: $showOnlyRepeatableFields ? $repeatableFields : $fields /}
 						{let $disableAddField: $dropownItems and (length($dropownItems) > 0) ? false : true /}
+
 						{call ClayDropdownBase.render}
 							{param events: [
 								'itemClicked': $_handleFieldsDropdownItemClicked
@@ -36,7 +32,9 @@
 							{param disabled: $disableAddField /}
 							{param elementClasses: 'calculator-add-field-button-container' /}
 							{param items: $dropownItems ? $dropownItems : [] /}
-							{param label: $strings.addField /}
+							{param label kind="text"}
+								{msg desc=""}add-field{/msg}
+							{/param}
 							{param ref: 'calculatorAddField' + $index /}
 							{param spritemap: $spritemap /}
 							{param style: 'primary' /}
@@ -103,7 +101,9 @@
 							{param name: 'calculator-expression' /}
 							{param readOnly: true /}
 							{param displayStyle: 'multipleline' /}
-							{param placeholder: $strings.theExpressionWillBeDisplayedHere /}
+							{param placeholder kind="text"}
+								{msg desc=""}the-expression-will-be-displayed-here{/msg}
+							{/param}
 							{param showLabel: false /}
 							{param spritemap: $spritemap /}
 							{param value: $expression /}

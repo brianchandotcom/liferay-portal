@@ -198,20 +198,6 @@ class Select extends Component {
 		spritemap: Config.string(),
 
 		/**
-		 * @default {}
-		 * @instance
-		 * @memberof Select
-		 * @type {object}
-		 */
-
-		strings: Config.object().value(
-			{
-				chooseAnOption: Liferay.Language.get('choose-an-option'),
-				chooseOptions: Liferay.Language.get('choose-options')
-			}
-		),
-
-		/**
 		 * @default undefined
 		 * @instance
 		 * @memberof Text
@@ -267,7 +253,7 @@ class Select extends Component {
 		);
 
 		const emptyOption = {
-			label: this.strings.chooseAnOption,
+			label: Liferay.Language.get('choose-an-option'),
 			value: ''
 		};
 

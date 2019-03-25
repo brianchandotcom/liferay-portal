@@ -116,26 +116,6 @@ class Validation extends Component {
 		 * @default undefined
 		 * @instance
 		 * @memberof Validation
-		 * @type {!string}
-		 */
-
-		strings: {
-			value: {
-				chooseAnOption: Liferay.Language.get('choose-an-option'),
-				email: Liferay.Language.get('email'),
-				errorMessage: Liferay.Language.get('error-message'),
-				ifInput: Liferay.Language.get('if-input'),
-				showErrorMessage: Liferay.Language.get('show-error-message'),
-				theValue: Liferay.Language.get('the-value'),
-				url: Liferay.Language.get('url'),
-				validationMessage: Liferay.Language.get('validation')
-			}
-		},
-
-		/**
-		 * @default undefined
-		 * @instance
-		 * @memberof Validation
 		 * @type {?(object|undefined)}
 		 */
 

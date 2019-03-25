@@ -62,23 +62,23 @@ class RuleEditor extends Component {
 		).internal().value(
 			[
 				{
-					label: 'Show',
+					label: Liferay.Language.get('show'),
 					value: 'show'
 				},
 				{
-					label: 'Enable',
+					label: Liferay.Language.get('enable'),
 					value: 'enable'
 				},
 				{
-					label: 'Require',
+					label: Liferay.Language.get('require'),
 					value: 'require'
 				},
 				{
-					label: 'Autofill',
+					label: Liferay.Language.get('autofill'),
 					value: 'auto-fill'
 				},
 				{
-					label: 'Calculate',
+					label: Liferay.Language.get('calculate'),
 					value: 'calculate'
 				}
 			]
@@ -320,56 +320,7 @@ class RuleEditor extends Component {
 		 * @type {!string}
 		 */
 
-		spritemap: Config.string().required(),
-
-		/**
-		 * @default undefined
-		 * @instance
-		 * @memberof RuleEditor
-		 * @type {!string}
-		 */
-
-		strings: {
-			value: {
-				actions: Liferay.Language.get('actions'),
-				addField: Liferay.Language.get('add-field'),
-				and: Liferay.Language.get('and'),
-				autofill: Liferay.Language.get('autofill'),
-				calculate: Liferay.Language.get('calculate'),
-				cancel: Liferay.Language.get('cancel'),
-				chooseAnOption: Liferay.Language.get('choose-an-option'),
-				condition: Liferay.Language.get('condition'),
-				dataProviderError: Liferay.Language.get('data-provider-error'),
-				dataProviderParameterInput: Liferay.Language.get('data-provider-parameter-input'),
-				dataProviderParameterInputDescription: Liferay.Language.get('data-provider-parameter-input-description'),
-				dataProviderParameterOutput: Liferay.Language.get('data-provider-parameter-output'),
-				dataProviderParameterOutputDescription: Liferay.Language.get('data-provider-parameter-output-description'),
-				delete: Liferay.Language.get('delete'),
-				deleteAction: Liferay.Language.get('delete-action'),
-				deleteActionQuestion: Liferay.Language.get('are-you-sure-you-want-to-delete-this-action'),
-				deleteCondition: Liferay.Language.get('delete-condition'),
-				deleteConditionQuestion: Liferay.Language.get('are-you-sure-you-want-to-delete-this-condition'),
-				description: Liferay.Language.get('define-condition-and-action-to-change-fields-and-elements-on-the-form'),
-				dismiss: Liferay.Language.get('dismiss'),
-				do: Liferay.Language.get('do'),
-				enable: Liferay.Language.get('enable'),
-				fromDataProvider: Liferay.Language.get('from-data-provider'),
-				if: Liferay.Language.get('if'),
-				jumpToPage: Liferay.Language.get('jump-to-page'),
-				or: Liferay.Language.get('or'),
-				otherField: Liferay.Language.get('other-field'),
-				require: Liferay.Language.get('require'),
-				requiredField: Liferay.Language.get('required-field'),
-				save: Liferay.Language.get('save'),
-				show: Liferay.Language.get('show'),
-				showTheResult: Liferay.Language.get('choose-a-field-to-show-the-result'),
-				the: Liferay.Language.get('the'),
-				theExpressionWillBeDisplayedHere: Liferay.Language.get('the-expression-will-be-displayed-here'),
-				title: Liferay.Language.get('rule'),
-				user: Liferay.Language.get('user'),
-				value: Liferay.Language.get('value')
-			}
-		}
+		spritemap: Config.string().required()
 	}
 
 	created() {
@@ -1102,17 +1053,12 @@ class RuleEditor extends Component {
 
 	_handleLogicalOperationChange(event) {
 		const {target} = event;
+		const {value} = target.dataset;
 
-		const logicalOperatorSelected = target.innerHTML;
-
-		let {logicalOperator} = this;
-
-		if (logicalOperatorSelected != logicalOperator) {
-			logicalOperator = logicalOperatorSelected.toLowerCase();
-
+		if (value !== this.logicalOperator) {
 			this.setState(
 				{
-					logicalOperator
+					logicalOperator: value
 				}
 			);
 		}

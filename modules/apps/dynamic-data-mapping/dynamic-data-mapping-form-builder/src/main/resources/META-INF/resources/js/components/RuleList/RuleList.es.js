@@ -1,12 +1,12 @@
 import 'clay-button';
 import 'clay-dropdown';
+
 import Component from 'metal-component';
 import dom from 'metal-dom';
 import Soy from 'metal-soy';
+import templates from './RuleList.soy.js';
 import {Config} from 'metal-state';
 import {EventHandler} from 'metal-events';
-
-import templates from './RuleList.soy.js';
 import {getFieldProperty} from '../LayoutProvider/util/fields.es';
 import {PagesVisitor} from '../../util/visitors.es';
 
@@ -96,41 +96,26 @@ class RuleList extends Component {
 		spritemap: Config.string().required(),
 
 		/**
-		 * @default undefined
+		 * @default strings
 		 * @instance
 		 * @memberof RuleList
-		 * @type {!string}
+		 * @type {!object}
 		 */
 
 		strings: Config.object().value(
 			{
-				and: Liferay.Language.get('and'),
-				'auto-fill': Liferay.Language.get('autofill-x-from-data-provider-x'),
 				'belongs-to': Liferay.Language.get('belongs-to'),
 				'calculate-field': Liferay.Language.get('calculate-field-x-as-x'),
 				contains: Liferay.Language.get('contains'),
-				delete: Liferay.Language.get('delete'),
-				edit: Liferay.Language.get('edit'),
-				emptyListText: Liferay.Language.get('there-are-no-rules-yet-click-on-plus-icon-below-to-add-the-first'),
-				'enable-field': Liferay.Language.get('enable-x'),
 				'equals-to': Liferay.Language.get('is-equal-to'),
-				field: Liferay.Language.get('field'),
-				fromDataProvider: Liferay.Language.get('from-data-provider'),
 				'greater-than': Liferay.Language.get('is-greater-than'),
 				'greater-than-equals': Liferay.Language.get('is-greater-than-or-equal-to'),
-				if: Liferay.Language.get('if'),
 				'is-empty': Liferay.Language.get('is-empty'),
-				'jump-to-page': Liferay.Language.get('jump-to-page-x'),
 				'less-than': Liferay.Language.get('is-less-than'),
 				'less-than-equals': Liferay.Language.get('is-less-than-or-equal-to'),
 				'not-contains': Liferay.Language.get('does-not-contain'),
 				'not-equals-to': Liferay.Language.get('is-not-equal-to'),
-				'not-is-empty': Liferay.Language.get('is-not-empty'),
-				or: Liferay.Language.get('or'),
-				'require-field': Liferay.Language.get('require-x'),
-				rules: Liferay.Language.get('rules'),
-				'show-field': Liferay.Language.get('show-x'),
-				value: Liferay.Language.get('value')
+				'not-is-empty': Liferay.Language.get('is-not-empty')
 			}
 		)
 	}

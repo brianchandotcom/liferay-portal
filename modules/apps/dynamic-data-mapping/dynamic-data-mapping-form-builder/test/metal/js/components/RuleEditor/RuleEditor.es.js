@@ -776,7 +776,7 @@ describe(
 
 								jest.runAllTimers();
 
-								component.element.querySelector('[data-logical-operator-value="and"]').click();
+								component.element.querySelector('[data-value="and"]').click();
 
 								jest.runAllTimers();
 

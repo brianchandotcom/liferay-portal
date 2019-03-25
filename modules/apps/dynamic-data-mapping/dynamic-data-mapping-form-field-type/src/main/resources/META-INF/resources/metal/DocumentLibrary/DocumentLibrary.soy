@@ -2,7 +2,6 @@
 
 {template .render}
 	{@param name: string}
-	{@param strings: [select: string]}
 	{@param? id: string}
 	{@param? label: string}
 	{@param? placeholder: string}
@@ -23,7 +22,6 @@
 				{param placeholder: $placeholder /}
 				{param readOnly: $readOnly /}
 				{param spritemap: $spritemap /}
-				{param strings: $strings /}
 				{param tip: $tip /}
 				{param value: $value /}
 			{/call}
@@ -41,7 +39,6 @@
 
 {template .content}
 	{@param name: string}
-	{@param strings: [select: string]}
 	{@param? id: string}
 	{@param? placeholder: string}
 	{@param? readOnly: bool}
@@ -82,7 +79,6 @@
 
 			{call .button_group}
 				{param readOnly: $readOnly /}
-				{param strings: $strings /}
 			{/call}
 		</div>
 
@@ -100,12 +96,11 @@
  * Prints the button group to manipulate files.
  */
 {template .button_group}
-	{@param strings: [select: string]}
 	{@param? readOnly: bool}
 
 	<div class="input-group-append input-group-item input-group-item-shrink">
 		<button class="btn btn-secondary select-button" {if $readOnly}disabled{/if} type="button">
-			<span class="lfr-btn-label">{$strings.select}</span>
+			<span class="lfr-btn-label">{msg desc=""}select{/msg}</span>
 		</button>
 	</div>
 {/template}

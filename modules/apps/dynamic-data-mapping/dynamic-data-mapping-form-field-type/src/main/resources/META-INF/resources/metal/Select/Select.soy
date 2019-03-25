@@ -1,7 +1,7 @@
 {namespace Select}
 
 {template .render}
-	{@param strings: [chooseAnOption: string, chooseOptions: string]}
+	{@param spritemap: string}
 	{@param value: list<string>}
 	{@param? _handleClick: any}
 	{@param? _handleItemClicked: any}
@@ -16,7 +16,6 @@
 	{@param? repeatable: bool}
 	{@param? required: bool}
 	{@param? showLabel: bool}
-	{@param spritemap: string}
 	{@param? tip: string}
 
 	{call FieldBase.render}
@@ -32,7 +31,6 @@
 				{param options: $options /}
 				{param readOnly: $readOnly /}
 				{param spritemap: $spritemap /}
-				{param strings: $strings /}
 				{param value: $value /}
 			{/call}
 		{/param}
@@ -48,7 +46,6 @@
 
 {template .content}
 	{@param spritemap: string}
-	{@param strings: [chooseAnOption: string, chooseOptions: string]}
 	{@param value: list<string>}
 	{@param? _handleClick: any}
 	{@param? _handleItemClicked: any}
@@ -106,11 +103,13 @@
 						{/for}
 
 						{ifempty}
-							{if $multiple}
-								<div class="option-selected option-selected-placeholder">{$strings.chooseOptions}</div>
-							{else}
-								<div class="option-selected option-selected-placeholder">{$strings.chooseAnOption}</div>
-							{/if}
+							<div class="option-selected option-selected-placeholder">
+								{if $multiple}
+									{msg desc=""}choose-options{/msg}
+								{else}
+									{msg desc=""}choose-an-option{/msg}
+								{/if}
+							</div>
 					{/for}
 
 					{if $multiple}

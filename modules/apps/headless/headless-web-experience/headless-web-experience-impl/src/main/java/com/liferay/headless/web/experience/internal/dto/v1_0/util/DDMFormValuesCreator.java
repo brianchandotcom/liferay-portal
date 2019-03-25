@@ -25,6 +25,7 @@ import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.headless.web.experience.dto.v1_0.ContentField;
 import com.liferay.journal.service.JournalArticleService;
 import com.liferay.petra.function.UnsafeFunction;
+import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.util.ListUtil;
 
 import java.util.ArrayList;
@@ -53,11 +54,14 @@ import javax.ws.rs.BadRequestException;
 public class DDMFormValuesCreator {
 
 	public DDMFormValuesCreator(
-		DLAppService dlAppService,
-		JournalArticleService journalArticleService) {
+		DLAppService dlAppService, long groupId,
+		JournalArticleService journalArticleService,
+		LayoutLocalService layoutLocalService) {
 
 		_dlAppService = dlAppService;
+		_groupId = groupId;
 		_journalArticleService = journalArticleService;
+		_layoutLocalService = layoutLocalService;
 	}
 
 	public DDMFormValues createDDMFormValues(
@@ -119,8 +123,8 @@ public class DDMFormValuesCreator {
 				ListUtil.toList(contentField.getNestedFields()), ddmFormField,
 				locale,
 				DDMValueUtil.toDDMValue(
-					contentField, ddmFormField, _dlAppService,
-					_journalArticleService, locale));
+					contentField, ddmFormField, _dlAppService, _groupId,
+					_journalArticleService, _layoutLocalService, locale));
 
 			ddmFormFieldValues.add(ddmFormFieldValue);
 		}
@@ -201,6 +205,8 @@ public class DDMFormValuesCreator {
 	}
 
 	private final DLAppService _dlAppService;
+	private final long _groupId;
 	private final JournalArticleService _journalArticleService;
+	private final LayoutLocalService _layoutLocalService;
 
 }

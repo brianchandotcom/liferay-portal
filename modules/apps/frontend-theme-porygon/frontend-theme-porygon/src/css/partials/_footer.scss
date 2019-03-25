@@ -13,4 +13,10 @@
 			text-decoration: none;
 		}
 	}
+
+	.portlet-topper	a,
+	.portlet-topper	a:focus,
+	.portlet-topper	a:hover {
+		color: $primary;
+	}
 }

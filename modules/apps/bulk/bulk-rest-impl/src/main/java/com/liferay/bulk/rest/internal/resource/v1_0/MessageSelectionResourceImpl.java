@@ -19,7 +19,6 @@ import com.liferay.bulk.rest.dto.v1_0.MessageSelection;
 import com.liferay.bulk.rest.internal.selection.v1_0.DocumentBulkSelectionFactory;
 import com.liferay.bulk.rest.resource.v1_0.MessageSelectionResource;
 import com.liferay.bulk.selection.BulkSelection;
-import com.liferay.portal.kernel.exception.PortalException;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -29,34 +28,19 @@ import org.osgi.service.component.annotations.ServiceScope;
  * @author Alejandro Tardín
  */
 @Component(
-	properties = "OSGI-INF/liferay/rest/v1_0/message-selection.properties",
+	properties = "OSGI-INF/liferay/rest/v1_0/bulk-selection.properties",
 	scope = ServiceScope.PROTOTYPE, service = MessageSelectionResource.class
 )
 public class MessageSelectionResourceImpl
 	extends BaseMessageSelectionResourceImpl {
 
 	@Override
-	public MessageSelection postKeywordMessageSelection(
+	public MessageSelection postBulkSelection(
 			DocumentBulkSelection documentBulkSelection)
 		throws Exception {
 
-		return _toMessageSelection(
-			_documentBulkSelectionFactory.create(documentBulkSelection));
-	}
-
-	@Override
-	public MessageSelection postTaxonomyVocabularyMessageSelection(
-			DocumentBulkSelection documentBulkSelection)
-		throws Exception {
-
-		BulkSelection<?> bulkSelection = _documentBulkSelectionFactory.create(
+		BulkSelection bulkSelection = _documentBulkSelectionFactory.create(
 			documentBulkSelection);
-
-		return _toMessageSelection(bulkSelection.toAssetEntryBulkSelection());
-	}
-
-	private MessageSelection _toMessageSelection(BulkSelection<?> bulkSelection)
-		throws PortalException {
 
 		return new MessageSelection() {
 			{

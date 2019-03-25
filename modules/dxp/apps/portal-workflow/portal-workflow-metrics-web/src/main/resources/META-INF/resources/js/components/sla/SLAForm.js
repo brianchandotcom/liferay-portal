@@ -1,27 +1,30 @@
 import {ALERT_MESSAGE, DAYS, DURATION, HOURS, NAME} from './Constants';
 import {
+	BackLink,
+	BackRedirect
+} from '../../shared/components/router/routerWrapper';
+import {
 	hasErrors,
 	validateDays,
 	validateDuration,
 	validateHours,
 	validateName
 } from './util/slaFormUtil';
+import {AppContext} from '../AppContext';
 import autobind from 'autobind-decorator';
 import createNumberMask from 'text-mask-addons/dist/createNumberMask';
 import {durationAsMilliseconds} from '../../shared/util/duration';
 import FieldError from './form/fieldError';
 import FieldLabel from './form/fieldLabel';
 import Icon from '../../shared/components/Icon';
-import Link from '../../shared/components/router/Link';
 import MaskedInput from 'react-text-mask';
 import React from 'react';
-import redirect from '../../shared/components/router/redirect';
 
 /**
  * SLA form component.
  * @extends React.Component
  */
-export default class SLAForm extends React.Component {
+class SLAForm extends React.Component {
 	constructor(props) {
 		super(props);
 
@@ -30,8 +33,18 @@ export default class SLAForm extends React.Component {
 			description: '',
 			errors: {},
 			hours: '',
-			name: ''
+			name: '',
+			redirectToSlaList: false
 		};
+	}
+
+	componentWillMount() {
+		if (this.props.id) {
+			this.context.setTitle(Liferay.Language.get('edit-sla'));
+		}
+		else {
+			this.context.setTitle(Liferay.Language.get('new-sla'));
+		}
 	}
 
 	@autobind
@@ -62,7 +75,8 @@ export default class SLAForm extends React.Component {
 			this.setState({errors});
 		}
 		else {
-			const {client, processId} = this.props;
+			const {client} = this.context;
+			const {processId} = this.props;
 			const duration = durationAsMilliseconds(days, hours);
 
 			errors[ALERT_MESSAGE] = '';
@@ -75,7 +89,7 @@ export default class SLAForm extends React.Component {
 					processId
 				})
 				.then(() => {
-					redirect('sla-list', {processId});
+					this.setState({redirectToSlaList: true});
 				})
 				.catch(errorResponse => {
 					const errorKey = errorResponse.fieldName || ALERT_MESSAGE;
@@ -131,11 +145,14 @@ export default class SLAForm extends React.Component {
 			includeThousandsSeparator: false,
 			prefix: ''
 		});
-		const {errors} = this.state;
-		const {processId} = this.props;
+		const {errors, redirectToSlaList} = this.state;
 		const onChangeHandler = validationFunc => evt => {
 			this.handleChange(evt, validationFunc);
 		};
+
+		if (redirectToSlaList === true) {
+			return <BackRedirect />;
+		}
 
 		return (
 			<div>
@@ -285,12 +302,9 @@ export default class SLAForm extends React.Component {
 							</div>
 
 							<div className="btn-group-item">
-								<Link
-									className="btn btn-secondary"
-									query={{processId}}
-									text={Liferay.Language.get('cancel')}
-									to="sla-list"
-								/>
+								<BackLink className="btn btn-secondary">
+									{Liferay.Language.get('cancel')}
+								</BackLink>
 							</div>
 						</div>
 					</div>
@@ -299,3 +313,6 @@ export default class SLAForm extends React.Component {
 		);
 	}
 }
+
+SLAForm.contextType = AppContext;
+export default SLAForm;

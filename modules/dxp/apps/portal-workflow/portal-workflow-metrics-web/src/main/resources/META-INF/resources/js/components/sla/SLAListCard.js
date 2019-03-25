@@ -1,8 +1,9 @@
+import {AppContext} from '../AppContext';
 import autobind from 'autobind-decorator';
+import {ChildLink} from '../../shared/components/router/routerWrapper';
 import DisplayResult from '../../shared/components/pagination/DisplayResult';
 import EmptyContent from '../../shared/components/EmptyContent';
 import Icon from '../../shared/components/Icon';
-import Link from '../../shared/components/router/Link';
 import openToast from 'frontend-js-web/liferay/toast/commands/OpenToast.es';
 import PageSizeEntries from '../../shared/components/pagination/PageSizeEntries';
 import Pagination from '../../shared/components/pagination/Pagination';
@@ -14,22 +15,24 @@ import SLAListTable from './SLAListTable';
 const REQUEST_ORIGIN_TYPE_FETCH = 'REQUEST_ORIGIN_TYPE_FETCH';
 const REQUEST_ORIGIN_TYPE_SEARCH = 'REQUEST_ORIGIN_TYPE_SEARCH';
 
-export default class SLAListCard extends React.Component {
+class SLAListCard extends React.Component {
 	constructor(props) {
 		super(props);
 
+		const {page = 1, pageSize = 20, processId} = this.props;
+
 		this.state = {
 			items: [],
-			page: 1,
-			pageSize: 20,
+			page,
+			pageSize,
+			processId,
 			requestOriginType: null,
 			totalCount: 0
 		};
 	}
 
 	componentDidMount() {
-		const {processId} = this.props;
-		const {page, pageSize} = this.state;
+		const {page, pageSize, processId} = this.state;
 
 		this.requestData({
 			page,
@@ -51,6 +54,10 @@ export default class SLAListCard extends React.Component {
 		}
 	}
 
+	componentWillMount() {
+		this.context.setTitle(Liferay.Language.get('slas'));
+	}
+
 	removeItem() {
 		openToast({message: Liferay.Language.get('sla-was-deleted')});
 	}
@@ -63,7 +70,7 @@ export default class SLAListCard extends React.Component {
 	 * @param {string} configuration.title
 	 */
 	requestData({page, pageSize, processId, title}) {
-		const {client} = this.props;
+		const {client} = this.context;
 
 		this.state.requestOriginType =
 			typeof title === 'string'
@@ -81,7 +88,7 @@ export default class SLAListCard extends React.Component {
 		const {processId} = this.props;
 		const page = 1;
 
-		this.requestData({page, pageSize, processId, title}).then(
+		return this.requestData({page, pageSize, processId, title}).then(
 			({items, totalCount}) => this.setState({items, page, totalCount})
 		);
 	}
@@ -200,20 +207,19 @@ export default class SLAListCard extends React.Component {
 
 						<ul className="navbar-nav">
 							<li className="nav-item">
-								<Link
+								<ChildLink
 									className="btn btn-primary nav-btn nav-btn-monospaced navbar-breakpoint-down-d-none"
-									query={{processId}}
-									to="sla-form"
+									to={`/sla/new/${processId}`}
 								>
 									<Icon iconName="plus" />
-								</Link>
+								</ChildLink>
 							</li>
 						</ul>
 					</div>
 				</nav>
 
 				<div className="container-fluid-1280">
-					<div className="alert alert-info" role="alert">
+					<div className="alert alert-dismissible alert-info" role="alert">
 						<span className="alert-indicator">
 							<Icon iconName="reload" />
 						</span>
@@ -225,6 +231,15 @@ export default class SLAListCard extends React.Component {
 								'instances-in-this-process-are-being-updated-according-to-sla-changes'
 							)}
 						</span>
+
+						<button
+							aria-label="Close"
+							className="close"
+							data-dismiss="alert"
+							type="button"
+						>
+							<Icon iconName="times" />
+						</button>
 					</div>
 
 					{emptySearchRender(emptyContentRender(listRender(loadingRender())))}
@@ -233,3 +248,6 @@ export default class SLAListCard extends React.Component {
 		);
 	}
 }
+
+SLAListCard.contextType = AppContext;
+export default SLAListCard;

@@ -1,4 +1,3 @@
-import Link from '../../shared/components/router/Link';
 import React from 'react';
 
 export default class SLAConfirmDialog extends React.Component {
@@ -21,20 +20,15 @@ export default class SLAConfirmDialog extends React.Component {
 							<div className="modal-item-last">
 								<div className="btn-group">
 									<div className="btn-group-item">
-										<Link
-											className="btn btn-secondary"
-											text={Liferay.Language.get('cancel')}
-											to="sla-list"
-										/>
+										<button className="btn btn-secondary" type="button">
+											{Liferay.Language.get('cancel')}
+										</button>
 									</div>
 
 									<div className="btn-group-item">
-										<Link
-											className="btn btn-secondary"
-											query={{itemRemoved}}
-											text={Liferay.Language.get('ok')}
-											to="sla-list"
-										/>
+										<button className="btn btn-secondary" type="button">
+											{Liferay.Language.get('ok')}
+										</button>
 									</div>
 								</div>
 							</div>

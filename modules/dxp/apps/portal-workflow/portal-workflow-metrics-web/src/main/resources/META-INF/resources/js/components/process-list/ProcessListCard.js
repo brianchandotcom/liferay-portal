@@ -2,6 +2,7 @@ import {
 	REQUEST_ORIGIN_TYPE_FETCH,
 	REQUEST_ORIGIN_TYPE_SEARCH
 } from './Constants';
+import {AppContext} from '../AppContext';
 import autobind from 'autobind-decorator';
 import DisplayResult from '../../shared/components/pagination/DisplayResult';
 import ListView from '../../shared/components/list/ListView';
@@ -14,22 +15,24 @@ import Search from '../../shared/components/pagination/Search';
 /**
  * @class
  * @memberof processes-list
- * */
-export default class ProcessListCard extends React.Component {
+ */
+class ProcessListCard extends React.Component {
 	constructor(props) {
 		super(props);
+
+		const {page = 1, pageSize = 20} = this.props;
 
 		this.requestOriginType = null;
 
 		this.state = {
 			items: [],
-			page: 1,
-			pageSize: 20,
+			page,
+			pageSize,
 			totalCount: 0
 		};
 	}
 
-	componentWillMount() {
+	componentDidMount() {
 		const {page, pageSize} = this.state;
 
 		this.requestData({page, pageSize}).then(({items, totalCount}) =>
@@ -40,6 +43,10 @@ export default class ProcessListCard extends React.Component {
 		);
 	}
 
+	componentWillMount() {
+		this.context.setTitle(Liferay.Language.get('metrics'));
+	}
+
 	/**
 	 * @param {Object} configuration
 	 * @param {number} configuration.page
@@ -47,7 +54,7 @@ export default class ProcessListCard extends React.Component {
 	 * @param {string} configuration.title
 	 */
 	requestData({page, pageSize, title}) {
-		const {client} = this.props;
+		const {client} = this.context;
 		const isSearch = typeof title === 'string';
 		let urlRequest = `/processes?page=${page}&pageSize=${pageSize}`;
 
@@ -67,8 +74,8 @@ export default class ProcessListCard extends React.Component {
 		const {pageSize} = this.state;
 		const page = 1;
 
-		this.requestData({page, pageSize, title}).then(({items, totalCount}) =>
-			this.setState({items, page, totalCount})
+		return this.requestData({page, pageSize, title}).then(
+			({items, totalCount}) => this.setState({items, page, totalCount})
 		);
 	}
 
@@ -158,3 +165,6 @@ export default class ProcessListCard extends React.Component {
 		);
 	}
 }
+
+ProcessListCard.contextType = AppContext;
+export default ProcessListCard;

@@ -1,11 +1,11 @@
+import {ChildLink} from '../../shared/components/router/routerWrapper';
 import {formatDuration} from '../../shared/util/duration';
 import Icon from '../../shared/components/Icon';
-import Link from '../../shared/components/router/Link';
 import React from 'react';
 
 export default class SLAListItem extends React.Component {
 	render() {
-		const {description, duration, name, processId} = this.props;
+		const {description, duration, id, name, processId} = this.props;
 		const durationString = formatDuration(duration);
 
 		return (
@@ -50,21 +50,16 @@ export default class SLAListItem extends React.Component {
 							className="dropdown-menu dropdown-menu-right"
 						>
 							<li>
-								<Link
+								<ChildLink
 									className="dropdown-item"
-									query={{processId}}
-									text={Liferay.Language.get('edit')}
-									to="sla-form"
-								/>
+									to={`/sla/edit/${processId}/${id}`}
+								>
+									{Liferay.Language.get('edit')}
+								</ChildLink>
 							</li>
 
 							<li>
-								<Link
-									className="dropdown-item"
-									query={{itemToRemove: 'test'}}
-									text={Liferay.Language.get('delete')}
-									to="sla-list"
-								/>
+								<a>{Liferay.Language.get('delete')}</a>
 							</li>
 						</ul>
 					</div>

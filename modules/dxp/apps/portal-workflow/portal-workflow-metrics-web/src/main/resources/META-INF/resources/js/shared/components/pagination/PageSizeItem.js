@@ -1,11 +1,13 @@
+import {Link, withRouter} from 'react-router-dom';
 import autobind from 'autobind-decorator';
+import pathToRegexp from 'path-to-regexp';
 import React from 'react';
 
 /**
  * @class
  * @memberof shared/components
- * */
-export default class PageSizeItem extends React.Component {
+ */
+class PageSizeItem extends React.Component {
 	@autobind
 	setPageSize() {
 		const {onChangePageSize, pageSize} = this.props;
@@ -14,17 +16,23 @@ export default class PageSizeItem extends React.Component {
 	}
 
 	render() {
-		const {pageSize} = this.props;
+		const {location: {search}, match, pageSize} = this.props;
+		const params = Object.assign({}, match.params, {page: 1, pageSize});
+		const path = pathToRegexp.compile(match.path);
 
 		return (
-			<a
+			<Link
 				className="dropdown-item"
-				data-senna-off
-				href={`#${pageSize}`}
 				onClick={this.setPageSize}
+				to={{
+					pathname: path(params),
+					search
+				}}
 			>
 				{pageSize}
-			</a>
+			</Link>
 		);
 	}
 }
+
+export default withRouter(PageSizeItem);

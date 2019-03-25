@@ -1,5 +1,5 @@
+import {ChildLink} from '../../shared/components/router/routerWrapper';
 import Icon from '../../shared/components/Icon';
-import Link from '../../shared/components/router/Link';
 import React from 'react';
 
 /**
@@ -50,12 +50,9 @@ export default class ProcessListItem extends React.Component {
 							className="dropdown-menu dropdown-menu-right"
 						>
 							<li>
-								<Link
-									className="dropdown-item"
-									query={{processId: id}}
-									text={Liferay.Language.get('set-up-slas')}
-									to="sla-list"
-								/>
+								<ChildLink className="dropdown-item" to={`/slas/${id}`}>
+									{Liferay.Language.get('set-up-slas')}
+								</ChildLink>
 							</li>
 						</ul>
 					</div>

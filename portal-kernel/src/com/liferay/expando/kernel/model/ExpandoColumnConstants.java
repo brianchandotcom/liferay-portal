@@ -105,6 +105,12 @@ public class ExpandoColumnConstants {
 
 	public static final String NUMBER_LABEL = "custom.field.number";
 
+	public static final String PRECISION_16_BIT = "16-bit";
+
+	public static final String PRECISION_32_BIT = "32-bit";
+
+	public static final String PRECISION_64_BIT = "64-bit";
+
 	public static final String PROPERTY_DISPLAY_TYPE = "display-type";
 
 	public static final String PROPERTY_DISPLAY_TYPE_BOOLEAN = "boolean";
@@ -166,6 +172,12 @@ public class ExpandoColumnConstants {
 	public static final String STRING_LOCALIZED_LABEL =
 		"custom.field.java.lang.String.localized";
 
+	public static final String TYPE_DECIMAL = "Decimal";
+
+	public static final String TYPE_INTEGER = "Integer";
+
+	public static final String TYPE_TEXT = "Text";
+
 	public static final int[] TYPES = {
 		BOOLEAN, BOOLEAN_ARRAY, DATE, DATE_ARRAY, DOUBLE, DOUBLE_ARRAY, FLOAT,
 		FLOAT_ARRAY, GEOLOCATION, INTEGER, INTEGER_ARRAY, LONG, LONG_ARRAY,
@@ -174,6 +186,20 @@ public class ExpandoColumnConstants {
 	};
 
 	public static final String UNKNOWN_LABEL = "Unknown";
+
+	public static final String getDataType(int type) {
+		if ((type == DOUBLE) || (type == FLOAT)) {
+			return TYPE_DECIMAL;
+		}
+		else if ((type == LONG) || (type == INTEGER) || (type == SHORT)) {
+			return TYPE_INTEGER;
+		}
+		else if ((type == STRING) || (type == STRING_LOCALIZED)) {
+			return TYPE_TEXT;
+		}
+
+		return StringPool.BLANK;
+	}
 
 	public static final String getDefaultDisplayTypeProperty(
 		int type, UnicodeProperties properties) {
@@ -204,6 +230,20 @@ public class ExpandoColumnConstants {
 			}
 
 			return PROPERTY_DISPLAY_TYPE_INPUT_FIELD;
+		}
+
+		return StringPool.BLANK;
+	}
+
+	public static final String getPrecisionType(int type) {
+		if ((type == DOUBLE) || (type == LONG)) {
+			return PRECISION_64_BIT;
+		}
+		else if ((type == FLOAT) || (type == INTEGER)) {
+			return PRECISION_32_BIT;
+		}
+		else if (type == SHORT) {
+			return PRECISION_16_BIT;
 		}
 
 		return StringPool.BLANK;

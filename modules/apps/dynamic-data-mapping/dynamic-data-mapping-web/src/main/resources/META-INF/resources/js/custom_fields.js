@@ -105,7 +105,7 @@ AUI.add(
 			return !duplicate;
 		};
 
-		DEFAULTS_FORM_VALIDATOR.STRINGS.structureFieldName = Liferay.Language.get('hyphens-are-not-allowed-in-field-names');
+		DEFAULTS_FORM_VALIDATOR.STRINGS.structureFieldName = Liferay.Language.get('please-enter-only-alphanumeric-characters-or-underscore');
 
 		DEFAULTS_FORM_VALIDATOR.RULES.structureFieldName = function(value) {
 			return LiferayFormBuilderUtil.validateFieldName(value);

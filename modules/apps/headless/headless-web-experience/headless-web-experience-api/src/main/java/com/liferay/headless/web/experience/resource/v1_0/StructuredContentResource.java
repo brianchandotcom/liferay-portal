@@ -48,11 +48,11 @@ public interface StructuredContentResource {
 			Sort[] sorts)
 		throws Exception;
 
-	public StructuredContent getContentSpaceKeyStructuredContentKey(
+	public StructuredContent getContentSpaceKeyStructuredContent(
 			Long contentSpaceId, String key)
 		throws Exception;
 
-	public StructuredContent getContentSpaceUuidStructuredContentUuid(
+	public StructuredContent getContentSpaceUuidStructuredContent(
 			Long contentSpaceId, String uuid)
 		throws Exception;
 

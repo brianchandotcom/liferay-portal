@@ -671,15 +671,15 @@ public class Query {
 
 	@GraphQLField
 	@GraphQLInvokeDetached
-	public UserAccount getMyUserAccountUserAccount(
+	public UserAccount getMyUserAccount(
 			@GraphQLName("user-account-id") Long userAccountId)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
 			_userAccountResourceComponentServiceObjects,
 			this::_populateResourceContext,
-			userAccountResource ->
-				userAccountResource.getMyUserAccountUserAccount(userAccountId));
+			userAccountResource -> userAccountResource.getMyUserAccount(
+				userAccountId));
 	}
 
 	@GraphQLField

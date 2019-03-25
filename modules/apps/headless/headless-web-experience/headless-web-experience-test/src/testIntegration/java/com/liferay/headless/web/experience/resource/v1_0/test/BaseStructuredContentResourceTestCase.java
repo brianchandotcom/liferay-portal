@@ -949,12 +949,12 @@ public abstract class BaseStructuredContentResourceTestCase {
 	}
 
 	@Test
-	public void testGetContentSpaceKeyStructuredContentKey() throws Exception {
+	public void testGetContentSpaceKeyStructuredContent() throws Exception {
 		StructuredContent postStructuredContent =
-			testGetContentSpaceKeyStructuredContentKey_addStructuredContent();
+			testGetContentSpaceKeyStructuredContent_addStructuredContent();
 
 		StructuredContent getStructuredContent =
-			invokeGetContentSpaceKeyStructuredContentKey(
+			invokeGetContentSpaceKeyStructuredContent(
 				postStructuredContent.getContentSpaceId(),
 				postStructuredContent.getKey());
 
@@ -963,14 +963,14 @@ public abstract class BaseStructuredContentResourceTestCase {
 	}
 
 	protected StructuredContent
-			testGetContentSpaceKeyStructuredContentKey_addStructuredContent()
+			testGetContentSpaceKeyStructuredContent_addStructuredContent()
 		throws Exception {
 
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
 	}
 
-	protected StructuredContent invokeGetContentSpaceKeyStructuredContentKey(
+	protected StructuredContent invokeGetContentSpaceKeyStructuredContent(
 			Long contentSpaceId, String key)
 		throws Exception {
 
@@ -1001,9 +1001,8 @@ public abstract class BaseStructuredContentResourceTestCase {
 		}
 	}
 
-	protected Http.Response
-			invokeGetContentSpaceKeyStructuredContentKeyResponse(
-				Long contentSpaceId, String key)
+	protected Http.Response invokeGetContentSpaceKeyStructuredContentResponse(
+			Long contentSpaceId, String key)
 		throws Exception {
 
 		Http.Options options = _createHttpOptions();
@@ -1022,14 +1021,12 @@ public abstract class BaseStructuredContentResourceTestCase {
 	}
 
 	@Test
-	public void testGetContentSpaceUuidStructuredContentUuid()
-		throws Exception {
-
+	public void testGetContentSpaceUuidStructuredContent() throws Exception {
 		StructuredContent postStructuredContent =
-			testGetContentSpaceUuidStructuredContentUuid_addStructuredContent();
+			testGetContentSpaceUuidStructuredContent_addStructuredContent();
 
 		StructuredContent getStructuredContent =
-			invokeGetContentSpaceUuidStructuredContentUuid(
+			invokeGetContentSpaceUuidStructuredContent(
 				postStructuredContent.getContentSpaceId(),
 				postStructuredContent.getUuid());
 
@@ -1038,14 +1035,14 @@ public abstract class BaseStructuredContentResourceTestCase {
 	}
 
 	protected StructuredContent
-			testGetContentSpaceUuidStructuredContentUuid_addStructuredContent()
+			testGetContentSpaceUuidStructuredContent_addStructuredContent()
 		throws Exception {
 
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
 	}
 
-	protected StructuredContent invokeGetContentSpaceUuidStructuredContentUuid(
+	protected StructuredContent invokeGetContentSpaceUuidStructuredContent(
 			Long contentSpaceId, String uuid)
 		throws Exception {
 
@@ -1076,9 +1073,8 @@ public abstract class BaseStructuredContentResourceTestCase {
 		}
 	}
 
-	protected Http.Response
-			invokeGetContentSpaceUuidStructuredContentUuidResponse(
-				Long contentSpaceId, String uuid)
+	protected Http.Response invokeGetContentSpaceUuidStructuredContentResponse(
+			Long contentSpaceId, String uuid)
 		throws Exception {
 
 		Http.Options options = _createHttpOptions();

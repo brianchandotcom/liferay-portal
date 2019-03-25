@@ -33,8 +33,7 @@ import javax.annotation.Generated;
 @Generated("")
 public interface UserAccountResource {
 
-	public UserAccount getMyUserAccountUserAccount(Long userAccountId)
-		throws Exception;
+	public UserAccount getMyUserAccount(Long userAccountId) throws Exception;
 
 	public Page<UserAccount> getOrganizationUserAccountsPage(
 			Long organizationId, Pagination pagination)

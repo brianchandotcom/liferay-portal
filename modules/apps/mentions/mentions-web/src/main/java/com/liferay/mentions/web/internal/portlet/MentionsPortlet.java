@@ -146,20 +146,15 @@ public class MentionsPortlet extends MVCPortlet {
 			jsonObject.put("mention", mention);
 
 			jsonObject.put(
-				"portraitHTML", _getUserPortraitHTML(user, themeDisplay));
+				"portraitHTML",
+				UserPortraitTag.getUserPortraitHTML(
+					StringPool.BLANK, user, themeDisplay));
 			jsonObject.put("screenName", user.getScreenName());
 
 			jsonArray.put(jsonObject);
 		}
 
 		return jsonArray;
-	}
-
-	private String _getUserPortraitHTML(User user, ThemeDisplay themeDisplay)
-		throws PortalException {
-
-		return UserPortraitTag.getUserPortraitHTML(
-			StringPool.BLANK, user, themeDisplay);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

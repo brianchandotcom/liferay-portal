@@ -109,25 +109,24 @@ public abstract class BaseUserAccountResourceTestCase {
 	}
 
 	@Test
-	public void testGetMyUserAccountUserAccount() throws Exception {
-		UserAccount postUserAccount =
-			testGetMyUserAccountUserAccount_addUserAccount();
+	public void testGetMyUserAccount() throws Exception {
+		UserAccount postUserAccount = testGetMyUserAccount_addUserAccount();
 
-		UserAccount getUserAccount = invokeGetMyUserAccountUserAccount(
+		UserAccount getUserAccount = invokeGetMyUserAccount(
 			postUserAccount.getId());
 
 		assertEquals(postUserAccount, getUserAccount);
 		assertValid(getUserAccount);
 	}
 
-	protected UserAccount testGetMyUserAccountUserAccount_addUserAccount()
+	protected UserAccount testGetMyUserAccount_addUserAccount()
 		throws Exception {
 
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
 	}
 
-	protected UserAccount invokeGetMyUserAccountUserAccount(Long userAccountId)
+	protected UserAccount invokeGetMyUserAccount(Long userAccountId)
 		throws Exception {
 
 		Http.Options options = _createHttpOptions();
@@ -154,8 +153,7 @@ public abstract class BaseUserAccountResourceTestCase {
 		}
 	}
 
-	protected Http.Response invokeGetMyUserAccountUserAccountResponse(
-			Long userAccountId)
+	protected Http.Response invokeGetMyUserAccountResponse(Long userAccountId)
 		throws Exception {
 
 		Http.Options options = _createHttpOptions();

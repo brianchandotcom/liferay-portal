@@ -106,22 +106,19 @@ public abstract class BaseOrganizationResourceTestCase {
 	}
 
 	@Test
-	public void testGetMyUserAccountUserAccountOrganizationsPage()
-		throws Exception {
-
+	public void testGetMyUserAccountOrganizationsPage() throws Exception {
 		Long userAccountId =
-			testGetMyUserAccountUserAccountOrganizationsPage_getUserAccountId();
+			testGetMyUserAccountOrganizationsPage_getUserAccountId();
 		Long irrelevantUserAccountId =
-			testGetMyUserAccountUserAccountOrganizationsPage_getIrrelevantUserAccountId();
+			testGetMyUserAccountOrganizationsPage_getIrrelevantUserAccountId();
 
 		if ((irrelevantUserAccountId != null)) {
 			Organization irrelevantOrganization =
-				testGetMyUserAccountUserAccountOrganizationsPage_addOrganization(
+				testGetMyUserAccountOrganizationsPage_addOrganization(
 					irrelevantUserAccountId, randomIrrelevantOrganization());
 
-			Page<Organization> page =
-				invokeGetMyUserAccountUserAccountOrganizationsPage(
-					irrelevantUserAccountId, Pagination.of(1, 2));
+			Page<Organization> page = invokeGetMyUserAccountOrganizationsPage(
+				irrelevantUserAccountId, Pagination.of(1, 2));
 
 			Assert.assertEquals(1, page.getTotalCount());
 
@@ -132,16 +129,15 @@ public abstract class BaseOrganizationResourceTestCase {
 		}
 
 		Organization organization1 =
-			testGetMyUserAccountUserAccountOrganizationsPage_addOrganization(
+			testGetMyUserAccountOrganizationsPage_addOrganization(
 				userAccountId, randomOrganization());
 
 		Organization organization2 =
-			testGetMyUserAccountUserAccountOrganizationsPage_addOrganization(
+			testGetMyUserAccountOrganizationsPage_addOrganization(
 				userAccountId, randomOrganization());
 
-		Page<Organization> page =
-			invokeGetMyUserAccountUserAccountOrganizationsPage(
-				userAccountId, Pagination.of(1, 2));
+		Page<Organization> page = invokeGetMyUserAccountOrganizationsPage(
+			userAccountId, Pagination.of(1, 2));
 
 		Assert.assertEquals(2, page.getTotalCount());
 
@@ -152,27 +148,26 @@ public abstract class BaseOrganizationResourceTestCase {
 	}
 
 	@Test
-	public void testGetMyUserAccountUserAccountOrganizationsPageWithPagination()
+	public void testGetMyUserAccountOrganizationsPageWithPagination()
 		throws Exception {
 
 		Long userAccountId =
-			testGetMyUserAccountUserAccountOrganizationsPage_getUserAccountId();
+			testGetMyUserAccountOrganizationsPage_getUserAccountId();
 
 		Organization organization1 =
-			testGetMyUserAccountUserAccountOrganizationsPage_addOrganization(
+			testGetMyUserAccountOrganizationsPage_addOrganization(
 				userAccountId, randomOrganization());
 
 		Organization organization2 =
-			testGetMyUserAccountUserAccountOrganizationsPage_addOrganization(
+			testGetMyUserAccountOrganizationsPage_addOrganization(
 				userAccountId, randomOrganization());
 
 		Organization organization3 =
-			testGetMyUserAccountUserAccountOrganizationsPage_addOrganization(
+			testGetMyUserAccountOrganizationsPage_addOrganization(
 				userAccountId, randomOrganization());
 
-		Page<Organization> page1 =
-			invokeGetMyUserAccountUserAccountOrganizationsPage(
-				userAccountId, Pagination.of(1, 2));
+		Page<Organization> page1 = invokeGetMyUserAccountOrganizationsPage(
+			userAccountId, Pagination.of(1, 2));
 
 		List<Organization> organizations1 =
 			(List<Organization>)page1.getItems();
@@ -180,9 +175,8 @@ public abstract class BaseOrganizationResourceTestCase {
 		Assert.assertEquals(
 			organizations1.toString(), 2, organizations1.size());
 
-		Page<Organization> page2 =
-			invokeGetMyUserAccountUserAccountOrganizationsPage(
-				userAccountId, Pagination.of(2, 2));
+		Page<Organization> page2 = invokeGetMyUserAccountOrganizationsPage(
+			userAccountId, Pagination.of(2, 2));
 
 		Assert.assertEquals(3, page2.getTotalCount());
 
@@ -203,7 +197,7 @@ public abstract class BaseOrganizationResourceTestCase {
 	}
 
 	protected Organization
-			testGetMyUserAccountUserAccountOrganizationsPage_addOrganization(
+			testGetMyUserAccountOrganizationsPage_addOrganization(
 				Long userAccountId, Organization organization)
 		throws Exception {
 
@@ -211,8 +205,7 @@ public abstract class BaseOrganizationResourceTestCase {
 			"This method needs to be implemented");
 	}
 
-	protected Long
-			testGetMyUserAccountUserAccountOrganizationsPage_getUserAccountId()
+	protected Long testGetMyUserAccountOrganizationsPage_getUserAccountId()
 		throws Exception {
 
 		throw new UnsupportedOperationException(
@@ -220,15 +213,14 @@ public abstract class BaseOrganizationResourceTestCase {
 	}
 
 	protected Long
-			testGetMyUserAccountUserAccountOrganizationsPage_getIrrelevantUserAccountId()
+			testGetMyUserAccountOrganizationsPage_getIrrelevantUserAccountId()
 		throws Exception {
 
 		return null;
 	}
 
-	protected Page<Organization>
-			invokeGetMyUserAccountUserAccountOrganizationsPage(
-				Long userAccountId, Pagination pagination)
+	protected Page<Organization> invokeGetMyUserAccountOrganizationsPage(
+			Long userAccountId, Pagination pagination)
 		throws Exception {
 
 		Http.Options options = _createHttpOptions();
@@ -258,9 +250,8 @@ public abstract class BaseOrganizationResourceTestCase {
 			});
 	}
 
-	protected Http.Response
-			invokeGetMyUserAccountUserAccountOrganizationsPageResponse(
-				Long userAccountId, Pagination pagination)
+	protected Http.Response invokeGetMyUserAccountOrganizationsPageResponse(
+			Long userAccountId, Pagination pagination)
 		throws Exception {
 
 		Http.Options options = _createHttpOptions();

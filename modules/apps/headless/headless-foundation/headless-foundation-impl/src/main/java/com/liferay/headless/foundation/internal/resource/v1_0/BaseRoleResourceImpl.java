@@ -67,7 +67,7 @@ public abstract class BaseRoleResourceImpl implements RoleResource {
 	@Path("/my-user-accounts/{user-account-id}/roles")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "Role")})
-	public Page<Role> getMyUserAccountUserAccountRolesPage(
+	public Page<Role> getMyUserAccountRolesPage(
 			@NotNull @PathParam("user-account-id") Long userAccountId,
 			@Context Pagination pagination)
 		throws Exception {

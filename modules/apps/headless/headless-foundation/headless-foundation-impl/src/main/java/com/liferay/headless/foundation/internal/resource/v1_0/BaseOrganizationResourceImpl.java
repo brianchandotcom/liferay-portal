@@ -68,7 +68,7 @@ public abstract class BaseOrganizationResourceImpl
 	@Path("/my-user-accounts/{user-account-id}/organizations")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "Organization")})
-	public Page<Organization> getMyUserAccountUserAccountOrganizationsPage(
+	public Page<Organization> getMyUserAccountOrganizationsPage(
 			@NotNull @PathParam("user-account-id") Long userAccountId,
 			@Context Pagination pagination)
 		throws Exception {

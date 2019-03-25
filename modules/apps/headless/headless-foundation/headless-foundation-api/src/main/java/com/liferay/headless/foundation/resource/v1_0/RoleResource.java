@@ -32,7 +32,7 @@ import javax.annotation.Generated;
 @Generated("")
 public interface RoleResource {
 
-	public Page<Role> getMyUserAccountUserAccountRolesPage(
+	public Page<Role> getMyUserAccountRolesPage(
 			Long userAccountId, Pagination pagination)
 		throws Exception;
 

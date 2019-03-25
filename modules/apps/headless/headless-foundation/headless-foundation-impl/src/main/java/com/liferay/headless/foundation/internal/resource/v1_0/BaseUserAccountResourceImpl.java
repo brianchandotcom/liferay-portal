@@ -67,7 +67,7 @@ public abstract class BaseUserAccountResourceImpl
 	@Path("/my-user-accounts/{user-account-id}")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "UserAccount")})
-	public UserAccount getMyUserAccountUserAccount(
+	public UserAccount getMyUserAccount(
 			@NotNull @PathParam("user-account-id") Long userAccountId)
 		throws Exception {
 

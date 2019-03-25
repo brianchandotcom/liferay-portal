@@ -74,7 +74,12 @@
 	<ul class="nav nav-stacked" key="{$node.key}">
 		<li class="nav-item">
 			{let $itemClasses kind="text"}
-				fragments-editor-sidebar-section__structure-panel__item
+				d-flex
+				{sp}fragments-editor-sidebar-section__structure-panel__item
+				{sp}justify-content-between
+				{sp}my-1
+				{sp}p-1
+				{sp}rounded
 
 				{if $node.active}
 					{sp}active
@@ -86,8 +91,17 @@
 			{/let}
 
 			<div class="{$itemClasses}">
+				{if length($node.children) > 0}
+					{call .collapseIcon}
+						{param handleClick: $handleElementCollapseButtonClick /}
+						{param node: $node /}
+						{param spritemap: $spritemap /}
+					{/call}
+				{/if}
+
 				{let $itemNameAttributes kind="attributes"}
-					class="fragments-editor-sidebar-section__structure-panel__item-name text-truncate"
+					class="btn btn-unstyled flex-grow-1 text-truncate"
+					type="button"
 
 					{if $node.elementId and $node.elementType}
 						data-element-id="{$node.elementId}"
@@ -98,17 +112,9 @@
 					{/if}
 				{/let}
 
-				<div {$itemNameAttributes}>
+				<button {$itemNameAttributes}>
 					{$node.label}
-				</div>
-
-				{if length($node.children) > 0}
-					{call .collapseIcon}
-						{param handleClick: $handleElementCollapseButtonClick /}
-						{param node: $node /}
-						{param spritemap: $spritemap /}
-					{/call}
-				{/if}
+				</button>
 
 				{if $node.elementId and $node.elementType}
 					{call .removeIcon}
@@ -122,6 +128,7 @@
 			{if length($node.children) > 0}
 				{let $childrenClasses kind="text"}
 					collapse
+					{sp}pl-3
 
 					{if $node.expanded}
 						{sp}show
@@ -158,35 +165,33 @@
 	{@param spritemap: string}
 	{@param? handleClick: any}
 
-	<span class="fragments-editor-sidebar-section__structure-panel__item-icon">
-		{let $collapseIconAttributes kind="attributes"}
-			aria-controls="{$node.key}"
-			class="btn btn-sm btn-unstyled"
-			data-node-key="{$node.key}"
-			data-onclick="{$handleClick}"
-			type="button"
+	{let $collapseIconAttributes kind="attributes"}
+		aria-controls="{$node.key}"
+		class="btn btn-sm btn-unstyled py-1"
+		data-node-key="{$node.key}"
+		data-onclick="{$handleClick}"
+		type="button"
 
+		{if $node.expanded}
+			aria-expanded="true"
+		{else}
+			aria-expanded="false"
+		{/if}
+	{/let}
+
+	<button {$collapseIconAttributes}>
+		{let $angleDirection kind="text"}
 			{if $node.expanded}
-				aria-expanded="true"
+				down
 			{else}
-				aria-expanded="false"
+				right
 			{/if}
 		{/let}
 
-		<button {$collapseIconAttributes}>
-			{let $angleDirection kind="text"}
-				{if $node.expanded}
-					down
-				{else}
-					right
-				{/if}
-			{/let}
-
-			<svg class="lexicon-icon lexicon-icon-angle-{$angleDirection}">
-				<use xlink:href="{$spritemap}#angle-{$angleDirection}"></use>
-			</svg>
-		</button>
-	</span>
+		<svg class="lexicon-icon lexicon-icon-angle-{$angleDirection}">
+			<use xlink:href="{$spritemap}#angle-{$angleDirection}"></use>
+		</svg>
+	</button>
 {/template}
 
 /**
@@ -202,10 +207,10 @@
 
 	{let $removeButtonClasses kind="text"}
 		btn
-		{sp}btn-unstyled
-		{sp}btn-monospaced
 		{sp}btn-sm
+		{sp}btn-unstyled
 		{sp}fragments-editor-sidebar-section__structure-panel__item-remove-btn
+		{sp}py-1
 	{/let}
 
 	<button

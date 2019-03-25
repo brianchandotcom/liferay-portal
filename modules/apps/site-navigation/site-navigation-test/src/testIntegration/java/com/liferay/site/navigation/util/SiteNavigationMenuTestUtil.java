@@ -28,6 +28,8 @@ import com.liferay.site.navigation.model.SiteNavigationMenuItem;
 import com.liferay.site.navigation.service.SiteNavigationMenuItemLocalServiceUtil;
 import com.liferay.site.navigation.service.SiteNavigationMenuLocalServiceUtil;
 
+import java.util.Date;
+
 /**
  * @author Kyle Miho
  */
@@ -45,6 +47,21 @@ public class SiteNavigationMenuTestUtil {
 
 		return addSiteNavigationMenu(
 			group, SiteNavigationConstants.TYPE_DEFAULT, auto);
+	}
+
+	public static SiteNavigationMenu addSiteNavigationMenu(
+			Group group, Date date, String name)
+		throws PortalException {
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(group.getGroupId());
+
+		serviceContext.setCreateDate(date);
+		serviceContext.setModifiedDate(date);
+
+		return SiteNavigationMenuLocalServiceUtil.addSiteNavigationMenu(
+			TestPropsValues.getUserId(), group.getGroupId(), name,
+			serviceContext);
 	}
 
 	public static SiteNavigationMenu addSiteNavigationMenu(

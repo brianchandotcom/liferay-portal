@@ -14,26 +14,17 @@
 
 package com.liferay.info.renderer;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import aQute.bnd.annotation.ProviderType;
 
 /**
  * @author Jorge Ferrer
  */
-public interface InfoItemRenderer<T> {
+@ProviderType
+public interface InfoListRendererContext {
 
-	public default void render(
-		T t, HttpServletRequest httpServletRequest,
-		HttpServletResponse httpServletResponse) {
+	public static InfoListRendererContext DEFAULT_INFO_LIST_RENDERER_CONTEXT =
+		new DefaultInfoListRendererContext();
 
-		render(
-			t, httpServletRequest, httpServletResponse,
-			InfoListRendererContext.DEFAULT_INFO_LIST_RENDERER_CONTEXT);
-	}
-
-	public void render(
-		T t, HttpServletRequest httpServletRequest,
-		HttpServletResponse httpServletResponse,
-		InfoListRendererContext infoListRendererContext);
+	public String getTemplate();
 
 }

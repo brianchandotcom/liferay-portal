@@ -14,26 +14,24 @@
 
 package com.liferay.info.renderer;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
 /**
  * @author Jorge Ferrer
  */
-public interface InfoItemRenderer<T> {
+public class DefaultInfoListRendererContext implements InfoListRendererContext {
 
-	public default void render(
-		T t, HttpServletRequest httpServletRequest,
-		HttpServletResponse httpServletResponse) {
-
-		render(
-			t, httpServletRequest, httpServletResponse,
-			InfoListRendererContext.DEFAULT_INFO_LIST_RENDERER_CONTEXT);
+	public DefaultInfoListRendererContext() {
+		this("full-content");
 	}
 
-	public void render(
-		T t, HttpServletRequest httpServletRequest,
-		HttpServletResponse httpServletResponse,
-		InfoListRendererContext infoListRendererContext);
+	public DefaultInfoListRendererContext(String template) {
+		_template = template;
+	}
+
+	@Override
+	public String getTemplate() {
+		return _template;
+	}
+
+	private String _template;
 
 }

@@ -19,6 +19,7 @@ import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.model.AssetRenderer;
 import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.info.renderer.InfoItemRenderer;
+import com.liferay.info.renderer.InfoListRendererContext;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import javax.servlet.http.HttpServletRequest;
@@ -36,7 +37,8 @@ public class AssetEntryInfoItemRenderer
 	@Override
 	public void render(
 		AssetEntry assetEntry, HttpServletRequest request,
-		HttpServletResponse response) {
+		HttpServletResponse response,
+		InfoListRendererContext infoListRendererContext) {
 
 		AssetRendererFactory<?> assetRendererFactory =
 			AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(
@@ -49,7 +51,8 @@ public class AssetEntryInfoItemRenderer
 			AssetRenderer<?> assetRenderer =
 				assetRendererFactory.getAssetRenderer(assetEntry.getClassPK());
 
-			assetRenderer.include(request, response, "full-content");
+			assetRenderer.include(
+				request, response, infoListRendererContext.getTemplate());
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);

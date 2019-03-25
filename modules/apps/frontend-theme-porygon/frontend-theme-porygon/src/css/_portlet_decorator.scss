@@ -48,4 +48,13 @@
 		margin: -74px auto 0;
 		position: relative;
 	}
+
+	.list-group-item {
+		background-color: transparent;
+		border-width: 0;
+	}
+
+	.list-group-item-flex {
+		padding: .75rem 0;
+	}
 }

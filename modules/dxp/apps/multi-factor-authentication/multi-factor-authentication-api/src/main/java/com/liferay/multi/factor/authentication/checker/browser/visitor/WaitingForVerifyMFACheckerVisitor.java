@@ -42,7 +42,6 @@ public class WaitingForVerifyMFACheckerVisitor
 
 		_isBrowserVerifiedVisitor = new IsBrowserVerifiedMFACheckerVisitor(
 			httpServletRequest, userId);
-
 		_isUserSetupCompleteVisitor = new IsUserSetupCompleteMFACheckerVisitor(
 			userId);
 	}
@@ -51,13 +50,12 @@ public class WaitingForVerifyMFACheckerVisitor
 	public List<BrowserMFAChecker> visit(
 		MandatoryCompositeMFAChecker mandatoryCompositeMFAChecker) {
 
-		List<MFAChecker> mfaCheckers =
-			mandatoryCompositeMFAChecker.getMFACheckers();
+		List<BrowserMFAChecker> mfaCheckers = new ArrayList<>();
 
-		ArrayList<BrowserMFAChecker> availableMFACheckers = new ArrayList<>();
+		for (MFAChecker mfaChecker :
+				mandatoryCompositeMFAChecker.getMFACheckers()) {
 
-		for (MFAChecker mfaChecker : mfaCheckers) {
-			if (!availableMFACheckers.isEmpty()) {
+			if (!mfaCheckers.isEmpty()) {
 				break;
 			}
 
@@ -68,10 +66,10 @@ public class WaitingForVerifyMFACheckerVisitor
 					"Mandatory step setup must be complete");
 			}
 
-			availableMFACheckers.addAll(mfaChecker.accept(this));
+			mfaCheckers.addAll(mfaChecker.accept(this));
 		}
 
-		return availableMFACheckers;
+		return mfaCheckers;
 	}
 
 	@Override

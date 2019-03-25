@@ -54,20 +54,20 @@ class SidebarStructurePanel extends Component {
 			state,
 			{
 				children: column.fragmentEntryLinkIds.map(
-						fragmentEntryLinkId => state.fragmentEntryLinks[fragmentEntryLinkId]
-					).filter(
-						fragmentEntryLink => fragmentEntryLink
-					).map(
-						fragmentEntryLink => SidebarStructurePanel._getTreeNode(
-							state,
-							{
-								elementId: fragmentEntryLink.fragmentEntryLinkId,
-								elementType: FRAGMENTS_EDITOR_ITEM_TYPES.fragment,
-								key: `fragment-entry-link-${fragmentEntryLink.fragmentEntryLinkId}`,
-								label: fragmentEntryLink.name
-							}
-						)
-					),
+					fragmentEntryLinkId => state.fragmentEntryLinks[fragmentEntryLinkId]
+				).filter(
+					fragmentEntryLink => fragmentEntryLink
+				).map(
+					fragmentEntryLink => SidebarStructurePanel._getTreeNode(
+						state,
+						{
+							elementId: fragmentEntryLink.fragmentEntryLinkId,
+							elementType: FRAGMENTS_EDITOR_ITEM_TYPES.fragment,
+							key: `fragment-entry-link-${fragmentEntryLink.fragmentEntryLinkId}`,
+							label: fragmentEntryLink.name
+						}
+					)
+				),
 				key: `column-${column.columnId}`,
 				label: Liferay.Language.get('column')
 			}

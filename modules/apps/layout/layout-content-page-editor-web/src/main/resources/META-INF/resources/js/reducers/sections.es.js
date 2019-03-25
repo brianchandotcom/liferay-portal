@@ -343,8 +343,8 @@ function _addColumns(layoutData, sectionIndex, numberOfColumns, columnsSize) {
 				}
 			);
 
-			const numberOfOldColumns = columns.length;
 			const numberOfNewColumns = numberOfColumns - columns.length;
+			const numberOfOldColumns = columns.length;
 
 			for (let i = 0; i < numberOfNewColumns; i++) {
 				columns.push(

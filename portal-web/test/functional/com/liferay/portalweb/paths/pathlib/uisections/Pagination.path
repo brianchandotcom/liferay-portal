@@ -60,7 +60,7 @@
 </tr>
 <tr>
 	<td>RESULTS</td>
-	<td>//div[@class='pagination-results']</td>
+	<td>//p[@class='pagination-results']</td>
 	<td></td>
 </tr>
 <tr>

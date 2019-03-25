@@ -851,6 +851,8 @@ public class AnnotationLocatorTest {
 	@Type(value = 6)
 	private interface SuperInterface2 extends SuperInterface1 {
 
+		// Skip JavaParser
+
 		@Override
 		@Method(value = 6)
 		@Mix(value = 6)

@@ -15,6 +15,7 @@
 package com.liferay.data.engine.rest.resource.v1_0;
 
 import com.liferay.data.engine.rest.dto.v1_0.DataDefinition;
+import com.liferay.data.engine.rest.dto.v1_0.DataDefinitionPermission;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
@@ -39,8 +40,13 @@ public interface DataDefinitionResource {
 	public DataDefinition postContentSpaceDataDefinition(
 			Long contentSpaceId, DataDefinition dataDefinition)
 		throws Exception;
-
+	
 	public void deleteDataDefinition(Long dataDefinitionId) throws Exception;
+
+	public boolean postDataDefinitionPermission(
+			Long dataDefinitionId, String operation,
+			DataDefinitionPermission dataDefinitionPermission)
+		throws Exception;
 
 	public DataDefinition getDataDefinition(Long dataDefinitionId)
 		throws Exception;

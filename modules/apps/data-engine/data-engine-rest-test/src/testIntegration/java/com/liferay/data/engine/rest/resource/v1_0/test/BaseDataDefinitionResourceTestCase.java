@@ -22,6 +22,7 @@ import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
 import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
 
 import com.liferay.data.engine.rest.dto.v1_0.DataDefinition;
+import com.liferay.data.engine.rest.dto.v1_0.DataDefinitionPermission;
 import com.liferay.data.engine.rest.resource.v1_0.DataDefinitionResource;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -347,6 +348,77 @@ public abstract class BaseDataDefinitionResourceTestCase {
 				_toPath(
 					"/content-spaces/{content-space-id}/data-definitions",
 					contentSpaceId);
+
+		options.setLocation(location);
+
+		options.setPost(true);
+
+		HttpUtil.URLtoString(options);
+
+		return options.getResponse();
+	}
+
+	@Test
+	public void testPostDataDefinitionPermission() throws Exception {
+		DataDefinition randomDataDefinition = randomDataDefinition();
+
+		DataDefinition postDataDefinition =
+			testPostDataDefinitionPermission_addDataDefinition(
+				randomDataDefinition);
+
+		assertEquals(randomDataDefinition, postDataDefinition);
+		assertValid(postDataDefinition);
+	}
+
+	protected DataDefinition testPostDataDefinitionPermission_addDataDefinition(
+			DataDefinition dataDefinition)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected boolean invokePostDataDefinitionPermission(
+			Long dataDefinitionId, String operation,
+			DataDefinitionPermission dataDefinitionPermission)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		String location =
+			_resourceURL +
+				_toPath(
+					"/data-definitions/{data-definition-id}/permissions",
+					dataDefinitionId);
+
+		options.setLocation(location);
+
+		options.setPost(true);
+
+		String string = HttpUtil.URLtoString(options);
+
+		try {
+			return _outputObjectMapper.readValue(string, Boolean.class);
+		}
+		catch (Exception e) {
+			_log.error("Unable to process HTTP response: " + string, e);
+
+			throw e;
+		}
+	}
+
+	protected Http.Response invokePostDataDefinitionPermissionResponse(
+			Long dataDefinitionId, String operation,
+			DataDefinitionPermission dataDefinitionPermission)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		String location =
+			_resourceURL +
+				_toPath(
+					"/data-definitions/{data-definition-id}/permissions",
+					dataDefinitionId);
 
 		options.setLocation(location);
 

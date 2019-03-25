@@ -510,7 +510,7 @@ EditCategories.STATE = {
 	 * @review
 	 * @type {String}
 	 */
-	urlSelectionDescription: Config.string().value('/bulk-rest/v1.0/keywords/message-selection'),
+	urlSelectionDescription: Config.string().value('/bulk-rest/v1.0/bulk-selection'),
 
 	/**
 	 * Url to backend service that updates

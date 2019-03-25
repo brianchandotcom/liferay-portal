@@ -34,17 +34,17 @@ import mousio.etcd4j.responses.EtcdKeysResponse;
 /**
  * @author Michael Hashimoto
  */
-public class LiferayEtcd {
+public class EtcdUtil {
 
-	public LiferayEtcd() {
+	public EtcdUtil() {
 		this("http://127.0.0.1:2379");
 	}
 
-	public LiferayEtcd(String url) {
+	public EtcdUtil(String url) {
 		setURL(url);
 	}
 
-	public void delete(LiferayEtcd.Node node) {
+	public void delete(EtcdUtil.Node node) {
 		if (node instanceof DirNode) {
 			delete(node.getKey(), true);
 		}
@@ -78,7 +78,7 @@ public class LiferayEtcd {
 		}
 	}
 
-	public LiferayEtcd.Node get(String key) {
+	public EtcdUtil.Node get(String key) {
 		try (EtcdClient etcdClient = getEtcdClient()) {
 			EtcdKeyGetRequest etcdKeyGetRequest = etcdClient.get(key);
 
@@ -96,7 +96,7 @@ public class LiferayEtcd {
 		}
 	}
 
-	public LiferayEtcd.DirNode put(String key) {
+	public EtcdUtil.DirNode put(String key) {
 		try (EtcdClient etcdClient = getEtcdClient()) {
 			EtcdKeyPutRequest etcdKeyPutRequest = etcdClient.putDir(key);
 
@@ -120,7 +120,7 @@ public class LiferayEtcd {
 		throw new RuntimeException(key + " is not a dir");
 	}
 
-	public LiferayEtcd.ValueNode put(String key, String value) {
+	public EtcdUtil.ValueNode put(String key, String value) {
 		try (EtcdClient etcdClient = getEtcdClient()) {
 			EtcdKeyPutRequest etcdKeyPutRequest = etcdClient.put(key, value);
 
@@ -150,7 +150,7 @@ public class LiferayEtcd {
 
 	public static class DirNode extends Node {
 
-		public List<LiferayEtcd.Node> getNodes() {
+		public List<EtcdUtil.Node> getNodes() {
 			List<Node> nodes = new ArrayList<>();
 
 			EtcdKeysResponse.EtcdNode etcdNode = liferayEtcd.getEtcdNode(key);
@@ -175,7 +175,7 @@ public class LiferayEtcd {
 		}
 
 		protected DirNode(
-			LiferayEtcd liferayEtcd, EtcdKeysResponse.EtcdNode etcdNode) {
+			EtcdUtil liferayEtcd, EtcdKeysResponse.EtcdNode etcdNode) {
 
 			super(liferayEtcd, etcdNode.getKey());
 
@@ -192,13 +192,13 @@ public class LiferayEtcd {
 			return key;
 		}
 
-		protected Node(LiferayEtcd liferayEtcd, String key) {
+		protected Node(EtcdUtil liferayEtcd, String key) {
 			this.liferayEtcd = liferayEtcd;
 			this.key = key;
 		}
 
 		protected final String key;
-		protected final LiferayEtcd liferayEtcd;
+		protected final EtcdUtil liferayEtcd;
 
 	}
 
@@ -216,7 +216,7 @@ public class LiferayEtcd {
 		}
 
 		protected ValueNode(
-			LiferayEtcd liferayEtcd, EtcdKeysResponse.EtcdNode etcdNode) {
+			EtcdUtil liferayEtcd, EtcdKeysResponse.EtcdNode etcdNode) {
 
 			super(liferayEtcd, etcdNode.getKey());
 
@@ -249,7 +249,7 @@ public class LiferayEtcd {
 		}
 	}
 
-	protected LiferayEtcd.Node getNode(EtcdKeysResponse.EtcdNode etcdNode) {
+	protected EtcdUtil.Node getNode(EtcdKeysResponse.EtcdNode etcdNode) {
 		if (etcdNode.isDir()) {
 			return new DirNode(this, etcdNode);
 		}

@@ -63,7 +63,7 @@ public class WaitingForVerifyMFACheckerVisitor
 				!mfaChecker.accept(_isUserSetupCompleteVisitor)) {
 
 				throw new IllegalStateException(
-					"Mandatory step setup must be complete");
+					"Setup was not completed");
 			}
 
 			mfaCheckers.addAll(mfaChecker.accept(this));

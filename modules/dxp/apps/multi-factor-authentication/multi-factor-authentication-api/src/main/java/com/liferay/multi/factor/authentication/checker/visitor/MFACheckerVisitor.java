@@ -12,11 +12,11 @@
  *
  */
 
-package com.liferay.multi.factor.authentication.spi.checker.visitor;
+package com.liferay.multi.factor.authentication.checker.visitor;
 
-import com.liferay.multi.factor.authentication.spi.checker.MFAChecker;
-import com.liferay.multi.factor.authentication.spi.checker.composite.MandatoryCompositeMFAChecker;
-import com.liferay.multi.factor.authentication.spi.checker.composite.OptionalCompositeMFAChecker;
+import com.liferay.multi.factor.authentication.checker.MFAChecker;
+import com.liferay.multi.factor.authentication.checker.composite.MandatoryCompositeMFAChecker;
+import com.liferay.multi.factor.authentication.checker.composite.OptionalCompositeMFAChecker;
 
 /**
  * @author Carlos Sierra Andrés

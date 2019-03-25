@@ -12,7 +12,7 @@
  *
  */
 
-package com.liferay.multi.factor.authentication.spi.checker.setup;
+package com.liferay.multi.factor.authentication.checker.setup;
 
 import java.io.IOException;
 

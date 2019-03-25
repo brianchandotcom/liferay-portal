@@ -12,12 +12,11 @@
  *
  */
 
-package com.liferay.multi.factor.authentication.spi.checker.composite;
+package com.liferay.multi.factor.authentication.checker.composite;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.multi.factor.authentication.spi.checker.MFAChecker;
-import com.liferay.multi.factor.authentication.spi.checker.visitor.MFACheckerVisitor;
+import com.liferay.multi.factor.authentication.checker.MFAChecker;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 
@@ -32,11 +31,6 @@ public abstract class BaseCompositeMFAChecker implements MFAChecker {
 
 	public BaseCompositeMFAChecker(List<MFAChecker> mfaCheckers) {
 		this.mfaCheckers = mfaCheckers;
-	}
-
-	@Override
-	public <T> T accept(MFACheckerVisitor<T> mfaCheckerVisitor) {
-		return mfaCheckerVisitor.visit(this);
 	}
 
 	@Override

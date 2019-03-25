@@ -12,12 +12,12 @@
  *
  */
 
-package com.liferay.multi.factor.authentication.spi.checker.composite;
+package com.liferay.multi.factor.authentication.checker.composite;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.multi.factor.authentication.spi.checker.MFAChecker;
-import com.liferay.multi.factor.authentication.spi.checker.visitor.MFACheckerVisitor;
+import com.liferay.multi.factor.authentication.checker.MFAChecker;
+import com.liferay.multi.factor.authentication.checker.visitor.MFACheckerVisitor;
 
 import java.util.List;
 
@@ -25,9 +25,9 @@ import java.util.List;
  * @author Carlos Sierra Andrés
  */
 @ProviderType
-public class OptionalCompositeMFAChecker extends BaseCompositeMFAChecker {
+public class MandatoryCompositeMFAChecker extends BaseCompositeMFAChecker {
 
-	public OptionalCompositeMFAChecker(List<MFAChecker> mfaCheckers) {
+	public MandatoryCompositeMFAChecker(List<MFAChecker> mfaCheckers) {
 		super(mfaCheckers);
 	}
 

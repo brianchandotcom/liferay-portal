@@ -12,19 +12,27 @@
  *
  */
 
-package com.liferay.multi.factor.authentication.spi.checker.headless;
+package com.liferay.multi.factor.authentication.checker;
 
-import javax.servlet.http.HttpServletRequest;
+import com.liferay.multi.factor.authentication.checker.visitor.MFACheckerVisitor;
+
+import java.util.Locale;
 
 /**
  * @author Tomas Polesovsky
  */
-public interface HeadlessMFAChecker {
+public interface MFAChecker {
 
-	public boolean isHeadlessVerified(
-		HttpServletRequest httpServletRequest, long userId);
+	public default <T> T accept(MFACheckerVisitor<T> mfaCheckerVisitor) {
+		return mfaCheckerVisitor.visit(this);
+	}
 
-	public boolean verifyHeadlessRequest(
-		HttpServletRequest httpServletRequest, long userId);
+	public default String getLabel(Locale locale) {
+		return getName();
+	}
+
+	public String getName();
+
+	public boolean isEnabled();
 
 }

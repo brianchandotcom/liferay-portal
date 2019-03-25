@@ -93,8 +93,7 @@ public class ResourceOpenAPIParser {
 									javaDataTypeMap, operation,
 									requestBodyMediaType);
 							String methodName = _getMethodName(
-								operation, path, requestBodyMediaType,
-								returnType, schemaName);
+								operation, path, returnType, schemaName);
 
 							javaMethodSignatures.add(
 								new JavaMethodSignature(
@@ -370,48 +369,11 @@ public class ResourceOpenAPIParser {
 	}
 
 	private static String _getMethodName(
-		Operation operation, String path, String requestBodyMediaType,
-		String returnType, String schemaName) {
-
-		List<String> requestBodyMediaTypes = new ArrayList<>();
-
-		if (operation.getRequestBody() != null) {
-			RequestBody requestBody = operation.getRequestBody();
-
-			if (requestBody.getContent() != null) {
-				Map<String, Content> contents = requestBody.getContent();
-
-				requestBodyMediaTypes.addAll(contents.keySet());
-
-				Collections.sort(requestBodyMediaTypes);
-			}
-		}
+		Operation operation, String path, String returnType,
+		String schemaName) {
 
 		if (operation.getOperationId() != null) {
-			String operationId = operation.getOperationId();
-
-			if (requestBodyMediaTypes.size() < 2) {
-				return operationId;
-			}
-
-			int index = 0;
-
-			for (int i = 0; i < operationId.length(); i++) {
-				if (Character.isUpperCase(operationId.charAt(i))) {
-					index = i;
-
-					break;
-				}
-			}
-
-			StringBuilder sb = new StringBuilder();
-
-			sb.append(operationId.substring(0, index));
-			sb.append("MediaType");
-			sb.append(requestBodyMediaTypes.indexOf(requestBodyMediaType) + 1);
-			sb.append(operationId.substring(index));
-
-			return sb.toString();
+			return operation.getOperationId();
 		}
 
 		List<String> methodNameSegments = new ArrayList<>();
@@ -419,15 +381,6 @@ public class ResourceOpenAPIParser {
 		String httpMethod = OpenAPIParserUtil.getHTTPMethod(operation);
 
 		methodNameSegments.add(httpMethod);
-
-		if (requestBodyMediaType != null) {
-			if (requestBodyMediaTypes.size() > 1) {
-				int position =
-					requestBodyMediaTypes.indexOf(requestBodyMediaType) + 1;
-
-				methodNameSegments.add("MediaType" + position);
-			}
-		}
 
 		String[] pathSegments = path.split("/");
 		String pluralSchemaName = TextFormatter.formatPlural(schemaName);

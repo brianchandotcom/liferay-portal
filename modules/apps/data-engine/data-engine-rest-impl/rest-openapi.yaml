@@ -63,6 +63,20 @@ components:
                         $ref: '#/components/schemas/LocalizedValue'
                     type: array
             type: object
+        DataDefinitionPermission:
+            properties:
+                delete:
+                    type: boolean
+                update:
+                    type: boolean
+                view:
+                    type: boolean
+                roleNames:
+                    items:
+                        type: string
+                    type:
+                        array
+            type: object
         DataDefinitionRule:
             properties:
                 dataDefinitionFieldNames:
@@ -320,6 +334,32 @@ paths:
                                 type: array
                     description: ""
             tags: ["DataRecordCollection"]
+    "/data-definitions/{data-definition-id}/permissions":
+        post:
+            parameters:
+                - in: path
+                  name: data-definition-id
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+                - in: query
+                  name: operation
+                  required: true
+                  schema:
+                      type: string
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/DataDefinitionPermission"
+                description: ""
+            responses:
+                204:
+                    content:
+                        application/json: {}
+                    description: ""
+            tags: ["DataDefinition"]
     "/data-definitions/{data-definition-id}":
         delete:
             parameters:

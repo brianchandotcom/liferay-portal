@@ -30,10 +30,10 @@ import java.util.stream.Stream;
  * @author Carlos Sierra Andrés
  */
 @ProviderType
-public class PredicateCollectorMFACheckerVisitor
+public abstract class BaseCollectorMFACheckerVisitor
 	implements MFACheckerVisitor<List<MFAChecker>> {
 
-	public PredicateCollectorMFACheckerVisitor(
+	public BaseCollectorMFACheckerVisitor(
 		Predicate<MFAChecker> predicate) {
 
 		_predicate = predicate;

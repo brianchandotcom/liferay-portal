@@ -16,14 +16,14 @@ package com.liferay.multi.factor.authentication.checker.setup.visitor;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.multi.factor.authentication.checker.visitor.PredicateCollectorMFACheckerVisitor;
+import com.liferay.multi.factor.authentication.checker.visitor.BaseCollectorMFACheckerVisitor;
 
 /**
  * @author Carlos Sierra Andrés
  */
 @ProviderType
 public class WaitingForSetupMFACheckerVisitor
-	extends PredicateCollectorMFACheckerVisitor {
+	extends BaseCollectorMFACheckerVisitor {
 
 	public WaitingForSetupMFACheckerVisitor(
 		boolean onlyForcedSetup, long userId) {

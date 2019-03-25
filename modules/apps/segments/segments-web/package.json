@@ -79,7 +79,7 @@
 		"modulePathIgnorePatterns": [
 			"/classes/"
 		],
-		"setupTestFrameworkScriptFile": "<rootDir>/test/js/setup.js",
+		"setupFilesAfterEnv": ["<rootDir>/test/js/setup.js"],
 		"testMatch": [
 			"<rootDir>/test/js/**/*.es.js"
 		]

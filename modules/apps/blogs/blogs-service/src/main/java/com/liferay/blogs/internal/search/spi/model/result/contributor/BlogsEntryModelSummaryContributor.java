@@ -18,6 +18,8 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Summary;
+import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.search.spi.model.result.contributor.ModelSummaryContributor;
 
 import java.util.Locale;
@@ -40,16 +42,25 @@ public class BlogsEntryModelSummaryContributor
 	public Summary getSummary(
 		Document document, Locale locale, String snippet) {
 
+		String languageId = LocaleUtil.toLanguageId(locale);
+
+		String content = LocalizationUtil.getLocalizedName(
+			Field.CONTENT, languageId);
+		String title = LocalizationUtil.getLocalizedName(
+			Field.TITLE, languageId);
+
+		return createSummary(document, content, title);
+	}
+
+	protected Summary createSummary(
+		Document document, String titleField, String contentField) {
+
 		String prefix = Field.SNIPPET + StringPool.UNDERLINE;
 
-		String title = document.get(prefix + Field.TITLE, Field.TITLE);
-		String content = document.get(prefix + Field.CONTENT, Field.CONTENT);
+		String title = document.get(prefix + titleField, titleField);
+		String content = document.get(prefix + contentField, contentField);
 
-		Summary summary = new Summary(title, content);
-
-		summary.setMaxContentLength(200);
-
-		return summary;
+		return new Summary(title, content);
 	}
 
 }

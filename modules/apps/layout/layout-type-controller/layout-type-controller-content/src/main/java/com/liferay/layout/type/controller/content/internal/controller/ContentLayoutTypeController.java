@@ -94,7 +94,7 @@ public class ContentLayoutTypeController extends BaseLayoutTypeControllerImpl {
 
 		if (layoutMode.equals(Constants.EDIT)) {
 			request.setAttribute(
-				ContentPageEditorWebKeys.ASSET_DISPLAY_CONTRIBUTOR_TRACKER,
+				ContentPageEditorWebKeys.INFO_DISPLAY_CONTRIBUTOR_TRACKER,
 				_assetDisplayContributorTracker);
 
 			request.setAttribute(

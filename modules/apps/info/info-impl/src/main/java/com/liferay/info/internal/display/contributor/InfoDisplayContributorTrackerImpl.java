@@ -35,9 +35,7 @@ public class InfoDisplayContributorTrackerImpl
 	implements InfoDisplayContributorTracker {
 
 	@Override
-	public InfoDisplayContributor getInfoDisplayContributor(
-		String className) {
-
+	public InfoDisplayContributor getInfoDisplayContributor(String className) {
 		return _infoDisplayContributor.get(className);
 	}
 
@@ -75,8 +73,8 @@ public class InfoDisplayContributorTrackerImpl
 			infoDisplayContributor.getInfoURLSeparator());
 	}
 
-	private final Map<String, InfoDisplayContributor>
-		_infoDisplayContributor = new ConcurrentHashMap<>();
+	private final Map<String, InfoDisplayContributor> _infoDisplayContributor =
+		new ConcurrentHashMap<>();
 	private final Map<String, InfoDisplayContributor>
 		_infoDisplayContributorByURLSeparator = new ConcurrentHashMap<>();
 

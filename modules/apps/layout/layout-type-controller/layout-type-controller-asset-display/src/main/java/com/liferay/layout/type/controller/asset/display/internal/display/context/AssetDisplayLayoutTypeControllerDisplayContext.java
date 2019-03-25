@@ -62,12 +62,12 @@ public class AssetDisplayLayoutTypeControllerDisplayContext {
 
 		AssetDisplayContributor assetDisplayContributor =
 			(AssetDisplayContributor)_request.getAttribute(
-				AssetDisplayWebKeys.ASSET_DISPLAY_CONTRIBUTOR);
+				AssetDisplayWebKeys.INFO_DISPLAY_CONTRIBUTOR);
 
 		if ((assetDisplayContributor == null) && (assetEntry != null)) {
 			AssetDisplayContributorTracker assetDisplayContributorTracker =
 				(AssetDisplayContributorTracker)request.getAttribute(
-					ContentPageEditorWebKeys.ASSET_DISPLAY_CONTRIBUTOR_TRACKER);
+					ContentPageEditorWebKeys.INFO_DISPLAY_CONTRIBUTOR_TRACKER);
 
 			assetDisplayContributor =
 				assetDisplayContributorTracker.getAssetDisplayContributor(

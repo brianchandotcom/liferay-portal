@@ -622,9 +622,7 @@ public abstract class BaseDocumentResourceTestCase {
 		Assert.assertTrue(true);
 	}
 
-	protected Document testPatchDocument_addDocument(Document document)
-		throws Exception {
-
+	protected Document testPatchDocument_addDocument() throws Exception {
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
 	}

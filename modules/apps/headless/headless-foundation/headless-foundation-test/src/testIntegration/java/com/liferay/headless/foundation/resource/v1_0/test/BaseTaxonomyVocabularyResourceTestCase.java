@@ -709,15 +709,14 @@ public abstract class BaseTaxonomyVocabularyResourceTestCase {
 	@Test
 	public void testPatchTaxonomyVocabulary() throws Exception {
 		TaxonomyVocabulary postTaxonomyVocabulary =
-			testPatchTaxonomyVocabulary_addTaxonomyVocabulary(
-				randomTaxonomyVocabulary());
+			testPatchTaxonomyVocabulary_addTaxonomyVocabulary();
 
 		TaxonomyVocabulary randomPatchTaxonomyVocabulary =
-			randomTaxonomyVocabulary();
+			randomPatchTaxonomyVocabulary();
 
 		TaxonomyVocabulary patchTaxonomyVocabulary =
-			testPatchTaxonomyVocabulary_addTaxonomyVocabulary(
-				randomPatchTaxonomyVocabulary);
+			invokePatchTaxonomyVocabulary(
+				postTaxonomyVocabulary.getId(), randomPatchTaxonomyVocabulary);
 
 		TaxonomyVocabulary expectedPatchTaxonomyVocabulary =
 			(TaxonomyVocabulary)BeanUtils.cloneBean(postTaxonomyVocabulary);
@@ -733,8 +732,7 @@ public abstract class BaseTaxonomyVocabularyResourceTestCase {
 	}
 
 	protected TaxonomyVocabulary
-			testPatchTaxonomyVocabulary_addTaxonomyVocabulary(
-				TaxonomyVocabulary taxonomyVocabulary)
+			testPatchTaxonomyVocabulary_addTaxonomyVocabulary()
 		throws Exception {
 
 		throw new UnsupportedOperationException(

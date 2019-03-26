@@ -1197,14 +1197,14 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 	@Test
 	public void testPatchKnowledgeBaseArticle() throws Exception {
 		KnowledgeBaseArticle postKnowledgeBaseArticle =
-			testPatchKnowledgeBaseArticle_addKnowledgeBaseArticle(
-				randomKnowledgeBaseArticle());
+			testPatchKnowledgeBaseArticle_addKnowledgeBaseArticle();
 
 		KnowledgeBaseArticle randomPatchKnowledgeBaseArticle =
-			randomKnowledgeBaseArticle();
+			randomPatchKnowledgeBaseArticle();
 
 		KnowledgeBaseArticle patchKnowledgeBaseArticle =
-			testPatchKnowledgeBaseArticle_addKnowledgeBaseArticle(
+			invokePatchKnowledgeBaseArticle(
+				postKnowledgeBaseArticle.getId(),
 				randomPatchKnowledgeBaseArticle);
 
 		KnowledgeBaseArticle expectedPatchKnowledgeBaseArticle =
@@ -1222,8 +1222,7 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 	}
 
 	protected KnowledgeBaseArticle
-			testPatchKnowledgeBaseArticle_addKnowledgeBaseArticle(
-				KnowledgeBaseArticle knowledgeBaseArticle)
+			testPatchKnowledgeBaseArticle_addKnowledgeBaseArticle()
 		throws Exception {
 
 		throw new UnsupportedOperationException(

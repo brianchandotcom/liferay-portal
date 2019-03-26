@@ -252,14 +252,14 @@ public abstract class BaseDiscussionForumPostingResourceTestCase {
 	@Test
 	public void testPatchDiscussionForumPosting() throws Exception {
 		DiscussionForumPosting postDiscussionForumPosting =
-			testPatchDiscussionForumPosting_addDiscussionForumPosting(
-				randomDiscussionForumPosting());
+			testPatchDiscussionForumPosting_addDiscussionForumPosting();
 
 		DiscussionForumPosting randomPatchDiscussionForumPosting =
-			randomDiscussionForumPosting();
+			randomPatchDiscussionForumPosting();
 
 		DiscussionForumPosting patchDiscussionForumPosting =
-			testPatchDiscussionForumPosting_addDiscussionForumPosting(
+			invokePatchDiscussionForumPosting(
+				postDiscussionForumPosting.getId(),
 				randomPatchDiscussionForumPosting);
 
 		DiscussionForumPosting expectedPatchDiscussionForumPosting =
@@ -280,8 +280,7 @@ public abstract class BaseDiscussionForumPostingResourceTestCase {
 	}
 
 	protected DiscussionForumPosting
-			testPatchDiscussionForumPosting_addDiscussionForumPosting(
-				DiscussionForumPosting discussionForumPosting)
+			testPatchDiscussionForumPosting_addDiscussionForumPosting()
 		throws Exception {
 
 		throw new UnsupportedOperationException(

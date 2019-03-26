@@ -246,14 +246,13 @@ public abstract class BaseTaxonomyCategoryResourceTestCase {
 	@Test
 	public void testPatchTaxonomyCategory() throws Exception {
 		TaxonomyCategory postTaxonomyCategory =
-			testPatchTaxonomyCategory_addTaxonomyCategory(
-				randomTaxonomyCategory());
+			testPatchTaxonomyCategory_addTaxonomyCategory();
 
-		TaxonomyCategory randomPatchTaxonomyCategory = randomTaxonomyCategory();
+		TaxonomyCategory randomPatchTaxonomyCategory =
+			randomPatchTaxonomyCategory();
 
-		TaxonomyCategory patchTaxonomyCategory =
-			testPatchTaxonomyCategory_addTaxonomyCategory(
-				randomPatchTaxonomyCategory);
+		TaxonomyCategory patchTaxonomyCategory = invokePatchTaxonomyCategory(
+			postTaxonomyCategory.getId(), randomPatchTaxonomyCategory);
 
 		TaxonomyCategory expectedPatchTaxonomyCategory =
 			(TaxonomyCategory)BeanUtils.cloneBean(postTaxonomyCategory);
@@ -268,8 +267,7 @@ public abstract class BaseTaxonomyCategoryResourceTestCase {
 		assertValid(getTaxonomyCategory);
 	}
 
-	protected TaxonomyCategory testPatchTaxonomyCategory_addTaxonomyCategory(
-			TaxonomyCategory taxonomyCategory)
+	protected TaxonomyCategory testPatchTaxonomyCategory_addTaxonomyCategory()
 		throws Exception {
 
 		throw new UnsupportedOperationException(

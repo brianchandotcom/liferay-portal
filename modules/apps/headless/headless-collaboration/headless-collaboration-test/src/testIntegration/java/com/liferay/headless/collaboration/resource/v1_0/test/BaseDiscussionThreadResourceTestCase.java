@@ -1165,14 +1165,13 @@ public abstract class BaseDiscussionThreadResourceTestCase {
 	@Test
 	public void testPatchDiscussionThread() throws Exception {
 		DiscussionThread postDiscussionThread =
-			testPatchDiscussionThread_addDiscussionThread(
-				randomDiscussionThread());
+			testPatchDiscussionThread_addDiscussionThread();
 
-		DiscussionThread randomPatchDiscussionThread = randomDiscussionThread();
+		DiscussionThread randomPatchDiscussionThread =
+			randomPatchDiscussionThread();
 
-		DiscussionThread patchDiscussionThread =
-			testPatchDiscussionThread_addDiscussionThread(
-				randomPatchDiscussionThread);
+		DiscussionThread patchDiscussionThread = invokePatchDiscussionThread(
+			postDiscussionThread.getId(), randomPatchDiscussionThread);
 
 		DiscussionThread expectedPatchDiscussionThread =
 			(DiscussionThread)BeanUtils.cloneBean(postDiscussionThread);
@@ -1187,8 +1186,7 @@ public abstract class BaseDiscussionThreadResourceTestCase {
 		assertValid(getDiscussionThread);
 	}
 
-	protected DiscussionThread testPatchDiscussionThread_addDiscussionThread(
-			DiscussionThread discussionThread)
+	protected DiscussionThread testPatchDiscussionThread_addDiscussionThread()
 		throws Exception {
 
 		throw new UnsupportedOperationException(

@@ -326,7 +326,7 @@ definition {
 
 	@description = "This is a use case for LPS-42750."
 	@priority = "3"
-	test ViewMobileDeviceRules {
+	test ViewMobileDeviceFamilies {
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Site Administration",

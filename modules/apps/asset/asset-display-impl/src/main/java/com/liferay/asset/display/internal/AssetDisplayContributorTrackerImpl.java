@@ -16,12 +16,17 @@ package com.liferay.asset.display.internal;
 
 import com.liferay.asset.display.contributor.AssetDisplayContributor;
 import com.liferay.asset.display.contributor.AssetDisplayContributorTracker;
+import com.liferay.info.display.contributor.InfoDisplayContributor;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
+import org.osgi.framework.Bundle;
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.FrameworkUtil;
+import org.osgi.framework.ServiceRegistration;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ReferenceCardinality;
@@ -62,11 +67,25 @@ public class AssetDisplayContributorTrackerImpl
 	protected void setAssetDisplayContributor(
 		AssetDisplayContributor assetDisplayContributor) {
 
+		Bundle bundle = FrameworkUtil.getBundle(
+			assetDisplayContributor.getClass());
+
+		BundleContext bundleContext = bundle.getBundleContext();
+
 		_assetDisplayContributor.put(
 			assetDisplayContributor.getClassName(), assetDisplayContributor);
 		_assetDisplayContributorByAssetURLSeparator.put(
 			assetDisplayContributor.getAssetURLSeparator(),
 			assetDisplayContributor);
+
+		ServiceRegistration<InfoDisplayContributor> serviceRegistration =
+			bundleContext.registerService(
+				InfoDisplayContributor.class,
+				new AssetInfoDisplayContributorAdapter(assetDisplayContributor),
+				null);
+
+		_serviceRegistrations.put(
+			assetDisplayContributor.getClassName(), serviceRegistration);
 	}
 
 	protected void unsetAssetDisplayContributor(
@@ -75,11 +94,15 @@ public class AssetDisplayContributorTrackerImpl
 		_assetDisplayContributor.remove(assetDisplayContributor.getClassName());
 		_assetDisplayContributorByAssetURLSeparator.remove(
 			assetDisplayContributor.getAssetURLSeparator());
+
+		_serviceRegistrations.remove(assetDisplayContributor.getClassName());
 	}
 
 	private final Map<String, AssetDisplayContributor>
 		_assetDisplayContributor = new ConcurrentHashMap<>();
 	private final Map<String, AssetDisplayContributor>
 		_assetDisplayContributorByAssetURLSeparator = new ConcurrentHashMap<>();
+	private final Map<String, ServiceRegistration<InfoDisplayContributor>>
+		_serviceRegistrations = new ConcurrentHashMap<>();
 
 }

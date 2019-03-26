@@ -480,7 +480,7 @@ public abstract class BaseDiscussionSectionResourceTestCase {
 
 		options.setLocation(location);
 
-		HttpUtil.URLtoString(options);
+		HttpUtil.URLtoByteArray(options);
 
 		return options.getResponse();
 	}
@@ -563,7 +563,7 @@ public abstract class BaseDiscussionSectionResourceTestCase {
 
 		options.setPost(true);
 
-		HttpUtil.URLtoString(options);
+		HttpUtil.URLtoByteArray(options);
 
 		return options.getResponse();
 	}
@@ -627,7 +627,7 @@ public abstract class BaseDiscussionSectionResourceTestCase {
 
 		options.setLocation(location);
 
-		HttpUtil.URLtoString(options);
+		HttpUtil.URLtoByteArray(options);
 
 		return options.getResponse();
 	}
@@ -696,7 +696,7 @@ public abstract class BaseDiscussionSectionResourceTestCase {
 
 		options.setLocation(location);
 
-		HttpUtil.URLtoString(options);
+		HttpUtil.URLtoByteArray(options);
 
 		return options.getResponse();
 	}
@@ -704,15 +704,13 @@ public abstract class BaseDiscussionSectionResourceTestCase {
 	@Test
 	public void testPatchDiscussionSection() throws Exception {
 		DiscussionSection postDiscussionSection =
-			testPatchDiscussionSection_addDiscussionSection(
-				randomDiscussionSection());
+			testPatchDiscussionSection_addDiscussionSection();
 
 		DiscussionSection randomPatchDiscussionSection =
-			randomDiscussionSection();
+			randomPatchDiscussionSection();
 
-		DiscussionSection patchDiscussionSection =
-			testPatchDiscussionSection_addDiscussionSection(
-				randomPatchDiscussionSection);
+		DiscussionSection patchDiscussionSection = invokePatchDiscussionSection(
+			postDiscussionSection.getId(), randomPatchDiscussionSection);
 
 		DiscussionSection expectedPatchDiscussionSection =
 			(DiscussionSection)BeanUtils.cloneBean(postDiscussionSection);
@@ -727,8 +725,8 @@ public abstract class BaseDiscussionSectionResourceTestCase {
 		assertValid(getDiscussionSection);
 	}
 
-	protected DiscussionSection testPatchDiscussionSection_addDiscussionSection(
-			DiscussionSection discussionSection)
+	protected DiscussionSection
+			testPatchDiscussionSection_addDiscussionSection()
 		throws Exception {
 
 		throw new UnsupportedOperationException(
@@ -792,7 +790,7 @@ public abstract class BaseDiscussionSectionResourceTestCase {
 
 		options.setPatch(true);
 
-		HttpUtil.URLtoString(options);
+		HttpUtil.URLtoByteArray(options);
 
 		return options.getResponse();
 	}
@@ -881,7 +879,7 @@ public abstract class BaseDiscussionSectionResourceTestCase {
 
 		options.setPut(true);
 
-		HttpUtil.URLtoString(options);
+		HttpUtil.URLtoByteArray(options);
 
 		return options.getResponse();
 	}
@@ -1261,7 +1259,7 @@ public abstract class BaseDiscussionSectionResourceTestCase {
 
 		options.setLocation(location);
 
-		HttpUtil.URLtoString(options);
+		HttpUtil.URLtoByteArray(options);
 
 		return options.getResponse();
 	}
@@ -1345,7 +1343,7 @@ public abstract class BaseDiscussionSectionResourceTestCase {
 
 		options.setPost(true);
 
-		HttpUtil.URLtoString(options);
+		HttpUtil.URLtoByteArray(options);
 
 		return options.getResponse();
 	}

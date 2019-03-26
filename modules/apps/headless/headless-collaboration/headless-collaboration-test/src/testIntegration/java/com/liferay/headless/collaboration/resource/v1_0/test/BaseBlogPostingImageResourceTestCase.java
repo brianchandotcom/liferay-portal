@@ -168,7 +168,7 @@ public abstract class BaseBlogPostingImageResourceTestCase {
 
 		options.setLocation(location);
 
-		HttpUtil.URLtoString(options);
+		HttpUtil.URLtoByteArray(options);
 
 		return options.getResponse();
 	}
@@ -237,7 +237,7 @@ public abstract class BaseBlogPostingImageResourceTestCase {
 
 		options.setLocation(location);
 
-		HttpUtil.URLtoString(options);
+		HttpUtil.URLtoByteArray(options);
 
 		return options.getResponse();
 	}
@@ -610,7 +610,7 @@ public abstract class BaseBlogPostingImageResourceTestCase {
 
 		options.setLocation(location);
 
-		HttpUtil.URLtoString(options);
+		HttpUtil.URLtoByteArray(options);
 
 		return options.getResponse();
 	}
@@ -678,7 +678,7 @@ public abstract class BaseBlogPostingImageResourceTestCase {
 
 		options.setPost(true);
 
-		HttpUtil.URLtoString(options);
+		HttpUtil.URLtoByteArray(options);
 
 		return options.getResponse();
 	}

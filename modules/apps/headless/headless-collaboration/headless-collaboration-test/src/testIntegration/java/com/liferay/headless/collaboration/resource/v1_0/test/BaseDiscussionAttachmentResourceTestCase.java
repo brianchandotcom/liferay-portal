@@ -167,7 +167,7 @@ public abstract class BaseDiscussionAttachmentResourceTestCase {
 
 		options.setLocation(location);
 
-		HttpUtil.URLtoString(options);
+		HttpUtil.URLtoByteArray(options);
 
 		return options.getResponse();
 	}
@@ -237,7 +237,7 @@ public abstract class BaseDiscussionAttachmentResourceTestCase {
 
 		options.setLocation(location);
 
-		HttpUtil.URLtoString(options);
+		HttpUtil.URLtoByteArray(options);
 
 		return options.getResponse();
 	}
@@ -356,7 +356,7 @@ public abstract class BaseDiscussionAttachmentResourceTestCase {
 
 		options.setLocation(location);
 
-		HttpUtil.URLtoString(options);
+		HttpUtil.URLtoByteArray(options);
 
 		return options.getResponse();
 	}
@@ -428,7 +428,7 @@ public abstract class BaseDiscussionAttachmentResourceTestCase {
 
 		options.setPost(true);
 
-		HttpUtil.URLtoString(options);
+		HttpUtil.URLtoByteArray(options);
 
 		return options.getResponse();
 	}
@@ -547,7 +547,7 @@ public abstract class BaseDiscussionAttachmentResourceTestCase {
 
 		options.setLocation(location);
 
-		HttpUtil.URLtoString(options);
+		HttpUtil.URLtoByteArray(options);
 
 		return options.getResponse();
 	}
@@ -619,7 +619,7 @@ public abstract class BaseDiscussionAttachmentResourceTestCase {
 
 		options.setPost(true);
 
-		HttpUtil.URLtoString(options);
+		HttpUtil.URLtoByteArray(options);
 
 		return options.getResponse();
 	}

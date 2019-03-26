@@ -169,7 +169,7 @@ public abstract class BaseTaxonomyCategoryResourceTestCase {
 
 		options.setLocation(location);
 
-		HttpUtil.URLtoString(options);
+		HttpUtil.URLtoByteArray(options);
 
 		return options.getResponse();
 	}
@@ -238,7 +238,7 @@ public abstract class BaseTaxonomyCategoryResourceTestCase {
 
 		options.setLocation(location);
 
-		HttpUtil.URLtoString(options);
+		HttpUtil.URLtoByteArray(options);
 
 		return options.getResponse();
 	}
@@ -246,14 +246,13 @@ public abstract class BaseTaxonomyCategoryResourceTestCase {
 	@Test
 	public void testPatchTaxonomyCategory() throws Exception {
 		TaxonomyCategory postTaxonomyCategory =
-			testPatchTaxonomyCategory_addTaxonomyCategory(
-				randomTaxonomyCategory());
+			testPatchTaxonomyCategory_addTaxonomyCategory();
 
-		TaxonomyCategory randomPatchTaxonomyCategory = randomTaxonomyCategory();
+		TaxonomyCategory randomPatchTaxonomyCategory =
+			randomPatchTaxonomyCategory();
 
-		TaxonomyCategory patchTaxonomyCategory =
-			testPatchTaxonomyCategory_addTaxonomyCategory(
-				randomPatchTaxonomyCategory);
+		TaxonomyCategory patchTaxonomyCategory = invokePatchTaxonomyCategory(
+			postTaxonomyCategory.getId(), randomPatchTaxonomyCategory);
 
 		TaxonomyCategory expectedPatchTaxonomyCategory =
 			(TaxonomyCategory)BeanUtils.cloneBean(postTaxonomyCategory);
@@ -268,8 +267,7 @@ public abstract class BaseTaxonomyCategoryResourceTestCase {
 		assertValid(getTaxonomyCategory);
 	}
 
-	protected TaxonomyCategory testPatchTaxonomyCategory_addTaxonomyCategory(
-			TaxonomyCategory taxonomyCategory)
+	protected TaxonomyCategory testPatchTaxonomyCategory_addTaxonomyCategory()
 		throws Exception {
 
 		throw new UnsupportedOperationException(
@@ -333,7 +331,7 @@ public abstract class BaseTaxonomyCategoryResourceTestCase {
 
 		options.setPatch(true);
 
-		HttpUtil.URLtoString(options);
+		HttpUtil.URLtoByteArray(options);
 
 		return options.getResponse();
 	}
@@ -422,7 +420,7 @@ public abstract class BaseTaxonomyCategoryResourceTestCase {
 
 		options.setPut(true);
 
-		HttpUtil.URLtoString(options);
+		HttpUtil.URLtoByteArray(options);
 
 		return options.getResponse();
 	}
@@ -802,7 +800,7 @@ public abstract class BaseTaxonomyCategoryResourceTestCase {
 
 		options.setLocation(location);
 
-		HttpUtil.URLtoString(options);
+		HttpUtil.URLtoByteArray(options);
 
 		return options.getResponse();
 	}
@@ -885,7 +883,7 @@ public abstract class BaseTaxonomyCategoryResourceTestCase {
 
 		options.setPost(true);
 
-		HttpUtil.URLtoString(options);
+		HttpUtil.URLtoByteArray(options);
 
 		return options.getResponse();
 	}
@@ -1265,7 +1263,7 @@ public abstract class BaseTaxonomyCategoryResourceTestCase {
 
 		options.setLocation(location);
 
-		HttpUtil.URLtoString(options);
+		HttpUtil.URLtoByteArray(options);
 
 		return options.getResponse();
 	}
@@ -1349,7 +1347,7 @@ public abstract class BaseTaxonomyCategoryResourceTestCase {
 
 		options.setPost(true);
 
-		HttpUtil.URLtoString(options);
+		HttpUtil.URLtoByteArray(options);
 
 		return options.getResponse();
 	}

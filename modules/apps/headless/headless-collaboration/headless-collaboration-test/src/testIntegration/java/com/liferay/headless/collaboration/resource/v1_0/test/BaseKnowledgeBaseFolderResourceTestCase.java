@@ -283,7 +283,7 @@ public abstract class BaseKnowledgeBaseFolderResourceTestCase {
 
 		options.setLocation(location);
 
-		HttpUtil.URLtoString(options);
+		HttpUtil.URLtoByteArray(options);
 
 		return options.getResponse();
 	}
@@ -368,7 +368,7 @@ public abstract class BaseKnowledgeBaseFolderResourceTestCase {
 
 		options.setPost(true);
 
-		HttpUtil.URLtoString(options);
+		HttpUtil.URLtoByteArray(options);
 
 		return options.getResponse();
 	}
@@ -434,7 +434,7 @@ public abstract class BaseKnowledgeBaseFolderResourceTestCase {
 
 		options.setLocation(location);
 
-		HttpUtil.URLtoString(options);
+		HttpUtil.URLtoByteArray(options);
 
 		return options.getResponse();
 	}
@@ -504,7 +504,7 @@ public abstract class BaseKnowledgeBaseFolderResourceTestCase {
 
 		options.setLocation(location);
 
-		HttpUtil.URLtoString(options);
+		HttpUtil.URLtoByteArray(options);
 
 		return options.getResponse();
 	}
@@ -512,14 +512,14 @@ public abstract class BaseKnowledgeBaseFolderResourceTestCase {
 	@Test
 	public void testPatchKnowledgeBaseFolder() throws Exception {
 		KnowledgeBaseFolder postKnowledgeBaseFolder =
-			testPatchKnowledgeBaseFolder_addKnowledgeBaseFolder(
-				randomKnowledgeBaseFolder());
+			testPatchKnowledgeBaseFolder_addKnowledgeBaseFolder();
 
 		KnowledgeBaseFolder randomPatchKnowledgeBaseFolder =
-			randomKnowledgeBaseFolder();
+			randomPatchKnowledgeBaseFolder();
 
 		KnowledgeBaseFolder patchKnowledgeBaseFolder =
-			testPatchKnowledgeBaseFolder_addKnowledgeBaseFolder(
+			invokePatchKnowledgeBaseFolder(
+				postKnowledgeBaseFolder.getId(),
 				randomPatchKnowledgeBaseFolder);
 
 		KnowledgeBaseFolder expectedPatchKnowledgeBaseFolder =
@@ -536,8 +536,7 @@ public abstract class BaseKnowledgeBaseFolderResourceTestCase {
 	}
 
 	protected KnowledgeBaseFolder
-			testPatchKnowledgeBaseFolder_addKnowledgeBaseFolder(
-				KnowledgeBaseFolder knowledgeBaseFolder)
+			testPatchKnowledgeBaseFolder_addKnowledgeBaseFolder()
 		throws Exception {
 
 		throw new UnsupportedOperationException(
@@ -601,7 +600,7 @@ public abstract class BaseKnowledgeBaseFolderResourceTestCase {
 
 		options.setPatch(true);
 
-		HttpUtil.URLtoString(options);
+		HttpUtil.URLtoByteArray(options);
 
 		return options.getResponse();
 	}
@@ -693,7 +692,7 @@ public abstract class BaseKnowledgeBaseFolderResourceTestCase {
 
 		options.setPut(true);
 
-		HttpUtil.URLtoString(options);
+		HttpUtil.URLtoByteArray(options);
 
 		return options.getResponse();
 	}
@@ -875,7 +874,7 @@ public abstract class BaseKnowledgeBaseFolderResourceTestCase {
 
 		options.setLocation(location);
 
-		HttpUtil.URLtoString(options);
+		HttpUtil.URLtoByteArray(options);
 
 		return options.getResponse();
 	}
@@ -965,7 +964,7 @@ public abstract class BaseKnowledgeBaseFolderResourceTestCase {
 
 		options.setPost(true);
 
-		HttpUtil.URLtoString(options);
+		HttpUtil.URLtoByteArray(options);
 
 		return options.getResponse();
 	}

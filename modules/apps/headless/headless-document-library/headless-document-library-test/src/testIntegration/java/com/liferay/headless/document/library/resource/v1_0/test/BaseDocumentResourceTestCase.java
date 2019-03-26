@@ -444,7 +444,7 @@ public abstract class BaseDocumentResourceTestCase {
 
 		options.setLocation(location);
 
-		HttpUtil.URLtoString(options);
+		HttpUtil.URLtoByteArray(options);
 
 		return options.getResponse();
 	}
@@ -510,7 +510,7 @@ public abstract class BaseDocumentResourceTestCase {
 
 		options.setPost(true);
 
-		HttpUtil.URLtoString(options);
+		HttpUtil.URLtoByteArray(options);
 
 		return options.getResponse();
 	}
@@ -558,7 +558,7 @@ public abstract class BaseDocumentResourceTestCase {
 
 		options.setLocation(location);
 
-		HttpUtil.URLtoString(options);
+		HttpUtil.URLtoByteArray(options);
 
 		return options.getResponse();
 	}
@@ -612,7 +612,7 @@ public abstract class BaseDocumentResourceTestCase {
 
 		options.setLocation(location);
 
-		HttpUtil.URLtoString(options);
+		HttpUtil.URLtoByteArray(options);
 
 		return options.getResponse();
 	}
@@ -622,9 +622,7 @@ public abstract class BaseDocumentResourceTestCase {
 		Assert.assertTrue(true);
 	}
 
-	protected Document testPatchDocument_addDocument(Document document)
-		throws Exception {
-
+	protected Document testPatchDocument_addDocument() throws Exception {
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
 	}
@@ -671,7 +669,7 @@ public abstract class BaseDocumentResourceTestCase {
 
 		options.setPatch(true);
 
-		HttpUtil.URLtoString(options);
+		HttpUtil.URLtoByteArray(options);
 
 		return options.getResponse();
 	}
@@ -728,7 +726,7 @@ public abstract class BaseDocumentResourceTestCase {
 
 		options.setPut(true);
 
-		HttpUtil.URLtoString(options);
+		HttpUtil.URLtoByteArray(options);
 
 		return options.getResponse();
 	}
@@ -1041,7 +1039,7 @@ public abstract class BaseDocumentResourceTestCase {
 
 		options.setLocation(location);
 
-		HttpUtil.URLtoString(options);
+		HttpUtil.URLtoByteArray(options);
 
 		return options.getResponse();
 	}
@@ -1100,7 +1098,7 @@ public abstract class BaseDocumentResourceTestCase {
 
 		options.setPost(true);
 
-		HttpUtil.URLtoString(options);
+		HttpUtil.URLtoByteArray(options);
 
 		return options.getResponse();
 	}

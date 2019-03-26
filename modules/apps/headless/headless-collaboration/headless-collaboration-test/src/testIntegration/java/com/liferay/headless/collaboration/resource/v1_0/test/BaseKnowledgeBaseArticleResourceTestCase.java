@@ -493,7 +493,7 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 
 		options.setLocation(location);
 
-		HttpUtil.URLtoString(options);
+		HttpUtil.URLtoByteArray(options);
 
 		return options.getResponse();
 	}
@@ -577,7 +577,7 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 
 		options.setPost(true);
 
-		HttpUtil.URLtoString(options);
+		HttpUtil.URLtoByteArray(options);
 
 		return options.getResponse();
 	}
@@ -964,7 +964,7 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 
 		options.setLocation(location);
 
-		HttpUtil.URLtoString(options);
+		HttpUtil.URLtoByteArray(options);
 
 		return options.getResponse();
 	}
@@ -1052,7 +1052,7 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 
 		options.setPost(true);
 
-		HttpUtil.URLtoString(options);
+		HttpUtil.URLtoByteArray(options);
 
 		return options.getResponse();
 	}
@@ -1119,7 +1119,7 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 
 		options.setLocation(location);
 
-		HttpUtil.URLtoString(options);
+		HttpUtil.URLtoByteArray(options);
 
 		return options.getResponse();
 	}
@@ -1189,7 +1189,7 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 
 		options.setLocation(location);
 
-		HttpUtil.URLtoString(options);
+		HttpUtil.URLtoByteArray(options);
 
 		return options.getResponse();
 	}
@@ -1197,14 +1197,14 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 	@Test
 	public void testPatchKnowledgeBaseArticle() throws Exception {
 		KnowledgeBaseArticle postKnowledgeBaseArticle =
-			testPatchKnowledgeBaseArticle_addKnowledgeBaseArticle(
-				randomKnowledgeBaseArticle());
+			testPatchKnowledgeBaseArticle_addKnowledgeBaseArticle();
 
 		KnowledgeBaseArticle randomPatchKnowledgeBaseArticle =
-			randomKnowledgeBaseArticle();
+			randomPatchKnowledgeBaseArticle();
 
 		KnowledgeBaseArticle patchKnowledgeBaseArticle =
-			testPatchKnowledgeBaseArticle_addKnowledgeBaseArticle(
+			invokePatchKnowledgeBaseArticle(
+				postKnowledgeBaseArticle.getId(),
 				randomPatchKnowledgeBaseArticle);
 
 		KnowledgeBaseArticle expectedPatchKnowledgeBaseArticle =
@@ -1222,8 +1222,7 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 	}
 
 	protected KnowledgeBaseArticle
-			testPatchKnowledgeBaseArticle_addKnowledgeBaseArticle(
-				KnowledgeBaseArticle knowledgeBaseArticle)
+			testPatchKnowledgeBaseArticle_addKnowledgeBaseArticle()
 		throws Exception {
 
 		throw new UnsupportedOperationException(
@@ -1289,7 +1288,7 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 
 		options.setPatch(true);
 
-		HttpUtil.URLtoString(options);
+		HttpUtil.URLtoByteArray(options);
 
 		return options.getResponse();
 	}
@@ -1383,7 +1382,7 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 
 		options.setPut(true);
 
-		HttpUtil.URLtoString(options);
+		HttpUtil.URLtoByteArray(options);
 
 		return options.getResponse();
 	}
@@ -1567,7 +1566,7 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 
 		options.setLocation(location);
 
-		HttpUtil.URLtoString(options);
+		HttpUtil.URLtoByteArray(options);
 
 		return options.getResponse();
 	}
@@ -1657,7 +1656,7 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 
 		options.setPost(true);
 
-		HttpUtil.URLtoString(options);
+		HttpUtil.URLtoByteArray(options);
 
 		return options.getResponse();
 	}
@@ -1841,7 +1840,7 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 
 		options.setLocation(location);
 
-		HttpUtil.URLtoString(options);
+		HttpUtil.URLtoByteArray(options);
 
 		return options.getResponse();
 	}
@@ -1931,7 +1930,7 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 
 		options.setPost(true);
 
-		HttpUtil.URLtoString(options);
+		HttpUtil.URLtoByteArray(options);
 
 		return options.getResponse();
 	}

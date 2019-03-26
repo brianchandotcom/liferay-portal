@@ -443,7 +443,7 @@ public abstract class BaseFolderResourceTestCase {
 
 		options.setLocation(location);
 
-		HttpUtil.URLtoString(options);
+		HttpUtil.URLtoByteArray(options);
 
 		return options.getResponse();
 	}
@@ -522,7 +522,7 @@ public abstract class BaseFolderResourceTestCase {
 
 		options.setPost(true);
 
-		HttpUtil.URLtoString(options);
+		HttpUtil.URLtoByteArray(options);
 
 		return options.getResponse();
 	}
@@ -570,7 +570,7 @@ public abstract class BaseFolderResourceTestCase {
 
 		options.setLocation(location);
 
-		HttpUtil.URLtoString(options);
+		HttpUtil.URLtoByteArray(options);
 
 		return options.getResponse();
 	}
@@ -624,18 +624,19 @@ public abstract class BaseFolderResourceTestCase {
 
 		options.setLocation(location);
 
-		HttpUtil.URLtoString(options);
+		HttpUtil.URLtoByteArray(options);
 
 		return options.getResponse();
 	}
 
 	@Test
 	public void testPatchFolder() throws Exception {
-		Folder postFolder = testPatchFolder_addFolder(randomFolder());
+		Folder postFolder = testPatchFolder_addFolder();
 
-		Folder randomPatchFolder = randomFolder();
+		Folder randomPatchFolder = randomPatchFolder();
 
-		Folder patchFolder = testPatchFolder_addFolder(randomPatchFolder);
+		Folder patchFolder = invokePatchFolder(
+			postFolder.getId(), randomPatchFolder);
 
 		Folder expectedPatchFolder = (Folder)BeanUtils.cloneBean(postFolder);
 
@@ -647,7 +648,7 @@ public abstract class BaseFolderResourceTestCase {
 		assertValid(getFolder);
 	}
 
-	protected Folder testPatchFolder_addFolder(Folder folder) throws Exception {
+	protected Folder testPatchFolder_addFolder() throws Exception {
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
 	}
@@ -701,7 +702,7 @@ public abstract class BaseFolderResourceTestCase {
 
 		options.setPatch(true);
 
-		HttpUtil.URLtoString(options);
+		HttpUtil.URLtoByteArray(options);
 
 		return options.getResponse();
 	}
@@ -777,7 +778,7 @@ public abstract class BaseFolderResourceTestCase {
 
 		options.setPut(true);
 
-		HttpUtil.URLtoString(options);
+		HttpUtil.URLtoByteArray(options);
 
 		return options.getResponse();
 	}
@@ -1087,7 +1088,7 @@ public abstract class BaseFolderResourceTestCase {
 
 		options.setLocation(location);
 
-		HttpUtil.URLtoString(options);
+		HttpUtil.URLtoByteArray(options);
 
 		return options.getResponse();
 	}
@@ -1158,7 +1159,7 @@ public abstract class BaseFolderResourceTestCase {
 
 		options.setPost(true);
 
-		HttpUtil.URLtoString(options);
+		HttpUtil.URLtoByteArray(options);
 
 		return options.getResponse();
 	}

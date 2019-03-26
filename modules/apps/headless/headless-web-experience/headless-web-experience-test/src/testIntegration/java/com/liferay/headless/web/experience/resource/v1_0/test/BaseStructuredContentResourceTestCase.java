@@ -480,7 +480,7 @@ public abstract class BaseStructuredContentResourceTestCase {
 
 		options.setLocation(location);
 
-		HttpUtil.URLtoString(options);
+		HttpUtil.URLtoByteArray(options);
 
 		return options.getResponse();
 	}
@@ -563,7 +563,7 @@ public abstract class BaseStructuredContentResourceTestCase {
 
 		options.setPost(true);
 
-		HttpUtil.URLtoString(options);
+		HttpUtil.URLtoByteArray(options);
 
 		return options.getResponse();
 	}
@@ -943,7 +943,7 @@ public abstract class BaseStructuredContentResourceTestCase {
 
 		options.setLocation(location);
 
-		HttpUtil.URLtoString(options);
+		HttpUtil.URLtoByteArray(options);
 
 		return options.getResponse();
 	}
@@ -1015,7 +1015,7 @@ public abstract class BaseStructuredContentResourceTestCase {
 
 		options.setLocation(location);
 
-		HttpUtil.URLtoString(options);
+		HttpUtil.URLtoByteArray(options);
 
 		return options.getResponse();
 	}
@@ -1087,7 +1087,7 @@ public abstract class BaseStructuredContentResourceTestCase {
 
 		options.setLocation(location);
 
-		HttpUtil.URLtoString(options);
+		HttpUtil.URLtoByteArray(options);
 
 		return options.getResponse();
 	}
@@ -1151,7 +1151,7 @@ public abstract class BaseStructuredContentResourceTestCase {
 
 		options.setLocation(location);
 
-		HttpUtil.URLtoString(options);
+		HttpUtil.URLtoByteArray(options);
 
 		return options.getResponse();
 	}
@@ -1220,7 +1220,7 @@ public abstract class BaseStructuredContentResourceTestCase {
 
 		options.setLocation(location);
 
-		HttpUtil.URLtoString(options);
+		HttpUtil.URLtoByteArray(options);
 
 		return options.getResponse();
 	}
@@ -1228,15 +1228,13 @@ public abstract class BaseStructuredContentResourceTestCase {
 	@Test
 	public void testPatchStructuredContent() throws Exception {
 		StructuredContent postStructuredContent =
-			testPatchStructuredContent_addStructuredContent(
-				randomStructuredContent());
+			testPatchStructuredContent_addStructuredContent();
 
 		StructuredContent randomPatchStructuredContent =
-			randomStructuredContent();
+			randomPatchStructuredContent();
 
-		StructuredContent patchStructuredContent =
-			testPatchStructuredContent_addStructuredContent(
-				randomPatchStructuredContent);
+		StructuredContent patchStructuredContent = invokePatchStructuredContent(
+			postStructuredContent.getId(), randomPatchStructuredContent);
 
 		StructuredContent expectedPatchStructuredContent =
 			(StructuredContent)BeanUtils.cloneBean(postStructuredContent);
@@ -1251,8 +1249,8 @@ public abstract class BaseStructuredContentResourceTestCase {
 		assertValid(getStructuredContent);
 	}
 
-	protected StructuredContent testPatchStructuredContent_addStructuredContent(
-			StructuredContent structuredContent)
+	protected StructuredContent
+			testPatchStructuredContent_addStructuredContent()
 		throws Exception {
 
 		throw new UnsupportedOperationException(
@@ -1316,7 +1314,7 @@ public abstract class BaseStructuredContentResourceTestCase {
 
 		options.setPatch(true);
 
-		HttpUtil.URLtoString(options);
+		HttpUtil.URLtoByteArray(options);
 
 		return options.getResponse();
 	}
@@ -1405,7 +1403,7 @@ public abstract class BaseStructuredContentResourceTestCase {
 
 		options.setPut(true);
 
-		HttpUtil.URLtoString(options);
+		HttpUtil.URLtoByteArray(options);
 
 		return options.getResponse();
 	}
@@ -1455,7 +1453,7 @@ public abstract class BaseStructuredContentResourceTestCase {
 
 		options.setLocation(location);
 
-		HttpUtil.URLtoString(options);
+		HttpUtil.URLtoByteArray(options);
 
 		return options.getResponse();
 	}

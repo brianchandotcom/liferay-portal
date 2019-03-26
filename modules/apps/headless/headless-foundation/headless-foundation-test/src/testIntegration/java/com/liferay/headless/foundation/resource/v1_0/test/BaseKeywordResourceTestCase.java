@@ -443,7 +443,7 @@ public abstract class BaseKeywordResourceTestCase {
 
 		options.setLocation(location);
 
-		HttpUtil.URLtoString(options);
+		HttpUtil.URLtoByteArray(options);
 
 		return options.getResponse();
 	}
@@ -522,7 +522,7 @@ public abstract class BaseKeywordResourceTestCase {
 
 		options.setPost(true);
 
-		HttpUtil.URLtoString(options);
+		HttpUtil.URLtoByteArray(options);
 
 		return options.getResponse();
 	}
@@ -570,7 +570,7 @@ public abstract class BaseKeywordResourceTestCase {
 
 		options.setLocation(location);
 
-		HttpUtil.URLtoString(options);
+		HttpUtil.URLtoByteArray(options);
 
 		return options.getResponse();
 	}
@@ -624,18 +624,19 @@ public abstract class BaseKeywordResourceTestCase {
 
 		options.setLocation(location);
 
-		HttpUtil.URLtoString(options);
+		HttpUtil.URLtoByteArray(options);
 
 		return options.getResponse();
 	}
 
 	@Test
 	public void testPatchKeyword() throws Exception {
-		Keyword postKeyword = testPatchKeyword_addKeyword(randomKeyword());
+		Keyword postKeyword = testPatchKeyword_addKeyword();
 
-		Keyword randomPatchKeyword = randomKeyword();
+		Keyword randomPatchKeyword = randomPatchKeyword();
 
-		Keyword patchKeyword = testPatchKeyword_addKeyword(randomPatchKeyword);
+		Keyword patchKeyword = invokePatchKeyword(
+			postKeyword.getId(), randomPatchKeyword);
 
 		Keyword expectedPatchKeyword = (Keyword)BeanUtils.cloneBean(
 			postKeyword);
@@ -648,9 +649,7 @@ public abstract class BaseKeywordResourceTestCase {
 		assertValid(getKeyword);
 	}
 
-	protected Keyword testPatchKeyword_addKeyword(Keyword keyword)
-		throws Exception {
-
+	protected Keyword testPatchKeyword_addKeyword() throws Exception {
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
 	}
@@ -704,7 +703,7 @@ public abstract class BaseKeywordResourceTestCase {
 
 		options.setPatch(true);
 
-		HttpUtil.URLtoString(options);
+		HttpUtil.URLtoByteArray(options);
 
 		return options.getResponse();
 	}
@@ -781,7 +780,7 @@ public abstract class BaseKeywordResourceTestCase {
 
 		options.setPut(true);
 
-		HttpUtil.URLtoString(options);
+		HttpUtil.URLtoByteArray(options);
 
 		return options.getResponse();
 	}

@@ -162,7 +162,7 @@ public abstract class BaseBlogPostingResourceTestCase {
 
 		options.setLocation(location);
 
-		HttpUtil.URLtoString(options);
+		HttpUtil.URLtoByteArray(options);
 
 		return options.getResponse();
 	}
@@ -221,20 +221,19 @@ public abstract class BaseBlogPostingResourceTestCase {
 
 		options.setLocation(location);
 
-		HttpUtil.URLtoString(options);
+		HttpUtil.URLtoByteArray(options);
 
 		return options.getResponse();
 	}
 
 	@Test
 	public void testPatchBlogPosting() throws Exception {
-		BlogPosting postBlogPosting = testPatchBlogPosting_addBlogPosting(
-			randomBlogPosting());
+		BlogPosting postBlogPosting = testPatchBlogPosting_addBlogPosting();
 
-		BlogPosting randomPatchBlogPosting = randomBlogPosting();
+		BlogPosting randomPatchBlogPosting = randomPatchBlogPosting();
 
-		BlogPosting patchBlogPosting = testPatchBlogPosting_addBlogPosting(
-			randomPatchBlogPosting);
+		BlogPosting patchBlogPosting = invokePatchBlogPosting(
+			postBlogPosting.getId(), randomPatchBlogPosting);
 
 		BlogPosting expectedPatchBlogPosting = (BlogPosting)BeanUtils.cloneBean(
 			postBlogPosting);
@@ -249,8 +248,7 @@ public abstract class BaseBlogPostingResourceTestCase {
 		assertValid(getBlogPosting);
 	}
 
-	protected BlogPosting testPatchBlogPosting_addBlogPosting(
-			BlogPosting blogPosting)
+	protected BlogPosting testPatchBlogPosting_addBlogPosting()
 		throws Exception {
 
 		throw new UnsupportedOperationException(
@@ -309,7 +307,7 @@ public abstract class BaseBlogPostingResourceTestCase {
 
 		options.setPatch(true);
 
-		HttpUtil.URLtoString(options);
+		HttpUtil.URLtoByteArray(options);
 
 		return options.getResponse();
 	}
@@ -390,7 +388,7 @@ public abstract class BaseBlogPostingResourceTestCase {
 
 		options.setPut(true);
 
-		HttpUtil.URLtoString(options);
+		HttpUtil.URLtoByteArray(options);
 
 		return options.getResponse();
 	}
@@ -738,7 +736,7 @@ public abstract class BaseBlogPostingResourceTestCase {
 
 		options.setLocation(location);
 
-		HttpUtil.URLtoString(options);
+		HttpUtil.URLtoByteArray(options);
 
 		return options.getResponse();
 	}
@@ -818,7 +816,7 @@ public abstract class BaseBlogPostingResourceTestCase {
 
 		options.setPost(true);
 
-		HttpUtil.URLtoString(options);
+		HttpUtil.URLtoByteArray(options);
 
 		return options.getResponse();
 	}

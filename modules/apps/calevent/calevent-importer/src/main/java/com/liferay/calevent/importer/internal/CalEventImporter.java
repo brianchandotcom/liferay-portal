@@ -1314,140 +1314,6 @@ public class CalEventImporter {
 		}
 	}
 
-	@Reference(unbind = "-")
-	protected void setAssetCategoryLocalService(
-		AssetCategoryLocalService assetCategoryLocalService) {
-
-		_assetCategoryLocalService = assetCategoryLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setAssetEntryLocalService(
-		AssetEntryLocalService assetEntryLocalService) {
-
-		_assetEntryLocalService = assetEntryLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setAssetLinkLocalService(
-		AssetLinkLocalService assetLinkLocalService) {
-
-		_assetLinkLocalService = assetLinkLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setAssetVocabularyLocalService(
-		AssetVocabularyLocalService assetVocabularyLocalService) {
-
-		_assetVocabularyLocalService = assetVocabularyLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setCalendarBookingLocalService(
-		CalendarBookingLocalService calendarBookingLocalService) {
-
-		_calendarBookingLocalService = calendarBookingLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setCalendarResourceLocalService(
-		CalendarResourceLocalService calendarResourceLocalService) {
-
-		_calendarResourceLocalService = calendarResourceLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setClassNameLocalService(
-		ClassNameLocalService classNameLocalService) {
-
-		_classNameLocalService = classNameLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setCounterLocalService(
-		CounterLocalService counterLocalService) {
-
-		_counterLocalService = counterLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setGroupLocalService(GroupLocalService groupLocalService) {
-		_groupLocalService = groupLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setMBDiscussionLocalService(
-		MBDiscussionLocalService mbDiscussionLocalService) {
-
-		_mbDiscussionLocalService = mbDiscussionLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setMBMessageLocalService(
-		MBMessageLocalService mbMessageLocalService) {
-
-		_mbMessageLocalService = mbMessageLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setMBThreadLocalService(
-		MBThreadLocalService mbThreadLocalService) {
-
-		_mbThreadLocalService = mbThreadLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setRatingsEntryLocalService(
-		RatingsEntryLocalService ratingsEntryLocalService) {
-
-		_ratingsEntryLocalService = ratingsEntryLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setRatingsStatsLocalService(
-		RatingsStatsLocalService ratingsStatsLocalService) {
-
-		_ratingsStatsLocalService = ratingsStatsLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setResourceActionLocalService(
-		ResourceActionLocalService resourceActionLocalService) {
-
-		_resourceActionLocalService = resourceActionLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setResourcePermissionLocalService(
-		ResourcePermissionLocalService resourcePermissionLocalService) {
-
-		_resourcePermissionLocalService = resourcePermissionLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setRoleLocalService(RoleLocalService roleLocalService) {
-		_roleLocalService = roleLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setSocialActivityLocalService(
-		SocialActivityLocalService socialActivityLocalService) {
-
-		_socialActivityLocalService = socialActivityLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setSubscriptionLocalService(
-		SubscriptionLocalService subscriptionLocalService) {
-
-		_subscriptionLocalService = subscriptionLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setUserLocalService(UserLocalService userLocalService) {
-		_userLocalService = userLocalService;
-	}
-
 	protected void updateMBThreadRootMessageId(
 			long threadId, long rootMessageId)
 		throws PortalException {
@@ -1493,36 +1359,75 @@ public class CalEventImporter {
 			}
 		};
 
+	@Reference
 	private AssetCategoryLocalService _assetCategoryLocalService;
+
+	@Reference
 	private AssetEntryLocalService _assetEntryLocalService;
+
+	@Reference
 	private AssetLinkLocalService _assetLinkLocalService;
+
+	@Reference
 	private AssetVocabularyLocalService _assetVocabularyLocalService;
+
+	@Reference
 	private CalendarBookingLocalService _calendarBookingLocalService;
+
+	@Reference
 	private CalendarResourceLocalService _calendarResourceLocalService;
+
+	@Reference
 	private ClassNameLocalService _classNameLocalService;
+
+	@Reference
 	private CounterLocalService _counterLocalService;
 
-	@Reference(unbind = "-")
+	@Reference
 	private ExpandoRowLocalService _expandoRowLocalService;
 
-	@Reference(unbind = "-")
+	@Reference
 	private ExpandoTableLocalService _expandoTableLocalService;
 
-	@Reference(unbind = "-")
+	@Reference
 	private ExpandoValueLocalService _expandoValueLocalService;
 
+	@Reference
 	private GroupLocalService _groupLocalService;
+
 	private JSONSerializer _jsonSerializer;
+
+	@Reference
 	private MBDiscussionLocalService _mbDiscussionLocalService;
+
+	@Reference
 	private MBMessageLocalService _mbMessageLocalService;
+
+	@Reference
 	private MBThreadLocalService _mbThreadLocalService;
+
+	@Reference
 	private RatingsEntryLocalService _ratingsEntryLocalService;
+
+	@Reference
 	private RatingsStatsLocalService _ratingsStatsLocalService;
+
+	@Reference
 	private ResourceActionLocalService _resourceActionLocalService;
+
+	@Reference
 	private ResourcePermissionLocalService _resourcePermissionLocalService;
+
+	@Reference
 	private RoleLocalService _roleLocalService;
+
+	@Reference
 	private SocialActivityLocalService _socialActivityLocalService;
+
+	@Reference
 	private SubscriptionLocalService _subscriptionLocalService;
+
+	@Reference
 	private UserLocalService _userLocalService;
 
 }

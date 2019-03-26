@@ -3931,6 +3931,7 @@ org.apache.catalina.startup.ClassLoaderFactory.level=INFO]]>
 						app.server.bin.dir="${app.server.tcat.admin.bin.dir}"
 						app.server.bundle.index="@{app.server.bundle.index}"
 						delete.liferay.home="@{delete.liferay.home}"
+						test.docker.environment="${test.docker.environment}"
 						testable.portal.started.marker.file="@{testable.portal.started.marker.file}"
 					/>
 
@@ -3938,23 +3939,15 @@ org.apache.catalina.startup.ClassLoaderFactory.level=INFO]]>
 						app.server.bin.dir="${app.server.tcat.agent.bin.dir}"
 						app.server.bundle.index="@{app.server.bundle.index}"
 						delete.liferay.home="@{delete.liferay.home}"
+						test.docker.environment="${test.docker.environment}"
 						testable.portal.started.marker.file="@{testable.portal.started.marker.file}"
 					/>
 				</then>
-				<elseif>
-					<istrue value="${test.docker.environment}" />
-					<then>
-						<start-app-server-docker-cmd
-							app.server.bundle.index="@{app.server.bundle.index}"
-							delete.liferay.home="@{delete.liferay.home}"
-							testable.portal.started.marker.file="@{testable.portal.started.marker.file}"
-						/>
-					</then>
-				</elseif>
 				<else>
 					<start-app-server-cmd
 						app.server.bundle.index="@{app.server.bundle.index}"
 						delete.liferay.home="@{delete.liferay.home}"
+						test.docker.environment="${test.docker.environment}"
 						testable.portal.started.marker.file="@{testable.portal.started.marker.file}"
 					/>
 				</else>
@@ -3966,6 +3959,8 @@ org.apache.catalina.startup.ClassLoaderFactory.level=INFO]]>
 		<attribute default="${app.server.bin.dir}" name="app.server.bin.dir" />
 		<attribute default="0" name="app.server.bundle.index" />
 		<attribute default="true" name="delete.liferay.home" />
+		<attribute default="host" name="docker.network.name" />
+		<attribute default="false" name="test.docker.environment" />
 		<attribute default="" name="testable.portal.started.marker.file" />
 
 		<sequential>
@@ -4052,10 +4047,30 @@ org.apache.catalina.startup.ClassLoaderFactory.level=INFO]]>
 					<if>
 						<equals arg1="${test.ant.launched.by.selenium}" arg2="true" />
 						<then>
-							<exec dir="${test.app.server.bin.dir}" executable="${app.server.start.executable}" resolveexecutable="true">
-								<arg line="${app.server.start.executable.arg.line}" />
-								<env key="JAVA_HOME" path="${java.jdk.home}" />
-							</exec>
+							<if>
+								<istrue value="${test.docker.environment}" />
+								<then>
+									<echo>docker run -d -p 8080:8080 -v ${app.server.parent.dir}:${app.server.parent.dir} --cidfile=docker.process.pid --network=@{docker.network.name} openjdk:8-alpine ${app.server.bin.dir}/${app.server.start.executable} run</echo>
+
+									<exec executable="docker">
+										<arg line="run -d" />
+										<arg line="-p 8080:8080" />
+										<arg value="-v" />
+										<arg value="${app.server.parent.dir}:${app.server.parent.dir}" />
+										<arg value="--cidfile=docker.process.pid" />
+										<arg value="--network=@{docker.network.name}" />
+										<arg value="openjdk:8-alpine" />
+										<arg value="${app.server.bin.dir}/${app.server.start.executable}" />
+										<arg value="run" />
+									</exec>
+								</then>
+								<elseif>
+									<exec dir="${test.app.server.bin.dir}" executable="${app.server.start.executable}" resolveexecutable="true">
+										<arg line="${app.server.start.executable.arg.line}" />
+										<env key="JAVA_HOME" path="${java.jdk.home}" />
+									</exec>
+								</elseif>
+							</if>
 
 							<wait-for-app-server app.server.bin.dir="@{app.server.bin.dir}" app.server.bundle.index="@{app.server.bundle.index}" />
 						</then>
@@ -4075,111 +4090,34 @@ org.apache.catalina.startup.ClassLoaderFactory.level=INFO]]>
 								</if>
 
 								<daemons>
-									<exec dir="${test.app.server.bin.dir}" executable="${app.server.start.executable}" failonerror="true" resolveexecutable="true">
-										<arg line="${app.server.start.executable.arg.line}" />
-										<env key="JAVA_HOME" path="${java.jdk.home}" />
-									</exec>
+									<if>
+										<istrue value="${test.docker.environment}" />
+										<then>
+											<echo>docker run -d -p 8080:8080 -v ${app.server.parent.dir}:${app.server.parent.dir} --cidfile=docker.process.pid --network=@{docker.network.name} openjdk:8-alpine ${app.server.bin.dir}/${app.server.start.executable} run</echo>
+
+											<exec executable="docker">
+												<arg line="run -d" />
+												<arg line="-p 8080:8080" />
+												<arg value="-v" />
+												<arg value="${app.server.parent.dir}:${app.server.parent.dir}" />
+												<arg value="--cidfile=docker.process.pid" />
+												<arg value="--network=@{docker.network.name}" />
+												<arg value="openjdk:8-alpine" />
+												<arg value="${app.server.bin.dir}/${app.server.start.executable}" />
+												<arg value="run" />
+											</exec>
+										</then>
+										<elseif>
+											<exec dir="${test.app.server.bin.dir}" executable="${app.server.start.executable}" failonerror="true" resolveexecutable="true">
+												<arg line="${app.server.start.executable.arg.line}" />
+												<env key="JAVA_HOME" path="${java.jdk.home}" />
+											</exec>
+										</elseif>
+									</if>
 								</daemons>
 							</parallel>
 						</else>
 					</if>
-				</then>
-			</if>
-		</sequential>
-	</macrodef>
-
-	<macrodef name="start-app-server-docker-cmd">
-		<attribute default="${app.server.bin.dir}" name="app.server.bin.dir" />
-		<attribute default="0" name="app.server.bundle.index" />
-		<attribute default="true" name="delete.liferay.home" />
-		<attribute default="" name="testable.portal.started.marker.file" />
-		<attribute default="host" name="docker.network.name" />
-
-		<sequential>
-			<set-app-server-properties
-				app.server.bin.dir="@{app.server.bin.dir}"
-				app.server.bundle.index="@{app.server.bundle.index}"
-			/>
-
-			<local name="portal.not.started" />
-
-			<if>
-				<equals arg1="@{app.server.bin.dir}" arg2="${app.server.tcat.admin.bin.dir}" />
-				<then>
-					<waitfor maxwait="1" maxwaitunit="second" timeoutproperty="portal.not.started">
-						<socket port="${test.app.server.leading.port.number}180" server="localhost" />
-					</waitfor>
-				</then>
-				<elseif>
-					<equals arg1="@{app.server.bin.dir}" arg2="${app.server.tcat.agent.bin.dir}" />
-					<then>
-						<waitfor maxwait="1" maxwaitunit="second" timeoutproperty="portal.not.started">
-							<socket port="${test.app.server.leading.port.number}080" server="localhost" />
-						</waitfor>
-					</then>
-				</elseif>
-				<else>
-					<waitfor maxwait="1" maxwaitunit="second" timeoutproperty="portal.not.started">
-						<socket port="${test.app.server.leading.port.number}080" server="localhost" />
-					</waitfor>
-				</else>
-			</if>
-
-			<if>
-				<isset property="portal.not.started" />
-				<then>
-					<echo
-						file="@{testable.portal.started.marker.file}"
-						message="1"
-						unless:blank="@{testable.portal.started.marker.file}"
-					/>
-
-					<if>
-						<or>
-							<equals arg1="${app.server.type}" arg2="jboss" />
-							<equals arg1="${app.server.type}" arg2="wildfly" />
-						</or>
-						<then>
-							<echo file="${test.app.server.deploy.dir}/ROOT.war.dodeploy"></echo>
-						</then>
-					</if>
-
-					<get-testcase-property property.name="portal.version" />
-
-					<if>
-						<and>
-							<not>
-								<isset property="portal.version" />
-							</not>
-							<equals arg1="@{delete.liferay.home}" arg2="true" />
-						</and>
-						<then>
-							<antcall target="delete-liferay-home">
-								<param name="keep.hypersonicdb" value="true" />
-							</antcall>
-						</then>
-					</if>
-
-					<delete failonerror="false" includeemptydirs="true">
-						<fileset
-							dir="${test.app.server.dir}/logs"
-							excludes="catalina.*.log"
-						/>
-					</delete>
-
-					<echo>docker run -d -p 8080:8080 -v ${app.server.parent.dir}:${app.server.parent.dir} --cidfile=docker.process.pid --network=@{docker.network.name} openjdk:8-alpine ${app.server.bin.dir}/${app.server.start.executable} run</echo>
-
-					<exec executable="docker">
-						<arg line="run -d" />
-						<arg line="-p 8080:8080" />
-						<arg value="-v" />
-						<arg value="${app.server.parent.dir}:${app.server.parent.dir}" />
-						<arg value="--cidfile=docker.process.pid" />
-						<arg value="--network=@{docker.network.name}" />
-						<arg value="openjdk:8-alpine" />
-						<arg value="${app.server.bin.dir}/${app.server.start.executable}" />
-						<arg value="run" />
-					</exec>
 				</then>
 			</if>
 		</sequential>

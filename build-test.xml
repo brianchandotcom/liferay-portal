@@ -3942,7 +3942,7 @@ org.apache.catalina.startup.ClassLoaderFactory.level=INFO]]>
 					/>
 				</then>
 				<elseif>
-					<istrue value="${use.docker}" />
+					<istrue value="${test.docker.environment}" />
 					<then>
 						<start-app-server-docker-cmd
 							app.server.bundle.index="@{app.server.bundle.index}"
@@ -4310,7 +4310,7 @@ org.apache.catalina.startup.ClassLoaderFactory.level=INFO]]>
 					/>
 				</then>
 				<elseif>
-					<istrue value="${use.docker}" />
+					<istrue value="${test.docker.environment}" />
 					<then>
 						<stop-app-server-docker-cmd
 							app.server.bundle.index="@{app.server.bundle.index}"
@@ -9902,7 +9902,7 @@ cluster.link.bind.addr["cluster-link-udp"]=127.0.0.1</echo>
 							<condition property="mysql.host" value="127.0.0.1" else="${database.host}">
 								<and>
 									<equals arg1="${database.host}" arg2="localhost" />
-									<istrue value="${use.docker}" />
+									<istrue value="${test.docker.environment}" />
 								</and>
 							</condition>
 

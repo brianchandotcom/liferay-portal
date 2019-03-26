@@ -99,6 +99,7 @@
 		"@babel/plugin-proposal-object-rest-spread": "^7.4.0",
 		"@babel/preset-env": "^7.4.2",
 		"babel-eslint": "^8.2.6",
+		"babel-jest": "^24.5.0",
 		"babel-plugin-incremental-dom": "^3.3.0",
 		"babel-plugin-module-resolver": "^3.1.1",
 		"browser-sync": "^2.24.7",
@@ -128,7 +129,6 @@
 		},
 		"moduleNameMapper": {
 			"(.*)\\.soy$": "$1.soy.js",
-			"clay-(.*)$": "2.11.1",
 			"dynamic-data-mapping-form-builder/(.*)": "<rootDir>/../dynamic-data-mapping-form-builder/src/main/resources/META-INF/resources/$1",
 			"source/(.*)": "<rootDir>/src/main/resources/META-INF/resources/metal/js/$1.js"
 		},
@@ -138,6 +138,9 @@
 			"/__mock__/",
 			"/__fixtures__/"
 		],
+		"transform": {
+			".*": "<rootDir>/jest-preprocessor.js"
+		},
 		"setupFiles": [
 			"<rootDir>/test/metal/setup/setup.js",
 			"<rootDir>/test/metal/setup/setup_framework.js"

@@ -358,13 +358,8 @@ public class SharingEntryLocalServiceImpl
 		long fromUserId, long classNameId, int start, int end,
 		OrderByComparator<SharingEntry> orderByComparator) {
 
-		if (classNameId > 0) {
-			return sharingEntryPersistence.findByU_C(
-				fromUserId, classNameId, start, end, orderByComparator);
-		}
-
-		return sharingEntryPersistence.findByUserId(
-			fromUserId, start, end, orderByComparator);
+		return sharingEntryFinder.findByUserId(
+			fromUserId, classNameId, start, end, orderByComparator);
 	}
 
 	/**
@@ -380,11 +375,7 @@ public class SharingEntryLocalServiceImpl
 	public int getFromUserSharingEntriesCount(
 		long fromUserId, long classNameId) {
 
-		if (classNameId > 0) {
-			return sharingEntryPersistence.countByU_C(fromUserId, classNameId);
-		}
-
-		return sharingEntryPersistence.countByUserId(fromUserId);
+		return sharingEntryFinder.countByUserId(fromUserId, classNameId);
 	}
 
 	/**

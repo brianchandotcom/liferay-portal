@@ -38,7 +38,7 @@ tabsNames = ArrayUtil.append(tabsNames, (String)request.getAttribute(PortalSetti
 	refresh="<%= false %>"
 >
 	<liferay-ui:section>
-		<liferay-util:include page='<%= "/authentication/general.jsp" %>' portletId="<%= portletDisplay.getRootPortletId() %>" />
+		<liferay-util:include page='<%= "/authentication/general.jsp" %>' servletContext="<%= application %>" />
 	</liferay-ui:section>
 
 	<%

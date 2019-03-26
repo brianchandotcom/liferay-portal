@@ -12,23 +12,13 @@
  * details.
  */
 
-package com.liferay.product.navigation.personal.menu.web.internal.configuration.definition;
-
-import com.liferay.portal.kernel.settings.definition.ConfigurationBeanDeclaration;
-import com.liferay.product.navigation.personal.menu.configuration.PersonalMenuConfiguration;
-
-import org.osgi.service.component.annotations.Component;
+package com.liferay.product.navigation.personal.menu.configuration;
 
 /**
  * @author Samuel Trong Tran
  */
-@Component(service = ConfigurationBeanDeclaration.class)
-public class PersonalMenuConfigurationBeanDeclaration
-	implements ConfigurationBeanDeclaration {
+public interface PersonalMenuConfigurationTracker {
 
-	@Override
-	public Class<?> getConfigurationBeanClass() {
-		return PersonalMenuConfiguration.class;
-	}
+	public PersonalMenuConfiguration getCompanyConfiguration(long companyId);
 
 }

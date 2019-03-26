@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.verify.test;
+package com.liferay.portal.verify.test.util;
 
 import com.liferay.portal.kernel.util.InfrastructureUtil;
 import com.liferay.portal.kernel.util.ObjectValuePair;

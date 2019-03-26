@@ -17,7 +17,6 @@ package com.liferay.product.navigation.personal.menu;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.util.AggregateResourceBundle;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
@@ -74,11 +73,7 @@ public abstract class BasePersonalMenuEntry implements PersonalMenuEntry {
 	protected abstract String getPortletId();
 
 	protected ResourceBundle getResourceBundle(Locale locale) {
-		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
-			"content.Language", locale, getClass());
-
-		return new AggregateResourceBundle(
-			resourceBundle, PortalUtil.getResourceBundle(locale));
+		return ResourceBundleUtil.getBundle(locale, getClass());
 	}
 
 }

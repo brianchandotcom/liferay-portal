@@ -4452,7 +4452,10 @@ org.apache.catalina.startup.ClassLoaderFactory.level=INFO]]>
 				app.server.bundle.index="@{app.server.bundle.index}"
 			/>
 
-			<loadfile property="docker.process.pid" srcfile="docker.process.pid" />
+			<loadfile
+				property="docker.process.pid"
+				srcfile="docker.process.pid"
+			/>
 
 			<exec executable="docker">
 				<arg line="container stop ${docker.process.pid}" />
@@ -9837,16 +9840,16 @@ cluster.link.bind.addr["cluster-link-udp"]=127.0.0.1</echo>
 
 							<local name="mysql.host" />
 
-							<condition property="mysql.host" value="127.0.0.1" else="${database.host}">
+							<condition else="${database.host}" property="mysql.host" value="127.0.0.1">
 								<and>
 									<equals arg1="${database.host}" arg2="localhost" />
 									<istrue value="${test.docker.environment}" />
 								</and>
 							</condition>
 
-							<var name="arg.line" value="${arg.line} -h ${mysql.host}" unless:blank="${mysql.host}" />
-							<var name="arg.line" value="${arg.line} -u ${database.username}" unless:blank="${database.username}" />
-							<var name="arg.line" value="${arg.line} -p${database.password}" unless:blank="${database.password}" />
+							<var name="arg.line" unless:blank="${mysql.host}" value="${arg.line} -h ${mysql.host}" />
+							<var name="arg.line" unless:blank="${database.username}" value="${arg.line} -u ${database.username}" />
+							<var name="arg.line" unless:blank="${database.password}" value="${arg.line} -p${database.password}" />
 
 							<propertycopy from="${database.type}.executable" name="database.executable" override="true" />
 

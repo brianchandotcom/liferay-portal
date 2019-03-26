@@ -100,6 +100,19 @@ public class Mutation {
 	}
 
 	@GraphQLInvokeDetached
+	public Keyword patchKeyword(
+			@GraphQLName("keyword-id") Long keywordId,
+			@GraphQLName("Keyword") Keyword keyword)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_keywordResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			keywordResource -> keywordResource.patchKeyword(
+				keywordId, keyword));
+	}
+
+	@GraphQLInvokeDetached
 	public Keyword putKeyword(
 			@GraphQLName("keyword-id") Long keywordId,
 			@GraphQLName("Keyword") Keyword keyword)
@@ -122,6 +135,20 @@ public class Mutation {
 			taxonomyCategoryResource ->
 				taxonomyCategoryResource.deleteTaxonomyCategory(
 					taxonomyCategoryId));
+	}
+
+	@GraphQLInvokeDetached
+	public TaxonomyCategory patchTaxonomyCategory(
+			@GraphQLName("taxonomy-category-id") Long taxonomyCategoryId,
+			@GraphQLName("TaxonomyCategory") TaxonomyCategory taxonomyCategory)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_taxonomyCategoryResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			taxonomyCategoryResource ->
+				taxonomyCategoryResource.patchTaxonomyCategory(
+					taxonomyCategoryId, taxonomyCategory));
 	}
 
 	@GraphQLInvokeDetached
@@ -195,6 +222,21 @@ public class Mutation {
 			taxonomyVocabularyResource ->
 				taxonomyVocabularyResource.deleteTaxonomyVocabulary(
 					taxonomyVocabularyId));
+	}
+
+	@GraphQLInvokeDetached
+	public TaxonomyVocabulary patchTaxonomyVocabulary(
+			@GraphQLName("taxonomy-vocabulary-id") Long taxonomyVocabularyId,
+			@GraphQLName("TaxonomyVocabulary") TaxonomyVocabulary
+				taxonomyVocabulary)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_taxonomyVocabularyResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			taxonomyVocabularyResource ->
+				taxonomyVocabularyResource.patchTaxonomyVocabulary(
+					taxonomyVocabularyId, taxonomyVocabulary));
 	}
 
 	@GraphQLInvokeDetached

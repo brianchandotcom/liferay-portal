@@ -21,6 +21,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
@@ -45,6 +46,7 @@ import javax.validation.constraints.NotNull;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
+import javax.ws.rs.PATCH;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
@@ -121,6 +123,68 @@ public abstract class BaseTaxonomyVocabularyResourceImpl
 		throws Exception {
 
 		return new TaxonomyVocabulary();
+	}
+
+	@Override
+	@Consumes("application/json")
+	@PATCH
+	@Path("/taxonomy-vocabularies/{taxonomy-vocabulary-id}")
+	@Produces("application/json")
+	@Tags(value = {@Tag(name = "TaxonomyVocabulary")})
+	public TaxonomyVocabulary patchTaxonomyVocabulary(
+			@NotNull @PathParam("taxonomy-vocabulary-id") Long
+				taxonomyVocabularyId,
+			TaxonomyVocabulary taxonomyVocabulary)
+		throws Exception {
+
+		preparePatch(taxonomyVocabulary);
+
+		TaxonomyVocabulary existingTaxonomyVocabulary = getTaxonomyVocabulary(
+			taxonomyVocabularyId);
+
+		if (Validator.isNotNull(taxonomyVocabulary.getAvailableLanguages())) {
+			existingTaxonomyVocabulary.setAvailableLanguages(
+				taxonomyVocabulary.getAvailableLanguages());
+		}
+
+		if (Validator.isNotNull(taxonomyVocabulary.getContentSpaceId())) {
+			existingTaxonomyVocabulary.setContentSpaceId(
+				taxonomyVocabulary.getContentSpaceId());
+		}
+
+		if (Validator.isNotNull(taxonomyVocabulary.getDateCreated())) {
+			existingTaxonomyVocabulary.setDateCreated(
+				taxonomyVocabulary.getDateCreated());
+		}
+
+		if (Validator.isNotNull(taxonomyVocabulary.getDateModified())) {
+			existingTaxonomyVocabulary.setDateModified(
+				taxonomyVocabulary.getDateModified());
+		}
+
+		if (Validator.isNotNull(taxonomyVocabulary.getDescription())) {
+			existingTaxonomyVocabulary.setDescription(
+				taxonomyVocabulary.getDescription());
+		}
+
+		if (Validator.isNotNull(taxonomyVocabulary.getName())) {
+			existingTaxonomyVocabulary.setName(taxonomyVocabulary.getName());
+		}
+
+		if (Validator.isNotNull(
+				taxonomyVocabulary.getNumberOfTaxonomyCategories())) {
+
+			existingTaxonomyVocabulary.setNumberOfTaxonomyCategories(
+				taxonomyVocabulary.getNumberOfTaxonomyCategories());
+		}
+
+		if (Validator.isNotNull(taxonomyVocabulary.getViewableBy())) {
+			existingTaxonomyVocabulary.setViewableBy(
+				taxonomyVocabulary.getViewableBy());
+		}
+
+		return putTaxonomyVocabulary(
+			taxonomyVocabularyId, existingTaxonomyVocabulary);
 	}
 
 	@Override

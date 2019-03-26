@@ -49,6 +49,10 @@ public interface TaxonomyVocabularyResource {
 	public TaxonomyVocabulary getTaxonomyVocabulary(Long taxonomyVocabularyId)
 		throws Exception;
 
+	public TaxonomyVocabulary patchTaxonomyVocabulary(
+			Long taxonomyVocabularyId, TaxonomyVocabulary taxonomyVocabulary)
+		throws Exception;
+
 	public TaxonomyVocabulary putTaxonomyVocabulary(
 			Long taxonomyVocabularyId, TaxonomyVocabulary taxonomyVocabulary)
 		throws Exception;

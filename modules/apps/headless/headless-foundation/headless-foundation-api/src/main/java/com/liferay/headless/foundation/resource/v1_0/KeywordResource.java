@@ -46,6 +46,9 @@ public interface KeywordResource {
 
 	public Keyword getKeyword(Long keywordId) throws Exception;
 
+	public Keyword patchKeyword(Long keywordId, Keyword keyword)
+		throws Exception;
+
 	public Keyword putKeyword(Long keywordId, Keyword keyword) throws Exception;
 
 	public void setContextCompany(Company contextCompany);

@@ -40,6 +40,10 @@ public interface TaxonomyCategoryResource {
 	public TaxonomyCategory getTaxonomyCategory(Long taxonomyCategoryId)
 		throws Exception;
 
+	public TaxonomyCategory patchTaxonomyCategory(
+			Long taxonomyCategoryId, TaxonomyCategory taxonomyCategory)
+		throws Exception;
+
 	public TaxonomyCategory putTaxonomyCategory(
 			Long taxonomyCategoryId, TaxonomyCategory taxonomyCategory)
 		throws Exception;

@@ -630,6 +630,86 @@ public abstract class BaseKeywordResourceTestCase {
 	}
 
 	@Test
+	public void testPatchKeyword() throws Exception {
+		Keyword postKeyword = testPatchKeyword_addKeyword(randomKeyword());
+
+		Keyword randomPatchKeyword = randomKeyword();
+
+		Keyword patchKeyword = testPatchKeyword_addKeyword(randomPatchKeyword);
+
+		Keyword expectedPatchKeyword = (Keyword)BeanUtils.cloneBean(
+			postKeyword);
+
+		_beanUtilsBean.copyProperties(expectedPatchKeyword, randomPatchKeyword);
+
+		Keyword getKeyword = invokeGetKeyword(patchKeyword.getId());
+
+		assertEquals(expectedPatchKeyword, getKeyword);
+		assertValid(getKeyword);
+	}
+
+	protected Keyword testPatchKeyword_addKeyword(Keyword keyword)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected Keyword invokePatchKeyword(Long keywordId, Keyword keyword)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		options.setBody(
+			_inputObjectMapper.writeValueAsString(keyword),
+			ContentTypes.APPLICATION_JSON, StringPool.UTF8);
+
+		String location =
+			_resourceURL + _toPath("/keywords/{keyword-id}", keywordId);
+
+		options.setLocation(location);
+
+		options.setPatch(true);
+
+		String string = HttpUtil.URLtoString(options);
+
+		if (_log.isDebugEnabled()) {
+			_log.debug("HTTP response: " + string);
+		}
+
+		try {
+			return _outputObjectMapper.readValue(string, Keyword.class);
+		}
+		catch (Exception e) {
+			_log.error("Unable to process HTTP response: " + string, e);
+
+			throw e;
+		}
+	}
+
+	protected Http.Response invokePatchKeywordResponse(
+			Long keywordId, Keyword keyword)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		options.setBody(
+			_inputObjectMapper.writeValueAsString(keyword),
+			ContentTypes.APPLICATION_JSON, StringPool.UTF8);
+
+		String location =
+			_resourceURL + _toPath("/keywords/{keyword-id}", keywordId);
+
+		options.setLocation(location);
+
+		options.setPatch(true);
+
+		HttpUtil.URLtoString(options);
+
+		return options.getResponse();
+	}
+
+	@Test
 	public void testPutKeyword() throws Exception {
 		Keyword postKeyword = testPutKeyword_addKeyword();
 

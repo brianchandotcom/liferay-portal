@@ -244,6 +244,101 @@ public abstract class BaseTaxonomyCategoryResourceTestCase {
 	}
 
 	@Test
+	public void testPatchTaxonomyCategory() throws Exception {
+		TaxonomyCategory postTaxonomyCategory =
+			testPatchTaxonomyCategory_addTaxonomyCategory(
+				randomTaxonomyCategory());
+
+		TaxonomyCategory randomPatchTaxonomyCategory = randomTaxonomyCategory();
+
+		TaxonomyCategory patchTaxonomyCategory =
+			testPatchTaxonomyCategory_addTaxonomyCategory(
+				randomPatchTaxonomyCategory);
+
+		TaxonomyCategory expectedPatchTaxonomyCategory =
+			(TaxonomyCategory)BeanUtils.cloneBean(postTaxonomyCategory);
+
+		_beanUtilsBean.copyProperties(
+			expectedPatchTaxonomyCategory, randomPatchTaxonomyCategory);
+
+		TaxonomyCategory getTaxonomyCategory = invokeGetTaxonomyCategory(
+			patchTaxonomyCategory.getId());
+
+		assertEquals(expectedPatchTaxonomyCategory, getTaxonomyCategory);
+		assertValid(getTaxonomyCategory);
+	}
+
+	protected TaxonomyCategory testPatchTaxonomyCategory_addTaxonomyCategory(
+			TaxonomyCategory taxonomyCategory)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected TaxonomyCategory invokePatchTaxonomyCategory(
+			Long taxonomyCategoryId, TaxonomyCategory taxonomyCategory)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		options.setBody(
+			_inputObjectMapper.writeValueAsString(taxonomyCategory),
+			ContentTypes.APPLICATION_JSON, StringPool.UTF8);
+
+		String location =
+			_resourceURL +
+				_toPath(
+					"/taxonomy-categories/{taxonomy-category-id}",
+					taxonomyCategoryId);
+
+		options.setLocation(location);
+
+		options.setPatch(true);
+
+		String string = HttpUtil.URLtoString(options);
+
+		if (_log.isDebugEnabled()) {
+			_log.debug("HTTP response: " + string);
+		}
+
+		try {
+			return _outputObjectMapper.readValue(
+				string, TaxonomyCategory.class);
+		}
+		catch (Exception e) {
+			_log.error("Unable to process HTTP response: " + string, e);
+
+			throw e;
+		}
+	}
+
+	protected Http.Response invokePatchTaxonomyCategoryResponse(
+			Long taxonomyCategoryId, TaxonomyCategory taxonomyCategory)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		options.setBody(
+			_inputObjectMapper.writeValueAsString(taxonomyCategory),
+			ContentTypes.APPLICATION_JSON, StringPool.UTF8);
+
+		String location =
+			_resourceURL +
+				_toPath(
+					"/taxonomy-categories/{taxonomy-category-id}",
+					taxonomyCategoryId);
+
+		options.setLocation(location);
+
+		options.setPatch(true);
+
+		HttpUtil.URLtoString(options);
+
+		return options.getResponse();
+	}
+
+	@Test
 	public void testPutTaxonomyCategory() throws Exception {
 		TaxonomyCategory postTaxonomyCategory =
 			testPutTaxonomyCategory_addTaxonomyCategory();

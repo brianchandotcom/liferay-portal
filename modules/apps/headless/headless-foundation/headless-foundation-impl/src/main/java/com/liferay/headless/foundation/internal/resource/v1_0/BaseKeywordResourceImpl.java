@@ -21,6 +21,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
@@ -45,6 +46,7 @@ import javax.validation.constraints.NotNull;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
+import javax.ws.rs.PATCH;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
@@ -116,6 +118,44 @@ public abstract class BaseKeywordResourceImpl implements KeywordResource {
 		throws Exception {
 
 		return new Keyword();
+	}
+
+	@Override
+	@Consumes("application/json")
+	@PATCH
+	@Path("/keywords/{keyword-id}")
+	@Produces("application/json")
+	@Tags(value = {@Tag(name = "Keyword")})
+	public Keyword patchKeyword(
+			@NotNull @PathParam("keyword-id") Long keywordId, Keyword keyword)
+		throws Exception {
+
+		preparePatch(keyword);
+
+		Keyword existingKeyword = getKeyword(keywordId);
+
+		if (Validator.isNotNull(keyword.getContentSpaceId())) {
+			existingKeyword.setContentSpaceId(keyword.getContentSpaceId());
+		}
+
+		if (Validator.isNotNull(keyword.getDateCreated())) {
+			existingKeyword.setDateCreated(keyword.getDateCreated());
+		}
+
+		if (Validator.isNotNull(keyword.getDateModified())) {
+			existingKeyword.setDateModified(keyword.getDateModified());
+		}
+
+		if (Validator.isNotNull(keyword.getKeywordUsageCount())) {
+			existingKeyword.setKeywordUsageCount(
+				keyword.getKeywordUsageCount());
+		}
+
+		if (Validator.isNotNull(keyword.getName())) {
+			existingKeyword.setName(keyword.getName());
+		}
+
+		return putKeyword(keywordId, existingKeyword);
 	}
 
 	@Override

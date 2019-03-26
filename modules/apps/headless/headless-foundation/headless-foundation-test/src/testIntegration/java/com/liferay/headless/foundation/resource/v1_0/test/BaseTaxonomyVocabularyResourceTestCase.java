@@ -707,6 +707,103 @@ public abstract class BaseTaxonomyVocabularyResourceTestCase {
 	}
 
 	@Test
+	public void testPatchTaxonomyVocabulary() throws Exception {
+		TaxonomyVocabulary postTaxonomyVocabulary =
+			testPatchTaxonomyVocabulary_addTaxonomyVocabulary(
+				randomTaxonomyVocabulary());
+
+		TaxonomyVocabulary randomPatchTaxonomyVocabulary =
+			randomTaxonomyVocabulary();
+
+		TaxonomyVocabulary patchTaxonomyVocabulary =
+			testPatchTaxonomyVocabulary_addTaxonomyVocabulary(
+				randomPatchTaxonomyVocabulary);
+
+		TaxonomyVocabulary expectedPatchTaxonomyVocabulary =
+			(TaxonomyVocabulary)BeanUtils.cloneBean(postTaxonomyVocabulary);
+
+		_beanUtilsBean.copyProperties(
+			expectedPatchTaxonomyVocabulary, randomPatchTaxonomyVocabulary);
+
+		TaxonomyVocabulary getTaxonomyVocabulary = invokeGetTaxonomyVocabulary(
+			patchTaxonomyVocabulary.getId());
+
+		assertEquals(expectedPatchTaxonomyVocabulary, getTaxonomyVocabulary);
+		assertValid(getTaxonomyVocabulary);
+	}
+
+	protected TaxonomyVocabulary
+			testPatchTaxonomyVocabulary_addTaxonomyVocabulary(
+				TaxonomyVocabulary taxonomyVocabulary)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected TaxonomyVocabulary invokePatchTaxonomyVocabulary(
+			Long taxonomyVocabularyId, TaxonomyVocabulary taxonomyVocabulary)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		options.setBody(
+			_inputObjectMapper.writeValueAsString(taxonomyVocabulary),
+			ContentTypes.APPLICATION_JSON, StringPool.UTF8);
+
+		String location =
+			_resourceURL +
+				_toPath(
+					"/taxonomy-vocabularies/{taxonomy-vocabulary-id}",
+					taxonomyVocabularyId);
+
+		options.setLocation(location);
+
+		options.setPatch(true);
+
+		String string = HttpUtil.URLtoString(options);
+
+		if (_log.isDebugEnabled()) {
+			_log.debug("HTTP response: " + string);
+		}
+
+		try {
+			return _outputObjectMapper.readValue(
+				string, TaxonomyVocabulary.class);
+		}
+		catch (Exception e) {
+			_log.error("Unable to process HTTP response: " + string, e);
+
+			throw e;
+		}
+	}
+
+	protected Http.Response invokePatchTaxonomyVocabularyResponse(
+			Long taxonomyVocabularyId, TaxonomyVocabulary taxonomyVocabulary)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		options.setBody(
+			_inputObjectMapper.writeValueAsString(taxonomyVocabulary),
+			ContentTypes.APPLICATION_JSON, StringPool.UTF8);
+
+		String location =
+			_resourceURL +
+				_toPath(
+					"/taxonomy-vocabularies/{taxonomy-vocabulary-id}",
+					taxonomyVocabularyId);
+
+		options.setLocation(location);
+
+		options.setPatch(true);
+
+		HttpUtil.URLtoString(options);
+
+		return options.getResponse();
+	}
+
+	@Test
 	public void testPutTaxonomyVocabulary() throws Exception {
 		TaxonomyVocabulary postTaxonomyVocabulary =
 			testPutTaxonomyVocabulary_addTaxonomyVocabulary();

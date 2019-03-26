@@ -21,6 +21,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
@@ -45,6 +46,7 @@ import javax.validation.constraints.NotNull;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
+import javax.ws.rs.PATCH;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
@@ -83,6 +85,67 @@ public abstract class BaseTaxonomyCategoryResourceImpl
 		throws Exception {
 
 		return new TaxonomyCategory();
+	}
+
+	@Override
+	@Consumes("application/json")
+	@PATCH
+	@Path("/taxonomy-categories/{taxonomy-category-id}")
+	@Produces("application/json")
+	@Tags(value = {@Tag(name = "TaxonomyCategory")})
+	public TaxonomyCategory patchTaxonomyCategory(
+			@NotNull @PathParam("taxonomy-category-id") Long taxonomyCategoryId,
+			TaxonomyCategory taxonomyCategory)
+		throws Exception {
+
+		preparePatch(taxonomyCategory);
+
+		TaxonomyCategory existingTaxonomyCategory = getTaxonomyCategory(
+			taxonomyCategoryId);
+
+		if (Validator.isNotNull(taxonomyCategory.getAvailableLanguages())) {
+			existingTaxonomyCategory.setAvailableLanguages(
+				taxonomyCategory.getAvailableLanguages());
+		}
+
+		if (Validator.isNotNull(taxonomyCategory.getDateCreated())) {
+			existingTaxonomyCategory.setDateCreated(
+				taxonomyCategory.getDateCreated());
+		}
+
+		if (Validator.isNotNull(taxonomyCategory.getDateModified())) {
+			existingTaxonomyCategory.setDateModified(
+				taxonomyCategory.getDateModified());
+		}
+
+		if (Validator.isNotNull(taxonomyCategory.getDescription())) {
+			existingTaxonomyCategory.setDescription(
+				taxonomyCategory.getDescription());
+		}
+
+		if (Validator.isNotNull(taxonomyCategory.getName())) {
+			existingTaxonomyCategory.setName(taxonomyCategory.getName());
+		}
+
+		if (Validator.isNotNull(
+				taxonomyCategory.getNumberOfTaxonomyCategories())) {
+
+			existingTaxonomyCategory.setNumberOfTaxonomyCategories(
+				taxonomyCategory.getNumberOfTaxonomyCategories());
+		}
+
+		if (Validator.isNotNull(taxonomyCategory.getParentVocabularyId())) {
+			existingTaxonomyCategory.setParentVocabularyId(
+				taxonomyCategory.getParentVocabularyId());
+		}
+
+		if (Validator.isNotNull(taxonomyCategory.getViewableBy())) {
+			existingTaxonomyCategory.setViewableBy(
+				taxonomyCategory.getViewableBy());
+		}
+
+		return putTaxonomyCategory(
+			taxonomyCategoryId, existingTaxonomyCategory);
 	}
 
 	@Override

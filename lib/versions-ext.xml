@@ -2793,21 +2793,6 @@
 				</licenses>
 			</library>
 			<library>
-				<file-name>lib/portal/sigar.jar</file-name>
-				<version>1.6.4</version>
-				<project-name>Sigar</project-name>
-				<project-url>https://sourceforge.net/projects/sigar/</project-url>
-				<licenses>
-					<license>
-						<license-name>BSD Style License</license-name>
-						<license-url>http://en.wikipedia.org/wiki/BSD_licenses</license-url>
-					</license>
-				</licenses>
-				<comments>
-					This includes modifications for compatibility with JDK 5.
-				</comments>
-			</library>
-			<library>
 				<file-name>lib/portal/simplecaptcha.jar</file-name>
 				<version>1.1.1</version>
 				<project-name>SimpleCaptcha</project-name>

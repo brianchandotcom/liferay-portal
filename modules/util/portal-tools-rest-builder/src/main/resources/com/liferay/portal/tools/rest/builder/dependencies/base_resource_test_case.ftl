@@ -722,11 +722,11 @@ public abstract class Base${schemaName}ResourceTestCase {
 				<#if !properties?keys?seq_contains("id") || arguments?ends_with(",multipartBody")>
 					Assert.assertTrue(true);
 				<#else>
-					${schemaName} post${schemaName} = test${javaMethodSignature.methodName?cap_first}_add${schemaName}(random${schemaName}());
+					${schemaName} post${schemaName} = test${javaMethodSignature.methodName?cap_first}_add${schemaName}();
 
-					${schemaName} randomPatch${schemaName} = random${schemaName}();
+					${schemaName} randomPatch${schemaName} = randomPatch${schemaName}();
 
-					${schemaName} patch${schemaName} = test${javaMethodSignature.methodName?cap_first}_add${schemaName}(randomPatch${schemaName});
+					${schemaName} patch${schemaName} = invoke${javaMethodSignature.methodName?cap_first}(post${schemaName}.getId(), randomPatch${schemaName});
 
 					${schemaName} expectedPatch${schemaName} = (${schemaName})BeanUtils.cloneBean(post${schemaName});
 
@@ -740,7 +740,7 @@ public abstract class Base${schemaName}ResourceTestCase {
 			}
 
 			<#if properties?keys?seq_contains("id")>
-				protected ${schemaName} test${javaMethodSignature.methodName?cap_first}_add${schemaName}(${schemaName} ${schemaVarName}) throws Exception {
+				protected ${schemaName} test${javaMethodSignature.methodName?cap_first}_add${schemaName}() throws Exception {
 					throw new UnsupportedOperationException("This method needs to be implemented");
 				}
 			</#if>

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.calevent.importer.internal;
+package com.liferay.calevent.importer.internal.verify;
 
 import com.liferay.asset.kernel.exception.NoSuchVocabularyException;
 import com.liferay.asset.kernel.model.AssetCategory;
@@ -52,8 +52,6 @@ import com.liferay.message.boards.service.MBThreadLocalService;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.cal.DayAndPosition;
 import com.liferay.portal.kernel.cal.TZSRecurrence;
-import com.liferay.portal.kernel.dao.db.DBInspector;
-import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.NoSuchUserException;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -83,6 +81,7 @@ import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.verify.VerifyProcess;
 import com.liferay.ratings.kernel.model.RatingsEntry;
 import com.liferay.ratings.kernel.model.RatingsStats;
 import com.liferay.ratings.kernel.service.RatingsEntryLocalService;
@@ -92,7 +91,6 @@ import com.liferay.social.kernel.service.SocialActivityLocalService;
 import com.liferay.subscription.model.Subscription;
 import com.liferay.subscription.service.SubscriptionLocalService;
 
-import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -108,43 +106,85 @@ import java.util.Map;
 
 import org.jabsorb.JSONSerializer;
 
-import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Adam Brandizzi
  */
-@Component(immediate = true, service = {})
-public class CalEventImporter {
+@Component(
+	immediate = true,
+	property = "verify.process.name=com.liferay.calevent.importer",
+	service = VerifyProcess.class
+)
+public class CalEventImporterVerifyProcess extends VerifyProcess {
 
-	@Activate
-	protected void activate() throws Exception {
-		long start = System.currentTimeMillis();
+	@Override
+	protected void doVerify() throws Exception {
+		try (LoggingTimer loggingTimer = new LoggingTimer()) {
+			importCalEvents();
+		}
+	}
 
-		if (_log.isInfoEnabled()) {
-			_log.info("Importing CalEvent records");
+	protected void importCalEvents() throws Exception {
+		if (!hasTable("CalEvent")) {
+			return;
 		}
 
-		try (Connection con = DataAccess.getConnection()) {
-			connection = con;
+		try (LoggingTimer loggingTimer = new LoggingTimer()) {
+			StringBundler sb = new StringBundler(6);
 
-			DBInspector dbInspector = new DBInspector(connection);
+			sb.append("select uuid_, eventId, groupId, companyId, userId, ");
+			sb.append("userName, createDate, modifiedDate, title, ");
+			sb.append("description, location, startDate, endDate, ");
+			sb.append("durationHour, durationMinute, allDay, type_, ");
+			sb.append("repeating, recurrence, remindBy, firstReminder, ");
+			sb.append("secondReminder from CalEvent");
 
-			importCalEvents(dbInspector);
-		}
-		finally {
-			connection = null;
+			try (PreparedStatement ps = connection.prepareStatement(
+					sb.toString())) {
 
-			if (_log.isInfoEnabled()) {
-				_log.info(
-					"Completed CalEvent import process in " +
-						(System.currentTimeMillis() - start) + "ms");
+				ResultSet rs = ps.executeQuery();
+
+				while (rs.next()) {
+					String uuid = rs.getString("uuid_");
+					long eventId = rs.getLong("eventId");
+					long groupId = rs.getLong("groupId");
+					long companyId = rs.getLong("companyId");
+					long userId = rs.getLong("userId");
+					String userName = rs.getString("userName");
+					Timestamp createDate = rs.getTimestamp("createDate");
+					Timestamp modifiedDate = rs.getTimestamp("modifiedDate");
+					String title = rs.getString("title");
+					String description = rs.getString("description");
+					String location = rs.getString("location");
+					Timestamp startDate = rs.getTimestamp("startDate");
+					int durationHour = rs.getInt("durationHour");
+					int durationMinute = rs.getInt("durationMinute");
+					boolean allDay = rs.getBoolean("allDay");
+					String type = rs.getString("type_");
+					String recurrence = rs.getString("recurrence");
+					int remindBy = rs.getInt("remindBy");
+					int firstReminder = rs.getInt("firstReminder");
+					int secondReminder = rs.getInt("secondReminder");
+
+					CalendarBooking calendarBooking = _importCalEvent(
+						uuid, eventId, groupId, companyId, userId, userName,
+						createDate, modifiedDate, title, description, location,
+						startDate, durationHour, durationMinute, allDay, type,
+						recurrence, remindBy, firstReminder, secondReminder);
+
+					if (_log.isInfoEnabled()) {
+						_log.info(
+							"CalendarBooking: " + calendarBooking +
+								" imported sucessfully.");
+					}
+				}
 			}
 		}
 	}
 
-	protected void addAssetEntry(
+	private void _addAssetEntry(
 		long entryId, long groupId, long companyId, long userId,
 		String userName, Date createDate, Date modifiedDate, long classNameId,
 		long classPK, String classUuid, boolean visible, Date startDate,
@@ -184,7 +224,7 @@ public class CalEventImporter {
 		_assetEntryLocalService.updateAssetEntry(assetEntry);
 	}
 
-	protected void addAssetLink(
+	private void _addAssetLink(
 		long linkId, long companyId, long userId, String userName,
 		Date createDate, long entryId1, long entryId2, int type, int weight) {
 
@@ -202,7 +242,7 @@ public class CalEventImporter {
 		_assetLinkLocalService.updateAssetLink(assetLink);
 	}
 
-	protected CalendarBooking addCalendarBooking(
+	private CalendarBooking _addCalendarBooking(
 		String uuid, long calendarBookingId, long companyId, long groupId,
 		long userId, String userName, Timestamp createDate,
 		Timestamp modifiedDate, long calendarId, long calendarResourceId,
@@ -246,7 +286,7 @@ public class CalEventImporter {
 			calendarBooking);
 	}
 
-	protected void addMBDiscussion(
+	private void _addMBDiscussion(
 		String uuid, long discussionId, long groupId, long companyId,
 		long userId, String userName, Date createDate, Date modifiedDate,
 		long classNameId, long classPK, long threadId) {
@@ -268,7 +308,7 @@ public class CalEventImporter {
 		_mbDiscussionLocalService.updateMBDiscussion(mbDiscussion);
 	}
 
-	protected void addMBMessage(
+	private void _addMBMessage(
 			String uuid, long messageId, long groupId, long companyId,
 			long userId, String userName, Date createDate, Date modifiedDate,
 			long classNameId, long classPK, long categoryId, long threadId,
@@ -283,10 +323,10 @@ public class CalEventImporter {
 			rootMessageId = messageId;
 		}
 		else {
-			rootMessageId = importMBMessage(
+			rootMessageId = _importMBMessage(
 				rootMessageId, threadId, classPK, mbMessageIds);
 
-			parentMessageId = importMBMessage(
+			parentMessageId = _importMBMessage(
 				parentMessageId, threadId, classPK, mbMessageIds);
 		}
 
@@ -320,7 +360,7 @@ public class CalEventImporter {
 		_mbMessageLocalService.updateMBMessage(mbMessage);
 	}
 
-	protected void addMBThread(
+	private void _addMBThread(
 		String uuid, long threadId, long groupId, long companyId, long userId,
 		String userName, Date createDate, Date modifiedDate, long categoryId,
 		long rootMessageId, long rootMessageUserId, String title,
@@ -355,7 +395,7 @@ public class CalEventImporter {
 		_mbThreadLocalService.updateMBThread(mbThread);
 	}
 
-	protected RatingsEntry addRatingsEntry(
+	private RatingsEntry _addRatingsEntry(
 		long entryId, long companyId, long userId, String userName,
 		Date createDate, Date modifiedDate, String className, long classPK,
 		double score) {
@@ -377,7 +417,7 @@ public class CalEventImporter {
 		return _ratingsEntryLocalService.updateRatingsEntry(ratingsEntry);
 	}
 
-	protected RatingsStats addRatingsStats(
+	private RatingsStats _addRatingsStats(
 		long statsId, String className, long classPK, int totalEntries,
 		double totalScore, double averageScore) {
 
@@ -396,7 +436,7 @@ public class CalEventImporter {
 		return _ratingsStatsLocalService.updateRatingsStats(ratingsStats);
 	}
 
-	protected void addSocialActivity(
+	private void _addSocialActivity(
 		long activityId, long groupId, long companyId, long userId,
 		long createDate, long mirrorActivityId, long classNameId, long classPK,
 		int type, String extraData, long receiverUserId) {
@@ -418,7 +458,7 @@ public class CalEventImporter {
 		_socialActivityLocalService.updateSocialActivity(socialActivity);
 	}
 
-	protected void addSubscription(
+	private void _addSubscription(
 		long subscriptionId, long companyId, long userId, String userName,
 		Date createDate, Date modifiedDate, long classNameId, long classPK,
 		String frequency) {
@@ -438,7 +478,7 @@ public class CalEventImporter {
 		_subscriptionLocalService.updateSubscription(subscription);
 	}
 
-	protected String convertRecurrence(String originalRecurrence)
+	private String _convertRecurrence(String originalRecurrence)
 		throws Exception {
 
 		if (Validator.isNull(originalRecurrence)) {
@@ -455,7 +495,7 @@ public class CalEventImporter {
 
 			// LPS-65972
 
-			JSONSerializer jsonSerializer = getJSONSerializer();
+			JSONSerializer jsonSerializer = _getJSONSerializer();
 
 			tzsRecurrence = (TZSRecurrence)jsonSerializer.fromJSON(
 				originalRecurrence);
@@ -530,7 +570,7 @@ public class CalEventImporter {
 		return RecurrenceSerializer.serialize(recurrence);
 	}
 
-	protected String[] getActionIds(
+	private String[] _getActionIds(
 		ResourcePermission resourcePermission, String oldClassName,
 		List<String> modelResourceActions) {
 
@@ -550,7 +590,7 @@ public class CalEventImporter {
 		return actionIds.toArray(new String[actionIds.size()]);
 	}
 
-	protected AssetCategory getAssetCategory(
+	private AssetCategory _getAssetCategory(
 			long userId, long companyId, long groupId, String name)
 		throws PortalException {
 
@@ -612,7 +652,7 @@ public class CalEventImporter {
 			serviceContext);
 	}
 
-	protected CalendarResource getCalendarResource(long companyId, long groupId)
+	private CalendarResource _getCalendarResource(long companyId, long groupId)
 		throws PortalException {
 
 		ServiceContext serviceContext = new ServiceContext();
@@ -697,7 +737,7 @@ public class CalEventImporter {
 			groupId, null, null, nameMap, descriptionMap, true, serviceContext);
 	}
 
-	protected JSONSerializer getJSONSerializer() throws Exception {
+	private JSONSerializer _getJSONSerializer() throws Exception {
 		if (_jsonSerializer == null) {
 			_jsonSerializer = new JSONSerializer();
 
@@ -707,7 +747,7 @@ public class CalEventImporter {
 		return _jsonSerializer;
 	}
 
-	protected void importAssetLink(
+	private void _importAssetLink(
 			AssetLink assetLink, long oldEntryId, long newEntryId)
 		throws Exception {
 
@@ -734,10 +774,10 @@ public class CalEventImporter {
 		if (linkedAssetEntry.getClassNameId() ==
 				_classNameLocalService.getClassNameId(_CLASS_NAME)) {
 
-			CalendarBooking calendarBooking = importCalEvent(
+			CalendarBooking calendarBooking = _importCalEvent(
 				linkedAssetEntry.getClassPK());
 
-			CalendarResource calendarResource = getCalendarResource(
+			CalendarResource calendarResource = _getCalendarResource(
 				calendarBooking.getCompanyId(), calendarBooking.getGroupId());
 
 			linkedAssetEntry = _assetEntryLocalService.getEntry(
@@ -750,20 +790,20 @@ public class CalEventImporter {
 				entryId1 = linkedAssetEntry.getEntryId();
 			}
 
-			if (isAssetLinkImported(entryId1, entryId2, assetLink.getType())) {
+			if (_isAssetLinkImported(entryId1, entryId2, assetLink.getType())) {
 				return;
 			}
 		}
 
 		long linkId = _counterLocalService.increment();
 
-		addAssetLink(
+		_addAssetLink(
 			linkId, assetLink.getCompanyId(), assetLink.getUserId(),
 			assetLink.getUserName(), assetLink.getCreateDate(), entryId1,
 			entryId2, assetLink.getType(), assetLink.getWeight());
 	}
 
-	protected void importAssets(
+	private void _importAssets(
 			String uuid, long companyId, long groupId, long userId, String type,
 			long eventId, long calendarBookingId)
 		throws Exception {
@@ -779,7 +819,7 @@ public class CalEventImporter {
 
 		long entryId = _counterLocalService.increment();
 
-		addAssetEntry(
+		_addAssetEntry(
 			entryId, assetEntry.getGroupId(), assetEntry.getCompanyId(),
 			assetEntry.getUserId(), assetEntry.getUserName(),
 			assetEntry.getCreateDate(), assetEntry.getModifiedDate(),
@@ -802,7 +842,7 @@ public class CalEventImporter {
 
 		if (Validator.isNotNull(type)) {
 			assetCategories.add(
-				getAssetCategory(userId, companyId, groupId, type));
+				_getAssetCategory(userId, companyId, groupId, type));
 		}
 
 		for (AssetCategory assetCategory : assetCategories) {
@@ -816,7 +856,7 @@ public class CalEventImporter {
 			assetEntry.getEntryId());
 
 		for (AssetLink assetLink : assetLinks) {
-			importAssetLink(assetLink, assetEntry.getEntryId(), entryId);
+			_importAssetLink(assetLink, assetEntry.getEntryId(), entryId);
 		}
 
 		// Asset tags
@@ -829,7 +869,7 @@ public class CalEventImporter {
 		}
 	}
 
-	protected void importCalendarBookingResourcePermission(
+	private void _importCalendarBookingResourcePermission(
 			ResourcePermission resourcePermission, long calendarBookingId,
 			List<String> modelResourceActions)
 		throws PortalException {
@@ -837,7 +877,7 @@ public class CalEventImporter {
 		CalendarBooking calendarBooking =
 			_calendarBookingLocalService.getCalendarBooking(calendarBookingId);
 
-		String[] actionIds = getActionIds(
+		String[] actionIds = _getActionIds(
 			resourcePermission, _CLASS_NAME, modelResourceActions);
 
 		_resourcePermissionLocalService.setResourcePermissions(
@@ -847,7 +887,7 @@ public class CalEventImporter {
 			actionIds);
 	}
 
-	protected void importCalendarBookingResourcePermissions(
+	private void _importCalendarBookingResourcePermissions(
 			long companyId, long eventId, long calendarBookingId)
 		throws PortalException {
 
@@ -861,12 +901,12 @@ public class CalEventImporter {
 				String.valueOf(eventId));
 
 		for (ResourcePermission resourcePermission : resourcePermissions) {
-			importCalendarBookingResourcePermission(
+			_importCalendarBookingResourcePermission(
 				resourcePermission, calendarBookingId, modelResourceActions);
 		}
 	}
 
-	protected CalendarBooking importCalEvent(long calEventId) throws Exception {
+	private CalendarBooking _importCalEvent(long calEventId) throws Exception {
 		try (LoggingTimer loggingTimer = new LoggingTimer()) {
 			StringBundler sb = new StringBundler(6);
 
@@ -906,7 +946,7 @@ public class CalEventImporter {
 					int firstReminder = rs.getInt("firstReminder");
 					int secondReminder = rs.getInt("secondReminder");
 
-					return importCalEvent(
+					return _importCalEvent(
 						uuid, eventId, groupId, companyId, userId, userName,
 						createDate, modifiedDate, title, description, location,
 						startDate, durationHour, durationMinute, allDay, type,
@@ -918,7 +958,7 @@ public class CalEventImporter {
 		}
 	}
 
-	protected CalendarBooking importCalEvent(
+	private CalendarBooking _importCalEvent(
 			String uuid, long eventId, long groupId, long companyId,
 			long userId, String userName, Timestamp createDate,
 			Timestamp modifiedDate, String title, String description,
@@ -929,7 +969,7 @@ public class CalEventImporter {
 
 		// Calendar booking
 
-		CalendarResource calendarResource = getCalendarResource(
+		CalendarResource calendarResource = _getCalendarResource(
 			companyId, groupId);
 
 		CalendarBooking calendarBooking =
@@ -956,102 +996,50 @@ public class CalEventImporter {
 			secondReminder = 0;
 		}
 
-		calendarBooking = addCalendarBooking(
+		calendarBooking = _addCalendarBooking(
 			uuid, calendarBookingId, companyId, groupId, userId, userName,
 			createDate, modifiedDate, calendarResource.getDefaultCalendarId(),
 			calendarResource.getCalendarResourceId(), title, description,
-			location, startTime, endTime, allDay, convertRecurrence(recurrence),
-			firstReminder, NotificationType.EMAIL, secondReminder,
-			NotificationType.EMAIL);
+			location, startTime, endTime, allDay,
+			_convertRecurrence(recurrence), firstReminder,
+			NotificationType.EMAIL, secondReminder, NotificationType.EMAIL);
 
 		// Resources
 
-		importCalendarBookingResourcePermissions(
+		_importCalendarBookingResourcePermissions(
 			companyId, eventId, calendarBookingId);
 
 		// Subscriptions
 
-		importSubscriptions(companyId, eventId, calendarBookingId);
+		_importSubscriptions(companyId, eventId, calendarBookingId);
 
 		// Asset
 
-		importAssets(
+		_importAssets(
 			uuid, companyId, groupId, userId, type, eventId, calendarBookingId);
 
 		// Expando
 
-		importExpando(companyId, eventId, calendarBookingId);
+		_importExpando(companyId, eventId, calendarBookingId);
 
 		// Message boards
 
-		importMBDiscussion(eventId, calendarBookingId);
+		_importMBDiscussion(eventId, calendarBookingId);
 
 		// Ratings
 
-		importRatings(
+		_importRatings(
 			_CLASS_NAME, eventId, CalendarBooking.class.getName(),
 			calendarBookingId);
 
 		// Social
 
-		importSocialActivities(eventId, calendarBookingId);
+		_importSocialActivities(eventId, calendarBookingId);
 
 		return calendarBooking;
 	}
 
-	protected void importCalEvents(DBInspector dbInspector) throws Exception {
-		if (!dbInspector.hasTable("CalEvent", true)) {
-			return;
-		}
-
-		try (LoggingTimer loggingTimer = new LoggingTimer()) {
-			StringBundler sb = new StringBundler(6);
-
-			sb.append("select uuid_, eventId, groupId, companyId, userId, ");
-			sb.append("userName, createDate, modifiedDate, title, ");
-			sb.append("description, location, startDate, endDate, ");
-			sb.append("durationHour, durationMinute, allDay, type_, ");
-			sb.append("repeating, recurrence, remindBy, firstReminder, ");
-			sb.append("secondReminder from CalEvent");
-
-			try (PreparedStatement ps = connection.prepareStatement(
-					sb.toString())) {
-
-				ResultSet rs = ps.executeQuery();
-
-				while (rs.next()) {
-					String uuid = rs.getString("uuid_");
-					long eventId = rs.getLong("eventId");
-					long groupId = rs.getLong("groupId");
-					long companyId = rs.getLong("companyId");
-					long userId = rs.getLong("userId");
-					String userName = rs.getString("userName");
-					Timestamp createDate = rs.getTimestamp("createDate");
-					Timestamp modifiedDate = rs.getTimestamp("modifiedDate");
-					String title = rs.getString("title");
-					String description = rs.getString("description");
-					String location = rs.getString("location");
-					Timestamp startDate = rs.getTimestamp("startDate");
-					int durationHour = rs.getInt("durationHour");
-					int durationMinute = rs.getInt("durationMinute");
-					boolean allDay = rs.getBoolean("allDay");
-					String type = rs.getString("type_");
-					String recurrence = rs.getString("recurrence");
-					int remindBy = rs.getInt("remindBy");
-					int firstReminder = rs.getInt("firstReminder");
-					int secondReminder = rs.getInt("secondReminder");
-
-					importCalEvent(
-						uuid, eventId, groupId, companyId, userId, userName,
-						createDate, modifiedDate, title, description, location,
-						startDate, durationHour, durationMinute, allDay, type,
-						recurrence, remindBy, firstReminder, secondReminder);
-				}
-			}
-		}
-	}
-
-	protected void importExpando(
+	private void _importExpando(
 			long companyId, long eventId, long calendarBookingId)
 		throws PortalException {
 
@@ -1091,7 +1079,7 @@ public class CalEventImporter {
 		}
 	}
 
-	protected void importMBDiscussion(long eventId, long calendarBookingId)
+	private void _importMBDiscussion(long eventId, long calendarBookingId)
 		throws PortalException {
 
 		MBDiscussion mbDiscussion = _mbDiscussionLocalService.fetchDiscussion(
@@ -1101,10 +1089,10 @@ public class CalEventImporter {
 			return;
 		}
 
-		long threadId = importMBThread(
+		long threadId = _importMBThread(
 			mbDiscussion.getThreadId(), calendarBookingId);
 
-		addMBDiscussion(
+		_addMBDiscussion(
 			PortalUUIDUtil.generate(), _counterLocalService.increment(),
 			mbDiscussion.getGroupId(), mbDiscussion.getCompanyId(),
 			mbDiscussion.getUserId(), mbDiscussion.getUserName(),
@@ -1114,18 +1102,18 @@ public class CalEventImporter {
 			calendarBookingId, threadId);
 	}
 
-	protected long importMBMessage(
+	private long _importMBMessage(
 			long messageId, long threadId, long calendarBookingId,
 			Map<Long, Long> mbMessageIds)
 		throws PortalException {
 
 		MBMessage mbMessage = _mbMessageLocalService.getMBMessage(messageId);
 
-		return importMBMessage(
+		return _importMBMessage(
 			mbMessage, threadId, calendarBookingId, mbMessageIds);
 	}
 
-	protected long importMBMessage(
+	private long _importMBMessage(
 			MBMessage mbMessage, long threadId, long calendarBookingId,
 			Map<Long, Long> mbMessageIds)
 		throws PortalException {
@@ -1138,7 +1126,7 @@ public class CalEventImporter {
 
 		messageId = _counterLocalService.increment();
 
-		addMBMessage(
+		_addMBMessage(
 			PortalUUIDUtil.generate(), messageId, mbMessage.getGroupId(),
 			mbMessage.getCompanyId(), mbMessage.getUserId(),
 			mbMessage.getUserName(), mbMessage.getCreateDate(),
@@ -1154,7 +1142,7 @@ public class CalEventImporter {
 			mbMessage.getStatusByUserName(), mbMessage.getStatusDate(),
 			mbMessageIds);
 
-		importRatings(
+		_importRatings(
 			MBDiscussion.class.getName(), mbMessage.getMessageId(),
 			MBDiscussion.class.getName(), messageId);
 
@@ -1163,20 +1151,20 @@ public class CalEventImporter {
 		return messageId;
 	}
 
-	protected long importMBThread(long threadId, long calendarBookingId)
+	private long _importMBThread(long threadId, long calendarBookingId)
 		throws PortalException {
 
 		MBThread mbThread = _mbThreadLocalService.fetchMBThread(threadId);
 
-		return importMBThread(mbThread, calendarBookingId);
+		return _importMBThread(mbThread, calendarBookingId);
 	}
 
-	protected long importMBThread(MBThread mbThread, long calendarBookingId)
+	private long _importMBThread(MBThread mbThread, long calendarBookingId)
 		throws PortalException {
 
 		long threadId = _counterLocalService.increment();
 
-		addMBThread(
+		_addMBThread(
 			PortalUUIDUtil.generate(), threadId, mbThread.getGroupId(),
 			mbThread.getCompanyId(), mbThread.getUserId(),
 			mbThread.getUserName(), mbThread.getCreateDate(),
@@ -1194,24 +1182,24 @@ public class CalEventImporter {
 			mbThread.getThreadId(), WorkflowConstants.STATUS_ANY);
 
 		for (MBMessage mbMessage : mbMessages) {
-			importMBMessage(
+			_importMBMessage(
 				mbMessage, threadId, calendarBookingId, mbMessageIds);
 		}
 
-		updateMBThreadRootMessageId(
+		_updateMBThreadRootMessageId(
 			threadId, mbMessageIds.get(mbThread.getRootMessageId()));
 
 		return threadId;
 	}
 
-	protected void importRatings(
+	private void _importRatings(
 		String oldClassName, long oldClassPK, String className, long classPK) {
 
 		List<RatingsEntry> ratingsEntries =
 			_ratingsEntryLocalService.getEntries(oldClassName, oldClassPK);
 
 		for (RatingsEntry ratingsEntry : ratingsEntries) {
-			addRatingsEntry(
+			_addRatingsEntry(
 				_counterLocalService.increment(), ratingsEntry.getCompanyId(),
 				ratingsEntry.getUserId(), ratingsEntry.getUserName(),
 				ratingsEntry.getCreateDate(), ratingsEntry.getModifiedDate(),
@@ -1225,30 +1213,28 @@ public class CalEventImporter {
 			return;
 		}
 
-		addRatingsStats(
+		_addRatingsStats(
 			_counterLocalService.increment(), className, classPK,
 			ratingsStats.getTotalEntries(), ratingsStats.getTotalScore(),
 			ratingsStats.getAverageScore());
 	}
 
-	protected void importSocialActivities(
-		long eventId, long calendarBookingId) {
-
+	private void _importSocialActivities(long eventId, long calendarBookingId) {
 		List<SocialActivity> socialActivities =
 			_socialActivityLocalService.getActivities(
 				_CLASS_NAME, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 
 		for (SocialActivity socialActivity : socialActivities) {
 			if (socialActivity.getClassPK() == eventId) {
-				importSocialActivity(socialActivity, calendarBookingId);
+				_importSocialActivity(socialActivity, calendarBookingId);
 			}
 		}
 	}
 
-	protected void importSocialActivity(
+	private void _importSocialActivity(
 		SocialActivity socialActivity, long calendarBookingId) {
 
-		addSocialActivity(
+		_addSocialActivity(
 			_counterLocalService.increment(SocialActivity.class.getName()),
 			socialActivity.getGroupId(), socialActivity.getCompanyId(),
 			socialActivity.getUserId(), socialActivity.getCreateDate(),
@@ -1258,10 +1244,10 @@ public class CalEventImporter {
 			socialActivity.getExtraData(), socialActivity.getReceiverUserId());
 	}
 
-	protected void importSubscription(
+	private void _importSubscription(
 		Subscription subscription, long calendarBookingId) {
 
-		addSubscription(
+		_addSubscription(
 			_counterLocalService.increment(), subscription.getCompanyId(),
 			subscription.getUserId(), subscription.getUserName(),
 			subscription.getCreateDate(), subscription.getModifiedDate(),
@@ -1269,7 +1255,7 @@ public class CalEventImporter {
 			calendarBookingId, subscription.getFrequency());
 	}
 
-	protected void importSubscriptions(
+	private void _importSubscriptions(
 		long companyId, long eventId, long calendarBookingId) {
 
 		List<Subscription> subscriptions =
@@ -1277,12 +1263,11 @@ public class CalEventImporter {
 				companyId, _CLASS_NAME, eventId);
 
 		for (Subscription subscription : subscriptions) {
-			importSubscription(subscription, calendarBookingId);
+			_importSubscription(subscription, calendarBookingId);
 		}
 	}
 
-	protected boolean isAssetLinkImported(
-			long entryId1, long entryId2, int type)
+	private boolean _isAssetLinkImported(long entryId1, long entryId2, int type)
 		throws SQLException {
 
 		StringBundler sb = new StringBundler(3);
@@ -1314,8 +1299,7 @@ public class CalEventImporter {
 		}
 	}
 
-	protected void updateMBThreadRootMessageId(
-			long threadId, long rootMessageId)
+	private void _updateMBThreadRootMessageId(long threadId, long rootMessageId)
 		throws PortalException {
 
 		MBThread mbThread = _mbThreadLocalService.getMBThread(threadId);
@@ -1325,8 +1309,6 @@ public class CalEventImporter {
 		_mbThreadLocalService.updateMBThread(mbThread);
 	}
 
-	protected Connection connection;
-
 	private static final String _ASSET_VOCABULARY_NAME = "Calendar Event Types";
 
 	private static final String _CLASS_NAME =
@@ -1335,7 +1317,7 @@ public class CalEventImporter {
 	private static final int _REMIND_BY_NONE = 0;
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		CalEventImporter.class);
+		CalEventImporterVerifyProcess.class);
 
 	private static final Map<Integer, Frequency> _frequencies =
 		new HashMap<Integer, Frequency>() {

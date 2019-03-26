@@ -185,10 +185,14 @@
 		id="floatingToolbarMappingPanelFieldSelect"
 		{$fieldsDisabled}
 	>
+		{let $unmappedLabel kind="text"}
+			-- {msg desc=""}unmapped{/msg} --
+		{/let}
+
 		{call .selectOption}
 			{param optionId: '' /}
-			{param optionLabel: '-' /}
-			{param selectedId: $mappedFieldId or '-' /}
+			{param optionLabel: $unmappedLabel /}
+			{param selectedId: $mappedFieldId or $unmappedLabel /}
 		{/call}
 
 		{foreach $field in $fields}

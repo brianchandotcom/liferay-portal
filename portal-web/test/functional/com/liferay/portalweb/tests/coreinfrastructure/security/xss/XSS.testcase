@@ -333,9 +333,7 @@ definition {
 			portlet = "Mobile Device Families"
 		);
 
-		MobileDevice.addDeviceFamilyCP(
-			deviceFamilyName = '''<script>alert(123);</script>'''
-		);
+		MobileDevice.addDeviceFamilyCP(deviceFamilyName = '''<script>alert(123);</script>''');
 
 		Navigator.openURL();
 
@@ -345,7 +343,10 @@ definition {
 			portlet = "Pages"
 		);
 
-		SitePages.gotoPageMenuItem(menuItem = "Configure", pageName = "Welcome");
+		SitePages.gotoPageMenuItem(
+			menuItem = "Configure",
+			pageName = "Welcome"
+		);
 
 		Navigator.gotoNavTab(navTab = "Advanced");
 
@@ -353,9 +354,7 @@ definition {
 
 		Page.disableMobileDeviceRulesAreInheritedFromPublicPages();
 
-		Page.selectMobileDeviceFamily(
-			deviceFamilyName = '''<script>alert(123);</script>'''
-		);
+		Page.selectMobileDeviceFamily(deviceFamilyName = '''<script>alert(123);</script>''');
 
 		AssertElementNotPresent(locator1 = "//body[.='123']");
 

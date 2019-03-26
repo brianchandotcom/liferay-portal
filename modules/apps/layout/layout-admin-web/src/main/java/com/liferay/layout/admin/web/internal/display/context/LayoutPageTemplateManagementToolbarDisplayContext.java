@@ -118,8 +118,7 @@ public class LayoutPageTemplateManagementToolbarDisplayContext
 							"addPageTemplateURL",
 							_getAddLayoutPageTemplateEntryURL());
 						dropdownItem.setLabel(
-							LanguageUtil.get(
-								request, "standard-page-template"));
+							LanguageUtil.get(request, "content-page-template"));
 					});
 
 				Group scopeGroup = _themeDisplay.getScopeGroup();

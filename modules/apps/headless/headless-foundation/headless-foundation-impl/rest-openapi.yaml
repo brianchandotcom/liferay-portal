@@ -695,27 +695,6 @@ paths:
                                 $ref: "#/components/schemas/Keyword"
                     description: ""
             tags: ["Keyword"]
-        patch:
-            parameters:
-                - in: path
-                  name: keyword-id
-                  required: true
-                  schema:
-                      format: int64
-                      type: integer
-            requestBody:
-                content:
-                    application/json:
-                        schema:
-                            $ref: "#/components/schemas/Keyword"
-            responses:
-                200:
-                    content:
-                        application/json:
-                            schema:
-                                $ref: "#/components/schemas/Keyword"
-                    description: ""
-            tags: ["Keyword"]
         put:
             parameters:
                 - in: path

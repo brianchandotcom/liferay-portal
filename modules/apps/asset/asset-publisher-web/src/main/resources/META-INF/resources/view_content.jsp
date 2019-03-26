@@ -43,44 +43,53 @@ AssetEntry assetEntry = null;
 AssetRendererFactory<?> assetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByType(type);
 AssetRenderer<?> assetRenderer = null;
 
-if (Validator.isNotNull(urlTitle)) {
-	assetRenderer = assetRendererFactory.getAssetRenderer(groupId, urlTitle);
+try {
+	if (Validator.isNotNull(urlTitle)) {
+		assetRenderer = assetRendererFactory.getAssetRenderer(groupId, urlTitle);
 
-	assetEntry = assetRendererFactory.getAssetEntry(assetRendererFactory.getClassName(), assetRenderer.getClassPK());
-}
-else {
-	assetEntry = assetRendererFactory.getAssetEntry(assetEntryId);
-
-	assetRenderer = assetRendererFactory.getAssetRenderer(assetEntry.getClassPK());
-}
-
-if ((assetEntry.isVisible() && !assetPublisherDisplayContext.isEnablePermissions()) || (assetRenderer.hasViewPermission(permissionChecker) && assetRenderer.isDisplayable())) {
-	request.setAttribute("view.jsp-assetEntry", assetEntry);
-	request.setAttribute("view.jsp-assetRenderer", assetRenderer);
-	request.setAttribute("view.jsp-assetRendererFactory", assetRendererFactory);
-	request.setAttribute("view.jsp-print", print);
-	request.setAttribute("view.jsp-showBackURL", !print);
-
-	PortalUtil.addPortletBreadcrumbEntry(request, assetRenderer.getTitle(locale), currentURL);
-%>
-
-	<liferay-util:include page="/view_asset_entry_full_content.jsp" servletContext="<%= application %>" />
-
-<%
-	String summary = StringUtil.shorten(assetRenderer.getSummary(liferayPortletRequest, liferayPortletResponse), assetPublisherDisplayContext.getAbstractLength());
-
-	PortalUtil.setPageDescription(summary, request);
-
-	PortalUtil.setPageKeywords(assetHelper.getAssetKeywords(assetEntry.getClassName(), assetEntry.getClassPK()), request);
-	PortalUtil.setPageTitle(assetRenderer.getTitle(locale), request);
-}
-else {
-	if (!assetEntry.isVisible()) {
-		SessionErrors.add(renderRequest, NoSuchModelException.class.getName());
+		assetEntry = assetRendererFactory.getAssetEntry(assetRendererFactory.getClassName(), assetRenderer.getClassPK());
 	}
 	else {
-		SessionErrors.add(renderRequest, PrincipalException.MustHavePermission.class.getName());
+		assetEntry = assetRendererFactory.getAssetEntry(assetEntryId);
+
+		assetRenderer = assetRendererFactory.getAssetRenderer(assetEntry.getClassPK());
 	}
+
+	if ((assetEntry.isVisible() && !assetPublisherDisplayContext.isEnablePermissions()) || (assetRenderer.hasViewPermission(permissionChecker) && assetRenderer.isDisplayable())) {
+		request.setAttribute("view.jsp-assetEntry", assetEntry);
+		request.setAttribute("view.jsp-assetRenderer", assetRenderer);
+		request.setAttribute("view.jsp-assetRendererFactory", assetRendererFactory);
+		request.setAttribute("view.jsp-print", print);
+		request.setAttribute("view.jsp-showBackURL", !print);
+
+		PortalUtil.addPortletBreadcrumbEntry(request, assetRenderer.getTitle(locale), currentURL);
+%>
+
+		<liferay-util:include page="/view_asset_entry_full_content.jsp" servletContext="<%= application %>" />
+
+	<%
+		String summary = StringUtil.shorten(assetRenderer.getSummary(liferayPortletRequest, liferayPortletResponse), assetPublisherDisplayContext.getAbstractLength());
+
+		PortalUtil.setPageDescription(summary, request);
+
+		PortalUtil.setPageKeywords(assetHelper.getAssetKeywords(assetEntry.getClassName(), assetEntry.getClassPK()), request);
+		PortalUtil.setPageTitle(assetRenderer.getTitle(locale), request);
+	}
+	else {
+		if (!assetEntry.isVisible()) {
+			SessionErrors.add(renderRequest, NoSuchModelException.class.getName());
+		}
+		else {
+			SessionErrors.add(renderRequest, PrincipalException.MustHavePermission.class.getName());
+		}
+	%>
+
+		<liferay-util:include page="/error.jsp" servletContext="<%= application %>" />
+
+<%
+	}
+}
+catch (Exception e) {
 %>
 
 	<liferay-util:include page="/error.jsp" servletContext="<%= application %>" />

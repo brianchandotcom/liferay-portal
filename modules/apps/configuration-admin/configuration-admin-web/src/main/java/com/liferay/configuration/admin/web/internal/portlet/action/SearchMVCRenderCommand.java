@@ -115,7 +115,9 @@ public class SearchMVCRenderCommand implements MVCRenderCommand {
 						configurationModelFactoryId);
 				}
 
-				if (configurationModel != null) {
+				if ((configurationModel != null) &&
+					configurationModel.isGenerateUI()) {
+
 					searchResults.add(configurationModel);
 				}
 			}

@@ -8,6 +8,7 @@ import {EDITABLE_FRAGMENT_ENTRY_PROCESSOR} from '../../fragment_entry_link/Fragm
 import {focusItem, removeItem, setIn} from '../../../utils/FragmentsEditorUpdateUtils.es';
 import {FRAGMENTS_EDITOR_ITEM_TYPES} from '../../../utils/constants';
 import {getConnectedComponent} from '../../../store/ConnectedComponent.es';
+import {getItemPath} from '../../../utils/FragmentsEditorGetUtils.es';
 import templates from './SidebarStructurePanel.soy';
 
 /**
@@ -17,21 +18,24 @@ class SidebarStructurePanel extends Component {
 
 	/**
 	 * @param {Object} state
+	 * @param {{itemId: string, itemType: string}[]} activePath
 	 * @private
 	 * @return {Object}
 	 * @review
 	 * @static
 	 */
-	static _addStructureToState(state) {
+	static _addStructureToState(state, activePath) {
 		return setIn(
 			state,
 			['structure'],
 			SidebarStructurePanel._getTreeNode(
 				state,
+				activePath,
 				{
 					children: state.layoutData.structure.map(
 						row => SidebarStructurePanel._getRowTree(
 							state,
+							activePath,
 							row
 						)
 					),
@@ -45,14 +49,16 @@ class SidebarStructurePanel extends Component {
 
 	/**
 	 * @param {object} state
+	 * @param {{itemId: string, itemType: string}[]} activePath
 	 * @param {object} column
 	 * @return {Object}
 	 * @review
 	 * @static
 	 */
-	static _getColumnTree(state, column) {
+	static _getColumnTree(state, activePath, column) {
 		return SidebarStructurePanel._getTreeNode(
 			state,
+			activePath,
 			{
 				children: column.fragmentEntryLinkIds.map(
 					fragmentEntryLinkId => state.fragmentEntryLinks[fragmentEntryLinkId]
@@ -61,7 +67,16 @@ class SidebarStructurePanel extends Component {
 				).map(
 					fragmentEntryLink => SidebarStructurePanel._getFragmentEntryLinkTree(
 						state,
+						activePath,
 						fragmentEntryLink
+					)
+				),
+				expanded: column.fragmentEntryLinkIds.some(
+					fragmentEntryLinkId => activePath.some(
+						item => (
+							item.itemType === FRAGMENTS_EDITOR_ITEM_TYPES.fragment &&
+							item.itemId === fragmentEntryLinkId
+						)
 					)
 				),
 				key: `column-${column.columnId}`,
@@ -72,20 +87,23 @@ class SidebarStructurePanel extends Component {
 
 	/**
 	 * @param {object} state
+	 * @param {{itemId: string, itemType: string}[]} activePath
 	 * @param {object} fragmentEntryLink
 	 * @return {Object}
 	 * @review
 	 * @static
 	 */
-	static _getFragmentEntryLinkTree(state, fragmentEntryLink) {
+	static _getFragmentEntryLinkTree(state, activePath, fragmentEntryLink) {
 		return SidebarStructurePanel._getTreeNode(
 			state,
+			activePath,
 			{
 				children: Object.keys(
 					fragmentEntryLink.editableValues[EDITABLE_FRAGMENT_ENTRY_PROCESSOR]
 				).map(
 					editableValueKey => SidebarStructurePanel._getTreeNode(
 						state,
+						activePath,
 						{
 							elementId: `${fragmentEntryLink.fragmentEntryLinkId}-${editableValueKey}`,
 							elementType: FRAGMENTS_EDITOR_ITEM_TYPES.editable,
@@ -104,18 +122,21 @@ class SidebarStructurePanel extends Component {
 
 	/**
 	 * @param {object} state
+	 * @param {{itemId: string, itemType: string}[]} activePath
 	 * @param {object} row
 	 * @return {Object}
 	 * @review
 	 * @static
 	 */
-	static _getRowTree(state, row) {
+	static _getRowTree(state, activePath, row) {
 		return SidebarStructurePanel._getTreeNode(
 			state,
+			activePath,
 			{
 				children: row.columns.map(
 					column => SidebarStructurePanel._getColumnTree(
 						state,
+						activePath,
 						column
 					)
 				),
@@ -129,6 +150,7 @@ class SidebarStructurePanel extends Component {
 
 	/**
 	 * @param {object} state
+	 * @param {{itemId: string, itemType: string}[]} activePath
 	 * @param {object} data
 	 * @param {string} data.key
 	 * @param {string} data.label
@@ -141,7 +163,7 @@ class SidebarStructurePanel extends Component {
 	 * @review
 	 * @static
 	 */
-	static _getTreeNode(state, data) {
+	static _getTreeNode(state, activePath, data) {
 		return {
 			active: (
 				state.activeItemId === data.elementId &&
@@ -150,7 +172,14 @@ class SidebarStructurePanel extends Component {
 			children: data.children || [],
 			elementId: data.elementId || '',
 			elementType: data.elementType || '',
-			expanded: data.expanded || (state._expandedNodes.indexOf(data.key) !== -1),
+			expanded: data.expanded ||
+				(state._expandedNodes.indexOf(data.key) !== -1) ||
+				activePath.some(
+					item => (
+						(data.elementId === item.itemId) &&
+						(data.elementType === item.itemType)
+					)
+				),
 			hovered: (
 				state.hoveredItemId === data.elementId &&
 				state.hoveredItemType === data.elementType
@@ -166,7 +195,14 @@ class SidebarStructurePanel extends Component {
 	 * @review
 	 */
 	prepareStateForRender(state) {
-		return SidebarStructurePanel._addStructureToState(state);
+		return SidebarStructurePanel._addStructureToState(
+			state,
+			getItemPath(
+				state.activeItemId,
+				state.activeItemType,
+				state.layoutData.structure
+			)
+		);
 	}
 
 	/**

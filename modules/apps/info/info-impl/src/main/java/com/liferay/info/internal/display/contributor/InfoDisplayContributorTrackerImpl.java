@@ -17,9 +17,10 @@ package com.liferay.info.internal.display.contributor;
 import com.liferay.info.display.contributor.InfoDisplayContributor;
 import com.liferay.info.display.contributor.InfoDisplayContributorTracker;
 
-import java.util.Collections;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -34,8 +35,22 @@ public class InfoDisplayContributorTrackerImpl
 	implements InfoDisplayContributorTracker {
 
 	@Override
+	public InfoDisplayContributor getInfoDisplayContributor(
+		String className) {
+
+		return _infoDisplayContributor.get(className);
+	}
+
+	@Override
+	public InfoDisplayContributor getInfoDisplayContributorByURLSeparator(
+		String urlSeparator) {
+
+		return _infoDisplayContributorByURLSeparator.get(urlSeparator);
+	}
+
+	@Override
 	public List<InfoDisplayContributor> getInfoDisplayContributors() {
-		return Collections.unmodifiableList(_infoDisplayContributors);
+		return new ArrayList(_infoDisplayContributor.values());
 	}
 
 	@Reference(
@@ -45,16 +60,24 @@ public class InfoDisplayContributorTrackerImpl
 	protected void setInfoDisplayContributor(
 		InfoDisplayContributor infoDisplayContributor) {
 
-		_infoDisplayContributors.add(infoDisplayContributor);
+		_infoDisplayContributor.put(
+			infoDisplayContributor.getClassName(), infoDisplayContributor);
+		_infoDisplayContributorByURLSeparator.put(
+			infoDisplayContributor.getInfoURLSeparator(),
+			infoDisplayContributor);
 	}
 
 	protected void unsetInfoDisplayContributor(
 		InfoDisplayContributor infoDisplayContributor) {
 
-		_infoDisplayContributors.remove(infoDisplayContributor);
+		_infoDisplayContributor.remove(infoDisplayContributor.getClassName());
+		_infoDisplayContributorByURLSeparator.remove(
+			infoDisplayContributor.getInfoURLSeparator());
 	}
 
-	private final List<InfoDisplayContributor> _infoDisplayContributors =
-		new CopyOnWriteArrayList();
+	private final Map<String, InfoDisplayContributor>
+		_infoDisplayContributor = new ConcurrentHashMap<>();
+	private final Map<String, InfoDisplayContributor>
+		_infoDisplayContributorByURLSeparator = new ConcurrentHashMap<>();
 
 }

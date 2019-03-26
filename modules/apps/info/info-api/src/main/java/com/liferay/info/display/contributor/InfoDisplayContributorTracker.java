@@ -21,6 +21,11 @@ import java.util.List;
  */
 public interface InfoDisplayContributorTracker {
 
+	public InfoDisplayContributor getInfoDisplayContributor(String className);
+
+	public InfoDisplayContributor getInfoDisplayContributorByURLSeparator(
+		String urlSeparator);
+
 	public List<InfoDisplayContributor> getInfoDisplayContributors();
 
 }

@@ -18,7 +18,11 @@
 	<c:when test="<%= type == ExpandoColumnConstants.BOOLEAN %>">
 
 		<%
-		boolean curValue = ((Boolean)defaultValue).booleanValue();
+		boolean curValue = true;
+
+		if (defaultValue != null) {
+			curValue = ((Boolean)defaultValue).booleanValue();
+		}
 		%>
 
 		<aui:select name="defaultValue">

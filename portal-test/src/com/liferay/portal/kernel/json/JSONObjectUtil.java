@@ -14,15 +14,10 @@
 
 package com.liferay.portal.kernel.json;
 
-import com.liferay.petra.reflect.ReflectionUtil;
-
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Comparator;
-import java.util.Iterator;
-import java.util.List;
-
-import org.json.JSONException;
+import java.util.Map;
+import java.util.Set;
+import java.util.TreeSet;
 
 /**
  * @author Shuyang Zhou
@@ -34,44 +29,21 @@ public class JSONObjectUtil {
 	}
 
 	public static String toOrderedJSONString(String jsonString) {
-		try {
-			org.json.JSONObject jsonObject = new org.json.JSONObject(
-				jsonString) {
+		org.json.JSONObject jsonObject = new org.json.JSONObject(jsonString) {
 
-				@Override
-				@SuppressWarnings("rawtypes")
-				public Iterator keys() {
-					Iterator<?> iterator = super.keys();
+			@Override
+			protected Set<Map.Entry<String, Object>> entrySet() {
+				Set<Map.Entry<String, Object>> entrySet = new TreeSet<>(
+					Comparator.comparing(Map.Entry::getKey));
 
-					List<Object> list = new ArrayList<>(length());
+				entrySet.addAll(super.entrySet());
 
-					while (iterator.hasNext()) {
-						list.add(iterator.next());
-					}
+				return entrySet;
+			}
 
-					Collections.sort(
-						list,
-						new Comparator<Object>() {
+		};
 
-							@Override
-							public int compare(Object object1, Object object2) {
-								String string1 = object1.toString();
-
-								return string1.compareTo(object2.toString());
-							}
-
-						});
-
-					return list.iterator();
-				}
-
-			};
-
-			return jsonObject.toString();
-		}
-		catch (JSONException jsone) {
-			return ReflectionUtil.throwException(jsone);
-		}
+		return jsonObject.toString();
 	}
 
 }

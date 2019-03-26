@@ -25,6 +25,7 @@ import com.liferay.headless.foundation.resource.v1_0.KeywordResource;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
+import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -36,6 +37,7 @@ import com.liferay.portal.vulcan.resource.EntityModelResource;
 import com.liferay.portal.vulcan.util.SearchUtil;
 
 import javax.ws.rs.ClientErrorException;
+import javax.ws.rs.ForbiddenException;
 import javax.ws.rs.core.MultivaluedMap;
 
 import org.osgi.service.component.annotations.Component;
@@ -114,6 +116,10 @@ public class KeywordResourceImpl
 				"A tag with the name " + keyword.getName() + " already exists",
 				422, dte);
 		}
+		catch (PrincipalException.MustHavePermission mh) {
+			throw new ForbiddenException(
+				"You do not have permissions to create a keyword", mh);
+		}
 	}
 
 	@Override
@@ -132,6 +138,10 @@ public class KeywordResourceImpl
 			throw new ClientErrorException(
 				"A tag with the name " + keyword.getName() + " already exists",
 				422, dte);
+		}
+		catch (PrincipalException.MustHavePermission mh) {
+			throw new ForbiddenException(
+				"You do not have permissions to update keyword", mh);
 		}
 	}
 

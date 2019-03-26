@@ -1,4 +1,4 @@
-import {FRAGMENTS_EDITOR_ITEM_BORDERS} from '../utils/constants';
+import {FRAGMENTS_EDITOR_ITEM_BORDERS, FRAGMENTS_EDITOR_ITEM_TYPES} from '../utils/constants';
 
 const ARROW_DOWN_KEYCODE = 40;
 
@@ -113,6 +113,74 @@ function getItemMoveDirection(keycode) {
 	}
 
 	return direction;
+}
+
+/**
+ * For a given itemId and itemType, returns an array
+ * with the whole path of active elements.
+ * @param {string|null} itemId
+ * @param {string|null} itemType
+ * @param {object[]} structure
+ * @return {{itemId: string, itemType}[]}
+ */
+function getItemPath(itemId, itemType, structure) {
+	let itemPath = [];
+
+	if (itemId && itemType) {
+		itemPath = [
+			{
+				itemId,
+				itemType
+			}
+		];
+
+		if (itemType === FRAGMENTS_EDITOR_ITEM_TYPES.editable) {
+			const [fragmentEntryLinkId] = itemId.split('-');
+
+			itemPath = [
+				...itemPath,
+				...getItemPath(
+					fragmentEntryLinkId,
+					FRAGMENTS_EDITOR_ITEM_TYPES.fragment,
+					structure
+				)
+			];
+		}
+		else if (itemType === FRAGMENTS_EDITOR_ITEM_TYPES.fragment) {
+			const column = [].concat(
+				...structure.map(row => row.columns)
+			).find(
+				column => column.fragmentEntryLinkIds.indexOf(itemId)
+			);
+
+			itemPath = [
+				...itemPath,
+				...getItemPath(
+					column.columnId,
+					FRAGMENTS_EDITOR_ITEM_TYPES.column,
+					structure
+				)
+			];
+		}
+		else if (itemType === FRAGMENTS_EDITOR_ITEM_TYPES.column) {
+			const section = structure.find(
+				row => row.columns.find(
+					column => column.columnId === itemId
+				)
+			);
+
+			itemPath = [
+				...itemPath,
+				...getItemPath(
+					section.rowId,
+					FRAGMENTS_EDITOR_ITEM_TYPES.section,
+					structure
+				)
+			];
+		}
+	}
+
+	return itemPath;
 }
 
 /**
@@ -241,6 +309,7 @@ function getWidgetPath(widgets, portletId, _path = ['widgets']) {
 export {
 	getColumn,
 	getDropSectionPosition,
+	getItemPath,
 	getFragmentColumn,
 	getFragmentRowIndex,
 	getItemMoveDirection,

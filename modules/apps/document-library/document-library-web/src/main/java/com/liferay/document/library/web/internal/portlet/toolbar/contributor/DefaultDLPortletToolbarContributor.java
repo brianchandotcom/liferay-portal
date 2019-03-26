@@ -124,6 +124,12 @@ public class DefaultDLPortletToolbarContributor
 				portletResponse);
 		}
 
+		MenuItem lastExtensionMenuItem = null;
+
+		if (!menuItems.isEmpty()) {
+			lastExtensionMenuItem = menuItems.get(menuItems.size() - 1);
+		}
+
 		menuItems.addAll(
 			_menuItemProvider.getAddDocumentTypesMenuItems(
 				folder, themeDisplay, portletRequest));
@@ -132,6 +138,12 @@ public class DefaultDLPortletToolbarContributor
 			(lastStaticMenuItem != menuItems.get(menuItems.size() - 1))) {
 
 			lastStaticMenuItem.setSeparator(true);
+		}
+
+		if ((lastExtensionMenuItem != null) &&
+			(lastExtensionMenuItem != menuItems.get(menuItems.size() - 1))) {
+
+			lastExtensionMenuItem.setSeparator(true);
 		}
 
 		return menuItems;

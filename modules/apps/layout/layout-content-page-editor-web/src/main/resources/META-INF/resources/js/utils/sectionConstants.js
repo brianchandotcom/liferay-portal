@@ -25,15 +25,6 @@ export const CONFIG_KEYS = {
 };
 
 /**
- * Section config defaults
- */
-export const DEFAULT_CONFIG = {
-	[CONFIG_KEYS.columnSpacing]: true,
-	[CONFIG_KEYS.paddingHorizontal]: PADDING_OPTIONS[1].paddingSize,
-	[CONFIG_KEYS.paddingVertical]: PADDING_OPTIONS[1].paddingSize,
-};
-
-/**
  * Max section columns
  */
 export const MAX_COLUMNS = 12;
@@ -101,3 +92,12 @@ export const PADDING_OPTIONS = [
 		paddingSize: '8'
 	}
 ];
+
+/**
+ * Section config defaults
+ */
+export const DEFAULT_CONFIG = {
+	[CONFIG_KEYS.columnSpacing]: true,
+	[CONFIG_KEYS.paddingHorizontal]: PADDING_OPTIONS[1].paddingSize,
+	[CONFIG_KEYS.paddingVertical]: PADDING_OPTIONS[1].paddingSize
+};

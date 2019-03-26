@@ -129,14 +129,28 @@ class FloatingToolbarLinkPanel extends Component {
 FloatingToolbarLinkPanel.STATE = {
 
 	/**
-	 * @default undefined
-	 * @memberof FloatingToolbarLinkPanel
+	 * @default BUTTON_TYPES
+	 * @memberOf FloatingToolbarLinkPanel
+	 * @private
 	 * @review
-	 * @type {object}
+	 * @type {object[]}
 	 */
-	store: Config
-		.object()
-		.value(null),
+	_buttonTypes: Config
+		.array()
+		.internal()
+		.value(BUTTON_TYPES),
+
+	/**
+	 * @default TARGET_TYPES
+	 * @memberOf FloatingToolbarLinkPanel
+	 * @private
+	 * @review
+	 * @type {object[]}
+	 */
+	_targetTypes: Config
+		.array()
+		.internal()
+		.value(TARGET_TYPES),
 
 	/**
 	 * @default undefined
@@ -159,28 +173,14 @@ FloatingToolbarLinkPanel.STATE = {
 		.required(),
 
 	/**
-	 * @default CONTAINER_TYPES
-	 * @memberOf FloatingToolbarLinkPanel
-	 * @private
+	 * @default undefined
+	 * @memberof FloatingToolbarLinkPanel
 	 * @review
-	 * @type {object[]}
+	 * @type {object}
 	 */
-	_buttonTypes: Config
-		.array()
-		.internal()
-		.value(BUTTON_TYPES),
-
-	/**
-	 * @default CONTAINER_TYPES
-	 * @memberOf FloatingToolbarLinkPanel
-	 * @private
-	 * @review
-	 * @type {object[]}
-	 */
-	_targetTypes: Config
-		.array()
-		.internal()
-		.value(TARGET_TYPES)
+	store: Config
+		.object()
+		.value(null)
 };
 
 Soy.register(FloatingToolbarLinkPanel, templates);

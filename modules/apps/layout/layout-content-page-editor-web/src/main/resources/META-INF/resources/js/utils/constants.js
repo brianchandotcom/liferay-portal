@@ -16,7 +16,6 @@ export const BUTTON_TYPES = [
 	}
 ];
 
-
 /**
  * List of editable types and their compatibilities
  * with the corresponding mappeable types

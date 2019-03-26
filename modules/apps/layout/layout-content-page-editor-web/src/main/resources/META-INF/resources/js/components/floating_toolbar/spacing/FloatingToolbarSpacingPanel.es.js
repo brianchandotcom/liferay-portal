@@ -20,46 +20,6 @@ const DEFAULT_PADDING_SIZE = '3';
 class FloatingToolbarSpacingPanel extends Component {
 
 	/**
-	 * @inheritdoc
-	 * @param {object} state
-	 * @return {object}
-	 * @review
-	 */
-	prepareStateForRender(state) {
-		const config = (state.item && state.item.config) || {};
-		let nextState = state;
-		const selectedPaddingSizes = {
-			horizontal: DEFAULT_PADDING_SIZE,
-			vertical: DEFAULT_PADDING_SIZE
-		};
-
-		if (config) {
-			selectedPaddingSizes.horizontal = config.paddingHorizontal || DEFAULT_PADDING_SIZE;
-			selectedPaddingSizes.vertical = config.paddingVertical || DEFAULT_PADDING_SIZE;
-		}
-
-		nextState = setIn(
-			nextState,
-			['_paddingOptions'],
-			PADDING_OPTIONS
-		);
-
-		nextState = setIn(
-			nextState,
-			['_selectedPaddingSizes'],
-			selectedPaddingSizes
-		);
-
-		nextState = setIn(
-			nextState,
-			['_sectionColumnsCount'],
-			this.item.columns.length
-		);
-
-		return nextState;
-	}
-
-	/**
 	 * Handle container option change
 	 * @param {Event} event
 	 */
@@ -90,7 +50,7 @@ class FloatingToolbarSpacingPanel extends Component {
 
 		this._updateSectionConfig(
 			{
-				[`${ITEM_CONFIG_KEYS.padding}${paddingDirectionId}`]: value
+				[ITEM_CONFIG_KEYS[`padding${paddingDirectionId}`]]: value
 			}
 		);
 	}
@@ -196,6 +156,15 @@ FloatingToolbarSpacingPanel.STATE = {
 		.array()
 		.internal()
 		.value(NUMBER_OF_COLUMNS_OPTIONS),
+
+	/**
+	 * @default PADDING_OPTIONS
+	 * @memberOf FloatingToolbarSpacingPanel
+	 * @private
+	 * @review
+	 * @type {object[]}
+	 */
+	_paddingOptions: Config.array().internal().value(PADDING_OPTIONS),
 
 	/**
 	 * @default undefined

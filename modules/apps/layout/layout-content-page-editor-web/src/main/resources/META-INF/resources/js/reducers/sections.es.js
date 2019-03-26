@@ -1,5 +1,5 @@
 import {ADD_SECTION, MOVE_SECTION, REMOVE_SECTION, UPDATE_SECTION_COLUMNS, UPDATE_SECTION_COLUMNS_NUMBER, UPDATE_SECTION_CONFIG} from '../actions/actions.es';
-import {MAX_SECTION_COLUMNS} from '../utils/constants';
+import {DEFAULT_SECTION_CONFIG, MAX_SECTION_COLUMNS} from '../utils/constants';
 import {add, remove, setIn, updateIn, updateLayoutData, updateWidgets} from '../utils/FragmentsEditorUpdateUtils.es';
 import {getDropSectionPosition, getSectionFragmentEntryLinkIds, getSectionIndex} from '../utils/FragmentsEditorGetUtils.es';
 
@@ -511,7 +511,7 @@ function _addSection(layoutColumns, layoutData, position) {
 		layoutData.structure,
 		{
 			columns,
-			config: {},
+			config: DEFAULT_SECTION_CONFIG,
 			rowId: `${nextRowId}`
 		},
 		position

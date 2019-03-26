@@ -257,7 +257,8 @@ export const ITEM_CONFIG_KEYS = {
 	backgroundColorCssClass: 'backgroundColorCssClass',
 	columnSpacing: 'columnSpacing',
 	containerType: 'containerType',
-	padding: 'padding'
+	paddingHorizontal: 'paddingHorizontal',
+	paddingVertical: 'paddingVertical'
 };
 
 /**
@@ -326,3 +327,12 @@ export const TEXT_STYLES = [
 		textStyleId: 'lead'
 	}
 ];
+
+/**
+ * Section config defaults
+ */
+export const DEFAULT_SECTION_CONFIG = {
+	[ITEM_CONFIG_KEYS.columnSpacing]: true,
+	[ITEM_CONFIG_KEYS.paddingHorizontal]: PADDING_OPTIONS[1].paddingSize,
+	[ITEM_CONFIG_KEYS.paddingVertical]: PADDING_OPTIONS[1].paddingSize,
+};

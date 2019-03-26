@@ -16,11 +16,6 @@
 		label: string,
 		paddingSize: string
 	]>}
-	{@param? _sectionColumnsCount: number}
-	{@param? _selectedPaddingSizes: [
-		horizontal: string,
-		vertical: string
-	]}
 
 	<div class="floating-toolbar-spacing-panel">
 		<div class="form-group">
@@ -39,7 +34,7 @@
 			{/call}
 		</div>
 
-		{if $_paddingOptions and $_selectedPaddingSizes}
+		{if $_paddingOptions}
 			<div class="form-group-autofit">
 				{let $verticalContainerPaddingLabel kind="text"}
 					{msg desc=""}padding-vertical{/msg}
@@ -50,7 +45,7 @@
 					{param paddingDirectionId: 'Vertical' /}
 					{param handleContainerPaddingOptionChange: $_handleContainerPaddingOptionChange /}
 					{param paddingOptions: $_paddingOptions /}
-					{param selectedPaddingSize: $_selectedPaddingSizes.vertical ?: '1' /}
+					{param selectedPaddingSize: $item.config.paddingVertical /}
 				{/call}
 
 				{let $horizontalContainerPaddingLabel kind="text"}
@@ -62,12 +57,12 @@
 					{param paddingDirectionId: 'Horizontal' /}
 					{param handleContainerPaddingOptionChange: $_handleContainerPaddingOptionChange /}
 					{param paddingOptions: $_paddingOptions /}
-					{param selectedPaddingSize: $_selectedPaddingSizes.horizontal ?: '1' /}
+					{param selectedPaddingSize: $item.config.paddingHorizontal /}
 				{/call}
 			</div>
 		{/if}
 
-		{if $_sectionColumnsCount > 1}
+		{if length($item.columns) > 1}
 			<div class="form-group">
 				{call .columnSpacingOptions}
 					{param handleColumnSpacingOptionChange: $_handleColumnSpacingOptionChange /}

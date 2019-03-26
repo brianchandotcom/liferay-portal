@@ -27,6 +27,7 @@ import com.liferay.headless.foundation.dto.v1_0.TaxonomyVocabulary;
 import com.liferay.headless.foundation.internal.dto.v1_0.util.CreatorUtil;
 import com.liferay.headless.foundation.internal.odata.entity.v1_0.VocabularyEntityModel;
 import com.liferay.headless.foundation.resource.v1_0.TaxonomyVocabularyResource;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.model.ClassName;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
@@ -53,6 +54,7 @@ import com.liferay.portal.vulcan.util.SearchUtil;
 import com.liferay.portlet.asset.util.AssetVocabularySettingsHelper;
 
 import java.util.AbstractMap;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -131,6 +133,44 @@ public class TaxonomyVocabularyResourceImpl
 			contextAcceptLanguage.getPreferredLocale());
 
 		return _toTaxonomyVocabulary(assetVocabulary);
+	}
+
+	@Override
+	public TaxonomyVocabulary patchTaxonomyVocabulary(
+			Long taxonomyVocabularyId, TaxonomyVocabulary taxonomyVocabulary)
+		throws Exception {
+
+		AssetVocabulary assetVocabulary = _assetVocabularyService.getVocabulary(
+			taxonomyVocabularyId);
+
+		if (!ArrayUtil.contains(
+				assetVocabulary.getAvailableLanguageIds(),
+				contextAcceptLanguage.getPreferredLanguageId())) {
+
+			throw new BadRequestException(
+				StringBundler.concat(
+					"Unable to patch structured content with language ",
+					contextAcceptLanguage.getPreferredLanguageId(),
+					" because it is only configured to support ",
+					Arrays.toString(
+						assetVocabulary.getAvailableLanguageIds())));
+		}
+
+		return _toTaxonomyVocabulary(
+			_assetVocabularyService.updateVocabulary(
+				assetVocabulary.getVocabularyId(), null,
+				LocalizedMapUtil.patch(
+					assetVocabulary.getTitleMap(),
+					contextAcceptLanguage.getPreferredLocale(),
+					taxonomyVocabulary.getName()),
+				LocalizedMapUtil.patch(
+					assetVocabulary.getDescriptionMap(),
+					contextAcceptLanguage.getPreferredLocale(),
+					taxonomyVocabulary.getDescription()),
+				_getSettings(
+					taxonomyVocabulary.getAssetTypes(),
+					assetVocabulary.getGroupId()),
+				new ServiceContext()));
 	}
 
 	@Override

@@ -24,7 +24,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
  */
 @ExtendedObjectClassDefinition(
 	category = "multi-factor-authentication",
-	factoryInstanceLabelAttribute = "mfaPolicyName"
+	factoryInstanceLabelAttribute = "name"
 )
 @Meta.OCD(
 	factory = true,

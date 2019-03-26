@@ -32,6 +32,10 @@ import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.permission.LayoutPermissionUtil;
+import com.liferay.portal.kernel.util.DateUtil;
+import com.liferay.portal.kernel.util.Validator;
+
+import java.text.ParseException;
 
 import java.util.Locale;
 import java.util.Objects;
@@ -60,9 +64,13 @@ public class DDMValueUtil {
 		if (ddmFormField.isLocalizable()) {
 			LocalizedValue localizedValue = new LocalizedValue(locale);
 
-			if (Objects.equals(
-					DDMFormFieldType.DOCUMENT_LIBRARY,
-					ddmFormField.getType())) {
+			if (Objects.equals(DDMFormFieldType.DATE, ddmFormField.getType())) {
+				localizedValue.addString(
+					locale, _toDateString(value.getData(), locale));
+			}
+			else if (Objects.equals(
+						DDMFormFieldType.DOCUMENT_LIBRARY,
+						ddmFormField.getType())) {
 
 				localizedValue.addString(
 					locale, _toJSON(dlAppService, "", value.getDocumentId()));
@@ -89,7 +97,7 @@ public class DDMValueUtil {
 				catch (Exception e) {
 					throw new BadRequestException(
 						"No structured content exists with ID " +
-							value.getDocumentId(),
+							value.getStructuredContentId(),
 						e);
 				}
 
@@ -178,6 +186,23 @@ public class DDMValueUtil {
 		}
 
 		return layout;
+	}
+
+	private static String _toDateString(String dateString, Locale locale) {
+		if (Validator.isNull(dateString)) {
+			return "";
+		}
+
+		try {
+			return DateUtil.getDate(
+				DateUtil.parseDate(
+					"yyyy-MM-dd'T'HH:mm:ss'Z'", dateString, locale),
+				"yyyy-MM-dd", locale);
+		}
+		catch (ParseException pe) {
+			throw new BadRequestException(
+				"Date incorrectly formatted, you must use ISO-8601 format", pe);
+		}
 	}
 
 	private static String _toJSON(

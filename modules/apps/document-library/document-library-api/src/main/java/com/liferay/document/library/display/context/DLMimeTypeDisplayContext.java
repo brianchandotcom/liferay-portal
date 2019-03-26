@@ -21,6 +21,8 @@ public interface DLMimeTypeDisplayContext {
 
 	public String getCssClassFileMimeType(String mimeType);
 
-	public String getIconFileMimeType(String mimeType);
+	public default String getIconFileMimeType(String mimeType) {
+		return "document-default";
+	}
 
 }

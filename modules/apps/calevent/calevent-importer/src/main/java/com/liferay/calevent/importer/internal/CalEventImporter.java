@@ -1062,8 +1062,12 @@ public class CalEventImporter {
 		long oldClassNameId = _classNameLocalService.getClassNameId(
 			_CLASS_NAME);
 
-		ExpandoTable expandoTable = _expandoTableLocalService.getTable(
+		ExpandoTable expandoTable = _expandoTableLocalService.fetchTable(
 			companyId, oldClassNameId, "CUSTOM_FIELDS");
+
+		if (expandoTable == null) {
+			return;
+		}
 
 		ExpandoRow expandoRow = _expandoRowLocalService.fetchRow(
 			expandoTable.getTableId(), eventId);

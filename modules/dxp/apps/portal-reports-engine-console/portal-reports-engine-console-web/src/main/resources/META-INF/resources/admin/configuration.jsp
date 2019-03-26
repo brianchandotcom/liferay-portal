@@ -43,7 +43,6 @@ Map<String, String> emailDefinitionTerms = EmailConfigurationUtil.getEmailDefini
 		<liferay-ui:tabs
 			names="<%= tabs1Names %>"
 			refresh="<%= false %>"
-			type="tabs nav-tabs-default"
 		>
 			<liferay-ui:error key="emailDeliveryBody" message="please-enter-a-valid-body" />
 			<liferay-ui:error key="emailDeliverySubject" message="please-enter-a-valid-subject" />

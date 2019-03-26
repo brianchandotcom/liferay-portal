@@ -167,7 +167,6 @@ String successMessageKey = KaleoDesignerPortletKeys.KALEO_DESIGNER + "requestPro
 								cssClass="navigation-bar component-navigation-bar navbar-no-collapse"
 								names="details,revision-history"
 								refresh="<%= false %>"
-								type="tabs nav-tabs-default"
 							>
 								<div class="tab-content">
 									<c:if test="<%= kaleoDefinitionVersion != null %>">

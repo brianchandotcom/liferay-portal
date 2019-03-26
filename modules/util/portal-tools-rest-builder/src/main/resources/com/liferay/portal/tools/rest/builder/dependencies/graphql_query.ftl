@@ -50,11 +50,7 @@ public class Query {
 	<#list javaMethodSignatures as javaMethodSignature>
 		${freeMarkerTool.getGraphQLMethodAnnotations(javaMethodSignature)}
 		public ${javaMethodSignature.returnType} ${javaMethodSignature.methodName}(${freeMarkerTool.getGraphQLParameters(javaMethodSignature.javaMethodParameters, javaMethodSignature.operation, true)}) throws Exception {
-			<#if stringUtil.equals(javaMethodSignature.returnType, "javax.ws.rs.core.Response")>
-				Response.ResponseBuilder responseBuilder = Response.ok();
-
-				return responseBuilder.build();
-			<#elseif javaMethodSignature.returnType?contains("Collection<")>
+			<#if javaMethodSignature.returnType?contains("Collection<")>
 				return _applyComponentServiceObjects(
 					_${javaMethodSignature.schemaName?uncap_first}ResourceComponentServiceObjects,
 					this::_populateResourceContext,

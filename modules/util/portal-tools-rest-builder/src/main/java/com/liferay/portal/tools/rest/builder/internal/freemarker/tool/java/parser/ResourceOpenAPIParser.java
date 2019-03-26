@@ -605,7 +605,7 @@ public class ResourceOpenAPIParser {
 			return String.class.getName();
 		}
 
-		return boolean.class.getName();
+		return javax.ws.rs.core.Response.class.getName();
 	}
 
 	private static boolean _isSchemaMethod(

@@ -11,8 +11,10 @@ class HeaderMenuBackItem extends React.Component {
 			container,
 			location: { pathname, search }
 		} = this.props;
-		const isFirstPage = pathname === basePath || pathname === '/';
+
 		const backPath = queryString.parse(search).backPath;
+
+		const isFirstPage = pathname === basePath || pathname === '/';
 
 		return (
 			<PortalComponent container={container}>

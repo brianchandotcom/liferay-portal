@@ -41,6 +41,7 @@ class PageItem extends React.Component {
 		const renderLink = () => {
 			if (type) {
 				const isNext = type === 'next';
+
 				const iconType = isNext ? 'angle-right' : 'angle-left';
 				const displayType = isNext
 					? Liferay.Language.get('next')

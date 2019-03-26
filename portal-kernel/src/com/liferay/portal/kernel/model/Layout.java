@@ -411,12 +411,6 @@ public interface Layout extends LayoutModel, PersistedModel {
 	 */
 	public boolean isSupportsEmbeddedPortlets();
 
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), with no direct replacement
-	 */
-	@Deprecated
-	public boolean isTypeArticle();
-
 	public boolean isTypeControlPanel();
 
 	public boolean isTypeEmbedded();

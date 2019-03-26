@@ -242,19 +242,6 @@ public class GroupWrapper
 		return model.getChildren(site);
 	}
 
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
-	 #getChildrenWithLayouts(boolean, int, int,
-	 OrderByComparator)}
-	 */
-	@Deprecated
-	@Override
-	public java.util.List<Group> getChildrenWithLayouts(
-		boolean site, int start, int end) {
-
-		return model.getChildrenWithLayouts(site, start, end);
-	}
-
 	@Override
 	public java.util.List<Group> getChildrenWithLayouts(
 		boolean site, int start, int end,
@@ -856,15 +843,6 @@ public class GroupWrapper
 	@Override
 	public boolean isActive() {
 		return model.isActive();
-	}
-
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link #hasAncestor}
-	 */
-	@Deprecated
-	@Override
-	public boolean isChild(long groupId) {
-		return model.isChild(groupId);
 	}
 
 	@Override

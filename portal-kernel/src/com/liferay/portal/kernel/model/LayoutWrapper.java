@@ -1584,15 +1584,6 @@ public class LayoutWrapper
 		return model.isSystem();
 	}
 
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), with no direct replacement
-	 */
-	@Deprecated
-	@Override
-	public boolean isTypeArticle() {
-		return model.isTypeArticle();
-	}
-
 	@Override
 	public boolean isTypeControlPanel() {
 		return model.isTypeControlPanel();

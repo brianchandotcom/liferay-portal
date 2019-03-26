@@ -61,15 +61,6 @@ public interface Group extends GroupModel, PersistedModel, TreeModel {
 
 	public java.util.List<Group> getChildren(boolean site);
 
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
-	 #getChildrenWithLayouts(boolean, int, int,
-	 OrderByComparator)}
-	 */
-	@Deprecated
-	public java.util.List<Group> getChildrenWithLayouts(
-		boolean site, int start, int end);
-
 	public java.util.List<Group> getChildrenWithLayouts(
 		boolean site, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<Group> obc);
@@ -162,12 +153,6 @@ public interface Group extends GroupModel, PersistedModel, TreeModel {
 	public boolean hasRemoteStagingGroup();
 
 	public boolean hasStagingGroup();
-
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link #hasAncestor}
-	 */
-	@Deprecated
-	public boolean isChild(long groupId);
 
 	public boolean isCompany();
 

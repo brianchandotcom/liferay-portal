@@ -33,10 +33,10 @@ FileVersion fileVersion = (FileVersion)request.getAttribute(WebKeys.DOCUMENT_LIB
 
 		if (Objects.equals(fileEntry.getVersion(), fileVersion.getVersion())) {
 			if (ImageProcessorUtil.hasImages(fileVersion)) {
-				thumbnailURL = DLURLHelperUtil.getPreviewURL(fileEntry, fileVersion, themeDisplay, "&imageThumbnail=1");
+				thumbnailURL = DLURLHelperUtil.getPreviewURL(fileEntry, fileVersion, themeDisplay, "&imagePreview=1");
 			}
 			else if (PDFProcessorUtil.hasImages(fileVersion)) {
-				thumbnailURL = DLURLHelperUtil.getPreviewURL(fileEntry, fileVersion, themeDisplay, "&documentThumbnail=1");
+				thumbnailURL = DLURLHelperUtil.getPreviewURL(fileEntry, fileVersion, themeDisplay, "&previewFileIndex=1");
 			}
 			else if (VideoProcessorUtil.hasVideo(fileVersion)) {
 				thumbnailURL = DLURLHelperUtil.getPreviewURL(fileEntry, fileVersion, themeDisplay, "&videoThumbnail=1");

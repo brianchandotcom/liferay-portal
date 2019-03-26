@@ -11,7 +11,7 @@
 				SharingEntry.sharingEntryId IN
 					(
 						SELECT
-							min(SharingEntry.sharingEntryId)
+							MAX(SharingEntry.sharingEntryId)
 						FROM
 							SharingEntry
 						WHERE
@@ -31,7 +31,7 @@
 				SharingEntry.sharingEntryId IN
 					(
 						SELECT
-							min(SharingEntry.sharingEntryId)
+							MAX(SharingEntry.sharingEntryId)
 						FROM
 							SharingEntry
 						WHERE

@@ -291,6 +291,12 @@ gradle.beforeProject {
 			}
 		}
 
+		pluginManager.withPlugin("com.liferay.soy.translation") {
+			replaceSoyTranslation {
+				enabled = false
+			}
+		}
+
 		pluginManager.withPlugin("eclipse") {
 			tasks.eclipse.dependsOn {
 				Set<ProjectDependency> projectDependencies = configurations.runtime.allDependencies.withType(ProjectDependency)

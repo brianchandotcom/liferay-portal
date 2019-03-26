@@ -4050,7 +4050,7 @@ org.apache.catalina.startup.ClassLoaderFactory.level=INFO]]>
 							<if>
 								<istrue value="${test.docker.environment}" />
 								<then>
-									<echo>docker run -d -p 8080:8080 -v ${app.server.parent.dir}:${app.server.parent.dir} --cidfile=docker.process.pid --network=@{docker.network.name} openjdk:8-alpine ${app.server.bin.dir}/${app.server.start.executable} run</echo>
+									<echo>docker run -d -p 8080:8080 -v ${app.server.parent.dir}:${app.server.parent.dir} --cidfile=docker.process.pid --network=@{docker.network.name} openjdk:8-alpine ${app.server.bin.dir}/${app.server.start.executable} ${app.server.start.executable.arg.line}</echo>
 
 									<exec executable="docker">
 										<arg line="run -d" />
@@ -4061,7 +4061,7 @@ org.apache.catalina.startup.ClassLoaderFactory.level=INFO]]>
 										<arg value="--network=@{docker.network.name}" />
 										<arg value="openjdk:8-alpine" />
 										<arg value="${app.server.bin.dir}/${app.server.start.executable}" />
-										<arg value="run" />
+										<arg value="${app.server.start.executable.arg.line}" />
 									</exec>
 								</then>
 								<elseif>
@@ -4093,7 +4093,7 @@ org.apache.catalina.startup.ClassLoaderFactory.level=INFO]]>
 									<if>
 										<istrue value="${test.docker.environment}" />
 										<then>
-											<echo>docker run -d -p 8080:8080 -v ${app.server.parent.dir}:${app.server.parent.dir} --cidfile=docker.process.pid --network=@{docker.network.name} openjdk:8-alpine ${app.server.bin.dir}/${app.server.start.executable} run</echo>
+											<echo>docker run -d -p 8080:8080 -v ${app.server.parent.dir}:${app.server.parent.dir} --cidfile=docker.process.pid --network=@{docker.network.name} openjdk:8-alpine ${app.server.bin.dir}/${app.server.start.executable} ${app.server.start.executable.arg.line}</echo>
 
 											<exec executable="docker">
 												<arg line="run -d" />
@@ -4104,7 +4104,7 @@ org.apache.catalina.startup.ClassLoaderFactory.level=INFO]]>
 												<arg value="--network=@{docker.network.name}" />
 												<arg value="openjdk:8-alpine" />
 												<arg value="${app.server.bin.dir}/${app.server.start.executable}" />
-												<arg value="run" />
+												<arg value="${app.server.start.executable.arg.line}" />
 											</exec>
 										</then>
 										<elseif>

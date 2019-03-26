@@ -120,8 +120,6 @@ public class CalEventImporter {
 
 	@Activate
 	protected void activate() throws Exception {
-		initJSONSerializer();
-
 		long start = System.currentTimeMillis();
 
 		if (_log.isInfoEnabled()) {
@@ -457,7 +455,9 @@ public class CalEventImporter {
 
 			// LPS-65972
 
-			tzsRecurrence = (TZSRecurrence)_jsonSerializer.fromJSON(
+			JSONSerializer jsonSerializer = getJSONSerializer();
+
+			tzsRecurrence = (TZSRecurrence)jsonSerializer.fromJSON(
 				originalRecurrence);
 		}
 
@@ -709,6 +709,16 @@ public class CalEventImporter {
 		return _calendarResourceLocalService.addCalendarResource(
 			userId, groupId, _classNameLocalService.getClassNameId(Group.class),
 			groupId, null, null, nameMap, descriptionMap, true, serviceContext);
+	}
+
+	protected JSONSerializer getJSONSerializer() throws Exception {
+		if (_jsonSerializer == null) {
+			_jsonSerializer = new JSONSerializer();
+
+			_jsonSerializer.registerDefaultSerializers();
+		}
+
+		return _jsonSerializer;
 	}
 
 	protected void importAssetLink(
@@ -1283,12 +1293,6 @@ public class CalEventImporter {
 		for (Subscription subscription : subscriptions) {
 			importSubscription(subscription, calendarBookingId);
 		}
-	}
-
-	protected void initJSONSerializer() throws Exception {
-		_jsonSerializer = new JSONSerializer();
-
-		_jsonSerializer.registerDefaultSerializers();
 	}
 
 	protected boolean isAssetLinkImported(

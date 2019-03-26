@@ -26,7 +26,7 @@
 </tr>
 <tr>
 	<td>COMMUNICATION_SELECT_TITLE</td>
-	<td>//select[contains(@Id,'title')]</td>
+	<td>//select[contains(@id,'title')]</td>
 	<td></td>
 </tr>
 </tbody>

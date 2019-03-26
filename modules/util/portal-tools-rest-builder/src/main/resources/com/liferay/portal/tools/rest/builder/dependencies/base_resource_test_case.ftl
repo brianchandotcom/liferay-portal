@@ -928,7 +928,7 @@ public abstract class Base${schemaName}ResourceTestCase {
 				options.setPut(true);
 			</#if>
 
-			HttpUtil.URLtoString(options);
+			HttpUtil.URLtoByteArray(options);
 
 			return options.getResponse();
 		}

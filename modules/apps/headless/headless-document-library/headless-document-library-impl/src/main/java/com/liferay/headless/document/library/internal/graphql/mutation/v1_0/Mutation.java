@@ -117,6 +117,7 @@ public class Mutation {
 
 	@GraphQLField
 	@GraphQLInvokeDetached
+	@GraphQLName("postContentSpaceTreeDocumentContentSpaceIdMultipartBody")
 	public Document postContentSpaceTreeDocument(
 			@GraphQLName("content-space-id") Long contentSpaceId,
 			@GraphQLName("MultipartBody") MultipartBody multipartBody)
@@ -140,6 +141,7 @@ public class Mutation {
 	}
 
 	@GraphQLInvokeDetached
+	@GraphQLName("patchDocumentDocumentIdMultipartBody")
 	public Document patchDocument(
 			@GraphQLName("document-id") Long documentId,
 			@GraphQLName("MultipartBody") MultipartBody multipartBody)
@@ -153,6 +155,7 @@ public class Mutation {
 	}
 
 	@GraphQLInvokeDetached
+	@GraphQLName("putDocumentDocumentIdMultipartBody")
 	public Document putDocument(
 			@GraphQLName("document-id") Long documentId,
 			@GraphQLName("MultipartBody") MultipartBody multipartBody)
@@ -167,6 +170,7 @@ public class Mutation {
 
 	@GraphQLField
 	@GraphQLInvokeDetached
+	@GraphQLName("postFolderDocumentFolderIdMultipartBody")
 	public Document postFolderDocument(
 			@GraphQLName("folder-id") Long folderId,
 			@GraphQLName("MultipartBody") MultipartBody multipartBody)

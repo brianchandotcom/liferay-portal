@@ -204,6 +204,7 @@ public class Mutation {
 
 	@GraphQLField
 	@GraphQLInvokeDetached
+	@GraphQLName("postContentSpaceBlogPostingImageContentSpaceIdMultipartBody")
 	public BlogPostingImage postContentSpaceBlogPostingImage(
 			@GraphQLName("content-space-id") Long contentSpaceId,
 			@GraphQLName("MultipartBody") MultipartBody multipartBody)
@@ -283,6 +284,9 @@ public class Mutation {
 
 	@GraphQLField
 	@GraphQLInvokeDetached
+	@GraphQLName(
+		"postDiscussionForumPostingDiscussionAttachmentDiscussionForumPostingIdMultipartBody"
+	)
 	public DiscussionAttachment postDiscussionForumPostingDiscussionAttachment(
 			@GraphQLName("discussion-forum-posting-id") Long
 				discussionForumPostingId,
@@ -300,6 +304,9 @@ public class Mutation {
 
 	@GraphQLField
 	@GraphQLInvokeDetached
+	@GraphQLName(
+		"postDiscussionThreadDiscussionAttachmentDiscussionThreadIdMultipartBody"
+	)
 	public DiscussionAttachment postDiscussionThreadDiscussionAttachment(
 			@GraphQLName("discussion-thread-id") Long discussionThreadId,
 			@GraphQLName("MultipartBody") MultipartBody multipartBody)
@@ -660,6 +667,9 @@ public class Mutation {
 
 	@GraphQLField
 	@GraphQLInvokeDetached
+	@GraphQLName(
+		"postKnowledgeBaseArticleKnowledgeBaseAttachmentKnowledgeBaseArticleIdMultipartBody"
+	)
 	public KnowledgeBaseAttachment
 			postKnowledgeBaseArticleKnowledgeBaseAttachment(
 				@GraphQLName("knowledge-base-article-id") Long

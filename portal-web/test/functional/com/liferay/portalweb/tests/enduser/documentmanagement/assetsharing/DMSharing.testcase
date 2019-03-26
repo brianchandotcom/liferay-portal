@@ -697,10 +697,10 @@ definition {
 	@priority = "5"
 	test ShareWithNoSharingPermissions {
 		JSONUser.addUser(
-			userEmailAddress = "userea@liferay.com",
-			userFirstName = "userfn",
-			userLastName = "userln",
-			userScreenName = "usersn"
+			userEmailAddress = "userea1@liferay.com",
+			userFirstName = "userfn1",
+			userLastName = "userln1",
+			userScreenName = "usersn1"
 		);
 
 		ProductMenu.gotoPortlet(

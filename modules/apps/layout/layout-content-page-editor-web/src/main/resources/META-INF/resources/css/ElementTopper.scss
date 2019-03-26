@@ -55,6 +55,10 @@
 		width: 100%;
 	}
 
+	&-wrapper:focus {
+		outline: none;
+	}
+
 	&-wrapper--active,
 	&-wrapper--hovered {
 		outline: none;

@@ -58,6 +58,10 @@
 		}
 	}
 
+	&__container--resizing &__col:before {
+		box-shadow: inset 0 0 0 $topperBorderWidth $topperBorderColor;
+	}
+
 	&__row.no-gutters &__col:before {
 		left: 0;
 		width: 100%;

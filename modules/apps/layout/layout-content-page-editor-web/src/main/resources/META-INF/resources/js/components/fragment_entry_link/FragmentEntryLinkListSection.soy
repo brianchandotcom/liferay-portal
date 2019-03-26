@@ -62,6 +62,10 @@
 		{sp}fragments-editor__topper-wrapper
 		{sp}fragment-entry-link-list__container
 
+		{if $_resizing}
+			{sp}fragment-entry-link-list__container--resizing
+		{/if}
+
 		{if $empty}
 			{sp}fragment-entry-link-list__container--empty
 		{/if}
@@ -70,12 +74,12 @@
 			{sp}{$dropTargetBorder}
 		{/if}
 
-		{if $activeItemId == $rowId and $activeItemType == $dropTargetItemTypes.section}
+		{if not $_resizing and $activeItemId == $rowId and $activeItemType == $dropTargetItemTypes.section}
 			{sp}fragment-entry-link-list__row-section--active
 			{sp}fragments-editor__topper-wrapper--active
 		{/if}
 
-		{if $hoveredItemId == $rowId and $hoveredItemType == $dropTargetItemTypes.section}
+		{if not $_resizing and $hoveredItemId == $rowId and $hoveredItemType == $dropTargetItemTypes.section}
 			{sp}fragment-entry-link-list__container--hovered
 			{sp}fragments-editor__topper-wrapper--hovered
 		{/if}

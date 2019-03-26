@@ -69,8 +69,7 @@ public class GraphQLOpenAPIParser {
 		Set<String> requestBodyMediaTypes =
 			javaMethodSignature.getRequestBodyMediaTypes();
 
-		if ((requestBodyMediaTypes != null) &&
-			!requestBodyMediaTypes.isEmpty() &&
+		if (!requestBodyMediaTypes.isEmpty() &&
 			!requestBodyMediaTypes.contains("application/json")) {
 
 			List<JavaMethodParameter> javaMethodParameters =

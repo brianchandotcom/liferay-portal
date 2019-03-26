@@ -788,10 +788,22 @@ public class LayoutPageTemplateEntryLocalServiceImpl
 		serviceContext.setAttribute(
 			"layout.instanceable.allowed", Boolean.TRUE);
 
-		return layoutLocalService.addLayout(
+		Layout layout = layoutLocalService.addLayout(
 			userId, groupId, false, 0, titleMap, titleMap, null, null, null,
 			layoutType, StringPool.BLANK, true, true, new HashMap<>(),
 			serviceContext);
+
+		serviceContext.setModifiedDate(layout.getModifiedDate());
+
+		layoutLocalService.addLayout(
+			userId, groupId, false, layout.getParentLayoutId(),
+			classNameLocalService.getClassNameId(Layout.class),
+			layout.getPlid(), layout.getNameMap(), titleMap,
+			layout.getDescriptionMap(), layout.getKeywordsMap(),
+			layout.getRobotsMap(), layoutType, StringPool.BLANK, true, true,
+			Collections.emptyMap(), serviceContext);
+
+		return layout;
 	}
 
 	private static final char[] _BLACKLIST_CHAR = {

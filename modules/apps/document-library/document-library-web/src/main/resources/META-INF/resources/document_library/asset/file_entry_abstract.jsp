@@ -29,24 +29,24 @@ FileVersion fileVersion = (FileVersion)request.getAttribute(WebKeys.DOCUMENT_LIB
 	<div class="asset-summary">
 
 		<%
-		String thumbnailURL = StringPool.BLANK;
+		String previewURL = StringPool.BLANK;
 
 		if (Objects.equals(fileEntry.getVersion(), fileVersion.getVersion())) {
 			if (ImageProcessorUtil.hasImages(fileVersion)) {
-				thumbnailURL = DLURLHelperUtil.getPreviewURL(fileEntry, fileVersion, themeDisplay, "&imagePreview=1");
+				previewURL = DLURLHelperUtil.getPreviewURL(fileEntry, fileVersion, themeDisplay, "&imagePreview=1");
 			}
 			else if (PDFProcessorUtil.hasImages(fileVersion)) {
-				thumbnailURL = DLURLHelperUtil.getPreviewURL(fileEntry, fileVersion, themeDisplay, "&previewFileIndex=1");
+				previewURL = DLURLHelperUtil.getPreviewURL(fileEntry, fileVersion, themeDisplay, "&previewFileIndex=1");
 			}
 			else if (VideoProcessorUtil.hasVideo(fileVersion)) {
-				thumbnailURL = DLURLHelperUtil.getPreviewURL(fileEntry, fileVersion, themeDisplay, "&videoThumbnail=1");
+				previewURL = DLURLHelperUtil.getPreviewURL(fileEntry, fileVersion, themeDisplay, "&videoThumbnail=1");
 			}
 		}
 		%>
 
 		<c:choose>
-			<c:when test="<%= Validator.isNotNull(thumbnailURL) %>">
-				<div class="aspect-ratio aspect-ratio-8-to-3 aspect-ratio-bg-cover cover-image mb-3" style="background-image: url(<%= thumbnailURL %>)"></div>
+			<c:when test="<%= Validator.isNotNull(previewURL) %>">
+				<div class="aspect-ratio aspect-ratio-8-to-3 aspect-ratio-bg-cover cover-image mb-3" style="background-image: url(<%= previewURL %>)"></div>
 			</c:when>
 			<c:otherwise>
 				<div class="container">

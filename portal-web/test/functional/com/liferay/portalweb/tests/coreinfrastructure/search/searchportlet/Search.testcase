@@ -38,6 +38,26 @@ definition {
 		}
 	}
 
+	@ignore = "true"
+	@priority = "3"
+	test AssertGuestCannotSeeEmptySearchWidgets {
+		// Ignoring test until LPS-92008 is resolved
+
+		var portalURL = PropsUtil.get("portal.url");
+
+		Navigator.openSpecificURL(url = "${portalURL}/web/guest/search");
+
+		SearchPortlets.addWidgets(searchPortletList = "Category Facet,Custom Facet,Folder Facet,Modified Facet,Search Bar,Search Insights,Search Options,Search Results,Site Facet,Sort,Suggestions,Tag Facet,Type Facet,User Facet");
+
+		User.logoutPG();
+
+		Navigator.openSpecificURL(url = "${portalURL}/web/guest/search");
+
+		for (var portletName : list "Category Facet,Custom Facet,Folder Facet,Modified Facet,Search Bar,Search Insights,Search Options,Search Results,Site Facet,Sort,Suggestions,Tag Facet,Type Facet,User Facet") {
+			Portlet.viewNoSpecificPG(portletName = "${portletName}");
+		}
+	}
+
 	@priority = "4"
 	test AssertSearchInsightsExplain {
 		JSONWebcontent.addWebContent(

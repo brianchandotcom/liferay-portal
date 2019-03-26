@@ -67,6 +67,14 @@ public class ChainingCheck extends BaseCheck {
 			StringUtil.split(allowedVariableTypeNames));
 	}
 
+	public void setRequiredChainingVariableTypeNames(
+		String requiredChainingVariableTypeNames) {
+
+		_requiredChainingVariableTypeNames = ArrayUtil.append(
+			_requiredChainingVariableTypeNames,
+			StringUtil.split(requiredChainingVariableTypeNames));
+	}
+
 	@Override
 	protected void doVisitToken(DetailAST detailAST) {
 		DetailAST parentDetailAST = detailAST.getParent();
@@ -102,6 +110,8 @@ public class ChainingCheck extends BaseCheck {
 			int chainSize = chain.size();
 
 			if (chainSize == 1) {
+				_checkRequiredChaining(methodCallDetailAST);
+
 				continue;
 			}
 
@@ -234,6 +244,58 @@ public class ChainingCheck extends BaseCheck {
 				methodCallDetailAST, TokenTypes.SUPER_CTOR_CALL)) {
 
 			log(methodCallDetailAST, _MSG_AVOID_CHAINING, methodName);
+		}
+	}
+
+	private void _checkRequiredChaining(DetailAST methodCallDetailAST) {
+		DetailAST parentDetailAST = methodCallDetailAST.getParent();
+
+		if (parentDetailAST.getType() != TokenTypes.EXPR) {
+			return;
+		}
+
+		DetailAST nextSiblingDetailAST = parentDetailAST.getNextSibling();
+
+		if ((nextSiblingDetailAST == null) ||
+			(nextSiblingDetailAST.getType() != TokenTypes.SEMI)) {
+
+			return;
+		}
+
+		nextSiblingDetailAST = nextSiblingDetailAST.getNextSibling();
+
+		if ((nextSiblingDetailAST == null) ||
+			(nextSiblingDetailAST.getType() != TokenTypes.EXPR)) {
+
+			return;
+		}
+
+		DetailAST firstChildDetailAST = nextSiblingDetailAST.getFirstChild();
+
+		if (firstChildDetailAST.getType() != TokenTypes.METHOD_CALL) {
+			return;
+		}
+
+		String classOrVariableName1 = _getClassOrVariableName(
+			methodCallDetailAST);
+		String classOrVariableName2 = _getClassOrVariableName(
+			firstChildDetailAST);
+
+		if ((classOrVariableName1 == null) ||
+			!Objects.equals(classOrVariableName1, classOrVariableName2)) {
+
+			return;
+		}
+
+		String variableTypeName = DetailASTUtil.getVariableTypeName(
+			methodCallDetailAST, classOrVariableName1, false);
+
+		if (ArrayUtil.contains(
+				_requiredChainingVariableTypeNames, variableTypeName)) {
+
+			log(
+				methodCallDetailAST, _MSG_REQUIRED_CHAINING,
+				classOrVariableName1);
 		}
 	}
 
@@ -615,6 +677,8 @@ public class ChainingCheck extends BaseCheck {
 
 	private static final String _MSG_ALLOWED_CHAINING = "chaining.allowed";
 
+	private static final String _MSG_REQUIRED_CHAINING = "chaining.required";
+
 	private static final String _MSG_AVOID_CHAINING = "chaining.avoid";
 
 	private static final String _MSG_AVOID_TOO_MANY_CONCAT =
@@ -624,5 +688,6 @@ public class ChainingCheck extends BaseCheck {
 	private String[] _allowedMethodNames = new String[0];
 	private String[] _allowedMockitoMethodNames = new String[0];
 	private String[] _allowedVariableTypeNames = new String[0];
+	private String[] _requiredChainingVariableTypeNames = new String[0];
 
 }

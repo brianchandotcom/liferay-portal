@@ -8,7 +8,8 @@
 			"clay-icon",
 			"clay-label",
 			"clay-link",
-			"clay-multi-select"
+			"clay-multi-select",
+			"clay-portal"
 		]
 	}
 }

@@ -33,6 +33,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.ResourceConstants;
+import com.liferay.portal.kernel.model.ResourcePermission;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
@@ -145,6 +146,67 @@ public class DataDefinitionResourceImpl extends BaseDataDefinitionResourceImpl {
 	}
 
 	@Override
+	public void postContentSpaceDataDefinitionPermission(
+			Long contentSpaceId, String operation,
+			DataDefinitionPermission dataDefinitionPermission)
+		throws Exception {
+
+		if (!StringUtil.equalsIgnoreCase(
+				DataEngineConstants.OPERATION_DELETE_PERMISSION, operation) &&
+			!StringUtil.equalsIgnoreCase(
+				DataEngineConstants.OPERATION_SAVE_PERMISSION, operation)) {
+
+			throw new BadRequestException(
+				"Operation must be 'delete' or 'save'");
+		}
+
+		_checkPermission(contentSpaceId, ActionKeys.DEFINE_PERMISSIONS);
+
+		List<String> actionIds = new ArrayList<>();
+
+		if (dataDefinitionPermission.getAddDataDefinition()) {
+			actionIds.add(DataActionKeys.ADD_DATA_DEFINITION);
+		}
+
+		if (dataDefinitionPermission.getDefinePermissions()) {
+			actionIds.add(DataActionKeys.DEFINE_PERMISSIONS);
+		}
+
+		if (actionIds.isEmpty()) {
+			return;
+		}
+
+		if (StringUtil.equalsIgnoreCase(
+				DataEngineConstants.OPERATION_SAVE_PERMISSION, operation)) {
+
+			for (Role role : _getRoles(dataDefinitionPermission)) {
+				_resourcePermissionLocalService.setResourcePermissions(
+					contextCompany.getCompanyId(),
+					DataEngineConstants.RESOURCE_NAME,
+					ResourceConstants.SCOPE_COMPANY,
+					String.valueOf(contextCompany.getCompanyId()),
+					role.getRoleId(), ArrayUtil.toStringArray(actionIds));
+			}
+		}
+		else {
+			for (Role role : _getRoles(dataDefinitionPermission)) {
+				ResourcePermission resourcePermission =
+					_resourcePermissionLocalService.fetchResourcePermission(
+						contextCompany.getCompanyId(),
+						DataEngineConstants.RESOURCE_NAME,
+						ResourceConstants.SCOPE_COMPANY,
+						String.valueOf(contextCompany.getCompanyId()),
+						role.getRoleId());
+
+				if (resourcePermission != null) {
+					_resourcePermissionLocalService.deleteResourcePermission(
+						resourcePermission);
+				}
+			}
+		}
+	}
+
+	@Override
 	public void postDataDefinitionPermission(
 			Long dataDefinitionId, String operation,
 			DataDefinitionPermission dataDefinitionPermission)
@@ -200,31 +262,7 @@ public class DataDefinitionResourceImpl extends BaseDataDefinitionResourceImpl {
 				String.valueOf(dataDefinitionId), modelPermissions);
 		}
 		else {
-			List<String> invalidRoleNames = new ArrayList<>();
-			List<Role> roles = new ArrayList<>();
-
-			for (String roleName : dataDefinitionPermission.getRoleNames()) {
-				try {
-					roles.add(
-						_roleLocalService.getRole(
-							contextCompany.getCompanyId(), roleName));
-				}
-				catch (NoSuchRoleException nsre) {
-					if (_log.isDebugEnabled()) {
-						_log.debug(roleName, nsre);
-					}
-
-					invalidRoleNames.add(roleName);
-				}
-			}
-
-			if (!invalidRoleNames.isEmpty()) {
-				throw new BadRequestException(
-					"Invalid roles: " +
-						ArrayUtil.toStringArray(invalidRoleNames));
-			}
-
-			for (Role role : roles) {
+			for (Role role : _getRoles(dataDefinitionPermission)) {
 				for (String actionId : actionIds) {
 					_resourcePermissionLocalService.removeResourcePermission(
 						contextCompany.getCompanyId(),
@@ -292,6 +330,36 @@ public class DataDefinitionResourceImpl extends BaseDataDefinitionResourceImpl {
 
 	private long _getClassNameId() {
 		return _portal.getClassNameId(InternalDataDefinition.class);
+	}
+
+	private List<Role> _getRoles(
+			DataDefinitionPermission dataDefinitionPermission)
+		throws PortalException {
+
+		List<String> invalidRoleNames = new ArrayList<>();
+		List<Role> roles = new ArrayList<>();
+
+		for (String roleName : dataDefinitionPermission.getRoleNames()) {
+			try {
+				roles.add(
+					_roleLocalService.getRole(
+						contextCompany.getCompanyId(), roleName));
+			}
+			catch (NoSuchRoleException nsre) {
+				if (_log.isDebugEnabled()) {
+					_log.debug(roleName, nsre);
+				}
+
+				invalidRoleNames.add(roleName);
+			}
+		}
+
+		if (!invalidRoleNames.isEmpty()) {
+			throw new BadRequestException(
+				"Invalid roles: " + ArrayUtil.toStringArray(invalidRoleNames));
+		}
+
+		return roles;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

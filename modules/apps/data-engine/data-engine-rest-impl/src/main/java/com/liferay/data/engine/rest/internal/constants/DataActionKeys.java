@@ -21,4 +21,6 @@ public class DataActionKeys {
 
 	public static final String ADD_DATA_DEFINITION = "ADD_DATA_DEFINITION";
 
+	public static final String DEFINE_PERMISSIONS = "DEFINE_PERMISSIONS";
+
 }

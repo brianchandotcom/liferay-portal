@@ -53,7 +53,7 @@ class Analytics {
 
 		instance.config = config;
 
-		instance.asahIdentityEndpoint = `${endpointUrl}/identity`;
+		instance.identityEndpoint = `${endpointUrl}/identity`;
 
 		instance.events = storage.get(STORAGE_KEY_EVENTS) || [];
 		instance.contexts = storage.get(STORAGE_KEY_CONTEXTS) || [];
@@ -221,7 +221,7 @@ class Analytics {
 				mode: 'cors',
 			};
 
-			return fetch(this.asahIdentityEndpoint, request).then(
+			return fetch(this.identityEndpoint, request).then(
 				() => newIdentityHash
 			);
 		}

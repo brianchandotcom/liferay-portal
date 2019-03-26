@@ -27,6 +27,7 @@ import com.liferay.headless.foundation.internal.dto.v1_0.util.CreatorUtil;
 import com.liferay.headless.foundation.internal.odata.entity.v1_0.CategoryEntityModel;
 import com.liferay.headless.foundation.resource.v1_0.TaxonomyCategoryResource;
 import com.liferay.petra.function.UnsafeConsumer;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.BooleanQuery;
 import com.liferay.portal.kernel.search.Field;
@@ -36,6 +37,7 @@ import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.search.filter.TermFilter;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -48,10 +50,12 @@ import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 import com.liferay.portal.vulcan.util.SearchUtil;
 
 import java.util.AbstractMap;
+import java.util.Arrays;
 import java.util.Collections;
 
 import javax.servlet.http.HttpServletResponse;
 
+import javax.ws.rs.BadRequestException;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MultivaluedMap;
 
@@ -145,6 +149,40 @@ public class TaxonomyCategoryResourceImpl
 				}
 			},
 			filter, pagination, sorts);
+	}
+
+	@Override
+	public TaxonomyCategory patchTaxonomyCategory(
+			Long taxonomyCategoryId, TaxonomyCategory taxonomyCategory)
+		throws Exception {
+
+		AssetCategory assetCategory = _assetCategoryService.getCategory(
+			taxonomyCategoryId);
+
+		if (!ArrayUtil.contains(
+				assetCategory.getAvailableLanguageIds(),
+				contextAcceptLanguage.getPreferredLanguageId())) {
+
+			throw new BadRequestException(
+				StringBundler.concat(
+					"Unable to patch structured content with language ",
+					contextAcceptLanguage.getPreferredLanguageId(),
+					" because it is only configured to support ",
+					Arrays.toString(assetCategory.getAvailableLanguageIds())));
+		}
+
+		return _toTaxonomyCategory(
+			_assetCategoryService.updateCategory(
+				taxonomyCategoryId, assetCategory.getParentCategoryId(),
+				LocalizedMapUtil.patch(
+					assetCategory.getTitleMap(),
+					contextAcceptLanguage.getPreferredLocale(),
+					taxonomyCategory.getName()),
+				LocalizedMapUtil.patch(
+					assetCategory.getDescriptionMap(),
+					contextAcceptLanguage.getPreferredLocale(),
+					taxonomyCategory.getDescription()),
+				assetCategory.getVocabularyId(), null, new ServiceContext()));
 	}
 
 	@Override

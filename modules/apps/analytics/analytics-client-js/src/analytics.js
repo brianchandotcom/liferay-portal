@@ -1,8 +1,8 @@
 import {LocalStorageMechanism, Storage} from 'metal-storage';
 import middlewares from './middlewares/defaults';
 
-// Gateways
-import AsahClient from './AsahClient/AsahClient';
+// Gateway
+import Client from './Client';
 
 import defaultPlugins from './plugins/defaults';
 import fingerprint from './utils/fingerprint';
@@ -43,12 +43,12 @@ class Analytics {
 
 		const {endpointUrl, flushInterval} = config;
 
-		const asahClient = new AsahClient(endpointUrl);
+		const client = new Client(endpointUrl);
 
-		instance.client = asahClient;
+		instance.client = client;
 
 		instance._sendData = userId => {
-			return asahClient.send(instance, userId);
+			return client.send(instance, userId);
 		};
 
 		instance.config = config;

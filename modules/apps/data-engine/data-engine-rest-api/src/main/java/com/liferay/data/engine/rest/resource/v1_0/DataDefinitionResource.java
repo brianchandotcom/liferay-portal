@@ -41,6 +41,11 @@ public interface DataDefinitionResource {
 			Long contentSpaceId, DataDefinition dataDefinition)
 		throws Exception;
 
+	public void postContentSpaceDataDefinitionPermission(
+			Long contentSpaceId, String operation,
+			DataDefinitionPermission dataDefinitionPermission)
+		throws Exception;
+
 	public void postDataDefinitionPermission(
 			Long dataDefinitionId, String operation,
 			DataDefinitionPermission dataDefinitionPermission)

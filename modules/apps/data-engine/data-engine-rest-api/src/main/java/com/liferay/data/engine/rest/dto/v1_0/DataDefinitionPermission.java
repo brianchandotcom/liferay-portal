@@ -38,6 +38,54 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement(name = "DataDefinitionPermission")
 public class DataDefinitionPermission {
 
+	public Boolean getAddDataDefinition() {
+		return addDataDefinition;
+	}
+
+	public void setAddDataDefinition(Boolean addDataDefinition) {
+		this.addDataDefinition = addDataDefinition;
+	}
+
+	@JsonIgnore
+	public void setAddDataDefinition(
+		UnsafeSupplier<Boolean, Exception> addDataDefinitionUnsafeSupplier) {
+
+		try {
+			addDataDefinition = addDataDefinitionUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Boolean addDataDefinition;
+
+	public Boolean getDefinePermissions() {
+		return definePermissions;
+	}
+
+	public void setDefinePermissions(Boolean definePermissions) {
+		this.definePermissions = definePermissions;
+	}
+
+	@JsonIgnore
+	public void setDefinePermissions(
+		UnsafeSupplier<Boolean, Exception> definePermissionsUnsafeSupplier) {
+
+		try {
+			definePermissions = definePermissionsUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Boolean definePermissions;
+
 	public Boolean getDelete() {
 		return delete;
 	}
@@ -136,6 +184,16 @@ public class DataDefinitionPermission {
 		StringBundler sb = new StringBundler();
 
 		sb.append("{");
+
+		sb.append("\"addDataDefinition\": ");
+
+		sb.append(addDataDefinition);
+		sb.append(", ");
+
+		sb.append("\"definePermissions\": ");
+
+		sb.append(definePermissions);
+		sb.append(", ");
 
 		sb.append("\"delete\": ");
 

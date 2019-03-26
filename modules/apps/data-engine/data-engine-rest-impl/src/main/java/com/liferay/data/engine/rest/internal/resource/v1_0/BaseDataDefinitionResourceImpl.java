@@ -100,6 +100,19 @@ public abstract class BaseDataDefinitionResourceImpl
 	@Override
 	@Consumes("application/json")
 	@POST
+	@Path("/content-spaces/{content-space-id}/data-definitions/permissions")
+	@Produces("application/json")
+	@Tags(value = {@Tag(name = "DataDefinition")})
+	public void postContentSpaceDataDefinitionPermission(
+			@NotNull @PathParam("content-space-id") Long contentSpaceId,
+			@NotNull @QueryParam("operation") String operation,
+			DataDefinitionPermission dataDefinitionPermission)
+		throws Exception {
+	}
+
+	@Override
+	@Consumes("application/json")
+	@POST
 	@Path("/data-definitions/{data-definition-id}/permissions")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "DataDefinition")})

@@ -92,6 +92,23 @@ public class Mutation {
 
 	@GraphQLField
 	@GraphQLInvokeDetached
+	public void postContentSpaceDataDefinitionPermission(
+			@GraphQLName("content-space-id") Long contentSpaceId,
+			@GraphQLName("operation") String operation,
+			@GraphQLName("DataDefinitionPermission") DataDefinitionPermission
+				dataDefinitionPermission)
+		throws Exception {
+
+		_applyVoidComponentServiceObjects(
+			_dataDefinitionResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			dataDefinitionResource ->
+				dataDefinitionResource.postContentSpaceDataDefinitionPermission(
+					contentSpaceId, operation, dataDefinitionPermission));
+	}
+
+	@GraphQLField
+	@GraphQLInvokeDetached
 	public void postDataDefinitionPermission(
 			@GraphQLName("data-definition-id") Long dataDefinitionId,
 			@GraphQLName("operation") String operation,

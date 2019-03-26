@@ -32,7 +32,7 @@ definition {
 	}
 
 	macro addDeviceFamilyCP {
-		LexiconEntry.gotoAdd();
+		Click(locator1 = "Button#PLUS");
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "Portlet#HEADER",

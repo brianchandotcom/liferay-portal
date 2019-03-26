@@ -72,7 +72,7 @@ long classNameId = ParamUtil.getLong(request, "classNameId");
 
 	<c:choose>
 		<c:when test="<%= Objects.equals(message, JournalArticleConstants.DISPLAY_PAGE) %>">
-			<liferay-ui:message key="please-select-an-existing-display-page" />
+			<liferay-ui:message key="please-select-an-existing-display-page-template" />
 		</c:when>
 		<c:otherwise>
 			<liferay-ui:message key="the-content-references-a-missing-page" />

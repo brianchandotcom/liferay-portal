@@ -73,7 +73,7 @@ public class AssetDisplayPagesItemSelectorViewDisplayContext {
 		SearchContainer<LayoutPageTemplateEntry>
 			assetDisplayPageSearchContainer = new SearchContainer<>(
 				_portletRequest, _getPortletURL(), null,
-				"there-are-no-display-pages");
+				"there-are-no-display-page-templates");
 
 		assetDisplayPageSearchContainer.setOrderByCol(_getOrderByCol());
 

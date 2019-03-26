@@ -31,10 +31,12 @@ import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.vulcan.util.TransformUtil;
 
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -52,8 +54,13 @@ public class DDMFormValuesUtil {
 		LayoutLocalService layoutLocalService, Locale locale,
 		List<DDMFormField> rootDDMFormFields) {
 
-		Map<String, List<ContentField>> contentFieldMap = _toContentFieldsMap(
-			Stream.of(contentFields));
+		Map<String, List<ContentField>> contentFieldMap = Optional.ofNullable(
+			contentFields
+		).map(
+			fields -> _toContentFieldsMap(Stream.of(fields))
+		).orElse(
+			new HashMap<>()
+		);
 
 		return new DDMFormValues(ddmForm) {
 			{

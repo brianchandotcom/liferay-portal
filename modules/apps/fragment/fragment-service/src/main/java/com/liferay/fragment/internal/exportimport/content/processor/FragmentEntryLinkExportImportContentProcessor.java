@@ -19,6 +19,9 @@ import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.model.AssetRenderer;
 import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.asset.kernel.service.AssetEntryLocalService;
+import com.liferay.dynamic.data.mapping.model.DDMStructure;
+import com.liferay.dynamic.data.mapping.model.DDMTemplate;
+import com.liferay.dynamic.data.mapping.service.DDMTemplateLocalService;
 import com.liferay.exportimport.content.processor.ExportImportContentProcessor;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
@@ -93,6 +96,26 @@ public class FragmentEntryLinkExportImportContentProcessor
 
 				if ((classNameId == 0) || (classPK == 0)) {
 					continue;
+				}
+
+				String mappedField = editableJSONObject.getString(
+					"mappedField", editableJSONObject.getString("fieldId"));
+
+				if (mappedField.startsWith(_DDM_TEMPLATE)) {
+					String ddmTemplateKey = mappedField.substring(
+						_DDM_TEMPLATE.length());
+
+					DDMTemplate ddmTemplate =
+						_ddmTemplateLocalService.fetchTemplate(
+							portletDataContext.getScopeGroupId(),
+							_portal.getClassNameId(DDMStructure.class),
+							ddmTemplateKey);
+
+					if (ddmTemplate != null) {
+						StagedModelDataHandlerUtil.exportReferenceStagedModel(
+							portletDataContext, stagedModel, ddmTemplate,
+							PortletDataContext.REFERENCE_TYPE_DEPENDENCY);
+					}
 				}
 
 				AssetEntry assetEntry = _assetEntryLocalService.getEntry(
@@ -207,6 +230,32 @@ public class FragmentEntryLinkExportImportContentProcessor
 					continue;
 				}
 
+				String mappedField = editableJSONObject.getString(
+					"mappedField", editableJSONObject.getString("fieldId"));
+
+				if (mappedField.startsWith(_DDM_TEMPLATE)) {
+					String ddmTemplateKey = mappedField.substring(
+						_DDM_TEMPLATE.length());
+
+					Map<String, String> ddmTemplateKeys =
+						(Map<String, String>)
+							portletDataContext.getNewPrimaryKeysMap(
+								DDMTemplate.class + ".ddmTemplateKey");
+
+					String importedDDMTemplateKey = MapUtil.getString(
+						ddmTemplateKeys, ddmTemplateKey, ddmTemplateKey);
+
+					if (editableJSONObject.has("mappedField")) {
+						editableJSONObject.put(
+							"mappedField",
+							_DDM_TEMPLATE + importedDDMTemplateKey);
+					}
+					else {
+						editableJSONObject.put(
+							"fieldId", _DDM_TEMPLATE + importedDDMTemplateKey);
+					}
+				}
+
 				AssetRendererFactory assetRendererFactory =
 					AssetRendererFactoryRegistryUtil.
 						getAssetRendererFactoryByClassName(className);
@@ -248,11 +297,16 @@ public class FragmentEntryLinkExportImportContentProcessor
 		throws PortalException {
 	}
 
+	private static final String _DDM_TEMPLATE = "ddmTemplate_";
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		FragmentEntryLinkExportImportContentProcessor.class);
 
 	@Reference
 	private AssetEntryLocalService _assetEntryLocalService;
+
+	@Reference
+	private DDMTemplateLocalService _ddmTemplateLocalService;
 
 	@Reference
 	private Portal _portal;

@@ -75,6 +75,45 @@ public class DefaultDLMimeTypeDisplayContext
 		return "file-icon-color-0";
 	}
 
+	@Override
+	public String getIconFileMimeType(String mimeType) {
+		if (_containsMimeType(_dlConfiguration.codeFileMimeTypes(), mimeType)) {
+			return "document-code";
+		}
+		else if (_containsMimeType(
+					_dlConfiguration.compressedFileMimeTypes(), mimeType)) {
+
+			return "document-compressed";
+		}
+		else if (_containsMimeType(
+					_dlConfiguration.multimediaFileMimeTypes(), mimeType)) {
+
+			return "document-multimedia";
+		}
+		else if (_containsMimeType(
+					_dlConfiguration.presentationFileMimeTypes(), mimeType)) {
+
+			return "document-presentation";
+		}
+		else if (_containsMimeType(
+					_dlConfiguration.spreadSheetFileMimeTypes(), mimeType)) {
+
+			return "document-table";
+		}
+		else if (_containsMimeType(
+					_dlConfiguration.textFileMimeTypes(), mimeType)) {
+
+			return "document-text";
+		}
+		else if (_containsMimeType(
+					_dlConfiguration.vectorialFileMimeTypes(), mimeType)) {
+
+			return "document-vector";
+		}
+
+		return "document-default";
+	}
+
 	@Activate
 	@Modified
 	protected void activate(Map<String, Object> properties) {

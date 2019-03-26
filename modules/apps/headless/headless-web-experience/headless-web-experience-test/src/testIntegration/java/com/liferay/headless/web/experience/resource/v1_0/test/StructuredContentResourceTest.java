@@ -50,7 +50,6 @@ import org.junit.runner.RunWith;
 /**
  * @author Javier Gamarra
  */
-@Ignore
 @RunWith(Arquillian.class)
 public class StructuredContentResourceTest
 	extends BaseStructuredContentResourceTestCase {

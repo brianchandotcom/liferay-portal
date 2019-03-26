@@ -709,7 +709,7 @@ public abstract class BaseTaxonomyVocabularyResourceTestCase {
 	@Test
 	public void testPatchTaxonomyVocabulary() throws Exception {
 		TaxonomyVocabulary postTaxonomyVocabulary =
-			testPatchTaxonomyVocabulary_addTaxonomyVocabulary(
+			testPostContentSpaceTaxonomyVocabulary_addTaxonomyVocabulary(
 				randomTaxonomyVocabulary());
 
 		TaxonomyVocabulary randomPatchTaxonomyVocabulary =

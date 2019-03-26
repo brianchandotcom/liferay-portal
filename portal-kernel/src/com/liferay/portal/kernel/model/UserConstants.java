@@ -16,11 +16,7 @@ package com.liferay.portal.kernel.model;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
-import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.util.DigesterUtil;
 import com.liferay.portal.kernel.util.PrefsPropsUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
@@ -52,41 +48,6 @@ public class UserConstants {
 
 	public static final String USERS_EMAIL_ADDRESS_AUTO_SUFFIX = PropsUtil.get(
 		PropsKeys.USERS_EMAIL_ADDRESS_AUTO_SUFFIX);
-
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
-	 *             #getPortraitURL(String, boolean, long, String)}
-	 */
-	@Deprecated
-	public static String getPortraitURL(
-		String imagePath, boolean male, long portraitId) {
-
-		if (!_userFileUploadsSettings.isImageCheckToken()) {
-			return getPortraitURL(imagePath, male, portraitId, null);
-		}
-
-		if (portraitId <= 0) {
-			return getPortraitURL(imagePath, male, 0, StringPool.BLANK);
-		}
-
-		try {
-			User user = UserLocalServiceUtil.fetchUserByPortraitId(portraitId);
-
-			if (user == null) {
-				return getPortraitURL(imagePath, male, 0, StringPool.BLANK);
-			}
-
-			return getPortraitURL(
-				imagePath, male, portraitId, user.getUserUuid());
-		}
-		catch (Exception e) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(e, e);
-			}
-		}
-
-		return StringPool.BLANK;
-	}
 
 	public static String getPortraitURL(
 		String imagePath, boolean male, long portraitId, String userUuid) {
@@ -125,8 +86,6 @@ public class UserConstants {
 
 		return sb.toString();
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(UserConstants.class);
 
 	private static volatile UserFileUploadsSettings _userFileUploadsSettings =
 		ServiceProxyFactory.newServiceTrackedInstance(

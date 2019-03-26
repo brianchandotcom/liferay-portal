@@ -55,7 +55,7 @@ User selUser = (User)request.getAttribute("user.selUser");
 					<liferay-ui:logo-selector
 						currentLogoURL="<%= selUser.getPortraitURL(themeDisplay) %>"
 						defaultLogo="<%= selUser.getPortraitId() == 0 %>"
-						defaultLogoURL="<%= UserConstants.getPortraitURL(themeDisplay.getPathImage(), selUser.isMale(), 0) %>"
+						defaultLogoURL="<%= UserConstants.getPortraitURL(themeDisplay.getPathImage(), selUser.isMale(), 0, selUser.getUserUuid()) %>"
 						logoDisplaySelector=".user-logo"
 						maxFileSize="<%= userFileUploadsConfiguration.imageMaxSize() %>"
 						showBackground="<%= false %>"

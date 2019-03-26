@@ -1761,7 +1761,7 @@ import org.osgi.service.component.annotations.Reference;
 			<#list entity.entityColumns as entityColumn>
 				<#if stringUtil.equals(entityColumn.methodName, "HeadId")>
 					draft${entity.name}.setHeadId(published${entity.name}.getPrimaryKey());
-				<#elseif !entityColumn.isPrimary() && !stringUtil.equals(entityColumn.methodName, "MvccVersion")>
+				<#elseif !entityColumn.isPrimary() && !stringUtil.equals(entityColumn.methodName, "MvccVersion") && !entityColumn.isMappingManyToMany()>
 					draft${entity.name}.set${entityColumn.methodName}(published${entity.name}.get${entityColumn.methodName}());
 				</#if>
 			</#list>

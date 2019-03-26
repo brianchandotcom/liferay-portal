@@ -597,7 +597,10 @@ definition {
 		property portal.acceptance = "true";
 		property testray.component.names = "Asset Publisher";
 
-		AssetPublisherPortlet.configureSelectedPG(selectedAsset = "Web Content Article");
+		AssetPublisherPortlet.configureAssetTypePG(
+			assetSubtype = "Basic Web Content",
+			selectedAsset = "Web Content Article"
+		);
 
 		Navigator.gotoSitePage(
 			pageName = "Asset Publisher Page",
@@ -606,7 +609,8 @@ definition {
 
 		AssetPublisherPortlet.viewSelectedPG(
 			selectedAsset = "Basic Web Content",
-			selectedAssetConfiguration = "Web Content Article"
+			selectedAssetConfiguration = "Web Content Article",
+			assetSubtypeConfiguration = "Basic Web Content"
 		);
 	}
 

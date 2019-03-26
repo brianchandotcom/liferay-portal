@@ -8,6 +8,15 @@ import middlewares from './middlewares/defaults';
  * @class
  */
 class Client {
+
+	/**
+	 * Constructor
+	 * @param {*} uri The Endpoint URI where the data should be sent
+	 */
+	constructor(uri) {
+		this.uri = uri;
+	}
+
 	_getContextEvents(analytics, context) {
 		return analytics.events.filter(event => {
 			return (

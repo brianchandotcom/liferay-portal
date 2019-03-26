@@ -57,6 +57,10 @@ public class InfoDisplayContributorFieldTrackerImpl
 
 		String className = (String)properties.get("model.class.name");
 
+		if (Validator.isNull(className)) {
+			return;
+		}
+
 		List<InfoDisplayContributorField> infoDisplayContributorFields =
 			_itemClassInfoDisplayContributorFields.computeIfAbsent(
 				className, itemClass -> new ArrayList<>());
@@ -69,6 +73,10 @@ public class InfoDisplayContributorFieldTrackerImpl
 		Map<String, Object> properties) {
 
 		String className = (String)properties.get("model.class.name");
+
+		if (Validator.isNull(className)) {
+			return;
+		}
 
 		List<InfoDisplayContributorField> infoDisplayContributorFields =
 			_itemClassInfoDisplayContributorFields.get(className);

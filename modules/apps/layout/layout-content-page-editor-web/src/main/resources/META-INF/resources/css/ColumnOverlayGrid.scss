@@ -1,8 +1,18 @@
 @import "variables";
 
+@keyframes ColumnOverlayGridFadeIn {
+	to {
+		opacity: 1;
+	}
+}
+
 .column-overlay-grid {
+	animation: ColumnOverlayGridFadeIn ease 0.3s;
+	animation-fill-mode: forwards;
 	height: 200vh;
 	left: 0;
+	opacity: 0;
+	outline: none;
 	top: -100vh;
 	z-index: 1;
 

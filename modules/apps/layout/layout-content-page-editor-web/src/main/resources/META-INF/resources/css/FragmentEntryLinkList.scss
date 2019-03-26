@@ -38,7 +38,9 @@
 			pointer-events: none;
 			position: absolute;
 			top: 0;
+			transition: box-shadow ease 0.3s;
 			width: calc(100% - #{$fragmentsEditorSpacing * 3});
+			will-change: box-shadow;
 		}
 
 		&-resizer {

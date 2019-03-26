@@ -54,7 +54,7 @@ class CriteriaBuilder extends Component {
 		 * @type {?(string|undefined)}
 		 */
 		entityName: PropTypes.string.isRequired,
-		id: PropTypes.number.isRequired,
+		id: PropTypes.string.isRequired,
 
 		/**
 		 * Name displayed to label a contributor and its' properties.

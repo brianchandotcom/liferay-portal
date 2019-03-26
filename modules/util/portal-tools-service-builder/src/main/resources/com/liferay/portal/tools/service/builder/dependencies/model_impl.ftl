@@ -45,7 +45,6 @@ import ${apiPackagePath}.model.${entity.name}Soap;
 	<#assign versionedEntity = entity.versionedEntity />
 
 	import ${apiPackagePath}.model.${versionedEntity.name};
-	import ${apiPackagePath}.model.impl.${versionedEntity.name}Impl;
 </#if>
 
 import ${apiPackagePath}.service.${entity.name}LocalServiceUtil;

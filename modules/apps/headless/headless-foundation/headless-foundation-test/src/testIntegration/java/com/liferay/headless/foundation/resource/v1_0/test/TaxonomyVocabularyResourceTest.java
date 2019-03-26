@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import java.util.Objects;
 
 import org.junit.Assert;
-import org.junit.Ignore;
 import org.junit.runner.RunWith;
 
 /**
@@ -31,11 +30,6 @@ import org.junit.runner.RunWith;
 @RunWith(Arquillian.class)
 public class TaxonomyVocabularyResourceTest
 	extends BaseTaxonomyVocabularyResourceTestCase {
-
-	@Ignore
-	@Override
-	public void testPatchTaxonomyVocabulary() throws Exception {
-	}
 
 	protected void assertValid(TaxonomyVocabulary taxonomyVocabulary) {
 		boolean valid = false;
@@ -122,9 +116,9 @@ public class TaxonomyVocabularyResourceTest
 			testGroup.getGroupId(), randomTaxonomyVocabulary());
 	}
 
+	@Override
 	protected TaxonomyVocabulary
-			testPatchTaxonomyVocabulary_addTaxonomyVocabulary(
-				TaxonomyVocabulary taxonomyVocabulary)
+			testPatchTaxonomyVocabulary_addTaxonomyVocabulary()
 		throws Exception {
 
 		return invokePostContentSpaceTaxonomyVocabulary(

@@ -117,6 +117,7 @@ class FragmentEntryLinkListSection extends Component {
 			buttons: SECTION_FLOATING_TOOLBAR_BUTTONS,
 			item: this.row,
 			itemId: this.rowId,
+			itemType: FRAGMENTS_EDITOR_ITEM_TYPES.section,
 			portalElement: document.body,
 			store: this.store
 		};

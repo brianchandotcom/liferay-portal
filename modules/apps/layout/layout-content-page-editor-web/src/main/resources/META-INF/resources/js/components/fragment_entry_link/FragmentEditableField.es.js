@@ -250,6 +250,7 @@ class FragmentEditableField extends PortletBase {
 				type: this.type
 			},
 			itemId: this.editableId,
+			itemType: FRAGMENTS_EDITOR_ITEM_TYPES.editable,
 			portalElement: document.body,
 			store: this.store
 		};

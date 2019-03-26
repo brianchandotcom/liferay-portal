@@ -530,20 +530,6 @@ public class CalEventImporter {
 		return RecurrenceSerializer.serialize(recurrence);
 	}
 
-	protected long getActionId(
-		ResourceAction oldResourceAction, String newClassName) {
-
-		ResourceAction newResourceAction =
-			_resourceActionLocalService.fetchResourceAction(
-				newClassName, oldResourceAction.getActionId());
-
-		if (newResourceAction == null) {
-			return 0;
-		}
-
-		return newResourceAction.getBitwiseValue();
-	}
-
 	protected String[] getActionIds(
 		ResourcePermission resourcePermission, String oldClassName,
 		List<String> modelResourceActions) {

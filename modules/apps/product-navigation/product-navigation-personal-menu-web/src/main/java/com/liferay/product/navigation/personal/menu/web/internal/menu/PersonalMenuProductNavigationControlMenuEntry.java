@@ -15,7 +15,6 @@
 package com.liferay.product.navigation.personal.menu.web.internal.menu;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.module.configuration.ConfigurationProviderUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.util.PropsValues;
@@ -23,6 +22,7 @@ import com.liferay.product.navigation.control.menu.BaseJSPProductNavigationContr
 import com.liferay.product.navigation.control.menu.ProductNavigationControlMenuEntry;
 import com.liferay.product.navigation.control.menu.constants.ProductNavigationControlMenuCategoryKeys;
 import com.liferay.product.navigation.personal.menu.configuration.PersonalMenuConfiguration;
+import com.liferay.product.navigation.personal.menu.configuration.PersonalMenuConfigurationTracker;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
@@ -56,8 +56,8 @@ public class PersonalMenuProductNavigationControlMenuEntry
 			WebKeys.THEME_DISPLAY);
 
 		PersonalMenuConfiguration personalMenuConfiguration =
-			ConfigurationProviderUtil.getCompanyConfiguration(
-				PersonalMenuConfiguration.class, themeDisplay.getCompanyId());
+			_personalMenuConfigurationTracker.getCompanyConfiguration(
+				themeDisplay.getCompanyId());
 
 		if (personalMenuConfiguration.showThePersonalMenuInTheControlMenu()) {
 			return true;
@@ -82,5 +82,8 @@ public class PersonalMenuProductNavigationControlMenuEntry
 	public void setServletContext(ServletContext servletContext) {
 		super.setServletContext(servletContext);
 	}
+
+	@Reference
+	private PersonalMenuConfigurationTracker _personalMenuConfigurationTracker;
 
 }

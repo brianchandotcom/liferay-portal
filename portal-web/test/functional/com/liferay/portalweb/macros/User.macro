@@ -2089,7 +2089,7 @@ definition {
 			);
 		}
 		else if ("${captchaType}" == "recaptcha") {
-			SelectFrame(locator1 = "IFrame#RECAPTCHA");
+			SelectFrame.selectFrameNoLoading(locator1 = "IFrame#RECAPTCHA");
 
 			AssertElementPresent.assertElementPresent(
 				locator1 = "SignInCreateAccount#RECAPTCHA_LABEL"

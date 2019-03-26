@@ -595,7 +595,7 @@ definition {
 	@priority = "5"
 	test ConfigureAPPortletSelectedWebContent {
 		property portal.acceptance = "true";
-		property testray.component.names = "Asset Publisher";
+		property testray.component.names = "Asset Publisher,Training";
 
 		AssetPublisherPortlet.configureAssetTypePG(
 			assetSubtype = "Basic Web Content",

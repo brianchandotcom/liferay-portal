@@ -19,6 +19,7 @@ import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.spring.transaction.TransactionExecutor;
 
+import java.util.Arrays;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -192,7 +193,7 @@ public class AopServiceManager {
 				}
 			}
 
-			return aopInterfaces;
+			return Arrays.copyOf(aopInterfaces, aopInterfaces.length);
 		}
 
 	}

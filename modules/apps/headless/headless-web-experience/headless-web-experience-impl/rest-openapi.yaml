@@ -101,6 +101,7 @@ components:
                             writeOnly: true
                         imageDescription:
                             type: string
+                            writeOnly: true
                         link:
                             format: uri
                             type: string

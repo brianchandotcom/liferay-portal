@@ -1143,7 +1143,7 @@ public abstract class Base${schemaName}ResourceTestCase {
 		}
 
 		for (int i = 0; i < values.length; i++) {
-			template = template.replaceFirst("\\{.*\\}", String.valueOf(values[i]));
+			template = template.replaceFirst("\\{.*?\\}", String.valueOf(values[i]));
 		}
 
 		return template;

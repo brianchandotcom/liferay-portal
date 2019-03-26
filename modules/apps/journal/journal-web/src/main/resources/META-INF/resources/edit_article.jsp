@@ -38,7 +38,7 @@ JournalEditArticleDisplayContext journalEditArticleDisplayContext = new JournalE
 	<aui:input name="hideDefaultSuccessMessage" type="hidden" value="<%= journalEditArticleDisplayContext.isHideDefaultSuccessMessage() || (journalEditArticleDisplayContext.getClassNameId() == PortalUtil.getClassNameId(DDMStructure.class)) %>" />
 	<aui:input name="redirect" type="hidden" value="<%= journalEditArticleDisplayContext.getRedirect() %>" />
 	<aui:input name="portletResource" type="hidden" value="<%= journalEditArticleDisplayContext.getPortletResource() %>" />
-	<aui:input name="referringPlid" type="hidden" value="<%= journalEditArticleDisplayContext.getReferringPlid() %>" />
+	<aui:input name="refererPlid" type="hidden" value="<%= journalEditArticleDisplayContext.getRefererPlid() %>" />
 	<aui:input name="referringPortletResource" type="hidden" value="<%= journalEditArticleDisplayContext.getReferringPortletResource() %>" />
 	<aui:input name="groupId" type="hidden" value="<%= journalEditArticleDisplayContext.getGroupId() %>" />
 	<aui:input name="privateLayout" type="hidden" value="<%= layout.isPrivateLayout() %>" />

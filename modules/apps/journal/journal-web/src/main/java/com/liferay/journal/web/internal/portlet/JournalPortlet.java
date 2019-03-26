@@ -958,10 +958,10 @@ public class JournalPortlet extends MVCPortlet {
 		String portletResource = ParamUtil.getString(
 			actionRequest, "portletResource");
 
-		long referringPlid = ParamUtil.getLong(actionRequest, "referringPlid");
+		long refererPlid = ParamUtil.getLong(actionRequest, "refererPlid");
 
-		if (Validator.isNotNull(portletResource) && (referringPlid > 0)) {
-			Layout layout = _layoutLocalService.getLayout(referringPlid);
+		if (Validator.isNotNull(portletResource) && (refererPlid > 0)) {
+			Layout layout = _layoutLocalService.getLayout(refererPlid);
 
 			PortletPreferences portletPreferences =
 				PortletPreferencesFactoryUtil.getStrictPortletSetup(
@@ -1531,10 +1531,10 @@ public class JournalPortlet extends MVCPortlet {
 
 		Layout layout = themeDisplay.getLayout();
 
-		long referringPlid = ParamUtil.getLong(actionRequest, "referringPlid");
+		long refererPlid = ParamUtil.getLong(actionRequest, "refererPlid");
 
-		if (referringPlid > 0) {
-			layout = _layoutLocalService.fetchLayout(referringPlid);
+		if (refererPlid > 0) {
+			layout = _layoutLocalService.fetchLayout(refererPlid);
 		}
 
 		_journalContentSearchLocalService.updateContentSearch(

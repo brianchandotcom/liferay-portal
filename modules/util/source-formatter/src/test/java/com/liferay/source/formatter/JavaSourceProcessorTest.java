@@ -361,14 +361,7 @@ public class JavaSourceProcessorTest extends BaseSourceProcessorTestCase {
 
 	@Test
 	public void testSortAnnotationParameters() throws Exception {
-		test(
-			"SortAnnotationParameters.testjava",
-			new String[] {
-				"Annotation parameter 'immediate' is not sorted alphabetically",
-				"Annotation parameter 'propagation' is not sorted " +
-					"alphabetically"
-			},
-			new Integer[] {24, 27});
+		test("SortAnnotationParameters.testjava");
 	}
 
 	@Test

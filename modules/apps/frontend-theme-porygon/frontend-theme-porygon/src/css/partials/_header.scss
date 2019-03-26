@@ -1,5 +1,5 @@
 header {
-	.portlet-boundary:hover {
+	.portlet:hover, .portlet.open {
 		z-index: 1050;
 	}
 
@@ -55,7 +55,7 @@ header {
 		overflow: hidden;
 		width: 100%;
 
-		&.focus:hover {
+		&.focus {
 			overflow: visible;
 		}
 
@@ -124,13 +124,13 @@ header {
 			&:nth-of-type(2) {
 				@include transform(scale(0.6));
 
-				top: 40px;
+				top: 42px;
 			}
 		}
 
 		&.open {
 			.lexicon-icon {
-				top: 40px;
+				top: 42px;
 
 				&:nth-of-type(2) {
 					@include transform(scale(1));

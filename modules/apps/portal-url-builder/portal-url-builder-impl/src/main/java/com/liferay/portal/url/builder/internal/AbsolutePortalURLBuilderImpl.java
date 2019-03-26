@@ -214,7 +214,11 @@ public class AbsolutePortalURLBuilderImpl implements AbsolutePortalURLBuilder {
 		}
 
 		if (!ignorePathProxy) {
-			sb.append(_getPathProxy());
+			String pathProxy = _getPathProxy();
+
+			if (!pathPrefix.startsWith(pathProxy)) {
+				sb.append(pathProxy);
+			}
 		}
 
 		if (!Validator.isBlank(pathPrefix)) {

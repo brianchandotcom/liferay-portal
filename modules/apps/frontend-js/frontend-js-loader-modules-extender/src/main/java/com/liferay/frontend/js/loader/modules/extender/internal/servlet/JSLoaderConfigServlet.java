@@ -79,7 +79,7 @@ public class JSLoaderConfigServlet extends HttpServlet {
 				request);
 
 		String url = absolutePortalURLBuilder.forWhiteboard(
-			"/js_loader_config"
+			"/js_resolve_modules"
 		).build();
 
 		printWriter.println("Liferay.RESOLVE_PATH = \"" + url + "\";\n");

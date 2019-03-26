@@ -66,8 +66,6 @@ public class GraphQLOpenAPIParser {
 
 		Set<String> methodAnnotations = new TreeSet<>();
 
-		methodAnnotations.add("@GraphQLInvokeDetached");
-
 		String httpMethod = OpenAPIParserUtil.getHTTPMethod(
 			javaMethodSignature.getOperation());
 
@@ -76,6 +74,8 @@ public class GraphQLOpenAPIParser {
 
 			methodAnnotations.add("@GraphQLField");
 		}
+
+		methodAnnotations.add("@GraphQLInvokeDetached");
 
 		String methodAnnotation = _getMethodAnnotationGraphQLName(
 			javaMethodSignature);

@@ -87,12 +87,14 @@ import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.servlet.DummyHttpServletResponse;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleThreadLocal;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.odata.entity.EntityField;
@@ -106,6 +108,8 @@ import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 import com.liferay.portal.vulcan.util.SearchUtil;
 import com.liferay.ratings.kernel.service.RatingsStatsLocalService;
 
+import java.text.ParseException;
+
 import java.time.LocalDateTime;
 
 import java.util.AbstractMap;
@@ -115,6 +119,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
+import java.util.TimeZone;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -622,6 +627,23 @@ public class StructuredContentResourceImpl
 			ContentField.class);
 	}
 
+	private String _toDateString(Locale locale, String valueString) {
+		if (Validator.isNull(valueString)) {
+			return "";
+		}
+
+		try {
+			return DateUtil.getDate(
+				DateUtil.parseDate("yyyy-MM-dd", valueString, locale),
+				"yyyy-MM-dd'T'HH:mm:ss'Z'", locale,
+				TimeZone.getTimeZone("UTC"));
+		}
+		catch (ParseException pe) {
+			throw new BadRequestException(
+				"Date incorrectly formatted, you must use ISO-8601 format", pe);
+		}
+	}
+
 	private Fields _toFields(
 			ContentField[] contentFields, JournalArticle journalArticle)
 		throws Exception {
@@ -810,8 +832,16 @@ public class StructuredContentResourceImpl
 
 		String valueString = String.valueOf(value.getString(locale));
 
-		if (Objects.equals(
-				DDMFormFieldType.DOCUMENT_LIBRARY, ddmFormField.getType())) {
+		if (Objects.equals(DDMFormFieldType.DATE, ddmFormField.getType())) {
+			return new Value() {
+				{
+					data = _toDateString(locale, valueString);
+				}
+			};
+		}
+		else if (Objects.equals(
+					DDMFormFieldType.DOCUMENT_LIBRARY,
+					ddmFormField.getType())) {
 
 			JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
 				valueString);

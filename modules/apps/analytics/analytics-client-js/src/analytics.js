@@ -5,7 +5,6 @@ import middlewares from './middlewares/defaults';
 import Client from './Client';
 
 import defaultPlugins from './plugins/defaults';
-import fingerprint from './utils/fingerprint';
 import hash from './utils/hash';
 import uuidv1 from 'uuid/v1';
 
@@ -189,7 +188,6 @@ class Analytics {
 		const {dataSourceId} = this.config;
 
 		const bodyData = {
-			...fingerprint(),
 			dataSourceId,
 			identity,
 			userId,

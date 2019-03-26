@@ -1164,6 +1164,14 @@ definition {
 			assetTitle2 = "WebContent Title 2",
 			assetTitle3 = "WebContent Title 3"
 		);
+
+		Navigator.gotoPage(pageName = "Asset Publisher Page");
+
+		Portlet.configureCustomTitlePG(portletTitleName = "Asset Publisher");
+
+		Navigator.gotoPage(pageName = "Asset Publisher Page");
+
+		Portlet.viewSpecificPG(portletName = "Asset Publisher Custom");
 	}
 
 	@priority = "5"

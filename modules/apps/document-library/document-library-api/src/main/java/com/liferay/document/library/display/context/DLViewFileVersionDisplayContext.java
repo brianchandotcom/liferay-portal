@@ -52,6 +52,10 @@ public interface DLViewFileVersionDisplayContext extends DLDisplayContext {
 
 	public String getDiscussionLabel(Locale locale);
 
+	public default String getIconFileMimeType() {
+		return "document-default";
+	}
+
 	public Menu getMenu() throws PortalException;
 
 	public List<ToolbarItem> getToolbarItems() throws PortalException;

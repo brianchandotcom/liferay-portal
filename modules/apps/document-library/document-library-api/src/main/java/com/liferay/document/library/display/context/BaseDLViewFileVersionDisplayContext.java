@@ -93,6 +93,11 @@ public class BaseDLViewFileVersionDisplayContext
 	}
 
 	@Override
+	public String getIconFileMimeType() {
+		return parentDisplayContext.getIconFileMimeType();
+	}
+
+	@Override
 	public Menu getMenu() throws PortalException {
 		return parentDisplayContext.getMenu();
 	}

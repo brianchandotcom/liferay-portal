@@ -59,11 +59,13 @@ public class ContentPageEditorLayoutPageTemplateDisplayContext
 		soyContext.put(
 			"getAssetDisplayContributorsURL",
 			getFragmentEntryActionURL(
-				"/content_layout/get_asset_display_contributors"));
-		soyContext.put(
+				"/content_layout/get_asset_display_contributors")
+		).put(
 			"getAssetClassTypesURL",
-			getFragmentEntryActionURL("/content_layout/get_asset_class_types"));
-		soyContext.put("lastSaveDate", StringPool.BLANK);
+			getFragmentEntryActionURL("/content_layout/get_asset_class_types")
+		).put(
+			"lastSaveDate", StringPool.BLANK
+		);
 
 		if (_showMapping) {
 			soyContext.put(
@@ -190,8 +192,11 @@ public class ContentPageEditorLayoutPageTemplateDisplayContext
 
 		SoyContext typeSoyContext = SoyContextFactoryUtil.createSoyContext();
 
-		typeSoyContext.put("id", layoutPageTemplateEntry.getClassNameId());
-		typeSoyContext.put("label", _getMappingTypeLabel());
+		typeSoyContext.put(
+			"id", layoutPageTemplateEntry.getClassNameId()
+		).put(
+			"label", _getMappingTypeLabel()
+		);
 
 		soyContext.put("type", typeSoyContext);
 
@@ -200,8 +205,10 @@ public class ContentPageEditorLayoutPageTemplateDisplayContext
 				SoyContextFactoryUtil.createSoyContext();
 
 			subtypeSoyContext.put(
-				"id", layoutPageTemplateEntry.getClassTypeId());
-			subtypeSoyContext.put("label", _getMappingSubtypeLabel());
+				"id", layoutPageTemplateEntry.getClassTypeId()
+			).put(
+				"label", _getMappingSubtypeLabel()
+			);
 
 			soyContext.put("subtype", subtypeSoyContext);
 		}

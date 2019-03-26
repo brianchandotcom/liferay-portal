@@ -57,17 +57,18 @@ public class ChangeListsIndicatorDisplayContext {
 			_httpServletRequest, CTPortletKeys.CHANGE_LISTS,
 			PortletRequest.RENDER_PHASE);
 
-		soyContext.put("urlChangeListsOverview", portletURL.toString());
-
 		soyContext.put(
+			"urlChangeListsOverview", portletURL.toString()
+		).put(
 			"urlCollectionsBase",
-			_themeDisplay.getPortalURL() + "/o/change-tracking/collections");
-		soyContext.put(
+			_themeDisplay.getPortalURL() + "/o/change-tracking/collections"
+		).put(
 			"urlProductionInformation",
 			StringBundler.concat(
 				_themeDisplay.getPortalURL(),
 				"/o/change-tracking/processes?companyId=",
-				_themeDisplay.getCompanyId(), "&published=true"));
+				_themeDisplay.getCompanyId(), "&published=true")
+		);
 
 		return soyContext;
 	}

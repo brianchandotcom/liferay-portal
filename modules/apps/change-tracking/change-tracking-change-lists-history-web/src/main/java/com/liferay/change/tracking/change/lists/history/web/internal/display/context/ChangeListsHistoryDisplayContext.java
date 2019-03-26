@@ -53,19 +53,25 @@ public class ChangeListsHistoryDisplayContext {
 	public SoyContext getChangeListsHistoryContext() {
 		SoyContext soyContext = SoyContextFactoryUtil.createSoyContext();
 
-		soyContext.put("baseURL", String.valueOf(_getPortletURL()));
-		soyContext.put("filterStatus", _getFilterByStatus());
-		soyContext.put("filterUser", _getFilterByUser());
-		soyContext.put("orderByCol", _getOrderByCol());
-		soyContext.put("orderByType", getOrderByType());
 		soyContext.put(
+			"baseURL", String.valueOf(_getPortletURL())
+		).put(
+			"filterStatus", _getFilterByStatus()
+		).put(
+			"filterUser", _getFilterByUser()
+		).put(
+			"orderByCol", _getOrderByCol()
+		).put(
+			"orderByType", getOrderByType()
+		).put(
 			"spritemap",
-			_themeDisplay.getPathThemeImages() + "/lexicon/icons.svg");
-		soyContext.put(
+			_themeDisplay.getPathThemeImages() + "/lexicon/icons.svg"
+		).put(
 			"urlProcesses",
 			_themeDisplay.getPortalURL() +
 				"/o/change-tracking/processes?companyId=" +
-					_themeDisplay.getCompanyId());
+					_themeDisplay.getCompanyId()
+		);
 
 		return soyContext;
 	}

@@ -76,17 +76,19 @@ public class ChangeListsDisplayContext {
 
 		soyContext.put(
 			"spritemap",
-			_themeDisplay.getPathThemeImages() + "/lexicon/icons.svg");
-		soyContext.put(
+			_themeDisplay.getPathThemeImages() + "/lexicon/icons.svg"
+		).put(
 			"urlCollectionsBase",
-			_themeDisplay.getPortalURL() + "/o/change-tracking/collections");
-		soyContext.put(
+			_themeDisplay.getPortalURL() + "/o/change-tracking/collections"
+		).put(
 			"urlProductionInformation",
 			StringBundler.concat(
 				_themeDisplay.getPortalURL(),
 				"/o/change-tracking/processes?companyId=",
-				_themeDisplay.getCompanyId(), "&type=published-latest"));
-		soyContext.put("urlProductionView", _themeDisplay.getPortalURL());
+				_themeDisplay.getCompanyId(), "&type=published-latest")
+		).put(
+			"urlProductionView", _themeDisplay.getPortalURL()
+		);
 
 		PortletURL portletURL = PortletURLFactoryUtil.create(
 			_renderRequest, CTPortletKeys.CHANGE_LISTS_HISTORY,

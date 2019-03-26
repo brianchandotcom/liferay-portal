@@ -84,14 +84,15 @@ public class ContentPageLayoutEditorDisplayContext
 		SoyContext soyContext = super.getFragmentsEditorToolbarSoyContext();
 
 		soyContext.put(
-			"availableSegmentsEntries",
-			_getAvailableSegmentsEntriesSoyContext());
-		soyContext.put(
+			"availableSegmentsEntries", _getAvailableSegmentsEntriesSoyContext()
+		).put(
 			"availableSegmentsExperiences",
-			_getAvailableSegmentsExperiencesSoyContext());
-		soyContext.put("defaultSegmentsEntryId", _getDefaultSegmentsEntryId());
-		soyContext.put(
-			"defaultSegmentsExperienceId", _getDefaultSegmentsExperienceId());
+			_getAvailableSegmentsExperiencesSoyContext()
+		).put(
+			"defaultSegmentsEntryId", _getDefaultSegmentsEntryId()
+		).put(
+			"defaultSegmentsExperienceId", _getDefaultSegmentsExperienceId()
+		);
 
 		_fragmentsEditorToolbarSoyContext = soyContext;
 
@@ -117,10 +118,11 @@ public class ContentPageLayoutEditorDisplayContext
 				SoyContextFactoryUtil.createSoyContext();
 
 			segmentsEntrySoyContext.put(
-				"name", segmentsEntry.getName(themeDisplay.getLocale()));
-			segmentsEntrySoyContext.put(
+				"name", segmentsEntry.getName(themeDisplay.getLocale())
+			).put(
 				"segmentsEntryId",
-				String.valueOf(segmentsEntry.getSegmentsEntryId()));
+				String.valueOf(segmentsEntry.getSegmentsEntryId())
+			);
 
 			availableSegmentsEntriesSoyContext.put(
 				String.valueOf(segmentsEntry.getSegmentsEntryId()),
@@ -143,15 +145,16 @@ public class ContentPageLayoutEditorDisplayContext
 				SoyContextFactoryUtil.createSoyContext();
 
 			segmentsExperienceSoyContext.put(
-				"name", segmentsExperience.getName(themeDisplay.getLocale()));
-			segmentsExperienceSoyContext.put(
-				"priority", segmentsExperience.getPriority());
-			segmentsExperienceSoyContext.put(
+				"name", segmentsExperience.getName(themeDisplay.getLocale())
+			).put(
+				"priority", segmentsExperience.getPriority()
+			).put(
 				"segmentsEntryId",
-				String.valueOf(segmentsExperience.getSegmentsEntryId()));
-			segmentsExperienceSoyContext.put(
+				String.valueOf(segmentsExperience.getSegmentsEntryId())
+			).put(
 				"segmentsExperienceId",
-				String.valueOf(segmentsExperience.getSegmentsExperienceId()));
+				String.valueOf(segmentsExperience.getSegmentsExperienceId())
+			);
 
 			availableSegmentsEntriesSoyContext.put(
 				String.valueOf(segmentsExperience.getSegmentsExperienceId()),

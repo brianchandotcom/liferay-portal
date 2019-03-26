@@ -18,8 +18,9 @@ class TopSearch extends State {
 		super();
 
 		this.search_ = dom.toElement('#search');
-		this.searchIcon_ = dom.toElement('#banner .btn-search');
-		this.searchInput_ = dom.toElement('#banner .search-input');
+		this.searchOptions_ = dom.toElement('#search .dropdown-toggle');
+		this.searchInput_ = dom.toElement('#search .search-input');
+		this.searchIcon_ = dom.toElement('#search + .btn-search');
 
 		if (this.searchInput_) {
 			dom.addClasses(this.searchInput_, 'visible-xs');
@@ -57,7 +58,7 @@ class TopSearch extends State {
 	onSearchInputBlur_(event) {
 		async.nextTick(
 			() => {
-				let stateActiveElementBlur = document.activeElement !== this.searchIcon_ && document.activeElement !== this.searchInput_;
+				let stateActiveElementBlur = document.activeElement !== this.searchIcon_ && document.activeElement !== this.searchInput_ && document.activeElement !== this.searchOptions_;
 
 				if (stateActiveElementBlur && (!this.searchInput_.value || this.searchInput_.value === '')) {
 					this.visible = false;

@@ -970,6 +970,45 @@ public class SharingEntryLocalServiceTest {
 				SharingEntryAction.VIEW));
 	}
 
+	@Test
+	public void testRetrievesUniqueSharedByMeSharingEntries() throws Exception {
+		long classNameId = _classNameLocalService.getClassNameId(
+			Group.class.getName());
+		long classPK = _group.getGroupId();
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
+
+		_sharingEntryLocalService.addSharingEntry(
+			_fromUser.getUserId(), _toUser.getUserId(), classNameId, classPK,
+			_group.getGroupId(), true, Arrays.asList(SharingEntryAction.VIEW),
+			null, serviceContext);
+
+		SharingEntry latestSharingEntry =
+			_sharingEntryLocalService.addSharingEntry(
+				_fromUser.getUserId(), _user.getUserId(), classNameId, classPK,
+				_group.getGroupId(), true,
+				Arrays.asList(SharingEntryAction.VIEW), null, serviceContext);
+
+		long sharingEntriesCount =
+			_sharingEntryLocalService.getFromUserSharingEntriesCount(
+				_fromUser.getUserId(), classNameId);
+
+		Assert.assertEquals(1, sharingEntriesCount);
+
+		List<SharingEntry> sharingEntries =
+			_sharingEntryLocalService.getFromUserSharingEntries(
+				_fromUser.getUserId(), classNameId, 0, 2,
+				new SharingEntryModifiedDateComparator());
+
+		Assert.assertEquals(
+			sharingEntries.toString(), 1, sharingEntries.size());
+
+		SharingEntry sharingEntry = sharingEntries.get(0);
+
+		Assert.assertEquals(latestSharingEntry, sharingEntry);
+	}
+
 	@Test(expected = NoSuchEntryException.class)
 	public void testUpdateNonexistingSharingEntry() throws Exception {
 		_sharingEntryLocalService.updateSharingEntry(

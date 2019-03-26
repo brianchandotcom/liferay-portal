@@ -119,14 +119,6 @@ public class LayoutTypeImpl implements LayoutType {
 		return _layoutTypeController.isURLFriendliable();
 	}
 
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), with no direct replacement
-	 */
-	@Deprecated
-	@Override
-	public void setLayout(Layout layout) {
-	}
-
 	@Override
 	public void setTypeSettingsProperty(String key, String value) {
 		UnicodeProperties typeSettingsProperties = getTypeSettingsProperties();

@@ -57,12 +57,6 @@ public interface LayoutType extends Serializable {
 
 	public boolean isURLFriendliable();
 
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), with no direct replacement
-	 */
-	@Deprecated
-	public void setLayout(Layout layout);
-
 	public void setTypeSettingsProperty(String key, String value);
 
 }

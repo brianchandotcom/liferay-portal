@@ -273,10 +273,9 @@ public class LayoutImplTest {
 
 	@SuppressWarnings("deprecation")
 	private static final String[] _TYPES = {
-		LayoutConstants.TYPE_ARTICLE, LayoutConstants.TYPE_CONTROL_PANEL,
-		LayoutConstants.TYPE_EMBEDDED, LayoutConstants.TYPE_LINK_TO_LAYOUT,
-		LayoutConstants.TYPE_PANEL, LayoutConstants.TYPE_PORTLET,
-		LayoutConstants.TYPE_URL
+		LayoutConstants.TYPE_CONTROL_PANEL, LayoutConstants.TYPE_EMBEDDED,
+		LayoutConstants.TYPE_LINK_TO_LAYOUT, LayoutConstants.TYPE_PANEL,
+		LayoutConstants.TYPE_PORTLET, LayoutConstants.TYPE_URL
 	};
 
 	@DeleteAfterTestRun

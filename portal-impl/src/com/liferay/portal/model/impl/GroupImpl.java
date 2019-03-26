@@ -146,19 +146,6 @@ public class GroupImpl extends GroupBaseImpl {
 			getCompanyId(), getGroupId(), site);
 	}
 
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
-	 *             #getChildrenWithLayouts(boolean, int, int,
-	 *             OrderByComparator)}
-	 */
-	@Deprecated
-	@Override
-	public List<Group> getChildrenWithLayouts(
-		boolean site, int start, int end) {
-
-		return getChildrenWithLayouts(site, start, end, null);
-	}
-
 	@Override
 	public List<Group> getChildrenWithLayouts(
 		boolean site, int start, int end, OrderByComparator<Group> obc) {
@@ -808,15 +795,6 @@ public class GroupImpl extends GroupBaseImpl {
 		_stagingGroup = stagingGroup;
 
 		return true;
-	}
-
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link #hasAncestor}
-	 */
-	@Deprecated
-	@Override
-	public boolean isChild(long groupId) {
-		return hasAncestor(groupId);
 	}
 
 	@Override

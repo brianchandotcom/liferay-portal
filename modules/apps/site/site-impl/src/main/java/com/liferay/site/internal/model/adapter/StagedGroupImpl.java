@@ -92,19 +92,6 @@ public class StagedGroupImpl implements StagedGroup {
 		return _group.getChildren(site);
 	}
 
-	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link
-	 *             #getChildrenWithLayouts(boolean, int, int,
-	 *             OrderByComparator)}
-	 */
-	@Deprecated
-	@Override
-	public List<Group> getChildrenWithLayouts(
-		boolean site, int start, int end) {
-
-		return _group.getChildrenWithLayouts(site, start, end);
-	}
-
 	@Override
 	public List<Group> getChildrenWithLayouts(
 		boolean site, int start, int end, OrderByComparator<Group> obc) {
@@ -541,15 +528,6 @@ public class StagedGroupImpl implements StagedGroup {
 	@Override
 	public boolean isCachedModel() {
 		return _group.isCachedModel();
-	}
-
-	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link #hasAncestor}
-	 */
-	@Deprecated
-	@Override
-	public boolean isChild(long groupId) {
-		return _group.isChild(groupId);
 	}
 
 	@Override

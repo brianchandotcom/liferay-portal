@@ -1142,15 +1142,6 @@ public class LayoutImpl extends LayoutBaseImpl {
 		return false;
 	}
 
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), with no direct replacement
-	 */
-	@Deprecated
-	@Override
-	public boolean isTypeArticle() {
-		return false;
-	}
-
 	@Override
 	public boolean isTypeControlPanel() {
 		if (Objects.equals(getType(), LayoutConstants.TYPE_CONTROL_PANEL) ||

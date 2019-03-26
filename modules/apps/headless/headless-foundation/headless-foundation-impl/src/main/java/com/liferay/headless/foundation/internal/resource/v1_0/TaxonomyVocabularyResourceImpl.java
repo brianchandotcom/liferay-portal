@@ -62,6 +62,8 @@ import java.util.Optional;
 
 import javax.servlet.http.HttpServletResponse;
 
+import javax.validation.constraints.NotNull;
+
 import javax.ws.rs.BadRequestException;
 import javax.ws.rs.InternalServerErrorException;
 import javax.ws.rs.core.Context;
@@ -131,6 +133,39 @@ public class TaxonomyVocabularyResourceImpl
 			contextAcceptLanguage.getPreferredLocale());
 
 		return _toTaxonomyVocabulary(assetVocabulary);
+	}
+
+	@Override
+	public TaxonomyVocabulary patchTaxonomyVocabulary(
+			@NotNull Long taxonomyVocabularyId,
+			TaxonomyVocabulary taxonomyVocabulary)
+		throws Exception {
+
+		AssetVocabulary assetVocabulary = _assetVocabularyService.getVocabulary(
+			taxonomyVocabularyId);
+
+		AssetType[] assetTypes = taxonomyVocabulary.getAssetTypes();
+
+		if (assetTypes == null) {
+			assetTypes = _getAssetTypes(
+				new AssetVocabularySettingsHelper(
+					assetVocabulary.getSettings()),
+				assetVocabulary.getGroupId());
+		}
+
+		return _toTaxonomyVocabulary(
+			_assetVocabularyService.updateVocabulary(
+				assetVocabulary.getVocabularyId(), null,
+				LocalizedMapUtil.patch(
+					assetVocabulary.getTitleMap(),
+					contextAcceptLanguage.getPreferredLocale(),
+					taxonomyVocabulary.getName()),
+				LocalizedMapUtil.patch(
+					assetVocabulary.getDescriptionMap(),
+					contextAcceptLanguage.getPreferredLocale(),
+					taxonomyVocabulary.getDescription()),
+				_getSettings(assetTypes, assetVocabulary.getGroupId()),
+				new ServiceContext()));
 	}
 
 	@Override

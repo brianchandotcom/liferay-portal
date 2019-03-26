@@ -112,8 +112,7 @@ public class JournalArticleVerticalCard implements VerticalCard {
 
 	@Override
 	public String getTitle() {
-		String title = HtmlUtil.escape(
-			_assetRenderer.getTitle(_themeDisplay.getLocale()));
+		String title = _assetRenderer.getTitle(_themeDisplay.getLocale());
 
 		if (_article.getGroupId() == _themeDisplay.getScopeGroupId()) {
 			return title;

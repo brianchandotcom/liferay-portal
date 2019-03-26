@@ -4059,7 +4059,7 @@ org.apache.catalina.startup.ClassLoaderFactory.level=INFO]]>
 										<arg value="${app.server.parent.dir}:${app.server.parent.dir}" />
 										<arg value="--cidfile=docker.process.pid" />
 										<arg value="--network=@{docker.network.name}" />
-										<arg value="openjdk:8-alpine" />
+										<arg value="openjdk:8u191-jdk-alpine3.8" />
 										<arg value="${app.server.bin.dir}/${app.server.start.executable}" />
 										<arg value="${app.server.start.executable.arg.line}" />
 									</exec>
@@ -4102,7 +4102,7 @@ org.apache.catalina.startup.ClassLoaderFactory.level=INFO]]>
 												<arg value="${app.server.parent.dir}:${app.server.parent.dir}" />
 												<arg value="--cidfile=docker.process.pid" />
 												<arg value="--network=@{docker.network.name}" />
-												<arg value="openjdk:8-alpine" />
+												<arg value="openjdk:8u191-jdk-alpine3.8" />
 												<arg value="${app.server.bin.dir}/${app.server.start.executable}" />
 												<arg value="${app.server.start.executable.arg.line}" />
 											</exec>

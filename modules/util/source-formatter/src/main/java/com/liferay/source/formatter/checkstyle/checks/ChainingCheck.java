@@ -677,12 +677,12 @@ public class ChainingCheck extends BaseCheck {
 
 	private static final String _MSG_ALLOWED_CHAINING = "chaining.allowed";
 
-	private static final String _MSG_REQUIRED_CHAINING = "chaining.required";
-
 	private static final String _MSG_AVOID_CHAINING = "chaining.avoid";
 
 	private static final String _MSG_AVOID_TOO_MANY_CONCAT =
 		"concat.avoid.too.many";
+
+	private static final String _MSG_REQUIRED_CHAINING = "chaining.required";
 
 	private String[] _allowedClassNames = new String[0];
 	private String[] _allowedMethodNames = new String[0];

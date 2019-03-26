@@ -21,4 +21,6 @@ public interface DLMimeTypeDisplayContext {
 
 	public String getCssClassFileMimeType(String mimeType);
 
+	public String getIconFileMimeType(String mimeType);
+
 }

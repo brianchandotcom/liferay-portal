@@ -3,16 +3,11 @@ import Component from 'metal-component';
 import Soy, {Config} from 'metal-soy';
 
 import './FloatingToolbarSpacingPanelDelegateTemplate.soy';
-import {CONTAINER_TYPES, ITEM_CONFIG_KEYS, NUMBER_OF_COLUMNS_OPTIONS, PADDING_OPTIONS} from '../../../utils/constants';
-import {setIn, updateSection} from '../../../utils/FragmentsEditorUpdateUtils.es';
+import {CONTAINER_TYPES, CONFIG_KEYS, NUMBER_OF_COLUMNS_OPTIONS, PADDING_OPTIONS} from '../../../utils/sectionConstants';
+import {updateSection} from '../../../utils/FragmentsEditorUpdateUtils.es';
 import templates from './FloatingToolbarSpacingPanel.soy';
 import {UPDATE_SECTION_COLUMNS_NUMBER, UPDATE_SECTION_CONFIG} from '../../../actions/actions.es';
 import getConnectedComponent from '../../../store/ConnectedComponent.es';
-
-/**
- * @type {string}
- */
-const DEFAULT_PADDING_SIZE = '3';
 
 /**
  * FloatingToolbarSpacingPanel
@@ -26,7 +21,7 @@ class FloatingToolbarSpacingPanel extends Component {
 	_handleColumnSpacingOptionChange(event) {
 		this._updateSectionConfig(
 			{
-				[ITEM_CONFIG_KEYS.columnSpacing]: event.target.checked
+				[CONFIG_KEYS.columnSpacing]: event.target.checked
 			}
 		);
 	}
@@ -50,7 +45,7 @@ class FloatingToolbarSpacingPanel extends Component {
 
 		this._updateSectionConfig(
 			{
-				[ITEM_CONFIG_KEYS[`padding${paddingDirectionId}`]]: value
+				[CONFIG_KEYS[`padding${paddingDirectionId}`]]: value
 			}
 		);
 	}
@@ -62,7 +57,7 @@ class FloatingToolbarSpacingPanel extends Component {
 	_handleContainerTypeOptionChange(event) {
 		this._updateSectionConfig(
 			{
-				[ITEM_CONFIG_KEYS.containerType]: event.delegateTarget.value
+				[CONFIG_KEYS.containerType]: event.delegateTarget.value
 			}
 		);
 	}

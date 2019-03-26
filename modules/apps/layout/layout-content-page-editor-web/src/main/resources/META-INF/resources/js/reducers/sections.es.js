@@ -1,5 +1,5 @@
 import {ADD_SECTION, MOVE_SECTION, REMOVE_SECTION, UPDATE_SECTION_COLUMNS, UPDATE_SECTION_COLUMNS_NUMBER, UPDATE_SECTION_CONFIG} from '../actions/actions.es';
-import {DEFAULT_SECTION_CONFIG, MAX_SECTION_COLUMNS} from '../utils/constants';
+import {DEFAULT_CONFIG, MAX_COLUMNS} from '../utils/sectionConstants';
 import {add, remove, setIn, updateIn, updateLayoutData, updateWidgets} from '../utils/FragmentsEditorUpdateUtils.es';
 import {getDropSectionPosition, getSectionFragmentEntryLinkIds, getSectionIndex} from '../utils/FragmentsEditorGetUtils.es';
 
@@ -256,7 +256,7 @@ function updateSectionColumnsNumberReducer(state, actionType, payload) {
 
 				const numberOfColumns = payload.numberOfColumns;
 
-				const columnsSize = (MAX_SECTION_COLUMNS / numberOfColumns).toString();
+				const columnsSize = Math.floor(MAX_COLUMNS / numberOfColumns);
 				const sectionIndex = getSectionIndex(nextState.layoutData.structure, payload.sectionId);
 
 				let columns = nextState.layoutData.structure[sectionIndex].columns;
@@ -442,7 +442,7 @@ function _getColumnSize(numberOfColumns, columnsSize, columnIndex) {
 	const middleColumnPosition = Math.ceil(numberOfColumns / 2) - 1;
 
 	if (middleColumnPosition === columnIndex) {
-		newColumnSize = MAX_SECTION_COLUMNS - ((numberOfColumns - 1) * columnsSize);
+		newColumnSize = MAX_COLUMNS - ((numberOfColumns - 1) * columnsSize);
 	}
 
 	return newColumnSize.toString();
@@ -511,7 +511,7 @@ function _addSection(layoutColumns, layoutData, position) {
 		layoutData.structure,
 		{
 			columns,
-			config: DEFAULT_SECTION_CONFIG,
+			config: DEFAULT_CONFIG,
 			rowId: `${nextRowId}`
 		},
 		position

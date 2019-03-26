@@ -16,69 +16,6 @@ export const BUTTON_TYPES = [
 	}
 ];
 
-/**
- * Available values for padding (horizontal and vertical) config key
- */
-export const PADDING_OPTIONS = [
-	{
-		label: 'x0',
-		paddingSize: '0'
-	},
-	{
-		label: 'x1',
-		paddingSize: '3'
-	},
-	{
-		label: 'x2',
-		paddingSize: '4'
-	},
-	{
-		label: 'x4',
-		paddingSize: '5'
-	},
-	{
-		label: 'x6',
-		paddingSize: '6'
-	},
-	{
-		label: 'x8',
-		paddingSize: '7'
-	},
-	{
-		label: 'x10',
-		paddingSize: '8'
-	}
-];
-
-/**
- * Available values for containerType config key
- */
-export const NUMBER_OF_COLUMNS_OPTIONS = [
-	{
-		label: '1',
-		numberOfColumnId: '1'
-	},
-	{
-		label: '2',
-		numberOfColumnId: '2'
-	},
-	{
-		label: '3',
-		numberOfColumnId: '3'
-	},
-	{
-		label: '4',
-		numberOfColumnId: '4'
-	},
-	{
-		label: '5',
-		numberOfColumnId: '5'
-	},
-	{
-		label: '6',
-		numberOfColumnId: '6'
-	}
-];
 
 /**
  * List of editable types and their compatibilities
@@ -123,21 +60,6 @@ export const COMPATIBLE_TYPES = {
 		'textarea'
 	]
 };
-
-/**
- * Available values for containerType config key
- */
-export const CONTAINER_TYPES = [
-	{
-		containerTypeId: 'fluid',
-		label: Liferay.Language.get('fluid')
-	},
-
-	{
-		containerTypeId: 'fixed',
-		label: Liferay.Language.get('fixed-width')
-	}
-];
 
 /**
  * Available editable field config keys
@@ -251,22 +173,6 @@ export const FRAGMENTS_EDITOR_ITEM_TYPES = {
 };
 
 /**
- * Available element config keys
- */
-export const ITEM_CONFIG_KEYS = {
-	backgroundColorCssClass: 'backgroundColorCssClass',
-	columnSpacing: 'columnSpacing',
-	containerType: 'containerType',
-	paddingHorizontal: 'paddingHorizontal',
-	paddingVertical: 'paddingVertical'
-};
-
-/**
- * Max section columns
- */
-export const MAX_SECTION_COLUMNS = 12;
-
-/**
  * Available attributes for target config key
  */
 export const TARGET_TYPES = [
@@ -327,12 +233,3 @@ export const TEXT_STYLES = [
 		textStyleId: 'lead'
 	}
 ];
-
-/**
- * Section config defaults
- */
-export const DEFAULT_SECTION_CONFIG = {
-	[ITEM_CONFIG_KEYS.columnSpacing]: true,
-	[ITEM_CONFIG_KEYS.paddingHorizontal]: PADDING_OPTIONS[1].paddingSize,
-	[ITEM_CONFIG_KEYS.paddingVertical]: PADDING_OPTIONS[1].paddingSize,
-};

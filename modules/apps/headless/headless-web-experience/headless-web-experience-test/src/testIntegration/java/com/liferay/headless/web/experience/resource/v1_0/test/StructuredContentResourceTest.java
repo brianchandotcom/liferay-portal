@@ -44,13 +44,11 @@ import java.util.Objects;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.runner.RunWith;
 
 /**
  * @author Javier Gamarra
  */
-@Ignore
 @RunWith(Arquillian.class)
 public class StructuredContentResourceTest
 	extends BaseStructuredContentResourceTestCase {
@@ -81,6 +79,24 @@ public class StructuredContentResourceTest
 		registry.ungetService(_serviceReference);
 
 		super.tearDown();
+	}
+
+	@Override
+	public StructuredContent
+			testGetContentSpaceKeyStructuredContent_addStructuredContent()
+		throws Exception {
+
+		return invokePostContentSpaceStructuredContent(
+			testGroup.getGroupId(), randomStructuredContent());
+	}
+
+	@Override
+	public StructuredContent
+			testGetContentSpaceUuidStructuredContent_addStructuredContent()
+		throws Exception {
+
+		return invokePostContentSpaceStructuredContent(
+			testGroup.getGroupId(), randomStructuredContent());
 	}
 
 	protected void assertValid(StructuredContent structuredContent) {

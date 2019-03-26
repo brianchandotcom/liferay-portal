@@ -100,19 +100,6 @@ public class Mutation {
 	}
 
 	@GraphQLInvokeDetached
-	public Keyword patchKeyword(
-			@GraphQLName("keyword-id") Long keywordId,
-			@GraphQLName("Keyword") Keyword keyword)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_keywordResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			keywordResource -> keywordResource.patchKeyword(
-				keywordId, keyword));
-	}
-
-	@GraphQLInvokeDetached
 	public Keyword putKeyword(
 			@GraphQLName("keyword-id") Long keywordId,
 			@GraphQLName("Keyword") Keyword keyword)

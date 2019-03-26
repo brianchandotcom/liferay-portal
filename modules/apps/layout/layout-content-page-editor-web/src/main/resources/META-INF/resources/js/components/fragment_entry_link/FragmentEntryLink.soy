@@ -5,9 +5,6 @@
  */
 {template .render}
 	{@param fragmentEntryLinkId: string}
-	{@param? _handleFragmentFocusOut: any}
-	{@param? _handleFragmentClick: any}
-	{@param? _handleFragmentHoverStart: any}
 	{@param? _handleFragmentKeyUp: any}
 	{@param? _handleFragmentRemoveButtonClick: any}
 	{@param? content: ?}
@@ -45,10 +42,9 @@
 		class="{$wrapperClasses}"
 		data-drag-source-label="{$name ?: ''}"
 		data-fragment-entry-link-id="{$fragmentEntryLinkId}"
-		data-onfocusout="{$_handleFragmentFocusOut}"
-		data-onclick="{$_handleFragmentClick}"
+		data-fragments-editor-item-id="{$fragmentEntryLinkId}"
+		data-fragments-editor-item-type="fragments-editor-fragment"
 		data-onkeyup="{$_handleFragmentKeyUp}"
-		data-onmouseover="{$_handleFragmentHoverStart}"
 		ref="fragmentEntryLinkWrapper"
 		tabindex="0"
 	>

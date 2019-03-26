@@ -1,7 +1,4 @@
-import {contains} from 'metal-dom';
-
-import {CLEAR_ACTIVE_ITEM, CLEAR_DROP_TARGET, CLEAR_HOVERED_ITEM, UPDATE_LAST_SAVE_DATE, UPDATE_SAVING_CHANGES_STATUS, UPDATE_TRANSLATION_STATUS} from '../actions/actions.es';
-import {FRAGMENTS_EDITOR_ITEM_TYPES} from '../utils/constants';
+import {CLEAR_DROP_TARGET, UPDATE_LAST_SAVE_DATE, UPDATE_SAVING_CHANGES_STATUS, UPDATE_TRANSLATION_STATUS} from '../actions/actions.es';
 import {getWidget, getWidgetPath} from './FragmentsEditorGetUtils.es';
 
 /**
@@ -18,33 +15,6 @@ function add(array, element, position) {
 	newArray.splice(position, 0, element);
 
 	return newArray;
-}
-
-/**
- * @param {string} itemId
- * @param {FRAGMENTS_EDITOR_ITEM_TYPES} itemType
- * @review
- */
-function focusItem(itemId, itemType) {
-	if (itemId && itemType) {
-		let attr = '';
-
-		if (itemType === FRAGMENTS_EDITOR_ITEM_TYPES.editable) {
-			attr = 'id';
-		}
-		else if (itemType === FRAGMENTS_EDITOR_ITEM_TYPES.fragment) {
-			attr = 'data-fragment-entry-link-id';
-		}
-		else if (itemType === FRAGMENTS_EDITOR_ITEM_TYPES.section) {
-			attr = 'data-layout-section-id';
-		}
-
-		const item = document.querySelector(`[${attr}='${itemId}']`);
-
-		if (item) {
-			item.focus();
-		}
-	}
 }
 
 /**
@@ -80,9 +50,6 @@ function moveItem(store, moveItemAction, moveItemPayload) {
 		)
 		.dispatchAction(
 			CLEAR_DROP_TARGET
-		)
-		.dispatchAction(
-			CLEAR_HOVERED_ITEM
 		);
 }
 
@@ -132,9 +99,7 @@ function removeItem(store, removeItemAction, removeItemPayload) {
 			{
 				savingChanges: false
 			}
-		)
-		.dispatchAction(CLEAR_HOVERED_ITEM)
-		.dispatchAction(CLEAR_ACTIVE_ITEM);
+		);
 }
 
 /**
@@ -152,30 +117,6 @@ function setIn(object, keyPath, value) {
 		object,
 		keyPath,
 		() => value
-	);
-}
-
-/**
- * Returns true if current active element should be clear
- * @param {HTMLElement} oldActiveElement
- * @return {boolean}
- */
-function shouldClearFocus(oldActiveElement) {
-	const fragmentEntryLinkList = (
-		document.querySelector('#wrapper') ||
-		document.body
-	);
-	const newActiveElement = document.activeElement;
-
-	return (
-		oldActiveElement &&
-		newActiveElement &&
-		(oldActiveElement !== newActiveElement) &&
-		!contains(oldActiveElement, newActiveElement) &&
-		(
-			contains(fragmentEntryLinkList, newActiveElement) ||
-			(newActiveElement === document.body)
-		)
 	);
 }
 
@@ -342,12 +283,10 @@ function updateWidgets(state, fragmentEntryLinkId) {
 
 export {
 	add,
-	focusItem,
 	moveItem,
 	remove,
 	removeItem,
 	setIn,
-	shouldClearFocus,
 	updateIn,
 	updateLayoutData,
 	updateSection,

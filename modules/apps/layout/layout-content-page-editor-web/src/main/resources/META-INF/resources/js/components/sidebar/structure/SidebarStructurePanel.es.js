@@ -3,9 +3,9 @@ import {Config} from 'metal-state';
 import Soy from 'metal-soy';
 
 import '../fragments/FragmentsEditorSidebarCard.es';
-import {CLEAR_HOVERED_ITEM, REMOVE_FRAGMENT_ENTRY_LINK, REMOVE_SECTION, UPDATE_ACTIVE_ITEM, UPDATE_HOVERED_ITEM} from '../../../actions/actions.es';
+import {REMOVE_FRAGMENT_ENTRY_LINK, REMOVE_SECTION} from '../../../actions/actions.es';
 import {EDITABLE_FRAGMENT_ENTRY_PROCESSOR} from '../../fragment_entry_link/FragmentEntryLinkContent.es';
-import {focusItem, removeItem, setIn} from '../../../utils/FragmentsEditorUpdateUtils.es';
+import {removeItem, setIn} from '../../../utils/FragmentsEditorUpdateUtils.es';
 import {FRAGMENTS_EDITOR_ITEM_TYPES} from '../../../utils/constants';
 import {getConnectedComponent} from '../../../store/ConnectedComponent.es';
 import {getItemPath} from '../../../utils/FragmentsEditorGetUtils.es';
@@ -202,53 +202,6 @@ class SidebarStructurePanel extends Component {
 				state.activeItemType,
 				state.layoutData.structure
 			)
-		);
-	}
-
-	/**
-	 * Callback executed when an element name is clicked in the tree
-	 * @param {object} event
-	 * @private
-	 * @review
-	 */
-	_handleElementClick(event) {
-		const {elementId, elementType} = event.delegateTarget.dataset;
-
-		this.store.dispatchAction(
-			UPDATE_ACTIVE_ITEM,
-			{
-				activeItemId: elementId,
-				activeItemType: elementType
-			}
-		);
-
-		focusItem(elementId, elementType);
-	}
-
-	/**
-	 * @param {MouseEvent} event
-	 * @private
-	 * @review
-	 */
-	_handleElementMouseEnter(event) {
-		const {elementId, elementType} = event.delegateTarget.dataset;
-
-		this.store.dispatchAction(
-			UPDATE_HOVERED_ITEM,
-			{
-				hoveredItemId: elementId,
-				hoveredItemType: elementType
-			}
-		);
-	}
-
-	/**
-	 * @private
-	 * @review
-	 */
-	_handleElementMouseLeave() {
-		this.store.dispatchAction(
-			CLEAR_HOVERED_ITEM
 		);
 	}
 

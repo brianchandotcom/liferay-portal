@@ -5,9 +5,6 @@
  */
 {template .render}
 	{@param? _expandedNodes: ?}
-	{@param? _handleElementClick: any}
-	{@param? _handleElementMouseEnter: any}
-	{@param? _handleElementMouseLeave: any}
 	{@param? _handleElementRemoveButtonClick: any}
 	{@param? _handleElementCollapseButtonClick: any}
 	{@param? activeItemId: string}
@@ -36,9 +33,6 @@
 			<div class="collapse menubar-collapse">
 				{if $spritemap and $structure}
 					{call .treeNode}
-						{param handleElementClick: $_handleElementClick /}
-						{param handleElementMouseEnter: $_handleElementMouseEnter /}
-						{param handleElementMouseLeave: $_handleElementMouseLeave /}
 						{param handleElementRemoveButtonClick: $_handleElementRemoveButtonClick /}
 						{param handleElementCollapseButtonClick: $_handleElementCollapseButtonClick /}
 						{param node: $structure /}
@@ -54,9 +48,6 @@
  * Tree root
  */
 {template .treeNode}
-	{@param? handleElementClick: any}
-	{@param? handleElementMouseEnter: any}
-	{@param? handleElementMouseLeave: any}
 	{@param? handleElementCollapseButtonClick: any}
 	{@param? handleElementRemoveButtonClick: any}
 	{@param node: [
@@ -100,9 +91,6 @@
 				{/if}
 
 				{call .itemName}
-					{param handleClick: $handleElementClick /}
-					{param handleMouseEnter: $handleElementMouseEnter /}
-					{param handleMouseLeave: $handleElementMouseLeave /}
 					{param node: $node /}
 				{/call}
 
@@ -128,9 +116,6 @@
 				<div class="{$childrenClasses}">
 					{foreach $nodeChild in $node.children}
 						{call .treeNode}
-							{param handleElementClick: $handleElementClick /}
-							{param handleElementMouseEnter: $handleElementMouseEnter /}
-							{param handleElementMouseLeave: $handleElementMouseLeave /}
 							{param handleElementRemoveButtonClick: $handleElementRemoveButtonClick /}
 							{param handleElementCollapseButtonClick: $handleElementCollapseButtonClick /}
 							{param key: $nodeChild.key /}
@@ -191,9 +176,6 @@
 		elementType: string,
 		label: string
 	]}
-	{@param? handleClick: any}
-	{@param? handleMouseEnter: any}
-	{@param? handleMouseLeave: any}
 
 	{let $itemNameClasses kind="text"}
 		btn
@@ -211,9 +193,8 @@
 			class="{$itemNameClasses}"
 			data-element-id="{$node.elementId}"
 			data-element-type="{$node.elementType}"
-			data-onclick="{$handleClick}"
-			data-onmouseenter="{$handleMouseEnter}"
-			data-onmouseleave="{$handleMouseLeave}"
+			data-fragments-editor-item-id="{$node.elementId}"
+			data-fragments-editor-item-type="{$node.elementType}"
 			type="button"
 		{/let}
 

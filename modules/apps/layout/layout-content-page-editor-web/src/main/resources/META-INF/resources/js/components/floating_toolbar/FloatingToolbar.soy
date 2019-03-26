@@ -14,7 +14,6 @@
 		type: string
 	]>}
 	{@param? _handlePanelButtonClick: any}
-	{@param? _handleFloatingToolbarFocusOut: any}
 	{@param? classes: string}
 	{@param? fixSelectedPanel: bool}
 	{@param? selectedPanelId: string}
@@ -23,7 +22,8 @@
 
 	<div
 		class="fragments-editor__floating-toolbar {$classes ?: ''}"
-		data-onfocusout="{$_handleFloatingToolbarFocusOut}"
+		data-fragments-editor-item-id="{$itemId}"
+		data-fragments-editor-item-type="{$itemType}"
 		tabindex="-1"
 	>
 		{if $spritemap and $buttons and (length($buttons) > 0)}

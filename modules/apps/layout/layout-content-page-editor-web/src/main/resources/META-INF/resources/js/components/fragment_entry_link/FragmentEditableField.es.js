@@ -8,11 +8,11 @@ import '../floating_toolbar/mapping/FloatingToolbarMappingPanel.es';
 import '../floating_toolbar/text_properties/FloatingToolbarTextPropertiesPanel.es';
 import './FragmentEditableFieldTooltip.es';
 
-import {CLEAR_ACTIVE_ITEM, CLEAR_FRAGMENT_EDITOR, DISABLE_FRAGMENT_EDITOR, ENABLE_FRAGMENT_EDITOR, OPEN_ASSET_TYPE_DIALOG, UPDATE_ACTIVE_ITEM, UPDATE_CONFIG_ATTRIBUTES, UPDATE_EDITABLE_VALUE, UPDATE_HOVERED_ITEM, UPDATE_LAST_SAVE_DATE, UPDATE_SAVING_CHANGES_STATUS, UPDATE_TRANSLATION_STATUS} from '../../actions/actions.es';
+import {CLEAR_FRAGMENT_EDITOR, DISABLE_FRAGMENT_EDITOR, ENABLE_FRAGMENT_EDITOR, OPEN_ASSET_TYPE_DIALOG, UPDATE_CONFIG_ATTRIBUTES, UPDATE_EDITABLE_VALUE, UPDATE_LAST_SAVE_DATE, UPDATE_SAVING_CHANGES_STATUS, UPDATE_TRANSLATION_STATUS} from '../../actions/actions.es';
 import {EDITABLE_FIELD_CONFIG_KEYS, FLOATING_TOOLBAR_BUTTONS, FRAGMENTS_EDITOR_ITEM_TYPES} from '../../utils/constants';
 import {prefixSegmentsExperienceId} from '../../utils/prefixSegmentsExperienceId.es';
 import {getConnectedComponent} from '../../store/ConnectedComponent.es';
-import {setIn, shouldClearFocus} from '../../utils/FragmentsEditorUpdateUtils.es';
+import {setIn} from '../../utils/FragmentsEditorUpdateUtils.es';
 import {shouldUpdateOnChangeProperties, shouldUpdatePureComponent} from '../../utils/FragmentsEditorComponentUtils.es';
 import FloatingToolbar from '../floating_toolbar/FloatingToolbar.es';
 import FragmentProcessors from '../fragment_processors/FragmentProcessors.es';
@@ -340,22 +340,6 @@ class FragmentEditableField extends PortletBase {
 	}
 
 	/**
-	 * Callback executed when an editable lose the focus
-	 * @private
-	 * @review
-	 */
-	_handleEditableBlur() {
-		requestAnimationFrame(
-			() => {
-				if (shouldClearFocus(this.element)) {
-					this.store.dispatchAction(CLEAR_ACTIVE_ITEM);
-					this._editing = false;
-				}
-			}
-		);
-	}
-
-	/**
 	 * Handle editable click event
 	 * @param {Event} event
 	 * @private
@@ -377,15 +361,6 @@ class FragmentEditableField extends PortletBase {
 
 				this._disposeFloatingToolbar();
 			}
-			else {
-				this.store.dispatchAction(
-					UPDATE_ACTIVE_ITEM,
-					{
-						activeItemId: `${this.fragmentEntryLinkId}-${this.editableId}`,
-						activeItemType: FRAGMENTS_EDITOR_ITEM_TYPES.editable
-					}
-				);
-			}
 		}
 	}
 
@@ -400,25 +375,6 @@ class FragmentEditableField extends PortletBase {
 		this.store.dispatchAction(
 			DISABLE_FRAGMENT_EDITOR
 		);
-	}
-
-	/**
-	 * Callback executed when cursor enters editable element
-	 * @private
-	 * @review
-	 */
-	_handleEditableHoverStart(event) {
-		event.stopPropagation();
-
-		if (this.store) {
-			this.store.dispatchAction(
-				UPDATE_HOVERED_ITEM,
-				{
-					hoveredItemId: `${this.fragmentEntryLinkId}-${this.editableId}`,
-					hoveredItemType: FRAGMENTS_EDITOR_ITEM_TYPES.editable
-				}
-			);
-		}
 	}
 
 	/**

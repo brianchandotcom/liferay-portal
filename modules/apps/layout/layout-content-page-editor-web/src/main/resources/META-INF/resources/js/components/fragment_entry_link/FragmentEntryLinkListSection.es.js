@@ -7,10 +7,10 @@ import '../floating_toolbar/background_image/FloatingToolbarBackgroundImagePanel
 import '../floating_toolbar/spacing/FloatingToolbarSpacingPanel.es';
 import './ColumnOverlayGrid.es';
 import './FragmentEntryLink.es';
-import {CLEAR_ACTIVE_ITEM, MOVE_SECTION, REMOVE_SECTION, UPDATE_ACTIVE_ITEM, UPDATE_HOVERED_ITEM, UPDATE_SECTION_COLUMNS} from '../../actions/actions.es';
+import {MOVE_SECTION, REMOVE_SECTION, UPDATE_SECTION_COLUMNS} from '../../actions/actions.es';
 import {FLOATING_TOOLBAR_BUTTONS, FRAGMENTS_EDITOR_ITEM_TYPES} from '../../utils/constants';
 import {getItemMoveDirection, getSectionIndex, getTargetBorder} from '../../utils/FragmentsEditorGetUtils.es';
-import {moveItem, removeItem, setIn, shouldClearFocus, updateSection} from '../../utils/FragmentsEditorUpdateUtils.es';
+import {moveItem, removeItem, setIn, updateSection} from '../../utils/FragmentsEditorUpdateUtils.es';
 import {shouldUpdatePureComponent} from '../../utils/FragmentsEditorComponentUtils.es';
 import FloatingToolbar from '../floating_toolbar/FloatingToolbar.es';
 import getConnectedComponent from '../../store/ConnectedComponent.es';
@@ -165,20 +165,6 @@ class FragmentEntryLinkListSection extends Component {
 	}
 
 	/**
-	 * Callback executed when a section lose the focus
-	 * @private
-	 */
-	_handleSectionFocusOut() {
-		requestAnimationFrame(
-			() => {
-				if (shouldClearFocus(this.element)) {
-					this.store.dispatchAction(CLEAR_ACTIVE_ITEM);
-				}
-			}
-		);
-	}
-
-	/**
 	 * @private
 	 * @review
 	 */
@@ -186,40 +172,6 @@ class FragmentEntryLinkListSection extends Component {
 		this._resizing = true;
 
 		this._resizeSectionColumns = this.row.columns;
-	}
-
-	/**
-	 * Callback executed when a section is clicked.
-	 * @param {Event} event
-	 * @private
-	 */
-	_handleSectionClick(event) {
-		event.stopPropagation();
-
-		this.store.dispatchAction(
-			UPDATE_ACTIVE_ITEM,
-			{
-				activeItemId: event.delegateTarget.dataset.layoutSectionId,
-				activeItemType: FRAGMENTS_EDITOR_ITEM_TYPES.section
-			}
-		);
-	}
-
-	/**
-	 * Callback executed when a section starts being hovered.
-	 * @param {Event} event
-	 * @private
-	 */
-	_handleSectionHoverStart(event) {
-		if (this.store) {
-			this.store.dispatchAction(
-				UPDATE_HOVERED_ITEM,
-				{
-					hoveredItemId: event.delegateTarget.dataset.layoutSectionId,
-					hoveredItemType: FRAGMENTS_EDITOR_ITEM_TYPES.section
-				}
-			);
-		}
 	}
 
 	/**
@@ -244,14 +196,6 @@ class FragmentEntryLinkListSection extends Component {
 				targetBorder: getTargetBorder(direction),
 				targetItemId: targetItem.rowId
 			};
-
-			this.store.dispatchAction(
-				UPDATE_ACTIVE_ITEM,
-				{
-					activeItemId: sectionId,
-					activeItemType: FRAGMENTS_EDITOR_ITEM_TYPES.section
-				}
-			);
 
 			moveItem(this.store, MOVE_SECTION, moveItemPayload);
 		}

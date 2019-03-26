@@ -8,7 +8,7 @@ import '../floating_toolbar/FloatingToolbar.es';
 import './FragmentEntryLinkListSection.es';
 import getConnectedComponent from '../../store/ConnectedComponent.es';
 import templates from './FragmentEntryLinkList.soy';
-import {CLEAR_DROP_TARGET, CLEAR_HOVERED_ITEM, MOVE_FRAGMENT_ENTRY_LINK, MOVE_SECTION, UPDATE_ACTIVE_ITEM, UPDATE_DROP_TARGET} from '../../actions/actions.es';
+import {CLEAR_DROP_TARGET, MOVE_FRAGMENT_ENTRY_LINK, MOVE_SECTION, UPDATE_DROP_TARGET} from '../../actions/actions.es';
 import {moveItem, setIn} from '../../utils/FragmentsEditorUpdateUtils.es';
 import {FRAGMENTS_EDITOR_ITEM_BORDERS, FRAGMENTS_EDITOR_ITEM_TYPES} from '../../utils/constants';
 import {getFragmentColumn, getTargetBorder} from '../../utils/FragmentsEditorGetUtils.es';
@@ -276,16 +276,6 @@ class FragmentEntryLinkList extends Component {
 	}
 
 	/**
-	 * Callback executed when the fragment list ends being hovered.
-	 * @private
-	 */
-	_handleFragmentEntryLinkListHoverEnd() {
-		if (this.store) {
-			this.store.dispatchAction(CLEAR_HOVERED_ITEM);
-		}
-	}
-
-	/**
 	 * @param {Event} event
 	 * @private
 	 * @review
@@ -311,14 +301,6 @@ class FragmentEntryLinkList extends Component {
 				targetItemId: targetFragmentEntryLinkId,
 				targetItemType: FRAGMENTS_EDITOR_ITEM_TYPES.fragment
 			};
-
-			this.store.dispatchAction(
-				UPDATE_ACTIVE_ITEM,
-				{
-					activeItemId: fragmentEntryLinkId,
-					activeItemType: FRAGMENTS_EDITOR_ITEM_TYPES.fragment
-				}
-			);
 
 			moveItem(this.store, MOVE_FRAGMENT_ENTRY_LINK, moveItemPayload);
 		}

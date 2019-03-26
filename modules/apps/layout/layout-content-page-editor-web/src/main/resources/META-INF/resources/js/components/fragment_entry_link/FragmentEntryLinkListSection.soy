@@ -17,9 +17,6 @@
 	{@param? _columnResizerVisible: bool}
 	{@param? _handleFragmentMove: any}
 	{@param? _handleResizerMouseDown: any}
-	{@param? _handleSectionFocusOut: any}
-	{@param? _handleSectionClick: any}
-	{@param? _handleSectionHoverStart: any}
 	{@param? _handleSectionKeyUp: any}
 	{@param? _handleSectionRemoveButtonClick: any}
 	{@param? _resizing: bool}
@@ -107,11 +104,10 @@
 	<section
 		class="{$sectionClasses}"
 		data-drag-source-label="{msg desc=""}section{/msg}"
+		data-fragments-editor-item-id="{$rowId}"
+		data-fragments-editor-item-type="fragments-editor-section"
 		data-layout-section-id="{$rowId}"
-		data-onfocusout="{$_handleSectionFocusOut}"
-		data-onclick="{$_handleSectionClick}"
 		data-onkeyup="{$_handleSectionKeyUp}"
-		data-onmouseover="{$_handleSectionHoverStart}"
 		key="{$key}"
 		style="{$sectionStyle}"
 		tabindex="0"

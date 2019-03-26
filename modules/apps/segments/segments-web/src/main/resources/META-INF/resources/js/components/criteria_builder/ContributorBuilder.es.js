@@ -8,7 +8,6 @@ import React from 'react';
 import {buildQueryString, translateQueryToCriteria} from '../../utils/odata.es';
 import {CONJUNCTIONS} from '../../utils/constants.es';
 import {DragDropContext as dragDropContext} from 'react-dnd';
-import {sub} from '../../utils/utils.es';
 
 const conjunctionShape = PropTypes.shape(
 	{
@@ -121,10 +120,10 @@ class ContributorBuilder extends React.Component {
 
 				diffState = {
 					contributors: prevState.contributors.map(
-						(contributor, i) => {
-							const {conjunctionId, properties} = contributor;
+						contributor => {
+							const {conjunctionId, properties, propertyKey} = contributor;
 
-							return index === i ?
+							return index === propertyKey ?
 								{
 									...contributor,
 									criteriaMap: criteriaChange,
@@ -206,13 +205,6 @@ class ContributorBuilder extends React.Component {
 
 		const {contributors, editingId} = this.state;
 
-		const selectedContributor = contributors[editingId];
-
-		const selectedProperty = selectedContributor &&
-			propertyGroups.find(
-				propertyGroup => selectedContributor.propertyKey === propertyGroup.propertyKey
-			);
-
 		const rootClasses = getCN(
 			'contributor-builder-root',
 			{
@@ -224,12 +216,9 @@ class ContributorBuilder extends React.Component {
 			<div className={rootClasses}>
 				<div className="criteria-builder-section-sidebar">
 					<CriteriaSidebar
-						propertyKey={selectedProperty && selectedProperty.propertyKey}
-						supportedProperties={selectedProperty && selectedProperty.properties}
-						title={sub(
-							Liferay.Language.get('x-properties'),
-							[selectedProperty && selectedProperty.name]
-						)}
+						onTitleClicked={this._handleCriteriaEdit}
+						propertyGroups={propertyGroups}
+						propertyKey={editingId}
 					/>
 				</div>
 
@@ -262,9 +251,9 @@ class ContributorBuilder extends React.Component {
 
 											<CriteriaBuilder
 												criteria={criteria.criteriaMap}
-												editing={editingId === i}
+												editing={editingId === criteria.propertyKey}
 												entityName={criteria.entityName}
-												id={i}
+												id={criteria.propertyKey}
 												modelLabel={criteria.modelLabel}
 												onChange={this._handleCriteriaChange}
 												onEditToggle={this._handleCriteriaEdit}

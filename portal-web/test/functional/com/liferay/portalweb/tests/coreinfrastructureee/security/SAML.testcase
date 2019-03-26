@@ -499,6 +499,142 @@ definition {
 	}
 
 	@priority = "4"
+	test ConfigureSAMLToImportUsersFromLDAP {
+		property apacheds.enabled = "true";
+		property test.name.skip.portal.instance = "SAML#ConfigureSAMLToImportUsersFromLDAP";
+
+		SAML.configureLiferaySAMLAsIdP(samlEntityID = "samlidp");
+
+		SAML.configureLiferaySAMLAsSP(
+			samlEntityID = "samlsp",
+			spURL = "http://www.able.com:9080"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "Instance Settings"
+		);
+
+		PortalSettings.addLDAPServer(LDAPServerName = "ApacheDS Server");
+
+		PortalSettings.editLDAPServer(LDAPServerName = "ApacheDS Server");
+
+		PortalSettings.testLDAPConnection();
+
+		Navigator.openSpecificURL(url = "http://www.able.com:9080");
+
+		Navigator.gotoLoginPage();
+
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "Instance Settings"
+		);
+
+		PortalSettings.addLDAPServer(LDAPServerName = "ApacheDS Server");
+
+		PortalSettings.editLDAPServer(LDAPServerName = "ApacheDS Server");
+
+		PortalSettings.testLDAPConnection();
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "Instance Settings"
+		);
+
+		var enableSettingList = "enabled,ldapExportEnabled,ldapImportEnabled,importOnStartup";
+
+		PortalSettings.configureLDAPSetting(enableSettingList = "${enableSettingList}");
+
+		PortalSettings.viewEnabledLDAPSetting(
+			enableSettingList = "${enableSettingList}"
+		);
+
+		Portlet.shutdownServer();
+
+		Portlet.startServer(deleteLiferayHome = "false");
+
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "Search"
+		);
+
+		SearchAdministration.executeSearchActions(
+			actionsDescription = "Reindex all search indexes."
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations"
+		);
+
+		User.viewCP(
+			userEmailAddress = "ldapuseremail@liferay.com",
+			userFirstName = "ldapusergivenname",
+			userLastName = "ldapusersn",
+			userScreenName = "ldapusercn"
+		);
+
+		Navigator.gotoBack();
+
+		User.editPasswordCP(
+			userEmailAddress = "ldapuseremail@liferay.com",
+			userScreenName = "ldapusercn"
+		);
+
+		Navigator.openSpecificURL(url = "http://www.able.com:9080");
+
+		Navigator.gotoLoginPage();
+
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "SAML Admin"
+		);
+
+		SAMLNavigation.gotoServiceProvider();
+
+		SAMLPortlet.configureServiceProvider(
+			enbleLDAPImport = "true"
+		);
+
+		User.logoutPG(specificURL = "http://www.able.com:9080");
+
+		User.loginPG(
+			password = "test",
+			specificURL = "http://www.able.com:9080",
+			userEmailAddress = "ldapuseremail@liferay.com"
+		);
+
+		User.logoutPG(specificURL = "http://www.able.com:9080");
+
+		User.loginPG(
+			password = "test",
+			specificURL = "http://www.able.com:9080",
+			userEmailAddress = "test@liferay.com"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations"
+		);
+
+		User.viewCP(
+			userEmailAddress = "ldapuseremail@liferay.com",
+			userFirstName = "ldapusergivenname",
+			userLastName = "ldapusersn",
+			userScreenName = "ldapusercn"
+		);
+	}
+
+	@priority = "4"
 	test SPInitiatedSSOWithScreenNameIdentifier {
 		property test.name.skip.portal.instance = "SAML#SPInitiatedSSOWithScreenNameIdentifier";
 

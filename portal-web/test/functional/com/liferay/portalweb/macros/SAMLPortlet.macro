@@ -139,6 +139,12 @@ definition {
 			);
 		}
 
+		if ("${enbleLDAPImport}" == "true") {
+			Check(
+				locator1 = "CPSAMLAdminServiceProvider#SERVICE_PROVIDER_LDAP_IMPORT_ENABLED_CHECKBOX"
+			);
+		}
+
 		PortletEntry.save();
 	}
 }

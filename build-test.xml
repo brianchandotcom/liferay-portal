@@ -4050,11 +4050,11 @@ org.apache.catalina.startup.ClassLoaderFactory.level=INFO]]>
 							<if>
 								<istrue value="${test.docker.environment}" />
 								<then>
-									<echo>docker run -d -p 8080:8080 -v ${app.server.parent.dir}:${app.server.parent.dir} --cidfile=docker.process.pid --network=@{docker.network.name} openjdk:8-alpine ${app.server.bin.dir}/${app.server.start.executable} ${app.server.start.executable.arg.line}</echo>
+									<echo>docker run -d -p ${test.app.server.leading.port.number}080:${test.app.server.leading.port.number}080 -v ${app.server.parent.dir}:${app.server.parent.dir} --cidfile=docker.process.pid --network=@{docker.network.name} openjdk:8-alpine ${app.server.bin.dir}/${app.server.start.executable} ${app.server.start.executable.arg.line}</echo>
 
 									<exec executable="docker">
 										<arg line="run -d" />
-										<arg line="-p 8080:8080" />
+										<arg line="-p ${test.app.server.leading.port.number}080:${test.app.server.leading.port.number}080" />
 										<arg value="-v" />
 										<arg value="${app.server.parent.dir}:${app.server.parent.dir}" />
 										<arg value="--cidfile=docker.process.pid" />
@@ -4093,11 +4093,11 @@ org.apache.catalina.startup.ClassLoaderFactory.level=INFO]]>
 									<if>
 										<istrue value="${test.docker.environment}" />
 										<then>
-											<echo>docker run -d -p 8080:8080 -v ${app.server.parent.dir}:${app.server.parent.dir} --cidfile=docker.process.pid --network=@{docker.network.name} openjdk:8-alpine ${app.server.bin.dir}/${app.server.start.executable} ${app.server.start.executable.arg.line}</echo>
+											<echo>docker run -d -p ${test.app.server.leading.port.number}080:${test.app.server.leading.port.number}080 -v ${app.server.parent.dir}:${app.server.parent.dir} --cidfile=docker.process.pid --network=@{docker.network.name} openjdk:8-alpine ${app.server.bin.dir}/${app.server.start.executable} ${app.server.start.executable.arg.line}</echo>
 
 											<exec executable="docker">
 												<arg line="run -d" />
-												<arg line="-p 8080:8080" />
+												<arg line="-p ${test.app.server.leading.port.number}080:${test.app.server.leading.port.number}080" />
 												<arg value="-v" />
 												<arg value="${app.server.parent.dir}:${app.server.parent.dir}" />
 												<arg value="--cidfile=docker.process.pid" />

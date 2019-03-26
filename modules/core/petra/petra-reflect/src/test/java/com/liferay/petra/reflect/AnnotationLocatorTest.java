@@ -851,9 +851,9 @@ public class AnnotationLocatorTest {
 	@Type(value = 6)
 	private interface SuperInterface2 extends SuperInterface1 {
 
-		@Override
 		@Method(value = 6)
 		@Mix(value = 6)
+		@Override
 		void originMethod1();
 
 		@Method(value = 6)

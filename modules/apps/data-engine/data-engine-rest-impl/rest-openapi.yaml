@@ -65,6 +65,10 @@ components:
             type: object
         DataDefinitionPermission:
             properties:
+                addDataDefinition:
+                    type: boolean
+                definePermissions:
+                    type: boolean
                 delete:
                     type: boolean
                 update:
@@ -270,6 +274,31 @@ paths:
                         application/json:
                             schema:
                                 $ref: "#/components/schemas/DataDefinition"
+                    description: ""
+            tags: ["DataDefinition"]
+    "/content-spaces/{content-space-id}/data-definitions/permissions":
+        post:
+            parameters:
+                - in: path
+                  name: content-space-id
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+                - in: query
+                  name: operation
+                  required: true
+                  schema:
+                      type: string
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/DataDefinitionPermission"
+            responses:
+                204:
+                    content:
+                        application/json: {}
                     description: ""
             tags: ["DataDefinition"]
     "/content-spaces/{content-space-id}/data-layout":

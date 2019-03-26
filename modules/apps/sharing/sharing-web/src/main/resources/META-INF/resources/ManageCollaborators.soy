@@ -31,7 +31,7 @@
 				{/if}
 				<ul class="list-group">
 					{foreach $collaborator in $collaborators}
-						<li class="list-group-item list-group-item-flex" data-onmouseout="{$_handleHoverCollaborator}" data-onmouseover="{$_handleHoverCollaborator}" id="collaborator{$collaborator.id}">
+						<li class="list-group-item list-group-item-flex" data-onmouseout="{$_handleHoverCollaborator}" data-onmouseover="{$_handleHoverCollaborator}" id="collaborator{$collaborator.userId}">
 							{call .collaborator}
 								{param _handleBlurExpirationDate: $_handleBlurExpirationDate /}
 								{param _handleChangePermission: $_handleChangePermission /}
@@ -102,15 +102,15 @@
 	{@param spritemap: string}
 
 	<div class="autofit-col">
-		{if $collaborator.imageSrc}
+		{if $collaborator.portraitURL}
 			{call ClaySticker.render}
 				{param size: 'xl' /}
-				{param imageSrc: $collaborator.imageSrc /}
+				{param imageSrc: $collaborator.portraitURL /}
 				{param shape: 'circle' /}
 			{/call}
 		{else}
 			<span class="user-avatar-image">
-				<div class="sticker sticker-circle sticker-light sticker-lg user-icon user-icon-default user-icon-lg user-icon-color-{$collaborator.id % 10}">
+				<div class="sticker sticker-circle sticker-light sticker-lg user-icon user-icon-default user-icon-lg user-icon-color-{$collaborator.userId % 10}">
 					{call ClayIcon.render}
 						{param spritemap: $spritemap /}
 						{param symbol: 'user' /}
@@ -124,7 +124,7 @@
 
 		<div class="autofit-row autofit-row-center">
 			<div class="autofit-col autofit-col-expand">
-				<h4>{$collaborator.name}</h4>
+				<h4>{$collaborator.fullName}</h4>
 			</div>
 
 			<div class="autofit-col expiration-icon {if not $collaborator.sharingEntryExpirationDate}hidden {/if}
@@ -143,7 +143,7 @@
 						'click': $_hideShowExpirationDateBlock
 					] /}
 					{param data: [
-						'collaboratorid': $collaborator.id,
+						'collaboratorid': $collaborator.userId,
 						'title': $tooltipMessage
 					] /}
 					{param elementClasses: 'text-muted' /}
@@ -167,7 +167,7 @@
 			<div class="autofit-col">
 				<button
 					class="btn btn-link btn-monospaced btn-remove text-muted"
-					data-collaborator-id="{$collaborator.id}"
+					data-collaborator-id="{$collaborator.userId}"
 					data-sharingentry-id="{$collaborator.sharingEntryId}"
 					data-onclick="{$_handleDeleteCollaborator}"
 					{if $_loadingResponse}disabled{/if}
@@ -179,7 +179,7 @@
 			</div>
 		</div>
 
-		<div class="autofit-float autofit-row autofit-row-center {if not $collaborator.expanded}hide{/if}" id="expiration{$collaborator.id}">
+		<div class="autofit-float autofit-row autofit-row-center {if not $collaborator.expanded}hide{/if}" id="expiration{$collaborator.userId}">
 			<div class="autofit-col">
 				<span>{msg desc=""}has-permissions-until{/msg}</span>
 			</div>
@@ -188,7 +188,7 @@
 				<input
 					class="form-control"
 					data-onblur="{$_handleBlurExpirationDate}"
-					data-collaborator-id="{$collaborator.id}"
+					data-collaborator-id="{$collaborator.userId}"
 					data-sharingentry-id="{$collaborator.sharingEntryId}"
 					min="{$_tomorrowDate}"
 					type="date"
@@ -207,7 +207,7 @@
 					{param events: [
 						'click': $_handleDeleteExpirationDate
 					] /}
-					{param data: ['collaboratorId': $collaborator.id] /}
+					{param data: ['collaboratorId': $collaborator.userId] /}
 					{param elementClasses: 'text-muted' /}
 					{param label: $cancelMsg /}
 					{param size: 'sm' /}

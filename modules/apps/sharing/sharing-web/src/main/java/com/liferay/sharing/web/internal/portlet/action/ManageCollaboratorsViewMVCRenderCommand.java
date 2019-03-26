@@ -124,18 +124,19 @@ public class ManageCollaboratorsViewMVCRenderCommand
 					JSONFactoryUtil.createJSONObject();
 
 				collaboratorJSONObject.put(
-					"id", Long.valueOf(sharingEntryToUser.getUserId()));
+					"userId", Long.valueOf(sharingEntryToUser.getUserId()));
 
-				String imageSrc = StringPool.BLANK;
+				String portraitURL = StringPool.BLANK;
 
 				if (sharingEntryToUser.getPortraitId() > 0) {
-					imageSrc = sharingEntryToUser.getPortraitURL(themeDisplay);
+					portraitURL = sharingEntryToUser.getPortraitURL(
+						themeDisplay);
 				}
 
-				collaboratorJSONObject.put("imageSrc", imageSrc);
+				collaboratorJSONObject.put("portraitURL", portraitURL);
 
 				collaboratorJSONObject.put(
-					"name", sharingEntryToUser.getFullName());
+					"fullName", sharingEntryToUser.getFullName());
 				collaboratorJSONObject.put(
 					"sharingEntryId", sharingEntry.getSharingEntryId());
 

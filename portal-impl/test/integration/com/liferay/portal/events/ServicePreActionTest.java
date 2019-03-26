@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.RoleConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalServiceUtil;
 import com.liferay.portal.kernel.service.RoleLocalServiceUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -34,6 +35,8 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.util.test.LayoutTestUtil;
+
+import java.util.List;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -59,6 +62,8 @@ public class ServicePreActionTest {
 		_group = GroupTestUtil.addGroup();
 
 		LayoutTestUtil.addLayout(_group);
+
+		LayoutTestUtil.addLayout(_group.getGroupId(), "Page not visible", false, null, false, true);
 
 		_request.setRequestURI(PortalUtil.getPathMain() + "/portal/login");
 
@@ -139,6 +144,32 @@ public class ServicePreActionTest {
 		Layout layout = defaultLayoutComposite.getLayout();
 
 		Assert.assertEquals(layout.getPlid(), plid);
+	}
+
+	@Test
+	public void testHiddenLayoutsVirtualHostLayoutCompositeWithNonExistentLayout()
+		throws Exception {
+
+		_request.setRequestURI("/non/existent/page");
+
+		long plid = getThemeDisplayPlid(true, false);
+
+		ServicePreAction.LayoutComposite defaultLayoutComposite =
+			TestServicePreAction.INSTANCE.getDefaultVirtualHostLayoutComposite(
+				_request);
+
+		defaultLayoutComposite =
+			TestServicePreAction.INSTANCE.getViewableLayoutComposite(
+				_request, _user, PermissionCheckerFactoryUtil.create(_user),
+				defaultLayoutComposite, 0, false);
+
+		Layout layout = defaultLayoutComposite.getLayout();
+
+		List<Layout> layouts = defaultLayoutComposite.getLayouts();
+
+		Assert.assertEquals(layout.getPlid(), plid);
+
+		Assert.assertEquals(layouts.size(), 1);
 	}
 
 	protected long getThemeDisplayPlid(

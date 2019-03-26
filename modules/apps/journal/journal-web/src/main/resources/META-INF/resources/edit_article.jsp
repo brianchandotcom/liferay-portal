@@ -20,8 +20,6 @@
 JournalArticle article = journalDisplayContext.getArticle();
 
 JournalEditArticleDisplayContext journalEditArticleDisplayContext = new JournalEditArticleDisplayContext(request, liferayPortletResponse, article);
-
-themeDisplay.setRefererPlid(journalEditArticleDisplayContext.getReferringPlid());
 %>
 
 <aui:model-context bean="<%= article %>" model="<%= JournalArticle.class %>" />

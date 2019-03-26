@@ -143,6 +143,15 @@ const INITIAL_STATE = {
 		.value(''),
 
 	/**
+	 * Default configurations for AlloyEditor instances.
+	 * @default {}
+	 * @instance
+	 * @review
+	 * @type {object}
+	 */
+	defaultEditorConfigurations: Config.object().value({}),
+
+	/**
 	 * Default language id.
 	 * @default ''
 	 * @review
@@ -221,6 +230,15 @@ const INITIAL_STATE = {
 	dropTargetItemType: Config
 		.string()
 		.value(''),
+
+	/**
+	 * URL for updating a distinct fragment entries of the editor.
+	 * @default ''
+	 * @instance
+	 * @review
+	 * @type {string}
+	 */
+	editFragmentEntryLinkURL: Config.string().value(''),
 
 	/**
 	 * Available elements that can be dragged inside the existing Page Template,

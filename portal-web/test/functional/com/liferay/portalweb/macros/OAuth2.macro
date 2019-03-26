@@ -161,10 +161,6 @@ definition {
 			);
 
 			Button.clickApply();
-
-			if (IsElementPresent(locator1 = "Icon#CLOSE")) {
-				IFrame.closeFrame();
-			}
 		}
 
 		if ((isSet(clientSecret)) || (isSet(generateNewSecret))) {
@@ -185,10 +181,6 @@ definition {
 			}
 
 			Button.clickApply();
-
-			if (IsElementPresent(locator1 = "Icon#CLOSE")) {
-				IFrame.closeFrame();
-			}
 		}
 
 		// All macros that require return must have return statement that's called.

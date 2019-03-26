@@ -107,6 +107,8 @@ public class ExpandoColumnConstants {
 
 	public static final String PROPERTY_DISPLAY_TYPE = "display-type";
 
+	public static final String PROPERTY_DISPLAY_TYPE_BOOLEAN = "boolean";
+
 	public static final String PROPERTY_DISPLAY_TYPE_CHECKBOX = "checkbox";
 
 	public static final String PROPERTY_DISPLAY_TYPE_DATE = "date";
@@ -177,12 +179,14 @@ public class ExpandoColumnConstants {
 	public static final String getDefaultDisplayTypeProperty(
 		int type, UnicodeProperties properties) {
 
-		if ((type == BOOLEAN) || (type == BOOLEAN_ARRAY) ||
-			(type == DATE_ARRAY) || (type == DOUBLE_ARRAY) ||
-			(type == FLOAT_ARRAY) || (type == INTEGER_ARRAY) ||
-			(type == LONG_ARRAY) || (type == NUMBER_ARRAY) ||
-			(type == SHORT_ARRAY) || (type == STRING_ARRAY) ||
-			(type == STRING_ARRAY_LOCALIZED)) {
+		if (type == BOOLEAN) {
+			return PROPERTY_DISPLAY_TYPE_BOOLEAN;
+		}
+		else if ((type == BOOLEAN_ARRAY) || (type == DATE_ARRAY) ||
+				 (type == DOUBLE_ARRAY) || (type == FLOAT_ARRAY) ||
+				 (type == INTEGER_ARRAY) || (type == LONG_ARRAY) ||
+				 (type == NUMBER_ARRAY) || (type == SHORT_ARRAY) ||
+				 (type == STRING_ARRAY) || (type == STRING_ARRAY_LOCALIZED)) {
 
 			return PROPERTY_DISPLAY_TYPE_SELECTION_LIST;
 		}

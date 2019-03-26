@@ -244,6 +244,33 @@ renderResponse.setTitle(modelResourceName + ": " + ((expandoColumn == null) ? La
 					</div>
 				</a>
 			</aui:col>
+
+			<aui:col span="<%= 4 %>">
+				<portlet:renderURL var="createBooleanURL">
+					<portlet:param name="mvcPath" value="/edit/expando.jsp" />
+					<portlet:param name="redirect" value="<%= redirect %>" />
+					<portlet:param name="modelResource" value="<%= modelResource %>" />
+					<portlet:param name="displayType" value="<%= ExpandoColumnConstants.PROPERTY_DISPLAY_TYPE_BOOLEAN %>" />
+					<portlet:param name="type" value="<%= String.valueOf(ExpandoColumnConstants.BOOLEAN) %>" />
+				</portlet:renderURL>
+
+				<a class="card card-interactive card-interactive-secondary" href="<%= createBooleanURL %>">
+					<div class="card-body custom-card-body-boolean">
+						<span class="simple-toggle-switch toggle-switch">
+							<span class="toggle-switch-check-bar">
+								<span class="toggle-switch-check"></span>
+								<span aria-hidden="true" class="toggle-switch-bar">
+									<span class="toggle-switch-handle"></span>
+								</span>
+							</span>
+
+							<label>
+								<liferay-ui:message key="true-or-false" />
+							</label>
+						</span>
+					</div>
+				</a>
+			</aui:col>
 		</aui:row>
 	</liferay-frontend:edit-form-body>
 </liferay-frontend:edit-form>

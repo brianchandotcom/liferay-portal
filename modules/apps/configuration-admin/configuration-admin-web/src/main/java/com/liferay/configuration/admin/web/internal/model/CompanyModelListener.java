@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.configuration.admin.web.internal.model.listener;
+package com.liferay.configuration.admin.web.internal.model;
 
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;

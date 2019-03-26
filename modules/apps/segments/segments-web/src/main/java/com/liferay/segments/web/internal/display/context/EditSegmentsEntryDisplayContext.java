@@ -242,22 +242,33 @@ public class EditSegmentsEntryDisplayContext {
 		return _segmentsEntry;
 	}
 
-	public int getSegmentsEntryClassPKsCount() throws PortalException {
-		if (_segmentsEntryClassPKsCount != null) {
+	public int getSegmentsEntryClassPKsCount() {
+		try {
+			if (_segmentsEntryClassPKsCount != null) {
+				return _segmentsEntryClassPKsCount;
+			}
+
+			SegmentsEntry segmentsEntry = null;
+
+			segmentsEntry = getSegmentsEntry();
+
+			if (segmentsEntry == null) {
+				return 0;
+			}
+
+			_segmentsEntryClassPKsCount =
+				_segmentsEntryProvider.getSegmentsEntryClassPKsCount(
+					segmentsEntry.getSegmentsEntryId());
+
 			return _segmentsEntryClassPKsCount;
 		}
+		catch (PortalException pe) {
+			if (_log.isWarnEnabled()) {
+				_log.warn("Unable to obtain the segment user count", pe);
+			}
 
-		SegmentsEntry segmentsEntry = getSegmentsEntry();
-
-		if (segmentsEntry == null) {
 			return 0;
 		}
-
-		_segmentsEntryClassPKsCount =
-			_segmentsEntryProvider.getSegmentsEntryClassPKsCount(
-				segmentsEntry.getSegmentsEntryId());
-
-		return _segmentsEntryClassPKsCount;
 	}
 
 	public long getSegmentsEntryId() {

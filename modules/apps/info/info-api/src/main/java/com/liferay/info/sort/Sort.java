@@ -19,12 +19,9 @@ import com.liferay.portal.kernel.util.StringBundler;
 import java.io.Serializable;
 
 /**
- * @author Bruno Farache
+ * @author Jorge Ferrer
  */
 public class Sort implements Serializable {
-
-	public Sort() {
-	}
 
 	public Sort(String fieldName, boolean reverse) {
 		_fieldName = fieldName;

@@ -36,6 +36,7 @@ public class DefaultInfoListProviderContext implements InfoListProviderContext {
 
 	public DefaultInfoListProviderContext(Group group, User user) {
 		_group = group;
+		_user = user;
 
 		try {
 			_company = CompanyLocalServiceUtil.getCompany(group.getCompanyId());
@@ -43,8 +44,6 @@ public class DefaultInfoListProviderContext implements InfoListProviderContext {
 		catch (PortalException pe) {
 			throw new RuntimeException(pe);
 		}
-
-		_user = user;
 	}
 
 	@Override

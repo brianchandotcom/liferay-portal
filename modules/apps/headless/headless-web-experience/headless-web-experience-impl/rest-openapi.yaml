@@ -325,6 +325,36 @@ components:
                     writeOnly: true
             required:
                 - contentStructureId
+        StructuredContentFolder:
+            description: https://www.schema.org/StructuredContentFolder
+            properties:
+                contentSpaceId:
+                    format: int64
+                    type: integer
+                creator:
+                    $ref: "#/components/schemas/Creator"
+                dateCreated:
+                    format: date-time
+                    type: string
+                dateModified:
+                    format: date-time
+                    type: string
+                description:
+                    type: string
+                id:
+                    format: int64
+                    type: integer
+                name:
+                    type: string
+                numberOfFolders:
+                    type: number
+                numberOfStructuredContents:
+                    type: number
+                viewableBy:
+                    enum: [Anyone, Members, Owner]
+                    type: string
+                    writeOnly: true
+            type: object
 info:
     description: ""
     title: "Headless Web Experience"
@@ -502,6 +532,66 @@ paths:
                                 type: array
                     description: ""
             tags: ["ContentStructure"]
+    "/content-spaces/{content-space-id}/structured-content-folders":
+        get:
+            parameters:
+                - in: path
+                  name: content-space-id
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+                - in: query
+                  name: filter
+                  schema:
+                      type: string
+                - in: query
+                  name: flatten
+                  schema:
+                      type: boolean
+                - in: query
+                  name: page
+                  schema:
+                      type: integer
+                - in: query
+                  name: pageSize
+                  schema:
+                      type: integer
+                - in: query
+                  name: sort
+                  schema:
+                      type: string
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/StructuredContentFolder"
+                                type: array
+                    description: ""
+            tags: ["StructuredContentFolder"]
+        post:
+            parameters:
+                - in: path
+                  name: content-space-id
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/StructuredContentFolder"
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/StructuredContentFolder"
+                    description: ""
+            tags: ["StructuredContentFolder"]
     "/content-spaces/{content-space-id}/structured-contents":
         get:
             parameters:
@@ -519,6 +609,10 @@ paths:
                   name: filter
                   schema:
                       type: string
+                - in: query
+                  name: flatten
+                  schema:
+                      type: boolean
                 - in: query
                   name: page
                   schema:
@@ -726,6 +820,177 @@ paths:
                                 $ref: "#/components/schemas/Rating"
                     description: ""
             tags: ["Rating"]
+    "/structured-content-folders/{structured-content-folder-id}":
+        delete:
+            parameters:
+                - in: path
+                  name: structured-content-folder-id
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            responses:
+                204:
+                    content:
+                        application/json: {}
+                    description: ""
+            tags: ["StructuredContentFolder"]
+        get:
+            parameters:
+                - in: path
+                  name: structured-content-folder-id
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/StructuredContentFolder"
+                    description: ""
+        put:
+            parameters:
+                - in: path
+                  name: structured-content-folder-id
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/StructuredContentFolder"
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/StructuredContentFolder"
+                    description: ""
+            tags: ["StructuredContentFolder"]
+    "/structured-content-folders/{structured-content-folder-id}/structured-content-folders":
+        get:
+            parameters:
+                - in: path
+                  name: structured-content-folder-id
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+                - in: query
+                  name: filter
+                  schema:
+                      type: string
+                - in: query
+                  name: page
+                  schema:
+                      type: integer
+                - in: query
+                  name: pageSize
+                  schema:
+                      type: integer
+                - in: query
+                  name: sort
+                  schema:
+                      type: string
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/StructuredContentFolder"
+                                type: array
+                    description: ""
+            tags: ["StructuredContentFolder"]
+        post:
+            parameters:
+                - in: path
+                  name: structured-content-folder-id
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/StructuredContentFolder"
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/StructuredContentFolder"
+                    description: ""
+            tags: ["StructuredContentFolder"]
+    "/structured-content-folders/{structured-content-folder-id}/structured-contents":
+        get:
+            parameters:
+                - in: header
+                  name: Accept-Language
+                  schema:
+                      type: string
+                - in: path
+                  name: structured-content-folder-id
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+                - in: query
+                  name: filter
+                  schema:
+                      type: string
+                - in: query
+                  name: page
+                  schema:
+                      type: integer
+                - in: query
+                  name: pageSize
+                  schema:
+                      type: integer
+                - in: query
+                  name: sort
+                  schema:
+                      type: string
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/StructuredContent"
+                                type: array
+                    description: ""
+            tags: ["StructuredContent"]
+        post:
+            parameters:
+                - in: header
+                  name: Accept-Language
+                  schema:
+                      type: string
+                - in: path
+                  name: structured-content-folder-id
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/StructuredContent"
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/StructuredContent"
+                    description: ""
+            tags: ["StructuredContent"]
     "/structured-contents/{structured-content-id}":
         delete:
             parameters:

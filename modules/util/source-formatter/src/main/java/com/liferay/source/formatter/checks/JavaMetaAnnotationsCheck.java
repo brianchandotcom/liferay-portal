@@ -37,7 +37,7 @@ public class JavaMetaAnnotationsCheck extends JavaAnnotationsCheck {
 			String fileContent)
 		throws IOException {
 
-		return formatAnnotations(fileName, (JavaClass)javaTerm, false);
+		return formatAnnotations(fileName, (JavaClass)javaTerm);
 	}
 
 	@Override

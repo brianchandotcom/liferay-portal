@@ -43,7 +43,7 @@ public class JavaAnnotationsCheck extends BaseJavaTermCheck {
 			String fileContent)
 		throws IOException {
 
-		return formatAnnotations(fileName, (JavaClass)javaTerm, true);
+		return formatAnnotations(fileName, (JavaClass)javaTerm);
 	}
 
 	protected String formatAnnotation(
@@ -54,14 +54,13 @@ public class JavaAnnotationsCheck extends BaseJavaTermCheck {
 			return annotation;
 		}
 
-		annotation = _fixAnnotationLineBreaks(annotation, indent);
+		annotation = _fixAnnotationLineBreaks(annotation);
 		annotation = _fixSingleValueArray(annotation);
 
 		return annotation;
 	}
 
-	protected String formatAnnotations(
-			String fileName, JavaClass javaClass, boolean sortAnnotations)
+	protected String formatAnnotations(String fileName, JavaClass javaClass)
 		throws IOException {
 
 		String content = javaClass.getContent();
@@ -76,7 +75,7 @@ public class JavaAnnotationsCheck extends BaseJavaTermCheck {
 			String indent = _getIndent(annotationsBlock);
 
 			String newAnnotationsBlock = _formatAnnotations(
-				fileName, javaClass, annotationsBlock, indent, sortAnnotations);
+				fileName, javaClass, annotationsBlock, indent);
 
 			content = StringUtil.replace(
 				content, "\n" + annotationsBlock, "\n" + newAnnotationsBlock);
@@ -90,25 +89,13 @@ public class JavaAnnotationsCheck extends BaseJavaTermCheck {
 		return new String[] {JAVA_CLASS};
 	}
 
-	private String _fixAnnotationLineBreaks(String annotation, String indent) {
+	private String _fixAnnotationLineBreaks(String annotation) {
 		Matcher matcher = _annotationLineBreakPattern1.matcher(annotation);
 
 		if (matcher.find()) {
 			return StringUtil.replaceFirst(
 				annotation, matcher.group(1), StringPool.BLANK,
 				matcher.start());
-		}
-
-		matcher = _annotationLineBreakPattern2.matcher(annotation);
-
-		if (matcher.find()) {
-			return StringUtil.replaceFirst(
-				annotation, matcher.group(1), StringPool.SPACE,
-				matcher.start());
-		}
-
-		if (annotation.matches(".*\\(\n[\\S\\s]*[^\t\n]\\)\n")) {
-			return StringUtil.replaceLast(annotation, ")", "\n" + indent + ")");
 		}
 
 		return annotation;
@@ -173,12 +160,10 @@ public class JavaAnnotationsCheck extends BaseJavaTermCheck {
 
 	private String _formatAnnotations(
 			String fileName, JavaClass javaClass, String annotationsBlock,
-			String indent, boolean sortAnnotations)
+			String indent)
 		throws IOException {
 
 		List<String> annotations = _splitAnnotations(annotationsBlock, indent);
-
-		String previousAnnotation = null;
 
 		for (String annotation : annotations) {
 			String newAnnotation = formatAnnotation(
@@ -186,26 +171,11 @@ public class JavaAnnotationsCheck extends BaseJavaTermCheck {
 
 			if (newAnnotation.contains(StringPool.OPEN_PARENTHESIS)) {
 				newAnnotation = _formatAnnotations(
-					fileName, javaClass, newAnnotation, indent + "\t\t", false);
+					fileName, javaClass, newAnnotation, indent + "\t\t");
 			}
 
 			annotationsBlock = StringUtil.replace(
 				annotationsBlock, annotation, newAnnotation);
-
-			if (!sortAnnotations) {
-				continue;
-			}
-
-			if (Validator.isNotNull(previousAnnotation) &&
-				(previousAnnotation.compareToIgnoreCase(newAnnotation) > 0)) {
-
-				annotationsBlock = StringUtil.replaceFirst(
-					annotationsBlock, previousAnnotation, newAnnotation);
-				annotationsBlock = StringUtil.replaceLast(
-					annotationsBlock, newAnnotation, previousAnnotation);
-			}
-
-			previousAnnotation = newAnnotation;
 		}
 
 		return annotationsBlock;
@@ -305,8 +275,6 @@ public class JavaAnnotationsCheck extends BaseJavaTermCheck {
 
 	private static final Pattern _annotationLineBreakPattern1 = Pattern.compile(
 		"[{=]\n.*(\" \\+\n\t*\")");
-	private static final Pattern _annotationLineBreakPattern2 = Pattern.compile(
-		"=(\n\t*)\"");
 	private static final Pattern _arrayPattern = Pattern.compile("=\\s+\\{");
 	private static final Pattern _modifierPattern = Pattern.compile(
 		"[^\n]\n(\t*)(public|protected|private)");

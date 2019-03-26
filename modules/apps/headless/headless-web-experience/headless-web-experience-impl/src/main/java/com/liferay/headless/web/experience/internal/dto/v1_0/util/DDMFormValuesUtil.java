@@ -17,6 +17,7 @@ package com.liferay.headless.web.experience.internal.dto.v1_0.util;
 import com.liferay.document.library.kernel.service.DLAppService;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
+import com.liferay.dynamic.data.mapping.model.DDMFormFieldType;
 import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 import com.liferay.dynamic.data.mapping.model.UnlocalizedValue;
 import com.liferay.dynamic.data.mapping.model.Value;
@@ -33,6 +34,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -161,6 +163,12 @@ public class DDMFormValuesUtil {
 	}
 
 	private static Value _toValue(DDMFormField ddmFormField, Locale locale) {
+		if (Objects.equals(
+				DDMFormFieldType.SEPARATOR, ddmFormField.getType())) {
+
+			return null;
+		}
+
 		LocalizedValue localizedValue = ddmFormField.getPredefinedValue();
 
 		String valueString = localizedValue.getString(

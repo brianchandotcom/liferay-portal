@@ -66,32 +66,6 @@ public class GraphQLOpenAPIParser {
 
 		Set<String> methodAnnotations = new TreeSet<>();
 
-		Set<String> requestBodyMediaTypes =
-			javaMethodSignature.getRequestBodyMediaTypes();
-
-		if (!requestBodyMediaTypes.isEmpty() &&
-			!requestBodyMediaTypes.contains("application/json")) {
-
-			List<JavaMethodParameter> javaMethodParameters =
-				javaMethodSignature.getJavaMethodParameters();
-
-			StringBuilder sb = new StringBuilder("@GraphQLName(\"");
-
-			sb.append(javaMethodSignature.getMethodName());
-
-			for (JavaMethodParameter javaMethodParameter :
-					javaMethodParameters) {
-
-				sb.append(
-					StringUtil.upperCaseFirstLetter(
-						javaMethodParameter.getParameterName()));
-			}
-
-			sb.append("\")");
-
-			methodAnnotations.add(sb.toString());
-		}
-
 		methodAnnotations.add("@GraphQLInvokeDetached");
 
 		String httpMethod = OpenAPIParserUtil.getHTTPMethod(
@@ -101,6 +75,13 @@ public class GraphQLOpenAPIParser {
 			Objects.equals(httpMethod, "post")) {
 
 			methodAnnotations.add("@GraphQLField");
+		}
+
+		String methodAnnotation = _getMethodAnnotationGraphQLName(
+			javaMethodSignature);
+
+		if (methodAnnotation != null) {
+			methodAnnotations.add(methodAnnotation);
 		}
 
 		return StringUtil.merge(methodAnnotations, "\n");
@@ -211,6 +192,34 @@ public class GraphQLOpenAPIParser {
 		}
 
 		return javaMethodSignatures;
+	}
+
+	private static String _getMethodAnnotationGraphQLName(
+		JavaMethodSignature javaMethodSignature) {
+
+		Set<String> requestBodyMediaTypes =
+			javaMethodSignature.getRequestBodyMediaTypes();
+
+		if (requestBodyMediaTypes.isEmpty() ||
+			requestBodyMediaTypes.contains("application/json")) {
+
+			return null;
+		}
+
+		List<JavaMethodParameter> javaMethodParameters =
+			javaMethodSignature.getJavaMethodParameters();
+
+		StringBuilder sb = new StringBuilder();
+
+		sb.append(javaMethodSignature.getMethodName());
+
+		for (JavaMethodParameter javaMethodParameter : javaMethodParameters) {
+			String parameterName = javaMethodParameter.getParameterName();
+
+			sb.append(StringUtil.upperCaseFirstLetter(parameterName));
+		}
+
+		return "@GraphQLName(\"" + sb.toString() + "\")";
 	}
 
 	private static String _getParameterAnnotation(

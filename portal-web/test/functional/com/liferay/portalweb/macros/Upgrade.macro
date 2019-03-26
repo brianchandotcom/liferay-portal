@@ -1340,6 +1340,28 @@ definition {
 
 		DMDocument.viewPG(dmDocumentTitle = "Document1");
 
+		DMDocument.expandInfo();
+
+		AssertTextEquals(
+			locator1 = "DocumentsAndMediaDocument#DOCUMENT_INFO_UPLOADED_BY",
+			value1 = "Test Test"
+		);
+
+		AssertTextEquals(
+			locator1 = "DocumentsAndMediaDocument#DOCUMENT_DETAILS_VERSION",
+			value1 = "VERSION 1.0",
+			key_dmDocumentVersionNumber = "1.0"
+		);
+
+		AssertTextEquals(
+			locator1 = "DocumentsAndMediaDocument#DOCUMENT_INFO_WORKFLOW_STATUS",
+			value1 = "APPROVED"
+		);
+
+		AssertElementPresent(
+			locator1 = "Button#DOWNLOAD"
+		);
+
 		Navigator.gotoPage(pageName = "Message Boards");
 
 		MessageboardsThread.gotoPG(

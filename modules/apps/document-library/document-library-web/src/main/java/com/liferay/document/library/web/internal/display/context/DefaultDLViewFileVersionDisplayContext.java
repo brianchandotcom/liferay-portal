@@ -176,6 +176,16 @@ public class DefaultDLViewFileVersionDisplayContext
 	}
 
 	@Override
+	public String getIconFileMimeType() {
+		if (_dlMimeTypeDisplayContext == null) {
+			return "document-default";
+		}
+
+		return _dlMimeTypeDisplayContext.getIconFileMimeType(
+			_fileVersion.getMimeType());
+	}
+
+	@Override
 	public Menu getMenu() throws PortalException {
 		Menu menu = new Menu();
 

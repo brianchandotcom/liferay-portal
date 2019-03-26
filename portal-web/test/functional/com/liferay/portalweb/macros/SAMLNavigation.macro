@@ -12,7 +12,7 @@ definition {
 	}
 
 	macro gotoServiceProvider {
-		AssertClick(locator1 = "NavTab#SERVICE_PROVIDER", value1 = "Service Provider");
+		Navigator.gotoNavTab(navTab = "Service Provider");
 	}
 
 	macro gotoServiceProviderConnection {

@@ -20,7 +20,10 @@
 
 .portlet > .portlet-topper {
 	padding: 0 4px 0 8px;
-	right: auto;
+
+	@include sm {
+		right: auto;
+	}
 
 	.portlet-title-default {
 		line-height: 1.4;

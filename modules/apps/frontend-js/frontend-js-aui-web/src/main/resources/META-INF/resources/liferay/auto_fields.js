@@ -98,8 +98,9 @@ AUI.add(
 						var deleteRow = visibleRows > 1;
 
 						if (visibleRows == 1) {
-							instance.addRow(node);
-
+							deleteRow = false;
+						}
+						else if (visibleRows > 1) {
 							deleteRow = true;
 						}
 

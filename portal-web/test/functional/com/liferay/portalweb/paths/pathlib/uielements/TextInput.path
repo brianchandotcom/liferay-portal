@@ -319,6 +319,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>PORTLET_TITLE</td>
+	<td>//div[contains(@class,'portlet-title-editable')]//input</td>
+	<td></td>
+</tr>
+<tr>
 	<td>POSTAL_CODE</td>
 	<td>//div[label[contains(.,'Postal Code')]]//input[@type='text']</td>
 	<td></td>

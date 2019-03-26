@@ -175,6 +175,18 @@ definition {
 		Type(locator1 = "Portlet#BORDER_WIDTH_TOP_INPUT", value1 = "20");
 	}
 
+	macro configureCustomTitlePG {
+		var key_portletTitleName = "${portletTitleName}";
+
+		AssertElementPresent(locator1 = "Portlet#SPECIFIC_TITLE");
+
+		Click(locator1 = "Portlet#SPECIFIC_TITLE");
+
+		Type(locator1 = "TextInput#PORTLET_TITLE", value1 = "${portletTitleName} Custom");
+
+		Click(locator1 = "Icon#OK");
+	}
+
 	macro configureCustomTitleViaLookandfeelPG {
 		IFrame.selectConfigurationFrame();
 

@@ -139,14 +139,23 @@ public class KeywordResourceImpl
 		return new Keyword() {
 			{
 				contentSpaceId = assetTag.getGroupId();
-				creator = CreatorUtil.toCreator(
-					_portal,
-					_userLocalService.getUserById(assetTag.getUserId()));
 				dateCreated = assetTag.getCreateDate();
 				dateModified = assetTag.getModifiedDate();
 				id = assetTag.getTagId();
 				keywordUsageCount = assetTag.getAssetCount();
 				name = assetTag.getName();
+
+				setCreator(
+					() -> {
+						if (assetTag.getUserId() != 0) {
+							return CreatorUtil.toCreator(
+								_portal,
+								_userLocalService.getUserById(
+									assetTag.getUserId()));
+						}
+
+						return null;
+					});
 			}
 		};
 	}

@@ -39,13 +39,13 @@ public class SharingEntryFinderImpl
 	extends SharingEntryFinderBaseImpl implements SharingEntryFinder {
 
 	public static final String COUNT_BY_USER_ID =
-		SharingEntryFinder.class.getName() + ".countByUserId";
+		SharingEntryFinder.class.getName() + ".countFromUserSharingEntries";
 
 	public static final String FIND_BY_USER_ID =
-		SharingEntryFinder.class.getName() + ".findByUserId";
+		SharingEntryFinder.class.getName() + ".findFromUserSharingEntries";
 
 	@Override
-	public int countByUserId(long userId, long classNameId) {
+	public int countFromUserSharingEntries(long userId, long classNameId) {
 		Session session = null;
 
 		try {
@@ -88,7 +88,7 @@ public class SharingEntryFinderImpl
 	}
 
 	@Override
-	public List<SharingEntry> findByUserId(
+	public List<SharingEntry> findFromUserSharingEntries(
 		long userId, long classNameId, int begin, int end,
 		OrderByComparator<SharingEntry> orderByComparator) {
 

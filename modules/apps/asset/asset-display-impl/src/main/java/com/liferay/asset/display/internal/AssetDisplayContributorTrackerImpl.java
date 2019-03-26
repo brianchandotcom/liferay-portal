@@ -16,12 +16,17 @@ package com.liferay.asset.display.internal;
 
 import com.liferay.asset.display.contributor.AssetDisplayContributor;
 import com.liferay.asset.display.contributor.AssetDisplayContributorTracker;
+import com.liferay.asset.display.contributor.AssetInfoDisplayContributor;
+import com.liferay.info.display.contributor.InfoDisplayContributor;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.ServiceRegistration;
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ReferenceCardinality;
@@ -55,6 +60,11 @@ public class AssetDisplayContributorTrackerImpl
 		return new ArrayList(_assetDisplayContributor.values());
 	}
 
+	@Activate
+	protected void activate(BundleContext bundleContext) {
+		_bundleContext = bundleContext;
+	}
+
 	@Reference(
 		cardinality = ReferenceCardinality.MULTIPLE,
 		policy = ReferencePolicy.DYNAMIC
@@ -67,6 +77,14 @@ public class AssetDisplayContributorTrackerImpl
 		_assetDisplayContributorByAssetURLSeparator.put(
 			assetDisplayContributor.getAssetURLSeparator(),
 			assetDisplayContributor);
+
+		ServiceRegistration<InfoDisplayContributor> serviceRegistration =
+			_bundleContext.registerService(
+				InfoDisplayContributor.class,
+				new AssetInfoDisplayContributor(assetDisplayContributor), null);
+
+		_serviceRegistrations.put(
+			assetDisplayContributor.getClassName(), serviceRegistration);
 	}
 
 	protected void unsetAssetDisplayContributor(
@@ -75,11 +93,16 @@ public class AssetDisplayContributorTrackerImpl
 		_assetDisplayContributor.remove(assetDisplayContributor.getClassName());
 		_assetDisplayContributorByAssetURLSeparator.remove(
 			assetDisplayContributor.getAssetURLSeparator());
+
+		_serviceRegistrations.remove(assetDisplayContributor.getClassName());
 	}
 
 	private final Map<String, AssetDisplayContributor>
 		_assetDisplayContributor = new ConcurrentHashMap<>();
 	private final Map<String, AssetDisplayContributor>
 		_assetDisplayContributorByAssetURLSeparator = new ConcurrentHashMap<>();
+	private BundleContext _bundleContext;
+	private final Map<String, ServiceRegistration<InfoDisplayContributor>>
+		_serviceRegistrations = new ConcurrentHashMap<>();
 
 }

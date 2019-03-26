@@ -30,6 +30,8 @@ components:
                     type: number
                 text:
                     type: string
+            required:
+                - text
             type: object
         Creator:
             description: https://www.schema.org/Creator
@@ -158,6 +160,8 @@ components:
                     enum: [Anyone, Members, Owner]
                     type: string
                     writeOnly: true
+            required:
+                - name
             type: object
 info:
     description: ""

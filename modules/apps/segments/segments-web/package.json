@@ -51,7 +51,7 @@
 		"babel-preset-env": "^1.7.0",
 		"babel-preset-react": "^6.0.0",
 		"check-source-formatting": "^2.0.14",
-		"clay-css": "2.10.0",
+		"clay-css": "2.11.1",
 		"css-loader": "^2.0.1",
 		"eslint": "^5.8.0",
 		"eslint-config-liferay": "^2.0.18",

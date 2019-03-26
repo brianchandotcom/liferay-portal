@@ -73,12 +73,12 @@
 	"dependencies": {
 		"autobind-decorator": "^2.1.0",
 		"classnames": "^2.2.6",
-		"clay-alert": "2.10.0",
-		"clay-checkbox": "2.10.0",
-		"clay-icon": "2.10.0",
-		"clay-management-toolbar": "2.10.0",
-		"clay-modal": "2.10.0",
-		"clay-radio": "2.10.0",
+		"clay-alert": "2.11.1",
+		"clay-checkbox": "2.11.1",
+		"clay-icon": "2.11.1",
+		"clay-management-toolbar": "2.11.1",
+		"clay-modal": "2.11.1",
+		"clay-radio": "2.11.1",
 		"isomorphic-fetch": "^2.2.1",
 		"metal-clipboard": "^2.0.1",
 		"metal-debounce": "^2.0.0",
@@ -130,7 +130,7 @@
 		},
 		"moduleNameMapper": {
 			"(.*)\\.soy$": "$1.soy.js",
-			"clay-(.*)$": "2.10.0",
+			"clay-(.*)$": "2.11.1",
 			"dynamic-data-mapping-form-builder/(.*)": "<rootDir>/../dynamic-data-mapping-form-builder/src/main/resources/META-INF/resources/$1",
 			"source/(.*)": "<rootDir>/src/main/resources/META-INF/resources/metal/js/$1.js"
 		},

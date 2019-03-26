@@ -511,7 +511,7 @@ public class LanguageKeysCheck extends BaseFileCheck {
 			"^apply[ \t]+plugin[ \t]*:[ \t]+\"com.liferay.lang.merger\"$",
 			Pattern.MULTILINE);
 	private static final Pattern _mergeLangPattern = Pattern.compile(
-		"mergeLang \\{\\s*sourceDirs = \\[(.*?)\\]", Pattern.DOTALL);
+		"mergeLang \\{.*sourceDirs = \\[(.*?)\\]", Pattern.DOTALL);
 	private static final Pattern _metaAnnotationDescriptionParameterPattern =
 		Pattern.compile(
 			"@Meta\\.(?:AD|OCD)\\([^\\{]*?description\\s*=\\s*\"(.+?)\"");

@@ -562,6 +562,12 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<description>A CSS class for styling the card's secondary container.</description>
+			<name>cardCssClass</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
 			<description>Whether to select the card checkbox. The default value is <![CDATA[<code>false</code>]]>.</description>
 			<name>checkboxChecked</name>
 			<required>false</required>
@@ -683,6 +689,12 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<description>A CSS class for styling the card's secondary container.</description>
+			<name>cardCssClass</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
 			<description>Whether to select the card checkbox. The default value is <![CDATA[<code>false</code>]]>.</description>
 			<name>checkboxChecked</name>
 			<required>false</required>
@@ -797,6 +809,12 @@
 		<attribute>
 			<description>The service context of the action JSP.</description>
 			<name>actionJspServletContext</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description>A CSS class for styling the card's secondary container.</description>
+			<name>cardCssClass</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
@@ -1515,6 +1533,12 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<description>A CSS class for styling the card's secondary container.</description>
+			<name>cardCssClass</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
 			<description>Whether to select the card checkbox. The default value is <![CDATA[<code>false</code>]]>.</description>
 			<name>checkboxChecked</name>
 			<required>false</required>
@@ -1629,6 +1653,12 @@
 		<attribute>
 			<description>Whether to display the image as a background image.</description>
 			<name>backgroundImage</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description>A CSS class for styling the card's secondary container.</description>
+			<name>cardCssClass</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>

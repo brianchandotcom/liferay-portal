@@ -4822,7 +4822,7 @@ public class ServiceBuilder {
 		for (int i = 0; i < pkEntityColumns.size(); i++) {
 			EntityColumn pkEntityColumn = pkEntityColumns.get(i);
 
-			pkEntityColumnNames[i] = pkEntityColumn.getName();
+			pkEntityColumnNames[i] = pkEntityColumn.getDBName();
 		}
 
 		IndexMetadata entityPKIndexMetadata = new IndexMetadata(

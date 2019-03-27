@@ -253,7 +253,7 @@
 </tr>
 <tr>
 	<td>SIDEBAR_MENUITEM_REMOVE_FIELD</td>
-	<td>//a[@title='Remove Field']</td>
+	<td>//a[@title='Remove Field'] | //button[text()='Remove Field']</td>
 	<td></td>
 </tr>
 <tr>

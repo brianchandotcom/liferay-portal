@@ -31,7 +31,7 @@ import java.util.Objects;
 
 import javax.annotation.Generated;
 
-import javax.validation.constraints.NotNull;
+import javax.validation.constraints.NotEmpty;
 
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -240,7 +240,7 @@ public class TaxonomyCategory {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	@NotNull
+	@NotEmpty
 	protected String name;
 
 	public Number getNumberOfTaxonomyCategories() {

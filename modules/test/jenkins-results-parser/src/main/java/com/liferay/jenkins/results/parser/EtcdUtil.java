@@ -19,6 +19,7 @@ import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeoutException;
 
@@ -36,15 +37,11 @@ import mousio.etcd4j.responses.EtcdKeysResponse;
  */
 public class EtcdUtil {
 
-	public static void delete(
-		String etcdServerURL, EtcdKeysResponse.EtcdNode node) {
-
+	public static void delete(String etcdServerURL, Node node) {
 		try (EtcdClient etcdClient = getEtcdClient(etcdServerURL)) {
 			EtcdKeyDeleteRequest etcdKeyDeleteRequest = null;
 
-			List<EtcdKeysResponse.EtcdNode> nodes = node.getNodes();
-
-			if (nodes.isEmpty()) {
+			if (!node.isDir()) {
 				etcdKeyDeleteRequest = etcdClient.delete(node.getKey());
 			}
 			else {
@@ -65,9 +62,7 @@ public class EtcdUtil {
 		}
 	}
 
-	public static EtcdKeysResponse.EtcdNode get(
-		String etcdServerURL, String key) {
-
+	public static Node get(String etcdServerURL, String key) {
 		try (EtcdClient etcdClient = getEtcdClient(etcdServerURL)) {
 			EtcdKeyGetRequest etcdKeyGetRequest = etcdClient.get(key);
 
@@ -76,7 +71,7 @@ public class EtcdUtil {
 
 			EtcdKeysResponse etcdKeysResponse = etcdResponsePromise.get();
 
-			return etcdKeysResponse.getNode();
+			return new Node(etcdKeysResponse.getNode());
 		}
 		catch (EtcdAuthenticationException | EtcdException | IOException |
 			   TimeoutException e) {
@@ -97,15 +92,11 @@ public class EtcdUtil {
 		}
 	}
 
-	public static EtcdKeysResponse.EtcdNode put(
-		String etcdServerURL, String key) {
-
+	public static Node put(String etcdServerURL, String key) {
 		return put(etcdServerURL, key, null);
 	}
 
-	public static EtcdKeysResponse.EtcdNode put(
-		String etcdServerURL, String key, String value) {
-
+	public static Node put(String etcdServerURL, String key, String value) {
 		try (EtcdClient etcdClient = getEtcdClient(etcdServerURL)) {
 			EtcdKeyPutRequest etcdKeyPutRequest = null;
 
@@ -121,13 +112,81 @@ public class EtcdUtil {
 
 			EtcdKeysResponse etcdKeysResponse = etcdResponsePromise.get();
 
-			return etcdKeysResponse.getNode();
+			return new Node(etcdKeysResponse.getNode());
 		}
 		catch (EtcdAuthenticationException | EtcdException | IOException |
 			   TimeoutException e) {
 
 			throw new RuntimeException(e);
 		}
+	}
+
+	public static class Node {
+
+		public Node(String key, String value) {
+			this(key);
+
+			_value = value;
+		}
+
+		public void addNode(Node node) {
+			if (_value != null) {
+				throw new RuntimeException(
+					JenkinsResultsParserUtil.combine(
+						"Node ", getKey(), " is not a directory Node."));
+			}
+
+			_childNodes.add(node);
+		}
+
+		public String getKey() {
+			return _key;
+		}
+
+		public List<Node> getNodes() {
+			return _childNodes;
+		}
+
+		public String getValue() {
+			return _value;
+		}
+
+		public boolean isDir() {
+			if (!_childNodes.isEmpty()) {
+				return true;
+			}
+
+			return false;
+		}
+
+		public void removeNode(Node node) {
+			_childNodes.remove(node);
+		}
+
+		private Node(EtcdKeysResponse.EtcdNode etcdNode) {
+			this(etcdNode.getKey());
+
+			if (etcdNode.isDir()) {
+				List<EtcdKeysResponse.EtcdNode> childEtcdNodes =
+					etcdNode.getNodes();
+
+				for (EtcdKeysResponse.EtcdNode childEtcdNode : childEtcdNodes) {
+					addNode(new Node(childEtcdNode));
+				}
+			}
+			else {
+				_value = etcdNode.getValue();
+			}
+		}
+
+		private Node(String key) {
+			_key = key;
+		}
+
+		private final List<Node> _childNodes = new ArrayList<>();
+		private String _key;
+		private String _value;
+
 	}
 
 }

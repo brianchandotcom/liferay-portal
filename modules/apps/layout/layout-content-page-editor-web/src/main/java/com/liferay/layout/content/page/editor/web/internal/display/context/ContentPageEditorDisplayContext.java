@@ -962,12 +962,14 @@ public class ContentPageEditorDisplayContext {
 				).put(
 					"fragmentEntryLinkId",
 					String.valueOf(fragmentEntryLink.getFragmentEntryLinkId())
-				).putAll(
-					_getFragmentEntrySoyContext(fragmentEntry, content)
-				).put(
-					String.valueOf(fragmentEntryLink.getFragmentEntryLinkId()),
-					soyContext
 				);
+
+				soyContext.putAll(
+					_getFragmentEntrySoyContext(fragmentEntry, content));
+
+				soyContexts.put(
+					String.valueOf(fragmentEntryLink.getFragmentEntryLinkId()),
+					soyContext);
 			}
 		}
 		finally {

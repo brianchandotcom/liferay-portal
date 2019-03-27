@@ -1503,6 +1503,106 @@ definition {
 		AssertHTMLSourceTextPresent(value1 = "${escapedScript}");
 	}
 
+	test ToggleHiddenFacetsViaBasicFacetSelection {
+		var webContentserviceContext1 = '''{"assetTagNames": ["fruit"]}''';
+
+		JSONWebcontent.addWebContent(
+			content = "WC WebContent Content 1",
+			groupName = "Guest",
+			serviceContext = "${webContentserviceContext1}",
+			title = "apple"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			panel = "Site Administration",
+			portlet = "Blogs"
+		);
+
+		Blogs.addEntry(
+			entryContent = "Blog Entry Content",
+			entryTitle = "apple"
+		);
+
+		Navigator.openURL();
+
+		SearchPortlets.searchEmbedded(searchTerm = "apple");
+
+		Portlet.gotoPortletOptions(
+			portletName = "Search Options",
+			portletOption = "Configuration"
+		);
+
+		SelectFrame(locator1 = "IFrame#CONFIGURATION");
+
+		AssertNotChecked(
+			locator1 = "Checkbox#ANY_CHECKBOX",
+			checkboxName = "Basic Facet Selection"
+		);
+
+		IFrame.closeFrame();
+
+		AssertVisible(
+			locator1 = "Checkbox#ANY_CHECKBOX",
+			checkboxName = "fruit"
+		);
+
+		SearchFacetPortlet.checkFacet(facetValueName = "Blogs Entry");
+
+		AssertElementNotPresent(
+			locator1 = "Checkbox#ANY_CHECKBOX",
+			checkboxName = "fruit"
+		);
+
+		Refresh();
+
+		AssertChecked(
+			locator1 = "Checkbox#ANY_CHECKBOX",
+			checkboxName = "Blogs Entry"
+		);
+
+		SearchFacetPortlet.uncheckFacet(facetValueName = "Blogs Entry");
+
+		AssertVisible(
+			locator1 = "Checkbox#ANY_CHECKBOX",
+			checkboxName = "fruit"
+		);
+
+		SearchPortlets.configureSearchOptions(basicFacetSelection = "true");
+
+		SearchPortlets.searchEmbedded(searchTerm = "apple");
+
+		AssertVisible(
+			locator1 = "Checkbox#ANY_CHECKBOX",
+			checkboxName = "fruit"
+		);
+
+		SearchFacetPortlet.checkFacet(facetValueName = "Blogs Entry");
+
+		AssertVisible(
+			locator1 = "Checkbox#ANY_CHECKBOX",
+			checkboxName = "fruit"
+		);
+
+		SearchFacetPortlet.checkFacet(facetValueName = "fruit");
+
+		Search.viewNoResultAssetTitle(searchAssetTitle = "apple");
+
+		Refresh();
+
+		AssertChecked(
+			locator1 = "Checkbox#ANY_CHECKBOX",
+			checkboxName = "Blogs Entry"
+		);
+
+		AssertChecked(
+			locator1 = "Checkbox#ANY_CHECKBOX",
+			checkboxName = "fruit"
+		);
+
+		Search.viewNoResultAssetTitle(searchAssetTitle = "apple");
+	}
+
 	@description = "This is a use case for LPS-74299."
 	@priority = "3"
 	test ViewFacetPersistence {

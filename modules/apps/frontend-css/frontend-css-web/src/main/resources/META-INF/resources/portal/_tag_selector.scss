@@ -13,6 +13,10 @@
 }
 
 .lfr-tags-selector-content {
+	&.has-error .form-feedback-item {
+		margin-top: -1.5em;
+	}
+
 	.toolbar {
 		position: static;
 	}

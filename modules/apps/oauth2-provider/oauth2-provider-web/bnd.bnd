@@ -7,3 +7,4 @@ Provide-Capability:\
 		resource.bundle.base.name="content.Language";\
 		service.ranking="1"
 Web-ContextPath: /oauth2-provider-web
+-dsannotations-options: inherit

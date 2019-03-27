@@ -22,6 +22,7 @@ import java.util.Objects;
 
 import javax.annotation.Generated;
 
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
 import javax.xml.bind.annotation.XmlRootElement;
@@ -155,7 +156,11 @@ public class ${schemaName} <#if dtoParentClassName?has_content>extends ${dtoPare
 			</#if>
 		)
 		<#if schema.requiredPropertySchemaNames?? && schema.requiredPropertySchemaNames?seq_contains(propertyName)>
-			@NotNull
+			<#if stringUtil.equals(propertyType, "String")>
+				@NotEmpty
+			<#else>
+				@NotNull
+			</#if>
 		</#if>
 		protected ${propertyType} ${propertyName};
 	</#list>

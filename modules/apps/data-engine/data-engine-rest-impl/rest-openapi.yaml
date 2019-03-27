@@ -690,6 +690,23 @@ paths:
                                 $ref: "#/components/schemas/DataRecordCollection"
                     description: ""
             tags: ["DataRecordCollection"]
+    "/data-record-collections/{data-record-collection-id}/export":
+        get:
+            parameters:
+                - in: path
+                  name: data-record-collection-id
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            responses:
+                204:
+                    content:
+                        application/json:
+                            schema:
+                                type: string
+                    description: ""
+            tags: ["DataRecord"]
     "/data-record-collections/{data-record-collection-id}/data-records":
         get:
             parameters:

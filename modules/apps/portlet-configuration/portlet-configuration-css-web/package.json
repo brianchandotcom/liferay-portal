@@ -1,6 +1,6 @@
 {
 	"devDependencies": {
-		"liferay-npm-scripts": "1.4.3"
+		"liferay-npm-scripts": "1.4.6"
 	},
 	"name": "portlet-configuration-css-web",
 	"scripts": {

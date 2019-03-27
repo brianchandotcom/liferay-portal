@@ -44,7 +44,11 @@ String label = (String)request.getAttribute("liferay-product-navigation:personal
 			'click',
 			function(event) {
 				fetch(
-					'<liferay-portlet:resourceURL id="/get_personal_menu_items" portletName="<%= PersonalMenuPortletKeys.PERSONAL_MENU %>" />'
+					'<liferay-portlet:resourceURL id="/get_personal_menu_items" portletName="<%= PersonalMenuPortletKeys.PERSONAL_MENU %>" />',
+					{
+						credentials: 'include',
+						method: 'GET'
+					}
 				).then(
 					function(response) {
 						return response.json();

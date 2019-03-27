@@ -21,19 +21,6 @@
 			fileVersion="<%= latestFileVersion %>"
 		/>
 	</c:if>
-
-	<c:choose>
-		<c:when test="<%= fileShortcut != null %>">
-			<div class="file-icon-color-0 sticker sticker-right">
-				<aui:icon cssClass="icon-monospaced" image="shortcut" markupView="lexicon" message="shortcut" />
-			</div>
-		</c:when>
-		<c:when test="<%= fileEntry.hasLock() || fileEntry.isCheckedOut() %>">
-			<div class="file-icon-color-0 sticker sticker-right">
-				<aui:icon cssClass="icon-monospaced" image="lock" markupView="lexicon" message="locked" />
-			</div>
-		</c:when>
-	</c:choose>
 </liferay-frontend:vertical-card-sticker-bottom>
 
 <liferay-frontend:vertical-card-header>
@@ -42,4 +29,17 @@
 
 <liferay-frontend:vertical-card-footer>
 	<aui:workflow-status showIcon="<%= false %>" showLabel="<%= false %>" status="<%= latestFileVersion.getStatus() %>" />
+
+	<c:choose>
+		<c:when test="<%= fileShortcut != null %>">
+			<span class="file-icon-color-0">
+				<aui:icon image="shortcut" markupView="lexicon" message="shortcut" />
+			</span>
+		</c:when>
+		<c:when test="<%= fileEntry.hasLock() || fileEntry.isCheckedOut() %>">
+			<span class="file-icon-color-0">
+				<aui:icon image="lock" markupView="lexicon" message="locked" />
+			</span>
+		</c:when>
+	</c:choose>
 </liferay-frontend:vertical-card-footer>

@@ -383,6 +383,12 @@ public class DefaultDLViewFileVersionDisplayContext
 
 			_uiItemsBuilder.addMoveMenuItem(menuItems);
 
+			if (!menuItems.isEmpty()) {
+				MenuItem menuItem = menuItems.get(menuItems.size() - 1);
+
+				menuItem.setSeparator(true);
+			}
+
 			_uiItemsBuilder.addPermissionsMenuItem(menuItems);
 
 			_uiItemsBuilder.addDeleteMenuItem(menuItems);

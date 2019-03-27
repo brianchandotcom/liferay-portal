@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutTypePortlet;
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.model.PortletConstants;
+import com.liferay.portal.kernel.model.ResourceAction;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.ResourcePermission;
 import com.liferay.portal.kernel.model.Role;
@@ -92,6 +93,17 @@ public class BaseUpgradePortletIdTest extends BaseUpgradePortletId {
 	@AfterClass
 	public static void tearDownClass() throws Exception {
 		for (Portlet portlet : _portlets) {
+			List<ResourceAction> portletResourceActions =
+				ResourceActionLocalServiceUtil.getResourceActions(
+					portlet.getPortletName());
+
+			for (ResourceAction portletResourceAction :
+					portletResourceActions) {
+
+				ResourceActionLocalServiceUtil.deleteResourceAction(
+					portletResourceAction);
+			}
+
 			if (!portlet.isUndeployedPortlet()) {
 				PortletLocalServiceUtil.deployPortlet(portlet);
 			}

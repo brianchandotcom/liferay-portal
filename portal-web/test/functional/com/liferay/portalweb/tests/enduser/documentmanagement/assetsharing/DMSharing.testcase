@@ -265,6 +265,7 @@ definition {
 
 		AssertClick(
 			locator1 = "DocumentsAndMedia#DESCRIPTIVE_LIST_DOCUMENT_TITLE",
+			key_dmDocumentTitle = "Document with sharing disabled",
 			value1 = "Document with sharing disabled"
 		);
 
@@ -307,6 +308,7 @@ definition {
 
 		AssertClick(
 			locator1 = "DocumentsAndMedia#DESCRIPTIVE_LIST_DOCUMENT_TITLE",
+			key_dmDocumentTitle = "Document with sharing disabled",
 			value1 = "Document with sharing disabled"
 		);
 

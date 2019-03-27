@@ -33,6 +33,30 @@ public class InputCheckBoxTag extends IncludeTag {
 		return super.doEndTag();
 	}
 
+	public String getCssClass() {
+		return _cssClass;
+	}
+
+	public String getFormName() {
+		return _formName;
+	}
+
+	public String getId() {
+		return _id;
+	}
+
+	public String getOnClick() {
+		return _onClick;
+	}
+
+	public String getParam() {
+		return _param;
+	}
+
+	public boolean isDisabled() {
+		return _disabled;
+	}
+
 	public void setCssClass(String cssClass) {
 		_cssClass = cssClass;
 	}

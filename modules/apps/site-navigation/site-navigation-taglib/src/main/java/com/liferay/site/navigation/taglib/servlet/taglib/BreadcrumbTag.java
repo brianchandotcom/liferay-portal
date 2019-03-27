@@ -29,6 +29,10 @@ import javax.servlet.jsp.PageContext;
  */
 public class BreadcrumbTag extends IncludeTag {
 
+	public List<BreadcrumbEntry> getBreadcrumbEntries() {
+		return _breadcrumbEntries;
+	}
+
 	public void setBreadcrumbEntries(List<BreadcrumbEntry> breadcrumbEntries) {
 		_breadcrumbEntries = breadcrumbEntries;
 	}

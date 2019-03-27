@@ -48,6 +48,38 @@ import javax.servlet.http.HttpServletRequest;
  */
 public class LanguageTag extends IncludeTag {
 
+	public long getDdmTemplateGroupId() {
+		return _ddmTemplateGroupId;
+	}
+
+	public String getDdmTemplateKey() {
+		return _ddmTemplateKey;
+	}
+
+	public String getFormName() {
+		return _formName;
+	}
+
+	public String getLanguageId() {
+		return _languageId;
+	}
+
+	public String[] getLanguageIds() {
+		return _languageIds;
+	}
+
+	public String getName() {
+		return _name;
+	}
+
+	public boolean isDisplayCurrentLocale() {
+		return _displayCurrentLocale;
+	}
+
+	public boolean isUseNamespace() {
+		return _useNamespace;
+	}
+
 	public void setDdmTemplateGroupId(long ddmTemplateGroupId) {
 		_ddmTemplateGroupId = ddmTemplateGroupId;
 	}

@@ -47,6 +47,62 @@ public class RepositoryEntryBrowserTag extends IncludeTag {
 		"icon", "descriptive", "list"
 	};
 
+	public DLMimeTypeDisplayContext getDlMimeTypeDisplayContext() {
+		return _dlMimeTypeDisplayContext;
+	}
+
+	public String getEmptyResultsMessage() {
+		return _emptyResultsMessage;
+	}
+
+	public List<String> getExtensions() {
+		return _extensions;
+	}
+
+	public String getItemSelectedEventName() {
+		return _itemSelectedEventName;
+	}
+
+	public ItemSelectorReturnTypeResolver getItemSelectorReturnTypeResolver() {
+		return _itemSelectorReturnTypeResolver;
+	}
+
+	public long getMaxFileSize() {
+		return _maxFileSize;
+	}
+
+	public PortletURL getPortletURL() {
+		return _portletURL;
+	}
+
+	public List<RepositoryEntry> getRepositoryEntries() {
+		return _repositoryEntries;
+	}
+
+	public int getRepositoryEntriesCount() {
+		return _repositoryEntriesCount;
+	}
+
+	public String getTabName() {
+		return _tabName;
+	}
+
+	public PortletURL getUploadURL() {
+		return _uploadURL;
+	}
+
+	public boolean isShowBreadcrumb() {
+		return _showBreadcrumb;
+	}
+
+	public boolean isShowDragAndDropZone() {
+		return _showDragAndDropZone;
+	}
+
+	public boolean isShowSearch() {
+		return _showSearch;
+	}
+
 	/**
 	 * @deprecated As of Judson (7.1.x), with no direct replacement
 	 */

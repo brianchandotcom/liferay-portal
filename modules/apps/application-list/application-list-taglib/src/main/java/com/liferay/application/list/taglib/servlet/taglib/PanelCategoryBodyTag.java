@@ -32,6 +32,10 @@ import javax.servlet.http.HttpServletRequest;
  */
 public class PanelCategoryBodyTag extends BasePanelTag {
 
+	public PanelCategory getPanelCategory() {
+		return _panelCategory;
+	}
+
 	public void setPanelApps(List<PanelApp> panelApps) {
 		_panelApps = panelApps;
 	}

@@ -28,6 +28,10 @@ import javax.servlet.jsp.PageContext;
 @ProviderType
 public class ProcessSummaryLinkTag extends IncludeTag {
 
+	public long getBackgroundTaskId() {
+		return _backgroundTaskId;
+	}
+
 	public void setBackgroundTaskId(long backgroundTaskId) {
 		_backgroundTaskId = backgroundTaskId;
 	}

@@ -39,9 +39,53 @@ public class CheckboxTag extends BaseCssTag {
 		return super.doEndTag();
 	}
 
+	public long getDeletions() {
+		return _deletions;
+	}
+
+	public String getDescription() {
+		return _description;
+	}
+
+	public String getId() {
+		return _id;
+	}
+
+	public long getItems() {
+		return _items;
+	}
+
+	public String getLabel() {
+		return _label;
+	}
+
+	public String getName() {
+		return _name;
+	}
+
+	public String getPopover() {
+		return _popover;
+	}
+
+	public String getSuggestion() {
+		return _suggestion;
+	}
+
 	@Override
 	public String getTagNameForCssPath() {
 		return "checkbox";
+	}
+
+	public String getWarning() {
+		return _warning;
+	}
+
+	public boolean isChecked() {
+		return _checked;
+	}
+
+	public boolean isDisabled() {
+		return _disabled;
 	}
 
 	public void setChecked(boolean checked) {

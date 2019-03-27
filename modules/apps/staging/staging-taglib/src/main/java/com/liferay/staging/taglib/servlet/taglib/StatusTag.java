@@ -29,6 +29,14 @@ import javax.servlet.jsp.PageContext;
 @ProviderType
 public class StatusTag extends IncludeTag {
 
+	public String getCssClass() {
+		return _cssClass;
+	}
+
+	public StagedModel getStagedModel() {
+		return _stagedModel;
+	}
+
 	public void setCssClass(String cssClass) {
 		_cssClass = cssClass;
 	}

@@ -34,6 +34,22 @@ import javax.servlet.jsp.PageContext;
  */
 public class AssetAddonEntrySelectorTag extends IncludeTag {
 
+	public List<AssetAddonEntry> getAssetAddonEntries() {
+		return _assetAddonEntries;
+	}
+
+	public String getHiddenInput() {
+		return _hiddenInput;
+	}
+
+	public List<AssetAddonEntry> getSelectedAssetAddonEntries() {
+		return _selectedAssetAddonEntries;
+	}
+
+	public String getTitle() {
+		return _title;
+	}
+
 	public void setAssetAddonEntries(List<AssetAddonEntry> assetAddonEntries) {
 		_assetAddonEntries = assetAddonEntries;
 	}

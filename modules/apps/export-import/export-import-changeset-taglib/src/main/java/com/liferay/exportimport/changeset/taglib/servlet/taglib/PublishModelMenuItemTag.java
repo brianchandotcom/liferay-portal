@@ -48,6 +48,10 @@ public class PublishModelMenuItemTag extends IncludeTag {
 		return EVAL_BODY_INCLUDE;
 	}
 
+	public StagedModel getStagedModel() {
+		return _stagedModel;
+	}
+
 	@Override
 	public void setPageContext(PageContext pageContext) {
 		super.setPageContext(pageContext);

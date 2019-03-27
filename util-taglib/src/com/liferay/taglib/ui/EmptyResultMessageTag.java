@@ -24,6 +24,18 @@ import javax.servlet.http.HttpServletRequest;
  */
 public class EmptyResultMessageTag extends IncludeTag {
 
+	public String getMessage() {
+		return _message;
+	}
+
+	public boolean isCompact() {
+		return _compact;
+	}
+
+	public boolean isSearch() {
+		return _search;
+	}
+
 	public void setCompact(boolean compact) {
 		_compact = compact;
 	}

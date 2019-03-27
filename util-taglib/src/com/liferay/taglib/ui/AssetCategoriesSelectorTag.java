@@ -25,6 +25,38 @@ import javax.servlet.http.HttpServletRequest;
  */
 public class AssetCategoriesSelectorTag extends IncludeTag {
 
+	public String getClassName() {
+		return _className;
+	}
+
+	public long getClassPK() {
+		return _classPK;
+	}
+
+	public long getClassTypePK() {
+		return _classTypePK;
+	}
+
+	public String getCurCategoryIds() {
+		return _curCategoryIds;
+	}
+
+	public long[] getGroupIds() {
+		return _groupIds;
+	}
+
+	public String getHiddenInput() {
+		return _hiddenInput;
+	}
+
+	public boolean isIgnoreRequestValue() {
+		return _ignoreRequestValue;
+	}
+
+	public boolean isShowRequiredLabel() {
+		return _showRequiredLabel;
+	}
+
 	public void setClassName(String className) {
 		_className = className;
 	}

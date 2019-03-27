@@ -27,6 +27,10 @@ import javax.servlet.http.HttpServletRequest;
  */
 public class QuickAccessTag extends IncludeTag {
 
+	public String getContentId() {
+		return _contentId;
+	}
+
 	public void setContentId(String contentId) {
 		_contentId = contentId;
 	}

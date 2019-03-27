@@ -28,6 +28,38 @@ import javax.servlet.jsp.PageContext;
 @ProviderType
 public class ProcessErrorTag extends IncludeTag {
 
+	public boolean isAuthException() {
+		return _authException;
+	}
+
+	public boolean isDuplicateLockException() {
+		return _duplicateLockException;
+	}
+
+	public boolean isIllegalArgumentException() {
+		return _illegalArgumentException;
+	}
+
+	public boolean isLayoutPrototypeException() {
+		return _layoutPrototypeException;
+	}
+
+	public boolean isNoSuchExceptions() {
+		return _noSuchExceptions;
+	}
+
+	public boolean isRemoteExportException() {
+		return _remoteExportException;
+	}
+
+	public boolean isRemoteOptionsException() {
+		return _remoteOptionsException;
+	}
+
+	public boolean isSystemException() {
+		return _systemException;
+	}
+
 	public void setAuthException(boolean authException) {
 		_authException = authException;
 	}

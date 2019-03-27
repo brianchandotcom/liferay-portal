@@ -73,6 +73,54 @@ public class PanelTag extends IncludeTag {
 		return EVAL_BODY_INCLUDE;
 	}
 
+	public String getCssClass() {
+		return _cssClass;
+	}
+
+	public String getDefaultState() {
+		return _defaultState;
+	}
+
+	public String getHelpMessage() {
+		return _helpMessage;
+	}
+
+	public String getIconCssClass() {
+		return _iconCssClass;
+	}
+
+	public String getId() {
+		return _id;
+	}
+
+	public String getMarkupView() {
+		return _markupView;
+	}
+
+	public String getParentId() {
+		return _parentId;
+	}
+
+	public String getState() {
+		return _state;
+	}
+
+	public String getTitle() {
+		return _title;
+	}
+
+	public boolean isCollapsible() {
+		return _collapsible;
+	}
+
+	public Boolean isExtended() {
+		return _extended;
+	}
+
+	public boolean isPersistState() {
+		return _persistState;
+	}
+
 	public void setCollapsible(boolean collapsible) {
 		_collapsible = collapsible;
 	}

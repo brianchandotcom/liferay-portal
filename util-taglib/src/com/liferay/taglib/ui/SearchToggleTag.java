@@ -25,6 +25,26 @@ import javax.servlet.http.HttpServletRequest;
  */
 public class SearchToggleTag extends IncludeTag {
 
+	public String getButtonLabel() {
+		return _buttonLabel;
+	}
+
+	public DisplayTerms getDisplayTerms() {
+		return _displayTerms;
+	}
+
+	public String getId() {
+		return _id;
+	}
+
+	public String getMarkupView() {
+		return _markupView;
+	}
+
+	public boolean isAutoFocus() {
+		return _autoFocus;
+	}
+
 	public void setAutoFocus(boolean autoFocus) {
 		_autoFocus = autoFocus;
 	}

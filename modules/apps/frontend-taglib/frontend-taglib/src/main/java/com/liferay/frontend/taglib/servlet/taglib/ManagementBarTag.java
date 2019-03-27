@@ -37,8 +37,16 @@ public class ManagementBarTag extends BaseBarTag implements BodyTag {
 		return EVAL_BODY_INCLUDE;
 	}
 
+	public String getSearchContainerId() {
+		return _searchContainerId;
+	}
+
 	public boolean isDisabled() {
 		return _disabled;
+	}
+
+	public boolean isIncludeCheckBox() {
+		return _includeCheckBox;
 	}
 
 	public void setActionButtons(String actionButtons) {

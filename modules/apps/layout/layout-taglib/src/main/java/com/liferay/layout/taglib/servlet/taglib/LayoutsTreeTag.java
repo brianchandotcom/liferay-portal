@@ -50,6 +50,82 @@ public class LayoutsTreeTag extends IncludeTag {
 		return EVAL_BODY_INCLUDE;
 	}
 
+	public long getGroupId() {
+		return _groupId;
+	}
+
+	public LayoutSetBranch getLayoutSetBranch() {
+		return _layoutSetBranch;
+	}
+
+	public String getLinkTemplate() {
+		return _linkTemplate;
+	}
+
+	public PortletURL getPortletURL() {
+		return _portletURL;
+	}
+
+	public Map<String, PortletURL> getPortletURLs() {
+		return _portletURLs;
+	}
+
+	public String getRootLinkTemplate() {
+		return _rootLinkTemplate;
+	}
+
+	public String getRootNodeName() {
+		return _rootNodeName;
+	}
+
+	public String getScriptPosition() {
+		return _scriptPosition;
+	}
+
+	public String getSelectedLayoutIds() {
+		return _selectedLayoutIds;
+	}
+
+	public Long getSelPlid() {
+		return _selPlid;
+	}
+
+	public String getTreeId() {
+		return _treeId;
+	}
+
+	public boolean isCheckContentDisplayPage() {
+		return _checkContentDisplayPage;
+	}
+
+	public boolean isDefaultStateChecked() {
+		return _defaultStateChecked;
+	}
+
+	public boolean isDraggableTree() {
+		return _draggableTree;
+	}
+
+	public boolean isExpandFirstNode() {
+		return _expandFirstNode;
+	}
+
+	public boolean isIncomplete() {
+		return _incomplete;
+	}
+
+	public boolean isPrivateLayout() {
+		return _privateLayout;
+	}
+
+	public boolean isSaveState() {
+		return _saveState;
+	}
+
+	public boolean isSelectableTree() {
+		return _selectableTree;
+	}
+
 	public void setCheckContentDisplayPage(boolean checkContentDisplayPage) {
 		_checkContentDisplayPage = checkContentDisplayPage;
 	}

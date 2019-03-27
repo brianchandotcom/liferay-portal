@@ -29,6 +29,14 @@ import javax.servlet.jsp.PageContext;
 @ProviderType
 public class ProcessDurationTag extends IncludeTag {
 
+	public BackgroundTask getBackgroundTask() {
+		return _backgroundTask;
+	}
+
+	public boolean isListView() {
+		return _listView;
+	}
+
 	public void setBackgroundTask(BackgroundTask backgroundTask) {
 		_backgroundTask = backgroundTask;
 	}

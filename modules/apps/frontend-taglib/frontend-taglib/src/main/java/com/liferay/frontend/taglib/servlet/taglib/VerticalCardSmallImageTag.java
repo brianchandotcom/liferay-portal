@@ -36,6 +36,14 @@ public class VerticalCardSmallImageTag extends IncludeTag {
 		return EVAL_BODY_INCLUDE;
 	}
 
+	public String getCssClass() {
+		return _cssClass;
+	}
+
+	public String getSrc() {
+		return _src;
+	}
+
 	public void setCssClass(String cssClass) {
 		_cssClass = cssClass;
 	}

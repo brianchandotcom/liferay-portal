@@ -58,6 +58,14 @@ public class PanelCategoryContentTag extends BasePanelTag {
 		return EVAL_BODY_INCLUDE;
 	}
 
+	public PanelCategory getPanelCategory() {
+		return _panelCategory;
+	}
+
+	public boolean isShowOpen() {
+		return _showOpen;
+	}
+
 	public void setPanelCategory(PanelCategory panelCategory) {
 		_panelCategory = panelCategory;
 	}

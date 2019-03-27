@@ -29,6 +29,26 @@ import javax.servlet.jsp.PageContext;
 @ProviderType
 public class ProcessListMenuTag extends IncludeTag {
 
+	public BackgroundTask getBackgroundTask() {
+		return _backgroundTask;
+	}
+
+	public boolean isDeleteMenu() {
+		return _deleteMenu;
+	}
+
+	public boolean isLocalPublishing() {
+		return _localPublishing;
+	}
+
+	public boolean isRelaunchMenu() {
+		return _relaunchMenu;
+	}
+
+	public boolean isSummaryMenu() {
+		return _summaryMenu;
+	}
+
 	public void setBackgroundTask(BackgroundTask backgroundTask) {
 		_backgroundTask = backgroundTask;
 	}

@@ -73,6 +73,30 @@ public class PanelAppTag extends BasePanelTag {
 		return EVAL_BODY_INCLUDE;
 	}
 
+	public Map<String, Object> getData() {
+		return _data;
+	}
+
+	public String getId() {
+		return _id;
+	}
+
+	public String getLabel() {
+		return _label;
+	}
+
+	public PanelApp getPanelApp() {
+		return _panelApp;
+	}
+
+	public String getUrl() {
+		return _url;
+	}
+
+	public Boolean isActive() {
+		return _active;
+	}
+
 	public void setActive(Boolean active) {
 		_active = active;
 	}

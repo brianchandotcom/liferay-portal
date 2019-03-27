@@ -29,6 +29,46 @@ import javax.servlet.jsp.PageContext;
 @ProviderType
 public class RadioTag extends IncludeTag {
 
+	public String getDescription() {
+		return _description;
+	}
+
+	public String getId() {
+		return _id;
+	}
+
+	public String getLabel() {
+		return _label;
+	}
+
+	public String getName() {
+		return _name;
+	}
+
+	public String getPopover() {
+		return _popover;
+	}
+
+	public String getValue() {
+		return _value;
+	}
+
+	public boolean isChecked() {
+		return _checked;
+	}
+
+	public boolean isDisabled() {
+		return _disabled;
+	}
+
+	public boolean isIgnoreRequestValue() {
+		return _ignoreRequestValue;
+	}
+
+	public boolean isInline() {
+		return _inline;
+	}
+
 	public void setChecked(boolean checked) {
 		_checked = checked;
 	}

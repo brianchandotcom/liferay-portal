@@ -27,6 +27,34 @@ import javax.servlet.jsp.PageContext;
  */
 public class RSSSettingsTag extends IncludeTag {
 
+	public int getDelta() {
+		return _delta;
+	}
+
+	public String getDisplayStyle() {
+		return _displayStyle;
+	}
+
+	public String[] getDisplayStyles() {
+		return _displayStyles;
+	}
+
+	public String getFeedType() {
+		return _feedType;
+	}
+
+	public String getName() {
+		return _name;
+	}
+
+	public boolean isEnabled() {
+		return _enabled;
+	}
+
+	public boolean isNameEnabled() {
+		return _nameEnabled;
+	}
+
 	public void setDelta(int delta) {
 		_delta = delta;
 	}

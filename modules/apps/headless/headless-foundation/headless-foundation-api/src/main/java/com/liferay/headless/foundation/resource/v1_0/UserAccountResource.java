@@ -16,6 +16,8 @@ package com.liferay.headless.foundation.resource.v1_0;
 
 import com.liferay.headless.foundation.dto.v1_0.UserAccount;
 import com.liferay.portal.kernel.model.Company;
+import com.liferay.portal.kernel.search.Sort;
+import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.vulcan.multipart.MultipartBody;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
@@ -36,10 +38,12 @@ public interface UserAccountResource {
 	public UserAccount getMyUserAccount(Long userAccountId) throws Exception;
 
 	public Page<UserAccount> getOrganizationUserAccountsPage(
-			Long organizationId, Pagination pagination)
+			Long organizationId, Filter filter, Pagination pagination,
+			Sort[] sorts)
 		throws Exception;
 
-	public Page<UserAccount> getUserAccountsPage(Pagination pagination)
+	public Page<UserAccount> getUserAccountsPage(
+			Filter filter, Pagination pagination, Sort[] sorts)
 		throws Exception;
 
 	public UserAccount postUserAccount(UserAccount userAccount)
@@ -57,7 +61,7 @@ public interface UserAccountResource {
 		throws Exception;
 
 	public Page<UserAccount> getWebSiteUserAccountsPage(
-			Long webSiteId, Pagination pagination)
+			Long webSiteId, Filter filter, Pagination pagination, Sort[] sorts)
 		throws Exception;
 
 	public void setContextCompany(Company contextCompany);

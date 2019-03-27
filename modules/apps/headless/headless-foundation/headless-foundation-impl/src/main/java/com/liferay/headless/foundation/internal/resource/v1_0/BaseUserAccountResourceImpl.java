@@ -19,6 +19,8 @@ import com.liferay.headless.foundation.resource.v1_0.UserAccountResource;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Company;
+import com.liferay.portal.kernel.search.Sort;
+import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.portal.vulcan.multipart.MultipartBody;
 import com.liferay.portal.vulcan.pagination.Page;
@@ -78,8 +80,10 @@ public abstract class BaseUserAccountResourceImpl
 	@GET
 	@Parameters(
 		value = {
+			@Parameter(in = ParameterIn.QUERY, name = "filter"),
 			@Parameter(in = ParameterIn.QUERY, name = "page"),
-			@Parameter(in = ParameterIn.QUERY, name = "pageSize")
+			@Parameter(in = ParameterIn.QUERY, name = "pageSize"),
+			@Parameter(in = ParameterIn.QUERY, name = "sorts")
 		}
 	)
 	@Path("/organizations/{organization-id}/user-accounts")
@@ -87,7 +91,8 @@ public abstract class BaseUserAccountResourceImpl
 	@Tags(value = {@Tag(name = "UserAccount")})
 	public Page<UserAccount> getOrganizationUserAccountsPage(
 			@NotNull @PathParam("organization-id") Long organizationId,
-			@Context Pagination pagination)
+			@Context Filter filter, @Context Pagination pagination,
+			@Context Sort[] sorts)
 		throws Exception {
 
 		return Page.of(Collections.emptyList());
@@ -97,14 +102,18 @@ public abstract class BaseUserAccountResourceImpl
 	@GET
 	@Parameters(
 		value = {
+			@Parameter(in = ParameterIn.QUERY, name = "filter"),
 			@Parameter(in = ParameterIn.QUERY, name = "page"),
-			@Parameter(in = ParameterIn.QUERY, name = "pageSize")
+			@Parameter(in = ParameterIn.QUERY, name = "pageSize"),
+			@Parameter(in = ParameterIn.QUERY, name = "sorts")
 		}
 	)
 	@Path("/user-accounts")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "UserAccount")})
-	public Page<UserAccount> getUserAccountsPage(@Context Pagination pagination)
+	public Page<UserAccount> getUserAccountsPage(
+			@Context Filter filter, @Context Pagination pagination,
+			@Context Sort[] sorts)
 		throws Exception {
 
 		return Page.of(Collections.emptyList());
@@ -174,8 +183,10 @@ public abstract class BaseUserAccountResourceImpl
 	@GET
 	@Parameters(
 		value = {
+			@Parameter(in = ParameterIn.QUERY, name = "filter"),
 			@Parameter(in = ParameterIn.QUERY, name = "page"),
-			@Parameter(in = ParameterIn.QUERY, name = "pageSize")
+			@Parameter(in = ParameterIn.QUERY, name = "pageSize"),
+			@Parameter(in = ParameterIn.QUERY, name = "sorts")
 		}
 	)
 	@Path("/web-sites/{web-site-id}/user-accounts")
@@ -183,7 +194,8 @@ public abstract class BaseUserAccountResourceImpl
 	@Tags(value = {@Tag(name = "UserAccount")})
 	public Page<UserAccount> getWebSiteUserAccountsPage(
 			@NotNull @PathParam("web-site-id") Long webSiteId,
-			@Context Pagination pagination)
+			@Context Filter filter, @Context Pagination pagination,
+			@Context Sort[] sorts)
 		throws Exception {
 
 		return Page.of(Collections.emptyList());

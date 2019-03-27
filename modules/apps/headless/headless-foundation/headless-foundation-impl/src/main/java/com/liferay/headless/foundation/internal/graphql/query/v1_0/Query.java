@@ -683,8 +683,9 @@ public class Query {
 	@GraphQLInvokeDetached
 	public Collection<UserAccount> getOrganizationUserAccountsPage(
 			@GraphQLName("organization-id") Long organizationId,
+			@GraphQLName("filter") Filter filter,
 			@GraphQLName("pageSize") int pageSize,
-			@GraphQLName("page") int page)
+			@GraphQLName("page") int page, @GraphQLName("Sort[]") Sort[] sorts)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
@@ -693,7 +694,8 @@ public class Query {
 			userAccountResource -> {
 				Page paginationPage =
 					userAccountResource.getOrganizationUserAccountsPage(
-						organizationId, Pagination.of(pageSize, page));
+						organizationId, filter, Pagination.of(pageSize, page),
+						sorts);
 
 				return paginationPage.getItems();
 			});
@@ -702,8 +704,9 @@ public class Query {
 	@GraphQLField
 	@GraphQLInvokeDetached
 	public Collection<UserAccount> getUserAccountsPage(
+			@GraphQLName("filter") Filter filter,
 			@GraphQLName("pageSize") int pageSize,
-			@GraphQLName("page") int page)
+			@GraphQLName("page") int page, @GraphQLName("Sort[]") Sort[] sorts)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
@@ -711,7 +714,7 @@ public class Query {
 			this::_populateResourceContext,
 			userAccountResource -> {
 				Page paginationPage = userAccountResource.getUserAccountsPage(
-					Pagination.of(pageSize, page));
+					filter, Pagination.of(pageSize, page), sorts);
 
 				return paginationPage.getItems();
 			});
@@ -734,8 +737,9 @@ public class Query {
 	@GraphQLInvokeDetached
 	public Collection<UserAccount> getWebSiteUserAccountsPage(
 			@GraphQLName("web-site-id") Long webSiteId,
+			@GraphQLName("filter") Filter filter,
 			@GraphQLName("pageSize") int pageSize,
-			@GraphQLName("page") int page)
+			@GraphQLName("page") int page, @GraphQLName("Sort[]") Sort[] sorts)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
@@ -744,7 +748,8 @@ public class Query {
 			userAccountResource -> {
 				Page paginationPage =
 					userAccountResource.getWebSiteUserAccountsPage(
-						webSiteId, Pagination.of(pageSize, page));
+						webSiteId, filter, Pagination.of(pageSize, page),
+						sorts);
 
 				return paginationPage.getItems();
 			});

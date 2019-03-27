@@ -4287,7 +4287,7 @@ public class DEDataRecordCollectionServiceTest {
 			searchDEDataRecordCollection(_group, "");
 
 		IdempotentRetryAssert.retryAssert(
-			3, TimeUnit.SECONDS,
+			6, TimeUnit.SECONDS,
 			() -> {
 				Assert.assertEquals(
 					deDataRecordCollections.toString(), 5,
@@ -4311,7 +4311,7 @@ public class DEDataRecordCollectionServiceTest {
 			searchDEDataRecordCollection(_group, "Description1");
 
 		IdempotentRetryAssert.retryAssert(
-			3, TimeUnit.SECONDS,
+			6, TimeUnit.SECONDS,
 			() -> {
 				Assert.assertEquals(
 					deDataRecordCollections.toString(), 1,
@@ -4335,7 +4335,7 @@ public class DEDataRecordCollectionServiceTest {
 			searchDEDataRecordCollection(_group, "Name1");
 
 		IdempotentRetryAssert.retryAssert(
-			3, TimeUnit.SECONDS,
+			6, TimeUnit.SECONDS,
 			() -> {
 				Assert.assertEquals(
 					deDataRecordCollections.toString(), 1,
@@ -4363,7 +4363,7 @@ public class DEDataRecordCollectionServiceTest {
 			searchDEDataRecordCollection(_group, "nonascii£祝你好运");
 
 		IdempotentRetryAssert.retryAssert(
-			3, TimeUnit.SECONDS,
+			6, TimeUnit.SECONDS,
 			() -> {
 				Assert.assertEquals(
 					deDataRecordCollections.toString(), 1,
@@ -4384,13 +4384,13 @@ public class DEDataRecordCollectionServiceTest {
 		}
 
 		List<DEDataRecordCollection> deDataRecordCollections =
-			searchDEDataRecordCollection(_group, "description1");
+			searchDEDataRecordCollection(_group, "descript");
 
 		IdempotentRetryAssert.retryAssert(
-			3, TimeUnit.SECONDS,
+			6, TimeUnit.SECONDS,
 			() -> {
 				Assert.assertEquals(
-					deDataRecordCollections.toString(), 1,
+					deDataRecordCollections.toString(), 5,
 					deDataRecordCollections.size());
 
 				return null;
@@ -4411,7 +4411,7 @@ public class DEDataRecordCollectionServiceTest {
 			searchDEDataRecordCollection(_group, "NonExistingNameDescription");
 
 		IdempotentRetryAssert.retryAssert(
-			3, TimeUnit.SECONDS,
+			6, TimeUnit.SECONDS,
 			() -> {
 				Assert.assertEquals(
 					deDataRecordCollections.toString(), 0,
@@ -4435,7 +4435,7 @@ public class DEDataRecordCollectionServiceTest {
 			searchDEDataRecordCollection(_group, "Descrip");
 
 		IdempotentRetryAssert.retryAssert(
-			3, TimeUnit.SECONDS,
+			6, TimeUnit.SECONDS,
 			() -> {
 				Assert.assertEquals(
 					deDataRecordCollections.toString(), 5,

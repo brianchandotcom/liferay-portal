@@ -321,7 +321,79 @@ definition {
 
 		FormFields.editHelpText(fieldHelpText = "Help Text", fieldName = "tip");
 
+		FormFields.selectTextFieldLineOption(textFieldLineOption = "Multiple Lines");
+
 		FormFields.enableSwitcher(fieldName = "required");
+
+		Form.closeSidebar();
+
+		Form.gotoAddField(fieldType = "Single Selection");
+
+		Form.editFieldLabel(fieldValue = "Radio");
+
+		FormFields.editHelpText(fieldHelpText = "Help Text", fieldName = "tip");
+
+		FormFields.editOptionsRow(optionName = "Option1", optionValue = "Option 1");
+
+		FormFields.editOptionsRow(
+			optionName = "Option2",
+			optionValue = "Option 2",
+			rowNumber = "2"
+		);
+
+		FormFields.editOptionsRow(
+			optionName = "Option3",
+			optionValue = "Option 3",
+			rowNumber = "3"
+		);
+
+		FormFields.editOptionsRow(
+			optionName = "Option4",
+			optionValue = "Option 4",
+			rowNumber = "4"
+		);
+
+		FormFields.editOptionsRow(
+			optionName = "Option5",
+			optionValue = "Option 5",
+			rowNumber = "5"
+		);
+
+		Click(locator1 = "Form#SIDEBAR_BACK");
+
+		Form.closeSidebar();
+
+		Form.gotoAddField(fieldType = "Multiple Selection");
+
+		Form.editFieldLabel(fieldValue = "Checkbox");
+
+		FormFields.editHelpText(fieldHelpText = "Help Text", fieldName = "tip");
+
+		FormFields.editOptionsRow(
+			optionName = "Checkbox1",
+			optionValue = "Checkbox 1",
+			rowNumber = "1"
+		);
+
+		FormFields.editOptionsRow(
+			optionName = "Checkbox2",
+			optionValue = "Checkbox 2",
+			rowNumber = "2"
+		);
+
+		FormFields.editOptionsRow(
+			optionName = "Checkbox3",
+			optionValue = "Checkbox 3",
+			rowNumber = "3"
+		);
+
+		FormFields.editOptionsRow(
+			optionName = "Checkbox4",
+			optionValue = "Checkbox 4",
+			rowNumber = "4"
+		);
+
+		Click(locator1 = "Form#SIDEBAR_BACK");
 
 		Form.closeSidebar();
 
@@ -379,6 +451,8 @@ definition {
 			siteName = "Guest"
 		);
 
+		FormFields.viewTextLabel(fieldLabel = "Checkbox", fieldName = "Checkbox");
+		FormFields.viewTextLabel(fieldLabel = "Radio", fieldName = "Radio");
 		FormFields.viewTextLabel(fieldLabel = "Label", fieldName = "Label");
 	}
 

@@ -31,14 +31,17 @@ import com.liferay.knowledge.base.model.KBArticle;
 import com.liferay.knowledge.base.model.KBFolder;
 import com.liferay.knowledge.base.service.KBArticleService;
 import com.liferay.knowledge.base.service.KBFolderService;
+import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.ClassName;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
+import com.liferay.portal.kernel.search.BooleanQuery;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.BooleanFilter;
 import com.liferay.portal.kernel.search.filter.ExistsFilter;
 import com.liferay.portal.kernel.search.filter.Filter;
+import com.liferay.portal.kernel.search.filter.TermFilter;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -85,32 +88,21 @@ public class KnowledgeBaseArticleResourceImpl
 			Pagination pagination, Sort[] sorts)
 		throws Exception {
 
-		return SearchUtil.search(
+		return _getKnowledgeBaseArticlePage(
 			booleanQuery -> {
 				if ((tree != null) && tree) {
 					BooleanFilter booleanFilter =
 						booleanQuery.getPreBooleanFilter();
 
 					booleanFilter.add(
-						new ExistsFilter("folderNames"),
+						new ExistsFilter(Field.FOLDER_ID),
 						BooleanClauseOccur.MUST_NOT);
+					booleanFilter.add(
+						new TermFilter("parentMessageId", "0"),
+						BooleanClauseOccur.MUST);
 				}
 			},
-			filter, KBArticle.class, pagination,
-			queryConfig -> queryConfig.setSelectedFieldNames(
-				Field.ENTRY_CLASS_PK),
-			searchContext -> {
-				searchContext.setAttribute(
-					Field.STATUS, WorkflowConstants.STATUS_APPROVED);
-				searchContext.setCompanyId(contextCompany.getCompanyId());
-				searchContext.setGroupIds(new long[] {contentSpaceId});
-				searchContext.setKeywords("");
-			},
-			document -> _toKBArticle(
-				_kbArticleService.getLatestKBArticle(
-					GetterUtil.getLong(document.get(Field.ENTRY_CLASS_PK)),
-					WorkflowConstants.STATUS_APPROVED)),
-			sorts);
+			contentSpaceId, filter, pagination, sorts);
 	}
 
 	@Override
@@ -133,46 +125,56 @@ public class KnowledgeBaseArticleResourceImpl
 	@Override
 	public Page<KnowledgeBaseArticle>
 			getKnowledgeBaseArticleKnowledgeBaseArticlesPage(
-				Long knowledgeBaseArticleId, Pagination pagination)
+				Long knowledgeBaseArticleId, Filter filter,
+				Pagination pagination, Sort[] sorts)
 		throws Exception {
 
 		KBArticle kbArticle = _kbArticleService.getLatestKBArticle(
 			knowledgeBaseArticleId, WorkflowConstants.STATUS_APPROVED);
 
-		return Page.of(
-			transform(
-				_kbArticleService.getKBArticles(
-					kbArticle.getGroupId(), kbArticle.getResourcePrimKey(),
-					WorkflowConstants.STATUS_APPROVED,
-					pagination.getStartPosition(), pagination.getEndPosition(),
-					null),
-				this::_toKBArticle),
-			pagination,
-			_kbArticleService.getKBArticlesCount(
-				kbArticle.getGroupId(), kbArticle.getResourcePrimKey(),
-				WorkflowConstants.STATUS_APPROVED));
+		return _getKnowledgeBaseArticlePage(
+			booleanQuery -> {
+				BooleanFilter booleanFilter =
+					booleanQuery.getPreBooleanFilter();
+
+				booleanFilter.add(
+					new TermFilter(
+						"parentMessageId",
+						String.valueOf(kbArticle.getKbArticleId())),
+					BooleanClauseOccur.MUST);
+			},
+			kbArticle.getGroupId(), filter, pagination, sorts);
 	}
 
 	@Override
 	public Page<KnowledgeBaseArticle>
 			getKnowledgeBaseFolderKnowledgeBaseArticlesPage(
-				Long knowledgeBaseFolderId, Pagination pagination)
+				Long knowledgeBaseFolderId, Boolean tree, Filter filter,
+				Pagination pagination, Sort[] sorts)
 		throws Exception {
 
 		KBFolder kbFolder = _kbFolderService.getKBFolder(knowledgeBaseFolderId);
 
-		return Page.of(
-			transform(
-				_kbArticleService.getKBArticles(
-					kbFolder.getGroupId(), knowledgeBaseFolderId,
-					WorkflowConstants.STATUS_APPROVED,
-					pagination.getStartPosition(), pagination.getEndPosition(),
-					null),
-				this::_toKBArticle),
-			pagination,
-			_kbArticleService.getKBArticlesCount(
-				kbFolder.getGroupId(), knowledgeBaseFolderId,
-				WorkflowConstants.STATUS_APPROVED));
+		return _getKnowledgeBaseArticlePage(
+			booleanQuery -> {
+				BooleanFilter booleanFilter =
+					booleanQuery.getPreBooleanFilter();
+
+				booleanFilter.add(
+					new TermFilter(
+						Field.FOLDER_ID,
+						String.valueOf(kbFolder.getKbFolderId())),
+					BooleanClauseOccur.MUST);
+
+				if (Boolean.TRUE.equals(tree)) {
+					booleanFilter.add(
+						new TermFilter(
+							"parentMessageId",
+							String.valueOf(kbFolder.getKbFolderId())),
+						BooleanClauseOccur.MUST);
+				}
+			},
+			kbFolder.getGroupId(), filter, pagination, sorts);
 	}
 
 	@Override
@@ -252,6 +254,30 @@ public class KnowledgeBaseArticleResourceImpl
 					knowledgeBaseArticle.getTaxonomyCategoryIds(),
 					contentSpaceId,
 					knowledgeBaseArticle.getViewableByAsString())));
+	}
+
+	private Page<KnowledgeBaseArticle> _getKnowledgeBaseArticlePage(
+			UnsafeConsumer<BooleanQuery, Exception> booleanQueryUnsafeConsumer,
+			Long contentSpaceId, Filter filter, Pagination pagination,
+			Sort[] sorts)
+		throws Exception {
+
+		return SearchUtil.search(
+			booleanQueryUnsafeConsumer, filter, KBArticle.class, pagination,
+			queryConfig -> queryConfig.setSelectedFieldNames(
+				Field.ENTRY_CLASS_PK),
+			searchContext -> {
+				searchContext.setAttribute(
+					Field.STATUS, WorkflowConstants.STATUS_APPROVED);
+				searchContext.setCompanyId(contextCompany.getCompanyId());
+				searchContext.setGroupIds(new long[] {contentSpaceId});
+				searchContext.setKeywords("");
+			},
+			document -> _toKBArticle(
+				_kbArticleService.getLatestKBArticle(
+					GetterUtil.getLong(document.get(Field.ENTRY_CLASS_PK)),
+					WorkflowConstants.STATUS_APPROVED)),
+			sorts);
 	}
 
 	private KnowledgeBaseArticle _toKBArticle(KBArticle kbArticle)

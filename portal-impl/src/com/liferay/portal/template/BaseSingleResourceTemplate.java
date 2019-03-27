@@ -91,10 +91,6 @@ public abstract class BaseSingleResourceTemplate extends BaseTemplate {
 	}
 
 	protected void cacheTemplateResource(String templateManagerName) {
-		if (templateManagerName.equals(TemplateConstants.LANG_TYPE_VM)) {
-			return;
-		}
-
 		if (!(templateResource instanceof CacheTemplateResource) &&
 			!(templateResource instanceof StringTemplateResource)) {
 

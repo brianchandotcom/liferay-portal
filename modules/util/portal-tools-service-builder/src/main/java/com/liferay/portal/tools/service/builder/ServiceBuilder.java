@@ -2097,24 +2097,18 @@ public class ServiceBuilder {
 
 	private void _addIndexMetadata(
 		Map<String, List<IndexMetadata>> indexMetadatasMap, String tableName,
-		Entity entity, IndexMetadata indexMetadata) {
+		List<String> pkEntityColumnDBNames, IndexMetadata indexMetadata) {
 
-		List<EntityColumn> pkEntityColumns = null;
+		if ((pkEntityColumnDBNames != null) &&
+			(pkEntityColumnDBNames.size() > 1)) {
 
-		if (entity != null) {
-			pkEntityColumns = entity.getPKEntityColumns();
-		}
-
-		if ((pkEntityColumns != null) && (pkEntityColumns.size() > 1)) {
 			String[] columnNames = indexMetadata.getColumnNames();
 
-			if (columnNames.length <= pkEntityColumns.size()) {
+			if (columnNames.length <= pkEntityColumnDBNames.size()) {
 				boolean redundant = true;
 
 				for (int i = 0; i < columnNames.length; i++) {
-					EntityColumn pkEntityColumn = pkEntityColumns.get(i);
-
-					if (!columnNames[i].equals(pkEntityColumn.getDBName())) {
+					if (!columnNames[i].equals(pkEntityColumnDBNames.get(i))) {
 						redundant = false;
 					}
 				}
@@ -3588,6 +3582,8 @@ public class ServiceBuilder {
 				IndexMetadata indexMetadata =
 					IndexMetadataFactoryUtil.createIndexMetadata(indexSQL);
 
+				List<String> pkEntityColumnDBNames = null;
+
 				Entity entity = _getEntityByTableName(
 					indexMetadata.getTableName());
 
@@ -3596,11 +3592,13 @@ public class ServiceBuilder {
 						indexMetadata.getIndexName(),
 						indexMetadata.getTableName(), indexMetadata.isUnique(),
 						indexMetadata.getColumnNames());
+
+					pkEntityColumnDBNames = entity.getPKEntityColumnDBNames();
 				}
 
 				_addIndexMetadata(
-					indexMetadatasMap, indexMetadata.getTableName(), entity,
-					indexMetadata);
+					indexMetadatasMap, indexMetadata.getTableName(),
+					pkEntityColumnDBNames, indexMetadata);
 			}
 		}
 
@@ -3653,8 +3651,8 @@ public class ServiceBuilder {
 						dbNames.toArray(new String[dbNames.size()]));
 
 				_addIndexMetadata(
-					indexMetadatasMap, indexMetadata.getTableName(), entity,
-					indexMetadata);
+					indexMetadatasMap, indexMetadata.getTableName(),
+					entity.getPKEntityColumnDBNames(), indexMetadata);
 			}
 		}
 
@@ -4369,36 +4367,34 @@ public class ServiceBuilder {
 
 		Entity[] entities = new Entity[3];
 
+		List<String> mappingPKEntityColumnDBNames = new ArrayList<>();
+
 		for (int i = 0; i < entities.length; i++) {
 			entities[i] = getEntity(entityMapping.getEntityName(i));
 
 			if (entities[i] == null) {
 				return;
 			}
+
+			// Skip Company
+
+			if (i != 0) {
+				mappingPKEntityColumnDBNames.addAll(
+					entities[i].getPKEntityColumnDBNames());
+			}
 		}
 
 		String tableName = entityMapping.getTableName();
 
-		for (int i = 0; i < entities.length; i++) {
-			Entity entity = entities[i];
-
-			List<EntityColumn> pkEntityColumns = entity.getPKEntityColumns();
-
-			int j = 0;
-
-			if (i == 1) {
-				j = 1;
-			}
-
-			for (; j < pkEntityColumns.size(); j++) {
-				EntityColumn entityColumn = pkEntityColumns.get(j);
-
+		for (Entity entity : entities) {
+			for (String dbName : entity.getPKEntityColumnDBNames()) {
 				IndexMetadata indexMetadata =
 					IndexMetadataFactoryUtil.createIndexMetadata(
-						false, tableName, entityColumn.getDBName());
+						false, tableName, dbName);
 
 				_addIndexMetadata(
-					indexMetadatasMap, tableName, null, indexMetadata);
+					indexMetadatasMap, tableName, mappingPKEntityColumnDBNames,
+					indexMetadata);
 			}
 		}
 	}

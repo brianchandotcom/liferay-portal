@@ -20,10 +20,10 @@ function getDefaultValue(property) {
 		defaultValue = options[0].value;
 	}
 	else if (type === PROPERTY_TYPES.DATE) {
-		defaultValue = jsDatetoYYYYMMDD((new Date()));
+		defaultValue = jsDatetoYYYYMMDD(new Date());
 	}
 	else if (type === PROPERTY_TYPES.DATE_TIME) {
-		defaultValue = (new Date()).toISOString();
+		defaultValue = new Date().toISOString();
 	}
 	else if (type === PROPERTY_TYPES.BOOLEAN) {
 		defaultValue = 'true';
@@ -51,7 +51,7 @@ class CriteriaSidebarCollapse extends Component {
 			propertyGroup => this.props.propertyKey === propertyGroup.propertyKey
 		);
 
-		const properties = (propertyGroup ? propertyGroup.properties : []);
+		const properties = propertyGroup ? propertyGroup.properties : [];
 
 		return properties.filter(
 			property => {
@@ -110,31 +110,30 @@ class CriteriaSidebarCollapse extends Component {
 									<li className="empty-message">
 										{Liferay.Language.get('no-results-were-found')}
 									</li> :
-									active && filteredProperties.length &&
-								filteredProperties.map(
-									({label, name, options, type}) => {
-										const defaultValue = getDefaultValue(
-											{
-												label,
-												name,
-												options,
-												type
-											}
-										);
+									filteredProperties.map(
+										({label, name, options, type}) => {
+											const defaultValue = getDefaultValue(
+												{
+													label,
+													name,
+													options,
+													type
+												}
+											);
 
-										return (
-											<CriteriaSidebarItem
-												className={`color--${key}`}
-												defaultValue={defaultValue}
-												key={name}
-												label={label}
-												name={name}
-												propertyKey={key}
-												type={type}
-											/>
-										);
-									}
-								)
+											return (
+												<CriteriaSidebarItem
+													className={`color--${key}`}
+													defaultValue={defaultValue}
+													key={name}
+													label={label}
+													name={name}
+													propertyKey={key}
+													type={type}
+												/>
+											);
+										}
+									)
 								}
 							</ul>
 						</li>);

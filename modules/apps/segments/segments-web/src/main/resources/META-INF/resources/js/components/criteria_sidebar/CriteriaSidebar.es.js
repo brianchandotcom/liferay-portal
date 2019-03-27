@@ -19,12 +19,8 @@ class CriteriaSidebar extends Component {
 		this.setState({searchValue: value});
 	}
 
-	_handleOnClickCollapse = (key, editing) => {
-		this.props.onTitleClicked(key, editing);
-	}
-
 	render() {
-		const {propertyGroups, propertyKey} = this.props;
+		const {onTitleClicked, propertyGroups, propertyKey} = this.props;
 
 		const {searchValue} = this.state;
 
@@ -44,7 +40,7 @@ class CriteriaSidebar extends Component {
 
 				<div className="sidebar-collapse">
 					<CriteriaSidebarCollapse
-						onCollapseClick={this._handleOnClickCollapse}
+						onCollapseClick={onTitleClicked}
 						propertyGroups={propertyGroups}
 						propertyKey={propertyKey}
 						searchValue={searchValue}

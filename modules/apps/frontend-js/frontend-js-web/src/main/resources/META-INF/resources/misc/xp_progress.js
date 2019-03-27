@@ -76,11 +76,3 @@ this.tid=setInterval('startBar('+this.N+')',this.speed);
 clearInterval(this.tid);
 this.tid=0;
 }}
-
-function togglePause(){
-if(this.tid==0){
-this.tid=setInterval('startBar('+this.N+')',this.speed);
-}else{
-clearInterval(this.tid);
-this.tid=0;
-}}

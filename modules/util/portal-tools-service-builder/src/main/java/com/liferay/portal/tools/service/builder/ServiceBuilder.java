@@ -2100,8 +2100,20 @@ public class ServiceBuilder {
 		IndexMetadata entityPKIndexMetadata, IndexMetadata indexMetadata) {
 
 		if (entityPKIndexMetadata != null) {
-			Boolean redundant = indexMetadata.redundantToPKIndex(
-				entityPKIndexMetadata);
+			boolean redundant = true;
+
+			String[] indexMetadataColumnNames =
+				entityPKIndexMetadata.getColumnNames();
+
+			String[] columnNames = indexMetadata.getColumnNames();
+
+			if (columnNames.length <= indexMetadataColumnNames.length) {
+				for (int i = 0; i < columnNames.length; i++) {
+					if (!columnNames[i].equals(indexMetadataColumnNames[i])) {
+						redundant = false;
+					}
+				}
+			}
 
 			if (redundant) {
 				return;

@@ -1,7 +1,8 @@
 definition {
 	macro checkCardCheckbox {
-		LexiconCard.clickCard(
-			card = "${card}"
+		Click.clickNoWaitForVisible(
+			locator1 = "LexiconCard#CARD_CHECKBOX",
+			key_card = "${card}"
 		);
 
 		AssertChecked.assertCheckedNotVisible(

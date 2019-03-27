@@ -15,6 +15,7 @@
 package com.liferay.document.library.web.internal.display.context;
 
 import com.liferay.document.library.display.context.DLDisplayContextFactory;
+import com.liferay.document.library.display.context.DLDisplayContextProvider;
 import com.liferay.document.library.display.context.DLEditFileEntryDisplayContext;
 import com.liferay.document.library.display.context.DLMimeTypeDisplayContext;
 import com.liferay.document.library.display.context.DLViewFileEntryHistoryDisplayContext;
@@ -58,8 +59,9 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
  * @author Iván Zaera
  */
 @Component(immediate = true, service = DLDisplayContextProvider.class)
-public class DLDisplayContextProvider {
+public class DLDisplayContextProviderImpl implements DLDisplayContextProvider {
 
+	@Override
 	public DLEditFileEntryDisplayContext getDLEditFileEntryDisplayContext(
 		HttpServletRequest request, HttpServletResponse response,
 		DLFileEntryType dlFileEntryType) {
@@ -81,6 +83,7 @@ public class DLDisplayContextProvider {
 		return dlEditFileEntryDisplayContext;
 	}
 
+	@Override
 	public DLEditFileEntryDisplayContext getDLEditFileEntryDisplayContext(
 		HttpServletRequest request, HttpServletResponse response,
 		FileEntry fileEntry) {
@@ -101,6 +104,7 @@ public class DLDisplayContextProvider {
 		return dlEditFileEntryDisplayContext;
 	}
 
+	@Override
 	public DLViewFileEntryHistoryDisplayContext
 		getDLViewFileEntryHistoryDisplayContext(
 			HttpServletRequest request, HttpServletResponse response,
@@ -134,6 +138,7 @@ public class DLDisplayContextProvider {
 		return dlViewFileEntryHistoryDisplayContext;
 	}
 
+	@Override
 	public DLViewFileVersionDisplayContext getDLViewFileVersionDisplayContext(
 		HttpServletRequest request, HttpServletResponse response,
 		FileShortcut fileShortcut) {
@@ -179,6 +184,7 @@ public class DLDisplayContextProvider {
 		}
 	}
 
+	@Override
 	public DLViewFileVersionDisplayContext getDLViewFileVersionDisplayContext(
 		HttpServletRequest request, HttpServletResponse response,
 		FileVersion fileVersion) {

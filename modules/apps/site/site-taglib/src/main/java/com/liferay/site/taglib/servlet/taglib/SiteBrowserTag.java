@@ -32,6 +32,38 @@ import javax.servlet.jsp.PageContext;
  */
 public class SiteBrowserTag extends IncludeTag {
 
+	public String getDisplayStyle() {
+		return _displayStyle;
+	}
+
+	public String getEmptyResultsMessage() {
+		return _emptyResultsMessage;
+	}
+
+	public String getEventName() {
+		return _eventName;
+	}
+
+	public List<Group> getGroups() {
+		return _groups;
+	}
+
+	public int getGroupsCount() {
+		return _groupsCount;
+	}
+
+	public PortletURL getPortletURL() {
+		return _portletURL;
+	}
+
+	public long[] getSelectedGroupIds() {
+		return _selectedGroupIds;
+	}
+
+	public boolean isShowSearch() {
+		return _showSearch;
+	}
+
 	public void setDisplayStyle(String displayStyle) {
 		_displayStyle = displayStyle;
 	}

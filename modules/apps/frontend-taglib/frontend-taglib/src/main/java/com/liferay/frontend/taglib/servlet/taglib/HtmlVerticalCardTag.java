@@ -21,6 +21,10 @@ import javax.servlet.http.HttpServletRequest;
  */
 public class HtmlVerticalCardTag extends VerticalCardTag {
 
+	public String getHtml() {
+		return _html;
+	}
+
 	public void setHtml(String html) {
 		_html = html;
 	}

@@ -29,6 +29,26 @@ import javax.servlet.jsp.PageContext;
 @ProviderType
 public class SelectPagesTag extends IncludeTag {
 
+	public long getExportImportConfigurationId() {
+		return _exportImportConfigurationId;
+	}
+
+	public long getGroupId() {
+		return _groupId;
+	}
+
+	public String getTreeId() {
+		return _treeId;
+	}
+
+	public boolean isDisableInputs() {
+		return _disableInputs;
+	}
+
+	public boolean isPrivateLayout() {
+		return _privateLayout;
+	}
+
 	public void setAction(String action) {
 		if (action == null) {
 			_action = StringPool.BLANK;

@@ -31,12 +31,20 @@ public class SearchIteratorTag<R> extends SearchPaginatorTag<R> {
 		return _displayStyle;
 	}
 
+	public String getMarkupView() {
+		return _markupView;
+	}
+
 	public ResultRowSplitter getResultRowSplitter() {
 		return _resultRowSplitter;
 	}
 
 	public String getSearchResultCssClass() {
 		return _searchResultCssClass;
+	}
+
+	public boolean isPaginate() {
+		return _paginate;
 	}
 
 	public void setDisplayStyle(String displayStyle) {

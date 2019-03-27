@@ -31,6 +31,50 @@ import javax.servlet.http.HttpServletRequest;
  */
 public class AssetTagsSelectorTag extends IncludeTag {
 
+	public String getAddCallback() {
+		return _addCallback;
+	}
+
+	public String getClassName() {
+		return _className;
+	}
+
+	public long getClassPK() {
+		return _classPK;
+	}
+
+	public String getCurTags() {
+		return _curTags;
+	}
+
+	public long[] getGroupIds() {
+		return _groupIds;
+	}
+
+	public String getHiddenInput() {
+		return _hiddenInput;
+	}
+
+	public String getId() {
+		return _id;
+	}
+
+	public String getRemoveCallback() {
+		return _removeCallback;
+	}
+
+	public boolean isAllowAddEntry() {
+		return _allowAddEntry;
+	}
+
+	public boolean isAutoFocus() {
+		return _autoFocus;
+	}
+
+	public boolean isIgnoreRequestValue() {
+		return _ignoreRequestValue;
+	}
+
 	public void setAddCallback(String addCallback) {
 		_addCallback = addCallback;
 	}

@@ -25,6 +25,14 @@ import javax.servlet.jsp.PageContext;
  */
 public class ProductNavigationPersonalMenuTag extends IncludeTag {
 
+	public String getLabel() {
+		return _label;
+	}
+
+	public boolean isExpanded() {
+		return _expanded;
+	}
+
 	public void setExpanded(boolean expanded) {
 		_expanded = expanded;
 	}

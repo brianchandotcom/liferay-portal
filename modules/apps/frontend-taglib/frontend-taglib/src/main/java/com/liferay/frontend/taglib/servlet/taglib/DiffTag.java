@@ -28,6 +28,18 @@ import javax.servlet.jsp.PageContext;
  */
 public class DiffTag extends IncludeTag {
 
+	public List<DiffResult>[] getDiffResults() {
+		return _diffResults;
+	}
+
+	public String getSourceName() {
+		return _sourceName;
+	}
+
+	public String getTargetName() {
+		return _targetName;
+	}
+
 	public void setDiffResults(List<DiffResult>[] diffResults) {
 		_diffResults = diffResults;
 	}

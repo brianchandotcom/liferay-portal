@@ -33,6 +33,14 @@ public class MimeTypeStickerTag extends IncludeTag {
 		return EVAL_BODY_INCLUDE;
 	}
 
+	public String getCssClass() {
+		return _cssClass;
+	}
+
+	public FileVersion getFileVersion() {
+		return _fileVersion;
+	}
+
 	public void setCssClass(String cssClass) {
 		_cssClass = cssClass;
 	}

@@ -23,6 +23,22 @@ import javax.servlet.http.HttpServletRequest;
  */
 public class InputResourceTag extends IncludeTag {
 
+	public String getCssClass() {
+		return _cssClass;
+	}
+
+	public String getId() {
+		return _id;
+	}
+
+	public String getTitle() {
+		return _title;
+	}
+
+	public String getUrl() {
+		return _url;
+	}
+
 	public void setCssClass(String cssClass) {
 		_cssClass = cssClass;
 	}

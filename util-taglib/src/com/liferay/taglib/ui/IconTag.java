@@ -57,12 +57,56 @@ public class IconTag extends IncludeTag {
 		return EVAL_BODY_INCLUDE;
 	}
 
+	public String getAlt() {
+		return _alt;
+	}
+
+	public String getAriaRole() {
+		return _ariaRole;
+	}
+
 	public String getCssClass() {
 		return _cssClass;
 	}
 
 	public String getIcon() {
 		return _icon;
+	}
+
+	public String getIconCssClass() {
+		return _iconCssClass;
+	}
+
+	public String getImageHover() {
+		return _imageHover;
+	}
+
+	public String getLang() {
+		return _lang;
+	}
+
+	public String getLinkCssClass() {
+		return _linkCssClass;
+	}
+
+	public String getMarkupView() {
+		return _markupView;
+	}
+
+	public String getTarget() {
+		return _target;
+	}
+
+	public boolean isLocalizeMessage() {
+		return _localizeMessage;
+	}
+
+	public boolean isToolTip() {
+		return _toolTip;
+	}
+
+	public boolean isUseDialog() {
+		return _useDialog;
 	}
 
 	public void setAlt(String alt) {

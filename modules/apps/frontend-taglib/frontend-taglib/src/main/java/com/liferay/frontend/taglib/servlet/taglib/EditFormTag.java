@@ -44,8 +44,44 @@ public class EditFormTag extends IncludeTag {
 		return super.doStartTag();
 	}
 
+	public String getCssClass() {
+		return _cssClass;
+	}
+
+	public String getMethod() {
+		return _method;
+	}
+
+	public String getName() {
+		return _name;
+	}
+
+	public String getOnSubmit() {
+		return _onSubmit;
+	}
+
+	public String getPortletNamespace() {
+		return _portletNamespace;
+	}
+
+	public boolean isEscapeXml() {
+		return _escapeXml;
+	}
+
 	public boolean isFluid() {
 		return _fluid;
+	}
+
+	public boolean isInlineLabels() {
+		return _inlineLabels;
+	}
+
+	public boolean isUseNamespace() {
+		return _useNamespace;
+	}
+
+	public boolean isValidateOnBlur() {
+		return _validateOnBlur;
 	}
 
 	public void setAction(PortletURL portletURL) {

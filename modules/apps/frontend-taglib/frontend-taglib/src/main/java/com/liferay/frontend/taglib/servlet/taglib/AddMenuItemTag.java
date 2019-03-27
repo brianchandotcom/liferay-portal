@@ -33,6 +33,30 @@ public class AddMenuItemTag extends IncludeTag {
 		return EVAL_BODY_INCLUDE;
 	}
 
+	public Map<String, Object> getAnchorData() {
+		return _anchorData;
+	}
+
+	public String getCssClass() {
+		return _cssClass;
+	}
+
+	public String getId() {
+		return _id;
+	}
+
+	public String getTitle() {
+		return _title;
+	}
+
+	public AddMenuKeys.AddMenuType getType() {
+		return _addMenuType;
+	}
+
+	public String getUrl() {
+		return _url;
+	}
+
 	public void setAnchorData(Map<String, Object> anchorData) {
 		_anchorData = anchorData;
 	}

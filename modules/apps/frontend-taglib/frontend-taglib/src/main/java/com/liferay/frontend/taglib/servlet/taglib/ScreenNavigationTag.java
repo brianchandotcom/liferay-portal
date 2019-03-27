@@ -65,12 +65,56 @@ public class ScreenNavigationTag extends IncludeTag {
 		return super.doStartTag();
 	}
 
+	public String getContainerCssClass() {
+		return _containerCssClass;
+	}
+
+	public String getContainerWrapperCssClass() {
+		return _containerWrapperCssClass;
+	}
+
+	public Object getContext() {
+		return _context;
+	}
+
+	public String getFullContainerCssClass() {
+		return _fullContainerCssClass;
+	}
+
+	public String getHeaderContainerCssClass() {
+		return _headerContainerCssClass;
+	}
+
+	public String getId() {
+		return _id;
+	}
+
+	public String getKey() {
+		return _key;
+	}
+
+	public String getMenubarCssClass() {
+		return _menubarCssClass;
+	}
+
+	public Object getModelBean() {
+		return _modelBean;
+	}
+
 	public Object getModelContext() {
 		if (Validator.isNotNull(_modelBean)) {
 			return _modelBean;
 		}
 
 		return _context;
+	}
+
+	public String getNavCssClass() {
+		return _navCssClass;
+	}
+
+	public PortletURL getPortletURL() {
+		return _portletURL;
 	}
 
 	public void setContainerCssClass(String containerCssClass) {

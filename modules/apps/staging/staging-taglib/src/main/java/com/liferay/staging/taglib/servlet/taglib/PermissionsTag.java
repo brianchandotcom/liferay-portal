@@ -29,6 +29,18 @@ import javax.servlet.jsp.PageContext;
 @ProviderType
 public class PermissionsTag extends IncludeTag {
 
+	public long getExportImportConfigurationId() {
+		return _exportImportConfigurationId;
+	}
+
+	public boolean isDisableInputs() {
+		return _disableInputs;
+	}
+
+	public boolean isGlobal() {
+		return _global;
+	}
+
 	public void setAction(String action) {
 		if (action == null) {
 			_action = StringPool.BLANK;

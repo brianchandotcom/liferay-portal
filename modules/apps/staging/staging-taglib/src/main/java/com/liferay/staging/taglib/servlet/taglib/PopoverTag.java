@@ -29,9 +29,21 @@ import javax.servlet.jsp.PageContext;
 @ProviderType
 public class PopoverTag extends BaseCssTag {
 
+	public String getId() {
+		return _id;
+	}
+
 	@Override
 	public String getTagNameForCssPath() {
 		return "popover";
+	}
+
+	public String getText() {
+		return _text;
+	}
+
+	public String getTitle() {
+		return _title;
 	}
 
 	public void setId(String id) {

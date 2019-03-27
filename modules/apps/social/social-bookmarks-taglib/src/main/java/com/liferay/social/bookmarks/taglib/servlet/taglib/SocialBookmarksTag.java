@@ -58,6 +58,34 @@ public class SocialBookmarksTag extends IncludeTag {
 		return super.doStartTag();
 	}
 
+	public String getClassName() {
+		return _className;
+	}
+
+	public long getClassPK() {
+		return _classPK;
+	}
+
+	public int getMaxInlineItems() {
+		return _maxInlineItems;
+	}
+
+	public String getTarget() {
+		return _target;
+	}
+
+	public String getTitle() {
+		return _title;
+	}
+
+	public String getUrl() {
+		return _url;
+	}
+
+	public PortletURL getUrlImpl() {
+		return _urlImpl;
+	}
+
 	public void setClassName(String className) {
 		_className = className;
 	}

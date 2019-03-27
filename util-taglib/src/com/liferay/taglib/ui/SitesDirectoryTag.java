@@ -31,6 +31,14 @@ public class SitesDirectoryTag extends IncludeTag {
 
 	public static final String SITES_TOP_LEVEL = "top-level";
 
+	public String getDisplayStyle() {
+		return _displayStyle;
+	}
+
+	public String getSites() {
+		return _sites;
+	}
+
 	public void setDisplayStyle(String displayStyle) {
 		_displayStyle = displayStyle;
 	}

@@ -76,6 +76,22 @@ public class PreviewTag extends IncludeTag {
 		}
 	}
 
+	public String getPortletName() {
+		return _portletName;
+	}
+
+	public String getQueryString() {
+		return _queryString;
+	}
+
+	public String getWidth() {
+		return _width;
+	}
+
+	public boolean isShowBorders() {
+		return _showBorders;
+	}
+
 	public void setPortletName(String portletName) {
 		_portletName = portletName;
 	}

@@ -25,6 +25,26 @@ import javax.servlet.jsp.PageContext;
  */
 public class CustomAttributeTag extends IncludeTag {
 
+	public String getClassName() {
+		return _className;
+	}
+
+	public long getClassPK() {
+		return _classPK;
+	}
+
+	public String getName() {
+		return _name;
+	}
+
+	public boolean isEditable() {
+		return _editable;
+	}
+
+	public boolean isLabel() {
+		return _label;
+	}
+
 	public void setClassName(String className) {
 		_className = className;
 	}

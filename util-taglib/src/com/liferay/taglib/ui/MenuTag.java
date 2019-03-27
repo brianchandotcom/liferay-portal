@@ -29,6 +29,10 @@ public class MenuTag extends IncludeTag {
 		return EVAL_BODY_INCLUDE;
 	}
 
+	public Menu getMenu() {
+		return _menu;
+	}
+
 	public void setMenu(Menu menu) {
 		_menu = menu;
 	}

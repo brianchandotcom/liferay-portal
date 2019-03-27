@@ -28,6 +28,30 @@ import javax.servlet.http.HttpServletRequest;
  */
 public class HeaderTag extends IncludeTag {
 
+	public String getBackLabel() {
+		return _backLabel;
+	}
+
+	public String getCssClass() {
+		return _cssClass;
+	}
+
+	public String getTitle() {
+		return _title;
+	}
+
+	public boolean isEscapeXml() {
+		return _escapeXml;
+	}
+
+	public boolean isLocalizeTitle() {
+		return _localizeTitle;
+	}
+
+	public boolean isShowBackURL() {
+		return _showBackURL;
+	}
+
 	public void setBackLabel(String backLabel) {
 		_backLabel = backLabel;
 	}

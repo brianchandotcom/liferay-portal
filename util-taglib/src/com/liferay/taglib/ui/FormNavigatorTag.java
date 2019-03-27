@@ -35,6 +35,42 @@ public class FormNavigatorTag extends IncludeTag {
 		return EVAL_BODY_INCLUDE;
 	}
 
+	public String getBackURL() {
+		return _backURL;
+	}
+
+	public String getDisplayStyle() {
+		return _displayStyle;
+	}
+
+	public Object getFormModelBean() {
+		return _formModelBean;
+	}
+
+	public String getFormName() {
+		return _formName;
+	}
+
+	public String getHtmlBottom() {
+		return _htmlBottom;
+	}
+
+	public String getHtmlTop() {
+		return _htmlTop;
+	}
+
+	public String getId() {
+		return _id;
+	}
+
+	public String getMarkupView() {
+		return _markupView;
+	}
+
+	public boolean isShowButtons() {
+		return _showButtons;
+	}
+
 	public void setBackURL(String backURL) {
 		_backURL = backURL;
 	}

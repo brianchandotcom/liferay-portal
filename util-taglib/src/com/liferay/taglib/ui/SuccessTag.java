@@ -76,6 +76,30 @@ public class SuccessTag extends IncludeTag implements BodyTag {
 		return SKIP_BODY;
 	}
 
+	public String getKey() {
+		return _key;
+	}
+
+	public String getMessage() {
+		return _message;
+	}
+
+	public String getTargetNode() {
+		return _targetNode;
+	}
+
+	public int getTimeout() {
+		return _timeout;
+	}
+
+	public boolean isEmbed() {
+		return _embed;
+	}
+
+	public boolean isTranslateMessage() {
+		return _translateMessage;
+	}
+
 	@Override
 	public int processEndTag() throws Exception {
 		String message = _message;

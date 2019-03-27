@@ -66,6 +66,14 @@ public class PublishChangesetTag extends IncludeTag {
 		return EVAL_BODY_INCLUDE;
 	}
 
+	public Changeset getChangeset() {
+		return _changeset;
+	}
+
+	public long getGroupId() {
+		return _groupId;
+	}
+
 	public void setChangeset(Changeset changeset) {
 		_changeset = changeset;
 	}

@@ -29,9 +29,49 @@ import javax.servlet.http.HttpServletRequest;
  */
 public class InputSearchTag extends BaseValidatorTagSupport {
 
+	public String getButtonLabel() {
+		return _buttonLabel;
+	}
+
+	public String getCssClass() {
+		return _cssClass;
+	}
+
+	public String getId() {
+		return _id;
+	}
+
 	@Override
 	public String getInputName() {
 		return _name;
+	}
+
+	public String getMarkupView() {
+		return _markupView;
+	}
+
+	public String getName() {
+		return _name;
+	}
+
+	public String getPlaceholder() {
+		return _placeholder;
+	}
+
+	public String getTitle() {
+		return _title;
+	}
+
+	public boolean isAutoFocus() {
+		return _autoFocus;
+	}
+
+	public boolean isShowButton() {
+		return _showButton;
+	}
+
+	public boolean isUseNamespace() {
+		return _useNamespace;
 	}
 
 	public void setAutoFocus(boolean autoFocus) {

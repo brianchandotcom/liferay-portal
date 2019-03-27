@@ -27,6 +27,30 @@ import javax.servlet.jsp.PageContext;
  */
 public class AssetTagsNavigationTag extends IncludeTag {
 
+	public long getClassNameId() {
+		return _classNameId;
+	}
+
+	public String getDisplayStyle() {
+		return _displayStyle;
+	}
+
+	public int getMaxAssetTags() {
+		return _maxAssetTags;
+	}
+
+	public boolean isHidePortletWhenEmpty() {
+		return _hidePortletWhenEmpty;
+	}
+
+	public boolean isShowAssetCount() {
+		return _showAssetCount;
+	}
+
+	public boolean isShowZeroAssetCount() {
+		return _showZeroAssetCount;
+	}
+
 	public void setClassNameId(long classNameId) {
 		_classNameId = classNameId;
 	}

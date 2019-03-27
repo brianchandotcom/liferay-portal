@@ -35,6 +35,22 @@ public class AssetTagsSummaryTag<R> extends IncludeTag {
 		return _assetTagNames;
 	}
 
+	public String getClassName() {
+		return _className;
+	}
+
+	public long getClassPK() {
+		return _classPK;
+	}
+
+	public String getMessage() {
+		return _message;
+	}
+
+	public String getParamName() {
+		return _paramName;
+	}
+
 	public PortletURL getPortletURL() {
 		return _portletURL;
 	}

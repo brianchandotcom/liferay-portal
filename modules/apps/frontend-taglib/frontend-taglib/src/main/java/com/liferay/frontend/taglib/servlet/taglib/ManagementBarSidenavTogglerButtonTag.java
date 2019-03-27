@@ -25,6 +25,22 @@ import javax.servlet.http.HttpServletRequest;
 public class ManagementBarSidenavTogglerButtonTag
 	extends ManagementBarButtonTag {
 
+	public String getPosition() {
+		return _position;
+	}
+
+	public String getType() {
+		return _type;
+	}
+
+	public String getTypeMobile() {
+		return _typeMobile;
+	}
+
+	public String getWidth() {
+		return _width;
+	}
+
 	@Override
 	public void setHref(String href) {
 		_href = href;

@@ -31,6 +31,30 @@ import javax.servlet.jsp.PageContext;
  */
 public class EmptyResultMessageTag extends IncludeTag {
 
+	public List<DropdownItem> getActionDropdownItems() {
+		return _actionDropdownItems;
+	}
+
+	public EmptyResultMessageKeys.AnimationType getAnimationType() {
+		return _animationType;
+	}
+
+	public String getComponentId() {
+		return _componentId;
+	}
+
+	public String getDefaultEventHandler() {
+		return _defaultEventHandler;
+	}
+
+	public String getDescription() {
+		return _description;
+	}
+
+	public String getElementType() {
+		return _elementType;
+	}
+
 	public void setActionDropdownItems(List<DropdownItem> actionDropdownItems) {
 		_actionDropdownItems = actionDropdownItems;
 	}

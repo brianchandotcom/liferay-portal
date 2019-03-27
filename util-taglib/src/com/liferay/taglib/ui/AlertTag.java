@@ -40,6 +40,38 @@ public class AlertTag extends IncludeTag {
 		return EVAL_BODY_INCLUDE;
 	}
 
+	public Integer getAnimationTime() {
+		return _animationTime;
+	}
+
+	public String getIcon() {
+		return _icon;
+	}
+
+	public String getMessage() {
+		return _message;
+	}
+
+	public String getTargetNode() {
+		return _targetNode;
+	}
+
+	public Integer getTimeout() {
+		return _timeout;
+	}
+
+	public String getTitle() {
+		return _title;
+	}
+
+	public String getType() {
+		return _type;
+	}
+
+	public boolean isCloseable() {
+		return _closeable;
+	}
+
 	@Override
 	public int processEndTag() throws Exception {
 		Map<String, String> values = new HashMap<>();

@@ -24,6 +24,18 @@ import javax.servlet.http.HttpServletRequest;
  */
 public class SearchPaginatorTag<R> extends SearchFormTag<R> {
 
+	public String getId() {
+		return _id;
+	}
+
+	public String getMarkupView() {
+		return _markupView;
+	}
+
+	public String getType() {
+		return _type;
+	}
+
 	public void setId(String id) {
 		_id = id;
 	}

@@ -38,6 +38,84 @@ public class AppViewSearchEntryTag extends IncludeTag {
 		return EVAL_BODY_INCLUDE;
 	}
 
+	public String getActionJsp() {
+		return _actionJsp;
+	}
+
+	public List<RelatedSearchResult<Comment>> getCommentRelatedSearchResults() {
+		return _commentRelatedSearchResults;
+	}
+
+	public String getContainerName() {
+		return _containerName;
+	}
+
+	public String getContainerType() {
+		return _containerType;
+	}
+
+	public String getCssClass() {
+		return _cssClass;
+	}
+
+	public String getDescription() {
+		return _description;
+	}
+
+	public List<RelatedSearchResult<FileEntry>>
+		getFileEntryRelatedSearchResults() {
+
+		return _fileEntryRelatedSearchResults;
+	}
+
+	public String[] getQueryTerms() {
+		return _queryTerms;
+	}
+
+	public String getRowCheckerId() {
+		return _rowCheckerId;
+	}
+
+	public String getRowCheckerName() {
+		return _rowCheckerName;
+	}
+
+	public int getStatus() {
+		return _status;
+	}
+
+	public String getThumbnailSrc() {
+		return _thumbnailSrc;
+	}
+
+	public String getTitle() {
+		return _title;
+	}
+
+	public String getUrl() {
+		return _url;
+	}
+
+	public List<String> getVersions() {
+		return _versions;
+	}
+
+	public boolean isEscape() {
+		return _escape;
+	}
+
+	public boolean isHighlightEnabled() {
+		return _highlightEnabled;
+	}
+
+	public boolean isLocked() {
+		return _locked;
+	}
+
+	public boolean isShowCheckbox() {
+		return _showCheckbox;
+	}
+
 	public void setActionJsp(String actionJsp) {
 		_actionJsp = actionJsp;
 	}

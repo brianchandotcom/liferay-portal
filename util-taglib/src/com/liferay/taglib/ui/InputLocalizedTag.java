@@ -37,6 +37,90 @@ public class InputLocalizedTag extends IncludeTag {
 		return _availableLocales;
 	}
 
+	public String getCssClass() {
+		return _cssClass;
+	}
+
+	public String getDefaultLanguageId() {
+		return _defaultLanguageId;
+	}
+
+	public String getDisplayWidth() {
+		return _displayWidth;
+	}
+
+	public String getEditorName() {
+		return _editorName;
+	}
+
+	public String getFieldPrefix() {
+		return _fieldPrefix;
+	}
+
+	public String getFieldPrefixSeparator() {
+		return _fieldPrefixSeparator;
+	}
+
+	public String getFormName() {
+		return _formName;
+	}
+
+	public String getHelpMessage() {
+		return _helpMessage;
+	}
+
+	public String getId() {
+		return _id;
+	}
+
+	public String getInputAddon() {
+		return _inputAddon;
+	}
+
+	public String getLanguageId() {
+		return _languageId;
+	}
+
+	public String getMaxLength() {
+		return _maxLength;
+	}
+
+	public String getName() {
+		return _name;
+	}
+
+	public String getPlaceholder() {
+		return _placeholder;
+	}
+
+	public String getToolbarSet() {
+		return _toolbarSet;
+	}
+
+	public String getType() {
+		return _type;
+	}
+
+	public String getXml() {
+		return _xml;
+	}
+
+	public boolean isAutoFocus() {
+		return _autoFocus;
+	}
+
+	public boolean isAutoSize() {
+		return _autoSize;
+	}
+
+	public boolean isDisabled() {
+		return _disabled;
+	}
+
+	public boolean isIgnoreRequestValue() {
+		return _ignoreRequestValue;
+	}
+
 	public void setAutoFocus(boolean autoFocus) {
 		_autoFocus = autoFocus;
 	}

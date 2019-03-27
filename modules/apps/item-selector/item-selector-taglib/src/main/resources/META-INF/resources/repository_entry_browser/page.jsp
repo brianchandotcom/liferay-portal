@@ -20,7 +20,6 @@
 String randomNamespace = PortalUtil.generateRandomKey(request, "taglib_ui_repository_entry_browse_page") + StringPool.UNDERLINE;
 
 String displayStyle = GetterUtil.getString(request.getAttribute("liferay-item-selector:repository-entry-browser:displayStyle"));
-DLMimeTypeDisplayContext dlMimeTypeDisplayContext = (DLMimeTypeDisplayContext)request.getAttribute("liferay-item-selector:repository-entry-browser:dlMimeTypeDisplayContext");
 String emptyResultsMessage = GetterUtil.getString(request.getAttribute("liferay-item-selector:repository-entry-browser:emptyResultsMessage"));
 ItemSelectorReturnType existingFileEntryReturnType = (ItemSelectorReturnType)request.getAttribute("liferay-item-selector:repository-entry-browser:existingFileEntryReturnType");
 List<String> extensions = (List)request.getAttribute("liferay-item-selector:repository-entry-browser:extensions");
@@ -310,14 +309,6 @@ ItemSelectorRepositoryEntryManagementToolbarDisplayContext itemSelectorRepositor
 									data.put("title", title);
 									data.put("url", DLURLHelperUtil.getPreviewURL(fileEntry, latestFileVersion, themeDisplay, StringPool.BLANK));
 									data.put("value", ItemSelectorRepositoryEntryBrowserUtil.getValue(itemSelectorReturnTypeResolver, existingFileEntryReturnType, fileEntry, themeDisplay));
-
-									String stickerCssClass = "file-icon-color-0";
-
-									String fileExtensionSticker = StringUtil.shorten(StringUtil.upperCase(fileEntry.getExtension()), 3, StringPool.BLANK);
-
-									if (Validator.isNotNull(dlMimeTypeDisplayContext)) {
-										stickerCssClass = dlMimeTypeDisplayContext.getCssClassFileMimeType(fileEntry.getMimeType());
-									}
 								%>
 
 									<liferay-ui:search-container-column-text>
@@ -331,9 +322,10 @@ ItemSelectorRepositoryEntryManagementToolbarDisplayContext itemSelectorRepositor
 													title="<%= title %>"
 												>
 													<liferay-frontend:vertical-card-sticker-bottom>
-														<div class="sticker sticker-secondary sticker-bottom-left <%= stickerCssClass %>">
-															<%= fileExtensionSticker %>
-														</div>
+														<liferay-document-library:mime-type-sticker
+															cssClass="sticker-bottom-left sticker-secondary"
+															fileVersion="<%= latestFileVersion %>"
+														/>
 													</liferay-frontend:vertical-card-sticker-bottom>
 												</liferay-frontend:icon-vertical-card>
 											</c:when>
@@ -346,9 +338,10 @@ ItemSelectorRepositoryEntryManagementToolbarDisplayContext itemSelectorRepositor
 													title="<%= title %>"
 												>
 													<liferay-frontend:vertical-card-sticker-bottom>
-														<div class="sticker sticker-bottom <%= stickerCssClass %>">
-															<%= fileExtensionSticker %>
-														</div>
+														<liferay-document-library:mime-type-sticker
+															cssClass="sticker-bottom sticker-secondary"
+															fileVersion="<%= latestFileVersion %>"
+														/>
 													</liferay-frontend:vertical-card-sticker-bottom>
 												</liferay-frontend:vertical-card>
 											</c:otherwise>
@@ -415,11 +408,11 @@ ItemSelectorRepositoryEntryManagementToolbarDisplayContext itemSelectorRepositor
 												src="<%= DLURLHelperUtil.getThumbnailSrc(fileEntry, themeDisplay) %>"
 											/>
 										</c:when>
-										<c:when test="<%= (dlMimeTypeDisplayContext != null) && Validator.isNotNull(latestFileVersion.getExtension()) %>">
+										<c:when test="<%= Validator.isNotNull(latestFileVersion.getExtension()) %>">
 											<liferay-ui:search-container-column-text>
-												<div class="sticker <%= dlMimeTypeDisplayContext.getCssClassFileMimeType(fileEntry.getMimeType()) %>">
-													<%= StringUtil.shorten(StringUtil.upperCase(latestFileVersion.getExtension()), 3, StringPool.BLANK) %>
-												</div>
+												<liferay-document-library:mime-type-sticker
+													fileVersion="<%= latestFileVersion %>"
+												/>
 											</liferay-ui:search-container-column-text>
 										</c:when>
 										<c:otherwise>

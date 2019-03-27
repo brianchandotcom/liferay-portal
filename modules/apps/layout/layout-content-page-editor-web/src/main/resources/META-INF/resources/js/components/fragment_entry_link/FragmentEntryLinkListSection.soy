@@ -173,6 +173,8 @@
 						{param _handleFragmentMove: $_handleFragmentMove /}
 						{param _handleResizerMouseDown: $_handleResizerMouseDown /}
 						{param _resizeColumnIndex: $_resizeColumnIndex /}
+						{param activeItemId: $activeItemId /}
+						{param activeItemType: $activeItemType /}
 						{param columnId: $column.columnId /}
 						{param columnIndex: index($column) /}
 						{param defaultEditorConfigurations: $defaultEditorConfigurations /}
@@ -217,6 +219,8 @@
 	{@param? dropTargetBorder: string}
 	{@param? dropTargetItemId: string}
 	{@param? dropTargetItemType: string}
+	{@param? activeItemId: string}
+	{@param? activeItemType: string}
 	{@param? hoveredItemId: string}
 	{@param? hoveredItemType: string}
 	{@param? lastColumn: bool}
@@ -269,6 +273,8 @@
 
 			{if $fragmentEntryLink}
 				{call .fragmentEntryLink}
+					{param activeItemId: $activeItemId /}
+					{param activeItemType: $activeItemType /}
 					{param content: $fragmentEntryLink.content /}
 					{param defaultEditorConfigurations: $defaultEditorConfigurations /}
 					{param defaultSegmentsExperienceId: $defaultSegmentsExperienceId /}
@@ -316,6 +322,8 @@
 	{@param name: string}
 	{@param selectedMappingTypes: ?}
 	{@param store: ?}
+	{@param? activeItemId: string}
+	{@param? activeItemType: string}
 	{@param? hoveredItemId: string}
 	{@param? hoveredItemType: string}
 	{@param? _handleFragmentMove: ?}
@@ -325,6 +333,11 @@
 	{let $styleModifier kind="text"}
 		{if $dropTargetItemId == $fragmentEntryLinkId and $dropTargetItemType == $dropTargetItemTypes.fragment}
 			{sp}{$dropTargetBorder}
+		{/if}
+
+		{if $activeItemId == $fragmentEntryLinkId and $activeItemType == $dropTargetItemTypes.fragment}
+			{sp}fragments-editor__topper-wrapper--active
+			{sp}fragment-entry-link-wrapper--active
 		{/if}
 
 		{if $hoveredItemId == $fragmentEntryLinkId and $hoveredItemType == $dropTargetItemTypes.fragment}

@@ -5,7 +5,6 @@ import {Config} from 'metal-state';
 import './FragmentEntryLinkContent.es';
 import templates from './FragmentEntryLink.soy';
 import {REMOVE_FRAGMENT_ENTRY_LINK} from '../../actions/actions.es';
-import {FRAGMENTS_EDITOR_ITEM_TYPES} from '../../utils/constants';
 import {getConnectedComponent} from '../../store/ConnectedComponent.es';
 import {getItemMoveDirection} from '../../utils/FragmentsEditorGetUtils.es';
 import {removeItem} from '../../utils/FragmentsEditorUpdateUtils.es';
@@ -16,20 +15,6 @@ import {shouldUpdatePureComponent} from '../../utils/FragmentsEditorComponentUti
  * @review
  */
 class FragmentEntryLink extends Component {
-
-	/**
-	 * @inheritdoc
-	 * @review
-	 */
-	rendered() {
-		if (
-			(this.activeItemType === FRAGMENTS_EDITOR_ITEM_TYPES.fragment) &&
-			(this.activeItemId === this.fragmentEntryLinkId) &&
-			this.element
-		) {
-			this.element.focus();
-		}
-	}
 
 	/**
 	 * @inheritdoc

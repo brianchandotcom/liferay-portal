@@ -55,8 +55,6 @@ import com.liferay.ratings.kernel.service.RatingsStatsLocalService;
 import java.util.List;
 import java.util.Optional;
 
-import javax.validation.constraints.NotNull;
-
 import javax.ws.rs.core.MultivaluedMap;
 
 import org.osgi.service.component.annotations.Component;
@@ -83,45 +81,20 @@ public class KnowledgeBaseArticleResourceImpl
 
 	@Override
 	public Page<KnowledgeBaseArticle> getContentSpaceKnowledgeBaseArticlesPage(
-			@NotNull Long contentSpaceId, Filter filter, Pagination pagination,
-			Sort[] sorts)
+			Long contentSpaceId, Boolean tree, Filter filter,
+			Pagination pagination, Sort[] sorts)
 		throws Exception {
 
 		return SearchUtil.search(
 			booleanQuery -> {
-			},
-			filter, KBArticle.class, pagination,
-			queryConfig -> queryConfig.setSelectedFieldNames(
-				Field.ENTRY_CLASS_PK),
-			searchContext -> {
-				searchContext.setAttribute(
-					Field.STATUS, WorkflowConstants.STATUS_APPROVED);
-				searchContext.setCompanyId(contextCompany.getCompanyId());
-				searchContext.setGroupIds(new long[] {contentSpaceId});
-				searchContext.setKeywords("");
-			},
-			document -> _toKBArticle(
-				_kbArticleService.getLatestKBArticle(
-					GetterUtil.getLong(document.get(Field.ENTRY_CLASS_PK)),
-					WorkflowConstants.STATUS_APPROVED)),
-			sorts);
-	}
+				if ((tree != null) && tree) {
+					BooleanFilter booleanFilter =
+						booleanQuery.getPreBooleanFilter();
 
-	@Override
-	public Page<KnowledgeBaseArticle>
-			getContentSpaceTreeKnowledgeBaseArticlesPage(
-				@NotNull Long contentSpaceId, Filter filter,
-				Pagination pagination, Sort[] sorts)
-		throws Exception {
-
-		return SearchUtil.search(
-			booleanQuery -> {
-				BooleanFilter booleanFilter =
-					booleanQuery.getPreBooleanFilter();
-
-				booleanFilter.add(
-					new ExistsFilter("folderNames"),
-					BooleanClauseOccur.MUST_NOT);
+					booleanFilter.add(
+						new ExistsFilter("folderNames"),
+						BooleanClauseOccur.MUST_NOT);
+				}
 			},
 			filter, KBArticle.class, pagination,
 			queryConfig -> queryConfig.setSelectedFieldNames(
@@ -204,17 +177,6 @@ public class KnowledgeBaseArticleResourceImpl
 
 	@Override
 	public KnowledgeBaseArticle postContentSpaceKnowledgeBaseArticle(
-			Long contentSpaceId, KnowledgeBaseArticle knowledgeBaseArticle)
-		throws Exception {
-
-		return _getKnowledgeBaseArticle(
-			contentSpaceId, 0L,
-			_classNameLocalService.fetchClassName(KBFolder.class.getName()),
-			knowledgeBaseArticle);
-	}
-
-	@Override
-	public KnowledgeBaseArticle postContentSpaceTreeKnowledgeBaseArticle(
 			Long contentSpaceId, KnowledgeBaseArticle knowledgeBaseArticle)
 		throws Exception {
 

@@ -156,7 +156,7 @@ public class StructuredContentResourceImpl
 	}
 
 	@Override
-	public StructuredContent getContentSpaceKeyStructuredContent(
+	public StructuredContent getContentSpaceStructuredContentByKey(
 			Long contentSpaceId, String key)
 		throws Exception {
 
@@ -167,17 +167,7 @@ public class StructuredContentResourceImpl
 	}
 
 	@Override
-	public Page<StructuredContent> getContentSpaceStructuredContentsPage(
-			Long contentSpaceId, Filter filter, Pagination pagination,
-			Sort[] sorts)
-		throws Exception {
-
-		return _getStructuredContentsPage(
-			contentSpaceId, null, filter, pagination, sorts);
-	}
-
-	@Override
-	public StructuredContent getContentSpaceUuidStructuredContent(
+	public StructuredContent getContentSpaceStructuredContentByUuid(
 			Long contentSpaceId, String uuid)
 		throws Exception {
 
@@ -190,6 +180,16 @@ public class StructuredContentResourceImpl
 			journalArticle.getResourcePrimKey(), ActionKeys.VIEW);
 
 		return _getStructuredContent(journalArticle);
+	}
+
+	@Override
+	public Page<StructuredContent> getContentSpaceStructuredContentsPage(
+			Long contentSpaceId, Filter filter, Pagination pagination,
+			Sort[] sorts)
+		throws Exception {
+
+		return _getStructuredContentsPage(
+			contentSpaceId, null, filter, pagination, sorts);
 	}
 
 	@Override

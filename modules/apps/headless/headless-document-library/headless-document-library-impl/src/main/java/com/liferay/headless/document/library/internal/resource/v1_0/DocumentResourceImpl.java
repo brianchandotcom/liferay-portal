@@ -90,9 +90,9 @@ public class DocumentResourceImpl
 	}
 
 	@Override
-	public Page<Document> getContentSpaceTreeDocumentsPage(
-			Long contentSpaceId, Filter filter, Pagination pagination,
-			Sort[] sorts)
+	public Page<Document> getContentSpaceDocumentsPage(
+			Long contentSpaceId, Boolean tree, Filter filter,
+			Pagination pagination, Sort[] sorts)
 		throws Exception {
 
 		return _getDocumentsPage(
@@ -214,7 +214,7 @@ public class DocumentResourceImpl
 	}
 
 	@Override
-	public Document postContentSpaceTreeDocument(
+	public Document postContentSpaceDocument(
 			Long contentSpaceId, MultipartBody multipartBody)
 		throws Exception {
 

@@ -28,7 +28,7 @@
 
 					<img alt="<%= HtmlUtil.escapeAttribute(group.getDescriptiveName(locale)) %>" height="56" src="<%= HtmlUtil.escape(themeDisplay.getCompanyLogo()) %>" />
 
-					<h1 class="font-weight-bold h4 mb-0 text-dark">
+					<h1 class="font-weight-bold h2 mb-0 text-dark">
 						<%= PropsValues.COMPANY_DEFAULT_NAME %>
 					</h1>
 				</div>

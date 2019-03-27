@@ -3612,6 +3612,13 @@ public class ServiceBuilder {
 
 					pkEntityColumnDBNames = entity.getPKEntityColumnDBNames();
 				}
+				else {
+					EntityMapping entityMapping = _entityMappings.get(
+						indexMetadata.getTableName());
+
+					pkEntityColumnDBNames =
+						_getEntityMappingPKEntityColumnDBNames(entityMapping);
+				}
 
 				_addIndexMetadata(
 					indexMetadatasMap, indexMetadata.getTableName(),
@@ -4396,22 +4403,16 @@ public class ServiceBuilder {
 
 		Entity[] entities = new Entity[3];
 
-		List<String> mappingPKEntityColumnDBNames = new ArrayList<>();
-
 		for (int i = 0; i < entities.length; i++) {
 			entities[i] = getEntity(entityMapping.getEntityName(i));
 
 			if (entities[i] == null) {
 				return;
 			}
-
-			// Skip Company
-
-			if (i != 0) {
-				mappingPKEntityColumnDBNames.addAll(
-					entities[i].getPKEntityColumnDBNames());
-			}
 		}
+
+		List<String> mappingPKEntityColumnDBNames =
+			_getEntityMappingPKEntityColumnDBNames(entityMapping);
 
 		String tableName = entityMapping.getTableName();
 
@@ -4834,6 +4835,32 @@ public class ServiceBuilder {
 			StringBundler.concat(
 				"No entity column exist with column database name ",
 				columnDBName, " for entity ", entity.getName()));
+	}
+
+	private List<String> _getEntityMappingPKEntityColumnDBNames(
+			EntityMapping entityMapping)
+		throws Exception {
+
+		if (entityMapping == null) {
+			return null;
+		}
+
+		List<String> mappingPKEntityColumnDBNames = new ArrayList<>();
+
+		// Skip Company
+
+		for (int i = 1; i < 3; i++) {
+			Entity entity = getEntity(entityMapping.getEntityName(i));
+
+			if (entity == null) {
+				return null;
+			}
+
+			mappingPKEntityColumnDBNames.addAll(
+				entity.getPKEntityColumnDBNames());
+		}
+
+		return mappingPKEntityColumnDBNames;
 	}
 
 	private String _getFileContent(String fileName) throws IOException {

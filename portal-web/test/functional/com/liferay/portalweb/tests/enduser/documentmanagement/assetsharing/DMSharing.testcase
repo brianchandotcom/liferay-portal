@@ -259,6 +259,8 @@ definition {
 			dmDocumentTitle = "Document with sharing disabled"
 		);
 
+		LexiconEntry.openEntryMenu(rowEntry = "Document with sharing disabled");
+
 		AssertElementNotPresent(locator1="MenuItem#ANY_MENU_ITEM", key_menuItem="Share");
 
 		AssertClick(
@@ -298,6 +300,8 @@ definition {
 			dmDocumentFile = "Document_1.doc",
 			dmDocumentTitle = "Document with sharing disabled"
 		);
+
+		LexiconEntry.openEntryMenu(rowEntry = "Document with sharing disabled");
 
 		AssertElementNotPresent(locator1="MenuItem#ANY_MENU_ITEM", key_menuItem="Share");
 

@@ -247,12 +247,10 @@ String viewInContextURL = assetRenderer.getURLViewInContext(liferayPortletReques
 
 	<%
 	boolean showContextLink = assetPublisherDisplayContext.isShowContextLink(assetRenderer.getGroupId(), assetRendererFactory.getPortletId()) && !print && assetEntry.isVisible();
-	boolean showConversions = assetPublisherDisplayContext.isEnableConversions() && assetRenderer.isConvertible() && !print;
-	boolean showLocalization = (assetPublisherDisplayContext.isShowAvailableLocales() && assetRenderer.isLocalizable() && !print);
 	boolean showRatings = assetPublisherDisplayContext.isEnableRatings() && assetRenderer.isRatable();
 	%>
 
-	<c:if test="<%= showContextLink || showRatings || assetPublisherDisplayContext.isEnableFlags() || assetPublisherDisplayContext.isEnablePrint() || showLocalization || showConversions %>">
+	<c:if test="<%= showContextLink || showRatings || assetPublisherDisplayContext.isEnableFlags() || assetPublisherDisplayContext.isEnablePrint() || Validator.isNotNull(assetPublisherDisplayContext.getSocialBookmarksTypes()) %>">
 		<div class="separator"><!-- --></div>
 
 		<div class="asset-details autofit-row autofit-row-center">
@@ -343,6 +341,31 @@ String viewInContextURL = assetRenderer.getURLViewInContext(liferayPortletReques
 				</div>
 			</c:if>
 
+			<c:if test="<%= Validator.isNotNull(assetPublisherDisplayContext.getSocialBookmarksTypes()) %>">
+				<div class="autofit-col">
+					<liferay-social-bookmarks:bookmarks
+						className="<%= assetEntry.getClassName() %>"
+						classPK="<%= assetEntry.getClassPK() %>"
+						displayStyle="<%= assetPublisherDisplayContext.getSocialBookmarksDisplayStyle() %>"
+						target="_blank"
+						title="<%= title %>"
+						types="<%= assetPublisherDisplayContext.getSocialBookmarksTypes() %>"
+						urlImpl="<%= viewFullContentURL %>"
+					/>
+				</div>
+			</c:if>
+		</div>
+	</c:if>
+
+	<%
+	boolean showConversions = assetPublisherDisplayContext.isEnableConversions() && assetRenderer.isConvertible() && !print;
+	boolean showLocalization = (assetPublisherDisplayContext.isShowAvailableLocales() && assetRenderer.isLocalizable() && !print);
+	%>
+
+	<c:if test="<%= showConversions || showLocalization %>">
+		<div class="separator"><!-- --></div>
+
+		<div class="asset-details autofit-row autofit-row-center">
 			<c:if test="<%= showLocalization %>">
 
 				<%
@@ -387,20 +410,6 @@ String viewInContextURL = assetRenderer.getURLViewInContext(liferayPortletReques
 
 			</c:if>
 		</div>
-	</c:if>
-
-	<c:if test="<%= Validator.isNotNull(assetPublisherDisplayContext.getSocialBookmarksTypes()) %>">
-		<div class="separator"><!-- --></div>
-
-		<liferay-social-bookmarks:bookmarks
-			className="<%= assetEntry.getClassName() %>"
-			classPK="<%= assetEntry.getClassPK() %>"
-			displayStyle="<%= assetPublisherDisplayContext.getSocialBookmarksDisplayStyle() %>"
-			target="_blank"
-			title="<%= title %>"
-			types="<%= assetPublisherDisplayContext.getSocialBookmarksTypes() %>"
-			urlImpl="<%= viewFullContentURL %>"
-		/>
 	</c:if>
 
 	<c:if test="<%= assetPublisherDisplayContext.isEnableComments() && assetRenderer.isCommentable() %>">

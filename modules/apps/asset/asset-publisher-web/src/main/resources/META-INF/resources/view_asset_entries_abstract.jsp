@@ -213,7 +213,7 @@ for (AssetEntry assetEntry : assetEntryResult.getAssetEntries()) {
 				</div>
 			</c:if>
 
-			<c:if test="<%= (assetPublisherDisplayContext.isEnableRatings() && assetRenderer.isRatable()) || assetPublisherDisplayContext.isEnableFlags() || assetPublisherDisplayContext.isEnablePrint() || (assetPublisherDisplayContext.isShowAvailableLocales() && assetRenderer.isLocalizable()) || (assetPublisherDisplayContext.isEnableConversions() && assetRenderer.isConvertible()) %>">
+			<c:if test="<%= (assetPublisherDisplayContext.isEnableRatings() && assetRenderer.isRatable()) || assetPublisherDisplayContext.isEnableFlags() || assetPublisherDisplayContext.isEnablePrint() || Validator.isNotNull(assetPublisherDisplayContext.getSocialBookmarksTypes()) %>">
 				<div class="separator"><!-- --></div>
 
 				<div class="asset-details autofit-row autofit-row-center">
@@ -279,6 +279,39 @@ for (AssetEntry assetEntry : assetEntryResult.getAssetEntries()) {
 						</div>
 					</c:if>
 
+					<%
+					PortletURL viewFullContentURL = renderResponse.createRenderURL();
+
+					viewFullContentURL.setParameter("mvcPath", "/view_content.jsp");
+					viewFullContentURL.setParameter("type", assetRendererFactory.getType());
+
+					if (Validator.isNotNull(assetRenderer.getUrlTitle())) {
+						if (assetRenderer.getGroupId() != scopeGroupId) {
+							viewFullContentURL.setParameter("groupId", String.valueOf(assetRenderer.getGroupId()));
+						}
+
+						viewFullContentURL.setParameter("urlTitle", assetRenderer.getUrlTitle());
+					}
+					%>
+
+					<div class="autofit-col">
+						<liferay-social-bookmarks:bookmarks
+							className="<%= assetEntry.getClassName() %>"
+							classPK="<%= assetEntry.getClassPK() %>"
+							displayStyle="<%= assetPublisherDisplayContext.getSocialBookmarksDisplayStyle() %>"
+							target="_blank"
+							title="<%= title %>"
+							types="<%= assetPublisherDisplayContext.getSocialBookmarksTypes() %>"
+							urlImpl="<%= viewFullContentURL %>"
+						/>
+					</div>
+				</div>
+			</c:if>
+
+			<c:if test="<%= (assetPublisherDisplayContext.isShowAvailableLocales() && assetRenderer.isLocalizable()) || (assetPublisherDisplayContext.isEnableConversions() && assetRenderer.isConvertible()) %>">
+				<div class="separator"><!-- --></div>
+
+				<div class="asset-details autofit-row autofit-row-center">
 					<c:if test="<%= assetPublisherDisplayContext.isShowAvailableLocales() && assetRenderer.isLocalizable() %>">
 
 						<%
@@ -323,35 +356,6 @@ for (AssetEntry assetEntry : assetEntryResult.getAssetEntries()) {
 
 					</c:if>
 				</div>
-			</c:if>
-
-			<c:if test="<%= Validator.isNotNull(assetPublisherDisplayContext.getSocialBookmarksTypes()) %>">
-				<div class="separator"><!-- --></div>
-
-				<%
-				PortletURL viewFullContentURL = renderResponse.createRenderURL();
-
-				viewFullContentURL.setParameter("mvcPath", "/view_content.jsp");
-				viewFullContentURL.setParameter("type", assetRendererFactory.getType());
-
-				if (Validator.isNotNull(assetRenderer.getUrlTitle())) {
-					if (assetRenderer.getGroupId() != scopeGroupId) {
-						viewFullContentURL.setParameter("groupId", String.valueOf(assetRenderer.getGroupId()));
-					}
-
-					viewFullContentURL.setParameter("urlTitle", assetRenderer.getUrlTitle());
-				}
-				%>
-
-				<liferay-social-bookmarks:bookmarks
-					className="<%= assetEntry.getClassName() %>"
-					classPK="<%= assetEntry.getClassPK() %>"
-					displayStyle="<%= assetPublisherDisplayContext.getSocialBookmarksDisplayStyle() %>"
-					target="_blank"
-					title="<%= title %>"
-					types="<%= assetPublisherDisplayContext.getSocialBookmarksTypes() %>"
-					urlImpl="<%= viewFullContentURL %>"
-				/>
 			</c:if>
 
 			<c:if test="<%= assetPublisherDisplayContext.isEnableComments() && assetRenderer.isCommentable() %>">

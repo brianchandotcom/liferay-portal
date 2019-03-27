@@ -1097,16 +1097,6 @@ definition {
 		);
 	}
 
-	macro viewConfigureAPDisplayTemplateFullContentBookmarksPG {
-		var key_assetTitle = "${assetTitle}";
-
-		AssertElementPresent(locator1 = "Icon#SHARE");
-
-		AssertElementNotPresent(locator1 = "Link#READ_MORE");
-
-		SocialBookmarks.viewBookmarkIcons(socialBookmarks = "Facebook,LinkedIn,Twitter");
-	}
-
 	macro viewConfigureAPDisplayTemplateTableBookmarksPG {
 		var key_assetTitle = "${assetTitle}";
 		var key_bookmarkName = "${bookmarkName}";

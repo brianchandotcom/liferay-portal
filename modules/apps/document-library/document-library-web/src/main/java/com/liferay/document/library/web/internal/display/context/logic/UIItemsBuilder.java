@@ -493,9 +493,14 @@ public class UIItemsBuilder {
 			return;
 		}
 
+		String label = TextFormatter.formatStorageSize(
+			_fileEntry.getSize(), _themeDisplay.getLocale());
+
 		_addURLUIItem(
 			new URLToolbarItem(), toolbarItems, DLUIItemKeys.DOWNLOAD,
-			LanguageUtil.get(_resourceBundle, "download"),
+			StringBundler.concat(
+				LanguageUtil.get(_resourceBundle, "download"), " (", label,
+				")"),
 			_dlurlHelper.getDownloadURL(
 				_fileEntry, _fileVersion, _themeDisplay, StringPool.BLANK));
 	}

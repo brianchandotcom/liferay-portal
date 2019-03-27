@@ -29,7 +29,6 @@ import org.osgi.service.component.annotations.Component;
 	property = {
 		"com.liferay.portlet.css-class-wrapper=portlet-workflow-metrics-web",
 		"com.liferay.portlet.display-category=category.hidden",
-		"com.liferay.portlet.footer-portlet-javascript=/js/index.js",
 		"com.liferay.portlet.friendly-url-mapping=workflow_metrics_web",
 		"com.liferay.portlet.header-portlet-css=/css/main.css",
 		"com.liferay.portlet.icon=/icons/workflow.png",

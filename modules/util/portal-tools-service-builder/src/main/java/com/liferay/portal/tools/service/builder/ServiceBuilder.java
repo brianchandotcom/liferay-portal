@@ -3566,6 +3566,7 @@ public class ServiceBuilder {
 		try (UnsyncBufferedReader unsyncBufferedReader =
 				new UnsyncBufferedReader(new FileReader(sqlFile))) {
 
+			iterate:
 			while (true) {
 				String indexSQL = unsyncBufferedReader.readLine();
 
@@ -3592,6 +3593,22 @@ public class ServiceBuilder {
 						indexMetadata.getIndexName(),
 						indexMetadata.getTableName(), indexMetadata.isUnique(),
 						indexMetadata.getColumnNames());
+
+					for (String columnName : indexMetadata.getColumnNames()) {
+						EntityColumn entityColumn = _fetchEntityColumnDBName(
+							entity, columnName);
+
+						if (entityColumn == null) {
+							System.out.println(
+								StringBundler.concat(
+									"Removing index ",
+									indexMetadata.getIndexName(),
+									" because column \"", columnName,
+									"\" does not exist"));
+
+							continue iterate;
+						}
+					}
 
 					pkEntityColumnDBNames = entity.getPKEntityColumnDBNames();
 				}

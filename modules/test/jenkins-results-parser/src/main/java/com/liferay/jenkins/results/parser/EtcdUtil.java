@@ -37,9 +37,9 @@ import mousio.etcd4j.responses.EtcdKeysResponse;
 public class EtcdUtil {
 
 	public static void delete(
-		EtcdClient etcdClient, EtcdKeysResponse.EtcdNode node) {
+		String etcdServerURL, EtcdKeysResponse.EtcdNode node) {
 
-		try {
+		try (EtcdClient etcdClient = getEtcdClient(etcdServerURL)) {
 			EtcdKeyDeleteRequest etcdKeyDeleteRequest = null;
 
 			List<EtcdKeysResponse.EtcdNode> nodes = node.getNodes();
@@ -66,9 +66,9 @@ public class EtcdUtil {
 	}
 
 	public static EtcdKeysResponse.EtcdNode get(
-		EtcdClient etcdClient, String key) {
+		String etcdServerURL, String key) {
 
-		try {
+		try (EtcdClient etcdClient = getEtcdClient(etcdServerURL)) {
 			EtcdKeyGetRequest etcdKeyGetRequest = etcdClient.get(key);
 
 			EtcdResponsePromise<EtcdKeysResponse> etcdResponsePromise =
@@ -98,15 +98,15 @@ public class EtcdUtil {
 	}
 
 	public static EtcdKeysResponse.EtcdNode put(
-		EtcdClient etcdClient, String key) {
+		String etcdServerURL, String key) {
 
-		return put(etcdClient, key, null);
+		return put(etcdServerURL, key, null);
 	}
 
 	public static EtcdKeysResponse.EtcdNode put(
-		EtcdClient etcdClient, String key, String value) {
+		String etcdServerURL, String key, String value) {
 
-		try {
+		try (EtcdClient etcdClient = getEtcdClient(etcdServerURL)) {
 			EtcdKeyPutRequest etcdKeyPutRequest = null;
 
 			if (value == null) {

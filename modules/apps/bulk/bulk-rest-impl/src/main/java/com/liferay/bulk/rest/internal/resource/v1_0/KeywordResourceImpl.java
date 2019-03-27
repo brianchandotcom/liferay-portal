@@ -31,18 +31,14 @@ import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.BaseModelPermissionCheckerUtil;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
-import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.vulcan.pagination.Page;
 
 import java.io.Serializable;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
-import java.util.function.Function;
-import java.util.stream.Stream;
 
 import javax.ws.rs.core.Context;
 
@@ -79,20 +75,27 @@ public class KeywordResourceImpl extends BaseKeywordResourceImpl {
 		BulkSelection<AssetEntry> assetEntryBulkSelection =
 			bulkSelection.toAssetEntryBulkSelection();
 
-		Stream<AssetEntry> stream = assetEntryBulkSelection.stream();
+		PermissionChecker permissionChecker =
+			PermissionCheckerFactoryUtil.create(_user);
 
-		return Page.of(
-			transform(
-				new ArrayList<>(
-					stream.map(
-						_getAssetTagNamesFunction(
-							PermissionCheckerFactoryUtil.create(_user))
-					).reduce(
-						SetUtil::intersect
-					).orElse(
-						new HashSet<>()
-					)),
-				this::_toTag));
+		Set<String> assetTagNames = new HashSet<>();
+
+		assetEntryBulkSelection.forEach(
+			assetEntry -> {
+				if (BaseModelPermissionCheckerUtil.containsBaseModelPermission(
+						permissionChecker, assetEntry.getGroupId(),
+						assetEntry.getClassName(), assetEntry.getClassPK(),
+						ActionKeys.UPDATE)) {
+
+					Collections.addAll(
+						assetTagNames,
+						_assetTagLocalService.getTagNames(
+							assetEntry.getClassName(),
+							assetEntry.getClassPK()));
+				}
+			});
+
+		return Page.of(transform(assetTagNames, this::_toTag));
 	}
 
 	@Override
@@ -102,24 +105,6 @@ public class KeywordResourceImpl extends BaseKeywordResourceImpl {
 		_update(false, keywordBulkSelection);
 
 		return true;
-	}
-
-	private Function<AssetEntry, Set<String>> _getAssetTagNamesFunction(
-		PermissionChecker permissionChecker) {
-
-		return assetEntry -> {
-			if (!BaseModelPermissionCheckerUtil.containsBaseModelPermission(
-					permissionChecker, assetEntry.getGroupId(),
-					assetEntry.getClassName(), assetEntry.getClassPK(),
-					ActionKeys.UPDATE)) {
-
-				return Collections.emptySet();
-			}
-
-			return SetUtil.fromArray(
-				_assetTagLocalService.getTagNames(
-					assetEntry.getClassName(), assetEntry.getClassPK()));
-		};
 	}
 
 	private Keyword _toTag(String assetTagName) {

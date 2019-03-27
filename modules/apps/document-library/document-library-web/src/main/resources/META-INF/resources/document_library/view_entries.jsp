@@ -147,11 +147,10 @@ if (portletTitleBasedNavigation && (folderId != DLFolderConstants.DEFAULT_PARENT
 								</c:when>
 								<c:when test="<%= Validator.isNotNull(latestFileVersion.getExtension()) %>">
 									<liferay-ui:search-container-column-text>
-										<div class="sticker sticker-document sticker-secondary <%= dlViewFileVersionDisplayContext.getCssClassFileMimeType() %>">
-											<clay:icon
-												symbol="<%= dlViewFileVersionDisplayContext.getIconFileMimeType() %>"
-											/>
-										</div>
+										<liferay-document-library:mime-type-sticker
+											cssClass="sticker-secondary"
+											fileVersion="<%= latestFileVersion %>"
+										/>
 									</liferay-ui:search-container-column-text>
 								</c:when>
 								<c:otherwise>

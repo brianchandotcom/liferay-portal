@@ -78,7 +78,8 @@ public class AssetBrowserDisplayContext {
 
 		if (AssetBrowserWebConfigurationValues.SEARCH_WITH_DATABASE) {
 			int total = AssetEntryLocalServiceUtil.getEntriesCount(
-				_getFilterGroupIds(), _getClassNameIds(), _getKeywords(),
+				_getFilterGroupIds(), _getClassNameIds(),
+				new long[] {getSubtypeSelectionId()}, _getKeywords(),
 				_getKeywords(), _getKeywords(), _getKeywords(), _getListable(),
 				false, false);
 

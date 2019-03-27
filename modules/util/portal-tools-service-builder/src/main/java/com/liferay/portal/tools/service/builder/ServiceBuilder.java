@@ -4128,6 +4128,18 @@ public class ServiceBuilder {
 		_deleteFile("docroot/WEB-INF/src/META-INF/misc-spring.xml");
 	}
 
+	private EntityColumn _fetchEntityColumnDBName(
+		Entity entity, String columnDBName) {
+
+		for (EntityColumn entityColumn : entity.getFinderEntityColumns()) {
+			if (columnDBName.equals(entityColumn.getDBName())) {
+				return entityColumn;
+			}
+		}
+
+		return null;
+	}
+
 	private String _fixHbmXml(String content) throws IOException {
 		try (UnsyncBufferedReader unsyncBufferedReader =
 				new UnsyncBufferedReader(new UnsyncStringReader(content))) {
@@ -4794,10 +4806,11 @@ public class ServiceBuilder {
 	private EntityColumn _getEntityColumnByColumnDBName(
 		Entity entity, String columnDBName) {
 
-		for (EntityColumn entityColumn : entity.getFinderEntityColumns()) {
-			if (columnDBName.equals(entityColumn.getDBName())) {
-				return entityColumn;
-			}
+		EntityColumn entityColumn = _fetchEntityColumnDBName(
+			entity, columnDBName);
+
+		if (entityColumn != null) {
+			return entityColumn;
 		}
 
 		throw new IllegalArgumentException(

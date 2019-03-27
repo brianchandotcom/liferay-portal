@@ -1688,7 +1688,7 @@ artifact.url=${remote.repository.url}/com/liferay/portal/com.liferay.${processed
 
 	<macrodef name="setup-yarn">
 		<sequential>
-			<gradle-execute task="setUpYarn">
+			<gradle-execute dir="${project.dir}/modules" task="setUpYarn">
 				<arg value="--build-file=${project.dir}/modules/util.gradle" />
 			</gradle-execute>
 		</sequential>

@@ -109,10 +109,6 @@ public class SearchPortlet extends BaseKBPortlet {
 		throws IOException, PortletException {
 
 		try {
-			renderRequest.setAttribute(
-				KBWebKeys.DL_MIME_TYPE_DISPLAY_CONTEXT,
-				dlMimeTypeDisplayContext);
-
 			KBArticle kbArticle = null;
 
 			long resourcePrimKey = ParamUtil.getLong(

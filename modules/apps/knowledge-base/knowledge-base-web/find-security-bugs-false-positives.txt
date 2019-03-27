@@ -1,5 +1,4 @@
 com/liferay/document/library/configuration/DLConfiguration.fileExtensions()[Ljava/lang/String;:SAFE
-com/liferay/document/library/display/context/DLMimeTypeDisplayContext.getCssClassFileMimeType(Ljava/lang/String;)Ljava/lang/String;:SAFE
 com/liferay/knowledge/base/model/KBArticleModel.getContent()Ljava/lang/String;:SAFE
 com/liferay/knowledge/base/model/KBTemplateModel.getContent()Ljava/lang/String;:SAFE
 com/liferay/portal/kernel/dao/search/SearchContainer.getEmptyResultsMessage():SAFE@org/apache/jsp/section/view_jsp

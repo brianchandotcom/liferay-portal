@@ -99,10 +99,6 @@ public class SectionPortlet extends BaseKBPortlet {
 		throws IOException, PortletException {
 
 		try {
-			renderRequest.setAttribute(
-				KBWebKeys.DL_MIME_TYPE_DISPLAY_CONTEXT,
-				dlMimeTypeDisplayContext);
-
 			KBArticle kbArticle = getKBArticle(renderRequest);
 
 			renderRequest.setAttribute(

@@ -16,7 +16,6 @@ package com.liferay.knowledge.base.web.internal.portlet;
 
 import com.liferay.asset.kernel.exception.AssetCategoryException;
 import com.liferay.asset.kernel.exception.AssetTagException;
-import com.liferay.document.library.display.context.DLMimeTypeDisplayContext;
 import com.liferay.document.library.kernel.antivirus.AntivirusScannerException;
 import com.liferay.document.library.kernel.exception.DuplicateFileEntryException;
 import com.liferay.document.library.kernel.exception.DuplicateFileException;
@@ -93,9 +92,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.osgi.service.component.annotations.Reference;
-import org.osgi.service.component.annotations.ReferenceCardinality;
-import org.osgi.service.component.annotations.ReferencePolicy;
-import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
  * @author Adolfo Pérez
@@ -680,17 +676,6 @@ public abstract class BaseKBPortlet extends MVCPortlet {
 		this.adminHelper = adminHelper;
 	}
 
-	@Reference(
-		cardinality = ReferenceCardinality.OPTIONAL,
-		policy = ReferencePolicy.DYNAMIC,
-		policyOption = ReferencePolicyOption.GREEDY
-	)
-	protected void setDLMimeTypeDisplayContext(
-		DLMimeTypeDisplayContext dlMimeTypeDisplayContext) {
-
-		this.dlMimeTypeDisplayContext = dlMimeTypeDisplayContext;
-	}
-
 	@Reference(unbind = "-")
 	protected void setJSONFactory(JSONFactory jsonFactory) {
 		this.jsonFactory = jsonFactory;
@@ -735,14 +720,7 @@ public abstract class BaseKBPortlet extends MVCPortlet {
 		this.uploadResponseHandler = uploadResponseHandler;
 	}
 
-	protected void unsetDLMimeTypeDisplayContext(
-		DLMimeTypeDisplayContext dlMimeTypeDisplayContext) {
-
-		this.dlMimeTypeDisplayContext = null;
-	}
-
 	protected AdminHelper adminHelper;
-	protected DLMimeTypeDisplayContext dlMimeTypeDisplayContext;
 	protected JSONFactory jsonFactory;
 	protected KBArticleService kbArticleService;
 	protected KBCommentLocalService kbCommentLocalService;

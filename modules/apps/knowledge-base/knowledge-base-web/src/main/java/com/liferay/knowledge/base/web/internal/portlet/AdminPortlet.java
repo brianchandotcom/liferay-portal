@@ -466,10 +466,6 @@ public class AdminPortlet extends BaseKBPortlet {
 		throws IOException, PortletException {
 
 		try {
-			renderRequest.setAttribute(
-				KBWebKeys.DL_MIME_TYPE_DISPLAY_CONTEXT,
-				dlMimeTypeDisplayContext);
-
 			KBArticle kbArticle = null;
 
 			long kbArticleClassNameId = _portal.getClassNameId(

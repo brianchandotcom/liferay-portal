@@ -20,7 +20,7 @@ import java.util.concurrent.Callable;
 /**
  * @author Shuyang Zhou
  */
-public abstract class AbstractNoticeableExecutorService
+public abstract class BaseNoticeableExecutorService
 	extends AbstractExecutorService implements NoticeableExecutorService {
 
 	@Override

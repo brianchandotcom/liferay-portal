@@ -47,7 +47,7 @@ public class NoticeableThreadPoolExecutorTest {
 
 			@Override
 			public void appendAssertClasses(List<Class<?>> assertClasses) {
-				assertClasses.add(AbstractNoticeableExecutorService.class);
+				assertClasses.add(BaseNoticeableExecutorService.class);
 			}
 
 		};

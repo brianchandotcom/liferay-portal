@@ -14,7 +14,7 @@
 
 package com.liferay.portal.cluster.multiple.internal;
 
-import com.liferay.petra.concurrent.AbstractNoticeableExecutorService;
+import com.liferay.petra.concurrent.BaseNoticeableExecutorService;
 import com.liferay.petra.concurrent.NoticeableExecutorService;
 import com.liferay.petra.concurrent.NoticeableFuture;
 import com.liferay.petra.executor.PortalExecutorManager;
@@ -56,7 +56,7 @@ public class MockPortalExecutorManager implements PortalExecutorManager {
 	}
 
 	private static class MockNoticeableExecutorService
-		extends AbstractNoticeableExecutorService
+		extends BaseNoticeableExecutorService
 		implements NoticeableExecutorService {
 
 		@Override

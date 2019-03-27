@@ -130,7 +130,8 @@ public class ThemesProjectConfigurator extends BaseProjectConfigurator {
 
 					if (dirName.equals("build") ||
 						dirName.equals("build_gradle") ||
-						dirName.equals("node_modules")) {
+						dirName.equals("node_modules") ||
+						dirName.equals("node_modules_cache")) {
 
 						return FileVisitResult.SKIP_SUBTREE;
 					}

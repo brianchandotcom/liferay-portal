@@ -92,6 +92,8 @@ public class SourceFormatter {
 			new ExcludeSyntaxPattern(ExcludeSyntax.GLOB, "**/test-results/**"),
 			new ExcludeSyntaxPattern(ExcludeSyntax.GLOB, "**/tmp/**"),
 			new ExcludeSyntaxPattern(
+				ExcludeSyntax.GLOB, "**/node_modules_cache/**"),
+			new ExcludeSyntaxPattern(
 				ExcludeSyntax.REGEX,
 				"^((?!/frontend-js-node-shims/src/).)*/node_modules/.*"),
 			new ExcludeSyntaxPattern(

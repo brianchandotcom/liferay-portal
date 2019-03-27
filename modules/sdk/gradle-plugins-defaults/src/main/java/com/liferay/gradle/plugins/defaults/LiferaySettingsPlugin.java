@@ -200,7 +200,8 @@ public class LiferaySettingsPlugin implements Plugin<Settings> {
 					String dirName = String.valueOf(dirPath.getFileName());
 
 					if (dirName.equals("build") ||
-						dirName.equals("node_modules")) {
+						dirName.equals("node_modules") ||
+						dirName.equals("node_modules_cache")) {
 
 						return FileVisitResult.SKIP_SUBTREE;
 					}

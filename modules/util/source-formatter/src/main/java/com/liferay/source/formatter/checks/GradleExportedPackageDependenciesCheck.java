@@ -267,8 +267,8 @@ public class GradleExportedPackageDependenciesCheck extends BaseFileCheck {
 
 	private static final String[] _SKIP_DIR_NAMES = {
 		".git", ".gradle", ".idea", ".m2", ".settings", "bin", "build",
-		"classes", "dependencies", "node_modules", "sql", "src", "test",
-		"test-classes", "test-coverage", "test-results", "tmp"
+		"classes", "dependencies", "node_modules", "node_modules_cache", "sql",
+		"src", "test", "test-classes", "test-coverage", "test-results", "tmp"
 	};
 
 	private static final Pattern _dependenciesPattern = Pattern.compile(

@@ -357,7 +357,8 @@ public class FileUtil extends com.liferay.gradle.util.FileUtil {
 	private static final Logger _logger = Logging.getLogger(FileUtil.class);
 
 	private static final List<String> _excludedDirNames = Arrays.asList(
-		"bin", "build", "classes", "node_modules", "test-classes", "tmp");
+		"bin", "build", "classes", "node_modules", "node_modules_cache",
+		"test-classes", "tmp");
 
 	private static class FileComparator implements Comparator<File> {
 

@@ -66,8 +66,8 @@ public class JavadocFormatterUtil {
 
 		String[] excludes = {
 			"**/.git/**", "**/.gradle/**", "**/bin/**", "**/build/**",
-			"**/classes/**", "**/node_modules/**", "**/portal-client/**",
-			"**/tmp/**"
+			"**/classes/**", "**/node_modules/**", "**/node_modules_cache/**",
+			"**/portal-client/**", "**/tmp/**"
 		};
 
 		List<String> fileNames = scanForFiles(

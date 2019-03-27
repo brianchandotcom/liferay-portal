@@ -163,8 +163,8 @@ public class JavadocFormatter {
 
 		String[] excludes = {
 			"**/.git/**", "**/.gradle/**", "**/bin/**", "**/build/**",
-			"**/classes/**", "**/node_modules/**", "**/portal-client/**",
-			"**/tmp/**"
+			"**/classes/**", "**/node_modules/**", "**/node_modules_cache/**",
+			"**/portal-client/**", "**/tmp/**"
 		};
 
 		for (String limit : limits) {

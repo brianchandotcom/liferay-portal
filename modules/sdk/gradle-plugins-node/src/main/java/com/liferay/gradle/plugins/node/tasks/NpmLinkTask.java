@@ -56,7 +56,8 @@ public class NpmLinkTask extends BaseNpmCommandTask {
 	}
 
 	private static final String[] _EXCLUDE_DIR_NAMES = {
-		"bin", "build", "classes", "node_modules", "test-classes", "tmp"
+		"bin", "build", "classes", "node_modules", "node_modules_cache",
+		"test-classes", "tmp"
 	};
 
 	private static final String[] _INCLUDES = {

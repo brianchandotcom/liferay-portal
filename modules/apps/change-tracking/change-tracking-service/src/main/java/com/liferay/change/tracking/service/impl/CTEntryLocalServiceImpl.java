@@ -177,11 +177,13 @@ public class CTEntryLocalServiceImpl extends CTEntryLocalServiceBaseImpl {
 	}
 
 	@Indexable(type = IndexableType.REINDEX)
+	@Override
 	public List<CTEntry> getRelatedOwnerCTEntries(long ctEntryId) {
 		return getRelatedOwnerCTEntries(
 			ctEntryId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 	}
 
+	@Override
 	public List<CTEntry> getRelatedOwnerCTEntries(
 		long ctEntryId, int start, int end,
 		OrderByComparator<CTEntry> orderByComparator) {
@@ -338,9 +340,7 @@ public class CTEntryLocalServiceImpl extends CTEntryLocalServiceBaseImpl {
 		Stream<Document> documentsStream = searchResponse.getDocumentsStream();
 
 		return documentsStream.map(
-			document -> document.getFieldValue(Field.ENTRY_CLASS_PK)
-		).map(
-			GetterUtil::getLong
+			document -> document.getLong(Field.ENTRY_CLASS_PK)
 		).map(
 			ctEntryLocalService::fetchCTEntry
 		).filter(

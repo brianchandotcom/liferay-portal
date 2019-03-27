@@ -200,13 +200,13 @@ public class DefaultDLViewFileVersionDisplayContext
 
 		_uiItemsBuilder.addEditToolbarItem(toolbarItems);
 
-		_uiItemsBuilder.addMoveToolbarItem(toolbarItems);
-
 		_uiItemsBuilder.addCheckoutToolbarItem(toolbarItems);
 
 		_uiItemsBuilder.addCancelCheckoutToolbarItem(toolbarItems);
 
 		_uiItemsBuilder.addCheckinToolbarItem(toolbarItems);
+
+		_uiItemsBuilder.addMoveToolbarItem(toolbarItems);
 
 		_uiItemsBuilder.addPermissionsToolbarItem(toolbarItems);
 
@@ -369,19 +369,19 @@ public class DefaultDLViewFileVersionDisplayContext
 		if (isActionsVisible()) {
 			_uiItemsBuilder.addDownloadMenuItem(menuItems);
 
-			_uiItemsBuilder.addOpenInMsOfficeMenuItem(menuItems);
-
 			_uiItemsBuilder.addViewOriginalFileMenuItem(menuItems);
+
+			_uiItemsBuilder.addOpenInMsOfficeMenuItem(menuItems);
 
 			_uiItemsBuilder.addEditMenuItem(menuItems);
 
-			_uiItemsBuilder.addMoveMenuItem(menuItems);
-
 			_uiItemsBuilder.addCheckoutMenuItem(menuItems);
+
+			_uiItemsBuilder.addCancelCheckoutMenuItem(menuItems);
 
 			_uiItemsBuilder.addCheckinMenuItem(menuItems);
 
-			_uiItemsBuilder.addCancelCheckoutMenuItem(menuItems);
+			_uiItemsBuilder.addMoveMenuItem(menuItems);
 
 			_uiItemsBuilder.addPermissionsMenuItem(menuItems);
 

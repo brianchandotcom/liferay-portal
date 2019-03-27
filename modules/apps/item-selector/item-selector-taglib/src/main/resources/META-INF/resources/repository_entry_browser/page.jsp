@@ -271,6 +271,7 @@ ItemSelectorRepositoryEntryManagementToolbarDisplayContext itemSelectorRepositor
 										colspan="<%= 3 %>"
 									>
 										<liferay-frontend:horizontal-card
+											cardCssClass="card-interactive card-interactive-secondary"
 											resultRow="<%= row %>"
 											text="<%= folder.getName() %>"
 											url="<%= viewFolderURL.toString() %>"
@@ -323,6 +324,7 @@ ItemSelectorRepositoryEntryManagementToolbarDisplayContext itemSelectorRepositor
 										<c:choose>
 											<c:when test="<%= Validator.isNull(thumbnailSrc) %>">
 												<liferay-frontend:icon-vertical-card
+													cardCssClass="card-interactive card-interactive-primary"
 													cssClass="item-preview"
 													data="<%= data %>"
 													icon="documents-and-media"
@@ -337,6 +339,7 @@ ItemSelectorRepositoryEntryManagementToolbarDisplayContext itemSelectorRepositor
 											</c:when>
 											<c:otherwise>
 												<liferay-frontend:vertical-card
+													cardCssClass="card-interactive card-interactive-primary"
 													cssClass="item-preview"
 													data="<%= data %>"
 													imageUrl="<%= thumbnailSrc %>"

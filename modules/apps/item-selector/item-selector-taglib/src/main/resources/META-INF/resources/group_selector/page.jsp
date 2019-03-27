@@ -64,6 +64,7 @@ SearchContainer searchContainer = new GroupSearch(liferayPortletRequest, iterato
 				colspan="<%= 3 %>"
 			>
 				<liferay-frontend:horizontal-card
+					cardCssClass="card-interactive card-interactive-primary"
 					resultRow="<%= row %>"
 					text="<%= curGroup.getDescriptiveName(locale) %>"
 					url="<%= viewGroupURL.toString() %>"

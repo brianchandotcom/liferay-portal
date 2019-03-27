@@ -30,7 +30,7 @@
 		"metal-uri": "^3.1.0"
 	},
 	"devDependencies": {
-		"liferay-npm-scripts": "1.4.7"
+		"liferay-npm-scripts": "1.4.9"
 	},
 	"jest": {
 		"setupFiles": [

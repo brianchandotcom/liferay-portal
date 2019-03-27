@@ -44,7 +44,7 @@
 		"babel-loader": "^7.1.4",
 		"check-source-formatting": "^2.0.14",
 		"jest": "^24.5.0",
-		"liferay-jest-junit-reporter": "1.0.0",
+		"liferay-jest-junit-reporter": "1.0.1",
 		"liferay-npm-bridge-generator": "^2.0.0",
 		"liferay-npm-bundler": "2.7.0",
 		"metal-tools-soy": "^4.2.1",

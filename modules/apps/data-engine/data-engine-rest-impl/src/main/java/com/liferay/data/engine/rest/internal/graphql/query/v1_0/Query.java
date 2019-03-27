@@ -148,6 +148,21 @@ public class Query {
 
 	@GraphQLField
 	@GraphQLInvokeDetached
+	public String getDataRecordCollectionExport(
+			@GraphQLName("data-record-collection-id") Long
+				dataRecordCollectionId)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_dataRecordResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			dataRecordResource ->
+				dataRecordResource.getDataRecordCollectionExport(
+					dataRecordCollectionId));
+	}
+
+	@GraphQLField
+	@GraphQLInvokeDetached
 	public Collection<DataRecord> getDataRecordCollectionDataRecordsPage(
 			@GraphQLName("data-record-collection-id") Long
 				dataRecordCollectionId,

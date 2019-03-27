@@ -107,6 +107,53 @@ public abstract class BaseDataRecordResourceTestCase {
 	}
 
 	@Test
+	public void testGetDataRecordCollectionExport() throws Exception {
+		Assert.assertTrue(true);
+	}
+
+	protected String invokeGetDataRecordCollectionExport(
+			Long dataRecordCollectionId)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		String location =
+			_resourceURL +
+				_toPath(
+					"/data-record-collections/{data-record-collection-id}/export",
+					dataRecordCollectionId);
+
+		options.setLocation(location);
+
+		String string = HttpUtil.URLtoString(options);
+
+		if (_log.isDebugEnabled()) {
+			_log.debug("HTTP response: " + string);
+		}
+
+		return string;
+	}
+
+	protected Http.Response invokeGetDataRecordCollectionExportResponse(
+			Long dataRecordCollectionId)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		String location =
+			_resourceURL +
+				_toPath(
+					"/data-record-collections/{data-record-collection-id}/export",
+					dataRecordCollectionId);
+
+		options.setLocation(location);
+
+		HttpUtil.URLtoByteArray(options);
+
+		return options.getResponse();
+	}
+
+	@Test
 	public void testGetDataRecordCollectionDataRecordsPage() throws Exception {
 		Long dataRecordCollectionId =
 			testGetDataRecordCollectionDataRecordsPage_getDataRecordCollectionId();
@@ -773,7 +820,7 @@ public abstract class BaseDataRecordResourceTestCase {
 
 		for (int i = 0; i < values.length; i++) {
 			template = template.replaceFirst(
-				"\\{.*?\\}", String.valueOf(values[i]));
+				"\\{.*\\}", String.valueOf(values[i]));
 		}
 
 		return template;

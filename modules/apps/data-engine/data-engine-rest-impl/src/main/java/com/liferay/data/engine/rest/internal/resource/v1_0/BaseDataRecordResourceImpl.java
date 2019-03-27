@@ -62,6 +62,19 @@ public abstract class BaseDataRecordResourceImpl implements DataRecordResource {
 
 	@Override
 	@GET
+	@Path("/data-record-collections/{data-record-collection-id}/export")
+	@Produces("application/json")
+	@Tags(value = {@Tag(name = "DataRecord")})
+	public String getDataRecordCollectionExport(
+			@NotNull @PathParam("data-record-collection-id") Long
+				dataRecordCollectionId)
+		throws Exception {
+
+		return StringPool.BLANK;
+	}
+
+	@Override
+	@GET
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.QUERY, name = "page"),

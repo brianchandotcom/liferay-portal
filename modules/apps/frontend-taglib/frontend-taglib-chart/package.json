@@ -3,7 +3,7 @@
 		"clay-charts": "2.11.1"
 	},
 	"devDependencies": {
-		"liferay-npm-bundler": "^2.1.0"
+		"liferay-npm-bundler": "2.7.0"
 	},
 	"name": "frontend-taglib-chart",
 	"scripts": {

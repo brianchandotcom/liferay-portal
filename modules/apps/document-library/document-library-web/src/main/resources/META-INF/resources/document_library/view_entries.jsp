@@ -201,7 +201,7 @@ if (portletTitleBasedNavigation && (folderId != DLFolderConstants.DEFAULT_PARENT
 										<liferay-frontend:html-vertical-card
 											actionJsp="/document_library/file_entry_action.jsp"
 											actionJspServletContext="<%= application %>"
-											cssClass="entry-display-style"
+											cssClass="entry-display-style file-card"
 											html="<%= customThumbnailHtml %>"
 											resultRow="<%= row %>"
 											rowChecker="<%= entriesChecker %>"
@@ -215,7 +215,7 @@ if (portletTitleBasedNavigation && (folderId != DLFolderConstants.DEFAULT_PARENT
 										<liferay-frontend:icon-vertical-card
 											actionJsp="/document_library/file_entry_action.jsp"
 											actionJspServletContext="<%= application %>"
-											cssClass="entry-display-style"
+											cssClass="entry-display-style file-card"
 											icon="documents-and-media"
 											resultRow="<%= row %>"
 											rowChecker="<%= entriesChecker %>"
@@ -229,7 +229,7 @@ if (portletTitleBasedNavigation && (folderId != DLFolderConstants.DEFAULT_PARENT
 										<liferay-frontend:vertical-card
 											actionJsp="/document_library/file_entry_action.jsp"
 											actionJspServletContext="<%= application %>"
-											cssClass="entry-display-style"
+											cssClass="entry-display-style file-card"
 											imageUrl="<%= thumbnailSrc %>"
 											resultRow="<%= row %>"
 											rowChecker="<%= entriesChecker %>"

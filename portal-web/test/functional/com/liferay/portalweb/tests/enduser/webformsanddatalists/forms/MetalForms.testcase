@@ -2402,12 +2402,12 @@ definition {
 
 		FormsAdminNavigator.gotoDeleteField(
 			fieldLabel = "Date Field",
-			fieldName = "DateField"
+			fieldName = "Date Field"
 		);
 
 		FormFields.viewDateFieldNotPresent(
 			fieldLabel = "Date Field",
-			fieldName = "DateField"
+			fieldName = "Date Field"
 		);
 
 		Form.save();

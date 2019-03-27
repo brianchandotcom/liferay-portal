@@ -316,7 +316,7 @@ ItemSelectorRepositoryEntryManagementToolbarDisplayContext itemSelectorRepositor
 											<c:when test="<%= Validator.isNull(thumbnailSrc) %>">
 												<liferay-frontend:icon-vertical-card
 													cardCssClass="card-interactive card-interactive-primary"
-													cssClass="item-preview"
+													cssClass="file-card item-preview"
 													data="<%= data %>"
 													icon="documents-and-media"
 													title="<%= title %>"
@@ -332,7 +332,7 @@ ItemSelectorRepositoryEntryManagementToolbarDisplayContext itemSelectorRepositor
 											<c:otherwise>
 												<liferay-frontend:vertical-card
 													cardCssClass="card-interactive card-interactive-primary"
-													cssClass="item-preview"
+													cssClass="file-card item-preview"
 													data="<%= data %>"
 													imageUrl="<%= thumbnailSrc %>"
 													title="<%= title %>"

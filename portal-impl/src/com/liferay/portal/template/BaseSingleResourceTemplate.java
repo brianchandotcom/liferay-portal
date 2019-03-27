@@ -35,9 +35,9 @@ import java.util.Map;
 /**
  * @author Miroslav Ligas
  */
-public abstract class AbstractSingleResourceTemplate extends BaseTemplate {
+public abstract class BaseSingleResourceTemplate extends BaseTemplate {
 
-	public AbstractSingleResourceTemplate(
+	public BaseSingleResourceTemplate(
 		TemplateResource templateResource,
 		TemplateResource errorTemplateResource, Map<String, Object> context,
 		TemplateContextHelper templateContextHelper, String templateManagerName,

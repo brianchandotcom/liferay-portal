@@ -16,6 +16,8 @@ import graphql.annotations.annotationTypes.GraphQLName;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 
+import java.math.BigDecimal;
+
 import java.util.Date;
 import java.util.Map;
 import java.util.Objects;

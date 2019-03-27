@@ -106,6 +106,10 @@ setUpYarn {
 			logger.lifecycle "Restoring node_modules_cache from {}", userNodeModulesCacheDir
 
 			FileUtil.syncDir(project, userNodeModulesCacheDir, nodeModulesCacheDir, true)
+
+			logger.lifecycle "Running Yarn install in offline mode"
+
+			args "--offline"
 		}
 	}
 

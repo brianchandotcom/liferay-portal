@@ -80,8 +80,7 @@ public abstract class BasePrefixQueryTestCase extends BaseIndexingTestCase {
 					searchHit -> {
 						Document document = searchHit.getDocument();
 
-						String userName = (String)document.getFieldValue(
-							Field.USER_NAME);
+						String userName = document.getString(Field.USER_NAME);
 
 						Assert.assertTrue(userName.startsWith("Oth"));
 					});

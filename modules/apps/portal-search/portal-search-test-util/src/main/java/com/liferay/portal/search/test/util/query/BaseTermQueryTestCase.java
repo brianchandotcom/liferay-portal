@@ -98,7 +98,7 @@ public abstract class BaseTermQueryTestCase extends BaseIndexingTestCase {
 				Document document = searchHit.getDocument();
 
 				Assert.assertEquals(
-					"SomeUser5", document.getFieldValue(Field.USER_NAME));
+					"SomeUser5", document.getString(Field.USER_NAME));
 			});
 	}
 

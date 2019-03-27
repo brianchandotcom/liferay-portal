@@ -188,8 +188,7 @@ public abstract class BaseStringQueryTestCase extends BaseIndexingTestCase {
 					searchHit -> {
 						Document document = searchHit.getDocument();
 
-						String userName = (String)document.getFieldValue(
-							Field.USER_NAME);
+						String userName = document.getString(Field.USER_NAME);
 
 						Assert.assertTrue(
 							userName.startsWith("OtherUser") ||
@@ -244,8 +243,7 @@ public abstract class BaseStringQueryTestCase extends BaseIndexingTestCase {
 					searchHit -> {
 						Document document = searchHit.getDocument();
 
-						actualValues.add(
-							(String)document.getFieldValue(_FIELD_NAME));
+						actualValues.add(document.getString(_FIELD_NAME));
 					});
 
 				Assert.assertEquals(

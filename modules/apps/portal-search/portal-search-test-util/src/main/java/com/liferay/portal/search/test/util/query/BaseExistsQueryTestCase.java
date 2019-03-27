@@ -78,11 +78,11 @@ public abstract class BaseExistsQueryTestCase extends BaseIndexingTestCase {
 				Document document = searchHit.getDocument();
 
 				Assert.assertEquals(
-					"Priority value", 1.0,
-					(Double)document.getFieldValue(Field.PRIORITY), 0);
+					"Priority value", 1.0, document.getDouble(Field.PRIORITY),
+					0);
 
 				Assert.assertEquals(
-					"SomeUser1", document.getFieldValue(Field.USER_NAME));
+					"SomeUser1", document.getString(Field.USER_NAME));
 			});
 	}
 

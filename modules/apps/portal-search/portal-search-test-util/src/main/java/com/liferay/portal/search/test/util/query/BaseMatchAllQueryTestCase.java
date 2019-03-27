@@ -74,8 +74,7 @@ public abstract class BaseMatchAllQueryTestCase extends BaseIndexingTestCase {
 
 					Document document = searchHit.getDocument();
 
-					Double priority = (Double)document.getFieldValue(
-						Field.PRIORITY);
+					Double priority = document.getDouble(Field.PRIORITY);
 
 					Assert.assertEquals("Priority value", i + 1.0, priority, 0);
 				}

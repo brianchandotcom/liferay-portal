@@ -85,7 +85,7 @@ public abstract class BaseRangeTermQueryTestCase extends BaseIndexingTestCase {
 
 					Assert.assertEquals(
 						"Priority value", expectedValue,
-						(Double)document.getFieldValue(Field.PRIORITY), 0);
+						document.getDouble(Field.PRIORITY), 0);
 
 					expectedValue++;
 				}

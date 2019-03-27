@@ -131,7 +131,7 @@ public class DocumentsAssert {
 		String fieldName, Stream<Document> stream) {
 
 		return _getFieldValueStrings(
-			stream.map(document -> document.getFieldValues(fieldName)));
+			stream.map(document -> document.getValues(fieldName)));
 	}
 
 	private static String _sort(Collection<String> collection) {

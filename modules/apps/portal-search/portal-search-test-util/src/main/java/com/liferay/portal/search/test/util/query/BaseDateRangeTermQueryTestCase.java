@@ -90,9 +90,8 @@ public abstract class BaseDateRangeTermQueryTestCase
 					searchHit -> {
 						Document document = searchHit.getDocument();
 
-						String expirationDateString =
-							(String)document.getFieldValue(
-								Field.EXPIRATION_DATE);
+						String expirationDateString = document.getDate(
+							Field.EXPIRATION_DATE);
 
 						try {
 							Date expirationDate = dateFormat.parse(

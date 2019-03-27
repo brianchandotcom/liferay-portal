@@ -91,8 +91,7 @@ public abstract class BaseMatchPhraseQueryTestCase
 					searchHit -> {
 						Document document = searchHit.getDocument();
 
-						actualValues.add(
-							(String)document.getFieldValue(_FIELD_NAME));
+						actualValues.add(document.getString(_FIELD_NAME));
 					});
 
 				Assert.assertEquals(

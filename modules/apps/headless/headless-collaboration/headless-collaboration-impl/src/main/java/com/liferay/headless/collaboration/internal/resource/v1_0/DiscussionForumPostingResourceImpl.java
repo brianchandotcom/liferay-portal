@@ -124,12 +124,8 @@ public class DiscussionForumPostingResourceImpl
 				DiscussionForumPosting discussionForumPosting)
 		throws Exception {
 
-		MBMessage mbMessage = _mbMessageService.getMessage(
-			discussionForumPostingId);
-
 		return _addDiscussionThread(
-			mbMessage.getGroupId(), discussionForumPostingId,
-			discussionForumPosting);
+			discussionForumPosting, discussionForumPostingId);
 	}
 
 	@Override
@@ -142,8 +138,7 @@ public class DiscussionForumPostingResourceImpl
 			discussionThreadId);
 
 		return _addDiscussionThread(
-			mbThread.getGroupId(), mbThread.getRootMessageId(),
-			discussionForumPosting);
+			discussionForumPosting, mbThread.getRootMessageId());
 	}
 
 	@Override
@@ -168,20 +163,31 @@ public class DiscussionForumPostingResourceImpl
 	}
 
 	private DiscussionForumPosting _addDiscussionThread(
-			Long contentSpaceId, Long discussionForumPostingId,
-			DiscussionForumPosting discussionForumPosting)
+			DiscussionForumPosting discussionForumPosting,
+			Long discussionForumPostingId)
 		throws PortalException {
+
+		MBMessage mbMessage = _mbMessageService.getMessage(
+			discussionForumPostingId);
+
+		String headline = discussionForumPosting.getHeadline();
+
+		if (headline == null) {
+			headline =
+				MBMessageConstants.MESSAGE_SUBJECT_PREFIX_RE +
+					mbMessage.getSubject();
+		}
 
 		return _toDiscussionForumPosting(
 			_mbMessageService.addMessage(
-				discussionForumPostingId, discussionForumPosting.getHeadline(),
+				discussionForumPostingId, headline,
 				discussionForumPosting.getArticleBody(),
 				MBMessageConstants.DEFAULT_FORMAT, Collections.emptyList(),
 				false, 0.0, false,
 				ServiceContextUtil.createServiceContext(
 					discussionForumPosting.getKeywords(),
 					discussionForumPosting.getTaxonomyCategoryIds(),
-					contentSpaceId,
+					mbMessage.getGroupId(),
 					discussionForumPosting.getViewableByAsString())));
 	}
 

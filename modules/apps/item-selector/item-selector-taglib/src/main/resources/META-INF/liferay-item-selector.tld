@@ -100,7 +100,7 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>The DL MimeType Display Context.</description>
+			<description>Deprecated as of 7.2.0, with no direct replacement.</description>
 			<name>dlMimeTypeDisplayContext</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>

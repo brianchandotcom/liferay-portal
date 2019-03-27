@@ -21,6 +21,29 @@ Folder folder = (Folder)request.getAttribute(WebKeys.DOCUMENT_LIBRARY_FOLDER);
 %>
 
 <c:if test="<%= folder != null %>">
+	<div class="aspect-ratio aspect-ratio-8-to-3 bg-light mb-4">
+		<div class="aspect-ratio-item-center-middle aspect-ratio-item-fluid card-type-asset-icon">
+			<div class="text-secondary">
+				<svg aria-hidden="true" class="lexicon-icon lexicon-icon-folder reference-mark user-icon-xl">
+					<use xlink:href="<%= themeDisplay.getPathThemeImages() %>/lexicon/icons.svg#folder" />
+				</svg>
+			</div>
+		</div>
+	</div>
+
+	<c:if test="<%= Validator.isNotNull(folder.getDescription()) %>">
+		<p>
+			<%= HtmlUtil.replaceNewLine(HtmlUtil.escape(folder.getDescription())) %>
+		</p>
+	</c:if>
+
+	<%
+	int foldersCount = DLAppServiceUtil.getFoldersCount(folder.getRepositoryId(), folder.getFolderId());
+	%>
+
+	<div class="small">
+		<%= foldersCount %> <liferay-ui:message key='<%= (foldersCount == 1) ? "subfolder" : "subfolders" %>' />
+	</div>
 
 	<%
 	int status = WorkflowConstants.STATUS_APPROVED;
@@ -29,60 +52,21 @@ Folder folder = (Folder)request.getAttribute(WebKeys.DOCUMENT_LIBRARY_FOLDER);
 		status = WorkflowConstants.STATUS_ANY;
 	}
 
-	int foldersCount = DLAppServiceUtil.getFoldersCount(folder.getRepositoryId(), folder.getFolderId());
 	int fileEntriesCount = DLAppServiceUtil.getFileEntriesAndFileShortcutsCount(folder.getRepositoryId(), folder.getFolderId(), status);
 	%>
 
-	<aui:row>
-		<aui:col cssClass="lfr-asset-column lfr-asset-column-details" width="<%= 100 %>">
-			<c:if test="<%= Validator.isNotNull(folder.getDescription()) %>">
-				<div class="lfr-asset-description">
-					<%= HtmlUtil.replaceNewLine(HtmlUtil.escape(folder.getDescription())) %>
-				</div>
-			</c:if>
+	<div class="small">
+		<%= fileEntriesCount %> <liferay-ui:message key='<%= (fileEntriesCount == 1) ? "document" : "documents" %>' />
+	</div>
 
-			<div class="lfr-asset-metadata">
-				<div class="icon-calendar lfr-asset-icon">
-					<liferay-ui:message arguments="<%= dateFormatDateTime.format(folder.getModifiedDate()) %>" key="last-updated-x" translateArguments="<%= false %>" />
-				</div>
-
-				<%
-				AssetRendererFactory<?> dlFolderAssetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(DLFolder.class.getName());
-				%>
-
-				<div class="lfr-asset-icon">
-					<liferay-ui:icon
-						icon="<%= dlFolderAssetRendererFactory.getIconCssClass() %>"
-						markupView="lexicon"
-					/>
-
-					<%= foldersCount %> <liferay-ui:message key='<%= (foldersCount == 1) ? "subfolder" : "subfolders" %>' />
-				</div>
-
-				<%
-				AssetRendererFactory<?> dlFileEntryAssetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(DLFileEntry.class.getName());
-				%>
-
-				<div class="last lfr-asset-icon">
-					<liferay-ui:icon
-						icon="<%= dlFileEntryAssetRendererFactory.getIconCssClass() %>"
-						markupView="lexicon"
-					/>
-
-					<%= fileEntriesCount %> <liferay-ui:message key='<%= (fileEntriesCount == 1) ? "document" : "documents" %>' />
-				</div>
-			</div>
-
-			<liferay-expando:custom-attributes-available
-				className="<%= DLFolderConstants.getClassName() %>"
-			>
-				<liferay-expando:custom-attribute-list
-					className="<%= DLFolderConstants.getClassName() %>"
-					classPK="<%= (folder != null) ? folder.getFolderId() : 0 %>"
-					editable="<%= false %>"
-					label="<%= true %>"
-				/>
-			</liferay-expando:custom-attributes-available>
-		</aui:col>
-	</aui:row>
+	<liferay-expando:custom-attributes-available
+		className="<%= DLFolderConstants.getClassName() %>"
+	>
+		<liferay-expando:custom-attribute-list
+			className="<%= DLFolderConstants.getClassName() %>"
+			classPK="<%= (folder != null) ? folder.getFolderId() : 0 %>"
+			editable="<%= false %>"
+			label="<%= true %>"
+		/>
+	</liferay-expando:custom-attributes-available>
 </c:if>

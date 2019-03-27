@@ -168,6 +168,8 @@ components:
         DiscussionForumPosting:
             description: https://www.schema.org/DiscussionForumPosting
             properties:
+                anonymous:
+                    type: boolean
                 articleBody:
                     type: string
                 contentSpaceId:

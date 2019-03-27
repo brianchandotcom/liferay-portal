@@ -29,7 +29,7 @@ import java.util.Map;
 /**
  * @author Miroslav Ligas
  */
-public abstract class AbstractMultiResourceTemplate extends AbstractTemplate {
+public abstract class AbstractMultiResourceTemplate extends BaseTemplate {
 
 	public AbstractMultiResourceTemplate(
 		List<TemplateResource> templateResources,

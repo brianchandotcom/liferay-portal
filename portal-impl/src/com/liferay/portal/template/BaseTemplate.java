@@ -32,9 +32,9 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * @author Tina Tian
  */
-public abstract class AbstractTemplate implements Template {
+public abstract class BaseTemplate implements Template {
 
-	public AbstractTemplate(
+	public BaseTemplate(
 		TemplateResource errorTemplateResource, Map<String, Object> context,
 		TemplateContextHelper templateContextHelper,
 		String templateManagerName) {

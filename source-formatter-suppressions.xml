@@ -22,7 +22,7 @@
 		<suppress checks="MemberNameCheck" files="portal-impl/test/unit/com/liferay/portal/nio/intraband/proxy/IntrabandProxyUtilTest\.java" />
 		<suppress checks="MemberNameCheck" files="portal-test-integration/src/com/liferay/portal/search/test/BaseSearchTestCase\.java" />
 		<suppress checks="MethodNameCheck" files="portal-impl/src/com/liferay/portal/events/EventsProcessorUtil\.java" />
-		<suppress checks="MethodNameCheck" files="portal-impl/src/com/liferay/portal/template/AbstractTemplate\.java" />
+		<suppress checks="MethodNameCheck" files="portal-impl/src/com/liferay/portal/template/BaseTemplate\.java" />
 		<suppress checks="MethodNameCheck" files="portal-impl/src/com/liferay/portal/util/HttpImpl\.java" />
 		<suppress checks="MethodNameCheck" files="portal-impl/test/unit/com/liferay/portal/kernel/nio/intraband/CancelingPortalExecutorManagerUtilAdvice\.java" />
 		<suppress checks="MethodNameCheck" files="portal-impl/test/unit/com/liferay/portal/kernel/nio/intraband/PortalExecutorManagerUtilAdvice\.java" />

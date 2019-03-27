@@ -35,7 +35,7 @@ import java.util.Map;
 /**
  * @author Miroslav Ligas
  */
-public abstract class AbstractSingleResourceTemplate extends AbstractTemplate {
+public abstract class AbstractSingleResourceTemplate extends BaseTemplate {
 
 	public AbstractSingleResourceTemplate(
 		TemplateResource templateResource,

@@ -399,15 +399,6 @@ definition {
 			siteName = "Test Site Name"
 		);
 
-		AssetPublisherPortlet.viewConfigureAPDisplayTemplateFullContentBookmarksPG(
-			assetTitle = "Test Bookmark Name"
-		);
-
-		Navigator.gotoSitePage(
-			pageName = "Asset Publisher Page",
-			siteName = "Test Site Name"
-		);
-
 		Portlet.gotoPortletOptions(
 			portletName = "Asset Publisher",
 			portletOption = "Configuration"

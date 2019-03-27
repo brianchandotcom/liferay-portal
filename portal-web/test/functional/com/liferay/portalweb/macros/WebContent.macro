@@ -1836,8 +1836,6 @@ definition {
 			assetTitle = "${webContentTitle}"
 		);
 
-		AssertVisible(locator1 = "Icon#SHARE");
-
 		AssertTextEquals.assertPartialText(
 			locator1 = "APAsset#ASSET_TITLE_HEADER",
 			value1 = "${webContentTitle}"

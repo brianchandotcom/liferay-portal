@@ -37,7 +37,7 @@ import org.osgi.framework.ServiceReference;
 /**
  * @author Tomas Polesovsky
  */
-public abstract class AbstractContextContainerRequestFilter
+public abstract class BaseContextContainerRequestFilter
 	implements ContainerRequestFilter {
 
 	public Bundle getBundle() {

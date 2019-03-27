@@ -14,7 +14,6 @@
 
 package com.liferay.wiki.web.internal.item.selector.view;
 
-import com.liferay.document.library.display.context.DLMimeTypeDisplayContext;
 import com.liferay.item.selector.ItemSelectorReturnType;
 import com.liferay.item.selector.ItemSelectorReturnTypeResolverHandler;
 import com.liferay.item.selector.ItemSelectorView;
@@ -43,9 +42,6 @@ import javax.servlet.ServletResponse;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
-import org.osgi.service.component.annotations.ReferenceCardinality;
-import org.osgi.service.component.annotations.ReferencePolicy;
-import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
  * @author Iván Zaera
@@ -104,10 +100,6 @@ public class WikiAttachmentItemSelectorView
 				WIKI_ATTACHMENT_ITEM_SELECTOR_VIEW_DISPLAY_CONTEXT,
 			wikiAttachmentItemSelectorViewDisplayContext);
 
-		request.setAttribute(
-			WikiItemSelectorWebKeys.DL_MIME_TYPE_DISPLAY_CONTEXT,
-			_dlMimeTypeDisplayContext);
-
 		ServletContext servletContext = getServletContext();
 
 		RequestDispatcher requestDispatcher =
@@ -123,13 +115,6 @@ public class WikiAttachmentItemSelectorView
 				new ItemSelectorReturnType[] {
 					new FileEntryItemSelectorReturnType()
 				}));
-
-	@Reference(
-		cardinality = ReferenceCardinality.OPTIONAL,
-		policy = ReferencePolicy.DYNAMIC,
-		policyOption = ReferencePolicyOption.GREEDY
-	)
-	private volatile DLMimeTypeDisplayContext _dlMimeTypeDisplayContext;
 
 	@Reference
 	private ItemSelectorReturnTypeResolverHandler

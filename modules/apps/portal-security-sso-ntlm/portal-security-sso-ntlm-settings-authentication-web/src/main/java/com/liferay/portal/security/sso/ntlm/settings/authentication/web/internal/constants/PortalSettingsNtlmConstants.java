@@ -19,6 +19,12 @@ package com.liferay.portal.security.sso.ntlm.settings.authentication.web.interna
  */
 public class PortalSettingsNtlmConstants {
 
+	public static final String DELETE_MVC_ACTION_COMMAND_NAME =
+		"/portal_settings/ntlm_delete";
+
 	public static final String FORM_PARAMETER_NAMESPACE = "ntlm_";
+
+	public static final String SAVE_MVC_ACTION_COMMAND_NAME =
+		"/portal_settings/ntlm";
 
 }

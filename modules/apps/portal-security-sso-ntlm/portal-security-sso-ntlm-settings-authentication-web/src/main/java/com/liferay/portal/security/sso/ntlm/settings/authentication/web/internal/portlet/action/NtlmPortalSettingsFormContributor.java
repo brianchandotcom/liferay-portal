@@ -35,7 +35,8 @@ public class NtlmPortalSettingsFormContributor
 
 	@Override
 	public Optional<String> getDeleteMVCActionCommandNameOptional() {
-		return Optional.of("/portal_settings/ntlm_delete");
+		return Optional.of(
+			PortalSettingsNtlmConstants.DELETE_MVC_ACTION_COMMAND_NAME);
 	}
 
 	@Override
@@ -45,7 +46,8 @@ public class NtlmPortalSettingsFormContributor
 
 	@Override
 	public Optional<String> getSaveMVCActionCommandNameOptional() {
-		return Optional.of("/portal_settings/ntlm");
+		return Optional.of(
+			PortalSettingsNtlmConstants.SAVE_MVC_ACTION_COMMAND_NAME);
 	}
 
 	@Override

@@ -88,6 +88,10 @@ public class DefaultDLMimeTypeDisplayContext
 		else if (_containsMimeType(
 					_dlConfiguration.multimediaFileMimeTypes(), mimeType)) {
 
+			if (mimeType.startsWith("image")) {
+				return "document-image";
+			}
+
 			return "document-multimedia";
 		}
 		else if (_containsMimeType(

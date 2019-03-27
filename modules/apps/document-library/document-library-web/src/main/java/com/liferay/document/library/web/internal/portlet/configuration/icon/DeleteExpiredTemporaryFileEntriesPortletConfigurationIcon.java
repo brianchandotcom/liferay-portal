@@ -94,7 +94,7 @@ public class DeleteExpiredTemporaryFileEntriesPortletConfigurationIcon
 
 	@Override
 	public double getWeight() {
-		return 103;
+		return 120;
 	}
 
 	@Override

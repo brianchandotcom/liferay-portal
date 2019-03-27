@@ -88,7 +88,7 @@ public class DownloadFolderPortletConfigurationIcon
 
 	@Override
 	public double getWeight() {
-		return 107;
+		return 200;
 	}
 
 	@Override

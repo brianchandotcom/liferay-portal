@@ -6740,11 +6740,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 			unsetUserOrganizations(userId, oldOrganizationIds);
 		}
 
-		for (long newOrganizationId : newOrganizationIds) {
-			if (!ArrayUtil.contains(oldOrganizationIds, newOrganizationId)) {
-				addOrganizationUsers(newOrganizationId, new long[] {userId});
-			}
-		}
+		userPersistence.setOrganizations(userId, newOrganizationIds);
 
 		if (indexingEnabled) {
 			reindex(userId);

@@ -280,8 +280,7 @@ public class UIItemsBuilder {
 
 		compareVersionURL.setParameter("backURL", _getCurrentURL());
 
-		String jsNamespace =
-			getNamespace() + String.valueOf(_fileVersion.getFileVersionId());
+		String jsNamespace = getNamespace() + _fileVersion.getFileVersionId();
 
 		StringBundler sb = new StringBundler(4);
 

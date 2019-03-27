@@ -56,7 +56,7 @@
 	},
 	"devDependencies": {
 		"liferay-npm-bundler-preset-standard": "2.7.0",
-		"liferay-npm-scripts": "1.4.7"
+		"liferay-npm-scripts": "1.4.9"
 	},
 	"jest": {
 		"moduleNameMapper": {

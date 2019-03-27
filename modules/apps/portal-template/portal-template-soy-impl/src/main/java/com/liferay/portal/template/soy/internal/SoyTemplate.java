@@ -34,7 +34,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ResourceBundleLoader;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.template.AbstractMultiResourceTemplate;
+import com.liferay.portal.template.BaseMultiResourceTemplate;
 
 import java.io.Reader;
 import java.io.Writer;
@@ -61,7 +61,7 @@ import org.osgi.framework.wiring.BundleWiring;
 /**
  * @author Bruno Basto
  */
-public class SoyTemplate extends AbstractMultiResourceTemplate {
+public class SoyTemplate extends BaseMultiResourceTemplate {
 
 	public SoyTemplate(
 		List<TemplateResource> templateResources,

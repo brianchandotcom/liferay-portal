@@ -29,9 +29,9 @@ import java.util.Map;
 /**
  * @author Miroslav Ligas
  */
-public abstract class AbstractMultiResourceTemplate extends BaseTemplate {
+public abstract class BaseMultiResourceTemplate extends BaseTemplate {
 
-	public AbstractMultiResourceTemplate(
+	public BaseMultiResourceTemplate(
 		List<TemplateResource> templateResources,
 		TemplateResource errorTemplateResource, Map<String, Object> context,
 		TemplateContextHelper templateContextHelper, String templateManagerName,

@@ -9,8 +9,8 @@
 		"babel-preset-env": "^1.7.0",
 		"check-source-formatting": "^2.0.14",
 		"cross-env": "^5.2.0",
-		"liferay-npm-bundler": "2.7.0",
-		"liferay-jest-junit-reporter": "1.0.1"
+		"liferay-jest-junit-reporter": "1.0.1",
+		"liferay-npm-bundler": "2.7.0"
 	},
 	"name": "site-admin-web",
 	"scripts": {

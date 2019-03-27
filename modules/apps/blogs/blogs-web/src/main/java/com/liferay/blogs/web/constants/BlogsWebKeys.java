@@ -22,7 +22,4 @@ public class BlogsWebKeys {
 	public static final String BLOGS_ITEM_SELECTOR_HELPER =
 		"BLOGS_ITEM_SELECTOR_HELPER";
 
-	public static final String DL_MIME_TYPE_DISPLAY_CONTEXT =
-		"DL_MIME_TYPE_DISPLAY_CONTEXT";
-
 }

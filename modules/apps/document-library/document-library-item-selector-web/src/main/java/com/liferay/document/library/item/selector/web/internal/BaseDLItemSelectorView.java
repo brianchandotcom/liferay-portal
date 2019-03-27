@@ -15,7 +15,6 @@
 package com.liferay.document.library.item.selector.web.internal;
 
 import com.liferay.asset.kernel.service.AssetVocabularyService;
-import com.liferay.document.library.display.context.DLMimeTypeDisplayContext;
 import com.liferay.document.library.item.selector.web.internal.constants.DLItemSelectorWebKeys;
 import com.liferay.document.library.item.selector.web.internal.display.context.DLItemSelectorViewDisplayContext;
 import com.liferay.item.selector.ItemSelectorCriterion;
@@ -41,9 +40,6 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 
 import org.osgi.service.component.annotations.Reference;
-import org.osgi.service.component.annotations.ReferenceCardinality;
-import org.osgi.service.component.annotations.ReferencePolicy;
-import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
  * @author Roberto Díaz
@@ -103,10 +99,6 @@ public abstract class BaseDLItemSelectorView<T extends ItemSelectorCriterion>
 			DLItemSelectorWebKeys.DL_ITEM_SELECTOR_VIEW_DISPLAY_CONTEXT,
 			dlItemSelectorViewDisplayContext);
 
-		request.setAttribute(
-			DLItemSelectorWebKeys.DL_MIME_TYPE_DISPLAY_CONTEXT,
-			dlMimeTypeDisplayContext);
-
 		requestDispatcher.include(request, response);
 	}
 
@@ -144,13 +136,6 @@ public abstract class BaseDLItemSelectorView<T extends ItemSelectorCriterion>
 	protected ResourceBundleLoader getResourceBundleLoader() {
 		return LanguageResources.RESOURCE_BUNDLE_LOADER;
 	}
-
-	@Reference(
-		cardinality = ReferenceCardinality.OPTIONAL,
-		policy = ReferencePolicy.DYNAMIC,
-		policyOption = ReferencePolicyOption.GREEDY
-	)
-	protected volatile DLMimeTypeDisplayContext dlMimeTypeDisplayContext;
 
 	@Reference
 	protected StagingGroupHelper stagingGroupHelper;

@@ -12,6 +12,7 @@
 	{@param? useFallbackInput: bool}
 	{@param? _dataSource: ?}
 	{@param? _handleButtonClicked: any}
+	{@param? _handleInputOnBlur: any}
 	{@param? _handleItemAdded: any}
 	{@param? _handleItemRemoved: any}
 	{@param? _typedCategory: string}
@@ -26,6 +27,7 @@
 			{param dataSource: $_dataSource ?: [] /}
 			{param events: [
 				'buttonClicked': $_handleButtonClicked,
+				'inputOnBlur': $_handleInputOnBlur,
 				'itemAdded': $_handleItemAdded,
 				'itemRemoved': $_handleItemRemoved,
 				'itemSelected': $_handleItemAdded

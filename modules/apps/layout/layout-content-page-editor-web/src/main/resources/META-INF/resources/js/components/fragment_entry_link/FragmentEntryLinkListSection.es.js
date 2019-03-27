@@ -47,6 +47,10 @@ class FragmentEntryLinkListSection extends Component {
 	 */
 	disposed() {
 		this._disposeFloatingToolbar();
+
+		document.body.removeEventListener('mouseleave', this._handleBodyMouseLeave);
+		document.body.removeEventListener('mousemove', this._handleBodyMouseMove);
+		document.body.removeEventListener('mouseup', this._handleBodyMouseUp);
 	}
 
 	/**

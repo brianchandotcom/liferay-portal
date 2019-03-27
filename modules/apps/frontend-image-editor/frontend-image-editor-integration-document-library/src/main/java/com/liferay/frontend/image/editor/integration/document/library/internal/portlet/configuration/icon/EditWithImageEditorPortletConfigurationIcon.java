@@ -20,6 +20,8 @@ import com.liferay.document.library.util.DLURLHelper;
 import com.liferay.frontend.image.editor.integration.document.library.internal.constants.ImageEditorIntegrationDLWebKeys;
 import com.liferay.frontend.image.editor.integration.document.library.internal.display.context.logic.ImageEditorDLDisplayContextHelper;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.configuration.icon.BaseJSPPortletConfigurationIcon;
 import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIcon;
 import com.liferay.portal.kernel.repository.model.FileEntry;
@@ -28,8 +30,6 @@ import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
-
-import java.io.IOException;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
@@ -81,8 +81,7 @@ public class EditWithImageEditorPortletConfigurationIcon
 
 	@Override
 	public boolean include(
-			HttpServletRequest request, HttpServletResponse response)
-		throws IOException {
+		HttpServletRequest request, HttpServletResponse response) {
 
 		try {
 			request.setAttribute(
@@ -116,15 +115,11 @@ public class EditWithImageEditorPortletConfigurationIcon
 
 			return false;
 		}
-		catch (Exception pe) {
+		catch (Exception e) {
+			_log.error(e, e);
+
+			return false;
 		}
-
-		return false;
-	}
-
-	@Reference(unbind = "-")
-	public void setDLAppService(DLAppService dlAppService) {
-		_dlAppService = dlAppService;
 	}
 
 	@Override
@@ -160,6 +155,10 @@ public class EditWithImageEditorPortletConfigurationIcon
 		return fileVersion;
 	}
 
+	private static final Log _log = LogFactoryUtil.getLog(
+		EditWithImageEditorPortletConfigurationIcon.class);
+
+	@Reference
 	private DLAppService _dlAppService;
 
 	@Reference

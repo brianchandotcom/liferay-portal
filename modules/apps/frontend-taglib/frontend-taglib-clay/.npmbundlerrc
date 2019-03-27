@@ -10,7 +10,8 @@
 				"metal-soy": ">=2.16.5",
 				"metal-state": ">=2.16.5",
 				"metal-web-component": ">=2.16.5"
-			}
+			},
+            "frontend-taglib-clay": {}
 		}
 	},
     "exclude": {

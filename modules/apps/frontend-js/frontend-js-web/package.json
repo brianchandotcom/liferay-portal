@@ -46,7 +46,7 @@
 		"jest": "23.2.0",
 		"liferay-jest-junit-reporter": "1.0.0",
 		"liferay-npm-bridge-generator": "^2.0.0",
-		"liferay-npm-bundler": "^2.1.0",
+		"liferay-npm-bundler": "2.7.0",
 		"metal-tools-soy": "^4.2.1",
 		"rimraf": "^2.6.3",
 		"webpack": "4.29.5",

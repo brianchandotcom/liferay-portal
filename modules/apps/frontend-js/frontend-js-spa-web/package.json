@@ -21,7 +21,7 @@
 		"babel-preset-env": "^1.6.1",
 		"check-source-formatting": "^2.0.14",
 		"liferay-npm-bridge-generator": "^2.0.0",
-		"liferay-npm-bundler": "^2.1.0"
+		"liferay-npm-bundler": "2.7.0"
 	},
 	"name": "frontend-js-spa-web",
 	"scripts": {

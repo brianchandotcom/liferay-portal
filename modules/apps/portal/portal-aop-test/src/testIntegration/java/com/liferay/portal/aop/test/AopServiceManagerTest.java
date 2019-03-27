@@ -15,20 +15,30 @@
 package com.liferay.portal.aop.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.petra.concurrent.DefaultNoticeableFuture;
 import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.portal.aop.AopService;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.ProxyUtil;
+import com.liferay.portal.spring.aop.AopCacheManager;
+import com.liferay.portal.spring.aop.AopInvocationHandler;
 import com.liferay.portal.spring.transaction.TransactionAttributeAdapter;
 import com.liferay.portal.spring.transaction.TransactionExecutor;
+import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
+import java.lang.reflect.Constructor;
+import java.lang.reflect.Method;
+
 import java.util.Dictionary;
+import java.util.Set;
 
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -38,8 +48,13 @@ import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.Constants;
 import org.osgi.framework.FrameworkUtil;
+import org.osgi.framework.PrototypeServiceFactory;
+import org.osgi.framework.ServiceException;
 import org.osgi.framework.ServiceReference;
 import org.osgi.framework.ServiceRegistration;
+import org.osgi.service.log.LogLevel;
+import org.osgi.service.log.LogListener;
+import org.osgi.service.log.LogReaderService;
 
 import org.springframework.transaction.PlatformTransactionManager;
 
@@ -54,19 +69,32 @@ public class AopServiceManagerTest {
 	public static final AggregateTestRule aggregateTestRule =
 		new LiferayIntegrationTestRule();
 
-	@Test
-	public void testAopService() {
+	@Before
+	public void setUp() throws ReflectiveOperationException {
 		Bundle bundle = FrameworkUtil.getBundle(AopServiceManagerTest.class);
 
-		BundleContext bundleContext = bundle.getBundleContext();
+		_bundleContext = bundle.getBundleContext();
 
+		_getServiceObjectsMethod = BundleContext.class.getMethod(
+			"getServiceObjects", ServiceReference.class);
+
+		Class<?> serviceObjectsClass = bundle.loadClass(
+			"org.osgi.framework.ServiceObjects");
+
+		_getServiceMethod = serviceObjectsClass.getMethod("getService");
+		_ungetServiceMethod = serviceObjectsClass.getMethod(
+			"ungetService", Object.class);
+	}
+
+	@Test
+	public void testAopService() {
 		Dictionary<String, Object> properties = new HashMapDictionary<>();
 
 		properties.put("key", "value");
 		properties.put(Constants.SERVICE_RANKING, 1);
 
 		ServiceRegistration<AopService> aopServiceServiceRegistration =
-			bundleContext.registerService(
+			_bundleContext.registerService(
 				AopService.class, new TestServiceImpl(), properties);
 
 		TestTransactionExecutor testTransactionExecutor =
@@ -74,16 +102,16 @@ public class AopServiceManagerTest {
 
 		ServiceRegistration<TransactionExecutor>
 			transactionExecutorServiceRegistration =
-				bundleContext.registerService(
+				_bundleContext.registerService(
 					TransactionExecutor.class, testTransactionExecutor,
 					properties);
 
 		ServiceReference<TestService> testServiceServiceReference =
-			bundleContext.getServiceReference(TestService.class);
+			_bundleContext.getServiceReference(TestService.class);
 
 		Assert.assertNotNull(testServiceServiceReference);
 
-		TestService testService = bundleContext.getService(
+		TestService testService = _bundleContext.getService(
 			testServiceServiceReference);
 
 		try {
@@ -106,7 +134,7 @@ public class AopServiceManagerTest {
 				"value2", testServiceServiceReference.getProperty("key"));
 		}
 		finally {
-			bundleContext.ungetService(testServiceServiceReference);
+			_bundleContext.ungetService(testServiceServiceReference);
 		}
 
 		transactionExecutorServiceRegistration.unregister();
@@ -114,7 +142,180 @@ public class AopServiceManagerTest {
 		aopServiceServiceRegistration.unregister();
 	}
 
+	@Test
+	public void testAopServiceFactory() throws Exception {
+		ServiceRegistration<?> aopServiceServiceRegistration =
+			_bundleContext.registerService(
+				AopService.class.getName(), new TestPrototypeServiceFactory(),
+				null);
+
+		ServiceReference<TestService> serviceReference =
+			_bundleContext.getServiceReference(TestService.class);
+
+		Object serviceObjects = _getServiceObjectsMethod.invoke(
+			_bundleContext, serviceReference);
+
+		TestService testService1 = (TestService)_getServiceMethod.invoke(
+			serviceObjects);
+		TestService testService2 = (TestService)_getServiceMethod.invoke(
+			serviceObjects);
+
+		Assert.assertNotSame(testService1, testService2);
+
+		AopInvocationHandler aopInvocationHandler1 =
+			ProxyUtil.fetchInvocationHandler(
+				testService1, AopInvocationHandler.class);
+
+		AopInvocationHandler aopInvocationHandler2 =
+			ProxyUtil.fetchInvocationHandler(
+				testService2, AopInvocationHandler.class);
+
+		Assert.assertNotNull(aopInvocationHandler1);
+
+		Assert.assertNotNull(aopInvocationHandler2);
+
+		Assert.assertNotSame(
+			aopInvocationHandler1.getTarget(),
+			aopInvocationHandler2.getTarget());
+
+		Set<AopInvocationHandler> aopInvocationHandlers =
+			ReflectionTestUtil.getFieldValue(
+				AopCacheManager.class, "_aopInvocationHandlers");
+
+		Assert.assertTrue(
+			aopInvocationHandlers.toString(),
+			aopInvocationHandlers.contains(aopInvocationHandler1));
+		Assert.assertTrue(
+			aopInvocationHandlers.toString(),
+			aopInvocationHandlers.contains(aopInvocationHandler2));
+
+		_ungetServiceMethod.invoke(serviceObjects, testService1);
+
+		Assert.assertFalse(
+			aopInvocationHandlers.toString(),
+			aopInvocationHandlers.contains(aopInvocationHandler1));
+		Assert.assertTrue(
+			aopInvocationHandlers.toString(),
+			aopInvocationHandlers.contains(aopInvocationHandler2));
+
+		_ungetServiceMethod.invoke(serviceObjects, testService2);
+
+		Assert.assertFalse(
+			aopInvocationHandlers.toString(),
+			aopInvocationHandlers.contains(aopInvocationHandler2));
+
+		_bundleContext.ungetService(serviceReference);
+
+		aopServiceServiceRegistration.unregister();
+	}
+
+	@Test
+	public void testInvalidAopServiceFactory() throws Exception {
+		ServiceRegistration<?> aopServiceServiceRegistration =
+			_bundleContext.registerService(
+				AopService.class.getName(), new TestPrototypeServiceFactory(),
+				null);
+
+		ServiceReference<TestService> serviceReference =
+			_bundleContext.getServiceReference(TestService.class);
+
+		Object serviceObjects = _getServiceObjectsMethod.invoke(
+			_bundleContext, serviceReference);
+
+		DefaultNoticeableFuture<Throwable> defaultNoticeableFuture =
+			new DefaultNoticeableFuture<>();
+
+		LogListener logListener = logEntry -> {
+			if (logEntry.getLevel() == LogLevel.ERROR.ordinal()) {
+				defaultNoticeableFuture.set(logEntry.getException());
+			}
+		};
+
+		Object factory = ReflectionTestUtil.getFieldValue(
+			_logReaderService, "factory");
+
+		Object listeners = ReflectionTestUtil.getFieldValue(
+			factory, "listeners");
+
+		Class<?> listenersClass = listeners.getClass();
+
+		Constructor<?> constructor = listenersClass.getConstructor(int.class);
+
+		Object newListeners = constructor.newInstance(0);
+
+		ReflectionTestUtil.setFieldValue(factory, "listeners", newListeners);
+
+		_logReaderService.addLogListener(logListener);
+
+		Class<?> aopInterface = TestServiceImpl._AOP_INTERFACES[0];
+
+		try {
+			TestServiceImpl._AOP_INTERFACES[0] = AopService.class;
+
+			Assert.assertNull(_getServiceMethod.invoke(serviceObjects));
+
+			Throwable throwable = defaultNoticeableFuture.get();
+
+			Assert.assertNotNull(throwable);
+
+			Assert.assertTrue(
+				throwable.toString(), throwable instanceof ServiceException);
+
+			Throwable cause = throwable.getCause();
+
+			Assert.assertTrue(
+				cause.toString(), cause instanceof IllegalArgumentException);
+
+			String message = cause.getMessage();
+
+			Assert.assertTrue(
+				message, message.startsWith("Prototype AopService "));
+		}
+		finally {
+			_logReaderService.removeLogListener(logListener);
+
+			TestServiceImpl._AOP_INTERFACES[0] = aopInterface;
+
+			aopServiceServiceRegistration.unregister();
+
+			ReflectionTestUtil.setFieldValue(factory, "listeners", listeners);
+		}
+	}
+
+	private BundleContext _bundleContext;
+	private Method _getServiceMethod;
+	private Method _getServiceObjectsMethod;
+
+	@Inject
+	private LogReaderService _logReaderService;
+
+	private Method _ungetServiceMethod;
+
+	private static class TestPrototypeServiceFactory
+		implements PrototypeServiceFactory<AopService> {
+
+		@Override
+		public AopService getService(
+			Bundle bundle,
+			ServiceRegistration<AopService> serviceRegistration) {
+
+			return new TestServiceImpl();
+		}
+
+		@Override
+		public void ungetService(
+			Bundle bundle, ServiceRegistration<AopService> serviceRegistration,
+			AopService aopService) {
+		}
+
+	}
+
 	private static class TestServiceImpl implements AopService, TestService {
+
+		@Override
+		public Class<?>[] getAopInterfaces() {
+			return _AOP_INTERFACES;
+		}
 
 		@Override
 		public TestService getEnclosingAopProxy() {
@@ -125,6 +326,10 @@ public class AopServiceManagerTest {
 		public void setAopProxy(Object aopProxy) {
 			_testService = (TestService)aopProxy;
 		}
+
+		private static final Class<?>[] _AOP_INTERFACES = new Class<?>[] {
+			TestService.class
+		};
 
 		private TestService _testService;
 

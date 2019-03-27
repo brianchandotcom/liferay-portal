@@ -1549,6 +1549,11 @@ public abstract class BaseDiscussionForumPostingResourceTestCase {
 		sb.append(operator);
 		sb.append(" ");
 
+		if (entityFieldName.equals("anonymous")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
 		if (entityFieldName.equals("articleBody")) {
 			sb.append("'");
 			sb.append(String.valueOf(discussionForumPosting.getArticleBody()));
@@ -1636,6 +1641,7 @@ public abstract class BaseDiscussionForumPostingResourceTestCase {
 	protected DiscussionForumPosting randomDiscussionForumPosting() {
 		return new DiscussionForumPosting() {
 			{
+				anonymous = RandomTestUtil.randomBoolean();
 				articleBody = RandomTestUtil.randomString();
 				contentSpaceId = RandomTestUtil.randomLong();
 				dateCreated = RandomTestUtil.nextDate();

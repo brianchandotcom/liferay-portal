@@ -55,6 +55,11 @@ public class DiscussionForumPostingSerDes {
 
 		sb.append("{");
 
+		sb.append("\"anonymous\": ");
+
+		sb.append(discussionForumPosting.getAnonymous());
+		sb.append(", ");
+
 		sb.append("\"articleBody\": ");
 
 		sb.append("\"");
@@ -243,7 +248,13 @@ public class DiscussionForumPostingSerDes {
 			DiscussionForumPosting discussionForumPosting,
 			String jsonParserFieldName, Object jsonParserFieldValue) {
 
-			if (Objects.equals(jsonParserFieldName, "articleBody")) {
+			if (Objects.equals(jsonParserFieldName, "anonymous")) {
+				if (jsonParserFieldValue != null) {
+					discussionForumPosting.setAnonymous(
+						(Boolean)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "articleBody")) {
 				if (jsonParserFieldValue != null) {
 					discussionForumPosting.setArticleBody(
 						(String)jsonParserFieldValue);

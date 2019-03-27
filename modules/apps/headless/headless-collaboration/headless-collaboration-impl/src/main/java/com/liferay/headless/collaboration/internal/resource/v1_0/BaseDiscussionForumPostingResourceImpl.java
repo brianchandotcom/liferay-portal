@@ -106,6 +106,11 @@ public abstract class BaseDiscussionForumPostingResourceImpl
 		DiscussionForumPosting existingDiscussionForumPosting =
 			getDiscussionForumPosting(discussionForumPostingId);
 
+		if (Validator.isNotNull(discussionForumPosting.getAnonymous())) {
+			existingDiscussionForumPosting.setAnonymous(
+				discussionForumPosting.getAnonymous());
+		}
+
 		if (Validator.isNotNull(discussionForumPosting.getArticleBody())) {
 			existingDiscussionForumPosting.setArticleBody(
 				discussionForumPosting.getArticleBody());

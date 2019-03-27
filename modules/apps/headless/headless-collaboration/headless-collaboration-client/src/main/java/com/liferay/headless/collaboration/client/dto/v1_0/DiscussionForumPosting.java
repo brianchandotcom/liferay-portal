@@ -59,6 +59,27 @@ public class DiscussionForumPosting {
 
 	}
 
+	public Boolean getAnonymous() {
+		return anonymous;
+	}
+
+	public void setAnonymous(Boolean anonymous) {
+		this.anonymous = anonymous;
+	}
+
+	public void setAnonymous(
+		UnsafeSupplier<Boolean, Exception> anonymousUnsafeSupplier) {
+
+		try {
+			anonymous = anonymousUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Boolean anonymous;
+
 	public String getArticleBody() {
 		return articleBody;
 	}

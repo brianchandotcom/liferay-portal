@@ -76,6 +76,30 @@ public class DiscussionForumPosting {
 
 	}
 
+	public Boolean getAnonymous() {
+		return anonymous;
+	}
+
+	public void setAnonymous(Boolean anonymous) {
+		this.anonymous = anonymous;
+	}
+
+	@JsonIgnore
+	public void setAnonymous(
+		UnsafeSupplier<Boolean, Exception> anonymousUnsafeSupplier) {
+
+		try {
+			anonymous = anonymousUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Boolean anonymous;
+
 	public String getArticleBody() {
 		return articleBody;
 	}
@@ -432,6 +456,11 @@ public class DiscussionForumPosting {
 		StringBundler sb = new StringBundler();
 
 		sb.append("{");
+
+		sb.append("\"anonymous\": ");
+
+		sb.append(anonymous);
+		sb.append(", ");
 
 		sb.append("\"articleBody\": ");
 

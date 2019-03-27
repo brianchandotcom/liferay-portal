@@ -4307,6 +4307,53 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	}
 
 	/**
+	 * Removes the user from the organizations.
+	 *
+	 * @param userId the primary key of the user
+	 * @param organizationIds the primary keys of the organizations
+	 */
+	@Override
+	public void unsetUserOrganizations(
+			final long userId, long[] organizationIds)
+		throws PortalException {
+
+		long[] groupIds = new long[organizationIds.length];
+
+		for (int i = 0; i < organizationIds.length; i++) {
+			Organization organization =
+				organizationPersistence.findByPrimaryKey(organizationIds[i]);
+
+			groupIds[i] = organization.getGroupId();
+		}
+
+		userGroupRoleLocalService.deleteUserGroupRoles(userId, groupIds);
+
+		organizationLocalService.deleteUserOrganizations(
+			userId, organizationIds);
+
+		reindex(userId);
+
+		Callable<Void> callable = new Callable<Void>() {
+
+			@Override
+			public Void call() throws Exception {
+				Message message = new Message();
+
+				message.put("groupIds", groupIds);
+				message.put("userId", userId);
+
+				MessageBusUtil.sendMessage(
+					DestinationNames.USER_SUBSCRIPTION_CLEAN_UP, message);
+
+				return null;
+			}
+
+		};
+
+		TransactionCommitCallbackUtil.registerCallback(callable);
+	}
+
+	/**
 	 * Updates whether the user has agreed to the terms of use.
 	 *
 	 * @param  userId the primary key of the user
@@ -6677,12 +6724,20 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 			long userId, long[] newOrganizationIds, boolean indexingEnabled)
 		throws PortalException {
 
-		long[] oldOrganizationIds = getOrganizationPrimaryKeys(userId);
+		long[] existingOrganizationIds = getOrganizationPrimaryKeys(userId);
+		long[] oldOrganizationIds = {};
 
-		for (long oldOrganizationId : oldOrganizationIds) {
-			if (!ArrayUtil.contains(newOrganizationIds, oldOrganizationId)) {
-				unsetOrganizationUsers(oldOrganizationId, new long[] {userId});
+		for (long existingOrganizationId : existingOrganizationIds) {
+			if (!ArrayUtil.contains(
+					newOrganizationIds, existingOrganizationId)) {
+
+				oldOrganizationIds = ArrayUtil.append(
+					oldOrganizationIds, existingOrganizationId);
 			}
+		}
+
+		if (oldOrganizationIds.length > 0) {
+			unsetUserOrganizations(userId, oldOrganizationIds);
 		}
 
 		for (long newOrganizationId : newOrganizationIds) {

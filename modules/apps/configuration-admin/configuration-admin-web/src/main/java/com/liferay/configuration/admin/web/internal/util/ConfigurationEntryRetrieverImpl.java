@@ -158,6 +158,10 @@ public class ConfigurationEntryRetrieverImpl
 			configurationCategory);
 
 		for (ConfigurationScreen configurationScreen : configurationScreens) {
+			if (!scope.equals(configurationScreen.getScope())) {
+				continue;
+			}
+
 			ConfigurationEntry configurationEntry =
 				new ConfigurationScreenConfigurationEntry(
 					configurationScreen, locale);

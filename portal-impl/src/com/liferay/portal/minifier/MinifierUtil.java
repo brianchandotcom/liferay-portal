@@ -19,10 +19,12 @@ import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringWriter;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;
 import com.liferay.registry.ServiceTracker;
+import org.apache.commons.lang.time.StopWatch;
 
 /**
  * @author Brian Wing Shun Chan
@@ -48,6 +50,10 @@ public class MinifierUtil {
 	}
 
 	private static String _minifyCss(String content) {
+		StopWatch stopWatch = new StopWatch();
+
+		stopWatch.start();
+
 		UnsyncStringWriter unsyncStringWriter = new UnsyncStringWriter();
 
 		try {
@@ -66,6 +72,23 @@ public class MinifierUtil {
 
 			return unsyncStringWriter.toString();
 		}
+		finally {
+			if (_log.isDebugEnabled()) {
+				int lenght = 0;
+
+				if (content != null) {
+					byte[] bytes = content.getBytes();
+
+					lenght = bytes.length;
+				}
+
+				_log.debug(
+					StringBundler.concat(
+						"_minifyCss for size", String.valueOf(lenght),
+						"B takes ", String.valueOf(stopWatch.getTime()),
+						" ms"));
+			}
+		}
 	}
 
 	private static String _minifyJavaScript(
@@ -78,7 +101,30 @@ public class MinifierUtil {
 			return content;
 		}
 
-		return javaScriptMinifier.compress(resourceName, content);
+		StopWatch stopWatch = new StopWatch();
+
+		stopWatch.start();
+
+		try {
+			return javaScriptMinifier.compress(resourceName, content);
+		}
+		finally {
+			if (_log.isDebugEnabled()) {
+				int lenght = 0;
+
+				if (content != null) {
+					byte[] bytes = content.getBytes();
+
+					lenght = bytes.length;
+				}
+
+				_log.debug(
+					StringBundler.concat(
+						"minifyJavaScript for ", resourceName, " with size ",
+						String.valueOf(lenght), "B takes ",
+						String.valueOf(stopWatch.getTime()), " ms"));
+			}
+		}
 	}
 
 	private MinifierUtil() {

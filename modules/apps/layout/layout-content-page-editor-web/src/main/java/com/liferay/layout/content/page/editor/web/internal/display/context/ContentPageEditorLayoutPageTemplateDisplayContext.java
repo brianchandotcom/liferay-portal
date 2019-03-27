@@ -14,11 +14,11 @@
 
 package com.liferay.layout.content.page.editor.web.internal.display.context;
 
-import com.liferay.asset.display.contributor.AssetDisplayContributor;
 import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
 import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.asset.kernel.model.ClassType;
 import com.liferay.asset.kernel.model.ClassTypeReader;
+import com.liferay.info.display.contributor.InfoDisplayContributor;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryServiceUtil;
 import com.liferay.petra.string.StringPool;
@@ -165,15 +165,15 @@ public class ContentPageEditorLayoutPageTemplateDisplayContext
 		LayoutPageTemplateEntry layoutPageTemplateEntry =
 			_getLayoutPageTemplateEntry();
 
-		AssetDisplayContributor assetDisplayContributor =
-			assetDisplayContributorTracker.getAssetDisplayContributor(
+		InfoDisplayContributor infoDisplayContributor =
+			infoDisplayContributorTracker.getInfoDisplayContributor(
 				layoutPageTemplateEntry.getClassName());
 
-		if (assetDisplayContributor == null) {
+		if (infoDisplayContributor == null) {
 			return null;
 		}
 
-		return assetDisplayContributor.getLabel(themeDisplay.getLocale());
+		return infoDisplayContributor.getLabel(themeDisplay.getLocale());
 	}
 
 	private SoyContext _getSelectedMappingTypes() throws PortalException {

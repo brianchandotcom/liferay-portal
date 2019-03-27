@@ -14,13 +14,13 @@
 
 package com.liferay.layout.type.controller.asset.display.internal.portlet;
 
-import com.liferay.asset.display.contributor.AssetDisplayContributor;
-import com.liferay.asset.display.contributor.AssetDisplayContributorTracker;
 import com.liferay.asset.display.page.portlet.AssetDisplayPageFriendlyURLProvider;
 import com.liferay.asset.display.page.util.AssetDisplayPageHelper;
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.model.AssetRenderer;
 import com.liferay.asset.kernel.service.AssetEntryLocalService;
+import com.liferay.info.display.contributor.InfoDisplayContributor;
+import com.liferay.info.display.contributor.InfoDisplayContributorTracker;
 import com.liferay.layout.type.controller.asset.display.internal.constants.AssetDisplayPageFriendlyURLResolverConstants;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -50,11 +50,11 @@ public class AssetDisplayPageFriendlyURLProviderImpl
 			return null;
 		}
 
-		AssetDisplayContributor assetDisplayContributor =
-			_assetDisplayContributorTracker.getAssetDisplayContributor(
+		InfoDisplayContributor infoDisplayContributor =
+			_infoDisplayContributorTracker.getInfoDisplayContributor(
 				assetEntry.getClassName());
 
-		if (assetDisplayContributor == null) {
+		if (infoDisplayContributor == null) {
 			return null;
 		}
 
@@ -77,7 +77,7 @@ public class AssetDisplayPageFriendlyURLProviderImpl
 		}
 
 		if (Validator.isNotNull(urlTitle)) {
-			sb.append(assetDisplayContributor.getAssetURLSeparator());
+			sb.append(infoDisplayContributor.getInfoURLSeparator());
 			sb.append(StringPool.SLASH);
 			sb.append(assetRenderer.getUrlTitle(themeDisplay.getLocale()));
 		}
@@ -104,10 +104,10 @@ public class AssetDisplayPageFriendlyURLProviderImpl
 	}
 
 	@Reference
-	private AssetDisplayContributorTracker _assetDisplayContributorTracker;
+	private AssetEntryLocalService _assetEntryLocalService;
 
 	@Reference
-	private AssetEntryLocalService _assetEntryLocalService;
+	private InfoDisplayContributorTracker _infoDisplayContributorTracker;
 
 	@Reference
 	private Portal _portal;

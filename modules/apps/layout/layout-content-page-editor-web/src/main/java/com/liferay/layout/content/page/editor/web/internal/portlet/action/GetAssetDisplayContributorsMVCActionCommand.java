@@ -14,8 +14,8 @@
 
 package com.liferay.layout.content.page.editor.web.internal.portlet.action;
 
-import com.liferay.asset.display.contributor.AssetDisplayContributor;
-import com.liferay.asset.display.contributor.AssetDisplayContributorTracker;
+import com.liferay.info.display.contributor.InfoDisplayContributor;
+import com.liferay.info.display.contributor.InfoDisplayContributorTracker;
 import com.liferay.layout.content.page.editor.constants.ContentPageEditorPortletKeys;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -57,17 +57,17 @@ public class GetAssetDisplayContributorsMVCActionCommand
 
 		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
 
-		for (AssetDisplayContributor assetDisplayContributor :
-				_assetDisplayContributorTracker.getAssetDisplayContributors()) {
+		for (InfoDisplayContributor infoDisplayContributor :
+				_infoDisplayContributorTracker.getInfoDisplayContributors()) {
 
 			JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
 			jsonObject.put(
 				"id",
-				_portal.getClassNameId(assetDisplayContributor.getClassName()));
+				_portal.getClassNameId(infoDisplayContributor.getClassName()));
 			jsonObject.put(
 				"label",
-				assetDisplayContributor.getLabel(themeDisplay.getLocale()));
+				infoDisplayContributor.getLabel(themeDisplay.getLocale()));
 
 			jsonArray.put(jsonObject);
 		}
@@ -77,7 +77,7 @@ public class GetAssetDisplayContributorsMVCActionCommand
 	}
 
 	@Reference
-	private AssetDisplayContributorTracker _assetDisplayContributorTracker;
+	private InfoDisplayContributorTracker _infoDisplayContributorTracker;
 
 	@Reference
 	private Portal _portal;

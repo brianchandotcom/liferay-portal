@@ -14,8 +14,6 @@
 
 package com.liferay.asset.publisher.web.internal.portlet;
 
-import com.liferay.asset.display.contributor.AssetDisplayContributor;
-import com.liferay.asset.display.contributor.AssetDisplayContributorTracker;
 import com.liferay.asset.display.contributor.constants.AssetDisplayWebKeys;
 import com.liferay.asset.display.page.constants.AssetDisplayPageConstants;
 import com.liferay.asset.display.page.model.AssetDisplayPageEntry;
@@ -31,6 +29,8 @@ import com.liferay.asset.publisher.constants.AssetPublisherPortletKeys;
 import com.liferay.asset.util.AssetHelper;
 import com.liferay.friendly.url.model.FriendlyURLEntryLocalization;
 import com.liferay.friendly.url.service.FriendlyURLEntryLocalService;
+import com.liferay.info.display.contributor.InfoDisplayContributor;
+import com.liferay.info.display.contributor.InfoDisplayContributorTracker;
 import com.liferay.journal.exception.NoSuchArticleException;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.model.JournalArticleConstants;
@@ -377,11 +377,11 @@ public class DisplayPageFriendlyURLResolver implements FriendlyURLResolver {
 			Map<String, Object> requestContext, String urlTitle)
 		throws PortalException {
 
-		AssetDisplayContributor assetDisplayContributor =
-			_assetDisplayContributorTracker.getAssetDisplayContributor(
+		InfoDisplayContributor infoDisplayContributor =
+			_infoDisplayContributorTracker.getInfoDisplayContributor(
 				assetEntry.getClassName());
 
-		if (assetDisplayContributor == null) {
+		if (infoDisplayContributor == null) {
 			throw new PortalException();
 		}
 
@@ -390,7 +390,7 @@ public class DisplayPageFriendlyURLResolver implements FriendlyURLResolver {
 
 		request.setAttribute(
 			AssetDisplayWebKeys.INFO_DISPLAY_CONTRIBUTOR,
-			assetDisplayContributor);
+			infoDisplayContributor);
 		request.setAttribute(WebKeys.LAYOUT_ASSET_ENTRY, assetEntry);
 
 		FriendlyURLEntryLocalization friendlyURLEntryLocalization =
@@ -429,9 +429,6 @@ public class DisplayPageFriendlyURLResolver implements FriendlyURLResolver {
 		DisplayPageFriendlyURLResolver.class);
 
 	@Reference
-	private AssetDisplayContributorTracker _assetDisplayContributorTracker;
-
-	@Reference
 	private AssetDisplayPageEntryLocalService
 		_assetDisplayPageEntryLocalService;
 
@@ -452,6 +449,9 @@ public class DisplayPageFriendlyURLResolver implements FriendlyURLResolver {
 
 	@Reference
 	private Http _http;
+
+	@Reference
+	private InfoDisplayContributorTracker _infoDisplayContributorTracker;
 
 	@Reference
 	private JournalArticleLocalService _journalArticleLocalService;

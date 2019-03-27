@@ -14,8 +14,8 @@
 
 package com.liferay.layout.type.controller.asset.display.internal.controller;
 
-import com.liferay.asset.display.contributor.AssetDisplayContributorTracker;
 import com.liferay.fragment.contributor.FragmentCollectionContributorTracker;
+import com.liferay.info.display.contributor.InfoDisplayContributorTracker;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.layout.content.page.editor.constants.ContentPageEditorWebKeys;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
@@ -140,7 +140,7 @@ public class AssetDisplayLayoutTypeController
 
 			request.setAttribute(
 				ContentPageEditorWebKeys.INFO_DISPLAY_CONTRIBUTOR_TRACKER,
-				_assetDisplayContributorTracker);
+				_infoDisplayContributorTracker);
 
 			addAttributes(request);
 
@@ -227,11 +227,11 @@ public class AssetDisplayLayoutTypeController
 	private static final String _VIEW_PAGE = "/layout/view/asset_display.jsp";
 
 	@Reference
-	private AssetDisplayContributorTracker _assetDisplayContributorTracker;
-
-	@Reference
 	private FragmentCollectionContributorTracker
 		_fragmentCollectionContributorTracker;
+
+	@Reference
+	private InfoDisplayContributorTracker _infoDisplayContributorTracker;
 
 	@Reference
 	private ItemSelector _itemSelector;

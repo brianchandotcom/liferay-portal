@@ -134,7 +134,10 @@ public class KBArticleIndexer extends BaseIndexer<KBArticle> {
 		document.addText(Field.DESCRIPTION, kbArticle.getDescription());
 		document.addText(Field.TITLE, kbArticle.getTitle());
 
+		document.addKeyword(Field.FOLDER_ID, kbArticle.getKbFolderId());
 		document.addKeyword("folderNames", getKBFolderNames(kbArticle));
+		document.addKeyword(
+			"parentMessageId", kbArticle.getParentResourcePrimKey());
 		document.addKeyword("titleKeyword", kbArticle.getTitle(), true);
 
 		return document;

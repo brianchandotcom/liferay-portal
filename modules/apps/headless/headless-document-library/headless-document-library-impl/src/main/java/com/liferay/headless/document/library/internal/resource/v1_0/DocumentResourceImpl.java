@@ -239,6 +239,17 @@ public class DocumentResourceImpl
 	public Document putDocument(Long documentId, MultipartBody multipartBody)
 		throws Exception {
 
+		Optional<Document> documentOptional =
+			multipartBody.getValueAsInstanceOptional(
+				"document", Document.class);
+
+		if ((multipartBody.getBinaryFile("file") == null) &&
+			!documentOptional.isPresent()) {
+
+			throw new BadRequestException(
+				"Body is empty, you must send file or document");
+		}
+
 		FileEntry existingFileEntry = _dlAppService.getFileEntry(documentId);
 
 		BinaryFile binaryFile = Optional.ofNullable(
@@ -250,10 +261,6 @@ public class DocumentResourceImpl
 				existingFileEntry.getContentStream(),
 				existingFileEntry.getSize())
 		);
-
-		Optional<Document> documentOptional =
-			multipartBody.getValueAsInstanceOptional(
-				"document", Document.class);
 
 		FileEntry fileEntry = _dlAppService.updateFileEntry(
 			documentId, binaryFile.getFileName(), binaryFile.getContentType(),

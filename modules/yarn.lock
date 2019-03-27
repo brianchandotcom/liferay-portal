@@ -10822,10 +10822,10 @@ liferay-npm-bundler@2.7.0:
     semver "^5.5.0"
     xml-js "^1.6.8"
 
-liferay-npm-scripts@1.4.6:
-  version "1.4.6"
-  resolved "https://registry.yarnpkg.com/liferay-npm-scripts/-/liferay-npm-scripts-1.4.6.tgz#68f1be686efa6084b381f7969826ee38a817ff0e"
-  integrity sha512-3OfrWABGH27qZ7L3+Eo01ZTmOl9iBLqzLMdca4ydNbopwXdsv5dGsTjvDe3T97z3zRS95ChUvvj0uuPhS6rjZw==
+liferay-npm-scripts@1.4.7:
+  version "1.4.7"
+  resolved "https://registry.yarnpkg.com/liferay-npm-scripts/-/liferay-npm-scripts-1.4.7.tgz#4f1c68d147accb96352e8ee3252d36e89bcbb316"
+  integrity sha512-VpaNmdKS0RG8JzLsbvvdFWSXU1cQ+dpNajy4eRr9ixR6rlXekXDxbVVrRQeadceKZRIJqrKl2Obw5zbuRo0x9w==
   dependencies:
     babel-cli "6.26.0"
     babel-preset-env "^1.6.1"

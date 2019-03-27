@@ -12,8 +12,9 @@
  * details.
  */
 
-package com.liferay.portal.service.user;
+package com.liferay.user.service.test;
 
+import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
@@ -28,12 +29,14 @@ import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 
 /**
  * @author Brian Wing Shun Chan
  * @author José Manuel Navarro
  * @author Drew Brokke
  */
+@RunWith(Arquillian.class)
 public class UserServiceOrganizationAdminUnsetsUsersForNonSiteOrganizationTest {
 
 	@ClassRule

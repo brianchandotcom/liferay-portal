@@ -33,9 +33,9 @@
 			"tests.js"
 		]
 	},
-	 "ignore": [
-        "**/__tests__/**",
-        "**/test/**"
-    ],
+	"ignore": [
+		"**/__tests__/**",
+		"**/test/**"
+	],
 	"output": "classes/META-INF/resources"
 }

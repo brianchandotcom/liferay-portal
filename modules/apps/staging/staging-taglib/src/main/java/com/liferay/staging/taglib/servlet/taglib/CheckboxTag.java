@@ -148,7 +148,6 @@ public class CheckboxTag extends BaseCssTag {
 		_description = StringPool.BLANK;
 		_disabled = false;
 		_id = StringPool.BLANK;
-		_ignoreRequestValue = false;
 		_items = 0;
 		_label = StringPool.BLANK;
 		_name = StringPool.BLANK;
@@ -170,8 +169,6 @@ public class CheckboxTag extends BaseCssTag {
 			"liferay-staging:checkbox:description", _description);
 		request.setAttribute("liferay-staging:checkbox:disabled", _disabled);
 		request.setAttribute("liferay-staging:checkbox:id", _id);
-		request.setAttribute(
-			"liferay-staging:checkbox:ignoreRequestValue", _ignoreRequestValue);
 		request.setAttribute("liferay-staging:checkbox:items", _items);
 		request.setAttribute("liferay-staging:checkbox:label", _label);
 		request.setAttribute("liferay-staging:checkbox:name", _name);
@@ -188,7 +185,6 @@ public class CheckboxTag extends BaseCssTag {
 	private String _description = StringPool.BLANK;
 	private boolean _disabled;
 	private String _id = StringPool.BLANK;
-	private boolean _ignoreRequestValue;
 	private long _items;
 	private String _label = StringPool.BLANK;
 	private String _name = StringPool.BLANK;

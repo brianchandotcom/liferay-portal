@@ -72,13 +72,6 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>Whether to ignore the value saved from the request object. The default value is false.</description>
-			<name>ignoreRequestValue</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
-			<type>boolean</type>
-		</attribute>
-		<attribute>
 			<description>The number of items. It is displayed after the label when it is greater than zero.</description>
 			<name>items</name>
 			<required>false</required>
@@ -693,12 +686,6 @@
 			<description>The background task's status label (e.g., <![CDATA[<code>backgroundTask.getStatusLabel()</code>]]>).</description>
 			<name>backgroundTaskStatusLabel</name>
 			<required>true</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
-		<attribute>
-			<description>The CSS class for the link to the detailed message.</description>
-			<name>linkClass</name>
-			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 	</tag>

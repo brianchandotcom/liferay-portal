@@ -73,6 +73,7 @@
 		}
 	},
 	"dependencies": {
+		"@babel/cli": "^7.2.3",
 		"autobind-decorator": "^2.1.0",
 		"classnames": "^2.2.6",
 		"clay-alert": "2.11.1",

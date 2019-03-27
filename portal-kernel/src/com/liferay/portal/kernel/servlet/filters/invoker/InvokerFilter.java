@@ -200,7 +200,11 @@ public class InvokerFilter extends BasePortalLifecycle implements Filter {
 		String queryString = request.getQueryString();
 
 		if (Validator.isNotNull(queryString)) {
-			cacheKey = cacheKey + StringPool.QUESTION + queryString;
+			cacheKey = cacheKey.concat(
+				StringPool.QUESTION
+			).concat(
+				queryString
+			);
 		}
 
 		InvokerFilterChain invokerFilterChain = _filterChains.get(cacheKey);

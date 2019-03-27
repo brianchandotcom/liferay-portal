@@ -25,7 +25,7 @@ import java.util.Map;
  * @author Milen Dyankov
  */
 @ProviderType
-public class UnknownDevice extends AbstractDevice {
+public class UnknownDevice extends BaseDevice {
 
 	public static UnknownDevice getInstance() {
 		return _instance;

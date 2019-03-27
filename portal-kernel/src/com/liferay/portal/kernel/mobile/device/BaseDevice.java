@@ -25,7 +25,7 @@ import com.liferay.portal.kernel.util.StringBundler;
  * @author Michael C. Han
  */
 @ProviderType
-public abstract class AbstractDevice implements Device {
+public abstract class BaseDevice implements Device {
 
 	@Override
 	public String toString() {

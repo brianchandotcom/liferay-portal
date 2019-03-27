@@ -28,6 +28,8 @@ import java.util.Date;
 
 import javax.annotation.Generated;
 
+import javax.validation.constraints.NotNull;
+
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -178,6 +180,7 @@ public class Comment {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	@NotNull
 	protected String text;
 
 	public String toString() {

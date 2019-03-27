@@ -31,6 +31,8 @@ import java.util.Objects;
 
 import javax.annotation.Generated;
 
+import javax.validation.constraints.NotNull;
+
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -238,6 +240,7 @@ public class Folder {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	@NotNull
 	protected String name;
 
 	public Number getNumberOfDocuments() {

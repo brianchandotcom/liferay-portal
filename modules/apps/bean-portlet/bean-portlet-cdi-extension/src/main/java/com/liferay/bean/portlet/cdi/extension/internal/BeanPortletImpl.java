@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 
 import java.util.ArrayList;
@@ -37,6 +38,7 @@ import java.util.Map;
 import java.util.Set;
 
 import javax.portlet.PortletMode;
+import javax.portlet.annotations.ServeResourceMethod;
 
 import javax.xml.XMLConstants;
 import javax.xml.namespace.QName;
@@ -87,6 +89,11 @@ public class BeanPortletImpl implements BeanPortlet {
 		_supportedPublicRenderParameters = supportedPublicRenderParameters;
 		_containerRuntimeOptions = containerRuntimeOptions;
 		_portletDependencies = portletDependencies;
+
+		if (!asyncSupported) {
+			asyncSupported = _getAsyncSupported(beanMethodMap);
+		}
+
 		_asyncSupported = asyncSupported;
 		_multipartConfig = multipartConfig;
 		_displayCategory = displayCategory;
@@ -707,6 +714,27 @@ public class BeanPortletImpl implements BeanPortlet {
 		if (defaultValue != null) {
 			dictionary.put(key, defaultValue);
 		}
+	}
+
+	private boolean _getAsyncSupported(
+		Map<MethodType, List<BeanMethod>> beanMethodMap) {
+
+		for (BeanMethod beanMethod :
+				beanMethodMap.get(MethodType.SERVE_RESOURCE)) {
+
+			Method method = beanMethod.getMethod();
+
+			ServeResourceMethod serveResourceMethod = method.getAnnotation(
+				ServeResourceMethod.class);
+
+			if ((serveResourceMethod != null) &&
+				serveResourceMethod.asyncSupported()) {
+
+				return true;
+			}
+		}
+
+		return false;
 	}
 
 	private String _getPublicRenderParameterNamespaceURI(

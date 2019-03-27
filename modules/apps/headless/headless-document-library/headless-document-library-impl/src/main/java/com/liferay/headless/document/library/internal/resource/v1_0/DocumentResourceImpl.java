@@ -100,12 +100,14 @@ public class DocumentResourceImpl
 				BooleanFilter booleanFilter =
 					booleanQuery.getPreBooleanFilter();
 
-				booleanFilter.add(
-					new TermFilter(
-						Field.FOLDER_ID,
-						String.valueOf(
-							DLFolderConstants.DEFAULT_PARENT_FOLDER_ID)),
-					BooleanClauseOccur.MUST);
+				if ((tree != null) && tree) {
+					booleanFilter.add(
+						new TermFilter(
+							Field.FOLDER_ID,
+							String.valueOf(
+								DLFolderConstants.DEFAULT_PARENT_FOLDER_ID)),
+						BooleanClauseOccur.MUST);
+				}
 
 				if (contentSpaceId != null) {
 					booleanFilter.add(

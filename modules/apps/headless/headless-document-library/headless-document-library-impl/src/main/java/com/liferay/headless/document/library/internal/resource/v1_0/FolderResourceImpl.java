@@ -67,9 +67,14 @@ public class FolderResourceImpl
 			Pagination pagination, Sort[] sorts)
 		throws Exception {
 
+		Long folderId = null;
+
+		if ((tree != null) && tree) {
+			folderId = DLFolderConstants.DEFAULT_PARENT_FOLDER_ID;
+		}
+
 		return _getFoldersPage(
-			contentSpaceId, filter, DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
-			pagination, sorts);
+			contentSpaceId, filter, folderId, pagination, sorts);
 	}
 
 	@Override

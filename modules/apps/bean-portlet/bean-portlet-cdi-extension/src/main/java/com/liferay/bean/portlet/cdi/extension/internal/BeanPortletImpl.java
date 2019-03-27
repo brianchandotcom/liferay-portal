@@ -719,18 +719,21 @@ public class BeanPortletImpl implements BeanPortlet {
 	private boolean _getAsyncSupported(
 		Map<MethodType, List<BeanMethod>> beanMethodMap) {
 
-		for (BeanMethod beanMethod :
-				beanMethodMap.get(MethodType.SERVE_RESOURCE)) {
+		List<BeanMethod> beanMethods = beanMethodMap.get(
+			MethodType.SERVE_RESOURCE);
 
-			Method method = beanMethod.getMethod();
+		if (beanMethods != null) {
+			for (BeanMethod beanMethod : beanMethods) {
+				Method method = beanMethod.getMethod();
 
-			ServeResourceMethod serveResourceMethod = method.getAnnotation(
-				ServeResourceMethod.class);
+				ServeResourceMethod serveResourceMethod = method.getAnnotation(
+					ServeResourceMethod.class);
 
-			if ((serveResourceMethod != null) &&
-				serveResourceMethod.asyncSupported()) {
+				if ((serveResourceMethod != null) &&
+					serveResourceMethod.asyncSupported()) {
 
-				return true;
+					return true;
+				}
 			}
 		}
 

@@ -313,8 +313,8 @@ for (AssetEntry assetEntry : assetEntryResult.getAssetEntries()) {
 							data.put("resource-href", exportAssetURL.toString());
 						%>
 
-							<div class="autofit-col component-subtitle export-action mr-3">
-								<aui:a data="<%= data %>" href="<%= exportAssetURL.toString() %>" label='<%= LanguageUtil.format(request, "x-convert-x-to-x", new Object[] {"hide-accessible", title, StringUtil.toUpperCase(HtmlUtil.escape(extension))}, false) %>' />
+							<div class="autofit-col export-action">
+								<aui:a cssClass="btn btn-outline-borderless btn-outline-secondary btn-sm" data="<%= data %>" href="<%= exportAssetURL.toString() %>" label='<%= LanguageUtil.format(request, "x-convert-x-to-x", new Object[] {"hide-accessible", title, StringUtil.toUpperCase(HtmlUtil.escape(extension))}, false) %>' />
 							</div>
 
 						<%

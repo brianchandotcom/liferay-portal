@@ -21,7 +21,7 @@ import com.liferay.portal.kernel.messaging.MessageBus;
  * @author Michael C. Han
  */
 public class DefaultSearchEngineConfigurator
-	extends AbstractSearchEngineConfigurator {
+	extends BaseSearchEngineConfigurator {
 
 	public void setDefaultSearchEngineId(String defaultSearchEngineId) {
 		_defaultSearchEngineId = defaultSearchEngineId;

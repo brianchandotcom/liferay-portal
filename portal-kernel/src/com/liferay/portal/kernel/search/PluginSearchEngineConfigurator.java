@@ -22,7 +22,7 @@ import com.liferay.portal.kernel.portlet.PortletClassLoaderUtil;
  * @author Michael C. Han
  */
 public class PluginSearchEngineConfigurator
-	extends AbstractSearchEngineConfigurator {
+	extends BaseSearchEngineConfigurator {
 
 	public void setDefaultSearchEngineId(String defaultSearchEngineId) {
 		_defaultSearchEngineId = defaultSearchEngineId;

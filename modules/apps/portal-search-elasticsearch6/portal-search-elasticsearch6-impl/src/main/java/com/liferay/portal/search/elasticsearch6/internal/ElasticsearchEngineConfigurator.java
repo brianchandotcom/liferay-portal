@@ -14,7 +14,7 @@
 
 package com.liferay.portal.search.elasticsearch6.internal;
 
-import com.liferay.portal.kernel.search.AbstractSearchEngineConfigurator;
+import com.liferay.portal.kernel.search.BaseSearchEngineConfigurator;
 import com.liferay.portal.kernel.search.IndexSearcher;
 import com.liferay.portal.kernel.search.IndexWriter;
 import com.liferay.portal.kernel.search.SearchEngine;
@@ -40,7 +40,7 @@ import org.osgi.service.component.annotations.Reference;
 	service = SearchEngineConfigurator.class
 )
 public class ElasticsearchEngineConfigurator
-	extends AbstractSearchEngineConfigurator {
+	extends BaseSearchEngineConfigurator {
 
 	@Override
 	public void destroy() {

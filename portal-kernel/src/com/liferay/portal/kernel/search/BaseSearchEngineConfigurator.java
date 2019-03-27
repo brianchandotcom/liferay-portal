@@ -52,7 +52,7 @@ import java.util.Set;
 /**
  * @author Michael C. Han
  */
-public abstract class AbstractSearchEngineConfigurator
+public abstract class BaseSearchEngineConfigurator
 	implements SearchEngineConfigurator {
 
 	@Override
@@ -464,7 +464,7 @@ public abstract class AbstractSearchEngineConfigurator
 			PropsUtil.get(PropsKeys.INDEX_SEARCH_WRITER_MAX_QUEUE_SIZE));
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		AbstractSearchEngineConfigurator.class);
+		BaseSearchEngineConfigurator.class);
 
 	private ServiceRegistrar<Destination> _destinationServiceRegistrar;
 	private volatile MessageBus _messageBus;

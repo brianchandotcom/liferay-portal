@@ -26,7 +26,9 @@ import com.liferay.headless.foundation.internal.dto.v1_0.util.EmailUtil;
 import com.liferay.headless.foundation.internal.dto.v1_0.util.PhoneUtil;
 import com.liferay.headless.foundation.internal.dto.v1_0.util.PostalAddressUtil;
 import com.liferay.headless.foundation.internal.dto.v1_0.util.WebUrlUtil;
+import com.liferay.headless.foundation.internal.odata.entity.v1_0.UserAccountEntityModel;
 import com.liferay.headless.foundation.resource.v1_0.UserAccountResource;
+import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -37,6 +39,13 @@ import com.liferay.portal.kernel.model.ListTypeConstants;
 import com.liferay.portal.kernel.model.ListTypeModel;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserConstants;
+import com.liferay.portal.kernel.search.BooleanClauseOccur;
+import com.liferay.portal.kernel.search.BooleanQuery;
+import com.liferay.portal.kernel.search.Field;
+import com.liferay.portal.kernel.search.Sort;
+import com.liferay.portal.kernel.search.filter.BooleanFilter;
+import com.liferay.portal.kernel.search.filter.Filter;
+import com.liferay.portal.kernel.search.filter.TermFilter;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
@@ -45,15 +54,17 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.service.UserService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.kernel.util.comparator.UserLastNameComparator;
-import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.vulcan.multipart.MultipartBody;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
+import com.liferay.portal.vulcan.resource.EntityModelResource;
+import com.liferay.portal.vulcan.util.SearchUtil;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -61,6 +72,7 @@ import java.util.Optional;
 import java.util.function.Function;
 
 import javax.ws.rs.BadRequestException;
+import javax.ws.rs.core.MultivaluedMap;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -73,11 +85,19 @@ import org.osgi.service.component.annotations.ServiceScope;
 	properties = "OSGI-INF/liferay/rest/v1_0/user-account.properties",
 	scope = ServiceScope.PROTOTYPE, service = UserAccountResource.class
 )
-public class UserAccountResourceImpl extends BaseUserAccountResourceImpl {
+public class UserAccountResourceImpl
+	extends BaseUserAccountResourceImpl implements EntityModelResource {
 
 	@Override
 	public void deleteUserAccount(Long userAccountId) throws Exception {
 		_userService.deleteUser(userAccountId);
+	}
+
+	@Override
+	public EntityModel getEntityModel(MultivaluedMap multivaluedMap)
+		throws Exception {
+
+		return _entityModel;
 	}
 
 	@Override
@@ -87,19 +107,21 @@ public class UserAccountResourceImpl extends BaseUserAccountResourceImpl {
 
 	@Override
 	public Page<UserAccount> getOrganizationUserAccountsPage(
-			Long organizationId, Pagination pagination)
+			Long organizationId, Filter filter, Pagination pagination,
+			Sort[] sorts)
 		throws Exception {
 
-		return Page.of(
-			transform(
-				_userService.getOrganizationUsers(
-					organizationId, WorkflowConstants.STATUS_APPROVED,
-					pagination.getStartPosition(), pagination.getEndPosition(),
-					new UserLastNameComparator(true)),
-				this::_toUserAccount),
-			pagination,
-			_userService.getOrganizationUsersCount(
-				organizationId, WorkflowConstants.STATUS_APPROVED));
+		return _getUserAccountPage(
+			booleanQuery -> {
+				BooleanFilter booleanFilter =
+					booleanQuery.getPreBooleanFilter();
+
+				booleanFilter.add(
+					new TermFilter(
+						"organizationIds", String.valueOf(organizationId)),
+					BooleanClauseOccur.MUST);
+			},
+			filter, pagination, sorts);
 	}
 
 	@Override
@@ -108,7 +130,8 @@ public class UserAccountResourceImpl extends BaseUserAccountResourceImpl {
 	}
 
 	@Override
-	public Page<UserAccount> getUserAccountsPage(Pagination pagination)
+	public Page<UserAccount> getUserAccountsPage(
+			Filter filter, Pagination pagination, Sort[] sorts)
 		throws Exception {
 
 		PermissionChecker permissionChecker =
@@ -118,35 +141,27 @@ public class UserAccountResourceImpl extends BaseUserAccountResourceImpl {
 			throw new PrincipalException.MustBeCompanyAdmin(permissionChecker);
 		}
 
-		return Page.of(
-			transform(
-				_userLocalService.getUsers(
-					contextCompany.getCompanyId(), false,
-					WorkflowConstants.STATUS_APPROVED,
-					pagination.getStartPosition(), pagination.getEndPosition(),
-					null),
-				this::_toUserAccount),
-			pagination,
-			_userLocalService.getUsersCount(
-				contextCompany.getCompanyId(), false,
-				WorkflowConstants.STATUS_APPROVED));
+		return _getUserAccountPage(
+			booleanQuery -> {
+			},
+			filter, pagination, sorts);
 	}
 
 	@Override
 	public Page<UserAccount> getWebSiteUserAccountsPage(
-			Long webSiteId, Pagination pagination)
+			Long webSiteId, Filter filter, Pagination pagination, Sort[] sorts)
 		throws Exception {
 
-		return Page.of(
-			transform(
-				_userService.getGroupUsers(
-					webSiteId, WorkflowConstants.STATUS_APPROVED,
-					pagination.getStartPosition(), pagination.getEndPosition(),
-					new UserLastNameComparator(true)),
-				this::_toUserAccount),
-			pagination,
-			_userService.getGroupUsersCount(
-				webSiteId, WorkflowConstants.STATUS_APPROVED));
+		return _getUserAccountPage(
+			booleanQuery -> {
+				BooleanFilter booleanFilter =
+					booleanQuery.getPreBooleanFilter();
+
+				booleanFilter.add(
+					new TermFilter("groupId", String.valueOf(webSiteId)),
+					BooleanClauseOccur.MUST);
+			},
+			filter, pagination, sorts);
 	}
 
 	@Override
@@ -287,6 +302,24 @@ public class UserAccountResourceImpl extends BaseUserAccountResourceImpl {
 		};
 	}
 
+	private Page<UserAccount> _getUserAccountPage(
+			UnsafeConsumer<BooleanQuery, Exception> booleanQueryUnsafeConsumer,
+			Filter filter, Pagination pagination, Sort[] sorts)
+		throws Exception {
+
+		return SearchUtil.search(
+			booleanQueryUnsafeConsumer, filter, User.class, pagination,
+			queryConfig -> queryConfig.setSelectedFieldNames(
+				Field.ENTRY_CLASS_PK),
+			searchContext -> {
+				searchContext.setCompanyId(contextCompany.getCompanyId());
+			},
+			document -> _toUserAccount(
+				_userService.getUserById(
+					GetterUtil.getLong(document.get(Field.ENTRY_CLASS_PK)))),
+			sorts);
+	}
+
 	private UserAccount _toUserAccount(User user) throws PortalException {
 		Contact contact = user.getContact();
 
@@ -360,6 +393,9 @@ public class UserAccountResourceImpl extends BaseUserAccountResourceImpl {
 			}
 		};
 	}
+
+	private static final EntityModel _entityModel =
+		new UserAccountEntityModel();
 
 	@Reference
 	private AssetTagLocalService _assetTagLocalService;

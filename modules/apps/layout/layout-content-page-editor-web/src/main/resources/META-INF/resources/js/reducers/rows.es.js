@@ -30,11 +30,14 @@ function addRowReducer(state, actionType, payload) {
 				);
 
 				updateLayoutData(
-					nextState.updateLayoutPageTemplateDataURL,
-					nextState.portletNamespace,
-					nextState.classNameId,
-					nextState.classPK,
-					nextData
+					{
+						classNameId: nextState.classNameId,
+						classPK: nextState.classPK,
+						data: nextData,
+						portletNamespace: nextState.portletNamespace,
+						segmentsExperienceId: nextState.segmentsExperienceId,
+						updateLayoutPageTemplateDataURL: nextState.updateLayoutPageTemplateDataURL
+					}
 				)
 					.then(
 						() => {
@@ -84,11 +87,14 @@ function moveRowReducer(state, actionType, payload) {
 				);
 
 				updateLayoutData(
-					nextState.updateLayoutPageTemplateDataURL,
-					nextState.portletNamespace,
-					nextState.classNameId,
-					nextState.classPK,
-					nextData
+					{
+						classNameId: nextState.classNameId,
+						classPK: nextState.classPK,
+						data: nextData,
+						portletNamespace: nextState.portletNamespace,
+						segmentsExperienceId: nextState.segmentsExperienceId,
+						updateLayoutPageTemplateDataURL: nextState.updateLayoutPageTemplateDataURL
+					}
 				)
 					.then(
 						() => {
@@ -146,12 +152,15 @@ function removeRowReducer(state, actionType, payload) {
 				);
 
 				updateLayoutData(
-					nextState.updateLayoutPageTemplateDataURL,
-					nextState.portletNamespace,
-					nextState.classNameId,
-					nextState.classPK,
-					nextData,
-					fragmentEntryLinkIds
+					{
+						classNameId: nextState.classNameId,
+						classPK: nextState.classPK,
+						data: nextData,
+						fragmentEntryLinkIds: fragmentEntryLinkIds,
+						portletNamespace: nextState.portletNamespace,
+						segmentsExperienceId: nextState.segmentsExperienceId,
+						updateLayoutPageTemplateDataURL: nextState.updateLayoutPageTemplateDataURL
+					}
 				)
 					.then(
 						() => {
@@ -212,11 +221,14 @@ const updateRowColumnsReducer = (state, actionType, payload) => new Promise(
 				);
 
 				updateLayoutData(
-					nextState.updateLayoutPageTemplateDataURL,
-					nextState.portletNamespace,
-					nextState.classNameId,
-					nextState.classPK,
-					nextState.layoutData
+					{
+						classNameId: nextState.classNameId,
+						classPK: nextState.classPK,
+						data: nextState.layoutData,
+						portletNamespace: nextState.portletNamespace,
+						segmentsExperienceId: nextState.segmentsExperienceId,
+						updateLayoutPageTemplateDataURL: nextState.updateLayoutPageTemplateDataURL
+					}
 				)
 					.then(
 						() => {
@@ -281,12 +293,15 @@ function updateRowColumnsNumberReducer(state, actionType, payload) {
 				}
 
 				updateLayoutData(
-					nextState.updateLayoutPageTemplateDataURL,
-					nextState.portletNamespace,
-					nextState.classNameId,
-					nextState.classPK,
-					nextData,
-					fragmentEntryLinkIdsToRemove
+					{
+						classNameId: nextState.classNameId,
+						classPK: nextState.classPK,
+						data: nextData,
+						fragmentEntryLinkIds: fragmentEntryLinkIdsToRemove,
+						portletNamespace: nextState.portletNamespace,
+						segmentsExperienceId: nextState.segmentsExperienceId,
+						updateLayoutPageTemplateDataURL: nextState.updateLayoutPageTemplateDataURL
+					}
 				)
 					.then(
 						() => {
@@ -355,11 +370,14 @@ const updateRowConfigReducer = (state, actionType, payload) => new Promise(
 				);
 
 				updateLayoutData(
-					nextState.updateLayoutPageTemplateDataURL,
-					nextState.portletNamespace,
-					nextState.classNameId,
-					nextState.classPK,
-					nextState.layoutData
+					{
+						classNameId: nextState.classNameId,
+						classPK: nextState.classPK,
+						data: nextState.layoutData,
+						portletNamespace: nextState.portletNamespace,
+						segmentsExperienceId: nextState.segmentsExperienceId,
+						updateLayoutPageTemplateDataURL: nextState.updateLayoutPageTemplateDataURL
+					}
 				)
 					.then(
 						() => {

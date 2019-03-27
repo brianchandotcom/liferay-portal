@@ -44,11 +44,14 @@ function addPortletReducer(state, actionType, payload) {
 							);
 
 							return updateLayoutData(
-								nextState.updateLayoutPageTemplateDataURL,
-								nextState.portletNamespace,
-								nextState.classNameId,
-								nextState.classPK,
-								nextData
+								{
+									classNameId: nextState.classNameId,
+									classPK: nextState.classPK,
+									data: nextData,
+									portletNamespace: nextState.portletNamespace,
+									segmentsExperienceId: nextState.segmentsExperienceId,
+									updateLayoutPageTemplateDataURL: nextState.updateLayoutPageTemplateDataURL
+								}
 							);
 						}
 					)

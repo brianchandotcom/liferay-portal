@@ -93,6 +93,7 @@ import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
@@ -100,6 +101,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Optional;
+import java.util.ResourceBundle;
 import java.util.Set;
 
 import javax.portlet.PortletException;
@@ -1310,9 +1312,11 @@ public class DDMFormAdminDisplayContext {
 
 		navigationItem.setHref(portletURL.toString());
 
+		ResourceBundle moduleResourceBundle = ResourceBundleUtil.getBundle(
+			"content.Language", formAdminRequestHelper.getLocale(), getClass());
+
 		navigationItem.setLabel(
-			LanguageUtil.get(
-				formAdminRequestHelper.getLocale(), "data-providers"));
+			LanguageUtil.get(moduleResourceBundle, "data-providers"));
 	}
 
 	private static final String[] _DISPLAY_VIEWS = {"descriptive", "list"};

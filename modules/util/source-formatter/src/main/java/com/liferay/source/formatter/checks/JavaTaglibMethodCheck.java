@@ -118,24 +118,28 @@ public class JavaTaglibMethodCheck extends BaseJavaTermCheck {
 				continue;
 			}
 
-			String expectedGetterMethodName = null;
-
-			if (StringUtil.equalsIgnoreCase(
-					javaParameter.getParameterType(), "boolean")) {
-
-				expectedGetterMethodName = StringUtil.replaceFirst(
-					setterJavaMethod.getName(), "set", "is");
-			}
-			else {
-				expectedGetterMethodName = StringUtil.replaceFirst(
-					setterJavaMethod.getName(), "set", "get");
-			}
+			String expectedGetterMethodName = StringUtil.replaceFirst(
+				setterJavaMethod.getName(), "set", "get");
 
 			JavaMethod getterJavaMethod = _getJavaMethod(
 				javaMethods, expectedGetterMethodName);
 
 			if (getterJavaMethod != null) {
 				continue;
+			}
+
+			if (StringUtil.equalsIgnoreCase(
+					javaParameter.getParameterType(), "boolean")) {
+
+				expectedGetterMethodName = StringUtil.replaceFirst(
+					setterJavaMethod.getName(), "set", "is");
+
+				getterJavaMethod = _getJavaMethod(
+					javaMethods, expectedGetterMethodName);
+
+				if (getterJavaMethod != null) {
+					continue;
+				}
 			}
 
 			JavaClass setterMethodJavaClass =

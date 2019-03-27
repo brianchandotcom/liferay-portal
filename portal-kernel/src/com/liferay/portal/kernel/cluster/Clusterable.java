@@ -21,16 +21,33 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
+ * When invoked by an AopInvocationHandler, Methods annotated with Clusterable
+ * are invoked across the cluster. By default the method is invoked on all
+ * active nodes in the cluster.
+ *
+ * All Liferay aspect annotations are aware of their scope. Interface aspect
+ * annotations can be overwritten by their implementations. Class level aspect
+ * annotations can be overwritten by method annotations.
+ *
  * @author Shuyang Zhou
+ * @review
  */
 @Documented
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.METHOD)
 public @interface Clusterable {
 
+	/**
+	 * A ClusterInvokeAcceptor can filter out invocation on members of the node
+	 * in case they are not ready or capable of handling the invocation.
+	 */
 	public Class<? extends ClusterInvokeAcceptor> acceptor()
 		default ClusterInvokeAcceptor.class;
 
+	/**
+	 * Indicates if only the master node should be invoked. The result of the
+	 * method invocation is deserialized and returned.
+	 */
 	public boolean onMaster() default false;
 
 }

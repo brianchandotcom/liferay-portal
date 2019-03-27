@@ -21,15 +21,38 @@ import java.util.Map;
 /**
  * @author Michael Young
  * @author Shuyang Zhou
+ * @see Transactional
+ * @review
  */
 public enum Isolation {
 
+	/**
+	 * Use the default isolation level of the counter service.
+	 */
 	COUNTER(TransactionDefinition.ISOLATION_COUNTER),
+	/**
+	 * Use the default isolation level of the underlying datastore.
+	 */
 	DEFAULT(TransactionDefinition.ISOLATION_DEFAULT),
+	/**
+	 * Use the default isolation level of the portal.
+	 */
 	PORTAL(TransactionDefinition.ISOLATION_PORTAL),
+	/**
+	 * Prevent dirty reads; allow non-repeatable reads and phantom reads.
+	 */
 	READ_COMMITTED(TransactionDefinition.ISOLATION_READ_COMMITTED),
+	/**
+	 * Allow dirty reads, non-repeatable reads and phantom reads.
+	 */
 	READ_UNCOMMITTED(TransactionDefinition.ISOLATION_READ_UNCOMMITTED),
+	/**
+	 * Prevent dirty reads and non-repeatable reads; allow phantom reads.
+	 */
 	REPEATABLE_READ(TransactionDefinition.ISOLATION_REPEATABLE_READ),
+	/**
+	 * Prevent dirty reads, non-repeatable reads and phantom reads.
+	 */
 	SERIALIZABLE(TransactionDefinition.ISOLATION_SERIALIZABLE);
 
 	public static Isolation getIsolation(int value) {

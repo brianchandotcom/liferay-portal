@@ -7,6 +7,15 @@
 		}
 	}
 
+	.asset-title {
+		font-size: 1.5rem;
+		font-weight: 700;
+	}
+
+	.metadata-author {
+		font-size: 0.875rem;
+	}
+
 	.timeline-item {
 		&:first-child {
 			.timeline-icon {

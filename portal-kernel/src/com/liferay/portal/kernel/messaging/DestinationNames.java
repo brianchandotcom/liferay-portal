@@ -130,6 +130,9 @@ public interface DestinationNames {
 
 	public static final String TEST_TRANSACTION = "liferay/test_transaction";
 
+	public static final String USER_SUBSCRIPTION_CLEAN_UP =
+		"liferay/user_subscription_clean_up";
+
 	public static final String WORKFLOW_COMPARATOR =
 		"liferay/workflow_comparator";
 

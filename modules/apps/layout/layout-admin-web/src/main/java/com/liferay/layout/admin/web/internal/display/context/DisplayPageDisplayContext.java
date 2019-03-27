@@ -58,7 +58,7 @@ public class DisplayPageDisplayContext {
 
 		SearchContainer displayPagesSearchContainer = new SearchContainer(
 			_renderRequest, _renderResponse.createRenderURL(), null,
-			"there-are-no-display-pages");
+			"there-are-no-display-page-templates");
 
 		displayPagesSearchContainer.setRowChecker(
 			new EmptyOnClickRowChecker(_renderResponse));
@@ -160,7 +160,7 @@ public class DisplayPageDisplayContext {
 		PortletURL portletURL = _renderResponse.createRenderURL();
 
 		portletURL.setParameter("mvcPath", "/view_display_pages.jsp");
-		portletURL.setParameter("tabs1", "display-pages");
+		portletURL.setParameter("tabs1", "display-page-templates");
 		portletURL.setParameter("redirect", _themeDisplay.getURLCurrent());
 
 		String keywords = getKeywords();

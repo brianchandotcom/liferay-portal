@@ -794,11 +794,11 @@ public class LayoutsAdminDisplayContext {
 					add(
 						navigationItem -> {
 							navigationItem.setActive(
-								Objects.equals(getTabs1(), "display-pages"));
+								Objects.equals(getTabs1(), "display-page-templates"));
 							navigationItem.setHref(
-								getPortletURL(), "tabs1", "display-pages");
+								getPortletURL(), "tabs1", "display-page-templates");
 							navigationItem.setLabel(
-								LanguageUtil.get(_request, "display-pages"));
+								LanguageUtil.get(_request, "display-page-templates"));
 						});
 				}
 			}

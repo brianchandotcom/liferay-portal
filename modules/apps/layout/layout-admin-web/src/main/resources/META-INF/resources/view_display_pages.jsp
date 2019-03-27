@@ -39,7 +39,7 @@ DisplayPageManagementToolbarDisplayContext displayPageManagementToolbarDisplayCo
 
 <aui:form action="<%= deleteDisplayPageURL %>" cssClass="container-fluid-1280" name="fm">
 	<liferay-ui:error key="<%= PortalException.class.getName() %>" message="one-or-more-entries-could-not-be-deleted" />
-	<liferay-ui:error key="<%= RequiredLayoutPageTemplateEntryException.class.getName() %>" message="you-cannot-delete-asset-display-pages-that-are-used-by-one-or-more-assets" />
+	<liferay-ui:error key="<%= RequiredLayoutPageTemplateEntryException.class.getName() %>" message="you-cannot-delete-asset-display-page-templates-that-are-used-by-one-or-more-assets" />
 
 	<liferay-ui:search-container
 		id="displayPages"

@@ -12,13 +12,17 @@
 	},
 	"dump-report": false,
 	"exclude": {
-		"clay-charts": [
-			"src/__tests__/**/*",
-			"src/jsx/**/*"
-		],
+		"*": [
+			"**/__tests__/**",
+			"**/test/**",
+			"demo/**",
+			"example/**",
+			"rollup.*.js",
+			"src/**"
+		],	
 		"commander": true,
-		"d3": [
-			"rollup.*.js"
+		"fbjs": [
+			"flow/**"
 		],
 		"iconv-lite": [
 			"lib/extend-node.js",
@@ -29,5 +33,9 @@
 			"tests.js"
 		]
 	},
+	 "ignore": [
+        "**/__tests__/**",
+        "**/test/**"
+    ],
 	"output": "classes/META-INF/resources"
 }

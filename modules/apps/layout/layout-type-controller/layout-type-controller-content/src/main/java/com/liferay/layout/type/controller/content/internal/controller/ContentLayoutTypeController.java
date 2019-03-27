@@ -28,11 +28,13 @@ import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.LayoutTypeController;
 import com.liferay.portal.kernel.model.impl.BaseLayoutTypeControllerImpl;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.permission.LayoutPermissionUtil;
 import com.liferay.portal.kernel.servlet.TransferHeadersHelperUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.taglib.servlet.PipingServletResponse;
 
@@ -129,8 +131,7 @@ public class ContentLayoutTypeController extends BaseLayoutTypeControllerImpl {
 
 		try {
 			LayoutPageTemplateEntry layoutPageTemplateEntry =
-				_layoutPageTemplateEntryLocalService.
-					fetchLayoutPageTemplateEntryByPlid(layout.getPlid());
+				_getLayoutPageTemplateEntry(layout);
 
 			if (layoutPageTemplateEntry != null) {
 				request.setAttribute(
@@ -231,6 +232,26 @@ public class ContentLayoutTypeController extends BaseLayoutTypeControllerImpl {
 		this.servletContext = servletContext;
 	}
 
+	private LayoutPageTemplateEntry _getLayoutPageTemplateEntry(Layout layout) {
+		LayoutPageTemplateEntry layoutPageTemplateEntry =
+			_layoutPageTemplateEntryLocalService.
+				fetchLayoutPageTemplateEntryByPlid(layout.getPlid());
+
+		if (layoutPageTemplateEntry != null) {
+			return layoutPageTemplateEntry;
+		}
+
+		if (layout.getClassNameId() == _portal.getClassNameId(Layout.class)) {
+			Layout publishedLayout = _layoutLocalService.fetchLayout(
+				layout.getClassPK());
+
+			return _layoutPageTemplateEntryLocalService.
+				fetchLayoutPageTemplateEntryByPlid(publishedLayout.getPlid());
+		}
+
+		return null;
+	}
+
 	private static final String _EDIT_LAYOUT_PAGE =
 		"/layout/edit_layout/content.jsp";
 
@@ -251,7 +272,13 @@ public class ContentLayoutTypeController extends BaseLayoutTypeControllerImpl {
 	private ItemSelector _itemSelector;
 
 	@Reference
+	private LayoutLocalService _layoutLocalService;
+
+	@Reference
 	private LayoutPageTemplateEntryLocalService
 		_layoutPageTemplateEntryLocalService;
+
+	@Reference
+	private Portal _portal;
 
 }

@@ -2259,6 +2259,7 @@ log.sanitizer.enabled=false</echo>
 							<echo>Executing Gradle task in directory "modules": testIntegration.</echo>
 
 							<gradle-execute dir="modules" refreshdependencies="@{refreshdependencies}" task="testIntegration">
+								<arg value="--continue" />
 								<arg value="-Dapp.server.start.executable.arg.line=${test.batch.app.server.start.executable.arg.line}" />
 								<arg value="-Ddatabase.type=@{database.type}" />
 								<arg value="-Dbuild.exclude.ant.plugin=true" />
@@ -5125,6 +5126,7 @@ log.sanitizer.enabled=false</echo>
 		<run-batch-test>
 			<test-action>
 				<gradle-execute dir="modules" task="test">
+					<arg value="--continue" />
 					<arg value="-Dbuild.exclude.ant.plugin=true" />
 					<arg if:set="com.liferay.portal.search.solr7.test.unit.started" value="-Dcom.liferay.portal.search.solr7.test.unit.started=${com.liferay.portal.search.solr7.test.unit.started}" />
 					<arg value="-Djunit.code.coverage=${test.batch.code.coverage}" />

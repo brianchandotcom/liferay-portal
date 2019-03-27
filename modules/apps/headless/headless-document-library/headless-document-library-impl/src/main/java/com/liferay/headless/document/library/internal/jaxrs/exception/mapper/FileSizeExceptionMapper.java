@@ -23,8 +23,7 @@ import javax.ws.rs.ext.ExceptionMapper;
 import org.osgi.service.component.annotations.Component;
 
 /**
- * Converts any {@code FileSizeException} to a {@code 422}
- * error.
+ * Converts any {@code FileSizeException} to a {@code 400} error.
  *
  * @author Alejandro Hernández
  * @review
@@ -43,7 +42,7 @@ public class FileSizeExceptionMapper
 	@Override
 	public Response toResponse(FileSizeException fse) {
 		return Response.status(
-			422
+			400
 		).type(
 			MediaType.TEXT_PLAIN
 		).entity(

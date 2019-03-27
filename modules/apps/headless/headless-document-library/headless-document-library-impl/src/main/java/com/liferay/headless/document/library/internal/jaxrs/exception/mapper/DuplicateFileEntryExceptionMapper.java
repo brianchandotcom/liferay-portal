@@ -23,8 +23,7 @@ import javax.ws.rs.ext.ExceptionMapper;
 import org.osgi.service.component.annotations.Component;
 
 /**
- * Converts any {@code DuplicateFileEntryException} to a {@code 422}
- * error.
+ * Converts any {@code DuplicateFileEntryException} to a {@code 409} error.
  *
  * @author Alejandro Hernández
  * @review
@@ -47,7 +46,7 @@ public class DuplicateFileEntryExceptionMapper
 		message = message.replace("file entry", "document");
 
 		return Response.status(
-			422
+			409
 		).type(
 			MediaType.TEXT_PLAIN
 		).entity(

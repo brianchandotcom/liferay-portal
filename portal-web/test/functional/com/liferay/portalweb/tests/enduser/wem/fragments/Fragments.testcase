@@ -109,7 +109,7 @@ definition {
 				entry = "Fragment Name (Copy)"
 			);
 
-			SelectFrame(locator1 = "FragmentEditor#PREVIEW_IFRAME");
+			SelectFrame.selectFrameNoLoading(locator1 = "FragmentEditor#PREVIEW_IFRAME");
 
 			AssertTextEquals(
 				locator1 = "//div[contains(@id,'fragment')]",

@@ -250,7 +250,7 @@ definition {
 
 			LexiconEntry.gotoEntryMenuItem(menuItem = "Edit", rowEntry = "Button");
 
-			SelectFrame(locator1 = "FragmentEditor#PREVIEW_IFRAME");
+			SelectFrame.selectFrameNoLoading(locator1 = "FragmentEditor#PREVIEW_IFRAME");
 
 			AssertElementPresent(locator1 = "Button#SUBMIT");
 

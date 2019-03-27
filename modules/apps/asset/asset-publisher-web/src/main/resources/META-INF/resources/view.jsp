@@ -33,8 +33,8 @@ if (assetPublisherDisplayContext.isEnableTagBasedNavigation() && !assetPublisher
 				</portlet:actionURL>
 
 				<liferay-ui:icon
-					icon="start"
 					label="<%= true %>"
+					linkCssClass="btn btn-secondary btn-sm mb-4"
 					markupView="lexicon"
 					message="unsubscribe"
 					url="<%= unsubscribeURL %>"
@@ -46,8 +46,8 @@ if (assetPublisherDisplayContext.isEnableTagBasedNavigation() && !assetPublisher
 				</portlet:actionURL>
 
 				<liferay-ui:icon
-					icon="start-o"
 					label="<%= true %>"
+					linkCssClass="btn btn-secondary btn-sm mb-4"
 					markupView="lexicon"
 					message="subscribe"
 					url="<%= subscribeURL %>"

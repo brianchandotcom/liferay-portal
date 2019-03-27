@@ -4,6 +4,8 @@ import aQute.bnd.osgi.Resource
 
 import java.util.jar.Manifest
 
+task jarManifest
+
 dependencies {
 	compileInclude group: "com.fasterxml", name: "classmate", version: "1.4.0"
 	compileInclude group: "com.fasterxml.jackson.dataformat", name: "jackson-dataformat-xml", version: "2.9.8"
@@ -60,6 +62,10 @@ deployDependencies {
 }
 
 jar {
+	finalizedBy jarManifest
+}
+
+jarManifest {
 	doLast {
 		ant.jar(destfile: jar.archivePath, update: true) {
 			Jar jar = new Jar(jar.archivePath)

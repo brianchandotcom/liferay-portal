@@ -20,38 +20,41 @@
 List<Tuple> assetLinkEntries = (List<Tuple>)request.getAttribute("liferay-asset:asset-links:assetLinkEntries");
 %>
 
-<liferay-ui:search-container
-	total="<%= assetLinkEntries.size() %>"
->
-	<liferay-ui:search-container-results
-		results="<%= assetLinkEntries %>"
-	/>
+<h2 class="mb-3 sheet-tertiary-title">
+	<liferay-ui:message key="related-assets" />
+</h2>
 
-	<liferay-ui:search-container-row
-		className="com.liferay.portal.kernel.util.Tuple"
-		modelVar="tuple"
-	>
+<ul class="list-group sidebar-list-group">
 
-		<%
+	<%
+	for (Tuple tuple : assetLinkEntries) {
 		AssetEntry assetLinkEntry = (AssetEntry)tuple.getObject(0);
 
 		AssetRenderer assetRenderer = assetLinkEntry.getAssetRenderer();
-		%>
+	%>
 
-		<liferay-ui:search-container-column-text
-			name="related-assets"
-		>
-			<aui:icon cssClass="mr-2" image="<%= assetRenderer.getIconCssClass() %>" markupView="lexicon" />
+		<li class="list-group-item list-group-item-flex">
+			<div class="autofit-col">
+				<div class="sticker sticker-secondary">
+					<span class="inline-item">
+						<aui:icon image="<%= assetRenderer.getIconCssClass() %>" markupView="lexicon" />
+					</span>
+				</div>
+			</div>
 
-			<aui:a href="<%= (String)tuple.getObject(1) %>" target='<%= themeDisplay.isStatePopUp() ? "_blank" : "_self" %>'>
-				<%= HtmlUtil.escape(assetLinkEntry.getTitle(locale)) %>
-			</aui:a>
-		</liferay-ui:search-container-column-text>
-	</liferay-ui:search-container-row>
+			<div class="autofit-col autofit-col-expand">
+				<section class="autofit-section">
+					<div class="list-group-title text-truncate-inline">
+						<aui:a cssClass="text-truncate" href="<%= (String)tuple.getObject(1) %>" target='<%= themeDisplay.isStatePopUp() ? "_blank" : "_self" %>'>
+							<%= HtmlUtil.escape(assetLinkEntry.getTitle(locale)) %>
+						</aui:a>
+					</div>
+				</section>
+			</div>
+		</li>
 
-	<liferay-ui:search-iterator
-		markupView="lexicon"
-		paginate="<%= false %>"
-		searchResultCssClass="table table-autofit table-heading-nowrap"
-	/>
-</liferay-ui:search-container>
+	<%
+	}
+	%>
+
+</ul>

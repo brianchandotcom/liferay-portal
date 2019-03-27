@@ -16,11 +16,10 @@
 
 <liferay-frontend:vertical-card-sticker-bottom>
 	<c:if test="<%= Validator.isNotNull(latestFileVersion.getExtension()) %>">
-		<div class="sticker sticker-document sticker-bottom <%= dlViewFileVersionDisplayContext.getCssClassFileMimeType() %>">
-			<clay:icon
-				symbol="<%= dlViewFileVersionDisplayContext.getIconFileMimeType() %>"
-			/>
-		</div>
+		<liferay-document-library:mime-type-sticker
+			cssClass="sticker-bottom"
+			fileVersion="<%= latestFileVersion %>"
+		/>
 	</c:if>
 
 	<c:choose>

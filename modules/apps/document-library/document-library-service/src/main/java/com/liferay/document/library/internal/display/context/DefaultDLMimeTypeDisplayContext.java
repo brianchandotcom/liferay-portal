@@ -39,17 +39,17 @@ public class DefaultDLMimeTypeDisplayContext
 	@Override
 	public String getCssClassFileMimeType(String mimeType) {
 		if (_containsMimeType(_dlConfiguration.codeFileMimeTypes(), mimeType)) {
-			return "file-icon-color-7";
+			return "file-icon-color-0";
 		}
 		else if (_containsMimeType(
 					_dlConfiguration.compressedFileMimeTypes(), mimeType)) {
 
-			return "file-icon-color-1";
+			return "file-icon-color-0";
 		}
 		else if (_containsMimeType(
 					_dlConfiguration.multimediaFileMimeTypes(), mimeType)) {
 
-			return "file-icon-color-3";
+			return "file-icon-color-5";
 		}
 		else if (_containsMimeType(
 					_dlConfiguration.presentationFileMimeTypes(), mimeType)) {
@@ -69,7 +69,7 @@ public class DefaultDLMimeTypeDisplayContext
 		else if (_containsMimeType(
 					_dlConfiguration.vectorialFileMimeTypes(), mimeType)) {
 
-			return "file-icon-color-5";
+			return "file-icon-color-3";
 		}
 
 		return "file-icon-color-0";

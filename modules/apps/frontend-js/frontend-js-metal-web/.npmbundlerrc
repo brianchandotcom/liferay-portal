@@ -1,5 +1,4 @@
 {
-	"output": "classes/META-INF/resources",
 	"config": {
 		"imports": {
 			"frontend-js-node-shims": {
@@ -18,5 +17,7 @@
 		"querystring": [
 			"test/**/*"
 		]
-	}
+	},
+	"output": "classes/META-INF/resources",
+	"preset": "liferay-npm-bundler-preset-standard"
 }

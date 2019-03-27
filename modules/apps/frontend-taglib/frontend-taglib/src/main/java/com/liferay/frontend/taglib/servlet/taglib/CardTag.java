@@ -36,6 +36,74 @@ public class CardTag extends IncludeTag {
 		return EVAL_BODY_INCLUDE;
 	}
 
+	public String getActionJsp() {
+		return _actionJsp;
+	}
+
+	public String getCardCssClass() {
+		return _cardCssClass;
+	}
+
+	public String getCheckboxCSSClass() {
+		return _checkboxCSSClass;
+	}
+
+	public Map<String, Object> getCheckboxData() {
+		return _checkboxData;
+	}
+
+	public String getCheckboxId() {
+		return _checkboxId;
+	}
+
+	public String getCheckboxName() {
+		return _checkboxName;
+	}
+
+	public String getCheckboxValue() {
+		return _checkboxValue;
+	}
+
+	public String getCssClass() {
+		return _cssClass;
+	}
+
+	public Map<String, Object> getData() {
+		return _data;
+	}
+
+	public String getImageCSSClass() {
+		return _imageCSSClass;
+	}
+
+	public String getImageUrl() {
+		return _imageUrl;
+	}
+
+	public ResultRow getResultRow() {
+		return _resultRow;
+	}
+
+	public RowChecker getRowChecker() {
+		return _rowChecker;
+	}
+
+	public String getUrl() {
+		return _url;
+	}
+
+	public boolean isCheckboxChecked() {
+		return _checkboxChecked;
+	}
+
+	public boolean isCheckboxDisabled() {
+		return _checkboxDisabled;
+	}
+
+	public boolean isShowCheckbox() {
+		return _showCheckbox;
+	}
+
 	public void setActionJsp(String actionJsp) {
 		_actionJsp = actionJsp;
 	}

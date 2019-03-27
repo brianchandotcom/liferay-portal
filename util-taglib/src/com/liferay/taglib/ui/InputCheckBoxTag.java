@@ -53,6 +53,10 @@ public class InputCheckBoxTag extends IncludeTag {
 		return _param;
 	}
 
+	public boolean isDefaultValue() {
+		return _defaultValue;
+	}
+
 	public boolean isDisabled() {
 		return _disabled;
 	}
@@ -62,7 +66,7 @@ public class InputCheckBoxTag extends IncludeTag {
 	}
 
 	public void setDefaultValue(boolean defaultValue) {
-		_defaultValue = Boolean.valueOf(defaultValue);
+		_defaultValue = defaultValue;
 	}
 
 	public void setDisabled(boolean disabled) {
@@ -90,7 +94,7 @@ public class InputCheckBoxTag extends IncludeTag {
 		super.cleanUp();
 
 		_cssClass = null;
-		_defaultValue = Boolean.FALSE;
+		_defaultValue = false;
 		_disabled = false;
 		_formName = "fm";
 		_id = null;
@@ -129,7 +133,7 @@ public class InputCheckBoxTag extends IncludeTag {
 		"/html/taglib/ui/input_checkbox/page.jsp";
 
 	private String _cssClass;
-	private Boolean _defaultValue = Boolean.FALSE;
+	private boolean _defaultValue;
 	private boolean _disabled;
 	private String _formName = "fm";
 	private String _id;

@@ -36,7 +36,7 @@
 	},
 	"devDependencies": {
 		"liferay-npm-bundler-preset-standard": "2.7.0",
-		"liferay-npm-scripts": "1.4.6"
+		"liferay-npm-scripts": "1.4.7"
 	},
 	"name": "frontend-js-metal-web",
 	"scripts": {

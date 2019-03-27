@@ -6677,10 +6677,6 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 			long userId, long[] newOrganizationIds, boolean indexingEnabled)
 		throws PortalException {
 
-		if (newOrganizationIds == null) {
-			return;
-		}
-
 		long[] oldOrganizationIds = getOrganizationPrimaryKeys(userId);
 
 		for (long oldOrganizationId : oldOrganizationIds) {

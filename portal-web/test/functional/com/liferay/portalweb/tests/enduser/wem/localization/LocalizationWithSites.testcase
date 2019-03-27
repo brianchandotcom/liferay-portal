@@ -542,7 +542,7 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Configuración",
 			panel = "Site Administration",
-			portlet = "Ajustes del sitio"
+			portlet = "Configuración del sitio web"
 		);
 
 		Site.configureCurrentLanguagesCP(
@@ -579,7 +579,7 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Configuración",
 			panel = "Site Administration",
-			portlet = "Ajustes del sitio"
+			portlet = "Configuración del sitio web"
 		);
 
 		Site.configureCurrentLanguagesCP(

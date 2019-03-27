@@ -32,7 +32,7 @@ definition {
 			portlet = "Forms"
 		);
 
-		LexiconEntry.gotoHeaderMenuItem(menuItem = "Data Providers");
+		Navigator.gotoNavItem(navItem = "Data Providers");
 
 		FormsAdminNavigator.gotoAddDataProvider();
 
@@ -206,7 +206,7 @@ definition {
 			portlet = "Forms"
 		);
 
-		LexiconEntry.gotoHeaderMenuItem(menuItem = "Data Providers");
+		Navigator.gotoNavItem(navItem = "Data Providers");
 
 		FormsAdminNavigator.gotoAddDataProvider();
 
@@ -312,7 +312,7 @@ definition {
 			portlet = "Forms"
 		);
 
-		LexiconEntry.gotoHeaderMenuItem(menuItem = "Data Providers");
+		Navigator.gotoNavItem(navItem = "Data Providers");
 
 		FormsAdminNavigator.gotoAddDataProvider();
 

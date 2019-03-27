@@ -97,6 +97,16 @@ class AssetVocabularyCategoriesSelector extends Component {
 	}
 
 	/**
+	 * Hides the category error
+	 *
+	 * @private
+	 * @review
+	 */
+	_handleInputOnBlur() {
+		this._unexistingCategoryError = false;
+	}
+
+	/**
 	 * Updates tags fallback and notifies that a new tag has been added
 	 * @param {!Event} event
 	 * @private

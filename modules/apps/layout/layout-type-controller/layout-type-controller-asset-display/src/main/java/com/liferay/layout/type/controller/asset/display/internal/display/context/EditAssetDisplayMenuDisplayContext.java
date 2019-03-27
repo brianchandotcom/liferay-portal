@@ -74,10 +74,6 @@ public class EditAssetDisplayMenuDisplayContext {
 						_themeDisplay.getPermissionChecker(),
 						_themeDisplay.getLayout(), ActionKeys.UPDATE)) {
 
-					String editLayoutURL = HttpUtil.setParameter(
-						_themeDisplay.getURLCurrent(), "p_l_mode",
-						Constants.EDIT);
-
 					ResourceBundle resourceBundle =
 						ResourceBundleUtil.getBundle(
 							"content.Language", _themeDisplay.getLocale(),
@@ -85,7 +81,16 @@ public class EditAssetDisplayMenuDisplayContext {
 
 					add(
 						dropdownItem -> {
+							String editLayoutURL = HttpUtil.setParameter(
+								_themeDisplay.getURLCurrent(), "p_l_mode",
+								Constants.EDIT);
+
+							editLayoutURL = HttpUtil.setParameter(
+								editLayoutURL, "p_l_back_url",
+								_themeDisplay.getURLCurrent());
+
 							dropdownItem.setHref(editLayoutURL);
+
 							dropdownItem.setLabel(
 								LanguageUtil.get(
 									resourceBundle,

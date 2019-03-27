@@ -1,5 +1,0 @@
-{
-	"build": {
-		"dependencies": ["com.liferay.frontend.js.web"]
-	}
-}

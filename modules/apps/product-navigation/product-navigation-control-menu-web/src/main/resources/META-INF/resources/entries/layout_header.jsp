@@ -20,10 +20,20 @@
 LayoutTypeController layoutTypeController = LayoutTypeControllerTracker.getLayoutTypeController(layout.getType());
 
 ResourceBundle layoutTypeResourceBundle = ResourceBundleUtil.getBundle("content.Language", locale, layoutTypeController.getClass());
+
+String headerTitle = HtmlUtil.escape(layout.getName(locale));
+
+String layoutFriendlyURL = layout.getFriendlyURL();
+
+String portletId = ParamUtil.getString(request, "p_p_id");
+
+if (Validator.isNotNull(portletId) && layout.isSystem() && layoutFriendlyURL.equals(PropsValues.CONTROL_PANEL_LAYOUT_FRIENDLY_URL)) {
+	headerTitle = PortalUtil.getPortletTitle(portletId, locale);
+}
 %>
 
 <li class="align-items-center control-menu-nav-item control-menu-nav-item-content">
-	<span class="control-menu-level-1-heading truncate-text" data-qa-id="headerTitle"><%= HtmlUtil.escape(layout.getName(locale)) %></span>&nbsp;<span class="text-muted truncate-text">(<%= LanguageUtil.get(request, layoutTypeResourceBundle, "layout.types." + layout.getType()) %>)</span>
+	<span class="control-menu-level-1-heading truncate-text" data-qa-id="headerTitle"><%= headerTitle %></span>&nbsp;<span class="text-muted truncate-text">(<%= LanguageUtil.get(request, layoutTypeResourceBundle, "layout.types." + layout.getType()) %>)</span>
 
 	<%
 	Map<String, Object> context = new HashMap<>();

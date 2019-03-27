@@ -18,6 +18,7 @@ import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.bulk.selection.BulkSelection;
 import com.liferay.bulk.selection.BulkSelectionFactory;
 import com.liferay.document.library.kernel.service.DLAppService;
+import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.repository.RepositoryProvider;
@@ -28,7 +29,6 @@ import com.liferay.portal.kernel.util.ResourceBundleLoader;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.util.Map;
-import java.util.function.Consumer;
 
 /**
  * @author Adolfo Pérez
@@ -75,13 +75,14 @@ public class FolderFileShortcutBulkSelection
 	}
 
 	@Override
-	protected RepositoryModelOperation getRepositoryModelOperation(
-		Consumer<? super FileShortcut> action) {
+	protected <E extends PortalException> RepositoryModelOperation
+		getRepositoryModelOperation(
+			UnsafeConsumer<? super FileShortcut, E> action) {
 
 		return new BaseRepositoryModelOperation() {
 
 			@Override
-			public void execute(FileShortcut fileShortcut) {
+			public void execute(FileShortcut fileShortcut) throws E {
 				action.accept(fileShortcut);
 			}
 

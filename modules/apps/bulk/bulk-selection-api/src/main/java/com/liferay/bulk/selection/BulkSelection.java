@@ -15,13 +15,13 @@
 package com.liferay.bulk.selection;
 
 import com.liferay.asset.kernel.model.AssetEntry;
+import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.portal.kernel.exception.PortalException;
 
 import java.io.Serializable;
 
 import java.util.Locale;
 import java.util.Map;
-import java.util.stream.Stream;
 
 /**
  * @author Adolfo Pérez
@@ -30,6 +30,10 @@ public interface BulkSelection<T> {
 
 	public String describe(Locale locale) throws PortalException;
 
+	public <E extends PortalException> void forEach(
+			UnsafeConsumer<T, E> unsafeConsumer)
+		throws PortalException;
+
 	public Class<? extends BulkSelectionFactory> getBulkSelectionFactoryClass();
 
 	public Map<String, String[]> getParameterMap();
@@ -37,8 +41,6 @@ public interface BulkSelection<T> {
 	public boolean isMultiple();
 
 	public Serializable serialize();
-
-	public Stream<T> stream() throws PortalException;
 
 	public BulkSelection<AssetEntry> toAssetEntryBulkSelection();
 

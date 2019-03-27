@@ -14,18 +14,16 @@
 
 package com.liferay.bulk.selection;
 
+import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.util.ResourceBundleLoader;
 
 import java.io.Serializable;
 
-import java.util.Collections;
 import java.util.Locale;
 import java.util.Map;
 import java.util.ResourceBundle;
-import java.util.Set;
-import java.util.stream.Stream;
 
 /**
  * @author Adolfo Pérez
@@ -54,6 +52,14 @@ public abstract class BaseSingleEntryBulkSelection<T>
 	}
 
 	@Override
+	public <E extends PortalException> void forEach(
+			UnsafeConsumer<T, E> unsafeConsumer)
+		throws PortalException {
+
+		unsafeConsumer.accept(getEntry());
+	}
+
+	@Override
 	public Map<String, String[]> getParameterMap() {
 		return _parameterMap;
 	}
@@ -66,13 +72,6 @@ public abstract class BaseSingleEntryBulkSelection<T>
 	@Override
 	public Serializable serialize() {
 		return String.valueOf(_entryId);
-	}
-
-	@Override
-	public Stream<T> stream() throws PortalException {
-		Set<T> set = Collections.singleton(getEntry());
-
-		return set.stream();
 	}
 
 	protected abstract T getEntry() throws PortalException;

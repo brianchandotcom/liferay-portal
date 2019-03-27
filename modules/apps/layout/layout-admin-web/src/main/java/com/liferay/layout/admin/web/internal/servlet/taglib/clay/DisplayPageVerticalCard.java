@@ -14,8 +14,6 @@
 
 package com.liferay.layout.admin.web.internal.servlet.taglib.clay;
 
-import com.liferay.asset.display.contributor.AssetDisplayContributor;
-import com.liferay.asset.display.contributor.AssetDisplayContributorTracker;
 import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
 import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.asset.kernel.model.ClassType;
@@ -25,6 +23,8 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.soy.VerticalCard;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItemList;
+import com.liferay.info.display.contributor.InfoDisplayContributor;
+import com.liferay.info.display.contributor.InfoDisplayContributorTracker;
 import com.liferay.layout.admin.web.internal.constants.LayoutAdminWebKeys;
 import com.liferay.layout.admin.web.internal.servlet.taglib.util.DisplayPageActionDropdownItemsProvider;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
@@ -67,8 +67,8 @@ public class DisplayPageVerticalCard
 		_renderRequest = renderRequest;
 		_renderResponse = renderResponse;
 
-		_assetDisplayContributorTracker =
-			(AssetDisplayContributorTracker)renderRequest.getAttribute(
+		_infoDisplayContributorTracker =
+			(InfoDisplayContributorTracker)renderRequest.getAttribute(
 				LayoutAdminWebKeys.INFO_DISPLAY_CONTRIBUTOR_TRACKER);
 		_layoutPageTemplateEntry = (LayoutPageTemplateEntry)baseModel;
 		_themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
@@ -228,19 +228,18 @@ public class DisplayPageVerticalCard
 	}
 
 	private String _getTypeLabel() {
-		AssetDisplayContributor assetDisplayContributor =
-			_assetDisplayContributorTracker.getAssetDisplayContributor(
+		InfoDisplayContributor infoDisplayContributor =
+			_infoDisplayContributorTracker.getInfoDisplayContributor(
 				_layoutPageTemplateEntry.getClassName());
 
-		if (assetDisplayContributor == null) {
+		if (infoDisplayContributor == null) {
 			return StringPool.BLANK;
 		}
 
-		return assetDisplayContributor.getLabel(_themeDisplay.getLocale());
+		return infoDisplayContributor.getLabel(_themeDisplay.getLocale());
 	}
 
-	private final AssetDisplayContributorTracker
-		_assetDisplayContributorTracker;
+	private final InfoDisplayContributorTracker _infoDisplayContributorTracker;
 	private final LayoutPageTemplateEntry _layoutPageTemplateEntry;
 	private final RenderRequest _renderRequest;
 	private final RenderResponse _renderResponse;

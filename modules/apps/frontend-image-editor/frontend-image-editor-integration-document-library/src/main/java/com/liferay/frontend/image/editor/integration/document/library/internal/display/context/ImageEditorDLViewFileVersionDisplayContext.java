@@ -15,11 +15,13 @@
 package com.liferay.frontend.image.editor.integration.document.library.internal.display.context;
 
 import com.liferay.document.library.display.context.BaseDLViewFileVersionDisplayContext;
+import com.liferay.document.library.display.context.DLUIItemKeys;
 import com.liferay.document.library.display.context.DLViewFileVersionDisplayContext;
 import com.liferay.document.library.util.DLURLHelper;
 import com.liferay.frontend.image.editor.integration.document.library.internal.display.context.logic.ImageEditorDLDisplayContextHelper;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.repository.model.FileVersion;
+import com.liferay.portal.kernel.servlet.taglib.ui.BaseUIItem;
 import com.liferay.portal.kernel.servlet.taglib.ui.Menu;
 import com.liferay.portal.kernel.servlet.taglib.ui.MenuItem;
 import com.liferay.portal.kernel.servlet.taglib.ui.ToolbarItem;
@@ -62,7 +64,8 @@ public class ImageEditorDLViewFileVersionDisplayContext
 			return menu;
 		}
 
-		menuItems.add(
+		_addEditWithImageEditorUIItem(
+			menuItems,
 			_imageEditorDLDisplayContextHelper.
 				getJavacriptEditWithImageEditorMenuItem(_resourceBundle));
 
@@ -77,11 +80,33 @@ public class ImageEditorDLViewFileVersionDisplayContext
 			return toolbarItems;
 		}
 
-		toolbarItems.add(
+		return _addEditWithImageEditorUIItem(
+			toolbarItems,
 			_imageEditorDLDisplayContextHelper.
 				getJavacriptEditWithImageEditorToolbarItem(_resourceBundle));
+	}
 
-		return toolbarItems;
+	private <T extends BaseUIItem> List<T> _addEditWithImageEditorUIItem(
+		List<T> uiItems, T editWithImageEditorUIItem) {
+
+		int i = 1;
+
+		for (T uiItem : uiItems) {
+			if (DLUIItemKeys.EDIT.equals(uiItem.getKey())) {
+				break;
+			}
+
+			i++;
+		}
+
+		if (i >= uiItems.size()) {
+			uiItems.add(editWithImageEditorUIItem);
+		}
+		else {
+			uiItems.add(i, editWithImageEditorUIItem);
+		}
+
+		return uiItems;
 	}
 
 	private static final UUID _UUID = UUID.fromString(

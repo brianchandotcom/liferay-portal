@@ -6,7 +6,7 @@
 		"custom-event-polyfill": "1.0.6",
 		"moment": "2.24.0",
 		"path-to-regexp": "3.0.0",
-		"query-string": "6.4.0",
+		"qs": "6.7.0",
 		"react": "16.6.3",
 		"react-dom": "16.6.3",
 		"react-router-dom": "4.3.1",

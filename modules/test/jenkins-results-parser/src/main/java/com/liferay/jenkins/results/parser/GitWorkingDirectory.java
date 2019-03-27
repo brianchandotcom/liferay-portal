@@ -1537,6 +1537,21 @@ public class GitWorkingDirectory {
 		return _upstreamBranchName;
 	}
 
+	public GitRemote getUpstreamGitRemote() {
+		Map<String, GitRemote> gitRemotes = getGitRemotes();
+
+		GitRemote gitRemote = gitRemotes.get("upstream");
+
+		if (gitRemote == null) {
+			gitRemote = addGitRemote(
+				true, "upstream",
+				JenkinsResultsParserUtil.combine(
+					"git@github.com:liferay/", getGitRepositoryName(), ".git"));
+		}
+
+		return gitRemote;
+	}
+
 	public LocalGitBranch getUpstreamLocalGitBranch() {
 		String upstreamBranchName = getUpstreamBranchName();
 
@@ -2023,21 +2038,6 @@ public class GitWorkingDirectory {
 
 		return JenkinsResultsParserUtil.getDirectoriesContainingFiles(
 			subdirectories, files);
-	}
-
-	protected GitRemote getUpstreamGitRemote() {
-		Map<String, GitRemote> gitRemotes = getGitRemotes();
-
-		GitRemote gitRemote = gitRemotes.get("upstream");
-
-		if (gitRemote == null) {
-			gitRemote = addGitRemote(
-				true, "upstream",
-				JenkinsResultsParserUtil.combine(
-					"git@github.com:liferay/", getGitRepositoryName(), ".git"));
-		}
-
-		return gitRemote;
 	}
 
 	protected String loadGitRepositoryName() {

@@ -80,21 +80,21 @@ public class FolderResourceTest extends BaseFolderResourceTestCase {
 
 	@Override
 	protected Folder testDeleteFolder_addFolder() throws Exception {
-		return invokePostContentSpaceTreeFolder(
+		return invokePostContentSpaceFolder(
 			testGroup.getGroupId(), randomFolder());
 	}
 
 	@Override
-	protected Folder testGetContentSpaceTreeFoldersPage_addFolder(
+	protected Folder testGetContentSpaceFoldersPage_addFolder(
 			Long contentSpaceId, Folder folder)
 		throws Exception {
 
-		return invokePostContentSpaceTreeFolder(contentSpaceId, folder);
+		return invokePostContentSpaceFolder(contentSpaceId, folder);
 	}
 
 	@Override
 	protected Folder testGetFolder_addFolder() throws Exception {
-		Folder postFolder = invokePostContentSpaceTreeFolder(
+		Folder postFolder = invokePostContentSpaceFolder(
 			testGroup.getGroupId(), randomFolder());
 
 		Assert.assertEquals(0, postFolder.getNumberOfDocuments());
@@ -121,7 +121,7 @@ public class FolderResourceTest extends BaseFolderResourceTestCase {
 
 	@Override
 	protected Long testGetFolderFoldersPage_getFolderId() throws Exception {
-		Folder folder = invokePostContentSpaceTreeFolder(
+		Folder folder = invokePostContentSpaceFolder(
 			testGroup.getGroupId(), randomFolder());
 
 		return folder.getId();
@@ -129,15 +129,15 @@ public class FolderResourceTest extends BaseFolderResourceTestCase {
 
 	@Override
 	protected Folder testPatchFolder_addFolder() throws Exception {
-		return invokePostContentSpaceTreeFolder(
+		return invokePostContentSpaceFolder(
 			testGroup.getGroupId(), randomFolder());
 	}
 
 	@Override
-	protected Folder testPostContentSpaceTreeFolder_addFolder(Folder folder)
+	protected Folder testPostContentSpaceFolder_addFolder(Folder folder)
 		throws Exception {
 
-		Folder postFolder = invokePostContentSpaceTreeFolder(
+		Folder postFolder = invokePostContentSpaceFolder(
 			testGroup.getGroupId(), folder);
 
 		Assert.assertEquals(0, postFolder.getNumberOfDocuments());
@@ -149,7 +149,7 @@ public class FolderResourceTest extends BaseFolderResourceTestCase {
 	protected Folder testPostFolderFolder_addFolder(Folder folder)
 		throws Exception {
 
-		Folder parentFolder = invokePostContentSpaceTreeFolder(
+		Folder parentFolder = invokePostContentSpaceFolder(
 			testGroup.getGroupId(), randomFolder());
 
 		return invokePostFolderFolder(parentFolder.getId(), folder);
@@ -157,7 +157,7 @@ public class FolderResourceTest extends BaseFolderResourceTestCase {
 
 	@Override
 	protected Folder testPutFolder_addFolder() throws Exception {
-		return invokePostContentSpaceTreeFolder(
+		return invokePostContentSpaceFolder(
 			testGroup.getGroupId(), randomFolder());
 	}
 

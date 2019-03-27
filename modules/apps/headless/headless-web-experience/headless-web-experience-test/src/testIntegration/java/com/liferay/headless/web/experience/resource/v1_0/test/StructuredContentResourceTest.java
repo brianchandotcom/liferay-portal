@@ -81,24 +81,6 @@ public class StructuredContentResourceTest
 		super.tearDown();
 	}
 
-	@Override
-	public StructuredContent
-			testGetContentSpaceKeyStructuredContent_addStructuredContent()
-		throws Exception {
-
-		return invokePostContentSpaceStructuredContent(
-			testGroup.getGroupId(), randomStructuredContent());
-	}
-
-	@Override
-	public StructuredContent
-			testGetContentSpaceUuidStructuredContent_addStructuredContent()
-		throws Exception {
-
-		return invokePostContentSpaceStructuredContent(
-			testGroup.getGroupId(), randomStructuredContent());
-	}
-
 	protected void assertValid(StructuredContent structuredContent) {
 		boolean valid = false;
 
@@ -166,6 +148,24 @@ public class StructuredContentResourceTest
 	@Override
 	protected StructuredContent
 			testDeleteStructuredContent_addStructuredContent()
+		throws Exception {
+
+		return invokePostContentSpaceStructuredContent(
+			testGroup.getGroupId(), randomStructuredContent());
+	}
+
+	@Override
+	protected StructuredContent
+			testGetContentSpaceStructuredContentByKey_addStructuredContent()
+		throws Exception {
+
+		return invokePostContentSpaceStructuredContent(
+			testGroup.getGroupId(), randomStructuredContent());
+	}
+
+	@Override
+	protected StructuredContent
+			testGetContentSpaceStructuredContentByUuid_addStructuredContent()
 		throws Exception {
 
 		return invokePostContentSpaceStructuredContent(

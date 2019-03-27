@@ -552,6 +552,17 @@ public class Entity implements Comparable<Entity> {
 		return entityColumn.getDBName();
 	}
 
+	public List<String> getPKEntityColumnDBNames() {
+		List<String> pkEntityColumnDBNames = new ArrayList<>(
+			_pkEntityColumns.size());
+
+		for (EntityColumn entityColumn : _pkEntityColumns) {
+			pkEntityColumnDBNames.add(entityColumn.getDBName());
+		}
+
+		return pkEntityColumnDBNames;
+	}
+
 	public List<EntityColumn> getPKEntityColumns() {
 		return _pkEntityColumns;
 	}

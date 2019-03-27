@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+
+<suppressions>
+	<source-check>
+		<suppress checks="JavaTaglibMethodCheck" files="modules/apps/social/social-activities-taglib/src/main/java/com/liferay/social/activities/taglib/servlet/taglib/SocialActivitiesTag\.java" />
+	</source-check>
+</suppressions>

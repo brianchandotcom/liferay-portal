@@ -14,9 +14,9 @@
 
 package com.liferay.layout.content.page.editor.web.internal.portlet.action;
 
-import com.liferay.asset.display.contributor.AssetDisplayContributor;
-import com.liferay.asset.display.contributor.AssetDisplayContributorTracker;
 import com.liferay.asset.kernel.model.ClassType;
+import com.liferay.info.display.contributor.InfoDisplayContributor;
+import com.liferay.info.display.contributor.InfoDisplayContributorTracker;
 import com.liferay.layout.content.page.editor.constants.ContentPageEditorPortletKeys;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -59,15 +59,15 @@ public class GetAssetClassTypesMVCActionCommand extends BaseMVCActionCommand {
 
 		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
 
-		AssetDisplayContributor assetDisplayContributor =
-			_assetDisplayContributorTracker.getAssetDisplayContributor(
+		InfoDisplayContributor infoDisplayContributor =
+			_infoDisplayContributorTracker.getInfoDisplayContributor(
 				_portal.getClassName(classNameId));
 
-		if (assetDisplayContributor != null) {
+		if (infoDisplayContributor != null) {
 			ThemeDisplay themeDisplay =
 				(ThemeDisplay)actionRequest.getAttribute(WebKeys.THEME_DISPLAY);
 
-			List<ClassType> classTypes = assetDisplayContributor.getClassTypes(
+			List<ClassType> classTypes = infoDisplayContributor.getClassTypes(
 				themeDisplay.getScopeGroupId(), themeDisplay.getLocale());
 
 			for (ClassType classType : classTypes) {
@@ -85,7 +85,7 @@ public class GetAssetClassTypesMVCActionCommand extends BaseMVCActionCommand {
 	}
 
 	@Reference
-	private AssetDisplayContributorTracker _assetDisplayContributorTracker;
+	private InfoDisplayContributorTracker _infoDisplayContributorTracker;
 
 	@Reference
 	private Portal _portal;

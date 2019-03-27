@@ -4691,6 +4691,8 @@ log.sanitizer.enabled=false</echo>
 
 				<loadresource property="modules.compile.task.groups">
 					<filterchain>
+						<replacestring from="-test:assemble" to="-test:compileTestIntegrationJava" />
+
 						<tokenfilter>
 							<replaceregex flags="g" pattern="(\S+ ){${test.module.groups.size}}" replace="\0," />
 						</tokenfilter>

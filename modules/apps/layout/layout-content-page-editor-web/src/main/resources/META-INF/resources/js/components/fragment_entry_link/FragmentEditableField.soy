@@ -7,6 +7,7 @@
 	{@param content: html}
 	{@param type: string}
 	{@param? _handleEditableClick: any}
+	{@param? _handleEditableFocus: any}
 	{@param? _mapped: bool}
 	{@param? _mappedFieldLabel: string}
 	{@param? _translated: bool}
@@ -62,19 +63,25 @@
 		{/if}
 	{/let}
 
-	<lfr-editable
+	{let $editableAttributes kind="attributes"}
 		class="{$editableClasses}"
 		data-editable-id="{$editableId}"
 		data-fragment-entry-link-id="{$fragmentEntryLinkId}"
 		data-fragments-editor-item-id="{$fragmentEntryLinkEditableId}"
 		data-fragments-editor-item-type="fragments-editor-editable-field"
-		data-onclick="{$_handleEditableClick}"
+		data-onfocus="{$_handleEditableFocus}"
 		id="{$fragmentEntryLinkEditableId}"
 		ref="editable"
 		tabindex="0"
 		title="{$_mappedFieldLabel ?: ''}"
 		type="{$type}"
-	>
+
+		{if (not $_mapped) and ($activeItemId == $fragmentEntryLinkEditableId) and ($activeItemType == $itemTypes.editable)}
+			data-onclick="{$_handleEditableClick}"
+		{/if}
+	{/let}
+
+	<lfr-editable {$editableAttributes}>
 		{if ($type == 'image') and $editableValues.mappedField and $editableValues.config and $editableValues.config.imageLink}
 			{let $linkAttributes kind="attributes"}
 				href="{$editableValues.config.imageLink}"

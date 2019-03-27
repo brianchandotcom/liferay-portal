@@ -342,27 +342,26 @@ class FragmentEditableField extends PortletBase {
 
 	/**
 	 * Handle editable click event
-	 * @param {Event} event
 	 * @private
+	 * @review
 	 */
-	_handleEditableClick(event) {
-		event.preventDefault();
-		event.stopPropagation();
-
-		if (!this._editing) {
-			const mapped = FragmentEditableField._isMapped(
-				this.editableValues
-			);
-
-			if (!mapped &&
-				this.activeItemId === `${this.fragmentEntryLinkId}-${this.editableId}` &&
-				this.activeItemType === FRAGMENTS_EDITOR_ITEM_TYPES.editable) {
-
-				this._enableEditor();
-
-				this._disposeFloatingToolbar();
-			}
+	_handleEditableClick() {
+		if (this._preventEditableClick) {
+			this._preventEditableClick = false;
 		}
+		else {
+			this._disposeFloatingToolbar();
+			this._enableEditor();
+		}
+	}
+
+	/**
+	 * Handle editable focus event
+	 * @private
+	 * @review
+	 */
+	_handleEditableFocus() {
+		this._preventEditableClick = true;
 	}
 
 	/**
@@ -693,6 +692,18 @@ FragmentEditableField.STATE = {
 	_mappedFieldValue: Config
 		.internal()
 		.string(),
+
+	/**
+	 * Prevent editable click effect
+	 * @instance
+	 * @memberOf FragmentEditableField
+	 * @private
+	 * @review
+	 * @type {boolean}
+	 */
+	_preventEditableClick: Config
+		.bool()
+		.value(),
 
 	/**
 	 * Id of the timeout to save changes

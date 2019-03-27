@@ -2106,26 +2106,22 @@ public class ServiceBuilder {
 		}
 
 		if ((pkEntityColumns != null) && (pkEntityColumns.size() > 1)) {
-			IndexMetadata entityPKIndexMetadata = _getEntityPKIndexMetadata(
-				entity.getPKEntityColumns());
-
-			boolean redundant = true;
-
-			String[] indexMetadataColumnNames =
-				entityPKIndexMetadata.getColumnNames();
-
 			String[] columnNames = indexMetadata.getColumnNames();
 
-			if (columnNames.length <= indexMetadataColumnNames.length) {
+			if (columnNames.length <= pkEntityColumns.size()) {
+				boolean redundant = true;
+
 				for (int i = 0; i < columnNames.length; i++) {
-					if (!columnNames[i].equals(indexMetadataColumnNames[i])) {
+					EntityColumn pkEntityColumn = pkEntityColumns.get(i);
+
+					if (!columnNames[i].equals(pkEntityColumn.getDBName())) {
 						redundant = false;
 					}
 				}
-			}
 
-			if (redundant) {
-				return;
+				if (redundant) {
+					return;
+				}
 			}
 		}
 
@@ -4812,23 +4808,6 @@ public class ServiceBuilder {
 			StringBundler.concat(
 				"No entity column exist with column database name ",
 				columnDBName, " for entity ", entity.getName()));
-	}
-
-	private IndexMetadata _getEntityPKIndexMetadata(
-		List<EntityColumn> pkEntityColumns) {
-
-		String[] pkEntityColumnNames = new String[pkEntityColumns.size()];
-
-		for (int i = 0; i < pkEntityColumns.size(); i++) {
-			EntityColumn pkEntityColumn = pkEntityColumns.get(i);
-
-			pkEntityColumnNames[i] = pkEntityColumn.getDBName();
-		}
-
-		IndexMetadata entityPKIndexMetadata = new IndexMetadata(
-			null, null, false, pkEntityColumnNames);
-
-		return entityPKIndexMetadata;
 	}
 
 	private String _getFileContent(String fileName) throws IOException {

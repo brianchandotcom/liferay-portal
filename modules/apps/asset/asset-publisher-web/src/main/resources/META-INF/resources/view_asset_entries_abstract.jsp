@@ -365,8 +365,6 @@ for (AssetEntry assetEntry : assetEntryResult.getAssetEntries()) {
 			</c:if>
 		</div>
 
-		<div class="separator"><!-- --></div>
-
 <%
 	}
 	catch (Exception e) {

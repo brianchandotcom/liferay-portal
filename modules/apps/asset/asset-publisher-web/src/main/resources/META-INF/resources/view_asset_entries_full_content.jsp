@@ -48,8 +48,6 @@ for (AssetEntry assetEntry : assetEntryResult.getAssetEntries()) {
 
 	<liferay-util:include page="/view_asset_entry_full_content.jsp" servletContext="<%= application %>" />
 
-	<div class="separator"><!-- --></div>
-
 <%
 }
 %>

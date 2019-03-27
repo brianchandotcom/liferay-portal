@@ -188,7 +188,7 @@ String viewInContextURL = assetRenderer.getURLViewInContext(liferayPortletReques
 		</div>
 	</c:if>
 
-	<div class="asset-content mb-4" id="<portlet:namespace /><%= assetEntry.getEntryId() %>">
+	<div class="asset-content mb-4">
 		<liferay-asset:asset-display
 			assetEntry="<%= assetEntry %>"
 			assetRenderer="<%= assetRenderer %>"

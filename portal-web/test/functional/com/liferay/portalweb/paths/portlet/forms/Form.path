@@ -207,6 +207,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SIDEBAR_BACK</td>
+	<td>//div[contains(@class,'open') and contains(@class,'form-builder-sidebar')]//a[contains(@class,'back')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SIDEBAR_BASIC_TAB</td>
 	<td>//a[contains(@class,'tab') and .='Basic']</td>
 	<td></td>

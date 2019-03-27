@@ -47,7 +47,7 @@
 <!--FIELDS-->
 <tr>
 	<td>FIELDS_LINK</td>
-	<td>//*[contains(@class,'nav-link') and contains(.,'Fields')]</td>
+	<td>//*[contains(@class,'tab-label') and contains(.,'Fields')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -68,7 +68,7 @@
 <!--SETTINGS-->
 <tr>
 	<td>SETTINGS_LINK</td>
-	<td>//*[contains(@class,'nav-link') and contains(.,'Settings')]</td>
+	<td>//*[contains(@class,'tab-label') and contains(.,'Settings')]</td>
 	<td></td>
 </tr>
 <tr>

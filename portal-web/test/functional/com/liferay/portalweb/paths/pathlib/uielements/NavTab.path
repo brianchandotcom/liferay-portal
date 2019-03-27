@@ -14,6 +14,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>NAV_TABS</td>
+	<td>//*[contains(@class,'nav-tabs')]//*[contains(.,'${key_tab}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>TAB_LINK</td>
 	<td>//*[contains(@class,'nav-link') and normalize-space()='${key_tab}']</td>
 	<td></td>

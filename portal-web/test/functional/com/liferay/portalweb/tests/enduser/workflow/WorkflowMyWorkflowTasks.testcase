@@ -127,7 +127,12 @@ definition {
 			portlet = "My Workflow Tasks"
 		);
 
-		Navigator.gotoNavTab(navTab = "Assigned to My Roles");
+		var key_tab = "Assigned to My Roles";
+
+		AssertClick.assertPartialTextClickAt(
+			locator1 = "NavTab#NAV_TABS",
+			value1 = "Assigned to My Roles"
+		);
 
 		Workflow.gotoAssetViaTableTitle(workflowAssetTitle = "Blogs Entry Title");
 
@@ -141,7 +146,12 @@ definition {
 			portlet = "My Workflow Tasks"
 		);
 
-		Navigator.gotoNavTab(navTab = "Assigned to My Roles");
+		var key_tab = "Assigned to My Roles";
+
+		AssertClick.assertPartialTextClickAt(
+			locator1 = "NavTab#NAV_TABS",
+			value1 = "Assigned to My Roles"
+		);
 
 		Workflow.gotoAssetViaTableTitle(workflowAssetTitle = "Blogs Entry Title");
 

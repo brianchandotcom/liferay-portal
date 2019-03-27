@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.language;
+package com.liferay.portal.language.test;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;

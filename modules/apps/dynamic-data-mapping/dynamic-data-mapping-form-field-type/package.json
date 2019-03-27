@@ -122,7 +122,7 @@
 	"scripts": {
 		"build": "npm run build-soy && npm run build-js && npm run bundler && npm run clean",
 		"build-js": "babel --source-maps -d classes/META-INF/resources src/main/resources/META-INF/resources",
-		"build-soy": "metalsoy --soyDeps \"../../../node_modules/+(clay-*|frontend-js-web)/src/**/*.soy\"",
+		"build-soy": "metalsoy --externalMsgFormat \"Liferay.Language.get('\\$2')\" --soyDeps \"../../../node_modules/+(clay-*|frontend-js-web)/src/**/*.soy\"",
 		"build-soy-tests": "npm run build-soy && metalsoy -s \"test/**/*.soy\" -d \"test\"",
 		"bundler": "liferay-npm-bundler",
 		"checkFormat": "npm run csf",

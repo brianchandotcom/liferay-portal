@@ -19,4 +19,11 @@
 		right: $sticker-inside-offset;
 		top: $sticker-inside-offset;
 	}
+
+	.sticker-document {
+		.lexicon-icon {
+			height: 1.25em;
+			width: auto;
+		}
+	}
 }

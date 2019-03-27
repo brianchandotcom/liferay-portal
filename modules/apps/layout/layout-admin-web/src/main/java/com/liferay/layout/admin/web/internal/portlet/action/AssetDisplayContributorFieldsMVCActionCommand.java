@@ -14,9 +14,9 @@
 
 package com.liferay.layout.admin.web.internal.portlet.action;
 
-import com.liferay.asset.display.contributor.AssetDisplayContributor;
-import com.liferay.asset.display.contributor.AssetDisplayContributorTracker;
-import com.liferay.asset.display.contributor.AssetDisplayField;
+import com.liferay.info.display.contributor.InfoDisplayContributor;
+import com.liferay.info.display.contributor.InfoDisplayContributorTracker;
+import com.liferay.info.display.contributor.InfoDisplayField;
 import com.liferay.layout.admin.constants.LayoutAdminPortletKeys;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -26,6 +26,8 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
+
+import java.util.Set;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -54,11 +56,10 @@ public class AssetDisplayContributorFieldsMVCActionCommand
 
 		String className = ParamUtil.getString(actionRequest, "className");
 
-		AssetDisplayContributor assetDisplayContributor =
-			_assetDisplayContributorTracker.getAssetDisplayContributor(
-				className);
+		InfoDisplayContributor infoDisplayContributor =
+			_infoDisplayContributorTracker.getInfoDisplayContributor(className);
 
-		if (assetDisplayContributor == null) {
+		if (infoDisplayContributor == null) {
 			JSONPortletResponseUtil.writeJSON(
 				actionRequest, actionResponse,
 				JSONFactoryUtil.createJSONArray());
@@ -73,11 +74,12 @@ public class AssetDisplayContributorFieldsMVCActionCommand
 
 		long classTypeId = ParamUtil.getLong(actionRequest, "classTypeId");
 
-		for (AssetDisplayField assetDisplayField :
-				assetDisplayContributor.getAssetDisplayFields(
-					classTypeId, themeDisplay.getLocale())) {
+		Set<InfoDisplayField> infoDisplayFields =
+			infoDisplayContributor.getInfoDisplayFields(
+				classTypeId, themeDisplay.getLocale());
 
-			jsonArray.put(assetDisplayField.toJSONObject());
+		for (InfoDisplayField infoDisplayField : infoDisplayFields) {
+			jsonArray.put(infoDisplayField.toJSONObject());
 		}
 
 		JSONPortletResponseUtil.writeJSON(
@@ -85,6 +87,6 @@ public class AssetDisplayContributorFieldsMVCActionCommand
 	}
 
 	@Reference
-	private AssetDisplayContributorTracker _assetDisplayContributorTracker;
+	private InfoDisplayContributorTracker _infoDisplayContributorTracker;
 
 }

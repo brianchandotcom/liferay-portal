@@ -14,8 +14,6 @@
 
 package com.liferay.layout.type.controller.asset.display.internal.portlet;
 
-import com.liferay.asset.display.contributor.AssetDisplayContributor;
-import com.liferay.asset.display.contributor.AssetDisplayContributorTracker;
 import com.liferay.asset.display.contributor.constants.AssetDisplayWebKeys;
 import com.liferay.asset.display.page.constants.AssetDisplayPageConstants;
 import com.liferay.asset.display.page.model.AssetDisplayPageEntry;
@@ -26,6 +24,8 @@ import com.liferay.asset.kernel.model.AssetRenderer;
 import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.asset.kernel.service.AssetEntryService;
 import com.liferay.asset.util.AssetHelper;
+import com.liferay.info.display.contributor.InfoDisplayContributor;
+import com.liferay.info.display.contributor.InfoDisplayContributorTracker;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryService;
 import com.liferay.layout.type.controller.asset.display.internal.constants.AssetDisplayPageFriendlyURLResolverConstants;
@@ -70,7 +70,7 @@ public class AssetDisplayPageFriendlyURLResolver
 
 		request.setAttribute(
 			AssetDisplayWebKeys.INFO_DISPLAY_CONTRIBUTOR,
-			_getAssetDisplayContributor(groupId, friendlyURL));
+			_getInfoDisplayContributor(groupId, friendlyURL));
 
 		AssetEntry assetEntry = _getAssetEntry(groupId, friendlyURL);
 
@@ -114,36 +114,6 @@ public class AssetDisplayPageFriendlyURLResolver
 			ASSET_DISPLAY_PAGE_URL_SEPARATOR;
 	}
 
-	private AssetDisplayContributor _getAssetDisplayContributor(
-			long groupId, String friendlyURL)
-		throws PortalException {
-
-		String assetURLSeparator = _getAssetURLSeparator(friendlyURL);
-
-		AssetDisplayContributor assetDisplayContributor = null;
-
-		if (Validator.isNotNull(assetURLSeparator)) {
-			assetDisplayContributor =
-				_assetDisplayContributorTracker.
-					getAssetDisplayContributorByAssetURLSeparator(
-						assetURLSeparator);
-		}
-		else {
-			AssetEntry assetEntry = _getAssetEntry(groupId, friendlyURL);
-
-			assetDisplayContributor =
-				_assetDisplayContributorTracker.getAssetDisplayContributor(
-					assetEntry.getClassName());
-		}
-
-		if (assetDisplayContributor == null) {
-			throw new PortalException(
-				"Display page is not available for " + assetURLSeparator);
-		}
-
-		return assetDisplayContributor;
-	}
-
 	private AssetEntry _getAssetEntry(long groupId, String friendlyURL)
 		throws PortalException {
 
@@ -153,10 +123,10 @@ public class AssetDisplayPageFriendlyURLResolver
 			return _assetEntryService.getEntry(assetEntryId);
 		}
 
-		AssetDisplayContributor assetDisplayContributor =
-			_getAssetDisplayContributor(groupId, friendlyURL);
+		InfoDisplayContributor infoDisplayContributor =
+			_getInfoDisplayContributor(groupId, friendlyURL);
 
-		String className = assetDisplayContributor.getClassName();
+		String className = infoDisplayContributor.getClassName();
 
 		AssetRendererFactory assetRendererFactory =
 			AssetRendererFactoryRegistryUtil.
@@ -224,6 +194,35 @@ public class AssetDisplayPageFriendlyURLResolver
 		return assetURLSeparator;
 	}
 
+	private InfoDisplayContributor _getInfoDisplayContributor(
+			long groupId, String friendlyURL)
+		throws PortalException {
+
+		String assetURLSeparator = _getAssetURLSeparator(friendlyURL);
+
+		InfoDisplayContributor infoDisplayContributor = null;
+
+		if (Validator.isNotNull(assetURLSeparator)) {
+			infoDisplayContributor =
+				_infoDisplayContributorTracker.
+					getInfoDisplayContributorByURLSeparator(assetURLSeparator);
+		}
+		else {
+			AssetEntry assetEntry = _getAssetEntry(groupId, friendlyURL);
+
+			infoDisplayContributor =
+				_infoDisplayContributorTracker.getInfoDisplayContributor(
+					assetEntry.getClassName());
+		}
+
+		if (infoDisplayContributor == null) {
+			throw new PortalException(
+				"Display page is not available for " + assetURLSeparator);
+		}
+
+		return infoDisplayContributor;
+	}
+
 	private String _getUrlTitle(String friendlyURL) {
 		List<String> paths = StringUtil.split(friendlyURL, CharPool.SLASH);
 
@@ -257,9 +256,6 @@ public class AssetDisplayPageFriendlyURLResolver
 	}
 
 	@Reference
-	private AssetDisplayContributorTracker _assetDisplayContributorTracker;
-
-	@Reference
 	private AssetDisplayPageEntryLocalService
 		_assetDisplayPageEntryLocalService;
 
@@ -268,6 +264,9 @@ public class AssetDisplayPageFriendlyURLResolver
 
 	@Reference
 	private AssetHelper _assetHelper;
+
+	@Reference
+	private InfoDisplayContributorTracker _infoDisplayContributorTracker;
 
 	@Reference
 	private LayoutLocalService _layoutLocalService;

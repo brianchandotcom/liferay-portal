@@ -15,13 +15,24 @@
 package com.liferay.layout.content.page.editor.web.internal.portlet.action;
 
 import com.liferay.layout.content.page.editor.constants.ContentPageEditorPortletKeys;
+import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
+import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryService;
+import com.liferay.layout.util.LayoutCopyHelper;
+import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
+import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.servlet.SessionMessages;
+import com.liferay.portal.kernel.transaction.Propagation;
+import com.liferay.portal.kernel.transaction.TransactionConfig;
+import com.liferay.portal.kernel.transaction.TransactionInvokerUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+
+import java.util.Date;
+import java.util.concurrent.Callable;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -48,28 +59,89 @@ public class PublishLayoutPageTemplateEntryMVCActionCommand
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
-		long layoutPageTemplateEntryId = ParamUtil.getLong(
-			actionRequest, "classPK");
+		PublishLayoutPageTemplateEntryCallable publishLayoutCallable =
+			new PublishLayoutPageTemplateEntryCallable(actionRequest);
 
-		String portletId = _portal.getPortletId(actionRequest);
-
-		if (SessionMessages.contains(
-				actionRequest,
-				portletId.concat(
-					SessionMessages.KEY_SUFFIX_HIDE_DEFAULT_SUCCESS_MESSAGE)) &&
-			SessionMessages.contains(actionRequest, "fragmentEntryLinkAdded")) {
-
-			SessionMessages.clear(actionRequest);
+		try {
+			TransactionInvokerUtil.invoke(
+				_transactionConfig, publishLayoutCallable);
 		}
-
-		_layoutPageTemplateEntryService.updateLayoutPageTemplateEntry(
-			layoutPageTemplateEntryId, WorkflowConstants.STATUS_APPROVED);
+		catch (Throwable t) {
+			throw new Exception(t);
+		}
 	}
+
+	private static final TransactionConfig _transactionConfig =
+		TransactionConfig.Factory.create(
+			Propagation.REQUIRED, new Class<?>[] {Exception.class});
+
+	@Reference
+	private LayoutCopyHelper _layoutCopyHelper;
+
+	@Reference
+	private LayoutLocalService _layoutLocalService;
+
+	@Reference
+	private LayoutPageTemplateEntryLocalService
+		_layoutPageTemplateEntryLocalService;
 
 	@Reference
 	private LayoutPageTemplateEntryService _layoutPageTemplateEntryService;
 
 	@Reference
 	private Portal _portal;
+
+	private class PublishLayoutPageTemplateEntryCallable
+		implements Callable<Void> {
+
+		@Override
+		public Void call() throws Exception {
+			long draftPlid = ParamUtil.getLong(_actionRequest, "classPK");
+
+			Layout draftLayout = _layoutLocalService.getLayout(draftPlid);
+
+			Layout layout = _layoutLocalService.getLayout(
+				draftLayout.getClassPK());
+
+			LayoutPageTemplateEntry layoutPageTemplateEntry =
+				_layoutPageTemplateEntryLocalService.
+					fetchLayoutPageTemplateEntryByPlid(
+						draftLayout.getClassPK());
+
+			String portletId = _portal.getPortletId(_actionRequest);
+
+			if (SessionMessages.contains(
+					_actionRequest,
+					portletId.concat(
+						SessionMessages.
+							KEY_SUFFIX_HIDE_DEFAULT_SUCCESS_MESSAGE)) &&
+				SessionMessages.contains(
+					_actionRequest, "fragmentEntryLinkAdded")) {
+
+				SessionMessages.clear(_actionRequest);
+			}
+
+			_layoutCopyHelper.copyLayout(draftLayout, layout);
+
+			_layoutPageTemplateEntryService.updateLayoutPageTemplateEntry(
+				layoutPageTemplateEntry.getLayoutPageTemplateEntryId(),
+				WorkflowConstants.STATUS_APPROVED);
+
+			_layoutLocalService.updateLayout(
+				layout.getGroupId(), layout.isPrivateLayout(),
+				layout.getLayoutId(), new Date());
+
+			return null;
+		}
+
+		private PublishLayoutPageTemplateEntryCallable(
+			ActionRequest actionRequest) {
+
+			_actionRequest = actionRequest;
+		}
+
+		private final ActionRequest _actionRequest;
+
+	}
 
 }

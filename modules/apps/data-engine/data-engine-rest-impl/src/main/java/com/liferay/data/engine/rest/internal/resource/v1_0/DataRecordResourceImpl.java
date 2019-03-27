@@ -23,6 +23,7 @@ import com.liferay.data.engine.rest.internal.dto.v1_0.util.DataRecordValueUtil;
 import com.liferay.data.engine.rest.internal.rule.function.v1_0.DataRuleFunction;
 import com.liferay.data.engine.rest.internal.rule.function.v1_0.DataRuleFunctionFactory;
 import com.liferay.data.engine.rest.internal.rule.function.v1_0.DataRuleFunctionResult;
+import com.liferay.data.engine.rest.internal.storage.DataRecordExporter;
 import com.liferay.data.engine.rest.internal.storage.DataStorage;
 import com.liferay.data.engine.rest.resource.v1_0.DataRecordResource;
 import com.liferay.dynamic.data.lists.model.DDLRecord;
@@ -71,6 +72,8 @@ public class DataRecordResourceImpl extends BaseDataRecordResourceImpl {
 
 	@Activate
 	public void activate() {
+		_dataRecordExporter = new DataRecordExporter(_ddlRecordSetLocalService);
+
 		_dataStorage = new DataStorage(
 			_ddlRecordSetLocalService, _ddmContentLocalService,
 			_ddmStructureService);
@@ -102,6 +105,17 @@ public class DataRecordResourceImpl extends BaseDataRecordResourceImpl {
 			pagination,
 			_ddlRecordLocalService.getRecordsCount(
 				dataRecordCollectionId, PrincipalThreadLocal.getUserId()));
+	}
+
+	@Override
+	public String getDataRecordCollectionExport(Long dataRecordCollectionId)
+		throws Exception {
+
+		return _dataRecordExporter.export(
+			transform(
+				_ddlRecordLocalService.getRecords(
+					dataRecordCollectionId, -1, -1, null),
+				this::_toDataRecord));
 	}
 
 	@Override
@@ -266,6 +280,7 @@ public class DataRecordResourceImpl extends BaseDataRecordResourceImpl {
 		}
 	}
 
+	private DataRecordExporter _dataRecordExporter;
 	private DataStorage _dataStorage;
 
 	@Reference

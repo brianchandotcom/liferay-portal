@@ -62,7 +62,8 @@ public interface KnowledgeBaseArticleResource {
 
 	public Page<KnowledgeBaseArticle>
 			getKnowledgeBaseArticleKnowledgeBaseArticlesPage(
-				Long knowledgeBaseArticleId, Pagination pagination)
+				Long knowledgeBaseArticleId, Filter filter,
+				Pagination pagination, Sort[] sorts)
 		throws Exception;
 
 	public KnowledgeBaseArticle postKnowledgeBaseArticleKnowledgeBaseArticle(
@@ -72,7 +73,8 @@ public interface KnowledgeBaseArticleResource {
 
 	public Page<KnowledgeBaseArticle>
 			getKnowledgeBaseFolderKnowledgeBaseArticlesPage(
-				Long knowledgeBaseFolderId, Pagination pagination)
+				Long knowledgeBaseFolderId, Boolean tree, Filter filter,
+				Pagination pagination, Sort[] sorts)
 		throws Exception;
 
 	public KnowledgeBaseArticle postKnowledgeBaseFolderKnowledgeBaseArticle(

@@ -239,8 +239,10 @@ public abstract class BaseKnowledgeBaseArticleResourceImpl
 	@GET
 	@Parameters(
 		value = {
+			@Parameter(in = ParameterIn.QUERY, name = "filter"),
 			@Parameter(in = ParameterIn.QUERY, name = "page"),
-			@Parameter(in = ParameterIn.QUERY, name = "pageSize")
+			@Parameter(in = ParameterIn.QUERY, name = "pageSize"),
+			@Parameter(in = ParameterIn.QUERY, name = "sorts")
 		}
 	)
 	@Path(
@@ -252,7 +254,8 @@ public abstract class BaseKnowledgeBaseArticleResourceImpl
 			getKnowledgeBaseArticleKnowledgeBaseArticlesPage(
 				@NotNull @PathParam("knowledge-base-article-id") Long
 					knowledgeBaseArticleId,
-				@Context Pagination pagination)
+				@Context Filter filter, @Context Pagination pagination,
+				@Context Sort[] sorts)
 		throws Exception {
 
 		return Page.of(Collections.emptyList());
@@ -279,8 +282,10 @@ public abstract class BaseKnowledgeBaseArticleResourceImpl
 	@GET
 	@Parameters(
 		value = {
+			@Parameter(in = ParameterIn.QUERY, name = "filter"),
 			@Parameter(in = ParameterIn.QUERY, name = "page"),
-			@Parameter(in = ParameterIn.QUERY, name = "pageSize")
+			@Parameter(in = ParameterIn.QUERY, name = "pageSize"),
+			@Parameter(in = ParameterIn.QUERY, name = "sorts")
 		}
 	)
 	@Path(
@@ -292,7 +297,8 @@ public abstract class BaseKnowledgeBaseArticleResourceImpl
 			getKnowledgeBaseFolderKnowledgeBaseArticlesPage(
 				@NotNull @PathParam("knowledge-base-folder-id") Long
 					knowledgeBaseFolderId,
-				@Context Pagination pagination)
+				@QueryParam("tree") Boolean tree, @Context Filter filter,
+				@Context Pagination pagination, @Context Sort[] sorts)
 		throws Exception {
 
 		return Page.of(Collections.emptyList());

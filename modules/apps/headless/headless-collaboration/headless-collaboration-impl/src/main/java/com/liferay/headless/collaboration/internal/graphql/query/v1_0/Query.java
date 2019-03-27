@@ -559,8 +559,10 @@ public class Query {
 			getKnowledgeBaseArticleKnowledgeBaseArticlesPage(
 				@GraphQLName("knowledge-base-article-id") Long
 					knowledgeBaseArticleId,
+				@GraphQLName("filter") Filter filter,
 				@GraphQLName("pageSize") int pageSize,
-				@GraphQLName("page") int page)
+				@GraphQLName("page") int page,
+				@GraphQLName("Sort[]") Sort[] sorts)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
@@ -570,8 +572,8 @@ public class Query {
 				Page paginationPage =
 					knowledgeBaseArticleResource.
 						getKnowledgeBaseArticleKnowledgeBaseArticlesPage(
-							knowledgeBaseArticleId,
-							Pagination.of(pageSize, page));
+							knowledgeBaseArticleId, filter,
+							Pagination.of(pageSize, page), sorts);
 
 				return paginationPage.getItems();
 			});
@@ -583,8 +585,11 @@ public class Query {
 			getKnowledgeBaseFolderKnowledgeBaseArticlesPage(
 				@GraphQLName("knowledge-base-folder-id") Long
 					knowledgeBaseFolderId,
+				@GraphQLName("tree") Boolean tree,
+				@GraphQLName("filter") Filter filter,
 				@GraphQLName("pageSize") int pageSize,
-				@GraphQLName("page") int page)
+				@GraphQLName("page") int page,
+				@GraphQLName("Sort[]") Sort[] sorts)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
@@ -594,8 +599,8 @@ public class Query {
 				Page paginationPage =
 					knowledgeBaseArticleResource.
 						getKnowledgeBaseFolderKnowledgeBaseArticlesPage(
-							knowledgeBaseFolderId,
-							Pagination.of(pageSize, page));
+							knowledgeBaseFolderId, tree, filter,
+							Pagination.of(pageSize, page), sorts);
 
 				return paginationPage.getItems();
 			});

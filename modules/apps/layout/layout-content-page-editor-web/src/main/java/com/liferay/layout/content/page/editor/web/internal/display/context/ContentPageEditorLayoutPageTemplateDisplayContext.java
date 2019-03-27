@@ -20,10 +20,12 @@ import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.asset.kernel.model.ClassType;
 import com.liferay.asset.kernel.model.ClassTypeReader;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
-import com.liferay.layout.page.template.service.LayoutPageTemplateEntryServiceUtil;
+import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalServiceUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.template.soy.util.SoyContext;
@@ -74,14 +76,10 @@ public class ContentPageEditorLayoutPageTemplateDisplayContext
 					"/content_layout/get_mapping_fields"));
 		}
 
-		if (classNameId == PortalUtil.getClassNameId(
-				LayoutPageTemplateEntry.class)) {
-
-			soyContext.put(
-				"publishURL",
-				getFragmentEntryActionURL(
-					"/content_layout/publish_layout_page_template_entry"));
-		}
+		soyContext.put(
+			"publishURL",
+			getFragmentEntryActionURL(
+				"/content_layout/publish_layout_page_template_entry"));
 
 		if (_showMapping) {
 			soyContext.put("selectedMappingTypes", _getSelectedMappingTypes());
@@ -135,9 +133,18 @@ public class ContentPageEditorLayoutPageTemplateDisplayContext
 			return _layoutPageTemplateEntry;
 		}
 
+		Layout draftLayout = LayoutLocalServiceUtil.getLayout(classPK);
+
+		Layout layout = LayoutLocalServiceUtil.fetchLayout(
+			PortalUtil.getClassNameId(Layout.class), draftLayout.getPlid());
+
+		if (layout == null) {
+			return null;
+		}
+
 		_layoutPageTemplateEntry =
-			LayoutPageTemplateEntryServiceUtil.fetchLayoutPageTemplateEntry(
-				classPK);
+			LayoutPageTemplateEntryLocalServiceUtil.
+				fetchLayoutPageTemplateEntryByPlid(layout.getPlid());
 
 		return _layoutPageTemplateEntry;
 	}

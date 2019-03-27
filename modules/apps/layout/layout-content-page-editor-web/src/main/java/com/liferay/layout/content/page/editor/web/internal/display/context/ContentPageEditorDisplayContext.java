@@ -38,9 +38,7 @@ import com.liferay.item.selector.criteria.image.criterion.ImageItemSelectorCrite
 import com.liferay.item.selector.criteria.url.criterion.URLItemSelectorCriterion;
 import com.liferay.layout.content.page.editor.constants.ContentPageEditorPortletKeys;
 import com.liferay.layout.content.page.editor.constants.ContentPageEditorWebKeys;
-import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
-import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalServiceUtil;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalServiceUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.editor.configuration.EditorConfiguration;
@@ -265,31 +263,20 @@ public class ContentPageEditorDisplayContext {
 
 		boolean draft = false;
 
-		if (classNameId == PortalUtil.getClassNameId(Layout.class)) {
-			Layout draftLayout = LayoutLocalServiceUtil.getLayout(classPK);
+		Layout draftLayout = LayoutLocalServiceUtil.getLayout(classPK);
 
-			Layout layout = LayoutLocalServiceUtil.getLayout(
-				draftLayout.getClassPK());
+		Layout layout = LayoutLocalServiceUtil.getLayout(
+			draftLayout.getClassPK());
 
-			Date modifiedDate = draftLayout.getModifiedDate();
+		Date modifiedDate = draftLayout.getModifiedDate();
 
-			Date publishDate = layout.getPublishDate();
+		Date publishDate = layout.getPublishDate();
 
-			if (publishDate == null) {
-				publishDate = modifiedDate;
-			}
-
-			draft = modifiedDate.after(publishDate);
+		if (publishDate == null) {
+			publishDate = modifiedDate;
 		}
-		else {
-			LayoutPageTemplateEntry layoutPageTemplateEntry =
-				LayoutPageTemplateEntryLocalServiceUtil.
-					getLayoutPageTemplateEntry(classPK);
 
-			Date modifiedDate = layoutPageTemplateEntry.getModifiedDate();
-
-			draft = modifiedDate.after(layoutPageTemplateEntry.getCreateDate());
-		}
+		draft = modifiedDate.after(publishDate);
 
 		soyContext.put(
 			"draft", draft

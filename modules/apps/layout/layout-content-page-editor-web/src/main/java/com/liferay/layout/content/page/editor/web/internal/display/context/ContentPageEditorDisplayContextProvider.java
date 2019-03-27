@@ -68,8 +68,13 @@ public class ContentPageEditorDisplayContextProvider {
 			showMapping = true;
 		}
 
+		Layout draftLayout = _layoutLocalService.fetchLayout(
+			_portal.getClassNameId(Layout.class.getName()),
+			layoutPageTemplateEntry.getPlid());
+
 		return new ContentPageEditorLayoutPageTemplateDisplayContext(
-			request, renderResponse, className, classPK, showMapping);
+			request, renderResponse, Layout.class.getName(),
+			draftLayout.getPlid(), showMapping);
 	}
 
 	@Reference

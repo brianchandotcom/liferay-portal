@@ -53,25 +53,25 @@ for (AssetEntry assetEntry : assetEntryResult.getAssetEntries()) {
 		<div class="asset-abstract mb-5 <%= assetPublisherWebUtil.isDefaultAssetPublisher(layout, portletDisplay.getId(), assetPublisherDisplayContext.getPortletResource()) ? "default-asset-publisher" : StringPool.BLANK %>">
 			<span class="asset-anchor lfr-asset-anchor" id="<%= assetEntry.getEntryId() %>"></span>
 
-			<div class="autofit-row autofit-row-center mb-2">
-				<div class="autofit-col">
-					<h4 class="asset-title component-title">
-						<c:choose>
-							<c:when test="<%= assetPublisherDisplayContext.isShowContextLink() %>">
-								<a class="h2" href="<%= viewURL %>">
-									<%= HtmlUtil.escape(title) %>
-								</a>
-							</c:when>
-							<c:otherwise>
+			<div class="mb-2">
+				<h4 class="component-title">
+					<c:choose>
+						<c:when test="<%= assetPublisherDisplayContext.isShowContextLink() %>">
+							<a class="asset-title d-inline" href="<%= viewURL %>">
 								<%= HtmlUtil.escape(title) %>
-							</c:otherwise>
-						</c:choose>
-					</h4>
-				</div>
+							</a>
+						</c:when>
+						<c:otherwise>
+							<span class="asset-title d-inline">
+								<%= HtmlUtil.escape(title) %>
+							</span>
+						</c:otherwise>
+					</c:choose>
 
-				<div class="autofit-col autofit-col-end inline-item-after">
-					<liferay-util:include page="/asset_actions.jsp" servletContext="<%= application %>" />
-				</div>
+					<span class="d-inline-flex">
+						<liferay-util:include page="/asset_actions.jsp" servletContext="<%= application %>" />
+					</span>
+				</h4>
 			</div>
 
 			<c:if test="<%= assetPublisherDisplayContext.isShowAuthor() || (assetPublisherDisplayContext.isShowCreateDate() && (assetEntry.getCreateDate() != null)) || (assetPublisherDisplayContext.isShowPublishDate() && (assetEntry.getPublishDate() != null)) || (assetPublisherDisplayContext.isShowExpirationDate() && (assetEntry.getExpirationDate() != null)) || (assetPublisherDisplayContext.isShowModifiedDate() && (assetEntry.getModifiedDate() != null)) || assetPublisherDisplayContext.isShowViewCount() %>">
@@ -216,7 +216,7 @@ for (AssetEntry assetEntry : assetEntryResult.getAssetEntries()) {
 			<c:if test="<%= (assetPublisherDisplayContext.isEnableRatings() && assetRenderer.isRatable()) || assetPublisherDisplayContext.isEnableFlags() || assetPublisherDisplayContext.isEnablePrint() || Validator.isNotNull(assetPublisherDisplayContext.getSocialBookmarksTypes()) %>">
 				<div class="separator"><!-- --></div>
 
-				<div class="asset-details autofit-row autofit-row-center">
+				<div class="asset-details autofit-float autofit-row autofit-row-center">
 					<c:if test="<%= assetPublisherDisplayContext.isEnableRatings() && assetRenderer.isRatable() %>">
 						<div class="asset-ratings autofit-col mr-3">
 							<liferay-ui:ratings
@@ -311,7 +311,7 @@ for (AssetEntry assetEntry : assetEntryResult.getAssetEntries()) {
 			<c:if test="<%= (assetPublisherDisplayContext.isShowAvailableLocales() && assetRenderer.isLocalizable()) || (assetPublisherDisplayContext.isEnableConversions() && assetRenderer.isConvertible()) %>">
 				<div class="separator"><!-- --></div>
 
-				<div class="asset-details autofit-row autofit-row-center">
+				<div class="asset-details autofit-float autofit-row autofit-row-center">
 					<c:if test="<%= assetPublisherDisplayContext.isShowAvailableLocales() && assetRenderer.isLocalizable() %>">
 
 						<%

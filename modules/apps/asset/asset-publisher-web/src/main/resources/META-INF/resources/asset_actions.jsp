@@ -36,7 +36,7 @@ List<DropdownItem> dropdownItems = assetEntryActionDropdownItemsProvider.getActi
 				markupView="lexicon"
 				message="<%= StringPool.BLANK %>"
 				showWhenSingleIcon="<%= true %>"
-				triggerCssClass="component-action"
+				triggerCssClass="text-primary"
 			>
 
 				<%
@@ -74,6 +74,7 @@ List<DropdownItem> dropdownItems = assetEntryActionDropdownItemsProvider.getActi
 				cssClass="visible-interaction"
 				data='<%= (HashMap)dropdownItem.get("data") %>'
 				icon='<%= String.valueOf(dropdownItem.get("icon")) %>'
+				linkCssClass="text-primary"
 				markupView="lexicon"
 				method="get"
 				url='<%= String.valueOf(dropdownItem.get("href")) %>'

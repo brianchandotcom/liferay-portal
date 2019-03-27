@@ -71,9 +71,109 @@ public class EditorTag extends BaseValidatorTagSupport {
 		return super.doStartTag();
 	}
 
+	public String getConfigKey() {
+		return _configKey;
+	}
+
+	public Map<String, String> getConfigParams() {
+		return _configParams;
+	}
+
+	public String getContents() {
+		return _contents;
+	}
+
+	public String getContentsLanguageId() {
+		return _contentsLanguageId;
+	}
+
+	public String getCssClass() {
+		return _cssClass;
+	}
+
+	public Map<String, Object> getData() {
+		return _data;
+	}
+
+	public String getEditorName() {
+		return _editorName;
+	}
+
+	public Map<String, String> getFileBrowserParams() {
+		return _fileBrowserParams;
+	}
+
+	public String getHeight() {
+		return _height;
+	}
+
+	public String getInlineEditSaveURL() {
+		return _inlineEditSaveURL;
+	}
+
 	@Override
 	public String getInputName() {
 		return _getConfigKey();
+	}
+
+	public String getName() {
+		return _name;
+	}
+
+	public String getOnBlurMethod() {
+		return _onBlurMethod;
+	}
+
+	public String getOnChangeMethod() {
+		return _onChangeMethod;
+	}
+
+	public String getOnFocusMethod() {
+		return _onFocusMethod;
+	}
+
+	public String getOnInitMethod() {
+		return _onInitMethod;
+	}
+
+	public String getPlaceholder() {
+		return _placeholder;
+	}
+
+	public String getToolbarSet() {
+		return _toolbarSet;
+	}
+
+	public String getWidth() {
+		return _width;
+	}
+
+	public boolean isAllowBrowseDocuments() {
+		return _allowBrowseDocuments;
+	}
+
+	public boolean isAutoCreate() {
+		return _autoCreate;
+	}
+
+	public boolean isInlineEdit() {
+		return _inlineEdit;
+	}
+
+	public boolean isRequired() {
+		return _required;
+	}
+
+	public boolean isResizable() {
+		return _resizable;
+	}
+
+	public boolean isShowSource() {
+		return _showSource;
+	}
+
+	public boolean isSkipEditorLoading() {
+		return _skipEditorLoading;
 	}
 
 	public void setAllowBrowseDocuments(boolean allowBrowseDocuments) {

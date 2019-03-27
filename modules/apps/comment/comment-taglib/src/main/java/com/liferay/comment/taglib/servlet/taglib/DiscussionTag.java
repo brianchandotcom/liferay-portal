@@ -30,6 +30,42 @@ import javax.servlet.jsp.PageContext;
  */
 public class DiscussionTag extends IncludeTag {
 
+	public String getClassName() {
+		return _className;
+	}
+
+	public long getClassPK() {
+		return _classPK;
+	}
+
+	public Discussion getDiscussion() {
+		return _discussion;
+	}
+
+	public String getFormName() {
+		return _formName;
+	}
+
+	public String getRedirect() {
+		return _redirect;
+	}
+
+	public long getUserId() {
+		return _userId;
+	}
+
+	public boolean isAssetEntryVisible() {
+		return _assetEntryVisible;
+	}
+
+	public boolean isHideControls() {
+		return _hideControls;
+	}
+
+	public boolean isRatingsEnabled() {
+		return _ratingsEnabled;
+	}
+
 	public void setAssetEntryVisible(boolean assetEntryVisible) {
 		_assetEntryVisible = assetEntryVisible;
 	}

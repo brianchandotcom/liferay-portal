@@ -246,8 +246,7 @@ public class DocumentResourceImpl
 		if ((multipartBody.getBinaryFile("file") == null) &&
 			!documentOptional.isPresent()) {
 
-			throw new BadRequestException(
-				"No document or file found in body");
+			throw new BadRequestException("No document or file found in body");
 		}
 
 		FileEntry existingFileEntry = _dlAppService.getFileEntry(documentId);

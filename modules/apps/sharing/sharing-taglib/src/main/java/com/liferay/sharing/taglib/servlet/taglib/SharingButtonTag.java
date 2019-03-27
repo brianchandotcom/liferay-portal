@@ -30,6 +30,14 @@ import javax.servlet.jsp.PageContext;
  */
 public class SharingButtonTag extends IncludeTag {
 
+	public String getClassName() {
+		return _className;
+	}
+
+	public long getClassPK() {
+		return _classPK;
+	}
+
 	public void setClassName(String className) {
 		_className = className;
 	}

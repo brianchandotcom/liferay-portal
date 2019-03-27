@@ -35,6 +35,146 @@ public class AppViewEntryTag extends IncludeTag {
 		return EVAL_BODY_INCLUDE;
 	}
 
+	public String getActionJsp() {
+		return _actionJsp;
+	}
+
+	public String getAssetCategoryClassName() {
+		return _assetCategoryClassName;
+	}
+
+	public long getAssetCategoryClassPK() {
+		return _assetCategoryClassPK;
+	}
+
+	public String getAssetTagClassName() {
+		return _assetTagClassName;
+	}
+
+	public long getAssetTagClassPK() {
+		return _assetTagClassPK;
+	}
+
+	public String getAuthor() {
+		return _author;
+	}
+
+	public String getClassTypeName() {
+		return _classTypeName;
+	}
+
+	public Date getCreateDate() {
+		return _createDate;
+	}
+
+	public String getCssClass() {
+		return _cssClass;
+	}
+
+	public Map<String, Object> getData() {
+		return _data;
+	}
+
+	public String getDescription() {
+		return _description;
+	}
+
+	public Date getDisplayDate() {
+		return _displayDate;
+	}
+
+	public String getDisplayStyle() {
+		return _displayStyle;
+	}
+
+	public Date getExpirationDate() {
+		return _expirationDate;
+	}
+
+	public long getGroupId() {
+		return _groupId;
+	}
+
+	public String getIconCssClass() {
+		return _iconCssClass;
+	}
+
+	public String getLatestApprovedVersion() {
+		return _latestApprovedVersion;
+	}
+
+	public String getLatestApprovedVersionAuthor() {
+		return _latestApprovedVersionAuthor;
+	}
+
+	public String getMarkupView() {
+		return _markupView;
+	}
+
+	public Date getModifiedDate() {
+		return _modifiedDate;
+	}
+
+	public Date getReviewDate() {
+		return _reviewDate;
+	}
+
+	public String getRowCheckerId() {
+		return _rowCheckerId;
+	}
+
+	public String getRowCheckerName() {
+		return _rowCheckerName;
+	}
+
+	public int getStatus() {
+		return _status;
+	}
+
+	public String getThumbnailDivStyle() {
+		return _thumbnailDivStyle;
+	}
+
+	public String getThumbnailSrc() {
+		return _thumbnailSrc;
+	}
+
+	public String getThumbnailStyle() {
+		return _thumbnailStyle;
+	}
+
+	public String getTitle() {
+		return _title;
+	}
+
+	public String getUrl() {
+		return _url;
+	}
+
+	public String getVersion() {
+		return _version;
+	}
+
+	public boolean isFolder() {
+		return _folder;
+	}
+
+	public boolean isLocked() {
+		return _locked;
+	}
+
+	public boolean isShortcut() {
+		return _shortcut;
+	}
+
+	public boolean isShowCheckbox() {
+		return _showCheckbox;
+	}
+
+	public boolean isShowLinkTitle() {
+		return _showLinkTitle;
+	}
+
 	public void setActionJsp(String actionJsp) {
 		_actionJsp = actionJsp;
 	}

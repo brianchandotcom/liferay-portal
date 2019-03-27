@@ -26,6 +26,38 @@ import javax.servlet.jsp.PageContext;
  */
 public class ImageSelectorTag extends IncludeTag {
 
+	public String getDraggableImage() {
+		return _draggableImage;
+	}
+
+	public long getFileEntryId() {
+		return _fileEntryId;
+	}
+
+	public String getItemSelectorEventName() {
+		return _itemSelectorEventName;
+	}
+
+	public String getItemSelectorURL() {
+		return _itemSelectorURL;
+	}
+
+	public long getMaxFileSize() {
+		return _maxFileSize;
+	}
+
+	public String getParamName() {
+		return _paramName;
+	}
+
+	public String getUploadURL() {
+		return _uploadURL;
+	}
+
+	public String getValidExtensions() {
+		return _validExtensions;
+	}
+
 	public void setDraggableImage(String draggableImage) {
 		_draggableImage = draggableImage;
 	}

@@ -30,6 +30,66 @@ import javax.servlet.http.HttpServletRequest;
  */
 public class PageIteratorTag extends IncludeTag {
 
+	public int getCur() {
+		return _cur;
+	}
+
+	public String getCurParam() {
+		return _curParam;
+	}
+
+	public int getDelta() {
+		return _delta;
+	}
+
+	public String getDeltaParam() {
+		return _deltaParam;
+	}
+
+	public String getFormName() {
+		return _formName;
+	}
+
+	public String getId() {
+		return _id;
+	}
+
+	public String getJsCall() {
+		return _jsCall;
+	}
+
+	public String getMarkupView() {
+		return _markupView;
+	}
+
+	public int getMaxPages() {
+		return _maxPages;
+	}
+
+	public PortletURL getPortletURL() {
+		return _portletURL;
+	}
+
+	public String getTarget() {
+		return _target;
+	}
+
+	public int getTotal() {
+		return _total;
+	}
+
+	public String getType() {
+		return _type;
+	}
+
+	public boolean isDeltaConfigurable() {
+		return _deltaConfigurable;
+	}
+
+	public boolean isForcePost() {
+		return _forcePost;
+	}
+
 	public void setCur(int cur) {
 		_cur = cur;
 	}

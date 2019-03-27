@@ -31,6 +31,34 @@ import javax.servlet.jsp.PageContext;
  */
 public class RSSTag extends IncludeTag {
 
+	public int getDelta() {
+		return _delta;
+	}
+
+	public String getDisplayStyle() {
+		return _displayStyle;
+	}
+
+	public String getFeedType() {
+		return _feedType;
+	}
+
+	public String getMessage() {
+		return _message;
+	}
+
+	public String getName() {
+		return _name;
+	}
+
+	public ResourceURL getResourceURL() {
+		return _resourceURL;
+	}
+
+	public String getUrl() {
+		return _url;
+	}
+
 	public void setDelta(int delta) {
 		_delta = delta;
 	}

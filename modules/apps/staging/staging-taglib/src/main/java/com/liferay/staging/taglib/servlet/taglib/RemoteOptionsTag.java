@@ -28,6 +28,18 @@ import javax.servlet.jsp.PageContext;
 @ProviderType
 public class RemoteOptionsTag extends IncludeTag {
 
+	public long getExportImportConfigurationId() {
+		return _exportImportConfigurationId;
+	}
+
+	public boolean isDisableInputs() {
+		return _disableInputs;
+	}
+
+	public boolean isPrivateLayout() {
+		return _privateLayout;
+	}
+
 	public void setDisableInputs(boolean disableInputs) {
 		_disableInputs = disableInputs;
 	}

@@ -23,6 +23,14 @@ import javax.servlet.http.HttpServletRequest;
  */
 public class DiffHtmlTag extends IncludeTag {
 
+	public String getDiffHtmlResults() {
+		return _diffHtmlResults;
+	}
+
+	public String getInfoMessage() {
+		return _infoMessage;
+	}
+
 	public void setDiffHtmlResults(String diffHtmlResults) {
 		_diffHtmlResults = diffHtmlResults;
 	}

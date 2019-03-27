@@ -33,6 +33,10 @@ import javax.servlet.http.HttpServletRequest;
  */
 public class IconPortletTag extends IconTag {
 
+	public Portlet getPortlet() {
+		return _portlet;
+	}
+
 	public void setPortlet(Portlet portlet) {
 		_portlet = portlet;
 	}

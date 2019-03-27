@@ -35,6 +35,10 @@ import javax.servlet.http.HttpServletRequest;
  */
 public class UserVerticalCardTag extends VerticalCardTag {
 
+	public long getUserId() {
+		return _userId;
+	}
+
 	public void setUserId(long userId) {
 		_userId = userId;
 	}

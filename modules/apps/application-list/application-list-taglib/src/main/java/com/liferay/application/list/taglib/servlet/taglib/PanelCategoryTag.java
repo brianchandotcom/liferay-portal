@@ -38,6 +38,22 @@ import javax.servlet.http.HttpServletRequest;
  */
 public class PanelCategoryTag extends BasePanelTag {
 
+	public PanelCategory getPanelCategory() {
+		return _panelCategory;
+	}
+
+	public boolean isShowBody() {
+		return _showBody;
+	}
+
+	public boolean isShowHeader() {
+		return _showHeader;
+	}
+
+	public boolean isShowOpen() {
+		return _showOpen;
+	}
+
 	public void setPanelCategory(PanelCategory panelCategory) {
 		_panelCategory = panelCategory;
 	}

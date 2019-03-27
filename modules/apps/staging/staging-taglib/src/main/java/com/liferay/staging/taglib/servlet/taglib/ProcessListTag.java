@@ -30,6 +30,38 @@ import javax.servlet.jsp.PageContext;
 @ProviderType
 public class ProcessListTag extends IncludeTag {
 
+	public String getEmptyResultsMessage() {
+		return _emptyResultsMessage;
+	}
+
+	public String getLocalTaskExecutorClassName() {
+		return _localTaskExecutorClassName;
+	}
+
+	public String getMvcRenderCommandName() {
+		return _mvcRenderCommandName;
+	}
+
+	public String getRemoteTaskExecutorClassName() {
+		return _remoteTaskExecutorClassName;
+	}
+
+	public ResultRowSplitter getResultRowSplitter() {
+		return _resultRowSplitter;
+	}
+
+	public boolean isDeleteMenu() {
+		return _deleteMenu;
+	}
+
+	public boolean isRelaunchMenu() {
+		return _relaunchMenu;
+	}
+
+	public boolean isSummaryMenu() {
+		return _summaryMenu;
+	}
+
 	public void setDeleteMenu(boolean deleteMenu) {
 		_deleteMenu = deleteMenu;
 	}

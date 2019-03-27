@@ -47,6 +47,22 @@ public class ManagementBarSortTag extends IncludeTag implements BodyTag {
 		return super.doStartTag();
 	}
 
+	public String getOrderByCol() {
+		return _orderByCol;
+	}
+
+	public String getOrderByType() {
+		return _orderByType;
+	}
+
+	public Map<String, String> getOrderColumns() {
+		return _orderColumns;
+	}
+
+	public PortletURL getPortletURL() {
+		return _portletURL;
+	}
+
 	public void setDisabled(boolean disabled) {
 		_disabled = disabled;
 	}

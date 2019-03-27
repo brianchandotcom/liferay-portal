@@ -23,6 +23,14 @@ import javax.servlet.http.HttpServletRequest;
  */
 public class VerticalCardTag extends CardTag {
 
+	public String getOnClick() {
+		return _onClick;
+	}
+
+	public boolean isBackgroundImage() {
+		return _backgroundImage;
+	}
+
 	public void setBackgroundImage(boolean backgroundImage) {
 		_backgroundImage = backgroundImage;
 	}

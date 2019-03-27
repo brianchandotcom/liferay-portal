@@ -26,6 +26,78 @@ import javax.servlet.http.HttpServletRequest;
  */
 public class InputFieldTag extends IncludeTag {
 
+	public Object getBean() {
+		return _bean;
+	}
+
+	public String getCssClass() {
+		return _cssClass;
+	}
+
+	public String getDateTogglerCheckboxLabel() {
+		return _dateTogglerCheckboxLabel;
+	}
+
+	public String getDefaultLanguageId() {
+		return _defaultLanguageId;
+	}
+
+	public Object getDefaultValue() {
+		return _defaultValue;
+	}
+
+	public String getField() {
+		return _field;
+	}
+
+	public String getFieldParam() {
+		return _fieldParam;
+	}
+
+	public Format getFormat() {
+		return _format;
+	}
+
+	public String getFormName() {
+		return _formName;
+	}
+
+	public String getId() {
+		return _id;
+	}
+
+	public String getLanguageId() {
+		return _languageId;
+	}
+
+	public Class<?> getModel() {
+		return _model;
+	}
+
+	public String getPlaceholder() {
+		return _placeholder;
+	}
+
+	public boolean isAutoComplete() {
+		return _autoComplete;
+	}
+
+	public boolean isAutoFocus() {
+		return _autoFocus;
+	}
+
+	public boolean isAutoSize() {
+		return _autoSize;
+	}
+
+	public boolean isDisabled() {
+		return _disabled;
+	}
+
+	public boolean isIgnoreRequestValue() {
+		return _ignoreRequestValue;
+	}
+
 	public void setAutoComplete(boolean autoComplete) {
 		_autoComplete = autoComplete;
 	}

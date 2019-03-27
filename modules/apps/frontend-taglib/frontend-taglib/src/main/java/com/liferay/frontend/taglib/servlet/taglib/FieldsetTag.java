@@ -40,6 +40,38 @@ public class FieldsetTag extends IncludeTag {
 		return super.doStartTag();
 	}
 
+	public String getCssClass() {
+		return _cssClass;
+	}
+
+	public String getHelpMessage() {
+		return _helpMessage;
+	}
+
+	public String getId() {
+		return _id;
+	}
+
+	public String getLabel() {
+		return _label;
+	}
+
+	public boolean isCollapsed() {
+		return _collapsed;
+	}
+
+	public boolean isCollapsible() {
+		return _collapsible;
+	}
+
+	public boolean isColumn() {
+		return _column;
+	}
+
+	public boolean isLocalizeLabel() {
+		return _localizeLabel;
+	}
+
 	public void setCollapsed(boolean collapsed) {
 		_collapsed = collapsed;
 	}

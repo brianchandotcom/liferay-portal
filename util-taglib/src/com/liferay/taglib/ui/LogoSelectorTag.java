@@ -27,6 +27,50 @@ import javax.servlet.http.HttpServletRequest;
  */
 public class LogoSelectorTag extends IncludeTag {
 
+	public int getAspectRatio() {
+		return _aspectRatio;
+	}
+
+	public String getCurrentLogoURL() {
+		return _currentLogoURL;
+	}
+
+	public String getDefaultLogoURL() {
+		return _defaultLogoURL;
+	}
+
+	public String getEditLogoFn() {
+		return _editLogoFn;
+	}
+
+	public String getLogoDisplaySelector() {
+		return _logoDisplaySelector;
+	}
+
+	public long getMaxFileSize() {
+		return _maxFileSize;
+	}
+
+	public String getTempImageFileName() {
+		return _tempImageFileName;
+	}
+
+	public boolean isDefaultLogo() {
+		return _defaultLogo;
+	}
+
+	public boolean isPreserveRatio() {
+		return _preserveRatio;
+	}
+
+	public boolean isShowBackground() {
+		return _showBackground;
+	}
+
+	public boolean isShowButtons() {
+		return _showButtons;
+	}
+
 	public void setAspectRatio(int aspectRatio) {
 		_aspectRatio = aspectRatio;
 	}

@@ -29,6 +29,18 @@ import javax.servlet.jsp.PageContext;
 @ProviderType
 public class ProcessMessageTaskDetailsTag extends IncludeTag {
 
+	public long getBackgroundTaskId() {
+		return _backgroundTaskId;
+	}
+
+	public String getBackgroundTaskStatusMessage() {
+		return _backgroundTaskStatusMessage;
+	}
+
+	public String getLinkClass() {
+		return _linkClass;
+	}
+
 	public void setBackgroundTaskId(long backgroundTaskId) {
 		_backgroundTaskId = backgroundTaskId;
 	}

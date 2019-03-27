@@ -25,6 +25,14 @@ import javax.servlet.http.HttpServletRequest;
  */
 public class PortletMessagesTag extends IncludeTag {
 
+	public Group getGroup() {
+		return _group;
+	}
+
+	public Portlet getPortlet() {
+		return _portlet;
+	}
+
 	public void setGroup(Group group) {
 		_group = group;
 	}

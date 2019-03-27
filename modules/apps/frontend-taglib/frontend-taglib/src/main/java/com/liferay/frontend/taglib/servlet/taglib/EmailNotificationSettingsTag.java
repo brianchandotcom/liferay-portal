@@ -35,6 +35,58 @@ public class EmailNotificationSettingsTag extends IncludeTag {
 		return EVAL_BODY_INCLUDE;
 	}
 
+	public String getBodyLabel() {
+		return _bodyLabel;
+	}
+
+	public String getEmailBody() {
+		return _emailBody;
+	}
+
+	public LocalizedValuesMap getEmailBodyLocalizedValuesMap() {
+		return _emailBodyLocalizedValuesMap;
+	}
+
+	public Map<String, String> getEmailDefinitionTerms() {
+		return _emailDefinitionTerms;
+	}
+
+	public String getEmailParam() {
+		return _emailParam;
+	}
+
+	public String getEmailSubject() {
+		return _emailSubject;
+	}
+
+	public LocalizedValuesMap getEmailSubjectLocalizedValuesMap() {
+		return _emailSubjectLocalizedValuesMap;
+	}
+
+	public String getFieldPrefix() {
+		return _fieldPrefix;
+	}
+
+	public String getFieldPrefixSeparator() {
+		return _fieldPrefixSeparator;
+	}
+
+	public String getHelpMessage() {
+		return _helpMessage;
+	}
+
+	public boolean isEmailEnabled() {
+		return _emailEnabled;
+	}
+
+	public boolean isShowEmailEnabled() {
+		return _showEmailEnabled;
+	}
+
+	public boolean isShowSubject() {
+		return _showSubject;
+	}
+
 	public void setBodyLabel(String bodyLabel) {
 		_bodyLabel = bodyLabel;
 	}

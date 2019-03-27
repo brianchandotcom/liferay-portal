@@ -76,6 +76,22 @@ public class JournalArticleTag extends IncludeTag {
 		return super.doStartTag();
 	}
 
+	public String getArticleId() {
+		return _articleId;
+	}
+
+	public long getGroupId() {
+		return _groupId;
+	}
+
+	public String getWrapperCssClass() {
+		return _wrapperCssClass;
+	}
+
+	public boolean isShowTitle() {
+		return _showTitle;
+	}
+
 	public void setArticleId(String articleId) {
 		_articleId = articleId;
 	}

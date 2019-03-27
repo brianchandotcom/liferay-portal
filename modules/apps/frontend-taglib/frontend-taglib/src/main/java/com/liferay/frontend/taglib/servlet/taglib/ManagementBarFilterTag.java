@@ -36,6 +36,18 @@ public class ManagementBarFilterTag extends IncludeTag implements BodyTag {
 		return super.doStartTag();
 	}
 
+	public String getLabel() {
+		return _label;
+	}
+
+	public List<ManagementBarFilterItem> getManagementBarFilterItems() {
+		return _managementBarFilterItems;
+	}
+
+	public String getValue() {
+		return _value;
+	}
+
 	public void setDisabled(boolean disabled) {
 		_disabled = disabled;
 	}

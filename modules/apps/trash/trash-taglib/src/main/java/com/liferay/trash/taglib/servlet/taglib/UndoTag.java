@@ -54,6 +54,10 @@ public class UndoTag extends IncludeTag {
 		return EVAL_BODY_INCLUDE;
 	}
 
+	public String getRedirect() {
+		return _redirect;
+	}
+
 	@Override
 	public void setPageContext(PageContext pageContext) {
 		super.setPageContext(pageContext);

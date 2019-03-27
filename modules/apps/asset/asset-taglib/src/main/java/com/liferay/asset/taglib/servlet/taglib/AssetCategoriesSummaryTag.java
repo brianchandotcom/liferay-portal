@@ -32,6 +32,26 @@ import javax.servlet.jsp.PageContext;
  */
 public class AssetCategoriesSummaryTag<R> extends IncludeTag {
 
+	public String getClassName() {
+		return _className;
+	}
+
+	public long getClassPK() {
+		return _classPK;
+	}
+
+	public String getDisplayStyle() {
+		return _displayStyle;
+	}
+
+	public String getMessage() {
+		return _message;
+	}
+
+	public String getParamName() {
+		return _paramName;
+	}
+
 	public PortletURL getPortletURL() {
 		return _portletURL;
 	}

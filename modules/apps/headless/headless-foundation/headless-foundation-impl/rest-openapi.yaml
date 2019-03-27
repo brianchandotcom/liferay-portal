@@ -936,6 +936,10 @@ paths:
     "/organizations/{organization-id}/user-accounts":
         get:
             parameters:
+                - in: query
+                  name: filter
+                  schema:
+                      type: string
                 - in: path
                   name: organization-id
                   required: true
@@ -950,6 +954,10 @@ paths:
                   name: pageSize
                   schema:
                       type: integer
+                - in: query
+                  name: sort
+                  schema:
+                      type: string
             responses:
                 200:
                     content:
@@ -1348,6 +1356,10 @@ paths:
         get:
             parameters:
                 - in: query
+                  name: filter
+                  schema:
+                      type: string
+                - in: query
                   name: page
                   schema:
                       type: integer
@@ -1355,6 +1367,10 @@ paths:
                   name: pageSize
                   schema:
                       type: integer
+                - in: query
+                  name: sort
+                  schema:
+                      type: string
             responses:
                 200:
                     content:
@@ -1606,12 +1622,10 @@ paths:
     "/web-sites/{web-site-id}/user-accounts":
         get:
             parameters:
-                - in: path
-                  name: web-site-id
-                  required: true
+                - in: query
+                  name: filter
                   schema:
-                      format: int64
-                      type: integer
+                      type: string
                 - in: query
                   name: page
                   schema:
@@ -1619,6 +1633,16 @@ paths:
                 - in: query
                   name: pageSize
                   schema:
+                      type: integer
+                - in: query
+                  name: sort
+                  schema:
+                      type: string
+                - in: path
+                  name: web-site-id
+                  required: true
+                  schema:
+                      format: int64
                       type: integer
             responses:
                 200:

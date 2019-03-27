@@ -15,12 +15,17 @@
 package com.liferay.portal.vulcan.internal.jaxrs.exception.mapper;
 
 import com.liferay.portal.kernel.security.auth.PrincipalException;
+import com.liferay.portal.kernel.servlet.HttpMethods;
 
+import javax.servlet.http.HttpServletRequest;
+
+import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.ext.ExceptionMapper;
 
 /**
- * Converts any {@code PrincipalException} to a {@code 404} error.
+ * Converts any {@code PrincipalException} to a {@code 404} error in case it is
+ * a GET request, otherwise return a {@code 403}
  *
  * @author Brian Wing Shun Chan
  * @review
@@ -30,9 +35,20 @@ public class PrincipalExceptionMapper
 
 	@Override
 	public Response toResponse(PrincipalException pe) {
+		String method = _httpServletRequest.getMethod();
+
+		if (method.equals(HttpMethods.GET)) {
+			return Response.status(
+				Response.Status.NOT_FOUND
+			).build();
+		}
+
 		return Response.status(
-			Response.Status.NOT_FOUND
+			Response.Status.FORBIDDEN
 		).build();
 	}
+
+	@Context
+	private HttpServletRequest _httpServletRequest;
 
 }

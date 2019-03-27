@@ -18,6 +18,7 @@ import com.liferay.document.library.constants.DLPortletKeys;
 import com.liferay.document.library.util.DLURLHelper;
 import com.liferay.document.library.web.internal.display.context.logic.FileEntryDisplayContextHelper;
 import com.liferay.document.library.web.internal.portlet.action.ActionUtil;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigurationIcon;
@@ -25,6 +26,7 @@ import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfiguration
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.TextFormatter;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import javax.portlet.PortletRequest;
@@ -49,8 +51,18 @@ public class DownloadFileEntryPortletConfigurationIcon
 
 	@Override
 	public String getMessage(PortletRequest portletRequest) {
-		return LanguageUtil.get(
-			getResourceBundle(getLocale(portletRequest)), "download");
+		FileEntry fileEntry = _getFileEntry(portletRequest);
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		String label = TextFormatter.formatStorageSize(
+			fileEntry.getSize(), themeDisplay.getLocale());
+
+		return StringBundler.concat(
+			LanguageUtil.get(
+				getResourceBundle(getLocale(portletRequest)), "download"),
+			" (", label, ")");
 	}
 
 	@Override
@@ -62,23 +74,14 @@ public class DownloadFileEntryPortletConfigurationIcon
 	public String getURL(
 		PortletRequest portletRequest, PortletResponse portletResponse) {
 
-		FileEntry fileEntry = null;
-		FileVersion fileVersion = null;
-
-		try {
-			fileEntry = ActionUtil.getFileEntry(portletRequest);
-
-			fileVersion = ActionUtil.getFileVersion(portletRequest, fileEntry);
-		}
-		catch (Exception e) {
-			return null;
-		}
+		FileEntry fileEntry = _getFileEntry(portletRequest);
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
 		return _dlurlHelper.getDownloadURL(
-			fileEntry, fileVersion, themeDisplay, StringPool.BLANK);
+			fileEntry, _getFileVersion(portletRequest, fileEntry), themeDisplay,
+			StringPool.BLANK);
 	}
 
 	@Override
@@ -109,6 +112,26 @@ public class DownloadFileEntryPortletConfigurationIcon
 	@Override
 	public boolean isToolTip() {
 		return false;
+	}
+
+	private FileEntry _getFileEntry(PortletRequest portletRequest) {
+		try {
+			return ActionUtil.getFileEntry(portletRequest);
+		}
+		catch (Exception e) {
+			return null;
+		}
+	}
+
+	private FileVersion _getFileVersion(
+		PortletRequest portletRequest, FileEntry fileEntry) {
+
+		try {
+			return ActionUtil.getFileVersion(portletRequest, fileEntry);
+		}
+		catch (Exception e) {
+			return null;
+		}
 	}
 
 	@Reference

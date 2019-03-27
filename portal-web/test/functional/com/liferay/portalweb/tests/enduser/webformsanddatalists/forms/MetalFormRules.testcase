@@ -1056,7 +1056,7 @@ definition {
 
 		Form.editFieldLabelMetal(fieldValue = "Date Field");
 
-		FormFields.enableSwitcher(fieldName = "required");
+		FormFields.enableSwitcher(fieldName = "Required");
 
 		Form.closeSidebar();
 

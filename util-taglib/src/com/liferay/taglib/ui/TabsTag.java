@@ -232,6 +232,10 @@ public class TabsTag extends IncludeTag {
 		return _formName;
 	}
 
+	public String[] getNames() {
+		return _names;
+	}
+
 	public String getOnClick() {
 		return _onClick;
 	}
@@ -260,6 +264,10 @@ public class TabsTag extends IncludeTag {
 		}
 
 		return false;
+	}
+
+	public String[] getTabsValues() {
+		return _tabsValues;
 	}
 
 	public String getType() {

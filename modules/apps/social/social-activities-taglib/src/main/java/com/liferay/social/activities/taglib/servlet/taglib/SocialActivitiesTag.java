@@ -34,6 +34,10 @@ import javax.servlet.jsp.PageContext;
  */
 public class SocialActivitiesTag extends IncludeTag {
 
+	public List<SocialActivityDescriptor> getActivityDescriptors() {
+		return _activityDescriptors;
+	}
+
 	public String getClassName() {
 		return _className;
 	}

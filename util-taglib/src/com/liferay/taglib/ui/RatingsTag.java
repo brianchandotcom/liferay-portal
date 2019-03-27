@@ -51,6 +51,14 @@ public class RatingsTag extends IncludeTag {
 		return _numberOfStars;
 	}
 
+	public RatingsEntry getRatingsEntry() {
+		return _ratingsEntry;
+	}
+
+	public RatingsStats getRatingsStats() {
+		return _ratingsStats;
+	}
+
 	public String getUrl() {
 		return _url;
 	}

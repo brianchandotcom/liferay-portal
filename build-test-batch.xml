@@ -7,7 +7,7 @@
 		<isset property="env.AXIS_VARIABLE" />
 	</condition>
 
-	<macrodef name="add-cdiannotations-header-if-necessary">
+	<macrodef name="add-cdiannotations-header">
 		<attribute name="liferay.plugin.package.properties.file" />
 
 		<sequential>
@@ -4314,11 +4314,11 @@ log.sanitizer.enabled=false</echo>
 						See LPS-86824 for more details.
 						-->
 
-						<add-cdiannotations-header-if-necessary
+						<add-cdiannotations-header
 							liferay.plugin.package.properties.file="${liferay.faces.bridge.impl.dir}/demo/jsf-cdi-applicant-portlet/src/main/webapp/WEB-INF/liferay-plugin-package.properties"
 						/>
 
-						<add-cdiannotations-header-if-necessary
+						<add-cdiannotations-header
 							liferay.plugin.package.properties.file="${liferay.faces.bridge.impl.dir}/demo/jsf-flows-portlet/src/main/webapp/WEB-INF/liferay-plugin-package.properties"
 						/>
 

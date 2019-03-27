@@ -14,8 +14,6 @@
 
 package com.liferay.fragment.entry.processor.editable;
 
-import com.liferay.asset.display.contributor.AssetDisplayContributor;
-import com.liferay.asset.display.contributor.AssetDisplayContributorTracker;
 import com.liferay.asset.display.contributor.util.ContentAccessor;
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.service.AssetEntryLocalService;
@@ -24,6 +22,8 @@ import com.liferay.fragment.entry.processor.editable.parser.EditableElementParse
 import com.liferay.fragment.exception.FragmentEntryContentException;
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.processor.FragmentEntryProcessor;
+import com.liferay.info.display.contributor.InfoDisplayContributor;
+import com.liferay.info.display.contributor.InfoDisplayContributorTracker;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -404,13 +404,13 @@ public class EditableFragmentEntryProcessor implements FragmentEntryProcessor {
 			return StringPool.BLANK;
 		}
 
-		AssetDisplayContributor assetDisplayContributor =
-			_assetDisplayContributorTracker.getAssetDisplayContributor(
+		InfoDisplayContributor infoDisplayContributor =
+			_infoDisplayContributorTracker.getInfoDisplayContributor(
 				_portal.getClassName(classNameId));
 
 		String fieldId = jsonObject.getString("fieldId");
 
-		Object fieldValue = assetDisplayContributor.getAssetDisplayFieldValue(
+		Object fieldValue = infoDisplayContributor.getInfoDisplayFieldValue(
 			assetEntry, fieldId, locale);
 
 		if (fieldValue instanceof ContentAccessor) {
@@ -647,13 +647,13 @@ public class EditableFragmentEntryProcessor implements FragmentEntryProcessor {
 		"([^\\{]+)\\s*\\{([^\\}]+)\\}");
 
 	@Reference
-	private AssetDisplayContributorTracker _assetDisplayContributorTracker;
-
-	@Reference
 	private AssetEntryLocalService _assetEntryLocalService;
 
 	private final Map<String, EditableElementParser> _editableElementParsers =
 		new HashMap<>();
+
+	@Reference
+	private InfoDisplayContributorTracker _infoDisplayContributorTracker;
 
 	@Reference
 	private Portal _portal;

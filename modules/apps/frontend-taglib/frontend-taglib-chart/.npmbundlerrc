@@ -25,5 +25,6 @@
 			"tests.js"
 		]
     },
-    "output": "classes/META-INF/resources"
+    "output": "classes/META-INF/resources",
+		"preset": "liferay-npm-bundler-preset-standard"
 }

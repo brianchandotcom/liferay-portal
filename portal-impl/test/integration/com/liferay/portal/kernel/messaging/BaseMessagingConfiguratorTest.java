@@ -14,7 +14,7 @@
 
 package com.liferay.portal.kernel.messaging;
 
-import com.liferay.portal.kernel.messaging.config.AbstractMessagingConfigurator;
+import com.liferay.portal.kernel.messaging.config.BaseMessagingConfigurator;
 import com.liferay.portal.kernel.messaging.config.DefaultMessagingConfigurator;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -39,7 +39,7 @@ import org.junit.Test;
 /**
  * @author Michael C. Han
  */
-public class AbstractMessagingConfiguratorTest {
+public class BaseMessagingConfiguratorTest {
 
 	@ClassRule
 	@Rule
@@ -52,8 +52,8 @@ public class AbstractMessagingConfiguratorTest {
 
 		final TestClassLoader testClassLoader = new TestClassLoader();
 
-		AbstractMessagingConfigurator pluginMessagingConfigurator =
-			new AbstractMessagingConfigurator() {
+		BaseMessagingConfigurator pluginMessagingConfigurator =
+			new BaseMessagingConfigurator() {
 
 				@Override
 				protected ClassLoader getOperatingClassloader() {

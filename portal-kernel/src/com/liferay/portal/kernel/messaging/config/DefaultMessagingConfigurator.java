@@ -17,8 +17,7 @@ package com.liferay.portal.kernel.messaging.config;
 /**
  * @author Michael C. Han
  */
-public class DefaultMessagingConfigurator
-	extends AbstractMessagingConfigurator {
+public class DefaultMessagingConfigurator extends BaseMessagingConfigurator {
 
 	@Override
 	protected ClassLoader getOperatingClassloader() {

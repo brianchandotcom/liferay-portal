@@ -44,7 +44,7 @@ import java.util.Set;
 /**
  * @author Michael C. Han
  */
-public abstract class AbstractMessagingConfigurator
+public abstract class BaseMessagingConfigurator
 	implements MessagingConfigurator {
 
 	public void afterPropertiesSet() {

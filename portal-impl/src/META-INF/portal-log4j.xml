@@ -296,7 +296,7 @@
 		<priority value="ERROR" />
 	</category>
 
-	<category name="com.liferay.portal.kernel.messaging.config.AbstractMessagingConfigurator">
+	<category name="com.liferay.portal.kernel.messaging.config.BaseMessagingConfigurator">
 		<priority value="INFO" />
 	</category>
 

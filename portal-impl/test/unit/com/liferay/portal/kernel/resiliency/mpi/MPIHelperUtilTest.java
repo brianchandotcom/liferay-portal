@@ -14,7 +14,7 @@
 
 package com.liferay.portal.kernel.resiliency.mpi;
 
-import com.liferay.portal.kernel.messaging.config.AbstractMessagingConfigurator;
+import com.liferay.portal.kernel.messaging.config.BaseMessagingConfigurator;
 import com.liferay.portal.kernel.messaging.config.MessagingConfigurator;
 import com.liferay.portal.kernel.messaging.config.MessagingConfiguratorRegistry;
 import com.liferay.portal.kernel.nio.intraband.DatagramReceiveHandler;
@@ -836,7 +836,7 @@ public class MPIHelperUtilTest {
 			logRecords = captureHandler.resetLogLevel(Level.OFF);
 
 			MessagingConfigurator messagingConfigurator =
-				new AbstractMessagingConfigurator() {
+				new BaseMessagingConfigurator() {
 
 					@Override
 					public void connect() {

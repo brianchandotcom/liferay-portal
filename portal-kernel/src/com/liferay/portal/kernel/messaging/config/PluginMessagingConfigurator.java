@@ -20,7 +20,7 @@ import com.liferay.portal.kernel.servlet.ServletContextClassLoaderPool;
 /**
  * @author Michael C. Han
  */
-public class PluginMessagingConfigurator extends AbstractMessagingConfigurator {
+public class PluginMessagingConfigurator extends BaseMessagingConfigurator {
 
 	@Override
 	public void afterPropertiesSet() {

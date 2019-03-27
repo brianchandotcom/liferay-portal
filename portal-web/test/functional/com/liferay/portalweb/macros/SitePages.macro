@@ -68,7 +68,7 @@ definition {
 
 			Click(locator1 = "SitePagesEditPage#LAYOUT_CARD");
 		}
-		else if ("${sitePageType}" == "Standard Page") {
+		else if ("${sitePageType}" == "Content Page") {
 			Select(
 				locator1 = "SitePagesEditPage#LAYOUT_PAGE_TEMPLATE_SELECT",
 				value1 = "${layoutPageTemplateName}"

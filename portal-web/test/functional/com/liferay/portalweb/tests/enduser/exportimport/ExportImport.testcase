@@ -219,7 +219,7 @@ definition {
 
 		SiteTemplates.addSitePageViaSiteTemplateCP(
 			pageName = "Test Template Content Page",
-			sitePageType = "Standard Page",
+			sitePageType = "Content Page",
 			siteTemplateName = "Site Template Name"
 		);
 

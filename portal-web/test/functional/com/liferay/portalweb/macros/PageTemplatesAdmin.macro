@@ -24,7 +24,7 @@ definition {
 			var menuItem = "${pageTemplateType}";
 		}
 		else {
-			var menuItem = "Standard Page Template";
+			var menuItem = "Content Page Template";
 		}
 
 		LexiconEntry.gotoAddMenuItem(menuItem = "${menuItem}");

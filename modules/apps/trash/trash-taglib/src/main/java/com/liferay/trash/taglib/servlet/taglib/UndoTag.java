@@ -54,6 +54,10 @@ public class UndoTag extends IncludeTag {
 		return EVAL_BODY_INCLUDE;
 	}
 
+	public String getPortletURL() {
+		return _portletURL;
+	}
+
 	public String getRedirect() {
 		return _redirect;
 	}

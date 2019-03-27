@@ -251,7 +251,10 @@ public class WorkflowInstanceEditDisplayContext
 	}
 
 	public String getWorkflowLogComment(WorkflowLog workflowLog) {
-		return HtmlUtil.escape(workflowLog.getComment());
+		return HtmlUtil.escape(
+			LanguageUtil.get(
+				workflowInstanceRequestHelper.getRequest(),
+				workflowLog.getComment()));
 	}
 
 	public String getWorkflowLogCreateDate(WorkflowLog workflowLog) {

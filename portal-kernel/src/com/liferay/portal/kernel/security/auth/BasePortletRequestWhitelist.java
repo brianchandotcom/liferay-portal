@@ -27,10 +27,10 @@ import java.util.Set;
  * @author Péter Borkuti
  * @author Tomas Polesovsky
  */
-public abstract class AbstractPortletRequestWhitelist
+public abstract class BasePortletRequestWhitelist
 	implements PortletRequestWhitelist {
 
-	public AbstractPortletRequestWhitelist() {
+	public BasePortletRequestWhitelist() {
 		resetPortletInvocationWhitelist();
 		resetPortletInvocationWhitelistActions();
 	}

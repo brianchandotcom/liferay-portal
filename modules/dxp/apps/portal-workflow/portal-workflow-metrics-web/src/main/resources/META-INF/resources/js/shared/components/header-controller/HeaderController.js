@@ -1,12 +1,12 @@
+import React, { Fragment } from 'react';
 import HeaderMenuBackItem from './HeaderMenuBackItem';
 import HeaderTitle from './HeaderTitle';
-import React from 'react';
 
 export default class HeaderController extends React.Component {
 	componentWillMount() {
-		const headerContainer = document.getElementById(
-			`${Liferay.ControlMenu['_namespace']}controlMenu`
-		);
+		const { namespace } = this.props;
+
+		const headerContainer = document.getElementById(`${namespace}controlMenu`);
 
 		if (headerContainer) {
 			this.backButtonContainer = headerContainer.querySelector(
@@ -22,14 +22,14 @@ export default class HeaderController extends React.Component {
 		const { basePath, title } = this.props;
 
 		return (
-			<template>
+			<Fragment>
 				<HeaderMenuBackItem
 					basePath={basePath}
 					container={this.backButtonContainer}
 				/>
 
 				<HeaderTitle container={this.titleContainer} title={title} />
-			</template>
+			</Fragment>
 		);
 	}
 }

@@ -20,16 +20,12 @@
 	<span aria-hidden="true" class="loading-animation"></span>
 </div>
 
-<aui:script use="liferay-product-navigation-control-menu">
-	Liferay.Loader.require(
-		["<%= npmResolvedPackageName %>"],
-		function(bootstrapRequire) {
-			bootstrapRequire.default(
-				'<portlet:namespace />root',
-				<%= PropsValues.SEARCH_CONTAINER_PAGE_DEFAULT_DELTA %>,
-				<%= Arrays.toString(PropsValues.SEARCH_CONTAINER_PAGE_DELTA_VALUES) %>,
-				<%= PropsValues.SEARCH_CONTAINER_PAGE_ITERATOR_MAX_PAGES %>
-			);
-		}
+<aui:script require='<%= npmResolvedPackageName + " as bootstrapRequire" %>'>
+	bootstrapRequire.default(
+		'<portlet:namespace />root',
+		'<portlet:namespace />',
+		<%= PropsValues.SEARCH_CONTAINER_PAGE_DEFAULT_DELTA %>,
+		<%= Arrays.toString(PropsValues.SEARCH_CONTAINER_PAGE_DELTA_VALUES) %>,
+		<%= PropsValues.SEARCH_CONTAINER_PAGE_ITERATOR_MAX_PAGES %>
 	);
 </aui:script>

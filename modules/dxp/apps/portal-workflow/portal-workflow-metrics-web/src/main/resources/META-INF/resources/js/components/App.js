@@ -26,6 +26,7 @@ export default class AppComponent extends React.Component {
 			defaultDelta: props.defaultDelta,
 			deltas: props.deltas,
 			maxPages: props.maxPages,
+			namespace: props.namespace,
 			setTitle: this.setTitle.bind(this)
 		};
 
@@ -39,6 +40,7 @@ export default class AppComponent extends React.Component {
 	}
 
 	render() {
+		const { namespace } = this.contextState;
 		const { title } = this.state;
 		const withParams = Component => ({ match: { params } }) => (
 			<Component {...params} />
@@ -47,7 +49,11 @@ export default class AppComponent extends React.Component {
 		return (
 			<Router>
 				<AppContext.Provider value={this.contextState}>
-					<HeaderController basePath="/processes" title={title} />
+					<HeaderController
+						basePath="/processes"
+						namespace={namespace}
+						title={title}
+					/>
 
 					<div className="portal-workflow-metrics-app">
 						<Switch>

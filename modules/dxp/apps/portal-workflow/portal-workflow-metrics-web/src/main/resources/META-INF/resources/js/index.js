@@ -2,7 +2,7 @@ import AppComponent from './components/App';
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-export default function(elementId, defaultDelta, deltas, maxPages) {
+export default function(elementId, namespace, defaultDelta, deltas, maxPages) {
 	const container = document.getElementById(elementId);
 
 	ReactDOM.render(
@@ -11,6 +11,7 @@ export default function(elementId, defaultDelta, deltas, maxPages) {
 			defaultDelta={defaultDelta}
 			deltas={deltas}
 			maxPages={maxPages}
+			namespace={namespace}
 		/>,
 		container
 	);

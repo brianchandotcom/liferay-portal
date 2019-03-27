@@ -76,7 +76,7 @@ public class EditWithImageEditorPortletConfigurationIcon
 
 	@Override
 	public double getWeight() {
-		return 106;
+		return 175;
 	}
 
 	@Override

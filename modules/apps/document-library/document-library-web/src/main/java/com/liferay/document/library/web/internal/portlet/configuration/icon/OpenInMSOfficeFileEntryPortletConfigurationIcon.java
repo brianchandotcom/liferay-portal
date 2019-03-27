@@ -111,7 +111,7 @@ public class OpenInMSOfficeFileEntryPortletConfigurationIcon
 
 	@Override
 	public double getWeight() {
-		return 107;
+		return 190;
 	}
 
 	@Override

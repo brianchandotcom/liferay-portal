@@ -44,6 +44,10 @@ public class EditFormTag extends IncludeTag {
 		return super.doStartTag();
 	}
 
+	public String getAction() {
+		return _action;
+	}
+
 	public String getCssClass() {
 		return _cssClass;
 	}

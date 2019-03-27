@@ -25,8 +25,84 @@ import javax.servlet.http.HttpServletRequest;
  */
 public class FlashTag extends IncludeTag {
 
+	public String getAlign() {
+		return _align;
+	}
+
+	public String getAllowFullScreen() {
+		return _allowFullScreen;
+	}
+
+	public String getAllowScriptAccess() {
+		return _allowScriptAccess;
+	}
+
+	public String getBase() {
+		return _base;
+	}
+
+	public String getBgcolor() {
+		return _bgcolor;
+	}
+
+	public String getDevicefont() {
+		return _devicefont;
+	}
+
+	public String getFlashvars() {
+		return _flashvars;
+	}
+
+	public String getHeight() {
+		return _height;
+	}
+
+	public String getId() {
+		return _id;
+	}
+
+	public String getLoop() {
+		return _loop;
+	}
+
+	public String getMenu() {
+		return _menu;
+	}
+
 	public String getMovie() {
 		return _movie;
+	}
+
+	public String getPlay() {
+		return _play;
+	}
+
+	public String getQuality() {
+		return _quality;
+	}
+
+	public String getSalign() {
+		return _salign;
+	}
+
+	public String getScale() {
+		return _scale;
+	}
+
+	public String getSwliveconnect() {
+		return _swliveconnect;
+	}
+
+	public String getVersion() {
+		return _version;
+	}
+
+	public String getWidth() {
+		return _width;
+	}
+
+	public String getWmode() {
+		return _wmode;
 	}
 
 	public void setAlign(String align) {

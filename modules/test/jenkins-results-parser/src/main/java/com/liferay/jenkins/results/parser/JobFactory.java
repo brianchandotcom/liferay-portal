@@ -155,7 +155,9 @@ public class JobFactory {
 		}
 
 		if (jobName.startsWith("test-portal-acceptance-upstream(")) {
-			_jobs.put(jobName, new PortalAcceptanceUpstreamJob(jobName));
+			_jobs.put(
+				jobName,
+				new PortalAcceptanceUpstreamJob(jobName, testSuiteName));
 
 			return _jobs.get(jobName);
 		}

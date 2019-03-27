@@ -250,10 +250,6 @@ public class DisplayPortlet extends BaseKBPortlet {
 		throws IOException, PortletException {
 
 		try {
-			renderRequest.setAttribute(
-				KBWebKeys.DL_MIME_TYPE_DISPLAY_CONTEXT,
-				dlMimeTypeDisplayContext);
-
 			KBArticleSelection kbArticleSelection = getKBArticle(renderRequest);
 
 			renderRequest.setAttribute(

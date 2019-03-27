@@ -14,8 +14,8 @@
 
 package com.liferay.document.library.web.internal.util;
 
+import com.liferay.document.library.display.context.DLDisplayContextProvider;
 import com.liferay.document.library.web.internal.display.context.DLAdminDisplayContextProvider;
-import com.liferay.document.library.web.internal.display.context.DLDisplayContextProvider;
 import com.liferay.document.library.web.internal.display.context.IGDisplayContextProvider;
 
 import org.osgi.service.component.annotations.Activate;

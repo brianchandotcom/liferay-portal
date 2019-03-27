@@ -956,6 +956,10 @@ paths:
                   name: sort
                   schema:
                       type: string
+                - in: query
+                  name: tree
+                  schema:
+                      type: boolean
             responses:
                 200:
                     content:
@@ -987,63 +991,7 @@ paths:
                                 $ref: "#/components/schemas/KnowledgeBaseArticle"
                     description: ""
             tags: ["KnowledgeBaseArticle"]
-    "/content-spaces/{content-space-id}/tree-knowledge-base-articles":
-        get:
-            parameters:
-                - in: path
-                  name: content-space-id
-                  required: true
-                  schema:
-                      format: int64
-                      type: integer
-                - in: query
-                  name: filter
-                  schema:
-                      type: string
-                - in: query
-                  name: page
-                  schema:
-                      type: integer
-                - in: query
-                  name: pageSize
-                  schema:
-                      type: integer
-                - in: query
-                  name: sort
-                  schema:
-                      type: string
-            responses:
-                200:
-                    content:
-                        application/json:
-                            schema:
-                                items:
-                                    $ref: "#/components/schemas/KnowledgeBaseArticle"
-                                type: array
-                    description: ""
-            tags: ["KnowledgeBaseArticle"]
-        post:
-            parameters:
-                - in: path
-                  name: content-space-id
-                  required: true
-                  schema:
-                      format: int64
-                      type: integer
-            requestBody:
-                content:
-                    application/json:
-                        schema:
-                            $ref: "#/components/schemas/KnowledgeBaseArticle"
-            responses:
-                200:
-                    content:
-                        application/json:
-                            schema:
-                                $ref: "#/components/schemas/KnowledgeBaseArticle"
-                    description: ""
-            tags: ["KnowledgeBaseArticle"]
-    "/content-spaces/{content-space-id}/tree-knowledge-base-folders":
+    "/content-spaces/{content-space-id}/knowledge-base-folders":
         get:
             parameters:
                 - in: path

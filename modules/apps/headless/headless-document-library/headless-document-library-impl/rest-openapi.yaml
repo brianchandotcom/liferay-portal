@@ -273,7 +273,7 @@ paths:
                                 $ref: "#/components/schemas/Comment"
                     description: ""
             tags: ["Comment"]
-    "/content-spaces/{content-space-id}/tree-documents":
+    "/content-spaces/{content-space-id}/documents":
         get:
             parameters:
                 - in: path
@@ -298,6 +298,10 @@ paths:
                   name: sort
                   schema:
                       type: string
+                - in: query
+                  name: tree
+                  schema:
+                      type: boolean
             responses:
                 200:
                     content:
@@ -335,7 +339,7 @@ paths:
                                 $ref: "#/components/schemas/Document"
                     description: ""
             tags: ["Document"]
-    "/content-spaces/{content-space-id}/tree-folders":
+    "/content-spaces/{content-space-id}/folders":
         get:
             parameters:
                 - in: path
@@ -360,6 +364,10 @@ paths:
                   name: sort
                   schema:
                       type: string
+                - in: query
+                  name: tree
+                  schema:
+                      type: boolean
             responses:
                 200:
                     content:

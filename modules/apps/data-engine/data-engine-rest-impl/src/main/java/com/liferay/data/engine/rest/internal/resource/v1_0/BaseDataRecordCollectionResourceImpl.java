@@ -15,6 +15,7 @@
 package com.liferay.data.engine.rest.internal.resource.v1_0;
 
 import com.liferay.data.engine.rest.dto.v1_0.DataRecordCollection;
+import com.liferay.data.engine.rest.dto.v1_0.DataRecordCollectionPermission;
 import com.liferay.data.engine.rest.resource.v1_0.DataRecordCollectionResource;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.petra.string.StringPool;
@@ -61,6 +62,21 @@ import javax.ws.rs.core.UriInfo;
 @Path("/v1.0")
 public abstract class BaseDataRecordCollectionResourceImpl
 	implements DataRecordCollectionResource {
+
+	@Override
+	@Consumes("application/json")
+	@POST
+	@Path(
+		"/content-spaces/{content-space-id}/data-record-collections/permissions"
+	)
+	@Produces("application/json")
+	@Tags(value = {@Tag(name = "DataRecordCollection")})
+	public void postContentSpaceDataRecordCollectionPermission(
+			@NotNull @PathParam("content-space-id") Long contentSpaceId,
+			@NotNull @QueryParam("operation") String operation,
+			DataRecordCollectionPermission dataRecordCollectionPermission)
+		throws Exception {
+	}
 
 	@Override
 	@GET
@@ -115,6 +131,20 @@ public abstract class BaseDataRecordCollectionResourceImpl
 		throws Exception {
 
 		return new DataRecordCollection();
+	}
+
+	@Override
+	@Consumes("application/json")
+	@POST
+	@Path("/data-record-collections/{data-record-collection-id}/permissions")
+	@Produces("application/json")
+	@Tags(value = {@Tag(name = "DataRecordCollection")})
+	public void postDataRecordCollectionPermission(
+			@NotNull @PathParam("data-record-collection-id") Long
+				dataRecordCollectionId,
+			@NotNull @QueryParam("operation") String operation,
+			DataRecordCollectionPermission dataRecordCollectionPermission)
+		throws Exception {
 	}
 
 	@Override

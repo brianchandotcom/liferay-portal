@@ -19,6 +19,7 @@ import com.liferay.data.engine.rest.dto.v1_0.DataDefinitionPermission;
 import com.liferay.data.engine.rest.dto.v1_0.DataLayout;
 import com.liferay.data.engine.rest.dto.v1_0.DataRecord;
 import com.liferay.data.engine.rest.dto.v1_0.DataRecordCollection;
+import com.liferay.data.engine.rest.dto.v1_0.DataRecordCollectionPermission;
 import com.liferay.data.engine.rest.resource.v1_0.DataDefinitionResource;
 import com.liferay.data.engine.rest.resource.v1_0.DataLayoutResource;
 import com.liferay.data.engine.rest.resource.v1_0.DataRecordCollectionResource;
@@ -232,6 +233,25 @@ public class Mutation {
 
 	@GraphQLField
 	@GraphQLInvokeDetached
+	public void postContentSpaceDataRecordCollectionPermission(
+			@GraphQLName("content-space-id") Long contentSpaceId,
+			@GraphQLName("operation") String operation,
+			@GraphQLName("DataRecordCollectionPermission")
+				DataRecordCollectionPermission dataRecordCollectionPermission)
+		throws Exception {
+
+		_applyVoidComponentServiceObjects(
+			_dataRecordCollectionResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			dataRecordCollectionResource ->
+				dataRecordCollectionResource.
+					postContentSpaceDataRecordCollectionPermission(
+						contentSpaceId, operation,
+						dataRecordCollectionPermission));
+	}
+
+	@GraphQLField
+	@GraphQLInvokeDetached
 	public DataRecordCollection postDataDefinitionDataRecordCollection(
 			@GraphQLName("data-definition-id") Long dataDefinitionId,
 			@GraphQLName("DataRecordCollection") DataRecordCollection
@@ -245,6 +265,25 @@ public class Mutation {
 				dataRecordCollectionResource.
 					postDataDefinitionDataRecordCollection(
 						dataDefinitionId, dataRecordCollection));
+	}
+
+	@GraphQLField
+	@GraphQLInvokeDetached
+	public void postDataRecordCollectionPermission(
+			@GraphQLName("data-record-collection-id") Long
+				dataRecordCollectionId,
+			@GraphQLName("operation") String operation,
+			@GraphQLName("DataRecordCollectionPermission")
+				DataRecordCollectionPermission dataRecordCollectionPermission)
+		throws Exception {
+
+		_applyVoidComponentServiceObjects(
+			_dataRecordCollectionResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			dataRecordCollectionResource ->
+				dataRecordCollectionResource.postDataRecordCollectionPermission(
+					dataRecordCollectionId, operation,
+					dataRecordCollectionPermission));
 	}
 
 	@GraphQLInvokeDetached

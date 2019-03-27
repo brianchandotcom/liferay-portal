@@ -15,6 +15,7 @@
 package com.liferay.data.engine.rest.resource.v1_0;
 
 import com.liferay.data.engine.rest.dto.v1_0.DataRecordCollection;
+import com.liferay.data.engine.rest.dto.v1_0.DataRecordCollectionPermission;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
@@ -32,6 +33,11 @@ import javax.annotation.Generated;
 @Generated("")
 public interface DataRecordCollectionResource {
 
+	public void postContentSpaceDataRecordCollectionPermission(
+			Long contentSpaceId, String operation,
+			DataRecordCollectionPermission dataRecordCollectionPermission)
+		throws Exception;
+
 	public Page<DataRecordCollection> getContentSpaceDataRecordCollectionsPage(
 			Long contentSpaceId, String keywords, Pagination pagination)
 		throws Exception;
@@ -43,6 +49,11 @@ public interface DataRecordCollectionResource {
 
 	public DataRecordCollection postDataDefinitionDataRecordCollection(
 			Long dataDefinitionId, DataRecordCollection dataRecordCollection)
+		throws Exception;
+
+	public void postDataRecordCollectionPermission(
+			Long dataRecordCollectionId, String operation,
+			DataRecordCollectionPermission dataRecordCollectionPermission)
 		throws Exception;
 
 	public void deleteDataRecordCollection(Long dataRecordCollectionId)

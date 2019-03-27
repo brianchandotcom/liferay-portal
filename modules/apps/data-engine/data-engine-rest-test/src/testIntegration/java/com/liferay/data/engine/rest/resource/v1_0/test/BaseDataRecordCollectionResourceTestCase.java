@@ -22,6 +22,7 @@ import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
 import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
 
 import com.liferay.data.engine.rest.dto.v1_0.DataRecordCollection;
+import com.liferay.data.engine.rest.dto.v1_0.DataRecordCollectionPermission;
 import com.liferay.data.engine.rest.resource.v1_0.DataRecordCollectionResource;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -104,6 +105,77 @@ public abstract class BaseDataRecordCollectionResourceTestCase {
 	public void tearDown() throws Exception {
 		GroupTestUtil.deleteGroup(irrelevantGroup);
 		GroupTestUtil.deleteGroup(testGroup);
+	}
+
+	@Test
+	public void testPostContentSpaceDataRecordCollectionPermission()
+		throws Exception {
+
+		DataRecordCollection randomDataRecordCollection =
+			randomDataRecordCollection();
+
+		DataRecordCollection postDataRecordCollection =
+			testPostContentSpaceDataRecordCollectionPermission_addDataRecordCollection(
+				randomDataRecordCollection);
+
+		assertEquals(randomDataRecordCollection, postDataRecordCollection);
+		assertValid(postDataRecordCollection);
+	}
+
+	protected DataRecordCollection
+			testPostContentSpaceDataRecordCollectionPermission_addDataRecordCollection(
+				DataRecordCollection dataRecordCollection)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected void invokePostContentSpaceDataRecordCollectionPermission(
+			Long contentSpaceId, String operation,
+			DataRecordCollectionPermission dataRecordCollectionPermission)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		String location =
+			_resourceURL +
+				_toPath(
+					"/content-spaces/{content-space-id}/data-record-collections/permissions",
+					contentSpaceId);
+
+		options.setLocation(location);
+
+		options.setPost(true);
+
+		String string = HttpUtil.URLtoString(options);
+
+		if (_log.isDebugEnabled()) {
+			_log.debug("HTTP response: " + string);
+		}
+	}
+
+	protected Http.Response
+			invokePostContentSpaceDataRecordCollectionPermissionResponse(
+				Long contentSpaceId, String operation,
+				DataRecordCollectionPermission dataRecordCollectionPermission)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		String location =
+			_resourceURL +
+				_toPath(
+					"/content-spaces/{content-space-id}/data-record-collections/permissions",
+					contentSpaceId);
+
+		options.setLocation(location);
+
+		options.setPost(true);
+
+		HttpUtil.URLtoByteArray(options);
+
+		return options.getResponse();
 	}
 
 	@Test
@@ -548,6 +620,74 @@ public abstract class BaseDataRecordCollectionResourceTestCase {
 				_toPath(
 					"/data-definitions/{data-definition-id}/data-record-collections",
 					dataDefinitionId);
+
+		options.setLocation(location);
+
+		options.setPost(true);
+
+		HttpUtil.URLtoByteArray(options);
+
+		return options.getResponse();
+	}
+
+	@Test
+	public void testPostDataRecordCollectionPermission() throws Exception {
+		DataRecordCollection randomDataRecordCollection =
+			randomDataRecordCollection();
+
+		DataRecordCollection postDataRecordCollection =
+			testPostDataRecordCollectionPermission_addDataRecordCollection(
+				randomDataRecordCollection);
+
+		assertEquals(randomDataRecordCollection, postDataRecordCollection);
+		assertValid(postDataRecordCollection);
+	}
+
+	protected DataRecordCollection
+			testPostDataRecordCollectionPermission_addDataRecordCollection(
+				DataRecordCollection dataRecordCollection)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected void invokePostDataRecordCollectionPermission(
+			Long dataRecordCollectionId, String operation,
+			DataRecordCollectionPermission dataRecordCollectionPermission)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		String location =
+			_resourceURL +
+				_toPath(
+					"/data-record-collections/{data-record-collection-id}/permissions",
+					dataRecordCollectionId);
+
+		options.setLocation(location);
+
+		options.setPost(true);
+
+		String string = HttpUtil.URLtoString(options);
+
+		if (_log.isDebugEnabled()) {
+			_log.debug("HTTP response: " + string);
+		}
+	}
+
+	protected Http.Response invokePostDataRecordCollectionPermissionResponse(
+			Long dataRecordCollectionId, String operation,
+			DataRecordCollectionPermission dataRecordCollectionPermission)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		String location =
+			_resourceURL +
+				_toPath(
+					"/data-record-collections/{data-record-collection-id}/permissions",
+					dataRecordCollectionId);
 
 		options.setLocation(location);
 
@@ -1039,7 +1179,7 @@ public abstract class BaseDataRecordCollectionResourceTestCase {
 
 		for (int i = 0; i < values.length; i++) {
 			template = template.replaceFirst(
-				"\\{.*?\\}", String.valueOf(values[i]));
+				"\\{.*\\}", String.valueOf(values[i]));
 		}
 
 		return template;

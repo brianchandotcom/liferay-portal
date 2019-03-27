@@ -1681,6 +1681,10 @@ paths:
     "/knowledge-base-articles/{knowledge-base-article-id}/knowledge-base-articles":
         get:
             parameters:
+                - in: query
+                  name: filter
+                  schema:
+                      type: string
                 - in: path
                   name: knowledge-base-article-id
                   required: true
@@ -1695,6 +1699,10 @@ paths:
                   name: pageSize
                   schema:
                       type: integer
+                - in: query
+                  name: sort
+                  schema:
+                      type: string
             responses:
                 200:
                     content:
@@ -1879,6 +1887,10 @@ paths:
     "/knowledge-base-folders/{knowledge-base-folder-id}/knowledge-base-articles":
         get:
             parameters:
+                - in: query
+                  name: filter
+                  schema:
+                      type: string
                 - in: path
                   name: knowledge-base-folder-id
                   required: true
@@ -1893,6 +1905,14 @@ paths:
                   name: pageSize
                   schema:
                       type: integer
+                - in: query
+                  name: sort
+                  schema:
+                      type: string
+                - in: query
+                  name: tree
+                  schema:
+                      type: boolean
             responses:
                 200:
                     content:
